@@ -8,7 +8,7 @@ require_once('extensions/wikia/MergeFiles/MergeFilesMinimal.php');
 require_once('extensions/wikia/MergeFiles/MergeFilesAdditional.php');
 
 $HeadURL = split('/', '$HeadURL$');
-$wgReleaseNumber = $HeadURL[5];
+$wgReleaseNumber = ($HeadURL[4] === "trunk" ) ? "trunk" : $HeadURL[5];
 $targetPrefix = "/images/common/releases_{$wgReleaseNumber}/skins/";
 $java = "/usr/bin/java";
 $yuic = "/images/common/yuic.jar";
