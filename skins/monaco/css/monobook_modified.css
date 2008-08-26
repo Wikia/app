@@ -100,7 +100,6 @@ h3, h4, h5, h6 {
 	border-bottom: none;
 	font-weight: bold;
 }
-.editsection {float: right}
 h3 { font-size: 132%; }
 h3 .editsection { font-size: 76%; font-weight: normal; }
 h4 { font-size: 116%; }
@@ -519,14 +518,6 @@ div.townBox dl dd {
 }
 #pagehistory span.minor {
 	font-weight: bold;
-}
-#pagehistory li {
-	border: 1px solid white;
-}
-#pagehistory li.selected {
-	background-color: #f9f9f9;
-	color: #000;
-	border: 1px dashed #aaa;
 }
 
 /*
