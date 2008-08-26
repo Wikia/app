@@ -32,8 +32,7 @@
     color:#000000;
     float:left;
     font-weight:bold;
-    margin:-14px 0px 15px;
-    padding-bottom:20px;
+    margin:-14px 0px 35px;
     position:relative;
     width:100%;
     z-index:2;
@@ -64,7 +63,8 @@
 
 #siteSub {
 	float:left;
-	padding-top: 65px;
+	left: 20px;
+	padding-top: 48px;
 	position: absolute;
 	width: auto;
 }
