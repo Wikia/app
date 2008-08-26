@@ -285,7 +285,6 @@ if ( !$this->isSkyscraper() ) {
 	$this->html('abc_footer');
 
 ?>
-</div>
 <?php $this->html('ads_bottomjs'); ?>
 <?php $this->html('bottomscripts'); /* JS call to runBodyOnloadHook */ ?>
 <?php $this->html('reporttime') ?>
