@@ -1,0 +1,26 @@
+PASSWORDSTRENGTH README
+
+1. INTRODUCTION
+This extension is designed to implement more stringent password checks on registration/preference update.
+
+2. INSTALLATION
+Place PasswordStrength.php in "$IP/extensions/PasswordStrength/". Open LocalSettings.php and add the following line at the end:
+
+require_once("$IP/extensions/PasswordStrength/PasswordStrength.php");
+
+3. SETTING UP CHECKS
+The global array $wgPasswordStrengthCheck is a series of regular expressions to be applied to the password. The default (and example) is 
+$wgPasswordStrengthCheck[] = '/^\d+$/'; This would cause any password consisting of only numbers to be denied.
+
+4. WARNINGS
+a) If a user has a password that does not pass the check, then they are locked out of their account.
+b) If anchors are not added to the regex (ie: ^...$), then all passwords matching the regex _in part_ will fail (in the example, without
+anchors, no numeric characters would be allowed).
+
+5. TODO
+Make it where a password failure on login (due to invalid complexity) forces a password change, not an account lockout (this requires
+a modification to core).
+
+6. LICENSING
+PasswordStrength is made available under the conditions of the GNU General Public License version 2 (or at your option, any later
+version). For more information, see http://www.gnu.org/copyleft/gpl.html

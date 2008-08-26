@@ -1,0 +1,9 @@
+.editsimilar {
+	background-color: #c0fec0;
+	border: solid 1px #006400;
+}
+
+.editsimilar_dismiss {
+	float: right;
+	font-size:0.9em;
+}                    

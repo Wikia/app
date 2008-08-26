@@ -1,0 +1,80 @@
+.lr-left {
+	float:left;
+	width:40%;
+}
+
+.lr-right {
+	float:right;
+	border-left:1px solid #DCDCDC;
+	float:right;
+	padding:0px 0px 0px 20px;
+	margin:0px 0px 0px 0px;
+	width:40%;
+}
+
+.lr-right h3 {
+	padding:0px !important;
+	margin:0px !important;
+	font-size:16px;
+}
+
+.lr-right p {
+	padding:0px !important;
+	margin:10px 0px !important;
+}
+
+.lr-top-link {
+	font-weight:bold;
+	margin:0px 0px 5px 0px;
+}
+
+.link-highlight {
+	background-color:#FFFB9B;
+	border:1px solid #FDC745;
+	padding:0px 8px;
+	white-space:nowrap;
+}
+
+.lr-top-link a {
+	font-weight:bold;
+	text-decoration:none;
+}
+
+.lr-left p {
+	margin:0px !important;
+	padding:8px 0px !important;
+	font-weight:bold;
+	font-size:13px;
+}
+
+.remember-me {
+	margin:10px 0px 10px -4px;
+}
+
+.favorite-input {
+	margin:8px 0px;
+}
+
+.favorite-input-title {
+	font-weight:bold;
+	min-width:40px;
+	margin:0px 10px 0px 0px;
+}
+
+.lr-input {
+	width:90%;
+}
+
+.username-unavail {
+	font-size:.8em;
+	color:red;
+	font-weight:bold;
+	padding:5px 0px 0px 0px;
+}
+
+.username-avail {
+	font-size:.8em;
+	color:#6BEC4B;
+	font-weight:bold;
+	padding:5px 0px 0px 0px;
+}

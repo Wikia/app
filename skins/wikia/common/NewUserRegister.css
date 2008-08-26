@@ -1,0 +1,43 @@
+#userlogin .loginText, #userlogin .loginPassword, #wpCaptchaWord {
+	width: 250px;
+}
+
+.mw-label {
+	text-align: right;
+	padding-right: 4px;
+	vertical-align: top;
+	padding-top: 3px;
+}
+
+#wpBirthDateTD select {
+	width: 80px;
+	margin: 0 3px 0 0;
+}
+
+#wpBirthDay {
+	margin: 0;
+}
+
+div#userlogin .captcha {
+	background-color: transparent;
+	border: none;
+	padding: 0;
+}
+
+div#userlogin .mw-input-ok {
+	background: transparent url('../img/ok.png') 260px 4px no-repeat;
+}
+
+div#userlogin .mw-input-error {
+	background: transparent url('../img/error.png') 260px 4px no-repeat;
+}
+
+div#userlogin .mw-progress {
+	background: transparent url('../../common/progress-wheel.gif') 260px 4px no-repeat;
+}
+
+div#userlogin .inputError {
+	display: none;
+	margin-left: 24px;
+	color: red;
+}

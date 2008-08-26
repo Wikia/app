@@ -1,0 +1,18 @@
+#!/bin/bash
+
+if [ "X$1" == X ];then
+	echo "Usage: ar-fixup <edition>"
+	exit
+fi
+
+cd /var/static
+dest=/var/static/downloads/$edition/ar
+if ! grep -q ar/upload/2/26/Arabisc1.png $dest/skins.lst;then
+	echo ar/upload/2/26/Arabisc1.png >> $dest/skins.lst
+fi
+sed -i~ 's!http://upload\.wikimedia\.org/wikipedia/ar/2/26/Arabisc1\.png!../upload/2/26/Arabisc1.png!' ar/raw/ميدياويكي~Monobook.css
+
+rm -f $dest/wikipedia-ar-html.7z
+echo Compressing...
+7z -l a $dest/wikipedia-ar-html.7z @$dest/html.lst @$dest/skins.lst > /dev/null
+echo Done

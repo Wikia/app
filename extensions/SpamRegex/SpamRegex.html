@@ -1,0 +1,194 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" dir="ltr" lang="en"><head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<link rel="copyright" href="http://www.gnu.org/copyleft/fdl.html"><title>SpamRegex</title>
+
+		<style type="text/css" media="screen,projection">/*<![CDATA[*/ @import "/skins3/monobook/main.css?0"; /*]]>*/</style>
+		<link rel="stylesheet" type="text/css" media="print" href="SpamRegex_files/commonPrint.css"><!--[if lt IE 5.5000]><style type="text/css">@import "/skins3/monobook/IE50Fixes.css";</style><![endif]--><!--[if IE 5.5000]><style type="text/css">@import "/skins3/monobook/IE55Fixes.css";</style><![endif]--><!--[if IE 6]><style type="text/css">@import "/skins3/monobook/IE60Fixes.css";</style><![endif]--><!--[if IE 7]><style type="text/css">@import "/skins3/monobook/IE70Fixes.css?0";</style><![endif]--><!--[if lt IE 7]><script type="text/javascript" src="/skins3/common/IEFixes.js"></script>
+		<meta http-equiv="imagetoolbar" content="no" /><![endif]-->
+
+		<script type="text/javascript">var skin = 'monobook';var stylepath = '/skins3';</script>
+		<script type="text/javascript" src="SpamRegex_files/wikibits"><!-- wikibits js --></script>
+		<script type="text/javascript" src="SpamRegex_files/index"><!-- site js --></script>
+		<style type="text/css">/*<![CDATA[*/
+@import "/index.php?title=MediaWiki:Common.css&action=raw&ctype=text/css&smaxage=18000";
+@import "/index.php?title=MediaWiki:Monobook.css&action=raw&ctype=text/css&smaxage=18000";
+@import "/index.php?title=-&action=raw&gen=css&maxage=18000&ts=20070117004616";
+/*]]>*/</style>
+		<script type="text/javascript" src="SpamRegex_files/index_002"></script><!-- Head Scripts --></head>
+
+
+
+
+<body class="ns-0">
+
+<div id="globalWrapper">
+		<div id="column-content">
+       <div id="content" class="content-ads">
+
+
+		<a name="top" id="top"></a>
+				<h1 class="firstHeading">SpamRegex</h1>
+
+
+		<div id="bodyContent">
+			<h3 id="siteSub">Wikia</h3>
+			<div id="contentSub"></div>
+												<!-- start content -->
+			<table id="toc" class="toc" summary="Contents"><tbody><tr><td><div id="toctitle"><h2>Contents</h2> <span class="toctoggle">[<a href="javascript:toggleToc()" class="internal" id="togglelink">hide</a>]</span></div>
+<ul>
+<li class="toclevel-1"><a href="#Product_Requirements"><span class="tocnumber">1</span> <span class="toctext">Product Requirements</span></a>
+<ul>
+<li class="toclevel-2"><a href="#Product_Description"><span class="tocnumber">1.1</span> <span class="toctext">Product Description</span></a></li>
+<li class="toclevel-2"><a href="#Product_Assumptions"><span class="tocnumber">1.2</span> <span class="toctext">Product Assumptions</span></a></li>
+<li class="toclevel-2"><a href="#Product_Features"><span class="tocnumber">1.3</span> <span class="toctext">Product Features</span></a></li>
+<li class="toclevel-2"><a href="#Key_Product_Concepts"><span class="tocnumber">1.4</span> <span class="toctext">Key Product Concepts</span></a></li>
+<li class="toclevel-2"><a href="#Product_Unknowns"><span class="tocnumber">1.5</span> <span class="toctext">Product Unknowns</span></a></li>
+<li class="toclevel-2"><a href="#Potential_Product_Issues"><span class="tocnumber">1.6</span> <span class="toctext">Potential Product Issues</span></a></li>
+<li class="toclevel-2"><a href="#Product_Interface"><span class="tocnumber">1.7</span> <span class="toctext">Product Interface</span></a></li>
+<li class="toclevel-2"><a href="#Product_Structure"><span class="tocnumber">1.8</span> <span class="toctext">Product Structure</span></a></li>
+<li class="toclevel-2"><a href="#Product_Use_Cases"><span class="tocnumber">1.9</span> <span class="toctext">Product Use Cases</span></a></li>
+<li class="toclevel-2"><a href="#Product_Bugs"><span class="tocnumber">1.10</span> <span class="toctext">Product Bugs</span></a></li>
+<li class="toclevel-2"><a href="#FEEDBACK"><span class="tocnumber">1.11</span> <span class="toctext">FEEDBACK</span></a></li>
+</ul>
+</li>
+</ul>
+</td></tr></tbody></table><script type="text/javascript"> if (window.showTocToggle) { var tocShowText = "show"; var tocHideText = "hide"; showTocToggle(); } </script>
+<a name="Product_Requirements"></a><h1>Product Requirements</h1>
+<a name="Product_Description"></a><h2>Product Description</h2>
+<dl><dd> This special page is to provide a more convenient way of
+viewing, adding and removing phrases blocked from editing. It's main
+concept is to populate <i>$wgSpamRegex</i> before the actual check goes (which disallows of saving a page when it contains any of given <i>bad</i> expressions).
+</dd></dl>
+<a name="Product_Assumptions"></a><h2>Product Assumptions</h2>
+<ul><li> we use a shared database (so the block is enabled on multiple wikias)
+</li><li> we use memcached (so database operations are sped up)
+</li><li> user of this special page should belong to the 'staff' group
+</li><li> we do not allow complex regular expressions to be entered (for now, the script escapes regex special characters)
+</li></ul>
+<a name="Product_Features"></a><h2>Product Features</h2>
+<dl><dd><dl><dt>Basic functionality
+</dt><dd> Ability to add, view and remove expressions, and see who put them there and when.
+</dd></dl>
+</dd></dl>
+<a name="Key_Product_Concepts"></a><h2>Key Product Concepts</h2>
+<dl><dd><dl><dt>Data fetched from shared database
+</dt><dd> Data should be fetched from a shared database, supported with the use of memcached instead of hardwritten from the file.
+</dd><dt>Submit form on one page with the list
+</dt><dd> Easier to manage than having them on two separated special pages.
+</dd></dl>
+</dd></dl>
+<p><br>
+</p>
+<a name="Product_Unknowns"></a><h2>Product Unknowns</h2>
+<dl><dd> (coming up next)
+</dd></dl>
+<a name="Potential_Product_Issues"></a><h2>Potential Product Issues</h2>
+<dl><dd> When admin blocks an expression that is already contained on
+some pages, the user editing them and trying to save will still be
+displayed an error. Hopefully, it should be self-explanatory to the
+user. Also, allowing complex regular expressions can generate php
+errors on editing (for all users). <strike>The latter should be resolved by now by escaping regex special characters.</strike>
+<dl><dd>Now, regular expressions are validated, and the use of special regex characters is allowed.
+</dd></dl>
+</dd></dl>
+<a name="Product_Interface"></a><h2>Product Interface</h2>
+<dl><dd> A special page. Allows to browse, add or remove expressions.
+</dd></dl>
+<a name="Product_Structure"></a><h2>Product Structure</h2>
+<ul><li> <b>Files</b>
+<ul><li> <b>SpamRegex.php</b> <i>contains includes for the files in the folder, this one replaces old regexBlock.php</i>
+</li><li> <b>/SpamRegex</b>  <i>folder containg the core of the extension plus docs</i>
+<ul><li> <b>README</b> <i>contains installation instructions and product description</i>
+</li><li> <b>SpamRegexCore.php</b> <i>contains the blocking utility and use of the hook</i>
+</li><li> <b>SpecialSpamRegex.php</b> <i>Special Page for viewing and managing block list</i>
+</li><li> <i> <b>SimplifiedRegex.php</b> - 'this one is required also by RegexBlock'</i>
+</li></ul>
+</li></ul>
+</li></ul>
+<ul><li> <b>SQL</b>
+</li></ul>
+<pre>       CREATE TABLE `spam_regex` (
+                       `spam_id` int(5) NOT NULL auto_increment,
+                       `spam_text` varchar(255) NOT NULL,
+                       `spam_timestamp` char(14) NOT NULL,
+                       `spam_user` varchar(255) NOT NULL,
+                       PRIMARY KEY  (`spam_id`),
+                       UNIQUE KEY `spam_text` (`spam_text`),
+                       KEY `spam_timestamp` (`spam_timestamp`),
+                       KEY `spam_user` (`spam_user`)
+                       )&nbsp;;
+</pre>
+<ul><li> <b>Installation</b>
+</li></ul>
+<ol><li> Create the tables.
+</li><li> Copy the <b>/SpamRegex</b> folder and its contents into /extensions.
+</li><li> Copy <b>SpamRegex.php</b> to /extensions.
+</li><li> If not already supplied with RegexBlock extension, copy <b>SimplifiedRegex.php</b> into /extensions.
+</li><li> Include the SpamRegex.php in GlobalSettings.php.
+</li><li> This extension uses Memcached - please check if Memcached is configured properly in Global/LocalSettings.
+</li></ol>
+<dl><dd><dl><dd>That should do the trick. If people belonging to staff
+cannot access the extension, check if relogin helps. If not, please
+check if the staff permissions are not overwritten after the
+initialization of the extension. If that is the case, the permissions
+should be rather appended (the extension adds one new permission
+right).
+</dd></dl>
+</dd></dl>
+<a name="Product_Use_Cases"></a><h2>Product Use Cases</h2>
+<ol><li> <b>Blocking an unwanted expression</b>
+</li></ol>
+<dl><dd><dl><dd>An expression is found particularily nasty and therefore is banned from editing.
+<dl><dt>Step 1 (An admin blocks that expression)
+</dt><dd>Admin inserts the username into the database via the special page spamregex.
+</dd><dt>Step 2 (The user cannot save page containing that expression)
+</dt><dd>When any user tries to save any page containing that
+expression, the page will not be saved and an explanation will be
+presented to the user.
+</dd></dl>
+</dd></dl>
+</dd></dl>
+<a name="Product_Bugs"></a><h2>Product Bugs</h2>
+<dl><dd><b>Known Bugs</b>:
+</dd></dl>
+<dl><dd> (coming up next)
+</dd></dl>
+<a name="FEEDBACK"></a><h2>FEEDBACK</h2>
+<p>Please post any comments or thoughts here.
+</p>
+<ul><li> <i>Will this special page be global and only exist on one wiki
+(the central, or staff)? If so, it should probably be locked to (and
+viewable by) only staff? If viewable by non-staff, bypassing it would
+be much easier. Splarka 00:53, 18 November 2006 (UTC)</i>
+</li></ul>
+<dl><dd><dl><dd> <i>Right. I have made it that only staff members can
+view/use it. Should work. And I will put up some regex validation
+there, now it returns error on match when the expression is malformed.
+--Bartek 14:03, 21 November 2006 (UTC)</i>
+</dd></dl>
+</dd></dl>
+<ul><li>All looks good on this test --Sannse 11:07, 27 November 2006 (UTC)
+</li><li><i>I've allowed complex regular expressions to be entered, as Splarka said, with a validator checking them before insertion. - --<a href="http://staff.wikia.com/wiki/User:Bartek" title="User:Bartek">Bartek</a> 16:01, 27 November 2006 (UTC)</i>
+</li><li> Also, as Angela wrote today, the message should be edited and point to a help page (to avoid confusion) - --<a href="http://staff.wikia.com/wiki/User:Bartek" title="User:Bartek">Bartek</a> 08:32, 12 December 2006 (UTC)
+</li></ul>
+
+	</div>
+       </div>
+
+
+			<div class="visualClear"></div>
+		<div id="footer">
+				<div id="f-poweredbyico"><a href="http://www.mediawiki.org/"><img src="SpamRegex_files/poweredby_mediawiki_88x31" alt="MediaWiki"></a></div>
+				<div id="f-copyrightico"><a href="http://www.gnu.org/copyleft/fdl.html"><img src="SpamRegex_files/gnu-fdl" alt="GNU Free Documentation License"></a></div>
+			<ul id="f-list">
+				<li id="lastmod"></li>
+				<li id="credits">This page was last modified 09:49, 12 December 2006. <div style="visibility: hidden; display: block; white-space: normal;"> [new] Based on work by <a href="http://staff.wikia.com/wiki/User:Bartek" title="User:Bartek">Bartek</a>, <a href="http://staff.wikia.com/wiki/User:Johnq" title="User:Johnq">Johnq</a>, <a href="http://staff.wikia.com/wiki/User:Sannse" title="User:Sannse">Sannse</a> and <a href="http://staff.wikia.com/index.php?title=SpamRegex&amp;action=credits" title="SpamRegex">others</a>.</div></li>
+				<li id="about"><a href="http://www.wikia.com/wiki/About_Wikia" title="About Wikia">About Wikia</a></li>
+			</ul>
+		</div>
+
+
+</div><!-- end of globalWrapper? -->
+<!--1-->
+</body></html>

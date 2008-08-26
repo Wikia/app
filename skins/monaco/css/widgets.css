@@ -1,0 +1,303 @@
+#widget_sidebar {
+	left: 5px;
+	position: absolute;
+	top: 5px;
+	width: 206px;
+	/*width: 15.45em;*/
+	z-index: 995;
+}
+
+#sidebar_1 {
+	padding-bottom: 100px;
+}
+
+.widget {
+	background: #FFF;
+	border: 1px solid #AAA;
+	color: #000;
+	margin-bottom: 10px !important;
+	padding: 2px !important;
+}
+
+.widget dt {
+	cursor: move;
+	font-family: tahoma, arial, sans-serif;
+	font-size: 9pt;
+	font-weight: bold;
+	line-height: 1.2em;
+	padding: 3px;
+}
+.loggedout .widget dt {
+	cursor: default;
+}
+.widget dt.mini {
+	font-size: 8pt;
+	padding: 2px;
+	text-align: center;
+}
+.widget .widgetToolbox div {
+	float: right;
+	height: 12px;
+	margin: 3px 0 0 4px;
+	position: relative;
+}
+.widget .widgetToolbox span {
+	background: url(../images/widget_sprite.png);
+	cursor: pointer;
+	display: block;
+	height: 12px;
+	position: absolute;
+	width: 28px;
+}
+.widget .widgetToolbox div.close {
+	width: 10px;
+}
+.widget .widgetToolbox div.close span {
+	clip: rect(0px 28px 12px 18px);
+	left: -18px;
+	margin-top: -2px;
+}
+.widget .widgetToolbox div.edit {
+	width: 11px;
+}
+.widget .widgetToolbox div.edit span {
+	clip: rect(0px 18px 12px 7px);
+	left: -7px;
+	margin-top: -2px;
+}
+.widget .widgetToolbox div.hide {
+	width: 7px;
+}
+.widget .widgetToolbox div.hide span {
+	clip: rect(0px 7px 12px 0px);
+	margin-top: -2px;
+}
+.widget dd {
+	font-size: 9pt;
+	padding: 7px;
+	margin: 0;
+	max-height: 250px;
+	overflow: auto;
+}
+.widget h1 {
+	font-family: tahoma, arial, sans-serif;
+	font-size: 10pt;
+	font-weight: bold;
+}
+.widget li {
+	padding: .15em 0;
+}
+.widget .widgetViewControl {
+	border-bottom: 1px solid #AAA;
+	font-size: 9pt;
+	margin-bottom: 5px;
+	padding-bottom: 5px;
+}
+
+.widget .widgetMore
+{
+    padding: 5px 0;
+    text-align: right;
+    text-transform: lowercase;
+}
+
+.widget_loading
+{
+    height: 30px;
+    background-image: url('../images/widget_loading.gif');
+    background-position: 50% 50%;
+    background-repeat: no-repeat;
+}
+
+.widget form label {
+    display: inline;
+}
+
+.widget form input {
+    margin: 3px 0;
+    width: 170px;
+}
+
+.widget form select {
+    margin: 3px 0;
+    width: 180px;
+}
+
+.widget form input.checkbox,
+.widget form input.editor_button {
+    width: auto;
+    margin: 0 3px;
+}
+
+/*** SEARCH/NAVIGATION ***/
+#search_box {
+	background-image: url(../images/reflected_shadow.png);
+	background-position: top left;
+	background-repeat: repeat-x;
+	height: 32px;
+	position: relative;
+}
+#search_field {
+	border: 1px solid #039;
+	font-size: 9pt;
+	left: 5px;
+	height: 14px;
+	margin: 0;
+	padding: 2px;
+	position: absolute;
+	top: 6px;
+	width: 85%;
+	color: gray;
+}
+#search_field.field_active {
+	color: #000;
+}
+#search_button {
+	background: url(../images/search.png);
+	clip: rect(0px 20px 22px 0px);
+	cursor: pointer;
+	height: 44px;
+	/*left: 176px;*/
+	left: 87%;
+	position: absolute;
+	top: 2px;
+	width: 20px;
+	border: none;
+}
+
+#navigation * {
+	overflow: visible;
+}
+#navigation .widget {
+	margin: 0 !important;
+}
+
+.border-fix {
+	border-bottom: none !important;
+}
+
+.sub-menu {
+	border: 1px solid #D4DFD7;
+	padding: 5px 0px;
+	position: absolute;
+	right: -205px;
+	top: 0;
+	width: 200px;
+	z-index: 1000;
+}
+
+#navigation .menu-item {
+	border-bottom: 1px solid #EEE;
+	display: block;
+	font-family: Tahoma, arial, sans-serif;
+	font-weight: bold;
+	height: 1%;
+	padding: 0;
+	position: relative;
+}
+#navigation a {
+	color: #333;
+	display: block;
+	height: 1%;
+	padding: 3px 5px;
+	text-decoration: none;
+}
+
+#navigation a:hover, .navigation-hover {
+	background-color: #e0efff;
+}
+#navigation em {
+	font-family: arial, sans-serif;
+	font-size: 16pt;
+	font-weight: bold;
+	line-height: 20px;
+	position: absolute;
+	right: 3px;
+	top: 0px;
+}
+#navigation .widget {
+	margin: 0;
+}
+#link_box {
+	font-size: 8pt;
+	padding: 5px 0;
+}
+#link_box a {
+	background: transparent;
+	font-weight: bold;
+}
+#link_box table {
+	width: 100%;
+}
+#link_box td {
+	vertical-align: top;
+}
+#link_box ul {
+	padding: 0 5px;
+}
+
+.yuimenuitemmore a,
+.yuimenuitemedit1 a,
+.yuimenuitemedit2 a {
+	text-align: right;
+	font-size: 8pt;
+	padding: 2px 2px !important;
+}
+
+/*** Search suggest ***/
+.yui-ac-container {
+	z-index: 1000;
+	position: absolute;
+	top: 25px;
+	left: 5px;
+	width: 171px;
+}
+.yui-ac-content{
+	border:1px solid #808080 !important;
+	color: #000;
+	position: absolute;
+	width: 100%;
+	background:#fff;
+	overflow:hidden;
+	z-index:9050;
+}
+.yui-ac-content ul {
+	float: none !important;
+	margin: 0 !important;
+	padding: 0 !important;
+	width: 100%;
+	list-style-image: none !important;
+}
+.yui-ac-content li {
+	float: none !important;
+	font-size: 9pt;
+	margin: 0 !important;
+	/*padding: 2px 5px !important;*/
+	padding: 1px 0px 0px 3px;
+	cursor: default;
+	white-space: nowrap;
+}
+
+/* ie6/7 search suggest issue fix */
+#search_box {
+	position: relative;
+	z-index: 1;
+}
+
+#searchSuggestContainer {
+	z-index: 20000;
+}
+
+/* macbre: <widget> */
+.widgetTag {
+	width: 200px;
+	position: static;
+}
+
+.widgetTag .widget_title {
+	display: none;
+}
+
+.widgetTag dl {
+	position: relative;
+}

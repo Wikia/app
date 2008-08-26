@@ -1,0 +1,68 @@
+!!!!!!!!!! WARNING !!!!!!!!!!
+
+EXTENSION STILL EXPERIMENTAL
+USE IT AT YOUR OWN RISK
+
+!!!!!!!! END WARNING !!!!!!!!
+
+== Installation ==
+
+This extension is intented to allow to customize the wiki settings whitout
+needing to edit the LocalSettings.php file. To enable it, simple include the
+Configure.php file in... LocalSettings.php (should be the last time you need
+to edit that file :), but also you will need to call the efConfigureSetup()
+function in LocalSettings.php because you may want to customize some settings
+of the extension and to prevent an attack, the settings have to be always
+defined (this is done by including the Configure.php file), even if they won't
+be changed because they can arbitrary be set if the register_globals feature of
+PHP is turned on.
+The default code you can add to your LocalSettings.php is the following:
+
+require_once( "$IP/extensions/Configure/Configure.php" );
+efConfigureSetup();
+
+== Configuration ==
+
+The extension will require a directory to store the configuration and this
+directory have to be writable by the web server. The default path is the
+$IP/serialized directory, that means the "serialized" directory in the wiki
+root path. You can change it in $wgConfigureFilesPath. Don't forget to override
+this variable between the time you include the Configure.php file and the time
+you call efConfigureSetup(), otherwise your changes won't be used.
+
+Note: on MediaWiki < 1.13, serialized directory is publicly viewable, and users
+will be able to see the whole configuration, so PLEASE MAKE IT UNREADABLE BY
+WEB USERS OR CHANGE IT TO A DIRECTORY THAT ISN'T ACCESSIBLE VIA THE WEB.
+YOU HAVE BEEN WARNED.
+
+== Hints ==
+
+Although this extension allows you to configure all settings, it's recommended
+to keep the original LocalSettings.php file. You can simply add the extension
+after the default settings. If you don't want a setting to be modified, simply
+redeclare it after calling efConfigureSetup(), it will still be customizable in
+Special:Configure but changes won't have any effect.
+
+This extension uses an extended class of SiteConfiguration, for "normal"
+installation, it isn't useful, but for some wiki farms, it will allow to
+multiple with only one copy of the software. To change the configuration you
+want to load, pass an argument to efConfigureSetup(). A user with
+'configure-interwiki' right will also be able to change any configuration.
+
+== Troubleshooting ==
+
+If an admin changed the settings in a way that the wiki can't work anymore,
+you can do either:
+* use the manage.php command line script to revert the configuration to an
+  older version
+* drop the conf-now.ser file you'll find in $wgConfigureFilesPath
+  directory. Then it will fall back to the default configuration that is in
+  LocalSettings.php. It's why it's important to keep that file.
+
+== To do ==
+
+* Some settings are still uneditable because of their array usage, this will
+  need to develop some specific method to change them.
+* Many other things, if i have time :)
+
+See http://www.mediawiki.org/wiki/Extension:Configure for more information.

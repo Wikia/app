@@ -1,0 +1,218 @@
+body {
+	background-color: #f2f2f2;
+}
+
+#header, #wikia, #wikia-inside {
+	background-image: url(http://images.wikia.com/common/skins/quartz/smoke/images/header_bg2.gif);
+}
+#header, #header a {
+	color: #000;
+}
+#header a:hover {
+	color: #333;
+}
+
+/*** User area ***/
+ul#welcome li.user {
+	background-image: url(http://images.wikia.com/common/skins/quartz/smoke/images/user_menu.gif);
+	color: #ffd557;
+}
+#userMenu {
+	background: #f2f2f2;
+	border-color: #FFF;
+}
+#userMenu a {
+	color: #000;
+}
+#userMenu a:hover {
+	background: #ffd557;
+	color: #000;
+}
+
+/*** Wikia box ***/
+#wikiaLogo {
+	background: url(http://images.wikia.com/common/skins/quartz/smoke/images/wikia_logo.gif) no-repeat;
+}
+#search input {
+	border-color:#ffd557;
+}
+#search div {
+	background: url(http://images.wikia.com/common/skins/quartz/smoke/images/search.gif) no-repeat;
+}
+div.gelButton {
+	background: url(http://images.wikia.com/common/skins/quartz/smoke/images/gel_buttons.gif) top left no-repeat;
+}
+div.gelButton a {
+	background: url(http://images.wikia.com/common/skins/quartz/smoke/images/gel_buttons.gif) top right no-repeat;
+}
+
+/*** Nav Links ***/
+table#navLinksWikia a {
+	background: url(http://images.wikia.com/common/skins/quartz/smoke/images/nav_bullet.gif) 0% 4px no-repeat;
+	color: #000;
+}
+
+/*** Article ***/
+.articleBar {
+	background: url(http://images.wikia.com/common/skins/quartz/smoke/images/article_bars.gif) top left no-repeat;
+}
+.articleBar div {
+	background: url(http://images.wikia.com/common/skins/quartz/smoke/images/article_bars.gif) top right no-repeat;
+}
+.articleBar a {
+	color: #000;
+}
+table#wikiafooter, table#wikiafooter td a {
+	color: #000;
+}
+a#wikiaFooterLogo {
+	background: url(http://images.wikia.com/common/skins/quartz/smoke/images/wikia_logo_small.gif);
+}
+
+/* widgets integration */
+li.widget, #spotlights {
+	border-color: #999;
+	background: #FFF;
+	color: #000;
+}
+li.widget a, li.widget a:visited {
+	color: #000;
+}
+li.widget h1, li.widget h2 {
+	color: #FFD242;
+}
+.roundedDiv b.xb2, .roundedDiv b.xb3, .roundedDiv b.xb4 {
+	background: #F2F2F2;
+	border-color: #999;
+}
+.roundedDiv b.xb1 {
+	background: #87888C;
+}
+
+.roundedDiv div.r_boxContent {
+	background: #F2F2F2;
+	border-color: #87888C;
+	color: #000;
+}
+div.wikiaDialog .hd,
+div.wikiaDialog h2,
+.boxHeader_noBorderMargin,
+.boxHeader_noBorder,
+.boxHeader {
+	color: #ffd242 !important;
+	border-color: #87888c;
+}
+
+#switchSkin a {
+	color: #FFF;
+}
+
+/* AutoComplete/SearchSuggest - Inez */
+.yui-ac-content li.yui-ac-highlight {
+	background: #FFD557 !important;
+}
+.yui-ac-content li.yui-ac-prehighlight {
+	background: #FFD517 !important;
+}
+
+/* tooltips */
+.wikiaTooltip {
+	background-color: #ffec3b;
+	border-color: #FFD242;
+}
+
+.prefSection {
+	background: #EEE;
+}
+
+.boxLinkSmall a:link { color: #000000; text-decoration: none; }
+.boxLinkSmall a:visited { color: #000000; text-decoration: none; }
+.boxLinkSmall a:active { color: #000000; text-decoration: none; }
+.boxLinkSmall a:hover { color: #000000; text-decoration: underline; }
+
+/* spotlights for logged in users */
+#spotlights
+{
+    border: solid 1px #999999;
+    background-color: #FFFFFF;
+}
+
+div.wikiaDialog .bd{
+	color: #000000 !important;
+}
+
+div.wikiaDialog form table{
+	color: #000000 !important;
+}
+
+div.wikiaDialog a:link, div.wikiaDialog a:visited, div.wikiaDialog a:active, div.wikiaDialog a:hover {
+	color: #000000;
+}
+
+/* YUI dialogs look customization */
+#wikiaProgressDialog .hd,
+#wikiaDialog .hd,
+#wikiaProgressDialog .bd,
+#wikiaDialog .bd,
+#wikiaProgressDialog .ft,
+#wikiaDialog .ft
+{
+    background-color: #fff;
+    border: none;
+    color: #000000 !important;
+}
+
+#wikiaProgressDialog .hd,
+#wikiaDialog .hd
+{
+  border-bottom: solid 1px #87888C;
+  background-color: #0080C0;
+  color: #ffffff !important;
+}
+
+#wikiaProgressDialog .bd,
+#wikiaDialog .bd
+{
+	color: #333333 !important;
+}
+
+#wikiaProgressDialog,
+#wikiaDialog
+{
+    background-color: #fff;
+    border-color: #545454;
+    font-size: 1.05em;
+}
+
+/* stoaf fix */
+#notifyReport .articleName a
+{
+    color: #333333 !important;
+}
+
+#switchSkin a {
+	color: #000;
+}
+
+/* YUI dialogs */
+.yui-panel .hd {
+    background-color: #f2f2f2;
+    border-color: #f2f2f2;
+    color: #000;
+    border-bottom: solid 1px #666;
+}
+
+.yui-panel {
+    background-color: #f2f2f2;
+}
+
+/* #1968 */
+li.widget table {
+    color: #000 !important;
+}
+
+/* macbre: standard button CSS */
+.button {
+	background-color: #fec423;
+	color: #333;
+}

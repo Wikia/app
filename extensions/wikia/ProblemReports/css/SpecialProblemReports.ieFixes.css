@@ -1,0 +1,29 @@
+/* ie6/7 fixes */
+td.problemReportsDescription div {width: 720px !important}
+
+/* Special:ProblemReports */
+a.problemReportsInfo {
+	background-image: none !important;
+	filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src="http://images.wikia.com/common/extensions/wikia/ProblemReports/images/problem_reports_info.png",sizingMethod="image");
+}
+a.problemReportsActionFixed {
+	background-image: none !important;
+filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src="http://images.wikia.com/common/extensions/wikia/ProblemReports/images/problem_reports_fixed.png",sizingMethod="image");
+}
+a.problemReportsActionNotAProblem {
+	background-image: none !important;
+	filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src="http://images.wikia.com/common/extensions/wikia/ProblemReports/images/problem_reports_not_problem.png",sizingMethod="image");
+}
+a.problemReportsActionNeedStaffHelp {
+	background-image: none !important;
+filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src="http://images.wikia.com/common/extensions/wikia/ProblemReports/images/problem_reports_need_staff_help.png",sizingMethod="image");
+}
+a.problemReportsActionUndo {
+	background-image: none !important;
+	filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src="http://images.wikia.com/common/extensions/wikia/ProblemReports/images/problem_reports_undo.png",sizingMethod="image");
+}
+a.problemReportsActionRemove {
+	background-image: none !important;
+filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src="http://images.wikia.com/common/extensions/wikia/ProblemReports/images/problem_reports_remove.png",sizingMethod="image");
+}
+

@@ -1,0 +1,36 @@
+#monaco_footer {
+	font-size: x-small;
+	margin: 0 5px 0 22em;
+	position: relative;
+	top: -155px;
+}
+#spotlight_footer {
+	font-size: x-small;
+	margin-bottom: 20px; 
+	overflow: hidden;
+}
+#spotlight_footer table {
+	width: 100%;
+}
+#spotlight_footer table td {
+	padding: 5px;
+	text-align: center;
+}
+#wikia_footer {
+	font-size: 9pt;
+	margin-bottom: 20px;
+	width: 100%;
+}
+#wikia_footer th, #wikia_footer td {
+	padding-bottom: 15px;
+	vertical-align: middle;
+}
+#wikia_footer th {
+	font-weight: bold;
+	width: 150px;
+}
+#wikia_corporate_footer {
+	border-top: 1px solid #AAA;
+	padding-top: 10px;
+	text-align: center;
+}

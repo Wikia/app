@@ -1,0 +1,116 @@
+/*
+ * Create a new thread page
+ */
+
+form.wf.new_thread	{}
+
+form.wf.new_thread textarea
+{
+	margin:0.5em 0 0.5em 0;
+}
+
+div.wf.title_error { color:red; }
+
+
+
+/*
+ * Forum's page
+ */
+
+div.wf.forum_header
+{
+	background-color:#f9f9f9;
+	margin:0 0 1em 0;
+}
+
+div.wf.create_thread
+{
+	border-style:solid;
+	border-color:#aaaaaa;
+	border-width:1px;
+	background-color:#f9f9f9;
+	padding:0.5em;
+	clear:both;
+	font-size:120%;
+	text-align:center;
+}
+
+// set this property to 'none' to remove top "create new thread" message
+// div.wf.create_thread#top { display:none; }
+
+// set this property to 'none' to remove bottom "create create new thread" message
+// div.wf.create_thread#bottom { display:none; }
+
+table.wf.thread_table
+{
+	width:100%;
+	border-collapse:collapse;
+	margin:0 0 1em 0;
+}
+
+table.wf.thread_table tr.wf.thread_row
+{
+	border-style:solid;
+	border-color:#aaaaaa;
+	border-width:1px;
+}
+
+tr.wf.thread_row {}
+
+tr.wf.thread_row#threadtablehead
+{
+	background:#F0F0F0;
+	font-weight:bold;
+	padding:0.5em;
+}
+
+tr.wf.thread_row.thread_list.odd  { background:#F8F8F8; }
+tr.wf.thread_row.thread_list.peer { background:#FFFFFF; }
+tr.wf.thread_row.thread_inc.odd   { background:#F8F8F8; }
+tr.wf.thread_row.thread_inc.peer  { background:#F8F8F8; }
+
+tr.wf.thread_row.thread_inc td
+{
+	/*border-style:solid;
+	border-color:#aaaaaa;
+	border-width:1px 0 0 0;*/
+}
+tr.wf.thread_row.thread_inc.odd td  {}
+tr.wf.thread_row.thread_inc.peer td {}
+
+tr.wf.thread_row.thread_body td
+{
+	background:#FFFFFF;
+	padding:1em;
+	display:none;
+}
+tr.wf.thread_row.thread_body.odd td  {}
+tr.wf.thread_row.thread_body.peer td {}
+
+tr.wf#thread_interval
+{
+    height:1em;
+}
+
+div.wf.threadcontent
+{
+	/*border-style:solid;
+	border-color:#aaaaaa;
+	border-width:1px;*/
+	background-color:white;
+	padding:1em;
+	margin:0 0 1em 0;
+	clear:both;
+}
+
+div.wf.threadedit
+{
+	margin-left:0.5em;
+	margin-bottom:0.5em;
+	float:right;
+}
+
+img.wf.thread_toggle
+{
+   cursor:pointer;
+}

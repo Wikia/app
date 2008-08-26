@@ -1,0 +1,24 @@
+.video-error {
+	color:#ff0000;
+	font-size:16px;
+	font-weight:bold;
+}
+
+.page-nav a {
+	font-weight:bold;
+}
+
+.page-nav {
+	margin-top:10px;
+	margin-bottom:10px;
+}
+
+#categorysearch {
+	margin-top:5px;
+	margin-bottom:5px;
+	
+}
+
+#wpVideo {
+	width:500px;
+}

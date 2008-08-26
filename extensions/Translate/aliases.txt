@@ -1,0 +1,68 @@
+Advanced random
+file = AdvancedRandom/AdvancedRandom.alias.php
+
+Category tree
+file = CategoryTree/CategoryTreePage.i18n.alias.php
+
+Check user
+file = CheckUser/CheckUser.alias.php
+
+Special cite
+file = Cite/SpecialCite.i18n.alias.php
+
+Configure
+file = Configure/Configure.alias.php
+
+Confirm account
+file = ConfirmAccount/ConfirmAccount.alias.php
+
+Contact page
+file = ContactPage/ContactPage.alias.php
+
+Cross namespace links
+file = CrossNamespaceLinks/SpecialCrossNamespaceLinks.alias.php
+
+Delete batch
+file = DeleteBatch/DeleteBatch.alias.php
+
+Deleted contributions
+file = DeletedContributions/DeletedContributions.i18n.alias.php
+
+Edit count
+file = Editcount/SpecialEditcount.alias.php
+
+Edit user
+file = EditUser/EditUser.alias.php
+
+Email page
+file = EmailPage/EmailPage.alias.php
+
+Eval
+file = Eval/SpecialEval.alias.php
+
+Expand templates
+file = ExpandTemplates/ExpandTemplates.alias.php
+
+Gadgets
+file = Gadgets/Gadgets.i18n.alias.php
+
+Global blocking
+file = GlobalBlocking/GlobalBlocking.alias.php
+
+Import users
+file = ImportUsers/SpecialImportUsers.alias.php
+
+Invitations
+file = Invitations/Invitations.i18n.alias.php
+
+Link search
+file = LinkSearch/LinkSearch.alias.php
+
+Rename user
+file = Renameuser/SpecialRenameuser.alias.php
+
+Site matrix
+file = SiteMatrix/SiteMatrix.alias.php
+
+Translate
+file = Translate/Translate.alias.php

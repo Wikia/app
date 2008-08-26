@@ -1,0 +1,119 @@
+.wikiwyg_toolbar {
+    background: #F0F0EE none repeat scroll 0% ;
+    border: 1px solid #DCDCDC ;
+    letter-spacing: 0;
+    padding: 2px ;
+}
+
+span.wikiwyg_control_link a {
+    padding-right: 4px ;
+    padding-left: 4px ;
+}
+
+.wikiwyg_button {
+    background: #F0F0EE;
+    border: 1px solid #F0F0EE;
+    cursor: pointer;
+    width: 20px;
+    height: 20px;
+    vertical-align: bottom;
+}
+
+.wikiwyg_button:hover {
+    border: 1px outset;
+}
+
+.wikiwyg_button:active {
+    border: 1px inset;
+}
+
+.wikiwyg_button_disabled {
+    background: #F0F0EE;
+    border: 1px solid #F0F0EE;
+    width: 20px;
+    height: 20px;
+    vertical-align: bottom;
+    opacity: 0.5;
+}
+
+.wikiwyg_button_disabled:hover {
+    border: 1px solid #F0F0EE;
+}
+
+.wikiwyg_separator {
+    background: #F0F0EE;
+    border: 1px solid #F0F0EE;
+    width: 9px;
+    height: 20px;
+    vertical-align: bottom;
+}
+
+.lower_tab .wikiwyg_separator {
+    background: #fff;
+    border: 1px solid #fff;
+}
+
+.wikiwyg_selector {
+    width: 70px;
+}
+
+.wikiwyg_wysiwyg table {
+    border-collapse: collapse;
+    margin-bottom: .2em;
+}
+
+.wikiwyg_wysiwyg table td {
+    border: 1px;
+    border-style: solid;
+    padding: .2em;
+    vertical-align: top;
+}
+
+#wikiwyg_lower_wrapper label, #category_wrapper label {
+	display:block;
+	float:left;
+	width:200px;
+}
+
+#wikiwyg_lower_wrapper .no-float, #category_wrapper .no_float {
+	float: none ;
+	display: inline ;
+}
+
+#wikiwyg_lower_wrapper .editpage-tier, #category_wrapper .editpage_tier {
+	clear:both;
+	overflow:auto;
+}
+
+#wikiwyg_lower_wrapper table, #category_wrapper table {
+	width: 100% ;
+}
+
+#wikiwyg_lower_wrapper .editpage_header, #category_wrapper .editpage_header {
+	vertical-align: top ;
+	font-weight: bold ;
+	width: 14% ;
+}
+
+#wikiwyg_lower_wrapper textarea, #category_wrapper textarea {
+	width: 100% ;
+}
+
+#wikiwyg_lower_wrapper li, #category_wrapper li  {
+	margin-left: 30px ;
+	vertical-align: middle ;
+	float: left ;
+}
+
+#wikiwyg_lower_wrapper .last, #category_wrapper .last {
+	clear: both ;
+	float: none ;
+       	list-style-image: none ;
+       	list-style-position: outside ;
+       	list-style-type: none ;
+}
+
+#wikiwyg_lower_wrapper .editpage-inside, #category_wrapper .editpage_inside {
+	float:left;
+}
+

@@ -1,0 +1,66 @@
+SORT EXTENSION
+
+	Version 1.1
+	© 2006-2007 Rob Church
+
+The Sort extension introduces a <sort> tag to MediaWiki markup, which
+simplifies the creation of sorted lists. The sort direction and
+list type can be customised.
+
+== Requirements ==
+
+The Sort extension requires MediaWiki 1.7.0 or later.
+
+== Installation ==
+
+1. Check out all extension files from Subversion and place them in a
+   "MinimumNameLength" subdirectory within your MediaWiki "extensions"
+   directory
+2. Add the line
+   require_once( "{$IP}/extensions/MinimumNameLength/MinimumNameLength.php" );
+   to your LocalSettings.php file
+
+Installation can be verified through the [[Special:Version]] page on the wiki.
+
+== Using the extension ==
+
+Sort adds a new tag, <sort>, to the MediaWiki markup, which can be inserted
+while editing. The syntax of this tag is:
+
+	<sort order="[order]" class="[class]">
+	List item one
+	List item two
+	etc.
+	</sort>
+
+The order and class attributes are optional, and are used to customise the
+sort direction and list type generated. By default, Sort will generate an
+alphabetically sorted unordered list. Each item in the list should go on
+a new line.
+
+Wiki links can be used; list tokens (i.e. # and *) will be trimmed.
+
+The following are valid order values
+
+* asc - ascending sort (default)
+* desc - descending sort
+
+The following are valid class values
+
+* ul - unordered [bulleted] list (default)
+* ol - ordered [numbered] list
+
+== Change log ==
+
+Version 1.1
+July 23, 2007
+	Major code refactoring
+	Trim existing list tokens
+
+Version 1.0
+June 23, 2006
+	Initial release
+	
+== Feedback ==
+
+All feedback, bug reports, etc. welcome via <robchur@gmail.com>.

@@ -1,0 +1,164 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+	<title>Wikihiero XHTML/CSS test page</title>
+	<style type="text/css">
+		span.hiero {
+			white-space: nowrap;
+			text-align: center;
+			display: block;
+			height: 46px;
+		}
+		span.hiero span,
+		span.hiero span span,
+		span.hiero span span span {
+			margin: 0;
+			padding: 0;
+			background-position: center;
+			background-repeat:no-repeat;
+			text-align: center;
+			vertical-align: center;
+			display: block;
+			float: left;
+		}
+		span.hiero span {
+			height: 38px;
+			width: 29px;
+		}
+		span.hiero span span {
+			height: 20px;
+			width:20px;
+		}
+		span.hiero span span span {
+			height: 12px;
+			width:14px;
+		}
+
+		/* be nice to bad screenreaders, display: none nodes aren't
+		** read by some, most notably claws.
+		*/
+		span.hiero * code {
+			display: block;
+			width: 0;
+			height: 0;
+			overflow: hidden;
+		}
+
+		/* debugging */
+		/*span.hiero span span  {
+		border: 1px solid Red;
+		}*/
+
+		/*
+		** Alternate version
+		*/
+		span.imghiero * {
+			float: left;
+			display: block;
+			text-align: center;
+			vertical-align: middle;
+		}
+	</style>
+</head>
+<body>
+
+<h3>ROW:</h3>
+
+<tt>&lt;hiero&gt;A1-A2-Aa1*Aa2:Aa3-A3-A4&lt;/hiero&gt;</tt>
+
+<hr />
+<h3>TABLE:</h3>
+
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+	<td><img src="img/hiero_A1.png" alt="A1" /></td>
+	<td><img src="img/hiero_A2.png" alt="A2" /></td>
+	<td>
+		<table cellspacing="0" cellpadding="0">
+		<tr><td><img src="img/hiero_Aa1.png" alt="Aa1" /><img src="img/hiero_Aa2.png" alt="Aa2" /></td></tr>
+		</table>
+	<center><img src="img/hiero_Aa3.png" alt="Aa3" /></center>
+	</td>
+	<td><img src="img/hiero_A3.png" alt="A3" /></td>
+	<td><img src="img/hiero_A4.png" alt="A4" /></td>
+</tr>
+</table>
+
+<hr />
+<h3>SPAN:</h3>
+
+<span class="hiero hiero-row-s">
+	<span style='background-image: url("img/hiero_A1.png");'><code>- H -</code></span>
+	<span style='background-image: url("img/hiero_A2.png");width:27px;'><code>- H -</code></span>
+<span style="width:40px;">
+	<span style='background-image:url("img/hiero_Aa1.png"); width:20px;'><code>a</code></span>
+	<span style='background-image:url("img/hiero_Aa2.png"); width:20px;'><code>b</code></span>
+	<span style='background-image:url("img/hiero_Aa3.png"); width:40px;clear:left;'><code>c</code></span>
+</span>
+	<span style='background-image:url("img/hiero_A3.png");width:28px;'><code>- h -</code></span>
+	<span style='background-image:url("img/hiero_A4.png");'><code>- h -</code></span>
+</span>
+
+<hr />
+<h3>ROW:</h3>
+
+<tt>&lt;hiero&gt;A1-A2-(Aa1-Aa2:Aa3):Aa4-A3-A4&lt;/hiero&gt;</tt>
+
+<hr />
+<h3>TABLE:</h3>
+
+<table border='0' cellspacing='0' cellpadding='0'>
+  <tr>
+<td><img src='img/hiero_A1.png' alt="A1" /></td>
+<td><img src='img/hiero_A2.png' alt="A2" /></td>
+<td>
+  <table cellspacing='0' cellpadding='0'>
+	<tr>
+	  <td><img src="img/hiero_Aa1.png" alt="Aa1" height="12" /></td>
+	  <td><center><img src="img/hiero_Aa2.png" alt="Aa2" height="12" /><br /><img src="img/hiero_Aa3.png" alt="Aa3" height="12" /></center></td>
+	</tr>
+  </table>
+  <center><img src="img/hiero_Aa4.png" alt="Aa4" height="12" /></center>
+	</td>
+	<td><img src="img/hiero_A3.png" alt="A3" /></td>
+	<td><img src="img/hiero_A4.png" alt="A4" /></td>
+  </tr>
+</table>
+
+<hr/>
+<h3>SPAN:</h3>
+
+<span class="hiero hiero-row-s">
+	<span style='background-image:url("img/hiero_A1.png");'><code>- H -</code></span>
+	<span style='background-image:url("img/hiero_A2.png");width:27px;'><code>- H -</code></span>
+	<span>
+		<span style='background-image:url("img/hiero_Aa1.png");width:12px;'><code>b</code></span>
+		<span style="width:12px">
+			<span style='background-image:url("img/hiero_Aa2.png");'><code>d</code></span>
+			<span style='background-image:url("img/hiero_Aa3.png");clear:left;'><code>d</code></span>
+		</span>
+	<span style='background-image:url("img/hiero_Aa4.png");clear:left;width:29px;'><code>a</code></span>
+	</span>
+	<span style='background-image:url("img/hiero_A3.png");width:28px;'><code>- H -</code></span>
+	<span style='background-image:url("img/hiero_A4.png");'><code>- H -</code></span>
+</span>
+
+<h3>Span with images:</h3>
+
+<span class="imghiero">
+	<img src='img/hiero_A1.png' alt="H"/>
+	<img src='img/hiero_A2.png' alt="H"/>
+	<span>
+		<img src='img/hiero_Aa1.png' style="margin-top:6px;height:12px;" alt="b"/>
+		<span>
+			<img src='img/hiero_Aa2.png' style="margin-left:3px;height:12px;" alt="d"/>
+			<img src='img/hiero_Aa3.png' style="height:12px;clear:left;" alt="d"/>
+		</span>
+		<img src='img/hiero_Aa4.png' style="height:12px;clear:left;" alt="a"/>
+	</span>
+	<img src='img/hiero_A3.png' alt="H"/>
+	<img src='img/hiero_A4.png' alt="H"/>
+</span>
+
+</body>
+</html>

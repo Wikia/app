@@ -1,0 +1,241 @@
+/*
+
+    File for Wikia modifications to vanilla MonoBook
+
+*/
+
+body.with-adsense #content
+{
+    margin: 2.8em 125px 0 12.2em;
+    border-right: solid 1px rgb(170,170,170);
+}
+
+#column-google {
+    clear: left;
+    position: absolute;
+    padding: 35px 0px 0px 3px;
+    float: right;
+    right: 0px;
+    top: 10px;
+    z-index: 1;
+}
+
+#column-google-right
+{
+    margin: 25px 0;
+}
+
+#footer li#credits,
+#footer li#hosting
+{
+    display: block;
+}
+
+
+
+/* SendToAFriend & ProblemReports */
+#notifyForm
+{
+    background-color: #fff;
+    color: #000000;
+    border: solid 1px #aaaaaa;
+    font-size:12px;
+    visibility: hidden;
+    position: absolute;
+    margin-top: -250px;
+    left: -200px;
+    padding: 8px 12px 0px 8px;
+}
+
+#notifyForm form
+{
+    padding: 5px 12px 12px 5px;
+}
+
+#notifyForm .articleName
+{
+  font-weight: bold;
+  font-size: 1.3em;
+  padding: 5px 0 15px 0;
+}
+
+#notifyForm label
+{
+  margin: 20px 0 2px 0;
+  display: block;
+}
+
+#notifyForm input[type="text"],
+#notifyForm textarea,
+.monotype
+{
+  width: 100%;
+  border: solid 1px #87888C;
+  background-color: #fff;
+  padding: 2px;
+}
+
+#notifyForm input.submit
+{
+  background: url('http://images.wikia.com/common/SendToAFriendSubmitBg.png');
+  border: none;
+  margin: 15px;
+  font-weight: bold;
+  width: 96px;
+  height: 26px;
+  cursor: pointer;
+}
+
+.boxHeader
+{
+	font-size: 1.3em;
+	margin-bottom: 10px;
+	border-bottom: solid 1px #aaaaaa;
+}
+
+/* hide unneeded elements */
+#notifyForm .boxHeader
+{
+  border-bottom: none;
+  cursor: default;
+}
+
+#notifyForm_c .underlay,
+#notifyForm .hd,
+#notifyForm .ft
+{
+  display: none !important;
+}
+
+/* RTL */
+body.rtl #content {
+    border-right: 1px solid #aaa; /* re-add right border */
+}
+body.rtl #content.content-noads {
+    margin: 2.8em 12.2em 0 0;
+    border-right: none;
+}
+body.rtl #content.content-ads {
+    margin: 2.8em 12.2em 0 125px;
+}
+body.rtl #column-google {
+    width: 120px;
+    clear: right;
+    position: absolute;
+    padding: 35px 3px 0px 0px;
+    float: left;
+    left: 0px;
+    right: auto;
+    top: 10px;
+    z-index: 1;
+}
+
+* html body.rtl #footer {
+	margin-left:  125px;
+	margin-right: 155px;
+}
+
+* html body.rtl .content-ads {
+	margin-left: 125px !important;
+}
+
+/* macbre: standard button CSS */
+.button {
+	background: #3366cc;    
+	border:4px double #FFFFFF;
+	color: #fff;
+	cursor:pointer;
+	font-family:"Lucida Grande",Tahoma,sans-serif;
+	font-size:9pt;
+	font-weight:bold;
+	padding:2px 5px;
+}
+
+
+/* Link Suggest */
+.navigation-hover {
+	background-color: #e0efff;
+}
+
+/* Link Suggest */
+.yui-ac-container {
+	z-index: 1000;
+	position: absolute;
+	top: 25px;
+	left: 5px;
+	width: 171px;
+	margin-left: -155px;
+	margin-top: -35px;
+}
+.yui-ac-content{
+	border:1px solid #808080 !important;
+	color: #000;
+	position: absolute;
+	width: 100%;
+	background:#fff;
+	overflow:hidden;
+	z-index:9050;
+}
+.yui-ac-content ul {
+	float: none !important;
+	margin: 0 !important;
+	padding: 0 !important;
+	width: 100%;
+	list-style-image: none !important;
+}
+.yui-ac-content li {
+	float: none !important;
+	font-size: 9pt;
+	margin: 0 !important;
+	/*padding: 2px 5px !important;*/
+	padding: 1px 0px 0px 3px;
+	cursor: default;
+	white-space: nowrap;
+}
+
+/* MW arrow icons */
+.mw-arr-r {
+        background-image: url('../../common/images/Arr_r.png');
+        background-repeat: no-repeat;
+}
+
+.mw-arr-l {
+        background-image: url('../../common/images/Arr_l.png');
+        background-repeat: no-repeat;
+}
+
+.mw-arr-d {
+        background-image: url('../../common/images/Arr_d.png');
+        background-repeat: no-repeat;
+}
+
+.mw-arr-u {
+        background-image: url('../../common/images/Arr_u.png');
+        background-repeat: no-repeat;
+}
+
+.mw-hide-images img {
+        display: none;
+}
+
+/* Fixes for ChangesList */
+.changes-list-entry a {
+        display: block;
+        width: 12px;
+        height: 12px;
+        float: left;
+        position: relative;
+        top: 5px;
+}
+
+.changes-list-entry a img {
+        display: none;
+}
+
+
+/* IE fixes */
+* html .staffSig {
+	background-image: none !important;
+	filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='http://images.wikia.com/wikia/images/e/e9/WikiaStaff.png', sizingMethod='scale');
+}
+

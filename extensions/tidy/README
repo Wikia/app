@@ -1,0 +1,7 @@
+This tidy.conf file is used to configure the HTML Tidy executable or
+library when $wgUseTidy is enabled in MediaWiki.
+
+As of MediaWiki 1.10, the default is to use includes/tidy.conf, which
+is bundled with the main MediaWiki distribution.
+
+A copy remains here in extensions/tidy for backwards compatibility.

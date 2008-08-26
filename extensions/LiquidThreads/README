@@ -1,0 +1,57 @@
+STATUS:
+======
+
+This software is beta. There are bugs and missing features. But it is
+basically usable, and you are encouraged to try it (with caution). Also, please
+hack Liquid Threads and make it more awesome.
+
+INSTALLATION:
+============
+
+1. Rename this directory to extensions/LiquidThreads inside your
+   MediaWiki directory.
+2. Cause your MySQL server to execute the statements in lqt.sql.
+   (On Unix, you can say, "mysql -u $USER -p -e 'source lqt.sql'".)
+3. Add this line to the end of your LocalSettings.php:
+   require_once('extensions/LiquidThreads/LqtPages.php');
+
+Liquid Threads uses namespace numbers 90, 91, 92, and 93. If you are using
+another extension which uses any of these numbers, you should have Liquid
+Threads use different numbers by adding something like the following to your
+LocalSettings.php, *before* including LqtPages.php:
+
+$egLqtNamespaceNumbers = array(
+    'Thread' => 100,
+    'Thread_talk' => 101,
+    'Summary' => 102,
+    'Summary_talk' => 103
+);
+
+UPGRADES:
+========
+
+If you are upgrading from an earlier version of Liquid Threads, instead of
+sourcing lqt.sql, you should source the appropriate schema change files, in
+order:
+
+lqt-schema-change-1.sql for before r25931
+lqt-schema-change-2.sql for before r26550
+lqt-schema-change-3.sql for before r26563
+lqt-schema-change-4.sql for before r26575
+lqt-schema-change-5.sql for before r28178
+lqt-schema-change-6.sql for before r28693
+
+CONTACT:
+=======
+
+* David McCabe
+* davemccabe@gmail.com (email or jabber)
+* davidmccabe in #mediawiki on irc.freenode.net
+
+CREDITS:
+=======
+
+Written by David McCabe, sponsered by COL.org, Wikia.com, and the Google
+Summer of Code, with lots of help from Erik Möller, Brion Vibber, and the kind
+folks on #mediawiki.
+

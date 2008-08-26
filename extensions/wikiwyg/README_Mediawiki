@@ -1,0 +1,27 @@
+The base code for the wikiwyg environment is maintained by SocialText
+and can be accessed via their wikiwyg svn repository at
+http://svn.wikiwyg.net/code/trunk/wikiwyg
+
+The Mediawiki extension that enables wikiwyg to work with Mediawiki is being released to the community for further development.
+
+In it's current state, the "Extension" is actually 2 extensions and a patch to MediaWiki.  The two extensions are in share/MediaWiki/extensions
+
+MediaWikiWyg.php - the glue code that allows Mediawiki to work with Wikiwyg
+EZParser.php - Adds a simple interface to the Mediawiki Parser.  Used
+to generate the HTML view when switching editing modes
+
+The patch is available as share/MediaWiki/mediawiki-1.7alpha.patch.
+The patch could conceivably be removed once the extension was able to
+change the way that templates and some other similar things are
+rendered, and once it is possible for an extension to allow a piece of
+JavaScript to be included before wikibits (or if the frame-breaking
+code could be somehow modified so that an extension could disable it).
+
+By default, the code is expecting the entire directory (the directory
+containing this README file) to be checked out in the documentroot of
+the site, so you may need to adjust the paths to some of the
+JavaScript files if that is not the case for your setup.
+
+Let me know if you have any success with it, or if you need some help figuring out how to use it.
+
+Jason Richey <jasonr@wikia.com>

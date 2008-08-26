@@ -1,0 +1,110 @@
+#wikia_logo {
+	background-image: none;
+	filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='/skins/monaco/images/wikia_logo.png', sizingMethod='crop');
+}
+#wikia_logo.entertainment span {
+	background-image: none;
+	filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='/skins/monaco/images/hub_entertainment.png', sizingMethod='crop');
+}
+.headerMenuButton dt, .headerMenuButton dd {
+	background-image: none;
+	filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='/skins/monaco/images/header_button.png', sizingMethod='crop');
+}
+a.bigButton big, a.bigButton small {
+	background-image: none;
+	filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='/skins/monaco/images/big_button.png', sizingMethod='crop');
+}
+#page_controls div {
+	background: none;
+	filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='/skins/monaco/images/sprite.png', sizingMethod='crop');
+}
+#search_button {
+	background: none;
+	filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='/skins/monaco/images/search.png', sizingMethod='crop');
+}
+.shadow, #page_bar, #search_box {
+	background-image: none !important;
+}
+.widget dt div.close span, .widget dt div.edit span, .widget dt div.hide span, #widget_cockpit_close {
+	background-image: none;
+	filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='/skins/monaco/images/widget_sprite.png', sizingMethod='crop');
+}
+.staffSig {
+	background-image: none !important;
+	filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='http://images.wikia.com/wikia/images/e/e9/WikiaStaff.png', sizingMethod='scale');
+}
+
+body.ns-0 #bodyContent table {
+	position: relative;
+}
+#wikia_header #headerButtonHub {
+	margin-left: -30%;
+}
+
+/* RTL fixes */
+body.rtl #fe_talk,
+body.rtl #fe_permalink {
+	width: 40%;
+	position: relative;
+	right: -6px;
+}
+
+body.rtl #fe_talk div a,
+body.rtl #fe_permalink div a {
+	position: relative;
+	margin-right: 6px;
+}
+
+body.rtl #articleFooter ul.actions li div {
+        margin: 0 20px 0 0;
+}
+body.ltr #articleFooter ul.actions li div {
+	margin: 0 0 0 20px;
+}
+
+
+/* ads fix */
+#monaco_shrinkwrap_main,
+#navigation_widget,
+#navigation,
+#navigation .menu-item {
+	z-index: 20;
+	position: relative;
+}
+
+/* user menu fix */
+#monaco_shrinkwrap_main,
+#wikia_page {
+	z-index: 1 !important;
+}
+
+/* widget dashboard (#2397) */
+.widget_dashboard .sidebar,
+.widget_dashboard .widget,
+.widget_dashboard .widgetToolbox {
+	position: relative;
+}
+
+/* Special:Widgets */
+#widgetsSpecialPageList dl {
+	position: relative;
+}
+
+.ImageMapWrapper {
+	clear: both;
+}
+
+/* edit page */
+#wpTextbox1 {
+	width: 99% !important;
+}
+
+/* #3433 */
+#wikia_header #headerButtonHub {
+	margin-left: 0 !important;
+	left: -50%;
+}
+
+.mask {
+	position: absolute;
+}

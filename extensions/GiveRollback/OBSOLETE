@@ -1,0 +1,8 @@
+This extension is obsolete.
+
+Adding/removing rollback role can be done from core product now.
+
+Use the following in LocalSettings.php (by default also for sysop and up):
+$wgGroupPermissions['ROLENAME']['rollback']        = true;
+
+In the future this extension may be removed from trunk.

@@ -1,0 +1,141 @@
+/**
+ * CSS stylesheet for Configure extension
+ *
+ * @author Alexandre Emsenhuber
+ * @license GPLv2 or higher
+ * @ingroup Extensions
+ */
+
+/**
+ * Toc
+ */
+
+td.config-col-toc, td.config-col-toc-hidden {
+	vertical-align: top;
+}
+
+td.config-col-toc {
+	border-right: 1px solid #999;
+	margin-right: 1em;
+}
+
+td.config-col-form {
+	width: 100%;
+	vertical-align: top;
+}
+
+td.config-col-form fieldset {
+	border: none;
+	width: 100%;
+}
+
+td.config-col-form fieldset > legend {
+	display: none;
+}
+
+ul.configtoc {
+	font-size: 95%;
+	vertical-align: top;
+}
+ 
+ul.configtoc, ul.configtoc > li > ul {
+	list-style-type: none !important;
+	list-style-image: none !important;
+	line-height: 1em !important;
+}
+
+ul.configtoc > li, ul.configtoc > li > ul > li {
+	white-space: nowrap;
+}
+
+ul.configtoc > li, ul.configtoc > li > ul > li {
+	background-color: #fefefe;
+}
+
+.config-toc-delimiter {
+	border-top: 1px solid #bbb;
+	width: 100%;
+}
+
+/**
+ * tables borders
+ */
+
+table.assoc,
+table.ns-array,
+table.ns-text,
+table.group-bool,
+table.group-array {
+	border: 1px solid #777;
+}
+
+table.assoc > tr > td,
+table.ns-array > tr > td,
+table.ns-text > tr > td,
+table.group-bool > tr > td,
+table.group-array > tr > td {
+	border: 1px solid #777;
+	padding: 3px;
+	margin: 3px;
+}
+
+/**
+ * links
+ */
+a.configure-doc,
+a.configure-doc:hover,
+a.configure-doc:active {
+	color: #021488;
+}
+
+a.configure-doc:visited {
+	color: #0318d8;
+}
+
+/**
+ * disabled settings
+ */
+td.disabled > hr {
+	border: 0 !important;
+	color: #777 !important;
+	background-color: #777 !important;
+
+}
+
+span.array-disabled, span.disabled {
+	text-decoration: line-through;
+	color: #888;
+	font-style: italic;
+}
+
+span.array {
+	font-style: italic;
+}
+
+/**
+ * JavaScript stuff
+ */
+td.button {
+	border: 0 !important;
+}
+
+input.button-add {
+	float: right;
+}
+
+/**
+ * diffs
+ */
+h3.config-diff-section {
+	margin-top: .5em;
+	background-color: #aaa;
+}
+
+h4.config-diff-group {
+	margin-top: .3em;
+	text-decoration: underline;
+}
+
+td.configure-setting {
+	font-weight: normal;
+}

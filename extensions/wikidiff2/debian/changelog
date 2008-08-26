@@ -1,0 +1,6 @@
+php5-wikidiff2 (1.0.2-1) unstable; urgency=low
+
+  * Initial release as deb package
+
+ -- Brion Vibber <brion@wikimedia.org>  Tue, 21 Aug 2007 18:03:07 +0000
+

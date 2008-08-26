@@ -1,0 +1,448 @@
+
+.lqt_watchlist_messages_notice {
+	background-color: #eee;
+	border: 1px solid #ddd;
+	margin: 1em 0;
+	margin-right: 0;
+	padding: .5em 1em;
+	
+	display: table;
+	width: auto;
+}
+
+.lqt_newmessages_section {
+	border-bottom: 0px;
+}
+
+.lqt_undo_mark_as_read {
+	background-color: #f0f0e3;
+}
+
+.lqt_newer_older {
+	margin-right: 1em;
+}
+.lqt_newer_older_disabled {
+	margin-right: 1em;
+	color: #999;
+}
+
+.lqt_start_discussion {
+/*	background-color: #353535;
+	color: #888;
+	padding: 5pt;
+	border: solid 1px #ddd;*/
+	vertical-align: middle;
+	font-size: 120%;
+}
+
+.lqt_header_notice {
+	font-size: smaller;
+	float: right;
+	font-weight: bold;
+}
+.lqt_header_content {
+/*	background-color: #eee; */
+	border-bottom: 2px solid #ddd;
+	border-right: 2px solid #ddd;
+	margin: 0.5em 0 1.5em 0;
+	padding: 0;
+	
+	float: left;
+	width: 100%;
+	
+/*	display: table;
+	width: auto;*/
+}
+.lqt_header_commands {
+	float: right;
+	clear: both;
+	list-style: none;
+	margin: 0;
+	margin-top: 0.5em;
+}
+.lqt_header_commands li {
+	display: inline;
+	padding-right: 0.6em;
+	font-weight: bold;
+	font-size: smaller;
+}
+
+.lqt_thread_show_summary {
+	margin-left: 1em;
+	margin-bottom: 0.5em;
+}
+
+.lqt_summary_notice {
+	display: table; /* Occupy only the width of the text, */
+	width: auto;    /* not the entire available width.    */
+	font-size: smaller;	
+	border: 1px solid #c0c090;
+	background: #eeeeee;
+	margin: 1em 0;
+	padding: .5em 1em;
+}
+.lqt_summary_notice a { font-weight: bold; }
+
+.lqt_thread_permalink_summary {
+margin-right: 5em;
+}
+.lqt_thread_permalink_summary_body {
+	background-color: #eee;
+	border: 1px solid #ddd;
+	clear: both;
+	padding-left: 1em; padding-right: 1em;
+	margin: 2em 1em 1em 1em;
+}
+.lqt_thread_permalink_summary_title {
+	float: left;
+	margin-left: 1em;
+	font-weight: bold;
+}
+.lqt_thread_permalink_summary_edit {
+	float: right;
+	margin-right: 1em;
+	font-weight: normal;
+	font-size: smaller;
+}
+
+.lqt_subject_increment {
+	color: #999;
+/*	font-size: 50%;*/
+}
+/*h1:hover .lqt_subject_increment {
+	color: black;
+}*/
+
+
+/*********************************
+The archive and TOC on talkpages.
+**********************************/
+
+.lqt_archive_teaser_empty {
+	clear:both;
+	font-weight: bold;
+}
+.lqt_archive_teaser {
+	float: left;
+	display: table; width: auto;
+/*	margin-bottom: 2em;*/
+}
+.lqt_toc_wrapper {
+	float:left;
+	margin-right: 3.5em; /* Space before archive */
+/*	margin-bottom: 2em;*/
+}
+.lqt_toc_archive_wrapper {
+	margin-top: 0.5em;
+	margin-bottom: 1.5em;
+	float:left;
+}
+.lqt_archive_teaser ul, .lqt_toc_wrapper ul {
+	list-style-type: none;
+	list-style-image: none;
+	text-align: left;
+	margin-left: 0;
+	padding-left: 0;
+	margin-bottom: 0.6em;
+	margin-top: 0;
+}
+.lqt_archive_teaser ul li, .lqt_toc_wrapper ul li {
+	padding-left: 1em;
+	border-left: solid 1px #ddd;
+}
+h2.lqt_recently_archived, h2.lqt_toc_title {
+	border: none;
+	font-size: 100%;
+	font-weight: bold;
+	margin-bottom: 0 !important;
+}
+.lqt_archive_teaser .lqt_browse_archive {
+/*	display: block;*/
+	float:right;
+	font-weight: bold;
+	margin-top: 0;
+/*	margin-left: 1em;*/
+}
+
+
+/*********************************
+The archive page.
+**********************************/
+
+
+
+.lqt_search_annotations {
+	float: left;
+	text-align: right;
+	font-style: italic;
+}
+
+#lqt_archive_search_form {
+	clear:left;
+	border: 1px solid #ddd;
+	margin: 0.5em 0;
+	background-color: #eee;
+	padding: 0.4em;
+	display: table; width: auto;
+}
+#lqt_archive_search_form table {
+	background-color: transparent;
+}
+.lqt_archive_listing {
+	clear: left;
+}
+.lqt_archive_listing td {
+	padding-right: 2em;
+	padding-bottom: 1em;
+	vertical-align: top;
+}
+.lqt_archive_listing td p:first-child {
+	/* The summary is wrapped in <p> tags by the wikitext parser,
+	   which messes up the vertical alignment. */
+	margin: 0; padding: 0;
+}
+.lqt_archive_listing th {
+	text-align: left;
+	vertical-align: baseline;
+	font-weight: bold; 
+	border-bottom: 1px solid #ddd;
+}
+
+.lqt_hidden {
+	display: none;
+}
+
+.lqt_thread {
+/*        display: none;*/
+}
+
+.lqt_post_changed_by_history {
+	padding: 0.5em 1em;
+	background-color: #eeeeee;
+	border: solid 1pt #ffaa66;
+	display: table; width: auto;
+}
+
+.lqt_post_new_message {
+	padding: 0.5em 1em;
+	background-color: #eeeeee;
+	border: solid 1pt #ffaa66;
+	display: table; width: auto;
+}
+
+.lqt_history_info {
+	padding: .75em 1.5em .75em 1.5em;
+	margin-bottom: 1em;
+	background-color: #eeeeee;
+	border: solid 1pt #ffaa66;
+	display: table; width: auto;
+}
+
+.lqt_thread_disclosure_triangle {
+        margin-right: 4pt;
+}
+
+.lqt_deleted_notice {
+       color: #999;
+       font-style: italic;
+}
+
+.lqt_deleted_notice a {
+	 color: #5874d1;
+}
+.lqt_deleted_notice a:visited {
+	color: #937cba;
+}
+.lqt_deleted_notice a:active {
+	color: #faa700;
+}     
+
+.lqt_channel_body {
+        background-color: white;
+}
+
+.ns-98 #content {
+        background-color: white;
+}
+
+.lqt_post {
+/*	border: solid 1px #ddd;
+	border-left: 2px solid;*/
+	margin-bottom: 2em;
+	padding: 0 0 0.5em 0em;
+	clear: both;
+}
+
+.lqt_post_highlight { border: solid 1px #fabd23; margin-top: 0.1in; padding: 0.2em; }
+
+.lqt_replies { margin-left: 0.25in; }
+
+.lqt_nonindent_message {
+	color: #777;
+	font-size: smaller;
+}
+
+
+.lqt_edited_notice {
+/*	font-size: smaller;
+	margin-top: -0.5em;
+	padding-top: 0;*/
+}
+.lqt_edited_notice_author {
+/*	color: #c2cb9a; */
+}
+.lqt_edited_notice_others {
+/*	color: #bb84b4; */
+}
+
+
+.lqt_header {
+	clear:both;
+	padding-right: 7em; /* so as not to bump into threadlevel_commands. */
+}
+
+.lqt_threadlevel_commands {
+	/* shift up to be in line with the h2. */
+	position:relative;
+	top:-2.9em;
+	margin-bottom:-2.9em;
+	
+	float:right;
+	
+	font-size:smaller;
+	color: #777;
+}
+
+.lqt_threadlevel_commands li {
+	display: inline;
+	list-style-type: none;
+	padding-right: 0.6em;
+}
+
+.lqt_footer {
+	margin: 0em 0 0em 0 ;
+	font-size: smaller;
+	color: #777;
+/*	padding-left: 0.6em;*/
+	padding-top: 0;
+	padding-bottom: 0;
+	display: table;
+	width: auto;
+	
+	margin-left: -0.6em;	
+	
+/*	border-top: solid 1px #eee;
+	border-left: solid 1px #ddd;*/
+}
+
+.lqt_footer li {
+	display: inline;
+	list-style-type: none;
+	padding-right: 0.6em;
+	margin-top: 0;
+	margin-bottom: 0;
+	
+	background-color: #efefef;
+	border-bottom: solid 1px #ddd;
+}
+
+/* This doesn't work in IE, so we need to replace it. What we want is
+   padding-left on the surrounding ul, but then we would need to place
+   the background color on the ul, and there is a *gap*. */
+.lqt_footer li:first-child {
+	padding-left: 0.6em;
+}
+
+#lqt_subject_field { 
+	margin-top: 0.7em;
+	margin-bottom: 0.5em;
+	width: 80%;
+ }
+
+.lqt_post .lqt_footer a, .lqt_nonindent_message a, .lqt_threadlevel_commands a {
+	color: #5874d1;
+}
+.lqt_post .lqt_footer a:visited, .lqt_nonindent_message a:visited, .lqt_threadlevel_commands a:visited {
+	color: #937cba;
+}
+.lqt_post .lqt_footer a:active, .lqt_nonindent_message a:active, .lqt_threadlevel_commands a:active {
+	color: #faa700;
+}
+.lqt_post .lqt_footer a.stub, .lqt_nonindent_message a.stub, .lqt_threadlevel_commands a.stub {
+	color: #a66e7a;
+}
+.lqt_post .lqt_footer a.new, #p-personal a.new, .lqt_threadlevel_commands a.new, .lqt_nonindent_message a.new, #p-personal a.new, .lqt_threadlevel_commands a.new, #p-personal a.new {
+	color: #d25858;
+}
+.lqt_post .lqt_footer a.new:visited, #p-personal a.new:visited, .lqt_threadlevel_commands a.new:visited, .lqt_nonindent_message a.new:visited, #p-personal a.new:visited, .lqt_threadlevel_commands a.new:visited, #p-personal a.new:visited {
+	color: #c49292;
+}
+
+/*.lqt_post:hover .lqt_footer {
+        color: black;
+}*/
+/*
+.lqt_post:hover {
+        border-color: #aaa;
+}*/
+
+.lqt_post .lqt_footer .lqt_footer_commands:hover a, .lqt_nonindent_message:hover a, .lqt_threadlevel_commands:hover a {
+	color: #002bb8;
+	text-decoration: none;
+}
+.lqt_post .lqt_footer .lqt_footer_commands:hover a:visited, .lqt_nonindent_message:hover a:visited, .lqt_threadlevel_commands:hover a:visited {
+	color: #5a3696;
+	text-decoration: none;
+}
+.lqt_post .lqt_footer .lqt_footer_commands:hover a:active, .lqt_nonindent_message:hover a:active, .lqt_threadlevel_commands:hover a:active {
+	color: #faa700;
+	text-decoration: none;
+}
+.lqt_post .lqt_footer .lqt_footer_commands:hover a.stub, .lqt_nonindent_message:hover a.stub, .lqt_threadlevel_commands:hover a.stub {
+	color: #772233;
+	text-decoration: none;
+}
+.lqt_post .lqt_footer .lqt_footer_commands:hover a.new, #p-personal a.new, .lqt_threadlevel_commands:hover a.new, .lqt_nonindent_message:hover a.new, #p-personal a.new, .lqt_threadlevel_commands:hover a.new, #p-personal a.new {
+	color: #ba0000;
+	text-decoration: none;
+}
+.lqt_post .lqt_footer .lqt_footer_commands:hover a.new:visited, #p-personal a.new:visited, .lqt_threadlevel_commands:hover a.new:visited, .lqt_nonindent_message:hover a.new:visited, #p-personal a.new:visited, .lqt_threadlevel_commands:hover a.new:visited, #p-personal a.new:visited {
+	color: #a55858;
+	text-decoration: none;
+}
+
+
+/* light, background color scheme:
+.lqt_post_color_1 a { background-color: #E0BF96 !important; }
+.lqt_post_color_2 a { background-color: #D2E096 !important; }
+.lqt_post_color_3 a { background-color: #96E0B4 !important; }
+.lqt_post_color_4 a { background-color: #96CCE0 !important; }
+.lqt_post_color_5 a { background-color: #C096E0 !important; }
+.lqt_post_color_6 a { background-color: #E09696 !important; }
+*/
+
+/* bright, forground color scheme: */
+.lqt_post_color_1 a { color: #cd9800 !important; }
+.lqt_post_color_2 a { color: #cd0098 !important; }
+.lqt_post_color_3 a { color: #98cd00 !important; }
+.lqt_post_color_4 a { color: #9800cd !important; }
+.lqt_post_color_5 a { color: #0098cd !important; }
+.lqt_post_color_6 a { color: #00cd98 !important; }
+
+.lqt_footer_sig:hover .lqt_post_color_1 a { color: #cd9800 !important; }
+.lqt_footer_sig:hover .lqt_post_color_2 a { color: #cd0098 !important; }
+.lqt_footer_sig:hover .lqt_post_color_3 a { color: #98cd00 !important; }
+.lqt_footer_sig:hover .lqt_post_color_4 a { color: #9800cd !important; }
+.lqt_footer_sig:hover .lqt_post_color_5 a { color: #0098cd !important; }
+.lqt_footer_sig:hover .lqt_post_color_6 a { color: #00cd98 !important; }
+.lqt_footer_sig:hover a { text-decoration: none; }
+
+li#ca-nstab-thread {
+	/* from #ca-talk */
+	margin-right: 1.6em;
+}
+
+.lqt_view_options  { font-size:85%; float:right; }
+.lqt_sorting_order { font-size:85%; }
+.lqt_go_sort { font-size:85%; font-weight:bold;}
+.lqt_remember_sort { font-size:85%; }

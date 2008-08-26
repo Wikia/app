@@ -1,0 +1,72 @@
+/* the css file for sequence styles */
+
+.mv_head_jump{
+	font-family:"verdana","helvetica","arial",sans-serif;
+	font-size:11px;
+	background:#CCCCCC;
+	z-index:1;
+}
+.mv_playline{
+	position:absolute;
+	background:gray;
+	top:20px;
+	left:0px;
+	width:2px;	
+	bottom:20px;
+	z-index:10;
+}
+.mv_seq_tracks{
+	position:absolute;left:90px;top:0px;right:12px;bottom:0px;overflow:auto;
+}
+.mv_tl_left_cnt{
+	position:absolute;
+	top:0px;
+	left:0px;
+	bottom:0px;
+	width:85px;
+}
+.track_name{
+	font-family:"verdana","helvetica","arial",sans-serif;
+	font-size:12px;
+	width:85px;
+	position:absolute;
+	background:#CCCCCC;
+}
+.container_track{
+	position:absolute;
+	border:solid thin red;
+
+}
+.mv_time_clip_text{
+	font-family:"verdana","helvetica","arial",sans-serif;
+	font-size:12px;
+}
+.mv_time_clip{
+	position:absolute;
+	z-index:0;
+	overflow:hidden;
+	border:solid thin white;
+ 	white-space: nowrap;
+}
+.mv_clip_cnt{
+	position:absolute;
+	width:16px;
+	height:16px;
+}
+
+.ui-drag-e{ cursor: e-resize;}
+.ui-drag-w{ cursor: w-resize;}
+
+.mv_clip_stats{
+	font-family:"verdana","helvetica","arial",sans-serif;
+	font-size:11px;
+	position:absolute;
+	background:#CCCCCC;
+	bottom:0px;
+	right:0px;
+}
+.mv_droppable{
+	position:absolute;
+	top:0px;
+	z-index:-1;
+}

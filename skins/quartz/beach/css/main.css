@@ -1,0 +1,173 @@
+body {
+	background-color: #42779e;
+	background-image: url(http://images.wikia.com/common/skins/quartz/beach/images/background.gif);
+	background-repeat: repeat-x;
+}
+
+#header, #wikia, #wikia-inside {
+	background-image: url(http://images.wikia.com/common/skins/quartz/beach/images/header_bg2.gif);
+}
+#header, #header a {
+	color: #FFF;
+}
+#header a:hover {
+	color: #ffd557;
+}
+
+/*** User area ***/
+ul#welcome li.user {
+	background-image: url(http://images.wikia.com/common/skins/quartz/beach/images/user_menu.gif);
+	color: #ecd995;
+}
+#userMenu {
+	background: #3e2a18;
+	border-color: #FFF;
+}
+#userMenu a {
+	color: #FFF;
+}
+#userMenu a:hover {
+	background: #ecd995;
+	color: #000;
+}
+
+/*** Wikia box ***/
+#wikiaLogo {
+	background: url(http://images.wikia.com/common/skins/quartz/beach/images/wikia_logo.gif) no-repeat;
+}
+#search input {
+	border-color: #ecd995;
+}
+#search div {
+	background: url(http://images.wikia.com/common/skins/quartz/beach/images/search.gif) no-repeat;
+}
+div.gelButton {
+	background: url(http://images.wikia.com/common/skins/quartz/beach/images/gel_buttons.gif) top left no-repeat;
+}
+div.gelButton a {
+	background: url(http://images.wikia.com/common/skins/quartz/beach/images/gel_buttons.gif) top right no-repeat;
+}
+
+/*** Nav Links ***/
+table#navLinksWikia a {
+	background: url(http://images.wikia.com/common/skins/quartz/beach/images/nav_bullet.gif) 0% 4px no-repeat;
+	color: #000;
+}
+table#navLinksWikia a:hover {
+	color: #333;
+}
+
+/*** Article ***/
+.articleBar {
+	background: url(http://images.wikia.com/common/skins/quartz/beach/images/article_bars.gif) top left no-repeat;
+}
+.articleBar div {
+	background: url(http://images.wikia.com/common/skins/quartz/beach/images/article_bars.gif) top right no-repeat;
+}
+.articleBar a {
+	color: #000;
+}
+/*
+.articleBar .editButton, .articleBar .editButton span {
+	background-image: url(http://images.wikia.com/common/skins/quartz/beach/images/edit_button.gif);
+	color: #FFF;
+}
+*/
+table#wikiafooter, table#wikiafooter td a {
+	color: #FFF;
+}
+a#wikiaFooterLogo {
+	background: url(http://images.wikia.com/common/skins/quartz/beach/images/wikia_logo_small.gif);
+}
+
+/* widgets integration */
+li.widget a, li.widget a:visited {
+	color: #FFF;
+}
+ul.widgets_vertical li.widget, #widget_cockpit, #spotlights {
+	background-color: #3e2a18;
+	border-color: #999;
+}
+li.widget h1, li.widget h2 {
+	color: #ecd995;
+}
+
+.roundedDiv b.xb2, .roundedDiv b.xb3, .roundedDiv b.xb4 {
+	background: #3E2A18; 
+	border-color: #999999;
+}
+.roundedDiv b.xb1 {
+	background: #999999;
+}
+
+.roundedDiv div.r_boxContent {
+	background: #3E2A18;
+	border-color: #999999;
+	color: #fff;
+}
+div.wikiaDialog .hd,
+div.wikiaDialog h2,
+.boxHeader_noBorderMargin,
+.boxHeader_noBorder,
+.boxHeader {
+	color: #ffd242 !important;
+	border-color: #87888c;
+}
+
+#switchSkin a {
+	color: #FFF;
+}
+
+/* AutoComplete/SearchSuggest - Inez */
+.yui-ac-content li.yui-ac-highlight {
+	background: #FFD557 !important;
+}
+.yui-ac-content li.yui-ac-prehighlight {
+	background: #FFD517 !important;
+}
+
+/* tooltips */
+.wikiaTooltip {
+	background-color: #ffec3b;
+	border-color: #FFD242;
+}
+
+.prefSection {
+	background: #EEE;
+}
+
+/* AjaxLogin fix - macbre */
+#loginDiv form table td,
+#loginDiv form table td a
+{
+    color: #fff !important;
+}
+
+ul.widgets,
+.widgets h5
+{
+    color: #fff;
+}
+
+/* YUI dialogs */
+.yui-panel .hd {
+    background-color: #3e2a18;
+    border-color: #3e2a18;
+    color: #fec423;
+    border-bottom: solid 1px #666;
+}
+
+.yui-panel {
+    background-color: #3e2a18;
+    color: #fff;
+}
+
+.yui-panel a {
+    color: #fff !important;
+}
+
+/* macbre: standard button CSS */
+.button {
+	background-color: #ecd995;
+	color: #000;
+}

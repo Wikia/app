@@ -1,0 +1,66 @@
+<tr>
+  <td colspan="2" align="left"><strong><!--LINE 1--></strong></td>
+  <td colspan="2" align="left"><strong><!--LINE 1--></strong></td>
+</tr>
+<tr>
+  <td> </td>
+  <td class="diff-context">== Shortest sequence in X ==</td>
+  <td> </td>
+  <td class="diff-context">== Shortest sequence in X ==</td>
+</tr>
+<tr>
+  <td colspan="2">&nbsp;</td>
+  <td>+</td>
+  <td class="diff-addedline">x1</td>
+</tr>
+<tr>
+  <td> </td>
+  <td class="diff-context">x2</td>
+  <td> </td>
+  <td class="diff-context">x2</td>
+</tr>
+<tr>
+  <td> </td>
+  <td class="diff-context">x1</td>
+  <td> </td>
+  <td class="diff-context">x1</td>
+</tr>
+<tr>
+  <td> </td>
+  <td class="diff-context">x2</td>
+  <td> </td>
+  <td class="diff-context">x2</td>
+</tr>
+<tr>
+  <td> </td>
+  <td class="diff-context">x1</td>
+  <td> </td>
+  <td class="diff-context">x1</td>
+</tr>
+<tr>
+  <td colspan="2">&nbsp;</td>
+  <td>+</td>
+  <td class="diff-addedline">x2</td>
+</tr>
+<tr>
+  <td colspan="2">&nbsp;</td>
+  <td>+</td>
+  <td class="diff-addedline">x1</td>
+</tr>
+<tr>
+  <td colspan="2">&nbsp;</td>
+  <td>+</td>
+  <td class="diff-addedline">x2</td>
+</tr>
+<tr>
+  <td> </td>
+  <td class="diff-context">context</td>
+  <td> </td>
+  <td class="diff-context">context</td>
+</tr>
+<tr>
+  <td> </td>
+  <td class="diff-context">context</td>
+  <td> </td>
+  <td class="diff-context">context</td>
+</tr>

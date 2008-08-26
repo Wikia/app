@@ -1,0 +1,16 @@
+#taskHeader {
+	background: none;
+	filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src="/skins/taskmode/images/scallop.png",sizingMethod="crop");
+}
+#wikia_logo_header {
+	background: none;
+	filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src="/skins/taskmode/images/wikia_logo.png",sizingMethod="crop");
+}
+#wikia_logo_footer {
+	background: none;
+	filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src="/skins/taskmode/images/wikia_logo_small.png",sizingMethod="crop");
+}
+#articleBar .right {
+	background: none;
+	filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src="/skins/taskmode/images/article_bar.png",sizingMethod="crop");
+}

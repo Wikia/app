@@ -1,0 +1,361 @@
+@import url("../monobook/main.css");
+
+body {
+	text-align: center;
+	font-family:Arial;
+	margin:0 auto auto;
+	background-color:#fff !important;
+}
+
+#container {
+	text-align:left;
+}
+
+#body-container {
+	position:relative;
+	border:3px solid green;
+}
+
+/**MAIN FIXES**/
+
+.tab-on a, .tab-off a {
+	text-decoration:none;
+}
+
+.profile-tab-on a {
+	color:#687F79;
+	text-decoration:none;
+}
+
+.tab-on a:visited, .tab-off a:visited {
+	color:#fff;
+}
+
+.tab-on a:hover, .tab-off a:hover {
+	color:#3B4744;
+	text-decoration:none;
+}
+
+#footer-container {
+	position:relative;
+	left:0px;
+	top:5px;
+	font-size:12px;
+}
+
+ul {
+	padding:0.3em 0pt 0pt 1.5em;
+	margin:0pt;
+}
+
+li {
+	padding-bottom:0.1em;
+	margin-bottom:0 !important;
+}
+
+#footer-container a {
+	color:#0099D9;
+}
+
+/**Article**/
+#article-container {
+	position:relative;
+	top:17px;
+	padding:0px 10px 0px 185px;
+}
+
+.mini-fix {
+	padding-left:20px !important;
+}
+
+#article {
+	background-color:#FFFFFF;
+	border-bottom:1px solid #D4DFD7;
+	border-left:1px solid #D4DFD7;
+	border-right:1px solid #D4DFD7;
+	font-family:sans-serif;
+	font-size:127%;
+	line-height:1.5em;
+	padding:10px;
+}
+
+#article-text a:hover {
+	color:#002BB8;
+	text-decoration:underline;
+}
+
+#article-text a.new:hover {
+	color:#CC2200;
+	text-decoration:underline;
+}
+
+#action-bar {
+	position:relative;
+	background-color:#D4DFD7;
+	font-size:13px;
+	height:30px;
+}
+
+#article-tabs a {
+	color:#687F79;
+	margin:0px 3px 0px;
+	font-size:13px;
+	text-decoration:none;
+}
+
+
+#article-tabs a:hover {
+	color:#3B4744;
+}
+
+#article-tabs {
+	position:relative;
+	top:5px;
+	left:5px;
+}
+
+.article-tab-on, .more-tab-on {
+	position:relative;
+	background:url('http://images.wikia.com/search/wiki/article_tab_on_left.gif') no-repeat right top;
+	float:left;
+	line-height:25px;
+	font-size:10px;
+}
+
+.article-tab-on span, .more-tab-on span {
+	background:url('http://images.wikia.com/search/wiki/article_tab_on_right.gif') no-repeat left top;
+	cursor:pointer;
+	display:block;
+	float:left;
+	line-height:25px;
+	padding:0px 10px;
+}
+
+.article-tab-off, .more-tab-off {
+	position:relative;
+	background:url('http://images.wikia.com/search/wiki/article_tab_off_left.gif') no-repeat right top;
+	float:left;
+	line-height:25px;
+	font-size:10px;
+}
+
+.article-tab-off span, .more-tab-off span {
+	background:url('http://images.wikia.com/search/wiki/article_tab_off_right.gif') no-repeat left top;
+	cursor:pointer;
+	display:block;
+	float:left;
+	line-height:25px;
+	padding:0px 10px;
+}
+
+
+.article-tab-off img, .article-tab-on img, .more-tab-on img, .more-tab-off img {
+	vertical-align:baseline;
+}
+
+#article-controls {
+	float:right;
+	position:relative;
+	padding:10px 0px 0px 0px;
+	right:10px;
+	z-index:2;
+}
+
+#article-controls a {
+	text-decoration:none;
+	font-size:11px;
+	color:#68BD46;
+}
+
+#article-controls a:hover {
+	color:#466C2C;
+}
+
+#article-controls img {
+	padding:0px 1px 0px 0px;
+	margin:-2px 0px 0px 0px;
+	vertical-align:middle;
+}
+
+
+.more-tab-off, .more-tab-on {
+	margin:0px 3px;
+	height:25px;
+	font-size:13px;
+}
+
+.more-tab-off {
+	color:#687F79;
+}
+
+.more-tab-on {
+	color:#3B4744;
+}
+
+.more-tab-off span, .more-tab-on span {
+	padding:5px 10px 0px 10px;
+	line-height:14px;
+}
+
+.article-more-actions {
+	background-color:#FFFFFF;
+	border-bottom:2px solid #EFF3F0;
+	border-left:1px solid #EFF3F0;
+	border-right:2px solid #EFF3F0;
+	padding:0px;
+	position:absolute;
+	right:-2px;
+	top:25px;
+	width:100%;
+}
+
+.article-more-actions a {
+	display:block;
+	border-bottom:1px dashed #EAF0F1;
+	padding:0px 0px 0px 10px;
+	line-height:24px;
+	font-size:12px;
+}
+
+/**SIDE NAVIATION**/
+#side-navigation {
+	position:absolute;
+	top:120px;
+	left:10px;
+	width:170px;
+	font-family:arial;
+	font-size:12px;
+	z-index:2;
+}
+
+#side-navigation a {
+	color:#0099D9;
+}
+
+#sn {
+	margin:0px 0px 15px 0px;
+}
+
+#sn-top {
+	position:relative;
+	background-color:#D4DFD7;
+}
+
+#sn-title {
+	background:url('http://images.wikia.com/search/wiki/sn_tl.gif') no-repeat scroll top left;
+	color:#687F79;
+	font-size:17px;
+	font-weight:bold;
+	letter-spacing:-1px;
+	padding:3px 0px 3px 10px;
+}
+
+#sn-tr {
+	position:absolute;
+	top:0px;
+	right:0px;
+	background:url('http://images.wikia.com/search/wiki/sn_tr.gif') no-repeat scroll top right;
+	font-size:10px;
+	height:15px;
+	padding:15px 10px 0px 0px;
+}
+
+#sn-tr a {
+	text-decoration:none;
+	color:#687F79;
+}
+
+#sn-tr a:hover {
+	color:#3b4744;
+	text-decoration:underline;
+}
+
+#sn-content {
+	border-left:1px solid #D4DFD7;
+	border-right:1px solid #D4DFD7;
+	font-size:12px;
+	color:#687F79;
+	background-color:#fff;
+}
+
+#sn-content p {
+	margin:0px;
+	padding:10px 0px;
+}
+
+
+#sn-controls {
+	background-color:#EFF2F3;
+	padding:10px 10px 5px 10px;
+	font-size:10px;
+	color:#687F79;
+}
+
+#sn-bottom {
+	position:relative;
+	background-color:#D4DFD7;
+	height:20px;
+	width:100%;
+}
+
+#sn-bl {
+	background:url('http://images.wikia.com/search/wiki/sn_bl.gif') no-repeat scroll bottom left;
+	text-align:center;
+	height:20px;
+}
+
+#sn-br {
+	position:absolute;
+	right:0px;
+	top:0px;
+	background:transparent url('http://images.wikia.com/search/wiki/sn_br.gif') no-repeat scroll bottom right;
+	height:20px;
+	width:20px;
+}
+
+.side-unit {
+	margin:0px 0px 15px 0px;
+}
+
+.side-unit-title {
+	font-size:16px;
+	color:#333;
+	margin:0px 0px 5px 5px;
+}
+
+#sn-content .side-link {
+	border-bottom:1px dashed #EAF0F1;
+	font-size:12px;
+	font-weight:bold;
+	padding:5px 0px 5px 10px;
+	position:relative;
+}
+
+#sn-content .side-link a:hover {
+	text-decoration:none;
+}
+
+.side-unit-content .side-link {
+	font-size:12px;
+	font-weight:bold;
+	line-height:18px;
+	padding:0px 0px 0px 5px;
+	position:relative;
+}
+
+.sn-hover {
+	background-color:#FFFCA9 !important;
+}
+
+#searchBody {
+	padding:0px 0px 0px 5px;
+} 
+
+.border-fix {
+	border-bottom:none !important;
+}
+
+.new-message-link a{
+	color:#ffffff;
+	text-decoration:underline;
+}

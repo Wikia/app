@@ -1,0 +1,21 @@
+#!/bin/bash
+
+dolang() {
+	echo -------------------------------------------------
+	echo $1
+	echo -------------------------------------------------
+	cd /home/wikipedia/common/php-1.5/maintenance
+	$bindir/dumpHTML.sh "$@"
+}
+
+finishlang() {
+	if [ -d /mnt/static/$1 ];then
+		mv /mnt/static/$1 /mnt/static/$1-old
+	fi
+	mv /mnt/static/$1-new /mnt/static/$1
+	
+	echo "Compressing $1..."
+	$bindir/compress-html $1 $edition 2>&1 >/dev/null
+	echo "Done."
+}
+

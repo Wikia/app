@@ -1,0 +1,188 @@
+.cleared {
+	clear:both;
+}
+
+.image-options-button #search_flickr_button {
+	background:none !important;
+	clip:none !important;
+	position:static !important;
+}
+
+.loading-message {
+	background-color:#F15A3A;
+	position:absolute;
+	z-index:1000;
+	padding:1px 3px;
+	color:#fff;
+	width:56px;
+	margin:-10px 0px 20px 0px;
+}
+
+.flickr-image-container {
+	float:left;
+	width:100%;
+	border-bottom:1px solid #dcdcdc;
+	padding:0px 0px 10px 0px;
+	margin:0px 10px 15px 0px;
+}
+
+.flickr-image-container img {
+	padding:3px;
+	border:1px solid #dcdcdc;
+	background-color:#ffffff;
+}
+
+.no-border {
+	border-bottom:none;
+	margin:0px 0px 10px0px 0px;
+	padding:0px 0px 10px 0px;
+}
+
+.flickr-image {
+	float:left;
+	width:100px;
+	margin:0px 20px 0px 0px;
+}
+
+.flickr-checkbox {
+	float:left;
+	margin:0px 20px 0px 0px;
+}
+
+flickr-image-info {
+	float:left;
+}
+
+.selected-photos {
+	float:right;
+}
+
+.import-left-content {
+	float:left;
+	width:60%;
+}
+
+.flickr-import-navigation {
+	font-weight:bold;
+	padding:0px 0px 5px 0px;
+}
+
+.flickr-import-navigation a {
+	margin:0px 10px 0px 0px;
+}
+
+.selected-photos {
+	width:180px;
+	background-color:#F2F4F7;
+	border:1px solid #D7DEE8;
+	min-height:120px;
+	padding:5px;
+	
+}
+
+.selected-photo-container img {
+	padding:3px;
+	background-color:#ffffff;
+	border:1px solid #dcdcdc;
+	margin:0px 0px 7px 0px;
+}
+
+.image-options {
+	padding:15px 0px;
+}
+
+.image-options-button {
+	float:left;
+	margin:0px 10px 0px 0px;
+	padding:10px;
+	background-color:orange;
+	font-weight:bold;
+	font-size:14px;
+}
+
+.image-options-button a, .image-options-button a:visited {
+	text-decoration:none;
+	color:#fff;
+	font-weight:normal;
+}
+
+.image-options-button a:hover {
+	text-decoration:none;
+}
+
+.import-subtitle {
+	color:#333333;
+	font-size:12px;
+	font-weight:normal;
+	margin:0px 0px 10px 0px;
+}
+
+.import-search {
+	background-color:#F2F4F7;
+	border:1px solid #D7DEE8;
+	margin:0px 0px 25px 0px;
+	width:100%;
+}
+
+.import-search-padding {
+	padding:5px;
+	color:#333333;
+}
+
+.selected-photos-title {
+	color:#333333;
+	font-weight:bold;
+	font-size:16px;
+	margin:10px 0px;
+}
+
+.selected-photos-button {
+	margin:0px 0px 10px 0px;
+}
+
+#submit-instructions{
+	font-size:14px;
+	color:#666666;
+}
+
+/*Lightbox*/
+
+#lightbox {
+	display:none;
+	padding:10px;
+}
+#lightbox img {
+	background-color:transparent;
+	border:medium none;
+	clear:both;
+	display:none;
+}
+
+#lightboxText {
+	color:white;
+	width:auto;
+}
+
+#overlay img {
+	border:medium none;
+}
+		
+#overlay{ 
+	position: absolute;
+	top: 0;
+	left: 0;
+	z-index: 90;
+	width: 100%;
+	height: 500px;
+	/* background-image: url(overlay.png); */
+	background-color: black;
+	filter: alpha(opacity=80);
+	opacity: .8;
+}
+
+/* * html #overlay{
+	background-image: url(blank.gif);
+	background-color: #000;
+	background-color: transparent;
+	filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src="overlay.png", sizingMethod="scale");
+}*/

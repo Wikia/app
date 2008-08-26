@@ -1,0 +1,53 @@
+The GIS extension is based on the experience learned from WikiProject 
+Geographical coordinates. The extensions can be enabled individually, but
+the concept is certainly more powerful when they are all enabled. 
+
+For more information, please see:
+http://meta.wikimedia.org/wiki/Gis
+http://en.wikipedia.org/wiki/Wikipedia:WikiProject_Geographical_coordinates
+
+Magnus Manske has been extremely helpful in the work on integration with 
+Wikimaps, and that work will continue. I would also like to give a big thank
+you to all participants in WikiProject Geographical coordinates who have
+helped immensely with suggestions practical work.
+
+Egil Kvaleberg
+en:User:Egil
+
+
+Installation
+
+   The gis extension is compatible with both version 1.9 of
+   MediaWiki.
+
+   The extension can be found under extensions/gis in the MediaWiki CVS
+   repository. After having checked out from CVS, move the extensions/gis
+   directory to the $mediawiki/extensions directory and add these lines
+   to LocalSettings.php:
+
+   $wgMapsourcesURL = "extensions/gis/index.php";
+   include( "extensions/gis/geo.php" );
+
+   If the $wgMapsourcesURL definition is omitted, the geo tag will not
+   include a link to the map sources.
+
+   If inclusion of database.php is omitted, there will be no database, so
+   the neighborhood and map support functions are disabled.
+
+   If using the database function, the gis database must be enabled. This
+   may be done via the [1]phpMyAdmin database maintenance tool, running
+   gisdb.sql. Remember to replace /*$wgDBprefix*/ with your actual
+   prefix. It can also be done directly in MySQL:
+
+   # mysql -u USERNAME -p -D wikidb
+   source extensions/gis/gisdb.sql;
+   quit;
+
+   If the map sources are used, a suitable map source file should be
+   installed in Wiki:Map sources (or equivalent). You can use the [2]map
+   source example as a starting point.
+
+References
+
+  1. http://www.phpmyadmin.net/home_page/
+  2. http://meta.wikimedia.org/wiki/Gis_map_source_example

@@ -1,0 +1,37 @@
+.WidgetWikiaToolbox .listLeft,
+.WidgetWikiaToolbox .listRight {
+	width: 48%;
+	float: left;
+}
+
+.WidgetWikiaToolbox .listHdr {
+	color: #FEC423;
+	font-size: 11pt;
+	font-weight: normal;
+	margin: 2px 0px 3px 0px;
+}
+
+div.gelButton.addButton {
+	background-position:100% -40px;
+	margin-top: 5px;
+}
+
+div.gelButton.addButton a {
+	background-position:0pt -40px;
+	margin-left:0pt;
+	margin-right:8px;
+	padding-left:22px;
+}
+
+/* ie6 fix */
+* html .WidgetWikiaToolbox .addButton {
+	position: relative !important;
+	margin-top: 20px;
+}
+
+* html .WidgetWikiaToolbox .listLeft,
+* html .WidgetWikiaToolbox .listRight {
+	position: relative;
+	padding-bottom: 0px !important;
+}
+

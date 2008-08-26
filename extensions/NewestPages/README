@@ -1,0 +1,99 @@
+NEWEST PAGES EXTENSION
+
+	Version 1.7
+	© 2006 Rob Church
+
+This is free software licensed under the GNU General Public Licence. Please
+see http://www.gnu.org/copyleft/gpl.html for further details, including the
+full text and terms of the licence.
+
+== Overview ==
+
+1. Introduction
+2. Installing the extension
+3. Accessing the special page
+4. Including the special page
+5. Customising the interface text
+6. Customising extension behaviour
+7. Notes
+
+== 1. Introduction ==
+
+The Newest Pages extension adds an includable special page to MediaWiki which
+produces an ordered list of the newest pages in the wiki, up to a specified
+limit. The page can be accessed as a regular special page, or included within
+other pages as a form of dynamic list.
+
+== 2. Installing the extension ==
+
+To install the Newest Pages extension, first upload/copy the extension files
+NewestPages.php and NewestPages.i18n.php into your MediaWiki extensions directory.
+Then edit your LocalSettings.php file and add the following line:
+
+	require_once( 'extensions/NewestPages.php' );
+
+Save the file to complete the installation.
+
+== 3. Accessing the special page ==
+
+To access the special page in the regular view mode, go to Special:Newestpages
+on your wiki, or select it from the list of special pages.
+
+The page has a default limit of 50 items, which can be customised using the
+supplied limit links, or with the 'limit' parameter in the page URL.
+
+To filter according to namespace, use the namespace selector and click Go, or
+alter the 'namespace' parameter in the page URL.
+
+You can opt to exclude redirect pages from the results using the "show/hide
+redirects" links at the top of the page.
+
+== 4. Including the special page ==
+
+To include the special page into another page, add the following wiki markup
+to that page:
+
+	{{Special:Newestpages}}
+
+This will be replaced with a list when the containing page is rendered. To
+customise the limit here, use the following syntax:
+
+	{{Special:Newestpages/X}}
+
+where X is the desired limit. To set the namespace to be used, pass this
+instead, e.g.
+
+	{{Special:Newestpages/User}}
+	
+would show the newest pages in the user namespace. Use - to select the main
+namespace. To select a namespace AND set a limit, use syntax similar to the
+following:
+
+	{{Special:Newestpages/User/5}}
+	{{Special:Newestpages/5/User}}
+
+== 5. Customising the interface text ==
+
+All interface text used in the Newest Pages extension is customisable via
+the MediaWiki namespace. See Special:Allmessages for a list of customisable
+interface messages in the wiki.
+
+== 6. Customising extension behaviour ==
+
+The default page limit for the extension can be altered using the
+$wgNewestPagesLimit variable, e.g.
+
+ $wgNewestPagesLimit = 500;
+ 
+sets the default limit to be 500. This should be set after the call
+to include the extension file. The default remains at 50 pages, and there
+is an absolute limit of 5000 pages, to avoid crippling the database server(s).
+
+== 7. Notes ==
+
+This extension was written in a much more specific form to serve the needs of a
+user in the #mediawiki IRC channel. Following a second request for a similar
+page, I decided to clean up the code, give the page a more generalised function,
+and release it.
+
+Feedback welcomed at <robchur@gmail.com> as usual.

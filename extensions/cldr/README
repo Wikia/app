@@ -1,0 +1,16 @@
+This extension contains local language names for different languages extracted
+from CLDR data.
+
+== Installation ==
+Include it in LocalSettings.php:
+ include("$IP/extensions/cldr/LanguageNames.php");
+
+== Updating data ==
+
+Download newest data from CLDR site:
+ http://unicode.org/cldr/repository_access.html
+
+Example:
+ wget http://unicode.org/Public/cldr/1.5.0/core.zip
+ unzip core.zip -d core
+ php rebuild.php

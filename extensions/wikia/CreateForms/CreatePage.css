@@ -1,0 +1,38 @@
+
+.create-title {
+	color:#333333;
+	font-size:14px;
+	font-weight:bold;
+	margin:0px 0px 5px;
+}
+
+.categorytext {
+	width:700px;
+}
+
+.copyright-warning {
+	margin:0px 0px 10px 0px;
+	width:700px;
+	font-size:11px;
+	color:#333333;
+}
+
+#uploading {
+	border-style: none;
+	padding: 0px;
+	margin-bottom: 16px;
+	height:50px;
+	width:800px;
+	overflow:hidden;
+}
+
+#editform .title {
+	color:#78BA5D;
+	font-size:1.1em;
+	margin:0px 0px 5px 0px;
+	font-weight:bold;
+}
+
+textarea#pageCtg {
+	width:80%;
+}

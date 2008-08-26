@@ -1,0 +1,126 @@
+#articleWrapper { padding-right: 10px !important; }
+#xlsmenu_h {font-size:12pt;}
+.input_button {font-size: 9.5pt; font-family: Trebuchet MS,arial,sans-serif,helvetica;}
+fieldset {font-size: 9pt; font-family: Trebuchet MS,arial,sans-serif,helvetica;}
+div.hide {float:right; padding:0px 2px 1px 10px; width:8px;}
+.panel {text-align:center;font-size:10px;height:12px;}
+.panel-top {text-align:center;padding:5px; border-top:1px inset #FFFFFF;font-weight: bold}
+.panel-bootom-big {text-align:left; padding:3px; font-size:13pt; border-bottom:1px solid black; font-weight: bold}
+.stats-subtitle {text-align:left; padding:3px; font-size:12pt; font-weight: bold}
+.legend-subtitle {text-align:left; padding:3px; font-size:10pt; font-weight: bold}
+.small {padding:0px 2px 1px 2px; font-size:10px;}
+.medium {padding:1px 0px 1px 0px; font-size:11px;}
+.normal {padding:1px 0px 1px 0px; font-size:12px;}
+.big {padding:1px 0px 1px 0px; font-size:12pt;}
+.cityinfo {font-size:9pt; padding:1px 8px 1px 8px; font-family: verdana,arial,sans-serif,helvetica;}
+td.cb { border:1px inset #FFFFFF; text-align:center; font-size:12px; padding-left:1px; padding-right:1px;}
+td.cb_small {height:3px; border:1px inset #FFFFFF; font-size:1px;}
+td.db { border:1px inset #FFFFFF; text-align:right; font-size:12px; padding-left:1px; padding-right:1px;}
+td.cb_header { border:1px inset #FFFFFF; text-align:center; font-size:12px; padding-left:1px; padding-right:1px;}
+td.eb { border:1px inset #FFFFFF; text-align:right; font-size:8pt; padding-left:1px; padding-right:1px; font-family: verdana,arial,sans-serif,helvetica;}
+td.ebl { border:1px inset #FFFFFF; text-align:left; font-size:8pt; padding-left:1px; padding-right:1px; font-family: verdana,arial,sans-serif,helvetica;}
+td.rb { border:1px inset #FFFFFF; text-align:right; font-size:8pt; padding-left:1px; padding-right:1px;}
+td.eb-trend { border:1px outset #FFFFFF; text-align:right; padding:2px 1px 2px 1px}
+td.eb-trend-trend { border:1px outset #FFFFFF; text-align:left; padding:2px 1px 2px 4px}
+td.wktdr { border:1px outset #FFFFFF; text-align:right; padding:0px 4px;}
+td.wktd { border:1px outset #FFFFFF;width:100%; padding:0px 2px;}
+td.db_month { border-bottom:3px inset #FFFFFF; border-left:1px inset #FFFFFF; border-top:1px inset #FFFFFF; text-align:right; font-size:11px;}
+td.rb_month { border-bottom:3px inset #FFFFFF; border-left:1px inset #FFFFFF; border-top:1px inset #FFFFFF; text-align:center; font-size:11px;}
+td.main { border:1px inset #FFF; text-align:left; font-size:8pt; margin:0px; padding:3px 5px 3px 3px; font-family: verdana,arial,sans-serif,helvetica;}
+td.main_select { border:1px inset #FFF; text-align:left; font-size:8pt; margin:0px; padding:0px 1px 0px 1px; font-family: verdana,arial,sans-serif,helvetica;line-height:1em;}
+td.main2x { border:1px inset #FFF; text-align:left; font-size:8pt; margin:0px; padding:3px 15px 3px 3px; font-family: verdana,arial,sans-serif,helvetica;}
+.wk-info {float:left; padding-left:5px;font-size:10pt;}
+.wk-info-clear {float:left; padding-left:5px;padding-top:10px;font-size:10pt;font-weight: bold;clear:both}
+.wk-select-class-clear {float:left; padding-left:5px;padding-top:5px;font-size:8pt;clear:both}
+.wk-clear-hr {float:left; padding:5px;font-size:8pt;clear:both;border-bottom:1px solid #FFFFFF;width:auto;}
+.wk-stats-ol {margin-left:3px; padding-left: 3px;}
+.wk-select-class {padding: 5px;}
+.wk-select-class-main {top:25px !important; float:right;font-size:8.8pt;width:auto;position:relative;}
+.ws_chart_table {font-size:8pt;width:auto;overflow:auto;padding:45px 3px 3px 3px;font-family:Trebuchet MS,arial,sans-serif,helvetica;}
+.ws_chart_yaxis {height:100%;width:50px;background-color:#F8F8FF;border-right:1px solid #000000;}
+.ws_chart_xaxis {border-top:1px solid #000000;font-size:6.2pt;color:#A52A2A;background-color:#F8F8FF;}
+.ws_chart_xaxis_wbo {border-top:0px;font-size:6.8pt;color:#A52A2A;background-color:#F8F8FF;}
+.ws_chart_xaxis_months {border-top:1px solid #000000;font-size:6.5pt;background-color:#F8F8FF;}
+.ws_chart_xaxis_year {border-top:1px solid #000000;font-size:6.5pt;border-left:1px dotted #000000;background-color:#F8F8FF;}
+.ws_chart_column {padding:0px 2px 0px 2px;}
+.ws_charts {text-align:right; font-size:7.5pt; background-image:url('/extensions/wikia/WikiaStats/images/background1.gif'); background-repeat: repeat; width:350px; border: 1px solid #000000; font-family:Trebuchet MS,arial,sans-serif,helvetica;}
+.ws-select {background-color:#ffffdd; border:1px inset #808080;font-size:8.5pt;width:450px;}
+.ws-table-history {background-color:#ffffdd; font-size:11px;width:100%}
+.ws-select-short {background-color:#ffffdd; border:1px inset #808080;font-size:8.5pt;}
+.ws-select-btn {background-color:#ffffdd; border:1px outset #808080;font-size:8.5pt; padding:1px 0px;}
+.ws-trend-table {background-color:#ffffdd; border:1px solid #808080;font-size:8pt;line-height:0.9em;width:450px;padding:0px 2px;font-family:Trebuchet MS, Arial, Tahoma;}
+.ws-trend-table-wob {background-color:#ffffdd; border:1px solid #808080;font-size:7.7pt;line-height:1.1em;width:350px;padding:0px 2px;}
+.ws-trend-table-nobrd {background-color:#ffffdd; font-size:7.7pt;line-height:0.9em;padding:0px 2px;}
+.ws-trend-table-wob-nobrd {background-color:#ffffdd; font-size:7.7pt;line-height:0.9em;padding:0px 2px;}
+.ws-spam-box {color:#FFFFFF;font-weight:normal;margin-left:3px; padding:0px 2px; clear:none; float:none;}
+.ws-div-overflow {float:left;clear:both;overflow:auto;width:100%;}
+.ws-div-history {float:left;clear:both;font-size:12px;font-family:arial,sans-serif,helvetica;background-color:#ffffdd;line-height:1.1em;padding:0px 2px 0px 4px; }
+.ws-td-lb {text-align:left; border:1px solid #EAEAEA; white-space:nowrap;padding:1px 2px 0px;}
+.ws-td-rb {text-align:right;border:1px solid #EAEAEA;white-space:nowrap;padding:1px 2px 0px;}
+.ws-div-main {float:none;clear:both;}
+.ws-backpage {float:left;font-size:7pt;clear:both;}
+.wk-stats-panel {font-size:10pt; padding:5px;}
+.wk-stats-main-panel {font-size:10pt;padding:5px;border-bottom:1px inset #2F6FAB;border-left:1px outset #2F6FAB;border-right:1px inset #2F6FAB;border-top: 1px outset #2F6FAB; width:521px;margin-left:auto;margin-right:auto;margin-top:2pt;}
+.wk-progress-stats-panel {font-size:10pt; padding:20px;}
+.div-eb-trend { border:1px solid #FFFFFF; text-align:right; padding:0px 2px; width: 60px; float:left; clear:none; line-height:12px;}
+.div-eb-trend-trend { border:1px outset #FFFFFF; text-align:left; padding:0px 0px 2px;}
+.div-eb-trend-clear {float:none;padding-top:1px;clear:both}
+.ws-div-select {float:left;clear:both;border-top:1px solid #000000;border-left:1px solid #000000;background-color:#ffffdd;font-size:8pt;}
+.ws-div-select-right {float:right;clear:both;border-top:1px solid #000000;border-left:1px solid #000000;background-color:#ffffdd;font-size:8pt;width:300px;}
+.wsss {margin:0px 5px;float:left}
+.wssr {padding:0px 5px;float:right;}
+.wsdc {float:none;padding-top:1px;clear:both}
+.wset { border:1px outset #FFFFFF; padding:0px 0px 2px; width: 500px; height:17px; clear:both}
+.wsetc { border:1px outset #FFFFFF; padding:0px 0px 2px; width: 300px; height:17px; clear:right;}
+.wsssw {width:20px;text-align:right;float:left;padding:0px 5px 0px 10px;}
+.wsnv {display: none;}
+.ws-frame-border { border: 1px solid #DCDCDC; margin: 5px 2px;}
+.ws-btn-panel { border: 1px solid #DCDCDC; margin: 5px 0px; padding: 5px; vertical-align:middle;}
+.ws-div-scroll {height: 330px; width: 460px; overflow-y: scroll; border: 1px solid #DCDCDC; clear:both;}
+.ws-div-scroll-table {height: 390px; width: 466px; overflow: auto; border: 0px solid #DCDCDC; position:relative; }
+.ws_label { display:block; float:left; width:auto; clear:left; padding: 2px 5px;}
+.ws_check { clear:right; margin: 2px 5px;}
+.wsmdiv {clear:both;border-bottom:1px solid #808080;height:12px;padding-top:3px;}
+.ws-show-btn {text-align:center; font-size:11px;}
+.wstab {border-bottom:1px inset #B1B1B1;border-left:1px outset #B1B1B1;border-right:none;border-top:none;width:330px;padding:1px 2px;font-size:9pt;}
+.wstabbot {border-bottom:1px inset #B1B1B1;}
+.wstabopt {border-bottom:1px inset #B1B1B1;border-left:1px outset #B1B1B1;border-right:1px inset #B1B1B1;border-top:none;width:70px;padding:1px 2px;font-size:9pt;}
+.clear {clear:both;float:none;height:9px;}
+.button-group button {color:#000000; font-size:93%; line-height:2; min-height:2em; padding:0pt 10px; background-color:transparent; cursor:pointer; border:1px outset grey; margin:2pt; text-align:center;}
+.button-group button:hover, .button-group button.hover { background-color:#FEC423; border:1px outset #DCDCDC; }
+#compareStatsDialog {display: none;font-size:12px;width:1px;}
+.yui-dialog .ft, .yui-simple-dialog .ft {float: right;}
+
+#ws-title {margin: 1em; padding: 1em;}
+#ws-upload {text-align: left;}
+#ws-upload li {display: inline; padding-left: 2em;}
+#ws-show-stats {text-align:center; font-size:11px;}
+#ws-wikians-active-btn {text-align:center; font-size:11px;}
+#ws-main-table {padding:10px;}
+#ws-main-table-ctrl {overflow: scroll; width: auto; height: 350px; padding:10px;}
+#ws-main-table-stats {text-align:center; font-size:11px; width:500px; overflow:auto;}
+#ws-page-edits-count-table {text-align:center; font-size:11px; width:500px; overflow:auto;}
+#ws-page-edits-table-stats {text-align:left; font-size:11px; width:500px; overflow:auto;}
+#ws-edits-article {padding:10px; width:800px; overflow:auto; border-top: 0px inset #FFFFFF;display:none; margin:2px;}
+#ws-active-wikians {padding:10px; width:800px; overflow:auto; border-top: 1px inset #FFFFFF;display:none;margin:2px;}
+#ws-anon-wikians {padding:10px; width:800px; overflow:auto; border-top: 1px inset #FFFFFF;display:none; margin:2px;}
+#ws-article-size {padding:10px; width:800px; overflow:auto; border-top: 1px inset #FFFFFF;display:none; margin:2px;}
+#ws-namespace-count {padding:10px; width:800px; overflow:auto; border-top: 1px inset #FFFFFF;display:none; margin:2px;}
+#ws-page-edits-count {padding:10px; width:800px; overflow:auto; border-top: 1px inset #FFFFFF;display:none; margin:2px;}
+#ws-progress-bar {float:none;text-align:left;width:auto;clear:both;height:10px;}
+#ws-progress-edits-bar {clear:right;text-align:left;width:auto;float:left;}
+#ws-progress-page-edits-bar {clear:right;text-align:left;width:auto;float:left;}
+#ws-progress-anon-bar {clear:right;text-align:left;width:auto;float:left}
+#ws-progress-article-bar {clear:right;text-align:left;width:auto;float:left;}
+#ws-progress-namespace-bar {clear:right;text-align:left;width:auto;float:left;}
+#ws-title {margin: 1em; padding: 1em;}
+#ws-upload {text-align: left;}
+#ws-main-table-headers {width:500px;float:left;height:20px;}
+#wk-stats-legend {font-size: 8pt; font-family:Trebuchet MS,arial,verdana;padding:5px 0px 0px 0px;}
+#wk-column-group {font-weight: bold; padding: 4px 0px 2px 0px;}
+#wk-stats-legend-values {padding: 1px 7px 1px 7px;}
+#wk-stats-legend-columns {padding: 10px 0px 10px 2px;}
+.ws-input {border-bottom:1px inset #2F6FAB; border-left:1px outset #2F6FAB; border-right:1px inset #2F6FAB;border-top: 1px outset #2F6FAB;width:240px;padding:1px 2px; margin:2px; font-size:8.5pt;}
+div#widget_sidebar { display: none !important; }
+div#wikia_page { margin-left: 5px; z-index:50 !important; }
+div#sidebar { display: none !important; }

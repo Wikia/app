@@ -1,0 +1,380 @@
+/* metavid.css Created on June 29, 2007
+ *
+ * All Metavid Wiki code is Released under the GPL2
+ * for more info visit http:/metavid.ucsc.edu/code
+ * 
+ * @author Michael Dale
+ * @email dale@ucsc.edu
+ * @url http://metavid.ucsc.edu
+ *
+ * extended styles for metavid extension
+ */
+.tail_color{
+	position:absolute;
+	width:10px;
+	border-bottom-color:#2F6FAB
+}
+.mv_fd_mvd{
+	float:left;
+	margin:4px;
+	width:90%;
+	min-width: 350px;
+}
+.mv_video_time_hr{
+ 	position:absolute;
+ 	top:10px;
+ 	right:30px;
+ 	z-index:5;
+	font-weight: 100; 
+	background:black;
+	color:white;
+}
+.mv_timeline_mvd_jumper{
+	cursor:pointer;
+}
+.mv_fd_im_cont{
+	 display: block;
+	 margin-left: auto;
+	 margin-right: auto;
+} 
+
+label.mv_css_form,input.mv_css_form {
+	display: block;
+	width: 150px;
+	float: left;
+	margin-bottom: 10px;
+}
+label.mv_css_form {
+	text-align: right;
+	width: 75px;
+	padding-right: 20px;
+}
+br.mv_css_form {
+	clear: left;
+}
+
+.pl_desc{
+	font-family:sans-serif;
+	font-style:normal;
+	font-size:small;
+	font-variant:normal;	
+}
+
+textarea.mv_ajax_textarea{
+	font-family:sans-serif;
+	font-style:normal;
+	font-size:small;
+	font-variant:normal;
+	font-weight:normal;
+}
+div.autocomplete {   
+      position:absolute;
+      min-width:250px;      
+      overflow:hidden;
+      z-index:99;
+      background-color:white;
+      border:1px solid #888;
+      margin:0px;
+      padding:0px;
+}
+div.autocomplete ul {
+      list-style-type:none;       
+      margin:0px;
+      padding:0px;
+}
+div.autocomplete ul li.selected { background-color: #ffb;}
+div.autocomplete ul li {
+      list-style-type:none;
+      display:block;
+      margin:0;      
+      padding:2px;
+      cursor:pointer;
+      font-size:1.2em;
+}
+
+#resizable css:    
+.ui-resizable-handle { position: absolute; background: #ddd; display: none; }
+.ui-resizable .ui-resizable-handle { display: block }
+.ui-resizable-e { z-index:5; position:absolute; cursor: e-resize; width: 15px;height:19px; top: 0px; bottom: 0px; right: 0px;}
+.ui-resizable-w { z-index:5; position:absolute; cursor: w-resize; width: 15px;height:19px; top: 0px; bottom: 0px; left: 0px;}
+.ui-dragSpan {filter: alpha(opacity=70); -moz-opacity: .7; background-color:#AAF; position:absolute; left: 10px; right:10px;height:19px;  } 
+    
+#auto complete css: 
+.ac_results {
+	padding: 0px;
+	border: 1px solid WindowFrame;
+	background-color: Window;
+	overflow: hidden;
+}
+
+.ac_results ul {
+	width: 100%;
+	list-style-position: outside;
+	list-style: none;
+	padding: 0;
+	margin: 0;
+}
+
+.ac_results iframe {
+	display:none;/*sorry for IE5*/
+	display/**/:block;/*sorry for IE5*/
+	position:absolute;
+	top:0;
+	left:0;
+	z-index:-1;
+	filter:mask();
+	width:3000px;
+	height:3000px;
+}
+
+.ac_results li {
+	margin: 0px;
+	padding: 2px 5px;
+	cursor: pointer;
+	display: block;
+	width: 96%;
+	font: menu;
+	font-size: 12px;
+	overflow: hidden;
+}
+
+.ac_loading {
+	background : Window url('./images/indicator.gif') right center no-repeat;
+}
+
+.ac_over {
+	background-color: #CCC;
+	color: #000;
+	padding-right:10px;
+}
+.set_ogg_player_pref{
+	text-align:left;
+}
+
+/**********************
+* stream interface
+***********************/
+.mv_stream_title{
+	font-weight:bold;font-size:1.1em;
+}
+#mv_page_spacer{
+	width:100%;
+	height:550px;
+}
+#MV_VideoPlayer{
+	position:absolute;width:322px;top:30px;height:270px;left:10px;margin:4px;
+}
+#MV_Overlay{
+	position:absolute;left:365px;top:30px;right:15px;bottom:10px;margin:4px;min-width:470px;
+}
+#mv_fd_mvd_cont{
+	position:absolute;top:0px;bottom:30px;right:12px;overflow-x:hidden;overflow-y:auto;
+}
+#mv_time_line{
+	position:absolute;background:#DDDDDD;left:0px;height:94%;overflow:hidden;
+}
+#MV_Tools{
+	position:absolute;width:322px;top:312px;left:10px;bottom:10px;margin:4px;
+}
+#mv_tool_cont{
+	position:absolute;top:0px;left:0px;right:13px;bottom:30px;overflow:auto;
+}
+#mv_videoPlayerTime{
+	position:absolute;left:50px;z-index:5;font-weight: 100;width:120px;background:black;color:white;
+}
+
+/*hide page title for streams*/
+body.ns-106 .firstHeading{
+	display:none;
+}
+/***********************
+*sequence interface
+************************/
+#MV_SequencePlayer{
+	position:absolute;width:322px;top:30px;bottom:195px;left:10px;margin:4px;
+}
+#MV_SequenceTools{
+	position:absolute;left:365px;right:10px;top:30px;bottom:195px;margin:4px;
+}
+#MV_SequenceTimeline{
+	position:absolute;left:10px;right:10px;height:174px;bottom:0px;margin:4px;
+}
+
+#cmml_link{
+	position: absolute; right: 17px; top: 18px;width:28px;height:28px;z-index:2;
+}
+
+/***********************
+* search interface 
+************************/
+input.mv_search_text{
+	margin-top:17px;
+	font-size:12;
+}	
+.mv_search_select{
+	margin-top:17px;
+}
+.hl_term{
+	font-weight:bold;
+	background:white;
+}
+.mv_result_bar {
+	background-color:#FFCC66;
+	border-bottom:thin dashed #000000;
+	border-top:thin dashed #000000;
+	margin-top:5px;
+	margin-right:5px;
+	padding-left:5px;
+	padding-top:2px;
+}
+
+
+/* jCalendar css */
+table.jCalendar {
+	border: 1px solid #000;
+	background: #aaa;
+    border-collapse: separate;
+    border-spacing: 2px;
+}
+table.jCalendar th {
+	background: #333;
+	color: #fff;
+	font-weight: bold;
+	padding: 3px 5px;
+}
+table.jCalendar td {
+	background: #ccc;
+	color: #000;
+	padding: 3px 5px;
+	text-align: center;
+}
+table.jCalendar td.other-month {
+	background: #ddd;
+	color: #aaa;
+}
+table.jCalendar td.today {
+	background: #666;
+	color: #fff;
+}
+table.jCalendar td.selected {
+	background: #f66;
+	color: #fff;
+}
+table.jCalendar td.selected:hover {
+	background: #f33;
+	color: #fff;
+}
+table.jCalendar td:hover, table.jCalendar td.dp-hover {
+	background: #fff;
+	color: #000;
+}
+table.jCalendar td.disabled, table.jCalendar td.disabled:hover {
+	background: #bbb;
+	color: #888;
+}
+
+table.jCalendar td.has_streams {
+	background: #FC6;
+}
+
+/* For the popup */
+
+/* NOTE - you will probably want to style a.dp-choose-date - see how I did it in demo.css */
+
+div.dp-popup {
+	position: relative;
+	background: #ccc;
+	font-size: 10px;
+	font-family: arial, sans-serif;
+	padding: 2px;
+	width: 171px;
+	line-height: 1.2em;
+}
+div#dp-popup {
+	position: absolute;
+	z-index: 199;
+}
+div.dp-popup h2 {
+	font-size: 12px;
+	text-align: center;
+	margin: 2px 0;
+	padding: 0;
+}
+a#dp-close {
+	font-size: 11px;
+	padding: 4px 0;
+	text-align: center;
+	display: block;
+}
+a#dp-close:hover {
+	text-decoration: underline;
+}
+div.dp-popup a {
+	color: #000;
+	text-decoration: none;
+	padding: 3px 2px 0;
+}
+div.dp-popup div.dp-nav-prev {
+	position: absolute;
+	top: 2px;
+	left: 4px;
+	width: 100px;
+}
+div.dp-popup div.dp-nav-prev a {
+	float: left;
+}
+/* Opera needs the rules to be this specific otherwise it doesn't change the cursor back to pointer after you have disabled and re-enabled a link */
+div.dp-popup div.dp-nav-prev a, div.dp-popup div.dp-nav-next a {
+	cursor: pointer;
+}
+div.dp-popup div.dp-nav-prev a.disabled, div.dp-popup div.dp-nav-next a.disabled {
+	cursor: default;
+}
+div.dp-popup div.dp-nav-next {
+	position: absolute;
+	top: 2px;
+	right: 4px;
+	width: 100px;
+}
+div.dp-popup div.dp-nav-next a {
+	float: right;
+}
+div.dp-popup a.disabled {
+	cursor: default;
+	color: #aaa;
+}
+div.dp-popup td {
+	cursor: pointer;
+}
+div.dp-popup td.disabled {
+	cursor: default;
+}
+
+a.dp-choose-date {
+	/*float: left;*/
+	width: 16px;
+	height: 16px;
+	padding: 0;
+	margin: 15px 3px 0;
+	display: inline;
+	text-indent: -2000px;
+	overflow: hidden;
+	background: url('images/calendar.png') no-repeat; 
+}
+a.dp-choose-date.dp-disabled {
+	background-position: 0 -20px;
+	cursor: default;
+}
+/* makes the input field shorter once the date picker code
+ * has run (to allow space for the calendar icon
+ */
+input.dp-applied {
+	/*float: left;*/
+}
+
+.mv_adj_hr{
+	border:solid black thin;
+}
+
+
+

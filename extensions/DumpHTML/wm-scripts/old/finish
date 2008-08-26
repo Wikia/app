@@ -1,0 +1,11 @@
+#!/bin/bash
+
+if [ "X$2" == "X" ];then
+	echo "Usage: finish <edition> <lang>"
+	exit
+fi
+export bindir=/var/static/scripts
+export edition=$1
+. $bindir/functions
+
+finishlang $2

@@ -1,0 +1,227 @@
+>>>> YOUR VERSION FCKeditor/patches/FCKeditor.1.12alpha (r30456).patch (/local/mw-1.13-upgrade/extensions) 121690713052701
+>>>> YOUR VERSION extensions/FCKeditor/patches/FCKeditor.1.12alpha (r30456).patch (/local/mw-1.13-upgrade) 121690373139466
+Index: EditPage.php
+===================================================================
+--- EditPage.php	(revision 30456)
++++ EditPage.php	(working copy)
+@@ -1468,11 +1468,16 @@
+ 	 * @todo document
+ 	 */
+ 	function getPreviewText() {
+-		global $wgOut, $wgUser, $wgTitle, $wgParser;
++		global $wgOut, $wgUser, $wgTitle, $wgParser, $wgRequest;
+ 
+ 		$fname = 'EditPage::getPreviewText';
+ 		wfProfileIn( $fname );
+ 
++		if ($wgUser->getOption( 'showtoolbar' ) && !$wgUser->getOption( 'riched_disable' ) && !$this->previewOnOpen() ) {
++			$oldTextBox1 = $this->textbox1; 
++			$this->importFormData( $wgRequest );
++		}
++
+ 		if ( $this->mTriedSave && !$this->mTokenOk ) {
+ 			if ( $this->mTokenOkExceptSuffix ) {
+ 				$note = wfMsg( 'token_suffix_mismatch' );
+@@ -1543,6 +1548,10 @@
+ 			$previewhead.='<h2>' . htmlspecialchars( wfMsg( 'previewconflict' ) ) . "</h2>\n";
+ 		}
+ 
++		if ($wgUser->getOption( 'showtoolbar' ) && !$wgUser->getOption( 'riched_disable' ) && !$this->previewOnOpen() ) {
++			$this->textbox1 = $oldTextBox1;
++		}
++
+ 		wfProfileOut( $fname );
+ 		return $previewhead . $previewHTML;
+ 	}
+Index: Parser.php
+===================================================================
+--- Parser.php	(revision 30456)
++++ Parser.php	(working copy)
+@@ -2151,7 +2151,7 @@
+ 						// pre
+ 						if ($this->mLastSection != 'pre') {
+ 							$paragraphStack = false;
+-							$output .= $this->closeParagraph().'<pre>';
++							$output .= $this->closeParagraph().'<pre class="_fck_mw_lspace">';
+ 							$this->mLastSection = 'pre';
+ 						}
+ 						$t = substr( $t, 1 );
+Index: SpecialPreferences.php
+===================================================================
+--- SpecialPreferences.php	(revision 30456)
++++ SpecialPreferences.php	(working copy)
+@@ -915,6 +915,7 @@
+ 				'editondblclick',
+ 				'editwidth',
+ 				'showtoolbar',
++				'riched_disable', //add new tab (Rich Editor)
+ 				'previewonfirst',
+ 				'previewontop',
+ 				'minordefault',
+@@ -925,6 +926,14 @@
+ 			) ) . '</fieldset>'
+ 		);
+ 
++		# FCKeditor
++		# load FCKeditor settings into separate tab
++		if (!$wgUser->getOption( 'riched_disable' )) {
++			$wgOut->addHTML( '<fieldset><legend>' . wfMsg( 'textrichditor' ) . '</legend>' . 
++			$this->getToggles( FCKeditor_Mediawiki::$nsToggles ) . '</fieldset>'
++			);
++		}
++
+ 		# Recent changes
+ 		$wgOut->addHtml( '<fieldset><legend>' . wfMsgHtml( 'prefs-rc' ) . '</legend>' );
+ 		
+==== ORIGINAL VERSION extensions/FCKeditor/patches/FCKeditor.1.12alpha (r30456).patch 121690373139466
+==== THEIR VERSION extensions/FCKeditor/patches/FCKeditor.1.12alpha (r30456).patch (/mirror/wikia/branches/mw-1.13-upgrade) 121690373139466
+Index: EditPage.php
+===================================================================
+--- EditPage.php	(revision 30456)
++++ EditPage.php	(working copy)
+@@ -1468,11 +1468,16 @@
+ 	 * @todo document
+ 	 */
+ 	function getPreviewText() {
+-		global $wgOut, $wgUser, $wgTitle, $wgParser;
++		global $wgOut, $wgUser, $wgTitle, $wgParser, $wgRequest;
+ 
+ 		$fname = 'EditPage::getPreviewText';
+ 		wfProfileIn( $fname );
+ 
++		if ($wgUser->getOption( 'showtoolbar' ) && !$wgUser->getOption( 'riched_disable' ) && !$this->previewOnOpen() ) {
++			$oldTextBox1 = $this->textbox1; 
++			$this->importFormData( $wgRequest );
++		}
++
+ 		if ( $this->mTriedSave && !$this->mTokenOk ) {
+ 			if ( $this->mTokenOkExceptSuffix ) {
+ 				$note = wfMsg( 'token_suffix_mismatch' );
+@@ -1543,6 +1548,10 @@
+ 			$previewhead.='<h2>' . htmlspecialchars( wfMsg( 'previewconflict' ) ) . "</h2>\n";
+ 		}
+ 
++		if ($wgUser->getOption( 'showtoolbar' ) && !$wgUser->getOption( 'riched_disable' ) && !$this->previewOnOpen() ) {
++			$this->textbox1 = $oldTextBox1;
++		}
++
+ 		wfProfileOut( $fname );
+ 		return $previewhead . $previewHTML;
+ 	}
+Index: Parser.php
+===================================================================
+--- Parser.php	(revision 30456)
++++ Parser.php	(working copy)
+@@ -2151,7 +2151,7 @@
+ 						// pre
+ 						if ($this->mLastSection != 'pre') {
+ 							$paragraphStack = false;
+-							$output .= $this->closeParagraph().'<pre>';
++							$output .= $this->closeParagraph().'<pre class="_fck_mw_lspace">';
+ 							$this->mLastSection = 'pre';
+ 						}
+ 						$t = substr( $t, 1 );
+Index: SpecialPreferences.php
+===================================================================
+--- SpecialPreferences.php	(revision 30456)
++++ SpecialPreferences.php	(working copy)
+@@ -915,6 +915,7 @@
+ 				'editondblclick',
+ 				'editwidth',
+ 				'showtoolbar',
++				'riched_disable', //add new tab (Rich Editor)
+ 				'previewonfirst',
+ 				'previewontop',
+ 				'minordefault',
+@@ -925,6 +926,14 @@
+ 			) ) . '</fieldset>'
+ 		);
+ 
++		# FCKeditor
++		# load FCKeditor settings into separate tab
++		if (!$wgUser->getOption( 'riched_disable' )) {
++			$wgOut->addHTML( '<fieldset><legend>' . wfMsg( 'textrichditor' ) . '</legend>' . 
++			$this->getToggles( FCKeditor_Mediawiki::$nsToggles ) . '</fieldset>'
++			);
++		}
++
+ 		# Recent changes
+ 		$wgOut->addHtml( '<fieldset><legend>' . wfMsgHtml( 'prefs-rc' ) . '</legend>' );
+ 		
+
+==== ORIGINAL VERSION FCKeditor/patches/FCKeditor.1.12alpha (r30456).patch 121690713052701
+Index: EditPage.php
+===================================================================
+--- EditPage.php	(revision 30456)
++++ EditPage.php	(working copy)
+@@ -1468,11 +1468,16 @@
+ 	 * @todo document
+ 	 */
+ 	function getPreviewText() {
+-		global $wgOut, $wgUser, $wgTitle, $wgParser;
++		global $wgOut, $wgUser, $wgTitle, $wgParser, $wgRequest;
+ 
+ 		$fname = 'EditPage::getPreviewText';
+ 		wfProfileIn( $fname );
+ 
++		if ($wgUser->getOption( 'showtoolbar' ) && !$wgUser->getOption( 'riched_disable' ) && !$this->previewOnOpen() ) {
++			$oldTextBox1 = $this->textbox1; 
++			$this->importFormData( $wgRequest );
++		}
++
+ 		if ( $this->mTriedSave && !$this->mTokenOk ) {
+ 			if ( $this->mTokenOkExceptSuffix ) {
+ 				$note = wfMsg( 'token_suffix_mismatch' );
+@@ -1543,6 +1548,10 @@
+ 			$previewhead.='<h2>' . htmlspecialchars( wfMsg( 'previewconflict' ) ) . "</h2>\n";
+ 		}
+ 
++		if ($wgUser->getOption( 'showtoolbar' ) && !$wgUser->getOption( 'riched_disable' ) && !$this->previewOnOpen() ) {
++			$this->textbox1 = $oldTextBox1;
++		}
++
+ 		wfProfileOut( $fname );
+ 		return $previewhead . $previewHTML;
+ 	}
+Index: Parser.php
+===================================================================
+--- Parser.php	(revision 30456)
++++ Parser.php	(working copy)
+@@ -2151,7 +2151,7 @@
+ 						// pre
+ 						if ($this->mLastSection != 'pre') {
+ 							$paragraphStack = false;
+-							$output .= $this->closeParagraph().'<pre>';
++							$output .= $this->closeParagraph().'<pre class="_fck_mw_lspace">';
+ 							$this->mLastSection = 'pre';
+ 						}
+ 						$t = substr( $t, 1 );
+Index: SpecialPreferences.php
+===================================================================
+--- SpecialPreferences.php	(revision 30456)
++++ SpecialPreferences.php	(working copy)
+@@ -915,6 +915,7 @@
+ 				'editondblclick',
+ 				'editwidth',
+ 				'showtoolbar',
++				'riched_disable', //add new tab (Rich Editor)
+ 				'previewonfirst',
+ 				'previewontop',
+ 				'minordefault',
+@@ -925,6 +926,14 @@
+ 			) ) . '</fieldset>'
+ 		);
+ 
++		# FCKeditor
++		# load FCKeditor settings into separate tab
++		if (!$wgUser->getOption( 'riched_disable' )) {
++			$wgOut->addHTML( '<fieldset><legend>' . wfMsg( 'textrichditor' ) . '</legend>' . 
++			$this->getToggles( FCKeditor_Mediawiki::$nsToggles ) . '</fieldset>'
++			);
++		}
++
+ 		# Recent changes
+ 		$wgOut->addHtml( '<fieldset><legend>' . wfMsgHtml( 'prefs-rc' ) . '</legend>' );
+ 		
+==== THEIR VERSION FCKeditor/patches/FCKeditor.1.12alpha (r30456).patch (/mirror/mediawiki/tags/REL1_13_0RC1/extensions) 121690713052701
+

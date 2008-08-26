@@ -1,0 +1,50 @@
+/* widgets cockpit */
+#widget_cockpit_overlay
+{
+	top: 2px;
+}
+
+#carousel-prev
+{
+	float: none;
+	position: absolute;
+	top: 0;
+	left: 0;
+}
+
+#carousel-next
+{
+	float: none;
+	position: absolute;
+	top: 0;
+	right: 0;
+}
+div#sidebar {
+	top: 0px;
+}
+
+
+/* fixes #1936 */
+#header {z-index: 2 !important; position: relative}
+#articleWrapper {z-index: 1 !important}
+
+/* fixes #2016 - override monobook/main.css */
+ul {
+    list-style-type: none !important;
+    list-style-image: none !important;
+}
+
+#article ul {
+    list-style-type: square !important;
+    list-style-image: url('../../monobook/bullet.gif') !important;
+}
+
+/* #2010 */
+body.rtl #welcome {
+    direction: ltr; /* that's why we all love IE :) */
+}
+
+body.rtl #breadCrumb {
+    direction: ltr;
+}
+

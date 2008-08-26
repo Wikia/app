@@ -1,0 +1,287 @@
+/* common fixes */
+
+/* #2016 */
+#dashboard_wrapper ul {
+    list-style-type: none !important;
+    list-style-image: none !important;
+}
+
+/* #1968 */
+li.widget table {
+    background-color: inherit;
+    color: #fff;
+}
+
+* html .widgetToolbox .closeButton
+{
+	background-image: none !important;
+        filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src="http://images.wikia.com/common/widgets/icons/widget_toolbox_close.png",sizingMethod="image") !important;
+        margin-top: 2px;
+}
+
+/* editor */
+.widgetEditor dl dt
+{
+   text-align: left;
+   float:      none;
+}
+
+.widgetEditor dl dd
+{
+  margin-left:  0;
+}
+
+.widgetEditor input,
+.widgetEditor select
+{
+	font-size: 0.9em;
+}
+
+.widgetEditor select,
+.widgetEditor input,
+.widgetEditor select option
+{
+	width: 275px;
+}
+
+.widgetEditor input.widgetEditorSubmit
+{
+	cursor:  pointer;
+	width: 80px;
+	margin:  4px 0 2px 60px;
+}
+
+.widgetEditor  .widgetEditorCancel
+{
+	float: none;
+	margin-left: 30px;
+}
+
+.widgetEditor dl 
+{
+	border-bottom; none;
+}
+
+/* star voting fixes */
+
+.star-rating li.current-rating
+{
+  position: relative;
+  left: 0px;
+}
+
+.star-rating li a
+{
+  float: left;
+}
+
+.star-rating li a:hover
+{
+  background: none;
+  filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src="http://images.wikia.com/common/skins/star-rating_3.png",sizingMethod="crop");
+}
+
+#rateIt
+{
+  margin-bottom: -23px;
+}
+
+#rateLabel,
+#star-rating,
+#unrateLink
+{
+    display: inline;
+    float:   left;
+}
+
+#star-rating {margin: 0 !important}
+#unrateLink  {float: right; margin: 2px 5px 0 0}
+
+#rateItClear {clear: both; display: block}
+
+#widget_cockpit ul li.blocked,
+#widgetsSpecialPageList dl.blocked dt div
+{
+    cursor: no-drop !important;
+}
+
+/* cockpit thumb icons */
+* html .widget_thumb
+{
+  background: none;
+  filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src="http://images.wikia.com/common/widgets/icons/widget.png",sizingMethod="image");
+}
+
+* html  .WidgetJabberThumb
+{
+	background: none;
+  filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src="http://images.wikia.com/common/widgets/icons/widget_jabber.png",sizingMethod="image");
+}
+
+* html .WidgetLastWikisThumb
+{
+	background: none;
+  filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src="http://images.wikia.com/common/widgets/icons/widget_lastwikis.png",sizingMethod="image");
+}
+
+* html .WidgetMostVisitedThumb
+{
+	background: none;
+  filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src="http://images.wikia.com/common/widgets/icons/widget_mostvisited.png",sizingMethod="image");
+}
+
+* html .WidgetRecentChangesThumb
+{
+	background: none;
+  filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src="http://images.wikia.com/common/widgets/icons/widget_recentchanges.png",sizingMethod="image");
+}
+
+* html .WidgetTopUsersThumb
+{
+	background: none;
+  filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src="http://images.wikia.com/common/widgets/icons/widget_topusers.png",sizingMethod="image");
+}
+
+* html .WidgetTopVotedThumb
+{
+	background: none;
+  filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src="http://images.wikia.com/common/widgets/icons/widget_topvoted.png",sizingMethod="image");
+}
+
+* html .WidgetWatchlistThumb
+{
+	background: none;
+  filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src="http://images.wikia.com/common/widgets/icons/widget_watchlist.png",sizingMethod="image");
+}
+
+* html .WidgetEditedRecentlyThumb
+{
+	background: none;
+  filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src="http://images.wikia.com/common/widgets/icons/widget_recenteditors.png",sizingMethod="image");
+}
+
+* html .WidgetFeedThumb
+{
+	background: none;
+  filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src="http://images.wikia.com/common/widgets/icons/widget_rss.png",sizingMethod="image");
+	text-indent: -500px;
+}
+
+* html .WidgetWeatherThumb
+{
+	background: none;
+  filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src="http://images.wikia.com/common/widgets/icons/widget_weather.png",sizingMethod="image");
+	text-indent: -500px;
+}
+
+* html .WidgetTipsThumb
+{
+	background: none;
+  filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src="http://images.wikia.com/common/widgets/icons/widget_tips.png",sizingMethod="image");
+	text-indent: -500px;
+}
+
+* html .WidgetActiveTalkPagesThumb
+{
+	background: none;
+  filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src="http://images.wikia.com/common/widgets/icons/widget_activetalkpages.png",sizingMethod="image");
+	text-indent: -500px;
+}
+
+* html .WidgetBlockUserThumb
+{
+	background: none;
+  filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src="http://images.wikia.com/common/widgets/icons/widget_block_user.png",sizingMethod="image");
+	text-indent: -500px;
+}
+
+* html .WidgetCountdownThumb
+{
+	background: none;
+  filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src="http://images.wikia.com/common/widgets/icons/widget_countdown.png",sizingMethod="image");
+	text-indent: -500px;
+}
+
+* html .WidgetReferersThumb
+{
+	background: none;
+  filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src="http://images.wikia.com/common/widgets/icons/widget_referers.png",sizingMethod="image");
+	text-indent: -500px;
+}
+
+* html .WidgetShoutBoxThumb
+{
+	background: none;
+  filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src="http://images.wikia.com/common/widgets/icons/widget_shoutbox.png",sizingMethod="image");
+	text-indent: -500px;
+}
+
+* html .WidgetSlideshowThumb
+{
+	background: none;
+  filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src="http://images.wikia.com/common/skins-200801.5/common/widgets/icons/widget_slideshow.png",sizingMethod="image");
+	text-indent: -500px;
+}
+
+* html .WidgetNewContributorsThumb
+{
+	background: none;
+  filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src="http://images.wikia.com/common/widgets/icons/widget_new_contributors.png",sizingMethod="image");
+	text-indent: -500px;
+}
+
+* html .WidgetProblemReportsThumb
+{
+	background: none;
+  filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src="http://images.wikia.com/common/widgets/icons/widget_problem_reports.png",sizingMethod="image");
+	text-indent: -500px;
+}
+
+* html .WidgetWikiaSearchThumb
+{
+	background: none;
+  filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src="http://images.wikia.com/common/widgets/icons/widget_wikia_search.png",sizingMethod="image");
+	text-indent: -500px;
+}
+
+* html .WidgetWikiPageThumb
+{
+	background: none;
+  filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src="http://images.wikia.com/common/widgets/icons/widget_wiki_page.png",sizingMethod="image");
+	text-indent: -500px;
+}
+
+* html .WidgetHotPagesThumb
+{
+	background: none;
+  filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src="http://images.wikia.com/common/widgets/icons/widget_hot_pages.png",sizingMethod="image");
+	text-indent: -500px;
+}
+
+* html .WidgetNewestImagesThumb
+{
+	background: none;
+  filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src="http://images.wikia.com/common/widgets/icons/widget_newestimages.png",sizingMethod="image");
+	text-indent: -500px;
+}
+
+* html .WidgetAncientPagesThumb
+{
+	background: none;
+  filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src="http://images.wikia.com/common/widgets/icons/widget_stalepages.png",sizingMethod="image");
+	text-indent: -500px;
+}
+
+* html .WidgetNeedHelpThumb
+{
+	background: none;
+  filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src="http://images.wikia.com/common/widgets/icons/widget_needshelp.png",sizingMethod="image");
+	text-indent: -500px;
+}
+
+* html .WidgetTopContentThumb
+{
+	background: none;
+  filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src="http://images.wikia.com/common/widgets/icons/widget_topcontent.png",sizingMethod="image");
+	text-indent: -500px;
+}

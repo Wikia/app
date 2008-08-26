@@ -1,0 +1,7 @@
+This extension is obsolete.
+
+Adding/removing own groups can be configured done from core product now.
+
+For example: $wgGroupsRemoveFromSelf = array('sysop');
+
+See: http://www.mediawiki.org/wiki/Manual:Configuration_settings

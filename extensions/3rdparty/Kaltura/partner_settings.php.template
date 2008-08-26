@@ -1,0 +1,49 @@
+<?php
+/*
+This file is part of the Kaltura Collaborative Media Suite which allows users 
+to do with audio, video, and animation what Wiki platfroms allow them to do with 
+text.
+
+Copyright (C) 2006-2008  Kaltura Inc.
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU Affero General Public License as
+published by the Free Software Foundation, either version 3 of the
+License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU Affero General Public License for more details.
+
+You should have received a copy of the GNU Affero General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+*/
+
+$version = "0.5";
+
+$secret = "{PARTNER_SECRET}";
+$partner_id = "{PARTNER_ID}";
+$subp_id = "{SUBP_ID}";
+ 
+$SERVER_HOST = "http://www.kaltura.com";
+$SERVICE_URL = $SERVER_HOST . "/index.php/partnerservices2/";
+$WIDGET_HOST = $SERVER_HOST;
+
+$wiki_root = "{WIKI_ROOT}";
+
+// defines if to log every hit to the server
+$log_kaltura_services = true;
+
+$send_raw_text = true;
+
+// texts
+$partner_name = "{PARTNER_NAME}";
+$btn_txt_back = "{BTN_TXT_BACK}";
+$btn_txt_publish = "{BTN_TXT_PUBLISH}" ;
+$logo_url = "{LOGO_URL_ROF_EDITOR}";
+
+$kg_open_editor_as_special = {EDITOR_AS_SPECIAL}; //true;
+$kg_allow_anonymous_users = {ALLOW_ANONYMOUS_USERS}; //false;
+?>

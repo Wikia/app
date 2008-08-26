@@ -1,0 +1,194 @@
+.problemReportsList {
+	border-collapse: collapse;
+	margin: 10px 0;
+}
+.problemReportsList td,
+.problemReportsList th {
+	border: solid 1px #d1d1d1;
+	font-size: 0.95em;
+	padding: 3px 5px;
+	height: 34px;
+	vertical-align: middle;
+}
+
+.problemReportsList thead tr {
+	background-color: #eee;
+	color: black;
+}
+
+.problemReportsList .odd {
+	background-color: #fafafa;
+	color: black;
+}
+
+.problemReportsList sup {
+	margin-left: 2px;
+}
+
+.problemReportsList .problemReportsDescription div {
+	overflow: auto !important;
+	display: block;
+	width: 100%;
+}
+
+.problemReportsList .problemReportsDescription h5 {
+	font-size: 0.8em;
+	font-weight: normal;
+	color: #999;
+	text-align: right;
+	float: right;
+}
+
+.problemReportsCategoriesLegend {
+	font-size: 0.9em;
+	float: left;
+	margin-left: 10px;
+}
+.problemReportsCategoriesLegend dt {
+	display: block;
+	float: left;
+	width: 8px;
+	height: 8px;
+	margin: 5px 0 0 5px
+}
+
+.problemReportsCategoriesLegend dd {
+    float: left;
+    margin: 0px 10px 0 4px;
+}
+
+a.problemReportsInfo {
+	background-image: url("../images/problem_reports_info.png");
+	width: 16px;
+	height: 16px;
+	margin: 0 3px;
+	text-decoration: none;
+	display: block;
+	float: right;
+	cursor: pointer;
+}
+
+a.problemReportsActions {
+	width: 16px;
+	height: 16px;
+	margin: 0 3px;
+	text-decoration: none;
+	display: block;
+	float: left;
+	cursor: pointer;
+}
+
+a.problemReportsActionGreyedOut {
+	opacity: 0.4;
+	cursor: default;
+}
+
+a.problemReportsActionFixed {
+	background-image: url("../images/problem_reports_fixed.png");
+}
+a.problemReportsActionNotAProblem {
+	background-image: url("../images/problem_reports_not_problem.png");
+}
+a.problemReportsActionNeedStaffHelp {
+	background-image: url("../images/problem_reports_need_staff_help.png");
+}
+a.problemReportsActionUndo {
+	background-image: url("../images/problem_reports_undo.png");
+	float: right;
+	margin: 0;
+}
+a.problemReportsActionRemove {
+	background-image: url("../images/problem_reports_remove.png");
+	margin-left: 10px;
+	opacity: 0.7;
+}
+
+em.reportProblemStatus0 {
+	color: #555;
+}
+em.reportProblemStatus1 {
+	color: #006400;
+}
+em.reportProblemStatus2 {
+	color: #888;
+}
+em.reportProblemStatus3 {
+	color:#DC143C;
+}
+
+#mailer legend,
+#problem_type_form legend {
+	font-size: 100%;
+	border-bottom: solid 1px #0080C0;
+	font-weight: bold;
+	padding: 2px 5px;
+}
+#mailer-notice {
+	padding: 5px 2px;
+}
+#mailer .headers {
+	margin: 15px 0;
+}
+#mailer .headers label {
+	float: left;
+	display: inline;
+	width: 75px;
+	text-align: right;
+	padding: 3px 5px
+}
+#mailer .headers input {
+	width: 400px;
+	float: left;
+	padding: 2px;
+	border: solid 1px #666;
+	padding: 2px;
+}
+#mailer textarea {
+	border: solid 1px #666;
+	margin-bottom: 15px;
+	width: 72%;
+	height: 250px;
+	float: left;
+}
+#mailer #mailer-templates {
+	float: right;
+	width: 25%;
+	height: 250px;
+	background-color: #f9f9f9;
+	border-left: solid 2px #ccc;
+	padding: 3px 5px;
+	overflow: auto;
+}
+#mailer br {
+	clear: left
+}
+.problemreportsmailer {
+	border: solid 1px #0080C0;
+	margin: -10px 0 5px;
+	background: #BAE5FF;
+}
+#mailer .actionBar {
+	background: #F9F9F9 none repeat scroll 0%;
+	border-bottom: 1px solid #CCC;
+	border-top: 1px solid #CCC;
+	clear: both;
+	margin-top: 20px;
+	padding: 4px 8px;
+	text-align: right
+}
+#mailer .actionBar input {
+	background: #3366CC none repeat scroll 0%;
+	border: 4px double #FFF;
+	color: #FFF;
+	cursor: pointer;
+	font-family: "Lucida Grande",sans-serif;
+	font-size: 9pt;
+	font-weight: bold;
+	padding: 2px 5px;
+}
+#problem_type_chooser {
+	width: 120px;
+	border: solid 1px #333;
+	margin: 15px 2px 8px;
+}
+

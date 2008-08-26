@@ -1,0 +1,150 @@
+<mediawiki lang="en" version="0.3" schemaLocation="http://www.mediawiki.org/xml/export-0.3/ http://www.mediawiki.org/xml/export-0.3.xsd" xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.mediawiki.org/xml/export-0.3/">
+  <siteinfo>
+    <sitename>Staff Wiki</sitename>
+    <base>http://www.wikia.com
+    <generator>MediaWiki 1.7alpha</generator>
+    <case>first-letter</case>
+      <namespaces>
+      <namespace key="-2">Media</namespace>
+      <namespace key="-1">Special</namespace>
+      <namespace key="0"></namespace>
+      <namespace key="1">Talk</namespace>
+      <namespace key="2">User</namespace>
+      <namespace key="3">User talk</namespace>
+      <namespace key="4">Staff Wiki</namespace>
+      <namespace key="5">Staff Wiki talk</namespace>
+      <namespace key="6">Image</namespace>
+      <namespace key="7">Image talk</namespace>
+      <namespace key="8">MediaWiki</namespace>
+      <namespace key="9">MediaWiki talk</namespace>
+      <namespace key="10">Template</namespace>
+      <namespace key="11">Template talk</namespace>
+      <namespace key="12">Help</namespace>
+      <namespace key="13">Help talk</namespace>
+      <namespace key="14">Category</namespace>
+      <namespace key="15">Category talk</namespace>
+      <namespace key="100">Portal</namespace>
+      <namespace key="101">Portal talk</namespace>
+      <namespace key="102">Blog</namespace>
+    </namespaces>
+  </siteinfo>
+  <page>
+    <title>SpamRegex</title>
+    <id>1905</id>
+    <revision>
+      <id>5811</id>
+      <timestamp>2006-12-12T09:49:55Z</timestamp>
+      <contributor>
+        <username>Sannse</username>
+        <id>45</id>
+      </contributor>
+      <comment>/* Product Structure */</comment>
+      <text space="preserve">&lt;H1&gt;Product
+Requirements&lt;/H1&gt;
+==Product Description==
+: This special page is to provide a more convenient way of viewing,
+adding and removing phrases blocked from editing. It's main concept is
+to populate ''$wgSpamRegex'' before the actual check goes (which
+disallows of saving a page when it contains any of given ''bad''
+expressions).
+==Product Assumptions==
+* we use a shared database (so the block is enabled on multiple wikias)
+* we use memcached (so database operations are sped up)
+* user of this special page should belong to the 'staff' group
+* we do not allow complex regular expressions to be entered (for now,
+the script escapes regex special characters)
+==Product Features==
+:;Basic functionality
+:: Ability to add, view and remove expressions, and see who put them
+there and when.
+==Key Product Concepts==
+:;Data fetched from shared database
+:: Data should be fetched from a shared database, supported with the
+use of memcached instead of hardwritten from the file.
+:;Submit form on one page with the list
+:: Easier to manage than having them on two separated special pages.
+==Product Unknowns==
+: (coming up next)
+==Potential Product Issues==
+: When admin blocks an expression that is already contained on some
+pages, the user editing them and trying to save will still be displayed
+an error. Hopefully, it should be self-explanatory to the user. Also,
+allowing complex regular expressions can generate php errors on editing
+(for all users). &lt;strike&gt;The latter should be resolved by now by
+escaping regex special characters.&lt;/strike&gt;
+::Now, regular expressions are validated, and the use of special regex
+characters is allowed.
+==Product Interface==
+: A special page. Allows to browse, add or remove expressions.
+==Product Structure==
+* '''Files'''
+** '''SpamRegex.php''' ''contains includes for the files in the folder,
+this one replaces old regexBlock.php
+** '''/SpamRegex''' ''folder containg the core of the extension plus
+docs''
+*** '''README''' ''contains installation instructions and product
+description''
+*** '''SpamRegexCore.php''' ''contains the blocking utility and use of
+the hook''
+*** '''SpecialSpamRegex.php''' ''Special Page for viewing and managing
+block list''
+*** '' '''SimplifiedRegex.php''' - 'this one is required also by
+[[RegexBlock]]'
+* '''SQL''' CREATE TABLE `spam_regex` ( `spam_id` int(5) NOT NULL
+auto_increment, `spam_text` varchar(255) NOT NULL, `spam_timestamp`
+char(14) NOT NULL, `spam_user` varchar(255) NOT NULL, PRIMARY KEY
+(`spam_id`), UNIQUE KEY `spam_text` (`spam_text`), KEY `spam_timestamp`
+(`spam_timestamp`), KEY `spam_user` (`spam_user`) ) ;
+* '''Installation'''
+# Create the tables.
+# Copy the '''/SpamRegex''' folder and its contents into /extensions.
+# Copy '''SpamRegex.php''' to /extensions.
+# If not already supplied with [[RegexBlock]] extension, copy
+'''SimplifiedRegex.php''' into /extensions.
+# Include the SpamRegex.php in GlobalSettings.php.
+# This extension uses Memcached - please check if Memcached is
+configured properly in Global/LocalSettings.
+::That should do the trick. If people belonging to staff cannot access
+the extension, check if relogin helps. If not, please check if the
+staff permissions are not overwritten after the initialization of the
+extension. If that is the case, the permissions should be rather
+appended (the extension adds one new permission right).
+==Product Use Cases==
+# '''Blocking an unwanted expression'''
+::An expression is found particularily nasty and therefore is banned
+from editing.
+::;Step 1 (An admin blocks that expression)'''
+:::Admin inserts the username into the database via the special page
+spamregex.
+::;Step 2 (The user cannot save page containing that expression)
+:::When any user tries to save any page containing that expression, the
+page will not be saved and an explanation will be presented to the
+user.
+==Product Bugs==
+:Please test it on http://fp006.qa.wikia.com/wiki/Special:Spamregex.
+(it requires staff group rights).
+:'''Known Bugs''':
+: (coming up next)
+==FEEDBACK==
+Please post any comments or thoughts here.
+* ''Will this special page be global and only exist on one wiki (the
+central, or staff)? If so, it should probably be locked to (and
+viewable by) only staff? If viewable by non-staff, bypassing it would
+be much easier. [[User:Splarka|Splarka]] 00:53, 18 November 2006
+(UTC)''
+:: ''Right. I have made it that only staff members can view/use it.
+Should work. And I will put up some regex validation there, now it
+returns error on match when the expression is malformed.
+--[[User:Bartek|Bartek]] 14:03, 21 November 2006 (UTC)''
+*All looks good on this test -- [[User:Sannse|Sannse]] 11:07, 27 November 2006
+(UTC)
+*''I've allowed complex regular expressions to be entered, as Splarka
+said, with a validator checking them before insertion. -
+--[[User:Bartek|Bartek]] 16:01, 27 November 2006 (UTC)''
+* Also, as Angela wrote today, the message should be edited and point
+to a help page (to avoid confusion) - --[[User:Bartek|Bartek]] 08:32,
+12 December 2006 (UTC)
+[[Category:Features]]</text>
+    </revision>
+  </page>
+</mediawiki>

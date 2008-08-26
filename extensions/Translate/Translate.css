@@ -1,0 +1,75 @@
+/* Special:Translate */
+.mw-sp-translate-table {
+	width: 100%;
+}
+
+.mw-sp-translate-table th {
+	background-color: #b2b2ff;
+}
+
+.mw-sp-translate-table tr.orig {
+	background-color: #ffe2e2;
+}
+
+.mw-sp-translate-table tr.new {
+	background-color: #e2ffe2;
+}
+
+.mw-sp-translate-table tr.def {
+	background-color: #f0f0ff;
+}
+
+.mw-sp-translate-table tr.ign {
+	background-color: #202020;
+}
+
+.mw-sp-translate-table tr.opt {
+	background-color: #F2F200;
+}
+
+.mw-sp-translate-error {
+	font-style: italic;
+	background-color: yellow;
+	padding-left: 3em;
+	padding-right: 3em;
+}
+
+.mw-sp-translate-settings table {
+	border-spacing: 12pt 5pt;
+	background-color: inherit;
+	font-weight: bold;
+}
+
+.mw-sp-translate-edit-fields fieldset {
+	line-height: normal;
+}
+
+.mw-sp-translate-group {
+	border: 0;
+	margin: 0 3em 3em 3em;
+}
+
+.mw-sp-translate-group .description {
+	position: relative;
+	padding: 0.5em 1em 1em 1em;
+ 	border: 1px dotted black;
+	background-color: #C8D8FF;
+	margin-bottom: 2em;
+}
+
+.mw-sp-translate-target {
+	border: 0;
+	margin: 0 0 0 3em;
+ }
+
+.mw-sp-translate-target h3 {
+	font-size: 100%;
+	border: 0;
+	margin-bottom: 0;
+}
+
+.mw-sp-translate-target .description {
+	border: 1px dotted black;
+	background-color: #F3F3FF;
+	font-size: 85%;
+ }

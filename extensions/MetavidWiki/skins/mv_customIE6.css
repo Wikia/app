@@ -1,0 +1,19 @@
+/*forced 1024x786 fixed layout for IE6 */
+#MV_Overlay{
+	position:absolute;left:365px;top:30px;width:470px;height:550px;margin:4px;
+}
+#mv_fd_mvd_cont{	
+	position:absolute;top:30px;left:30px;height:94%;width:416px;overflow-x:hidden;overflow-y:auto; 
+}
+#mv_time_line{
+	position:absolute;background:#DDDDDD;left:5px;width:25px;height:94%;overflow:hidden;
+}
+#MV_Tools{
+	position:absolute;width:322px;top:312px;left:10px;height:270px;margin:4px;
+}
+#mv_tool_cont{
+	position:absolute;top:20px;left:5px;width:343px;height:263px;overflow:auto;
+}
+#mv_videoPlayerTime{
+	position:absolute;top:40px;right:30px;z-index:5;font-weight: 100;background:black;color:white;
+}

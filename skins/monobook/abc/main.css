@@ -1,0 +1,87 @@
+body {
+	background-color: #8FB8DA;
+}
+
+#column-content {
+	background-color: #8FB8DA;
+}
+
+#footer,
+.pBody {
+	background-color: #8FB8DA;
+}
+
+
+
+#p-cactions {
+	top: 189px;
+}
+
+#p-personal {
+	margin-top: 175px;
+}
+
+#p-logo {
+	top: 160px;
+}
+
+#globalWrapper {
+	text-align: center;
+}
+
+#wikia-content,
+#footer {
+	width: 994px;
+	margin: 0 auto;
+	text-align: left;
+}
+
+iframe {
+	border: none;
+}
+
+#p-personal {
+	width: 994px;
+	left: auto;
+}
+
+#p-logo {
+	left: auto;
+}
+
+#p-cactions {
+	left: auto;
+	margin-left: 135px;
+	top: 191px;
+}
+
+body.with-adsense #content {
+	margin-top: 39px;
+}
+
+#column-google {
+	top: 210px;
+	padding-left: 875px;
+	display: block;
+	float: none;
+	right: auto;
+}
+
+/* IE6 fixes */
+
+* html #column-one {
+	left: auto;
+	top: 200px;
+}
+
+* html #p-logo {
+	top: 0px;
+}
+
+* html #p-cactions {
+	top: -11px;
+}
+
+* html #p-personal {
+	margin-top: -28px;
+}

@@ -1,0 +1,42 @@
+== About ==
+
+Semantic Forms is an extension to MediaWiki that works in
+conjunction with another extension, Semantic MediaWiki, to allow
+for the creation and usage of forms to add and edit semantic data.
+For much more information on Semantic Forms, see the extension
+homepage at
+http://www.mediawiki.org/wiki/Extension:Semantic_Forms
+
+Notes on installing Semantic Forms can be found in the file INSTALL.
+
+== Credits ==
+
+Semantic Forms was created, and mostly written by, Yaron Koren.
+Important code contributions were also made by Jeffrey Stuckman,
+Harold Solbrig, Louis Gerbarg, Matt Williamson, Nils Opperman,
+Sergey Chernyshev and wheresmytab.
+
+Language translations were provided by many people; see the
+file /languages/SF_Messages.php for the full listing.
+
+== Contact ==
+
+Most comments, questions, suggestions and bug reports should be
+submitted to the Semantic Forms mailing list/Google group at
+http://groups.google.com/group/semantic-forms. You can also
+contact Yaron directly for any of these, at yaron57@gmail.com.
+
+== Credits to other projects ==
+
+* The Semantic Forms extension makes external calls to the Yahoo!
+User Interface (YUI) JavaScript library
+(http://developer.yahoo.com/yui/). YUI is distributed via the
+BSD license (http://developer.yahoo.com/yui/license.html),
+which is compatible with the GPL license under which Semantic
+Forms is distributed.
+
+* Semantic Forms also includes the Floatbox Javascript library
+by Byron McGregor (http://randomous.com/tools/floatbox/). Floatbox
+is distributed via the Creative Commons Attribution 3.0 License
+(http://creativecommons.org/licenses/by/3.0/), which is compatible
+with the GPL license under which Semantic Forms is distributed.

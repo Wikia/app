@@ -1,0 +1,393 @@
+# Force the test runner to ensure the extension is loaded
+!! hooks
+section
+!! endhooks
+
+!! functionhooks
+lst
+lstx
+!!endfunctionhooks
+
+# This is the standard article assumed to exist.
+!! article
+Sections
+!! text
+1 <section begin=1/>sec 1<section end=1/>
+
+2 <section begin="2"/>sec 2<section end='2'/>
+
+3 <section begin="3" />sec 3<section end="3" />
+
+a <section begin=a/>sec a<section end=a/>
+
+<section begin=a/>...<section end=a/>
+!! endarticle
+
+#test to see what happens when we don't use LST.
+!!test
+LST: Normal rendering
+!!input
+begin <section begin=test/>middle<section end=test/> end
+!!result
+<p>begin middle end
+</p>
+!!end
+
+!!test
+LST: Normal (non-labelled) transclusion
+!!input
+{{:sections}}
+!!result
+<p>1 sec 1
+</p><p>2 sec 2
+</p><p>3 sec 3
+</p><p>a sec a
+</p><p>...
+</p>
+!!end
+
+!!test
+LST: Transclude a section (#lst)
+!!input
+{{#lst:sections|1}}
+!!result
+<p>sec 1
+</p>
+!!end
+
+!!test
+LST: Transclude a section (#section)
+!!input
+{{#section:sections|1}}
+!!result
+<p>sec 1
+</p>
+!!end
+
+!!test
+LST: Substitute a section
+!!options
+pst
+!!input
+{{subst:#lst:sections|1}}
+!!result
+sec 1
+!!end
+
+
+!!test
+LST: Substitute a section with quoted attributes
+!!input
+{{#lst:sections|2}}
+!!result
+<p>sec 2
+</p>
+!!end
+
+!!test
+LST: Substitute a section with an optional /
+!!input
+{{#lst:sections|3}}
+!!result
+<p>sec 3
+</p>
+!!end
+
+!!test
+LST: multiple sections with the same name
+!!input
+{{#lst:sections|a}}
+!!result
+<p>sec a...
+</p>
+!!end
+
+!!test
+LST: Transclude range of sections
+!!input
+{{#lst:sections|1|3}}
+!!result
+<p>sec 1
+</p><p>2 sec 2
+</p><p>3 sec 3
+</p>
+!!end
+
+!!test
+LST: Exclude a section
+!!input
+{{#lstx:sections|1}}
+!!result
+<p>1 
+</p><p>2 sec 2
+</p><p>3 sec 3
+</p><p>a sec a
+</p><p>...
+</p>
+!!end
+
+!!test
+LST: Exclude a range
+!!input
+{{#lstx:sections|1||3}}
+!!result
+<p>1 
+</p><p>a sec a
+</p><p>...
+</p>
+!!end
+
+!!test
+LST: Replace a section
+!!input
+{{#lstx:sections|1|one}}
+!!result
+<p>1 one
+</p><p>2 sec 2
+</p><p>3 sec 3
+</p><p>a sec a
+</p><p>...
+</p>
+!!end
+
+!!test
+LST: Replace multiple sections
+!!input
+{{#lstx:sections|a|A}}
+!!result
+<p>1 sec 1
+</p><p>2 sec 2
+</p><p>3 sec 3
+</p><p>a A
+</p><p>A
+</p>
+!!end
+
+!!test
+LST: Replace a range
+!!input
+{{#lstx:sections|1|test|3}}
+!!result
+<p>1 test
+</p><p>a sec a
+</p><p>...
+</p>
+!!end
+
+!!article
+template:sub
+!!text
+<<includeonly>section {{{1}}}=test</includeonly>/>
+!!endarticle
+!!test
+LST: Substitute a tag from a template
+!!options
+pst noxml
+!!input
+{{subst:sub|begin}}
+!!result
+<section begin=test/>
+!!end
+
+!!article
+sub
+!!text
+begin {{subst:sub|begin}}middle{{subst:sub|end}} end
+!!endarticle
+!!test
+LST: Indirect substitution
+!!input
+{{#lst:sub|test}}
+!!result
+<p>middle
+</p>
+!!end
+
+!!article
+nest
+!!text
+<section begin=outer/>
+I am outer
+<section begin=inner/>
+inner
+<section end=inner/>
+<section end=outer/>
+!!endarticle
+!!test
+LST: Nested sections - inner section marks removed by tag hook.
+!!input
+{{#lst:nest|outer}}
+!!result
+<p>I am outer
+</p><p>inner
+</p><p><br />
+</p>
+!!end
+
+!!test
+LST: red link from nonexistent article
+!!input
+{{#lst:no such article|anything}}
+!!result
+<p><a href="/index.php?title=No_such_article&amp;action=edit&amp;redlink=1" class="new" title="No such article (not yet written)">No such article</a>
+</p>
+!!end
+
+# Note: MW <= 1.8 uses a different section header format. In these versions, the header out will look like this instead:
+# <div class="editsection" style="float:right;margin-left:5px;">[<a href="/index.php?title=Headings&amp;action=edit&amp;section=T-1" title="Headings">edit</a>]</div><a name="section"></a><h2>section</h2>
+!!article
+headings
+!!text
+<section begin=head/>
+==section==
+blah
+<section end=head/>
+<section begin=head2/>
+==section2==
+blah
+<section end=head2/>
+!!endarticle
+
+!!test
+LST: Transcluded section headings create edit link to template
+!!input
+{{#lst:headings|head}}
+!!result
+<a name="section"></a><h2><span class="editsection">[<a href="/index.php?title=Headings&amp;action=edit&amp;section=T-1" title="Headings">edit</a>]</span> <span class="mw-headline">section</span></h2>
+<p>blah
+</p>
+!!end
+
+!!test
+LST: Transcluded section headings create edit link to right section (mw 1.9r18218)
+!!input
+{{#lst:headings|head2}}
+!!result
+<a name="section2"></a><h2><span class="editsection">[<a href="/index.php?title=Headings&amp;action=edit&amp;section=T-2" title="Headings">edit</a>]</span> <span class="mw-headline">section2</span></h2>
+<p>blah
+</p>
+!!end
+
+!!article
+lst_head_bounds
+!!text
+===
+=2=
+<section begin=s/>
+=3=
+hi
+=4=
+<section end=s/>
+=head4=
+!!endarticle
+!!test
+LST: more sensitive test for heading count boundaries.
+!!input
+{{#lst:lst_head_bounds|s}}
+!!result
+<a name="3"></a><h1><span class="editsection">[<a href="/index.php?title=Lst_head_bounds&amp;action=edit&amp;section=T-3" title="Lst head bounds">edit</a>]</span> <span class="mw-headline">3</span></h1>
+<p>hi
+</p>
+<a name="4"></a><h1><span class="editsection">[<a href="/index.php?title=Lst_head_bounds&amp;action=edit&amp;section=T-4" title="Lst head bounds">edit</a>]</span> <span class="mw-headline">4</span></h1>
+
+!!end
+
+
+!!test
+LST: Nick's bogus input
+!!input
+{{#lstx:</
+includeonly>
+{|}}
+!!result
+!!end
+
+!!article
+lst_javascript
+!!text
+<section begin=ownage />
+<script>alert("Ownage!");</script>
+<section end=ownage />
+!!endarticle
+!!test
+LST: javascript
+!!input
+{{#lst:lst javascript|ownage}}
+!!result
+<p>&lt;script&gt;alert("Ownage!");&lt;/script&gt;
+</p>
+!!end
+
+!!article
+slash
+!!text
+<section begin="/"/>slash<section end="/"/>
+!!endarticle
+!!test
+LST: regexp special chars in section name
+!!input
+{{#lst:Slash|/}}
+!!result
+<p>slash
+</p>
+!!end
+
+# We can't use the simplest case where the article transcludes itself
+# from a regression test (bug 8158).  This test will segv if the cycle
+# detection code in the extension fails.
+!!article
+cycle
+!!text
+<section begin=cycle/>{{#lst:cycle|cycle}}<section end=cycle/>
+!!endarticle
+!!test
+LST: cycle detection
+!!options
+!!input
+{{#lst:cycle|cycle}}
+!!result
+<p><a href="/wiki/Cycle" title="Cycle">Cycle</a>
+</p>
+!!end
+
+#make sure we can still multiply-transclude (that is, path is cleared)
+!!test
+LST: multiple transclude
+!!input
+{{#lst:sections|1}}
+{{#lst:sections|1}}
+!!result
+<p>sec 1
+sec 1
+</p>
+!!end
+
+!!test
+LST: transclude nonexistant section
+!!input
+{{#lst:sections|9999}}
+!!result
+!!end
+
+!!article
+LST-alt
+!!text
+<section Begin=1/>caps<section END=1/>
+<section com=test begin=2 ent=test />junk<section x=y end=2 boo=hoo/>
+!!endarticle
+!!test
+LST: alternate caps
+!!input
+{{#section:LST-alt|1}}
+!!result
+<p>caps
+</p>
+!!end
+!!test
+LST: useless options
+!!input
+{{#section:LST-alt|2}}
+!!result
+<p>junk
+</p>
+!!end

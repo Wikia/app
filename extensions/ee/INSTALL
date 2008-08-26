@@ -1,0 +1,225 @@
+Installation of ee.pl reference implementation
+Erik Moeller - moeller(at)scireview(dot)de
+
+See README for the purpose and usage of the program.
+
+Be advised that ee.pl is primarily a proof of concept. It is usable, but it
+may be difficult to set up, particularly under Microsoft Windows. I hope
+that other people will write implementations of the external editor protocol
+as well.
+
+MediaWiki presently (V1.5) supports external editors for images and text,
+and external diff tools. You can enable external editing for text and
+external diffs in your user preferences. You can launch external editors
+for images by clicking the link at the bottom of the image history. 
+
+If you want to be able to choose selectively when to use external editing
+for text, you may want to try hacking your Monobook.css/js to add a tab that
+points to the "action=edit&externaledit=true" for the page you're viewing.
+A bookmarklet would also work.
+
+ee.pl is a Perl script with the following dependencies:
+
+- a recent distribution of Perl (>V5.004)
+- the following modules:
+  - LWP (should be bundled with recent Perl distributions)
+  - Config::IniFiles
+  - Gtk2
+  - Encode
+- Gtk2 libraries for graphical user itnerfaces
+
+== Installation under Unix ==
+
+1) Install Perl if required, www.perl.com is your friend
+
+2) Become Root and run the CPAN shell with
+   
+    perl -MCPAN -e shell
+   
+3) Install the individual modules above with:
+
+    install Config::IniFiles
+    install Encode
+
+4) As for libgtk2-perl, it may be easiest to get binaries for your
+   platform. See the FAQ at
+   http://live.gnome.org/GTK2_2dPerl_2fFrequentlyAskedQuestions
+   for more information. Under Debian, it's particularly easy.
+   Just become root and type:
+   
+    apt-get install libgtk2-perl
+    
+   Any dependencies should be automagically resolved. If you're
+   brave, you can also try to compile everything from source;
+   http://gtk2-perl.sourceforge.net/ and the FAQ will have
+   information to guide you through the process.
+
+If everything is set up properly, you should get a graphical error message
+if you run ee.pl without any command line parameters.
+
+Edit ee.ini to define wikis (usernames and passwords) and applications. The
+bundled ee.ini file contains comments and should be largely
+self-explanatory. It needs to reside in the path which is set as $cfgfile
+in your ee.pl; by default, that is ~/.ee-helper/.
+
+Now, when you click an external-editor-powered link in your browser,
+associate the MIME type application/x-external-editor with your ee.pl
+executable.
+
+== Installation under Windows ==
+
+1) Get ActivePerl from
+http://www.activestate.com/Products/Download/Download.plex?id=ActivePerl
+
+2) Open a command line window and type
+
+    ppm
+    
+   Now type the following commands:
+     
+    install Config-IniFiles
+    install Encode
+    rep add Gtk http://gtk2-perl.sourceforge.net/win32/ppm/
+    install Gtk2
+    
+   Note that these may take a while to produce any output on the screen.
+   If a firewall warning pops up, approve the program to access the
+   Internet. If you have a proxy set up, see the ActivePerl docs
+   for configuring ppm to use it.
+   
+
+3) Edit ee.pl in a text editor and change the variable $cfgfile to point it
+   to the location of ee.ini. Example:
+      
+      $cfgfile='C:\ee\ee.ini';
+      
+   Note that you have to use single quotes, or the backslash will be
+   interpreted as a special character.
+
+4) If you run ee.pl without parameters, a graphical error message should
+   pop up. If that is the case, you're almost there already.
+
+5) Edit ee.ini and adapt the programs, wikis and paths. You can use regular
+   Windows paths like C:\Program Files\My Program\program.exe. As noted
+   above, the file should be largely self-explanatory.
+   
+   For the browser configuration, don't use the -openurl syntax in the
+   example file if running Firefox. Instead, just run the Firefox executable
+   with the URL as the only parameter (C:\bla\firefox.exe $url).
+
+6) Edit ee.bat and adapt the paths to point to the right files (your
+   Perl executable and your ee.pl).
+
+Now, when you click an external-editor-powered link in your browser,
+associate the MIME type application/x-external-editor with your ee.bat
+executable (not ee.pl -- I found this to be unreliable in different
+browsers).
+
+I haven't managed to get rid of the annoying pop up console window
+under Windows. If you find a way to do that, please let me know.
+
+== Installation under Mac OS X ==
+
+(Provided by JVinocur.)
+
+This is for OS 10.4, but it probably would work on the past couple major 
+versions at least.
+
+1. You probably want to have /Applications/Utilities/Console.app running
+   throughout this (and displaying console.log), since useful error 
+   messages can appear there.
+2. Put ee.pl in your ~/bin/ directory, and create ~/.ee-helper/ and put 
+   ee.ini there.
+3. Install some extras off your OS install media, if you don't already have 
+   them:
+	* The developer tools
+	* Apple's X11.app (or some other X11, if you don't like Apple's)
+4. Install Fink, and get these packages:
+	* gtk+2
+	* glib2
+	* And possibly others, if you get error messages later. (I already 
+	had a ton of packages installed, so it's hard to know which ones 
+	are truly required. I suspect gtk+2-dev and glib2-dev may be 
+	needed.)
+5. Perl stuff:
+	* A recent version of Perl is already installed on your system.
+	* The LWP and Encode packages are already installed as well (at 
+	least on 10.4).
+	* Run sudo perl -MCPAN -e shell to enter the CPAN interactive 
+	environment, and run these commands:
+	1. install Config::IniFiles
+	2. install ExtUtils::Depends
+	3. install ExtUtils::PkgConfig
+	4. install Glib
+	5. install Gtk2
+	* At this point, test your setup: open up an xterm inside X11.app 
+	and try running ee.pl (with no arguments) and hopefully see a 
+	graphical error message pop up. If you don't, examine the output 
+	you see and try to figure out if it's complaining about 
+	Gtk-related problems (try to find the missing components via Fink)
+	or Perl-related problems (try to find the missing components via 
+	Fink first, since some Perl stuff is available there, or via CPAN).
+
+6. Now, if all you want to do is use tools that run inside of X11, you 
+should be set. However, you probably want to use native OS X applications 
+for your browser and perhaps even your editors, and that's the tricky part,
+because OS X doesn't silently mix commandline and graphical applications.
+	
+	* Take a look at the helper applications defined in ee.ini and 
+	adjust anything you like. You'll need to use OS X's open command 
+	as an intermediary if you want to use any native graphical 
+	applications (ones you can launch from the Finder):
+
+	o Use Browser=open "$url" to let it pick your default system web 
+	browser, or something like Browser=open -a Safari "$url" to force 
+	a different one.
+	o For the [Editors] section, simply identify the application you'd 
+	like, for example:
+
+	+ wiki=open -a TextEdit (a native application)
+	+ wiki=/usr/X11R6/bin/xedit (application that runs inside of X11)
+
+	* At this point, test your setup:
+	1. Download a control file (for example, the one for Meta:Sandbox 
+	and save it to disk (say, in your Desktop folder).
+	2. Start X11.app and run in an xterm: 
+
+	~/bin/ee.pl ~/Desktop/Meta:Sandbox
+
+	3. You should be able to make changes in whatever editor you 
+	configured, save them to your local copy, and use the ee.pl window
+	(in X11.app) to preview in your web browser and/or save changes 
+	back to the wiki.
+	* Finally, you have to set up your web browser's MIME type 
+	handling. In the unlikely event you use a browser that runs in X11
+	app, just configure it to use ~/bin/ee.pl as your helper 
+	application for application/x-external-editor. However, you 
+	probably want to use a native web browser, and to do that you need
+	to make a graphical wrapper:
+	1. Save the OSXee.sh script (below) in your ~/bin.
+	2. Download DropScript and use it to make a graphical version of 
+	OSXee.sh (by default it will be called DropOSXee). Put DropOSXee 
+	in your Applications folder.
+	3. At this point, test your setup: in the Finder, drag the 
+	Meta:Sandbox control file (that you downloaded above) onto the 
+	DropOSXee icon, and the ee.pl window should appear in X11.app.
+	4. Configure your browser to use DropOSXee as your helper 
+	application for application/x-external-editor.
+
+	o Most browsers have this in their preferences / configuration 
+	somewhere. Safari, however, uses the operating system's mappings, 
+	and to adjust them you need to install RCDefaultApp into your 
+	System Preferences application and modify the MIME types there.
+
+Contact JVinocur if you have any questions:
+http://en.wikipedia.org/wiki/User_talk:JVinocur
+
+== General comments ==
+
+Change the $LANGUAGE variable in ee.pl to set the program language (use a
+language code like "en" or "de").
+
+Caveat: Versions of Firefox I've tested are very buggy when indicating the
+MIME type. It may be displayed as "PHP script" instead of
+application/x-external-editor -- it will still be correctly associated,
+though.

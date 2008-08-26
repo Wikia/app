@@ -1,0 +1,269 @@
+#footer,
+#header,
+#article {
+	direction: rtl;
+}
+
+#header {
+    padding-left: 0px;
+}
+
+caption, th {
+	text-align: right;
+}
+ul#welcome {
+	right: 10px;
+}
+ul#welcome li {
+	float: right;
+	margin-right: 0;
+	margin-left: 3px;
+}
+ul#welcome li.user {
+	background-position: right top;
+	padding-right: 0;
+	padding-left: 27px;
+}
+#userMenu {
+	left: 0px;
+	border-width: 1px;
+}
+#userMenu ul {
+	padding: 0;
+}
+#userMenu ul li {
+    display: block;
+    float: none;
+    margin: 0px;
+}
+ul#wikia {
+	float: left;
+}
+ul#wikia li {
+	background-position: 100% 0;
+	padding-left: 0;
+	padding-right: 37px;
+}
+#wikiaLogo {
+	left: auto;
+	right: 30px;
+}
+ul#wikia li ul li {
+	float: right;
+	padding: 0px;
+}
+ul#wikia li ul li.nosearch {
+	padding-right: 0;
+}
+ul#wikia li ul li input {
+	float: right;
+	left: auto;
+	right: 0;
+}
+* html #wikia li ul li input {
+	right: -3px;
+}
+ul#wikia li input {
+	float: right;
+}
+#search input {
+	margin-left: 0;
+	right: 149px;
+	position: absolute;
+	padding-right: 8px;
+}
+#search div {
+	right: 136px;
+}
+#gelButtons {
+	left: 60px;
+	right: auto;
+}
+table#navLinks a {
+	background-position: 100% 4px;
+	float: right;
+	margin-left: 15px;
+	margin-right: 0;
+	padding-left: 0;
+	padding-right: 10px;
+}
+#navLinks img {
+	float: right;
+}
+#navLinks ul {
+	float: right;
+}
+table#navLinksWikia a {
+	margin-right: 15px;
+	padding-bottom: 5px;
+	padding-right: 10px;
+	background-position: 100% 4px;
+}
+table#navLinksWikia #wikiLogo a {
+	margin-right: 0px;
+}
+div#sidebar {
+	left: 0;
+	right: auto;
+	margin-left: 10px;
+	margin-right: 0;
+}
+#articleWrapper {
+	padding: 0pt 10px 0pt 320px;
+}
+.articleBar {
+	background-position: top right;
+	padding-left: 0;
+	padding-right: 10px;
+}
+.articleBar div {
+	background-position: top left;
+	float: left;
+	margin-left: 0;
+	margin-right: 5px;
+	padding-left: 15px;
+	padding-right: 0;
+}
+.articleBar div a {
+	margin-left: 0;
+	margin-right: 10px;
+	float: left;
+}
+.articleBar span {
+	border-left: none;
+	border-right: 1px dotted #606060;
+	margin-left: 0;
+	margin-right: 3px;
+}
+.articleBar a {
+	float: right;
+}
+.articleBar a.divider {
+	background-position: right center;
+	padding-left:  10px;
+	padding-right: 10px;
+}
+#editButton {
+	background-position: center left;
+	margin-left: 0;
+	margin-right: 0;
+	padding-left: 6px;
+	padding-right: 0;
+}
+#editButton span {
+	background-position: center right;
+	padding-left: 0;
+	padding-right: 6px;
+}
+#bottomBar {
+	background-position: 100% -30px;
+	padding-left: 0;
+	padding-right: 15px;
+}
+#bottomBar div {
+	background-position: bottom left;
+	padding-left: 10px;
+	padding-right: 0;
+}
+table#footer {
+	margin-left: 332px;
+	margin-right: 30px;
+}
+table#footer th.wikiaFooterLogo {
+	background-position: 100% 6px;
+}
+table#footer td {
+	padding-left: 40px;
+	padding-right: 0;
+	text-align: right;
+}
+
+.wikiaTooltipWelcome
+{
+	margin-left: -250px;
+}
+
+.wikiaTooltipSidebar
+{
+	margin-left: 250px;
+}
+#bottomBar #rateIt {
+	float: right;
+}
+
+.yui-ac-container {
+    right: 150px;
+    width: 190px;
+}
+
+#breadCrumb {
+    position: absolute;
+    padding-top: 3px;
+    width: 313px;
+}
+
+#breadCrumb li {
+    padding-left: 2px !important;
+    padding-right: 0px;
+}
+
+#article ul,
+#article ol {
+    margin: 0.3em 1.5em 0px 0px;
+}
+
+/* macbre: A/B testing stuff for Inez */
+#header.abmode-1 #wikiaLogo,
+#header.abmode-1 #searchSubmit,
+#header.abmode-1 .yui-ac-container,
+#header.abmode2 #wikiaLogo,
+#header.abmode2 #searchSubmit,
+#header.abmode2 .yui-ac-container {
+    margin-top: 10px;
+}
+
+#header.abmode-1 #search input,
+#header.abmode2 #search input {
+    top: 10px;
+}
+
+#header.abmode1 #wikiaLogo
+{
+    top: 31px;
+}
+
+#header.abmode1 #searchfield
+{
+    margin-top: 33px;
+}
+
+#header.abmode1 #searchSubmit
+{
+    top: 33px;
+}
+
+#header.abmode1 .yui-ac-container
+{
+    top: 56px;
+    z-index: 50;
+}
+
+#header.abmode1 #breadCrumb li
+{
+    /*float: left;*/
+}
+
+.widgetViewControl
+{
+    left: 18px;
+    right: auto;
+}
+
+/* Special:Preferences fixes (#2104) */
+.prefsection .toggle {
+    text-indent: 0;
+}
+
+#preftoc {
+    margin: 0 !important;
+}

@@ -1,0 +1,195 @@
+/*
+#wikiLogo a {
+	height: 75px;
+	width: 266px;
+}
+#wikiLogo img {
+	display: none;
+}
+*/
+
+
+/* macbre: fixes copied mainly from slate/smoke */
+
+#article
+{
+	/* peek-a-boo fix */
+	margin-left: 0;
+	height: 1%;
+}
+
+/* star voting fixes */
+
+.star-rating {overflow: hidden}
+
+.star-rating li.current-rating
+{
+  position: relative;
+  left: 0px;
+  /*background: none;
+  filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src="http://images.wikia.com/common/skins/star-rating_2.png",sizingMethod="crop");*/
+}
+
+.star-rating
+{
+  /*background: none;
+  filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src="http://images.wikia.com/common/skins/star-rating_1.png",sizingMethod="crop");*/
+}
+
+.star-rating li a
+{
+  /*border: solid 1px #666666;*/
+  float: left;
+}
+
+.star-rating li a:hover
+{
+  background: none;
+  filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src="http://images.wikia.com/common/skins/star-rating_3.png",sizingMethod="crop");
+}
+
+/* #rateIt * {border: solid 1px #666666} */
+
+#rateIt
+{
+  margin-bottom: -23px;
+}
+
+#rateLabel,
+#star-rating,
+#unrateLink
+{
+    display: inline;
+    float:   left;
+}
+
+#star-rating {margin: 0}
+#unrateLink  {float: right; margin: 2px 5px 0 0}
+
+#rateItClear {clear: both; display: block}
+
+/* stf: notifyForm fixes */
+#notifyForm,
+#notifyReport
+{
+    position: absolute;
+    width: 370px !important;
+    margin-top:  -300px;
+}
+
+#notifyForm #stf_float_1
+{
+   position: absolute;
+   top:  155px;
+   left: 5px;
+}
+
+#notifyForm #stf_float_3
+{
+   position: absolute;
+   top:  155px;
+   left: 200px;
+}
+
+#stoaf_msg
+{
+    width: 328px !important;
+}
+
+#stoaf_emails
+{
+    overflow: hidden;
+}
+
+#notifyForm .r_boxContent
+{
+   border-right: solid 1px #000000;
+}
+
+#notifyForm input.submit
+{
+    background: none;
+    filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src="http://images.wikia.com/common/SendToAFriendSubmitBg.png", sizingMethod="image");
+}
+
+/* widgets cockpit */
+#widget_cockpit_overlay
+{
+	top: 2px;
+}
+
+.widget .r_boxContent
+{
+	height: 1%;
+}
+
+#carousel-prev
+{
+	float: none;
+	position: absolute;
+	top: 0;
+	left: 0;
+}
+
+#carousel-next
+{
+	float: none;
+	position: absolute;
+	top: 0;
+	right: 0;
+}
+
+/* macbre: ReportAProblem fixes */
+#reportProblemForm input.priefix
+{
+	width: 255px;
+}
+div.smallGreenButton div.left, div.smallGreenButton div.right {
+	background: none;
+  	filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src="http://images.wikia.com/common/skins/quartz/images/small_green_button.png",sizingMethod="crop");
+}
+
+/* fixes #1936 */
+#header {z-index: 2 !important; position: relative}
+#articleWrapper {z-index: 1 !important}
+
+/* fixes #2016 - override monobook/main.css */
+ul {
+    list-style-type: none !important;
+    list-style-image: none !important;
+}
+
+#article ul {
+    list-style-type: square !important;
+    list-style-image: url('../../monobook/bullet.gif') !important;
+}
+
+/* christian: article footer png hack */
+#articleFooter img.sprite {
+    background: none;
+    filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src="/skins/monaco/images/sprite.png",sizingMethod="crop");
+}
+
+/* #2010 */
+body.rtl #welcome {
+    direction: ltr; /* that's why we all love IE :) */
+}
+
+body.rtl #breadCrumb {
+    direction: ltr;
+}
+
+/* #2060/2061 */
+.widgetWikiaToolbox .listLeft,
+.widgetWikiaToolbox .listRight {
+    position: relative !important;
+}
+
+.widgetWikiaToolbox ul {
+    padding-bottom: 10px !important;
+}
+
+/* #2080 */
+
+#articleFooter {position: relative}
+#articleFooter table {position: relative; top: 0px}

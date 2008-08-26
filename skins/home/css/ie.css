@@ -1,0 +1,18 @@
+#rightNowSubLinks
+{
+  overflow: hidden;
+}
+
+#rightNowSubLinks div
+{
+ margin-top: 0px;
+ position: relative;
+ top: 2px;
+}
+
+#introSection .boxContent
+{
+ height: 272px;
+}
+
+#searchform {margin: 0}

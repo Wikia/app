@@ -1,0 +1,112 @@
+/*** MAIN COLORS ***/
+body {
+	padding-top: 204px;
+}
+.color1, .color1 a, .yui-panel .hd {
+	background-color: #4a3a25;
+	color: #FFF;
+}
+.color2 {
+	background-color: #8fb8da;
+}
+#background_strip {
+	background-color: transparent;
+	border: 0;
+	height: auto;
+	left: 0;
+	position: absolute;
+	top: 0;
+	width: 100%;
+}
+#wikiaBranding {
+	display: none;
+}
+#wikia_page {
+	margin-top: 0;
+}
+
+/*** WIDGETS ***/
+#widget_sidebar {
+	top: 204px;
+}
+.widget dd {
+	background: #bbab97;
+}
+.widget a {
+	color: #000;
+	text-decoration: underline;
+}
+.widget a.bigButton {
+	text-decoration: none;
+}
+#search_field {
+	border-color: #222;
+}
+#navigation_widget, #navigation_widget .widget {
+	background-color: #FFF;
+}
+#navigation a:hover, .yuimenuitemlabel-hassubmenu-selected {
+	background-color: #F5F5F5;
+}
+#search_button {
+	background-image: url(../images/search.png);
+}
+* html #search_button {
+	background-image: none;
+	filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='/skins/monaco/abc/images/search.png', sizingMethod='crop');
+}
+#link_box {
+	background-color: #b0d9f3;
+	border: 1px solid #CCC;
+}
+#link_box a {
+	color: #333 !important;
+}
+.community_details {
+	background-color: #4a3a25;
+	color: #FFF;
+}
+.community_details a {
+	color: #FFF;
+	text-decoration: underline;
+}
+
+/*** HEADER AND FOOTER ***/
+#wikia_header {
+	background-color: transparent;
+	border: 0;
+	position: absolute;
+	top: 168px;
+	right: 0;
+}
+#widget_cockpit {
+	left: 225px;
+}
+#userData a {
+	color: #000;
+}
+#header_username a {
+	color: #4a3a25;
+}
+#wikia_footer {
+	color: #000;
+	display: none;
+}
+#wikia_footer a {
+	color: #333;
+}
+#wikia_logo {
+	background-image: url(../images/wikia_logo.png);
+}
+* html #wikia_logo {
+	background-image: none;
+	filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='/skins/monaco/abc/images/wikia_logo.png', sizingMethod='crop');
+}
+.headerMenuButton dt, .headerMenuButton dd {
+	background-image: url(../images/header_button.png);
+	color: #FFF;
+}
+* html .headerMenuButton dt, * html .headerMenuButton dd {
+	background-image: none;
+	filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='/skins/monaco/abc/images/header_button.png', sizingMethod='crop');
+}

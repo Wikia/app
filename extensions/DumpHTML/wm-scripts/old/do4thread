@@ -1,0 +1,16 @@
+#!/bin/bash
+
+if [ "X$1" == "X" ];then
+	echo "Usage: do4thread <edition>"
+	exit
+fi
+export bindir=/var/static/scripts
+export edition=$1
+
+
+cd /home/wikipedia/common/php-1.5/maintenance
+$bindir/thread1 $1 >> /var/static/thread1.log 2>&1 &
+$bindir/thread2 $1 >> /var/static/thread2.log 2>&1 &
+$bindir/thread3 $1 >> /var/static/thread3.log 2>&1 &
+$bindir/thread4 $1 >> /var/static/thread4.log 2>&1 &
+

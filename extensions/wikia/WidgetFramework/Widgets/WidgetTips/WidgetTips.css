@@ -1,0 +1,10 @@
+.WidgetTips .WidgetTipsSelector {
+    margin-bottom: 12px;
+    font-size: 0.9em;
+    text-align: right;
+    text-transform: lowercase;
+}
+
+.WidgetTips .WidgetTipsSelector a {
+    cursor: pointer;
+}

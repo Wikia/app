@@ -1,0 +1,127 @@
+/*
+
+    File for Wikia modifications to Uncyclopedia
+
+*/
+
+body.with-adsense #content
+{
+    margin: 2.8em 125px 0 12.2em;
+    border-right: solid 1px rgb(170,170,170);
+}
+
+#column-google {
+    width: 120px;
+    clear: left;
+    position: absolute;
+    padding: 35px 0px 0px 3px;
+    float: right;
+    right: 0px;
+    top: 10px;
+    z-index: 1;
+}
+
+#column-google-right
+{
+    margin: 25px 0;
+}
+
+#f-poweredbyico a
+{
+    margin: 0 0 0 8px;
+}
+
+#footer li#hosting
+{
+    display: block;
+}
+
+
+/* SendToAFriend & ProblemReports */
+#notifyForm,
+#reportProblemForm
+{
+    background-color: #fff;
+    color: #000000;
+    border: solid 1px #aaaaaa;
+    font-size:12px;
+    visibility: hidden;
+    position: absolute;
+    margin-top: -250px;
+    left: -200px;
+    padding: 8px 12px 0px 8px;
+}
+
+#reportProblemForm
+{
+	width: 580px !important;
+	left: -300px;
+}
+
+#notifyForm form,
+#reportProblemForm form
+{
+    padding: 5px 12px 12px 5px;
+}
+
+#notifyForm .articleName
+{
+  font-weight: bold;
+  font-size: 1.3em;
+  padding: 5px 0 15px 0;
+}
+
+#notifyForm label,
+#reportProblemForm label
+{
+  margin: 20px 0 2px 0;
+  display: block;
+}
+
+#notifyForm input[type="text"],
+#reportProblemForm input[type="text"],
+#notifyForm textarea,
+#reportProblemForm textarea,
+.monotype
+{
+  width: 100%;
+  border: solid 1px #87888C;
+  background-color: #fff;
+  padding: 2px;
+}
+
+#notifyForm input.submit
+{
+  background: url('http://images.wikia.com/common/SendToAFriendSubmitBg.png');
+  border: none;
+  margin: 15px;
+  font-weight: bold;
+  width: 96px;
+  height: 26px;
+  cursor: pointer;
+}
+
+.boxHeader
+{
+	font-size: 1.3em;
+	margin-bottom: 10px;
+	border-bottom: solid 1px #aaaaaa;
+}
+
+/* hide unneeded elements */
+#notifyForm .boxHeader,
+#notifyReport .boxHeader
+{
+  border-bottom: none;
+  cursor: default;
+}
+
+#notifyForm_c .underlay,
+#notifyForm .hd,
+#notifyForm .ft,
+#reportProblemForm_c .underlay,
+#reportProblemForm .hd,
+#reportProblemForm .ft
+{
+  display: none !important;
+}

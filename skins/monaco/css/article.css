@@ -1,0 +1,326 @@
+#wikia_page {
+	background: #FFF;
+	border: 1px solid #AAA;
+	height: 1%;
+	margin: 0 5px 0 216px;
+	/*margin: -36px 5px 10px 22em;*/
+	position: relative;
+	top: -176px;
+	z-index: 5;
+	overflow: visible;
+}
+
+#page_bar {
+	background-image: url(../images/reflected_shadow.png);
+	background-position: top left;
+	background-repeat: repeat-x;
+	color: white;
+	font-family: tahoma, sans-serif;
+	font-size: 11pt;
+	margin: 2px 2px 0;
+	overflow: hidden;
+	padding: 0 5px;
+}
+
+#page_bar.alt {
+	margin: 0 2px;
+	position: fixed;
+	top: 0;
+}
+
+#page_bar * {
+	float: left;
+}
+#page_bar u {
+	float: none;
+}
+#page_controls li {
+	margin-right: 12px;
+	line-height: 32px;
+	padding-left: 18px;
+	position: relative;
+}
+#page_controls div {
+	background-image: url(../images/sprite.png);
+	clip: rect(0px 0px 0px 0px);
+	height: 16px;
+	margin: 8px 2px 0 0;
+	position: absolute;
+	width: 320px;
+}
+#page_controls a {
+	background: transparent;
+	position: relative;
+	text-decoration: none;
+	z-index: 2;
+}
+#page_controls a:hover {
+	text-decoration: underline;
+}
+#control_edit div {
+	clip: rect(0px 16px 16px 0px);
+	left: 0px;
+}
+#control_history div {
+	clip: rect(0px 32px 16px 16px);
+	left: -16px;
+}
+#control_watch div {
+	clip: rect(0px 48px 16px 32px);
+	left: -32px;
+}
+#control_unwatch div {
+	clip: rect(0px 240px 16px 224px);
+	left: -224px;
+}
+#control_move div {
+	clip: rect(0px 64px 16px 48px);
+	left: -48px;
+}
+#control_protect div, #control_unprotect div {
+	clip: rect(0px 80px 16px 64px);
+	left: -64px;
+}
+#control_delete div, #control_undelete div {
+	clip: rect(0px 96px 16px 80px);
+	left: -80px;
+}
+#control_report-problem div {
+	clip: rect(0px 224px 16px 208px);
+	left: -208px;
+}
+#control_viewsource div {
+	clip: rect(0px 256px 16px 240px);
+	left: -240px;
+}
+#control_addsection div {
+	clip: rect(0px 288px 16px 272px);
+	left: -272px;
+}
+
+#page_tabs {
+	float: right;
+	font-family: arial;
+}
+#page_tabs li {
+	background-color: #EEE;
+	color: #000;
+	cursor: pointer;
+	padding: 0 8px;
+	height: 27px;
+	line-height: 27px;
+	margin-left: 3px;
+	margin-top: 5px;
+}
+#page_tabs li.selected {
+	background-color: white;
+	color: #000;
+	font-weight: bold;
+}
+#page_tabs a {
+	background: transparent;
+	color: #000;
+	text-decoration: none;
+}
+#page_tabs a:hover {
+	text-decoration: underline;
+}
+
+#article {
+	min-height: 200px;
+	padding: 10px;
+	position: relative;
+	overflow: visible;
+}
+
+/*** ARTICLE FOOTER ***/
+#articleFooter {
+	border-top: 1px dashed #CCC;
+	font-size: 9pt;
+	margin: 0;
+	overflow: hidden;
+	padding: 0;
+}
+#articleFooter table {
+	border-collapse: collapse;
+	width: 100%;
+}
+#articleFooter td {
+	padding: 10px;
+	vertical-align: top;
+}
+#articleFooter td.col2 {
+	border-left: 1px dashed #CCC;
+	width: 50%;
+}
+#articleFooter strong {
+	border: 0;
+	color: #333;
+	font-size: 10pt;
+	font-weight: bold;
+	float: left;
+	line-height: 22px;
+	margin: 0 10px 0 0;
+	padding: 0;
+	clear: both;
+}
+#articleFooter ul.actions {
+	margin: 0;
+	padding: 0;
+}
+#articleFooter ul.actions li {
+	line-height: 1.5em;
+	padding: 2px 0;
+	position: relative;
+	clear: both;
+}
+#articleFooter ul.actions li div {
+	display: inline;
+	position: relative;
+	margin-left: 20px;
+}
+#articleFooter img.sprite {
+	background: url(../images/sprite.png);
+	height: 16px;
+	margin-right: 16px;
+	position: absolute;
+	width: 320px;
+}
+#fe_edit_icon {
+	clip: rect(0px 16px 16px 0px);
+	left: 0;
+}
+#fe_talk_icon {
+	clip: rect(0px 32px 16px 16px);
+	left: -16px;
+}
+#fe_user_icon {
+	clip: rect(0px 112px 16px 96px);
+	left: -96px;
+}
+#fe_random_icon {
+	clip: rect(0px 128px 16px 112px);
+	left: -112px;
+}
+#fe_create_icon {
+	clip: rect(0px 144px 16px 128px);
+	left: -128px;
+}
+#fe_email_icon {
+	clip: rect(0px 160px 16px 144px);
+	left: -144px;
+}
+#fe_report_icon {
+	clip: rect(0px 224px 16px 208px);
+	left: -208px;
+}
+#fe_permalink_icon {
+        clip: rect(0px 64px 16px 48px);
+        left: -48px;
+}
+#fe_talk {
+	float: left;
+}
+#fe_permalink {
+	float: left;
+	margin: 0 25px;
+	clear: none !important;
+}
+#share {
+	float: left;
+	position: relative;
+}
+#share dl {
+	position: absolute;
+}
+#share dt {
+	background: url(http://images.wikia.com/common/skins-1.12/quartz/images/share_hover_bg.png);
+	color: #FFF;
+	display: none;
+	font-size: 8.5pt; 
+	font-weight: bold;
+	height: 21px;
+	left: -32px;
+	line-height: 19px;
+	position: absolute;
+	text-align: center;
+	top: -19px;
+	width: 80px;
+	z-index: 10;
+}
+#share dl:hover dt {
+	display: block;
+}
+#share dd {
+	height: 16px;
+	overflow: hidden;
+	position: relative;
+	width: 16px;
+}
+#share dd a {
+	background: url(../images/sprite.png);
+	display: block;
+	height: 16px;
+	position: absolute;
+	width: 320px;
+}
+#shareDelicious dd a {
+	clip: rect(0px 176px 16px 160px);
+	left: -160px;
+}
+#shareStumble {
+	left: 20px;
+}
+#shareStumble dd a {
+	clip: rect(0px 208px 16px 192px);
+	left: -192px;
+}
+#shareDigg {
+	left: 40px;
+}
+#shareDigg dd a {
+	clip: rect(0px 192px 16px 176px);
+	left: -176px;
+}
+#articleFooter .col2 strong {
+	display: block;
+}
+
+/* macbre: standard button CSS */
+.button {
+	border: 4px double #FFFFFF;
+	cursor: pointer;
+	font-family: "Lucida Grande",Tahoma,sans-serif;
+	font-size: 12px;
+	font-weight: bold;
+	padding: 2px 5px;
+}
+
+.editingTips .accordion-menu {
+	display: block !important;
+	position: absolute;
+	left: 10px;
+	width: 200px;
+	margin-top: -20px
+}
+.editingTips #widget_sidebar {
+	display: none
+}
+.editingTips #wikia_page {
+	margin-left: 5px
+}
+.editingTips #bodyContent {
+	margin-left: 216px
+}
+.editingWide .accordion-menu {
+	display: none !important
+}
+.editingWide #bodyContent {
+	margin-left: 0px
+}
+.editingWide #wikiPreview {
+	margin-left: 216px
+}
+#editingTips {
+	height: 363px;
+}

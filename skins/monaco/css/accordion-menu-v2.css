@@ -1,0 +1,67 @@
+dl.accordion-menu {
+	margin: 0;
+	padding: 0;
+}
+
+dl.accordion-menu dt.a-m-t {
+	background: #DDD;
+	color: #222;
+	height: 14px;
+	line-height: 14px;
+	margin: 0;
+	border-bottom: 1px solid #999;
+}
+
+dl.accordion-menu dt.a-m-t-hover{
+	background: #CCC;
+}
+
+dl.accordion-menu dt.a-m-t-down{
+	border: solid 1px #666;
+	border-right-color: #dfdfdf;
+	border-bottom-color: #dfdfdf;
+}
+
+html.accordion-menu-js dt.a-m-t{
+	cursor:pointer;
+	zoom:1;
+}
+
+dl.accordion-menu dd.a-m-d {
+	margin: 0;
+	max-height: none;
+	padding: 0;
+}
+
+html.accordion-menu-js dd.a-m-d{
+	display:none;
+}
+
+html.accordion-menu-js dd.a-m-d-expand {
+	display:block;
+	overflow: auto !important;
+}
+
+html.accordion-menu-js dd.a-m-d-before-expand {
+	display:block;
+	position:relative;
+	z-index:-1;
+	opacity:0;
+	height:auto !important;
+	/*visibility:hidden;*/
+	overflow:visible;
+}
+
+html.accordion-menu-js dt.a-m-t-expand {
+	background:#CCC;
+	color:black;
+}
+
+html.accordion-menu-js dd.a-m-d-anim {
+	overflow:hidden;
+	display:block;	
+}
+
+dl.accordion-menu dd.a-m-d .bd{
+	padding:0.5em;
+}

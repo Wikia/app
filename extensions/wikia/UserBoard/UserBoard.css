@@ -1,0 +1,77 @@
+#user-page-board {
+	margin:5px 0px 10px 0px;
+}
+
+.user-board-top-links {
+	font-weight:bold;
+	margin:0px 0px 10px 0px;
+}
+
+.user-board-top-links a {
+	text-decoration:none;
+}
+
+.user-page-message-form {
+	margin:5px 0px 15px 0px;
+	font-weight:bold;
+}
+
+.user-board-message {
+	border:1px solid #e2e2e2;
+	margin:0px 0px 15px 0px;
+}
+
+.user-board-message-from {
+	background-color:#F8F5F5;
+	padding:3px 0px 5px 5px;
+}
+
+.user-board-message-from a {
+	font-size:14px;
+	text-decoration:none;
+	font-weight:bold;
+}
+
+.user-board-message-content {
+	padding:5px;
+}
+
+.user-board-message-time {
+	font-size:11px;
+	color:#797979;
+	margin:2px 0px 0px 5px;
+}
+
+.user-board-message-image {
+	float:left;
+	margin:0px 10px 0px 0px;
+}
+
+.user-board-message-image img {
+	border:1px solid #dcdcdc;
+}
+
+.user-board-message-body {
+	float:left;
+	margin:0px 10px 0px 0px;
+	vertical-align:top;
+	width:410px;
+}
+
+.user-board-message-body p {
+	margin:0px 0px 0px 0px !important;
+}
+
+.user-board-message-links {
+	padding:0px 0px 5px 5px;
+}
+
+.user-board-message-links a {
+	font-size:11px;
+	text-decoration:none;
+	margin:0px 10px 0px 0px;
+}
+
+.user-board-red a {
+	color:#ff0000;
+}

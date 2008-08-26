@@ -1,0 +1,104 @@
+//////////////////////////////////////////////////////////////////////////
+
+ WikiHiero - A PHP converter from text using "Manual for the encoding of 
+ hieroglyphic texts for computer input" syntax into HTML entities (table and
+ images).
+
+ Copyright (C) 2004 Guillaume Blanchard (Aoineko)
+
+ This program is free software; you can redistribute it and/or
+ modify it under the terms of the GNU General Public License
+ as published by the Free Software Foundation; either version 2
+ of the License, or any later version.
+
+ This program is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
+
+ You should have received a copy of the GNU General Public License
+ along with this program; if not, write to the Free Software
+ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+
+//////////////////////////////////////////////////////////////////////////
+
+ Hieroglyphs pictures
+
+ Copyright (c) 2004 S. Rosmorduc, G. Watson, J. Hirst
+
+ Permission is granted to copy, distribute and/or modify those pictures
+ under the terms of the GNU Free Documentation License, Version 1.2
+ or any later version published by the Free Software Foundation;
+ with no Invariant Sections, no Front-Cover Texts, and no Back-Cover
+ Texts. A copy of the license is included in the section entitled "GNU
+ Free Documentation License".
+
+//////////////////////////////////////////////////////////////////////////
+
+== INSTALL AS A WEB PAGE ==
+
+You need a server running Apache and PHP. WikiHiero was tested with 
+Apache 1.3.27 and PHP 4.3.3, but must work with oldest version.
+
+1) Copy all file to your server.
+2) Enjoy!
+
+If you rename the pictures directory, pictures prefix or extension, please 
+modify "wikihiero.php" to fit your changes. If you modify any picture size, 
+or add/remove pictures, you need to run "wh_generate.php" to build an updated
+"wh_list.php".
+
+
+== ADD WIKI-HIERO TO YOUR HOMEPAGE, FORUM ==
+
+You need a server running Apache and PHP. WikiHiero was tested with 
+Apache 1.3.27 and PHP 4.3.3, but must work with oldest version.
+
+1) Copy "wikihiero.php", "wh_list.php" and "img" directory to your server.
+2) Include "wikihiero.php" at the top of the file where you want to use it:
+   <?php include "wikihiero.php"; ?>
+   In both file are not in the same folder, don't forget to specify the path.
+3) Where you want show hieroglyphs, add the line
+   <?php echo WikiHiero("my_text"); ?>
+4) Enjoy!
+
+If you rename the pictures directory, pictures prefix or extension, please 
+modify "wikihiero.php" to fit your changes. If you modify any picture size, 
+or add/remove pictures, you need to run "wh_generate.php" to build an updated
+"wh_list.php".
+
+== Version history ==
+
+0.2.0: New parser
+
+0.2.1: Fix link to hieroglyph tables
+
+0.2.2: 
+- Fix hieroglyph size when into a [[w:cartouche|cartouche]]
+- Fix phonemes table to use 'Aa' category rather than 'J'
+
+0.2.3: Add Swedish interface
+
+0.2.4: Add Japanese and Dutch interface
+
+0.2.5:
+- Fix Swedish interface
+- Create a function to handle language entries lack
+- Change 'height' option by a 'scale' (in percentage)
+- Add a 'line' option to split text lines
+
+0.2.6:
+- Add source annotation.
+- Support of both '-' and ' ' as separator
+
+0.2.7:
+- Add parsing process duration. 
+- Add download section
+
+0.2.8: 
+- Add Chinese interface. 
+- Minor fix
+
+0.2.9: 
+- Add Esperanto interface. 
+- Fix cartouche size

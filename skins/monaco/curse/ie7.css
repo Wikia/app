@@ -1,0 +1,9 @@
+#nav-node li ul {
+        list-style: none;
+        list-style-image: none;
+}
+
+#curse_header {
+	z-index: 1000;
+}
+

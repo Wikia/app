@@ -1,0 +1,41 @@
+This extension provides case-insensitive matches for a few points in
+MediaWiki's functionality:
+
+* "go" exact title matches
+* Prefix-based searches in OpenSearch (Firefox plugin) and internal AJAX searches
+
+It does not provide complete case-insensitivity for title linking within the wiki.
+
+
+== Database schema ==
+
+A 'titlekey' table is added to the wiki's database, which maintains a case-folded
+copy of each page's title. This is then binary-indexed for matching and sorting.
+
+The table must be present for the wiki to function once the extension is enabled,
+and it must be populated for the title match functions to pick up matches.
+
+
+== Installation ==
+
+To enable the extension, add the following line to your LocalSettings.php file:
+
+  include "$IP/extensions/TitleKey/TitleKey.php";
+
+
+You must then create and populate the new database table.
+
+The easiest way to do this is to run MediaWIki's standard updaters:
+
+  php maintenance/update.php
+
+
+If you do not have command-line access to your server, you can manually
+apply the titlekey.sql file's commands to your database (check for proper
+table prefix, etc).
+
+
+== Repopulating the titlekey table ==
+
+The titlekey table can be repopulated by hand by running the rebuildTitleKeys.php
+command-line script.

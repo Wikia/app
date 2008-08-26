@@ -1,0 +1,30 @@
+#curse_header {
+	z-index: 1000;
+}
+#logo {
+	background-image: none;
+	filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='http://static.curse.com/v5/images/logo-curse.png',sizingMethod='scale');
+}
+
+/* menus */
+#nav-node ul {
+	list-style: none;
+	list-style-image: none;
+}
+
+/* languages */
+#hlang li a {
+	display: inline;
+}
+#hlang {
+	line-height: 11px;
+	height: 11px;
+	padding-top: 4px;
+}
+#hlang li a {
+	height: 11px;
+}
+#hlang li ul {
+	top: 11px;
+}
+

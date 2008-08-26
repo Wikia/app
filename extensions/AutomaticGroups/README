@@ -1,0 +1,44 @@
+Automatic Groups Extension
+© 2007 Rob Church
+See LICENSE file for full licencing information
+
+== Overview ==
+
+The Automatic Groups extension provides a convenient means to configure
+additional automatic rights and user group membership for users matching
+specific criteria.
+
+Rights and groups can be added based on
+
+	* account age
+	* edit count
+	
+The extension requires MediaWiki 1.11.0 or above.
+	
+== Configuration ==
+
+Group criteria are set using the $wgAutomaticGroups global, which is an
+array mapping group names to an array of criteria. Rights criteria are
+set using $wgAutomaticRights, which has the same format.
+
+The criteria are indexed by attribute, mapping to the minimum value
+required for that criterion.
+
+Valid criteria are:
+
+	* 'edits'
+		Minimum edit count
+	* 'age'
+		Account age (in seconds)
+		
+=== Examples ===
+
+To assign the group 'uploaders' to all accounts at least 4 days old, one
+might use
+
+	$wgAutomaticGroups['uploaders'] = array( 'age' => 86400 * 4 );
+	
+To assign the 'delete' right to all accounts at least 4 days old
+with at least 250 edits, one might use
+
+	$wgAutomaticRights['delete'] = array( 'age' => 86400 * 4, 'edits' => 250 );

@@ -1,0 +1,416 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" dir="ltr" lang="en"><head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<link rel="copyright" href="http://www.gnu.org/copyleft/fdl.html"><title>RegexBlock</title>
+		
+		<style type="text/css" media="screen,projection">/*<![CDATA[*/ @import "/skins3/monobook/main.css?0"; /*]]>*/</style>
+		<link rel="stylesheet" type="text/css" media="print" href="_files/commonPrint.css"><!--[if lt IE 5.5000]><style type="text/css">@import "/skins3/monobook/IE50Fixes.css";</style><![endif]--><!--[if IE 5.5000]><style type="text/css">@import "/skins3/monobook/IE55Fixes.css";</style><![endif]--><!--[if IE 6]><style type="text/css">@import "/skins3/monobook/IE60Fixes.css";</style><![endif]--><!--[if IE 7]><style type="text/css">@import "/skins3/monobook/IE70Fixes.css?0";</style><![endif]--><!--[if lt IE 7]><script type="text/javascript" src="/skins3/common/IEFixes.js"></script>
+		<meta http-equiv="imagetoolbar" content="no" /><![endif]-->
+		
+		<script type="text/javascript">var skin = 'monobook';var stylepath = '/skins3';</script>
+		<script type="text/javascript" src="_files/wikibits"><!-- wikibits js --></script>
+		<script type="text/javascript" src="_files/index"><!-- site js --></script>
+		<style type="text/css">/*<![CDATA[*/
+@import "/index.php?title=MediaWiki:Common.css&action=raw&ctype=text/css&smaxage=18000";
+@import "/index.php?title=MediaWiki:Monobook.css&action=raw&ctype=text/css&smaxage=18000";
+@import "/index.php?title=-&action=raw&gen=css&maxage=18000&ts=20070117004616";
+/*]]>*/</style>
+		<script type="text/javascript" src="_files/index_002"></script><!-- Head Scripts --></head>
+
+<body class="ns-0">
+
+<div id="globalWrapper">
+		<div id="column-content">
+       <div id="content" class="content-ads">	 
+
+        	
+		<a name="top" id="top"></a>
+				<h1 class="firstHeading">RegexBlock</h1>
+                
+        
+		<div id="bodyContent">
+			<h3 id="siteSub">Wikia</h3>
+			<div id="contentSub"></div>
+												<!-- start content -->
+
+<table id="toc" class="toc" summary="Contents"><tbody><tr><td><div id="toctitle"><h2>Contents</h2> <span class="toctoggle">[<a href="javascript:toggleToc()" class="internal" id="togglelink">hide</a>]</span></div>
+<ul>
+<li class="toclevel-1"><a href="#Product_Requirements"><span class="tocnumber">1</span> <span class="toctext">Product Requirements</span></a>
+<ul>
+<li class="toclevel-2"><a href="#Product_Description"><span class="tocnumber">1.1</span> <span class="toctext">Product Description</span></a></li>
+<li class="toclevel-2"><a href="#Product_Assumptions"><span class="tocnumber">1.2</span> <span class="toctext">Product Assumptions</span></a></li>
+<li class="toclevel-2"><a href="#Product_Features"><span class="tocnumber">1.3</span> <span class="toctext">Product Features</span></a></li>
+<li class="toclevel-2"><a href="#Key_Product_Concepts"><span class="tocnumber">1.4</span> <span class="toctext">Key Product Concepts</span></a></li>
+<li class="toclevel-2"><a href="#Product_Unknowns"><span class="tocnumber">1.5</span> <span class="toctext">Product Unknowns</span></a></li>
+<li class="toclevel-2"><a href="#Potential_Product_Issues"><span class="tocnumber">1.6</span> <span class="toctext">Potential Product Issues</span></a></li>
+<li class="toclevel-2"><a href="#Product_Interface"><span class="tocnumber">1.7</span> <span class="toctext">Product Interface</span></a></li>
+<li class="toclevel-2"><a href="#Product_Structure"><span class="tocnumber">1.8</span> <span class="toctext">Product Structure</span></a></li>
+<li class="toclevel-2"><a href="#Product_Use_Cases"><span class="tocnumber">1.9</span> <span class="toctext">Product Use Cases</span></a></li>
+<li class="toclevel-2"><a href="#Product_Bugs"><span class="tocnumber">1.10</span> <span class="toctext">Product Bugs</span></a></li>
+<li class="toclevel-2"><a href="#Discussion"><span class="tocnumber">1.11</span> <span class="toctext">Discussion</span></a></li>
+<li class="toclevel-2"><a href="#Suggested_messages"><span class="tocnumber">1.12</span> <span class="toctext">Suggested messages</span></a></li>
+<li class="toclevel-2"><a href="#Help_page"><span class="tocnumber">1.13</span> <span class="toctext">Help page</span></a></li>
+<li class="toclevel-2"><a href="#Post_release"><span class="tocnumber">1.14</span> <span class="toctext">Post release</span></a></li>
+</ul>
+</li>
+</ul>
+</td></tr></tbody></table><script type="text/javascript"> if (window.showTocToggle) { var tocShowText = "show"; var tocHideText = "hide"; showTocToggle(); } </script>
+<a name="Product_Requirements"></a><h1>Product Requirements</h1>
+<a name="Product_Description"></a><h2>Product Description</h2>
+<dl><dd> This is the automated version of the original regexBlock
+extension. It takes data out of shared the database instead out of
+hardwritten text inside of the file (<i>uses memcached to speed up the operations, mostly on the side of checking edits</i>)
+and applies blocking to all users, groupped by blocker's names. There
+is also a Special Page (restricted to users with the preexisting
+'block' ability) that allows to block, view (also view by blockers) and
+unblock user names and IP addresses. Current version also allows to
+block entire IP addresses (no range or partial blockings in this case).
+</dd></dl>
+<dl><dd> Will also include in this one an ability to prevent new
+account creation (yes, such a thing already exists in IP Blocks, but is
+not multi-wikia-wide).
+</dd></dl>
+<a name="Product_Assumptions"></a><h2>Product Assumptions</h2>
+<ul><li> we use a shared database (so the block is enabled on multiple wikias)
+</li><li> we use memcached (so database operations are sped up)
+</li><li> user of this special page should have the rights to block
+</li><li> we take care of account creation prevention multi-wikia style right here
+</li></ul>
+<a name="Product_Features"></a><h2>Product Features</h2>
+<dl><dd><dl><dt>Basic functionality
+</dt><dd> Ability to block users by their names when they try to edit
+pages, getting data out of the database, special page for managing
+blocks.
+</dd><dt>Extended functionality
+</dt><dd> Ability to block IP addresses, use of memcached, viewing blocks by blockers.
+</dd><dt>Additional functionality
+</dt><dd> Ability to block new account creation on multiple wikias,
+displaying efficiency statistics for particular blocks (who, when, from
+where tried to edit and was blocked), allowing to set expiration period
+for blocks (which is already done).
+</dd></dl>
+</dd></dl>
+<a name="Key_Product_Concepts"></a><h2>Key Product Concepts</h2>
+<dl><dd><dl><dt>Data fetched from shared database
+</dt><dd> Data should be fetched from a shared database, supported with the use of memcached instead of hardwritten from the file.
+</dd><dt>Submit form on one page with the list
+</dt><dd> Easier to manage than having them on two separated special pages.
+</dd><dt>May be extended by having more statistics, timestamps, allow blocks by IP ranges, and such
+</dt><dd> We can add some statistics into separate tables (like the
+reason - rather an internal note for admin, why this particular user
+has been blocked, or the IP's from which the user tried to login etc.).
+</dd></dl>
+</dd></dl>
+<p><br>
+</p>
+<a name="Product_Unknowns"></a><h2>Product Unknowns</h2>
+<ul><li> Should we have a similar page for usernames excluded from
+blocking (when we block some IPs)? This could be linked to this project
+(the new special page would fetch some data from this one).
+</li><li> Include ability to block entire IP ranges? There are already indications that it would be useful.
+</li><li> Include timestamps? For now, the blocks are there for infinity.
+<ul><li> Timestamps are now included. Expired blocks are deleted
+automatically when a blocked user tries to edit and an expired block is
+then applied. In such case, the block is discarded and user can edit.
+Admin can also remove expired blocks manually from list (they are
+denoted 'EXPIRED' in red font)
+</li></ul>
+</li><li> Show more information? Like for example statistics, which users tried to login from which IPs and how many times, etc.
+</li></ul>
+<a name="Potential_Product_Issues"></a><h2>Potential Product Issues</h2>
+<ul><li> As we are able to block entire IP addresses, so there is more
+need for a utility to allow specific users identified by their
+usernames to edit anyway, even when they log from the blocked address.
+Similar request already exists here: <a>Product_Priorities:_Ops_Upgrades_Bugs#General</a>.
+The special page to exclude blocks could integrate both IP Blocks and
+Regexblocks or it could be just two separate special pages.
+</li><li> <strike>The blocks are permanent at the moment. So there is more attention required to them.</strike>
+</li></ul>
+<dl><dd> Which is untrue now. The blocks can be made with a chosen
+expiration time. After that, then can be removed manually or on block.
+Either way, they will be harmless.
+</dd></dl>
+<ul><li> also a note: on older versions of MW when the user is
+regexblocked (s)he cannot also create accounts (same goes for normal IP
+blocks), on newer (I've tested it personally on 1.8.2) it allows a
+separate user account creation block - it's about the code, and since I
+was developing a clean extension, I didn't want to alter the MW code
+itself. This leads to a situation, when the same block of one vandal
+will allow him/her to create account on one wiki, and disallow on the
+other (assuming that they will have different versions and the option
+'block account creation' will be unchecked).
+</li></ul>
+<a name="Product_Interface"></a><h2>Product Interface</h2>
+<dl><dd> Has one Special Page named Regexblock. It displays a form, used for adding blocks, and a list, used for managing blocks.
+</dd></dl>
+<dl><dd> The form has a field, specyfing user name or IP that we want
+to block. While not required for a successful block, there are three
+more options: whether match should be <b>exact</b>, whether we should deny this user <b>account creation</b>, or the <b>expiration period</b>, after which the block will be invalid.
+</dd></dl>
+<dl><dd> The list can be filtered by usernames of the blockers. Each row displays following information:  <i>username or IP address blocked</i>, <i>username of the blocker</i> and a <i>link to unblock</i>.
+The unblock requires no confirmation and is processed instantenuosly.
+The list can be traversed as all standard lists in special pages (prev,
+next, display by 20, 50 etc.). Each row also has the link to <b>statistics</b> for a particular block.
+</dd></dl>
+<a name="Product_Structure"></a><h2>Product Structure</h2>
+<ul><li> <b>Files</b>
+<ul><li> <b>regexBlock.php</b> <i>contains includes for the files in the folder, this one replaces old regexBlock.php</i>
+</li><li> <b>/regexBlock</b>  <i>folder containg the core of the extension plus docs</i>
+<ul><li> <b>README</b> <i>contains installation instructions and product description</i>
+</li><li> <b>regexBlockCore.php</b> <i>contains the blocking utility and use of the hook</i>
+</li><li> <b>SpecialRegexBlock.php</b> <i>Special Page for viewing and managing block list</i>
+</li><li> <b>SpecialRegexBlockStats.php</b> <i>Special Page for displaying stats for particular blocks</i>
+</li><li> <i> <b>SimplifiedRegex.php</b> - this one is required also by SpamRegex</i>
+</li></ul>
+</li></ul>
+</li></ul>
+<ul><li> <b>SQL</b>
+</li></ul>
+<pre>CREATE TABLE `blockedby` (
+`blckby_id` int(5) NOT NULL auto_increment,
+`blckby_name` varchar(255) character set latin1 collate latin1_bin NOT NULL,
+`blckby_blocker` varchar(255) character set latin1 collate latin1_bin NOT NULL,
+`blckby_timestamp` char(14) NOT NULL,
+`blckby_expire` char(14) NOT NULL,
+`blckby_create` tinyint(1) NOT NULL default '1',
+`blckby_exact` tinyint(1) NOT NULL default '0',
+`blckby_reason` tinyblob NOT NULL,
+ PRIMARY KEY  (`blckby_id`),
+ UNIQUE KEY `blckby_name` (`blckby_name`),
+ KEY `blckby_timestamp` (`blckby_timestamp`),
+ KEY `blckby_expire` (`blckby_expire`)
+ )&nbsp;;
+</pre>
+<pre>CREATE TABLE `stats_blockedby` (
+`stats_id` int(8) NOT NULL auto_increment,
+`stats_user` varchar(255) character set latin1 collate latin1_bin NOT NULL,
+`stats_blocker` varchar(255) character set latin1 collate latin1_bin NOT NULL,
+`stats_timestamp` char(14) NOT NULL,
+`stats_ip` char(15) NOT NULL,
+`stats_match` varchar(255) character set latin1 collate latin1_bin NOT NULL default '-',
+`stats_wiki` varchar(255) NOT NULL default <i>,</i>
+ PRIMARY KEY  (`stats_id`),
+ KEY `stats_timestamp` (`stats_timestamp`)
+ )&nbsp;;
+</pre>
+<p><br>
+</p>
+<ul><li> <b>Installation</b>
+</li></ul>
+<ol><li> Create tables in the shared database.
+</li><li> Copy folder /regexBlock to /extensions, copy SimplifiedRegex.php to /extensions (<b>do not</b> copy regexBlock.php yet!).
+</li><li> Edit regexBlock.php and set <b>REGEXBLOCK_PATH</b> to its correct value.
+</li><li> Copy regexBlock.php to /extensions.
+</li></ol>
+<dl><dd>That should do the trick. If people belonging to staff cannot
+access the extension, check if relogin helps. If not, please check if
+the staff permissions are not <b>overwritten</b> after the
+initialization of the extension. If that is the case, the permissions
+should be rather appended (the extension adds one new permission
+right).
+</dd></dl>
+<a name="Product_Use_Cases"></a><h2>Product Use Cases</h2>
+<ol><li> <b>Blocking a vandalising user by a username</b>
+</li></ol>
+<dl><dd><dl><dd>A user is vandalising over different wikias. An admin
+blocks the user by adding his/her username to the block list. The user
+cannot edit pages anymore until the block is released.
+<dl><dt>Step 1 (An admin blocks user)
+</dt><dd>Admin inserts the username into the database via the special page regexblock.
+</dd><dt>Step 2 (The user cannot edit pages)
+</dt><dd>Blocked user (a user that his/her username <b>contains</b> the
+blocked username) tries to edit. There goes a block check, and there is
+a match. Now, the expiration check is done. If the block is still
+valid, unfortunate (vandalising) user will be displayed a message that
+this particular user is blocked, along with the name of the blocker.
+Also, on a successful block, an entry into the database is made.
+</dd><dt>Step 3 (Admin releases the block)
+</dt><dd>When the situation is under control, admin can ublock the user
+(or not, if the user's actions made clear that the block should be
+permanent). Admin can also view statistics for this particular block
+(frequent attempts to edit despite being blocked may encourage admin to
+make a more permanent block...).
+</dd></dl>
+</dd></dl>
+</dd></dl>
+<ol><li> <b>Blocking a vandalising user by an IP address</b>
+</li></ol>
+<dl><dd><dl><dd> A user is vandalising over different wikias. An admin
+blocks the user by adding his/her IP address to the block list. No
+users logging from that IP will be able to edit the pages.
+<dl><dt>Step 1 (An admin blocks <b>full</b> IP address)
+</dt><dd>Admin inserts the <b>full</b> IP address into the database via the special page regexblock (<i>a
+partial or range IP address will be treated like a username. This is to
+avoid situations such as when a '3' block blocks all IP's including
+'3'. Regular expressions.</i>). 
+</dd><dt>Step 2 (The user cannot edit pages)
+</dt><dd>When a user logging in from a particular IP address (it has to be an <b>exact</b>
+match) tries to edit, he/she will be displayed a message that this
+particular user is blocked, along with the name of the blocker. Also,
+all non-logged users from that IP address will be blocked.
+</dd><dt>Step 3 (Admin releases the block)
+</dt><dd>When the situation is under control, admin can ublock this IP
+address (or not, if the user's actions made clear that the block should
+be permanent).
+</dd></dl>
+</dd></dl>
+</dd></dl>
+<a name="Product_Bugs"></a><h2>Product Bugs</h2>
+<dl><dd><b>Known Bugs</b>:
+</dd></dl>
+<dl><dd><ul><li> there is a little glitch when someone unblocks the
+last block by a particular blocker (it shows 'All' on the select, but
+the list is empty, the only exception is when unblocked row was the
+last on the global list)
+</li></ul>
+</dd></dl>
+<a name="Discussion"></a><h2>Discussion</h2>
+<p>Kaz3t</a>:
+I'm not convinced that currently way for blocking user by name is the
+best. For example user name can consist of his real name and surname.
+So if we block user "John" we also block users "Johnny", "John Smith",
+etc. In my opinion we should have choice - multi-block (as it is now)
+and single-block (for example when we want to block this and only this
+specified user we put his name between quotation-marks). </p>
+<dl><dd><dl><dd><dl><dd> Yes, you got a point. Umm, but wouldn't a checkbox be better? It would be more obvious on the first sight, I believe. --Bartek 16:03, 17 November 2006 (UTC)
+</dd><dd> I added a checkbox just for that, should be working fine. --Bartek 16:01, 20 November 2006 (UTC)
+</dd></dl>
+</dd></dl>
+</dd></dl>
+<ul><li> The message that a user sees is the same whether it is a
+similar name block or a specific name block (or even an IP block). I
+think this needs to either be made more general, or made variable. The
+reason set is: "This username is prevented from editing due to
+vandalism by a user with a similar name. Please create an alternate
+user name or contact Wikia about the problem"
+</li></ul>
+<dl><dd><dl><dd><dl><dd><dl><dd> There are four types of messages now
+(displayed to the blocked user). First, is the reason specified by an
+admin. If there is none, different messages will be displayed for:
+exact username match, IP address match and a regex username match. - --Bartek 13:07, 24 November 2006 (UTC)
+</dd></dl>
+</dd></dl>
+</dd></dl>
+</dd></dl>
+<ul><li> Is it possible to block <i>just</i> creation of accounts? for
+example to stop future creation of sannse-like accounts while still
+allowing me to edit? (this isn't vital though)
+</li></ul>
+<dl><dd><dl><dd><dl><dd><dl><dd> Good point. For the moment, it is not possible with this extension. It will be added in the future. - --Bartek 09:42, 24 November 2006 (UTC)
+</dd></dl>
+</dd></dl>
+</dd></dl>
+</dd></dl>
+<ul><li> When it's an exact match block, this is mentioned on the
+listing. Could it also be mentioned when it is not exact? It would make
+this listing clearer. For example:
+<ul><li>  Bartek (exact match) (account creation block) (blocked by: Sannse) on (etc.)
+</li><li>  Bartek (regex match) (account creation block) (blocked by: Sannse) on (etc.)
+</li></ul>
+</li></ul>
+<dl><dd><dl><dd><dl><dd><dl><dd> Changed already --Bartek 09:34, 24 November 2006 (UTC)
+</dd></dl>
+</dd></dl>
+</dd></dl>
+</dd></dl>
+<dl><dd><dl><dd><dl><dd><dl><dd> Done - --Bartek 09:39, 24 November 2006 (UTC)
+</dd></dl>
+</dd></dl>
+</dd></dl>
+</dd></dl>
+<ul><li> I think that's all I can come up with, this is wonderful! thanks so much for getting this going&nbsp;:) -- Sannse 18:13, 23 November 2006 (UTC)
+</li></ul>
+<ul><li> The list of blocks is in alphabetical order. Is this the best
+way? I think it may be, I'm just used to seeing such things in time
+order.
+</li></ul>
+<dl><dd><dl><dd><dl><dd><dl><dd> Right. For the time being, it is in a descending time order. Feel free to test and I will change to what will be best. - --Bartek 14:03, 27 November 2006 (UTC)
+</dd></dl>
+</dd></dl>
+</dd></dl>
+</dd></dl>
+<ul><li> Expired blocks are shown - useful? or are they quickly going to fill up the blocklog?
+</li></ul>
+<dl><dd><dl><dd><dl><dd><dl><dd> Now they are hidden. - --Bartek 14:03, 27 November 2006 (UTC)
+</dd></dl>
+</dd></dl>
+</dd></dl>
+</dd></dl>
+<ul><li> All seems to work as advertised&nbsp;:) -- Sannse 11:32, 27 November 2006 (UTC)
+</li></ul>
+<ul><li> A community team question.  Do we want to change the default block reasons at all?  The current defaults are:
+<ul><li> "This IP address is prevented from editing due to vandalism" (IP block)
+</li><li> "This username is prevented from editing due to vandalism by
+a user with a similar name. Please create an alternate user name or
+contact Wikia about the problem" (RegEx block)
+</li><li> "This username is prevented from editing due to vandalism" (Username block)
+</li></ul>
+</li></ul>
+<dl><dd>It won't always be vandalism. Is there something more general
+we can use to cover vandalism, spamming, trolling, impersonation, etc? Angela 10:53, 28 November 2006 (UTC)
+</dd></dl>
+<dl><dd><dl><dd> how about "vandalism or other disruption" -- Sannse 08:59, 30 November 2006 (UTC)
+</dd></dl>
+</dd></dl>
+<ul><li> as Splarka said earlier (05.12.2006) on IRC - <i>an idea for
+blocking IP ranges: a radio box: (*) whole username (exact match) ( )
+regex username ( ) IP or IP range in the first: "Splarka" would block
+just that name... in the second "Spla" would block any username
+containing that... and in the third: 75.72.55.78 would block just the
+user's IP, and 75.72. could block 75.72.*.* simple summary: IP matching
+would be made manual (easier to code probably?) although CIDR support
+might be better than regex for IPs... eg 75.72.0.0/16</i>
+</li></ul>
+<ul><li> as Sannse and Splarka said today on IRC, it would be good to
+have an option to block users in case-sensitive mode. One proposition
+is for an exact match to be case-sensitive. - --Bartek 09:06, 18 December 2006 (UTC)
+</li></ul>
+<dl><dd><dl><dd> As agreed, it will be case-sensitive for an exact match mode. - --Bartek 09:08, 18 December 2006 (UTC)
+<dl><dd>Which is already under testing
+</dd></dl>
+</dd></dl>
+</dd></dl>
+<ul><li> and, as Emil said, it would be good to check if there is some
+proxy check within the IP check (might be already implemented in
+existing functions, since I am using class User's function to get the
+user's IP)
+</li></ul>
+<a name="Suggested_messages"></a><h2>Suggested messages</h2>
+<ul><li> "This IP address is prevented from editing due to vandalism or
+other disruption by you or by someone who shares your IP address. If
+you believe this is in error, please contact Wikia." (IP block)
+</li><li> "This username is prevented from editing due to vandalism or
+other disruption by a user with a similar name. Please create an
+alternate user name or contact Wikia about the problem." (RegEx block)
+</li><li> "This username is prevented from editing due to vandalism or other disruption. If you believe this is in error, please contact Wikia." (Username block)
+</li></ul>
+<a name="Post_release"></a><h2>Post release</h2>
+<p>A possible problem that's hard to confirm.
+User:WatchTVEatDonutDrinkBeer complained of errors on trying to access
+pages on wikiality. Their browser would direct them to Not Found
+
+The requested URL /Main_Page was not found on this server.
+Apache/2.2.0 (Unix) mod_ssl/2.2.0 OpenSSL/0.9.7f PHP/5.1.4 Server at 84.40.25.253 Port 80
+<p>Because the timing of their last edit was so similar to a block Angela had made:
+</p>
+<pre># wheels! (regex match) (account creation block) (blocked by: Angela, generic reason) on 19:43, 29 December 2006 (unblock) permanent block (stats)
+</pre>
+<p>I tried removing this block. Once I'd done that, he could access the
+site normally. Replacing the block had no effect. I compared his IP
+with the vandal's (User:Willy on wheels!) but they didn't match.
+Perhaps a coincidence? But recording it here just in case it isn't -- Sannse 20:42, 29 December 2006 (UTC)
+</p>
+
+	</div>
+       </div>
+
+			<div class="visualClear"></div>
+		<div id="footer">
+				<div id="f-poweredbyico"><a href="http://www.mediawiki.org/"><img src="_files/poweredby_mediawiki_88x31" alt="MediaWiki"></a></div>
+				<div id="f-copyrightico"><a href="http://www.gnu.org/copyleft/fdl.html"><img src="_files/gnu-fdl" alt="GNU Free Documentation License"></a></div>
+	  			<div id="f-hosting"><i>Wikia</i> is a service mark of Wikia, Inc. All rights reserved.</div>
+		</div>
+
+</div>
+
+</body></html>

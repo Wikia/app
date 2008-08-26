@@ -1,0 +1,21 @@
+To install:
+
+Add this line to LocalSettings:
+ Require_Once ($IP . '/extensions/XSoundBox.php');
+
+Since Adobe Flash Player can only handle MP3 files we need to convert other files first.
+This is done with sox/lame combo, so you'll have to make sure both programs are installed and avaiable for HTTP server.
+
+SoX can be obtained here: http://sox.sourceforge.net/
+Lame can be obtained here: http://lame.sourceforge.net/
+
+Few globals:
+
+Special dir for storing converted sound files...
+ $wgXSoundRepoPath = $IP . $wgUploadPath . '/XSounds/';
+... this dir must be accesible through WWW interface, and here you're defining it's URL:
+ $wgXSoundRepoURL = $wgServer . $wgScriptPath . $wgUploadPath . '/XSounds/';
+Last but not least! A Flash file:
+ $XSoundFlashFile = $wgServer . $wgScriptPath . '/Jukebox.swf';
+
+For further reference contact: CorfiX (corfix@wikia.com)

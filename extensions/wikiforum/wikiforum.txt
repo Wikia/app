@@ -1,0 +1,33 @@
+Wikiforum.php -- a forum-like extension for Mediawiki
+Copyright 2004 Guillaume Blanchard <aoineko@free.fr>
+
+==============================================================================
+This program is free software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation; either version 2 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+==============================================================================
+
+To install this extension, just add the below to your LocalSettings.php:
+   
+ define('NS_THREAD', 110); // thread namespace (can be any thing greater than 100)
+ require_once( "extensions/wikiforum.php" );
+
+You can also configurate the forum with the fellowing functions:
+
+ $wgForum->SetThreadNumber(10);        // set the total number of threads
+ $wgForum->SetIncludeNumber(3);        // set the total number of full included threads
+ $wgForum->SetSummaryMaxLength(10);    // set the maximum length of summary into threads table
+ $wgForum->SetForumLastestOnTop(true); // lastest thread shown on top
+
+NOTE: this extension is not fully functionaly for MediaWiki version 1.5 due to
+a database schema change. You will not be able to list the threads.

@@ -1,0 +1,62 @@
+/* editor */
+
+.widgetEditor dl dd
+{
+  margin-left:  2px;
+}
+
+/* star rating fixes */
+#rateIt
+{
+  margin-bottom: -23px;
+}
+
+#rateLabel,
+#star-rating,
+#unrateLink
+{
+  display: inline;
+  float:   left;
+}
+
+#star-rating {margin: 0 !important}
+
+#unrateLink
+{
+  float: right;
+  margin: 2px 5px 0 0;
+}
+
+.star-rating li a:hover
+{
+  background-image: url('http://images.wikia.com/common/skins/star-rating_3.png');
+  background-position: 0 0;
+}
+
+#rateItClear {clear: both; display: block}
+
+/* search button fix */
+#search-submit
+{
+  top:  5px;
+  left: 0px;
+}
+
+/* #1968 */
+li.widget table {
+    background-color: inherit;
+    color: #fff;
+}
+
+/* #2016 */
+#dashboard_wrapper ul {
+    list-style-type: none !important;
+    list-style-image: none !important;
+}
+
+/* #2194 */
+#widget_cockpit ul li.blocked,
+#widgetsSpecialPageList dl.blocked dt div
+{
+	filter: Alpha(Opacity=30, Style=0);
+}

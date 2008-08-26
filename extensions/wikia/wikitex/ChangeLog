@@ -1,0 +1,126 @@
+2005-03-10  Peter Danenberg  <pcd at wikitex dot org>
+
+	* manifest.ms: updated for skak
+
+	* readme.ms: updated for skak
+
+	* wikitex.plot.inc.p: filename placeholder
+
+	* wikitex.chess.inc.tex: updated for skak
+
+	* wikitex.sh: verbose errors enabled on plot;
+	'export DISPLAY' localized
+
+	* wikitex.php: updated blacklist for skak
+
+2005-03-08  Peter Danenberg  <pcd at wikitex dot org>
+
+	* readme.ms: clarified installation; added gschem
+	to xvfb requisants.
+
+	* wikitex.inc.php: added designator for <schem>;
+	switched out PPCH for Xym; called the former
+	<ppch>, the latter <chem>.
+
+	* wikitex.php (strSchem): added hook for
+	<schem> class
+
+	* wikitex.sh (wt_exec): added wt_exec so as to
+	catch errors and show not only whence, but why
+	a render failed.
+	(schem): added support for gschem
+
+2005-03-02  Peter Danenberg  <pcd at wikitex dot org>
+
+	* copying.ms: verbatim license
+
+	* readme.ms: added colophon.
+
+2005-02-28  Peter Danenberg  <pcd at wikitex dot org>
+
+	* wikitex.sh (wt_anch): fixed a catachrestical escape
+	which frustrated the source's display.
+
+2005-02-05  Peter Danenberg  <pcd at wikitex dot org>
+
+	* thanks.ms: added.
+
+	* readme.ms: updated installation process.
+
+2005-01-29  Peter Danenberg  <pcd at wikitex dot org>
+
+	* wikitex.sh: added support for gnuplot and graphviz;
+	<plot> and <graph> respectively.  Added link to source
+	from each image.
+
+2005-01-28  Peter Danenberg  <pcd at wikitex dot org>
+
+	* wikitex.sh: Utterly refactored; new features: modular
+	handlers; multi-page output; plain-text, detailed errors;
+	file-based output cache.
+
+2005-01-25  Peter Danenberg  <pcd at wikitex dot org>
+
+	* wikitex.php (WikiTeX): \write, \let, \csname, \read,
+	and \open added to the blacklist; thanks to Johannes
+	Berg for the heads up.
+
+	* wikitex.sh (strInc): removed some lingering hard paths;
+	added support for dvipng; removed dvi2bitmap.
+
+	* wikitex.inc.php (WikiTeX): 'math' class changed to 'ams'
+	so as to avoid conflict with texvc; i.e. no chance of a
+	de-coupling of texvc and MediaWiki anytime soon.
+
+2004-10-04  Peter Danenberg  <pcdanenb at mitdasein dot com>
+
+	* manifest.ms: updated
+
+	* readme.ms: installation process for svg and batik
+
+	* wikitex.php: added 'batik' and 'svg' elements; fixed
+	invalid constructor in objRend which gave syntax errors
+	in PHP4.
+
+	* wikitex.sh: added 'batik' and 'svg' elements; changed
+	error template to wikitex.error.inc.tex; and: transitioned
+	to png from gif.
+
+	* wikitex.svg.inc.svg: added
+
+	* wikitex.batik.inc.svg: added
+
+	* wikitex.inc.sh: inc.sh reintroduced; batik path in-
+	erted; as well as indications for an Apache bandaid
+	should defective paths prevail.
+
+2004-10-03  Peter Danenberg  <pcd at wikitex dot org>
+
+	* wikitex.php: added support for SVG; deciding currently
+	on the Batikian solution (xml.apache.org/batik) since,
+	while slow, it is very complete.  For oeconomy's sake,
+	may switch later to ImageMagick's more limited, but faster,
+	SVG subset.
+
+2004-09-07  Peter Danenberg  <pcd at wikitex dot org>
+
+	* wikitex.inc.php: transferred parms from LocalSettings.php
+	hither; so as to produce a clean installation interface
+	(merely the addition of line for the stand-alone distributees).
+
+2004-09-06  Peter Danenberg  <pcd at wikitex dot org>
+
+	* README: clarified acquisition
+
+	* wikitex.php: added PHP4 constructor
+
+	* wikitex.php: updated parse code to phase3 standards;
+	WikiTeX now parses like pseudo-XML: <math></math>,
+	<chem></chem>, etc.
+
+	* wikitex.php: added new classes: go, xym, teng, and feyn.
+
+2004-09-05  Peter Danenberg  <pcd at wikitex dot org>
+
+	* README: added; with entry on extending WikiTeX.
+

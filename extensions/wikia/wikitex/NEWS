@@ -1,0 +1,264 @@
+
+
+
+
+
+
+
+
+
+                     WikiTeX 1.0.3 NEWS
+
+          Peter Danenberg <pcd at wikitex dot org>
+
+
+Thu Mar 10 01:26:39 PST 2005  Peter Danenberg
+
+          Skak  by  Torben  Hoffmann has replaced Piet Tute-
+     laers' package as the <chess> renderer; Skak  is  back-
+     wards compatible and allows, amongst other things:
+
+          o    SAN and PGN notation
+
+          o    large boards (with \largeboard)
+
+          o    move arrows (with \printarrow)
+
+     see the docs for details.
+
+Tue Mar  8 16:53:39 PST 2005  Peter Danenberg
+
+          <schem>  added;  id  est,  schematic  capture with
+     gschem (geda.seul.org).  PPCH has been deprecated; XyM-
+     TeX,  meanwhile, has taken its place as the <chem> ren-
+     derer.
+
+          Effort is underway to replace  our  ad-hoc  black-
+     lists  with  chroot-based security; adieu, "directa non
+     grata!"
+
+          Lastly, verbose errors now declare  not  only  the
+     whence, but the why of defects.
+
+Sun Feb  6 14:21:48 PST 2005  Peter Danenberg
+
+          We've disassociated our versioning from MediaWiki,
+     and started with a pristine 1.0;  so  that,  should  we
+     bundle  in  the  future, our release cycles can be dis-
+     tinct.
+
+Sat Jan 29 00:34:09 PST 2005  Peter Danenberg
+
+          Changes almost too numerous to enumerate; but some
+     of the more exciting:
+
+     o    Gnuplot  and Graphviz: <plot> and <graph>, respec-
+          tively
+
+     o    Multi-page output for music, go and chess
+
+
+
+
+
+                        10 March 2005
+
+
+
+
+
+                             -2-
+
+
+     o    More detailed, helpful error messages
+
+          The installation process, to boot, is less  error-
+     prone;  no  Python:  but  the  bash  interface has been
+     refactored.
+
+Tue Jan 25 11:23:48 PST 2005  Peter Danenberg
+
+          This candidate both maintains by  tightening  down
+     our blacklist (thanks, Johannes Berg); and innovates by
+     introducing Jan-Aoke Larsson's dvipng.  dvipng replaces
+     dvi2bitmap; resulting in cleaner, faster renders.
+
+          <math></math>  becomes  <amsmath></amsmath> in the
+     stand-alone version, to avoid conflicting  with  texvc;
+     in pre-packaged WikiTeX, it replaces texvc.
+
+          I'd  also  like  to  un-cobweb that bash interface
+     with Python before we go live.
+
+Mon Oct  4 01:56:23 PDT 2004  Peter Danenberg
+
+          In order to plumb their  several  virtues'  depth,
+     the  Batik  toolkit  ("heavy  SVG"),  will be available
+     alongside ImageMagick; its more efficient kin.
+
+          Batik  may  be  invoked  by  <batik></batik>;  and
+     <svg></svg>, ImageMagick.
+
+Sun Oct  3 17:38:03 PDT 2004  Peter Danenberg
+
+          SVG  is finally here; and we opted for Batik's SVG
+     kit (xml.apache.org/batik) which, though very full-fea-
+     tured,  suffers  from a Java-like retardation.  It were
+     mere oeconomy that ever  importuned  us  to  return  to
+     ImageMagick's SVG subset.
+
+Mon Sep  6 03:20:26 PDT 2004  Peter Danenberg
+
+          With  the  introduction  of XML-like tags, we have
+     cleared a major hurdle towards integration with  Media-
+     Wiki; next on the list, parameters of the form:
+
+          <music tempo="80"></music>
+
+     WikiTeX'  vulnerability  to  attack  must also be thor-
+     oughly sounded.
+
+Sun May 30 00:00:00 PDT 2004  Peter Danenberg
+
+          We're  refactoring WikiTeX from the ground  up  to
+     implement tags of the form:
+
+
+
+
+
+                        10 March 2005
+
+
+
+
+
+                             -3-
+
+
+          <class [parm: value]>content</class>
+
+     and  likely  of  an  external  parser; where a lex/yacc
+     solution might  be attractive.  (Finite state  recogni-
+     tion  is  probably  what  we're looking  for,  however,
+     rather  than  look-ahead  left-to-right  parsing;  i.e.
+     top-down recursive descent.)
+
+          If  WikiTeX'  sum scope, on the other hand, resem-
+     bles  a  glue-script with regular-expression grinding,*
+     we might not need  to  look  past  Perl;  PHP,  in  any
+     case,  just passes as lexer/parser: but we'd like some-
+     thing more robust and, above all, to separate  applica-
+     tion from interface.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+-----------
+  * Raymond,  Eric  Steven.   The Art of Unix Pro-
+gramming (faqs.org/docs/artu).
+
+
+
+                        10 March 2005
+
+
+
+
+
+                             -4-
+
+
+WikiTeX: expansible LaTeX module for MediaWiki
+Copyright (C) 2004-5  Peter Danenberg
+
+     WikiTeX  is licensed under the Artistic License 2.0; to
+view a copy of this license, see COPYING or visit:
+
+     http://dev.perl.org/perl6/rfc/346.html
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                        10 March 2005
+
+

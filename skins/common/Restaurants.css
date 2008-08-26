@@ -1,0 +1,680 @@
+@import url("common.css");
+	
+/**General**/
+body {background-color:#ffffff;}
+td {font-family:arial;}
+img {border:none;}
+
+.title {
+font-size:12pt;
+font-weight:bold;
+color:#F85D7E;
+}
+
+.title a {
+text-decoration:none;
+}
+
+a {color:#4A911A;}
+
+a.external, a.stub {
+color:#4A911A !important;
+text-decoration:underline;
+font-weight:bold;
+}
+
+a.new {
+color:#FF3399 !important;
+text-decoration:underline;
+font-weight:bold;
+}
+
+.altlink {
+cursor:pointer;
+color:#4A911A;
+}
+
+.pagetitle {
+font-size:18pt;
+font-weight:600;
+}
+
+.bluehatch {
+background-image:url("../../images/bluehatch.gif");
+padding:5px; 
+background-color:#F8F8F8;
+background-repeat: repeat-x;
+border: 1px solid #cccccc;
+}
+
+topright.newmessage {
+color:#FF3399 !important;
+font-weight:bold;
+}
+
+/**Top Tabs**/
+td.toptabs {
+border:1px solid #DCDCDC;
+text-align:center;
+vertical-align:middle;
+color:#4A911A;
+font-size:10pt;
+padding:4px;
+background-image:url(../../images/tabGradient.gif);
+}
+
+td.toptabs:hover {
+background-image:url(../../images/tabGradientHover.gif);
+}
+
+td.toptabsOn {
+cursor:pointer;
+border-top:1px solid #DCDCDC;
+border-left:1px solid #DCDCDC;
+border-right:1px solid #DCDCDC;
+text-align:center;
+vertical-align:middle;
+color: #4A911A;
+font-size:10pt;
+padding:5px;
+}
+
+td.toptabs a {
+color:#000000;
+text-decoration:none;
+}
+
+td.toptabsOn a {
+color:#000000;
+text-decoration:none;
+}
+
+.topright {
+border-bottom:1px solid #DCDCDC;
+text-align:right;
+font-size:10pt;
+}
+
+.topright a {
+color:#000000;
+text-decoration:none;
+}
+
+/**Nav Bar **/
+.righttop {
+background-image:url("../../images/politics/righttop.gif");
+padding-right:3px;
+}
+
+.leftmiddle {
+background-image:url("../../images/restaurants/background.gif");
+padding-left:10px;
+font-size:12pt;
+font-weight:bold;
+color:white;
+}
+
+.leftmiddle a {
+font-size:11pt;
+font-weight:bold;
+color:white;
+text-decoration:none;
+}
+
+.rightmiddle {
+background-image:url("../../images/restaurants/rightmiddle.gif");
+text-align:center;
+}
+
+.rightmiddle a {
+font-size:15pt;
+font-weight:bold;
+color:white;
+text-decoration:none;
+}
+
+.leftbottom {
+background-image:url("../../images/leftbottomfade.gif");
+background-repeat: repeat-x;
+}
+
+rightbottom {
+background-image:url("../../images/restaurants/rightbottom.gif");
+}
+
+/** Middle Top **/
+.middleleft {
+padding-top:17px;
+padding-bottom:10px;
+background-color:#ffffff;
+}
+
+.middleright {
+padding-top:17px;
+padding-bottom:10px;
+text-align:right;
+background-color:#ffffff;
+}
+
+.mainpagelinks a {
+text-decoration:none;
+font-weight:bold;
+}
+
+/** Main Window **/
+.main {
+background-color:#ffffff; 
+padding:5px;
+color:#404040;
+font-size:.9em;
+line-height:1.2em;
+}
+
+
+/**Footer**/
+.footer {
+font-size:12px;
+color:#dcdcdc;
+text-align:center;
+padding-top:15px;
+}
+
+/** Vote **/
+.votebox {
+border:1px solid #4A911A;
+background-image:url("../../images/restaurants/votebox.gif");
+font-weight:bold;
+font-size:16pt;
+}
+
+.votebutton {
+text-decoration:none;
+color:#4A911A;
+font-size:11pt; 
+}
+
+/** lightbox **/
+input.register {
+font-size:16pt;
+}
+
+.registerlabel {
+color:#4A911A;
+font-size:14pt;
+}
+
+.registertext {
+font-size:10pt;
+color:#666666;
+padding-left:8px;
+padding-bottom:10px;
+}
+
+input.registersubmit {
+padding:4px;
+background-image:url("../../images/tabGradient.gif");
+border:1px solid #dcdcdc;
+font-size:12pt;
+filter:chroma(color=#dcdcdc);
+}
+
+.registerclose {
+border-top:1px solid #dcdcdc;
+text-align:center;
+padding-top:10px;
+}
+
+/** list pages **/
+.listrating {
+font-size:10px;
+color:#666666;
+}
+
+.listrating-score {
+font-size:11px;
+font-weight:800;
+padding-right:5px;
+}
+
+.listpageItem {
+margin-bottom:5px;
+width:100%;
+}
+
+.borderListpages .listpageItem{
+border-bottom:1px solid #cccccc;
+padding:6px;
+background-color:#FFFFFF
+}
+
+#destinationview .listpageItem {
+padding-bottom:3px;
+border:none;
+}
+
+.showdetails { 
+font-size:13pt; 
+font-weight:bold;
+}
+
+.showdetails a {
+text-decoration:none;
+}
+
+.showdetails a:hover {
+background-color:#4A911A;
+color:#ffffff;
+}
+
+.view {
+padding-top:2px; 
+font-size:14px;
+font-weight:bold;
+text-align:left;
+}
+
+.view a {
+text-decoration:none;
+}
+
+.listdate {
+font-size:10px;
+color:#666666;
+padding-bottom:3px;
+
+}
+
+.liststats {
+font-size:10px;
+color:#666666;
+padding-top:2px;
+padding-bottom:4px;
+}
+
+.liststatstitle {
+font-size:11px;
+color:#26579A;
+font-weight:bold;
+}
+
+.categorylinks {
+font-size:10px;
+text-decoration:none;
+}
+
+.categorylinks a {
+color:#FF3399;
+border-bottom:1px dotted #FF3399;
+text-decoration:none;
+}
+
+.categorylinks a:hover {
+color:#ffffff;
+background-color:#FF3399;
+}
+
+.categorylinkstitle {
+font-size:11px;
+font-weight:800;
+color:#FF3399;
+}
+
+.listblurb {
+font-size:11px;
+padding-bottom:4px;
+}
+
+#listpagesnav ul {
+margin:0px;
+padding:0px;
+list-style:none;
+}
+
+#listpagesnav .nav {
+font-family:arial;
+font-size:10pt;
+border:1px solid #3BAAAB;
+margin:1px;
+padding:2px;
+width:45px;
+text-align:center;
+color:#4A911A;
+background-color:#ffffff;
+background-image:url(../../images/tabGradient.gif);
+filter:chroma(color=#000000);
+cursor:pointer;
+}
+
+#listpagesnav .nonav {
+font-family:arial;
+font-size:10pt;
+border:1px solid #dcdcdc;
+margin:1px;
+padding:2px;
+width:45px;
+text-align:center;
+color:#999999;
+background-image:url(../../images/tabGradient.gif);
+filter:chroma(color=#000000);
+cursor:pointer;
+}
+
+#listpagesnav .navnodetails a {
+font-family:arial;
+font-size:10pt;
+color:#285C98;
+text-decoration:underline;
+}
+
+#listpagesnav .navnodetails a:hover {
+font-family:arial;
+font-size:10pt;
+color:#78BA5D;
+text-decoration:underline;
+}
+
+#listpagesnav .nonavnodetails a {
+font-family:arial;
+font-size:10pt;
+color:#666666 !important;
+text-decoration:underline;
+}
+
+.listpage img {
+border:1px solid #dcdcdc;
+}
+
+#listpages li{
+	display:block;
+	list-style-type: none;
+	padding:5px;
+	margin:10px;
+	width:300px;
+	border:3px solid #C2CDE0;
+}
+
+#listpages ul{
+	padding-left: 0px;
+	margin-left: 0px;;
+
+}
+
+.voteboxsmall {
+border:1px solid #4A911A;
+background-image:url("../../images/restaurants/votebox.gif");
+font-weight:bold;
+font-size:15px;
+}
+
+/** Create Page **/
+
+.createsubtitle {
+font-size:8pt !important;
+color:#999999 !important;
+font-weight:normal !important;
+}
+
+input.createbox {
+border:1px solid #dcdcdc;
+font-size:12pt;
+font-family:arial;
+background-image:url(../../images/createbackground.gif);
+}
+
+textarea.createbox {
+border:1px solid #dcdcdc;
+font-size:12pt;
+font-family:arial;
+background-image:url(../../images/createbackground.gif);
+}
+
+input.createsubmit {
+padding:4px;
+background-image:url(../../images/tabGradient.gif);
+border:1px solid #dcdcdc;
+color:#4A911A;
+font-size:10pt;
+filter:chroma(color=#dcdcdc);
+}
+
+div.addfeed {
+font-size:10px;
+padding-bottom:8px;
+}
+
+/** Comments **/
+.commenticon {
+padding-left:35px !important;
+padding-bottom:5px;
+}
+
+.username {
+color:#4A911A;
+font-size:13pt;
+font-weight:bold;
+}
+
+.username a {
+text-decoration:none;
+}
+
+.commenttime {
+color:#666666;
+font-size:8pt;
+}
+
+.commentscore {
+color:#4A911A;
+font-size:9pt;
+font-weight:bold;
+}
+
+.reply {
+color:#4A911A;
+font-size:11pt;
+text-align:right;
+text-decoration:underline;
+}
+
+.commentmiddle {
+border:1px #C2CDE0 solid;
+background-color:#F8F8F8;
+font-size:101%;
+line-height:1.35;
+padding:5px;
+}
+
+.replyto {
+color:#4A911A;
+font-weight:800
+}
+
+/** Site Scout **/
+
+.items {
+	clear:both;
+}
+
+.site-scout {
+	clear: both;
+	border-top: 1px solid #ccc;
+	min-height: 3.3em; /*for the hover*/
+}
+
+
+.site-scout a, .site-scout span {
+	padding-top:5px;
+	padding-bottom:3px;
+}
+
+a.item-title {
+	font-weight:800;
+}
+
+.item-header span {
+	font-weight: bold;
+	color:#000000;
+	font-size: 85%;
+	padding-bottom:3px;
+}
+
+.item-info, .item-title, .item-user, .item-comment, .item-time, .item-user-link, .item-user-talk{
+	float: left;
+	display: block;
+	text-decoration: none;
+}
+
+.item-info  {
+	width: 45px;
+	font-size: 85%;
+	text-align:center;
+}
+
+
+.site-scout .item-title {
+	width: 275px;
+}
+
+.item-user {
+	float:right;
+	width: 175px;
+	font-size: 75%;
+}
+
+.item-user img {
+	vertical-align: middle;
+	border: 1px solid #ccc;
+}
+
+.item-user-talk {
+	height:18px;
+}
+
+.item-user-talk img {
+	vertical-align: middle;
+	border: 0px;
+}
+
+.item-comment {
+	float:right;
+	width: 150px;
+	font-size: 75%;
+	font-color:#666666;
+}
+
+
+.item-time {
+	float:right;
+	width: 110px;
+	color:#666666;
+	font-size: 75%;
+}
+
+table.site-scout-stats {
+	color:#666666;
+	font-size: 85%;
+}
+
+td.site-scout-stats-header {
+	font-weight:800;
+}
+
+/**Login/Register**/
+
+.loginWindow{
+position:absolute;
+top:5px;left:5px;
+background-image:url("../../images/bluehatch.gif");
+padding:5px; 
+background-color:#F8F8F8;
+background-repeat: repeat-x;
+border: 1px solid #4A911A;
+z-index:1000;
+width:460px;
+}
+
+/**Vote Ratings**/
+.rating-title{
+	font-size:14px;
+	color:#666666;
+	font-weight:800;
+	padding-bottom:2px;
+}
+
+.rating-avg{
+	font-size:16px;
+	color:#666666;
+	font-weight:800;
+}
+
+.rating-total{
+	font-size:10px;
+	color:#666666;
+}
+
+.smallList .listpageItem a {
+ font-size:12px;
+ font-weight:800;
+}
+.smallList .listpageItem {
+ margin-bottom:5px;
+ padding-bottom:0px;
+ padding-left:1px;
+}
+
+.pagetitle {
+line-height:1.5em;
+}
+
+.mainpage {
+font-size:12px;
+}
+
+.site-scout-controls{
+background-image:url("../../images/restaurants/sitescout.gif");	
+background-repeat: no-repeat;
+background-position:top;
+}
+
+.commentboxsmall {
+background-image:url("../../images/politics_chatbox.gif");
+font-weight:bold;
+color:#FFFFFF;
+font-size:15px;
+repeat:no;
+}
+
+.cod-poster{
+font-weight:800;
+font-size:11px;
+padding-right:3px;
+}
+.cod-poster a{
+font-weight:800;
+font-size:11px;
+}
+
+.cod-comment a{
+font-size:11px;
+}
+
+.cod-score{
+padding-right:4px;
+font-size:14px;
+font-weight:800;
+color:orange;
+}
+
+#uploading {
+	border-style: none;
+	padding: 0;
+	margin-bottom: 16px;
+	height: 14em;
+	width: 100%;
+}
+
+.backgroundtip {
+background-image:url("../../images/restaurants/backgroundtip.gif");
+padding-left:7px;
+background-repeat:no-repeat;
+}

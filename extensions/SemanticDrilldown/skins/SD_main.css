@@ -1,0 +1,63 @@
+/**
+ * The main CSS file for the Semantic Drilldown extension.
+ */
+
+div.drilldown-categories-wrapper {
+	float: right;
+	background: white;
+	padding: 0px 25px 25px 25px;
+}
+
+div.drilldown-categories {
+	border: 2px #888888 solid;
+}
+
+div.drilldown-categories-header {
+	font-weight: bold;
+	padding: 3px 8px 3px 8px;
+	background: #c9c9c9;
+}
+
+div.drilldown-category {
+	border-top: 1px #aaaaaa solid;
+	padding: 3px 8px 3px 8px;
+	margin: 0px;
+	background: #e9e9e9;
+}
+
+div.selected-category {
+	background: white;
+}
+
+div.drilldown-header {
+	font-size: large;
+	font-weight: bold;
+}
+
+span.drilldown-header-value {
+	font-weight: normal;
+}
+
+div.drilldown-filters {
+	/* background: #e2e2e2; */
+	margin-top: 10px;
+	padding-bottom: 8px;
+	margin-bottom: 8px;
+	border-bottom: 1px #aaaaaa solid;
+}
+span.drilldown-or {
+	color: gray;
+	font-weight: normal;
+}
+
+div.drilldown-filter-label {
+	font-weight: bold;
+}
+
+span.drilldown-filter-notes {
+	font-weight: normal;
+}
+
+div.drilldown-filter-values {
+	margin-bottom: 10px;
+}

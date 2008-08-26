@@ -1,0 +1,11 @@
+.WidgetTopContent select {
+    float: left;
+    width: 130px;
+    margin-top: 4px;
+    font-size: 0.9em !important;
+}
+
+* html .WidgetTopContent dd,
+* html .WidgetTopContent dt {
+	position: relative;
+}

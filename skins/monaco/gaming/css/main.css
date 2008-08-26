@@ -1,0 +1,180 @@
+/*** MAIN COLORS ***/
+.color1, .color1 a, .yui-panel .hd {
+	background-color: #ffcb3b;
+	color: #000;
+}
+.color2 {
+	background-color: #09101d;
+}
+#background_strip {
+	background: #09101d url(http://images.wikia.com/common/skins/quartz/gaming/images/background.jpg);
+	border-color: #71d1ef;
+}
+#page_bar {
+	background-image: none;
+}
+
+/*** WIDGETS ***/
+.widget {
+	background-color: #0e192d;
+	border-color: #71d1ef;
+	color: #FFF;
+}
+.widget a {
+	color: #FFF !important;
+}
+#navigation .menu-item {
+	border-color: #666;
+}
+#navigation a {
+	color: #71d1ef;
+}
+#navigation a:hover, .navigation-hover {
+	background-color: #71d1ef;
+	color: #333 !important;
+}
+#link_box, #link_box a {
+	background-color: #09101D;
+	color: #FFF !important;
+}
+#navigation_widget {
+	border-color: #AAA;
+}
+#search_button {
+	background-image: url(../images/search.png);
+}
+* html #search_button {
+	background-image: none;
+	filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='/skins/monaco/gaming/images/search.png', sizingMethod='crop');
+}
+#search_box {
+	background-image: none;
+}
+
+/*** HEADER AND FOOTER ***/
+#wikia_header {
+	background-color: #0e192d;
+	border-color: #71d1ef;
+}
+#userData a, #wikiaBranding a {
+	color: #FFF;
+}
+#header_username a {
+	color: #fec423;
+}
+#wikia_footer {
+	color: #FFF;
+}
+#wikia_footer a {
+	color: #EEE;
+}
+#wikia_logo {
+	background-image: url(../images/wikia_logo.png);
+}
+* html #wikia_logo {
+	background-image: none;
+	filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='/skins/monaco/gaming/images/wikia_logo.png', sizingMethod='crop');
+}
+.headerMenuButton dt, .headerMenuButton dd {
+	background-image: url(../images/header_button.png);
+	color: #333;
+}
+* html .headerMenuButton dt, * html .headerMenuButton dd {
+	background-image: none;
+	filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='/skins/monaco/gaming/images/header_button.png', sizingMethod='crop');
+}
+
+/*** PAGE ***/
+body {
+	color: #FFF;
+}
+#wikia_page {
+	background: #0e192d;
+	color: #FFF;
+}
+#wikia_page a {
+	color: #71d1ef;
+}
+#wikia_page a.new {
+	color: #C20;
+}
+#wikia_page code {
+	background-color: #060;
+}
+#page_tabs li.selected, #page_tabs li.selected a {
+	background: #0e192d;
+	color: #FFF !important;
+}
+#articleFooter {
+	background-color: transparent;
+}
+#articleFooter a {
+	color: #FFF;
+	text-decoration: underline;
+}
+#articleFooter strong {
+	color: #FFF;
+}
+#preftoc li {
+	background-color: #ffcb3b;
+}
+#preftoc li a {
+	color: #000;
+}
+
+#wikia_page table.toc,
+#catlinks,
+#wikia_page table.gallery td,
+div#userloginForm form,
+div#userlogin form#userlogin2,
+div#userloginForm table,
+div#userlogin form#userlogin2 table,
+ul#filetoc,
+#preferences,
+.prefsection table,
+.prefsection legend
+{
+	background-color: #09101D;
+	color: #FFF;
+}
+
+.problemReportsList .odd {
+	background-color: #09101D !important;
+	color: #FFF !important;
+}
+
+
+/* color fixes */
+#page_controls a {color: #000 !important}
+
+#pagehistory li.selected,
+#toc,
+.toc,
+.toccolours,
+.mw-warning {
+    background-color: #1E293D;
+    color: #fff
+}
+
+table.diff,
+td.diff-otitle,
+td.diff-ntitle,
+td.diff-article {
+    background-color: #0e192d;
+}
+
+td.diff-context {
+    background-color: #3e495d;
+}
+
+td.diff-addedline {
+    background-color: #2e594d;
+}
+
+/* IE fixes for star rating */
+* html .star-rating,
+* html .star-rating li a.hover,
+* html .star-rating li.current-rating
+{
+	background-image: url('../../images/star-rating.black.png');
+}

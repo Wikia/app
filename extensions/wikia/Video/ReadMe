@@ -1,0 +1,15 @@
+VIDEO NAMESPACE FOR MEDIAWIKI
+
+1. Overview
+
+== 1. Overview ==
+
+The video namespace facilitates creation and displaying of new video description pages that contain emdeddable flash videos. 
+
+It introduces the [[Video:Name]] Mediawiki markup (and <video name="Name"></video>)
+
+Also allows functionality for Video Galleries (similar to <gallery>) and showing Videos in category pages.
+
+== 2. Requirements ==
+
+The '''Video Namespace''' extension requires MediaWiki 1.9.0 or greater.

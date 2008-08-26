@@ -1,0 +1,58 @@
+You can collect articles, generate and download a PDF file from article collections or from single articles, order books from a print-on-demand partner and save article collections for later use or to share them. 
+
+== Add and remove articles ==
+
+When you are on an article page, you see a small box titled "collections" on the left. Here you can add the current article (in the currently shown revision) to your collection. If the article has previously been added to the collection you can remove it instead.
+
+== Manage the collection ==
+
+Click "Show collection" to go to the [[Special:Collection]]. Here you can manage your collection:
+* enter a title and a subtitle for the collection
+* create chapters
+* rearrange the articles and chapters in the collection
+* remove articles and chapters from your collection
+* sort the collection (chapter-wise)
+
+== Download PDF files ==
+
+To download a PDF version of a single article, just go to the article page and click on the "Download as PDF" inside the toolbox on the left.
+
+To download an entire collection as a PDF file, go to the [[Special:Collection]] page and click the "Download PDF" button.
+
+=== Improving PDF Output ===
+
+Some articles use wikitext that is not ideal for producing PDFs. One important special case is the use of templates that should look different or be omitted in PDF output. There are two ways to handle such a template during PDF generation:
+* exclude the template by adding its name to the [MediaWiki:PDF Template Blacklist|template blacklist]
+* override it with another template by creating a template with name "PrintSOMETEMPLATE" where SOMETEMPLATE is the name of the original template.
+
+== Order books ==
+
+You can easily order a book made from your collection. Just click on the links of a print-on-demand partner at the right of the [[Special:Collection]] page.
+
+== Save and load collections ==
+
+You have to be [[Special:Userlogin|logged-in]] to save a collection. Go to the [[Special:Collection]] page, choose whether you want to save the collection as a subpage of your userpage or as a subpage of Wikipedia:Collections, enter a title and click the save button. Collections are automatically added to the [[:Category:Collections|Collections category]].
+
+If you are on a collection page, the "collections" portlet on the left contains a "Load collection" link to load the shown collection.
+
+== Format of saved collection pages ==
+
+A collection with title "My Collection" and subtitle "Just an Example" consisting of two chapters "Foo" and "Bar" each containing three articles will be saved as a page with the following [[wikitext]]:
+
+<pre>
+== My Collection ==
+=== Just an Example ===
+;Foo
+:[[First_article]]
+:[[Second_article]]
+:[[Third_article]]
+;Bar
+:[[Fourth_article]]
+:[[Fifth_article]]
+:[[Sixth_article]]
+[[Category:Collections]]
+</pre>
+
+{{Languages|Help:Collections}}
+
+[[Category:Help|{{PAGENAME}}]]

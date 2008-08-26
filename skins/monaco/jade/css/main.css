@@ -1,0 +1,38 @@
+/*** MAIN COLORS ***/
+.color1, .color1 a, .yui-panel .hd {
+	background-color: #228b22;
+}
+.color2 {
+	background-color: #F2F2F2;
+}
+
+/*** WIDGETS ***/
+#search_field {
+	border-color: #135013;
+}
+#search_button {
+	background-image: url(../images/search.png);
+}
+* html #search_button {
+	background-image: none;
+	filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='/skins/monaco/jade/images/search.png', sizingMethod='crop');
+}
+
+/*** HEADER AND FOOTER ***/
+#header_username a {
+	color: #228b22;
+}
+#wikia_logo {
+	background-image: url(../images/wikia_logo.png);
+}
+* html #wikia_logo {
+	background-image: none;
+	filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='/skins/monaco/jade/images/wikia_logo.png', sizingMethod='crop');
+}
+.headerMenuButton dt, .headerMenuButton dd {
+	background-image: url(../images/header_button.png);
+}
+* html .headerMenuButton dt, * html .headerMenuButton dd {
+	background-image: none;
+	filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='/skins/monaco/jade/images/header_button.png', sizingMethod='crop');
+}

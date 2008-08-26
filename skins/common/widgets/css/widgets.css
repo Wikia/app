@@ -1,0 +1,420 @@
+/* Copyright (c) 2007 Wikia Inc. All rights reserved. */
+
+
+/* WidgetAdvertiser */
+
+.widgetAdvertiser h1 {
+					display: none
+				}
+				.widgetAdvertiserAd {
+					float: left;
+				}
+}
+
+.widgetAdvertiserAd {
+	float: left;
+}
+
+.widgetAdvertiserAd table {
+	background-color: transparent;
+}
+
+.widgetAdvertiserAd_tr_user {
+	width: 125px;
+	height: 125px;
+	overflow: hidden;
+	margin: 0 10px;
+}
+
+.widgetAdvertiserAd_spot_user {
+	border-left: dashed 1px #87888C;
+	height: 125px;
+	overflow: hidden;
+	padding-left: 10px;
+	margin: 0;
+	width: 125px;
+}
+
+.widgetAdvertiserAd_tr_user {
+	margin-top: 10px;
+}
+
+.widgetAdvertiserAd_spot1_anon {
+	border-right: dashed 1px #999;
+	height: 125px;
+	overflow: hidden;
+	padding: 5px 10px 5px 9px;
+	width: 125px;
+}
+
+.widgetAdvertiserAd_spot2_anon {
+	height: 125px;
+	overflow: hidden;
+	padding: 5px 0 5px 10px;
+	width: 125px;
+}
+
+/* /WidgetAdvertiser */
+
+
+/* WidgetBlockUser */
+
+
+
+/* /WidgetBlockUser */
+
+
+/* WidgetEditedRecently */
+
+
+
+/* /WidgetEditedRecently */
+
+
+/* WidgetLanguageUrls */
+
+
+
+/* /WidgetLanguageUrls */
+
+
+/* WidgetLastWikis */
+
+
+
+/* /WidgetLastWikis */
+
+
+/* WidgetMostVisited */
+
+
+
+/* /WidgetMostVisited */
+
+
+/* WidgetNeedHelp */
+
+
+
+/* /WidgetNeedHelp */
+
+
+/* WidgetProblemReports */
+
+
+
+/* /WidgetProblemReports */
+
+
+/* WidgetRecentChanges */
+
+
+
+/* /WidgetRecentChanges */
+
+
+/* WidgetSidebar */
+
+
+.widgetSidebar .listLeft,
+.widgetSidebar .listRight {
+	width: 50%;
+	float: left;
+}
+
+* html .widgetSidebar .listLeft {padding-left: 1%; width: 49%}
+
+/* /WidgetSidebar */
+
+
+/* WidgetThisWiki */
+
+li.widgetThisWiki{list-style: none;}
+
+
+/* /WidgetThisWiki */
+
+
+/* WidgetWikiaToolbox */
+
+.widgetWikiaToolbox .listLeft,
+.widgetWikiaToolbox .listRight {
+	width: 48%;
+	float: left;
+}
+
+.widgetWikiaToolbox .listHdr {
+	color: #FEC423;
+	font-size: 11pt;
+	font-weight: normal;
+	margin: 2px 0px 3px 0px;
+}
+
+div.gelButton.addButton {
+	background-position:100% -40px;
+	margin-top: 5px;
+}
+
+div.gelButton.addButton a {
+	background-position:0pt -40px;
+	margin-left:0pt;
+	margin-right:8px;
+	padding-left:22px;
+}
+
+
+/* /WidgetWikiaToolbox */
+
+
+/* WidgetTopUsers */
+
+
+
+/* /WidgetTopUsers */
+
+
+/* WidgetTopVoted */
+
+
+
+/* /WidgetTopVoted */
+
+
+/* WidgetWatchlist */
+
+
+
+/* /WidgetWatchlist */
+
+
+/* WidgetWikiaMessages */
+
+
+
+/* /WidgetWikiaMessages */
+
+
+/* WidgetTopContent */
+
+
+
+/* /WidgetTopContent */
+
+
+/* WidgetWikiaPartners */
+
+
+
+/* /WidgetWikiaPartners */
+
+
+/* WidgetGamespot */
+
+.widgetGamespot a {
+	color: #feb900 !important;
+	display: block;
+	font-size: 9pt;
+	font-weight: bold;
+	line-height: 30px;
+	text-align: center;
+	text-decoration: none;
+}
+.widgetGamespot ul {
+	margin: 5px !important;
+	margin-top: -5px !important;
+	padding: 0 !important;
+	font-size:8.5pt !important;
+}
+.widgetGamespot li {
+	border-bottom: 1px dotted #666;
+	list-style: none;
+	margin-bottom: 0.1em;
+}
+.widgetGamespot li a {
+	display: inline;
+	text-align: left;
+}
+.widgetGamespot a:hover {
+	text-decoration: underline;
+}
+.widgetGamespotDate {
+	color: #b8b8b8;
+	font-style: italic;
+	height: 30px;
+	line-height: 30px;
+}
+.widgetGamespot h1 {
+	/*background: url(/skins/quartz/gamespot/images/gamespot_logo_box.gif) no-repeat;*/
+	/*padding-left: 100px !important;*/
+	font-size: 12pt !important;
+	color: #c9c9c9 !important;
+	text-decoration: none !important;
+	line-height: 30px !important;
+	font-weight:normal !important;
+}
+
+
+/* /WidgetGamespot */
+
+
+/* WidgetActiveTalkPages */
+
+
+
+/* /WidgetActiveTalkPages */
+
+
+/* WidgetReferers */
+
+.widgetReferers .widgetReferersDomainTag {margin: 2px 5px; line-height: 1.4em}
+
+/* /WidgetReferers */
+
+
+/* WidgetWikiPage */
+
+.widgetWikiPage .widgetContent a {text-decoration: underline; color: inherit}
+
+/* /WidgetWikiPage */
+
+
+/* WidgetSlideshow */
+
+    div.widgetSlideshow {  
+	position: relative;
+	overflow: hidden;
+	height:   180px;
+    }
+    
+    div.widgetSlideshow div.slide {
+	position:absolute;
+	opacity: 0;
+	margin: auto;
+	width: 100%;
+	height: 150px;
+	background-color: #000000;
+	border: solid 1px #666666;
+	background-position: 50% 50%;
+	background-repeat: no-repeat;
+    }
+    
+    div.widgetSlideshow div.slide a {
+	width: 100%;
+	height: 100%;
+	display: block;
+    }
+   
+    div.widgetSlideshow table {
+	position: absolute;
+	width: 100%;
+	height: 100%
+    }
+    
+    .yui-sldshw-next {
+     z-index: 1;
+     display: block;
+     opacity: 1.0;
+    }
+
+    .yui-sldshw-active {
+     z-index: 10;
+     display: block;
+     opacity: 1.0;
+    }
+    
+    .yui-sldshw-cached {
+     display: none;
+     z-index: 0;
+     opacity: 1.0;
+    }
+
+    div.yui-sldshw-frame {
+     background: white;
+    }
+    
+    
+	div.widgetSlideshow .widgetSlideshowControls
+	{
+		position: absolute;
+		bottom: 0px;
+		right: 0px;
+		padding: 5px;
+		z-index: 100;
+		opacity: 0.7;
+	}
+
+	div.widgetSlideshow .widgetSlideshowControls a
+	{
+		width: 16px;
+		height: 16px;
+		margin: 0 3px;
+		display: block;
+		cursor: pointer;
+		float: left;
+		text-decoration: none;
+	}
+	
+	.widgetSlideshowControlPrev
+	{
+		background-image: url('../icons/widget_slideshow_prev.png');
+	}
+	
+	.widgetSlideshowControlNext
+	{
+		background-image: url('../icons/widget_slideshow_next.png');
+	}
+	
+	.widgetSlideshowControlPause
+	{
+		background-image: url('../icons/widget_slideshow_pause.png');
+	}
+	
+	.widgetSlideshowControlPlay
+	{
+		background-image: url('../icons/widget_slideshow_play.png');
+	}
+
+/* /WidgetSlideshow */
+
+
+/* WidgetTips */
+
+.widgetTips .widgetTipsPrevNext {position: absolute; top: -1px; right: 22px}
+.widgetLoading .widgetTipsPrevNext {display: none}
+.widgetTips .widgetTipsPrevNext a {font-weight: bold; text-decoration: none; margin: 0 2px; font-size: 1.4em; cursor: pointer}
+.widgetTips .widgetContent h1, .widgetTips .widgetContent h2, .widgetTips .widgetContent h3, .widgetTips .widgetContent h4 {color: inherit !important}
+.widgetTips .editsection {display: none}
+
+/* /WidgetTips */
+
+
+/* WidgetAncientPages */
+
+
+
+/* /WidgetAncientPages */
+
+
+/* WidgetShoutBox */
+
+.widgetShoutBox .widgetContent form input {border: solid 1px #666666; font-size: 0.9em; margin: 0px 2px}
+.widgetShoutBox .widgetContent form input[type="text"] {width: 180px; padding: 2px}
+.widgetShoutBox .widgetContent form input[type="submit"] {width: 60px; padding: 1px; cursor: pointer}
+body.ltr .widgetShoutBox ul li {padding-left: 60px; text-indent: -60px}
+.widgetShoutBox ul li p {display: inline}
+/*.widgetShoutBox ul li.msgOdd {border-top: solid 1px #777777; border-bottom: solid 1px #777777}*/
+.widgetShoutBox ul li .shoutBoxMsg a {text-decoration: underline}
+body.rtl .widgetShoutBox ul {direction: ltr; text-align: right}
+
+
+/* /WidgetShoutBox */
+
+
+/* WidgetLanguages */
+
+
+
+/* /WidgetLanguages */
+
+
+/* Generated automatically on 2008-02-20 11:15:04. Do not edit it by hand. */

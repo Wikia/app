@@ -1,0 +1,20 @@
+== About ==
+
+Semantic Calendar is an extension to MediaWiki that works in
+conjunction with another extension, Semantic MediaWiki, to provide
+a drilldown interface for all the data on a site.
+For more information on Semantic Calendar, see the extension
+homepage at
+http://www.mediawiki.org/wiki/Extension:Semantic_Calendar
+
+Notes on installing Semantic Calendar can be found in the file INSTALL.
+
+== Credits ==
+
+Semantic Calendar was written by Yaron Koren, with important code
+contributions from Terry Hurlbut.
+
+== Contact ==
+
+Comments, questions, suggestions and bug reports should be
+sent to Yaron at yaron57@gmail.com.

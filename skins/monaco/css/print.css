@@ -1,0 +1,36 @@
+body {
+	background-color: #fff !important;
+	background-image: none !important;
+	color: #000 !important;
+	padding: 0;
+	margin: 0;
+}
+#wikia_page {
+	padding: 0;
+	margin: 0;
+	background: #fff !important;
+	min-height: 0px;
+	border: none !important;
+	position: static;
+	overflow: visible;
+}
+#article {
+	padding: 0;
+	margin: 0;
+	overflow: visible;
+	position: static;
+}
+#wikia_header,
+#background_strip,
+#widget_sidebar,
+#page_bar,
+#articleFooter,
+#monaco_footer,
+#adSpace0,
+#adSpace1,
+#adSpace2,
+#adSpace3,
+#fast_bottom_ads,
+#realAdsContainer {
+	display: none;
+}

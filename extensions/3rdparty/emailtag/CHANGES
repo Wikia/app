@@ -1,0 +1,5 @@
+0.1 - TR/2006-11-23
+- has some sort of weird features for scrambling the Special:Email url with
+  str_rot13
+- some debugging issues and testing with bzip2 or gzip compression
+- initial version @ 2006-11-17

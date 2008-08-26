@@ -1,0 +1,83 @@
+<?xml version="1.0" standalone="no"?>
+<definitions name="PurgeRequest"
+    targetNamespace="http://www.akamai.com/purge"
+    xmlns:tns="http://www.akamai.com/purge"
+    xmlns:purgedt="http://www.akamai.com/purge"
+    xmlns:xsd="http://www.w3.org/2000/10/XMLSchema"
+    xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+    xmlns="http://schemas.xmlsoap.org/wsdl/">
+
+    <types>
+        <schema targetNamespace="http://www.akamai.com/purge"
+       		xmlns:purgedt="http://www.akamai.com/purge"
+                xmlns="http://www.w3.org/2000/10/XMLSchema" >
+
+
+            <complexType name="ListOfString" base="soap:Array">
+                <sequence>
+                    <element name="string" type="xsd:string"
+                        minOccurs="0" maxOccurs="unbounded" />
+                </sequence>
+            </complexType>
+
+            <complexType name="PurgeResult">
+                <sequence>
+                    <element name="resultCode" type="xsd:int"/>
+                    <element name="resultMsg" type="xsd:string"/>
+                    <element name="sessionID" type="xsd:string"/>
+                    <element name="estTime" type="xsd:int"/>
+                    <element name="uriIndex" type="xsd:int"/>
+                    <element name="modifiers" nullable="true" type="tns:ListOfString"/>
+                </sequence>
+            </complexType>
+
+        </schema>
+    </types>
+
+    <message name="purgeRequest" >
+        <part name="name" type="xsd:string"/>
+        <part name="pwd" type="xsd:string"/>
+        <part name="network" type="xsd:string"/>
+        <part name="opt" nullable="true" type="tns:ListOfString"/>
+        <part name="uri" type="tns:ListOfString"/>
+    </message>
+    <message name="purgeRequestResponse" >
+        <part name="return" type="tns:PurgeResult" />
+    </message>
+
+    <portType name="PurgeApi">
+        <operation name="purgeRequest" paramOrder="name pwd network opt uri">
+            <input  message="tns:purgeRequest"
+                    name="purgeRequest"/>
+            <output message="tns:purgeRequestResponse"/>
+        </operation>
+    </portType>
+
+    <binding name="PurgeApiSOAPBinding" type="tns:PurgeApi">
+        <soap:binding style="rpc"
+                      transport="http://schemas.xmlsoap.org/soap/http"/>
+        <operation name="purgeRequest">
+            <soap:operation soapAction="" style="rpc"/>
+            <input>
+                <soap:body
+                    use="encoded"
+                    namespace="http://www.akamai.com/purge"
+                    encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+            </input>
+            <output>
+                <soap:body
+                    use="encoded"
+                    namespace="http://www.akamai.com/purge"
+                    encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+            </output>
+        </operation>
+    </binding>
+    <service name="JavaClasses">
+        <documentation>Provides programmatic purge access </documentation>
+        <port name="PurgeApi" binding="tns:PurgeApiSOAPBinding">
+            <soap:address
+                location="https://ccuapi.akamai.com:443/soap/servlet/soap/purge"/>
+        </port>
+    </service>
+</definitions>
+

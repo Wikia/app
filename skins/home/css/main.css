@@ -1,0 +1,473 @@
+body {
+	margin: 0;
+	padding: 0;
+	text-align: center;
+	font: normal 9pt arial, sans-serif;
+	background: #f2f2f2;
+}
+
+#mainContainer {
+	width: 750px;
+	margin: 0 auto;
+	text-align: left;
+	border: 0px solid #000;
+}
+
+#header {
+	width: 100%;
+	margin: 20px 0 0 0;
+	color:#3822a8;
+}
+.headerLogo {
+	background: url(http://images.wikia.com/common/skins/home/images/wikia_blue.gif);
+	float: left;
+	height: 35px;
+	margin-left: 10px;
+	width: 135px;
+}
+
+#header a:link { color:#3822a8; text-decoration: underline; }
+#header a:active { color:#3822a8; text-decoration: underline; }
+#header a:visited { color:#3822a8; text-decoration: underline; }
+#header a:hover { color:#3822a8; text-decoration: none; }
+
+.headerCopy {
+	float: left;
+	font-weight: bold;
+	margin-top: 16px;
+	margin-left: 10px;
+}
+
+.greeting {
+	font-weight: normal;
+}
+
+#mainContent {
+	clear: both;
+	width: 100%;
+	padding-top: 10px;
+}
+
+.printfooter {
+    display: none;
+}
+
+#leftCol {
+	width: 257px;
+	float: left;
+}
+
+#rightCol {
+	width: 478px;
+	padding: 0 0 0 15px;
+	float: left;
+}
+div.blacktext div.boxContent{
+	color: #000;
+}
+
+.homepage_box_top {
+	border-bottom: 1px solid #F2F2F2;
+	margin-bottom: 10px;
+	min-height: 50px;
+}
+.homepage_headline {
+	color: #333;
+	font-family: "Lucida Grande", arial, sans-serif;
+	font-weight: bold;
+	padding-top: 7px;
+}
+.homepage_headline span {
+	display: block;
+	font-weight: normal;
+}
+#graphic_search_cloud {
+	background: url(http://images.wikia.com/common/skins/home/images/search_cloud.gif) no-repeat;
+	float: right;
+	height: 46px;
+	width: 51px;
+}
+#graphic_jimmy {
+	background: url(http://images.wikia.com/common/skins/home/images/jimmy_50x50.jpg) center center no-repeat;
+	border: 1px solid #999;
+	float: left;
+	height: 50px;
+	margin: 0 8px 8px 0;
+	padding: 1px;
+	width: 50px;
+}
+#pseudo_hubs {
+	font-size: 8pt;
+}
+#pseudo_hubs a {
+	color: #666;
+}
+ul#featured_hubs {
+	background: #FFC;
+	border: 1px solid #C90;
+	float: right;
+	margin: 0;
+	padding: 0 5px;
+	width: 150px;
+}
+ul#featured_hubs li {
+	background-position: 0 5px;
+	background-repeat: no-repeat;
+	font-size: 8pt;
+	list-style: none;
+	min-height: 50px;
+	padding: 5px 0 5px 45px;
+}
+ul#featured_hubs li.gaming {
+	background-image: url(http://images.wikia.com/common/skins/home/images/icon_gaming.jpg);
+}
+ul#featured_hubs li.entertainment {
+	background-image: url(http://images.wikia.com/common/skins/home/images/icon_entertainment.jpg);
+}
+ul#featured_hubs a {
+	font-size: 10pt;
+}
+
+.hub_list {
+	float: left;
+	margin-right: 10px;
+}
+.hub_list ul {
+	margin: 0;
+	padding: 0;
+}
+.hub_list li {
+	list-style: none;
+	margin-bottom: 3px;
+}
+
+#introSection {
+}
+
+.introTitle {
+	line-height: 1.58em;
+	word-spacing: 0.15em;
+	font-weight: bold;
+	font-size: 16px;
+	margin: 0 0 10px 0;
+}
+
+.introTitle div {
+	display: inline;
+	background:#ffee00;
+}
+.introCopy {
+	font-weight: bold;
+	line-height: 1.38em;
+	word-spacing: 0.15em;
+	margin: 0 0 20px 0;
+}
+.introImage {
+	margin: 0 0 10px 0;
+}
+
+.joinUs {
+	display: none;
+	margin: 0 0 5px 0;
+}
+.joinUsButton {
+	display: inline;
+	vertical-align: middle;
+	margin: 0 5px 0 0;
+}
+.joinUsCopy {
+	font-size: 14px;
+	font-weight: bold;
+	padding: 0 0 0 5px;
+}
+
+.tutorial {
+	display: none;
+	margin: 0 0 11px 0;
+}
+
+.tutorialCopy {
+	font-size: 14px;
+	font-weight: bold;
+	padding: 0 5px 0 0;
+}
+
+.tutorialButton {
+	display: inline;
+	vertical-align: middle;
+	margin: 0 0 0 5px;
+}
+
+img
+{
+    border: none;
+}
+
+
+#rightNowSection .title {
+	font-weight: bold;
+	font-size: 14px;
+	color: #3822a8;
+	margin: 3px;
+}
+
+.rightNowLeft {
+	float: left;
+}
+#rightNowLinks {
+	z-index: 4;
+	border: 0px solid #000;
+	position: absolute;
+	top: 55px;
+}
+
+*html #rightNowLinks {
+	left: 16px;
+}
+
+#rightNowLinks a:link { font-weight: bold;color:#666; text-decoration:none; }
+#rightNowLinks a:visited { font-weight: bold;color:#666; text-decoration:none; }
+#rightNowLinks a:active { font-weight: bold;color:#666; text-decoration:none; }
+#rightNowLinks a:hover { font-weight: bold;color:#666; text-decoration:underline; }
+
+#rightNowLinks div {
+	width: 113px;
+	padding: 3px 5px;
+	border: 1px solid #fff;
+	border-right:0;
+}
+
+#rightNowLinks div.selected { padding: 3px 5px; border: 1px solid #e5e5e5; border-right: 1px solid #fff; z-index: 100; }
+
+
+
+#rightNowSubLinks {
+	float: left;
+	margin: 0 0 0 30px;
+	padding: 10px 0 0 10px;
+	border-left: 1px solid #e5e5e5;
+	width: 240px;
+	height: 170px;
+	position: absolute;
+	left: 110px;
+	top: 0px;
+}
+#rightNowSubLinks a:link { color:#666; text-decoration:none; }
+#rightNowSubLinks a:active { color:#666; text-decoration:none; }
+#rightNowSubLinks a:visited { color:#666; text-decoration:none; }
+#rightNowSubLinks a:hover { color:#666; text-decoration:underline; }
+
+#rightNowSubLinks div { padding: 5px 5px 5px 0; }
+
+
+
+#searchSection {
+	display: none;
+	position: relative;
+}
+#searchSection .header {
+	font-weight: bold;
+	font-size: 16px;
+	color: #3822a8;
+	margin: 0 0 5px 0;
+	width: 99%;
+}
+#searchSection .subHeader {
+	font-weight: bold;
+	font-size: 14px;
+	color: #3822a8;
+	width: 95%;
+	margin: 5px 0 5px 0;
+}
+#searchSection input {
+	border:1px solid #c2c7cc;
+	font: normal 11px sans-serif;
+	background:#ffee80;
+	width: 95%;
+	padding: 2px;
+}
+
+.linkSection {
+	float: left;
+	margin: 0 8px 0 0;
+	width: 30%;
+}
+
+.searchLinks {
+    line-height: 1.7;
+}
+
+#searchSection a:link { color: #666; text-decoration: none; }
+#searchSection a:active { color: #666; text-decoration: none; }
+#searchSection a:visited{ color: #666; text-decoration: none; }
+#searchSection a:hover { color: #666; text-decoration: underline; }
+
+
+#goButton {
+	width: 28px;
+	height: 31px;
+	background: url(../images/searchArrow.png);
+	position:absolute;
+	top: 40px;
+	left: 391px;
+}
+
+#goButton span {
+	font-weight: bold;
+	position: relative;
+	top: 7px;
+	left: 2px;
+}
+
+#searchSection #goButton a:link { color: #3822a8; text-decoration: none; }
+#searchSection #goButton a:visited{ color: #3822a8; text-decoration: none; }
+#searchSection #goButton a:active { color: #3822a8; text-decoration: none; }
+#searchSection #goButton a:hover{ color: #3822a8; text-decoration: none; }
+
+
+#discoverySection {
+	clear: both;
+	padding: 15px 0 0 0;
+	font-weight: bold;
+	color:#3822a8;
+}
+
+#discoverySection a:link { color:#3822a8; text-decoration: none; }
+#discoverySection a:visited { color:#3822a8;text-decoration: none; }
+#discoverySection a:active { color:#3822a8;text-decoration: none; }
+#discoverySection a:hover { color:#3822a8;text-decoration: underline; }
+
+.moreLink {
+	background: #ffee80;
+}
+.discoveryHeader {
+	font: bold 16px sans-serif;
+	border-bottom: 1px solid #dfd9ff;
+	padding: 10px 0 5px 0;
+	margin: 0 0 5px 0;
+}
+
+.discoveryLinkSection {
+	float: left;
+	margin: 0 21px 0 0;
+	width: 17%;
+}
+
+.discoveryLinkSection p {
+    line-height: 1.7;
+}
+
+
+#footer {
+	margin: 20px auto 0 auto;
+}
+
+.footerMain {
+	padding-left: 10px;
+}
+
+.footerLinks {
+	font-weight: bold;
+}
+#f-hosting {
+	font-weight: normal;
+}
+.footerLogo {
+	background: url(http://images.wikia.com/common/skins/home/images/wikia_blue_small.gif) no-repeat;
+	height: 19px;
+	display: block;
+	margin-bottom: 5px;
+	width: 72px;
+}
+
+
+#footer a:link { color: #3822a8; text-decoration: none; }
+#footer a:visited{ color: #3822a8; text-decoration: none; }
+#footer a:active { color: #3822a8; text-decoration: none; }
+#footer a:hover { color: #3822a8; text-decoration: underline; }
+
+.adDiv {
+	clear: both;
+	float: right;
+	margin-right: 10px;
+}
+.adDiv img {
+	margin-bottom: 5px;
+}
+
+.roundedDiv { border:0px solid #000; background: transparent; margin: 0 0 0 0; width: 100%; }
+
+.roundedDiv b.xtop, .roundedDiv b.xbottom {display:block; background:transparent; font-size:1px;}
+.roundedDiv b.xb1, .roundedDiv b.xb2, .roundedDiv b.xb3, .roundedDiv b.xb4 {display:block; overflow:hidden;}
+.roundedDiv b.xb1, .roundedDiv b.xb2, .roundedDiv b.xb3 {height:1px;}
+.roundedDiv b.xb2, .roundedDiv b.xb3, .roundedDiv b.xb4 {background:#fff; border-left:1px solid #e5e5e5; border-right:1px solid #e5e5e5;}
+.roundedDiv b.xb1 {margin:0 5px; background:#e5e5e5;}
+.roundedDiv b.xb2 {margin:0 3px; border-width:0 2px;}
+.roundedDiv b.xb3 {margin:0 2px;}
+.roundedDiv b.xb4 {height:2px; margin:0 1px;}
+
+.roundedDiv div.boxContent {
+	display:block;
+	background:#fff;
+	border:1px solid #e5e5e5;
+	border-width:0 1px;
+	color: #3822a8;
+	padding: 8px 8px 8px 15px;
+	text-align: left;
+}
+
+
+/* AJAX login fixes */
+
+.errorbox{
+color: #ff0000;
+}
+
+#AjaxLoginWindow_RoundBox .roundedDiv,
+#AjaxRegisterWindow_RoundBox .roundedDiv
+{
+    background: #fff;
+}
+
+#AjaxLoginWindow .loginText,
+#AjaxLoginWindow .loginPassword
+{
+    position: relative;
+}
+
+#rightNowLinks {
+    cursor: pointer;
+}
+
+.clearfix:after {
+    content: "."; 
+    display: block; 
+    height: 0; 
+    clear: both; 
+    visibility: hidden;
+}
+
+.clearfix {display: inline-block;}
+
+
+/* Search box */
+
+#header-search-bar {
+	clear: both;
+	padding: 40px 0px 20px 0px;
+	background: #f2f2f2 url('../images/web_search_cloud.png') no-repeat 3px 22px;
+}
+
+#header-search-bar form {
+	margin: 0 0 0 175px;
+	padding: 0;
+}
+
+.header-search-input {
+	width: 380px;
+}
+
+/* Hides from IE-mac \*/
+* html .clearfix {height: 1%;}
+.clearfix {display: block;}
+/* End hide from IE-mac */

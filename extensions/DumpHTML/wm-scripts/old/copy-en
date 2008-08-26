@@ -1,0 +1,25 @@
+#!/usr/bin/perl -w
+use File::Copy;
+use File::Path;
+use File::Basename;
+
+while (<>) {
+	chomp($_);
+	$source = "/mnt/wikipedia/htdocs/static/$_";
+	$dest = "/var/static/$_";
+	if (!-e $dest) {
+		if (!-d dirname($dest)) {
+			mkpath(dirname($dest));
+		}
+		print "$_ ";
+		$result = copy($source, $dest);
+		if ( $result ) {
+			print "OK\n";
+		} else {
+			print "failed\n";
+		}
+		sleep 0.5
+	} else {
+		print "$_ already copied\n";
+	}
+}

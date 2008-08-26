@@ -1,0 +1,80 @@
+Index: Setup.php
+===================================================================
+--- Setup.php	(revision 28861)
++++ Setup.php	(working copy)
+@@ -165,6 +165,13 @@
+ 
+ $wgUseEnotif = $wgEnotifUserTalk || $wgEnotifWatchlist;
+ 
++#support old $wgSharedDB variable
++if ( $wgSharedDB && !array_key_exists( 'user', $wgSharedTables ) ) {
++	//in some later version, we may wish to throw an exception so people know $wgSharedDB is deprecated
++    $wgSharedTables['user'] = $wgSharedDB . '.' . $wgDBprefix . 'user';
++}
++
++
+ if($wgMetaNamespace === FALSE) {
+ 	$wgMetaNamespace = str_replace( ' ', '_', $wgSitename );
+ }
+Index: DefaultSettings.php
+===================================================================
+--- DefaultSettings.php	(revision 28849)
++++ DefaultSettings.php	(working copy)
+@@ -567,7 +567,8 @@
+  * main database.
+  * EXPERIMENTAL
+  */
+-$wgSharedDB = null;
++#$wgSharedDB = null;
++$wgSharedTables = array(); /*Patch for Farmer extension*/
+ 
+ # Database load balancer
+ # This is a two-dimensional array, an array of server info structures
+Index: Database.php
+===================================================================
+--- Database.php	(revision 28849)
++++ Database.php	(working copy)
+@@ -1611,22 +1611,29 @@
+ 	 * @param string $name database table name
+ 	 */
+ 	function tableName( $name ) {
+-		global $wgSharedDB;
+-		# Skip quoted literals
+-		if ( $name{0} != '`' ) {
+-			if ( $this->mTablePrefix !== '' &&  strpos( $name, '.' ) === false ) {
+-				$name = "{$this->mTablePrefix}$name";
+-			}
+-			if ( isset( $wgSharedDB ) && "{$this->mTablePrefix}user" == $name ) {
+-				$name = "`$wgSharedDB`.`$name`";
+-			} else {
+-				# Standard quoting
+-				$name = "`$name`";
+-			}
+-		}
+-		return $name;
++
++		global $wgSharedTables;
++        
++        # Skip quotes literals
++        if ( $name{0} != '`' ) {
++            #if we have a map for this table
++            if ( array_key_exists($name, $wgSharedTables ) ) {
++        		$name = '`' . $wgSharedTables[$name] . '`';
++        	} else {
++        		if (strpos( '.', $name ) === false ) {
++        			$name = $this->mTablePrefix . $name;
++        		}
++                
++                $name = "`$name`";
++        	}
++        	
++        }
++        
++        return $name;
+ 	}
+ 
++
++
+ 	/**
+ 	 * Fetch a number of table names into an array
+ 	 * This is handy when you need to construct SQL for joins

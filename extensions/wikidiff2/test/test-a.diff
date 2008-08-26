@@ -1,0 +1,280 @@
+<tr>
+  <td colspan="2" align="left"><strong><!--LINE 1--></strong></td>
+  <td colspan="2" align="left"><strong><!--LINE 1--></strong></td>
+</tr>
+<tr>
+  <td> </td>
+  <td class="diff-context">== Added line ==</td>
+  <td> </td>
+  <td class="diff-context">== Added line ==</td>
+</tr>
+<tr>
+  <td> </td>
+  <td class="diff-context"></td>
+  <td> </td>
+  <td class="diff-context"></td>
+</tr>
+<tr>
+  <td colspan="2">&nbsp;</td>
+  <td>+</td>
+  <td class="diff-addedline">sjgfkdjfgb</td>
+</tr>
+<tr>
+  <td> </td>
+  <td class="diff-context">== Removed line ==</td>
+  <td> </td>
+  <td class="diff-context">== Removed line ==</td>
+</tr>
+<tr>
+  <td> </td>
+  <td class="diff-context"></td>
+  <td> </td>
+  <td class="diff-context"></td>
+</tr>
+<tr>
+  <td>-</td>
+  <td class="diff-deletedline">kjahegwnygw</td>
+  <td colspan="2">&nbsp;</td>
+</tr>
+<tr>
+  <td> </td>
+  <td class="diff-context">== Moved text ==</td>
+  <td> </td>
+  <td class="diff-context">== Moved text ==</td>
+</tr>
+<tr>
+  <td> </td>
+  <td class="diff-context">a</td>
+  <td> </td>
+  <td class="diff-context">a</td>
+</tr>
+<tr>
+  <td>-</td>
+  <td class="diff-deletedline">---line---</td>
+  <td colspan="2">&nbsp;</td>
+</tr>
+<tr>
+  <td> </td>
+  <td class="diff-context">a</td>
+  <td> </td>
+  <td class="diff-context">a</td>
+</tr>
+<tr>
+  <td> </td>
+  <td class="diff-context">a</td>
+  <td> </td>
+  <td class="diff-context">a</td>
+</tr>
+<tr>
+  <td colspan="2" align="left"><strong><!--LINE 13--></strong></td>
+  <td colspan="2" align="left"><strong><!--LINE 12--></strong></td>
+</tr>
+<tr>
+  <td> </td>
+  <td class="diff-context">a</td>
+  <td> </td>
+  <td class="diff-context">a</td>
+</tr>
+<tr>
+  <td> </td>
+  <td class="diff-context">a</td>
+  <td> </td>
+  <td class="diff-context">a</td>
+</tr>
+<tr>
+  <td colspan="2">&nbsp;</td>
+  <td>+</td>
+  <td class="diff-addedline">---line---</td>
+</tr>
+<tr>
+  <td> </td>
+  <td class="diff-context">a</td>
+  <td> </td>
+  <td class="diff-context">a</td>
+</tr>
+<tr>
+  <td> </td>
+  <td class="diff-context">a</td>
+  <td> </td>
+  <td class="diff-context">a</td>
+</tr>
+<tr>
+  <td colspan="2" align="left"><strong><!--LINE 19--></strong></td>
+  <td colspan="2" align="left"><strong><!--LINE 19--></strong></td>
+</tr>
+<tr>
+  <td> </td>
+  <td class="diff-context">a</td>
+  <td> </td>
+  <td class="diff-context">a</td>
+</tr>
+<tr>
+  <td> </td>
+  <td class="diff-context">a</td>
+  <td> </td>
+  <td class="diff-context">a</td>
+</tr>
+<tr>
+  <td>-</td>
+  <td class="diff-deletedline">--line1--</td>
+  <td colspan="2">&nbsp;</td>
+</tr>
+<tr>
+  <td>-</td>
+  <td class="diff-deletedline">--line2--</td>
+  <td colspan="2">&nbsp;</td>
+</tr>
+<tr>
+  <td> </td>
+  <td class="diff-context">a</td>
+  <td> </td>
+  <td class="diff-context">a</td>
+</tr>
+<tr>
+  <td> </td>
+  <td class="diff-context">a</td>
+  <td> </td>
+  <td class="diff-context">a</td>
+</tr>
+<tr>
+  <td colspan="2" align="left"><strong><!--LINE 29--></strong></td>
+  <td colspan="2" align="left"><strong><!--LINE 27--></strong></td>
+</tr>
+<tr>
+  <td> </td>
+  <td class="diff-context">a</td>
+  <td> </td>
+  <td class="diff-context">a</td>
+</tr>
+<tr>
+  <td> </td>
+  <td class="diff-context">a</td>
+  <td> </td>
+  <td class="diff-context">a</td>
+</tr>
+<tr>
+  <td colspan="2">&nbsp;</td>
+  <td>+</td>
+  <td class="diff-addedline">--line1--</td>
+</tr>
+<tr>
+  <td colspan="2">&nbsp;</td>
+  <td>+</td>
+  <td class="diff-addedline">--line2--</td>
+</tr>
+<tr>
+  <td> </td>
+  <td class="diff-context">a</td>
+  <td> </td>
+  <td class="diff-context">a</td>
+</tr>
+<tr>
+  <td> </td>
+  <td class="diff-context">a</td>
+  <td> </td>
+  <td class="diff-context">a</td>
+</tr>
+<tr>
+  <td colspan="2" align="left"><strong><!--LINE 35--></strong></td>
+  <td colspan="2" align="left"><strong><!--LINE 35--></strong></td>
+</tr>
+<tr>
+  <td> </td>
+  <td class="diff-context">a</td>
+  <td> </td>
+  <td class="diff-context">a</td>
+</tr>
+<tr>
+  <td> </td>
+  <td class="diff-context">== Shortest sequence in Y ==</td>
+  <td> </td>
+  <td class="diff-context">== Shortest sequence in Y ==</td>
+</tr>
+<tr>
+  <td>-</td>
+  <td class="diff-deletedline">x1</td>
+  <td colspan="2">&nbsp;</td>
+</tr>
+<tr>
+  <td> </td>
+  <td class="diff-context">x2</td>
+  <td> </td>
+  <td class="diff-context">x2</td>
+</tr>
+<tr>
+  <td> </td>
+  <td class="diff-context">x1</td>
+  <td> </td>
+  <td class="diff-context">x1</td>
+</tr>
+<tr>
+  <td> </td>
+  <td class="diff-context">x2</td>
+  <td> </td>
+  <td class="diff-context">x2</td>
+</tr>
+<tr>
+  <td> </td>
+  <td class="diff-context">x1</td>
+  <td> </td>
+  <td class="diff-context">x1</td>
+</tr>
+<tr>
+  <td>-</td>
+  <td class="diff-deletedline">x2</td>
+  <td colspan="2">&nbsp;</td>
+</tr>
+<tr>
+  <td>-</td>
+  <td class="diff-deletedline">x1</td>
+  <td colspan="2">&nbsp;</td>
+</tr>
+<tr>
+  <td>-</td>
+  <td class="diff-deletedline">x2</td>
+  <td colspan="2">&nbsp;</td>
+</tr>
+<tr>
+  <td> </td>
+  <td class="diff-context">context</td>
+  <td> </td>
+  <td class="diff-context">context</td>
+</tr>
+<tr>
+  <td> </td>
+  <td class="diff-context">context</td>
+  <td> </td>
+  <td class="diff-context">context</td>
+</tr>
+<tr>
+  <td colspan="2" align="left"><strong><!--LINE 49--></strong></td>
+  <td colspan="2" align="left"><strong><!--LINE 45--></strong></td>
+</tr>
+<tr>
+  <td> </td>
+  <td class="diff-context">context</td>
+  <td> </td>
+  <td class="diff-context">context</td>
+</tr>
+<tr>
+  <td> </td>
+  <td class="diff-context">== Changed line ==</td>
+  <td> </td>
+  <td class="diff-context">== Changed line ==</td>
+</tr>
+<tr>
+  <td>-</td>
+  <td class="diff-deletedline">
+blah blah blah <span class="diffchange">1</span>
+  </td>
+  <td>+</td>
+  <td class="diff-addedline">
+blah blah blah <span class="diffchange">2</span>
+  </td>
+</tr>
+<tr>
+  <td> </td>
+  <td class="diff-context"></td>
+  <td> </td>
+  <td class="diff-context"></td>
+</tr>

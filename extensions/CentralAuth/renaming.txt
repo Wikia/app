@@ -1,0 +1,6 @@
+Renaming model:
+
+* Never change the established name of a user account
+* To "rename", create a new account and migrate the settings.
+* -question- -> what about reattribution?
+

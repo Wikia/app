@@ -1,0 +1,251 @@
+Implementation notes...
+-----------------------
+
+== Goals ==
+
+As a reminder, some things we are and aren't trying to accomplish here:
+
+=== Are trying to achieve: ===
+
+* All new accounts will be valid on all Wikimedia wikis, using a consistent
+  username and password everywhere.
+
+* Once migrated, all old accounts will be valid on all Wikimedia wikis,
+  using a consistent username and password everywhere.
+
+* Accounts will only have to set and confirm e-mail in one place.
+
+=== Are not trying to achieve at this time: ===
+
+* Automatic passing of login data between sites
+* Integration with non-Wikimedia authentication systems (OpenID etc)
+* Total integration of user options, etc across wikis
+
+=== Are not trying to achieve ever: ===
+
+* Different usernames on each wiki
+
+
+== Migration strategies ==
+
+The system consists of 'local' accounts (the user table entries on each wiki)
+and 'global' accounts (the accounts on the central auth server).
+
+A local account may be in one of two states:
+ - unattached: old account awaiting migration
+ - attached: migrated, or newly created under the new system
+
+An attempt to login with a given name on a given wiki will encounter one of
+these possible states:
+ - no global account: 'no such user' error
+ - no local account: an attached local account will be transparently created
+ - attached: login continues
+ - unattached: login-time migration will be triggered
+
+
+=== First-stage migration ===
+
+This is an automated process which will run when the system is put into
+place:
+
+For each name in use on the various wikis at initial migration time, a
+global account is created.
+
+One account for each name is selected as the 'winner', usually the most
+prolific. The winner's password and email address are assigned to the
+global account.
+
+Some accounts can be fully migrated automatically:
+ - Name occurred only on one wiki
+ - Multiple instances, but all with the same e-mail address
+ - Potentially, unused accounts could be subsumed automatically
+
+Note that passwords cannot be checked at this time due to the hashing
+method used in our user table. Matching e-mail addresses can be considered
+'password-equivalent' here as whoever owns that address is able to set
+the password.
+
+If there are accounts which do not match the winning e-mail address, the
+account will be left in a transitional state:
+ - Matching local accounts are attached, and can be used to log in.
+ - Non-matching local accounts are left unattached, for later migration.
+
+
+=== Login-time migration ===
+
+When a user attempts to login to an unattached account, this triggers
+login-time migration.
+
+The account can now be automatically attached if:
+ - The given password matches both the local and global account
+ - The local account's email address matches the global account's
+   confirmed e-mail address
+
+(We check e-mail again as the global account's email may have been changed
+since original migration time.)
+
+
+=== Login-time renaming ===
+
+Some portion of name conflicts really are different people, so they won't
+be able to confirm themselves as the global account owner.
+
+If the login-time migration checks fail, the user is offered the option to
+rename the account, either merging it to an existing global account or making
+a brand new one.
+
+* FIXME: We may need to clean up some rename operations to make this safe.
+
+
+=== Cleanup and long-term ===
+
+The presence of a third-party unattached local account on a given wiki means
+that the owner of the global account can't use his/her global account to log
+in on that wiki.
+
+Practically speaking, not all conflicting accounts will be resolved by their
+owners in a timely fashion. Some will never return; some will be malicious;
+some will just forget.
+
+We'll require a way for unclaimed unattached accounts to be renamed forcefully.
+Possibly this can require a bureaucrat's intervention; possibly this can be
+done by the conflicting global account's owner after some timeout period.
+
+
+=== Notifications ===
+
+Conflicting accounts should be notified by e-mail where possible.
+
+
+== Implementation: parts! ==
+
+* Core: central database o' fun
+* Edge: Wikis
+
+=== Communication requirements ===
+
+* Full edge<->core connectivity in cases:
+ - pmtpa: same database cluster
+ - pmtpa.enwiki: alternate database master
+ - yaseo: offsite [could be implemented with a ssh tunnel to mysql]
+
+* Open login sessions should continue to function if core is offline
+
+* (?) Previously used login sessions should be able to log back in if
+      core is offline.
+
+If core is inaccessible from an edge server:
+
+* Open login sessions should continue to basically function
+ - some operations such as changing password or email would fail
+
+* Previously used logins _may_ be able to log back in
+ - using previously stored password hash? Unsure about this.
+
+* New account creations, etc obviously would fail
+
+
+
+=== Core auth API ===
+
+A few basic operations:
+
+* register($name)
+* setPassword($name, $hashedPass)
+* setEmail($name, $email)
+* setEmailConfirmed($name)
+* attachLocal($name, $dbname)
+* attemptAuth($name, $hashedPass)
+
+
+
+=== Some crappy login pseudocode ===
+
+On login:
+* load local account data
+  if local user exists:
+    * coreAuth::attemptAuth($name, $hashedPass)
+      if passed:
+        -> update local lock state, email, email confirmation
+        -> successful login.
+      else if failed:
+        -> whine about bad pass
+      else if no such user:
+        -> INVALID STATE
+  else:
+    * coreAuth::attemptAuth($name, $hashedPass)
+      if passed:
+        -> create local account
+        -> coreAuth::attachLocal($name, $dbname)
+        -> update local lock state, email, email confirmation
+        -> successful login.
+      else if failed:
+        -> whine about bad pass
+      else if no such user:
+        -> whine about no such user
+
+On registration request:
+* load local account data
+  if local user exists:
+    -> whine about user already exists
+  else:
+    * coreAuth::attemptAuth($name, $hashedPass)
+      if passed:
+        -> whine or log in :)
+      else if failed:
+        -> whine about user already exists
+      else if no such user:
+        -> coreAuth::register($name)
+        -> coreAuth::setEmail($name, $email)
+        -> coreAuth::setPassword($name, $hashedPass)
+        -> create local account
+        -> coreAuth::attachLocal($name, $dbname)
+        -> update local lock state, email, email confirmation
+        -> successful login.
+
+See the diagrams made using dia ( http://www.gnome.org/projects/dia ):
+  - login.dia
+  - registration.dia
+
+== Edge implementation ==
+
+The AuthPlugin interface was written with the idea of creating local accounts
+automatically on login based on external data.
+
+Probably require some additional work on the login page to work in migration.
+
+Users logged in to a transitional account should see a notice about the
+remaining unattached accounts. (This could be dismissed eg to show only
+on the preferences page to minimize annoyance.) From this notice a list
+of conflicting wikis can be produced for immediate link-and-login.
+
+
+== Core implementation ==
+
+Either this can be done as local PHP code accessing a database (potentially
+via ssh tunnel for yaseo) or hit something over http/https. May want to
+examine this a bit.
+
+
+== Migration testing ==
+
+First-stage migration can be tested offline to get some statistics.
+
+
+== Messages and translations ==
+
+Get the UI messages ready with some time before this goes live; we'll want
+translations in the various languages ready to go.
+
+
+== Permissions ==
+
+Group memberships (hence on-wiki permissions) remain local; a sysop in
+one place is not necessarily in another.
+
+We will have to make some changes to the way we handle the restricted
+wikis however: the simplest thing would be to add a group on those wikis
+for approved users, and shift the permissions over from 'user' to 'private'
+or whatever. Then add some handy way for local sysops to privatise people,
+rather than the cumbersome 'account by email'.
+
