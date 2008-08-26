@@ -202,7 +202,7 @@ $wgSkipSkins = array(
  * release number is used for building links
  */
 $HeadURL = split('/', '$HeadURL$');
-$wgReleaseNumber = $HeadURL[5];
+$wgReleaseNumber = ($HeadURL[4] === "trunk" ) ? "trunk" : $HeadURL[5];
 
 /**
  * Enable FAST extension for this branch only
