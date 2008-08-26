@@ -959,7 +959,7 @@ class MonacoTemplate extends QuickTemplate {
 <?php
 	foreach($this->data['references']['css'] as $css) {
 ?>
-		<?= isset($css['cond']) ? '<!--['.$css['cond'].']>' : '' ?><link rel="stylesheet" type="text/css" <?= isset($css['param']) ? $css['param'] : '' ?>href="<?= $css['url'] ?>" /><?= isset($css['cond']) ? '<![endif]-->' : '' ?>
+		<?= isset($css['cond']) ? '<!--['.$css['cond'].']>' : '' ?><link rel="stylesheet" type="text/css" <?= isset($css['param']) ? $css['param'] : '' ?>href="<?= htmlspecialchars($css['url']) ?>" /><?= isset($css['cond']) ? '<![endif]-->' : '' ?>
 
 <?php
 	}
