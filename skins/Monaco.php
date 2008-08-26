@@ -951,7 +951,7 @@ class MonacoTemplate extends QuickTemplate {
 	/* macbre: #3432 */
 	foreach($this->data['references']['allinone_css'] as $css) {
 ?>
-			@import "<?= $css['url']; ?>";
+			@import "<?= $css['url'] ?>";
 <?php
 	}
 ?>
@@ -963,7 +963,9 @@ class MonacoTemplate extends QuickTemplate {
 
 <?php
 	}
-	echo '<noscript><link rel="stylesheet" type="text/css" href="'.$wgStylePath.'/monaco/css/noscript.css" /></noscript>';
+?>
+		<noscript><link rel="stylesheet" type="text/css" href="<?= $wgStylePath ?>/monaco/css/noscript.css" /></noscript>
+<?php
 	foreach($this->data['references']['cssstyle'] as $cssstyle) {
 ?>
 		<style type="text/css"><?= $cssstyle['content'] ?></style>
@@ -992,7 +994,7 @@ class MonacoTemplate extends QuickTemplate {
 	}
 ?>
 
-	<body <?php if($this->data['body_onload'    ]) { ?>onload="<?php     $this->text('body_onload')     ?>"<?php } ?>
+	<body<?php if($this->data['body_onload'    ]) { ?> onload="<?php     $this->text('body_onload')     ?>"<?php } ?>
  class="mediawiki <?php $this->text('nsclass') ?> <?php $this->text('dir') ?> <?php $this->text('pageclass') ?><?php if(!empty($this->data['printable']) ) { ?> printable<?php } ?><?php if (!$wgUser->isLoggedIn()) { ?> loggedout<?php } ?> color2 wikiaSkinMonaco<?=$isMainpage?>" id="body">
 
  <?php
