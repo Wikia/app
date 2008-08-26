@@ -1,0 +1,9 @@
+#!/usr/bin/perl
+
+for ($i=24; $i>=0; $i--) {
+	$oldname = sprintf("vol%02d", $i);
+	$newname = sprintf("vol%02d", $i+1);
+	rename($oldname, $newname) or die "Error moving file $oldname to $newname";
+	
+}
+

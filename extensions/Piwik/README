@@ -1,0 +1,78 @@
+MediaWiki Piwik Integration extension
+
+version 0.2.5rev0.7.5 (1.0-RC1)
+07 July 2008
+
+This is the README file for the Piwik Integration extension for MediaWiki
+software. The extension is only useful if you've got a MediaWiki
+installation; it can only be installed by the administrator of the site.
+
+== Minimum requirements ==
+
+* MediaWiki 1.11+
+
+* A Piwik installation with the site configured
+
+== Installation instructions ==
+
+Please, read them carefully. They're not very difficult to understand,
+but ALL steps are necessary:
+
+* Create a folder called "piwik" in your extensions directory
+
+* Upload Piwik.php, Piwik.i18n.php, Piwik_specialpage.php and piwik-mw.js
+  to the "piwik" folder you've just created
+
+* Edit your LocalSettings.php and, at the end of the file, add the
+  following:
+
+        require_once($IP.'/extensions/piwik/Piwik.php');
+
+
+* Then, you need to define where Piwik is installed and the "idsite".
+  To do it, just add after the require_once:
+
+        $wgPiwikURL = "http://piwik/url/";
+        $wgPiwikIDSite = "piwik_idsite";
+
+  Note: Change the value of $wgPiwikURL with the URL where you installed
+        Piwik. Remember to add the trailing slash!
+
+        Change the value of $wgPiwikIDSite with the number inside
+        "piwik_idsite" in your Piwik code. For example, in:
+
+            <!-- Piwik -->
+            <a href="http://piwik.org" title="Web analytics" onclick="window.open(this.href);return(false);">
+            <script language="javascript" src="http://piwik/url/piwik.js" type="text/javascript"></script>
+            <script type="text/javascript">
+            <!--
+            piwik_action_name = '';
+            piwik_idsite = 1;
+            piwik_url = 'http://piwik/url/piwik.php';
+            piwik_log(piwik_action_name, piwik_idsite, piwik_url);
+            //-->
+            </script><object>
+            <noscript><p>Web analytics <img src="http://stats.astronomipedia.es/piwik.php" style="border:0" alt="piwik"/></p>
+            </noscript></object></a>
+            <!-- /Piwik -->
+
+        the $wgPiwikIDSite is 1
+
+
+* You can also set $wgPiwikCustomJS if you want to add custom javascript
+  tags (see http://piwik.org/javascript-tag-documentation/ for further
+  information). For example:
+
+            $wgPiwikCustomJS = "piwik_hosts_alias = ["hostname1.com", "hostname2.com"]; // the current tracked website is added to this array anyway
+            piwik_install_tracker = 0;"
+			
+* If you want to change piwik_action_name, you can set $wgPiwikActionName
+  inside your LocalSettings.php file.
+  
+** In case you want to include the piwik_action_name as, for example,
+   "wiki/Title of the page", you can set $wgPiwikUsePageTitle to
+   true and set $wgPiwikActionName to "wiki/". The extension will print
+  
+			piwik_action_name = 'wiki/Title of the page';
+			
+

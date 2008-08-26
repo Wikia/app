@@ -1,0 +1,3 @@
+Go to http://www.fckeditor.net/download and download the latest version. Then
+ uncompress the contents of the "fckeditor" directory of the download file to
+ this folder (extensions/FCKeditor/fckeditor).

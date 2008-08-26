@@ -1,0 +1,9 @@
+require_once( "{{path}}/Lockdown.php" );
+
+# see Lockdown/README for instructions on configuration
+#
+# restrict editing of pages in the project namespace to sysops:
+# $wgNamespacePermissionLockdown[NS_PROJECT]['edit'] = array('sysop');
+#
+# restrict use of Special:Export to logged in users:
+# $wgSpecialPageLockdown['Export'] = array('user');

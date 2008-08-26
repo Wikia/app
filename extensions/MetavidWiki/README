@@ -1,0 +1,70 @@
+== About ==
+MetaVidWiki is a project for extending MediaWiki with interfaces 
+that enable community engagement with audio video metdata.
+For more details visit metavid.ucsc.edu
+
+== Disclaimer ==
+MetaVidWiki is still under development. For more info come by #metavid or visit 
+http://metavid.ucsc.edu/wiki/index.php/MetaVidWiki_Software
+
+==Short technical Description==
+Metavid builds off of semantic mediaWiki but is should not be too difficult
+to set up without semantic wiki... Its just a matter of how structured you 
+want your temporal metadata.
+
+Metavid Wiki adds the following namespaces:
+MV_NS_STREAM : Stream : The base namespace for media with temporal meta data.
+    It manages stream file sets, and top level metadata for the stream. And
+    provides an interface for editing temporal metadata associated with the stream.
+MV_NS_MVD : The namespace for temporal metadata. Pages in this namespace
+    follow the following format Stream_Name:mvd_type:time_start/time_end
+MV_NS_SEQUENCE : The namespace for view/editing sequences/playlists.
+
+The Search functionality is extended to do basic metadata queries and
+return media results. (ie a category query can return all mvd chunks
+in a given category range). Search results export to rss video feeds.
+
+Categories are extended to include streams, video segments and sequences.
+Categories are also extended to support rss video feed export.
+
+Mv_Embed is a stand alone javascript library for playing back ogg theora
+video in the browser. It extends oggHandler's plugin detect script and dynamically
+calls javascript libraries which generalize plugin api's to something near
+html5 video tag. Mv_embed also supports basic sequences via rss, xspf,
+m3u or custom inline format and includes a basic in-browser sequence editor (still under development) 
+More info at  http://metavid.ucsc.edu/wiki/index.php/Mv_Embed
+
+==Dependencies for MetaVidWiki ==
+* MediaWiki: MetaVid is an extension to MediaWiki (we run off the svn but should work with anything > 1.10 or so.)
+* SemanticMediaWiki: you can get semantic wiki from http://semantic-mediawiki.org/ we use 1.0.1 release
+* mod_annodex: you will need a server side ogg segment server we use mod_annodex you can get that at annodex.net
+alternatively you could use oggz-chop instead of mod_annodex
+
+
+==Install:==
+
+===add to LocalSettings.php ===
+ParserFunctions are necessary
+require_once( "$IP/extensions/ParserFunctions/ParserFunctions.php" );
+
+//set up namespace:
+$smwgNamespaceIndex=100;
+//set metavid namespace to smw namespace + 6
+$mvNamespaceIndex=$smwgNamespaceIndex + 6;
+include_once("$IP/extensions/MetavidWiki/includes/MV_Settings.php");
+
+//include SemanticMediaWiki settings (if used) 
+include_once("$IP/extensions/SemanticMediaWiki/includes/SMW_Settings.php");
+enableSemantics('localhost');
+
+//include after enableSemantics to enable metavid Extension semantic wiki overrides
+enableMetavid();
+
+=== base templates ===
+These base Templates (for structuring output of metadata) can be added by running the
+maintenance/metavid2mvWiki.php with the "update_templates" option.
+(this also includes congress templates that may or may not be of use to you. 
+
+===sql that must be run on install===
+Run the sql: maintenance/mv_tables.sql
+ having a web based install is on the todo list ;)

@@ -1,0 +1,57 @@
+#!/bin/bash
+. $bindir/functions
+
+for lang in \
+aa \
+ab \
+af \
+ak \
+als \
+am \
+ang \
+an \
+arc \
+ar \
+ast \
+as \
+av \
+ay \
+az \
+ba \
+be \
+bg \
+bh \
+bi \
+bm \
+bn \
+bo \
+br \
+bs \
+ca \
+ceb \
+ce \
+cho \
+chr \
+ch \
+chy \
+co \
+cr \
+csb \
+cs \
+cv \
+cy \
+da \
+de \
+dk \
+dv \
+dz \
+ee \
+el
+do 
+	dolang $lang
+	finishlang $lang
+done
+
+dolang en -e 694697
+
+

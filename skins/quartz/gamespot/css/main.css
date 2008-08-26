@@ -1,0 +1,222 @@
+body {
+	background: url(../images/background.gif);
+}
+
+#header, #wikia, #wikia-inside {
+	background-image: url(../images/header.gif);
+}
+#header, #header a {
+	color: #FFF;
+}
+#header a:hover {
+	color: #ffd557;
+}
+
+/*** User area ***/
+ul#welcome li.user {
+	background-image: url(http://images.wikia.com/common/skins/quartz/slate/images/user_menu.gif);
+	color: #ffd557;
+}
+#userMenu {
+	background: #505254;
+	border-color: #FFF;
+}
+#userMenu a {
+	color: #FFF;
+}
+#userMenu a:hover {
+	background: #ffd557;
+	color: #000;
+}
+
+/*** Wikia box ***/
+#wikiaLogo {
+	background: url(../images/wikia_logo_header.gif) no-repeat;
+}
+#search input {
+	border-color:#ffd557;
+}
+#search div {
+	background: url(../images/search.gif) no-repeat;
+}
+div.gelButton {
+	background: url(../images/gel_buttons.gif) top left no-repeat;
+}
+div.gelButton a {
+	background: url(../images/gel_buttons.gif) top right no-repeat;
+}
+
+/*** Nav Links ***/
+table#navLinksWikia a {
+	background: url(http://images.wikia.com/common/skins/quartz/slate/images/nav_bullet.gif) 0% 4px no-repeat;
+	color: #000000;
+}
+
+/*** Article ***/
+#articleWrapper {
+	padding-top: 10px;
+}
+.articleBar {
+	background-image: url(../images/article_bars.gif);
+	color: #FFF;
+}
+.articleBar div {
+	background-image: url(../images/article_bars.gif);
+}
+.articleBar a {
+	color: #000;
+}
+table#wikiafooter, table#wikiafooter td a {
+	color: #000;
+}
+a#wikiaFooterLogo {
+	background: url(../images/wikia_logo_footer.gif);
+}
+
+/* widgets integration */
+li.widget, #spotlights {
+	border-color: #999;
+	background-color: #383838;
+	color: #FFF;
+}
+li.widget a, li.widget a:visited, li.widget h5 {
+	color: #FFF;
+}
+li.widget h1, li.widget h2 {
+	color: #ecc064;
+}
+
+.roundedDiv b.xb2, .roundedDiv b.xb3, .roundedDiv b.xb4 {
+	background: #505254;
+	border-color: #87888C;
+}
+.roundedDiv b.xb1 {
+	background: #87888C;
+}
+
+.roundedDiv div.r_boxContent {
+	background: #505254;
+	border-color: #87888C;
+	color: #fff;
+}
+div.wikiaDialog .hd,
+div.wikiaDialog h2,
+.boxHeader_noBorderMargin,
+.boxHeader_noBorder,
+.boxHeader {
+	color: #ffd242 !important;
+	border-color: #87888c;
+}
+
+#switchSkin a {
+	color: #FFF;
+}
+
+/* AutoComplete/SearchSuggest - Inez */
+.yui-ac-content li.yui-ac-highlight {
+	background: #FFD557 !important;
+}
+.yui-ac-content li.yui-ac-prehighlight {
+	background: #FFD517 !important;
+}
+
+/* tooltips */
+.wikiaTooltip {
+	background-color: #ffec3b;
+	border-color: #FFD242;
+}
+
+.prefSection {
+	background: #EEE;
+}
+#gamespotHeader {
+	color: #787878;
+	font-size: 9pt;
+	position: relative;
+	top: 25px;
+	margin-right: 375px;
+}
+#gamespotHeader div {
+	height: 45px;
+	margin: 0 0 5px 0px;
+	padding: 0px 0px 5px 0px;
+}
+#gamespotHeader h1, #gamespotHeader h2 {
+	border: 0;
+	float: left;
+	font-weight: bold;
+	margin: 0;
+	padding: 0;
+}
+#gamespotHeader h1 {
+	color: #424242;
+	font-size: 20pt;
+}
+#gamespotHeader h2 {
+	border-left: 2px solid #aaa;
+	color: #aaa;
+	font-size: 16pt;
+	padding-left: 5px;
+	margin-left: 5px;
+}
+#gamespotHeader a {
+	color: #787878;
+	font-weight: normal;
+}
+#gamespotHeader a:hover {
+	color: #787878;
+}
+#gamespotLinks {
+	left: 0px;
+	position: absolute;
+	top: 75px;
+	font-weight: bold;
+	margin-right: -375px;
+}
+
+#gamespot_wikilogo {
+	float: left;
+	margin-right: 13px;
+}
+#gamespot_logo {
+	margin-top: 10px;
+	padding-bottom: 6px;
+}
+#header {
+	background-color: #FFF;
+	height: 125px;
+	margin: 0;
+}
+#languageMenuToggle {
+	display: none;
+}
+#gamespotHeader h1 a {
+	font-weight: bold;
+	text-decoration:none;
+}
+#gamespotHeader h2 a {
+        font-weight: bold;
+        text-decoration:none;
+}
+
+/* YUI dialogs */
+.yui-panel .hd {
+    background-color: #505254;
+    border-color: #505254;
+    color: #ffd242;
+    border-bottom: solid 1px #87888c;
+}
+
+.yui-panel {
+    background-color: #505254;
+    color: #fff;
+}
+
+.yui-panel a {
+    color: #fff !important;
+}
+
+/* fixes #2156 */
+div#sidebar {
+    top: 10px;
+}

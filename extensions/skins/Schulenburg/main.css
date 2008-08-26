@@ -1,0 +1,167 @@
+
+a:link { color:#990000; text-decoration:none; }
+a:visited { color:#990000; text-decoration:none; }
+a:focus { color:#990000; text-decoration:none; }
+a:hover { color:#990000; text-decoration:none; }
+a:active { color:#990000; text-decoration:none; }
+
+p {
+ margin-top: 0em;
+ margin-bottom: 0.5em;
+}
+
+ul {
+ margin-bottom: 0em;
+}
+
+.story {
+ font-family: Verdana, Arial, Sans-Serif;
+ font-size: 9pt;
+ line-height: 1.5em;
+ color:#484848;
+}
+
+#videooptions {
+ font-family: Verdana, Arial, Sans-Serif;
+ font-size: 8pt;
+ color:#999999;
+}
+
+#videooptions a {
+ font-family: Verdana, Arial, Sans-Serif;
+ font-size: 8pt;
+ color:#484848;
+ font-weight: bold;
+}
+
+.whatweneed {
+ font-family: Verdana, Arial, Sans-Serif;
+ font-size: 9pt;
+ line-height: 1.5em;
+ color:#484848;
+}
+
+.morestories {
+ font-family: Verdana, Arial, Sans-Serif;
+ font-size: 9pt;
+ font-style:italic;
+ text-align: center;
+ color:#999999;
+}
+
+.tax-exemption {
+ font-family: Verdana, Arial, Sans-Serif;
+ font-size: 9pt;
+ line-height: 1.5em;
+ color:#666666;
+}
+
+.tabmenu {
+ font-size: 8pt;
+ font-weight: normal;
+ color: #666666;
+ border-bottom: 1px solid #edb571;
+ margin: 0px 0px 0px 0px;
+ padding: 0px;
+ z-index: 1;
+ padding-left: 10px
+}
+
+.tabmenu li {
+ display: inline;
+ overflow: hidden;
+ list-style-type: none;
+}
+
+.tabmenu a, a.active {
+ color: #000000;
+ background: #f2e3d2;
+ font: normal 1em Verdana, Arial, sans-serif;
+ border: 1px solid #e9a95e;
+ padding: 0px 5px 0px 5px;
+ margin: 0;
+ text-decoration: none;
+}
+
+.tabmenu a.active {
+ font-weight: bold;
+ background: #f8e5bb;
+ border-bottom: 1px solid #f8e5bb;
+}
+
+.tabmenu a:hover {
+ color: #ffffff;
+ background: #e9a85e;
+}
+
+.tabmenu a:visited {
+ color: #000000;
+}
+
+.tabmenu a.active:hover {
+ background: #f8e5bb;
+ color: #000000;
+}
+
+.tabmenu-pane {
+ font-family: Verdana, Arial, Sans-Serif;
+ font-size: 9pt;
+ line-height: 1.5em;
+ color:#484848;	
+ background: #f8e5bb;
+ padding: 20px;
+ border: 1px solid #e9a95e;
+ border-top: none;
+ z-index: 2;
+}
+
+.tabmenu-pane a {
+ text-decoration: none;
+ color: #f8e5bb;
+}
+
+.tabmenu-pane a:hover {
+ background: #f8e5bb;
+}
+
+#lastline {
+ text-decoration: none;
+ color: #006699;
+}
+
+#lastline a {
+ text-decoration: none;
+ color: #006699;
+}
+
+.corner-1 {
+	width: 8px;
+	height: 8px;
+	float: left;
+	position: relative;
+	top: 0px;
+}
+.corner-2 {
+	width: 8px;
+	height: 8px;
+	float: right;
+	position: relative;
+	top: 0px;
+}
+.corner-3 {
+	width: 8px;
+	height: 8px;
+	float: right;
+	z-index: 1;
+	position: relative;
+	bottom: 8px;
+}
+.corner-4 {
+	width: 8px;
+	height: 8px;
+	float: left;
+	z-index: 1;
+	position: relative;
+	bottom: 8px;
+}
+

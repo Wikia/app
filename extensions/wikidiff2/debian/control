@@ -1,0 +1,12 @@
+Source: php5-wikidiff2
+Section: web
+Priority: optional
+Maintainer: Brion Vibber <brion@wikimedia.org>
+Build-Depends: debhelper (>= 5), php5-dev
+Standards-Version: 3.7.2
+
+Package: php5-wikidiff2
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}, php5-common
+Description: MediaWiki diff plugin for PHP 5
+ Faster diff plugin for MediaWiki under PHP 5

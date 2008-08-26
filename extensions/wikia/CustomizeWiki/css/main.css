@@ -1,0 +1,71 @@
+textarea.fullWidth {
+	width: 100%;
+	border: solid 1px #a0a0a0;
+}
+input.button {
+	background: #36C;
+	border-width: 4px;
+	border-style: double;
+	border-color: #FFF;
+	color: #FFF;
+	cursor: pointer;
+	font-family: "Lucida Grande", sans-serif;
+	font-weight: bold;
+	font-size: 9pt;
+	padding: 2px 5px;
+}
+#taskHeader {
+	background: #EEE;
+	border-bottom: 1px solid #999;
+	height: 35px;
+}
+#article {
+	font-family: sans-serif;
+	line-height: 1.5em;
+	padding: 10px;
+}
+div.actionBar {
+	background: #F9F9F9;
+	border-top: 1px solid #CCC;
+	border-bottom: 1px solid #CCC;
+	padding: 4px 8px;
+	margin-top: 20px;
+	text-align: right;
+	clear: both;
+}
+
+
+
+#customwelcome ul.breads { list-style-type: none; display: inline; }
+#customwelcome ul.breads li { list-style-type: none; display: inline; }
+
+#customskin ul { list-style-type: none; display: inline; }
+#customskin ul li { list-style-type: none; display: inline; }
+#customskin div.skinframe {
+    border-right: 1px solid #CCC;
+    float: left;
+    padding: 10px;
+}
+
+#customskin div.skinframe:hover {
+    background-color: #f1f1f1;
+    cursor: pointer;
+}
+
+#previewImage {
+        float: right;
+        width: 300px;
+}
+
+#previewImage img {
+        border: 1px solid #999;
+        background: #F9F9F9;
+        display: block;
+        padding: 3px;
+}
+#skinThumbs {
+        margin-right: 300px;
+}
+
+#logo-upload-progress {margin: 10px auto; font-weight: bold}
+#logo-upload-img {margin-right: 10px}

@@ -1,0 +1,18 @@
+/**
+ * css classes for AjaxPoll
+ */
+div.ajax-poll {
+    border: 1px dashed grey;
+	padding: 1em;
+	margin-top: 1em;
+	width: 40em;
+}
+
+div.ajax-poll div.header {
+	font-weight: bold;
+}
+
+div.ajax-poll div.row {
+	padding: 0.2em;
+	margin: 0.2em;
+}

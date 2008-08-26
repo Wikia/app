@@ -1,0 +1,47 @@
+#!/usr/bin/perl -w
+
+if ($#ARGV != 0) {
+	print "Usage: throttle <pid>\n";
+	exit 1;
+}
+
+$pid = $ARGV[0];
+$threshold = 1800;
+
+# Get status
+open STAT, "/proc/$pid/stat" or die "No such process $pid\n";
+@bits = split(/ /, <STAT>);
+$state = $bits[2];
+close STAT;
+
+print "Found process, state=$state";
+
+if ($state eq 'T') {
+	print " (not running)\n";
+	$running = 0;
+} else {
+	print " (running)\n";
+	$running = 1;
+}
+
+# Monitor albert's NFS traffic stats and continue when the calls per second drops below $threshold
+$alive = 1;
+while ($alive) {
+	$traffic = `ganglia-fetch -h albert -p 8662 albert.wikimedia.org nfs_server_calls`;
+	chomp($traffic);
+	
+	if ($running) {
+		if ($traffic > $threshold) {
+			print "nfs_server_calls = $traffic, stopping\n";
+			$alive = kill SIGSTOP, $pid;
+			$running = 0;
+		}
+	} else {
+		if ($traffic < $threshold) {
+			print "nfs_server_calls = $traffic, starting\n";
+			$alive = kill SIGCONT, $pid;
+			$running = 1;
+		}
+	}
+	sleep 10;
+}

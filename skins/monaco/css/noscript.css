@@ -1,0 +1,12 @@
+#navigation {
+	display: block;
+}
+#navigation .widget {
+	border: 0;
+	margin-left: 10px;
+	position: static;
+}
+#navigation .widget ul li a {
+	font-size: 10pt;
+	font-weight: normal;
+}

@@ -1,0 +1,53 @@
+#widgetsSpecialPageList dl
+{
+	margin: 8px 5px;
+	width: 400px;
+	float: left
+}
+
+#widgetsSpecialPageList dt
+{
+	float: left;
+	position: relative;
+}
+
+#widgetsSpecialPageList dd
+{
+	margin-left: 70px
+}
+
+#widgetsSpecialPageList dd h4
+{
+	padding: 4px 0 0 0;
+}
+
+#widgetsSpecialPageCopyrights
+{
+	margin: 50px 0px 30px 0px;
+	color: #666666;
+	font-size: 0.8em;
+	text-align: center;
+	clear: left;
+}
+
+#widgetsSpecialPageList dl dt .widgetsThumb
+{
+	height: 50px;
+	width: 50px;
+}
+
+#widgetsSpecialPageList div.add
+{
+	background-image: url(http://images.wikia.com/skins/monaco/images/sprite.png);
+	clip: rect(0px 272px 16px 256px);
+	cursor: pointer;
+	display: block;
+	height: 16px;
+	position: absolute;
+	right: -55px;
+	top: 42px;
+	width: 320px;
+	z-index: 100;
+}
+
+

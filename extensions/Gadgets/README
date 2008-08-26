@@ -1,0 +1,78 @@
+--------------------------------------------------------------------------
+README for the Gadgets extension
+Copyright © 2007 Daniel Kinzler
+Licenses: GNU General Public Licence (GPL)
+          GNU Free Documentation License (GFDL)
+--------------------------------------------------------------------------
+
+The Gadgets extension provides a way for users to pick JavaScript or CSS
+based "gadgets" that other wiki users provide.
+
+<http://mediawiki.org/wiki/Extension:Gadgets>
+
+The Gadgets extension was originally written by Daniel Kinzler in 2007
+and is released under the GNU General Public Licence (GPL).
+The internationalization files may contain contributions by several people;
+they should be mentioned in each file individually.
+
+== Installing ==
+Copy the Gadgets directory into the extensions folder of your
+MediaWiki installation. Then add the following lines to your
+LocalSettings.php file (near the end):
+
+  require_once( "$IP/extensions/Gadgets/Gadgets.php" );
+
+== Usage ==
+The list of available gadgets is defined on MediaWiki:Gadgets-definition.
+Gadgets defined there show up in the "Gadgets" section of
+Special:Preferences, so users can pick the gadgets they would like to use.
+An overview of the gadgets defined by MediaWiki:Gadgets-definition is also
+shown on Special:Gadgets, along with links to the respective system
+messages, for easy editing.
+
+Each line in MediaWiki:Gadgets-definition that start with one or more "*"
+(asterisk) characters defines a gadget; it must have the following form:
+
+  * mygadget|mygadget.js|mygadget.css
+
+That is, each line consists of fields separated by a "|" (pipe) character.
+The first field ("mygadget" in the example) is the gadgets internal name,
+and references a system message (MediaWiki:Gadget-mygadget in the example)
+that contains a short description of the gadget, using wiki syntax.
+Note that the internal name must start with a ASCII letter, and must
+contain only ASCII letter and numbers, hyphens ("-"), underscores ("_"),
+colons (":"), and periods (".") (spaces are also allowed but converted to
+underscores ("_"), like for page titles).
+
+The remaining fields on the line refer to the JavaScript or CSS code that
+makes up the gadget, contained in system messages
+(MediaWiki:Gadget-mygadget.js and MediaWiki:Gadget-mygadget.css in the
+example); the names of those messages must end with ".js" or ".css",
+respectively. A gadget can use any number of code messages, specifically,
+common code can be put into a code message used by several gadgets, in
+addition to their own specific code, e.g:
+
+  * frobinator|commonStuff.js|frob.js|frob.css|pretty.css
+  * l33t|commonStuff.js|tools.js|l33t.js
+
+The list of gadgets in MediaWiki:Gadgets-definition can be broken into
+sections using lines that start and end with two or more "=" (equals)
+characters, enclosing the name of a system message that defines the
+section's name - for example:
+
+  == editing-gadgets ==
+
+This would define a new section, with the title defined on the page
+MediaWiki:Gadget-section-editing-gadgets
+
+
+== Caveats ==
+
+* Requires MediaWiki 1.11alpha, revision 24477 or later.
+* Gadgets do not apply to Special:Preferences, so users can always disable
+  any broken gadgets they may have enabled.
+* Uses BeforePageDisplay hook, thus only works with MonoBook based skins;
+  specifically, does not work with CologneBlue.
+* Gadget code is included after user code - that means that user JS has no
+  access to things defined in gadgets, and user CSS is overwritten by CSS
+  from gadgets. (pending a better way to insert things into the HTML head)

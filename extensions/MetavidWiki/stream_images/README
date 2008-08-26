@@ -1,0 +1,10 @@
+By default folder for stream frames.
+base naming syntax is 
+	last_digit_of_stream_id / stream_id / frame_time_in_seconds.jpg
+resized images: 
+	last_digit_of_stream_id / stream_id / frame_time_in_seconds_160x120.jpg 
+	
+images_not_available is the base missing image that is sent when no image can be found in range
+
+Eventually stream images will be moved over to mediaWiki image directory
+once streams are better tied into uploaded files. 

@@ -1,0 +1,40 @@
+[[Semantic Forms 1.2.6]]
+
+Contents:
+* Disclaimer
+* Requirements
+* Installation
+* Contact
+
+== Disclaimer ==
+
+Semantic Forms is a relatively new extension, and there is no
+guarantee that any of it will work on your system. On the other hand,
+the code does not make any modifications to the database directly,
+so it should be a low-risk installation.
+
+For a proper legal disclaimer, see the file "COPYING".
+
+== Requirements ==
+
+The extension requires an install of Semantic MediaWiki 1.0 or
+greater. For more details, see Semantic MediaWiki's own
+installation requirements.
+
+== Installation ==
+
+(1) Extract the archive to obtain the directory "SemanticForms" that contains
+    all relevant files. Copy this directory (or extract/download it) to
+    "[wikipath]/extensions/".
+(2) Insert the following line into the file "[wikipath]/LocalSettings.php":
+      include_once('extensions/SemanticForms/includes/SF_Settings.php');
+
+'''Remark:'''  Semantic Forms creates an additional custom namespace, "Form"
+(see http://meta.wikimedia.org/wiki/Help:Custom_namespaces). If you have your
+own custom namespaces, you have to set the parameter $sfgNamespaceIndex before
+including SF_Settings.php. See SF_Settings.php for more details.
+
+== Contact ==
+
+If you have any issues or questions, please send them to
+yaron57@gmail.com.

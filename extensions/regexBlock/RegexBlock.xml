@@ -1,0 +1,357 @@
+<mediawiki lang="en" version="0.3" schemaLocation="http://www.mediawiki.org/xml/export-0.3/ http://www.mediawiki.org/xml/export-0.3.xsd" xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.mediawiki.org/xml/export-0.3/">
+  <siteinfo>
+    <sitename>Wikia</sitename>
+    <base>http://www.wikia.com/wiki/Main_Page
+    <generator>MediaWiki 1.7alpha</generator>
+    <case>first-letter</case>
+      <namespaces>
+      <namespace key="-2">Media</namespace>
+      <namespace key="-1">Special</namespace>
+      <namespace key="0"></namespace>
+      <namespace key="1">Talk</namespace>
+      <namespace key="2">User</namespace>
+      <namespace key="3">User talk</namespace>
+      <namespace key="4">Staff Wiki</namespace>
+      <namespace key="5">Staff Wiki talk</namespace>
+      <namespace key="6">Image</namespace>
+      <namespace key="7">Image talk</namespace>
+      <namespace key="8">MediaWiki</namespace>
+      <namespace key="9">MediaWiki talk</namespace>
+      <namespace key="10">Template</namespace>
+      <namespace key="11">Template talk</namespace>
+      <namespace key="12">Help</namespace>
+      <namespace key="13">Help talk</namespace>
+      <namespace key="14">Category</namespace>
+      <namespace key="15">Category talk</namespace>
+      <namespace key="100">Portal</namespace>
+      <namespace key="101">Portal talk</namespace>
+      <namespace key="102">Blog</namespace>
+    </namespaces>
+  </siteinfo>
+  <page>
+    <title>RegexBlock</title>
+    <id>1873</id>
+    <revision>
+      <id>6278</id>
+      <timestamp>2006-12-29T20:42:46Z</timestamp>
+      <contributor>
+        <username>Sannse</username>
+        <id>5</id>
+      </contributor>
+      <comment>/* Help page */</comment>
+      <text space="preserve">:&lt;small&gt;See
+[[Cross wiki user blocks]] for a list of users blocked the old
+way.&lt;/small&gt;
+&lt;H1&gt;Product Requirements&lt;/H1&gt;
+==Product Description==
+: This is the automated version of the original regexBlock extension.
+It takes data out of shared the database instead out of hardwritten
+text inside of the file (''uses memcached to speed up the operations,
+mostly on the side of checking edits'') and applies blocking to all
+users, groupped by blocker's names. There is also a Special Page
+(restricted to users with the preexisting 'block' ability) that allows
+to block, view (also view by blockers) and unblock user names and IP
+addresses. Current version also allows to block entire IP addresses (no
+range or partial blockings in this case).
+: Will also include in this one an ability to prevent new account
+creation (yes, such a thing already exists in IP Blocks, but is not
+multi-wikia-wide).
+==Product Assumptions==
+* we use a shared database (so the block is enabled on multiple wikias)
+* we use memcached (so database operations are sped up)
+* user of this special page should have the rights to block
+* we take care of account creation prevention multi-wikia style right
+here
+==Product Features==
+:;Basic functionality
+:: Ability to block users by their names when they try to edit pages,
+getting data out of the database, special page for managing blocks.
+:;Extended functionality
+:: Ability to block IP addresses, use of memcached, viewing blocks by
+blockers.
+:;Additional functionality
+:: Ability to block new account creation on multiple wikias, displaying
+efficiency statistics for particular blocks (who, when, from where
+tried to edit and was blocked), allowing to set expiration period for
+blocks (which is already done).
+==Key Product Concepts==
+:;Data fetched from shared database
+:: Data should be fetched from a shared database, supported with the
+use of memcached instead of hardwritten from the file.
+:;Submit form on one page with the list
+:: Easier to manage than having them on two separated special pages.
+:;May be extended by having more statistics, timestamps, allow blocks
+by IP ranges, and such
+:: We can add some statistics into separate tables (like the reason -
+rather an internal note for admin, why this particular user has been
+blocked, or the IP's from which the user tried to login etc.).
+==Product Unknowns==
+* Should we have a similar page for usernames excluded from blocking
+(when we block some IPs)? This could be linked to this project (the new
+special page would fetch some data from this one).
+* Include ability to block entire IP ranges? There are already
+indications that it would be useful.
+* Include timestamps? For now, the blocks are there for infinity.
+** Timestamps are now included. Expired blocks are deleted
+automatically when a blocked user tries to edit and an expired block is
+then applied. In such case, the block is discarded and user can edit.
+Admin can also remove expired blocks manually from list (they are
+denoted 'EXPIRED' in red font)
+* Show more information? Like for example statistics, which users tried
+to login from which IPs and how many times, etc.
+==Potential Product Issues==
+* As we are able to block entire IP addresses, so there is more need
+for a utility to allow specific users identified by their usernames to
+edit anyway, even when they log from the blocked address. Similar
+request already exists here:
+[[Product_Priorities:_Ops_Upgrades_Bugs#General]]. The special page to
+exclude blocks could integrate both IP Blocks and Regexblocks or it
+could be just two separate special pages.
+* &lt;strike&gt;The blocks are permanent at the moment. So there is
+more attention required to them.&lt;/strike&gt;
+: Which is untrue now. The blocks can be made with a chosen expiration
+time. After that, then can be removed manually or on block. Either way,
+they will be harmless.
+* also a note: on older versions of MW when the user is regexblocked
+(s)he cannot also create accounts (same goes for normal IP blocks), on
+newer (I've tested it personally on 1.8.2) it allows a separate user
+account creation block - it's about the
+code, and since I was developing a clean extension, I didn't want to
+alter the MW code itself. This leads to a situation, when the same
+block of one vandal will allow him/her to create account on one wiki,
+and disallow on the other (assuming that they will have different
+versions and the option 'block account creation' will be unchecked).
+==Product Interface==
+: Has one Special Page named Regexblock. It displays a form, used for
+adding blocks, and a list, used for managing blocks.
+: The form has a field, specyfing user name or IP that we want to
+block. While not required for a successful block, there are three more
+options: whether match should be '''exact''', whether we should deny
+this user '''account creation''', or the '''expiration period''', after
+which the block will be invalid.
+: The list can be filtered by usernames of the blockers. Each row
+displays following information: ''username or IP address blocked'',
+''username of the blocker'' and a ''link to unblock''. The unblock
+requires no confirmation and is processed instantenuosly. The list can
+be traversed as all standard lists in special pages (prev, next,
+display by 20, 50 etc.). Each row also has the link to '''statistics'''
+for a particular block.
+==Product Structure==
+* '''Files'''
+** '''regexBlock.php''' ''contains includes for the files in the
+folder, this one replaces old regexBlock.php
+** '''/regexBlock''' ''folder containg the core of the extension plus
+docs''
+*** '''README''' ''contains installation instructions and product
+description''
+*** '''regexBlockCore.php''' ''contains the blocking utility and use of
+the hook''
+*** '''SpecialRegexBlock.php''' ''Special Page for viewing and managing
+block list''
+*** '''SpecialRegexBlockStats.php''' ''Special Page for displaying
+stats for particular blocks''
+*** '' '''SimplifiedRegex.php''' - this one is required also by
+[[SpamRegex]] ''
+* '''SQL''' CREATE TABLE `blockedby` ( `blckby_id` int(5) NOT NULL
+auto_increment, `blckby_name` varchar(255) character set latin1 collate
+latin1_bin NOT NULL, `blckby_blocker` varchar(255) character set latin1
+collate latin1_bin NOT NULL, `blckby_timestamp` char(14) NOT NULL,
+`blckby_expire` char(14) NOT NULL, `blckby_create` tinyint(1) NOT NULL
+default '1', `blckby_exact` tinyint(1) NOT NULL default '0',
+`blckby_reason` tinyblob NOT NULL, PRIMARY KEY (`blckby_id`), UNIQUE
+KEY `blckby_name` (`blckby_name`), KEY `blckby_timestamp`
+(`blckby_timestamp`), KEY `blckby_expire` (`blckby_expire`) ) ; CREATE
+TABLE `stats_blockedby` ( `stats_id` int(8) NOT NULL auto_increment,
+`stats_user` varchar(255) character set latin1 collate latin1_bin NOT
+NULL, `stats_blocker` varchar(255) character set latin1 collate
+latin1_bin NOT NULL, `stats_timestamp` char(14) NOT NULL, `stats_ip`
+char(15) NOT NULL, `stats_match` varchar(255) character set latin1
+collate latin1_bin NOT NULL default '-', `stats_wiki` varchar(255) NOT
+NULL default '', PRIMARY KEY (`stats_id`), KEY `stats_timestamp`
+(`stats_timestamp`) ) ;
+* '''Installation'''
+# Create tables in the shared database.
+# Copy folder /regexBlock to /extensions, copy SimplifiedRegex.php to
+/extensions ('''do not''' copy regexBlock.php yet!).
+# Edit regexBlock.php and set '''REGEXBLOCK_PATH''' to its correct
+value.
+# Copy regexBlock.php to /extensions.
+:That should do the trick. If people belonging to staff cannot access
+the extension, check if relogin helps. If not, please check if the
+staff permissions are not '''overwritten''' after the initialization of
+the extension. If that is the case, the permissions should be rather
+appended (the extension adds one new permission right).
+==Product Use Cases==
+# '''Blocking a vandalising user by a username'''
+::A user is vandalising over different wikias. An admin blocks the user
+by adding his/her username to the block list. The user cannot edit
+pages anymore until the block is released.
+::;Step 1 (An admin blocks user)'''
+:::Admin inserts the username into the database via the special page
+regexblock.
+::;Step 2 (The user cannot edit pages)
+:::Blocked user (a user that his/her username '''contains''' the
+blocked username) tries to edit. There goes a block check, and there is
+a match. Now, the expiration check is done. If the block is still
+valid, unfortunate (vandalising) user will be displayed a message that
+this particular user is blocked, along with the name of the blocker.
+Also, on a successful block, an entry into the database is made.
+::;Step 3 (Admin releases the block)
+:::When the situation is under control, admin can ublock the user (or
+not, if the user's actions made clear that the block should be
+permanent). Admin can also view statistics for this particular block
+(frequent attempts to edit despite being blocked may encourage admin to
+make a more permanent block...).
+# '''Blocking a vandalising user by an IP address'''
+:: A user is vandalising over different wikias. An admin blocks the
+user by adding his/her IP address to the block list. No users logging
+from that IP will be able to edit the pages.
+::;Step 1 (An admin blocks '''full''' IP address)
+:::Admin inserts the '''full''' IP address into the database via the
+special page regexblock (''a partial or range IP address will be
+treated like a username. This is to avoid situations such as when a '3'
+block blocks all IP's including '3'. Regular expressions.''). ::;Step 2
+(The user cannot edit pages)
+:::When a user logging in from a particular IP address (it has to be an
+'''exact''' match) tries to edit, he/she will be displayed a message
+that this particular user is blocked, along with the name of the
+blocker. Also, all non-logged users from that IP address will be
+blocked.
+::;Step 3 (Admin releases the block)
+:::When the situation is under control, admin can ublock this IP
+address (or not, if the user's actions made clear that the block should
+be permanent).
+==Product Bugs==
+:Please test it on http://fp006.qa.wikia.com/wiki/Special:Regexblock.
+(it requires staff group rights). Account creation prevention mode may
+not work properly at the moment - still working on that.
+:'''Known Bugs''':
+:* there is a little glitch when someone unblocks the last block by a
+particular blocker (it shows 'All' on the select, but the list is
+empty, the only exception is when unblocked row was the last on the
+global list)
+==Discussion==
+[[User:Kaz3t]]: I'm not convinced that currently way for blocking user
+by name is the best. For example user name can consist of his real name
+and surname. So if we block user "John" we also block users "Johnny",
+"John Smith", etc. In my opinion we should have choice - multi-block
+(as it is now) and single-block (for example when we want to block this
+and only this specified user we put his name between quotation-marks).
+::: Yes, you got a point. Umm, but wouldn't a checkbox be better? It
+would be more obvious on the first sight, I believe.
+--[[User:Bartek|Bartek]] 16:03, 17 November 2006 (UTC)''
+::: I added a checkbox just for that, should be working fine.
+--[[User:Bartek|Bartek]] 16:01, 20 November 2006 (UTC)
+* The message that a user sees is the same whether it is a similar name
+block or a specific name block (or even an IP block). I think this
+needs to either be made more general, or made variable. The reason set
+is: "This username is prevented from editing due to vandalism by a user
+with a similar name. Please create an alternate user name or contact
+Wikia about the problem"
+:::: There are four types of messages now (displayed to the blocked
+user). First, is the reason specified by an admin. If there is none,
+different messages will be displayed for: exact username match, IP
+address match and a regex username match. - --[[User:Bartek|Bartek]]
+13:07, 24 November 2006 (UTC)
+* Is it possible to block ''just'' creation of accounts? for example to
+stop future creation of sannse-like accounts while still allowing me to
+edit? (this isn't vital though)
+:::: Good point. For the moment, it is not possible with this
+extension. It will be added in the future. - --[[User:Bartek|Bartek]]
+09:42, 24 November 2006 (UTC)
+* When it's an exact match block, this is mentioned on the listing.
+Could it also be
+mentioned when it is not exact? It would make this listing clearer. For
+example:
+** Bartek (exact match) (account creation block) (blocked by: Sannse)
+on (etc.)
+** Bartek (regex match) (account creation block) (blocked by: Sannse)
+on (etc.)
+:::: Changed already --[[User:Bartek|Bartek]] 09:34, 24 November 2006
+(UTC)
+*
+http://fp006.qa.wikia.com/index.php?title=Special:Regexblockstats&amp;target=sannse
+- I think all other logs have newes entries at the top. Can this one be
+reversed?
+:::: Done - --[[User:Bartek|Bartek]] 09:39, 24 November 2006 (UTC)
+* I think that's all I can come up with, this is wonderful! thanks so
+much for getting this going :) -- [[User:Sannse|Sannse]] 18:13, 23
+November 2006 (UTC)
+* The list of blocks is in alphabetical order. Is this the best way? I
+think it may be, I'm just used to seeing such things in time order.
+:::: Right. For the time being, it is in a descending time order. Feel
+free to test and I will change to what will be best. -
+--[[User:Bartek|Bartek]] 14:03, 27 November 2006 (UTC)
+* Expired blocks are shown - useful? or are they quickly going to fill
+up the blocklog?
+:::: Now they are hidden. - --[[User:Bartek|Bartek]] 14:03, 27 November
+2006 (UTC)
+* All seems to work as advertised :) -- [[User:Sannse|Sannse]] 11:32,
+27 November 2006 (UTC)
+* A community team question. Do we want to change the default block
+reasons at all? The current defaults are:
+** "This IP address is prevented from editing due to vandalism" (IP
+block)
+** "This username is prevented from editing due to vandalism by a user
+with a similar name. Please create an alternate user name or contact
+Wikia about the problem" (RegEx block)
+** "This username is prevented from editing due to vandalism" (Username
+block)
+:It won't always be vandalism. Is there something more general we can
+use to cover vandalism, spamming, trolling, impersonation, etc?
+[[User:Angela|Angela]] 10:53, 28 November 2006 (UTC)
+:: how about "vandalism or other disruption" -- [[User:Sannse|Sannse]]
+08:59, 30 November 2006 (UTC)
+* as Splarka said earlier (05.12.2006) on IRC - ''an idea for blocking
+IP ranges: a radio box: (*) whole username (exact match) ( ) regex
+username ( ) IP or IP range in the first: "Splarka" would block just
+that name... in the second "Spla" would block any username containing
+that... and in the third: 75.72.55.78 would block just the user's IP,
+and 75.72. could block 75.72.*.* simple summary: IP matching would be
+made manual (easier to code probably?) although CIDR support might be
+better than regex for IPs... eg 75.72.0.0/16''
+* as Sannse and Splarka said today on IRC, it would be good to have an
+option to block users in case-sensitive mode. One proposition is for an
+exact match to be case-sensitive. - --[[User:Bartek|Bartek]] 09:06, 18
+December 2006 (UTC)
+:: As agreed, it will be case-sensitive for an exact match mode. -
+--[[User:Bartek|Bartek]] 09:08, 18 December 2006 (UTC)
+:::Which is already under testing
+* and, as Emil said, it would be good to check if there is some proxy
+check within the IP check (might be already implemented in existing
+functions, since I am using class User's function to get the user's IP)
+==Suggested messages==
+* "This IP address is prevented from editing due to vandalism or other
+disruption by you or by someone who shares your IP address. If you
+believe this is in error, please [[Special:Contact|contact Wikia]]."
+(IP block)
+* "This username is prevented from editing due to vandalism or other
+disruption by a user with a similar name. Please create an alternate
+user name or [[Special:Contact|contact Wikia]] about the problem."
+(RegEx block)
+* "This username is prevented from editing due to vandalism or other
+disruption. If you believe this is in error, please
+[[Special:Contact|contact Wikia]]." (Username block)
+==Help page==
+[[Help:Global blocks]] (for contributors, not feature users)
+==Post release==
+A possible problem that's hard to confirm.
+User:WatchTVEatDonutDrinkBeer complained of errors on trying to access
+pages on wikiality. Their browser would direct them to
+http://84.40.25.253/PageName
+and they would get the 404 message: Not Found The requested URL
+/Main_Page was not found on this server. Apache/2.2.0 (Unix)
+mod_ssl/2.2.0 OpenSSL/0.9.7f PHP/5.1.4 Server at 84.40.25.253 Port 80
+Because the timing of their last edit was so similar to a block Angela
+had made: # wheels! (regex match) (account creation block) (blocked by:
+Angela, generic reason) on 19:43, 29 December 2006 (unblock) permanent
+block (stats)
+I tried removing this block. Once I'd done that, he could access the
+site normally. Replacing the block had no effect. I compared his IP
+with the vandal's (User:Willy on wheels!) but they didn't match.
+Perhaps a coincidence? But recording it here just in case it isn't --
+[[User:Sannse|Sannse]] 20:42, 29 December 2006 (UTC)
+[[Category:Features]]</text>
+    </revision>
+  </page>
+</mediawiki>

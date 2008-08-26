@@ -1,0 +1,4 @@
+This was originally a fork of the File_Ogg package in PEAR. I (TS) have now taken 
+over maintainership of that package, and have merged my work back to there, 
+starting with version 0.3.0. 
+

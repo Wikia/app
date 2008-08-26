@@ -1,0 +1,237 @@
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="../css/wikiwyg.css" />
+<script type="text/javascript" src="../lib/Wikiwyg.js"></script>
+<script type="text/javascript" src="../lib/Wikiwyg/Toolbar.js"></script>
+<script type="text/javascript" src="../lib/Wikiwyg/Wikitext.js"></script>
+<script>
+// Find all the divs in the page (after it has loaded) and Wikiwygify them.
+Wikiwyg.prototype.modeClasses = ['Wikiwyg.Wikitext'];
+
+var wikiwyg_divs = [];
+onload = function() {
+    config = {
+        imagesLocation: '../images/',
+        doubleClickToEdit: true
+    };
+    var elements = document.getElementsByTagName('div');
+    var divs = [];
+    for (var i = 0; i < elements.length; i++)
+        divs.push(elements[i]);
+    for (var i in divs) {
+        var wikiwyg = new Wikiwyg();
+        wikiwyg.createWikiwygArea(divs[i], config);
+        wikiwyg_divs.push(wikiwyg);
+    }
+    return true;
+}
+
+</script>
+</head>
+<body>
+<h1>Wikiwyg HTML to Wikitext Tests</h1>
+<p>
+Doubleclick on any of the sections below to see the wikitext version.
+</p>
+<hr />
+<blockquote>
+   
+
+<h3>Tables Tests</h3>
+<div>
+<table class="formatter_table">
+<tr>
+<td><strong>one</strong></td>
+<td><u>two</u></td>
+<td><del>three</del></td>
+</tr>
+<tr>
+<td>one</td>
+<td>two</td>
+<td>three</td>
+</tr>
+<tr>
+<td>yeah</td>
+<td></td>
+<td>yeah</td>
+</tr>
+</table>
+<p>Done!</p>
+</div>
+
+<h3>Link Tests</h3>
+<div>
+<p>
+This is an external link without a name:
+ <a href="http://coffeekid.com">http://coffeekid.com</a>
+</p>
+<hr />
+<p>
+This is an external link: <a href="http://coffeekid.com"><em>The</em> Coffee Blog</a>
+</p>
+<hr />
+<p>
+This is an WikiLink: <a href="?WikiLink">WikiLink</a>
+</p>
+</div>
+
+
+<h3>Preformatted Tests</h3>
+<div>
+<pre>
+sub foo {
+    my $bar = shift;
+}
+</pre>
+<p>And another</p>
+<pre>
+&lt;html&gt;
+    &lt;body&gt;
+        &lt;p&gt;
+        Le text.
+        &lt;p&gt;
+    &lt;body&gt;
+&lt;html&gt;
+</pre>
+</div>
+
+
+<h3>Heading Tests</h3>
+<div>
+<h1>Heading One</h1>
+
+<ul>
+<li>One
+<li>Two
+</ul>
+
+<h3>Heading <i>Three</i></h3>
+<p>This is the stuff...</p>
+<h2><u>Heading</u> Two</h2>
+</div>
+   
+
+<h3>Horizontal Rule Tests</h3>
+<div>
+<hr />
+
+
+<p>Paragraph between hr tags.</p>
+
+
+  <hr/>
+
+<ul><li>foo</li></ul>
+
+<hr/>Sandwiched between two...<hr/>
+
+
+</div>
+
+
+<h3>List Tests</h3>
+<div>
+
+<ul>
+  <li>List Item at the top</li>
+  <ul>
+    <li>Sub-list item.</li>
+    <li>  Spaced list item.</li>
+    <li>
+      Longer list item with
+      a break and some whitespace.
+    </li>
+    <ol>
+      <li>One</li>
+      <li>Two</li>
+      <li>Three</li>
+      <ol>
+        <li>Three.One</li>
+      </ol>
+    </ol>
+  </ul>
+  <li>Fin</li>
+</ul>
+
+<ul>
+  <li>One
+    <ol>
+      <li>111</li>
+      <li>222</li>
+    </ol>
+  </li>
+  <li>Two</li>
+</ul>
+
+<ul><ul><li>one</li></ul>
+<li>two
+<li>three</li>
+</ul>
+
+
+
+</div>
+
+
+<h3>Paragraph Tests</h3>
+<div>
+    This is a line with leading whitespace and no p tags.
+
+    This is a similar line. I think whitespace should be collapsed.
+<p>This is a line in a p tag.
+
+This other line should get collapsed.
+</p>
+<p>another paragraph.</p><p>  another paragraph.</p>
+</div>
+<pre style="display: none">
+This is a line with leading whitespace and no p tags. This is a similar line. I think whitespace should be collapsed.
+
+This is a line in a p tag. This other line should get collapsed.
+
+another paragraph.
+
+another paragraph.
+</pre>
+
+
+<h3>Bold Tests</h3>
+<div>
+This is one type of <b>bold</b> using the 'b' tag.
+This is one type of <strong>bold</strong> using the 'strong' tag.
+This is another type of <span style="font-weight: bold">bold</span> using the
+'span style="font-weight: bold"' markup.
+</div>
+
+
+<h3>Italic Tests</h3>
+<hr />
+<div>
+This is one type of <i>italic</i> using the 'i' tag.
+This is one type of <em>italic</em> using the 'em' tag.
+This is another type of <span style="font-style: italic">italic</span> using the
+'span style="font-style: italic"' markup.
+</div>
+
+
+<h3>Underline Tests</h3>
+<hr />
+<div>
+This is one type of <u>underline</u> using the 'u' tag.
+This is another type of <span style="text-decoration: underline">underline</span> using the 'span style="text-decoration: underline"' markup.
+</div>
+
+
+<h3>Strikethrough Tests</h3>
+<hr />
+<div>
+This is one type of <del>strikethrough</del> using the 'del' tag.
+This is one type of <strike>strikethrough</strike> using the 'strike' tag.
+This is one type of <s>strikethrough</s> using the 's' tag.
+This is another type of <span style="text-decoration: line-through">strikethrough</span> using the 'span style="text-decoration: line-through"' markup.
+</div>
+
+
+</blockquote>
+</body>
+</html>

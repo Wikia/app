@@ -1,0 +1,25 @@
+#!/bin/bash
+
+if [ "asdf$1" == asdf ];then
+	echo "Usage: compress-volumes <language>"
+	exit
+fi
+
+basedir=/var/zwinger/htdocs/static
+htmldir=$basedir/$1
+listdir=$basedir/downloads/$1/listfiles
+destdir=$basedir/downloads/$1/volumes
+
+cd $basedir
+
+for listfile in $listdir/vol* ;do
+	vol=`basename $listfile`
+	destfile=$destdir/$vol.7z
+	
+	if [ -e $destfile ];then
+		echo "$destfile already done"
+	else
+		echo 7z a $destdir/$vol.7z @$listfile
+		7z a $destdir/$vol.7z @$listfile
+	fi
+done

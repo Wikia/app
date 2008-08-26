@@ -1,0 +1,90 @@
+.mw-apc-content {
+	clear: both;
+	font-size: x-small;
+}
+
+.apc-header-1 { background:rgb(153,153,204); margin:0; padding:0.5em 1em 0.5em 1em; }
+.apc-header-1 a:hover { text-decoration:none; color:rgb(90,90,90); }
+
+.mw-apc-logo {
+	background:rgb(119,123,180);
+	border-right: solid black 1px;
+	border-bottom: solid black 1px;
+	font-style:italic;
+	padding-left:1.2em;
+	padding-right:1.2em;
+	text-align:right;
+}
+
+.mw-apc-logo a {
+	color:black;
+}
+
+.mw-apc-nameinfo {
+	color:white;
+	display:inline;
+	font-size:0.4em;
+	margin-left: 3em;
+}
+
+.mw-apc-separator {
+	background:white;
+	border-bottom:solid rgb(102,102,153) 1px;
+	border-style:none;
+	border-top:solid rgb(102,102,153) 10px;
+	height:12px;
+	margin:0;
+	margin-top:1px;
+	padding:0;
+}
+
+.mw-apc-stats {
+	background:rgb(238,238,238);
+	border:solid rgb(238,238,238) 1px;
+	margin-bottom:1em;
+	}
+.mw-apc-content h2 {
+	background:rgb(204,204,204);
+	color:black;
+	font-size:1em;
+	margin:0;
+	padding:0.1em 1em 0.1em 1em;
+	}
+.mw-apc-content table {
+	border:solid rgb(204,204,204) 1px;
+	border-spacing:0;
+	width:100%;
+	border:solid rgb(204,204,204) 1px;
+	color:black;
+	}
+.mw-apc-content table th {
+	background:rgb(204,204,204);
+	color:white;
+	margin:0;
+	padding:0.1em 1em 0.1em 1em;
+	}
+.mw-apc-content th a.sortable { color:black; }
+.mw-apc-content td { padding:0.3em 1em 0.3em 1em; }
+.mw-apc-tr-0 { background:rgb(238,238,238); }
+.mw-apc-tr-1 { background:rgb(221,221,221); }
+.mw-apc-td-0 { border-right:solid rgb(102,102,153) 1px; white-space:nowrap; }
+.mw-apc-td-n { border-right:solid rgb(102,102,153) 1px; }
+
+.mw-apc-content td { padding:0.3em 1em 0.3em 1em; } td h3 {
+	color:black;
+	font-size:1.1em;
+	margin-left:-0.3em;
+	}
+
+
+.mw-apc-stats { margin:1em; width:45%; float: left; display: table;}
+
+span.box {
+	border: black solid 1px;
+	border-right:solid black 2px;
+	border-bottom:solid black 2px;
+	padding:0 0.5em 0 0.5em;
+	margin-right:1em;
+}
+span.green { background:#60F060; padding:0 0.5em 0 0.5em}
+span.red { background:#D06030; padding:0 0.5em 0 0.5em }

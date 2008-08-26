@@ -1,0 +1,33 @@
+#results {
+  width: 49%;
+  margin-left: 25%;
+  border: 1px solid black;
+  display: none;
+  overflow: scroll;
+  font: menu;
+  /*color: WindowText;*/
+  color: black;
+  background-color: white;
+}
+
+#results a {
+  display: block;
+  text-decoration: none;
+  /*color: WindowText;*/
+  color: black;
+  background-color: white;
+  padding: 1px 3px;
+}
+
+#results a:hover {
+  /*background-color: Highlight;
+  color: HighlightText;*/
+  background-color: blue;
+  color: white;
+}
+
+#lsearchbox input {
+  width: 50%;
+  margin-left: 25%;
+}
+

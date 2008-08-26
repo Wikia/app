@@ -1,0 +1,18 @@
+.SWM_message {
+	margin: 15px 0;
+	padding: 0px 8px;
+	background-color: #fafad2;
+	color: #000000;
+	border: solid 1px #f0e68c;
+}
+
+.SWM_message .SWM_expire {
+	float: right;
+	font-size: 0.9em;
+	margin-right: 10px;
+}
+
+.SWM_message .SWM_dismiss {
+	float: right;
+	font-size: 0.9em;
+}

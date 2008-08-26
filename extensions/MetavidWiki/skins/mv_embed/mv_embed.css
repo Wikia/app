@@ -1,0 +1,38 @@
+.mv_track {
+	margin-bottom:20px;
+	position:relative;
+}
+.mv_playhead {
+	position:absolute;
+	top:0;
+	left:0;
+	width:17px;
+	height:21px;
+	/*http://art.gnome.org/themes/gtk2*/
+}
+.mv_status {
+	font-family:"Times New Roman", Times, serif;
+	font-size:14px;
+	float:left;
+}
+
+.inputTrackerInput {
+        height:20;
+    	width:30;
+        font-family : Arial, Helvetica, sans-serif;
+	font-size : 12px;
+}
+.mv_loading_icon {
+	position:absolute;
+	top:0px;
+	right:0px;	
+	width:16px;
+	height:16px;	
+}
+div.floatleft, table.floatleft {
+	border:0pt none;
+	clear:left;
+	float:left;
+	margin:0pt 0.5em 0.5em 0pt;
+	position:relative;
+}

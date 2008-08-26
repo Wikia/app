@@ -1,0 +1,26 @@
+External Editor Helper application (EE)
+Erik Moeller, 2005
+
+License: Public domain
+
+Purpose: Allows the use of arbitrary external applications for editing
+or viewing resources on the web, e.g. in a wiki.
+
+Example: You want to edit a picture in a wiki. If the wiki supports the
+use of application/external-editor, you should find an editing link next
+to the image. After you click that link, the wiki sends a resource
+description file to the web browser which has the MIME type
+application/external-editor. The web browser knows that this MIME type
+is associated with the helper application ee.pl, which downloads the image,
+starts the image editing application, and uploads the image back to the
+server upon save.
+ 
+Usage: Associate the MIME type application/external-editor in your web
+browser with ee.pl. Configure the editors and viewing programs by
+editing the file ~/.ee-helper/ee.ini (in your home directory); an
+example should be part of the archive containing this program. To
+save files back to the server, you also have to add authentication
+information to the configuration file.
+
+Installation: See INSTALL for detailed setup instructions under
+Unix and Windows.

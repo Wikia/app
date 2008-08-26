@@ -1,0 +1,163 @@
+/* Style container */
+#reportProblemForm_c {
+	top: 0px;
+	left: 0px;
+	position: absolute
+}
+
+#reportProblemSummary_c {
+	position: absolute;
+	top: 150px;
+	left: 150px;
+}
+
+#reportProblemForm a {
+	color: inherit;
+	text-decoration: underline
+}
+
+#reportProblemForm {
+	background-color: #fff;
+	color: #000000;
+	border: solid 1px #aaaaaa;
+	font-size: 9pt;
+	visibility: hidden;
+	position: absolute;
+	margin-top: -250px;
+	left: -200px;
+	padding: 8px 12px 0px 8px;
+}
+
+#reportProblemForm {
+	width: 580px !important;
+	left: -300px;
+}
+
+/* Form fields */
+#reportProblemForm form
+{
+	padding: 5px 12px 12px 5px;
+}
+
+#reportProblemForm a {
+	color: inherit;
+	text-decoration: underline
+}
+
+#reportProblem input[type="text"],
+#reportProblem textarea,
+#reportProblem select {
+	padding: 2px;
+	margin: 7px 0 7px 10px;
+}
+
+#reportProblem label.floaty {
+	width: 120px;
+	float: left;
+	padding: 10px 0;
+	text-align: left;
+	margin: 0
+}
+
+#reportProblem input.floaty {
+	width: 250px
+}
+
+#reportProblem select.floaty {
+	width: 256px
+}
+#reportProblem br.floaty {
+	clear: both
+}
+
+#reportProblem textarea {
+	width: 405px;
+}
+
+#reportProblemForm .errorField {
+	border: solid 1px #DC143C !important;
+	background-color: #FFFAFA !important;
+}
+
+#reportProblemForm #pr_browser {
+	margin: 5px 0 5px 130px;
+	font-size: 0.8em;
+	color: #666
+}
+
+#wikiaDialogInfo {
+	color: #000;
+}
+
+/* Quartz */
+body.wikiaSkinQuartz #reportProblemForm {
+	border: none;
+	background: none;
+}
+
+body.wikiaSkinQuartz #reportProblem .boxHeader {
+	margin: -11px -4px 10px -4px;
+}
+
+body.wikiaSkinQuartz #reportProblemForm .container-close {
+	right: 26px;
+	top: 16px;
+}
+
+body.wikiaSkinQuartz #reportProblemForm #pr_browser {
+	color: inherit;
+}
+
+/* Some fixes */
+#reportProblem .boxHeader {
+	font-size: 1.3em;
+	margin: -11px -22px 10px -11px;
+	padding: 7px;
+}
+
+body.rtl #reportProblem .boxHeader {
+	padding-right: 22px;
+}
+
+#reportProblemForm_c .underlay,
+#reportProblemForm .hd,
+#reportProblemForm .ft {
+	display: none !important;
+}
+
+#wikiaDialogInfo_c {
+	z-index: 2000 !important /* show it above ProblemReports dialog */
+}
+
+#wikiaDialogInfo_mask {
+	z-index: 1900 !important; /* show it above ProblemReportsDialog */
+}
+
+body.rtl #_yuiResizeMonitor {
+	right: -137px !important;
+	left: auto !important;
+}
+
+/* IE fixes */
+* html #reportProblem label.floaty {
+	width: 100px;
+	display: inline;
+	float: left;
+	padding: 10px 0;
+	text-align: left;
+	margin: 0
+}
+
+* html #reportProblem input.floaty,
+* html #reportProblem select.floaty, 
+* html #reportProblem textarea {
+	width:425px;
+	display: inline;
+	float: left;
+	margin: 7px 0 7px 10px
+}
+
+* html form#reportProblem {
+	position: relative
+}
+

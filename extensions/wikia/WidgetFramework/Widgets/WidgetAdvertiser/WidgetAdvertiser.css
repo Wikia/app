@@ -1,0 +1,54 @@
+.WidgetAdvertiser dt {
+	font-size: 8pt;
+	padding: 1px 3px;
+}
+.WidgetAdvertiser dd {
+	padding: 0;
+	overflow: hidden;
+}
+.WidgetAdvertiser h1,
+.WidgetAdvertiser .widgetToolbox {
+    display: none
+}
+.widgetAdvertiserAd {
+    float: left;
+}
+
+.widgetAdvertiserAd table {
+	background-color: transparent;
+}
+
+.widgetAdvertiserAd_tr_user {
+	width: 125px;
+	height: 125px;
+	overflow: hidden;
+	margin: 0 10px;
+}
+
+.widgetAdvertiserAd_spot_user {
+	border-left: dashed 1px #87888C;
+	height: 125px;
+	overflow: hidden;
+	padding-left: 10px;
+	margin: 0;
+	width: 125px;
+}
+
+.widgetAdvertiserAd_tr_user {
+	margin-top: 10px;
+}
+
+.widgetAdvertiserAd_spot1_anon {
+	border-right: dashed 1px #999;
+	height: 125px;
+	overflow: hidden;
+	padding: 5px 10px 5px 9px;
+	width: 125px;
+}
+
+.widgetAdvertiserAd_spot2_anon {
+	height: 125px;
+	overflow: hidden;
+	padding: 5px 0 5px 10px;
+	width: 125px;
+}

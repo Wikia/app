@@ -1,0 +1,52 @@
+This is the latest version of the metavid capture software.
+It has been tuned a bit to be more genneraly applicable/scallable
+
+The genneral flow and machine layout is as follows:
+note: obvisuly your layout may differ and adjustments may be needed. 
+
+dependencies: 
+	metavidWiki
+	ffmpeg2theora 
+	icecast
+	
+	~Video for Linux~ compatible capture hardware
+
+
+Scripts Run level: 
+
+==box_config==
+box_name =(optional if left empty will use IP)
+box_ip = ip address of the machine
+machine_roles = capture|transcode|mediaServer
+
+
+==default config==
+the base set of variables
+log_level = debug|error
+log_location = /path/to/log_file
+
+//will run demon scripts based on machine role
+mv2mvWiki_demon.php
+
+
+===capture===
+capture_demon.php  
+
+===transcode===
+transcode_demon.php
+
+
+(media server and mediaWiki server could be the same box) 
+===media server===
+~ shoutcast ~
+mediaServer_demon.php 
+
+===mediaWiki Server===
+mysql
+wiki running under /wiki
+mediaWiki_demon.php
+
+
+
+===http capture admin===
+(can be run on any server) 

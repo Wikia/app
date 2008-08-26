@@ -1,0 +1,6 @@
+== Known problems ==
+
+* Footnotes inside galleries does not get parsed
+* A footnote in a template does not expand the template parameters
+* The numbering of footnotes when doing page inclusions is wrong.
+

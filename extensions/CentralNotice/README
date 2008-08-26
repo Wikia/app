@@ -1,0 +1,60 @@
+Proof of concept for the moment fiddling with an alternative sitenotice
+loading architecture. At the moment there's no backend logic or caching
+logic, I'm just testing the three-level loading.
+
+
+Wiki page HTML contains an unchanging bit that just sets JS variables about
+what site this is, then calls an external <script> to fetch site notice text.
+
+
+That second level can be a stable URL which can be heavily cached within squids
+*and* cleanly purged on sitewide updates.
+
+It itself is small, just calling out to a third <script>, this time with the
+site info (project and language) and a cache validation epoch / version marker
+in the query string.
+
+
+The third level is the bit that would provide the actual site notice text, and
+could be cached arbitrarily long in both squids and final user agents, since
+changed versions will get a new URL with a version number one level up.
+
+
+
+The theory here is that it should interact better with big-site caching.
+A user agent's first hit to the wiki will look something like:
+
+* Load wiki page HTML
+* Load Special:NoticeLoader JS
+* Load Special:NoticeText JS
+
+A hit to another page on the same wiki can skip the third hit:
+
+* Load new wiki page HTML
+* Load unchanged Special:NoticeLoader JS
+* skip cached Special:NoticeText JS
+
+Then if the site notice changes, the system only has to purge that constant
+Special:NoticeLoader URL from squids, and right away at the next hit the user
+agent sees:
+
+* Load new wiki page HTML
+* Load new Special:NoticeLoader JS
+* Load new Special:NoticeText JS
+
+We could spare hits on the notice loader by letting clients cache it for a
+shorter term as well, so a typical second hit looks nicely like:
+
+* Load new wiki page HTML
+* skip cached Special:NoticeLoader JS
+* skip cached Special:NoticeText JS
+
+This could delay visibility of changed site notices until the allowed age
+runs out, but if we manage *scheduled* site notices, we could send cache
+headers which will run out at the expected changeover time.
+
+It might be nice to allow for quick corrections though, so caching for weeks
+at a time might not be wise. ;)
+
+
+

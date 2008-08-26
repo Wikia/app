@@ -1,0 +1,117 @@
+.back-links {
+	margin:0px 0px 10px 0px;
+}
+
+.back-links a {
+	text-decoration:none;
+	font-weight:bold;
+}
+
+.ga-count {
+	margin:0px 0px 15px 0px;
+}
+
+.ga-item {
+	border:1px solid #D7DEE8;
+	padding:7px;
+	float:left;
+	margin:0px 15px 15px 0px;
+	width:350px;
+}
+
+.ga-item a {
+	text-decoration:none;
+	font-weight:bold;
+	font-size:14px;
+}
+
+.ga-item img {
+	border:1px solid #dcdcdc;
+	background-color:#fff;
+	padding:3px;
+	display:block;
+	float:left;
+	margin:0px 10px 0px 0px;
+}
+
+.page-nav a {
+	font-weight:bold;
+}
+
+.ga-new {
+	background-color:#FFFB9B;
+	border:1px solid #FDC745;
+	font-weight:bold;
+	padding:0px 5px;
+}
+
+.ga-name {
+	font-size:16px;
+	font-weight:bold;
+	margin:0px 0px 2px;
+}
+
+.ga-timestamp {
+	font-size:9px;
+	color:#999;
+	margin:0px 0px 5px 0px;
+}
+
+.ga-description-message {
+	margin:0px 0px 5px 0px;
+	color:#666;
+	font-weight:bold;
+}
+
+.ga-gift-count {
+	font-size:9px;
+	margin:0px 0px 10px 0px;
+}
+
+.ga-description-container {
+	width:480px;
+	margin:20px 0px;
+}
+
+.ga-recent {
+	border-top:1px solid #EFEFEF;
+	padding:10px 0px 0px 0px;
+}
+
+.ga-recent img {
+	vertical-align:middle;
+	padding:3px;
+	background-color:#fff;
+	border:1px solid #dcdcdc;
+	margin:0px 10px 0px 0px;
+}
+
+.ga-recent a {
+	display:block;
+	float:left;
+	text-decoration:none;
+}
+
+.ga-recent-title {
+	font-size:14px;
+	font-weight:bold;
+	color:#777;
+	margin:0px 0px 2px 0px;
+}
+
+.ga-recent-item {
+	margin:0px 0px 5px 0px;
+}
+
+.ga-description {
+	padding:0px 0px 15px 0px;
+}
+
+.ga-description img {
+	border:1px solid #dcdcdc;
+	background-color:#fff;
+	padding:3px;
+	display:block;
+	float:left;
+	margin:0px 10px 0px 0px;
+}

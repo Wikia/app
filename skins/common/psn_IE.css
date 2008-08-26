@@ -1,0 +1,34 @@
+.user-board-message-links {
+	padding-top:5px;
+}
+
+.profile-toggle-button {
+	left:50px;
+}
+
+#title-linktabs, #profile-toggle-button {
+	right:20px !important;
+}
+
+.ratings-top {
+	right:20px !important;
+	top:45px;
+}
+
+.bottom-left-nav {
+	margin-top:0px;
+}
+
+.menu-item .sub-menu-button {
+	right:10px;
+}
+
+#title-linktabs {
+	right:0px !important;
+	top:5px !important;
+}
+
+.ratings-top {
+ 	right:0px !important;
+	top:37px !important;
+}

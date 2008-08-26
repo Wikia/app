@@ -1,0 +1,12 @@
+Source: normal
+Section: unknown
+Priority: optional
+Maintainer: brion <brion@pobox.com>
+Build-Depends: debhelper (>= 5), libicu34-dev, phpapi-20051025, php5-dev, swig, g++
+Standards-Version: 3.7.2
+
+Package: php5-utfnormal
+Architecture: any
+Depends: phpapi-20051025, php5-common, libicu34
+Description: PHP extension to use ICU library to do stuff
+ PHP extension to use ICU library for UTF-8 normalization.

@@ -1,0 +1,432 @@
+/*  ^Header
+-------------------------------------------------------------- */
+#hcontainer {
+    position:absolute;
+    margin:0 -10px 0 -10px;
+    height:131px;
+    left:auto;
+    right:auto;
+    top:0;
+}
+#curse_header ul, #curse_header li {
+    padding:0;
+    margin:0;
+}
+#cheader { height: 131px; }
+#curse_header {
+    height:131px;
+	font-size: 0.9em;
+    background:#53514d url('bkg-header.jpg') left top no-repeat;
+    position:relative;
+    font-family:"lucida grande",tahoma,verdana,arial,sans-serif;
+}
+#curse_header a img { border: 0; }
+#curse_header .hdbox {
+    line-height:normal;
+    margin-bottom:0;
+    background:none;
+}
+#logo, #user-goodies, #nav-node, #curse_navigation { position:absolute; }
+#logo { 
+    left:15px;
+    top:15px;
+    background-image: url('http://static.curse.com/v5/images/logo-curse.png');
+    width: 235px;
+    height: 80px;
+    display: block;
+}
+#user-goodies, #user-goodies ul {
+    height:18px;
+    line-height:18px;
+}
+#user-goodies, #user-goodies a { color:#ddd; }
+#user-goodies, #user-goodies li a {
+    background:left top no-repeat;
+    background-image:url('http://static.curse.com/v5/images/bkg-user-goodies.png') !important;
+}
+#user-goodies {
+    right: 0px;
+    top: 0px;
+    width: 70px;
+    font-size:0.82em;
+}
+#user-goodies ul {
+    margin:0 0 0 17px;
+    padding:0 10px 0 11px;
+    background:#5f5e5c;
+}
+#user-goodies li {
+    display:block;
+    position:relative;
+    float:left;
+    margin:0 5px 0 0;
+}
+#user-goodies li a {
+    display:block;
+    padding:0 5px;
+    text-decoration:none;
+    background-position:-17px -17px;
+}
+#user-goodies li.dropdown a {
+    padding-right:13px;
+    background-position:right -17px;
+}
+#user-goodies li.last { margin:0; }
+#user-goodies li:hover a, #user-goodies li a:hover {
+    background-color:#7f7e7c;
+    text-decoration:none;
+}
+/*  TODO find a better way to do Language selection
+    via text-replacement and display:inline-block method
+    only drawback so far is in Firefox */
+#user-goodies li.last span {
+    width:16px;
+    height:12px;
+    font-size:0pt;
+    line-height:0pt;
+    background:url('http://static.curse.com/v5/images/flags.png') left top no-repeat;
+    overflow:hidden;
+}
+/*  dropdown controls */
+#user-goodies li ul {
+    display:none;
+    float:left;
+    margin:0;
+    padding:0;
+    position:absolute;
+    height:auto;
+    line-height:normal;
+    background:#5f5e5c;
+    border:1px solid #7f7e7c;
+}
+#user-goodies li:hover ul, #user-goodies li.hover ul { display:block; }
+#user-goodies li li {
+    display:block;
+    float:left;
+    margin:0;
+    height:auto;
+    line-height:normal;
+}
+#user-goodies li li a {
+    background-image:none !important;
+    background-color:#5f5e5c !important;
+    padding:3px 5px;
+}
+#user-goodies li li a:hover {
+    background-color:#7f7e7c !important;
+}
+/*  language menu has special styles */
+#user-goodies .language img {
+    width:14px;
+    height:10px;
+    line-height:10px;
+    margin:4px 0 3px 0;
+    background:url('http://static.curse.com/v5/images/flags.png') left top no-repeat;
+    vertical-align:middle;
+}
+#user-goodies .flag-en img { background-position:0 0; }
+#user-goodies .flag-de img { background-position:-17px 0; }
+#user-goodies .flag-es img { background-position:-34px 0; }
+#user-goodies .flag-fr img { background-position:-51px 0; }
+#user-goodies .flag-cn img { background-position:-68px 0; }
+#user-goodies .flag-tw img { background-position:0 -12px; }
+#user-goodies .flag-kr img { background-position:-17px -12px; }
+#user-goodies .flag-it img { background-position:-34px -12px; }
+#user-goodies .language ul {
+    right:0;
+    width:78px;
+    overflow:auto;
+}
+#user-goodies .language li a {
+    float:left;
+    outline:0;
+    width:20px;
+    text-align:center;
+    padding:3px;
+}
+#nav-node, #nav-main {
+    margin:0;
+    list-style:none;
+}
+#nav-node li, #nav-main li { display:inline; }
+#nav-node li.last, #nav-main li.last {
+    padding-right:0;
+    border-bottom:none;
+}
+#nav-node, #nav-node a, #nav-main, #nav-main a, #nav-main a span, #formSearch { float:left; }
+#nav-node a, #nav-node a span, #nav-main a, #nav-main a span { display:block; }
+#nav-node a, #nav-main a { text-decoration:none; }
+/*#nav-node * { z-index: 1001; }
+#curse_header * { z-index: 500; }*/
+#nav-node {
+    left:260px;
+    top:68px;
+    font-size:1.08em;
+    font-weight:bold;
+    z-index:100;
+}
+#nav-node a {
+    margin:0 5px 0 0;
+    padding-left:3px;
+    height:34px;
+    line-height:34px;
+    color:#444;
+    background:left top no-repeat;
+}
+#nav-node a span {
+    padding:0 14px 0 11px;
+    background:right -34px no-repeat;    
+    cursor:pointer;
+}
+#nav-node em { font-style: italic; }
+#nav-node a:hover, #nav-node li:hover a { background-position:left -68px; }
+#nav-node a:hover span, #nav-node li:hover a span { background-position:right -102px; }
+#nav-node li.selected a, #nav-node li.selected a:hover, #nav-ndoe li.selected:hover a {
+    color:#fff;
+    background-position:left -136px;
+}
+#nav-node li.selected a span, #nav-node li.selected a:hover span,
+    #nav-node li.selected:hover a span {
+    background-position:right -170px;
+}
+#nav-node li.dropdown a span {
+    padding-right:21px;
+    background-position:right -204px;
+}
+#nav-node li.dropdown:hover a span { background-position:right -238px; }
+#nav-node a, #nav-node a span { background-image:url('http://static.curse.com/v5/images/bkg-nav-node.png'); }
+/*  dropdown controls */
+#nav-node li {
+    display:block;
+    position:relative;
+    float:left;
+}
+
+#nav-node li ul {
+    float:left;
+    position:absolute;
+    display:none;
+    border:1px solid #555;
+    padding:5px;
+    margin:0;
+    top:32px;
+    left:-1px;
+    width:180px;
+    background:#f7f7f7;
+    z-index:1001;
+}
+#nav-node li:hover ul, #nav-node li.hover ul { display:block; }
+#nav-node li li {
+    display:block;
+    background:none;
+    float:none;
+    border-bottom:1px #bbb solid;
+    margin:0;
+    padding:2px 5px;
+}
+#nav-node li li.last { border-bottom: 0; }
+#nav-node li li a {
+    float:none;
+    height:16px;
+    line-height:16px;
+    display:block;
+    font-weight:normal;
+    margin:0;
+    padding:3px 0;
+    color:#666 !important;
+    background:none !important;
+}
+#nav-node li li:hover a, #nav-node li li a:hover {
+    color:#333 !important;
+}
+#curse_navigation {
+    left:0;
+    top:100px;
+    border-top:1px solid #000;
+    width:100%;
+    height:30px;
+    line-height:30px;
+    font-size:0.92em;
+    color:#9ddaf2;
+    background:repeat-x;
+    background-image:url('http://static.curse.com/v5/images/bkg-nav-main.png');
+    /*overflow:hidden;*/
+}
+#curse_navigation a, #curse_navigation a span { color:#fff !important; }
+
+#nav-main {
+    width:820px;
+    font-weight:bold;
+}
+#nav-main a {
+	padding: 0px;
+    padding-right:2px;
+    line-height:30px;
+    height:30px;
+    background:url('http://static.curse.com/v5/images/bkg-nav-main.png') right -60px no-repeat;
+}
+#nav-main a span {
+    padding:0 8px 0 10px;
+    line-height:30px;
+    height:30px;
+    background:right top repeat-x;
+    background-image:url('http://static.curse.com/v5/images/bkg-nav-main.png');
+    cursor:pointer;
+}
+#nav-main a:hover span, #nav-main li.selected a span {
+    background-position:right -30px;
+}
+#nav-main li.first a {
+    padding:0;
+    background:none !important;
+}    
+#nav-main li.first a span, #nav-main li.first a:hover span {
+    padding:0;
+    width:18px;
+    text-indent:-9999px;
+    background:right -90px no-repeat;
+}
+
+#formSearch {
+    padding:0;
+    margin:0;
+    width:250px;
+    height:30px;
+    line-height:30px;
+    text-align:right;
+    position: absolute;
+    top:0;
+    right:10px;
+}
+#formSearch label, #formSearch div.input, #formSearch input.image,
+    #formSearch .icon, #formSearch input.text { float:left; }
+#formSearch label {
+    color:#FFF1B8;
+    font-weight: normal;
+    padding-right:2px;
+    width:48px;
+}
+#formSearch div.input {
+    border:1px solid #999;
+    margin:5px 5px 0 0;
+    width:158px;
+    background:#fff;
+}
+#formSearch .icon, #formSearch input.text { height:17px !important; }
+#formSearch .icon, #formSearch .dropdown {
+    width:20px;
+    background:url('http://static.curse.com/v5/images/icons-search.png') left top no-repeat;
+}
+#formSearch input.image {
+    background:none;
+    border:0;
+    padding:0;
+}
+#formSearch div.input .icon { margin:0 8px 0 0; }
+/*  Use .dropdown along with .icon */
+#formSearch div.input .dropdown {
+    margin:0;
+    width:28px;
+}
+#formSearch input.text {
+    border:0;
+    margin:0;
+    padding:0;
+    width:130px;
+    line-height:normal;
+
+    /*display:inline-block;
+    letter-spacing:normal;
+    line-height:normal;
+    text-align:auto;
+    text-indent:0;
+    text-shadow:none;
+    text-transform:none;
+    word-spacing:0; */
+}
+#formSearch input.image { margin:3px 0 0; }
+/*  TODO add other portals to search under
+    Use along with .icon */
+#formSearch .wow { background-position:0 -17px; }
+
+/* extra styles */
+ul.nav { list-style:none; }
+ul.nav li.last { padding-right:0; }
+ul.horizontal { margin:0; }
+ul.horizontal li, ul.tabs li { display:inline; }
+ul.plain, ul.cover {
+    margin-left:0;
+    list-style-type:none;
+}
+#curse_header .icon {
+    display:block;
+    vertical-align:middle;
+    line-height:0;
+    font-size:0;
+    background:left top :no-repeat;
+    overflow:hidden;
+}
+.left       { float:left; }
+.right      { float:right; }
+
+.hide       { display:none; }
+.show       { display:block; }
+
+.reset-margin   { margin:0; } 
+.reset-padding  { padding:0; } 
+.reset          { margin:0; padding:0; } 
+
+.align-justify  { text-align:justify; } 
+.align-left     { text-align:left; } 
+.align-center   { text-align:center; } 
+.align-right    { text-align:right; }
+/*  Clearing floats without extra markup
+    Based on How To Clear Floats Without Structural Markup by PiE
+    http://www.positioniseverything.net/easyclearing.html */
+.clear, .container,
+    .callout, .tabs, .tidbit { display: inline-block; }
+.clear:after, .container:after,
+    .callout:after, .tabs:after, .tidbit:after {
+    content: "."; 
+    display: block; 
+    height: 0; 
+    clear: both; 
+    visibility: hidden; 
+}
+/* Hides from IE-mac \*/
+* html .clear, * html .container,
+    * html .callout, * html .tabs, * html .tidbit { height: 1%; }
+.clear, .container,
+    .callout, .tabs, .tidbit  { display: block; }
+/* End hide from IE-mac */
+
+/* footer */
+#curse_footer {
+    padding:1.5em;
+    min-height:60px;
+    text-align:center;
+    line-height:1.74em;
+    font-size:0.92em;
+    color:#fff;
+    background:#4f4f4f url('http://static.curse.com/v5/images/bkg-footer.png') 0 0 repeat-x !important;
+}
+#curse_footer a, #curse_footer a:link, #footer a:visited { color:#f90; }
+#curse_footer ul.nav li {
+    border-left:1px solid #999;
+    padding:0 .75em;
+    color:#999;
+}
+#curse_footer ul.nav li.first {
+    border-left:0;
+    padding-left:0;
+}
+
+/* Monaco fixes */
+#widget_sidebar {
+	top: 287px;
+}
+
+.headerMenu {
+	top: 167px !important;
+}
+

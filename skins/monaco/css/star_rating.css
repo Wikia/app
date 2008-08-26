@@ -1,0 +1,107 @@
+.star-rating,
+.star-rating li a:hover,
+.star-rating li.current-rating
+{
+	background:transparent url('../images/star-rating.png') repeat-x scroll left top;
+}
+
+ul.star-rating
+{
+	float: left;
+    height:17px;
+    list-style-image:none;
+    list-style-position:outside;
+    list-style-type:none;
+    margin:0px;
+    padding:0px;
+    position:relative;
+    width:85px;
+    overflow: hidden;
+}
+
+.star-rating li
+{
+    float:left;
+    margin:0px;
+    padding:0px;
+}
+
+.star-rating li a
+{
+    display:block;
+    height:17px;
+    overflow:hidden;
+    padding:0px;
+    position:absolute;
+    text-decoration:none;
+    text-indent:-9000px;
+    width:17px;
+    z-index:20;
+    top: 0px; /* opera fix */
+    cursor: pointer;
+    /*background:transparent url('../images/star-rating.png') repeat-x scroll left top !important;*/
+}
+.star-rating li a:hover,
+* html .star-rating li a.hover
+{
+	/* hovered stars background - white */
+	background-position: left bottom;
+	border:medium none;
+	left:0px;
+	z-index:2;
+	cursor: pointer;
+}
+
+.star-rating a.one-star { left: 0px; }
+.star-rating a.one-star:hover { width: 17px; }
+
+.star-rating a.two-stars { left: 17px; }
+.star-rating a.two-stars:hover { width: 34px; }
+
+.star-rating a.three-stars { left: 34px; }
+.star-rating a.three-stars:hover { width: 51px; }
+
+.star-rating a.four-stars { left: 51px; }
+.star-rating a.four-stars:hover { width: 68px; }
+
+.star-rating a.five-stars { left: 68px; }
+.star-rating a.five-stars:hover { width: 85px; }
+
+.star-rating li.current-rating
+{
+	/* currently voted stars background - yellow */
+	background-position: left center;
+	height:17px;
+	position:absolute;
+	text-indent:-9000px;
+	z-index:1;
+}
+#unrateLink {
+	display: block;
+	float: left;
+	height: 17px;
+	line-height: 17px;
+	margin-left: 10px;
+	position: relative;
+	top: 2px;
+}
+#unrateLink a:hover { text-decoration:underline; }
+
+/* IE fixes */
+* html .star-rating,
+* html .star-rating li a:hover,
+* html .star-rating li a.hover,
+* html .star-rating li.current-rating
+{
+	background-image: url('../images/star-rating.white.png');
+}
+
+/* macbre: progress wheel stuff */
+.star-rating-progress {
+	background-image:  url('http://images.wikia.com/common/skins/common/progress-wheel.gif') !important;
+	background-repeat: no-repeat;
+}
+
+.star-rating-progress li {
+	display: none;
+}

@@ -1,0 +1,83 @@
+body {
+	font-family: arial, sans-serif;
+	font-size: 10pt;
+	margin: 0;
+}
+.color1, .color1 a, .yui-panel .hd {
+	background-color: #36C;
+	color: white;
+}
+.color2 {
+	background-color: #F5F5F5;
+}
+
+.shadow {
+	background-image: url(../images/shadow.png);
+	background-position: bottom left;
+	background-repeat: repeat-x;
+}
+
+.shadow {
+	background-image: none;
+}
+.mask {
+	background: #000;
+	opacity: .6;
+	position: fixed;
+}
+.right {
+	text-align: right;
+}
+
+body.mainpage {
+	min-width: 990px;
+}
+.monaco_shrinkwrap {
+	/*
+	left: 50%;
+	margin-left: -485px;
+	width: 971px;
+	*/
+	position: relative;
+	width: 100%;
+}
+#background_accent1 {
+	background-repeat: no-repeat;
+	margin-right: 481px;
+	position: absolute;
+	right: 50%;
+	z-index: 2;
+}
+#background_accent2 {
+	background-repeat: no-repeat;
+	background-position: 481px 0px;
+	left: 50%;
+	position: absolute;
+	width: 50%;
+	z-index: 2;
+}
+body.mainpage .HOME_TOP_LEADERBOARD, body.mainpage .FAST_HOME1 {
+	height: 90px;
+	margin-bottom: 10px;
+}
+body.mainpage .HOME_TOP_RIGHT_BOXAD, body.mainpage .FAST_HOME2 {
+	float: right;
+	min-height: 250px;
+	position: relative;
+	width: 300px;
+	z-index: 2;
+}
+.clearfix:after {
+    content: ".";
+    display: block;
+    height: 0;
+    clear: both;
+    visibility: hidden;
+}
+
+.clearfix {display: inline-block;}
+
+/* Hides from IE-mac \*/
+* html .clearfix {height: 1%;}
+.clearfix {display: block;}
+/* End hide from IE-mac */

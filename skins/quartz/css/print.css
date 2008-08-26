@@ -1,0 +1,32 @@
+body, html
+{
+    background-color: #fff !important;
+    background-image: none !important;
+    padding: 10px;
+}
+
+#articleWrapper {margin: 0 auto; width: 750px; padding: 0}
+
+#header,
+#sidebar,
+#footer,
+#wikiafooter,
+.articleBar,
+#bottomBar,
+#widget_cockpit,
+#notifyReport,
+#notifyForm,
+.wikiaTooltip,
+#reportProblemForm,
+.usermessage,
+#articleFooter
+{
+    display: none;
+}
+
+.printfooter,
+#editpage-copywarn
+{
+	display: block;
+	padding: 20px 0;
+}

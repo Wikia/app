@@ -1,0 +1,285 @@
+body {
+	background-color: #09101d;
+	background-image: url(http://images.wikia.com/common/skins/quartz/gaming/images/background.jpg);
+	background-position: top right;
+	background-repeat: repeat-x;
+}
+
+#header, #wikia, #wikia-inside {
+	background-image: url(http://images.wikia.com/common/skins/quartz/gaming/images/header_bg2.gif);
+}
+#header, #header a {
+	color: #FFF;
+}
+#header a:hover {
+	color: #ffd557;
+}
+
+/*** User area ***/
+ul#welcome li.user {
+	background-image: url(http://images.wikia.com/common/skins/quartz/gaming/images/user_menu.gif);
+	color: #ffd557;
+}
+#userMenu {
+	background: #0e192d;
+	border-color: #FFF;
+}
+#userMenu a {
+	color: #FFF;
+}
+#userMenu a:hover {
+	background: #ffd557;
+	color: #000;
+}
+
+/*** Wikia box ***/
+#wikiaLogo {
+	background: url(http://images.wikia.com/common/skins/quartz/gaming/images/wikia_logo.gif) no-repeat;
+}
+#search input {
+	background: #000;
+	border-color:#ffd557;
+}
+#search input.black {
+	color: #71d1ef;
+}
+#search div {
+	background: url(http://images.wikia.com/common/skins/quartz/gaming/images/search.gif) no-repeat;
+}
+div.gelButton {
+	background: url(http://images.wikia.com/common/skins/quartz/gaming/images/gel_buttons.gif) top left no-repeat;
+}
+div.gelButton a {
+	background: url(http://images.wikia.com/common/skins/quartz/gaming/images/gel_buttons.gif) top right no-repeat;
+}
+
+/*** Nav Links ***/
+table#navLinksWikia a {
+	background: url(http://images.wikia.com/common/skins/quartz/gaming/images/nav_bullet.gif) 0% 4px no-repeat;
+}
+
+/*** Article ***/
+.articleBar {
+	background: url(http://images.wikia.com/common/skins/quartz/gaming/images/article_bars.gif) top left no-repeat;
+}
+.articleBar div {
+	background: url(http://images.wikia.com/common/skins/quartz/gaming/images/article_bars.gif) top right no-repeat;
+}
+.articleBar a {
+	background: #0e192d;
+	color: #FFF;
+}
+.articleBar a.divider {
+	background: #0e192d;
+}
+.articleBar .editButton, .articleBar .editButton span {
+	/*background-image: url(http://images.wikia.com/common/skins/quartz/gaming/images/edit_button.gif);*/
+	background: #0e192d;
+	color: #FFF;
+}
+table#wikiafooter, table#wikiafooter td a {
+	color: #FFF;
+}
+a#wikiaFooterLogo {
+	background: url(http://images.wikia.com/common/skins/quartz/gaming/images/wikia_logo_small.gif);
+}
+
+/* widgets integration */
+li.widget a, li.widget a:visited {
+	color: #FFF;
+}
+ul.widgets_vertical li.widget, #widget_cockpit, #spotlights {
+	background-color: #0e192d;
+	border-color: #71d1ef;
+}
+li.widget h1, li.widget h2 {
+	color: #ecc064;
+}
+
+.roundedDiv b.xb2, .roundedDiv b.xb3, .roundedDiv b.xb4 {
+	background: #0e192d; 
+	border-color: #71d1ef;
+}
+.roundedDiv b.xb1 {
+	background: #71d1ef;
+}
+
+.roundedDiv div.r_boxContent {
+	background: #0e192d;
+	border-color: #71d1ef;
+	color: #fff;
+}
+div.wikiaDialog .hd,
+div.wikiaDialog h2,
+.boxHeader_noBorderMargin,
+.boxHeader_noBorder,
+.boxHeader {
+	color: #ffd242 !important;
+	border-color: #87888c;
+}
+
+#switchSkin a {
+	color: #FFF;
+}
+
+/* AutoComplete/SearchSuggest - Inez */
+.yui-ac-content li.yui-ac-highlight {
+	background: #FFD557 !important;
+}
+.yui-ac-content li.yui-ac-prehighlight {
+	background: #FFD517 !important;
+}
+
+/* tooltips */
+.wikiaTooltip {
+	background-color: #ffec3b;
+	border-color: #FFD242;
+}
+
+.prefSection {
+	background: #09101d;
+}
+
+/* white on black article */
+#article, #preferences, .prefsection table, .prefsection legend {
+	background: #0e192d;
+}
+#preftoc li {
+	background-color: #ffcb3b;
+}
+#preftoc li a {
+	color: #000;
+}
+#article {
+	border-left: 1px solid #ffcb3b;
+	border-right: 1px solid #ffcb3b;
+	color: #FFF;
+}
+#article a {
+	color: #71d1ef;
+}
+#article a.new {
+	color: #C20;
+}
+#article table {
+	background: transparent;
+	color: #FFF;
+}
+#article table.toc, #catlinks, #article table.gallery td {
+	background-color: #09101D;
+}
+#article div.thumb {
+	color: #000;
+}
+#article code {
+	background-color: #060;
+}
+#article h1, #article h2, #article h3, #article h4, #article h5, #article h6 {
+	color: #FFF;
+}
+#articleFooter {
+	background: #0E192D;
+	border-style: dashed solid solid;
+	border-color: #FFF #FFCB3B #FFCB3B;
+	border-width: 1px;
+}
+#articleFooter table, #articleFooter h1 {
+	color: #FFF;
+	background: #0E192D;
+}
+#articleFooter a {
+	color: #71D1EF;
+}
+#pagehistory li {
+	border-width: 1px 0 0 0;
+	border-color: #999;
+	border-style: solid;
+}
+#pagehistory li.selected {
+	border-width: 1px 0 0 0;
+	border-color: #999;
+	border-style: dashed;
+	background-color: black;
+	color: white;
+}
+div#userlogin .captcha {
+	background-color: transparent;
+}
+.forumheader {
+	background-color: #90101D;
+}
+.poll {
+	background-color: #09101D;
+}
+.poll .pollAnswerVotes {
+	color: #000;
+}
+.poll .pollAnswerVotes div {
+	background-color: #FFCB3B
+}
+
+table.diff,
+td.diff-otitle,
+td.diff-ntitle,
+.forumlist td.forum_edited a {
+	background-color: transparent;
+	color: #FFF;
+}
+td.diff-addedline, td.diff-deletedline {
+	color: #000;
+}
+td.diff-context {
+	background-color: #222;
+}
+div.prefsectiontip {
+	background-color: #900;
+}
+table.imagelist th, table.imagelist td {
+	background: transparent !important;
+}
+
+div#userloginForm form, div#userlogin form#userlogin2, div#userloginForm table, div#userlogin form#userlogin2 table {
+	background-color: #09101D;
+}
+
+/* widgets color fix */
+ul.widgets {
+    color: #fff;
+}
+
+/* AjaxLogin fix - macbre */
+#loginDiv form table td,
+#loginDiv form table td a
+{
+    color: #fff !important;
+}
+
+/* YUI dialogs */
+.yui-panel .hd {
+    background-color: #0e192d;
+    border-color: #0e192d;
+    color: #fff;
+    border-bottom: solid 1px #666;
+}
+
+.yui-panel {
+    background-color: #0e192d;
+    color: #fff;
+    border-color: #71d1ef;
+}
+
+.yui-panel a {
+    color: #fff !important;
+}
+
+/* fixes #2227 */
+.problemReportsList .odd {
+	background-color: #333 !important;
+	color: white !important;
+}
+
+/* macbre: standard button CSS */
+.button {
+	background-color: #ffcb3b;
+	color: #000;
+}

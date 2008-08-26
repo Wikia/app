@@ -1,0 +1,262 @@
+/**Give Gift Page **/
+.give-gift-message {
+color:#999999;
+font-size:1.1em;
+font-weight:bold;
+margin:0px 0px 20px 0px;
+}
+
+.give-gift-message img {
+vertical-align:middle;	
+}
+
+.give-gift-container a {
+text-decoration:none;
+}
+
+.give-gift {
+float:left;
+width:250px;
+height:110px;
+border:1px solid #dcdcdc;
+padding:4px 4px 10px 4px;
+margin:0px 10px 10px 0px;
+cursor:pointer;
+}
+.give-gift-image {
+float:left;
+margin:0px 20px 0px 0px;	
+}
+
+.give-gift-info {
+float:left;
+width:150px;
+}
+
+.give-gift-confirm-info {
+float:left;
+width:500px;
+}
+
+.give-gift-name {
+font-size:1.2em;
+font-weight:bold;
+color:#285C98;
+}
+
+.give-gift-description {
+color:#999999;
+font-size:1.0em;
+}
+
+.give-gift-description img {
+vertical-align:middle;	
+}
+
+.request-message {
+clear:both;
+margin:10px 0px 10px 0px;
+color:#999999;
+font-size:1.1em;
+font-weight:bold;
+}
+
+.give-gift-buttons {
+clear:both;
+padding:10px 0px 0px 0px;	
+}
+
+.give-gift-buttons input, .give-gift-button {
+}
+
+.give-gift-title {
+color:#285C98;
+font-size:1.1em;
+margin:0px 0px 10px 0px;
+font-weight:bold;
+}
+
+.gift-links {
+margin:0px 0px 10px 0px;
+font-weight:bold;
+}
+
+.gift-links a {
+text-decoration:none;	
+}
+
+.give-gift-selectbox {
+text-decoration:none;	
+}
+
+.page-nav {
+clear:both;
+font-weight:bold;	
+}
+
+/** View All User Gifts **/
+.gift-count {
+font-size:1.1em;
+color:#666666;
+display:block;
+margin:0px 0px 10px 0px;
+}
+
+.user-gift {
+float:left;
+border:1px solid #dcdcdc;
+padding:4px 4px 10px 4px;
+width:350px;
+margin:0px 10px 10px 0px;
+}
+
+.user-gift-manager {
+float:left;
+border:1px solid #dcdcdc;
+padding:4px 4px 10px 4px;
+width:150px;
+margin:0px 10px 10px 0px;
+}
+
+.gift-image {
+float:left;
+margin:0px 20px 0px 0px;
+}
+
+.gift-image-manager {
+width:150px;
+margin-left: auto;
+margin-right: auto;
+}
+
+.gift-info-manager {
+width:150px;
+margin-left: auto;
+margin-right: auto;
+}
+
+.gift-info {
+float:left;
+width:240px;
+}
+
+.gift-info img {
+vertical-align:middle;
+}
+
+.gift-info p {
+margin:0px 0px 9px 0px;
+padding:0px;
+}
+
+.give-gift-link {
+font-size:.85em;	
+}
+
+.user-gift a {
+text-decoration:none;	
+}
+
+.gift-links {
+margin:0px 0px 10px 0px;
+font-weight:bold;
+}
+
+.gift-links a {
+text-decoration:none;	
+}
+
+/** View Individual Gift **/
+.gift {
+padding:4px 4px 10px 4px;
+width:500px;	
+}
+
+.individual-gift-info {
+float:left;
+width:50%;
+}
+
+.individual-gift-info img {
+vertical-align:middle;	
+}
+
+.individual-gift-info a {
+text-decoration:none;	
+}
+
+.individual-gift-name {
+font-size:1.5em;
+font-weight:bold;
+color:#285C98;
+}
+
+.individual-gift-name-div {
+font-size:1.5em;
+font-weight:bold;
+color:#285C98;
+width:100%;
+border-bottom: 1px solid #dcdcdc;
+padding-bottom: 3px;
+}
+
+.individual-gift-date-div {
+font-size:.86em;
+color:#999999;
+}
+
+.individual-gift-from {
+font-size:1.3em;
+font-weight:bold;
+color:#999999;
+}
+
+.individual-gift-date {
+font-size:.86em;
+color:#999999;
+}
+
+.individual-gift-message {
+color:#999999;
+font-size:1.1em;
+}
+
+.individual-gift-message img {
+vertical-align:middle;	
+}
+
+.individual-gift-description {
+border-top:1px solid #dcdcdc;
+font-size:.86em;
+color: #777777;
+padding: 5px;
+}
+
+.individual-gift-count {
+border-top:1px solid #dcdcdc;
+padding:5px 0px 0px 0px;
+margin:0px;
+font-size:.86em;
+color#888888;
+}
+
+.profile-on {
+background-color:#FFFB9B;
+font-weight:bold;
+padding:0px 5px 0px 5px;
+}
+
+.gift-list {
+float:left;
+width:80px;
+}
+
+.user-message {
+color:#797979;
+font-size:12pt;
+margin:0px 0px 10px 0px;
+}
+
+.cleared {
+clear: both;
+}

@@ -1,0 +1,89 @@
+/** Site Scout **/
+
+.items {
+	clear:both;
+}
+
+.site-scout {
+	clear: both;
+	border-top: 1px solid #ccc;
+	min-height: 3.3em; /*for the hover*/
+}
+
+
+.site-scout a, .site-scout span {
+	padding-top:5px;
+	padding-bottom:3px;
+}
+
+a.item-title {
+	font-weight:800;
+}
+
+.item-header span {
+	font-weight: bold;
+	color:#000000;
+	font-size: 85%;
+	padding-bottom:3px;
+}
+
+.item-info, .item-title, .item-user, .item-comment, .item-time, .item-user-link, .item-user-talk{
+	float: left;
+	display: block;
+	text-decoration: none;
+}
+
+.item-info  {
+	width: 45px;
+	font-size: 85%;
+	text-align:center;
+}
+
+
+.site-scout .item-title {
+	width: 275px;
+}
+
+.item-user {
+	float:right;
+	width: 175px;
+	font-size: 75%;
+}
+
+.item-user img {
+	vertical-align: middle;
+	border: 1px solid #ccc;
+}
+
+.item-user-talk {
+	height:18px;
+}
+
+.item-user-talk img {
+	vertical-align: middle;
+	border: 0px;
+}
+
+.item-comment {
+	float:right;
+	font-size:75%;
+	width:150px;
+	overflow:hidden;
+}
+
+
+.item-time {
+	float:right;
+	width: 110px;
+	color:#666666;
+	font-size: 75%;
+}
+
+table.site-scout-stats {
+	color:#666666;
+	font-size: 85%;
+}
+
+td.site-scout-stats-header {
+	font-weight:800;
+}

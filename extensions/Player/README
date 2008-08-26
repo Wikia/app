@@ -1,0 +1,252 @@
+--------------------------------------------------------------------------
+README for the Player extension
+Copyright © 2007 Daniel Kinzler
+Licenses: GNU General Public Licence (GPL)
+          GNU Free Documentation License (GFDL)
+--------------------------------------------------------------------------
+
+The Player extension provides a special page, Special:Player, that allows 
+playback of video and other multimedia content uploaded to the wiki. It
+also provides a custom tag, <player>, that allows multimedia content to be
+embedded into wiki pages and played on demand (embedded playback requires
+Ajax; without Ajax, a link to the player page is provided).
+
+<http://mediawiki.org/wiki/Extension:Player>
+
+The Player extension was originally written by Daniel Kinzler in 2007
+and is released under the GNU General Public Licence (GPL). Some of the
+icons are from LGPL icons sets, see the ICONS-LICENSE file.
+
+Note that this extension is EXPERIMENTAL, and basically an UGLY KLUGE
+while waiting for more flexible media file handling facilities in 
+MediaWiki proper.
+
+Per default, the Player extension RELIES ON BROWSER PLUGINS for playback 
+- this means that if you want to play a movie, your browser has to have a 
+plugin for this type of movie installed. But the Player extension can also
+be configured to use a server-supplied player that is based on 
+Macromedia Flash or Java. For example, the FlowPlayer Flash scrip can be
+used to play Flash Video files (FLV), or Flumotion's Cortado Java applet
+can be used to play OGG files - this way, users need to have Flash resp.
+Java installed (which is wide spread), instead of having to
+have codecs for FLV and OGG installed (which is rare - the VLC plugin
+supports both, though).
+
+* FlowPlayer: http://flowplayer.sourceforge.net/  (Apache License)
+* Flumotion Cortado: http://www.flumotion.net/cortado/ (GPL)
+
+== Installing ==
+
+Copy the Player directory into the extensions folder of your 
+MediaWiki installation. Then add the following line to your
+LocalSettings.php file (near the end):
+
+  require_once( "$IP/extensions/Player/Player.php" );
+
+=== Installing Flash/Java-based players ===
+To install third-party players for use by the Player extension, get the 
+files required by the player and put them into the directory you
+installed the Player extension in. The create a template that uses the
+player, and assign it to the desired MIME types using the
+$wgPlayerTemplates setting (see below). In PlayerDefaultSettings.php
+there are example templates for FlowPlayer and the Cortodo player.
+
+== Configuration ==
+
+The Player extension can be configured in several ways. The Default 
+configuration, along with some notes and documenation, are in the
+PlayerDefaultSettings.php file. Some important settings are described below:
+
+* wgUseAjax: this is a global MediaWiki setting. You have to set it to true
+to enable embedded playback. If not enabled, or if the browser does not
+support JavaScript or has it disabled, a link to the player page will be
+provided instead of an embedded player.
+
+* $wgPlayerTemplates: this is an array that contains a template for each 
+MIME-type that should be handeled by the Player plugin (see Templates below).
+
+* $wgPlayerMimeOverride: this is a map of mime-type aliases. This allows
+you to override the mime type that will be passed to the player template.
+For example, video/ogg is per defautl mapped to application/ogg, since 
+some browser plugins don't recognize video/ogg.
+
+* $wgPlayerVideoResolutionDetector: this is used to configure the program used
+to detect the resolution (size) of videos. It can be set to false or null to
+disable resolution detection, or to a string to use the same detection command,
+for everything, or to an array mapping mime types to detection commands (using
+the entry for "*" as a fallback). Each entry in the array by itself be a
+string specifying a command, or an array containing three fields: command,
+outpattern and outreplace, where outpattern is a PCRE regular expression, and
+outreplace is a replacment string for that pattern. This can be used transform 
+the commands output into the form expected by the Player extension, namely the
+form 400x300. There are two example settings in PlayerDefaultSettings.php,
+both commented out. One uses mplayer for everything, the otehr uses ogginfo
+for ogg files and mplayer for the rest. Note that for now, the detector
+command is run every time a player or placeholder is rendered.
+
+
+=== Templates ===
+Player templates are HTML-snippets for embedding something into the HTML output
+that allows a specific media file to be played (usually, a template would
+generate an <object>, <embed> or <applet> tag). In a template, placeholders
+for template parameters are used to adopt the template for a specific media
+file (see below).
+
+The $wgPlayerTemplates maps the MIME type of a given file to a template. If 
+no template is defined for that type, playback is not allowed. If the 
+"forcegeneric" option is used, the entry for the pseudo-type "generic" 
+is always used, regardles of the file's actual type or the template associated
+with that type.
+
+PlayerDefaultSettings.php defines several templates for your conveniance:
+
+* $wgPlayerGenericTemplate: generates a generic <object> tag with fallback to
+<embed> for old browsers. This is used for almost everything per default.
+
+* $wgPlayerSvgPluginTemplate: like $wgPlayerGenericTemplate, but works around
+a problem with some SVG plugins by providing an extra src parameter. Used per
+default for image/svg+xml
+
+* $wgPlayerFlashPluginTemplate: generates specialized <object> and <embed>
+tags for the Macromedia Flash/ShockWave plugin. Used per default for 
+application/x-shockwave-flash
+
+* $wgPlayerFlowPlayerTemplate: template for embedding the FlowPlayer for
+playback of FLV files. Not enabled per default; you can enable it by
+using the line for video/x-flv from PlayerDefaultSettings.php.
+Requires FlowPlayer from http://flowplayer.sourceforge.net
+Note that this has been tested successfully only with the "Light" version of
+FlowPlayer, other versions seemed to have some problem.
+
+* $wgPlayerCortadoPlayerTemplate: template for embedding the Cortado player
+for playback of OGG files. Not enabled per default; you can enable it by
+using the line for audio/ogg, video/ogg and application/ogg from
+PlayerDefaultSettings.php. Requires Cortado player
+from http://www.flumotion.net/cortado/ 
+
+In PlayerDefaultSettings.php, $wgPlayerGenericTemplate is assigned to most
+common media types, including mp3, wav, midi, ogg, mpeg, avi, and pdf. 
+
+See http://www.mediawiki.org/wiki/Manual:Configuring_file_uploads for
+information on allowing specific file types for upload. See
+http://www.mediawiki.org/wiki/Manual:Mime_type_detection for information
+on MIME type detection.
+
+=== Template Parameters ===
+
+Template parameters have the form {{{xxx}}}. They are used as placeholders 
+for values that apply to a specific media file, and will be replaced by the
+respective values before output. There are several forms of parameters:
+
+* {{{foo}}} is a simple parameter - it will expand to the value of 
+the option "foo", or be removed if "foo" is not set.
+
+* {{{foo|quux}}} is a parameter with default walue - it  will expand to
+the value of the option "foo", or to "quux" if "foo" is not set.
+
+* {{{#env:wgFoo}}} is an environment parameter - it will expand to the
+value of the global variable "wgFoo".
+This can be used to access global variables like $wgPlayerExtensionPath, 
+$wgServer, $wgJsMimeType, $wgScriptPath, etc.
+
+* {{{#attr:foo}}} is an attribute-parameter - it  will expand to
+foo="baz" (where baz is the value of the "foo" option).
+
+* {{{#attr:foo|bar}}} is an attribute-parameter with name-alias - 
+it  will expand to bar="baz" (where baz is the value of the "foo" option).
+
+* {{{#param:foo}}} is an param-tag-parameter - it  will expand to
+<param name="foo" value="baz"/> (where baz is the value of the "foo" option).
+
+* {{{#param:foo|bar}}} is an param-tag-parameter with name-alias - 
+<param name="bar" value="baz"/> (where baz is the value of the "foo" option).
+
+* {{{#ifset:foo|some text}}} is a conditional block - the value "some text"
+will be output only if the "foo"-option is set, otherwise the entire block
+is ignored. There is limmited support for nesting: ifset blocks can contain
+other template parameters, but not other ifset or ifunset blocks.
+
+* {{{#ifunset:foo|some text}}} is a inverse conditional block - the value 
+"some text" will be output only if the "foo"-option is NOT set, otherwise
+the entire block is ignored. There is limmited support for nesting: ifunset
+blocks can contain other template parameters, but not other ifset or ifunset
+blocks.
+
+The following template parameters are always available:
+
+* uniq: a unique string, may be used to mark and refer to HTML elements using
+the id attribute.
+* url: the (local) URL of the media file.
+* fullurl: the full URL of the media file.
+* type: MIME-type media file (subject to $wgPlayerMimeTypeOverride).
+* width: the effective width, in pixels, the player should occupy.
+* height: the effective height, in pixels, the player should occupy.
+* pageurl: the URL of the file's description page in the wiki.
+* filename: plain name of the media file.
+* plainalt: an alternative text suitable for use in HTML attrbutes (such as
+alt or title). Generally the file name.
+* htmlalt: HTML-text that may be shown instead of the player. Generally a
+link to the file's description page.
+
+The following global variables (accessible by the {{{#env:xxx}}} syntax) may
+be particularly interresting:
+
+* $wgPlayerExtensionPath: The URL path to the extension's installation
+directory. This may be used to reference secondary files in that directory,
+such as CSS or JS files, player scripts (SWF or JAR files), etc.
+
+* $wgScriptPath: URL path to MediaWiki's installation root. Usefull for
+building URLs.
+
+* $wgServer: Host- and protocol part of MediaWiki's server. Usefull for
+building URLs.
+
+Additional parameters may be passed from attributes the user supplies in
+a <player> tag, or on the Special:Player page. User-supplied parameteres
+are always HTML-escaped.
+
+== Usage ==
+
+The <player> tag can be used to embed videos and other multimedia content 
+into wiki pages.
+
+    <player>Testing.mpg</player>                this embeds the Testing.mpg file
+    <player>Testing.mpg | some text</player>    this embeds the Testing.mpg file with a caption
+    <player align="right" width="200">Testing.mpg</player>    floating right-aligned, 200 pixels wide.
+
+=== Tag Attributes ===
+The following attributes can be usedin <player> tags:
+
+* id: sets the global ID for the resulting HTML structure.
+
+* class: adds CSS class(es) - same as for normal HTML tags.
+
+* style: adds CSS styles - same as for normal HTML tags.
+
+* width: determines the desired width for the player. The aspect ratio is
+preserved while scaling, if know (see $wgPlayerVideoResolutionDetector).
+If both width and height are given, a box-fit is applied.
+
+* height: determines the desired height for the player. The aspect ratio is
+preserved while scaling, if know (see $wgPlayerVideoResolutionDetector).
+If both width and height are given, a box-fit is applied.
+
+* align: determines the alignment. Thre are four possible values:
+**none: (default): the player box creates a paragraph.
+**center: the player box creates a centered paragraph.
+**left: the player box floats on the left side, text flows around it.
+**right: the player box floats on the right side, text flows around it.
+
+* thumb: determines the thumbnail image (if any). Must be the name of an
+uploaded image.
+
+* forcegeneric: use the template registered under the "generic" key, instead
+of selecting a template by the file's type.
+
+Any additional attributes are passed on as template parameters. So, if you 
+give foo="test" as an attribute, a template may refer to that value using
+{{{foo}}}. Note that user parameters are always escaped before being passed 
+to the template, to avoid HTML injection issues.
+
+Some attributes supported by some templates (in the hope the user's plugin
+will understand them): loop, menu, scale, and quality.

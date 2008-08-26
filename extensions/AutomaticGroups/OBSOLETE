@@ -1,0 +1,7 @@
+This extension is obsolete.
+
+Auto promotion is configurable from core product now.
+
+See: http://www.mediawiki.org/wiki/Manual:$wgAutopromote
+
+In the future this extension may be removed from trunk.

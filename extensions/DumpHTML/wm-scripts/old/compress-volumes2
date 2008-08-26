@@ -1,0 +1,25 @@
+#!/bin/bash
+
+if [ "asdf$1" == asdf ];then
+	echo "Usage: compress-volumes <language>"
+	exit
+fi
+
+basedir=/mnt/static
+htmldir=$basedir/$1
+destdir=$basedir/downloads/$1/volumes
+shift
+
+cd $basedir
+
+for listfile in "$@" ;do
+	vol=`basename $listfile`
+	destfile=$destdir/$vol.7z
+	
+	if [ -e $destfile ];then
+		echo "$destfile already done"
+	else
+		echo 7z a $destdir/$vol.7z @$listfile
+		7z a $destdir/$vol.7z @$listfile
+	fi
+done

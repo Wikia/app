@@ -1,0 +1,77 @@
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="../css/wikiwyg.css" />
+<script type="text/javascript">
+//error_dump_trace = function (e, f, l) {
+//    var concat = 'Line ' + l + ' in file ' + f + '\n' + e;
+//    var callers = [];
+//    var caller  = arguments.callee.caller;
+//    while (caller != null) {
+//        var f_name = caller.match(/function\s+([^(\s]+)/)[1];
+//        if (!f_name) f_name = 'ANON';
+//        callers.unshift(f_name);
+//        caller = caller.
+//    }
+//    alert(concat);
+//    return true;
+//}
+error_dump = function (e, f, l) {
+    var concat = 'Line ' + l + ' in file ' + f + '\n' + e;
+    alert(concat);
+    return true;
+}
+onerror = error_dump;
+</script>
+<script type="text/javascript" src="../lib/Wikiwyg.js"></script>
+<script type="text/javascript" src="../lib/Wikiwyg/Toolbar.js"></script>
+<script type="text/javascript" src="../lib/Wikiwyg/Wikitext.js"></script>
+<script>
+// Find all the divs in the page (after it has loaded) and Wikiwygify them.
+Wikiwyg.prototype.modeClasses = ['Wikiwyg.Wikitext'];
+
+var wikiwyg;
+onload = function() {
+    config = {
+        imagesLocation: '../images/',
+        doubleClickToEdit: true
+    };
+    var element = document.getElementById('content_div');
+    wikiwyg = new Wikiwyg();
+    wikiwyg.createWikiwygArea(element, config);
+    if (wikiwyg.enabled)
+        document.getElementById('edit_clicker').onclick = function () {
+            try {
+                wikiwyg.editMode();
+                throw new Error ("IE Sucks and Expects Error Objects");
+            }
+            catch (e) {
+                throw(e);
+            }
+            return false;
+        }
+    else
+        throw new Error "no wikiwyg available";
+}
+
+</script>
+</head>
+<body>
+<h1>Wikiwyg HTML to Wikitext Tests</h1>
+<p>
+Doubleclick on any of the sections below to see the wikitext version.
+</p>
+<hr />
+<blockquote>
+   
+
+<h3><a id="edit_clicker" href="#">Click to test</a></h3>
+<div id="content_div">
+<p>
+11:52 < cdent> have you got some correspondence from them that i can look at while i watch the tests (i'm trying to fix them right now)?
+</p>
+</div>
+
+
+</blockquote>
+</body>
+</html>

@@ -1,0 +1,65 @@
++ Add a Storage class for $wgMemc
++ Prevent running OpenIDLogin, OpenIDFinish when you're already logged in
++ Add a server mode
++ Prevent serving OpenID accounts
++ Prevent trusting the same server
++ Limit domains whose OpenIDs you trust
++ For domains, Order Allow,Deny or Deny,Allow
++ Function to let skins tell if user is OpenID user
++ Function to let skins know user's OpenID URL
++ Interwiki login
+- drop-down for username prefixes (Yahoo, etc.)
++ server mode login
++ server mode trust form
++ server mode share fields form
++ change a "regular" account to an OpenID account
+- keep user from setting password in OpenID account
+- keep user from mailing new password in OpenID account
+- participate in account-creation throttle
+- audit to prevent circumventing blocks/bans
+- OpenID extension to share MW settings
+- share timezone when/if available
++ split big file into 2-3 smaller modules
++ add openid.server to user pages
++ hide openid.server for non-user pages
+- optimize trust storage
++ change trust data separators from , and | to FS and RS
+- User preferences tab for OpenID
+- Manage allow-to-trust settings in User preferences
+- Optionally redirect User: page to OpenID URL
+- If user logs in with OpenID, add a cookie, and auto-login next time
+  with check_immediate
++ Have some $trust_root values that we _always_ allow to trust
++ README
++ form to choose user ID if not sreg.nickname or sreg.fullname
++ try to guess user name from URL with /
+  like http://getopenid.com/evanprodromou or
+  http://profile.typekey.com/EvanProdromou/
++ Allow specifying a FileStore
+- Allow specifying a MySQLStore
+- Allow specifying a memcached store
++ Fall back to FileStore if Memc is bogus
++ Unit test for MemcStore
++ for just-a-hostname OpenIDs, if the first element is not
+  www, use the first element as a proposed ID
+- configurable regexps for finding a user ID from an OpenID.
++ Make the OpenID login page more prominent. A personal toolbox link for each page?
++ Update Sreg support for new API in version 2.0 libraries
+- Provider-driven identifier selection (eh? do we care?)
++ fix problem with getting $request->identity after login on server
++ fix problem with return_to parsing on login
++ fix problem with return_to parsing on convert
++ optionally allow user to specify an existing username/password after
+  logging in with OpenID the first time (like ma.gnolia.com)
+- deal with difference between canonical ID and "display ID" with XRIs
++ add more explanatory text to the default login instructions (copy Wikitravel text)
+- add a public-domain Help:OpenID.wiki
+- add more than one OpenID to a user account
++ link to Special:OpenIDConvert if user is already logged in
+- support RP discovery
+- AJAX login, rather than klutzy JS form
+- link to OpenID login on Special:Userlogin
+- Dynamic HTML swap in of OpenID login form on Special:Userlogin
+- warn if a user account has been used as a login before attaching an
+  OpenID
+  

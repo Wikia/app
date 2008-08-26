@@ -1,0 +1,169 @@
+body {
+	background: url(http://images.wikia.com/common/skins/quartz/sapphire/images/background.gif) repeat-x;
+	background-color: #f2f2f2;
+}
+
+#header, #wikia, #wikia-inside {
+	background-image: url(http://images.wikia.com/common/skins/quartz/sapphire/images/header_bg.gif);
+}
+#header, #header a {
+	color: #000;
+}
+#header a:hover {
+	color: #333;
+}
+
+/*** User area ***/
+ul#welcome li.user {
+	background-image: url(http://images.wikia.com/common/skins/quartz/sapphire/images/user_menu.gif);
+	color: #36C;
+}
+#userMenu {
+	background: #f2f2f2;
+	border-color: #36C;
+}
+#userMenu a {
+	color: #000;
+}
+#userMenu a:hover {
+	background: #36C;
+	color: #FFF;
+}
+
+/*** Wikia box ***/
+#wikiaLogo {
+	background: url(http://images.wikia.com/common/skins/quartz/sapphire/images/wikia_logo.gif) no-repeat;
+}
+#search input {
+	border-color: #36C;
+}
+#search div {
+	background: url(http://images.wikia.com/common/skins/quartz/sapphire/images/search.gif) no-repeat;
+}
+div.gelButton {
+	background: url(http://images.wikia.com/common/skins/quartz/sapphire/images/gel_buttons.gif) top left no-repeat;
+}
+div.gelButton a {
+	background: url(http://images.wikia.com/common/skins/quartz/sapphire/images/gel_buttons.gif) top right no-repeat;
+	color: #FFF;
+}
+
+/*** Nav Links ***/
+table#navLinksWikia a {
+	background: url(http://images.wikia.com/common/skins/quartz/sapphire/images/nav_bullet.gif) 0% 4px no-repeat;
+	color: #000;
+}
+
+/*** Article ***/
+.articleBar {
+	background: url(http://images.wikia.com/common/skins/quartz/sapphire/images/article_bars.gif) top left no-repeat;
+	color: #FFF;
+}
+.articleBar div {
+	background: url(http://images.wikia.com/common/skins/quartz/sapphire/images/article_bars.gif) top right no-repeat;
+}
+.articleBar a {
+	color: #000;
+}
+/*
+.articleBar .editButton, .articleBar .editButton span {
+	background-image: url(http://images.wikia.com/common/skins/quartz/sapphire/images/edit_button.gif);
+	color: #FFF;
+}
+*/
+table#wikiafooter, table#wikiafooter td a {
+	color: #000;
+}
+a#wikiaFooterLogo {
+	background: url(http://images.wikia.com/common/skins/quartz/sapphire/images/wikia_logo_small.gif);
+}
+
+/* widgets integration */
+li.widget, #spotlights {
+	border-color: #999;
+	background-color: #FFF;
+	color: #000;
+}
+li.widget a, li.widget a:visited {
+	color: #000;
+}
+li.widget h1, li.widget h2 {
+	color: #36C;
+}
+
+.roundedDiv b.xb2, .roundedDiv b.xb3, .roundedDiv b.xb4 {
+	background: #F2F2F2; 
+	border-color: #999;
+}
+.roundedDiv b.xb1 {
+	background: #87888C;
+}
+
+.roundedDiv div.r_boxContent {
+	background: #F2F2F2;
+	border-color: #87888C;
+	color: #000;
+}
+.widgetWikiaToolbox .listHdr {
+	color: #36C;
+}
+
+div.wikiaDialog .hd,
+div.wikiaDialog h2,
+.boxHeader_noBorderMargin,
+.boxHeader_noBorder,
+.boxHeader {
+	color: #36C !important;
+	border-color: #87888c;
+}
+
+
+/* AjaxLogin/Register fix - macbre */
+div.wikiaDialog a:link, div.wikiaDialog a:visited, div.wikiaDialog a:active, div.wikiaDialog a:hover {
+	color: #000000 !important;
+	text-decoration: underline !important;
+}
+
+.wikiaDialog form table td,
+.wikiaDialog form table td a
+{
+    color: #000000 !important;
+}
+
+#switchSkin a {
+	color: #FFF;
+}
+
+/* AutoComplete/SearchSuggest - Inez */
+.yui-ac-content li.yui-ac-highlight {
+	background: #36C !important;
+}
+.yui-ac-content li.yui-ac-prehighlight {
+	background: #36C !important;
+}
+
+/* tooltips */
+.wikiaTooltip {
+	background-color: #ffec3b;
+	border-color: #FFD242;
+}
+
+.prefSection {
+	background: #EEE;
+}
+
+/* refs #1775 */
+#notifyReport .articleName a {
+ color: #333333 !important;
+}
+
+/* YUI dialogs */
+.yui-panel .hd {
+    background-color: #3366cc;
+    color: #fff;
+}
+
+/* #1968 */
+li.widget table {
+    color: #000 !important;
+}

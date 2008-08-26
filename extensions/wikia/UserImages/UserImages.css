@@ -1,0 +1,58 @@
+.slide-show-top {
+	margin:10px 0px;
+}
+
+.slide-show-top a {
+	font-weight:bold;
+	text-decoration:none;
+}
+
+.slide-show-bottom {
+	margin:0px 0px 20px 0px;
+}
+
+.slide-show-bottom a {
+	font-size:13px;
+	margin:0px 10px 0px 0px;
+}
+
+.slide-show-bottom ul {
+	padding:0px;
+	margin:0px;
+	list-style:none;
+}
+
+.slide-show-bottom li {
+	float:left;
+	margin:0px 10px 0px 0px;
+}
+
+.user-image-container {
+	float:left;
+}
+
+.user-image {
+	color: #666;
+	font-size:16px;
+	letter-spacing:-1px;
+	font-weight:bold;
+}
+
+.user-image p {
+	margin:0px 0px 10px 0px !important;
+}
+
+.user-image img, .user-gallery-image img {
+	padding:3px;
+	background-color:#ffffff;
+	border:1px solid #dcdcdc;
+}
+
+.user-gallery-image {
+	float:left;
+	margin:0px 10px 15px 0px;
+}
+
+.page-nav {
+	font-weight:bold;
+}

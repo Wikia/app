@@ -1,0 +1,36 @@
+[[Data Transfer 0.1.9]]
+
+Contents:
+* Disclaimer
+* Requirements
+* Installation
+* Contact
+
+== Disclaimer ==
+
+Data Transfer is a new extension, and there is no guarantee that
+any of it will work on your system. However, it does not make
+any modifications to the database, so it should be a low-risk
+installation.
+
+For a proper legal disclaimer, see the file "COPYING".
+
+== Requirements ==
+
+The extension can make use of, but does not require, an install of
+Semantic MediaWiki. If Semantic MediaWiki is used, it must be of
+version 0.6 or greater. For more details, see Semantic MediaWiki's
+own installation requirements.
+
+== Installation ==
+
+(1) Extract the archive to obtain the directory "DataTransfer"
+    that contains all relevant files. Copy this directory (or
+    extract/download it) to "[wikipath]/extensions/".
+(2) Insert the following line into the file "[wikipath]/LocalSettings.php":
+      include_once('extensions/DataTransfer/includes/DT_Settings.php');
+
+== Contact ==
+
+If you have any issues or questions, please send them to
+yaron57@gmail.com.

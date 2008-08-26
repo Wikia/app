@@ -1,0 +1,54 @@
+#!/bin/bash
+. $bindir/functions
+
+dolang en -s 2918581
+
+for lang in \
+eo \
+es \
+et \
+eu \
+fa \
+ff \
+fiu-vro \
+'fi' \
+fj \
+fo \
+fr \
+fur \
+fy \
+ga \
+gd \
+gl \
+gn \
+got \
+gu \
+gv \
+ha \
+haw \
+he \
+hi \
+ho \
+hr \
+ht \
+hu \
+hy \
+hz \
+ia \
+id \
+ie \
+ig \
+ii \
+ik \
+ilo \
+io \
+is \
+it \
+iu
+do 
+	dolang $lang
+	finishlang $lang
+done
+
+dolang ja -e 323460
+

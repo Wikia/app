@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<playlist version="1" xmlns="http://xspf.org/ns/0/">
+    <title>Dorganisms</title>
+    <info>http://metavid.ucsc.edu/wiki/index.php/Dorganisms</info>
+    <trackList>
+        <track>
+            <title>put on our blue suits</title>
+            <annotation>&lt;b&gt;Byran Dorgan:&lt;/b&gt; we put on our blue suits every. morning but. nobody's job's in. jeopardy
+             it's. just. a lot of. other people whose jobs. are in jeopardy. All the people. who made etch-a-sketch
+             remember that. etch-a-sketch?` everybody. played. with etch-a-sketch` you got two.
+             knobs in there, you've got sand. in. and try to. do a picture. on. etch-a-sketch
+              gone gone to. china. I mean, they're all gone
+             </annotation>
+            <location>http://metavid.ucsc.edu/media/senate_11-14-05.ogg.anx?t=0:42:14/0:42:56</location>
+            <image>http://metavid.ucsc.edu/image_media/senate_11-14-05?t=0:42:14&amp;size=320x240</image>
+            <info>http://metavid.ucsc.edu/overlay/video_player/webview?stream_name=senate_11-14-05&amp;t=0:42:14/0:42:56</info>            
+        </track>
+        <track>
+            <title>we know better</title>
+            <annotation>&lt;b&gt;Byran Dorgan:&lt;/b&gt;that 1.4 trillion in combined debut we know better than that we know what to do
+            </annotation>
+            <location>http://metavid.ucsc.edu/media/senate_proceeding_02-10-06.ogg.HQ.anx?t=01:30:59/01:31:24</location>
+            <image>http://metavid.ucsc.edu/image_media/senate_proceeding_02-10-06?t=01:30:59&amp;size=320x240</image>
+            <info>http://metavid.ucsc.edu/overlay/video_player/webview?stream_name=senate_proceeding_02-10-06&amp;t=01:30:59/01:31:24</info>            
+        </track>
+        <track>
+            <title>random clip</title>
+            <annotation>example annotation
+            </annotation>
+            <location>http://metavid.ucsc.edu/media/senate_11-14-05.ogg.anx?t=0:44:14/0:45:56</location>
+            <image>http://metavid.ucsc.edu/image_media/senate_proceeding_06-08-06?t=0:44:14&amp;size=320x240</image>
+            <info>http://metavid.ucsc.edu/overlay/video_player/webview?stream_name=senate_proceeding_06-08-06&amp;t=0:44:14/0:45:56</info>            
+        </track>
+    </trackList>
+</playlist>

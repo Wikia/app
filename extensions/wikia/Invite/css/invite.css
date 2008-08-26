@@ -1,0 +1,249 @@
+/** Invite Box **/
+
+.invite-email-sent {
+color:#285C98;
+font-size:11px;
+width:200px;
+float:left;
+padding:4px 4px 10px 4px;
+margin:0px 10px 10px 0px;
+}
+
+.invite-message {
+color:#666666;
+font-size:1.1em;
+margin:5px 0px 5px 0px;
+}
+
+.invite-left {
+float:left;
+border:1px solid #dcdcdc;
+width:500px;
+padding:10px;
+margin:0px 10px 0px 0px;
+}
+
+.invite-right {
+float:left;
+border:1px solid #dcdcdc;
+width:250px;
+padding:5px 5px 10px 5px;
+text-align:center;
+height:149px;
+}
+
+.invite-right h1 {
+font-size:1.1em;
+font-weight:bold;
+color:#666666;
+}
+
+.invite-right-image {
+float:left;
+text-align:center;
+margin:0px 0px 0px 48px !important;
+}
+
+
+.invite-links {
+margin:0px 0px 10px 0px;
+font-weight:bold;
+}
+
+.invite-links a {
+text-decoration:none;
+}
+
+.invite-icons {
+margin:10px 0px 10px 0px;
+width:500px;
+}
+
+.invite-form {
+width:500px;	
+}
+
+.invite-form-title {
+float:left;
+width:200px;
+margin:0px 0px 11px 0px;
+color:#285C98;
+font-weight:800;
+font-size:12px;
+}
+
+.invite-form-input {
+float:left;
+margin:0px 0px 11px 0px;
+width:300px;
+}
+
+.invite-form-button {
+background-color:#78BA5D;
+border:1px solid #285C98;
+margin:10px 0px 0px 0px;
+color:#ffffff;
+font-size:1.0em;	
+font-weight: bold;
+}
+
+/** Invite Email **/
+.invite-email-title {
+color: #ffd242;
+font-size:1.2em;
+font-weight:bold;
+}
+
+.invite-form-enter-email {
+float:left;
+margin:0px 30px 0px 0px;
+}
+
+.invite-email-submessage {
+color:#666666;
+font-size:1.05em;
+}
+
+.email-to {
+float:left;
+}
+
+.invite-email-content {
+float:left;
+}
+
+.email-field{
+font-weight:800;
+font-size:13px;
+color:#666666;
+padding-bottom:0px;
+}
+
+.email-field textarea {
+	overflow-x:hidden;
+	overflow-y:auto;
+}
+
+.email-field input{
+width:350px;
+}
+
+.invite-title{
+font-size:15px;
+padding-bottom:5px;
+}
+
+.profile-on {
+background-color:#FFFB9B;
+font-weight:bold;
+padding:0px 5px 0px 5px;
+}
+
+.cleared {
+clear:both;
+}
+
+/** Contact List **/
+
+.contacts {
+max-height:300px;
+overflow-x:hidden;
+overflow-y:auto;
+border:1px solid #dcdcdc;
+}
+
+.contacts-title-row {
+background-color:#dcdcdc;
+}
+
+.contacts-title {
+float:left;
+font-size:13px;
+font-weight:bold;
+width:300px;
+}
+
+.contacts-message {
+padding:0px 0px 10px 0px;	
+}
+
+.contacts-row {
+margin:10px 0px 0px 0px;
+padding:0px 0px 10px 0px;
+border-bottom:1px solid #dcdcdc;
+}
+
+.contacts-checkbox {
+float:left;
+width:75px;
+}
+
+.contacts-cell {
+float:left;
+width:300px;
+}
+
+.contacts-loading {
+padding:5px;
+font-size:1.2em;
+font-weight:bold;
+color:#285C98;
+text-align:center;
+}
+
+.user-page-tabs {
+margin:0px 0px 20px 0px;	
+}
+
+.user-tab-end {
+float:left;
+padding:23px 0px 0px 0px !important;
+border-bottom:1px solid #dcdcdc;
+width:100px;
+}
+
+#user-tab-on {
+float:left;
+background-image:url("../../images/common/userTabOn.png");
+background-repeat:no-repeat;
+width:86px;
+height:24px;
+padding:5px 0px 3px 0px;
+text-align:center;
+}
+
+#user-tab-off {
+	float:left;
+	background-image:url("../../images/common/userTabOff.png");
+	background-repeat:no-repeat;
+	width:86px;
+	height:24px;
+	padding:5px 0px 3px 0px;
+	text-align:center;
+}
+
+#user-tab-on a, #user-tab-off a {
+text-decoration:none;
+}
+
+.relationship-request-buttons {
+margin:10px 0px 10px 0px;	
+}
+
+.relationship-request-button {
+background-color:#78BA5D;
+border:1px solid #285C98;
+color:#ffffff;
+font-size:1.0em;
+}
+
+.user-message {
+color:#797979;
+font-size:12pt;
+margin:0px 0px 10px 0px;
+}
+
+.invite-email-text {
+border:1px solid #dcdcdc;
+background-color:#F2F2F2;
+}

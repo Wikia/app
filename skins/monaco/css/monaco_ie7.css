@@ -1,0 +1,33 @@
+/* RTL fixes */
+body.rtl #articleFooter .actions li {
+	direction: ltr;
+}
+
+body.rtl #fe_talk,
+body.rtl #fe_permalink {
+	width: 40% !important;
+	position: relative;
+}
+
+body.rtl #articleFooter .actions li div {
+	position: relative;
+	top: 2px;
+	display: block;
+	float: right;
+	clear: both;
+}
+
+body.rtl #articleFooter .actions li div a {
+	direction: rtl;
+}
+
+.ImageMapWrapper {
+	clear: both;
+}
+
+/* #3433 */
+#wikia_header #headerButtonHub {
+	margin-left: 0 !important;
+	left: -50%;
+}
+

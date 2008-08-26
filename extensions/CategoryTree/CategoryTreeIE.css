@@ -1,0 +1,4 @@
+/* Hack for using inline-block with MSIE */
+html .CategoryTreePretendInlineMSIE { 
+	display: inline;
+}

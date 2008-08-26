@@ -1,0 +1,9 @@
+The "extensions" module regroup code can be used to enhance your MediaWiki
+experience. Some of the extensions are large and we did not want to keep
+them in the main MediaWiki branch. For example wikihero is a great tool to
+easily get Egyptian hieroglyphs but it contains hundreds of pictures.
+
+A minimal description of extension functionality is usually available
+inside $wgExtensionCredits in the setup file of an extension. More
+elaborate documentation may be available on http://www.mediawiki.org. See
+'url' inside $wgExtensionCredits for the exact URL to the documentation.

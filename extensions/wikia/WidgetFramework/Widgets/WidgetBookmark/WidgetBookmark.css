@@ -1,0 +1,42 @@
+div.WidgetBookmark,
+.WidgetBookmark dd {
+	overflow: visible !important;
+	max-height: none;
+}
+
+.WidgetBookmark .WidgetBookmarkMenu {
+	text-align: right;
+	text-transform: lowercase;
+	position: relative;
+}
+
+.WidgetBookmark .WidgetBookmarkMenu a.addBookmark {
+	cursor: pointer;
+	background-image: url(../../common/widgets/icons/widget_bookmark_add.png);
+	display: block;
+	width: 16px;
+	height: 16px;
+	position: absolute;
+	top: -25px;
+	right: 20px;
+}
+
+div.WidgetBookmark .WidgetBookmarkMenu a.addBookmark {
+	top: -33px;
+}
+
+body.rtl .WidgetBookmark .WidgetBookmarkMenu a.addBookmark {
+	left: -3px;
+	right: auto;
+}
+
+body.rtl div.WidgetBookmark .WidgetBookmarkMenu a.addBookmark {
+	left: 20px;
+}
+
+.WidgetBookmark .WidgetBookmarkRemove {
+	margin-left: 10px;
+	cursor: pointer;
+	font-weight: bold;
+	opacity: 0.6;
+}

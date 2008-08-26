@@ -1,0 +1,9 @@
+Some quickie unit tests done with the PHPUnit testing framework. To run the
+test suite, run 'make test' in this dir or 'php RunTests.php'
+
+PHPUnit is no longer maintained by PEAR. To get the current version of
+PHPUnit, first uninstall any old version of PHPUnit or PHPUnit2 from PEAR, 
+then install the current version from phpunit.de like this:
+
+# pear channel-discover pear.phpunit.de
+# pear install phpunit/PHPUnit

@@ -1,0 +1,6 @@
+ALTER TABLE	`objects`
+	ADD `UUID` VARCHAR(36) NOT NULL,
+	ADD INDEX `UUID` (`UUID`);
+	
+UPDATE `objects`
+	SET `UUID`=UUID();

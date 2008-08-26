@@ -1,0 +1,249 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>SYNOPSIS</title>
+<link rev="made" href="mailto:root@localhost" />
+</head>
+
+<body style="background-color: white">
+
+<p><a name="__index__"></a></p>
+<!-- INDEX BEGIN -->
+
+<ul>
+
+	<li><a href="#synopsis">SYNOPSIS</a></li>
+	<li><a href="#classes">CLASSES</a></li>
+	<li><a href="#methods">METHODS</a></li>
+	<li><a href="#identifiers">IDENTIFIERS</a></li>
+	<ul>
+
+		<li><a href="#semicolons">SEMICOLONS</a></li>
+		<li><a href="#braces">BRACES</a></li>
+	</ul>
+
+	<li><a href="#other">OTHER</a></li>
+</ul>
+<!-- INDEX END -->
+
+<hr />
+<p>
+</p>
+<h1><a name="synopsis">SYNOPSIS</a></h1>
+<p>This document describes the coding style used in Wikiwyg.</p>
+<p>This is the first major Javascript project for the current developers of
+Wikiwyg. It seems worthwhile to write down the coding style decisions.
+Perhaps someday there will emerge more definitive standards for how to
+do good javascript.</p>
+<p>
+</p>
+<hr />
+<h1><a name="classes">CLASSES</a></h1>
+<p>Yes, in truth, Javascript does not use class based OO. Still it can
+be useful to think in those terms. Especially for a group of Perl
+expats. ;)</p>
+<p>All classes in Wikiwyg are defined as <code>Subclass</code> objects. The class
+<code>My.Class</code> which is a subclass of <code>Your.Class</code> is defined like this:</p>
+<pre>
+    var proto = new Subclass('My.Class', 'Your.Class');</pre>
+<p>The <code>Subclass</code> constructor is a simple class generator that generates a
+constructor for your class, puts it in the symbol table, and gives the
+prototype a few helpful properties:</p>
+<dl>
+<dt><strong><a name="item_classname">classname</a></strong><br />
+</dt>
+<dd>
+The class name of an object. Useful for introspection.
+</dd>
+<p></p>
+<dt><strong><a name="item_baseclass">baseclass</a></strong><br />
+</dt>
+<dd>
+The base class name of an object.
+</dd>
+<p></p>
+<dt><strong><a name="item_superfunc"><code>superfunc('method_name')</code></a></strong><br />
+</dt>
+<dd>
+This method allows you to call a particular method, higher in the
+inheritance hierarchy.
+</dd>
+<dd>
+<pre>
+    proto.foo = function(xyz) {
+        this.superfunc('foo').call(this, xyz);
+    }</pre>
+</dd>
+<p></p></dl>
+<p>The <code>Subclass</code> constructor returns the prototype of the new class,
+which is handy to use to add more properties to the prototype.</p>
+<p>
+</p>
+<hr />
+<h1><a name="methods">METHODS</a></h1>
+<p>Wikiwyg has a few different kinds of methods.</p>
+<dl>
+<dt><strong><a name="item_public_instance_methods">Public instance methods</a></strong><br />
+</dt>
+<dd>
+Most of the methods are instance methods (as opposed to class methods).
+All this means is that they are functions assigned to the prototype of
+the class object.
+</dd>
+<dd>
+<pre>
+    proto.doSomething = function() { ... };</pre>
+</dd>
+<dd>
+<p>That the method is <em>Public</em> just means that it is intended to be
+supported asis in the future. Put another way, public methods form the
+API of a class.</p>
+</dd>
+<p></p>
+<dt><strong><a name="item_private_instance_methods">Private instance methods</a></strong><br />
+</dt>
+<dd>
+Private instance methods differ from publics ones, in that they are not
+guaranteed to be around in later releases of the code.
+</dd>
+<dd>
+<pre>
+    proto.do_something_else = function() { ... };</pre>
+</dd>
+<p></p>
+<dt><strong><a name="item_public_class_methods">Public class methods</a></strong><br />
+</dt>
+<dd>
+Some methods are just helper functions and don't have anything to do
+with an object instance.
+</dd>
+<dd>
+<pre>
+    klass.helperFunction(foo) { ... };</pre>
+</dd>
+<dd>
+<p>For the most part, all class methods are public in Wikiwyg. Also most of
+them are defined in the 'Wikiwyg' class.</p>
+</dd>
+<p></p></dl>
+<p>
+</p>
+<hr />
+<h1><a name="identifiers">IDENTIFIERS</a></h1>
+<p>Wikiwyg uses several styles of identifiers:</p>
+<dl>
+<dt><strong><a name="item_titlecased"><code>Titlecased</code></a></strong><br />
+</dt>
+<dd>
+A single word with the first letter capitalized. These identifiers are only
+used for the parts of class names.
+</dd>
+<dd>
+<pre>
+    proto = new Subclass('Foo.Bar.Baz');</pre>
+</dd>
+<dd>
+<p>If multiple words must be specified, use CamelCase.</p>
+</dd>
+<p></p>
+<dt><strong><a name="item_mountaincasedwords"><code>mountainCasedWords</code></a></strong><br />
+</dt>
+<dd>
+Multiple words with the first one lower case and the rest title case.
+Used for public method names. There are some public methods which use
+lowercase_words, but they are a special case.
+</dd>
+<p></p>
+<dt><strong><a name="item_lower_case_words_with_underscores"><code>lower_case_words_with_underscores</code></a></strong><br />
+</dt>
+<dd>
+These indentifiers are used for private method names and for
+variable names.
+</dd>
+<dd>
+<p>They are also used for a special kind of public method. Methods that
+begin with 'do_' or 'format_' are public.</p>
+</dd>
+<p></p>
+<dt><strong><a name="item_lowercase"><code>lowercase</code></a></strong><br />
+</dt>
+<dd>
+Single lowercase words are used for more generic or less important
+variable names. They are also used for a few very common public
+properties like <code>config</code>.
+</dd>
+<p></p>
+<dt><strong><a name="item_i"><code>i</code></a></strong><br />
+</dt>
+<dd>
+Single letter identifiers are only used for things like <a href="#item_i"><code>i</code></a> for a
+loop iterator.
+</dd>
+<p></p></dl>
+<p>
+</p>
+<h2><a name="semicolons">SEMICOLONS</a></h2>
+<p>For the most part, Javascript dows not require semicolons to terminate
+statements. Nonetheless, Wikiwyg terminates almost all statements with
+semicolons because they make the code more legible. They convey to the
+maintainer where the statement is intended to end.</p>
+<p>There ar a couple exceptions to the rule though.</p>
+<pre>
+    proto.two = function() {
+        return 2;
+    }</pre>
+<p>There is no semicolon after the function definition. Even though
+technically this is the end of an assignment statement, the '}' is
+sufficient to convey that meaning.</p>
+<p>On the other hand:</p>
+<pre>
+    proto.two = function() { return 2 };</pre>
+<p>In the above case, when the function assignment is all on one line,
+the inner statement should not have a semicolon, but the entire
+statement should.</p>
+<p>
+</p>
+<h2><a name="braces">BRACES</a></h2>
+<p>Javascript allows single statement blocks to be free of braces. Although
+sometimes this makes code less verbose looking, it has proven a bad idea
+to do this everywhere that it is allowed. It makes the code more fragile
+to changing because you have to always be aware when you need the
+braces. Unfortunately, Javascript will not warn you when you are about
+to shoot yourself in the foot.</p>
+<p>Wikiwyg uses the following guidelines for braces.</p>
+<ul>
+<li></li>
+All functions should have braces around the body.
+<p></p>
+<li></li>
+<code>if</code> statements can omit braces only if the condition is on one line
+and the body is a total of one line. If one of the <code>else</code> clauses is
+multiline in any way, the entire if structure should use braces.
+<pre>
+    if (foo) {
+        xxx = 1;
+    }
+    else {
+        yyy = 1;
+        zzz = 2;
+    }</pre>
+<p>The less you fight the braces, the happier you become. :}</p>
+<p></p>
+<li></li>
+With <code>for</code> and <code>while</code> statements, use braces if either the condition
+or body uses more than one line.
+<p></p></ul>
+<p>
+</p>
+<hr />
+<h1><a name="other">OTHER</a></h1>
+<ul>
+<li><strong><a name="item_sensibly_break_up_lines_longer_than_80_chars_2e">Sensibly break up lines longer than 80 chars.</a></strong><br />
+</li>
+<li><strong><a name="item_don_27t_do_tabs_21">Don't Do Tabs!</a></strong><br />
+</li>
+</ul>
+
+</body>
+
+</html>

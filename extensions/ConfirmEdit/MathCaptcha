@@ -1,0 +1,76 @@
+MATHCAPTCHA PLUGIN FOR MEDIAWIKI
+
+1. Overview
+2. Requirements
+3. Installing the plugin
+4. Customising captcha behaviour
+5. Change log
+6. Feedback
+7. References
+
+== 1. Overview ==
+
+The MathCaptcha plugin is an alternative captcha[1] mechanism which can
+be used in conjunction with the ConfirmEdit extension[2] to provide a
+more convenient means of blocking or throttling automated editing.
+
+The method used to generate the captcha images, and the formatting of
+said images, means that the captchas will not, at this time, defeat a
+tool which is designed to break them; however, casual mass-registration
+or mass-spamming attempts will be dissuaded.
+
+== 2. Requirements ==
+
+The plugin requires
+
+* Working support for TeX within MediaWiki (using the standard TexVC
+  software)[3]
+* ConfirmEdit extension
+
+== 3. Installing the plugin ==
+
+Check the plugin out from Subversion[4] (and check out the ConfirmEdit
+extension, if you don't have it installed) and place the files in your
+extensions/ directory, within your wiki root.
+
+Edit LocalSettings.php and add the following lines near the bottom of the
+file, above the closing ?> tag:
+
+	require_once( 'extensions/ConfirmEdit.php' );
+	require_once( 'extensions/MathCaptcha.php' );
+	$wgCaptchaClass = 'MathCaptcha';
+	
+This installs ConfirmEdit and instructs it to use the MathCaptcha plugin.
+The default settings for ConfirmEdit are used. At this point, no further
+action is required to have the plugin work for user registration or edits
+which add new external links to a page.
+
+== 4. Customising captcha behaviour ==
+
+A number of settings relating to the ConfirmEdit extension can be used to alter
+the attitude of the captcha, including those actions for which it appears,
+users who do not have to pass a captcha, etc. See the ConfirmEdit.php file for
+information on this.
+
+As an example, to throw a captcha for all edits, add the following line to
+LocalSettings.php:
+
+	$wgCaptchaTriggers['edit'] = true;
+
+== 5. Change log ==
+
+12/06/2006
+1.0
+	Initial release
+
+== 6. Feedback ==
+
+Feedback on the MathCaptcha plugin is welcomed at <robchur@gmail.com>. To report bugs
+with the ConfirmEdit extension, please use http://bugzilla.wikimedia.org.
+
+== 7. References ==
+
+i. http://en.wikipedia.org/wiki/Captcha
+ii. http://meta.wikimedia.org/wiki/ConfirmEdit
+iii. http://meta.wikimedia.org/wiki/Enable_TeX
+iv. http://www.mediawiki.org/wiki/Subversion

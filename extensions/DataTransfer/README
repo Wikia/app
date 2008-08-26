@@ -1,0 +1,22 @@
+== About ==
+
+Data Transfer is an extension to MediaWiki that displays XML for the
+current contents of the pages of any combination of the wiki's
+categories and namespaces. The XML is split into fields based on field
+declarations within the page's template calls; any text that is not
+within template calls gets placed into one or more "free text" tags.
+
+For more information on Data Transfer, see the extension
+homepage at
+http://www.mediawiki.org/wiki/Extension:Data_Transfer
+
+Notes on installing Data Transfer can be found in the file INSTALL.
+
+== Credits ==
+
+Data Transfer was written by Yaron Koren.
+
+== Contact ==
+
+Comments, questions, suggestions and bug reports should be
+sent to Yaron at yaron57@gmail.com.

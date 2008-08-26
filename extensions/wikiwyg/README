@@ -1,0 +1,46 @@
+==============================================================================
+Wikiwyg - Turn any HTML div into a wikitext /and/ wysiwyg edit area.
+
+DESCRIPTION:
+
+Wikiwyg is a Javascript library that can be easily integrated into any
+wiki or blog software. It offers the user multiple ways to edit/view a
+piece of content: Wysiwyg, Wikitext, Raw-HTML and Preview.
+
+The library is easy to use, completely object oriented, configurable and
+extendable.
+
+See the Wikiwyg documentation for details.
+
+AUTHORS:
+
+    Ingy döt Net <ingy@cpan.org>
+    Casey West <casey@geeknest.com>
+    Chris Dent <cdent@burningchrome.com>
+    Matt Liggett <mml@pobox.com>
+    Ryan King <rking@panoptic.com>
+    Dave Rolsky <autarch@urth.org>
+    Kang-min Liu <gugod@gugod.org>
+
+COPYRIGHT:
+
+    Copyright (c) 2005 Socialtext Corporation 
+    655 High Street
+    Palo Alto, CA 94301 U.S.A.
+    All rights reserved.
+
+Wikiwyg is free software. 
+
+This library is free software; you can redistribute it and/or modify it
+under the terms of the GNU Lesser General Public License as published by
+the Free Software Foundation; either version 2.1 of the License, or (at
+your option) any later version.
+
+This library is distributed in the hope that it will be useful, but
+WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser
+General Public License for more details.
+
+    http://www.gnu.org/copyleft/lesser.txt
+
+ =============================================================================

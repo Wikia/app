@@ -1,0 +1,13 @@
+Set the following variables to fit your environment:
+$wiki_root = /wiki/index.php   <the root URL of the wiki to which all URLs are appended to>
+$secret = <the secret given to you by Kaltura to match the partner_id>
+$partner_id = <partner_id given to you by Kaltura>
+$subp_id = <subp_id given to you by Kaltura>
+
+When debugging the service, it is important to use the log file.
+To do so:
+1. in partner_settings.php: set $log_kaltura_services  
+	$log_kaltura_services=true
+2. create a directory called 'log' in the same directory as this file.
+	Make sure it has write permission.
+If all works well, a file called 'kaltura_extension_log' will be created and contain info about each service request.

@@ -1,0 +1,30 @@
+# tables required for the SpamRegex extension:
+# total count: 1 table
+
+
+	CREATE TABLE `spam_regex` (
+			`spam_id` int(5) NOT NULL auto_increment,
+			`spam_text` varchar(255) NOT NULL,
+			`spam_timestamp` char(14) NOT NULL,
+			`spam_user` varchar(255) NOT NULL,
+			`spam_textbox` int(1) NOT NULL DEFAULT 1,
+			`spam_summary` int(1) NOT NULL DEFAULT 0,
+			PRIMARY KEY  (`spam_id`),
+			UNIQUE KEY `spam_text` (`spam_text`),
+			KEY `spam_timestamp` (`spam_timestamp`),
+			KEY `spam_user` (`spam_user`)
+			) ;
+
+#    1.  Create the tables.
+#    2. Copy the /SpamRegex folder and its contents into /extensions.
+#    3. Copy SpamRegex.php to /extensions.
+#    4. If not already supplied with RegexBlock extension, copy SimplifiedRegex.php into /extensions.
+#    5. Include the SpamRegex.php in GlobalSettings.php.
+#    6. This extension uses Memcached - please check if Memcached is configured properly in Global/LocalSettings.
+#
+#    That should do the trick. If people belonging to staff cannot access the extension, check if relogin helps. If not, please check if the staff permissions are not overwritten after the initialization of the extension. If that is the case, the permissions should be rather appended (the extension adds one new permission right).
+#
+#
+
+# More details can be found in the included SpamRegex.xml (mediawiki XML
+# dump format) or SpamRegex.html files

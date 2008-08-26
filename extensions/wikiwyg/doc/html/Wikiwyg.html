@@ -1,0 +1,303 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>Wikiwyg - Turn any HTML div into a wysiwyg and wikitext edit area.</title>
+<link rev="made" href="mailto:root@localhost" />
+</head>
+
+<body style="background-color: white">
+
+<p><a name="__index__"></a></p>
+<!-- INDEX BEGIN -->
+
+<ul>
+
+	<li><a href="#name">NAME</a></li>
+	<li><a href="#synopsis">SYNOPSIS</a></li>
+	<li><a href="#description">DESCRIPTION</a></li>
+	<li><a href="#features">FEATURES</a></li>
+	<li><a href="#project_goals">PROJECT GOALS</a></li>
+	<li><a href="#extending">EXTENDING</a></li>
+	<li><a href="#subclassing">SUBCLASSING</a></li>
+	<li><a href="#resources">RESOURCES</a></li>
+	<li><a href="#bugs_and_caveats">BUGS AND CAVEATS</a></li>
+	<li><a href="#credits">CREDITS</a></li>
+	<li><a href="#authors">AUTHORS</a></li>
+	<li><a href="#copyright">COPYRIGHT</a></li>
+</ul>
+<!-- INDEX END -->
+
+<hr />
+<p>
+</p>
+<h1><a name="name">NAME</a></h1>
+<p>Wikiwyg - Turn any HTML div into a wysiwyg and wikitext edit area.</p>
+<p>
+</p>
+<hr />
+<h1><a name="synopsis">SYNOPSIS</a></h1>
+<pre>
+    // This code enables a div to be a Wikiwyg area
+    var myDiv = document.getElementById('some_id');
+    var myConfig = {
+        javascriptLocation: '../../lib/',
+        doubleClickToEdit: true,
+        modeClasses: [
+            'Wikiwyg.Wysiwyg',
+            'Wikiwyg.Wikitext',
+            'Wikiwyg.Preview'
+        ],
+        toolbar: {
+            imagesLocation: '../../images/',
+            controlLayout: [
+                'save', 'cancel', 'mode_selector', '/',
+                'bold', 'italic', '|', 'indent', 'outdent'
+            ]
+        },
+        wysiwyg: {
+            iframeId: 'wikiwyg_iframe'
+        }
+    };
+    var myWikiwyg = new Wikiwyg.MySubclass();</pre>
+<pre>
+    // Attempt to enable Wikiwyg for some div
+    myWikiwyg.createWikiwygArea(myDiv, myConfig);
+    
+    // Change some link(s) to turn on the wikiwyg area
+    if (myWikiwyg.enabled) {
+        Wikiwyg.changeLinksMatching(
+            'href', /action=edit/,
+            function() {
+                myWikiwyg.editMode();
+                return false;
+            }
+        );
+    }</pre>
+<pre>
+    // You'll likely want to sublass Wikiwyg for your application.
+    // Wikiwyg will work fine on its own but some behavior is undefined.
+    proto = new Subclass('Wikiwyg.MySubclass', 'Wikiwyg');</pre>
+<pre>
+    proto.modeClasses = [
+        'Wikiwyg.Wysiwyg',
+        'Wikiwyg.Wikitext.MySubclass',
+        'Wikitext.Preview'
+    ];</pre>
+<pre>
+    proto.saveChanges = function() {
+        // code to save edit changes to your system
+    }</pre>
+<pre>
+    // A subclass to customize Wikiwyg.Wikitext for your wiki variation
+    proto = new Subclass('Wikiwyg.Wikitext.MySubclass', 'Wikiwyg.Wikitext');
+    // etc...</pre>
+<p>
+</p>
+<hr />
+<h1><a name="description">DESCRIPTION</a></h1>
+<p>Wikiwyg is a Javascript library that can be easily integrated into any
+wiki or blog software. It offers the user multiple ways to edit/view a
+piece of content:</p>
+<pre>
+    * Wysiwyg mode - Simple, HTML, Design Mode editing.
+    * Wikitext mode - Standard, Wiki, Text Area editing.
+    * HTML mode - View/Edit raw html.
+    * Preview mode - Display mode without saving changes.</pre>
+<p>Wikiwyg allows you to switch between modes, delegating some of the
+processing to the server when necessary.</p>
+<p>
+</p>
+<hr />
+<h1><a name="features">FEATURES</a></h1>
+<pre>
+    * Works in Internet Explorer and Mozilla browsers.
+    * Can lay over any html div and be hooked into the existing edit
+      buttons provided by the system.
+    * Gracefully falls back to existing functionality if browser does
+      not support Wikiwyg.
+    * Subclassable to the environment it is being integrated into.
+    * Configurable to tweak basic options.
+    * Can edit multiple divs on the same page at the same time.
+    * Instantaneous switch from view to edit.
+    * Implemented as a clean OO library where each enabled div is a
+      Wikiwyg object.
+    * Toolbar does the right thing in both Wysiwyg and Wikitext modes.
+    * Control key shortcuts apply styles without using the toolbar.
+    * Adding new modes is as simple as adding new classes to the
+      modeClasses property.</pre>
+<p>
+</p>
+<hr />
+<h1><a name="project_goals">PROJECT GOALS</a></h1>
+<p>Wikiwyg wants to be a wysiwyg and also traditional editor for
+preexisting wiki and weblog software packages. The initial targets are
+the Kwiki wiki project and Socialtext Workspace(tm).</p>
+<p>Wikiwyg should become the new TEXTAREA for applications that want more
+advanced input but don't want to rearchitect their infrastructure.</p>
+<p>Wikiwyg is simple to integrate into existing software. In many cases it
+should require no changes to the server side.</p>
+<p>
+</p>
+<hr />
+<h1><a name="extending">EXTENDING</a></h1>
+<p>Wikiwyg uses CamelCase identifiers for public methods and attributes and
+lower_case_with_underscore identifiers for private methods and
+attributes.</p>
+<p>Nothing is really private in Javascript but the idea is that ``private''
+identifiers are <em>Subject to Change</em>. If you need to override private
+stuff, please go right ahead; then consider notifying the author of your
+use case, so that things can be refactored to use public methods in a
+subsequent release.</p>
+<p>On the other hand you are highly encouraged to override public methods.
+That's why they are public :)</p>
+<p>For example, to change the layout of the toolbar buttons, you would
+define your own <code>setToolbarButtons</code> method (after loading the
+Wikiwyg library).</p>
+<pre>
+    Wikiwyg.Toolbar.prototype.setToolbarButtons = function() {
+        this.add_toolbar_button('foo');
+        ...
+    }</pre>
+<p>NOTE: Creating a flexible library for something like Wikiwyg is a
+challenge but it is entirely possible. Avoid the temptation to fork the
+code and instead learn to work with it and contribute back to the
+project. That way as Wikiwyg matures, so will your integration of it.</p>
+<p>
+</p>
+<hr />
+<h1><a name="subclassing">SUBCLASSING</a></h1>
+<p>NOTE: Javascript doesn't have classes and subsclasses per se, but you
+can fake them and get encapsulation and inheritance benefits. So please
+check your purist hat at the front desk...</p>
+<p>Wikiwyg is intended to be subclassed. The nature of this beast is that
+it can only do so much for you. This is your system after all, and
+Wikiwyg doesn't know all the ins and outs of it. Wikiwyg provides
+methods for the things it wants to do conceptually and leaves it up to
+you to implement the ones that are specific to your system.</p>
+<p>Wikiwyg is actually comprised of several classes (even though they live
+in one module/file):</p>
+<pre>
+    * Wikiwyg -- the main driver class
+    * Wikiwyg.Toolbar -- the class for creating/handling the toolbar
+    * The Mode Classes:
+    ** Wikiwyg.Wysiwyg -- the DesignMode wysiwyg editor
+    ** Wikiwyg.Wikitext -- textarea editor with wiki syntax
+    ** Wikiwyg.Preview -- an html preview of your changes</pre>
+<p>To create a new subclass, Wikiwyg provides a special constructor called
+<code>Subclass</code>. It takes two string arguments: the name of the new class,
+and optionally the name of the parent class. <code>Subclass</code> provides each object
+with two extra attributes: <code>classname</code> and <code>superfunc</code>. Here is a typical
+usage in Wikiwyg:</p>
+<pre>
+    proto = new Subclass('Wikiwyg.Wikitext.Mine', 'Wikiwyg.Wikitext');
+    
+    proto.markupRules = {
+        bold: ['bound_phrase', &quot;'''&quot;, &quot;'''&quot;],
+        italic: ['bound_phrase', &quot;''&quot;, &quot;''&quot;]
+    };
+    
+    proto.enableThis = function() {
+        this.superfunc('enableThis').call(this);   // Call the base enableThis
+        this.textarea.height = '400px';
+        // alert(this.classname + ' is all set up!');
+    }</pre>
+<p>
+</p>
+<hr />
+<h1><a name="resources">RESOURCES</a></h1>
+<pre>
+    * <a href="http://www.wikiwyg.net/">http://www.wikiwyg.net/</a>
+    * <a href="http://wiki.wikiwyg.net/">http://wiki.wikiwyg.net/</a>
+    * <a href="http://demo.wikiwyg.net/">http://demo.wikiwyg.net/</a>
+    * <a href="http://www.openjsan.org/">http://www.openjsan.org/</a>
+    * wikiwyg-dev@wikiwyg.net</pre>
+<p>
+</p>
+<hr />
+<h1><a name="bugs_and_caveats">BUGS AND CAVEATS</a></h1>
+<p>Wikiwyg currently only works in Internet Explorere 6.0 and in Gecko
+browsers like Mozilla Firefox. Other browsers like Safari and Opera will
+hopefully be supported later.</p>
+<p>
+</p>
+<hr />
+<h1><a name="credits">CREDITS</a></h1>
+<p>The Wikiwyg library was written almost from scratch after playing with
+the code from RTE and WikiEdit. Wikiwyg differs highly in that it is a
+pure Javascript implementation, and is completely object oriented.</p>
+<dl>
+<dt><strong><a name="item_socialtext">Socialtext</a></strong><br />
+</dt>
+<dd>
+Socialtext is responsible for starting the Wikiwyg effort and putting it
+into the open for others to use.
+</dd>
+<p></p>
+<dt><strong><a name="item_ingy_d_c3_b6t_net">Ingy döt Net</a></strong><br />
+</dt>
+<dd>
+Ingy started the Wikiwyg project. He is currently an employee of
+Socialtext and also the author of the Kwiki wiki software
+(http://www.kwiki.org).
+</dd>
+<p></p>
+<dt><strong><a name="item_chris_dent">Chris Dent</a></strong><br />
+</dt>
+<dd>
+Chris did all the work that makes the Wikitext mode toolbar so smart and
+context sensitive.
+</dd>
+<dd>
+<p>See: <a href="http://www.socialtext.com">http://www.socialtext.com</a></p>
+</dd>
+<p></p>
+<dt><strong><a name="item_roman__22kukutz_22_ivanov__3cthingol_40mail_2eru_3">Roman ``Kukutz'' Ivanov &lt;<a href="mailto:thingol@mail.ru">thingol@mail.ru</a>&gt;</a></strong><br />
+</dt>
+<dd>
+Roman wrote WikiEdit which is basically a textarea toolbar.
+<a href="http://wackowiki.com/WikiEdit">http://wackowiki.com/WikiEdit</a>
+</dd>
+<p></p>
+<dt><strong><a name="item_kevin_roth">Kevin Roth</a></strong><br />
+</dt>
+<dd>
+Kevin wrote the cross-browser rich-text editor (RTE).
+<a href="http://www.kevinroth.com/rte/demo.htm">http://www.kevinroth.com/rte/demo.htm</a>
+</dd>
+<p></p></dl>
+<p>
+</p>
+<hr />
+<h1><a name="authors">AUTHORS</a></h1>
+<pre>
+    Ingy döt Net &lt;ingy@cpan.org&gt;
+    Casey West &lt;casey@geeknest.com&gt;
+    Chris Dent &lt;cdent@burningchrome.com&gt;
+    Matt Liggett &lt;mml@pobox.com&gt;
+    Ryan King &lt;rking@panoptic.com&gt;
+    Dave Rolsky &lt;autarch@urth.org&gt;
+    Kang-min Liu &lt;gugod@gugod.org&gt;</pre>
+<p>
+</p>
+<hr />
+<h1><a name="copyright">COPYRIGHT</a></h1>
+<pre>
+    Copyright (c) 2005 Socialtext Corporation 
+    655 High Street
+    Palo Alto, CA 94301 U.S.A.
+    All rights reserved.</pre>
+<p>Wikiwyg is free software.</p>
+<p>This library is free software; you can redistribute it and/or modify it
+under the terms of the GNU Lesser General Public License as published by
+the Free Software Foundation; either version 2.1 of the License, or (at
+your option) any later version.</p>
+<p>This library is distributed in the hope that it will be useful, but
+WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser
+General Public License for more details.</p>
+<pre>
+    <a href="http://www.gnu.org/copyleft/lesser.txt">http://www.gnu.org/copyleft/lesser.txt</a></pre>
+
+</body>
+
+</html>

@@ -1,0 +1,619 @@
+@import "../../smoke/css/main.css";
+
+#hmain {
+	background:#4F4F4F none repeat scroll 0% 50%;
+	clear:both;
+	color:#CCCCCC;
+	display:block;
+	height:60px;
+	line-height:60px;
+	padding:0pt 20px;
+}
+
+#header, #inner {
+	width: 100%;
+	clear: both;
+}
+#hcontainer {
+	position: absolute;
+	top: 5px;
+	text-align: center;
+	left: 0;
+	right: 0;
+}
+#header {
+	margin: 0 auto;
+	text-align: left;
+}
+/* dropdown controls */
+#header ul {
+	margin: 0;
+	padding: 0;
+	height: 20px;
+	line-height: 20px;
+	float: right;
+	list-style-type: none;
+}
+#header li {
+	display: inline;
+	float: left;
+	margin: 0;
+	padding: 0;
+	position: relative;
+}
+#header li a {
+	text-decoration: none;
+	width: auto;
+}
+#header li .icon_dropdown {
+	background-position: -98px -2px;
+	width: 11px;
+	height: 11px;
+}
+#htabs li .icon_dropdown {
+	background-position: -98px 0;
+}
+#header li ul li {
+	float: none;
+}
+#header,
+#header * {
+	z-index: 1000;
+}
+#header li ul,
+#header li ul * {
+	z-index: 1001;
+}
+#header li ul {
+	border: 1px solid #aaa;
+	background: #fdfdfd url('../images/header/lang-background.png') bottom left repeat-x;
+	white-space: nowrap;
+	display: block;
+	font-size: 93%;
+	padding: 5px;
+	margin-top: -1px;
+	float: none;
+	position: absolute;
+	display: none;
+	height: auto;
+	line-height: 20px;
+}
+#mlinks, #mlinks * {
+	z-index: 1002 !important;
+}
+#htabs li ul {
+	left: 0;
+	width: 150px;
+	top: 21px;
+	border-top: 0;
+}
+#header li:hover ul a:hover,
+#header li.hover ul a:hover {
+	border-color: #cd5401;
+	background: #eee !important;
+	color: #000;
+}
+#header li:hover ul,
+#header li.hover ul {
+	display: block;
+}
+#header li ul a,
+#header li ul a {
+	margin: 1px 0;
+	color: #515151 !important;
+	border: 0;
+	font-weight: bold;
+	background: transparent !important;
+	padding: 2px 4px;
+	height: 11px;
+	line-height: 11px;
+	display: block;
+	border-right: 4px solid #ccc;
+	float: none;
+	width: auto;
+	display: block;
+	position: relative;
+	text-align: left;
+}
+#hticker {
+	background: #fff;
+	height: 20px;
+	line-height: 20px;
+	clear: both;
+	font-size: 93%;
+}
+#htabs li a {
+	height: 25px;
+	line-height: 26px;
+	margin-top: -8px;
+	position: relative;
+	margin-left: 1px;
+	border-top: 3px solid #515151;
+	display: block;
+	padding: 0 5px;
+	width: 80px;
+	text-align: center;
+	background: #eee;
+	color: #515151;
+	font-weight: bold;
+}
+#htabs .active a,
+#htabs .active:hover a {
+	border-top-color: #ff640f;
+	color: #ff640f;
+	background: #fff;
+}
+#htabs li:hover a,
+#htabs li.hover a,
+#htabs a:hover {
+	border-top-color: #8a8a8a;
+}
+#hlinks {
+	background: #3a3a3a url('../images/frame.png') right -231px no-repeat;
+	color: #fff;
+	padding-right: 10px !important;
+	margin-top: -1px;
+	border-bottom: 1px solid #777;
+}
+#hlinks a {
+	color: #fff;
+	display: block;
+	border-left: 1px solid #5a5a5a;
+	padding: 0 20px;
+}
+#hlinks a:hover {
+	background-color: #000;
+}
+#hlinks .active a {
+	background-color: #222;
+	color: #ccc;
+}
+#htabs li ul li {
+	float: none;
+}
+#mlinks {
+	top: -1px;
+	font-size: 93%;
+	height: 16px;
+	width: auto;
+	display: block;
+	line-height: 16px;
+}
+#mlinks li:hover a,
+#mlinks li.hover a,
+#mlinks li a:hover {
+	border-color: #aaa;
+	background-color: #fdfdfd;
+}
+#mlinks li ul {
+	font-size: 100%;
+	width: 150px;
+	right: 0;
+	top: 18px;
+}
+#mlinks a {
+	border: 1px solid #fff;
+	text-decoration: none;
+	height: 16px;
+	line-height: 16px;
+}
+#mlinks .flag {
+	height: 11px;
+	line-height: 11px;
+}
+#mlinks li li .inline {
+	margin-right: 3px;
+}**/
+#hmain {
+	background: #4f4f4f;
+	padding: 0 20px;
+	color: #ccc;
+	display: block;
+	height: 60px;
+	clear: both;
+	line-height: 60px;
+}
+#hlogo {
+	float: left;
+	background: url('../images/frame.png') 0 -28px no-repeat;
+	/*width: 150px;*/
+	padding-top: 19px;
+	padding-left: 76px;
+	height: 60px;
+	position: absolute;
+	z-index: 4;
+	margin-left: -20px;
+	margin-top: -19px;
+	text-indent: -10000px;
+	display: block;
+}
+#hlogo a {
+	display: block;
+	background: url('../images/frame.png') 0 -170px no-repeat;
+	width: 110px;
+	height: 60px;
+}
+#hsearch {
+	padding: 18px 0;
+	font-size: 93%;
+	white-space: nowrap;
+	line-height: 24px;
+	float: right;
+}
+#hsearch input[type=text] {
+	border: 0;
+	margin: 0 3px;
+	padding: 1px 2px;
+	font-size: 100%;
+	width: 200px;
+	background: #fff;
+}
+#hsearch .vTextInput,
+#hsearch select {
+	border: 0;
+	margin: 0 3px;
+	padding: 1px 2px;
+	font-size: 100%;
+	width: 200px;
+	background: #fff;
+}
+#hsearch select {
+	width: auto;
+}
+/*#hsearch input[type=submit] {
+	background: url('../images/sprites/buttons.png') -144px -69px no-repeat;
+	height: 21px;
+	width: 26px;
+	bottom: -1px;
+	position: relative;
+	text-indent: -10000px;
+	border: 0;
+}*/
+#hsearch .links {
+	margin-left: 10px;
+	font-size: 93%;
+	word-spacing: 4px;
+}
+#hsearch .links a {
+	color: #fff;
+	text-decoration: underline;
+}
+#hsearch .links a:hover {
+	color: #fd9100;
+}
+#hsearch select {
+	height: 16px;
+	top: -1px;
+	padding: 0;
+	position: relative;
+}
+#hsearch option {
+	padding: 2px;
+}
+#hsearch label {
+	margin-left: 5px;
+	font-weight: bold;
+	color: #ccc;
+}
+#mlinks {
+	margin-right: 5px;
+}
+#mlinks li a {
+	display: block;
+	padding: 0 5px;
+	color: #3b7ec2;
+}
+#pticker {
+	margin: 0 0 10px 0;
+	height: 36px;
+	background: #777 url('../images/sprites/nav/1.png') 0 -111px repeat-x;
+	padding: 0 10px;
+	font-size: 93%;
+	position: relative;
+}
+#pticker, #pticker * { z-index: 10; }
+#pticker .l,
+#pticker .r {
+	height: 36px;
+	width: 9px;
+	position: absolute;	
+	background-repeat: no-repeat;
+}
+#pticker .l {
+	left: 0;
+	background: url('../images/sprites/nav/1.png') 0 0;
+}
+#pticker .r {
+	right: 0;
+	background: url('../images/sprites/nav/1.png') -9px 0;
+}
+#pticker .i {
+	text-indent: -10000px;
+	background: url('../images/sprites/nav/1.png') 0 -148px;
+	width: 32px;
+	height: 30px;
+	top: 2px;
+	left: 17px;
+	position: absolute;
+}
+#pticker ul {
+	list-style-type: none;
+	margin: 0;
+	padding-left: 40px;
+	background: #898989 url('../images/sprites/nav/1.png') 0 -37px repeat-x;
+	height: 36px;
+	line-height: 36px;
+}
+#pticker li {
+	display: inline;
+	float: left;
+	position: relative;
+}
+#pticker li a {
+	padding: 1px 10px;
+	color: #fff;
+	float: left;
+	line-height: 36px;
+	height: 34px;
+	font-weight: bold;
+	display: block;
+	font-size: 100%;
+	text-align: center;
+	text-decoration: none;
+}
+#pticker li a img {
+	border: 0;
+}
+#pticker li.i:hover a {
+	background: none;
+}
+#pticker li:hover a,
+#pticker li a:hover,
+#pticker li.hover a {
+	background: #7a7a7a url('../images/sprites/nav/1.png') 0 -74px repeat-x;
+}
+#pticker li:hover ul,
+#pticker li.hover ul {
+	display: block;
+}
+#pticker li:hover ul a,
+#pticker li.hover ul a {
+	background: none;
+}
+#pticker li ul {
+	position: absolute;
+	background: #f0f0f0;
+	width: auto;
+	white-space: nowrap;
+	left: 0;
+	top: 36px;
+	height: auto;
+	border: 1px solid #7e7e7e;
+	width: 120px;
+	width: auto;
+	min-width: 120px;
+	border-top: 0;
+	padding: 5px;
+	display: none;
+}
+#pticker li li {
+	float: none;
+}
+#pticker li li a {
+	color: #7c7c7c;
+	padding: 1px 5px;
+	width: auto;
+	text-align: left;
+	white-space: normal;
+	float: none;
+	height: auto;
+	line-height: 16px;
+}
+#pticker li li ul {
+	border: none;
+	position: relative;
+	top: auto;
+	min-width: 0;
+	padding: 0;
+	left: auto;
+}
+#pticker li li li a {
+	font-weight: normal;
+	color: #7c7c7c;
+	padding-left: 10px;
+}
+#pticker li li a:hover {
+	background: #dadad9;
+}
+#aleader {
+	float: right;
+	width: 728px;
+	height: 90px;
+	margin-top: 10px;
+	line-height: 90px;
+}
+#amedium,
+#aleader {
+	z-index: 5;
+	background: #eee;
+}
+#amedium {
+	width: 300px;
+	margin-bottom: 10px;
+}
+#plogo {
+	padding: 20px 10px 10px 10px;
+	font-size: 93%;
+	height: 70px;
+	color: #444;
+	width: 222px;
+	overflow: hidden;
+	background: #fff url('../images/logos/mycurse-1.png') no-repeat;
+	position: relative;
+}
+.mycurse#plogo {
+	position: relative;
+	padding-left: 43px;
+	width: 189px;
+}
+.mycurse#plogo .avatar {
+	position: absolute;
+	left: 5px;
+	top: 20px;
+}
+.mycurse#plogo h2 {
+	margin: 0;
+	font-size: 130%;
+}
+.mycurse#plogo h3 {
+	margin: 0;
+	font-size: 110%;
+}
+.mycurse#plogo ul {
+	margin: 3px 0 3px 10px;
+	line-height: 14px;
+}
+.mycurse#plogo dl {
+	margin: 6px 0;
+	line-height: 14px;
+}
+.mycurse#plogo dt {
+	float: left;
+	clear: left;
+	margin-right: 3px;
+	font-weight: bold;
+}
+
+#plogo .btnbar_lg {
+	height: 33px;
+	margin: 5px 0;
+}
+#plogo .btnbar a {
+	position: absolute;
+	right: 5px;
+	bottom: 5px;
+}
+#plogo .title {
+	color: #302000;
+	text-decoration: none;
+	font-size: 110%;
+	font-weight: bold;
+}
+#plogo .links {
+	float: right;
+	margin: 0;
+	padding: 10px 0;
+	list-style-type: none;
+	border-left: 1px solid #b4811b;
+	padding-left: 5px;
+}
+#plogo .links li {
+	padding: 2px 0;
+}
+#plogo .links a {
+	color: #a65e19;
+	font-weight: bold;
+}
+/* breadcrumbs */
+.breadcrumb {
+	font-size: 93%;
+	margin-bottom: 10px;
+}
+.breadcrumb a {
+	font-size: 100%;
+	text-decoration: none;
+}
+/* searchbox */
+.searchbox {
+	position: relative;
+	border: 1px solid #cbcbcb;
+	background: #eee;
+	font-size: 93%;
+	padding: 7px;
+	text-align: center;
+	vertical-align: middle;
+}
+.searchbox form {
+	margin: 0;
+}
+.searchbox label {
+	color: #424242;
+	margin-right: 5px;
+	font-weight: bold;
+}
+.searchbox .vTextField {
+	width: 230px;
+	padding: 2px 4px;
+}
+.searchbox a {
+	margin-left: 5px;
+	font-size: 93%;
+}
+.h {
+	position: relative;
+	color: #cd5401;
+	border-bottom: 1px solid #cd5401;
+	padding-left: 10px;
+	line-height: 20px;
+	margin: 20px 0 10px 0;
+}
+.h small {
+	color: #000;
+	font-weight: normal;
+	font-size: 75%;
+}
+.h * {
+	margin: 0;	
+}
+.subh {
+	color: #aaa;
+	margin-top: -7px;
+	margin-bottom: 10px;
+	padding-left: 25px;
+}
+
+
+#header input[type="button"], #header input[type="submit"], #header input[type="reset"]
+{
+	background:#CCCCCC none repeat scroll 0%;
+	border-color:#CCCCCC rgb(153, 153, 153) rgb(153, 153, 153) rgb(204, 204, 204);
+	border-style:solid;
+	border-width:1px;
+	color:#000000;
+	cursor:pointer;
+	font-size:93%;
+	font-weight:bold;
+	padding:0pt 4px;
+	width:auto;
+}
+
+
+/* wikia addons */
+
+#header {background-color: #fff; padding-top: 45px; font-family:Arial; font-size: 1.1em}
+#toolsColumn {top: 125px}
+
+#footerCurse { 
+	border-top: 1px solid #ccc;
+	clear: both;
+	font-size: 85%;
+	text-align: center;
+	margin-top: 10px;
+	padding-top: 10px;
+	
+	clear: both;
+	margin-left: 10px;
+	margin-right: 328px;
+}
+#footerCurse a { font-size: 100%; color:#0567AE; text-decoration:underline; }
+#footerCurse p {
+	margin: 0;
+	line-height: 20px;
+}
+
+#hlogo
+{
+	background-color: #fff;
+	background-position: 10px -28px;
+	padding-left: 84px;
+}

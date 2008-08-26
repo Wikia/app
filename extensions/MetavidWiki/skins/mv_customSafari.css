@@ -1,0 +1,6 @@
+#mv_fd_mvd_cont{
+	top:30px;right:0px;bottom:0px;
+}
+#mv_tool_cont{
+	position:absolute;top:30px;left:5px;right:0px;bottom:0px;overflow:auto;
+}

@@ -1,0 +1,86 @@
+div.wikiasearchpager {
+  border-top: 1px solid #999999;
+  border: 1px solid #999999;
+  padding:.2em .2em .2em .8em;
+  margin-top:1em;
+  text-align: left;
+  background-color: #dddddd;
+}
+.searchfragment {
+	color: #636363;
+}
+.searchfooter, .searchfooter a {
+	color: #448844;
+}
+.searchtitle {
+	margin-top: 1em;
+	font-size: 110%;
+}
+.wikiasearch {
+  text-decoration: none;
+  border-bottom:1px solid #999999;
+  background: #ffffff;
+  margin: 0 0 0 0;
+}
+.wikiasearch_left {
+  float: left;
+  font-size: 160%;
+  color: black;
+}
+.wikiasearch_right {
+  float: right;
+  text-align: right;
+  font-size: 100%;
+  color: black;
+  padding: 0 .5em;
+}
+.box_search_tabs_parent {
+  border-bottom:1px solid #999999;
+  margin: 0;
+  white-space: nowrap;
+  width: 100%;
+  line-height: 1.1em;
+  overflow: visible;
+  background: none;
+  border-collapse: collapse;
+  padding-left: 0;
+  list-style: none;
+  font-size: 95%;
+}
+.box_search_tabs {
+  list-style: none;
+  margin-left: .6em;
+}
+.box_search_tabs li {
+  display: inline;
+  border: 1px solid #999999;
+  border-bottom: none;
+  padding: 0 0 .1em 0;
+  margin: 0 .3em 0 0;
+  overflow: visible;
+  background: white;
+}
+.box_search_tabs li.active_tab {
+  border-color: #999999;
+  padding: 0 0 .2em 0;
+  font-weight: bold;
+}
+.box_search_tabs li.disabled_tab {
+  border-color: #888888;
+}
+.box_search_tabs li a {
+  background-color: #eeeeff;
+  border: none;
+  padding: 0 .8em .1em;
+  position: relative;
+  margin: 0;
+  text-decoration: none;
+}
+.box_search_tabs li.active_tab a {
+  padding: 0 1em .3em !important;
+  background-color: #ffffff;
+}
+.box_search_tabs li.disabled_tab a {
+  background-color: #dddddd;
+  color: #888888;
+}

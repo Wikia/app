@@ -1,0 +1,21 @@
+<?php
+$messages = array(
+	'textrichditor' => 'Editor formátovaného textu',
+	'tog-riched_disable' => 'Vypnúť editor formátovaného textu',
+	'tog-riched_disable_ns_main' => 'Vypnúť editor formátovaného textu v hlavnom mennom priestore',
+	'tog-riched_disable_ns_talk' => 'Vypnúť editor formátovaného textu v mennom priestore „{{ns:Talk}}“',
+	'tog-riched_disable_ns_user' => 'Vypnúť editor formátovaného textu v mennom priestore „{{ns:User}}“',
+	'tog-riched_disable_ns_user_talk' => 'Vypnúť editor formátovaného textu v mennom priestore „{{ns:User_talk}}“',
+	'tog-riched_disable_ns_project' => 'Vypnúť editor formátovaného textu v mennom priestore „{{ns:Project}}“',
+	'tog-riched_disable_ns_project_talk' => 'Vypnúť editor formátovaného textu v mennom priestore „{{ns:Project_talk}}“',
+	'tog-riched_disable_ns_image' => 'Vypnúť editor formátovaného textu v mennom priestore „{{ns:Image}}“',
+	'tog-riched_disable_ns_image_talk' => 'Vypnúť editor formátovaného textu v mennom priestore „{{ns:Image_talk}}“',
+	'tog-riched_disable_ns_mediawiki' => 'Vypnúť editor formátovaného textu v mennom priestore „{{ns:MediaWiki}}“',
+	'tog-riched_disable_ns_mediawiki_talk' => 'Vypnúť editor formátovaného textu v mennom priestore „{{ns:MediaWiki_talk}}“',
+	'tog-riched_disable_ns_template' => 'Vypnúť editor formátovaného textu v mennom priestore „{{ns:Template}}“',
+	'tog-riched_disable_ns_template_talk' => 'Vypnúť editor formátovaného textu v mennom priestore „{{ns:Template_talk}}“',
+	'tog-riched_disable_ns_help' => 'Vypnúť editor formátovaného textu v mennom priestore „{{ns:Help}}“',
+	'tog-riched_disable_ns_help_talk' => 'Vypnúť editor formátovaného textu v mennom priestore „{{ns:Help_talk}}“',
+	'tog-riched_disable_ns_category' => 'Vypnúť editor formátovaného textu v mennom priestore „{{ns:Category}}“',
+	'tog-riched_disable_ns_category_talk' => 'Vypnúť editor formátovaného textu v mennom priestore „{{ns:Category_talk}}“',
+);

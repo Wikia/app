@@ -1,0 +1,1900 @@
+@import url("http://images2.wikia.com/common/wikiany/css/main.css");
+
+body {
+	text-align:center;
+	margin:0px;
+	font-family:Arial;
+}
+
+h1.pagetitle {
+	margin-bottom:10px;
+}
+
+#container {
+	margin-left:auto;
+	margin-right:auto;
+	margin-top:0pt;
+	text-align:left;
+}
+
+.cleared {
+	clear:both;
+}
+
+#siteNotice {
+	padding:0px;
+}
+
+.clearfix:after {
+    content: "."; 
+    display: block; 
+    height: 0; 
+    clear: both; 
+    visibility: hidden;
+}
+
+.clearfix {display: inline-block;}
+
+/* Hides from IE-mac \*/
+* html .clearfix {height: 1%;}
+/* End hide from IE-mac */
+
+/**Buttons**/
+.positive-button {
+	background:url('http://images.wikia.com/openserving/psn/images/common/new/positive_button_right.gif?1') no-repeat right top;
+	float:left;
+	line-height:17px;
+	font-size:10px;
+	color:#fff;
+}
+
+.positive-button span {
+	background:url('http://images.wikia.com/openserving/psn/images/common/new/positive_button_left.gif?1') no-repeat left top;
+	cursor:pointer;
+	display:block;
+	float:left;
+	line-height:17px;
+	padding:0px 22px;
+}
+
+.negative-button {
+	background:url('http://images.wikia.com/openserving/psn/images/common/new/negative_button_right.gif?1') no-repeat right top;
+	float:left;
+	line-height:17px;
+	font-size:10px;
+	color:#fff;
+}
+
+.negative-button span {
+	background:url('http://images.wikia.com/openserving/psn/images/common/new/negative_button_left.gif?1') no-repeat left top;
+	cursor:pointer;
+	display:block;
+	float:left;
+	line-height:17px;
+	padding:0px 22px;
+}
+
+#wikia-more-category .positive-button {
+	background:url('http://images.wikia.com/openserving/psn/images/common/new/category_button_right.gif?1') no-repeat right top;
+}
+
+#wikia-more-category .positive-button span {
+	background:url('http://images.wikia.com/openserving/psn/images/common/new/category_button_left.gif?1') no-repeat left top;
+}
+
+
+a.positive-button:hover {
+	color:#466C2C !important;
+	text-decoration:none;
+}
+
+a.negative-button:hover {
+	text-decoration:none;
+}
+
+#wikia-more-category a:hover {
+	color:#01405B;
+	text-decoration:none;
+}
+
+a.positive-button:visited, a.negative-button:visited {
+	color:#fff;
+}
+
+#wikia-more-menu {
+	background-color:#fff;
+	border-bottom:1px solid #D4DFD7;
+	border-left:1px solid #D4DFD7;
+	border-right:1px solid #D4DFD7;
+	left:8px;
+	position:absolute;
+	top:35px;
+	width:292px;
+	z-index:6;
+	padding:5px 10px;
+	font-size:13px;
+}
+
+#wikia-more-menu a {
+	display:block;
+	border-bottom:1px dashed #EAF0F1;
+	float:left;
+	width:144px;
+	color:#0099D9;
+	line-height:20px;
+}
+
+/**Wikia Header**/
+
+#wikia-header {
+	position:relative;
+	background-color:#687F79;
+	height:35px;
+	width:100%;
+	z-index:10;
+}
+
+#wikia-logo {
+	position:absolute;
+	top:2px;
+	left:9px;
+}
+
+#wikia-logo img {
+	vertical-align:text-bottom !important;
+}
+
+#wikia-category {
+	color:#fff;
+	line-height:25px;
+	font-size:20px;
+	margin:0px 0px 0px 5px;
+}
+
+#wikia-more-category {
+	position:absolute;
+	top:12px;
+	left:205px;
+	text-transform:uppercase;
+}
+
+#wikia-login {
+	margin:12px 0px 0px 0px;
+	float:right;
+	padding:0px 5px 0px 10px;
+	line-height:17px;
+	color:#fff;
+	font-size:11px;
+}
+
+#wikia-login a {
+	margin:0px 10px 0px 0px;
+}
+
+#login-message {
+	float:left;
+	margin:1px 10px 0px;
+}
+
+#login-message a {
+	margin:0px 2px;
+	font-size:11px;
+	text-decoration:underline;
+}
+
+#login-message a:hover {
+	color:#333;
+}
+
+/**Site Header**/
+#site-header {
+	z-index:5;
+	position:relative;
+	width:100%;
+}
+
+#site-logo {
+}
+
+#top-ad {
+	position:absolute;
+	top:53px;
+	left:278px;
+	z-index:6;
+}
+
+/**Body**/
+#body-container {
+	margin:-15px 10px 0px 220px;
+}
+
+#body {
+	top:0px;
+}
+
+#article {
+	font-family:sans-serif;
+	background-color:#fff;
+	font-size:127%;
+	line-height:1.5em;
+	width:100%;
+}
+
+#article-body {
+	padding:10px;
+	border-left:1px solid #D4DFD7;
+	border-right:1px solid #D4DFD7;
+	border-bottom:1px solid #D4DFD7;
+}
+
+#article-text {
+	position:relative;
+	width:100%;
+}
+
+#action-bar {
+	position:relative;
+	background-color:#D4DFD7;
+	font-size:13px;
+	height:30px;
+	z-index:10;
+}
+
+#article-tabs a {
+	color:#687F79;
+	margin:0px 3px 0px;
+	font-size:13px;
+	text-decoration:none;
+}
+
+
+#article-tabs a:hover {
+	color:#3B4744;
+}
+
+#article-tabs {
+	position:relative;
+	top:5px;
+	left:5px;
+}
+
+.tab-on, .more-tab-on {
+	position:relative;
+	background:url('http://images.wikia.com/openserving/psn/images/common/article_tab_on_left.gif?1') no-repeat right top;
+	float:left;
+	line-height:25px;
+	font-size:10px;
+}
+
+.tab-on span, .more-tab-on span {
+	background:url('http://images.wikia.com/openserving/psn/images/common/article_tab_on_right.gif?1') no-repeat left top;
+	cursor:pointer;
+	display:block;
+	float:left;
+	line-height:25px;
+	padding:0px 10px;
+}
+
+.tab-off, .more-tab-off {
+	position:relative;
+	background:url('http://images.wikia.com/openserving/psn/images/common/article_tab_off_left.gif?1') no-repeat right top;
+	float:left;
+	line-height:25px;
+	font-size:10px;
+}
+
+.tab-off span, .more-tab-off span {
+	background:url('http://images.wikia.com/openserving/psn/images/common/article_tab_off_right.gif?1') no-repeat left top;
+	cursor:pointer;
+	display:block;
+	float:left;
+	line-height:25px;
+	padding:0px 10px;
+}
+
+
+.tab-off img, .tab-on img, .more-tab-on img, .more-tab-off img {
+	vertical-align:baseline;
+}
+
+.tab-new {
+	color:#F15A3A !important;
+}
+
+#article-controls {
+	float:right;
+	position:relative;
+	padding:10px 10px 0px 0px;
+	z-index:15;
+}
+
+#article-controls a {
+	text-decoration:none;
+	font-size:11px;
+	color:#68BD46;
+}
+
+#article-controls a:hover {
+	color:#466C2C;
+}
+
+#article-controls img {
+	padding:0px 1px 0px 0px;
+	margin:-2px 0px 0px 0px;
+	vertical-align:middle;
+}
+
+
+.more-tab-off, .more-tab-on {
+	margin:0px 3px;
+	height:25px;
+	font-size:13px;
+}
+
+.more-tab-off {
+	color:#687F79;
+}
+
+.more-tab-on {
+	color:#3B4744;
+}
+
+.more-tab-off span, .more-tab-on span {
+	padding:5px 10px 0px 10px;
+	line-height:14px;
+}
+
+.article-more-actions {
+	background-color:#FFFFFF;
+	border-bottom:2px solid #EFF3F0;
+	border-left:1px solid #EFF3F0;
+	border-right:2px solid #EFF3F0;
+	padding:0px;
+	position:absolute;
+	right:-2px;
+	top:25px;
+	width:100%;
+	z-index:1000;
+}
+
+.article-more-actions a {
+	display:block;
+	border-bottom:1px dashed #EAF0F1;
+	padding:0px 0px 0px 10px;
+	line-height:14px;
+	padding:6px 0px 6px 8px;
+}
+
+/**Side Bar**/
+#side-bar {
+	position:absolute;
+	top:163px;
+	left:10px;
+	width:200px;
+	z-index:10;
+}
+
+#navigation {
+	margin:0px 0px 10px 0px;
+}
+
+#navigation-title {
+	font-size:17px;
+	color:#687F79;
+	line-height:30px;
+	font-weight:bold;
+	padding:0px 5px;
+	background:url('http://images.wikia.com/openserving/psn/images/common/new/navigation_top.gif?1') no-repeat scroll top left;
+}
+
+#search-box {
+	margin:0px 0px 5px 0px;
+	padding:0px 0px 0px 5px;
+}
+
+#search-title {
+	color:#333;
+	font-size:14px;
+	margin:0px 0px 5px 0px;
+}
+
+input.search-field {
+	float:left;
+	width:145px;
+	height:22px;
+	border:1px solid #D4DFD7;
+	color:#687F79;
+	padding:2px 0px 0px 3px;
+	margin:0px 0px 0px 0px;
+}
+
+input.search-button {
+	float:left;
+	margin:0px 0px 0px -5px;
+}
+
+/**MENU**/
+
+#menu {
+	border-left:1px solid #d4dfd7;
+	border-right:1px solid #d4dfd7;
+}
+
+.menu-item {
+	position:relative;
+	border-bottom:1px dashed #EAF0F1;
+	padding:4px 0px 4px 5px;
+	color:#333;
+	font-size:12px;
+	font-weight:bold;
+}
+
+.menu-item a {
+	color:#0099D9;
+	text-decoration:none;
+}
+
+.menu-item a:visited {
+	color:#0099D9;
+	text-decoration:none;
+}
+
+.menu-item a:hover {
+	color:#01405B;
+	text-decoration:none;
+}
+
+.menu-item .sub-menu-button {
+	position:absolute;
+	top:8px;
+	right:5px;
+}
+
+.sub-menu-item .sub-menu-button {
+	position:absolute;
+	right:5px;
+	top:7px;
+}
+
+.border-fix {
+	border-bottom:none !important;
+}
+
+#other-links {
+	font-size:11px;
+	padding:5px 7px;
+	background:url('http://images.wikia.com/openserving/psn/images/common/new/navigation_bottom.gif?1') no-repeat scroll bottom left;
+}
+
+#other-links-container {
+	background-color:#d4dfd7;
+}
+
+#other-links a {
+	float:left;
+	display:block;
+	color:#687F79;
+	text-decoration:none;
+	line-height:14px;
+	width:90px;
+}
+
+#other-links a:hover {
+	color:#3B4744;
+	text-decoration:underline;
+}
+
+.sub-menu {
+	position:absolute;
+	top:-2px;
+	right:-135px;
+	background-color:#fff;
+	border:1px solid #D4DFD7;
+	padding:5px 0px;
+	width:130px;
+	z-index:1000;
+}
+
+.sub-menu-item {
+	border-bottom:1px dashed #EAF0F1;
+	color:#333333;
+	font-size:12px;
+	padding:4px 10px;
+	position:relative;
+
+}
+
+.sub-sub-menu {
+	position:absolute;
+	top:-27px;
+	right:-300px;
+	background-color:#fff;
+	padding:5px 10px;
+	border:1px solid #D4DFD7;
+	width:130px;
+	z-index:1000;
+}
+
+.sub-sub-menu-item {
+	border-bottom:1px dashed #EAF0F1;
+	color:#333333;
+	font-size:12px;
+}
+
+/**Footer**/
+#footer-container {
+	position:relative;
+	background-color:#F7F9F8;
+	border-bottom:1px solid #D4DFD7;
+	border-left:1px solid #D4DFD7;
+	border-right:1px solid #D4DFD7;
+	height:140px;
+}
+
+#footer-container a, #footer-bottom a {
+	color:#0099D9;
+}
+
+#footer-container a:hover, #footer-bottom a:hover {
+	text-decoration:underline;
+}
+
+#footer-container h2 {
+	font-size:16px;
+	color:#687F79;
+	margin:0;
+	padding:0px 0px 5px 0px !important;
+	border-bottom:none;
+}
+
+#footer-container p {
+	margin:0px 0px 12px 0px;
+	font-size:11px;
+	line-height:12px;
+}
+
+#footer-actions {
+	float:left;
+	padding:0px 20px 0px 0px;
+	margin:10px 20px 10px 10px;
+	width:40%;
+	border-right:1px #dcdcdc solid;
+}
+
+#footer-actions a {
+	text-decoration:none;
+	font-size:13px;
+	display:block;
+}
+
+#footer-contributors {
+	float:left;
+	width:40%;
+	padding:10px 10px 10px 0px;
+}
+
+#footer-contributors br {
+	height:10px;
+}
+
+#footer-contributors a, #footer-contributors a:hover {
+	text-decoration:none;
+}
+
+#footer-contributors img {
+	border:1px solid #dcdcdc;
+	padding:1px;
+	background:#fff;
+	height:30px;
+	width:30px;
+}
+
+.editor-spacer {
+	height:3px;
+}
+
+#footer-bottom {
+	padding:5px;
+	text-align:center;
+}
+
+img.gnu-image {
+	display:block;
+	float:left;
+}
+
+img.right-image {
+	display:block;
+	float:right;
+}
+
+#footer-bottom a {
+	text-decoration:none;
+	margin:0px 5px 0px 0px;
+	font-size:12px;
+}
+
+/**Vote Box**/
+.vote-box {
+	background-color:#68BD46;
+	height:30px;
+	padding:13px 0px 0px;
+	text-align:center;
+	width:43px;
+}
+
+.vote-number {
+	color:#fff;
+	font-size:16px;
+	font-weight:bold;
+}
+
+.vote-action {
+	text-align:center;
+	width:43px;
+}
+
+.vote-action a {
+	font-weight:bold;
+	font-size:11px;
+	text-decoration:none;
+}
+
+.rating-score {
+	background-color:#68BD46;
+	color:#fff;
+	float:left;
+	font-size:14px;
+	font-weight:bold;
+	padding:1px 8px 0px;
+	margin:1px 7px 0px 0px;
+	text-align:center;
+}
+
+.ratings-top {
+	position:absolute;
+	top:37px !important;
+	right:0px !important;
+	width:100%;
+}
+
+.rating-section img {
+	vertical-align:text-bottom;
+}
+
+.rating-voted {
+	color:#666666;
+	line-height:10px;
+	font-size:9px;
+	position:absolute;
+	right:0px;
+}
+
+/**Halo Legacy**/
+#title-linktabs {
+	position:absolute;
+	top:5px;
+	right:0px;
+}
+
+#title-linktabs img {
+	margin:0px 0px 0px 3px;
+}
+
+/**COMMENTS**/
+.full {
+	width:530px;
+}
+
+.reply {
+	margin-left:70px !important;
+	width:460px;
+}
+
+.c-item {
+	position:relative;
+	border-bottom: 1px solid #dcdcdc;
+	padding:0px 0px 10px 0px;
+	margin:0px 0px 15px 0px;
+}
+
+.c-avatar {
+	position:absolute;
+	top:0px;
+	left:0px;
+}
+
+.c-avatar img {
+	padding:3px;
+	border:1px solid #dcdcdc;
+	background-color:#fff;
+}
+
+.c-container {
+	position:relative;
+	top:0px;
+	top:0px;
+	margin:0px 0px 0px 70px;
+}
+
+.c-user {
+	font-weight:bold;
+	position:relative;
+	margin:0px 0px 6px 0px;
+}
+
+.c-user a {
+	font-size:14px;
+	text-decoration:none;
+}
+
+.c-time {
+	font-size:10px;
+	color:#888;
+	line-height:11px !important;
+	font-weight:normal !important;
+}
+
+.c-user-level {
+	color:#666;
+	font-size:11px;
+	margin:0px 5px 0px 5px;
+}
+
+.c-comment {
+	overflow:auto;
+}
+
+.c-ignored {
+	color:#666;
+	font-size:11px;
+	padding:5px 0px 10px 0px;
+	margin:0px 0px 15px 0px;
+	border-bottom:1px solid #dcdcdc;
+}
+
+.c-ignored-links a {
+}
+
+.f-message {
+	width:460px;
+}
+
+.r-message {
+	width:360px;
+}
+
+.c-score {
+	position:absolute;
+	top:-2px;
+	right:0px;
+	font-size:11px;
+	padding-top:6px;
+	font-weight:bold;
+	z-index:4;
+}
+
+.c-score-title {
+	margin:0px 10px 0px 0px;
+} 
+
+.c-actions {
+	float:right;
+	font-size:10px;
+	margin:10px 0px 0px 0px;
+}
+
+.c-delete a {
+	color:red !important;
+}
+
+.c-score img {
+	vertical-align:middle;
+	margin:-5px 0px 0px 2px
+}
+
+.c-form-title {
+	color:#333;
+	font-weight:bold;
+	font-size:17px;
+	margin:0px 0px 5px 0px;
+}
+
+.c-form-message {
+	font-size:11px;
+	width:400px;
+	line-height:13px;
+	color:#666;
+	padding:5px 0px 10px 0px;
+}
+
+textarea#comment {
+	width:530px;
+}
+
+.c-form-button {
+	padding:10px 0px 0px;
+}
+
+.c-order {
+	padding:20px 0px;
+}
+
+.c-spy {
+	float:left;
+	font-size:10px;
+	margin:0px 0px 0px 10px;
+}
+
+.c-order-select {
+	float:left;
+}
+
+/* LISTPAGES */
+
+.listpages-left {
+	float:left;
+	border:1px solid #dcdcdc;
+	width:500px;
+}
+
+.listpages-link {
+	margin:0px;
+	padding:0px;
+}
+
+.listpages-item {
+	margin-top:10px;
+}
+
+.listpages-item a {
+	text-decoration:underline;
+	font-weight:bold;
+}
+
+.listpages-image {
+	float:left;
+	margin-right:10px;
+}
+
+.listpages-categories {
+	color:#78BA5D;
+	font-size:10px;
+	font-weight:bold;
+}
+
+.listpages-categories a {
+	color:#78BA5D;
+	font-size:10px;
+	text-decoration:none;
+	border-bottom:1px dotted #78BA5D;
+}
+
+.listpages-date {
+	color:#888;
+	font-size:10px;
+}
+
+.listpages-stats {
+	color:#666;
+	font-weight:bold;
+	font-size:11px;
+}
+
+.listpages-stats img {
+	vertical-align:middle;
+	margin:-2px 1px 0px 2px;
+}
+
+.listpages-votebox {
+	margin:0px 10px 3px 0px;
+	float:left;
+	text-align:center;
+	width:25px;
+}
+
+.rating-total {
+	color:#666;
+	font-weight:bold;
+	font-size:11px;
+	margin:3px 0px 0px 0px;
+}
+
+.listpages-votebox-number {
+	background-color:#89C46F;
+	color:#FFFFFF;
+	margin:0px 0px 2px 0px;
+	font-weight:bold;
+	padding:3px 0px;
+}
+
+.listpages-votebox-text {
+	margin:-1px 0px 0px 0px;
+	font-size:9px;
+	color:#777;
+	line-height:9px;
+}
+
+.listpages-commentbox-number {
+	background-color:orange;
+	color:#FFFFFF;
+	font-weight:bold;
+	padding:3px 0px;
+	margin:0px 0px 2px;
+}
+
+.listpages-blurb {
+	margin:0px 0px 2px 0px;
+}
+
+.listpages-blurb a {
+	font-size:11px;
+	text-decoration:underline;
+}
+
+.listpages-nav-buttons {
+	margin:10px 0px 0px 0px;
+}
+
+.listpages-blurb-size-small {
+	font-size:11px;
+	line-height:15px;
+}
+
+.listpages-blurb-size-medium {
+	font-size:12px;
+	line-height:16px;
+}
+
+.listpages-blurb-size-large {
+	font-size:13px;
+	line-height:17px;
+}
+
+.listpage-button {
+	background-color:#FAFAFA;
+	border:1px solid #DCDCDC;
+	color:#376EA6;
+	font-size:12px;
+	padding:3px;
+	margin:0px 3px 0px 0px;
+}
+
+.listpage-button-off {
+	background-color:#FAFAFA;
+	border:1px solid #DCDCDC;
+	color:#797979;
+	font-size:12px;
+	padding:3px;
+	margin:0px 3px 0px 0px;
+}
+
+.listpages-nav-buttons a {
+	margin:0px 5px 0px 0px;
+}
+
+/**EXTENSIONS CSS FIXES**/
+
+/** RATE IMAGE **/
+.image-categories-container h2 {
+	border-bottom:none;
+}
+
+.image-ratings {
+	padding:15px 0px 0px 0px;
+}
+
+.image-ratings h2 {
+	border-bottom:none;
+	margin:0px 0px 10px 0px !important;
+	padding:0px;
+}
+
+/**Polls**/
+.poll {
+	width:60%;
+	position:relative;
+}
+
+.poll-right {
+	padding:8px 0px 0px 0px;
+	width:30%;
+	position:relative;
+}
+
+.poll h1.pagetitle {
+	margin-bottom:15px;
+}
+
+.create-poll-top h1 {
+	padding:0px;
+	font-weight:bold;
+}
+
+.credit-box h1 {
+	border-bottom:none;
+	margin:0px !important;
+	padding:0px 0px 5px 0px;
+}
+
+#edit-image-frame {
+	margin:-10px 0px 0px 0px;
+}
+
+.credit-box-edit {
+	margin:0px 0px 15px 0px !important;
+}
+
+.credit-box-edit h1 {
+	margin:0px 0px 5px 0px !important;
+	padding:0px !important;
+	font-weight:bold;
+}
+
+/**Picture Game**/
+.pick-game-welcome-message h1, .uploadLeft h1, #vote-stats-text h1, #picGameVote h1, .edit-image-one h1, .credit-box-edit h1, .edit-image-text h2, .update-poll-left h1, .update-poll-right h1, .credit-box h1 {
+	border-bottom:none;
+	font-weight:bold;
+}
+
+.pick-game-welcome-message h1 {
+	padding:0px;
+}
+
+.imgContent {
+	width:55% !important;
+	min-width:55% !important;
+}
+
+.other-info {
+	width:30%;
+	margin:0px;
+}
+
+.imgTitle, .quizgame-title {
+	background:transparent none repeat scroll 0%;
+	border-bottom:1px solid #AAAAAA;
+	color:black;
+	font-weight:normal !important;
+	margin:0px 0px 15px 0px !important;
+	padding-bottom:0.17em;
+	padding-top:0.5em;
+	font-size:188% !important;
+	
+}
+
+
+/**Quiz**/
+.quizgame-right {
+	width:40%;
+	position:relative;
+	padding-top:8px;
+}
+
+.quizgame-left {
+	width:50%;
+	position:relative;
+}
+
+.quiz-leaderboard-top-links {
+	margin:10px 0px !important;
+}
+
+.user-rank p {
+	position:relative;
+}
+
+.user-rank h2 {
+	border-bottom:none;
+}
+
+.quiz-leaderboard-nav {
+	margin:15px 0px 0px !important;
+}
+
+.view-quizzes-top-links, .view-poll-top-links {
+	margin:10px 0px 10px !important;
+}
+
+.view-quizzes-top-links a, .view-poll-top-links a {
+	color:#002BB8;
+	font-weight:bold;
+	text-decoration:none;
+}
+
+.view-quizzes-text, .view-quizzes-user-name, .view-poll-text, .view-poll-user-name {
+	color:#002BB8;
+}
+
+.quizgame-create-form h1, .create-message h1, .create-poll-top h1, .create-poll-question-and-answer h1, .create-poll-image h1 {
+	border-bottom:none;
+	font-weight:bold;
+}
+
+.create-message, .create-poll-top {
+	margin-top:0px;
+}
+
+/**User Page**/
+#profile-top {
+	background-color:#fff;
+	border-bottom:1px solid #D4DFD7;
+	padding:10px 0px;
+	position:relative;
+}
+
+#points-level {
+	margin:0px;
+}
+
+.no-info-container {
+	background-color:#EFF3F0;
+}
+
+#user-page-left {
+	width:35%;
+}
+
+#user-page-right {
+	width:60%;
+}
+
+.relationship-action {
+	margin:15px 0px;
+}
+
+.back-links {
+	padding:15px 0px 0px 0px;
+}
+
+#honorific-level {
+	margin:0px 0px 0px 10px;
+}
+
+#profile-toggle-button {
+	position:absolute;
+	top:-29px;
+	right:0px;
+	background-color:orange;
+	padding:2px 10px;
+}
+
+#profile-toggle-button a {
+	font-weight:bold;
+	color:#fff;
+	text-decoration:none;
+}
+
+#profile-toggle-button a:hover {
+	color:#c07c00;
+}
+
+/**Gifts**/
+.g-give-all {
+	width:27%;
+}
+
+.g-blue {
+	color:#002BB8 !important;
+}
+
+.g-describe {
+	padding-top:15px;
+}
+
+/**Blog Page**/
+#blog-page-container h2 {
+	border-bottom:none;
+}
+
+#blog-page-left {
+	position:absolute;
+	right:0px;
+	top:0px;
+	width:20%;
+}
+
+#blog-page-middle {
+	margin:0px;
+	width:75%;
+	float:none;
+	overflow:visible;
+	padding:0px;
+}
+
+#blog-page-middle h1.page-title {
+	margin:0px !important;
+}
+
+#blog-page-middle #categories {
+	background-color:#F9F9F9;
+	border:1px solid #AAAAAA;
+	clear:both;
+	margin-top:1em;
+	padding:5px;
+}
+
+/**Board**/
+.user-board-top-links {
+	padding:15px 0px 0px 0px;
+}
+
+select#message_type {
+	vertical-align:middle;
+	margin:-1px 0px 0px 5px;
+}
+
+.user-board-message {
+	border:1px solid #D4DFD7;
+}
+
+.user-board-message-from {
+	background-color:#EFF3F0;
+}
+
+.user-page-message-form textarea {
+	width:80%;
+}
+
+#blast-friends-list div.blast-friend-unselected, #blast-friends-list div.blast-foe-unselected {
+	color:#002BB8;
+}
+
+/**Import Video/Image**/
+.loading-message {
+	background-color:#F15A3A;
+	position:absolute;
+	z-index:1000;
+	padding:1px 3px;
+}
+
+.import-subtitle {
+	margin:10px 0px 0px 0px;
+	font-size:12px;
+	font-weight:normal;
+}
+
+.image-options, .video-options {
+	padding:15px 0px;
+}
+
+.selected-photos, .selected-videos {
+	margin:20px 0px;
+}
+
+.video-options-button, .image-options-button {
+	background-color:orange;
+	border:1px solid orange;
+}
+
+.video-options-button a, .image-options-button a {
+	color:#fff;
+	font-weight:normal;
+}
+
+.video-options-button a:hover, .image-options-button a:hover {
+	text-decoration:none;
+}
+
+.import-left-content {
+	width:60%;
+}
+
+.import-search, .flickr-image-container, .youtube-video-container, .youtube-results {
+	width:100%;
+}
+
+/**Article Home**/
+.main-page-left {
+	width:60%;
+}
+
+.main-page-right {
+	width:35%;
+}
+
+/**Image Rating**/
+.image-rating-menu {
+	margin:15px 0px 0px 0px;
+}
+
+.category-button {
+	color:#002BB8;
+}
+
+.image-categories-add {
+	font-size:11px;
+}
+
+.featured-image {
+	margin-top:15px;
+	padding:5px;
+	width:65%;
+}
+
+.image-rating-row, .image-rating-row-bottom {
+	width:65%;
+}
+
+.image-rating-container {
+	width:40%;
+}
+
+.image-categories-container {
+	width:60%;
+}
+
+/**Top Lists**/
+.top-users {
+	margin:15px 0px 0px !important;
+}
+
+/**User Images**/
+.slide-show-top {
+	margin:10px 0px !important;
+}
+
+/**Top Awards**/
+.top-awards-navigation {
+	margin:15px 0px 0px !important;
+}
+
+/**Login**/
+.lr-top-link {
+	margin:15px 0px 5px !important;
+}
+
+.lr-right {
+	margin:15px 0px 0px !important;
+}
+
+/**Random Shit**/
+#userloginForm {
+	margin:15px 0px 0px 0px;
+}
+
+/**Random Featured user**/
+.random-featured-user {
+	font-size:11px;
+	color:#333;
+	line-height:14px;
+	margin:10px 0px 0px 0px;
+}
+
+.random-featured-user img {
+	float:left;
+	border:1px solid #dcdcdc;
+	padding:3px;
+	background-color:#fff;
+	display:block;
+	text-align:justify;
+	margin:0px 10px 0px 0px;
+}
+
+.random-featured-user-title {
+	margin:0px 0px 6px 0px;
+}
+
+.random-featured-user-title a {
+	text-decoration:none;
+	font-size:14px;
+	font-weight:bold;
+}
+
+.random-featured-user-about-title {
+	font-weight:bold;
+}
+
+/**Site Activity**/
+
+.mp-friends-activity {
+	padding:0px 0px 15px 0px;
+}
+
+.mp-friends-activity h2 {
+	letter-spacing:-1px;
+	color:#333;
+	font-size:18px;
+	margin:0px 0px 8px 0px !important;
+}
+
+.mp-activity-timestamp {
+	color:#999999;
+	font-size:9px;
+	overflow:hidden;
+	margin:0px 0px 0px 6px;
+}
+
+.mp-activity {
+	border-bottom:1px solid #dcdcdc;
+	padding:7px 0px;
+}
+
+.mp-activity-last {
+	padding:7px 0px 0px 0px;
+}
+
+.mp-activity img, .mp-activity-bottom img {
+	vertical-align:middle;
+	margin:0px 5px 0px 0px;
+}
+
+.mp-activity a, .mp-activity-bottom a {
+	text-decoration:none;
+}
+
+.item {
+	color:#666;
+	margin:2px 25px;
+}
+
+.item a {
+	color:#666;
+}
+
+.item img {
+	border:1px solid #dcdcdc;
+	padding:1px;
+	background-color:#fff;
+}
+
+#recent-all {
+	padding:0px 0px 25px 0px;
+}
+
+
+/**Casual Game**/
+
+.poll-unit-title {
+	font-size:12px;
+	line-height:13px;
+	font-weight:bold;
+	color:#777;
+	margin:0px 0px 8px 0px;
+}
+
+.poll-unit-choices a {
+	text-decoration:none;
+	font-weight:bold;
+	font-size:12px;
+	display:block;
+}
+
+.poll-unit-image {
+	margin:0px 0px 8px 0px;
+}
+
+.poll-unit-image img {
+	padding:3px;
+	background-color:#fff;
+	border:1px solid #dcdcdc;
+}
+
+.poll-unit-choices input {
+	margin:0px 5px 0px 0px;
+}
+
+.quiz-unit-image {
+	margin:8px 0px 0px 0px;
+}
+
+.quiz-unit-image img {
+	padding:3px;
+	background-color:#fff;
+	border:1px solid #dcdcdc;
+}
+
+.quiz-unit-title a {
+	font-size:13px;
+	text-decoration:none;
+	font-weight:bold;
+}
+
+.pg-unit-title {
+	font-size:12px;
+	line-height:13px;
+	font-weight:bold;
+	color:#777;
+	margin:0px 0px 8px 0px;
+}
+
+.pg-unit-pictures img {
+	float:left;
+	background-color:#fff;
+	border:1px solid #dcdcdc;
+	padding:3px;
+	margin:0px 3px 0px 0px;
+}
+
+/**Timeline**/
+
+.timeline-year-container {
+	padding:5px;
+	background-color:#EFF3F0;
+	margin-top:5px;
+	border:1px solid #D4DFD7;	
+}
+
+.timeline-year {
+	float:left;
+	width:100px;
+	font-size:20px;
+	font-weight:800;
+	color:#D4DFD7;	
+}
+
+.timeline-month-container {
+	float:left;
+}
+
+.timeline-month {
+	font-weight:800;
+	float:left;
+	width:100px;
+}
+
+.timeline-data-container {
+	float:left;
+}
+
+.timeline-data{
+	margin-bottom:3px;
+}
+
+.timeline-day{
+	font-style:italic;
+	padding-right:7px;
+}
+
+/**Edit Profile**/
+.profile-info {
+	background-color:#fff;
+	padding:25px 0px;
+}
+
+.profile-tab-bar {
+	padding:0px;
+}
+
+.profile-update-title {
+	color:#333;
+	padding:0px;
+}
+
+.profile-tab-bar {
+	margin-top:20px;
+	border-bottom:none;
+}
+
+.profile-tab {
+	background-color:#68BD46;
+	border:none;
+	margin:0px 5px 0px 0px;
+}
+
+.profile-tab-on {
+	background-color:#466C2C;
+	border:none;
+	margin:0px 5px 0px 0px;
+}
+
+.profile-tab-on a, .profile-tab a {
+	color:#fff;
+	font-weight:normal;
+	text-decoration:none;
+}
+
+.profile-tab a:hover {
+	color:#466C2C;
+}
+
+
+/**BOTTOM NAV**/
+.bottom-left-nav {
+	margin:15px 0px 0px 0px;
+}
+
+.game-unit-container, .bottom-left-nav-container {
+	padding:0px 0px 15px 0px;
+	margin:0px;
+	border-bottom:none;
+	overflow:hidden;
+}
+
+
+.game-unit-container h2, .bottom-left-nav-container h2 {
+	margin:0px 0px 5px 0px !important;
+	font-size:16px;
+	letter-spacing:-1px;
+	color:#333;
+	border-bottom:none;
+	font-weight:bold;
+}
+
+.game-unit-container a, .bottom-left-nav-container a {
+	color:#0099D9;
+	text-decoration:none;
+}
+
+.game-unit-container a:visited, .bottom-left-nav-container a:visited {
+	color:#0099D9;
+	text-decoration:none;
+}
+
+.game-unit-container a:hover, .bottom-left-nav-container a:hover {
+	color:#01405B;
+	text-decoration:none;
+}
+
+.bottom-left-nav-container .listpages-container a {
+	font-size:12px;
+	line-height:14px;
+	text-decoration:none;
+}
+
+.bottom-left-listpage-fix h2 {
+	margin-bottom:-5px !important;
+}
+
+/**Meet the Communtiy**/
+.random-users-avatars {
+	padding:0px 0px 0px 10px;
+}
+
+.random-users-avatars h2 {
+	border-bottom:none;
+	margin:0px 0px 0px 0px;
+	padding:7px 0px 8px 0px;
+}
+
+.random-users-avatars img {
+	border:1px solid #DCDCDC;
+	display:block;
+	float:left;
+	height:50px;
+	margin:0px 8px 8px 0px;
+	width:50px;
+	
+}
+
+/**MP SITE ACTIVITY**/
+.mp-site-activity h2 {
+	border-bottom:none;
+	padding:15px 0px 8px 0px;
+	margin:0px;
+}
+
+/**MP WELCOME USER**/
+.mp-welcome-logged-in {
+	margin:0px 0px 0px 15px;
+}
+
+.mp-welcome-logged-in h2 {
+	font-size:20px;
+	line-height:24px;
+	border-bottom:none;
+	padding:8px 0px 10px 0px !important;
+	margin:0px 0px 0px 0px !important;
+}
+
+.mp-welcome-info {
+	float:left;
+	width:240px;
+}
+
+.mp-welcome-image {
+	float:left;
+	margin:0px 10px 0px 0px;
+	text-align:center;
+}
+
+.mp-welcome-image a {
+	font-size:10px;
+	text-decoration:none;
+}
+
+.mp-welcome-image img {
+	background-color:#FFFFFF;
+	border:1px solid #DCDCDC;
+	padding:3px;
+}
+
+.mp-welcome-points {
+	float:left;
+	width:200px;
+}
+
+.points-and-level {
+	margin:0px 0px 3px;
+}
+
+.needed-points {
+	color:#666666;
+	font-size:10px;
+	line-height:12px;
+	padding:5px 0px 0px;
+}
+
+.total-points {
+	background-color:#CC0000;
+	color:#FFFFFF;
+	float:left;
+	font-size:12px;
+	font-weight:bold;
+	margin:0px 5px 0px 0px;
+	padding:1px 5px;
+	text-align:center;
+}
+
+.honorific-level {
+float:left;
+}
+
+/**Invite Your Friends**/
+.invite-email-title {
+	color:#333333;
+	font-size:14px;
+	font-weight:bold;
+	margin:0px 0px 5px;
+}
+
+.invite-email-submessage {
+	color:#666;
+	font-size:12px;
+}
+
+.email-field {
+	color:#666;
+	font-size:12px;
+	font-weight:bold;
+}
+
+.email-field input {
+	width:300px;
+}
+
+/**Comment Ignore List**/
+.comment_blocked_user {
+	margin:10px 0px 0px 0px;
+}
+
+/**Articles Home**/
+.main-page-left, .main-page-right {
+	padding:10px 0px 0px 0px;
+}
+
+.logged-in-articles h2, .side-articles h2 {
+	font-size:1.5em;
+	letter-spacing:0px;
+	color:#000;
+	font-weight:normal;
+}
+
+.rss-feed img {
+	margin:0px 3px 0px 0px;
+}
+
+/**User Activity*/
+.user-home-feed {
+	padding-top:15px;
+	width:60%;
+}
+
+.user-home-links-container {
+	padding-top:15px;
+}
+
+/**Video**/
+#wpVideo {
+	width:500px;
+}
+
+/**Awards**/
+.top-awards {
+	padding-top:15px;
+}
+
+.email-new-article-message {
+	padding:15px 0px 0px 0px;
+}
+
+#siteNotice {
+	border:none;
+}
+
+textarea#pageBody {
+	width:80%;
+}
+
+/** Game Profile */
+.game-profile-top {
+	background-color:#EFF3F0;
+	border:1px solid #D4DFD7;
+	padding:10px;
+	margin:0px 0px 15px 0px;
+	width:100%;
+}
+.game-profile-top table{
+	background-color:#EFF3F0;
+
+}
+.game-profile-information {
+	margin:0px 0px 0px 20px;
+	width:400px;
+}
+
+.game-profile-information td {
+	font-size:11px;
+	width:50%;
+}
+
+td.game-profile-image {
+	width:150px;
+	text-align:center;
+}
+
+.game-profile-image p {
+	margin:2px 0px 0px 0px !important;
+}
+
+.game-profile-image a {
+	text-decoration:none;
+}
+
+/* embeddable polls */
+.poll-embed-title{
+	font-size:14px;
+	font-weight:bold;
+}
+
+.poll-choice {
+	font-size:14px;
+	font-weight:bold;
+	margin:0px 0px 6px 0px;
+	color:#666;
+}
+
+.poll-choice-left {
+	margin:10px 0px 3px 0px;
+}
+
+.poll-choice-votes {
+	font-size:12px;
+	color:#000000;
+	font-weight:bold;
+}
+
+.image-choice-1 {
+	border-bottom:2px solid #000000;
+	border-right:2px solid #000000;
+	border-top:2px solid #82C3FF;
+	vertical-align:middle;
+}
+
+.image-choice-2 {
+	border-bottom:2px solid #000000;
+	border-right:2px solid #000000;
+	border-top:2px solid #F0B4AB;
+	vertical-align:middle;
+}
+
+.image-choice-3 {
+	border-bottom:2px solid #000000;
+	border-right:2px solid #000000;
+	border-top:2px solid #86ff80;
+	vertical-align:middle;
+}
+
+.image-choice-4 {
+	border-bottom:2px solid #000000;
+	border-right:2px solid #000000;
+	border-top:2px solid #f8ff80;
+	vertical-align:middle;
+}
+
+.image-choice-5 {
+	border-bottom:2px solid #000000;
+	border-right:2px solid #000000;
+	border-top:2px solid #dd80ff;
+	vertical-align:middle;
+}

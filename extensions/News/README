@@ -1,0 +1,220 @@
+--------------------------------------------------------------------------
+README for the News extension
+Copyright © 2007 Daniel Kinzler
+Licenses: GNU General Public Licence (GPL)
+          GNU Free Documentation License (GFDL)
+--------------------------------------------------------------------------
+
+The News extension allows a custom excerpt from Special:Recentchanges to be 
+included on a wiki page, or to be published as an RSS or Atom feed. 
+It supports several types of filtering as well as full custom formating of
+entries, using template syntax.
+
+<http://mediawiki.org/wiki/Extension:News>
+
+The News extension was originally written by Daniel Kinzler in 2007
+and is released under the GNU General Public Licence (GPL).
+
+Note that the functionality of this extension overlaps with the DynamicPageList
+and DynamicPageList2 extensions - however, this extension has a different focus.
+
+== Installing ==
+
+Copy the News directory into the extensions folder of your 
+MediaWiki installation. Then add the following line to your
+LocalSettings.php file (near the end):
+
+  require_once( "$IP/extensions/News/News.php" );
+
+== Usage ==
+
+The News extension prvodes provides three custom tags:
+* <news>: this includes a list of recent changes on the wiki page
+* <newsfeed>: this defines a news feed of recent changes; on the wiki page,
+  a preview is rendered, similar to the output of the <news> tag; the wiki
+  page then also supports the newsfeed action, which returns the feed in
+  RSS or Atom format.
+* <newsfeedlink>: this creates a link to a news feed defined using a
+  <newsfeed> tag. This is convenient for creating prominent links to the 
+  news feeds.
+
+=== Filtering and formatting ===
+
+To get the last 10 changes to your wiki on any wiki page, use the
+following:
+
+	<news/>
+
+You can provide options to controll the listing (for example, 20
+entries and no minor edits):
+
+	<news limit="20" nominor/>
+
+To define your own format for the generated list, you can provide a
+pattern that will be used for each entry:
+
+	<news limit="20" nominor>
+	* [[{{{pagename}}}]] ([[User:{{{user}}}]], {{{timeanddate}}})
+	</news>
+
+For a full list of options and template parameters, see below.
+
+The <newsfeed> tag supports the same optiosn for filtering and
+formatting as the <news> tag. For information on how to access a feed defined
+using <newsfeed>, see the section "Accessing Feeds" below.
+
+=== Options ===
+The following options (tag attributes) can be used to controll the output of the
+<news> and <newsfeed> tags:
+
+* unique        show only the most recent change to each page
+
+* limit         the maximum number of entries to show
+
+* categories    limit results to the given categories. Multiple categories can
+                be given separated by "|"; Intersections of categories are not
+                supported. Recursion into subcategories is not supported.
+
+* namespaces    limit results to the given namespaces. Multiple namespaces can
+                be given separated by "|"; you can use "0", "-" or "main" to
+                refer to the default namespace.
+
+* notalk        ignore all "talk" namespaces. Not used if the namespaces option
+                is given.
+
+* nominor       hide minor edits ("true" or "false", default is "false"). If
+                given, the edit shown may not refer to the current revision. 
+
+* nobot         hide bot edits ("true" or "false", default is "false"). If
+                given, the edit shown may not refer to the current revision. 
+
+* noanon        hide anonymous edits ("true" or "false", default is "false"). If
+                given, the edit shown may not refer to the current revision. 
+
+* onlypatrolled show only patrolled edits ("true" or "false", default is
+                "false"). If given, the edit shown may not refer to the current
+                revision. 
+
+* onlynew       show only page creations ("true" or "false", default is
+                "false"). If given, the edit shown may not refer to the current
+                revision. 
+
+* trigger       show only edits with the given trigger in the edit comment.
+                Used primarily to explicitely "publish" pages to a news box
+                or feed. If used, the resulting feed will also look slightly
+                different, focussing less on a single edit and more on the
+                page. Most importantly, the edit comment will not be show in
+                the feed, and a generic link to the page will be used, instead
+                of a permalink to a specific version (unless the permalink
+                option is also set).
+
+* permalinks    force the use of permalinks in feeds, even if a trigger is
+                used to publish pages. Per default, feeds that use a trigger
+                use generic page links instead of permalinks to specific
+                versions. Feeds not using a trigger always use permalinks.
+
+* prefix        wikitext to be inserted before the wikitext generated from the
+                template text is parsed. Can be used to make tables from news.
+
+* postfix       wikitext to be inserted after the wikitext generated from the
+                template text is parsed. Can be used to make tables from news.
+
+=== Parameters ===
+When giving a template text between the <news> tags, the following
+template-parameters are available (use them as {{{xxx}}}):
+
+* rawtime      raw timestamp - can be formated using the parser function "time",
+               e.g. {{#time:j. M.|{{{rawtime}}}}} 
+
+* date         date of the edit, formated per user preference
+
+* time         time of the edit, formated per user preference
+
+* timeanddate  time and date of the edit, formated per user preference
+
+* namespace    numeric namespace id, can be used with {{ns:{{{namespace}}}}}
+
+* title        canonical title (without namespace prefix)
+
+* pagename     full title, with namespace prefix
+
+* type         numerical change type (0 = edit, 1 = new, 2 = move, 3 = log,
+               4 = move-over)
+
+* minor        "true" for minor changes, blank otherwise
+
+* user         user name who made the entry
+
+* comment      edit summary (escaped wikitext, safe to use)
+
+* new_rev      revision id associated with this entry (or zero)
+
+* old_rev      revision id associated with the entry before this one (or zero)
+
+* diff         full diff link for the edit (or blank)
+
+* permalink    full url to the revision created by the edit (may not be the
+               current revision)
+
+* bot          "true" for bot edits, blank otherwise
+
+* new          "true" for newly created pages, blank otherwise
+
+* patrolled    "true" if the edit was patrolled, blank otherwise
+
+* old_len      page length before the edit
+
+* new_len      page length after the edit
+
+* content      the full content of the page
+
+* head         the page's content up to about 2KB of text, with smart cut-off.
+
+=== Accessing Feeds ===
+
+If the page Foo defines a feed using a <newsfeed> tag, that feed can be
+referenced by using feed=rss or feed=atom in the url respectively.
+
+So, if the URL path for page Foo is /wiki/Foo, you can use
+  /wiki/Foo?feed=rss 
+to get an RSS feed for that page. If the URL is /w/index.php?title=Foo,
+you would use 
+  /w/index.php?title=Foo&feed=rss
+
+You can conveniently create links to feeds using the <newsfeedlink> tag:
+For example, 
+  <newsfeedlink feed="Foo" format="rss">My Foo Feed</newsfeedlink>
+would generate a link to the news feed defined on page Foo using a
+<newsfeed> tag.
+
+You can also specify an icon to use in the link:
+  <newsfeedlink feed="Foo" format="rss" icon="rss.png">My Foo Feed</newsfeedlink>
+would generate a link that has the image "rss.png" before the link text
+(the icon option refers to the name of an image uploaded to the wiki). 
+  <newsfeedlink feed="Foo" format="rss" icon="rss.png|right">My Foo Feed</newsfeedlink>
+would generate a link that has the image to the right of the link text; and
+  <newsfeedlink feed="Foo" format="rss" icon="rss.png" title="RSS feed"/>
+generates a link that only shows the given icon. The title attribute specifies
+the tooltip to show when the mouse hovers over the link.
+
+Note that the link text may contain full wiki text, and the title-attribute may
+contain variables like {{PAGENAME}}.
+
+== Configuration ==
+Configuration settings to define in LocalSettings.php
+
+* $wgNewsFeedURLPattern: this defines the pattern used by the <newsfeedlink>
+tag to generate feed URLs. In the pattern, $1 will be replaced by the page title,
+and $2 will be replaced by the requested feed format.
+If you are using pretty URLs with $wgArticlePath set to $wgScript/$1 or /wiki/$1,
+etc, you can use the following for nicer feed URLs: 
+  $wgNewsFeedURLPattern = $wgArticlePath . '?feed=$2';
+(note that $wgArticlePath already contains $1 with the meaning "page title")
+If you want to use rewrite rules for canonical feed URLs, like /feed/Foo.rss,
+set
+  $wgNewsFeedURLPattern = '/feed/$1.$2';
+
+* $wgNewsFeedUserPattern: this defines the pattern used to generate author
+names in feed items. In the pattern, $1 is replaced by the user name. To 
+e.g. generate email-addresses at your site as author names, use
+  $wgNewsFeedUserPattern = '$1@' . $wgServerName;

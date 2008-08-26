@@ -1,0 +1,8 @@
+/*
+ * Stylesheet to fix the RTL view of the category tree.
+ */
+
+.CategoryTreeChildren {
+	margin-left: 0px;
+	margin-right: 1.5ex;
+}
