@@ -1082,6 +1082,11 @@ class SkinTemplate extends Skin {
 		$out = false;
 		wfRunHooks( 'SkinTemplateSetupPageCss', array( &$out ) );
 
+		# make a little CDATA block
+		if ( !empty($out) ) {
+			$out = '/*<![CDATA[*/' . $out . '/*]]>*/';
+		}
+
 		wfProfileOut( __METHOD__ );
 		return $out;
 	}
