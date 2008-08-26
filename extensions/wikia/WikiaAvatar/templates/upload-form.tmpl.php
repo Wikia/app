@@ -70,6 +70,11 @@
 	width: auto;
 }
 
+* html #bodyContent {
+	position: relative;
+	height: 1%;
+}
+
 .usermessage {
     margin:15px 0pt 1em 82px;
     padding:0.5em 0.6em;
