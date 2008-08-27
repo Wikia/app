@@ -17,27 +17,13 @@ class AdProviderGoogle implements iAdProvider {
 		return self::$instance;
 	}
 
-	public function getAd($slotname, $slot) {
 
-		return "<!-- Google Ad: $slotname, " . print_r($slot, true) . "-->";
-
-	}
-
-        public function getHeightWidthFromSize($size){
-                if (preg_match('/^([0-9]{2,4})x([0-9]{2,4})/', $size, $matches)){
-                        return array('width'=>$matches[1], 'height'=>$matches[2]);
-                } else {
-                        return false;
-                }
-        }
-
-
-
-        public function getAdTag(){
+        public function getAd($slotname, $slot){
                 global $AdEngine;
-                $dim=$this->getHeightWidthFromSize($this->slotInfo['size']);
+                $dim=AdEngine::getHeightWidthFromSize($slot['size']);
 
-                $out='<script type="text/javascript">
+                $out = "<!-- " . __CLASS__ . " slot: $slotname -->";
+                $out .= '<script type="text/javascript">/*<![CDATA[*/
                         bannerid=\'__GO____\';
                         
                         google_ad_client = "pub-4086838842346968";
@@ -55,15 +41,25 @@ class AdProviderGoogle implements iAdProvider {
                         google_color_url    = "002BB8";
                                 
                         //google_ad_channel = "90000000xx";
-                        google_hints= "' . addslashes($AdEngine->getSearchKeywords()) . '"; 
+                        google_hints= "' . addslashes($this->getGoogleHints()) . '"; 
                         //google_page_url = "";
                         //google_ui_features = "rc:6";
                         //document.write(\'<scr\' + \'ipt type="text/javascript"  src="http://pagead2.googlesyndication.com/pagead/show_ads.js"></scr\' + \'ipt>\');
-                        </script>
+                        /*]]>*/</script>
                         <script type="text/javascript"  src="http://pagead2.googlesyndication.com/pagead/show_ads.js"></script>';
-                $this->lastAdTag=$out;
                 return $out;
         }
 
+
+	/* Note: This function won't really do any good right now, because we don't have ads
+	 * on the search results pages 
+	 */
+	public function getGoogleHints(){
+		if(!empty($_GET['search'])){
+                        return $_GET['search'];
+                } else {
+                        return '';
+                }
+	}
 
 }

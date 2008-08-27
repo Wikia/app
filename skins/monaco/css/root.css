@@ -33,11 +33,6 @@ body.mainpage {
 	min-width: 990px;
 }
 .monaco_shrinkwrap {
-	/*
-	left: 50%;
-	margin-left: -485px;
-	width: 971px;
-	*/
 	position: relative;
 	width: 100%;
 }
@@ -81,3 +76,57 @@ body.mainpage .HOME_TOP_RIGHT_BOXAD, body.mainpage .FAST_HOME2 {
 * html .clearfix {height: 1%;}
 .clearfix {display: block;}
 /* End hide from IE-mac */
+
+
+/*** DART STYLES ***/
+#HOME_TOP_LEADERBOARD {
+	background: #00F;
+	margin-bottom: 10px;
+	margin-left: auto;
+}
+#HOME_TOP_RIGHT_BOXAD {
+	background: #00F;
+	float: right;
+	margin-left: 10px;
+	margin-bottom: 10px;
+}
+#HOME_LEFT_SKYSCRAPER_1 {
+	background: #00F;
+	margin: 0 auto 10px auto;
+}
+#HOME_LEFT_SKYSCRAPER_2 {
+	background: #00F;
+	margin: 0 auto;
+}
+
+#LEFT_SPOTLIGHT_1 {
+	background: #F00;
+}
+#LEFT_SKYSCRAPER_1 {
+	background: #F00;
+	margin: 0 auto 10px auto;
+}
+#LEFT_SKYSCRAPER_2 {
+	background: #F00;
+	margin: 0 auto;
+}
+#TOP_LEADERBOARD {
+	background: #F00;
+	margin-bottom: 10px;
+}
+#TOP_RIGHT_BOXAD {
+	background: #F00;
+	float: right;
+	margin-left: 10px;
+	margin-bottom: 10px;
+}
+
+#FOOTER_SPOTLIGHT_LEFT, #FOOTER_SPOTLIGHT_MIDDLE, #FOOTER_SPOTLIGHT_RIGHT {
+	background: #F00;
+	margin: 0 auto;
+}
+
+/* general ads styling */
+.wikia_ad {
+	z-index: 15;
+}

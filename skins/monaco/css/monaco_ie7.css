@@ -31,3 +31,18 @@ body.rtl #articleFooter .actions li div a {
 	left: -50%;
 }
 
+/* spotlights fix */
+#spotlight_footer {
+	height: 1px;
+	margin-bottom: 100px;
+}
+
+body {
+	position: relative;
+	z-index: 1;
+}
+
+.wikia_spotlight {
+	z-index: -1;
+}
+

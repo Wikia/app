@@ -31,11 +31,11 @@ INSERT INTO ad_slot VALUES (NULL, 'TOP_LEADERBOARD', 'monaco', '728x90', 1, 'Yes
 INSERT INTO ad_slot VALUES (NULL, 'TOP_RIGHT_BOXAD', 'monaco', '300x250', 1, 'Yes');
 INSERT INTO ad_slot VALUES (NULL, 'LEFT_SKYSCRAPER_1', 'monaco', '160x600', 1, 'Yes');
 INSERT INTO ad_slot VALUES (NULL, 'LEFT_SKYSCRAPER_2', 'monaco', '160x600', 1, 'Yes');
-INSERT INTO ad_slot VALUES (NULL, 'FOOTER_BOXAD', 'monaco', '300x250', 1, 'Yes');
-INSERT INTO ad_slot VALUES (NULL, 'LEFT_SPOTLIGHT_1', 'monaco', '200x75', 1, 'Yes');
-INSERT INTO ad_slot VALUES (NULL, 'FOOTER_SPOTLIGHT_LEFT', 'monaco', '200x75', 1, 'Yes');
-INSERT INTO ad_slot VALUES (NULL, 'FOOTER_SPOTLIGHT_MIDDLE', 'monaco', '200x75', 1, 'Yes');
-INSERT INTO ad_slot VALUES (NULL, 'FOOTER_SPOTLIGHT_RIGHT', 'monaco', '200x75', 1, 'Yes');
+INSERT INTO ad_slot VALUES (NULL, 'FOOTER_BOXAD', 'monaco', '300x250', 3, 'Yes');
+INSERT INTO ad_slot VALUES (NULL, 'LEFT_SPOTLIGHT_1', 'monaco', '200x75', 2, 'Yes');
+INSERT INTO ad_slot VALUES (NULL, 'FOOTER_SPOTLIGHT_LEFT', 'monaco', '200x75', 2, 'Yes');
+INSERT INTO ad_slot VALUES (NULL, 'FOOTER_SPOTLIGHT_MIDDLE', 'monaco', '200x75', 2, 'Yes');
+INSERT INTO ad_slot VALUES (NULL, 'FOOTER_SPOTLIGHT_RIGHT', 'monaco', '200x75', 2, 'Yes');
 
 -- Allow wikis to override slots
 DROP TABLE IF EXISTS ad_slot_override;
