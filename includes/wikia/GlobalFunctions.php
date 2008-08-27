@@ -493,13 +493,7 @@ function wfGetDBExt($db = DB_MASTER) {
  */
 function wfWaitForSlavesExt( $maxLag ) {
 	if( $maxLag ) {
-		if( class_exists('ExternalStoreDB') ) {
-			$external = new ExternalStoreDB();
-			$lb = $external->getLoadBalancer( 'archive1' );
-		} else {
-			return null;
-		}
-
+		$lb = wfGetLBFactory()->getExternalLB( 'archive1' );
 		list( $host, $lag ) = $lb->getMaxLag();
 		while( $lag > $maxLag ) {
 			$name = @gethostbyaddr( $host );
