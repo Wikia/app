@@ -3,10 +3,8 @@
 	border: 1px solid #AAA;
 	height: 1%;
 	margin: 0 5px 0 216px;
-	/*margin: -36px 5px 10px 22em;*/
 	position: relative;
 	top: -176px;
-	z-index: 5;
 	overflow: visible;
 }
 

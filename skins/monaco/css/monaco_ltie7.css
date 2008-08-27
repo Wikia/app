@@ -62,20 +62,16 @@ body.ltr #articleFooter ul.actions li div {
 	margin: 0 0 0 20px;
 }
 
-
-/* ads fix */
-#monaco_shrinkwrap_main,
-#navigation_widget,
-#navigation,
-#navigation .menu-item {
-	z-index: 20;
-	position: relative;
+/* spotlights fix */
+#spotlight_footer {
+	height: 1px;
+	margin-bottom: 100px;
 }
 
 /* user menu fix */
 #monaco_shrinkwrap_main,
 #wikia_page {
-	z-index: 1 !important;
+	z-index: 10 !important;
 }
 
 /* widget dashboard (#2397) */
@@ -105,6 +101,12 @@ body.ltr #articleFooter ul.actions li div {
 	left: -50%;
 }
 
-.mask {
-	position: absolute;
+/* ads */
+#FOOTER_SPOTLIGHT_LEFT, #FOOTER_SPOTLIGHT_MIDDLE, #FOOTER_SPOTLIGHT_RIGHT {
+	visibility: hidden;
+}
+
+#spotlight_footer {
+	height: 1px;
+	margin-bottom: 100px;
 }

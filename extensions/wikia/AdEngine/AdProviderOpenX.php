@@ -15,47 +15,98 @@ class AdProviderOpenX implements iAdProvider {
 		return self::$instance;
 	}
 
-	private $zoneIds = array(	'HOME_TOP_LEADERBOARD' => 626,
-								'HOME_TOP_RIGHT_BOXAD' => 627,
-								'HOME_LEFT_SKYSCRAPER_1' => 628,
-								'HOME_LEFT_SKYSCRAPER_2' => 629,
-								'TOP_LEADERBOARD' => 630,
-								'TOP_RIGHT_BOXAD' => 631,
-								'LEFT_SKYSCRAPER_1' => 632,
-								'LEFT_SKYSCRAPER_2' => 633,
-								'FOOTER_BOXAD' => 634,
-								'LEFT_SPOTLIGHT_1' => 635,
-								'FOOTER_SPOTLIGHT_LEFT' => 636,
-								'FOOTER_SPOTLIGHT_MIDDLE' => 637,
-								'FOOTER_SPOTLIGHT_RIGHT' => 638);
+	// TODO, get these out of code and configurable
+	private $zoneIds = array(
+		'HOME_TOP_LEADERBOARD' => 626,
+		'HOME_TOP_RIGHT_BOXAD' => 627,
+		'HOME_LEFT_SKYSCRAPER_1' => 628,
+		'HOME_LEFT_SKYSCRAPER_2' => 629,
+		'TOP_LEADERBOARD' => 630,
+		'TOP_RIGHT_BOXAD' => 631,
+		'LEFT_SKYSCRAPER_1' => 632,
+		'LEFT_SKYSCRAPER_2' => 633,
+		'FOOTER_BOXAD' => 634
+	);
+
+	private $spotlightZones = array(
+		'LEFT_SPOTLIGHT_1', 
+		'FOOTER_SPOTLIGHT_LEFT',
+		'FOOTER_SPOTLIGHT_MIDDLE',
+		'FOOTER_SPOTLIGHT_RIGHT'
+	);
+
+	private $spotlightCategoryZones = array(
+		'2' => 635, // Gaming
+		'3' => 636, // Entertainment
+		'5' => 637, 
+		'9' => 637, 
+		'12' => 637, 
+		'15' => 637, 
+		'16' => 637, 
+		'18' => 637, 
+		'19' => 637, 
+		'default' => 638
+	);
 
 	public function getAd($slotname, $slot) {
 
-		if(empty($this->zoneIds[$slotname])) {
-			throw new Exception();
-		}
 
-		$zoneId = $this->zoneIds[$slotname];
+		global $wgCatId;
+		$zoneId = $this->getZoneId($slotname, @$wgCatId);
+
+		if(empty($zoneId)){
+			// Don't throw an exception. Under no circumstances should an ad failing
+			// prevent the page from rendering.
+                        $NullAd = new AdProviderNullAd("Invalid slotname, no zoneid for $slotname in " . __CLASS__);
+                        return $NullAd->getAd($slotname, $slot);
+		}
 
 		$adtag = <<<EOT
 <!-- AdProviderOpenX slot: $slotname zoneid: $zoneId  -->
-<script type='text/javascript'><!--//<![CDATA[
-   var m3_u = (location.protocol=='https:'?'https://wikia-ads.wikia.com/www/delivery/ajs.php':'http://wikia-ads.wikia.com/www/delivery/ajs.php');
-   var m3_r = Math.floor(Math.random()*99999999999);
-   if (!document.MAX_used) document.MAX_used = ',';
-   document.write ("<scr"+"ipt type='text/javascript' src='"+m3_u);
-   document.write ("?zoneid=$zoneId");
-   document.write ('&amp;cb=' + m3_r);
-   if (document.MAX_used != ',') document.write ("&amp;exclude=" + document.MAX_used);
-   document.write ("&amp;loc=" + escape(window.location));
-   if (document.referrer) document.write ("&amp;referer=" + escape(document.referrer));
-   if (document.context) document.write ("&context=" + escape(document.context));
-   if (document.mmm_fo) document.write ("&amp;mmm_fo=1");
-   document.write ("'><\/scr"+"ipt>");
-//]]>--></script>
+<script type='text/javascript'>/*<![CDATA[*/
+   var source = Array();
+   source.push('slot=$slotname');
+   source.push('catid=' + wgCatId);
+   source.push('lang=' + wgContentLanguage);
+
+  document.write('<scr'+'ipt type="text/javascript">');
+  document.write('var base_url = "http://wikia-ads.wikia.com/www/delivery/ajs.php";');
+  document.write('base_url += "?loc=" + escape(window.location);');
+  document.write('if(typeof document.referrer != "undefined") base_url += "&referer=" + escape(document.referrer);');
+  document.write('if(typeof document.context != "undefined") base_url += "&context=" + escape(document.context);');
+  document.write('if(typeof document.mmm_fo != "undefined") base_url += "&mmm_fo=1";');
+  document.write('base_url += "&zoneid=$zoneId";');
+  document.write('base_url += "&cb=" + Math.floor(Math.random()*99999999999);');
+  document.write('if(typeof document.MAX_used != "undefined" && document.MAX_used != ",") base_url += "&exclude=" + document.MAX_used;');
+  document.write('base_url += "&source='+source.join(';')+'";');
+  document.write('base_url += "&block=1";');
+  document.write('</scr'+'ipt>');
+  document.write('<scr'+'ipt type="text/javascript" src="'+base_url+'"></scr'+'ipt>');
+
+/*]]>*/</script>
 EOT;
 		return $adtag;
 
+	}
+
+
+	// Logic for zoneids documented here: http://staff.wikia-inc.com/wiki/Ad_Slots
+	public function getZoneId($slotname, $catid){
+
+		if (isset($this->zoneIds[$slotname])){
+			return $this->zoneIds[$slotname];
+		} else if (in_array($slotname, $this->spotlightZones)){
+
+			// For spotlights, they all have the same zoneid, determined by category.
+			if (isset($this->spotlightCategoryZones[$catid])){
+				return $this->spotlightCategoryZones[$catid];
+			} else {
+				return $this->spotlightCategoryZones['default'];
+			}
+
+		} else {
+			return null;
+		}
 	}
 
 }
