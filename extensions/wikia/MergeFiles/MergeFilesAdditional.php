@@ -104,6 +104,8 @@ $MF['monaco_loggedin_js']['source'] = array(
 	'common/yui_extra/tools-min.js',
 	'common/yui_extra/carousel-min.js',
 
+	'common/jquery-1.2.6.min.js',
+
 	'common/jiffy.js',
 	'common/ajax.js',
 	'common/urchin.js',
@@ -132,6 +134,8 @@ $MF['monaco_non_loggedin_js']['source'] = array(
 	'common/yui_2.5.2/tabview/tabview.js',
 	'common/yui_extra/tools-min.js',
 
+	'common/jquery-1.2.6.min.js',
+
 	'common/jiffy.js',
 	'common/ajax.js',
 	'common/urchin.js',
@@ -153,7 +157,6 @@ $MF['monaco_non_loggedin_js']['source'] = array_merge($MF['monaco_non_loggedin_j
 $MF['monaco_css']['source'] = array(
 	'common/yui_2.5.2/container/assets/container.css',
 	'common/yui_2.5.2/tabview/assets/tabview.css',
-	'common/yui_2.5.2/logger/assets/skins/sam/logger.css',
 	'common/shared.css',
 	'monaco/css/monobook_modified.css',
 	'monaco/css/reset_modified.css',
