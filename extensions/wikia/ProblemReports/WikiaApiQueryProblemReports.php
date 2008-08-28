@@ -778,11 +778,9 @@ class WikiaApiQueryProblemReports extends WikiaApiQuery {
     static function makeActionText( $key, $title, $params, $skin )
     {
 		global $wgLogActions, $wgOut, $wgTitle;
-		
+
 		wfProfileIn(__METHOD__);
-	
-		$titleLink = '[['.$title->getNsText().':'.$title->getPrefixedText().']]';
-		
+
 		$problemTypes = array (
 			wfMsg('pr_what_problem_spam_short'),
 			wfMsg('pr_what_problem_vandalised_short'),
@@ -799,6 +797,9 @@ class WikiaApiQueryProblemReports extends WikiaApiQuery {
 				if (empty($params[1])) {
 					$params = explode("\n", $params[0]);
 				}
+
+				$titleLink = '[['.$title->getNsText().':'.$title->getPrefixedText().']]';
+
 				$rt = wfMsg( $wgLogActions[$key], $titleLink, '[[Special:ProblemReports/'.$params[1].'|#'.$params[1].']]' );
 				break;
 		
