@@ -9,31 +9,40 @@ var DDM = YAHOO.util.DragDropMgr;
 var value = null;
 Event.onDOMReady(function() {
 	searchField = Dom.get('search_field');
+
+	defaultValue = searchField.title;
+	doBlur = true;
+
 	if (searchField.value == '') {
-		value = searchField.value = searchField.title;
+		searchField.value = searchField.title;
 	}
 	else if (searchField.value != searchField.title) {
-		value = searchField.title;
 		Dom.addClass(searchField, 'field_active');
-	}
-	else {
-		value = searchField.title;
+		doBlur = false; // allow user to continue typing after page is loaded
 	}
 	Event.addListener(searchField, 'click', function() {
-		if(value == null || value == searchField.value) {
+		if(defaultValue == null || defaultValue == searchField.value) {
 			searchField.value = '';
 			Dom.addClass(searchField, 'field_active');
 		}
 		searchField.focus();
 	});
+	// solves strange issue described in #3083
+	Event.addListener(searchField, 'keypress', function() {
+		if(defaultValue == null || defaultValue == searchField.value) {
+			searchField.value = '';
+			Dom.addClass(searchField, 'field_active');
+		}
+	});
+
 	Event.addListener(searchField, 'blur', function() {
 		if(searchField.value == '') {
-			searchField.value = value;
+			searchField.value = defaultValue;
 			Dom.removeClass(searchField, 'field_active');
 		}
 	});
 	Event.addListener('search_button', 'click', function() {
-		if (searchField.value == value) {
+		if (searchField.value == defaultValue) {
 			searchField.value = '';
 		}
 
@@ -41,8 +50,10 @@ Event.onDOMReady(function() {
 	});
 
 	// #3083: blur() is buggy in IE
-	searchField.disabled = true;
-	searchField.disabled = false;
+	if (doBlur) {
+		searchField.disabled = true;
+		searchField.disabled = false;
+	}
 
 	var submitAutoComplete_callback = {
 		success: function(o) {
