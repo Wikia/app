@@ -16,14 +16,12 @@ TieDivLibrary = new function() {
 			if (YAHOO.util.Dom.getStyle(items[i][0], "float") == 'right') {
 				jQuery("#" + items[i][0] + "_load").css({
 					position: "absolute", 
-					zIndex: 100, 
 					top: jQuery("#" + items[i][0]).offset().top, 
 					right: YAHOO.util.Dom.getViewportWidth() - jQuery("#" + items[i][0]).offset().left - jQuery("#" + items[i][0]).width()
 				});
 			} else {
 				jQuery("#" + items[i][0] + "_load").css({
 					position: "absolute", 
-					zIndex: 100, 
 					top: jQuery("#" + items[i][0]).offset().top, 
 					left: jQuery("#" + items[i][0]).offset().left
 				});
