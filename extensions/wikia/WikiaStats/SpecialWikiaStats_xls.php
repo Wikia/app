@@ -9,8 +9,7 @@
 
 class WikiaStatsXLS {
 	//--
-	function __construct()
-	{
+	function __construct() {
 		//
 	}
 	
@@ -19,36 +18,30 @@ class WikiaStatsXLS {
 		return;
 	}
 
-	private function setXLSFileEnd() 
-	{
-		echo pack("ss", 0x0A, 0x00);
-		return;
+	private function setXLSFileEnd() {
+		exit(pack("ss", 0x0A, 0x00));
 	}
 
-	private function mergeXLSColsRows($row, $col, $to_row, $to_col)
-	{
+	private function mergeXLSColsRows($row, $col, $to_row, $to_col) {
 		echo pack("ss", 0xE5, 0x0A);
 		echo pack("sssss", 1, $row, $to_row, $col, $to_col);
 		return;
 	}
 
-	private function writeXLSNumber($row, $col, $value) 
-	{
+	private function writeXLSNumber($row, $col, $value) {
 		echo pack("sssss", 0x203, 14, $row, $col, 0x0);
 		echo pack("d", $value);
 		return;
 	}
 
-	private function writeXLSLabel($row, $col, $value ) 
-	{
+	private function writeXLSLabel($row, $col, $value ) {
 		$len = strlen($value);
 		echo pack("ssssss", 0x204, 8 + $len, $row, $col, 0x0, $len);
 		echo $value;
 		return;
 	}
 
-	public function setXLSHeader($dbname)
-	{
+	public function setXLSHeader($dbname) {
 		header("HTTP/1.0 200 OK");
 		header("Pragma: public");
 		header("Expires: 0");
@@ -60,29 +53,24 @@ class WikiaStatsXLS {
 		header("Content-Transfer-Encoding: binary ");
 	}
 	
-	public function getXLSCityDBName($city_id)
-	{
+	public function getXLSCityDBName($city_id) {
 		$dbname = WikiFactory::IDtoDB($city_id);
-		if (empty($dbname))
-		{
+		if (empty($dbname)) {
 			$dbname = sprintf(DEFAULT_WIKIA_XLS_FILENAME, intval($city_id));
 		}
 		#---
 		return $dbname;
 	}
 	
-	public function generateEmptyFile()
-	{
+	public function generateEmptyFile()	{
 		$dbname = sprintf(DEFAULT_WIKIA_XLS_FILENAME, intval($cityId));
 		$this->setXLSHeader($dbname);
 		#----
 		$this->setXLSFileBegin();
 		$this->setXLSFileEnd();
-		exit;
 	}
 	
-	public function makeMainStats($data, &$columns, &$monthlyStats, $city_id)
-	{
+	public function makeMainStats($data, &$columns, &$monthlyStats, $city_id) {
 		global $wgUser;
 		
 		#----
@@ -120,7 +108,6 @@ class WikiaStatsXLS {
 		// second row
 		// date
 		$this->writeXLSLabel(4, 0, '');
-		$this->mergeXLSColsRows(4, 0, 5, 0);
 		// wikians
 		$this->writeXLSLabel(4,1,wfMsg('wikiastats_total'));
 		$this->mergeXLSColsRows(4, 1, 5, 1);
@@ -279,10 +266,9 @@ class WikiaStatsXLS {
 			}
 		}
 		
-		$this->setXLSFileEnd();
 		unset($columns);
 		unset($monthlyStats);
-		exit;
+		$this->setXLSFileEnd();
 	}
 	
 	public function makeDistribStats($city_id, &$statsData)
@@ -299,7 +285,6 @@ class WikiaStatsXLS {
 		 * table header
 		 */
 		$this->writeXLSLabel(3, 0, wfMsg('wikiastats_distrib_edits'));
-		$this->mergeXLSColsRows(3, 0, 4, 0);
 		$this->writeXLSLabel(3, 1, wfMsg('wikiastats_distrib_wikians'));
 		$this->mergeXLSColsRows(3, 1, 3, 2);
 		$this->writeXLSLabel(3, 3, wfMsg('wikiastats_distrib_edits_total'));
@@ -313,8 +298,7 @@ class WikiaStatsXLS {
 		 * data
 		 */
 		$row = 5;
-		foreach ($statsData as $id => $data)
-		{
+		foreach ($statsData as $id => $data) {
 			$col = 0;
 			$this->writeXLSNumber($row,$col,$data['edits']);$col++;
 			$this->writeXLSNumber($row,$col,$data['wikians']);$col++;
@@ -326,7 +310,6 @@ class WikiaStatsXLS {
 		#---
 		unset($statsData);
 		$this->setXLSFileEnd();
-		exit;
 	}
 	
 	public function makeActiveWikiansStats($city_id, &$active, &$absent)
@@ -342,8 +325,7 @@ class WikiaStatsXLS {
 		$this->mergeXLSColsRows(1, 0, 1, 11);
 
 		$row = 3;
-		if (!empty($active))
-		{
+		if (!empty($active)) {
 			/*
 			 * header
 			 */
@@ -353,7 +335,6 @@ class WikiaStatsXLS {
 			$this->mergeXLSColsRows(4, 0, 4, 11);
 			// first row of table
 			$this->writeXLSLabel(6,0,wfMsg('wikiastats_username'));
-			$this->mergeXLSColsRows(6, 0, 9, 0);
 			$this->writeXLSLabel(6,1,wfMsg('wikiastats_edits'));
 			$this->mergeXLSColsRows(6, 1, 6, 6);
 			$this->writeXLSLabel(6,7,wfMsg('wikiastats_first_edit'));
@@ -389,15 +370,11 @@ class WikiaStatsXLS {
 			$this->writeXLSLabel(9,2,wfMsg('wikiastats_prev_rank_xls'));
 
 			$row = 10;
-			foreach ($active as $rank => $data)
-			{
+			foreach ($active as $rank => $data) {
 				$rank_change = $data['rank_change'];
-				if ($data['rank_change'] > 0)
-				{
+				if ($data['rank_change'] > 0) {
 					$rank_change = "+".$rank_change;
-				}
-				elseif ($data['rank_change'] == 0)
-				{
+				} elseif ($data['rank_change'] == 0) {
 					$rank_change = "...";
 				}	
 				#---
@@ -421,16 +398,14 @@ class WikiaStatsXLS {
 				
 				$row++;
 			}
-			if (!empty($active))
-			{
+			if (!empty($active)) {
 				$row++;
 			}
 		}
 		
 		// absent wikians
 		$row++;
-		if (!empty($absent))
-		{
+		if (!empty($absent)) {
 			/*
 			 * header
 			 */
@@ -439,7 +414,6 @@ class WikiaStatsXLS {
 			$row = $row + 2;
 			// first row of table
 			$this->writeXLSLabel($row,0,wfMsg('wikiastats_username'));
-			$this->mergeXLSColsRows($row, 0, $row+1, 0);
 			$this->writeXLSLabel($row,1,wfMsg('wikiastats_edits'));
 			$this->mergeXLSColsRows($row, 1, $row, 2);
 			$this->writeXLSLabel($row,3,wfMsg('wikiastats_first_edit'));
@@ -456,8 +430,7 @@ class WikiaStatsXLS {
 			$this->writeXLSLabel($row,6,wfMsg('wikiastats_days_ago'));
 
 			$row++;
-			foreach ($absent as $rank => $data)
-			{
+			foreach ($absent as $rank => $data) {
 				#---
 				$outFirstEdit = substr(wfMsg(strtolower(date("F",$data['first_edit']))), 0, 3) . " " . date("d",$data['first_edit']) .", ".date("Y",$data['first_edit']);
 				#---
@@ -478,7 +451,6 @@ class WikiaStatsXLS {
 		unset($active);
 		unset($absent);
 		$this->setXLSFileEnd();
-		exit;
 	}
 	
 	public function makeWikiaAnonUsersStats($city_id, &$anonData)
@@ -496,13 +468,11 @@ class WikiaStatsXLS {
 		$this->mergeXLSColsRows(3, 0, 3, 7);
 
 		$row = 5;
-		if (!empty($anonData))
-		{
+		if (!empty($anonData)) {
 			/*
 			 * Header
 			 */
 			$this->writeXLSLabel($row,0,wfMsg('wikiastats_username'));
-			$this->mergeXLSColsRows($row, 0, $row+1, 0);
 			$this->writeXLSLabel($row,1,wfMsg('wikiastats_edits'));
 			$this->mergeXLSColsRows($row, 1, $row, 2);
 			$this->writeXLSLabel($row,3,wfMsg('wikiastats_first_edit'));
@@ -518,8 +488,7 @@ class WikiaStatsXLS {
 			$this->writeXLSLabel($row,6,wfMsg('wikiastats_days_ago'));
 			$row++;
 			$rank = 0;
-			foreach ($anonData as $id => $data)
-			{
+			foreach ($anonData as $id => $data) {
 				$rank++;
 				#---
 				$outFirstEdit = substr(wfMsg(strtolower(date("F",$data['min']))), 0, 3) . " " . date("d",$data['min']) .", ".date("Y",$data['min']);
@@ -541,7 +510,6 @@ class WikiaStatsXLS {
 		
 		unset($anonData);
 		$this->setXLSFileEnd();
-		exit;
 	}
 	
 	public function makeArticleSizeStats($city_id, &$articleCount, &$articleSize)
@@ -561,41 +529,33 @@ class WikiaStatsXLS {
 		 */
 		$row = 3;
 		$this->writeXLSLabel($row,0,wfMsg('wikiastats_date'));
-		$this->mergeXLSColsRows($row, 0, $row+1, 0);
 		$this->writeXLSLabel($row,1,wfMsg('wikiastats_articles_text') . "(%)");
 		$this->mergeXLSColsRows($row, 1, $row, count($articleSize));
 		$row++;
 		// second line
 		$col = 1;
-		foreach ($articleSize as $s => $values)
-		{
+		foreach ($articleSize as $s => $values) {
 			$text = "< ".$s." B";
-			if ($s >= 1024)
-			{
-				$text = "< ".sprintf ("%.0f", $s/1024)." kB";
-			}
+			if ($s >= 1024) $text = "< ".sprintf ("%.0f", $s/1024)." kB";
 			$this->writeXLSLabel($row,$col,$text);
 			$col++;
 		}
 
 		$row++;
-		foreach ($articleCount as $date => $monthStats)
-		{
+		foreach ($articleCount as $date => $monthStats) {
 			$col = 0;
 			$cntAll = intval($monthStats['count']);
 			#---
 			$dateArr = explode("-",$date);
 			$stamp = mktime(0,0,0,$dateArr[1],1,$dateArr[0]);
 			$out = substr(wfMsg(strtolower(date("F",$stamp))), 0, 3) . " " . $dateArr[0];
-			if ($date == sprintf("%s-%s", date("Y"), date("m")))
-			{
+			if ($date == sprintf("%s-%s", date("Y"), date("m"))) {
 				$out = substr(wfMsg(strtolower(date("F",$stamp))), 0, 3) . " " . date("d") . ", " . $dateArr[0];
 			}
 			#---
 			$this->writeXLSLabel($row,$col,$out);
 			#---
-			foreach ($articleSize as $s => $values)
-			{
+			foreach ($articleSize as $s => $values) {
 				$col++;
 				$cntDate = array_key_exists($date, $values) ? intval($values[$date]['count']) : 0;
 				$rowValue = sprintf("%0.1f", ($cntDate * 100) / $cntAll);
@@ -607,7 +567,6 @@ class WikiaStatsXLS {
 		unset($articleCount);
 		unset($articleSize);
 		$this->setXLSFileEnd();
-		exit;
 	}
 	
 	public function makeDBNamespaceStats($city_id, &$namespaceCount, &$nspaces, &$allowedNamespace)
@@ -629,16 +588,13 @@ class WikiaStatsXLS {
 		 */
 		$row = 3;
 		$this->writeXLSLabel($row,0,wfMsg('wikiastats_date'));
-		$this->mergeXLSColsRows($row, 0, $row+1, 0);
 		$this->writeXLSLabel($row,1,wfMsg('wikiastats_namespace'));
 		$this->mergeXLSColsRows($row, 1, $row, count($allowedNamespace));
 		$row++;
 		// second row
 		$col = 0;
-		foreach ($nspaces as $n => $nName)
-		{
-			if (in_array($n, $allowedNamespace))
-			{
+		foreach ($nspaces as $n => $nName) {
+			if (in_array($n, $allowedNamespace)) {
 				$col++;
 				$this->writeXLSLabel($row,$col,$nName);
 			}
@@ -654,18 +610,15 @@ class WikiaStatsXLS {
 			$dateArr = explode("-",$date);
 			$stamp = mktime(0,0,0,$dateArr[1],1,$dateArr[0]);
 			$out = substr(wfMsg(strtolower(date("F",$stamp))), 0, 3) . " " . $dateArr[0];
-			if ($date == sprintf("%s-%s", date("Y"), date("m")))
-			{
+			if ($date == sprintf("%s-%s", date("Y"), date("m"))) {
 				$out = substr(wfMsg(strtolower(date("F",$stamp))), 0, 3) . " " . date("d") . ", " . $dateArr[0];
 			}
 			#---
 			$this->writeXLSLabel($row,$col,$out);
 			#---
 			
-			foreach ($nspaces as $n => $nName)
-			{
-				if (in_array($n, $allowedNamespace))
-				{
+			foreach ($nspaces as $n => $nName) {
+				if (in_array($n, $allowedNamespace)) {
 					$col++;
 					$val = (array_key_exists($n, $monthStats)) ? intval($monthStats[$n]) : 0;
 					//$out = (empty($val)) ? "" : ($val >= $kB) ? sprintf ("%.1f", $val/$kB)." k" : (($val >= $mB) ? sprintf ("%.1f", $val/$mB)." M" : $val);
@@ -679,7 +632,6 @@ class WikiaStatsXLS {
 		unset($nspaces);
 		unset($allowedNamespace);
 		$this->setXLSFileEnd();
-		exit;
 	}
 	
 	public function makeMostEditPagesStats($city_id, &$statsCount, &$mSourceMetaSpace)
@@ -702,7 +654,6 @@ class WikiaStatsXLS {
 		 */
 		$row = 5;
 		$this->writeXLSLabel($row,0,'#');
-		$this->mergeXLSColsRows($row, 0, $row+1, 0);
 		$this->writeXLSLabel($row,1,wfMsg('wikiastats_edits'));
 		$this->mergeXLSColsRows($row, 1, $row, 2);
 		$this->writeXLSLabel($row,3,wfMsg('wikiastats_unique_users'));
@@ -719,15 +670,13 @@ class WikiaStatsXLS {
 		$this->writeXLSLabel($row,4,wfMsg('wikiastats_unregister'));
 
 		$row++;
-		if (!empty($statsCount))
-		{
+		if (!empty($statsCount)) {
 			$Kb = 1024 ;
 			$Mb = $Kb * $Kb ;
 			$Gb = $Kb * $Kb * $Kb ;
 			
 			$rank = 0;
-			foreach ($statsCount as $cnt => $stats)
-			{
+			foreach ($statsCount as $cnt => $stats) {
 				$col = 0;
 				$rank++;
 				$reg_edits = ($stats['reg_edits']) ? sprintf("%0.0f", ($stats['reg_edits']/$cnt) * 100) : sprintf("%0.0f", $stats['reg_edits']);
@@ -760,7 +709,6 @@ class WikiaStatsXLS {
 		unset($statsCount);
 		unset($mSourceMetaSpace);
 		$this->setXLSFileEnd();
-		exit;
 	}
 	
 	
@@ -768,10 +716,9 @@ class WikiaStatsXLS {
 	{
 		#--- F O R M U L A ( mean )
 		$sum = 0;
-		$meanInfo = wfMsg('wikiastats_trend_mean_info')." \n";
+		$meanInfo = wfMsg('wikiastats_trend_mean_info')." \r\n";
 		$meanInfo .= wfMsg('wikiastats_trend_formula'). ": ";
-		for ($i = 1; $i <= STATS_TREND_MONTH; $i++)
-		{
+		for ($i = 1; $i <= STATS_TREND_MONTH; $i++) {
 			$cur_date = mktime(23, 59, 59, (date('m') + 1) - (STATS_TREND_MONTH - $i), 0, date('Y'));
 			#---
 			$day = ($i == STATS_TREND_MONTH) ? date("d") : date("d", $cur_date);
@@ -800,8 +747,7 @@ class WikiaStatsXLS {
 		$growthInfo .= wfMsg('wikiastats_trend_formula'). ": ";
 		#---
 		$sum = 0;
-		for ($i = 1; $i <= STATS_TREND_MONTH; $i++)
-		{
+		for ($i = 1; $i <= STATS_TREND_MONTH; $i++) {
 			$cur_date = mktime(23, 59, 59, (date('m') + 1) - (STATS_TREND_MONTH - $i), 0, date('Y'));
 			$next_date = mktime(23, 59, 59, (date('m') + 1) - (STATS_TREND_MONTH - $i - 1), 0, date('Y'));
 			#---
@@ -810,12 +756,11 @@ class WikiaStatsXLS {
 			$month = substr(wfMsg(strtolower(date("F",$cur_date))), 0, 3);
 			$next_month = substr(wfMsg(strtolower(date("F",$next_date))), 0, 3);
 			#---
-			if ($i < STATS_TREND_MONTH)
-			{
+			if ($i < STATS_TREND_MONTH) {
 				$sum += $day;
 				$variable = "G" . $i ;
 				$growthArray[0][] = $variable;
-				$growthArray[1][] = $variable . " = " . $day . " x (" . wfMsg('wikiastats_trend_value') . "[" . $next_month . "] - ". wfMsg('wikiastats_trend_value') . "[" . $month . "] ) / ".wfMsg('wikiastats_trend_value') . "[" . $month . "]";
+				$growthArray[1][] = $variable . "= " . $day . " x ([$next_month]-[$month])/[$month]";
 				$growthArray[2][] = $day;
 			}
 		}
@@ -832,10 +777,8 @@ class WikiaStatsXLS {
 	
 	private function makeCitiesMenu($cityOrderList, $cityList, $row, $col)
 	{
-		if (is_array($cityOrderList))
-		{
-			foreach ($cityOrderList as $id => $city_id)
-			{
+		if (is_array($cityOrderList)) {
+			foreach ($cityOrderList as $id => $city_id) {
 				$wikiaName = ($city_id == 0) ? wfMsg('wikiastats_trend_all_wikia_text') : $cityList[$city_id]['dbname'];
 				$this->writeXLSLabel($row,$col,$wikiaName);
 				$col++;
@@ -863,14 +806,13 @@ class WikiaStatsXLS {
 		$col1 = 0; $col2 = 4 * ($col1 + 1);
 		$this->makeTrendMeanFormula($row1, $row2, $col1, $col2);
 
-		$col1 = $col2 + 2; $col2 = 4 * $col1;
+		$col1 = $col2 + 2; $col2 = $col1 + 5;
 		$this->makeGrowthMeanFormula($row1, $row2, $col1, $col2);
 
 		// show statistics
 		$row = $row2 + 2;
 		$i = 0;
-		foreach ($trend_stats as $column => $dateValues)
-		{
+		foreach ($trend_stats as $column => $dateValues) {
 			$col1 = 0; $col2 = $col1 + 4;
 			$linkText = array("wikians" => wfMsg('wikiastats_distrib_wikians'), "articles" => wfMsg('wikiastats_articles_text'), "database" => wfMsg('wikiastats_database'), "links" => wfMsg('wikiastats_links'), "usage" => wfMsg('wikiastats_reg_users'));
 
@@ -894,10 +836,8 @@ class WikiaStatsXLS {
 
 			$loop = 0;	
 			$links = array();
-			foreach ($linkText as $id => $name)
-			{
-				if (!empty($name))
-				{
+			foreach ($linkText as $id => $name) {
+				if (!empty($name)) {
 					$links[] = $name;
 				}
 				$loop++;
@@ -914,39 +854,29 @@ class WikiaStatsXLS {
 
 			$loop = 0;
 			$row++;
-			foreach ($dateValues as $date => $cities)
-			{
+			foreach ($dateValues as $date => $cities) {
 				$col1 = 0;
 				$trend = 0;
 				$growth = 0;
-				if ($loop == 0) #--- current date
-				{
+				if ($loop == 0) { #--- current date
 					$dateArr = explode("-", date("Y-m-d"));
 					#---
 					$stamp = mktime(0,0,0,$dateArr[1],$dateArr[2],$dateArr[0]);
 					$outDate = substr(wfMsg(strtolower(date("F",$stamp))), 0, 3) . " " . $dateArr[2] .", ". $dateArr[0];
-				}
-				else
-				{
-					if (!in_array($date, array('trend', 'mean', 'growth')))
-					{
+				} else {
+					if (!in_array($date, array('trend', 'mean', 'growth'))) {
 						$dateArr = explode("-", $date);
 						#---
 						$stamp = mktime(0,0,0,$dateArr[1],1,$dateArr[0]);
 						$outDate = substr(wfMsg(strtolower(date("F",$stamp))), 0, 3) . " ".$dateArr[0];
-					}
-					else
-					{
-						if ($date == 'trend')
-						{
+					} else {
+						if ($date == 'trend') {
 							$trend = 1;
 							$dateArr = explode("-", date("Y-m-f"));
 							#---
 							$stamp = mktime(0,0,0,$dateArr[1],1,$dateArr[0]);
 							$outDate = substr(wfMsg(strtolower(date("F",$stamp))), 0, 3) . " ".$dateArr[0];
-						}
-						else
-						{
+						} else {
 							$outDate = ucfirst($date);
 							$growth = ($date == 'growth') ? 1 : 0;
 						}
@@ -957,12 +887,10 @@ class WikiaStatsXLS {
 				$this->mergeXLSColsRows($row, $col1, $row, $col2); 
 
 				$col1 = $col2 + 1;
-				foreach ($cityOrderList as $id => $city_id)
-				{
+				foreach ($cityOrderList as $id => $city_id) {
 					$out = "";
 					$city_values = (array_key_exists($city_id, $cities)) ? $cities[$city_id] : 0;
-					if (empty($growth))
-					{
+					if (empty($growth)) {
 						if ($column == 'A')
 							$out = sprintf("%0d", $city_values);
 						elseif ($column == 'H')
@@ -970,11 +898,8 @@ class WikiaStatsXLS {
 						elseif ($column == 'I')
 							$out = sprintf("%0.0f", $city_values);
 						elseif (($column == 'J') || ($column == 'K'))
-						{
 							$out = sprintf("%0d%%", $city_values * 100);
-						}
-						elseif ($column == 'M')
-						{
+						elseif ($column == 'M') {
 							if (intval($city_values) > $GB)
 								$out = sprintf("%0.1f GB", $city_values/$GB);
 							elseif (intval($city_values) > $MB)
@@ -983,9 +908,7 @@ class WikiaStatsXLS {
 								$out = sprintf("%0.1f KB", $city_values/$KB);
 							else
 								$out = sprintf("%0d", intval($city_values));
-						}
-						else
-						{
+						} else {
 							if (intval($city_values) > $G)
 								$out = sprintf("%0.1f G", intval($city_values/$G));
 							elseif (intval($city_values) > $M)
@@ -995,15 +918,12 @@ class WikiaStatsXLS {
 							else
 								$out = sprintf("%0d", $city_values);
 						}
-					}
-					else
-					{
+					} else {
 						$out = sprintf("%0d", $city_values);
 						if ($out >= 100) $out = "";
 					}
 					#---
-					if ($trend == 1)
-					{
+					if ($trend == 1) {
 						$out = "+/-".$out;
 					}
 					$out .= (($growth == 1) && ($out !== "") && (strpos($out,"%") === false)) ? "%" : "";
@@ -1028,7 +948,6 @@ class WikiaStatsXLS {
 		unset($month_array);
 		unset($cityOrderList);
 		$this->setXLSFileEnd();
-		exit;
 	}
 	
 	public function makeCreationStats($cityList, &$arr_wikians, &$dWikians, &$arr_article, &$dArticles)
@@ -1047,17 +966,14 @@ class WikiaStatsXLS {
 		$this->setXLSFileBegin();
 		$col = 0;
 		$this->writeXLSLabel(1, $col, wfMsg('wikiastats_creation_wikia_text'));
-		$this->mergeXLSColsRows(1, $col, 1, $col + $max_width);
 		#---
 		$row = 3;
 		$this->writeXLSLabel($row, $col, wfMsg('wikiastats_mainstats_short_column_A') . "\n" . wfMsg('wikiastats_mainstats_column_A'));
-		$this->mergeXLSColsRows($row, $col, $row + 1, $col + count($dWikians));
+		#---
 		$start_row = $row;
-		if (!empty($dWikians) && is_array($dWikians))
-		{
+		if (!empty($dWikians) && is_array($dWikians)) {
 			$col = 0;
-			foreach ($dWikians as $id => $date)
-			{
+			foreach ($dWikians as $id => $date)	{
 				$row = $start_row + 3;
 				$dateArr = explode("-", $date);
 				#---
@@ -1068,10 +984,8 @@ class WikiaStatsXLS {
 				#---
 				$col++;
 				$row++;
-				if ( !empty($wikians) && !empty($wikians[$date]) )
-				{
-					foreach ($wikians[$date] as $id => $wikiaInfo)
-					{
+				if ( !empty($wikians) && !empty($wikians[$date]) ) {
+					foreach ($wikians[$date] as $id => $wikiaInfo) {
 						$dbname = (array_key_exists($wikiaInfo['city_id'], $cityList)) ? $cityList[$wikiaInfo['city_id']]['dbname'] : "";
 						#---
 						$this->writeXLSLabel($row, $col, $dbname."(".$wikiaInfo['cnt'].")"); 
@@ -1084,12 +998,9 @@ class WikiaStatsXLS {
 		$row = $start_row;
 		$col += 2;
 		$this->writeXLSLabel($row, $col, wfMsg('wikiastats_mainstats_short_column_E') . "\n" . wfMsg('wikiastats_mainstats_column_E'));
-		$this->mergeXLSColsRows($row, $col, $row + 1, $col + count($dArticles));
 
-		if (!empty($dArticles) && is_array($dArticles))
-		{
-			foreach ($dArticles as $id => $date)
-			{
+		if (!empty($dArticles) && is_array($dArticles))	{
+			foreach ($dArticles as $id => $date) {
 				$row = $start_row + 3;
 				$dateArr = explode("-", $date);
 				#---
@@ -1100,12 +1011,9 @@ class WikiaStatsXLS {
 				#---
 				$col++;
 				$row++;
-				if ( !empty($article) && !empty($article[$date]) )
-				{
-					foreach ($article[$date] as $id => $wikiaInfo)
-					{
+				if ( !empty($article) && !empty($article[$date]) ) {
+					foreach ($article[$date] as $id => $wikiaInfo) {
 						$dbname = (array_key_exists($wikiaInfo['city_id'], $cityList)) ? $cityList[$wikiaInfo['city_id']]['dbname'] : "";
-						
 						$this->writeXLSLabel($row, $col, $dbname."(".$wikiaInfo['cnt'].")"); 
 						$row++;
 					}
@@ -1119,7 +1027,6 @@ class WikiaStatsXLS {
 		unset($article);
 		unset($dArticles);
 		$this->setXLSFileEnd();
-		exit;
 	}
 	
 	public function makeColumnStats($column,&$cityList,$nbrCities,&$splitCityList,&$columnHistory,&$columnRange)
@@ -1129,36 +1036,29 @@ class WikiaStatsXLS {
 		$this->setXLSHeader($filename);
 		#----
 		$this->setXLSFileBegin();
-		$col = 0;
+		$col = 1;
 		$this->writeXLSLabel(1, $col, $filename);
 		$this->mergeXLSColsRows(1, $col, 1, $col + count($splitCityList));
 		
-		$rows = array();
-		$loop = 0;
-
-		$col += 1;		
-		$row = 3;
+		$rows = array(); $loop = 0;
+		$col += 1; $row = 3;
 		$this->makeCitiesMenu($splitCityList, $cityList, $row, $col);
 
 		$loop = 0;
 		$prev_date = "";
-		foreach ($columnHistory as $date => $dateValues) 
-		{
-			$col = 0;
-			$row++;
+		foreach ($columnHistory as $date => $dateValues) {
+			$col = 1; $row++;
 			$show_percent = false;
 			$cur_date = $date;
 			#---
 			$addEmptyLine = (!empty($prev_date)) ? WikiaGenericStats::checkColumnStatDate($date, $prev_date) : false;
 			#---
-			if ($addEmptyLine !== false)
-			{
+			if ($addEmptyLine !== false) {
 				$this->mergeXLSColsRows($row, $col, $row, $col + count($splitCityList));
 				$row++;
 			}
 	
-			if (strpos($date, STATS_COLUMN_PREFIX) !== false) 
-			{
+			if (strpos($date, STATS_COLUMN_PREFIX) !== false) {
 				$date = str_replace(STATS_COLUMN_PREFIX, "", $date);
 				$show_percent = true;
 			}
@@ -1167,24 +1067,18 @@ class WikiaStatsXLS {
 			#---
 			$this->writeXLSLabel($row, $col, $outDate); 
 			#---
-			foreach ($splitCityList as $id => $city_id)
-			{
+			foreach ($splitCityList as $id => $city_id) {
 				$col++;
 				$output = "";
-				if (array_key_exists($city_id, $dateValues))
-				{
-					if ($dateValues[$city_id] != "null")
-					{
-						if ($show_percent === false)
-						{
+				if (array_key_exists($city_id, $dateValues)) {
+					if ($dateValues[$city_id] != "null") {
+						if ($show_percent === false) {
 							if (in_array($columnLetter, array("J","K"))) {
 								$output = sprintf("%0.1f", 100 * $dateValues[$city_id]);
 							} else {
 								$output = sprintf("%0.1f", $dateValues[$city_id]);
 							}
-						}
-						else
-						{
+						} else {
 							$output = sprintf("%0.0f%%", $dateValues[$city_id]);
 						}
 					}
@@ -1204,6 +1098,5 @@ class WikiaStatsXLS {
 		unset($columnHistory);
 		unset($columnRange);
 		$this->setXLSFileEnd();
-		exit;
 	}
 }
