@@ -461,18 +461,34 @@ if (!function_exists('wfGetDBStats')) {
 	}
 }
 
+/**
+ * @author emil@wikia.com
+ * @return default external cluster
+ */
+function wfGetDefaultExternalCluster() {
+	global $wgDefaultExternalStore;
+	if( $wgDefaultExternalStore ) {
+		if( is_array( $wgDefaultExternalStore ) ) {
+			$store = $wgDefaultExternalStore[0];
+		} else {
+			$store = $wgDefaultExternalStore;
+		}
+		list( $proto, $cluster ) = explode( '://', $store, 2 );
+		return $cluster;
+	} else {
+		throw new MWException( __METHOD__.'$wgDefaultExternalStore should be defined' );
+	}
+}
 
 /**
  * @author MoLi <moli@wikia.com>
  * @return db's handle for external storage
  */
-function wfGetDBExt($db = DB_MASTER) {
-	if( class_exists("ExternalStoreDB") ) {
-		$external = new ExternalStoreDB();
-		return $external->getLoadBalancer( 'archive1' )->getConnection( $db );
-	} else {
-		return null;
+function wfGetDBExt($db = DB_MASTER, $cluster = null) {
+	if( !$cluster ) {
+		$cluster = wfGetDefaultExternalCluster();
 	}
+	return wfGetLBFactory()->getExternalLB( $cluster )->getConnection( $db );
 }
 
 /**
@@ -491,9 +507,12 @@ function wfGetDBExt($db = DB_MASTER) {
  * @param int $maxLag
  * @return null
  */
-function wfWaitForSlavesExt( $maxLag ) {
+function wfWaitForSlavesExt( $maxLag, $cluster = null ) {
 	if( $maxLag ) {
-		$lb = wfGetLBFactory()->getExternalLB( 'archive1' );
+		if( !$cluster ) {
+			$cluster = wfGetDefaultExternalCluster();
+		}
+		$lb = wfGetLBFactory()->getExternalLB( $cluster );
 		list( $host, $lag ) = $lb->getMaxLag();
 		while( $lag > $maxLag ) {
 			$name = @gethostbyaddr( $host );

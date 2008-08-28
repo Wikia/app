@@ -150,8 +150,7 @@ class WikiaUserProfileActivity
 			#---
 			$city_where = ($this->shared_city) ? " and rc_city_id = '".$this->shared_city."' " : "";
 			#---
-			$external = new ExternalStoreDB();
-			$dbs = $external->getSlave( "archive1" );
+			$dbs = wfGetDBExt(DB_SLAVE);
 			#---
 			$sql = "SELECT rc_city_id, UNIX_TIMESTAMP( rc_timestamp) as item_date, rc_title, rc_user, rc_user_text, rc_comment, rc_id, rc_minor, rc_new, rc_namespace ";
 			$sql .= "FROM `dbstats`.`city_recentchanges` where rc_id > 0 {$rel_sql} {$user_sql} {$city_where} ";
