@@ -99,6 +99,8 @@ class MultiDeleteForm {
 			$scRange = '' ;
 			$scReason = '' ;
 			$scFile = '' ;
+			$scWikiList = '';
+			$scWikiInbox = '';
 		}
 
    		$wgOut->addHtml("
