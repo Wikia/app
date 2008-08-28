@@ -597,6 +597,8 @@ class MultiWikiEditForm {
 
 		if (NS_PROJECT == $nt->getNamespace()) {
 			$str = preg_replace ("/$wgMetaNamespace/", "Project", $str) ;
+		} elseif (NS_PROJECT_TALK == $nt->getNamespace()) {
+			$str = preg_replace ("/$wgMetaNamespaceTalk/", "Project talk", $str) ;
 		}
 
 		$part = explode ("php", $str ) ;

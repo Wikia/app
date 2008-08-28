@@ -64,6 +64,11 @@ class SpecialSearch {
 			$this->namespaces = SearchEngine::userNamespaces( $user );
 		}
 
+		if (empty($this->namespaces))
+		{
+			$this->namespaces = $this->defaultNamespaces();
+		}
+
 		$this->searchRedirects = $request->getcheck( 'redirs' ) ? true : false;
 	}
 
@@ -283,6 +288,23 @@ class SpecialSearch {
 		$wgOut->setSubtitle( $wgOut->parse( wfMsg( $subtitlemsg, wfEscapeWikiText($term) ) ) );
 		$wgOut->setArticleRelated( false );
 		$wgOut->setRobotpolicy( 'noindex,nofollow' );
+	}
+
+	/**
+	 * Extract default namespaces to search from wiki config,
+	 * returning a list of index numbers.
+	 *
+	 * @return array
+	 * @private
+	 */
+	function defaultNamespaces() {
+		global $wgNamespacesToBeSearchedDefault;
+
+		$arr = array();
+		foreach( $wgNamespacesToBeSearchedDefault as $ns => $val ) {
+			$arr[] = $ns;
+		}
+		return $arr;
 	}
 
 	/**

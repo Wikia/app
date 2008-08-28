@@ -417,6 +417,7 @@ div.wikiaDialog h2,
 'widget-wikipage-source' => 'Source page',
 'widget-bookmark-empty' => 'Add your favorite pages by clicking "add" icon above',
 'widget-contribs-empty' => 'You have no contributions on this wiki.',
+'widget-contribs-limit' => 'Limit',
 'widgets' => 'Widgets list',
 'widgets-specialpage-info' => 'Widgets work best with one of the new skins, eg. [{{SERVER}}/index.php?title=Special:Widgets&useskin=monaco Monaco].
 
