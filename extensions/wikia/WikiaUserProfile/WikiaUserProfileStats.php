@@ -66,8 +66,7 @@ class WikiaUserProfileStats
 		#---
 		if (empty($data))
 		{
-			$external = new ExternalStoreDB();
-			$dbr = $external->getSlave( "archive1" );
+			$dbr = wfGetDBExt(DB_SLAVE);
 			#---
 			$sql_where = array( "rc_user" => $this->user_id, "rc_new" => "1" );
 			#---

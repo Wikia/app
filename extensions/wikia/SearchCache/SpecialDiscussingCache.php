@@ -34,8 +34,7 @@
 	$cnt = 100;	
 	$formAction = $wgTitle->escapeLocalURL();
 	$dbstats = 'dbstats';
-	$external = new ExternalStoreDB();
-	$db = $external->getSlave( "archive1" );
+	$db = wfGetDBExt(DB_SLAVE);
 	$d = array();
 	$res = $db->query( "select rc_timestamp, rc_title, rc_namespace, rc_type, rc_city_id from $dbstats.city_recentchanges_3_days where mod( rc_namespace, 2 ) = 1  and rc_namespace!=" . NS_USER_TALK  . limit2langs('rc_city_id')  . " group by rc_title order by rc_timestamp desc limit $cnt" );
 	$db = wfGetDB( DB_SLAVE );

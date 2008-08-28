@@ -77,12 +77,7 @@ class ExternalStorageUpdate {
 				return false;
 			}
 
-			/**
-			 * we should not call this directly, we'll use new loadbalancer factory
-			 * when 1.13 will be alive
-			 */
-			$external = new ExternalStoreDB();
-			$dbw = $external->getMaster( $cluster );
+			$dbw = wfGetDBExt( DB_MASTER, $cluster );
 
 			$ret = $dbw->update(
 				"blobs",
@@ -147,7 +142,9 @@ class ExternalStorageUpdate {
 				/**
 				 * be sure that data is written
 				 */
-				$dbw->commit();
+				if( $dbw->getFlag( DBO_TRX ) ) {
+					$dbw->commit();
+				}
 			}
 		}
 		else {

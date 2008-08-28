@@ -60,14 +60,7 @@ class WikiaApiQueryReferers extends WikiaApiQuery {
 	}
 
 	protected function getDB() {
-		$db = "";
-		if (class_exists("ExternalStoreDB")) {
-			$external = new ExternalStoreDB();
-			$db = $external->getSlave( "archive1" );
-		} else {
-			$db = wfGetDBStats();
-		}
-		return $db;
+		return wfGetDBExt(DB_SLAVE);
 	}
 
 	/*
