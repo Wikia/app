@@ -198,12 +198,12 @@ EOT;
 			case 'TOP_LEADERBOARD': return 'tile=1;';
 			case 'TOP_RIGHT_BOXAD': return 'tile=2;';
 			case 'LEFT_SKYSCRAPER_1': return 'tile=3;';
-			case 'LEFT_SKYSCRAPER_2': return 'tile=4;';
+			case 'LEFT_SKYSCRAPER_2': return 'tile=3;'; // same so both skyscrapers don't show
 			case 'FOOTER_BOXAD': return 'tile=5;';
 			case 'HOME_TOP_LEADERBOARD': return 'tile=1;';
 			case 'HOME_TOP_RIGHT_BOXAD': return 'tile=2;';
 			case 'HOME_LEFT_SKYSCRAPER_1': return 'tile=3;';
-			case 'HOME_LEFT_SKYSCRAPER_2': return 'tile=4;';
+			case 'HOME_LEFT_SKYSCRAPER_2': return 'tile=3;';
 			default: return '';
 		}
 	}
