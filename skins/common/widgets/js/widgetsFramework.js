@@ -349,7 +349,7 @@ YAHOO.extend(YAHOO.wikia.ddObject, YAHOO.util.DDProxy, {
 	},
 
 	onDrag: function(e) {
-		TieDivLib.recalc();
+		TieDivLibrary.calculate();
 		var y = Event.getPageY(e);
 		if(y < this.lastY) {
 			this.goingUp = true;
