@@ -27,7 +27,6 @@ $wgExtensionCredits['specialpage'][] = array(
 	'description' => 'This extension provides an interface for sending messages seen on all wikis.'
 );
 
-$wgExtensionFunctions[] = 'InterwikiDispatcherInit';
 $wgExtensionMessagesFiles['SpecialInterwikiDispatcher'] = dirname(__FILE__) . '/SpecialInterwikiDispatcher.i18n.php';
 
 //Register hook
@@ -38,7 +37,3 @@ if (!function_exists('extAddSpecialPage')) {
 	require("$IP/extensions/ExtensionFunctions.php");
 }
 extAddSpecialPage(dirname(__FILE__) . '/SpecialInterwikiDispatcher_body.php' /* file */, 'InterwikiDispatcher' /* name */, 'InterwikiDispatcher' /* class */);
-
-function InterwikiDispatcherInit() {
-
-}

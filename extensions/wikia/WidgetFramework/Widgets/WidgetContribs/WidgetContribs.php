@@ -17,8 +17,15 @@ $wgWidgets['WidgetContribs'] = array(
 		'en' => 'Handy way to view your contributions', 
 		'pl' => 'Pomocna lista ostatnich edycji'
 	),
+	'params' => array(
+		'limit' => array(
+			'type'    => 'text',
+			'default' => 10,
+			'msg' => 'widget-contribs-limit'
+		)
+        ),
 	'closeable' => true,
-	'editable' => false,
+	'editable' => true,
 );
 
 function WidgetContribs($id, $params) {
@@ -26,13 +33,17 @@ function WidgetContribs($id, $params) {
 
 	global $wgUser;
 
+	// limit amount of messages
+	$limit = intval($params['limit']);
+	$limit = ($limit <=0 || $limit > 50) ? 10 : $limit;
+
 	// get last edits from API
 	$results = WidgetFrameworkCallAPI(array
 	(
 		'action'	=> 'query',
 		'list'		=> 'usercontribs',
 		'ucuser'	=> $wgUser->getName(),
-		'uclimit'	=> 10
+		'uclimit'	=> $limit
 	));
 
 	$ret = '';
