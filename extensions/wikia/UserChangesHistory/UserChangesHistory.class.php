@@ -14,6 +14,7 @@ class UserChangesHistory {
 
 	const LOGIN_AUTO = 0;
 	const LOGIN_FORM = 1;
+	const LOGIN_REGISTRATION = 2;
 
 	/**
 	 * LoginHistoryHook
@@ -68,7 +69,7 @@ class UserChangesHistory {
 	 * Store row from user table before changes of preferences are saved.
 	 * Called by Hook SavePreferences
 	 * Data is stored in external storage archive1
-     *
+	 *
 	 * @author Krzysztof Krzyżaniak (eloy) <eloy@wikia-inc.com>
 	 * @access public
 	 * @static

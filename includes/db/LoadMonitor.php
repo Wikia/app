@@ -65,7 +65,7 @@ class LoadMonitor_MySQL implements LoadMonitor {
 
 		global $wgMemc;
 		$masterName = $this->parent->getServerName( 0 );
-		$memcKey = wfMemcKey( 'lag_times', $masterName );
+		$memcKey = join( ':', array( 'db', 'lag_times', $masterName ) );
 		$times = $wgMemc->get( $memcKey );
 		if ( $times ) {
 			# Randomly recache with probability rising over $expiry

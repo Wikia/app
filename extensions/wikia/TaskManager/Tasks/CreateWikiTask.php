@@ -144,6 +144,14 @@ class CreateWikiTask extends BatchTask {
 		$this->resetImagesTimestamp();
 
 		/**
+		 * protect key pages, e.g. logo and favicon (bug: 3209)
+		 */
+		$cmd = sprintf("SERVER_ID={$this->mWikiID} php {$IP}/maintenance/wikia/protectKeyPages.php --conf {$wgWikiaLocalSettingsPath} --aconf {$wgWikiaAdminSettingsPath}");
+		$this->addLog( "Running {$cmd}");
+		$retval = wfShellExec( $cmd, $status );
+		$this->addLog( $retval );
+
+		/**
 		 * Move Main_Page to $wgSitename page
 		 */
 		$cmd = sprintf("SERVER_ID={$this->mWikiID} php {$IP}/maintenance/wikia/moveMain.php --conf {$wgWikiaLocalSettingsPath} --aconf {$wgWikiaAdminSettingsPath}");

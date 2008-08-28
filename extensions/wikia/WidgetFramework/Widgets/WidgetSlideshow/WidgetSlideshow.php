@@ -37,7 +37,8 @@ $wgWidgets['WidgetSlideshow'] = array(
     'editable' => true,
 );
 
-
+$wgGroupPermissions['sysop']['wteditimagelist'] = true;
+$wgGroupPermissions['staff']['wteditimagelist'] = true;
 
 function WidgetSlideshow($id, $params) {
 
@@ -61,7 +62,7 @@ function WidgetSlideshow($id, $params) {
 		
     $editText = '';
     
-    if ( ($params['show'] == 3) && (in_array('staff', $wgUser->getGroups()) || in_array('sysop', $wgUser->getGroups())) ) {
+    if ( ($params['show'] == 3) && $wgUser->isAllowed('wteditimagelist') ) {
 	// add edit list link only for sysops/staff users
         $url = Title::newFromText('WidgetSlideshowImages', NS_MEDIAWIKI);
 			

@@ -1,10 +1,12 @@
 <?php
 
 /**
- * CovertOps
+ * ContestTool
  *
  * Lets privlidged users edit wikis without leaving a visible trace
- * in RecentChanges and logs. Used for contests.
+ * in RecentChanges and logs.
+ *
+ * THIS IS FOR GAMING TRIVIA CONTESTS ONLY.
  *
  * @author Łukasz Garczewski (TOR) <tor@wikia.com>
  * @date 2008-08-18
@@ -15,24 +17,24 @@
  */
 
 if (!defined('MEDIAWIKI')) {
-	echo "This is MediaWiki extension named CovertOps.\n";
+	echo "This is MediaWiki extension named ContestTool.\n";
 	exit(1) ;
 }
 
 $wgExtensionCredits['specialpage'][] = array(
-	'name' => 'CovertOps',
+	'name' => 'Contest Tool',
 	'author' => '[http://www.wikia.com/wiki/User:TOR Lucas \'TOR\' Garczewski]',
-	'description' => '[classified]'
+	'description' => 'Dedicated tool for managing on-wiki contests'
 );
 //Allow group STAFF to use this extension.
-$wgAvailableRights[] = 'covertops';
-$wgGroupPermissions['*']['covertops'] = false;
-$wgGroupPermissions['staff']['covertops'] = true;
+$wgAvailableRights[] = 'contesttool';
+$wgGroupPermissions['*']['contesttool'] = false;
+$wgGroupPermissions['staff']['contesttool'] = true;
 
-$wgExtensionMessagesFiles['CovertOps'] = dirname(__FILE__) . '/SpecialCovertOps.i18n.php';
+$wgExtensionMessagesFiles['ContestTool'] = dirname(__FILE__) . '/SpecialContestTool.i18n.php';
 
 //Register special page
 if (!function_exists('extAddSpecialPage')) {
 	require("$IP/extensions/ExtensionFunctions.php");
 }
-extAddSpecialPage(dirname(__FILE__) . '/SpecialCovertOps_body.php', 'CovertOps', 'CovertOps');
+extAddSpecialPage(dirname(__FILE__) . '/SpecialContestTool_body.php', 'ContestTool', 'ContestTool');

@@ -120,7 +120,7 @@ function axCreatepageAdvancedSwitch () {
 	
 	$mCreateplate = $wgRequest->getVal ("createplates") ;
 	$editor = new CreatePageMultiEditor ($mCreateplate) ;
-	$content = $editor->GlueArticle () ;
+	$content = CreateMultiPage::unescapeBlankMarker ($editor->GlueArticle ()) ;
 	wfCreatePageUnescapeKnownMarkupTags ($content) ;
 	$_SESSION ['article_content'] = $content ;
         

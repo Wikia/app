@@ -424,7 +424,7 @@ class CreatePageCreateplateForm {
 				return false ;
 			} else if ($wgRequest->getCheck ('wpAdvancedEdit')) {
                                 $editor = new CreatePageMultiEditor ($this->mCreateplate) ;
-                                $content = $editor->GlueArticle () ;
+                                $content = CreateMultiPage::unescapeBlankMarker ($editor->GlueArticle ()) ;
 				wfCreatePageUnescapeKnownMarkupTags ($content) ;				
 				$_SESSION ['article_content'] = $content ;
 				$wgOut->redirect ($wgServer . $wgScript . "?title=" . $wgRequest->getVal ('Createtitle') . "&action=edit&createpage=true") ;

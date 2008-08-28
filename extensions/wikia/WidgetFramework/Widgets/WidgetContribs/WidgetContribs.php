@@ -54,7 +54,7 @@ function WidgetContribs($id, $params) {
 	    $ret = WidgetFrameworkWrapLinks($list);
 	}
 	else {
-	    $ret = wfMsg('nocontribs');
+	    $ret = wfMsg('widget-contribs-empty');
 	}
 
 	// 'more' link...
