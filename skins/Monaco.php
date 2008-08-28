@@ -1642,7 +1642,7 @@ if ($wgEnableAdEngineCollisionTest &&
         echo ArticleAdLogic::getCollisionCollision($this->data['bodytext']);
 }
 
-
+/**
 global $wgAdServingType;
 if($wgAdServingType === 1) {
 	$adsDisplayed = AdServer::getInstance()->adsDisplayed;
