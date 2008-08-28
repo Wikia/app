@@ -66,7 +66,7 @@ function wfSpamRegexSpecial( $par ) {
 	} else {
 		$sRF->showForm('');
 	}
-		$sRL->showList ('', $offset ) ;
+		$sRL->showList ('') ;
 }
 
 /* useful for cleaning the memcached keys */
