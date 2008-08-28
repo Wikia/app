@@ -1,10 +1,12 @@
 <?php
 
 /**
- * CovertOps
+ * ContestTool
  *
  * Lets privlidged users edit wikis without leaving a visible trace
- * in RecentChanges and logs. Used for contests.
+ * in RecentChanges and logs.
+ *
+ * THIS IS FOR GAMING TRIVIA CONTESTS ONLY.
  *
  * @author Łukasz Garczewski (TOR) <tor@wikia.com>
  * @date 2008-08-18
@@ -15,21 +17,21 @@
  */
 
 if (!defined('MEDIAWIKI')) {
-	echo "This is MediaWiki extension named SiteWideMessages.\n";
+	echo "This is MediaWiki extension named ContestTool.\n";
 	exit(1) ;
 }
 
-class CovertOps extends SpecialPage {
+class ContestTool extends SpecialPage {
 	/**
 	 * contructor
 	 */
 	function  __construct() {
-		parent::__construct('CovertOps' /*class*/, 'covertops' /*restriction*/);
+		parent::__construct('ContestTool' /*class*/, 'contesttool' /*restriction*/);
 	}
 
 	function execute($subpage) {
 		global $wgUser, $wgOut, $wgRequest, $wgTitle, $wgParser;
-		wfLoadExtensionMessages('CovertOps');
+		wfLoadExtensionMessages('ContestTool');
 
 		$template = 'editor';	//default template
 
@@ -44,8 +46,8 @@ class CovertOps extends SpecialPage {
 			$action = 'select';
 		}
 
-		if(!$wgUser->isAllowed('covertops')) {
-			$wgOut->permissionRequired('covertops');
+		if(!$wgUser->isAllowed('contesttool')) {
+			$wgOut->permissionRequired('contesttool');
 			return;
 		}
 
@@ -55,7 +57,7 @@ class CovertOps extends SpecialPage {
 		switch ($action) {
 
 			case 'select':
-				$wgOut->SetPageTitle(wfMsg('cops-page-title-select'));
+				$wgOut->SetPageTitle(wfMsg('cntool-page-title-select'));
 				$template = "selector";	
 				break;
 			case 'save':
@@ -86,7 +88,7 @@ class CovertOps extends SpecialPage {
                                 }
 
                                 $formData['messagePreview'] = $wgOut->parse($formData['messageContent']);
-                                $wgOut->SetPageTitle(wfMsg('cops-page-title-preview'));
+                                $wgOut->SetPageTitle(wfMsg('cntool-page-title-preview'));
                                 break;
 
 			case 'edit':
@@ -97,7 +99,7 @@ class CovertOps extends SpecialPage {
 				//no break - go to 'default' => editor
 
 			default:	//editor
-				$wgOut->SetPageTitle(wfMsg('cops-page-title-editor'));
+				$wgOut->SetPageTitle(wfMsg('cntool-page-title-editor'));
 		}
 
 		$oTmpl = new EasyTemplate(dirname( __FILE__ ) . '/templates/');
@@ -117,7 +119,7 @@ class CovertOps extends SpecialPage {
 
 		# Backup text or External reference to shared table
 		$dbw->insertSelect (
-			wfSharedTable('covertops_text'),
+			wfSharedTable('contesttool_text'),
 			$dbw->tableName('text'),
 			array (
 				'city_id' => $wgCityId,
@@ -127,7 +129,7 @@ class CovertOps extends SpecialPage {
                         array (
 				'old_id' => $revision->getTextId()
 			),
-			'CovertOps::replaceText',
+			'ContestTool::replaceText',
 			array( 'IGNORE' ) # Backup 1st one only, subsequent edits are corrections of the *new* text
 		);
 
@@ -156,7 +158,7 @@ class CovertOps extends SpecialPage {
 			$dbw->tableName( 'text' ),
 			array( 'old_text' => $new_text ),
 			array( 'old_id' => $revision->getTextId ),
-			'CovertOps::replaceText'
+			'ContestTool::replaceText'
 		);
 		
 		if ($wgDefaultExternalStore) {
@@ -179,7 +181,7 @@ class CovertOps extends SpecialPage {
 				'pr_expiry' => 'infinity',
 				'pr_id' => NULL
 			),
-			'CovertOps::covertProtect',
+			'ContestTool::covertProtect',
 			array( 'IGNORE' )
 		);
 	}
