@@ -6,6 +6,8 @@ $wgExtensionCredits['other'][] = array(
 
 class AdProviderDART implements iAdProvider {
 
+	private $isMainPage;
+
 	protected static $instance = false;
 
 	protected function __construct(){
@@ -29,16 +31,14 @@ class AdProviderDART implements iAdProvider {
 							'Humor' => 'wka.humor',
 							'Lifestyle' => 'wka.life',
 							'Music' => 'wka.music',
-							'Philosophy and Religion' => 'wka.phil',
-							'Politics and Activism' => 'wka.poli',
-							'Science and Nature' => 'wka.sci',
+							'Philosophy' => 'wka.phil',
+							'Politics' => 'wka.poli',
+							'Science' => 'wka.sci',
 							'Sports' => 'wka.sports',
 							'Technology' => 'wka.tech',
 							'Test Site' => 'wka.test',
 							'Toys' => 'wka.toys',
 							'Travel' => 'wka.travel');
-
-	private $isMainPage;
 
 	public function getAd($slotname, $slot){
 
