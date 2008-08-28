@@ -982,8 +982,6 @@ class MonacoTemplate extends QuickTemplate {
 	}
 
 ?>
-	<? //TODO: Build into allinone ?> 
-	<script type="text/javascript" src="/skins/common/jquery-1.2.6.min.js"></script> 
 	</head>
 <?php		wfProfileOut( __METHOD__ . '-head'); ?>
 <?php		wfProfileIn( __METHOD__ . '-body'); ?>
