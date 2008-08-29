@@ -1242,10 +1242,13 @@ if(isset($this->data['articlelinks']['right'])) {
 					<?php if(!empty($skin->newuemsg)) { echo $skin->newuemsg; } ?>
 					<?php if($this->data['showjumplinks']) { ?><div id="jump-to-nav"><?php $this->msg('jumpto') ?> <a href="#column-one"><?php $this->msg('jumptonavigation') ?></a>, <a href="#searchInput"><?php $this->msg('jumptosearch') ?></a></div><?php } ?>
 					<?php
+						global $wgOut;
 						if (ArticleAdLogic::isMainPage()) { //main page
 							echo AdEngine::getInstance()->getPlaceHolderDiv('HOME_TOP_LEADERBOARD');
 							echo AdEngine::getInstance()->getPlaceHolderDiv('HOME_TOP_RIGHT_BOXAD');
-						} else if (ArticleAdLogic::isContentPage() && !ArticleAdLogic::isShortArticle($wgArticle->getContent())) { //valid article
+						} else if ($wgOut->isArticle() &&
+						  ArticleAdLogic::isContentPage() &&
+						  !ArticleAdLogic::isShortArticle($wgArticle->getContent())) { //valid article
 							if (ArticleAdLogic::isBoxAdArticle($this->data['bodytext'])) {
 								echo AdEngine::getInstance()->getPlaceHolderDiv('TOP_RIGHT_BOXAD');
 							} else {
@@ -1603,7 +1606,10 @@ menuitem_array = new Array();var submenuitem_array = new Array();</script>';
 <?php		wfProfileOut( __METHOD__ . '-navigation'); ?>
 			
 			<?php 
-				if (ArticleAdLogic::isContentPage() && ArticleAdLogic::isLongArticle($wgArticle->getContent())) { //valid article
+				global $wgOut;
+				if ($wgOut->isArticle() &&
+				     ArticleAdLogic::isContentPage() &&
+				     ArticleAdLogic::isLongArticle($wgArticle->getContent())) { //valid article
 					echo '<div style="text-align: center; margin-bottom: 10px;">'. AdEngine::getInstance()->getPlaceHolderDiv('LEFT_SKYSCRAPER_1', false) .'</div>';
 				} else if (ArticleAdLogic::isMainPage()) { //main page
 					echo '<div style="text-align: center; margin-bottom: 10px;">'. AdEngine::getInstance()->getPlaceHolderDiv('HOME_LEFT_SKYSCRAPER_1', false) .'</div>';
@@ -1616,7 +1622,9 @@ menuitem_array = new Array();var submenuitem_array = new Array();</script>';
 			<?= WidgetFramework::getInstance()->Draw(1) ?>
 			
 			<?php
-				if (ArticleAdLogic::isContentPage() && ArticleAdLogic::isLongArticle($wgArticle->getContent())) { //valid article
+				if ($wgOut->isArticle() &&
+                                     ArticleAdLogic::isContentPage() && 
+	                             ArticleAdLogic::isLongArticle($wgArticle->getContent())) { //valid article
 					echo '<div style="text-align: center; margin-bottom: 10px;">'. AdEngine::getInstance()->getPlaceHolderDiv('LEFT_SKYSCRAPER_2', false) .'</div>';
 				} else if (ArticleAdLogic::isMainPage()) { //main page
 					echo '<div style="text-align: center; margin-bottom: 10px;">'. AdEngine::getInstance()->getPlaceHolderDiv('HOME_LEFT_SKYSCRAPER_2', false) .'</div>';
