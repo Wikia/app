@@ -123,7 +123,7 @@ class Inputbox {
 
 		$type = $this->hidden ? 'hidden' : 'text';
 		$searchform=<<<ENDFORM
-		<table border="0" width="100%" cellspacing="0" cellpadding="0">
+		<table border="0" width="100%" cellspacing="0" cellpadding="0" class="inputBox inputBoxSearchForm">
 		<tr>
 		<td align="center" bgcolor="{$this->bgcolor}">
 		<form name="searchbox" action="$searchpath" class="searchbox">
@@ -225,7 +225,7 @@ ENDFORM;
 		}
 		$type = $this->hidden ? 'hidden' : 'text';
 		$createform=<<<ENDFORM
-<table border="0" width="100%" cellspacing="0" cellpadding="0">
+<table border="0" width="100%" cellspacing="0" cellpadding="0" class="inputBox inputBoxCreateForm">
 <tr>
 <td align="center" bgcolor="{$this->bgcolor}">
 <form name="createbox" action="$action" method="get" class="createbox">
