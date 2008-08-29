@@ -52,7 +52,7 @@ class AdEngine {
 			// Found a cached value
 			return true;
 		}
-			
+
 		$db = wfGetDB(DB_SLAVE);
 
 		$sql = "SELECT ad_slot.as_id, ad_slot.slot, ad_slot.size,
@@ -113,7 +113,7 @@ class AdEngine {
 
 			$AdProviderNull=new AdProviderNull('User is logged in', false);
 			return $AdProviderNull->getAd($slotname, $this->slots[$slotname]);
-			
+
 		} else {
 
 			$provider = $this->getAdProvider($this->slots[$slotname]['provider_id']);
@@ -143,8 +143,8 @@ class AdEngine {
  	 * 300x250,300x600
  	 * 728x*
  	 *
- 	 * Do the best you can to return a height/width 
- 	 */	
+ 	 * Do the best you can to return a height/width
+ 	 */
         public function getHeightWidthFromSize($size){
                 if (preg_match('/^([0-9]{2,4})x([0-9]{2,4})/', $size, $matches)){
                         return array('width'=>$matches[1], 'height'=>$matches[2]);
@@ -163,7 +163,7 @@ class AdEngine {
 		$style = "";
 
 		if (! empty($this->slots[$slotname])){
-			$styles = array(); 
+			$styles = array();
 			$dim = self::getHeightWidthFromSize($this->slots[$slotname]['size']);
 			if (!empty($dim['width'])){
 				array_push($styles, "width: {$dim['width']}px;");
@@ -186,29 +186,29 @@ class AdEngine {
 
 
 	public function getDelayedLoadingCode(){
+		global $wgExtensionsPath;
+
 		if (empty($this->placeholders)){
 			// No delayed ads on this page
 			return '<!-- No placeholders called for ' . __METHOD__ . " -->\n";
 		}
 
 		$out = "<!-- #### BEGIN " . __CLASS__ . '::' . __METHOD__ . " ####-->\n";
-		$out .= '<script type="text/javascript" src="/extensions/wikia/TieDivLibrary/TieDivLibrary.js"></script>';
+		$out .= '<script type="text/javascript">TieDivLibrary.timer();</script>';
 		foreach ($this->placeholders as $slotname){
-
 			$class = strpos($slotname, 'SPOTLIGHT') ? ' class="wikia_spotlight"' : ' class="wikia_ad"';
-
 			$out .= '<div id="' . $slotname . '_load"'.$class.'>' . $this->getAd($slotname) . "</div>\n";
+			// FIXME! Probably the parameter for function indexOf should be changed, talk to Michael about it
 			$out .= '<script type="text/javascript">
-				//need to check innerHTML of returned ad to determine if 1x1 pixel or empty
-				YAHOO.util.Dom.setStyle("'. $slotname .'", "display", "block");
-			</script>';
+				if($("'.$slotname.'_load").innerHTML.indexOf("style=\"width: 0px; height: 0px;\" width=\"0\" height=\"0\"") == -1) {
+					YAHOO.util.Dom.setStyle("'. $slotname .'", "display", "block");
+				}
+				</script>';
 			$out .= '<script type="text/javascript">TieDivLibrary.tie("'. $slotname .'");</script>';
-		}	
-		$out .= '<script type="text/javascript">TieDivLibrary.calculate();</script>';
+		}
 		$out .= "<!-- #### END " . __CLASS__ . '::' . __METHOD__ . " ####-->\n";
 		return $out;
 	}
-
 
 	public function getPlaceHolders(){
 		return $this->placeholders;

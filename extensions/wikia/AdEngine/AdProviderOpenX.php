@@ -29,7 +29,7 @@ class AdProviderOpenX implements iAdProvider {
 	);
 
 	private $spotlightZones = array(
-		'LEFT_SPOTLIGHT_1', 
+		'LEFT_SPOTLIGHT_1',
 		'FOOTER_SPOTLIGHT_LEFT',
 		'FOOTER_SPOTLIGHT_MIDDLE',
 		'FOOTER_SPOTLIGHT_RIGHT'
@@ -38,50 +38,47 @@ class AdProviderOpenX implements iAdProvider {
 	private $spotlightCategoryZones = array(
 		'2' => 635, // Gaming
 		'3' => 636, // Entertainment
-		'5' => 637, 
-		'9' => 637, 
-		'12' => 637, 
-		'15' => 637, 
-		'16' => 637, 
-		'18' => 637, 
-		'19' => 637, 
+		'5' => 637,
+		'9' => 637,
+		'12' => 637,
+		'15' => 637,
+		'16' => 637,
+		'18' => 637,
+		'19' => 637,
 		'default' => 638
 	);
 
 	public function getAd($slotname, $slot) {
-
-
 		global $wgCatId;
 		$zoneId = $this->getZoneId($slotname, @$wgCatId);
 
 		if(empty($zoneId)){
-			// Don't throw an exception. Under no circumstances should an ad failing
-			// prevent the page from rendering.
-                        $NullAd = new AdProviderNullAd("Invalid slotname, no zoneid for $slotname in " . __CLASS__);
-                        return $NullAd->getAd($slotname, $slot);
+			$nullAd = new AdProviderNullAd("Invalid slotname, no zoneid for $slotname in " . __CLASS__);
+			return $nullAd->getAd($slotname, $slot);
 		}
 
 		$adtag = <<<EOT
 <!-- AdProviderOpenX slot: $slotname zoneid: $zoneId  -->
 <script type='text/javascript'>/*<![CDATA[*/
-   var source = Array();
-   source.push('slot=$slotname');
-   source.push('catid=' + wgCatId);
-   source.push('lang=' + wgContentLanguage);
 
-  document.write('<scr'+'ipt type="text/javascript">');
-  document.write('var base_url = "http://wikia-ads.wikia.com/www/delivery/ajs.php";');
-  document.write('base_url += "?loc=" + escape(window.location);');
-  document.write('if(typeof document.referrer != "undefined") base_url += "&referer=" + escape(document.referrer);');
-  document.write('if(typeof document.context != "undefined") base_url += "&context=" + escape(document.context);');
-  document.write('if(typeof document.mmm_fo != "undefined") base_url += "&mmm_fo=1";');
-  document.write('base_url += "&zoneid=$zoneId";');
-  document.write('base_url += "&cb=" + Math.floor(Math.random()*99999999999);');
-  document.write('if(typeof document.MAX_used != "undefined" && document.MAX_used != ",") base_url += "&exclude=" + document.MAX_used;');
-  document.write('base_url += "&source='+source.join(';')+'";');
-  document.write('base_url += "&block=1";');
-  document.write('</scr'+'ipt>');
-  document.write('<scr'+'ipt type="text/javascript" src="'+base_url+'"></scr'+'ipt>');
+	var source = Array();
+	source.push('slot=$slotname');
+	source.push('catid=' + wgCatId);
+	source.push('lang=' + wgContentLanguage);
+
+	document.write('<scr'+'ipt type="text/javascript">');
+	document.write('var base_url = "http://wikia-ads.wikia.com/www/delivery/ajs.php";');
+	document.write('base_url += "?loc=" + escape(window.location);');
+	document.write('if(typeof document.referrer != "undefined") base_url += "&referer=" + escape(document.referrer);');
+	document.write('if(typeof document.context != "undefined") base_url += "&context=" + escape(document.context);');
+	document.write('if(typeof document.mmm_fo != "undefined") base_url += "&mmm_fo=1";');
+	document.write('base_url += "&zoneid=$zoneId";');
+	document.write('base_url += "&cb=" + AdsCB;');
+	document.write('if(typeof document.MAX_used != "undefined" && document.MAX_used != ",") base_url += "&exclude=" + document.MAX_used;');
+	document.write('base_url += "&source='+source.join(';')+'";');
+	document.write('base_url += "&block=1";');
+	document.write('</scr'+'ipt>');
+	document.write('<scr'+'ipt type="text/javascript" src="'+base_url+'"></scr'+'ipt>');
 
 /*]]>*/</script>
 EOT;
@@ -89,21 +86,17 @@ EOT;
 
 	}
 
-
 	// Logic for zoneids documented here: http://staff.wikia-inc.com/wiki/Ad_Slots
 	public function getZoneId($slotname, $catid){
-
-		if (isset($this->zoneIds[$slotname])){
+		if(isset($this->zoneIds[$slotname])){
 			return $this->zoneIds[$slotname];
 		} else if (in_array($slotname, $this->spotlightZones)){
-
 			// For spotlights, they all have the same zoneid, determined by category.
-			if (isset($this->spotlightCategoryZones[$catid])){
+			if(isset($this->spotlightCategoryZones[$catid])){
 				return $this->spotlightCategoryZones[$catid];
 			} else {
 				return $this->spotlightCategoryZones['default'];
 			}
-
 		} else {
 			return null;
 		}
