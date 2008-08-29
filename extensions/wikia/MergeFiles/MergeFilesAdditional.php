@@ -104,7 +104,7 @@ $MF['monaco_loggedin_js']['source'] = array(
 	'common/yui_extra/tools-min.js',
 	'common/yui_extra/carousel-min.js',
 
-	'common/jquery-1.2.6.min.js',
+	'common/jquery-1.2.6.min.js', // Hope it's temporary solution
 
 	'common/jiffy.js',
 	'common/ajax.js',
@@ -119,6 +119,7 @@ $MF['monaco_loggedin_js']['source'] = array(
 	'../extensions/wikia/ProblemReports/js/ProblemReports-loader.js',
 	'../extensions/wikia/onejstorule.js',
 	'../extensions/wikia/FAST/FAST.js',
+	'../extensions/wikia/TieDivLibrary/TieDivLibrary.js',
 );
 $MF['monaco_loggedin_js']['source'] = array_merge($MF['monaco_loggedin_js']['source'], $widgetsAssets['js']);
 
@@ -133,7 +134,7 @@ $MF['monaco_non_loggedin_js']['source'] = array(
 	'common/yui_2.5.2/tabview/tabview.js',
 	'common/yui_extra/tools-min.js',
 
-	'common/jquery-1.2.6.min.js',
+	'common/jquery-1.2.6.min.js', // Hope it's temporary solution
 
 	'common/jiffy.js',
 	'common/ajax.js',
@@ -149,6 +150,7 @@ $MF['monaco_non_loggedin_js']['source'] = array(
 	'../extensions/wikia/onejstorule.js',
 	'../extensions/wikia/FAST/FAST.js',
 	'../extensions/wikia/Userengagement/Userengagement.js',
+	'../extensions/wikia/TieDivLibrary/TieDivLibrary.js',
 );
 $MF['monaco_non_loggedin_js']['source'] = array_merge($MF['monaco_non_loggedin_js']['source'], $widgetsAssets['js']);
 

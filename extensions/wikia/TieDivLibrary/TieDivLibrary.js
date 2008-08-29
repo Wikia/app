@@ -1,3 +1,5 @@
+var AdsCB = Math.floor(Math.random()*99999999); // generate random number to use as a cache buster during the call for ad (OpenX and DART)
+
 /**
  * http://www.hedgerwow.com/360/dhtml/js-onfontresize2.html
  */
@@ -69,7 +71,7 @@ YAHOO.namespace('YAHOO.example').FontSizeMonitor = (function(){
 TieDivLibrary = new function() {
 
 	var items = Array();
-	var loopCount = 300;
+	var loopCount = 500;
 
 	this.tie = function(slotname) {
 		items.push([slotname]);
@@ -78,19 +80,18 @@ TieDivLibrary = new function() {
 	this.calculate = function() {
 		YAHOO.log('calculate()', 'info', 'TieDivLibrary');
 		for(i = 0; i < items.length; i++) {
-			//YAHOO.log("slotname: " + items[i][0]);
 			jQuery.noConflict();
 			var offset = jQuery("#" + items[i][0]).offset();
 			if (YAHOO.util.Dom.getStyle(items[i][0], "float") == 'right') {
 				jQuery("#" + items[i][0] + "_load").css({
-					position: "absolute", 
-					top: jQuery("#" + items[i][0]).offset().top, 
+					position: "absolute",
+					top: offset.top,
 					right: YAHOO.util.Dom.getViewportWidth() - offset.left - jQuery("#" + items[i][0]).width()
 				});
 			} else {
 				jQuery("#" + items[i][0] + "_load").css({
-					position: "absolute", 
-					top: offset.top, 
+					position: "absolute",
+					top: offset.top,
 					left: offset.left
 				});
 			}
@@ -112,24 +113,20 @@ TieDivLibrary = new function() {
 		if (go) TieDivLibrary.timer();
 	}
 
-	YAHOO.log('init()', 'info', 'TieDivLibrary');
-
-	// events
-	//
-	YAHOO.util.Event.addListener(window, 'load', function() {
+	YAHOO.util.Event.on(window, 'load', function() {
 		setTimeout(function() { loopCount = 0; }, 2000);
 		YAHOO.example.FontSizeMonitor.onChange.subscribe(TieDivLibrary.calculate);
 	});
 
-	YAHOO.util.Event.addListener(window, 'resize', function() {
+	YAHOO.util.Event.on(window, 'resize', function() {
 		TieDivLibrary.calculate();
 	});
 
-	YAHOO.util.Event.addListener(document, 'click', function() {
+	YAHOO.util.Event.on(document, 'click', function() {
 		TieDivLibrary.loop(3);
 	});
 
-	YAHOO.util.Event.addListener(document, 'keydown', function() {
+	YAHOO.util.Event.on(document, 'keydown', function() {
 		TieDivLibrary.loop(3);
 	});
 
