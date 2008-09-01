@@ -20,7 +20,7 @@ class ArticleAdLogicTest extends PHPUnit_TestCase {
 	function testIsShort() {
 		// These should fail the short test. Note that medium should fail too, because it's not short nor long.
 		$this->assertFalse(ArticleAdLogic::isShortArticle(file_get_contents('./longArticleWithImagesNoCollision.html')));
-		$this->assertFalse(ArticleAdLogic::isShortArticle(file_get_contents('./longArticleWithWideTable.html')));
+		$this->assertFalse(ArticleAdLogic::isShortArticle(file_get_contents('./tableWithWideImages.html')));
 		$this->assertFalse(ArticleAdLogic::isShortArticle(file_get_contents('./mediumArticlePlainText.html')));
 
 		// These are the true short articles
@@ -31,7 +31,7 @@ class ArticleAdLogicTest extends PHPUnit_TestCase {
 	function testIsLong() {
 		// These are the true long articles
 		$this->assertTrue(ArticleAdLogic::isLongArticle(file_get_contents('./longArticleWithImagesNoCollision.html')));
-		$this->assertTrue(ArticleAdLogic::isLongArticle(file_get_contents('./longArticleWithWideTable.html')));
+		$this->assertTrue(ArticleAdLogic::isLongArticle(file_get_contents('./tableWithWideImages.html')));
 
 		// These should fail the long test, including the medium, because it's not long enough
 		$this->assertFalse(ArticleAdLogic::isLongArticle(file_get_contents('./mediumArticlePlainText.html')));
@@ -52,12 +52,15 @@ class ArticleAdLogicTest extends PHPUnit_TestCase {
 
 		// These should should display a banner ad
 		$this->assertFalse(ArticleAdLogic::isBoxAdArticle(file_get_contents('./articleWithMagicWordBanner.html')));
-		$this->assertFalse(ArticleAdLogic::isBoxAdArticle(file_get_contents('./longArticleWithWideTable.html')));
+		$this->assertFalse(ArticleAdLogic::isBoxAdArticle(file_get_contents('./tableWithWideImages.html')));
+		$this->assertFalse(ArticleAdLogic::isBoxAdArticle(file_get_contents('./wideTableNoImages.html')));
 		$this->assertFalse(ArticleAdLogic::isBoxAdArticle(file_get_contents('./table100Percent.html')));
 		$this->assertFalse(ArticleAdLogic::isBoxAdArticle(file_get_contents('./table500Pixels.html')));
 		$this->assertFalse(ArticleAdLogic::isBoxAdArticle(file_get_contents('./table500pxPixels.html')));
 		$this->assertFalse(ArticleAdLogic::isBoxAdArticle(file_get_contents('./tableWithClass.html')));
 		$this->assertFalse(ArticleAdLogic::isBoxAdArticle(file_get_contents('./tableWithId.html')));
+		$this->assertFalse(ArticleAdLogic::isBoxAdArticle(file_get_contents('./tableWidthStyleAndWidth.html')));
+		$this->assertFalse(ArticleAdLogic::isBoxAdArticle(file_get_contents('./wierdCollisionPage.html')));
 	}
 }
 // header('Content-Type: text/plain');
@@ -67,5 +70,3 @@ $suite->addTest(new ArticleAdLogicTest('testIsLong'));
 $suite->addTest(new ArticleAdLogicTest('testIsBoxAd'));
 $result = PHPUnit::run($suite);
 echo $result->toHTML();
-
-

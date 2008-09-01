@@ -1,14 +1,4 @@
 <?php
-/* We need an easy way to switch back and forth between Old Monaco (AdServer) and New Monaco (AdEngine)
- * Monaco_AdServer, and the if statement below, can be removed once everyone is using $wgEnableAdEngine 
-*/
-global $wgEnableAdEngine;
-if ($wgEnableAdEngine != true){
-	// Use the old code
-        require dirname(__FILE__) . '/Monaco_200808.4.php';
-        return;
-}
-
 /**
  * Monaco skin
  *
@@ -54,9 +44,6 @@ class SkinMonaco extends SkinTemplate {
 		$this->skinname  = 'monaco';
 		$this->stylename = 'monaco';
 		$this->template  = 'MonacoTemplate';
-
-		// extra CSS file for RTL (MW1.13)
-		$this->cssfiles[] = 'rtl';
 
 		// Get category information (id, name, url)
 		$cats = wfGetBreadCrumb();
@@ -942,7 +929,7 @@ class MonacoTemplate extends QuickTemplate {
 
 	function execute() {
 		wfProfileIn( __METHOD__ );
-		global $wgArticle, $wgUser, $wgLogo, $wgStylePath, $wgRequest, $wgTitle, $wgSitename, $wgEnableFAST_HOME2;
+		global $wgUser, $wgLogo, $wgStylePath, $wgRequest, $wgTitle, $wgSitename;
 		$skin = $wgUser->getSkin();
 
 ?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -962,7 +949,7 @@ class MonacoTemplate extends QuickTemplate {
 	/* macbre: #3432 */
 	foreach($this->data['references']['allinone_css'] as $css) {
 ?>
-			@import "<?= $css['url'] ?>";
+			@import "<?= $css['url']; ?>";
 <?php
 	}
 ?>
@@ -970,13 +957,11 @@ class MonacoTemplate extends QuickTemplate {
 <?php
 	foreach($this->data['references']['css'] as $css) {
 ?>
-		<?= isset($css['cond']) ? '<!--['.$css['cond'].']>' : '' ?><link rel="stylesheet" type="text/css" <?= isset($css['param']) ? $css['param'] : '' ?>href="<?= htmlspecialchars($css['url']) ?>" /><?= isset($css['cond']) ? '<![endif]-->' : '' ?>
+		<?= isset($css['cond']) ? '<!--['.$css['cond'].']>' : '' ?><link rel="stylesheet" type="text/css" <?= isset($css['param']) ? $css['param'] : '' ?>href="<?= $css['url'] ?>" /><?= isset($css['cond']) ? '<![endif]-->' : '' ?>
 
 <?php
 	}
-?>
-		<noscript><link rel="stylesheet" type="text/css" href="<?= $wgStylePath ?>/monaco/css/noscript.css" /></noscript>
-<?php
+	echo '<noscript><link rel="stylesheet" type="text/css" href="'.$wgStylePath.'/monaco/css/noscript.css" /></noscript>';
 	foreach($this->data['references']['cssstyle'] as $cssstyle) {
 ?>
 		<style type="text/css"><?= $cssstyle['content'] ?></style>
@@ -997,8 +982,8 @@ class MonacoTemplate extends QuickTemplate {
 <?php		wfProfileOut( __METHOD__ . '-head'); ?>
 <?php		wfProfileIn( __METHOD__ . '-body'); ?>
 
-<?php 
-	if (ArticleAdLogic::isMainPage()){
+<?
+	if ($wgTitle->getArticleId() == Title::newMainPage()->getArticleId()) {
 		$isMainpage = ' mainpage';
 	} else {
 		$isMainpage = null;
@@ -1024,6 +1009,7 @@ class MonacoTemplate extends QuickTemplate {
 			<div id="ghost"></div>
 
 <?php
+echo AdServer::getInstance()->getAd('js_bot1');
 wfRunHooks('GetHTMLAfterBody', array ($this));
 ?>
 
@@ -1251,29 +1237,9 @@ if(isset($this->data['articlelinks']['right'])) {
 					<?php if($this->data['newtalk'] ) { ?><div class="usermessage"><?php $this->html('newtalk')  ?></div><?php } ?>
 					<?php if(!empty($skin->newuemsg)) { echo $skin->newuemsg; } ?>
 					<?php if($this->data['showjumplinks']) { ?><div id="jump-to-nav"><?php $this->msg('jumpto') ?> <a href="#column-one"><?php $this->msg('jumptonavigation') ?></a>, <a href="#searchInput"><?php $this->msg('jumptosearch') ?></a></div><?php } ?>
-					<?php
-					global $wgOut;
-
-					if ($wgOut->isArticle()){
-						if (ArticleAdLogic::isMainPage()){
-							echo AdEngine::getInstance()->getPlaceHolderDiv('HOME_TOP_LEADERBOARD');
-							if ($wgEnableFAST_HOME2) {
-								echo AdEngine::getInstance()->getPlaceHolderDiv('HOME_TOP_RIGHT_BOXAD');
-							}
-						} else if ( ArticleAdLogic::isContentPage() &&
-							   !ArticleAdLogic::isShortArticle($this->data['bodytext'])) { //valid article
-
-							if (ArticleAdLogic::isBoxAdArticle($this->data['bodytext'])) {
-								echo AdEngine::getInstance()->getPlaceHolderDiv('TOP_RIGHT_BOXAD');
-							} else {
-								echo AdEngine::getInstance()->getPlaceHolderDiv('TOP_LEADERBOARD');
-							}
-						}
-					}
-					?>
 					<!-- start content -->
 					<?php $this->html('bodytext') ?>
-					<?php if($this->data['catlinks']) { $this->html('catlinks'); } ?>
+					<?php if($this->data['catlinks']) { ?><div id="catlinks"><?php       $this->html('catlinks') ?></div><?php } ?>
 					<!-- end content -->
 					<div class="visualClear"></div>
 				</div>
@@ -1421,6 +1387,7 @@ if(!$custom_article_footer && $displayArticleFooter) {
 		$this->html('headscripts');
 	}
 ?>
+		<script type="text/javascript" src="http://images2.wikia.nocookie.net/common/releases_200808.4/skins/monaco/js/ads.js"></script>
 <?php		wfProfileIn( __METHOD__ . '-monacofooter'); ?>
 		<div id="monaco_footer" class="reset">
 
@@ -1428,13 +1395,13 @@ if(!$custom_article_footer && $displayArticleFooter) {
 		<table>
 		<tr>
 			<td>
-				<?php echo AdEngine::getInstance()->getPlaceHolderDiv('FOOTER_SPOTLIGHT_LEFT'); ?>
+				<?= AdServer::getInstance()->getAd('bb') ?>
 			</td>
 			<td>
-				<?php echo AdEngine::getInstance()->getPlaceHolderDiv('FOOTER_SPOTLIGHT_MIDDLE'); ?>
+				<?= AdServer::getInstance()->getAd('bb3') ?>
 			</td>
 			<td>
-				<?php echo AdEngine::getInstance()->getPlaceHolderDiv('FOOTER_SPOTLIGHT_RIGHT'); ?>
+				<?= AdServer::getInstance()->getAd('bb5') ?>
 			</td>
 		</tr>
 		</table>
@@ -1617,37 +1584,29 @@ menuitem_array = new Array();var submenuitem_array = new Array();</script>';
 	}
 ?>
 			</div>
+<?php
+global $wgFASTSIDE;
+if(!empty($wgFASTSIDE) && isset($wgFASTSIDE[0])) {
+?>
+	<div style="display: none; text-align: center; margin-bottom: 10px;"><?= $wgFASTSIDE[0] ?></div>
+<?php
+}
+?>
 			<!-- /SEARCH/NAVIGATION -->
 <?php		wfProfileOut( __METHOD__ . '-navigation'); ?>
-			
-			<?php 
-				global $wgOut;
-				if ($wgOut->isArticle() ){
-					if ( ArticleAdLogic::isContentPage() &&
-					     ArticleAdLogic::isLongArticle($this->data['bodytext'])) { //valid article
-						echo '<div style="text-align: center; margin-bottom: 10px;">'. AdEngine::getInstance()->getPlaceHolderDiv('LEFT_SKYSCRAPER_1', false) .'</div>';
-					} else if (ArticleAdLogic::isMainPage()) { //main page
-						echo '<div style="text-align: center; margin-bottom: 10px;">'. AdEngine::getInstance()->getPlaceHolderDiv('HOME_LEFT_SKYSCRAPER_1', false) .'</div>';
-					}
-				}
-			?>
-
 <?php		wfProfileIn( __METHOD__ . '-widgets'); ?>
 
 			<div id="sidebar_1" class="sidebar">
 			<?= WidgetFramework::getInstance()->Draw(1) ?>
-			
-			<?php
-				if ($wgOut->isArticle() &&
-                                     ArticleAdLogic::isContentPage() && 
-	                             ArticleAdLogic::isLongArticle($this->data['bodytext'])) { //valid article
-					echo '<div style="text-align: center; margin-bottom: 10px;">'. AdEngine::getInstance()->getPlaceHolderDiv('LEFT_SKYSCRAPER_2', false) .'</div>';
-				} else if (ArticleAdLogic::isMainPage()) { //main page
-					echo '<div style="text-align: center; margin-bottom: 10px;">'. AdEngine::getInstance()->getPlaceHolderDiv('HOME_LEFT_SKYSCRAPER_2', false) .'</div>';
-				}
-			?>
-
+<?php
+if(!empty($wgFASTSIDE) && isset($wgFASTSIDE[1])) {
+?>
+	<div style="display: none; text-align: center; margin-bottom: 10px;"><?= $wgFASTSIDE[1] ?></div>
+<?php
+}
+?>
 			</div>
+
 		</div>
 		<!-- /WIDGETS -->
 	<!--/div-->
@@ -1657,23 +1616,53 @@ wfProfileOut( __METHOD__ . '-widgets');
 // curse like cobranding
 $this->printCustomFooter();
 
-global $wgEnableAdEngineCollisionTest, $wgArticle;
+global $wgEnableAdEngineCollisionTest;
 if ($wgEnableAdEngineCollisionTest &&
     ! ArticleAdLogic::isMainPage() &&
-    ! ArticleAdLogic::isShortArticle($this->data['bodytext']) && 
-      ArticleAdLogic::isContentPage() &&
-      empty($_GET['action'])){
+      ArticleAdLogic::isContentPage()){
         echo ArticleAdLogic::getCollisionCollision($this->data['bodytext']);
 }
 
+
+global $wgAdServingType;
+if($wgAdServingType === 1) {
+	$adsDisplayed = AdServer::getInstance()->adsDisplayed;
+	function cmpAds($a, $b) {
+		if($a[1] == 'FAST_TOP') { return 0; }
+		else if($a[1] == 'FAST_HOME1') { return 1; }
+		else if($a[1] == 'FAST_HOME2') { return 2; }
+		else if($a[1] == 'HOME_TOP_LEADERBOARD') { return 1; }
+		else if($a[1] == 'HOME_TOP_RIGHT_BOXAD') { return 2; }
+		else if($a[1] == 'FAST_BOTTOM') { return 3; }
+		else if($a[1] == 'FAST_HOME3') { return 4; }
+		else if($a[1] == 'FAST_HOME4') { return 5; }
+		else if($a[1] == 'FAST_SIDE') { return 6; }
+		else if($a[1] == 'tr_anon') { return 7; }
+		else if($a[1] == 'tr_user') { return 8; }
+		else if($a[1] == 'js_bot5') { return 9; }
+		else if($a[1] == 'js_bot4') { return 10; }
+		else { return 100; }
+	}
+	uasort($adsDisplayed, "cmpAds");
+
+	echo '<div id="realAdsContainer">';
+	echo '<script type="text/javascript">TieDivLib.init();</script>';
+	foreach($adsDisplayed as $adSpace => $ad) {
+		echo '<div id="realAd'.$adSpace.'" style="display: none">';
+		echo '<script type="text/javascript">ad_call('.$adSpace.', "'.$ad[0].'", "'.$ad[1].'");</script>';
+		echo '</div>';
+		echo '<script type="text/javascript">if(curAdSpaceId != -1) TieDivLib.tie("realAd'.$adSpace.'", "adSpace"+curAdSpaceId, "'.$ad[1].'");</script>';
+	}
+	echo '</div>';
+}
 echo '</div>';
+echo AdServer::getInstance()->getAd('js_bot2');
+echo AdServer::getInstance()->getAd('js_bot3');
+echo AdServer::getInstance()->getAd('js_bot4');
 $this->html('bottomscripts'); /* JS call to runBodyOnloadHook */
 $this->html('reporttime');
 wfRunHooks('SpecialFooter');
 wfProfileOut( __METHOD__ . '-body');
-?>
-<?php
-	echo AdEngine::getInstance()->getDelayedLoadingCode();
 ?>
 	</body>
 </html>

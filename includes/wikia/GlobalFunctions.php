@@ -9,7 +9,7 @@ if ( !defined( 'MEDIAWIKI' ) ) {
  */
 
 require( "$IP/extensions/wikia/AdServer.php" );
-require( "$IP/extensions/wikia/AdEngine/AdEngine.php" );
+require_once( "$IP/extensions/wikia/AdEngine/AdEngine.php" );
 require_once( "$IP/extensions/wikia/MergeFiles/MergeFiles.php" );
 
 /**
@@ -524,4 +524,64 @@ function wfWaitForSlavesExt( $maxLag, $cluster = null ) {
 			list( $host, $lag ) = $lb->getMaxLag();
 		}
 	}
+}
+
+/**
+ * wfGetCurrentUrl
+ *
+ * Get full url for request, used when $wgTitle is not available yet
+ * based on code from marco panichi
+ *
+ * @author Krzysztof Krzyżaniak <eloy@wikia-inc.com>
+ * @access public
+ *
+ * @return array	parts of current url
+ */
+function wfGetCurrentUrl() {
+	$arr = array();
+	$uri = $_SERVER['REQUEST_URI'];
+
+	/**
+	 * query
+	 */
+	$x = array_pad( explode( '?', $uri ), 2, false );
+	$arr[ "query" ] = ( $x[1] )? $x[1] : '' ;
+
+	/**
+	 * resource
+	 */
+	$x = array_pad( explode( '/', $x[0] ), 2, false );
+	$x_last = array_pop( $x );
+	if( strpos( $x_last, '.' ) === false ) {
+		$arr[ "resource" ] = '';
+		$x[] = $x_last;
+	}
+	else {
+		$arr[ "resource" ] = $x_last;
+	}
+
+	/**
+	 * path
+	 */
+	$arr[ "path" ] = implode( '/', $x );
+	rtrim( $arr[ "path"], "/" ); #--- old trick, faster than checking if / exists
+	$arr[ "path" ] .= '/';
+
+	/**
+	 * host
+	 */
+	$arr[ "host" ] = $_SERVER['SERVER_NAME'];
+
+	/**
+	 * scheme
+	 */
+	$server_prt = explode( '/', $_SERVER['SERVER_PROTOCOL'] );
+	$arr[ "scheme" ] = strtolower( $server_prt[0] );
+
+	/**
+	 * full url
+	 */
+	$arr[ "url" ] = $arr[ "scheme" ] . '://' . $arr[ "host" ] . $uri;
+
+	return $arr;
 }
