@@ -472,6 +472,9 @@ function showCarousel(e) {
 
 		Event.addListener(window, 'resize', getNumberForCarousel);
 	}
+	if (TieDivLibrary != 'undefined') {
+		TieDivLibrary.loop(3);	
+	}
 }
 
 function getNumberForCarousel() {

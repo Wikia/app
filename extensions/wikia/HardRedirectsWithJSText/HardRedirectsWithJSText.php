@@ -69,10 +69,11 @@ function jsRedirectedFromText($out){
         if (! $wgEnableHardRedirectsWithJSText){
                 return true;
         }
-        if(get_class($wgUser->getSkin()) != 'SkinMonaco') {
+        
+		if(get_class($wgUser->getSkin()) != 'SkinMonaco') {
                 return true;
         }
- 
+		
         $out->addInlineScript('
           var jsrdCookie="' . addslashes($wgCookiePrefix) . 'RedirectedFrom";
           var jsrdText="' . addslashes(wfMsg('redirectedfrom')) . '";
@@ -101,10 +102,17 @@ function jsRedirectedFromText($out){
  */
 function hardRedirectWithCookie($wgTitle, $target){
 
-        global $wgEnableHardRedirectsWithJSText, $wgUser;
+        global $wgEnableHardRedirectsWithJSText,$wgEnableHardRedirectsWithJSTextLimit, $wgUser;
         if(get_class($wgUser->getSkin()) != 'SkinMonaco') {
                 return true;
         }
+		//number of sequential redirects
+		if( empty( $wgEnableHardRedirectsWithJSTextLimit ) ){
+			$wgEnableHardRedirectsWithJSTextLimit = 3;
+		}
+		
+		$doredirect	= true;
+		
         if ($wgEnableHardRedirectsWithJSText){
                 global $wgOut, $wgCookiePrefix, $wgCookiePath, $wgCookieDomain,
                         $wgCookieSecure, $wgRequest;
@@ -113,11 +121,43 @@ function hardRedirectWithCookie($wgTitle, $target){
                          setcookie( $wgCookiePrefix.'RedirectedFrom',
                                 $wgTitle->getLocalUrl() . '|' . $wgTitle->getText(),
                                 time() + 30, $wgCookiePath, $wgCookieDomain, $wgCookieSecure );
-                }
-
-                if (($target !== false) && ($target instanceof Title)) {
+								
+						//get cookie if exists
+						$redirectsequence = array();
+						
+						if(!empty($_COOKIE[$wgCookiePrefix.'RedirectedTrail'])){
+						 $redirectsequence =  explode( '|', $_COOKIE[$wgCookiePrefix.'RedirectedTrail']);
+						}
+						
+						
+		                 if (($target !== false) && ($target instanceof Title)) {
+	                       $targetUrlMd =  md5( $target->getFullURL() );
+		                   setcookie( $wgCookiePrefix.'RedirectedTrail',
+                                implode('|', $redirectsequence) . '|' . $targetUrlMd,
+                                time() + 30, $wgCookiePath, $wgCookieDomain, $wgCookieSecure );
+    		             }
+						 
+						//check if current md5 exists delimited with | or we went through redirect limit
+						if( in_array( $targetUrlMd, $redirectsequence ) || ( count( $redirectsequence ) > $wgEnableHardRedirectsWithJSTextLimit ) ){
+							$doredirect	= false;
+						}
+                
+                if (($target !== false) && ($target instanceof Title) && ( $doredirect ) ) {
                         $wgOut->redirect( $target->getFullURL(), '301' );
+                }else{
+        
+		/*
+		   echo 'not redirecting ' . intval($doredirect);
+		   print_r($redirectsequence);
+		   echo $targetUrlMd;
+		*/		
+                	//no need to redirect
+  					//drop the cookie for trail and reset the count.. user need to refresh the page 
+   		            setcookie( $wgCookiePrefix.'RedirectedTrail',
+                              '',
+                              time() - 30, $wgCookiePath, $wgCookieDomain, $wgCookieSecure );
                 }
-        }
+        	}
+		}
         return true;
 }

@@ -181,10 +181,14 @@ class WikiFactoryHub {
 	 * @return array	array with category maps id => name
      */
     private function loadCategories() {
+      global $wgSharedDB ;
+	$tmp = array();
 
-		$tmp = array();
+
+	if( !$wgSharedDB ) {
+	  return array();
+	}
         wfProfileIn( __METHOD__ );
-
         $dbr = wfGetDB( DB_SLAVE );
 
         $oRes = $dbr->select(

@@ -1,5 +1,6 @@
 <?php
-require dirname(__FILE__) . '/ArticleAdLogic.php';
+
+require_once dirname(__FILE__) . '/ArticleAdLogic.php';
 
 $wgExtensionCredits['other'][] = array(
 	'name' => 'AdEngine',
@@ -13,9 +14,9 @@ interface iAdProvider {
 
 class AdEngine {
 
-	const cacheKeyVersion = "1.5";
-
+	const cacheKeyVersion = "1.9";
 	const cacheTimeout = 1800;
+	const noadgif = "http://images2.wikia.nocookie.net/common/wikia/noad.gif";
 
 	// TODO: pull these from wikicities.provider
 	private $providers = array('1' => 'DART', '2' => 'OpenX', '3' => 'Google', '-1' => 'Null');
@@ -45,7 +46,7 @@ class AdEngine {
 		$skin_name = 'monaco'; // Hard code for now.
 		global $wgMemc, $wgCityId;
 
-		$cacheKey = wfMemcKey('slots', $skin_name, self::cacheKeyVersion);
+		$cacheKey = wfMemcKey(__CLASS__ . 'slots', $skin_name, self::cacheKeyVersion);
 		$this->slots = $wgMemc->get($cacheKey);
 
 		if(is_array($this->slots)){
@@ -89,51 +90,79 @@ class AdEngine {
 		return true;
 	}
 
-	// For the selected provider, get an ad tag. Logic for hiding/displaying ads
-	// should be here, not in the skin.
-	public function getAd($slotname) {
-		global $wgShowAds, $wgUser;
 
-		if(empty($this->slots[$slotname])) {
-			$AdProviderNull=new AdProviderNull('Unrecognized slot', true);
-			return $AdProviderNull->getAd($slotname, array());
-
-		} else  if(empty($this->providers[$this->slots[$slotname]['provider_id']])) {
-			// Note: Don't throw an exception here. Fail gracefully for ads,
-			// don't under any circumstances fail the rendering of the page
-			$AdProviderNull=new AdProviderNull('Unrecognized provider_id', true);
-			return $AdProviderNull->getAd($slotname, $this->slots[$slotname]);
-
-		} else if ( $wgShowAds == false ){
-
-			$AdProviderNull=new AdProviderNull('$wgShowAd set to false', false);
-			return $AdProviderNull->getAd($slotname, $this->slots[$slotname]);
-
-		} else if ( is_object($wgUser) && $wgUser->isLoggedIn() && !$wgUser->getOption('showAds') ){
-
-			$AdProviderNull=new AdProviderNull('User is logged in', false);
-			return $AdProviderNull->getAd($slotname, $this->slots[$slotname]);
-
-		} else {
-
-			$provider = $this->getAdProvider($this->slots[$slotname]['provider_id']);
-			return $provider->getAd($slotname, $this->slots[$slotname]);
-
+	/* Category name/id is needed multiple times for multiple providers. Be gentle on our dbs by adding a thin caching layer. */
+	public function getCachedCategory(){
+		static $cat;
+		if (! empty($cat)){
+			// This function already called
+			return $cat;
 		}
+
+		global $wgMemc, $wgCityId;
+		$cacheKey = wfMemcKey(__CLASS__ . 'category', self::cacheKeyVersion);
+
+		$cat = $wgMemc->get($cacheKey);
+		if (!empty($cat)){
+			return $cat;
+		}
+
+		$hub = WikiFactoryHub::getInstance();
+		$cat = array(
+			'id'=>$hub->getCategoryId($wgCityId),
+			'name'=>$hub->getCategoryName($wgCityId)
+		);
+
+		$wgMemc->set($cacheKey, $cat, self::cacheTimeout);
+		return $cat;
 	}
 
-	private function getAdProvider($provider_id) {
-		if($this->providers[$provider_id] == 'DART') {
-			return AdProviderDART::getInstance();
-		} else if($this->providers[$provider_id] == 'OpenX') {
-			return AdProviderOpenX::getInstance();
-		} else if($this->providers[$provider_id] == 'Google') {
-			return AdProviderGoogle::getInstance();
+	// For the provided $slotname, get an ad tag. 
+	public function getAd($slotname) {
+
+		$AdProvider = $this->getAdProvider($slotname);
+		return $AdProvider->getAd($slotname, $this->slots[$slotname]);
+
+	}
+	
+	// Logic for hiding/displaying ads should be here, not in the skin.
+	private function getAdProvider($slotname) {
+		global $wgShowAds, $wgUser;
+
+
+		// Note: Don't throw an exception on error. Fail gracefully for ads,
+		// don't under any circumstances fail the rendering of the page.
+		// Instead, return a "AdProviderNull" object with an error message
+
+		if (empty($this->slots[$slotname])) {
+			return new AdProviderNull('Unrecognized slot', true);
+
+		} else if ($this->slots[$slotname]['enabled'] == 'No'){
+			return new AdProviderNull("Slot is disabled", false);
+
+		} else if (! ArticleAdLogic::isMandatoryAd($slotname) &&
+			     empty($_GET['showads']) && $wgShowAds == false ){
+			return new AdProviderNull('$wgShowAds set to false', false);
+
+		} else if (! ArticleAdLogic::isMandatoryAd($slotname) && empty($_GET['showads']) && 
+			   is_object($wgUser) && $wgUser->isLoggedIn() && !$wgUser->getOption('showAds') ){
+			return new AdProviderNull('User is logged in', false);
+
+ 	        } else if (empty($this->providers[$this->slots[$slotname]['provider_id']])) {
+
+			return new AdProviderNull('Unrecognized provider', true);
 		} else {
-			// Note: Don't throw an exception here. Fail gracefully for ads,
-			// don't under any circumstances fail the rendering of the page
-			return new AdProviderNull("Unrecognized provider_id ($provider_id)", true);
+
+			// Error conditions out of the way, send back the appropriate Ad provider
+			switch ($this->providers[$this->slots[$slotname]['provider_id']]){
+				case 'DART': return AdProviderDART::getInstance();
+				case 'OpenX': return AdProviderOpenX::getInstance();
+				case 'Google': return AdProviderGoogle::getInstance();
+			}
 		}
+
+		// Should never happen, but be sure that an object is always returned.
+		return new AdProviderNull('Logic error in ' . __METHOD__, true);
 	}
 
 	/* Size is stored as $widthx$size character column. Split here.
@@ -160,26 +189,27 @@ class AdEngine {
 	   to be loaded at the bottom of the page with an absolute position.
 	   Keep track fo the placeholders for future refence */
 	public function getPlaceHolderDiv($slotname, $reserveSpace=true){
-		$style = "";
-
-		if (! empty($this->slots[$slotname])){
-			$styles = array();
-			$dim = self::getHeightWidthFromSize($this->slots[$slotname]['size']);
-			if (!empty($dim['width'])){
-				array_push($styles, "width: {$dim['width']}px;");
-				array_push($styles, "height: {$dim['height']}px;");
-			}
-
-			if($this->slots[$slotname]['enabled'] == 'No' || $reserveSpace == false){
-				array_push($styles, "display: none;");
-			}
-
-			$style = ' style="'. implode(" ", $styles) .'"';
-
-			// We will use this at the bottom of the page for ads.
-			$this->placeholders[] = $slotname;
-
+		$AdProvider = $this->getAdProvider($slotname);
+		// If it's a Null Ad, just return an empty comment, and don't store in place holder array.
+		if ($AdProvider instanceof AdProviderNull){
+			return "<div id=\"$slotname\" style=\"display:none\">'" . $AdProvider->getAd($slotname, array()) . "</div>";
 		}
+
+		$styles = array();
+		$dim = self::getHeightWidthFromSize($this->slots[$slotname]['size']);
+		if (!empty($dim['width'])){
+			array_push($styles, "width: {$dim['width']}px;");
+			array_push($styles, "height: {$dim['height']}px;");
+		}
+
+		if($this->slots[$slotname]['enabled'] == 'No' || $reserveSpace == false){
+			array_push($styles, "display: none;");
+		}
+
+		$style = ' style="'. implode(" ", $styles) .'"';
+
+		// We will use this at the bottom of the page for ads.
+		$this->placeholders[] = $slotname;
 
 		return "<div id=\"$slotname\"$style></div>";
 	}
@@ -194,17 +224,30 @@ class AdEngine {
 		}
 
 		$out = "<!-- #### BEGIN " . __CLASS__ . '::' . __METHOD__ . " ####-->\n";
-		$out .= '<script type="text/javascript">TieDivLibrary.timer();</script>';
+		$out .= '<script type="text/javascript">TieDivLibrary.timer();</script>' . "\n";
 		foreach ($this->placeholders as $slotname){
-			$class = strpos($slotname, 'SPOTLIGHT') ? ' class="wikia_spotlight"' : ' class="wikia_ad"';
-			$out .= '<div id="' . $slotname . '_load"'.$class.'>' . $this->getAd($slotname) . "</div>\n";
-			// FIXME! Probably the parameter for function indexOf should be changed, talk to Michael about it
+			$AdProvider = $this->getAdProvider($slotname);
+
+			// Hmm. Should we just use: class="wikia_$adtype"?
+			$class = self::getAdType($slotname) == 'spotlight' ? ' class="wikia_spotlight"' : ' class="wikia_ad"';
+			$out .= '<div id="' . $slotname . '_load"'.$class.'>' . $AdProvider->getAd($slotname, $this->slots[$slotname]) . "</div>\n";
+
+			/* This image is what will be returned if there is NO AD to be displayed.
+ 			 * If this happens, we want leave the div collapsed.
+			 * We tried for a more elegant solution, but were a bit constrained on the
+			 * code that could be returned from the ad networks we deal with.
+			 * I'd like to see a better solution for this, someday
+			 * See Christian or Nick for more info.
+			*/
 			$out .= '<script type="text/javascript">
-				if($("'.$slotname.'_load").innerHTML.indexOf("style=\"width: 0px; height: 0px;\" width=\"0\" height=\"0\"") == -1) {
+				// expand the div, as long as there is an ad returned.
+				if($("'.$slotname.'_load").innerHTML.indexOf("' . self::noadgif . '") == -1) {
 					YAHOO.util.Dom.setStyle("'. $slotname .'", "display", "block");
 				}
-				</script>';
-			$out .= '<script type="text/javascript">TieDivLibrary.tie("'. $slotname .'");</script>';
+	
+				// Absolutely position the ${slotname}_load div over the top of the placeholder
+				TieDivLibrary.tie("'. $slotname .'");
+				</script>' . "\n";
 		}
 		$out .= "<!-- #### END " . __CLASS__ . '::' . __METHOD__ . " ####-->\n";
 		return $out;
@@ -213,4 +256,30 @@ class AdEngine {
 	public function getPlaceHolders(){
 		return $this->placeholders;
 	}
+
+
+        /* Sometimes there is different behavior for different types of ad. Reduce the number of
+         * hacks and hard coded slot names by providing a grouping on type of based on size.
+         * Possible return values:
+         *  "spotlight" , "leaderboard", "boxad", "skyscraper"
+         *
+         * NULL will be returned if this function is unable to determine the type of ad
+         *
+	 * Long term, this should be a column in the ad_slots table. This will happen when
+	 * we build the UI for managing those tables.
+         */
+        public function getAdType($slotname){
+                if (empty($this->slots[$slotname]['size'])){
+                        return NULL;
+                }  
+
+		switch ($this->slots[$slotname]['size']){
+			case '200x75': return 'spotlight';
+			case '728x90': return 'leaderboard';
+			case '300x250': return 'boxad';
+			case '160x600': return 'skyscraper';
+			default: return NULL;
+		}
+        }
+
 }

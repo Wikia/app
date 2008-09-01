@@ -40,6 +40,7 @@ class AdProviderDART implements iAdProvider {
 							'Toys' => 'wka.toys',
 							'Travel' => 'wka.travel');
 
+
 	public function getAd($slotname, $slot){
 
 		/* Nick wrote: Note, be careful of the order of the key values. From Dart Webmaster guide:
@@ -99,10 +100,10 @@ EOT;
 	}
 
 	function getDartSite(){
-		global $wgCat;
-		if(!empty($wgCat['name'])) {
-			if(!empty($this->sites[$wgCat['name']])) {
-				return $this->sites[$wgCat['name']];
+		$cat=AdEngine::getCachedCategory();
+		if(!empty($cat['name'])) {
+			if(!empty($this->sites[$cat['name']])) {
+				return $this->sites[$cat['name']];
 			}
 		}
 		return 'wka.wikia';
