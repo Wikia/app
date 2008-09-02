@@ -1,6 +1,6 @@
 ﻿/*
  * FCKeditor - The text editor for Internet - http://www.fckeditor.net
- * Copyright (C) 2003-2007 Frederico Caldeira Knabben
+ * Copyright (C) 2003-2008 Frederico Caldeira Knabben
  *
  * == BEGIN LICENSE ==
  *
@@ -45,6 +45,7 @@ InsertLinkLbl		: "Collegamento",
 InsertLink			: "Inserisci/Modifica collegamento",
 RemoveLink			: "Elimina collegamento",
 Anchor				: "Inserisci/Modifica Ancora",
+AnchorDelete		: "Rimuovi Ancora",
 InsertImageLbl		: "Immagine",
 InsertImage			: "Inserisci/Modifica immagine",
 InsertFlashLbl		: "Oggetto Flash",
@@ -70,6 +71,7 @@ RightJustify		: "Allinea a destra",
 BlockJustify		: "Giustifica",
 DecreaseIndent		: "Riduci rientro",
 IncreaseIndent		: "Aumenta rientro",
+Blockquote			: "Blockquote",	//MISSING
 Undo				: "Annulla",
 Redo				: "Ripristina",
 NumberedListLbl		: "Elenco numerato",
@@ -103,20 +105,27 @@ SelectionField	: "Menu di selezione",
 ImageButton		: "Bottone immagine",
 
 FitWindow		: "Massimizza l'area dell'editor",
+ShowBlocks		: "Visualizza Blocchi",
 
 // Context Menu
 EditLink			: "Modifica collegamento",
 CellCM				: "Cella",
 RowCM				: "Riga",
 ColumnCM			: "Colonna",
-InsertRow			: "Inserisci riga",
+InsertRowAfter		: "Inserisci Riga Dopo",
+InsertRowBefore		: "Inserisci Riga Prima",
 DeleteRows			: "Elimina righe",
-InsertColumn		: "Inserisci colonna",
+InsertColumnAfter	: "Inserisci Colonna Dopo",
+InsertColumnBefore	: "Inserisci Colonna Prima",
 DeleteColumns		: "Elimina colonne",
-InsertCell			: "Inserisci cella",
+InsertCellAfter		: "Inserisci Cella Dopo",
+InsertCellBefore	: "Inserisci Cella Prima",
 DeleteCells			: "Elimina celle",
 MergeCells			: "Unisce celle",
-SplitCell			: "Dividi celle",
+MergeRight			: "Unisci a Destra",
+MergeDown			: "Unisci in Basso",
+HorizontalSplitCell	: "Dividi Cella Orizzontalmente",
+VerticalSplitCell	: "Dividi Cella Verticalmente",
 TableDelete			: "Cancella Tabella",
 CellProperties		: "Proprietà cella",
 TableProperties		: "Proprietà tabella",
@@ -134,7 +143,7 @@ SelectionFieldProp	: "Proprietà menu di selezione",
 TextareaProp		: "Proprietà area di testo",
 FormProp			: "Proprietà modulo",
 
-FontFormats			: "Normale;Formattato;Indirizzo;Titolo 1;Titolo 2;Titolo 3;Titolo 4;Titolo 5;Titolo 6;Paragrafo (DIV)",		//REVIEW : Check _getfontformat.html
+FontFormats			: "Normale;Formattato;Indirizzo;Titolo 1;Titolo 2;Titolo 3;Titolo 4;Titolo 5;Titolo 6;Paragrafo (DIV)",
 
 // Alerts and Messages
 ProcessingXHTML		: "Elaborazione XHTML in corso. Attendere prego...",
@@ -229,7 +238,7 @@ DlgLnkURL			: "URL",
 DlgLnkAnchorSel		: "Scegli Ancora",
 DlgLnkAnchorByName	: "Per Nome",
 DlgLnkAnchorById	: "Per id elemento",
-DlgLnkNoAnchors		: "<Nessuna ancora disponibile nel documento>",		//REVIEW : Change < and > with ( and )
+DlgLnkNoAnchors		: "(Nessuna ancora disponibile nel documento)",
 DlgLnkEMail			: "Indirizzo E-Mail",
 DlgLnkEMailSubject	: "Oggetto del messaggio",
 DlgLnkEMailBody		: "Corpo del messaggio",
@@ -322,6 +331,9 @@ DlgCellBackColor	: "Colore sfondo",
 DlgCellBorderColor	: "Colore bordo",
 DlgCellBtnSelect	: "Scegli...",
 
+// Find and Replace Dialog
+DlgFindAndReplaceTitle	: "Cerca e Sostituisci",
+
 // Find Dialog
 DlgFindTitle		: "Trova",
 DlgFindFindBtn		: "Trova",
@@ -344,10 +356,9 @@ PasteAsText		: "Incolla come testo semplice",
 PasteFromWord	: "Incolla da Word",
 
 DlgPasteMsg2	: "Incolla il testo all'interno dell'area sottostante usando la scorciatoia di tastiere (<STRONG>Ctrl+V</STRONG>) e premi <STRONG>OK</STRONG>.",
-DlgPasteSec		: "Because of your browser security settings, the editor is not able to access your clipboard data directly. You are required to paste it again in this window.",	//MISSING
+DlgPasteSec		: "A causa delle impostazioni di sicurezza del browser,l'editor non è in grado di accedere direttamente agli appunti. E' pertanto necessario incollarli di nuovo in questa finestra.",
 DlgPasteIgnoreFont		: "Ignora le definizioni di Font",
 DlgPasteRemoveStyles	: "Rimuovi le definizioni di Stile",
-DlgPasteCleanBox		: "Svuota area di testo",
 
 // Color Picker
 ColorAutomatic	: "Automatico",

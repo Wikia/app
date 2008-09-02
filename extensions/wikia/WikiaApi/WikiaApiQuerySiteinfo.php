@@ -56,7 +56,7 @@ class WikiaApiQuerySiteinfo extends ApiQuerySiteinfo {
 		$data = array ();
 		foreach ($this->variablesList as $id => $variableName) {
 			$data[$id] = array( 'id' => $variableName );
-			ApiResult :: setContent( $data[$id], array_key_exists($variableName, $GLOBALS) ? $GLOBALS[$variableName] : "" );
+			ApiResult :: setContent( $data[$id], (array_key_exists($variableName, $GLOBALS) && !is_null($GLOBALS[$variableName])) ? $GLOBALS[$variableName] : "" );
 		}
 		
 		$result = $this->getResult();

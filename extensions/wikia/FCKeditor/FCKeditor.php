@@ -1,69 +1,107 @@
 <?php
-if (!defined('MEDIAWIKI')) die();
+
+# Not a valid entry point, skip unless MEDIAWIKI is defined
+if (!defined('MEDIAWIKI')) {
+	echo <<<HEREDOC
+To install my extension, put the following line in LocalSettings.php:
+require_once( "\$IP/extensions/FCKeditor/FCKeditor.php" );
+HEREDOC;
+	exit( 1 );
+}
+
 /*
- * FCKeditor extension for MediaWiki
- * Author: Inez Korczyński ( inez at wikia dot com )
- * Based on: FCKeditor extension
- * To enable it please set variables: $wgRawHtml and $wgFCKUseEditor to true in LocalSettings.php
+This library is free software; you can redistribute it and/or
+modify it under the terms of the GNU Lesser General Public
+License as published by the Free Software Foundation; either
+version 2.1 of the License, or (at your option) any later version.
+
+This library is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+Lesser General Public License for more details.
+
+You should have received a copy of the GNU Lesser General Public
+License along with this library; if not, write to the Free Software
+Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA
+*/
+
+global $wgFCKWikiTextBeforeParse ;
+
+require_once $IP . "/includes/GlobalFunctions.php";
+require_once $IP . "/includes/EditPage.php";
+
+if (version_compare("1.13alpha", $wgVersion, "<=")) {
+    require_once $IP . "/includes/parser/ParserOptions.php";
+    require_once $IP . "/includes/parser/Parser.php";
+    require_once $IP . "/includes/Preprocessor.php";
+    require_once $IP . "/includes/Preprocessor_DOM.php";
+    require_once dirname(__FILE__) . DIRECTORY_SEPARATOR . "FCKeditorParser.body.php";
+}
+else if (version_compare("1.12", $wgVersion, "<")) {
+    require_once $IP . "/includes/ParserOptions.php";
+    require_once $IP . "/includes/Parser.php";
+    require_once $IP . "/includes/Preprocessor.php";
+    require_once $IP . "/includes/Preprocessor_DOM.php";
+    require_once dirname(__FILE__) . DIRECTORY_SEPARATOR . "FCKeditorPreprocessor.php";
+    require_once dirname(__FILE__) . DIRECTORY_SEPARATOR . "FCKeditorParser.body.php";
+}
+else {
+    require_once $IP . "/includes/ParserOptions.php";
+    require_once $IP . "/includes/Parser.php";
+    require_once dirname(__FILE__) . DIRECTORY_SEPARATOR . "FCKeditorParser.body.php";
+
+}
+
+require_once dirname(__FILE__) . DIRECTORY_SEPARATOR . "FCKeditorSajax.body.php";
+require_once dirname(__FILE__) . DIRECTORY_SEPARATOR . "FCKeditorParserOptions.body.php";
+require_once dirname(__FILE__) . DIRECTORY_SEPARATOR . "FCKeditorSkin.body.php";
+require_once dirname(__FILE__) . DIRECTORY_SEPARATOR . "FCKeditorEditPage.body.php";
+require_once dirname(__FILE__) . DIRECTORY_SEPARATOR . "FCKeditor.body.php";
+require_once dirname(__FILE__) . DIRECTORY_SEPARATOR . "fckeditor" . DIRECTORY_SEPARATOR . "fckeditor.php";
+
+if (empty ($wgFCKEditorExtDir)) {
+    $wgFCKEditorExtDir = "extensions/FCKeditor" ;
+}
+if (empty ($wgFCKEditorDir)) {
+    $wgFCKEditorDir = "extensions/FCKeditor/fckeditor" ;
+}
+if (empty ($wgFCKEditorToolbarSet)) {
+    $wgFCKEditorToolbarSet = "Wiki" ;
+}
+if (empty ($wgFCKEditorHeight)) {
+    $wgFCKEditorHeight = "0" ; // "0" for automatic ("300" minimum).
+}
+
+/**
+ * Enable use of AJAX features.
  */
+$wgUseAjax = true;
+$wgAjaxExportList[] = 'wfSajaxSearchImageFCKeditor';
+$wgAjaxExportList[] = 'wfSajaxSearchArticleFCKeditor';
+$wgAjaxExportList[] = 'wfSajaxWikiToHTML';
+$wgAjaxExportList[] = 'wfSajaxGetImageUrl';
+$wgAjaxExportList[] = 'wfSajaxGetMathUrl';
+$wgAjaxExportList[] = 'wfSajaxSearchTemplateFCKeditor';
+$wgAjaxExportList[] = 'wfSajaxSearchSpecialTagFCKeditor';
 
-$wgHooks['EditPage::showEditForm:initial'][]    = 'wfFCKeditorAddFCKScript';
-$wgHooks['ArticleAfterFetchContent'][]          = 'wfFCKeditorCheck';
-$wgHooks['ArticleSave'][]			= 'wfFCKeditorAddHTMLtag';
+$wgExtensionCredits['other'][] = array(
+"name" => "FCKeditor extension",
+"author" => "FCKeditor.net (inspired by the code written by Mafs [Meta])",
+"version" => 'fckeditor/mw-extension $Rev$ 2008',
+"url" => "http://meta.wikimedia.org/wiki/FCKeditor",
+"description" => "FCKeditor extension"
+);
 
-function wfFCKeditorAddFCKScript($editpage)
-{
-	global $wgOut, $wgFCKUseEditor;
+$fckeditor = new FCKeditor("fake");
+$wgFCKEditorIsCompatible = $fckeditor->IsCompatible();
 
-	if ( $wgFCKUseEditor == true )
-	{
-		$wgOut->addScript( '<script type="text/javascript" src="extensions/wikia/FCKeditor/fckeditor/fckeditor.js"></script>' );
-		$wgOut->addScript( "
-<script type=\"text/javascript\">
-function onLoadFCK () {
-	var oFCKeditor = new FCKeditor('wpTextbox1');
-	oFCKeditor.BasePath = \"extensions/wikia/FCKeditor/fckeditor/\";
-	if (document.getElementById(\"wpTextbox1\")) {
-		oFCKeditor.Height = \"600\";
-		oFCKeditor.ReplaceTextarea();
-		var oDiv = document.getElementById(\"toolbar\");
-		oDiv.style.cssText = 'display: none;';
-	}
-}
-addOnloadHook(onLoadFCK);
-</script>\n" );
-	}
-	return true;
-}
+$oFCKeditorExtension = new FCKeditor_MediaWiki();
+$oFCKeditorExtension->registerHooks();
 
-function wfFCKeditorCheck ($q, $text)
-{
-        global $wgOut, $wgFCKUseEditor, $wgRequest;
 
-        $action = $wgRequest->getVal( 'action' );
 
-        if ( $action == 'edit' && $wgFCKUseEditor == true )
-	{
-		if ( strpos( $text, '<html>' ) == 0 && strpos( $text, '</html>' ) == ( strlen( $text ) - 7 ) )
-        	{
-        		$text = substr($text, 6, strlen( $text ) - 7 - 6);
-        	}
-        	else
-        	{
-        		$text = $wgOut->parse($text);
-        	}
-        }
-        return true;
-}
 
-function wfFCKeditorAddHTMLtag(&$article, &$user, &$text, &$summary, $minor, $watch, $sectionanchor, &$flags)
-{
-	global $wgFCKUseEditor;
-	if ($wgFCKUseEditor == true )
-	{
-		$text = '<html>'.$text.'</html>';
-	}
-	return true;
-}
 
-?>
+
+
+
