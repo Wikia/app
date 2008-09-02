@@ -1,14 +1,4 @@
 <?php
-/* We need an easy way to switch back and forth between Old Monaco (AdServer) and New Monaco (AdEngine)
- * Monaco_AdServer, and the if statement below, can be removed once everyone is using $wgEnableAdEngine 
-*/
-global $wgEnableAdEngine;
-if ($wgEnableAdEngine != true){
-	// Use the old code
-        require dirname(__FILE__) . '/Monaco_200808.4.php';
-        return;
-}
-
 /**
  * Monaco skin
  *
@@ -955,6 +945,18 @@ class MonacoTemplate extends QuickTemplate {
 		<meta http-equiv="Content-Type" content="<?php $this->text('mimetype') ?>; charset=<?php $this->text('charset') ?>" />
                 <!-- Skin = <?php echo basename(__FILE__) ?> -->
 		<?php $this->html('headlinks') ?>
+		<?php /* TODO move this to allinone, and find a better spot for this code after I talk to Christian. 
+			 This is an experiment to see if moving it higher on the page makes it better */?>
+		<script type="text/javascript" src="/extensions/wikia/AdEngine/AdEngine.js"></script>
+		<?php 
+		/* Note: This was placed at the top of the page intentionally, so that we
+		   get more accurate stats. Get Michael's permission before moving.
+		*/?>
+		<script src="http://www.google-analytics.com/urchin.js" type="text/javascript"></script>
+		<script type="text/javascript">_uff=0;_uacct="UA-288915-1";_userv=1;urchinTracker();_userv=1;</script>
+		<script type="text/javascript" src="http://edge.quantserve.com/quant.js"></script>
+		<script type="text/javascript">_qacct="p-8bG6eLqkH6Avk";quantserve();</script>
+
 		<title><?php $this->text('pagetitle') ?></title>
 		<?php print Skin::makeGlobalVariablesScript( $this->data ); ?>
 		<style type="text/css">/*<![CDATA[*/
@@ -1287,7 +1289,7 @@ if(isset($this->data['articlelinks']['right'])) {
 
 			<!-- ARTICLE FOOTER -->
 <?php		wfProfileIn( __METHOD__ . '-articlefooter'); ?>
-<?php
+<?php 
 global $wgTitle, $wgOut;
 $displayArticleFooter = $wgTitle->exists() && $wgTitle->isContentPage() && !$wgTitle->isTalkPage() && $wgOut->isArticle();
 
@@ -1420,6 +1422,13 @@ if(!$custom_article_footer && $displayArticleFooter) {
 		}
 		$this->html('headscripts');
 	}
+
+if (in_array("TOP_RIGHT_BOXAD", AdEngine::getInstance()->getPlaceholders())){
+	// Reset elements with a "clear:none" to "clear:right" when the box ad is displayed
+        // Fixes pages like this: http://en.dcdatabaseproject.com/Fang_Zhifu_(New_Earth)
+	echo '<script type="text/javascript">AdEngine.resetCssClear("right");</script>' . "\n";
+}
+
 ?>
 <?php		wfProfileIn( __METHOD__ . '-monacofooter'); ?>
 		<div id="monaco_footer" class="reset">
