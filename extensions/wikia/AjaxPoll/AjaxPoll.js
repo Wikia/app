@@ -5,7 +5,9 @@ YAHOO.namespace( "AjaxPoll" );
 
 YAHOO.AjaxPoll.Callback = {
 	success: function( response ) {
-		var answer = YAHOO.Tools.JSONParse( response.responseText );
+//	var answer = YAHOO.Tools.JSONParse( response.responseText );
+// simple hack to avoid YUI "parseJSON error":
+		var answer = eval('(' + response.responseText + ')');
 		var votes = answer["votes"];
 		/**
 		 * get all spans with class "wpBar<id>"

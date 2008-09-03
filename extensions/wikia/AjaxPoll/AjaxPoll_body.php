@@ -359,14 +359,21 @@ class AjaxPollClass {
 	 * @return array	rendered HTML answer and status of operation
 	 */
 	public function doSubmit( &$request ) {
+		global $wgUser, $wgTitle, $parserMemc;
 
-		$values = $request->getValues();
 		$status = false;
 		$vote = $request->getVal( "wpPollRadio" . $this->mId, null );
 
 		if( !is_null( $vote ) ) {
 			if( $this->doVote( $vote ) ) {
 				$status = wfMsg( "ajaxpoll_ThankYou" );
+				// invalidate cache
+				$wgTitle->invalidateCache();
+
+				// clear parser cache
+				$oArticle = new Article($wgTitle);
+				$parserCache =& ParserCache::singleton();
+				$parserMemc->set( $parserCache->getKey($oArticle, $wgUser), null, 0 );
 			}
 			else {
 				$status = wfMsg( "ajaxpoll_Error" );
