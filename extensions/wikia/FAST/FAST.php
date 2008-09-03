@@ -1,4 +1,11 @@
 <?php
+/****************
+
+FAST has been disabled from this release forward 
+
+***************/
+return;
+
 if(!defined('MEDIAWIKI')) {
 	die(1);
 }

@@ -1275,7 +1275,7 @@ if(isset($this->data['articlelinks']['right'])) {
 					?>
 					<!-- start content -->
 					<?php $this->html('bodytext') ?>
-					<?php if($this->data['catlinks']) { $this->html('catlinks'); } ?>
+					<?php if($this->data['catlinks']) { ?><div id="catlinks"><?php       $this->html('catlinks') ?></div><?php } ?>
 					<!-- end content -->
 					<div class="visualClear"></div>
 				</div>
