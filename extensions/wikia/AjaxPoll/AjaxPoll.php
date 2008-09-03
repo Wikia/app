@@ -39,10 +39,10 @@ require_once( dirname(__FILE__) . '/AjaxPoll_body.php' );
  * @global
  */
 function wfAjaxPollTag() {
-    global $wgParser, $wgOut, $wgJsMimeType, $wgScriptPath, $wgMergeStyleVersionJS;
+	global $wgParser, $wgOut, $wgJsMimeType, $wgScriptPath, $wgMergeStyleVersionJS;
 	$rand = $wgMergeStyleVersionJS;
 
-    $wgParser->setHook( "apoll", array( "AjaxPollClass", "renderFromTag" ) );
+	$wgParser->setHook( "poll", array( "AjaxPollClass", "renderFromTag" ) );
 	$wgOut->addScript( "<script type=\"{$wgJsMimeType}\" src=\"{$wgScriptPath}/extensions/wikia/AjaxPoll/AjaxPoll.js?{$rand}\" ></script>" );
 	$wgOut->addScript( "<link rel=\"stylesheet\" type=\"text/css\" href=\"{$wgScriptPath}/extensions/wikia/AjaxPoll/AjaxPoll.css?{$rand}\" />" );
 }
@@ -59,7 +59,7 @@ function wfAjaxPollTag() {
 function axAjaxPollSubmit() {
 	global $wgRequest;
 
-	$pool_id = $wgRequest->getVal( "wpPollId", null );
+	$pool_id = $wgRequest->getVal( "wpPollId", null );	
 	$poll = AjaxPollClass::newFromId( $pool_id );
 
 	return Wikia::json_encode( $poll->doSubmit( $wgRequest ) );
