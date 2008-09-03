@@ -150,7 +150,7 @@ EOT;
 		$out = substr($out, 0, 5); // limited to 5 chars
 
 		if ($keyname != $out){
-			trigger_error("DART key-name was invalid, changed from '$keyname' to '$out'", E_USER_NOTICE);
+		//	trigger_error("DART key-name was invalid, changed from '$keyname' to '$out' for {$_SERVER['REQUEST_URI']}", E_USER_NOTICE);
 		}
 
 		return $out;
@@ -176,7 +176,7 @@ EOT;
 		}
 
 		if ($keyvalue != $out){
-			trigger_error("DART key-value was invalid, changed from '$keyvalue' to '$out'", E_USER_NOTICE);
+		//	trigger_error("DART key-value was invalid, changed from '$keyvalue' to '$out' for {$_SERVER['REQUEST_URI']}", E_USER_NOTICE);
 		}
 
 		return urlencode($out);

@@ -1,4 +1,5 @@
-/* Utility functions related to AdEngine
+/**
+ * Utility functions related to AdEngine
  * @author Nick Sullivan
 */
 
@@ -6,7 +7,8 @@ function AdEngine (){
 	this.bodyWrapper = 'bodyContent';
 }
 
-/* For pages that have divs floated right, clear right so they appear under a box ad
+/**
+ * For pages that have divs floated right, clear right so they appear under a box ad
  * Param side should be either "left" or "right"
  * Code pulled originally from FAST.js, with some modifications.
  * @author Inez Korczynski, lightly modified by Nick Sullivan
@@ -32,8 +34,8 @@ AdEngine.resetCssClear = function (side) {
  * so that we know what colors to display for ads. For example, 
  * if the site has a black background, call a black ad from Google
  * Code pulled originally from FAST.js, with some modifications.
-
- * @author Inez Korczynski, repackage into AdEngin by Nick Sullivan
+ * 
+ * @author Inez Korczynski, repackaged into AdEngine by Nick Sullivan
  */
 AdEngine.getAdColor = function (type) {
 
