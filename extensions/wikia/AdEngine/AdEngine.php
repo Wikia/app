@@ -55,12 +55,15 @@ class AdEngine {
 		}
 
 		$db = wfGetDB(DB_SLAVE);
+		$ad_slot_table = wfSharedTable('ad_slot');
+		$ad_slot_override_table = wfSharedTable('ad_slot_override');
+		$ad_provider_value_table = wfSharedTable('ad_provider_value');
 
 		$sql = "SELECT ad_slot.as_id, ad_slot.slot, ad_slot.size,
 				COALESCE(adso.provider_id, ad_slot.default_provider_id) AS provider_id,
 				COALESCE(adso.enabled, ad_slot.default_enabled) AS enabled
-				FROM wikicities.ad_slot
-				LEFT OUTER JOIN wikicities.ad_slot_override AS adso
+				FROM $ad_slot_table
+				LEFT OUTER JOIN $ad_slot_override_table AS adso
 				  ON ad_slot.as_id = adso.as_id AND city_id=".intval($wgCityId)."
 				WHERE skin='".$db->strencode($skin_name)."'";
 
@@ -75,7 +78,7 @@ class AdEngine {
 			);
 		}
 
-		$sql = "SELECT * FROM wikicities.ad_provider_value WHERE
+		$sql = "SELECT * FROM $ad_provider_value_table WHERE
 			 (city_id = ".intval($wgCityId)." OR city_id IS NULL) ORDER by city_id";
 		$res = $db->query($sql);
 		while($row = $db->fetchObject($res)) {
@@ -149,19 +152,29 @@ class AdEngine {
 			return new AdProviderNull('User is logged in', false);
 
  	        } else if (empty($this->providers[$this->slots[$slotname]['provider_id']])) {
+			return new AdProviderNull('Empty provider id', true);
 
-			return new AdProviderNull('Unrecognized provider', true);
  	        } else if ($wgLanguageCode != 'en' ){
 			// Different settings for non english wikis.
 			if ( AdEngine::getInstance()->getAdType($slotname) == 'spotlight' ){
 				return AdProviderOpenX::getInstance();
 			} else {
-				return new AdProviderNull('Non English wiki', false);
+				// Google's TOS prevents serving ads for some languages
+				if (in_array($wgLanguageCode, AdProviderGoogle::getSupportedLanguages())){
+					return AdProviderGoogle::getInstance();
+				} else {
+					return new AdProviderNull("Unsupported language for Google Adsense ($wgLanguageCode)", false);
+				}
 			}
 		} else {
+			if (!empty($_GET['forceProviderid'])){
+				$provider_id = $_GET['forceProviderid'];
+			} else {
+				$provider_id = $this->slots[$slotname]['provider_id'];
+			}
 			
 			// Error conditions out of the way, send back the appropriate Ad provider
-			switch ($this->providers[$this->slots[$slotname]['provider_id']]){
+			switch ($this->providers[$provider_id]){
 				case 'DART': return AdProviderDART::getInstance();
 				case 'OpenX': return AdProviderOpenX::getInstance();
 				case 'Google': return AdProviderGoogle::getInstance();

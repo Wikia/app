@@ -26,9 +26,7 @@ FCKConfig.ForcePasteAsPlainText = false ;
 FCKConfig.FontFormats	= 'p;h2;h3;h4;h5;h6;pre' ;
 
 FCKConfig.AutoDetectLanguage	= false ;
-FCKConfig.DefaultLanguage		= 'en' ;
-
-// FCKConfig.DisableObjectResizing = true ;
+FCKConfig.DefaultLanguage	= 'en' ;
 
 FCKConfig.EditorAreaStyles = '\
 .FCK__MWRef, .FCK__MWSpecial, .FCK__MWReferences, .FCK__MWNowiki, .FCK__MWIncludeonly, .FCK__MWNoinclude, .FCK__MWOnlyinclude, .FCK__MWGallery \

@@ -6,7 +6,7 @@
  * @package MediaWiki
  * @subpackage Extensions
  *
- * @author Maciej Brencz <macbre@wikia.com>
+ * @author Maciej Brencz <macbre@wikia-inc.com>
  * @license http://www.gnu.org/copyleft/gpl.html GNU General Public License 2.0 or later
  *
  */

@@ -1,5 +1,3 @@
-var AdsCB = Math.floor(Math.random()*99999999); // generate random number to use as a cache buster during the call for ad (OpenX and DART)
-
 /**
  * http://www.hedgerwow.com/360/dhtml/js-onfontresize2.html
  */
@@ -75,7 +73,7 @@ TieDivLibrary = new function() {
 
 	this.tie = function(slotname) {
 		items.push([slotname]);
-	}
+	};
 
 	this.calculate = function() {
 		YAHOO.log('calculate()', 'info', 'TieDivLibrary');
@@ -96,7 +94,7 @@ TieDivLibrary = new function() {
 				});
 			}
 		}
-	}
+	};
 
 	this.timer = function() {
 		TieDivLibrary.calculate();
@@ -104,14 +102,14 @@ TieDivLibrary = new function() {
 		if(loopCount > 0) {
 			setTimeout(TieDivLibrary.timer, 350);
 		}
-	}
+	};
 
 	this.loop = function(count) {
 		var go = false;
 		if (loopCount <= 0) go = true;
 		loopCount = count;
 		if (go) TieDivLibrary.timer();
-	}
+	};
 
 	YAHOO.util.Event.on(window, 'load', function() {
 		setTimeout(function() { loopCount = 0; }, 2000);
@@ -130,4 +128,4 @@ TieDivLibrary = new function() {
 		TieDivLibrary.loop(3);
 	});
 
-}
+};

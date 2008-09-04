@@ -598,7 +598,11 @@ li.WidgetMostPopularThumb
 	 background-image: url('../icons/widget_contribs.png');
 	 text-indent: -500px;
 }
-
+.WidgetNewPagesThumb
+{
+	 background-image: url('../icons/widget_new_pages.png');
+	 text-indent: -500px;
+}
 
 
 /* RTL fixes */

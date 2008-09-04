@@ -405,42 +405,6 @@ sEditorAreaCSS += ",'.implode(',', $userStyles).'";
 		$wgOut->addScript ($script);
                 $wgOut->addScript ('<script type="text/javascript" src="' . $wgFCKEditorExtDir . '/FCKeditor_body.js?' . $wgStyleVersion . '"></script>') ;
 
-/*
-$script .= <<<HEREDOC
-<script type="text/javascript">
-function showSource() {
-	var wp = document.getElementById("wpDiff");
-	var s = document.createElement("input");
-	s.type="submit";
-	s.value="Wiki2HTML";
-	s.name="Wiki2HTML";
-	s.onclick = function wiki2html() {
-		var oEditor = FCKeditorAPI.GetInstance('wpTextbox1');
-		WikiToHTML_Call();
-		return false;
-	}
-	wp.parentNode.insertBefore(s, wp.nextSibling);
-}
-
-var sajax_debug_mode = false;
-var sajax_request_type = "GET";
-
-function WikiToHTML_Result(result)
-{
-	var oEditor = FCKeditorAPI.GetInstance('wpTextbox1');
-	oEditor.SetHTML(result.responseText);
-}
-function WikiToHTML_Call()
-{
-	var oEditor = FCKeditorAPI.GetInstance('wpTextbox1');
-	sajax_do_call('wfSajaxWikiToHTML', [oEditor.GetHTML()], WikiToHTML_Result);
-}
-
-addOnloadHook(showSource);
-</script>
-HEREDOC;
-*/
-
 		return true;
 	}
 

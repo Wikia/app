@@ -6,22 +6,18 @@ else if ( window.detachEvent )
 
 mwSetupToolbar = function() { return false ; } ;
 
-function onLoadFCKeditor()
-{
+function onLoadFCKeditor() {
         var oldTextbox = document.getElementById('wpTextbox1') ;
-        if ( oldTextbox )
-        {
+        if ( oldTextbox ) {
                 var height = wgFCKEditorHeight ;
 
-                if ( height == 0 )
-                {
+                if ( height == 0 ) {
                         // Get the window (inner) size.
                         var height = window.innerHeight || ( document.documentElement && document.documentElement.clientHeight ) || 550 ;
 
                         // Reduce the height to the offset of the toolbar.
                         var offset = document.getElementById('wikiPreview') || document.getElementById('toolbar') ;
-                        while ( offset )
-                        {
+                        while ( offset ) {
                                 height -= offset.offsetTop ;
                                 offset = offset.offsetParent ;
                         }
@@ -53,14 +49,13 @@ function onLoadFCKeditor()
 
                 var needToConfirm = true ;
 
-                function confirmExit(){
-                        if (needToConfirm){
-                                return "You have attempted to leave this page. If you have made any changes to the fields without clicking the Save button, your changes will be lost. Are you sure you want to exit this page?";
+                function confirmExit() {
+                        if (needToConfirm) {
+                                return "Any usaved changes will be lost." ;
                         }
                 }
 
-                FCKeditor_OnComplete = function (FCKinstance)
-                {
+                FCKeditor_OnComplete = function (FCKinstance) {
                         if ('source' == document.getElementById ("FCKmode").value) {
                                 FCKinstance.SwitchEditMode () ;
                         }
@@ -70,7 +65,6 @@ function onLoadFCKeditor()
                                         insertTags (tag, '', '') ;
                                 } else {
 					FCKinstance.InsertImage (tag) ;	
-                                        //todo parse and construct link from this markup
                                 }
                         }
 
@@ -105,23 +99,18 @@ function onLoadFCKeditor()
                         document.getElementById ('wpSummaryLabel').style.display = 'inline' ;
                         saveButton.parentNode.parentNode.style.display = 'inline' ;
                 } 
-                insertTags = function (tagOpen, tagClose, sampleText)
-                {
+                insertTags = function (tagOpen, tagClose, sampleText) {
                         var txtarea;
                         var isFCK = false ;
-                        if ( !(typeof(FCK) == "undefined") && !(typeof(FCK.EditingArea) == "undefined") )
-                        {
+                        if ( !(typeof(FCK) == "undefined") && !(typeof(FCK.EditingArea) == "undefined") ) {
                                 txtarea = FCK.EditingArea.Textarea ;
                                 isFCK = true ;
                         }
-                        else if (document.editform)
-                        {
+                        else if (document.editform) {
                                 FCKarea = document.getElementById( oFCKeditor.InstanceName ) ;
-                                if ( FCKarea.style.display == 'none' )
-                                {
+                                if ( FCKarea.style.display == 'none' ) {
                                         SRCiframe = document.getElementById ('wpTextbox1___Frame') ;
-                                        if ( SRCiframe )
-                                        {
+                                        if ( SRCiframe ) {
                                                 isFCK = true ;
                                                 if (window.frames["wpTextbox1___Frame"])
                                                         SRCdoc = window.frames["wpTextbox1___Frame"].document ;
@@ -136,26 +125,22 @@ function onLoadFCKeditor()
                                                         return false ;
 
                                         }
-                                        else
-                                        {
+                                        else {
                                                 return false ;
                                         }
                                 }
-                                else
-                                {
+                                else {
                                         txtarea = document.editform.wpTextbox1 ;
                                 }
                         }
-                       else
-                        {
+                       else {
                                 var areas = document.getElementsByTagName( 'textarea' ) ;
                                 txtarea = areas[0] ;
                         }
 
                         var selText, isSample = false ;
 
-                        if ( document.selection  && document.selection.createRange )
-                        {
+                        if ( document.selection  && document.selection.createRange ) {
                                 if (isFCK) {
                                         var inDocument = window.frames["wpTextbox1___Frame"].document ;
                                 } else {
@@ -178,8 +163,7 @@ function onLoadFCKeditor()
                                 }
 
                                 range.text = tagOpen + selText + tagClose ;
-                                if ( isSample && range.moveStart )
-                                {
+                                if ( isSample && range.moveStart ) {
                                         if (window.opera)
                                                 tagClose = tagClose.replace(/\\n/g,'') ;
                                         range.moveStart('character', - tagClose.length - selText.length) ;
@@ -192,8 +176,7 @@ function onLoadFCKeditor()
                                         inDocument.body.scrollTop = winScroll ;
 
                         }
-                        else if ( txtarea.selectionStart || txtarea.selectionStart == '0' )
-                        {
+                        else if ( txtarea.selectionStart || txtarea.selectionStart == '0' ) {
 
                                 var textScroll = txtarea.scrollTop ;
                                 txtarea.focus() ;
@@ -201,25 +184,21 @@ function onLoadFCKeditor()
                                 var endPos = txtarea.selectionEnd ;
                                 selText = txtarea.value.substring( startPos, endPos ) ;
 
-                                if (!selText)
-                                {
+                                if (!selText) {
                                         selText = sampleText ;
                                         isSample = true ;
                                 }
-                                else if (selText.charAt(selText.length - 1) == ' ')
-                                {
+                                else if (selText.charAt(selText.length - 1) == ' ') {
                                         selText = selText.substring(0, selText.length - 1) ;
                                         tagClose += ' ' ;
                                 }
                                 txtarea.value = txtarea.value.substring(0, startPos) + tagOpen + selText + tagClose +
                                                                 txtarea.value.substring(endPos, txtarea.value.length) ;
-                                if (isSample)
-                                {
+                                if (isSample) {
                                         txtarea.selectionStart = startPos + tagOpen.length ;
                                         txtarea.selectionEnd = startPos + tagOpen.length + selText.length ;
                                 }
-                                else
-                                {
+                                else {
                                         txtarea.selectionStart = startPos + tagOpen.length + selText.length + tagClose.length ;
                                         txtarea.selectionEnd = txtarea.selectionStart;
                                 }

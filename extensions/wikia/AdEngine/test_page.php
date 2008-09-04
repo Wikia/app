@@ -13,7 +13,9 @@ $wgShowAds=true;
 ?>
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en" dir="ltr">
 <head>
-<title>Test Page</title>
+<title>Test Page for AdEngine</title>
+<script type="text/javascript" src="AdEngine.js"></script>
+<script type="text/javascript" src="http://yui.yahooapis.com/combo?2.5.2/build/utilities/utilities.js"></script>
 <script>
 var wgContentLanguage = "en";
 var wgCatId = 3;
@@ -112,17 +114,6 @@ body {
 	float: right;
 	margin: 0 0 10px 10px;
 }
-#FASTsleeper1 {
-	display: none;
-	position: absolute;
-	top: 10px;	
-}
-#FASTsleeper2 {
-	display: none;
-	position: absolute;
-	top: 10px;	
-	width: 100%;
-}
 </style>
 </head>
 <script>
@@ -131,12 +122,6 @@ function FASTisCollisionTop(){
 	return true;
 }
 </script>
-<!-- Dependency --> 
-<script src="http://yui.yahooapis.com/2.5.2/build/yahoo/yahoo-min.js"></script> 
-<!-- Used for Custom Events and event listener bindings --> 
-<script src="http://yui.yahooapis.com/2.5.2/build/event/event-min.js"></script> 
-<!-- Source file --> 
-<script src="http://yui.yahooapis.com/2.5.2/build/connection/connection-min.js"></script>
 <?php
 $html=file_get_contents(dirname(__FILE__) . '/testfiles/longArticleWithImagesNoCollision.html'); 
 ?>
@@ -146,38 +131,40 @@ $html=file_get_contents(dirname(__FILE__) . '/testfiles/longArticleWithImagesNoC
 	<input type="button" value="TOP_RIGHT_BOXAD" onclick="toggleAds(this.value);" />
 </div>
 <div id="background_strip"></div>
+<div id="bodyContent">
 <div class="monaco_shrinkwrap">
 	<div id="wikia_page">
 		<div id="page_bar">controls here</div>
 		<div id="article">
-			<?php echo AdEngine::getInstance()->getPlaceHolderDiv("TOP_LEADERBOARD"); ?>
-			<?php echo AdEngine::getInstance()->getPlaceHolderDiv("TOP_RIGHT_BOXAD"); ?>
+			<div id="TOP_LEADERBOARD"><?php echo AdEngine::getInstance()->getAd("TOP_LEADERBOARD"); ?></div>
+			<div id="TOP_RIGHT_BOXAD"><?php echo AdEngine::getInstance()->getAd("TOP_RIGHT_BOXAD"); ?></div>
 			<?php echo $html;?>
 			
 		</div><!-- Closing "article" -->
 		<div id="articleFooter">
+<!--
 			Article controls here
 			<div>
 			  Footer Right box ad: <br />
-			  <?php /* echo AdEngine::getInstance()->getPlaceHolderDiv("FOOTER_BOXAD"); */?>
+			  <?php /* echo AdEngine::getInstance()->getAd("FOOTER_BOXAD"); */?>
 			</div>
+-->
 		
 			<br clear="all">
-			<hr />
 			
 			<table id="spotlight_footer">
 			<tr>
 				<td>
 		  	  		Left spotlight: <br />
-			  		<?php echo AdEngine::getInstance()->getAd("FOOTER_SPOTLIGHT_LEFT"); ?>
+			  		<div id="FOOTER_SPOTLIGHT_LEFT"><?php echo AdEngine::getInstance()->getAd("FOOTER_SPOTLIGHT_LEFT"); ?></div>
 			  	</td>
 				<td>
 			  		Right spotlight: <br />
-			  		<?php echo AdEngine::getInstance()->getAd("FOOTER_SPOTLIGHT_RIGHT"); ?>
+			  		<div id="FOOTER_SPOTLIGHT_RIGHT"><?php echo AdEngine::getInstance()->getAd("FOOTER_SPOTLIGHT_RIGHT"); ?></div>
 				</td>
 				<td>
 			  		Center spotlight: <br />
-			  		<?php echo AdEngine::getInstance()->getAd("FOOTER_SPOTLIGHT_MIDDLE"); ?>
+			  		<div id="FOOTER_SPOTLIGHT_MIDDLE"><?php echo AdEngine::getInstance()->getAd("FOOTER_SPOTLIGHT_MIDDLE"); ?></div>
 				</td>
 			</tr>
 			</table>
@@ -185,34 +172,17 @@ $html=file_get_contents(dirname(__FILE__) . '/testfiles/longArticleWithImagesNoC
 	</div><!-- Closing "wikia_page" -->
 	<div id="widget_sidebar">
 		Left Skyscraper 1:
-		<?php echo AdEngine::getInstance()->getPlaceHolderDiv("LEFT_SKYSCRAPER_1", false); ?>
-		
+		<div id="LEFT_SKYSCRAPER_1"><?php echo AdEngine::getInstance()->getAd("LEFT_SKYSCRAPER_1", false); ?></div>
 		<p>
 		Left Spotlight:
-		<?php echo AdEngine::getInstance()->getAd("LEFT_SPOTLIGHT_1"); ?>
+		<div id="LEFT_SPOTLIGHT_1"><?php echo AdEngine::getInstance()->getAd("LEFT_SPOTLIGHT_1"); ?></div>
 
 		<p>
 		Left Skyscraper 2:
-		<?php echo AdEngine::getInstance()->getPlaceHolderDiv("LEFT_SKYSCRAPER_2", false); ?>
+		<div id="LEFT_SKYSCRAPER_2"><?php echo AdEngine::getInstance()->getAd("LEFT_SKYSCRAPER_2", false); ?></div>
 	
 	</div>
+  </div><!-- Closing bodyContent -->
 </div><!--Closing "monaco_shrinkwrap" -->
-<?php echo AdEngine::getInstance()->getDelayedLoadingCode()?>
-
-
-<script language="javascript">
-// Temporary div swap code, to be replaced by tie div, when it's ready.
-function swapMe(slot){
-  realDiv=document.getElementById(slot);
-  loadDiv=document.getElementById(slot+'_load');
-  realDiv.innerHTML=loadDiv.innerHTML;
-}
-<?php
-foreach (AdEngine::getInstance()->getPlaceholders() as $ph){
-	echo "swapMe('$ph');\n";
-}
-?>
-</script>
 </body>
-<?php echo ArticleAdLogic::getCollisionCollision($html); ?>
 </html>

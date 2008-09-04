@@ -19,8 +19,7 @@ class FCKeditorSkin
 	 * @return string     * 
 	 */
 	function makeImageLinkObj( $nt, $label, $alt, $align = '', $params = array(), $framed = false,
-	$thumb = false, $manual_thumb = '', $valign = '' )
-	{
+	$thumb = false, $manual_thumb = '', $valign = '' ) {
 		$orginal = $nt->getText();
 		$img   = new Image( $nt );
 		$imgName = $img->getName();
@@ -215,8 +214,7 @@ class FCKeditorSkin
 		return $ret;
 	}
 
-	function makeKnownLinkObj( $nt, $text = '', $query = '', $trail = '', $prefix = '' , $aprops = '', $style = '' )
-	{
+	function makeKnownLinkObj( $nt, $text = '', $query = '', $trail = '', $prefix = '' , $aprops = '', $style = '' ) {
 		$fname = 'FCKeditorSkin::makeKnownLinkObj';
 		wfProfileIn( $fname );
 
@@ -257,8 +255,7 @@ class FCKeditorSkin
 		return $r;
 	}
 
-	function makeBrokenLinkObj( $nt, $text = '', $query = '', $trail = '', $prefix = '' )
-	{
+	function makeBrokenLinkObj( $nt, $text = '', $query = '', $trail = '', $prefix = '' ) {
 		# Fail gracefully
 		if ( ! isset($nt) ) {
 			# throw new MWException();
@@ -344,13 +341,11 @@ class FCKeditorSkin
 		return '<a href="'.$url.'">'.$text.'</a>';
 	}
 
-	function __call( $m, $a)
-	{
+	function __call( $m, $a) {
 		return call_user_func_array( array( $this->skin, $m ), $a );
 	}
 
-	function __construct( &$skin )
-	{
+	function __construct( &$skin ) {
 		$this->skin = $skin;
 	}
 }

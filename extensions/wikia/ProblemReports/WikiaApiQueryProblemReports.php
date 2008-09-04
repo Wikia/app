@@ -6,7 +6,7 @@
  * API for ProblemReports extension
  * Lists, adds, updates and removes problem reports
  *
- * @author Maciej Brencz <macbre@wikia.com>
+ * @author Maciej Brencz <macbre@wikia-inc.com>
  *
  */
 

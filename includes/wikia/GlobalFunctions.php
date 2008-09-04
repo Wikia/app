@@ -564,8 +564,6 @@ function wfGetCurrentUrl() {
 	 * path
 	 */
 	$arr[ "path" ] = implode( '/', $x );
-	rtrim( $arr[ "path"], "/" ); #--- old trick, faster than checking if / exists
-	$arr[ "path" ] .= '/';
 
 	/**
 	 * host
