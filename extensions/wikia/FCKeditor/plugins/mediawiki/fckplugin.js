@@ -58,15 +58,14 @@ FCKCommands.RegisterCommand ('Replace', new FCKDialogCommand( 'Replace', FCKLang
 
 FCKToolbarItems.OldGetItem = FCKToolbarItems.GetItem;
 
-FCKToolbarItems.GetItem = function( itemName )
-{
+FCKToolbarItems.GetItem = function( itemName ) {
 	var oItem = FCKToolbarItems.LoadedItems[ itemName ] ;
 
-	if ( oItem )
+	if ( oItem ) {
 		return oItem ;
+	}
 
-	switch ( itemName )
-	{
+	switch ( itemName ) {
                 case 'Find'                             : oItem = new FCKToolbarButton( 'Find'          , FCKLang.Find, null, null, null, true, 16 ) ; break ;
                 case 'Replace'                  : oItem = new FCKToolbarButton( 'Replace'       , FCKLang.Replace, null, null, null, true, 17 ) ; break ;
 		case 'Bold'			: oItem = new FCKToolbarButton( 'Bold'          , FCKLang.Bold, null, null, true, true, 20 ) ; break ;
@@ -86,15 +85,12 @@ FCKToolbarItems.GetItem = function( itemName )
 	return oItem ;
 }
 
-FCKToolbarButton.prototype.Click = function() 
-{
+FCKToolbarButton.prototype.Click = function() {
 	var oToolbarButton = this._ToolbarButton || this ;
 	
 	var CMode = false ;
-	if ( oToolbarButton.SourceView && (FCK_EDITMODE_SOURCE == FCK.EditMode) )
-	{
-		switch (oToolbarButton.CommandName) 
-		{
+	if ( oToolbarButton.SourceView && ( FCK_EDITMODE_SOURCE == FCK.EditMode ) ) {
+		switch ( oToolbarButton.CommandName ) {
 			case 'Bold' 		: window.parent.insertTags ('\'\'\'', '\'\'\'', 'Bold text') ; CMode = true ; break ;
 			case 'Italic' 		: window.parent.insertTags ('\'\'', '\'\'', 'Italic text') ; CMode = true ; break ;
 			case 'Underline' 	: window.parent.insertTags ('<u>', '</u>', 'Underlined text') ; CMode = true ; break ;
@@ -105,13 +101,13 @@ FCKToolbarButton.prototype.Click = function()
 		}
 	}
 	
-	if ( !CMode )
+	if ( !CMode ) {
 		FCK.ToolbarSet.CurrentInstance.Commands.GetCommand( oToolbarButton.CommandName ).Execute() ;
+	}
 }
 
 // MediaWiki Wikitext Data Processor implementation.
-FCK.DataProcessor =
-{
+FCK.DataProcessor = {
 	_inPre : false,
 	_inLSpace : false,	
 
@@ -123,8 +119,7 @@ FCK.DataProcessor =
 	 *     @param {String} data The data to be converted in the
 	 *            DataProcessor specific format.
 	 */
-	ConvertToHtml : function( data )
-	{
+	ConvertToHtml : function( data ) {
 		// Call the original code.
 		return FCKDataProcessor.prototype.ConvertToHtml.call( this, data ) ;
 	},
@@ -138,8 +133,7 @@ FCK.DataProcessor =
 	 *     @param {Boolean} format Indicates that the data must be formatted
 	 *            for human reading. Not all Data Processors may provide it.
 	 */
-	ConvertToDataFormat : function( rootNode, excludeRoot, ignoreIfEmptyParagraph, format )
-	{
+	ConvertToDataFormat : function( rootNode, excludeRoot, ignoreIfEmptyParagraph, format ) {
 		// rootNode is <body>.
 
 		// Normalize the document for text node processing (except IE - #1586).
@@ -156,8 +150,7 @@ FCK.DataProcessor =
 	 * editor selection position.
 	 *     @param {String} html The HTML to be fixed.
 	 */
-	FixHtml : function( html )
-	{
+	FixHtml : function( html ) {
 		return html ;
 	},
 
@@ -166,9 +159,9 @@ FCK.DataProcessor =
 	//		1 : Suffix
 	//		2 : Ignore children
 	_BasicElements : {
-		body	: [ ],
+		body		: [ ],
 		b		: [ "'''", "'''" ],
-		strong	: [ "'''", "'''" ],
+		strong		: [ "'''", "'''" ],
 		i		: [ "''", "''" ],
 		em		: [ "''", "''" ],
 		p		: [ '\n', '\n' ],
@@ -183,87 +176,88 @@ FCK.DataProcessor =
 	} ,
 
 	// This function is based on FCKXHtml._AppendNode.
-	_AppendNode : function( htmlNode, stringBuilder, prefix )
-	{
-		if ( !htmlNode )
+	_AppendNode : function( htmlNode, stringBuilder, prefix ) {
+		if ( !htmlNode ) {
 			return ;
+		}
 
-		switch ( htmlNode.nodeType )
-		{
+		switch ( htmlNode.nodeType ) {
 			// Element Node.
 			case 1 :
 
 				// Here we found an element that is not the real element, but a
 				// fake one (like the Flash placeholder image), so we must get the real one.
-				if ( htmlNode.getAttribute('_fckfakelement') && !htmlNode.getAttribute( '_fck_mw_math' ) )
+				if ( htmlNode.getAttribute('_fckfakelement') && !htmlNode.getAttribute( '_fck_mw_math' ) ) {
 					return this._AppendNode( FCK.GetRealElement( htmlNode ), stringBuilder ) ;
+				}
 
 				// Mozilla insert custom nodes in the DOM.
-				if ( FCKBrowserInfo.IsGecko && htmlNode.hasAttribute('_moz_editor_bogus_node') )
+				if ( FCKBrowserInfo.IsGecko && htmlNode.hasAttribute('_moz_editor_bogus_node') ) {
 					return ;
+				}
 
 				// This is for elements that are instrumental to FCKeditor and
 				// must be removed from the final HTML.
-				if ( htmlNode.getAttribute('_fcktemp') )
+				if ( htmlNode.getAttribute('_fcktemp') ) {
 					return ;
+				}
 
 				// Get the element name.
 				var sNodeName = htmlNode.tagName.toLowerCase()  ;
 
-				if ( FCKBrowserInfo.IsIE )
-				{
+				if ( FCKBrowserInfo.IsIE ) {
 					// IE doens't include the scope name in the nodeName. So, add the namespace.
-					if ( htmlNode.scopeName && htmlNode.scopeName != 'HTML' && htmlNode.scopeName != 'FCK' )
+					if ( htmlNode.scopeName && htmlNode.scopeName != 'HTML' && htmlNode.scopeName != 'FCK' ) {
 						sNodeName = htmlNode.scopeName.toLowerCase() + ':' + sNodeName ;
+					}
 				}
-				else
-				{
-					if ( sNodeName.StartsWith( 'fck:' ) )
+				else {
+					if ( sNodeName.StartsWith( 'fck:' ) ) {
 						sNodeName = sNodeName.Remove( 0,4 ) ;
+					}
 				}
 
 				// Check if the node name is valid, otherwise ignore this tag.
 				// If the nodeName starts with a slash, it is a orphan closing tag.
 				// On some strange cases, the nodeName is empty, even if the node exists.
-				if ( !FCKRegexLib.ElementName.test( sNodeName ) )
+				if ( !FCKRegexLib.ElementName.test( sNodeName ) ) {
 					return ;
+				}
 
-				if ( sNodeName == 'br' && ( this._inPre || this._inLSpace ) ) 
-				{
+				if ( sNodeName == 'br' && ( this._inPre || this._inLSpace ) ) {
 					stringBuilder.push( "\n" ) ;
-					if ( this._inLSpace )
+					if ( this._inLSpace ) {
 						stringBuilder.push( " " ) ;
+					}
 					return ;
 				}
 					
 				// Remove the <br> if it is a bogus node.
-				if ( sNodeName == 'br' && htmlNode.getAttribute( 'type', 2 ) == '_moz' )
+				if ( sNodeName == 'br' && htmlNode.getAttribute( 'type', 2 ) == '_moz' ) {
 					return ;
+				}
 
 				// The already processed nodes must be marked to avoid then to be duplicated (bad formatted HTML).
 				// So here, the "mark" is checked... if the element is Ok, then mark it.
-				if ( htmlNode._fckxhtmljob && htmlNode._fckxhtmljob == FCKXHtml.CurrentJobNum )
+				if ( htmlNode._fckxhtmljob && htmlNode._fckxhtmljob == FCKXHtml.CurrentJobNum ) {
 					return ;
+				}
 
 				var basicElement = this._BasicElements[ sNodeName ] ;
-				if ( basicElement )
-				{
+				if ( basicElement ) {
 					var basic0 = basicElement[0];
 					var basic1 = basicElement[1];
 
-					if ( ( basicElement[0] == "''" || basicElement[0] == "'''" ) && stringBuilder.length > 2 )
-					{
+					if ( ( basicElement[0] == "''" || basicElement[0] == "'''" ) && stringBuilder.length > 2 ) {
 						var pr1 = stringBuilder[stringBuilder.length-1];
 						var pr2 = stringBuilder[stringBuilder.length-2];
 
 						if ( pr1 + pr2 == "'''''") {
-							if ( basicElement[0] == "''")
-							{
+							if ( basicElement[0] == "''") {
 								basic0 = '<i>';
 								basic1 = '</i>';
 							}
-							if ( basicElement[0] == "'''")
-							{
+							if ( basicElement[0] == "'''") {
 								basic0 = '<b>';
 								basic1 = '</b>';
 							}
@@ -275,26 +269,23 @@ FCK.DataProcessor =
 
 					var len = stringBuilder.length ;
 					
-					if ( !basicElement[2] )
-					{
+					if ( !basicElement[2] ) {
 						this._AppendChildNodes( htmlNode, stringBuilder, prefix ) ;
 						// only empty element inside, remove it to avoid quotes
 						if ( ( stringBuilder.length == len || (stringBuilder.length == len + 1 && !stringBuilder[len].length) ) 
-							&& basicElement[0].charAt(0) == "'")
-						{
+							&& basicElement[0].charAt(0) == "'") {
 							stringBuilder.pop();
 							stringBuilder.pop();
 							return;
 						}
 					}
 
-					if ( basic1 )
+					if ( basic1 ) {
 						stringBuilder.push( basic1 ) ;
+					}
 				}
-				else
-				{
-					switch ( sNodeName )
-					{
+				else {
+					switch ( sNodeName ) {
 						case 'ol' :
 						case 'ul' :
 							var isFirstLevel = !htmlNode.parentNode.nodeName.IEquals( 'ul', 'ol', 'li', 'dl', 'dt', 'dd' ) ;
@@ -304,13 +295,11 @@ FCK.DataProcessor =
 							if ( isFirstLevel && stringBuilder[ stringBuilder.length - 1 ] != "\n" ) {
 								stringBuilder.push( '\n' ) ;
 							}
-
 							break ;
 
 						case 'li' :
 
-							if( stringBuilder.length > 1)
-							{
+							if( stringBuilder.length > 1) {
 								var sLastStr = stringBuilder[ stringBuilder.length - 1 ] ;
 								if ( sLastStr != ";" && sLastStr != ":" && sLastStr != "#" && sLastStr != "*")
  									stringBuilder.push( '\n' + prefix ) ;
@@ -319,27 +308,23 @@ FCK.DataProcessor =
 							var parent = htmlNode.parentNode ;
 							var listType = "#" ;
 							
-							while ( parent )
-							{
-								if ( parent.nodeName.toLowerCase() == 'ul' )
-								{
+							while ( parent ) {
+								if ( parent.nodeName.toLowerCase() == 'ul' ) {
 									listType = "*" ;
 									break ;
 								}
-								else if ( parent.nodeName.toLowerCase() == 'ol' )
-								{
+								else if ( parent.nodeName.toLowerCase() == 'ol' ) {
 									listType = "#" ;
 									break ;
 								}
-								else if ( parent.nodeName.toLowerCase() != 'li' )
+								else if ( parent.nodeName.toLowerCase() != 'li' ) {
 									break ;
-
+								}
 								parent = parent.parentNode ;
 							}
 							
 							stringBuilder.push( listType ) ;
 							this._AppendChildNodes( htmlNode, stringBuilder, prefix + listType ) ;
-							
 							break ;
 
 						case 'a' :
@@ -348,69 +333,64 @@ FCK.DataProcessor =
 							var href = htmlNode.getAttribute( '_fcksavedurl' ) ;
 							var hrefType		= htmlNode.getAttribute( '_fck_mw_type' ) || '' ;
 							
-							if ( href == null )
+							if ( href == null ) {
 								href = htmlNode.getAttribute( 'href' , 2 ) || '' ;
+							}
 
 							var isWikiUrl = true ;
 							
-							if ( hrefType == "media" )
+							if ( hrefType == "media" ) {
 								stringBuilder.push( '[[Media:' ) ;
-							else if ( htmlNode.className == "extiw" )
-							{
+							}
+							else if ( htmlNode.className == "extiw" ) {
 								stringBuilder.push( '[[' ) ;
 								var isWikiUrl = true;
 							}
-							else
-							{
+							else {
 								var isWikiUrl = !( href.StartsWith( 'mailto:' ) || /^\w+:\/\//.test( href ) ) ;
 								stringBuilder.push( isWikiUrl ? '[[' : '[' ) ;
 							}
 							stringBuilder.push( href ) ;
-							if ( htmlNode.innerHTML != '[n]' && (!isWikiUrl || href != htmlNode.innerHTML || !href.toLowerCase().StartsWith("category:")))
-							{
-       		 						if (href != htmlNode.innerHTML)
-								{
+							if ( htmlNode.innerHTML != '[n]' && (!isWikiUrl || href != htmlNode.innerHTML || !href.toLowerCase().StartsWith("category:"))) {
+       		 						if (href != htmlNode.innerHTML) {
 									stringBuilder.push( isWikiUrl? '|' : ' ' ) ;
 									this._AppendChildNodes( htmlNode, stringBuilder, prefix ) ;
 								}
 							}
 							stringBuilder.push( isWikiUrl ? ']]' : ']' ) ;
-
 							break ;
 							
 						case 'dl' :
 						
 							this._AppendChildNodes( htmlNode, stringBuilder, prefix ) ;
 							var isFirstLevel = !htmlNode.parentNode.nodeName.IEquals( 'ul', 'ol', 'li', 'dl', 'dd', 'dt' ) ;
-							if ( isFirstLevel && stringBuilder[ stringBuilder.length - 1 ] != "\n" )
+							if ( isFirstLevel && stringBuilder[ stringBuilder.length - 1 ] != "\n" ) {
 								stringBuilder.push( '\n') ;
-							
+							}							
 							break ;
 
 						case 'dt' :
 						
-							if( stringBuilder.length > 1)
-							{
+							if( stringBuilder.length > 1) {
 								var sLastStr = stringBuilder[ stringBuilder.length - 1 ] ;
-								if ( sLastStr != ";" && sLastStr != ":" && sLastStr != "#" && sLastStr != "*" )
+								if ( sLastStr != ";" && sLastStr != ":" && sLastStr != "#" && sLastStr != "*" ) {
  									stringBuilder.push( '\n' + prefix ) ;
+								}
 							}
 							stringBuilder.push( ';' ) ;
-							this._AppendChildNodes( htmlNode, stringBuilder, prefix + ";") ;
-							
+							this._AppendChildNodes( htmlNode, stringBuilder, prefix + ";") ;				
 							break ;
 
 						case 'dd' :
 						
-							if( stringBuilder.length > 1)
-							{
+							if( stringBuilder.length > 1) {
 								var sLastStr = stringBuilder[ stringBuilder.length - 1 ] ;
-								if ( sLastStr != ";" && sLastStr != ":" && sLastStr != "#" && sLastStr != "*" )
+								if ( sLastStr != ";" && sLastStr != ":" && sLastStr != "#" && sLastStr != "*" ) {
  									stringBuilder.push( '\n' + prefix ) ;
+								}
 							}
 							stringBuilder.push( ':' ) ;
-							this._AppendChildNodes( htmlNode, stringBuilder, prefix + ":" ) ;
-							
+							this._AppendChildNodes( htmlNode, stringBuilder, prefix + ":" ) ;				
 							break ;
 							
 						case 'table' :
@@ -422,33 +402,33 @@ FCK.DataProcessor =
 								stringBuilder.push( attribs ) ;
 							stringBuilder.push( '\n' ) ;
 
-							if ( htmlNode.caption && htmlNode.caption.innerHTML.length > 0 )
-							{
+							if ( htmlNode.caption && htmlNode.caption.innerHTML.length > 0 ) {
 								stringBuilder.push( '|+ ' ) ;
 								this._AppendChildNodes( htmlNode.caption, stringBuilder, prefix ) ;
 								stringBuilder.push( '\n' ) ;
 							}
 
-							for ( var r = 0 ; r < htmlNode.rows.length ; r++ )
-							{
+							for ( var r = 0 ; r < htmlNode.rows.length ; r++ ) {
 								attribs = this._GetAttributesStr( htmlNode.rows[r] ) ;
 
 								stringBuilder.push( '|-' ) ;
-								if ( attribs.length > 0 )
+								if ( attribs.length > 0 ) {
 									stringBuilder.push( attribs ) ;
+								}
 								stringBuilder.push( '\n' ) ;
 
-								for ( var c = 0 ; c < htmlNode.rows[r].cells.length ; c++ )
-								{
+								for ( var c = 0 ; c < htmlNode.rows[r].cells.length ; c++ ) {
 									attribs = this._GetAttributesStr( htmlNode.rows[r].cells[c] ) ;
 
-									if ( htmlNode.rows[r].cells[c].tagName.toLowerCase() == "th" )
+									if ( htmlNode.rows[r].cells[c].tagName.toLowerCase() == "th" ) {
 										stringBuilder.push( '!' ) ; 
-									else
+									} else {
 										stringBuilder.push( '|' ) ;
+									}
 
-									if ( attribs.length > 0 )
+									if ( attribs.length > 0 ) {
 										stringBuilder.push( attribs + ' |' ) ;
+									}
 
 									stringBuilder.push( ' ' ) ;
 
@@ -461,15 +441,13 @@ FCK.DataProcessor =
 							}
 
 							stringBuilder.push( '|}\n' ) ;
-
 							break ;
 
 						case 'img' :
 
 							var formula = htmlNode.getAttribute( '_fck_mw_math' ) ;
 
-							if ( formula && formula.length > 0 )
-							{
+							if ( formula && formula.length > 0 ) {
 								stringBuilder.push( '<math>' ) ;
 								stringBuilder.push( formula ) ;
 								stringBuilder.push( '</math>' ) ;
@@ -486,44 +464,46 @@ FCK.DataProcessor =
 							stringBuilder.push( '[[Image:' )
 							stringBuilder.push( imgName )
 
-							if ( imgType.length > 0 )
+							if ( imgType.length > 0 ) {
 								stringBuilder.push( '|' + imgType ) ;
+							}
 
-							if ( imgLocation.length > 0 )
+							if ( imgLocation.length > 0 ) {
 								stringBuilder.push( '|' + imgLocation ) ;
+							}
 
-							if ( imgWidth.length > 0 )
-							{
+							if ( imgWidth.length > 0 ) {
 								stringBuilder.push( '|' + imgWidth ) ;
 
-								if ( imgHeight.length > 0 )
+								if ( imgHeight.length > 0 ) {
 									stringBuilder.push( 'x' + imgHeight ) ;
-
+								}
 								stringBuilder.push( 'px' ) ;
 							}
 
-							if ( imgCaption.length > 0 )
+							if ( imgCaption.length > 0 ) {
 								stringBuilder.push( '|' + imgCaption ) ;
+							}
 
 							stringBuilder.push( ']]' )
 
 							break ;
 
 						case 'span' :
-							switch ( htmlNode.className )
-							{
+							switch ( htmlNode.className ) {
 								case 'fck_mw_ref' :
 									var refName = htmlNode.getAttribute( 'name' ) ;
 
 									stringBuilder.push( '<ref' ) ;
 
-									if ( refName && refName.length > 0 )
+									if ( refName && refName.length > 0 ) {
 										stringBuilder.push( ' name="' + refName + '"' ) ;
+									}
 
-									if ( htmlNode.innerHTML.length == 0 )
+									if ( htmlNode.innerHTML.length == 0 ) {
 										stringBuilder.push( ' />' ) ;
-									else
-									{
+									}
+									else {
 										stringBuilder.push( '>' ) ;
 										stringBuilder.push( htmlNode.innerHTML ) ;
 										stringBuilder.push( '</ref>' ) ;
@@ -560,33 +540,33 @@ FCK.DataProcessor =
 									
 								case 'fck_mw_onlyinclude' :
 									sNodeName = 'onlyinclude' ;
-									
 									break ;
 							}
 
 							// Change the node name and fell in the "default" case.
-							if ( htmlNode.getAttribute( '_fck_mw_customtag' ) )
+							if ( htmlNode.getAttribute( '_fck_mw_customtag' ) ) {
 								sNodeName = htmlNode.getAttribute( '_fck_mw_tagname' ) ;
+							}
 
 						case 'pre' :
 							var attribs = this._GetAttributesStr( htmlNode ) ;
 							
-							if ( htmlNode.className == "_fck_mw_lspace")
-							{
+							if ( htmlNode.className == "_fck_mw_lspace") {
 								stringBuilder.push( "\n " ) ;
 								this._inLSpace = true ;
 								this._AppendChildNodes( htmlNode, stringBuilder, prefix ) ;
 								this._inLSpace = false ;
-								if ( !stringBuilder[stringBuilder.length-1].EndsWith("\n") )
+								if ( !stringBuilder[stringBuilder.length-1].EndsWith("\n") ) {
 									stringBuilder.push( "\n" ) ;
+								}
 							}
-							else
-							{
+							else {
 								stringBuilder.push( '<' ) ;
 								stringBuilder.push( sNodeName ) ;
 
-								if ( attribs.length > 0 )
+								if ( attribs.length > 0 ) {
 									stringBuilder.push( attribs ) ;
+								}
 
 								stringBuilder.push( '>' ) ;
 								this._inPre = true ;
@@ -605,8 +585,9 @@ FCK.DataProcessor =
 							stringBuilder.push( '<' ) ;
 							stringBuilder.push( sNodeName ) ;
 
-							if ( attribs.length > 0 )
+							if ( attribs.length > 0 ) {
 								stringBuilder.push( attribs ) ;
+							}
 
 							stringBuilder.push( '>' ) ;
 							this._AppendChildNodes( htmlNode, stringBuilder, prefix ) ;
@@ -626,8 +607,7 @@ FCK.DataProcessor =
 				var parentIsSpecialTag = htmlNode.parentNode.getAttribute( '_fck_mw_customtag' ) ; 
 				var textValue = htmlNode.nodeValue;
 	
-				if ( !parentIsSpecialTag ) 
-				{
+				if ( !parentIsSpecialTag ) {
 					if ( FCKBrowserInfo.IsIE && this._inLSpace ) {
 						textValue = textValue.replace(/\r/, "\r ") ;
 					}
@@ -640,24 +620,26 @@ FCK.DataProcessor =
 					textValue = textValue.replace( /\u00A0/g, '&nbsp;' ) ;
 
 					if ( ( !htmlNode.previousSibling ||
-					( stringBuilder.length > 0 && stringBuilder[ stringBuilder.length - 1 ].EndsWith( '\n' ) ) ) && !this._inLSpace && !this._inPre )
-					{
+					( stringBuilder.length > 0 && stringBuilder[ stringBuilder.length - 1 ].EndsWith( '\n' ) ) ) && !this._inLSpace && !this._inPre ) {
 						textValue = textValue.LTrim() ;
 					}
 
-					if ( !htmlNode.nextSibling && !this._inLSpace && !this._inPre && (!htmlNode.parentNode || !htmlNode.parentNode.nextSibling))
+					if ( !htmlNode.nextSibling && !this._inLSpace && !this._inPre && (!htmlNode.parentNode || !htmlNode.parentNode.nextSibling)) {
 						textValue = textValue.RTrim() ;
+					}
 
-					if (!this._inLSpace && !this._inPre)
+					if (!this._inLSpace && !this._inPre) {
 						textValue = textValue.replace( / {2,}/g, ' ' ) ;
+					}
 
-					if ( this._inLSpace && textValue.length == 1 && textValue.charCodeAt(0) == 13 )
+					if ( this._inLSpace && textValue.length == 1 && textValue.charCodeAt(0) == 13 ) {
 						textValue = textValue + " " ;
-					if ( this._IsInsideCell )
+					}
+					if ( this._IsInsideCell ) {
 						textValue = textValue.replace( /\|/g, '&#124;' ) ;
+					}
 				}
-				else 
-				{
+				else {
 					textValue = FCKTools.HTMLDecode(textValue).replace(/fckLR/g,'\r\n');
 				}
 				
@@ -668,8 +650,9 @@ FCK.DataProcessor =
 			case 8 :
 				// IE catches the <!DOTYPE ... > as a comment, but it has no
 				// innerHTML, so we can catch it, and ignore it.
-				if ( FCKBrowserInfo.IsIE && !htmlNode.innerHTML )
+				if ( FCKBrowserInfo.IsIE && !htmlNode.innerHTML ) {
 					return ;
+				}
 
 				stringBuilder.push( "<!--"  ) ;
 
@@ -681,60 +664,49 @@ FCK.DataProcessor =
 		}
 	},
 
-	_AppendChildNodes : function( htmlNode, stringBuilder, listPrefix )
-	{
+	_AppendChildNodes : function( htmlNode, stringBuilder, listPrefix ) {
 		var child = htmlNode.firstChild ;
 
-		while ( child )
-		{
+		while ( child ) {
 			this._AppendNode( child, stringBuilder, listPrefix ) ;
 			child = child.nextSibling ;
 		}
 	},
 
-	_GetAttributesStr : function( htmlNode )
-	{
+	_GetAttributesStr : function( htmlNode ) {
 		var attStr = '' ;
 		var aAttributes = htmlNode.attributes ;
 
-		for ( var n = 0 ; n < aAttributes.length ; n++ )
-		{
+		for ( var n = 0 ; n < aAttributes.length ; n++ ) {
 			var oAttribute = aAttributes[n] ;
 
-			if ( oAttribute.specified )
-			{
+			if ( oAttribute.specified ) {
 				var sAttName = oAttribute.nodeName.toLowerCase() ;
 				var sAttValue ;
 
 				// Ignore any attribute starting with "_fck".
-				if ( sAttName.StartsWith( '_fck' ) )
+				if ( sAttName.StartsWith( '_fck' ) ) {
 					continue ;
-				// There is a bug in Mozilla that returns '_moz_xxx' attributes as specified.
-				else if ( sAttName.indexOf( '_moz' ) == 0 )
+				} else if ( sAttName.indexOf( '_moz' ) == 0 ) { // There is a bug in Mozilla that returns '_moz_xxx' attributes as specified.
 					continue ;
-				// For "class", nodeValue must be used.
-				else if ( sAttName == 'class' )
-				{
+				} else if ( sAttName == 'class' ) { // For "class", nodeValue must be used.
 					// Get the class, removing any fckXXX we can have there.
 					sAttValue = oAttribute.nodeValue.replace( /(^|\s*)fck\S+/, '' ).Trim() ;
 
-					if ( sAttValue.length == 0 )
+					if ( sAttValue.length == 0 ) {
 						continue ;
-				}
-				else if ( sAttName == 'style' && FCKBrowserInfo.IsIE ) {
+					}
+				} else if ( sAttName == 'style' && FCKBrowserInfo.IsIE ) {
 					sAttValue = htmlNode.style.cssText.toLowerCase() ;
-				}
-				// XHTML doens't support attribute minimization like "CHECKED". It must be trasformed to cheched="checked".
-				else if ( oAttribute.nodeValue === true )
+				} else if ( oAttribute.nodeValue === true ) { // XHTML doens't support attribute minimization like "CHECKED". It must be trasformed to cheched="checked".
 					sAttValue = sAttName ;
-				else
+				} else {
 					sAttValue = htmlNode.getAttribute( sAttName, 2 ) ;	// We must use getAttribute to get it exactly as it is defined.
-
+				}
 				// leave templates
 				if ( sAttName.StartsWith( '{{' ) && sAttName.EndsWith( '}}' ) ) {
 					attStr += ' ' + sAttName ;
-				}
-				else {
+				} else {
 					attStr += ' ' + sAttName + '="' + String(sAttValue).replace( '"', '&quot;' ) + '"' ;
 				}
 			}
@@ -745,16 +717,13 @@ FCK.DataProcessor =
 
 // Here we change the SwitchEditMode function to make the Ajax call when
 // switching from Wikitext.
-(function()
-{
+(function() {
 	var original = FCK.SwitchEditMode ;
 
-	FCK.SwitchEditMode = function()
-	{
+	FCK.SwitchEditMode = function() {
 		var args = arguments ;
 
-		var loadHTMLFromAjax = function( result )
-		{
+		var loadHTMLFromAjax = function( result ) {
 			var splitResult = result.responseText.split ("<FCK_SajaxResponse_splitter_tag/>") ;
 			FCK.EditingArea.Textarea.value = splitResult [0] ;
 			parent.document.getElementById ('fck_parsed_templates').value = escape (splitResult [1]) ;
@@ -763,8 +732,7 @@ FCK.DataProcessor =
 		}
 		var edittools_markup = parent.document.getElementById ('editpage-specialchars') ;
 
-		if ( FCK.EditMode == FCK_EDITMODE_SOURCE )
-		{
+		if ( FCK.EditMode == FCK_EDITMODE_SOURCE ) {
 			FCK.EditingArea.Textarea.style.visibility = 'hidden' ;
 
 			var loading = document.createElement( 'span' ) ;
@@ -790,9 +758,8 @@ FCK.DataProcessor =
 	}
 })() ;
 
-(function()
-{
-	FCK.isInedible = function (value) {
+(function() {
+	FCK.isInedible = function( value ) {
         if ( FCK.EditMode != FCK_EDITMODE_SOURCE ) {
 		if (FCK.EditorDocument.body.innerHTML.indexOf ("{{") >= 0 ) {
 			return true ;
@@ -802,12 +769,12 @@ FCK.DataProcessor =
 	}
 })();
 
-FCK.InsertImage = function (tag) {
+FCK.InsertImage = function( tag ) {
 	window.parent.sajax_request_type = 'GET' ;
 	window.parent.sajax_do_call( 'wfSajaxGetImageUrl', [tag], FCK.UpdateImageFromAjax ) ;	
 }
 
-FCK.UpdateImageFromAjax = function (response) {
+FCK.UpdateImageFromAjax = function( response ) {
         oImage = FCK.CreateElement( 'IMG' ) ;
         FCK.UpdateImage( oImage, response.responseText ) ;
 }
@@ -842,7 +809,7 @@ FCK.UpdateImage = function (e, realUrl) {
         e.setAttribute( "_fcksavedurl", realUrl, 0 ) ;
 }
 
-FCKDocumentProcessor.refillTemplates = function () {
+FCKDocumentProcessor.refillTemplates = function() {
 	var text = unescape (parent.document.getElementById ('fck_parsed_templates').value) ;
 	var max = text.length ;
 	var pos = 0 ;
@@ -868,8 +835,7 @@ FCKDocumentProcessor.refillTemplates = function () {
 	return templates ;
 }
 
-var FCKDocumentProcessor_CreateFakeElem = function( fakeClass, realElement, contentHtml )
-{
+var FCKDocumentProcessor_CreateFakeElem = function( fakeClass, realElement, contentHtml ) {
 	var oImg = FCKTools.GetElementDocument( realElement ).createElement( 'DIV' ) ;
 
 	oImg.className = fakeClass ;
@@ -881,8 +847,9 @@ var FCKDocumentProcessor_CreateFakeElem = function( fakeClass, realElement, cont
 	oImg.contentEditable = false ;
         oImg.setAttribute( '_fckfakelement', 'true', 0 ) ;
 
-        if ( FCKBrowserInfo.IsGecko )
+        if ( FCKBrowserInfo.IsGecko ) {
                 oImg.style.cursor = 'default' ;
+	}
 	oImg.setAttribute('readonly', true) ;
         oImg.setAttribute( '_fckrealelement', FCKTempBin.AddElement( realElement ), 0 ) ;
 
@@ -890,7 +857,7 @@ var FCKDocumentProcessor_CreateFakeElem = function( fakeClass, realElement, cont
 }
 
 //similar to placeholder plugin
-function FCK_SetupTemplatesForGecko () {
+function FCK_SetupTemplatesForGecko() {
         FCK_TemplatesClickListener = function( e ) {
 		var our_target = e.target ;
                 if (our_target.tagName == 'DIV' && our_target.getAttribute ('_fck_mw_template')) {
@@ -909,8 +876,7 @@ function FCK_SetupTemplatesForGecko () {
 }
 
 // MediaWiki document processor.
-FCKDocumentProcessor.AppendNew().ProcessDocument = function( document )
-{
+FCKDocumentProcessor.AppendNew().ProcessDocument = function( document ) {
 	// Templates and magic words.
 	if (parent.showFCKTemplates) {
 		var templates = FCKDocumentProcessor.refillTemplates () ;
@@ -921,40 +887,47 @@ FCKDocumentProcessor.AppendNew().ProcessDocument = function( document )
 	var numTemplates = templates.length - 1 ;
 	var eSpan ;
 	var i = aSpans.length - 1 ;
-	while ( i >= 0 && ( eSpan = aSpans[i--] ) )
-	{
+	while ( i >= 0 && ( eSpan = aSpans[i--] ) ) {
 		var className = null ;
-		switch ( eSpan.className )
-		{
+		switch ( eSpan.className ) {
 			case 'fck_mw_ref' :
 				className = 'FCK__MWRef' ;
 			case 'fck_mw_references' :
-				if ( className == null )
+				if ( className == null ) {
 					className = 'FCK__MWReferences' ;
+				}
 			case 'fck_mw_template' :
-				if ( className == null ) //YC
+				if ( className == null ) { //YC
 					className = 'FCK__MWTemplate' ; //YC
+				}
 			case 'fck_mw_magic' :
-				if ( className == null )
+				if ( className == null ) {
 					className = 'FCK__MWMagicWord' ;
+				}
 			case 'fck_mw_special' : //YC
-				if ( className == null )
+				if ( className == null ) {
 					className = 'FCK__MWSpecial' ;
+				}
 			case 'fck_mw_nowiki' :
-				if ( className == null )
+				if ( className == null ) {
 					className = 'FCK__MWNowiki' ;
+				}
 			case 'fck_mw_includeonly' :
-				if ( className == null )
+				if ( className == null ) {
 					className = 'FCK__MWIncludeonly' ;
+				}
 			case 'fck_mw_gallery' :
-				if ( className == null )
+				if ( className == null ) {
 					className = 'FCK__MWGallery' ;
+				}
 			case 'fck_mw_noinclude' :
-				if ( className == null )
+				if ( className == null ) {
 					className = 'FCK__MWNoinclude' ;
+				}
 			case 'fck_mw_onlyinclude' :
-				if ( className == null )
+				if ( className == null ) {
 					className = 'FCK__MWOnlyinclude' ;
+				}
 
 				if ((className != 'FCK__MWTemplate') || !parent.showFCKTemplates) {    				
 					var oImg = FCKDocumentProcessor_CreateFakeImage( className, eSpan.cloneNode(true) ) ;
@@ -976,10 +949,8 @@ FCKDocumentProcessor.AppendNew().ProcessDocument = function( document )
 	var aHrefs = document.getElementsByTagName( 'A' ) ;
 	var a ;
 	var i = aHrefs.length - 1 ;
-	while ( i >= 0 && ( a = aHrefs[i--] ) )
-	{
-		if (a.className == 'extiw')
-		{
+	while ( i >= 0 && ( a = aHrefs[i--] ) ) {
+		if (a.className == 'extiw') {
 			 a.href = ":" + a.title ;
 			 a.setAttribute( '_fcksavedurl', ":" + a.title ) ;
 		}
@@ -987,57 +958,48 @@ FCKDocumentProcessor.AppendNew().ProcessDocument = function( document )
 }
 
 /* patch for 2.6.1 */
-if (window.parent.FCKeditor.prototype.VersionBuild > 18219) 
-{
-	FCKToolbarSet.prototype.RefreshModeState = function( editorInstance )
-	{
+if ( window.parent.FCKeditor.prototype.VersionBuild > 18219 ) {
+	FCKToolbarSet.prototype.RefreshModeState = function( editorInstance ) {
 		if ( FCK.Status != FCK_STATUS_COMPLETE )
 			return ;
 
 		var oToolbarSet = editorInstance ? editorInstance.ToolbarSet : this ;
 		var aItems = oToolbarSet.ItemsWysiwygOnly ;
 
-		if ( FCK.EditMode == FCK_EDITMODE_WYSIWYG )
-		{
+		if ( FCK.EditMode == FCK_EDITMODE_WYSIWYG ) {
 			for ( var i = 0 ; i < aItems.length ; i++ )
 				aItems[i].Enable() ;
 
 			oToolbarSet.RefreshItemsState( editorInstance ) ;
-		}
-		else
-		{
+		} else {
 			oToolbarSet.RefreshItemsStateOverride( editorInstance ) ;
 		}
 
-		for ( var j = 0 ; j < aItems.length ; j++ )
+		for ( var j = 0 ; j < aItems.length ; j++ ) {
 			aItems[j].Disable() ;
+		}	
 	}
 
-	FCKToolbarSet.prototype.RefreshItemsStateOverride = function( editorInstance )
-	{
+	FCKToolbarSet.prototype.RefreshItemsStateOverride = function( editorInstance ) {
 		var aItems = ( editorInstance ? editorInstance.ToolbarSet : this ).ItemsContextSensitive ;
 
-		for ( var i = 0 ; i < aItems.length ; i++ )
-		{
-			if ( (!aItems[i].SourceView) || ('Source' == aItems[i].CommandName) )
+		for ( var i = 0 ; i < aItems.length ; i++ ) {
+			if ( (!aItems[i].SourceView) || ('Source' == aItems[i].CommandName) ) {
 				aItems[i].RefreshState() ;		
+			}
 		}
 	}
 }
 
-function _FCK_GetEditorAreaStyleTags()
-{
+function _FCK_GetEditorAreaStyleTags() {
 	var fixedStyle = '<' + 'link href="' + FCKConfig.EditorAreaCSS + '" type="text/css" rel="stylesheet" />' ;
         return  fixedStyle + FCKTools.GetStyleHtml( FCKConfig.EditorAreaStyles ) ;
 }
 
-FCKContextMenu.prototype.SetMouseClickWindow = function( mouseClickWindow )
-{
-        if ( !FCKBrowserInfo.IsIE )
-        {
+FCKContextMenu.prototype.SetMouseClickWindow = function( mouseClickWindow ) {
+        if ( !FCKBrowserInfo.IsIE ) {
                 this._Document = mouseClickWindow.document ;
-                if ( FCKBrowserInfo.IsOpera && !( 'oncontextmenu' in document.createElement('foo') ) )
-                {
+                if ( FCKBrowserInfo.IsOpera && !( 'oncontextmenu' in document.createElement('foo') ) ) {
                         this._Document.addEventListener( 'mousedown', FCKContextMenu_Document_OnMouseDown, false ) ;
                         this._Document.addEventListener( 'mouseup', FCKContextMenu_Document_OnMouseUp, false ) ;
                 }
@@ -1045,7 +1007,7 @@ FCKContextMenu.prototype.SetMouseClickWindow = function( mouseClickWindow )
         }
 }
 
-function FCKImage_OnDoubleClick (img) {
+function FCKImage_OnDoubleClick( img ) {
         if ( img.tagName == 'IMG') {
 		if (img.getAttribute ('_fck_mw_template') ) {
 	                FCKCommands.GetCommand( 'MW_Template' ).Execute() ;
@@ -1068,7 +1030,7 @@ function FCKImage_OnDoubleClick (img) {
 	}
 }
 
-function FCKDiv_OnDoubleClick (span) {
+function FCKDiv_OnDoubleClick( span ) {
 	if (span.tagName == 'DIV') {
 		if (span.getAttribute ('_fck_mw_template') ) {
 			FCKCommands.GetCommand( 'MW_Template' ).Execute() ;
@@ -1076,12 +1038,13 @@ function FCKDiv_OnDoubleClick (span) {
 	}
 }
 
-function FCK_VisibleTemplatesCheck () {
+function FCK_VisibleTemplatesCheck() {
 	// this will disallow for template content selection under Firefox
 	// more of a placeholder for now
         var sel = FCKSelection.GetSelection() ;
-        if ( !sel || sel.rangeCount < 1 )
+        if ( !sel || sel.rangeCount < 1 ) {
                 return ;
+	}
         var range = sel.getRangeAt( 0 );
 }
 

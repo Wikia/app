@@ -20,7 +20,7 @@ class SpecialWidgetDashboard extends SpecialPage {
 		$this->setHeaders();
 
 		if(WidgetFramework::getInstance()->GetSkin() == 'monaco') {
-			$wgOut->addHTML('<div class="sidebar widget_sidebar widget_dashboard">');
+			$wgOut->addHTML('<div class="sidebar widget_sidebar widget_dashboard reset">');
 			$wgOut->addHTML('<div id="sidebar_3" class="sidebar" style="display:inline; float: left; width: 15.45em; margin-right: 8px; padding-bottom: 75px">');
 			$wgOut->addHTML(WidgetFramework::getInstance()->Draw(3));
 			$wgOut->addHTML('</div>');

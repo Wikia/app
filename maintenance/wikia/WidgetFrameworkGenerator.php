@@ -12,8 +12,7 @@ function saveToFile($where, $what) {
 }
 
 echo "Wait for OK...";
-chdir(dirname(__FILE__).'/../');
-require_once('commandLine.inc');
+require_once('../commandLine.inc');
 
 // This is array which contain in order names of widgets to display in widget carousel
 $wgWidgetsOrderedList = array(
@@ -36,11 +35,12 @@ $wgWidgetsOrderedList = array(
 	'WidgetAncientPages',
 	'WidgetShoutBox',
 	'WidgetWikiPage',
+	'WidgetNewPages'
 );
 
 global $wgWidgets;
 foreach($wgWidgetsOrderedList as $key => $val) {
-	$filePath = '../extensions/wikia/WidgetFramework/Widgets/' . $val . '/' . $val . '.php';
+	$filePath = '../../extensions/wikia/WidgetFramework/Widgets/' . $val . '/' . $val . '.php';
 	if(file_exists($filePath)) {
 		require_once($filePath);
 	}
@@ -54,5 +54,5 @@ foreach($wgWidgets as $key => $val) {
 }
 
 $widgetsConfigStr = 'var widgetsConfig = '.Wikia::json_encode($widgetsConfig).';';
-saveToFile('../skins/common/widgets/js/widgetsConfig.js', $widgetsConfigStr);
-echo "\nOK!";
+saveToFile('../../skins/common/widgets/js/widgetsConfig.js', $widgetsConfigStr);
+echo "\nOK!\n";

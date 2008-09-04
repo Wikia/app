@@ -125,7 +125,8 @@ class SpecialVersion {
 		global $IP;
 		$wikia_release = str_replace( '/wikia/', '', self::getSvnURL( $IP ) );
 		$wikia_revision = self::getSvnRevision( $IP );
-		return "$wikia_release (r$wikia_revision)";
+		$wikia_conf = self::getSvnRevision( '/usr/wikia/conf/current/' );
+		return "$wikia_release (code r$wikia_revision, configuration r$wikia_conf)";
 	}
 
 	/** Generate wikitext showing extensions name, URL, author and description */

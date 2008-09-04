@@ -40,5 +40,5 @@ function WidgetMostVisited($id, $params) {
 
 	wfProfileOut( __METHOD__ );
 	
-	return ( count($items) > 0 ? WidgetFrameworkWrapLinks($items) . WidgetFrameworkMoreLink( Title::newFromText('Top', NS_SPECIAL)->getLocalURL() . '/most_visited') : '(the list is empty)' );
+	return ( count($items) > 0 ? WidgetFrameworkWrapLinks($items) . WidgetFrameworkMoreLink( Title::newFromText('Top', NS_SPECIAL)->getLocalURL() . '/most_visited') : wfMsg('widget-empty-list'));
 }
