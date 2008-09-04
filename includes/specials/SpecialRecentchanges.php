@@ -30,7 +30,7 @@ class SpecialRecentChanges extends SpecialPage {
 		$opts->add( 'hideliu',       false );
 		$opts->add( 'hidepatrolled', false );
 		$opts->add( 'hidemyself',    false );
-		$opts->add( 'hideenhanced',  !$wgUser->getOption('usenewrc') );
+		$opts->add( 'hideenhanced', !$wgUser->getOption( 'usenewrc' ) );
 
 		$opts->add( 'namespace', '', FormOptions::INTNULL );
 		$opts->add( 'invert', false );
@@ -47,23 +47,31 @@ class SpecialRecentChanges extends SpecialPage {
 	 * @return FormOptions
 	 */
 	public function setup( $parameters ) {
-		global $wgUser, $wgRequest;
+		global $wgUser, $wgRequest, $wgCookiePrefix, $wgCookieExpiration, $wgCookiePath, $wgCookieDomain, $wgCookieSecure;
 
 		$opts = $this->getDefaultOptions();
 		$opts['days'] = (int)$wgUser->getOption( 'rcdays', $opts['days'] );
 		$opts['limit'] = (int)$wgUser->getOption( 'rclimit', $opts['limit'] );
 		$opts['hideminor'] = $wgUser->getOption( 'hideminor', $opts['hideminor'] );
+		$hideenhanced_default = $opts->getValue('hideenhanced');
 		$opts->fetchValuesFromRequest( $wgRequest );
 
-		/* Wikia - Inez */
-		$userUsenewrc = (bool) $wgUser->getOption( 'usenewrc' );
-		if($userUsenewrc == $opts['hideenhanced']) {
-			$wgUser->setOption( 'usenewrc', !$opts['hideenhanced'] );
-			$wgUser->saveSettings();
-			if(!$wgUser->isLoggedIn()) {
-				global $wgCookieExpiration, $wgCookiePath, $wgCookieDomain, $wgCookieSecure;
-				$exp = time() + $wgCookieExpiration;
-				setcookie($wgCookiePrefix.'_usenewrc', !$opts['hideenhanced'] ? 'yes' : 'no', $exp, $wgCookiePath, $wgCookieDomain, $wgCookieSecure );
+		if( $wgUser->isLoggedIn() ) {
+			if( $wgUser->getOption( 'usenewrc' ) != !$opts['hideenhanced'] ) {
+				$wgUser->setOption( 'usenewrc', !$opts['hideenhanced'] );
+				$wgUser->saveSettings();
+			}
+		} else {
+			if($wgRequest->getVal('hideenhanced', null) != null) {
+				if($hideenhanced_default != $opts['hideenhanced']) {
+					$hideenhanced_value = !$opts['hideenhanced'];
+					$wgUser->setOption( 'usenewrc', !$opts['hideenhanced'] );
+				} else {
+					$hideenhanced_value = null;
+				}
+				setcookie( $wgCookiePrefix.'_usenewrc', $hideenhanced_value, time() + $wgCookieExpiration, $wgCookiePath, $wgCookieDomain, $wgCookieSecure );
+			} else if(isset($_COOKIE[$wgCookiePrefix.'_usenewrc'])) {
+				$wgUser->setOption( 'usenewrc', $_COOKIE[$wgCookiePrefix.'_usenewrc'] );
 			}
 		}
 
@@ -95,13 +103,6 @@ class SpecialRecentChanges extends SpecialPage {
 	 * @param $parameters string
 	 */
 	public function execute( $parameters ) {
-		/* Wikia - Inez */
-		global $wgUser, $wgCookiePrefix;
-		if(!$wgUser->isLoggedIn()) {
-			$wgUser->setOption('usenewrc', (isset($_COOKIE[$wgCookiePrefix . '_usenewrc']) && $_COOKIE[$wgCookiePrefix . '_usenewrc'] == 'yes') ? true : false);
-			$wgUser->saveSettings();
-		}
-
 		global $wgRequest, $wgOut;
 		$feedFormat = $wgRequest->getVal( 'feed' );
 
@@ -145,7 +146,7 @@ class SpecialRecentChanges extends SpecialPage {
 			$batch->execute();
 			$this->webOutput( $rows, $opts );
 		}
-  	
+
 	}
 
 	/**
@@ -180,6 +181,7 @@ class SpecialRecentChanges extends SpecialPage {
 			if ( 'hidepatrolled' === $bit ) $opts['hidepatrolled'] = true;
 			if ( 'hideanons' === $bit ) $opts['hideanons'] = true;
 			if ( 'hidemyself' === $bit ) $opts['hidemyself'] = true;
+			if ( 'hideenhanced' === $bit ) $opts['hideenhanced'] = true;
 
 			if ( is_numeric( $bit ) ) $opts['limit'] =  $bit;
 
@@ -662,6 +664,8 @@ class SpecialRecentChanges extends SpecialPage {
 			array( 'hidepatrolled' => 1-$options['hidepatrolled'] ), $nondefaults);
 		$myselfLink = $this->makeOptionsLink( $showhide[1-$options['hidemyself']],
 			array( 'hidemyself' => 1-$options['hidemyself'] ), $nondefaults);
+		$enhancedLink = $this->makeOptionsLink( $showhide[1-$options['hideenhanced']],
+			array( 'hideenhanced' => 1-$options['hideenhanced'] ), $nondefaults);
 
 		$links[] = wfMsgHtml( 'rcshowhideminor', $minorLink );
 		$links[] = wfMsgHtml( 'rcshowhidebots', $botLink );
@@ -670,13 +674,12 @@ class SpecialRecentChanges extends SpecialPage {
 		if( $wgUser->useRCPatrol() )
 			$links[] = wfMsgHtml( 'rcshowhidepatr', $patrLink );
 		$links[] = wfMsgHtml( 'rcshowhidemine', $myselfLink );
+		$links[] = wfMsgHtml( 'rcshowhideenhanced', $enhancedLink );
 		$hl = implode( ' | ', $links );
 
 		// show from this onward link
 		$now = $wgLang->timeanddate( wfTimestampNow(), true );
 		$tl =  $this->makeOptionsLink( $now, array( 'from' => wfTimestampNow()), $nondefaults );
-		$enhancedLink = $this->makeOptionsLink( $showhide[1-$options['hideenhanced']],
-		array( 'hideenhanced' => 1-$options['hideenhanced'] ), $nondefaults);
 
 		$rclinks = wfMsgExt( 'rclinks', array( 'parseinline', 'replaceafter'),
 			$cl, $dl, $hl );
