@@ -281,9 +281,11 @@ class MediaWiki {
 		$file = $title->getNamespace() == NS_IMAGE ? $article->getFile() : null;
 		if( ( $action == 'view' || $action == 'render' ) 	// ... for actions that show content
 					&& !$request->getVal( 'oldid' ) &&    // ... and are not old revisions
-					$request->getVal( 'redirect' ) != 'no' &&	// ... unless explicitly told not to
+					$request->getVal( 'redirect' ) != 'no'	// ... unless explicitly told not to
 					// ... and the article is not a non-redirect image page with associated file
-					!( is_object( $file ) && $file->exists() && !$file->getRedirected() ) ) {
+#					!( is_object( $file ) && $file->exists() && !$file->getRedirected() ) ) {
+#					The line above commented out to enable on-click image redirects (trac #2789) --TOR
+					) {
 
 			# Give extensions a change to ignore/handle redirects as needed
 			$ignoreRedirect = $target = false;
