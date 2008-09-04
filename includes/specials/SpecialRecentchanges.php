@@ -59,7 +59,6 @@ class SpecialRecentChanges extends SpecialPage {
 
 		if( $wgUser->isLoggedIn() ) {
 			if( $wgUser->getOption( 'usenewrc' ) != !$opts['hideenhanced'] ) {
-				$wgUser->setOption( 'usenewrc', !$opts['hideenhanced'] );
 				$wgUser->saveSettings();
 			}
 		}
