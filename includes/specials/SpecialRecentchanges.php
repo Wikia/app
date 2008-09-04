@@ -53,21 +53,14 @@ class SpecialRecentChanges extends SpecialPage {
 		$opts['days'] = (int)$wgUser->getOption( 'rcdays', $opts['days'] );
 		$opts['limit'] = (int)$wgUser->getOption( 'rclimit', $opts['limit'] );
 		$opts['hideminor'] = $wgUser->getOption( 'hideminor', $opts['hideminor'] );
-		$hideenhanced_default = $opts->getValue('hideenhanced');
 		$opts->fetchValuesFromRequest( $wgRequest );
+
+		$wgUser->setOption( 'usenewrc', !$opts['hideenhanced'] );
 
 		if( $wgUser->isLoggedIn() ) {
 			if( $wgUser->getOption( 'usenewrc' ) != !$opts['hideenhanced'] ) {
 				$wgUser->setOption( 'usenewrc', !$opts['hideenhanced'] );
 				$wgUser->saveSettings();
-			}
-		} else {
-			if($wgRequest->getVal('hideenhanced', null) != null) {
-				$hideenhanced_value = $wgRequest->getVal('hideenhanced');
-				setcookie( $wgCookiePrefix.'_usenewrc', !$hideenhanced_value, time() + $wgCookieExpiration, $wgCookiePath, $wgCookieDomain, $wgCookieSecure );
-				$wgUser->setOption( 'usenewrc', !$hideenhanced_value );
-			} else if(isset($_COOKIE[$wgCookiePrefix.'_usenewrc'])) {
-				$wgUser->setOption( 'usenewrc', $_COOKIE[$wgCookiePrefix.'_usenewrc'] );
 			}
 		}
 
