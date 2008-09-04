@@ -63,13 +63,9 @@ class SpecialRecentChanges extends SpecialPage {
 			}
 		} else {
 			if($wgRequest->getVal('hideenhanced', null) != null) {
-				if($hideenhanced_default != $opts['hideenhanced']) {
-					$hideenhanced_value = !$opts['hideenhanced'];
-					$wgUser->setOption( 'usenewrc', !$opts['hideenhanced'] );
-				} else {
-					$hideenhanced_value = null;
-				}
-				setcookie( $wgCookiePrefix.'_usenewrc', $hideenhanced_value, time() + $wgCookieExpiration, $wgCookiePath, $wgCookieDomain, $wgCookieSecure );
+				$hideenhanced_value = $wgRequest->getVal('hideenhanced');
+				setcookie( $wgCookiePrefix.'_usenewrc', !$hideenhanced_value, time() + $wgCookieExpiration, $wgCookiePath, $wgCookieDomain, $wgCookieSecure );
+				$wgUser->setOption( 'usenewrc', !$hideenhanced_value );
 			} else if(isset($_COOKIE[$wgCookiePrefix.'_usenewrc'])) {
 				$wgUser->setOption( 'usenewrc', $_COOKIE[$wgCookiePrefix.'_usenewrc'] );
 			}
