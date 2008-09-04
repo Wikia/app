@@ -78,54 +78,47 @@ ul.widgets_horizontal li.widget {
 
 /* widgets cockpit */
 
-#widget_cockpit
-{
+#widget_cockpit {
     overflow: hide;
 }
 
-#pt-show_cockpit
-{
+#pt-show_cockpit {
 	margin-left: 25px !important;
 }
 
-#pt-hide_cockpit
-{
+#pt-hide_cockpit {
 	margin-left: 25px !important;
 	display: none;
 }
 
-#widget_cockpit_hide
-{
-    display:  inline;
-    float:    right;
-    font-size:0.9em;
-    position: relative;
-    top:      -7px;
+#widget_cockpit_hide {
+	display:  inline;
+	float:    right;
+	font-size:0.9em;
+	position: relative;
+	top:      -7px;
 }
 
-#widget_cockpit ul
-{
-    list-style: none !important;
-    padding: 0 !important;
-    margin: 0 !important;
-    height: 50px;
+#widget_cockpit ul {
+	list-style: none !important;
+	padding: 0 !important;
+	margin: 0 !important;
+	height: 50px;
 }
 
-#widget_cockpit ul li
-{
-    display: inline;
-    float:   left;
-    width: 50px;
-    height: 50px;
-    margin: 0 5px;
-    border: solid 1px #cccccc;
-    background-position: 50% 50%;
-    background-repeat: no-repeat;
-		cursor: move;
+#widget_cockpit ul li {
+	display: inline;
+	float:   left;
+	width: 50px;
+	height: 50px;
+	margin: 0 5px;
+	border: solid 1px #cccccc;
+	background-position: 50% 50%;
+	background-repeat: no-repeat;
+	cursor: move;
 }
 
-#widget_cockpit ul li.blocked
-{
+#widget_cockpit ul li.blocked {
 	opacity: 0.5;
 	cursor: default;
 }
@@ -133,31 +126,28 @@ ul.widgets_horizontal li.widget {
 /** Widgets common **/
 
 .draggable .boxHeader,
-.draggable .boxHeader_noBorderMargin
-{
+.draggable .boxHeader_noBorderMargin {
 	cursor: move;
 }
 
 
 /* Special:WidgetDashboard */
-.dashboard
-{
-    width: 30%;
-    margin: 0 10px !important;
-    float: left;
-    display: inline;
-    min-height: 300px;
-    list-style: none !important;
-    padding: 0 !important;
+.dashboard {
+	width: 30%;
+	margin: 0 10px !important;
+	float: left;
+	display: inline;
+	min-height: 300px;
+	list-style: none !important;
+	padding: 0 !important;
 }
 
 /** Widgets look&fell added by macbre **/
-.widget div ul
-{
-    margin: 0;
-    padding: 0;
-    list-style: none;
-    line-height: 1.5em;
+.widget div ul {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+	line-height: 1.5em;
 }
 
 /* Cockpit toogle links in myStuffBar */
@@ -165,12 +155,11 @@ ul.widgets_horizontal li.widget {
 #mystuff_hide_cockpit {display:none}
 #mystuff_logout {margin-right: 25px}
 
-.widgetLoading h1
-{
- /* ajaxload.info - image src declared in skins CSS! */
-  background-repeat: no-repeat !important;
-  background-position: 100% 3px !important;
-  cursor: progress !important;
+.widgetLoading h1 {
+	/* ajaxload.info - image src declared in skins CSS! */
+	background-repeat: no-repeat !important;
+	background-position: 100% 3px !important;
+	cursor: progress !important;
 }
 
 .widgetLoading .widgetToolbox {display: none !important}
@@ -184,29 +173,25 @@ body.rtl .widgetLoading h1 {
 }
 
 /* widgets editor */
-form.widgetEditor
-{
-    padding: 5px 2px;
-    margin:  0 0 10px 0;
+form.widgetEditor {
+	padding: 5px 2px;
+	margin:  0 0 10px 0;
 	cursor:  default;
 	direction: ltr;
 }
 
-.widget form.progress
-{
+.widget form.progress {
 	cursor: wait;
 }
 
-.widgetEditor dl
-{
-    clear: both;
-    margin:   0;
-    padding: 0;
-    border-bottom: solid 1px #aaaaaa;
+.widgetEditor dl {
+	clear: both;
+	margin:   0;
+	padding: 0;
+	border-bottom: solid 1px #aaaaaa;
 }
 
-.widgetEditor dl dt
-{
+.widgetEditor dl dt {
 	width:      95px;
 	text-align: right;
 	float:      left;
@@ -215,8 +200,7 @@ form.widgetEditor
 	padding: 2px;
 }
 
-.widgetEditor dl dd
-{
+.widgetEditor dl dd {
 	padding: 2px;
 	margin: 0;
 	margin-left:  103px;
@@ -225,68 +209,58 @@ form.widgetEditor
 }
 
 .widgetEditor input[type='text'],
-.widgetEditor select
-{
+.widgetEditor select {
 	font-size: 0.9em !important;
 	width:      150px;
 }
 
-.widgetEditor input[type='submit']
-{
+.widgetEditor input[type='submit'] {
 	font-size:   0.9em;
 	margin:      3px 0 0 106px;
 	cursor:      pointer;
 	float:       left;
 }
 
-.widgetEditorCancel
-{
+.widgetEditorCancel {
 	cursor:      pointer;
-  font-size:   0.9em;
-  margin:      6px 6px 0 0;
+	font-size:   0.9em;
+	margin:      6px 6px 0 0;
 	float:       right;
 }
 
 /* editor for widgets in dashboard - width fixes */
 
-#dashboard_wrapper .widgetEditor dl dt
-{
+#dashboard_wrapper .widgetEditor dl dt {
 	width:      60px;
 }
 
-#dashboard_wrapper .widgetEditor dl dd
-{
+#dashboard_wrapper .widgetEditor dl dd {
 	margin-left:  73px;
 	width: 150px;
 }
 
 #dashboard_wrapper .widgetEditor input[type='text'],
-#dashboard_wrapper .widgetEditor select
-{
+#dashboard_wrapper .widgetEditor select {
 	width:      160px;
 }
 
 /* carousel */
-#carousel-prev
-{
-    float: left;
-    padding: 25px 8px 0 8px;
+#carousel-prev {
+	float: left;
+	padding: 25px 8px 0 8px;
 }
 
-#carousel-next
-{
-    float: right;
-    padding: 25px 8px 0 8px;
+#carousel-next {
+	float: right;
+	padding: 25px 8px 0 8px;
 }
 
-#mycarousel
-{
+#mycarousel {
 	height: 52px;
 	width: 100% !important;
 }
 
-#widget_cockpit_overlay
-{
+#widget_cockpit_overlay {
 	position: absolute;
 	width: 750px;
 	height: 70px;
@@ -294,14 +268,12 @@ form.widgetEditor
 	left: 45px;
 }
 
-#widget_cockpit_list
-{
+#widget_cockpit_list {
 	position: absolute;
 	width: 10000px;
 }
 
-#widget_cockpit_list li
-{
+#widget_cockpit_list li {
 	/* Fix for extra spacing in IE */
 	float:left;
 
@@ -311,22 +283,19 @@ form.widgetEditor
 }
 
 /* toolbox */
-body.ltr .widgetToolbox
-{
+body.ltr .widgetToolbox {
 	position: absolute;
 	right:    3px;
 	top:      5px;
 }
 
-body.rtl .widgetToolbox
-{
+body.rtl .widgetToolbox {
 	position: absolute;
 	left: 3px;
 	top: 5px;
 }
 
-.widgetToolbox span
-{
+.widgetToolbox span {
 	margin: 0 1px;
 	cursor: pointer;
 	display: block;
@@ -338,24 +307,20 @@ body.rtl .widgetToolbox
 	background-position: 50% 50%;
 }
 
-.widgetToolbox .toogleButton
-{
+.widgetToolbox .toogleButton {
 	background-image: url('../icons/widget_toolbox_toogle.png');
 }
 
-.widgetToolbox .editButton
-{
+.widgetToolbox .editButton {
 	background-image: url('../icons/widget_toolbox_edit.png');
 }
 
-.widgetToolbox .closeButton
-{
+.widgetToolbox .closeButton {
 	background-image: url('../icons/widget_toolbox_close.png');
 	margin-left: 4px;
 }
 
-.widget .widgetMore
-{
+.widget .widgetMore {
     padding: 5px 0;
     text-align: right;
     text-transform: lowercase;
@@ -391,8 +356,7 @@ body.rtl .widgetToolbox
 
 /* widgets cockpit icons */
 
-.widget_thumb
-{
+.widget_thumb {
 	background-image: url('../icons/widget.png');
 	background-repeat: no-repeat;
 	background-position: 0px 0px;
@@ -417,197 +381,117 @@ body.rtl .widgetToolbox
 	background-image: url('../icons/widget_stalepages.png');
 	text-indent: -500px;
 }
-/*
-li.WidgetEditedRecentlyThumb
-{
-	background-image: url('../icons/widget_jabber.png');
-	text-indent: -500px;
-	border: none !important;
-}
-*/
-
-.WidgetJabberThumb
-{
+.WidgetJabberThumb {
 	background-image: url('../icons/widget_jabber.png');
 	text-indent: -500px;
 }
-
-.WidgetLastWikisThumb
-{
+.WidgetLastWikisThumb {
 	background-image: url('../icons/widget_lastwikis.png');
 	text-indent: -500px;
 }
-
-/*
-li.WidgetMillenniumThumb
-{
-	background-image: url('../icons/widget_jabber.png');
-	text-indent: -500px;
-	border: none !important;
-}
-*/
-
-/*
-li.WidgetMostPopularThumb
-{
-	background-image: url('../icons/widget_jabber.png');
-	text-indent: -500px;
-	border: none !important;
-}
-*/
-
-.WidgetMostVisitedThumb
-{
+.WidgetMostVisitedThumb {
 	background-image: url('../icons/widget_mostvisited.png');
 	text-indent: -500px;
 }
-
-.WidgetRecentChangesThumb
-{
+.WidgetRecentChangesThumb {
 	background-image: url('../icons/widget_recentchanges.png');
 	text-indent: -500px;
 }
-
-.WidgetTopUsersThumb
-{
+.WidgetTopUsersThumb {
 	background-image: url('../icons/widget_topusers.png');
 	text-indent: -500px;
 }
 
-.WidgetTopVotedThumb
-{
+.WidgetTopVotedThumb {
 	background-image: url('../icons/widget_topvoted.png');
 	text-indent: -500px;
 }
-
-.WidgetWatchlistThumb
-{
+.WidgetWatchlistThumb {
 	background-image: url('../icons/widget_watchlist.png');
 	text-indent: -500px;
 }
-
-.WidgetEditedRecentlyThumb
-{
+.WidgetEditedRecentlyThumb {
 	background-image: url('../icons/widget_recenteditors.png');
 	text-indent: -500px;
 }
-
-.WidgetFeedThumb
-{
+.WidgetFeedThumb {
 	background-image: url('../icons/widget_rss.png');
 	text-indent: -500px;
 }
-
-.WidgetWeatherThumb
-{
+.WidgetWeatherThumb {
 	background-image: url('../icons/widget_weather.png');
 	text-indent: -500px;
 }
-
-.WidgetTipsThumb
-{
+.WidgetTipsThumb {
 	background-image: url('../icons/widget_tips.png');
 	text-indent: -500px;
 }
-
-.WidgetActiveTalkPagesThumb
-{
+.WidgetActiveTalkPagesThumb {
 	background-image: url('../icons/widget_activetalkpages.png');
 	text-indent: -500px;
 }
-
-.WidgetBlockUserThumb
-{
+.WidgetBlockUserThumb {
 	background-image: url('../icons/widget_block_user.png');
 	text-indent: -500px;
 }
-
-.WidgetCountdownThumb
-{
+.WidgetCountdownThumb {
 	background-image: url('../icons/widget_countdown.png');
 	text-indent: -500px;
 }
-
-.WidgetReferrersThumb
-{
+.WidgetReferrersThumb {
 	background-image: url('../icons/widget_referers.png');
 	text-indent: -500px;
 }
-
-.WidgetShoutBoxThumb
-{
+.WidgetShoutBoxThumb {
 	background-image: url('../icons/widget_shoutbox.png');
 	text-indent: -500px;
 }
-
-.WidgetSlideshowThumb
-{
+.WidgetSlideshowThumb {
 	background-image: url('../icons/widget_slideshow.png');
 	text-indent: -500px;
 }
-
-.WidgetNewContributorsThumb
-{
+.WidgetNewContributorsThumb {
 	background-image: url('../icons/widget_new_contributors.png');
 	text-indent: -500px;
 }
-
-.WidgetProblemReportsThumb
-{
+.WidgetProblemReportsThumb {
 	background-image: url('../icons/widget_problem_reports.png');
 	text-indent: -500px;
 }
-
-.WidgetWikiaSearchThumb
-{
+.WidgetWikiaSearchThumb {
 	background-image: url('../icons/widget_wikia_search.png');
 	text-indent: -500px;
 }
-
-.WidgetWikiPageThumb
-{
+.WidgetWikiPageThumb {
 	background-image: url('../icons/widget_wiki_page.png');
 	text-indent: -500px;
 }
-
-.WidgetHotPagesThumb
-{
+.WidgetHotPagesThumb {
 	background-image: url('../icons/widget_hot_pages.png');
 	text-indent: -500px;
 }
-
-.WidgetNewestImagesThumb
-{
+.WidgetNewestImagesThumb {
 	background-image: url('../icons/widget_newestimages.png');
 	text-indent: -500px;
 }
-
-.WidgetRelatedCommunitiesThumb
-{
+.WidgetRelatedCommunitiesThumb {
 	background-image: url('../icons/widget_related_communities.png');
 	text-indent: -500px;
 }
-
-.WidgetBookmarkThumb
-{
+.WidgetBookmarkThumb {
         background-image: url('../icons/widget_bookmark.png');
         text-indent: -500px;
 }
-.WidgetContribsThumb
-{
+.WidgetContribsThumb {
 	 background-image: url('../icons/widget_contribs.png');
 	 text-indent: -500px;
 }
-.WidgetNewPagesThumb
-{
+.WidgetNewPagesThumb {
 	 background-image: url('../icons/widget_new_pages.png');
 	 text-indent: -500px;
 }
 
-
 /* RTL fixes */
-
-body.rtl ul.widgets
-{
+body.rtl ul.widgets {
 	direction: rtl;
 }

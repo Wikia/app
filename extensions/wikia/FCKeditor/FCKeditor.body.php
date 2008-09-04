@@ -28,8 +28,7 @@ class FCKeditor_MediaWiki
 
 	static $messagesLoaded = false;
 
-	function __call($m,$a)
-	{
+	function __call($m,$a) {
 		print "\n#### " . $m . "\n";
 		if (!isset($this->count[$m])) {
 			$this->count[$m] = 0;
@@ -38,15 +37,13 @@ class FCKeditor_MediaWiki
 		return true;
 	}
 
-	function onMonoBookTemplateToolboxEnd()
-	{
+	function onMonoBookTemplateToolboxEnd() {
 		if ($this->debug) {
 			print_r($this->count);
 		}
 	}
 
-	private function getExcludedNamespaces()
-	{
+	private function getExcludedNamespaces() {
 		global $wgUser;
 
 		if ( is_null( $this->excludedNamespaces ) ) {
@@ -61,21 +58,19 @@ class FCKeditor_MediaWiki
 		return $this->excludedNamespaces;
 	}
 
-	public function onLanguageGetMagic(&$magicWords, $langCode)
-	{
+	public function onLanguageGetMagic( &$magicWords, $langCode ) {
 		$magicWords['NORICHEDITOR'] = array( 0, '__NORICHEDITOR__' );
 		
 		return true;
 	}
 	
-	public function onParserBeforeInternalParse(&$parser, &$text, &$strip_state)
-	{
+	public function onParserBeforeInternalParse( &$parser, &$text, &$strip_state ) {
 		MagicWord::get( 'NORICHEDITOR' )->matchAndRemove( $text );
 		
 		return true;
 	}
 
-	public function onExtendJSGlobalVars ($vars) {
+	public function onExtendJSGlobalVars( $vars ) {
     		global $wgFCKEditorVisibleTemplates, $wgFCKEditorHeight, $wgFCKEditorDomain, $wgFCKEditorDir, $wgFCKEditorExtDir ;
 		global $wgStyleVersion, $wgFCKEditorToolbarSet ;
 		empty ($wgFCKEditorVisibleTemplates) ? $showFCKTemplates = 'false' : $showFCKTemplates = 'true' ;
@@ -91,8 +86,7 @@ class FCKeditor_MediaWiki
 	        return true;
 	}
 	
-	public function onEditPageShowEditFormFields($pageEditor, $wgOut)
-	{
+	public function onEditPageShowEditFormFields( $pageEditor, $wgOut ) {
 		global $wgUser, $wgFCKEditorIsCompatible, $wgTitle, $wgVersion, $wgOut, $wgRequest ;
 
 		/*
@@ -144,8 +138,7 @@ class FCKeditor_MediaWiki
 		return true;
 	}
 
-	public function onEditPageBeforeConflictDiff($pageEditor, $wgOut)
-	{
+	public function onEditPageBeforeConflictDiff( $pageEditor, $wgOut ) {
 		global $fckPageEditor, $wgRequest;
 
 		/*
@@ -158,8 +151,7 @@ class FCKeditor_MediaWiki
 		return true;
 	}
 	
-	public function onSanitizerAfterFixTagAttributes($text, $element, &$attribs)
-	{
+	public function onSanitizerAfterFixTagAttributes( $text, $element, &$attribs ) {
 		$text = preg_match_all("/Fckmw\d+fckmw/", $text, $matches);
 		
 		if (!empty($matches[0][0])) {
@@ -214,8 +206,7 @@ class FCKeditor_MediaWiki
 		}
 	}
 
-	public function onCustomEditor(&$article, &$user)
-	{
+	public function onCustomEditor( &$article, &$user ) {
 		global $wgRequest, $mediaWiki;
 
 		$action = $mediaWiki->getVal('Action');
@@ -237,8 +228,7 @@ class FCKeditor_MediaWiki
 		return false;
 	}
 
-	public function onEditPageBeforePreviewText(&$editPage, $previewOnOpen)
-	{
+	public function onEditPageBeforePreviewText( &$editPage, $previewOnOpen ) {
 		global $wgUser, $wgRequest;
 
 		if ($wgUser->getOption( 'showtoolbar' ) && !$wgUser->getOption( 'riched_disable' ) && !$previewOnOpen ) {
@@ -249,8 +239,7 @@ class FCKeditor_MediaWiki
 		return true;
 	}
 
-	public function onEditPagePreviewTextEnd(&$editPage, $previewOnOpen)
-	{
+	public function onEditPagePreviewTextEnd( &$editPage, $previewOnOpen ) {
 		global $wgUser;
 
 		if ($wgUser->getOption( 'showtoolbar' ) && !$wgUser->getOption( 'riched_disable' ) && !$previewOnOpen ) {
@@ -260,8 +249,7 @@ class FCKeditor_MediaWiki
 		return true;
 	}
 
-	public function onParserAfterTidy(&$parser, &$text)
-	{
+	public function onParserAfterTidy( &$parser, &$text ) {
 		global $wgUseTeX, $wgUser, $wgTitle, $wgFCKEditorIsCompatible;
 
 		if (!$wgUser->getOption( 'showtoolbar' ) || $wgUser->getOption( 'riched_disable' ) || !$wgFCKEditorIsCompatible) {
@@ -281,8 +269,7 @@ class FCKeditor_MediaWiki
 		return true;
 	}
 
-	public function onMessagesPreLoad()
-	{
+	public function onMessagesPreLoad() {
 		global $wgMessageCache, $wgUser, $wgContLanguageCode;
 
 		if ( !self::$messagesLoaded ) {

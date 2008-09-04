@@ -7,7 +7,7 @@ else if ( window.detachEvent )
 mwSetupToolbar = function() { return false ; } ;
 
 function onLoadFCKeditor() {
-        var oldTextbox = document.getElementById('wpTextbox1') ;
+        var oldTextbox = document.getElementById( 'wpTextbox1' ) ;
         if ( oldTextbox ) {
                 var height = wgFCKEditorHeight ;
 
@@ -16,7 +16,7 @@ function onLoadFCKeditor() {
                         var height = window.innerHeight || ( document.documentElement && document.documentElement.clientHeight ) || 550 ;
 
                         // Reduce the height to the offset of the toolbar.
-                        var offset = document.getElementById('wikiPreview') || document.getElementById('toolbar') ;
+                        var offset = document.getElementById( 'wikiPreview' ) || document.getElementById( 'toolbar' ) ;
                         while ( offset ) {
                                 height -= offset.offsetTop ;
                                 offset = offset.offsetParent ;
@@ -27,7 +27,7 @@ function onLoadFCKeditor() {
 
                 height = ( !height || height < 300 ) ? 300 : height ;
 
-                var oFCKeditor = new FCKeditor('wpTextbox1') ;
+                var oFCKeditor = new FCKeditor( 'wpTextbox1' ) ;
                 oFCKeditor.Domain = wgFCKEditorDomain ;
                 if (oFCKeditor.Domain != '') {
                         document.domain = oFCKeditor.Domain ;
@@ -55,27 +55,27 @@ function onLoadFCKeditor() {
                         }
                 }
 
-                FCKeditor_OnComplete = function (FCKinstance) {
-                        if ('source' == document.getElementById ("FCKmode").value) {
-                                FCKinstance.SwitchEditMode () ;
+                FCKeditor_OnComplete = function( FCKinstance ) {
+                        if ( 'source' == document.getElementById( "FCKmode" ).value ) {
+                                FCKinstance.SwitchEditMode() ;
                         }
 
-                        insertFckTags = function (tag) {
-                                if (FCKinstance.EditMode == FCK_EDITMODE_SOURCE) {
-                                        insertTags (tag, '', '') ;
+                        insertFckTags = function( tag ) {
+                                if ( FCKinstance.EditMode == FCK_EDITMODE_SOURCE ) {
+                                        insertTags( tag, '', '' ) ;
                                 } else {
-					FCKinstance.InsertImage (tag) ;	
+					FCKinstance.InsertImage( tag ) ;	
                                 }
                         }
 
-                        var saveButton = document.getElementById ('wpSave') ;
-                        var previewButton = document.getElementById ('wpPreview') ;
-                        var diffButton = document.getElementById ('wpDiff') ;
-                        var upperSave = document.getElementById ('wpUpperFCKSave') ;
-                        var upperPreview = document.getElementById ('wpUpperFCKPreview') ;
-                        var upperCancel = document.getElementById ('wpUpperFCKCancel') ;
+                        var saveButton = document.getElementById( 'wpSave' ) ;
+                        var previewButton = document.getElementById( 'wpPreview' ) ;
+                        var diffButton = document.getElementById( 'wpDiff' ) ;
+                        var upperSave = document.getElementById( 'wpUpperFCKSave' ) ;
+                        var upperPreview = document.getElementById( 'wpUpperFCKPreview' ) ;
+                        var upperCancel = document.getElementById( 'wpUpperFCKCancel' ) ;
 
-                        if (FCKinstance.isInedible ()) {
+                        if ( FCKinstance.isInedible() ) {
                                 var fckIframe = document.getElementById ("wpTextbox1___Frame")  ;
                                 if (fckIframe) {
                                         fckIframe.parentNode.removeChild (fckIframe) ;

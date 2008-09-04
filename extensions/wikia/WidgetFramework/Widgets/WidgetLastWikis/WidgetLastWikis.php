@@ -24,9 +24,9 @@ $wgWidgets['WidgetLastWikis'] = array(
 function WidgetLastWikis($id, $params) {
 	wfProfileIn(__METHOD__);
 	
-	global $wgSitename, $wgCookiePrefix, $wgCookiePath, $wgCookieDomain, $wgCookieSecure;
+	global $wgSitename, $wgCookiePrefix;
 
-	$cookie = $_COOKIE["{$wgCookiePrefix}recentlyvisited"];
+	$cookie = isset($_COOKIE["{$wgCookiePrefix}recentlyvisited"]) ? $_COOKIE["{$wgCookiePrefix}recentlyvisited"] : false;
 	$server = $_SERVER['SERVER_NAME'];
 	$found = false;
 	$count = 0;
@@ -35,7 +35,7 @@ function WidgetLastWikis($id, $params) {
 	// first, prepare the existing rank
 	$items  = array();
 
-	if ( count($urls) > 0 ) {
+	if ( is_array($urls) && count($urls) > 0 ) {
 	    for ( $index = 0; $index < 6; $index++ ) {
 		$url  = isset($urls[$index]['url']) ? $urls[$index]['url'] : '';
 		$name = isset($urls[$index]['name']) ? $urls[$index]['name'] : '';
@@ -59,7 +59,7 @@ function WidgetLastWikis($id, $params) {
 		array_unshift ( $urls, array( 'url' => $server, 'name' => $wgSitename ) );		
 
 		$expire = time()+3600*24*7;
-		WebResponse::setcookie($cookie, serialize( $urls ), $expire);
+		WebResponse::setcookie($wgCookiePrefix.'recentlyvisited', serialize( $urls ), $expire);
 	}
 
 	wfProfileOut( __METHOD__ );
