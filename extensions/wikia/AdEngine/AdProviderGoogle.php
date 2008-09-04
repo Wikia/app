@@ -35,7 +35,7 @@ class AdProviderGoogle implements iAdProvider {
                         google_color_url    = AdEngine.getAdColor("url");' . "\n";
 	
 		$channel = $this->getChannel();
-	       	$out.= 'google_channel      = "' . addslashes($channel) . '";' . "\n";
+	       	$out.= 'google_ad_channel      = "' . addslashes($channel) . '";' . "\n";
 		// Channel is how we do bucket tests.
 		// Testing the effectiveness of google_page_url and google_hints here
 		if ($channel == '9000000009'){
