@@ -3,7 +3,7 @@ Geographical coordinates. The extensions can be enabled individually, but
 the concept is certainly more powerful when they are all enabled. 
 
 For more information, please see:
-http://meta.wikimedia.org/wiki/Gis
+http://www.mediawiki.org/wiki/Extension:Gis
 http://en.wikipedia.org/wiki/Wikipedia:WikiProject_Geographical_coordinates
 
 Magnus Manske has been extremely helpful in the work on integration with 
@@ -50,4 +50,4 @@ Installation
 References
 
   1. http://www.phpmyadmin.net/home_page/
-  2. http://meta.wikimedia.org/wiki/Gis_map_source_example
+  2. http://www.mediawiki.org/wiki/Extension:Gis/map_source_example

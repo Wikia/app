@@ -125,6 +125,11 @@ class RatingHistory extends UnlistedSpecialPage
 	* @returns string, url path to file
 	*/
 	public function makeTagGraph( $tag, $filePath ) {
+		if( !function_exists( 'ImageCreate' ) ) {
+			// GD is not installed
+			return false;
+		}
+		
 		global $wgPHPlotDir;
 		require_once( "$wgPHPlotDir/phplot.php" ); // load classes
 		// Define the object
@@ -145,9 +150,6 @@ class RatingHistory extends UnlistedSpecialPage
 		// Define the data using the DB rows
 		$data = array();
 		$totalVal = $totalCount = $n = 0;
-		$lastDay = 31; // init to not trigger first time
-		$lastMonth = 12; // init to not trigger first time
-		$lastYear = 9999; // init to not trigger first time
 		$res = $dbr->select( 'reader_feedback_history',
 			array( 'rfh_total', 'rfh_count', 'rfh_date' ),
 			array( 'rfh_page_id' => $this->page->getArticleId(), 
@@ -161,7 +163,7 @@ class RatingHistory extends UnlistedSpecialPage
 			$res->seek( $dbr->numRows($res)-1 );
 			$upper = wfTimestamp( TS_UNIX, $dbr->fetchObject( $res )->rfh_date );
 			$days = intval( ($upper - $lower)/86400 );
-			$int = intval( ceil($days/10) ); // 10 labels at most
+			$int = ($this->period > 31) ? 31 : intval( ceil($days/12) );
 			$res->seek( 0 );
 		}
 		while( $row = $dbr->fetchObject( $res ) ) {
@@ -173,43 +175,36 @@ class RatingHistory extends UnlistedSpecialPage
 			$month = intval( substr( $row->rfh_date, 4, 2 ) );
 			$day = intval( substr( $row->rfh_date, 6, 2 ) );
 			# Fill in days with no votes to keep spacing even
-			# Year gaps...
-			for( $i=($lastYear + 1); $i < $year; $i++ ) {
-				for( $x=1; $x <= 365; $x++ ) {
-					$data[] = array("",'','');
+			if( isset($lastDate) ) {
+				$dayGap = wfTimestamp(TS_UNIX,$row->rfh_date) - wfTimestamp(TS_UNIX,$lastDate);
+				$x = intval( $dayGap/86400 );
+				# Day gaps...
+				for( $x; $x > 1; --$x ) {
+					$data[] = array("",$lastDAve,$lastRAve);
 					$n++;
 				}
 			}
-			# Month gaps...
-			for( $i=($lastMonth + 1); $i < $month; $i++ ) {
-				for( $x=1; $x <= 31; $x++ ) {
-					$data[] = array("",'','');
-					$n++;
-				}
-			}
-			# Day gaps...
-			for( $x=($lastDay + 1); $x < $day; $x++ ) {
-				$data[] = array("",'','');
-				$n++;
-			}
+			$n++;
 			# Label point?
 			if( $n >= $int || !count($data) ) {
-				$p = ($this->period > 31) ? "{$month}/{$day}/".substr( $year, 2, 2 ) : "{$month}/{$day}";
+				$p = ($this->period > 31) ? "{$month}-".substr( $year, 2, 2 ) : "{$month}/{$day}";
 				$n = 0;
 			} else {
 				$p = "";
-				$n++;
 			}
 			$data[] = array( $p, $dayAve, $cumAve);
-			$lastDay = $day;
-			$lastMonth = $month;
-			$lastYear = $year;
+			$lastDate = $row->rfh_date;
+			$lastDAve = $dayAve;
+			$lastRAve = $cumAve;
 		}
+		$dbr->freeResult( $res );
 		// Minimum sample size
 		if( count($data) < 2 || $totalCount < 10 ) {
 			return false;
 		}
 		$plot->SetDataValues($data);
+		$plot->SetPointShapes('dot');
+		$plot->setPointSizes( 1 );
 		$plot->SetBackgroundColor('#fffff0');
 		// Turn off X axis ticks and labels because they get in the way:
 		$plot->SetXTickLabelPos('none');

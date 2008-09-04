@@ -50,7 +50,7 @@ class ReaderFeedback extends UnlistedSpecialPage
 		$this->dims = array();
 		foreach( FlaggedRevs::getFeedbackTags() as $tag => $weight ) {
 			$this->dims[$tag] = $wgRequest->getIntOrNull( "wp$tag" );
-			if( is_null($this->dims[$tag]) ) {
+			if( !self::isValid($this->dims[$tag]) ) {
 				$wgOut->redirect( $this->page->getLocalUrl() );
 			}
 		}
@@ -126,12 +126,16 @@ class ReaderFeedback extends UnlistedSpecialPage
 					}
 					break;
 				case "commentary": // honeypot value
-					$bot = true;
+					if( $val )
+						$bot = true;
 					break;
 				default:
 					$p = preg_replace( '/^wp/', '', $par ); // kill any "wp" prefix
 					if( array_key_exists( $p, $tags ) ) {
 						$form->dims[$p] = intval($val);
+						if( !self::isValid( $form->dims[$p] ) ) {
+							return '<err#>'; // bad range
+						}
 					}
 					break;
 			}
@@ -152,6 +156,10 @@ class ReaderFeedback extends UnlistedSpecialPage
 			return '<err#>'.wfMsgExt( 'readerfeedback-voted', array('parseinline'), 
 				$form->page->getPrefixedText(), $graphLink );
 		}
+	}
+	
+	protected static function isValid( $int ) {
+		return ( !is_null($int) && $int > 0 && $int <= 4 );
 	}
 	
 	public static function validationKey( $rid, $uid ) {
