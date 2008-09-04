@@ -1,3 +1,5 @@
+var AdsCB = Math.floor(Math.random()*99999999); // generate random number to use as a cache buster during the call for ad (OpenX and DART)
+
 /**
  * Utility functions related to AdEngine
  * @author Nick Sullivan

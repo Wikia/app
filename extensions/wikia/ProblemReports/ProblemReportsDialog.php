@@ -6,30 +6,29 @@ if (!defined('MEDIAWIKI')) die();
  * @package MediaWiki
  * @subpackage Extensions
  *
- * @author Maciej Brencz <macbre@wikia.com>
+ * @author Maciej Brencz <macbre@wikia-inc.com>
  * @license http://www.gnu.org/copyleft/gpl.html GNU General Public License 2.0 or later
  */
 
 // add link to content actions array in skin
-function wfProblemReportsAddLink(&$content_actions)
-{
+function wfProblemReportsAddLink(&$content_actions) {
 	wfProfileIn(__METHOD__);
 
 	// where are we? on article page?
-	global $wgUser, $wgTitle, $wgRequest, $wgProblemReportsEnableAnonReports;
+	global $wgUser, $wgTitle, $wgOut, $wgRequest, $wgProblemReportsEnableAnonReports;
 
-	// do nothing when anon users can't report problems or
-	// we're not on article page (main namespace) or we're on printable page version
-	if (
-	     ( $wgUser->isAnon() && empty($wgProblemReportsEnableAnonReports) ) ||
-	     ( $wgTitle->getNamespace() != 0 ) ||
-	     ( $wgRequest->getVal('printable') != '' )
-	   )
-	{
+	// are we on page with editable content? (check taken from Monaco.php)
+	$onContentPage = $wgTitle->exists() && $wgTitle->isContentPage() && !$wgTitle->isTalkPage() && $wgOut->isArticle();
 
-	    wfDebug("ProblemReports: leaving without adding dialog\n".
-	            'ProblemReportsEnableAnonReports: '.($wgProblemReportsEnableAnonReports ? 'yes' : 'no')."\n");
+	if (!$onContentPage) {
+		wfDebug("ProblemReports: not a content page - leaving...\n");
+		wfProfileOut(__METHOD__);
+		return true;
+	}
 
+	// do nothing when anon users can't report problems
+	if ( !empty($wgProblemReportsEnableAnonReports) && $wgUser->isAnon() ) {
+	    wfDebug("ProblemReports: anons can't add reports - leaving...\n");
 	    wfProfileOut(__METHOD__);
 	    return true;
 	}
@@ -39,8 +38,8 @@ function wfProblemReportsAddLink(&$content_actions)
 	// load messages
 	wfLoadExtensionMessages( 'ProblemReports' );
 
-	$content_actions['report-problem'] = array
-	(
+	// add action tab in monobook
+	$content_actions['report-problem'] = array(
 		'class' => '',
 		'text' => wfMsg('reportproblem'),
 		'href' => '#' ,

@@ -454,4 +454,6 @@ div.widget_cockpit_controls {
 .WidgetContribsThumb div {
 	background-image: url(../../common/widgets/icons/widget_contribs.png);
 }
-
+.WidgetNewPagesThumb div {
+	background-image: url(../../common/widgets/icons/widget_new_pages.png);
+}

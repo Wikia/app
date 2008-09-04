@@ -133,6 +133,8 @@ class SpecialSearch {
 
 		$wgOut->addWikiMsg( 'searchresulttext' );
 
+		wfRunHooks( 'SearchBeforeResults', array( &$this, &$term ) );
+
 		if( '' === trim( $term ) ) {
 			// Empty query -- straight view of search form
 			$wgOut->setSubtitle( '' );

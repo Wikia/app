@@ -17,36 +17,36 @@ class AdProviderGoogle implements iAdProvider {
 		return self::$instance;
 	}
 
-
         public function getAd($slotname, $slot){
                 global $AdEngine;
                 $dim=AdEngine::getHeightWidthFromSize($slot['size']);
 
                 $out = "<!-- " . __CLASS__ . " slot: $slotname -->";
                 $out .= '<script type="text/javascript">/*<![CDATA[*/
-                        bannerid=\'__GO____\';
-                        
-                        google_ad_client = "pub-4086838842346968";
-                        
-                        google_ad_width = ' . $dim['width'] . ';google_ad_height = ' .$dim['height'] .';
-                                
-                        google_ad_format = google_ad_width+"x"+google_ad_height+"_as";
-                                
-                        google_ad_type = "text";
-                        // TODO: implement the colors for this wiki
-                        google_color_border = "FFFFFF";
-                        google_color_bg     = "FFFFFF";
-                        google_color_link   = "0000FF";
-                        google_color_text   = "000000";
-                        google_color_url    = "002BB8";
-                                
-                        //google_ad_channel = "90000000xx";
-                        google_hints= "' . addslashes($this->getGoogleHints()) . '"; 
-                        //google_page_url = "";
-                        //google_ui_features = "rc:6";
-                        //document.write(\'<scr\' + \'ipt type="text/javascript"  src="http://pagead2.googlesyndication.com/pagead/show_ads.js"></scr\' + \'ipt>\');
-                        /*]]>*/</script>
-                        <script type="text/javascript"  src="http://pagead2.googlesyndication.com/pagead/show_ads.js"></script>';
+                        google_ad_client    = "pub-4086838842346968";
+                        google_ad_width     = "' . $dim['width'] . '";
+			google_ad_height    = "' . $dim['height'] . '";
+                        google_ad_format    = google_ad_width + "x" + google_ad_height + "_as";
+                        google_ad_type      = "text";
+                        google_color_border = AdEngine.getAdColor("text");
+                        google_color_bg     = AdEngine.getAdColor("bg");
+                        google_color_link   = AdEngine.getAdColor("link");
+                        google_color_text   = AdEngine.getAdColor("text");
+                        google_color_url    = AdEngine.getAdColor("url");' . "\n";
+	
+		$channel = $this->getChannel();
+	       	$out.= 'google_channel      = "' . addslashes($channel) . '";' . "\n";
+		// Channel is how we do bucket tests.
+		// Testing the effectiveness of google_page_url and google_hints here
+		if ($channel == '9000000009'){
+			// Pass the page url for this test
+                        $out .= 'google_page_url     = "' . addslashes($this->getPageUrl()) . '";' . "\n";
+		} else if ($channel == '9000000011') {
+			// Note 9000000010 is for "no hints"
+                        $out .= 'google_hints        = "' . addslashes($this->getGoogleHints()) . '";' . "\n";
+		}
+		$out .= '/*]]>*/</script>
+			<script type="text/javascript" src="http://pagead2.googlesyndication.com/pagead/show_ads.js"></script>';
                 return $out;
         }
 
@@ -58,8 +58,45 @@ class AdProviderGoogle implements iAdProvider {
 		if(!empty($_GET['search'])){
                         return $_GET['search'];
                 } else {
-                        return '';
+			// Pull in the same keywords we use for the page.
+			global $wgOut;
+			if (!empty($wgOut->mKeywords)){
+				return implode(',', $wgOut->mKeywords);
+			}
                 }
+	}
+
+
+	public function getPageUrl(){
+		global $wgTitle;
+		if (is_object($wgTitle) && method_exists($wgTitle, 'getFullUrl')){
+			return $wgTitle->getFullUrl();
+		} else {
+			return 'http://' . $_SERVER['HTTP_HOST'] . $_SERVER['SCRIPT_NAME'];
+		}
+	} 
+
+	public function getChannel(){
+		// Channel is a way to do bucket testing.
+		static $channel;
+		if (!empty($channel)){
+			return $channel;
+		}
+		
+		switch (mt_rand(1,3)){
+			case 1: $channel = 9000000009; break;
+			case 2: $channel = 9000000010; break;
+			case 3: $channel = 9000000011; break;
+		}
+		return $channel;
+	}
+
+
+	
+	// https://www.google.com/adsense/support/bin/answer.py?hl=en&answer=9727
+	public function getSupportedLanguages(){
+		return array('ar', 'bg', 'zh', 'hr', 'cs', 'da', 'nl', 'en', 'fi', 'fr', 'de', 'el', 'he',
+			     'hu', 'it', 'ja', 'ko', 'no', 'pl', 'pt', 'ro', 'ru', 'sr', 'sk', 'es', 'sv', 'tr');
 	}
 
 }

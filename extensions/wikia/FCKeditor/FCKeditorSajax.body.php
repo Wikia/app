@@ -1,7 +1,6 @@
 <?php
 
-function wfSajaxGetMathUrl( $term )
-{
+function wfSajaxGetMathUrl( $term ) {
 	$originalLink = MathRenderer::renderMath( $term );
 
 	if (false == strpos($originalLink, "src=\"")) {
@@ -14,8 +13,7 @@ function wfSajaxGetMathUrl( $term )
 	return $url;
 }
 
-function wfSajaxGetImageUrl( $term )
-{
+function wfSajaxGetImageUrl( $term ) {
 	global $wgExtensionFunctions, $wgTitle, $wgContLang ;
 
 	$options = new FCKeditorParserOptions();
@@ -50,8 +48,7 @@ function wfSajaxGetImageUrl( $term )
 	return  $url . "<FCK_SajaxResponse_splitter_tag/>" . $tag ;
 }
 
-function wfSajaxSearchSpecialTagFCKeditor($empty)
-{
+function wfSajaxSearchSpecialTagFCKeditor($empty) {
 	global $wgParser;
 
 	$ret = "nowiki\nincludeonly\nonlyinclude\nnoinclude\ngallery\n";
@@ -63,8 +60,7 @@ function wfSajaxSearchSpecialTagFCKeditor($empty)
 	return $ret;
 }
 
-function wfSajaxSearchImageFCKeditor( $term )
-{
+function wfSajaxSearchImageFCKeditor( $term ) {
 	global $wgContLang, $wgOut;
 	$limit = 10;
 
@@ -96,8 +92,7 @@ function wfSajaxSearchImageFCKeditor( $term )
 	return $ret;
 }
 
-function wfSajaxSearchArticleFCKeditor( $term )
-{
+function wfSajaxSearchArticleFCKeditor( $term ) {
 	global $wgContLang, $wgOut;
 	$limit = 10;
 	$ns = NS_MAIN;
@@ -167,8 +162,7 @@ function wfSajaxSearchArticleFCKeditor( $term )
 	return $ret;
 }
 
-function wfSajaxSearchTemplateFCKeditor($empty)
-{
+function wfSajaxSearchTemplateFCKeditor($empty) {
 	global $wgContLang, $wgOut;
 	$ns = NS_TEMPLATE;
 
@@ -186,8 +180,7 @@ function wfSajaxSearchTemplateFCKeditor($empty)
 	return $ret;
 }
 
-function wfSajaxWikiToHTML( $wiki )
-{
+function wfSajaxWikiToHTML( $wiki ) {
 	global $wgTitle;
 
 	$options = new FCKeditorParserOptions();

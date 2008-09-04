@@ -24,12 +24,13 @@ $wgWidgets['WidgetLastWikis'] = array(
 function WidgetLastWikis($id, $params) {
 	wfProfileIn(__METHOD__);
 	
-	global $wgSitename;
+	global $wgSitename, $wgCookiePrefix, $wgCookiePath, $wgCookieDomain, $wgCookieSecure;
 
+	$cookie = $_COOKIE["{$wgCookiePrefix}recentlyvisited"];
 	$server = $_SERVER['SERVER_NAME'];
 	$found = false;
 	$count = 0;
-	$urls = isset( $_COOKIE['recentlyvisited'] ) ? unserialize( $_COOKIE['recentlyvisited'] ) : array();
+	$urls = !empty( $cookie ) ? unserialize( $cookie ) : array();
 
 	// first, prepare the existing rank
 	$items  = array();
@@ -46,22 +47,19 @@ function WidgetLastWikis($id, $params) {
 		    $count++;
 		}
 	    }
-	
-		// next, insert actual Wikia to this rank
-		if ( !$found ) {
+	}	
 
-		    if ( count($urls) > 0) {
-			for ( $index = 5; $index > 0; $index-- ) {
-			    $urls[$index] = array();
-			    $urls[$index]['url' ] = $urls[$index - 1]['url' ];
-			    $urls[$index]['name'] = $urls[$index - 1]['name'];
-			}
-		    }
-    
-		    $urls[0]['url' ] = $server;
-		    $urls[0]['name'] = $wgSitename;
-		    setcookie( 'recentlyvisited', serialize( $urls ), time()+3600*24*7, '/', '.wikia.com', 0 );
+	// next, add the current Wikia into the list, if it's not already there
+	if ( !$found ) {
+
+		if ( count($urls) == 5) {
+			array_pop ( $urls );
 		}
+
+		array_unshift ( $urls, array( 'url' => $server, 'name' => $wgSitename ) );		
+
+		$expire = time()+3600*24*7;
+		WebResponse::setcookie($cookie, serialize( $urls ), $expire);
 	}
 
 	wfProfileOut( __METHOD__ );

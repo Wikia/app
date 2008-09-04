@@ -64,7 +64,7 @@ function jsRedirectedFromDiv($article, $outputDone, $pcache){
 
 // Fill in the text in the div created above. In a separate hook so the javascript is at the bottom of the page.
 function jsRedirectedFromText($out){
-        global $wgUser, $wgEnableHardRedirectsWithJSText, $wgCookiePrefix;
+        global $wgUser, $wgEnableHardRedirectsWithJSText, $wgCookiePrefix, $wgTitle;
         global $wgCookiePath, $wgCookieDomain, $wgCookieSecure;
         if (! $wgEnableHardRedirectsWithJSText){
                 return true;
@@ -74,8 +74,9 @@ function jsRedirectedFromText($out){
                 return true;
         }
 		
+		//the RedirectedFrom suffix set as MD5 of target on previous page
         $out->addInlineScript('
-          var jsrdCookie="' . addslashes($wgCookiePrefix) . 'RedirectedFrom";
+          var jsrdCookie="' . addslashes($wgCookiePrefix) . 'RedirectedFrom_' . md5( $wgTitle->getText() ) . '";
           var jsrdText="' . addslashes(wfMsg('redirectedfrom')) . '";
           var jsrdVal=YAHOO.util.Cookie.get(jsrdCookie);
 
@@ -117,10 +118,13 @@ function hardRedirectWithCookie($wgTitle, $target){
                 global $wgOut, $wgCookiePrefix, $wgCookiePath, $wgCookieDomain,
                         $wgCookieSecure, $wgRequest;
                 if ($wgRequest->getVal('redirect')!='no'){
-                         // Only set the cookie if they are not on a 'redirect=no' page.
-                         setcookie( $wgCookiePrefix.'RedirectedFrom',
+                	
+					    if (($target !== false) && ($target instanceof Title)) {
+		                 // Only set the cookie if they are not on a 'redirect=no' page.
+                         setcookie( $wgCookiePrefix . 'RedirectedFrom_' . md5( $target->getText() ),
                                 $wgTitle->getLocalUrl() . '|' . $wgTitle->getText(),
                                 time() + 30, $wgCookiePath, $wgCookieDomain, $wgCookieSecure );
+						}
 								
 						//get cookie if exists
 						$redirectsequence = array();
