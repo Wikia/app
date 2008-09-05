@@ -542,28 +542,14 @@ function wfGetCurrentUrl() {
 	$uri = $_SERVER['REQUEST_URI'];
 
 	/**
-	 * query
+	 * sometimes $uri contain whole url, not only last part
 	 */
-	$x = array_pad( explode( '?', $uri ), 2, false );
-	$arr[ "query" ] = ( $x[1] )? $x[1] : '' ;
-
-	/**
-	 * resource
-	 */
-	$x = array_pad( explode( '/', $x[0] ), 2, false );
-	$x_last = array_pop( $x );
-	if( strpos( $x_last, '.' ) === false ) {
-		$arr[ "resource" ] = '';
-		$x[] = $x_last;
-	}
-	else {
-		$arr[ "resource" ] = $x_last;
-	}
-
-	/**
-	 * path
-	 */
-	$arr[ "path" ] = implode( '/', $x );
+    if( !preg_match( '!^https?://!', $uri ) ) {
+        $uri = isset( $_SERVER[ "SERVER_NAME" ] )
+			? "http://" . $_SERVER[ "SERVER_NAME" ] . $uri
+			: "http://localhost" . $uri;
+    }
+    $arr = parse_url( $uri );
 
 	/**
 	 * host
@@ -579,7 +565,8 @@ function wfGetCurrentUrl() {
 	/**
 	 * full url
 	 */
-	$arr[ "url" ] = $arr[ "scheme" ] . '://' . $arr[ "host" ] . $uri;
+	$arr[ "url" ] = $arr[ "scheme" ] . '://' . $arr[ "host" ] . $arr[ "path" ];
+	$arr[ "url" ] = isset( $arr[ "query" ] ) ? $arr[ "url" ] . "?" . $arr[ "query" ] : $arr[ "url" ];
 
 	return $arr;
 }

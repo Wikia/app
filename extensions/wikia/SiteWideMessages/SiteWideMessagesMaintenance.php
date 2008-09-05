@@ -3,7 +3,7 @@
 /**
  * @package MediaWiki
  * @subpackage SiteWideMessages
- * @author Maciej Błaszkowski <marooned at wikia-inc.com> for Wikia.com
+ * @author Maciej Błaszkowski <marooned@wikia.com> for Wikia.com
  * @copyright (C) 2008, Wikia Inc.
  * @licence GNU General Public Licence 2.0 or later
  */

@@ -6,7 +6,7 @@
  * A SiteWideMessages extension for MediaWiki
  * Provides an interface for sending messages seen on all wikis
  *
- * @author Maciej Błaszkowski (Marooned) <marooned at wikia-inc.com>
+ * @author Maciej Błaszkowski (Marooned) <marooned@wikia.com>
  * @date 2008-01-09
  * @copyright Copyright (C) 2008 Maciej Błaszkowski, Wikia Inc.
  * @license http://www.gnu.org/copyleft/gpl.html GNU General Public License 2.0 or later
@@ -55,23 +55,24 @@ class SiteWideMessages extends SpecialPage {
 		$wgOut->addScript("\n\t<link rel=\"stylesheet\" type=\"text/css\" href=\"$wgExtensionsPath/wikia/SiteWideMessages/SpecialSiteWideMessages.css?$wgStyleVersion\" />");
 
 		$template = 'editor';	//default template
-		$editMsgId = 0;			//edit message mode
+		$editMsgId = 0;	//edit message mode
 
-		$formData['sendModeWikis'] = $wgRequest->getVal('mSendModeWikis', 'ALL');
-		$formData['sendModeUsers'] = $wgRequest->getVal('mSendModeUsers', 'ALL');
-		$formData['hubId'] = intval($wgRequest->getVal('mHubId'));
+		$formData['sendMode'] = $wgRequest->getVal('mSendMode', 'ALL');
+		$formData['groupMode'] = $wgRequest->getVal('mGroupMode', 'ALL');
+		$formData['userName'] = $wgRequest->getText('mUserName');
 		$formData['wikiName'] = $wgRequest->getText('mWikiName');
 		$formData['groupName'] = $wgRequest->getText('mGroupName');
 		$formData['groupNameS'] = $wgRequest->getText('mGroupNameS');
-		$formData['userName'] = $wgRequest->getText('mUserName');
+		$formData['groupWikiName'] = $wgRequest->getText('mGroupWikiName');
 		$formData['expireTime'] = $wgRequest->getVal('mExpireTime');
+		$formData['hubId'] = intval($wgRequest->getVal('mHubId'));
 
 		//fetching hub list
 		$DB = wfGetDB(DB_SLAVE);
 		$dbResult = $DB->Query (
 			  'SELECT cat_id, cat_name'
 			. ' FROM ' . wfSharedTable('city_cats')
-			. ' ORDER BY cat_name'
+			. ' ORDER BY cat_id'
 			. ';'
 			, __METHOD__
 		);
@@ -162,11 +163,11 @@ class SiteWideMessages extends SpecialPage {
 				break;
 
 			case 'send':
-				$mRecipientId = $formData['sendModeUsers'] != 'USER' ? null : $wgUser->idFromName($formData['userName']);
+				$mRecipientId = $formData['sendMode'] == 'ALL' ? null : $wgUser->idFromName($formData['userName']);
 				//TODO: if $mRecipientId == 0 => error - no such user
 				$mText = $wgRequest->getText('mContent');
 				$groupName = $formData['groupName'] == '' ? $formData['groupNameS'] : $formData['groupName'];
-				$result = $this->sendMessage($wgUser, $mRecipientId, $mText, $formData['expireTime'], $formData['wikiName'], $formData['userName'], $groupName, $formData['sendModeWikis'], $formData['sendModeUsers'], $formData['hubId']);
+				$result = $this->sendMessage($wgUser, $mRecipientId, $mText, $wgRequest->getVal('mExpireTime'), $formData['wikiName'], $formData['userName'], $groupName, $formData['sendMode'], $formData['groupMode'], $formData['groupWikiName'], $formData['hubId']);
 
 				if (is_null($result['msgId'])) {	//we have an error
 					$formData['messageContent'] = $wgRequest->getText('mContent');
@@ -181,7 +182,7 @@ class SiteWideMessages extends SpecialPage {
 
 			case 'sent':
 				$mId = $wgRequest->getText('id');
-				$mText = $mId ? $this->getMessageText($mId, true) : null;
+				$mText = $mId ? $this->getMessageText($mId) : null;
 
 				if ($mId && !is_null($mText)) {
 					$formData['messageContent'] = $wgOut->parse($mText);
@@ -235,43 +236,53 @@ class SiteWideMessages extends SpecialPage {
 	}
 
 	//DB functions
-	private function sendMessage($mSender, $mRecipientId, $mText, $mExpire, $mWikiName, $mRecipientName, $mGroupName, $mSendModeWikis, $mSendModeUsers, $mHubId) {
+	private function sendMessage($mSender, $mRecipientId, $mText, $mExpire, $mWikiName, $mRecipientName, $mGroupName, $mSendMode, $mGroupMode, $mGroupWikiName, $mHubId) {
 		global $wgSharedDB;
 		$result = array('msgId' => null, 'errMsg' => null);
 		$dbInsertResult = false;
 		$mWikiId = null;
 
 		//remove unnecessary data
-		switch ($mSendModeWikis) {
+		switch($mSendMode) {
 			case 'ALL':
 				$mWikiName = '';
-				$mHubId = null;
-				break;
-			case 'HUB':
-				$mWikiName = '';
-				break;
-			case 'WIKI':
-				$mHubId = null;
-		}
-
-		switch($mSendModeUsers) {
-			case 'ALL':
-			case 'ACTIVE':
 				$mRecipientName = '';
 				$mGroupName = '';
-				break;
-			case 'GROUP':
-				$mRecipientName = '';
+				$sendToAll = true;
+				$mHubId = null;
 				break;
 			case 'USER':
+				$mWikiName = '';
 				$mGroupName = '';
+				$sendToAll = false;
+				$mHubId = null;
+				break;
+			case 'WIKI':
+				$mRecipientName = '';
+				$mGroupName = '';
+				$sendToAll = false;
+				$mHubId = null;
+				break;
+			case 'GROUP':
+				$mWikiName = '';
+				$mRecipientName = '';
+				if ($mGroupMode == 'ALL') {
+					$mGroupWikiName = '';
+				}
+				$sendToAll = false;
+				$mHubId = null;
+			case 'HUB':
+				$mWikiName = '';
+				$mRecipientName = '';
+				$mGroupName = '';
+				$sendToAll = false;
 		}
 
-		$sendToAll = $mSendModeWikis == 'ALL' && $mSendModeUsers == 'ALL';
-
 		$tmpWikiName = false;
-		if ($mSendModeWikis == 'WIKI' && $mWikiName != '') {
+		if ($mSendMode == 'WIKI' && $mWikiName != '') {
 			$tmpWikiName = $mWikiName;
+		} elseif ($mSendMode == 'GROUP' && $mGroupMode == 'WIKI' && $mGroupWikiName != '') {
+			$tmpWikiName = $mGroupWikiName;
 		}
 		if ($tmpWikiName) {
 			$wikiDomains = array('', '.wikia.com', '.sjc.wikia-inc.com');
@@ -284,12 +295,12 @@ class SiteWideMessages extends SpecialPage {
 
 		if ($mText == '') {
 			$result['errMsg'] = wfMsg('swm-error-empty-message');
-		} elseif ($mSendModeWikis == 'WIKI' && is_null($mWikiId)) {
+		} elseif (($mSendMode == 'WIKI' || ($mSendMode == 'GROUP' && $mGroupMode == 'WIKI')) && is_null($mWikiId)) {
 			//this wiki doesn't exist
 			$result['errMsg'] = wfMsg('swm-error-no-such-wiki');
-		} elseif ($mSendModeUsers == 'USER' && !User::idFromName($mRecipientName)) {
+		} elseif ($mSendMode == 'USER' && !User::idFromName($mRecipientName)) {
 			$result['errMsg'] = wfMsg('swm-error-no-such-user');
-//		} elseif ($mSendModeUsers == 'GROUP' && $mGroupName == '') {
+//		} elseif ($mSendMode == 'GROUP' && $mGroupName == '') {
 //			$result['errMsg'] = wfMsg('swm-error-empty-group');
 		} else {
 			global $wgParser, $wgUser;
@@ -323,137 +334,86 @@ class SiteWideMessages extends SpecialPage {
 				$dbInsertResult = true;
 				$result['msgId'] = $DB->insertId();
 
-				if ($mSendModeUsers == 'USER') {
-					if (!is_null($mRecipientId) && !is_null($result['msgId'])) {
-						$dbResult = (boolean)$DB->Query (
-							  'INSERT INTO ' . MSG_STATUS_DB
-							. ' (msg_wiki_id, msg_recipient_id, msg_id, msg_status)'
-							. ' VALUES ('
-							. $DB->AddQuotes($mWikiId). ', '
-							. $DB->AddQuotes($mRecipientId) . ', '
-							. $DB->AddQuotes($result['msgId']) . ', '
-							. MSG_STATUS_DISMISSED
-							. ');'
+				switch($mSendMode) {
+					case 'ALL':
+						break;
+
+					case 'USER':
+						if (!is_null($mRecipientId) && $dbResult && !is_null($result['msgId'])) {
+							$dbResult = (boolean)$DB->Query (
+								  'INSERT INTO ' . MSG_STATUS_DB
+								. ' (msg_wiki_id, msg_recipient_id, msg_id, msg_status)'
+								. ' VALUES ('
+								. $DB->AddQuotes($mWikiId). ', '
+								. $DB->AddQuotes($mRecipientId) . ', '
+								. $DB->AddQuotes($result['msgId']) . ', '
+								. MSG_STATUS_UNSEEN
+								. ');'
+								, __METHOD__
+							);
+							$dbInsertResult &= $dbResult;
+						}
+						break;
+
+					case 'WIKI':
+						$wikiDB = WikiFactory::IDtoDB($mWikiId);
+
+						$DB = wfGetDB(DB_SLAVE);
+						$DB->selectDB($wikiDB);
+						if (!$DB->tableExists('local_users')) {
+							break;
+						}
+						$dbResult = $DB->Query (
+							  'SELECT user_id'
+							. ' FROM local_users'
+							. ';'
 							, __METHOD__
 						);
-						$dbInsertResult &= $dbResult;
-					}
-				} else {
-					switch ($mSendModeWikis) {
-						case 'ALL':
-							switch ($mSendModeUsers) {
-								case 'ALL':
-									break;
 
-								case 'ACTIVE':
-								case 'GROUP':
-									//add task to TaskManager
-									$oTask = new SWMSendToGroupTask();
-									$oTask->createTask(
-										array(
-											'messageId'		=> $result['msgId'],
-											'sendModeWikis'	=> $mSendModeWikis,
-											'sendModeUsers'	=> $mSendModeUsers,
-											'wikiName'		=> $mWikiName,
-											'groupName'		=> $mGroupName,
-											'senderId'		=> $mSender->GetID(),
-											'senderName'	=> $mSender->GetName(),
-											'hubId'			=> $mHubId
-										),
-										TASK_QUEUED
-									);
-									break;
-							}
-							break;
+						$activeUsers = array();
+						while ($oMsg = $DB->FetchObject($dbResult)) {
+							$activeUsers[] = $oMsg->user_id;
+						}
+						$DB->FreeResult($dbResult);
 
-						case 'HUB':
-							switch ($mSendModeUsers) {
-								case 'ALL':
-								case 'ACTIVE':
-								case 'GROUP':
-									//add task to TaskManager
-									$oTask = new SWMSendToGroupTask();
-									$oTask->createTask(
-										array(
-											'messageId'		=> $result['msgId'],
-											'sendModeWikis'	=> $mSendModeWikis,
-											'sendModeUsers'	=> $mSendModeUsers,
-											'wikiName'		=> $mWikiName,
-											'groupName'		=> $mGroupName,
-											'senderId'		=> $mSender->GetID(),
-											'senderName'	=> $mSender->GetName(),
-											'hubId'			=> $mHubId
-										),
-										TASK_QUEUED
-									);
-									break;
-							}
-							break;
+						$DB = wfGetDB(DB_MASTER);
+						$sqlValues = array();
+						foreach($activeUsers as $activeUser) {
+							$sqlValues[] = "($mWikiId, $activeUser, {$result['msgId']}, " . MSG_STATUS_UNSEEN . ')';
+						}
+						if (count($sqlValues)) {
+							$dbResult = (boolean)$DB->Query (
+								  'INSERT INTO ' . MSG_STATUS_DB
+								. ' (msg_wiki_id, msg_recipient_id, msg_id, msg_status)'
+								. ' VALUES ' . implode(',', $sqlValues)
+								. ';'
+								, __METHOD__
+							);
+							$dbInsertResult &= $dbResult;
+						}
+						break;
 
-						case 'WIKI':
-							switch ($mSendModeUsers) {
-								case 'ALL':
-								case 'ACTIVE':
-									$wikiDB = WikiFactory::IDtoDB($mWikiId);
-
-									$DB = wfGetDB(DB_SLAVE);
-									$DB->selectDB($wikiDB);
-									if (!$DB->tableExists('local_users')) {
-										break;
-									}
-									$dbResult = $DB->Query (
-										  'SELECT user_id'
-										. ' FROM local_users'
-										. ';'
-										, __METHOD__
-									);
-
-									$activeUsers = array();
-									while ($oMsg = $DB->FetchObject($dbResult)) {
-										$activeUsers[] = $oMsg->user_id;
-									}
-									$DB->FreeResult($dbResult);
-
-									$DB = wfGetDB(DB_MASTER);
-									$sqlValues = array();
-									foreach($activeUsers as $activeUser) {
-										$sqlValues[] = "($mWikiId, $activeUser, {$result['msgId']}, " . MSG_STATUS_DISMISSED . ')';
-									}
-									if (count($sqlValues)) {
-										$dbResult = (boolean)$DB->Query (
-											  'INSERT INTO ' . MSG_STATUS_DB
-											. ' (msg_wiki_id, msg_recipient_id, msg_id, msg_status)'
-											. ' VALUES ' . implode(',', $sqlValues)
-											. ';'
-											, __METHOD__
-										);
-										$dbInsertResult &= $dbResult;
-									}
-									break;
-
-								case 'GROUP':
-									//add task to TaskManager
-									$oTask = new SWMSendToGroupTask();
-									$oTask->createTask(
-										array(
-											'messageId'		=> $result['msgId'],
-											'sendModeWikis'	=> $mSendModeWikis,
-											'sendModeUsers'	=> $mSendModeUsers,
-											'wikiName'		=> $mWikiName,
-											'groupName'		=> $mGroupName,
-											'senderId'		=> $mSender->GetID(),
-											'senderName'	=> $mSender->GetName(),
-											'hubId'			=> $mHubId
-										),
-										TASK_QUEUED
-									);
-									break;
-							}
-							break;
-					}	//end: switch ($mSendModeWikis)
-				}	//end: if ($mSendModeUsers == 'USER')
-			}	//end: if ($dbResult) => message sent
-		}	//end: else =? no errors
+					case 'GROUP':
+					case 'HUB':
+						#--- add task to TaskManager
+						$oTask = new SWMSendToGroupTask();
+						$oTask->createTask(
+							array(
+								'taskType' => $mSendMode,
+								'messageId' => $result['msgId'],
+								'groupMode' => $mGroupMode,
+								'groupName' => $mGroupName,
+								'groupWikiName' => $mGroupWikiName,
+								'senderId' => $mSender->GetID(),
+								'senderName' => $mSender->GetName(),
+								'hubId' => $mHubId
+							),
+							TASK_QUEUED
+						);
+						break;
+				}
+			}
+		}
 
 		wfDebug(basename(__FILE__) . ' || ' . __METHOD__ . " || SenderId=" . $mSender->GetID() . ", RecipientId=$mRecipientId, Expire=$mExpire, result=" . ($dbInsertResult ? 'true':'false') . "\n");
 		return $result;
@@ -483,8 +443,8 @@ class SiteWideMessages extends SpecialPage {
 
 	/**
 	 */
-	private function getMessageText($mId, $master = false) {
-		$DB = wfGetDB($master ? DB_MASTER : DB_SLAVE);
+	private function getMessageText($mId) {
+		$DB = wfGetDB(DB_SLAVE);
 
 		$dbResult = $DB->Query (
 			  'SELECT msg_text'

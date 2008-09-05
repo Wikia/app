@@ -6,7 +6,7 @@
  * A SiteWideMessages extension for MediaWiki
  * Provides an interface for sending messages seen on all wikis
  *
- * @author Maciej Błaszkowski (Marooned) <marooned at wikia-inc.com>
+ * @author Maciej Błaszkowski (Marooned) <marooned@wikia.com>
  * @date 2008-01-09
  * @copyright Copyright (C) 2008 Maciej Błaszkowski, Wikia Inc.
  * @license http://www.gnu.org/copyleft/gpl.html GNU General Public License 2.0 or later
@@ -38,22 +38,17 @@ $messages = array(
 		'swm-label-sent'			=> 'Sent',
 		'swm-label-list'			=> 'List',
 		'swm-label-recipient'		=> 'Recipient',
-		'swm-label-recipient-wikis'	=> 'Wikis',
-		'swm-label-recipient-users'	=> 'Users',
 		'swm-label-expiration'		=> 'Expiration time',
-		'swm-label-mode-wikis-all'	=> 'All wikis',
-		'swm-label-mode-wikis-hub'	=> 'Selected hub',
-		'swm-label-mode-wikis-wiki'	=> 'Selected wiki',
-		'swm-label-mode-users-all'	=> 'All users',
-		'swm-label-mode-users-active'		=> 'Active users',
-		'swm-label-mode-users-group'		=> 'Users belonging to the group',
-		'swm-label-mode-users-group-hint'	=> '<i>Pick a group from drop down or write name by hand to overwrite drop down selection.</i>',
-		'swm-label-mode-users-user'			=> 'Selected user',
-		'swm-label-mode-users-user-hint'	=> '<i>This option ignores selection in group "Wikis".</i>',
+		'swm-label-mode-all'		=> 'All users',
+		'swm-label-mode-user'		=> 'Selected user',
+		'swm-label-mode-wiki'		=> 'Active users on wiki',
+		'swm-label-mode-hub'		=> 'Active users on hub',
+		'swm-label-mode-hub-hint'	=> '<i>Note that all options below are more time consuming and will be queued in TaskManager.</i>',
+		'swm-label-mode-group'		=> 'Users belonging to the group',
+		'swm-label-mode-group-hint'	=> '<i>Pick a group from drop down or write name by hand to overwrite drop down selection.</i>',
 		'swm-label-content'			=> 'Content',
 		'swm-label-comment'			=> 'Comment',
 		'swm-label-dismissed'		=> 'Dismissed',
-		'swm-taskmanager-hint'		=> '<i>Note that some options are more time consuming and will be queued in TaskManager.</i>',
 		'swm-button-preview'		=> '[ Preview ]',
 		'swm-button-send'			=> '[ Send ]',
 		'swm-button-save'			=> '[ Save ]',
