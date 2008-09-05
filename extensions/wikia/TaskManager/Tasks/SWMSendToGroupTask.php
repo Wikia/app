@@ -3,7 +3,7 @@
 /**
  * @package MediaWiki
  * @subpackage BatchTask
- * @author Maciej Błaszkowski <marooned at wikia.com> for Wikia.com
+ * @author Maciej Błaszkowski <marooned@wikia.com> for Wikia.com
  * @copyright (C) 2008, Wikia Inc.
  * @licence GNU General Public Licence 2.0 or later
  */
@@ -18,9 +18,6 @@ if (!defined('MSG_STATUS_DB')) {
 }
 if (!defined('MSG_STATUS_UNSEEN')) {
 	define('MSG_STATUS_UNSEEN', '0');
-}
-if (!defined('MSG_STATUS_DISMISSED')) {
-	define('MSG_STATUS_DISMISSED', '2');
 }
 
 #--- messages file
@@ -46,7 +43,7 @@ class SWMSendToGroupTask extends BatchTask {
 	 * entry point for TaskExecutor
 	 *
 	 * @access public
-	 * @author Maciej Błaszkowski (Marooned) <marooned at wikia.com>
+	 * @author Marooned
 	 *
 	 * @param mixed $params default null - task data from wikia_tasks table
 	 *
@@ -56,43 +53,23 @@ class SWMSendToGroupTask extends BatchTask {
 		$this->mData = $params;
 		//set task id for future use (logs, for example)
 		$this->mTaskID = $params->task_id;
-		$args = unserialize($params->task_arguments) ;
+		$data = unserialize($params->task_arguments) ;
 
 		$result = false;
-		$this->addLog("Begin process of sending messages [wiki mode: {$args['sendModeWikis']}, user mode: {$args['sendModeUsers']}].");
-		switch ($args['sendModeWikis']) {
-			case 'ALL':
-				switch ($args['sendModeUsers']) {
-					case 'ACTIVE':
-						$this->sendMessageToActive($args);
-						break;
-
-					case 'GROUP':
-						$this->sendMessageToGroup($args);
-						break;
-				}
-				break;
-
+		$this->addLog("Begin process of sending messages [mode: {$data['groupMode']}].");
+		switch($data['taskType']) {
+			case 'GROUP':
+			switch($data['groupMode']) {
+				case 'ALL':
+					$result = $this->sendMessageToAll($data);
+					break;
+				case 'WIKI':
+					$result = $this->sendMessageToWiki($data);
+					break;
+			}
+			break;
 			case 'HUB':
-				switch ($args['sendModeUsers']) {
-					case 'ALL':
-					case 'ACTIVE':
-						$this->sendMessageToHub($args);
-						break;
-
-					case 'GROUP':
-						$this->sendMessageToGroupOnHub($args);
-						break;
-				}
-				break;
-
-			case 'WIKI':
-				switch ($args['sendModeUsers']) {
-					case 'GROUP':
-						$result = $this->sendMessageToWiki($args);
-						break;
-				}
-				break;
+				$result = $this->sendMessageToHub($data);
 		}
 		return (boolean)$result;
 	}
@@ -165,7 +142,7 @@ class SWMSendToGroupTask extends BatchTask {
 	 * description of task, used in task listing.
 	 *
 	 * @access public
-	 * @author Maciej Błaszkowski (Marooned) <marooned at wikia.com>
+	 * @author Marooned
 	 *
 	 * @return string: task description
 	 */
@@ -173,106 +150,39 @@ class SWMSendToGroupTask extends BatchTask {
 		$desc = $this->getType();
 		if( !is_null( $this->mData ) ) {
 			$args = unserialize( $this->mData->task_arguments );
-			if (!isset($args['sendModeWikis'])) {	//backward compatibility
-				$desc = $args['taskType'] == 'GROUP' ?
-					sprintf('SiteWideMessages :: Send to a group<br/>' .
-					'Group: %s, Wiki: %s<br/>' .
-					'Sender: %s [id: %d]',
-					$args['groupName'],
-					($args['groupMode'] == 'ALL' ? '<i>ALL</i>' : $args['groupWikiName']),
-					$args['senderName'],
-					$args['senderId']
-				) :
-					sprintf('SiteWideMessages :: Send to a hub<br/>' .
-					'Hub ID: %s<br/>' .
-					'Sender: %s [id: %d]',
-					$args['hubId'],
-					$args['senderName'],
-					$args['senderId']
-				);
-			} else {
-				switch ($args['sendModeWikis']) {
-					case 'ALL':
-						switch ($args['sendModeUsers']) {
-							case 'ACTIVE':
-								$desc = sprintf('SiteWideMessages :: Send to active users<br/>' .
-									'Sender: %s [id: %d]',
-									$args['senderName'],
-									$args['senderId']
-								);
-								break;
-
-							case 'GROUP':
-								$desc = sprintf('SiteWideMessages :: Send to a group on all wikis<br/>' .
-									'Group: %s, Wiki: <i>ALL</i><br/>' .
-									'Sender: %s [id: %d]',
-									$args['groupName'],
-									$args['senderName'],
-									$args['senderId']
-								);
-								break;
-						}
-						break;
-
-					case 'HUB':
-						switch ($args['sendModeUsers']) {
-							case 'ALL':
-							case 'ACTIVE':
-								$desc = sprintf('SiteWideMessages :: Send to a hub<br/>' .
-									'Hub ID: %s<br/>' .
-									'Sender: %s [id: %d]',
-									$args['hubId'],
-									$args['senderName'],
-									$args['senderId']
-								);
-								break;
-
-							case 'GROUP':
-								$desc = sprintf('SiteWideMessages :: Send to a group on a hub<br/>' .
-									'Group: %s, Hub ID: %s<br/>' .
-									'Sender: %s [id: %d]',
-									$args['groupName'],
-									$args['hubId'],
-									$args['senderName'],
-									$args['senderId']
-								);
-								break;
-						}
-						break;
-
-					case 'WIKI':
-						switch ($args['sendModeUsers']) {
-							case 'GROUP':
-								$desc = sprintf('SiteWideMessages :: Send to a group on one wiki<br/>' .
-									'Group: %s, Wiki: %s<br/>' .
-									'Sender: %s [id: %d]',
-									$args['groupName'],
-									$args['wikiName'],
-									$args['senderName'],
-									$args['senderId']
-								);
-								break;
-						}
-						break;
-				}
-			}
+			$desc = $args['taskType'] == 'GROUP' ?
+				sprintf('SiteWideMessages :: Send to a group<br/>' .
+				'Group: %s, Wiki: %s<br/>' .
+				'Sender: %s [id: %d]',
+				$args['groupName'],
+				($args['groupMode'] == 'ALL' ? '<i>ALL</i>' : $args['groupWikiName']),
+				$args['senderName'],
+				$args['senderId']
+			) :
+				sprintf('SiteWideMessages :: Send to a hub<br/>' .
+				'Hub ID: %s<br/>' .
+				'Sender: %s [id: %d]',
+				$args['hubId'],
+				$args['senderName'],
+				$args['senderId']
+			);
 		}
 		return $desc;
 	}
 
 	/**
-	 * sendMessageToGroup
+	 * sendMessageToAll
 	 *
 	 * sends a message to specified group of users
 	 *
 	 * @access private
-	 * @author Maciej Błaszkowski (Marooned) <marooned at wikia.com>
+	 * @author Marooned
 	 *
 	 * @param mixed $params - task arguments
 	 *
 	 * @return boolean: result of sending
 	 */
-	private function sendMessageToGroup($params) {
+	private function sendMessageToAll($params) {
 		$result = true;
 
 		$DB = wfGetDB(DB_SLAVE);
@@ -294,8 +204,43 @@ class SWMSendToGroupTask extends BatchTask {
 		}
 		$DB->FreeResult($dbResult);
 
-		$result = $this->sendMessageHelperToGroup($DB, $wikisDB, $params);
+		$usersSent = array();
 
+		//step 2 of 3: look into each wiki for users that belong to a specified group
+		$this->addLog('Step 2 of 3: look into each wiki for users that belong to a specified group [number of wikis = ' . count($wikisDB) . ']');
+		foreach($wikisDB as $wikiID => $wikiDB) {
+			$DB->selectDB($wikiDB);
+			$dbResult = $DB->Query (
+				  'SELECT ug_user'
+				. ' FROM user_groups'
+				. ' WHERE ug_group = ' . $DB->AddQuotes($params['groupName'])
+				. ';'
+				, __METHOD__
+			);
+
+			//for log purpose
+			$wikiIDorg = $wikiID;
+			//if the group is 'staff' - display (==send) the message on a local wiki [John's request, 2008-03-06] - Marooned
+			if ($params['groupName'] == 'staff') {
+				$wikiID = null;
+			}
+
+			//step 3 of 3: add records about new message to right users
+			$sqlValues = array();
+			while ($row = $DB->FetchObject($dbResult)) {
+				if (empty($usersSent[$row->ug_user])) {
+					$sqlValues[] = "($wikiID, {$row->ug_user}, {$params['messageId']}, " . MSG_STATUS_UNSEEN . ')';
+					$usersSent[$row->ug_user] = true;
+				}
+			}
+			$DB->FreeResult($dbResult);
+			if (count($sqlValues)) {
+				//remove line below if log is too long
+				$this->addLog("Step 3 of 3: add records about new message to right users [wiki_id = $wikiIDorg, wiki_db = $wikiDB, number of users = " . count($sqlValues) .	"]");
+				$result &= $this->sendMessageToUsers($sqlValues);
+			}
+			unset($sqlValues);
+		}
 		return $result;
 	}
 
@@ -305,7 +250,7 @@ class SWMSendToGroupTask extends BatchTask {
 	 * sends a message to specified group of users
 	 *
 	 * @access private
-	 * @author Maciej Błaszkowski (Marooned) <marooned at wikia.com>
+	 * @author Marooned
 	 *
 	 * @param mixed $params - task arguments
 	 *
@@ -317,7 +262,7 @@ class SWMSendToGroupTask extends BatchTask {
 		$wikiID = null;
 		$wikiDomains = array('', '.wikia.com', '.sjc.wikia-inc.com');
 		foreach($wikiDomains as $wikiDomain) {
-			if(!is_null($wikiID = WikiFactory::DomainToID($params['wikiName'] . $wikiDomain))) {
+			if(!is_null($wikiID = WikiFactory::DomainToID($params['groupWikiName'] . $wikiDomain))) {
 				break;
 			}
 		}
@@ -355,12 +300,12 @@ class SWMSendToGroupTask extends BatchTask {
 
 		$sqlValues = array();
 		while ($row = $DB->FetchObject($dbResult)) {
-			$sqlValues[] = "($wikiID, {$row->ug_user}, {$params['messageId']}, " . MSG_STATUS_DISMISSED . ')';
+			$sqlValues[] = "($wikiID, {$row->ug_user}, {$params['messageId']}, " . MSG_STATUS_UNSEEN . ')';
 		}
 		$DB->FreeResult($dbResult);
 		$this->addLog("Add records about new message to right users [wiki_id = $wikiID, wiki_db = $wikiDB, number of users = " . count($sqlValues) . "]");
 		if (count($sqlValues)) {
-			$result = $this->sendMessageHelperToUsers($sqlValues);
+			$result = $this->sendMessageToUsers($sqlValues);
 		}
 		unset($sqlValues);
 		return $result;
@@ -372,7 +317,7 @@ class SWMSendToGroupTask extends BatchTask {
 	 * sends a message to active users on wikis in specified hub
 	 *
 	 * @access private
-	 * @author Maciej Błaszkowski (Marooned) <marooned at wikia.com>
+	 * @author Marooned
 	 *
 	 * @param mixed $params - task arguments
 	 *
@@ -402,132 +347,9 @@ class SWMSendToGroupTask extends BatchTask {
 		}
 		$DB->FreeResult($dbResult);
 
-		$result = $this->sendMessageHelperToActive($DB, $wikisDB, $params);
-
-		return $result;
-	}
-
-	/**
-	 * sendMessageToGroupOnHub
-	 *
-	 * sends a message to active users on wikis in specified hub
-	 *
-	 * @access private
-	 * @author Maciej Błaszkowski (Marooned) <marooned at wikia.com>
-	 *
-	 * @param mixed $params - task arguments
-	 *
-	 * @return boolean: result of sending
-	 */
-	private function sendMessageToGroupOnHub($params) {
-		$result = true;
-
-		$DB = wfGetDB(DB_SLAVE);
-
-		//step 1 of 3: get list of all active wikis
-		$this->addLog('Step 1 of 3: get list of all active wikis belonging to a specified hub');
-		$dbResult = $DB->Query (
-			  'SELECT city_id, city_dbname'
-			. ' FROM ' . wfSharedTable('city_list')
-			. ' JOIN ' . wfSharedTable('city_cat_mapping') . ' USING (city_id)'
-			. ' WHERE city_public = 1'
-			. ' AND city_useshared = 1'
-			. ' AND cat_id = ' . $params['hubId']
-			. ';'
-			, __METHOD__
-		);
-
-		$wikisDB = array();
-		while ($row = $DB->FetchObject($dbResult)) {
-			$wikisDB[$row->city_id] = $row->city_dbname;
-		}
-		$DB->FreeResult($dbResult);
-
-		$result = $this->sendMessageHelperToGroup($DB, $wikisDB, $params);
-
-		return $result;
-	}
-
-	/**
-	 * sendMessageToActive
-	 *
-	 * sends a message to active users on all wikis
-	 *
-	 * @access private
-	 * @author Maciej Błaszkowski (Marooned) <marooned at wikia.com>
-	 *
-	 * @param mixed $params - task arguments
-	 *
-	 * @return boolean: result of sending
-	 */
-	private function sendMessageToActive($params) {
-		$result = true;
-
-		$DB = wfGetDB(DB_SLAVE);
-
-		//step 1 of 3: get list of all active wikis
-		$this->addLog('Step 1 of 3: get list of all active wikis');
-		$dbResult = $DB->Query (
-			  'SELECT city_id, city_dbname'
-			. ' FROM ' . wfSharedTable('city_list')
-			. ' WHERE city_public = 1'
-			. ' AND city_useshared = 1'
-			. ';'
-			, __METHOD__
-		);
-
-		$wikisDB = array();
-		while ($row = $DB->FetchObject($dbResult)) {
-			$wikisDB[$row->city_id] = $row->city_dbname;
-		}
-		$DB->FreeResult($dbResult);
-
-		$result = $this->sendMessageHelperToActive($DB, $wikisDB, $params);
-
-		return $result;
-	}
-
-	/**
-	 * sendMessageToUser
-	 *
-	 * add record about new message for specified users
-	 *
-	 * @access private
-	 * @author Maciej Błaszkowski (Marooned) <marooned at wikia.com>
-	 *
-	 * @param mixed $userId - User ID
-	 *
-	 * @return boolean: result of operation
-	 */
-	private function sendMessageHelperToUsers(&$sqlValues) {
-		$DB = wfGetDB(DB_MASTER);
-		$dbResult = (boolean)$DB->Query (
-			  'INSERT INTO ' . MSG_STATUS_DB
-			. ' (msg_wiki_id, msg_recipient_id, msg_id, msg_status)'
-			. ' VALUES ' . implode(',', $sqlValues)
-			. ';'
-			, __METHOD__
-		);
-		return $dbResult;
-	}
-
-	/**
-	 * sendMessageHelperToActive
-	 *
-	 * send message to active users on provided wikis
-	 *
-	 * @access private
-	 * @author Maciej Błaszkowski (Marooned) <marooned at wikia.com>
-	 *
-	 * @param mixed $wikisDB - arary of wikis
-	 *
-	 * @return boolean: result of operation
-	 */
-	private function sendMessageHelperToActive(&$DB, &$wikisDB, &$params) {
-		$result = true;
 		$usersSent = array();
 
-		//step 2 of 3: look into each wiki for active users
+		//step 2 of 3: look into each wiki for users that belong to a specified group
 		$this->addLog('Step 2 of 3: look into each wiki for active users [number of wikis = ' . count($wikisDB) . ']');
 		foreach($wikisDB as $wikiID => $wikiDB) {
 			$DB->selectDB($wikiDB);
@@ -545,7 +367,7 @@ class SWMSendToGroupTask extends BatchTask {
 			$sqlValues = array();
 			while ($row = $DB->FetchObject($dbResult)) {
 				if (empty($usersSent[$row->user_id])) {
-					$sqlValues[] = "($wikiID, {$row->user_id}, {$params['messageId']}, " . MSG_STATUS_DISMISSED . ')';
+					$sqlValues[] = "($wikiID, {$row->user_id}, {$params['messageId']}, " . MSG_STATUS_UNSEEN . ')';
 					$usersSent[$row->user_id] = true;
 				}
 			}
@@ -553,7 +375,7 @@ class SWMSendToGroupTask extends BatchTask {
 			if (count($sqlValues)) {
 				//remove line below if log is too long
 				$this->addLog("Step 3 of 3: add records about new message to right users [wiki_id = $wikiID, wiki_db = $wikiDB, number of users = " . count($sqlValues) .	"]");
-				$result &= $this->sendMessageHelperToUsers($sqlValues);
+				$result &= $this->sendMessageToUsers($sqlValues);
 			}
 			unset($sqlValues);
 		}
@@ -561,54 +383,26 @@ class SWMSendToGroupTask extends BatchTask {
 	}
 
 	/**
-	 * sendMessageHelperToGroup
+	 * sendMessageToUser
 	 *
-	 * send message to active users on provided wikis
+	 * add record about new message for specified users
 	 *
 	 * @access private
-	 * @author Maciej Błaszkowski (Marooned) <marooned at wikia.com>
+	 * @author Marooned
 	 *
-	 * @param mixed $wikisDB - arary of wikis
+	 * @param mixed $userId - User ID
 	 *
 	 * @return boolean: result of operation
 	 */
-	private function sendMessageHelperToGroup(&$DB, &$wikisDB, &$params) {
-		$usersSent = array();
-
-		//step 2 of 3: look into each wiki for users that belong to a specified group
-		$this->addLog('Step 2 of 3: look into each wiki for users that belong to a specified group [number of wikis = ' . count($wikisDB) . ']');
-		foreach($wikisDB as $wikiID => $wikiDB) {
-			$DB->selectDB($wikiDB);
-			$dbResult = $DB->Query (
-				  'SELECT ug_user'
-				. ' FROM user_groups'
-				. ' WHERE ug_group = ' . $DB->AddQuotes($params['groupName'])
-				. ';'
-				, __METHOD__
-			);
-
-			//for log purpose
-			$wikiIDorg = $wikiID;
-			//if the group is 'staff' - display (==send) the message on a local wiki [John's request, 2008-03-06] - Marooned
-			if ($params['groupName'] == 'staff') {
-				$wikiID = null;
-			}
-
-			//step 3 of 3: add records about new message to right users
-			$sqlValues = array();
-			while ($row = $DB->FetchObject($dbResult)) {
-				if (empty($usersSent[$row->ug_user])) {
-					$sqlValues[] = "($wikiID, {$row->ug_user}, {$params['messageId']}, " . MSG_STATUS_DISMISSED . ')';
-					$usersSent[$row->ug_user] = true;
-				}
-			}
-			$DB->FreeResult($dbResult);
-			if (count($sqlValues)) {
-				//remove line below if log is too long
-				$this->addLog("Step 3 of 3: add records about new message to right users [wiki_id = $wikiIDorg, wiki_db = $wikiDB, number of users = " . count($sqlValues) .	"]");
-				$result &= $this->sendMessageHelperToUsers($sqlValues);
-			}
-			unset($sqlValues);
-		}
+	private function sendMessageToUsers($sqlValues) {
+		$DB = wfGetDB(DB_MASTER);
+		$dbResult = (boolean)$DB->Query (
+			  'INSERT INTO ' . MSG_STATUS_DB
+			. ' (msg_wiki_id, msg_recipient_id, msg_id, msg_status)'
+			. ' VALUES ' . implode(',', $sqlValues)
+			. ';'
+			, __METHOD__
+		);
+		return $dbResult;
 	}
 }
