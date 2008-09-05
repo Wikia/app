@@ -88,6 +88,7 @@ TieDivLibrary = new function() {
 				});
 			} else {
 				jQuery("#" + items[i][0] + "_load").css({
+					display: "block",
 					top: offset.top,
 					left: offset.left
 				});
