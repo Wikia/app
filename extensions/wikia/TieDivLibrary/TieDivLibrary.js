@@ -82,13 +82,12 @@ TieDivLibrary = new function() {
 			var offset = jQuery("#" + items[i][0]).offset();
 			if (YAHOO.util.Dom.getStyle(items[i][0], "float") == 'right') {
 				jQuery("#" + items[i][0] + "_load").css({
-					position: "absolute",
+					display: "block",
 					top: offset.top,
 					right: YAHOO.util.Dom.getViewportWidth() - offset.left - jQuery("#" + items[i][0]).width()
 				});
 			} else {
 				jQuery("#" + items[i][0] + "_load").css({
-					position: "absolute",
 					top: offset.top,
 					left: offset.left
 				});
