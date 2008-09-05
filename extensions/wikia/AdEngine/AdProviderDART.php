@@ -65,6 +65,7 @@ class AdProviderDART implements iAdProvider {
 		$url .= 's2=' . $this->getZone2() . ';';
 		$url .= $this->getProviderValues($slot);
 		$url .= $this->getArticleKV();
+		$url .= $this->getDomainKV($_SERVER['HTTP_HOST']);
 		$url .= 'pos=' . $slotname . ';';
 		$url .= $this->getKeywordsKV();
 		$url .= $this->getDcoptKV($slotname);
@@ -192,7 +193,7 @@ EOT;
 			case 'TOP_LEADERBOARD': return 'tile=1;';
 			case 'TOP_RIGHT_BOXAD': return 'tile=2;';
 			case 'LEFT_SKYSCRAPER_1': return 'tile=3;';
-			case 'LEFT_SKYSCRAPER_2': return 'tile=3;'; // same so both skyscrapers don't show
+			case 'LEFT_SKYSCRAPER_2': return 'tile=3;'; // same so both skyscrapers don't show. Note: This isn't working.
 			case 'FOOTER_BOXAD': return 'tile=5;';
 			case 'HOME_TOP_LEADERBOARD': return 'tile=1;';
 			case 'HOME_TOP_RIGHT_BOXAD': return 'tile=2;';
@@ -238,4 +239,45 @@ EOT;
 		}
 	}
 
+	/* We need a way to target based on domain.
+ 	 * "dom" was a reserved value, so "dmn" is what I decided to use for the key.
+	 *
+	 *  The end value will look like this:
+	 *  pages on wowwiki.com - dmn=wowwikicom
+	 *  pages on muppet.wikia.com - dmn=wikiacom
+	 *
+	 *  It's tricky to parse Top level domains, because of examples like .co.uk
+	 *  http://en.wikipedia.org/wiki/List_of_Internet_top-level_domains
+	 */
+	public function getDomainKV($host){
+		$lhost=strtolower($host);
+		if (!preg_match('/([a-z\-0-9]+)\.([a-z]{2,6})$/', $lhost, $match1)){
+			return false;
+		}
+
+		// Yuck. Got a better idea?
+		if ($match1[1] == 'co'){
+			// .co.uk or .co.jp
+			if (!preg_match('/([a-z\-0-9]+)\.co\.([a-z]{2})$/', $lhost, $match2)){
+				return false;
+			} else {
+				return 'dmn=' . $this->sanitizeKeyValue($match2[0]);
+			}
+		}
+
+		return 'dmn=' . $this->sanitizeKeyValue($match1[0]);
+	}
+
 }
+
+/* Test cases for getDomainKV 
+echo AdProviderDART::getDomainKV('muppet.wikia.com') . "\n";
+echo AdProviderDART::getDomainKV('memory-alpha.org') . "\n";
+echo AdProviderDART::getDomainKV('pl.transformersfiction.wikia.com') . "\n";
+echo AdProviderDART::getDomainKV('hiki.pedia.ws') . "\n";
+echo AdProviderDART::getDomainKV('www.google.co.uk') . "\n";
+echo AdProviderDART::getDomainKV('www.google.co.jp') . "\n";
+echo AdProviderDART::getDomainKV('www.google.com') . "\n";
+echo AdProviderDART::getDomainKV('google.com') . "\n";
+echo AdProviderDART::getDomainKV('wikia.com') . "\n";
+*/
