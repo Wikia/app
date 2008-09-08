@@ -71,8 +71,9 @@ function wfRequestTitle( $name, $language = null)
  * @return string processed name
  */
 function wfRequestDeleteCommonPostfix($name) {
-	$commonPostfixes = array('/pedia$/', '/wikia$/', '/wiki$/');
-	return preg_replace($commonPostfixes, '', $name);
+	$commonPostfixes = array('pedia', 'wikia', 'wiki');
+	$regexp = array('/(?:^|(?<!\s))(?:' . implode('|', $commonPostfixes) . ')(?:\s|$)/');
+	return preg_replace($regexp, '', $name);
 }
 
 /**
@@ -97,6 +98,8 @@ function wfRequestLikeOrExact( $name, $language = null ) {
 	$domains["exact"] = array();
 	$unique = array();
 
+	$name = wfRequestDeleteCommonPostfix($name);
+
 	/**
 	 * don't check short names
 	 */
@@ -108,7 +111,6 @@ function wfRequestLikeOrExact( $name, $language = null ) {
 
 		if( is_array( $names ) ) {
 			foreach( $names as $n ) {
-				$n = wfRequestDeleteCommonPostfix($n);
 				if( !preg_match("/^[\w\.]+$/",$n) ) continue;
 				$tmp_array[] = "city_domain like '{$n}.%'";
 			}
@@ -120,7 +122,6 @@ function wfRequestLikeOrExact( $name, $language = null ) {
 			}
 		}
 		else {
-			$name = wfRequestDeleteCommonPostfix($name);
 			$condition = "city_domain like '{$name}.%'";
 		}
 
