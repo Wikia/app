@@ -104,6 +104,11 @@ $wgApiQueryListModules["wkmostvisit"] = "WikiaApiQueryMostVisitedPages";
 $wgApiQueryListModules["wkreferer"] = "WikiaApiQueryReferers";
 
 /**
+ * registered API methods
+ */
+$wgApiQueryMetaModules["siteinfo"] = "WikiaApiQuerySiteInfo";
+
+/**
  * registered Ajax methods
  */
 global $wgAjaxExportList;
