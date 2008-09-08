@@ -2,12 +2,13 @@
 
 $messages = array();
 $messages["en"] = array(
-	"ajaxpoll_PercentVotes" => "of all votes",
-	"ajaxpoll_ThankYou" => "Thank You for your vote!",
-	"ajaxpoll_Error" => "There was a problem with processing your vote, please try again.",
-	"ajaxpoll_Created" => "The poll was created on ",
-	"ajaxpoll_Total" => ", and so far ",
-	"ajaxpoll_Voted" => "people voted.",
-	"ajaxpoll_Submit" => "Vote!",
-	"ajaxpoll_Closed" => "Poll is closed now. Enjoy the results.",
+	"ajaxpoll-percentVotes" => "of all votes",
+	"ajaxpoll-thankyou" => "Thank You for your vote!",
+	"ajaxpoll-error" => "There was a problem with processing your vote, please try again.",
+	"ajaxpoll-created" => "The poll was created on ",
+	"ajaxpoll-total" => ", and so far ",
+	"ajaxpoll-voted" => "people voted.",
+	"ajaxpoll-submit" => "Vote!",
+	"ajaxpoll-closed" => "Poll is closed now. Enjoy the results.",
+	"ajaxpoll-submitting" => "Please wait, submitting your vote..."
 );
