@@ -1571,7 +1571,9 @@ class User {
 			// Save an invalid hash...
 			$this->mPassword = '';
 		} else {
-			$this->mPassword = self::crypt( $str );
+			// Wikia uses the old hashing until we migrate all wikis to MW 1.13
+			//$this->mPassword = self::crypt( $str );
+			$this->mPassword = self::oldCrypt( $str, $this->mId );
 		}
 		$this->mNewpassword = '';
 		$this->mNewpassTime = null;
@@ -1615,7 +1617,9 @@ class User {
 	 */
 	function setNewpassword( $str, $throttle = true ) {
 		$this->load();
-		$this->mNewpassword = self::crypt( $str );
+		// Wikia uses the old hashing until we migrate all wikis to MW 1.13
+		//$this->mNewpassword = self::crypt( $str );
+		$this->mNewpassword = self::oldCrypt( $str, $this->mId );
 		if ( $throttle ) {
 			$this->mNewpassTime = wfTimestampNow();
 		}
@@ -2532,16 +2536,16 @@ class User {
 			if(0 == $old_id) {
 				return false;
 			}
-			$old_ep = $this->encryptPasswordId($old_id, $password);
+			$old_ep = self::oldCrypt($password, $old_id);
 			if(0 == strcmp($old_ep, $this->mPassword)) {
-				$this->mPassword = $this->encryptPassword($password);
+				$this->mPassword = self::oldCrypt($password, $this->mId);
 				$this->setToken();
 				$this->saveSettings();
 				return true;
 			} elseif ( function_exists( 'iconv' ) ) {
-				$old_ep = $this->encryptPasswordId($old_id, iconv('UTF-8', 'WINDOWS-1252', $password));
+				$old_ep = self::oldCrypt(iconv('UTF-8', 'WINDOWS-1252', $password), $old_id);
 				if(0 == strcmp($old_ep, $this->mPassword)){
-					$this->mPassword = $this->encryptPassword(iconv('UTF-8', 'WINDOWS-1252', $password));
+					$this->mPassword = self::oldCrypt(iconv('UTF-8', 'WINDOWS-1252', $password), $this->mId);
 					$this->setToken();
 					$this->saveSettings();
 					return true;
