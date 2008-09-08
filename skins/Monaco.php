@@ -932,7 +932,7 @@ class MonacoTemplate extends QuickTemplate {
 
 	function execute() {
 		wfProfileIn( __METHOD__ );
-		global $wgArticle, $wgUser, $wgLogo, $wgStylePath, $wgRequest, $wgTitle, $wgSitename, $wgEnableFAST_HOME2;
+		global $wgArticle, $wgUser, $wgLogo, $wgStylePath, $wgRequest, $wgTitle, $wgSitename, $wgEnableFAST_HOME2, $wgExtensionsPath;
 		$skin = $wgUser->getSkin();
 
 ?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -945,10 +945,10 @@ class MonacoTemplate extends QuickTemplate {
 		<meta http-equiv="Content-Type" content="<?php $this->text('mimetype') ?>; charset=<?php $this->text('charset') ?>" />
                 <!-- Skin = <?php echo basename(__FILE__) ?> -->
 		<?php $this->html('headlinks') ?>
-		<?php /* TODO move this to allinone, and find a better spot for this code after I talk to Christian. 
+		<?php /* TODO move this to allinone, and find a better spot for this code after I talk to Christian.
 			 This is an experiment to see if moving it higher on the page makes it better */?>
-		<script type="text/javascript" src="/extensions/wikia/AdEngine/AdEngine.js"></script>
-		<?php 
+		<script type="text/javascript" src="<?=$wgExtensionsPath?>/wikia/AdEngine/AdEngine.js"></script>
+		<?php
 		/* Note: This was placed at the top of the page intentionally, so that we
 		   get more accurate stats. Get Michael's permission before moving.
 		*/?>
@@ -999,7 +999,7 @@ class MonacoTemplate extends QuickTemplate {
 <?php		wfProfileOut( __METHOD__ . '-head'); ?>
 <?php		wfProfileIn( __METHOD__ . '-body'); ?>
 
-<?php 
+<?php
 	if (ArticleAdLogic::isMainPage()){
 		$isMainpage = ' mainpage';
 	} else {
@@ -1289,7 +1289,7 @@ if(isset($this->data['articlelinks']['right'])) {
 
 			<!-- ARTICLE FOOTER -->
 <?php		wfProfileIn( __METHOD__ . '-articlefooter'); ?>
-<?php 
+<?php
 global $wgTitle, $wgOut;
 $displayArticleFooter = $wgTitle->exists() && $wgTitle->isContentPage() && !$wgTitle->isTalkPage() && $wgOut->isArticle();
 
@@ -1628,8 +1628,8 @@ menuitem_array = new Array();var submenuitem_array = new Array();</script>';
 			</div>
 			<!-- /SEARCH/NAVIGATION -->
 <?php		wfProfileOut( __METHOD__ . '-navigation'); ?>
-			
-			<?php 
+
+			<?php
 				global $wgOut;
 				if ($wgOut->isArticle() ){
 					if (ArticleAdLogic::isMainPage()) { //main page
@@ -1645,7 +1645,7 @@ menuitem_array = new Array();var submenuitem_array = new Array();</script>';
 
 			<div id="sidebar_1" class="sidebar">
 			<?= WidgetFramework::getInstance()->Draw(1) ?>
-			
+
 			<?php
 				if ($wgOut->isArticle() ){
 					if (ArticleAdLogic::isMainPage()) { //main page
@@ -1670,7 +1670,7 @@ $this->printCustomFooter();
 global $wgEnableAdEngineCollisionTest, $wgArticle;
 if ($wgEnableAdEngineCollisionTest &&
     ! ArticleAdLogic::isMainPage() &&
-    ! ArticleAdLogic::isShortArticle($this->data['bodytext']) && 
+    ! ArticleAdLogic::isShortArticle($this->data['bodytext']) &&
       ArticleAdLogic::isContentPage() &&
       empty($_GET['action'])){
         echo ArticleAdLogic::getCollisionCollision($this->data['bodytext']);
