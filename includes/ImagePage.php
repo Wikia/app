@@ -136,8 +136,7 @@ class ImagePage extends Article {
 			$wgOut->addHTML( Xml::element( 'h2', array( 'id' => 'metadata' ), wfMsg( 'metadata' ) ). "\n" );
 			$wgOut->addWikiText( $this->makeMetadataTable( $formattedMetadata ) );
 			$wgOut->addScriptFile( 'metadata.js' );
-			$wgOut->addScript(
-				"<script type=\"text/javascript\">attachMetadataToggle('mw_metadata', '$expand', '$collapse');</script>\n" );
+			$wgOut->addInlineScript( "attachMetadataToggle('mw_metadata', '$expand', '$collapse');" );
 		}
 	}
 	
