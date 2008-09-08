@@ -133,24 +133,26 @@ class AdEngine {
 		global $wgShowAds, $wgUser, $wgLanguageCode;
 
 
-		// Note: Don't throw an exception on error. Fail gracefully for ads,
-		// don't under any circumstances fail the rendering of the page.
-		// Instead, return a "AdProviderNull" object with an error message
+		/* Note: Don't throw an exception on error. Fail gracefully for ads,
+		 * don't under any circumstances fail the rendering of the page.
+		 * Instead, return a "AdProviderNull" object with an error message.
+		 * Note that the second parameter for AdProviderNull constructor
+		 * is a boolean for whether or not to log it as an error
+		 */
 
-
-		// FIXME This code to go complicated! Refactor.
+		// First handle error conditions
 		if (empty($this->slots[$slotname])) {
 			return new AdProviderNull('Unrecognized slot', true);
 
 		} else if ($this->slots[$slotname]['enabled'] == 'No'){
 			return new AdProviderNull("Slot is disabled", false);
 
-/* Commented out until I better understand what to do.
-		} else if (!in_array($wgLanguageCode, self::getAdLanguages())){
-			// https://trac.wikia-inc.com/trac/comteam/ticket/200
-			return new AdProviderNull("We don't display ads for this language ($wgLanguageCode) ", false);
-*/
+		// As long as they are enabled via config, spotlights are always displayed...
+		} else if ( AdEngine::getInstance()->getAdType($slotname) == 'spotlight' ){ 
+			/// and they are always OpenX
+			return AdProviderOpenX::getInstance();
 
+		// Now some toggles based on preferences and logged in/out
 		} else if (! ArticleAdLogic::isMandatoryAd($slotname) &&
 			     empty($_GET['showads']) && $wgShowAds == false ){
 			return new AdProviderNull('$wgShowAds set to false', false);
@@ -159,38 +161,45 @@ class AdEngine {
 			   is_object($wgUser) && $wgUser->isLoggedIn() && !$wgUser->getOption('showAds') ){
 			return new AdProviderNull('User is logged in', false);
 
- 	        } else if (empty($this->providers[$this->slots[$slotname]['provider_id']])) {
-			return new AdProviderNull('Empty provider id', true);
+		} else if (!empty($_GET['forceProviderid'])){
+			// For debugging, allow ad providers to be forced
+			return $this->getProviderFromId($_GET['forceProviderid']);
 
- 	        } else if ($wgLanguageCode != 'en' ){
-			// Different settings for non english wikis.
-			if ( AdEngine::getInstance()->getAdType($slotname) == 'spotlight' ){
-				return AdProviderOpenX::getInstance();
-			} else {
-				// Google's TOS prevents serving ads for some languages
-				if (in_array($wgLanguageCode, AdProviderGoogle::getSupportedLanguages())){
-					return AdProviderGoogle::getInstance();
+		// All of the errors and toggles are handled, now switch based on language
+		} else {
+	
+			// More info on logic here: http://staff.wikia-inc.com/wiki/DART_Implementation/NonEnglish
+			switch ($wgLanguageCode) {
+			  case 'en': return $this->getProviderFromId($this->slots[$slotname]['provider_id']);
+			  case 'de': return $this->getProviderFromId($this->slots[$slotname]['provider_id']);
+			  default: 
+				if (! ArticleAdLogic::isMandatoryAd($slotname) ){
+					return new AdProviderNull("We don't display ads for this language ($wgLanguageCode) ", false);
+				
 				} else {
-					return new AdProviderNull("Unsupported language for Google Adsense ($wgLanguageCode)", false);
+					// Google's TOS prevents serving ads for some languages
+					if (! in_array($wgLanguageCode, AdProviderGoogle::getSupportedLanguages())){
+						return new AdProviderNull("Unsupported language for Google Adsense ($wgLanguageCode)", false);
+					} else {
+						return AdProviderGoogle::getInstance();
+					}
 				}
 			}
-		} else {
-			if (!empty($_GET['forceProviderid'])){
-				$provider_id = $_GET['forceProviderid'];
-			} else {
-				$provider_id = $this->slots[$slotname]['provider_id'];
-			}
-
-			// Error conditions out of the way, send back the appropriate Ad provider
-			switch ($this->providers[$provider_id]){
-				case 'DART': return AdProviderDART::getInstance();
-				case 'OpenX': return AdProviderOpenX::getInstance();
-				case 'Google': return AdProviderGoogle::getInstance();
-			}
+		
 		}
 
-		// Should never happen, but be sure that an object is always returned.
+		// Should never happen, but be sure that an AdProvider object is always returned.
 		return new AdProviderNull('Logic error in ' . __METHOD__, true);
+	}
+
+
+	public function getProviderFromId ($provider_id) {
+		switch ($this->providers[$provider_id]){
+			case 'DART': return AdProviderDART::getInstance();
+			case 'OpenX': return AdProviderOpenX::getInstance();
+			case 'Google': return AdProviderGoogle::getInstance();
+			default: return new AdProviderNull('Unrecognized provider id', true);
+		}
 	}
 
 	/* Size is stored as $widthx$size character column. Split here.
