@@ -22,7 +22,7 @@ YAHOO.Wikia.Tracker = {
 		if(wgIsArticle) {
 			this.trackByStr(null, 'view');
 		}
-		
+
 		// Edit page
 		if(wgArticleId != 0 && wgAction == 'edit') {
 			this.trackByStr(null, 'editpage/view');
@@ -53,7 +53,7 @@ YAHOO.Wikia.Tracker = {
 		if ( wgCanonicalSpecialPageName && wgCanonicalSpecialPageName == 'Userlogin' ) {
 			Event.addListener($('userloginlink').getElementsByTagName('a')[0], 'click', YAHOO.Wikia.Tracker.trackByStr, 'loginActions/goToSignup');
 		}
-		
+
 		// Special:Search (Macbre)
 		if ( wgCanonicalSpecialPageName && wgCanonicalSpecialPageName == 'Search' ) {
 			lists = Dom.get('bodyContent').getElementsByClassName('mw-search-results');
@@ -62,12 +62,12 @@ YAHOO.Wikia.Tracker = {
 
 				listNames = ['title', 'text'];
 
-				for (l=0; l < lists.length; l++) {
-					offset = 1; // lists[l].start;
-					anchors = lists[l].getElementsByTagName('a');
+				for (m=0; m < lists.length; m++) {
+					//offset = 1; // lists[m].start;
+					anchors = lists[m].getElementsByTagName('a');
 
 					for (a=0; a < anchors.length; a++) {
-						Event.addListener(anchors[a], 'click', YAHOO.Wikia.Tracker.trackByStr, 'search/searchResults/' + listNames[l] + 'Match/' + (offset + a));
+						Event.addListener(anchors[a], 'click', YAHOO.Wikia.Tracker.trackByStr, 'search/searchResults/' + listNames[m] + 'Match/' + (1 + a));
 					}
 				}
 
