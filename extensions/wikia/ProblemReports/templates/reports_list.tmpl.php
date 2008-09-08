@@ -81,7 +81,7 @@
 
 <!-- Problem #<?= $problem['id'] ?> -->
 
-<tr id="problemReportsList-problem-<?= $problem['id'] ?>" <?= (++$count) % 2 ? '' : ' class="odd"' ?>>
+<tr id="problemReportsList-problem-<?= $problem['id'] ?>"<?= (++$count) % 2 ? '' : ' class="odd"' ?>>
 
 <td style="border-<?= $wgContLang->isRTL() ? 'right' : 'left' ?>: solid 4px #<?= $colors[$problem['type']] ?>" width="80">
 <?php if( !empty($problem['summary']) ): ?>    <a onclick="reportProblemToogleSummary(<?= $problem['id'] ?>)" class="problemReportsInfo" title="<?= wfMsg('pr_table_description')?>">&nbsp;</a><?php endif; ?>
