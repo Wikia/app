@@ -62,12 +62,19 @@ YAHOO.Wikia.Tracker = {
 
 				listNames = ['title', 'text'];
 
-				for (m=0; m < lists.length; m++) {
-					//offset = 1; // lists[m].start;
-					anchors = lists[m].getElementsByTagName('a');
+				// parse URL to get offset value
+				re = (/\&offset\=(\d+)/).exec(document.location);
+				if (re && parseInt(re[1])) {
+					offset = parseInt(re[1]) + 1;
+				}
+				else {
+					offset = 1;
+				}
 
+				for (m=0; m < lists.length; m++) {
+					anchors = lists[m].getElementsByTagName('a');
 					for (a=0; a < anchors.length; a++) {
-						Event.addListener(anchors[a], 'click', YAHOO.Wikia.Tracker.trackByStr, 'search/searchResults/' + listNames[m] + 'Match/' + (1 + a));
+						Event.addListener(anchors[a], 'click', YAHOO.Wikia.Tracker.trackByStr, 'search/searchResults/' + listNames[m] + 'Match/' + (offset + a));
 					}
 				}
 
