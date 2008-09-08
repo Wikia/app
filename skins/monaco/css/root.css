@@ -109,14 +109,19 @@ body.mainpage .HOME_TOP_RIGHT_BOXAD, body.mainpage .FAST_HOME2 {
 	margin-left: 10px;
 	margin-bottom: 10px;
 }
-
 #FOOTER_SPOTLIGHT_LEFT, #FOOTER_SPOTLIGHT_MIDDLE, #FOOTER_SPOTLIGHT_RIGHT {
 	margin: 0 auto;
 }
 
-/* general ads styling */
+/* general ads/spotlights styling */
 .wikia_ad {
 	z-index: 15;
+	display: none;
+	position: absolute;
+}
+.wikia_spotlight {
+	display: none;
+	position: absolute;
 }
 #HOME_LEFT_SKYSCRAPER_1_load, #HOME_LEFT_SKYSCRAPER_2_load, #LEFT_SKYSCRAPER_1_load, #LEFT_SKYSCRAPER_2_load, #LEFT_SPOTLIGHT_1_load {
 	z-index: 20;
