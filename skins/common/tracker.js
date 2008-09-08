@@ -64,12 +64,7 @@ YAHOO.Wikia.Tracker = {
 
 				// parse URL to get offset value
 				re = (/\&offset\=(\d+)/).exec(document.location);
-				if (re && parseInt(re[1])) {
-					offset = parseInt(re[1]) + 1;
-				}
-				else {
-					offset = 1;
-				}
+				offset = re ? (parseInt(re[1]) + 1) : 1;
 
 				for (m=0; m < lists.length; m++) {
 					anchors = lists[m].getElementsByTagName('a');
