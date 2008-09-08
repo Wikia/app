@@ -10,9 +10,9 @@ $link = $titleObj->getLocalUrl('type=signup');
 		<div class="boxHeader color1"><?= wfMsg('login') ?></div>
 		<form action="" method="post" name="userajaxloginform" id="userajaxloginform" style="margin:5px">
 			<div id="wpError" style="width: 250px; line-height: 1.4em"></div>
-			<label for="wpName1"><?= wfMsg("yourname") ?>:</label><br/>
+			<label for="wpName1"><?= wfMsg("yourname") ?></label><br/>
 			<input type="text" class="loginText" name="wpName" id="wpName1" tabindex="101" size="20" /><br/>
-			<label for="wpPassword1"><?= wfMsg("yourpassword") ?>:</label><br/>
+			<label for="wpPassword1"><?= wfMsg("yourpassword") ?></label><br/>
 			<input type="password" class="loginPassword" name="wpPassword" id="wpPassword1" tabindex="102" size="20" /><br/>
 			<div style="padding-bottom:3px">
 				<input type="checkbox" name="wpRemember" tabindex="104" value="1" id="wpRemember" <?php if( $wgUser->getOption( 'rememberpassword' ) ) { ?>checked="checked"<?php } ?> />

@@ -76,7 +76,7 @@ TieDivLibrary = new function() {
 	};
 
 	this.calculate = function() {
-		YAHOO.log('calculate()', 'info', 'TieDivLibrary');
+		//YAHOO.log('calculate()', 'info', 'TieDivLibrary');
 		for(i = 0; i < items.length; i++) {
 			jQuery.noConflict();
 			var offset = jQuery("#" + items[i][0]).offset();

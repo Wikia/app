@@ -223,13 +223,8 @@ YAHOO.extend(YAHOO.wikia.ddObject, YAHOO.util.DDProxy, {
 		var clickEl = this.getEl();
 
 		if(YAHOO.util.Dom.hasClass(clickEl, 'WidgetAdvertiser')) {
-			var adSpaceId = clickEl.childNodes[1].childNodes[1].id;
-			var items = TieDivLib.getItems();
-			for(var i = 0; i < items.length; i++) {
-				if(items[i][1] == adSpaceId) {
-					$(items[i][0]).style.visibility = 'hidden';
-				}
-			}
+			var adSpaceId = clickEl.childNodes[1].childNodes[0].id;
+			$(adSpaceId + '_load').style.visibility = 'hidden';
 		}
 
 		if (this.isThumb == false) {
@@ -268,13 +263,8 @@ YAHOO.extend(YAHOO.wikia.ddObject, YAHOO.util.DDProxy, {
 			Dom.setStyle(thisid, 'visibility', '');
 
 			if(YAHOO.util.Dom.hasClass(srcEl, 'WidgetAdvertiser')) {
-				var adSpaceId = srcEl.childNodes[1].childNodes[1].id;
-				var items = TieDivLib.getItems();
-				for(var i = 0; i < items.length; i++) {
-					if(items[i][1] == adSpaceId) {
-						$(items[i][0]).style.visibility = 'visible';
-					}
-				}
+				var adSpaceId = srcEl.childNodes[1].childNodes[0].id;
+				$(adSpaceId + '_load').style.visibility = 'visible';
 			}
 
 		});

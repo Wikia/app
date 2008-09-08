@@ -261,11 +261,11 @@ EOT;
 			if (!preg_match('/([a-z\-0-9]+)\.co\.([a-z]{2})$/', $lhost, $match2)){
 				return false;
 			} else {
-				return 'dmn=' . $this->sanitizeKeyValue($match2[0]);
+				return 'dmn=' . $this->sanitizeKeyValue($match2[0]) . ';';
 			}
 		}
 
-		return 'dmn=' . $this->sanitizeKeyValue($match1[0]);
+		return 'dmn=' . $this->sanitizeKeyValue($match1[0]) . ';';
 	}
 
 }
