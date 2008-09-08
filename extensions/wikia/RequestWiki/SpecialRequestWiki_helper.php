@@ -59,6 +59,23 @@ function wfRequestTitle( $name, $language = null)
 }
 
 /**
+ * wfRequestDeleteCommonPostfix
+ *
+ * deletes common postfixes like 'pedia' or 'wiki'
+ *
+ * @access public
+ * @author Maciej Błaszkowski <marooned at wikia-inc.com>
+ *
+ * @param string $name: name process
+ *
+ * @return string processed name
+ */
+function wfRequestDeleteCommonPostfix($name) {
+	$commonPostfixes = array('/pedia$/', '/wikia$/', '/wiki$/');
+	return preg_replace($commonPostfixes, '', $name);
+}
+
+/**
  * wfRequestLikeOrExact
  *
  * check if name is similar or the same, using sql like queries
@@ -83,7 +100,7 @@ function wfRequestLikeOrExact( $name, $language = null ) {
 	/**
 	 * don't check short names
 	 */
-	if( strlen( $name ) > 2 ) {
+	if( strlen( $name ) > 3 ) {
 
 		$names = explode(" ", $name);
 		$skip = false;
@@ -91,6 +108,7 @@ function wfRequestLikeOrExact( $name, $language = null ) {
 
 		if( is_array( $names ) ) {
 			foreach( $names as $n ) {
+				$n = wfRequestDeleteCommonPostfix($n);
 				if( !preg_match("/^[\w\.]+$/",$n) ) continue;
 				$tmp_array[] = "city_domain like '{$n}.%'";
 			}
@@ -102,6 +120,7 @@ function wfRequestLikeOrExact( $name, $language = null ) {
 			}
 		}
 		else {
+			$name = wfRequestDeleteCommonPostfix($name);
 			$condition = "city_domain like '{$name}.%'";
 		}
 
