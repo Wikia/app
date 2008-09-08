@@ -120,14 +120,14 @@ class AdEngine {
 		return $cat;
 	}
 
-	// For the provided $slotname, get an ad tag. 
+	// For the provided $slotname, get an ad tag.
 	public function getAd($slotname) {
 
 		$AdProvider = $this->getAdProvider($slotname);
 		return $AdProvider->getAd($slotname, $this->slots[$slotname]);
 
 	}
-	
+
 	// Logic for hiding/displaying ads should be here, not in the skin.
 	private function getAdProvider($slotname) {
 		global $wgShowAds, $wgUser, $wgLanguageCode;
@@ -136,7 +136,7 @@ class AdEngine {
 		// Note: Don't throw an exception on error. Fail gracefully for ads,
 		// don't under any circumstances fail the rendering of the page.
 		// Instead, return a "AdProviderNull" object with an error message
-		
+
 
 		// FIXME This code to go complicated! Refactor.
 		if (empty($this->slots[$slotname])) {
@@ -155,7 +155,7 @@ class AdEngine {
 			     empty($_GET['showads']) && $wgShowAds == false ){
 			return new AdProviderNull('$wgShowAds set to false', false);
 
-		} else if (! ArticleAdLogic::isMandatoryAd($slotname) && empty($_GET['showads']) && 
+		} else if (! ArticleAdLogic::isMandatoryAd($slotname) && empty($_GET['showads']) &&
 			   is_object($wgUser) && $wgUser->isLoggedIn() && !$wgUser->getOption('showAds') ){
 			return new AdProviderNull('User is logged in', false);
 
@@ -180,7 +180,7 @@ class AdEngine {
 			} else {
 				$provider_id = $this->slots[$slotname]['provider_id'];
 			}
-			
+
 			// Error conditions out of the way, send back the appropriate Ad provider
 			switch ($this->providers[$provider_id]){
 				case 'DART': return AdProviderDART::getInstance();
@@ -272,7 +272,7 @@ class AdEngine {
 				if($("'.$slotname.'_load").innerHTML.indexOf("' . self::noadgif . '") == -1) {
 					YAHOO.util.Dom.setStyle("'. $slotname .'", "display", "block");
 				}
-	
+
 				// Absolutely position the ${slotname}_load div over the top of the placeholder
 				TieDivLibrary.tie("'. $slotname .'");
 				</script>' . "\n";
@@ -285,21 +285,20 @@ class AdEngine {
 		return $this->placeholders;
 	}
 
-
-        /* Sometimes there is different behavior for different types of ad. Reduce the number of
-         * hacks and hard coded slot names by providing a grouping on type of based on size.
-         * Possible return values:
-         *  "spotlight" , "leaderboard", "boxad", "skyscraper"
-         *
-         * NULL will be returned if this function is unable to determine the type of ad
-         *
+	/* Sometimes there is different behavior for different types of ad. Reduce the number of
+	 * hacks and hard coded slot names by providing a grouping on type of based on size.
+	 * Possible return values:
+	 *  "spotlight" , "leaderboard", "boxad", "skyscraper"
+	 *
+	 * NULL will be returned if this function is unable to determine the type of ad
+	 *
 	 * Long term, this should be a column in the ad_slots table. This will happen when
 	 * we build the UI for managing those tables.
-         */
-        public function getAdType($slotname){
-                if (empty($this->slots[$slotname]['size'])){
-                        return NULL;
-                }  
+	 */
+	public function getAdType($slotname){
+		if (empty($this->slots[$slotname]['size'])){
+			return NULL;
+		}
 
 		switch ($this->slots[$slotname]['size']){
 			case '200x75': return 'spotlight';
@@ -308,6 +307,6 @@ class AdEngine {
 			case '160x600': return 'skyscraper';
 			default: return NULL;
 		}
-        }
+	}
 
 }
