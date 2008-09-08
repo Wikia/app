@@ -62,16 +62,15 @@ function WidgetContribs($id, $params) {
 		);
 	    }
 	    
-	    $ret = WidgetFrameworkWrapLinks($list);
+		$ret = WidgetFrameworkWrapLinks($list);
+
+		// 'more' link...
+		$more = Title::newFromText('Contributions/' . $wgUser->getName(), NS_SPECIAL)->getLocalURL();
+		$ret .= WidgetFrameworkMoreLink($more);
 	}
 	else {
 	    $ret = wfMsg('widget-contribs-empty');
 	}
-
-	// 'more' link...
-	$more = Title::newFromText('Contributions/' . $wgUser->getName(), NS_SPECIAL)->getLocalURL();
-
-	$ret .= WidgetFrameworkMoreLink($more);
 
 	wfProfileOut(__METHOD__);
 

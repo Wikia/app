@@ -27,15 +27,16 @@ function WidgetLanguages($id, $params) {
     global $wgUser,$wgContLang, $wgLanguageCode;
     $skin = $wgUser->getSkin();
     $out = '';
-    if(isset($skin->language_urls)) {
+
+    // only display the widget if there are interlanguage links
+    if(!empty($skin->language_urls) && is_array($skin->language_urls)) {
     	$language = $wgContLang->getLanguageName($wgLanguageCode);
 		$out = '<select onchange="WidgetLanguagesHandleRedirect(this);"><option value="0">'.$language.'</option>';
-		if(is_array($skin->language_urls)) {
-			foreach($skin->language_urls as $key => $val) {
+		foreach($skin->language_urls as $val) {
 				$out .= '<option value="'.htmlspecialchars($val['href']).'">'.$val['text'].'</option>';
-			}
 		}
-		$out .= '</select>';
+		
+	$out .= '</select>';
     }
     wfProfileOut(__METHOD__);
     return $out;
