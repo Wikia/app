@@ -14,15 +14,6 @@ class AjaxPollClass {
 	public $mId, $mBody, $mAttribs, $mParser, $mQuestion, $mStatus, $mTotal;
 	public $mTitle, $mCreated;
 	public $mAnswers = array();
-	public $mColors = array(
-		1 => "red",
-		2 => "orange",
-		3 => "yellow",
-		4 => "green",
-		5 => "blue",
-		6 => "indigo",
-		7 => "purple"
-	);
 
 	/**
 	 * __construct
@@ -124,8 +115,7 @@ class AjaxPollClass {
 		);
 		if( isset( $oRow->poll_id ) ) {
 			$this->mCreated = $oRow->poll_date;
-		}
-		else {
+		} else {
 			$this->mCreated = date("Y-m-d H:i:s");
 			$status = $dbw->insert(
 				"poll_info",
@@ -172,8 +162,7 @@ class AjaxPollClass {
 		while( $oRow = $dbr->fetchObject( $oRes ) ) {
 			if( isset( $votes[ $oRow->poll_answer ] ) ) {
 				$votes[ $oRow->poll_answer ][ "value" ]++;
-			}
-			else {
+			} else {
 				$votes[ $oRow->poll_answer ][ "value" ] = 1;
 			}
 			$total++;
@@ -186,6 +175,7 @@ class AjaxPollClass {
 		foreach( $votes as $nr => $vote ) {
 			$percent = $vote[ "value" ] / $total * 100;
 			$votes[ $nr ][ "percent" ] = $percent;
+			$votes[ $nr ][ "title" ] = $percent . "%&nbsp;" . wfMsg("ajaxpoll-percentVotes");
 			$votes[ $nr ][ "pixels" ] = $this->percent2pixels( $percent );
 			$votes[ $nr ][ "key" ] = $nr;
 		}
@@ -234,7 +224,6 @@ class AjaxPollClass {
 			"question"	=> $question,
 			"title"		=> $this->mTitle,
 			"status"	=> $this->mStatus,
-			"colors"	=> $this->mColors,
 			"attribs"	=> $this->mAttribs,
 			"created"	=> wfTimestamp( TS_RFC2822, $this->mCreated )
 		));
@@ -249,8 +238,7 @@ class AjaxPollClass {
 			foreach( $lines as $line ) {
 				$out .= trim( $line );
 			}
-		}
-		else {
+		} else {
 			$out = trim( $before );
 		}
 
@@ -290,8 +278,7 @@ class AjaxPollClass {
 			foreach( $lines as $nr => $line ) {
 				if( $nr == 0 ) {
 					$question = $line;
-				}
-				else {
+				} else {
 					/**
 					 * $nr + 1 is for compatibility with old poll extension
 					 */
@@ -311,14 +298,6 @@ class AjaxPollClass {
 		$this->mQuestion = $question;
 		$this->mAnswers = $answers;
 
-		/**
-		 * fill colours table
-		 */
-		$colors = $this->mColors;
-		foreach( $answers as $nr => $answer ) {
-			$this->mColors[ $nr ] = $colors[ ( $nr - 1 ) % count( $colors ) ];
-		}
-
 		return array( $question, $answers );
 	}
 
@@ -334,16 +313,6 @@ class AjaxPollClass {
 		$this->mStatus = isset( $this->mAttribs["status"] )
 			? $this->mAttribs["status"] : "open";
 
-		/**
-		 * deparse colours
-		 */
-		foreach( $this->mAttribs as $key => $value ) {
-			if( preg_match( "/^color(\d+)$/", $key, $matches ) ) {
-				if( isset( $matches[1] ) ) {
-					$this->mColors[ $matches[1] ] = $value;
-				}
-			}
-		}
 	}
 
 	/**
@@ -366,7 +335,7 @@ class AjaxPollClass {
 
 		if( !is_null( $vote ) ) {
 			if( $this->doVote( $vote ) ) {
-				$status = wfMsg( "ajaxpoll_ThankYou" );
+				$status = wfMsg( "ajaxpoll-thankyou" );
 				// invalidate cache
 				$wgTitle->invalidateCache();
 
@@ -374,9 +343,8 @@ class AjaxPollClass {
 				$oArticle = new Article($wgTitle);
 				$parserCache =& ParserCache::singleton();
 				$parserMemc->set( $parserCache->getKey($oArticle, $wgUser), null, 0 );
-			}
-			else {
-				$status = wfMsg( "ajaxpoll_Error" );
+			} else {
+				$status = wfMsg( "ajaxpoll-error" );
 			}
 		}
 		list ( $votes, $total ) = $this->getVotes();
