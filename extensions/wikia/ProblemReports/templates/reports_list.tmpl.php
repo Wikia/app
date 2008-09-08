@@ -1,6 +1,6 @@
 <?php
     
-    global $wgServer, $wgLang, $wgContLang, $wgOut, $wgExtensionsPath;
+    global $wgServer, $wgLang, $wgContLang, $wgOut, $wgExtensionsPath, $wgCityId;
 
 ?>
 
@@ -54,7 +54,7 @@
     }
     else {
 		$comments_url = $problem['server'] . Title::makeTitle(NS_MAIN, 'Project_talk:ProblemReports/'.$problem['id'])->escapeLocalURL();
-		$comments_url = '<a href="'.$comments_url.'">'. htmlspecialchars(wfMsg('pr_table_comments')) .'</a>';
+		$comments_url = '<a href="'.htmlspecialchars($comments_url).'">'. htmlspecialchars(wfMsg('pr_table_comments')) .'</a>';
     }
 			
     // make link to: user page (for logged-in users) / contributions list of certain IP + entered username (for anons)
@@ -64,21 +64,21 @@
 		$user_name = $problem['ip'] . (empty($problem['reporter']) ? '' :  ' ("'.$problem['reporter'].'")');								
     }
     else {
-        // User:foo
-		$user_url = htmlspecialchars(Title::makeTitle(NS_USER, $problem['reporter'])->escapeLocalURL());
+		// User:foo
+		$user_url = Title::makeTitle(NS_USER, $problem['reporter'])->escapeLocalURL();
 		$user_name = $problem['reporter'];
     }
 			
-    // change link to point to wikia where problem was reported
-    $user_url = str_replace($wgServer, $problem['server'], $user_url);
+    // change link to point to wikia where problem was reported (#3566)
+    if ($wgCityId != $problem['city']) {
+		$user_url = $problem['server'] . $user_url;
+    }
 		
     // format date (calculate time for UTC per #2214)
     $date = $wgLang->sprintfDate('j\-M\-y\<\b\r \/\>H:i', $problem['date']) . ' UTC';
 			
     // more link
     $more_url = Title::makeTitle(NS_SPECIAL,'ProblemReports')->escapeLocalURL('city='.$problem['city']);
-    
-    
 ?>
 
 <!-- Problem #<?= $problem['id'] ?> -->
@@ -93,7 +93,7 @@
     <td style="text-align: center; width: 40px"><?= htmlspecialchars($problemTypes[$problem['type']]) ?></td>
     <td><a href="<?= $url ?>"><?= wordwrap(htmlspecialchars($problem['title']), 30, ' <br />', true) ?></a></td>
     <td style="text-align: center"><?= $date ?></td>
-    <td><a href="<?= $user_url ?>"><?= htmlspecialchars(shortenText($user_name,30)) ?></a>
+    <td><a href="<?= htmlspecialchars($user_url) ?>"><?= htmlspecialchars(shortenText($user_name,30)) ?></a>
 <?php if (!empty($problem['email']) && $can_do_actions):?>
  <a href="<?= Title::newFromText('ProblemReports/'.$problem['id'], NS_SPECIAL)->escapeLocalURL() ?>" title="<?= wfMsg('email')?>" style="text-decoration: none"><img src="<?= $wgExtensionsPath ?>/wikia/ProblemReports/images/mail_icon.gif" alt="@" width="16" height="16"/></a>
 <?php endif ?><?php if ($isStaff && $problem['anon'] == 0) :?>
