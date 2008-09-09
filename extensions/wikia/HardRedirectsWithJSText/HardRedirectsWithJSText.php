@@ -96,12 +96,11 @@ function jsRedirectedFromText($out){
         return true;
 }
 
-
 /* Hard redirect them to the new url with 301.
  * Append the query string if there is one.
- * Set a cookie for the "Redirected From" text.
+ * Set a cookie for the "Redirected From_MD%(urloftarget)" text.
  */
-function hardRedirectWithCookie($wgTitle, $target){
+function hardRedirectWithCookie($source, $target){
 
         global $wgEnableHardRedirectsWithJSText,$wgEnableHardRedirectsWithJSTextLimit, $wgUser;
         if(get_class($wgUser->getSkin()) != 'SkinMonaco') {
@@ -119,10 +118,10 @@ function hardRedirectWithCookie($wgTitle, $target){
                         $wgCookieSecure, $wgRequest;
                 if ($wgRequest->getVal('redirect')!='no'){
                 	
-					    if (($target !== false) && ($target instanceof Title)) {
+					    if ( ( $source !== false ) && ( $source instanceof Title ) && ( $target !== false ) && ( $target instanceof Title ) ) {
 		                 // Only set the cookie if they are not on a 'redirect=no' page.
                          setcookie( $wgCookiePrefix . 'RedirectedFrom_' . md5( $target->getText() ),
-                                $wgTitle->getLocalUrl() . '|' . $wgTitle->getText(),
+                                $source->getLocalUrl() . '|' . $source->getText(),
                                 time() + 30, $wgCookiePath, $wgCookieDomain, $wgCookieSecure );
 						}
 								
@@ -132,7 +131,6 @@ function hardRedirectWithCookie($wgTitle, $target){
 						if(!empty($_COOKIE[$wgCookiePrefix.'RedirectedTrail'])){
 						 $redirectsequence =  explode( '|', $_COOKIE[$wgCookiePrefix.'RedirectedTrail']);
 						}
-						
 						
 		                 if (($target !== false) && ($target instanceof Title)) {
 	                       $targetUrlMd =  md5( $target->getFullURL() );
@@ -149,13 +147,7 @@ function hardRedirectWithCookie($wgTitle, $target){
                 if (($target !== false) && ($target instanceof Title) && ( $doredirect ) ) {
                         $wgOut->redirect( $target->getFullURL(), '301' );
                 }else{
-        
-		/*
-		   echo 'not redirecting ' . intval($doredirect);
-		   print_r($redirectsequence);
-		   echo $targetUrlMd;
-		*/		
-                	//no need to redirect
+                  	//no need to redirect
   					//drop the cookie for trail and reset the count.. user need to refresh the page 
    		            setcookie( $wgCookiePrefix.'RedirectedTrail',
                               '',
