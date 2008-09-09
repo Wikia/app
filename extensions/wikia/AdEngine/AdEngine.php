@@ -148,7 +148,7 @@ class AdEngine {
 			return new AdProviderNull("Slot is disabled", false);
 
 		// As long as they are enabled via config, spotlights are always displayed...
-		} else if ( AdEngine::getInstance()->getAdType($slotname) == 'spotlight' ){ 
+		} else if ( AdEngine::getInstance()->getAdType($slotname) == 'spotlight' ){
 			/// and they are always OpenX
 			return AdProviderOpenX::getInstance();
 
@@ -167,15 +167,15 @@ class AdEngine {
 
 		// All of the errors and toggles are handled, now switch based on language
 		} else {
-	
+
 			// More info on logic here: http://staff.wikia-inc.com/wiki/DART_Implementation/NonEnglish
 			switch ($wgLanguageCode) {
 			  case 'en': return $this->getProviderFromId($this->slots[$slotname]['provider_id']);
 			  case 'de': return $this->getProviderFromId($this->slots[$slotname]['provider_id']);
-			  default: 
+			  default:
 				if (! in_array($slotname, array('LEFT_SKYSCRAPER_2', 'HOME_LEFT_SKYSCRAPER_2'))){
 					return new AdProviderNull("We only lower skyscraper ads for this language ($wgLanguageCode) ", false);
-				
+
 				} else {
 					// Google's TOS prevents serving ads for some languages
 					if (! in_array($wgLanguageCode, AdProviderGoogle::getSupportedLanguages())){
@@ -185,7 +185,7 @@ class AdEngine {
 					}
 				}
 			}
-		
+
 		}
 
 		// Should never happen, but be sure that an AdProvider object is always returned.
@@ -261,7 +261,12 @@ class AdEngine {
 		}
 
 		$out = "<!-- #### BEGIN " . __CLASS__ . '::' . __METHOD__ . " ####-->\n";
-		$out .= '<script type="text/javascript">TieDivLibrary.timer();</script>' . "\n";
+
+		$out .= '<script type="text/javascript">';
+		$out .= 'var noadgif = "'.self::noadgif.'";';
+		$out .= 'TieDivLibrary.timer();';
+		$out .= '</script>';
+
 		foreach ($this->placeholders as $slotname){
 			$AdProvider = $this->getAdProvider($slotname);
 
@@ -278,15 +283,10 @@ class AdEngine {
 			 * I'd like to see a better solution for this, someday
 			 * See Christian or Nick for more info.
 			*/
-			$out .= '<script type="text/javascript">
-				// expand the div, as long as there is an ad returned.
-				if($("'.$slotname.'_load").innerHTML.indexOf("' . self::noadgif . '") == -1) {
-					YAHOO.util.Dom.setStyle("'. $slotname .'", "display", "block");
-				}
-
-				// Absolutely position the ${slotname}_load div over the top of the placeholder
-				TieDivLibrary.tie("'. $slotname .'");
-				</script>' . "\n";
+			$out .= '<script type="text/javascript">';
+			$out .= 'AdEngine.displaySlotIfAd("'. $slotname .'");';
+			$out .= 'TieDivLibrary.tie("'. $slotname .'");';
+			$out .= '</script>';
 		}
 		$out .= "<!-- #### END " . __CLASS__ . '::' . __METHOD__ . " ####-->\n";
 		return $out;
