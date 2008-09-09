@@ -20,6 +20,7 @@ if (!defined('MEDIAWIKI')){
 }
 
 $wgExtensionFunctions [] = 'wfInitializeSpecialInterwikiEdit';
+$wgExtensionMessagesFiles['SpecialInterwikiEdit'] = dirname(__FILE__) . '/SpecialInterwikiEdit.i18n.php';
 
 function wfInitializeSpecialInterwikiEdit(){
 	global $wgSharedDB, $wgExternalSharedDB;
@@ -35,16 +36,14 @@ function wfInitializeSpecialInterwikiEdit(){
     $wgAvailableRights [] = 'InterwikiEdit';
     $wgGroupPermissions ['staff']['InterwikiEdit'] = True;
     SpecialPage::AddPage (new SpecialPage ('InterwikiEdit', 'InterwikiEdit', True, 'wfSpecialInterwikiEdit', False));
-    $wgMessageCache->AddMessage ('interwikiedit', 'Interwiki Editor');
-    $wgMessageCache->AddMessage ('language_interwiki_only', 'Only language interwiki');
-    $wgMessageCache->AddMessage ('all_interwiki', 'all interwiki');
-    $wgMessageCache->AddMessage ('update', 'Update');
 }
 
 function wfSpecialInterwikiEdit (){
 	global $wgOut, $wgRequest;
 	$action = $wgRequest->getVal('action', 'choose');
 	//$lang_only = $wgRequest->getVal('lang_only', 1);
+
+	wfLoadExtensionMessages('SpecialInterwikiEdit');
 
 	if ($action != 'choose') $ret = "<p class='subpages'>&lt; <a href=''>Back to menu</a></p>";
 	else $ret = "";
@@ -60,6 +59,8 @@ function wfSpecialInterwikiEdit (){
 	    case 'choose':
 	    default : $ret .= wfSIWEChooseAction();
 	}
+
+	$wgOut->setPageTitle(wfMsg('iwedit-title'));
 	$wgOut->AddHTML ($ret);
 }
 
@@ -351,7 +352,7 @@ function wfSIWEEditInterwiki(){
 	$ret .= "<p>Editing interwiki table for <a href='$wikiaURL'>$wikiaURL</a><br />\n";
     $ret .= "<form id='settings' action='' method='POST'>
 	<label for='from'>Show from: <label><input type='text' id='from' name='from' value= ". $db->addQuotes($from). " />
-	<input type='submit' value='". wfMsg('update') ."' />
+	<input type='submit' value='". wfMsg('iwedit-update') ."' />
 	<input type='hidden' name='wikia_id' value='$wikiaID' />
 	<input type='hidden' name='action' value='Edit interwiki' />
 	</form> </p>";
@@ -489,9 +490,9 @@ function wfSIWELinkWikisCommit () {
 	list( , $wikiaID, , $ext_wikiaID) = wfSIWEGetRequestData();
 
 	if (wfSIWELinkWikisCommitProper ($wikiaID, $ext_wikiaID) && wfSIWELinkWikisCommitProper ($ext_wikiaID, $wikiaID)) {
-		$ret = "<p>Link creation succesfull.</p>";
+		$ret = wfMsg('iwedit-success');
 	} else {
-		$ret = "<p>An error occured.</p>";
+		$ret = wfMsg('iwedit-error');
 	}
 
 	return $ret;
