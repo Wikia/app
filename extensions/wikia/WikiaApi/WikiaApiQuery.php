@@ -9,13 +9,13 @@
  *
  */
 
-define ('WIKIA_API_QUERY_LIMIT', 		25);
+define ('WIKIA_API_QUERY_LIMIT', 	25);
 define ('WIKIA_API_QUERY_MIN_LIMIT',	0);
 
-define ('WIKIA_API_QUERY_OFFSET',		0);
+define ('WIKIA_API_QUERY_OFFSET',	0);
 define ('WIKIA_API_QUERY_MIN_OFFSET',	0);
 
-define ('WIKIA_API_QUERY_CTIME',		5 * 60 * 3);
+define ('WIKIA_API_QUERY_CTIME',	5 * 60 * 3);
 define ('WIKIA_API_QUERY_MIN_CTIME',	5);
 
 define ('WIKIA_API_QUERY_DBNAME',	(isset($wgDBname))?$wgDBname:(isset($wgSharedDB))?$wgSharedDB:"");
@@ -33,14 +33,14 @@ class WikiaApiQuery extends ApiQueryBase {
 	const QUERY 	= "query";
 
     #--- default params
-	const MAX_LIMIT 		= 25;
-	const DEF_LIMIT 		= 0;
+	const MAX_LIMIT 	= 25;
+	const DEF_LIMIT 	= 0;
 	const DEF_LIMIT_COUNT 	= 5;
-	const CACHE_TIME 		= 1800;
+	const CACHE_TIME 	= 1800;
 
     #--- user status
     const USER_LOGIN		= 1;
-    const USER_ANON			= 2;
+    const USER_ANON		= 2;
     const USER_LOGOUT		= 3;
 
     #--- DB constant
@@ -136,7 +136,7 @@ class WikiaApiQuery extends ApiQueryBase {
 			default : $allowParam = array_merge($allowParam, $this->getAllowedQueryParams()); break;
 		}
 		return $allowParam;
-    }
+        }
 
 
 	/*
