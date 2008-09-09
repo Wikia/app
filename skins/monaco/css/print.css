@@ -26,11 +26,8 @@ body {
 #page_bar,
 #articleFooter,
 #monaco_footer,
-#adSpace0,
-#adSpace1,
-#adSpace2,
-#adSpace3,
-#fast_bottom_ads,
-#realAdsContainer {
-	display: none;
+.wikia_ad,
+.wikia_spotlight,
+.wikia_ad_placeholder {
+	display: none !important;
 }
