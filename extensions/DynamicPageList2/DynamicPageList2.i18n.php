@@ -98,6 +98,178 @@ $wgDPL2Messages['en'] = array(
 	'dpl2_articlecount' => 'There {{PLURAL:$1|is one article|are $1 articles}} in this heading.'
 );
 
+$wgDPL2Messages['ar'] = array(
+	'dpl2-desc' => 'تعديل على امتداد [http://www.mediawiki.org/wiki/Extension:DynamicPageList DynamicPageList] الأصلي بالعديد من التحسينات',
+	/*
+		Debug
+	*/
+	// (FATAL) ERRORS
+	/**
+	 * $0: 'namespace' or 'notnamespace'
+	 * $1: wrong parameter given by user
+	 * $3: list of possible titles of namespaces (except pseudo-namespaces: Media, Special)
+	 */
+	'dpl2_debug_' . DPL2_ERR_WRONGNS => "خطأ: محدد '$0' خاطئ: '$1'! مساعدة:  <code>$0= <i>سلسلة فارغة</i> (رئيسي)$3</code>. (المساويات مع الكلمات السحرية مسموح بها أيضا.)",
+	/**
+	 * $0: 'linksto' (left as $0 just in case the parameter is renamed in the future)
+	 * $1: wrong parameter given by user
+	*/
+	'dpl2_debug_' . DPL2_ERR_WRONGLINKSTO => "خطأ: محدد '$0' خاطئ: '$1'! مساعدة:  <code>$0= <i>اسم الصفحة الكامل</i></code>. (الكلمات السحرية مسموح بها.)",
+	/**
+	 * $0: max number of categories that can be included
+	*/
+	'dpl2_debug_' . DPL2_ERR_TOOMANYCATS => 'خطأ: تصنيفات كثيرة جدا! الحد الأقصى: $0. مساعدة: زد <code>$wgDPL2MaxCategoryCount</code> لتحديد المزيد من التصنيفات أو اضبط <code>$wgDPL2AllowUnlimitedCategories=true</code> للا حد. (اضبط المتغير في <code>LocalSettings.php</code>, بعد تضمين <code>DynamicPageList2.php</code>.)',
+	/**
+	 * $0: min number of categories that have to be included
+	*/
+	'dpl2_debug_' . DPL2_ERR_TOOFEWCATS => 'خطأ: تصنيفات قليلة جدا! الحد الأدنى: $0. مساعدة: قلل <code>$wgDPL2MinCategoryCount</code> لتحديد عدد أقل من التصنيفات. (اضبط المتغير مفضلا في <code>LocalSettings.php</code>, بعد تضمين <code>DynamicPageList2.php</code>.)',
+	'dpl2_debug_' . DPL2_ERR_CATDATEBUTNOINCLUDEDCATS => "خطأ: تحتاج إلى أن تضمن على الأقل تصنيفا واجدا إذا كنت تريد استخدام 'addfirstcategorydate=true' او 'ordermethod=categoryadd'!",
+	'dpl2_debug_' . DPL2_ERR_CATDATEBUTMORETHAN1CAT => "خطأ: إذا قمت بتضمين أكثر من تصنيف واحد, لا يمكنك استخدام 'addfirstcategorydate=true' أو 'ordermethod=categoryadd'!",
+	'dpl2_debug_' . DPL2_ERR_MORETHAN1TYPEOFDATE => 'خطأ: لا يمكنك إضافة أكثر من نوع واحد من البيانات في المرة!',
+	/**
+	 * $0: param=val that is possible only with $1 as last 'ordermethod' parameter
+	 * $1: last 'ordermethod' parameter required for $0
+	*/
+	'dpl2_debug_' . DPL2_ERR_WRONGORDERMETHOD => "خطأ: يمكنك استخدام '$0' مع 'ordermethod=[...,]$1' فقط!",
+	/**
+	 * $0: prefix_dpl_clview where 'prefix' is the prefix of your MediaWiki table names
+	 * $1: SQL query to create the prefix_dpl_clview on your MediaWiki DB
+	*/
+	'dpl2_debug_' . DPL2_ERR_NOCLVIEW => "خطأ: لم يمكن عمل عمليات منطقية على الصفحات غير المصنفة (على سبيل المثال مع محدد 'category') لأن رؤية $0 غير موجودة في قاعدة البيانات! مساعدة: اجعل إداري قاعدة البيانات ينفذ هذا الاستعلام: <code>$1</code>.",
+
+	// WARNINGS
+	/**
+	 * $0: unknown parameter given by user
+	 * $1: list of DPL2 available parameters separated by ', '
+	*/
+	'dpl2_debug_' . DPL2_WARN_UNKNOWNPARAM => "تحذير: المحدد غير المعروف '$0' يتم تجاهله. مساعدة: المحددات المتوفرة: <code>$1</code>.",
+	/**
+	 * $3: list of valid param values separated by ' | '
+	*/
+	'dpl2_debug_' . DPL2_WARN_WRONGPARAM => "تحذير: محدد '$0' خاطئ: '$1'! استخدام الافتراضي: '$2'. مساعدة: <code>$0= $3</code>.",
+	/**
+	 * $0: param name
+	 * $1: wrong param value given by user
+	 * $2: default param value used instead by program
+	*/
+	'dpl2_debug_' . DPL2_WARN_WRONGPARAM_INT => "تحذير: محدد '$0' خاطئ: '$1'! استخدام الافتراضي: '$2' (لا حد). مساعدة: <code>$0= <i>سلسلة فارغة</i> (لا حد) | n</code>، مع <code>n</code> عدد صحيح موجب.",
+	'dpl2_debug_' . DPL2_WARN_NORESULTS => 'تحذير: لا نتائج!',
+	'dpl2_debug_' . DPL2_WARN_CATOUTPUTBUTWRONGPARAMS => "تحذير: أضف المحددات ('adduser', 'addeditdate', إلى آخره)' و 'includepage' ليس لها تاثير مع 'mode=category'. فقط نظاق/عنوان الصفحة يمكن رؤيتها في هذا النمط.",
+	/**
+	 * $0: 'headingmode' value given by user
+	 * $1: value used instead by program (which means no heading)
+	*/
+	'dpl2_debug_' . DPL2_WARN_HEADINGBUTSIMPLEORDERMETHOD => "تحذير: 'headingmode=$0' ليس له تاثير مع 'ordermethod' على مكون واحد. استخدام قيم: '$1'. مساعدة: you can use not-$1 'headingmode' مع 'ordermethod' على مكونات متعددة. المكون الأول يتم استخدامه للعناوين. على سبيل المثال 'ordermethod=category,<i>comp</i>' (<i>comp</i> مكون آخر) لعناوين التصنيفات.",
+	/**
+	 * $0: 'debug' value
+	*/
+	'dpl2_debug_' . DPL2_WARN_DEBUGPARAMNOTFIRST => "تحذير: 'debug=$0' ليس في الموضع الأول في عنصر DPL. إعدادات التصحيح الجديدة لا يتم تطبيقها قبل أن يتم التحقق من كل المحددات السابقة.",
+	/**
+	 * $0: title of page that creates an infinite transclusion loop
+	*/
+	'dpl2_debug_' . DPL2_WARN_TRANSCLUSIONLOOP => "تحذير: لفة تضمين لا نهائية تم إنشاؤها بواسطة الصفحة '$0'.",
+
+	// OTHERS
+	/**
+	 * $0: SQL query executed to generate the dynamic page list
+	*/
+	'dpl2_debug_' . DPL2_QUERY => 'استعلام: <code>$0</code>',
+
+	/*
+	   Output formatting
+	*/
+	/**
+	 * $1: number of articles
+	*/
+	'dpl2_articlecount' => 'توجد {{PLURAL:$1|مقالة واحدة|$1 مقالة}} في هذا العنوان.'
+);
+
+$wgDPL2Messages['arz'] = array(
+	'dpl2-desc' => 'تعديل على امتداد [http://www.mediawiki.org/wiki/Extension:DynamicPageList DynamicPageList] الأصلى بالعديد من التحسينات',
+	/*
+		Debug
+	*/
+	// (FATAL) ERRORS
+	/**
+	 * $0: 'namespace' or 'notnamespace'
+	 * $1: wrong parameter given by user
+	 * $3: list of possible titles of namespaces (except pseudo-namespaces: Media, Special)
+	 */
+	'dpl2_debug_' . DPL2_ERR_WRONGNS => "خطأ: محدد '$0' خاطئ: '$1'! مساعدة:  <code>$0= <i>سلسلة فارغة</i> (رئيسى)$3</code>. (المساويات مع الكلمات السحرية مسموح بها أيضا.)",
+	/**
+	 * $0: 'linksto' (left as $0 just in case the parameter is renamed in the future)
+	 * $1: wrong parameter given by user
+	*/
+	'dpl2_debug_' . DPL2_ERR_WRONGLINKSTO => "خطأ: محدد '$0' خاطئ: '$1'! مساعدة:  <code>$0= <i>اسم الصفحة الكامل</i></code>. (الكلمات السحرية مسموح بها.)",
+	/**
+	 * $0: max number of categories that can be included
+	*/
+	'dpl2_debug_' . DPL2_ERR_TOOMANYCATS => 'خطأ: تصنيفات كتيرة أوى! الحد الأقصى: $0. مساعدة: زد <code>$wgDPL2MaxCategoryCount</code> لتحديد المزيد من التصنيفات أو اضبط <code>$wgDPL2AllowUnlimitedCategories=true</code> للا حد. (اضبط المتغير في <code>LocalSettings.php</code>, بعد تضمين <code>DynamicPageList2.php</code>.)',
+	/**
+	 * $0: min number of categories that have to be included
+	*/
+	'dpl2_debug_' . DPL2_ERR_TOOFEWCATS => 'خطأ: تصنيفات قليلة أوى! الحد الأدنى: $0. مساعدة: قلل <code>$wgDPL2MinCategoryCount</code> لتحديد عدد أقل من التصنيفات. (اضبط المتغير مفضلا فى <code>LocalSettings.php</code>, بعد تضمين <code>DynamicPageList2.php</code>.)',
+	'dpl2_debug_' . DPL2_ERR_CATDATEBUTNOINCLUDEDCATS => "خطأ: تحتاج إلى أن تضمن على الأقل تصنيفا واجدا إذا كنت تريد استخدام 'addfirstcategorydate=true' او 'ordermethod=categoryadd'!",
+	'dpl2_debug_' . DPL2_ERR_CATDATEBUTMORETHAN1CAT => "خطأ: إذا قمت بتضمين أكثر من تصنيف واحد، لا يمكنك استخدام 'addfirstcategorydate=true' أو 'ordermethod=categoryadd'!",
+	'dpl2_debug_' . DPL2_ERR_MORETHAN1TYPEOFDATE => 'خطأ: لا يمكنك إضافة أكثر من نوع واحد من البيانات فى المرة!',
+	/**
+	 * $0: param=val that is possible only with $1 as last 'ordermethod' parameter
+	 * $1: last 'ordermethod' parameter required for $0
+	*/
+	'dpl2_debug_' . DPL2_ERR_WRONGORDERMETHOD => "خطأ: يمكنك استخدام '$0' مع 'ordermethod=[...,]$1' فقط!",
+	/**
+	 * $0: prefix_dpl_clview where 'prefix' is the prefix of your MediaWiki table names
+	 * $1: SQL query to create the prefix_dpl_clview on your MediaWiki DB
+	*/
+	'dpl2_debug_' . DPL2_ERR_NOCLVIEW => "خطأ: لم يمكن عمل عمليات منطقية على الصفحات غير المصنفة (على سبيل المثال مع محدد 'category') لأن رؤية $0 غير موجودة فى قاعدة البيانات! مساعدة: اجعل إدارى قاعدة البيانات ينفذ هذا الاستعلام: <code>$1</code>.",
+
+	// WARNINGS
+	/**
+	 * $0: unknown parameter given by user
+	 * $1: list of DPL2 available parameters separated by ', '
+	*/
+	'dpl2_debug_' . DPL2_WARN_UNKNOWNPARAM => "تحذير: المحدد غير المعروف '$0' يتم تجاهله. مساعدة: المحددات المتوفرة: <code>$1</code>.",
+	/**
+	 * $3: list of valid param values separated by ' | '
+	*/
+	'dpl2_debug_' . DPL2_WARN_WRONGPARAM => "تحذير: محدد '$0' خاطئ: '$1'! استخدام الافتراضي: '$2'. مساعدة: <code>$0= $3</code>.",
+	/**
+	 * $0: param name
+	 * $1: wrong param value given by user
+	 * $2: default param value used instead by program
+	*/
+	'dpl2_debug_' . DPL2_WARN_WRONGPARAM_INT => "تحذير: محدد '$0' خاطئ: '$1'! استخدام الافتراضي: '$2' (لا حد). مساعدة: <code>$0= <i>سلسلة فارغة</i> (لا حد) | n</code>، مع <code>n</code> عدد صحيح موجب.",
+	'dpl2_debug_' . DPL2_WARN_NORESULTS => 'تحذير: لا نتائج!',
+	'dpl2_debug_' . DPL2_WARN_CATOUTPUTBUTWRONGPARAMS => "تحذير: أضف المحددات ('adduser', 'addeditdate', إلى آخره)' و 'includepage' ليس لها تاثير مع 'mode=category'. فقط نظاق/عنوان الصفحة يمكن رؤيتها فى هذا النمط.",
+	/**
+	 * $0: 'headingmode' value given by user
+	 * $1: value used instead by program (which means no heading)
+	*/
+	'dpl2_debug_' . DPL2_WARN_HEADINGBUTSIMPLEORDERMETHOD => "تحذير: 'headingmode=$0' ليس له تاثير مع 'ordermethod' على مكون واحد. استخدام قيم: '$1'. مساعدة: you can use not-$1 'headingmode' مع 'ordermethod' على مكونات متعددة. المكون الأول يتم استخدامه للعناوين. على سبيل المثال 'ordermethod=category,<i>comp</i>' (<i>comp</i> مكون آخر) لعناوين التصنيفات.",
+	/**
+	 * $0: 'debug' value
+	*/
+	'dpl2_debug_' . DPL2_WARN_DEBUGPARAMNOTFIRST => "تحذير: 'debug=$0' ليس فى الموضع الأول فى عنصر DPL. إعدادات التصحيح الجديدة لا يتم تطبيقها قبل أن يتم التحقق من كل المحددات السابقة.",
+	/**
+	 * $0: title of page that creates an infinite transclusion loop
+	*/
+	'dpl2_debug_' . DPL2_WARN_TRANSCLUSIONLOOP => "تحذير: لفة تضمين لا نهائية تم إنشاؤها بواسطة الصفحة '$0'.",
+
+	// OTHERS
+	/**
+	 * $0: SQL query executed to generate the dynamic page list
+	*/
+	'dpl2_debug_' . DPL2_QUERY => 'استعلام: <code>$0</code>',
+
+	/*
+	   Output formatting
+	*/
+	/**
+	 * $1: number of articles
+	*/
+	'dpl2_articlecount' => 'توجد {{PLURAL:$1|مقالة واحدة|$1 مقالة}} فى هذا العنوان.'
+);
+
 $wgDPL2Messages['de'] = array(
 	'dpl2-desc' => 'Erweiterung der [http://www.mediawiki.org/wiki/Extension:DynamicPageList DynamicPageList] mit vielen Verbesserungen',
 );

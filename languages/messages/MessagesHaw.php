@@ -179,6 +179,7 @@ $messages = array(
 'disclaimerpage'       => 'Project:Nā a‘o ‘ana laulā',
 'edithelp'             => 'Kōkua me ka ho‘ololi ‘ana',
 'edithelppage'         => 'Help:Ho‘ololi',
+'helppage'             => 'Help:Papa kuhikuhi',
 'mainpage'             => 'Ka papa kinohi',
 'mainpage-description' => 'Ka papa kinohi',
 'policy-url'           => 'Project:Palapala',
@@ -250,6 +251,7 @@ He mea ho‘ohana ‘oe. Mai poina e loli kāu makemake ma {{SITENAME}}.',
 'logout'                  => "E ha'alele",
 'userlogout'              => "E ha'alele",
 'notloggedin'             => 'Mai ‘e‘e',
+'nologin'                 => 'ʻAʻohe waihona kāu? $1.',
 'nologinlink'             => "Lilo i mea ho'ohana",
 'createaccount'           => 'E hana',
 'gotaccountlink'          => 'E komo',
@@ -312,12 +314,15 @@ hō‘ike ‘ia i lalo:",
 'protectedpagewarning'   => '<strong>A‘o ‘ana:  Ua laka ‘ia kēia ‘ao‘ao, pēlā, hiki i nā "kahu" ke ho‘opololei wale nō.</strong>',
 'template-protected'     => '(ho‘omalu ‘ia)',
 'template-semiprotected' => '(hapa-ho‘omalu ‘ia)',
+'edittools'              => '<!-- Eia ka ‘ōlelo e hō‘ike ‘ia malalo o nā palapala ho‘ololi ame nā palapala ho‘ohui. -->',
 
 # History pages
 'currentrev'          => 'Kāmua hou',
 'currentrevisionlink' => 'Kāmua hou',
 'cur'                 => 'hou',
 'last'                => 'hope',
+'page_first'          => 'mua',
+'page_last'           => 'hope',
 'deletedrev'          => '[ua kāpae ‘ia]',
 'histfirst'           => 'Kahiko loa',
 'histlast'            => 'Hou loa',
@@ -413,11 +418,14 @@ hō‘ike ‘ia i lalo:",
 'movethispage'      => "E ho'ololi kēia",
 
 # Special:Log
-'log' => 'Nā mo‘olelo',
+'log'           => 'Nā mo‘olelo',
+'all-logs-page' => 'Nā moʻolelo āpau',
 
 # Special:AllPages
 'allpages'       => 'Nā ‘ao‘ao loa apau',
 'alphaindexline' => '$1 i $2',
+'nextpage'       => 'Mea aʻe ($1)',
+'prevpage'       => 'Mea ma mua aʻe ($1)',
 'allarticles'    => 'Nā mo‘olelo apau loa',
 'allpagesprev'   => 'Mua',
 'allpagesnext'   => 'Hope',
@@ -494,7 +502,9 @@ hō‘ike ‘ia i lalo:",
 # Move page
 'move-page-legend'        => "E ho'ololi",
 'movearticle'             => "E ho'ololi",
+'move-watch'              => 'E nānā pono i kēia mea',
 'movepagebtn'             => "E ho'ololi",
+'1movedto2'               => 'Ua hoʻoneʻe ʻo [[$1]] iā [[$2]]',
 'movereason'              => 'Kumu:',
 'delete_and_move'         => 'E kāpae a e ho‘ololi i ka inoa',
 'delete_and_move_confirm' => '‘Ae, e kāpae i ka ‘ao‘ao',
@@ -549,6 +559,14 @@ hō‘ike ‘ia i lalo:",
 
 # action=purge
 'confirm_purge_button' => 'Hiki nō',
+
+# Multipage image navigation
+'imgmultipageprev' => '← mea ma mua aʻe',
+'imgmultipagenext' => 'mea aʻe →',
+
+# Table pager
+'table_pager_next' => 'Mea aʻe',
+'table_pager_prev' => 'Mea ma mua aʻe',
 
 # Auto-summaries
 'autosumm-replace' => "Ke pani nei i ka ‘ao‘ao me '$1'",

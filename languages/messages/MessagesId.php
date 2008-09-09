@@ -384,13 +384,13 @@ $messages = array(
 'category_header'                => 'Artikel dalam kategori "$1"',
 'subcategories'                  => 'Subkategori',
 'category-media-header'          => 'Media dalam kategori "$1"',
-'category-empty'                 => "''Kategori ini saat ini tak memiliki artikel atau media.''",
+'category-empty'                 => "''Tidak terdapat artikel maupun media dalam kategori ini.''",
 'hidden-categories'              => '{{PLURAL:$1|Kategori tersembunyi|Kategori tersembunyi}}',
 'hidden-category-category'       => 'Kategori tersembunyi', # Name of the category where hidden categories will be listed
 'category-subcat-count'          => '{{PLURAL:$2|Kategori ini hanya memiliki satu subkategori berikut.|Kategori ini memiliki {{PLURAL:$1|subkategori|$1 subkategori}} berikut, dari total $2.}}',
 'category-subcat-count-limited'  => 'Kategori ini memiliki {{PLURAL:$1|subkategori|$1 subkategori}} berikut.',
 'category-article-count'         => '{{PLURAL:$2|Kategori ini hanya memiliki satu halaman berikut.|Kategori ini memiliki {{PLURAL:$1|halaman|$1 halaman}}, dari total $2.}}',
-'category-article-count-limited' => 'Kategori ini memiliki {{PLURAL:$1|halaman|$1 halaman}} berikut.',
+'category-article-count-limited' => 'Kategori ini memiliki {{PLURAL:$1|satu halaman|$1 halaman}} berikut.',
 'category-file-count'            => '{{PLURAL:$2|Kategori ini hanya memiliki satu berkas berikut.|Kategori ini memiliki {{PLURAL:$1|berkas|$1 berkas}} berikut, dari total $2.}}',
 'category-file-count-limited'    => 'Kategori ini memiliki {{PLURAL:$1|berkas|$1 berkas}} berikut.',
 'listingcontinuesabbrev'         => 'samb.',
@@ -1293,9 +1293,11 @@ Nama berkas yang akan dimuat: <strong><tt>$1</tt></strong><br />
 Nama berkas yang telah ada: <strong><tt>$2</tt></strong><br />
 Satu-satunya perbedaan adalah pada kapitalisasi ekstensi. Harap cek apakah berkas tersebut sama.',
 'fileexists-thumb'            => "<center>'''Berkas yang tersedia'''</center>",
-'fileexists-thumbnail-yes'    => 'Berkas ini tampaknya merupakan gambar dengan ukuran yang lebih kecil <em>(thumbnail)</em>. Harap cek berkas <strong><tt>$1</tt></strong>.<br />
-Jika berkas tersebut merupakan berkas yang sama, tidak perlu untuk memuat kembali versi kecil lainnya.',
-'file-thumbnail-no'           => 'Nama berkas dimulai dengan <strong><tt>$1</tt></strong>. Tampaknya berkas ini merupakan gambar dengan ukuran yang lebih kecil <em>(thumbnail)</em>.
+'fileexists-thumbnail-yes'    => 'Berkas ini tampaknya merupakan gambar yang ukurannya diperkecil <i>(miniatur)</i>.
+Harap periksa berkas <strong><tt>$1</tt></strong> tersebut.<br />
+Jika berkas tersebut memang merupakan gambar dalam ukuran aslinya, Anda tidak perlu untuk memuat kembali miniatur lainnya.',
+'file-thumbnail-no'           => 'Nama berkas dimulai dengan <strong><tt>$1</tt></strong>.
+Tampaknya berkas ini merupakan gambar dengan ukuran diperkecil <i>(miniatur)</i>.
 Jika Anda memiliki versi resolusi penuh dari gambar ini, harap muatkan berkas tersebut. Jika tidak, harap ubah nama berkas ini.',
 'fileexists-forbidden'        => 'Ditemukan berkas dengan nama yang sama;
 harap kembali dan muatkan berkas dengan nama lain. [[Image:$1|thumb|center|$1]]',
@@ -1404,7 +1406,7 @@ Klik pada kepala kolom untuk mengubah urutan.',
 'filedelete-comment'          => 'Komentar:',
 'filedelete-submit'           => 'Hapus',
 'filedelete-success'          => "'''$1''' telah dihapus.",
-'filedelete-success-old'      => '<span class="plainlinks">Versi \'\'\'[[Media:$1|$1]]\'\'\' pada $3, $2 telah dihapus.</span>',
+'filedelete-success-old'      => "Berkas '''[[Media:$1|$1]]''' versi $3, $2 telah dihapus.",
 'filedelete-nofile'           => "'''$1''' tak ditemukan pada situs ini.",
 'filedelete-nofile-old'       => "Tak ditemukan arsip versi dari '''$1''' dengan atribut yang diberikan.",
 'filedelete-iscurrent'        => 'Anda mencoba menghapus versi terakhir berkas ini. Harap kembalikan dulu ke versi lama.',
@@ -1460,8 +1462,8 @@ Suatu halaman dianggap sebagai halaman disambiguasi apabila halaman tersebut men
 
 'doubleredirects'            => 'Pengalihan ganda',
 'doubleredirectstext'        => 'Halaman ini memuat daftar halaman yang beralih ke halaman pengalihan yang lain. Setiap baris memuat pranala ke pengalihan pertama dan pengalihan kedua serta target dari pengalihan kedua yang umumnya adalah halaman yang sebenarnya. Halaman peralihan pertama seharusnya dialihkan ke halaman target tersebut.',
-'double-redirect-fixed-move' => '[[$1]] telah dipindahkan, sekarang menjadi halaman peralihan ke [[$2]]',
-'double-redirect-fixer'      => 'Pengguna yang memperbaiki pengalihan',
+'double-redirect-fixed-move' => '[[$1]] telah dipindahkan menjadi halaman peralihan ke [[$2]]',
+'double-redirect-fixer'      => 'Revisi pengalihan',
 
 'brokenredirects'        => 'Pengalihan rusak',
 'brokenredirectstext'    => 'Halaman-halaman berikut dialihkan ke halaman yang tidak ada.',
@@ -1565,7 +1567,9 @@ Anda dapat melakukan pembatasan tampilan dengan memilih jenis log, nama pengguna
 
 # Special:Categories
 'categories'                    => 'Daftar kategori',
-'categoriespagetext'            => 'Kategori-kategori berikut mengandung halaman atau media.',
+'categoriespagetext'            => 'Terdapat halaman-halaman atau media dalam kategori-kategori berikut.
+[[Special:UnusedCategories|Kategori-kategori tanpa isi]] tidak ditampilkan di sini.
+Lihat pula [[Special:WantedCategories|daftar kategori yang dibutuhkan]].',
 'categoriesfrom'                => 'Tampilkan kategori-kategori dimulai dengan:',
 'special-categories-sort-count' => 'urutkan menurut jumlah',
 'special-categories-sort-abc'   => 'urutkan menurut abjad',
@@ -1593,10 +1597,10 @@ Anda dapat melakukan pembatasan tampilan dengan memilih jenis log, nama pengguna
 'defemailsubject' => 'Surat-e {{SITENAME}}',
 'noemailtitle'    => 'Tidak ada alamat surat-e',
 'noemailtext'     => 'Pengguna ini tidak memasukkan alamat surat-e yang sah, atau memilih untuk tidak menerima surat-e dari pengguna yang lain.',
-'emailfrom'       => 'Dari',
-'emailto'         => 'Untuk',
-'emailsubject'    => 'Perihal',
-'emailmessage'    => 'Pesan',
+'emailfrom'       => 'Dari:',
+'emailto'         => 'Untuk:',
+'emailsubject'    => 'Perihal:',
+'emailmessage'    => 'Pesan:',
 'emailsend'       => 'Kirim',
 'emailccme'       => 'Kirimi saya salinan pesan saya.',
 'emailccsubject'  => 'Salinan pesan Anda untuk $1: $2',
@@ -1773,7 +1777,8 @@ Lihat [[Special:ProtectedPages|daftar halaman yang dilindungi]] untuk daftar ter
 'undelete-fieldset-title'      => 'Mengembalikan revisi',
 'undeleteextrahelp'            => "Untuk mengembalikan keseluruhan halaman, biarkan seluruh kotak cek tidak terpilih dan klik '''''Kembalikan'''''. Untuk melakukan pengembalian selektif, cek kotak revisi yang diinginkan dan klik '''''Kembalikan'''''. Menekan tombol '''''Reset''''' akan mengosongkan isian komentar dan semua kotak cek.",
 'undeleterevisions'            => '$1 {{PLURAL:$1|revisi|revisi}} diarsipkan',
-'undeletehistory'              => 'Jika Anda mengembalikan halaman tersebut, semua revisi akan dikembalikan ke dalam sejarah. Jika sebuah halaman baru dengan nama yang sama telah dibuat sejak penghapusan, revisi yang telah dikembalikan akan kelihatan dalam sejarah dahulu, dan revisi terkini halaman tersebut tidak akan ditimpa secara otomatis. Ingat pula bahwa pembatasan revisi berkas terhapus sewaktu pemulihan',
+'undeletehistory'              => 'Jika Anda mengembalikan halaman tersebut, semua revisi juga akan dikembalikan ke dalam daftar versi terdahulu halaman.
+Jika sebuah halaman baru dengan nama yang sama telah dibuat sejak penghapusan, revisi-revisi yang dikembalikan tersebut akan ditampilkan dalam daftar versi terdahulu.',
 'undeleterevdel'               => 'Pembatalan penghapusan tidak akan dilakukan jika hal tersebut akan mengakibatkan revisi terkini halaman terhapus sebagian. Pada kondisi tersebut, Anda harus menghilangkan cek atau menghilangkan penyembunyian revisi yang dihapus terakhir. Revisi berkas yang tidak dapat Anda lihat tidak akan dipulihkan.',
 'undeletehistorynoadmin'       => 'Artikel ini telah dihapus. Alasan penghapusan diberikan pada ringkasan di bawah ini, berikut detil pengguna yang telah melakukan penyuntingan pada halaman ini sebelum dihapus. Isi terakhir dari revisi yang telah dihapus ini hanya tersedia untuk pengurus.',
 'undelete-revision'            => 'Revisi yang telah dihapus dari $1 (sampai $2) oleh $3:',
@@ -1898,7 +1903,7 @@ Lihat [[Special:IPBlockList|Daftar IP]] untuk meninjau kembali pemblokiran.',
 'blocklistline'                   => '$1, $2 memblokir $3 ($4)',
 'infiniteblock'                   => 'tak terbatas',
 'expiringblock'                   => 'kadaluwarsa $1',
-'anononlyblock'                   => 'hanya anon',
+'anononlyblock'                   => 'hanya pengguna anonim',
 'noautoblockblock'                => 'pemblokiran otomatis dimatikan',
 'createaccountblock'              => 'pembuatan akun diblokir',
 'emailblock'                      => 'surat-e diblokir',
@@ -2001,7 +2006,7 @@ Artikel yang dituju, "[[:$1]]", telah mempunyai isi. Apakah Anda hendak menghapu
 'imagenocrossnamespace'   => 'Tidak dapat memindahkan berkas ke ruang nama non-berkas',
 'imagetypemismatch'       => 'Ekstensi yang diberikan tidak cocok dengan tipe berkas',
 'imageinvalidfilename'    => 'Nama berkas tujuan tidak sah',
-'fix-double-redirects'    => 'Perbaiki semua pengalihan yang merujuk ke artikel aslinya',
+'fix-double-redirects'    => 'Perbaiki semua pengalihan ganda yang mungkin terjadi',
 
 # Export
 'export'            => 'Ekspor halaman',
@@ -2033,10 +2038,10 @@ Jika Anda hanya ingin mengimpor versi terbaru, Anda melakukannya lebih cepat den
 # Thumbnails
 'thumbnail-more'           => 'Perbesar',
 'filemissing'              => 'Berkas tak ditemukan',
-'thumbnail_error'          => 'Kesalahan sewaktu pembuatan gambar kecil (thumbnail): $1',
+'thumbnail_error'          => 'Gagal membuat miniatur: $1',
 'djvu_page_error'          => 'Halaman DjVu di luar rentang',
 'djvu_no_xml'              => 'XML untuk berkas DjVu tak dapat diperoleh',
-'thumbnail_invalid_params' => 'Parameter gambar kecil tak sah',
+'thumbnail_invalid_params' => 'Kesalahan parameter miniatur',
 'thumbnail_dest_directory' => 'Direktori tujuan tak dapat dibuat',
 
 # Special:Import
@@ -2220,7 +2225,7 @@ Simpan ke komputer Anda lalu muatkan di sini.',
 # Media information
 'mediawarning'         => "'''Peringatan:''' Berkas ini mungkin mengandung kode berbahaya yang jika dijalankan dapat mempengaruhi sistem Anda.<hr />",
 'imagemaxsize'         => 'Batasi ukuran gambar dalam halaman deskripsi berkas sampai:',
-'thumbsize'            => 'Ukuran gambar kecil (thumbnail):',
+'thumbsize'            => 'Ukuran miniatur:',
 'widthheightpage'      => '$1×$2, $3 {{PLURAL:$3|halaman|halaman}}',
 'file-info'            => '(ukuran berkas: $1, tipe MIME: $2)',
 'file-info-size'       => '($1 × $2 piksel, ukuran berkas: $3, tipe MIME: $4)',
@@ -2623,7 +2628,7 @@ Coba dengan pratayang normal.',
 'lag-warn-high'   => 'Karenanya besarnya keterlambatan basis data server, perubahan yang lebih baru dari $1 {{PLURAL:$1|detik|detik}} mungkin tidak muncul di daftar ini.',
 
 # Watchlist editor
-'watchlistedit-numitems'       => 'Daftar pantauan Anda berisi {{PLURAL:$1|1 judul|$1 judul}},tidak termasuk halaman pembicaraan.',
+'watchlistedit-numitems'       => 'Daftar pantauan Anda berisi {{PLURAL:$1|1 judul|$1 judul}}, tidak termasuk halaman pembicaraan.',
 'watchlistedit-noitems'        => 'Daftar pantauan Anda kosong.',
 'watchlistedit-normal-title'   => 'Sunting daftar pantauan',
 'watchlistedit-normal-legend'  => 'Hapus judul dari daftar pantauan',

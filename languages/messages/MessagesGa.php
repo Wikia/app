@@ -191,12 +191,14 @@ $messages = array(
 'dec'           => 'Noll',
 
 # Categories related messages
-'pagecategories'         => '{{PLURAL:$1|Catagóir|Catagóirí}}',
-'category_header'        => 'Ailt sa chatagóir "$1"',
-'subcategories'          => 'Fo-chatagóirí',
-'category-media-header'  => 'Meáin sa chatagóir "$1"',
-'category-empty'         => "''Níl aon leathanaigh ná méid sa chatagóir ar an am seo.''",
-'listingcontinuesabbrev' => 'ar lean.',
+'pagecategories'              => '{{PLURAL:$1|Catagóir|Catagóirí}}',
+'category_header'             => 'Ailt sa chatagóir "$1"',
+'subcategories'               => 'Fo-chatagóirí',
+'category-media-header'       => 'Meáin sa chatagóir "$1"',
+'category-empty'              => "''Níl aon leathanaigh ná méid sa chatagóir ar an am seo.''",
+'category-file-count'         => '{{PLURAL:$2|Tá ach an comhad a leanas sa chatagóir seo|Tá {{PLURAL:$1|an comhad seo|$1 na comhaid seo}} a leanas sa chatagóir seo, as $2 san iomlán.}}',
+'category-file-count-limited' => 'Tá {{PLURAL:$1|an comhad seo|$1 na comhaid seo}} a leanas sa chatagóir reatha.',
+'listingcontinuesabbrev'      => 'ar lean.',
 
 'mainpagetext'      => "<big>'''D'éirigh le suiteáil MediaWiki.'''</big>",
 'mainpagedocfooter' => 'Féach ar [http://meta.wikimedia.org/wiki/MediaWiki_localisation doiciméid um conas an chomhéadán a athrú]
@@ -241,10 +243,12 @@ agus an [http://meta.wikimedia.org/wiki/MediaWiki_User%27s_Guide Lámhleabhar ú
 'edit'              => 'Athraigh an lch seo',
 'create'            => 'Cruthaigh',
 'editthispage'      => 'Athraigh an lch seo',
+'create-this-page'  => 'Cruthaigh an lch seo',
 'delete'            => 'Scrios',
 'deletethispage'    => 'Scrios an lch seo',
 'undelete_short'    => 'Díscrios {{PLURAL:$1|athrú amháin|$1 athruithe}}',
 'protect'           => 'Glasáil',
+'protect_change'    => 'athraigh an leibhéal cosanta',
 'protectthispage'   => 'Glasáil an lch seo',
 'unprotect'         => 'Díghlasáil',
 'unprotectthispage' => 'Díghlasáil an lch seo',
@@ -261,7 +265,10 @@ agus an [http://meta.wikimedia.org/wiki/MediaWiki_User%27s_Guide Lámhleabhar ú
 'userpage'          => 'Féach ar lch úsáideora',
 'projectpage'       => 'Féach ar lch thionscadail',
 'imagepage'         => 'Féach ar lch íomhá',
+'mediawikipage'     => 'Féach ar lch teachtaireacht',
 'templatepage'      => 'Féach ar leathanach an teimpléad',
+'viewhelppage'      => 'Féach ar lch chabhair',
+'categorypage'      => 'Féach ar lch chatagóir',
 'viewtalkpage'      => 'Féach ar phlé',
 'otherlanguages'    => 'I dteangacha eile',
 'redirectedfrom'    => '(Athsheolta ó $1)',
@@ -311,6 +318,7 @@ agus an [http://meta.wikimedia.org/wiki/MediaWiki_User%27s_Guide Lámhleabhar ú
 'youhavenewmessagesmulti' => 'Tá teachtaireachtaí nua agat ar $1',
 'editsection'             => 'athraigh',
 'editold'                 => 'athraigh',
+'viewsourceold'           => 'féach ar foinse',
 'editsectionhint'         => 'Athraigh mír: $1',
 'toc'                     => 'Clár ábhair',
 'showtoc'                 => 'taispeáin',
@@ -319,9 +327,12 @@ agus an [http://meta.wikimedia.org/wiki/MediaWiki_User%27s_Guide Lámhleabhar ú
 'viewdeleted'             => 'Féach ar $1?',
 'restorelink'             => '{{PLURAL:$1|athrú scriosta amháin|$1 athruithe scriosta}}',
 'feedlinks'               => 'Fotha:',
+'feed-invalid'            => 'Cineál liostáil fotha neamhbhailí.',
+'feed-unavailable'        => 'Níl fotha sindeacáitiú ar fáil ar {{SITENAME}}.',
 'site-rss-feed'           => '$1 Fotha RSS',
 'site-atom-feed'          => '$1 Fotha Atom',
 'page-rss-feed'           => '"$1" Fotha RSS',
+'page-atom-feed'          => '"$1" Fotha Atom',
 
 # Short words for each namespace, by default used in the namespace tab in monobook
 'nstab-main'      => 'Alt',
@@ -395,6 +406,8 @@ Feidhm: $1<br />
 Iarratas: $2',
 'viewsource'           => 'Féach ar fhoinse',
 'viewsourcefor'        => 'le haghaidh $1',
+'protectedpagetext'    => 'Tá an leathanach seo glasáilte chun coisc ar eagarthóireacht.',
+'viewsourcetext'       => 'Is féidir foinse an leathanach seo a fheiceáil ná a cóipeáil:',
 'editinginterface'     => "'''Rabhadh:''' Tá tú ag athrú leathanaigh a bhfuil téacs comhéadain do na bogearraí air. Cuirfear athruithe ar an leathanach seo i bhfeidhm ar an gcomhéadan úsáideora.
 Más maith leat MediaWiki a aistriú, cuimhnigh ar [http://translatewiki.net/wiki/Main_Page?setlang=ga Betawiki] (tionscadal logánaithe MediaWiki) a úsáid.",
 'sqlhidden'            => '(Iarratas SQL folaithe)',
@@ -466,7 +479,7 @@ Cinntigh do litriú, nó bain úsáid as an foirm thíos chun cuntas úsáideora
 'wrongpassword'              => "D'iontráil tú focal faire mícheart (nó ar iarraidh). Déan iarracht eile le do thoil.",
 'wrongpasswordempty'         => 'Níor iontráil tú focal faire. Bain triail eile as.',
 'passwordtooshort'           => "Tá d'fhocal faire ró-ghearr.
-Caithfidh go bhfuil $1 carachtar ann ar a laghad.",
+Caithfidh go bhfuil {{PLURAL:$1|1 carachtar|$1 carachtair}} carachtar ann ar a laghad.",
 'mailmypassword'             => "Seol m'fhocal faire chugam.",
 'passwordremindertitle'      => 'Cuimneachán an fhocail faire ó {{SITENAME}}',
 'passwordremindertext'       => 'D\'iarr duine éigin (tusa de réir cosúlachta, ón seoladh IP $1)
@@ -541,21 +554,23 @@ Ná tabhair aird don teachtaireacht seo má cruthaíodh an cuntas seo trí earr�
 'missingsummary'         => "'''Cuimhneachán:''' Níor thug tú achoimriú don athrú. Má chliceáileann tú Sábháil arís, sábhálfar an t-athrú gan é a hachoimriú.",
 'summary-preview'        => 'Réamhamharc an achoimre',
 'blockedtitle'           => 'Tá an úsáideoir seo faoi chosc',
-'blockedtext'            => 'Chuir $1 cosc ar d’ainm úsáideora nó ar do sheoladh IP. Is í seo an chúis a thugadh:<br />\'\'$2\'\'.<p>Is féidir leat teagmháil a dhéanamh le $1 nó le duine eile de na [[{{SITENAME}}:Administrators|riarthóirí]] chun an cosc a phléigh.
+'blockedtext'            => "<big>'''Chuir \$1 cosc ar d’ainm úsáideora nó ar do sheoladh IP.'''</big>
 
-* Tús an chosc: $8
-* Dul as feidhm: $6
-* Sprioc an chosc: $7
+Is í seo an chúis a thugadh:<br />''\$2''.<p>Is féidir leat teagmháil a dhéanamh le \$1 nó le duine eile de na [[{{MediaWiki:Grouppage-sysop}}|riarthóirí]] chun an cosc a phléigh.
+
+* Tús an chosc: \$8
+* Dul as feidhm: \$6
+* Sprioc an chosc: \$7
 <br />
-Tabhair faoi deara nach féidir leat an gné "cuir ríomhphost chuig an úsáideoir seo" a úsáid mura bhfuil seoladh ríomhphoist bailí cláraithe i do [[Special:Preferences|shocruithe úsáideora]]. 
+Tabhair faoi deara nach féidir leat an gné \"cuir ríomhphost chuig an úsáideoir seo\" a úsáid mura bhfuil seoladh ríomhphoist bailí cláraithe i do [[Special:Preferences|shocruithe úsáideora]]. 
 
-Is é $3 do sheoladh IP agus #$5 do ID coisc. Déan tagairt don seoladh seo le gach ceist a chuirfeá.
+Is é \$3 do sheoladh IP agus #\$5 do ID coisc. Déan tagairt don seoladh seo le gach ceist a chuirfeá.
 
 ==Nóta do úsáideoirí AOL==
 De bhrí ghníomhartha leanúnacha creachadóireachta a dhéanann aon úsáideoir AOL áirithe, is minic a coisceann {{SITENAME}} ar friothálaithe AOL. Faraor, áfach, is féidir le 
-go leor úsáídeoirí AOL an friothálaí céanna a úsáid, agus mar sin is minic a coiscaítear úsáideoirí AOL neamhchiontacha. Gabh ár leithscéal d\'aon trioblóid. 
+go leor úsáídeoirí AOL an friothálaí céanna a úsáid, agus mar sin is minic a coiscaítear úsáideoirí AOL neamhchiontacha. Gabh ár leithscéal d'aon trioblóid. 
 
-Dá dtarlódh an scéal seo duit, cuir ríomhphost chuig riarthóir le seoladh ríomhphoist AOL. Bheith cinnte tagairt a dhéanamh leis an seoladh IP seo thuas.',
+Dá dtarlódh an scéal seo duit, cuir ríomhphost chuig riarthóir le seoladh ríomhphoist AOL. Bheith cinnte tagairt a dhéanamh leis an seoladh IP seo thuas.",
 'whitelistedittitle'     => 'Logáil isteach chun athrú a dhéanamh',
 'whitelistedittext'      => 'Ní mór duit $1 chun ailt a athrú.',
 'loginreqtitle'          => 'Tá logáil isteach de dhíth ort',
@@ -658,6 +673,7 @@ Treoir: (rth) = difríocht ón leagan reatha, (rmh) = difríocht ón leagan roim
 'historyempty'        => '(folamh)',
 
 # Revision feed
+'history-feed-title'          => 'Stáir leasú',
 'history-feed-item-nocomment' => '$1 ag $2', # user at time
 
 # Revision deletion
@@ -671,6 +687,7 @@ Treoir: (rth) = difríocht ón leagan reatha, (rmh) = difríocht ón leagan roim
 'lineno'                  => 'Líne $1:',
 'compareselectedversions' => 'Cuir na leagain roghnaithe i gcomparáid',
 'editundo'                => 'cealaigh',
+'diff-multi'              => '({{PLURAL:$1|Leasú idirmheánach amháin|$1 leasú idirmheánach}} nach thaispeántar.)',
 
 # Search results
 'searchresults'         => 'Torthaí an chuardaigh',
@@ -776,7 +793,7 @@ den am an freastalaí (UTC).',
 'nchanges'                          => '$1 {{PLURAL:$1|athrú amháin|athruithe}}',
 'recentchanges'                     => 'Athruithe is déanaí',
 'recentchangestext'                 => 'Déan faire ar na hathruithe is déanaí sa vicí ar an leathanach seo.',
-'rcnote'                            => "Is {{PLURAL:$1|é seo a leanas <strong>an t-athrú amháin</strong>|iad seo a leanas na <strong>$1</strong> athruithe is déanaí}} {{PLURAL:$2|ar feadh an lae dheireanaigh|ar feadh na '''$2''' lá deireanacha}}, ag $3.",
+'rcnote'                            => "Is {{PLURAL:$1|é seo a leanas <strong>an t-athrú amháin</strong>|iad seo a leanas na <strong>$1</strong> athruithe is déanaí}} {{PLURAL:$2|ar feadh an lae dheireanaigh|ar feadh na '''$2''' lá deireanacha}}, as $5, $4.",
 'rcnotefrom'                        => 'Is iad seo a leanas na hathruithe ó <b>$2</b> (go dti <b>$1</b> taispeánaithe).',
 'rclistfrom'                        => 'Taispeáin nua-athruithe dom ó $1 anuas',
 'rcshowhideminor'                   => '$1 mionathruithe',
@@ -810,12 +827,12 @@ den am an freastalaí (UTC).',
 'uploadnologintext' => 'Ní mór duit [[Special:UserLogin|logáil isteach]] chun comhaid a huaslódáil.',
 'uploaderror'       => 'Earráid uaslódála',
 'uploadtext'        => "Bain úsáid as an bhfoirm thíos chun comhaid a uaslódáil.
-Chun comhaid atá ann cheana a fheiceáil nó a chuardach téigh chuig an [[Special:ImageList|liosta comhad uaslódáilte]]. Gheobhaidh tú liosta de chomhaid uaslódáilte nó scriosta sa [[Special:Log/upload|loga uaslódála]] freisin.
+Chun comhaid atá ann cheana a fheiceáil nó a chuardach téigh chuig an [[Special:ImageList|liosta comhad uaslódáilte]]. Gheobhaidh tú liosta de chomhaid uaslódáilte sa [[Special:Log/upload|loga uaslódála]] agus liosta de chomhaid scriosta sa [[Special:Log/delete|loga scriosta]] freisin.
 
 Chun comhad a úsáid ar leathanach, cuir isteach nasc mar seo:
-'''<nowiki>[[</nowiki>{{ns:image}}<nowiki>:comhad.jpg]]</nowiki>''',
-'''<nowiki>[[</nowiki>{{ns:image}}<nowiki>:comhad.png|téacs eile]]</nowiki>''' nó 
-'''<nowiki>[[</nowiki>{{ns:media}}<nowiki>:comhad.ogg]]</nowiki>''' más comhad fuaime atá i gceist.",
+* '''<tt><nowiki>[[</nowiki>{{ns:image}}<nowiki>:comhad.jpg]]</nowiki></tt>''' chun leagan iomlán an chomhad a úsáid
+* '''<tt><nowiki>[[</nowiki>{{ns:image}}<nowiki>:comhad.png|200px|thumb|left|téacs eile]]</nowiki></tt>''' chun comhad le 200 picteillín ar leithead i mbosca san imeall clé le 'téacs eile' mar tuairisc
+* '''<tt><nowiki>[[</nowiki>{{ns:media}}<nowiki>:comhad.ogg]]</nowiki></tt>''' más comhad fuaime atá i gceist",
 'uploadlog'         => 'Stair uaslódála',
 'uploadlogpage'     => 'Stair_uaslódála',
 'uploadlogpagetext' => 'Is liosta é seo a leanas de na uaslódáil comhad is deanaí.
@@ -889,6 +906,9 @@ uaslódáil é arís, le do thoil.',
 'randompage'         => 'Leathanach fánach',
 'randompage-nopages' => 'Níl aon leathanaigh san ainmspás seo.',
 
+# Random redirect
+'randomredirect' => 'Atreorú randamach',
+
 # Statistics
 'statistics'    => 'Staidreamh',
 'sitestats'     => 'Staidreamh do {{SITENAME}}',
@@ -920,6 +940,10 @@ ghnáth tugann sé sin an sprioc-alt "fíor".',
 'brokenredirects-edit'   => '(athraigh)',
 'brokenredirects-delete' => '(scrios)',
 
+'withoutinterwiki' => 'Leathanaigh gan naisc idirvicí',
+
+'fewestrevisions' => 'Leathanaigh leis na leasaithe is lú',
+
 # Miscellaneous special pages
 'nbytes'                  => '$1 {{PLURAL:$1|bheart amháin|bearta}}',
 'ncategories'             => '$1 {{PLURAL:$1|chatagóir amháin|catagóirí}}',
@@ -930,11 +954,14 @@ ghnáth tugann sé sin an sprioc-alt "fíor".',
 'uncategorizedpages'      => 'Leathanaigh gan catagóir',
 'uncategorizedcategories' => 'Catagóirí gan catagórú',
 'uncategorizedimages'     => 'Íomhánna gan chatagóir',
+'uncategorizedtemplates'  => 'Teimpléid gan catagóir',
 'unusedcategories'        => 'Catagóirí nach úsáidtear',
 'unusedimages'            => 'Íomhánna nach úsáidtear',
 'popularpages'            => 'Leathanaigh coitianta',
 'wantedcategories'        => 'Catagóirí agus iarraidh ag gabháil leis',
 'wantedpages'             => 'Leathanaigh de dhíth',
+'mostcategories'          => 'Leathanaigh leis na chatagóir is mó',
+'mostrevisions'           => 'Leathanaigh leis na leasaithe is mó',
 'prefixindex'             => 'Innéacs réimír',
 'shortpages'              => 'Leathanaigh gearra',
 'longpages'               => 'Leathanaigh fada',
@@ -986,7 +1013,9 @@ leathanach atá i gceist agat.',
 
 # Special:Categories
 'categories'         => 'Catagóirí',
-'categoriespagetext' => 'Tá na catagóir seo a leanas ann sa vicí.',
+'categoriespagetext' => 'Tá na catagóiri seo a leanas ann sa vicí.
+Níl na [[Special:UnusedCategories|catagóiri gan úsáid]] ar fáil anseo.
+Féach freisin ar [[Special:WantedCategories|catagóirí agus iarraidh ag gabháil leis]].',
 
 # E-mail user
 'mailnologin'     => 'Níl aon seoladh maith ann',
@@ -1023,7 +1052,7 @@ mian leis ríomhphost a fháil ón úsáideoirí eile.',
 Amach anseo liostálfar athruithe don leathanach seo agus dá leathanach plé ansin,
 agus beidh '''cló trom''' ar a theideal san [[Special:RecentChanges|liosta de na hathruithe is déanaí]] sa chaoi go bhfeicfeá iad go héasca.",
 'removedwatch'         => 'Bainte den liosta faire',
-'removedwatchtext'     => 'Baineadh an leathanach "<nowiki>$1</nowiki>" de do liosta faire.',
+'removedwatchtext'     => 'Baineadh an leathanach "<nowiki>$1</nowiki>" as [[Special:Watchlist|do liosta faire]].',
 'watch'                => 'Fair',
 'watchthispage'        => 'Déan faire ar an leathanach seo',
 'unwatch'              => 'Ná fair',
@@ -1099,6 +1128,7 @@ Féach ar $2 chun cuntas na scriosiadh deireanacha a fháil.',
 'deletionlog'                 => 'cuntas scriosaidh',
 'reverted'                    => 'Tá eagrán níos luaithe in úsáid anois',
 'deletecomment'               => 'Cúis don scriosadh',
+'deleteotherreason'           => 'Fáth eile/breise:',
 'deletereasonotherlist'       => 'Fáth eile',
 'deletereason-dropdown'       => '*Fáthanna coitianta scriosta
 ** Iarratas ón údar
@@ -1124,12 +1154,23 @@ Féach ar [[Special:ProtectedPages|Leathanach glasáilte]] chun a thuilleadh eol
 'protect-title'               => 'Ag glasáil "$1"',
 'protect-legend'              => 'Cinntigh an glasáil',
 'protectcomment'              => 'Cúis don glasáil',
+'protectexpiry'               => 'As feidhm:',
+'protect_expiry_invalid'      => 'Am éaga neamhbhailí.',
+'protect_expiry_old'          => 'Am éaga san am atá thart.',
 'protect-unchain'             => 'Díghlasáil an cead athainmithe',
 'protect-text'                => 'Is féidir leat an leibhéal glasála a athrú anseo don leathanach <strong><nowiki>$1</nowiki></strong>.',
+'protect-locked-access'       => 'Ní chead ag do chuntas chun athraigh leibhéal cosaint an leathanach.
+Seo iad na socruithe reatha faoin leathanach <strong>$1</strong>:',
 'protect-default'             => '(réamhshocrú)',
+'protect-fallback'            => 'Ceadúnas "$1" riachtanach',
 'protect-level-autoconfirmed' => 'Bac úsáideoirí neamhchláraithe',
 'protect-level-sysop'         => 'Oibreoirí chórais amháin',
+'protect-summary-cascade'     => 'cascáidithe',
+'protect-expiring'            => 'as feidhm $1 (UTC)',
+'protect-cascade'             => 'Coisc leathanaigh san áireamh an leathanach seo (cosanta cascáideach)',
+'protect-cantedit'            => 'Ní féidir leat na leibhéil cosanta a athrú faoin leathanach seo, mar níl cead agat é a cur in eagar.',
 'restriction-type'            => 'Ceadúnas:',
+'restriction-level'           => 'Leibhéal srianadh:',
 'pagesize'                    => '(bearta)',
 
 # Restrictions (nouns)
@@ -1167,7 +1208,7 @@ leathanaigh go huathoibríoch.',
 'month'         => 'As mí (agus is luaithe):',
 'year'          => 'As bliain (agus is luaithe):',
 
-'sp-contributions-newbies-sub' => 'Le cuntasaí nua',
+'sp-contributions-newbies-sub' => 'Le cuntais nua',
 'sp-contributions-blocklog'    => 'Log coisc',
 'sp-contributions-username'    => 'Seoladh IP ná ainm úsáideoir:',
 
@@ -1199,6 +1240,15 @@ leathanaigh áirithe a rinne an duine damáiste ar).',
 'ipbexpiry'               => 'Am éaga',
 'ipbreason'               => 'Cúis',
 'ipbreasonotherlist'      => 'Fáth eile',
+'ipbreason-dropdown'      => '*Fáthanna coitianta
+** Loitiméaracht
+** Naisc turscar
+** Fadhbanna cóipcheart
+** Ag iarraidh ciapadh daoine eile
+** Drochúsáid as cuntais iolrach
+** Fadhbanna idirvicí
+** Feallaire
+** Seachfhreastalaí Oscailte',
 'ipbsubmit'               => 'Coisc an úsáideoir seo',
 'ipbother'                => 'Méid eile ama',
 'ipboptions'              => '2 uair:2 hours,1 lá amháin:1 day,3 lá:3 days,1 sheachtain amháin:1 week,2 sheachtain:2 weeks,1 mhí amháin:1 month,3 mhí:3 months,6 mhí:6 months,1 bhliain amháin:1 year,gan teorainn:infinite', # display1:time1,display2:time2,...
@@ -1274,13 +1324,13 @@ Cinntigh go bhfuil an scéal seo d'intinn agat.",
 'movepagetext'            => "Úsáid an fhoirm seo thíos chun leathanach a athainmniú. Aistreofar a chuid staire go léir chuig an teideal nua.
 Déanfar leathanach atreoraithe den sean-teideal chuig an teideal nua.
 Ní athrófar naisc chuig sean-teideal an leathanaigh; 
-bí cinnte go ndéanfá cuardach ar atreoruithe dúbailte nó briste.
+bí cinnte go ndéanfá cuardach ar atreoruithe [[Special:DoubleRedirects|dúbailte]] nó [[Special:BrokenRedirects|briste]].
 Tá dualgas ort bheith cinnte go rachaidh na naisc chuig an áit is ceart fós.
 
 Tabhair faoi deara '''nach''' n-athainmneofar an leathanach má tá leathanach ann cheana féin faoin teideal nua, ach amháin más folamh nó atreorú é nó mura bhfuil aon stair athraithe aige cheana.
 Mar sin, is féidir leathanach a athainmniú ar ais chuig an teideal a raibh air roimhe má tá botún déanta agat, agus ní féidir leathanach atá ann cheana a fhorscríobh.
 
-'''AIRE!'''
+<font color=\"red\">'''AIRE!'''</font>
 Is féidir gur dianbheart gan choinne é athrú a dhéanamh ar leathanach móréilimh;
 cinntigh go dtuigeann tú na hiarmhairtí go léir roimh dul ar aghaigh.",
 'movepagetalktext'        => "Aistreofar an leathanach phlé leis, má tá sin ann:
@@ -1295,6 +1345,7 @@ Sna scéil sin, caithfidh tú an leathanach a aistrigh nó a báigh leis na lám
 'move-watch'              => 'Déan faire an leathanach seo',
 'movepagebtn'             => 'Athainmnigh an leathanach',
 'pagemovedsub'            => "D'éirigh leis an athainmniú",
+'movepage-moved'          => '<big>\'\'\'Athainmníodh "$1" mar "$2"\'\'\'</big>', # The two titles are passed in plain text as $3 and $4 to allow additional goodies in the message.
 'articleexists'           => 'Tá leathanach leis an teideal seo ann fós, nó níl an
 teideal a rinne tú rogha air ina theideal bailí.
 Toghaigh teideal eile le do thoil.',
@@ -1478,6 +1529,8 @@ iarradh sábháil. Is dócha gur nasc chuig suíomh seachtrach ba chúis leis.',
 'imagemaxsize'         => 'Cuir an teorann seo ar na íomhánna atá le fáil ar leathanaigh cuir síos íomhánna:',
 'thumbsize'            => 'Méid mionshamhla :',
 'file-info-size'       => '($1 × $2 picteilín, méid comhaid: $3, cineál MIME: $4)',
+'file-nohires'         => '<small>Níl aon taifeach is mó ar fáil.</small>',
+'svg-long-desc'        => '(Comhad SVG, ainmniúil $1 × $2 picteilíni, méid comhaid: $3)',
 'show-big-image'       => 'Taispeáin leagan ardtaifigh den íomhá',
 'show-big-image-thumb' => '<small>Méid an réamhamhairc seo: $1 × $2 picteilín</small>',
 
@@ -1838,6 +1891,7 @@ $1',
 'watchlistedit-raw-titles' => 'Teideail:',
 
 # Watchlist editing tools
+'watchlisttools-view' => 'Féach ar na hathruithe ábhartha',
 'watchlisttools-edit' => 'Féach ar do liosta faire ná cuir in eagar é',
 'watchlisttools-raw'  => 'Cuir do amhliosta faire in eagar',
 

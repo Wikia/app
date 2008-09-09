@@ -213,7 +213,7 @@ $messages = array(
 'subcategories'                  => 'Podkategorije',
 'category-media-header'          => 'Dataje w kategoriji „$1”',
 'category-empty'                 => "''Tuta kategorija tuchwilu žane nastawki abo medije njewobsahuje.''",
-'hidden-categories'              => '{{PLURAL:$1|Schowana kategorija|Schowane kategorije}}',
+'hidden-categories'              => '{{PLURAL:$1|Schowana kategorija|Schowanej kategoriji|Schowane kategorije|Schowanych kategorijow}}',
 'hidden-category-category'       => 'Schowane kategorije', # Name of the category where hidden categories will be listed
 'category-subcat-count'          => '{{PLURAL:$2|Tuta kategorija ma jenož slědowacu podkategoriju.|Tuta kategorija ma {{PLURAL:$1|slědowacu podkategoriju|$1 slědowacej podkategoriji|$1 slědowace podkategorije|$1 slědowacych podkategorijow}} z dohromady $2.}}',
 'category-subcat-count-limited'  => 'Tuta kategorija ma {{PLURAL:$1|slědowacu podkategoriju|slědowacej $1 podkategoriji|slědowace $1 podkategorije|slědowacych $1 podkategorijow}}:',
@@ -645,7 +645,7 @@ Prošu podaj wšě horjeka naspomnjene podrobnosće w naprašowanjach, kotrež �
 'accmailtext'                      => 'Hesło za wužiwarja "$1" bu na adresu $2 pósłane.',
 'newarticle'                       => '(Nowy nastawk)',
 'newarticletext'                   => 'Sy wotkaz k stronje slědował, kotraž hišće njeeksistuje. Zo by stronu wutworił, wupjelń slědowace tekstowe polo (hlej [[{{MediaWiki:Helppage}}|stronu pomocy]] za dalše informacije). Jeli sy zmylnje tu, klikń prosće na tłóčatko <b>Wróćo</b> we swojim wobhladowaku.',
-'anontalkpagetext'                 => "---- ''To je diskusijna strona za anonymneho wužiwarja, kiž hišće konto wutworił njeje abo je njewužiwa. Dyrbimy tohodla numerisku IP-adresu wužiwać, zo bychmy jeho/ju identifikowali. Tajka IP-adresa hodźi so wot wjacorych wužiwarjow zhromadnje wužiwać. Jeli sy anonymny wužiwar a měniš, zo buchu irelewantne komentary k tebi pósłane, [[Special:UserLogin|wutwor konto abo přizjew so]], zo by přichodnu šmjatańcu wobešoł.''",
+'anontalkpagetext'                 => "---- ''To je diskusijna strona za anonymneho wužiwarja, kiž hišće konto wutworił njeje abo je njewužiwa. Dyrbimy tohodla numerisku IP-adresu wužiwać, zo bychmy jeho/ju identifikowali. Tajka IP-adresa hodźi so wot wjacorych wužiwarjow zhromadnje wužiwać. Jeli sy anonymny wužiwar a měniš, zo buchu irelewantne komentary k tebi pósłane, [[Special:UserLogin/signup|wutwor prošu konto]] abo [[Special:UserLogin|přizjew so]], zo by přichodnu šmjatańcu z anonymnymi wužiwarjemi wobešoł.''",
 'noarticletext'                    => 'Tuchwilu tuta strona žadyn tekst njewobsahuje, móžeš jeje titul w druhich stronach [[Special:Search/{{PAGENAME}}|pytać]] abo [{{fullurl:{{FULLPAGENAME}}|action=edit}} stronu wobdźěłać].',
 'userpage-userdoesnotexist'        => 'Wužiwarske konto „$1“ njeje zregistrowane. Prošu pruwuj, hač chceš tutu stronu woprawdźe wutworić/wobdźěłać.',
 'clearyourcache'                   => '<b>Kedźbu:</b> Po składowanju dyrbiš snano pufrowak swojeho wobhladowaka wuprózdnić, <b>Mozilla/Firefox/Safari:</b> tłóč na <i>Umsch</i> kliknjo na <i>Znowa</i> abo tłóč <i>Strg-Umsch-R</i> (<i>Cmd-Shift-R</i> na Apple Mac); <b>IE:</b> tłóč <i>Strg</i> kliknjo na symbol <i>Aktualisieren</i> abo tłóč <i>Strg-F5</i>; <b>Konqueror:</b>: Klikń jenož na tłóčatko <i>Erneut laden</i> abo tłoč  <i>F5</i>; Wužiwarjo <b>Opery</b> móža swój pufrowak dospołnje  w <i>Tools→Preferences</i> wuprózdnić.',
@@ -661,12 +661,13 @@ Prošu podaj wšě horjeka naspomnjene podrobnosće w naprašowanjach, kotrež �
 'note'                             => '<strong>Kedźbu:</strong>',
 'previewnote'                      => '<strong>Kedźbu, to je jenož přehlad, změny hišće składowane njejsu!</strong>',
 'previewconflict'                  => 'Tutón přehlad tekst w hornim tekstowym polu zwobrazni kaž so zjewi, jeli jón składuješ.',
-'session_fail_preview'             => '<strong>Zda so, zo je problem z twojim přizjewjenjom; tuta akcija bu wěstosće dla přećiwo zadobywanju do posedźenja znjemóžnjena. Prošu spytaj hišće raz. Wostanje-li tutón problem, spytaj so wotzjewić a so zaso přizjewić.</strong>',
-'session_fail_preview_html'        => "<strong>Wodaj! Straty posedźenskich datow dla njemóžachmy twoju změnu předźěłać.</strong>
+'session_fail_preview'             => '<strong>Wodaj! Njemóžachmy twoje wobdźěłanje předźěłać, dokelž su so posedźenske daty zhubili. Spytaj prošu hišće raz.
+Jeli to hišće njefunguje, [[Special:UserLogout|wotzjew so]] a potom přizjew so zaso.</strong>',
+'session_fail_preview_html'        => "<strong>Wodaj! Njemóžachmy twoje wobdźěłanje předźěłać, dokelž su so posedźenske daty zhubili.</strong>
 
-''Dokelž we {{SITENAME}} je luty HTML zmóžnił, je přehlad jako wěstotna naprawa přećiwo atakam přez JavaScript schowany.''
+''Dokelž we {{GRAMMAR:lokatiw|{{SITENAME}}}} je luty HTML zmóžnił, je přehlad jako wěstotna naprawa přećiwo atakam přez JavaScript schowany.''
 
-<strong>Jeli to je legitimny wobdźěłowanski pospyt, spytaj prošu hišće raz. Jeli to hišće njefunguje, wotzjew so a přizjew so znowa.</strong>",
+<strong>Jeli to je legitimny wobdźěłowanski pospyt, spytaj prošu hišće raz. Jeli to hišće njefunguje, [[Special:UserLogout|wotzjew so]] a přizjew so znowa.</strong>",
 'token_suffix_mismatch'            => '<strong>Twoja změna je so wotpokazała, dokelž twój wobhladowak je znamješka skepsał.
 Składowanje móže wobsah strony zničić. Móže so to na přikład přez wopačnje dźěłowacy proksy stać.</strong>',
 'editing'                          => 'Wobdźěłanje strony $1',
@@ -1060,7 +1061,7 @@ Móžeš [[:\$1|tutu stronu wutworić]].",
 'recentchanges'                     => 'Aktualne změny',
 'recentchangestext'                 => 'Na tutej stronje móžeš najaktualniše změny w {{GRAMMAR:lokatiw|{{SITENAME}}}} wobkedźbować.',
 'recentchanges-feed-description'    => 'Slěduj najaktualniše změny {{GRAMMAR:genitiw|{{SITENAME}}}} w tutym kanalu.',
-'rcnote'                            => "Deleka {{PLURAL:$1|je '''1''' změna|stej poslednjej '''$1''' změnje|su poslednje '''$1''' změny|je poslednich '''$1''' změnow}} w {{PLURAL:$2|poslednim dnju|poslednimaj '''$2''' dnjomaj|poslednich '''$2''' dnjach|poslednich '''$2''' dnjach}}, staw wot $4, $5.",
+'rcnote'                            => "Deleka {{PLURAL:\$1|je '''1''' změna|stej poslednjej '''\$1''' změnje|su poslednje '''\$1''' změny|je poslednich '''\$1''' změnow}} w {{PLURAL:\$2|poslednim dnju|poslednimaj '''\$2''' dnjomaj|poslednich '''\$2''' dnjach|poslednich '''\$2''' dnjach}}, staw wot \$4, \$5. <div id=\"rc-legend\" style=\"float:right;font-size:84%;margin-left:5px;\"> <b>Legenda</b><br />   <b><tt>N</tt></b>&nbsp;– Nowy přinošk<br /> <b><tt>S</tt></b>&nbsp;– Snadna změna<br /> <b><tt>B</tt></b>&nbsp;– Změny awtomatiskich programow (bot)<br />  ''(± ličba)''&nbsp;– Změna wulkosće w bajtach </div>",
 'rcnotefrom'                        => "Deleka so změny wot '''$2''' pokazuja (hač k '''$1''').",
 'rclistfrom'                        => 'Nowe změny pokazać, započinajo z $1',
 'rcshowhideminor'                   => 'snadne změny $1',
@@ -1102,13 +1103,13 @@ Strony na [[Special:Watchlist|wobkedźbowankach]] su '''tučne'''.",
 'upload_directory_missing'    => 'Zapis nahraćow ($1) faluje a njeda so přez webserwer wutworić.',
 'upload_directory_read_only'  => 'Nahrawanski zapis ($1) njehodźi so přez webserwer popisować.',
 'uploaderror'                 => 'Zmylk při nahrawanju',
-'uploadtext'                  => "Wužij formular deleka, zo by nowe dataje nahrał.
-Zo by prjedy nahrate dataje wobhladał abo pytał dźi k [[Special:ImageList|lisćinje nahratych datajow]], nahraća a wušmórnjenja so tež w [[Special:Log/upload|protokolu nahraćow]] protokoluja.
+'uploadtext'                  => "Wužij slědowacy formular, zo by nowe dataje nahrał.
+Zo by prjedy nahrate dataje wobhladał abo pytał dźi k [[Special:ImageList|lisćinje nahratych datajow]], nahraća so tež w [[Special:Log/upload|protokolu nahraćow]], wušmórnjenja  [[Special:Log/delete|protokolu wušmornjenjow]] protokoluja.
 
-Zo by dataju do strony zapřijał, wužij wotkaz we formje
-'''<nowiki>[[</nowiki>{{ns:image}}<nowiki>:Dataja.jpg]]</nowiki>''',
-'''<nowiki>[[</nowiki>{{ns:image}}<nowiki>:Dataja.png|alternatiwny tekst]]</nowiki>''' abo
-'''<nowiki>[[</nowiki>{{ns:media}}<nowiki>:Dataja.ogg]]</nowiki>''' zo by direktnje k dataji wotkazał.",
+Zo by dataju do strony zapřijał, wužij wotkaz w jednej ze slědowacych formow:
+* '''<tt><nowiki>[[</nowiki>{{ns:image}}<nowiki>:Dataja.jpg]]</nowiki></tt>''', zo by połnu wersiju dataje wužiwał
+* '''<tt><nowiki>[[</nowiki>{{ns:image}}<nowiki>:Dataja.png|200px|thumb|left|alternatiwny tekst]]</nowiki></tt>''', zo by wobraz ze šěrokosću 200 pikselow do kašćika na lěwej kromje z alternatiwnym tekstom jako wopisanje wužiwał
+* '''<tt><nowiki>[[</nowiki>{{ns:media}}<nowiki>:Dataja.ogg]]</nowiki></tt>''' zo by direktnje k dataji wotkazał, bjeztoho zo by so dataja zwobrazniła",
 'upload-permitted'            => 'Dowolene datajowe typy: $1.',
 'upload-preferred'            => 'Preferowane datajowe typy: $1.',
 'upload-prohibited'           => 'Zakazane datajowe typy: $1.',
@@ -1266,7 +1267,7 @@ PICT # misc.
 'filedelete-comment'          => 'Přičina:',
 'filedelete-submit'           => 'Wušmórnyć',
 'filedelete-success'          => "Strona '''„$1“''' bu wušmórnjena.",
-'filedelete-success-old'      => '<span class="plainlinks">Wersija \'\'\'[[Media:$1|$1]]\'\'\' wot $2, $3 hodź. bu zničena.</span>',
+'filedelete-success-old'      => "Wersija '''[[Media:$1|$1]]''' wot $2, $3 hodź. bu zničena.",
 'filedelete-nofile'           => "'''„$1“''' njeeksistuje na tutym webowym sydle.",
 'filedelete-nofile-old'       => "Njeje žana archiwowana wersija '''$1''' z podatymi atributami.",
 'filedelete-iscurrent'        => 'Spytaš najnowšu wersiju dataje wušmórnyć. Prošu cofń do toho na staršu wersiju.',
@@ -1426,8 +1427,10 @@ Dołhosć [http://www.mediawiki.org/wiki/Manual:Job_queue rynka nadawkow] je '''
 'allpages-bad-ns'   => 'Mjenowy rum „$1" w {{grammar:lokatiw|{{SITENAME}}}} njeeksistuje.',
 
 # Special:Categories
-'categories'                    => 'Kategoriji',
-'categoriespagetext'            => 'Slědowace kategorije w tutym wikiju eksistuja:',
+'categories'                    => 'Kategorije',
+'categoriespagetext'            => 'Slědowace kategorije wobsahuja strony abo medije.
+[[Special:UnusedCategories|Njewužiwane kategorije]] so tu njepokazuja.
+Hlej tež [[Special:WantedCategories|požadane kategorije]].',
 'categoriesfrom'                => 'Kategorije pokazać, započinajo z:',
 'special-categories-sort-count' => 'Po ličbje sortěrować',
 'special-categories-sort-abc'   => 'Alfabetisce sortěrować',
@@ -1456,10 +1459,10 @@ E-mejlowa adresa, kotruž sy w swojich nastajenjach zapodał, jewi so jako adres
 'defemailsubject' => 'Powěsć z {{grammar:genitiw|{{SITENAME}}}}',
 'noemailtitle'    => 'Žana e-mejlowa adresa podata',
 'noemailtext'     => 'Tutón wužiwar njeje płaćiwu e-mejlowu adresu podał abo je so rozsudźił, zo nochce mejlki druhich wužiwarjow dóstać.',
-'emailfrom'       => 'Wot',
-'emailto'         => 'Komu',
-'emailsubject'    => 'Předmjet',
-'emailmessage'    => 'Powěsć',
+'emailfrom'       => 'Wot:',
+'emailto'         => 'Komu:',
+'emailsubject'    => 'Tema:',
+'emailmessage'    => 'Powěsć:',
 'emailsend'       => 'Wotesłać',
 'emailccme'       => 'E-mejluj mi kopiju mojeje powěsće.',
 'emailccsubject'  => 'Kopija twojeje powěsće wužiwarjej $1: $2',
@@ -1579,9 +1582,9 @@ Prošu potwjerdź, zo maš wotpohlad to činić, zo rozumiš sćěwki a zo to wo
 'rollbacklink'                => 'Cofnyć',
 'rollbackfailed'              => 'Cofnjenje njeporadźiło',
 'cantrollback'                => 'Njemóžno změnu cofnyć; strona nima druhich awtorow.',
-'alreadyrolled'               => 'Njemóžno poslednu změnu [[:$1]] přez wužiwarja [[User:$2|$2]] ([[User talk:$2|Diskusija]]) cofnyć; něchtó druhi je stronu wobdźěłał abo změnu hižo cofnył.
+'alreadyrolled'               => 'Njemóžno poslednu změnu [[:$1]] přez wužiwarja [[User:$2|$2]] ([[User talk:$2|Diskusija]] | [[Special:Contributions/$2|{{int:contribslink}}]]) cofnyć; něchtó druhi je stronu wobdźěłał abo změnu hižo cofnył.
 
-Poslednja změna bě wot wužiwarja [[User:$3|$3]] ([[User talk:$3|Diskusija]]).',
+Poslednja změna bě wot wužiwarja [[User:$3|$3]] ([[User talk:$3|Diskusija]] | [[Special:Contributions/$3|{{int:contribslink}}]]).',
 'editcomment'                 => 'Komentar wobdźěłanja běše: „<i>$1</i>”.', # only shown if there is an edit comment
 'revertpage'                  => 'Změny [[Special:Contributions/$2|$2]] ([[User talk:$2|Diskusija]]) cofnjene a nawróćene k poslednjej wersiji wužiwarja [[User:$1|$1]]', # Additional available: $3: revid of the revision reverted to, $4: timestamp of the revision reverted to, $5: revid of the revision reverted from, $6: timestamp of the revision reverted from
 'rollback-success'            => 'Změny wužiwarja $1 cofnjene; wróćo na wersiju wužiwarja $2.',
@@ -1638,7 +1641,7 @@ Hlej [[Special:ProtectedPages|tutu specialnu stronu]] za lisćinu škitanych str
 'undelete-fieldset-title'      => 'Wersije wobnowić',
 'undeleteextrahelp'            => 'Zo by stronu z wšěmi wersijemi wobnowił zapodaj prošu přičinu a klikń na „Wobnowić”. Chceš-li jenož jednotliwe wersije wobnowić, wuběr prošu jich markěrowanske kašćiki, zapodaj přičinu a klikń na „Wobnowić”. Kliknjenje na „Cofnyć” wuprózdni komentarowe polo a wšě kašćiki.',
 'undeleterevisions'            => '$1 {{PLURAL:$1|wersija|wersiji|wersije|wersijow}} {{PLURAL:$1|archiwowana|archiwowanej|archiwowane|archiwowane}}',
-'undeletehistory'              => 'Jeli tutu stronu wobnowiš, so wšě (tež prjedy wušmórnjene) wersije zaso do stawiznow wobnowja. Jeli bu po wušmórnjenju nowa strona ze samsnym mjenom wutworjena, budu so wobnowjene wersije w prjedawšich stawiznach jewić. Wobkedźbuj tež, zo wobmjezowanja za datajowe wersije so po wobnowjenju zhubja.',
+'undeletehistory'              => 'Jeli tutu stronu wobnowiš, so wšě (tež prjedy wušmórnjene) wersije zaso do stawiznow wobnowja. Jeli bu po wušmórnjenju nowa strona ze samsnym mjenom wutworjena, budu so wobnowjene wersije w prjedawšich stawiznach jewić.',
 'undeleterevdel'               => 'Wobnowjenje so njepřewjedźe, jeli je najwyša strona docpěta abo datajowa wersija budźe so zdźěla wušmórnje. 
 W tutym padźe dyrbiš najnowšu wušmórnjenu wersiju znjemóžnić abo pokazać.',
 'undeletehistorynoadmin'       => 'Strona bu wušmórnjena. Přičina za wušmórnjenje so deleka w zjeću pokazuje, zhromadnje z podrobnosćemi wužiwarjow, kotřiž běchu tutu stronu do zničenja wobdźěłali. Tuchwilny wobsah strony je jenož administratoram přistupny.',
