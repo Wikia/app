@@ -306,7 +306,7 @@ class MediaWiki {
 				}
 
 				// Originally implemented by Nick for HardRedirectsWithJSText Extension
-				wfRunHooks('BeforeRedirect', array( &$wgTitle, &$target ) );
+				wfRunHooks('BeforeRedirect', array( &$title, &$target ) );
 
 				if( is_object( $target ) ) {
 					// Rewrite environment to redirected article
