@@ -62,7 +62,6 @@ class WikiaApiQueryTopEditUsers extends WikiaApiQuery {
 		extract($this->extractRequestParams());
 
 		$this->initCacheKey($lcache_key, __METHOD__);
-
 		try {
 			#--- database instance
 			$db =& $this->getDB();
@@ -72,12 +71,9 @@ class WikiaApiQueryTopEditUsers extends WikiaApiQuery {
 				throw new WikiaApiQueryError(0);
 			}
 
-			$this->addTables( array( "revision" ) );
-			$this->addFields( array(
-				'rev_user',
-				'count(*) as edit_cnt',
-				'rev_user_text',
-				));
+			$this->addTables( array( "`user_rev_cnt` JOIN `wikicities`.`user` on user_id = rev_user" ) );
+			$this->addFields( array('rev_user','rev_cnt as edit_cnt','user_name'));
+			$this->addWhere ( "rev_user > 0" );
 
 			#--- user
 			if ( !is_null($user) ) {
@@ -85,10 +81,8 @@ class WikiaApiQueryTopEditUsers extends WikiaApiQuery {
 					throw new WikiaApiQueryError(1);
 				}
 				$this->setCacheKey ($lcache_key, 'U', $user);
-				$this->addWhereFld ( "rev_user", $user );
+				$this->addWhere ( "rev_user = '" . intval($user) . "'" );
 			}
-
-			$this->addWhere ( "rev_user > 0" );
 
 			#---
 			if ( !empty($ctime) ) {
@@ -116,7 +110,6 @@ class WikiaApiQueryTopEditUsers extends WikiaApiQuery {
 			}
 
 			#--- order by
-			$this->addOption( "GROUP BY", "rev_user, rev_user_text	" );
 			$this->addOption( "ORDER BY", "edit_cnt DESC" );
 
 			$data = array();
@@ -128,9 +121,9 @@ class WikiaApiQueryTopEditUsers extends WikiaApiQuery {
 					$data[$row->rev_user] = array(
 						"user_id"		=> $row->rev_user,
 						"cnt"			=> $row->edit_cnt,
-						"user_name"		=> $row->rev_user_text
+						"user_name"		=> $row->user_name
 					);
-					ApiResult :: setContent( $data[$row->rev_user], $row->rev_user_text);
+					ApiResult :: setContent( $data[$row->rev_user], $row->user_name);
 				}
 				$db->freeResult($res);
 				$this->saveCacheData($lcache_key, $data, $ctime);
