@@ -174,7 +174,7 @@ class WikiaApiQueryTopEditUsers extends WikiaApiQuery {
 	 *
 	 * Description's parameters
 	 *
-	 *
+	 */
 	#---
 	protected function getParamQueryDescription() {
 		return 	array (
