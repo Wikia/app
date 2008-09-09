@@ -271,6 +271,7 @@ class SiteWideMessages extends SpecialPage {
 				}
 				$sendToAll = false;
 				$mHubId = null;
+				break;
 			case 'HUB':
 				$mWikiName = '';
 				$mRecipientName = '';
