@@ -36,7 +36,7 @@ $wgHooks['CreatePageMultiEditor::GenerateForm:presubmit'][] = 'wfAntiSpamInputBo
 $wgExtensionFunctions[] = 'wfAntiSpamInputInit';
 $wgExtensionCredits['other'][] = array(
     'name' => 'AntiSpamInput' ,
-    'author' => "[http://inside.wikia.com/wiki/User:TOR Łukasz 'TOR' Garczewski]",
+    'author' => "[http://www.wikia.com/wiki/User:TOR Łukasz 'TOR' Garczewski]",
     'version' => 0.3 ,
     'description' => 'Simple spambot blocking mechanism.'
 );

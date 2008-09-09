@@ -22,7 +22,7 @@ $wgExtensionFunctions [] = 'efInitializeGlobalUserrights';
 
 $wgExtensionCredits['other'][] = array(
     'name' => 'Shared UserRights' ,
-    'author' => "[http://inside.wikia.com/wiki/User:TOR Lucas 'TOR' Garczewski]",
+    'author' => "[http://www.wikia.com/wiki/User:TOR Lucas 'TOR' Garczewski]",
     'description' => 'Easy global user rights administration'
 );
 

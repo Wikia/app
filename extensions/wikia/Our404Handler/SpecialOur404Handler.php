@@ -19,7 +19,7 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 $wgExtensionCredits['specialpage'][] = array(
     "name" => "Our404Handler",
     "description" => "Our 404 handler for making thumbs and other magic",
-    "author" => "[http://inside.wikia.com/wiki/User:Eloy.wikia Krzysztof Krzyźaniak (eloy)]"
+    "author" => "[http://www.wikia.com/wiki/User:Eloy.wikia Krzysztof Krzyźaniak (eloy)]"
 );
 
 #--- messages file

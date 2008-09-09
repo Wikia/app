@@ -16,7 +16,7 @@
  */
 $wgExtensionCredits['parserhook'][] = array(
 	'name' => 'AjaxPoll',
-	'author' => '[http://inside.wikia.com/wiki/User:Eloy.wikia Krzysztof Krzyżaniak (eloy)]',
+	'author' => '[http://www.wikia.com/wiki/User:Eloy.wikia Krzysztof Krzyżaniak (eloy)]',
 	'description' => 'Poll extension for MediaWiki driven by Ajax requests'
 );
 

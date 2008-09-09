@@ -52,7 +52,7 @@ $messages['en'] = array(
 	'createpage_about_info' => 'This is the simplified editor. To find out more go to [[w:c:help:Help:CreatePage|Wikia Help]].' ,
 	'createpage_advanced_text' => 'You can also use the $1.' ,
 	'createpage_advanced_edit' => 'advanced editor' ,
-	'tog-createpage-redlinks' => 'Use <a href="http://www.inside.wikia.com/wiki/CreatePage">CreatePage</a> when following broken links' ,	
+	'tog-createpage-redlinks' => 'Use <a href="http://help.wikia.com/wiki/Help:CreatePage">CreatePage</a> when following broken links' ,	
 );
 
 $messages['pl'] = array(
@@ -99,8 +99,8 @@ $messages['pl'] = array(
 	'createpage_please_wait' => 'Proszę czekać...' ,
 	'createpage_upload_directory_read_only' => 'Katalog ładowania obrazków nie jest zapisywalny przez serwer' ,
 	'headline_tip_3' => 'Nagłówek poziom 3' ,
-	'createpage_about_info' => 'Jesteś w uproszczonym edytorze. Więcej informacji o nim znajdziesz na [[w:c:inside:CreatePage|Inside Wikia]].' ,
+	'createpage_about_info' => 'Jesteś w uproszczonym edytorze. Więcej informacji o nim znajdziesz na [[w:c:help:Help:CreatePage|Wikia Help]].' ,
 	'createpage_advanced_text' => 'Możesz też użyć $1' ,
 	'createpage_advanced_edit' => 'zaawansowanego edytora' ,
-	'tog-createpage-redlinks' => 'Otwórz <a href="http://www.inside.wikia.com/wiki/CreatePage">CreatePage\'a</a> po przejściu do nieistniejącej strony'
+	'tog-createpage-redlinks' => 'Otwórz <a href="http://help.wikia.com/wiki/Help:CreatePage">CreatePage\'a</a> po przejściu do nieistniejącej strony'
 );
