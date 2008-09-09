@@ -135,6 +135,11 @@ Event.onContentReady("background_strip", function() {
 		Event.addListener(menuId, 'mouseout', function() {
 			headerMenuTimer = setTimeout("YAHOO.util.Dom.get('"+menuId+"').style.visibility = 'hidden';", 300);
 		});
+		// #3374
+		Event.addListener(buttonId, 'mouseover', function() {
+			clearTimeout(headerButtonTimer);
+			clearTimeout(headerMenuTimer);
+		});
 		Event.addListener(menuId, 'mouseover', function() {
 			clearTimeout(headerButtonTimer);
 			clearTimeout(headerMenuTimer);
