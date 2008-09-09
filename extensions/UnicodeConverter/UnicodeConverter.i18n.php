@@ -16,6 +16,28 @@ $messages['en'] = array(
 	'unicodeconverter-newtext' => 'Converted text:',
 );
 
+/** Arabic (العربية)
+ * @author Meno25
+ */
+$messages['ar'] = array(
+	'unicodeconverter'         => 'محول يونيكود',
+	'unicodeconverter-desc'    => 'مثال بسيط لنموذج صفحة خاصة. [[Special:UnicodeConverter|بإعطاء سلسلة في UTF-8]], فإنها تحولها إلى كيانات HTML مناسبة لصفحة ويب ISO 8859-1',
+	'unicodeconverter-ok'      => 'موافق',
+	'unicodeconverter-oldtext' => 'النص الأصلي:',
+	'unicodeconverter-newtext' => 'النص المحول:',
+);
+
+/** Egyptian Spoken Arabic (مصرى)
+ * @author Meno25
+ */
+$messages['arz'] = array(
+	'unicodeconverter'         => 'محول يونيكود',
+	'unicodeconverter-desc'    => 'مثال بسيط لنموذج صفحة خاصة. [[Special:UnicodeConverter|بإعطاء سلسلة في UTF-8]], فإنها تحولها إلى كيانات HTML مناسبة لصفحة ويب ISO 8859-1',
+	'unicodeconverter-ok'      => 'موافق',
+	'unicodeconverter-oldtext' => 'النص الأصلى:',
+	'unicodeconverter-newtext' => 'النص المحول:',
+);
+
 /** German (Deutsch)
  * @author Raimond Spekking
  */

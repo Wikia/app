@@ -398,7 +398,7 @@ Emandako arrazoia ''$2'' izan zen.",
 Erabiltzaile anonimo bezala jarraitu dezakezu {{SITENAME}} erabiltzen, edo saioa has dezakezu berriz erabiltzaile berdinarekin edo ezberdin batekin. Kontuan izan orrialde batzuk saioa hasita bazenu bezala ikus ditzakezula nabigatzailearen katxea garbitu arte.',
 'welcomecreation'            => '== Ongi etorri, $1! ==
 
-Zure kontua sortu egin da. Ez ahaztu {{SITENAME}}(e)ko hobespenak aldatzea.',
+Zure kontua sortu egin da. Ez ahaztu [[Special:Preferences|{{SITENAME}}(e)ko hobespenak]] aldatzea.',
 'loginpagetitle'             => 'Saio hasiera',
 'yourname'                   => 'Erabiltzaile izena',
 'yourpassword'               => 'Pasahitza',
@@ -666,7 +666,7 @@ Orrialdearen berrikuspen hau artxibo publikoetatik kendu da. Guneko administratz
 'revisiondelete'              => 'Berrikuspenak ezabatu/leheneratu',
 'revdelete-nooldid-title'     => 'Helburu berrikuspenik ez',
 'revdelete-nooldid-text'      => 'Ez d(it)uzu eragiketa hau burutzeko helburu berrikuspena(k) zehaztu.',
-'revdelete-selected'          => '[[:$1]](r)en hautatutako berrikuspena:',
+'revdelete-selected'          => '{{PLURAL:$2|[[:$1]](r)en hautatutako berrikuspena:|[[:$1]](r)en hautatutako berrikuspenak}}',
 'revdelete-text'              => 'Ezabatutako berrikuspenek orrialdearen historian agertzen jarraituko dute, baina bere edukiak ez dira publikoki eskuratu ahal izango.
 
 Wiki honetako beste administratzaileek ezkutuko eduki hau ikusteko aukera izango dute, eta baita leheneratzeko ere, gunearen arduradunek beste mugapenen bat ezartzen ez badute behintzat.',
@@ -1068,6 +1068,7 @@ Aukera ezazu, mesedez, fitxategi izen deskriptiboago bat.',
 'shareduploadwiki-linktext'      => 'fitxategiaren deskribapen orrialdea',
 'shareduploadduplicate'          => 'Fitxategi hau biltegi komuneko $1 fitxategiaren duplikatua da.',
 'shareduploadduplicate-linktext' => 'beste fitxategi bat',
+'shareduploadconflict'           => 'Fitxategi honek biltegi komun batean dagoen $1 fitxategiaren izen berdina du.',
 'shareduploadconflict-linktext'  => 'beste fitxategi bat',
 'noimage'                        => 'Ez dago fitxategirik izen honekin, $1 dezakezu nahi baduzu.',
 'noimage-linktext'               => 'igo egin',

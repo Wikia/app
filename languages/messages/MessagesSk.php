@@ -675,6 +675,7 @@ Udaný dôvod zablokovania:
 
 * Blokovanie začalo: $8
 * Blokovanie vyprší: $6
+* Blokovanie sa týka: $6
 
 Ak potrebujete informácie o blokovaní, môžete kontaktovať $1 alebo niektorého iného
 [[{{MediaWiki:Grouppage-sysop}}|správcu]].
@@ -682,7 +683,8 @@ Ak potrebujete informácie o blokovaní, môžete kontaktovať $1 alebo niektor�
 Pozn.: Nemôžete použiť funkciu „{{MediaWiki:emailuser}}“, ak ste si vo svojich
 [[Special:Preferences|používateľských nastaveniach]] nezaregistrovali platnú emailovú adresu.
 
-ID vášho blokovania je $5. Prosím, uveďte tento ID v akýchkoľvek otázkach, ktoré sa opýtate.",
+Vaša aktuálna IP adresa je $3. ID vášho blokovania je $5.
+Prosím, uveďte tieto podrobnosti v akýchkoľvek otázkach, ktoré sa opýtate.",
 'blockednoreason'                  => 'nebol uvedený dôvod',
 'blockedoriginalsource'            => "Zdroj '''$1''' je zobrazený nižšie:",
 'blockededitsource'                => "Text '''vašich úprav''' stránky '''$1''' je zobrazený nižšie:",
@@ -1353,7 +1355,7 @@ Kliknutím na hlavičku stĺpca zmeníte poradie triedenia.',
 'filedelete-comment'          => 'Komentár:',
 'filedelete-submit'           => 'Zmazať',
 'filedelete-success'          => "'''$1''' bol zmazaný.",
-'filedelete-success-old'      => '<span class="plainlinks">Verzia súboru \'\'\'[[Media:$1|$1]]\'\'\' z $3, $2 bola zmazaná.</span>',
+'filedelete-success-old'      => "Verzia súboru '''[[Media:$1|$1]]''' z $3, $2 bola zmazaná.",
 'filedelete-nofile'           => "'''$1''' neexistuje na {{GRAMMAR:lokál|{{SITENAME}}}}.",
 'filedelete-nofile-old'       => "Neexistuje archivovaná verzia '''$1''' s uvedenými atribútmi.",
 'filedelete-iscurrent'        => 'Pokúšate sa zmazať poslednú verziu tohto súboru. Prosím, najskôr vráťte staršiu verziu.',
@@ -1520,7 +1522,9 @@ Môžete zmenšiť rozsah, ak zvolíte typ záznamu, používateľské meno aleb
 
 # Special:Categories
 'categories'                    => 'Kategórie',
-'categoriespagetext'            => 'Nasledovné kategórie obsahujú stránky alebo multimediálne súbory.',
+'categoriespagetext'            => 'Nasledovné kategórie obsahujú stránky alebo multimediálne súbory.
+Nie sú tu zobrazené [[Special:UnusedCategories|nepoužité kategórie]].
+Pozri aj [[Special:WantedCategories|žiadané kategórie]].',
 'categoriesfrom'                => 'Zobraziť kategórie počnúc:',
 'special-categories-sort-count' => 'zoradiť podľa počtu',
 'special-categories-sort-abc'   => 'zoradiť podľa abecedy',
@@ -1552,10 +1556,10 @@ Emailová adresa, ktorú ste zadali vo svojich [[Special:Preferences|nastaveniac
 'noemailtitle'    => 'Chýba e-mailová adresa',
 'noemailtext'     => 'Tento používateľ nešpecifikoval platnú e-mailovú adresu
 alebo sa rozhodol, že nebude prijímať e-maily od druhých používateľov.',
-'emailfrom'       => 'Odosielateľ',
-'emailto'         => 'Príjemca',
-'emailsubject'    => 'Predmet',
-'emailmessage'    => 'Správa',
+'emailfrom'       => 'Od:',
+'emailto'         => 'Komu:',
+'emailsubject'    => 'Predmet:',
+'emailmessage'    => 'Správa:',
 'emailsend'       => 'Odoslať',
 'emailccme'       => 'Pošli mi emailom kópiu mojej správy.',
 'emailccsubject'  => 'Kópia správy pre $1: $2',
@@ -1739,10 +1743,7 @@ Ak chcete vykonať selektívnu obnovu, zašktrnite polia zodpovedajúce revízi�
 Kliknutie na '''''Reset''''' vyčistí pole s komentárom a všetky zaškrtávacie polia.",
 'undeleterevisions'            => '$1 {{PLURAL:verzia je archivovaná|verzie sú archivované|verzií je archivovaných}}',
 'undeletehistory'              => 'Ak obnovíte túto stránku, obnovia sa aj všetky predchádzajúce verzie do histórie predchádzajúcich verzií.
-Ak bola od zmazania vytvorená nová stránka s rovnakým názvom, zobrazia sa
-obnovené verzie ako posledné úpravy novej stránky a aktuálna verzia novej stránky
-nebude automaticky nahradená.
-Tiež pamätajte, že obmedzenia vzťahujúce sa na revízie súborov sa pri obnovení stratia.',
+Ak bola od zmazania vytvorená nová stránka s rovnakým názvom, obnovené revízie sa objavia v histórii stránky.',
 'undeleterevdel'               => 'Obnovenie sa nevykoná, ak by malo mať za dôsledok čiastočné zmazanie poslednej revízie. V takých prípadoch musíte odznačiť alebo odkryť najnovšie zmazané revízie.',
 'undeletehistorynoadmin'       => 'Táto stránka bola zmazaná. Dôvod zmazania je zobrazený dolu v zhrnutí spolu s podrobnosťami o používateľoch, ktorí túto stránku upravovali pred zmazaním. Samotný text týchto zmazaných revízií je prístupný iba správcom.',
 'undelete-revision'            => '$3 zmazal revíziu $1 (z $2):',

@@ -240,9 +240,8 @@ CREATE TABLE ipblocks (
   ipb_range_end         TEXT,
   ipb_deleted           SMALLINT     NOT NULL  DEFAULT 0,
   ipb_block_email       SMALLINT     NOT NULL  DEFAULT 0
-
 );
-CREATE INDEX ipb_address ON ipblocks (ipb_address);
+CREATE UNIQUE INDEX ipb_address_unique ON ipblocks (ipb_address,ipb_user,ipb_auto,ipb_anon_only);
 CREATE INDEX ipb_user    ON ipblocks (ipb_user);
 CREATE INDEX ipb_range   ON ipblocks (ipb_range_start,ipb_range_end);
 
@@ -569,5 +568,5 @@ CREATE TABLE mediawiki_version (
 );
 
 INSERT INTO mediawiki_version (type,mw_version,sql_version,sql_date)
-  VALUES ('Creation','??','$LastChangedRevision: 581 $','$LastChangedDate: 2008-07-29 13:20:14 +0000 (Tue, 29 Jul 2008) $');
+  VALUES ('Creation','??','$LastChangedRevision: 40517 $','$LastChangedDate: 2008-09-06 07:14:20 +0000 (Sat, 06 Sep 2008) $');
 

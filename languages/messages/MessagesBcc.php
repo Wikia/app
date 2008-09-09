@@ -153,6 +153,8 @@ $messages = array(
 'underline-never'   => 'هچ وهد',
 'underline-default' => 'پیشفرضین بروزر',
 
+'skinpreview' => '(بازبینی)',
+
 # Dates
 'sunday'        => 'یک شنبه',
 'monday'        => 'دوشنبه',
@@ -252,7 +254,7 @@ $messages = array(
 
 'errorpagetitle'    => 'حطا',
 'returnto'          => 'تررگ به $1.',
-'tagline'           => 'چه {{sitename}}',
+'tagline'           => 'چه {{SITENAME}}',
 'help'              => 'کمک',
 'search'            => 'گردگ',
 'searchbutton'      => 'گردگ',
@@ -332,7 +334,9 @@ $messages = array(
 
 'badaccess'        => 'حطا اجازت',
 'badaccess-group0' => 'شما مجاز نهیت عملی که درخواست کت اجرا کنیت',
-'badaccess-groups' => 'کاری که شما درخواست کت محدود په کابران ته یکی چه گروهان {{PLURAL:$2|گروه|یکی چه گروهان}}: $1.',
+'badaccess-group1' => 'عملی که ما درخواست کتت مربوط به گروه کابران $1.',
+'badaccess-group2' => 'کاری که شما درخواست کت محدود په کاربران ته یکی چه گروهان $1.',
+'badaccess-groups' => 'کاری که شما درخواست کت محدود په کابران ته یکی چه گروهان $1.',
 
 'versionrequired'     => 'نسخه $1. مدیا وی کی نیازنت',
 'versionrequiredtext' => 'نسخه $1 چه مدیا وی کی نیازنت په استفاده ای صفحه. بچار [[Special:Version|version page]].',
@@ -747,7 +751,7 @@ $2',
 
 # Parser/template warnings
 'expensive-parserfunction-warning'        => 'هوژاری: ای صفحه شامل بازگین توار عملگر تجریه کنوک سنگیننت.
-آیی بایدن کمتر چه  $2{{PLURAL:$2|توار|توار}}, داشته بیت ادان هنو  $1 هست.',
+آیی بایدن کمتر چه  $2, داشته بیت ادان هنو  $1 هست.',
 'expensive-parserfunction-category'       => ' صفحات گونبازگین توار عملگر تجریه کنوک',
 'post-expand-template-inclusion-warning'  => 'هوژاری: اندازه شامل تمپلت باز مزننت.
 لهتی تمپلتان هور نه بینت.',
@@ -787,7 +791,6 @@ $2',
 'histlegend'          => 'بخش تفاوت: په مقایسه کتن نسخه یان گزینه انتخاب کنیت اینتر یا دکمه بجن.<br />
 Legend: (cur) = تفاوتان گون هنوکین نسخه,
 (last) = تفاوت گون بعدی نسخه, M = هوردین  اصلاح.',
-'history-search'      => 'گردگ ته تاریح',
 'deletedrev'          => '[حذف]',
 'histfirst'           => 'اولین',
 'histlast'            => 'اهرین',
@@ -895,7 +898,6 @@ Legend: (cur) = تفاوتان گون هنوکین نسخه,
 
 # Search results
 'searchresults'             => 'نتایج گردگ',
-'searchresults-title'       => 'نتایج گردگ په $1',
 'searchresulttext'          => 'په گیشترین اطلاعات گردگ باره {{SITENAME}}، بچار [[{{MediaWiki:Helppage}}|{{int:help}}]].',
 'searchsubtitle'            => 'شما گردگیت په \'\'\'[[:$1]]\'\'\' ([[Special:Prefixindex/$1|کل صفحات شروع بنت گون "$1"]] | [[Special:WhatLinksHere/$1|کل صفحات که لینک انت په "$1"]])',
 'searchsubtitleinvalid'     => "شما گردگیت په '''$1'''",
@@ -953,7 +955,6 @@ Legend: (cur) = تفاوتان گون هنوکین نسخه,
 'qbsettings-floatingright' => 'راست شناور',
 'changepassword'           => 'کلمه رمز عوض کن',
 'skin'                     => 'پوست',
-'skin-preview'             => 'بازین',
 'math'                     => 'ریاضی',
 'dateformat'               => 'فرم تاریح',
 'datedefault'              => 'هچ ترجیح',
@@ -1300,9 +1301,6 @@ PICT # misc.
 'filehist-comment'               => 'نظر',
 'imagelinks'                     => 'لینکان',
 'linkstoimage'                   => 'جهلیگین {{PLURAL:$1|صفحه |$1 صفحات لینک}} پی ای فایل',
-'linkstoimage-more'              => 'گیشتر چه  $1 {{PLURAL:$1|صفحه لینکان|صفحات لینک}} پی ای فایل.
-جهلگین لیست {{PLURAL:$1|اولین لینک صفحه|اولین $1 لینکان صفحه ی}} پی ای فایل فقط پیش داریت.
-یک [[Special:WhatLinksHere/$2|لیست کامل]] موجودنت.',
 'nolinkstoimage'                 => 'هچ صفحه ای نیست که به ای فایل لینک بوت.',
 'morelinkstoimage'               => 'View [[Special:WhatLinksHere/$1|گیشتر لینکان]]به ای فایل',
 'redirectstofile'                => 'جهلیگین {{PLURAL:$1|فایل غیر مستقیم بنت|$1 فایلان غیر مستقیم بنت.}} به ای فایل',
@@ -1341,6 +1339,8 @@ PICT # misc.
 'filedelete-success-old'      => '<span class="plainlinks">نسخه چه \'\'\'[[Media:$1|$1]]\'\'\'  په داب چه $3, $2 حذف بوتت.</span>',
 'filedelete-nofile'           => "'''$1'' ته  {{SITENAME}} موجود نهنت.",
 'filedelete-nofile-old'       => "هچ نسخه آرشیوی چه'''$1'''  گون مشخصین نشان نیست.",
+'filedelete-iscurrent'        => 'شما لوٹیت نوکترین نسخه ای فایلء حذف کنیت.
+لطفا اول په یک پیشرتین نسخه بدل کنیت.',
 'filedelete-otherreason'      => 'دگر/گیشترین دلیل:',
 'filedelete-reason-otherlist' => 'دگ دلیل',
 'filedelete-reason-dropdown'  => '*متداول این دلایل حذف
@@ -1415,7 +1415,7 @@ PICT # misc.
 'fewestrevisions' => 'صفحات گون کمترین بازبینی',
 
 # Miscellaneous special pages
-'nbytes'                  => '$1 {{PLURAL:$1|byte|bytes}}',
+'nbytes'                  => '$1 {{PLURAL:$1|بایت|بایت}}',
 'ncategories'             => '$1 {{PLURAL:$1|دسته|دسته جات}}',
 'nlinks'                  => '$1 {{PLURAL:$1|link|لینک}}',
 'nmembers'                => '$1 {{PLURAL:$1|member|اعضا}}',
@@ -1506,7 +1506,9 @@ PICT # misc.
 
 # Special:Categories
 'categories'                    => 'دسته یان',
-'categoriespagetext'            => 'جهلیگین دسته جات شامل صفحات یا مدیا انت',
+'categoriespagetext'            => 'جهلیگین دسته جات شامل صفحات یا مدیا انت
+[[Special:UnusedCategories|دسته جات بی استفاده]] ادان پیشدارگ نه بنت.
+ هنچوش بچار[[Special:WantedCategories|wanted categories]].',
 'categoriesfrom'                => 'پیشدار دسته جات که شروع بنت گون:',
 'special-categories-sort-count' => 'ترتیب په اساس شمار',
 'special-categories-sort-abc'   => 'ترتیب الفبی',
@@ -1536,10 +1538,10 @@ PICT # misc.
 'defemailsubject' => '{{SITENAME}} ایمیل',
 'noemailtitle'    => 'هچ آدرس ایمیل',
 'noemailtext'     => 'ای کاربر یک آدرس ایمیل معتبری مشخص نه کتت یا انتخابی کت ای که چه دگه کابران ایمیل مه گریت.',
-'emailfrom'       => 'چه',
-'emailto'         => 'به',
-'emailsubject'    => 'موضوغ',
-'emailmessage'    => 'کوله',
+'emailfrom'       => ':چه',
+'emailto'         => 'به:',
+'emailsubject'    => 'موضوع:',
+'emailmessage'    => 'کوله:',
 'emailsend'       => 'دیم دی',
 'emailccme'       => 'یک کپی چه منی کوله په من وت ایمیل کن.',
 'emailccsubject'  => 'کپی چه شمی کوله په $1: $2',
@@ -1731,8 +1733,7 @@ $NEWPAGE
 په اجرا کتن تررینگ انتخابی جعبه هانی که مطابق بازبینی آن باید تررینگ بیت نشان بلیت، و کلیک کنیت '''''تررین''''. کلیک کتن '''''Reset''''' فیلد نظرء و کل جعبه نشان پهک کنت.",
 'undeleterevisions'            => '$1 {{PLURAL:$1|بازبینی|بازبینی ان}} آرشیو بوتنت',
 'undeletehistory'              => 'اگر  صفحه ای تررینیت، کل بازبینی آن ته تاریح دکه ذخیره بنت.
-اگر یک نوکین صفحه گون یک دابی نام بعد چه حذف شر بوتت، دگه ذخیره بوتگین بازبینی آن ته تاریح اولتر جاه کآینت.
-هنچوش توجه بیت که محدودیات ته بازبینی آن فایل ته دگه تررینگ گار بنت.',
+اگر یک نوکین صفحه گون یک دابی نام بعد چه حذف شر بوتت، دگه ذخیره بوتگین بازبینی آن ته تاریح اولتر جاه کآینت.',
 'undeleterevdel'               => 'تررینگ حذف انجام نه بیت اگر آی تاثیری ته اصلی صفحه یا فایل بازبینی که جری جذف بوتت.
 ته ای موارد شما بایدن چک می کنیت یا پناه مه کنیت نوکترین بازبینی حدفیء.',
 'undeletehistorynoadmin'       => 'ای صفحه حذف بوتت.
@@ -1776,22 +1777,20 @@ $1',
 'blanknamespace' => '(اصلی)',
 
 # Contributions
-'contributions'       => 'مشارکتان کاربر',
-'contributions-title' => 'مشارکتان کاربر په $1',
-'mycontris'           => 'می مشارکتان',
-'contribsub2'         => 'په $1 ($2)',
-'nocontribs'          => 'هچ تغییر هم دپ گون ای معیار در نه بوت.',
-'uctop'               => '(بالا)',
-'month'               => 'چه ماه(و پیش تر):',
-'year'                => 'چه سال(و پیشتر)',
+'contributions' => 'مشارکتان کاربر',
+'mycontris'     => 'می مشارکتان',
+'contribsub2'   => 'په $1 ($2)',
+'nocontribs'    => 'هچ تغییر هم دپ گون ای معیار در نه بوت.',
+'uctop'         => '(بالا)',
+'month'         => 'چه ماه(و پیش تر):',
+'year'          => 'چه سال(و پیشتر)',
 
-'sp-contributions-newbies'       => 'پیش دار فقط مشارکتان نوکین حسایانء',
-'sp-contributions-newbies-sub'   => 'په نوکین حسابان',
-'sp-contributions-newbies-title' => 'مشارکتان کاربر په نوکین حسابان',
-'sp-contributions-blocklog'      => 'محدود کتن ورود',
-'sp-contributions-search'        => 'گردگ په مشارکتان',
-'sp-contributions-username'      => 'آدرس آی پی یا نام کاربری',
-'sp-contributions-submit'        => 'گردگ',
+'sp-contributions-newbies'     => 'پیش دار فقط مشارکتان نوکین حسایانء',
+'sp-contributions-newbies-sub' => 'په نوکین حسابان',
+'sp-contributions-blocklog'    => 'محدود کتن ورود',
+'sp-contributions-search'      => 'گردگ په مشارکتان',
+'sp-contributions-username'    => 'آدرس آی پی یا نام کاربری',
+'sp-contributions-submit'      => 'گردگ',
 
 # What links here
 'whatlinkshere'            => 'ای لینکی که ادا هست',
@@ -2220,8 +2219,6 @@ $1',
 'newimages'             => 'گالری نوکین فایلان',
 'imagelisttext'         => "جهل یک لیستی چه  '''$1''' {{PLURAL:$1|فایل|فایلان}} هست که ترتیبنت $2.",
 'newimages-summary'     => 'ای حاصین صفحه اهرین آپلود بوتگین فایلان پیشداریت',
-'newimages-legend'      => 'فیلتر',
-'newimages-label'       => 'نام فایل ( یا چنڈی چه آيی):',
 'showhidebots'          => '(روباتان $1 )',
 'noimages'              => 'هیچی په دیستن',
 'ilsubmit'              => 'گردگ',
@@ -2659,7 +2656,6 @@ $1',
 'useajaxsearch'    => 'چه گردگ آژاکسی استفاده کن',
 
 # Separators for various lists, etc.
-'semicolon-separator' => ';',
 'colon-separator'    => ':&#32;',
 'autocomment-prefix' => '-',
 
