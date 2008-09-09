@@ -49,7 +49,7 @@ $messages['en'] = array(
 	'createpage_please_wait' => 'Please wait...' ,
 	'createpage_upload_directory_read_only' => 'The upload directory is not writable by the webserver' ,
 	'headline_tip_3' => 'Level 3 headline' ,
-	'createpage_about_info' => 'This is the simplified editor. To find out more go to [[w:c:inside:CreatePage|Inside Wikia]].' ,
+	'createpage_about_info' => 'This is the simplified editor. To find out more go to [[w:c:help:Help:CreatePage|Wikia Help]].' ,
 	'createpage_advanced_text' => 'You can also use the $1.' ,
 	'createpage_advanced_edit' => 'advanced editor' ,
 	'tog-createpage-redlinks' => 'Use <a href="http://www.inside.wikia.com/wiki/CreatePage">CreatePage</a> when following broken links' ,	
