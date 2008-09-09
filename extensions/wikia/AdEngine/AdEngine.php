@@ -243,7 +243,7 @@ class AdEngine {
 			array_push($styles, "display: none;");
 		}
 
-		$style = ' style="'. implode(" ", $styles) .'"';
+		$style = ' style="'. implode(" ", $styles) .'" class="wikia_ad_placeholder"';
 
 		// We will use this at the bottom of the page for ads.
 		$this->placeholders[] = $slotname;
