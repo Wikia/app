@@ -19,7 +19,7 @@ AdEngine.resetCssClear = function (side) {
 	var Dom = YAHOO.util.Dom;
 	Dom.getElementsBy(function(el) {
 	if((el.nodeName == 'DIV' || el.nodeName == 'TABLE') &&
-		    // el.id.substring(0,7) != 'adSpace' && 
+		    // el.id.substring(0,7) != 'adSpace' &&
 		    Dom.getStyle(el, 'float') == side) {
 			return true;
 		}
@@ -31,12 +31,12 @@ AdEngine.resetCssClear = function (side) {
 
 };
 
-/** 
+/**
  * Utility functions for determining what colors are on articles,
- * so that we know what colors to display for ads. For example, 
+ * so that we know what colors to display for ads. For example,
  * if the site has a black background, call a black ad from Google
  * Code pulled originally from FAST.js, with some modifications.
- * 
+ *
  * @author Inez Korczynski, repackaged into AdEngine by Nick Sullivan
  */
 AdEngine.getAdColor = function (type) {
@@ -135,4 +135,10 @@ AdEngine.getHEX = function (color) {
 /* Backward compatible function call, this method is already referenced in Ad Server code */
 function AdGetColor(type) {
 	return AdEngine.getAdColor(type);
+}
+
+AdEngine.displaySlotIfAd = function (slotname) {
+	if($(slotname + '_load').innerHTML.indexOf(noadgif) == -1) {
+		YAHOO.util.Dom.setStyle(slotname, 'display', 'block');
+	}
 }
