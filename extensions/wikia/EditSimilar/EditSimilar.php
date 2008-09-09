@@ -38,7 +38,7 @@ $wgExtensionFunctions [] = 'wfEditSimilarSetup' ;
 $wgExtensionCredits['other'][] = array(
         'name' => 'EditSimilar',
         'version' => 1.16 ,
-        'author' => 'Bartek Łapiński, [http://inside.wikia.com/wiki/User:TOR Łukasz \'TOR\' Garczewski]',
+        'author' => 'Bartek Łapiński, [http://www.wikia.com/wiki/User:TOR Łukasz \'TOR\' Garczewski]',
         'url' => 'http://help.wikia.com/wiki/Help:EditSimilar',
         'description' => 'Encourages users to edit an article similar (by categories) to the one they just had edited.',
 );
