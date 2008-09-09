@@ -73,8 +73,8 @@ class WikiFactoryLoader {
 			 */
 			$this->mCityID = $id;
 			$this->mServerName = is_null( $server_name )
-				? $server_name
-				: strtolower( $_SERVER['SERVER_NAME'] );
+				? strtolower( $_SERVER['SERVER_NAME'] )
+				: $server_name;
 		}
 		elseif( !empty($_SERVER['SERVER_NAME'])) {
 			$this->mServerName = strtolower( $_SERVER['SERVER_NAME'] );
@@ -339,7 +339,7 @@ class WikiFactoryLoader {
 		 * mCityHost may contain path after url (memory-alpha, dofus), we just
 		 * split this for comparing hosts.
 		 */
-		list( $host, $path ) = explode( "/", $this->mCityHost, 2 );
+		list( $host, $path ) = array_pad( explode( "/", $this->mCityHost, 2 ), 2, false );
 
 		if( !empty( $host ) && !empty( $this->mServerName )
 			&& strtolower( $host ) != $this->mServerName

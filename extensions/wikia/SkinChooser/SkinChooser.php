@@ -68,7 +68,7 @@ function SavePreferencesSkinChooser($pref) {
 $wgHooks['UserToggles'][] = 'SkinChooserExtraToggle';
 function SkinChooserExtraToggle(&$extraToggle) {
 	$extraToggle[] = 'skinoverwrite';
-
+	$extraToggle[] = 'showAds';
 	return true;
 }
 
