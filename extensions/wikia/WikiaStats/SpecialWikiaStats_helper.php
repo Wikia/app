@@ -28,7 +28,7 @@ class WikiaGenericStats {
     var $mSelectedCityId = -1;
 
     const MONTHLY_STATS = 7;
-    const USE_MEMC = 0;
+    const USE_MEMC = 1;
     const USE_OLD_DB = 1;
 	const IGNORE_WIKIS = "5, 11, 6745";
 
