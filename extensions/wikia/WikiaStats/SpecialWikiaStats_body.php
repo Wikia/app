@@ -24,7 +24,7 @@ class WikiaStatsClass extends SpecialPage
     var $mPosted, $mStats, $mSkinName;
     var $userIsSpecial;
 
-    const USE_MEMC = 0;
+    const USE_MEMC = 1;
 
     #--- constructor
     public function __construct()
