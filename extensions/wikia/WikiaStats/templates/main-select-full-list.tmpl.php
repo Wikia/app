@@ -57,7 +57,7 @@ function showXLSCompareDialog(statistics)
 		YD.get("wk-stats-panel").style.display = "none";
 		YD.get("wk-stats-main-panel").style.display = "none";
 		YD.get("wk-progress-stats-panel").style.display = "block";	
-		XLSGenerate(statistics, '');
+		XLSGenerate(statistics, '', '', '');
 		YAHOO.wkstatsxlsmenu.container.xlsmenu.setHeader('<?= addslashes(wfMsg('wikiastats_creation_panel_header')) ?>');
 		YAHOO.wkstatsxlsmenu.container.xlsmenu.show();
 	}
@@ -89,18 +89,18 @@ YAHOO.namespace("wkstatsxlsmenu.container");
 
                 xlmmenutext = "<div class=\"wk-stats-main-panel\" id=\"wk-stats-main-panel\">";
                 xlmmenutext += "<ul>";
-                xlmmenutext += "<li id=\"wk-xls-pagetitle\"><a href=\"javascript:void(0);\" onClick=\"XLSGenerate('1', '');\"><?=wfMsg("wikiastats_pagetitle")?></a></li>";
+                xlmmenutext += "<li id=\"wk-xls-pagetitle\"><a href=\"javascript:void(0);\" onClick=\"XLSGenerate('1', '', '', '');\"><?=wfMsg("wikiastats_pagetitle")?></a></li>";
                 xlmmenutext += "</ul>";
                 xlmmenutext += "</div>";
 
                 xlmmenutext += "<div class=\"wk-stats-panel\" id=\"wk-stats-panel\">";
                 xlmmenutext += "<ul>";
-                xlmmenutext += "<li><a href=\"javascript:void(0);\" onClick=\"XLSGenerate('2', '');\"><?=wfMsg("wikiastats_distrib_article")?></a></li>";
-                xlmmenutext += "<li><a href=\"javascript:void(0);\" onClick=\"XLSGenerate('3', '');\"><?=wfMsg("wikiastats_active_absent_wikians")?></a></li>";
-                xlmmenutext += "<li><a href=\"javascript:void(0);\" onClick=\"XLSGenerate('4', '');\"><?=wfMsg("wikiastats_anon_wikians")?></a></li>";
-                xlmmenutext += "<li><a href=\"javascript:void(0);\" onClick=\"XLSGenerate('5', '');\"><?=wfMsg("wikiastats_article_one_link")?></a></li>";
-                xlmmenutext += "<li><a href=\"javascript:void(0);\" onClick=\"XLSGenerate('6', '');\"><?=wfMsg("wikiastats_namespace_records")?></a></li>";
-                xlmmenutext += "<li><a href=\"javascript:void(0);\" onClick=\"XLSGenerate('7', '');\"><?=wfMsg("wikiastats_page_edits")?></a></li>";
+                xlmmenutext += "<li><a href=\"javascript:void(0);\" onClick=\"XLSGenerate('2', '', '', '');\"><?=wfMsg("wikiastats_distrib_article")?></a></li>";
+                xlmmenutext += "<li><a href=\"javascript:void(0);\" onClick=\"XLSGenerate('3', '', '', '');\"><?=wfMsg("wikiastats_active_absent_wikians")?></a></li>";
+                xlmmenutext += "<li><a href=\"javascript:void(0);\" onClick=\"XLSGenerate('4', '', '', '');\"><?=wfMsg("wikiastats_anon_wikians")?></a></li>";
+                xlmmenutext += "<li><a href=\"javascript:void(0);\" onClick=\"XLSGenerate('5', '', '', '');\"><?=wfMsg("wikiastats_article_one_link")?></a></li>";
+                xlmmenutext += "<li><a href=\"javascript:void(0);\" onClick=\"XLSGenerate('6', '', '', '');\"><?=wfMsg("wikiastats_namespace_records")?></a></li>";
+                xlmmenutext += "<li><a href=\"javascript:void(0);\" onClick=\"XLSGenerate('7', '', '', '');\"><?=wfMsg("wikiastats_page_edits")?></a></li>";
                 xlmmenutext += "</ul>";
                 xlmmenutext += "</div>";
 
@@ -151,7 +151,7 @@ YAHOO.namespace("Wikia.Statistics");
                         return false;
                     }
                     YD.get("wk-progress-compare-panel").style.display = "block";
-                    XLSGenerate(compare_stats, checked_list);
+                    XLSGenerate(compare_stats, checked_list, '', '');
                 };
                 YAHOO.Wikia.Statistics.handleCancel = function() 
                 { 

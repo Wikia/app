@@ -12,9 +12,9 @@ class WikiaStatsXLS {
 	function __construct() {
 		//
 	}
-	
+
 	private function setXLSFileBegin() {
-		echo pack("ssssss", 0x809, 0x8, 0x0, 0x10, 0x0, 0x0);  
+		echo pack("ssssss", 0x809, 0x8, 0x0, 0x10, 0x0, 0x0);
 		return;
 	}
 
@@ -29,8 +29,10 @@ class WikiaStatsXLS {
 	}
 
 	private function writeXLSNumber($row, $col, $value) {
-		echo pack("sssss", 0x203, 14, $row, $col, 0x0);
-		echo pack("d", $value);
+		if ($value != 0) {
+			echo pack("sssss", 0x203, 14, $row, $col, 0x0);
+			echo pack("d", $value);
+		}
 		return;
 	}
 
@@ -49,10 +51,10 @@ class WikiaStatsXLS {
 		header("Content-Type: application/force-download");
 		header("Content-Type: application/octet-stream");
 		header("Content-Type: application/download");;
-		header("Content-Disposition: attachment;filename=".str_replace(" ", "_", $dbname).".xls "); 
+		header("Content-Disposition: attachment;filename=".str_replace(" ", "_", $dbname).".xls ");
 		header("Content-Transfer-Encoding: binary ");
 	}
-	
+
 	public function getXLSCityDBName($city_id) {
 		$dbname = WikiFactory::IDtoDB($city_id);
 		if (empty($dbname)) {
@@ -61,7 +63,7 @@ class WikiaStatsXLS {
 		#---
 		return $dbname;
 	}
-	
+
 	public function generateEmptyFile()	{
 		$dbname = sprintf(DEFAULT_WIKIA_XLS_FILENAME, intval($cityId));
 		$this->setXLSHeader($dbname);
@@ -69,160 +71,119 @@ class WikiaStatsXLS {
 		$this->setXLSFileBegin();
 		$this->setXLSFileEnd();
 	}
-	
+
 	public function makeMainStats($data, &$columns, &$monthlyStats, $city_id) {
 		global $wgUser;
-		
+
 		#----
 		$dbname = $this->getXLSCityDBName($city_id);
 		#----
-		$this->setXLSHeader($dbname);
+		$this->setXLSHeader(wfMsg('wikiastats_filename_mainstats', $dbname));
 		#----
 		$this->setXLSFileBegin();
 		$this->writeXLSLabel(1,1,ucfirst($dbname). " - " .wfMsg('wikiastats_pagetitle'));
-		$this->mergeXLSColsRows(1, 0, 1, count($columns));
+		$this->mergeXLSColsRows(1, 1, 1, count($columns));
 		/*
 		 * table header
 		 */
-		$col_date = 0;
+		$col_date = 1;
 		$this->writeXLSLabel(3, $col_date, wfMsg('wikiastats_date'));
-		$col_wikians = 1;
+		$col_wikians = 1 + $col_date;
 		$this->writeXLSLabel(3, $col_wikians, wfMsg('wikiastats_wikians'));
-		$this->mergeXLSColsRows(3, $col_wikians, 3, $col_wikians + 3);
-		$col_articles = 5;
+		$this->mergeXLSColsRows(3, $col_wikians, 3, $col_wikians + 6);
+		$col_articles = 8 + $col_date;
 		$this->writeXLSLabel(3, $col_articles, wfMsg('wikiastats_articles'));
 		$this->mergeXLSColsRows(3, $col_articles, 3, $col_articles + 6);
-		$col_db = 12;
+		$col_db = 15 + $col_date;
 		$this->writeXLSLabel(3, $col_db, wfMsg('wikiastats_database'));
 		$this->mergeXLSColsRows(3, $col_db, 3, $col_db + 2);
-		$col_links = 15;
+		$col_links = 18 + $col_date;
 		$this->writeXLSLabel(3, $col_links, wfMsg('wikiastats_links'));
 		$this->mergeXLSColsRows(3, $col_links, 3, $col_links + 4);
-		$col_image = 20;
+		$col_image = 23 + $col_date;
 		$this->writeXLSLabel(3, $col_image, wfMsg('wikiastats_images'));
 		$this->mergeXLSColsRows(3, $col_image, 3, $col_image + 1);
-		$col_users = 22;
-		$this->writeXLSLabel(3, $col_users, wfMsg('wikiastats_reg_users'));
-		$this->mergeXLSColsRows(3, $col_users, 3, $col_users + 3);
 
 		// second row
 		// date
-		$this->writeXLSLabel(4, 0, '');
+		$this->writeXLSLabel(4, $col_date, '');
 		// wikians
-		$this->writeXLSLabel(4,1,wfMsg('wikiastats_total'));
-		$this->mergeXLSColsRows(4, 1, 5, 1);
-		$this->writeXLSLabel(4,2,wfMsg('wikiastats_new'));
-		$this->mergeXLSColsRows(4, 2, 5, 2);
-		$this->writeXLSLabel(4,3,wfMsg('wikiastats_edits'));
-		$this->writeXLSLabel(5,3,">5");
-		$this->writeXLSLabel(5,4,">100");
+		$this->writeXLSLabel(4,2,wfMsg('wikiastats_months_edits'));
+		$this->mergeXLSColsRows(4, 2, 4, 6);
+		$this->writeXLSLabel(4,7,wfMsg('wikiastats_lifetime_editors'));
+		$this->mergeXLSColsRows(4, 7, 4, 8);
+		$this->writeXLSLabel(5,2,str_replace("<br/>", " ", wfMsg('wikiastats_main_namespace')));
+		$this->mergeXLSColsRows(5, 2, 5, 4);
+		$this->writeXLSLabel(5,5,str_replace("<br/>", " ", wfMsg('wikiastats_other_namespace')));
+		$this->mergeXLSColsRows(5, 5, 5, 6);
+		$this->writeXLSLabel(5,7,wfMsg('wikiastats_total'));
+		$this->mergeXLSColsRows(5, 7, 6, 7);
+		$this->writeXLSLabel(5, 8,str_replace("<br/>", " ", wfMsg('wikiastats_main_namespace')));
+		$this->mergeXLSColsRows(5, 8, 5, 8);
+
+		$this->writeXLSLabel(6,2,wfMsg('wikiastats_total'));
+		$this->writeXLSLabel(6,3,">5");
+		$this->writeXLSLabel(6,4,">100");
+		$this->writeXLSLabel(6,5,wfMsg('wikistats_user_namespace'));
+		$this->writeXLSLabel(6,6,wfMsg('wikistats_image_namespace'));
+		$this->writeXLSLabel(6,8,">10");
+		#$this->writeXLSLabel(6,3,"new");
+
 		// articles
-		$this->writeXLSLabel(4,5,wfMsg('wikiastats_count'));
-		$this->mergeXLSColsRows(4, 5, 4, 6);
-		$this->writeXLSLabel(5,5,wfMsg('wikiastats_official'));
-		$this->writeXLSLabel(5,6,wfMsg('wikiastats_more_200_ch'));
+		$this->writeXLSLabel(4,9,wfMsg('wikiastats_count'));
+		$this->mergeXLSColsRows(4, 9, 5, 10);
+		$this->writeXLSLabel(6,9,wfMsg('wikiastats_official'));
+		$this->writeXLSLabel(6,10,wfMsg('wikiastats_more_200_ch'));
 		//
-		$this->writeXLSLabel(4,7,wfMsg('wikiastats_new_per_day'));
-		$this->mergeXLSColsRows(4, 7, 5, 7);
+		$this->writeXLSLabel(4,11,str_replace("<br/>", " ", wfMsg('wikiastats_new_per_day')));
+		$this->mergeXLSColsRows(4, 11, 6, 11);
 		//
-		$this->writeXLSLabel(4,5,wfMsg('wikiastats_mean'));
-		$this->mergeXLSColsRows(4, 8, 4, 9);
-		$this->writeXLSLabel(5,8,wfMsg('wikiastats_edits'));
-		$this->writeXLSLabel(5,9,wfMsg('wikiastats_bytes'));
+		$this->writeXLSLabel(4,12,wfMsg('wikiastats_mean'));
+		$this->mergeXLSColsRows(4, 12, 5, 13);
+		$this->writeXLSLabel(6,12,wfMsg('wikiastats_edits'));
+		$this->writeXLSLabel(6,13,wfMsg('wikiastats_bytes'));
 		//
-		$this->writeXLSLabel(4,10,wfMsg('wikiastats_larger_than'));
-		$this->mergeXLSColsRows(4, 10, 4, 11);
-		$this->writeXLSLabel(5,10,'0.5Kb');
-		$this->writeXLSLabel(5,11,'2.0Kb');
+		$this->writeXLSLabel(4,14,wfMsg('wikiastats_larger_than'));
+		$this->mergeXLSColsRows(4, 14, 5, 15);
+		$this->writeXLSLabel(6,14,'0.5Kb');
+		$this->writeXLSLabel(6,15,'2.0Kb');
 		// database
-		$this->writeXLSLabel(4,12,wfMsg('wikiastats_edits'));
-		$this->mergeXLSColsRows(4, 12, 5, 12);
-		$this->writeXLSLabel(4,13,wfMsg('wikiastats_size'));
-		$this->mergeXLSColsRows(4, 13, 5, 13);
-		$this->writeXLSLabel(4,14,wfMsg('wikiastats_words'));
-		$this->mergeXLSColsRows(4, 14, 5, 14);
+		$this->writeXLSLabel(4,16,wfMsg('wikiastats_edits'));
+		$this->mergeXLSColsRows(4, 16, 6, 16);
+		$this->writeXLSLabel(4,17,wfMsg('wikiastats_size'));
+		$this->mergeXLSColsRows(4, 17, 6, 17);
+		$this->writeXLSLabel(4,18,wfMsg('wikiastats_words'));
+		$this->mergeXLSColsRows(4, 18, 6, 18);
 		// links
-		$this->writeXLSLabel(4,15,wfMsg('wikiastats_internal'));
-		$this->mergeXLSColsRows(4, 15, 5, 15);
-		$this->writeXLSLabel(4,16,wfMsg('wikiastats_interwiki'));
-		$this->mergeXLSColsRows(4, 16, 5, 16);
-		$this->writeXLSLabel(4,17,wfMsg('wikiastats_image'));
-		$this->mergeXLSColsRows(4, 17, 5, 17);
-		$this->writeXLSLabel(4,18,wfMsg('wikiastats_external'));
-		$this->mergeXLSColsRows(4, 18, 5, 18);
-		$this->writeXLSLabel(4,19,wfMsg('wikiastats_redirects'));
-		$this->mergeXLSColsRows(4, 19, 5, 19);
+		$this->writeXLSLabel(4,19,wfMsg('wikiastats_internal'));
+		$this->mergeXLSColsRows(4, 19, 6, 19);
+		$this->writeXLSLabel(4,20,wfMsg('wikiastats_interwiki'));
+		$this->mergeXLSColsRows(4, 20, 6, 20);
+		$this->writeXLSLabel(4,21,wfMsg('wikiastats_image'));
+		$this->mergeXLSColsRows(4, 21, 6, 21);
+		$this->writeXLSLabel(4,22,wfMsg('wikiastats_external'));
+		$this->mergeXLSColsRows(4, 22, 6, 22);
+		$this->writeXLSLabel(4,23,wfMsg('wikiastats_redirects'));
+		$this->mergeXLSColsRows(4, 23, 6, 23);
 		// images
-		$this->writeXLSLabel(4,20,wfMsg('wikiastats_uploaded_images'));
-		$this->mergeXLSColsRows(4, 20, 5, 20);
-		$this->writeXLSLabel(4,21,wfMsg('wikiastats_with_links'));
-		$this->mergeXLSColsRows(4, 21, 5, 21);
-		// unique users
-		$this->writeXLSLabel(4,22,wfMsg('wikiastats_total'));
-		$this->mergeXLSColsRows(4, 22, 5, 22);
-		$this->writeXLSLabel(4,23,wfMsg('wikistats_edited_in_namespace'));
-		$this->mergeXLSColsRows(4, 23, 4, 25);
-		$this->writeXLSLabel(5,23,wfMsg('wikistats_main_namespace'));
-		$this->writeXLSLabel(5,24,wfMsg('wikistats_user_namespace'));
-		$this->writeXLSLabel(5,25,wfMsg('wikistats_image_namespace'));		
-		
+		$this->writeXLSLabel(4,24,wfMsg('wikiastats_uploaded_images'));
+		$this->mergeXLSColsRows(4, 24, 6, 24);
+		$this->writeXLSLabel(4,25,wfMsg('wikiastats_with_links'));
+		$this->mergeXLSColsRows(4, 25, 6, 25);
+
 		// monthly stats
-		$row = 6;
-		foreach ($monthlyStats as $date => $columnsData)
-		{
-			#---
-			if ($columnsData['visible'] === 1)
-			{
-				$dateArr = explode("-", $date);
-				$stamp = mktime(0,0,0,$dateArr[1],1,$dateArr[0]);
-				$outDate = substr(wfMsg(strtolower(date("F",$stamp))), 0, 3) . " " . $dateArr[0];
-				// output date in correct format
-				$this->writeXLSLabel($row, 0, $outDate);
-				//----
-				$col = 1;
-				foreach ($columns as $column)
-				{
-					if ( in_array($column, array('date')) ) continue;
-					#---
-					$out = $columnsData[$column];
-					$class = "rb";
-					if ( (in_array($column, array('B','H','I','J','K'))) ||
-						 (empty($columnsData[$column]) || ($columnsData[$column] == 0)) ||
-						 ($columnsData[$column] >= 100) )
-					{
-						$out = "";
-					}
-					// output value
-					if ($out != "")
-					{
-						$out = sprintf("%0.0f%%", $out);
-						$this->writeXLSNumber($row, $col, $out);
-					}
-					$col++;
-				}
-				$row++;
-			}
-		}
-		
-		// column's names -> A, B, C ... 
-		$col=0;
-		foreach ($columns as $column)
-		{
-			if ($column == "date") $column = "";
-			$this->writeXLSLabel($row,$col,$column);
-			$col++;
-		}
+		$row = 7;
 		// statistics
 		foreach ($data as $date => $columnsData)
 		{
 			$row++;
 			$G = 1000 * 1000 * 1000;
 			$M = 1000 * 1000;
-			$K = 1000;	
+			$K = 1000;
 			$GB = 1024 * 1024 * 1024;
 			$MB = 1024 * 1024;
-			$KB = 1024;	
-			$col=0;
+			$KB = 1024;
+			$col = $col_date;
 			foreach ($columns as $column)
 			{
 				$out = $columnsData[$column];
@@ -241,42 +202,77 @@ class WikiaStatsXLS {
 						}
 						$out = addslashes($out);
 					}
-					elseif ($column == 'H')
-						$out = sprintf("%0.1	f", $columnsData[$column]);
-					elseif ($column == 'I')
+					elseif ($column == 'K')
+						$out = sprintf("%0.1f", $columnsData[$column]);
+					elseif ($column == 'L')
 						$out = sprintf("%0.0f", $columnsData[$column]);
-					elseif ( in_array($column, array('J', 'K')) )
+					elseif ( in_array($column, array('M', 'N')) )
 						$out = sprintf("%0d", $columnsData[$column] * 100);
 					else
 						$out = sprintf("%0d", intval($columnsData[$column]));
 				}
-				
-				if ($out != "")
-				{
+
+				if ($out != "") {
 					if ($column == 'date')
-					{
 						$this->writeXLSLabel($row,$col,$out);
-					}
 					else
-					{
 						$this->writeXLSNumber($row, $col, $out);
-					}
 				}
 				$col++;
 			}
 		}
-		
+
+		$row++;
+		// column's names -> A, B, C ...
+		$col = $col_date;
+		foreach ($columns as $column)
+		{
+			if ($column == "date") $column = "";
+			$this->writeXLSLabel($row,$col,$column);
+			$col++;
+		}
+
+		$row++;	
+		foreach ($monthlyStats as $date => $columnsData)
+		{
+			#---
+			if ($columnsData['visible'] === 1) {
+				$dateArr = explode("-", $date);
+				$stamp = mktime(0,0,0,$dateArr[1],1,$dateArr[0]);
+				$outDate = substr(wfMsg(strtolower(date("F",$stamp))), 0, 3) . " " . $dateArr[0];
+				// output date in correct format
+				$this->writeXLSLabel($row, $col_date, $outDate);
+				//----
+				$col = $col_date + 1;
+				foreach ($columns as $column)
+				{
+					if ( in_array($column, array('date')) ) continue;
+					#---
+					$out = $columnsData[$column];
+					if (empty($columnsData[$column]) || ($columnsData[$column] == 0) || ($columnsData[$column] >= 100)) {
+						$out = "";
+					}
+					if ($out != "") {
+							$out = sprintf("%0.0f%%", $out);
+							$this->writeXLSNumber($row, $col, $out);
+					}
+					$col++;
+				}
+				$row++;
+			}
+		}
+
 		unset($columns);
 		unset($monthlyStats);
 		$this->setXLSFileEnd();
 	}
-	
+
 	public function makeDistribStats($city_id, &$statsData)
 	{
 		#----
 		$dbname = $this->getXLSCityDBName($city_id);
 		#----
-		$this->setXLSHeader($dbname . "_distrib");
+		$this->setXLSHeader(wfMsg('wikiastats_filename_other1', $dbname));
 		#----
 		$this->setXLSFileBegin();
 		$this->writeXLSLabel(1,1,ucfirst($dbname). " - " .wfMsg('wikiastats_distrib_article'));
@@ -318,7 +314,7 @@ class WikiaStatsXLS {
 		$dbname = $this->getXLSCityDBName($city_id);
 		$cur_month = 1;
 		#----
-		$this->setXLSHeader($dbname . "_active");
+		$this->setXLSHeader(wfMsg('wikiastats_filename_other2', $dbname));
 		#----
 		$this->setXLSFileBegin();
 		$this->writeXLSLabel(1,0,ucfirst($dbname). " - " .wfMsg('wikiastats_active_absent_wikians'));
@@ -459,7 +455,7 @@ class WikiaStatsXLS {
 		$dbname = $this->getXLSCityDBName($city_id);
 		$cur_month = 1;
 		#----
-		$this->setXLSHeader($dbname . "_anon");
+		$this->setXLSHeader(wfMsg('wikiastats_filename_other3', $dbname));
 		#----
 		$this->setXLSFileBegin();
 		$this->writeXLSLabel(1,0,ucfirst($dbname). " - " .wfMsg('wikiastats_anon_wikians'));
@@ -518,7 +514,7 @@ class WikiaStatsXLS {
 		$dbname = $this->getXLSCityDBName($city_id);
 		$cur_month = 1;
 		#----
-		$this->setXLSHeader($dbname . "_onelink");
+		$this->setXLSHeader(wfMsg('wikiastats_filename_other4', $dbname));
 		#----
 		$this->setXLSFileBegin();
 		$this->writeXLSLabel(1,0,ucfirst($dbname). " - " .wfMsg('wikiastats_article_one_link'));
@@ -577,7 +573,7 @@ class WikiaStatsXLS {
 		$dbname = $this->getXLSCityDBName($city_id);
 		$cur_month = 1;
 		#----
-		$this->setXLSHeader($dbname . "_dbnspaces");
+		$this->setXLSHeader(wfMsg('wikiastats_filename_other5', $dbname));
 		#----
 		$this->setXLSFileBegin();
 		$this->writeXLSLabel(1,0,ucfirst($dbname). " - " .wfMsg('wikiastats_namespace_records'));
@@ -641,7 +637,7 @@ class WikiaStatsXLS {
 		$dbname = $this->getXLSCityDBName($city_id);
 		$cur_month = 1;
 		#----
-		$this->setXLSHeader($dbname . "_mostedit");
+		$this->setXLSHeader(wfMsg('wikiastats_filename_other6', $dbname));
 		#----
 		$this->setXLSFileBegin();
 		$this->writeXLSLabel(1,0,ucfirst($dbname). " - " .str_replace("&gt;", ">", wfMsg('wikiastats_page_edits')) );
@@ -734,7 +730,7 @@ class WikiaStatsXLS {
 		$meanInfo .= "(" . implode(" + ", $meanArray[0]) . ") / Y1 \n" . wfMsg('wikiastats_trend_where_text') . " \n";
 		$meanInfo .= implode(",\n", $meanArray[1]).",\n";
 		$meanInfo .= "Y1 = ".implode(" + ", $meanArray[2])." = ". $sum ;
-		
+
 		$this->writeXLSLabel($row1,$col1,$meanInfo);
 		$this->mergeXLSColsRows($row1, $col1, $row2, $col2);
 		
@@ -795,7 +791,7 @@ class WikiaStatsXLS {
 		$MB = 1024 * 1024;
 		$KB = 1024;	
 		
-		$this->setXLSHeader(wfMsg('wikiastats_comparisons_table_1')."_".date('Ymd'));
+		$this->setXLSHeader(wfMsg('wikiastats_filename_trend', date('Ymd')));
 		#----
 		$this->setXLSFileBegin();
 		$col = 0;
@@ -952,7 +948,7 @@ class WikiaStatsXLS {
 	
 	public function makeCreationStats($cityList, &$arr_wikians, &$dWikians, &$arr_article, &$dArticles)
 	{
-		$this->setXLSHeader(wfMsg('wikiastats_creation_wikia_filename')."_".date('Ymd'));
+		$this->setXLSHeader(wfMsg('wikiastats_filename_creation', date('Ymd')));
 		#----
 		$max_wikians = (is_array($arr_wikians)) ? $arr_wikians[1] : 1;
 		$max_articles = (is_array($arr_article)) ? $arr_article[1] : 1;
@@ -1032,8 +1028,7 @@ class WikiaStatsXLS {
 	public function makeColumnStats($column,&$cityList,$nbrCities,&$splitCityList,&$columnHistory,&$columnRange)
 	{
 		$columnLetter = $columnRange[$column-3];
-		$filename = wfMsg("wikiastats_mainstats_short_column_" . $columnLetter);
-		$this->setXLSHeader($filename);
+		$this->setXLSHeader(wfMsg("wikiastats_filename_column_" . $columnLetter));
 		#----
 		$this->setXLSFileBegin();
 		$col = 1;

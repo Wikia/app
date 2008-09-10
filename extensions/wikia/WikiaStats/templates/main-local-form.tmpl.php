@@ -6,6 +6,7 @@
 var YC = YAHOO.util.Connect;
 var YD = YAHOO.util.Dom;
 var YE = YAHOO.util.Event;
+var wk_stats_city_id = 0;
 var previous_page = 0;
 
 function visible_wikians(rows, col, v)
@@ -111,7 +112,7 @@ function visible_image(rows, col, v)
 	//
 }
 
-function visible_column(col, col_to, show, text, div_hide) 
+function visible_column(col, col_to, show, text, div_hide)
 {
 	var tableStats  = document.getElementById("table_stats");
 	var v = (show) ? '' : 'none';
@@ -119,7 +120,7 @@ function visible_column(col, col_to, show, text, div_hide)
 
 	var rowStart = 4;
 	var rowEnd = rows.length-4;
-	
+
 	if (show == 1) {
 		for (i = rowStart; i < rowEnd; i++) {
 			var cels = rows[i].getElementsByTagName('td');
@@ -183,8 +184,7 @@ function visible_column(col, col_to, show, text, div_hide)
 	return true;
 }
 
-function selectArticleSize(id)
-{
+function selectArticleSize(id) {
 	var backColor = YAHOO.util.Dom.getStyle('article-size-' + id, 'background-color');
 	var new_backColor = (backColor == 'transparent') ? '#ADFF2F' : 'transparent';
 	YAHOO.util.Dom.setStyle('article-size-' + id, 'background-color', new_backColor);
@@ -221,7 +221,7 @@ YAHOO.util.Event.onDOMReady(function () {
 		success: function( oResponse ) {
 			var resCode = 0;
 			if (oResponse.responseText != "") {
-				resCode = 1;    		
+				resCode = 1;
 				YD.get("ws-main-table").innerHTML = oResponse.responseText;
 				YD.get("ws-progress-bar").innerHTML = "&nbsp;";
 			} else {
@@ -279,6 +279,8 @@ YAHOO.util.Event.onDOMReady(function () {
 		params 	+= "&rsargs[3]=" + document.getElementById( "ws-date-year-to" ).value;
 		params 	+= "&rsargs[4]=" + document.getElementById( "ws-date-month-to" ).value;
 		
+		var _legend = document.getElementById('wk-stats-legend');
+		var _otherStats = document.getElementById('ws-other-stats-panel');
 		if (this.id == "ws-show-charts") {
 			params += "&rsargs[5]=1";
 			if (_legend) {
@@ -394,7 +396,7 @@ YAHOO.util.Event.onDOMReady(function () {
 		}
 	};
 
-	YAHOO.Wikia.Statistics.DistribArticleEditsStats = function(e) 
+	YAHOO.Wikia.Statistics.DistribArticleEditsStats = function(e)
 	{
 		var city 	= document.getElementById( "wk-stats-city-id" );
 		var params 	= "&rsargs[0]=" + city.value;
@@ -540,34 +542,20 @@ YAHOO.util.Event.onDOMReady(function () {
 	}	
 });
 
+
 /*]]>*/
 </script>
-<?php 
-$select_stats = "";
-$selected_stats = "";
-foreach ($cityList as $domain => $city_id)
-{
-	$selected = ($city_id == $selCity) ? "selected" : "";
-	if (!empty($selected)) {
-		$selected_stats = ucfirst($domain);		
-	}
-	$select_stats .= "<option $selected value=\"$city_id\">".ucfirst($domain)."</option>";
-}
-?>	
+<input type="hidden" id="wk-stats-city-id" value="<?=$selCity?>">
 <fieldset>
 <legend class="legend-subtitle"><?=wfMsg('wikiastats_main_statistics_legend')?></legend>
 <div id="ws-upload">
 	<div id="ws-progress-bar"></div>
 	<div style="text-align:right; float:right;">
-	<?= wfMsg("wikiastats_info") ?>
-	<br />
-	<span class="wk-select-class"><select name="ws-domain" id="ws-domain" style="text-align:left; font-size:11px;"><?=$select_stats?></select></span>
-	<br />
-	<span class="wk-select-class"><?= wfMsg('wikiastats_daterange_from') ?> 
+	<span class="wk-select-class" valign="middle"><?= wfMsg('wikiastats_daterange_from') ?> 
 	<select name="ws-date-month-from" id="ws-date-month-from" style="text-align:left; font-size:11px;">
 <?php
-foreach ($dateRange['months'] as $id => $month)
-{
+$curMonth = date("m"); $curYear = date("Y");
+foreach ($dateRange['months'] as $id => $month) { 
 ?>
 	<option value="<?= ($id+1) ?>"><?= ucfirst($month) ?></option>
 <?php
@@ -579,10 +567,10 @@ foreach ($dateRange['months'] as $id => $month)
 $minYear = intval($dateRange['minYear']); 
 if ($minYear < 2000) $minYear = 2000;
 $maxYear = intval($dateRange['maxYear']);
-while ($minYear <= $maxYear)
-{
+while ($minYear <= $maxYear) {
+	$selected = ($curYear == $minYear) ? "selected" : "";
 ?>
-	<option value="<?= $minYear ?>"><?= $minYear ?></option>
+	<option <?= $selected ?> value="<?= $minYear ?>"><?= $minYear ?></option>
 <?php	
 	$minYear++;
 }
@@ -592,9 +580,7 @@ while ($minYear <= $maxYear)
 	<?= wfMsg('wikiastats_daterange_to') ?>
 	<select name="ws-date-month-to" id="ws-date-month-to" style="text-align:left; font-size:11px;">
 <?php
-$curMonth = date("m"); $curYear = date("Y");
-foreach ($dateRange['months'] as $id => $month)
-{
+foreach ($dateRange['months'] as $id => $month) {
 	$k = $id+1; $selected = ($curMonth == $k) ? "selected" : "";
 ?>
 	<option <?= $selected ?> value="<?= $k ?>"><?= ucfirst($month) ?></option>
@@ -605,8 +591,7 @@ foreach ($dateRange['months'] as $id => $month)
 	<select name="ws-date-year-to" id="ws-date-year-to" style="text-align:left; font-size:11px;">
 <?php
 $minYear = intval($dateRange['minYear']); $maxYear = intval($dateRange['maxYear']);
-while ($minYear <= $maxYear)
-{
+while ($minYear <= $maxYear) {
 	$selected = ($curYear == $minYear) ? "selected" : "";
 ?>
 	<option <?= $selected ?> value="<?= $minYear ?>"><?= $minYear ?></option>
@@ -616,17 +601,16 @@ while ($minYear <= $maxYear)
 ?>
 	</select></span>
 	<br />
-	<span class="wk-select-class">
+	<div class="wk-select-class">
 		<span style="padding:5px 2px;"><input type="button" id="ws-show-stats" name="ws-show-stats" value="<?= wfMsg("wikiastats_showstats_btn") ?>"></span>
 		<span style="padding:5px 2px;"><input type="button" id="ws-show-charts" value="<?= wfMsg("wikiastats_showcharts") ?>" name="ws-show-charts"></span>
 		<span style="padding:5px 2px;"><input type="button" id="ws-export-xls" value="<?= wfMsg("wikiastats_export_xls") ?>" name="ws-export-xls"></span>
-	</span>
+	</div>
 	</div>
 </div>
 <div id="ws-main-table">
 <?
-if (!empty($main_tbl))
-{
+if (!empty($main_tbl)) {
 	echo $main_tbl;
 }
 ?>

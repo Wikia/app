@@ -1,6 +1,6 @@
 <!-- s:<?= __FILE__ ?> -->
 <!-- PAGE EDITED DETAILS TABLE -->
-<table cellspacing="0" cellpadding="0" border="0" style="width:auto; font-family: arial,sans-serif,helvetica; font-size:9pt;">
+<table cellspacing="0" cellpadding="0" border="0" style="width:auto; font-family: arial,sans-serif,helvetica; font-size:9pt;" id="table_page_edited_stats_details">
 <tr>
 <td class="wk-select-class">&nbsp;</td>
 <?php

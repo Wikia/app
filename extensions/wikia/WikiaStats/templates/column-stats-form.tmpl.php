@@ -146,7 +146,7 @@ foreach ($columnHistory as $date => $dateValues)
 					}
 					elseif (($dateValues[$city_id] > 0) && ($dateValues[$city_id] < 25))
 					{
-						$output = "<font color=\"#000000\">".sprintf("+%0.0f%%", $dateValues[$city_id])."</font>";
+						$output = "<font color=\"#555555\">".sprintf("+%0.0f%%", $dateValues[$city_id])."</font>";
 					}
 					elseif (($dateValues[$city_id] > 25) && ($dateValues[$city_id] < 75))
 					{
