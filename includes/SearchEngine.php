@@ -307,7 +307,7 @@ class SearchEngine {
 		} else {
 			$class = 'SearchEngineDummy';
 		}
-		$search = new $class( wfGetDB( DB_SLAVE ) );
+		$search = new $class( wfGetDB( DB_SLAVE, 'search' ) );
 		$search->setLimitOffset(0,0);
 		return $search;
 	}
