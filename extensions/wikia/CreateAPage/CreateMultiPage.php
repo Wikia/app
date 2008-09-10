@@ -27,6 +27,7 @@ define ("SIMPLE_TAG_PARSE", '/\<!---(.*?)---\>/is');
 define ("CATEGORY_TAG_PARSE", '/\[\[Category:(.*?)\]\]/');
 define ("CATEGORY_TAG_SPECIFIC", '/\<!---categories---\>/is') ;
 define ("IMAGEUPLOAD_TAG_SPECIFIC", '/\<!---imageupload---\>/is') ;
+define ("INFOBOX_SEPARATOR", '/\<!---separator---\>/is');
 define ("ISBLANK_TAG_SPECIFIC", '<!---blanktemplate--->') ;
 define ("TEMPLATE_INFOBOX_FORMAT", '/\{\{[^\{\}]*Infobox.*\}\}/is') ;
 define ("TEMPLATE_OPENING", '/\{\{[^\{\}]*Infobox[^\|]*/i') ;
