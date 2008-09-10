@@ -31,7 +31,7 @@ function wfMiniAjaxUpload(){
    	all the uploaded files are prepended with the current timestamp.
 */
 
-require_once 'SpecialUpload.php';
+require_once 'specials/SpecialUpload.php';
 require_once 'SpecialPage.php';
 class MiniAjaxUploadForm extends UploadForm{
 	
