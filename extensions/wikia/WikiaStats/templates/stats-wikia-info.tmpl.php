@@ -38,6 +38,6 @@ $cityUrl = (is_object($cityInfo) && $cityId > 0) ? "<a target=\"new\" href=\"".$
 	<td align="left" colspan="2"><strong><?= wfMsg('wikiastats_see_wikia_wide_stats') ?></strong> <a href="http://www.wikia.com/wiki/Special:WikiaStats" target="new">http://www.wikia.com/wiki/Special:WikiaStats</a> </td>
 </tr>
 <tr>
-	<td align="left" colspan="2"><strong><?= wfMsg('wikiastats_see_help_page') ?></strong> <a href="http://contractor.wikia-inc.com/wiki/New_WikiStats_Documentation" target="new">http://contractor.wikia-inc.com/wiki/New_WikiStats_Documentation</a> </td>
+	<td align="left" colspan="2"><strong><?= wfMsg('wikiastats_see_help_page') ?></strong> <a href="http://help.wikia.com/wiki/Help:WikiaStats" target="new">http://help.wikia.com/wiki/Help:WikiaStats</a> </td>
 </tr>
 </table>
