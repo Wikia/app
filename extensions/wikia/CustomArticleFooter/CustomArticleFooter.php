@@ -12,13 +12,15 @@ function wfCustomArticleFooter(  $skin , &$tpl, &$custom_article_footer ) {
 	$editors = array();
 	if(!$data ) {
 		wfDebug( "loading recent editors for page {$page_title_id} from db\n" );
-		$dbr =& wfGetDB( DB_MASTER );
-		$sql = "SELECT DISTINCT rev_user, rev_user_text FROM revision WHERE rev_page = {$page_title_id} and rev_user <> 0 and rev_user_text<>'Mediawiki Default' ORDER BY rev_user_text ASC LIMIT 0,8";
+		
+		$dbr =& wfGetDB( DB_SLAVE );
+		$sql = "SELECT DISTINCT rev_user, rev_user_text FROM revision WHERE rev_page = {$page_title_id} and rev_user <> 0 and rev_user_text<>'Mediawiki Default' ORDER BY rev_id DESC LIMIT 0,8";
 		$res = $dbr->query($sql);
 		while ($row = $dbr->fetchObject( $res ) ) {
 			$editors[] = array( "user_id" => $row->rev_user, "user_name" => $row->rev_user_text);
 		}
-		$wgMemc->set( $key, $editors, 60 * 5 );
+		
+		$wgMemc->set( $key, $editors, 60 * 30 );
 	} else {
 		wfDebug( "loading recent editors for page {$page_title_id} from cache\n" );
 		$editors = $data;
