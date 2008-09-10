@@ -199,7 +199,7 @@ class TaskManagerExecutor {
 		} catch (DBError $e) {
 			wfDebugLog( "taskmanager", "Database error: " . $e->getMessage(), true );
 		}
-		$dbr->close();
+#		$dbr->close();
 
 		/**
 		 * check TTL of tasks, close if needed
