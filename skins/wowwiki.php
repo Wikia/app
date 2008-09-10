@@ -114,7 +114,7 @@ class WowWikiTemplate extends QuickTemplate {
 			<?php if($this->data['showjumplinks']) { ?><div id="jump-to-nav"><?php $this->msg('jumpto') ?> <a href="#column-one"><?php $this->msg('jumptonavigation') ?></a>, <a href="#searchInput"><?php $this->msg('jumptosearch') ?></a></div><?php } ?>
 			<!-- start content -->
 			<?php $this->html('bodytext') ?>
-			<?php if($this->data['catlinks']) { ?><div id="catlinks"><?php       $this->html('catlinks') ?></div><?php } ?>
+			<?php if($this->data['catlinks']) { $this->html('catlinks'); } ?>
 			<!-- end content -->
 			<div class="visualClear"></div>
 		</div>
