@@ -5,10 +5,13 @@ function XLSClearCitiesList() { var checklist = document.XLSCompareForm.wscid; v
 function XLSIframeStatusChanged() { if (window.frames['ws_frame_xls_'+wk_stats_city_id].document.readyState == 'complete') { /*StatsPageLoaderHide(); */ } else { setTimeout("XLSIframeStatusChanged()", 500) } }
 function XLSIframeLoaded(panel, statistics) { StatsPageLoaderHide(0); }
 function XLSIframeLoadedReady() { StatsPageLoaderHide(0); }
-function XLSGenerate(statistics, others) { 
+function XLSGenerate(statistics, others, date_from, date_to) { 
 	var params 	= "&rsargs[0]=" + wk_stats_city_id + "&rsargs[1]=" + statistics;
     YD.get("ws-xls-div").innerHTML = "";
 	if (others != '') params += "&rsargs[2]=" + others;
+				 else params += "&rsargs[2]=";
+	if (date_from != '') params += "&rsargs[3]=" + date_from;
+	if (date_to != '') params += "&rsargs[4]=" + date_to;
 	//----
     var baseurl = "/index.php?action=ajax&rs=axWStatisticsXLS" + params;
     if (window.frames['ws_frame_xls_'+wk_stats_city_id]) {

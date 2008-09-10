@@ -1,5 +1,4 @@
 <!-- s:<?= __FILE__ ?> -->
-<script type="text/javascript" src="/extensions/wikia/WikiaStats/js/wikiastats.js"></script>
 <script type="text/javascript">
 /*<![CDATA[*/
 // Find the search box in the DOM
@@ -53,7 +52,7 @@ YAHOO.namespace("Wikia.Statistics");
                     	ShowCompareStats(compare_stats, checked_list, (document.getElementById('showStatsNewWindowBox').checked));
 					} else {
 						StatsPageLoaderShow(0);
-                    	XLSGenerate(compare_stats, checked_list);
+                    	XLSGenerate(compare_stats, checked_list, '', '');
 					}
                 };
                 YAHOO.Wikia.Statistics.handleCancel = function() { 
@@ -75,10 +74,40 @@ YAHOO.namespace("Wikia.Statistics");
             XLSShowMenu('<?=intval($wgCityId)?>');
             WikiaStatsGetInfo('wk-stats-info-panel', '<?=intval($wgCityId)?>');
         }
-    }
+    }    
+
+	YAHOO.Wikia.Statistics.WSShowStatsTab = function(e) {
+		if (this.id == "ws-wikia-compare-id") {
+			setActiveCompareTab();
+		} else {
+			setActiveSelectTab();
+		} 
+	}
+	YE.addListener("ws-wikia-select-id", "click", YAHOO.Wikia.Statistics.WSShowStatsTab);
+	YE.addListener("ws-wikia-compare-id", "click", YAHOO.Wikia.Statistics.WSShowStatsTab);
     YE.onDOMReady(YAHOO.Wikia.Statistics.init, YAHOO.Wikia.Statistics, true); 
 }
 )();
+
+function setActiveSelectTab() {
+	var tab_active = document.getElementById("ws_main_wikia_select_td");
+	var tab_hid = document.getElementById("ws_main_wikia_compare_td");
+	tab_active.style.display = "block";
+	tab_hid.style.display = "none";
+	document.getElementById("ws-wikia-select-id").className="selected";
+	document.getElementById("ws-wikia-compare-id").className="";
+}
+
+function setActiveCompareTab() {
+	var tab_active = document.getElementById("ws_main_wikia_compare_td");
+	var tab_hid = document.getElementById("ws_main_wikia_select_td");
+	tab_active.style.display = "block";
+	tab_hid.style.display = "none";
+	tab_active.class="";
+	tab_hid.class="selected";
+	document.getElementById("ws-wikia-compare-id").className="selected";
+	document.getElementById("ws-wikia-select-id").className="";
+}
 
 function WSCountCheckboxes(checked, reset) {
 	var nbrToCheck = <?=$MAX_NBR?>;
@@ -92,9 +121,6 @@ function WSCountCheckboxes(checked, reset) {
 	txt = txt.replace("_NBR_", _tmp);
 	YD.get('ws-wikis-check').innerHTML = txt;
 }
-
-YE.addListener("ws-check-cities", "click", XLSClearCitiesList);
-pageLoaderInit('<?=addslashes(wfMsg('wikiastats_generate_stats_msg'))?>', '<?=addslashes(wfMsg('wikiastats_xls_cancel'))?>');
 
 function sortWikiaList(method) {
 	var sort_div = document.getElementById( "ws-sort-link" );
@@ -122,6 +148,9 @@ function sortWikiaPanelList(method) {
 	WikiaStatsPanelSortList();
 }
 
+YE.addListener("ws-check-cities", "click", XLSClearCitiesList);
+pageLoaderInit('<?=addslashes(wfMsg('wikiastats_generate_stats_msg'))?>', '<?=addslashes(wfMsg('wikiastats_xls_cancel'))?>');
+
 /*]]>*/
 </script>
 <!-- Statistics dialog -->
@@ -148,61 +177,65 @@ function sortWikiaPanelList(method) {
 	</form>
 </div>
 <div class="bd" id="showStatsNewWindow" style="padding:5px 0px 0px 0px;float:left;display:table !important;">
-<table width="100%" class="100%"><tr><td style="padding:2px;"><input type="checkbox" checked id="showStatsNewWindowBox"></td><td style="padding:2px"><?=wfMsg('wikiastats_show_new_window')?></td></tr></table>
+<table width="100%" class="100%">
+<tr>
+	<td style="padding:2px;"><input type="checkbox" checked id="showStatsNewWindowBox"></td>
+	<td style="padding:2px"><?=wfMsg('wikiastats_show_new_window')?></td>
+</tr>
+</table>
 </div>
 </div>
 <!-- end of statistics dialog -->
 <div id="ws-xls-div"></div>
 <div id="ws-main-table" style="height:100%">
 <!-- WIKI's INFORMATION -->
+<div id="page_bar" class="reset color1 clearfix">
+<ul id="page_tabs" style="float:left">
+	<li class="selected" id="ws-wikia-select-id"><?=wfMsg('wikiastats_pagetitle')?></li>
+	<li class="" id="ws-wikia-compare-id"><?=wfMsg('wikiastats_comparision')?></li>
+</ul>
+</div>
+<br />
 <table style="width:auto; font-family:Trebuchet MS,Arial,Helvetica,sans-serif;" height="100%" valign="top" border="0">
- <tr>
-    <td class="panel-bootom-big" nowrap align="left">
-        <strong><?= wfMsg('wikiastats_wikia') ?> <!--(<?=$loop?> <?= wfMsg('wikiastats_records') ?>)--></strong> 
-    </td>
-    <td nowrap align="left" style="width:10px;">&nbsp;</td>
-    <td class="panel-bootom-big" nowrap align="left">
-        <strong><?= wfMsg('wikiastats_comparision') ?></strong>
-    </td>
- </tr>
 <!-- main tables -->
  <tr>
-    <td align="left" valign="top" id="tdMenu" valign="top" height="100%" style="width:569px">
-	  	<fieldset style="margin:2px 0pt;height:250px;">
-			<div style="width:250px;padding:0px 1px;float:left;clear:left;margin-top:5pt;margin-bottom:2pt;margin-left:auto;margin-right:auto;">
-			  <?=$wikia_rows?>
-			  <div id="ws-sort-link" style="float:right; padding:0px 10px;"><a href="javascript:void(0);" onClick="sortWikiaList(1)"><?=wfMsg('wikiastats_sort_list_alphabet')?></a></div>
-			</div>  
-			<div class="wk-stats-main-panel" id="wk-stats-info-panel" class="ws-input" style="margin-top:6pt;margin-bottom:2pt;float:left;clear:right;width:271px;height:150px;"></div>
-			<div class="wk-select-class-main">
-				<span style="padding-left: 10px;"><input type="button" class="input_button" id="ws-show-charts" value="<?= wfMsg("wikiastats_showcharts") ?>" name="ws-show-charts" onClick="redirectToStats(1)"></span>
-				<span style="padding-left: 10px;"><input type="button" class="input_button" name="ws-show-stats" value="<?= wfMsg("wikiastats_showstats_btn") ?>" onClick="redirectToStats(0)"></span>
-				<div style="padding:15px 21px 0px 120px;"><a href="javascript:void(0);" onClick="redirectTooldStats();"><?=wfMsg('wikiastats_see_old_statistics_page')?></a></div>
+    <td align="left" valign="top" id="tdMenu" valign="top" height="100%">
+    	<div id="ws_main_wikia_select_td">
+			<fieldset style="margin:2px 0pt;height:250px;width:550px;">
+				<div style="width:250px;padding:0px 1px;float:left;clear:left;margin-top:5pt;margin-bottom:2pt;margin-left:auto;margin-right:auto;">
+				  <?=$wikia_rows?>
+				  <div id="ws-sort-link" style="float:right; padding:0px 10px;"><a href="javascript:void(0);" onClick="sortWikiaList(1)"><?=wfMsg('wikiastats_sort_list_alphabet')?></a></div>
+				</div>  
+				<div class="wk-stats-main-panel" id="wk-stats-info-panel" class="ws-input" style="margin-top:6pt;margin-bottom:2pt;float:left;clear:right;width:271px;height:150px;"></div>
+				<div class="wk-select-class-main">
+					<span style="padding-left: 10px;"><input type="button" class="input_button" id="ws-show-charts" value="<?= wfMsg("wikiastats_showcharts") ?>" name="ws-show-charts" onClick="redirectToStats(1)"></span>
+					<span style="padding-left: 10px;"><input type="button" class="input_button" id="ws-show-stats" name="ws-show-stats" value="<?= wfMsg("wikiastats_showstats_btn") ?>" onClick="redirectToStats(0)"></span>
+					<div style="padding:15px 21px 0px 120px;"><a href="javascript:void(0);" onClick="redirectTooldStats();"><?=wfMsg('wikiastats_see_old_statistics_page')?></a></div>
+				</div>
+			</fieldset>
+			<div style="float:left; width:100%; padding: 0px 1px;clear:both;" id="ws-main-xls-stats">
+			<fieldset style="margin:0px">
+				<legend><?=wfMsg('wikiastats_generate_XLS_file_title')?></legend>
+				<div class="wk-stats-main-panel" id="wk-stats-main-panel">
+					<ul><li id="wk-xls-pagetitle"><a href="javascript:void(0);" onClick="XLSStats('1');"><?=wfMsg("wikiastats_pagetitle")?></a></li></ul>
+				</div>
+				<div class="wk-stats-main-panel" id="wk-stats-panel">
+					<ul>
+					<li><a href="javascript:void(0);" onClick="XLSStats('2');"><?=wfMsg("wikiastats_distrib_article")?></a></li>
+					<li><a href="javascript:void(0);" onClick="XLSStats('3');"><?=wfMsg("wikiastats_active_absent_wikians")?></a></li>
+					<li><a href="javascript:void(0);" onClick="XLSStats('4');"><?=wfMsg("wikiastats_anon_wikians")?></a></li>
+					<li><a href="javascript:void(0);" onClick="XLSStats('5');"><?=wfMsg("wikiastats_article_one_link")?></a></li>
+					<li><a href="javascript:void(0);" onClick="XLSStats('6');"><?=wfMsg("wikiastats_namespace_records")?></a></li>
+					<li><a href="javascript:void(0);" onClick="XLSStats('7');"><?=wfMsg("wikiastats_page_edits")?></a></li>
+					</ul>
+				</div>
+			</fieldset>
 			</div>
-		</fieldset>
-
-		<div style="float:left; width:100%; padding: 0px 1px;clear:both;" id="ws-main-xls-stats">
-	  	<fieldset style="margin:0px">
-	  	<legend><?=wfMsg('wikiastats_generate_XLS_file_title')?></legend>
-		<div class="wk-stats-main-panel" id="wk-stats-main-panel">
-			<ul><li id="wk-xls-pagetitle"><a href="javascript:void(0);" onClick="XLSStats('1');"><?=wfMsg("wikiastats_pagetitle")?></a></li></ul>
-		</div>
-		<div class="wk-stats-main-panel" id="wk-stats-panel">
-			<ul>
-			<li><a href="javascript:void(0);" onClick="XLSStats('2');"><?=wfMsg("wikiastats_distrib_article")?></a></li>
-			<li><a href="javascript:void(0);" onClick="XLSStats('3');"><?=wfMsg("wikiastats_active_absent_wikians")?></a></li>
-			<li><a href="javascript:void(0);" onClick="XLSStats('4');"><?=wfMsg("wikiastats_anon_wikians")?></a></li>
-			<li><a href="javascript:void(0);" onClick="XLSStats('5');"><?=wfMsg("wikiastats_article_one_link")?></a></li>
-			<li><a href="javascript:void(0);" onClick="XLSStats('6');"><?=wfMsg("wikiastats_namespace_records")?></a></li>
-			<li><a href="javascript:void(0);" onClick="XLSStats('7');"><?=wfMsg("wikiastats_page_edits")?></a></li>
-			</ul>
-		</div>
-		</fieldset>
-		</div>
+    	</div>
     </td>
     <td nowrap align="left" valign="top">&nbsp;</td>
     <td nowrap align="left" valign="top">
-       <table style="width: auto;line-height:11pt" cellpadding="0" cellspacing="0">
+       <table style="width: auto;line-height:11pt" cellpadding="0" cellspacing="0" id="ws_main_wikia_compare_td">
 <? $k = 7; for ($i=1; $i<=27; $i++) { $l = $k + $i; if ( empty($userIsSpecial) && (is_array($wgStatsExcludedNonSpecialGroup)) && (in_array(($i-2), $wgStatsExcludedNonSpecialGroup) )) continue; ?>	
         <tr><td class="wstab"><?= wfMsg("wikiastats_comparisons_table_$i") ?></td>
         <td class="wstabopt"><a href="javascript:void(0);" onClick="showXLSCompareDialog('<?=$l?>', false);"><?= wfMsg('wikiastats_xls_files_stats') ?></a>&nbsp;-&nbsp;<a href="javascript:void(0);" onClick="showXLSCompareDialog('<?=$i?>', true);"><?= wfMsg('wikiastats_tables') ?></a></td></tr>
@@ -218,5 +251,8 @@ function sortWikiaPanelList(method) {
 /*<![CDATA[*/
 var wsElement = document.getElementById('ws-city-name');
 if (wsElement) { wsElement.onkeyup = function(){ WikiaStatsGetWikis(this, this.value); }; }
+if (document.getElementById("ws_main_wikia_select_td") && document.getElementById("ws_main_wikia_compare_td")) {
+	setActiveSelectTab();
+}
 </script>
 <!-- e:<?= __FILE__ ?> -->

@@ -270,7 +270,7 @@ foreach ($dateValues as $date => $cities)
 			}
 			elseif (($out > 0) && ($out < 25))
 			{
-				$out = "<font color=\"#000000\">".sprintf("+%0.0f%%", $out)."</font>";
+				$out = "<font color=\"#555555\">".sprintf("+%0.0f%%", $out)."</font>";
 			}
 			elseif (($out > 25) && ($out < 75))
 			{
