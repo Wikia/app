@@ -334,3 +334,7 @@ legend {
 	border: 1px solid lightgray;
 	padding: 15px 15px 15px 15px;
 }
+
+.createpage-separator {
+	height: 10pt;
+}
