@@ -8,49 +8,38 @@
  */
 
 if (!defined('MEDIAWIKI')) {
-        echo <<<EOT
+	echo <<<EOT
 To install this extension, put the following line in LocalSettings.php:
 require_once( "$IP/extensions/wikia/Datalag/Datalag.php" );
 EOT;
-        exit( 1 );
+	exit( 1 );
 }
 
 $wgAjaxExportList[] = 'datalagAjax';
 $wgAjaxExportList[] = 'datalagsAjax';
 
-
 function datalagAjax() {
-  global $wgLoadBalancer;
-  $lag = 0;
-  $host = 'none';
- 
- if( !empty( $wgLoadBalancer->mServers ) ){
- 	
-  
-  if( count( $wgLoadBalancer->mServers) > 1){  	
-
-  list( $host, $lag ) = $wgLoadBalancer->getMaxLag();
-    $name = gethostbyaddr( $host );
+	$host = 'none'; $lag = 0;
+	$lb = wfGetLB();
 	
-	if ( $name !== false ) {
-		$host = $name;
+	if( $lb->getServerCount() > 1 ) {
+		list( $host, $lag ) = $lb->getMaxLag();
 	}
-   
-  }
- }	
-	$response = array('maxlag_host'=>$host, 'maxlag_sec'=>$lag);
-	return new AjaxResponse( Wikia::json_encode( $response ) );
+
+	return new AjaxResponse( Wikia::json_encode( array( 
+							'maxlag_host' => $host,
+							'maxlag_sec' => $lag
+							) 
+	) );
 }
 
 function datalagsAjax() {
-  global $wgLoadBalancer;
-  $res = 'none';
- 
- if( !empty( $wgLoadBalancer->mServers ) ){
-  if( count( $wgLoadBalancer->mServers) > 1){  	
-	$res = $wgLoadBalancer->getLagTimes();
-  }
- }	
-	$response = array('lagdata'=>$res);
-	return new AjaxResponse( Wikia::json_encode( $response ) );
+	$res = 'none';
+	$lb = wfGetLB();
+
+	if( $lb->getServerCount() > 1 ) {
+		$res = $lb->getLagTimes();
+	}
+
+	return new AjaxResponse( Wikia::json_encode( array( 'lagdata' => $res ) ) );
 }
