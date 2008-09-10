@@ -344,7 +344,6 @@ echo AdServer::getInstance()->getAd('js_bot3');
 <!-- End Quantcast tag -->
 
 </body></html>
-<!--<?php global $wgLoadBalancer; echo $wgLoadBalancer->allowLagged();?>-->
 <?php
     wfRestoreWarnings();
     } // end of execute() method
