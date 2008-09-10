@@ -81,7 +81,9 @@ class SiteWideMessages extends SpecialPage {
 		while ($row = $DB->FetchObject($dbResult)) {
 			$hubList[$row->cat_id] = $row->cat_name;
 		}
-		$DB->FreeResult($dbResult);
+		if ($dbResult !== false) {
+			$DB->FreeResult($dbResult);
+		}
 
 		$formData['hubNames'] = $hubList;
 
@@ -99,7 +101,9 @@ class SiteWideMessages extends SpecialPage {
 		while ($row = $DB->FetchObject($dbResult)) {
 			$groupList[] = $row->ug_group;
 		}
-		$DB->FreeResult($dbResult);
+		if ($dbResult !== false) {
+			$DB->FreeResult($dbResult);
+		}
 
 		$formData['groupNames'] = $groupList;
 
@@ -375,7 +379,9 @@ class SiteWideMessages extends SpecialPage {
 						while ($oMsg = $DB->FetchObject($dbResult)) {
 							$activeUsers[] = $oMsg->user_id;
 						}
-						$DB->FreeResult($dbResult);
+						if ($dbResult !== false) {
+							$DB->FreeResult($dbResult);
+						}
 
 						$DB = wfGetDB(DB_MASTER);
 						$sqlValues = array();
@@ -460,7 +466,9 @@ class SiteWideMessages extends SpecialPage {
 		if ($oMsg = $DB->FetchObject($dbResult)) {
 			$result = $oMsg->msg_text;
 		}
-		$DB->FreeResult($dbResult);
+		if ($dbResult !== false) {
+			$DB->FreeResult($dbResult);
+		}
 		return $result;
 	}
 
@@ -490,7 +498,9 @@ class SiteWideMessages extends SpecialPage {
 			$messages[$i]['msg_wiki_name'] = $oMsg->msg_wiki_name;
 			$i++;
 		}
-		$DB->FreeResult($dbResult);
+		if ($dbResult !== false) {
+			$DB->FreeResult($dbResult);
+		}
 		return $messages;
 	}
 
@@ -531,7 +541,9 @@ class SiteWideMessages extends SpecialPage {
 		while ($oMsg = $DB->FetchObject($dbResult)) {
 			$tmpMsg[$oMsg->id] = array('wiki_id' => null);
 		}
-		$DB->FreeResult($dbResult);
+		if ($dbResult !== false) {
+			$DB->FreeResult($dbResult);
+		}
 
 		if (count($tmpMsg)) {
 			//step 2 of 3: remove dismissed and seen messages
@@ -548,7 +560,9 @@ class SiteWideMessages extends SpecialPage {
 			while ($oMsg = $DB->FetchObject($dbResult)) {
 				unset($tmpMsg[$oMsg->id]);
 			}
-			$DB->FreeResult($dbResult);
+			if ($dbResult !== false) {
+				$DB->FreeResult($dbResult);
+			}
 		}
 		//step 3 of 3: add unseen messages sent to *this* user (on *all* wikis or *this* wiki)
 		$dbResult = $DB->Query (
@@ -567,7 +581,9 @@ class SiteWideMessages extends SpecialPage {
 		while ($oMsg = $DB->FetchObject($dbResult)) {
 			$tmpMsg[$oMsg->id] = array('wiki_id' => $oMsg->msg_wiki_id);
 		}
-		$DB->FreeResult($dbResult);
+		if ($dbResult !== false) {
+			$DB->FreeResult($dbResult);
+		}
 		//sort from newer to older
 		krsort($tmpMsg);
 
@@ -604,7 +620,9 @@ class SiteWideMessages extends SpecialPage {
 		while ($oMsg = $DB->FetchObject($dbResult)) {
 			$tmpMsg[$oMsg->id] = array('wiki_id' => null, 'text' => $oMsg->text, 'expire' => $oMsg->expire);
 		}
-		$DB->FreeResult($dbResult);
+		if ($dbResult !== false) {
+			$DB->FreeResult($dbResult);
+		}
 
 		if (count($tmpMsg)) {
 			//step 2 of 3: remove dismissed messages
@@ -621,7 +639,9 @@ class SiteWideMessages extends SpecialPage {
 			while ($oMsg = $DB->FetchObject($dbResult)) {
 				unset($tmpMsg[$oMsg->id]);
 			}
-			$DB->FreeResult($dbResult);
+			if ($dbResult !== false) {
+				$DB->FreeResult($dbResult);
+			}
 		}
 		//step 3 of 3: add not dismissed messages sent to *this* user (on *all* wikis or *this* wiki)
 		$dbResult = $DB->Query (
@@ -641,8 +661,9 @@ class SiteWideMessages extends SpecialPage {
 		while ($oMsg = $DB->FetchObject($dbResult)) {
 			$tmpMsg[$oMsg->id] = array('wiki_id' => $oMsg->msg_wiki_id, 'text' => $oMsg->text, 'expire' => $oMsg->expire);
 		}
-		$DB->FreeResult($dbResult);
-
+		if ($dbResult !== false) {
+			$DB->FreeResult($dbResult);
+		}
 		//sort from newer to older
 		krsort($tmpMsg);
 
@@ -721,7 +742,9 @@ class SiteWideMessages extends SpecialPage {
 			if ($oMsg = $DB->FetchObject($dbResult)) {
 				$mWikiId = $oMsg->msg_wiki_id;
 			}
-			$DB->FreeResult($dbResult);
+			if ($dbResult !== false) {
+				$DB->FreeResult($dbResult);
+			}
 
 			$dbResult = (boolean)$DB->Query (
 				  'REPLACE INTO ' . MSG_STATUS_DB
