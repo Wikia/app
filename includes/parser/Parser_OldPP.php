@@ -580,6 +580,10 @@ class Parser_OldPP
 					break;
 				default:
 					if( isset( $this->mTagHooks[$tagName] ) ) {
+						# Workaround for PHP bug 35229 and similar
+						if ( !is_callable( $this->mTagHooks[$name] ) ) {
+							throw new MWException( "Tag hook for $name is not callable\n" );
+						}
 						$output = call_user_func_array( $this->mTagHooks[$tagName],
 							array( $content, $params, $this ) );
 					} else {
@@ -3004,6 +3008,11 @@ class Parser_OldPP
 				if ( $function ) {
 					$funcArgs = array_map( 'trim', $args );
 					$funcArgs = array_merge( array( &$this, trim( substr( $part1, $colonPos + 1 ) ) ), $funcArgs );
+
+					# Workaround for PHP bug 35229 and similar
+					if ( !is_callable( $this->mFunctionHooks[$function] ) ) {
+						throw new MWException( "Tag hook for $function is not callable\n" );
+					}
 					$result = call_user_func_array( $this->mFunctionHooks[$function], $funcArgs );
 					$found = true;
 
