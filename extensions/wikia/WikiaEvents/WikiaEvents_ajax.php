@@ -463,8 +463,6 @@ function wfwkAddEventInfo($ev_id, $ev_type, $ev_field_id)
 	#---
 	$res = $dbr->query($sql);
 	$id = ($res) ? $dbr->insertId() : false;
-#	$dbr->close();
-	//$dbr->freeResult($res);
 	
 	$whereUser = "";
 	if (empty($user_id))
@@ -486,7 +484,7 @@ function wfwkAddEventInfo($ev_id, $ev_type, $ev_field_id)
 
 	#---
 	$res = $dbr->query($sql);
-	$dbr->close();
+	$dbr->commit();
 
 	wfProfileOut( __METHOD__ );
 	$aResponse = array('insert_id' => $id);
