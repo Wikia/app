@@ -2710,6 +2710,7 @@ class Article {
 	 */
 	function editUpdates( $text, $summary, $minoredit, $timestamp_of_pagechange, $newid, $changed = true ) {
 		global $wgDeferredUpdateList, $wgMessageCache, $wgUser, $wgParser, $wgEnableParserCache;
+		global $wgPostCommitUpdateList;
 
 		wfProfileIn( __METHOD__ );
 
@@ -2758,7 +2759,7 @@ class Article {
 		$u = new SiteStatsUpdate( 0, 1, $this->mGoodAdjustment, $this->mTotalAdjustment );
 		array_push( $wgDeferredUpdateList, $u );
 		$u = new SearchUpdate( $id, $title, $text );
-		array_push( $wgDeferredUpdateList, $u );
+		array_push( $wgPostCommitUpdateList, $u );
 
 		# If this is another user's talk page, update newtalk
 		# Don't do this if $changed = false otherwise some idiot can null-edit a
