@@ -301,7 +301,9 @@
 	width: 200px;
 	margin-top: -20px
 }
-.editingTips #widget_sidebar {
+.editingTips #widget_sidebar,
+.editingTips #background_strip .monaco_shrinkwrap,
+.editingTips #headerButtonHub {
 	display: none
 }
 .editingTips #wikia_page {
