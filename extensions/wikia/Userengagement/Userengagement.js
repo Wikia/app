@@ -1,14 +1,16 @@
 YAHOO.util.Event.onDOMReady(function() {
-
+	
 	if(!$('ue_msg')) {
-		return;
+	  return;
 	}
 
 	var dacookie = YAHOO.Tools.getCookie("wgWikiaUserEngagement");
 	if(!dacookie) {
-		return;
+	 var oData = 0;	
+	}else{
+	 var oData = parseInt(dacookie.charAt(0));	
 	}
-
+	
 	var callback = {
 		success: function(o) {
 			if(o.responseText !== undefined) {
@@ -28,8 +30,10 @@ YAHOO.util.Event.onDOMReady(function() {
 		timeout: 50000
 	};
 
-	var oData = parseInt(dacookie.charAt(0)) + 1;
-	if((!isNaN(oData)) && (oData < 9)){
-		YAHOO.util.Connect.asyncRequest('GET', wgScriptPath + '/index.php?action=ajax&rs=UserengagementAjax&m='+oData, callback);
+	if( oData < 9 ){
+		var cExpire = new Date();
+		cExpire.setMonth( cExpire.getMonth()+1 );
+		YAHOO.Tools.setCookie( 'wgWikiaUserEngagement', oData+1, cExpire, '/' );
+		YAHOO.util.Connect.asyncRequest('GET', wgScriptPath + '/index.php?action=ajax&rs=UserengagementAjax&m='+oData + '&lan=' + wgUserLanguage, callback);
 	}
 });
