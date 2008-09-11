@@ -581,8 +581,8 @@ class Parser_OldPP
 				default:
 					if( isset( $this->mTagHooks[$tagName] ) ) {
 						# Workaround for PHP bug 35229 and similar
-						if ( !is_callable( $this->mTagHooks[$name] ) ) {
-							throw new MWException( "Tag hook for $name is not callable\n" );
+						if ( !is_callable( $this->mTagHooks[$tagName] ) ) {
+							throw new MWException( "Tag hook for $tagName is not callable\n" );
 						}
 						$output = call_user_func_array( $this->mTagHooks[$tagName],
 							array( $content, $params, $this ) );
