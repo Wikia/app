@@ -210,7 +210,6 @@ class WikiaGenericStats {
 				$loop++;
 			}
 			$dbs->freeResult( $res );
-			$dbs->close();
 			#---
 			//ksort(&$wkCityOrderStats, SORT_NUMERIC);
 			#---
@@ -263,7 +262,6 @@ class WikiaGenericStats {
 				$loop++;
 			}
 			$dbs->freeResult( $res );
-			$dbs->close();
 			#---
 			$wkCreationWikiansList = array(0 => $result, 1 => $max_values);
 			if (self::USE_MEMC) $wgMemc->set("wikiacreationwikiansstats", $wkCreationWikiansList, 60*60*3);
@@ -317,7 +315,6 @@ class WikiaGenericStats {
 				$loop++;
 			}
 			$dbs->freeResult( $res );
-			$dbs->close();
 			#---
 			$wkCreationArticleList = array(0 => $result, 1 => $max_values);
 			if (self::USE_MEMC) $wgMemc->set("wikiacreationarticlestats", $wkCreationArticleList, 60*60*3);
@@ -423,7 +420,6 @@ class WikiaGenericStats {
 				$wkStatsUrl = substr($row["city_url"], 0, -1);
 			}
 			$dbr->freeResult( $res );
-			$dbr->close();
 			if (self::USE_MEMC) $wgMemc->set($memkey, $wkStatsUrl, 60*60*3);
 		}
 
@@ -459,7 +455,6 @@ class WikiaGenericStats {
 					$result = array('count' => $row["cnt"], 'sum' => $row["s"]);
 				}
 				$dbs->freeResult( $res );
-				$dbs->close();
 				#---
 				if (self::USE_MEMC) $wgMemc->set($memkey, $result, 60*60*3);
 			}
@@ -570,7 +565,6 @@ class WikiaGenericStats {
 					}
 				}
 				$dbs->freeResult( $res );
-				$dbs->close();
 				#---
 				if (self::USE_MEMC) $wgMemc->set($memkey, $wkCityTrendStatistics, 60*60*3);
 			} catch (DBConnectionError $e) {
@@ -644,7 +638,6 @@ class WikiaGenericStats {
 					$rank++;
 				}
 				$dbs->freeResult( $res );
-				$dbs->close();
 				#---
 				if (self::USE_MEMC) $wgMemc->set($memkey, $result, 60*60*3);
 			}
@@ -688,7 +681,6 @@ class WikiaGenericStats {
 					$result[$row->dt] = array('count' => $row->cnt, 'date' => $row->dt);
 				}
 				$dbs->freeResult( $res );
-				$dbs->close();
 				#---
 				if (self::USE_MEMC) $wgMemc->set($memkey, $result, 60*60*3);
 			}
@@ -729,7 +721,6 @@ class WikiaGenericStats {
 					$result[$row->dt][$row->af_namespace] = $row->cnt;
 				}
 				$dbs->freeResult( $res );
-				$dbs->close();
 				#---
 				if (self::USE_MEMC) $wgMemc->set($memkey, $result, 60*60*3);
 			}
@@ -795,7 +786,6 @@ class WikiaGenericStats {
 					}
 				}
 				$dbs->freeResult( $res );
-				$dbs->close();
 				#---
 				if (self::USE_MEMC) $wgMemc->set($memkey, $result, 60*60*3);
 			}
@@ -857,7 +847,6 @@ class WikiaGenericStats {
 					);
 				}
 				$dbs->freeResult( $res );
-				$dbs->close();
 				#---
 				if (self::USE_MEMC) $wgMemc->set($memkey, $result, 60*60*3);
 			}
@@ -911,7 +900,6 @@ class WikiaGenericStats {
 					);
 				}
 				$dbs->freeResult( $res );
-				$dbs->close();
 				#---
 				if (self::USE_MEMC) $wgMemc->set($memkey, $result, 60*60*3);
 			}
@@ -962,7 +950,6 @@ class WikiaGenericStats {
 				$lStatsRangeTime['maxYear'] = $years['maxYear'];
 				#---
 				$dbs->freeResult( $res );
-				$dbs->close();
 				if (self::USE_MEMC) $wgMemc->set($memkey, $lStatsRangeTime, 60*60*3);
 				#---
 			} catch (DBConnectionError $e) {
@@ -1084,7 +1071,6 @@ class WikiaGenericStats {
 				$row = $dbs->fetchObject( $res );
 				$stats_date = $row->date;
 				$dbs->freeResult( $res );
-				$dbs->close();
 			}
 			if (empty($stats_date)) {
 				$stats_date = time();
@@ -1662,7 +1648,6 @@ class WikiaGenericStats {
 					}
 				}
 				$dbs->freeResult( $res );
-				$dbs->close();
 
 				#---
 				if (self::USE_MEMC) $wgMemc->set($memkey, $wkCityMainStatistics, 60*60*3);
