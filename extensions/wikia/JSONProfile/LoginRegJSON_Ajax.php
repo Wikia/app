@@ -11,7 +11,6 @@ function wfCheckUserLoginJSON($callback_function="handle_user_logged_in"){
 		$logged_in_info["user_id"] = "";
 		$logged_in_info["hash"] = "";
 		$logged_in_info["IP"] = $wgUser->getName();
-		//$logged_in_info["user_blocked"] = 0;
 		
 	}
 	else {
@@ -22,19 +21,14 @@ function wfCheckUserLoginJSON($callback_function="handle_user_logged_in"){
 		$user_groups = $wgUser->getGroups();
 		$user_groups = array_flip($user_groups);
 		if (isset($user_groups['staff'])||isset($user_groups['bureaucrat'])||isset($user_groups['sysop'])) $logged_in_info["adminhash"] = md5($wgUser->getName()."HasAdminRights"); 
-		//$logged_in_info["user_blocked"] = $wgUser->isBlocked();
 	}
 
-	
-	
-	//return "var user_logged_in = ". jsonify($logged_in_info) . ";\n\n{$callback_function}(user_logged_in);\n\nsetLoginCookie(user_logged_in);\n\nset_header_loggedin();";
 	return "var user_logged_in = " . 
 		jsonify($logged_in_info) . 
 		";\n\n" . 
 		"setLoginCookie(user_logged_in);\n\n" . 
 		"set_header_loggedin();\n\n" . 
 		"{$callback_function}(user_logged_in);";
-	// return "var user_logged_in = ". jsonify($logged_in_info) . ";\n\nsetLoginCookie(user_logged_in);\n\n{$callback_function}(user_logged_in);";
 
 }
 
@@ -52,39 +46,12 @@ function wfDoLogoutJSON($callback_function=false){
 	}
 
 }
-/*
-$wgAjaxExportList [] = 'wfDoLoginJSON';
-function wfDoLoginJSON($wpName, $wpPassword, $wpRemember){
-	global $IP, $wgOut,$wgRequest, $wgUser, $wgServer,$wgArticlePath,  $wgScriptPath;
-
-	require_once ( $IP.'/includes/SpecialUserlogin.php');
-
-	$_REQUEST['wpName'] = $wpName;
-	$_REQUEST['wpPassword'] = $wpPassword;
-	if ($wpRemember) {
-		$_REQUEST['wpRemember'] = 1;
-	}
-	$_REQUEST['wpLoginattempt']="Login!";
-	$_REQUEST['action']="submitlogin";
-
-	
-	$l_form = new LoginForm($wgRequest);
-	$l_form->processLogin();
-	
-	return wfCheckUserLoginJSON();
-	
-}
-*/
 
 $wgAjaxExportList [] = 'wfDoEmailPassword';
 function wfDoEmailPassword($username, $returnto){
-	/* if(!isset($_POST['wpName']) || !isset($_POST['wpSourceForm'])) {
-		return "<script type=\"text/javascript\">alert(\"Something failed badly. Reload this page.\"); </script>";
-	}*/
-	
 	global $IP, $wgOut,$wgRequest, $wgUser, $wgServer,$wgArticlePath,  $wgScriptPath;
 
-	require_once ( $IP.'/includes/SpecialUserlogin.php');
+	require_once ( $IP.'/includes/specials/SpecialUserlogin.php');
 	
 	// need to make sure it falls into the if switch
 	$_SERVER['REQUEST_METHOD'] = 'POST';
@@ -108,7 +75,6 @@ function wfDoEmailPassword($username, $returnto){
 		$msg = str_replace("\t", "", $msg);
 		$msg = str_replace("Login error:", "", $msg);
 	}
-	//<div class="errorbox"> ... </div>
 	
 	return "var msg=" . jsonify($msg) . "; alert(msg);";
 }
@@ -128,7 +94,7 @@ function wfDoLoginJSONPost(){
 	
 	global $IP, $wgOut,$wgRequest, $wgUser, $wgServer,$wgArticlePath,  $wgScriptPath;
 
-	require_once ( $IP.'/includes/SpecialUserlogin.php');
+	require_once ( $IP.'/includes/specials/SpecialUserlogin.php');
 
 	$_REQUEST['wpName'] = $wpName;
 	$_REQUEST['wpPassword'] = $wpPassword;
@@ -145,29 +111,15 @@ function wfDoLoginJSONPost(){
 	$l_form = new LoginForm($wgRequest);
 	$l_form->processLogin();
 	
-	
-	//wfSpecialUserlogin();
-	
 	$temp_out=$wgOut->getHTML();
-	//return "//" . $wpName . " " . ($wgUser->isLoggedIn() ? "yup" : "nope");
-	//if (strpos($temp_out, "You are now logged in")) {
+	
 	if ($wgUser->isLoggedIn()) {
-		/*
-		if ($wgUser->isBlocked()) {
-			$output = "<script type=\"text/javascript\">alert(\"Unable to login because you are blocked.\"); location.href='{$wpSourceForm}';</script>";
-			$wgUser->logout();
-			return $output;
-		}*/
 		$name = urlencode($wpName);
 		$output = "<script type=\"text/javascript\">
 				location.href='{$wpSourceForm}?loggedinas={$name}';
 			</script>";
-		
-		//setCookie(getMd5Digest({$wpName}."OurSecretKey").equalsIgnoreCase($valid)
-		
 	}
 	else {
-		//if (strpos($temp_out, "Login error")) {
 		$re_pattern = "/<div class=\"errorbox\"\>[^<]*<h2\>Login error\:<\/h2\>([^<]*)<\/div\>/iU";
 		preg_match($re_pattern, $temp_out, $matches);
 		if (sizeof($matches)) {
@@ -175,16 +127,11 @@ function wfDoLoginJSONPost(){
 			$output = "<script type=\"text/javascript\">alert(\"{$message}\"); location.href='{$wpSourceForm}';</script>";
 		}
 		else {
-			//$message=$temp_out;
 			$message = "not logged in";
 			$output = "<script type=\"text/javascript\">alert(\"{$message}\"); location.href='{$wpSourceForm}';</script>";
-			//$output = $message;
 		}
 	}
-	
 	return $output;
-	
-	//return wfCheckUserLoginJSON();
 	
 }
 
@@ -196,38 +143,17 @@ function wfGetRegCaptchaJSON($callback_function="process_captcha"){
 	$res["public_key"] = $recaptcha_public_key;
 	return "var captcha_stuff = ". jsonify($res) . ";\n\n{$callback_function}(captcha_stuff);";
 	
-	/* 
-	//if($wgCaptchaTriggers['createaccount'] == true){
-		$f = new FancyCaptchaSearch();
-		$captcha_stuff = $f->getJSON();
-		
-		
-		
-		
-		return "var captcha_stuff = ". jsonify($captcha_stuff) . ";\n\n{$callback_function}(captcha_stuff);";
-	*/
-	
 }
 //"
 $wgAjaxExportList [] = 'wfDoRegisterJSONPost';
 function wfDoRegisterJSONPost(){
-	/*
-	if(!isset($_POST['wpName']) || !isset($_POST['wpPassword']) || !isset($_POST['wpSourceForm'])) {
-		return "no";
-	}
-	
-	$wpName = $_POST['wpName'];
-	$wpPassword = $_POST['wpPassword'];
-	$wpSourceForm = $_POST['wpSourceForm'];
-	$wpRemember = (isset($_POST['wpRemember']) ? $_POST['wpRemember'] : 0);
-*/
 	
 	global $IP, $wgOut,$wgRequest, $wgUser, $wgServer,$wgArticlePath,  $wgScriptPath, $recaptcha_private_key, $wgCaptchaTriggers;
 	
 	$wpSourceForm = $_POST['wpSourceForm'];
 	$wpName = $_POST['wpName'];
 	
-	require_once ( $IP.'/includes/SpecialUserlogin.php');
+	require_once ( $IP.'/includes/specials/SpecialUserlogin.php');
 	require_once($IP . "/extensions/wikia/JSONProfile/recaptchalib.php");
 
 	$wgCaptchaTriggers['createaccount'] = false;
@@ -242,29 +168,14 @@ function wfDoRegisterJSONPost(){
 				location.href='{$wpSourceForm}?error=true';
 			</script>";
 	}
-		
-	/*
-	$_REQUEST['wpName'] = $wpName;
-	$_REQUEST['wpPassword'] = $wpPassword;
-	if ($wpRemember) {
-		$_REQUEST['wpRemember'] = 1;
-	}
-	$_REQUEST['wpLoginattempt']="Login!";
-	*/
 	
 	$_REQUEST['action']="submitlogin";
 	$_REQUEST['type']="signup";
 
-	/*
-	$l_form = new LoginForm($wgRequest);
-	$l_form->processLogin();
-	*/
-	
 	wfSpecialUserlogin();
 	
 	$temp_out=$wgOut->getHTML();
 	
-	//if (strpos($temp_out, "You are now logged in")) {
 	if ($wgUser->isLoggedIn()) {
 		
 		$birthday = $wgRequest->getVal("birthyear") . "-" . $wgRequest->getVal("birthmonth") . "-" . $wgRequest->getVal("birthdate");
@@ -303,7 +214,6 @@ function wfDoRegisterJSONPost(){
 	
 	return $output;
 	
-	//return wfCheckUserLoginJSON();
 	
 }
 
@@ -322,8 +232,6 @@ function registerSetBdayGender($birthday, $gender) {
 		), ""
 		);
 	
-	//$wgMemc->delete( wfMemcKey( 'user', 'profile', 'info', $wgUser->getID() ) );
-		
 	}
 	
 }
@@ -386,7 +294,6 @@ function wfcheckBlocksJSON($callback_function="handle_block_check"){
 		$b = Block::newFromDB($logged_in_blocked["ip"]);
 		if ($b && $b!=null) $logged_in_blocked["hash"] = "";
 		else $logged_in_blocked["hash"] = md5($logged_in_blocked["ip"] + $logged_in_blocked["UTC"] + "Rhymenocerous");
-		//$logged_in_info["user_blocked"] = 0;
 		
 	}
 	else {
@@ -398,14 +305,10 @@ function wfcheckBlocksJSON($callback_function="handle_block_check"){
 		else $logged_in_blocked["hash"] = md5($logged_in_blocked["name"] + $logged_in_blocked["UTC"] + "Rhymenocerous");
 	}
 
-	
-	
-	//return "var user_logged_in = ". jsonify($logged_in_info) . ";\n\n{$callback_function}(user_logged_in);\n\nsetLoginCookie(user_logged_in);\n\nset_header_loggedin();";
 	return "var user_blocked = " . 
 		jsonify($logged_in_blocked) . 
 		";\n\n" . 
 		"{$callback_function}(user_blocked);";
-	// return "var user_logged_in = ". jsonify($logged_in_info) . ";\n\nsetLoginCookie(user_logged_in);\n\n{$callback_function}(user_logged_in);";
 
 }
 
