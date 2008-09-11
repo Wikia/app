@@ -152,7 +152,7 @@ function SaveEditingTipsState() {
 		$wgUser->setOption('disableeditingtips', ($wgRequest->getVal('open') != 'true'));
 		$wgUser->SaveSettings();
 		$dbw = wfGetDB( DB_MASTER );
-		$dbw->close();
+		$dbw->commit();
 	} else {
 		global $wgCookieExpiration, $wgCookiePath, $wgCookieDomain, $wgCookieSecure, $wgCookiePrefix;
 		$exp = time() + $wgCookieExpiration;

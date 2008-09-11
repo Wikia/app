@@ -178,7 +178,7 @@ class WikiaMiniUpload {
 				}
 				$wgUser->addWatch($title);
 				$db =& wfGetDB(DB_MASTER);
-				$db->close();
+				$db->commit();
 			}
 		} else {
 			$title = Title::newFromText($mwname, 6);
