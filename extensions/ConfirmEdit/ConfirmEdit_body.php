@@ -146,7 +146,7 @@ class SimpleCaptcha {
 	function injectUserCreate( &$template ) {
 		global $wgCaptchaTriggers, $wgOut;
 		if( $wgCaptchaTriggers['createaccount'] ) {
-			$template->set( 'header',
+			$template->set( 'captcha',
 				"<div class='captcha'>" .
 				$wgOut->parse( $this->getMessage( 'createaccount' ) ) .
 				$this->getForm() .
