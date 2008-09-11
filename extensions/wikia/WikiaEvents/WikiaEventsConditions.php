@@ -769,7 +769,6 @@ class WikiaEventsDBConditions
 				break;
 			}
 		}
-		$dbr->close();
 	
 		if ($needSelect && $result)
 		{
@@ -813,7 +812,6 @@ class WikiaEventsDBConditions
 		#---
 		$res = $dbr->query($sql);
 		$id = ($res) ? $dbr->insertId() : false;
-		$dbr->close();
 
 		wfProfileOut( __METHOD__ );
 		return $id;
@@ -868,7 +866,6 @@ class WikiaEventsDBConditions
 		
 		#---
 		$res = $dbr->query($sql);
-		$dbr->close();
 
 		wfProfileOut( __METHOD__ );
 		return true;
@@ -978,7 +975,6 @@ class WikiaEventsDBConditions
 		
 		#---
 		$res = $dbr->query($sql);
-		$dbr->close();
 
 		wfProfileOut( __METHOD__ );
 		return true;

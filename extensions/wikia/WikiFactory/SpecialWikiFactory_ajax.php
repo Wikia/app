@@ -170,7 +170,6 @@ function axWFactoryDomainCRUD($type="add") {
         $aDomains[] = $oRow->city_domain;
     }
     $dbw->freeResult( $oRes );
-    $dbw->close();
 
     #--- send response, return domain array
     $aResponse["domains"] = $aDomains;

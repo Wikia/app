@@ -831,7 +831,6 @@ class CreateWikiForm extends SpecialPage {
 		$fExecTimeCur = wfTime();
 
 		$this->releaseLock($this->mParams["wpRequestID"]);
-		//$dbw->close();
 
 		#--- add task to TaskManager
 		$oTask = new CreateWikiTask();

@@ -101,7 +101,6 @@ class clsLinkEx {
 			$result = $db->query( $query ) ;
 			
 			if( $retresult == false ){
-			  $db->close();	
 			  return $r;	
 			}else{
 
