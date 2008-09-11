@@ -161,6 +161,7 @@ class MultiWikiEditTask extends BatchTask {
 						"task_arguments" => $sParams
 						));
 			$task_id = $dbw->insertId () ;
+			$dbw->commit();
 			return $task_id ;
 		}
 	}
