@@ -723,33 +723,40 @@ function wfHostname() {
 	}
 }
 
-	/**
-	 * Returns a HTML comment with the elapsed time since request.
-	 * This method has no side effects.
-	 * @return string
-	 */
-	function wfReportTime() {
-	  global $wgRequestTime, $wgShowHostnames, $wgRUstart;
+/**
+ * Returns a HTML comment with the elapsed time since request.
+ * This method has no side effects.
+ * @return string
+ */
+function wfReportTime() {
+	global $wgRequestTime, $wgShowHostnames, $wgRUstart;
 
-		$now = wfTime();
-		$elapsed = $now - $wgRequestTime;
+	$now = wfTime();
+	$elapsed = $now - $wgRequestTime;
 
-        if( isset( $wgRUstart['ru_utime.tv_sec'] ) ) {
-            $rcputime = ( $wgRUstart['ru_utime.tv_sec'] + $wgRUstart['ru_stime.tv_sec']
-                + ($wgRUstart['ru_utime.tv_usec'] + $wgRUstart['ru_stime.tv_usec']) * 1e-6);
-            $ru = getrusage();
-            $ncputime = ( $ru['ru_utime.tv_sec'] + $ru['ru_stime.tv_sec']
-                + ($ru['ru_utime.tv_usec'] + $ru['ru_stime.tv_usec']) * 1e-6);
-            $elapsedcpu = $ncputime - $rcputime;
-        }
-        else {
-            $elapsedcpu = 0;
-        }
-        header(sprintf("X-Time-CPU-Time: %01.3f %01.3f", $elapsed, $elapsedcpu ));
-		return $wgShowHostnames
-		  ? sprintf( "<!-- Served by %s in %01.3f secs. cpu: %01.3f -->", wfHostname(), $elapsed, $elapsedcpu )
-		  : sprintf( "<!-- Served in %01.3f secs. cpu: %01.3f -->", $elapsed, $elapsedcpu );
+	if( isset( $wgRUstart['ru_utime.tv_sec'] ) ) {
+		$rcputime = ( $wgRUstart['ru_utime.tv_sec'] + $wgRUstart['ru_stime.tv_sec']
+			+ ($wgRUstart['ru_utime.tv_usec'] + $wgRUstart['ru_stime.tv_usec']) * 1e-6);
+		$ru = getrusage();
+		$ncputime = ( $ru['ru_utime.tv_sec'] + $ru['ru_stime.tv_sec']
+			+ ($ru['ru_utime.tv_usec'] + $ru['ru_stime.tv_usec']) * 1e-6);
+		$elapsedcpu = $ncputime - $rcputime;
+	} else {
+		$elapsedcpu = 0;
 	}
+	header( sprintf( "X-CPU-Time: %01.3f", $elapsedcpu ) );
+	header( sprintf( "X-Real-Time: %01.3f", $elapsed ) );
+	if( $wgShowHostnames) header( sprintf( "X-Served-By: %s", wfHostname() ) );
+	global $wgUser, $wgTitle;
+	if( is_object( $wgUser) ) header( sprintf( "X-User-Id: %d", $wgUser->getId() ) );
+	if( is_object( $wgTitle ) ) {
+		header( sprintf( "X-Article-Id: %d", $wgTitle->getArticleId() ) );
+		header( sprintf( "X-Namespace-Number: %d", $wgTitle->getNamespace() ) );
+	}
+	return $wgShowHostnames
+		? sprintf( "<!-- Served by %s in %01.3f secs. cpu: %01.3f -->", wfHostname(), $elapsed, $elapsedcpu )
+		: sprintf( "<!-- Served in %01.3f secs. cpu: %01.3f -->", $elapsed, $elapsedcpu );
+}
 
 /**
  * Safety wrapper for debug_backtrace().

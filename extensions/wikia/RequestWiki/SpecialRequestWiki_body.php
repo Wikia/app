@@ -115,7 +115,7 @@ class RequestWikiPage extends SpecialPage {
 			$wgOut->redirect($tLogin->getFullURL('returnto=' . $tRequest->getPrefixedURL()));
 		}
 		#--- check if user have confirmed mail email first
-		elseif (!$wgUser->isAllowed( 'emailconfirmed' )) {
+		elseif (!$wgUser->isEmailConfirmed()) {
 			#--- show info that user should be emailconfirmed
 			$oTmpl->set_vars( array(
 				'title' => $this->mTitle,
