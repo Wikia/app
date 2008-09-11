@@ -1,6 +1,9 @@
 <!-- s:<?= __FILE__ ?> -->
 <style type="text/css">
 /*<![CDATA[*/
+#tm-log pre {
+	max-height: 500px
+}
 /*]]>*/
 </style>
 <div id="tm-log">
