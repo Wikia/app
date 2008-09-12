@@ -610,7 +610,7 @@ class CreateWikiForm extends SpecialPage {
 			"wgRedirectScript"      => '/redirect.php',
 			"wgArticlePath"         => '/wiki/$1',
 			"wgLogo"                => '$wgUploadPath/b/bc/Wiki.png',
-			"wgUploadPath"          => "http://images.wikia.com/{$aWiki["dir_part"]}/images/",
+			"wgUploadPath"          => "http://images.wikia.com/{$aWiki["dir_part"]}/images",
 			"wgUploadDirectory"     => "/images/{$aWiki["dir_part"]}/images",
 			"wgDBname"              => $aWiki["dbname"],
 			"wgSharedDB"            => "wikicities",
