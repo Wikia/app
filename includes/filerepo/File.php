@@ -170,7 +170,7 @@ abstract class File {
 		if ( !isset( $this->url ) ) {
 			$this->url = $this->repo->getZoneUrl( 'public' ) . '/' . $this->getUrlRel();
 		}
-		return $this->url;
+		return wfReplaceImageServer( $this->url );
 	}
 
 	/**
@@ -576,8 +576,7 @@ abstract class File {
 			// purge collisions from elsewhere during failure. Don't keep triggering for 
 			// "thumbs" which have the main image URL though (bug 13776)
 			if ( $wgUseSquid && ($thumb->isError() || $thumb->getUrl() != $this->getURL()) ) {
-				// emil: we don't have squids in front of image server so don't waste our time on purge
-				//SquidUpdate::purge( array( $thumbUrl ) );
+				SquidUpdate::purge( array( $thumbUrl ) );
 			}
 		} while (false);
 
