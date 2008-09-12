@@ -746,7 +746,7 @@ function wfReportTime() {
 	}
 	header( sprintf( "X-CPU-Time: %01.3f", $elapsedcpu ) );
 	header( sprintf( "X-Real-Time: %01.3f", $elapsed ) );
-	if( $wgShowHostnames) header( sprintf( "X-Served-By: %s", wfHostname() ) );
+	if( $wgShowHostnames) header( sprintf( "X-Served-By-Backend: %s", wfHostname() ) );
 	global $wgUser, $wgTitle;
 	if( is_object( $wgUser) ) header( sprintf( "X-User-Id: %d", $wgUser->getId() ) );
 	if( is_object( $wgTitle ) ) {
