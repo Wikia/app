@@ -588,8 +588,7 @@ class LocalFile extends File
 		$this->purgeThumbnails();
 
 		// Purge squid cache for this file
-		// emil: we don't have squids in front of image server so don't waste our time on purge
-		//SquidUpdate::purge( array( $this->getURL() ) );
+		SquidUpdate::purge( array( $this->getURL() ) );
 	}
 
 	/**
@@ -613,8 +612,7 @@ class LocalFile extends File
 
 		// Purge the squid
 		if ( $wgUseSquid ) {
-			// we don't have squids in front of image server so don't waste our time on purge
-			//SquidUpdate::purge( $urls );
+			SquidUpdate::purge( $urls );
 		}
 	}
 
@@ -786,8 +784,7 @@ class LocalFile extends File
 		// Delete thumbnails and refresh the metadata cache
 		$this->purgeThumbnails();
 		$this->saveToCache();
-		// emil: we don't have squids in front of image server so don't waste our time on purge
-		//SquidUpdate::purge( array( $this->getURL() ) );
+		SquidUpdate::purge( array( $this->getURL() ) );
 
 		// Fail now if the file isn't there
 		if ( !$this->fileExists ) {
@@ -1430,7 +1427,6 @@ class LocalFileDeleteBatch {
 		}
 
 		// Purge squid
-		/* emil: we don't have squids in front of image server so don't waste our time on purge
 		if ( $wgUseSquid ) {
 			$urls = array();
 			foreach ( $this->srcRels as $srcRel ) {
@@ -1439,7 +1435,6 @@ class LocalFileDeleteBatch {
 			}
 			SquidUpdate::purge( $urls );
 		}
-		*/
 
 		// Delete image/oldimage rows
 		$this->doDBDeletes();
