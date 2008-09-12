@@ -53,6 +53,7 @@ function WidgetCommunity($id, $params) {
 		"action" => "query",
 		"list" => "recentchanges",
 		"rclimit" => 2,
+		"rctype" => "edit|new",
 		"rcshow" => "!anon|!bot",
 		"rcnamespace" => "0|1|2|3|6|7",
 		"rcprop" => "title|timestamp|user"));
