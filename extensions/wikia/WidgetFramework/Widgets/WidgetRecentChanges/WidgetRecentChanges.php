@@ -43,6 +43,7 @@ function WidgetRecentChanges($id, $params) {
 	(
 		'action'  => 'query',
 		'list'    => 'recentchanges',
+		'rctype'  => 'edit|new',
 		'rclimit' => $limit,
 	);
 
