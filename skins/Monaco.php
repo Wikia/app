@@ -945,17 +945,21 @@ class MonacoTemplate extends QuickTemplate {
 		<meta http-equiv="Content-Type" content="<?php $this->text('mimetype') ?>; charset=<?php $this->text('charset') ?>" />
                 <!-- Skin = <?php echo basename(__FILE__) ?> -->
 		<?php $this->html('headlinks') ?>
-		<?php /* TODO move this to allinone, and find a better spot for this code after I talk to Christian.
-			 This is an experiment to see if moving it higher on the page makes it better */?>
-		<script type="text/javascript" src="<?=$wgExtensionsPath?>/wikia/AdEngine/AdEngine.js"></script>
-		<?php
-		/* Note: This was placed at the top of the page intentionally, so that we
+				<?php
+		/* Note: These analytics calls were placed at the top of the page intentionally, so that we
 		   get more accurate stats. Get Michael's permission before moving.
 		*/?>
 		<script src="http://www.google-analytics.com/urchin.js" type="text/javascript"></script>
 		<script type="text/javascript">_uff=0;_uacct="UA-288915-1";_userv=1;urchinTracker();_userv=1;</script>
 		<script type="text/javascript" src="http://edge.quantserve.com/quant.js"></script>
 		<script type="text/javascript">_qacct="p-8bG6eLqkH6Avk";quantserve();</script>
+		<noscript>
+		<a href="http://www.quantcast.com/p-8bG6eLqkH6Avk" target="_blank"><img src="http://pixel.quantserve.com/pixel/p-8bG6eLqkH6Avk.gif" style="display: none;" border="0" height="1" width="1" alt="Quantcast"/></a>
+		</noscript>
+		<?php /* TODO move this to allinone, and find a better spot for this code after I talk to Christian.
+			 This is an experiment to see if moving it higher on the page makes it better */?>
+		<script type="text/javascript" src="<?=$wgExtensionsPath?>/wikia/AdEngine/AdEngine.js"></script>
+
 
 		<title><?php $this->text('pagetitle') ?></title>
 		<?php print Skin::makeGlobalVariablesScript( $this->data ); ?>
