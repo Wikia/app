@@ -2695,10 +2695,6 @@ class User {
 		$this->load();
 		$this->mEmailToken = $hash;
 		$this->mEmailTokenExpires = $expiration;
-		# Wikia - bad style fix for #1623 - needs review if it is still needed
-		if(isset($_GET['ajax']) && $_GET['ajax'] == 1) {
-			$dbw->commit();
-		}
 
 		return $token;
 	}
