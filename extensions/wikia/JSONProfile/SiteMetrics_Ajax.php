@@ -304,7 +304,7 @@ function fetchTrends($metric, $callback){
                 $sql .= ' ORDER BY created_at DESC
                           LIMIT 365;';
                 
-                $key = wfMemcKey( 'wikiasearch' , 'metricsv2.0' , $metric, $callback, $q );
+                $key = wfMemcKey( 'wikiasearch' , 'metricsv2.1' , $metric, $callback, $q );
                 
                 if(!$data = $wgMemc->get($key)){
                 
@@ -358,7 +358,7 @@ function fetchWfMessages($metric, $callback){
         
         global $wgMemc;
         
-        $key = wfMemcKey( 'wikiasearch' , 'metricsv2.0' , $metric, $callback );
+        $key = wfMemcKey( 'wikiasearch' , 'metricsv2.1' , $metric, $callback );
         
         if( $res = $wgMemc->get($key) )
                 return $res;
@@ -400,7 +400,7 @@ function fetchTopUsers($metric, $callback){
 	global $wgRequest, $wgMemc;
 	
         $dbr =& wfGetDB( DB_SLAVE );
-	$keyMemcache = wfMemcKey( 'wikiasearch' , 'metricsv2.0' , $metric, $callback );
+	$keyMemcache = wfMemcKey( 'wikiasearch' , 'metricsv2.1' , $metric, $callback );
 	 
        $result = $wgMemc->get($keyMemcache);
        if($result){ return array("html" => $result, "key" => ""); }
@@ -584,8 +584,10 @@ function createJSON($sql, $boundSQL, $timeSql){
 	$messages = array();
 	foreach($keys as $key){ $messages[$key] = wfMsg($key); }
 
-        if(!$IsByMonth)
-                $finalData = doBackAverages($finalData, $timeSql, $IsByMonth);
+        if(!$IsByMonth){
+                $arr = doBackAverages($finalData, $timeSql, $IsByMonth);
+                $finalData = $arr["tableData"];
+        }
 
 	// concat up the arrays
 	$stats = array();
@@ -601,7 +603,9 @@ function createJSON($sql, $boundSQL, $timeSql){
 	$stats["endDate"] = $endDate;
 	$stats["minTime"] = $minTime;
 	$stats["maxTime"] = $maxTime;
-	
+	$stats["shortAverageString"] = $arr["shortData"];
+        $stats["longAverageString"] = $arr["longData"];
+        
 	$stats["deltaString"] = $deltaString;
 	$stats["dataString"] = $dataString;
 	$stats["averageString"] = $avgDataString;
@@ -647,6 +651,9 @@ function doBackAverages($finalData, $timeSql, $IsByMonth){
                 $arr[] = $finalData[$i];
         }
         
+        $longData = array();
+        $shortData = array();
+        
         for($i=0; $i < count($arr); $i++){
                 
                 $shortSum += $arr[$i]["count"];
@@ -654,18 +661,24 @@ function doBackAverages($finalData, $timeSql, $IsByMonth){
                 
                 if($i >= $longSumTo){
                         $arr[$i]["longAverage"] = round($longRollingSum / $longSumTo);
+                        $longData[] = round($longRollingSum / $longSumTo);
                         $longRollingSum -= $arr[$i-$longSumTo]["count"];
                 }
                 
                 if($i >= $shortSumTo){
                         $arr[$i]["shortAverage"] = round($shortSum / $shortSumTo);
+                        $shortData[] = round($shortSum / $shortSumTo);
                         $shortSum -= $arr[$i-$shortSumTo]["count"];      
                 }
         }
         
-        $arr = array_slice($arr, count($data));
-                
-        return $arr;
+       // $arr = array_slice($arr, count($data));
+        
+        $ret["tableData"] = array_slice($arr, count($data));
+        $ret["shortData"] = $shortData;
+        $ret["longData"] = $longData;
+        
+        return $ret;
 }
 
 function fetchGlobalKTTrend($metric, $callback){
@@ -711,7 +724,7 @@ function fetchGlobalKTTrend($metric, $callback){
                         ORDER BY created_at DESC LIMIT 365;';
                         
         $boundSQL = 'SELECT UNIX_TIMESTAMP(created_at) AS the_date FROM metrics_ktops ORDER BY created_at DESC LIMIT 1';
-        $keyMemcache = wfMemcKey( 'wikiasearch' , 'metricsv2.0' , $metric, $callback,
+        $keyMemcache = wfMemcKey( 'wikiasearch' , 'metricsv2.1' , $metric, $callback,
                                         $IsByMonth, str_replace(" ", "", $startDateSql), str_replace(" ", "", $endDateSql) );
 	
 	$result = $wgMemc->get($keyMemcache);
@@ -770,8 +783,9 @@ function fetchSiteMetrics($metric, $callback){
         $fixedStartDate = date("Y-m-d 00:00:00", $startDate);
         $endDateSql = date("Y-m-d 23:59:59", $endDate);
         
-        $key = wfMemcKey( 'wikiasearch' , 'metricsv2.0' , $metric, $callback,
+        $key = wfMemcKey( 'wikiasearch' , 'metricsv2.1' , $metric, $callback,
                                         $IsByMonth, str_replace(" ", "", $fixedStartDate),  str_replace(" ", "",$endDateSql) );
+        // $key = false;
         
         $backdate = date("Y-m-d 00:00:00", $startDate-(28*86400));
         
@@ -1027,7 +1041,7 @@ function fetchQueryTrend($metric, $callback){
                                                 FROM metrics_current_top_queries
                                                 WHERE `query`="' . $query.  '" AND `language`="' . $lang . '"
                                                 ORDER BY created_at DESC LIMIT 1';
-				$key = wfMemcKey( 'wikiasearch' , 'metricsv2.0' , $metric, $callback, $query, $lang, $IsByMonth, str_replace(" ", "",$startDateSql), str_replace(" ", "",$endDateSql) );
+				$key = wfMemcKey( 'wikiasearch' , 'metricsv2.1' , $metric, $callback, $query, $lang, $IsByMonth, str_replace(" ", "",$startDateSql), str_replace(" ", "",$endDateSql) );
 			}else{
 				$sql = 'SELECT SUM(`count`) AS the_count, `keyword` AS the_query, UNIX_TIMESTAMP(created_at) AS the_date
 					FROM metrics_current_ktkeywords
@@ -1048,7 +1062,7 @@ function fetchQueryTrend($metric, $callback){
                                 $boundSQL = 'SELECT UNIX_TIMESTAMP(created_at) AS the_date
                                                 FROM metrics_current_ktkeywords
                                                 WHERE `keyword`="' . $query.  '" ORDER BY created_at DESC LIMIT 1';
-				$key = wfMemcKey( 'wikiasearch' , 'metricsv2.0' , $metric, $callback, $query, $IsByMonth, str_replace(" ", "",$startDateSql), str_replace(" ", "",$endDateSql) );
+				$key = wfMemcKey( 'wikiasearch' , 'metricsv2.1' , $metric, $callback, $query, $IsByMonth, str_replace(" ", "",$startDateSql), str_replace(" ", "",$endDateSql) );
 			}
 		break;
 	}
@@ -1108,7 +1122,7 @@ function fetchKTTrend($metric, $callback){
         $backdate = date("Y-m-d 00:00:00", $startDate-(28*86400));
 
         
-        $key = wfMemcKey( 'wikiasearch' , 'metricsv2.0' , $metric, $callback, $op, $IsByMonth, str_replace(" ", "",$startDateSql), str_replace(" ", "",$endDateSql) );
+        $key = wfMemcKey( 'wikiasearch' , 'metricsv2.1' , $metric, $callback, $op, $IsByMonth, str_replace(" ", "",$startDateSql), str_replace(" ", "",$endDateSql) );
         
 	$sql = "SELECT SUM(`count`) AS the_count, op, UNIX_TIMESTAMP(created_at) AS the_date
                         FROM metrics_ktops
@@ -1155,7 +1169,7 @@ function fetchKTStats($metric, $callback){
 			FROM metrics_ktops
 			GROUP BY op
 			ORDER BY the_count DESC LIMIT 12;";
-	$keyMemcache = wfMemcKey( 'wikiasearch' , 'metricsv2.0' , $metric, $callback );
+	$keyMemcache = wfMemcKey( 'wikiasearch' , 'metricsv2.1' , $metric, $callback );
 	
 	$result = $wgMemc->get($keyMemcache);	
 	if($result){
@@ -1205,9 +1219,9 @@ function fetchQueryData($metric, $callback){
 	$noCount = false;
 	
 	if($lang){
-		$keyMemcache = wfMemcKey( 'wikiasearch' , 'metricsv2.0' , $metric, $callback, $lang );
+		$keyMemcache = wfMemcKey( 'wikiasearch' , 'metricsv2.1' , $metric, $callback, $lang );
 	}else{
-		$keyMemcache = wfMemcKey( 'wikiasearch' , 'metricsv2.0' , $metric, $callback );
+		$keyMemcache = wfMemcKey( 'wikiasearch' , 'metricsv2.1' , $metric, $callback );
 	}
 	
         
