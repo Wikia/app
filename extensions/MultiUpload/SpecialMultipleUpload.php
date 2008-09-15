@@ -422,14 +422,6 @@ function fillDestFilenameMulti(i) {
 		<td align='left'><input tabindex='9' type='submit' name='wpUpload' value=\"{$ulb}\" /></td>
 	</tr>
 
-	<tr>
-		<td id='multiuploadetools' colspan='3'>
-		" );
-		$wgOut->addWikiText( wfMsgForContent( 'edittools' ) );
-		$wgOut->addHTML( "
-		</td>
-	</tr>
-
 	</table>
 	</form>" );
 	}
