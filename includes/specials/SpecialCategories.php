@@ -93,7 +93,7 @@ class CategoryPager extends AlphabeticPager {
 		$titleText = $this->getSkin()->makeLinkObj( $title, htmlspecialchars( $title->getText() ) );
 		$count = wfMsgExt( 'nmembers', array( 'parsemag', 'escape' ),
 				$wgLang->formatNum( $result->cat_pages ) );
-		return Xml::tags('li', null, "$titleText ($count)" ) . "\n";
+		return Xml::tags('li', null, $titleText ) . "\n";
 	}
 	
 	public function getStartForm( $from ) {
