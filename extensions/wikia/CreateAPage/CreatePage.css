@@ -335,6 +335,15 @@ legend {
 	padding: 15px 15px 15px 15px;
 }
 
-.createpage-separator {
-	height: 10pt;
+#wpCategoryTextarea {
+	display: none ;
 }
+
+#wpCategoryInput, #wpCategoryButton {
+	margin: 4px 2px 0 2px ;
+}
+
+#wpCategoryInput {
+	width: 450px ;
+}
+

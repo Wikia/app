@@ -119,7 +119,7 @@ class CreatePageMultiEditor extends CreatePageEditor {
 		} 
 
 		// parse the textarea
-        	$categories_array = preg_split ("/,/", $categories, -1) ;
+        	$categories_array = preg_split ("/\|/", $categories, -1) ;
 		foreach ($categories_array as $category) {
 			if (!empty ($category)) {
 				$text .= "\n[[" . $ns_cat . ":" . $category . "]]" ;

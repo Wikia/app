@@ -30,9 +30,6 @@ foreach ($inf_pars as $inf_par)
 <div id="createpage_upload_div<?= $inf_image_num ?>">
 <label for="wpUploadFile" class="normal-label"><?= $inf_par_pair[0] ?></label><?=$editimage?>
 <?
-		} elseif (preg_match(INFOBOX_SEPARATOR, $inf_par_pair[1], $math)) {
-			# Replace each template parameter with <!---separator---> as value with:
-			echo '<div class="createpage-separator">&nbsp;</div>';
 		} else {
 ?>			
 <label for="wpInfoboxPar<?=$inf_par_num?>" class="normal-label"><?=$inf_par_pair[0]?></label><input type="text" id="wpInfoboxPar<?=$inf_par_num?>" name="wpInfoboxPar<?=$inf_par_num?>" value="<?= htmlspecialchars (trim($inf_par_pair[1])) ?>" class="normal-input" /><br/>
