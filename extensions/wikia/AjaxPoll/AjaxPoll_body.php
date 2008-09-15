@@ -339,14 +339,14 @@ class AjaxPollClass {
 				// invalidate cache
 				$wgTitle->invalidateCache();
 
-				// Send purge
-				$update = SquidUpdate::newSimplePurge( $wgTitle );
-				$update->doUpdate();
-
 				// clear parser cache
 				$oArticle = new Article($wgTitle);
 				$parserCache =& ParserCache::singleton();
 				$parserMemc->set( $parserCache->getKey($oArticle, $wgUser), null, 0 );
+
+				// Send purge
+				$update = SquidUpdate::newSimplePurge( $wgTitle );
+				$update->doUpdate();
 			} else {
 				$status = wfMsg( "ajaxpoll-error" );
 			}
