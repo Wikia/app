@@ -50,7 +50,7 @@ class CreateMultiPage
 
 	static public function unescapeBlankMarker ($text) {
 		$text = str_replace ("\n<!---blanktemplate--->\n", '', $text) ;
-
+		$text = str_replace ('<!---imageupload--->', '', $text) ;
 		return $text ;
 	}
 
