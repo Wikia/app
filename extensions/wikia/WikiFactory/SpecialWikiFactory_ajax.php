@@ -96,6 +96,7 @@ function axWFactoryDomainCRUD($type="add") {
                         "city_domain" => strtolower($sDomain)
                     )
                 );
+					 $dbw->commit();
                 $sInfo .= "Success: Domain <em>{$sDomain}</em> added.";
             }
             break;
@@ -129,11 +130,13 @@ function axWFactoryDomainCRUD($type="add") {
                         "city_domain" => strtolower($sDomain)
                     )
                 );
+					 $dbw->commit();
                 $sInfo .= "Success: Domain <em>{$sDomain}</em> changed to <em>{$sNewDomain}</em>.";
             }
             break;
         case "remove":
             $dbw->delete(wfSharedTable("city_domains"), array( "city_id" => $iCityId, "city_domain" => $sDomain ), __METHOD__);
+				$dbw->commit();
             $sInfo .= "Success: Domain <em>{$sDomain}</em> removed.";
             break;
         case "status":
@@ -142,6 +145,7 @@ function axWFactoryDomainCRUD($type="add") {
                 #--- updatec city_list table
                 $dbw->update(wfSharedTable("city_list"), array("city_public" => $iNewStatus),
                     array("city_id" => $iCityId));
+					 $dbw->commit();
                 switch ($iNewStatus) {
                     case 0:
                         $aResponse["div-body"] = "<strong>changed to disabled</strong>";
