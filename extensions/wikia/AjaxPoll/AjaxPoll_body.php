@@ -339,6 +339,10 @@ class AjaxPollClass {
 				// invalidate cache
 				$wgTitle->invalidateCache();
 
+				// Send purge
+				$update = SquidUpdate::newSimplePurge( $wgTitle );
+				$update->doUpdate();
+
 				// clear parser cache
 				$oArticle = new Article($wgTitle);
 				$parserCache =& ParserCache::singleton();
