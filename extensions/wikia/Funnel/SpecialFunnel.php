@@ -7,7 +7,7 @@
 if (!defined('MEDIAWIKI')) {
         echo <<<EOT
 To install this extension, put the following line in LocalSettings.php:
-require_once( "$IP/extensions/wikia/Userengagement/SpecialFunnel.php" );
+require_once( "$IP/extensions/wikia/Funnel/SpecialFunnel.php" );
 EOT;
     exit( 1 );
 }
