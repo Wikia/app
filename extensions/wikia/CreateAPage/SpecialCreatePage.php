@@ -23,7 +23,7 @@ $wgExtensionCredits['specialpage'][] = array(
    'name' => 'CreatePage',
    'author' => 'Bartek Łapiński, Lucas \'TOR\' Garczewski, Przemek Piotrowski'  ,
    'url' => 'http://help.wikia.com/wiki/Help:CreatePage' ,
-   'version' => '3.56' ,
+   'version' => '3.57' ,
    'description' => 'easy to use interface for creating new articles'
 );
 
