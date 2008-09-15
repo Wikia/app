@@ -424,7 +424,7 @@ class Video{
 	function nextHistoryLine() {
 		$dbr = wfGetDB( DB_SLAVE );
 
-		if ( $this->historyLine == 0 ) {// called for the first time, return line from cur
+		if ( empty($this->historyLine) ) {// called for the first time, return line from cur
 			$this->historyRes = $dbr->select( 'video',
 				array(
 					'video_url',
