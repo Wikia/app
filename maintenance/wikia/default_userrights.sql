@@ -46,7 +46,6 @@ insert into user_groups(ug_user, ug_group) values
 
 delete from user_groups where ug_group="janitor";
 insert into user_groups(ug_user, ug_group) values
-(/*Greyman*/87167,'janitor'),
 (/*Jaymach*/7701,'janitor'),
 (/*PanSola*/12719,'janitor'),
 (/*Uberfuzzy*/161697, 'janitor')
