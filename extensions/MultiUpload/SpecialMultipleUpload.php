@@ -325,7 +325,6 @@ function fillDestFilenameMulti(i) {
     if (!document.getElementById)
         return;
 	var path = document.getElementById('wpUploadFile_' + i).value;
-		<td></td>
     // Find trailing part
     var slash = path.lastIndexOf('/');
     var backslash = path.lastIndexOf('\\\\');
