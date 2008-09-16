@@ -1131,7 +1131,7 @@ class PreferencesForm {
 		);
 		$wgOut->addHTML( '<fieldset><legend>'.wfMsg('searchsuggest').'</legend>' );
 		$wgOut->addHTML( $this->getToggle( 'searchsuggest' ).'</fieldset>' );
-		$wgOut->addHTML( "</fieldset>" );
+		//$wgOut->addHTML( "</fieldset>" ); // macbre: was causing #3578
 
 		# Misc
 		#
