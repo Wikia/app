@@ -29,8 +29,6 @@ foreach ($boxes as $id => $box) {
                         $linenum = count( explode( "\n", $box['value'] ) ) + 1;
                         $linenum = ($linenum > 8) ? 8 : $linenum;
                         $value = "<textarea type=\"text\" rows=\"5\" cols=\"{$cols}\" {$html}>".$box['value']."</textarea>";
-			$value .= "<a href=\"#\" id=\"wpTextIncrease" . $id . "\" class=\"createpage-controller\">+</a><br/>" ;
-			$value .= "<a href=\"#\" id=\"wpTextDecrease" . $id . "\" class=\"createpage-controller\">-</a>" ;
 			if ($box ['toolbar'] != '') {
 				$value = $box ['toolbar'] . $value ;
 			}
