@@ -39,11 +39,12 @@ INSERT INTO ad_slot VALUES (NULL, 'FOOTER_SPOTLIGHT_RIGHT', 'monaco', '200x75', 
 
 -- Allow wikis to override slots
 DROP TABLE IF EXISTS ad_slot_override;
-CREATE TABLE ad_slot_override (
+E TABLE ad_slot_override (
   as_id SMALLINT UNSIGNED NOT NULL,
   city_id INT UNSIGNED NOT NULL,
   provider_id TINYINT UNSIGNED DEFAULT NULL,
   enabled ENUM('Yes', 'No') DEFAULT NULL,
+  comment text,
   PRIMARY KEY(as_id, city_id),
   KEY(city_id)
 ) ENGINE=InnoDB;
