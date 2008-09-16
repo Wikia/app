@@ -29,7 +29,7 @@ class WikiaGenericStats {
 
     const MONTHLY_STATS = 7;
     const USE_MEMC = 1;
-    const USE_OLD_DB = 1;
+    const USE_OLD_DB = 0;
 	const IGNORE_WIKIS = "5, 11, 6745";
 
 	var $columnMapIndex = null;
@@ -1071,6 +1071,7 @@ class WikiaGenericStats {
 				$row = $dbs->fetchObject( $res );
 				$stats_date = $row->date;
 				$dbs->freeResult( $res );
+				
 			}
 			if (empty($stats_date)) {
 				$stats_date = time();
@@ -1648,7 +1649,7 @@ class WikiaGenericStats {
 					}
 				}
 				$dbs->freeResult( $res );
-
+				
 				#---
 				if (self::USE_MEMC) $wgMemc->set($memkey, $wkCityMainStatistics, 60*60*3);
 			} catch (DBConnectionError $e) {
@@ -1866,10 +1867,10 @@ class WikiaGenericStats {
 							'last_edit_ago' => sprintf("%0.0f", (time() - $rankInfo["max"])/(60*60*24)),
 						);
 					} else { 
-					    $rank = (array_key_exists($user_id, $rankUsersPrev)) ? intval($rankUsersPrev[$user_id]["rank"]) : 0;
+					    $rank = (array_key_exists($user_id, $rankUsersPrev)) ? intval($rankUsersPrev[$user_id]["rank"]) : 50;
 					    $cnt_ns = (array_key_exists($user_id, $rankUsersNamespace)) ? $rankUsersNamespace[$user_id]["cnt"] : 0;
-					    $prev_cnt_ns = (array_key_exists($user_id, $rankUsersPrevNamespace)) ? $rankUsersPrevNamespace[$user_id]["cnt"] : 0;
-					    $cnt = (array_key_exists($user_id, $rankUsersPrev)) ? intval($rankUsersPrev[$user_id]["cnt"]) : 0;
+					    $prev_cnt_ns = (array_key_exists($user_id, $rankUsersPrevNamespace)) ? $rankUsersPrevNamespace[$user_id]["cnt"] : intval($cnt_ns);
+					    $cnt = (array_key_exists($user_id, $rankUsersPrev)) ? intval($rankUsersPrev[$user_id]["cnt"]) : intval($rankInfo["cnt"]);
 						$wikians_active[$rankInfo["rank"]] = array(
 							'user_id' => $rankInfo["user_id"],
 							'user_name' => $rankInfo["user_name"],
@@ -2374,7 +2375,6 @@ class WikiaGenericStats {
 		wfProfileOut( __METHOD__ );
         return $file_size ; 
     }
-
     
 
 	public function getStatisticsPager($total, $page, $link, $order="", $offset, $only_next=0)

@@ -26,7 +26,7 @@ define ("DEFAULT_WIKIA_XLS_FILENAME", "wikia_xls_%d");
 define ("MAX_CHART_HEIGHT", '180');
 define ("CHART_BAR_WIDTH", '14');
 define ("CHART_BAR_WIDTH_UNIT", 'px');
-define ("CENTRAL_WIKIA_ID", 'wikicities');
+define ("CENTRAL_WIKIA_ID", 'none');
 
 $wgExtensionCredits['specialpage'][] = array(
     "name" => "WikiaStats",
