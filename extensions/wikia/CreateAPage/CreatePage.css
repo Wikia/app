@@ -357,9 +357,15 @@ legend {
 }
 
 .createpage-upper {
-	margin-top: -95px;
 }
 
 .createpage-lower {
-	margin-top: -80px;
+}
+
+.createpage-textarea {
+	float: left;
+}
+
+.createpage-clear {
+	clear: both;
 }

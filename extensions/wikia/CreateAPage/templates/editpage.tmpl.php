@@ -16,6 +16,8 @@ foreach ($boxes as $id => $box) {
 	$id = trim($id);
 	$html = "name=\"wpTextboxes".$id."\" id=\"wpTextboxes".$id."\" style=\"display:".$display."\"";
 	$value = "";
+	$clear = " class=\"createpage-clear\""  ;
+
 	switch ($box['type']) {
 		case "text":  {
 			$value = "<input type=\"text\" size=\"50\" {$html} value=\"".$box['value']."\">";
@@ -28,7 +30,7 @@ foreach ($boxes as $id => $box) {
                 case "textarea": {
                         $linenum = count( explode( "\n", $box['value'] ) ) + 1;
                         $linenum = ($linenum > 8) ? 8 : $linenum;
-                        $value = "<textarea type=\"text\" rows=\"5\" cols=\"{$cols}\" {$html}>".$box['value']."</textarea>";
+                        $value = "<textarea type=\"text\" rows=\"5\" cols=\"{$cols}\" {$html} class=\"createpage-textarea\">".$box['value']."</textarea>";
 			if ($box ['toolbar'] != '') {
 				$value = $box ['toolbar'] . $value ;
 				$value .= "<a href=\"#\" id=\"wpTextIncrease" . $id . "\" class=\"createpage-controller createpage-upper\">+</a>" ;
@@ -41,7 +43,7 @@ foreach ($boxes as $id => $box) {
 		}
 	}
 ?>
-<div class="display:<?=$display?>"><?=$value?></div>
+<div style="display:<?=$display?>"<?=$clear?>><?=$value?></div>
 <?
 }
 ?>
