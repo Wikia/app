@@ -350,3 +350,7 @@ legend {
 .createpage-separator {
 	height: 10pt;
 } 
+
+.createpage-controller {
+	float: right;
+}
