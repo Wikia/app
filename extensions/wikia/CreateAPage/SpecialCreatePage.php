@@ -307,8 +307,7 @@ class CreatePageCreateplateForm {
 	}
 
         // produce a list of radio buttons from the given createplate array
-	function produceRadioList($createplates)
-	{
+	function produceRadioList($createplates) {
 		global $wgOut, $wgRequest, $wgServer, $wgScript ;
 
 		// this checks radio buttons when we have no javascript...
