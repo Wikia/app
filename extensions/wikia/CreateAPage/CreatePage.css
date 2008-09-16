@@ -33,6 +33,11 @@
 	text-align:right;
 }
 
+* html #createpagepreview .actionBar ,
+* html #createpageform .actionBar {
+	height: 1%;
+}
+
 #createpageform #createpageinfo {	
 	clear: both ;
 	padding-left: 5px ;
@@ -366,3 +371,12 @@ legend {
 	float: left;
 }
 
+/* macbre: IE6 fixes */
+* html .createpage-clear {
+	position: relative;
+}
+
+* html .createpage-lower {
+	right: 9px;
+	position: absolute;
+}
