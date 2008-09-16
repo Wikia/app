@@ -19,7 +19,7 @@
 }
 
 #wpTableMultiEdit div div .createpage_input_file label input,
-#cp-infobox div .createpage_input_file label input{
+#cp-infobox div .createpage_input_file label input {
         position:relative !important;
         font-size:9pt !important;
         line-height:12px !important;

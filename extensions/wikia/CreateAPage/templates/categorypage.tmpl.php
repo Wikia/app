@@ -13,8 +13,7 @@
 <div id="createpage_cloud_section">
 <?
 $xnum = 0;
-foreach ( $cloud->tags as $xname => $xtag ) 
-{
+foreach ( $cloud->tags as $xname => $xtag ) {
 ?>
 	<span id="tag<?=$xnum?>" style="font-size:<?=$xtag['size']?>pt">
 	<a href="#" id="cloud<?=$xnum?>" onclick="cloudAdd(escape ('<?=$xname?>'), <?=$xnum?>); return false;"><?=$xname?></a>
@@ -39,8 +38,7 @@ document.getElementById('createpage_cloud_div').style.display = 'block';
 <?
 $xnum = 0;
 
-foreach ( $cloud->tags as $xname => $xtag ) 
-{
+foreach ( $cloud->tags as $xname => $xtag ) {
 	$checked = (array_key_exists($xname, $array_category) && ($array_category[$xname])) ? "checked" : "";
 	$array_category[$xname] = 0;
 	#--$xtag['size']
@@ -52,10 +50,8 @@ foreach ( $cloud->tags as $xname => $xtag )
 $xnum++;
 }
 $display_category = array();
-foreach ($array_category as $xname => $visible)
-{
-	if ($visible == 1)
-	{
+foreach ($array_category as $xname => $visible) {
+	if ($visible == 1) {
 		$display_category[] = $xname;
 	}
 }

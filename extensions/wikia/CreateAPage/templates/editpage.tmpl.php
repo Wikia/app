@@ -9,28 +9,23 @@
 </style>
 <div style="display:block;" id="wpTableMultiEdit" name="wpTableMultiEdit">
 <?php
-foreach ($boxes as $id => $box)
-{
+foreach ($boxes as $id => $box) {
 ?>
 <?	
 	$display = (empty($box['display'])) ? 'none' : 'block';
 	$id = trim($id);
 	$html = "name=\"wpTextboxes".$id."\" id=\"wpTextboxes".$id."\" style=\"display:".$display."\"";
 	$value = "";
-	switch ($box['type'])
-	{
-		case "text": 
-		{
+	switch ($box['type']) {
+		case "text":  {
 			$value = "<input type=\"text\" size=\"50\" {$html} value=\"".$box['value']."\">";
 			break;
 		}
-		case "hidden" :
-		{
+		case "hidden" : {
 			$value = "<input type=\"hidden\" {$html} value=\"".$box['value']."\">";
 			break;
 		}
-                case "textarea":
-                {
+                case "textarea": {
                         $linenum = count( explode( "\n", $box['value'] ) ) + 1;
                         $linenum = ($linenum > 8) ? 8 : $linenum;
                         $value = "<textarea type=\"text\" rows=\"5\" cols=\"{$cols}\" {$html}>".$box['value']."</textarea>";
@@ -41,8 +36,7 @@ foreach ($boxes as $id => $box)
 			}
                         break;
                 }
-		default:
-		{
+		default: {
 			$value = $box['value'];
 		}
 	}
