@@ -305,6 +305,12 @@ YWC.TextareaAddToolbar = function (el) {
         YWC.multiEditButtons [el_id] = [] ;
         YWC.multiEditCustomButtons [el_id] = [] ;
         YE.addListener (el.id, 'focus', YWC.showThisBox, {'toolbarId' : el_id }) ;
+	
+	var res_incr = YD.get( 'wpTextIncrease' + el_id );
+	var res_decr = YD.get( 'wpTextDecrease' + el_id );
+        YE.addListener( 'wpTextIncrease' + el_id, 'click', YWC.resizeThisTextarea, {'textareaId' : el_id, 'numRows' : 1 } ) ;
+        YE.addListener( 'wpTextDecrease' + el_id, 'click', YWC.resizeThisTextarea, {'textareaId' : el_id, 'numRows' : -1 } ) ;
+
 	for (var i=0; i < YWC.ToolbarButtons.length; i++) {
 		YWC.addMultiEditButton (YWC.ToolbarButtons[i]['image'], YWC.ToolbarButtons[i]['tip'], YWC.ToolbarButtons[i]['open'], YWC.ToolbarButtons[i]['close'], YWC.ToolbarButtons[i]['sample'], YWC.ToolbarButtons[i]['id'] + el_id, el_id) ;	
 	}	
@@ -398,6 +404,13 @@ YWC.showThisBox = function (e, o) {
 	YD.get ('toolbar' + o.toolbarId).style.display = '' ;
 	YWC.hideOtherBoxes (o.toolbarId) ;
 }
+
+YWC.resizeThisTextarea = function( e, o ) {
+	YE.preventDefault (e) ;
+	var r_textarea = YD.get( 'wpTextboxes' + o.textareaId );
+	r_textarea.rows = r_textarea.rows + o.numRows ;		
+}
+
 
 YWC.hideOtherBoxes = function (box_id) {
 	for (var i = 0; i < YWC.multiEditTextboxes.length; i++) {

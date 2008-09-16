@@ -31,7 +31,7 @@ foreach ($boxes as $id => $box) {
                         $value = "<textarea type=\"text\" rows=\"5\" cols=\"{$cols}\" {$html}>".$box['value']."</textarea>";
 			if ($box ['toolbar'] != '') {
 				$value = $box ['toolbar'] . $value ;
-				$value .= "<a href=\"#\" id=\"wpTextIncrease" . $id . "\" class=\"createpage-controller createpage-upper\">+</a><br/>" ;
+				$value .= "<a href=\"#\" id=\"wpTextIncrease" . $id . "\" class=\"createpage-controller createpage-upper\">+</a>" ;
                         	$value .= "<a href=\"#\" id=\"wpTextDecrease" . $id . "\" class=\"createpage-controller createpage-lower\">-</a>" ;
 			}
                         break;
