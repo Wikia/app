@@ -360,6 +360,8 @@ legend {
 }
 
 .createpage-lower {
+	clear: left;
+	margin-top: -20px;
 }
 
 .createpage-textarea {
