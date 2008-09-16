@@ -231,6 +231,13 @@ class memcached
     */
    var $_connect_attempts;
 
+   /**
+    * host currently in use
+    *
+    * @access  private
+    */
+   var $_memc_host;
+
    // }}}
    // }}}
    // {{{ methods
@@ -263,6 +270,8 @@ class memcached
 
       $this->_connect_timeout = 0.01;
       $this->_connect_attempts = 3;
+
+      $this->_memc_host = '';
    }
 
    // }}}
@@ -925,9 +934,9 @@ class memcached
             if ($this->_debug)
                $this->_debugprint("Error parsing memcached response\n");
             if( !empty( $key ) )
-	        error_log( "memcached ({$this->memc_host}) - Error parsing memcached response. The key was: $key. And we got: $decl" );
+	        error_log( "memcached ({$this->_memc_host}) - Error parsing memcached response. The key was: $key. And we got: $decl" );
             else
-	        error_log( "memcached ({$this->memc_host}) - Error parsing memcached response. We got: $decl" );
+	        error_log( "memcached ({$this->_memc_host}) - Error parsing memcached response. We got: $decl" );
             return 0;
          }
       }
