@@ -151,12 +151,12 @@ function getDynamicRobots(){
 		$r .= "Disallow: /trap/\n";
 		$r .= "Disallow: /dbdumps/\n";
 		$r .= "Disallow: /wikistats/\n";
-		$r .= "Disallow: /wiki/*&printable=yes\n";
-		$r .= "Disallow: /wiki/*&feed=rss\n";
-		$r .= "Disallow: /wiki/*&action=edit\n";
-		$r .= "Disallow: /wiki/*&action=history\n";
-		$r .= "Disallow: /wiki/*&action=delete\n";
-		$r .= "Disallow: /wiki/*&action=watch\n";
+		$r .= "Disallow: /wiki/*printable=yes*\n";
+		$r .= "Disallow: /wiki/*feed=rss*\n";
+		$r .= "Disallow: /wiki/*action=edit*\n";
+		$r .= "Disallow: /wiki/*action=history*\n";
+		$r .= "Disallow: /wiki/*action=delete*\n";
+		$r .= "Disallow: /wiki/*action=watch*\n";
 		
 	    $lang = new Language();
 		
@@ -214,11 +214,11 @@ function getLangSpecificNamespace( &$lang, $code, &$procCodes ){
    }
    
     $r .= "# " . $code . "\n" ;
-	$r .= 'Disallow: /wiki/' . urlencode( utf8_encode( $ns[NS_SPECIAL] ) )."\n";
-	$r .= 'Disallow: /wiki/' . urlencode( utf8_encode( $ns[NS_HELP] ) )."\n";
-	$r .= 'Disallow: /wiki/' . urlencode( utf8_encode( $ns[NS_HELP_TALK] ) )."\n";
-	$r .= 'Disallow: /wiki/' . urlencode( utf8_encode( $ns[NS_TEMPLATE] ) )."\n";
-	$r .= 'Disallow: /wiki/' . urlencode( utf8_encode( $ns[NS_TEMPLATE_TALK] ) )."\n";
+	$r .= 'Disallow: /wiki/' . urlencode( $ns[NS_SPECIAL] )."*\n";
+	$r .= 'Disallow: /wiki/' . urlencode( $ns[NS_HELP] )."*\n";
+	$r .= 'Disallow: /wiki/' . urlencode( $ns[NS_HELP_TALK] )."*\n";
+	$r .= 'Disallow: /wiki/' . urlencode( $ns[NS_TEMPLATE] )."*\n";
+	$r .= 'Disallow: /wiki/' . urlencode( $ns[NS_TEMPLATE_TALK] )."*\n";
 	
 	return $r;
 }
