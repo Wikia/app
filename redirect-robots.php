@@ -142,84 +142,77 @@ exit(0);
 
 function getDynamicRobots(){
 	global $wgOut, $wgCat, $wgLanguageNames, $wgContLang;
-	$procCodes = array();
 	
 	$r = "\n";
 
-		$r .= "User-agent: *\n";
-		$r .= "Disallow: /w/\n";
-		$r .= "Disallow: /trap/\n";
-		$r .= "Disallow: /dbdumps/\n";
-		$r .= "Disallow: /wikistats/\n";
-		$r .= "Disallow: /wiki/*printable=yes*\n";
-		$r .= "Disallow: /wiki/*feed=rss*\n";
-		$r .= "Disallow: /wiki/*action=edit*\n";
-		$r .= "Disallow: /wiki/*action=history*\n";
-		$r .= "Disallow: /wiki/*action=delete*\n";
-		$r .= "Disallow: /wiki/*action=watch*\n";
+	$r .= "User-agent: *\n";
+	$r .= "Disallow: /w/\n";
+	$r .= "Disallow: /trap/\n";
+	$r .= "Disallow: /dbdumps/\n";
+	$r .= "Disallow: /wikistats/\n";
+	$r .= "Disallow: /*printable=yes*\n";
+	$r .= "Disallow: /*feed=rss*\n";
+	$r .= "Disallow: /*action=edit*\n";
+	$r .= "Disallow: /*action=history*\n";
+	$r .= "Disallow: /*action=delete*\n";
+	$r .= "Disallow: /*action=watch*\n";
 		
-	    $lang = new Language();
+	$lang = new Language();
 		
-		//process english first
+	//process english first
 
-		$code = $wgContLang->getCode();
-		if($code!='en'){
-			$r .= getLangSpecificNamespace( $lang, "en", $procCodes );			
-		}
+	$code = $wgContLang->getCode();
 		
-		if( trim( $code ) == ''){
- 			return;
-		}
-
-		$r .= getLangSpecificNamespace( $lang, $code, $procCodes);
+	if($code!='en'){
+		$r .= getLangSpecificNamespace( $lang, "en", $procCodes );			
+	}
 		
-		$hostel = explode('.',$_SERVER['SERVER_NAME']);
-		//delete tdlportion
-		unset($hostel[count($hostel)-1]);
-		unset($hostel[count($hostel)-1]);
-		$r .= "# sitemap\n";
-		$r .= 'Sitemap: http://' . $_SERVER['SERVER_NAME'] . '/' . "sitemap-index-" . implode('',$hostel) . ".xml"; 
+	if( trim( $code ) == ''){
+ 		return;
+	}
 
-	return $r;
+	$r .= getLangSpecificNamespace( $lang, $code );
+		
+	$hostel = explode('.',$_SERVER['SERVER_NAME']);
+	//delete tdlportion
+	unset($hostel[count($hostel)-1]);
+	unset($hostel[count($hostel)-1]);
+	$r .= "# sitemap\n";
+	$r .= 'Sitemap: http://' . $_SERVER['SERVER_NAME'] . '/' . "sitemap-index-" . implode('',$hostel) . ".xml"; 
+
+  return $r;
 }
 
-function getLangSpecificNamespace( &$lang, $code, &$procCodes ){
- global $wgSpecialPages;
+function getLangSpecificNamespace( &$lang, $code ){
+   global $wgSpecialPages;
   
    $r = '';	
    
-   //we only want new codes
-   if( in_array( $code, $procCodes ) || ( $code == '' ) ){
-   	return;
-   }else{
-   	 //is its fallback there
-	 $fb = $lang->getFallbackFor( $code );
-	 if( in_array( $fb, $procCodes ) ){
-	   	$procCodes[] = $code;
-		return;
-	 }
-   }
-   
-   //else lets get it
-   
-   $procCodes[] = $code;
-   
-   $rs = $lang->getLocalisationArray( $code ); //store em in memcache
+   $rs = $lang->getLocalisationArray( $code );
    $ns = $rs['namespaceNames'];
-  
-   if( empty( $ns ) || ( $ns[NS_SPECIAL] == 'Special' ) && $code != 'en'){
-   	if($code != 'en'){
-     return;
-	} 
-   }
    
-    $r .= "# " . $code . "\n" ;
-	$r .= 'Disallow: /wiki/' . urlencode( $ns[NS_SPECIAL] )."*\n";
-	$r .= 'Disallow: /wiki/' . urlencode( $ns[NS_HELP] )."*\n";
-	$r .= 'Disallow: /wiki/' . urlencode( $ns[NS_HELP_TALK] )."*\n";
-	$r .= 'Disallow: /wiki/' . urlencode( $ns[NS_TEMPLATE] )."*\n";
-	$r .= 'Disallow: /wiki/' . urlencode( $ns[NS_TEMPLATE_TALK] )."*\n";
+   $r .= "# " . $code . "\n" ;
+   $r .= 'Disallow: /wiki/' . urlencode( $ns[NS_SPECIAL] ) .":*\n";
+   $r .= 'Disallow: /*title=' . urlencode( $ns[NS_SPECIAL] ) .":*\n";
+   $r .= 'Disallow: /wiki/' . urlencode( $ns[NS_SPECIAL] ) ."%3A*\n";
+   $r .= 'Disallow: /*title=' . urlencode( $ns[NS_SPECIAL] ) ."%3A*\n";
+   $r .= 'Disallow: /wiki/' . urlencode( $ns[NS_HELP] ).":*\n";
+   $r .= 'Disallow: /*title=' . urlencode( $ns[NS_HELP] ).":*\n";
+   $r .= 'Disallow: /wiki/' . urlencode( $ns[NS_HELP] )."%3A*\n";
+   $r .= 'Disallow: /*title=' . urlencode( $ns[NS_HELP] )."%3A*\n";
+   $r .= 'Disallow: /wiki/' . urlencode( $ns[NS_HELP_TALK] ).":*\n";
+   $r .= 'Disallow: /*title=' . urlencode( $ns[NS_HELP_TALK] ).":*\n";
+   $r .= 'Disallow: /wiki/' . urlencode( $ns[NS_HELP_TALK] )."%3A*\n";
+   $r .= 'Disallow: /*title=' . urlencode( $ns[NS_HELP_TALK] )."%3A*\n";
+   $r .= 'Disallow: /wiki/' . urlencode( $ns[NS_TEMPLATE] ).":*\n";
+   $r .= 'Disallow: /*title=' . urlencode( $ns[NS_TEMPLATE] ).":*\n";
+   $r .= 'Disallow: /wiki/' . urlencode( $ns[NS_TEMPLATE] )."%3A*\n";
+   $r .= 'Disallow: /*title=' . urlencode( $ns[NS_TEMPLATE] )."%3A*\n";
+   $r .= 'Disallow: /wiki/' . urlencode( $ns[NS_TEMPLATE_TALK] ).":*\n";
+   $r .= 'Disallow: /*title=/' . urlencode( $ns[NS_TEMPLATE_TALK] ).":*\n";
+   $r .= 'Disallow: /wiki/' . urlencode( $ns[NS_TEMPLATE_TALK] )."%3A*\n";
+   $r .= 'Disallow: /*title=/' . urlencode( $ns[NS_TEMPLATE_TALK] )."%3A*\n";
 	
-	return $r;
+  return $r;
 }
 ?>
