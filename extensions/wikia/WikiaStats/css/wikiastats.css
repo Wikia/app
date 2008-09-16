@@ -61,7 +61,7 @@ td.main2x { border:1px inset #FFF; text-align:left; font-size:8pt; margin:0px; p
 .ws_chart_xaxis_months {border-top:1px solid #000000;font-size:6.5pt;background-color:#F8F8FF;}
 .ws_chart_xaxis_year {border-top:1px solid #000000;font-size:6.5pt;border-left:1px dotted #000000;background-color:#F8F8FF;}
 .ws_chart_column {padding:0px 2px 0px 2px;}
-.ws_charts {text-align:right; font-size:7.5pt; background-image:url('/extensions/wikia/WikiaStats/images/background1.gif'); background-repeat: repeat; width:350px; border: 1px solid #000000; font-family:Trebuchet MS,arial,sans-serif,helvetica;}
+.ws_charts {text-align:right; font-size:7.5pt; background-image:url('/extensions/wikia/WikiaStats/images/background1.gif'); background-repeat: repeat; width:350px; border: 1px solid #000000; font-family:Trebuchet MS,arial,sans-serif,helvetica;color:#555555;}
 .ws-select {background-color:#ffffdd; border:1px inset #808080;font-size:8.5pt;width:450px;}
 .ws-table-history {background-color:#ffffdd; font-size:11px;width:100%}
 .ws-select-short {background-color:#ffffdd; border:1px inset #808080;font-size:8.5pt;}

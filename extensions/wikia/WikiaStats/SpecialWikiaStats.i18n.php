@@ -3,6 +3,7 @@
 $wgWikiaStatsMessages = array();
 
 $wgWikiaStatsMessages["en"] = array(
+	"wikiastats" => "Wikia Statistics",
 	"wikiastats_wikia" => "Wikia",
 	"wikiastats_pagetitle" => "Wikia Statistics",
 	"wikiastats_info" => "Please select Wikia list of databases and press \"Show statistics\" button",
