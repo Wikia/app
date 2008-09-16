@@ -353,4 +353,13 @@ legend {
 
 .createpage-controller {
 	float: right;
+	margin-right: 30px; 
+}
+
+.createpage-upper {
+	margin-top: -95px;
+}
+
+.createpage-lower {
+	margin-top: -85px;
 }
