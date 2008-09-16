@@ -56,7 +56,7 @@ create table if not exists send_queue (
 CREATE TABLE IF NOT EXISTS `city_list` (
   `city_id` int(9) NOT NULL auto_increment,
   `city_path` varchar(255) NOT NULL default '/home/wikicities/cities/notreal',
-  `city_dbname` varchar(31) NOT NULL default 'notreal',
+  `city_dbname` varchar(64) NOT NULL default 'notreal',
   `city_sitename` varchar(255) NOT NULL default 'wikicities',
   `city_url` varchar(255) NOT NULL default 'http://notreal.wikicities.com/',
   `city_created` datetime default NULL,
