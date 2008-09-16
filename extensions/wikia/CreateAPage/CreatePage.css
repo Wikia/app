@@ -354,12 +354,12 @@ legend {
 
 .createpage-controller {
 	float: right;
-	margin-right: 10px; 
+	margin-right: 24px; 
 }
 
 .createpage-lower {
 	clear: left;
-	margin-top: -20px;
+	margin-top: -24px;
 }
 
 .createpage-textarea {
