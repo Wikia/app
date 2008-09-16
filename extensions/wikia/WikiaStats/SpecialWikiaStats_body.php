@@ -23,6 +23,7 @@ class WikiaStatsClass extends SpecialPage
 {
     var $mPosted, $mStats, $mSkinName;
     var $userIsSpecial;
+    var $fromDate, $toDate;
 
     const USE_MEMC = 1;
 
@@ -66,6 +67,9 @@ class WikiaStatsClass extends SpecialPage
 				break;
 			}
 		}
+
+		$this->fromDate = $wgRequest->getVal("from");
+		$this->toDate = $wgRequest->getVal("to");
 		
         #--- WikiaGenericStats instance
         $this->mStats = new WikiaGenericStats($wgUser->getID());
@@ -199,8 +203,23 @@ class WikiaStatsClass extends SpecialPage
         global $wgMemc;
 		global $wgStatsExcludedNonSpecialGroup;
 
+		list ($fromY, $fromM, $toY, $toM) = array();
+		$m = array();
+		if (preg_match("/^([0-9]{4})([0-9]{1,2})/", $this->fromDate, $m)) {
+			list (, $fromY, $fromM) = $m; 
+		} else {
+			list ($fromY, $fromM) = array(MIN_STATS_YEAR, MIN_STATS_MONTH);
+		}
+		//
+		if (preg_match("/^([0-9]{4})([0-9]{1,2})/", $this->toDate, $m)) {
+			list (, $toY, $toM) = $m; 
+		} else {
+			list ($toY, $toM) = array(date("Y"), date("m"));
+		}
+
 		wfProfileIn( __METHOD__ );
-		$memkey = "wikiastatsmainstatsform_".$city."_".$show_charts."_".$show_local;
+		$memkey = "wikiastatsmainstatsform_".$city."_".$show_charts."_".$show_local."_".$fromY.$fromM."_".$toY.$toM;
+		error_log(" memkey = $memkey \n\n\n", 3, "/tmp/moli.log");
 		$mainStats = "";
 		if (self::USE_MEMC) $mainStats = $wgMemc->get($memkey);
 
@@ -210,7 +229,7 @@ class WikiaStatsClass extends SpecialPage
 				$this->mStats->setLocalStats(true);
 			}
 			if ( (is_numeric($city)) && ($city >= 0) ) {
-				$main_stats = $this->mStats->getWikiMainStatistics($city, MIN_STATS_YEAR, '01', '', '', $show_charts);
+				$main_stats = $this->mStats->getWikiMainStatistics($city, $fromY, $fromM, $toY, $toM, $show_charts);
 				$table_stats = $main_stats["text"];
 				unset($main_stats);
 			}
@@ -229,6 +248,8 @@ class WikiaStatsClass extends SpecialPage
 				"selCity" 	=> $city,
 				"main_tbl" 	=> $table_stats,
 				"show_chart"=> $show_charts,
+				"fromDate"	=> array($fromY, $fromM),
+				"toDate"	=> array($toY, $toM),
 			));
 			$mainStats = "";
 			if ($show_local) {

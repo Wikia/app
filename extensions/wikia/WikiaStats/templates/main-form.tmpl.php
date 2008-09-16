@@ -566,10 +566,18 @@ foreach ($cityList as $domain => $city_id)
 	<span class="wk-select-class"><?= wfMsg('wikiastats_daterange_from') ?> 
 	<select name="ws-date-month-from" id="ws-date-month-from" style="text-align:left; font-size:11px;">
 <?php
-foreach ($dateRange['months'] as $id => $month)
-{
+$curMonth = date("m"); $curYear = date("Y");
+if (!empty($toDate)) {
+	list ($curYear, $curMonth) = $toDate;
+}
+list ($fromYear, $fromMonth) = array($curYear, "");
+if (!empty($fromDate)) {
+	list ($fromYear, $fromMonth) = $fromDate;
+}
+foreach ($dateRange['months'] as $id => $month) { 
+	$selected = ($fromMonth == ($id+1)) ? "selected" : "";
 ?>
-	<option value="<?= ($id+1) ?>"><?= ucfirst($month) ?></option>
+	<option value="<?= ($id+1) ?>" <?=$selected?>><?= ucfirst($month) ?></option>
 <?php
 }	
 ?>	
@@ -579,10 +587,10 @@ foreach ($dateRange['months'] as $id => $month)
 $minYear = intval($dateRange['minYear']); 
 if ($minYear < 2000) $minYear = 2000;
 $maxYear = intval($dateRange['maxYear']);
-while ($minYear <= $maxYear)
-{
+while ($minYear <= $maxYear) {
+	$selected = ($fromYear == $minYear) ? "selected" : "";
 ?>
-	<option value="<?= $minYear ?>"><?= $minYear ?></option>
+	<option <?= $selected ?> value="<?= $minYear ?>"><?= $minYear ?></option>
 <?php	
 	$minYear++;
 }

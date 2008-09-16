@@ -555,9 +555,17 @@ YAHOO.util.Event.onDOMReady(function () {
 	<select name="ws-date-month-from" id="ws-date-month-from" style="text-align:left; font-size:11px;">
 <?php
 $curMonth = date("m"); $curYear = date("Y");
+if (!empty($toDate)) {
+	list ($curYear, $curMonth) = $toDate;
+}
+list ($fromYear, $fromMonth) = array($curYear, "");
+if (!empty($fromDate)) {
+	list ($fromYear, $fromMonth) = $fromDate;
+}
 foreach ($dateRange['months'] as $id => $month) { 
+	$selected = ($fromMonth == ($id+1)) ? "selected" : "";
 ?>
-	<option value="<?= ($id+1) ?>"><?= ucfirst($month) ?></option>
+	<option value="<?= ($id+1) ?>" <?=$selected?>><?= ucfirst($month) ?></option>
 <?php
 }	
 ?>	
@@ -568,7 +576,7 @@ $minYear = intval($dateRange['minYear']);
 if ($minYear < 2000) $minYear = 2000;
 $maxYear = intval($dateRange['maxYear']);
 while ($minYear <= $maxYear) {
-	$selected = ($curYear == $minYear) ? "selected" : "";
+	$selected = ($fromYear == $minYear) ? "selected" : "";
 ?>
 	<option <?= $selected ?> value="<?= $minYear ?>"><?= $minYear ?></option>
 <?php	
