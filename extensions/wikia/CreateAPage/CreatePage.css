@@ -1,7 +1,8 @@
 /* common formatting for fields */
 
 #wpTableMultiEdit ,
-#cp-multiedit {
+#cp-multiedit,
+.createpage-clear {
 	clear: both ;
 }
 
@@ -356,9 +357,6 @@ legend {
 	margin-right: 30px; 
 }
 
-.createpage-upper {
-}
-
 .createpage-lower {
 	clear: left;
 	margin-top: -20px;
@@ -368,6 +366,3 @@ legend {
 	float: left;
 }
 
-.createpage-clear {
-	clear: both;
-}
