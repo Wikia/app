@@ -33,8 +33,8 @@ foreach ($boxes as $id => $box) {
                         $value = "<textarea type=\"text\" rows=\"5\" cols=\"{$cols}\" {$html} class=\"createpage-textarea\">".$box['value']."</textarea>";
 			if ($box ['toolbar'] != '') {
 				$value = $box ['toolbar'] . $value ;
-				$value .= "<a href=\"#\" id=\"wpTextIncrease" . $id . "\" class=\"createpage-controller createpage-upper\">+</a>" ;
-                        	$value .= "<a href=\"#\" id=\"wpTextDecrease" . $id . "\" class=\"createpage-controller createpage-lower\">-</a>" ;
+                        	$value .= "<a href=\"#\" id=\"wpTextDecrease" . $id . "\" class=\"createpage-controller createpage-upper\"><img src=\"$imgpath/up.png\" alt=\"-\"></a>" ;
+				$value .= "<a href=\"#\" id=\"wpTextIncrease" . $id . "\" class=\"createpage-controller createpage-lower\"><img src=\"$imgpath/down.png\" alt=\"+\"></a>" ;
 			}
                         break;
                 }
