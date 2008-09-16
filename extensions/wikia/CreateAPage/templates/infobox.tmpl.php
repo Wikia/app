@@ -7,14 +7,11 @@
 $inf_par_num = 0 ;
 $inf_image_num = 0 ;
 #---
-foreach ($inf_pars as $inf_par) 
-{
+foreach ($inf_pars as $inf_par) {
 	$inf_par = preg_replace ("/=/", "<!---equals--->", $inf_par, 1) ;
 	$inf_par_pair = preg_split ("/<\!---equals--->/", $inf_par, -1) ;	
-	if (is_array ($inf_par_pair)) 
-	{
-		if (preg_match(IMAGEUPLOAD_TAG_SPECIFIC, $inf_par_pair[1], $match)) 
-		{
+	if (is_array ($inf_par_pair)) {
+		if (preg_match(IMAGEUPLOAD_TAG_SPECIFIC, $inf_par_pair[1], $match)) {
 			$oTmplImg = new EasyTemplate( dirname( __FILE__ ));
 			$oTmplImg->set_vars(
 					array(
