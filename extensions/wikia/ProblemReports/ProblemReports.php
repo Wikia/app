@@ -41,7 +41,7 @@ $wgExtensionCredits['other'][] = array(
 	'url' => 'http://help.wikia.com/wiki/Help:ProblemReports',
 	'version' => '2.3',
 	'description' => 'Allows users to report problems with wiki-articles and helpers/sysops/janitors/staff to view & resolve them',
-	'author' => '[http://pl.inside.wikia.com/wiki/User:Macbre Maciej Brencz]'
+	'author' => '[http://pl.wikia.com/wiki/User:Macbre Maciej Brencz]'
 );
 
 // extension setup function
