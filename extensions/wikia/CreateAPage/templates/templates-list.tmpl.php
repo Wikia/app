@@ -408,7 +408,9 @@ YWC.showThisBox = function (e, o) {
 YWC.resizeThisTextarea = function( e, o ) {
 	YE.preventDefault (e) ;
 	var r_textarea = YD.get( 'wpTextboxes' + o.textareaId );
-	r_textarea.rows = r_textarea.rows + o.numRows ;		
+	if ( !( ( r_textarea.rows < 4 ) && ( o.numRows < 0 ) ) && !( ( r_textarea.rows > 10 ) && ( o.numRows > 0 ) ) ) {
+		r_textarea.rows = r_textarea.rows + o.numRows ;		
+	}
 }
 
 
