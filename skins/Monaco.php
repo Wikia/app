@@ -1634,12 +1634,13 @@ menuitem_array = new Array();var submenuitem_array = new Array();</script>';
 <?php		wfProfileOut( __METHOD__ . '-navigation'); ?>
 
 			<?php
+				// Logic for skyscrapers defined here: http://staff.wikia-inc.com/wiki/DART_Implementation/Skyscrapers
 				global $wgOut;
 				if ($wgOut->isArticle() ){
 					if (ArticleAdLogic::isMainPage()) { //main page
 						echo '<div style="text-align: center; margin-bottom: 10px;">'. AdEngine::getInstance()->getPlaceHolderDiv('HOME_LEFT_SKYSCRAPER_1', false) .'</div>';
 					} else if ( ArticleAdLogic::isContentPage() &&
-					     	    ArticleAdLogic::isLongArticle($this->data['bodytext'])) { //valid article
+					     	    ! ArticleAdLogic::isShortArticle($this->data['bodytext'])) { //valid article
 						echo '<div style="text-align: center; margin-bottom: 10px;">'. AdEngine::getInstance()->getPlaceHolderDiv('LEFT_SKYSCRAPER_1', false) .'</div>';
 					}
 				}
