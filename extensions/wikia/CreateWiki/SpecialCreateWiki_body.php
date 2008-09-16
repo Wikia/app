@@ -503,7 +503,7 @@ class CreateWikiForm extends SpecialPage {
 		$aWiki["subdomain"] = $aWiki["name"];
 		$aWiki["redirect"]  = $aWiki["name"];
 		$aWiki["dir_part"]  = $aWiki["name"];
-		$aWiki["dbname"]    = $aWiki["name"];
+		$aWiki["dbname"]    = substr($aWiki["name"], 0, 64);
 		$aWiki["path"]      = "/usr/wikia/docroot/wiki.factory";
 		$aWiki["images"]    = $WikiImagesDir . $aWiki["name"];
 
