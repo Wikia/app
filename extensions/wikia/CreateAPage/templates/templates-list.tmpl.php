@@ -306,8 +306,6 @@ YWC.TextareaAddToolbar = function (el) {
         YWC.multiEditCustomButtons [el_id] = [] ;
         YE.addListener (el.id, 'focus', YWC.showThisBox, {'toolbarId' : el_id }) ;
 	
-	var res_incr = YD.get( 'wpTextIncrease' + el_id );
-	var res_decr = YD.get( 'wpTextDecrease' + el_id );
         YE.addListener( 'wpTextIncrease' + el_id, 'click', YWC.resizeThisTextarea, {'textareaId' : el_id, 'numRows' : 1 } ) ;
         YE.addListener( 'wpTextDecrease' + el_id, 'click', YWC.resizeThisTextarea, {'textareaId' : el_id, 'numRows' : -1 } ) ;
 
