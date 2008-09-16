@@ -175,6 +175,7 @@ class CreateMultiPage
 		global $wgTitle;
 		global $wgMultiEditTag;
 		global $wgMultiEditPageSimpleTags, $wgMultiEditPageTags;
+		global $wgExtensionsPath;
 
 		$me_content = '' ;
 		$found_categories = array () ;
@@ -513,6 +514,7 @@ class CreateMultiPage
 				'ew' => $ew,
 				'is_section' => $is_section,
 				'title' => $wgTitle,
+				'imgpath' => $wgExtensionsPath . '/wikia/CreateAPage/images/'
 			)
 		);
 		#---
