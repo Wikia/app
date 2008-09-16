@@ -132,11 +132,11 @@ $barColor = ($column >= 'R' && $column < 'W') ? "green" : $barColor;
 $barColor = ($column >= 'W') ? "yellow" : $barColor;
 
 $title = "<div class=\"wk-stats-legend\"><a name=\"".strtolower($active)."\">";
-$title .= "<a href=\"#wikians\" style=\"" . (($column >= 'A' && $column < 'H') ? "color:#000000;font-weight:bold" : "color: #6495ED") . "\">".wfMsg("wikiastats_wikians")."</a> - ";
-$title .= "<a href=\"#articles\" style=\"" . (($column >= 'H' && $column < 'O') ? "color:#000000;font-weight:bold" : "color: #6495ED") . "\">".wfMsg("wikiastats_articles")."</a> - ";
-$title .= "<a href=\"#database\" style=\"" . (($column >= 'O' && $column < 'R') ? "color:#000000;font-weight:bold" : "color: #6495ED") . "\">".wfMsg("wikiastats_database")."</a> - ";
-$title .= "<a href=\"#links\" style=\"" . (($column >= 'R' && $column < 'W') ? "color:#000000;font-weight:bold" : "color: #6495ED") . "\">".wfMsg("wikiastats_links")."</a> - ";
-$title .= "<a href=\"#images\" style=\"" . (($column >= 'W') ? "color:#000000;font-weight:bold" : "color: #6495ED") . "\">".wfMsg("wikiastats_images")."</a>";
+$title .= "<a href=\"#wikians\" style=\"" . (($column >= 'A' && $column < 'H') ? "font-weight:bold" : "color: #6495ED") . "\">".wfMsg("wikiastats_wikians")."</a> - ";
+$title .= "<a href=\"#articles\" style=\"" . (($column >= 'H' && $column < 'O') ? "font-weight:bold" : "color: #6495ED") . "\">".wfMsg("wikiastats_articles")."</a> - ";
+$title .= "<a href=\"#database\" style=\"" . (($column >= 'O' && $column < 'R') ? "font-weight:bold" : "color: #6495ED") . "\">".wfMsg("wikiastats_database")."</a> - ";
+$title .= "<a href=\"#links\" style=\"" . (($column >= 'R' && $column < 'W') ? "font-weight:bold" : "color: #6495ED") . "\">".wfMsg("wikiastats_links")."</a> - ";
+$title .= "<a href=\"#images\" style=\"" . (($column >= 'W') ? "font-weight:bold" : "color: #6495ED") . "\">".wfMsg("wikiastats_images")."</a>";
 $title .= "</div>";
 $columnsBar = "";
 if (empty($sum)) $sum = 1;

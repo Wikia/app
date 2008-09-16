@@ -1,6 +1,5 @@
 <!-- MAIN STATISTICS NOTES -->
 <div id="wk-stats-legend">
-<a href="#wslegend" class="big"></a>
 <fieldset>
 <legend class="legend-subtitle"><?=wfMsg('wikiastats_statistics_legend')?></legend>
 <?= wfMsg('wikiastats_note_mainstats') ?><br />

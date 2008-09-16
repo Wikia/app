@@ -34,7 +34,7 @@ class WikiaStatsClass extends SpecialPage
         $this->mPosted = false;
         $this->mSkinName = "monobook";
 		wfLoadExtensionMessages("WikiaStats");
-        parent::__construct( "WikiaStats", "staff",  ""/*class*/); #--- restriction - user have to be logged
+        parent::__construct( "WikiaStats", "",  true/*class*/); #--- restriction - user have to be logged
     }
 
     public function execute( $subpage )

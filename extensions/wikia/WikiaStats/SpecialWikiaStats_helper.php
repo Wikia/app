@@ -1875,7 +1875,7 @@ class WikiaGenericStats {
 							'user_id' => $rankInfo["user_id"],
 							'user_name' => $rankInfo["user_name"],
 							'prev_rank' => $rank,
-							'rank_change' => intval($rankInfo["rank"]) - $rank,
+							'rank_change' => $rank - intval($rankInfo["rank"]),
 							'total' => intval($rankInfo["cnt"]),
 							'total_other' => intval($cnt_ns),
 							'edits_last' => (intval($rankInfo["cnt"]) - $cnt),
