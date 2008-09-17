@@ -363,8 +363,7 @@ legend {
 }
 
 .createpage-lower {
-	clear: left;
-	margin-top: -24px;
+	margin-top: 5px;
 }
 
 .createpage-textarea {
@@ -377,6 +376,5 @@ legend {
 }
 
 * html .createpage-lower {
-	right: 9px;
-	position: absolute;
+	position: relative;
 }
