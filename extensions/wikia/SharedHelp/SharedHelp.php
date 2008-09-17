@@ -23,9 +23,9 @@ $wgHooks['EditPage::showEditForm:initial'][] = 'SharedHelpEditPageHook';
 $wgHooks['SearchBeforeResults'][] = 'SharedHelpSearchHook';
 
 function SharedHelpHook(&$out, &$text) {
-	global $wgTitle, $wgMemc, $wgSharedDB, $wgDBname;
+	global $wgTitle, $wgMemc, $wgSharedDB, $wgDBname, $wgCityId;
 
-	if($wgDBname == 'help') { # Do not process for help.wikia.com
+	if($wgCityId == 3322) { # Do not process for help.wikia.com
 		return true;
 	}
 
@@ -99,7 +99,12 @@ function SharedHelpHook(&$out, &$text) {
 }
 
 function SharedHelpEditPageHook(&$editpage) {
-	global $wgTitle;
+	global $wgTitle, $wgCityId;
+
+	// do not show this message on help.wikia.com
+	if ($wgCityId == 3322) {
+		return true;
+	}
 
 	// show message only when editing pages from Help namespace
 	if ( $wgTitle->getNamespace() != 12 ) {
@@ -114,10 +119,16 @@ function SharedHelpEditPageHook(&$editpage) {
 }
 
 function SharedHelpSearchHook(&$searchPage, &$term) {
-	global $wgOut;
+	global $wgOut, $wgCityId;
+
+	// do not show this message on help.wikia.com
+	if ($wgCityId == 3322) {
+		return true;
+	}
 
 	$msg = '<div style="border: solid 1px; padding: 10px; margin: 5px" class="sharedHelpSearchInfo plainlinks">'.wfMsgExt('shared_help_search_info', 'parseinline', urlencode($term)).'</div>';
 
 	$wgOut->addHTML($msg);
+
 	return true;
 }
