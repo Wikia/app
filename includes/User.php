@@ -1913,7 +1913,7 @@ class User {
 			// In the spirit of DWIM
 			return true;
 
-		return in_array( $action, $this->getRights() );
+		return in_array( $action, $this->getRights(), true );
 	}
 
 	/**
