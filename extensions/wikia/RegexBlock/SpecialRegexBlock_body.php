@@ -131,7 +131,9 @@ class RegexBlockForm extends SpecialPage
         $action = $titleObj->escapeLocalURL( "action=submit" )."&".$this->makeListUrlParams();
     
         $expiries = RegexBlockData::getExpireValues();
-    
+    				
+    				$regexBlockAddress = (empty($this->mRegexBlockedAddress) && ($wgRequest->getVal('ip') != null) && ($wgRequest->getVal('action') == null)) ? $wgRequest->getVal('ip') : $this->mRegexBlockedAddress;
+    				
         $oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
         $oTmpl->set_vars( array(
             "err"                   => $this->mError,
@@ -141,7 +143,7 @@ class RegexBlockForm extends SpecialPage
             "out"                   => $wgOut,
             "sel_blocker"           => $this->mFilter,
             "expiries"              => $expiries,
-            "mRegexBlockedAddress"  => $this->mRegexBlockedAddress,
+            "mRegexBlockedAddress"  => $regexBlockAddress,
             "mRegexBlockedExact"    => $this->mRegexBlockedExact,
             "mRegexBlockedCreation" => $this->mRegexBlockedCreation,
             "mRegexBlockedExpire"   => $this->mRegexBlockedExpire,
