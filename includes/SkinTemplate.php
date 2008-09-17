@@ -1032,12 +1032,7 @@ class SkinTemplate extends Skin {
 			if (($us = $wgRequest->getVal('useskin', '')) !== '')
 				$skinquery = "&useskin=$us";
 			$sitecss .= '@import "' . self::makeNSUrl( 'Common.css', $query, NS_MEDIAWIKI) . '";' . "\n";
-
-			if(empty($this->themename)) {
-				$sitecss .= '@import "' . self::makeNSUrl( ucfirst( $this->skinname ) . '.css', $query, NS_MEDIAWIKI ) . '";' . "\n";
-			} else if($this->themename == 'slate') {
-				$sitecss .= '@import "' . self::makeNSUrl( ucfirst( $this->skinname ) . 'slate.css', $query, NS_MEDIAWIKI ) . '";' . "\n";
-			} else if($this->themename == 'custom') {
+			if( empty($this->themename) || $this->themename == 'custom' ) {
 				$sitecss .= '@import "' . self::makeNSUrl( ucfirst( $this->skinname ) . '.css', $query, NS_MEDIAWIKI ) . '";' . "\n";
 			}
 			$sitecss .= '@import "' . self::makeUrl( '-', "action=raw&gen=css$siteargs$skinquery" ) . '";' . "\n";
