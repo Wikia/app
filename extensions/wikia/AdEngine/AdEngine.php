@@ -16,7 +16,7 @@ class AdEngine {
 
 	const cacheKeyVersion = "1.9a";
 	const cacheTimeout = 1800;
-	const noadgif = "http://images2.wikia.nocookie.net/common/wikia/noad.gif";
+	const noadgif = "http://images.wikia.com/common/wikia/noad.gif?1";
 
 	// TODO: pull these from wikicities.provider
 	private $providers = array('1' => 'DART', '2' => 'OpenX', '3' => 'Google', '-1' => 'Null');
