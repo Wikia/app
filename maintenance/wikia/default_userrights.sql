@@ -71,7 +71,9 @@ insert into user_groups(ug_user, ug_group) values
 
 delete from user_groups where ug_user in (
 /*Uberfuzzy*/161697
-) and ug_group="checkuser";
+) and (ug_group="checkuser" or ug_group="regexblock" or ug_group="spamregex");
 insert into user_groups(ug_user, ug_group) values
-(/*Uberfuzzy*/161697, 'checkuser')
+(/*Uberfuzzy*/161697, 'checkuser'),
+(/*Uberfuzzy*/161697, 'regexblock'),
+(/*Uberfuzzy*/161697, 'spamregex')
 ;
