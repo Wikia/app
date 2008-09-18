@@ -12,6 +12,11 @@ if ( !defined( 'MEDIAWIKI' ) ) {
     exit( 1 ) ;
 }
 
+# Quit if Shared Database is not set
+if (empty($wgSharedDB)) {
+	return;
+}
+
 define ("STATS_TREND_MONTH", 5);
 define ("STATS_TREND_CITY_NBR", 20);
 define ("STATS_COLUMN_CITY_NBR", 59);
