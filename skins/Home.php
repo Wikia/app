@@ -313,11 +313,11 @@ class HomeTemplate extends QuickTemplate {
 
  	function choose_featured_hub() {
 		global $featured_hub, $non_featured_hub;
-		
+
 		$gaming_featured = '<h1>Wikia Gaming is home to over 500,000 pages of content on more than 1,500 wiki fansites built by millions of Xbox, PS3, Wii, PC and handheld gamers.</h1>
 				<table cellspacing="0">
 				<tr>
-					<td style="vertical-align: middle;"><a href="http://gaming.wikia.com"><img src="/skins/home/images/featured_wikia_gaming.gif" alt="Wikia Gaming" /></a></td>
+					<td style="vertical-align: middle;"><a href="http://gaming.wikia.com"><img src="'. $this->data['stylepath'] .'/home/images/featured_wikia_gaming.gif" alt="Wikia Gaming" /></a></td>
 					<td>
 						<h2>Console</h2>
 						<ul>
@@ -346,7 +346,7 @@ class HomeTemplate extends QuickTemplate {
 		$entertainment_featured = '<h1>Wikia Entertainment is home to over 1,000 wiki fansites built by millions of Movies, TV, Comics and Anime addicts.</h1>
 				<table cellspacing="0">
 				<tr>
-					<td style="vertical-align: middle;"><a href="http://entertainment.wikia.com"><img src="/skins/home/images/featured_wikia_entertainment.gif" alt="Wikia Gaming" /></a></td>
+					<td style="vertical-align: middle;"><a href="http://entertainment.wikia.com"><img src="'. $this->data['stylepath'] .'/home/images/featured_wikia_entertainment.gif" alt="Wikia Gaming" /></a></td>
 					<td>
 						<h2>Movies &amp; TV</h2>
 						<ul>
@@ -556,7 +556,7 @@ class HomeTemplate extends QuickTemplate {
 <div id="header">
 	<div class="shrinkwrap">
 		<div id="logo">
-			<a href="http://www.wikia.com"><img src="/skins/home/images/logo.gif" alt="Wikia - Find and collaborate with others who love what you love."/></a>
+			<a href="http://www.wikia.com"><img src="<?php $this->text('stylepath') ?>/home/images/logo.gif" alt="Wikia - Find and collaborate with others who love what you love."/></a>
 		</div>
 		<div id="love">
 			<form action="javascript:perform_search()">
@@ -645,18 +645,18 @@ class HomeTemplate extends QuickTemplate {
 	</div>
 	<div id="homepage_right">
 		<div style="position: absolute; top: 15px; left: 50%;"><a href="http://requests.wikia.com" class="big_button orange" style="margin-left: -50%;"><big>Create a Wiki</big><small></small></a></div>
-		<div class="box yellow" style="background-image: url(/skins/home/images/new_to_wikis_accent.gif); background-position: 240px 100%; background-repeat: no-repeat; padding-right: 70px;">
+		<div class="box yellow" style="background-image: url(<?php $this->text('stylepath') ?>/home/images/new_to_wikis_accent.gif); background-position: 240px 100%; background-repeat: no-repeat; padding-right: 70px;">
 			<h1>New to Wikis?</h1> 
 			"Wiki" comes from the Hawaiian word for fast. Wikia's wikis are websites where editing is simple and quick.<br />
 			<a href="http://help.wikia.com/wiki/Help:Video_demos">Take a video tour</a> to learn more.
 		</div>
 		<div class="box blue">
 			<h1>Adding Pictures just got easier</h1>
-			<img src="/skins/home/images/adding_pictures_accent.gif" alt="Flickr" style="float: right; margin-left: 10px;" />
+			<img src="<?php $this->text('stylepath') ?>/home/images/adding_pictures_accent.gif" alt="Flickr" style="float: right; margin-left: 10px;" />
 			Now you can search for images on Flickr, Wikia, or your desktop and add them directly to any article from the edit toolbar. Read the <a href="http://help.wikia.com/wiki/Help:Add_Images">help page</a> to learn more.
 		</div>
 		<div class="box green">
-			<img src="/skins/home/images/wikia_search.gif" alt="Wikia Search" style="float: right; margin-left: 10px;" />
+			<img src="<?php $this->text('stylepath') ?>/home/images/wikia_search.gif" alt="Wikia Search" style="float: right; margin-left: 10px;" />
 			<b>Wikia</b> is working to fix web searching in a collaborative and open way. Try searching the web with Wikia and help us improve our results.<br />
 			<form action="javascript: wikia_search();" style="margin-top: 3px;">
 				<input type="text" id="wikia_search_field" />
@@ -727,7 +727,7 @@ class HomeTemplate extends QuickTemplate {
 			<li><a href="http://www.wikia.com/wiki/Terms_of_use">Terms of Use</a></li>
 		</ul>
 		<div id="copyright">
-			<img src="/skins/home/images/footer_logo.gif" alt="Wikia" /><br />
+			<img src="<?php $this->text('stylepath') ?>/home/images/footer_logo.gif" alt="Wikia" /><br />
 			Wikia&reg; is a registered service mark of Wikia, Inc.<br />
 			All rights reserved.
 		</div>
