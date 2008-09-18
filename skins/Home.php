@@ -311,6 +311,100 @@ class HomeTemplate extends QuickTemplate {
         }
     }
 
+ 	function choose_featured_hub() {
+		global $featured_hub, $non_featured_hub;
+		
+		$gaming_featured = '<h1>Wikia Gaming is home to over 500,000 pages of content on more than 1,500 wiki fansites built by millions of Xbox, PS3, Wii, PC and handheld gamers.</h1>
+				<table cellspacing="0">
+				<tr>
+					<td style="vertical-align: middle;"><a href="http://gaming.wikia.com"><img src="/skins/home/images/featured_wikia_gaming.gif" alt="Wikia Gaming" /></a></td>
+					<td>
+						<h2>Console</h2>
+						<ul>
+							<li><a href="http://super-smash-bros.wikia.com">Super Smash Bros.</a></li>
+							<li><a href="http://fallout.wikia.com">Fallout</a></li>
+							<li><a href="http://littlebigplanet.wikia.com">Little Big Planet</a></li>
+							<li><a href="http://finalfantasy.wikia.com">Final Fantasy</a></li>
+							<li><a href="http://residentevil.wikia.com">Resident Evil</a></li>
+						</ul>
+						more <a href="http://gaming.wikia.com">console wikis</a>
+					</td>
+					<td>
+						<h2>PC</h2>
+						<ul>
+							<li><a href="http://www.wowwiki.com">World of Warcraft</a></li>
+							<li><a href="http://warhammeronline.wikia.com">Warhammer Online</a></li>
+							<li><a href="http://spore.wikia.com">Spore</a></li>
+							<li><a href="http://diablo.wikia.com">Diablo</a></li>
+							<li><a href="http://wiki.ffxiclopedia.org">Final Fantasy XI</a></li>
+						</ul>
+						more <a href="http://gaming.wikia.com">PC wikis</a>
+					</td>
+				</tr>
+				</table>';
+		
+		$entertainment_featured = '<h1>Wikia Entertainment is home to over 1,000 wiki fansites built by millions of Movies, TV, Comics and Anime addicts.</h1>
+				<table cellspacing="0">
+				<tr>
+					<td style="vertical-align: middle;"><a href="http://entertainment.wikia.com"><img src="/skins/home/images/featured_wikia_entertainment.gif" alt="Wikia Gaming" /></a></td>
+					<td>
+						<h2>Movies &amp; TV</h2>
+						<ul>
+							<li><a href="http://starwars.wikia.com">Star Wars</a></li>
+							<li><a href="http://fringe.wikia.com">Fringe</a></li>
+							<li><a href="http://harrypotter.wikia.com">Harry Potter</a></li>
+							<li><a href="http://24.wikia.com">24</a></li>
+							<li><a href="http://muppet.wikia.com">Muppets</a></li>
+						</ul>
+						more <a href="http://entertainment.wikia.com/wiki/Movies">movies</a> &amp <a href="http://entertainment.wikia.com/wiki/TV">TV wikis</a>
+					</td>
+					<td>
+						<h2>Comics &amp; Anime</h2>
+						<ul>
+							<li><a href="http://en.marveldatabase.com">Marvel Comics</a></li>
+							<li><a href="http://bleach.wikia.com">Bleach</a></li>
+							<li><a href="http://naruto.wikia.com">Naruto</a></li>
+							<li><a href="http://watchmen.wikia.com">Watchmen</a></li>
+							<li><a href="http://southpark.wikia.com">South Park</a></li>
+						</ul>
+						more <a href="http://entertainment.wikia.com/wiki/Comics">comics</a> &amp; <a href="http://entertainment.wikia.com/wiki/Anime">anime wikis</a>
+					</td>
+				</tr>
+				</table>';
+		
+		$gaming_non_featured = '<h1><a href="http://gaming.wikia.com">Gaming</a></h1>
+					Everything from MMO and RPGs to Fighters and Shooters... 
+					<ul>
+						<li><a href="http://www.wowwiki.com">World of Warcraft</a></li>
+						<li><a href="http://fallout.wikia.com">Fallout</a></li>
+						<li><a href="http://warhammeronline.wikia.com">Warhammer Online</a></li>
+						<li><a href="http://super-smash-bros.wikia.com">Super Smash Bros.</a></li>
+						<li><a href="http://halo.wikia.com">Halo</a></li>
+					</ul>
+					more <a href="http://gaming.wikia.com">gaming wikis</a>';
+
+		$entertainment_non_featured = '<h1><a href="http://entertainment.wikia.com">Entertainment</a></h1>
+					Movies, TV, Comics, Anime, Books, and more.
+					<ul>
+						<li><a href="http://starwars.wikia.com">Star Wars</a></li>
+						<li><a href="http://en.marveldatabase.com">Marvel Comics</a></li>
+						<li><a href="http://harrypotter.wikia.com">Harry Potter</a></li>
+						<li><a href="http://muppet.wikia.com">Muppet</a></li>
+						<li><a href="http://watchmen.wikia.com">Watchmen</a></li>
+					</ul>
+					more <a href="http://entertainment.wikia.com">entertainment wikis</a>';
+
+
+
+		$choice = rand(0, 1);
+		if ($choice == 0) {
+			$featured_hub = $gaming_featured;
+			$non_featured_hub = $entertainment_non_featured;
+		} else if ($choice == 1) {
+			$featured_hub = $entertainment_featured;
+			$non_featured_hub = $gaming_non_featured;
+		}
+	}
 	function execute()
 	{
 		wfProfileIn( __METHOD__ );
@@ -320,6 +414,7 @@ class HomeTemplate extends QuickTemplate {
 		global $wgAdServerTest, $wgWikiaUniqueBrowserId;
 		global $wgNoWideAd;
 		global $wgStyleVersion;
+		global $featured_hub, $non_featured_hub;
 
 		$this->mTitle = &$this->data['skin']->mTitle;
 		$this->memc = &wfGetCache(CACHE_MEMCACHED);  // is this still needed?
@@ -328,6 +423,7 @@ class HomeTemplate extends QuickTemplate {
 		$this->width = isset($_COOKIE['width']) && is_numeric($_COOKIE['width']) ? $_COOKIE['width'] : 1280;
 		$this->action = $wgRequest->getText('action', 'view');
 		$this->cachetime = 300;
+		$this->choose_featured_hub();
 
 ?><!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -339,6 +435,14 @@ class HomeTemplate extends QuickTemplate {
 	<meta http-equiv="imagetoolbar" content="no" />
 
 <?= Skin::makeGlobalVariablesScript( $this->data ); ?>
+
+<!-- Dependency --> 
+<script type="text/javascript" src="http://yui.yahooapis.com/2.5.2/build/yahoo/yahoo-min.js" ></script>
+
+<!-- Event source file -->
+<script type="text/javascript" src="http://yui.yahooapis.com/2.5.2/build/event/event-min.js" ></script>
+<script type="text/javascript" src="http://yui.yahooapis.com/2.5.2/build/dom/dom-min.js" ></script>
+
 
 <?php /**
 <!-- YUI -->
@@ -366,8 +470,10 @@ class HomeTemplate extends QuickTemplate {
 	<script type="<?php $this->text('jsmimetype') ?>"><?php $this->html('userjsprev') ?></script>
 <?php	}
         if($this->data['trackbackhtml']) echo $this->data['trackbackhtml']; ?>
+    	<style type="text/css" media="screen,projection">/*<![CDATA[*/@import "<?php $this->text('stylepath') ?>/common/yui_2.5.2/reset/reset-min.css?<?= $wgStyleVersion ?>"; /*]]>*/</style>
         <?php $this->html('headscripts') ?>
-    <style type="text/css" media="screen,projection">/*<![CDATA[*/@import "<?php $this->text('stylepath') ?>/home/css/main.css?<?= $wgStyleVersion ?>"; /*]]>*/</style>
+    	<style type="text/css" media="screen,projection">/*<![CDATA[*/@import "<?php $this->text('stylepath') ?>/home/css/main.css?<?= $wgStyleVersion ?>"; /*]]>*/</style>
+    	<style type="text/css" media="screen,projection">/*<![CDATA[*/@import "<?php $this->text('stylepath') ?>/home/css/main.css?<?= $wgStyleVersion ?>"; /*]]>*/</style>
 	<!--[if lt IE 7]><link rel="stylesheet" href="<?php $this->text('stylepath') ?>/home/css/ie.css?<?= $wgStyleVersion ?>" /><![endif]-->
 	<!--[if IE 7]><link rel="stylesheet" href="<?php $this->text('stylepath') ?>/home/css/ie7.css?<?= $wgStyleVersion ?>" /><![endif]-->
 
@@ -375,8 +481,8 @@ class HomeTemplate extends QuickTemplate {
 	<link rel="stylesheet" type="text/css" href="http://images.wikia.com/common/yui/container/assets/container.css?<?= $wgStyleVersion ?>" />
 	<link rel="stylesheet" type="text/css" href="http://images.wikia.com/common/yui/logger/assets/logger.css?<?= $wgStyleVersion ?>" />
 
-	<script type="text/javascript" src="<?php $this->text('stylepath') ?>/home/js/main.js?<?= $wgStyleVersion ?>"></script>
 **/ ?>
+	<script type="text/javascript" src="<?php $this->text('stylepath') ?>/home/js/main.js?<?= $wgStyleVersion ?>"></script>
 </head>
 
 <body class="mediawiki <?php $this->text('nsclass') ?> <?php $this->text('dir') ?> <?php $this->text('pageclass') ?>">
@@ -445,225 +551,185 @@ class HomeTemplate extends QuickTemplate {
 <?php
 		}
 ?>
-<div id="mainContainer">
-	<div id="header">
-		<a class="headerLogo" href="http://www.wikia.com"></a>
-		<div class="headerCopy">
-			<?php
 
-if($this->loggedin) {
-?>
-				<span><? global $wgOut; echo wfMsgExt('login_greeting', array('parseinline'), $wgUser->getName()); ?></span>&emsp;
-				<span class="notYouCopy">
-					<?php $this->msg('not_you'); ?> <a href="<?= Skin::makeSpecialUrl( 'Userlogout', $wgTitle->isSpecial( 'Preferences' ) ? '' : "returnto=".SpecialPage::getTitleFor('Userlogin')->getPrefixedDBkey()); ?>" id="login_as_another" onclick="<?php if ($wgEnableAjaxLogin) { echo " javascript:Login(); return false;"; } ?>"><?php $this->msg('login_as_another'); ?></a>
+
+<div id="header">
+	<div class="shrinkwrap">
+		<div id="logo">
+			<a href="http://www.wikia.com"><img src="/skins/home/images/logo.gif" alt="Wikia - Find and collaborate with others who love what you love."/></a>
+		</div>
+		<div id="love">
+			<form action="javascript:perform_search()">
+				<span style="float: left;">
+					What do you love?
+					<input type="text" id="search_field" />
 				</span>
-<?php
-} else {
-?>
-				<span>
-<?php
-        printf('<a href="%s" id="login">%s</a>',
-	Skin::makeSpecialUrl( 'Userlogin', 'returnto=Wikia' ),
-	wfMsg('login'));
-?> or <?php
-        printf('<a href="%s" id="register">%s</a>',
-        Skin::makeSpecialUrl( 'Userlogin', 'type=signup' ),
-        wfMsg('create_an_account') );
-?>
-				</span>
-<?php
-}
-?>
-
+				<a id="search_button" class="big_button"><big>Find a Wiki</big><small></small></a>
+				<input type="submit" value="submit" style="display: none;" />
+			</form>
 		</div>
+		<ul id="navigation">
+			<li class="first">
+				<a href="http://www.wikia.com/wiki/Category:Hubs">Content Hubs</a>
+			</li>
+			<li>
+				<a href="http://www.wikia.com/wiki/Big_wikis">Biggest Wikis</a>
+			</li>
+			<li>
+				<a href="http://www.wikia.com/wiki/Wikia_languages">Wikis by Language</a>
+			</li>
+			<li>
+				<a href="http://help.wikia.com/wiki/Help:Video_demos">What is a Wiki?</a>
+			</li>
+			<li>
+				<a href="http://help.wikia.com">Wikia Help</a>
+			</li>
+		</ul>
 	</div>
-
-	<div id="header-search-bar">
-		<form onsubmit="return search();">
-			<input type="text" value="" id="q2" class="header-search-input" name="q2"/>
-			<input type="submit" value="Web Search" onclick="search();" />
-		</form>
-
-		<script type="text/javascript">/*<![CDATA[*/
-                function search(){
-                        window.location='http://re.search.wikia.com/search.html#' + document.getElementById('q2').value;
-                        return false;
-                }
-		document.getElementById('q2').focus();
-                /*]]>*/</script>
-
-	</div>
+</div>
 
 
-	<div id="mainContent">
-		<div id="leftCol">
-			<div id="introSection">
+<div class="shrinkwrap clearfix">
+	<div id="homepage_left_outside">
+		<div id="homepage_left_inside">
+		
+			<div id="featured_box">
+				<?php
+					echo $featured_hub;
+				?>
+			</div>
 
-				<!-- rounded box -->
-					<div class="roundedDiv blacktext">
-					<b class="xtop"><b class="xb1"></b><b class="xb2"></b><b class="xb3"></b><b class="xb4"></b></b>
-						<div class="boxContent"><?php echo $wgOut->parse( "{{Main Page}}" );?>
-							<div class="joinUs">
-								<table cellpadding="0" cellspacing="0">
-								<tr>
-									<td><?php
-
-									printf('<a href="%s" onclick="%s" style="border: none">',
-                                    Skin::makeSpecialUrl( 'Userlogin', "type=signup" ),
-                                    ($wgEnableAjaxLogin) ? 'javascript:Register(); return false;' : '');
-
-									?><img src="<?php $this->text('stylepath') ?>/home/images/button_joinus.png" style="cursor:pointer; border:none" alt="Join us" /></a></td>
-									<td class="joinUsCopy"><?php echo wfMsg( 'its_easy' );?></td>
-								</tr>
-								</table>
-							</div>
-							<div class="tutorial">
-								<table cellpadding="0" cellspacing="0">
-								<tr>
-									<td class="tutorialCopy"><?php echo wfMsg( 'or_learn' );?></td>
-									<td><a href="http://www.wikia.com/wiki/Help:Tutorial_1"><img src="<?php $this->text('stylepath') ?>/home/images/button_tutorial.png" style="border:none" alt="Tutorial" /></a></td>
-								</tr>
-								</table>
-							</div>
-							<div style="clear: both;"></div>
-						</div>
-					<b class="xbottom"><b class="xb4"></b><b class="xb3"></b><b class="xb2"></b><b class="xb1"></b></b>
-					</div>
-				<!-- rounded box -->
-
+			<ul id="featured_hubs_header">
+				<li>
+					<div>Featured Hubs</div>
+				</li>
+			</ul>
+			<table cellspacing="0" id="featured_hubs">
+			<tr>
+				<td class="first">
+					<?php
+						echo $non_featured_hub;
+					?>
+				</td>
+				<td>
+					<h1><a href="http://www.wikia.com/wiki/Sports">Sports</a></h1>
+					Football, Basketball, Racing, Wrestling, Snooker, and more.
+					<ul>
+						<li><a href="http://www.armchairgm.com">Armchair GM</a></li>
+						<li><a href="http://prowrestling.wikia.com">Pro Wrestling</a></li>
+						<li><a href="http://mma.wikia.com">Mixed Martial Arts</a></li>
+						<li><a href="http://thirdturn.wikia.com">NASCAR</a></li>
+						<li><a href="http://baseball.wikia.com">Baseball</a></li>
+					</ul>
+					more <a href="http://www.wikia.com/wiki/Sports">sports wikis</a>
+				</td>
+				<td>
+					<h1><a href="http://www.wikia.com/wiki/Toys">Toys</a></h1>
+					For collectors, customizers, and kids of all ages.
+					<ul>
+						<li><a href="http://hotwheels.wikia.com">Hot Wheels</a></li>
+						<li><a href="http://bionicle.wikia.com">Bionicle</a></li>
+						<li><a href="http://americangirl.wikia.com">American Girl</a></li>
+						<li><a href="http://gijoe.wikia.com">GI Joe</a></li>
+						<li><a href="http://lego.wikia.com">Lego</a></li>
+					</ul>
+					more <a href="http://www.wikia.com/wiki/Toys">toys wikis</a>
+				</td>
+			</tr>
+			</table>
+			<div id="all_hubs">
+				See more content hubs: <a href="http://www.wikia.com/wiki/Humor">Humor</a>, <a href="http://www.wikia.com/wiki/Auto">Auto</a>, <a href="http://www.wikia.com/wiki/Technology">Technology</a>, <a href="http://www.wikia.com/wiki/Finance">Finance</a>... <a href="http://www.wikia.com/wiki/Category:Hubs">See All</a>
 			</div>
 
 		</div>
-
-		<div id="rightCol">
-			<div id="rightNowSection">
-<?php
-
-    // define rightNowSection elements (id's, names, static pages containing data list to display)
-
-    $rightNowSections = array
-    (
-        'reading'    => 'Reading',
-        'editing'    => 'Editing',
-        'discussing' => 'Discussing',
-        'favorites'  => 'Staff Favorites',
-        'starting'   => 'Starting new wikia'
-    );
-
-    $selectedSection = isset($_COOKIE['rightNow']) ? $_COOKIE['rightNow'] : 'favorites';
-?>
-				<!-- rounded box -->
-					<div class="roundedDiv blacktext">
-					<b class="xtop"><b class="xb1"></b><b class="xb2"></b><b class="xb3"></b><b class="xb4"></b></b>
-						<div class="boxContent clearfix">
-
-<!--
-style="height: 155px;">
-							<div class="rightNowLeft">
-								<div class="title"><?php echo wfMsg('right_now');?></div>
-								<div id="rightNowLinks"><?php
-
-								    foreach($rightNowSections as $id => $name)
-								    {
-								        echo '<div id="'.$id.'"'. ($selectedSection == $id ? ' class="selected"' : '').'><a id="'.$id.'_link" href="">'.$name.'</a></div>';
-								    }
-
-								?>
-
-							    </div>
-							</div>
-							<div id="rightNowSubLinks"><?php
-
-								    foreach($rightNowSections as $id => $name)
-								    {
-								        echo '<div id="'.$id.'_links" style="display: '. ($selectedSection == $id ? 'block' : 'none').'">'.$this->grabStaticData($id).'</div>';
-								    }
-
-    							?>
-
-							</div>
-							<div style="clear: both;"></div>
--->
-<?php echo $wgOut->parse( "{{Toprightbox}}"); ?>
-						</div>
-					<b class="xbottom"><b class="xb4"></b><b class="xb3"></b><b class="xb2"></b><b class="xb1"></b></b>
-					</div>
-				<!-- rounded box -->
-			</div>
-			<div id="searchSection">
-
-				<!-- rounded box -->
-					<div class="roundedDiv">
-					<b class="xtop"><b class="xb1"></b><b class="xb2"></b><b class="xb3"></b><b class="xb4"></b></b>
-						<div class="boxContent">
-						    <form action="<?php $this->text('searchaction') ?>" id="searchform">
-							<div class="header"><?php echo wfMsgExt('search', array( 'parseinline' ) );?></div>
-							<div>
-								<input type="text" name="search" value="" />
-							</div>
-							<?php
-							    $searchLinks = $this->grabStaticData('search');
-							    if( !empty( $searchLinks ) ) {
-							    ?>
-							    <div class="subHeader"><?php echo wfMsg('other_people');?></div>
-							<div class="searchLinks"><?= $searchLinks ?></div>
-							<?php } ?>
-							<div id="goButton"><span><a href="" onclick="document.getElementById('searchform').submit();return false;">go</a></span></div>
-							<div style="clear: both;"></div>
-						    </form>
-						</div>
-					<b class="xbottom"><b class="xb4"></b><b class="xb3"></b><b class="xb2"></b><b class="xb1"></b></b>
-					</div>
-				<!-- rounded box -->
-			</div>
-
-		</div>
-
 	</div>
-	<div id="discoverySection">
-			<!-- rounded box -->
-				<div class="roundedDiv">
-				<b class="xtop"><b class="xb1"></b><b class="xb2"></b><b class="xb3"></b><b class="xb4"></b></b>
-					<div class="boxContent" style="">
-						<div style="">
-							<?php for( $i=1; $i<=5; $i++ ) { ?>
-							<div class="discoveryLinkSection">
-								<div class="discoveryHeader"><?php echo wfMsgExt("Footer_home_header_$i", array('parseinline'));?></div>
-								<?php echo $wgOut->parse( "{{Footer_home_links_$i}}" );?>
-							</div>
-							<?php } ?>
-						</div>
-						<div style="clear: both;"></div>
-					</div>
-				<b class="xbottom"><b class="xb4"></b><b class="xb3"></b><b class="xb2"></b><b class="xb1"></b></b>
-				</div>
-			<!-- rounded box -->
+	<div id="homepage_right">
+		<div style="position: absolute; top: 15px; left: 50%;"><a href="http://requests.wikia.com" class="big_button orange" style="margin-left: -50%;"><big>Create a Wiki</big><small></small></a></div>
+		<div class="box yellow" style="background-image: url(/skins/home/images/new_to_wikis_accent.gif); background-position: 240px 100%; background-repeat: no-repeat; padding-right: 70px;">
+			<h1>New to Wikis?</h1> 
+			"Wiki" comes from the Hawaiian word for fast. Wikia's wikis are websites where editing is simple and quick.<br />
+			<a href="http://help.wikia.com/wiki/Help:Video_demos">Take a video tour</a> to learn more.
+		</div>
+		<div class="box blue">
+			<h1>Adding Pictures just got easier</h1>
+			<img src="/skins/home/images/adding_pictures_accent.gif" alt="Flickr" style="float: right; margin-left: 10px;" />
+			Now you can search for images on Flickr, Wikia, or your desktop and add them directly to any article from the edit toolbar. Read the <a href="http://help.wikia.com/wiki/Help:Add_Images">help page</a> to learn more.
+		</div>
+		<div class="box green">
+			<img src="/skins/home/images/wikia_search.gif" alt="Wikia Search" style="float: right; margin-left: 10px;" />
+			<b>Wikia</b> is working to fix web searching in a collaborative and open way. Try searching the web with Wikia and help us improve our results.<br />
+			<form action="javascript: wikia_search();" style="margin-top: 3px;">
+				<input type="text" id="wikia_search_field" />
+				<input type="submit" value="go" />
+			</form>
+		</div>
 	</div>
-	<div id="footer">
-		<div class="adDiv">
-		    <img src="<?php $this->text('stylepath') ?>/home/images/awards/business2000.jpg" />
-		    &nbsp;
-		    <img src="<?php $this->text('stylepath') ?>/home/images/awards/econtent.jpg" />
-		    &nbsp;
-		    <img src="<?php $this->text('stylepath') ?>/home/images/awards/red_herring.jpg" />
-		    &nbsp;
-		    <img src="<?php $this->text('stylepath') ?>/home/images/awards/webware.jpg" />
-		</div>
-		<div class="adDiv">
-			<img src="<?php $this->text('stylepath') ?>/home/images/gp_media.png" border="0" width="128" height="22" />
-		</div>
+</div>
 
-		<div class="footerMain">
-			<a class="footerLogo" href="http://www.wikia.com"></a>
-			<div class="footerLinks">
-				<a href="http://www.wikia.com/wiki/About_Wikia">About Us</a> ::
-				<a href="http://www.wikia.com/wiki/Advertising">Advertise</a> ::
-				<a href="http://www.wikia.com/wiki/Contact_us">Contact Us</a> ::
-				<a href="http://www.wikia.com/wiki/Hiring">Hiring</a> ::
-				<a href="http://www.wikia.com/wiki/Press">Press</a> ::
-				<a href="http://www.wikia.com/wiki/Terms_of_use">Terms of Use</a>
-				<div id="f-hosting"><i>Wikia</i>&reg; is a registered service mark of Wikia, Inc. All rights reserved.</div>
-			</div>
+<div id="feature_footer">
+	<div class="shrinkwrap">
+		<table cellspacing="0">
+		<tr>
+			<th class="first">Most Horrifying Characters</th>
+			<th>Wikia's Top Robots</th>
+			<th>WoW's Most Wanted Items</th>
+			<th class="last">Harry Potter's Spells</th>
+		</tr>
+		<tr>
+			<td class="first gaming">
+				<ol>
+					<li><a href="http://residentevil.wikia.com/wiki/Nemesis">Nemesis</a> (<a href="http://residentevil.wikia.com" class="secondary" >Resident Evil</a>)</li>
+					<li><a href="(http://silenthill.wikia.com/wiki/The_One_Truth">The One Truth</a> (<a href="http://silenthill.wikia.com" class="secondary">Silent Hill</a>)</li>
+					<li><a href="http://bioshock.wikia.com/wiki/Little_Sisters">Little Sisters</a> (<a href="http://bioshock.wikia.com" class="secondary">Bio-shock</a>)</li>
+					<li><a href="http://doom.wikia.com/wiki/Vulgar">The Vulgar</a> (<a href="http://doom.wikia.com" class="secondary">Doom</a>)</li>
+					<li><a href="http://animalcrossing.wikia.com/wiki/Agent_S">Agent S</a> (<a href="http://animalcrossing.wikia.com" class="secondary">Animal Crossing</a>)</li>
+				</ol>
+			</td>
+			<td class="entertainment">
+				<ul>
+					<li><a href="http://starwars.wikia.com/wiki/R2-D2">R2-D2</a> (<a href="http://starwars.wikia.com" class="secondary">Wookieepedia</a>)</li>
+					<li><a href="http://terminator.wikia.com/wiki/T-800">T-800</a> (<a href="http://terminator.wikia.com" class="secondary">Terminator Wiki</a>)</li>
+					<li><a href="http://futurama.wikia.com/wiki/Bender_Bending_Rodr%C3%ADguez">Bender</a> (<a href="http://futurama.wikia.com" class="secondary">Futurama Wiki</a>)</li>
+					<li><a href="http://memory-alpha.org/en/wiki/Data">Data</a> (<a href="http://memory-alpha.org" class="secondary">Memory Alpha</a>)</li>
+					<li><a href="http://pixar.wikia.com/wiki/WALL%E2%80%A2E">WALL-E</a> (<a href="http://pixar.wikia.com" class="secondary">Pixar Wiki</a>)</li>
+				</ul>
+			</td>
+			<td class="gaming">
+				<ol>
+			    		<li><a href="http://www.wowwiki.com/The_Skull_of_Gul%27dan">Skull of Gul'dan</a></li>
+			        	<li><a href="http://www.wowwiki.com/Frostmourne">Frostmourne</a></li>
+					<li><a href="http://www.wowwiki.com/Ashkandi%2C_Greatsword_of_the_Brotherhood">Greatsword of the Brotherhood</a></li>
+					<li><a href="http://www.wowwiki.com/The_1_Ring">The 1 Ring</a></li>
+					<li><a href="http://www.wowwiki.com/Atiesh%2C_Greatstaff_of_the_Guardian">Greatstaff of the Guardian</a></li>
+				</ol>
+			</td>
+			<td class="last entertainment">
+				<ul>
+					<li><a href="http://harrypotter.wikia.com/wiki/Patronus">Patronus</a></li>
+					<li><a href="http://harrypotter.wikia.com/wiki/Cruciatus_Curse">Cruciatus Curse</a></li>
+					<li><a href="http://harrypotter.wikia.com/wiki/Expelliarmus">Expelliarmus</a></li>
+					<li><a href="http://harrypotter.wikia.com/wiki/Imperius_Curse">Imperius Curse</a></li>
+					<li><a href="http://harrypotter.wikia.com/wiki/Avada_Kedavra">Avada Kedavra</a></li>
+				</ul>
+			</td>
+		</tr>
+		</table>
+	</div>
+</div>
+<div id="footer">
+	<div class="shrinkwrap">
+		<ul>
+			<li><a href="http://www.wikia.com/wiki/About_Wikia">About Us</a></li>
+			<li><a href="http://www.wikia.com/wiki/Advertising">Advertise</a></li>
+			<li><a href="http://www.wikia.com/wiki/Contact_us">Contact Us</a></li>
+			<li><a href="http://www.wikia.com/wiki/Hiring">Hiring</a></li>
+			<li><a href="http://www.wikia.com/wiki/Press">Press</a></li>
+			<li><a href="http://www.wikia.com/wiki/Terms_of_use">Terms of Use</a></li>
+		</ul>
+		<div id="copyright">
+			<img src="/skins/home/images/footer_logo.gif" alt="Wikia" /><br />
+			Wikia&reg; is a registered service mark of Wikia, Inc.<br />
+			All rights reserved.
 		</div>
 	</div>
 </div>
