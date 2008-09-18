@@ -60,7 +60,7 @@ function search_field_focus() {
 function search_field_blur() {
 	if (searchField.value == '') {
 		change_search_value();
-		search_timer = setInterval(change_search_value, 5000);S
+		search_timer = setInterval(change_search_value, 5000);
 	}
 }
 
