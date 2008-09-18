@@ -1,5 +1,47 @@
 <?php
 
+$wgAjaxExportList [] = 'wfCheckUserLoginJSONnew';
+function wfCheckUserLoginJSONnew($callback_function="handle_user_logged_in("){ 
+	global $wgUser, $wgSearchKTKeyAnon, $wgSearchKTKeyUser, $wgSearchKTKeyAdmin;
+	
+	$utc_str = gmdate("M d Y H:i:s", time());
+	$utc = strval(intval(strtotime($utc_str))*1000);
+  
+	$logged_in_info = array();
+	if (!$wgUser->isLoggedIn() || $wgUser->isAnon()) {
+		$logged_in_info["is_logged_in"] = false;
+		$logged_in_info["user_name"] = "";
+		$logged_in_info["user_id"] = "";
+		$logged_in_info["hash"] = md5($wgUser->getName().$wgSearchKTKeyAnon.$utc);
+		$logged_in_info["IP"] = $wgUser->getName();
+		$logged_in_info["time"] = $utc;
+	}else {
+		$logged_in_info["is_logged_in"] = true;
+		$logged_in_info["user_name"] = $wgUser->getName();
+		$logged_in_info["user_id"] = $wgUser->getId();
+		$user_groups = $wgUser->getGroups();
+		$user_groups = array_flip($user_groups);
+		if (isset($user_groups['staff'])||isset($user_groups['bureaucrat'])||isset($user_groups['sysop'])) {
+			$logged_in_info["adminhash"] = md5($wgUser->getName()."HasAdminRights");
+			$logged_in_info["hash"] = md5($wgUser->getName().$wgSearchKTKeyAdmin.$utc);
+		}
+		else $logged_in_info["hash"] = md5($wgUser->getName().$wgSearchKTKeyUser.$utc);
+		$logged_in_info["time"] = $utc;
+	}
+
+	
+	if( strpos( $callback_function, "(" ) === false ){
+		$callback_function .= "(";
+	}
+	return "var user_logged_in = " . 
+		jsonify($logged_in_info) . 
+		";\n\n" . 
+		"setLoginCookie(user_logged_in);\n\n" . 
+		"set_header_loggedin();\n\n" . 
+		"{$callback_function}user_logged_in);";
+}
+
+//we are keeping this function so the API to the Wikia Search Toolbar doesn't break :)
 $wgAjaxExportList [] = 'wfCheckUserLoginJSON';
 function wfCheckUserLoginJSON($callback_function="handle_user_logged_in"){ 
 	global $wgUser;
@@ -39,10 +81,10 @@ function wfDoLogoutJSON($callback_function=false){
 	$wgUser->logout();
 
 	if ($callback_function) {
-		return wfCheckUserLoginJSON($callback_function);
+		return wfCheckUserLoginJSONnew($callback_function);
 	}
 	else {
-		return wfCheckUserLoginJSON();
+		return wfCheckUserLoginJSONnew();
 	}
 
 }
