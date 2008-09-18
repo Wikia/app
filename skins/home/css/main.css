@@ -1,471 +1,375 @@
 body {
+	font-family: "arial", sans-serif;
+	font-size: 10pt;
 	margin: 0;
-	padding: 0;
 	text-align: center;
-	font: normal 9pt arial, sans-serif;
-	background: #f2f2f2;
 }
-
-#mainContainer {
-	width: 750px;
-	margin: 0 auto;
-	text-align: left;
-	border: 0px solid #000;
+a {
+	color: #00F;
+	text-decoration: none;
 }
-
+a:hover {
+	text-decoration: underline;
+}
+a:visited {
+	color: #1e64b4;
+}
 #header {
-	width: 100%;
-	margin: 20px 0 0 0;
-	color:#3822a8;
+	background: url(../images/header_background.png) repeat-x;
+	height: 120px;
+	margin-bottom: 20px;
 }
-.headerLogo {
-	background: url(http://images.wikia.com/common/skins/home/images/wikia_blue.gif);
-	float: left;
-	height: 35px;
-	margin-left: 10px;
-	width: 135px;
+#header .shrinkwrap {
+	height: 120px;
 }
-
-#header a:link { color:#3822a8; text-decoration: underline; }
-#header a:active { color:#3822a8; text-decoration: underline; }
-#header a:visited { color:#3822a8; text-decoration: underline; }
-#header a:hover { color:#3822a8; text-decoration: none; }
-
-.headerCopy {
-	float: left;
-	font-weight: bold;
-	margin-top: 16px;
-	margin-left: 10px;
+#logo {
+	padding-top: 18px;	
 }
-
-.greeting {
-	font-weight: normal;
-}
-
-#mainContent {
-	clear: both;
-	width: 100%;
-	padding-top: 10px;
-}
-
-.printfooter {
-    display: none;
-}
-
-#leftCol {
-	width: 257px;
-	float: left;
-}
-
-#rightCol {
-	width: 478px;
-	padding: 0 0 0 15px;
-	float: left;
-}
-div.blacktext div.boxContent{
-	color: #000;
-}
-
-.homepage_box_top {
-	border-bottom: 1px solid #F2F2F2;
-	margin-bottom: 10px;
-	min-height: 50px;
-}
-.homepage_headline {
+#love {
 	color: #333;
-	font-family: "Lucida Grande", arial, sans-serif;
-	font-weight: bold;
-	padding-top: 7px;
+	position: absolute;
+	font-family: "arial narrow", "arial", sans-serif;
+	font-size: 18pt;
+	right: 0;
+	top: 30px;
 }
-.homepage_headline span {
-	display: block;
-	font-weight: normal;
+#search_field {
+	color: #1e64b4;
+	font-family: "arial", sans-serif;
+	font-size: 15pt;
+	width: 200px;
 }
-#graphic_search_cloud {
-	background: url(http://images.wikia.com/common/skins/home/images/search_cloud.gif) no-repeat;
-	float: right;
-	height: 46px;
-	width: 51px;
+#love a.big_button {
+	margin: 2px 0 0 5px;
 }
-#graphic_jimmy {
-	background: url(http://images.wikia.com/common/skins/home/images/jimmy_50x50.jpg) center center no-repeat;
-	border: 1px solid #999;
+
+#navigation {
+	bottom: 0;
+	position: absolute;
+}
+#navigation li {
+	background: url(../images/navigation_divider.png) center left no-repeat;
 	float: left;
-	height: 50px;
-	margin: 0 8px 8px 0;
-	padding: 1px;
-	width: 50px;
+	font-family: "arial narrow", "arial", sans-serif;
 }
-#pseudo_hubs {
+#navigation li.first {
+	background: transparent;
+}
+#navigation a {
+	color: #FFF;
+	display: block;
+	height: 30px;
+	line-height: 30px;
+	padding: 0 10px 0 12px;
+}
+#navigation li.first a {
+	padding-left: 0;
+}
+
+/*** HOMEPAGE LEFT ***/
+#homepage_left_outside {
+	float: left; 
+	margin-right: -340px; 
+	position: relative;
+	width: 100%; 
+}
+#homepage_left_inside {
+	margin-right: 340px;
+}
+#featured_box {
+	background: url(../images/featured_hub_background.png) no-repeat;
+	color: #333;
 	font-size: 8pt;
+	padding: 13px 13px 0;
 }
-#pseudo_hubs a {
-	color: #666;
+#featured_box h1 {
+	color: #090;
+	font-size: 10.5pt;
+	margin-bottom: 10px;
 }
-ul#featured_hubs {
-	background: #FFC;
-	border: 1px solid #C90;
-	float: right;
-	margin: 0;
-	padding: 0 5px;
-	width: 150px;
+#featured_box h2 {
+	color: #F30;
+	font-weight: bold;
+	font-size: 11pt;
 }
-ul#featured_hubs li {
-	background-position: 0 5px;
-	background-repeat: no-repeat;
-	font-size: 8pt;
-	list-style: none;
-	min-height: 50px;
-	padding: 5px 0 5px 45px;
-}
-ul#featured_hubs li.gaming {
-	background-image: url(http://images.wikia.com/common/skins/home/images/icon_gaming.jpg);
-}
-ul#featured_hubs li.entertainment {
-	background-image: url(http://images.wikia.com/common/skins/home/images/icon_entertainment.jpg);
-}
-ul#featured_hubs a {
+#featured_box li a {
 	font-size: 10pt;
 }
+#featured_box table {
+	width: 100%;
+}
+#featured_box td {
+	vertical-align: top;
+}
+a.more {
+	color: #333;
+	font-size: 8pt;
+}
 
-.hub_list {
+#featured_hubs_header {
+	background: url(../images/featured_hubs_header_background.png) repeat-x;
+	height: 45px;
+	margin-top: 5px;
+}
+#featured_hubs_header li {
+	background: url(../images/featured_hubs_tab.png) no-repeat;
+	height: 26px;
 	float: left;
-	margin-right: 10px;
-}
-.hub_list ul {
-	margin: 0;
-	padding: 0;
-}
-.hub_list li {
-	list-style: none;
-	margin-bottom: 3px;
-}
-
-#introSection {
-}
-
-.introTitle {
-	line-height: 1.58em;
-	word-spacing: 0.15em;
-	font-weight: bold;
-	font-size: 16px;
-	margin: 0 0 10px 0;
-}
-
-.introTitle div {
-	display: inline;
-	background:#ffee00;
-}
-.introCopy {
-	font-weight: bold;
-	line-height: 1.38em;
-	word-spacing: 0.15em;
-	margin: 0 0 20px 0;
-}
-.introImage {
-	margin: 0 0 10px 0;
-}
-
-.joinUs {
-	display: none;
-	margin: 0 0 5px 0;
-}
-.joinUsButton {
-	display: inline;
-	vertical-align: middle;
-	margin: 0 5px 0 0;
-}
-.joinUsCopy {
-	font-size: 14px;
-	font-weight: bold;
-	padding: 0 0 0 5px;
-}
-
-.tutorial {
-	display: none;
-	margin: 0 0 11px 0;
-}
-
-.tutorialCopy {
-	font-size: 14px;
-	font-weight: bold;
-	padding: 0 5px 0 0;
-}
-
-.tutorialButton {
-	display: inline;
-	vertical-align: middle;
-	margin: 0 0 0 5px;
-}
-
-img
-{
-    border: none;
-}
-
-
-#rightNowSection .title {
-	font-weight: bold;
-	font-size: 14px;
-	color: #3822a8;
-	margin: 3px;
-}
-
-.rightNowLeft {
-	float: left;
-}
-#rightNowLinks {
-	z-index: 4;
-	border: 0px solid #000;
-	position: absolute;
-	top: 55px;
-}
-
-*html #rightNowLinks {
-	left: 16px;
-}
-
-#rightNowLinks a:link { font-weight: bold;color:#666; text-decoration:none; }
-#rightNowLinks a:visited { font-weight: bold;color:#666; text-decoration:none; }
-#rightNowLinks a:active { font-weight: bold;color:#666; text-decoration:none; }
-#rightNowLinks a:hover { font-weight: bold;color:#666; text-decoration:underline; }
-
-#rightNowLinks div {
-	width: 113px;
-	padding: 3px 5px;
-	border: 1px solid #fff;
-	border-right:0;
-}
-
-#rightNowLinks div.selected { padding: 3px 5px; border: 1px solid #e5e5e5; border-right: 1px solid #fff; z-index: 100; }
-
-
-
-#rightNowSubLinks {
-	float: left;
-	margin: 0 0 0 30px;
-	padding: 10px 0 0 10px;
-	border-left: 1px solid #e5e5e5;
-	width: 240px;
-	height: 170px;
-	position: absolute;
-	left: 110px;
-	top: 0px;
-}
-#rightNowSubLinks a:link { color:#666; text-decoration:none; }
-#rightNowSubLinks a:active { color:#666; text-decoration:none; }
-#rightNowSubLinks a:visited { color:#666; text-decoration:none; }
-#rightNowSubLinks a:hover { color:#666; text-decoration:underline; }
-
-#rightNowSubLinks div { padding: 5px 5px 5px 0; }
-
-
-
-#searchSection {
-	display: none;
-	position: relative;
-}
-#searchSection .header {
-	font-weight: bold;
-	font-size: 16px;
-	color: #3822a8;
-	margin: 0 0 5px 0;
-	width: 99%;
-}
-#searchSection .subHeader {
-	font-weight: bold;
-	font-size: 14px;
-	color: #3822a8;
-	width: 95%;
-	margin: 5px 0 5px 0;
-}
-#searchSection input {
-	border:1px solid #c2c7cc;
-	font: normal 11px sans-serif;
-	background:#ffee80;
-	width: 95%;
-	padding: 2px;
-}
-
-.linkSection {
-	float: left;
-	margin: 0 8px 0 0;
-	width: 30%;
-}
-
-.searchLinks {
-    line-height: 1.7;
-}
-
-#searchSection a:link { color: #666; text-decoration: none; }
-#searchSection a:active { color: #666; text-decoration: none; }
-#searchSection a:visited{ color: #666; text-decoration: none; }
-#searchSection a:hover { color: #666; text-decoration: underline; }
-
-
-#goButton {
-	width: 28px;
-	height: 31px;
-	background: url(../images/searchArrow.png);
-	position:absolute;
-	top: 40px;
-	left: 391px;
-}
-
-#goButton span {
-	font-weight: bold;
-	position: relative;
-	top: 7px;
-	left: 2px;
-}
-
-#searchSection #goButton a:link { color: #3822a8; text-decoration: none; }
-#searchSection #goButton a:visited{ color: #3822a8; text-decoration: none; }
-#searchSection #goButton a:active { color: #3822a8; text-decoration: none; }
-#searchSection #goButton a:hover{ color: #3822a8; text-decoration: none; }
-
-
-#discoverySection {
-	clear: both;
-	padding: 15px 0 0 0;
-	font-weight: bold;
-	color:#3822a8;
-}
-
-#discoverySection a:link { color:#3822a8; text-decoration: none; }
-#discoverySection a:visited { color:#3822a8;text-decoration: none; }
-#discoverySection a:active { color:#3822a8;text-decoration: none; }
-#discoverySection a:hover { color:#3822a8;text-decoration: underline; }
-
-.moreLink {
-	background: #ffee80;
-}
-.discoveryHeader {
-	font: bold 16px sans-serif;
-	border-bottom: 1px solid #dfd9ff;
-	padding: 10px 0 5px 0;
-	margin: 0 0 5px 0;
-}
-
-.discoveryLinkSection {
-	float: left;
-	margin: 0 21px 0 0;
-	width: 17%;
-}
-
-.discoveryLinkSection p {
-    line-height: 1.7;
-}
-
-
-#footer {
-	margin: 20px auto 0 auto;
-}
-
-.footerMain {
+	margin: 19px 5px 0;
 	padding-left: 10px;
 }
-
-.footerLinks {
+#featured_hubs_header li div {
+	background: url(../images/featured_hubs_tab.png) top right no-repeat;
+	color: #F30;
+	font-size: 9pt;
+	font-weight: bold;
+	height: 26px;
+	line-height: 30px;
+	padding-right: 10px;
+}
+#featured_hubs {
+	margin: 10px 0;
+	width: 100%;
+}
+#featured_hubs td {
+	background: url(../images/dotted_divider.gif) repeat-y;
+	color: #333;
+	font-size: 8pt;
+	padding: 5px 10px 5px 13px;
+	width: 33%;
+}
+#featured_hubs td.first {
+	background: transparent;
+	padding-left: 10px;
+}
+#featured_hubs h1 {
+	color: #090;
+	font-size: 12pt;
 	font-weight: bold;
 }
-#f-hosting {
-	font-weight: normal;
+#featured_hubs h1 a {
+	color: inherit;
 }
-.footerLogo {
-	background: url(http://images.wikia.com/common/skins/home/images/wikia_blue_small.gif) no-repeat;
-	height: 19px;
-	display: block;
-	margin-bottom: 5px;
-	width: 72px;
+#featured_hubs h1 a:hover {
+	text-decoration: none;
 }
-
-
-#footer a:link { color: #3822a8; text-decoration: none; }
-#footer a:visited{ color: #3822a8; text-decoration: none; }
-#footer a:active { color: #3822a8; text-decoration: none; }
-#footer a:hover { color: #3822a8; text-decoration: underline; }
-
-.adDiv {
-	clear: both;
-	float: right;
-	margin-right: 10px;
+#featured_hubs ul {
+	margin: 3px 0;
 }
-.adDiv img {
-	margin-bottom: 5px;
+#featured_hubs li a {
+	font-size: 10pt;
+}
+#all_hubs {
+	background: #EEE;
+	border-bottom: 1px solid #1e64b4;
+	font-size: 8pt;
+	padding: 3px;
+	text-align: center;
 }
 
-.roundedDiv { border:0px solid #000; background: transparent; margin: 0 0 0 0; width: 100%; }
+/*** HOMEPAGE RIGHT ***/
+#homepage_right {
+	background: #EEE url(../images/right_column_background.png) no-repeat;
+	border-bottom: 1px solid #1e64b4;
+	clear: right;	
+	float: right; 
+	padding: 45px 15px 15px;
+	position: relative; 
+	width: 300px; 
+}
+#homepage_right .box {
+	font-size: 9pt;
+	margin-top: 10px;
+	padding: 8px;
+}
+#homepage_right .box.green {
+	background: #5c8e6a url(../images/box_green_background.png);
+	border: 1px solid #396;
+	color: #333;
+}
+#homepage_right .box.yellow {
+	background: #FFFAAA;
+	border: 1px solid #A4A4A4;
+}
+#homepage_right .box.yellow h1 {
+	color: #1e64b4;
+	font-family: "Comic Sans MS", "arial", sans-serif;
+	font-size: 11pt;
+	font-weight: bold;
+}
+#homepage_right .box.blue {
+	background: #5986b2 url(../images/box_blue_background.png) top center repeat-y;
+	color: #FFF;
+}
+#homepage_right .box.blue h1 {
+	font-family: "Times New Roman", serif;
+	font-size: 12pt;
+	font-weight: bold;
+	margin-bottom: 4px;
+}
+#homepage_right .box.blue a {
+	color: #FFF;
+	font-weight: bold;
+	text-decoration: underline;
+}
 
-.roundedDiv b.xtop, .roundedDiv b.xbottom {display:block; background:transparent; font-size:1px;}
-.roundedDiv b.xb1, .roundedDiv b.xb2, .roundedDiv b.xb3, .roundedDiv b.xb4 {display:block; overflow:hidden;}
-.roundedDiv b.xb1, .roundedDiv b.xb2, .roundedDiv b.xb3 {height:1px;}
-.roundedDiv b.xb2, .roundedDiv b.xb3, .roundedDiv b.xb4 {background:#fff; border-left:1px solid #e5e5e5; border-right:1px solid #e5e5e5;}
-.roundedDiv b.xb1 {margin:0 5px; background:#e5e5e5;}
-.roundedDiv b.xb2 {margin:0 3px; border-width:0 2px;}
-.roundedDiv b.xb3 {margin:0 2px;}
-.roundedDiv b.xb4 {height:2px; margin:0 1px;}
-
-.roundedDiv div.boxContent {
-	display:block;
-	background:#fff;
-	border:1px solid #e5e5e5;
-	border-width:0 1px;
-	color: #3822a8;
-	padding: 8px 8px 8px 15px;
+#feature_footer {
+	background: #15477f url(../images/feature_footer_background.png) repeat-x;
+	color: #FFF;
+	margin-top: 20px;
+	min-height: 240px;
+	padding: 5px 0;
+}
+#feature_footer a {
+	border-bottom: 1px dotted #AAA;
+	color: #FFF;
+}
+#feature_footer a:hover {
+	border-bottom: 1px solid #FFF;
+	text-decoration: none;
+}
+#feature_footer a.secondary {
+	color: #DDD;
+	font-size: 9pt;
+}
+#feature_footer a.secondary:hover {
+	color: #FFF;
+}
+#feature_footer table {
+	width: 100%;
+}
+#feature_footer th, #feature_footer td {
+	border-left: 1px solid #6293cb;
+	padding: 0 10px;
+	width: 25%;
+}
+#feature_footer th.first, #feature_footer td.first {
+	border-left: 0;
+	padding-left: 0;
+}
+#feature_footer th.last, #feature_footer td.last {
+	padding-right: 0;
+}
+#feature_footer th {
+	color: #FFC;
+	font-size: 11pt;
+	font-weight: bold;
+	vertical-align: middle !important;
+	height: 45px;
+}
+#feature_footer td {
+	color: #FFF;
+	height: 200px;
+	padding-top: 20px;
+	padding-bottom: 50px;
+	vertical-align: top;
+}
+#feature_footer td.gaming {
+	background: url(../images/feature_footer_wikia_gaming_logo.gif) 95% 95% no-repeat;
+}
+#feature_footer td.entertainment {
+	background: url(../images/feature_footer_wikia_entertainment_logo.gif) 95% 95% no-repeat;
+}
+#feature_footer ol, #feature_footer ul {
+	margin-left: 20px;
+}
+#feature_footer li {
+	padding: 2px 0;
+}
+#feature_footer ol li {
+	list-style-type: decimal;
+}
+#feature_footer ul li {
+	list-style-type: disc;
+}
+#footer {
+	background: #252525 url(../images/footer_background.png) repeat-x;
+	height: 68px;
+	overflow: hidden;
 	text-align: left;
 }
-
-
-/* AJAX login fixes */
-
-.errorbox{
-color: #ff0000;
+#footer li {
+	float: left;
+	line-height: 74px;
+	padding-right: 10px;
+}
+#footer a {
+	color: #FFF;
+	font-size: 9pt;
+}
+#copyright {
+	color: #CCC;
+	font-size: 8pt;
+	position: absolute;
+	right: 0;
+	text-align: right;
+	top: 0;
+}
+#copyright img {
+	margin-bottom: 2px;
 }
 
-#AjaxLoginWindow_RoundBox .roundedDiv,
-#AjaxRegisterWindow_RoundBox .roundedDiv
-{
-    background: #fff;
+a.big_button {
+	display: block;
+	float: left;
+	height: 28px;
+	overflow: hidden;
+	padding-right: 10px;
+	position: relative;
+	text-decoration: none;
+}
+a.big_button:hover {
+	text-decoration: none;
+}
+a.big_button * {
+	cursor: pointer;
+	float: left;
+	font-family: "Lucida Grande", arial, sans-serif;
+	font-size: 9pt;
+	font-weight: bold;
+	height: 28px;
+	line-height: 28px;
+}
+a.big_button big, a.big_button small {
+	background: url(../images/big_button.png) no-repeat;
+}
+a.big_button big {
+	color: #EEE;
+	padding-left: 10px;
+}
+a.big_button small {
+	clip: rect(0px 300px 28px 290px);
+	position: absolute;
+	right: 0;
+	width: 300px;
 }
 
-#AjaxLoginWindow .loginText,
-#AjaxLoginWindow .loginPassword
-{
-    position: relative;
+a.big_button.orange big {
+	background-position: 0 -28px;
+}
+a.big_button.orange small {
+	clip: rect(28px 300px 56px 290px);
+	height: 56px;
+	top: -28px;
 }
 
-#rightNowLinks {
-    cursor: pointer;
+
+.shrinkwrap {
+	margin: 0 auto;
+	position: relative;
+	text-align: left;
+	width: 920px;
 }
 
 .clearfix:after {
-    content: "."; 
-    display: block; 
-    height: 0; 
-    clear: both; 
+    content: ".";
+    display: block;
+    height: 0;
+    clear: both;
     visibility: hidden;
 }
 
 .clearfix {display: inline-block;}
-
-
-/* Search box */
-
-#header-search-bar {
-	clear: both;
-	padding: 40px 0px 20px 0px;
-	background: #f2f2f2 url('../images/web_search_cloud.png') no-repeat 3px 22px;
-}
-
-#header-search-bar form {
-	margin: 0 0 0 175px;
-	padding: 0;
-}
-
-.header-search-input {
-	width: 380px;
-}
 
 /* Hides from IE-mac \*/
 * html .clearfix {height: 1%;}
