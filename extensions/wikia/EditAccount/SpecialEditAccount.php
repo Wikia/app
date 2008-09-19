@@ -24,12 +24,22 @@ $wgExtensionCredits['specialpage'][] = array(
         'author' => "[http://www.wikia.com/wiki/User:TOR Lucas 'TOR' Garczewski]",
         'description' => 'Enables Wikia Staff members to manage user account information.'
 );
+
+$wgExtensionMessagesFiles['EditAccount'] = dirname(__FILE__) . '/SpecialEditAccount.i18n.php';
+
+$wgSpecialPageGroups['EditAccount'] = 'users';
+
 //Allow group STAFF to use this extension.
 $wgAvailableRights[] = 'editaccount';
 $wgGroupPermissions['*']['editaccount'] = false;
 $wgGroupPermissions['staff']['editaccount'] = true;
 
-$wgExtensionMessagesFiles['EditAccount'] = dirname(__FILE__) . '/SpecialEditAccount.i18n.php';
+//Log deffinition
+$wgLogTypes[] = 'editaccnt';
+$wgLogNames['editaccnt'] = 'editaccount-log';
+$wgLogHeaders['editaccnt'] = 'editaccount-log-header';
+$wgLogActions['editaccnt/mailchange'] = 'editaccount-log-entry-email';
+$wgLogActions['editaccnt/passchange'] = 'editaccount-log-entry-pass';
 
 //Register special page
 if (!function_exists('extAddSpecialPage')) {

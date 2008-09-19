@@ -2,6 +2,7 @@
 
 $messages = array(
 	'en' => array(
+		'editaccount'			=> 'Edit Account',
 		'editaccount-title'		=> 'Special:EditAccount',
 		'editaccount-frame-manage'	=> 'Edit an acccount',
 		'editaccount-frame-usage'	=> 'Note',
@@ -20,5 +21,10 @@ $messages = array(
 		'editaccount-error-pass'	=> 'Password was not changed. Try again or contact the Tech Team.',
 		'editaccount-invalid-email'	=> '"$1" is not a valid e-mail address!',
 		'editaccount-nouser'		=> 'Account "$1" does not exist!',
+		# logging
+		'editaccount-log'		=> 'User accounts log',
+		'editaccount-log-header'	=> 'This page lists changes made to user preferences by Wikia Staff.',
+		'editaccount-log-entry-email'	=> 'changed e-mail for user $2',
+		'editaccount-log-entry-pass'	=> 'changed password for user $2',
 	),
 );
