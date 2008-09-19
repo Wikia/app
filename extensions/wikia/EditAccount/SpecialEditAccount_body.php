@@ -24,12 +24,10 @@ class EditAccount extends SpecialPage {
 	var $mStatus = null;
 	var $mStatusMsg;
 
-	/**
-	 * constructor
-	 */
-	function __construct() {
-		parent::__construct('EditAccount' /*class*/, 'editaccount' /*restriction*/);
-	}
+	function EditAccount() {
+                SpecialPage::SpecialPage('EditAccount', 'editaccount');
+                wfLoadExtensionMessages('EditAccount');
+        }
           
 	function execute() {
 		global $wgOut, $wgUser, $wgRequest;
@@ -43,8 +41,6 @@ class EditAccount extends SpecialPage {
 
 		$action = $wgRequest->getVal('wpAction');
 		$userName = $wgRequest->getVal('wpUserName');
-
-		wfLoadExtensionMessages('EditAccount');
 
 		// check if user name is an existing user
 		if (!empty($userName)) {
@@ -96,6 +92,11 @@ class EditAccount extends SpecialPage {
 
 			// Check if everything went through OK, just in case
 			if ($this->mUser->getEmail() == $email) {
+				global $wgUser, $wgTitle;
+
+				$log = new LogPage('editaccnt');
+				$log->addEntry('mailchange', $wgTitle, '', array($this->mUser->getUserPage()));
+
 				$this->mStatusMsg = wfMsg('editaccount-success-email', $this->mUser->mName, $email);
 				return true;
 			} else {
@@ -110,7 +111,13 @@ class EditAccount extends SpecialPage {
 
 	function setPassword($pass) {
 		if ($this->mUser->setPassword($pass)) {
+			global $wgUser, $wgTitle;
+
 			$this->mUser->saveSettings();
+
+			$log = new LogPage('editaccnt');
+			$log->addEntry('passchange', $wgTitle, '', array($this->mUser->getUserPage));
+
 			$this->mStatusMsg = wfMsg('editaccount-success-pass', $this->mUser->mName);
 			return true;
 		} else {
