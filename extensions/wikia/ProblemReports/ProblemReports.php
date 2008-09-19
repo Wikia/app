@@ -62,7 +62,7 @@ $wgAutoloadClasses['SpecialProblemReports'] = $IP . '/extensions/wikia/ProblemRe
 // extension setup (install hooks, load WikiaAPI modules)
 function wfProblemReports()
 {
-	global $wgLogTypes, $wgLogNames, $wgLogTypes, $wgLogActions, $wgLogHeaders, $wgProblemReportsEnable, $wgHooks, $wgServer;
+	global $wgLogTypes, $wgLogNames, $wgLogActions, $wgLogHeaders, $wgProblemReportsEnable, $wgHooks, $wgServer;
 	
 	// add hooks & messages if problem reporting is enabled
 	if (isset($wgProblemReportsEnable) && $wgProblemReportsEnable)
