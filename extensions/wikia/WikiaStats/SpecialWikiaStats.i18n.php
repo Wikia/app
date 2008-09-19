@@ -99,7 +99,6 @@ $wgWikiaStatsMessages["en"] = array(
 	"wikiastats_register" => "Reg.",
 	"wikiastats_unregister" => "Unreg.",	
 	"wikiastats_more_txt" => "more",	
-	"wikiastats_date" => "date",
 	"wikiastats_now" => "now",
 	"wikiastats_prev_rank" => "Δ",
 	"wikiastats_prev_rank_xls" => "+/-",
