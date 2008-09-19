@@ -17,7 +17,7 @@ var search_terms = [
 	['Wrestling', 'prowrestling'],
 	['Transformers', 'transformers'],
 	['Godzilla', 'godzilla'],
-	['Pixar Movies', 'pixar'],
+	['Pixar Movies', 'pixar']
 ];
 var search_term_index = '';
 
