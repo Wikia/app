@@ -51,7 +51,6 @@ $wgExtensionFunctions[] = 'wfProblemReports';
 $wgExtensionMessagesFiles['ProblemReports'] = $IP . '/extensions/wikia/ProblemReports/ProblemReports.i18n.php';
 
 // load files
-require( "$IP/extensions/wikia/ProblemReports/ProblemReports.i18n.php" );
 require( "$IP/extensions/wikia/ProblemReports/ProblemReportsDialog.php" );
 require( "$IP/extensions/wikia/ProblemReports/ProblemReportsAjax.php" );
 
@@ -65,11 +64,10 @@ function wfProblemReports()
 	global $wgLogTypes, $wgLogNames, $wgLogActions, $wgLogHeaders, $wgProblemReportsEnable, $wgHooks, $wgServer;
 	
 	// add hooks & messages if problem reporting is enabled
-	if (isset($wgProblemReportsEnable) && $wgProblemReportsEnable)
-	{
+	if (!empty($wgProblemReportsEnable)) {
 		global $wgOut, $wgExtensionsPath, $wgStyleVersion;
 	
-		// add "Report a problem" link and return html of Report a problem" dialog
+		// add "Report a problem" link and return html of "Report a problem" dialog
 		$wgHooks['SkinTemplateContentActions'][] = 'wfProblemReportsAddLink';
 	}
 
