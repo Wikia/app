@@ -16,6 +16,7 @@ $wgGroupPermissions['staff']['multiwikiedit'] = true;
 
 $dir = dirname(__FILE__);
 $wgExtensionMessagesFiles ['MultiWikiEdit'] = $dir . '/MultiWikiEdit.i18n.php';
+$wgSpecialPageGroups['Multiwikiedit'] = 'pagetools';
 
 $wgExtensionFunctions[] = 'wfMultiWikiEditSetup';
 $wgExtensionCredits['specialpage'][] = array(

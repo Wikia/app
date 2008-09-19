@@ -57,6 +57,7 @@ require( "$IP/extensions/wikia/ProblemReports/ProblemReportsAjax.php" );
 // special page
 $wgSpecialPages['ProblemReports'] = 'SpecialProblemReports'; 
 $wgAutoloadClasses['SpecialProblemReports'] = $IP . '/extensions/wikia/ProblemReports/SpecialProblemReports_body.php'; 
+$wgSpecialPageGroups['ProblemReports'] = 'maintenance';
 
 // extension setup (install hooks, load WikiaAPI modules)
 function wfProblemReports()

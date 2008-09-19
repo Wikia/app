@@ -35,6 +35,7 @@ if ( !function_exists( 'extAddSpecialPage' ) ) {
 
 extAddSpecialPage( dirname(__FILE__) . '/SpecialMostPopularArticles_body.php', 'Mostpopulararticles', 'MostpopulararticlesSpecialPage' );
 
+$wgSpecialPageGroups['Mostpopulararticles'] = 'highuse';
 
 function wfSetupMostPopularArticles( $queryPages = array() ) {
     $queryPages[] = array( 'MostpopulararticlesPage', 'Mostpopulararticles');

@@ -16,6 +16,7 @@ $wgGroupPermissions['staff']['multidelete'] = true;
 
 $dir = dirname(__FILE__);
 $wgExtensionMessagesFiles ['MultiDelete'] = $dir . '/MultiDelete.i18n.php';
+$wgSpecialPageGroups['Multidelete'] = 'pagetools';
 
 $wgExtensionFunctions[] = 'wfMultiDeleteSetup';
 $wgExtensionCredits['specialpage'][] = array(

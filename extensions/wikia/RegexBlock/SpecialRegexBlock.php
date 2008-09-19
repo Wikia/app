@@ -38,5 +38,4 @@ if ( !function_exists( 'extAddSpecialPage' ) ) {
 }
 
 extAddSpecialPage( dirname(__FILE__) . '/SpecialRegexBlock_body.php', 'RegexBlock', 'RegexBlockForm' );
-
-?>
+$wgSpecialPageGroups['RegexBlock'] = 'users';

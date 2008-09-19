@@ -27,4 +27,4 @@ $dir = dirname(__FILE__);
 $wgAutoloadClasses['Webtools'] = $dir . '/SpecialWebtools_body.php';
 $wgSpecialPages['webtools'] = array( /*class*/ 'Webtools', /*name*/ 'Webtools', /* permission */'', /*listed*/ true, /*function*/ false, /*file*/ false );
 $wgExtensionMessagesFiles['Webtools'] = $dir . '/SpecialWebtools.i18n.php';
-
+$wgSpecialPageGroups['Webtools'] = 'wiki';

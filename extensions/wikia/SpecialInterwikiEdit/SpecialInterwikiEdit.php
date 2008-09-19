@@ -21,6 +21,7 @@ if (!defined('MEDIAWIKI')){
 
 $wgExtensionFunctions [] = 'wfInitializeSpecialInterwikiEdit';
 $wgExtensionMessagesFiles['SpecialInterwikiEdit'] = dirname(__FILE__) . '/SpecialInterwikiEdit.i18n.php';
+$wgSpecialPageGroups['InterwikiEdit'] = 'wiki';
 
 function wfInitializeSpecialInterwikiEdit(){
 	global $wgSharedDB, $wgExternalSharedDB;
