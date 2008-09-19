@@ -183,7 +183,7 @@ a.more {
 	padding: 8px;
 }
 #homepage_right .box.green {
-	background: #5c8e6a url(../images/box_green_background.png);
+	background: #5c8e6a url(../images/box_green_background.png) repeat-x;
 	border: 1px solid #396;
 	color: #333;
 }
@@ -217,7 +217,6 @@ a.more {
 	background: #15477f url(../images/feature_footer_background.png) repeat-x;
 	color: #FFF;
 	margin-top: 20px;
-	min-height: 240px;
 	padding: 5px 0;
 }
 #feature_footer a {

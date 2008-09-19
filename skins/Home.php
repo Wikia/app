@@ -556,10 +556,10 @@ class HomeTemplate extends QuickTemplate {
 <div id="header">
 	<div class="shrinkwrap">
 		<div id="logo">
-			<a href="http://www.wikia.com"><img src="<?php $this->text('stylepath') ?>/home/images/logo.gif" alt="Wikia - Find and collaborate with others who love what you love."/></a>
+			<a href="http://www.wikia.com"><img src="<?php $this->text('stylepath') ?>/home/images/logo.gif" alt="Wikia - Find and collaborate with people who love what you love."/></a>
 		</div>
 		<div id="love">
-			<form action="javascript:perform_search()">
+			<form action="javascript: perform_search()">
 				<span style="float: left;">
 					What do you love?
 					<input type="text" id="search_field" />
@@ -679,7 +679,7 @@ class HomeTemplate extends QuickTemplate {
 			<td class="first gaming">
 				<ol>
 					<li><a href="http://residentevil.wikia.com/wiki/Nemesis">Nemesis</a> (<a href="http://residentevil.wikia.com" class="secondary" >Resident Evil</a>)</li>
-					<li><a href="(http://silenthill.wikia.com/wiki/The_One_Truth">The One Truth</a> (<a href="http://silenthill.wikia.com" class="secondary">Silent Hill</a>)</li>
+					<li><a href="http://silenthill.wikia.com/wiki/The_One_Truth">The One Truth</a> (<a href="http://silenthill.wikia.com" class="secondary">Silent Hill</a>)</li>
 					<li><a href="http://bioshock.wikia.com/wiki/Little_Sisters">Little Sisters</a> (<a href="http://bioshock.wikia.com" class="secondary">Bio-shock</a>)</li>
 					<li><a href="http://doom.wikia.com/wiki/Vulgar">The Vulgar</a> (<a href="http://doom.wikia.com" class="secondary">Doom</a>)</li>
 					<li><a href="http://animalcrossing.wikia.com/wiki/Agent_S">Agent S</a> (<a href="http://animalcrossing.wikia.com" class="secondary">Animal Crossing</a>)</li>
@@ -691,7 +691,7 @@ class HomeTemplate extends QuickTemplate {
 					<li><a href="http://terminator.wikia.com/wiki/T-800">T-800</a> (<a href="http://terminator.wikia.com" class="secondary">Terminator Wiki</a>)</li>
 					<li><a href="http://futurama.wikia.com/wiki/Bender_Bending_Rodr%C3%ADguez">Bender</a> (<a href="http://futurama.wikia.com" class="secondary">Futurama Wiki</a>)</li>
 					<li><a href="http://memory-alpha.org/en/wiki/Data">Data</a> (<a href="http://memory-alpha.org" class="secondary">Memory Alpha</a>)</li>
-					<li><a href="http://pixar.wikia.com/wiki/WALL%E2%80%A2E">WALL-E</a> (<a href="http://pixar.wikia.com" class="secondary">Pixar Wiki</a>)</li>
+					<li><a href="http://pixar.wikia.com/wiki/WALL%E2%80%A2E_(character)">WALL-E</a> (<a href="http://pixar.wikia.com" class="secondary">Pixar Wiki</a>)</li>
 				</ul>
 			</td>
 			<td class="gaming">
