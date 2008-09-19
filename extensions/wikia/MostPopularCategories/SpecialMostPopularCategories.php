@@ -34,6 +34,8 @@ if ( !function_exists( 'extAddSpecialPage' ) ) {
 }
 extAddSpecialPage( dirname(__FILE__) . '/SpecialMostPopularCategories_body.php', 'Mostpopularcategories', 'MostpopularcategoriesSpecialPage' );
 
+$wgSpecialPageGroups['Mostpopularcategories'] = 'highuse';
+
 function wfSetupMostPopularCategories( $queryPages = array() ) {
     $queryPages[] = array( 'MostpopularcategoriesPage', 'Mostpopularcategories');
     return true;

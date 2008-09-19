@@ -48,6 +48,7 @@ if ($wgCreatePageCoverRedLinks) {
 
 /* special page init */
 $wgSpecialPages ['createpage'] = array('SpecialPage', 'Createpage', 'createpage', true, 'wfCreatePageSpecial', false) ;
+$wgSpecialPageGroups['Createpage'] = 'pagetools';
 
 // when AdvancedEdit button is used, the existing content is preloaded
 function wfCreatePagePreloadContent ($editpage) {

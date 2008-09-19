@@ -12,3 +12,4 @@ $dir = dirname(__FILE__) . '/';
 $wgAutoloadClasses['Activeusers'] = $dir . 'ActiveUsers_body.php';
 $wgExtensionMessagesFiles['Activeusers'] = $dir . 'ActiveUsers.i18n.php';
 $wgSpecialPages['Activeusers'] = 'Activeusers';
+$wgSpecialPageGroups['Activeusers'] = 'users';
