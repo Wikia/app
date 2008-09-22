@@ -10,7 +10,7 @@
 <?	
 	$display = 'block' ;
 	$id = '0' ;
-	$html = "name=\"wpTextboxes".$id."\" id=\"wpTextboxes".$id."\" style=\"display:".$display."\"" ;
+	$html = "name=\"wpTextboxes".$id."\" id=\"wpTextboxes".$id."\" style=\"display:".$display."\" class=\"bigarea\"" ;
 	$value = "<textarea type=\"text\" rows=\"25\" cols=\"80\" {$html}>".$box."</textarea>" ;
 	if ($toolbar != '') {
 		$value = $toolbar . $value ;

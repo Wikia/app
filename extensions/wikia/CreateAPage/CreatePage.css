@@ -13,7 +13,11 @@
 }
 
 #createpageform textarea {
-	width: 92% ;
+	width: 92%;
+}
+
+#createpageform .bigarea {
+	width: 99%;
 }
 
 #createpageoverlay {
