@@ -34,6 +34,13 @@ CREATE TABLE `blockedby_stats` (
 */
 function wfRegexBlockCheck ($current_user) {
 	wfProfileIn( __METHOD__ );
+
+ if(in_array('staff', $current_user->getGroups())) {
+ 	// Staff users should not be blocked in any case
+		wfProfileOut( __METHOD__ );
+		return true;
+ }
+ 
 	$ip_to_check = wfGetIP();
 
 	/* First check cache */
