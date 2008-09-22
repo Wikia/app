@@ -13,7 +13,7 @@ function XLSGenerate(statistics, others, date_from, date_to) {
 	if (date_from != '') params += "&rsargs[3]=" + date_from;
 	if (date_to != '') params += "&rsargs[4]=" + date_to;
 	//----
-    var baseurl = "/index.php?action=ajax&rs=axWStatisticsXLS" + params;
+    var baseurl = wgScript + "?action=ajax&rs=axWStatisticsXLS" + params;
     if (window.frames['ws_frame_xls_'+wk_stats_city_id]) {
     	delete window.frames['ws_frame_xls_'+wk_stats_city_id];
 	}
@@ -29,7 +29,7 @@ function XLSShowMenu(city) { YAHOO.util.Dom.get("wk-stats-panel").style.display 
 function WikiaStatsGetInfo(panel, city) {
 	WikiaInfoCallback = { success: function( oResponse ) { YD.get(panel).innerHTML = oResponse.responseText; }, failure: function( oResponse ) { YD.get(panel).innerHTML = ""; } };
 	YD.get(panel).innerHTML = "<div class=\"wk-progress-stats-panel\"><center><img src=\"/extensions/wikia/WikiaStats/images/ajax_indicators.gif\" border=\"0\"></center></div>";
-	var baseurl = "/index.php?action=ajax&rs=axWStatisticsWikiaInfo&rsargs[0]=" + city;
+	var baseurl = wgScript + "?action=ajax&rs=axWStatisticsWikiaInfo&rsargs[0]=" + city;
 	YAHOO.util.Connect.asyncRequest( "GET", baseurl, WikiaInfoCallback);	
 };
 function pageLoaderInit(text, btn_text) {
@@ -42,7 +42,7 @@ function pageLoaderInit(text, btn_text) {
 	}
 };
 function redirectToStats(charts) { var city  = parseInt(document.getElementById("ws-city-list").value); StatsPageLoaderShow(0);
-    if (charts) { document.location = "/index.php?title=Special:WikiaStats&action=citycharts&city=" + city; } else { document.location = "/index.php?title=Special:WikiaStats&action=citystats&city=" + city; }
+    if (charts) { document.location = wgScript + "?title=Special:WikiaStats&action=citycharts&city=" + city; } else { document.location = wgScript + "?title=Special:WikiaStats&action=citystats&city=" + city; }
 }
 function showXLSCompareDialog(statistics, showHtml) {
 	compare_stats = statistics;
@@ -54,8 +54,10 @@ function showXLSCompareDialog(statistics, showHtml) {
 		document.getElementById('showStatsNewWindow').style.display = "none";
 	}
 	//----
-	if ((statistics == 9) && (showHtml == false)) {StatsPageLoaderShow(0); wk_stats_city_id = 0; XLSGenerate(statistics, ''); }
-	else if ((statistics == 2) && (showHtml == true)) { StatsPageLoaderShow(1); ShowCompareStats(statistics, "", false); }
+	//if ((statistics == 8) && (showHtml == false)) {StatsPageLoaderShow(0); wk_stats_city_id = 0; XLSGenerate(statistics, '', '', ''); }
+	if ((statistics == 9) && (showHtml == false)) {StatsPageLoaderShow(0); wk_stats_city_id = 0; XLSGenerate(statistics, '', '', ''); }
+	else if ((statistics == 8) && (showHtml == true)) { StatsPageLoaderShow(1); ShowCompareStats(statistics-7, "", false); }
+	else if ((statistics == 9) && (showHtml == true)) { StatsPageLoaderShow(1); ShowCompareStats(statistics-7, "", false); }
 	else {
 		CitiesListCallback = { 
 			success: function( oResponse ) { //YD.get("ws-div-scroll").innerHTML = oResponse.responseText; 
@@ -87,14 +89,14 @@ function showXLSCompareDialog(statistics, showHtml) {
 		var city_list = document.getElementById( "ws-div-scroll" );
 		if (city_list.innerHTML == "") {
 			city_list.innerHTML = "<table width=\"100%\" height=\"100%\" align=\"center\"><tr><td width=\"100%\" align=\"center\"><img src=\"/extensions/wikia/WikiaStats/images/ajax_indicators.gif\" border=\"0\"></td></tr></table>";
-			YAHOO.util.Connect.asyncRequest( "GET", "/index.php?action=ajax&rs=axWStatisticsWikiaList", CitiesListCallback);
+			YAHOO.util.Connect.asyncRequest( "GET", wgScript + "?action=ajax&rs=axWStatisticsWikiaList", CitiesListCallback);
 		}
 	}
 }
-function XLSStats(id) { StatsPageLoaderShow(0); wk_stats_city_id = parseInt(document.getElementById("ws-city-list").value); XLSGenerate(id, ''); }
+function XLSStats(id, date_from, date_to) { StatsPageLoaderShow(0); wk_stats_city_id = parseInt(document.getElementById("ws-city-list").value); XLSGenerate(id, '', date_from, date_to); }
 function ShowCompareStats(id, cityList, openNewWindow) { 
-	if (openNewWindow) { window.open("/index.php?title=Special:WikiaStats&action=compare&table=" + id + "&cities=" + cityList , "compareStatsWindow"); } 
-	else { StatsPageLoaderShow(1); document.location.href = "/index.php?title=Special:WikiaStats&action=compare&table=" + id + "&cities=" + cityList; }
+	if (openNewWindow) { window.open( wgScript + "?title=Special:WikiaStats&action=compare&table=" + id + "&cities=" + cityList , "compareStatsWindow"); } 
+	else { StatsPageLoaderShow(1); document.location.href = wgScript + "?title=Special:WikiaStats&action=compare&table=" + id + "&cities=" + cityList; }
 }
 
 function sortByText(a, b) {
@@ -163,7 +165,7 @@ function showWSSearchResult(value) {
 	if (search_div) {
 		search_div.innerHTML = "<div class=\"wk-progress-stats-panel\" style=\"height:164px\"><center><img src=\"/extensions/wikia/WikiaStats/images/ajax_indicators.gif\" border=\"0\"></center></div>";
 		hideSortUrl("ws-sort-link", "hidden");
-		YAHOO.util.Connect.asyncRequest( "GET", "/index.php?action=ajax&rs=axWStatisticsSearchWikis" + param, SearchWSCallback);
+		YAHOO.util.Connect.asyncRequest( "GET", wgScript + "?action=ajax&rs=axWStatisticsSearchWikis" + param, SearchWSCallback);
 	}
 }
 function WikiaStatsPanelSortList() {

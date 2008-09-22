@@ -105,17 +105,17 @@ foreach ($columnHistory as $date => $dateValues)
 			{
 				if ($show_percent === false)
 				{
-					if ($column == 3)
+					if ($column == 9)
 						$output = sprintf("%0d", $dateValues[$city_id]);
-					elseif ($column == 10)
+					elseif ($column == 13)
 						$output = sprintf("%0.1f", $dateValues[$city_id]);
-					elseif ($column == 11)
+					elseif ($column == 14)
 						$output = sprintf("%0.0f", $dateValues[$city_id]);
-					elseif (($column == 12) || ($column == 13))
+					elseif (($column == 15) || ($column == 16))
 					{
 						$output = sprintf("%0d%%", $dateValues[$city_id] * 100);
 					}
-					elseif ($column == 15)
+					elseif ($column == 18)
 					{
 						if ($dateValues[$city_id] > $GB)
 							$output = sprintf("%0.1f GB", $dateValues[$city_id]/$GB);

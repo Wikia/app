@@ -217,32 +217,56 @@ pageLoaderInit('<?=addslashes(wfMsg('wikiastats_generate_stats_msg'))?>', '<?=ad
 			<fieldset style="margin:0px">
 				<legend><?=wfMsg('wikiastats_generate_XLS_file_title')?></legend>
 				<div class="wk-stats-main-panel" id="wk-stats-main-panel">
-					<ul><li id="wk-xls-pagetitle"><a href="javascript:void(0);" onClick="XLSStats('1');"><?=wfMsg("wikiastats_pagetitle")?></a></li></ul>
+					<ul><li id="wk-xls-pagetitle"><a href="javascript:void(0);" onClick="XLSStats('1', '<?=$DEF_DATE?>', '<?=date('Y-m')?>');"><?=wfMsg("wikiastats_pagetitle")?></a></li></ul>
 				</div>
 				<div class="wk-stats-main-panel" id="wk-stats-panel">
 					<ul>
-					<li><a href="javascript:void(0);" onClick="XLSStats('2');"><?=wfMsg("wikiastats_distrib_article")?></a></li>
-					<li><a href="javascript:void(0);" onClick="XLSStats('3');"><?=wfMsg("wikiastats_active_absent_wikians")?></a></li>
-					<li><a href="javascript:void(0);" onClick="XLSStats('4');"><?=wfMsg("wikiastats_anon_wikians")?></a></li>
-					<li><a href="javascript:void(0);" onClick="XLSStats('5');"><?=wfMsg("wikiastats_article_one_link")?></a></li>
-					<li><a href="javascript:void(0);" onClick="XLSStats('6');"><?=wfMsg("wikiastats_namespace_records")?></a></li>
-					<li><a href="javascript:void(0);" onClick="XLSStats('7');"><?=wfMsg("wikiastats_page_edits")?></a></li>
+					<li><a href="javascript:void(0);" onClick="XLSStats('2', '<?=$DEF_DATE?>', '<?=date('Y-m')?>');"><?=wfMsg("wikiastats_distrib_article")?></a></li>
+					<li><a href="javascript:void(0);" onClick="XLSStats('3', '<?=$DEF_DATE?>', '<?=date('Y-m')?>');"><?=wfMsg("wikiastats_active_absent_wikians")?></a></li>
+					<li><a href="javascript:void(0);" onClick="XLSStats('4', '<?=$DEF_DATE?>', '<?=date('Y-m')?>');"><?=wfMsg("wikiastats_anon_wikians")?></a></li>
+					<li><a href="javascript:void(0);" onClick="XLSStats('5', '<?=$DEF_DATE?>', '<?=date('Y-m')?>');"><?=wfMsg("wikiastats_article_one_link")?></a></li>
+					<li><a href="javascript:void(0);" onClick="XLSStats('6', '<?=$DEF_DATE?>', '<?=date('Y-m')?>');"><?=wfMsg("wikiastats_namespace_records")?></a></li>
+					<li><a href="javascript:void(0);" onClick="XLSStats('7', '<?=$DEF_DATE?>', '<?=date('Y-m')?>');"><?=wfMsg("wikiastats_page_edits")?></a></li>
 					</ul>
 				</div>
 			</fieldset>
 			</div>
     	</div>
     </td>
-    <td nowrap align="left" valign="top">&nbsp;</td>
     <td nowrap align="left" valign="top">
-       <table style="width: auto;line-height:11pt" cellpadding="0" cellspacing="0" id="ws_main_wikia_compare_td">
-<? $k = 7; for ($i=1; $i<=27; $i++) { $l = $k + $i; if ( empty($userIsSpecial) && (is_array($wgStatsExcludedNonSpecialGroup)) && (in_array(($i-2), $wgStatsExcludedNonSpecialGroup) )) continue; ?>	
-        <tr><td class="wstab"><?= wfMsg("wikiastats_comparisons_table_$i") ?></td>
-        <td class="wstabopt"><a href="javascript:void(0);" onClick="showXLSCompareDialog('<?=$l?>', false);"><?= wfMsg('wikiastats_xls_files_stats') ?></a>&nbsp;-&nbsp;<a href="javascript:void(0);" onClick="showXLSCompareDialog('<?=$i?>', true);"><?= wfMsg('wikiastats_tables') ?></a></td></tr>
-<? if ($i == 2) { ?>
-        <tr><td class="wstabbot" style="line-height:7pt" colspan="2">&nbsp;</tr>
-<? } } ?>	
-       </table>
+		<table style="width:auto;line-height:11pt" cellpadding="0" cellspacing="0" id="ws_main_wikia_compare_td" valign="top">
+		<tr><td>
+<? 
+$k = 7; 
+$linkText = array(
+	"1" => wfMsg('wikiastats_comparision'),
+	"3" => wfMsg('wikiastats_distrib_wikians'), 
+	"10" => wfMsg('wikiastats_articles_text'), 
+	"17" => wfMsg('wikiastats_database'), 
+	"20" => wfMsg('wikiastats_links'), 
+	"25" => wfMsg('wikiastats_images')
+);
+for ($i=1; $i<=26; $i++) { 
+	$l = $k + $i; 
+	if ( in_array($i, array_keys($linkText)) ) { if ($i != 1) {
+?>
+	</fieldset>
+<?  } ?>	
+	<fieldset>
+	<legend style="font-size:10pt;"><strong><?= $linkText[$i] ?></strong></legend>
+<?  } ?>
+	<div style="width:520px">
+		<div style="width:450px; float: left;"><?= wfMsg("wikiastats_comparisons_table_$i") ?></div>
+		<div style="width:70px; float: right;">
+			<a href="javascript:void(0);" onClick="showXLSCompareDialog('<?=$l?>', false);"><?= wfMsg('wikiastats_xls_files_stats') ?></a>&nbsp;-&nbsp;
+			<a href="javascript:void(0);" onClick="showXLSCompareDialog('<?=$l?>', true);"><?= wfMsg('wikiastats_tables') ?></a>
+		</div>	
+	</div>
+<? 
+} 
+?>	
+		</td></tr>	
+		</table>
     </td>
  </tr>
 </table>
