@@ -16,7 +16,7 @@ $cityUrl = (is_object($cityInfo) && $cityId > 0) ? "<a target=\"new\" href=\"".$
 ?>
 <!-- s:<?= __FILE__ ?> -->
 <!-- WIKI's INFORMATION -->
-<fieldset style="width:auto">
+<fieldset style="width:auto; margin:-9px 2px 10px 0px">
 <legend><?=wfMsg("wikiastats_wikia_information")?></legend>
 <table cellspacing="1" cellpadding="2" border="0" style="font-size:8.5pt;font-family:Trebuchet MS,arial,sans-serif,helvetica;padding-bottom:1px;">
 <tr>
