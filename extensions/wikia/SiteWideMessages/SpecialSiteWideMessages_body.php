@@ -758,8 +758,6 @@ class SiteWideMessages extends SpecialPage {
 				, __METHOD__
 			);
 
-			$DB->commit();
-
 			//purge the cache
 			$key = 'wikia:talk_messages:' . $userID . ':' . str_replace(' ', '_', $wgUser->getName());
 			$wgMemc->delete($key);
