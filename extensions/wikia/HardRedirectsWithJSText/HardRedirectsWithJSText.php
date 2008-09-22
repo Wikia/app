@@ -122,8 +122,15 @@ function hardRedirectWithCookie($source, $target){
 		                 // Only set the cookie if they are not on a 'redirect=no' page.
                        	$targetUrlMd =  md5( $target->getFullURL() );
                         $sourceUrlMd =  md5( $source->getFullURL() );
+						
+						//exception of talk name space
+						$linktext = $source->getText();
+						if( ( $source->getNamespace() == NS_TALK) && ( stripos($linktext, $source->getNsText() . ':' )===false ) ){
+							$linktext = $source->getNsText() . ':' . $linktext;							
+						}
+						
 						 setcookie( $wgCookiePrefix . 'RedirectedFrom_' . md5( $target->getText() ),
-                                $source->getLocalUrl() . '|' . $source->getText(),
+                                $source->getLocalUrl() . '|' . $linktext,
                                 time() + 30, $wgCookiePath, $wgCookieDomain, $wgCookieSecure );
 						}
 								
