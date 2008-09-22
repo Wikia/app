@@ -40,3 +40,4 @@ $wgGroupPermissions['staff']['wikifactory'] = true;
 $wgGroupPermissions['wikifactory']['wikifactory'] = true;
 
 extAddSpecialPage( dirname(__FILE__) . '/SpecialWikiFactory_body.php', 'WikiFactory', 'WikiFactoryPage' );
+$wgSpecialPageGroups['WikiFactory'] = 'wikia';

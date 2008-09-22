@@ -18,4 +18,4 @@ $wgExtensionFunctions[] = 'wfWidgetsSpecialPage';
 function wfWidgetsSpecialPage() {
 	require_once( dirname(__FILE__) . '/WidgetsSpecialPage_body.php' );
 }
-
+$wgSpecialPageGroups['Widgets'] = 'wikia';

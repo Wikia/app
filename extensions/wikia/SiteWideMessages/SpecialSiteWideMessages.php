@@ -42,6 +42,7 @@ if (!function_exists('extAddSpecialPage')) {
 	require("$IP/extensions/ExtensionFunctions.php");
 }
 extAddSpecialPage(dirname(__FILE__) . '/SpecialSiteWideMessages_body.php', 'SiteWideMessages', 'SiteWideMessages');
+$wgSpecialPageGroups['SiteWideMessages'] = 'wikia';
 
 /**
  * Initialize hooks

@@ -64,11 +64,6 @@ $wgExtensionCredits['specialpage'][] = array(
 	'author' => 'Tomasz Klim'
 );
 $wgHooks['AddNewAccount2'][] = 'wfInviteAfterReg';
-$wgExtensionCredits['other'][] = array(
-	'name' => 'Invite a friend',
-	'description' => 'displays "invite a friend" form after creating new user account',
-	'author' => 'Tomasz Klim'
-);
 #$wgHooks['MonoBookTemplateToolboxEnd'][] = 'wfSendAjaxForm_echo';
 $wgExtensionCredits['other'][] = array(
 	'name' => 'Send to a friend',
@@ -81,6 +76,7 @@ if (!function_exists('extAddSpecialPage')) {
 	require("$IP/extensions/ExtensionFunctions.php");
 }
 extAddSpecialPage(dirname(__FILE__) . '/SendToAFriend_body.php', 'InviteSpecialPage', 'InviteSpecialPage');
+$wgSpecialPageGroups['InviteSpecialPage'] = 'users';
 
 function wfInviteAfterReg( $user=null ) {
 	global $wgUser, $wgOut, $wgNotificationEnableInvite;

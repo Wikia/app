@@ -6,7 +6,7 @@
  */
 
 $wgExtensionFunctions[] = 'wfSpecialContactSetup';
-
+$wgSpecialPageGroups['Contact'] = 'wikia';
 
 /**
  *
