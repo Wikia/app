@@ -120,7 +120,9 @@ function hardRedirectWithCookie($source, $target){
                 	
 					    if ( ( $source !== false ) && ( $source instanceof Title ) && ( $target !== false ) && ( $target instanceof Title ) ) {
 		                 // Only set the cookie if they are not on a 'redirect=no' page.
-                         setcookie( $wgCookiePrefix . 'RedirectedFrom_' . md5( $target->getText() ),
+                       	$targetUrlMd =  md5( $target->getFullURL() );
+                        $sourceUrlMd =  md5( $source->getFullURL() );
+						 setcookie( $wgCookiePrefix . 'RedirectedFrom_' . md5( $target->getText() ),
                                 $source->getLocalUrl() . '|' . $source->getText(),
                                 time() + 30, $wgCookiePath, $wgCookieDomain, $wgCookieSecure );
 						}
@@ -133,14 +135,18 @@ function hardRedirectWithCookie($source, $target){
 						}
 						
 		                 if (($target !== false) && ($target instanceof Title)) {
-	                       $targetUrlMd =  md5( $target->getFullURL() );
-		                   setcookie( $wgCookiePrefix.'RedirectedTrail',
+	                       setcookie( $wgCookiePrefix.'RedirectedTrail',
                                 implode('|', $redirectsequence) . '|' . $targetUrlMd,
                                 time() + 30, $wgCookiePath, $wgCookieDomain, $wgCookieSecure );
     		             }
 						 
 						//check if current md5 exists delimited with | or we went through redirect limit
 						if( in_array( $targetUrlMd, $redirectsequence ) || ( count( $redirectsequence ) > $wgEnableHardRedirectsWithJSTextLimit ) ){
+							$doredirect	= false;
+						}
+						
+						//check if it is redirect to itself
+						if($targetUrlMd == $sourceUrlMd){
 							$doredirect	= false;
 						}
                 
