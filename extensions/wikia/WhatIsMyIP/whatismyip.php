@@ -32,5 +32,4 @@ if (!defined('MEDIAWIKI'))
     require("$IP/extensions/wikia/whatismyip.php");
     }
     extAddSpecialPage( dirname(__FILE__) . '/whatismyip_body.php', 'whatismyip', 'WhatIsMyIP' );
-
-?>
+    $wgSpecialPageGroups['whatismyip'] = 'users';

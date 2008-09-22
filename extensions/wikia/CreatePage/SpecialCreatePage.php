@@ -16,7 +16,7 @@ $wgExtensionCredits['specialpage'][] = array(
 
 /* special page init */
 function wfCreatePageSetup() {
-	global $IP, $wgMessageCache, $wgOut ;
+	global $IP, $wgMessageCache, $wgOut, $wgSpecialPageGroups;
 	require_once($IP. '/includes/SpecialPage.php');
 
         /* add messages to all the translator people out there to play with */
@@ -41,6 +41,7 @@ function wfCreatePageSetup() {
                 )
         );
 	SpecialPage::addPage(new SpecialPage('Createpage', '', true, 'wfCreatePageSpecial', false));
+	$wgSpecialPageGroups['Createpage'] = 'pagetools';
 }
 
 /* the core */

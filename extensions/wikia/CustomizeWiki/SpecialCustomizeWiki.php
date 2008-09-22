@@ -43,6 +43,7 @@ if ( !function_exists( 'extAddSpecialPage' ) ) {
 }
 
 extAddSpecialPage( dirname(__FILE__) . "/Special{$sSpecialPage}_body.php", $sSpecialPage, "{$sSpecialPage}Page" );
+$wgSpecialPageGroups[$sSpecialPage] = 'wiki';
 
 /**
  * add customization modules

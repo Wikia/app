@@ -25,3 +25,4 @@ $wgAvailableRights[] = 'multilookup';
 $wgGroupPermissions['staff']['multilookup'] = true;
 
 extAddSpecialPage( dirname(__FILE__) . '/SpecialMultipleLookup_body.php', 'MultiLookup', 'MultipleLookupPage' );
+$wgSpecialPageGroups['MultiLookup'] = 'users';
