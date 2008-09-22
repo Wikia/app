@@ -16,23 +16,24 @@ $cityUrl = (is_object($cityInfo) && $cityId > 0) ? "<a target=\"new\" href=\"".$
 ?>
 <!-- s:<?= __FILE__ ?> -->
 <!-- WIKI's INFORMATION -->
-<fieldset style="width:40%">
+<fieldset style="width:auto">
 <legend><?=wfMsg("wikiastats_wikia_information")?></legend>
-<table cellspacing="0" cellpadding="0" border="0" style="font-size:8.5pt;font-family:Trebuchet MS,arial,sans-serif,helvetica;padding-bottom:1px;">
+<table cellspacing="1" cellpadding="2" border="0" style="font-size:8.5pt;font-family:Trebuchet MS,arial,sans-serif,helvetica;padding-bottom:1px;">
 <tr>
 	<td align="left" width="40%"><strong><?= wfMsg('wikiastats_wikiid')?></strong> <?= (!empty($cityId)) ? $cityId : " - " ?></td>
-	<td align="left" width="60%"><strong><?= wfMsg('wikiastats_wikiname') ?></strong> <?= $cityTitle ?></td>
+	<td align="left" width="60%" nowrap><strong><?= wfMsg('wikiastats_wikiname') ?></strong> <?= $cityTitle ?></td>
 </tr>
 <tr>
 	<td align="left"><strong><?= wfMsg('wikiastats_wikilang') ?></strong> <?= (!empty($langName)) ? $langName : $cityInfo->city_lang ?></td>
 	<td align="left"><strong><?= wfMsg('wikiastats_wikiurl') ?></strong> <?= $cityUrl ?></td></tr>
 </tr>
 <tr>
-	<td align="left"><strong><?= wfMsg('wikiastats_wikicategory') ?></strong> <?= $catName ?></td>
-	<td align="left"><strong><?= wfMsg('wikiastats_wikicreated') ?></strong> <?= (!empty($outDate)) ? $outDate : " - " ?></td>
+	<td align="left" nowrap><strong><?= wfMsg('wikiastats_wikicategory') ?></strong> <?= $catName ?></td>
+	<td align="left" ><strong><?= wfMsg('wikiastats_wikicreated') ?></strong> <?= (!empty($outDate)) ? $outDate : " - " ?></td>
 </tr>
 </table>
 </fieldset>
+<div style="padding-bottom:5px;">
 <table cellspacing="0" cellpadding="1" border="0" style="font-size:8.5pt;font-family: Trebuchet MS,arial,sans-serif,helvetica;">
 <tr>
 	<td align="left" colspan="2"><strong><?= wfMsg('wikiastats_see_wikia_wide_stats') ?></strong> <a href="http://www.wikia.com/wiki/Special:WikiaStats" target="new">http://www.wikia.com/wiki/Special:WikiaStats</a> </td>
@@ -41,3 +42,4 @@ $cityUrl = (is_object($cityInfo) && $cityId > 0) ? "<a target=\"new\" href=\"".$
 	<td align="left" colspan="2"><strong><?= wfMsg('wikiastats_see_help_page') ?></strong> <a href="http://help.wikia.com/wiki/Help:WikiaStats" target="new">http://help.wikia.com/wiki/Help:WikiaStats</a> </td>
 </tr>
 </table>
+</div>

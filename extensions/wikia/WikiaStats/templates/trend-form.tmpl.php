@@ -104,25 +104,28 @@ $KB = 1024;
 $i = 0;
 foreach ($trend_stats as $column => $dateValues)
 {
-	$linkText = array("wikians" => wfMsg('wikiastats_distrib_wikians'), "articles" => wfMsg('wikiastats_articles_text'), "database" => wfMsg('wikiastats_database'), "links" => wfMsg('wikiastats_links'), "unique wikians" => wfMsg('wikiastats_reg_users'), "images" => wfMsg('wikiastats_images'));
+	$linkText = array(
+		"wikians" => wfMsg('wikiastats_distrib_wikians'), 
+		"articles" => wfMsg('wikiastats_articles_text'), 
+		"database" => wfMsg('wikiastats_database'), 
+		"links" => wfMsg('wikiastats_links'), 
+		"images" => wfMsg('wikiastats_images')
+	);
 
 	$active = "";
-	if (($i >= 0) && ($i < 4)) {
+	if (($i >= 0) && ($i < 7)) {
 		$active = $linkText["wikians"];
 		$linkText["wikians"] = "";
-	} elseif ( ($i >= 4) && ($i < 11) ) {
+	} elseif ( ($i >= 7) && ($i < 14) ) {
 		$active = $linkText["articles"];
 		$linkText["articles"] = "";
-	} elseif ( ($i >= 11) && ($i < 14) ) {
+	} elseif ( ($i >= 14) && ($i < 17) ) {
 		$active = $linkText["database"];
 		$linkText["database"] = "";
-	} elseif ( ($i >= 14) && ($i < 19) ) {
+	} elseif ( ($i >= 17) && ($i < 22) ) {
 		$active = $linkText["links"];
 		$linkText["links"] = "";
-	} elseif ( ($i >= 19) && ($i < 23) ) {
-		$active = $linkText["unique wikians"];
-		$linkText["usage"] = "";
-	} elseif ( ($i >= 23) && ($i < 25) ) {
+	} elseif ( ($i >= 22) && ($i < 24) ) {
 		$active = $linkText["images"];
 		$linkText["images"] = "";
 	}
@@ -228,17 +231,17 @@ foreach ($dateValues as $date => $cities)
         $value = (array_key_exists($city_id, $cities)) ? $cities[$city_id] : 0;
 		if (empty($growth))
 		{
-			if ($column == 'A')
+			if ($column == 'G')
 				$out = sprintf("%0d", $value);
-			elseif ($column == 'H')
+			elseif ($column == 'K')
 				$out = sprintf("%0.1f", $value);
-			elseif ($column == 'I')
+			elseif ($column == 'L')
 				$out = sprintf("%0.0f", $value);
-			elseif (($column == 'J') || ($column == 'K'))
+			elseif (($column == 'M') || ($column == 'N'))
 			{
 				$out = sprintf("%0d%%", $value * 100);
 			}
-			elseif ($column == 'M')
+			elseif ($column == 'P')
 			{
 				if (intval($value) > $GB)
 					$out = sprintf("%0.1f GB", $value/$GB);

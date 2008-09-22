@@ -25,7 +25,7 @@ class WikiaStatsClass extends SpecialPage
     var $userIsSpecial;
     var $fromDate, $toDate;
 
-    const USE_MEMC = 1;
+    const USE_MEMC = 0;
 
     #--- constructor
     public function __construct()
@@ -35,6 +35,9 @@ class WikiaStatsClass extends SpecialPage
         $this->mSkinName = "monobook";
 		wfLoadExtensionMessages("WikiaStats");
         parent::__construct( "WikiaStats", "",  true/*class*/); #--- restriction - user have to be logged
+        if (method_exists('SpecialPage', 'setGroup')) { 
+			parent::setGroup('WikiaStats', 'wiki');	
+		}
     }
 
     public function execute( $subpage )
@@ -118,12 +121,7 @@ class WikiaStatsClass extends SpecialPage
 					$memory_limit = ini_get("memory_limit");
 					$column = $wgRequest->getVal("table"); 
 					$cities = $wgRequest->getVal("cities"); 
-					if ( empty($this->userIsSpecial) && (is_array($wgStatsExcludedNonSpecialGroup)) && (in_array($t, $wgStatsExcludedNonSpecialGroup) )) {
-						// don't show wikians statistics
-						$this->mainSelectCityForm();
-					} else {
-						$this->mainStatsColumnHistoryForm($column, $cities); 
-					}
+					$this->mainStatsColumnHistoryForm($column, $cities); 
 				}
 			} else {
 				$this->mainSelectCityForm();
@@ -183,6 +181,7 @@ class WikiaStatsClass extends SpecialPage
 				"dateRange" => $dateRange,
 				"MAX_NBR"	=> STATS_COLUMN_CITY_NBR,
 				"userIsSpecial"=> $this->userIsSpecial,
+				"DEF_DATE"	=> MIN_STATS_DATE,
 				"wgStatsExcludedNonSpecialGroup" => $wgStatsExcludedNonSpecialGroup,
 			));
 			
@@ -219,7 +218,6 @@ class WikiaStatsClass extends SpecialPage
 
 		wfProfileIn( __METHOD__ );
 		$memkey = "wikiastatsmainstatsform_".$city."_".$show_charts."_".$show_local."_".$fromY.$fromM."_".$toY.$toM;
-		error_log(" memkey = $memkey \n\n\n", 3, "/tmp/moli.log");
 		$mainStats = "";
 		if (self::USE_MEMC) $mainStats = $wgMemc->get($memkey);
 

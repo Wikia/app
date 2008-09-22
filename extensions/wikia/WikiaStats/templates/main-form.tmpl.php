@@ -6,6 +6,7 @@
 var YC = YAHOO.util.Connect;
 var YD = YAHOO.util.Dom;
 var YE = YAHOO.util.Event;
+var wk_stats_city_id = 0;
 var previous_page = 0;
 
 function visible_wikians(rows, col, v)
@@ -209,7 +210,7 @@ function wk_show_page_edited_details(page_id)
 	//---
 	YD.get("ws-progress-page-edits-bar").innerHTML="&nbsp;<img src=\"/extensions/wikia/WikiaStats/images/ajax_loader.gif\" />";
 	//---
-	var baseurl = "/index.php?action=ajax&rs=axWStatisticsPageEditsDetails" + params;
+	var baseurl = wgScript + "?action=ajax&rs=axWStatisticsPageEditsDetails" + params;
 	YAHOO.util.Connect.asyncRequest( "GET", baseurl, YAHOO.Wikia.Statistics.PageEditsDetailsStatisticCallback);
 }
 
@@ -264,7 +265,7 @@ YAHOO.util.Event.onDOMReady(function () {
 
 	YAHOO.Wikia.Statistics.ShowStats = function(e) 
 	{
-		var city = document.getElementById( "wk-stats-city-id" );
+		var city = document.getElementById( "ws-domain" );
 		document.getElementById( "ws-edits-article-table" ).innerHTML = "";
 		document.getElementById( "ws-wikians-active-absent-table" ).innerHTML = "";
 		document.getElementById( "ws-anon-wikians-table" ).innerHTML = "";
@@ -278,7 +279,9 @@ YAHOO.util.Event.onDOMReady(function () {
 		//--- to
 		params 	+= "&rsargs[3]=" + document.getElementById( "ws-date-year-to" ).value;
 		params 	+= "&rsargs[4]=" + document.getElementById( "ws-date-month-to" ).value;
-		
+
+		var _legend = document.getElementById('wk-stats-legend');
+		var _otherStats = document.getElementById('ws-other-stats-panel');
 		if (this.id == "ws-show-charts") {
 			params += "&rsargs[5]=1";
 			if (_legend) {
@@ -299,7 +302,7 @@ YAHOO.util.Event.onDOMReady(function () {
 		YE.preventDefault(e);
 		YD.get("ws-progress-bar").innerHTML="&nbsp;<img src=\"/extensions/wikia/WikiaStats/images/progressbar.gif\" />";
 		//---
-		var baseurl = "/index.php?action=ajax&rs=axWStatisticsGenerate" + params;
+		var baseurl = wgScript + "?action=ajax&rs=axWStatisticsGenerate" + params;
 		YAHOO.util.Connect.asyncRequest( "GET", baseurl, YAHOO.Wikia.Statistics.MainStatisticCallback);
 	};
 
@@ -402,7 +405,7 @@ YAHOO.util.Event.onDOMReady(function () {
 		YE.preventDefault(e);
 		YD.get("ws-progress-edits-bar").innerHTML="&nbsp;<img src=\"/extensions/wikia/WikiaStats/images/ajax_loader.gif\" />";
 		//---
-		var baseurl = "/index.php?action=ajax&rs=axWStatisticsDistribEditsGenerate" + params;
+		var baseurl = wgScript + "?action=ajax&rs=axWStatisticsDistribEditsGenerate" + params;
 		YAHOO.util.Connect.asyncRequest( "GET", baseurl, YAHOO.Wikia.Statistics.DistribEditsStatisticCallback);
 	};
 
@@ -416,7 +419,7 @@ YAHOO.util.Event.onDOMReady(function () {
 		YE.preventDefault(e);
 		YD.get("ws-progress-wikians-bar").innerHTML="&nbsp;<img src=\"/extensions/wikia/WikiaStats/images/ajax_loader.gif\" />";
 		//---
-		var baseurl = "/index.php?action=ajax&rs=axWStatisticsWikiansRank" + params;
+		var baseurl = wgScript + "?action=ajax&rs=axWStatisticsWikiansRank" + params;
 		YAHOO.util.Connect.asyncRequest( "GET", baseurl, YAHOO.Wikia.Statistics.WikiansRankStatisticCallback);
 	};
 
@@ -429,7 +432,7 @@ YAHOO.util.Event.onDOMReady(function () {
 		YE.preventDefault(e);
 		YD.get("ws-progress-anon-bar").innerHTML="&nbsp;<img src=\"/extensions/wikia/WikiaStats/images/ajax_loader.gif\" />";
 		//---
-		var baseurl = "/index.php?action=ajax&rs=axWStatisticsAnonUsers" + params;
+		var baseurl = wgScript + "?action=ajax&rs=axWStatisticsAnonUsers" + params;
 		YAHOO.util.Connect.asyncRequest( "GET", baseurl, YAHOO.Wikia.Statistics.UserAnonStatisticCallback);
 	};
 
@@ -453,7 +456,7 @@ YAHOO.util.Event.onDOMReady(function () {
 		YE.preventDefault(e);
 		YD.get("ws-progress-article-bar").innerHTML="&nbsp;<img src=\"/extensions/wikia/WikiaStats/images/ajax_loader.gif\" />";
 		//---
-		var baseurl = "/index.php?action=ajax&rs=axWStatisticsArticleSize" + params;
+		var baseurl = wgScript + "?action=ajax&rs=axWStatisticsArticleSize" + params;
 		YAHOO.util.Connect.asyncRequest( "GET", baseurl, YAHOO.Wikia.Statistics.UserArticlesStatisticCallback);
 	};
 
@@ -467,7 +470,7 @@ YAHOO.util.Event.onDOMReady(function () {
 		YE.preventDefault(e);
 		YD.get("ws-progress-namespace-bar").innerHTML="&nbsp;<img src=\"/extensions/wikia/WikiaStats/images/ajax_loader.gif\" />";
 		//---
-		var baseurl = "/index.php?action=ajax&rs=axWStatisticsNamespaceCount" + params;
+		var baseurl = wgScript + "?action=ajax&rs=axWStatisticsNamespaceCount" + params;
 		YAHOO.util.Connect.asyncRequest( "GET", baseurl, YAHOO.Wikia.Statistics.NamespaceStatisticCallback);
 	};
 
@@ -480,7 +483,7 @@ YAHOO.util.Event.onDOMReady(function () {
 		YE.preventDefault(e);
 		YD.get("ws-progress-page-edits-bar").innerHTML="&nbsp;<img src=\"/extensions/wikia/WikiaStats/images/ajax_loader.gif\" />";
 		//---
-		var baseurl = "/index.php?action=ajax&rs=axWStatisticsPageEdits" + params;
+		var baseurl = wgScript + "?action=ajax&rs=axWStatisticsPageEdits" + params;
 		YAHOO.util.Connect.asyncRequest( "GET", baseurl, YAHOO.Wikia.Statistics.PageEditsStatisticCallback);
 	};
 
@@ -517,6 +520,7 @@ YAHOO.util.Event.onDOMReady(function () {
 			}
 			default : {
 				var id = this.id;
+				wk_stats_city_id = parseInt(document.getElementById("wk-stats-city-id").value); 
 				id = id.replace("ws-xls-", "");
 				XLSGenerate(id, '', '', ''); 
 			}
@@ -558,7 +562,7 @@ foreach ($cityList as $domain => $city_id)
 <legend class="legend-subtitle"><?=wfMsg('wikiastats_main_statistics_legend')?></legend>
 <div id="ws-upload">
 	<div id="ws-progress-bar"></div>
-	<div style="text-align:right; float:right;">
+	<div style="text-align:right; float:right;margin:0px 0px 0px 20px;">
 	<?= wfMsg("wikiastats_info") ?>
 	<br />
 	<span class="wk-select-class"><select name="ws-domain" id="ws-domain" style="text-align:left; font-size:11px;"><?=$select_stats?></select></span>
@@ -633,8 +637,7 @@ while ($minYear <= $maxYear)
 </div>
 <div id="ws-main-table">
 <?
-if (!empty($main_tbl))
-{
+if (!empty($main_tbl)) {
 	echo $main_tbl;
 }
 ?>

@@ -209,7 +209,7 @@ function wk_show_page_edited_details(page_id)
 	//---
 	YD.get("ws-progress-page-edits-bar").innerHTML="&nbsp;<img src=\"/extensions/wikia/WikiaStats/images/ajax_loader.gif\" />";
 	//---
-	var baseurl = "/index.php?action=ajax&rs=axWStatisticsPageEditsDetails" + params;
+	var baseurl = wgScript + "?action=ajax&rs=axWStatisticsPageEditsDetails" + params;
 	YAHOO.util.Connect.asyncRequest( "GET", baseurl, YAHOO.Wikia.Statistics.PageEditsDetailsStatisticCallback);
 }
 
@@ -301,7 +301,7 @@ YAHOO.util.Event.onDOMReady(function () {
 		YE.preventDefault(e);
 		YD.get("ws-progress-bar").innerHTML="&nbsp;<img src=\"/extensions/wikia/WikiaStats/images/progressbar.gif\" />";
 		//---
-		var baseurl = "/index.php?action=ajax&rs=axWStatisticsGenerate" + params;
+		var baseurl = wgScript + "?action=ajax&rs=axWStatisticsGenerate" + params;
 		YAHOO.util.Connect.asyncRequest( "GET", baseurl, YAHOO.Wikia.Statistics.MainStatisticCallback);
 	};
 
@@ -404,7 +404,7 @@ YAHOO.util.Event.onDOMReady(function () {
 		YE.preventDefault(e);
 		YD.get("ws-progress-edits-bar").innerHTML="&nbsp;<img src=\"/extensions/wikia/WikiaStats/images/ajax_loader.gif\" />";
 		//---
-		var baseurl = "/index.php?action=ajax&rs=axWStatisticsDistribEditsGenerate" + params;
+		var baseurl = wgScript + "?action=ajax&rs=axWStatisticsDistribEditsGenerate" + params;
 		YAHOO.util.Connect.asyncRequest( "GET", baseurl, YAHOO.Wikia.Statistics.DistribEditsStatisticCallback);
 	};
 
@@ -418,7 +418,7 @@ YAHOO.util.Event.onDOMReady(function () {
 		YE.preventDefault(e);
 		YD.get("ws-progress-wikians-bar").innerHTML="&nbsp;<img src=\"/extensions/wikia/WikiaStats/images/ajax_loader.gif\" />";
 		//---
-		var baseurl = "/index.php?action=ajax&rs=axWStatisticsWikiansRank" + params;
+		var baseurl = wgScript + "?action=ajax&rs=axWStatisticsWikiansRank" + params;
 		YAHOO.util.Connect.asyncRequest( "GET", baseurl, YAHOO.Wikia.Statistics.WikiansRankStatisticCallback);
 	};
 
@@ -431,7 +431,7 @@ YAHOO.util.Event.onDOMReady(function () {
 		YE.preventDefault(e);
 		YD.get("ws-progress-anon-bar").innerHTML="&nbsp;<img src=\"/extensions/wikia/WikiaStats/images/ajax_loader.gif\" />";
 		//---
-		var baseurl = "/index.php?action=ajax&rs=axWStatisticsAnonUsers" + params;
+		var baseurl = wgScript + "?action=ajax&rs=axWStatisticsAnonUsers" + params;
 		YAHOO.util.Connect.asyncRequest( "GET", baseurl, YAHOO.Wikia.Statistics.UserAnonStatisticCallback);
 	};
 
@@ -455,7 +455,7 @@ YAHOO.util.Event.onDOMReady(function () {
 		YE.preventDefault(e);
 		YD.get("ws-progress-article-bar").innerHTML="&nbsp;<img src=\"/extensions/wikia/WikiaStats/images/ajax_loader.gif\" />";
 		//---
-		var baseurl = "/index.php?action=ajax&rs=axWStatisticsArticleSize" + params;
+		var baseurl = wgScript + "?action=ajax&rs=axWStatisticsArticleSize" + params;
 		YAHOO.util.Connect.asyncRequest( "GET", baseurl, YAHOO.Wikia.Statistics.UserArticlesStatisticCallback);
 	};
 
@@ -469,7 +469,7 @@ YAHOO.util.Event.onDOMReady(function () {
 		YE.preventDefault(e);
 		YD.get("ws-progress-namespace-bar").innerHTML="&nbsp;<img src=\"/extensions/wikia/WikiaStats/images/ajax_loader.gif\" />";
 		//---
-		var baseurl = "/index.php?action=ajax&rs=axWStatisticsNamespaceCount" + params;
+		var baseurl = wgScript + "?action=ajax&rs=axWStatisticsNamespaceCount" + params;
 		YAHOO.util.Connect.asyncRequest( "GET", baseurl, YAHOO.Wikia.Statistics.NamespaceStatisticCallback);
 	};
 
@@ -482,7 +482,7 @@ YAHOO.util.Event.onDOMReady(function () {
 		YE.preventDefault(e);
 		YD.get("ws-progress-page-edits-bar").innerHTML="&nbsp;<img src=\"/extensions/wikia/WikiaStats/images/ajax_loader.gif\" />";
 		//---
-		var baseurl = "/index.php?action=ajax&rs=axWStatisticsPageEdits" + params;
+		var baseurl = wgScript + "?action=ajax&rs=axWStatisticsPageEdits" + params;
 		YAHOO.util.Connect.asyncRequest( "GET", baseurl, YAHOO.Wikia.Statistics.PageEditsStatisticCallback);
 	};
 
@@ -550,7 +550,7 @@ YAHOO.util.Event.onDOMReady(function () {
 <legend class="legend-subtitle"><?=wfMsg('wikiastats_main_statistics_legend')?></legend>
 <div id="ws-upload">
 	<div id="ws-progress-bar"></div>
-	<div style="text-align:right; float:right;">
+	<div style="text-align:right; float:right; margin:0px 0px 0px 20px;">
 	<span class="wk-select-class" valign="middle"><?= wfMsg('wikiastats_daterange_from') ?> 
 	<select name="ws-date-month-from" id="ws-date-month-from" style="text-align:left; font-size:11px;">
 <?php
