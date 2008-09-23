@@ -39,7 +39,8 @@ function WidgetRelatedCommunities($id, $params) {
 							'href' => $val['href'],
 							'name' => $val['text'],
 							'title' => $val['text'],
-							'desc' => $val['desc']);
+							'desc' => $val['desc'],
+							'nofollow' => true);
 		}
 	}
 	wfProfileOut(__METHOD__);
