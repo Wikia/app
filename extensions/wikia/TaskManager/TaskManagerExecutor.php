@@ -240,8 +240,8 @@ class TaskManagerExecutor {
 				print_r( $oTask );
 				if( ! empty( $oTask->getData()->task_started ) ) {
 					$ttl = $oTask->getTTL();
-					$run = $oTask->getData()->task_started;
-					$now = wfTimestampNow();
+					$run =  wfTimestamp(TS_UNIX, $oTask->getData()->task_started);
+					$now = wfTimestamp();
 					if( ( $now - $run ) > $ttl ) {
 						#--- kill him!
 						$oTask->addLog( "TTL exceeded. Finished by task manager" );
