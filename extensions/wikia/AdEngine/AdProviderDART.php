@@ -136,7 +136,7 @@ EOT;
 
 	/* See the DART webmaster guide for a full explanation of DART key values. */
 	function getProviderValues($slot){
-		if(empty($slot['provider_values'])){
+                if(empty($slot['provider_values']) || !is_array($slot['provider_values'])){
 			return '';
 		}
 
