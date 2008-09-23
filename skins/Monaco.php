@@ -866,10 +866,7 @@ class MonacoTemplate extends QuickTemplate {
 				$script_output .= '$("navigation_widget").onmouseout = clearMenu;';
 				$script_output .= '$("sub-menu' . $last_count . '").onmouseout = clearMenu;if($("sub-menu' . $last_count . '").captureEvents) $("sub-menu' . $last_count .'").captureEvents(Event.MOUSEOUT);';
 			}
-			$extraAttributes = '';
-			if ($wgCityId == 177) {	//ticket #2942 - rel="nofollow" for central - Marooned
-				$extraAttributes = ' rel="nofollow"';
-			}
+			$extraAttributes = ' rel="nofollow"';
 			foreach($this->navmenu[$id]['children'] as $child) {
 				//$mouseover = ' onmouseover="' . ($level ? 'sub_' : '') . 'menuItemAction(\'' .
 				($level ? $last_count . '_' : '_') .$count . '\');"';
