@@ -1,9 +1,5 @@
 <?php
 
-$wgExtensionCredits['other'][] = array(
-	'name' => 'OpenX ad provider for AdEngine',
-);
-
 class AdProviderOpenX implements iAdProvider {
 
 	protected static $instance = false;
@@ -40,6 +36,16 @@ class AdProviderOpenX implements iAdProvider {
 		'19' => 637,
 		'default' => 638
 	);
+
+        private $slotsToCall = array();
+
+        public function addSlotToCall($slotname){
+                $this->slotsToCall[]=$slotname;
+        }
+
+        public function batchCallAllowed(){ return false; }
+        public function getSetupHtml(){ return false; }
+        public function getBatchCallHtml(){ return false; }
 
 	public function getAd($slotname, $slot) {
 		$cat=AdEngine::getCachedCategory();
