@@ -547,7 +547,7 @@ YAHOO.util.Event.onDOMReady(function () {
 </script>
 <input type="hidden" id="wk-stats-city-id" value="<?=$selCity?>">
 <fieldset>
-<legend class="legend-subtitle"><?=wfMsg('wikiastats_main_statistics_legend')?></legend>
+<legend><?=wfMsg('wikiastats_main_statistics_legend')?></legend>
 <div id="ws-upload">
 	<div id="ws-progress-bar"></div>
 	<div style="text-align:right; float:right; margin:0px 0px 0px 20px;">

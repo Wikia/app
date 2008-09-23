@@ -141,6 +141,3 @@ td.main2x { border:1px inset #FFF; text-align:left; font-size:8pt; margin:0px; p
 #wk-stats-legend-values {padding: 1px 7px 1px 7px;}
 #wk-stats-legend-columns {padding: 10px 0px 10px 2px;}
 .ws-input {border-bottom:1px inset #2F6FAB; border-left:1px outset #2F6FAB; border-right:1px inset #2F6FAB;border-top: 1px outset #2F6FAB;width:240px;padding:1px 2px; margin:2px; font-size:8.5pt;}
-#div#widget_sidebar { display: none !important; }
-#div#wikia_page { margin-left: 5px; }
-#div#sidebar { display: none !important; }
