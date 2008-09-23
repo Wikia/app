@@ -15,3 +15,29 @@
 #searchform {
 	margin: 0
 }
+
+/* macbre: #3682 */
+#homepage_left_inside {
+	height: 1%;
+}
+
+#feature_footer td {
+	height: 130px;
+}
+
+#featured_hubs_header li div {
+	width: 82px;
+}
+
+#homepage_right .big_button {
+	margin-left: 0 !important;
+	left: -50%;
+}
+
+#navigation {
+	top: 90px;
+}
+
+#navigation li a {
+	display: inline;
+}
