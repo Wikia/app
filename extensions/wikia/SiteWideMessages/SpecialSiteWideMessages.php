@@ -233,7 +233,7 @@ function SiteWideMessagesAjaxDismiss($msgId) {
 
 /**
  * When wiki is disabled or changed into the redirect, remove all messages from that wiki
- * User won't be able to to this by his own
+ * User won't be able to do this by his own
  */
 function SiteWideMessagesPublicStatusChange($city_public, $city_id) {
 	if ($city_public == 0 || $city_public == 2) {

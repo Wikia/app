@@ -770,7 +770,7 @@ class SiteWideMessages extends SpecialPage {
 		return false;
 	}
 
-	function deleteMessagesOnWiki($city_id) {
+	static function deleteMessagesOnWiki($city_id) {
 		$DB = wfGetDB(DB_MASTER);
 		$dbResult = (boolean)$DB->Query (
 			  'DELETE FROM ' . MSG_STATUS_DB
