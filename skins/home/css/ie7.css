@@ -1,18 +1,26 @@
-#rightNowSubLinks
-{
-  overflow: hidden;
+#rightNowSubLinks {
+	overflow: hidden;
 }
 
-#rightNowSubLinks div
-{
- margin-top: 0px;
- position: relative;
- top: 2px;
+#rightNowSubLinks div {
+	margin-top: 0px;
+	position: relative;
+	top: 2px;
 }
 
-#introSection .boxContent
-{
- height: 285px;
+#introSection .boxContent {
+	height: 285px;
 }
 
-#searchform {margin: 0}
+#searchform {
+	margin: 0
+}
+
+/* macbre: #3682 */
+#homepage_right .big_button { 
+	margin-left: 0 !important; 
+	left: -50%; 
+} 
+#feature_footer td { 
+	height: 130px;
+}
