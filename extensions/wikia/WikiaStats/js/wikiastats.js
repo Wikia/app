@@ -56,9 +56,13 @@ function showXLSCompareDialog(statistics, showHtml) {
 	//----
 	//if ((statistics == 8) && (showHtml == false)) {StatsPageLoaderShow(0); wk_stats_city_id = 0; XLSGenerate(statistics, '', '', ''); }
 	if ((statistics == 9) && (showHtml == false)) {StatsPageLoaderShow(0); wk_stats_city_id = 0; XLSGenerate(statistics, '', '', ''); }
-	else if ((statistics == 8) && (showHtml == true)) { StatsPageLoaderShow(1); ShowCompareStats(statistics-7, "", false); }
-	else if ((statistics == 9) && (showHtml == true)) { StatsPageLoaderShow(1); ShowCompareStats(statistics-7, "", false); }
+	//else if ((statistics == 8) && (showHtml == true)) { StatsPageLoaderShow(1); ShowCompareStats(statistics-7, "", false); }
+	else if ((statistics == 9) && (showHtml == true)) { StatsPageLoaderShow(1); ShowCompareStats(statistics-7, "", true); }
 	else {
+		if ((statistics == 8) && (showHtml == true)) { 
+			compare_stats = statistics - 7; 
+		}
+
 		CitiesListCallback = { 
 			success: function( oResponse ) { //YD.get("ws-div-scroll").innerHTML = oResponse.responseText; 
 				res = "<table>";

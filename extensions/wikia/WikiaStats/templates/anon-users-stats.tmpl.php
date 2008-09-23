@@ -34,7 +34,7 @@ foreach ($anonData as $id => $data)
 	$outLastEdit = substr(wfMsg(strtolower(date("F",$data['max']))), 0, 3) . " " . date("d",$data['max']) .", ".date("Y",$data['max']);
 ?>
 <tr>
-	<td class="eb" nowrap><a href="<?= $city_url ?><?= Title::makeTitle(NS_USER, $data['user_name'])->getLocalURL() ?>" target="new"><?= $data['user_name'] ?></a></td>
+	<td class="eb" nowrap><a href="<?= $city_url ?><?= Title::makeTitle(NS_SPECIAL, "Contributions")->getLocalURL() ?>/<?=$data['user_name']?>" target="new"><?= $data['user_name'] ?></a></td>
 	<td class="eb" nowrap><?= $rank ?></td>
 	<td class="eb" nowrap><?= $data['cnt'] ?></td>
 	<td class="eb" nowrap><?= $outFirstEdit ?></td>

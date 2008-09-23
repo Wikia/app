@@ -6,8 +6,8 @@ $wgWikiaStatsMessages["en"] = array(
 	"wikiastats" => "Wikia Statistics",
 	"wikiastats_wikia" => "Wikia",
 	"wikiastats_pagetitle" => "Wikia Statistics",
-	"wikiastats_info" => "Please select Wikia list of databases and press \"Show statistics\" button",
-	"wikiastats_mainstats_info" => "Please select Wikia from list of wikis and press \"Generate\" button",
+	"wikiastats_info" => "Select a wiki from the list and press \"Show statistics\"",
+	"wikiastats_mainstats_info" => "Select a wiki from the list and press \"Generate\"",
 	"wikiastats_xls_generate_info" => "You can select maximum $1 Wikis from the list",
 	"wikiastats_comparision" => "Comparisons",
 	"wikiastats_showstats_btn" => "Show statistics",
@@ -200,6 +200,7 @@ $wgWikiaStatsMessages["en"] = array(
 	"wikiastats_trend_ordered" => "All wiki are ordered by numbers of articles. <br /> Select part of those stats: ",
 	"wikiastats_trend_where_text" => "where:",
 	"wikiastats_trend_all_wikia_text" => "All wikis",
+	"wikiastats_always_selected" => "(always selected)",
 	"wikiastats_creation_wikia_text" => "Creation history / Accomplishments",
 	"wikiastats_creation_wikia_filename" => "Creation_history",
 	"wikiastats_creation_panel_header" => "\"Creation history\" statistic is generated",
@@ -276,5 +277,7 @@ $wgWikiaStatsMessages["en"] = array(
 	"wikiastats_filename_column_V" => "redirects",
 	"wikiastats_filename_column_W" => "uploaded_images",
 	"wikiastats_filename_column_X" => "images_with_links",
+	"wikiastats_code_version" => "Code version:",
+	"wikiastats_mediawiki_stats" => "MediaWiki statistics:",	
 );
 ?>

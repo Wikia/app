@@ -287,8 +287,15 @@ class WikiaStatsClass extends SpecialPage
 		#---
 		$cityList = $this->mStats->getWikiaAllCityList();
 		#---
+
+		$cityOrderList = array(); 
+		$cities = $wgRequest->getVal("cities"); 
+		$citiesList = array();
+		if (!empty($cities)) {
+			$citiesList = split(";", $cities, 30);
+		}
 		
-		$cityOrderList = $this->mStats->getWikiaOrderStatsList();
+		$cityOrderList = $this->mStats->getWikiaOrderStatsList('', $citiesList);
 		#--- split table to get list of id of cities 
 		$array_sli = array_slice($cityOrderList, $select, STATS_TREND_CITY_NBR);
 		$splitCityList = array_merge(array(0 => 0) /* all stats */, (is_array($array_sli)) ? $array_sli : array());

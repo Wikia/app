@@ -12,7 +12,7 @@ foreach ($cityStats as $id => $cityId)
 		$wikia_rows .= "<table><tr id=\"wkri-{$cityId}\">";
 		$wikia_rows .= "<td class=\"wktd\" id=\"wkcn-{$cityId}\">";
 		$wikia_rows .= "<a target=\"new\" href=\"".$cityList[$cityId]['url']."\">";
-		$wikia_rows .= ($cityId != 0) ? ucfirst($cityList[$cityId]['dbname']): wfMsg('wikiastats_trend_all_wikia_text') ;
+		$wikia_rows .= ($cityId != 0) ? ucfirst($cityList[$cityId]['dbname']): wfMsg('wikiastats_trend_all_wikia_text') . " " . wfMsg('wikiastats_always_selected') ;
 		$wikia_rows .= "</a></td>";
 		$wikia_rows .= "<td width=\"250\" class=\"wktdr\"><a href=\"/index.php?title=Special:WikiaStats&action=citystats&city={$cityId}\">".wfMsg('wikiastats_tables')."</a>&nbsp;-&nbsp;";
 		$wikia_rows .= "<a href=\"/index.php?title=Special:WikiaStats&action=citycharts&city={$cityId}\">".wfMsg('wikiastats_charts')."</a>&nbsp;-&nbsp;";
