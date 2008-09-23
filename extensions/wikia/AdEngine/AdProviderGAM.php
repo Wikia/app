@@ -91,7 +91,7 @@ class AdProviderGAM implements iAdProvider {
 		// Always pass the hub as a key value
 		$out .= $this->getTargetingValue('hub', $this->getHub()) . "\n";
 		// And languages
-		$out .= 'GA_googleAddAttr("cont_lang", wgLanguageCode);' . "\n";
+		$out .= 'GA_googleAddAttr("cont_lang", wgContentLanguage);' . "\n";
 		$out .= 'GA_googleAddAttr("user_lang", wgUserLanguage);' . "\n";
 		$out .= '</script>' . "\n";
 		
