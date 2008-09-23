@@ -9,15 +9,22 @@
  * along with an optional argument to log it as an error.
  */
 
-$wgExtensionCredits['other'][] = array(
-	'name' => 'Null ad provider for AdEngine, used when no ad should displayed'
-);
-
 class AdProviderNull implements iAdProvider {
 
 	protected static $instance = false;
 
 	private $reason;
+
+        private $slotsToCall = array();
+
+        public function addSlotToCall($slotname){
+                $this->slotsToCall[]=$slotname;
+        }
+
+	public function batchCallAllowed(){ return false; }
+	public function getSetupHtml(){ return false; }
+	public function getBatchCallHtml(){ return false; }
+
 
 	/* @param reason - a note for why NULL ad is being used.
  	 * @param logError - whether to log this as an error

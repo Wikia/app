@@ -1,9 +1,5 @@
 <?php
 
-$wgExtensionCredits['other'][] = array(
-	'name' => 'DART ad provider for AdEngine',
-);
-
 class AdProviderDART implements iAdProvider {
 
 	private $isMainPage;
@@ -39,7 +35,15 @@ class AdProviderDART implements iAdProvider {
 							'Test Site' => 'wka.test',
 							'Toys' => 'wka.toys',
 							'Travel' => 'wka.travel');
+        private $slotsToCall = array();
 
+        public function addSlotToCall($slotname){
+                $this->slotsToCall[]=$slotname;
+        }
+
+        public function batchCallAllowed(){ return false; }
+        public function getSetupHtml(){ return false; }
+        public function getBatchCallHtml(){ return false; }
 
 	public function getAd($slotname, $slot){
 

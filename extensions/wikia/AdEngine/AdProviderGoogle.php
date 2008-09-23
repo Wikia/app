@@ -1,14 +1,27 @@
 <?php
 
-// Not fully implemented
-
-$wgExtensionCredits['other'][] = array(
-	'name' => 'Null ad provider for AdEngine'
-);
-
 class AdProviderGoogle implements iAdProvider {
 
 	protected static $instance = false;
+
+        private $slotsToCall = array();
+
+        public function addSlotToCall($slotname){
+                $this->slotsToCall[]=$slotname;
+        }
+
+	public function batchCallAllowed(){
+		return false;
+	}
+
+	public function getBatchCallHtml(){
+		return false;
+	}
+
+	public function getSetupHtml(){
+		// TODO, see if we can call show_ads.js only once, and then just call a function multiple times
+		return false;
+	}
 
 	public static function getInstance() {
 		if(self::$instance == false) {

@@ -8,6 +8,7 @@ CREATE TABLE ad_provider (
 INSERT INTO ad_provider VALUES (1, 'DART');
 INSERT INTO ad_provider VALUES (2, 'Google');
 INSERT INTO ad_provider VALUES (3, 'OpenX');
+INSERT INTO ad_provider VALUES (4, 'GAM');
 
 
 -- Slots

@@ -10,16 +10,20 @@ $wgExtensionCredits['other'][] = array(
 interface iAdProvider {
 	public static function getInstance();
 	public function getAd($slotname, $slot);
+	public function batchCallAllowed();
+	public function addSlotToCall($slotname);
+	public function getSetupHtml();
+	public function getBatchCallHtml();
 }
 
 class AdEngine {
 
-	const cacheKeyVersion = "1.9a";
+	const cacheKeyVersion = "1.9b";
 	const cacheTimeout = 1800;
 	const noadgif = "http://images.wikia.com/common/wikia/noad.gif?1";
 
 	// TODO: pull these from wikicities.provider
-	private $providers = array('1' => 'DART', '2' => 'OpenX', '3' => 'Google', '-1' => 'Null');
+	private $providers = array('1' => 'DART', '2' => 'OpenX', '3' => 'Google', '4' => 'GAM', '-1' => 'Null');
 
 	private $slots = array();
 
@@ -40,6 +44,31 @@ class AdEngine {
 			self::$instance = new AdEngine();
 		}
 		return self::$instance;
+	}
+
+	// Load up all the providers. For each one, set up 
+
+	public function getSetupHtml(){
+
+		$out = "<!-- #### BEGIN " . __CLASS__ . '::' . __METHOD__ . " ####-->\n";
+
+		/* TODO move this to allinone, and find a better spot for this code after I talk to Christian.
+                         This is an experiment to see if moving it higher on the page makes it better */
+		global $wgExtensionsPath;
+		$out .= '<script type="text/javascript" src="' . $wgExtensionsPath . '/wikia/AdEngine/AdEngine.js"></script>'. "\n";
+
+		// Get the setup code for ad providers used on this page
+		foreach ($this->slots as $slotname => $slot){
+	                $AdProvider = $this->getAdProvider($slotname);
+			// Fill in slotsToCall with a list of slotnames that will be used. Needed for getBatchCallHtml
+			$AdProvider->addSlotToCall($slotname);
+
+			// Get setup HTML for each provider. May be empty.
+			$out .= $AdProvider->getSetupHtml();
+		}
+		$out .= "<!-- #### END " . __CLASS__ . '::' . __METHOD__ . " ####-->\n";
+			
+		return $out;
 	}
 
 	public function loadConfig() {
@@ -122,10 +151,8 @@ class AdEngine {
 
 	// For the provided $slotname, get an ad tag.
 	public function getAd($slotname) {
-
 		$AdProvider = $this->getAdProvider($slotname);
 		return $AdProvider->getAd($slotname, $this->slots[$slotname]);
-
 	}
 
 	// Logic for hiding/displaying ads should be here, not in the skin.
@@ -149,8 +176,12 @@ class AdEngine {
 
 		// As long as they are enabled via config, spotlights are always displayed...
 		} else if ( AdEngine::getInstance()->getAdType($slotname) == 'spotlight' ){
-			/// and they are always OpenX
-			return AdProviderOpenX::getInstance();
+			global $wgUseGAMForSpotlights;
+			if (!empty($wgUseGAMForSpotlights)){
+				return AdProviderGAM::getInstance();
+			} else {
+				return AdProviderOpenX::getInstance();
+			}
 
 		// Now some toggles based on preferences and logged in/out
 		} else if (! ArticleAdLogic::isMandatoryAd($slotname) &&
@@ -198,6 +229,7 @@ class AdEngine {
 			case 'DART': return AdProviderDART::getInstance();
 			case 'OpenX': return AdProviderOpenX::getInstance();
 			case 'Google': return AdProviderGoogle::getInstance();
+			case 'GAM': return AdProviderGAM::getInstance();
 			default: return new AdProviderNull('Unrecognized provider id', true);
 		}
 	}
@@ -245,9 +277,9 @@ class AdEngine {
 
 		$style = ' style="'. implode(" ", $styles) .'" class="wikia_ad_placeholder"';
 
-		// We will use this at the bottom of the page for ads.
+		// We will use these at the bottom of the page for ads.
 		$this->placeholders[] = $slotname;
-
+		
 		return "<div id=\"$slotname\"$style></div>";
 	}
 
