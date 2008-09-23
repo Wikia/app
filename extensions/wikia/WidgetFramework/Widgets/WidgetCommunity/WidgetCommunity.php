@@ -85,23 +85,15 @@ function WidgetCommunity($id, $params) {
 function WidgetCommunityFormatTime($time) {
 	$diff = time() - strtotime($time);
 	if ($diff < 60) { //less than a minute
-		return(', seconds ago');
+		return wfMsg('widget-community-secondsago', $diff);
 	} else if ($diff < (60 * 60)) { //less than an hour
 		$minutes = floor($diff/60);
-		$plural = ' minutes ago';
-		if ($minutes == 1) {
-			$plural = ' minute ago';
-		}
-		return(', '. floor($diff/60) . $plural);
+		return wfMsg('widget-community-minutesago', $minutes);
 	} else if ($diff < (60 * 60 * 24)) { //less than a day
 		$hours = floor($diff/(60*60));
-		$plural = ' hours ago';
-		if ($hours == 1) {
-			$plural = ' hour ago';
-		}
-		return(', '. floor($diff/(60*60)). $plural);
+		return wfMsg('widget-community-hoursago', $hours);
 	} else if ($diff < (60 * 60 * 24 * 2)) { //less than 2 days
-		return(', yesterday');
+		return wfMsg('widget-community-yesterday');
 	}
 	return '';
 }
