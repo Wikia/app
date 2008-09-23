@@ -127,7 +127,7 @@ class AdProviderGAM implements iAdProvider {
 
 
 	private function getProviderValues($slot){
-		if(empty($slot['provider_values'])){
+		if(empty($slot['provider_values']) || !is_array($slot['provider_values'])){
 			return '';
 		}
 
