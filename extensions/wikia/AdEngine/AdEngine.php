@@ -176,12 +176,8 @@ class AdEngine {
 
 		// As long as they are enabled via config, spotlights are always displayed...
 		} else if ( AdEngine::getInstance()->getAdType($slotname) == 'spotlight' ){
-			global $wgUseGAMForSpotlights;
-			if (!empty($wgUseGAMForSpotlights)){
-				return AdProviderGAM::getInstance();
-			} else {
-				return AdProviderOpenX::getInstance();
-			}
+			// ... and we always use Google Ad Manager
+			return AdProviderGAM::getInstance();
 
 		// Now some toggles based on preferences and logged in/out
 		} else if (! ArticleAdLogic::isMandatoryAd($slotname) &&
