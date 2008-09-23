@@ -956,10 +956,6 @@ class MonacoTemplate extends QuickTemplate {
 		<noscript>
 		<a href="http://www.quantcast.com/p-8bG6eLqkH6Avk" target="_blank"><img src="http://pixel.quantserve.com/pixel/p-8bG6eLqkH6Avk.gif" style="display: none;" border="0" height="1" width="1" alt="Quantcast"/></a>
 		</noscript>
-		<?php /* TODO move this to allinone, and find a better spot for this code after I talk to Christian.
-			 This is an experiment to see if moving it higher on the page makes it better */?>
-		<script type="text/javascript" src="<?=$wgExtensionsPath?>/wikia/AdEngine/AdEngine.js"></script>
-
 
 		<title><?php $this->text('pagetitle') ?></title>
 		<?php print Skin::makeGlobalVariablesScript( $this->data ); ?>
@@ -1259,6 +1255,7 @@ if(isset($this->data['articlelinks']['right'])) {
 					<?php if($this->data['showjumplinks']) { ?><div id="jump-to-nav"><?php $this->msg('jumpto') ?> <a href="#column-one"><?php $this->msg('jumptonavigation') ?></a>, <a href="#searchInput"><?php $this->msg('jumptosearch') ?></a></div><?php } ?>
 					<?php
 					global $wgOut;
+					echo AdEngine::getInstance()->getSetupHtml();
 
 					if ($wgOut->isArticle()){
 						if (ArticleAdLogic::isMainPage()){
