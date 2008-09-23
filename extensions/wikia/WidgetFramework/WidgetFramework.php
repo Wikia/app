@@ -571,7 +571,7 @@ function WidgetFrameworkWrapLinks($links) {
 		$out = '<ul>';
 		foreach($links as $link) {
 			$out .= '<li>';
-			$out .= '<a href="'.htmlspecialchars($link['href']).'"'.(isset($link['title']) ? ' title="'.htmlspecialchars($link['title']).'"' : '').'>'.htmlspecialchars($link['name']).'</a>';
+			$out .= '<a href="'.htmlspecialchars($link['href']).'"'.(isset($link['title']) ? ' title="'.htmlspecialchars($link['title']).'"' : '').(!empty($link['nofollow']) ? ' rel="nofollow"' : '').'>'.htmlspecialchars($link['name']).'</a>';
 			if(isset($link['desc'])) {
 				$out .= '<br/>'.$link['desc'];
 			}
