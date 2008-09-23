@@ -59,14 +59,7 @@ class CreatePageMultiEditor extends CreatePageEditor {
 		// check for already submitted values - for a preview, for example
 		('' != $wgRequest->getVal ('wpSummary')) ? $summaryval = $wgRequest->getVal ('wpSummary') : $summaryval = '' ;		
 		if ($this->mInitial) {
-			if( $wgUser->getOption( 'watchdefault' ) ) {
-                                $watchthischeck = 'checked="checked"' ;
-                        } elseif( $wgUser->getOption( 'watchcreations' ) && !$title->exists() ) {
-                                $watchthischeck = 'checked="checked"' ;
-                        } else {
-                                $watchthischeck = '' ;
-                        }
-
+                        $watchthischeck = 'checked="checked"' ;
                         if( $wgUser->getOption( 'minordefault' ) ) {
 				$minoreditcheck = 'checked="checked"' ;
 			} else {

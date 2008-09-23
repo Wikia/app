@@ -399,7 +399,6 @@ class CreatePageCreateplateForm {
 				return false ;
 			}
 			if ($wgRequest->getCheck ('wpSave') ) {
-				//apply the textbox into the object, then voila
 				$editor = new CreatePageMultiEditor ($this->mCreateplate) ;
 				$rtitle = Title::newFromText ($wgRequest->getVal ('Createtitle')) ;
 				$rarticle = new Article ($rtitle, $rtitle->getArticleID ()) ;
