@@ -580,7 +580,7 @@ class WikiaGenericStats {
 		return $wkCityTrendStatistics;
 	}
 
-	static private function getWikiansListStatsFromDB($cityDBName, $namespace=0, $limit=50, $stats_date=0, $userlist=array())
+	static private function getWikiansListStatsFromDB($cityDBName, $namespace=0, $limit=STATS_WIKIANS_RANK_NBR, $stats_date=0, $userlist=array())
 	{
     	global $wgMemc;
     	#---
@@ -1827,7 +1827,7 @@ class WikiaGenericStats {
 		$cityDBName = self::getWikiaDBCityListById($city_id);
 		#---
 		if (!empty($cityDBName)) {
-			$rankUsers = self::getWikiansListStatsFromDB($cityDBName, 0);
+			$rankUsers = self::getWikiansListStatsFromDB($cityDBName, 0, STATS_WIKIANS_RANK_NBR);
 			$rankUsersNamespace = array();
 			#--- get list of user id
 			$userIDs = array();
@@ -1836,17 +1836,17 @@ class WikiaGenericStats {
 			}
 			#---
 			if (!empty($userIDs)) {
-				$rankUsersNamespace = self::getWikiansListStatsFromDB($cityDBName, 1, 50, 0, $userIDs);
+				$rankUsersNamespace = self::getWikiansListStatsFromDB($cityDBName, 1, STATS_WIKIANS_RANK_NBR, 0, $userIDs);
 			}
 			#--- previous ranking
 			$stamp = date( "Y-m", mktime(0,0,0,date("m")- (1 + $month),1,date("Y")) );
-			$rankUsersPrev = self::getWikiansListStatsFromDB($cityDBName, 0, 50, $stamp);
+			$rankUsersPrev = self::getWikiansListStatsFromDB($cityDBName, 0, STATS_WIKIANS_RANK_NBR, $stamp);
 			$userIDs = array();
 			if (!empty($rankUsersPrev)) {
 				$userIDs = array_keys($rankUsersPrev);
 			}
 			if (!empty($userIDs)) {
-				$rankUsersPrevNamespace = self::getWikiansListStatsFromDB($cityDBName, 1, 50, $stamp, $userIDs);
+				$rankUsersPrevNamespace = self::getWikiansListStatsFromDB($cityDBName, 1, STATS_WIKIANS_RANK_NBR, $stamp, $userIDs);
 			}
 
 			$wikians_active = array();

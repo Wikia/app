@@ -280,11 +280,11 @@ foreach ($monthlyStats as $date => $columnsData) {
 </tr>
 </table>
 </div>
-<div class="clear" style="font-size:7.7pt;height:15px;">
+<!--<div class="clear" style="font-size:7.7pt;height:15px;">
         <?=wfMsg("wikiastats_date_of_generate", wfMsg(strtolower(date("l",$today_day))) . " " . substr(wfMsg(strtolower(date("F",$today_day))), 0, 3) . " " . date("d", $today_day) . ", " . date("Y", $today_day))?>
         <strong>&nbsp;&#183;&nbsp;</strong>
         <a href="#definitions"><?=wfMsg("wikiastats_see_definitions")?></a>
-</div>
+</div>-->
 
 <!-- END OF MAIN STATISTICS TABLE -->
 <!-- e:<?= __FILE__ ?> -->
