@@ -418,6 +418,10 @@ div.wikiaDialog h2,
 'widget-bookmark-empty' => 'Add your favorite pages by clicking "add" icon above',
 'widget-contribs-empty' => 'You have no contributions on this wiki.',
 'widget-contribs-limit' => 'Limit',
+'widget-community-secondsago' => ', {{PLURAL:$1|one second ago|$1 seconds ago}}',
+'widget-community-minutesago' => ', {{PLURAL:$1|one minute ago|$1 minutes ago}}',
+'widget-community-hoursago' => ', {{PLURAL:$1|one hour ago|$1 hours ago}}',
+'widget-community-yesterday' => ', yesterday',
 'widgets' => 'Widgets list',
 'widgets-specialpage-info' => 'Widgets work best with one of the new skins, eg. [{{SERVER}}/index.php?title=Special:Widgets&useskin=monaco Monaco].
 
@@ -910,6 +914,7 @@ Some IP addresses change periodically, and may be shared by several users. If yo
 \'\'\'IP info:\'\'\' [http://samspade.org/whois?query=$1 WHOIS] • [http://openrbl.org/query?$1 RDNS] • [http://www.robtex.com/rbls/$1.html RBLs] • [http://www.dnsstuff.com/tools/tracert.ch?ip=$1 Traceroute] • [http://www.as3344.net/is-tor/?args=$1 TOR check] &mdash; [[wikipedia:Regional Internet registry|RIR]]s: [http://ws.arin.net/whois/?queryinput=$1 America] &bull; [http://www.ripe.net/fcgi-bin/whois?searchtext=$1 Europe] · [http://www.afrinic.net/cgi-bin/whois?query=$1 Africa] · [http://www.apnic.net/apnic-bin/whois.pl?searchtext=$1 Asia-Pacific] · [http://www.lacnic.net/cgi-bin/lacnic/whois?lg=EN&query=$1 Latin America/Caribbean]
 |}',
 'specialpages-url' => 'Special:Specialpages',
+'specialpages-group-wikia' => 'Wikia special pages',
 'stf_abuse' => 'This email was sent via Wikia.
 If you think this was sent in error, please let us know at support@wikia.com',
 'subcategorycount' => 'There {{PLURAL:$1|is one subcategory|are $1 subcategories}} in this category, which {{PLURAL:$1|is|are}} shown below.  {{PLURAL:$1||More may be shown on subsequent pages.}}',
