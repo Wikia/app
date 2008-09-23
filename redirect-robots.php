@@ -78,7 +78,7 @@ Disallow: /
 
 User-agent: WebZIP
 Disallow: /
-http://us3.php.net/is_array
+
 User-agent: linko
 Disallow: /
 
