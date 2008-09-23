@@ -59,6 +59,7 @@ function SiteWideMessagesInit() {
 		$wgHooks['OutputPageParserOutput'][] = 'SiteWideMessagesGetUserMessages';
 		$wgHooks['EditPage::showEditForm:initial'][] = 'SiteWideMessagesArticleEditor';
 		$wgHooks['AbortDiffCache'][] = 'SiteWideMessagesAbortDiffCache';
+		$wgHooks['WikiFactoryPublicStatusChange'][] = 'SiteWideMessagesPublicStatusChange';
 	}
 }
 
@@ -229,4 +230,14 @@ function SiteWideMessagesAjaxDismiss($msgId) {
 	$result = SiteWideMessages::dismissMessage($msgId);
 	return $result ? '1' : '0';
 }
-?>
+
+/**
+ * When wiki is disabled or changed into the redirect, remove all messages from that wiki
+ * User won't be able to to this by his own
+ */
+function SiteWideMessagesPublicStatusChange($city_public, $city_id) {
+	if ($city_public == 0 || $city_public == 2) {
+		SiteWideMessages::deleteMessagesOnWiki($city_id);
+	}
+	return true;
+}
