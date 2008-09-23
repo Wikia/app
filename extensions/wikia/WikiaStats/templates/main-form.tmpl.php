@@ -698,7 +698,7 @@ for ($i = 1; $i <= 6; $i++)
 			<a href="javascript:void(0)" id="ws-anon-users-show"><?= wfMsg('wikiastats_anon_wikians'); ?></a>
 			<span style="padding:5px 2px;"><input type="image" id="ws-xls-4" value="<?= wfMsg("wikiastats_export_xls") ?>" src="/extensions/wikia/WikiaStats/images/xls.gif"></span>
 		</div>	
-		<span class="small"><?= wfMsg('wikiastats_active_wikians_subtitle') ?></span>
+		<span class="small"><?= wfMsg('wikiastats_anon_wikians_subtitle') ?></span>
 	</div>
 	<div id="ws-progress-anon-bar"></div>
 	<div class="clear">&nbsp;</div>
