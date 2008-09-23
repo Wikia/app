@@ -1,18 +1,17 @@
-#rightNowSubLinks
-{
-  overflow: hidden;
+#rightNowSubLinks {
+	overflow: hidden;
 }
 
-#rightNowSubLinks div
-{
- margin-top: 0px;
- position: relative;
- top: 2px;
+#rightNowSubLinks div {
+	margin-top: 0px;
+	position: relative;
+	top: 2px;
 }
 
-#introSection .boxContent
-{
- height: 272px;
+#introSection .boxContent {
+	height: 272px;
 }
 
-#searchform {margin: 0}
+#searchform {
+	margin: 0
+}
