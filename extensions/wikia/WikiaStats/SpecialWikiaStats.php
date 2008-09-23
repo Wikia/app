@@ -14,6 +14,7 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 
 define ("STATS_TREND_MONTH", 5);
 define ("STATS_TREND_CITY_NBR", 20);
+define ("STATS_WIKIANS_RANK_NBR", 100);
 define ("STATS_COLUMN_CITY_NBR", 59);
 define ("MIN_STATS_DATE", '2001-01');
 define ("STATS_COLUMN_PREFIX", "m_");
