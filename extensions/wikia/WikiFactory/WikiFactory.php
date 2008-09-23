@@ -1003,6 +1003,8 @@ class WikiFactory {
 
 		wfProfileIn( __METHOD__ );
 
+		wfRunHooks( 'WikiFactoryPublicStatusChange', array( &$city_public, &$city_id ) );
+
 		$dbw = wfGetDB( DB_MASTER );
 		$dbw->update(
 			wfSharedTable( "city_list" ),

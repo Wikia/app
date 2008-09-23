@@ -769,6 +769,17 @@ class SiteWideMessages extends SpecialPage {
 		}
 		return false;
 	}
+
+	function deleteMessagesOnWiki($city_id) {
+		$DB = wfGetDB(DB_MASTER);
+		$dbResult = (boolean)$DB->Query (
+			  'DELETE FROM ' . MSG_STATUS_DB
+			. ' WHERE msg_wiki_id = ' . $DB->AddQuotes($city_id)
+			. ';'
+			, __METHOD__
+		);
+		return $dbResult;
+	}
 }
 
 //class for pagination of list of messages

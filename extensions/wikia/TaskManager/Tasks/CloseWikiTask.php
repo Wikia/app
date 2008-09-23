@@ -58,7 +58,9 @@ class CloseWikiTask extends BatchTask {
         }
         else {
             #--- redirect to notreal.wikia.com
-            $this->disable();
+			if ( !empty($this->mParams['source_wikia_id']) ) {
+				WikiFactory::setPublicStatus(0, $this->mParams['source_wikia_id']);
+			}
         }
 
         #--- dump database to xml
@@ -189,25 +191,6 @@ class CloseWikiTask extends BatchTask {
         }
         else {
             return $oRow->city_id;
-        }
-    }
-
-    /**
-     * disable wiki in city_list (which redirect it to notreal.wikia.com)
-     *
-     * @access private
-     *
-     */
-    private function disable()
-    {
-        if ( !empty($this->mParams["source_wikia_id"]) ) {
-            $dbw = wfGetDB( DB_MASTER );
-            $dbw->update(
-                wfSharedTable( "city_list" ),
-                array( "city_public" => 0 ),
-                array( "city_id" => $this->mParams["source_wikia_id"] ),
-                __METHOD__
-            );
         }
     }
 
