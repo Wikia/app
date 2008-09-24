@@ -96,6 +96,26 @@ EOT
 
 		function showInfo( $target ) {
 			global $wgOut, $wgLang;
+			
+			/**
+			 * look for @ in username
+			 */
+			if( strpos( $target, '@' ) !== false ) {
+				/**
+				 * find username by email
+				 */
+				$dbr = wfGetDB( DB_SLAVE );
+				$row = $dbr->selectRow(
+					wfSharedTable( "user" ),
+					array( "user_name" ),
+					array( "user_email" => $target ),
+					__METHOD__
+				);
+				if( isset( $row->user_name ) ) {
+					$target = $row->user_name;
+				}
+			}
+
 			$user = User::newFromName( $target );
 			if ( ($user == null) || ($user->getId() == 0) ) {
 				$wgOut->addWikiText( '<span class="error">' . wfMsg( 'lookupuser_nonexistent', $target ) . '</span>' );
