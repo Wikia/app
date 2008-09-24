@@ -783,7 +783,7 @@ class SiteWideMessages extends SpecialPage {
 			$wgMemc->delete($key);
 
 			wfDebug(basename(__FILE__) . ' || ' . __METHOD__ . " || WikiId=$mWikiId, messageID=$messageID, result=" . ($dbResult ? 'true':'false') . "\n");
-			return $dbResult;
+			return (bool)$dbResult;
 		}
 		return false;
 	}
