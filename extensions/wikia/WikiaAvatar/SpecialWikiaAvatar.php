@@ -30,5 +30,4 @@ if ( !function_exists( 'extAddSpecialPage' ) ) {
 }
 
 extAddSpecialPage( dirname(__FILE__) . '/SpecialWikiaAvatar_body.php', 'AvatarUpload', 'WikiaAvatarUploadPage' );
-
-?>
+$wgSpecialPageGroups['AvatarUpload'] = 'users';

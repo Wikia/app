@@ -17,6 +17,7 @@ $wgSpecialPages['UploadAvatar'] = 'UploadAvatar';
 
 $wgAutoloadClasses['RemoveAvatar'] = "{$wgUserProfileDirectory}/SpecialRemoveAvatar.php";
 $wgSpecialPages['RemoveAvatar'] = 'RemoveAvatar';
+$wgSpecialPageGroups['RemoveAvatar'] = 'users';
 
 //default setup for displaying sections
 $wgUserProfileDisplay['friends'] = true;

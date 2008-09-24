@@ -4,6 +4,7 @@ define('REL_FRIEND', 1);
 define('REL_FOE',    2);
 
 $wgExtensionFunctions[] = 'wfSpecialViewRelationships';
+$wgSpecialPageGroups['SpecialViewRelationships'] = 'users';
 
 function wfSpecialViewRelationships(){
 	global $wgUser,$IP;
@@ -323,5 +324,3 @@ function wfSpecialViewRelationships(){
 	SpecialPage::addPage( new ViewRelationships );
 	global $wgMessageCache,$wgOut;
 }
-
-?>

@@ -32,4 +32,4 @@ if (!function_exists('extAddSpecialPage')) {
 	require("$IP/extensions/ExtensionFunctions.php");
 }
 extAddSpecialPage(dirname(__FILE__) . '/SpecialWhereIsExtension_body.php', 'WhereIsExtension', 'WhereIsExtension');
-?>
+$wgSpecialPageGroups['WhereIsExtension'] = 'wikia';

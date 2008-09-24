@@ -17,6 +17,7 @@ $dir = dirname( __FILE__ );
 $wgAutoloadClasses["PrivateDomains"] = $dir . "/SpecialPrivateDomains_body.php";
 $wgExtensionMessagesFiles["PrivateDomains"] = $dir . "/SpecialPrivateDomains.i18n.php";
 $wgSpecialPages['PrivateDomains'] = array( 'SpecialPage', 'PrivateDomains', 'PrivateDomains' );
+$wgSpecialPageGroups['PrivateDomains'] = 'wiki';
 
 $wgHooks['AlternateEdit'][] = 'pd_AlternateEdit'; // Occurs whenever action=edit is called
 $wgHooks['UserLoginComplete'][] = 'pd_UserLoginComplete'; // Occurs after a user has successfully logged in

@@ -1,7 +1,7 @@
 <?php
 
 $wgExtensionFunctions[] = 'wfSpecialTopFanBoxes';
-
+$wgSpecialPageGroups['TopUserboxes'] = 'users';
 
 function wfSpecialTopFanBoxes(){
 	global $wgUser,$IP;

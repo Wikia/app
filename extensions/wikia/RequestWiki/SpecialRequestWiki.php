@@ -40,3 +40,4 @@ if( !function_exists( 'extAddSpecialPage' ) ) {
     require( "$IP/extensions/ExtensionFunctions.php" );
 }
 extAddSpecialPage( dirname(__FILE__) . '/SpecialRequestWiki_body.php', 'RequestWiki', 'RequestWikiPage' );
+$wgSpecialPageGroups['RequestWiki'] = 'wikia';

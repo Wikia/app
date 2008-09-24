@@ -48,4 +48,4 @@ $wgGroupPermissions['staff']['wikifactory'] = true;
 $wgExtensionMessagesFiles[ $sSpecialPage ] = dirname(__FILE__) . "/Special{$sSpecialPage}.i18n.php";
 
 extAddSpecialPage( dirname(__FILE__) . "/Special{$sSpecialPage}_body.php", $sSpecialPage, "{$sSpecialPage}Page" );
-$wgSpecialPageGroups[$sSpecialPage] = 'wiki';
+$wgSpecialPageGroups[$sSpecialPage] = 'wikia';
