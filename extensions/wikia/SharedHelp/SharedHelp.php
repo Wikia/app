@@ -21,6 +21,7 @@ $wgExtensionCredits['other'][] = array(
 $wgHooks['OutputPageBeforeHTML'][] = 'SharedHelpHook';
 $wgHooks['EditPage::showEditForm:initial'][] = 'SharedHelpEditPageHook';
 $wgHooks['SearchBeforeResults'][] = 'SharedHelpSearchHook';
+$wgHooks['ParserReplaceLinkHolders'][] = 'SharedHelpReplaceLinkHolders';
 
 function SharedHelpHook(&$out, &$text) {
 	global $wgTitle, $wgMemc, $wgSharedDB, $wgDBname, $wgCityId;
@@ -62,8 +63,13 @@ function SharedHelpHook(&$out, &$text) {
 
 		# If getting content from memcache failed (invalidate) then just download it via HTTP
 		if(empty($content)) {
-			$urlTemplate = "http://help.wikia.com/index.php?title=Help:%s&action=render";
-			//$urlTemplate = "http://help.macbre.dev.poz.wikia-inc.com/index.php?title=Help:%s&action=render"; // for testing purposes
+			if (empty($wgDevelEnvironment)) {
+				$urlTemplate = "http://help.wikia.com/index.php?title=Help:%s&action=render";
+			}
+			else {
+				$urlTemplate = "http://help.macbre.dev.poz.wikia-inc.com/index.php?title=Help:%s&action=render"; // for testing purposes
+			}
+
 			$articleUrl = sprintf($urlTemplate, $wgTitle->getDBkey());
 			$content = HTTP::get($articleUrl);
 
@@ -130,5 +136,16 @@ function SharedHelpSearchHook(&$searchPage, &$term) {
 
 	$wgOut->addHTML($msg);
 
+	return true;
+}
+
+
+function SharedHelpReplaceLinkHolders($title, $colours, $key) {
+	if ($title->getNamespace() == 12) {
+		$dbr = wfGetDB( DB_SLAVE );
+		$table = 'help.'.$dbr->tableName('page');
+		$page_title = $dbr->selectField($table, 'page_title', array('page_namespace' => 12, 'page_title' => $title->getDBkey()), __METHOD__);
+		$colours[$key] = $page_title !== false ? '' : 'new';
+	}
 	return true;
 }

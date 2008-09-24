@@ -4076,30 +4076,35 @@ class Parser
 				}
 				$pdbk = $pdbks[$key] = $title->getPrefixedDBkey();
 
-				# Check if it's a static known link, e.g. interwiki
-				if ( $title->isAlwaysKnown() ) {
-					$colours[$pdbk] = '';
-				} elseif ( ( $id = $linkCache->getGoodLinkID( $pdbk ) ) != 0 ) {
-					$colours[$pdbk] = '';
-					$this->mOutput->addLink( $title, $id );
-				} elseif ( $linkCache->isBadLink( $pdbk ) ) {
-					$colours[$pdbk] = 'new';
-				} elseif ( $title->getNamespace() == NS_SPECIAL && !SpecialPage::exists( $pdbk ) ) {
-					$colours[$pdbk] = 'new';
-				} else {
-					# Not in the link cache, add it to the query
-					if ( !isset( $current ) ) {
-						$current = $ns;
-						$query =  "SELECT page_id, page_namespace, page_title, page_is_redirect, page_len";
-						$query .= " FROM $page WHERE (page_namespace=$ns AND page_title IN(";
-					} elseif ( $current != $ns ) {
-						$current = $ns;
-						$query .= ")) OR (page_namespace=$ns AND page_title IN(";
-					} else {
-						$query .= ', ';
-					}
+				// Wikia: call hook so we can decide when to make links red
+				wfRunHooks('ParserReplaceLinkHolders', array($title, &$colours, $pdbk));
 
-					$query .= $dbr->addQuotes( $this->mLinkHolders['dbkeys'][$key] );
+				# Check if it's a static known link, e.g. interwiki
+				if (!isset($colours[$pdbk])) {
+					if ( $title->isAlwaysKnown() ) {
+						$colours[$pdbk] = '';
+					} elseif ( ( $id = $linkCache->getGoodLinkID( $pdbk ) ) != 0 ) {
+						$colours[$pdbk] = '';
+						$this->mOutput->addLink( $title, $id );
+					} elseif ( $linkCache->isBadLink( $pdbk ) ) {
+						$colours[$pdbk] = 'new';
+					} elseif ( $title->getNamespace() == NS_SPECIAL && !SpecialPage::exists( $pdbk ) ) {
+						$colours[$pdbk] = 'new';
+					} else {
+						# Not in the link cache, add it to the query
+						if ( !isset( $current ) ) {
+							$current = $ns;
+							$query =  "SELECT page_id, page_namespace, page_title, page_is_redirect, page_len";
+							$query .= " FROM $page WHERE (page_namespace=$ns AND page_title IN(";
+						} elseif ( $current != $ns ) {
+							$current = $ns;
+							$query .= ")) OR (page_namespace=$ns AND page_title IN(";
+						} else {
+							$query .= ', ';
+						}
+	
+						$query .= $dbr->addQuotes( $this->mLinkHolders['dbkeys'][$key] );
+					}
 				}
 			}
 			if ( $query ) {
