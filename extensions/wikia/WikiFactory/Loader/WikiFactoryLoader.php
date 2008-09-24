@@ -92,6 +92,17 @@ class WikiFactoryLoader {
 		#--- turn on/off error_log
 		self::$mDebug = 0;
 
+		# now some initalizations
+		$this->mDBname = "wikicities";
+		$this->mDomain = array();
+		$this->mVariables = array();
+		$this->mIsWikiaActive = 0;
+		$this->mAlwaysFromDB = 0;
+		$this->mWikiID = 0;
+		$this->mSkipFileCache = 1;
+		$this->mNoRedirect = false;
+		$this->mDBhandler = null;
+
 		if( !empty( $wgDevelEnvironment ) ) {
 			if( is_array($wgDevelDomains) ) {
 				$this->mDevelDomains = array_merge( $this->mDevelDomains, $wgDevelDomains );
@@ -103,18 +114,8 @@ class WikiFactoryLoader {
 				}
 			}
 			self::$mDebug = 1;
+			$this->mAlwaysFromDB = 1;   #--- skip reading from memcache
 		}
-
-		# now some initalizations
-		$this->mDBname = "wikicities";
-		$this->mDomain = array();
-		$this->mVariables = array();
-		$this->mIsWikiaActive = 0;
-		$this->mAlwaysFromDB = 0;   #--- skip reading from memcache
-		$this->mWikiID = 0;
-		$this->mSkipFileCache = 1;
-		$this->mNoRedirect = false;
-		$this->mDBhandler = null;
 
 		WikiFactory::isUsed( true );
 
