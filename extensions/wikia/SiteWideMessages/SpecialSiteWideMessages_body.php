@@ -156,14 +156,21 @@ class SiteWideMessages extends SpecialPage {
 				break;
 
 			case 'save':
-				$mText = $wgRequest->getText('mContent');
-				$editMsgId = isset($_POST['editMsgId']) ? $_POST['editMsgId'] : 0;
-				if ($editMsgId) {	//editing?
-					$result = $this->saveMessage($editMsgId, $mText);
+				if (wfReadOnly()) {
+					$wgOut->SetPageTitle(wfMsg('readonly'));
+					$reason = wfReadOnlyReason();
+					$formData['messageContent'] = $wgRequest->getText('mContent');
+					$formData['errMsg'] = wfMsg('readonlytext', $reason);
+				} else {
+					$mText = $wgRequest->getText('mContent');
+					$editMsgId = isset($_POST['editMsgId']) ? $_POST['editMsgId'] : 0;
+					if ($editMsgId) {	//editing?
+						$result = $this->saveMessage($editMsgId, $mText);
+					}
+					$redirect = $wgTitle->getLocalUrl('action=list');
+					$wgOut->redirect($redirect, 200);
+					return;
 				}
-				$redirect = $wgTitle->getLocalUrl('action=list');
-				$wgOut->redirect($redirect, 200);
-				return;
 				break;
 
 			case 'send':
@@ -201,9 +208,16 @@ class SiteWideMessages extends SpecialPage {
 				break;
 
 			case 'remove':
-				$mId = $wgRequest->getText('id');
-				if ($mId) {
-					$this->removeMessage($mId);
+				if (wfReadOnly()) {
+					$wgOut->SetPageTitle(wfMsg('readonly'));
+					$reason = wfReadOnlyReason();
+					$formData['messageContent'] = $wgRequest->getText('mContent');
+					$formData['errMsg'] = wfMsg('readonlytext', $reason);
+				} else {
+					$mId = $wgRequest->getText('id');
+					if ($mId) {
+						$this->removeMessage($mId);
+					}
 				}
 				//no break - go to 'list'
 
@@ -298,7 +312,10 @@ class SiteWideMessages extends SpecialPage {
 			}
 		}
 
-		if ($mText == '') {
+		if (wfReadOnly()) {
+			$reason = wfReadOnlyReason();
+			$result['errMsg'] = wfMsg('readonlytext', $reason);
+		} elseif ($mText == '') {
 			$result['errMsg'] = wfMsg('swm-error-empty-message');
 		} elseif (($mSendMode == 'WIKI' || ($mSendMode == 'GROUP' && $mGroupMode == 'WIKI')) && is_null($mWikiId)) {
 			//this wiki doesn't exist
@@ -588,7 +605,6 @@ class SiteWideMessages extends SpecialPage {
 		krsort($tmpMsg);
 
 		$messages = array();
-		$language = Language::factory($wgLanguageCode);
 		$IDs = array();
 		foreach ($tmpMsg as $tmpMsgId => $tmpMsgData) {
 			$IDs['id'][] = $tmpMsgId;
@@ -681,7 +697,7 @@ class SiteWideMessages extends SpecialPage {
 		}
 
 		//once the messages are displayed, they must be marked as "seen" so user will not see "you have new messages" from now on
-		if (count($tmpMsg)) {
+		if (count($tmpMsg) && !wfReadOnly()) {
 			$userID = $user->GetID();
 
 			$DB = wfGetDB(DB_MASTER);
@@ -725,7 +741,9 @@ class SiteWideMessages extends SpecialPage {
 	static function dismissMessage($messageID) {
 		global $wgUser, $wgMemc;
 		$userID = $wgUser->GetID();
-		if ($userID) {
+		if (wfReadOnly()) {
+			return wfMsg('readonly');
+		} elseif ($userID) {
 			$DB = wfGetDB(DB_MASTER);
 
 			$dbResult = $DB->Query (
