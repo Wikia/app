@@ -37,7 +37,7 @@ function wfUnserializeHandler( $errno, $errstr ) {
 
 class WikiFactoryLoader {
 
-	public $mServerName, $mWikiID, $mCityHost, $mCityID;
+	public $mServerName, $mWikiID, $mCityHost, $mCityID, $mOldServerName;
 	public $mDomain, $mVariables, $mIsWikiaActive, $mAlwaysFromDB;
 	public $mDevelDomainPart, $mNoRedirect, $mTimestamp, $mAdCategory;
 	public $mExpireDomainCacheTimeout = 86400; #--- 24 hours
@@ -92,7 +92,10 @@ class WikiFactoryLoader {
 		#--- turn on/off error_log
 		self::$mDebug = 0;
 
-		# now some initalizations
+		/**
+		 * initalizations
+		 */
+		$this->mOldServerName = false;
 		$this->mDBname = "wikicities";
 		$this->mDomain = array();
 		$this->mVariables = array();
@@ -115,6 +118,40 @@ class WikiFactoryLoader {
 			}
 			self::$mDebug = 1;
 			$this->mAlwaysFromDB = 1;   #--- skip reading from memcache
+		}
+
+		/**
+		 * @author Krzysztof Krzyżaniak <eloy@wikia-inc.com>
+		 *
+		 * handle additional domains, we have plenty of domains which should
+		 * redirect to <wikia>.wikia.com. They should be added to
+		 * $wgWikiFactoryDomains variable (which is simple list). When
+		 * additional domain is detected we do simple replace:
+		 *
+		 * muppets.wikia.org => muppets.wikia.com
+		 *
+		 * additionally we remove www. before matching
+		 */
+		$wgWikiFactoryDomains = array( #--- eventually will be in CommonSettings
+			"wikia.net",
+			"wikia.org",
+			"wikicities.com",
+			"wikicities.net",
+			"wikicities.org"
+		);
+		if( isset( $wgWikiFactoryDomains ) && is_array( $wgWikiFactoryDomains ) ) {
+			foreach( $wgWikiFactoryDomains as $domain ) {
+				/**
+				 * remove www from domain
+				 */
+				$this->mOldServerName = $this->mServerName;
+				$this->mServerName = preg_replace( "/^www\./", "", $this->mServerName );
+				$pattern = "/{$domain}$/";
+				if( preg_match( $pattern, $this->mServerName ) ) {
+					$this->mServerName = str_replace( $domain, "wikia.com", $this->mServerName );
+					break;
+				}
+			}
 		}
 
 		WikiFactory::isUsed( true );
