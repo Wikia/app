@@ -2393,10 +2393,12 @@ class Title {
 		if( $this->getNamespace() == NS_MEDIAWIKI ) {
 			if( $this->getText() == 'Common.css' ) {
 				$urls[] = Title::newFromText( 'MediaWiki:Common.css' )->getInternalURL( "usemsgcache=yes&action=raw&ctype=text/css&smaxage=$wgSquidMaxage" );
-			}
-			foreach( Skin::getSkinNames() as $skinkey => $skinname ) {
-				if( $this->getText() == $skinname.'.css' ) {
-					$urls[] = $this->getInternalURL( "usemsgcache=yes&action=raw&ctype=text/css&smaxage=$wgSquidMaxage" );
+			} else {
+				foreach( Skin::getSkinNames() as $skinkey => $skinname ) {
+					if( $this->getText() == $skinname.'.css' ) {
+						$urls[] = $this->getInternalURL( "usemsgcache=yes&action=raw&ctype=text/css&smaxage=$wgSquidMaxage" );
+						break;
+					}
 				}
 			}
 		}
