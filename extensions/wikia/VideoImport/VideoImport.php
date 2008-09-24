@@ -4,7 +4,7 @@ require_once( "VideoImport.i18n.php" );
 
 
 $wgExtensionFunctions[] = 'wfVideoImport';
-
+$wgSpecialPageGroups['ImportVideo'] = 'media';
 
 function wfVideoImport() {
 

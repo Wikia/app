@@ -1,7 +1,7 @@
 <?php
 
 $wgExtensionFunctions[] = 'wfSpecialViewRelationshipRequests';
-
+$wgSpecialPageGroups['ViewrelationshipRequests'] = 'users';
 
 function wfSpecialViewRelationshipRequests(){
 	global $wgUser,$IP;
@@ -124,5 +124,3 @@ function wfSpecialViewRelationshipRequests(){
 	global $wgMessageCache,$wgOut;
 	//$wgMessageCache->addMessage( 'viewrelationship', 'view relationship requests' );
 }
-
-?>

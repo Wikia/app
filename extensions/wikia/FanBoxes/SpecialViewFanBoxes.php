@@ -1,7 +1,7 @@
 <?php
 
 $wgExtensionFunctions[] = 'wfSpecialViewFanBoxes';
-
+$wgSpecialPageGroups['ViewUserBoxes'] = 'users';
 
 function wfSpecialViewFanBoxes(){
 	global $wgUser,$IP;
@@ -260,5 +260,3 @@ function wfSpecialViewFanBoxes(){
 	global $wgMessageCache;
 	$wgMessageCache->addMessage( 'viewuserboxes', 'View UserBoxes' );
 }
-
-?>

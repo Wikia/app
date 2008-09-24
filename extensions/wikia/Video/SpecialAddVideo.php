@@ -15,3 +15,4 @@ if (!function_exists('extAddSpecialPage')) {
 	require("$IP/extensions/ExtensionFunctions.php");
 }
 extAddSpecialPage(dirname(__FILE__) . '/SpecialAddVideo_body.php', 'AddVideo', 'AddVideo');
+$wgSpecialPageGroups['AddVideo'] = 'media';

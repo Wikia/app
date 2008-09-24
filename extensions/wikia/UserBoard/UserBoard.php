@@ -18,6 +18,7 @@ $wgSpecialPages['BoardBlast'] = 'BoardBlast';
 
 $wgAutoloadClasses['ViewUserBoard'] = "{$wgUserBoardDirectory}/SpecialUserBoard.php";
 $wgSpecialPages['UserBoard'] = 'ViewUserBoard';
+$wgSpecialPageGroups['UserBoard'] = 'users';
 
 require_once( "{$wgUserBoardDirectory}/UserBoard_AjaxFunctions.php" );
 	

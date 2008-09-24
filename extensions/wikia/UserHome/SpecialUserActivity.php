@@ -1,7 +1,7 @@
 <?php
 
 $wgExtensionFunctions[] = 'wfSpecialUserHome';
-
+$wgSpecialPageGroups['UserActivity'] = 'users';
 
 function wfSpecialUserHome(){
 	global $wgUser,$IP;

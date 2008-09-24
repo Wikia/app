@@ -4,7 +4,7 @@ require_once( "FlickrImport.i18n.php" );
 
 
 $wgExtensionFunctions[] = 'wfImageImport';
-
+$wgSpecialPageGroups['ImportImage'] = 'media';
 
 function wfImageImport() {
 

@@ -34,5 +34,4 @@ $wgAvailableRights[] = 'avatarremove';
 $wgGroupPermissions['staff']['avatarremove'] = true;
 $wgGroupPermissions['sysop']['avatarremove'] = true;
 extAddSpecialPage( dirname(__FILE__) . '/SpecialWikiaAvatar_body.php', 'AvatarRemove', 'WikiaAvatarRemovePage' );
-
-?>
+$wgSpecialPageGroups['AvatarRemove'] = 'users';

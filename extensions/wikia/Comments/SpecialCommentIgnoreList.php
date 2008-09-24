@@ -1,6 +1,6 @@
 <?php
 $wgExtensionFunctions[] = 'wfSpecialCommentIgnoreList';
-
+$wgSpecialPageGroups['CommentIgnoreList'] = 'users';
 
 function wfSpecialCommentIgnoreList(){
 	global $wgUser,$IP;
