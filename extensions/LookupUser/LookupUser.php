@@ -97,7 +97,7 @@ EOT
 		function showInfo( $target ) {
 			global $wgOut, $wgLang;
 			$user = User::newFromName( $target );
-			if ( $user->getId() == 0 ) {
+			if ( ($user == null) || ($user->getId() == 0) ) {
 				$wgOut->addWikiText( '<span class="error">' . wfMsg( 'lookupuser_nonexistent', $target ) . '</span>' );
 			} else {
 				$authTs = $user->getEmailAuthenticationTimestamp();
