@@ -16,71 +16,77 @@ $wgWidgets['WidgetTips'] = array(
 	'desc' => array(
 		'en' => 'Shows random tips',
 		'pl' => 'Pokazuje losowe podpowiedzi'
-    ),
-    'params' => array(),
-    'closeable' => true,
-    'editable' => false,
-    'listable' => true
+	),
+	'params' => array(),
+	'closeable' => true,
+	'editable' => false,
+	'listable' => true
 );
 
 function WidgetTips($id, $params) {
+	global $wgParser, $wgRequest;
 
-    global $wgOut, $wgRequest;
+	wfProfileIn(__METHOD__);
 
-    wfProfileIn(__METHOD__);
+	if ( isset($params['_widgetTag']) ) {
+		// work-around for WidgetTag
+		$parser = new Parser();
+	} else {
+		$parser = &$wgParser;
+	}
 
-    $tips = WidgetTipsGetTips();
+	$tips = WidgetTipsGetTips();
 
-    if ( $tips == false ) {
-	wfProfileOut(__METHOD__);
-	return $wgOut->parse('No tips found in [[Mediawiki:Tips]]! Contact your Wiki admin');
-    }
-    
-    $tipsCount = count($tips);
-    
-    // check requested operation
-    $op = ( $wgRequest->getVal('op') != '' ) ? $wgRequest->getVal('op') : 'rand';
-    $tipId = $wgRequest->getInt('tipId');
-    
-    switch( $op ) {
+	if ( $tips == false ) {
+		wfProfileOut(__METHOD__);
+		return $parser->parse('No tips found in [[Mediawiki:Tips]]! Contact your Wiki admin', $wgParser->mTitle, $wgParser->mOptions)->getText();
+	}
+
+	$tipsCount = count($tips);
+
+	// check requested operation
+	$op = ( $wgRequest->getVal('op') != '' ) ? $wgRequest->getVal('op') : 'rand';
+	$tipId = $wgRequest->getInt('tipId');
+
+	switch( $op ) {
 	case 'prev':
-	    $tipId--;
-	    
-	    if ($tipId < 0) {
+		$tipId--;
+
+		if ($tipId < 0) {
 		$tipId = $tipsCount-1;
-	    }
-	    break;
+		}
+		break;
 
 	case 'next':
-	    $tipId++;
-	    
-	    if ($tipId >= $tipsCount) {
+		$tipId++;
+
+		if ($tipId >= $tipsCount) {
 		$tipId = 0;
-	    }
-	    break;
-    
+		}
+		break;
+
 	default:
-	    $tipId = array_rand($tips);
-    }
-    
-    // prev/next tip selector
-    $selector = '<div class="WidgetTipsSelector">'.
+		$tipId = array_rand($tips);
+	}
+
+	// prev/next tip selector
+	$selector = '<div class="WidgetTipsSelector">'.
 	'<a onclick="WidgetTipsChange(\''.$id.'\', '.$tipId.', \'prev\')">&laquo; '.wfMsg('allpagesprev').'</a> '.
 	'<a onclick="WidgetTipsChange(\''.$id.'\', '.$tipId.', \'next\')">'.wfMsg('allpagesnext').' &raquo;</a></div>';
 
-    wfProfileOut(__METHOD__);
+	wfProfileOut(__METHOD__);
 
-    return $selector . $wgOut->parse($tips[$tipId]);
+	return $selector . $parser->parse($tips[$tipId], $wgParser->mTitle, $wgParser->mOptions)->getText();
 }
 
 function WidgetTipsGetTips() {
 
-    $tips = wfMsg( 'tips' );
-    
-    if ( wfEmptyMsg( 'tips', $tips ) ) {
+	$tips = wfMsg( 'tips' );
+
+	if ( wfEmptyMsg( 'tips', $tips ) ) {
 	return false;
-    }
-    else {
+	}
+	else {
 	return $tips !='' ? explode("\n\n", trim($tips)) : false;
-    }
+	}
 }
