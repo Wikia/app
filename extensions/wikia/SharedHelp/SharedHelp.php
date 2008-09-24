@@ -60,9 +60,9 @@ function SharedHelpHook(&$out, &$text) {
 				}
 			}
 		}
-
 		# If getting content from memcache failed (invalidate) then just download it via HTTP
 		if(empty($content)) {
+			global $wgDevelEnvironment;
 			if (empty($wgDevelEnvironment)) {
 				$urlTemplate = "http://help.wikia.com/index.php?title=Help:%s&action=render";
 			}
