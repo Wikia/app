@@ -228,7 +228,7 @@ function SiteWideMessagesArticleEditor($editPage) {
  */
 function SiteWideMessagesAjaxDismiss($msgId) {
 	$result = SiteWideMessages::dismissMessage($msgId);
-	return $result ? '1' : '0';
+	return is_bool($result) ? ($result ? '1' : '0') : $result;
 }
 
 /**
