@@ -19,7 +19,6 @@ $wgExtensionCredits['specialpage'][] = array(
 	'description' => 'Funnel Redirects',
 );
 
-$wgSpecialPages['Funnel'] = array( /*class*/ 'Funnel', /*name*/ 'Funnel', false, false );
 
 function wfSpecialFunnel() {
   //init
