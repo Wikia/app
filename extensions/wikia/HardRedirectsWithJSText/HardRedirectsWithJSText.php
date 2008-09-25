@@ -123,9 +123,9 @@ function hardRedirectWithCookie($source, $target){
                        	$targetUrlMd =  md5( $target->getFullURL() );
                         $sourceUrlMd =  md5( $source->getFullURL() );
 						
-						//exception of talk name space
+						//add namespaces except for main
 						$linktext = $source->getText();
-						if( ( $source->getNamespace() == NS_TALK) && ( stripos($linktext, $source->getNsText() . ':' )===false ) ){
+						if( ( $source->getNamespace() != NS_MAIN ) && ( stripos($linktext, $source->getNsText() . ':' )===false ) ){
 							$linktext = $source->getNsText() . ':' . $linktext;							
 						}
 						
