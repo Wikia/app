@@ -139,6 +139,7 @@ class WikiFactoryLoader {
 			"wikicities.net",
 			"wikicities.org"
 		);
+
 		if( isset( $wgWikiFactoryDomains ) && is_array( $wgWikiFactoryDomains ) ) {
 			foreach( $wgWikiFactoryDomains as $domain ) {
 				/**
@@ -379,10 +380,17 @@ class WikiFactoryLoader {
 		 */
 		list( $host, $path ) = array_pad( explode( "/", $this->mCityHost, 2 ), 2, false );
 
-		if( !empty( $host ) && !empty( $this->mServerName )
-			&& strtolower( $host ) != $this->mServerName
-			&& empty($wgDevelEnvironment) && $this->mNoRedirect === false )
-		{
+		/**
+		 * check if domain from browser is different than main domain for wiki
+		 */
+		$cond1 = !empty( $host ) && !empty( $this->mServerName ) && strtolower( $host ) != $this->mServerName;
+
+		/**
+		 * check if not additional domain was used (then we redirect anyway)
+		 */
+		$cond2 = $host != $this->mOldServerName;
+
+		if( ( $cond1 || $cond2 ) && empty( $wgDevelEnvironment ) && $this->mNoRedirect === false ) {
 			$url = wfGetCurrentUrl();
 			/**
 			 * dofus exception
@@ -397,6 +405,7 @@ class WikiFactoryLoader {
 				 */
 				$url[ "path" ] = preg_replace( "!^(/wiki)!", "", $url[ "path" ] );
 			}
+
 			/**
 			 * now recombine url from parts
 			 */
@@ -419,7 +428,7 @@ class WikiFactoryLoader {
 		/**
 		 * if wikia is not defined or is disabled we redirecting to Not_a_valid_Wikia
 		 */
-		if( empty($this->mWikiID) || empty($this->mIsWikiaActive) ) {
+		if( empty( $this->mWikiID ) || empty( $this->mIsWikiaActive ) ) {
 			global $wgNotAValidWikia;
 			wfDebug("wikifactory: {$this->mWikiID}:{$this->mIsWikiaActive}) wiki id empty or Wikia disabled", true);
 			if ( !empty( self::$mDebug ) ) {
