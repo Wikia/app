@@ -12,17 +12,11 @@ EOT;
     exit( 1 );
 }
 
-$wgExtensionFunctions[] = 'wfSpecialFunnel';
 $wgExtensionCredits['specialpage'][] = array(
 	'name' => 'Funnel',
 	'author' => 'Andrew Yasinsky',
 	'description' => 'Funnel Redirects',
 );
-
-
-function wfSpecialFunnel() {
-  //init
-}
 
 function wfFunnel(){
   global $IP, $wgMessageCache, $wgAutoloadClasses, $wgSpecialPages, $wgOut, $wgRequest, $wgTitle, $wgLanguageCode;
