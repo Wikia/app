@@ -695,13 +695,13 @@ class HomeTemplate extends QuickTemplate {
 				</ul>
 			</td>
 			<td class="gaming">
-				<ol>
+				<ul>
 			    		<li><a href="http://www.wowwiki.com/The_Skull_of_Gul%27dan">Skull of Gul'dan</a></li>
 			        	<li><a href="http://www.wowwiki.com/Frostmourne">Frostmourne</a></li>
-					<li><a href="http://www.wowwiki.com/Ashkandi%2C_Greatsword_of_the_Brotherhood">Greatsword of the Brotherhood</a></li>
+					<li><a href="http://www.wowwiki.com/Ashbringer">Ashbringer</a></li>
 					<li><a href="http://www.wowwiki.com/The_1_Ring">The 1 Ring</a></li>
-					<li><a href="http://www.wowwiki.com/Atiesh%2C_Greatstaff_of_the_Guardian">Greatstaff of the Guardian</a></li>
-				</ol>
+					<li><a href="http://www.wowwiki.com/Atiesh%2C_Greatstaff_of_the_Guardian">Atiesh</a></li>
+				</ul>
 			</td>
 			<td class="last entertainment">
 				<ul>
