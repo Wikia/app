@@ -136,7 +136,13 @@ Paina selaimesi \'takaisin\'-nappia palataksesi sivunmuokkaustilaan.',
 /* </pre> */',
 'community' => 'Yhteisö',
 'contact' => 'Ota yhteyttä Wikiaan',
-'contactintro' => 'Ole hyvä ja lue <a href=http://www.wikia.com/wiki/Report_a_problem>raportoi ongelmasta</a>-sivu löytääksesi tietoa miten ilmoittaa ongelmasta ja miten käyttää tätä yhteydenottolomaketta.<p />Voit ottaa yhteyttä Wikian yhteisöön <a href=http://www.wikia.com/wiki/Community_portal>kahvihuoneessa</a> ja ilmoittaa ohjelmistobugeista osoitteessa <a href=http://bugs.wikia.com>bugs.wikia.com</a>. <p>Jos haluat viestisi <a href=http://fi.wikia.com/wiki/Wikia>Wikialle</a> olevan mieluummin olevan yksityinen, ole hyvä ja käytä allaolevaa yhteydenottolomaketta. <i>Kaikki kentät ovat vapaaehtoisia</i>.',
+'contactintro' => '<p>Ole hyvä ja lue <a href="http://www.wikia.com/wiki/Report_a_problem">raportoi ongelmasta</a>-sivu löytääksesi tietoa miten ilmoittaa ongelmasta ja miten käyttää tätä yhteydenottolomaketta.</p>
+
+<p>Voit ottaa yhteyttä Wikian yhteisöön <a href="http://fi.wikia.com/wiki/Foorumi:Sis%C3%A4llysluettelo">Keskuswikian foorumilla</a> ja ilmoittaa ohjelmistobugeista <a href="http://inside.wikia.com/forum">Inside-wikian foorumilla</a>.</p>
+
+<p>Jos haluat viestisi <a href="http://fi.wikia.com/wiki/Wikia">Wikialle</a> olevan mieluummin olevan yksityinen, ole hyvä ja käytä allaolevaa yhteydenottolomaketta. <i>Kaikki kentät ovat vapaaehtoisia</i>.</p>
+
+<p>Tämä lomake toimii tällä hetkellä hitaasti, mutta paina <i>lähetä</i>-painiketta <b>vain kerran</b>.</p>',
 'contactmail' => 'Lähetä',
 'contactpagetitle' => 'Ota yhteyttä Wikiaan',
 'contactproblem' => 'Aihe',
@@ -418,4 +424,108 @@ Ohjelmistobugeista voi raportoida foorumeilla. Tämän lomakkeen kautta tehdyt r
 'wt_shoutbox_initial_message' => 'Hei... tervetuloa chattiin!',
 'wysiwygcaption' => 'Visuaalinen muokkaaminen',
 'yourmail' => 'Sähköpostiosoitteesi',
+'editingTips' => '=Kuinka muotoilla tekstiä=
+Voit muotoilla tekstiä \'wikikielellä\' tai HTML:n avulla.
+
+<br />
+<span style="font-family: courier"><nowiki>\'\'kursivoitu\'\'</nowiki></span> => \'\'kursivoitu\'\'
+
+<br />
+<span style="font-family: courier"><nowiki>\'\'\'lihavoitu\'\'\'</nowiki></span> => \'\'\'lihavoitu\'\'\'
+
+<br />
+<span style="font-family: courier"><nowiki>\'\'\'\'\'kursivoitu ja lihavoitu\'\'\'\'\'</nowiki></span> => \'\'\'\'\'kursivoitu ja lihavoitu\'\'\'\'\'
+
+----
+
+<br />
+<nowiki><s>yliviivattu</s></nowiki> => <s>yliviivattu</s>
+
+<br />
+<nowiki><u>alleviivattu</u></nowiki> => <u>alleviivattu</u>
+
+<br />
+<nowiki><span style="color:red;">punaista tekstiä</span></nowiki> => <span style="color:red;">punaista tekstiä</span>
+
+=Kuinka tehdä linkkejä=
+Linkkejä luodaan yhden tai kahden hakasulkuparin avulla.
+
+<br />
+\'\'\'Yksinkertainen sisäinen linkki:\'\'\'<br />
+<nowiki>[[Artikkelin nimi]]</nowiki>
+
+<br />
+\'\'\'Sisäinen linkki linkkitekstin kera:\'\'\'<br />
+<nowiki>[[Artikkelin nimi|teksti, jonka haluat]]</nowiki>
+
+<br />
+----
+
+<br />
+\'\'\'Numeroitu ulkoinen linkki:\'\'\'<br />
+<nowiki>[http://www.esimerkki.com]</nowiki>
+
+<br />
+\'\'\'Ulkoinen linkki linkkitekstin kera:\'\'\'
+
+<nowiki>[http://www.esimerkki.com linkin teksti]</nowiki>
+
+=Kuinka lisätä otsikoita=
+Otsikot käyttävät yhtäsuuruusmerkkejä.  Mitä enemmän "="-merkkejä, sitä pienempi otsikko.
+Tason 1 otsikko on varattu sivun otsikolle.
+
+<br />
+<span style="font-size: 1.6em"><nowiki>==Otsikko 2==</nowiki></span>
+
+<br />
+<span style="font-size: 1.3em"><nowiki>===Otsikko 3===</nowiki></span>
+
+<br />
+<nowiki>====Otsikko 4====</nowiki>
+
+=Kuinka sisentää tekstiä=
+Sisennykset voivat olla yksinkertaisia, asteriskein varustettuja tai numeroituja.
+
+<br />
+<nowiki>: sisennys</nowiki><br />
+<nowiki>: sisennys</nowiki><br />
+<nowiki>:: lisää sisennystä</nowiki><br />
+<nowiki>::: vieläkin enemmän sisennystä</nowiki>
+
+<br />
+<nowiki>* asteriski</nowiki><br />
+<nowiki>* asteriski</nowiki><br />
+<nowiki>** ala-asteriski</nowiki><br />
+<nowiki>* asteriski</nowiki>
+
+<br />
+<nowiki># numeroitu lista</nowiki><br />
+<nowiki># numeroitu lista</nowiki><br />
+<nowiki>## ala-lista</nowiki><br />
+<nowiki># numeroitu lista</nowiki>
+
+=Kuinka lisätä kuvia=
+Kuvia lisätään ja muotoillaan samaan tapaan kuin linkkejäkin.
+
+<br />
+<nowiki>[[Kuva:Nimi.jpg]]</nowiki>
+
+<br />
+\'\'\'Lisätäksesi kuvatekstiä\'\'\'<br />
+<nowiki>[[Kuva:Nimi.jpg|kuvateksti]]</nowiki>
+
+<br />
+\'\'\'Tehdäksesi pienoiskuvan\'\'\'<br />
+<nowiki>[[Kuva:Nimi.jpg|thumb|]]</nowiki>
+
+<br />
+\'\'\'Määritelläksesi kuvan koon\'\'\'<br />
+<nowiki>[[Kuva:Nimi.jpg|200px|]]</nowiki>
+
+<br />
+\'\'\'Sijoitellaksesi kuvan\'\'\'<br />
+<nowiki>[[Kuva:Nimi.jpg|right|]]</nowiki>
+
+<br />
+Voit yhdistää näitä määritteitä lisäämällä pystyviivan "|" niiden väliin. Muista, että kaikki viimeisen pystyviivan jälkeen on tekstiä.',
 ) );

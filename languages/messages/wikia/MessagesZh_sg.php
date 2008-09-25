@@ -530,4 +530,143 @@ $NEWPAGE
 |}',
 'subcategorycount' => '在這個分類中有{{PLURAL:$1|is one subcategory| $1}}个亚类。请见{{PLURAL:$1|以下}}。{{PLURAL:$1||更多分类可见於次一级的分类}}。',
 'talkpagetext' => '<div style="margin: 0 0 1em; padding: .5em 1em; vertical-align: middle; border: solid #999 1px;">\'\'\'这是一个讨论页。请在您的留言后面加上四个波折号簽名。 (<code><nowiki>~~~~</nowiki></code>)\'\'\'</div>',
+'captcha-badlogin' => '请输入以下数学算式的答案([[Special:Captcha/help|更多资讯]])：',
+'captcha-create' => '请输入以下数学算式的答案([[Special:Captcha/help|更多资讯]])：',
+'createpage_alternate_creation' => '原始编辑模式请点选 $1',
+'createpage_button_caption' => '发布！',
+'createpage_caption' => '分类：',
+'createpage_categories' => '分类：',
+'createpage_categories_help' => '将文章加註分类，可加強这个站上的文章的组织。你可以在下方挑选一个适当的分类，或是直接输入一个新的分类。',
+'createpage_enter_text' => '输入文字',
+'createpage_here' => '这里',
+'createpage_hide_cloud' => '[隐藏分类云]',
+'createpage_show_cloud' => '[显示分类云]',
+'createpage_title' => '发表新文章',
+'createpage_title_caption' => '文章标题',
+'createwiki' => '申请wiki',
+'createwikipagetitle' => '申请wiki',
+'editingTips' => '= 如何改变字体格式 =
+你可以利用mediawiki的语法改变字体格式，或是利用HTML
+
+<nowiki>\'\'斜体\'\'</nowiki> => \'\'斜体\'\'
+
+<nowiki>\'\'\'粗体\'\'\'</nowiki> => \'\'\'粗体\'\'\'
+
+<nowiki>\'\'\'\'\'粗体和斜体\'\'\'\'\'</nowiki> => \'\'\'\'\'粗体和斜体\'\'\'\'\'　
+
+-----
+<nowiki><s>刪去</s></nowiki> => <s>刪去</s>
+
+<br />
+<nowiki><u>底線</u></nowiki> => <u>底線</u>
+
+<br />
+<nowiki><span style="color:red;">红字</span></nowiki> => <span style="color:red;">红字</span>
+
+= 连结 =
+利用两个或是一个中括号，可產生连结的效果
+
+<br />
+\'\'\'基本內部链结:\'\'\'<br />
+<nowiki>[[文章名]]</nowiki>
+
+<br />
+\'\'\'改变链结字樣:\'\'\'<br />
+<nowiki>[[文章名|你喜欢的字樣]]</nowiki>
+
+<br />
+----
+
+<br />
+\'\'\'连到外部网页:\'\'\'<br />
+<nowiki>[http://www.example.com]</nowiki>
+
+<br />
+\'\'\'改变外部链结字樣:\'\'\'
+
+<nowiki>[http://www.example.com 你喜欢的字樣]</nowiki> 
+
+= 如何增加标题 =
+使用 =(等号)就可以帮你建立次标题和三级标题。前后一个等号的标题等级和页面名称等级相同。
+
+<nowiki>==二级标题==</nowiki>
+
+<nowiki>===三级标题===</nowiki>
+
+<nowiki>====四级标题====</nowiki>
+
+
+= 如何把內容分项显示 =
+
+在句子的开头使用\'\'\':\'\'\'就可以达到开头缩排书写的效果。
+
+
+<nowiki>:一个缩排</nowiki><br>
+<nowiki>:一个缩排</nowiki><br>
+<nowiki>:: 两个缩排</nowiki><br />
+<nowiki>::: 更多缩排</nowiki>
+
+
+<nowiki>*第一项</nowiki><br>
+<nowiki>*第二项</nowiki><br>
+<nowiki>**第二项的再分项</nowiki><br>
+<nowiki>*第三项</nowiki><br>
+
+
+<nowiki>#第一鲇</nowiki><br>
+<nowiki>#第二鲇</nowiki><br>
+<nowiki>##2.1鲇</nowiki><br>
+<nowiki>#第三鲇</nowiki><br>
+
+
+= 如何加入图片 =
+如入图片的方法和加入链结的方法相似。
+
+<br />
+<nowiki>[[Image:图片名.jpg]]</nowiki>
+
+<br />
+\'\'\'背景說明(滑鼠移到图片上时显示)\'\'\'<br />
+<nowiki>[[Image:Name.jpg|說明文字]]</nowiki>
+
+<br />
+\'\'\'加入图片註解\'\'\'<br />
+<nowiki>[[Image:Name.jpg|thumb|]]</nowiki>
+
+<br />
+\'\'\'改变图片大小\'\'\'<br />
+<nowiki>[[Image:Name.jpg|200px|]]</nowiki>
+
+<br />
+\'\'\'改变图片位置\'\'\'<br />
+<nowiki>[[Image:Name.jpg|right|]]</nowiki>
+
+<br />
+你可以用 "|" 结合上述功能，別忘了，在最后一个 "|" 后面是加註文字。',
+'editingtips_enter_widescreen' => '放大编辑',
+'editingtips_exit_widescreen' => '退出放大编辑',
+'editingtips_hide' => '隐藏编辑小技巧',
+'fancycaptcha-badlogin' => '请输入认证码([[Special:Captcha/help|更多资讯]])：',
+'fancycaptcha-createaccount' => '请输入认证码([[Special:Captcha/help|更多资讯]])：',
+'monaco-latest' => '最近动态',
+'monaco-toolbox' => '* Special:Search|进階搜寻
+* upload-url|上传图片
+* Special:MultipleUpload|大量上传
+* specialpages-url|特殊页面
+* recentchanges-url|最近更改
+* randompage-url|随机页面
+* whatlinkshere|链入页面
+* helppage|说明手册',
+'multipleupload-text' => '大量上传档案！
+
+使用\'\'\'浏览\'\'\'按钮选择要上传档案的位置。可同时上传1至$1个档案。 你可以选择输入\'\'\'目标档案名\'\'\'和\'\'\'档案描述\'\'\'来简述此档案。不当的档案将可能被刪除，详见[[{{MediaWiki:Multipleupload-page}}|档案刪除政策]]。',
+'pr_mailer_notice' => '您在个人资料中所留下的电子邮件，将会自动显示在「发信人」的栏位中，所以收件人能直接回覆您的信件。',
+'pr_table_problem_id' => '问题编号',
+'pr_table_problem_type' => '问题类型',
+'pr_table_reporter_name' => '回报人',
+'pr_table_status' => '状态',
+'pr_total_number' => '回报总数',
+'pr_view_all' => '显示所有回报',
+'pr_what_problem_change' => '更改问题类型',
+'uploadtext-ext' => 'Wikia支援的所有延申套件请见[[{{ns:Special}}:Version|版本页]]。',
 ) );

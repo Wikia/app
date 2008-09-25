@@ -359,7 +359,8 @@ $messages = array_merge( $messages, array(
 'imagetag_seemoreimages' => '更に&#8220;$1&#8221関連の画像を見る:($2)',
 'import-interwiki-namespace' => '次の名前空間に取り込む:',
 'importfreeimages' => 'フリーライセンスの画像を取り込む',
-'importfreeimages_description' => 'このページでは、適切なライセンスを持つ画像をFlickrから検索し、このウィキに取り込むことができます。',
+'importfreeimages_description' => 'このページでは、適切なライセンスを持つ画像をFlickrから検索し、このウィキに取り込むことができます。
+<br />カンマ区切りでタグを複数個あわせて検索します。',
 'importfreeimages_filefromflickr' => 'Flickrから、利用者<b>[$2]</b>による$1。元URL',
 'importfreeimages_importthis' => 'この画像を取り込む',
 'importfreeimages_next' => '次の$1件',
@@ -422,7 +423,7 @@ $messages = array_merge( $messages, array(
 'multiplefileuploadsummary' => 'ファイルの概要:',
 'multipleupload-addresswarnings' => '再アップロードする前に、警告の内容をご確認ください。',
 'multipleupload-ignoreallwarnings' => '全ての警告を無視してファイルを保存する',
-'multipleupload-page' => '{{ns:project}}:ファイル削除の方針',
+'multipleupload-page' => '{{ns:project}}:方針',
 'multipleupload-saveallfiles' => 'ファイルを保存',
 'multipleupload-text' => '複数のファイルを一度にアップロードできます。
 
@@ -524,7 +525,7 @@ $messages = array_merge( $messages, array(
 * [[Special:Specialpages|特別]]ページ
 * [[Special:Allmessages|MediaWiki]]メッセージ
 
-さらに詳細な情報に関しては、Central Wikiaの\'\'\'[[Wikia:Wikia:Statistics|統計ページ]]\'\'\'からのリンクでたどれます。
+さらに詳細な情報に関しては、Central Wikiaの\'\'\'[[w:Wikia:Statistics|統計ページ]]\'\'\'からのリンクでたどれます。
 
 |}',
 'sitewidemessages' => 'サイト横断メッセージ',
@@ -602,14 +603,14 @@ $2
 'swm-error-empty-message' => 'メッセージを入力してください。',
 'swm-error-no-such-user' => '指定された利用者が存在していません。',
 'swm-error-no-such-wiki' => 'そのようなウィキは存在しません。',
-'swm-expire-info' => 'このメッセージは$0に期限が切れます。',
+'swm-expire-info' => 'このメッセージは$1に期限が切れます。',
 'swm-label-comment' => 'コメント',
 'swm-label-content' => '内容',
 'swm-label-edit' => '編集',
 'swm-label-expiration' => '期限',
 'swm-label-list' => 'リスト',
 'swm-label-mode-all' => '全利用者',
-'swm-label-mode-group-hint' => '<i>注意:これは、TaskManagerのキューに入れて作業するため、時間がかかります</i>',
+'swm-label-mode-group-hint' => '<i>注意:このオプションは、TaskManagerのキューに入れて作業するため、時間がかかります</i>',
 'swm-label-mode-group' => 'このグループに所属する利用者',
 'swm-label-mode-user' => '選択した利用者',
 'swm-label-mode-wiki' => 'このウィキの活発な利用者',
@@ -672,4 +673,387 @@ $2
 'wt_help_cockpit' => '|ウィジェット設定||ウィジェットのサムネイルをドラッグして、サイドバーに追加してください',
 'wt_help_sidebar' => '|ウィジェットサイドバー||「編集を」を押して、ウィジェットの設定を変更できます。ウィジェットを閉じるには、X印を押してください。',
 'wt_help_startup' => '|ウィジェットについては御存じですか?||自分の名前のあるメニューから、「ウィジェットの設定」をクリックしてください。',
+'createpage_about_info' => 'シンプルなエディタです。詳細は、ウィキアのヘルプをどうぞ。',
+'eauthentsent' => 'このアカウントが有効なものであるか確認するため、指定されたメールアドレスにアドレス確認のためのメールを送信しました。メールにあるURLをクリックすることで、メールアドレスの指定が有効になります。',
+'editSimilar-Categories' => '* スタブ
+* 要加筆
+* 編集中',
+'editingTips' => '=テキストの装飾 =
+wiki文法をつかうか、HTMLで装飾できます。
+<br />
+<span style="font-family: courier"><nowiki>\'\'斜体\'\'</nowiki></span> => \'\'斜体\'\'
+
+<br />
+<span style="font-family: courier"><nowiki>\'\'\'太字\'\'\'</nowiki></span> => \'\'\'太字\'\'\'
+
+<br />
+<span style="font-family: courier"><nowiki>\'\'\'\'\'斜体および太字\'\'\'\'\'</nowiki></span> => \'\'\'\'\'斜体および太字\'\'\'\'\'
+
+----
+
+<br />
+<nowiki><s>取り消し線</s></nowiki> => <s>取り消し線</s>
+
+<br />
+<nowiki><u>アンダーライン</u></nowiki> => <u>アンダーライン</u>
+
+<br />
+<nowiki><span style="color:red;">赤文字</span></nowiki> => <span style="color:red;">赤文字</span>
+
+=リンクの作り方 =
+ブラケット("["または"]")をひとつかふたつ使うことでリンクを作ることができます。
+
+<br />
+\'\'\'単純な内部リンク:\'\'\'<br />
+<nowiki>[[ページ名]]</nowiki>
+
+<br />
+\'\'\'テキスト付きの内部リンク:\'\'\'<br />
+<nowiki>[[ページ名|表示したいテキスト]]</nowiki>
+
+<br />
+----
+
+<br />
+\'\'\'外部リンク(表示される際には、<nowiki>[1]</nowiki>と略されます):\'\'\'<br />
+<nowiki>[http://www.example.com]</nowiki>
+
+<br />
+\'\'\'テキスト付きの外部リンク:\'\'\'
+<nowiki>[http://www.example.com 表示したいテキスト]</nowiki>
+
+= 見出し作成 =
+見出しは、"="で作ります。"="が多いほど、見出しは小さくなります。
+見出しの一番大きなものは、ページ名になります。
+
+<br />
+<span style="font-size: 1.6em"><nowiki>==見出し2==</nowiki></span>
+
+<br />
+<span style="font-size: 1.3em"><nowiki>===見出し3===</nowiki></span>
+
+<br />
+<nowiki>====見出し4====</nowiki>
+
+=テキストのインデント=
+単純なインデント、箇条書きによるインデント、数字付きのインデントができます。
+
+<br />
+<nowiki>: インデント</nowiki><br />
+<nowiki>: インデント</nowiki><br />
+<nowiki>:: もう一段インデント</nowiki><br />
+<nowiki>::: 更にインデント</nowiki>
+
+<br />
+<nowiki>* 箇条書き</nowiki><br />
+<nowiki>* 箇条書き</nowiki><br />
+<nowiki>** 一段下の箇条書き</nowiki><br />
+<nowiki>* 箇条書き</nowiki>
+
+<br />
+<nowiki># 数字付きリスト</nowiki><br />
+<nowiki># 数字付きリスト</nowiki><br />
+<nowiki>## 一段下の数字付きリスト</nowiki><br />
+<nowiki># 数字付きリスト</nowiki>
+
+=画像の挿入 =
+リンクを貼るのに似た方法で画像を挿入することができます。
+
+<br />
+<nowiki>[[画像:画像ファイル.jpg]]</nowiki>
+
+<br />
+\'\'\'ブラウザ向けのaltテキストを入れる場合\'\'\'<br />
+<nowiki>[[画像:画像ファイル.jpg|alt text]]</nowiki>
+
+<br />
+\'\'\'画像の縮小表示を行う場合\'\'\'<br />
+<nowiki>[[画像:画像ファイル.jpg|thumb|]]</nowiki>
+
+<br />
+\'\'\'画像を特定のサイズにする場合\'\'\'<br />
+<nowiki>[[画像:画像ファイル.jpg|200px|]]</nowiki>
+
+<br />
+\'\'\'画像を右寄せにする場合(デフォルトは左寄せ)\'\'\'<br />
+<nowiki>[[画像:画像ファイル.jpg|right|]]</nowiki>
+
+<br />
+"|"をつかって、それぞれの値をつなげることができます。最後の"|"以後の値は、全て解説用のテキストになります。',
+'editingtips_enter_widescreen' => '編集画面を大きくする',
+'editingtips_exit_widescreen' => '編集画面を元に戻す',
+'editingtips_hide' => 'ヘルプを隠す',
+'editingtips_show' => 'ヘルプを表示する',
+'editsimilar-link-disable' => 'この機能の設定を行なう',
+'editsimilar-thanks-notsimilar-singleresult' => 'ご参加ありがとうございます! $1 などといった記事も是非とも編集してみてください!',
+'editsimilar-thanks-notsimilar' => 'ご参加ありがとうございます! $1 などといった記事も是非とも編集してみてください!',
+'editsimilar-thanks-singleresult' => '編集ありがとうございます。$1 などの関連する記事の編集も是非どうぞ。',
+'editsimilar-thanks' => '編集ありがとうございます。$1 などの関連する記事の編集も是非どうぞ。',
+'editsimilar-thankyou' => '$1さん、編集ありがとうございます!',
+'enotif_body' => '$WATCHINGUSERNAMEさん、
+
+{{SITENAME}}のページ $PAGETITLE が $PAGEEDITDATE に
+$PAGEEDITOR によって$CHANGEDORCREATEDされました。
+現在の版を見るには次のURLにアクセスしてください:
+$PAGETITLE_URL
+$NEWPAGE
+
+編集内容の要約: $PAGESUMMARY ($PAGEMINOREDIT)
+
+投稿者:
+メール: $PAGEEDITOR_EMAIL
+ウィキ: $PAGEEDITOR_WIKI
+
+あなたがこのページを訪れない限り、これ以上の通知は送信されません。
+ウォッチリストからすべての通知フラグをリセットすることもできます。
+
+                         {{SITENAME}} 通知システム
+
+--
+ウォッチリストの設定を変更する:
+{{fullurl:Special:Watchlist/edit}}
+
+ヘルプは以下にあります:
+{{fullurl:Help:目次}}',
+'fast-adv' => '広告',
+'file-thumbnail-no' => 'ファイル名が <strong><tt>$1</tt></strong> から始まっており、サムネイル（縮小版画像）である可能性が高いです。
+より高精細な画像をお持ちの場合は、フルサイズ版をアップロードしてください。そうでない場合はファイル名を変更してください。',
+'importfreeimages-desc' => '[http://www.flickr.com flickr]から[[Special:ImportFreeImages|フリーなライセンスの写真を取り込む]]機能を提供します。',
+'importfreeimages-searchtype-all' => '全タグ',
+'importfreeimages-searchtype-any' => '全タグ',
+'importfreeimages-searchtype-name' => '検索対象:',
+'makebureaucratok' => '<b>利用者 "$1" をビューロクラットにしました。</b>',
+'makesysop-see-userrights' => '更に細かくは、[[Special:Userrights|利用者権限の管理]]をご覧ください。',
+'makesysoptext' => 'このフォームは通常の利用者を管理者にするために使用します。管理者にする利用者名を入力し、この利用者を管理者にするボタンを押してください。',
+'makesysoptitle' => '利用者を管理者にする',
+'miniupload' => 'ミニアップロード',
+'mu_login' => 'ファイルをアップロードするには、ログインする必要があります。',
+'mu_size_your_image' => '画像のサイズ',
+'pollNoVote' => 'さあ、投票しよう!',
+'pollPercentVotes' => '全体の$1%',
+'pollSubmitting' => '投票を処理しています。少しお待ちください。',
+'pollVoteAdd' => '投票が追加されました。',
+'pollVoteError' => '問題が発生しました。少ししてから再度投票してください。',
+'pollVoteUpdate' => '投票を更新しました。',
+'pollYourVote' => '$2について、$1に投票しています。以下の回答をクリックすると、投票を変更できます。',
+'pr_what_problem_unselect' => '全て',
+'right-skipcaptcha' => 'キャプチャのある動作をパスして活動できる',
+'skinchooser-customcss' => 'テーマを自分たちで作成する場合は、上記メニューで「Custom」を設定し、[[MediaWiki:Monaco.css]]でCSSを作成してください。',
+'stf_choose_from_existing' => '下から、使っているサービスを選んでください:',
+'swm-label-mode-hub-hint' => '<i>注意:このオプションは、TaskManagerのキューに入れて作業するため、時間がかかります</i>',
+'swm-label-mode-hub' => 'このカテゴリの人の利用者',
+'swm-list-no-messages' => 'メッセージがありません',
+'swm-msg-remove' => 'このメッセージの送信をやめますか? この作業は取り消せません!',
+'tog-disableeditingtips' => '編集時のヘルプを表示しない',
+'tog-disablelinksuggest' => '編集時のリンク補完を使わない',
+'tog-edit-similar' => '関連記事の提案を有効にする',
+'tog-showAds' => '<b>広告を全て表示する</b><br />ログインしてない利用者と同じように広告を表示するには、このオプションを選択してください。<br /><br />',
+'top_users' => '有力な参加者',
+'unable-block-edit' => 'このページの編集は許可されておりません。後で編集してください。',
+'uploadtext-ext' => '[[{{ns:Special}}:Version|バージョン情報]]のページで、利用できる拡張子を確認できます。',
+'userlogin-bad-birthday' => '正しい日付を選んでください。',
+'userlogin-captcha-label' => '画像で表示されている文字を入力してください。',
+'userlogin-choose-day' => '日',
+'userlogin-choose-month' => '月',
+'userlogin-choose-year' => '年',
+'userlogin-unable-info' => '申し訳ありません、現在登録が出来ません。',
+'userlogin-unable-title' => 'アカウントの登録が出来ません',
+'wikiastats_active_absent_wikians' => '投稿数順の活発/不活発なウィキアン(ウィキア利用者)',
+'wikiastats_active_month' => 'ヶ月',
+'wikiastats_active_months' => 'ヶ月',
+'wikiastats_active_wikians_date' => '変更された分を表示する',
+'wikiastats_active_wikians_subtitle' => 'ランク:記事編集のカウントのみで、ノートページその他の編集は含みません',
+'wikiastats_active_wikians_subtitle_info' => 'Δ = 30日以内にランクに変化のあったもの',
+'wikiastats_anon_wikians' => '投稿数順での匿名利用者リスト',
+'wikiastats_anon_wikians_count' => '$1人の匿名利用者が見つかりました',
+'wikiastats_archived' => 'アーカイブされました',
+'wikiastats_article_one_link' => '最低一つの内部リンクを含む記事',
+'wikiastats_article_size' => '一つ以上の内部リンクや、十分に読める文字をを含む記事<br />HTMLのコードや隠しリンクなどは含んでおりません。同様に、ヘッダもカウントしていません(リダイレクトは除く)',
+'wikiastats_articles' => '記事(リダイレクトを除く)',
+'wikiastats_articles_text' => '記事',
+'wikiastats_back_to_mainpage' => '統計ページのメインページに戻る',
+'wikiastats_back_to_prevpage' => '戻る',
+'wikiastats_bytes' => 'byte',
+'wikiastats_charts' => 'チャート',
+'wikiastats_comparision' => '比較',
+'wikiastats_comparisons_table_10' => '記事一つあたりの編集数',
+'wikiastats_comparisons_table_11' => '記事ひとつあたりのバイト数',
+'wikiastats_comparisons_table_12' => '0.5Kb以上の記事',
+'wikiastats_comparisons_table_13' => '2Kb以上の記事',
+'wikiastats_comparisons_table_14' => '編集回数(月)/編集回数(日)',
+'wikiastats_comparisons_table_15' => 'データベースサイズ',
+'wikiastats_comparisons_table_16' => '単語数',
+'wikiastats_comparisons_table_17' => '内部リンク数',
+'wikiastats_comparisons_table_18' => '他のウィキアへのリンク数',
+'wikiastats_comparisons_table_19' => '画像数',
+'wikiastats_comparisons_table_2' => '作成履歴',
+'wikiastats_comparisons_table_20' => '外部リンク数',
+'wikiastats_comparisons_table_21' => 'リダイレクト数',
+'wikiastats_comparisons_table_22' => '日毎の閲覧数',
+'wikiastats_comparisons_table_23' => '日毎の訪問者数',
+'wikiastats_comparisons_table_3' => '投稿者数',
+'wikiastats_comparisons_table_4' => '新しい利用者',
+'wikiastats_comparisons_table_5' => '活発な利用者',
+'wikiastats_comparisons_table_6' => '非常に活発な利用者',
+'wikiastats_comparisons_table_7' => '日毎の新規記事数',
+'wikiastats_creation_legend' => '月毎の平均上昇率:',
+'wikiastats_creation_panel_header' => '「作成履歴」を生成しました',
+'wikiastats_creation_wikia_text' => '作成履歴/実績',
+'wikiastats_database' => 'データベース',
+'wikiastats_database_name_stats' => 'データベース名',
+'wikiastats_date' => '日付:',
+'wikiastats_days_ago' => '日前',
+'wikiastats_dbdumps_stats' => 'データベースのダンプ',
+'wikiastats_distrib_edits' => '編集 >=',
+'wikiastats_distrib_edits_total' => '総編集数',
+'wikiastats_distrib_wikians' => 'ウィキアン(ウィキア利用者)',
+'wikiastats_edits' => '編集',
+'wikiastats_first_edit' => '最初の編集',
+'wikiastats_hide' => '隠す',
+'wikiastats_last_edit' => '最後の編集',
+'wikiastats_links' => 'リンク数',
+'wikiastats_mainstats_column_A' => '10回以上の編集のある利用者',
+'wikiastats_mainstats_column_B' => '10回以上の編集のある利用者の上昇率',
+'wikiastats_mainstats_column_C' => 'ひと月で5回以上投稿のあった利用者',
+'wikiastats_mainstats_column_D' => 'ひと月で100回以上投稿のあった利用者',
+'wikiastats_mainstats_column_E' => '一つ以上の内部リンクを持つ記事数',
+'wikiastats_mainstats_column_F' => '一つ以上の内部リンクを持ち、200文字以上を含む記事数<br />HTMLのコード、隠しリンクなどは無視していますし、ヘッダもカウントしていません。<br />(他の数字は、公式のカウント方法に従っています)',
+'wikiastats_mainstats_column_G' => '今月の日毎の新規記事数',
+'wikiastats_mainstats_column_H' => '記事毎の平均履歴数',
+'wikiastats_mainstats_column_I' => '記事の平均バイト数',
+'wikiastats_mainstats_column_J' => '0.5Kb以上の記事の占める割合(Fも参考のこと)',
+'wikiastats_mainstats_column_K' => '2Kb以上の記事の占める割合(Fも参考のこと)',
+'wikiastats_mainstats_column_L' => '先月の編集数(リダイレクト、非登録利用者含む)',
+'wikiastats_mainstats_column_M' => '全記事の合計サイズ(リダイレクト含む)',
+'wikiastats_mainstats_column_N' => '総単語数(リダイレクト、HTMLおよびWikiコード、隠しリンクを除く)',
+'wikiastats_mainstats_column_O' => '内部リンクの総数(リダイレクト、スタブ、リンクのリストを除く)',
+'wikiastats_mainstats_column_P' => '他のウィキアへの総リンク数',
+'wikiastats_mainstats_column_Q' => '利用されている画像の総数',
+'wikiastats_mainstats_column_R' => '他のサイトへのリンク数',
+'wikiastats_mainstats_column_S' => 'リダイレクトの総数',
+'wikiastats_mainstats_column_T' => '日毎の閲覧ページ数(Webalizerの出力による)',
+'wikiastats_mainstats_column_U' => '日毎の訪問者数(Webalizerの出力による)',
+'wikiastats_mainstats_info' => 'データベースのリストからウィキを選択して、"生成"のボタンを押してください',
+'wikiastats_mainstats_short_column_A' => '投稿者数',
+'wikiastats_mainstats_short_column_B' => '新規利用者',
+'wikiastats_mainstats_short_column_C' => '活発な利用者',
+'wikiastats_mainstats_short_column_D' => '非常に活発な利用者',
+'wikiastats_mainstats_short_column_E' => '記事数',
+'wikiastats_mainstats_short_column_F' => '記事数2',
+'wikiastats_mainstats_short_column_G' => '日毎の新規記事数',
+'wikiastats_mainstats_short_column_H' => '記事毎の編集数',
+'wikiastats_mainstats_short_column_I' => '記事毎のbyte数',
+'wikiastats_mainstats_short_column_J' => '0.5Kb以上の記事',
+'wikiastats_mainstats_short_column_K' => '2Kb以上の記事',
+'wikiastats_mainstats_short_column_L' => '月毎の編集回数',
+'wikiastats_mainstats_short_column_M' => 'データベースのサイズ',
+'wikiastats_mainstats_short_column_N' => '単語数',
+'wikiastats_mainstats_short_column_O' => '内部リンク数',
+'wikiastats_mainstats_short_column_P' => '他のウィキへのリンク数',
+'wikiastats_mainstats_short_column_Q' => '画像数',
+'wikiastats_mainstats_short_column_R' => '外部リンク数',
+'wikiastats_mainstats_short_column_S' => 'リダイレクト数',
+'wikiastats_mainstats_short_column_T' => '日毎の閲覧数',
+'wikiastats_mainstats_short_column_U' => '日毎の訪問者数',
+'wikiastats_more_txt' => '更に詳しく',
+'wikiastats_namespace' => '名前空間',
+'wikiastats_namespace_records' => '名前空間毎のデータベース',
+'wikiastats_nostats_found' => '選択したウィキの統計がありません',
+'wikiastats_note_mainstats' => '注:最初の数ヶ月は記録が遅くなります。履歴は当初は必ずしも表示されるものではありません。',
+'wikiastats_other' => 'その他',
+'wikiastats_page_edits' => '最も編集された記事(&gt; 25回)',
+'wikiastats_pagetitle' => 'ウィキアにおける統計',
+'wikiastats_please_wait' => 'XSLファイルを生成しました。少しお待ちください。',
+'wikiastats_redirects' => 'リダイレクト',
+'wikiastats_select_statistics' => '統計を選択',
+'wikiastats_showcharts' => 'チャートを見る',
+'wikiastats_showstats_btn' => '統計を見る',
+'wikiastats_tables' => 'テーブル',
+'wikiastats_trend_all_wikia_text' => '全ウィキ',
+'wikiastats_trend_growth_info' => '成長 = 表示されている月の月間平均成長',
+'wikiastats_trend_mean_info' => '平均 = 表示されている月の平均値',
+'wikiastats_trend_ordered' => '全てのウィキは、記事数順に並んでいます。<br />統計データの選択:',
+'wikiastats_unique_users' => 'ユニークな利用者数',
+'wikiastats_username' => '利用者',
+'wikiastats_usernames' => '利用者',
+'wikiastats_website' => 'ウェブサイト',
+'wikiastats_wikians' => 'ウィキアン(登録利用者)',
+'wikiastats_xls_cancel' => '取り消し',
+'wikiastats_xls_generate' => '生成',
+'wikiastats_xls_generate_info' => '最大{0}個までウィキを選択できます',
+'wikiastats_xls_press_uncheck' => '全てのウィキのチェックを外すには、このボタンを押してください。',
+'wikiastats_xls_uncheck_list' => 'チェックを外す',
+'wikiaststs_invalid_date' => '日付の指定が間違っています',
+'wmu-back' => '戻る',
+'wmu-caption' => '説明文',
+'wmu-close' => '閉じる',
+'wmu-conflict-inf' => '<h1>同じファイル名の画像が既にあります</h1>
+<b>$1</b>の画像について対応を選択してください。',
+'wmu-details-inf' => '<h1>ファイルの詳細</h1>
+このファイルの名前を決めてください。わかりやすいものがお勧めです。',
+'wmu-details-inf2' => '<h1>オプション</h1>
+記事に挿入する際のオプションを選択してください。',
+'wmu-existing' => '既にある名前を使う',
+'wmu-find-btn' => '探す',
+'wmu-find' => '画像を探す',
+'wmu-flickr-inf' => '写真サイトFlickrにあるフリーライセンスの画像を検索して、ウィキにインポートします。',
+'wmu-flickr2' => '$1件のFlickrの画像',
+'wmu-fullsize' => '実寸($1px/$2px)',
+'wmu-imagebutton' => '画像の追加',
+'wmu-imagelink' => '<b>新機能</b>画像の追加機能が新しくなりました',
+'wmu-insert' => '追加する',
+'wmu-insert2' => '追加する',
+'wmu-insert3' => 'この画像を追加する',
+'wmu-layout' => 'レイアウト',
+'wmu-license-cc' => 'CC-by-sa 3.0を適用する',
+'wmu-license' => 'ライセンス',
+'wmu-name' => '名前',
+'wmu-next' => '次の8件',
+'wmu-notlogged' => '画像をアップロードするには、アカウントを取得してログインしてください。',
+'wmu-optional' => '(オプション)',
+'wmu-overwrite' => 'この画像で上書きする',
+'wmu-prev' => '前の8件',
+'wmu-recent-inf' => '最近アップロードされた画像',
+'wmu-rename' => '画像の名前変更',
+'wmu-return' => '編集画面に戻る',
+'wmu-size' => 'サイズ',
+'wmu-success' => '<h1>成功しました</h1>
+記事に以下のデータを挿入しました。',
+'wmu-thiswiki' => 'ウィキにある画像',
+'wmu-thiswiki2' => '$1件の画像',
+'wmu-thumbnail' => 'サムネイル',
+'wmu-upload-btn' => 'アップロード',
+'wmu-upload' => 'アップロード',
+'wmu-warn1' => '検索するための単語を入力してください',
+'wmu-warn2' => 'アップロードする画像を挿入してください',
+'wmu-width' => '幅',
+'ws.action.h' => 'ステータス',
+'ws.cancel' => '取り消し',
+'ws.existingpage.h' => '存在するページ',
+'ws.link.h' => '(リンク)',
+'ws.ok' => '実行',
+'ws.overwrite.confirm' => 'いくつかのページは、既にウィキに存在しています。上書きしてもいいですか?',
+'ws.pagename.h' => 'ページ名',
+'ws.status.badurl' => 'インポートするページがありません。ウィキペディアの正確なURLのみ利用可能です("http://ja.wikipedia.org/wiki/メインページ"など)。',
+'ws.status.excludeall' => '全てインポートしない',
+'ws.status.failure' => 'インポートに失敗しました。あとでもう一度実行してください。',
+'ws.status.h' => 'インポート',
+'ws.status.import' => 'インポート',
+'ws.status.include' => 'インポート',
+'ws.status.includeall' => '全てインポートする',
+'ws.status.incomplete' => '不完全なインポート',
+'ws.status.preview' => 'プレビュー',
+'ws.status.remred' => 'インポートする記事から、存在しないページのリンクを取り除く',
+'ws.status.success' => '完了!',
+'ws.status.timeout' => 'タイムアウトしました。あとでもう一度実行してください。',
+'ws.step1.h.1' => '出発点となるウィキペディアのURL',
+'ws.step1.i.1' => 'このツールは、テンプレートや外部リンクを取り込まずに、ウィキペディアから記事をインポートする事の出来るものです。<br />リンクのある関連する記事を含める事も出来ます。<br />まずは、ブラウザのアドレスバーにあるウィキペディアのページのURLを下に貼付けてください。',
+'ws.step2.i.1' => '下記のページが見つかりました。<br />取り込むページ名をご確認ください。同じ名前がある場合は、インポートする際に上書きしてしまいますので、ご注意ください。',
+'ws.step2.i.2' => 'ページの関連するページを取り込むことができます',
+'wt_lastwikis_noresults' => '表示するウィキの訪問履歴がありません。是非とも[[w:c:ja:Wikia:プロジェクトポータル|ウィキの一覧ページ]]をご覧になって、他のウィキを訪れてみてください。',
+'wt_referers_empty_list' => 'このウィキで参照するだけのデータがまだ用意できておりません。後ほど、お尋ねください。',
+'wt_shoutbox_initial_message' => 'さあ、チャットの開始です!',
+'wt_show_external_urls' => '外部のURLだけを表示',
+'wt_show_internal_urls' => '内部リンクだけを表示',
+'yourbirthdate' => '誕生日',
 ) );

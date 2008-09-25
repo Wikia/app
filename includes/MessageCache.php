@@ -401,7 +401,7 @@ class MessageCache {
 		$parserMemc->delete( wfMemcKey( 'navlinks', $code ) );
 		$parserMemc->delete( wfMemcKey( 'MonacoData', $code ) );
 
-		wfRunHooks( "wfMessageCacheReplace", array( $title, $text ) );
+		wfRunHooks( "MessageCacheReplace", array( $title, $text ) );
 
 		wfProfileOut( __METHOD__ );
 	}
