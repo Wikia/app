@@ -185,4 +185,48 @@ $messages = array_merge( $messages, array(
 'tog-htmlemails' => '以HTML格式发送邮件',
 'whosonline' => '谁在线上？',
 'widgets' => 'Widgets列表',
+'activeusers' => '活跃用户',
+'captcha-badlogin' => '请输入以下数学算式的答案([[Special:Captcha/help|更多资讯]])：',
+'captcha-create' => '请输入以下数学算式的答案([[Special:Captcha/help|更多资讯]])：',
+'createpage' => '新增文章',
+'createpage_alternate_creation' => '原始编辑模式请点选 $1',
+'createpage_button_caption' => '发布！',
+'createpage_caption' => '分类：',
+'createpage_categories' => '分类：',
+'createpage_categories_help' => '将文章加註分类，可加強这个站上的文章的组织。你可以在下方挑选一个适当的分类，或是直接输入一个新的分类。',
+'createpage_enter_text' => '输入文字',
+'createpage_here' => '这里',
+'createpage_hide_cloud' => '[隐藏分类云]',
+'createpage_show_cloud' => '[显示分类云]',
+'createpage_title' => '发表新文章',
+'createpage_title_caption' => '文章标题',
+'createwiki' => '申请wiki',
+'createwikipagetitle' => '申请wiki',
+'editingtips_enter_widescreen' => '放大编辑',
+'editingtips_exit_widescreen' => '退出放大编辑',
+'editingtips_hide' => '隐藏编辑小技巧',
+'fancycaptcha-badlogin' => '请输入认证码([[Special:Captcha/help|更多资讯]])：',
+'fancycaptcha-createaccount' => '请输入认证码([[Special:Captcha/help|更多资讯]])：',
+'footer_1.5' => '快来编修本页',
+'footer_1' => '想改善$1？',
+'footer_2' => '回应此文',
+'monaco-latest' => '最近动态',
+'monaco-toolbox' => '* Special:Search|进階搜寻
+* upload-url|上传图片
+* Special:MultipleUpload|大量上传
+* specialpages-url|特殊页面
+* recentchanges-url|最近更改
+* randompage-url|随机页面
+* whatlinkshere|链入页面
+* helppage|说明手册',
+'multipleupload-text' => '大量上传档案！
+
+使用\'\'\'浏览\'\'\'按钮选择要上传档案的位置。可同时上传1至$1个档案。 你可以选择输入\'\'\'目标档案名\'\'\'和\'\'\'档案描述\'\'\'来简述此档案。不当的档案将可能被刪除，详见[[{{MediaWiki:Multipleupload-page}}|档案刪除政策]]。',
+'pr_mailer_notice' => '您在个人资料中所留下的电子邮件，将会自动显示在「发信人」的栏位中，所以收件人能直接回覆您的信件。',
+'pr_table_problem_id' => '问题编号',
+'pr_table_reporter_name' => '回报人',
+'pr_table_status' => '状态',
+'pr_total_number' => '回报总数',
+'pr_view_all' => '显示所有回报',
+'pr_what_problem_change' => '更改问题类型',
 ) );

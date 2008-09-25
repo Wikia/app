@@ -21,17 +21,22 @@ $messages = array_merge( $messages, array(
 'limit' => 'Limit',
 'title' => 'Title',
 'common.css' => '/***** CSS placed here will be applied to all skins on the entire site. *****/
-/* See also: [[MediaWiki:Monobook.css]] */
-/* <pre> */
 
 /* Mark redirects in Special:Allpages and Special:Watchlist */
-.allpagesredirect { font-style: italic; }
-.watchlistredir { font-style: italic; }
+.allpagesredirect {
+   font-style: italic;
+}
+.watchlistredir {
+   font-style: italic;
+}
 
 /* Giving headers and TOC a little extra space */
-h2 {margin-top: 20px;}
-
-.toc {margin-top: 20px;}
+h2 {
+   margin-top: 20px;
+}
+.toc {
+   margin-top: 20px;
+}
 
 /* Infobox template style */
 .infobox {
@@ -66,67 +71,141 @@ h2 {margin-top: 20px;}
 
 /* Forum formatting (by -Algorithm & -Splaka) */
 .forumheader {
-     border: 1px solid #aaa;
-     background-color: #f9f9f9; margin-top: 1em; padding: 12px;
+   border: 1px solid #aaa;
+   margin-top: 1em;
+   padding: 12px;
 }
 .forumlist td.forum_edited a {
-     color: black; text-decoration: none
+   color: black;
+   text-decoration: none;
 }
 .forumlist td.forum_title a {
-     padding-left: 20px;
+   padding-left: 20px;
 }
 .forumlist td.forum_title a.forum_new {
-     font-weight: bold; background: url(/images/4/4e/Forum_new.gif)
-     center left no-repeat; padding-left: 20px;
+   font-weight: bold;
+   background: url(/images/4/4e/Forum_new.gif) center left no-repeat;
+   padding-left: 20px;
 }
 .forumlist td.forum_title a.forum_new:visited {
-     font-weight: normal; background: none; padding-left: 20px;
+   font-weight: normal;
+   background: none;
+   padding-left: 20px;
 }
 .forumlist th.forum_title {
-     padding-left: 20px;
+   padding-left: 20px;
 }
 
 /* Recent changes byte indicators */
-.mw-plusminus-pos { color: #006500; }
-.mw-plusminus-neg { color: #8B0000; }
+.mw-plusminus-pos {
+   color: #006500;
+}
+.mw-plusminus-neg {
+   color: #8B0000;
+}
 
 /* Image frame fix */
 div.tright, div.tleft {
-    border: 1px solid silver;
+   border: 1px solid silver;
 }
 div.thumb {
-    margin: 2px;
+   margin: 2px;
+   margin-left: 6px;
 }
 
 div.thumbinner {
-    background: inherit;
-    border: none;
+   background: inherit;
+   border: none;
 }
 #article div.thumb {
-    color:inherit;
+   color:inherit;
 }
-/* </pre> */',
-'skinchooser-customcss' => 'For custom themes, select the custom option in the menu above and specify custom CSS in [[MediaWiki:Monaco.css]].',
-'confirmemail_subject' => 'Welcome to Wikia!',
+
+/* === Babel === */
+
+div.babelbox {
+   float: right;
+   margin-left: 1em;
+   margin-bottom: 0.5em;
+   width: 246px;
+   border: 1px solid #99B3FF;
+   padding: 2px 0 2px 0;
+}
+.lang-blockN, .lang-block0, .lang-block1, .lang-block2, .lang-block3 {
+   margin: 2px 4px 2px 4px; /* t, l, b, r */
+   width:238px;
+   border-collapse: collapse;
+}
+td.lang-codeN, td.lang-code0, td.lang-code1, td.lang-code2, td.lang-code3 {
+   text-align:center;
+   font-size:14pt;
+   width:45px;
+   height:45px;
+}
+td.lang-descriptionN, td.lang-description0, td.lang-description1,
+td.lang-description2, td.lang-description3 {
+  font-size:8pt;
+  padding:4pt;
+  line-height:1.25em;
+}
+
+.lang-block0 {
+   border:1px solid #FFB3B3;
+}
+td.lang-code0 {
+  background-color: #FFB3B3;
+  color: black;
+}
+td.lang-description0 {
+  background-color: #FFE0E8;
+  color: black;
+}
+
+.lang-block1,  .lang-block2, .lang-block3  {
+   border:1px solid #99B3FF;
+}
+td.lang-code1, td.lang-code2, td.lang-code3 {
+  background-color: #99B3FF;
+  color: black;
+}
+td.lang-description1,  td.lang-description2, td.lang-description3 {
+  background-color: #E0E8FF;
+  color: black;
+}
+
+.lang-blockN {
+   border:1px solid #6EF7A7;
+}
+td.lang-codeN {
+  background-color: #6EF7A7;
+  color: black;
+}
+td.lang-descriptionN {
+  background-color: #C5FCDC;
+  color: black;
+}',
+'skinchooser-customcss' => 'For custom themes, select the "custom" option in the menu above and specify custom CSS in [[MediaWiki:Monaco.css]].',
+'confirmemail_subject' => 'Please confirm your Wikia registration',
 'confirmemail_body' => 'Hi $2,
 
-Welcome to Wikia!
+Thank you for registering with Wikia! 
 
-With thousands of communities on Wikia, there are many ways to have fun here. Spend some time getting to know Wikia by visiting the home page (www.wikia.com), taking a tutorial (<http://www.wikia.com/wiki/Help:Tutorial_1>), reading interesting and cool articles, writing content on your favorite subjects, or meeting other members of the community.
+Please fully activate your new Wikia account by confirming your email address.
 
-
-To fully activate your account, please confirm your email by clicking on the link below or pasting it into your browser.
+Click on the link below or paste it into your browser:
 
 $3
 
-This confirmation link will expire in 7 days.
+Note: This confirmation link will expire in 7 days.
 
 (For your information, this username was created from the following address: $1)
 
+
+With thousands of communities on Wikia, there are many ways to have fun here. Spend some time getting to know Wikia by visiting the home page (www.wikia.com), taking a tutorial (<http://www.wikia.com/wiki/Help:Tutorial_1>), reading interesting and cool articles, writing content on your favorite subjects, or meeting other members of the community.
+
 We look forward to seeing you on Wikia!
 The Wikia Community Team
-www.wikia.com
-',
+www.wikia.com',
 'enotif_lastvisited' => 'To see all changes to this page since your last visit, click here: $1',
 'fileexists' => 'A file with this name exists already, please check $1 if you are not sure if you want to change it. Once uploaded, this image may take up to 2 minutes to be visible.',
 'enotif_body' => 'Dear $WATCHINGUSERNAME,
@@ -143,12 +222,13 @@ Please visit and edit often...
 
 {{SITENAME}}
 
-___________________________________________________________________________
+___________________________________________
+* Have you checked out our hubs? <http://www.wikia.com/wiki/Category:Hubs>
 
-    * Want to control which emails you receive from Wikia? Go to: {{fullurl:{{ns:special}}:Preferences}}.
-    * To see new wikis created this week, please visit <http://www.wikia.com/wiki/New_wikis_this_week>.',
+* Want to control which emails you receive? 
+Go to: {{fullurl:{{ns:special}}:Preferences}}.',
 'imagereverted' => 'Revert to earlier version was successful. <strong>This change may take up to 2 minutes to be visible.</strong>',
-'pagetitle' => '{{ #ifeq:{{PAGENAME}} | {{Mediawiki:Mainpage}} | {{SITENAME}} | $1 - {{SITENAME}} }}',
+'pagetitle' => '#wikiapagetitle#',
 'passwordremindertitle' => 'Password reminder from Wikia',
 'passwordremindertext' => 'Hi,
 The login password for user "$2" is now "$3".
@@ -176,6 +256,9 @@ This special page lets you track the most recent changes to the wiki.
 |-valign="top"
 |align="right"|\'\'\'Special pages&nbsp;:&nbsp;\'\'\'
 |align="left" |[[Special:Wantedpages|Wanted pages]] - [[Special:Longpages|Long pages]] - [[Special:Uncategorizedimages|Uncategorized images]] - [[Special:Uncategorizedpages|Uncategorized pages]] - [[Special:Specialpages|more special pages...]]
+|-valign="top"
+|align="right"|\'\'\'Find users&nbsp;:&nbsp;\'\'\'
+|align="left" |[[Special:Listusers/sysop|Administrators]] - [[Special:Listusers/helper|Helpers]] - [[Special:Listusers/janitor|Janitors]] - [[Special:Listusers/staff|Wikia Staff]] - [[Special:Listusers|more users...]]
 |}',
 'sidebar' => '
 * navigation
@@ -372,7 +455,8 @@ div.wikiaDialog h2,
 ',
 'wikipedia_skin' => 'Wikipedia skin',
 'old_skins' => 'Old skins',
-'tog-skinoverwrite' => '<b>See custom wiki skins</b> (recommended)<br>Some wiki administrators take a lot of time to customize the look of their wikis. Check the box above to see their wikis with full customization.',
+'tog-skinoverwrite' => '<b>Let the admins override my skin choice.</b> (recommended)<br>Setting this means the system will <b><i>ignore</i></b> your preferred skin and show the skin picked by each wiki\'s admins. Some wiki administrators take a lot of time to customize the look of their wikis. Check this box to see wikis with full customization.<br>
+<b>This setting will follow you across Wikia.</b>',
 'defaultskin_choose' => 'Set the default theme for this wiki: ',
 'admin_skin' => 'Admin Options',
 'or' => 'or',
@@ -456,7 +540,9 @@ Please change [[Special:Preferences#prefsection-1|your preferences]] to use this
 
 <p>You can contact the Wikia community at the <a href="http://www.wikia.com/wiki/Forum:Index">Central Forum</a> and report software bugs at <a href="http://inside.wikia.com/forum">Inside Wikia forum</a>.</p>
 
-<p>If you prefer your message to <a href=http://www.wikia.com/wiki/Wikia>Wikia</a> to be private, please use the contact form below. <i>All fields are optional</i>.</p>',
+<p>If you prefer your message to <a href=http://www.wikia.com/wiki/Wikia>Wikia</a> to be private, please use the contact form below. <i>All fields are optional</i>.</p>
+
+<p>This form is currently working slowly but please press <i>send</i> <b>only once</b>.</p>',
 'shared_help_info' => 'This text is stored on the Help Wikia.  [[w:c:Help:Help_talk:$1|Suggest changes here]].',
 'shared_help_edit_info' => 'The help text within the box is stored at [[w:c:Help:Help:$1|Help:$1]] on Help Wikia.
 
@@ -583,7 +669,7 @@ Text should be placed on this page only if you wish to explain usage, style and 
 'alreadyrolled' => 'Cannot roll back edit to [[:$1]] by [[User:$2|$2]] ([[User talk:$2|talk]] · [[special:blockip/$2|block]] · [[Special:Contributions/$2|contribs]]) because someone else has edited the page.
 
 The last revision was by [[User:$3|$3]] ([[User talk:$3|talk]] · [[Special:Contributions/$3|contribs]]).',
-'anoneditwarning' => '{| align=center width=75% cellpadding=5 style="background: #D3E1F2; border: 1px solid #aaa;"
+'anoneditwarning' => '{| align=center width=75% cellpadding=5 style="background: #D3E1F2; border: 1px solid #aaa; color:black;"
 |-
 | rowspan=2 | http://images.wikia.com/messaging/images//6/68/Login.png
 | valign=top colspan=2 | \'\'\'Have you forgotten to log in?\'\'\' A user name helps you track your contributions and communicate with other users. If you don\'t log in, your IP address will show up in the page history.
@@ -594,7 +680,7 @@ The last revision was by [[User:$3|$3]] ([[User talk:$3|talk]] · [[Special:Cont
 <br />',
 'anontalkpagetext' => '<br style="clear:both;" />
 ----
-{| id="anontalktext" class="plainlinks noeditsection" style="font-size:90%; border: 1px solid #B8B8B8; margin:1em 1em 0em 1em; padding:0.25em 1em 0.25em 1em; clear: both;"
+{| id="anontalktext" class="plainlinks noeditsection" style="font-size:90%; border: 1px solid #B8B8B8; margin:1em 1em 0em 1em; padding:0.25em 1em 0.25em 1em; clear: both;" 
 | \'\'\'This is the discussion page for an anonymous user  who has not created an account yet or who does not use it, identified by the user\'s numerical [[wikipedia:IP address|IP address]].\'\'\'
 
 Some IP addresses change periodically, and may be shared by several users. If you are an anonymous user, you may [[{{ns:Special}}:Userlogin|create an account or log in]] to avoid future confusion with other anonymous users. Registering also hides your IP address.
@@ -701,7 +787,7 @@ Insert text here',
 <charinsert> Æ æ Ø ø Å å </charinsert> &nbsp;
 <charinsert> Ə ə </charinsert></span>&nbsp;<br/></span>
 <span id="edittools_greek">\'\'\'Greek:\'\'\'
-<charinsert> Ά ά Έ έ Ή ή Ί ί Ό ό Ύ ύ Ώ ώ </charinsert> &nbsp;
+<charinsert> Ά ά Έ έ Ή ή Ί ί Ό ό Ύ ύ Ώ ώ </charinsert> &nbsp; 
 <charinsert> Α α Β β Γ γ Δ δ </charinsert> &nbsp;
 <charinsert> Ε ε Ζ ζ Η η Θ θ </charinsert> &nbsp;
 <charinsert> Ι ι Κ κ Λ λ Μ μ </charinsert> &nbsp;
@@ -773,8 +859,7 @@ Insert text here',
 | \'\'\'CC-by-sa-2.0\'\'\' – \'\'[[Media:{{PAGENAME}}|This file]]  is licensed under [[Wikipedia:Creative Commons|Creative Commons]] [http://creativecommons.org/licenses/by-sa/2.0/ Attribution ShareAlike 2.0] License.\'\'
 |}<includeonly>[[Category:CC-BY-SA files|{{PAGENAME}}]]</includeonly>',
 'group-janitor-member' => 'Janitor',
-'grouppage-checkuser' => 'w:Help:CheckUser',
-'grouppage-helper' => 'w:Wikia Helper Group',
+'grouppage-checkuser' => 'w:c:help:Help:CheckUser',
 'imghistlegend' => 'Legend: (cur) = this is the current file, (del) = delete this old version, (rev) = revert to this old version.<br />
 <i>Click on date to download the file or see the image uploaded on that date</i>.',
 'insertimagetitle' => 'Upload image',
@@ -813,23 +898,23 @@ Insert text here',
 **w:Hiring|General hiring',
 'monaco-footer-wikia-links' => '*http://www.wikia.com/wiki/About_Wikia|About Wikia
 *http://www.wikia.com/wiki/Contact_us|Contact Wikia
-*http://www.wikia.com/wiki/Terms_of_use|Terms of use
+*http://www.wikia.com/wiki/Terms_of_use|Terms
 *http://www.mediawiki.org/|MediaWiki
 *http://www.gnu.org/copyleft/fdl.html|GFDL
 *http://www.wikia.com/wiki/Advertising|Advertise on Wikia
-*http://www.wikia.com/wiki/Terms_of_use#Collection_of_personal_information|Privacy policy',
+*http://www.wikia.com/wiki/Terms_of_use#Collection_of_personal_information|<b>Privacy</b>',
 'monaco-related-communities' => '*w:Entertainment|Entertainment|TV shows, movies, cartoons and comics.
 *w:Gaming|Gaming|Get your game on with Wikia\'s video game wikis.
 *w:Sci-Fi|Science Fiction|Explore the world of the future.
 *w:Big_wikis|Biggest Wikis|See Wikia\'s biggest wikis.
 *w:Hubs|See all...',
-'monaco-related-communities-2' => '* w:c:ssb|Super Smash Bros|Check out the Brawl
-* w:c:devilmaycry|Devil May Cry|Devil May Cry 4
-* w:c:wow|WoWWiki|World of Warcraft
-* w:c:gta|Grand Theft Wiki|Grand Theft Auto 4
-* w:c:guildwars|GuildWiki|Guild Wars
-* w:c:yugioh|Yu-Gi-Oh!|
-* w:c:Runescape|Runescape|',
+'monaco-related-communities-2' => '*w:c:ssb|Super Smash Bros|Check out the Brawl
+*w:c:aoc|Age of Conan Wiki|Age of Conan
+*w:c:wow|WoWWiki|World of Warcraft
+*w:c:gta|Grand Theft Wiki|Grand Theft Auto 4
+*w:c:guildwars|GuildWiki|Guild Wars
+*w:c:yugioh|Yu-Gi-Oh!
+*w:c:Runescape|Runescape',
 'monaco-sidebar' => '*mainpage|{{SITENAME}}
 *mainpage|Top Content
 **#popular#|most_popular
@@ -842,17 +927,15 @@ Insert text here',
 **forum-url|forum
 *#category1#
 *#category2#',
-'monaco-toolbox' => '* Special:Search|Advanced search
-* upload-url|upload
-* Special:MultipleUpload|Multiple upload
+'monaco-toolbox' => '* upload-url|Upload image
 * specialpages-url|specialpages
+* helppage|help
 * recentchanges-url|recentchanges
 * randompage-url|randompage
-* whatlinkshere|whatlinkshere
-* helppage|help',
+* whatlinkshere|whatlinkshere',
 'multiupload' => 'Multiple upload',
 'newarticletext' => '<div style="float:right;"><small>\'\'[[MediaWiki:Newarticletext|View this template]]\'\'</small></div>
-\'\'\'You are starting a brand new article.\'\'\'
+\'\'\'You are starting a brand new article.\'\'\' 
 * Check out \'\'\'[[Help:Editing]]\'\'\' for more information on how to edit wiki pages.
 * Don\'t forget to \'\'\'categorize articles\'\'\' by adding <nowiki>[[Category:Name]]</nowiki> to the bottom of the page! A list of categories can be found on [[Special:Categories]].<br/><br/>',
 'noarticletext' => '\'\'\'Oops! {{SITENAME}} does not have a {{NAMESPACE}} page with this exact name.\'\'\'
@@ -863,9 +946,9 @@ Insert text here',
 'nosuchuser' => 'There is no user by the name "$1". User names are case sensitive. Please check your spelling, or use the link below to create a new user account.',
 'pr_introductory_text' => 'Most pages on this wiki are editable, and you are welcome to edit the page and correct mistakes yourself! If you need help doing that, see [[Help:Editing|how to edit]] and [[Help:Reverting|how to revert vandalism]].
 
-To contact staff or to report copyright problems, please see [[w:contact us|Wikia\'s "contact us" page]].
+To contact staff or to report copyright problems, please see [[w:contact us|Wikia\'s "contact us" page]].<br/>Wiki software bugs can also be discussed on the [[w:Forum:Help_desk|Central forums]].
 
-Software bugs can be reported on the forums. Reports made here will be [[Special:ProblemReports|displayed on the wiki]].',
+Reports made on this wiki will be displayed on [[Special:ProblemReports]].',
 'pr_view_staff' => 'Show reports that need staff help',
 'pr_what_problem_software_bug' => 'there is a bug in the wiki software',
 'prefs-help-realname' => 'Real name is optional and, if you choose to provide it, will be used for giving you attribution for your work.  This field must be filled in to use Wikia Search.',
@@ -875,7 +958,7 @@ Software bugs can be reported on the forums. Reports made here will be [[Special
 'selfmove' => '\'\'\'Source and destination titles are the same; can\'t move a page over itself.\'\'\' Please check that you didn\'t enter the destination title into the "reason" field instead of the "new title" field.',
 'sitestatstext' => '__NOTOC__
 {| class="plainlinks" align="top" width="100%"
-| valign="top" width="50%" |
+| valign="top" width="50%" | 
 ===Page statistics===
 \'\'\'$1 [[Special:Allpages|total pages]]\'\'\' on  {{SITENAME}} ([[Special:Newpages|new pages]]):
 
@@ -883,13 +966,13 @@ Software bugs can be reported on the forums. Reports made here will be [[Special
 **[[Special:Allpages|main namespace]] pages
 **must include one internal link
 **may be [[Special:Shortpages|short]] or [[Special:Longpages|long pages]]
-**may be [[Special:Disambiguations|disambiguations]]
 **may be [[Special:Lonelypages|orphaned]]
 
 *plus additional non-content pages, such as:
-**pages outside the main namespace<br/>(e.g. templates and discussion pages)
+**most pages outside the main namespace<br/>(e.g. templates and discussion pages)
 **[[Special:Listredirects|redirects]] ([[Special:BrokenRedirects|broken]]/[[Special:DoubleRedirects|double]])
 **[[Special:Deadendpages|dead ends]]
+**[[Special:Disambiguations|disambiguations]]
 
 | valign="top" width="50%" |
 
@@ -904,9 +987,9 @@ Software bugs can be reported on the forums. Reports made here will be [[Special
 * [[Special:Specialpages|Special]] pages
 * [[Special:Allmessages|MediaWiki]] messages
 
-Readers may also be interested in the much more detailed statistics linked from \'\'\'[[Wikia:Wikia:Statistics|WikiStats]]\'\'\' on Central Wikia.
+Readers may also be interested in the much more detailed statistics linked from \'\'\'[http://wikistats.wikia.com WikiStats]\'\'\'.
 |}',
-'sp-contributions-footer-anon' => '{| id="anontalktext" class="plainlinks noeditsection" style="font-size:90%; border: 1px solid #B8B8B8; margin:1em 1em 0em 1em; padding:0.25em 1em 0.25em 1em; clear: both;"
+'sp-contributions-footer-anon' => '{| id="anontalktext" class="plainlinks noeditsection" style="font-size:90%; border: 1px solid #B8B8B8; margin:1em 1em 0em 1em; padding:0.25em 1em 0.25em 1em; clear: both;" 
 | \'\'\'This is the contributions page for an anonymous user  who has not created an account yet or who does not use it, identified by the user\'s numerical [[wikipedia:IP address|IP address]].\'\'\'
 
 Some IP addresses change periodically, and may be shared by several users. If you are an anonymous user, you may [[{{ns:Special}}:Userlogin|create an account or log in]] to avoid future confusion with other anonymous users. Registering also hides your IP address. [[w:c:help:Help:Why create an account|Why create an account?]] ([[w:c:help:Help:Create an account|How to create an account]])
@@ -929,16 +1012,16 @@ If you think this was sent in error, please let us know at support@wikia.com',
 'top_users' => 'Featured users',
 'ue-EditArticle' => 'This is ue_EditSimilar event <a href="http://www.example.co.uk/files/map.pdf" onClick="javascript:urchinTracker(\'some value\'); ">now click here</a>',
 'ue-NewToWikia' => 'This is ue_NewToWikia Event <a href="http://www.example.co.uk/files/map.pdf" onClick="javascript:urchinTracker(\'some value\'); ">now click here</a>',
-'ue-VisitN1' => 'Welcome to Wikia! <a href="http://www.wikia.com/index.php?title=Special:Userlogin&type=signup" id="ue-Visit1_1">Create an account for FREE!</a>',
-'ue-VisitN10' => 'To save your edits and watch pages, please <a href="http://www.wikia.com/index.php?title=Special:Userlogin&type=signup" onClick="javascript:urchinTracker(\'/reg/ue-Visit10_10\'); ">create an account (free)</a>',
-'ue-VisitN2' => 'Welcome to Wikia - Track updates to this page by  <a href="http://www.wikia.com/index.php?title=Special:Userlogin&type=signup" onClick="javascript:urchinTracker(\'/reg/ue-Visit2_2\'); "creating an account (it\'s free!)"/a>',
-'ue-VisitN3' => 'Welcome to Wikia - Get page updates automatically when you <a href="http://www.wikia.com/index.php?title=Special:Userlogin&type=signup" onClick="javascript:urchinTracker(\'/reg/ue-Visit3_3\'); ">create an account.</a>',
-'ue-VisitN4' => 'Welcome to Wikia! To track all your favorite pages <a href="http://www.wikia.com/index.php?title=Special:Userlogin&type=signup" onClick="javascript:urchinTracker(\'/reg/ue-Visit4_4\'); ">Create an account (free)</a>',
-'ue-VisitN5' => 'Welcome to Wikia! To save your edits and watch pages, please <a href="http://www.wikia.com/index.php?title=Special:Userlogin&type=signup" onClick="javascript:urchinTracker(\'/reg/ue-Visit5_5\'); ">create an account (free)</a>',
-'ue-VisitN6' => 'Did you know? Wikia registered users can watch this page for updates -- <a href="http://www.wikia.com/index.php?title=Special:Userlogin&type=signup" onClick="javascript:urchinTracker(\'/reg/ue-Visit6_6\'); ">create a free account now!</a>',
-'ue-VisitN7' => 'Get your free Wikia User ID - <a href="http://www.wikia.com/index.php?title=Special:Userlogin&type=signup" onClick="javascript:urchinTracker(\'/reg/ue-Visit7_7\'); ">create an account now!</a>',
-'ue-VisitN8' => 'A Wikia User ID is free -- <a href="http://www.wikia.com/index.php?title=Special:Userlogin&type=signup" onClick="javascript:urchinTracker(\'/reg/ue-Visit8_8\'); ">create an account now!</a>',
-'ue-VisitN9' => 'Welcome to Wikia! Please <a href="http://www.wikia.com/index.php?title=Special:Userlogin&type=signup" onClick="javascript:urchinTracker(\'/reg/ue-Visit9_9\'); ">create an account (free)</a>',
+'ue-VisitN1' => 'Welcome to %SITENAME% - New user? Please <a href="/index.php?title=Special:Userlogin&type=signup" id="ue-Visit1_1">create an account (free).</a>',
+'ue-VisitN10' => 'To save your edits and watch pages, please <a href="/index.php?title=Special:Userlogin&type=signup" onClick="javascript:urchinTracker(\'/reg/ue-Visit10_10\'); ">create an account (free)</a>',
+'ue-VisitN2' => 'Welcome to %SITENAME% - Track updates to this page by <a href="/index.php?title=Special:Userlogin&type=signup" id="ue-Visit2_1">creating an account (free)</a>',
+'ue-VisitN3' => 'Welcome to %SITENAME% - New user? Please <a href="/index.php?title=Special:Userlogin&type=signup" id="ue-Visit3_1">create an account (free).</a>',
+'ue-VisitN4' => 'Welcome to %SITENAME%! To track all your favorite pages <a href="/index.php?title=Special:Userlogin&type=signup" id="ue-Visit4_1">Create an account (free)</a>',
+'ue-VisitN5' => 'Welcome to %SITENAME%! To save your edits and watch pages, please <a href="/index.php?title=Special:Userlogin&type=signup" id="ue-Visit5_1">create an account (free)</a>',
+'ue-VisitN6' => 'Did you know? Registered users of %SITENAME% can watch this page for updates -- <a href="/index.php?title=Special:Userlogin&type=signup"id="ue-Visit6_1">create a free account now!</a>',
+'ue-VisitN7' => 'Get your free %SITENAME% User ID - <a href="/index.php?title=Special:Userlogin&type=signup" id="ue-Visit7_1">create an account now!</a>',
+'ue-VisitN8' => 'Join %SITENAME% for free -- <a href="/index.php?title=Special:Userlogin&type=signup" id="ue-Visit8_1">create an account now!</a>',
+'ue-VisitN9' => 'Welcome to %SITENAME%! Please <a href="/index.php?title=Special:Userlogin&type=signup" id="ue-Visit9_1">create an account (free)</a>',
 'ue-WatchPage' => 'This is Ue-WatchPage event <a href="http://www.example.co.uk/files/map.pdf" onClick="javascript:urchinTracker(\'some value\'); ">now click here</a>',
 'ue-WelcomeMessage' => 'Hello and thank you for tripping on ue-WelcomeMessage',
 'ue_VisitN1' => 'Whaz up dog message Visit 1',
@@ -968,7 +1051,239 @@ If you think this was sent in error, please let us know at support@wikia.com',
 'userlogin-captcha-label' => 'Enter the word that appears:',
 'userlogin-form-error' => 'Please fix errors above before proceeding.',
 'unable-block-edit' => 'You are not allowed to edit this page. Try again later.',
-'var_logheader' => 'Below is a list of the most recent configuration changes for this wiki.',
+'var_logheader' => '&nbsp;',
 'tog-showAds' => '<b>Show all advertisements</b><br/>Select this option to see article pages as logged-out users see them.<br/><br/>',
 'fast-adv' => 'Advertisement',
+'clearyourcache' => '\'\'\'Note:\'\'\' After saving, you have to bypass your browser\'s cache to see the changes.
+*\'\'\'Internet Explorer:\'\'\' hold down the \'\'Ctrl\'\' key and click the \'\'Refresh\'\' or \'\'Reload\'\' button, or press \'\'Ctrl+F5\'\'.
+*\'\'\'Firefox:\'\'\' hold down the \'\'Shift\'\' key while clicking Reload; alternatively press \'\'Ctrl+F5\'\' or \'\'Ctrl-Shift-R\'\'.
+*\'\'\'Opera\'\'\' users have to clear their caches through \'\'Tools→Preferences\'\'
+*\'\'\'Konqueror\'\'\' and \'\'\'Safari\'\'\' users can just click the \'\'Reload\'\' button.',
+'confirmemail_loggedin' => '\'\'\'Your e-mail address has now been confirmed.\'\'\'
+
+Welcome!
+
+With thousands of communities on Wikia, there are many ways to have fun here. 
+
+Spend some time getting to know Wikia by [[w:Help:Tutorial 1|taking a tutorial]], reading interesting and cool articles, writing content on your favorite subjects, or meeting other members of the community.
+
+We look forward to seeing you on Wikia!
+
+The Wikia Community Team',
+'contributions' => 'Contributions',
+'createpage_about_info' => 'This is the simplified editor. To find out more go to [[w:c:help:Help:CreatePage|Wikia Help]].',
+'deletereason-dropdown' => '*Vandalism and problems
+** Copyright violation
+** Spam
+** Vandalism
+*Maintenance
+** Author request
+** Housekeeping
+** Marked for deletion
+*Redirects
+** Broken redirect
+** Unused redirect
+** Redirect left from pagemove',
+'description' => '{{SITENAME}} is a database that anyone can edit.',
+'disclaimerpage' => '{{#ifexist:Project:General disclaimer|Project:General disclaimer| }}',
+'editSimilar-Categories' => '* Stub
+* Stubs
+* Article stubs
+* Überarbeitungsanträge',
+'editingTips' => '= How to style text =
+
+You can style text with \'wikimarkup\' or HTML.
+
+<br />
+<code><nowiki>\'\'italic\'\'</nowiki></code> => \'\'italic\'\'
+
+<br />
+<code><nowiki>\'\'\'bold\'\'\'</nowiki></code> => \'\'\'bold\'\'\'
+
+<br />
+<code><nowiki>\'\'\'\'\'italic and bold\'\'\'\'\'</nowiki></code> => \'\'\'\'\'italic and bold\'\'\'\'\'
+
+----
+
+<br />
+<code><nowiki><s>strike</s></nowiki></code> => <s>strike</s>
+
+<br />
+<code><nowiki><u>underline</u></nowiki></code> => <u>underline</u>
+
+<br />
+<code><nowiki><span style="color:red;">red text</span></nowiki></code> => <span style="color:red;">red text</span>
+
+= How to make links =
+
+Links are created with one or two square brackets.
+
+<br />
+\'\'\'A simple internal link:\'\'\'<br />
+<code><nowiki>[[Article name]]</nowiki></code>
+
+<br />
+\'\'\'An internal link with link text:\'\'\'<br />
+<code><nowiki>[[Article name | text you want]]</nowiki></code>
+
+<br />
+----
+
+<br />
+\'\'\'A numbered external link:\'\'\'<br />
+<code><nowiki>[http://www.site.com]</nowiki></code>
+
+<br />
+\'\'\'An external link with link text:\'\'\'
+
+<code><nowiki>[http://www.site.com link text]</nowiki></code>
+
+=How to add headings=
+
+Headings use equals signs.  The more "=", the smaller the heading.
+
+<br />
+<span style="font-size: 1.6em;"><code><nowiki>==</nowiki></code>Heading 2<code><nowiki>==</nowiki></code></span>
+
+<br />
+<span style="font-size: 1.3em;"><code><nowiki>===</nowiki></code>\'\'\'Heading 3\'\'\'<code><nowiki>===</nowiki></code></span>
+
+<br />
+<code><nowiki>====</nowiki></code>\'\'\'Heading 4\'\'\'<code><nowiki>====</nowiki></code>
+
+=How to indent text=
+
+Indents can be created plain, with bullets, or numbered.
+
+<br />
+<code>:</code> indent<br />
+<code>:</code> indent<br />
+<code>::</code> more indent<br />
+<code>:::</code> even more indent
+
+<br />
+<code>*</code> bullet<br />
+<code>*</code> bullet<br />
+<code>**</code> sub-bullet<br />
+<code>*</code> bullet
+
+<br />
+<code>#</code> numbered list<br />
+<code>#</code> numbered list<br />
+<code>##</code> sub-list<br />
+<code>#</code> numbered list
+
+=How to insert images=
+
+Images are added and formatted in a similar way to links.
+
+<br />
+<code><nowiki>[[Image:Name.jpg]]</nowiki></code>
+
+<br />
+\'\'\'To add alt. text\'\'\'<br />
+<code><nowiki>[[Image:Name.jpg | alt text]]</nowiki></code>
+
+<br />
+\'\'\'To make a thumbnail\'\'\'<br />
+<code><nowiki>[[Image:Name.jpg | thumb | ]]</nowiki></code>
+
+<br />
+\'\'\'To specify the size of the image\'\'\'<br />
+<code><nowiki>[[Image:Name.jpg | 200px | ]]</nowiki></code>
+
+<br />
+\'\'\'To align the image\'\'\'<br />
+<code><nowiki>[[Image:Name.jpg | right|]]</nowiki></code>
+
+<br />
+You can combine these attributes by putting a pipe symbol "<code>|</code>" between them. Remember, anything after the last pipe is text.
+
+=More help and video demos=
+
+Want more detailed help?
+
+<br />
+Visit [[w:c:help|Wikia Help]]!
+
+<br />
+For video walkthroughs:
+
+<br/>
+Visit [[w:c:help:Help:Videos|Video demos]]!',
+'editinginterface' => '\'\'\'Warning:\'\'\' You are editing a page which is used to provide interface text for the software. Changes to this page will affect the appearance of the user interface for other users.',
+'editingtips_enter_widescreen' => 'Enter Widescreen',
+'editingtips_exit_widescreen' => 'Exit Widescreen',
+'editingtips_hide' => 'Hide Editing Tips',
+'editingtips_show' => 'Show Editing Tips',
+'editsimilar-thanks' => 'Thanks for your edit. Can you improve any of these related articles? $1.',
+'editsimilar-thanks-notsimilar' => 'Thank you for your edit. Can you improve any of these articles? $1.',
+'editsimilar-thanks-notsimilar-singleresult' => 'Thank you for your edit. Can you improve this article? $1.',
+'editsimilar-thanks-singleresult' => 'Thanks for your edit. Can you improve this related article? $1.',
+'exif-fnumber' => 'F Number',
+'filedelete-reason-dropdown' => '*Vandalism and problems
+** Copyright violation
+** Spam/vandalism
+*Maintenance
+** Author request
+** Housekeeping
+** Duplicated/superseded file
+** Misnamed file',
+'me_hide' => 'Ausblenden',
+'me_tip' => 'Tip: you can add new sections, simply by typing their names with double equality signs in the existing sections, eg. == New Section ==',
+'movelogpagetext' => 'Below is a list of page moves.',
+'movepagetext' => '<div id="MW-movepagetext">
+Using the form below will rename a page, moving all of its history to the new name. The old title will become a redirect page to the new title. <!--You can update redirects that point to the original title automatically. If you choose not to,-->Links to the old page title will not be changed; be sure to check for [[Special:DoubleRedirects|double]] or [[Special:BrokenRedirects|broken redirects]]. You are responsible for making sure that links continue to point where they are supposed to go.
+
+Note that the page will \'\'\'not\'\'\' be moved if there is already a page at the new title, unless it is empty or a redirect and has no past edit history. This means that you can rename a page back to where it was renamed from if you make a mistake, and you cannot overwrite an existing page.
+
+\'\'\'WARNING!\'\'\' This can be a drastic and unexpected change for a popular page; please be sure you understand the consequences of this before proceeding.
+</div>',
+'multipleupload-text' => '\'\'\'Upload multiple files here.\'\'\' Choose \'Browse\' and select each file you wish to upload. You can upload from 1 to $1 files at a time.
+
+You can enter an optional \'\'\'Destination filename\'\'\' and provide a \'\'\'Summary\'\'\' describing your file.
+
+To view or search previously uploaded files go to the [[Special:ImageList|list of uploaded files]], (re)uploads are also logged in the [[Special:Log/upload|upload log]], deletions in the [[Special:Log/delete|deletion log]].
+
+To include a file in a page, use a link in one of the following forms:
+* \'\'\'<tt><nowiki>[[</nowiki>{{ns:image}}<nowiki>:File.jpg]]</nowiki></tt>\'\'\' to use the full version of the file
+* \'\'\'<tt><nowiki>[[</nowiki>{{ns:image}}<nowiki>:File.png|200px|thumb|left|alt text]]</nowiki></tt>\'\'\' to use a 200 pixel wide rendition in a box in the left margin with \'alt text\' as description
+* \'\'\'<tt><nowiki>[[</nowiki>{{ns:media}}<nowiki>:File.ogg]]</nowiki></tt>\'\'\' for directly linking to the file without displaying the file',
+'multiupload-toolbox' => 'Upload multiple files',
+'nstab-main' => 'Article',
+'pr_mailer_tmp_info' => 'You can add templated responses [[MediaWiki:ProblemReportsResponses|here]].<br/>Find out more on [[w:c:help:Help:ProblemReports|Help:ProblemReports]].',
+'previewnote' => '<strong>Preview mode: no changes saved yet! Scroll down to continue editing.</strong>',
+'prlogheader' => 'Logs of [[Special:ProblemReports|reported problems]] and changes of their status',
+'problemReportsResponses' => '-',
+'session_fail_preview' => '<strong>Sorry! We could not process your edit due to a loss of session data. Please try again. If you are still seeing this message, try logging out and logging back in.</strong> This may occur when an edit is left unsaved for a long time, or during server maintenance. If it continues for an extended period, please [[Special:Contact|contact Wikia]].',
+'spoiler-endshere' => 'Spoiler ends here.',
+'spoiler-showhide-label' => 'Click Here to Show/Hide Spoiler Information',
+'spoiler-warning' => 'Spoiler warning: Quest and/or game spoiling details follow.',
+'stf_ctx_invite' => 'More than one? Separate with commas - up to $1!',
+'swm-label-mode-group-hint' => '<i>Note that this is more time consuming and will be queued in TaskManager.</i>',
+'tips' => '* Admins: you can add tips here by editing [[MediaWiki:Tips]]',
+'tog-externaleditor' => 'Use external editor by default (<a href="http://en.wikipedia.org/wiki/Wikipedia:Text_editor_support">more information</a>)',
+'tog-previewonfirst' => 'Show preview on first edit (see <a href="http://help.wikia.com/wiki/Help:Edit_conflict">help</a>)',
+'ue-VisitNX1' => 'Welcome to %SITENAME% <a href="http://www.wikia.com/index.php?title=Special:Userlogin&type=signup" id="ue-Visit1_1">Create an account for $1!</a>',
+'ue-VisitNfp005.sjc.wikia-inc.com2' => 'my super message for fp005 gee ffff',
+'user_Register_Text' => '===What is {{SITENAME}}?===
+   
+{{SITENAME}} is the best place to learn everything about the game we all love.  The {{SITENAME}} community is powered by die-hard fans.  We live, breathe, and die the game.
+
+===Why is {{SITENAME}} awesome?===
+ 
+We\'re a wiki!  What this means is that you could be an important author on {{SITENAME}}. Are you an expert who knows all the tricks and nuances of the game?  Are you a casual player who found something really interesting? Help us create the ultimate resource!
+
+===How much does it cost?===
+ 
+{{SITENAME}} is absolutely free.
+
+===We respect your privacy===
+ 
+We are serious about keeping your private information private.  We do not disclose your email address to third parties.
+
+__NOTOC__ __NOEDITSECTION__',
+'userstatstext' => '<!--see MediaWiki:Sitestatstext for what precedes this-->
+There are \'\'\'$1\'\'\' registered users on all of Wikia. Of the [[Special:ListUsers|registered users]] of {{SITENAME}}, \'\'\'$2\'\'\' are $5 (see also $3).',
+'yournick' => 'Signature:',
 ) );

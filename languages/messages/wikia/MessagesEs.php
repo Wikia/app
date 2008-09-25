@@ -137,7 +137,13 @@ es.wikia.com',
 'confirmemail_subject' => '¡Bienvenido a Wikia!',
 'confirmrecreate' => 'El usuario [[User:$1|$1]] ([[User talk:$1|discusión]]) borró este artículo después de que tú empezaras a editarlo y dio esta razón: \'\'$2\'\' Por favor, confirma que realmente deseas crear de nuevo el artículo.',
 'contact' => 'Contacta a Wikia',
-'contactintro' => 'Por favor, lee la página <a href=http://es.wikia.com/wiki/Informa_sobre_un_problema>Informa sobre un problema</a> para más información sobre informar de problemas y sobre cómo utilizar este formulario de contacto.<p />Puedes contactar a la comunidad de Wikia en <a href=http://es.wikia.com/wiki/Portal_de_la_comunidad>Portal de la comunidad</a> e infórmanos de errores en el software en <a href=http://bugs.wikia.com>bugs.wikia.com</a>. <p>Si prefieres que tu mensaje a <a href=http://es.wikia.com/wiki/Wikia>Wikia</a> sea privado, puedes utilizar el formulario de contacto de más abajo. <i>Todos los campos son opcionales</i>.',
+'contactintro' => '<p>Por favor, lee la página <a href=http://es.wikia.com/wiki/Informa_sobre_un_problema>Informa sobre un problema</a> para más información sobre informar de problemas y sobre cómo utilizar este formulario de contacto.</p>
+
+<p>Puedes contactar a la comunidad de Wikia en <a href=http://es.wikia.com/wiki/Portal_de_la_comunidad>Portal de la comunidad</a> e informarnos de errores en el software en el <a href="http://inside.wikia.com/forum">foro de Inside Wikia</a>. 
+
+<p>Si prefieres que tu mensaje a <a href=http://es.wikia.com/wiki/Wikia>Wikia</a> sea privado, puedes utilizar el formulario de contacto de más abajo. <i>Todos los campos son opcionales</i>.
+
+<p>El formulario presnta ciertas demoras en el envío, por lo que te sugerimos presiona el botón <i>enviar</i> <b>sólo una vez</b>.</p>',
 'contactmail' => 'Enviar',
 'contactmailsub' => 'Mail de contacto a Wikia',
 'contactpagetitle' => 'Contactar a Wikia',
@@ -414,10 +420,13 @@ Esta página especial te permite seguir los cambios más recientes en el wiki.
 {| class="plainlinks" style="background: transparent; margin-left:0.5em; margin-bottom:0.5em;" cellpadding="0" cellspacing="0"
 |-valign="top"
 |align="right"|\'\'\'Registros&nbsp;:&nbsp;\'\'\'
-|align="left" |[[Special:Newpages|Páginas nuevas]] - [[Special:Newimages|Archivos nuevos]] - [[Special:Log/delete|Borrados]] - [[Special:Log/move|Traslados]] - [[Special:Log/upload|Subidos]] - [[Special:Log/block|Bloqueos]] - [[Special:Log|más registros...]]
+|align="left" |[[Special:Newpages|Páginas nuevas]] - [[Special:Newimages|Archivos nuevos]] - [[Special:Log/delete|Borrados]] - [[Special:Log/move|Traslados]] - [[Special:Log/upload|Subidas]] - [[Special:Log/block|Bloqueos]] - [[Special:Log|más registros...]]
 |-valign="top"
 |align="right"|\'\'\'Páginas especiales&nbsp;:&nbsp;\'\'\'
 |align="left" |[[Special:Wantedpages|Páginas requeridas]] - [[Special:Longpages|Páginas largas]] - [[Special:Uncategorizedimages|Imágenes sin categorizar]] - [[Special:Uncategorizedpages|Páginas sin categorizar]] - [[Special:Specialpages|más páginas especiales...]]
+|-valign="top"
+|align="right"|\'\'\'Buscar usuarios&nbsp;:&nbsp;\'\'\'
+|align="left" |[[Special:Listusers/sysop|Administradores]] - [[Special:Listusers/helper|Helpers]] - [[Special:Listusers/janitor|Janitors]] - [[Special:Listusers/staff|Staff de Wikia]] - [[Special:Listusers|más usuarios...]]
 |}',
 'searchresulttext' => 'Para más información acerca de las búsquedas en {{SITENAME}}, consulta la [[{{MediaWiki:helppage}}|{{int:help}}]].',
 'stf_abuse' => 'Este email fue enviado via Wikia.
@@ -479,4 +488,662 @@ $2
 'this_discussion' => 'Esta discusión',
 'top_users' => 'Usuarios destacados',
 'upload' => 'Subir archivo',
+'add_avatar' => 'Añadir imagen',
+'add_personal_msg' => 'añadir un mensaje personal',
+'addasfoe' => 'añadir como enemigo',
+'addasfriend' => 'añadir como amigo',
+'addmessage' => 'Dejar mensaje',
+'addsection' => 'Dejar un mensaje',
+'already_a_member' => '¿Ya eres un miembro?',
+'antispam_label' => 'Este campo es una trampa contra spam. <strong>NO</strong> lo rellene.',
+'avatarremove' => 'Borrar avatar del usuario',
+'avatarupload' => 'Cargar nuevo Avatar',
+'avatarupload_add' => 'Nuevo avatar',
+'avatarupload_back' => 'Volver a página del perfil',
+'avatarupload_cannotremove' => '¡No puedes borrar el avatar del usuario seleccionado!',
+'avatarupload_cannotremoveforyou' => '¡No puedes borrar tu avatar!',
+'avatarupload_change' => 'Modificar avatar',
+'avatarupload_error_badext' => 'El archivo cargado no es una imagen adecuada, nosotros solamente aceptamos PNG, JPEG o archivos GIF.',
+'avatarupload_error_readonly' => 'Ocurrió un error con la configuración, no podemos escribir tu imagen. Inténtalo más tarde.',
+'avatarupload_error_success' => 'Archivo cargado',
+'avatarupload_error_toobig' => 'Este archivo es demasiado grande. Nosotros aceptamos archivos de 50KB como mucho. Inténtalo con uno más pequeño.',
+'avatarupload_getuser' => 'Búsqueda de usuarios',
+'avatarupload_gotoprofile' => 'Ir a página de perfil de $1',
+'avatarupload_info' => 'Tu avatar es el icono que te representa. Tu actual avatar se muestra arriba. La imagen del avatar debe ser un archivo de 75x75 px, PNG, JPEG, o una imagen GIF (las imágenes más grandes serán redimensionadas) y más pequeñas de 50KB.',
+'avatarupload_medium' => 'Medio, 50x50 px',
+'avatarupload_nouser' => '¡No se puede encontrar este usuario!',
+'avatarupload_pagetitle' => 'Modificar Tu Avatar',
+'avatarupload_remove_info' => 'Borrar avatar del usuario. Por favor pon el nombre de usuario correcto en el texto de la caja de abajo y presiona el botón',
+'avatarupload_removeavatar' => 'Borrar avatar',
+'avatarupload_removeconfirm' => '¿Estás seguro?',
+'avatarupload_small' => 'Pequeño, 16x16 px',
+'average' => 'media',
+'back_to_yout_profile' => 'Volver a tu Perfil',
+'backto_user_page' => 'Volver a la página de $1',
+'backtoeditgift' => 'Volver a Editar este Regalo',
+'backtogiftlist' => 'Volver a la Lista de Regalos',
+'backtoprofilepage' => 'Volver a Página de Perfil',
+'birthday' => 'Cumpleaños:',
+'birthday_title' => 'Cumpleaños',
+'blockme' => 'Bloquéame',
+'cannot_give_gift_yourselfl' => 'No puedes darte regalos a ti mismo.',
+'categorytree-desc' => 'Gadget basado en AJAX para mostrar la [[Special:CategoryTree|estructura de categorías]] de un wiki',
+'categorytree-retry' => 'Por favor, espere un momento e inténtelo de nuevo.',
+'charinsert-desc' => 'Permite la creación de cajas de JavaScript para [[MediaWiki:Edittools|insertar caracteres que no son normales]]',
+'checkuser-desc' => 'Otorga a los usuarios el permiso apropiado para habilitar la comprobación de la dirección IP de un usuario y otra información.',
+'checkuser-log-ipedits-xff' => '$1 tiene ediciones para XFF $2',
+'checkuser-log-ipedits' => '$1 tiene ediciones para $2',
+'checkuser-log-ipusers-xff' => '$1 tiene usuarios para XFF $2',
+'checkuser-log-ipusers' => '$1 tiene usuarios para $2',
+'checkuser-log-return' => 'Volver al formulario principal de CheckUser',
+'checkuser-log-subpage' => 'Registro',
+'checkuser-log-userips' => '$1 tiene IPs para $2',
+'checkuser-search-form' => 'Encontrar entradas en el registro donde $1 es $2',
+'checkuser-search-initiator' => 'iniciador',
+'checkuser-search-submit' => 'Búsqueda',
+'checkuser-search-target' => 'objetivo',
+'cite_error_key_str_invalid' => 'Error interno; inválido $str y/o $key. Esto no debería ocurrir nunca.',
+'cite_error_ref_no_input' => 'Etiqueta <code>&lt;ref&gt;</code> inválida; las referencias sin nombre deben tener contenido',
+'cite_error_ref_no_key' => 'Etiqueta <code>&lt;ref&gt;</code> inválida; las referencias sin contenido deben tener un nombre',
+'cite_error_ref_numeric_key' => 'Etiqueta <code>&lt;ref&gt;</code> inválida; el nombre no puede ser un simple entero. Usa un título descriptivo',
+'cite_error_ref_too_many_keys' => 'Etiqueta <code>&lt;ref&gt;</code> inválida; nombres inválidos, ejemplo, demasiados',
+'cite_error_references_invalid_input' => 'Etiqueta <code>&lt;references&gt;</code> inválida; no está permitada esa entrada. Usa <code>&lt;references /&gt;</code>',
+'cite_error_references_invalid_parameters' => 'Etiqueta <code>&lt;references&gt;</code> inválida; no se permiten esos parámetros. Usa <code>&lt;references /&gt;</code>',
+'cite_error_references_invalid_parameters_group' => 'Etiqueta <code>&lt;references&gt;</code> inválida; solamente se permite el parámetro "group". Usa <code>&lt;references /&gt;</code>, o <code>&lt;references group="..." /&gt;</code>',
+'cite_error_references_no_text' => 'Etiqueta <code>&lt;ref&gt;</code> inválida; no se proporcionó texto para las referencias nombradas <code>$1</code>',
+'cite_error_stack_invalid_input' => 'Error interno; claves amontonadas inválidas. Esto no debería ocurrir nunca.',
+'cockpit_hide' => 'Ocultar cabina',
+'createaccount-text' => 'Alguien creó una cuenta para este correo electrónico en  {{SITENAME}} ($4) con el nombre "$2", y la contraseña "$3".
+Por favor entra y cambia tu contraseña ahora.
+
+Puedes ignorar este mensaje si esta cuenta fue creada erróneamente.',
+'createpage_about_info' => 'Este es un editor simplificado. Para saber más ve a la [[w:es:Help:CreatePage|Central de Wikia en español]].',
+'createpage_add_content' => 'Añadir Contenido',
+'createpage_advanced_edit' => 'editor avanzado',
+'createpage_advanced_text' => 'Puedes usar también el $1.',
+'createpage_advanced_warning' => 'Cambiar el modo de edición puede romper el formato de la página, ¿quieres continuar?',
+'createpage_article_do_edit' => 'Edita este artículo',
+'createpage_article_exists' => 'Este artículo ya existe. Edítalo',
+'createpage_article_exists2' => 'o especifica otro título.',
+'createpage_article_title' => 'Título del artículo aquí',
+'createpage_button_createplate_submit' => 'Carga esta plantilla',
+'createpage_choose_createplate' => 'Escoge un tipo de página',
+'createpage_give_title' => 'Por favor, especifica un título',
+'createpage_image_label' => 'Localización de la Imagen',
+'createpage_image_rename_label' => 'Nombre de la Imagen',
+'createpage_img_uploaded' => 'Imagen cargada con éxito',
+'createpage_initial_run' => 'Proceder a editar',
+'createpage_insert_image' => 'Insertar Imagen',
+'createpage_login_href' => 'estar identificado',
+'createpage_login_required' => 'Necesitas',
+'createpage_login_required2' => 'para subir imágenes',
+'createpage_login_warning' => 'Identificándote ahora, podrías perder todo el texto que no haya sido guardado. ¿Quieres continuar?',
+'createpage_please_wait' => 'Por favor, espere...',
+'createpage_preview_end' => 'Final de la previsualización. Puedes resumir tu edición debajo.',
+'createpage_rename_label' => 'nombre',
+'createpage_title_additional' => 'Has seguido un vínculo a una página que no existe. Para crear la página, comienza a escribir en la caja de debajo',
+'createpage_title_check_header' => 'Comprobación del título obligada',
+'createpage_title_check_text' => 'No puedes realizar ninguna acción hasta que la comprobación del título haya finalizado. Por favor haz click de nuevo en el botón de acción para continuar.',
+'createpage_title_invalid' => 'Por favor especifica un título valido',
+'createpage_top_of_page' => 'Parte superior de la página',
+'createpage_upload_aborted' => 'La inserción de la imagen fue cancelada',
+'createpage_upload_directory_read_only' => 'El directorio de subida no se puede escribir por el servidor de la web',
+'createpage_upload_location' => 'Localización',
+'createpage_uploaded_from' => 'Subida desde Special:Createpage',
+'createpage_yes' => 'Sí',
+'editingTips' => '=Cómo dar formato =
+
+Puedes dar formato al texto usando formato wiki o HTML
+
+<br />
+<tt><nowiki>\'\'cursiva\'\'</nowiki></tt> => \'\'cursiva\'\'
+
+<br />
+<tt><nowiki>\'\'\'negrita\'\'\'</nowiki></tt> => \'\'\'negrita\'\'\'
+
+<br />
+<tt><nowiki>\'\'\'\'\'cursiva y negrita\'\'\'\'\'</nowiki></tt> => \'\'\'\'\'cursiva y negrilla\'\'\'\'\'
+
+----
+
+<br />
+<tt>&lt;s&gt;tachado&lt;/s&gt;</tt> => <s>tachado</s>
+
+<br />
+<tt>&lt;u&gt;subrayado&lt;/u&gt;</tt> => <u>subrayado</u>
+
+<br />
+<tt>&lt;span style="color:red;"&gt;texto en rojo&lt;/span&gt;</tt> => <span style="color:red;">texto en rojo</span>
+
+=Cómo crear enlaces =
+
+Los enlaces se crean usando uno o dos corchetes.
+
+<br />
+\'\'\'Un enlace interno simple:\'\'\'<br />
+<tt><nowiki>[[Artículo]]</nowiki></tt>
+
+<br />
+\'\'\'Un enlace interno con texto diferente:\'\'\'<br />
+<tt><nowiki>[[Artículo|otro texto]]</nowiki></tt>
+
+<br />
+----
+
+<br />
+\'\'\'Un enlace externo numerado:\'\'\'<br />
+<tt><nowiki>[http://www.example.com]</nowiki></tt>
+
+<br />
+\'\'\'Un enlace externo con texto:\'\'\'
+
+<tt><nowiki>[http://www.example.com texto del enlace]</nowiki></tt>
+
+=Cómo agregar encabezados =
+
+Los encabezados usan signos de igual.  cuantos más signos "=", el encabezado será de nivel inferior (más pequeño).
+El encabezado de primer nivel es el título del artículo.
+
+<br />
+<span style="font-size: 1.6em"><tt><nowiki>==Encabezado 2==</nowiki></tt></span>
+
+<br />
+<span style="font-size: 1.3em"><tt><nowiki>===Encabezado 3===</nowiki></tt></span>
+
+<br />
+<nowiki>====Encabezado 4====</nowiki>
+
+=Cómo indentar texto =
+
+La indentación puede ser lisa, con boliches o numerada.
+
+<br />
+<nowiki>: indentado</nowiki><br />
+<nowiki>: indentado</nowiki><br />
+<nowiki>:: más indentado</nowiki><br />
+<nowiki>::: aun más indentado</nowiki>
+
+<br />
+<nowiki>* boliche</nowiki><br />
+<nowiki>* boliche</nowiki><br />
+<nowiki>** sub-elemento</nowiki><br />
+<nowiki>* boliche</nowiki>
+
+<br />
+<nowiki># lista numerada</nowiki><br />
+<nowiki># lista numerada</nowiki><br />
+<nowiki>## sub-elemento</nowiki><br />
+<nowiki># lista numerada</nowiki>
+
+=Cómo insertar imágenes =
+
+Las imágenes se insertan de forma similar a los enlaces.
+
+<br />
+<tt><nowiki>[[</nowiki>{{ns:image}}:Nombre.jpg]]</tt>
+
+<br />
+\'\'\'Agregar un texto alternativo\'\'\'<br />
+<tt><nowiki>[[</nowiki>{{ns:image}}:Nombre.jpg|texto alternativo]]</tt>
+
+<br />
+\'\'\'Crear una miniatura\'\'\'<br />
+<tt><nowiki>[[</nowiki>{{ns:image}}:Nombre.jpg|thumb|]]</tt>
+
+<br />
+\'\'\'Especificar el tamaño de la imagen\'\'\'<br />
+<tt><nowiki>[[</nowiki>{{ns:image}}:Nombre.jpg|200px|]]</tt>
+
+<br />
+\'\'\'Alinear la imagen\'\'\'<br />
+<tt><nowiki>[[</nowiki>{{ns:image}}:Nombre.jpg|right|]]</tt>
+
+<br />
+Puedes combinar estos atributos separándolos con el símbolo de barra vertical "|". Recuerda que el último parámetro que no se reconozca se interpretará como texto.',
+'editingtips_enter_widescreen' => 'Editar en pantalla extendida',
+'editingtips_exit_widescreen' => 'Volver a modo de edición normal',
+'editingtips_hide' => 'Ocultar consejos para editar',
+'editingtips_show' => 'Mostrar consejos para editar',
+'editsimilar-link-disable' => 'determina preferencias',
+'editsimilar-thanks-notsimilar-singleresult' => 'Gracias por tu edición. ¿Puedes mejorar este artículo? $1.',
+'editsimilar-thanks-notsimilar' => 'Gracias por tu edición. ¿Puedes mejorar cualquiera de estos artículos? $1.',
+'editsimilar-thanks-singleresult' => 'Gracias por tu edición. ¿Puedes mejorar este artículo relacionado? $1.',
+'editsimilar-thanks' => 'Gracias por tu edición. ¿Puedes mejorar cualquiera de estos artículos relacionados? $1.',
+'editsimilar-thankyou' => '¡Gracias por tu edición, $1!',
+'export-download' => 'Grabar como archivo',
+'fancycaptcha-badlogin' => 'Para ayudar a proteger contra robos de contraseñas automáticos, por favor introduce las palabras que aparecen bajo esta caja ([[Special:Captcha/help|más información]]):',
+'filedelete-archive-read-only' => 'El directorio del archivo "$1" no puede ser grabado por el servidor web.',
+'filedelete-current-unregistered' => 'El archivo especificado "$1" no está en la base de datos.',
+'filedelete-intro-old' => '<span class="plainlinks">Tú estás borrando la versión de \'\'\'[[Media:$1|$1]]\'\'\' así como la de [$4 $3, $2].</span>',
+'filedelete-iscurrent' => 'Estás intentando borrar la versión más reciente de este archivo. Por favor, revierte a una versión más antigua primero.',
+'filedelete-nofile' => '\'\'\'$1\'\'\' no existe en {{SITENAME}}.',
+'filedelete-old-unregistered' => 'La revisión "$1" especificada del archivo, no está en la base de datos.',
+'filedelete-otherreason' => 'Otra razón/razón adicional',
+'filedelete-reason-dropdown' => '*Razones comunes de borrado
+** Violación de Copyright
+** Archivo duplicado',
+'filedelete-success-old' => '<span class="plainlinks">La versión de \'\'\'[[Media:$1|$1]]\'\'\' así como la de $3, $2 ha sido borrada.</span>',
+'filedeleteerror-long' => 'Fueron encontrados errores mientras se borraba el archivo:
+
+$1',
+'filedeleteerror-short' => 'Error borrando el archivo: $1',
+'filename-bad-prefix' => 'El nombre del archivo que tú estas subiendo comienza con <strong>"$1"</strong>, el cual no es un nombre descriptivo, habitualmente asignado a cámaras digitales. Por favor elija un nombre más descriptivo para tu archivo.',
+'filepageexists' => 'Una página (no un archivo) con este nombre existe actualmente, por favor compruebe <strong><tt>$1</tt></strong> si no está seguro de que quiera cambiarlo',
+'filepath-summary' => 'Esta página especial redirige a la ruta completa del archivo.
+Las imágenes son mostradas en su resolución máxima, otro tipo de archivos se abren con el programa al que estén asociados directamente.
+
+Introduce el nombre del archivo sin el prefijo "{{ns:image}}:"',
+'filerevert-badversion' => 'No hay una versión local previa de este archivo con la fecha determinada.',
+'filerevert-legend' => 'Revertir archivo',
+'filetype-banned-type' => '\'\'\'".$1"\'\'\' es un tipo de archivo no permitido. Los tipos de archivo permitidos son $2.',
+'find_friends' => 'Encuentra a Tus Amigos',
+'findspam-notextfound' => 'No se encuentran contribuciones.',
+'forum-url' => 'Forum:Index',
+'getcontactsmaintitlet' => 'Wikia es más divertida con tus amigos. Invitalos a todos. Introduce tu correo electrónico y contraseña debajo para cargar a tus contactos. <br /><b>Nosotros seremos responsables con la información privada que tú nos des. No almacenaremos la dirección de correo electrónico o la contraseña que tú nos des</b>',
+'hometown' => 'Ciudad natal:',
+'hometown_title' => 'Ciudad natal',
+'importfreeimages-searchtype-all' => 'Todas las etiquetas',
+'importfreeimages-searchtype-any' => 'Ninguna etiqueta',
+'importfreeimages-searchtype-name' => 'Tipo de búsqueda',
+'importfreeimages' => 'Importar imágenes libres',
+'importfreeimages_description' => 'Esta página te permite buscar fotos con una licencia adecuada de flickr e importarlas a tu wiki. <br />Pon las etiquetas separadas con comas.',
+'importfreeimages_importthis' => 'importar esta',
+'importfreeimages_nophotosfound' => 'No fueron encontradas fotos bajo tu criterio de búsqueda \'$1\', por favor, inténtalo de nuevo',
+'importfreeimages_owner' => 'Autor',
+'importfreeimages_promptuserforfilename' => 'Por favor introduce un destino:',
+'importfreeimages_returntoform' => 'o, pulsa <a href=\'$1\'>aquí</a> para volver a los resultados de tu búsqueda',
+'insertfullsize' => 'Insertar imagen original a tamaño completo',
+'insertimagetitle' => 'Subir imagen',
+'insertthumbnail' => 'Insertar imagen en miniatura',
+'invite_edit_subject' => '$1 quiere que edites $2 en Wikia',
+'invite_email_list_header' => 'Los correos electrónicos fueron enviados a las siguientes direcciones',
+'invite_enter_emails' => 'Introducir Correos Electrónicos',
+'invite_form_email' => 'Dirección de Correo Electrónico',
+'invite_form_password' => 'Contraseña',
+'invite_friends' => 'Invita a Tus Amigos',
+'invite_message' => '$1 es más divertida con tus amigos. Invita a tus amigos a participar en $1 con simplemente introducir la dirección de correo electrónico y un mensaje de invitación y haciendo click en "Enviar Correo Electrónico".',
+'invite_more_friends' => 'Invita Más Amigos',
+'invite_privacy_message' => 'Nosotros somos responsables con la información privada que tú nos das. No almacenaremos la dirección de correo electrónico o la contraseña que tú nos des.',
+'invite_rate_body' => '¡Hola! Tu amigo $1, quiere que califiques $4 en Wikia. Haz click aquí para calificar $5 Y no te olvides de añadir a $2 como tu amigo en Wikia, a $3 El Equipo de Wikia',
+'invite_rate_subject' => '$1 quiere que califiques $2 en Wikia',
+'invite_see_whos_online' => 'Ver Quién Está Conectado',
+'invite_sent' => '¡Tu Invitación Ha Sido Enviada!',
+'invite_sent_page_title' => '¡Mensaje enviado!',
+'invite_subject' => '¡$1 quiere que participes en Wikia!',
+'invite_view_body' => '¡Hola! Tu amigo $1, acaba de escribir un nuevo artículo en Wikia, ¡y quiere que tú lo compruebes! Haz click aquí para ver $5 Y no olvides añadir a $2 como tu amigo en Wikia, a $3 El Equipo de Wikia',
+'invite_view_subject' => '$1 quiere que leas *$2* en Wikia',
+'invite_your_friends' => 'Invitar a Tus Amigos',
+'invitecontact' => 'Invitar a contactos',
+'invitespecialpage' => 'Invita a tus amigos a participar en Wikia',
+'ipbreason-dropdown' => '*Motivos comunes de bloqueo
+** Añadir información falsa
+** Eliminar contenido de las páginas
+** Publicitar enlaces a otras páginas web
+** Añadir basura a las páginas
+** Comportamiento intimidatorio/acoso
+** Abusar de múltiples cuentas
+** Nombre de usuario inaceptable',
+'its_easy' => '...es fácil y gratis',
+'last_downloaded' => 'Última vez bajado',
+'location' => 'Localización:',
+'location_title' => 'Localización',
+'lookupcontribs' => 'Búsqueda de Contribuciones',
+'lookupcontribscontribs' => 'contribuciones',
+'lookupcontribscontribslink' => 'Enlace a sus contribuciones',
+'lookupcontribsdetails' => 'Ver detalles para:',
+'lookupcontribsfinalcontributions' => 'Contribuciones finales para $1',
+'lookupcontribsfullurls' => 'enlaces completos',
+'lookupcontribsgo' => 'Mostrar',
+'lookupcontribshelp' => 'Esta página especial puede ser usada para mostrar las contribuciones de los usuarios en múltiples wikias. Para mostrar la lista, pon un nombre de usuario debajo.',
+'lookupcontribsinvalidmode' => '<p class="error">"<b>$1</b>" no es un modo válido.</p>',
+'lookupcontribsinvalidresults' => '¡Resultados inválidos!',
+'lookupcontribsinvaliduser' => '<p class="error">El usuario "<b>$1</b>" no existe. Comprueba el nombre de usuario que pusiste para evitar posibles errores.',
+'lookupcontribsinvalidviewmode' => '<p class="error">"<b>$1</b>" no es un modo de vista válido.</p>',
+'lookupcontribslinks' => 'vínculos a contribuciones',
+'lookupcontribslistwikiainfo' => 'Lista de wikis donde hay artículos editados por <b>$1</b>',
+'lookupcontribsnbrresult' => 'Número de resultados:',
+'lookupcontribsnext' => 'siguiente',
+'lookupcontribsnoresultfound' => '¡No se encontraron resultados!',
+'lookupcontribsprevious' => 'Anterior',
+'lookupcontribsrecentcontributions' => 'Contribuciones recientes para $1',
+'lookupcontribsselectmodefinal' => 'contribuciones finales para este usuario',
+'lookupcontribsselectmodenormal' => 'contribuciones recientes para este usuario',
+'lookupcontribsselectuser' => 'Seleccionar usuario:',
+'lookupcontribsselectwikis' => 'Seleccionar wikis:',
+'lookupcontribstitle' => 'Búsqueda de Contribuciones',
+'lookupcontribswikititle' => 'Título',
+'lookupcontribusernotspecify' => 'No has especificado un usuario aún',
+'me_edit_normal' => 'Edición avanzada',
+'me_hide' => 'Ocultar',
+'me_show' => 'Mostrar',
+'me_upload' => 'Subir una imagen',
+'miniupload' => 'Subida de archivos simplificada',
+'monaco-custom' => 'Personalizado',
+'my_profile' => 'Mi perfil',
+'mylastestactivity' => 'Mi última actividad',
+'myprofile' => 'Mi perfil',
+'mystatsmenu' => 'Mis estadísticas',
+'numbercreatedpages' => 'Número de páginas creadas',
+'numberofvotes' => 'Número de artículos votados',
+'numberpageedits' => 'Número de ediciones',
+'old_skins' => 'Pieles viejas',
+'pagetitle' => '#wikiapagetitle#',
+'plural_foes' => 'Enemigos',
+'plural_friends' => 'Amigos',
+'plural_request' => 'solicitudes',
+'pollInfo' => 'Ha habido $1 votos desde que la encuesta fue creada el $2.',
+'pollNoVote' => 'Por favor, vota debajo.',
+'pollPercentVotes' => '$1% de todos los votos',
+'pollSubmitting' => 'Por favor espera, estamos comprobando tu voto.',
+'pollVoteAdd' => 'Tu voto ha sido añadido.',
+'pollVoteError' => 'Ha habido un problema cuando comprobábamos tu voto, por favor, inténtalo de nuevo.',
+'pollVoteUpdate' => 'Tu voto ha sido actualizado.',
+'pollYourVote' => 'Ya votaste por "$1" el $2, puedes cambiar tu voto haciendo clic en una respuesta debajo.',
+'popular-articles' => 'Artículos Populares',
+'popular-wikis' => 'Wikis Populares',
+'pr_describe_problem' => 'Describe el problema',
+'pr_email_visible_only_to_staff' => 'visible solamente para el staff',
+'pr_empty_email' => 'Por favor da tu dirección de correo electrónico',
+'pr_empty_summary' => 'Por favor da una pequeña descripción del problema',
+'pr_introductory_text' => '¡La mayoría de las páginas de este wiki son editables, y tú eres bienvenido para editar la página y corregir los errores tú mismo! Si tú necesitas ayuda para hacer eso, mira [[Help:Editing|cómo editar]] y [[Help:Reverting|cómo revertir vandalismos]].
+
+Para contactar con el equipo o para informar sobre problemas de copyright, por favor mira [[w:contact us|la página de "contáctanos" de Wikia]].
+
+Los bugs de software puede ser informados en los foros. Los informes que estén aquí [[Special:ProblemReports|se verán en el wiki]].',
+'pr_mailer_notice' => 'La dirección de correo electrónico que tú introduciste en tus preferencias de usuario aparecerá en "De", para que el destinatario pueda responder.',
+'pr_mailer_subject' => 'Problema reportado en',
+'pr_mailer_tmp_info' => 'Tu puedes añadir una plantilla de respuesta [[MediaWiki:ProblemReportsResponses|aquí]].<br/>Busca más en [[w:c:help:Help:ProblemReports|Help:ProblemReports]].',
+'pr_no_reports' => 'No hay informes con este criterio',
+'pr_raports_from_this_wikia' => 'Ver informes solamente de este wiki',
+'pr_remove_ask' => '¿Borrar permanentemente el informe?',
+'pr_reports_from' => 'Informes solamente de',
+'pr_spam_found' => 'Ha sido encontrado en el sumario de tu informe spam. Por favor cambia el contenido del sumario',
+'pr_status_0' => 'pendiente',
+'pr_status_1' => 'reparado',
+'pr_status_10' => 'borrar informe',
+'pr_status_2' => 'cerrado',
+'pr_status_3' => 'necesaria ayuda del equipo',
+'pr_status_ask' => '¿Cambiar estado del informe?',
+'pr_status_undo' => 'Deshacer cambio en el estado del informe',
+'pr_status_wait' => 'espere...',
+'pr_sysops_notice' => 'Si tú quieres cambiar el estado de un informe sobre un problema de tu wiki, por favor ve <a href="$1">aquí</a>...',
+'pr_table_actions' => 'Acciones',
+'pr_table_comments' => 'Comentarios',
+'pr_table_date_submitted' => 'Fecha de envío',
+'pr_table_description' => 'Descripción',
+'pr_table_page_link' => 'Página',
+'pr_table_problem_id' => 'ID del problema',
+'pr_table_problem_type' => 'Tipo de problema',
+'pr_table_reporter_name' => 'Nombre del informe',
+'pr_table_status' => 'Estado',
+'pr_table_wiki_name' => 'Nombre del wiki',
+'pr_thank_you' => '¡Gracias por informar sobre un problema! [[Special:ProblemReports/$1|Tú puedes ver su progreso de reparación]]',
+'pr_thank_you_error' => 'Ha ocurrido un error mientras enviaba el informe sobre un problema, por favor, inténtelo más tarde...',
+'pr_total_number' => 'Número total de informes',
+'pr_view_all' => 'Mostrar todos los informes',
+'pr_view_archive' => 'Ver problemas archivados',
+'pr_what_page' => 'Nombre de la página',
+'pr_what_problem' => 'Tema',
+'pr_what_problem_change' => 'Cambia el tipo de problema',
+'pr_what_problem_incorrect_content' => 'este contenido es incorrecto',
+'pr_what_problem_incorrect_content_short' => 'contenido',
+'pr_what_problem_other' => 'otro',
+'pr_what_problem_other_short' => 'otro',
+'pr_what_problem_select' => 'Selecciona el tipo de problema',
+'pr_what_problem_spam' => 'hay spam aquí',
+'pr_what_problem_unselect' => 'todo',
+'pr_what_problem_vandalised' => 'esta página ha sido vandalizada',
+'pr_what_problem_vandalised_short' => 'vándalo',
+'prlog_changedentry' => 'marcado problema $1 como "$2"',
+'prlog_emailedentry' => 'enviar mensaje de correo electrónico a $2 ($3)',
+'prlog_removedentry' => 'borrado problema $1',
+'prlog_reportedentry' => 'reportado un problema en $1 ($2)',
+'prlog_typeentry' => 'cambiado problema de tipo $1 a "$2"',
+'prlogheader' => 'Lista de informes sobre problemas y cambios de sus estados',
+'prlogtext' => 'Problemas notificados',
+'problemreports' => 'Lista de informes de problemas',
+'profile' => 'Perfil',
+'protectedtitlesempty' => 'No hay títulos actualmente protegidos con estos parámetros.',
+'rcshowhideenhanced' => '$1 cambios recientes realzados',
+'refreshpage' => 'Recarga la página para activar este widget',
+'reportproblem' => 'Informar sobre un problema',
+'requestcreatewiki' => 'Presentar Solicitud',
+'return_to_article' => 'Volver al artículo',
+'return_to_category' => 'Volver a la página de categoría',
+'return_to_category_talk' => 'Volver a la página de discusión',
+'return_to_forum' => 'Volver a la página del foro',
+'return_to_forum_talk' => 'Volver a la página de discusión',
+'return_to_help' => 'Volver a la página de ayuda',
+'return_to_help_talk' => 'Volver a la página de discusión',
+'return_to_image' => 'Volver a la página de la imagen',
+'return_to_image_talk' => 'Volver a la página de discusión',
+'return_to_mediawiki' => 'Volver a la página del mensaje',
+'return_to_mediawiki_talk' => 'Volver a la página de discusión',
+'return_to_project' => 'Volver a la página del proyecto',
+'return_to_project_talk' => 'Volver a la página de discusión',
+'return_to_special' => 'Volver a la página especial',
+'return_to_talk' => 'Volver a la página de discusión',
+'return_to_template' => 'Volver a la página del tema',
+'return_to_template_talk' => 'Volver a la página de discusión',
+'return_to_user' => 'Volver a la página de usuario',
+'return_to_user_talk' => 'Volver a la página de discusión',
+'save' => 'Guardar',
+'searchsuggest' => 'Sugerir en la búsqueda',
+'see_more' => 'Ver más...',
+'seemoredotdotdot' => 'Ver más...',
+'seewhoonline' => 'Encuentra amigos',
+'select_friend' => 'selecciona un amigo',
+'select_friend_from_list' => 'Seleccionar desde tu lista de amigos',
+'select_region_title' => 'Seleccionar Región',
+'selectcsvfile' => 'Seleccionar Archivo',
+'selected_user_page' => 'Página de Usuario de $1',
+'shared-problemreport' => 'Informar sobre un problema',
+'site_url' => 'Dirección del sitio',
+'sitemap_format' => 'Mapa del sitio',
+'sitemap_status' => 'Estado del mapa',
+'sitemap_type' => 'Tipo de mapa',
+'sitemap_url' => 'Dirección del mapa del sitio',
+'sitenotice-desc' => 'Permitir a los usuarios cerrar las noticias del sitio',
+'sitestatstext' => '__NOTOC__
+{| class="plainlinks" align="top" width="100%"
+| valign="top" width="50%" | 
+=== Estadísticas de páginas ===
+\'\'\'$1 [[Special:Allpages|páginas en total]]\'\'\' en  {{SITENAME}} ([[Special:Newpages|páginas nuevas]]):
+
+*\'\'\'$2 artículos legítimos:\'\'\'
+**Páginas del [[Special:Allpages|espacio de nombre principal]]
+**deben incluir al menos un enlace interno
+**pueden ser páginas [[Special:Shortpages|cortas]] o [[Special:Longpages|largas]]
+**pueden ser artículos [[Special:Lonelypages|huérfanos]]
+
+*páginas adicionales que no incluyen contenidos:
+**la mayor parte de las páginas que no están en el espacio de nombre principal<br/>(por ejemplo plantillas y páginas de discusión)
+**[[Special:Listredirects|redirecciones]] ([[Special:BrokenRedirects|incorrectas]]/[[Special:DoubleRedirects|dobles]])
+**[[Special:Deadendpages|sin salida]]
+**[[Special:Disambiguations|desambiaguaciones]]
+
+| valign="top" width="50%" |
+
+=== Otras estadísticas ===
+*\'\'\'$8 [[Special:Imagelist|imágenes]]\'\'\' ([[Special:Newimages|nuevas imágenes]])
+*\'\'\'$4\'\'\' ediciones / \'\'\'$1\'\'\' páginas = \'\'\'$5\'\'\' ediciones por página ([[Special:Mostrevisions|artículos con más revisiones]])
+
+=== Cola de tareas ===
+*La actual [http://meta.wikimedia.org/wiki/Help:Job_queue cola de tareas] es de \'\'\'$7\'\'\'
+
+=== Más información ===
+* [[Special:Specialpages|Páginas especiales]]
+* [[Special:Allmessages|Mensajes de MediaWiki]]
+
+También existe estadísticas más detalladas que pueden ser de interés para los visitantes en \'\'\'[http://wikistats.wikia.com WikiStats]\'\'\'.
+|}',
+'skinchooser-customcss' => 'Para personalizar temas, selecciona la opción apropiada en la casilla anterior y personaliza el CSS en [[MediaWiki:Monaco.css]].',
+'stf_choose_from_existing' => 'Elige desde tus contactos existentes:',
+'stf_most_popular' => 'Artículos más populares en $1:',
+'stf_your_friends' => 'La dirección de correo|electrónico de tu|amigo',
+'swm-button-new' => '[ Nuevo ]',
+'swm-button-preview' => '[ Previsualizar ]',
+'swm-button-save' => '[ Guardar ]',
+'swm-button-send' => '[ Enviar ]',
+'swm-days' => 'nunca,hora,horas,día,días',
+'swm-dismiss-content' => '<p>El mensaje fue descartado.</p><p>%s</p>',
+'swm-error-empty-group' => 'Introduce el nombre del grupo.',
+'swm-error-empty-message' => 'Introduce el contenido del mensaje.',
+'swm-error-no-such-user' => '¡El usuario especificado no existe!',
+'swm-expire-info' => 'Este mensaje expirará en $1.',
+'swm-label-content' => 'Contenido',
+'swm-label-dismissed' => 'Descartado',
+'swm-label-edit' => 'Editar',
+'swm-label-expiration' => 'Tiempo de expiración',
+'swm-label-list' => 'Lista',
+'swm-label-mode-all' => 'Todos los usuarios',
+'swm-label-mode-group' => 'Usuarios pertenecientes al grupo',
+'swm-label-mode-user' => 'Usuario seleccionado',
+'swm-label-mode-wiki' => 'Usuarios activos en el wiki',
+'swm-label-preview' => 'Previsualización',
+'swm-label-recipient' => 'Receptor',
+'swm-label-remove' => 'Quitar',
+'swm-label-sent' => 'Enviar',
+'swm-link-dismiss' => 'descartar este mensaje',
+'swm-list-table-date' => 'Fecha de envío',
+'swm-list-table-expire' => 'Expira',
+'swm-list-table-group' => 'Grupo',
+'swm-list-table-recipient' => 'Destinatario',
+'swm-list-table-removed' => 'Quitado',
+'swm-list-table-sender' => 'Remitente',
+'tog-createpage-redlinks' => 'Usa <a href="http://www.inside.wikia.com/wiki/CreatePage">CreatePage</a> cuando sigas enlaces rotos',
+'tog-disableeditingtips' => 'No mostrar consejos para editar',
+'tog-disablelinksuggest' => 'No mostrar sugerencias de vínculos',
+'tog-edit-similar' => 'Permitir sugerencias de artículos similares',
+'tog-htmlemails' => 'Emails en formato HTML',
+'tog-searchsuggest' => 'Mostrar sugerencias en el recuadro de búsqueda',
+'tog-showAds' => '<b>Mostrar todos los anuncios</b><br/>Selecciona esta opción para ver las páginas de los artículos como lo ven los usuarios sin identificar.<br/><br/>',
+'tog-skinoverwrite' => '<b>Ver piel personalizada del wiki</b> (recomendado)<br>Algunos administradores se toman un montón de tiempo para personalizar el aspecto de sus wikis.  Marca la casilla de arriba para ver sus wikis completamente personalizados.',
+'updateprofile' => 'Actualiza el perfil',
+'updateyourprofile' => 'Actualiza Tu Perfil',
+'upload-permitted' => 'Tipos de archivo permitidos: $1.',
+'upload-prohibited' => 'Tipos de archivo prohibidos: $1.',
+'uploadtext-ext' => 'Una lista completa de extensiones permitidas está disponible en la [[{{ns:Special}}:Version|página de la versión del wiki]].',
+'uploadtext' => 'Utilice el siguiente formulario para subir archivos.
+Para ver o buscar archivos subidos con anterioridad, ir a [[Special:Imagelist|lista de archivos subidos]].
+Lo que haya subido o borrado quedará registrado además en el [[Special:Log/upload|registro de archivos subidos]].
+
+Para incluir un archivo en una página, utilice en el formulario los enlaces
+\'\'\'<nowiki>[[</nowiki>{{ns:image}}<nowiki>:File.jpg]]</nowiki>\'\'\',
+\'\'\'<nowiki>[[</nowiki>{{ns:image}}<nowiki>:File.png|alt text]]</nowiki>\'\'\', o
+\'\'\'<nowiki>[[</nowiki>{{ns:media}}<nowiki>:File.ogg]]</nowiki>\'\'\', para vincular directamente el archivo.',
+'url_count' => 'Recuento de vínculos',
+'userrights-available-add-self' => 'Puedes añadirte a ti mismo a {{PLURAL:$2|este grupo|estos grupos}}: $1.',
+'userrights-available-add' => 'Puedes añadir usuarios a {{PLURAL:$2|este grupo|estos grupos}}: $1.',
+'userrights-available-remove-self' => 'Puedes quitarte a ti mismo de {{PLURAL:$2|este grupo|estos grupos}}: $1.',
+'userrights-available-remove' => 'Puedes quitar usuarios de {{PLURAL:$2|este grupo|estos grupos}}: $1.',
+'userrights-no-interwiki' => 'No tienes permisos para editar los derechos de los usuarios en otros wikis',
+'userrights-nologin' => 'Tú debes [[Special:Userlogin|acceder]] con una cuenta de administrador para asignar derechos a los usuarios.',
+'userrights-notallowed' => 'Tu cuenta no tiene permisos para asignar derechos a los usuarios.',
+'users' => 'Usuarios',
+'userstatstext' => '<!--see Sitestatstext for what precedes this-->
+Hay \'\'\'$1\'\'\' usuarios registrados en todo Wikia. De los usuarios registrados de {{SITENAME}} {{PLURAL:$2|\'\'\'1\'\'\' es administrador|\'\'\'$2\'\'\' son administradores}} (ver $3).',
+'var_logheader' => 'Este es el registro de cambios en la configuración del wiki, entre los que se incluyen cambios en la piel predefinida, bloqueos de usuarios y otro tipo de cambios.',
+'version-extension-functions' => 'Funciones de la extensión',
+'version-extensions' => 'Extensiones instaladas',
+'version-other' => 'Otras',
+'version-software-product' => 'Producto',
+'version-software' => 'Software instalado',
+'webtools' => 'Herramientas de la web [BETA]',
+'whats_new' => 'Qué es nuevo',
+'widget-wikipage-title' => 'Título del widget',
+'widget_description' => 'Descripción',
+'widget_name' => 'Nombre',
+'widgets-specialpage-info' => 'Los Widgets trabajan mejor con alguna de las nuevas pieles, por ejemplo [{{SERVER}}/index.php?title=Special:Widgets&useskin=monaco Monaco].
+
+Por favor, cambia [[Special:Preferences#prefsection-1|tus preferencias]] para usar esta herramienta.',
+'widgets' => 'Lista de Widgets',
+'widgetwikipage' => 'Este \'\'mensaje\'\' es un \'\'\'simple\'\'\' ejemplo del widget Wikipage. Tú puedes \'\'\'editar el contenido del widget\'\'\' simplemente [[Mediawiki:$1|editando esta página]] en MediaWiki.',
+'wikipedia_skin' => 'Piel de Wikipedia',
+'wmu-back' => 'Volver',
+'wmu-caption' => 'Pie de foto',
+'wmu-close' => 'Cerrar',
+'wmu-conflict-inf' => '<h1>Ups, ya existe un archivo con este nombre.</h1>Qué quieres hacer sobre <b>$1</b>?',
+'wmu-details-inf' => '<h1>Detalles del archivo</h1>Especifica un nombre para este archivo. Pon un nombre que lo describa bien.',
+'wmu-details-inf2' => '<h1>Opciones del Artículo</h1>Elige cómo quieres que se vea este archivo en tu artículo.',
+'wmu-existing' => 'Usar Imagen Existente',
+'wmu-find-btn' => 'Encontrar',
+'wmu-find' => 'Encontrar',
+'wmu-flickr-inf' => 'Busca fotos de licencia libre en Flickr para importarlas después a tu wiki.',
+'wmu-flickr2' => 'Imágenes de Flickr ($1 resultados)',
+'wmu-fullsize' => 'Tamaño completo ($1px/$2px)',
+'wmu-imagebutton' => 'Añade imágenes',
+'wmu-imagelink' => '<b>¡Nuevo!</b> Añade imágenes',
+'wmu-insert' => 'Insertar',
+'wmu-insert2' => 'Insertar Archivo',
+'wmu-insert3' => 'Insertar esta imagen',
+'wmu-layout' => 'Mostrar',
+'wmu-license' => 'Licencia',
+'wmu-name' => 'Nombre',
+'wmu-next' => '8 siguientes',
+'wmu-notlogged' => 'Identifícate o regístrate para subir imágenes desde tu ordenador',
+'wmu-optional' => '(Opcional)',
+'wmu-overwrite' => 'Sobrescribir la imagen existente con la tuya',
+'wmu-prev' => '8 anteriores',
+'wmu-recent-inf' => 'Imágenes Recientemente Subidas',
+'wmu-rename' => 'Renombrar Tu Imagen',
+'wmu-return' => 'Volver a editar',
+'wmu-size' => 'Tamaño',
+'wmu-success' => '<h1>Hecho</h1>El siguiente wikitexto fue satisfactoriamente incluido en tu artículo:',
+'wmu-thiswiki' => 'Este Wiki',
+'wmu-thiswiki2' => 'Imágenes en este Wiki (($1 resultados)',
+'wmu-upload-btn' => 'Subir',
+'wmu-upload' => 'Subir',
+'wmu-warn1' => '¡Necesitas especificar una duda primero!',
+'wmu-warn2' => '¡Necesitas seleccionar un archivo primero!',
+'wmu-width' => 'Anchura',
+'ws.action.h' => 'Estado',
+'ws.cancel' => 'Cancelar',
+'ws.existingpage.h' => 'Página Existente',
+'ws.overwrite.confirm' => 'Algunas de las páginas ya existen para este wiki. ¿Desea sobrescribirlas?',
+'ws.pagename.h' => 'Nombre de la página',
+'ws.status.badurl' => '¡No hay páginas para importar aquí! :( Nosotros solamente soportamos vínculos de Wikipedia válidos',
+'ws.status.excludeall' => 'Descartar todos',
+'ws.status.failure' => 'Hubo un fallo. Inténtelo más tarde',
+'ws.status.h' => 'Importar',
+'ws.status.import' => 'Importar',
+'ws.status.include' => 'Incluir',
+'ws.status.includeall' => 'Incluir todo',
+'ws.status.incomplete' => 'Importación incompleta',
+'ws.status.preview' => 'Previsualización',
+'ws.status.success' => '¡Hecho!',
+'ws.status.timeout' => 'Tiempo máximo superado. Inténtelo más tarde',
+'wt_cancel' => 'Cancelar',
+'wt_countdown_show_seconds' => 'Mostrar segundos',
+'wt_date_range' => 'Rango de fechas',
+'wt_location_src' => 'Localización de la búsqueda',
+'wt_nodata' => 'No hay datos disponibles',
+'wt_referers_empty_list' => 'Actualmente nosotros no tenemos estadísticas para generar un top de referencia para este wiki. Por favor, inténtalo más tarde...',
+'wt_search_src' => 'Fuente de búsqueda',
+'wt_shoutbox_initial_message' => '¡Hola... bienvenido al chat!',
+'wt_show_external_urls' => 'Mostrar solamente vínculos externos',
+'wt_show_internal_urls' => 'Mostrar también vínculos internos',
+'wt_show_period' => 'Mostrar periodo',
+'wt_show_referrers' => 'Mostrar referencias',
+'wt_update' => 'Actualizar',
+'you_have_more_foes' => 'Tienes $1 enemigos.&nbsp;',
+'you_have_more_friends' => 'Tienes $1 amigos.&nbsp;',
+'you_have_one_foe' => 'Tienes un enemigo.&nbsp;',
+'you_have_one_friend' => 'Tienes un amigo.&nbsp;',
+'you_remove_relationship' => 'Has eliminado a $1 como tu $2',
+'you_sent_few_gifts' => 'Has enviado el siguiente regalo a $1:',
+'youhavemoregift' => 'Tienes $1 regalos',
+'youhaveonegift' => 'Tienes un regalo',
+'youhaveonegiftt' => 'Tienes un regalo',
+'younoactivity' => 'No has tenido ninguna actividad recientemente',
+'your_friend_list' => 'Tu lista de amigos',
+'your_gift_list' => 'Tu lista de regalos',
+'your_user_page' => 'Tu Página de Usuario',
+'yourcontactst' => 'Tus contactos',
+'yourfoe' => 'Tu Enemigo',
+'yourfriend' => 'Tu Amigo',
+'yourmail' => 'Tu dirección de correo electrónico',
+'youruserpage' => 'Tu Página de Usuario',
+'yourvote' => 'Tu voto',
+'yousentgift' => '¡Has Enviado un Regalo a $1!',
 ) );

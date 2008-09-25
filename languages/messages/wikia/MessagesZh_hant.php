@@ -191,4 +191,54 @@ $messages = array_merge( $messages, array(
 'tog-htmlemails' => '以HTML格式發送郵件',
 'whosonline' => '誰在線上？',
 'widgets' => 'Widgets列表',
+'activeusers' => '活躍用戶',
+'captcha-badlogin' => '請輸入以下數學算式的答案([[Special:Captcha/help|更多資訊]])：',
+'captcha-create' => '請輸入以下數學算式的答案([[Special:Captcha/help|更多資訊]])：',
+'createpage' => '新增文章',
+'createpage_alternate_creation' => '原始編輯模式請點選 $1',
+'createpage_button_caption' => '發布！',
+'createpage_caption' => '分類：',
+'createpage_categories' => '分類：',
+'createpage_categories_help' => '將文章加註分類，可加強這個站上的文章的組織。你可以在下方挑選一個適當的分類，或是直接輸入一個新的分類。',
+'createpage_enter_text' => '輸入文字',
+'createpage_here' => '這裡',
+'createpage_hide_cloud' => '[隱藏分類雲]',
+'createpage_show_cloud' => '[顯示分類雲]',
+'createpage_title' => '發表新文章',
+'createpage_title_caption' => '文章標題',
+'createwiki' => '申請wiki',
+'createwikipagetitle' => '申請wiki',
+'editingtips_enter_widescreen' => '放大編輯',
+'editingtips_exit_widescreen' => '退出放大編輯',
+'editingtips_hide' => '隱藏編輯小技巧',
+'fancycaptcha-badlogin' => '請輸入認證碼([[Special:Captcha/help|更多資訊]])：',
+'fancycaptcha-createaccount' => '請輸入認證碼([[Special:Captcha/help|更多資訊]])：',
+'footer_1.5' => '快來編輯此頁！',
+'footer_2' => '回應此文',
+'footer_5' => '修改:$1 - $2',
+'footer_6' => '檢視隨機頁面',
+'footer_7' => '轉寄此文',
+'footer_8' => '分享到網路書籤',
+'monaco-articles-on' => '站上共有 $1 篇文章<br />',
+'monaco-latest' => '最新動態',
+'monaco-toolbox' => '* Special:Search|進階搜尋
+* upload-url|上傳圖片
+* Special:MultipleUpload|大量上傳
+* specialpages-url|特殊頁面
+* recentchanges-url|最近更改
+* randompage-url|隨機頁面
+* whatlinkshere|鏈入頁面
+* helppage|說明手冊',
+'multipleupload-text' => '大量上傳檔案！
+
+使用\'\'\'瀏覽\'\'\'按鈕選擇要上傳檔案的位置。可同時上傳1至$1個檔案。 你可以選擇輸入\'\'\'目標檔案名\'\'\'和\'\'\'檔案描述\'\'\'來簡述此檔案。不當的檔案將可能被刪除，詳見[[{{MediaWiki:Multipleupload-page}}|檔案刪除政策]]。',
+'pr_mailer_notice' => '您在個人資料中所留下的電子郵件，將會自動顯示在「發信人」的欄位中，所以收件人能直接回覆您的信件。',
+'pr_table_problem_id' => '問題編號',
+'pr_table_problem_type' => '问题类型',
+'pr_table_reporter_name' => '回報人',
+'pr_table_status' => '狀態',
+'pr_total_number' => '回報總數',
+'pr_view_all' => '顯示所有回報',
+'pr_what_problem_change' => '更改問題類型',
+'uploadtext-ext' => 'Wikia支援的所有延申套件請見[[{{ns:Special}}:Version|版本頁]]。',
 ) );
