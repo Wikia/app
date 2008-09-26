@@ -59,4 +59,4 @@ function wfFunnel(){
 
 if( !empty( $wgEnableSpecialFunnel ) ){
 	$wgHooks['BeforePageDisplay'][] = array( 'wfFunnel', array() );
-}<td></td>
+}
