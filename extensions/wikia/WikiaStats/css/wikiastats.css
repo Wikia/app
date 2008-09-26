@@ -17,6 +17,7 @@
 #table_page_edited_stats a {color:#0000FF;}
 #table_page_edited_stats_details {color:#000000;}
 #table_page_edited_stats_details a {color:#0000FF;}
+table {font-family:Trebuchet MS,Arial,Helvetica,sans-serif;}
 .input_button {font-size: 9.5pt; font-family: Trebuchet MS,arial,sans-serif,helvetica;}
 fieldset {font-size: 9pt; font-family: Trebuchet MS,arial,sans-serif,helvetica;}
 legend {font-size: 8pt; font-family:Trebuchet MS,arial,verdana;padding:0px;}
@@ -53,7 +54,7 @@ td.main2x { border:1px inset #FFF; text-align:left; font-size:8pt; margin:0px; p
 .wk-clear-hr {float:left; padding:5px;font-size:8pt;clear:both;border-bottom:1px solid #FFFFFF;width:auto;}
 .wk-stats-ol {margin-left:3px; padding-left: 3px;}
 .wk-select-class {padding: 5px;}
-.wk-select-class-main {top:25px !important; float:right;font-size:8.8pt;width:auto;position:relative;}
+.wk-select-class-main {float:right;font-size:8.8pt;width:auto;clear:both;}
 .ws_chart_table {font-size:8pt;width:auto;overflow:auto;padding:45px 3px 3px 3px;font-family:Trebuchet MS,arial,sans-serif,helvetica;}
 .ws_chart_yaxis {height:100%;width:50px;background-color:#F8F8FF;border-right:1px solid #000000;}
 .ws_chart_xaxis {border-top:1px solid #000000;font-size:6.2pt;color:#A52A2A;background-color:#F8F8FF;}
@@ -78,7 +79,8 @@ td.main2x { border:1px inset #FFF; text-align:left; font-size:8pt; margin:0px; p
 .ws-div-main {float:none;clear:both;}
 .ws-backpage {float:left;font-size:7pt;clear:both;}
 .wk-stats-panel {font-size:10pt; padding:5px;}
-.wk-stats-main-panel {font-size:10pt;padding:5px;border-bottom:1px inset #2F6FAB;border-left:1px outset #2F6FAB;border-right:1px inset #2F6FAB;border-top: 1px outset #2F6FAB; width:521px;margin-left:auto;margin-right:auto;margin-top:2pt;}
+.wk-stats-main-panel {font-size:9pt;padding:5px;width:350px;margin-left:auto;margin-right:auto;margin-top:2pt;}
+.wk-stats-info-panel {font-size:8pt;padding:5px;width:350px;margin-left:auto;margin-right:auto;margin-top:2pt; height:120px;}
 .wk-progress-stats-panel {font-size:10pt; padding:20px;}
 .div-eb-trend { border:1px solid #FFFFFF; text-align:right; padding:0px 2px; width: 60px; float:left; clear:none; line-height:12px;}
 .div-eb-trend-trend { border:1px outset #FFFFFF; text-align:left; padding:0px 0px 2px;}
@@ -94,7 +96,7 @@ td.main2x { border:1px inset #FFF; text-align:left; font-size:8pt; margin:0px; p
 .wsnv {display: none;}
 .ws-frame-border { border: 1px solid #DCDCDC; margin: 5px 2px;}
 .ws-btn-panel { border: 1px solid #DCDCDC; margin: 5px 0px; padding: 5px; vertical-align:middle;}
-.ws-div-scroll {height: 330px; width: 460px; overflow-y: scroll; border: 1px solid #DCDCDC; clear:both;}
+.ws-div-scroll {height: 330px; width: 455px; overflow-y: scroll; border: 1px solid #DCDCDC; clear:both;}
 .ws-div-scroll-table {height: 390px; width: 466px; overflow: auto; border: 0px solid #DCDCDC; position:relative; }
 .ws_label { display:block; float:left; width:auto; clear:left; padding: 2px 5px;}
 .ws_check { clear:right; margin: 2px 5px;}
@@ -107,7 +109,9 @@ td.main2x { border:1px inset #FFF; text-align:left; font-size:8pt; margin:0px; p
 .button-group button {color:#000000; font-size:93%; line-height:2; min-height:2em; padding:0pt 10px; background-color:transparent; cursor:pointer; border:1px outset grey; margin:2pt; text-align:center;}
 .button-group button:hover, .button-group button.hover { background-color:#FEC423; border:1px outset #DCDCDC; }
 #compareStatsDialog {display: none;font-size:12px;width:1px;}
-.yui-dialog .ft, .yui-simple-dialog .ft {float: right;}
+.yui-dialog .ft, .yui-simple-dialog .ft {width:230px;}
+.wk-stats-legend-values {padding: 1px 7px 1px 7px;}
+.wk-column-group {font-weight: bold; padding: 10px 0px 2px 0px;}
 
 #ws-title {margin: 1em; padding: 1em;}
 #ws-upload {text-align: left;}
@@ -137,7 +141,5 @@ td.main2x { border:1px inset #FFF; text-align:left; font-size:8pt; margin:0px; p
 #ws-upload {text-align: left;}
 #ws-main-table-headers {width:500px;float:left;height:20px;}
 #wk-stats-legend {font-size: 8pt; font-family:Trebuchet MS,arial,verdana;padding:0px;}
-#wk-column-group {font-weight: bold; padding: 10px 0px 2px 0px;}
-#wk-stats-legend-values {padding: 1px 7px 1px 7px;}
 #wk-stats-legend-columns {padding: 10px 0px 10px 2px;}
 .ws-input {border-bottom:1px inset #2F6FAB; border-left:1px outset #2F6FAB; border-right:1px inset #2F6FAB;border-top: 1px outset #2F6FAB;width:240px;padding:1px 2px; margin:2px; font-size:8.5pt;}

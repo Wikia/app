@@ -87,7 +87,7 @@ class WikiaStatsClass extends SpecialPage
 		$wgOut->setPageTitle( wfMsg("wikiastats_pagetitle") );
 		$wgOut->setRobotpolicy( "noindex,nofollow" );
 		#---
-		$wgOut->addScript("<link rel=\"stylesheet\" type=\"text/css\" href=\"/extensions/wikia/WikiaStats/css/wikiastats.css\">\n");
+		$wgOut->addScript("<link rel=\"stylesheet\" type=\"text/css\" href=\"/extensions/wikia/WikiaStats/css/wikiastats.css\" />\n");
 		$wgOut->addScript("<script type=\"text/javascript\" src=\"/extensions/wikia/WikiaStats/js/wikiastats.js\"></script>\n");
 
 		if ($wgDBname == CENTRAL_WIKIA_ID) { // central version
@@ -256,15 +256,14 @@ class WikiaStatsClass extends SpecialPage
 				$mainStats = $oTmpl->execute("main-form");
 			}
 
-			if (empty($show_charts)) {
-				$columns = $this->mStats->getRangeColumns();
-				$oTmpl->set_vars( array(
-					"columns" => $columns,
-					"userIsSpecial"=> $this->userIsSpecial,
-					"wgStatsExcludedNonSpecialGroup" => $wgStatsExcludedNonSpecialGroup,
-				));
-				$mainStats .= $oTmpl->execute("main-stats-definitions");
-			}
+			$columns = $this->mStats->getRangeColumns();
+			$oTmpl->set_vars( array(
+				"columns" => $columns,
+				"userIsSpecial"=> $this->userIsSpecial,
+				"wgStatsExcludedNonSpecialGroup" => $wgStatsExcludedNonSpecialGroup,
+				"show_charts" => $show_charts
+			));
+			$mainStats .= $oTmpl->execute("main-stats-definitions");
 
 			$wgMemc->set($memkey, $mainStats, 60*60*3);
 			unset($cityList);

@@ -32,6 +32,6 @@ foreach ($rights as $id => $right) {
 <tr><td align="left"><strong><?= wfMsg('wikiastats_wikilang') ?></strong> <?= (!empty($langName)) ? $langName : $city_row->city_lang ?></td></tr>
 <tr><td align="left"><strong><?= wfMsg('wikiastats_wikicategory') ?></strong> <?= $catName ?></td></tr>
 <tr><td align="left"><strong><?= wfMsg('wikiastats_wikicreated') ?></strong> <?= (!empty($outDate)) ? $outDate : " - " ?></td></tr>
-<tr><td align="left"><input type="hidden" id="ws-city-dbname" value="<?= (!empty($city_row)) ? $city_row->city_dbname : "ZZ" ?>"></td></tr>
+<tr><td align="left"><input type="hidden" id="ws-city-dbname" value="<?= (!empty($city_row)) ? $city_row->city_dbname : "ZZ" ?>" /></td></tr>
 </table>
 <!-- END OF WIKI's INFORMATION -->

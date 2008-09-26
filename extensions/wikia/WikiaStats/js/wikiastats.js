@@ -7,7 +7,7 @@ function XLSIframeLoaded(panel, statistics) { StatsPageLoaderHide(0); }
 function XLSIframeLoadedReady() { StatsPageLoaderHide(0); }
 function XLSGenerate(statistics, others, date_from, date_to) { 
 	var params 	= "&rsargs[0]=" + wk_stats_city_id + "&rsargs[1]=" + statistics;
-    YD.get("ws-xls-div").innerHTML = "";
+    YAHOO.util.Dom.get("ws-xls-div").innerHTML = "";
 	if (others != '') params += "&rsargs[2]=" + others;
 				 else params += "&rsargs[2]=";
 	if (date_from != '') params += "&rsargs[3]=" + date_from;
@@ -18,17 +18,17 @@ function XLSGenerate(statistics, others, date_from, date_to) {
     	delete window.frames['ws_frame_xls_'+wk_stats_city_id];
 	}
 	
-	YD.get("ws-xls-div").innerHTML = "<iframe name=\"ws_frame_xls_"+wk_stats_city_id+"\" id=\"ws_frame_xls_"+wk_stats_city_id+"\" src=\""+baseurl+"\" onload=\"XLSIframeLoaded('ws-xls-div'," + statistics + ");\" style=\"width:0px;height:0px\" frameborder=\"0\"></iframe>";
+	YAHOO.util.Dom.get("ws-xls-div").innerHTML = "<iframe name=\"ws_frame_xls_"+wk_stats_city_id+"\" id=\"ws_frame_xls_"+wk_stats_city_id+"\" src=\""+baseurl+"\" onload=\"XLSIframeLoaded('ws-xls-div'," + statistics + ");\" style=\"width:0px;height:0px\" frameborder=\"0\"></iframe>";
 	if (/MSIE (\d+\.\d+);/.test(navigator.userAgent)) {
 		var f = document.getElementById("ws_frame_xls_"+wk_stats_city_id);
 		f.onreadystatechange = XLSIframeStatusChanged();
 	}
 }
-function XLSCancel() { YD.get("ws-xls-div").innerHTML = ""; }
+function XLSCancel() { YAHOO.util.Dom.get("ws-xls-div").innerHTML = ""; }
 function XLSShowMenu(city) { YAHOO.util.Dom.get("wk-stats-panel").style.display = (city == 0) ? "none" : "block"; YAHOO.util.Dom.get("ws-main-xls-stats").style.display = "block"; }
 function WikiaStatsGetInfo(panel, city) {
-	WikiaInfoCallback = { success: function( oResponse ) { YD.get(panel).innerHTML = oResponse.responseText; }, failure: function( oResponse ) { YD.get(panel).innerHTML = ""; } };
-	YD.get(panel).innerHTML = "<div class=\"wk-progress-stats-panel\"><center><img src=\"/extensions/wikia/WikiaStats/images/ajax_indicators.gif\" border=\"0\"></center></div>";
+	WikiaInfoCallback = { success: function( oResponse ) { YAHOO.util.Dom.get(panel).innerHTML = oResponse.responseText; }, failure: function( oResponse ) { YAHOO.util.Dom.get(panel).innerHTML = ""; } };
+	YAHOO.util.Dom.get(panel).innerHTML = "<div class=\"wk-progress-stats-panel\"><center><img src=\"/extensions/wikia/WikiaStats/images/ajax_indicators.gif\" border=\"0\"></center></div>";
 	var baseurl = wgScript + "?action=ajax&rs=axWStatisticsWikiaInfo&rsargs[0]=" + city;
 	YAHOO.util.Connect.asyncRequest( "GET", baseurl, WikiaInfoCallback);	
 };
@@ -64,8 +64,8 @@ function showXLSCompareDialog(statistics, showHtml) {
 		}
 
 		CitiesListCallback = { 
-			success: function( oResponse ) { //YD.get("ws-div-scroll").innerHTML = oResponse.responseText; 
-				res = "<table>";
+			success: function( oResponse ) { //YAHOO.util.Dom.get("ws-div-scroll").innerHTML = oResponse.responseText; 
+				res = "<table width=\"100%\">";
 				var resData = eval('(' + oResponse.responseText + ')');
 				var addToArray = false;
 				if (selectWSWikisDialogList.length == 0) { addToArray = true }
@@ -75,7 +75,7 @@ function showXLSCompareDialog(statistics, showHtml) {
 					for (k in resData) {
 						var attr = (resData[k]["city"] == 0) ? "checked disabled" : " onClick=\"WSCountCheckboxes(this.checked, 0)\" ";
 						var line = (resData[k]["city"] == 0) ? "<tr><td colspan=\"2\" style=\"height:5px\">&nbsp;</td></tr>" : "";
-						res += "<tr><td style=\"padding:0px 3px\"><input type=\"checkbox\" " + attr + " id=\"wscid\" name=\"wscid\" value=\"" + resData[k]["city"] + "\"></td><td style=\"padding:0px 2px\">" +  resData[k]['name'] + "</td></tr>" + line;
+						res += "<tr id=\"row_wikis_" + k + "\"><td style=\"padding:0px 3px\"><input type=\"checkbox\" " + attr + " id=\"check_wikis_" + k + "\" name=\"wscid\" value=\"" + resData[k]["city"] + "\"></td><td style=\"padding:0px 2px\">" +  resData[k]['name'] + "</td></tr>" + line;
 						if (addToArray  == true) {
 							selectWSWikisDialogList[k] = new Array(resData[k]["city"], resData[k]['name']);
 						}
@@ -83,13 +83,13 @@ function showXLSCompareDialog(statistics, showHtml) {
 					}
 				}
 				res += "<table>";
-				YD.get("ws-div-scroll").innerHTML = res; 
+				YAHOO.util.Dom.get("ws-div-scroll").innerHTML = res; 
 			},
-			failure: function( oResponse ) { YD.get("ws-div-scroll").innerHTML = ""; }
+			failure: function( oResponse ) { YAHOO.util.Dom.get("ws-div-scroll").innerHTML = ""; }
 		};
 
 		YAHOO.Wikia.Statistics.compareStatsDialog.show();
-		YD.get("compareStatsDialog_c").style.display = "block";
+		YAHOO.util.Dom.get("compareStatsDialog_c").style.display = "block";
 		var city_list = document.getElementById( "ws-div-scroll" );
 		if (city_list.innerHTML == "") {
 			city_list.innerHTML = "<table width=\"100%\" height=\"100%\" align=\"center\"><tr><td width=\"100%\" align=\"center\"><img src=\"/extensions/wikia/WikiaStats/images/ajax_indicators.gif\" border=\"0\"></td></tr></table>";
@@ -128,7 +128,7 @@ function showWSSearchResult(value) {
 	hideSortUrl("ws-sort-link", "visible");
 
 	if (value == "") {
-		res = "<select name=\"ws-city-list\" id=\"ws-city-list\" class=\"ws-input\" size=\"14\" onChange=\"XLSShowMenu(this.value); WikiaStatsGetInfo('wk-stats-info-panel', this.value);\">";
+		res = "<select name=\"ws-city-list\" id=\"ws-city-list\" class=\"ws-input\" size=\"27\" width=\"200\" onChange=\"XLSShowMenu(this.value); WikiaStatsGetInfo('wk-stats-info-panel', this.value);\">";
 		var _tmpList = new Array();
 		for (i in selectWSWikisList) {
 			_tmpList[i] = new Array(selectWSWikisList[i][0], selectWSWikisList[i][1]);
@@ -154,7 +154,7 @@ function showWSSearchResult(value) {
 	SearchWSCallback = { 
 		success: function( oResponse ) { 
 			var resData = eval('(' + oResponse.responseText + ')');
-			res = "<select name=\"ws-city-list\" id=\"ws-city-list\" class=\"ws-input\" size=\"14\" onChange=\"XLSShowMenu(this.value); WikiaStatsGetInfo('wk-stats-info-panel', this.value);\">";
+			res = "<select name=\"ws-city-list\" id=\"ws-city-list\" class=\"ws-input\" size=\"27\" width=\"200\" onChange=\"XLSShowMenu(this.value); WikiaStatsGetInfo('wk-stats-info-panel', this.value);\">";
 			for (k in resData) {
 				res += "<option value=\"" + k + "\">" + resData[k] + "</option>";
 			}
@@ -162,7 +162,7 @@ function showWSSearchResult(value) {
 			search_div.innerHTML = res;
 		},
 		failure: function( oResponse ) { 
-			search_div.innerHTML = "<select name=\"ws-city-list\" id=\"ws-city-list\" class=\"ws-input\" size=\"14\" onChange=\"XLSShowMenu(this.value); WikiaStatsGetInfo('wk-stats-info-panel', this.value);\"></search>";
+			search_div.innerHTML = "<select name=\"ws-city-list\" id=\"ws-city-list\" class=\"ws-input\" size=\"27\" width=\"200\" onChange=\"XLSShowMenu(this.value); WikiaStatsGetInfo('wk-stats-info-panel', this.value);\"></search>";
 		}
 	};
 
@@ -174,6 +174,7 @@ function showWSSearchResult(value) {
 }
 function WikiaStatsPanelSortList() {
 	var _tmpList = new Array();
+
 	for (i in selectWSWikisDialogList) {
 		_tmpList[i] = new Array(selectWSWikisDialogList[i][0], selectWSWikisDialogList[i][1]);
 	}
@@ -182,7 +183,7 @@ function WikiaStatsPanelSortList() {
 		_tmpList.sort(sortByText);
 	}
 
-	var res = "<table>";
+	var res = "<table width=\"100%\">";
 	res += "<tr><td style=\"padding:0px 3px\"><input type=\"checkbox\" checked disabled id=\"wscid\" name=\"wscid\" value=\"" + firstElem[0] + "\"></td><td style=\"padding:0px 2px\">" +  firstElem[1] + "</td></tr>";
 	res += "<tr><td colspan=\"2\" style=\"height:5px\">&nbsp;</td></tr>";
 
@@ -193,8 +194,8 @@ function WikiaStatsPanelSortList() {
 			}
 		}
 	}
-	res += "<table>";
-	YD.get("ws-div-scroll").innerHTML = res; 
+	res += "</table>";
+	YAHOO.util.Dom.get("ws-div-scroll").innerHTML = res; 
 	_tmpList = 0;
 }
 
@@ -211,4 +212,51 @@ function redirectTooldStats() {
 	if (dbname) {
 		document.location.href = "http://wikistats.wikia.com/EN/TablesWikia" + dbname.toUpperCase() + ".htm";
 	}
+}
+
+function setActiveSelectTab() {
+	YAHOO.util.Dom.get("ws_main_wikia_select_td").style.display = "block";
+	YAHOO.util.Dom.get("ws_main_wikia_compare_td").style.display = "none";
+	YAHOO.util.Dom.get("ws-wikia-select-id").className="selected";
+	YAHOO.util.Dom.get("ws-wikia-compare-id").className="";
+}
+
+function setActiveCompareTab() {
+	YAHOO.util.Dom.get("ws_main_wikia_compare_td").style.display = "block";
+	YAHOO.util.Dom.get("ws_main_wikia_select_td").style.display = "none";
+	//YAHOO.util.Dom.get("ws_main_wikia_compare_td").class="";
+	//YAHOO.util.Dom.get("ws_main_wikia_select_td").class="selected";
+	YAHOO.util.Dom.get("ws-wikia-compare-id").className="selected";
+	YAHOO.util.Dom.get("ws-wikia-select-id").className="";
+}
+function WikiaStatsCompareGetWikis(element, value) {
+	var func = function() { showWSSearchCompareResult(value) };
+
+	if ( element.zid ) {
+		clearTimeout(element.zid);
+	}
+	element.zid = setTimeout(func,800);
+}
+
+function showWSSearchCompareResult(value) {
+	if (value != "") {
+		hideSortUrl("ws-sort-panel", "hidden");
+		if (selectWSWikisDialogList.length > 0) {
+			for (k in selectWSWikisDialogList) {
+				YAHOO.util.Dom.get("row_wikis_" + k).style.display = 'block';
+				if (k > 0) {
+					var i = selectWSWikisDialogList[k][1].toLowerCase().indexOf( value.toLowerCase(), 0 );
+					if (i < 0) {
+						YAHOO.util.Dom.get("row_wikis_" + k).style.display = 'none';
+					}
+				}
+			}
+		}
+	} else {
+		for (k in selectWSWikisDialogList) {
+			YAHOO.util.Dom.get("row_wikis_" + k).style.display = 'block';
+		}
+		hideSortUrl("ws-sort-panel", "visible");
+	}
+	
 }

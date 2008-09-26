@@ -12,7 +12,7 @@ if (!empty($statsCount))
   $Mb = $Kb * $Kb ;
   $Gb = $Kb * $Kb * $Kb ;
 ?>	
-<input type="hidden" id="wk-page-edits-stats-page-id" value="">
+<input type="hidden" id="wk-page-edits-stats-page-id" value="" />
 <div style="float:left; padding-bottom: 5px;">
 <table cellspacing="0" cellpadding="0" border="1" id="table_page_edited_stats" style="width:auto; font-family: arial,sans-serif,helvetica; font-size:9pt;background-color:#ffffdd;">
 <tr bgcolor="#ffdead">
@@ -53,14 +53,14 @@ foreach ($statsCount as $cnt => $stats)
     $title = ($naName) ? $naName . ":" . $stats['page_title'] : $stats['page_title'];
 ?>
 <tr id="wk-page-edited-row-<?=$stats['page_id']?>">
-	<td class="eb" nowrap><?= $rank ?></td>
-	<td class="eb" nowrap><?= $cnt ?></td>
-	<td class="eb" nowrap><?= $reg_edits ?></td>
-	<td class="eb" nowrap><?= $stats['reg_users'] ?></td>
-	<td class="eb" nowrap><?= $stats['unreg_users'] ?></td>
-	<td class="ebl" nowrap><a href="<?= $city_url ?>/index.php?title=<?= $title ?>" target="new"><?= $title ?></a></td>
-	<td class="eb" nowrap><?= $size ?></td>
-	<td class="ebl" nowrap><span onClick="wk_show_page_edited_details('<?=$stats['page_id']?>');" style="cursor:pointer; padding: 2px;" id="wk-page-edited-details-<?=$stats['page_id']?>"><?= wfMsg('wikiastats_more_txt') ?></span></td>
+	<td class="eb" style="white-space:nowrap;"><?= $rank ?></td>
+	<td class="eb" style="white-space:nowrap;"><?= $cnt ?></td>
+	<td class="eb" style="white-space:nowrap;"><?= $reg_edits ?></td>
+	<td class="eb" style="white-space:nowrap;"><?= $stats['reg_users'] ?></td>
+	<td class="eb" style="white-space:nowrap;"><?= $stats['unreg_users'] ?></td>
+	<td class="ebl" style="white-space:nowrap;"><a href="<?= $city_url ?>/index.php?title=<?= $title ?>" target="new"><?= $title ?></a></td>
+	<td class="eb" style="white-space:nowrap;"><?= $size ?></td>
+	<td class="ebl" style="white-space:nowrap;"><span onClick="wk_show_page_edited_details('<?=$stats['page_id']?>');" style="cursor:pointer; padding: 2px;" id="wk-page-edited-details-<?=$stats['page_id']?>"><?= wfMsg('wikiastats_more_txt') ?></span></td>
 </tr>	
 <?php
 }

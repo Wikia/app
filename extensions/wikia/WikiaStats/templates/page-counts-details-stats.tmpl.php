@@ -24,9 +24,9 @@ foreach ($userStats as $id => $stats)
             $rank++;
 ?>
 	<tr>
-		<td class="eb" nowrap><?= $rank ?></td>
-		<td class="ebl" nowrap><a href="<?= $city_url ?><?= Title::makeTitle(NS_USER, $info['user_text'])->getLocalURL() ?>" target="new"><?= $info['user_text'] ?></a></td>
-		<td class="eb" nowrap><?= $cnt ?></td>
+		<td class="eb" style="white-space:nowrap;"><?= $rank ?></td>
+		<td class="ebl" style="white-space:nowrap;"><a href="<?= $city_url ?><?= Title::makeTitle(NS_USER, $info['user_text'])->getLocalURL() ?>" target="new"><?= $info['user_text'] ?></a></td>
+		<td class="eb" style="white-space:nowrap;"><?= $cnt ?></td>
 	</tr>	
 <?php
         }

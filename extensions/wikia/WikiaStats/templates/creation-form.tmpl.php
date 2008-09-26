@@ -36,7 +36,7 @@ foreach ($dWikians as $id => $date)
 	<td class="ws-td-rb"><?=$outDate?></td>
 	
 <?
-	$url = "<td class=\"ws-td-lb\" nowrap>";
+	$url = "<td class=\"ws-td-lb\" style=\"white-space:nowrap;\">";
 	//$width = 100 * count($wikians[$date]);
 	if ( !empty($wikians) && !empty($wikians[$date]) )
 	{
@@ -86,7 +86,7 @@ foreach ($dArticles as $id => $date)
 ?>
 <tr>
 	<td class="ws-td-rb"><?=$outDate?></div>
-	<td class="ws-td-lb" nowrap>
+	<td class="ws-td-lb" style="white-space:nowrap;">
 <?
 	if ( !empty($article) && !empty($article[$date]) )
 	{

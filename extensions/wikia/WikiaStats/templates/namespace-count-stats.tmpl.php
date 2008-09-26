@@ -40,7 +40,7 @@ foreach ($namespaceCount as $date => $monthStats)
 
 ?>
 <tr>
-	<td class="eb" nowrap><?= $out ?></td>
+	<td class="eb" style="white-space:nowrap;"><?= $out ?></td>
 <?
 	foreach ($namespaces as $n => $nName)
 	{
@@ -51,7 +51,7 @@ foreach ($namespaceCount as $date => $monthStats)
 				(empty($val)) ? "" : 
 				($val >= $kB) ? sprintf ("%.1f", $val/$kB)." k" : (($val >= $mB) ? sprintf ("%.1f", $val/$mB)." M" : $val);
 ?>	
-	<td class="eb" nowrap><?= $out ?></td>
+	<td class="eb" style="white-space:nowrap;"><?= $out ?></td>
 <?
 		}
 	}

@@ -40,14 +40,14 @@ foreach ($articleCount as $date => $monthStats)
 
 ?>
 <tr>
-	<td class="eb" nowrap><?= $out ?></td>
+	<td class="eb" style="white-space:nowrap;"><?= $out ?></td>
 <?
 	foreach ($articleSize as $s => $values)
 	{
 		$cntDate = (is_array($values) && array_key_exists($date, $values)) ? intval($values[$date]['count']) : 0;
 		$rowValue = sprintf("%0.1f%%", ($cntDate * 100) / $cntAll);
 ?>	
-	<td class="eb" nowrap><?= $rowValue ?></td>
+	<td class="eb" style="white-space:nowrap;"><?= $rowValue ?></td>
 <?
 	}
 ?>
