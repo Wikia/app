@@ -31,7 +31,7 @@ foreach ($cityStats as $id => $cityId)
 		$wikia_rows[$y] .= "<a href=\"/index.php?title=Special:WikiaStats&action=citycharts&city={$cityId}\">".wfMsg('wikiastats_charts')."</a>&nbsp;-&nbsp;";
 		$wikia_rows[$y] .= "<a href=\"javascript:void(0)\" onClick=\"XLSShowMenu('{$cityId}');\">".wfMsg('wikiastats_xls_files_stats')."</a></td></tr>";
 		
-		$cities_list .= "<input type=\"checkbox\" {$readolny} id=\"wscid\" name=\"wscid\" value=\"{$cityId}\">". ucfirst($cityList[$cityId]['title']) ." (".ucfirst($cityList[$cityId]['dbname']).") <br />";
+		$cities_list .= "<input type=\"checkbox\" {$readolny} id=\"wscid\" name=\"wscid\" value=\"{$cityId}\" />". ucfirst($cityList[$cityId]['title']) ." (".ucfirst($cityList[$cityId]['dbname']).") <br />";
 		$cities_list .= ($cityId == 0) ? "<br />" : "";
 	}
 }
@@ -109,7 +109,7 @@ YAHOO.namespace("wkstatsxlsmenu.container");
                 xlmmenutext += "</div>";
 
                 xlmmenutext += "<div style=\"float:right;\">";
-                xlmmenutext += "<input type=\"button\" name=\"closePanel\" value=\"<?=wfMsg('wikiastats_panel_close_btn')?>\" onClick=\"XLSPanelClose();\">";
+                xlmmenutext += "<input type=\"button\" name=\"closePanel\" value=\"<?=wfMsg('wikiastats_panel_close_btn')?>\" onClick=\"XLSPanelClose();\" />";
                 xlmmenutext += "</div>";
 
                 YAHOO.wkstatsxlsmenu.container.xlsmenu.setBody(xlmmenutext); 
@@ -219,24 +219,24 @@ YE.addListener("ws-check-cities", "click", XLSClearCitiesList);
 <!-- WIKI's INFORMATION -->
 <table style="width:auto; font-family: arial,sans-serif,helvetica;" height="100%" valign="top">
  <tr>
-    <td class="panel-bootom-big" nowrap align="left">
+    <td class="panel-bootom-big" style="white-space:nowrap;" align="left">
         <strong><?= wfMsg('wikiastats_wikia') ?> <!--(<?=$loop?> <?= wfMsg('wikiastats_records') ?>)--></strong> 
     </td>
-    <td nowrap align="left" style="width:30px;">&nbsp;</td>
-    <td class="panel-bootom-big" nowrap align="left">
+    <td align="left" style="width:30px;white-space:nowrap;">&nbsp;</td>
+    <td class="panel-bootom-big" style="white-space:nowrap;" align="left">
         <strong><?= wfMsg('wikiastats_comparision') ?></strong>
     </td>
  </tr>
 <!-- main tables -->
  <tr>
-    <td nowrap align="left" valign="top" id="tdMenu" valign="top" height="100%">
+    <td align="left" valign="top" id="tdMenu" valign="top" height="100%" style="white-space:nowrap;">
     <?= count($wikia_rows); ?>
     <? foreach ($wikia_rows as $id => $rows) { ?>
         <table valign="top" class="ws-trend-table"><?=$rows?></table>
 	<? } ?>        
     </td>
-    <td nowrap align="left" valign="top">&nbsp;</td>
-    <td nowrap align="left" valign="top">
+    <td align="left" valign="top">&nbsp;</td>
+    <td align="left" valign="top">
         <table class="ws-trend-table-wob" id="ws-trend-table">
 <?
 $k = 7;

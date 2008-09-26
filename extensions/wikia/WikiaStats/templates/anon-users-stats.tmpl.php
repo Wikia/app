@@ -34,13 +34,13 @@ foreach ($anonData as $id => $data)
 	$outLastEdit = substr(wfMsg(strtolower(date("F",$data['max']))), 0, 3) . " " . date("d",$data['max']) .", ".date("Y",$data['max']);
 ?>
 <tr>
-	<td class="eb" nowrap><a href="<?= $city_url ?><?= Title::makeTitle(NS_SPECIAL, "Contributions")->getLocalURL() ?>/<?=$data['user_name']?>" target="new"><?= $data['user_name'] ?></a></td>
-	<td class="eb" nowrap><?= $rank ?></td>
-	<td class="eb" nowrap><?= $data['cnt'] ?></td>
-	<td class="eb" nowrap><?= $outFirstEdit ?></td>
-	<td class="eb" nowrap><?= sprintf("%0.0f", (time() - $data["min"])/(60*60*24)) ?></td>
-	<td class="eb" nowrap><?= $outLastEdit ?></td>
-	<td class="eb" nowrap><?= sprintf("%0.0f", (time() - $data["max"])/(60*60*24)) ?></td>
+	<td class="eb" style="white-space:nowrap;"><a href="<?= $city_url ?><?= Title::makeTitle(NS_SPECIAL, "Contributions")->getLocalURL() ?>/<?=$data['user_name']?>" target="new"><?= $data['user_name'] ?></a></td>
+	<td class="eb" style="white-space:nowrap;"><?= $rank ?></td>
+	<td class="eb" style="white-space:nowrap;"><?= $data['cnt'] ?></td>
+	<td class="eb" style="white-space:nowrap;"><?= $outFirstEdit ?></td>
+	<td class="eb" style="white-space:nowrap;"><?= sprintf("%0.0f", (time() - $data["min"])/(60*60*24)) ?></td>
+	<td class="eb" style="white-space:nowrap;"><?= $outLastEdit ?></td>
+	<td class="eb" style="white-space:nowrap;"><?= sprintf("%0.0f", (time() - $data["max"])/(60*60*24)) ?></td>
 </tr>	
 <?php
 }

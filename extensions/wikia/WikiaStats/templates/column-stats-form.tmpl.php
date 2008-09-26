@@ -31,7 +31,7 @@ $i = 0;
 <div style="text-align:right; float:left;padding:5px;">
 <select name="ws_column_stats" id="ws_column_stats" style="text-align:left; font-size:11px;">
 <? foreach ($rangeColumns as $id => $letter) { ?>
-<option value="<?=($id+3)?>" <?=(($column == ($id+3)) ? "selected" : "")?>><?=wfMsg("wikiastats_mainstats_short_column_" . $letter)?></option>
+<option value="<?=($id+3)?>" <?=(($column == ($id+3)) ? " selected=\"selected\" " : "")?>><?=wfMsg("wikiastats_mainstats_short_column_" . $letter)?></option>
 <? } ?>
 </select>
 </div>
@@ -93,7 +93,7 @@ foreach ($columnHistory as $date => $dateValues)
 	$outDate = WikiaGenericStats::makeCorrectDate($date, ($date==date('Y-m')));
 ?>	
 <tr>
-<td class="eb-trend" style="width:80px;" nowrap><strong><?=$outDate?></strong></td>
+<td class="eb-trend" style="width:80px;white-space:nowrap;"><strong><?=$outDate?></strong></td>
 <?
 	#---
 	foreach ($cityOrderList as $id => $city_id)
@@ -164,7 +164,7 @@ foreach ($columnHistory as $date => $dateValues)
 			}
 		}
 ?>
-<td class="eb-trend" nowrap style="width:30px;"><?=((!empty($output)) ? $output : "&nbsp;")?></td>
+<td class="eb-trend" style="width:30px;white-space:nowrap;"><?=((!empty($output)) ? $output : "&nbsp;")?></td>
 <?
 	}
 ?>

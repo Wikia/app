@@ -147,13 +147,13 @@ foreach ($trend_stats as $column => $dateValues)
 		$loop++;
 	}
 ?>	        
-<td style="width:250px; font-size:8pt;" nowrap>(<?=$column?>) <?= "<strong>".implode (" - ", $links)."</strong>" ?></td>
+<td style="width:250px; font-size:8pt;white-space:nowrap;">(<?=$column?>) <?= "<strong>".implode (" - ", $links)."</strong>" ?></td>
 <?
 	$roundCols = round( ( (count($cityOrderList) * 5) / 100), 0);
 	#---
 	for ($col = 0; $col < $roundCols; $col++) {
 ?>
-<td style="width:auto;font-size:8pt;text-align:center;" nowrap><strong><?= $active ?> - <a style="color:#008000;" href="/index.php?title=Special:WikiaStats&action=compare&table=3"><?= wfMsg('wikiastats_mainstats_short_column_' . $column) ?></a></strong></td>
+<td style="width:auto;font-size:8pt;text-align:center;white-space:nowrap;"><strong><?= $active ?> - <a style="color:#008000;" href="/index.php?title=Special:WikiaStats&action=compare&table=3"><?= wfMsg('wikiastats_mainstats_short_column_' . $column) ?></a></strong></td>
 <?		
 	}
 ?>	        
@@ -224,7 +224,7 @@ foreach ($dateValues as $date => $cities)
 		}
 	}
 ?>
-<tr><td class="eb-trend" style="width: 90px;<?= $backColor ?>" nowrap><strong><?= $outDate ?></strong></td>
+<tr><td class="eb-trend" style="width: 90px;<?= $backColor ?>white-space:nowrap;"><strong><?= $outDate ?></strong></td>
 <?		
 	foreach ($cityOrderList as $id => $city_id)
 	{
@@ -289,7 +289,7 @@ foreach ($dateValues as $date => $cities)
 			}
 		}	
 ?>		
-<td class="eb-trend" nowrap style="<?=$backColor?> width:40px;">&nbsp;<?= (($trend == 1) ? "&#177 ".$out : $out) ?><?= ((($growth == 1) && ($out !== "") && (strpos($out,"%") === false)) ? "%" : "") ?></td>
+<td class="eb-trend" style="<?=$backColor?> width:40px;white-space:nowrap;">&nbsp;<?= (($trend == 1) ? "&#177 ".$out : $out) ?><?= ((($growth == 1) && ($out !== "") && (strpos($out,"%") === false)) ? "%" : "") ?></td>
 <?		
 	}
 ?>

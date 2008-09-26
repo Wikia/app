@@ -12,11 +12,11 @@ foreach ($statsData as $id => $data)
 {
 ?>
 <tr>
-	<td class="eb" nowrap><?= $data['edits'] ?></td>
-	<td class="eb" nowrap><?= $data['wikians'] ?></td>
-	<td class="eb" nowrap><?= $data['wikians_perc'] ?></td>
-	<td class="eb" nowrap><?= $data['edits_total'] ?></td>
-	<td class="eb" nowrap><?= $data['edits_total_perc'] ?></td>
+	<td class="eb" style="white-space:nowrap;"><?= $data['edits'] ?></td>
+	<td class="eb" style="white-space:nowrap;"><?= $data['wikians'] ?></td>
+	<td class="eb" style="white-space:nowrap;"><?= $data['wikians_perc'] ?></td>
+	<td class="eb" style="white-space:nowrap;"><?= $data['edits_total'] ?></td>
+	<td class="eb" style="white-space:nowrap;"><?= $data['edits_total_perc'] ?></td>
 </tr>	
 <?php
 }

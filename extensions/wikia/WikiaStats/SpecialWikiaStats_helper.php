@@ -28,10 +28,10 @@ class WikiaGenericStats {
     var $mSelectedCityId = -1;
 
     const MONTHLY_STATS = 7;
-    const USE_MEMC = 0;
-    const USE_OLD_DB = 1;
+    const USE_MEMC = 1;
+    const USE_OLD_DB = 0;
 	const IGNORE_WIKIS = "5, 11, 6745";
-
+   	
 	var $columnMapIndex = null;
 	// show only local statistics for wikia
 	var $localStats = false;
@@ -1582,6 +1582,11 @@ class WikiaGenericStats {
 		if (!is_numeric($year_from) && !is_numeric($month_from)) $result = array("code" => "-12", "text" => wfMsg('wikiaststs_invalid_date'));
 		if (!is_numeric($year_to) && !is_numeric($month_to)) $result = array("code" => "-13", "text" => wfMsg('wikiaststs_invalid_date'));
 		#---
+		$stats_date = time();
+		if ($city_id > 0) {
+			$stats_date = self::getDateStatisticGenerate($city_id);
+		}
+		
 		$localStats = $this->getLocalStats();
 		$memkey = md5($city_id."_".$year_from."_".$month_from."_".$year_to."_".$month_to."_".intval($localStats));
     	$memkey = "wikiamainstatistics_".$memkey;
@@ -1721,7 +1726,7 @@ class WikiaGenericStats {
 
 						#---
 						ksort($dataSort);
-						$output .= self::generateHtmlCharts((empty($id))?$city_id:0, $dataSort, $column, $main_title);
+						$output .= self::generateHtmlCharts((empty($id))?$city_id:0, $dataSort, $column, $main_title, $stats_date);
 						$i++;
 					}
 					unset($charts);
@@ -1738,9 +1743,9 @@ class WikiaGenericStats {
 		return $result;
 	}
 
-	static public function generateHtmlCharts ($city_id, $chData, $column, $chMainTitle = "")
+	static public function generateHtmlCharts ($city_id, $chData, $column, $chMainTitle = "", $stats_date = "")
 	{
-        global $wgUser;
+        global $wgUser, $wgLang;
 
 		wfProfileIn( __METHOD__ );
         $chartSettings = array(
@@ -1748,6 +1753,10 @@ class WikiaGenericStats {
         	'barwidth' => CHART_BAR_WIDTH,
         	'barunit' => CHART_BAR_WIDTH_UNIT,
         );
+		if (empty($stats_date)) {
+			$stats_date = time();
+		}
+        
 		#---
         $oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
         $oTmpl->set_vars( array(
@@ -1755,7 +1764,9 @@ class WikiaGenericStats {
             "city_id" 		=> $city_id,
             "data" 			=> $chData,
             "mainTitle"		=> $chMainTitle,
+            "stats_date"	=> $stats_date,
             "column"		=> $column,
+            "wgLang"		=> $wgLang,
         ));
         #---
         $res = $oTmpl->execute("stats-chart");

@@ -157,14 +157,14 @@ function visible_column(col, col_to, show, text, div_hide)
 		var div_hidden = document.getElementById('ws-hide-div' + i);
 		if (show == 0) {
 			if (!div_hidden) {
-				table_hidden.innerHTML += "<span id=\"ws-hide-div"+i+"\" style=\"float:left; padding:4px; margin:2px; width:auto;\"><a href=\"javascript:void(0)\" onClick=\"javascript:visible_column("+col+","+col_to+",1,'"+ text +"',"+i+");\">" + colText.replace("%s", text) + "</a></span>";
+				table_hidden.innerHTML += "<span id=\"ws-hide-div"+i+"\" style=\"float:left; padding:4px; margin:2px; width:auto;\"><a href=\"javascript:void(0)\" onclick=\"javascript:visible_column("+col+","+col_to+",1,'"+ text +"',"+i+");\">" + colText.replace("%s", text) + "</a></span>";
 				div_hidden = document.getElementById('ws-hide-div' + i);
 				div_hidden.style.background = "#ffdead";
 				div_hidden.style.clear = 'none';
 				break;
 			} else if ((div_hidden) && (div_hidden.innerHTML == "")) {
 				div_hidden.style.background = "#ffdead";
-				div_hidden.innerHTML = "<a href=\"javascript:void(0)\" onClick=\"javascript:visible_column("+col+","+col_to+",1,'"+ text +"',"+i+");\">" + colText.replace("%s", text) + "</a>";
+				div_hidden.innerHTML = "<a href=\"javascript:void(0)\" onclick=\"javascript:visible_column("+col+","+col_to+",1,'"+ text +"',"+i+");\">" + colText.replace("%s", text) + "</a>";
 				div_hidden.style.margin = "2px";
 				div_hidden.style.padding = "4px";
 				div_hidden.style.clear = 'none';
@@ -545,13 +545,13 @@ YAHOO.util.Event.onDOMReady(function () {
 
 /*]]>*/
 </script>
-<input type="hidden" id="wk-stats-city-id" value="<?=$selCity?>">
+<input type="hidden" id="wk-stats-city-id" value="<?=$selCity?>" />
 <fieldset>
 <legend><?=wfMsg('wikiastats_main_statistics_legend')?></legend>
 <div id="ws-upload">
 	<div id="ws-progress-bar"></div>
 	<div style="text-align:right; float:right; margin:0px 0px 0px 20px;">
-	<span class="wk-select-class" valign="middle"><?= wfMsg('wikiastats_daterange_from') ?> 
+	<span class="wk-select-class"><?= wfMsg('wikiastats_daterange_from') ?> 
 	<select name="ws-date-month-from" id="ws-date-month-from" style="text-align:left; font-size:11px;">
 <?php
 $curMonth = date("m"); $curYear = date("Y");
@@ -563,7 +563,7 @@ if (!empty($fromDate)) {
 	list ($fromYear, $fromMonth) = $fromDate;
 }
 foreach ($dateRange['months'] as $id => $month) { 
-	$selected = ($fromMonth == ($id+1)) ? "selected" : "";
+	$selected = ($fromMonth == ($id+1)) ? " selected=\"selected\" " : "";
 ?>
 	<option value="<?= ($id+1) ?>" <?=$selected?>><?= ucfirst($month) ?></option>
 <?php
@@ -576,7 +576,7 @@ $minYear = intval($dateRange['minYear']);
 if ($minYear < 2000) $minYear = 2000;
 $maxYear = intval($dateRange['maxYear']);
 while ($minYear <= $maxYear) {
-	$selected = ($fromYear == $minYear) ? "selected" : "";
+	$selected = ($fromYear == $minYear) ? " selected=\"selected\" " : "";
 ?>
 	<option <?= $selected ?> value="<?= $minYear ?>"><?= $minYear ?></option>
 <?php	
@@ -589,7 +589,7 @@ while ($minYear <= $maxYear) {
 	<select name="ws-date-month-to" id="ws-date-month-to" style="text-align:left; font-size:11px;">
 <?php
 foreach ($dateRange['months'] as $id => $month) {
-	$k = $id+1; $selected = ($curMonth == $k) ? "selected" : "";
+	$k = $id+1; $selected = ($curMonth == $k) ? " selected=\"selected\" " : "";
 ?>
 	<option <?= $selected ?> value="<?= $k ?>"><?= ucfirst($month) ?></option>
 <?php
@@ -600,7 +600,7 @@ foreach ($dateRange['months'] as $id => $month) {
 <?php
 $minYear = intval($dateRange['minYear']); $maxYear = intval($dateRange['maxYear']);
 while ($minYear <= $maxYear) {
-	$selected = ($curYear == $minYear) ? "selected" : "";
+	$selected = ($curYear == $minYear) ? " selected=\"selected\" " : "";
 ?>
 	<option <?= $selected ?> value="<?= $minYear ?>"><?= $minYear ?></option>
 <?php	
@@ -610,9 +610,9 @@ while ($minYear <= $maxYear) {
 	</select></span>
 	<br />
 	<div class="wk-select-class">
-		<span style="padding:5px 2px;"><input type="button" id="ws-show-stats" name="ws-show-stats" value="<?= wfMsg("wikiastats_showstats_btn") ?>"></span>
-		<span style="padding:5px 2px;"><input type="button" id="ws-show-charts" value="<?= wfMsg("wikiastats_showcharts") ?>" name="ws-show-charts"></span>
-		<span style="padding:5px 2px;"><input type="button" id="ws-export-xls" value="<?= wfMsg("wikiastats_export_xls") ?>" name="ws-export-xls"></span>
+		<span style="padding:5px 2px;"><input type="button" id="ws-show-stats" name="ws-show-stats" value="<?= wfMsg("wikiastats_showstats_btn") ?>" /></span>
+		<span style="padding:5px 2px;"><input type="button" id="ws-show-charts" value="<?= wfMsg("wikiastats_showcharts") ?>" name="ws-show-charts" /></span>
+		<span style="padding:5px 2px;"><input type="button" id="ws-export-xls" value="<?= wfMsg("wikiastats_export_xls") ?>" name="ws-export-xls" /></span>
 	</div>
 	</div>
 </div>
@@ -630,10 +630,10 @@ if (!empty($main_tbl)) {
 <? } } ?>
 <!-- DISTRIBUTION OF ARTICLE EDITS OVER WIKIANS -->
 <div id="ws-edits-article">
-	<div id="ws-edits-article-title" style="clear:left;width:auto;float:left" valign="middle">
+	<div id="ws-edits-article-title" style="clear:left;width:auto;float:left">
 		<div valign="middle">
 			<a href="javascript:void(0)" id="ws-edits-article-show"><?= wfMsg('wikiastats_distrib_article'); ?></a>
-			<span style="padding:5px 2px;"><input type="image" id="ws-xls-2" value="<?= wfMsg("wikiastats_export_xls") ?>" src="/extensions/wikia/WikiaStats/images/xls.gif"></span>
+			<span style="padding:5px 2px;"><input type="image" id="ws-xls-2" value="<?= wfMsg("wikiastats_export_xls") ?>" src="/extensions/wikia/WikiaStats/images/xls.gif" /></span>
 		</div>	
 		<span class="small"><?= wfMsg('wikiastats_distrib_article_subtext') ?></span><br />
 		<span class="small"><?= wfMsg('wikiastats_distrib_article_counting') ?></span>
@@ -648,7 +648,7 @@ if (!empty($main_tbl)) {
 	<div id="ws-wikians-title" style="clear:left;width:auto;float:left">
 		<div valign="middle">
 			<a href="javascript:void(0)" id="ws-wikians-rank-show"><?= wfMsg('wikiastats_active_absent_wikians'); ?></a>
-			<span style="padding:5px 2px;"><input type="image" id="ws-xls-3" value="<?= wfMsg("wikiastats_export_xls") ?>" src="/extensions/wikia/WikiaStats/images/xls.gif"></span>		
+			<span style="padding:5px 2px;"><input type="image" id="ws-xls-3" value="<?= wfMsg("wikiastats_export_xls") ?>" src="/extensions/wikia/WikiaStats/images/xls.gif" /></span>		
 		</div>	
 		<span class="small"><?= wfMsg('wikiastats_active_wikians_subtitle') ?></span>
 	</div>
@@ -660,14 +660,14 @@ if (!empty($main_tbl)) {
 for ($i = 1; $i <= 6; $i++)
 {
 	$month_name = ($i == 1) ? wfMsg('wikiastats_active_month') : wfMsg('wikiastats_active_months');
-	$selected = ""; //($i == $cur_month) ? "selected" : "" ;
+	$selected = ""; //($i == $cur_month) ? " selected=\"selected\" " : "" ;
 ?>
 		<option <?= $selected ?> value="<?= $i ?>"><?= $i . " " .$month_name ?></option>
 <?php 
 }
 ?>	
 		</select></span>
-		<span class="wk-select-class"><input type="button" id="ws-wikians-active-btn" name="ws-wikians-active-btn" value=" ... "></span>
+		<span class="wk-select-class"><input type="button" id="ws-wikians-active-btn" name="ws-wikians-active-btn" value=" ... " /></span>
 	</div>
 	<div id="ws-wikians-active-absent-table"></div>
 </div>
@@ -677,7 +677,7 @@ for ($i = 1; $i <= 6; $i++)
 	<div id="ws-anon-users-title" style="clear:left;width:auto;float:left">
 		<div valign="middle">
 			<a href="javascript:void(0)" id="ws-anon-users-show"><?= wfMsg('wikiastats_anon_wikians'); ?></a>
-			<span style="padding:5px 2px;"><input type="image" id="ws-xls-4" value="<?= wfMsg("wikiastats_export_xls") ?>" src="/extensions/wikia/WikiaStats/images/xls.gif"></span>
+			<span style="padding:5px 2px;"><input type="image" id="ws-xls-4" value="<?= wfMsg("wikiastats_export_xls") ?>" src="/extensions/wikia/WikiaStats/images/xls.gif" /></span>
 		</div>	
 		<span class="small"><?= wfMsg('wikiastats_anon_wikians_subtitle') ?></span>
 	</div>
@@ -691,7 +691,7 @@ for ($i = 1; $i <= 6; $i++)
 	<div id="ws-articles-title" style="clear:left;width:auto;float:left">
 		<div valign="middle">
 			<?= wfMsg('wikiastats_article_size'); ?>
-			<span style="padding:5px 2px;"><input type="image" id="ws-xls-5" value="<?= wfMsg("wikiastats_export_xls") ?>" src="/extensions/wikia/WikiaStats/images/xls.gif"></span>
+			<span style="padding:5px 2px;"><input type="image" id="ws-xls-5" value="<?= wfMsg("wikiastats_export_xls") ?>" src="/extensions/wikia/WikiaStats/images/xls.gif" /></span>
 		</div>	
 		<br />
 		<span class="small"><?= wfMsg('wikiastats_article_size_subtitle') ?></span>
@@ -703,11 +703,11 @@ for ($i = 1; $i <= 6; $i++)
 			$text = "&lt;&nbsp;".sprintf ("%.0f", $s/1024)." kB";
 		}
 ?>		
-		<span class="medium" id="article-size-<?=$s?>" onClick="selectArticleSize('<?=$s?>');" style="border:1px outset white; cursor:pointer; padding:2px;"><?=$text?></span>
+		<span class="medium" id="article-size-<?=$s?>" onclick="selectArticleSize('<?=$s?>');" style="border:1px outset white; cursor:pointer; padding:2px;"><?=$text?></span>
 <?php
 	}
 ?>		
-		<span class="medium"><input type="button" class="medium" id="ws-article-size-show" value="<?= wfMsg('wikiastats_show') ?>"></span>
+		<span class="medium"><input type="button" class="medium" id="ws-article-size-show" value="<?= wfMsg('wikiastats_show') ?>" /></span>
 	</div>
 	<div id="ws-progress-article-bar"></div>
 	<div class="clear">&nbsp;</div>
@@ -719,7 +719,7 @@ for ($i = 1; $i <= 6; $i++)
 	<div id="ws-namespace-count-title" style="clear:left;width:auto;float:left">
 		<div valign="middle">
 			<a href="javascript:void(0)" id="ws-namespace-count-show"><?= wfMsg('wikiastats_namespace_records'); ?></a>
-			<span style="padding:5px 2px;"><input type="image" id="ws-xls-6" value="<?= wfMsg("wikiastats_export_xls") ?>" src="/extensions/wikia/WikiaStats/images/xls.gif"></span>
+			<span style="padding:5px 2px;"><input type="image" id="ws-xls-6" value="<?= wfMsg("wikiastats_export_xls") ?>" src="/extensions/wikia/WikiaStats/images/xls.gif" /></span>
 		</div>	
 	</div>
 	<div id="ws-progress-namespace-bar"></div>
@@ -732,7 +732,7 @@ for ($i = 1; $i <= 6; $i++)
 	<div id="ws-page-edits-count-title" style="clear:left;width:auto;float:left">
 		<div valign="middle">
 			<a href="javascript:void(0)" id="ws-page-edits-count-show"><?= wfMsg('wikiastats_page_edits'); ?></a>
-			<span style="padding:5px 2px;"><input type="image" id="ws-xls-7" value="<?= wfMsg("wikiastats_export_xls") ?>" src="/extensions/wikia/WikiaStats/images/xls.gif"></span>
+			<span style="padding:5px 2px;"><input type="image" id="ws-xls-7" value="<?= wfMsg("wikiastats_export_xls") ?>" src="/extensions/wikia/WikiaStats/images/xls.gif" /></span>
 		</div>	
 	</div>
 	<div id="ws-progress-page-edits-bar"></div>
@@ -748,7 +748,7 @@ if ( !empty($main_tbl) && (empty($show_chart)) )
 	if ($selCity > 0)
 	{
 ?>
-<script>
+<script type="text/javascript">
 document.getElementById( "ws-edits-article" ).style.display = "block";
 document.getElementById( "ws-active-wikians" ).style.display = "block";
 document.getElementById( "wk-select-month-wikians-div" ).style.display = "none";

@@ -471,8 +471,7 @@ function axWStatisticsWikiaList() {
         $mStats = new WikiaGenericStats($wgUser->getID());
         
         $cityStatsList = $mStats->getWikiaOrderStatsList();
-        if (is_array($cityStatsList) && (empty($cityStatsList[0])))
-        {
+        if (is_array($cityStatsList) && (empty($cityStatsList[0]))) {
             $cityStatsList = array_merge(array(0=>0) /*All stats*/, $cityStatsList);
         }
         $cityList = $mStats->getWikiaAllCityList();
@@ -492,7 +491,8 @@ function axWStatisticsWikiaList() {
 		foreach ($cityStatsList as $id => $cityId) {
 			if (!empty($cityList[$cityId])) {
 				$loop++;
-				$title = ($cityList[$cityId]['title'] == "&Sigma;") ? wfMsg("wikiastats_trend_all_wikia_text") : $cityList[$cityId]['title'];
+				//if ($loop > 300) break;
+				$title = ($cityList[$cityId]['title'] == "&Sigma;") ? wfMsg("wikiastats_trend_all_wikia_text") . " " . wfMsg("wikiastats_always_selected") : $cityList[$cityId]['title'];
 				$urlshort = ($cityList[$cityId]['title'] == "&Sigma;") ? $title : ucfirst($cityList[$cityId]['urlshort']) . " (".$title.")";
 				#(!empty($cityList[$cityId]['urlshort'])) ? " (".ucfirst($cityList[$cityId]['urlshort']).")" : "";
 				$main_select[] = array("city" => $cityId, "name" => ucfirst($urlshort));

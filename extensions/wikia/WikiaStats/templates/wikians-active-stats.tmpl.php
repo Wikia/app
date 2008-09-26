@@ -60,17 +60,17 @@ foreach ($wkActive as $rank => $data)
 	$outLastEdit = substr(wfMsg(strtolower(date("F",$data['last_edit']))), 0, 3) . " " . date("d",$data['last_edit']) .", ".date("Y",$data['last_edit']);
 ?>
 <tr>
-	<td class="eb" nowrap><a href="<?= trim($city_url) ?><?= Title::makeTitle(NS_USER, $data['user_name'])->getLocalURL() ?>" target="new"><?= $data['user_name'] ?></a></td>
-	<td class="eb" nowrap><?= $rank ?></td>
-	<td class="eb" nowrap><?= $rank_change ?></td>
-	<td class="eb" nowrap><?= $data['edits_last'] ?></td>
-	<td class="eb" nowrap><?= $data['total'] ?></td>
-	<td class="eb" nowrap><?= $data['total_other'] ?></td>
-	<td class="eb" nowrap><?= $data['edits_other_last'] ?></td>
-	<td class="eb" nowrap><?= $outFirstEdit ?></td>
-	<td class="eb" nowrap><?= $data['first_edit_ago'] ?></td>
-	<td class="eb" nowrap><?= $outLastEdit ?></td>
-	<td class="eb" nowrap><?= $data['last_edit_ago'] ?></td>
+	<td class="eb" style="white-space:nowrap;"><a href="<?= trim($city_url) ?><?= Title::makeTitle(NS_USER, $data['user_name'])->getLocalURL() ?>" target="new"><?= $data['user_name'] ?></a></td>
+	<td class="eb" style="white-space:nowrap;"><?= $rank ?></td>
+	<td class="eb" style="white-space:nowrap;"><?= $rank_change ?></td>
+	<td class="eb" style="white-space:nowrap;"><?= $data['edits_last'] ?></td>
+	<td class="eb" style="white-space:nowrap;"><?= $data['total'] ?></td>
+	<td class="eb" style="white-space:nowrap;"><?= $data['total_other'] ?></td>
+	<td class="eb" style="white-space:nowrap;"><?= $data['edits_other_last'] ?></td>
+	<td class="eb" style="white-space:nowrap;"><?= $outFirstEdit ?></td>
+	<td class="eb" style="white-space:nowrap;"><?= $data['first_edit_ago'] ?></td>
+	<td class="eb" style="white-space:nowrap;"><?= $outLastEdit ?></td>
+	<td class="eb" style="white-space:nowrap;"><?= $data['last_edit_ago'] ?></td>
 </tr>	
 <?php
 }
