@@ -12,11 +12,16 @@ EOT;
     exit( 1 );
 }
 
+$wgExtensionFunctions[] = 'wfSpecialFunnel';
 $wgExtensionCredits['specialpage'][] = array(
 	'name' => 'Funnel',
 	'author' => 'Andrew Yasinsky',
 	'description' => 'Funnel Redirects',
 );
+
+function wfSpecialFunnel() {
+  //init
+}
 
 function wfFunnel(){
   global $IP, $wgMessageCache, $wgAutoloadClasses, $wgSpecialPages, $wgOut, $wgRequest, $wgTitle, $wgLanguageCode;
@@ -28,7 +33,9 @@ function wfFunnel(){
   $params = array();
 
   parse_str( $_SERVER['QUERY_STRING'], $params );  
-
+  
+  if( isset($_REQUEST['action']) ) return true; //don't redirect on action=edit and the like
+  
   if( ( $_SERVER['REQUEST_METHOD'] == 'GET' ) && ( $_SERVER['PHP_SELF'] == '/index.php' ) && ( trim( $params['title'] ) != '' ) && ( $isContent ) ){ 
 		
 		$page = $params['title'];
@@ -37,11 +44,9 @@ function wfFunnel(){
 		
 		$query = '';
 		
-		if( count($params) > 0 ){
-			$query = '?' . http_build_query( $params );
-		}
+		if( count($params) > 0 ) return true; // we only care to rewrite content not its permutation
 		
-		$url = 'http://'.$_SERVER['SERVER_NAME'].$prefix.$page.$query;
+		$url = 'http://'.$_SERVER['SERVER_NAME'].$prefix.$page;
 	  	header( "Location: {$url}", true, 301);
 		exit(0);
 		
