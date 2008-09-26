@@ -22,7 +22,7 @@ $dbw = wfGetDB(DB_MASTER);
 $dbr->selectDB($sLogsDb);
 $dbw->selectDB($sLogsDb);
 
-$oResource = $dbr->query("SELECT up_path, up_created FROM upload_path WHERE up_sent<>'y' ORDER BY up_created ASC" . ($iImageLimit ? " LIMIT " . addslashes($iImageLimit) : ""));
+$oResource = $dbr->query("SELECT up_id, up_path FROM upload_path WHERE up_sent<>'y' ORDER BY up_created ASC" . ($iImageLimit ? " LIMIT " . addslashes($iImageLimit) : ""));
 
 if($oResource) {
  while($oResultRow = $dbr->fetchObject($oResource)) {
@@ -53,7 +53,7 @@ if($oResource) {
  	
  	if($bFileCopied && !$bIsDryRun) {
  		// update flag in db
- 		$dbw->query("UPDATE upload_path SET up_sent='y' WHERE up_path='" . $oResultRow->up_path . "' AND up_created='" . $oResultRow->up_created . "'");
+ 		$dbw->query("UPDATE upload_path SET up_sent='y' WHERE up_id='" . $oResultRow->up_id . "'");
 		 $dbw->immediateCommit();
  	}
  }
