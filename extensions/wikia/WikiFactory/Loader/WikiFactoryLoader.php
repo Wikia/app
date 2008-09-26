@@ -528,9 +528,7 @@ class WikiFactoryLoader {
 					/**
 					 * skip this variable
 					 */
-					if( !empty( self::$mDebug ) ) {
-						error_log("wikifactory: {$oRow->cv_name} with value {$tUnserVal} skipped");
-					}
+					$this->debug( "{$oRow->cv_name} with value {$tUnserVal} skipped" );
 				}
 				else {
 					$this->mVariables[ $oRow->cv_name ] = $tUnserVal;
@@ -551,10 +549,7 @@ class WikiFactoryLoader {
 					$this->mExpireValuesCacheTimeout
 				);
 			}
-			if( !empty( self::$mDebug ) ) {
-				error_log( "wikifactory: reading from database, id {$this->mWikiID}, count ".count( $this->mVariables ) );
-			}
-			wfDebug( "wikifactory: reading from database, id {$this->mWikiID}, count ".count( $this->mVariables ), true );
+			$this->debug( "reading from database, id {$this->mWikiID}, count ".count( $this->mVariables ) );
 			wfProfileOut( __METHOD__."-varsdb" );
 		}
 
@@ -683,7 +678,7 @@ class WikiFactoryLoader {
 	 * with flat arrays. Why not array_merge? For safety.
 	 *
 	 *
-	 * @author eloy@wikia
+	 * @author eloy@wikia-inc.com
 	 * @access public
 	 * @static
 	 *
@@ -707,6 +702,25 @@ class WikiFactoryLoader {
 					}
 				}
 			}
+		}
+	}
+
+	/**
+	 * debug
+	 *
+	 * simple conditional function for logging infos and errors
+	 *
+	 * @author Krzysztof Krzyżaniak <eloy@wikia-inc.com>
+	 * @access private
+	 *
+	 * @param	string	$message	log message
+	 *
+	 * @return nothing
+	 */
+	private function debug( $message ) {
+		wfDebug("wikifactory: {$message}", true);
+		if( !empty( self::$mDebug ) ) {
+			error_log("wikifactory: {$message}");
 		}
 	}
 };
