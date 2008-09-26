@@ -26,7 +26,7 @@ function wfSpecialFunnel() {
 function wfFunnel(){
   global $IP, $wgMessageCache, $wgAutoloadClasses, $wgSpecialPages, $wgOut, $wgRequest, $wgTitle, $wgLanguageCode, $wgUser;
  
-  if( $wgUser->isLoggedIn ) return true; //don't redirect for logged in users
+  if( $wgUser->isLoggedIn() ) return true; //don't redirect for logged in users
  
   $prefix = '/wiki/';
   
