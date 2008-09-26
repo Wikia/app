@@ -30,7 +30,7 @@ if($oResource) {
  	$sDestPath = $oResultRow->up_path;
  	foreach($aFileServers as $sServerName) {
  		if($sServerName == 'file3') {
- 			$sDestPath = preg_replace("!^/images/(.)!", "/images_file3/by_id/$1/$1", $sDestPath);
+ 			$sDestPath = preg_replace("!^/images/(.)!", "/raid/images/by_id/$1/$1", $sDestPath);
  		}
  		$sScpCommand = '/usr/bin/scp -p ' . $oResultRow->up_path . ' ' . $sUserLogin . '@' . $sServerName . ':' . $sDestPath;
  		$sScpCommand.= ' >/dev/null 2>&1';
