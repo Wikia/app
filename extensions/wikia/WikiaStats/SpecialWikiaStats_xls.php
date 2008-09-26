@@ -59,6 +59,9 @@ class WikiaStatsXLS {
 		$dbname = WikiFactory::IDtoDB($city_id);
 		if (empty($dbname)) {
 			$dbname = sprintf(DEFAULT_WIKIA_XLS_FILENAME, intval($city_id));
+		} 
+		if ($dbname == "wikicities") {
+			$dbname = "wikia";
 		}
 		#---
 		return $dbname;
