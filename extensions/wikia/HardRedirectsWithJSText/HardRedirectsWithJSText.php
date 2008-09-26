@@ -126,7 +126,7 @@ function hardRedirectWithCookie($source, $target){
 						//add namespaces except for main
 						$linktext = $source->getText();
 						if( ( $source->getNamespace() != NS_MAIN ) && ( stripos($linktext, $source->getNsText() . ':' )===false ) ){
-							$linktext = $source->getNsText() . ':' . $linktext;							
+							$linktext = str_replace( '_', ' ', $source->getNsText() ) . ':' . $linktext;							
 						}
 						
 						 setcookie( $wgCookiePrefix . 'RedirectedFrom_' . md5( $target->getText() ),
