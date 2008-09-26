@@ -39,7 +39,7 @@ class WikiFactoryLoader {
 
 	public $mServerName, $mWikiID, $mCityHost, $mCityID, $mOldServerName;
 	public $mDomain, $mVariables, $mIsWikiaActive, $mAlwaysFromDB;
-	public $mDevelDomainPart, $mNoRedirect, $mTimestamp, $mAdCategory;
+	public $mNoRedirect, $mTimestamp, $mAdCategory;
 	public $mExpireDomainCacheTimeout = 86400; #--- 24 hours
 	public $mExpireValuesCacheTimeout = 86400; #--- 24 hours
 
@@ -108,17 +108,9 @@ class WikiFactoryLoader {
 		$this->mDBhandler = null;
 
 		if( !empty( $wgDevelEnvironment ) ) {
-			if( is_array($wgDevelDomains) ) {
-				$this->mDevelDomains = array_merge( $this->mDevelDomains, $wgDevelDomains );
-			}
-			foreach( $this->mDevelDomains as $domain ) {
-				if( stripos( $this->mServerName, $domain ) ) {
-					$this->mServerName = str_replace( $domain, "wikia.com", $this->mServerName );
-					$this->mDevelDomainPart = $domain;
-				}
-			}
+			$wgWikiFactoryDomains = array_merge( $wgDevelDomains, $wgWikiFactoryDomains );
 			self::$mDebug = 1;
-			$this->mAlwaysFromDB = 1;   #--- skip reading from memcache
+			$this->mAlwaysFromDB = 1;
 		}
 
 		/**
@@ -532,10 +524,14 @@ class WikiFactoryLoader {
 				$tUnserVal = unserialize( $oRow->cv_value );
 				restore_error_handler();
 
-				if( !empty($wgDevelEnvironment) && $oRow->cv_name === "wgServer" ) {
-					$tUnserVal = str_replace( "wikia.com", $this->mDevelDomainPart, $tUnserVal );
+				if( !empty( $wgDevelEnvironment ) && $oRow->cv_name === "wgServer" ) {
+					/**
+					 * skip this variable
+					 */
 				}
-				$this->mVariables[$oRow->cv_name] = $tUnserVal;
+				else {
+					$this->mVariables[ $oRow->cv_name ] = $tUnserVal;
+				}
 			}
 			$dbr->freeResult( $oRes );
 
