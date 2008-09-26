@@ -66,6 +66,7 @@ class WikiFactoryLoader {
 	 */
 	public function  __construct( $id = null, $server_name = null ) {
 		global $wgDBname, $wgSharedDB, $wgDevelEnvironment, $wgDevelDomains;
+		global $wgWikiFactoryDomains;
 
 		if( !is_null( $id ) ) {
 			/**
@@ -132,14 +133,6 @@ class WikiFactoryLoader {
 		 *
 		 * additionally we remove www. before matching
 		 */
-		$wgWikiFactoryDomains = array( #--- eventually will be in CommonSettings
-			"wikia.net",
-			"wikia.org",
-			"wikicities.com",
-			"wikicities.net",
-			"wikicities.org"
-		);
-
 		if( isset( $wgWikiFactoryDomains ) && is_array( $wgWikiFactoryDomains ) ) {
 			foreach( $wgWikiFactoryDomains as $domain ) {
 				/**
