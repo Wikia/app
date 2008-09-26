@@ -15,8 +15,6 @@ header("Pragma: no-cache");
 header("Expires: 0");
 echo <<<EOT
 #
-# robots.txt for http://www.wikipedia.org/ and friends
-#
 # Please note: There are a lot of pages on this site, and there are
 # some misbehaved spiders out there that go _way_ too fast. If you're
 # irresponsible, your access to the site may be blocked.
@@ -191,22 +189,6 @@ function getLangSpecificNamespace( &$lang, $code ){
    $r .= 'Disallow: /*title=' . urlencode( $ns[NS_SPECIAL] ) .":*\n";
    $r .= 'Disallow: /wiki/' . urlencode( $ns[NS_SPECIAL] ) ."%3A*\n";
    $r .= 'Disallow: /*title=' . urlencode( $ns[NS_SPECIAL] ) ."%3A*\n";
-   $r .= 'Disallow: /wiki/' . urlencode( $ns[NS_HELP] ).":*\n";
-   $r .= 'Disallow: /*title=' . urlencode( $ns[NS_HELP] ).":*\n";
-   $r .= 'Disallow: /wiki/' . urlencode( $ns[NS_HELP] )."%3A*\n";
-   $r .= 'Disallow: /*title=' . urlencode( $ns[NS_HELP] )."%3A*\n";
-   $r .= 'Disallow: /wiki/' . urlencode( $ns[NS_HELP_TALK] ).":*\n";
-   $r .= 'Disallow: /*title=' . urlencode( $ns[NS_HELP_TALK] ).":*\n";
-   $r .= 'Disallow: /wiki/' . urlencode( $ns[NS_HELP_TALK] )."%3A*\n";
-   $r .= 'Disallow: /*title=' . urlencode( $ns[NS_HELP_TALK] )."%3A*\n";
-   $r .= 'Disallow: /wiki/' . urlencode( $ns[NS_TEMPLATE] ).":*\n";
-   $r .= 'Disallow: /*title=' . urlencode( $ns[NS_TEMPLATE] ).":*\n";
-   $r .= 'Disallow: /wiki/' . urlencode( $ns[NS_TEMPLATE] )."%3A*\n";
-   $r .= 'Disallow: /*title=' . urlencode( $ns[NS_TEMPLATE] )."%3A*\n";
-   $r .= 'Disallow: /wiki/' . urlencode( $ns[NS_TEMPLATE_TALK] ).":*\n";
-   $r .= 'Disallow: /*title=/' . urlencode( $ns[NS_TEMPLATE_TALK] ).":*\n";
-   $r .= 'Disallow: /wiki/' . urlencode( $ns[NS_TEMPLATE_TALK] )."%3A*\n";
-   $r .= 'Disallow: /*title=/' . urlencode( $ns[NS_TEMPLATE_TALK] )."%3A*\n";
 	
   return $r;
 }
