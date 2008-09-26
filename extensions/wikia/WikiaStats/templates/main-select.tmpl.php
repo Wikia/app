@@ -188,7 +188,7 @@ pageLoaderInit('<?=addslashes(wfMsg('wikiastats_generate_stats_msg'))?>', '<?=ad
 					<?=wfMsg('wikiastats_search_text')?> <input type="text" name="ws-city-name" autocomplete="off" id="ws-city-name" class="ws-input" style="width:auto" />	
 				</td>
 				<td align="left" valign="top" height="100%" rowspan="2" style="padding: 2px 10px">
-					<div style="float:right;clear:both;font-size:8pt;height:12px;"><a href="javascript:void(0);" onClick="redirectTooldStats();"><?=wfMsg('wikiastats_see_old_statistics_page')?></a></div>
+					<div style="float:right;clear:both;font-size:8pt;height:12px;"><a href="http://help.wikia.com/wiki/Help:WikiaStats" target="_new"><?=wfMsg('wikiastats_see_old_statistics_page')?></a></div>
 					<fieldset style="width:360px;">
 						<legend><?=wfMsg('wikiastats_wikia_information')?></legend>
 						<div id="wk-stats-info-panel" class="wk-stats-info-panel"></div>
