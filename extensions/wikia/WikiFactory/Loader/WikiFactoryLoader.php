@@ -528,6 +528,9 @@ class WikiFactoryLoader {
 					/**
 					 * skip this variable
 					 */
+					if( !empty( self::$mDebug ) ) {
+						error_log("wikifactory: {$oRow->cv_name} with value {$tUnserVal} skipped");
+					}
 				}
 				else {
 					$this->mVariables[ $oRow->cv_name ] = $tUnserVal;
