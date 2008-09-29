@@ -34,13 +34,15 @@ $wgExtensionAliasesFiles['MultiUpload'] = $dir . 'SpecialMultipleUpload.alias.ph
 function wfMultipleUpload() {
 	SpecialPage::AddPage(new SpecialPage('MultipleUpload'));
 
-	global $wgMaxUploadFiles, $wgHooks;
+	global $wgMaxUploadFiles, $wgHooks, $wgSpecialPageGroups;
 	$wgMaxUploadFiles = intval( $wgMaxUploadFiles );
 	wfLoadExtensionMessages( 'MultiUpload' );
 
     $wgHooks['MonoBookTemplateToolboxEnd'][]  = 'wfMultiUploadToolbox';
     $wgHooks['UploadComplete'][]  = 'wfMultiUploadShowSuccess';
     $wgHooks['SkinTemplateBuildNavUrlsNav_urlsAfterPermalink'][] = 'wfSpecialMultiUploadNav';
+
+    $wgSpecialPageGroups['MultipleUpload'] = 'media';
 
 }
 

@@ -42,6 +42,7 @@ $wgExtensionCredits['specialpage'][] = array(
 
 $wgExtensionMessagesFiles['ImportFreeImages'] = dirname(__FILE__) . '/ImportFreeImages.i18n.php';
 $wgSpecialPages['ImportFreeImages'] = array( 'SpecialPage', 'ImportFreeImages' );
+$wgSpecialPageGroups['ImportFreeImages'] = 'media';
 
 # Note: we can't delay message loading currently, since we don't override SpecialPage::execute(),
 # which calls SpecialPage::getDescription() before calling any of our functions.
