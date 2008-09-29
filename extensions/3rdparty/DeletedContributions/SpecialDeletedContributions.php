@@ -18,6 +18,8 @@ $wgExtensionCredits['specialpage'][] = array(
 $wgExtensionMessagesFiles['DeletedContributions'] = dirname(__FILE__) . '/DeletedContributions.i18n.php';
 $wgExtensionFunctions[] = 'efLoadDeletedContribs';
 
+$wgSpecialPageGroups['DeletedContributions'] = 'users';
+
 $wgHooks['ContributionsToolLinks'][] = 'wfLoadContribsLink';
 $wgHooks['SpecialPageExecuteBeforeHeader'][] = 'wfDeletedContributionsMessages';
 
