@@ -161,6 +161,8 @@ class WikiFactoryLoader {
 	 * @author Krzysztof Krzyżaniak <eloy@wikia.com>
 	 * @access public
 	 *
+	 * @todo change new Database to LoadBalancer factory
+	 *
 	 * @return object Database	database handler
 	 */
 	public function getDB() {
@@ -174,18 +176,14 @@ class WikiFactoryLoader {
 			$server = array_rand( $wgDBservers );
 			$host = $server[0]["host"];
 			$this->mDBhandler = new Database( $host, $wgDBuser, $wgDBpassword, $this->mDBname );
-			if( !empty( self::$mDebug ) ) {
-				error_log("wikifactory: connecting to {$host}");
-			}
+			$this->debug( "connecting to {$host}" );
 		}
 		/**
 		 * and finally fallback to $wgDBserver
 		*/
 		if( is_null( $this->mDBhandler ) ) {
 			$this->mDBhandler = new Database( $wgDBserver, $wgDBuser, $wgDBpassword, $this->mDBname );
-			if( !empty( self::$mDebug ) ) {
-				error_log("wikifactory: fallback to wgDBserver {$wgDBserver}");
-			}
+			$this->debug( "fallback to wgDBserver {$wgDBserver}" );
 		}
 
 		return $this->mDBhandler;
@@ -215,9 +213,7 @@ class WikiFactoryLoader {
 			$key = WikiFactory::getDomainKey( $this->mServerName );
 			$this->mDomain = $oMemc->get( $key );
 			$this->mDomain = isset( $this->mDomain["id"] ) ? $this->mDomain : array ();
-			if( !empty( self::$mDebug ) ) {
-				error_log("wikifactory: reading from cache, key {$key}");
-			}
+			$this->debug( "reading from cache, key {$key}" );
 			wfProfileOut( __METHOD__."-domaincache" );
 		}
 
@@ -319,10 +315,7 @@ class WikiFactoryLoader {
 					$this->mExpireDomainCacheTimeout
 				);
 			}
-			wfDebug("wikifactory: {$this->mWikiID}:{$this->mServerName} (from database)", true);
-			if( !empty( self::$mDebug ) ) {
-				error_log("wikifactory: reading from database {$this->mServerName}");
-			}
+			$this->debug( "city_id={$this->mWikiID}, reading from database key {$this->mServerName}" );
 			wfProfileOut( __METHOD__."-domaindb" );
 		}
 		else {
@@ -347,10 +340,7 @@ class WikiFactoryLoader {
 		 * redirection to another url
 		 */
 		if( $this->mIsWikiaActive == 2 ) {
-			wfDebug("wikifactory: {$this->mWikiID}:{$this->mIsWikiaActive}) redirected to {$this->mCityHost}", true);
-			if ( !empty( self::$mDebug ) ) {
-				error_log( "wikifactory: redirected to {$this->mCityHost}" );
-			}
+			$this->debug( "city_id={$this->mWikiID};city_public={$this->mIsWikiaActive}), redirected to {$this->mCityHost}" );
 			header( "Location: http://{$this->mCityHost}/", true, 301 );
 			wfProfileOut( __METHOD__ );
 			exit(0);
@@ -401,10 +391,8 @@ class WikiFactoryLoader {
 			$target = $url[ "scheme" ] . "://" . $host . $url[ "path" ];
 			$target = isset( $url[ "query" ] ) ? $target . "?" . $url[ "query" ] : $target;
 
-			wfDebug("wikifactory: redirected from {$url[ "url" ]} to {$target}", true);
-			if( !empty( self::$mDebug ) ) {
-				error_log( "wikifactory: redirected from {$url[ "url" ]} to {$target}" );
-			}
+			$this->debug( "redirected from {$url[ "url" ]} to {$target}" );
+
 			header( "Location: {$target}", true, 301 );
 			wfProfileOut( __METHOD__ );
 			exit(0);
@@ -415,10 +403,7 @@ class WikiFactoryLoader {
 		 */
 		if( empty( $this->mWikiID ) || empty( $this->mIsWikiaActive ) ) {
 			global $wgNotAValidWikia;
-			wfDebug("wikifactory: {$this->mWikiID}:{$this->mIsWikiaActive}) wiki id empty or Wikia disabled", true);
-			if ( !empty( self::$mDebug ) ) {
-				error_log("wikifactory: redirected to $wgNotAValidWikia");
-			}
+			$this->debug( "redirected to {$wgNotAValidWikia}" );
 			header("Location: $wgNotAValidWikia");
 			wfProfileOut( __METHOD__ );
 			exit(0);
@@ -482,15 +467,10 @@ class WikiFactoryLoader {
 				$this->mVariables = isset( $data["data"] ) && is_array( $data["data"] )
 					? $data["data"]
 					: array ();
-				if( !empty( self::$mDebug ) ) {
-					error_log("wikifactory: reading from cache, key {$key}, count ".count( $this->mVariables ));
-				}
+				$self->debug( "wikifactory: reading from cache, key {$key}, count ".count( $this->mVariables ) );
 			}
 			else {
-				wfDebug("wikifactory: timestamp doesn't match. Cache expired", true);
-				if( !empty( self::$mDebug ) ) {
-					error_log("wikifactory: timestamp doesn't match. Cache expired");
-				}
+				$self->debug( "wikifactory: timestamp doesn't match. Cache expired" );
 			}
 			wfProfileOut( __METHOD__."-varscache" );
 		}
@@ -661,7 +641,7 @@ class WikiFactoryLoader {
 			 * only 3 parts counts
 			 */
 			if ( count( $parts ) != 3 ) {
-				wfDebug( __METHOD__." not 3 parts." );
+				$this->debug( __METHOD__." not 3 parts." ) ;
 				continue;
 			}
 			$wgGroupPermissions[trim($parts[0])][trim($parts[1])] = (bool)trim($parts[2]);
