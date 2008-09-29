@@ -128,15 +128,15 @@ function SharedHelpHook(&$out, &$text) {
 		}
 		# If getting content from memcache failed (invalidate) then just download it via HTTP
 		if(empty($content)) {
-	/*		global $wgDevelEnvironment;
+			global $wgDevelEnvironment;
 			if (empty($wgDevelEnvironment)) {
-	*/
+	
 				$urlTemplate = "http://help.wikia.com/index.php?title=Help:%s&action=render";
-	/*		}
+			}
 			else {
 				$urlTemplate = "http://help.macbre.dev.poz.wikia-inc.com/index.php?title=Help:%s&action=render"; // for testing purposes
 			}
-	*/
+	
 			$articleUrl = sprintf($urlTemplate, $wgTitle->getDBkey());
 			list($content, $c) = SharedHttp::get($articleUrl);
 
