@@ -108,6 +108,11 @@ class WikiFactoryLoader {
 		$this->mDBhandler = null;
 
 		if( !empty( $wgDevelEnvironment ) ) {
+			$wgWikiFactoryDomains = is_array( $wgWikiFactoryDomains )
+				? $wgWikiFactoryDomains : array();
+			$wgDevelDomains = is_array( $wgDevelDomains )
+				? $wgDevelDomains : array();
+
 			$wgWikiFactoryDomains = array_merge( $wgDevelDomains, $wgWikiFactoryDomains );
 			self::$mDebug = 1;
 			$this->mAlwaysFromDB = 1;
