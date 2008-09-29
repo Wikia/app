@@ -14,7 +14,7 @@ if ( ! defined( 'MEDIAWIKI' ) )
  */
 
 // change this parameter to limit the # of files one can upload
-$wgMaxUploadFiles = 5;
+$wgMaxUploadFiles = isset( $wgMaxUploadFiles ) ? $wgMaxUploadFiles : 5;
 
 $wgExtensionFunctions[] = 'wfMultipleUpload';
 
