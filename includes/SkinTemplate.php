@@ -1029,8 +1029,10 @@ class SkinTemplate extends Skin {
 		if ( $wgUseSiteCss ) {
 			$query = "usemsgcache=yes&action=raw&ctype=text/css&smaxage=$wgSquidMaxage";
 			$skinquery = '';
-			if (($us = $wgRequest->getVal('useskin', '')) !== '')
+			if (($us = $wgRequest->getVal('useskin', '')) !== '') {
+				$us = strip_tags( $us );
 				$skinquery = "&useskin=$us";
+			}
 			$sitecss .= '@import "' . self::makeNSUrl( 'Common.css', $query, NS_MEDIAWIKI) . '";' . "\n";
 			if( empty($this->themename) || $this->themename == 'custom' ) {
 				$sitecss .= '@import "' . self::makeNSUrl( ucfirst( $this->skinname ) . '.css', $query, NS_MEDIAWIKI ) . '";' . "\n";
