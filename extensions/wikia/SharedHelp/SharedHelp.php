@@ -13,7 +13,7 @@ if(!defined('MEDIAWIKI')) {
 
 $wgExtensionCredits['other'][] = array(
         'name' => 'SharedHelp',
-	'version' => 0.11,
+	'version' => 0.16,
         'description' => 'Takes pages from [[w:c:Help|Help Wikia]] and inserts them into Help namespace on this wiki',
         'author' => array('Maciej Brencz, Inez Korczyński')
 );
@@ -23,10 +23,76 @@ $wgHooks['EditPage::showEditForm:initial'][] = 'SharedHelpEditPageHook';
 $wgHooks['SearchBeforeResults'][] = 'SharedHelpSearchHook';
 $wgHooks['ParserReplaceLinkHolders'][] = 'SharedHelpReplaceLinkHolders';
 
-function SharedHelpHook(&$out, &$text) {
-	global $wgTitle, $wgMemc, $wgSharedDB, $wgDBname, $wgCityId;
+class SharedHttp extends Http {
 
-	if($wgCityId == 3322) { # Do not process for help.wikia.com
+        static function get( $url, $timeout = 'default' ) {
+                return self::request( "GET", $url, $timeout );
+        }
+
+        static function post( $url, $timeout = 'default' ) {
+                return self::request( "POST", $url, $timeout );
+        }
+
+        static function request( $method, $url, $timeout = 'default' ) {
+		global $wgHTTPTimeout, $wgHTTPProxy, $wgVersion, $wgTitle;
+
+		wfDebug( __METHOD__ . ": $method $url\n" );
+		# Use curl if available
+		if ( function_exists( 'curl_init' ) ) {
+			$c = curl_init( $url );
+			if ( self::isLocalURL( $url ) ) {
+				curl_setopt( $c, CURLOPT_PROXY, 'localhost:80' );
+			} else if ($wgHTTPProxy) {
+				curl_setopt($c, CURLOPT_PROXY, $wgHTTPProxy);
+			}
+
+			if ( $timeout == 'default' ) {
+				$timeout = $wgHTTPTimeout;
+			}
+			curl_setopt( $c, CURLOPT_TIMEOUT, $timeout );
+	
+			curl_setopt( $c, CURLOPT_HEADER, true );
+			curl_setopt( $c, CURLOPT_FOLLOWLOCATION, false );
+			
+			curl_setopt( $c, CURLOPT_USERAGENT, "MediaWiki/$wgVersion" );
+			if ( $method == 'POST' )
+				curl_setopt( $c, CURLOPT_POST, true );
+			else
+				curl_setopt( $c, CURLOPT_CUSTOMREQUEST, $method );
+
+			# Set the referer to $wgTitle, even in command-line mode
+			# This is useful for interwiki transclusion, where the foreign
+			# server wants to know what the referring page is.
+			# $_SERVER['REQUEST_URI'] gives a less reliable indication of the
+			# referring page.
+			if ( is_object( $wgTitle ) ) {
+				curl_setopt( $c, CURLOPT_REFERER, $wgTitle->getFullURL() );
+			}
+
+			ob_start();
+			curl_exec( $c );
+			$text = ob_get_contents();
+			ob_end_clean();
+
+                        # Don't return the text of error messages, return false on error
+                        if ( ( curl_getinfo( $c, CURLINFO_HTTP_CODE ) != 200 ) && ( curl_getinfo( $c, CURLINFO_HTTP_CODE ) != 301 ) ) {
+                        	$text = false;
+			}
+                        # Don't return truncated output
+                        if ( curl_errno( $c ) != CURLE_OK ) {
+                                $text = false;
+                        }
+                } else {
+                }
+                return array( $text, $c );
+	}
+
+}
+
+function SharedHelpHook(&$out, &$text) {
+	global $wgTitle, $wgMemc, $wgSharedDB, $wgDBname, $wgCityId, $wgHelpWikiId;
+
+	if($wgCityId == $wgHelpWikiId) { # Do not process for help.wikia.com
 		return true;
 	}
 
@@ -62,17 +128,32 @@ function SharedHelpHook(&$out, &$text) {
 		}
 		# If getting content from memcache failed (invalidate) then just download it via HTTP
 		if(empty($content)) {
-			global $wgDevelEnvironment;
+	/*		global $wgDevelEnvironment;
 			if (empty($wgDevelEnvironment)) {
+	*/
 				$urlTemplate = "http://help.wikia.com/index.php?title=Help:%s&action=render";
-			}
+	/*		}
 			else {
 				$urlTemplate = "http://help.macbre.dev.poz.wikia-inc.com/index.php?title=Help:%s&action=render"; // for testing purposes
 			}
-
+	*/
 			$articleUrl = sprintf($urlTemplate, $wgTitle->getDBkey());
-			$content = HTTP::get($articleUrl);
+			list($content, $c) = SharedHttp::get($articleUrl);
 
+			# if we had redirect, then store it somewhere 
+			if(curl_getinfo($c, CURLINFO_HTTP_CODE) == 301) {
+				if(preg_match("/^Location: ([^\n]+)/m", $content, $dest_url)) {
+					$destinationUrl = $dest_url[1];
+				}
+			}
+			if(isset($destinationUrl)) {
+				global $wgServer, $wgArticlePath ;
+				$destinationPage = substr( $destinationUrl, strpos( $destinationUrl, 'Help:') );
+				$out->redirect( $wgServer . str_replace( "$1", $destinationPage, $wgArticlePath ) );
+			} else {
+				$tmp = split("\r\n\r\n", $content, 2);
+				$content = $tmp[1];
+			}
 			if(strpos($content, '"noarticletext"') > 0) {
 				$sharedArticle = array('exists' => 0, 'timestamp' => wfTimestamp());
 				$wgMemc->set($sharedArticleKey, $sharedArticle);
@@ -87,28 +168,31 @@ function SharedHelpHook(&$out, &$text) {
 				$wgMemc->set($sharedArticleKey, $sharedArticle);
 				wfDebug("SharedHelp: using parser cache {$sharedArticle['cachekey']}\n");
 			}
+                        curl_close( $c );
 		}
 
 		$content = preg_replace("|<span class=\"editsection\">\[<a href=\"(.*?)\" title=\"(.*?)\">(.*?)<\/a>\]<\/span>|", "", $content);
-		$content = str_replace("http://help.wikia.com/wiki/Help:", "/wiki/Help:", $content);
+		$content = str_replace("http://help.wikia.com/wiki", "/wiki", $content);
+		$content = str_replace("/wiki/Category", "/wikia.com/wiki/Category:", $content);
+
 
 		// "this text is stored..."
 		$info = '<div class="sharedHelpInfo" style="text-align: right; font-size: smaller;padding: 5px">' . wfMsgExt('shared_help_info', 'parseinline', $wgTitle->getDBkey()) . '</div>';
 
 		if(strpos($text, '"noarticletext"') > 0) {
-			$text = '<div style="border: solid 1px; padding: 10px; margin: 5px" class="sharedHelp">' . $info . $content . '</div>';
+			$text = '<div style="border: solid 1px; padding: 10px; margin: 5px" class="sharedHelp">' . $info . $content . '<div style="clear:both"></div></div>';
 		} else {
-			$text = '<div style="border: solid 1px; padding: 10px; margin: 5px" class="sharedHelp">' . $info . $content . '</div><br/>' . $text;
+			$text = '<div style="border: solid 1px; padding: 10px; margin: 5px" class="sharedHelp">' . $info . $content . '<div style="clear:both"></div></div><br/>' . $text;
 		}
 	}
 	return true;
 }
 
 function SharedHelpEditPageHook(&$editpage) {
-	global $wgTitle, $wgCityId;
+	global $wgTitle, $wgCityId, $wgHelpWikiId;
 
 	// do not show this message on help.wikia.com
-	if ($wgCityId == 3322) {
+	if ($wgCityId == $wgHelpWikiId) {
 		return true;
 	}
 
@@ -125,10 +209,10 @@ function SharedHelpEditPageHook(&$editpage) {
 }
 
 function SharedHelpSearchHook(&$searchPage, &$term) {
-	global $wgOut, $wgCityId;
+	global $wgOut, $wgCityId, $wgHelpWikiId;
 
 	// do not show this message on help.wikia.com
-	if ($wgCityId == 3322) {
+	if ($wgCityId == $wgHelpWikiId) {
 		return true;
 	}
 
