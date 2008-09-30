@@ -397,9 +397,9 @@ class MessageCache {
 		$sidebarKey = wfMemcKey( 'sidebar', $code );
 		$parserMemc->delete( $sidebarKey );
 
-		$parserMemc->delete( wfMemcKey( 'quartzsidebar', $code ) );
-		$parserMemc->delete( wfMemcKey( 'navlinks', $code ) );
-		$parserMemc->delete( wfMemcKey( 'MonacoData', $code ) );
+		$parserMemc->delete( wfMemcKey( 'quartzsidebar' ) );
+		$parserMemc->delete( wfMemcKey( 'navlinks' ) );
+		$parserMemc->delete( wfMemcKey( 'MonacoData' ) );
 
 		wfRunHooks( "MessageCacheReplace", array( $title, $text ) );
 
