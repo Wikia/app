@@ -198,6 +198,7 @@ EOT;
 			case 'TOP_RIGHT_BOXAD': return 'tile=2;';
 			case 'LEFT_SKYSCRAPER_1': return 'tile=3;';
 			case 'LEFT_SKYSCRAPER_2': return 'tile=3;'; // same so both skyscrapers don't show. Note: This isn't working.
+			case 'LEFT_SKYSCRAPER_3': return 'tile=6;'; 
 			case 'FOOTER_BOXAD': return 'tile=5;';
 			case 'HOME_TOP_LEADERBOARD': return 'tile=1;';
 			case 'HOME_TOP_RIGHT_BOXAD': return 'tile=2;';

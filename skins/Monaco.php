@@ -1283,7 +1283,17 @@ if(isset($this->data['articlelinks']['right'])) {
 
 			</div>
 			<!-- /ARTICLE -->
-<?php		wfProfileOut( __METHOD__ . '-article'); ?>
+			<?php // Check to see if it is a super long article, if so, show bottom left nav skyscraper
+			if ($wgOut->isArticle() &&
+		            !ArticleAdLogic::isMainPage() &&
+			     ArticleAdLogic::isContentPage() && 
+			    ArticleAdLogic::isSuperLongArticle($this->data['bodytext'])) { 
+				echo '<div style="position: absolute; height: 600px; width: 160px; margin-top: -600px; left: -190px;">' .
+					AdEngine::getInstance()->getPlaceHolderDiv('LEFT_SKYSCRAPER_3', true) .
+				     '</div>' . "\n";
+			}
+					
+		wfProfileOut( __METHOD__ . '-article'); ?>
 
 			<!-- ARTICLE FOOTER -->
 <?php		wfProfileIn( __METHOD__ . '-articlefooter'); ?>
@@ -1649,8 +1659,7 @@ menuitem_array = new Array();var submenuitem_array = new Array();</script>';
 				if ($wgOut->isArticle() ){
 					if (ArticleAdLogic::isMainPage()) { //main page
 						echo '<div style="text-align: center; margin-bottom: 10px;">'. AdEngine::getInstance()->getPlaceHolderDiv('HOME_LEFT_SKYSCRAPER_2', false) .'</div>';
-					} else if ( ArticleAdLogic::isContentPage() &&
-					     	    ArticleAdLogic::isLongArticle($this->data['bodytext'])) { //valid article
+					} else if ( ArticleAdLogic::isContentPage()) { //valid article
 						echo '<div style="text-align: center; margin-bottom: 10px;">'. AdEngine::getInstance()->getPlaceHolderDiv('LEFT_SKYSCRAPER_2', false) .'</div>';
 					}
 				}

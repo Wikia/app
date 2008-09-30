@@ -1,5 +1,4 @@
--- Providers
-DROP TABLE IF EXISTS ad_provider;
+-- Providers DROP TABLE IF EXISTS ad_provider;
 CREATE TABLE ad_provider (
         provider_id TINYINT UNSIGNED AUTO_INCREMENT NOT NULL,
         provider_name VARCHAR(25),
@@ -37,6 +36,7 @@ INSERT INTO ad_slot VALUES (NULL, 'LEFT_SPOTLIGHT_1', 'monaco', '200x75', 2, 'Ye
 INSERT INTO ad_slot VALUES (NULL, 'FOOTER_SPOTLIGHT_LEFT', 'monaco', '200x75', 2, 'Yes');
 INSERT INTO ad_slot VALUES (NULL, 'FOOTER_SPOTLIGHT_MIDDLE', 'monaco', '200x75', 2, 'Yes');
 INSERT INTO ad_slot VALUES (NULL, 'FOOTER_SPOTLIGHT_RIGHT', 'monaco', '200x75', 2, 'Yes');
+INSERT INTO ad_slot VALUES (NULL, 'LEFT_SKYSCRAPER_3', 'monaco', '160x600', 2, 'No');
 
 -- Allow wikis to override slots
 DROP TABLE IF EXISTS ad_slot_override;
