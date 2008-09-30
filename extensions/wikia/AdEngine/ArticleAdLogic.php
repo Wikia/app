@@ -13,8 +13,9 @@ $wgExtensionCredits['other'][] = array(
 class ArticleAdLogic {
 
 	// Play with these levels, once we get more test cases.
-	const shortArticleThreshold = 750; // what defines a "short" article. # of characters *after* html has been stripped.
-	const longArticleThreshold = 3500; // what defines a "long" article. # of characters *after* html has been stripped.
+	const shortArticleThreshold = 650; // what defines a "short" article. # of characters *after* html has been stripped.
+	const longArticleThreshold = 3300; // what defines a "long" article. # of characters *after* html has been stripped.
+	const superLongArticleThreshold = 10000; // what defines a "super long" article. # of characters *after* html has been stripped.
 	const collisionRankThreshold = .15;  // what collison score constitutes a collision. 0-1
 	const firstHtmlThreshold = 1500; // Check this much of the html for collision causing tags
 	const pixelThreshold = 350; // how many pixels for a "wide" object that will cause a collision, in pixels
@@ -32,6 +33,13 @@ class ArticleAdLogic {
 		$length = strlen(strip_tags($html));
 		$out = $length > self::longArticleThreshold;
 		self::adDebug("Article is $length characters. Check for long article is " . var_export($out, true));
+		return $out;
+	}
+
+	public static function isSuperLongArticle($html){
+		$length = strlen(strip_tags($html));
+		$out = $length > self::superLongArticleThreshold;
+		self::adDebug("Article is $length characters. Check for super-long article is " . var_export($out, true));
 		return $out;
 	}
 
