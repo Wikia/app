@@ -28,7 +28,7 @@ function wfSpecialUploadPutInformation( $uploadForm ) {
 
 	$dbw = wfGetDBExt( DB_MASTER );
 	$dbw->insert(
-		array( "upload_log" ),
+		"upload_log",
 		array(
 			'up_id' => $title->getArticleId(),
 			'up_title' => $mTitle,
