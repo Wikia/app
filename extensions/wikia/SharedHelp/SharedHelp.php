@@ -13,7 +13,7 @@ if(!defined('MEDIAWIKI')) {
 
 $wgExtensionCredits['other'][] = array(
         'name' => 'SharedHelp',
-	'version' => 0.16,
+	'version' => 0.17,
         'description' => 'Takes pages from [[w:c:Help|Help Wikia]] and inserts them into Help namespace on this wiki',
         'author' => array('Maciej Brencz, Inez Korczyński')
 );
@@ -22,6 +22,8 @@ $wgHooks['OutputPageBeforeHTML'][] = 'SharedHelpHook';
 $wgHooks['EditPage::showEditForm:initial'][] = 'SharedHelpEditPageHook';
 $wgHooks['SearchBeforeResults'][] = 'SharedHelpSearchHook';
 $wgHooks['ParserReplaceLinkHolders'][] = 'SharedHelpReplaceLinkHolders';
+
+$wgHooks['BrokenLink'][] = 'SharedHelpBrokenLink';
 
 class SharedHttp extends Http {
 
@@ -173,8 +175,8 @@ function SharedHelpHook(&$out, &$text) {
 
 		$content = preg_replace("|<span class=\"editsection\">\[<a href=\"(.*?)\" title=\"(.*?)\">(.*?)<\/a>\]<\/span>|", "", $content);
 		$content = str_replace("http://help.wikia.com/wiki", "/wiki", $content);
-		$content = str_replace("/wiki/Category", "http://help.wikia.com/wiki/Category", $content);
-		$content = str_replace("/wiki/Advice", "http://help.wikia.com/wiki/Advice", $content);
+                $content = str_replace("/wiki/Category", "http://help.wikia.com/wiki/Category", $content);
+                $content = str_replace("/wiki/Advice", "http://help.wikia.com/wiki/Advice", $content);
 
 		// "this text is stored..."
 		$info = '<div class="sharedHelpInfo" style="text-align: right; font-size: smaller;padding: 5px">' . wfMsgExt('shared_help_info', 'parseinline', $wgTitle->getDBkey()) . '</div>';
@@ -223,6 +225,17 @@ function SharedHelpSearchHook(&$searchPage, &$term) {
 	return true;
 }
 
+
+function SharedHelpBrokenLink( $linker, $nt, $query, $u, $style, $prefix, $text, $inside, $trail  ) {
+	if ($nt->getNamespace() == 12) {
+		//not red, blue
+		$style = $linker->getInternalLinkAttributesObj( $nt, $text, '', $titleAttr );
+		$u = str_replace( "&amp;action=edit&amp;redlink=1", "", $u );
+		$u = str_replace( "?action=edit&amp;redlink=1&amp;", "?", $u );
+		$u = str_replace( "?action=edit&amp;redlink=1", "", $u );	
+	}
+	return true;
+}
 
 function SharedHelpReplaceLinkHolders($title, $colours, $key) {
 	if ($title->getNamespace() == 12) {
