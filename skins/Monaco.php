@@ -1284,10 +1284,12 @@ if(isset($this->data['articlelinks']['right'])) {
 			</div>
 			<!-- /ARTICLE -->
 			<?php // Check to see if it is a super long article, if so, show bottom left nav skyscraper
+			global $wgContLang;
 			if ($wgOut->isArticle() &&
-		            !ArticleAdLogic::isMainPage() &&
+			    !$wgContLang->isRTL() && // Since this is in the left nav, not suitable for right-to-left languages
+		            !ArticleAdLogic::isMainPage() && 
 			     ArticleAdLogic::isContentPage() && 
-			    ArticleAdLogic::isSuperLongArticle($this->data['bodytext'])) { 
+			     ArticleAdLogic::isSuperLongArticle($this->data['bodytext'])) { 
 				echo '<div style="position: absolute; height: 600px; width: 160px; margin-top: -600px; left: -190px;">' .
 					AdEngine::getInstance()->getPlaceHolderDiv('LEFT_SKYSCRAPER_3', true) .
 				     '</div>' . "\n";
@@ -1644,7 +1646,7 @@ menuitem_array = new Array();var submenuitem_array = new Array();</script>';
 					if (ArticleAdLogic::isMainPage()) { //main page
 						echo '<div style="text-align: center; margin-bottom: 10px;">'. AdEngine::getInstance()->getPlaceHolderDiv('HOME_LEFT_SKYSCRAPER_1', false) .'</div>';
 					} else if ( ArticleAdLogic::isContentPage() &&
-					     	    ! ArticleAdLogic::isShortArticle($this->data['bodytext'])) { //valid article
+					     	   !ArticleAdLogic::isShortArticle($this->data['bodytext'])) { //valid article
 						echo '<div style="text-align: center; margin-bottom: 10px;">'. AdEngine::getInstance()->getPlaceHolderDiv('LEFT_SKYSCRAPER_1', false) .'</div>';
 					}
 				}
@@ -1659,7 +1661,8 @@ menuitem_array = new Array();var submenuitem_array = new Array();</script>';
 				if ($wgOut->isArticle() ){
 					if (ArticleAdLogic::isMainPage()) { //main page
 						echo '<div style="text-align: center; margin-bottom: 10px;">'. AdEngine::getInstance()->getPlaceHolderDiv('HOME_LEFT_SKYSCRAPER_2', false) .'</div>';
-					} else if ( ArticleAdLogic::isContentPage()) { //valid article
+					} else if ( ArticleAdLogic::isContentPage() &&
+					     	   !ArticleAdLogic::isShortArticle($this->data['bodytext'])) { //valid article
 						echo '<div style="text-align: center; margin-bottom: 10px;">'. AdEngine::getInstance()->getPlaceHolderDiv('LEFT_SKYSCRAPER_2', false) .'</div>';
 					}
 				}
