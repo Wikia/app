@@ -227,7 +227,7 @@ function SharedHelpSearchHook(&$searchPage, &$term) {
 function SharedHelpBrokenLink( $linker, $nt, $query, $u, $style, $prefix, $text, $inside, $trail  ) {
 	if ($nt->getNamespace() == 12) {
 		//not red, blue
-		$style = $linker->getInternalLinkAttributesObj( $nt, $text, '', $titleAttr );
+		$style = $linker->getInternalLinkAttributesObj( $nt, $text, '' );
 		$u = str_replace( "&amp;action=edit&amp;redlink=1", "", $u );
 		$u = str_replace( "?action=edit&amp;redlink=1&amp;", "?", $u );
 		$u = str_replace( "?action=edit&amp;redlink=1", "", $u );	
