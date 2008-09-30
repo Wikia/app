@@ -395,4 +395,21 @@ class ArticleAdLogic {
 		
 	}
 
+
+	/* Function to guess the height, in pixels of the supplied html */
+	public function getArticleHeight($html){
+		static $lastMd5, $lastResult;
+
+		$currentMd5 = md5($html);
+		if ($currentMd5 == $lastMd5 ){
+			// function was called again with the same html as last time.
+			return $lastResult;
+		}
+
+		
+		$lastMd5 = $currentMd5;
+		$lastResult = $result;
+		return $result;
+	}
+
 }
