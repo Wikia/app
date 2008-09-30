@@ -21,7 +21,7 @@ class AdProviderOpenX implements iAdProvider {
 		'TOP_RIGHT_BOXAD' => 631,
 		'LEFT_SKYSCRAPER_1' => 632,
 		'LEFT_SKYSCRAPER_2' => 633,
-		'LEFT_SKYSCRAPER_3' => 639, // FIXME This is just here for testing, will need to be changed once I know the real zone
+		'LEFT_SKYSCRAPER_3' => 652, 
 		'FOOTER_BOXAD' => 634
 	);
 

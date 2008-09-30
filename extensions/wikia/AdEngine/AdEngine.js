@@ -141,4 +141,26 @@ AdEngine.displaySlotIfAd = function (slotname) {
 	if($(slotname + '_load').innerHTML.indexOf(noadgif) == -1) {
 		YAHOO.util.Dom.setStyle(slotname, 'display', 'block');
 	}
-}
+};
+
+/* For testing click through rates on various placements of ads. 
+ * Accepts a slotname, checks to see which bucket this user should be in,
+ * and then adjusts the style for the containing div. The name of the bucket
+ * is returned so that it can be passed to the ad call for reporting.
+ */
+/* Disabled for now, next release 
+AdEngine.placementBucketTest = function (slotname) {
+	
+};
+*/
+
+/* Return the meta keywords so they can be passed as hints */
+AdEngine.getKeywords = function () {
+	var metaTags = document.getElementsByTagName('meta');
+	for (i = 0; i < metaTags.length; i++){
+		if (metaTags[i].name == "keywords"){
+			return metaTags[i].content;
+		}
+	}
+	return '';
+};
