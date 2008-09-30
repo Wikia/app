@@ -39,7 +39,7 @@ function wfNotifyOnPageChangeComplete($title, $timestamp, $watcher) {
 
 	$nl_id = $dbw->nextSequenceValue( 'notify_log_nl_id_seq' );
 	$dbw->insert(
-		array( "notify_log"),
+		"notify_log",
 		array(
 			'nl_id' 		=> $nl_id,
 			'nl_city'		=> intval($wgCityId),
