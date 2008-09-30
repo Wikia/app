@@ -27,8 +27,8 @@ function wfLinkSuggestToggle($toggles, $default_array = false) {
 	return true;
 }
 
-$wgHooks['EditForm::AfterEdit:Form'][] = 'AddLinkSuggest';
-function AddLinkSuggest($editPage) {
+$wgHooks['EditForm::MultiEdit:Form'][] = 'AddLinkSuggest';
+function AddLinkSuggest($a, $b, $c, $d) {
 	global $wgOut, $wgExtensionsPath, $wgStyleVersion, $wgUser;
 	if($wgUser->getOption('disablelinksuggest') != true) {
 		$wgOut->addHTML('<div id="wpTextbox1_container" class="yui-ac-container"></div>');
