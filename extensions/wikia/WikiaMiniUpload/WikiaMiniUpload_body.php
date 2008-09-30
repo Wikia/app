@@ -1,13 +1,18 @@
 <?php
 /*
  * @author Inez Korczyński
+ * @author Bartek Łapiński
  */
 
 class WikiaMiniUpload {
 
-	function loadMain() {
+	function loadMain( $error = false ) {
 		$tmpl = new EasyTemplate(dirname(__FILE__).'/templates/');
-		$tmpl->set_vars(array('result' => $this->recentlyUploaded()));
+		$tmpl->set_vars(array(
+				'result' => $this->recentlyUploaded(),
+				'error'  => $error
+				)
+		);
 		return $tmpl->execute("main");
 	}
 
@@ -83,17 +88,105 @@ class WikiaMiniUpload {
 		return $this->detailsPage($props);
 	}
 
+	function checkImage() {
+		global $IP, $wgRequest;
+	
+		$mFileSize = $wgRequest->getFileSize( 'wpUploadFile' );
+		$mSrcName = $wgRequest->getFileName( 'wpUploadFile' );
+//		$mTempPath = $wgRequest->get
+		$filtered = wfStripIllegalFilenameChars( $mSrcName );
+		$form = new UploadForm( $wgRequest );
+
+		// no filename or zero size	
+		if( trim( $mSrcName ) == '' || empty( $mFileSize ) ) {
+                        return UploadForm::EMPTY_FILE;
+                }
+	
+		//illegal filename
+		$nt = Title::makeTitleSafe( NS_IMAGE, $filtered );
+                if( is_null( $nt ) ) {
+                        return UploadForm::ILLEGAL_FILENAME;
+                }
+	
+		// extensions check
+		list( $partname, $ext ) = $form->splitExtensions( $filtered );
+
+                if( count( $ext ) ) {
+                        $finalExt = $ext[count( $ext ) - 1];
+                } else {
+                        $finalExt = '';
+                }
+
+		// for more than one "extension"
+		if( count( $ext ) > 1 ) {
+			for( $i = 0; $i < count( $ext ) - 1; $i++ )
+				$partname .= '.' . $ext[$i];
+		}
+
+		if( strlen( $partname ) < 1 ) {
+			return UploadForm::MIN_LENGHT_PARTNAME;
+		}
+
+		$form->mFileProps = File::getPropsFromPath( $form->mTempPath, $finalExt );
+		$form->checkMacBinary();
+		$veri = $form->verify( $form->mTempPath, $finalExt );
+
+		if( $veri !== true ) { //it's a wiki error...
+//			$resultDetails = array( 'veri' => $veri );
+			return UploadForm::VERIFICATION_ERROR;
+		}
+
+                global $wgCheckFileExtensions, $wgStrictFileExtensions;
+                global $wgFileExtensions, $wgFileBlacklist;
+                if ($finalExt == '') {
+                        return UploadForm::FILETYPE_MISSING;
+                } elseif ( $form->checkFileExtensionList( $ext, $wgFileBlacklist ) ||
+                                ($wgCheckFileExtensions && $wgStrictFileExtensions &&
+                                        !$form->checkFileExtension( $finalExt, $wgFileExtensions ) ) ) {
+                        return UploadForm::FILETYPE_BADTYPE;
+                }
+
+		return UploadForm::SUCCESS;			
+	}
+
+	function translateError ( $error ) {
+		switch( $error ) {
+			case UploadForm::SUCCESS:
+				return false;
+			case UploadForm::EMPTY_FILE:
+				return wfMsg( 'emptyfile' );
+			case UploadForm::MIN_LENGHT_PARTNAME:
+				return wfMsg( 'minlength1' );
+			case UploadForm::ILLEGAL_FILENAME:
+				return wfMsg( 'illegalfilename' );
+			case UploadForm::FILETYPE_MISSING:
+				return wfMsg( 'filetype-missing' );
+			case UploadForm::FILETYPE_BADTYPE:
+				return wfMsg( 'filetype-bad-extension' );
+			case UploadForm::VERIFICATION_ERROR:
+				return "File type verification error!" ;
+			default:
+				return false;
+		}
+	}
+
 	function uploadImage() {
-		global $wgRequest, $wgUser;
-		$tempname = 'Temp_file_'.$wgUser->getID().'_'.rand(0, 1000);
-		$file = new FakeLocalFile(Title::newFromText($tempname, 6), RepoGroup::singleton()->getLocalRepo());
-		$file->upload($wgRequest->getFileTempName('wpUploadFile'), '', '');
-		$props = array();
-		$props['file'] = $file;
-		$props['name'] = $wgRequest->getFileName('wpUploadFile');
-		$props['mwname'] = $tempname;
-		$props['upload'] = true;
-		return $this->detailsPage($props);
+		global $IP, $wgRequest, $wgUser;
+
+		$check_result = $this->checkImage() ;
+		if (UploadForm::SUCCESS == $check_result) {
+			$tempname = 'Temp_file_'.$wgUser->getID().'_'.rand(0, 1000);
+			$file = new FakeLocalFile(Title::newFromText($tempname, 6), RepoGroup::singleton()->getLocalRepo());
+			$file->upload($wgRequest->getFileTempName('wpUploadFile'), '', '');
+			$props = array();
+			$props['file'] = $file;
+			$props['name'] = $wgRequest->getFileName('wpUploadFile');
+			$props['mwname'] = $tempname;
+			$props['upload'] = true;
+			return $this->detailsPage($props);
+		} else {			
+			return $this->loadMain( $this->translateError( $check_result ) );
+		}
 	}
 
 	function detailsPage($props) {

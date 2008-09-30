@@ -234,3 +234,7 @@ ImageUploadOptionsTable img {
 	font-size: 11pt;
 	margin-top: 10px !important;
 }
+
+#WMU_error_box {
+	display: none;
+}

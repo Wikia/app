@@ -231,10 +231,74 @@ function WMU_upload(e) {
 		alert(wmu_warn2);
 		return false;
 	} else {
-		WMU_track('upload/defined'); // tracking
-		WMU_indicator(1, true);
-		return true;
+		if (WMU_initialCheck( $('ImageUploadFile').value )) {
+			WMU_track('upload/defined'); // tracking
+			WMU_indicator(1, true);
+			return true;
+		} else {
+			return false;
+		}
 	}
+}
+
+function WMU_splitExtensions( filename ) {
+	bits = filename.split( '.' );
+	basename = bits.shift();
+	return new Array( basename, bits );
+}
+
+function WMU_in_array( elem, a_array ) {
+	for ( key in a_array ) {
+		if ( elem == a_array[key] ) {
+			return true;
+		}
+	}
+	return false;
+}
+
+function WMU_checkFileExtension( ext, list) {
+	return WMU_in_array( ext.toLowerCase(), list );
+}
+
+function WMU_checkFileExtensionList( ext, list ) {
+	for ( elem in ext ) {
+		if ( WMU_in_array( ext[elem].toLowerCase(), list )) {
+			return true;
+		}
+	}
+	return false;
+}
+
+function WMU_initialCheck( checkedName ) {
+	list_array = WMU_splitExtensions( checkedName );
+	partname = list_array[0];
+	ext = list_array[1];
+	if (ext.length > 0) {
+		finalExt = ext[ext.length -1];
+	} else {
+		finalExt = '';
+	}
+
+	if (ext.lenght > 1) {
+		for (i=0; i< ext.length; i++ ) {
+			partname += '.' + ext[i];
+		}
+	}
+	
+	if (partname.lenght < 1) {
+		alert (minlength1);
+		return false;
+	}
+	if (finalExt == '') {
+		alert (filetype_missing) ;
+		return false;
+	} else if (WMU_checkFileExtensionList( ext, file_blacklist ) || ( check_file_extensions 
+			&& strict_file_extensions && !WMU_checkFileExtension( finalExt, file_extensions ) )  ) {		
+			alert (wmu_bad_extension);	
+			return false;
+	}
+	
+	return true;
 }
 
 function WMU_displayDetails(responseText) {
@@ -268,6 +332,10 @@ function WMU_displayDetails(responseText) {
 			WMU_slider.setValue(125, true);
 		}
 	}
+	if ($( 'WMU_error_box' )) {
+		alert( $( 'WMU_error_box' ).innerHTML );
+	}
+
 	WMU_indicator(1, false);
 }
 

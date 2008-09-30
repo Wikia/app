@@ -9,7 +9,7 @@ if(!defined('MEDIAWIKI')) {
 
 $wgExtensionCredits['other'][] = array(
         'name' => 'WikiaMiniUpload',
-        'author' => 'Inez Korczyński',
+        'author' => 'Inez Korczyński, Bartek Łapiński',
 );
 
 $dir = dirname(__FILE__).'/';
@@ -38,12 +38,21 @@ function WMUSetup($editform) {
 	return true;
 }
 
-function WMUSetupVars($vars) {
+function WMUSetupVars($vars) {	
+	global $wgFileBlacklist, $wgCheckFileExtensions, $wgStrictFileExtensions, $wgFileExtensions;
+
 	$vars['wmu_back'] = wfMsg('wmu-back');
 	$vars['wmu_imagebutton'] = wfMsg('wmu-imagebutton') ;
 	$vars['wmu_close'] = wfMsg('wmu-close');
 	$vars['wmu_warn1'] = wfMsg('wmu-warn1');
 	$vars['wmu_warn2'] = wfMsg('wmu-warn2');
+	$vars['wmu_bad_extension'] = wfMsg('wmu-bad-extension');
+	$vars['filetype_missing'] = wfMsg('filetype-missing');
+	$vars['file_extensions'] = $wgFileExtensions;
+	$vars['file_blacklist'] = $wgFileBlacklist;
+	$vars['check_file_extensions'] = $wgCheckFileExtensions;
+	$vars['strict_file_extensions'] = $wgStrictFileExtensions;
+
 	return true;
 }
 
