@@ -40,5 +40,6 @@ $messages['en'] = array(
 	'wmu-warn2' => 'You need to select file first!',
 	'wmu-imagelink' => '<b>New!</b> Add Images',
 	'wmu-imagebutton' => 'Add Images' ,
-	'wmu-license-cc' => 'Licenced under Creative Commons Attribution-Share Alike 3.0'
+	'wmu-license-cc' => 'Licenced under Creative Commons Attribution-Share Alike 3.0',
+	'wmu-bad-extension' => 'You tried to upload an illegal file type. Please try again.'
 );

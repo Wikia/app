@@ -7,6 +7,11 @@
 <?php
 global $wgStylePath, $wgUser, $wgScriptPath;
 if($wgUser->isLoggedIn()) {
+	if ($error) {
+?>
+		<span id="WMU_error_box"><?= $error ?></span>
+<?php
+	}
 ?>
 			<form onsubmit="return AIM.submit(this, WMU_uploadCallback)" action="<?= $wgScriptPath ?>/index.php?action=ajax&rs=WMU&method=uploadImage" id="ImageUploadForm" method="POST" enctype="multipart/form-data">
 				<input id="ImageUploadFile" name="wpUploadFile" type="file" />
