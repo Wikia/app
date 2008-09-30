@@ -47,6 +47,16 @@ class ArticleAdLogicTest extends PHPUnit_TestCase {
 		$this->assertFalse(ArticleAdLogic::isLongArticle(file_get_contents('./shortArticle.html')));
 	}
 
+	function testIsSuperLong() {
+		// These are the very long articles
+		$this->assertTrue(ArticleAdLogic::isSuperLongArticle(file_get_contents('./longArticleWithImagesNoCollision.html')));
+		$this->assertTrue(ArticleAdLogic::isLongArticle(file_get_contents('./superlongArticleWMediumText')));
+
+		// These should fail the long test, including the medium, because it's not long enough
+		$this->assertFalse(ArticleAdLogic::isLongArticle(file_get_contents('./mediumArticlePlainText.html')));
+		$this->assertFalse(ArticleAdLogic::isLongArticle(file_get_contents('./shortArticle.html')));
+	}
+
 	function testIsBoxAd(){
 		// These should should display a box ad. note the names of the files for explanations on why. 
 		// Additional info in the files themselves
@@ -78,6 +88,7 @@ class ArticleAdLogicTest extends PHPUnit_TestCase {
 $suite = new PHPUnit_TestSuite();
 $suite->addTest(new ArticleAdLogicTest('testIsShort'));
 $suite->addTest(new ArticleAdLogicTest('testIsLong'));
+$suite->addTest(new ArticleAdLogicTest('testIsSuperLong'));
 $suite->addTest(new ArticleAdLogicTest('testIsBoxAd'));
 $result = PHPUnit::run($suite);
 echo $result->toHTML();
