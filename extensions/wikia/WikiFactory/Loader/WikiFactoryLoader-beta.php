@@ -472,10 +472,10 @@ class WikiFactoryLoader {
 				$this->mVariables = isset( $data["data"] ) && is_array( $data["data"] )
 					? $data["data"]
 					: array ();
-				$self->debug( "wikifactory: reading from cache, key {$key}, count ".count( $this->mVariables ) );
+				$this->debug( "wikifactory: reading from cache, key {$key}, count ".count( $this->mVariables ) );
 			}
 			else {
-				$self->debug( "wikifactory: timestamp doesn't match. Cache expired" );
+				$this->debug( "wikifactory: timestamp doesn't match. Cache expired" );
 			}
 			wfProfileOut( __METHOD__."-varscache" );
 		}
