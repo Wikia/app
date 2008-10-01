@@ -49,14 +49,20 @@ class AdProviderGoogle implements iAdProvider {
 	
 		$channel = $this->getChannel();
 	       	$out.= 'google_ad_channel      = "' . addslashes($channel) . '";' . "\n";
-		// Channel is how we do bucket tests.
-		// Testing the effectiveness of google_page_url and google_hints here
+		/* Channel is how we do bucket tests.
+		 * Testing the effectiveness of google_page_url and google_hints here
+		 * The first test showed that hints performed better than the control and page_url
+		 * Now testing control vs hints alone vs hints + page_url
+		 */
 		if ($channel == '9000000009'){
-			// Pass the page url for this test
+			// page_url + hints. Rumor has it these two are mutually exclusive, but we are trying it anyway.
                         $out .= 'google_page_url     = "' . addslashes($this->getPageUrl()) . '";' . "\n";
+                        $out .= $this->getGoogleHints() . "\n"; 
+		} else if ($channel == '9000000010') {
+			// Control
 		} else if ($channel == '9000000011') {
-			// Note 9000000010 is for "no hints"
-                        $out .= 'google_hints        = "' . addslashes($this->getGoogleHints()) . '";' . "\n";
+			// Hints alone
+                        $out .= $this->getGoogleHints() . "\n"; 
 		}
 		$out .= '/*]]>*/</script>
 			<script type="text/javascript" src="http://pagead2.googlesyndication.com/pagead/show_ads.js"></script>';
@@ -69,13 +75,10 @@ class AdProviderGoogle implements iAdProvider {
 	 */
 	public function getGoogleHints(){
 		if(!empty($_GET['search'])){
-                        return $_GET['search'];
+			return 'google_hints        = "' . addslashes($_GET['search']) . '";';
                 } else {
 			// Pull in the same keywords we use for the page.
-			global $wgOut;
-			if (!empty($wgOut->mKeywords)){
-				return implode(',', $wgOut->mKeywords);
-			}
+			return 'google_hints        = AdEngine.getKeywords();';
                 }
 	}
 
