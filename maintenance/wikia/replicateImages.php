@@ -13,14 +13,19 @@ require_once( 'commandLine.inc' );
 
 class WikiaReplicateImages {
 
+	/**
+	 * flag is next value of 2^n
+	 */
 	private $mServers = array(
 		"file3" => array(
 			"address" => "file3.sjc.wikia-inc.com",
 			"transform" => array( "!^/images/(.)!", "/raid/images/by_id/$1/$1" ),
+			"flag" => 1
 		),
 		"willow" => array(
 			"address" => "willow.sjc.wikia-inc.com",
-			"transform" => false
+			"transform" => false,
+			"flag" => 2
 		)
 	);
 
@@ -32,29 +37,36 @@ class WikiaReplicateImages {
 	 * @param	array	$options	commandline options
 	 */
 	public function execute( $options ) {
-		$sLogsDb = '_wikialogs_';
-		$aFileServers = isset($options['server']) ? explode(',', $options['server']) : array();
 		$iImageLimit = isset($options['limit']) ? $options['limit'] : 10;
 		$sUserLogin = isset($options['u']) ? $options['u'] : 'cron';
 		$bIsDryRun = isset($options['dryrun']) ? true : false;
 
-		$dbr = wfGetDB(DB_SLAVE);
-		$dbw = wfGetDB(DB_MASTER);
+		$dbr = wfGetDBExt( DB_SLAVE );
+		$dbw = wfGetDBExt( DB_MASTER );
 
-		$dbr->selectDB($sLogsDb);
-		$dbw->selectDB($sLogsDb);
 
-		$oResource = $dbr->query("SELECT up_id, up_path FROM upload_path WHERE up_sent<>'y' ORDER BY up_created ASC" . ($iImageLimit ? " LIMIT " . addslashes($iImageLimit) : ""));
-
-		if($oResource) {
-			while($oResultRow = $dbr->fetchObject($oResource)) {
-				$bFileCopied = true;
-				$sDestPath = $oResultRow->up_path;
-				foreach($aFileServers as $sServerName) {
-					if($sServerName == 'file3') {
-						$sDestPath = preg_replace("!^/images/(.)!", "/raid/images/by_id/$1/$1", $sDestPath);
+		$oResource = $dbr->select(
+			array( "upload_log" ),
+			array( "up_id", "up_path" ),
+			array( "up_flags" => 0 ),
+			__METHOD__,
+			array(
+				  "ORDER BY" => "up_created ASC",
+				  "LIMIT" => $iImageLimit
+			)
+		);
+		if( $oResource ) {
+			while( $oResultRow = $dbr->fetchObject( $oResource ) ) {
+				$success = true;
+				$flags = 0;
+				foreach( $this->mServers as $server ) {
+					if( $server[ "transform" ] ) {
+						$sDestPath = preg_replace( $server["transform"][0], $server["transform"][1] , $oResultRow->up_path );
 					}
-					$sScpCommand = '/usr/bin/scp -p ' . $oResultRow->up_path . ' ' . $sUserLogin . '@' . $sServerName . ':' . $sDestPath;
+					else {
+						$sDestPath = $oResultRow->up_path;
+					}
+					$sScpCommand = '/usr/bin/scp -p ' . $oResultRow->up_path . ' ' . $sUserLogin . '@' . $server["address"] . ':' . $sDestPath;
 					$sScpCommand.= ' >/dev/null 2>&1';
 
 					if( 1 ) {
@@ -65,18 +77,27 @@ class WikiaReplicateImages {
 						$iReturnValue = 1;
 						@exec($sScpCommand, $aOutput, $iReturnValue);
 
-						if($iReturnValue > 0) {
+						if( $iReturnValue > 0 ) {
 							print("ERROR: $sScpCommand - command failed.\n\n");
-							$bFileCopied = false;
+							$success = false;
 							break;
+						}
+						else {
+							$flags = $flags | $server["flag"];
 						}
 					}
 				}
 
-				if($bFileCopied && !$bIsDryRun) {
-					// update flag in db
-					$dbw->query("UPDATE upload_path SET up_sent='y' WHERE up_id='" . $oResultRow->up_id . "'");
-					 $dbw->immediateCommit();
+				if( $success && 0 ) {
+					$dbw->update(
+						"upload_log",
+						array(
+							"up_sent" => wfTimestampNow(),
+							"up_flags" => $flags
+						),
+						array( "up_id" => $oResultRow->up_id )
+					);
+					$dbw->immediateCommit();
 				}
 			}
 		}
