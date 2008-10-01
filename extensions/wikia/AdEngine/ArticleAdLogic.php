@@ -13,33 +13,41 @@ $wgExtensionCredits['other'][] = array(
 class ArticleAdLogic {
 
 	// Play with these levels, once we get more test cases.
-	const shortArticleThreshold = 650; // what defines a "short" article. # of characters *after* html has been stripped.
-	const longArticleThreshold = 3300; // what defines a "long" article. # of characters *after* html has been stripped.
-	const superLongArticleThreshold = 10000; // what defines a "super long" article. # of characters *after* html has been stripped.
+	const stubArticleThreshold = 400; // what defines a "short" article, in characters.
+	const shortArticleThreshold = 650; // what defines a "short" article, in pixel height 
+	const longArticleThreshold = 1200; // what defines a "long" article, in pixel height. 
+	const superLongArticleThreshold = 2500; // what defines a "super long" article, in pixel height. (3 skyscrapers) 
 	const collisionRankThreshold = .15;  // what collison score constitutes a collision. 0-1
 	const firstHtmlThreshold = 1500; // Check this much of the html for collision causing tags
 	const pixelThreshold = 350; // how many pixels for a "wide" object that will cause a collision, in pixels
 	const percentThreshold = 50; // what % of the content is a "wide" table that will cause a collision
 	const columnThreshold = 3; // what # of columns is a "wide" table that will cause a collision
 
-	public static function isShortArticle($html){
+	public static function isStubArticle($html){
 		$length = strlen(strip_tags($html));
-		$out = $length < self::shortArticleThreshold;
-		self::adDebug("Article is $length characters. Check for short article is " . var_export($out, true));
+		$out = $length < self::stubArticleThreshold;
+		self::adDebug("Article is $length characters. Check for stub article is " . var_export($out, true));
+		return $out;
+	}
+
+	public static function isShortArticle($html){
+		$height = self::getArticleHeight($html);
+		$out = $height < self::shortArticleThreshold;
+		self::adDebug("Article is at least $height pixels high. Check for short article is " . var_export($out, true));
 		return $out;
 	}
 
 	public static function isLongArticle($html){
-		$length = strlen(strip_tags($html));
-		$out = $length > self::longArticleThreshold;
-		self::adDebug("Article is $length characters. Check for long article is " . var_export($out, true));
+		$height = self::getArticleHeight($html);
+		$out = $height > self::longArticleThreshold;
+		self::adDebug("Article is at least $height pixels high. Check for long article is " . var_export($out, true));
 		return $out;
 	}
 
 	public static function isSuperLongArticle($html){
-		$length = strlen(strip_tags($html));
-		$out = $length > self::superLongArticleThreshold;
-		self::adDebug("Article is $length characters. Check for super-long article is " . var_export($out, true));
+		$height = self::getArticleHeight($html);
+		$out = $height > self::superLongArticleThreshold;
+		self::adDebug("Article is at least $height pixels high. Check for super-long article is " . var_export($out, true));
 		return $out;
 	}
 
@@ -72,7 +80,7 @@ class ArticleAdLogic {
 			for ($i = 0; $i< sizeof($matches[0]); $i++){
 				$wholetag = $matches[0][$i];
 				$tag = $matches[1][$i][0];
-				if ($tag == 'table' ) $tableFound=true;
+				if (strtolower($tag) == 'table' ) $tableFound=true;
 					
 				$attr = self::getHtmlAttributes($matches[0][$i][0]);
 
@@ -406,10 +414,100 @@ class ArticleAdLogic {
 			return $lastResult;
 		}
 
+		/* First, measure the text. */
+		$textOnly = strip_tags($html);
+		$textOnlyLength = strlen($textOnly);
+		self::adDebug("Article is $textOnlyLength characters.");
+		$textHeight = round($textOnlyLength * self::getCharacterFactor());
+		self::adDebug("Text height is $textHeight pixels.");
+	
+		// Next measure the html height
+		$htmlHeight = self::getHtmlHeight($html);
+		self::adDebug("Weighted HTML height is $htmlHeight pixels.");
+
+		// Next look at images;
+		$imageHeight = self::getImageHeight($html);
+		self::adDebug("Weighted image height is $imageHeight pixels.");
 		
+		$result = $textHeight + $htmlHeight + $imageHeight;
+
 		$lastMd5 = $currentMd5;
 		$lastResult = $result;
 		return $result;
 	}
 
+	/* Get the mutiplier based on the number of pixels wide we expect the article area to be(articleAreaWidth).
+	 * I used 4 data points to arrive at the multiplier:
+	 * A 500x1000 div fits 3151 characters 
+	 * A 750x1000 div fits 4760 characters
+	 * A 1000x1000 div fits 5430 characters 
+	 * A 1250x1000 div fits 6639 characters 
+	 * A 1500x1000 div fits 8463 characters 
+	 *
+	 * Tested in Firefox 3, with negligible differences in other browsers.
+	 * See testfiles/testHeight.html if you want to do your own experimenting
+	 */
+	public function getCharacterFactor(){
+		$usableWidth = self::getArticleAreaWidth();
+		if ($usableWidth < 500) { return 1000/3151;
+		} else if ($usableWidth < 750) { return 1000/4760;
+		} else if ($usableWidth < 1000) { return 1000/5430;
+		} else if ($usableWidth < 1250) { return 1000/6639;
+		} else if ($usableWidth < 1500) { return 1000/8463;
+		} else { return 1;
+		}	
+	}
+
+	public function getArticleAreaWidth(){
+		/* Average window width is 1100 (confirmed with the collision tester),
+		 * note this is different from screen resolution reported by Google Analytics. 
+		 */
+
+		// Right now we only support Monaco, but others coming soon.
+		$skin = 'monaco';
+		switch ($skin) {
+			case 'monaco': return 1100; // Assume generous 1300 px browser width, subtract 200 for left nav
+			default: return 700; // Subtract 200 for left nav, and 200 for padding
+		}
+	}
+
+
+	public static function getHtmlHeight($html){
+		$height = 0;
+
+		// Assume a minimum of number pixels for certian tags. In all likelihood it will be higher
+		if (preg_match_all('/<(tr|div|ul)>/i', $html, $matches)){
+			$height += 25 * count($matches[0]);
+		}
+
+		return round($height);
+	}
+
+
+
+	public static function getImageHeight($html){
+		$imageArea = 0;
+
+		if (preg_match_all('/<img[^>]+>/is', $html, $matches)){
+
+			// PHP's preg_match_all return is a PITA to deal with	
+			for ($i = 0; $i< sizeof($matches[0]); $i++){
+				$wholetag = $matches[0][$i];
+				$tag = $matches[1][$i][0];
+					
+				$attr = self::getHtmlAttributes($matches[0][$i]);
+
+				if (empty($attr['width']) || empty($attr['height'])){
+					continue; // Shouldn't happen...
+				}
+
+				$imageArea =+ $imageArea + ($attr['width'] * $attr['height']);
+				
+			}
+		}
+
+		// This assumes that all the images are perfectly arranged 
+		// unlikely best case scenario, but good minimum floor
+		return round($imageArea / self::getArticleAreaWidth());
+	}
 }

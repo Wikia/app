@@ -1261,11 +1261,14 @@ if(isset($this->data['articlelinks']['right'])) {
 								echo AdEngine::getInstance()->getPlaceHolderDiv('HOME_TOP_RIGHT_BOXAD');
 							}
 						} else if ( ArticleAdLogic::isContentPage() &&
-							   !ArticleAdLogic::isShortArticle($this->data['bodytext'])) { //valid article
+							   !ArticleAdLogic::isStubArticle($this->data['bodytext'])) { //valid article
 
-							if (ArticleAdLogic::isBoxAdArticle($this->data['bodytext'])) {
+							if (ArticleAdLogic::isShortArticle($this->data['bodytext'])){
+								echo AdEngine::getInstance()->getPlaceHolderDiv('TOP_LEADERBOARD');
+							} elseif (ArticleAdLogic::isBoxAdArticle($this->data['bodytext'])) {
 								echo AdEngine::getInstance()->getPlaceHolderDiv('TOP_RIGHT_BOXAD');
 							} else {
+								// Long article, but a collision
 								echo AdEngine::getInstance()->getPlaceHolderDiv('TOP_LEADERBOARD');
 							}
 						}
