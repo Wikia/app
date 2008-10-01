@@ -49,7 +49,7 @@ function wfChangesXml( $rc ) {
 	//store change
 	$dbw = wfGetDBExt(DB_MASTER) ;
 	
-	$sql = "CREATE TABLE IF NOT EXISTS `_ext_changesxml` ( " .           
+	$sql = "CREATE TABLE IF NOT EXISTS `_ext_changes_xml` ( " .           
                    " `id` bigint(20) NOT NULL auto_increment, " . 
                    " `title` varchar(100) default NULL, " .       
                    " `url` varchar(200) default NULL, " .         
@@ -60,7 +60,7 @@ function wfChangesXml( $rc ) {
 	$dbw->query( $sql );
 	
 	$res = $dbw->insert(
-			'_ext_changesxml',
+			'_ext_changes_xml',
 			array(
 				'title'		=> $title,
 				'url'		=> $url,
