@@ -18,9 +18,8 @@ interface iAdProvider {
 
 class AdEngine {
 
-	const cacheKeyVersion = "1.9g";
+	const cacheKeyVersion = "1.9h";
 	const cacheTimeout = 1800;
-	const noadgif = "http://images.wikia.com/common/wikia/noad.gif?1";
 
 	// TODO: pull these from wikicities.provider
 	private $providers = array('1' => 'DART', '2' => 'OpenX', '3' => 'Google', '4' => 'GAM', '-1' => 'Null');
@@ -55,7 +54,7 @@ class AdEngine {
 		/* TODO move this to allinone, and find a better spot for this code after I talk to Christian.
                          This is an experiment to see if moving it higher on the page makes it better */
 		global $wgExtensionsPath;
-		$out .= '<script type="text/javascript" src="' . $wgExtensionsPath . '/wikia/AdEngine/AdEngine.js"></script>'. "\n";
+		$out .= '<script type="text/javascript" src="' . $wgExtensionsPath . '/wikia/AdEngine/AdEngine.js?' . self::cacheKeyVersion . '"></script>'. "\n";
 
 		// Get the setup code for ad providers used on this page
 		foreach ($this->slots as $slotname => $slot){
@@ -291,7 +290,6 @@ class AdEngine {
 		$out = "<!-- #### BEGIN " . __CLASS__ . '::' . __METHOD__ . " ####-->\n";
 
 		$out .= '<script type="text/javascript">';
-		$out .= 'var noadgif = "'.self::noadgif.'";';
 		$out .= 'TieDivLibrary.timer();';
 		$out .= '</script>';
 
