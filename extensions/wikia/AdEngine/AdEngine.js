@@ -137,10 +137,23 @@ function AdGetColor(type) {
 	return AdEngine.getAdColor(type);
 }
 
+/* Display the div for an ad, as long as it is not a no-op ad, such as a clear gif */
 AdEngine.displaySlotIfAd = function (slotname) {
-	if($(slotname + '_load').innerHTML.indexOf(noadgif) == -1) {
-		YAHOO.util.Dom.setStyle(slotname, 'display', 'block');
-	}
+        var noopStrings = new Array(
+                'http://images.wikia.com/common/wikia/noad.gif', // This should be our standard no-op
+                'http://m1.2mdn.net/viewad/817-grey.gif'  // DART sometimes sends this
+        );
+        var noopFound = false;
+        for (i = 0 ; i < noopStrings.length; i++){
+                if($(slotname + '_load').innerHTML.indexOf(noopStrings[i]) > -1 ) {
+                        noopFound = true;
+                        break;
+                }
+        }
+        // All clear
+        if (! noopFound ) {
+                YAHOO.util.Dom.setStyle(slotname, 'display', 'block');
+        }
 };
 
 /* For testing click through rates on various placements of ads. 
