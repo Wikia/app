@@ -316,9 +316,9 @@ class ArticleAdLogic {
 
 	
 	public function isContentPage(){
-                global $wgTitle;
+                global $wgTitle, $wgContentNamespaces;
                 if (is_object($wgTitle)){ 
-			return in_array($wgTitle->getNamespace(), array(NS_MAIN, NS_IMAGE, NS_CATEGORY)) || $wgTitle->getNamespace() >= 100;	
+			return in_array($wgTitle->getNamespace(), array_merge( $wgContentNamespaces, array(NS_MAIN, NS_IMAGE, NS_CATEGORY) ));	
 		} else {
 			return false;
 		}
