@@ -493,7 +493,6 @@ class ArticleAdLogic {
 			// PHP's preg_match_all return is a PITA to deal with	
 			for ($i = 0; $i< sizeof($matches[0]); $i++){
 				$wholetag = $matches[0][$i];
-				$tag = $matches[1][$i][0];
 					
 				$attr = self::getHtmlAttributes($matches[0][$i]);
 
