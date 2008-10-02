@@ -43,9 +43,9 @@ YAHOO.util.Event.onDOMReady(function () {
 <tr bgcolor="#ffeecc">
 	<td class="cb" rowspan="3">&nbsp;</td>
 	<td colspan="5" class="cb"><?=wfMsg('wikiastats_months_edits')?></td>
-	<td valign="top" colspan="2" class="cb"><?=wfMsg('wikiastats_lifetime_editors')?></td>
+	<td valign="middle" colspan="2" class="cb"><?=wfMsg('wikiastats_lifetime_editors')?></td>
 	<td colspan="2" rowspan="2" class="cb"><?=wfMsg('wikiastats_count')?></td>
-	<td valign="top" rowspan="3" class="cb"><?=wfMsg('wikiastats_new_per_day')?></td>
+	<td valign="middle" rowspan="3" class="cb"><?=wfMsg('wikiastats_new_per_day')?></td>
 	<td colspan="2" class="cb" rowspan="2" ><?=wfMsg('wikiastats_mean')?></td>
 	<td colspan="2" class="cb" rowspan="2" ><?=wfMsg('wikiastats_largerthan')?></td>
 	<td rowspan="3" class="cb"><?=wfMsg('wikiastats_edits')?></td>
@@ -69,7 +69,7 @@ YAHOO.util.Event.onDOMReady(function () {
 	<td class="cb"><?=wfMsg('wikiastats_total')?></td>
 	<td class="cb">&gt;5</td>
 	<td class="cb">&gt;100</td>
-	<td class="cb" style="white-space:nowrap;"><?=wfMsg('wikistats_user_namespace')?></td>
+	<td class="cb" style="white-space:nowrap;"><?=lcfirst(wfMsg('wikiastats_username'))?></td>
 	<td class="cb" style="white-space:nowrap;"><?=wfMsg('wikistats_image_namespace')?></td>
 	<td class="cb">&gt;10</td>
 	<td class="cb"><?=wfMsg('wikiastats_official')?></td>
@@ -224,13 +224,13 @@ foreach ($monthlyStats as $date => $columnsData) {
 	<td class="cb"><?=wfMsg('wikiastats_total')?></td>
 	<td class="cb">&gt;5</td>
 	<td class="cb">&gt;100</td>
-	<td class="cb" style="white-space:nowrap;"><?=wfMsg('wikistats_user_namespace')?></td>
+	<td class="cb" style="white-space:nowrap;"><?=lcfirst(wfMsg('wikiastats_username'))?></td>
 	<td class="cb" style="white-space:nowrap;"><?=wfMsg('wikistats_image_namespace')?></td>
 	<td class="cb" rowspan="2"><?=wfMsg('wikiastats_total')?></td>
 	<td class="cb">&gt;10</td>
 	<td class="cb"><?=wfMsg('wikiastats_official')?></td>
 	<td class="cb" style="white-space:nowrap;"><?=wfMsg('wikiastats_more_200_ch')?></td>
-	<td valign="top" rowspan="3" class="cb"><?=wfMsg('wikiastats_new_per_day')?></td>
+	<td valign="middle" rowspan="3" class="cb"><?=wfMsg('wikiastats_new_per_day')?></td>
 	<td class="cb"><?=wfMsg('wikiastats_edits')?></td>
 	<td class="cb"><?=wfMsg('wikiastats_bytes')?></td>
 	<td class="cb" style="white-space:nowrap;"><?=wfMsg('size-kilobytes', 0.5)?></td>
@@ -256,7 +256,7 @@ foreach ($monthlyStats as $date => $columnsData) {
 </tr>
 <tr bgcolor="#ffeecc">
 	<td colspan="5" class="cb"><?=wfMsg('wikiastats_months_edits')?></td>
-	<td valign="top" colspan="2" class="cb"><?=wfMsg('wikiastats_lifetime_editors')?></td>
+	<td valign="middle" colspan="2" class="cb"><?=wfMsg('wikiastats_lifetime_editors')?></td>
 </tr>
 <tr bgcolor="#ffdead">
 	<td class="cb"><b><?= ucfirst(wfMsg('wikiastats_date')) ?></b></td>

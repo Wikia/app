@@ -134,7 +134,7 @@ class WikiaStatsXLS {
 		$this->writeXLSLabel(6,2,wfMsg('wikiastats_total'));
 		$this->writeXLSLabel(6,3,">5");
 		$this->writeXLSLabel(6,4,">100");
-		$this->writeXLSLabel(6,5,wfMsg('wikistats_user_namespace'));
+		$this->writeXLSLabel(6,5,lcfirst(wfMsg('wikiastats_username')));
 		$this->writeXLSLabel(6,6,wfMsg('wikistats_image_namespace'));
 		$this->writeXLSLabel(6,8,">10");
 		#$this->writeXLSLabel(6,3,"new");
