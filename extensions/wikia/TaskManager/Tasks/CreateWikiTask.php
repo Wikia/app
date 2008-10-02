@@ -47,6 +47,7 @@ class CreateWikiTask extends BatchTask {
 	function execute( $params = null ) {
 		global $IP, $wgDevelEnvironment;
 		global $wgWikiaLocalSettingsPath, $wgWikiaAdminSettingsPath; // $wgExtensionMessagesFiles;
+		global $wgHubCreationVariables, $wgLangCreationVariables;
 
 		if( !isset( $wgWikiaAdminSettingsPath ) ) {
 			$wgWikiaAdminSettingsPath = dirname( $wgWikiaLocalSettingsPath ) . "/../AdminSettings.php";
@@ -117,6 +118,9 @@ class CreateWikiTask extends BatchTask {
 		 */
 		$this->sendWelcomeMail();
 
+		#--- modify wiki's variables based on language and $wgLangCreationVariables values
+		$this->addCreationSettings( $this->mTaskData['language'], $wgLangCreationVariables, 'language' );
+
 		# 8. Run WikiMover if there is starter for category choosen
 		if ( !empty($this->mParams["params"]["wpCreateWikiCategoryStarter"])) {
 			$oWikiMover = WikiMover::newFromIDs(
@@ -139,7 +143,7 @@ class CreateWikiTask extends BatchTask {
 			$this->addLog( $retval );
 			
 			#--- modify wiki's variables based on hub and $wgHubCreationVariables values
-	                $this->addHubSettings( $this->mParams["params"]["wpCreateWikiCategory"]  );
+	                $this->addCreationSettings( $this->mParams["params"]["wpCreateWikiCategory"], $wgHubCreationVariables, 'hub' );
 		}
 
 		/**
@@ -643,27 +647,27 @@ class CreateWikiTask extends BatchTask {
 	}
 
 	/**
-	 * addHubSettings
+	 * addCreationSettings
 	 *
 	 * @author tor@wikia-inc.com
-	 * @param  string $hub
+	 * @param  string $match
+	 * @param  array  $settings
+	 * @param  string $type
 	 */
-	public function addHubSettings( $hub ) {
-		global $wgHubCreationVariables;
-
-		if (!empty($hub) && is_array($wgHubCreationVariables[$hub])) {
-			$this->addLog("Found hub \"$hub\" in HubCreationVariables.");
-			foreach ($wgHubCreationVariables[$hub] as $key => $value) {
+	public function addCreationSettings( $match, $settings, $type = 'unknown' ) {
+		if (!empty($match) && is_array($settings[$match])) {
+			$this->addLog("Found '$match' in $type settings array.");
+			foreach ($settings[$match] as $key => $value) {
 				$success = WikiFactory::setVarById($key, $this->mWikiID, $value);
 				if ($success) {
-	                                $this->addLog("Successfully added hub setting: $key = $value");
+	                                $this->addLog("Successfully added setting: $key = $value");
 				} else {
-					$this->addLog("Failed to add hub setting: $key = $value");
+					$this->addLog("Failed to add setting: $key = $value");
 				}
 			}
-			$this->addLog("Finished adding hub settings.");
+			$this->addLog("Finished adding $type settings.");
 		} else {
-			$this->addLog("Hub not found in HubCreationVariables. Skipping this step.");
+			$this->addLog("'$match' not found in $type settings array. Skipping this step.");
 		}
 	}
 }
