@@ -110,3 +110,9 @@ body.ltr #articleFooter ul.actions li div {
 	height: 1px;
 	margin-bottom: 100px;
 }
+
+/* #3740 */
+#monaco_footer {
+	top: 0px !important;
+	margin-top: -155px;
+}
