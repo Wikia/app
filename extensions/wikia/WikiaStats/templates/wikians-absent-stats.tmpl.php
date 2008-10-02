@@ -28,9 +28,9 @@ if (!empty($wkAbsent))
 foreach ($wkAbsent as $rank => $data)
 {
 	#---
-	$outFirstEdit = substr(wfMsg(strtolower(date("F",$data['first_edit']))), 0, 3) . " " . date("d",$data['first_edit']) .", ".date("Y",$data['first_edit']);
+	$outFirstEdit = $wgLang->sprintfDate(WikiaGenericStats::getStatsDateFormat(0), wfTimestamp(TS_MW, $data['first_edit']));
 	#---
-	$outLastEdit = substr(wfMsg(strtolower(date("F",$data['last_edit']))), 0, 3) . " " . date("d",$data['last_edit']) .", ".date("Y",$data['last_edit']);
+	$outLastEdit = $wgLang->sprintfDate(WikiaGenericStats::getStatsDateFormat(0), wfTimestamp(TS_MW, $data['last_edit']));
 ?>
 <tr>
 	<td class="eb" style="white-space:nowrap;"><a href="<?= $city_url ?><?= Title::makeTitle(NS_USER, $data['user_name'])->getLocalURL() ?>" target="new"><?= $data['user_name'] ?></a></td>

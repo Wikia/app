@@ -7,8 +7,8 @@ if (!empty($created) && ($created != "0000-00-00 00:00:00"))
 	#---
 	$dateArr = explode("-", $dateTime[0]);
 	#---
-	$stamp = mktime(0,0,0,$dateArr[1],$dateArr[2],$dateArr[0]);
-	$outDate = substr(wfMsg(strtolower(date("F",$stamp))), 0, 3) . " " . $dateArr[2] .", ". $dateArr[0]. " ".$dateTime[1];
+	$stamp = mktime(23,59,59,$dateArr[1],$dateArr[2],$dateArr[0]);
+	$outDate = $wgLang->timeanddate( wfTimestamp( TS_MW, $stamp ), true );
 }
 $langName = (is_object($city_row)) ? $wgContLang->getLanguageName( $city_row->city_lang ) : " - ";
 $catName = (is_object($city_row) && !empty($cats) && array_key_exists($city, $cats)) ? $cats[$city]['name'] : " - ";

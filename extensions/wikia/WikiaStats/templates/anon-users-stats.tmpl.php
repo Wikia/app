@@ -29,9 +29,9 @@ foreach ($anonData as $id => $data)
 {
 	$rank++;
 	#---
-	$outFirstEdit = substr(wfMsg(strtolower(date("F",$data['min']))), 0, 3) . " " . date("d",$data['min']) .", ".date("Y",$data['min']);
+	$outFirstEdit = $wgLang->sprintfDate(WikiaGenericStats::getStatsDateFormat(0), wfTimestamp(TS_MW, $data['min']));
 	#---
-	$outLastEdit = substr(wfMsg(strtolower(date("F",$data['max']))), 0, 3) . " " . date("d",$data['max']) .", ".date("Y",$data['max']);
+	$outLastEdit = $wgLang->sprintfDate(WikiaGenericStats::getStatsDateFormat(0), wfTimestamp(TS_MW, $data['max']));
 ?>
 <tr>
 	<td class="eb" style="white-space:nowrap;"><a href="<?= $city_url ?><?= Title::makeTitle(NS_SPECIAL, "Contributions")->getLocalURL() ?>/<?=$data['user_name']?>" target="new"><?= $data['user_name'] ?></a></td>

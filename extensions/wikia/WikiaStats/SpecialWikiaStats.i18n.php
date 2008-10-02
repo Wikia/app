@@ -88,7 +88,7 @@ $wgWikiaStatsMessages["en"] = array(
 	"wikiastats_visits" => "visits",
 	"wikiastats_new_per_day" => "new<br/>per day",
 	"wikiastats_official" => "official",
-	"wikiastats_more_200_ch" => ">200 ch",
+	"wikiastats_more_200_ch" => "&gt;200 ch",
 	"wikiastats_count" => "count",
 	"wikiastats_unique_users" => "Unique users",
 	"wikiastats_first_edit" => "First edit",
@@ -281,5 +281,9 @@ $wgWikiaStatsMessages["en"] = array(
 	"wikiastats_code_version" => "Code version:",
 	"wikiastats_mediawiki_stats" => "MediaWiki statistics:",
 	"wikiastats_statistics_information" => "Statistics information",
+	"wikiastats_nbr_kilo" => "K = x 1000",
+	"wikiastats_nbr_mega" => "M = K x 1000",
+	"wikiastats_nbr_giga" => "G = M x 1000",
+	"wikiastats_nbr_format" => "Numbers format: ",
 );
 ?>

@@ -31,13 +31,11 @@ foreach ($namespaceCount as $date => $monthStats)
 	$cntAll = (array_key_exists('count', $monthStats) && !empty($monthStats['count'])) ? intval( $monthStats['count'] ) : 0;
 	#---
 	$dateArr = explode("-",$date);
-	$stamp = mktime(0,0,0,$dateArr[1],1,$dateArr[0]);
-	$out = substr(wfMsg(strtolower(date("F",$stamp))), 0, 3) . " " . $dateArr[0];
-	if ($date == sprintf("%s-%s", date("Y"), date("m")))
-	{
-		$out = substr(wfMsg(strtolower(date("F",$stamp))), 0, 3) . " " . date("d") . ", " . $dateArr[0];
+	$stamp = mktime(23,59,59,$dateArr[1],1,$dateArr[0]);
+	$out = $wgLang->sprintfDate("M Y", wfTimestamp(TS_MW, $stamp));
+	if ($date == date("Y-m")) {
+		$out = $wgLang->sprintfDate(WikiaGenericStats::getStatsDateFormat(0), wfTimestamp(TS_MW, $stamp));
 	}
-
 ?>
 <tr>
 	<td class="eb" style="white-space:nowrap;"><?= $out ?></td>
@@ -49,7 +47,8 @@ foreach ($namespaceCount as $date => $monthStats)
 			$val = (array_key_exists($n, $monthStats)) ? intval($monthStats[$n]) : 0;
 			$out = 
 				(empty($val)) ? "" : 
-				($val >= $kB) ? sprintf ("%.1f", $val/$kB)." k" : (($val >= $mB) ? sprintf ("%.1f", $val/$mB)." M" : $val);
+					($val >= $kB) ? sprintf("%s K", $wgLang->formatNum(sprintf ("%.1f", $val/$kB))) 
+								  : (($val >= $mB) ? sprintf("%s M", $wgLang->formatNum(sprintf ("%.1f", $val/$mB))) : $val);
 ?>	
 	<td class="eb" style="white-space:nowrap;"><?= $out ?></td>
 <?

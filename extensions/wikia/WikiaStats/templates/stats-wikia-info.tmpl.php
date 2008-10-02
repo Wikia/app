@@ -6,8 +6,8 @@ if (!empty($created) && ($created != "0000-00-00 00:00:00")) {
 	#---
 	$dateArr = explode("-", $dateTime[0]);
 	#---
-	$stamp = mktime(0,0,0,$dateArr[1],$dateArr[2],$dateArr[0]);
-	$outDate = substr(wfMsg(strtolower(date("F",$stamp))), 0, 3) . " " . $dateArr[2] .", ". $dateArr[0]. " ".$dateTime[1];
+	$stamp = mktime(23,59,59,$dateArr[1],$dateArr[2],$dateArr[0]);
+	$outDate = $wgLang->timeanddate( wfTimestamp( TS_MW, $stamp ), true );
 }
 $langName = (is_object($cityInfo)) ? $wgContLang->getLanguageName( $cityInfo->city_lang ) : " - ";
 $catName = (is_object($cityInfo) && !empty($cats) && array_key_exists($cityId, $cats)) ? $cats[$cityId]['name'] : " - ";
@@ -50,6 +50,6 @@ $cityUrl = (is_object($cityInfo) && $cityId > 0) ? "<a target=\"new\" href=\"".$
 </table>
 </div>
 <div class="clear" style="font-size:7.5pt;height:5px;float:right;">
-        <?=wfMsg("wikiastats_date_of_generate", wfMsg(strtolower(date("l",$today_day))) . " " . substr(wfMsg(strtolower(date("F",$today_day))), 0, 3) . " " . date("d", $today_day) . ", " . date("Y", $today_day))?>
+        <?=wfMsg("wikiastats_date_of_generate", $wgLang->timeanddate( wfTimestamp( TS_MW, $today_day ), true ));?>
 </div>
 </fieldset>

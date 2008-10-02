@@ -24,8 +24,8 @@ foreach ($dWikians as $id => $date)
 {
 	$dateArr = explode("-", $date);
 	#---
-	$stamp = mktime(0,0,0,$dateArr[1],1,$dateArr[0]);
-	$outDate = substr(wfMsg(strtolower(date("F",$stamp))), 0, 3) . " ".$dateArr[0];
+	$stamp = mktime(23,59,59,$dateArr[1],1,$dateArr[0]);
+	$outDate = $wgLang->sprintfDate("M Y", wfTimestamp(TS_MW, $stamp));
 #	$style1 = "border:1px solid #808080; border-bottom: 0px; border-right:0px;";
 #	$style1 = ($loop == (count($dWikians) - 1)) ? "border:1px solid #808080; border-right:0px;" : $style1;
 
@@ -81,17 +81,15 @@ foreach ($dArticles as $id => $date)
 {
 	$dateArr = explode("-", $date);
 	#---
-	$stamp = mktime(0,0,0,$dateArr[1],1,$dateArr[0]);
-	$outDate = substr(wfMsg(strtolower(date("F",$stamp))), 0, 3) . " ".$dateArr[0];
+	$stamp = mktime(23,59,59,$dateArr[1],1,$dateArr[0]);
+	$outDate = $wgLang->sprintfDate("M Y", wfTimestamp(TS_MW, $stamp));
 ?>
 <tr>
 	<td class="ws-td-rb"><?=$outDate?></div>
 	<td class="ws-td-lb" style="white-space:nowrap;">
 <?
-	if ( !empty($article) && !empty($article[$date]) )
-	{
-		foreach ($article[$date] as $id => $wikiaInfo)
-		{
+	if ( !empty($article) && !empty($article[$date]) ) {
+		foreach ($article[$date] as $id => $wikiaInfo) {
 			$out = $wikiaInfo['cnt'];
 			$dbname = (!empty($wikiaInfo['city_id']) && array_key_exists($wikiaInfo['city_id'], $cityList)) ? $cityList[$wikiaInfo['city_id']]['dbname'] : "";
 

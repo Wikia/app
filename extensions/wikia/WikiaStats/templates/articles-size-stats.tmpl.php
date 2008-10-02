@@ -14,10 +14,11 @@ if (!empty($articleCount))
 <?
 foreach ($articleSize as $s => $values)
 {
-	$text = "&lt;&nbsp;".$s." B";
-	if ($s >= 1024)
-	{
-		$text = "&lt;&nbsp;".sprintf ("%.0f", $s/1024)." kB";
+	$bT = wfMsg('size-bytes', sprintf("%0d", $s));
+	$text = "&lt;&nbsp;".$bT;
+	if ($s >= 1024) {
+		$kbT = wfMsg('size-kilobytes', sprintf ("%.0f", $s/1024));
+		$text = "&lt;&nbsp;".$kbT;
 	}
 ?>	
 	<td class="cb"><?= $text ?></td>
@@ -31,21 +32,19 @@ foreach ($articleCount as $date => $monthStats)
 	$cntAll = intval($monthStats['count']);
 	#---
 	$dateArr = explode("-",$date);
-	$stamp = mktime(0,0,0,$dateArr[1],1,$dateArr[0]);
-	$out = substr(wfMsg(strtolower(date("F",$stamp))), 0, 3) . " " . $dateArr[0];
-	if ($date == sprintf("%s-%s", date("Y"), date("m")))
-	{
-		$out = substr(wfMsg(strtolower(date("F",$stamp))), 0, 3) . " " . date("d") . ", " . $dateArr[0];
+	$stamp = mktime(23,59,59,$dateArr[1],1,$dateArr[0]);
+	$out = $wgLang->sprintfDate("M Y", wfTimestamp(TS_MW, $stamp));
+	if ($date == sprintf("%s-%s", date("Y"), date("m"))) {
+		$out = $wgLang->sprintfDate(WikiaGenericStats::getStatsDateFormat(0), wfTimestamp(TS_MW, $stamp));
 	}
 
 ?>
 <tr>
 	<td class="eb" style="white-space:nowrap;"><?= $out ?></td>
 <?
-	foreach ($articleSize as $s => $values)
-	{
+	foreach ($articleSize as $s => $values) {
 		$cntDate = (is_array($values) && array_key_exists($date, $values)) ? intval($values[$date]['count']) : 0;
-		$rowValue = sprintf("%0.1f%%", ($cntDate * 100) / $cntAll);
+		$rowValue = sprintf("%s%%", $wgLang->formatNum(sprintf("%0.1f", ($cntDate * 100) / $cntAll)));
 ?>	
 	<td class="eb" style="white-space:nowrap;"><?= $rowValue ?></td>
 <?

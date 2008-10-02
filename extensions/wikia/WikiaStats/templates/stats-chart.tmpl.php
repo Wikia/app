@@ -31,27 +31,10 @@ $maxValue = $iMax;
 foreach ($data as $date => $out) {
 	#---
 	$dateArr = explode("-",$date);
-	$stamp = mktime(0,0,0,$dateArr[1],1,$dateArr[0]);
-	$new_date = substr(wfMsg(strtolower(date("F",$stamp))), 0, 3) . " " . $dateArr[0];
+	$stamp = mktime(23,59,59,$dateArr[1],1,$dateArr[0]);
+	$new_date = $wgLang->sprintfDate("M Y", wfTimestamp(TS_MW, $stamp));
+	error_log($date . "=>" . $new_date . " \n", 3, "/tmp/moli.log");
 	#---
-/*	if ($column == 'H') $value = sprintf("%0.1f", $out);
-	elseif ($column == 'I') $value = sprintf("%0.0f", $out);
-	elseif (($column == 'J') || ($column == 'K')) {
-		$value = sprintf("%0d", $out * 100);
-		$suffix = "%";
-	}
-	elseif ($column == 'M') {
-		$useByte = 1;
-		if (intval($out) > $GB) $value = sprintf("%0.1f GB", intval($out)/$GB);
-		elseif (intval($out) > $MB) $value = sprintf("%0.1f MB", intval($out)/$MB);
-		elseif (intval($out) > $KB) $value = sprintf("%0.1f KB", intval($out)/$KB);
-		else $value = sprintf("%0.0f", intval($out));
-	} else {
-		if (intval($out) > $G) $value = sprintf("%0.1f G", intval($out)/$G);
-		elseif (intval($out) > $M) $value = sprintf("%0.1f M", intval($out)/$M);
-		elseif (intval($out) > $K) $value = sprintf("%0.1f k", intval($out)/$K);
-		else $value = sprintf("%0d", intval($out));
-	} */
 	if (in_array($column, array('M', 'N'))) {
 		$value = sprintf("%0d", $out * 100);
 		$out = $out * 100;
@@ -59,56 +42,57 @@ foreach ($data as $date => $out) {
 	} elseif (in_array($column, array('P'))) {
 		$value = sprintf("%0.0f", intval($out));
 		if (intval($iMax) > $GB) {
-			$value = sprintf("%0.1f", intval($out)/$GB);
+			$value = $wgLang->formatNum(sprintf("%0.1f", intval($out)/$GB));
 			if (strlen($value) > 4) { 
 				$value = sprintf("%0.0f", intval($out)/$GB);
 			}
-			$suffix = "GB";
-			$maxValue = sprintf("%0.1f", intval($iMax)/$GB);
+			$suffix = wfMsg('size-gigabytes', "");
+			$maxValue = $wgLang->formatNum(sprintf("%0.1f", intval($iMax)/$GB));
 		} elseif (intval($iMax) > $MB) {
-			$value = sprintf("%0.1f", intval($out)/$MB);
+			$value = $wgLang->formatNum(sprintf("%0.1f", intval($out)/$MB));
 			if (strlen($value) > 4) { 
 				$value = sprintf("%0.0f", intval($out)/$MB);
 			}
-			$suffix = "MB";
-			$maxValue = sprintf("%0.1f", intval($iMax)/$MB);
+			$suffix = wfMsg('size-megabytes', "");
+			$maxValue = $wgLang->formatNum(sprintf("%0.1f", intval($iMax)/$MB));
 		} elseif (intval($iMax) > $KB) {
-			$value = sprintf("%0.1f", intval($out)/$KB);
+			$value = $wgLang->formatNum(sprintf("%0.1f", intval($out)/$KB));
 			if (strlen($value) > 4) { 
 				$value = sprintf("%0.0f", intval($out)/$KB);
 			}
-			$suffix = "KB";
-			$maxValue = sprintf("%0.1f", intval($iMax)/$KB);
+			$suffix = wfMsg('size-kilobytes', "");
+			$maxValue = $wgLang->formatNum(sprintf("%0.1f", intval($iMax)/$KB));
 		}
 	} else {
 		$value = sprintf("%0.0f", intval($out));
 		if (intval($iMax) > $G) {
-			$value = sprintf("%0.1f", intval($out)/$G);
+			$value = $wgLang->formatNum(sprintf("%0.1f", intval($out)/$G));
 			if (strlen($value) > 3) { 
 				$value = sprintf("%0.0f", intval($out)/$G);
 			}
 			$suffix = "G";
-			$maxValue = sprintf("%0.1f", intval($iMax)/$G);
+			$maxValue = $wgLang->formatNum(sprintf("%0.1f", intval($iMax)/$G));
 		} elseif (intval($iMax) > $M) {
-			$value = sprintf("%0.1f", intval($out)/$M);
+			$value = $wgLang->formatNum(sprintf("%0.1f", intval($out)/$M));
 			if (strlen($value) > 3) { 
 				$value = sprintf("%0.0f", intval($out)/$M);
 			}
 			$suffix = "M";
-			$maxValue = sprintf("%0.1f", intval($iMax)/$M);
+			$maxValue = $wgLang->formatNum(sprintf("%0.1f", intval($iMax)/$M));
 		} elseif (intval($iMax) > $K) {
-			$value = sprintf("%0.1f", intval($out)/$K);
+			$value = $wgLang->formatNum(sprintf("%0.1f", intval($out)/$K));
 			if (strlen($value) > 3) { 
 				$value = sprintf("%0.0f", intval($out)/$K);
 			}
 			$suffix = "K";
-			$maxValue = sprintf("%0.1f", intval($iMax)/$K);
+			$maxValue = $wgLang->formatNum(sprintf("%0.1f", intval($iMax)/$K));
 		}
 	}
 		
 	#---
 	$chartData[$date] = array("date" => $new_date, "value" => (!empty($out))?$value:"&nbsp;", "alt" => $out);
 }
+error_log(print_r($chartData, true). " \n", 3, "/tmp/moli.log");
 
 $height = $chartSettings['maxsize'];
 $ratio = $height/10; if ($iMax > 10) $ratio = $height/$iMax;
@@ -217,7 +201,7 @@ foreach ($data as $date => $out) {
 			}
 			$prev_year = $dateArr[1];
 		}
-		$selMonth = ($date == date("Y-m", $stats_date)) ? ($dateArr[0] . " " . date("d",$stats_date)) : $dateArr[0]
+		$selMonth = ($date == date("Y-m", $stats_date)) ? $wgLang->sprintfDate(WikiaGenericStats::getStatsDateFormat(0), wfTimestamp(TS_MW, $stats_date)) : $dateArr[0];
 ?>	
 	<td valign='middle' align='center' class="ws_chart_xaxis_months" style="<?=$addStyle?>"><?= $selMonth ?></td>
 <?

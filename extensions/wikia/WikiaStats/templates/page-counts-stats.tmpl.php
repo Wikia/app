@@ -35,13 +35,12 @@ foreach ($statsCount as $cnt => $stats)
 {
 	$rank++;
 	$reg_edits = ($stats['reg_edits']) ? sprintf("%0.0f%%", ($stats['reg_edits']/$cnt) * 100) : sprintf("%0.0f%%", $stats['reg_edits']);
-    if ($stats['archived'] < $Mb)
-    { 
-    	$size = "<font color=#AAAAAA>&lt; 1 MB</font> &nbsp;" ; 
-    }
-    else
-    { 
-    	$size = sprintf ("%.1f", $stats['archived'] / $Mb) . " MB &nbsp;" ; 
+    if ($stats['archived'] < $Mb) { 
+    	$mbT = wfMsg('size-megabytes', 1);
+    	$size = "<font color=#AAAAAA>&lt; ".$mbT."</font> &nbsp;" ; 
+    } else {
+		$mbT = wfMsg('size-megabytes', $wgLang->formatNum(sprintf ("%.1f", $stats['archived'] / $Mb)));
+    	$size = $mbT . "&nbsp;"; 
     }
     #---
     $naName = (array_key_exists($stats['namespace'], $canonicalNamespace)) ? $canonicalNamespace[$stats['namespace']] : "";

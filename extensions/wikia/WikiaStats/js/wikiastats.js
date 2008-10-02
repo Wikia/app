@@ -230,17 +230,18 @@ function setActiveCompareTab() {
 	YAHOO.util.Dom.get("ws-wikia-select-id").className="";
 }
 function WikiaStatsCompareGetWikis(element, value) {
-	var func = function() { showWSSearchCompareResult(value) };
-
+	var func = function() { 
+		showWSSearchCompareResult(element, value);
+	};
+	
 	if ( element.zid ) {
 		clearTimeout(element.zid);
 	}
 	element.zid = setTimeout(func,800);
 }
 
-function showWSSearchCompareResult(value) {
-	if (value != "") {
-		hideSortUrl("ws-sort-panel", "hidden");
+function showWSSearchCompareResult(element, value) {
+	var searchText = function() {
 		if (selectWSWikisDialogList.length > 0) {
 			for (k in selectWSWikisDialogList) {
 				YAHOO.util.Dom.get("row_wikis_" + k).style.display = 'block';
@@ -252,11 +253,22 @@ function showWSSearchCompareResult(value) {
 				}
 			}
 		}
-	} else {
+		YAHOO.util.Dom.get("ws-search-input-panel-btn").innerHTML = "";
+	}
+	
+	var unsearchText = function() {
 		for (k in selectWSWikisDialogList) {
 			YAHOO.util.Dom.get("row_wikis_" + k).style.display = 'block';
 		}
-		hideSortUrl("ws-sort-panel", "visible");
+		YAHOO.util.Dom.get("ws-search-input-panel-btn").innerHTML = "";
 	}
 	
+	YAHOO.util.Dom.get("ws-search-input-panel-btn").innerHTML = "<img src=\"/extensions/wikia/WikiaStats/images/ajax-loader-small.gif\" /></div>";
+	if (value != "") {
+		hideSortUrl("ws-sort-panel", "hidden");
+		setTimeout(searchText,100);
+	} else {
+		hideSortUrl("ws-sort-panel", "visible");
+		setTimeout(unsearchText,100);
+	}
 }

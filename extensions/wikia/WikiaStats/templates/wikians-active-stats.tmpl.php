@@ -55,9 +55,9 @@ foreach ($wkActive as $rank => $data)
 		$rank_change = "...";
 	}	
 	#---
-	$outFirstEdit = substr(wfMsg(strtolower(date("F",$data['first_edit']))), 0, 3) . " " . date("d",$data['first_edit']) .", ".date("Y",$data['first_edit']);
+	$outFirstEdit = $wgLang->sprintfDate(WikiaGenericStats::getStatsDateFormat(), wfTimestamp(TS_MW, $data['first_edit']));
 	#---
-	$outLastEdit = substr(wfMsg(strtolower(date("F",$data['last_edit']))), 0, 3) . " " . date("d",$data['last_edit']) .", ".date("Y",$data['last_edit']);
+	$outLastEdit = $wgLang->sprintfDate(WikiaGenericStats::getStatsDateFormat(), wfTimestamp(TS_MW, $data['last_edit']));
 ?>
 <tr>
 	<td class="eb" style="white-space:nowrap;"><a href="<?= trim($city_url) ?><?= Title::makeTitle(NS_USER, $data['user_name'])->getLocalURL() ?>" target="new"><?= $data['user_name'] ?></a></td>

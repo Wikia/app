@@ -29,14 +29,21 @@ class WikiaStatsXLS {
 	}
 
 	private function writeXLSNumber($row, $col, $value) {
-		if ($value != 0) {
-			echo pack("sssss", 0x203, 14, $row, $col, 0x0);
-			echo pack("d", $value);
+		if (strpos($value, ",") !== false) {
+			$this->writeXLSLabel($row, $col, $value );
+		} else {
+			if (isset($value)) {
+				echo pack("sssss", 0x203, 14, $row, $col, 0x0);
+				echo pack("d", sprintf("%0.2f", $value));
+			}
 		}
 		return;
 	}
 
 	private function writeXLSLabel($row, $col, $value ) {
+		$value = str_replace("<br/>", " ", $value);
+		$value = str_replace("&lt;", "<", $value);
+		$value = str_replace("&gt;", ">", $value);
 		$len = strlen($value);
 		echo pack("ssssss", 0x204, 8 + $len, $row, $col, 0x0, $len);
 		echo $value;
@@ -76,7 +83,7 @@ class WikiaStatsXLS {
 	}
 
 	public function makeMainStats($data, &$columns, &$monthlyStats, $city_id) {
-		global $wgUser;
+		global $wgUser, $wgLang;
 
 		#----
 		$dbname = $this->getXLSCityDBName($city_id);
@@ -146,10 +153,10 @@ class WikiaStatsXLS {
 		$this->writeXLSLabel(6,12,wfMsg('wikiastats_edits'));
 		$this->writeXLSLabel(6,13,wfMsg('wikiastats_bytes'));
 		//
-		$this->writeXLSLabel(4,14,wfMsg('wikiastats_larger_than'));
+		$this->writeXLSLabel(4,14,wfMsg('wikiastats_largerthan'));
 		$this->mergeXLSColsRows(4, 14, 5, 15);
-		$this->writeXLSLabel(6,14,'0.5Kb');
-		$this->writeXLSLabel(6,15,'2.0Kb');
+		$this->writeXLSLabel(6,14,wfMsg('size-kilobytes', 0.5));
+		$this->writeXLSLabel(6,15,wfMsg('size-kilobytes', 2));
 		// database
 		$this->writeXLSLabel(4,16,wfMsg('wikiastats_edits'));
 		$this->mergeXLSColsRows(4, 16, 6, 16);
@@ -196,17 +203,18 @@ class WikiaStatsXLS {
 				else {
 					if ($column == 'date') {
 						$dateArr = explode("-",$columnsData[$column]);
-						$stamp = mktime(0,0,0,$dateArr[1],1,$dateArr[0]);
-						$out = substr(wfMsg(strtolower(date("F",$stamp))), 0, 3) . " " . $dateArr[0];
-						$today = sprintf("%s-%s", date("Y"), date("m"));
-						if ( $columnsData[$column] == $today)
-						{
-							$out = substr(wfMsg(strtolower(date("F",$stamp))), 0, 3) . " " . date("d") . ", " . $dateArr[0];
+						$fixDF = WikiaGenericStats::getStatsDateFormat();
+						$stamp = mktime(23,59,59,$dateArr[1],1,$dateArr[0]);
+						$out = $wgLang->sprintfDate("M Y", wfTimestamp(TS_MW, $stamp));
+						$today = date("Y-m");
+						if ( $columnsData[$column] == $today) {
+							//$out = wfMsg(strtolower(date("M",$stamp))) . " " . date("d") . ", " . $dateArr[0];
+							$out = $wgLang->sprintfDate($fixDF, wfTimestamp(TS_MW, $stamp));
 						}
 						$out = addslashes($out);
 					}
 					elseif ($column == 'K')
-						$out = sprintf("%0.1f", $columnsData[$column]);
+						$out = $wgLang->formatNum(sprintf("%0.1f", $columnsData[$column]));
 					elseif ($column == 'L')
 						$out = sprintf("%0.0f", $columnsData[$column]);
 					elseif ( in_array($column, array('M', 'N')) )
@@ -241,8 +249,9 @@ class WikiaStatsXLS {
 			#---
 			if ($columnsData['visible'] === 1) {
 				$dateArr = explode("-", $date);
-				$stamp = mktime(0,0,0,$dateArr[1],1,$dateArr[0]);
-				$outDate = substr(wfMsg(strtolower(date("F",$stamp))), 0, 3) . " " . $dateArr[0];
+				$stamp = mktime(23,59,59,$dateArr[1],1,$dateArr[0]);
+				#$outDate = wfMsg(strtolower(date("M",$stamp))) . " " . $dateArr[0];
+				$outDate = $wgLang->sprintfDate("M Y", wfTimestamp(TS_MW, $stamp));
 				// output date in correct format
 				$this->writeXLSLabel($row, $col_date, $outDate);
 				//----
@@ -313,6 +322,7 @@ class WikiaStatsXLS {
 	
 	public function makeActiveWikiansStats($city_id, &$active, &$absent)
 	{
+		global $wgLang;
 		#----
 		$dbname = $this->getXLSCityDBName($city_id);
 		$cur_month = 1;
@@ -377,9 +387,11 @@ class WikiaStatsXLS {
 					$rank_change = "...";
 				}	
 				#---
-				$outFirstEdit = substr(wfMsg(strtolower(date("F",$data['first_edit']))), 0, 3) . " " . date("d",$data['first_edit']) .", ".date("Y",$data['first_edit']);
+				$outFirstEdit = $wgLang->sprintfDate(WikiaGenericStats::getStatsDateFormat(), wfTimestamp(TS_MW, $data['first_edit']));
+				#$outFirstEdit = wfMsg(strtolower(date("M",$data['first_edit']))) . " " . date("d",$data['first_edit']) .", ".date("Y",$data['first_edit']);
 				#---
-				$outLastEdit = substr(wfMsg(strtolower(date("F",$data['last_edit']))), 0, 3) . " " . date("d",$data['last_edit']) .", ".date("Y",$data['last_edit']);
+				#$outLastEdit = wfMsg(strtolower(date("M",$data['last_edit']))) . " " . date("d",$data['last_edit']) .", ".date("Y",$data['last_edit']);
+				$outLastEdit = $wgLang->sprintfDate(WikiaGenericStats::getStatsDateFormat(), wfTimestamp(TS_MW, $data['last_edit']));
 
 				// write data
 				$col = 0;
@@ -431,9 +443,11 @@ class WikiaStatsXLS {
 			$row++;
 			foreach ($absent as $rank => $data) {
 				#---
-				$outFirstEdit = substr(wfMsg(strtolower(date("F",$data['first_edit']))), 0, 3) . " " . date("d",$data['first_edit']) .", ".date("Y",$data['first_edit']);
+				$outFirstEdit = $wgLang->sprintfDate(WikiaGenericStats::getStatsDateFormat(), wfTimestamp(TS_MW, $data['first_edit']));
+				#$outFirstEdit = wfMsg(strtolower(date("M",$data['first_edit']))) . " " . date("d",$data['first_edit']) .", ".date("Y",$data['first_edit']);
 				#---
-				$outLastEdit = substr(wfMsg(strtolower(date("F",$data['last_edit']))), 0, 3) . " " . date("d",$data['last_edit']) .", ".date("Y",$data['last_edit']);
+				$outLastEdit = $wgLang->sprintfDate(WikiaGenericStats::getStatsDateFormat(), wfTimestamp(TS_MW, $data['last_edit']));
+				#$outLastEdit = wfMsg(strtolower(date("M",$data['last_edit']))) . " " . date("d",$data['last_edit']) .", ".date("Y",$data['last_edit']);
 				#---
 				$col = 0;
 				$this->writeXLSLabel($row,$col,$data['user_name']); $col++;
@@ -454,6 +468,7 @@ class WikiaStatsXLS {
 	
 	public function makeWikiaAnonUsersStats($city_id, &$anonData)
 	{
+		global $wgLang;
 		#----
 		$dbname = $this->getXLSCityDBName($city_id);
 		$cur_month = 1;
@@ -490,9 +505,11 @@ class WikiaStatsXLS {
 			foreach ($anonData as $id => $data) {
 				$rank++;
 				#---
-				$outFirstEdit = substr(wfMsg(strtolower(date("F",$data['min']))), 0, 3) . " " . date("d",$data['min']) .", ".date("Y",$data['min']);
+				$outFirstEdit = $wgLang->sprintfDate(WikiaGenericStats::getStatsDateFormat(), wfTimestamp(TS_MW, $data['min']));
+				#$outFirstEdit = wfMsg(strtolower(date("M",$data['min']))) . " " . date("d",$data['min']) .", ".date("Y",$data['min']);
 				#---
-				$outLastEdit = substr(wfMsg(strtolower(date("F",$data['max']))), 0, 3) . " " . date("d",$data['max']) .", ".date("Y",$data['max']);
+				#$outLastEdit = wfMsg(strtolower(date("M",$data['max'])))  . " " . date("d",$data['max']) .", ".date("Y",$data['max']);
+				$outLastEdit = $wgLang->sprintfDate(WikiaGenericStats::getStatsDateFormat(), wfTimestamp(TS_MW, $data['max']));
 				#---
 				$col = 0;
 				$this->writeXLSLabel($row,$col,$data['user_name']); $col++;
@@ -513,6 +530,7 @@ class WikiaStatsXLS {
 	
 	public function makeArticleSizeStats($city_id, &$articleCount, &$articleSize)
 	{
+		global $wgLang;
 		#----
 		$dbname = $this->getXLSCityDBName($city_id);
 		$cur_month = 1;
@@ -534,8 +552,12 @@ class WikiaStatsXLS {
 		// second line
 		$col = 1;
 		foreach ($articleSize as $s => $values) {
-			$text = "< ".$s." B";
-			if ($s >= 1024) $text = "< ".sprintf ("%.0f", $s/1024)." kB";
+			$bT = wfMsg('size-bytes', $s);
+			$text = "< ".$bT;
+			if ($s >= 1024) {
+				$kbT = wfMsg('size-kilobytes', sprintf("%.0f", $s/1024));
+				$text = "< ".$kbT;
+			}
 			$this->writeXLSLabel($row,$col,$text);
 			$col++;
 		}
@@ -546,10 +568,14 @@ class WikiaStatsXLS {
 			$cntAll = intval($monthStats['count']);
 			#---
 			$dateArr = explode("-",$date);
-			$stamp = mktime(0,0,0,$dateArr[1],1,$dateArr[0]);
-			$out = substr(wfMsg(strtolower(date("F",$stamp))), 0, 3) . " " . $dateArr[0];
-			if ($date == sprintf("%s-%s", date("Y"), date("m"))) {
-				$out = substr(wfMsg(strtolower(date("F",$stamp))), 0, 3) . " " . date("d") . ", " . $dateArr[0];
+			$stamp = mktime(23,59,59,$dateArr[1],1,$dateArr[0]);
+			#---
+			#$out = wfMsg(strtolower(date("M",$stamp))) . " " . $dateArr[0];
+			$out = $wgLang->sprintfDate("M Y", wfTimestamp(TS_MW, $stamp));
+			#---
+			if ($date == date("Y-m")) {
+				$out = $wgLang->sprintfDate(WikiaGenericStats::getStatsDateFormat(), wfTimestamp(TS_MW, $stamp));
+				#$out = wfMsg(strtolower(date("M",$stamp))) . " " . date("d") . ", " . $dateArr[0];
 			}
 			#---
 			$this->writeXLSLabel($row,$col,$out);
@@ -557,7 +583,8 @@ class WikiaStatsXLS {
 			foreach ($articleSize as $s => $values) {
 				$col++;
 				$cntDate = array_key_exists($date, $values) ? intval($values[$date]['count']) : 0;
-				$rowValue = sprintf("%0.1f", ($cntDate * 100) / $cntAll);
+				$rowValue = $wgLang->formatNum(sprintf("%0.1f", ($cntDate * 100) / $cntAll));
+				if ($s == 32) error_log ($s . " => " .$rowValue . "\n", 3, "/tmp/moli.log");
 				$this->writeXLSNumber($row,$col,$rowValue);
 			}
 			$row++;
@@ -570,6 +597,8 @@ class WikiaStatsXLS {
 	
 	public function makeDBNamespaceStats($city_id, &$namespaceCount, &$nspaces, &$allowedNamespace)
 	{
+		global $wgLang;
+		
 		$kB = 1000;
 		$mB = $kB * $kB;
 		#----
@@ -607,10 +636,12 @@ class WikiaStatsXLS {
 			#---
 			$col = 0;
 			$dateArr = explode("-",$date);
-			$stamp = mktime(0,0,0,$dateArr[1],1,$dateArr[0]);
-			$out = substr(wfMsg(strtolower(date("F",$stamp))), 0, 3) . " " . $dateArr[0];
-			if ($date == sprintf("%s-%s", date("Y"), date("m"))) {
-				$out = substr(wfMsg(strtolower(date("F",$stamp))), 0, 3) . " " . date("d") . ", " . $dateArr[0];
+			$stamp = mktime(23,59,59,$dateArr[1],1,$dateArr[0]);
+			#$out = wfMsg(strtolower(date("M",$stamp))) . " " . $dateArr[0];
+			$out = $wgLang->sprintfDate("M Y", wfTimestamp(TS_MW, $stamp));
+			if ($date == date("Y-m")) {
+				$out = $wgLang->sprintfDate(WikiaGenericStats::getStatsDateFormat(), wfTimestamp(TS_MW, $stamp));
+				#$out = wfMsg(strtolower(date("M",$stamp))) . " " . date("d") . ", " . $dateArr[0];
 			}
 			#---
 			$this->writeXLSLabel($row,$col,$out);
@@ -636,6 +667,7 @@ class WikiaStatsXLS {
 	public function makeMostEditPagesStats($city_id, &$statsCount, &$mSourceMetaSpace)
 	{
 		global $wgCanonicalNamespaceNames;
+		global $wgLang;
 
 		$dbname = $this->getXLSCityDBName($city_id);
 		$cur_month = 1;
@@ -681,9 +713,10 @@ class WikiaStatsXLS {
 				$reg_edits = ($stats['reg_edits']) ? sprintf("%0.0f", ($stats['reg_edits']/$cnt) * 100) : sprintf("%0.0f", $stats['reg_edits']);
 				#---
 				if ($stats['archived'] < $Mb) { 
-					$size = "< 1 MB"; 
+					$mbT = wfMsg('size-megabytes', 1);
+					$size = "< " . $mbT; 
 				} else { 
-					$size = sprintf ("%.1f", $stats['archived'] / $Mb) . " MB" ; 
+					$size = wfMsg('size-megabytes', $wgLang->formatNum(sprintf ("%.1f", $stats['archived'] / $Mb)));
 				}
 				#---
 				$naName = (array_key_exists($stats['namespace'], $wgCanonicalNamespaceNames)) ? $wgCanonicalNamespaceNames[$stats['namespace']] : "";
@@ -713,6 +746,7 @@ class WikiaStatsXLS {
 	
 	private function makeTrendMeanFormula($row1, $row2, $col1, $col2)
 	{
+		global $wgLang;
 		#--- F O R M U L A ( mean )
 		$sum = 0;
 		$meanInfo = wfMsg('wikiastats_trend_mean_info')." \r\n";
@@ -722,7 +756,7 @@ class WikiaStatsXLS {
 			#---
 			$day = ($i == STATS_TREND_MONTH) ? date("d") : date("d", $cur_date);
 			$sum += $day;
-			$month = substr(wfMsg(strtolower(date("F",$cur_date))), 0, 3);
+			$month = $wgLang->sprintfDate("M", wfTimestamp(TS_MW, $cur_date));
 			#---
 			$variable = "X" . $i;
 			$meanArray[0][] = $variable;
@@ -742,6 +776,8 @@ class WikiaStatsXLS {
 
 	private function makeGrowthMeanFormula($row1, $row2, $col1, $col2)
 	{
+		global $wgLang;
+		
 		$growthInfo = wfMsg('wikiastats_trend_growth_info'). "\n";
 		$growthInfo .= wfMsg('wikiastats_trend_formula'). ": ";
 		#---
@@ -752,8 +788,9 @@ class WikiaStatsXLS {
 			#---
 			$day = ($i == STATS_TREND_MONTH) ? date("d") : date("d", $next_date);
 			#---
-			$month = substr(wfMsg(strtolower(date("F",$cur_date))), 0, 3);
-			$next_month = substr(wfMsg(strtolower(date("F",$next_date))), 0, 3);
+			$month = $wgLang->sprintfDate("M", wfTimestamp(TS_MW, $cur_date));
+			#---
+			$next_month = $wgLang->sprintfDate("M", wfTimestamp(TS_MW, $next_date));
 			#---
 			if ($i < STATS_TREND_MONTH) {
 				$sum += $day;
@@ -787,6 +824,7 @@ class WikiaStatsXLS {
 	
 	public function makeTrendStats($city_id, &$trend_stats, &$month_array, &$cityList, &$cityOrderList)
 	{
+		global $wgLang;
 		$G = 1000 * 1000 * 1000;
 		$M = 1000 * 1000;
 		$K = 1000;	
@@ -866,21 +904,24 @@ class WikiaStatsXLS {
 				if ($loop == 0) { #--- current date
 					$dateArr = explode("-", date("Y-m-d"));
 					#---
-					$stamp = mktime(0,0,0,$dateArr[1],$dateArr[2],$dateArr[0]);
-					$outDate = substr(wfMsg(strtolower(date("F",$stamp))), 0, 3) . " " . $dateArr[2] .", ". $dateArr[0];
+					$stamp = mktime(23,59,59,$dateArr[1],$dateArr[2],$dateArr[0]);
+					#$outDate = wfMsg(strtolower(date("M",$stamp))) . " " . $dateArr[2] .", ". $dateArr[0];
+					$outDate = $wgLang->sprintfDate(WikiaGenericStats::getStatsDateFormat(), wfTimestamp(TS_MW, $stamp));
 				} else {
 					if (!in_array($date, array('trend', 'mean', 'growth'))) {
 						$dateArr = explode("-", $date);
 						#---
-						$stamp = mktime(0,0,0,$dateArr[1],1,$dateArr[0]);
-						$outDate = substr(wfMsg(strtolower(date("F",$stamp))), 0, 3) . " ".$dateArr[0];
+						$stamp = mktime(23,59,59,$dateArr[1],1,$dateArr[0]);
+						#$outDate = wfMsg(strtolower(date("M",$stamp))) . " ".$dateArr[0];
+						$outDate = $wgLang->sprintfDate("M Y", wfTimestamp(TS_MW, $stamp));
 					} else {
 						if ($date == 'trend') {
 							$trend = 1;
 							$dateArr = explode("-", date("Y-m-f"));
 							#---
-							$stamp = mktime(0,0,0,$dateArr[1],1,$dateArr[0]);
-							$outDate = substr(wfMsg(strtolower(date("F",$stamp))), 0, 3) . " ".$dateArr[0];
+							$stamp = mktime(23,59,59,$dateArr[1],1,$dateArr[0]);
+							#$outDate = wfMsg(strtolower(date("M",$stamp))) . " ".$dateArr[0];
+							$outDate = $wgLang->sprintfDate("M Y", wfTimestamp(TS_MW, $stamp));
 						} else {
 							$outDate = ucfirst($date);
 							$growth = ($date == 'growth') ? 1 : 0;
@@ -899,29 +940,22 @@ class WikiaStatsXLS {
 						if ($column == 'G')
 							$out = sprintf("%0d", $city_values);
 						elseif ($column == 'K')
-							$out = sprintf("%0.1f", $city_values);
+							$out = $wgLang->formatNum(sprintf("%0.1f", $city_values));
 						elseif ($column == 'L')
 							$out = sprintf("%0.0f", $city_values);
 						elseif (($column == 'M') || ($column == 'N'))
 							$out = sprintf("%0d%%", $city_values * 100);
 						elseif ($column == 'P') {
-							if (intval($city_values) > $GB)
-								$out = sprintf("%0.1f GB", $city_values/$GB);
+							if (intval($city_values) > $GB) 
+								$out = wfMsg('size-gibabytes', $wgLang->formatNum(sprintf("%0.1f", $city_values/$GB)));
 							elseif (intval($city_values) > $MB)
-								$out = sprintf("%0.1f MB", $city_values/$MB);
+								$out = wfMsg('size-megabytes', $wgLang->formatNum(sprintf("%0.1f", $city_values/$MB)));
 							elseif ($city_values > $KB)
-								$out = sprintf("%0.1f KB", $city_values/$KB);
+								$out = wfMsg('size-kilobytes', $wgLang->formatNum(sprintf("%0.1f", $city_values/$KB)));
 							else
 								$out = sprintf("%0d", intval($city_values));
 						} else {
-							if (intval($city_values) > $G)
-								$out = sprintf("%0.1f G", intval($city_values/$G));
-							elseif (intval($city_values) > $M)
-								$out = sprintf("%0.1f M", $city_values/$M);
-							//elseif (intval($city_values) > $K)
-							//	$out = sprintf("%0.1f k", intval($city_values)/$K);
-							else
-								$out = sprintf("%0d", $city_values);
+							$out = sprintf("%0d", $city_values);
 						}
 					} else {
 						$out = sprintf("%0d", $city_values);
@@ -957,6 +991,7 @@ class WikiaStatsXLS {
 	
 	public function makeCreationStats($cityList, &$arr_wikians, &$dWikians, &$arr_article, &$dArticles)
 	{
+		global $wgLang;
 		$this->setXLSHeader(wfMsg('wikiastats_filename_creation', date('Ymd')));
 		#----
 		$max_wikians = (is_array($arr_wikians)) ? $arr_wikians[1] : 1;
@@ -982,8 +1017,9 @@ class WikiaStatsXLS {
 				$row = $start_row + 3;
 				$dateArr = explode("-", $date);
 				#---
-				$stamp = mktime(0,0,0,$dateArr[1],1,$dateArr[0]);
-				$outDate = substr(wfMsg(strtolower(date("F",$stamp))), 0, 3) . " ".$dateArr[0];
+				$stamp = mktime(23,59,59,$dateArr[1],1,$dateArr[0]);
+				#$outDate = wfMsg(strtolower(date("M",$stamp))) . " ".$dateArr[0];
+				$outDate = $wgLang->sprintfDate("M Y", wfTimestamp(TS_MW, $stamp));
 
 				$this->writeXLSLabel($row, $col, $outDate); 
 				#---
@@ -1009,8 +1045,9 @@ class WikiaStatsXLS {
 				$row = $start_row + 3;
 				$dateArr = explode("-", $date);
 				#---
-				$stamp = mktime(0,0,0,$dateArr[1],1,$dateArr[0]);
-				$outDate = substr(wfMsg(strtolower(date("F",$stamp))), 0, 3) . " ".$dateArr[0];
+				$stamp = mktime(23,59,59,$dateArr[1],1,$dateArr[0]);
+				#$outDate = wfMsg(strtolower(date("M",$stamp))) . " ".$dateArr[0];
+				$outDate = $wgLang->sprintfDate("M Y", wfTimestamp(TS_MW, $stamp));
 				#---
 				$this->writeXLSLabel($row, $col, $outDate); 
 				#---
@@ -1078,9 +1115,9 @@ class WikiaStatsXLS {
 					if ($dateValues[$city_id] != "null") {
 						if ($show_percent === false) {
 							if (in_array($columnLetter, array("J","K"))) {
-								$output = sprintf("%0.1f", 100 * $dateValues[$city_id]);
+								$output = $wgLang->formatNum(sprintf("%0.1f", 100 * $dateValues[$city_id]));
 							} else {
-								$output = sprintf("%0.1f", $dateValues[$city_id]);
+								$output = $wgLang->formatNum(sprintf("%0.1f", $dateValues[$city_id]));
 							}
 						} else {
 							$output = sprintf("%0.0f%%", $dateValues[$city_id]);

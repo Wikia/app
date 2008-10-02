@@ -45,7 +45,7 @@ $KB = 1024;
 		#---
 		$day = ($i == $nbr_month) ? date("d") : date("d", $cur_date);
 		$sum += $day;
-		$month = substr(wfMsg(strtolower(date("F",$cur_date))), 0, 3);
+		$month = $wgLang->sprintfDate("M", wfTimestamp(TS_MW, $cur_date));
 		#---
 		$variable = "<strong style=\"font-color:#00008B\">X" . $i . "</strong>";
 		$meanArray[0][] = $variable;
@@ -74,8 +74,8 @@ $KB = 1024;
 		#---
 		$day = ($i == $nbr_month) ? date("d") : date("d", $next_date);
 		#---
-		$month = substr(wfMsg(strtolower(date("F",$cur_date))), 0, 3);
-		$next_month = substr(wfMsg(strtolower(date("F",$next_date))), 0, 3);
+		$month = $wgLang->sprintfDate("M", wfTimestamp(TS_MW, $cur_date));
+		$next_month = $wgLang->sprintfDate("M", wfTimestamp(TS_MW, $next_date));
 		#---
 		if ($i < $nbr_month)
 		{
@@ -193,8 +193,8 @@ foreach ($dateValues as $date => $cities)
 	{
 		$dateArr = explode("-", date("Y-m-d"));
 		#---
-		$stamp = mktime(0,0,0,$dateArr[1],$dateArr[2],$dateArr[0]);
-		$outDate = substr(wfMsg(strtolower(date("F",$stamp))), 0, 3) . " " . $dateArr[2] .", ". $dateArr[0];
+		$stamp = mktime(23,59,59,$dateArr[1],$dateArr[2],$dateArr[0]);
+		$outDate = $wgLang->sprintfDate(WikiaGenericStats::getStatsDateFormat(0), wfTimestamp(TS_MW, $stamp));
 	}
 	else
 	{
@@ -202,8 +202,8 @@ foreach ($dateValues as $date => $cities)
 		{
 			$dateArr = explode("-", $date);
 			#---
-			$stamp = mktime(0,0,0,$dateArr[1],1,$dateArr[0]);
-			$outDate = substr(wfMsg(strtolower(date("F",$stamp))), 0, 3) . " ".$dateArr[0];
+			$stamp = mktime(23,59,59,$dateArr[1],1,$dateArr[0]);
+			$outDate = $wgLang->sprintfDate("M Y", wfTimestamp(TS_MW, $stamp));
 		}
 		else
 		{
@@ -212,8 +212,8 @@ foreach ($dateValues as $date => $cities)
 				$trend = 1;
 				$dateArr = explode("-", date("Y-m-f"));
 				#---
-				$stamp = mktime(0,0,0,$dateArr[1],1,$dateArr[0]);
-				$outDate = substr(wfMsg(strtolower(date("F",$stamp))), 0, 3) . " ".$dateArr[0];
+				$stamp = mktime(23,59,59,$dateArr[1],1,$dateArr[0]);
+				$outDate = $wgLang->sprintfDate("M Y", wfTimestamp(TS_MW, $stamp));
 			}
 			else
 			{
@@ -234,7 +234,7 @@ foreach ($dateValues as $date => $cities)
 			if ($column == 'G')
 				$out = sprintf("%0d", $value);
 			elseif ($column == 'K')
-				$out = sprintf("%0.1f", $value);
+				$out = $wgLang->formatNum(sprintf("%0.1f", $value)); 
 			elseif ($column == 'L')
 				$out = sprintf("%0.0f", $value);
 			elseif (($column == 'M') || ($column == 'N'))
@@ -244,22 +244,20 @@ foreach ($dateValues as $date => $cities)
 			elseif ($column == 'P')
 			{
 				if (intval($value) > $GB)
-					$out = sprintf("%0.1f GB", $value/$GB);
+					$out = wfMsg('size-gigabytes', $wgLang->formatNum(sprintf("%0.1f", $value/$GB)));
 				elseif (intval($value) > $MB)
-					$out = sprintf("%0.1f MB", $value/$MB);
+					$out = wfMsg('size-megabytes', $wgLang->formatNum(sprintf("%0.1f", $value/$MB)));
 				elseif ($value > $KB)
-					$out = sprintf("%0.1f KB", $value/$KB);
+					$out = wfMsg('size-kilobytes', $wgLang->formatNum(sprintf("%0.1f", $value/$KB)));
 				else
 					$out = sprintf("%0d", intval($value));
 			}
 			else
 			{
 				if (intval($value) > $G)
-					$out = sprintf("%0.1f G", intval($value/$G));
+					$out = sprintf("%s G", $wgLang->formatNum(sprintf("%0.1f", $value/$G)));
 				elseif (intval($value) > $M)
-					$out = sprintf("%0.1f M", $value/$M);
-				//elseif (intval($value) > $K)
-				//	$out = sprintf("%0.1f k", intval($value)/$K);
+					$out = sprintf("%s M", $wgLang->formatNum(sprintf("%0.1f", $value/$M)));
 				else
 					$out = sprintf("%0d", $value);
 			}
