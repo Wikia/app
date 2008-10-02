@@ -82,7 +82,6 @@ $wgWikiaStatsMessages["en"] = array(
 	"wikiastats_redirects" => "redirects",
 	"wikistats_edited_in_namespace" => "edited in namespace",
 	"wikistats_main_namespace" => "main",
-	"wikistats_user_namespace" => "user",
 	"wikistats_image_namespace" => "image",
 	"wikiastats_page_requests" => "page requests",
 	"wikiastats_visits" => "visits",
