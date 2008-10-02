@@ -69,7 +69,7 @@ YAHOO.util.Event.onDOMReady(function () {
 	<td class="cb"><?=wfMsg('wikiastats_total')?></td>
 	<td class="cb">&gt;5</td>
 	<td class="cb">&gt;100</td>
-	<td class="cb" style="white-space:nowrap;"><?=lcfirst(wfMsg('wikiastats_username'))?></td>
+	<td class="cb" style="white-space:nowrap;"><?=$wgLang->lcfirst(wfMsg('wikiastats_username'))?></td>
 	<td class="cb" style="white-space:nowrap;"><?=wfMsg('wikistats_image_namespace')?></td>
 	<td class="cb">&gt;10</td>
 	<td class="cb"><?=wfMsg('wikiastats_official')?></td>
@@ -224,7 +224,7 @@ foreach ($monthlyStats as $date => $columnsData) {
 	<td class="cb"><?=wfMsg('wikiastats_total')?></td>
 	<td class="cb">&gt;5</td>
 	<td class="cb">&gt;100</td>
-	<td class="cb" style="white-space:nowrap;"><?=lcfirst(wfMsg('wikiastats_username'))?></td>
+	<td class="cb" style="white-space:nowrap;"><?=$wgLang->lcfirst(wfMsg('wikiastats_username'))?></td>
 	<td class="cb" style="white-space:nowrap;"><?=wfMsg('wikistats_image_namespace')?></td>
 	<td class="cb" rowspan="2"><?=wfMsg('wikiastats_total')?></td>
 	<td class="cb">&gt;10</td>
