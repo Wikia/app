@@ -16,6 +16,7 @@ class WikiaReplicateImages {
 	/**
 	 * flag is next value of 2^n
 	 */
+	private $mOptions;
 	private $mServers = array(
 		"file3" => array(
 			"address" => "file3.sjc.wikia-inc.com",
@@ -30,16 +31,22 @@ class WikiaReplicateImages {
 	);
 
 	/**
+	 * constructor
+	 */
+	public function __construct( $options ) {
+		$this->mOptions = $options;
+	}
+
+	/**
 	 * main entry point for class
 	 *
 	 * @access public
 	 *
-	 * @param	array	$options	commandline options
 	 */
-	public function execute( $options ) {
-		$iImageLimit = isset($options['limit']) ? $options['limit'] : 10;
-		$sUserLogin = isset($options['u']) ? $options['u'] : 'cron';
-		$bIsDryRun = isset($options['dryrun']) ? true : false;
+	public function execute() {
+		$iImageLimit = isset( $this->mOptions['limit'] ) ? $this->mOptions['limit'] : 10;
+		$login = isset( $this->mOptions['u']) ? $this->mOptions['u'] : 'cron';
+		$test = isset( $this->mOptions['test']) ? true : false;
 
 		$dbr = wfGetDBExt( DB_SLAVE );
 		$dbw = wfGetDBExt( DB_MASTER );
@@ -59,36 +66,50 @@ class WikiaReplicateImages {
 			while( $oResultRow = $dbr->fetchObject( $oResource ) ) {
 				$success = true;
 				$flags = 0;
+				$source = $oResultRow->up_path;
 				foreach( $this->mServers as $server ) {
 					if( $server[ "transform" ] ) {
-						$sDestPath = preg_replace( $server["transform"][0], $server["transform"][1] , $oResultRow->up_path );
+						$destination = preg_replace( $server["transform"][0], $server["transform"][1] , $source );
 					}
 					else {
-						$sDestPath = $oResultRow->up_path;
+						$destination = $source;
 					}
-					$sScpCommand = '/usr/bin/scp -p ' . $oResultRow->up_path . ' ' . $sUserLogin . '@' . $server["address"] . ':' . $sDestPath;
-					$sScpCommand.= ' >/dev/null 2>&1';
+					/**
+					 * check if source file exists. I know, stats are bad
+					 */
+					if( file_exists( $source ) ) {
+						$cmd = wfEscapeShellArg(
+							"/usr/bin/scp -p",
+							$oResultRow->up_path,
+							$login . '@' . $server["address"] . ':' . $destination,
+							">/dev/null",
+							"2>&1"
+						);
 
-					if( 1 ) {
-						print($sScpCommand . "\n");
-					}
-					else {
-						$aOutput = null;
-						$iReturnValue = 1;
-						@exec($sScpCommand, $aOutput, $iReturnValue);
-
-						if( $iReturnValue > 0 ) {
-							print("ERROR: $sScpCommand - command failed.\n\n");
-							$success = false;
-							break;
+						if( $test ) {
+							print( $cmd . "\n" );
 						}
 						else {
-							$flags = $flags | $server["flag"];
+							$output = wfShellExec( $cmd, $retval );
+
+							if( $retval > 0 ) {
+								syslog( LOG_ERR, "{$cmd} command failed." );
+								$success = false;
+								break;
+							}
+							else {
+								syslog( LOG_INFO, "{$cmd}." );
+								$flags = $flags | $server["flag"];
+							}
 						}
+					}
+					else {
+						syslog( LOG_WARNING, "{$source} doesn't exists." );
 					}
 				}
 
-				if( $success && 0 ) {
+				if( $success && 1 ) {
+					$dbw->begin();
 					$dbw->update(
 						"upload_log",
 						array(
@@ -97,7 +118,7 @@ class WikiaReplicateImages {
 						),
 						array( "up_id" => $oResultRow->up_id )
 					);
-					$dbw->immediateCommit();
+					$dbw->commit();
 				}
 			}
 		}
@@ -108,5 +129,7 @@ class WikiaReplicateImages {
 };
 
 
-$replicate = new WikiaReplicateImages();
-$replicate->execute( $options );
+openlog( "wikia-replicate-images", LOG_PID | LOG_PERROR, LOG_LOCAL0 );
+$replicate = new WikiaReplicateImages( $options );
+$replicate->execute();
+closelog();
