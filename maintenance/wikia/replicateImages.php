@@ -64,7 +64,7 @@ class WikiaReplicateImages {
 		);
 		if( $oResource ) {
 			while( $oResultRow = $dbr->fetchObject( $oResource ) ) {
-				$success = true;
+				$success = false;
 				$flags = 0;
 				$source = $oResultRow->up_path;
 				foreach( $this->mServers as $server ) {
@@ -100,6 +100,7 @@ class WikiaReplicateImages {
 							else {
 								syslog( LOG_INFO, "{$cmd}." );
 								$flags = $flags | $server["flag"];
+								$success = true;
 							}
 						}
 					}
@@ -108,7 +109,7 @@ class WikiaReplicateImages {
 					}
 				}
 
-				if( $success && 1 ) {
+				if( $success && !$test ) {
 					$dbw->begin();
 					$dbw->update(
 						"upload_log",
@@ -119,6 +120,7 @@ class WikiaReplicateImages {
 						array( "up_id" => $oResultRow->up_id )
 					);
 					$dbw->commit();
+					syslog( LOG_INFO, "{$source} copied to ".$login . '@' . $server["address"] . ':' . $destination, );
 				}
 			}
 		}
