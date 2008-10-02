@@ -1279,13 +1279,15 @@ class Linker {
 		 # no trailing newline, script should not be wrapped in a
 		 # paragraph
 		 . "</ul>\n</td></tr></table>"
+		 // macbre: fixes #2643 and #3730
 		 . '<script type="' . $wgJsMimeType . '">'
-		 . ' window.onload = function() {'
+		 . 'if (!window.onloadFuncts) {	var onloadFuncts = [];}'
+		 . 'onloadFuncts[onloadFuncts.length] = function() {'
 		 . ' if (window.showTocToggle) {'
 		 . '  window.tocShowText = "' . wfEscapeJsString( wfMsg('showtoc') ) . '";'
 		 . '  window.tocHideText = "' . wfEscapeJsString( wfMsg('hidetoc') ) . '";'
 		 . '  showTocToggle();'
-		 . ' }};'
+		 . '}};'
 		 . "</script>\n";
 	}
 
