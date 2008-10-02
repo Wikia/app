@@ -82,10 +82,9 @@ class WikiaReplicateImages {
 							"/usr/bin/scp",
 							"-p",
 							$oResultRow->up_path,
-							$login . '@' . $server["address"] . ':' . $destination,
-							">/dev/null",
-							"2>&1"
+							$login . '@' . $server["address"] . ':' . $destination
 						);
+						$cmd .= " >/dev/null 2>&1";
 
 						if( $test ) {
 							print( $cmd . "\n" );
