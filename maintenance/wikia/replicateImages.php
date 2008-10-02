@@ -81,10 +81,10 @@ class WikiaReplicateImages {
 						$cmd = wfEscapeShellArg(
 							"/usr/bin/scp",
 							"-p",
+							"-q",
 							$oResultRow->up_path,
 							$login . '@' . $server["address"] . ':' . $destination
 						);
-						$cmd .= " >/dev/null 2>&1";
 
 						if( $test ) {
 							print( $cmd . "\n" );
