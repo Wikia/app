@@ -19,12 +19,12 @@ class WikiaReplicateImages {
 	private $mOptions;
 	private $mServers = array(
 		"file3" => array(
-			"address" => "file3.sjc.wikia-inc.com",
+			"address" => "10.8.2.133",
 			"transform" => array( "!^/images/(.)!", "/raid/images/by_id/$1/$1" ),
 			"flag" => 1
 		),
 		"willow" => array(
-			"address" => "willow.sjc.wikia-inc.com",
+			"address" => "10.8.2.136",
 			"transform" => false,
 			"flag" => 2
 		)
@@ -79,7 +79,8 @@ class WikiaReplicateImages {
 					 */
 					if( file_exists( $source ) ) {
 						$cmd = wfEscapeShellArg(
-							"/usr/bin/scp -p",
+							"/usr/bin/scp",
+							"-p",
 							$oResultRow->up_path,
 							$login . '@' . $server["address"] . ':' . $destination,
 							">/dev/null",
