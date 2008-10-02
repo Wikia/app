@@ -80,7 +80,6 @@ class WikiaReplicateImages {
 					if( file_exists( $source ) ) {
 						$cmd = wfEscapeShellArg(
 							"/usr/bin/scp",
-							"-p",
 							"-q",
 							$oResultRow->up_path,
 							$login . '@' . $server["address"] . ':' . $destination
