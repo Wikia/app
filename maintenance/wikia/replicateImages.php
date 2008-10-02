@@ -120,7 +120,7 @@ class WikiaReplicateImages {
 						array( "up_id" => $oResultRow->up_id )
 					);
 					$dbw->commit();
-					syslog( LOG_INFO, "{$source} copied to ".$login . '@' . $server["address"] . ':' . $destination, );
+					syslog( LOG_INFO, "{$source} copied to ".$login . '@' . $server["address"] . ':' . $destination );
 				}
 			}
 		}
