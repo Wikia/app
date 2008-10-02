@@ -28,7 +28,7 @@ class WikiaGenericStats {
     var $mSelectedCityId = -1;
 
     const MONTHLY_STATS = 7;
-    const USE_MEMC = 1;
+    const USE_MEMC = 0;
     const USE_OLD_DB = 0;
 	const IGNORE_WIKIS = "5, 11, 6745";
    	
@@ -412,14 +412,7 @@ class WikiaGenericStats {
    		if (self::USE_MEMC) $wkStatsUrl = $wgMemc->get($memkey);
 		#---
    		if (empty($wkStatsUrl)) {
-			$dbr =& wfGetDB( DB_SLAVE );
-			#---
-			$sql = "SELECT city_url from ".wfSharedTable("city_list")." where city_id = {$city_id} and city_id not in (".self::IGNORE_WIKIS.")";
-			$res = $dbr->query($sql);
-			if ( $row = $dbr->fetchRow( $res ) ) {
-				$wkStatsUrl = substr($row["city_url"], 0, -1);
-			}
-			$dbr->freeResult( $res );
+			$wkStatsUrl = WikiFactory::getVarValueByName('wgServer', $city_id);
 			if (self::USE_MEMC) $wgMemc->set($memkey, $wkStatsUrl, 60*60*3);
 		}
 
@@ -429,7 +422,7 @@ class WikiaGenericStats {
 
 	static private function getUserEditCountFromDB($cityDBName, $value)
 	{
-    	global $wgMemc;
+    	global $wgMemc, $wgContentNamespaces;
     	#---
 		wfProfileIn( __METHOD__ );
 		$result = array('count' => 0, 'sum' => 0);
@@ -448,7 +441,7 @@ class WikiaGenericStats {
 				#---
 				$sql = "select count(wf_user) as cnt, sum(s) as s from ";
 				$sql .= "(select wf_user,sum(wf_contributed) as s from `wikiastats`.`{$cityDBName}_wikians_full` where ";
-				$sql .= "wf_user > 0 and wf_namespace = 0 group by wf_user having (sum(wf_contributed) >= {$value})) as query";
+				$sql .= "wf_user > 0 and wf_namespace in (".implode(",", $wgContentNamespaces).") group by wf_user having (sum(wf_contributed) >= {$value})) as query";
 				$res = $dbs->query($sql);
 				if ( $row = $dbs->fetchRow( $res ) )
 				{
@@ -582,15 +575,15 @@ class WikiaGenericStats {
 
 	static private function getWikiansListStatsFromDB($cityDBName, $namespace=0, $limit=STATS_WIKIANS_RANK_NBR, $stats_date=0, $userlist=array())
 	{
-    	global $wgMemc;
+    	global $wgMemc, $wgContentNamespaces;
     	#---
 		wfProfileIn( __METHOD__ );
 		#---
 		$namespace = intval($namespace);
+		$namespaceList = implode(",", $wgContentNamespaces);
 		#---
 		$whereUserList = "";
-		if (!empty($userlist))
-		{
+		if (!empty($userlist)) {
 			$whereUserList = "'".implode("','", $userlist)."'";
 		}
 
@@ -608,10 +601,12 @@ class WikiaGenericStats {
 				}
 				#---
 				$where = " wf_user > 0 ";
-				if (empty($namespace))
-					$where .= " and wf_namespace = {$namespace}	";
-				else
-					$where .= " and wf_namespace != 0 ";
+				if (empty($namespace)) {
+					$where .= " and wf_namespace in (".$namespaceList.") ";
+				}
+				else {
+					$where .= " and wf_namespace not in (".$namespaceList.") ";
+				}
 				#---
 				if (!empty($whereUserList))
 					$where .= " and wf_user in (".$whereUserList.") ";
@@ -650,11 +645,12 @@ class WikiaGenericStats {
 
 	static private function getArticlesCountsFromDB($cityDBName, $size = 0, $namespace=0)
 	{
-    	global $wgMemc;
+    	global $wgMemc, $wgContentNamespaces;
     	#---
 		wfProfileIn( __METHOD__ );
 		$result = array();
 		$memkey = 'wikiacitystatsarticlecount_'.$cityDBName.'_'.$size.'_'.$namespace;
+		$namespaceList = implode(",", $wgContentNamespaces);
 		#---
 		if (self::USE_MEMC) $result = $wgMemc->get($memkey);
 
@@ -667,10 +663,10 @@ class WikiaGenericStats {
 				}
 				#---
 				$where = "af_int_link_article > 0";
-				if (empty($namespace))
-					$where .= " and af_namespace = {$namespace}	";
+				if (empty($namespace)) 
+					$where .= " and af_namespace in (".$namespaceList.") ";
 				else
-					$where .= " and af_namespace != 0 ";
+					$where .= " and af_namespace not in (".$namespaceList.") ";
 				#---
 				if (!empty($size)) $where .= " and af_mean_size_article < {$size} ";
 				#---
@@ -733,11 +729,12 @@ class WikiaGenericStats {
 
 	static private function getAnonUserStatisticsFromDB($cityDBName, $namespace=0, $limit=50)
 	{
-    	global $wgMemc;
+    	global $wgMemc, $wgContentNamespaces;
     	#---
 		wfProfileIn( __METHOD__ );
 		#---
 		$namespace = intval($namespace);
+		$namespaceList = implode(",", $wgContentNamespaces);
 		$result = array();
 		#---
 		$memkey = 'wikiacitystatsusersanon_'.md5($cityDBName.'_'.$namespace.'_'.$limit);
@@ -754,10 +751,10 @@ class WikiaGenericStats {
 				}
 				#---
 				$where = " wf_user = 0 ";
-				if (empty($namespace))
-					$where .= " and wf_namespace = {$namespace}	";
+				if (empty($namespace)) 
+					$where .= " and wf_namespace in (".$namespaceList.") ";
 				else
-					$where .= " and wf_namespace != 0 ";
+					$where .= " and wf_namespace not in (".$namespaceList.") ";
 
 				#---
 				$sql = "select min(unix_timestamp(wf_first_day_edit)) as wf_min, max(unix_timestamp(wf_last_day_edit)) as wf_max, sum(wf_contributed) as wf_cnt, wf_user_text, wf_user ";
@@ -803,6 +800,8 @@ class WikiaGenericStats {
 		wfProfileIn( __METHOD__ );
 		#---
 		$namespace = intval($namespace);
+		$namespaceList = implode(",", $wgContentNamespaces);
+		
 		$result = array();
 		#---
 		$memkey = 'wikiacitystatseditpages_'.md5($cityDBName.'_'.$namespace.'_'.$reg_users.'_'.$limit);
@@ -825,9 +824,9 @@ class WikiaGenericStats {
 					$where .= " ef_user > 0 ";
 
 				if (empty($namespace))
-					$where .= " and ef_page_namespace = 0 ";
+					$where .= " and ef_page_namespace in (".$namespaceList.") ";
 				else
-					$where .= " and ef_page_namespace >= 0 ";
+					$where .= " and ef_page_namespace not in (".$namespaceList.") ";
 
 				#---
 				$sql = "select ef_page_id, ef_page_title, sum(ef_number_edits) as sum, count(ef_page_id) as cnt, sum(ef_archived) as archived, ef_page_namespace ";
@@ -918,7 +917,7 @@ class WikiaGenericStats {
     	#---
     	$monthsArray = array();
     	for ($i = 0; $i < 12; $i++) {
-    		$minDate = mktime(0,0,0,$i+1,1,1970); // min date
+    		$minDate = mktime(23,59,59,$i+1,1,1970); // min date
     		$monthsArray[] = wfMsg(strtolower(date("F",$minDate)));
 		}
     	#---
@@ -1203,7 +1202,7 @@ class WikiaGenericStats {
 	}
 
 	static function makeDateMonthArray() {
-		$today = sprintf("%s-%s", date("Y"), date("m"));
+		$today = date("Y-m");
 		$k = 0; for ($i = 0; $i < self::MONTHLY_STATS + 1; $i++) {
 			$date = date("Y-m", strtotime("-$i months"));
 			if ($today == $date) continue;
@@ -1269,18 +1268,19 @@ class WikiaGenericStats {
 	}
 
 	static public function makeCorrectDate($date, $today = 0) {
+		global $wgLang;
 		wfProfileIn( __METHOD__ );
 		$dateArr = explode("-", $date);
-		$stamp = mktime(0,0,0,$dateArr[1],1,$dateArr[0]);
-		$day = ($today) ? date("d") . ", " : "";
-		#---
+		$stamp = mktime(23,59,59,$dateArr[1],1,$dateArr[0]);
+		$corDate = ($today) ? $wgLang->sprintfDate(self::getStatsDateFormat(0), wfTimestamp(TS_MW, $stamp))
+						: $wgLang->sprintfDate("M Y", wfTimestamp(TS_MW, $stamp));
 		wfProfileOut( __METHOD__ );
-		return substr(wfMsg(strtolower(date("F",$stamp))), 0, 3) . " " . $day . $dateArr[0];
+		return $corDate;
 	}
 
 	static public function getWikiaInfoOutput($city_id)
 	{
-        global $wgUser, $wgDBStats, $wgContLang;
+        global $wgUser, $wgDBStats, $wgContLang, $wgLang;
 		wfProfileIn( __METHOD__ );
 		#---
 		$cityInfo = array();
@@ -1299,13 +1299,14 @@ class WikiaGenericStats {
 		#---
         $oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
         $oTmpl->set_vars( array(
-            "today" 		=> sprintf("%s-%s", date("Y"), date("m")),
+            "today" 		=> date("Y-m"),
             "today_day"     => $stats_date,
             "user"			=> $wgUser,
             "cityInfo"		=> $cityInfo,
             "cityId"		=> $city_id,
 			"wgContLang" 	=> $wgContLang,
 			"cats"		 	=> $cats,
+			"wgLang"		=> $wgLang,
         ));
         #---
 		wfProfileOut( __METHOD__ );
@@ -1314,7 +1315,7 @@ class WikiaGenericStats {
 
 	static public function setWikiMainStatisticsOutput($city_id, $data, $columns, $monthlyStats, $show_local = 0)
 	{
-        global $wgUser, $wgDBStats, $wgContLang;
+        global $wgUser, $wgDBStats, $wgContLang, $wgLang;
         global $wgStatsExcludedNonSpecialGroup;
 		wfProfileIn( __METHOD__ );
 		#---
@@ -1344,13 +1345,14 @@ class WikiaGenericStats {
         $oTmpl->set_vars( array(
             "statsData" 	=> $data,
             "columns"		=> $columns,
-            "today" 		=> sprintf("%s-%s", date("Y"), date("m")),
+            "today" 		=> date("Y-m"),
             "today_day"     => $stats_date,
             "user"			=> $wgUser,
             "monthlyStats"	=> $monthlyStats,
             "cityInfo"		=> $cityInfo,
             "cityId"		=> $city_id,
 			"wgContLang" 	=> $wgContLang,
+			"wgLang"		=> $wgLang,
 			"cats"		 	=> $cats,
 			"userIsSpecial" => $userIsSpecial,
 			"wgStatsExcludedNonSpecialGroup" => $wgStatsExcludedNonSpecialGroup
@@ -1377,7 +1379,7 @@ class WikiaGenericStats {
 
 	static public function setWikiWikiansStatisticsOutput($city_id, $month, $wikians_active, $wikians_absent)
 	{
-        global $wgUser;
+        global $wgUser, $wgLang;
 		wfProfileIn( __METHOD__ );
 		#---
         $oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
@@ -1386,6 +1388,7 @@ class WikiaGenericStats {
             "wkAbsent"		=> $wikians_absent,
             "city_url"		=> self::getWikiaCityUrlById($city_id),
             "cur_month"		=> $month,
+            "wgLang"		=> $wgLang
         ));
         #---
         $active = $oTmpl->execute("wikians-active-stats");
@@ -1396,13 +1399,14 @@ class WikiaGenericStats {
 
 	static private function setWikiAnonsStatisticsOutput($city_id, $data)
 	{
-        global $wgUser;
+        global $wgUser, $wgLang;
 		wfProfileIn( __METHOD__ );
 		#---
         $oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
         $oTmpl->set_vars( array(
             "anonData" 		=> $data,
             "city_url"		=> self::getWikiaCityUrlById($city_id),
+            "wgLang"		=> $wgLang,
         ));
         #---
         $active = $oTmpl->execute("anon-users-stats");
@@ -1412,13 +1416,14 @@ class WikiaGenericStats {
 
 	static private function setWikiArticleSizeOutput($city_id, $articleCount, $articleSize)
 	{
-        global $wgUser;
+        global $wgUser, $wgLang;
 		wfProfileIn( __METHOD__ );
 		#---
         $oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
         $oTmpl->set_vars( array(
             "articleCount" 		=> $articleCount,
             "articleSize" 		=> $articleSize,
+            "wgLang"			=> $wgLang,
         ));
         #---
         $res = $oTmpl->execute("articles-size-stats");
@@ -1429,12 +1434,14 @@ class WikiaGenericStats {
 
 	static private function setWikiNamespaceOutput($city_id, $namespaceCount, $nspaces, $allowedNamespace)
 	{
+		global $wgLang;
 		wfProfileIn( __METHOD__ );
         $oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
         $oTmpl->set_vars( array(
             "namespaceCount" 	=> $namespaceCount,
             "namespaces" 		=> $nspaces,
-            "allowedNamespaces"	=> $allowedNamespace
+            "allowedNamespaces"	=> $allowedNamespace,
+            "wgLang" 			=> $wgLang
         ));
         #---
         $res = $oTmpl->execute("namespace-count-stats");
@@ -1445,7 +1452,7 @@ class WikiaGenericStats {
 
 	static private function setWikiEditPagesOutput($city_id, $statsCount, $mSourceMetaSpace)
 	{
-        global $wgUser, $wgCanonicalNamespaceNames;
+        global $wgUser, $wgCanonicalNamespaceNames, $wgLang;
 		wfProfileIn( __METHOD__ );
 		#---
         $oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
@@ -1454,6 +1461,7 @@ class WikiaGenericStats {
             "statsCount" 	=> $statsCount,
             "projectNamespace" => $mSourceMetaSpace,
             "canonicalNamespace" => $wgCanonicalNamespaceNames,
+            "wgLang" => $wgLang,
         ));
         #---
         $res = $oTmpl->execute("page-counts-stats");
@@ -1481,6 +1489,7 @@ class WikiaGenericStats {
 
 	static public function setWikiMonthlyStats($statistics, &$columns, $prefix = "", $dateArr = array())
 	{
+		global $wgLang;
 		wfProfileIn( __METHOD__ );
 		$mothlyStatsArray = array();
 		#---
@@ -1512,7 +1521,7 @@ class WikiaGenericStats {
 					else {
 						$diff = $record[$column] - $prev_record[$column];
 						if ($prev_record[$column] != 0)
-							$diff = floatval(sprintf("%0.2f", ($diff / $prev_record[$column]) * 100));
+							$diff = $wgLang->formatNum(sprintf("%0.2f", ($diff / $prev_record[$column]) * 100)); 
 						else
 							$diff = 0;
 					}
@@ -1777,7 +1786,7 @@ class WikiaGenericStats {
 
 	static public function getWikiDistribStatistics($city_id, $xls = 0)
 	{
-		global $wgDBStats;
+		global $wgDBStats, $wgLang;
 		#---
 		$data = array("code" => 0, "text" => "");
 		#---
@@ -1808,9 +1817,9 @@ class WikiaGenericStats {
   			$result[$id] = array (
   				'edits' => $value,
   				'wikians' => $res['count'],
-  				'wikians_perc' => sprintf("%0.1f%%", ($res['count']/$wikiansTotal) * 100),
+  				'wikians_perc' => sprintf("%s%%", $wgLang->formatNum(sprintf("%0.1f", ($res['count']/$wikiansTotal) * 100))), //sprintf("%0.1f%%", ($res['count']/$wikiansTotal) * 100),
   				'edits_total' => $res['sum'],
-  				'edits_total_perc' => sprintf("%0.1f%%", ($res['sum']/$editsTotal) * 100),
+  				'edits_total_perc' => sprintf("%s%%", $wgLang->formatNum(sprintf("%0.1f", ($res['sum']/$editsTotal) * 100))), //sprintf("%0.1f%%", ($res['sum']/$editsTotal) * 100),
   			);
 		}
 
@@ -1850,7 +1859,7 @@ class WikiaGenericStats {
 				$rankUsersNamespace = self::getWikiansListStatsFromDB($cityDBName, 1, STATS_WIKIANS_RANK_NBR, 0, $userIDs);
 			}
 			#--- previous ranking
-			$stamp = date( "Y-m", mktime(0,0,0,date("m")- (1 + $month),1,date("Y")) );
+			$stamp = date( "Y-m", mktime(23,59,59,date("m")- (1 + $month),1,date("Y")) );
 			$rankUsersPrev = self::getWikiansListStatsFromDB($cityDBName, 0, STATS_WIKIANS_RANK_NBR, $stamp);
 			$userIDs = array();
 			if (!empty($rankUsersPrev)) {
@@ -1864,7 +1873,7 @@ class WikiaGenericStats {
 			$wikians_absent = array();
 			if (!empty($rankUsers)) {
 				foreach ($rankUsers as $user_id => $rankInfo) {
-					#$time_diff = time(mktime(0,0,0,date("m"),1,date("Y"))) - $rankInfo["max"];
+					#$time_diff = time(mktime(23,59,59,date("m"),1,date("Y"))) - $rankInfo["max"];
 					if (!is_array($rankInfo)) continue;
 					
 					$time_diff = time() - $rankInfo["max"];
@@ -2001,7 +2010,6 @@ class WikiaGenericStats {
 		#---
 		$data = array("code" => 0, "text" => "");
 		$allowedNamespace = array(0,2,3,4,6,8,10,12,14);
-
 		#---
 		$namespaces = $wgCanonicalNamespaceNames;
 		if (empty($namespaces[0])) {
@@ -2044,7 +2052,7 @@ class WikiaGenericStats {
 			foreach ($data as $date => $city_data) { #--- month iterration
 				$loop = 0;
 				$date_array = explode("-", $date); // YYYY-MM
-				$day_nbr = ($date == $curdate) ? date("d") : date("t", mktime(0,0,0,$date_array[1],1,$date_array[0]));
+				$day_nbr = ($date == $curdate) ? date("d") : date("t", mktime(23,59,59,$date_array[1],1,$date_array[0]));
 
 				if ((!empty($city_data)) && (!empty($alldata))) {
 					foreach ($city_data as $city_id => $records) { #--- city iterration
@@ -2126,6 +2134,7 @@ class WikiaGenericStats {
 
 	static private function makeTrend($c, $prev_value, $cur_value, $cur_day)
 	{
+		global $wgLang;		
 		wfProfileIn( __METHOD__ );
 		$factor = ($cur_day) ? round((date('t')/$cur_day), 2) : 0;
 		if ( ($c == 'C') || ($c == 'D') ) {
@@ -2142,9 +2151,9 @@ class WikiaGenericStats {
 
         $decimal = strpos($cur_value, ".") ;
         if ($decimal !== $decimal)
-        	$forecast = sprintf ("%.1f", $forecast) ;
+        	$forecast = $wgLang->formatNum(sprintf ("%.1f", $forecast));
         else
-        	$forecast = sprintf ("%.0f", $forecast) ;
+        	$forecast = $wgLang->formatNum(sprintf ("%.0f", $forecast));
         #---
         $perc = strpos($cur_value, "%");
         if ($perc !== false)
@@ -2369,6 +2378,19 @@ class WikiaGenericStats {
         return $result;
     }
     
+	static public function getStatsDateFormat($showYear = 1) {
+		global $wgUser;
+		$return = $dateFormat = $wgUser->getDatePreference();
+		switch ($dateFormat) {
+			case "mdy" : $return = (!empty($showYear)) ? "M j, Y" : "M j"; break;
+			case "dmy" : $return = (!empty($showYear)) ? "j M Y" : "j M"; break;
+			case "ymd" : $return = (!empty($showYear)) ? "Y M j" : "M j"; break;
+			case "ISO 8601" : $return = (!empty($showYear)) ? "xnY-xnM-xnd" : "xnM-xnd"; break;
+			default : $return = (!empty($showYear)) ? "M j, Y" : "M j"; break;
+		}
+		return $return;		
+	}
+
     static public function getUrlFilesize($url) 
     {
 		wfProfileIn( __METHOD__ );

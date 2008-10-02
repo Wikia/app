@@ -108,7 +108,7 @@ foreach ($columnHistory as $date => $dateValues)
 					if ($column == 9)
 						$output = sprintf("%0d", $dateValues[$city_id]);
 					elseif ($column == 13)
-						$output = sprintf("%0.1f", $dateValues[$city_id]);
+						$output = $wgLang->formatNum(sprintf("%0.1f", $dateValues[$city_id]));
 					elseif ($column == 14)
 						$output = sprintf("%0.0f", $dateValues[$city_id]);
 					elseif (($column == 15) || ($column == 16))
@@ -118,22 +118,22 @@ foreach ($columnHistory as $date => $dateValues)
 					elseif ($column == 18)
 					{
 						if ($dateValues[$city_id] > $GB)
-							$output = sprintf("%0.1f GB", $dateValues[$city_id]/$GB);
+							$output = wfMsg('size-gigabytes', $wgLang->formatNum(sprintf("%0.1f", $dateValues[$city_id]/$GB)));
 						elseif ($dateValues[$city_id] > $MB)
-							$output = sprintf("%0.1f MB", $dateValues[$city_id]/$MB);
+							$output = wfMsg('size-megabytes', $wgLang->formatNum(sprintf("%0.1f", $dateValues[$city_id]/$MB)));
 						elseif ($dateValues[$city_id] > $KB)
-							$output = sprintf("%0.1f KB", $dateValues[$city_id]/$KB);
+							$output = wfMsg('size-kilobytes', $wgLang->formatNum(sprintf("%0.1f", $dateValues[$city_id]/$KB)));
 						else
 							$output = sprintf("%0d", intval($dateValues[$city_id]));
 					}
 					else
 					{
 						if ($dateValues[$city_id] > $G)
-							$output = sprintf("%0.1f G", intval($dateValues[$city_id]/$G));
+							$output = sprintf("%s G", $wgLang->formatNum(sprintf("%0.1f", floatval($dateValues[$city_id]/$G))));
 						elseif ($dateValues[$city_id] > $M)
-							$output = sprintf("%0.1f M", $dateValues[$city_id]/$M);
+							$output = sprintf("%s M", $wgLang->formatNum(sprintf("%0.1f", floatval($dateValues[$city_id]/$M))));
 						elseif ($dateValues[$city_id] > $K)
-							$output = sprintf("%0.1f k", intval($dateValues[$city_id])/$K);
+							$output = sprintf("%s K", $wgLang->formatNum(sprintf("%0.1f", floatval($dateValues[$city_id]/$K))));
 						else
 							$output = sprintf("%0d", $dateValues[$city_id]);
 					}

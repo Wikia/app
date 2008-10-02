@@ -73,11 +73,11 @@ YAHOO.util.Event.onDOMReady(function () {
 	<td class="cb" style="white-space:nowrap;"><?=wfMsg('wikistats_image_namespace')?></td>
 	<td class="cb">&gt;10</td>
 	<td class="cb"><?=wfMsg('wikiastats_official')?></td>
-	<td class="cb" style="white-space:nowrap;">&gt;200 ch</td>
+	<td class="cb" style="white-space:nowrap;"><?=wfMsg('wikiastats_more_200_ch')?></td>
 	<td class="cb"><?=wfMsg('wikiastats_edits')?></td>
 	<td class="cb"><?=wfMsg('wikiastats_bytes')?></td>
-	<td class="cb" style="white-space:nowrap;">0.5 Kb</td>
-	<td class="cb" style="white-space:nowrap;">2 Kb</td>
+	<td class="cb" style="white-space:nowrap;"><?=wfMsg('size-kilobytes', 0.5)?></td>
+	<td class="cb" style="white-space:nowrap;"><?=wfMsg('size-kilobytes', 2)?></td>
 </tr>
 <?php
 foreach ($statsData as $date => $columnsData) {
@@ -103,37 +103,37 @@ foreach ($statsData as $date => $columnsData) {
 			if ($column == 'date') {
 				$class = "db";
 				$dateArr = explode("-",$columnsData[$column]);
-				$stamp = mktime(0,0,0,$dateArr[1],1,$dateArr[0]);
-				$out = substr(wfMsg(strtolower(date("F",$stamp))), 0, 3) . " " . $dateArr[0];
+				$stamp = mktime(23,59,59,$dateArr[1],1,$dateArr[0]);
+				$out = $wgLang->sprintfDate("M Y", wfTimestamp(TS_MW, $stamp));
 				if ($columnsData[$column] == $today) {
 				    $stamp = (!empty($today_day)) ? $today_day : $stamp;
-					$out = substr(wfMsg(strtolower(date("F",$stamp))), 0, 3) . " " . date("d", $stamp) . ", " . date("Y", $stamp);
+					$out = $wgLang->sprintfDate(WikiaGenericStats::getStatsDateFormat(0), wfTimestamp(TS_MW, $stamp));
 				}
 			}
 			elseif ($column == 'G')
 				$out = sprintf("%0d", $columnsData[$column]);
 			elseif ($column == 'K')
-				$out = sprintf("%0.1f", $columnsData[$column]);
+				$out = $wgLang->formatNum(sprintf("%0.1f", $columnsData[$column]));
 			elseif ($column == 'L')
 				$out = sprintf("%0.0f", $columnsData[$column]);
 			elseif (($column == 'M') || ($column == 'N'))
 				$out = sprintf("%0d%%", $columnsData[$column] * 100);
 			elseif ($column == 'P') {
 				if (intval($columnsData[$column]) > $GB)
-					$out = sprintf("%0.1f GB", intval($columnsData[$column])/$GB);
+					$out = wfMsg('size-gigabytes', $wgLang->formatNum(sprintf("%0.1f", intval($columnsData[$column])/$GB)));
 				elseif (intval($columnsData[$column]) > $MB)
-					$out = sprintf("%0.1f MB", intval($columnsData[$column])/$MB);
+					$out = wfMsg('size-megabytes', $wgLang->formatNum(sprintf("%0.1f", intval($columnsData[$column])/$MB)));
 				elseif ($columnsData[$column] > $KB)
-					$out = sprintf("%0.1f KB", intval($columnsData[$column])/$KB);
+					$out = wfMsg('size-kilobytes', $wgLang->formatNum(sprintf("%0.1f", intval($columnsData[$column])/$KB)));
 				else
 					$out = sprintf("%0d", intval($columnsData[$column]));
 			} else {
 				if (intval($columnsData[$column]) > $G)
-					$out = sprintf("%0.1f G", intval($columnsData[$column])/$G);
+					$out = sprintf("%s G", $wgLang->formatNum(sprintf("%0.1f", intval($columnsData[$column])/$G)));
 				elseif (intval($columnsData[$column]) > $M)
-					$out = sprintf("%0.1f M", intval($columnsData[$column])/$M);
+					$out = sprintf("%s M", $wgLang->formatNum(sprintf("%0.1f", intval($columnsData[$column])/$M)));
 				elseif ($columnsData[$column] > $K)
-					$out = sprintf("%0.1f k", intval($columnsData[$column])/$K);
+					$out = sprintf("%s K", $wgLang->formatNum(sprintf("%0.1f", intval($columnsData[$column])/$K)));
 				else
 					$out = sprintf("%0d", intval($columnsData[$column]));
 			}
@@ -177,8 +177,8 @@ foreach ($monthlyStats as $date => $columnsData) {
 	#---
 	if ($columnsData['visible'] === 1) {
 		$dateArr = explode("-", $date);
-		$stamp = mktime(0,0,0,$dateArr[1],1,$dateArr[0]);
-		$outDate = substr(wfMsg(strtolower(date("F",$stamp))), 0, 3) . " " . $dateArr[0];
+		$stamp = mktime(23,59,59,$dateArr[1],1,$dateArr[0]);
+		$outDate = $wgLang->sprintfDate("M Y", wfTimestamp(TS_MW, $stamp));
 
 ?>
 <tr>
@@ -229,12 +229,12 @@ foreach ($monthlyStats as $date => $columnsData) {
 	<td class="cb" rowspan="2"><?=wfMsg('wikiastats_total')?></td>
 	<td class="cb">&gt;10</td>
 	<td class="cb"><?=wfMsg('wikiastats_official')?></td>
-	<td class="cb" style="white-space:nowrap;">&gt;200 ch</td>
+	<td class="cb" style="white-space:nowrap;"><?=wfMsg('wikiastats_more_200_ch')?></td>
 	<td valign="top" rowspan="3" class="cb"><?=wfMsg('wikiastats_new_per_day')?></td>
 	<td class="cb"><?=wfMsg('wikiastats_edits')?></td>
 	<td class="cb"><?=wfMsg('wikiastats_bytes')?></td>
-	<td class="cb" style="white-space:nowrap;">0.5 Kb</td>
-	<td class="cb" style="white-space:nowrap;">2 Kb</td>
+	<td class="cb" style="white-space:nowrap;"><?=wfMsg('size-kilobytes', 0.5)?></td>
+	<td class="cb" style="white-space:nowrap;"><?=wfMsg('size-kilobytes', 2)?></td>
 	<td rowspan="3" class="cb"><?=wfMsg('wikiastats_edits')?></td>
 	<td rowspan="3" class="cb"><?=wfMsg('wikiastats_size')?></td>
 	<td rowspan="3" class="cb"><?=wfMsg('wikiastats_words')?></td>
@@ -278,11 +278,6 @@ foreach ($monthlyStats as $date => $columnsData) {
 </tr>
 </table>
 </div>
-<!--<div class="clear" style="font-size:7.7pt;height:15px;">
-        <?=wfMsg("wikiastats_date_of_generate", wfMsg(strtolower(date("l",$today_day))) . " " . substr(wfMsg(strtolower(date("F",$today_day))), 0, 3) . " " . date("d", $today_day) . ", " . date("Y", $today_day))?>
-        <strong>&nbsp;&#183;&nbsp;</strong>
-        <a href="#definitions"><?=wfMsg("wikiastats_see_definitions")?></a>
-</div>-->
 
 <!-- END OF MAIN STATISTICS TABLE -->
 <!-- e:<?= __FILE__ ?> -->

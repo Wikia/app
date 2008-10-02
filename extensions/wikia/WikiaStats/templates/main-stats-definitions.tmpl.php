@@ -9,6 +9,11 @@
 <span class="wk-stats-legend-values"><font color="#008000"><?= wfMsg('wikiastats_history_mainstats_value3'); ?></font></span>
 <span class="wk-stats-legend-values"><font color="#008000"><u><?= wfMsg('wikiastats_history_mainstats_value4'); ?></u></font></span>
 <br />
+<?= wfMsg('wikiastats_nbr_format') ?><br />
+<span class="wk-stats-legend-values"><font color="#555555"><?= wfMsg('wikiastats_nbr_kilo'); ?></font></span>
+<span class="wk-stats-legend-values"><font color="#555555"><?= wfMsg('wikiastats_nbr_mega'); ?></font></span>
+<span class="wk-stats-legend-values"><font color="#555555"><?= wfMsg('wikiastats_nbr_giga'); ?></font></span>
+<br />
 <div id="wk-stats-legend-columns">
 <?php
 $i = 0; $loop = 0;

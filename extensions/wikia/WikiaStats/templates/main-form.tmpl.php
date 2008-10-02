@@ -717,9 +717,11 @@ for ($i = 1; $i <= 6; $i++)
 		<br />
 <?php
 	for ($s = 32, $i = 0 ; $i <= 13 ; $s *= 2 , $i++) {
-		$text = "&lt;&nbsp;".$s." B";
+		$bT = wfMsg('size-bytes', $s);
+		$text = "&lt;&nbsp;".$bT;
 		if ($s >= 1024) {
-			$text = "&lt;&nbsp;".sprintf ("%.0f", $s/1024)." kB";
+			$kbT = wfMsg('size-kilobytes', $wgLang->formatNum(sprintf("%0.0f", $s/1024)));		
+			$text = "&lt;&nbsp;".$kbT;
 		}
 ?>		
 		<span class="medium" id="article-size-<?=$s?>" onclick="selectArticleSize('<?=$s?>');" style="border:1px outset white; cursor:pointer; padding:2px;"><?=$text?></span>

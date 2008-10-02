@@ -199,7 +199,7 @@ class WikiaStatsClass extends SpecialPage
     private function mainStatsForm($city, $show_charts = 0, $show_local = 0)
     {
         global $wgUser, $wgOut, $wgRequest;
-        global $wgMemc;
+        global $wgMemc, $wgLang;
 		global $wgStatsExcludedNonSpecialGroup;
 
 		list ($fromY, $fromM, $toY, $toM) = array();
@@ -248,6 +248,7 @@ class WikiaStatsClass extends SpecialPage
 				"show_chart"=> $show_charts,
 				"fromDate"	=> array($fromY, $fromM),
 				"toDate"	=> array($toY, $toM),
+				"wgLang"	=> $wgLang,
 			));
 			$mainStats = "";
 			if ($show_local) {
@@ -277,7 +278,7 @@ class WikiaStatsClass extends SpecialPage
 
     private function mainStatsTrendsForm ()
     {
-        global $wgUser, $wgOut, $wgRequest;
+        global $wgUser, $wgOut, $wgRequest, $wgLang;
 		wfProfileIn( __METHOD__ );
 
 		#---
@@ -326,7 +327,8 @@ class WikiaStatsClass extends SpecialPage
             "month_array"	=> $month_array,
             "select_trend"	=> $select,
             "pager"			=> $pager,
-            "page"			=> $page
+            "page"			=> $page,
+            "wgLang"		=> $wgLang
         ));
         
         $wgOut->addHTML( $oTmpl->execute("trend-form") );
@@ -341,7 +343,7 @@ class WikiaStatsClass extends SpecialPage
 	private function mainStatsCreationHistoryForm ()
 	{
         global $wgUser, $wgOut, $wgRequest;
-        global $wgMemc;
+        global $wgMemc, $wgLang;
 
 		wfProfileIn( __METHOD__ );
 		$memkey = "wikiastatscreationhistory";
@@ -366,6 +368,7 @@ class WikiaStatsClass extends SpecialPage
 				"max_wikians"	=> (is_array($arr_wikians)) ? $arr_wikians[1] : 1,
 				"dArticles"		=> $dArticles,
 				"max_articles"	=> (is_array($arr_article)) ? $arr_article[1] : 1,
+				"wgLang"		=> $wgLang
 			));
 			#---
 			$creationHistory = $oTmpl->execute("creation-form");
@@ -384,7 +387,7 @@ class WikiaStatsClass extends SpecialPage
 	
 	private function mainStatsColumnHistoryForm($column, $cities = "")
 	{
-		global $wgUser, $wgOut, $wgRequest;
+		global $wgUser, $wgOut, $wgRequest, $wgLang;
 
 		wfProfileIn( __METHOD__ );
 		#---
@@ -418,6 +421,7 @@ class WikiaStatsClass extends SpecialPage
             "rangeColumns"	=> $columnRange,
             "pager"			=> $pager,
             "cities"		=> $cities,
+            "wgLang"		=> $wgLang,
         ));
         $output = $oTmpl->execute("column-stats-form");
         
