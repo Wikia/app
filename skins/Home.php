@@ -389,7 +389,7 @@ class HomeTemplate extends QuickTemplate {
 						<li><a href="http://starwars.wikia.com">Star Wars</a></li>
 						<li><a href="http://en.marveldatabase.com">Marvel Comics</a></li>
 						<li><a href="http://harrypotter.wikia.com">Harry Potter</a></li>
-						<li><a href="http://muppet.wikia.com">Muppet</a></li>
+						<li><a href="http://muppet.wikia.com">Muppets</a></li>
 						<li><a href="http://watchmen.wikia.com">Watchmen</a></li>
 					</ul>
 					more <a href="http://entertainment.wikia.com">entertainment wikis</a>';
