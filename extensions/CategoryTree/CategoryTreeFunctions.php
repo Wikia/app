@@ -696,8 +696,10 @@ class CategoryTree {
 				'title' => wfMsgExt( 'categorytree-member-counts', 'parsemag', $cat->getSubcatCount(), $pages , $cat->getFileCount(), $cat->getPageCount(), $count )
 			);
 
-			$s .= ' ';
-			$s .= Xml::element( 'span', $attr, wfMsgExt( 'categorytree-member-num', 'parsemag', $cat->getSubcatCount(), $pages , $cat->getFileCount(), $cat->getPageCount(), $count ) );
+			if ($count) {
+				$s .= ' ';
+				$s .= Xml::element( 'span', $attr, wfMsgExt( 'categorytree-member-num', 'parsemag', $cat->getSubcatCount(), $pages , $cat->getFileCount(), $cat->getPageCount(), $count ) );
+			}
 		}
 
 		$s .= Xml::closeElement( 'div' );
