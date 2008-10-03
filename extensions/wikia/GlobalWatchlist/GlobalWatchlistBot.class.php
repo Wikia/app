@@ -70,7 +70,7 @@ class GlobalWatchlistBot {
 			return $pages;
 		}
 		
-		$oResource = $this->mDb->query("SELECT wl_title FROM " . addslashes($wikiDb) . ".watchlist WHERE wl_user='" . addslashes($userId) . "' AND (wl_notificationtimestamp IS NOT NULL) ORDER BY wl_notificationtimestamp");
+		$oResource = $this->mDb->query("SELECT wl_title FROM `" . addslashes($wikiDb) . "`.watchlist WHERE wl_user='" . addslashes($userId) . "' AND (wl_notificationtimestamp IS NOT NULL) ORDER BY wl_notificationtimestamp");
 		if($oResource) {
 			while($oResultRow = $this->mDb->fetchObject($oResource)) {
 				$pages[] = $oResultRow->wl_title;
