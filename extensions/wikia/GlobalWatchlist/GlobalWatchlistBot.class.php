@@ -44,7 +44,6 @@ class GlobalWatchlistBot {
 			
 			while($oResultRow = $this->mDb->fetchObject($oResource)) {
 				$iWatchlisters++;
-				print "User: " . $oResultRow->user_name . "\n";
 				$aUsers[$oResultRow->user_id] = array( 'name' => $oResultRow->user_name, 'email' => $oResultRow->user_email );
 			}
 			$this->printDebug("$iWatchlisters global watchilster(s) found. (time: " . $this->calculateDuration( time() - $this->mStartTime ). ")");
@@ -66,7 +65,7 @@ class GlobalWatchlistBot {
 		$oResource = $this->mDb->query("SELECT SCHEMA_NAME FROM INFORMATION_SCHEMA.SCHEMATA WHERE SCHEMA_NAME = '" . addslashes($wikiDb) . "'");
 		
 		if(!$oResult = $this->mDb->fetchObject($oResource)) {
-			$this->printDebug("ERROR: Wiki database: $wikiDb not found!");
+			//$this->printDebug("ERROR: Wiki database: $wikiDb not found!");
 			return $pages;
 		}
 		
@@ -89,13 +88,15 @@ class GlobalWatchlistBot {
 		$this->getGlobalWatchlisters();
 		$this->printDebug("Gathering watchlist data ...");
 
-		foreach($this->mWatchlisters as $iUserId => $aUserData) {
-			$oResource = $this->mDb->query("SELECT city_id, city_dbname, city_url, city_title FROM " . $wgSharedDB . ".city_list ORDER BY city_sitename");
-			
-			$aDigests[$iUserId] = array();
-			while($oResultRow = $this->mDb->fetchObject($oResource)) {
+		$oResource = $this->mDb->query("SELECT city_id, city_dbname, city_url, city_title FROM " . $wgSharedDB . ".city_list WHERE city_public='1' ORDER BY city_sitename");
+		
+		while($oResultRow = $this->mDb->fetchObject($oResource)) {
+			foreach($this->mWatchlisters as $iUserId => $aUserData) {		
 	  	$aPages = $this->getUserWatchlistPages($oResultRow->city_dbname, $iUserId);
 	  	if(count($aPages)) {
+					if(!isset($aDigests[$iUserId])) {
+						$aDigests[$iUserId] = array();					
+					}
 	  		$aWikiDigest = array(
 						'wikiName' => $oResultRow->city_title,
 						'wikiUrl' => $oResultRow->city_url,
@@ -104,8 +105,8 @@ class GlobalWatchlistBot {
 	  		);
 	  		$aDigests[$iUserId][] = $aWikiDigest;
 	  	}
-			}
-		}
+			} // foreach
+		} // while
 		
 		$this->printDebug("Gathering watchlist data ... done! (time: " . $this->calculateDuration(time() - $this->mStartTime ) . ")");
 		return $aDigests;
@@ -146,7 +147,8 @@ class GlobalWatchlistBot {
 		$this->printDebug("Script started.");
 		
 		$aDigests = $this->getWatchlistDigests();
-
+		//print_r($aDigests);
+		
 		$this->printDebug("Sending digest emails ... ");
 		$sEmailSubject = wfMsg('globalwatchlist-digest-email-subject');
 		foreach($aDigests as $iUserId => $aDigestsData) {
