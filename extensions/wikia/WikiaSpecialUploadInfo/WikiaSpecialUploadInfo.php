@@ -30,10 +30,11 @@ function wfSpecialUploadPutInformation( $uploadForm ) {
 	$dbw->insert(
 		"upload_log",
 		array(
-			'up_id' => $title->getArticleId(),
-			'up_title' => $mTitle,
-			'up_path' => $fullPath,
-			'up_created' => wfTimestampNow()
+			"up_id" => $title->getArticleId(),
+			"up_path" => $fullPath,
+			"up_flags"	=> 0,
+			"up_title" => $mTitle,
+			"up_created" => wfTimestampNow()
 		),
 		__METHOD__
 	);

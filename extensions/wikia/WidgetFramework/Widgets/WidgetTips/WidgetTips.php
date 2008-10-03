@@ -24,7 +24,7 @@ $wgWidgets['WidgetTips'] = array(
 );
 
 function WidgetTips($id, $params) {
-	global $wgParser, $wgRequest, $wgUser;
+	global $wgParser, $wgRequest, $wgUser, $wgTitle;
 
 	wfProfileIn(__METHOD__);
 
@@ -41,7 +41,7 @@ function WidgetTips($id, $params) {
 
 	if ( $tips == false ) {
 		wfProfileOut(__METHOD__);
-		return $parser->parse('No tips found in [[Mediawiki:Tips]]! Contact your Wiki admin', $wgParser->mTitle, $parser->mOptions )->getText();
+		return $parser->parse('No tips found in [[Mediawiki:Tips]]! Contact your Wiki admin', $wgTitle, $parser->mOptions )->getText();
 	}
 
 	$tipsCount = count($tips);
@@ -78,7 +78,7 @@ function WidgetTips($id, $params) {
 
 	wfProfileOut(__METHOD__);
 
-	return $selector . $parser->parse($tips[$tipId], $wgParser->mTitle, $wgParser->mOptions)->getText();
+	return $selector . $parser->parse($tips[$tipId], $wgTitle, $parser->mOptions )->getText();
 }
 
 function WidgetTipsGetTips() {
