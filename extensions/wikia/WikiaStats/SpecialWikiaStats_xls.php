@@ -134,7 +134,7 @@ class WikiaStatsXLS {
 		$this->writeXLSLabel(6,2,wfMsg('wikiastats_total'));
 		$this->writeXLSLabel(6,3,">5");
 		$this->writeXLSLabel(6,4,">100");
-		$this->writeXLSLabel(6,5,lcfirst(wfMsg('wikiastats_username')));
+		$this->writeXLSLabel(6,5,$wgLang->lcfirst(wfMsg('wikiastats_username')));
 		$this->writeXLSLabel(6,6,wfMsg('wikistats_image_namespace'));
 		$this->writeXLSLabel(6,8,">10");
 		#$this->writeXLSLabel(6,3,"new");
@@ -584,7 +584,6 @@ class WikiaStatsXLS {
 				$col++;
 				$cntDate = array_key_exists($date, $values) ? intval($values[$date]['count']) : 0;
 				$rowValue = $wgLang->formatNum(sprintf("%0.1f", ($cntDate * 100) / $cntAll));
-				if ($s == 32) error_log ($s . " => " .$rowValue . "\n", 3, "/tmp/moli.log");
 				$this->writeXLSNumber($row,$col,$rowValue);
 			}
 			$row++;
