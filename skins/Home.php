@@ -680,7 +680,7 @@ class HomeTemplate extends QuickTemplate {
 				<ol>
 					<li><a href="http://residentevil.wikia.com/wiki/Nemesis">Nemesis</a> (<a href="http://residentevil.wikia.com" class="secondary" >Resident Evil</a>)</li>
 					<li><a href="http://silenthill.wikia.com/wiki/The_One_Truth">The One Truth</a> (<a href="http://silenthill.wikia.com" class="secondary">Silent Hill</a>)</li>
-					<li><a href="http://bioshock.wikia.com/wiki/Little_Sisters">Little Sisters</a> (<a href="http://bioshock.wikia.com" class="secondary">Bio-shock</a>)</li>
+					<li><a href="http://bioshock.wikia.com/wiki/Little_Sisters">Little Sisters</a> (<a href="http://bioshock.wikia.com" class="secondary">BioShock</a>)</li>
 					<li><a href="http://doom.wikia.com/wiki/Vulgar">The Vulgar</a> (<a href="http://doom.wikia.com" class="secondary">Doom</a>)</li>
 					<li><a href="http://animalcrossing.wikia.com/wiki/Agent_S">Agent S</a> (<a href="http://animalcrossing.wikia.com" class="secondary">Animal Crossing</a>)</li>
 				</ol>
