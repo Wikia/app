@@ -72,6 +72,12 @@ function insertTags(tagOpen, tagClose, sampleText) {
 		var areas = document.getElementsByTagName('textarea');
 		txtarea = areas[0];
 	}
+
+	// macbre: prevent NS_ERROR_FAILURE when using FCK editor which hides txtarea
+	if (txtarea && txtarea.style.display == 'none') {
+		return false;
+	}
+
 	var selText, isSample = false;
 
 	if (document.selection  && document.selection.createRange) { // IE/Opera
