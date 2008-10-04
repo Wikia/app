@@ -1286,4 +1286,5 @@ __NOTOC__ __NOEDITSECTION__',
 'userstatstext' => '<!--see MediaWiki:Sitestatstext for what precedes this-->
 There are \'\'\'$1\'\'\' registered users on all of Wikia. Of the [[Special:ListUsers|registered users]] of {{SITENAME}}, \'\'\'$2\'\'\' are $5 (see also $3).',
 'yournick' => 'Signature:',
+'tog-disablewysiwyg' => 'Disable Rich Text Editing',
 ) );
