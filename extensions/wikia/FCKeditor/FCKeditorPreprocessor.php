@@ -695,7 +695,7 @@ class FCK_PPFrame_DOM extends PPFrame_DOM {
 						$titleText = $this->title->getPrefixedDBkey();
 						$this->parser->mHeadings[] = array( $titleText, $headingIndex );
 						$serial = count( $this->parser->mHeadings ) - 1;
-						$marker = "{$this->parser->mUniqPrefix}-h-$serial-{Parser::MARKER_SUFFIX}";
+						$marker = "{$this->parser->mUniqPrefix}-h-$serial-{$this->parser->mMarkerSuffix}";
 						$count = $contextNode->getAttribute( 'level' );
 						$s = substr( $s, 0, $count ) . $marker . substr( $s, $count );
 						$this->parser->mStripState->general->setPair( $marker, '' );

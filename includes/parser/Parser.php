@@ -419,11 +419,6 @@ class Parser
 			wfRunHooks( 'ParserLimitReport', array( $this, &$limitReport ) );
 			$text .= "\n<!-- \n$limitReport-->\n";
 		}
-		global $FCKparseEnable;
-		if (!empty($FCKparseEnable)) {
-			global $wgOut, $FCKmetaData;
-			$wgOut->addInlineScript('var FCKdata = ' . Wikia::json_encode($FCKmetaData));
-		}
 		$this->mOutput->setText( $text );
 		$this->mRevisionId = $oldRevisionId;
 		$this->mRevisionTimestamp = $oldRevisionTimestamp;
@@ -1308,17 +1303,11 @@ class Parser
 			# Set linktype for CSS - if URL==text, link is essentially free
 			$linktype = ($text == $url) ? 'free' : 'text';
 
-			$wasblank = $text == '';
 			# No link text, e.g. [http://domain.tld/some.link]
 			if ( $text == '' ) {
 				# Autonumber if allowed. See bug #5918
 				if ( strpos( wfUrlProtocols(), substr($protocol, 0, strpos($protocol, ':')) ) !== false ) {
-					global $FCKparseEnable;
-					if (!empty($FCKparseEnable)) {
-						$text = '[link]';
-					} else {
-						$text = '[' . ++$this->mAutonumber . ']';
-					}
+					$text = '[' . ++$this->mAutonumber . ']';
 					$linktype = 'autonumber';
 				} else {
 					# Otherwise just use the URL
@@ -1338,8 +1327,6 @@ class Parser
 			# Process the trail (i.e. everything after this link up until start of the next link),
 			# replacing any non-bracketed links
 			$trail = $this->replaceFreeExternalLinks( $trail );
-
-			wfFCKSetRefId('external link', $text, $url, '', $wasblank, true);
 
 			# Use the encoded URL
 			# This means that users can paste URLs directly into the text
@@ -1423,10 +1410,8 @@ class Parser
 				# Is this an external image?
 				$text = $this->maybeMakeExternalImage( $url );
 				if ( $text === false ) {
-					$description = $wgContLang->markNoConversion($url);
-					wfFCKSetRefId('external link: raw', $description, $url, '', true, true);
 					# Not an image, make a link
-					$text = $sk->makeExternalLink( $url, $description, true, 'free', $this->mTitle->getNamespace() );
+					$text = $sk->makeExternalLink( $url, $wgContLang->markNoConversion($url), true, 'free', $this->mTitle->getNamespace() );
 					# Register it in the output object...
 					# Replace unnecessary URL escape codes with their equivalent characters
 					$pasteurized = Parser::replaceUnusualEscapes( $url );
@@ -1487,12 +1472,11 @@ class Parser
 		$imagesexception = !empty($imagesfrom);
 		$text = false;
 		if ( $this->mOptions->getAllowExternalImages()
-		     || ( $imagesexception && strpos( $url, $imagesfrom ) === 0 )
+		     || ( $imagesexception && strpos( $url, $imagesfrom ) === 0 ) 
 			 || ( !empty($wgAllowExternalWhitelistImages) && wfRunHooks('outputMakeExternalImage', array(&$url)) )
 	    ) {
 			if ( preg_match( self::EXT_IMAGE_REGEX, $url ) ) {
 				# Image found
-				wfFCKSetRefId('external link: raw image', $url, $url, '', true, true);
 				$text = $sk->makeExternalImage( $url );
 			}
 		}
@@ -1505,7 +1489,7 @@ class Parser
 	 * @private
 	 */
 	function replaceInternalLinks( $s ) {
-		global $wgContLang, $FCKparseEnable;
+		global $wgContLang;
 		static $fname = 'Parser::replaceInternalLinks' ;
 
 		wfProfileIn( $fname );
@@ -1727,25 +1711,16 @@ class Parser
 						# but it might be hard to fix that, and it doesn't matter ATM
 						$text = $this->replaceExternalLinks($text);
 						$text = $this->replaceInternalLinks($text);
-						if ($FCKparseEnable) {
-							$refId = wfFCKSetRefId('image', $text, $link, $trail, $wasblank, $noforce, true);
-							$s .= $prefix . $this->armorLinks("<span$refId>[[$link" . ($wasblank ? '' : "|$text") . "]]</span>") . $trail;
-						} else {	//original action
-							# cloak any absolute URLs inside the image markup, so replaceExternalLinks() won't touch them
-							$s .= $prefix . $this->armorLinks( $this->makeImage( $nt, $text ) ) . $trail;
-							$this->mOutput->addImage( $nt->getDBkey() );
-						}
+
+						# cloak any absolute URLs inside the image markup, so replaceExternalLinks() won't touch them
+						$s .= $prefix . $this->armorLinks( $this->makeImage( $nt, $text ) ) . $trail;
+						$this->mOutput->addImage( $nt->getDBkey() );
+
 						wfProfileOut( "$fname-image" );
 						continue;
 					} else {
-						if ($FCKparseEnable) {
-							$refId = wfFCKSetRefId('image', $text, $link, $trail, $wasblank, $noforce, true);
-							$s .= $prefix . $this->armorLinks("<span$refId>[[$link" . ($wasblank ? '' : "|$text") . "]]</span>") . $trail;
-							continue;	//this continue is added to prevent adding additional link by parser as it's used above
-						} else {	//original action
-							# We still need to record the image's presence on the page
-							$this->mOutput->addImage( $nt->getDBkey() );
-						}
+						# We still need to record the image's presence on the page
+						$this->mOutput->addImage( $nt->getDBkey() );
 					}
 					wfProfileOut( "$fname-image" );
 
@@ -1754,9 +1729,7 @@ class Parser
 				if ( $ns == NS_CATEGORY ) {
 					wfProfileIn( "$fname-category" );
 					$s = rtrim($s . "\n"); # bug 87
-					if ($FCKparseEnable) {
-						$refId = wfFCKSetRefId('category', $text, $link, '', $wasblank, $noforce, true);
-					}
+
 					if ( $wasblank ) {
 						$sortkey = $this->getDefaultSort();
 					} else {
@@ -1771,11 +1744,7 @@ class Parser
 					 * Strip the whitespace Category links produce, see bug 87
 					 * @todo We might want to use trim($tmp, "\n") here.
 					 */
-					if ($FCKparseEnable) {
-						$s .= $prefix . "<span$refId>[[$link" . ($wasblank ? '' : "|$text") . "]]</span>" . $trail;
-					} else {
-						$s .= trim($prefix . $trail, "\n") == '' ? '': $prefix . $trail;
-					}
+					$s .= trim($prefix . $trail, "\n") == '' ? '': $prefix . $trail;
 
 					wfProfileOut( "$fname-category" );
 					continue;
@@ -1785,36 +1754,26 @@ class Parser
 			# Self-link checking
 			if( $nt->getFragment() === '' ) {
 				if( in_array( $nt->getPrefixedText(), $selflink, true ) ) {
-//					wfFCKSetRefId('self link', $text, $link, $trail, $wasblank, $noforce);
-					if (!$FCKparseEnable) {
-						//do not use 'continue' so we can handle self link as a regular link
-						$s .= $prefix . $sk->makeSelfLinkObj( $nt, $text, '', $trail );
-						continue;
-					}
+					$s .= $prefix . $sk->makeSelfLinkObj( $nt, $text, '', $trail );
+					continue;
 				}
 			}
 
 			# Special and Media are pseudo-namespaces; no pages actually exist in them
 			if( $ns == NS_MEDIA ) {
-				if ($FCKparseEnable) {
-					$refId = wfFCKSetRefId('internal link: media', $text, $link, $trail, $wasblank, $noforce, true);
-					$s .= $prefix . "<span$refId>[[" . ($noforce ? '' : ':') . "$link" . ($wasblank ? '' : "|$text") . "]]</span>" . $trail;
-				} else {	//original action
-					# Give extensions a chance to select the file revision for us
-					$skip = $time = false;
-					wfRunHooks( 'BeforeParserMakeImageLinkObj', array( &$this, &$nt, &$skip, &$time ) );
-					if ( $skip ) {
-						$link = $sk->makeLinkObj( $nt );
-					} else {
-						$link = $sk->makeMediaLinkObj( $nt, $text, $time );
-					}
-					# Cloak with NOPARSE to avoid replacement in replaceExternalLinks
-					$s .= $prefix . $this->armorLinks( $link ) . $trail;
-					$this->mOutput->addImage( $nt->getDBkey() );
+				# Give extensions a chance to select the file revision for us
+				$skip = $time = false;
+				wfRunHooks( 'BeforeParserMakeImageLinkObj', array( &$this, &$nt, &$skip, &$time ) );
+				if ( $skip ) {
+					$link = $sk->makeLinkObj( $nt );
+				} else {
+					$link = $sk->makeMediaLinkObj( $nt, $text, $time );
 				}
+				# Cloak with NOPARSE to avoid replacement in replaceExternalLinks
+				$s .= $prefix . $this->armorLinks( $link ) . $trail;
+				$this->mOutput->addImage( $nt->getDBkey() );
 				continue;
 			} elseif( $ns == NS_SPECIAL ) {
-				wfFCKSetRefId('internal link: special page', $text, $link, $trail, $wasblank, $noforce);
 				if( SpecialPage::exists( $nt->getDBkey() ) ) {
 					$s .= $this->makeKnownLinkHolder( $nt, $text, '', $trail, $prefix );
 				} else {
@@ -1827,13 +1786,11 @@ class Parser
 					// Force a blue link if the file exists; may be a remote
 					// upload on the shared repository, and we want to see its
 					// auto-generated page.
-					wfFCKSetRefId('internal link: file', $text, $link, $trail, $wasblank, $noforce);
 					$s .= $this->makeKnownLinkHolder( $nt, $text, '', $trail, $prefix );
 					$this->mOutput->addLink( $nt );
 					continue;
 				}
 			}
-			wfFCKSetRefId('internal link', $text, $link, $trail, $wasblank, $noforce);
 			$s .= $this->makeLinkHolder( $nt, $text, '', $trail, $prefix );
 		}
 		wfProfileOut( $fname );
@@ -2697,7 +2654,7 @@ class Parser
 	 *  self::OT_HTML: all templates and extension tags
 	 *
 	 * @param string $tex The text to transform
-	 * @param PPFrame $frame Object describing the arguments passed to the template.
+	 * @param PPFrame $frame Object describing the arguments passed to the template. 
 	 *        Arguments may also be provided as an associative array, as was the usual case before MW1.12.
 	 *        Providing arguments this way may be useful for extensions wishing to perform variable replacement explicitly.
 	 * @param bool $argsOnly Only do argument (triple-brace) expansion, not double-brace expansion
@@ -2764,7 +2721,7 @@ class Parser
 	function limitationWarn( $limitationType, $current=null, $max=null) {
 		$msgName = $limitationType . '-warning';
 		//does no harm if $current and $max are present but are unnecessary for the message
-		$warning = wfMsg( $msgName, $current, $max);
+		$warning = wfMsg( $msgName, $current, $max); 
 		$this->mOutput->addWarning( $warning );
 		$cat = Title::makeTitleSafe( NS_CATEGORY, wfMsgForContent( $limitationType . '-category' ) );
 		if ( $cat ) {
@@ -2785,7 +2742,7 @@ class Parser
 	 * @private
 	 */
 	function braceSubstitution( $piece, $frame ) {
-		global $wgContLang, $wgLang, $wgAllowDisplayTitle, $wgNonincludableNamespaces, $FCKparseEnable;
+		global $wgContLang, $wgLang, $wgAllowDisplayTitle, $wgNonincludableNamespaces ;
 		$fname = __METHOD__;
 		wfProfileIn( $fname );
 		wfProfileIn( __METHOD__.'-setup' );
@@ -2813,18 +2770,6 @@ class Parser
 		# $args is a list of argument nodes, starting from index 0, not including $part1
 		$args = (null == $piece['parts']) ? array() : $piece['parts'];
 		wfProfileOut( __METHOD__.'-setup' );
-
-		# FCK helper
-		if (!empty($FCKparseEnable)) {
-			$textArgs = array();
-			for ($i = 0; $i < $args->node->length; $i++) {
-				$textArgs[] = $args->node->item($i)->textContent;
-			}
-			$templateText = implode('', $frame->virtualBracketedImplode('{{', '|', '}}', $titleWithSpaces, $textArgs));
-			$refId = wfFCKSetRefId('curly brackets', $templateText, '', '', false, true, true);
-			$text = "<span$refId>" . $templateText . '</span>';
-			$found = true;
-		}
 
 		# SUBST
 		wfProfileIn( __METHOD__.'-modifiers' );
@@ -2919,7 +2864,7 @@ class Parser
 					$found = true;
 					$noparse = true;
 					$preprocessFlags = 0;
-
+					
 					if ( is_array( $result ) ) {
 						if ( isset( $result[0] ) ) {
 							$text = $result[0];
@@ -3302,7 +3247,7 @@ class Parser
 	 * @param PPFrame $frame
 	 */
 	function extensionSubstitution( $params, $frame ) {
-		global $wgRawHtml, $wgContLang, $FCKparseEnable;
+		global $wgRawHtml, $wgContLang;
 
 		$name = $frame->expand( $params['name'] );
 		$attrText = !isset( $params['attr'] ) ? null : $frame->expand( $params['attr'] );
@@ -3327,10 +3272,6 @@ class Parser
 					}
 				case 'nowiki':
 					$output = Xml::escapeTagsOnly( $content );
-					if ($FCKparseEnable) {
-						$refId = wfFCKSetRefId('nowiki', $output, '', '', false, true, true);
-						$output = "<span$refId>$output</span>";
-					}
 					break;
 				/*
 				case 'math':
@@ -3339,13 +3280,7 @@ class Parser
 					break;
 				*/
 				case 'gallery':
-					if ($FCKparseEnable) {
-						$content = "<gallery$attrText>$content</gallery>";
-						$refId = wfFCKSetRefId('gallery', $content, '', '', false, true, true);
-						$output = "<span$refId>".htmlspecialchars($content).'</span>';
-					} else {
-						$output = $this->renderImageGallery( $content, $attributes );
-					}
+					$output = $this->renderImageGallery( $content, $attributes );
 					break;
 				default:
 					if( isset( $this->mTagHooks[$name] ) ) {
@@ -3353,16 +3288,8 @@ class Parser
 						if ( !is_callable( $this->mTagHooks[$name] ) ) {
 							throw new MWException( "Tag hook for $name is not callable\n" );
 						}
-						if ($FCKparseEnable) {
-							$tmp = ($content != ''
-								? "<{$name}{$attrText}>{$content}</{$name}>"
-								: "<{$name}{$attrText}/>");
-							$refId = wfFCKSetRefId('hook', $tmp, '', '', false, true, true);
-							$output = "<span$refId>".htmlspecialchars($tmp).'</span>';
-						} else {
-							$output = call_user_func_array( $this->mTagHooks[$name],
-								array( $content, $attributes, $this ) );
-						}
+						$output = call_user_func_array( $this->mTagHooks[$name],
+							array( $content, $attributes, $this ) );
 					} else {
 						$output = '<span class="error">Invalid tag extension name: ' .
 							htmlspecialchars( $name ) . '</span>';
@@ -3429,7 +3356,6 @@ class Parser
 	 * Fills $this->mDoubleUnderscores, returns the modified text
 	 */
 	function doDoubleUnderscore( $text ) {
-		global $FCKparseEnable;
 		// The position of __TOC__ needs to be recorded
 		$mw = MagicWord::get( 'toc' );
 		if( $mw->match( $text ) ) {
@@ -3437,13 +3363,7 @@ class Parser
 			$this->mForceTocPosition = true;
 
 			// Set a placeholder. At the end we'll fill it in with the TOC.
-			if ($FCKparseEnable) {
-				$tmp = '__TOC__';
-				$refId = wfFCKSetRefId('double underscore', $tmp, '', '', false, true, true);
-				$text = $mw->replace( "<span$refId><!--MWTOC--></span>", $text, 1 );
-			} else {
-				$text = $mw->replace( '<!--MWTOC-->', $text, 1 );
-			}
+			$text = $mw->replace( '<!--MWTOC-->', $text, 1 );
 
 			// Only keep the first one.
 			$text = $mw->replace( '', $text );
@@ -3468,9 +3388,6 @@ class Parser
 			} else {
 				wfDebug( __METHOD__.": [[MediaWiki:hidden-category-category]] is not a valid title!\n" );
 			}
-		}
-		if ($FCKparseEnable && isset($refId)) {
-			$text = str_replace("<span$refId><!--MWTOC--></span>", "<span$refId>__TOC__</span>", $text);
 		}
 		return $text;
 	}
@@ -4057,23 +3974,23 @@ class Parser
 	 * @param integer $flags a combination of the following flags:
 	 *     SFH_NO_HASH   No leading hash, i.e. {{plural:...}} instead of {{#if:...}}
 	 *
-	 *     SFH_OBJECT_ARGS   Pass the template arguments as PPNode objects instead of text. This
+	 *     SFH_OBJECT_ARGS   Pass the template arguments as PPNode objects instead of text. This 
 	 *     allows for conditional expansion of the parse tree, allowing you to eliminate dead
-	 *     branches and thus speed up parsing. It is also possible to analyse the parse tree of
+	 *     branches and thus speed up parsing. It is also possible to analyse the parse tree of 
 	 *     the arguments, and to control the way they are expanded.
 	 *
 	 *     The $frame parameter is a PPFrame. This can be used to produce expanded text from the
 	 *     arguments, for instance:
 	 *         $text = isset( $args[0] ) ? $frame->expand( $args[0] ) : '';
 	 *
-	 *     For technical reasons, $args[0] is pre-expanded and will be a string. This may change in
+	 *     For technical reasons, $args[0] is pre-expanded and will be a string. This may change in 
 	 *     future versions. Please call $frame->expand() on it anyway so that your code keeps
 	 *     working if/when this is changed.
 	 *
 	 *     If you want whitespace to be trimmed from $args, you need to do it yourself, post-
 	 *     expansion.
 	 *
-	 *     Please read the documentation in includes/parser/Preprocessor.php for more information
+	 *     Please read the documentation in includes/parser/Preprocessor.php for more information 
 	 *     about the methods available in PPFrame and PPNode.
 	 *
 	 * @return The old callback function for this name, if any
@@ -4488,7 +4405,7 @@ class Parser
 			if ( count( $matches ) == 0 ) {
 				continue;
 			}
-
+			
 			if ( strpos( $matches[0], '%' ) !== false )
 				$matches[1] = urldecode( $matches[1] );
 			$tp = Title::newFromText( $matches[1] );
@@ -4559,7 +4476,6 @@ class Parser
 	 * Parse image options text and use it to make an image
 	 */
 	function makeImage( $title, $options ) {
-		global $FCKparseEnable;
 		# Check if the options text is of the form "options|alt text"
 		# Options are:
 		#  * thumbnail       	make a thumbnail with enlarge-icon and caption, alignment depends on lang
@@ -4581,10 +4497,6 @@ class Parser
 		#  * middle
 		#  * bottom
 		#  * text-bottom
-
-		if ($FCKparseEnable) {
-			$refId = wfFCKGetRefId($options, true);
-		}
 
 		$parts = array_map( 'trim', explode( '|', $options) );
 		$sk = $this->mOptions->getSkin();
@@ -4683,10 +4595,6 @@ class Parser
 
 		$params['frame']['alt'] = $alt;
 		$params['frame']['caption'] = $caption;
-
-		if ($FCKparseEnable) {
-			$params['frame']['refid'] = $refId;
-		}
 
 		wfRunHooks( 'ParserMakeImageParams', array( $title, $file, &$params ) );
 
