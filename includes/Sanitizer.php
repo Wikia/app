@@ -486,8 +486,7 @@ class Sanitizer {
 					if ( ! $badtag ) {
 						$rest = str_replace( '>', '&gt;', $rest );
 						$close = ( $brace == '/>' && !$slash ) ? ' /' : '';
-						$wasHtml = !$slash && strpos($newparams, ' refid="') === false ? ' wasHtml="1"' : '';
-						$text .= "<$slash$t$wasHtml$newparams$close>$rest";
+						$text .= "<$slash$t$newparams$close>$rest";
 						continue;
 					}
 				}
@@ -510,8 +509,7 @@ class Sanitizer {
 					}
 					$newparams = Sanitizer::fixTagAttributes( $params, $t );
 					$rest = str_replace( '>', '&gt;', $rest );
-					$wasHtml = !$slash ? ' wasHtml=1' : '';
-					$text .= "<$slash$t$wasHtml$newparams$brace$rest";
+					$text .= "<$slash$t$newparams$brace$rest";
 				} else {
 					$text .= '&lt;' . str_replace( '>', '&gt;', $x);
 				}
@@ -1138,7 +1136,7 @@ class Sanitizer {
 			# 7.5.4
 			'div'        => $block,
 			'center'     => $common, # deprecated
-			'span'       => array_merge( $block, array( 'refid' ) ),	//$block, # ??
+			'span'       => $block, # ??
 
 			# 7.5.5
 			'h1'         => $block,
