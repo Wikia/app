@@ -75,17 +75,17 @@ div.yui-sldshw-frame {
 	
 .WidgetSlideshowControlNext
 {
-	background-image: url(http://images.wikia.com/skins/common/widgets/icons/widget_slideshow_next.png);
+	background-image: url(../../common/widgets/icons/widget_slideshow_next.png);
 }
 	
 .WidgetSlideshowControlPause
 {
-	background-image: url(http://images.wikia.com/skins/common/widgets/icons/widget_slideshow_pause.png);
+	background-image: url(../../common/widgets/icons/widget_slideshow_pause.png);
 }
 	
 .WidgetSlideshowControlPlay
 {
-	background-image: url(http://images.wikia.com/skins/common/widgets/icons/widget_slideshow_play.png);
+	background-image: url(../../common/widgets/icons/widget_slideshow_play.png);
 }
 
 
