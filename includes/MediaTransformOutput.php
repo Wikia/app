@@ -168,6 +168,9 @@ class ThumbnailImage extends MediaTransformOutput {
 		if ( !empty( $options['img-class'] ) ) {
 			$attribs['class'] = $options['img-class'];
 		}
+		if ( isset( $options['refid'] ) ) {
+			$attribs['refid'] = $options['refid'];
+		}
 		return $this->linkWrap( $linkAttribs, Xml::element( 'img', $attribs ) );
 	}
 
@@ -195,7 +198,11 @@ class MediaTransformError extends MediaTransformOutput {
 	}
 
 	function toHtml( $options = array() ) {
-		return "<table class=\"MediaTransformError\" style=\"" .
+		$refId = '';
+		if (isset($options['refid'])) {
+			$refId = " refid=\"{$options['refid']}\"";
+		}
+		return "<table$refId class=\"MediaTransformError\" style=\"" .
 			"width: {$this->width}px; height: {$this->height}px;\"><tr><td>" .
 			$this->htmlMsg .
 			"</td></tr></table>";

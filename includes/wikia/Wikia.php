@@ -287,10 +287,11 @@ class Wikia {
      * author eloy@wikia
      *
      * @param string $what: json string for decoding
+     * @param boolean $assoc: returned object will be converted into associative array
      *
      * @return mixed: decoded structure
      */
-    static public function json_decode( $what )
+    static public function json_decode( $what, $assoc = false )
     {
 		wfProfileIn( __METHOD__ );
 
@@ -301,7 +302,7 @@ class Wikia {
 		    $mResponse = $oJson->decode( $what );
 		}
 		else {
-		    $mResponse = json_decode( $what );
+		    $mResponse = json_decode( $what, $assoc );
 		}
 
 		wfProfileOut( __METHOD__ );
