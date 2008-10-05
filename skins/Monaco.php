@@ -1236,7 +1236,7 @@ if ($wgOut->isArticle()){
 	if (ArticleAdLogic::isMainPage()){
 		$topAdCode = AdEngine::getInstance()->getPlaceHolderDiv('HOME_TOP_LEADERBOARD');
 		if ($wgEnableFAST_HOME2) {
-			$topAdCode = AdEngine::getInstance()->getPlaceHolderDiv('HOME_TOP_RIGHT_BOXAD');
+			$topAdCode .= AdEngine::getInstance()->getPlaceHolderDiv('HOME_TOP_RIGHT_BOXAD');
 		}
 	} else if ( ArticleAdLogic::isContentPage() &&
 		   !ArticleAdLogic::isStubArticle($this->data['bodytext'])) { //valid article
