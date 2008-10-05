@@ -18,7 +18,7 @@ interface iAdProvider {
 
 class AdEngine {
 
-	const cacheKeyVersion = "1.9h";
+	const cacheKeyVersion = "1.9i";
 	const cacheTimeout = 1800;
 
 	// TODO: pull these from wikicities.provider
@@ -29,13 +29,25 @@ class AdEngine {
 	private $placeholders = array();
 
 	protected static $instance = false;
+	
+	public $bucketName = null;
+	public $bucketNum = -1;
 
+	private $bucketTests = array(
+		1 => 'GAM_leaderboard', // Using Google Ad Manager for leaderboard testing
+		2 => 'GAM_boxad', // Using Google Ad Manager for the box ad
+                3 => 'lp', // Leaderboard placed left-center-right in current spot
+                4 => 'lp_at', // Leaderboard placed above title, left-center-right
+                5 => 'bp', // Boxad placement
+	);
+		
 	protected function __construct() {
 		$this->loadConfig();
 		global $wgAutoloadClasses;
 		foreach($this->providers as $p) {
 			$wgAutoloadClasses['AdProvider' . $p]=dirname(__FILE__) . '/AdProvider'.$p.'.php';
 		}
+		$this->bucketNum = mt_rand(0,200);
 	}
 
 	public static function getInstance() {
@@ -54,6 +66,7 @@ class AdEngine {
 		/* TODO move this to allinone, and find a better spot for this code after I talk to Christian.
                          This is an experiment to see if moving it higher on the page makes it better */
 		global $wgExtensionsPath;
+		// $wgExtensionsPath='/extensions';
 		$out .= '<script type="text/javascript" src="' . $wgExtensionsPath . '/wikia/AdEngine/AdEngine.js?' . self::cacheKeyVersion . '"></script>'. "\n";
 
 		// Get the setup code for ad providers used on this page
@@ -196,8 +209,19 @@ class AdEngine {
 
 			// More info on logic here: http://staff.wikia-inc.com/wiki/DART_Implementation/NonEnglish
 			switch ($wgLanguageCode) {
-			  case 'en': return $this->getProviderFromId($this->slots[$slotname]['provider_id']);
+			  case 'en': 
+
+				// Do bucket testing of different providers
+				if ($slotname == 'TOP_LEADERBOARD' && $this->getBucketName() == 'GAM_leaderboard'){
+					return AdProviderGAM::getInstance();
+				} else if ($slotname == 'TOP_RIGHT_BOXAD' && $this->getBucketName() == 'GAM_boxad'){
+					return AdProviderGAM::getInstance();
+				} else {
+					return $this->getProviderFromId($this->slots[$slotname]['provider_id']);
+				}
+
 			  case 'de': return $this->getProviderFromId($this->slots[$slotname]['provider_id']);
+
 			  default:
 				if (! in_array($slotname, array('LEFT_SKYSCRAPER_2', 'HOME_LEFT_SKYSCRAPER_2'))){
 					return new AdProviderNull("We only lower skyscraper ads for this language ($wgLanguageCode) ", false);
@@ -278,6 +302,39 @@ class AdEngine {
 		return "<div id=\"$slotname\"$style></div>";
 	}
 
+	public function getBucketTestingCode(){
+		// Bucket testing leaderboard ad placement
+		$out .= '<style type="text/css">' . 
+			".TOP_LEADERBOARD_left { margin-left:0 !important; margin-right:auto !important }\n" .
+			".TOP_LEADERBOARD_center { margin-left:auto !important; margin-right:auto !important }\n" .
+			".TOP_LEADERBOARD_right { margin-left:auto; !important; margin-right: 0 }\n" .
+			".TOP_RIGHT_BOXAD_overline { margin-top: -45px}\n" .
+			".TOP_RIGHT_BOXAD_down { margin-top: 30px}\n" .
+			"</style>\n";
+
+		$out .= "<script type='text/javascript'>\n" . 
+			"AdEngine.bucketTests = " . json_encode($this->bucketTests) . "\n" . 
+			'AdEngine.bucketName = "' . addslashes($this->getBucketName()) . '"' . ";\n" .
+			"</script>";
+			
+		return $out;
+	}
+
+	public function getBucketName(){
+	        if ($this->bucketName !== null){
+                	return $this->bucketName;
+		} else if (!empty($_GET['forceBucket'])){
+			// preg_replace to prevent XSS
+			$this->bucketName = preg_replace('/[^a-z0-9A-Z\-\_]/', '', $_GET['forceBucket']);
+			return $this->bucketName;
+		} else {
+			if (isset($this->bucketTests[$this->bucketNum])){
+				$this->bucketName = $this->bucketTests[$this->bucketNum];
+			} else {
+				$this->bucketName = '';
+			}
+		}
+	}
 
 	public function getDelayedLoadingCode(){
 		global $wgExtensionsPath;
@@ -289,12 +346,15 @@ class AdEngine {
 
 		$out = "<!-- #### BEGIN " . __CLASS__ . '::' . __METHOD__ . " ####-->\n";
 
-		$out .= '<script type="text/javascript">';
-		$out .= 'TieDivLibrary.timer();';
-		$out .= '</script>';
+		$out .=  $this->getBucketTestingCode();
+
+		$out .= '<script type="text/javascript">' .
+			"TieDivLibrary.timer();\n". 
+			'</script>';
 
 		foreach ($this->placeholders as $slotname){
 			$AdProvider = $this->getAdProvider($slotname);
+			$out .= "<script type='text/javascript'>AdEngine.doBucketTest('$slotname');</script>\n";
 
 			// Hmm. Should we just use: class="wikia_$adtype"?
 			$class = self::getAdType($slotname) == 'spotlight' ? ' class="wikia_spotlight"' : ' class="wikia_ad"';
