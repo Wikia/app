@@ -648,7 +648,6 @@ class MagicWordArray {
 	 * Removes the matched items from the input string (passed by reference)
 	 */
 	public function matchAndRemove( &$text ) {
-		global $FCKparseEnable;
 		$found = array();
 		$regexes = $this->getRegex();
 		foreach ( $regexes as $regex ) {
@@ -660,13 +659,7 @@ class MagicWordArray {
 				list( $name, $param ) = $this->parseMatch( $m );
 				$found[$name] = $param;
 			}
-			if ($FCKparseEnable && preg_match( $regex, $text, $keyword )) {
-				$tmp = $keyword[0];
-				$refId = wfFCKSetRefId('double underscore', $tmp, '', '', false, true, true);
-				$text = preg_replace( $regex, "<span$refId>{$keyword[0]}</span>", $text );
-			} else {	//oryginal code
-				$text = preg_replace( $regex, '', $text );
-			}
+			$text = preg_replace( $regex, '', $text );
 		}
 		return $found;
 	}
