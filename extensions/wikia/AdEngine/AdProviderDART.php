@@ -18,25 +18,25 @@ class AdProviderDART implements iAdProvider {
 	}
 
 	private $sites = array(	'Auto' => 'wka.auto',
-							'Creative' => 'wka.crea',
-							'Education' => 'wka.edu',
-							'Entertainment' => 'wka.ent',
-							'Finance' => 'wka.fin',
-							'Gaming' => 'wka.gaming',
-							'Green' => 'wka.green',
-							'Humor' => 'wka.humor',
-							'Lifestyle' => 'wka.life',
-							'Music' => 'wka.music',
-							'Philosophy' => 'wka.phil',
-							'Politics' => 'wka.poli',
-							'Science' => 'wka.sci',
-							'Sports' => 'wka.sports',
-							'Technology' => 'wka.tech',
-							'Test Site' => 'wka.test',
-							'Toys' => 'wka.toys',
-							'Travel' => 'wka.travel');
-        private $slotsToCall = array();
+				'Creative' => 'wka.crea',
+				'Education' => 'wka.edu',
+				'Entertainment' => 'wka.ent',
+				'Finance' => 'wka.fin',
+				'Gaming' => 'wka.gaming',
+				'Green' => 'wka.green',
+				'Humor' => 'wka.humor',
+				'Lifestyle' => 'wka.life',
+				'Music' => 'wka.music',
+				'Philosophy' => 'wka.phil',
+				'Politics' => 'wka.poli',
+				'Science' => 'wka.sci',
+				'Sports' => 'wka.sports',
+				'Technology' => 'wka.tech',
+				'Test Site' => 'wka.test',
+				'Toys' => 'wka.toys',
+				'Travel' => 'wka.travel');
 
+        private $slotsToCall = array();
         public function addSlotToCall($slotname){
                 $this->slotsToCall[]=$slotname;
         }
@@ -70,6 +70,7 @@ class AdProviderDART implements iAdProvider {
 		$url .= $this->getProviderValues($slot);
 		$url .= $this->getArticleKV();
 		$url .= $this->getDomainKV($_SERVER['HTTP_HOST']);
+		$url .= 'wkabkt=@@WIKIABUCKET@@;'; // To be filled in from AdEngine.bucket via javascript
 		$url .= 'pos=' . $slotname . ';';
 		$url .= $this->getKeywordsKV();
 		$url .= $this->getDcoptKV($slotname);
@@ -83,8 +84,9 @@ class AdProviderDART implements iAdProvider {
 		$out .= '<script type="text/javascript">/*<![CDATA[*/' . "\n";
 		// Ug. Heredocs suck, but with all the combinations of quotes, it was the cleanest way.
 		$out .= <<<EOT
-		document.write("<scr"+"ipt type='text/javascript' src='$url"+AdsCB+"'><\/scr"+"ipt>");
-
+		dartUrl = '$url' + AdsCB;
+		dartUrl = dartUrl.replace(/@@WIKIABUCKET@@/, AdEngine.bucketid);
+		document.write("<scr"+"ipt type='text/javascript' src='"+ dartUrl +"'><\/scr"+"ipt>");
 EOT;
 		$out .= "/*]]>*/</script>\n";
 

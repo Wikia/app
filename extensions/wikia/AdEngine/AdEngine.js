@@ -1,5 +1,4 @@
-var AdsCB = Math.floor(Math.random()*99999999); // generate random number to use as a cache buster during the call for ad (OpenX and DART)
-
+var AdsCB = Math.floor(Math.random()*99999999); // generate random number to use as a cache buster during the call for ad (OpenX and DART) 
 /**
  * Utility functions related to AdEngine
  * @author Nick Sullivan
@@ -156,16 +155,96 @@ AdEngine.displaySlotIfAd = function (slotname) {
         }
 };
 
+AdEngine.getBucketName = function(){
+	// Allow for it to be passed in the url, for testing
+	var forceParam = document.location.search.match(/forceBucket=[A-Za-z0-9_\-]+/);
+	if (forceParam != null ){
+		AdEngine.bucketName = forceParam.toString().substr(12);
+		return AdEngine.bucketName;
+	} else if (AdEngine.bucketName != '' ){
+		return AdEngine.bucketName;
+	} else {
+		return '';
+	}
+};
+
 /* For testing click through rates on various placements of ads. 
  * Accepts a slotname, checks to see which bucket this user should be in,
  * and then adjusts the style for the containing div. The name of the bucket
  * is returned so that it can be passed to the ad call for reporting.
+ * @return a unique id to identify the test (for passing in the ad call), or '' if no test done.
  */
-/* Disabled for now, next release 
-AdEngine.placementBucketTest = function (slotname) {
-	
+AdEngine.doBucketTest = function (slotname) {
+	var myBucket = AdEngine.getBucketName();
+	AdEngine.bucketid = ''; // Ad Engine bucket id is passed to the ad call for CTR tracking
+
+	if (slotname == 'TOP_LEADERBOARD' && myBucket == 'lp'){
+		// Switch around the leaderboard in it's current position
+		
+		var rand = randomnumber=Math.ceil(Math.random()*4);
+		switch (rand){
+			// Pick from different placements and shift accordingly
+			case 1:
+				document.getElementById(slotname).className=slotname + '_center';
+				AdEngine.bucketid = 'lp_center';
+				break;
+			case 2:
+				document.getElementById(slotname).className=slotname + '_left';
+				AdEngine.bucketid ='lp_left';
+				break;
+			case 3:
+				document.getElementById(slotname).className=slotname + '_right';
+				AdEngine.bucketid ='lp_right';
+				break;
+			default: // not in bucket test
+				AdEngine.bucketid ='lp_control';
+		}
+		
+	} else if (slotname == 'TOP_LEADERBOARD' && myBucket == 'lp_at'){
+		// Switch around the leaderboard in it's current position
+		
+		var rand = randomnumber=Math.ceil(Math.random()*4);
+		switch (rand){
+			// Pick from different placements and shift accordingly
+			case 1:
+				document.getElementById(slotname).className=slotname + '_center';
+				AdEngine.bucketid ='lp_at_center';
+				break;
+			case 2:
+				document.getElementById(slotname).className=slotname + '_left';
+				AdEngine.bucketid ='lp_at_left';
+				break;
+			case 3:
+				document.getElementById(slotname).className=slotname + '_right';
+				AdEngine.bucketid ='lp_at_right';
+				break;
+			default: // not in bucket test
+				AdEngine.bucketid ='lp_at_control';
+		}
+		
+	} else if (slotname == 'TOP_RIGHT_BOXAD' && myBucket == 'bp'){
+		// Switch around the leaderboard in it's current position
+		
+		var rand = randomnumber=Math.ceil(Math.random()*3);
+		switch (rand){
+			// Pick from different placements and shift accordingly
+			case 1:
+				document.getElementById(slotname).className=slotname + '_overline';
+				AdEngine.bucketid ='bp_overline';
+				break;
+			case 2:
+				document.getElementById(slotname).className=slotname + '_down';
+				AdEngine.bucketid ='bp_down';
+				break;
+			default: // not in bucket test
+				AdEngine.bucketid ='bp_control';
+		}
+	}	
+
+	// Set up other bucket tests here. Set this.bucket and it will be passed to DART as 'wkabkt'
+	return AdEngine.bucketid;
+
 };
-*/
 
 /* Return the meta keywords so they can be passed as hints */
 AdEngine.getKeywords = function () {

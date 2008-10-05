@@ -1227,17 +1227,47 @@ if(isset($this->data['articlelinks']['right'])) {
 			</div>
 
 			<!-- ARTICLE -->
+<?php
+echo AdEngine::getInstance()->getSetupHtml();
+global $wgOut;
+$topAdCode = '';
+$topAdCodeDisplayed = false;
+if ($wgOut->isArticle()){
+	if (ArticleAdLogic::isMainPage()){
+		$topAdCode = AdEngine::getInstance()->getPlaceHolderDiv('HOME_TOP_LEADERBOARD');
+		if ($wgEnableFAST_HOME2) {
+			$topAdCode = AdEngine::getInstance()->getPlaceHolderDiv('HOME_TOP_RIGHT_BOXAD');
+		}
+	} else if ( ArticleAdLogic::isContentPage() &&
+		   !ArticleAdLogic::isStubArticle($this->data['bodytext'])) { //valid article
+
+		if (ArticleAdLogic::isShortArticle($this->data['bodytext'])){
+			$topAdCode = AdEngine::getInstance()->getPlaceHolderDiv('TOP_LEADERBOARD');
+		} elseif (ArticleAdLogic::isBoxAdArticle($this->data['bodytext'])) {
+			$topAdCode = AdEngine::getInstance()->getPlaceHolderDiv('TOP_RIGHT_BOXAD');
+		} else {
+			// Long article, but a collision
+			$topAdCode = AdEngine::getInstance()->getPlaceHolderDiv('TOP_LEADERBOARD');
+		}
+	}
+}
+?>
 <?php		wfProfileIn( __METHOD__ . '-article'); ?>
 			<div id="article" <?php if($this->data['body_ondblclick']) { ?>ondblclick="<?php $this->text('body_ondblclick') ?>"<?php } ?>>
-
+				<?php 
+				// Testing putting the leader board above the title 
+				if (! ArticleAdLogic::isMainPage() && AdEngine::getInstance()->getBucketName() == 'lp_at'){
+					// Bucket test to put the ad ad the top 
+					echo $topAdCode;
+					$topAdCodeDisplayed = true;
+				}
+				?>
 				<a name="top" id="top"></a>
 				<?php if($this->data['sitenotice']) { ?><div id="siteNotice"><?php $this->html('sitenotice') ?></div><?php } ?>
 				<?php
 				global $wgSupressPageTitle;
 				if( empty( $wgSupressPageTitle ) ){ ?><h1 class="firstHeading"><?php $this->data['displaytitle']!=""?$this->html('title'):$this->text('title') ?></h1><?php } ?>
 
-				<!--contextual_targeting_start-->
-				<!--google_ad_section_start-->
 				<?php
 				if ($wgRequest->getVal('action') == 'edit') {
 					//echo '<br /><a href="#" id="editTipsLink" onclick="editTips(); return false;">Show Editing Tips</a>';
@@ -1251,27 +1281,9 @@ if(isset($this->data['articlelinks']['right'])) {
 					<?php if(!empty($skin->newuemsg)) { echo $skin->newuemsg; } ?>
 					<?php if($this->data['showjumplinks']) { ?><div id="jump-to-nav"><?php $this->msg('jumpto') ?> <a href="#column-one"><?php $this->msg('jumptonavigation') ?></a>, <a href="#searchInput"><?php $this->msg('jumptosearch') ?></a></div><?php } ?>
 					<?php
-					global $wgOut;
-					echo AdEngine::getInstance()->getSetupHtml();
-
-					if ($wgOut->isArticle()){
-						if (ArticleAdLogic::isMainPage()){
-							echo AdEngine::getInstance()->getPlaceHolderDiv('HOME_TOP_LEADERBOARD');
-							if ($wgEnableFAST_HOME2) {
-								echo AdEngine::getInstance()->getPlaceHolderDiv('HOME_TOP_RIGHT_BOXAD');
-							}
-						} else if ( ArticleAdLogic::isContentPage() &&
-							   !ArticleAdLogic::isStubArticle($this->data['bodytext'])) { //valid article
-
-							if (ArticleAdLogic::isShortArticle($this->data['bodytext'])){
-								echo AdEngine::getInstance()->getPlaceHolderDiv('TOP_LEADERBOARD');
-							} elseif (ArticleAdLogic::isBoxAdArticle($this->data['bodytext'])) {
-								echo AdEngine::getInstance()->getPlaceHolderDiv('TOP_RIGHT_BOXAD');
-							} else {
-								// Long article, but a collision
-								echo AdEngine::getInstance()->getPlaceHolderDiv('TOP_LEADERBOARD');
-							}
-						}
+					// Print out call to top leaderboard or box ad, if it's a main page, or not in the bucket test
+					if (ArticleAdLogic::isMainPage() || !$topAdCodeDisplayed){
+						echo $topAdCode;
 					}
 					?>
 					<!-- start content -->
