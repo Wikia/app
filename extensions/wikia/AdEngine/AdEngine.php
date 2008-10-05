@@ -18,7 +18,7 @@ interface iAdProvider {
 
 class AdEngine {
 
-	const cacheKeyVersion = "1.9j";
+	const cacheKeyVersion = "1.9k";
 	const cacheTimeout = 1800;
 
 	// TODO: pull these from wikicities.provider
