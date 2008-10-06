@@ -1071,6 +1071,15 @@ div#userloginForm .captcha {
 	background-color: white;
 }
 
+div#userlogin form#userlogin2 label { 
+	font-size: 115%; 
+	font-weight: bold; 
+} 
+  	
+div#userlogin form#userlogin2 input { 
+	margin-bottom: 4px; 
+}  
+
 #loginend, #signupend {
 	clear: both;
 }
