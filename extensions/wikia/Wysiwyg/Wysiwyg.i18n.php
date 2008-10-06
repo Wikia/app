@@ -8,4 +8,6 @@ $messages['en'] = array(
 	'wysiwyg-edgecase-nowysiwyg' => 'the "no wysiwyg" command',
 	'wysiwyg-edgecase-complex-description' => 'an external URL or template within a link description',
 	'wysiwyg-edgecase-template-with-link' => 'a template with a link as a parameter',
+	'wysiwyg-edgecase-template-with-link' => 'a template with a link as a parameter',
+	'wysiwyg-edgecase-syntax' => 'not allowed syntax'
 );

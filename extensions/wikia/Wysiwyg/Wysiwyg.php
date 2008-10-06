@@ -255,6 +255,7 @@ function wfFCKTestEdgeCases($text) {
 			'<!--' => 'wysiwyg-edgecase-comment',			//HTML comments
 			'{{{' => 'wysiwyg-edgecase-triplecurls',		//template parameters
 			'__NOWYSIWYG__' => 'wysiwyg-edgecase-nowysiwyg',//new magic word to disable FCK for current article
+			'<span refid=' => 'wysiwyg-edgecase-syntax',//TODO
 		),
 		'regexp' => array(
 			'/\[\[[^|]+\|.*?(?:(?:' . wfUrlProtocols() . ')|{{).*?]]/' => 'wysiwyg-edgecase-complex-description',	//external url or template found in the description of a link
