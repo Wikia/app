@@ -15,6 +15,7 @@ $messages["en"] = array(
     "wf_city_created" => "Created",
     "wf_city_public" => "Status",
     "wf_city_lang" => "Lang",
+    "wf_cat_name" => "Category",
     "wikifactory_removevariable" => "Remove wiki data from cache",
     "wikifactory_removeconfirm" => "Wiki data removed from cache!",
 	"wikifactory-label-variables" => "Variables",
