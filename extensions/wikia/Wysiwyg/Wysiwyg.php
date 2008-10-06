@@ -198,21 +198,18 @@ function wfWysiwygWiki2Html($wikitext, $articleId = -1, $encode = false) {
  * @return string refId
  */
 function wfFCKSetRefId($type, &$text, $link, $trail, $wasblank, $noforce, $returnOnly = false) {
-	global $FCKparseEnable, $FCKmetaData;
-	if ($FCKparseEnable) {
-		$tmpDescription = $wasblank ? '' : $text;
-		$refId = count($FCKmetaData);
-		if (!$returnOnly) {
-			$text .= "\x1$refId\x1";
-		}
-		$tmpInside = '';
-		if ($trail != '') {
-			list($tmpInside, $tmpTrail) = Linker::splitTrail($trail);
-		}
-		$FCKmetaData[$refId] = array('type' => $type, 'href' => ($noforce ? '' : ':') . $link, 'description' => $tmpDescription, 'trial' => $tmpInside);
-		return " refid=\"$refId\"";
+	global $FCKmetaData;
+	$tmpDescription = $wasblank ? '' : $text;
+	$refId = count($FCKmetaData);
+	if (!$returnOnly) {
+		$text .= "\x1$refId\x1";
 	}
-	return '';
+	$tmpInside = '';
+	if ($trail != '') {
+		list($tmpInside, $tmpTrail) = Linker::splitTrail($trail);
+	}
+	$FCKmetaData[$refId] = array('type' => $type, 'href' => ($noforce ? '' : ':') . $link, 'description' => $tmpDescription, 'trial' => $tmpInside);
+	return " refid=\"$refId\"";
 }
 
 /**
@@ -226,14 +223,10 @@ function wfFCKSetRefId($type, &$text, $link, $trail, $wasblank, $noforce, $retur
  * @return string refId
  */
 function wfFCKGetRefId(&$text, $returnIDonly = false) {
-	global $FCKparseEnable;
-	if ($FCKparseEnable) {
-		preg_match("#\x1([^\x1]+)#", $text, $m);
-		$refId = isset($m[1]) ? ($returnIDonly ? $m[1] : " refid=\"{$m[1]}\"") : '';
-		$text = preg_replace("#\x1[^\x1]+\x1#", '', $text);
-		return $refId;
-	}
-	return '';
+	preg_match("#\x1([^\x1]+)#", $text, $m);
+	$refId = isset($m[1]) ? ($returnIDonly ? $m[1] : " refid=\"{$m[1]}\"") : '';
+	$text = preg_replace("#\x1[^\x1]+\x1#", '', $text);
+	return $refId;
 }
 
 /**

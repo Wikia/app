@@ -235,7 +235,7 @@ class Linker {
 	 * @param $prefix String: optional prefix. As trail, only before instead of after.
 	 */
 	function makeLinkObj( $nt, $text= '', $query = '', $trail = '', $prefix = '' ) {
-		global $wgUser;
+		global $wgUser, $FCKparseEnable;
 		wfProfileIn( __METHOD__ );
 
 		if ( !$nt instanceof Title ) {
@@ -278,7 +278,10 @@ class Linker {
 					$trail = $m[2];
 				}
 			}
-			$refId = wfFCKGetRefId($text);
+			$refId = '';
+			if (!empty($FCKparseEnable)) {
+				$refId = wfFCKGetRefId($text);
+			}
 			$t = "<a href=\"{$u}\"{$style}{$refId}>{$text}{$inside}</a>";
 
 			wfProfileOut( __METHOD__ );
@@ -334,6 +337,7 @@ class Linker {
 	 * @return the a-element
 	 */
 	function makeKnownLinkObj( $title, $text = '', $query = '', $trail = '', $prefix = '' , $aprops = '', $style = '' ) {
+		global $FCKparseEnable;
 		wfProfileIn( __METHOD__ );
 
 		if ( !$title instanceof Title ) {
@@ -364,7 +368,10 @@ class Linker {
 		if ( $aprops !== '' ) $aprops = ' ' . $aprops;
 
 		list( $inside, $trail ) = Linker::splitTrail( $trail );
-		$refId = wfFCKGetRefId($text);
+		$refId = '';
+		if (!empty($FCKparseEnable)) {
+			$refId = wfFCKGetRefId($text);
+		}
 		$r = "<a href=\"{$u}\"{$style}{$aprops}{$refId}>{$prefix}{$text}{$inside}</a>{$trail}";
 		wfProfileOut( __METHOD__ );
 		return $r;
@@ -409,7 +416,10 @@ class Linker {
 		$style = $this->getInternalLinkAttributesObj( $nt, $text, 'new', $titleAttr );
 		list( $inside, $trail ) = Linker::splitTrail( $trail );
 
-		$refId = wfFCKGetRefId($text);
+		$refId = '';
+		if (!empty($FCKparseEnable)) {
+			$refId = wfFCKGetRefId($text);
+		}
 		wfRunHooks( 'BrokenLink', array( &$this, $nt, $query, &$u, &$style, &$prefix, &$text, &$inside, &$trail ) );
 		$s = "<a href=\"{$u}\"{$style}{$refId}>{$prefix}{$text}{$inside}</a>{$trail}";
 
@@ -513,7 +523,9 @@ class Linker {
 	/** @todo document */
 	function makeExternalImage( $url, $alt = '' ) {
 		global $FCKparseEnable;
-		$refId = wfFCKGetRefId($url, true);
+		if (!empty($FCKparseEnable)) {
+			$refId = wfFCKGetRefId($url, true);
+		}
 		if ( '' == $alt ) {
 			$alt = $this->fnamePart( $url );
 		}
@@ -697,7 +709,7 @@ class Linker {
 				'img-class' => isset( $fp['border'] ) ? 'thumbborder' : false
 			);
 			$refId = '';
-			if ($FCKparseEnable && isset($fp['refid'])) {
+			if (!empty($FCKparseEnable) && isset($fp['refid'])) {
 				if ($fp['align'] == '') {
 					$attrArr['refid'] = $fp['refid'];
 				} else {
@@ -789,7 +801,7 @@ class Linker {
 		$more = htmlspecialchars( wfMsg( 'thumbnail-more' ) );
 
 		$refId = '';
-		if ($FCKparseEnable && isset($fp['refid'])) {
+		if (!empty($FCKparseEnable) && isset($fp['refid'])) {
 			$refId = " refid=\"{$fp['refid']}\"";
 		}
 		$s = "<div$refId class=\"thumb t{$fp['align']}\"><div class=\"thumbinner\" style=\"width:{$outerWidth}px;\">";
@@ -830,7 +842,7 @@ class Linker {
 	 * @return string
 	 */
 	public function makeBrokenImageLinkObj( $title, $text = '', $query = '', $trail = '', $prefix = '', $time = false ) {
-		global $wgEnableUploads;
+		global $wgEnableUploads, $FCKparseEnable;
 		if( $title instanceof Title ) {
 			wfProfileIn( __METHOD__ );
 			$currentExists = $time ? ( wfFindFile( $title ) != false ) : false;
@@ -847,7 +859,10 @@ class Linker {
 					$q .= '&' . $query;
 				list( $inside, $trail ) = self::splitTrail( $trail );
 				$style = $this->getInternalLinkAttributesObj( $title, $text, 'new' );
-				$refId = wfFCKGetRefId($text);
+				$refId = '';
+				if (!empty($FCKparseEnable)) {
+					$refId = wfFCKGetRefId($text);
+				}
 				wfProfileOut( __METHOD__ );
 				return '<a href="' . $upload->escapeLocalUrl( $q ) . '"'
 					. $style . $refId . '>' . $prefix . $text . $inside . '</a>' . $trail;
@@ -878,7 +893,11 @@ class Linker {
 	 * @todo Handle invalid or missing images better.
 	 */
 	function makeMediaLinkObj( $title, $text = '', $time = false ) {
-		$refId = wfFCKGetRefId($text);
+		global $FCKparseEnable;
+		$refId = '';
+		if (!empty($FCKparseEnable)) {
+			$refId = wfFCKGetRefId($text);
+		}
 		if( is_null( $title ) ) {
 			### HOTFIX. Instead of breaking, return empty string.
 			return $text;
@@ -913,7 +932,11 @@ class Linker {
 
 	/** @todo document */
 	function makeExternalLink( $url, $text, $escape = true, $linktype = '', $ns = null ) {
-		$refId = wfFCKGetRefId($text);
+		global $FCKparseEnable;
+		$refId = '';
+		if (!empty($FCKparseEnable)) {
+			$refId = wfFCKGetRefId($text);
+		}
 		$style = $this->getExternalLinkAttributes( $url, $text, 'external ' . $linktype );
 		global $wgNoFollowLinks, $wgNoFollowNsExceptions;
 		if( $wgNoFollowLinks && !(isset($ns) && in_array($ns, $wgNoFollowNsExceptions)) ) {
