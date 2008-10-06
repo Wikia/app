@@ -1028,11 +1028,7 @@ class SkinTemplate extends Skin {
 		# If we use the site's dynamic CSS, throw that in, too
 		if ( $wgUseSiteCss ) {
 			$query = "usemsgcache=yes&action=raw&ctype=text/css&smaxage=$wgSquidMaxage";
-			$skinquery = '';
-			if (($us = $wgRequest->getVal('useskin', '')) !== '') {
-				$us = htmlspecialchars( strip_tags( $us ) );
-				$skinquery = "&useskin=$us";
-			}
+			$skinquery = "&useskin=" . urlencode( $this->getSkinName() );
 			$sitecss .= '@import "' . self::makeNSUrl( 'Common.css', $query, NS_MEDIAWIKI) . '";' . "\n";
 			if( empty($this->themename) || $this->themename == 'custom' ) {
 				$sitecss .= '@import "' . self::makeNSUrl( ucfirst( $this->skinname ) . '.css', $query, NS_MEDIAWIKI ) . '";' . "\n";
