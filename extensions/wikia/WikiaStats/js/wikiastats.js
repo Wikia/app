@@ -2,7 +2,6 @@ function StatsPageLoaderShow(show) { if (show == 1) YAHOO.pageloader.container.w
 function StatsPageLoaderHide(hide) { if (hide == 1) YAHOO.pageloader.container.wait.hide(); };
 function XLSPanelClose() { XLSCancel(); }
 function XLSClearCitiesList() { var checklist = document.XLSCompareForm.wscid; var is_checked = 0; var checked_list = ""; for (i = 1; i < checklist.length; i++) checklist[i].checked = false; WSCountCheckboxes(true, 1);}
-function XLSIframeStatusChanged() { if (window.frames['ws_frame_xls_'+wk_stats_city_id].document.readyState == 'complete') { /*StatsPageLoaderHide(); */ } else { setTimeout("XLSIframeStatusChanged()", 500) } }
 function XLSIframeLoaded(panel, statistics) { StatsPageLoaderHide(0); }
 function XLSIframeLoadedReady() { StatsPageLoaderHide(0); }
 function XLSGenerate(statistics, others, date_from, date_to) { 
@@ -17,12 +16,7 @@ function XLSGenerate(statistics, others, date_from, date_to) {
     if (window.frames['ws_frame_xls_'+wk_stats_city_id]) {
     	delete window.frames['ws_frame_xls_'+wk_stats_city_id];
 	}
-	
 	YAHOO.util.Dom.get("ws-xls-div").innerHTML = "<iframe name=\"ws_frame_xls_"+wk_stats_city_id+"\" id=\"ws_frame_xls_"+wk_stats_city_id+"\" src=\""+baseurl+"\" onload=\"XLSIframeLoaded('ws-xls-div'," + statistics + ");\" style=\"width:0px;height:0px\" frameborder=\"0\"></iframe>";
-	if (/MSIE (\d+\.\d+);/.test(navigator.userAgent)) {
-		var f = document.getElementById("ws_frame_xls_"+wk_stats_city_id);
-		f.onreadystatechange = XLSIframeStatusChanged();
-	}
 }
 function XLSCancel() { YAHOO.util.Dom.get("ws-xls-div").innerHTML = ""; }
 function XLSShowMenu(city) { YAHOO.util.Dom.get("wk-stats-panel").style.display = (city == 0) ? "none" : "block"; YAHOO.util.Dom.get("ws-main-xls-stats").style.display = "block"; }
