@@ -33,7 +33,6 @@ foreach ($data as $date => $out) {
 	$dateArr = explode("-",$date);
 	$stamp = mktime(23,59,59,$dateArr[1],1,$dateArr[0]);
 	$new_date = $wgLang->sprintfDate("M Y", wfTimestamp(TS_MW, $stamp));
-	error_log($date . "=>" . $new_date . " \n", 3, "/tmp/moli.log");
 	#---
 	if (in_array($column, array('M', 'N'))) {
 		$value = sprintf("%0d", $out * 100);
@@ -92,7 +91,6 @@ foreach ($data as $date => $out) {
 	#---
 	$chartData[$date] = array("date" => $new_date, "value" => (!empty($out))?$value:"&nbsp;", "alt" => $out);
 }
-error_log(print_r($chartData, true). " \n", 3, "/tmp/moli.log");
 
 $height = $chartSettings['maxsize'];
 $ratio = $height/10; if ($iMax > 10) $ratio = $height/$iMax;
