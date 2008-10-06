@@ -473,7 +473,7 @@ class ReverseParser {
 		$text = preg_replace("/('{2,})/", '<nowiki>$1</nowiki>', $text);
 
 		// 2. wrap = using <nowiki>
-		$text = preg_replace("/([=]+)/", '<nowiki>$1</nowiki>', $text);
+		$text = preg_replace("/^(=+)/m", '<nowiki>$1</nowiki>', $text);
 
 		// 3. wrap list bullets using <nowiki>
 		$text = preg_replace("/^([#*]+)/", '<nowiki>$1</nowiki>', $text);
