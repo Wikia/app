@@ -25,10 +25,12 @@ function wfSpecialChangesXml() {
 }
 
 function wfChangesXml( $rc ) {
+    global $wgEnableSpecialChangesXmlToFeed, $wgEnableSpecialChangesXmlToDb, $wgXML2FeedUrl;
 
 	//get old/new sizes
 	extract($rc->mExtra);
-
+    extract($rc->mAttribs); //only to get user text
+	
 	if ( isset( $oldSize ) && isset( $newSize ) ) {
 	 //we only look at certain size in main namespace
 	  if( abs( $newSize - $oldSize ) < 100 ){
@@ -37,9 +39,10 @@ function wfChangesXml( $rc ) {
 	}
 
 	$titleObj = $rc->getTitle();
+
 	if(	$titleObj->getNamespace() != NS_MAIN ){
- 	 //we only want content
-	 return;
+	 //we only want content
+	 return true;
 	}	
 
 	$title = $titleObj->getText();
@@ -47,7 +50,7 @@ function wfChangesXml( $rc ) {
 	$url = $titleObj->getFullURL();
 
 	//if storing in db enabled
-	if($wgEnableSpecialChangesXmlToDb){
+	if( !empty( $wgEnableSpecialChangesXmlToDb ) ){
 		//store change
 		$dbw = wfGetDBExt(DB_MASTER) ;
 		
@@ -78,38 +81,38 @@ function wfChangesXml( $rc ) {
 	}
 	
 	//PUT feed
-	if( $wgEnableSpecialChangesXmlToFeed ){
-		global $wgXML2FeedUrl;
+	if( !empty($wgEnableSpecialChangesXmlToFeed) ){
 		
-		$a_data =  "<feed xmlns='http://www.w3.org/2005/Atom' >";
-		$a_data .= "  <title type='text'>". $title ."</title>";
-		$a_data .= "  <link href='" . urlencode( $url ) ."' />" .
-		$a_data .= '  <link rel="self" type="application/atom+xml" href="" />';
-		$a_data .= "  <author><name>azimel</name></author>";
-		$a_data .= "  <entry>";
-		$a_data .= "    <title>" . $title . "</title>";
-		$a_data .= "    <link href='" . urlencode( $url ) . "' />";
-		$a_data .= "    <published>" . date( DATE_ATOM, time ) . "</published>";
-		$a_data .= "    <updated>" . date( DATE_ATOM, time ) . "</updated>";
-		$a_data .= "      <content type='html'>";
-		$a_data .= "      </content>";
-		$a_data .= "    <category term='' />";
-		$a_data .= "  </entry>";
-		$a_data .= "</feed>";
-				
-		$ch = curl_init();
-	    curl_setopt($ch, CURLOPT_TIMEOUT, 10);
-    	curl_setopt($ch, CURLOPT_URL, $wgXML2FeedUrl );
-		curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "PUT");
-		curl_setopt($ch, CURLOPT_HTTPHEADER, array("Content-Length: ".strlen($a_data)));
-		curl_setopt($ch, CURLOPT_POSTFIELDS, $a_data);
-		$r = curl_exec($ch);
+		if( !empty( $wgXML2FeedUrl ) ){
+			$a_data =  '<feed xmlns="http://www.w3.org/2005/Atom" >' . "\n";
+			$a_data .= '  <title type="text">'. $title .'</title>' . "\n";
+			$a_data .= '  <link href="' . $url .'" />' . "\n";
+			$a_data .= '  <link rel="self" type="application/atom+xml" href="" />' . "\n" ;
+			$a_data .= "  <author><name>" . $rc_user_text . "</name></author>" . "\n";
+			$a_data .= "  <entry>" . "\n";
+			$a_data .= "    <title>" . $title . "</title>" . "\n";
+			$a_data .= '    <link href="' . $url . '" />' . "\n";
+			$a_data .= "    <published>" . date( DATE_ATOM ) . "</published>" . "\n";
+			$a_data .= "    <updated>" . date( DATE_ATOM ) . "</updated>" . "\n";
+			$a_data .= '      <content type="html">' . "\n";
+			$a_data .= "      </content>" . "\n";
+			$a_data .= '    <category term="" />' . "\n";
+			$a_data .= "  </entry>" . "\n";
+			$a_data .= "</feed>" . "\n";
 		
+			$ch = curl_init();
+	    	curl_setopt($ch, CURLOPT_TIMEOUT, 10);
+	    	curl_setopt($ch, CURLOPT_URL, $wgXML2FeedUrl );
+			curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "PUT");
+			curl_setopt($ch, CURLOPT_HTTPHEADER, array("Content-Length: ".strlen($a_data)));
+			curl_setopt($ch, CURLOPT_POSTFIELDS, $a_data);
+			$r = curl_exec($ch);
+		}
 	}	
 	
   return true;	
 }
 
-if( !empty( $wgEnableSpecialChangesXml ) ){
+if( !empty( $wgEnableSpecialChangesXmlToFeed ) || !empty( $wgEnableSpecialChangesXmlToDb ) ){
 	$wgHooks['RecentChange_save'][] = 'wfChangesXml';
 }
