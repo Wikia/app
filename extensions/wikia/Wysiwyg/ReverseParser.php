@@ -218,7 +218,7 @@ class ReverseParser {
 					// text formatting
 					case 'i':
 					case 'em':
-						if(in_array($node->parentNode->nodeName, array('b', 'strong'))) {
+						if(substr($textContent, -1) == "'" || substr($textContent, 0, 1) == "'" || substr($node->previousSibling->textContent, -1) == "'" || substr($node->nextSibling->textContent, 0, 1) == "'" || in_array($node->parentNode->nodeName, array('b', 'strong'))) {
 							$open = '<em>';
 							$close = '</em>';
 						} else {
@@ -230,7 +230,7 @@ class ReverseParser {
 
 					case 'b':
 					case 'strong':
-						if(in_array($node->parentNode->nodeName, array('i', 'em'))) {
+						if(substr($textContent, -1) == "'" || substr($textContent, 0, 1) == "'" || substr($node->previousSibling->textContent, -1) == "'" || substr($node->nextSibling->textContent, 0, 1) == "'" || in_array($node->parentNode->nodeName, array('i', 'em'))) {
 							$open = '<strong>';
 							$close = '</strong>';
 						} else {
