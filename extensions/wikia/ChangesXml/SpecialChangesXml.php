@@ -46,32 +46,66 @@ function wfChangesXml( $rc ) {
 	$title = str_replace(array("\n", "\r", '_'), array("", "",""), $title);
 	$url = $titleObj->getFullURL();
 
-	//store change
-	$dbw = wfGetDBExt(DB_MASTER) ;
+	//if storing in db enabled
+	if($wgEnableSpecialChangesXmlToDb){
+		//store change
+		$dbw = wfGetDBExt(DB_MASTER) ;
+		
+		$sql = "CREATE TABLE IF NOT EXISTS `_ext_changes_xml` ( " .           
+	                   " `id` bigint(20) NOT NULL auto_increment, " . 
+	                   " `title` varchar(100) default NULL, " .       
+	                   " `url` varchar(200) default NULL, " .         
+	                   " `timestamp` bigint(20) default NULL, " .      
+	                   " PRIMARY KEY  (`id`) " .
+					   " KEY `ts` (`timestamp`) " .                      
+	                 " ) ENGINE=InnoDB DEFAULT CHARSET=latin1 ";
+		
+		$dbw->query( $sql );
+		
+		$res = $dbw->insert(
+				'_ext_changes_xml',
+				array(
+					'title'		=> $title,
+					'url'		=> $url,
+					'timestamp'	=> time(),
+				),
+				__METHOD__
+			);
 	
-	$sql = "CREATE TABLE IF NOT EXISTS `_ext_changes_xml` ( " .           
-                   " `id` bigint(20) NOT NULL auto_increment, " . 
-                   " `title` varchar(100) default NULL, " .       
-                   " `url` varchar(200) default NULL, " .         
-                   " `timestamp` bigint(20) default NULL, " .      
-                   " PRIMARY KEY  (`id`) " .                      
-                 " ) ENGINE=InnoDB DEFAULT CHARSET=latin1 ";
-	
-	$dbw->query( $sql );
-	
-	$res = $dbw->insert(
-			'_ext_changes_xml',
-			array(
-				'title'		=> $title,
-				'url'		=> $url,
-				'timestamp'	=> time(),
-			),
-			__METHOD__
-		);
-
-	if ($dbw->getFlag(DBO_TRX)) {
-		$dbw->commit();
+		if ($dbw->getFlag(DBO_TRX)) {
+			$dbw->commit();
+		}
 	}
+	
+	//PUT feed
+	if( $wgEnableSpecialChangesXmlToFeed ){
+		global $wgXML2FeedUrl;
+		
+		$a_data =  "<feed xmlns='http://www.w3.org/2005/Atom' >";
+		$a_data .= "  <title type='text'>". $title ."</title>";
+		$a_data .= "  <link href='" . urlencode( $url ) ."' />" .
+		$a_data .= '  <link rel="self" type="application/atom+xml" href="" />';
+		$a_data .= "  <author><name>azimel</name></author>";
+		$a_data .= "  <entry>";
+		$a_data .= "    <title>" . $title . "</title>";
+		$a_data .= "    <link href='" . urlencode( $url ) . "' />";
+		$a_data .= "    <published>" . date( DATE_ATOM, time ) . "</published>";
+		$a_data .= "    <updated>" . date( DATE_ATOM, time ) . "</updated>";
+		$a_data .= "      <content type='html'>";
+		$a_data .= "      </content>";
+		$a_data .= "    <category term='' />";
+		$a_data .= "  </entry>";
+		$a_data .= "</feed>";
+				
+		$ch = curl_init();
+	    curl_setopt($ch, CURLOPT_TIMEOUT, 10);
+    	curl_setopt($ch, CURLOPT_URL, $wgXML2FeedUrl );
+		curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "PUT");
+		curl_setopt($ch, CURLOPT_HTTPHEADER, array("Content-Length: ".strlen($a_data)));
+		curl_setopt($ch, CURLOPT_POSTFIELDS, $a_data);
+		$r = curl_exec($ch);
+		
+	}	
 	
   return true;	
 }
