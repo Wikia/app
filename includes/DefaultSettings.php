@@ -31,7 +31,7 @@ require_once( "$IP/includes/SiteConfiguration.php" );
 $wgConf = new SiteConfiguration;
 
 /** MediaWiki version number */
-$wgVersion			= '1.13.1';
+$wgVersion			= '1.13.2';
 
 /** Name of the site. It must be changed in LocalSettings.php */
 $wgSitename         = 'MediaWiki';
@@ -776,6 +776,13 @@ $wgExtraLanguageNames = array();
 $wgInputEncoding  = 'UTF-8';
 $wgOutputEncoding = 'UTF-8';
 $wgEditEncoding   = '';
+
+/**
+ * Locale for LC_CTYPE, to work around http://bugs.php.net/bug.php?id=45132
+ * For Unix-like operating systems, set this to to a locale that has a UTF-8 
+ * character set. Only the character set is relevant.
+ */
+$wgShellLocale = 'en_US.utf8';
 
 /**
  * Set this to eg 'ISO-8859-1' to perform character set
@@ -2284,7 +2291,7 @@ $wgAutoloadClasses = array();
  * $wgExtensionCredits[$type][] = array(
  * 	'name' => 'Example extension',
  *  'version' => 1.9,
- *  'svn-revision' => '$LastChangedRevision: 40539 $',
+ *  'svn-revision' => '$LastChangedRevision: 41545 $',
  *	'author' => 'Foo Barstein',
  *	'url' => 'http://wwww.example.com/Example%20Extension/',
  *	'description' => 'An example extension',
