@@ -15,7 +15,7 @@ $wgExtensionCredits['other'][] = array(
         'name' => 'SharedHelp',
 	'version' => 0.17,
         'description' => 'Takes pages from [[w:c:Help|Help Wikia]] and inserts them into Help namespace on this wiki',
-        'author' => array('Maciej Brencz, Inez Korczyński')
+        'author' => array('Maciej Brencz, Inez Korczyński, Bartek Łapiński')
 );
 
 $wgHooks['OutputPageBeforeHTML'][] = 'SharedHelpHook';
