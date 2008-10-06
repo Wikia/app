@@ -374,6 +374,16 @@ class CityListPager extends TablePager {
         return 'city_id';
     }
 
+	function getIndexField() {
+		if ('city_id' == $this->mSort)
+		{
+			return wfSharedTable("city_list").".city_id"; // quick hack, city_cat* aint got unique column names )-:
+		} else
+		{
+			return $this->mSort;
+		}
+	}
+
     function formatValue( $field, $value ) {
         global $wgLang;
         switch ( $field ) {
