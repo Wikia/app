@@ -3,6 +3,7 @@
  * This extension will keep trak of all changes over N characters in MAIN_NS
  * This data creates changes.xml file
  * Author Andrew Yasinky andrewy at wikia.com
+ * enbaling parameter $wgEnableSpecialChangesXmlToFeedUrl is url of where to put data
  */
 
 if (!defined('MEDIAWIKI')) {
@@ -25,7 +26,7 @@ function wfSpecialChangesXml() {
 }
 
 function wfChangesXml( $rc ) {
-    global $wgEnableSpecialChangesXmlToFeed, $wgEnableSpecialChangesXmlToDb, $wgXML2FeedUrl;
+    global $wgEnableSpecialChangesXmlToFeedUrl;
 
 	//get old/new sizes
 	extract($rc->mExtra);
@@ -48,42 +49,10 @@ function wfChangesXml( $rc ) {
 	$title = $titleObj->getText();
 	$title = str_replace(array("\n", "\r", '_'), array("", "",""), $title);
 	$url = $titleObj->getFullURL();
-
-	//if storing in db enabled
-	if( !empty( $wgEnableSpecialChangesXmlToDb ) ){
-		//store change
-		$dbw = wfGetDBExt(DB_MASTER) ;
-		
-		$sql = "CREATE TABLE IF NOT EXISTS `_ext_changes_xml` ( " .           
-	                   " `id` bigint(20) NOT NULL auto_increment, " . 
-	                   " `title` varchar(100) default NULL, " .       
-	                   " `url` varchar(200) default NULL, " .         
-	                   " `timestamp` bigint(20) default NULL, " .      
-	                   " PRIMARY KEY  (`id`) " .
-					   " KEY `ts` (`timestamp`) " .                      
-	                 " ) ENGINE=InnoDB DEFAULT CHARSET=latin1 ";
-		
-		$dbw->query( $sql );
-		
-		$res = $dbw->insert(
-				'_ext_changes_xml',
-				array(
-					'title'		=> $title,
-					'url'		=> $url,
-					'timestamp'	=> time(),
-				),
-				__METHOD__
-			);
-	
-		if ($dbw->getFlag(DBO_TRX)) {
-			$dbw->commit();
-		}
-	}
 	
 	//PUT feed
-	if( !empty($wgEnableSpecialChangesXmlToFeed) ){
+	if( !empty($wgEnableSpecialChangesXmlToFeedUrl) ){
 		
-		if( !empty( $wgXML2FeedUrl ) ){
 			$a_data =  '<feed xmlns="http://www.w3.org/2005/Atom" >' . "\n";
 			$a_data .= '  <title type="text">'. $title .'</title>' . "\n";
 			$a_data .= '  <link href="' . $url .'" />' . "\n";
@@ -101,18 +70,18 @@ function wfChangesXml( $rc ) {
 			$a_data .= "</feed>" . "\n";
 		
 			$ch = curl_init();
-	    	curl_setopt($ch, CURLOPT_TIMEOUT, 10);
-	    	curl_setopt($ch, CURLOPT_URL, $wgXML2FeedUrl );
+	    	curl_setopt($ch, CURLOPT_TIMEOUT, 5);
+	    	curl_setopt($ch, CURLOPT_URL, $wgEnableSpecialChangesXmlToFeedUrl );
 			curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "PUT");
 			curl_setopt($ch, CURLOPT_HTTPHEADER, array("Content-Length: ".strlen($a_data)));
 			curl_setopt($ch, CURLOPT_POSTFIELDS, $a_data);
 			$r = curl_exec($ch);
-		}
+		
 	}	
 	
   return true;	
 }
 
-if( !empty( $wgEnableSpecialChangesXmlToFeed ) || !empty( $wgEnableSpecialChangesXmlToDb ) ){
+if( !empty( $wgEnableSpecialChangesXmlToFeedUrl ) ){
 	$wgHooks['RecentChange_save'][] = 'wfChangesXml';
 }
