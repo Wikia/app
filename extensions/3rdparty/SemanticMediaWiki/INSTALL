@@ -1,0 +1,281 @@
+[[Semantic MediaWiki 1.3]]
+
+Install instructions for the latest SMW version are also online in a more
+convenient format for reading:
+
+         http://semantic-mediawiki.org/wiki/Help:Installation
+
+
+Contents
+
+* Disclaimer
+* Requirements
+* Installation
+  ** Testing your Installation
+  ** Customising Semantic MediaWiki
+  ** Running SMW on older versions of MediaWiki
+* Upgrading existing installations
+  ** Changed configuration options
+* Troubleshooting
+* SMW is installed. What should I do now?
+* Contact
+
+
+== Disclaimer ==
+
+For a proper legal disclaimer, see the file "COPYING".
+
+In general, the extension can be installed into a working wiki without making
+any irreversible changes to the source code or database, so you can try out
+the software without much risk (though no dedicated uninstall mechanism is
+provided). Every serious wiki should be subject to regular database backups!
+If you have any specific questions, please contact the authors.
+
+
+== Requirements ==
+
+* MediaWiki 1.11.* or greater (tested from 1.11.0 to 1.14alpha (r40427)).
+* PHP 5.x or greater installed and working
+* MySQL >= 4.0.14 (version required by MediaWiki)
+
+Notes:
+* SMW 1.2 currently has no Postgres support. It could be done if someone cares
+  to support this action.
+* SMW uses the PHP mb_*() multibyte functions such as mb_strpos in the 
+  php_mbstring.dll extension. This is standard but not enabled by default on 
+  some distributions of PHP.
+  See http://php.net/manual/en/ref.mbstring.php#mbstring.installation
+* For installation and upgrade, SMW needs the rights to create new tables
+  (CREATE) and to alter tables (ALTER TABLE). Both can be removed again after
+  SMW was set up. The script SMW_setup.php can use the DB credentials from
+  AdminSettings.php for this purpose, avoiding the need of extra rights for
+  the wiki DB user.
+* SMW creates and alters temporary tables for certain semantic queries. To do
+  this, your wikidb user must have privileges for CREATE TEMPORARY TABLES. The
+  according features can be disabled by adding the following to
+  Localsettings.php:
+
+  $smwgQSubcategoryDepth=0;
+  $smwgQPropertyDepth=0;
+  $smwgQFeatures        = SMW_ANY_QUERY & ~SMW_DISJUNCTION_QUERY;
+  $smwgQConceptFeatures = SMW_ANY_QUERY & ~SMW_DISJUNCTION_QUERY &
+                          ~SMW_CONCEPT_QUERY;
+
+
+== Installation ==
+
+If you upgrade an existing installation of Semantic MediaWiki, also read the
+remarks in the section "Notes on Upgrading" below!
+
+(1) Extract the archive or check out the current files from SVN to obtain the
+    directory "SemanticMediaWiki" that contains all relevant files. Copy this
+    directory to "[wikipath]/extensions/" (or extract/download it there).
+    We abbreviate "[wikipath]/extensions/SemanticMediaWiki" as "[SMW_path]".
+(2) Insert the following two lines into "[wikipath]/LocalSettings.php":
+
+       include_once('extensions/SemanticMediaWiki/includes/SMW_Settings.php');
+       enableSemantics('example.org');
+
+    where example.org should be replaced by your server's name (or IP address).
+    The latter is needed only once, using the "preferred" name of your server.
+    It is no problem to access a site by more than one servername in any case.
+    If you have custom namespaces (such as "Portal"), read the note below.
+(3) In your wiki, log in as a user with admin status and go to the page
+    "Special:SMWAdmin" to do the final setup steps. This can also be done with
+    a command-line php script. See [SMW_path]/maintenance/README for details.
+    Please consider announcing your new site to the SMW semantic wiki list by
+    using the according button on "Special:SMWAdmin".
+
+    Note that this requires persmissions to alter/create database tables, as
+    explained in the above note.
+
+(4) If you already have categories in your wiki, they will not immediately be
+    available for SMW queries. Category information becomes available if a
+    page in a category is edited next time. To make all information available
+    immediately, run the script [SMW_path]/maintenance/SMW_refreshData.php
+    as described in [SMW_path]/maintenance/README.
+
+'''Remark:'''  Semantic MediaWiki uses ten additional namespace indexes (see
+http://meta.wikimedia.org/wiki/Help:Custom_namespaces), in the range from
+100 to 109. 100 and 101 are only needed if $smwgSMWBetaCompatible is set.
+106 and 107 are reserved for the SemanticForms extension and not used by SMW.
+If you have your own custom namespaces, you have to set the parameter
+$smwgNamespaceIndex before including SMW_Settings.php. See the documentation
+$within SMW_Settings.php for details. If you add more namespaces later on,
+then you have to assign them to higher numbers than those used by Semantic
+MediaWiki.
+
+There is currently no working Postgres support. If you need that, please
+contact the developers and support them in adjusting SMW appropriately.
+
+=== Testing your Installation ===
+
+If you are uncertain that everything went well, you can do some testing steps
+to check if SMW is set up properly.
+
+Go to the Special:Version page and you should see Semantic MediaWiki (version
+nn) listed as a Parser Hook and several wfSMWXxxx functions listed as
+Extension Functions.
+
+Create a regular wiki page named "TestSMW", and in it enter the wiki text
+  Property test:  [[testproperty::Dummypage]]
+
+When previewing the page before saving, you should see a Factbox at the bottom
+of the article that shows your input. After saving the page, click on the link
+"Browse properties" in the page's toolbox. This view should show Testproperty
+with value Dummypage.
+
+If you don't get these results, check the steps in the Installation section,
+consult the FAQ section, then contact the user support list (see the Contact
+section).
+
+=== Customising Semantic MediaWiki ===
+
+Semantic MediaWiki can be customised by a number of settings. To do so, you
+can set respective parameters somewhere below the line
+"include_once('extensions/SemanticMediaWiki/includes/SMW_Settings.php');"
+in your LocalSetting.php. For example, one can write
+
+ include_once('extensions/SemanticMediaWiki/includes/SMW_Settings.php');
+ $smwgQDefaultLimit = 20;
+ enableSemantics('example.org');
+
+to have only 20 results of inline queries being shown by default. The
+parameters that are available are documented in the file SMW_Settings.php. Do
+not change this file directly, but put adoptions into your LocalSettings.php.
+
+Further options are explained at
+http://semantic-mediawiki.org/wiki/Help:Configuration
+
+=== Running SMW on older versions of MediaWiki ===
+
+If your site is still running on PHP4, SMW is not supported. It would hardly
+be possible to backport the code to the old PHP version. If you have PHP5 but
+an older MediaWiki version, additional patches/modifications might be needed.
+Download an older release of SMW and have a look at the included INSTALL
+instructions to find out whether other changes are recommended therein.
+
+
+== Upgrading existing installations ==
+
+SMW 1.3 does not require major steps for upgrading from SMW 1.2. You can follow
+the same steps as for new installations above (you just do not need to edit
+LocalSettings.php). Especially, you must trigger the SMW database setup via
+Special:SMWAdmin or using the script SMW_setup.php. Further actions may be
+required only if one of the following applies to you.
+
+If you still use a version before SMW 1.2, follow the upgrading instructions
+given at 
+http://semantic-mediawiki.org/wiki/Help:Installation_1.2#Notes_on_Upgrading,
+or SMW will not be working any more. If you have a version that is even older 
+than SMW 1.0, then read the installation steps given for your version in the
+installation instructions for SMW 1.1:
+http://semantic-mediawiki.org/wiki/Help:Installation_1.1#Notes_on_Upgrading
+
+If you use imported vocabulary, you will have to re-store the data for all
+pages that use the property imported from. This can often be done manually by
+just editing those (typically few) pages. If there are many affected pages, use
+the script to repair all data at once.
+
+If you use concepts, then it might be useful to re-store the data for the
+concept pages, but only if you are interested in using the new concept caching
+features of SMW. Otherwise concepts will also continue to work normally without
+taking any actions.
+
+=== Changed configuration options ===
+
+Some configuration options (used in LocalSettings.php) have changed since SMW
+1.0. All settings are documented in detail in the file SMW_Settings.php. The
+following list gives the version in which a setting was first introduced, so it
+can be ignored if you already run this version or a more recent one.
+
+* [1.3] Since SMW 1.3, the Factbox is hidden by default and will only appear.
+As a compensation, the toolbox (usually on the left below the search field)
+shows a link to Special:Browse. To use the display behaviour of the Factbox as
+it was before SMW 1.3, set $smwgShowFactbox = SMW_FACTBOX_NONEMPTY; The new
+link and the Factbox during editing can also be configured; see
+SMW_Settings.php for details.
+
+* [1.2.1] SMW will no longer support nested link syntax in property values by
+default, since this was known to cause problems. To re-enable this, set
+$smwgLinksInValues = true;
+
+* [1.2] If your wiki uses <ask> syntax or the Relation: namespace, you may want
+to set $smwgSMWBetaCompatible = true; before the line including
+SMW_Settings.php in LocalSettings.php. Consider changing <ask> to #ask to be
+able to drop SMW beta compatibility.
+
+* [1.2] If you had a setting $smwgQDisjunctionSupport = false, then you now
+need the following settings:
+
+ $smwgQFeatures        = SMW_ANY_QUERY & ~SMW_DISJUNCTION_QUERY;
+ $smwgQConceptFeatures = SMW_ANY_QUERY & ~SMW_DISJUNCTION_QUERY & ~SMW_CONCEPT_QUERY;
+
+Older configuration changes are found online, see
+http://semantic-mediawiki.org/wiki/Help:Installation_1.3
+
+
+== Troubleshooting ==
+
+Some technical problems are well known and have easy fixes. Please view the 
+online manual: http://semantic-mediawiki.org/wiki/Help:Troubleshooting
+
+See http://semantic-mediawiki.org/wiki/Help:Reporting_bugs for reporting and
+looking up bugs. You can also send an email to
+semediawiki-user@lists.sourceforge.net (subscribe first at
+http://sourceforge.net/mailarchive/forum.php?forum_name=semediawiki-user)
+
+
+== SMW is installed. What should I do now? ==
+
+Semantic MediaWiki is there to help you to structure your data, so that you
+can browse and search it easier. Typically, you should first add semantic 
+markup to articles that cover a topic that is typical for your wiki. A single
+article, semantic or not, will not improve your search capabilities.
+
+Start with a kind of article that occurs often in your wiki, possibly with
+some type of articles that is already collected in some category, such as
+cities, persons, or software projects. For these articles, introduce a few
+properties, and annotate many of the articles with the property. As with 
+categories, less is often more in semantic annotation: do not use overly 
+specific properties. A property that is not applicable to at least ten
+articles is hardly useful.
+
+Templates can greatly simplify initial annotation. Create a flashy template
+for your users to play with, and hide the semantic annotations in the code
+of the template. Use the ParserFunctions extension to implement optional
+parameters, so that your users can leave fields in the template unspecified
+without creating faulty annotations.
+
+Develop suitable inline queries ({{#ask: ... }}) along with any new
+annotation. If you don't know how to use some annotation for searching, or
+if you are not interested in searching for the annotated information anyway,
+then you should probably not take the effort in the first place. Annotate
+in a goal-directed way! Not all information can be extracted from the
+annotations in your wiki. E.g. one can currently not search for articles that
+are *not* in a given category. Think about what you want to ask for before
+editing half of your wiki with new semantics ...
+
+If in doubt, choose simple annotations and learn to combine them into more
+complex information. For example, you do not need to have a category for
+"European cities" -- just combine "located in::Europe" and "Category:City."
+If European cities are important for your wiki, you can create a Concept
+page for storing that particular query. In any case, if some annotation is
+not sufficient, you can still add more information. Cleaning too specific
+and possibly contradictory annotations can be more problematic.
+
+Regularly review users' use of categories, properties, and types using
+the Special pages for each.
+
+
+== Contact ==
+
+See "Contact" in the file README, or view the current online information
+http://semantic-mediawiki.org/wiki/Contact
+
+If you have remarks or questions, please send them to
+ semediawiki-user@lists.sourceforge.net
+You can join this mailing list at
+ http://sourceforge.net/mail/?group_id=147937
+
+Please report bugs to MediaZilla, http://bugzilla.wikimedia.org
