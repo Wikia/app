@@ -72,6 +72,17 @@
  *			Template matching in include improved. "abc" must not match "abc def" but did so previously.
  * @version 1.6.3
  *			Changed section matching to allow wildcards.
+ * @version 1.6.5
+ *			changed call time by reference in extract Heading
+ * @version 1.6.5
+ *			changed call time by reference in extract Heading
+ * @version 1.6.9
+ *			added include trimming
+ * @version 1.7.1
+ *			allow % within included template parameters
+ * @version 1.7.3
+ *			%SECTION% can now be used within multiseseparators (see includeHeading)
+
  */
 
 class DPL2Include
@@ -111,7 +122,7 @@ class DPL2Include
      * Handle recursive substitution here, so we can break cycles, and set up
      * return values so that edit sections will resolve correctly.
      **/
-    private static function parse($parser, $title, $text, $part1, $skiphead=0, $recursionCheck=true, $maxLength=-1, $link='') 
+    private static function parse($parser, $title, $text, $part1, $skiphead=0, $recursionCheck=true, $maxLength=-1, $link='', $trim=false) 
     {
       global $wgVersion;
     
@@ -133,8 +144,8 @@ class DPL2Include
         if ($maxLength>=0) {
             $text = self::limitTranscludedText($text,$maxLength,$link);
         }
-
-        return $text;
+        if ($trim) return trim($text);
+        else       return $text;
       }  else {
         return "[[" . $title->getPrefixedText() . "]]". 
           "<!-- WARNING: LST loop detected -->";
@@ -211,7 +222,7 @@ class DPL2Include
     }
     
     ///section inclusion - include all matching sections
-    public static function includeSection($parser, $page='', $sec='', $to='', $recursionCheck=true) {
+    public static function includeSection($parser, $page='', $sec='', $to='', $recursionCheck=true, $trim=false) {
 	  	$output = array();
       	if (self::text($parser, $page, $title, $text) == false) {
 	    	$output[] = $text;
@@ -222,7 +233,8 @@ class DPL2Include
     
     	preg_match_all( $pat, $text, $m, PREG_PATTERN_ORDER);
       
-    	foreach ($m[0] as $nr=>$piece)  {
+    	foreach ($m[2] as $nr=>$piece)  {
+	    	$piece = self::parse($parser,$title,$piece, "#lst:${page}|${sec}", 0, $recursionCheck, $trim);
 	    	if ($any) $output[] = $m[1][$nr].'::'.$piece;
 	    	else 	  $output[] = $piece;
     	}
@@ -271,7 +283,8 @@ class DPL2Include
         }
     }
 
-    public static function includeHeading($parser, $page='', $sec='', $to='', &$sectionHeading, $recursionCheck=true, $maxLength=-1, $link='default')
+    public static function includeHeading($parser, $page='', $sec='', $to='', &$sectionHeading, $recursionCheck=true, $maxLength=-1,
+    									  $link='default', $trim=false)
     {
       $output=array();
       if (self::text($parser, $page, $title, $text) == false) {
@@ -279,11 +292,12 @@ class DPL2Include
         return $output;
       }
 
-      return self::extractHeadingFromText($parser, $page, $title, $text, $sec, $to, &$sectionHeading, $recursionCheck, $maxLength, $link);
+      return self::extractHeadingFromText($parser, $page, $title, $text, $sec, $to, $sectionHeading, $recursionCheck, $maxLength, $link, $trim);
     }
 
     //section inclusion - include all matching sections (return array)
-    public static function extractHeadingFromText($parser, $page, $title, $text, $sec='', $to='', &$sectionHeading, $recursionCheck=true, $maxLength=-1, $link='default') {
+    public static function extractHeadingFromText($parser, $page, $title, $text, $sec='', $to='', &$sectionHeading, $recursionCheck=true, 
+    											  $maxLength=-1, $link='default', $trim=false) {
       
       // create a link symbol (arrow, img, ...) in case we have to cut the text block to maxLength
       if      ($link=='default')                 $link = ' [['.$page.'#'.$sec.'|..&rarr;]]';
@@ -328,7 +342,7 @@ class DPL2Include
         if ($nr==-2) {
             // output text before first section and done
             $piece = substr($text,0,$m[1][1]-1); 
-            $output[0] = self::parse($parser,$title,$piece, "#lsth:${page}|${sec}", 0, $recursionCheck, $maxLength, $link);
+            $output[0] = self::parse($parser,$title,$piece, "#lsth:${page}|${sec}", 0, $recursionCheck, $maxLength, $link, $trim);
             return $output;
         }
         
@@ -371,24 +385,24 @@ class DPL2Include
         }
         
         if (isset($m[0][0])) {
-            $sectionHeading=preg_replace("/^=+\s*/","",$m[0][0]);
-            $sectionHeading=preg_replace("/\s*=+\s*$/","",$sectionHeading);
+            $sectionHeading[$n]=preg_replace("/^=+\s*/","",$m[0][0]);
+            $sectionHeading[$n]=preg_replace("/\s*=+\s*$/","",$sectionHeading[$n]);
         }
-        else $sectionHeading = '';
+        else $sectionHeading[$n] = '';
         if ($nr==1) {
             // output n-th section and done
-            $output[0] = self::parse($parser,$title,$piece, "#lsth:${page}|${sec}", $nhead, $recursionCheck, $maxLength, $link);
+            $output[0] = self::parse($parser,$title,$piece, "#lsth:${page}|${sec}", $nhead, $recursionCheck, $maxLength, $link, $trim);
             break;
         }
         if ($nr==-1) {
             if (!isset($end_off)) {
                 // output last section and done
-                $output[0] = self::parse($parser,$title,$piece, "#lsth:${page}|${sec}", $nhead, $recursionCheck, $maxLength, $link);
+                $output[0] = self::parse($parser,$title,$piece, "#lsth:${page}|${sec}", $nhead, $recursionCheck, $maxLength, $link, $trim);
                 break;
             }
         } else {
             // output section by name and continue search for another section with the same name
-            $output[$n++] = self::parse($parser,$title,$piece, "#lsth:${page}|${sec}", $nhead, $recursionCheck, $maxLength, $link);
+            $output[$n++] = self::parse($parser,$title,$piece, "#lsth:${page}|${sec}", $nhead, $recursionCheck, $maxLength, $link, $trim);
         }
       } while ($continueSearch);
       return $output;
@@ -401,7 +415,8 @@ class DPL2Include
     // we return an array containing all occurences of the template call which match the condition "$mustMatch"
     // and do NOT match the condition "$mustNotMatch" (if specified)
     // we use a callback function to format retrieved parameters, accessible via $dpl->formatTemplateArg()
-    public static function includeTemplate($parser, $dpl, $dplNr, $article, $template1='', $template2='', $defaultTemplate, $mustMatch, $mustNotMatch)
+    public static function includeTemplate($parser, $dpl, $dplNr, $article, $template1='', $template2='', $defaultTemplate,
+    									   $mustMatch, $mustNotMatch, $matchParsed, $iTitleMaxLen)
     {
         $page = $article->mTitle->getPrefixedText();
         $date = $article->myDate;
@@ -433,7 +448,6 @@ class DPL2Include
                 // if parameters are required directly: return empty columns
                 if (count($extractParm)>1) 	{
                     $output[0]=$dpl->formatTemplateArg('',$dplNr,0,true,-1);
-                    //for ($i=1;$i<count($extractParm); $i++) $output[0] .= "\n|\n" . $dpl->formatTemplateArg('',$dplNr,$i,true,-1);
                     for ($i=1;$i<count($extractParm); $i++) $output[0] .= "\n|" . $dpl->formatTemplateArg('',$dplNr,$i,true,-1);
                 }
                 else $output[0]=$dpl->formatTemplateArg('',$dplNr,0,true,-1);
@@ -498,8 +512,12 @@ class DPL2Include
                         array_splice($parms,0,1); // remove artifact;
                         // if we must match a condition: test against it
                         $callText = substr($templateCall,0,$i-1);
-                        if ( ($mustMatch   =='' ||  preg_match($mustMatch   ,$callText)) &&
-                             ($mustNotMatch=='' || !preg_match($mustNotMatch,$callText))) {
+                        if ( ($mustMatch   =='' || 
+                        		(($matchParsed  && preg_match($mustMatch   ,$parser->recursiveTagParse($callText))) ||
+                        		 (!$matchParsed && preg_match($mustMatch   ,$callText)) )) &&
+                             ($mustNotMatch=='' || 
+                             	(($matchParsed  && !preg_match($mustNotMatch,$parser->recursiveTagParse($callText))) ||
+                             	 (!$matchParsed && !preg_match($mustNotMatch,$callText))))) {
                             $output[++$n]='';
                             $second=false;
                             foreach ($extractParm as $exParmKey => $exParm) {
@@ -513,13 +531,21 @@ class DPL2Include
                                     $output[$n] .= "|"; // \n";
                                 }
                                 $found=false;
-                                // named parameter
-                                $exParmQuote = str_replace('/','\/',$exParm);
-                                foreach ($parms as $parm) {
-                                    if (!preg_match("/^\s*$exParmQuote\s*=/",$parm)) continue;
-                                    $found=true;
-                                    $output[$n] .= $dpl->formatTemplateArg(preg_replace("/^$exParmQuote\s*=\s*/","",$parm),$dplNr,$exParmKey,$firstCall,$maxlen);
-                                    break;
+                                // % in parameter name
+                                if (strpos($exParm,'%')!==FALSE) {
+	                                // %% is a short form for inclusion of %PAGE% and %TITLE%
+	                                $found=true;
+    	                            $output[$n] .= $dpl->formatTemplateArg($dpl->articleLink($exParm,$article,$iTitleMaxLen),$dplNr,$exParmKey,$firstCall,$maxlen);
+                                }
+                                if (!$found) {
+	                                // named parameter
+	                                $exParmQuote = str_replace('/','\/',$exParm);
+	                                foreach ($parms as $parm) {
+	                                    if (!preg_match("/^\s*$exParmQuote\s*=/",$parm)) continue;
+	                                    $found=true;
+	                                    $output[$n] .= $dpl->formatTemplateArg(preg_replace("/^$exParmQuote\s*=\s*/","",$parm),$dplNr,$exParmKey,$firstCall,$maxlen);
+	                                    break;
+	                                }
                                 }
                                 if (!$found && is_numeric($exParm) && intval($exParm) == $exParm) {
                                     // numeric parameter
