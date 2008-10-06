@@ -40,10 +40,10 @@ $wgExtensionFunctions[] = 'wfYouTube';
 $wgExtensionCredits['parserhook'][] = array
 (
 	'name'        => 'YouTube',
-	'version'     => '1.7.1',
+	'version'     => '1.8',
 	'author'      => 'Przemek Piotrowski',
 	'url'         => 'http://help.wikia.com/wiki/Help:YouTube',
-	'description' => 'embeds YouTube and Google Video movies + Archive.org audio and video + WeGame and Gametrailers video + Tangler forum',
+	'description' => 'embeds YouTube and Google Video movies + Archive.org audio and video + WeGame and Gametrailers video + Tangler forum + GoGreenTube video',
 );
 
 function wfYouTube() 
@@ -58,6 +58,7 @@ function wfYouTube()
 	$wgParser->setHook('tangler', 'embedTangler');
 	$wgParser->setHook('gtrailer', 'embedGametrailers');
 	$wgParser->setHook('nicovideo', 'embedNicovideo');
+	$wgParser->setHook('ggtube', 'embedGoGreenTube');
 }
 
 function embedYouTube_url2ytid($url)
@@ -415,3 +416,49 @@ function embedNicovideo($input, $argv, &$parser)
 	}
 }
 
+function embedYouTube_url2ggid($url)
+{
+	$id = $url;
+
+	if (preg_match('/^http:\/\/www\.gogreentube\.com\/watch\.php\?v=(.+)$/', $url, $preg))
+	{
+		$id = $preg[1];
+	} elseif (preg_match('/^http:\/\/www\.gogreentube\.com\/embed\/(.+)$/', $url, $preg))
+	{
+		$id = $preg[1];
+	}
+
+	preg_match('/([0-9A-Za-z]+)/', $id, $preg);
+	$id = $preg[1];
+
+	return $id;
+}
+
+function embedGoGreenTube($input, $argv, &$parser)
+{
+	$ggid = '';
+	$width  = $width_max  = 432;
+	$height = $height_max = 394;
+
+	if (!empty($argv['ggid']))
+	{
+		$ggid = embedYouTube_url2ggid($argv['ggid']);
+	} elseif (!empty($input))
+	{
+		$ggid = embedYouTube_url2ggid($input);
+	}
+	if (!empty($argv['width']) && settype($argv['width'], 'integer') && ($width_max >= $argv['width']))
+	{
+		$width = $argv['width'];
+	}
+	if (!empty($argv['height']) && settype($argv['height'], 'integer') && ($height_max >= $argv['height']))
+	{
+		$height = $argv['height'];
+	}
+
+	if (!empty($ggid))
+	{
+		$url = "http://www.gogreentube.com/embed/{$ggid}";
+		return "<script type=\"text/javascript\" src=\"{$url}\"></script>";
+	}
+}
