@@ -34,7 +34,7 @@ class GlobalWatchlistBot {
 			$sWhereClause = "user_name IN ($sUserNames)";
 		}
 		else {
-			$sWhereClause = "user_options LIKE '%watchlist_digest=1%'";
+			$sWhereClause = "user_options LIKE '%watchlistdigest=1%'";
 		}
 		
 		$oResource = $this->mDb->query("SELECT user_id, user_name, user_email FROM " . $wgSharedDB. ".user WHERE (user_email_authenticated IS NOT NULL) AND " . $sWhereClause . " ORDER BY user_id");
@@ -144,7 +144,7 @@ class GlobalWatchlistBot {
 	
 	public function run() {
 		$this->mStartTime = time();
-		$this->printDebug("Script started.");
+		$this->printDebug("Script started. (" . date('Y-m-d H:i:s'). ")");
 		
 		$aDigests = $this->getWatchlistDigests();
 		//print_r($aDigests);

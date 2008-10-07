@@ -15,7 +15,6 @@ $aUserNames = (isset($options['users'])) ? explode(',', $options['users']) : arr
 if(class_exists('GlobalWatchlistBot')) {
 	$oWatchlistBot = new GlobalWatchlistBot($bDebugMode, $aUserNames);
 	$oWatchlistBot->run();
-	
 }
 else {
 	print "GlobalWatchlist extension is not installed.\n";

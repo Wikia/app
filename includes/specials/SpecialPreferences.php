@@ -825,6 +825,8 @@ class PreferencesForm {
 		}
 		# </FIXME>
 
+		wfRunHooks('getUserProfilePreferencesCustomHtml', array(&$this));
+
 		$wgOut->addHTML(
 			Xml::closeElement( 'table' ) .
 			Xml::closeElement( 'fieldset' )
