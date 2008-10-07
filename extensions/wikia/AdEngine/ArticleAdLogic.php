@@ -1,4 +1,4 @@
-<?php
+33<?php
 /* This script will look at the html of an article and evaluate it for ads, determining attributes like:
  * ) If it is a "short" article that should have no ads at all?
  * ) If it is a "long" article that can have additional ads in the left nav?
@@ -17,7 +17,7 @@ class ArticleAdLogic {
 	const shortArticleThreshold = 650; // what defines a "short" article, in pixel height 
 	const longArticleThreshold = 1200; // what defines a "long" article, in pixel height. 
 	const superLongArticleThreshold = 2500; // what defines a "super long" article, in pixel height. (3 skyscrapers) 
-	const collisionRankThreshold = .15;  // what collison score constitutes a collision. 0-1
+	const collisionRankThreshold = .150;  // what collison score constitutes a collision. 0-1
 	const firstHtmlThreshold = 1500; // Check this much of the html for collision causing tags
 	const pixelThreshold = 350; // how many pixels for a "wide" object that will cause a collision, in pixels
 	const percentThreshold = 50; // what % of the content is a "wide" table that will cause a collision
@@ -104,7 +104,7 @@ class ArticleAdLogic {
 
 		// Score is between 0 and 1, so if it's over 1, reset it to 1
 		if ($score > 1) $score = 1;
-		$score = round($score, 2);
+		$score = round($score, 3);
 		self::adDebug("Overall Collision Rank: $score");
 		return $score;
 

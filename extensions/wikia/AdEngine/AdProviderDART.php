@@ -173,7 +173,8 @@ EOT;
 		// Spaces are allowed in key-values only if an escaped character %20 is used, otherwise the key-
 		// value will not be funtional.
 		// Nick wrote: Retarted. They should just use url-encoding.
-		$out = str_replace(' ', '%20 ', $out);
+		// UPDATE: Michael says that even though this is valid in the spec, it causes problems in the UI
+		$out = str_replace(' ', '', $out);
 
 		// The value of a key-value cannot be empty, however, where there
 		// are instances where the value is intentionally blank, populate the value with null or some other
