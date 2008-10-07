@@ -17,7 +17,7 @@ class ArticleAdLogic {
 	const shortArticleThreshold = 650; // what defines a "short" article, in pixel height 
 	const longArticleThreshold = 1200; // what defines a "long" article, in pixel height. 
 	const superLongArticleThreshold = 2500; // what defines a "super long" article, in pixel height. (3 skyscrapers) 
-	const collisionRankThreshold = .150;  // what collison score constitutes a collision. 0-1
+	const collisionRankThreshold = .200;  // what collison score constitutes a collision. 0-1
 	const firstHtmlThreshold = 1500; // Check this much of the html for collision causing tags
 	const pixelThreshold = 350; // how many pixels for a "wide" object that will cause a collision, in pixels
 	const percentThreshold = 50; // what % of the content is a "wide" table that will cause a collision
@@ -151,23 +151,21 @@ class ArticleAdLogic {
 						return .75;
 					} else if ($pixels === false && $percentage === false ) {
 						self::adDebug("Table has style width of an unrecognized unit");
-						return .10;
+						return .05;
 					}
 				} else {
 					// Seems safe, width is not defined via a style
 					self::adDebug("Table has style, but seems ok");
-					return .05;
+					return .03;
 				}
 			} else if (isset($attr['class'])){
 				self::adDebug("Table has class attribute");
 				// This table has a class, which may have width defined
-				// TOO Strict?
-				return .2;
+				return .1;
 			} else if (isset($attr['id'])){
 				self::adDebug("Table has id attribute");
 				// This table has an id, which may have css styling and width defined
-				// TOO Strict?
-				return .15;
+				return .075;
 			} else {
 				// There is a table, but it seems harmless
 				self::adDebug("Table seems ok");
@@ -197,8 +195,12 @@ class ArticleAdLogic {
 					// Has a style with a width, but seems narrow enough
 					// Seems safe, % is low and pixels are low
 					self::adDebug("Div has style, but no width defined");
-					return .025;
+					return .015;
 				}
+			} else if (isset($attr['class'])){
+				self::adDebug("Div has class attribute");
+				// This div has a class, which may have width defined
+				return .015;
 			}
 			self::adDebug("Div seems harmless");
 			return 0;
@@ -211,12 +213,12 @@ class ArticleAdLogic {
 			} else if (isset($attr['width'])){
 				// Return a value proportional to the size of the image, where a $pixelThreshold wide
 				$eachpixel = self::collisionRankThreshold/self::pixelThreshold;
-				$out = round(($eachpixel * $attr['width'])/2, 3) ;
+				$out = round(($eachpixel * $attr['width'])/4, 3) ;
 				self::adDebug("Image is {$attr['width']} pixels, $out");
 				return $out;
 			} else {
-				self::adDebug("No width set on image, .1");
-				return .1;
+				self::adDebug("No width set on image");
+				return .05;
 			}
 
 		  default : return 0;

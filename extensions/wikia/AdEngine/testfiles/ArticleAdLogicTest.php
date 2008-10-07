@@ -69,6 +69,10 @@ class ArticleAdLogicTest extends PHPUnit_TestCase {
 		$this->assertTrue(ArticleAdLogic::isBoxAdArticle(file_get_contents('./table200pxPixels.html')));
 		$this->assertTrue(ArticleAdLogic::isBoxAdArticle(file_get_contents('./wierdNoCollisionPage.html')));
 		$this->assertTrue(ArticleAdLogic::isBoxAdArticle(file_get_contents('./div22emboxad.html')));
+		$this->assertTrue(ArticleAdLogic::isBoxAdArticle(file_get_contents('./tableWithClass.html')));
+		$this->assertTrue(ArticleAdLogic::isBoxAdArticle(file_get_contents('./tableWithId.html')));
+		$this->assertTrue(ArticleAdLogic::isBoxAdArticle(file_get_contents('./lotsThereButNoCollision.html')));
+		$this->assertTrue(ArticleAdLogic::isBoxAdArticle(file_get_contents('./largeImageButNoCollision.html')));
 
 		// These should should display a banner ad
 		$this->assertFalse(ArticleAdLogic::isBoxAdArticle(file_get_contents('./articleWithMagicWordBanner.html')));
@@ -77,10 +81,7 @@ class ArticleAdLogicTest extends PHPUnit_TestCase {
 		$this->assertFalse(ArticleAdLogic::isBoxAdArticle(file_get_contents('./table100Percent.html')));
 		$this->assertFalse(ArticleAdLogic::isBoxAdArticle(file_get_contents('./table500Pixels.html')));
 		$this->assertFalse(ArticleAdLogic::isBoxAdArticle(file_get_contents('./table500pxPixels.html')));
-		$this->assertFalse(ArticleAdLogic::isBoxAdArticle(file_get_contents('./tableWithClass.html')));
-		$this->assertFalse(ArticleAdLogic::isBoxAdArticle(file_get_contents('./tableWithId.html')));
 		$this->assertFalse(ArticleAdLogic::isBoxAdArticle(file_get_contents('./tableWidthStyleAndWidth.html')));
-		$this->assertFalse(ArticleAdLogic::isBoxAdArticle(file_get_contents('./wierdCollisionPage.html')));
 		$this->assertFalse(ArticleAdLogic::isBoxAdArticle(file_get_contents('./div100Percent.html')));
 	}
 }
