@@ -6,7 +6,7 @@
  *
  * To activate the functionality of this extension include the following in your
  * LocalSettings.php file:
- * require_once('$IP/extensions/wikia/WidgetTag/WidgetTag.php');
+ * require_once("$IP/extensions/wikia/WidgetTag/WidgetTag.php");
  */
 
 
