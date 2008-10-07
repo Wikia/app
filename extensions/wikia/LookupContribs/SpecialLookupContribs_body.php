@@ -14,7 +14,7 @@ class LookupContribsPage extends SpecialPage {
 	private $mTitle, $mUsername, $mMode, $mModeText, $mView, $mModes, $mViewModes;
 	private $mUserPage, $mUserLink;
 	private $mCore;
-	const USE_EXTERNAL_DB = 1;
+	const USE_EXTERNAL_DB = 0;
 	/**
 	 * constructor
 	 */

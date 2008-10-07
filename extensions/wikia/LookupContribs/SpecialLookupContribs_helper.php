@@ -203,6 +203,19 @@ class LookupContribsCore {
 						'ORDER BY'	=> 'rev_timestamp DESC',
 					)
 				);
+			} else if ( $fetch_mode == 'all' ) {
+				$res = $dbr->select(
+					"`{$this->__getDBname($database)}`.`revision`, `{$this->__getDBname($database)}`.`page`",
+					array( 'page_title as rc_title','rev_id','page_id','rev_timestamp as timestamp','page_namespace as rc_namespace', '0 as rc_new' ),
+					array(
+						'rev_user_text' => $this->mUsername,
+						' page_id = rev_page '
+					),
+					__METHOD__,
+					array(
+						'ORDER BY'	=> 'rev_timestamp DESC',
+					)
+				);
 			} else {
 				$res = false;
 			}

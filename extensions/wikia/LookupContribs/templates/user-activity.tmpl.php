@@ -186,7 +186,7 @@ function wkLCshowDetails(dbname, limit, offset)
 	<td><a href="<?=$wikiname->city_url?>" target="new"><?=$wikiname->city_url?></a></td>
 	<td>(<a href="<?php echo $wikiname->city_url?>index.php?title=Special:Contributions/<?php echo urlencode( $username ) ?>" target="new"><?=wfMsg('lookupcontribscontribs')?></a>)</td>
 	<td><?=wfMsg('lookupcontribsdetails')?>&#160;<select name="mode" id="wkLCmode<?=$wikiname->city_dbname?>">
-		<option value="normal"><?=wfMsg('lookupcontribsselectmodenormal')?></option><option value="final"><?=wfMsg('lookupcontribsselectmodefinal')?></option>
+		<option value="normal"><?=wfMsg('lookupcontribsselectmodenormal')?></option><option value="final"><?=wfMsg('lookupcontribsselectmodefinal')?></option><option value="all"><?=wfMsg('lookupcontribsselectmodeall')?></option>
 		</select>&#160;&#160;<input type="button" value="<?=wfMsg('lookupcontribsgo')?>" onclick="javascript:wkLCshowDetails('<?=$wikiname->city_dbname?>');">
 	</td>
 	<td id="wkLCUserActivityInd_<?=$wikiname->city_dbname?>"></td>

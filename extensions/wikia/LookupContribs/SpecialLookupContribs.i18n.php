@@ -18,6 +18,7 @@ $messages["en"] = array(
     'lookupcontribsdisplaymode' => 'Display mode: ',
     'lookupcontribsselectmodenormal' => 'recent contributions for that user',
     'lookupcontribsselectmodefinal' => 'final contributions for that user',
+    'lookupcontribsselectmodeall' => 'all contributions for that user',
     'lookupcontribsfullurls' => 'full urls',
     'lookupcontribslinks' => 'contribs links',
     'lookupcontribsgo' => 'Go',
