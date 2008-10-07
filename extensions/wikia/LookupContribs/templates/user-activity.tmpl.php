@@ -48,7 +48,7 @@ function wfJSPager(total,link,page,limit,func) {
 
 	if (page_count > 1) {
 		if (page != 0) {
-			pager += "<a style=\"" + linkStyle + "\" " + __makeClickFunc("onClick", func, func_param, limit, (parseInt(page)-1));
+			pager += "<a style=\"" + linkStyle + "\" " + __makeClickFunc("onclick", func, func_param, limit, (parseInt(page)-1));
 			pager += "href=\"" + link + "&page=" + (parseInt(page)-1) + "\">" + lcL_ARROW + " " + lcPREVIOUS + "</a>&nbsp;&nbsp;";
 		}
 
@@ -59,12 +59,12 @@ function wfJSPager(total,link,page,limit,func) {
 		}
 
 		if ( i > 0 ) {
-			pager += "<a style=\"" + linkStyle + "\" " + __makeClickFunc("onClick", func, func_param, limit, 0) + " href=\"" + link + "&page=0\">1</a>&nbsp;";
+			pager += "<a style=\"" + linkStyle + "\" " + __makeClickFunc("onclick", func, func_param, limit, 0) + " href=\"" + link + "&page=0\">1</a>&nbsp;";
 			if ( i != 1) pager += "&nbsp;...&nbsp;&nbsp;";
 		}
 
 		for (k = i; k < page; k++) {
-			pager += "<a style=\"" + linkStyle + "\" " + __makeClickFunc("onClick", func, func_param, limit, parseInt(k));
+			pager += "<a style=\"" + linkStyle + "\" " + __makeClickFunc("onclick", func, func_param, limit, parseInt(k));
 			pager += " href=\"" + link + "&page=" + parseInt(k) + "\">" + (parseInt(k)+1) + "</a>&nbsp;&nbsp;";
 		}
 
@@ -77,18 +77,18 @@ function wfJSPager(total,link,page,limit,func) {
 		}
 
 		for (i = parseInt(page)+1; i < to; i++) {
-			pager += "<a style=\"" + linkStyle + "\" " + __makeClickFunc("onClick", func, func_param, limit, parseInt(i));
+			pager += "<a style=\"" + linkStyle + "\" " + __makeClickFunc("onclick", func, func_param, limit, parseInt(i));
 			pager += " href=\"" + link + "&page=" + parseInt(i) + "\">" + (parseInt(i)+1) + "</a>&nbsp;&nbsp;";
 		}
 
 		if ( to < page_count ) {
 			if ( to != page_count-1 ) pager += "&nbsp;...&nbsp;&nbsp;";
-			pager += "<a style=\"" + linkStyle + "\" " + __makeClickFunc("onClick", func, func_param, limit, parseInt(page_count)-1);
+			pager += "<a style=\"" + linkStyle + "\" " + __makeClickFunc("onclick", func, func_param, limit, parseInt(page_count)-1);
 			pager += "href=\"" + link + "&page=" + (parseInt(page_count)-1) + "\">" + page_count + "</a>";
 		}
 
 		if ( (parseInt(page) + 1) != parseInt(page_count) ) {
-			pager += "&nbsp;&nbsp;<a style=\"" + linkStyle + "\" " + __makeClickFunc("onClick", func, func_param, limit, (parseInt(page)+1));
+			pager += "&nbsp;&nbsp;<a style=\"" + linkStyle + "\" " + __makeClickFunc("onclick", func, func_param, limit, (parseInt(page)+1));
 			pager += " href=\"" + link + "&page=" + (parseInt(page)+1) + "\">" + lcNEXT + " " + lcR_ARROW + "</a>";
 		}
 	} else {
@@ -178,22 +178,21 @@ function wkLCshowDetails(dbname, limit, offset)
 <td align="center"><b><?=wfMsg('lookupcontribscontribslink')?></b></td>
 <td align="center">&nbsp;</td>
 </tr>
-<? foreach ($userActivity as $id => $dbname) {
-	$dbname = trim($dbname);
-	if ( (!empty($dbname)) && (!empty($wikiList[$dbname])) ) {
-		$wikiname = $wikiList[$dbname];
+<? foreach ($userActivity as $id => $city_id) {
+	if ( (!empty($city_id)) && (!empty($wikiList[$city_id])) ) {
+		$wikiname = $wikiList[$city_id];
 ?>
 <tr bgcolor="#FFFFDF">
 	<td><a href="<?=$wikiname->city_url?>" target="new"><?=$wikiname->city_url?></a></td>
 	<td>(<a href="<?php echo $wikiname->city_url?>index.php?title=Special:Contributions/<?php echo urlencode( $username ) ?>" target="new"><?=wfMsg('lookupcontribscontribs')?></a>)</td>
-	<td><?=wfMsg('lookupcontribsdetails')?>&#160;<select name="mode" id="wkLCmode<?=$dbname?>">
+	<td><?=wfMsg('lookupcontribsdetails')?>&#160;<select name="mode" id="wkLCmode<?=$wikiname->city_dbname?>">
 		<option value="normal"><?=wfMsg('lookupcontribsselectmodenormal')?></option><option value="final"><?=wfMsg('lookupcontribsselectmodefinal')?></option>
-		</select>&#160;&#160;<input type="button" value="<?=wfMsg('lookupcontribsgo')?>" onClick="javascript:wkLCshowDetails('<?=$dbname?>');">
+		</select>&#160;&#160;<input type="button" value="<?=wfMsg('lookupcontribsgo')?>" onclick="javascript:wkLCshowDetails('<?=$wikiname->city_dbname?>');">
 	</td>
-	<td id="wkLCUserActivityInd_<?=$dbname?>"></td>
+	<td id="wkLCUserActivityInd_<?=$wikiname->city_dbname?>"></td>
 </tr>
 <tr>
-	<td colspan="3" valign="top" id="wkLCUserActivityRow_<?=$dbname?>"></td><td></td>
+	<td colspan="3" valign="top" id="wkLCUserActivityRow_<?=$wikiname->city_dbname?>"></td><td></td>
 </tr>
 <? } } ?>
 </table>
