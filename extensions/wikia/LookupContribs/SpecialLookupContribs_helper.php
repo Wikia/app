@@ -87,10 +87,10 @@ class LookupContribsCore {
 		$cached = $wgMemc->get($memkey);
 		if (!is_array ($cached) || LOOKUPCONTRIBS_NO_CACHE) { 
 			$dbr =& wfGetDB(DB_SLAVE);
-			$query = "SELECT city_dbname, city_url, city_title FROM ". wfSharedTable("city_list"). " WHERE city_public != 0";
+			$query = "SELECT city_id, city_dbname, city_url, city_title FROM ". wfSharedTable("city_list"). " WHERE city_public != 0";
 			$res = $dbr->query ($query);
 			while ($row = $dbr->fetchObject($res)) {
-				$wikias_array[$row->city_dbname] = $row;
+				$wikias_array[$row->city_id] = $row;
 			}
 			$dbr->freeResult ($res);
 			if (!LOOKUPCONTRIBS_NO_CACHE) $wgMemc->set( $memkey, $wikias_array );
@@ -107,7 +107,7 @@ class LookupContribsCore {
 		$memkey = wfForeignMemcKey( $wgSharedDB, null, "LookupContribs", "UserActivity", $username );
 		$cached = $wgMemc->get($memkey);
 		if (!is_array ($cached) || LOOKUPCONTRIBS_NO_CACHE) { 
-			$dbs = wfGetDBExt();
+			$dbs =& wfGetDBStats();
 			if (!is_null($dbs)) {
 				$query = "select ca_latest_activity from `{$wgDBStats}`.`city_user_activity` where ca_user_text = {$dbs->addQuotes($username)}";
 				$res = $dbs->query ($query);
@@ -115,6 +115,35 @@ class LookupContribsCore {
 					$userActivity = $row->ca_latest_activity;
 				}
 				$dbs->freeResult($res);
+				if (!LOOKUPCONTRIBS_NO_CACHE) {
+					$wgMemc->set( $memkey, $userActivity, 60*3 );
+				}
+			}
+		} else { 
+			$userActivity = $cached;
+		}
+		
+		return $userActivity;
+	}
+	
+	function checkUserActivityExternal($username) {
+		global $wgMemc, $wgSharedDB, $wgDBStats;
+		$userActivity = array();
+		$memkey = wfForeignMemcKey( $wgSharedDB, null, "LookupContribs", "UserActivityExt", $username );
+		$cached = $wgMemc->get($memkey);
+		if (!is_array ($cached) || LOOKUPCONTRIBS_NO_CACHE) { 
+			$dbext =& wfGetDBExt();
+			if (!is_null($dbext)) {
+				$query = "select rev_wikia_id, max(rev_timestamp) as max_activity, unix_timestamp(rev_timestamp) as max_timestamp ";
+				$query .= "from `dataware`.`blobs` where rev_user_text = ".$dbext->addQuotes($username)." and rev_wikia_id > 0 group by rev_wikia_id";
+				$res = $dbext->query ($query);
+				while ($row = $dbext->fetchObject($res)) {
+					$userActivity[$row->max_timestamp] = $row->rev_wikia_id;
+				}
+				if (!empty($userActivity)) {
+					krsort($userActivity);
+				}				
+				$dbext->freeResult($res);
 				if (!LOOKUPCONTRIBS_NO_CACHE) {
 					$wgMemc->set( $memkey, $userActivity, 60*3 );
 				}
@@ -134,6 +163,7 @@ class LookupContribsCore {
 	/* fetch all contributions from that given database */
 	function fetchContribs ($database, $fetch_mode) {
 		global $wgOut, $wgRequest, $wgLang, $wgMemc, $wgSharedDB ;
+		global $wgDBStatsServer, $wgDBStats;
 		wfProfileIn( __METHOD__ );
 
 		/* todo since there are now TWO modes, we need TWO keys to rule them all */
