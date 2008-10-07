@@ -18,7 +18,7 @@ interface iAdProvider {
 
 class AdEngine {
 
-	const cacheKeyVersion = "1.9k";
+	const cacheKeyVersion = "1.9l";
 	const cacheTimeout = 1800;
 
 	// TODO: pull these from wikicities.provider
@@ -69,15 +69,6 @@ class AdEngine {
 		// $wgExtensionsPath='/extensions';
 		$out .= '<script type="text/javascript" src="' . $wgExtensionsPath . '/wikia/AdEngine/AdEngine.js?' . self::cacheKeyVersion . '"></script>'. "\n";
 
-		// Get the setup code for ad providers used on this page
-		foreach ($this->slots as $slotname => $slot){
-	                $AdProvider = $this->getAdProvider($slotname);
-			// Fill in slotsToCall with a list of slotnames that will be used. Needed for getBatchCallHtml
-			$AdProvider->addSlotToCall($slotname);
-
-			// Get setup HTML for each provider. May be empty.
-			$out .= $AdProvider->getSetupHtml();
-		}
 		$out .= "<!-- #### END " . __CLASS__ . '::' . __METHOD__ . " ####-->\n";
 			
 		return $out;
@@ -304,15 +295,7 @@ class AdEngine {
 
 	public function getBucketTestingCode(){
 		// Bucket testing leaderboard ad placement
-		$out .= '<style type="text/css">' . 
-			".TOP_LEADERBOARD_left { margin-left:0 !important; margin-right:auto !important }\n" .
-			".TOP_LEADERBOARD_center { margin-left:auto !important; margin-right:auto !important }\n" .
-			".TOP_LEADERBOARD_right { margin-left:auto; !important; margin-right: 0 }\n" .
-			".TOP_RIGHT_BOXAD_overline { margin-top: -45px}\n" .
-			".TOP_RIGHT_BOXAD_down { margin-top: 30px}\n" .
-			"</style>\n";
-
-		$out .= "<script type='text/javascript'>\n" . 
+		$out = "<script type='text/javascript'>\n" . 
 			"AdEngine.bucketTests = " . json_encode($this->bucketTests) . "\n" . 
 			'AdEngine.bucketName = "' . addslashes($this->getBucketName()) . '"' . ";\n" .
 			"</script>";
@@ -352,9 +335,18 @@ class AdEngine {
 			"TieDivLibrary.timer();\n". 
 			'</script>';
 
+		// Get the setup code for ad providers used on this page. This is for Ad Providers that support multi-call.
+		foreach ($this->placeholders as $slotname){
+	                $AdProvider = $this->getAdProvider($slotname);
+			// Fill in slotsToCall with a list of slotnames that will be used. Needed for getBatchCallHtml
+			$AdProvider->addSlotToCall($slotname);
+
+			// Get setup HTML for each provider. May be empty.
+			$out .= $AdProvider->getSetupHtml();
+		}
+
 		foreach ($this->placeholders as $slotname){
 			$AdProvider = $this->getAdProvider($slotname);
-			$out .= "<script type='text/javascript'>AdEngine.doBucketTest('$slotname');</script>\n";
 
 			// Hmm. Should we just use: class="wikia_$adtype"?
 			$class = self::getAdType($slotname) == 'spotlight' ? ' class="wikia_spotlight"' : ' class="wikia_ad"';
@@ -370,10 +362,12 @@ class AdEngine {
 			 * See Christian or Nick for more info.
 			*/
 			$out .= '<script type="text/javascript">';
+			$out .= 'AdEngine.doBucketTest("'. $slotname .'");';
 			$out .= 'AdEngine.displaySlotIfAd("'. $slotname .'");';
 			$out .= 'TieDivLibrary.tie("'. $slotname .'");';
 			$out .= '</script>';
 		}
+		$out .= "<script type='text/javascript'>AdEngine.bucketDebug();</script>\n";
 		$out .= "<!-- #### END " . __CLASS__ . '::' . __METHOD__ . " ####-->\n";
 		return $out;
 	}
