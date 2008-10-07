@@ -140,8 +140,8 @@ function AdGetColor(type) {
 AdEngine.displaySlotIfAd = function (slotname) {
         var noopStrings = new Array(
                 'http://images.wikia.com/common/wikia/noad.gif', // This should be our standard no-op
-                'http://m1.2mdn.net/viewad/817-grey.gif'  // DART sometimes sends this
-        );
+                'http://m1.2mdn.net/viewad/817-grey.gif');  // DART sometimes sends this
+
         var noopFound = false;
         for (i = 0 ; i < noopStrings.length; i++){
                 if($(slotname + '_load').innerHTML.indexOf(noopStrings[i]) > -1 ) {
@@ -155,18 +155,45 @@ AdEngine.displaySlotIfAd = function (slotname) {
         }
 };
 
+/* The bucket name is for the type of test we are doing. This function is used because 
+ * the bucket name can be set manually in php, or passed through the url
+ */
 AdEngine.getBucketName = function(){
 	// Allow for it to be passed in the url, for testing
 	var forceParam = document.location.search.match(/forceBucket=[A-Za-z0-9_\-]+/);
 	if (forceParam != null ){
 		AdEngine.bucketName = forceParam.toString().substr(12);
-		return AdEngine.bucketName;
-	} else if (AdEngine.bucketName != '' ){
-		return AdEngine.bucketName;
-	} else {
-		return '';
+	}
+
+	return AdEngine.bucketName;
+};
+
+/* The bucketid is the value for the current bucket that is being tested, 
+ * it can also be passed through the url. 
+ * Note that AdEngine.bucketid and it will be passed to DART as 'wkabkt', and some day to other AdProviders
+ */
+AdEngine.bucketid = ''; // Set it to empty string so we don't pass 'undefined' to ad providers
+AdEngine.getBucketid = function(){
+	var forceParam = document.location.search.match(/forceBucketid=[^&;]*/);
+	if (forceParam != null ){
+		AdEngine.bucketid = forceParam.toString().substr(14);
+	} else if (YAHOO.util.Cookie.get('wkabkt') != null ){
+		AdEngine.bucketid = YAHOO.util.Cookie.get('wkabkt');
+	}
+
+	return AdEngine.bucketid;
+};
+
+AdEngine.bucketDebug = function (){
+	if (document.location.search.match(/bucketDebug/)){
+                var msg = 'AdEngine.bucketName = "' + AdEngine.bucketName + '"\n' +
+                  'AdEngine.bucketid = "' + AdEngine.bucketid + '"\n' + 
+                  'wkabkt cookie = "' + YAHOO.util.Cookie.get('wkabkt') + '"\n';
+
+                alert('Data from AdEngine.bucketDebug:\n' + msg);
 	}
 };
+
 
 /* For testing click through rates on various placements of ads. 
  * Accepts a slotname, checks to see which bucket this user should be in,
@@ -175,76 +202,89 @@ AdEngine.getBucketName = function(){
  * @return a unique id to identify the test (for passing in the ad call), or '' if no test done.
  */
 AdEngine.doBucketTest = function (slotname) {
-	var myBucket = AdEngine.getBucketName();
-	AdEngine.bucketid = ''; // Ad Engine bucket id is passed to the ad call for CTR tracking
+	AdEngine.getBucketName();
+	AdEngine.getBucketid(); 
 
-	if (slotname == 'TOP_LEADERBOARD' && myBucket == 'lp'){
-		// Switch around the leaderboard in it's current position
-		
-		var rand = randomnumber=Math.ceil(Math.random()*4);
-		switch (rand){
-			// Pick from different placements and shift accordingly
-			case 1:
-				document.getElementById(slotname).className=slotname + '_center';
-				AdEngine.bucketid = 'lp_center';
-				break;
-			case 2:
-				document.getElementById(slotname).className=slotname + '_left';
-				AdEngine.bucketid ='lp_left';
-				break;
-			case 3:
-				document.getElementById(slotname).className=slotname + '_right';
-				AdEngine.bucketid ='lp_right';
-				break;
-			default: // not in bucket test
-				AdEngine.bucketid ='lp_control';
+	// Set up the bucketid
+	if (AdEngine.bucketid == ''){ // It will be empty if it hasn't been set by AdEngine.getBucketid()
+		var bucketids = new Array('');
+
+		// Set up the various tests
+		if (slotname == 'TOP_LEADERBOARD' && AdEngine.bucketName == 'lp'){
+			bucketids = new Array('lp_center', 'lp_left', 'lp_right', 'lp_control');
+
+		} else if (slotname == 'TOP_LEADERBOARD' && AdEngine.bucketName == 'lp_at'){
+			bucketids = new Array('lp_at_center', 'lp_at_left', 'lp_at_right', 'lp_at_control');
+
+		} else if (slotname == 'TOP_RIGHT_BOXAD' && AdEngine.bucketName == 'bp'){
+			bucketids = new Array('bp_overline', 'bp_down', 'bp_control');
+
+		} 
+		// Set up other bucket tests here. 
+
+		if (bucketids.length > 1){
+			AdEngine.bucketid = bucketids[Math.floor(Math.random()*bucketids.length)];
 		}
-		
-	} else if (slotname == 'TOP_LEADERBOARD' && myBucket == 'lp_at'){
-		// Switch around the leaderboard in it's current position
-		
-		var rand = randomnumber=Math.ceil(Math.random()*4);
-		switch (rand){
-			// Pick from different placements and shift accordingly
-			case 1:
-				document.getElementById(slotname).className=slotname + '_center';
-				AdEngine.bucketid ='lp_at_center';
-				break;
-			case 2:
-				document.getElementById(slotname).className=slotname + '_left';
-				AdEngine.bucketid ='lp_at_left';
-				break;
-			case 3:
-				document.getElementById(slotname).className=slotname + '_right';
-				AdEngine.bucketid ='lp_at_right';
-				break;
-			default: // not in bucket test
-				AdEngine.bucketid ='lp_at_control';
-		}
-		
-	} else if (slotname == 'TOP_RIGHT_BOXAD' && myBucket == 'bp'){
-		// Switch around the leaderboard in it's current position
-		
-		var rand = randomnumber=Math.ceil(Math.random()*3);
-		switch (rand){
-			// Pick from different placements and shift accordingly
-			case 1:
-				document.getElementById(slotname).className=slotname + '_overline';
-				AdEngine.bucketid ='bp_overline';
-				break;
-			case 2:
-				document.getElementById(slotname).className=slotname + '_down';
-				AdEngine.bucketid ='bp_down';
-				break;
-			default: // not in bucket test
-				AdEngine.bucketid ='bp_control';
-		}
+
+	}
+
+
+	// Do the switching of the css via javascript
+	if (slotname == 'TOP_LEADERBOARD'){
+
+	  switch (AdEngine.bucketid){
+		case '': return; // No buckets for this page
+
+		// Shift around the leaderboards in their current slot
+		case 'lp_left':
+			YAHOO.util.Dom.setStyle(slotname, "margin-left", "0");
+			YAHOO.util.Dom.setStyle(slotname, "margin-right", "auto");
+			break;
+		case 'lp_center':
+			YAHOO.util.Dom.setStyle(slotname, "margin-left", "auto");
+			YAHOO.util.Dom.setStyle(slotname, "margin-right", "auto");
+			break;
+		case 'lp_right':
+			YAHOO.util.Dom.setStyle(slotname, "margin-left", "auto");
+			YAHOO.util.Dom.setStyle(slotname, "margin-right", "0");
+			break;
+
+		// Shift around the leaderboards in a new slot, above the title
+		case 'lp_at_left':
+			YAHOO.util.Dom.setStyle(slotname, "margin-left", "0");
+			YAHOO.util.Dom.setStyle(slotname, "margin-right", "auto");
+			break;
+		case 'lp_at_center':
+			YAHOO.util.Dom.setStyle(slotname, "margin-left", "auto");
+			YAHOO.util.Dom.setStyle(slotname, "margin-right", "auto");
+			break;
+		case 'lp_at_right':
+			YAHOO.util.Dom.setStyle(slotname, "margin-left", "auto");
+			YAHOO.util.Dom.setStyle(slotname, "margin-right", "0");
+			break;
+	  }
+	
+	} else if (slotname == 'TOP_RIGHT_BOXAD'){
+
+       	  // Shift the box ad up and down
+	  switch (AdEngine.bucketid){
+		case 'bp_overline':
+			YAHOO.util.Dom.setStyle(slotname, "margin-top", "-45px");
+			break;
+		case 'bp_down':
+			YAHOO.util.Dom.setStyle(slotname, "margin-top", "45px");
+			break;
+          }
+
 	}	
 
-	// Set up other bucket tests here. Set this.bucket and it will be passed to DART as 'wkabkt'
+	// Remember the bucketid for the current session
+	YAHOO.util.Cookie.set("wkabkt", AdEngine.bucketid);
+	
 	return AdEngine.bucketid;
 
 };
+
 
 /* Return the meta keywords so they can be passed as hints */
 AdEngine.getKeywords = function () {
