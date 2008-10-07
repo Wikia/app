@@ -1,4 +1,4 @@
-33<?php
+<?php
 /* This script will look at the html of an article and evaluate it for ads, determining attributes like:
  * ) If it is a "short" article that should have no ads at all?
  * ) If it is a "long" article that can have additional ads in the left nav?
