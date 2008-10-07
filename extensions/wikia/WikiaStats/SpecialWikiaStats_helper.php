@@ -105,7 +105,7 @@ class WikiaGenericStats {
 
 			$wkCityDomains["&Sigma;"] = 0;
 			#---
-			ksort(&$wkCityDomains, SORT_STRING);
+			ksort($wkCityDomains, SORT_STRING);
 			#---
 			if (self::USE_MEMC) $wgMemc->set("wikiacitystatslist", $wkCityDomains, 60*60*3);
 		}
@@ -210,8 +210,6 @@ class WikiaGenericStats {
 				$loop++;
 			}
 			$dbs->freeResult( $res );
-			#---
-			//ksort(&$wkCityOrderStats, SORT_NUMERIC);
 			#---
 			if (self::USE_MEMC) $wgMemc->set($memckey, $wkCityOrderStats, 60*60*3);
 		}
@@ -1542,7 +1540,7 @@ class WikiaGenericStats {
 		}
 
 		#---
-		krsort(&$mothlyStatsArray);
+		krsort($mothlyStatsArray);
 		wfProfileOut( __METHOD__ );
 		return $mothlyStatsArray;
 	}
