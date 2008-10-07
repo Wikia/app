@@ -22,3 +22,35 @@ $wgExtensionMessagesFiles['GlobalWatchlist'] = dirname(__FILE__) . '/GlobalWatch
 
 // classes
 $wgAutoloadClasses['GlobalWatchlistBot'] = dirname(__FILE__) . '/GlobalWatchlistBot.class.php';
+
+// hooks
+$wgHooks['getUserProfilePreferencesCustomHtml'][] = 'wfGlobalWatchlistPrefsCustomHtml';
+
+// user toggles
+$wgHooks ['UserToggles'][] = 'wfGlobalWatchlistToggle';	
+
+// permissions
+$wgAvailableRights[] = 'globalwatchlist';
+$wgGroupPermissions['staff']['globalwatchlist'] = true;
+
+function wfGlobalWatchlistToggle($extraToggles) {
+	$extraToggles['watchlistdigest'] = 'watchlistdigest';
+	return true;
+}
+
+function wfGlobalWatchlistPrefsCustomHtml($prefsForm) {
+	global $wgOut, $wgUser;
+
+	if($wgUser->isAllowed('globalwatchlist')) {	
+		// only for staff members at the moment
+		wfLoadExtensionMessages('GlobalWatchlist');
+	 
+	 $tname = 'watchlistdigest';
+	 $prefsForm->mUsedToggles[$tname] = true;
+	 
+	 $wgOut->addHTML($prefsForm->tableRow($prefsForm->getToggle($tname)));
+	}
+	
+ return true;
+}
+
