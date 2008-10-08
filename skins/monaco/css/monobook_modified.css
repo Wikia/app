@@ -712,7 +712,6 @@ div.prefsectiontip {
 #userloginForm form,
 div#userlogin form#userlogin2 {
 	clear: both;
-	color: #000;
 	margin: 0 3em 1em 0;
 }
 
@@ -732,7 +731,6 @@ div#userlogin form#userlogin2 input {
 }
 
 div#userlogin form#userlogin2 table {
-	color: #000;
 }
 
 #userloginForm h2,
