@@ -8,15 +8,21 @@
  * constructor
  */
 function wfSpecialUserlogin( $par = '' ) {
-	global $wgRequest;
+	global $wgRequest, $wgHooks;
 	if( session_id() == '' ) {
 		wfSetupSession();
 	}
-
+	$wgHooks['ExtendJSGlobalVars'][] = 'wfSpecialUserloginSetupVars';
 	$form = new LoginForm( $wgRequest, $par );
 	$form->execute();
 }
 
+function wfSpecialUserloginSetupVars($vars) {
+        $vars['prefs_help_birthmesg'] = wfMsg('prefs-help-birthmesg');
+        $vars['prefs_help_birthinfo'] = wfMsg('prefs-help-birthinfo') ;
+
+        return true;
+}
 
 
 /**
