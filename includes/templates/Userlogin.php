@@ -121,7 +121,6 @@ class UsercreateTemplate extends QuickTemplate {
 <?php } ?>
 <div id="userlogin<?php if ($this->data['ajax']) { ?>Ajax<?php } ?>">
 <form name="userlogin2" id="userlogin2" method="post" action="<?php $this->text('action') ?>" onsubmit="return checkForm();">
-	<h2><?php $this->msg('createaccount') ?></h2>
 <?php		if( $this->data['message'] && $this->data['ajax'] ) { ?>
 	<div class="<?php $this->text('messagetype') ?>box" style="margin:0px">
 		<?php if ( $this->data['messagetype'] == 'error' ) { ?>
@@ -179,19 +178,67 @@ class UsercreateTemplate extends QuickTemplate {
 	</script>
 	<table width="100%">
 		<colgroup>
-			<col width="220" />
 			<col width="*" />
 		</colgroup>
 		<tr>
-			<td class="mw-label"><label for='wpName2'><?php $this->msg('yourname') ?></label></td>
 			<td class="mw-input" id="wpNameTD">
+				<label for='wpName2'><?php $this->msg('yourname') ?></label><br/>
 				<input type='text' class='loginText' name="wpName" id="wpName2"	value="<?php $this->text('name') ?>" size='20' />
 				<span id="wpName2error" class="inputError"><?= wfMsg('noname') ?></span>
 			</td>
 		</tr>
 		<tr>
-			<td class="mw-label"><label for='wpBirthYear'><?php $this->msg('yourbirthdate') ?></label></td>
+			<?php if( $this->data['useemail'] ) { ?>
+			<td class="mw-input" id="wpEmailTD">
+				<label for='wpEmail'><?php $this->msg('youremail') ?></label><br/>
+				<input type='text' class='loginText' name="wpEmail" id="wpEmail" value="<?php $this->text('email') ?>" size='20' />
+				<div>
+                                        <?php $this->msgWiki('prefs-help-email'); ?>
+	                        </div>
+			</td>
+			<?php } ?>
+		</tr>
+		<tr>
+			<td class="mw-input" id="wpPasswordTD">
+				<label for='wpPassword2'><?php $this->msg('yourpassword') ?></label><br/>
+				<input type='password' class='loginPassword' name="wpPassword" id="wpPassword2" value="" size='20' />
+			</td>
+		</tr>
+	<?php if( $this->data['usedomain'] ) {
+		$doms = "";
+		foreach( $this->data['domainnames'] as $dom ) {
+			$doms .= "<option>" . htmlspecialchars( $dom ) . "</option>";
+		}
+	?>
+		<tr>
+			<td class="mw-input">
+				<?php $this->msg( 'yourdomainname' ) ?><br/>	
+				<select name="wpDomain" value="<?php $this->text( 'domain' ) ?>">
+					<?php echo $doms ?>
+				</select>
+			</td>
+		</tr>
+	<?php } ?>
+		<tr>
+			<td class="mw-input" id="wpRetypeTD">
+				<label for='wpRetype'><?php $this->msg('yourpasswordagain') ?></label><br/>
+				<input type='password' class='loginPassword' name="wpRetype" id="wpRetype" value="" size='20' />
+			</td>
+		</tr>
+		<tr>
+			<?php if( $this->data['userealname'] ) { ?>
+			<td class="mw-input">
+				<label for='wpRealName'><?php $this->msg('yourrealname') ?></label><br/>	
+				<input type='text' class='loginText' name="wpRealName" id="wpRealName" value="<?php $this->text('realname') ?>" size='20' />
+				<div>
+					<?php $this->msgWiki('prefs-help-realname'); ?>
+				</div>
+			</td>
+			<?php } ?>
+		</tr>
+		<tr>
 			<td class="mw-input" id="wpBirthDateTD">
+				<label for='wpBirthYear'><?php $this->msg('yourbirthdate') ?></label><br/>
 				<select name="wpBirthYear" id="wpBirthYear">
 					<option value="-1"><?php $this->msg('userlogin-choose-year') ?></option>
 					<?php
@@ -218,64 +265,20 @@ class UsercreateTemplate extends QuickTemplate {
 					?>
 				</select>
 				<span id="wpBirtherror" class="inputError"><?= wfMsg('userlogin-bad-birthday') ?></span>
+				<div>
+                                        <a href="#" id="prefsHelpBirthday"><?php $this->msgWiki('prefs-help-birthday'); ?></a>
+	                        </div>
 			</td>
 		</tr>
-		<tr>
-			<?php if( $this->data['useemail'] ) { ?>
-			<td class="mw-label"><label for='wpEmail'><?php $this->msg('youremail') ?></label></td>
-			<td class="mw-input" id="wpEmailTD">
-				<input type='text' class='loginText' name="wpEmail" id="wpEmail" value="<?php $this->text('email') ?>" size='20' />
-			</td>
-			<?php } ?>
-		</tr>
-		<tr>
-			<td class="mw-label"><label for='wpPassword2'><?php $this->msg('yourpassword') ?></label></td>
-			<td class="mw-input" id="wpPasswordTD">
-				<input type='password' class='loginPassword' name="wpPassword" id="wpPassword2" value="" size='20' />
-			</td>
-		</tr>
-	<?php if( $this->data['usedomain'] ) {
-		$doms = "";
-		foreach( $this->data['domainnames'] as $dom ) {
-			$doms .= "<option>" . htmlspecialchars( $dom ) . "</option>";
-		}
-	?>
-		<tr>
-			<td class="mw-label"><?php $this->msg( 'yourdomainname' ) ?></td>
-			<td class="mw-input">
-				<select name="wpDomain" value="<?php $this->text( 'domain' ) ?>">
-					<?php echo $doms ?>
-				</select>
-			</td>
-		</tr>
-	<?php } ?>
-		<tr>
-			<td class="mw-label"><label for='wpRetype'><?php $this->msg('yourpasswordagain') ?></label></td>
-			<td class="mw-input" id="wpRetypeTD">
-				<input type='password' class='loginPassword' name="wpRetype" id="wpRetype" value="" size='20' />
-			</td>
-		</tr>
-		<tr>
-			<?php if( $this->data['userealname'] ) { ?>
-			<td class="mw-label"><label for='wpRealName'><?php $this->msg('yourrealname') ?></label></td>
-			<td class="mw-input">
-				<input type='text' class='loginText' name="wpRealName" id="wpRealName" value="<?php $this->text('realname') ?>" size='20' />
-				<div class="prefsectiontip">
-					<?php $this->msgWiki('prefs-help-realname'); ?>
-				</div>
-			</td>
-			<?php } ?>
-		</tr>
+
 	<?php if($this->haveData('captcha')) { ?>
 		<tr>
-			<td class="mw-label" id="wpCaptchaWordLabel"><label for='wpCaptchaWord'><?php $this->msg('userlogin-captcha-label') ?></label></td>
 			<td class="mw-input">
 				<?php $this->html('captcha'); ?>
 			</td>
 		</tr>
 	<?php } ?>
 		<tr>
-			<td></td>
 			<td class="mw-input">
 				<input type='checkbox' name="wpRemember" value="1" id="wpRemember" <?php if( $this->data['remember'] ) { ?>checked="checked"<?php } ?>/>
 				<label for="wpRemember"><?php $this->msg('remembermypassword') ?></label>
@@ -286,16 +289,14 @@ class UsercreateTemplate extends QuickTemplate {
 		if ( isset( $this->data['extraInput'] ) && is_array( $this->data['extraInput'] ) ) {
 			foreach ( $this->data['extraInput'] as $inputItem ) { ?>
 		<tr>
+			<td class="mw-input">
 			<?php 
 				if ( !empty( $inputItem['msg'] ) && $inputItem['type'] != 'checkbox' ) {
-					?><td class="mw-label"><label for="<?php 
+					?><label for="<?php 
 					echo htmlspecialchars( $inputItem['name'] ); ?>"><?php
 					$this->msgWiki( $inputItem['msg'] ) ?></label><?php
-				} else {
-					?><td><?php
 				}
-			?></td>
-			<td class="mw-input">
+			?><br/>
 				<input type="<?php echo htmlspecialchars( $inputItem['type'] ) ?>" name="<?php
 				echo htmlspecialchars( $inputItem['name'] ); ?>"
 					tabindex="<?php echo $tabIndex++; ?>"
@@ -324,7 +325,6 @@ class UsercreateTemplate extends QuickTemplate {
 		}
 ?>
 		<tr>
-			<td></td>
 			<td class="mw-submit">
 				<input type='submit' name="wpCreateaccount" id="wpCreateaccount"
 					tabindex="<?php echo $tabIndex++; ?>"
@@ -340,16 +340,62 @@ class UsercreateTemplate extends QuickTemplate {
 		</tr>
 		<?php if( $this->data['useemail'] ) { ?>
 		<tr>
-			<td></td>
 			<td class="mw-input" id="wpEmailTD">
-				<div class="prefsectiontip">
-					<?php $this->msgWiki('prefs-help-email'); ?>
+				<div>
+					<?php $this->msgWiki('prefs-help-terms'); ?>
 				</div>
 			</td>
 		</tr>
 		<?php } ?>
 	</table>
 	<script type="text/javascript">
+		YAHOO.namespace("Wikia.UserRegistration");
+
+		 (function() {
+		 var YC = YAHOO.util.Connect;
+		 var YD = YAHOO.util.Dom;
+		 var YWUR = YAHOO.Wikia.UserRegistration;
+		 var YE = YAHOO.util.Event;
+		 var YT = YAHOO.Tools;
+
+		 YAHOO.Wikia.UserRegistration = {
+			init: function() {
+		        	YE.addListener('prefsHelpBirthday', 'click', YAHOO.Wikia.UserRegistration.showHintPanel);
+      			},
+			buildHintPanel: function() {
+			        var signupWhy = YD.get( 'signupWhyProvide' );
+			        var signupWhy_copy = document.createElement ('div') ;
+			        signupWhy.id = 'signupWhyProvide_copy' ;
+			        signupWhy_copy.innerHTML  = signupWhy.innerHTML ;
+			        document.body.appendChild (signupWhy_copy) ;
+			        YAHOO.Wikia.UserRegistration.hintPanel = new YAHOO.widget.Panel('signupWhyProvide_copy', {
+			                width: "350px" ,
+			                modal: true ,
+			                constraintoviewport: true ,
+			                draggable: false ,
+			                fixedcenter: true ,
+			                underlay: "none"
+			        } );
+			YAHOO.Wikia.UserRegistration.hintPanel.setHeader(prefs_help_birthmesg);
+			YAHOO.Wikia.UserRegistration.hintPanel.setBody(prefs_help_birthinfo);
+		        YAHOO.Wikia.UserRegistration.hintPanel.cfg.setProperty("zIndex", 1000) ;
+		        YAHOO.Wikia.UserRegistration.hintPanel.render (document.body) ;
+			},
+			showHintPanel: function(e) {
+                        	// Prevent the default action for clicked element (probably A)
+                        	if(e) {
+                                	YAHOO.util.Event.preventDefault(e);
+                        	}
+				if (!YAHOO.Wikia.UserRegistration.hintPanel) {
+		                        YAHOO.Wikia.UserRegistration.buildHintPanel () ;
+                		}
+		                YAHOO.Wikia.UserRegistration.hintPanel.show () ;
+			}
+		}
+
+		YE.onDOMReady(YAHOO.Wikia.UserRegistration.init, YAHOO.Wikia.UserRegistration, true);
+		})();
+
 		function checkEmail() {
 			var email_elem = document.getElementById('wpEmail') ;
 			if (email_elem) {
@@ -481,6 +527,7 @@ class UsercreateTemplate extends QuickTemplate {
 <?php if( @$this->haveData( 'uselang' ) ) { ?><input type="hidden" name="uselang" value="<?php $this->text( 'uselang' ); ?>" /><?php } ?>
 </form>
 </div>
+<div id="signupWhyProvide"></div>
 <div id="signupend" style="clear: both;"><?php $this->msgWiki( 'signupend' ); ?></div>
 <?php
 

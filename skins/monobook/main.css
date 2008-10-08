@@ -1044,9 +1044,7 @@ div.prefsectiontip {
 div#userloginForm form,
 div#userlogin form#userlogin2 {
 	margin: 0 3em 1em 0;
-	border: 1px solid #aaa;
 	clear: both;
-	padding: 1.5em 2em;
 	background-color: #f9f9f9;
 	float: left;
 }
@@ -1070,6 +1068,19 @@ div#userloginForm .captcha {
 	border: 1px solid #bbb;
 	padding: 1.5em 2em;
 	background-color: white;
+}
+
+div#userlogin form#userlogin2 label { 
+	font-size: 115%; 
+	font-weight: bold; 
+} 
+  	
+div#userlogin form#userlogin2 input { 
+	margin-bottom: 4px; 
+}  
+
+#signupWhyProvide { 
+	display: none;
 }
 
 #loginend, #signupend {

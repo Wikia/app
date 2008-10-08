@@ -25,15 +25,15 @@ div#userlogin .captcha {
 }
 
 div#userlogin .mw-input-ok {
-	background: transparent url('../img/ok.png') 260px 4px no-repeat;
+	background: transparent url('../img/ok.png') 260px 22px no-repeat;
 }
 
 div#userlogin .mw-input-error {
-	background: transparent url('../img/error.png') 260px 4px no-repeat;
+	background: transparent url('../img/error.png') 260px 22px no-repeat;
 }
 
 div#userlogin .mw-progress {
-	background: transparent url('../../common/progress-wheel.gif') 260px 4px no-repeat;
+	background: transparent url('../../common/progress-wheel.gif') 260px 22px no-repeat;
 }
 
 div#userlogin .inputError {
@@ -41,3 +41,4 @@ div#userlogin .inputError {
 	margin-left: 24px;
 	color: red;
 }
+
