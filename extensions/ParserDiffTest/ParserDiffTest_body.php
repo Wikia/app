@@ -43,7 +43,7 @@ class ParserDiffTest extends SpecialPage
 				return;
 			}
 
-			$comparing = wfMsg( 'pdt_comparing_page', htmlspecialchars( $title->getPrefixedText() ) );
+			$comparing = wfMsgExt( 'pdt_comparing_page', array('parse'), htmlspecialchars( $title->getPrefixedText() ) );
 		}
 
 		$oldClass = $wgPDT_OldConf['class'];
