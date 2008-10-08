@@ -14,31 +14,29 @@ $wgWidgets['WidgetNeedHelp'] = array(
 		'pl' => 'Potrzebna pomoc'
 	),
 	'desc' => array(
-		'en' => 'Displays articles that have been marked as needing help', 
+		'en' => 'Displays articles that have been marked as needing help',
 		'pl' => 'Wyświetla artykuły wymagające dopracowania'
-    ),
-    'closeable' => true,
-    'editable' => false,
+	),
+	'closeable' => true,
+	'editable' => false,
 );
 
 function WidgetNeedHelp($id, $params) {
-
-	global $wgOut;
+	global $wgUser, $wgTitle;
 
 	wfProfileIn(__METHOD__);
-	
-	// get content of MediaWiki:NeedHelp
-	$article = WidgetFrameworkGetArticle('Needhelp', NS_MEDIAWIKI);
-    
-	if ( $article == false ) {
-	    // "no article" fallback
-	    $ret = $wgOut->parse( wfMsg('Needhelp') );
-	}
-	else {
-	    $ret = $wgOut->parse($article);
-	}
 
+	if ( isset($params['_widgetTag']) ) {
+		// work-around for WidgetTag
+		$parser = new Parser();
+	} else {
+		$parser = &$wgParser;
+	}
+	$parser->mOptions = new ParserOptions();
+	$parser->mOptions->initialiseFromUser( $wgUser );
+
+	$ret = $parser->parse(wfMsg('Needhelp'), $wgTitle, $parser->mOptions)->getText();
 	wfProfileOut(__METHOD__);
-	
+
 	return $ret;
 }
