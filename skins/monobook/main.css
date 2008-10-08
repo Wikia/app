@@ -1045,7 +1045,6 @@ div#userloginForm form,
 div#userlogin form#userlogin2 {
 	margin: 0 3em 1em 0;
 	clear: both;
-	background-color: #f9f9f9;
 	float: left;
 }
 .rtl div#userloginForm form,
@@ -1055,7 +1054,6 @@ div#userlogin form#userlogin2 {
 
 div#userloginForm table,
 div#userlogin form#userlogin2 table {
-	background-color: #f9f9f9;
 }
 
 div#userloginForm h2,
