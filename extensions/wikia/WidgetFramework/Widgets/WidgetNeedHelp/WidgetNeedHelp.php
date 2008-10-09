@@ -22,7 +22,7 @@ $wgWidgets['WidgetNeedHelp'] = array(
 );
 
 function WidgetNeedHelp($id, $params) {
-	global $wgUser, $wgTitle;
+	global $wgUser, $wgTitle, $wgParser;
 
 	wfProfileIn(__METHOD__);
 
