@@ -655,8 +655,15 @@ class CreateWikiTask extends BatchTask {
 	 * @param  string $type
 	 */
 	public function addCreationSettings( $match, $settings, $type = 'unknown' ) {
+		global $wgUser;
+
 		if (!empty($match) && is_array($settings[$match])) {
 			$this->addLog("Found '$match' in $type settings array.");
+
+			# switching user for correct logging
+			$oldUser = $wgUser;
+			$wgUser = User::newFromName( 'CreateWiki script' );
+
 			foreach ($settings[$match] as $key => $value) {
 				$success = WikiFactory::setVarById($key, $this->mWikiID, $value);
 				if ($success) {
@@ -665,6 +672,9 @@ class CreateWikiTask extends BatchTask {
 					$this->addLog("Failed to add setting: $key = $value");
 				}
 			}
+
+			$wgUser = $oldUser;
+
 			$this->addLog("Finished adding $type settings.");
 		} else {
 			$this->addLog("'$match' not found in $type settings array. Skipping this step.");
