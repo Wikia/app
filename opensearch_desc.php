@@ -4,7 +4,7 @@
  * Generate an OpenSearch description file
  */
 
-require_once( dirname(__FILE__) . '/includes/WebStart.php' );
+require( dirname(__FILE__) . '/includes/WebStart.php' );
 
 if( $wgRequest->getVal( 'ctype' ) == 'application/xml' ) {
 	// Makes testing tweaks about a billion times easier
@@ -18,9 +18,12 @@ $response->header( "Content-type: $ctype" );
 
 // Set an Expires header so that squid can cache it for a short time
 // Short enough so that the sysadmin barely notices when $wgSitename is changed
-$expiryTime = 600; # 10 minutes
+$expiryTime = 86400; // 1 day
+// Note: We changed varnish to pass through X-Pass-Expires and X-Pass-Cache-Control to the client
 $response->header( 'Expires: ' . gmdate( 'D, d M Y H:i:s', time() + $expiryTime ) . ' GMT' );
-$response->header( 'Cache-control: max-age=600' );
+$response->header( 'X-Pass-Expires: ' . gmdate( 'D, d M Y H:i:s', time() + $expiryTime ) . ' GMT' );
+$response->header( "Cache-Control: max-age=$expiryTime" );
+$response->header( "X-Pass-Cache-Control: max-age=$expiryTime" );
 
 print '<?xml version="1.0"?>';
 print Xml::openElement( 'OpenSearchDescription',
