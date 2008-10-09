@@ -1,5 +1,6 @@
 <?php
-
+ini_set('error_reporting', E_ALL);
+ini_set("display_errors","On");
 $wgDBadminuser = $wgDBadminpassword = $wgDBserver = $wgDBname = $wgEnableProfileInfo = false;
 define( 'MW_NO_SETUP', 1 );
 require_once( dirname(__FILE__) . '/includes/WebStart.php' );
@@ -128,16 +129,43 @@ User-agent: WebReaper
 Disallow: /
 
 EOT;
-
+echo getDynamicRobots('goog');
 echo getDynamicRobots();
+echo "\n";
+echo getSitemapUrl();
 die;
 }
 
-function getDynamicRobots(){
+function getDynamicRobots($bot=''){
 	global $wgOut, $wgCat, $wgLanguageNames, $wgContLang;
 	
+if($bot == 'goog'){
 	$r = "\n";
+	$r .= "User-agent: Googlebot\n";
+	$r .= "Disallow: /w/\n";
+	$r .= "Disallow: /trap/\n";
+	$r .= "Disallow: /dbdumps/\n";
+	$r .= "Disallow: /wikistats/\n";
+	$r .= "Disallow: /*printable=yes*\n";
+	$r .= "Disallow: /*feed=rss*\n";
+	$r .= "Disallow: /*action=edit*\n";
+	$r .= "Disallow: /*action=history*\n";
+	$r .= "Disallow: /*action=delete*\n";
+	$r .= "Disallow: /*action=watch*\n";
+	$r .= "Noindex: /w/\n";
+	$r .= "Noindex: /trap/\n";
+	$r .= "Noindex: /dbdumps/\n";
+	$r .= "Noindex: /wikistats/\n";
+	$r .= "Noindex: /*printable=yes*\n";
+	$r .= "Noindex: /*feed=rss*\n";
+	$r .= "Noindex: /*action=edit*\n";
+	$r .= "Noindex: /*action=history*\n";
+	$r .= "Noindex: /*action=delete*\n";
+	$r .= "Noindex: /*action=watch*\n";
 
+}else{
+
+	$r  = "\n";
 	$r .= "User-agent: *\n";
 	$r .= "Disallow: /w/\n";
 	$r .= "Disallow: /trap/\n";
@@ -149,23 +177,30 @@ function getDynamicRobots(){
 	$r .= "Disallow: /*action=history*\n";
 	$r .= "Disallow: /*action=delete*\n";
 	$r .= "Disallow: /*action=watch*\n";
-		
+
+}		
+
 	$lang = new Language();
 		
 	//process english first
 
 	$code = $wgContLang->getCode();
-		
-	if($code!='en'){
-		$r .= getLangSpecificNamespace( $lang, "en", $procCodes );			
-	}
-		
+	
 	if( trim( $code ) == ''){
- 		return;
+		if($code!='en'){
+			$r .= getLangSpecificNamespace( $lang, $code, $bot );				
+		}else{
+			$r .= getLangSpecificNamespace( $lang, "en", $bot );	
+		}
+	}else{
+		$r .= getLangSpecificNamespace( $lang, "en", $bot );	
 	}
+	
+  return $r;
+}
 
-	$r .= getLangSpecificNamespace( $lang, $code );
-		
+function getSitemapUrl(){
+	$r = '';	
 	$hostel = explode('.',$_SERVER['SERVER_NAME']);
 	//delete tdlportion
 	unset($hostel[count($hostel)-1]);
@@ -173,23 +208,35 @@ function getDynamicRobots(){
 	$r .= "# sitemap\n";
 	$r .= 'Sitemap: http://' . $_SERVER['SERVER_NAME'] . '/' . "sitemap-index-" . implode('',$hostel) . ".xml"; 
 
-  return $r;
+	return $r;
 }
 
-function getLangSpecificNamespace( &$lang, $code ){
+function getLangSpecificNamespace( &$lang, $code, $bot='' ){
    global $wgSpecialPages;
   
    $r = '';	
    
    $rs = $lang->getLocalisationArray( $code );
    $ns = $rs['namespaceNames'];
-   
+  
+  if($bot == 'goog'){
    $r .= "# " . $code . "\n" ;
    $r .= 'Disallow: /wiki/' . urlencode( $ns[NS_SPECIAL] ) .":*\n";
    $r .= 'Disallow: /*title=' . urlencode( $ns[NS_SPECIAL] ) .":*\n";
    $r .= 'Disallow: /wiki/' . urlencode( $ns[NS_SPECIAL] ) ."%3A*\n";
    $r .= 'Disallow: /*title=' . urlencode( $ns[NS_SPECIAL] ) ."%3A*\n";
-	
+   $r .= "# " . $code . "\n" ;
+   $r .= 'Noindex: /wiki/' . urlencode( $ns[NS_SPECIAL] ) .":*\n";
+   $r .= 'Noindex: /*title=' . urlencode( $ns[NS_SPECIAL] ) .":*\n";
+   $r .= 'Noindex: /wiki/' . urlencode( $ns[NS_SPECIAL] ) ."%3A*\n";
+   $r .= 'Noindex: /*title=' . urlencode( $ns[NS_SPECIAL] ) ."%3A*\n";
+ }else{
+   $r .= "# " . $code . "\n" ;
+   $r .= 'Disallow: /wiki/' . urlencode( $ns[NS_SPECIAL] ) .":*\n";
+   $r .= 'Disallow: /*title=' . urlencode( $ns[NS_SPECIAL] ) .":*\n";
+   $r .= 'Disallow: /wiki/' . urlencode( $ns[NS_SPECIAL] ) ."%3A*\n";
+   $r .= 'Disallow: /*title=' . urlencode( $ns[NS_SPECIAL] ) ."%3A*\n";	
+ }	
   return $r;
 }
 
@@ -235,7 +282,7 @@ else {
 die;
 }
 
-$robotwikiset = array('buffy.wikia.com','godzilla.wikia.com','harrypotter.wikia.com','hotwheels.wikia.com','muppet.wikia.com','naruto.wikia.com','pushingdaisies.wikia.com','starwars.wikia.com','tardis.wikia.com','transformers.wikia.com','fp001.sjc.wikia-inc.com');
+$robotwikiset = array('buffy.wikia.com','godzilla.wikia.com','harrypotter.wikia.com','hotwheels.wikia.com','muppet.wikia.com','naruto.wikia.com','pushingdaisies.wikia.com','starwars.wikia.com','tardis.wikia.com','transformers.wikia.com','fp005.sjc.wikia-inc.com');
 
 if(in_array(strtolower($_SERVER['SERVER_NAME']), $robotwikiset)){
 	newrobots();
