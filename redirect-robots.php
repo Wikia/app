@@ -1,6 +1,5 @@
 <?php
-ini_set('error_reporting', E_ALL);
-ini_set("display_errors","On");
+
 $wgDBadminuser = $wgDBadminpassword = $wgDBserver = $wgDBname = $wgEnableProfileInfo = false;
 define( 'MW_NO_SETUP', 1 );
 require_once( dirname(__FILE__) . '/includes/WebStart.php' );
