@@ -753,6 +753,10 @@ div#userlogin .captcha,
 	display: none;
 }
 
+#signupWhyProvide_copy {
+	color: #000;
+}
+
 #login-sectiontip {
 	font-size: 85%;
 	line-height: 1.2;
