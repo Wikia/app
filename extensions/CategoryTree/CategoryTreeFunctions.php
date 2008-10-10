@@ -696,8 +696,7 @@ class CategoryTree {
 				'title' => wfMsgExt( 'categorytree-member-counts', 'parsemag', $cat->getSubcatCount(), $pages , $cat->getFileCount(), $cat->getPageCount(), $count )
 			);
 
-			# Don't display 0 counts if $wgCategoryTreeHideZero is set to true
-			if (empty($wgCategoryTreeHideZero) || $count > 0 ) {
+			if ($count) {
 				$s .= ' ';
 				$s .= Xml::element( 'span', $attr, wfMsgExt( 'categorytree-member-num', 'parsemag', $cat->getSubcatCount(), $pages , $cat->getFileCount(), $cat->getPageCount(), $count ) );
 			}
