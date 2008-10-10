@@ -108,6 +108,7 @@ body.mainpage .HOME_TOP_RIGHT_BOXAD, body.mainpage .FAST_HOME2 {
 	float: right;
 	margin-left: 10px;
 	margin-bottom: 10px;
+	margin-top: 100px;
 }
 #FOOTER_SPOTLIGHT_LEFT, #FOOTER_SPOTLIGHT_MIDDLE, #FOOTER_SPOTLIGHT_RIGHT {
 	margin: 0 auto;
