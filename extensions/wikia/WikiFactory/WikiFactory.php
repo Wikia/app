@@ -28,6 +28,11 @@ if( ! function_exists( "wfUnserializeHandler" ) ) {
 
 class WikiFactory {
 
+	const LOG_VARIABLE = 1;
+	const LOG_DOMAIN   = 2;
+	const LOG_CATEGORY = 3;
+	const LOG_STATUS   = 4;
+
 	const DOMAINCACHE = "/tmp/wikifactory/domains.ser";
 	const CACHEDIR = "/tmp/wikifactory/wikis";
 	static public $types = array(
@@ -198,6 +203,7 @@ class WikiFactory {
 			),
 			__METHOD__
 		);
+		self::log( self::LOG_DOMAIN, "{$domain} added.", $wiki );
 		$dbw->commit();
 		wfProfileOut( __METHOD__ );
 
@@ -248,7 +254,7 @@ class WikiFactory {
 	}
 
 	/**
-	 * SetVarById
+	 * setVarById
 	 *
 	 * used for saving new variable value, logging changes and update city_list
 	 * values
@@ -257,13 +263,13 @@ class WikiFactory {
 	 * @author eloy@wikia
 	 * @static
 	 *
-	 * @param integer $variable		variable id in city_variables_pool
+	 * @param integer $cv_variable_id		variable id in city_variables_pool
 	 * @param integer $city_id		wiki id in city list
 	 * @param mixed $value			new value for variable
 	 *
 	 * @return boolean: transaction status
 	 */
-	static public function SetVarById( $variable, $city_id, $value ) {
+	static public function setVarById( $cv_variable_id, $city_id, $value ) {
 
 		if( ! self::isUsed() ) {
 			wfDebug( __METHOD__ . ": WikiFactory is not used.");
@@ -272,7 +278,7 @@ class WikiFactory {
 
 		global $wgUser;
 
-		if( empty( $variable ) || empty( $city_id ) ) {
+		if( empty( $cv_variable_id ) || empty( $city_id ) ) {
 			return;
 		}
 
@@ -282,34 +288,28 @@ class WikiFactory {
 
 		$dbw->begin();
 		try {
-			$oRow = $dbw->selectRow(
-				wfSharedTable("city_variables") /*table*/,
-				array( /*fields*/
-					"cv_variable_id",
-					"cv_value"
-				),
-				array( /*where*/
-					"cv_variable_id" => $variable,
-					"cv_city_id" => $city_id
-				),
-				__METHOD__
-			);
 
-			#--- delete old value
+			$variable = self::loadVariableFromDB( $cv_variable_id, null, $city_id );
+
+			/**
+			 * delete old value
+			 */
 			$dbw->delete(
 				wfSharedTable("city_variables"),
 				array (
-					"cv_variable_id" => $variable,
+					"cv_variable_id" => $cv_variable_id,
 					"cv_city_id" => $city_id
 				),
 				__METHOD__
 			);
 
-			#--- insert
+			/**
+			 * insert new one
+			 */
 			$dbw->insert(
 				wfSharedTable("city_variables"),
 				array(
-					"cv_variable_id"    => $variable,
+					"cv_variable_id"    => $cv_variable_id,
 					"cv_city_id"        => $city_id,
 					"cv_value"          => serialize( $value )
 				),
@@ -317,17 +317,28 @@ class WikiFactory {
 			);
 
 			wfProfileIn( __METHOD__."-changelog" );
-			$dbw->insert(
-				wfSharedTable("city_variables_log"),
-				array(
-					"cv_city_id"        => $city_id,
-					"cv_variable_id"    => $variable,
-					"cv_value_old"      => serialize( $value ),
-					"cv_timestamp"      => wfTimestampNow(),
-					"cv_user_id"        => $wgUser->getID()
-				),
-				__METHOD__
-			);
+
+			if( isset( $variable->cv_value ) ) {
+				self::log(
+					self::LOG_VARIABLE,
+					sprintf("Variable %s changed value from %s to %s",
+						$variable->cv_name,
+						var_export( unserialize( $variable->cv_value ), true ),
+						var_export( $value, true )
+					),
+					$city_id
+				);
+			}
+			else {
+				self::log(
+					self::LOG_VARIABLE,
+					sprintf("Variable %s set value: %s",
+						$variable->cv_name,
+						var_export( $value, true )
+					),
+					$city_id
+				);
+			}
 			wfProfileOut( __METHOD__."-changelog" );
 
 			/**
@@ -335,14 +346,8 @@ class WikiFactory {
 			 * city_language or city_url)
 			 */
 			wfProfileIn( __METHOD__."-citylist" );
-			$oRow = $dbw->selectRow(
-				array( wfSharedTable("city_variables_pool" ))/*table*/,
-				array( "cv_id","cv_name") /*fields*/,
-				array( "cv_id" => $variable) /*where*/,
-				__METHOD__
-			);
-			wfRunHooks( 'WikiFactoryChanged', array( $oRow->cv_name , $city_id, $value ) );
-			switch( $oRow->cv_name ) {
+			wfRunHooks( 'WikiFactoryChanged', array( $variable->cv_name , $city_id, $value ) );
+			switch( $variable->cv_name ) {
 				case "wgServer":
 				case "wgScriptPath":
 					/**
@@ -352,7 +357,7 @@ class WikiFactory {
 					/**
 					 * ...so get the other variable
 					 */
-					if( $oRow->cv_name === "wgServer" ) {
+					if( $variable->cv_name === "wgServer" ) {
 						$tmp = self::getVarValueByName( "wgScriptPath", $city_id );
 						$server = is_null( $value ) ? "" : $value;
 						$script_path = is_null( $tmp ) ? "/" : $tmp . "/";
@@ -854,7 +859,7 @@ class WikiFactory {
 	 * @param integer $group default 0: variable group
 	 * @param boolean $defined default false: only with values in city_variables
 	 * @param boolean $editable default false: only with cv_access_level > 1
-	 * @param boolean	$string	default false	only with $string in names
+	 * @param boolean $string	default false	only with $string in names
 	 *
 	 * @return mixed: array with variables
 	 */
@@ -872,29 +877,29 @@ class WikiFactory {
 			wfSharedTable("city_variables_groups")
 		);
 
-		$aWhere = array( "cv_group_id = cv_variable_group" );
+		$where = array( "cv_group_id = cv_variable_group" );
 		$aAllowedOrders = array(
 			"cv_id", "cv_name", "cv_variable_type",
 			"cv_variable_group", "cv_access_level"
 		);
 		if (!empty( $group )) {
-			$aWhere["cv_variable_group"] = $group;
+			$where["cv_variable_group"] = $group;
 		}
 
 		if ( $editable === true ) {
-			$aWhere[] = "cv_access_level > 1";
+			$where[] = "cv_access_level > 1";
 		}
 
 		if( $string ) {
-			$aWhere[] = "cv_name like '%$string%'";
+			$where[] = "cv_name like '%$string%'";
 		}
 
 		if ( $defined === true && $wiki != 0 ) {
 			#--- add city_variables table
 			$aTables[] = wfSharedTable("city_variables");
 			#--- add join
-			$aWhere[] = "cv_variable_id = cv_id";
-			$aWhere[ "cv_city_id" ] = $wiki;
+			$where[] = "cv_variable_id = cv_id";
+			$where[ "cv_city_id" ] = $wiki;
 		}
 
 		#--- now construct query
@@ -904,7 +909,7 @@ class WikiFactory {
 		$oRes = $dbr->select(
 			$aTables,
 			array( "*" ),
-			$aWhere,
+			$where,
 			__METHOD__,
 			array( "ORDER BY" => $sort )
 		);
@@ -1012,6 +1017,7 @@ class WikiFactory {
 			array( "city_id" => $city_id ),
 			__METHOD__
 		);
+		self::log( self::LOG_STATUS, "Status of wiki changed to {$city_public}.", $city_id );
 
 		wfProfileOut( __METHOD__ );
 
@@ -1189,5 +1195,45 @@ class WikiFactory {
 		}
 
 		return false;
+	}
+
+
+	/**
+	 * log
+	 *
+	 * log information about changes in wiki factory system, very simple.
+	 * Use city_list_log table in shared database.
+	 *
+	 * @access public
+	 * @static
+	 * @author Krzysztof Krzyżaniak <eloy@wikia-inc.com>
+	 *
+	 * @param integer	$type	type of message, use constants from class
+	 * @param string	$msg	message to be logged
+	 * @param integer	$city_id default false	wiki id from city_list
+	 *
+	 * @return boolean	status of insert operation
+	 */
+	static public function log( $type, $msg, $city_id = false ) {
+		global $wgUser, $wgCityId;
+
+		if( ! self::isUsed() ) {
+			wfDebug( __METHOD__ . ": WikiFactory is not used.");
+			return false;
+		}
+
+		$city_id = ( $city_id === false ) ? $wgCityId : $city_id;
+
+		$dbw = wfGetDB( DB_MASTER );
+		return $dbw->insert(
+			wfSharedTable( "city_list_log" ),
+			array(
+				"cl_city_id" => $city_id,
+				"cl_user_id" => $wgUser->getId(),
+				"cl_type" => $type,
+				"cl_text" => $msg
+			),
+			__METHOD__
+		);
 	}
 };
