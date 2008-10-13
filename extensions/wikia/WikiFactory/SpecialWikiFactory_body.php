@@ -3,7 +3,7 @@
 /**
  * @package MediaWiki
  * @subpackage SpecialPage
- * @author Krzysztof Krzyżaniak <eloy@wikia.com> for Wikia.com
+ * @author Krzysztof Krzyżaniak <eloy@wikia-inc.com> for Wikia.com
  * @version: 0.1
  */
 
@@ -495,7 +495,6 @@ class ChangeLogPager extends TablePager {
 	/**
 	 * getTitle
 	 *
-	 * @author eloy@wikia.com
 	 * @return Title object
      */
 	function getTitle() {
@@ -505,7 +504,6 @@ class ChangeLogPager extends TablePager {
 	/**
 	 * getFieldNames
 	 *
-	 * @author eloy@wikia.com
 	 * @return Array with column names
 	 */
 	public function getFieldNames() {
@@ -526,7 +524,6 @@ class ChangeLogPager extends TablePager {
 	/**
 	 * isFieldSortable
 	 *
-	 * @author eloy@wikia.com
 	 * @param string $field: field name
 	 *
 	 * @return boolean: flag if $field is sortable of not
@@ -543,8 +540,6 @@ class ChangeLogPager extends TablePager {
 	 *
 	 * @param string $field: field name
 	 * @param mixed $value: field value
-	 *
-	 * @author eloy@wikia.com
 	 *
 	 * @return string: formated table field
 	 */
@@ -580,8 +575,6 @@ class ChangeLogPager extends TablePager {
 	 *
 	 * get default field for sorting
 	 *
-	 * @author eloy@wikia.com
-	 *
 	 * @return string: table field
 	 */
 	function getDefaultSort() {
@@ -593,8 +586,6 @@ class ChangeLogPager extends TablePager {
 	 * getQueryInfo
 	 *
 	 * get default field for sorting
-	 *
-	 * @author eloy@wikia.com
 	 *
 	 * @return array: query info
 	 */
@@ -624,8 +615,6 @@ class ChangeLogPager extends TablePager {
 	 * getForm
 	 *
 	 * get form definition
-	 *
-	 * @author eloy@wikia.com
 	 *
 	 * @return string: empty
 	 */

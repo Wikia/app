@@ -473,3 +473,12 @@ CREATE TABLE IF NOT EXISTS `online` (
 	INDEX USING BTREE (`timestamp`)
 ) TYPE=InnoDB;
 
+CREATE TABLE IF NOT EXISTS `city_list_log` (
+  `cl_city_id` int(10) unsigned NOT NULL,
+  `cl_timestamp` timestamp NOT NULL default CURRENT_TIMESTAMP,
+  `cl_user_id` int(5) unsigned default NULL,
+  `cl_type` int(5) NOT NULL,
+  `cl_text` mediumtext NOT NULL,
+  KEY `cl_city_id_idx` (`cl_city_id`),
+  KEY `cl_type_idx` (`cl_type`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
