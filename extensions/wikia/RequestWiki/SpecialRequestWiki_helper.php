@@ -230,12 +230,13 @@ function axWRequestCheckName() {
     if (!strlen($sName)) {
         $sResponse = Wikia::errormsg(wfMsg('requestwiki-error-empty-field'));
         $iError++;
-    }
-    elseif (preg_match('/[^a-z0-9-]/i', $sName)) {
+    } elseif (preg_match('/[^a-z0-9-]/i', $sName)) {
         $sResponse = Wikia::errormsg(wfMsg('requestwiki-error-bad-name'));
         $iError++;
-    }
-    else {
+    } elseif (in_array($sName, array_keys(Language::getLanguageNames()))) {
+	$sResponse = Wikia::errormsg(wfMsg('requestwiki-error-name-is-lang'));
+	$iError++;
+    } else {
 
         $iExists = wfRequestExact($sName, $sLang);
         #--- only $aDomains['exact'] are insteresting
