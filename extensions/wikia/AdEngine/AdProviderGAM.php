@@ -24,23 +24,32 @@ class AdProviderGAM implements iAdProvider {
 	}
 
 	private $sites = array(	'Auto' => 'auto',
-							'Creative' => 'crea',
-							'Education' => 'edu',
-							'Entertainment' => 'ent',
-							'Finance' => 'fin',
-							'Gaming' => 'gaming',
-							'Green' => 'green',
-							'Humor' => 'humor',
-							'Lifestyle' => 'life',
-							'Music' => 'music',
-							'Philosophy' => 'phil',
-							'Politics' => 'poli',
-							'Science' => 'sci',
-							'Sports' => 'sports',
-							'Technology' => 'tech',
-							'Test Site' => 'test',
-							'Toys' => 'toys',
-							'Travel' => 'travel');
+				'Creative' => 'crea',
+				'Education' => 'edu',
+				'Entertainment' => 'ent',
+				'Finance' => 'fin',
+				'Gaming' => 'gaming',
+				'Green' => 'green',
+				'Humor' => 'humor',
+				'Lifestyle' => 'life',
+				'Music' => 'music',
+				'Philosophy' => 'phil',
+				'Politics' => 'poli',
+				'Science' => 'sci',
+				'Sports' => 'sports',
+				'Technology' => 'tech',
+				'Test Site' => 'test',
+				'Toys' => 'toys',
+				'Travel' => 'travel');
+
+	private $channels = array(	'8770790322', // Control
+					'1816018796', // Content Language
+					'1561126031', // User Language
+					'6359157529', // Default colors (instead of matching colors to the wiki)
+					'2086936532', // Hints
+					'4120043396', // Keywords
+					'2695313814'); // Page Url
+
 	private $slotsToCall = array();
 
 	public function addSlotToCall($slotname){
@@ -88,11 +97,15 @@ class AdProviderGAM implements iAdProvider {
 			$out .= $this->getProviderValues($slotname);
 		}
 
+		// ###### Our custom key values
 		// Always pass the hub as a key value
 		$out .= $this->getTargetingValue('hub', $this->getHub()) . "\n";
 		// And languages
 		$out .= 'GA_googleAddAttr("cont_lang", wgContentLanguage);' . "\n";
 		$out .= 'GA_googleAddAttr("user_lang", wgUserLanguage);' . "\n";
+
+		// ###### Ad Sense attributes
+		$out .= $this->getAdSenseAttr();
 		$out .= '</script>' . "\n";
 		
 		// Make the call for all the ads
@@ -104,6 +117,87 @@ class AdProviderGAM implements iAdProvider {
 	}
 
 
+	/* Passing google ad sense attributes. The google ad sense attributes aren't very well documented.
+	 * This page seems to have quite a few.  http://gandolf.homelinux.org/~smhanov/blog/?id=21
+	 * Use Google Channels for bucket testing of different attributes.
+         */
+	public function getAdSenseAttr(){
+
+		$channel = $this->getChannel();
+		$out = '';
+
+		if ($channel != "6359157529"){
+			// Set the colors to match the wiki, except for "6359157529", which is testing white
+			$out .= 'GA_googleAddAdSensePageAttr("google_color_border", AdEngine.getAdColor("text"));' . "\n";
+			$out .= 'GA_googleAddAdSensePageAttr("google_color_bg", AdEngine.getAdColor("bg"));' . "\n";
+			$out .= 'GA_googleAddAdSensePageAttr("google_color_link", AdEngine.getAdColor("link"));' . "\n";
+			$out .= 'GA_googleAddAdSensePageAttr("google_color_text", AdEngine.getAdColor("text"));' . "\n";
+			$out .= 'GA_googleAddAdSensePageAttr("google_color_url", AdEngine.getAdColor("url"));' . "\n";
+		}
+
+                if (in_array(AdEngine::getInstance()->getBucketName(), array('lp', 'lp_at', 'bp'))){
+			$out .= 'GA_googleAddAdSensePageAttr("google_ad_channel", AdEngine.getGoogleChannel());' . "\n";
+                        // Stop here, because these are doing bucket tests in javascript
+			return $out;
+		}       
+
+		$out .= 'GA_googleAddAdSensePageAttr("google_ad_channel", "' . $channel . '");' . "\n";
+
+
+		// Bucket testing of different params based on channel
+		switch ($channel){
+		  case '8770790322': break; //control
+		  case '2086936532':
+			if(!empty($_GET['search'])){
+				// Note that we don't have ads on the search page right now, so this isn't going to do any good
+				$out .= 'GA_googleAddAdSensePageAttr("google_hints", "' . addslashes($_GET['search']) . '";';
+			} else {
+				// Pull in the same keywords we use for the page.
+				$out .= 'GA_googleAddAdSensePageAttr("google_hints", AdEngine.getKeywords());';
+			}
+			break;
+		  case '2695313814':
+			$out .= 'GA_googleAddAdSensePageAttr("google_page_url", "' . addslashes(AdProviderGoogle::getPageUrl()) . '");' . "\n";
+			break;
+
+		  case '1561126031':
+			$out .= 'GA_googleAddAdSensePageAttr("google_language", wgUserLanguage);' . "\n";
+			break;
+
+		  case '1816018796':
+			$out .= 'GA_googleAddAdSensePageAttr("google_language", wgContentLanguage);' . "\n";
+			break;
+
+		  case '4120043396':
+			if(!empty($_GET['search'])){
+				// Note that we don't have ads on the search page right now, so this isn't going to do any good
+				$out .= 'GA_googleAddAdSensePageAttr("google_kw", "' . addslashes($_GET['search']) . '";';
+			} else {
+				// Pull in the same keywords we use for the page.
+				$out .= 'GA_googleAddAdSensePageAttr("google_kw", AdEngine.getKeywords());';
+			}
+			break;
+
+		  default: trigger_error("Unrecognized Google Channel ($channel)", E_USER_WARNING);
+                }
+
+		return $out;
+	}
+
+        public function getChannel(){
+                // Channel is a way to do bucket testing.
+                static $channel;
+                if (!empty($channel)){
+                        return $channel;
+                }
+
+		$rand = mt_rand(0, sizeof($this->channels)-1);
+		$channel = $this->channels[$rand];
+                return $channel;
+        }
+
+
+
 	public function getAd($slotname, $slot){
 		$out = "";
 		// First time the ad is called, call all the batch code, if it hasn't already been called.
@@ -111,7 +205,7 @@ class AdProviderGAM implements iAdProvider {
 			$out .= $this->getBatchCallHtml();
 		} 
 
-		return $out .'<script type="text/javascript">GA_googleFillSlot("' . $slotname . '")</script>';
+		return $out . '<script type="text/javascript">GA_googleFillSlot("' . $slotname . '")</script>';
 	}
 
 
@@ -161,3 +255,4 @@ class AdProviderGAM implements iAdProvider {
 	}
 
 }
+

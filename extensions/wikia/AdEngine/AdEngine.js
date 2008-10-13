@@ -18,7 +18,6 @@ AdEngine.resetCssClear = function (side) {
 	var Dom = YAHOO.util.Dom;
 	Dom.getElementsBy(function(el) {
 	if((el.nodeName == 'DIV' || el.nodeName == 'TABLE') &&
-		    // el.id.substring(0,7) != 'adSpace' &&
 		    Dom.getStyle(el, 'float') == side) {
 			return true;
 		}
@@ -179,9 +178,31 @@ AdEngine.getBucketid = function(){
 		AdEngine.bucketid = forceParam.toString().substr(14);
 	} else if (YAHOO.util.Cookie.get('wkabkt') != null ){
 		AdEngine.bucketid = YAHOO.util.Cookie.get('wkabkt');
+	} else if (AdEngine.bucketid != '' ){
+		return AdEngine.bucketid;
+	} else {
+		var bucketids = new Array('');
+
+		// Set up the various tests
+		if ($('TOP_LEADERBOARD') != null && AdEngine.bucketName == 'lp'){
+			bucketids = new Array('lp_center', 'lp_left', 'lp_right', 'lp_control');
+
+		} else if ($('TOP_LEADERBOARD') != null && AdEngine.bucketName == 'lp_at'){
+			bucketids = new Array('lp_at_center', 'lp_at_left', 'lp_at_right', 'lp_at_control');
+
+		} else if ($('TOP_RIGHT_BOXAD') != null && AdEngine.bucketName == 'bp'){
+			bucketids = new Array('bp_overline', 'bp_down', 'bp_control');
+
+		} 
+
+		if (bucketids.length > 1){
+			AdEngine.bucketid = bucketids[Math.floor(Math.random()*bucketids.length)];
+		}
+
 	}
 
 	return AdEngine.bucketid;
+
 };
 
 AdEngine.bucketDebug = function (){
@@ -196,83 +217,59 @@ AdEngine.bucketDebug = function (){
 
 
 /* For testing click through rates on various placements of ads. 
- * Accepts a slotname, checks to see which bucket this user should be in,
+ * Checks to see which bucket this user should be in,
  * and then adjusts the style for the containing div. The name of the bucket
  * is returned so that it can be passed to the ad call for reporting.
  * @return a unique id to identify the test (for passing in the ad call), or '' if no test done.
  */
-AdEngine.doBucketTest = function (slotname) {
+AdEngine.doBucketTest = function () {
 	AdEngine.getBucketName();
 	AdEngine.getBucketid(); 
 
-	// Set up the bucketid
-	if (AdEngine.bucketid == ''){ // It will be empty if it hasn't been set by AdEngine.getBucketid()
-		var bucketids = new Array('');
-
-		// Set up the various tests
-		if (slotname == 'TOP_LEADERBOARD' && AdEngine.bucketName == 'lp'){
-			bucketids = new Array('lp_center', 'lp_left', 'lp_right', 'lp_control');
-
-		} else if (slotname == 'TOP_LEADERBOARD' && AdEngine.bucketName == 'lp_at'){
-			bucketids = new Array('lp_at_center', 'lp_at_left', 'lp_at_right', 'lp_at_control');
-
-		} else if (slotname == 'TOP_RIGHT_BOXAD' && AdEngine.bucketName == 'bp'){
-			bucketids = new Array('bp_overline', 'bp_down', 'bp_control');
-
-		} 
-		// Set up other bucket tests here. 
-
-		if (bucketids.length > 1){
-			AdEngine.bucketid = bucketids[Math.floor(Math.random()*bucketids.length)];
-		}
-
-	}
-
-
 	// Do the switching of the css via javascript
-	if (slotname == 'TOP_LEADERBOARD'){
+	if ($('TOP_LEADERBOARD') != null){
 
 	  switch (AdEngine.bucketid){
 		case '': return; // No buckets for this page
 
 		// Shift around the leaderboards in their current slot
 		case 'lp_left':
-			YAHOO.util.Dom.setStyle(slotname, "margin-left", "0");
-			YAHOO.util.Dom.setStyle(slotname, "margin-right", "auto");
+			YAHOO.util.Dom.setStyle("TOP_LEADERBOARD", "margin-left", "0");
+			YAHOO.util.Dom.setStyle("TOP_LEADERBOARD", "margin-right", "auto");
 			break;
 		case 'lp_center':
-			YAHOO.util.Dom.setStyle(slotname, "margin-left", "auto");
-			YAHOO.util.Dom.setStyle(slotname, "margin-right", "auto");
+			YAHOO.util.Dom.setStyle("TOP_LEADERBOARD", "margin-left", "auto");
+			YAHOO.util.Dom.setStyle("TOP_LEADERBOARD", "margin-right", "auto");
 			break;
 		case 'lp_right':
-			YAHOO.util.Dom.setStyle(slotname, "margin-left", "auto");
-			YAHOO.util.Dom.setStyle(slotname, "margin-right", "0");
+			YAHOO.util.Dom.setStyle("TOP_LEADERBOARD", "margin-left", "auto");
+			YAHOO.util.Dom.setStyle("TOP_LEADERBOARD", "margin-right", "0");
 			break;
 
 		// Shift around the leaderboards in a new slot, above the title
 		case 'lp_at_left':
-			YAHOO.util.Dom.setStyle(slotname, "margin-left", "0");
-			YAHOO.util.Dom.setStyle(slotname, "margin-right", "auto");
+			YAHOO.util.Dom.setStyle("TOP_LEADERBOARD", "margin-left", "0");
+			YAHOO.util.Dom.setStyle("TOP_LEADERBOARD", "margin-right", "auto");
 			break;
 		case 'lp_at_center':
-			YAHOO.util.Dom.setStyle(slotname, "margin-left", "auto");
-			YAHOO.util.Dom.setStyle(slotname, "margin-right", "auto");
+			YAHOO.util.Dom.setStyle("TOP_LEADERBOARD", "margin-left", "auto");
+			YAHOO.util.Dom.setStyle("TOP_LEADERBOARD", "margin-right", "auto");
 			break;
 		case 'lp_at_right':
-			YAHOO.util.Dom.setStyle(slotname, "margin-left", "auto");
-			YAHOO.util.Dom.setStyle(slotname, "margin-right", "0");
+			YAHOO.util.Dom.setStyle("TOP_LEADERBOARD", "margin-left", "auto");
+			YAHOO.util.Dom.setStyle("TOP_LEADERBOARD", "margin-right", "0");
 			break;
 	  }
 	
-	} else if (slotname == 'TOP_RIGHT_BOXAD'){
+	} else if ($('TOP_RIGHT_BOXAD') != null){
 
        	  // Shift the box ad up and down
 	  switch (AdEngine.bucketid){
 		case 'bp_overline':
-			YAHOO.util.Dom.setStyle(slotname, "margin-top", "-45px");
+			YAHOO.util.Dom.setStyle("TOP_RIGHT_BOXAD", "margin-top", "-45px");
 			break;
 		case 'bp_down':
-			YAHOO.util.Dom.setStyle(slotname, "margin-top", "45px");
+			YAHOO.util.Dom.setStyle("TOP_RIGHT_BOXAD", "margin-top", "45px");
 			break;
           }
 
@@ -285,6 +282,23 @@ AdEngine.doBucketTest = function (slotname) {
 
 };
 
+// This is how we handle the reporting for bucket testing, by using google channels
+AdEngine.getGoogleChannel = function (){
+	AdEngine.getBucketid();
+	switch (AdEngine.bucketid){
+	  case 'lp_left': return "7665676283";
+	  case 'lp_center': return "1028770315";
+  	  case 'lp_right': return "3592523985";
+	  case 'lp_at_left': return "6506950785";
+	  case 'lp_at_center': return "5436428914";
+	  case 'lp_at_right': return "3293611624";
+	  case 'bp_overline': return "5113403507";
+	  case 'bp_down': return "4971759242";
+	  default: return "";
+	}
+};
+
+
 
 /* Return the meta keywords so they can be passed as hints */
 AdEngine.getKeywords = function () {
@@ -296,3 +310,9 @@ AdEngine.getKeywords = function () {
 	}
 	return '';
 };
+
+/* Target based on the minute of the hour */
+AdEngine.getMinuteTargeting = function (){
+	var myDate = new Date();
+	return myDate.getMinutes() % 15;
+}; 

@@ -83,7 +83,7 @@ class AdProviderGoogle implements iAdProvider {
 	}
 
 
-	public function getPageUrl(){
+	static public function getPageUrl(){
 		global $wgTitle;
 		if (is_object($wgTitle) && method_exists($wgTitle, 'getFullUrl')){
 			return $wgTitle->getFullUrl();
