@@ -512,10 +512,10 @@ class ChangeLogPager extends TablePager {
 			if( ! $this->mWikiId ) {
 				$this->mFieldNames["city_url"]      = "Wiki";
 			}
-			$this->mFieldNames["cv_name"]       = "Variable name";
-			$this->mFieldNames["cv_value_old"]  = "Changed value";
-			$this->mFieldNames["cv_timestamp"]  = "Changed";
-			$this->mFieldNames["cv_user_id"]    = "Who";
+			$this->mFieldNames["cl_timestamp"]  = "Changed";
+			$this->mFieldNames["cl_type"]       = "Type";
+			$this->mFieldNames["cl_user_id"]    = "Who";
+			$this->mFieldNames["cl_text"]       = "What";
 		}
 
 		return $this->mFieldNames;
@@ -529,7 +529,7 @@ class ChangeLogPager extends TablePager {
 	 * @return boolean: flag if $field is sortable of not
      */
 	public function isFieldSortable( $field ) {
-		static $aSortable = array( "city_url", "cv_name", "cv_timestamp", "cv_user_id" );
+		static $aSortable = array( "city_url", "cl_type", "cl_timestamp", "cl_user_id" );
 		return in_array( $field, $aSortable );
 	}
 
@@ -551,15 +551,27 @@ class ChangeLogPager extends TablePager {
 				return $sRetval;
 				break;
 
-			case "cv_value_old":
-				return var_export( unserialize( $value ), 1);
-				break;
-
-			case "cv_timestamp":
+			case "cl_timestamp":
 				return wfTimestamp( TS_EXIF, $value );
 				break;
+			case "cl_type":
+				switch( $value ) {
+					case WikiFactory::LOG_CATEGORY:
+						return "category";
+						break;
+					case WikiFactory::LOG_VARIABLE:
+						return "variable";
+						break;
+					case WikiFactory::LOG_DOMAIN:
+						return "domain";
+						break;
+					case WikiFactory::LOG_STATUS:
+						return "status";
+						break;
+				}
+				break;
 
-			case "cv_user_id":
+			case "cl_user_id":
 				$oUser = User::newFromId( $value );
 				$oUser->load();
 				return sprintf("<a href=\"%s\">%s</a>", $oUser->getUserPage()->getLocalUrl(), $oUser->getName());
@@ -579,7 +591,7 @@ class ChangeLogPager extends TablePager {
 	 */
 	function getDefaultSort() {
 		$this->mDefaultDirection = true;
-		return "cv_timestamp";
+		return "cl_timestamp";
 	}
 
 	/**
@@ -592,16 +604,12 @@ class ChangeLogPager extends TablePager {
 	function getQueryInfo() {
 		$query = array(
 			"tables" => array(
-				wfSharedTable("city_variables_log"),
+				wfSharedTable("city_list_log"),
 				wfSharedTable("city_list"),
-				wfSharedTable("city_variables_pool")
 			),
 			"fields" => array( "*" ),
 			"conds" => array(
-				wfSharedTable("city_variables_log").".cv_variable_id = ".
-				wfSharedTable("city_variables_pool").".cv_id",
-				wfSharedTable("city_list").".city_id = ".
-				wfSharedTable("city_variables_log").".cv_city_id"
+				wfSharedTable("city_list").".city_id = " . wfSharedTable("city_list_log").".cl_city_id"
 			)
 		);
 
