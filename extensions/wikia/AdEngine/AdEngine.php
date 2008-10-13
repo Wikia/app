@@ -46,7 +46,8 @@ class AdEngine {
 		'masseffect',
 		'warhammeronline',
 		'starcraft',
-		'diablo'
+		'diablo',
+		'blind'
 	);
 		
 	protected function __construct() {
