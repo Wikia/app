@@ -18,7 +18,7 @@ interface iAdProvider {
 
 class AdEngine {
 
-	const cacheKeyVersion = "1.9l";
+	const cacheKeyVersion = "1.9m";
 	const cacheTimeout = 1800;
 
 	// TODO: pull these from wikicities.provider
@@ -39,6 +39,14 @@ class AdEngine {
                 3 => 'lp', // Leaderboard placed left-center-right in current spot
                 4 => 'lp_at', // Leaderboard placed above title, left-center-right
                 5 => 'bp', // Boxad placement
+	);
+
+	// Exclude these $wgDBname's from bucket testing
+	private $handsOffWikis = array(
+		'masseffect',
+		'warhammeronline',
+		'starcraft',
+		'diablo'
 	);
 		
 	protected function __construct() {
@@ -66,7 +74,7 @@ class AdEngine {
 		/* TODO move this to allinone, and find a better spot for this code after I talk to Christian.
                          This is an experiment to see if moving it higher on the page makes it better */
 		global $wgExtensionsPath;
-		// $wgExtensionsPath='/extensions';
+		//$wgExtensionsPath='/extensions';
 		$out .= '<script type="text/javascript" src="' . $wgExtensionsPath . '/wikia/AdEngine/AdEngine.js?' . self::cacheKeyVersion . '"></script>'. "\n";
 
 		$out .= "<!-- #### END " . __CLASS__ . '::' . __METHOD__ . " ####-->\n";
@@ -202,10 +210,15 @@ class AdEngine {
 			switch ($wgLanguageCode) {
 			  case 'en': 
 
-				// Do bucket testing of different providers
-				if ($slotname == 'TOP_LEADERBOARD' && $this->getBucketName() == 'GAM_leaderboard'){
+				// Do bucket testing of different providers and different placements
+				if ($slotname == 'TOP_LEADERBOARD' && (
+				    $this->getBucketName() == 'GAM_leaderboard' ||
+				    $this->getBucketName() == 'lp' ||
+				    $this->getBucketName() == 'lp_at')){
 					return AdProviderGAM::getInstance();
-				} else if ($slotname == 'TOP_RIGHT_BOXAD' && $this->getBucketName() == 'GAM_boxad'){
+				} else if ($slotname == 'TOP_RIGHT_BOXAD' && (
+				    $this->getBucketName() == 'GAM_boxad'  ||
+				    $this->getBucketName() == 'bp')){
 					return AdProviderGAM::getInstance();
 				} else {
 					return $this->getProviderFromId($this->slots[$slotname]['provider_id']);
@@ -298,18 +311,23 @@ class AdEngine {
 		$out = "<script type='text/javascript'>\n" . 
 			"AdEngine.bucketTests = " . json_encode($this->bucketTests) . "\n" . 
 			'AdEngine.bucketName = "' . addslashes($this->getBucketName()) . '"' . ";\n" .
+			"AdEngine.doBucketTest();\n" .
+			"AdEngine.bucketDebug();\n" .
 			"</script>";
 			
 		return $out;
 	}
 
 	public function getBucketName(){
-	        if ($this->bucketName !== null){
+		global $wgDBname;
+	        if (!is_null($this->bucketName)){
                 	return $this->bucketName;
 		} else if (!empty($_GET['forceBucket'])){
 			// preg_replace to prevent XSS
 			$this->bucketName = preg_replace('/[^a-z0-9A-Z\-\_]/', '', $_GET['forceBucket']);
 			return $this->bucketName;
+		} else if (in_array($wgDBname, $this->handsOffWikis)){
+			$this->bucketName = '';
 		} else {
 			if (isset($this->bucketTests[$this->bucketNum])){
 				$this->bucketName = $this->bucketTests[$this->bucketNum];
@@ -330,10 +348,8 @@ class AdEngine {
 		$out = "<!-- #### BEGIN " . __CLASS__ . '::' . __METHOD__ . " ####-->\n";
 
 		$out .=  $this->getBucketTestingCode();
-
-		$out .= '<script type="text/javascript">' .
-			"TieDivLibrary.timer();\n". 
-			'</script>';
+		
+		$out .= '<script type="text/javascript">TieDivLibrary.timer()</script>';
 
 		// Get the setup code for ad providers used on this page. This is for Ad Providers that support multi-call.
 		foreach ($this->placeholders as $slotname){
@@ -361,13 +377,11 @@ class AdEngine {
 			 * I'd like to see a better solution for this, someday
 			 * See Christian or Nick for more info.
 			*/
-			$out .= '<script type="text/javascript">';
-			$out .= 'AdEngine.doBucketTest("'. $slotname .'");';
-			$out .= 'AdEngine.displaySlotIfAd("'. $slotname .'");';
-			$out .= 'TieDivLibrary.tie("'. $slotname .'");';
-			$out .= '</script>';
+			$out .= '<script type="text/javascript">' .
+				'AdEngine.displaySlotIfAd("'. $slotname .'");' .
+				'TieDivLibrary.tie("'. $slotname .'");' .
+				'</script>';
 		}
-		$out .= "<script type='text/javascript'>AdEngine.bucketDebug();</script>\n";
 		$out .= "<!-- #### END " . __CLASS__ . '::' . __METHOD__ . " ####-->\n";
 		return $out;
 	}

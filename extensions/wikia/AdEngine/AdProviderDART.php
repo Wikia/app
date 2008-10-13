@@ -70,7 +70,8 @@ class AdProviderDART implements iAdProvider {
 		$url .= $this->getProviderValues($slot);
 		$url .= $this->getArticleKV();
 		$url .= $this->getDomainKV($_SERVER['HTTP_HOST']);
-		$url .= 'wkabkt=@@WIKIABUCKET@@;'; // To be filled in from AdEngine.bucket via javascript
+		$url .= 'AQ=@@WIKIA_AQ@@;'; // To be filled in from AdEngine.bucket via javascript
+		$url .= 'wkabkt=@@WIKIA_BUCKET@@;'; // To be filled in from AdEngine.bucket via javascript
 		$url .= 'pos=' . $slotname . ';';
 		$url .= $this->getKeywordsKV();
 		$url .= $this->getDcoptKV($slotname);
@@ -85,7 +86,8 @@ class AdProviderDART implements iAdProvider {
 		// Ug. Heredocs suck, but with all the combinations of quotes, it was the cleanest way.
 		$out .= <<<EOT
 		dartUrl = '$url' + AdsCB;
-		dartUrl = dartUrl.replace(/@@WIKIABUCKET@@/, AdEngine.bucketid);
+		dartUrl = dartUrl.replace(/@@WIKIA_BUCKET@@/, AdEngine.bucketid);
+		dartUrl = dartUrl.replace(/@@WIKIA_AQ@@/, AdEngine.getMinuteTargeting());
 		document.write("<scr"+"ipt type='text/javascript' src='"+ dartUrl +"'><\/scr"+"ipt>");
 EOT;
 		$out .= "/*]]>*/</script>\n";
