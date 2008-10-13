@@ -218,9 +218,15 @@ class ReverseParser {
 					// text formatting
 					case 'i':
 					case 'em':
-						if(substr($textContent, -1) == "'" || substr($textContent, 0, 1) == "'" || substr($node->previousSibling->textContent, -1) == "'" || substr($node->nextSibling->textContent, 0, 1) == "'" || in_array($node->parentNode->nodeName, array('b', 'strong'))) {
-							$open = '<em>';
-							$close = '</em>';
+						// handle nested bold and italic
+						// 0''12'''34''56'''789
+						if($node->parentNode && $node->parentNode->nextSibling && in_array($node->parentNode->nextSibling->nodeName, array('i','em'))) {
+							$open = "''";
+							$close = '';
+						}
+						else if ($node->previousSibling && in_array($node->previousSibling->nodeName, array('b','strong')) && $node->previousSibling->hasChildNodes() && in_array($node->previousSibling->lastChild->nodeName, array('i','em'))) {
+							$open = '';
+							$close = "''";
 						} else {
 							$open = $close = "''";
 						}
@@ -230,9 +236,15 @@ class ReverseParser {
 
 					case 'b':
 					case 'strong':
-						if(substr($textContent, -1) == "'" || substr($textContent, 0, 1) == "'" || substr($node->previousSibling->textContent, -1) == "'" || substr($node->nextSibling->textContent, 0, 1) == "'" || in_array($node->parentNode->nodeName, array('i', 'em'))) {
-							$open = '<strong>';
-							$close = '</strong>';
+						// handle nested bold and italic
+						// 0''12'''34''56'''789
+						if($node->parentNode && $node->parentNode->nextSibling && in_array($node->parentNode->nextSibling->nodeName, array('b','strong'))) {
+							$open = "'''";
+							$close = '';
+						}
+						else if ($node->previousSibling && in_array($node->previousSibling->nodeName, array('i','em')) && $node->previousSibling->hasChildNodes() && in_array($node->previousSibling->lastChild->nodeName, array('b','strong'))) {
+							$open = '';
+							$close ="'''";
 						} else {
 							$open = $close = "'''";
 						}
