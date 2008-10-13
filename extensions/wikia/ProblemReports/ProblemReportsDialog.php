@@ -27,7 +27,7 @@ function wfProblemReportsAddLink(&$content_actions) {
 	}
 
 	// do nothing when anon users can't report problems
-	if ( !empty($wgProblemReportsEnableAnonReports) && $wgUser->isAnon() ) {
+	if ( isset($wgProblemReportsEnableAnonReports) && $wgProblemReportsEnableAnonReports == false && $wgUser->isAnon() ) {
 	    wfDebug("ProblemReports: anons can't add reports - leaving...\n");
 	    wfProfileOut(__METHOD__);
 	    return true;
