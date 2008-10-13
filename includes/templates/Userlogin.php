@@ -242,25 +242,31 @@ class UsercreateTemplate extends QuickTemplate {
 				<select name="wpBirthYear" id="wpBirthYear">
 					<option value="-1"><?php $this->msg('userlogin-choose-year') ?></option>
 					<?php
+					$setYear = $this->data['birthyear'];
 					$maxYear = date('Y');
 					for($year=$maxYear; $year>=1900; $year--) {
-						echo "\t\t\t\t\t<option value=\"$year\">$year</option>";
+						$selected = $setYear == $year ? ' selected="selected"' : '';
+						echo "\t\t\t\t\t<option value=\"$year\"$selected>$year</option>";
 					}
 					?>
 				</select>
 				<select name="wpBirthMonth" id="wpBirthMonth">
 					<option value="-1"><?php $this->msg('userlogin-choose-month') ?></option>
 					<?php
+					$setMonth = $this->data['birthmonth'];
 					for($month=1; $month<=12; $month++) {
-						echo "\t\t\t\t\t<option value=\"$month\">$month</option>";
+						$selected = $setMonth == $month ? ' selected="selected"' : '';
+						echo "\t\t\t\t\t<option value=\"$month\"$selected>$month</option>";
 					}
 					?>
 				</select>
 				<select name="wpBirthDay" id="wpBirthDay">
 					<option value="-1"><?php $this->msg('userlogin-choose-day') ?></option>
 					<?php
+					$setDay = $this->data['birthday'];
 					for($day=1; $day<=31; $day++) {
-						echo "\t\t\t\t\t<option value=\"$day\">$day</option>";
+						$selected = $setDay == $day ? ' selected="selected"' : '';
+						echo "\t\t\t\t\t<option value=\"$day\"$selected>$day</option>";
 					}
 					?>
 				</select>

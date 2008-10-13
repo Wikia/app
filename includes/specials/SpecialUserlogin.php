@@ -844,6 +844,10 @@ class LoginForm {
 		$template->set( 'canreset', $wgAuth->allowPasswordChange() );
 		$template->set( 'remember', $wgUser->getOption( 'rememberpassword' ) or $this->mRemember  );
 
+		$template->set( 'birthyear', $this->wpBirthYear );
+		$template->set( 'birthmonth', $this->wpBirthMonth );
+		$template->set( 'birthday', $this->wpBirthDay );
+
 		# Prepare language selection links as needed
 		if( $wgLoginLanguageSelector ) {
 			$template->set( 'languages', $this->makeLanguageSelector() );
