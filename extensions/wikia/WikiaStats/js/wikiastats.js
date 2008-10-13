@@ -21,7 +21,7 @@ function XLSGenerate(statistics, others, date_from, date_to) {
 function XLSCancel() { YAHOO.util.Dom.get("ws-xls-div").innerHTML = ""; }
 function XLSShowMenu(city) { YAHOO.util.Dom.get("wk-stats-panel").style.display = (city == 0) ? "none" : "block"; YAHOO.util.Dom.get("ws-main-xls-stats").style.display = "block"; }
 function WikiaStatsGetInfo(panel, city) {
-	WikiaInfoCallback = { success: function( oResponse ) { YAHOO.util.Dom.get(panel).innerHTML = oResponse.responseText; }, failure: function( oResponse ) { YAHOO.util.Dom.get(panel).innerHTML = ""; } };
+	WikiaInfoCallback = { success: function( oResponse ) { YAHOO.util.Dom.get(panel).innerHTML = oResponse.responseText; if (!YAHOO.lang.isUndefined(TieDivLibrary)) TieDivLibrary.calculate();}, failure: function( oResponse ) { YAHOO.util.Dom.get(panel).innerHTML = ""; } };
 	YAHOO.util.Dom.get(panel).innerHTML = "<div class=\"wk-progress-stats-panel\"><center><img src=\"/extensions/wikia/WikiaStats/images/ajax_indicators.gif\" border=\"0\"></center></div>";
 	var baseurl = wgScript + "?action=ajax&rs=axWStatisticsWikiaInfo&rsargs[0]=" + city;
 	YAHOO.util.Connect.asyncRequest( "GET", baseurl, WikiaInfoCallback);	
