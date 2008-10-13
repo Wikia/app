@@ -315,6 +315,8 @@ class RequestWikiPage extends SpecialPage {
 			$errors['rw-name'] = Wikia::errormsg(wfMsg('requestwiki-error-empty-field'));
 		} elseif (preg_match('/[^a-z0-9-]/i', $params['request_name'])) {
 			$errors['rw-name'] = Wikia::errormsg(wfMsg('requestwiki-error-bad-name'));
+		} elseif (in_array($params['request_name'], array_keys(Language::getLanguageNames()))) {
+			$errors['rw-name'] = Wikia::errormsg(wfMsg('requestwiki-error-name-is-lang'));
 		}
 
 		#--- category

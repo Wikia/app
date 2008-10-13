@@ -131,6 +131,7 @@ $messages['en'] = array(
 	'requestwiki-error-in-progress' => 'Someone has already requested a wiki with this name.  Please try again, or contact staff for more help.',
 	'requestwiki-error-name-taken' => 'Sorry, this name is already taken.',
 	'requestwiki-error-name-too-short' => 'This name is too short, please choose a name with at least 3 characters.',
+	'requestwiki-error-name-is-lang' => 'The name you have selected is a reserved language code. Please try to use a longer, more descriptive name.',
 	'requestwiki-error-no-such-user' => 'This username was not found in the database.',
 	'requestwiki-error-no-url-category' => 'Please choose a category for each link.',
 	'requestwiki-error-page-exists' => "It's not possible to use this name because of an existing page on the request wiki.  Please try another name or contact staff for help."
