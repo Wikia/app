@@ -40,6 +40,7 @@ class AjaxPollClass {
 	static public function renderFromTag( $input, $params, &$parser ) {
 		global $wgTitle;
 
+		$input = strip_tags($input);
 		$class = new AjaxPollClass;
 
 		/**
