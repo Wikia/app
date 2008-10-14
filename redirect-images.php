@@ -5,7 +5,8 @@
  */
 
 $HeadURL = split('/', '$HeadURL$');
-$wgReleaseNumber = $HeadURL[6];
+$wgReleaseNumber = ($HeadURL[4] === "trunk" ) ? "trunk" : $HeadURL[5];
+
 $wgStylePath      = "http://images.wikia.com/common/releases_{$wgReleaseNumber}/skins";
 $newUrl = "";
 
