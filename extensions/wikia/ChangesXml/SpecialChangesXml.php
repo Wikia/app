@@ -64,8 +64,6 @@ function wfChangesXml( $rc ) {
 		$a_data .= '    <link href="' . $url . '" />' . "\n";
 		$a_data .= "    <published>" . date( DATE_ATOM ) . "</published>" . "\n";
 		$a_data .= "    <updated>" . date( DATE_ATOM ) . "</updated>" . "\n";
-		$a_data .= '      <content type="html">' . "\n";
-		$a_data .= "      </content>" . "\n";
 		foreach( $categories as $key=>$value ) {
 			$a_data .= '    <category term="' . str_replace( '_', ' ', str_replace( $category_string, '', $key) ) . '" />' . "\n";
 		}
