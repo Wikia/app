@@ -38,9 +38,12 @@ class AjaxPollClass {
 	 * @param Object $parser: Wiki Parser object
 	 */
 	static public function renderFromTag( $input, $params, &$parser ) {
-		global $wgTitle;
+		global $wgTitle, $wgOut;
 
-		$input = strip_tags($input);
+  $oParser = new Parser();
+  $input = $oParser->parse( $input, $wgTitle, $wgOut->parserOptions() );
+  $input = trim( strip_tags( $input->getText() ) );
+
 		$class = new AjaxPollClass;
 
 		/**
