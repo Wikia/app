@@ -147,6 +147,7 @@ class AdProviderGAM implements iAdProvider {
 		// Bucket testing of different params based on channel
 		switch ($channel){
 		  case '8770790322': break; //control
+		  case '6359157529': // Testing white backgrounds 
 		  case '2086936532':
 			if(!empty($_GET['search'])){
 				// Note that we don't have ads on the search page right now, so this isn't going to do any good
