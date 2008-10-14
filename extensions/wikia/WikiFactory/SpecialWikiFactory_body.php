@@ -243,23 +243,22 @@ class WikiFactoryPage extends SpecialPage {
 		$wgOut->addHTML( $oTmpl->execute("form") );
 	}
 
-    /**
-     * doUpdateHubs
-     *
-     * Store changes connected with hubs
-     *
-     * @access private
-     * @author eloy@wikia
-     *
-     * @return mixed	info when change, null when not changed
-     */
+	/**
+	 * doUpdateHubs
+	 *
+	 * Store changes connected with hubs
+	 *
+	 * @access private
+	 *
+	 * @return mixed	info when change, null when not changed
+	 */
 	private function doUpdateHubs( &$request ) {
 		$cat_id = $request->getVal( "wpWikiCategory", null );
 		if( !is_null( $cat_id ) ){
 			$hub = WikiFactoryHub::getInstance();
 			$hub->setCategory( $this->mWiki->city_id, $cat_id );
-	        $categories = $hub->getCategories();
-	        return Wikia::successmsg( "Hub is now set to: ". $categories[ $cat_id ] );
+			$categories = $hub->getCategories();
+			return Wikia::successmsg( "Hub is now set to: ". $categories[ $cat_id ] );
 		}
 		else {
 			return Wikia::errormsg( "Hub was not changed.");
