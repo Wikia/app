@@ -58,12 +58,12 @@ function wfChangesXml( $rc ) {
 		$a_data .= '  <title type="text">'. $title .'</title>' . "\n";
 		$a_data .= '  <link href="' . $wiki_url .'" />' . "\n";
 		$a_data .= '  <link rel="self" type="application/atom+xml" href="' . $wiki_atom .'" />' . "\n" ;
-		$a_data .= "  <author><name>" . $rc_user_text . "</name></author>" . "\n";
 		$a_data .= "  <entry>" . "\n";
 		$a_data .= "    <title>" . $title . "</title>" . "\n";
 		$a_data .= '    <link href="' . $url . '" />' . "\n";
 		$a_data .= "    <published>" . date( DATE_ATOM ) . "</published>" . "\n";
 		$a_data .= "    <updated>" . date( DATE_ATOM ) . "</updated>" . "\n";
+		$a_data .= "  	<author><name>" . $rc_user_text . "</name></author>" . "\n";
 		foreach( $categories as $key=>$value ) {
 			$a_data .= '    <category term="' . str_replace( '_', ' ', str_replace( $category_string, '', $key) ) . '" />' . "\n";
 		}
