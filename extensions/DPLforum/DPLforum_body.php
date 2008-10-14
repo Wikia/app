@@ -103,7 +103,7 @@ class DPLForum {
 		$page = ($count * $i);
 		if($page == $offset) return $text;
 
-		return '[{{fullurl:{{FULLPAGENAME}}|offset='.$page.'}} '.$text.']';
+		return '['. $parser->replaceVariables('{{fullurl:{{FULLPAGENAME}}|offset='.$page.'}} ') . $text.']';
 	}
 
 	function link_test($page, $cond) {
