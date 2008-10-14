@@ -2,7 +2,8 @@
 
 $messages = array();
 $messages["en"] = array(
-	"tog-watchlistdigest" => "E-mail me a weekly summary of pages on my watchlist I haven't visited since last edit",
+	"tog-watchlistdigest" => "E-mail me a Weekly Watchlist Digest",
+	"tog-watchlistdigestclear" => "Mark all pages from my Weekly Watchlist Digest as visited",
 	"globalwatchlist-digest-email-subject" => "Weekly Digest",
 	"globalwatchlist-digest-email-body" => "Dear $1,
 
@@ -15,5 +16,6 @@ Please visit and edit often...
 Wikia
 
 * To change your preferences for watchlist notifications, please visit http://www.wikia.com/wiki/Special:Preferences
+* To mark all pages from this Weekly Digest as visited see option in \"Watchlist\" tab at Preferences page
 "
 );

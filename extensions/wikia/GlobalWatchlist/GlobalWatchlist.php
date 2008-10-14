@@ -1,7 +1,9 @@
 <?php
 /**
- * GlobalWatchlist extension
+ * GlobalWatchlist extension - sending weekly digest email witch watchlisted pages on all wikis
  *
+ * !IMPORTANT! see GlobalWatchlist.sql file for db schema !IMPORTANT!
+ *  
  * @author Adrian 'ADi' Wieczorek <adi(at)wikia.com> 
  * 
  */
@@ -24,10 +26,11 @@ $wgExtensionMessagesFiles['GlobalWatchlist'] = dirname(__FILE__) . '/GlobalWatch
 $wgAutoloadClasses['GlobalWatchlistBot'] = dirname(__FILE__) . '/GlobalWatchlistBot.class.php';
 
 // hooks
-$wgHooks['getUserProfilePreferencesCustomHtml'][] = 'wfGlobalWatchlistPrefsCustomHtml';
+$wgHooks['getWatchlistPreferencesCustomHtml'][] = 'wfGlobalWatchlistPrefsCustomHtml';
+$wgHooks['getUserProfilePreferencesCustomEmailToggles'][] = 'wfGlobalWatchlistPrefsEmailToggle';
 
 // user toggles
-$wgHooks ['UserToggles'][] = 'wfGlobalWatchlistToggle';	
+$wgHooks['UserToggles'][] = 'wfGlobalWatchlistToggle';
 
 // permissions
 $wgAvailableRights[] = 'globalwatchlist';
@@ -35,11 +38,35 @@ $wgGroupPermissions['staff']['globalwatchlist'] = true;
 
 function wfGlobalWatchlistToggle($extraToggles) {
 	$extraToggles['watchlistdigest'] = 'watchlistdigest';
+	$extraToggles['watchlistdigestclear'] = 'watchlistdigestclear';
 	return true;
 }
 
 function wfGlobalWatchlistPrefsCustomHtml($prefsForm) {
-	global $wgOut, $wgUser;
+	global $wgOut, $wgUser, $wgSharedDB;
+	
+	if($wgUser->isAllowed('globalwatchlist')) {	
+		$dbr = wfGetDB(DB_SLAVE);
+		$oResource = $dbr->query("SELECT count(*) AS count FROM $wgSharedDB.global_watchlist WHERE gwa_user_id='" . $wgUser->getID() . "'");
+		$oResultRow = $dbr->fetchObject($oResource);
+		
+		if($oResultRow->count) {
+			// only for staff members at the moment
+			wfLoadExtensionMessages('GlobalWatchlist');
+	
+		 $tname = 'watchlistdigestclear';
+		 $prefsForm->mUsedToggles[$tname] = true;
+	
+			$wgOut->addHtml( $prefsForm->getToggle($tname) );			
+		}
+		
+	}
+	
+	return true;
+}
+
+function wfGlobalWatchlistPrefsEmailToggle($prefsForm, $toggleHtml) {
+	global $wgUser;
 
 	if($wgUser->isAllowed('globalwatchlist')) {	
 		// only for staff members at the moment
@@ -48,7 +75,7 @@ function wfGlobalWatchlistPrefsCustomHtml($prefsForm) {
 	 $tname = 'watchlistdigest';
 	 $prefsForm->mUsedToggles[$tname] = true;
 	 
-	 $wgOut->addHTML($prefsForm->tableRow($prefsForm->getToggle($tname)));
+	 $toggleHtml .= $prefsForm->getToggle($tname) . '<br />';
 	}
 	
  return true;

@@ -808,6 +808,7 @@ class PreferencesForm {
 					$this->getToggle( 'ccmeonemails', '', $disableEmailPrefs );
 			}
 
+			wfRunHooks('getUserProfilePreferencesCustomEmailToggles', array(&$this, &$enotifminoredits));
 
 			$wgOut->addHTML(
 				$this->tableRow( Xml::element( 'h2', null, wfMsg( 'email' ) ) ) .
@@ -825,7 +826,6 @@ class PreferencesForm {
 		}
 		# </FIXME>
 
-		wfRunHooks('getUserProfilePreferencesCustomHtml', array(&$this));
 
 		$wgOut->addHTML(
 			Xml::closeElement( 'table' ) .
@@ -1084,6 +1084,8 @@ class PreferencesForm {
 		$this->mUsedToggles['watchdefault'] = true;
 		$this->mUsedToggles['watchmoves'] = true;
 		$this->mUsedToggles['watchdeletion'] = true;
+
+		wfRunHooks('getWatchlistPreferencesCustomHtml', array(&$this));
 
 		$wgOut->addHtml( '</fieldset>' );
 
