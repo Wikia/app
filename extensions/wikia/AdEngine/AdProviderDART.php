@@ -145,8 +145,8 @@ EOT;
 		}
 
 		$out='';
-		foreach ($slot['provider_values'] as $keyname => $keyvalue){
-			$out .= $this->sanitizeKeyName($keyname) . '=' . $this->sanitizeKeyValue($keyvalue) . ';';
+		foreach ($slot['provider_values'] as $kvpair){
+			$out .= $this->sanitizeKeyName($kvpair['keyname']) . '=' . $this->sanitizeKeyValue($kvpair['keyvalue']) . ';';
 		}
 		return $out;
 	}

@@ -18,7 +18,7 @@ interface iAdProvider {
 
 class AdEngine {
 
-	const cacheKeyVersion = "1.9m";
+	const cacheKeyVersion = "1.9n";
 	const cacheTimeout = 1800;
 
 	// TODO: pull these from wikicities.provider
@@ -125,7 +125,7 @@ class AdEngine {
 		while($row = $db->fetchObject($res)) {
 			 foreach($this->slots as $slotname => $slot) {
 			 	if($slot['provider_id'] == $row->provider_id){
-					$this->slots[$slotname]['provider_values'][$row->keyname] = $row->keyvalue;
+					$this->slots[$slotname]['provider_values'][] = array('keyname' => $row->keyname, 'keyvalue' => $row->keyvalue);
 			 	}
 			 }
 		}
