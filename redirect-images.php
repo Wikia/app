@@ -4,7 +4,7 @@
  * eloy@wikia.com
  */
 
-$HeadURL = split('/', '$HeadURL: https://svn.wikia-inc.com/svn/wikia/releases/200806.3/redirect-images.php $');
+$HeadURL = split('/', '$HeadURL$');
 $wgReleaseNumber = $HeadURL[6];
 $wgStylePath      = "http://images.wikia.com/common/releases_{$wgReleaseNumber}/skins";
 $newUrl = "";
