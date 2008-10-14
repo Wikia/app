@@ -54,7 +54,10 @@ function wfChangesXml( $rc ) {
 	
 	//see if user anon or not by ip
 	
-	if (preg_match("{^\b((25[0-5]¦2[0-4]\d¦[01]\d\d¦\d?\d)\.){3}(25[0-5]¦2[0-4]\d¦[01]\d\d¦\d?\d)\b$}", $rc_user_text)) {
+	$ut = explode('.',$rc_user_text);
+
+	if ( count($ut) == 4 ) {		//ip;
+	
 		//ip;
 		$uurl = '';
 	} else {
