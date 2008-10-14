@@ -34,14 +34,14 @@
 		</div>
 		<?php if( $status === "open" ): ?>
 		<input type="submit" name="wpVote" id="axPollSubmit<?php echo $id ?>" value="<?php echo wfMsg("ajaxpoll-submit") ?>" />
-		<span id="pollSubmittingInfo" style="padding-left: 10px; visibility: hidden;">
+		<span id="pollSubmittingInfo<?php echo $id ?>" style="padding-left: 10px; visibility: hidden;">
 			<?php echo wfMsg("ajaxpoll-submitting"); ?>
 		</span>
 		<script type="text/javascript">
-		if( typeof( AjaxPollSubmitsArray == "undefined" ) ) {
+		if( typeof( AjaxPollSubmitsArray ) == "undefined" ) {
 			var AjaxPollSubmitsArray = [];
 		}
-		AjaxPollSubmitsArray.push({"submit":"axPollSubmit<?php echo $id ?>", "id":"axPoll<?php echo $id ?>", "url":"<?php echo $title->getFullURL( "action=ajax&rs=axAjaxPollSubmit" ) ?>"});
+		AjaxPollSubmitsArray.push({"submit":"axPollSubmit<?php echo $id ?>", "id":"axPoll<?php echo $id ?>", "pollId":"<?php echo $id ?>", "url":"<?php echo $title->getFullURL( "action=ajax&rs=axAjaxPollSubmit" ) ?>"});
 		</script>
 		<?php else: echo wfMsg("ajaxpoll-closed"); endif ?>
 	</form>

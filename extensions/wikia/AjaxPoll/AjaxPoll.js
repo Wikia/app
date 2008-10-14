@@ -10,7 +10,7 @@ YAHOO.AjaxPoll.Callback = {
 		var answer = eval('(' + response.responseText + ')');
 		var votes = answer["votes"];
 
-		YAHOO.util.Dom.setStyle('pollSubmittingInfo', 'visibility', 'hidden');
+		YAHOO.util.Dom.setStyle('pollSubmittingInfo' + answer['id'], 'visibility', 'hidden');
 
 		/**
 		 * get all spans with class "wpBar<id>"
@@ -48,7 +48,7 @@ YAHOO.AjaxPoll.Callback = {
 };
 
 YAHOO.AjaxPoll.submit = function( e, data ) {
-	YAHOO.util.Dom.setStyle('pollSubmittingInfo', 'visibility', 'visible');
+	YAHOO.util.Dom.setStyle('pollSubmittingInfo'+data["id"], 'visibility', 'visible');
 	YAHOO.util.Event.preventDefault( e );
 	YAHOO.AjaxPoll.form = YAHOO.util.Dom.get( data["form"] );
 	YAHOO.util.Connect.setForm( YAHOO.AjaxPoll.form );
@@ -64,7 +64,7 @@ YAHOO.AjaxPoll.init = function() {
 			AjaxPollSubmitsArray[ key ][ "submit" ],
 			"click",
 			YAHOO.AjaxPoll.submit,
-			{ "form":AjaxPollSubmitsArray[ key ][ "id" ], "url":AjaxPollSubmitsArray[ key ][ "url" ] }
+			{ "id":AjaxPollSubmitsArray[ key ][ "pollId" ], "form":AjaxPollSubmitsArray[ key ][ "id" ], "url":AjaxPollSubmitsArray[ key ][ "url" ] }
 		);
 	}
 };
