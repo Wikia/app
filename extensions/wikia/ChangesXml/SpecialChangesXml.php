@@ -14,16 +14,11 @@ EOT;
 	exit( 1 );
 }
 
-$wgExtensionFunctions[] = 'wfSpecialChangesXml';
 $wgExtensionCredits['specialpage'][] = array(
 		'name' => 'ChangesXml',
 		'author' => 'Andrew Yasinsky',
 		'description' => 'ChagesXml feed',
 );
-
-function wfSpecialChangesXml() {
-	//init
-}
 
 function wfChangesXml( $rc ) {
 	global $wgEnableSpecialChangesXmlToFeedUrl, $wgContLang;
