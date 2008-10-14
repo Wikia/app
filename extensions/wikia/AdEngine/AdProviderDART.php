@@ -79,15 +79,16 @@ class AdProviderDART implements iAdProvider {
 		$url .= $this->getTileKV($slotname);
 		// special "end" delimiter, this is for when we redirect ads to other places. Per Michael
 		$url .= 'endtag=$;';
-		$url .= "ord="; // See note above, ord MUST be last.
+		$url .= "ord=@@WIKIA_RANDOM@@?"; // See note above, ord MUST be last. Also note that DART told us to put the ? at the end
 
 		$out = "<!-- " . __CLASS__ . " slot: $slotname -->";
 		$out .= '<script type="text/javascript">/*<![CDATA[*/' . "\n";
 		// Ug. Heredocs suck, but with all the combinations of quotes, it was the cleanest way.
 		$out .= <<<EOT
-		dartUrl = '$url' + AdsCB;
+		dartUrl = "$url";
 		dartUrl = dartUrl.replace(/@@WIKIA_BUCKET@@/, AdEngine.bucketid);
 		dartUrl = dartUrl.replace(/@@WIKIA_AQ@@/, AdEngine.getMinuteTargeting());
+		dartUrl = dartUrl.replace(/@@WIKIA_RANDOM@@/, AdsCB);
 		document.write("<scr"+"ipt type='text/javascript' src='"+ dartUrl +"'><\/scr"+"ipt>");
 EOT;
 		$out .= "/*]]>*/</script>\n";
