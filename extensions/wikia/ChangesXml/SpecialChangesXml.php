@@ -21,7 +21,7 @@ $wgExtensionCredits['specialpage'][] = array(
 );
 
 function wfChangesXml( $rc ) {
-	global $wgEnableSpecialChangesXmlToFeedUrl, $wgContLang;
+	global $wgEnableSpecialChangesXmlToFeedUrl, $wgContLang, $wgUser;
 
 	//get old/new sizes
 	extract( $rc->mExtra );
@@ -51,6 +51,16 @@ function wfChangesXml( $rc ) {
 
 	$categories = $titleObj->getParentCategories();
 	$category_string = $wgContLang->getNSText( NS_CATEGORY ) . ':';
+	
+	//see if user anon or not by ip
+	
+	if (preg_match("{^\b((25[0-5]¦2[0-4]\d¦[01]\d\d¦\d?\d)\.){3}(25[0-5]¦2[0-4]\d¦[01]\d\d¦\d?\d)\b$}", $rc_user_text)) {
+		//ip;
+		$uurl = '';
+	} else {
+		//username;
+		$uurl = '<uri>' . $wiki_url . 'index.php?title=User:'. $rc_user_text . '</uri>';
+	} 
 
 	//PUT feed
 	if( !empty( $wgEnableSpecialChangesXmlToFeedUrl ) ) {
@@ -63,7 +73,8 @@ function wfChangesXml( $rc ) {
 		$a_data .= '    <link href="' . $url . '" />' . "\n";
 		$a_data .= "    <published>" . date( DATE_ATOM ) . "</published>" . "\n";
 		$a_data .= "    <updated>" . date( DATE_ATOM ) . "</updated>" . "\n";
-		$a_data .= "  	<author><name>" . $rc_user_text . "</name></author>" . "\n";
+		$a_data .= "  	<author><name>" . $rc_user_text . "</name>".$uurl."</author>" . "\n";
+			
 		foreach( $categories as $key=>$value ) {
 			$a_data .= '    <category term="' . str_replace( '_', ' ', str_replace( $category_string, '', $key) ) . '" />' . "\n";
 		}
