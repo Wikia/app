@@ -89,6 +89,12 @@ class WAtomFeed extends ChannelFeed {
 		$base = parse_url( $url );
 		$wiki_url = 'http://' . $base['host'] . '/';
 		
+		$wiki = '';
+		if(stripos($url, '/wiki/')!==false ){
+	 	 $wiki = 'wiki/';	
+		}
+		
+		
 		$rc_user_text = $item->getAuthor();
 		
 		foreach( $categories as $key=>$value ) {
@@ -101,7 +107,7 @@ class WAtomFeed extends ChannelFeed {
 		 $uurl = '';
 		} else {
 		 //username;
-		 $uurl = '<uri>' . $wiki_url . 'index.php?title=User:'. $rc_user_text . '</uri>';
+		 $uurl = '<uri>' . $wiki_url . $wiki . 'User:'. $rc_user_text . '</uri>';
 		} 
 		
 	?>
