@@ -43,6 +43,7 @@ class GlobalWatchlistBot {
 			$sWhereClause = "user_options LIKE '%" . addslashes($sFlag) . "=1%'";
 		}
 		
+		print("SELECT user_id, user_name, user_email FROM " . $wgSharedDB. ".user WHERE (user_email_authenticated IS NOT NULL) AND " . $sWhereClause . " ORDER BY user_id");
 		$oResource = $this->mDb->query("SELECT user_id, user_name, user_email FROM " . $wgSharedDB. ".user WHERE (user_email_authenticated IS NOT NULL) AND " . $sWhereClause . " ORDER BY user_id");
 		
 		if($oResource) {
@@ -178,14 +179,12 @@ class GlobalWatchlistBot {
 	 */
 	private function composeMail($iUserId, $aDigestsData) {
 		global $wgScriptPath;
-		
+
 		$sDigests = "";
 		foreach($aDigestsData as $aDigest) {
 			$sDigests .= $aDigest['wikiName'] . ":\n";
 			
-			// remove trailing slash from url
-			$aDigest['wikiUrl'] = ( substr( $aDigest['wikiUrl'], -1, 1 ) == '/' ? substr( $aDigest['wikiUrl'], 0, -1 ) : $aDigest['wikiUrl'] );
-			$sPageUrl = $aDigest['wikiUrl'] . (!empty($aDigest['wikiScriptPath']) ? $aDigest['wikiScriptPath'] : $wgScriptPath) . "/";
+			$sPageUrl = $aDigest['wikiUrl'];
 			foreach($aDigest['pages'] as $sPageTitle) {
 				$sDigests .= $sPageUrl . $sPageTitle . "\n";
 			}
@@ -237,43 +236,38 @@ class GlobalWatchlistBot {
 		global $wgSharedDB;
 		$this->printDebug("Sending digest emails ... ");
 		
-		$iUserId = 0;
-		$iWikiId = 0;
-		$aDigestData = array();
-		$aWikiDigest = array();
 		$sEmailSubject = wfMsg('globalwatchlist-digest-email-subject');
 
-		$oResource = $this->mDb->query("SELECT * FROM " . $wgSharedDB . ".global_watchlist ORDER BY gwa_user_id, gwa_city_id");
-		while($oResultRow = $this->mDb->fetchObject($oResource)) {
-			if($iUserId != $oResultRow->gwa_user_id) {
-				if(count($aDigestData)) {
-					$this->sendMail($iUserId, $sEmailSubject, $aDigestData);
-					$aDigestData = array();
+		foreach($this->mWatchlisters as $iUserId => $aUserData) {
+			$oResource = $this->mDb->query("SELECT * FROM " . $wgSharedDB . ".global_watchlist WHERE gwa_user_id='" . $iUserId . "' ORDER BY gwa_city_id");
+			
+			$iWikiId = 0;
+			$aDigestData = array();
+			$aWikiDigest = array( 'pages' => array());
+			while($oResultRow = $this->mDb->fetchObject($oResource)) {
+				if($iWikiId != $oResultRow->gwa_city_id) {
+					if(count($aWikiDigest['pages'])) {
+						$aDigestData[] = $aWikiDigest;
+					}
+					$iWikiId = $oResultRow->gwa_city_id;
+					$aWikiDigest = array(
+						'wikiUrl' => $this->mWikiData[$iWikiId]['wikiPageUrl'],
+						'wikiName' => $this->mWikiData[$iWikiId]['wikiName'],
+						'pages' => array()
+					);
 				}
-				$iWikiId = 0;
-				$iUserId = $oResultRow->gwa_user_id;
-			}
-			if($iWikiId != $oResultRow->gwa_city_id) {
-				if(count($aWikiDigest['pages'])) {
-					$aDigestData[] = $aWikiDigest;
-				}
-				$iWikiId = $oResultRow->gwa_city_id;
-				$aWikiDigest = array(
-					'wikiUrl' => $this->mWikiData[$iWikiId]['wikiPageUrl'],
-					'wikiName' => $this->mWikiData[$iWikiId]['wikiName'],
-					'pages' => array()
-				);
-			}
-			$aWikiDigest['pages'][] = (($oResultRow->gwa_namespace != 0) ? ($this->mWikiData[$iWikiId]['wikiNamespaces'][$oResultRow->gwa_namespace] . ":") : "") . $oResultRow->gwa_title;	  	
-		}
+				$aWikiDigest['pages'][] = (($oResultRow->gwa_namespace != 0) ? ($this->mWikiData[$iWikiId]['wikiNamespaces'][$oResultRow->gwa_namespace] . ":") : "") . $oResultRow->gwa_title;	  	
+			} // while
 
-		if(count($aWikiDigest['pages'])) {
-			$aDigestData[] = $aWikiDigest;
-		}
-		if(count($aDigestData)) {
-			$this->sendMail($iUserId, $sEmailSubject, $aDigestData);
-		}
-
+			if(count($aWikiDigest['pages'])) {
+				$aDigestData[] = $aWikiDigest;
+			}			
+			if(count($aDigestData)) {
+				$this->sendMail($iUserId, $sEmailSubject, $aDigestData);			 	
+			}
+			
+		} // foreach
+				
 		$this->printDebug("Sending digest emails ... Done!");		
 	}
 	
