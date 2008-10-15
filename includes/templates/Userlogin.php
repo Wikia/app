@@ -454,9 +454,16 @@ class UsercreateTemplate extends QuickTemplate {
 			var pass = document.getElementById('wpPassword2').value;
 			var pass2= document.getElementById('wpRetype').value;
 			if (pass == pass2) {
-				YAHOO.util.Dom.removeClass('wpRetypeTD', 'mw-input-error');
-				YAHOO.util.Dom.addClass('wpRetypeTD', 'mw-input-ok');
-				errorRetype = false;
+				if ('' == pass2) {
+					YAHOO.util.Dom.addClass('wpRetypeTD', 'mw-input-error');
+					YAHOO.util.Dom.removeClass('wpRetypeTD', 'mw-input-ok');
+					errorRetype = true;
+				} else {
+					YAHOO.util.Dom.removeClass('wpRetypeTD', 'mw-input-error');
+					YAHOO.util.Dom.addClass('wpRetypeTD', 'mw-input-ok');
+					errorRetype = false;
+				}
+				
 			} else {
 				YAHOO.util.Dom.addClass('wpRetypeTD', 'mw-input-error');
 				YAHOO.util.Dom.removeClass('wpRetypeTD', 'mw-input-ok');
@@ -504,7 +511,7 @@ class UsercreateTemplate extends QuickTemplate {
 		document.getElementById('wpBirthYear').onchange = checkDate;
 		document.getElementById('wpBirthMonth').onchange = checkDate;
 		document.getElementById('wpBirthDay').onchange = checkDate;
-		document.getElementById('wpPassword2').onblur = function(){checkPass(); checkUsernamePass()};
+		document.getElementById('wpPassword2').onblur = function(){checkPass(); checkRetype(); checkUsernamePass()};
 		document.getElementById('wpRetype').onblur = checkRetype;
 	</script>
 	<?php
