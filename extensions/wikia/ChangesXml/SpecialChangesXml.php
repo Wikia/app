@@ -44,10 +44,15 @@ function wfChangesXml( $rc ) {
 	$title = $titleObj->getText();
 	$title = str_replace( array( "\n", "\r", '_' ), array( "", "","" ), $title );
 	$url = $titleObj->getFullURL();
+	$wiki = '';
+	if(stripos($url, '/wiki/')!==false ){
+	 $wiki = 'wiki/';	
+	}
+	
 	$base = parse_url( $url );
 
 	$wiki_url = 'http://' . $base['host'] . '/';
-	$wiki_atom = $wiki_url . 'index.php?title=Special:RecentChanges&amp;feed=atom';	
+	$wiki_atom = $wiki_url . $wiki . 'Special:Atom';	
 
 	$categories = $titleObj->getParentCategories();
 	$category_string = $wgContLang->getNSText( NS_CATEGORY ) . ':';
@@ -62,7 +67,7 @@ function wfChangesXml( $rc ) {
 		$uurl = '';
 	} else {
 		//username;
-		$uurl = '<uri>' . $wiki_url . 'index.php?title=User:'. $rc_user_text . '</uri>';
+		$uurl = '<uri>' . $wiki_url . $wiki . 'User:'. $rc_user_text . '</uri>';
 	} 
 
 	//PUT feed
@@ -89,8 +94,7 @@ function wfChangesXml( $rc ) {
 		curl_setopt( $ch, CURLOPT_URL, $wgEnableSpecialChangesXmlToFeedUrl );
 		curl_setopt( $ch, CURLOPT_CUSTOMREQUEST, "PUT" );
 		curl_setopt( $ch, CURLOPT_HTTPHEADER, array( "Content-Length: " . strlen( $a_data ) ) );
-		curl_setopt( $ch, CURLOPT_POSTFIELDS, $a_data );
-		curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
+		curl_setopt( $ch, CURLOPT_POSTFIELDS, $a_data);
 		$r = curl_exec( $ch );
 
 	}
