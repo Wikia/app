@@ -250,6 +250,17 @@ FCKIndentCommand.prototype =
 		if ( itemsToMove.length < 1 )
 			return ;
 
+		// Wikia: MW uses <dl><dd> 'tree' for indentation (do outdent by removing one <dl> from node's parents list)
+		if ( this.Name.IEquals('outdent') && listNode.parentNode.nodeName.IEquals('dd') ) {
+			// check whether we really should do tags manipulation
+			// maybe changing marginLeft CSS property is enough
+			if ( !parseInt(listNode.style[this.IndentCSSProperty], 10) ) {
+				// replace <dl> with list tag
+				listNode.parentNode.parentNode.parentNode.replaceChild(listNode, listNode.parentNode.parentNode);
+				return;
+			}
+		}
+
 		// Wikia: handle whole list indentation (do not touch nested lists!)
 		//
 		if ( (startContainer == listNode.firstChild) && (endContainer == listNode.lastChild) && !listNode.parentNode.nodeName.IEquals('li') ) {
@@ -331,7 +342,9 @@ FCKIndentCommand.prototype =
 		if ( newList ) {
 			// Wikia: reset CSS of indented nested list
 			indentedList = newList.listNode.firstChild.getElementsByTagName(newList.listNode.firstChild.nodeName)[0];
-			indentedList.style[this.IndentCSSProperty] = '';
+			if (indentedList) {
+				indentedList.style[this.IndentCSSProperty] = '';
+			}
 
 			listNode.parentNode.replaceChild( newList.listNode, listNode ) ;
 		}
