@@ -211,6 +211,7 @@ class WikiaGenericStats {
 			}
 			$dbs->freeResult( $res );
 			#---
+			#---
 			if (self::USE_MEMC) $wgMemc->set($memckey, $wkCityOrderStats, 60*60*3);
 		}
 		wfProfileOut( __METHOD__ );
@@ -1599,6 +1600,8 @@ class WikiaGenericStats {
 		if ($city_id > 0) {
 			$stats_date = self::getDateStatisticGenerate($city_id);
 		}
+		
+		$all = (!empty($city_id)) ? 0 : 1;
 		
 		$localStats = $this->getLocalStats();
 		$memkey = md5($city_id."_".$year_from."_".$month_from."_".$year_to."_".$month_to."_".intval($localStats));
