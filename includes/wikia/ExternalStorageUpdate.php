@@ -49,7 +49,8 @@ class ExternalStorageUpdate {
 			}
 
 			$dbw = wfGetDBExt( DB_MASTER, $cluster );
-
+			$ip = ip2long(wfGetIP());
+			
 			$ret = $dbw->update(
 				"blobs",
 				array(
@@ -60,7 +61,8 @@ class ExternalStorageUpdate {
 					"rev_namespace" => $Title->getNamespace(),
 					"rev_user_text" => $this->mRevision->getUserText(),
 					"rev_flags"     => $this->mFlags,
-					"rev_timestamp" => wfTimestamp( TS_DB, $this->mRevision->mTimestamp )
+					"rev_timestamp" => wfTimestamp( TS_DB, $this->mRevision->mTimestamp ),
+					"rev_ip" 		=> $ip
 				),
 				array( "blob_id" => $id ),
 				__METHOD__
