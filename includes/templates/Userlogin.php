@@ -333,11 +333,9 @@ class UsercreateTemplate extends QuickTemplate {
 		<tr>
 			<td class="mw-submit">
 				<input type='submit' name="wpCreateaccount" id="wpCreateaccount"
-					tabindex="<?php echo $tabIndex++; ?>"
 					value="<?php $this->msg('createaccount') ?>" />
 				<?php if( $this->data['createemail'] ) { ?>
 				<input type='submit' name="wpCreateaccountMail" id="wpCreateaccountMail"
-					tabindex="<?php echo $tabIndex++; ?>"
 					value="<?php $this->msg('createaccountmail') ?>" />
 				<?php } ?>
 				<span id="wpFormerror" class="inputError"><?= wfMsg('userlogin-form-error') ?></span>
