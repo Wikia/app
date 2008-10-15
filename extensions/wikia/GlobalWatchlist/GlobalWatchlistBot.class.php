@@ -99,6 +99,8 @@ class GlobalWatchlistBot {
 		$this->getGlobalWatchlisters();
 		$this->printDebug("Gathering watchlist data ...");
 
+	 $dbw = wfGetDB(DB_MASTER);
+
 		$oResource = $this->mDb->query("SELECT city_id, city_dbname, city_url, city_title FROM " . $wgSharedDB . ".city_list WHERE city_public='1' ORDER BY city_sitename");
 		
 		while($oResultRow = $this->mDb->fetchObject($oResource)) {
@@ -126,7 +128,7 @@ class GlobalWatchlistBot {
 					}
 					
 	  		foreach($aPages as $aPage) {			
-						$this->mDb->query("INSERT INTO " . $wgSharedDB . ".global_watchlist (gwa_user_id, gwa_city_id, gwa_namespace, gwa_title) VALUES ('" . $iUserId . "', '" . $oResultRow->city_id . "','" . $aPage['namespace'] . "', '" . addslashes($aPage['title']) . "')");
+						$dbw->query("INSERT INTO " . $wgSharedDB . ".global_watchlist (gwa_user_id, gwa_city_id, gwa_namespace, gwa_title) VALUES ('" . $iUserId . "', '" . $oResultRow->city_id . "','" . $aPage['namespace'] . "', '" . addslashes($aPage['title']) . "')");
 	  		}
 	  		
 	  	}
