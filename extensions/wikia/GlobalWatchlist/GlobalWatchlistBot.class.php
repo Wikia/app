@@ -43,7 +43,6 @@ class GlobalWatchlistBot {
 			$sWhereClause = "user_options LIKE '%" . addslashes($sFlag) . "=1%'";
 		}
 		
-		print("SELECT user_id, user_name, user_email FROM " . $wgSharedDB. ".user WHERE (user_email_authenticated IS NOT NULL) AND " . $sWhereClause . " ORDER BY user_id");
 		$oResource = $this->mDb->query("SELECT user_id, user_name, user_email FROM " . $wgSharedDB. ".user WHERE (user_email_authenticated IS NOT NULL) AND " . $sWhereClause . " ORDER BY user_id");
 		
 		if($oResource) {
