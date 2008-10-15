@@ -23,7 +23,7 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 # of your wiki). No final slash.
 ##
 if (!isset($smwgScriptPath)) {
-	$smwgScriptPath = $wgScriptPath . '/extensions/SemanticMediaWiki';
+	$smwgScriptPath = $wgScriptPath . '/extensions/3rdparty/SemanticMediaWiki';
 }
 ##
 
@@ -32,7 +32,7 @@ if (!isset($smwgScriptPath)) {
 # local filesystem. Used against some PHP file path issues.
 ##
 if (!isset($smwgIP)) {
-	$smwgIP = $IP . '/extensions/SemanticMediaWiki';
+	$smwgIP = $IP . '/extensions/3rdparty/SemanticMediaWiki';
 }
 ##
 
