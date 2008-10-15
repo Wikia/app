@@ -4,6 +4,7 @@
  * RandomWiki
  *
  * @author Łukasz Garczewski (TOR) <tor@wikia-inc.com>
+ * @author Maciej Błaszkowski (Marooned) <marooned@wikia-inc.com>
  * @date 2008-10-14
  * @copyright Copyright (C) 2008 Łukasz Garczewski, Wikia Inc.
  * @license http://www.gnu.org/copyleft/gpl.html GNU General Public License 2.0 or later
@@ -19,7 +20,7 @@ if (!defined('MEDIAWIKI')) {
 class RandomWiki extends SpecialPage {
 
 	function RandomWiki() {
-                SpecialPage::SpecialPage('RandomWiki', 'editaccount');
+                SpecialPage::SpecialPage('RandomWiki');
         }
           
 	function execute() {
