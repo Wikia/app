@@ -87,7 +87,7 @@ FCKIndentCommand.prototype =
 		var startContainer = FCKSelection.GetBoundaryParentElement( true ) ;
 		var endContainer = FCKSelection.GetBoundaryParentElement( false ) ;
 		var listNode = FCKDomTools.GetCommonParentNode( startContainer, endContainer, ['ul','ol'] ) ;
-		var headerNode = FCKDomTools.GetCommonParentNode( startContainer, endContainer, ['h1','h2','h3','h4','h5','h6'] ) ;
+		var dontIndentNode = FCKDomTools.GetCommonParentNode( startContainer, endContainer, ['h1','h2','h3','h4','h5','h6','pre'] ) ;
 
 		if ( listNode )
 		{
@@ -102,7 +102,7 @@ FCKIndentCommand.prototype =
 			return FCK_TRISTATE_OFF ;
 		}
 
-		if ( headerNode )
+		if ( dontIndentNode )
 		{
 			return FCK_TRISTATE_DISABLED;
 		}
