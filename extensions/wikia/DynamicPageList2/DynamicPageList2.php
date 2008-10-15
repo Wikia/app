@@ -9,7 +9,7 @@
  * Note: DynamicPageList2 is based on DynamicPageList.
  *
  * Usage:
- * 	require_once("extensions/DynamicPageList/DynamicPageList2.php"); in LocalSettings.php
+ * 	require_once("extensions/DynamicPageList2.php"); in LocalSettings.php
  * 
  * @package MediaWiki
  * @subpackage Extensions
@@ -241,39 +241,7 @@
  *			Template matching in include improved. "abc" must not match "abc def" but did so previously.
  * @version 1.6.3
  *			Changed section matching to allow wildcards.
- * @version 1.6.4
- *			Syntax error fixed (self::$createdLinks must not be unset as it is static, near line 3020)
- *			dplmatrix added
- * @version 1.6.5
- *			added include(not)matchparsed
- *          bug fix missing array key , line 2248
- *          bug fix in DPLInclude (call time reference in extractHeadings)
- *          added %VERSION%
- * @version 1.6.6
- *          SQL escaping (protection against injection) added at "revisions"
- *			%TOTALPAGES% added
- * @version 1.6.7
- *			bugfix at goal=categories (due to change in 1.6.6)
- * @version 1.6.8
- *			allow & at category 
- * @version 1.6.9
- *			added check against non-includable namespaces
- *          added includetrim' command
- * @version 1.7.0
- *			bug fix at articlecategory (underscore)
- *          bug fix in installation checking (#2128)
- *          new command 'imageused'
- * @version 1.7.1
- *			allow % within included template parameters
- * @version 1.7.2
- *			experimental sorting of result tables (tablesortcol)
- * @version 1.7.3
- *			%SECTION% can now be used within multiseseparators
- *          preliminary patch for MW 1.12 (recursive template expansion)
- * @version 1.7.4
- *			new command: imagecontainer
- * @version 1.7.5
- 
+ *
  *		! when making changes here you must update the VERSION constant at the beginning of class ExtSynamicPageList2 !
  */
 
@@ -312,7 +280,7 @@ function ExtDynamicPageList2__endEliminate( &$parser, $text )			 	{
 
 class ExtDynamicPageList2
 {
-    const VERSION = '1.7.4';               // current version
+    const VERSION = '1.6.3';               // current version
 
     /**
      * Extension options
@@ -343,7 +311,9 @@ class ExtDynamicPageList2
         'addauthor'            => array('default' => 'false', 'true', 'no', 'yes', '0', '1', 'off', 'on'),
         'addcontribution'      => array('default' => 'false', 'true', 'no', 'yes', '0', '1', 'off', 'on'),
         'addlasteditor'        => array('default' => 'false', 'true', 'no', 'yes', '0', '1', 'off', 'on'),
-        'allowcachedresults'   => array('default' => 'false', 'true', 'no', 'yes', '0', '1', 'off', 'on'),
+        'allowcachedresults'   => array('default' => 'true', 'true', 'no', 'yes', '0', '1', 'off', 'on'),
+		'userdateformat'       => array('default' => ''),
+		'goal'                 => array('default' => 'pages', 'pages', 'categories'),
         /**
          * search for a page with the same title in another namespace (this is normally the article to a talk page)
          */
@@ -401,7 +371,7 @@ class ExtDynamicPageList2
          * - 3: every debug message.
          * - 4: The SQL statement as an echo before execution.
          */
-        'debug'                => array( 'default' => '2', '0', '1', '2', '3', '4', '5'),
+        'debug'                => array( 'default' => '1', '0', '1', '2', '3', '4', '5'),
 
         /**
          * eliminate=.. avoid creating unnecessary backreferences which point to to DPL results.
@@ -469,13 +439,10 @@ class ExtDynamicPageList2
          * includematch=..,..    allows to specify regular expressions which must match the included contents
          */
         'includematch'       => array('default' => ''),
-        'includematchparsed' => array('default' => ''),
         /** 
          * includenotmatch=..,..    allows to specify regular expressions which must NOT match the included contents
          */
-        'includenotmatch'       => array('default' => ''),
-        'includenotmatchparsed' => array('default' => ''),
-        'includetrim'           => array('default' => 'false', 'true', 'no', 'yes', '0', '1', 'off', 'on'),
+        'includenotmatch'    => array('default' => ''),
         /** 
          * Inline text is some wiki text used to separate list items with 'mode=inline'.
          */
@@ -531,16 +498,6 @@ class ExtDynamicPageList2
          * this parameter restricts the output to articles which do not contain a reference to the specified page.
          */
         'notlinksto'           => array('default' => ''),
-        /**
-         * this parameter restricts the output to articles which use one of the specified images.
-         * Examples:   imageused=Image:my image|Image:your image
-         */
-        'imageused'              => array('default' => ''),
-         /**
-		 * this parameter restricts the output to images which are used (contained) by one of the specified pages.
-		 * Examples:   imagecontainer=my article|your article
-		 */
-		'imagecontainer'	 => array('default' => ''),
         /**
          * this parameter restricts the output to articles which use the specified template.
          * Examples:   uses=Template:my template
@@ -766,15 +723,11 @@ class ExtDynamicPageList2
          */
         'tablerow'		       => array('default' => ''),
         /**
-         * The number (starting with 1) of the column to be used for sorting
-         */
-        'tablesortcol'	       => array('default' => '0', 'pattern' => '/^-?\d*$/'),
-        /**
          * Max # characters of page title to display.
          * Empty value (default) means no limit.
          * Not applicable to mode=category.
          */
-        'titlemaxlength'       => array('default' => '', 'pattern' => '/^\d*$/'), 
+        'titlemaxlength'       => array('default' => '', 'pattern' => '/^\d*$/'),
         /*
          *
          */
@@ -798,8 +751,6 @@ class ExtDynamicPageList2
         $wgParser->setHook( 'section', array( __CLASS__, 'removeSectionMarkers' ) );
         //------------------------------ parser #function  #dplchapter:
         $wgParser->setFunctionHook( 'dplchapter', array( __CLASS__, 'dplChapterParserFunction' ) );
-        //------------------------------ parser #function  #dplmatrix:
-        $wgParser->setFunctionHook( 'dplmatrix', array( __CLASS__, 'dplMatrixParserFunction' ) );
         //------------------------------ variant as a parser #function
         $wgParser->setFunctionHook( 'dpl', array( __CLASS__, 'dplParserFunction' ) );
 
@@ -842,7 +793,6 @@ class ExtDynamicPageList2
             # All remaining elements are synonyms for our parser function
             $magicWords['dpl'] = array( 0, 'dpl' );
             $magicWords['dplchapter'] = array( 0, 'dplchapter' );
-            $magicWords['dplmatrix'] = array( 0, 'dplmatrix' );
             # unless we return true, other parser functions extensions won't get loaded.
             return true;
     }
@@ -911,94 +861,13 @@ class ExtDynamicPageList2
         // $dump2   = self::dumpParsedRefs($parser,"after DPL func");
         // return $dump1.$text.$dump2;
         
-        $dplresult = self::dynamicPageList($input, $params, $parser, $reset, 'func');
-        global $wgVersion;
-        if (version_compare($wgVersion, '1.12.0')<0 || $parser instanceof Parser_OldPP) return $dplresult;
-        // old parser does further recursive processing by default
-        return array( // normal parser needs to be coaxed to do further recursive processing
-	        $parser->getPreprocessor()->preprocessToObj($dplresult, Parser::PTD_FOR_INCLUSION ),
-    	    "isChildObj" => true
-        );
-
+        return self::dynamicPageList($input, $params, $parser, $reset, 'func');
     }
 
-    public static function dplChapterParserFunction(&$parser, $text='', $heading=' ', $maxLength = -1, $page = '?page?', $link = 'default', $trim=false ) {
+    public static function dplChapterParserFunction(&$parser, $text='', $heading=' ', $maxLength = -1, $page = '?page?', $link = 'default' ) {
         $arg_list = func_get_args();
-        $output = DPL2Include::extractHeadingFromText($parser, $page, '?title?', $text, $heading, '', $sectionHeading, true, $maxLength, $link, $trim);
+        $output = DPL2Include::extractHeadingFromText($parser, $page, '?title?', $text, $heading, '', $sectionHeading, true, $maxLength, $link);
         return $output[0];
-    } 
-
-    public static function dplMatrixParserFunction(&$parser, $name, $yes, $no, $flip, $matrix ) {
-        $arg_list = func_get_args();
-        $lines = split("\n",$matrix);
-        $m = array();
-        $sources = array();
-        $targets = array();
-        $from = '';
-        $to = '';
-        if ($flip=='' | $flip=='normal') 	$flip=false;
-        else								$flip=true;
-        if ($name=='') $name='&nbsp;';
-        if ($yes=='') $yes= ' x ';
-        if ($no=='') $no = '&nbsp;';
-        if ($no[0]=='-') $no = " $no ";
-        foreach ($lines as $line) {
-	        if (strlen($line)<=0) continue;
-	        if ($line[0]!=' ') {
-		        $from = preg_split(' *\~\~ *',trim($line),2);
-		        if (!array_key_exists($from[0],$sources)) {
-			        if (count($from)<2 || $from[1]=='') $sources[$from[0]] = $from[0];
-			        else								$sources[$from[0]] = $from[1];
-			        $m[$from[0]] = array();
-		        }
-	        }
-	        else if (trim($line) != '') {
-		        $to = preg_split(' *\~\~ *',trim($line),2);
-		        if (count($to)<2 || $to[1]=='') $targets[$to[0]] = $to[0];
-		        else							$targets[$to[0]] = $to[1];
-		        $m[$from[0]][$to[0]] = true;
-	        }
-        }
-        ksort($targets);
-
-        $header = "\n";
-        
-        if ($flip) {
-	        foreach ($sources as $from => $fromName) {
-		        $header .= "![[$from|".$fromName."]]\n";
-        	}
-	        foreach ($targets as $to => $toName) {
-		        $targets[$to] = "[[$to|$toName]]";	        
-		        foreach ($sources as $from => $fromName) {
-			        if (array_key_exists($to,$m[$from])) {
-				        $targets[$to] .= "\n|$yes";
-			        }
-			        else {
-				        $targets[$to] .= "\n|$no";
-			        }
-		        }
-		        $targets[$to].= "\n|--\n";
-	        }
-	        return "{|class=dplmatrix\n|$name"."\n".$header."|--\n!".join("\n!",$targets)."\n|}";
-        }
-        else {
-	        foreach ($targets as $to => $toName) {
-		        $header .= "![[$to|".$toName."]]\n";
-        	}
-	        foreach ($sources as $from => $fromName) {
-		        $sources[$from] = "[[$from|$fromName]]";	        
-		        foreach ($targets as $to => $toName) {
-			        if (array_key_exists($to,$m[$from])) {
-				        $sources[$from] .= "\n|$yes";
-			        }
-			        else {
-				        $sources[$from] .= "\n|$no";
-			        }
-		        }
-		        $sources[$from].= "\n|--\n";
-	        }
-	        return "{|class=dplmatrix\n|$name"."\n".$header."|--\n!".join("\n!",$sources)."\n|}";
-        }
     } 
 
     private static function dumpParsedRefs($parser,$label) {
@@ -1109,7 +978,12 @@ class ExtDynamicPageList2
         // Extension variables
         // Allowed namespaces for DPL2: all namespaces except the first 2: Media (-2) and Special (-1), because we cannot use the DB for these to generate dynamic page lists.
         if( !is_array(self::$allowedNamespaces) ) { // Initialization
-            $aNs = $wgContLang->getNamespaces();            
+            $aNs = $wgContLang->getNamespaces();
+            // namespaces which are nonicludable will maybe somewhen ignored
+            // if (isset($wgNonincludableNamespaces)) {
+            //	foreach ($wgNonincludableNamespaces as $nonInc) unset ($aNs[$nonInc]);
+            // }
+            
             self::$allowedNamespaces = array_slice($aNs, 2, count($aNs), true);
             if( !is_array(self::$options['namespace']) )
                 self::$options['namespace'] = self::$allowedNamespaces;
@@ -1172,7 +1046,6 @@ class ExtDynamicPageList2
         $aListSeparators = array();
         $sTable = self::$options['table']['default'];
         $aTableRow = array();
-        $iTableSortCol = self::$options['tablesortcol']['default'];
             
         $sInlTxt = self::$options['inlinetext']['default'];
         
@@ -1200,18 +1073,16 @@ class ExtDynamicPageList2
         $bAddCategories = self::argBoolean(self::$options['addcategories']['default']);
         
         $bIncludeSubpages = self::argBoolean(self::$options['includesubpages']['default']);
-        $bIncludeTrim = self::argBoolean(self::$options['includetrim']['default']);
     
         $bIgnoreCase = self::argBoolean(self::$options['ignorecase']['default']);
         
         $_incpage = self::$options['includepage']['default'];
         $bIncPage =  is_string($_incpage) && $_incpage !== '';
-
+        
         $aSecLabels = array();
         if($bIncPage && $_incpage != '*') $aSecLabels = explode(',', $_incpage);
         $aSecLabelsMatch 	= array();
         $aSecLabelsNotMatch = array();
-        $bIncParsed = false;  // default is to match raw parameters
             
         $aSecSeparators = array();
         $aSecSeparators      = explode(',', self::$options['secseparators']['default']);
@@ -1266,9 +1137,6 @@ class ExtDynamicPageList2
         $aLinksFrom     = array();
         $aNotLinksFrom  = array();
     
-        $aImageUsed 	= array();
-        $aImageContainer= array();
-
         $aUses       = array();
         $aNotUses    = array();
         
@@ -1322,7 +1190,7 @@ class ExtDynamicPageList2
         // parse the result recursively. This allows to build complex structures in the output
         // which are only understood by the parser if seen as a whole
             
-        foreach($aParams as $iParam => $sParam) {		
+        foreach($aParams as $iParam => $sParam) {
             $aParam = explode('=', $sParam, 2);
             if( count( $aParam ) < 2 ) {
                 if (trim($aParam[0])!='') $output .= $logger->escapeMsg(DPL2_i18n::WARN_UNKNOWNPARAM, $aParam[0]. " [missing '=']", implode(', ', array_keys(self::$options)));
@@ -1389,13 +1257,7 @@ class ExtDynamicPageList2
                         $bNotHeading = true;
                         $sArg[0] = '';
                     }
-                    $op='OR';
-                    if (strpos($sArg,'&')!==false) {
-						$aParams = explode('&', $sArg);
-	                    $op = 'AND';
-                    } else {
-						$aParams = explode('|', $sArg);
-                    }
+                    $aParams = explode('|', $sArg);
                     foreach($aParams as $sParam) {
                         $sParam=trim($sParam);
                         if($sParam == '') { // include uncategorized pages (special value: empty string)
@@ -1416,21 +1278,13 @@ class ExtDynamicPageList2
                         }
                     }
                     if( !empty($aCategories) ) {
-                        if ($op=='OR') {
-	                        $aIncludeCategories[] = $aCategories;
-                    	}
-                    	else {
-	                    	foreach($aCategories as $aParams) {
-		                    	$sParam=array();
-		                    	$sParam[] = $aParams;
-								$aIncludeCategories[] = $sParam;
-							}
-						}
+                        $aIncludeCategories[] = $aCategories;
                         if($bHeading)		$aCatHeadings 	 = array_unique($aCatHeadings + $aCategories);
                         if($bNotHeading)	$aCatNotHeadings = array_unique($aCatNotHeadings + $aCategories);
                         $bConflictsWithOpenReferences=true;
                     }	
                     break;
+                    
                 case 'notcategoryregexp':
                     $sNotCategoryComparisonMode = ' REGEXP ';
                     $aExcludeCategories[] = $sArg;
@@ -1520,31 +1374,6 @@ class ExtDynamicPageList2
                     if(!$bSelectionCriteriaFound) return $logger->msgWrongParam('notlinksfrom', $sArg);
                     break;
                 
-                case 'imageused':
-                    $pages = explode('|', trim($sArg));
-                    $n=0;
-                    foreach($pages as $page) {
-                        if (trim($page)=='') continue;
-                        if (!($theTitle = Title::newFromText(trim($page)))) return $logger->msgWrongParam('imageused', $sArg);
-                        $aImageUsed[$n++] = $theTitle;
-                        $bSelectionCriteriaFound=true;
-                    }
-                    if(!$bSelectionCriteriaFound) return $logger->msgWrongParam('imageused', $sArg);
-                    $bConflictsWithOpenReferences=true;
-                    break;
-
-                case 'imagecontainer':
-                    $pages = explode('|', trim($sArg));
-                    $n=0;
-                    foreach($pages as $page) {
-                        if (trim($page)=='') continue;
-                        if (!($theTitle = Title::newFromText(trim($page)))) return $logger->msgWrongParam('imagecontainer', $sArg);
-                        $aImageContainer[$n++] = $theTitle;
-                        $bSelectionCriteriaFound=true;
-                    }
-                    if(!$bSelectionCriteriaFound) return $logger->msgWrongParam('imagecontainer', $sArg);
-                    break;
-
                 case 'uses':
                     $pages = explode('|', $sArg);
                     $n=0;
@@ -1762,7 +1591,7 @@ class ExtDynamicPageList2
                     break;
 
                 case 'articlecategory':
-                    $sArticleCategory =  str_replace(' ','_',$sArg);
+                    $sArticleCategory = $sArg;
                     break;
 
                 /**
@@ -1829,26 +1658,14 @@ class ExtDynamicPageList2
                         $aSecLabels= explode(',', $sArg);
                     break;
     
-                case 'includematchparsed':
-                	$bIncParsed=true;
                 case 'includematch':
                     $aSecLabelsMatch= explode(',', $sArg);
                     break;
     
-                case 'includenotmatchparsed':
-                	$bIncParsed=true;
                 case 'includenotmatch':
                     $aSecLabelsNotMatch= explode(',', $sArg);
                     break;
     
-                case 'includetrim':
-                    if( in_array($sArg, self::$options['includetrim'])) {
-                        $bIncludeTrim = self::argBoolean($sArg);
-                    }
-                    else
-                        $output .= $logger->msgWrongParam('includetrim', $sArg);
-                    break;
-                    
                 case 'adduser':
                     if( in_array($sArg, self::$options['adduser'])) {
                         $bAddUser = self::argBoolean($sArg);
@@ -2035,13 +1852,6 @@ class ExtDynamicPageList2
                     else					$aTableRow = explode (',',$sArg);
                     break;
                 
-                case 'tablesortcol':
-                    if( preg_match(self::$options['tablesortcol']['pattern'], $sArg) )
-                        $iTableSortCol = ($sArg == '') ? 0 : intval($sArg);
-                    else // wrong value
-                        $output .= $logger->msgWrongParam('tablesortcol', $sArg);
-                    break;
-                    
                 case 'dominantsection':
                     if( preg_match(self::$options['dominantsection']['pattern'], $sArg) )
                         $iDominantSection = ($sArg == '') ? NULL: intval($sArg);
@@ -2217,13 +2027,14 @@ class ExtDynamicPageList2
             global $wgHooks;
             if (!isset($wgHooks['ParserAfterTidy']) ||
                 !( in_array( __CLASS__ . '::endReset',$wgHooks['ParserAfterTidy']) ||
-                   in_array( array(__CLASS__, 'endReset' ),$wgHooks['ParserAfterTidy'],true) ) ) {
+                   in_array( array(__CLASS__, 'endReset' ),$wgHooks['ParserAfterTidy']) ) ) {
 	            // changed back to globals, gs
                 //$wgHooks['ParserAfterTidy'][]   = __CLASS__ . '::endReset';
                 $wgHooks['ParserAfterTidy'][]   = __CLASS__ . '__endReset';
             }
         }
-                
+            
+    
     // ###### CHECKS ON PARAMETERS ######
         // too many categories!!
         if ( ($iTotalCatCount > self::$maxCategoryCount) && (!self::$allowUnlimitedCategories) )
@@ -2359,7 +2170,6 @@ class ExtDynamicPageList2
                 else {
                     $aSecSeparators[2*$i] = "\n|"; // ."\n";
                     $aSecSeparators[2*$i+1]='';
-                    if (is_array($aSecLabels[$i]) && $aSecLabels[$i][0]=='#') 	$aMultiSecSeparators[$i] = "\n----\n";
                     if ($aSecLabels[$i][0]=='#') 	$aMultiSecSeparators[$i] = "\n----\n";
                     else							$aMultiSecSeparators[$i] = "<br/>\n";
                 }
@@ -2370,13 +2180,11 @@ class ExtDynamicPageList2
         $sSqlPage_counter = '';
         $sSqlPage_size = '';
         $sSqlPage_touched = '';
-		$sSqlCalcFoundRows = '';
-		if ( isset($iCount) && $sGoal != 'categories' && strpos($sResultsHeader.$sResultsFooter,'%TOTALPAGES%')!==false) $sSqlCalcFoundRows = 'SQL_CALC_FOUND_ROWS';
         if ($sDistinctResultSet == 'false') $sSqlDistinct = '';
         else								$sSqlDistinct = 'DISTINCT';
         $sSqlGroupBy = '';
         if ($sDistinctResultSet == 'strict' 
-           && (count($aLinksTo)+count($aNotLinksTo)+count($aLinksFrom)+count($aNotLinksFrom)+count($aImageUsed))>0 ) $sSqlGroupBy = 'page_title';
+           && (count($aLinksTo)+count($aNotLinksTo)+count($aLinksFrom)+count($aNotLinksFrom))>0 ) $sSqlGroupBy = 'page_title';
         $sSqlSortkey = '';
         $sSqlCl_to = '';
         $sSqlCats = '';
@@ -2394,7 +2202,6 @@ class ExtDynamicPageList2
         $sSqlRev_user = '';
         $sSqlCond_page_rev = '';
         $sPageLinksTable = $dbr->tableName( 'pagelinks' );
-        $sImageLinksTable = $dbr->tableName( 'imagelinks' );
         $sTemplateLinksTable = $dbr->tableName( 'templatelinks' );
         $sSqlPageLinksTable = '';
         $sSqlCond_page_pl = '';
@@ -2562,40 +2369,6 @@ class ExtDynamicPageList2
             }
         }
     
-        // imageused
-        if ( count($aImageUsed)>0 ) {
-            $sSqlPageLinksTable .= $sImageLinksTable . ' as il, ';
-            $sSqlCond_page_pl .= ' AND '.$sPageTable.'.page_id=il.il_from AND (';
-            $sSqlSelPage = ', il.il_to as image_sel_title';
-            $n=0;
-            foreach ($aImageUsed as $link) {
-                if ($n>0) $sSqlCond_page_pl .= ' OR ';
-                if ($bIgnoreCase) 	$sSqlCond_page_pl .= "UPPER(il.il_to)=UPPER(" . $dbr->addQuotes( $link->getDbKey() ).')';
-                else				$sSqlCond_page_pl .= "il.il_to=" . $dbr->addQuotes( $link->getDbKey() );
-                $n++;
-            }
-            $sSqlCond_page_pl .= ')';
-        }
-    
-        // imagecontainer
-        if ( count($aImageContainer)>0 ) {
-            $sSqlPageLinksTable .= $sImageLinksTable . ' as ic, ';
-            if ($acceptOpenReferences) {
-				$sSqlCond_page_pl .= ' AND (';
-            }
-            else {
-				$sSqlCond_page_pl .= ' AND '.$sPageTable.'.page_namespace=\'6\' AND '.$sPageTable.'.page_title=ic.il_to AND (';
-			}
-            $n=0;
-            foreach ($aImageContainer as $link) {
-                if ($n>0) $sSqlCond_page_pl .= ' OR ';
-                if ($bIgnoreCase) $sSqlCond_page_pl .= "UPPER(ic.il_from)=UPPER(" . $dbr->addQuotes( $link->getArticleID() ).')';
-                else              $sSqlCond_page_pl .= "ic.il_from=" . $dbr->addQuotes( $link->getArticleID() );
-                $n++;
-            }
-            $sSqlCond_page_pl .= ')';
-        }
-
         // uses
         if ( count($aUses)>0 ) {
             $sSqlPageLinksTable .= ' '.$sTemplateLinksTable . ' as tl, ';
@@ -2659,7 +2432,7 @@ class ExtDynamicPageList2
             $sSqlCond_page_rev .= ' AND ' . $dbr->addQuotes($sNotLastModifiedBy) . ' != (select rev_user_text from '.$sRevisionTable
                                 .' where '.$sRevisionTable.'.rev_page=page_id order by '.$sRevisionTable.'.rev_timestamp DESC limit 1)';
         }
-        
+    
         if ($bAddAuthor && $sSqlRevisionTable =='') {
             $sSqlRevisionTable = $sRevisionTable . ' AS rev, ';
             $sSqlCond_page_rev = ' AND '.$sPageTable.'.page_id=rev.rev_page AND rev.rev_timestamp=( SELECT MIN(rev_aux.rev_timestamp) FROM ' . $sRevisionTable . ' AS rev_aux WHERE rev_aux.rev_page=rev.rev_page )';
@@ -2727,15 +2500,9 @@ class ExtDynamicPageList2
         
         // SELECT ... FROM
         if ($acceptOpenReferences)
-                 // SELECT ... FROM
-        	if (count($aImageContainer)>0) {
-	        	$sSqlSelectFrom = "SELECT $sSqlCalcFoundRows $sSqlDistinct " . $sSqlCl_to . 'ic.il_to, ' . $sSqlSelPage . "ic.il_to as sortkey" . ' FROM ' . $sImageLinksTable . ' AS ic';
-        	}
-        	else {
-	        	$sSqlSelectFrom = "SELECT $sSqlCalcFoundRows $sSqlDistinct " . $sSqlCl_to . 'pl_namespace, pl_title' . $sSqlSelPage . $sSqlSortkey . ' FROM ' . $sPageLinksTable;
-        	}
+            $sSqlSelectFrom = "SELECT $sSqlDistinct " . $sSqlCl_to . 'pl_namespace, pl_title' . $sSqlSelPage . $sSqlSortkey . ' FROM ' . $sPageLinksTable;
         else
-			$sSqlSelectFrom = "SELECT $sSqlCalcFoundRows $sSqlDistinct " . $sSqlCl_to . $sPageTable.'.page_namespace as page_namespace,'.
+            $sSqlSelectFrom = "SELECT $sSqlDistinct " . $sSqlCl_to . $sPageTable.'.page_namespace as page_namespace,'.
             					$sPageTable.'.page_title as page_title' . $sSqlSelPage . $sSqlSortkey . $sSqlPage_counter .
                                 $sSqlPage_size . $sSqlPage_touched . $sSqlRev_user .
                                 $sSqlRev_timestamp . $sSqlRev_id . $sSqlCats . $sSqlCl_timestamp . 
@@ -2848,13 +2615,7 @@ class ExtDynamicPageList2
     
         // count(all categories) <= max no of categories
         $sSqlWhere .= $sSqlCond_MaxCat;
-
-        // check against forbidden namespaces
-		if(is_array($wgNonincludableNamespaces) && array_count_values($wgNonincludableNamespaces) > 0
-			&& implode(',', $wgNonincludableNamespaces)!='') {
-	        $sSqlWhere .= ' AND ' .$sPageTable. '.page_namespace not in (' . implode(',', $wgNonincludableNamespaces) . ')';
-        }
-              
+        
         // page_id=pl.pl_from (if pagelinks table required)
         $sSqlWhere .= $sSqlCond_page_pl;
 
@@ -2928,7 +2689,7 @@ class ExtDynamicPageList2
          
         if ($sGoal=='categories') {
             $sSqlSelectFrom = 'select distinct cl3.cl_to from '.$sCategorylinksTable.' as cl3 where cl3.cl_from in ( ' . 
-                                preg_replace('/SELECT +DISTINCT +.* FROM /','SELECT DISTINCT '.$sPageTable.'.page_id FROM ',$sSqlSelectFrom);
+                                preg_replace('/SELECT DISTINCT .* FROM /','SELECT DISTINCT '.$sPageTable.'.page_id FROM ',$sSqlSelectFrom);
             if ($sOrder == 'descending')	$sSqlWhere .= ' ) order by cl3.cl_to DESC';
             else							$sSqlWhere .= ' ) order by cl3.cl_to ASC';
         }
@@ -3001,25 +2762,24 @@ class ExtDynamicPageList2
                 $pageNamespace = 14;  // CATEGORY
                 $pageTitle     = $row->cl_to;
             } else if ($acceptOpenReferences) {
-	            if (count($aImageContainer)>0) {
-    	            $pageNamespace = 6;
-        	        $pageTitle     = $row->il_to;
-	            }
-	            else {
-	                // maybe non-existing title
-    	            $pageNamespace = $row->pl_namespace;
-        	        $pageTitle     = $row->pl_title;
-    	        }
+                // existing PAGE TITLE
+                $pageNamespace = $row->pl_namespace;
+                $pageTitle     = $row->pl_title;
             }
             else {
-	            // existing PAGE TITLE
+                // maybe non-existing title
                 $pageNamespace = $row->page_namespace;
                 $pageTitle     = $row->page_title;
             }
     
             // if subpages are to be excluded: skip them
             if (!$bIncludeSubpages && (!(strpos($pageTitle,'/')===false))) continue;
-                
+    
+            // maybe we will somewhen support namespace protections
+            // do not allow access to protected Namespaces
+            // if (count($wgNonincludableNamespaces)>0 && in_array($pageNamespace,$wgNonincludableNamespaces) ) continue;
+            // we should produce an error message if debug >= 3
+            
             $title = Title::makeTitle($pageNamespace, $pageTitle);
             
             if ( !($title instanceof Title) || !($wgTitle instanceof Title) ) {
@@ -3037,7 +2797,7 @@ class ExtDynamicPageList2
             //PAGE LINK
             $sTitleText = $title->getText();
             if (is_array($aReplaceInTitle) && ($aReplaceInTitle[0]!='')) $sTitleText = preg_replace($aReplaceInTitle[0],(!empty($aReplaceInTitle[1])) ? $aReplaceInTitle[1] : "",$sTitleText);
-    
+
             //chop off title if "too long"
             if( isset($iTitleMaxLen) && (strlen($sTitleText) > $iTitleMaxLen) )
                 $sTitleText = substr($sTitleText, 0, $iTitleMaxLen) . '...';
@@ -3075,15 +2835,6 @@ class ExtDynamicPageList2
                 }
             }
     
-			//STORE selected image
-            if ( count($aImageUsed)>0 ) {
-                if (!isset($row->image_sel_title)) {
-                    $dplArticle->mImageSelTitle     = 'unknown image';
-                } else {
-                    $dplArticle->mImageSelTitle     = $row->image_sel_title;
-                }
-            }
-
             if ($bGoalIsPages) {
                 //REVISION SPECIFIED
                 if( $sLastRevisionBefore.$sAllRevisionsBefore.$sFirstRevisionSince.$sAllRevisionsSince !='') {
@@ -3154,14 +2905,6 @@ class ExtDynamicPageList2
             $aArticles[] = $dplArticle;
         }
         $dbr->freeResult( $res );
-		$rowcount = -1;
-		if ( $sSqlCalcFoundRows != '') {
-			$res = $dbr->query('SELECT FOUND_ROWS() as rowcount');
-			$row = $dbr->fetchObject ( $res );
-			$rowcount = $row->rowcount;
-			$dbr->freeResult( $res );
-		}
-
     
     // ###### SHOW OUTPUT ######
     
@@ -3173,32 +2916,29 @@ class ExtDynamicPageList2
                                                         
         $dpl = new DPL2($aHeadings, $bHeadingCount, $iColumns, $iRows, $iRowSize, $sRowColFormat, $aArticles, 
                         $aOrderMethods[0], $hListMode, $listMode, $bEscapeLinks, $bIncPage, $iIncludeMaxLen, 
-                        $aSecLabels, $aSecLabelsMatch, $aSecLabelsNotMatch, $bIncParsed, $parser, $logger, $aReplaceInTitle, 
-                        $iTitleMaxLen, $defaultTemplateSuffix, $aTableRow, $bIncludeTrim, $iTableSortCol);
-
-		if ($rowcount == -1) $rowcount = $dpl->getRowCount();                
+                        $aSecLabels, $aSecLabelsMatch, $aSecLabelsNotMatch, $parser, $logger, $aReplaceInTitle, 
+                        $iTitleMaxLen, $defaultTemplateSuffix, $aTableRow);
+                        
         $dpl2result = $dpl->getText();
         $header='';
-        if ($sOneResultHeader != '' && $rowcount==1) {
+        if ($sOneResultHeader != '' && $dpl->getRowCount()==1) {
             $header = str_replace('%PAGES%',1,$sOneResultHeader);
-        } else if ($rowcount==0) {
+        } else if ($dpl->getRowCount()==0) {
             if ($sNoResultsHeader != '')	$output .= 	str_replace( '\n', "\n", str_replace( "¶", "\n", $sNoResultsHeader));
             if ($sNoResultsFooter != '')	$output .= 	str_replace( '\n', "\n", str_replace( "¶", "\n", $sNoResultsFooter));
             if ($sNoResultsHeader == '' && $sNoResultsFooter == '')	$output .= $logger->escapeMsg(DPL2_i18n::WARN_NORESULTS);
         }
         else {
-            if ($sResultsHeader != '')	$header = str_replace('%TOTALPAGES%',$rowcount,str_replace('%PAGES%',$rowcount,$sResultsHeader));
+            if ($sResultsHeader != '')	$header = str_replace('%PAGES%',$dpl->getRowCount(),$sResultsHeader);
         }
         $header = str_replace( '\n', "\n", str_replace( "¶", "\n", $header ));
-        $header = str_replace('%VERSION%', self::VERSION,$header);
         $footer='';
-        if ($sOneResultFooter != '' && $rowcount==1) {
+        if ($sOneResultFooter != '' && $dpl->getRowCount()==1) {
             $footer = str_replace('%PAGES%',1,$sOneResultFooter);
         } else {
-            if ($sResultsFooter != '')	$footer =  str_replace('%TOTALPAGES%',$rowcount,str_replace('%PAGES%',$rowcount,$sResultsFooter));
+            if ($sResultsFooter != '')	$footer = str_replace('%PAGES%',$dpl->getRowCount(),$sResultsFooter);
         }
         $footer = str_replace( '\n', "\n", str_replace( "¶", "\n", $footer ));
-        $footer = str_replace('%VERSION%', self::VERSION, $footer);
         
         $output .= $header . $dpl2result . $footer;
         
@@ -3212,7 +2952,7 @@ class ExtDynamicPageList2
             global $wgHooks;
             if (!isset($wgHooks['ParserAfterTidy']) ||
                 !(in_array(__CLASS__ . '::endEliminate',$wgHooks['ParserAfterTidy']) ||
-                  in_array( array( __CLASS__, 'endEliminate'),$wgHooks['ParserAfterTidy'],true))) {
+                  in_array( array( __CLASS__, 'endEliminate'),$wgHooks['ParserAfterTidy']))) {
             	// changed back to globals, gs
    	            // $wgHooks['ParserAfterTidy'][]   = __CLASS__ . '::endEliminate';
    	            $wgHooks['ParserAfterTidy'][]   = __CLASS__ . '__endEliminate';
@@ -3253,7 +2993,7 @@ class ExtDynamicPageList2
     
     }
 
-    // create keys for TableRow which represent the structure of the "include=" arguments
+    // create keys for TableRow which representg the structure of the "include=" arguments
     private static function updateTableRowKeys(&$aTableRow,$aSecLabels) {
         $tableRow = $aTableRow;
         $aTableRow=array();
@@ -3281,7 +3021,7 @@ class ExtDynamicPageList2
 
     private static function getSubcategories($cat,$sPageTable) {
         $dbr = wfGetDB( DB_SLAVE, 'dpl' );
-        $cats=$cat;	        
+        $cats=$cat;
         $res = $dbr->query("select distinct page_title from ".$dbr->tableName('page')." inner join "
                 .$dbr->tableName('categorylinks')." as cl0 on ".$sPageTable.".page_id = cl0.cl_from and cl0.cl_to='"
                .str_replace(' ','_',$cat)."'"." where page_namespace='14'");
@@ -3350,9 +3090,7 @@ class ExtDynamicPageList2
             }
             // $text .= self::dumpParsedRefs($parser,"after final eliminate".$parser->mTitle->getText());
         }
-        self::$createdLinks=array( 
-                'resetLinks'=> false, 'resetTemplates' => false, 
-                'resetCategories' => false, 'resetImages' => false, 'resetdone' => false );
+        unset(self::$createdLinks);
         return true;
     }
 
@@ -3364,7 +3102,6 @@ class DPL2Article {
 	var $mNamespace = -1;	// namespace (number)
 	var $mSelTitle = '';    // selected title of initial page
 	var $mSelNamespace = -1;// selected namespace (number) of initial page
-	var $mImageSelTitle = ''; // selected title of image
 	var $mLink = ''; 		// html link to page
 	var $mStartChar = ''; 	// page title first char
 	var $mParentHLink = ''; // heading (link to the associated page) that page belongs to in the list (default '' means no heading)
@@ -3482,7 +3219,6 @@ class DPL2 {
 	var $mIncSecLabels         = array(); // array of labels of sections to transclude
 	var $mIncSecLabelsMatch    = array(); // array of match patterns for sections to transclude
 	var $mIncSecLabelsNotMatch = array(); // array of NOT match patterns for sections to transclude
-	var $mIncParsed;    // whether to match raw parameters or parsed contents
 	var $mParser;
 	var $mParserOptions;
 	var $mParserTitle;
@@ -3495,8 +3231,7 @@ class DPL2 {
 	
 	function DPL2($headings, $bHeadingCount, $iColumns, $iRows, $iRowSize, $sRowColFormat, $articles, $headingtype, $hlistmode, 
 				  $listmode, $bescapelinks, $includepage, $includemaxlen, $includeseclabels, $includeseclabelsmatch, 
-				  $includeseclabelsnotmatch, $includematchparsed, &$parser, $logger, $replaceInTitle, $iTitleMaxLen,
-				  $defaultTemplateSuffix, $aTableRow, $bIncludeTrim, $iTableSortCol ) {
+				  $includeseclabelsnotmatch, &$parser, $logger, $replaceInTitle, $iTitleMaxLen, $defaultTemplateSuffix, $aTableRow ) {
 	   	global $wgContLang;
 		$this->nameSpaces = $wgContLang->getNamespaces();
 		$this->mArticles = $articles;
@@ -3507,7 +3242,6 @@ class DPL2 {
 			$this->mIncSecLabels         = $includeseclabels;
 			$this->mIncSecLabelsMatch    = $includeseclabelsmatch;
 			$this->mIncSecLabelsNotMatch = $includeseclabelsnotmatch;
-			$this->mIncParsed            = $includematchparsed;
 		}
 			
 		if (isset($includemaxlen)) $this->mIncMaxLen = $includemaxlen + 1;
@@ -3552,13 +3286,13 @@ class DPL2 {
 						$greml -= $portion;
 						// $this->mOutput .= "nsize=$nsize, portion=$portion, greml=$greml";
 						if ($greml>0) {
-							$this->mOutput .= $this->formatList($nstart-$offset, $portion, $iTitleMaxLen, $defaultTemplateSuffix, $bIncludeTrim, $iTableSortCol);
+							$this->mOutput .= $this->formatList($nstart-$offset, $portion, $iTitleMaxLen, $defaultTemplateSuffix);
 							$nstart += $portion;
 							$portion=0;
 							break;
 						}
 						else {
-							$this->mOutput .= $this->formatList($nstart-$offset, $portion+$greml, $iTitleMaxLen, $defaultTemplateSuffix, $bIncludeTrim, $iTableSortCol);
+							$this->mOutput .= $this->formatList($nstart-$offset, $portion+$greml, $iTitleMaxLen, $defaultTemplateSuffix);
 							$nstart += ($portion+$greml);
 							$portion = (-$greml);
 							if ($iColumns!=1) 	$this->mOutput .= "\n|valign=top|\n";
@@ -3585,7 +3319,7 @@ class DPL2 {
 					$this->mOutput .= $hlistmode->sItemStart;
 					$this->mOutput .= $hlistmode->sHeadingStart . $headingLink . $hlistmode->sHeadingEnd;
 					if ($bHeadingCount) $this->mOutput .= $this->formatCount($headingCount);
-					$this->mOutput .= $this->formatList($headingStart, $headingCount, $iTitleMaxLen, $defaultTemplateSuffix, $bIncludeTrim, $iTableSortCol);
+					$this->mOutput .= $this->formatList($headingStart, $headingCount, $iTitleMaxLen, $defaultTemplateSuffix);
 					$this->mOutput .= $hlistmode->sItemEnd;
 					$headingStart += $headingCount;
 				}
@@ -3602,7 +3336,7 @@ class DPL2 {
 			if ($rest>0) $nsize += 1;
 			$this->mOutput .= "{|".$sRowColFormat."\n|\n";
 			for ($g=0;$g<$iGroup;$g++) {
-				$this->mOutput .= $this->formatList($nstart, $nsize, $iTitleMaxLen, $defaultTemplateSuffix, $bIncludeTrim, $iTableSortCol);
+				$this->mOutput .= $this->formatList($nstart, $nsize, $iTitleMaxLen, $defaultTemplateSuffix);
 				if ($iColumns!=1) 	$this->mOutput .= "\n|valign=top|\n";
 				else				$this->mOutput .= "\n|-\n|\n";
 				$nstart = $nstart + $nsize;
@@ -3618,14 +3352,14 @@ class DPL2 {
 			$this->mOutput .= '{|'.$sRowColFormat."\n|\n";
 			do {
 				if ($nstart+$nsize > $count) $nsize = $count - $nstart;
-				$this->mOutput .= $this->formatList($nstart, $nsize, $iTitleMaxLen, $defaultTemplateSuffix, $bIncludeTrim, $iTableSortCol);
+				$this->mOutput .= $this->formatList($nstart, $nsize, $iTitleMaxLen, $defaultTemplateSuffix);
 				$this->mOutput .= "\n|-\n|\n";
 				$nstart = $nstart + $nsize;
 				if ($nstart >= $count) break;
 			} while (true);
 			$this->mOutput .= "\n|}\n";
 		} else {
-			$this->mOutput .= $this->formatList(0, count($articles), $iTitleMaxLen, $defaultTemplateSuffix, $bIncludeTrim, $iTableSortCol);
+			$this->mOutput .= $this->formatList(0, count($articles), $iTitleMaxLen, $defaultTemplateSuffix);
 		}
 		
 	}
@@ -3648,7 +3382,8 @@ class DPL2 {
 
 		$title = $article->mTitle->getText();
 		if (strpos($title,'%TITLE')>=0) {
-			if (is_array($this->mReplaceInTitle) && count($this->mReplaceInTitle)>1) {
+			if (is_array($this->mReplaceInTitle) && count($this->mReplaceInTitle)>1)
+			{
 				if ($this->mReplaceInTitle[0]!='') $title = preg_replace($this->mReplaceInTitle[0],$this->mReplaceInTitle[1],$title);
 			}
 			if( isset($titleMaxLength) && (strlen($title) > $titleMaxLength)) $title = substr($title, 0, $titleMaxLength) . '...';
@@ -3680,7 +3415,6 @@ class DPL2 {
 		    	$sTag = str_replace('%PAGESEL%',$this->nameSpaces[$article->mSelNamespace].':'.str_replace('_',' ',$article->mSelTitle),$sTag);
 	    	}
     	}
-		if ($article->mImageSelTitle!= '')	$sTag = str_replace('%IMAGESEL%',str_replace('_',' ',$article->mImageSelTitle),$sTag);
 	    if (!empty($article->mCategoryLinks) ) {
 		    $sTag = str_replace('%'.'CATLIST%',implode(', ', $article->mCategoryLinks),$sTag);
 		    $sTag = str_replace('%'.'CATNAMES%',implode(', ', $article->mCategoryTexts),$sTag);
@@ -3692,19 +3426,20 @@ class DPL2 {
 		return $sTag;
 	}
 		
-	function formatList($iStart, $iCount, $iTitleMaxLen, $defaultTemplateSuffix, $bIncludeTrim, $iTableSortCol) {
+	function formatList($iStart, $iCount, $iTitleMaxLen, $defaultTemplateSuffix) {
 		global $wgUser, $wgLang, $wgContLang;
 		
 		$mode = $this->mListMode;
 		//categorypage-style list output mode
-		if($mode->name == 'category') return $this->formatCategoryList($iStart, $iCount);
+		if($mode->name == 'category')
+			return $this->formatCategoryList($iStart, $iCount);
 		
 		//other list modes
 		$sk = & $wgUser->getSkin();
 		
 		//process results of query, outputing equivalent of <li>[[Article]]</li> for each result,
 		//or something similar if the list uses other startlist/endlist;
-		$rBody='';
+		$r = $mode->sListStart;
 		// the following statement caused a problem with multiple columns:  $this->filteredCount = 0;
 		for ($i = $iStart; $i < $iStart+$iCount; $i++) {
 			$article = $this->mArticles[$i];
@@ -3766,12 +3501,12 @@ class DPL2 {
 						else	$mustNotMatch = '';			
 
 						// if chapters are selected by number we get the heading from DPL2Include::includeHeading
-						$sectionHeading[0]='';
+						$sectionHeading='';
 						if($sSecLabel[0] == '#') {
-							$sectionHeading[0]=substr($sSecLabel,1);
+							$sectionHeading=substr($sSecLabel,1);
 							// Uses DPL2Include::includeHeading() from LabeledSectionTransclusion extension to include headings from the page
 							$secPieces = DPL2Include::includeHeading($this->mParser, $article->mTitle->getPrefixedText(), substr($sSecLabel, 1),'',
-																$sectionHeading,false,$maxlen,$cutLink,$bIncludeTrim);
+																$sectionHeading,false,$maxlen,$cutLink);
 							if ($mustMatch!='' || $mustNotMatch!='') {
 								$secPiecesTmp = $secPieces;
 								$offset=0;
@@ -3784,15 +3519,9 @@ class DPL2 {
 								}	
 							}
 							$this->formatSingleItems($secPieces,$s);
-							$secPiece[$s] = $secPieces[0];
-							for ($sp=1;$sp<count($secPieces);$sp++) {
-								if (isset($mode->aMultiSecSeparators[$s])) { 
-									$secPiece[$s] .= str_replace('%SECTION%',$sectionHeading[$sp],
-																$this->substTagParm($mode->aMultiSecSeparators[$s], $pagename, $article, 
-																					$this->filteredCount, $iTitleMaxLen));
-								}
-								$secPiece[$s] .= $secPieces[$sp];
-							}
+							$secPiece[$s] = implode(isset($mode->aMultiSecSeparators[$s])? 
+								$this->substTagParm($mode->aMultiSecSeparators[$s], $pagename, $article, 
+													$this->filteredCount, $iTitleMaxLen):'',$secPieces);
  							if ($mode->iDominantSection>=0 && $s==$mode->iDominantSection && count($secPieces)>1)	$dominantPieces=$secPieces;
 							if (($mustMatch!='' || $mustNotMatch!='') && count($secPieces)<=0) {
 								$matchFailed=true; 	// NOTHING MATCHED
@@ -3803,9 +3532,7 @@ class DPL2 {
 							// Uses DPL2Include::includeTemplate() from LabeledSectionTransclusion extension to include templates from the page
  							$template1 = substr($sSecLabel,1,strpos($sSecLabel,'}')-1);
  							$template2 = str_replace('}','',substr($sSecLabel,1));
-							$secPieces = DPL2Include::includeTemplate($this->mParser, $this, $s, $article, $template1, 
-																	  $template2, $template2.$defaultTemplateSuffix,$mustMatch,
-																	  $mustNotMatch,$this->mIncParsed,$iTitleMaxLen);
+							$secPieces = DPL2Include::includeTemplate($this->mParser, $this, $s, $article, $template1, $template2, $template2.$defaultTemplateSuffix,$mustMatch,$mustNotMatch);
  							$secPiece[$s] = implode(isset($mode->aMultiSecSeparators[$s])? 
  								$this->substTagParm($mode->aMultiSecSeparators[$s], $pagename, $article, $this->filteredCount, $iTitleMaxLen):'',$secPieces);
  							if ($mode->iDominantSection>=0 && $s==$mode->iDominantSection && count($secPieces)>1)	$dominantPieces=$secPieces;
@@ -3815,7 +3542,7 @@ class DPL2 {
 							}
 						} else {
 							// Uses DPL2Include::includeSection() from LabeledSectionTransclusion extension to include labeled sections from the page
-							$secPieces = DPL2Include::includeSection($this->mParser, $article->mTitle->getPrefixedText(), $sSecLabel,'', false, $bIncludeTrim);
+							$secPieces = DPL2Include::includeSection($this->mParser, $article->mTitle->getPrefixedText(), $sSecLabel,'', false);
  							$secPiece[$s] = implode(isset($mode->aMultiSecSeparators[$s])? 
  								$this->substTagParm($mode->aMultiSecSeparators[$s], $pagename, $article, $this->filteredCount, $iTitleMaxLen):'',$secPieces);
  							if ($mode->iDominantSection>=0 && $s==$mode->iDominantSection && count($secPieces)>1)	$dominantPieces=$secPieces;
@@ -3829,14 +3556,14 @@ class DPL2 {
 						// separator tags
 						if (count($mode->sSectionTags)==1) {
 							// If there is only one separator tag use it always
-							$septag[$s*2] = str_replace('%SECTION%',$sectionHeading[0],$this->substTagParm($mode->sSectionTags[0], $pagename, $article, $this->filteredCount, $iTitleMaxLen));
+							$septag[$s*2] = str_replace('%SECTION%',$sectionHeading,$this->substTagParm($mode->sSectionTags[0], $pagename, $article, $this->filteredCount, $iTitleMaxLen));
 						}
 						else if (isset($mode->sSectionTags[$s*2])) {
-							$septag[$s*2] = str_replace('%SECTION%',$sectionHeading[0],$this->substTagParm($mode->sSectionTags[$s*2], $pagename, $article,  $this->filteredCount, $iTitleMaxLen));
+							$septag[$s*2] = str_replace('%SECTION%',$sectionHeading,$this->substTagParm($mode->sSectionTags[$s*2], $pagename, $article,  $this->filteredCount, $iTitleMaxLen));
 						}
 						else $septag[$s*2] = '';
 						if (isset($mode->sSectionTags[$s*2+1])) {
-							$septag[$s*2+1] = str_replace('%SECTION%',$sectionHeading[0],$this->substTagParm($mode->sSectionTags[$s*2+1], $pagename, $article,  $this->filteredCount, $iTitleMaxLen));
+							$septag[$s*2+1] = str_replace('%SECTION%',$sectionHeading,$this->substTagParm($mode->sSectionTags[$s*2+1], $pagename, $article,  $this->filteredCount, $iTitleMaxLen));
 						}
 						else $septag[$s*2+1]='';
 
@@ -3867,87 +3594,61 @@ class DPL2 {
 				$this->filteredCount = $this->filteredCount + 1;
 			}			
 
-			if($i > $iStart) $rBody .= $mode->sInline; //If mode is not 'inline', sInline attribute is empty, so does nothing
+			if($i > $iStart) $r .= $mode->sInline; //If mode is not 'inline', sInline attribute is empty, so does nothing
 			
 			// symbolic substitution of %PAGE% by the current article's name
 			if ($mode->name == 'userformat') {
-				$rBody .= $this->substTagParm($mode->sItemStart, $pagename, $article,$this->filteredCount, $iTitleMaxLen);
+				$r .= $this->substTagParm($mode->sItemStart, $pagename, $article,$this->filteredCount, $iTitleMaxLen);
 			}
 			else {
-				$rBody .= $mode->sItemStart;
+				$r .= $mode->sItemStart;
 				if($article->mDate != '') {
 					if ($article->myDate != '') {
-						if($article->mRevision != '') 	$rBody 	.= ' <html><a href="'.$pagename.'?oldid='.$article->mRevision.'">'
-														   		.  $article->myDate.'</a></html>';
-						else 							$rBody	.= $article->myDate;
+						if($article->mRevision != '') 	$r .= ' <html><a href="'.$pagename.'?oldid='.$article->mRevision.'">'
+														   .  $article->myDate.'</a></html>';
+						else 							$r .= $article->myDate;
 					} else {
-						if($article->mRevision != '') 	$rBody	.= ' <html><a href="'.$pagename.'?oldid='.$article->mRevision.'">'
-														   		.  $wgLang->timeanddate($article->mDate, true).'</a></html> : ';
-						else 							$rBody	.= $wgLang->timeanddate($article->mDate, true) . ': ';
+						if($article->mRevision != '') 	$r .= ' <html><a href="'.$pagename.'?oldid='.$article->mRevision.'">'
+														   .  $wgLang->timeanddate($article->mDate, true).'</a></html> : ';
+						else 							$r .= $wgLang->timeanddate($article->mDate, true) . ': ';
 					}
 				}
 				// output the link to the article
-				$rBody .= $article->mLink;
+				$r .= $article->mLink;
 				if($article->mSize != '' && $mode->name != 'userformat') {
-					if (strlen($article->mSize) > 3)	$rBody	.=  ' [' . substr($article->mSize,0,strlen($article->mSize)-3) . ' kB]';
-					else								$rBody	.=  ' [' . $article->mSize . ' B]';
+					if (strlen($article->mSize) > 3)	$r .=  ' [' . substr($article->mSize,0,strlen($article->mSize)-3) . ' kB]';
+					else								$r .=  ' [' . $article->mSize . ' B]';
 				}
 				if($article->mCounter != '' && $mode->name != 'userformat') {
 					// Adapted from SpecialPopularPages::formatResult()
 					$nv = $this->msgExt( 'nviews', array( 'parsemag', 'escape'), $wgLang->formatNum( $article->mCounter ) );
-					$rBody .=  ' ' . $wgContLang->getDirMark() . '(' . $nv . ')';
+					$r .=  ' ' . $wgContLang->getDirMark() . '(' . $nv . ')';
 				}
-				if($article->mUserLink != '')	$rBody .= ' . . [[User:' . $article->mUser .'|'.$article->mUser.']]';
-				if($article->mContributor != '')$rBody .= ' . . [[User:' . $article->mContributor .'|'.$article->mContributor." $article->mContrib]]";
+				if($article->mUserLink != '')	$r .= ' . . [[User:' . $article->mUser .'|'.$article->mUser.']]';
+				if($article->mContributor != '')$r .= ' . . [[User:' . $article->mContributor .'|'.$article->mContributor." $article->mContrib]]";
 							
-				if( !empty($article->mCategoryLinks) )	$rBody .= ' . . <SMALL>' . wfMsg('categories') . ': ' . implode(' | ', $article->mCategoryLinks) . '</SMALL>';
+				if( !empty($article->mCategoryLinks) )	$r .= ' . . <SMALL>' . wfMsg('categories') . ': ' . implode(' | ', $article->mCategoryLinks) . '</SMALL>';
 			}
 			
 			// add included contents
 			
 			if ($this->mIncPage) {
 				DPL2Include::open($this->mParser, $this->mParserTitle->getPrefixedText());
-				$rBody .= $incwiki;
+				$r .= $incwiki;
 				DPL2Include::close($this->mParser, $this->mParserTitle->getPrefixedText());
 			}			
 				
 			if ($mode->name == 'userformat') {
-				$rBody .= $this->substTagParm($mode->sItemEnd, $pagename, $article, $this->filteredCount, $iTitleMaxLen);
+				$r .= $this->substTagParm($mode->sItemEnd, $pagename, $article, $this->filteredCount, $iTitleMaxLen);
 			}
-			else {
-				$rBody .= $mode->sItemEnd;
-			}
+			else
+				$r .= $mode->sItemEnd;
 		}
-		// if requested we sort the table by the contents of a given column
-		if ($iTableSortCol!=0) {
-			$sortcol = abs($iTableSortCol) + 1;
-			$rows=explode("\n|-",$rBody);
-			foreach($rows as $row) {
-				if (($word = explode("\n|",$row,$sortcol))!==false && count($word)>=$sortcol) {
-					$rowsKey[] = $word[$sortcol - 1];
-				} else {
-					$rowsKey[] = $row;
-				}
-			}
-			if ($iTableSortCol<0) 	krsort($rowsKey);
-			else					ksort ($rowsKey);
-			$rows=array_combine(array_values($rowsKey),$rows);
-			ksort($rows);
-			$rBody="\n|-".join("\n|-",$rows)."\n|-";	
-		}
-		return $mode->sListStart . $rBody . $mode->sListEnd;
+		$r .= $mode->sListEnd;
+		
+		return $r;
 	}
 	
-	// generate a hyperlink to the article
-	function articleLink($tag,$article,$iTitleMaxLen) {
-		$pagename = $article->mTitle->getPrefixedText();
-		if ($this->mEscapeLinks && ($article->mNamespace==14 || $article->mNamespace==6) ) {
-	       	// links to categories or images need an additional ":"
-			$pagename = ':'.$pagename;
-		}
-		return $this->substTagParm($tag, $pagename, $article, $this->filteredCount, $iTitleMaxLen);
- 	}
-
 	//format one item of an entry in the output list (i.e. the collection of occurences of one item from the include parameter)
 	function formatItem($piece, $tagStart, $tagEnd) {
 		return $tagStart.$piece.$tagEnd;
@@ -4089,7 +3790,7 @@ class DPL2Logger {
 	public function getSuppressErrors() {
 		return $this->iSuppressErrors;
 	}
-
+	
 	/**
 	 * Get a message, with optional parameters
 	 * Parameters from user input must be escaped for HTML *before* passing to this function

@@ -109,6 +109,11 @@ var FCK_IS_CUSTOM_DOMAIN = ( FCK_ORIGINAL_DOMAIN != FCK_RUNTIME_DOMAIN ) ;
 
 function LoadScript( url )
 {
+	if(url.indexOf('?') > 0) {
+		url += '&amp;cb=' + parent.wgStyleVersion;
+	} else {
+		url += '?cb=' + parent.wgStyleVersion;
+	}
 	document.write( '<scr' + 'ipt type="text/javascript" src="' + url + '"><\/scr' + 'ipt>' ) ;
 }
 

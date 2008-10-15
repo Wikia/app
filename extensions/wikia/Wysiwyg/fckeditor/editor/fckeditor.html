@@ -28,7 +28,6 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 	<meta http-equiv="Cache-Control" content="public">
 	<script type="text/javascript">
-
 // #1645: Alert the user if opening FCKeditor in FF3 from local filesystem
 // without security.fileuri.strict_origin_policy disabled.
 if ( document.location.protocol == 'file:' )
@@ -107,8 +106,12 @@ var FCK_IS_CUSTOM_DOMAIN = ( FCK_ORIGINAL_DOMAIN != FCK_RUNTIME_DOMAIN ) ;
 
 function LoadScript( url )
 {
-	version = (typeof parent.wgStyleVersion != undefined) ? "?" + parent.wgStyleVersion : '';
-	document.write( '<scr' + 'ipt type="text/javascript" src="' + url + version + '"><\/scr' + 'ipt>' ) ;
+	if(url.indexOf('?') > 0) {
+		url += '&amp;cb=' + parent.wgStyleVersion;
+	} else {
+		url += '?cb=' + parent.wgStyleVersion;
+	}
+	document.write( '<scr' + 'ipt type="text/javascript" src="' + url + '"><\/scr' + 'ipt>' ) ;
 }
 
 // Main editor scripts.

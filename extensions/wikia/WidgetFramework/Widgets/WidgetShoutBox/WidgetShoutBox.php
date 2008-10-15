@@ -1,19 +1,21 @@
 <?php
-/**
+/*
  * @author Maciej Brencz
 
-  CREATE TABLE `shout_box_messages` (
-  `id` int(11) NOT NULL auto_increment,
-  `wikia` varchar(200) default NULL,
-  `user` int(11) default NULL,
-  `time` timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
-  `message` text,
-  PRIMARY KEY  (`id`)
+CREATE TABLE `shout_box_messages` (
+ `id` int(11) NOT NULL auto_increment,
+ `wikia` varchar(200) default NULL,
+ `user` int(11) default NULL,
+ `time` timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
+ `message` text,
+ PRIMARY KEY  (`id`)
 )
 
- This is SHARED table ('wikicities' DB) !!!
+CREATE INDEX wikia_idx ON shout_box_messages (wikia);
 
- * */
+This is SHARED table (wikicities DB)
+
+ */
 if(!defined('MEDIAWIKI')) {
 	die(1);
 }
@@ -309,7 +311,7 @@ function WidgetShoutBoxGetMessages() {
     wfDebug("Getting messages for wikia '$wikia'\n");
 
     $conds   = array( 'wikia' => $wikia, 'u.user_id = s.user' );
-    $options = array( 'LIMIT' => 50, 'ORDER BY' => 'time DESC' );
+    $options = array( 'LIMIT' => 50, 'ORDER BY' => 'id DESC' );
 
     // do query
     $res = $dbr->select( $tables, $fields, $conds, __METHOD__, $options );

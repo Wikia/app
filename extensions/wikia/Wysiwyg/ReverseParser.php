@@ -40,6 +40,8 @@ class ReverseParser {
 				' <ol' => '<ol',
 				' <ul' => '<ul',
 				' <li' => '<li',
+				' </dd>' => '</dd>',
+				' </dt>' => '</dt>',
 				' <pre>' => '<pre>'
 			);
 
@@ -102,6 +104,13 @@ class ReverseParser {
 						break;
 				}
 				if (!$node->getAttribute('washtml')) {
+					// handle (un)ordered lists indentation done by FCK (margin-left/right CSS property)
+					if (in_array($node->nodeName, array('ol','ul'))) {
+						$indentation = $this->getIndentationLevel($node);
+						if ($indentation !== false) {
+							$this->listBullets = str_repeat(':', $indentation);
+						}
+					}
 					$this->listLevel++;
 					$this->listBullets .= $bullet;
 				}
@@ -133,7 +142,7 @@ class ReverseParser {
 
 			$washtml = $node->getAttribute('washtml');
 
-			$textContent = ($childOut != '') ? $childOut : $this->cleanupTextContent($node->textContent);
+			$textContent = ($childOut != '') ? $childOut : $this->cleanupTextContent($node);
 
 			if(empty($washtml)) {
 				switch($node->nodeName) {
@@ -145,6 +154,10 @@ class ReverseParser {
 						// <br /> as first child of <p> will be parsed as line break
 						if($node->parentNode && $node->parentNode->nodeName == 'p' && $node->parentNode->hasChildNodes() && $node->parentNode->childNodes->item(0)->isSameNode($node)) {
 							$out = "\n";
+						}
+						// remove <br /> when it's the last child of parent being inline element
+						else if ($node->parentNode && $this->isFormattingElement($node->parentNode) && $node->isSameNode($node->parentNode->lastChild) ) {
+							$out = '';
 						} else {
 							$out = '<br />';
 						}
@@ -341,11 +354,12 @@ class ReverseParser {
 						break;
 
 					// images
+					/*
 					case 'img':
 					case 'div': // [[Image:foo.jpg|thumb]]
 						$out = $this->handleImage($node, $textContent);
 						break;
-
+					*/
 					// handle more complicated tags
 					case 'a':
 						$out = $this->handleLink($node, $textContent);
@@ -382,7 +396,7 @@ class ReverseParser {
 						if($node->hasChildNodes() && $node->childNodes->item(0)->nodeType != XML_TEXT_NODE) {
 							// node with child nodes
 							// add \n only when node is HTML block element
-							if ($this->isInlineElement($node) && !in_array($node->nodeName, array('p', 'div'))) {
+							if ($this->isInlineElement($node)) {
 								$textContent = trim($textContent);
 								$trial = '';
 								$prefix = '';
@@ -409,7 +423,7 @@ class ReverseParser {
 				$out = '';
 			}
 			else {
-				$out = $this->cleanupTextContent($node->textContent);
+				$out = $this->cleanupTextContent($node);
 			}
 
 		}
@@ -444,6 +458,8 @@ class ReverseParser {
 				// ::: ...
 				if($node->hasChildNodes() && $node->childNodes->item(0)->nodeName == 'dl') {
 					return rtrim($content, ' ') . "\n";
+				} else if ($this->hasListInside($node)) {
+					return $content . "\n";
 				} else {
 					return $this->listBullets . $content . "\n";
 				}
@@ -471,13 +487,18 @@ class ReverseParser {
 	/**
 	 * Clean up node text content
 	 */
-	private function cleanupTextContent($text) {
+	private function cleanupTextContent($node) {
 		wfProfileIn(__METHOD__);
+
+		$text = $node->textContent;
 
 		if($text == '') {
 			wfProfileOut(__METHOD__);
 			return '';
 		}
+
+		// is text node the first child of parent node?
+		$isFirstChild = $node->isSameNode($node->parentNode->firstChild);
 
 		wfDebug("WYSIWYG ReverseParser cleanupTextContent for: {$text}\n");
 
@@ -487,16 +508,22 @@ class ReverseParser {
 		// 2. wrap = using <nowiki>
 		$text = preg_replace("/^(=+)/m", '<nowiki>$1</nowiki>', $text);
 
-		// 3. wrap list bullets using <nowiki>
-		$text = preg_replace("/^([#*]+)/", '<nowiki>$1</nowiki>', $text);
-
-		// 4. semicolon at the beginning of the line
-		if(in_array($text{0}, array(':', ';'))) {
-			$text = '<nowiki>' . $text{0} . '</nowiki>' . substr($text, 1);
+		// 3. wrap wikimarkup special characters (only when they're at the beginning of the p/td...)
+		if ($isFirstChild) {
+			// 3a. wrap list bullets using <nowiki>
+			$text = preg_replace("/^([#*]+)/", '<nowiki>$1</nowiki>', $text);
+	
+			// 3b. semicolon at the beginning of the line
+			if(in_array($text{0}, array(':', ';'))) {
+				$text = '<nowiki>' . $text{0} . '</nowiki>' . substr($text, 1);
+			}
 		}
 
-		// 5. wrap magic words {{ }} using <nowiki>
+		// 4. wrap curly brackets {{ }} using <nowiki>
 		$text = preg_replace("/({{2,3})([^}]+)(}{2,3})/", '<nowiki>$1$2$3</nowiki>', $text);
+
+		// 5. wrap magic words __ __ using <nowiki>
+		$text = preg_replace("/__([\d\D]+)__/", '<nowiki>__$1__</nowiki>', $text);
 
 		// 6. wrap [[foo]] using <nowiki>
 		$text = preg_replace("/(\[{2,})([^]]+)(\]{2,})/", '<nowiki>$1$2$3</nowiki>', $text);
@@ -550,6 +577,11 @@ class ReverseParser {
 
 				// {{template}}
 				case 'curly brackets':
+					if(!empty($refData['lineStart'])) {
+						if(!$node->isSameNode($node->parentNode->firstChild)) {
+							return "\n".$refData['description'];
+						}
+					}
 					return $refData['description'];
 
 				// __TOC__
@@ -559,10 +591,14 @@ class ReverseParser {
 				// <gallery> parser hook tag
 				case 'gallery':
 					return $refData['description'];
+
+				// fallback
+				default:
+					return '<!-- unsupported span tag! -->';
 			}
 		}
-
-		return '<!-- unsupported span tag! -->';
+		// sometimes FCK adds empty spans with "display: none"
+		return '';
 	}
 
 	/**
@@ -595,6 +631,7 @@ class ReverseParser {
 			switch($data['type']) {
 				case 'internal link':
 				case 'internal link: file':
+				case 'internal link: special page':
 					$tag =  "[[{$data['href']}";
 
 					if($content != $data['href'] . $data['trial'] && $content != $data['description'] . $data['trial']) {
@@ -678,6 +715,14 @@ class ReverseParser {
 	 }
 
 	/**
+	 * Return true if given node is inline formatting element
+	 */
+
+	private function isFormattingElement($node) {
+		return in_array($node->nodeName, array('u', 'b', 'strong', 'i', 'em', 'strike', 's'));
+	}
+
+	/**
 	 * Return true if given node is inline HTNL element or can contain inline elements (p / div)
 	 */
 	private function isInlineElement($node) {
@@ -697,4 +742,17 @@ class ReverseParser {
 	private function isList($node) {
 		return in_array($node->nodeName, array('ol', 'ul', 'dl'));
 	}
+
+	/**
+	 * Return true if given node has list element as one of his nested child
+	 */
+	private function hasListInside($node, $lists) {
+		while($node->hasChildNodes()) {
+			$node = $node->firstChild;
+			if ( in_array($node->nodeName, array('ol', 'ul')) ) {
+				return true;
+			}
+		}
+		return false;
+ 	}
 }

@@ -25,7 +25,7 @@ FCK.SwitchEditMode = function() {
 		FCK.EditingArea.TargetElement.className = 'childrenHidden';
 
 		window.parent.sajax_request_type = 'POST';
-		window.parent.sajax_do_call('wfWysywigAjax', ['wiki2html', FCK.EditingArea.Textarea.value, false, window.parent.wgArticleId], function(res) {
+		window.parent.sajax_do_call('Wysywig_Ajax', ['wiki2html', FCK.EditingArea.Textarea.value, false, window.parent.wgArticleId], function(res) {
 			var edgecases = res.getResponseHeader('X-edgecases');
 			if(typeof edgecases == "undefined") edgecases = res.getResponseHeader('X-Edgecases');
 			if (edgecases == '1') {
@@ -70,7 +70,7 @@ FCK.Events.AttachEvent( 'OnAfterSetHTML', function() {
 		var wysiwygDataEncoded =  window.parent.YAHOO.Tools.JSONEncode(FCK.wysiwygData);
 
 		window.parent.sajax_request_type = 'POST';
-		window.parent.sajax_do_call('wfWysywigAjax', ['html2wiki', html, wysiwygDataEncoded], function(res) {
+		window.parent.sajax_do_call('Wysywig_Ajax', ['html2wiki', html, wysiwygDataEncoded], function(res) {
 			FCK.EditingArea.Textarea.value = res.responseText;
 			FCK.EditingArea.TargetElement.className = '';
 			setTimeout(function() {FCK.InProgress = false;}, 100);

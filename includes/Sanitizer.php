@@ -486,7 +486,12 @@ class Sanitizer {
 					if ( ! $badtag ) {
 						$rest = str_replace( '>', '&gt;', $rest );
 						$close = ( $brace == '/>' && !$slash ) ? ' /' : '';
-						$wasHtml = !$slash && strpos($newparams, ' refid="') === false ? ' wasHtml="1"' : '';
+						global $FCKparseEnable;
+						if(!empty($FCKparseEnable)) {
+							$wasHtml = !$slash && strpos($newparams, ' refid="') === false ? ' wasHtml="1"' : '';
+						} else {
+							$wasHtml = '';
+						}
 						$text .= "<$slash$t$wasHtml$newparams$close>$rest";
 						continue;
 					}
@@ -510,7 +515,12 @@ class Sanitizer {
 					}
 					$newparams = Sanitizer::fixTagAttributes( $params, $t );
 					$rest = str_replace( '>', '&gt;', $rest );
-					$wasHtml = !$slash ? ' wasHtml=1' : '';
+					global $FCKparseEnable;
+					if(!empty($FCKparseEnable)) {
+						$wasHtml = !$slash ? ' wasHtml=1' : '';
+					} else {
+						$wasHtml = '';
+					}
 					$text .= "<$slash$t$wasHtml$newparams$brace$rest";
 				} else {
 					$text .= '&lt;' . str_replace( '>', '&gt;', $x);
