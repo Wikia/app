@@ -135,7 +135,7 @@ FCKIndentCommand.prototype =
 			var indent = parseInt( firstBlock.style[this.IndentCSSProperty], 10 ) ;
 			if ( isNaN( indent ) )
 				indent = 0 ;
-			if ( indent <= 0 )
+			if ( indent <= 0 &&  !firstBlock.nodeName.IEquals(['dl', 'dd']) ) // Wikia: MW uses <dl><dd> 'tree' for indentation
 				return FCK_TRISTATE_DISABLED ;
 			return FCK_TRISTATE_OFF ;
 		}
@@ -157,6 +157,29 @@ FCKIndentCommand.prototype =
 			// if the block itself is the nearestParent, or the block's parent is the nearestParent.
 			if ( ! ( block == nearestParent || block.parentNode == nearestParent ) )
 				continue ;
+
+			// Wikia: MW uses <dl><dd> 'tree' for indentation (do outdent by removing one <dl> from node's parents list
+			if ( this.Name.IEquals('outdent') && block.nodeName.IEquals('dl') ) {
+
+				// check whether we really should do tags manipulation
+				// maybe changing marginLeft CSS property is enough
+				if ( !parseInt(block.style[this.IndentCSSProperty], 10) ) {
+					// HTML content of outdented text node
+					content = block.getElementsByTagName('dd')[0].innerHTML;
+
+					if (block.parentNode.nodeName.IEquals('dd')) {
+						// remove <dl> which is our parent
+						block.parentNode.innerHTML = content;
+					}
+					else {
+						// block is not nested in another <dl> tags - replace <dl> with <p> tag
+						newBlock = block.ownerDocument.createElement('P');
+						block.parentNode.replaceChild(newBlock, block);
+						newBlock.innerHTML = content;
+					}
+					return;
+				}
+			}
 
 			if ( FCKIndentCommand._UseIndentClasses )
 			{
