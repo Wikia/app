@@ -343,7 +343,7 @@ class WikiFactory {
 
 			/**
 			 * check if variable is connected with city_list (for example
-			 * city_language or city_url) plus do some automatic cleanup
+			 * city_language or city_url)
 			 */
 			wfProfileIn( __METHOD__."-citylist" );
 			wfRunHooks( 'WikiFactoryChanged', array( $variable->cv_name , $city_id, $value ) );
@@ -401,27 +401,6 @@ class WikiFactory {
 						array("city_id" => $city_id ),
 						__METHOD__ );
 					break;
-				case "wgMetaNamespace":
-				case "wgMetaNamespaceTalk":
-					#--- cannot contain spaces!
-					$clean_value = preg_replace( ' ', '_', $value );
-					if ($clean_value != $value) {
-
-						$dbw->replace(
-							wfSharedTable("city_variables"),
-							array(),
-							array(
-								"cv_variable_id"    => $cv_variable_id,
-								"cv_city_id"        => $city_id,
-								"cv_value"          => serialize( $clean_value )
-							),
-							__METHOD__
-						);
-
-					}
-					break;
-
-				
 			}
 			wfProfileOut( __METHOD__."-citylist" );
 			$dbw->commit();
