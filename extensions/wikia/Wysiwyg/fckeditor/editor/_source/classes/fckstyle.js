@@ -962,11 +962,30 @@ FCKStyle.prototype =
 			var toPre	= newBlockIsPre && !blockIsPre ;
 			var fromPre	= !newBlockIsPre && blockIsPre ;
 
+			// Wikia: extract new header content from <dd>
+			if (block.nodeName.IEquals('dl')) {
+				block = block.getElementsByTagName('dd')[0];
+			}
+
 			// Move everything from the current node to the new one.
-			if ( toPre )
+			if ( toPre ) {
 				newBlock = this._ToPre( doc, block, newBlock ) ;
+				// find parent which isn't <dl>/<dd> tag
+				while (block.parentNode.nodeName.IEquals(['dl','dd'])) {
+					block = block.parentNode;
+				}
+
+			}
 			else if ( fromPre )
 				newBlock = this._FromPre( doc, block, newBlock ) ;
+			// Wikia: remove any indentation when applying header / preformatted style
+			else if ( newBlock.nodeName.IEquals(['h1','h2','h3','h4','h5','h6']) ) {
+				FCKDomTools.MoveChildren( block, newBlock ) ;
+				// find parent which isn't <dl>/<dd> tag
+				while (block.parentNode.nodeName.IEquals(['dl','dd'])) {
+					block = block.parentNode;
+				}
+			}
 			else	// Convering from a regular block to another regular block.
 				FCKDomTools.MoveChildren( block, newBlock ) ;
 
