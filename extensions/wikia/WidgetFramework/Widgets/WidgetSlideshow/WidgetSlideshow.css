@@ -70,41 +70,41 @@ div.yui-sldshw-frame {
 	
 .WidgetSlideshowControlPrev
 {
-	background-image: url(http://images.wikia.com/skins/common/widgets/icons/widget_slideshow_prev.png);
+	background-image: url(http://images.wikia.com/common/skins/common/widgets/icons/widget_slideshow_prev.png);
 }
 	
 .WidgetSlideshowControlNext
 {
-	background-image: url(../../common/widgets/icons/widget_slideshow_next.png);
+	background-image: url(http://images.wikia.com/common/skins/common/widgets/icons/widget_slideshow_next.png);
 }
 	
 .WidgetSlideshowControlPause
 {
-	background-image: url(../../common/widgets/icons/widget_slideshow_pause.png);
+	background-image: url(http://images.wikia.com/common/skins/common/widgets/icons/widget_slideshow_pause.png);
 }
 	
 .WidgetSlideshowControlPlay
 {
-	background-image: url(../../common/widgets/icons/widget_slideshow_play.png);
+	background-image: url(http://images.wikia.com/common/skins/common/widgets/icons/widget_slideshow_play.png);
 }
 
 
 * html .WidgetSlideshowControlPrev {
 	background: none;
-        filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='http://images.wikia.com/skins/common/widgets/icons/widget_slideshow_prev.png', sizingMethod='crop');
+        filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='http://images.wikia.com/common/skins/common/widgets/icons/widget_slideshow_prev.png', sizingMethod='crop');
 }
 
 * html .WidgetSlideshowControlNext {
 	background: none;
-        filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='http://images.wikia.com/skins/common/widgets/icons/widget_slideshow_next.png', sizingMethod='crop');
+        filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='http://images.wikia.com/common/skins/common/widgets/icons/widget_slideshow_next.png', sizingMethod='crop');
 }
 
 * html .WidgetSlideshowControlPause {
 	background: none;
-        filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='http://images.wikia.com/skins/common/widgets/icons/widget_slideshow_pause.png', sizingMethod='crop');
+        filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='http://images.wikia.com/common/skins/common/widgets/icons/widget_slideshow_pause.png', sizingMethod='crop');
 }
 
 * html .WidgetSlideshowControlPlay {
 	background: none;
-        filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='http://images.wikia.com/skins/common/widgets/icons/widget_slideshow_play.png', sizingMethod='crop');
+        filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='http://images.wikia.com/common/skins/common/widgets/icons/widget_slideshow_play.png', sizingMethod='crop');
 }
