@@ -38,7 +38,7 @@
 
 #widgetsSpecialPageList div.add
 {
-	background-image: url(../../../skins/monaco/images/sprite.png);
+	background-image: url(http://images.wikia.com/common/skins/monaco/images/sprite.png);
 	clip: rect(0px 272px 16px 256px);
 	cursor: pointer;
 	display: block;
@@ -49,5 +49,4 @@
 	width: 320px;
 	z-index: 100;
 }
-
 
