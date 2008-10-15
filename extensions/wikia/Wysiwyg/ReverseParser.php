@@ -66,7 +66,7 @@ class ReverseParser {
 			// final cleanup
 			$out = rtrim($out);
 
-			if ($out{0} == "\n" && $out{1} != "\n") {
+			if (strlen($out) > 1 && $out{0} == "\n" && $out{1} != "\n") {
 				// remove ONE empty line from the beginning of wikitext
 				$out = substr($out, 1);
 			}
