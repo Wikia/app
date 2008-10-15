@@ -94,7 +94,7 @@ class GlobalWatchlistBot {
 	 * gather digest data for all users
 	 */
 	public function fetchWatchlists() {
-		global $wgSharedDB, $wgScriptPath, $wgCanonicalNamespaceNames;
+		global $wgSharedDB, $wgArticlePath, $wgCanonicalNamespaceNames;
 		$aDigests = array();
 		$this->getGlobalWatchlisters();
 		$this->printDebug("Gathering watchlist data ...");
@@ -109,7 +109,7 @@ class GlobalWatchlistBot {
 
 	  	if(count($aPages)) {
 					if(!isset($this->mWikiData[$oResultRow->city_id])) {
-						$sWikiScriptPath = WikiFactory::getVarValueByName('wgScriptPath', $oResultRow->city_id);
+						$sWikiArticlePath = WikiFactory::getVarValueByName('wgArticlePath', $oResultRow->city_id);
 						$aNamespaces = WikiFactory::getVarValueByName('wgExtraNamespacesLocal', $oResultRow->city_id);
 						if(is_array($aNamespaces)) {
 							$aNamespaces = array_merge($wgCanonicalNamespaceNames, $aNamespaces);		
@@ -118,7 +118,7 @@ class GlobalWatchlistBot {
 							$aNamespaces = $wgCanonicalNamespaceNames;			
 						}
 						$sWikiUrl = ( substr( $oResultRow->city_url, -1, 1 ) == '/' ? substr( $oResultRow->city_url, 0, -1 ) : $oResultRow->city_url );
-						$sPageUrl = $sWikiUrl . (!empty($sWikiScriptPath) ? $sWikiScriptPath : $wgScriptPath) . '/';
+						$sPageUrl = $sWikiUrl . (!empty($sWikiArticlePath) ? str_replace('$1', '', $sWikiArticlePath) : $wgArticlePath);
 
 						$this->mWikiData[$oResultRow->city_id] = array( 
 							'wikiName' => $oResultRow->city_title,
