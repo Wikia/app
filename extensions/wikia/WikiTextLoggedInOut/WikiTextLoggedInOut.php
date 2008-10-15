@@ -2,12 +2,12 @@
 $wgExtensionFunctions[] = "wfWikiTextLoggedIn";
 
 function wfWikiTextLoggedIn() {
-	global $wgParser, $wgOut;
+	global $wgParser;
 	$wgParser->setHook( "loggedin", "OutputLoggedInText" );
 }
 
 function OutputLoggedInText( $input, $args, &$parser ){
-	global $wgUser, $wgTitle, $wgOut;
+	global $wgUser;
 
 	if( $wgUser->isLoggedIn() ){
 		return $parser->recursiveTagParse($input);
@@ -19,17 +19,16 @@ function OutputLoggedInText( $input, $args, &$parser ){
 $wgExtensionFunctions[] = "wfWikiTextLoggedOut";
 
 function wfWikiTextLoggedOut() {
-	global $wgParser, $wgOut;
+	global $wgParser;
 	$wgParser->setHook( "loggedout", "OutputLoggedOutText" );
 }
 
 function OutputLoggedOutText( $input, $args, &$parser ){
-	global $wgUser, $wgTitle, $wgOut;
+	global $wgUser;
 	
-	if( ! $wgUser->isLoggedIn() ){
+	if( $wgUser->isAnon() ){
 		return $parser->recursiveTagParse($input);
 	}
 	
 	return "";
 }
-?>
