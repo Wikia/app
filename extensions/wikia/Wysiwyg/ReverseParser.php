@@ -35,6 +35,7 @@ class ReverseParser {
 
 			// remove whitespace after <br /> and decode &nbsp;
 			$replacements = array(
+				' <p>' => '<p>',
 				'<br /> ' => '<br />',
 				'&nbsp;' => ' ',
 				' <ol' => '<ol',
