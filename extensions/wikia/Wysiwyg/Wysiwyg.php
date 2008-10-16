@@ -237,7 +237,7 @@ function Wysiwyg_HtmlToWikiText($html, $wysiwygData, $decode = false) {
  *
  * @author Maciej Błaszkowski <marooned at wikia-inc.com>
  */
- function wfFCKSetRefId($type, $params, $addMarker = true, $returnId = false) {
+function wfFCKSetRefId($type, $params, $addMarker = true, $returnId = false) {
 	// TODO: Rename function name and global variable name /Inez
 	global $FCKmetaData;
 
