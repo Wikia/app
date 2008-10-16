@@ -101,7 +101,8 @@ function FCKContextMenu_Document_OnContextMenu( e )
 			if ( el._FCKContextMenu.CtrlDisable && ( e.ctrlKey || e.metaKey ) )
 				return true ;
 
-			FCKTools.CancelEvent( e ) ;
+			//FCKTools.CancelEvent( e ) ;
+			e.stopPropagation(); // Wikia: don't show build-in browser's context menu on FF3
 			FCKContextMenu_AttachedElement_OnContextMenu( e, el._FCKContextMenu, el ) ;
 			return false ;
 		}
