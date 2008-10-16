@@ -51,6 +51,8 @@ function WidgetShoutBox($id, $params) {
     // maybe user is trying to add a message to chat
     if ( $wgRequest->getVal('message') && $wgRequest->getVal('rs') == 'WidgetFrameworkAjax' ) {
 		$showChat = WidgetShoutBoxAddMessage( $wgRequest->getVal('message') );
+    } elseif ( $wgRequest->getVal('msgid') && $wgRequest->getVal('rs') == 'WidgetFrameworkAjax' ) {	//remove a message
+		WidgetShoutBoxRemoveMessage( $wgRequest->getVal('msgid') );
     }
 
     $ret = '';
@@ -138,13 +140,19 @@ function WidgetShoutBox($id, $params) {
 			// include offset in timestamp
 			$msg['time'] += $time_offset;
 
+			//add remove link for privlidged users
+			$removeLink = '';
+			if ($wgUser->isAllowed('shoutboxremove')) {
+				$removeLink = '<a href="#" onclick="WidgetShoutBoxRemoveMsg(' . $id . ', this); return false;">x</a> ';
+			}
 			// time
-			$ret .= '<li'. ($count++ % 2 ? ' class="msgOdd"' : '').'>'.
-				htmlspecialchars( '['.date( $msg['time'] < $midnight ? 'j M' : 'G:i',$msg['time']).']' ).'&nbsp;';
+			$ret .= '<li' . ($count++ % 2 ? ' class="msgOdd"' : '') . ' msgid="' . $msg['id'] . '"' . '>' .
+				$removeLink.
+				htmlspecialchars( '['.date( $msg['time'] < $midnight ? 'j M' : 'G:i', $msg['time']) . ']' ) . '&nbsp;';
 
 			// user page link
 			$userPage = Title::newFromText($msg['user'], NS_USER);
-			$userLink = '<a href="'.$userPage->getLocalURL().'">'.htmlspecialchars($msg['user']).'</a>';
+			$userLink = '<a href="' . $userPage->getLocalURL() . '">' . htmlspecialchars($msg['user']) . '</a>';
 
 			// interprete IRC-like command (e.g. /me is going away for a while)
 			//
@@ -404,4 +412,42 @@ function WidgetShoutBoxGenerateHostname() {
 
     wfProfileOut( __METHOD__ );
     return 'notreal.wikia.com';
+}
+
+function WidgetShoutBoxRemoveMessage($msgId) {
+	global $wgUser, $wgMemc;
+
+	wfProfileIn(__METHOD__);
+
+	// check whether user is banned or not allowed to remove a message
+	if (!$wgUser->isAllowed('shoutboxremove') || $wgUser->isBlocked()) {
+	    // user is not allowed to chat
+	    wfProfileOut(__METHOD__);
+	    return false;
+	}
+
+	// msgId must be a number
+	if (ctype_digit($msgId)) {
+	    wfDebug("Shoutbox: removing msg id=$msgId\n");
+
+		$dbw = wfGetDB(DB_MASTER);
+
+		// remove a message from shared table
+		$dbw->delete(wfSharedTable('shout_box_messages'), array('id' => $msgId), __FUNCTION__ );
+
+		// add msg also to memcache entry - avoid using unecessary updates queries
+		$key = wfMemcKey('widget::shoutbox::messages:1');
+		$msgs = $wgMemc->get($key);
+		if (is_array($msgs)) {
+			// remove a message from cache
+			unset($msgs[$msgId]);
+
+			// save to cache
+			$wgMemc->set($key, $msgs, 3600); // cache for an hour
+		}
+	}
+
+	wfProfileOut(__METHOD__);
+
+	return true;
 }
