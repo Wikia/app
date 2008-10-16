@@ -9,6 +9,7 @@
 </style>
 <div style="display:block;" id="wpTableMultiEdit" name="wpTableMultiEdit">
 <?php
+
 foreach ($boxes as $id => $box) {
 ?>
 <?	
@@ -19,6 +20,25 @@ foreach ($boxes as $id => $box) {
 	$clear = " class=\"createpage-clear\""  ;
 
 	switch ($box['type']) {
+		case 'section_display': {
+			$i = $id;
+			$title_found = false;
+			while( $i < count( $boxes ) - 1 ) {
+				$i++;
+				if ($boxes[$i]['type'] == 'title') {
+					$title_found = true;
+					break;
+				}
+				if ($boxes[$i]['type'] == 'section_display') {
+					break;
+				}	
+			}			
+			if ($title_found) {
+				$display = 'none';
+			}
+			$value = $box['value'];
+			break;
+		}
 		case "text":  {
 			$value = "<input type=\"text\" size=\"50\" {$html} value=\"".$box['value']."\">";
 			break;
