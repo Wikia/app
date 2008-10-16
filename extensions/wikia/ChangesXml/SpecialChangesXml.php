@@ -86,6 +86,7 @@ function wfChangesXml( $rc ) {
 		curl_setopt( $ch, CURLOPT_CUSTOMREQUEST, "PUT" );
 		curl_setopt( $ch, CURLOPT_HTTPHEADER, array( "Content-Length: " . strlen( $a_data ) ) );
 		curl_setopt( $ch, CURLOPT_POSTFIELDS, $a_data);
+		curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
 		$r = curl_exec( $ch );
 
 	}
