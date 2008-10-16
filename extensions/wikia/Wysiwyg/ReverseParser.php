@@ -21,12 +21,11 @@ class ReverseParser {
 	// bullets stack for nested lists
 	private $listBullets = '';
 
+	// cache results of wfUrlProtocols()
 	private $protocols;
 
 	function __construct() {
-		$this->dom = new DOMdocument('1.0', 'UTF-8');
-		$this->dom->substituteEntities = false;
-
+		$this->dom = new DOMdocument();
 		$this->protocols = wfUrlProtocols();
 	}
 
