@@ -41,14 +41,15 @@ function mwSetupToolbar() {
 	var textbox = document.getElementById('wpTextbox1');
 	if (!textbox) { return false; }
 
-	if (textbox.style.display == 'none') { // Wikia fix (Bartek)
+	// Wikia fix (Bartek) / textbox is hidden when using FCK, but we want to setup it anyway (Macbre)
+	if (textbox.style.display == 'none' && !document.getElementById('wpTextbox1___Frame')) {
 		return false;
 	}
 
 	// Don't generate buttons for browsers which don't fully
 	// support it.
 	if (!(document.selection && document.selection.createRange)
-		&& textbox.selectionStart === null) {
+		&& textbox.style.display != 'none' && textbox.selectionStart === null) {
 		return false;
 	}
 
