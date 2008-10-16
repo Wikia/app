@@ -3792,7 +3792,7 @@ class Parser
 	 * @private
 	 */
 	function pstPass2( $text, $user ) {
-		global $wgContLang, $wgLocaltimezone;
+		global $wgContLang, $wgLocaltimezone, $FCKparseEnable;
 
 		/* Note: This is the timestamp saved as hardcoded wikitext to
 		 * the database, we use $wgContLang here in order to give
@@ -3819,12 +3819,16 @@ class Parser
 		$text = $this->replaceVariables( $text );
 
 		# Signatures
-		$sigText = $this->getUserSig( $user );
-		$text = strtr( $text, array(
-			'~~~~~' => $d,
-			'~~~~' => "$sigText $d",
-			'~~~' => $sigText
-		) );
+		if ($FCKparseEnable) {
+			$text = preg_replace_callback('/~{3,5}/', create_function('$tilde', 'return wfFCKSetRefId("tilde", array("text" => &$tilde[0]), false);'), $text);
+		} else {	//original code
+			$sigText = $this->getUserSig( $user );
+			$text = strtr( $text, array(
+				'~~~~~' => $d,
+				'~~~~' => "$sigText $d",
+				'~~~' => $sigText
+			) );
+		}
 
 		# Context links: [[|name]] and [[name (context)|]]
 		#
