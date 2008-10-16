@@ -1,0 +1,41 @@
+body.mainpage {
+	background: #000 url(../images/wow_lich_king.jpg) 50% 30px no-repeat !important;
+}
+body.mainpage .monaco_shrinkwrap {
+	left: 50%;
+	margin-left: -486px;
+	width: 972px;
+}
+body.mainpage #background_strip {
+	display: none;
+}
+body.mainpage #userData, body.mainpage #request_wiki {
+	top: 30px;
+}
+body.mainpage #wikia_footer, body.mainpage #wikia_footer a {
+	color: #fff
+}
+body.mainpage #wikia_header {
+	height: 80px;
+}
+body.mainpage #monaco_shrinkwrap_main {
+	margin-top: 166px;
+}
+body.mainpage #widget_sidebar, body.mainpage #wikia_page, body.mainpage #monaco_footer {
+	top: 0;
+	margin-top: 0;
+}
+body.mainpage #wikiaBranding {
+	position: absolute;
+	left: 450px;
+	padding-top: 0;
+	top: 15px;
+}
+body.mainpage #headerMenuHub {
+	left: 460px;
+	top: 81px !important;
+}
+body.mainpage #wikia_header .monaco_shrinkwrap {
+	background: url(http://images3.wikia.nocookie.net/warhammeronline/images/b/bf/Wiki_wide.png) 0 2px no-repeat;
+	height: 80px;
+}

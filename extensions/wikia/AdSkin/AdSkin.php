@@ -4,7 +4,7 @@
  */
 
 $wgHooks['GetHTMLAfterBody'][] = 'RenderAdSkin';
-
+		
 function RenderAdSkin() {
 	global $wgAdSkin, $wgExtensionsPath, $wgUser;
 
@@ -18,7 +18,11 @@ function RenderAdSkin() {
 		case "wow_lich_king":
 			echo '<link rel="stylesheet" type="text/css" href="'. $wgExtensionsPath .'/wikia/AdSkin/css/wow_lich_king.css" />';
 			break;
+		case "wow_lich_king_warhammer":
+			echo '<link rel="stylesheet" type="text/css" href="'. $wgExtensionsPath .'/wikia/AdSkin/css/wow_lich_king_warhammer.css" />';
+			break;
 		}	
 	}
+
 	return true;
 }
