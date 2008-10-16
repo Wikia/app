@@ -67,39 +67,28 @@ function axWFactoryDomainCRUD($type="add") {
     }
 
     $dbw = wfGetDB( DB_MASTER );
-    $dbw->selectDB("wikicities");
     $aDomains = array();
     $aResponse = array();
     $sInfo = "";
     switch( $type ) {
-        case "add":
-            #--- first, check if domain is not used
-            $oRes = $dbw->select(wfSharedTable("city_domains"), "count(*) as count",
-                array("city_domain" => $sDomain), __METHOD__ );
-            $oRow = $dbw->fetchObject( $oRes );
-            $dbw->freeResult( $oRes );
-            if ($oRow->count > 0) {
-                #--- domain is used already
-                $sInfo .= "Error: Domain <em>{$sDomain}</em> is already used so it's not added.";
-            }
-            elseif (!preg_match("/^[\w\.\-]+$/", $sDomain)) {
-                #--- check if domain is valid (a im sure that there is function
-                #--- somewhere for such purpose
-                $sInfo .= "Error: Domain <em>{$sDomain}</em> is invalid (or empty) so it's not added.";
-            }
-            else {
-                #--- reall add domain
-                $dbw->insert(
-                    wfSharedTable("city_domains"),
-                    array(
-                        "city_id" => $iCityId,
-                        "city_domain" => strtolower($sDomain)
-                    )
-                );
-					 $dbw->commit();
-                $sInfo .= "Success: Domain <em>{$sDomain}</em> added.";
-            }
-            break;
+		case "add":
+			if (!preg_match("/^[\w\.\-]+$/", $sDomain)) {
+				/**
+				 * check if domain is valid (a im sure that there is function
+				 * somewhere for such purpose
+				 */
+				$sInfo .= "Error: Domain <em>{$sDomain}</em> is invalid (or empty) so it's not added.";
+			}
+			else {
+				$added = WikiFactory::addDomain( $iCityId, $sDomain );
+				if ( $added ) {
+					$sInfo .= "Success: Domain <em>{$sDomain}</em> added.";
+				}
+				else {
+					$sInfo .= "Error: Domain <em>{$sDomain}</em> is already used so it's not added.";
+				}
+			}
+			break;
         case "change":
             $sNewDomain = $wgRequest->getVal("newdomain");
             #--- first, check if domain is not used
@@ -130,13 +119,13 @@ function axWFactoryDomainCRUD($type="add") {
                         "city_domain" => strtolower($sDomain)
                     )
                 );
-					 $dbw->commit();
+				$dbw->commit();
                 $sInfo .= "Success: Domain <em>{$sDomain}</em> changed to <em>{$sNewDomain}</em>.";
             }
             break;
         case "remove":
             $dbw->delete(wfSharedTable("city_domains"), array( "city_id" => $iCityId, "city_domain" => $sDomain ), __METHOD__);
-				$dbw->commit();
+			$dbw->commit();
             $sInfo .= "Success: Domain <em>{$sDomain}</em> removed.";
             break;
         case "status":
@@ -145,7 +134,7 @@ function axWFactoryDomainCRUD($type="add") {
                 #--- updatec city_list table
                 $dbw->update(wfSharedTable("city_list"), array("city_public" => $iNewStatus),
                     array("city_id" => $iCityId));
-					 $dbw->commit();
+				$dbw->commit();
                 switch ($iNewStatus) {
                     case 0:
                         $aResponse["div-body"] = "<strong>changed to disabled</strong>";
