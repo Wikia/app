@@ -77,7 +77,7 @@ class WAtomFeed extends ChannelFeed {
 	 * @param $item
 	 */
 	function outItem( $item ) {
-		global $wgMimeType,$wgCityId,$wgContLang;
+		global $wgMimeType,$wgCityId,$wgContLang,$wgArticlePath,$wgServer;
 		$c='';
 		$t = $item->getTitle();
 		$titleObj = Title::newFromText($t);
@@ -86,15 +86,6 @@ class WAtomFeed extends ChannelFeed {
 		$categories = $titleObj->getParentCategories();
 	    $category_string = $wgContLang->getNSText( NS_CATEGORY ) . ':';
 		$url = $titleObj->getFullURL();
-		$base = parse_url( $url );
-		$wiki_url = 'http://' . $base['host'] . '/';
-		
-		$wiki = '';
-		if(stripos($url, '/wiki/')!==false ){
-	 	 $wiki = 'wiki/';	
-		}
-		
-		
 		$rc_user_text = $item->getAuthor();
 		
 		foreach( $categories as $key=>$value ) {
@@ -107,7 +98,7 @@ class WAtomFeed extends ChannelFeed {
 		 $uurl = '';
 		} else {
 		 //username;
-		 $uurl = '<uri>' . $wiki_url . $wiki . 'User:'. $rc_user_text . '</uri>';
+		 $uurl = '<uri>' . str_replace('$1' , 'User:'. $rc_user_text, $wgServer.$wgArticlePath) . '</uri>';
 		} 
 		
 	?>
