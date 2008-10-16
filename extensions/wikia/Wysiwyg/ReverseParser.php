@@ -600,6 +600,10 @@ class ReverseParser {
 				case 'gallery':
 					return $refData['description'];
 
+				// ~~~~
+				case 'tilde':
+					return $refData['description'];
+
 				// fallback
 				default:
 					return '<!-- unsupported span tag! -->';
