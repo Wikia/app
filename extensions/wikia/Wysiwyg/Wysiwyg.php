@@ -304,6 +304,11 @@ function wfFCKSetRefId($type, $params, $addMarker = true, $returnId = false) {
 			$data['description'] = $params['text'];
 			$result = "<span refid=\"$refId\">{$params['text']}</span>";
 			break;
+
+		case 'tilde':
+			$data['description'] = $params['text'];
+			$result = "<span refid=\"$refId\">{$params['text']}</span>";
+			break;
 	}
 
 	if ($addMarker) {
