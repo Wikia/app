@@ -1339,7 +1339,7 @@ class Parser
 			$trail = $this->replaceFreeExternalLinks( $trail );
 
 			if (!empty($FCKparseEnable)) {
-				wfFCKSetRefId('external link', $text, $url, '', $wasblank, true);
+				wfFCKSetRefId('external link', array('text' => &$text, 'link' => $url, 'wasblank' => $wasblank));
 			}
 
 			# Use the encoded URL
@@ -1426,7 +1426,7 @@ class Parser
 				if ( $text === false ) {
 					$description = $wgContLang->markNoConversion($url);
 					if (!empty($FCKparseEnable)) {
-						wfFCKSetRefId('external link: raw', $description, $url, '', true, true);
+						wfFCKSetRefId('external link: raw', array('text' => &$description, 'link' => $url));
 					}
 					# Not an image, make a link
 					$text = $sk->makeExternalLink( $url, $description, true, 'free', $this->mTitle->getNamespace() );
@@ -1497,11 +1497,11 @@ class Parser
 				# Image found
 				global $FCKparseEnable;
 				if (!empty($FCKparseEnable)) {
-					wfFCKSetRefId('external link: raw image', $url, $url, '', true, true);
+					wfFCKSetRefId('external link: raw image', array('text' => &$url));
 				} else {
-					$text = $sk->makeExternalImage( $url );
-				}
+				$text = $sk->makeExternalImage( $url );
 			}
+		}
 		}
 		return $text;
 	}
@@ -1735,8 +1735,8 @@ class Parser
 						$text = $this->replaceExternalLinks($text);
 						$text = $this->replaceInternalLinks($text);
 						if (!empty($FCKparseEnable)) {
-							$refId = wfFCKSetRefId('image', $text, $link, $trail, $wasblank, $noforce, true);
-							$s .= $prefix . $this->armorLinks("<span$refId>[[$link" . ($wasblank ? '' : "|$text") . "]]</span>") . $trail;
+							$FCKtmp = wfFCKSetRefId('image', array('text' => &$text, 'link' => $link, 'wasblank' => $wasblank, 'noforce' => $noforce), false);
+							$s .= $prefix . $this->armorLinks($FCKtmp) . $trail;
 						} else {	//original action
 							# cloak any absolute URLs inside the image markup, so replaceExternalLinks() won't touch them
 							$s .= $prefix . $this->armorLinks( $this->makeImage( $nt, $text ) ) . $trail;
@@ -1746,8 +1746,8 @@ class Parser
 						continue;
 					} else {
 						if (!empty($FCKparseEnable)) {
-							$refId = wfFCKSetRefId('image', $text, $link, $trail, $wasblank, $noforce, true);
-							$s .= $prefix . $this->armorLinks("<span$refId>[[$link" . ($wasblank ? '' : "|$text") . "]]</span>") . $trail;
+							$FCKtmp = wfFCKSetRefId('image', array('text' => &$text, 'link' => $link, 'wasblank' => $wasblank, 'noforce' => $noforce), false);
+							$s .= $prefix . $this->armorLinks($FCKtmp) . $trail;
 							continue;	//this continue is added to prevent adding additional link by parser as it's used above
 						} else {	//original action
 							# We still need to record the image's presence on the page
@@ -1762,7 +1762,7 @@ class Parser
 					wfProfileIn( "$fname-category" );
 					$s = rtrim($s . "\n"); # bug 87
 					if (!empty($FCKparseEnable)) {
-						$refId = wfFCKSetRefId('category', $text, $link, '', $wasblank, $noforce, true);
+						$FCKtmp = wfFCKSetRefId('category', array('text' => &$text, 'link' => $link, 'wasblank' => $wasblank, 'noforce' => $noforce), false);
 					}
 					if ( $wasblank ) {
 						$sortkey = $this->getDefaultSort();
@@ -1779,7 +1779,7 @@ class Parser
 					 * @todo We might want to use trim($tmp, "\n") here.
 					 */
 					if (!empty($FCKparseEnable)) {
-						$s .= $prefix . "<span$refId>[[$link" . ($wasblank ? '' : "|$text") . "]]</span>" . $trail;
+						$s .= $prefix . $FCKtmp . $trail;
 					} else {
 						$s .= trim($prefix . $trail, "\n") == '' ? '': $prefix . $trail;
 					}
@@ -1792,7 +1792,6 @@ class Parser
 			# Self-link checking
 			if( $nt->getFragment() === '' ) {
 				if( in_array( $nt->getPrefixedText(), $selflink, true ) ) {
-//					wfFCKSetRefId('self link', $text, $link, $trail, $wasblank, $noforce);
 					if (!$FCKparseEnable) {
 						//do not use 'continue' so we can handle self link as a regular link
 						$s .= $prefix . $sk->makeSelfLinkObj( $nt, $text, '', $trail );
@@ -1804,8 +1803,8 @@ class Parser
 			# Special and Media are pseudo-namespaces; no pages actually exist in them
 			if( $ns == NS_MEDIA ) {
 				if (!empty($FCKparseEnable)) {
-					$refId = wfFCKSetRefId('internal link: media', $text, $link, $trail, $wasblank, $noforce, true);
-					$s .= $prefix . "<span$refId>[[" . ($noforce ? '' : ':') . "$link" . ($wasblank ? '' : "|$text") . "]]</span>" . $trail;
+					$FCKtmp = wfFCKSetRefId('internal link: media', array('text' => &$text, 'link' => $link, 'wasblank' => $wasblank, 'noforce' => $noforce), false);
+					$s .= $prefix . $FCKtmp . $trail;
 				} else {	//original action
 					# Give extensions a chance to select the file revision for us
 					$skip = $time = false;
@@ -1822,7 +1821,7 @@ class Parser
 				continue;
 			} elseif( $ns == NS_SPECIAL ) {
 				if (!empty($FCKparseEnable)) {
-					wfFCKSetRefId('internal link: special page', $text, $link, $trail, $wasblank, $noforce);
+					wfFCKSetRefId('internal link: special page', array('text' => &$text, 'link' => $link, 'trail' => $trail, 'wasblank' => $wasblank, 'noforce' => $noforce));
 				}
 				if( SpecialPage::exists( $nt->getDBkey() ) ) {
 					$s .= $this->makeKnownLinkHolder( $nt, $text, '', $trail, $prefix );
@@ -1837,7 +1836,7 @@ class Parser
 					// upload on the shared repository, and we want to see its
 					// auto-generated page.
 					if (!empty($FCKparseEnable)) {
-						wfFCKSetRefId('internal link: file', $text, $link, $trail, $wasblank, $noforce);
+						wfFCKSetRefId('internal link: file', array('text' => &$text, 'link' => $link, 'trail' => $trail, 'wasblank' => $wasblank, 'noforce' => $noforce));
 					}
 					$s .= $this->makeKnownLinkHolder( $nt, $text, '', $trail, $prefix );
 					$this->mOutput->addLink( $nt );
@@ -1845,7 +1844,7 @@ class Parser
 				}
 			}
 			if (!empty($FCKparseEnable)) {
-				wfFCKSetRefId('internal link', $text, $link, $trail, $wasblank, $noforce);
+				wfFCKSetRefId('internal link', array('text' => &$text, 'link' => $link, 'trail' => $trail, 'wasblank' => $wasblank, 'noforce' => $noforce));
 			}
 			$s .= $this->makeLinkHolder( $nt, $text, '', $trail, $prefix );
 		}
@@ -2834,8 +2833,7 @@ class Parser
 				$textArgs[] = $args->node->item($i)->textContent;
 			}
 			$templateText = implode('', $frame->virtualBracketedImplode('{{', '|', '}}', $titleWithSpaces, $textArgs));
-			$refId = wfFCKSetRefId('curly brackets', $templateText, '', '', false, true, true, $piece['lineStart']);
-			$text = "<span$refId>" . $templateText . '</span>';
+			$text = wfFCKSetRefId('curly brackets', array('text' => &$templateText, 'lineStart' => $piece['lineStart']), false);
 			$found = true;
 		}
 
@@ -3341,8 +3339,7 @@ class Parser
 				case 'nowiki':
 					$output = Xml::escapeTagsOnly( $content );
 					if (!empty($FCKparseEnable)) {
-						$refId = wfFCKSetRefId('nowiki', $output, '', '', false, true, true);
-						$output = "<span$refId>$output</span>";
+						$output = wfFCKSetRefId('nowiki', array('text' => &$output), false);
 					}
 					break;
 				/*
@@ -3354,8 +3351,7 @@ class Parser
 				case 'gallery':
 					if (!empty($FCKparseEnable)) {
 						$content = "<gallery$attrText>$content</gallery>";
-						$refId = wfFCKSetRefId('gallery', $content, '', '', false, true, true);
-						$output = "<span$refId>".htmlspecialchars($content).'</span>';
+						$output = wfFCKSetRefId('gallery', array('text' => &$content), false);
 					} else {
 						$output = $this->renderImageGallery( $content, $attributes );
 					}
@@ -3370,8 +3366,7 @@ class Parser
 							$tmp = ($content != ''
 								? "<{$name}{$attrText}>{$content}</{$name}>"
 								: "<{$name}{$attrText}/>");
-							$refId = wfFCKSetRefId('hook', $tmp, '', '', false, true, true);
-							$output = "<span$refId>".htmlspecialchars($tmp).'</span>';
+							$output = wfFCKSetRefId('hook', array('text' => &$tmp), false);
 						} else {
 							$output = call_user_func_array( $this->mTagHooks[$name],
 								array( $content, $attributes, $this ) );
@@ -3452,8 +3447,8 @@ class Parser
 			// Set a placeholder. At the end we'll fill it in with the TOC.
 			if (!empty($FCKparseEnable)) {
 				$tmp = '__TOC__';
-				$refId = wfFCKSetRefId('double underscore', $tmp, '', '', false, true, true);
-				$text = $mw->replace( "<span$refId><!--MWTOC--></span>", $text, 1 );
+				$FCKtmp = wfFCKSetRefId('double underscore: toc', array('text' => &$tmp), false);
+				$text = $mw->replace( $FCKtmp, $text, 1 );
 			} else {
 				$text = $mw->replace( '<!--MWTOC-->', $text, 1 );
 			}
@@ -3482,8 +3477,8 @@ class Parser
 				wfDebug( __METHOD__.": [[MediaWiki:hidden-category-category]] is not a valid title!\n" );
 			}
 		}
-		if (!empty($FCKparseEnable) && isset($refId)) {
-			$text = str_replace("<span$refId><!--MWTOC--></span>", "<span$refId>__TOC__</span>", $text);
+		if (!empty($FCKparseEnable)) {
+			$text = str_replace('<!--MWTOC-->', '__TOC__', $text);
 		}
 		return $text;
 	}
@@ -4198,7 +4193,7 @@ class Parser
 						} else {
 							$query .= ', ';
 						}
-
+	
 						$query .= $dbr->addQuotes( $this->mLinkHolders['dbkeys'][$key] );
 					}
 				}

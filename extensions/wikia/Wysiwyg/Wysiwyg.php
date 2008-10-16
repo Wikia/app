@@ -237,23 +237,81 @@ function Wysiwyg_HtmlToWikiText($html, $wysiwygData, $decode = false) {
  *
  * @author Maciej Błaszkowski <marooned at wikia-inc.com>
  */
-function wfFCKSetRefId($type, &$text, $link, $trail, $wasblank, $noforce, $returnOnly = false, $lineStart = false) {
+ function wfFCKSetRefId($type, $params, $addMarker = true, $returnId = false) {
 	// TODO: Rename function name and global variable name /Inez
 	global $FCKmetaData;
-	$tmpDescription = $wasblank ? '' : $text;
+
 	$refId = count($FCKmetaData);
-	if (!$returnOnly) {
-		$text .= "\x1$refId\x1";
+	$data = array('type' => $type);
+	$result = '';
+
+	switch ($type) {
+		case 'external link':
+			$data['href'] = $params['link'];
+			$data['description'] = $params['wasblank'] ? '' : $params['text'];
+			break;
+
+		case 'internal link':
+		case 'internal link: special page':
+		case 'internal link: file':
+			$data['href'] = ($params['noforce'] ? '' : ':') . $params['link'];
+			$data['description'] = $params['wasblank'] ? '' : $params['text'];
+			if ($params['trail'] != '') {
+				list($tmpInside, $tmpTrail) = Linker::splitTrail($params['trail']);
+				if ($tmpInside != '') {
+					$data['trial'] = $tmpInside;
+				}
+			}
+			break;
+
+		case 'internal link: media':
+		case 'image':
+		case 'category':
+			$data['href'] = ($params['noforce'] ? '' : ':') . $params['link'];
+			$data['description'] = $params['wasblank'] ? '' : $params['text'];
+			$result = "<span refid=\"$refId\">[[" . $data['href'] . ($params['wasblank'] ? '' : "|{$params['text']}") . "]]</span>";
+			break;
+
+		case 'external link: raw image':
+			$data['href'] = $params['text'];
+			break;
+
+		case 'external link: raw':
+			$data['href'] = $params['link'];
+			break;
+
+		case 'curly brackets':
+		case 'nowiki':
+			if (!empty($params['lineStart'])) {	//for curly brackets
+				$data['lineStart'] = 1;
+			}
+			$data['description'] = $params['text'];
+			$result = "<span refid=\"$refId\">" . $params['text'] . "</span>";
+			break;
+
+		case 'gallery':
+		case 'hook':
+			$data['description'] = $params['text'];
+			$result = "<span refid=\"$refId\">" . htmlspecialchars($params['text']) . '</span>';
+			break;
+
+		case 'double underscore: toc':
+			$data['description'] = $params['text'];
+			$result = "<span refid=\"$refId\"><!--MWTOC--></span>";
+			break;
+
+		case 'double underscore':
+			$data['description'] = $params['text'];
+			$result = "<span refid=\"$refId\">{$params['text']}</span>";
+			break;
 	}
-	$tmpInside = '';
-	if ($trail != '') {
-		list($tmpInside, $tmpTrail) = Linker::splitTrail($trail);
+
+	if ($addMarker) {
+		$params['text'] .= "\x1$refId\x1";
 	}
-	$FCKmetaData[$refId] = array('type' => $type, 'href' => ($noforce ? '' : ':') . $link, 'description' => $tmpDescription, 'trial' => $tmpInside);
-	if($lineStart) {
-		$FCKmetaData[$refId]['lineStart'] = true;
-	}
-	return " refid=\"$refId\"";
+
+	$FCKmetaData[$refId] = $data;
+	return $returnId ? $refId : $result;
 }
 
 /**
