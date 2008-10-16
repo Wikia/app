@@ -65,7 +65,7 @@ function wfChangesXml( $rc ) {
 	if( !empty( $wgEnableSpecialChangesXmlToFeedUrl ) ) {
 		$a_data =  '<feed xmlns="http://www.w3.org/2005/Atom" >' . "\n";
 		$a_data .= '  <title type="text">'. $title .'</title>' . "\n";
-		$a_data .= '  <link href="' . $wiki_url .'/" />' . "\n";
+		$a_data .= '  <link href="' . $wgServer .'/" />' . "\n";
 		$a_data .= '  <link rel="self" type="application/atom+xml" href="' . $wiki_atom .'" />' . "\n" ;
 		$a_data .= "  <entry>" . "\n";
 		$a_data .= "    <title>" . $title . "</title>" . "\n";
