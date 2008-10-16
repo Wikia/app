@@ -77,12 +77,15 @@ class GlobalWatchlistBot {
 			}
 		}
 		
-		$oResource = $this->mDb->query("SELECT wl_namespace, wl_title FROM `" . addslashes($sWikiDb) . "`.watchlist WHERE wl_user='" . addslashes($iUserId) . "' AND (wl_notificationtimestamp IS NOT NULL) ORDER BY wl_notificationtimestamp");
+		$oResource = $this->mDb->query("SELECT page_id, wl_namespace, wl_title, wl_notificationtimestamp FROM `" . addslashes($sWikiDb) . "`.watchlist, `" . addslashes($sWikiDb) . "`.page WHERE page_title=wl_title AND page_namespace=wl_namespace AND wl_user='" . addslashes($iUserId) . "' AND (wl_notificationtimestamp IS NOT NULL) ORDER BY wl_notificationtimestamp");
 		if($oResource) {
 			while($oResultRow = $this->mDb->fetchObject($oResource)) {
+				$oRevisionResource = $this->mDb->query("SELECT rev_id, rev_timestamp FROM `" . addslashes($sWikiDb) . "`.revision WHERE rev_page='" . $oResultRow->page_id . "' AND rev_timestamp<'" . $oResultRow->wl_notificationtimestamp . "' ORDER BY rev_timestamp DESC LIMIT 1");
+				$oRevisionRow = $this->mDb->fetchObject($oRevisionResource);
 				$aPages[] = array( 
 					'namespace' => $oResultRow->wl_namespace, 
-					'title' => $oResultRow->wl_title
+					'title' => $oResultRow->wl_title,
+					'revisionId' => (!empty($oRevisionRow->rev_id) ? $oRevisionRow->rev_id : 0 )
 				); 
 			}
 		}
@@ -101,7 +104,7 @@ class GlobalWatchlistBot {
 
 	 $dbw = wfGetDB(DB_MASTER);
 
-		$oResource = $this->mDb->query("SELECT city_id, city_dbname, city_url, city_title FROM " . $wgSharedDB . ".city_list WHERE city_public='1' ORDER BY city_sitename");
+		$oResource = $this->mDb->query("SELECT city_id, city_dbname, city_url, city_title FROM " . $wgSharedDB . ".city_list WHERE city_public='1' AND city_useshared='1' ORDER BY city_sitename");
 		
 		while($oResultRow = $this->mDb->fetchObject($oResource)) {
 			foreach($this->mWatchlisters as $iUserId => $aUserData) {		
@@ -128,7 +131,7 @@ class GlobalWatchlistBot {
 					}
 					
 	  		foreach($aPages as $aPage) {			
-						$dbw->query("INSERT INTO " . $wgSharedDB . ".global_watchlist (gwa_user_id, gwa_city_id, gwa_namespace, gwa_title) VALUES ('" . $iUserId . "', '" . $oResultRow->city_id . "','" . $aPage['namespace'] . "', '" . addslashes($aPage['title']) . "')");
+						$dbw->query("INSERT INTO " . $wgSharedDB . ".global_watchlist (gwa_user_id, gwa_city_id, gwa_namespace, gwa_title, gwa_rev_id) VALUES ('" . $iUserId . "', '" . $oResultRow->city_id . "','" . $aPage['namespace'] . "', '" . addslashes($aPage['title']) . "', '" . $aPage['revisionId'] . "')");
 	  		}
 	  		
 	  	}
@@ -184,8 +187,8 @@ class GlobalWatchlistBot {
 			$sDigests .= $aDigest['wikiName'] . ":\n";
 			
 			$sPageUrl = $aDigest['wikiUrl'];
-			foreach($aDigest['pages'] as $sPageTitle) {
-				$sDigests .= $sPageUrl . $sPageTitle . "\n";
+			foreach($aDigest['pages'] as $aPageData) {
+				$sDigests .= $sPageUrl . $aPageData['title'] . ($aPageData['revisionId'] ? "?diff=0&oldid=" . $aPageData['revisionId'] : "") . "\n";
 			}
 			$sDigests .= "\n";
 		}
@@ -255,7 +258,10 @@ class GlobalWatchlistBot {
 						'pages' => array()
 					);
 				}
-				$aWikiDigest['pages'][] = (($oResultRow->gwa_namespace != 0) ? ($this->mWikiData[$iWikiId]['wikiNamespaces'][$oResultRow->gwa_namespace] . ":") : "") . $oResultRow->gwa_title;	  	
+				$aWikiDigest['pages'][] = array(
+					'title' => (($oResultRow->gwa_namespace != 0) ? ($this->mWikiData[$iWikiId]['wikiNamespaces'][$oResultRow->gwa_namespace] . ":") : "") . $oResultRow->gwa_title,
+					'revisionId' => $oResultRow->gwa_rev_id
+				);	  	
 			} // while
 
 			if(count($aWikiDigest['pages'])) {
