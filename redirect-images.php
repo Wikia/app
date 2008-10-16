@@ -9,11 +9,13 @@ $wgReleaseNumber = ($HeadURL[4] === "trunk" ) ? "trunk" : $HeadURL[5];
 
 $wgStylePath      = "http://images.wikia.com/common/releases_{$wgReleaseNumber}/skins";
 $newUrl = "";
+$age = 1200;
 
 $imgUrl = "http://images.wikia.com/";
 if( isset( $_GET["skinpath"] ) ) {
 	$skinPath = $_GET["skinpath"];
 	$newUrl = $wgStylePath . "/" . $skinPath;
+	$age =  86000;
 }
 else {
 	$imgFile = stripslashes($_GET["image"]);
@@ -45,6 +47,7 @@ else {
 	}
 }
 
-header("Cache-Control: s-maxage=1200, must-revalidate, max-age=0", true);
+
+header("Cache-Control: public, max-age={$age}", true);
 header("Location: {$newUrl}", true, 301);
 exit(0);
