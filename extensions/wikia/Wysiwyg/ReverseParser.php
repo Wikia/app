@@ -498,6 +498,8 @@ class ReverseParser {
 
 		$text = $node->textContent;
 
+		$text = strtr($text, array('<' => '&lt;', '>' => '&gt;'));
+
 		if($text == '') {
 			wfProfileOut(__METHOD__);
 			return '';
