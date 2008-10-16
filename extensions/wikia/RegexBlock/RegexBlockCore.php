@@ -67,7 +67,7 @@ function wfRegexBlockCheck ($current_user) {
     get blockers
     @param
 */
-function wfRegexBlockGetBlockers() {
+function wfRegexBlockGetBlockers($master = 0) {
     global $wgSharedDB;
     $oMemc =& wfGetCache(CACHE_MEMCACHED);
 	wfProfileIn( __METHOD__ );
@@ -78,7 +78,7 @@ function wfRegexBlockGetBlockers() {
 
     if (!is_array($cached)) {
         /* get from database */
-        $dbr = wfGetDB( DB_SLAVE );
+        $dbr = wfGetDB( (empty($master)) ? DB_SLAVE : DB_MASTER );
         $oRes = $dbr->select(
             wfSharedTable(REGEXBLOCK_TABLE),
             array("blckby_blocker"),
@@ -200,7 +200,7 @@ function wfRegexIsCorrectCacheValue($cached) {
 	@param $user User: current user
 	@return Array: an array of arrays to run a regex match against
 */
-function wfGetRegexBlockedData($user, $blockers) {
+function wfGetRegexBlockedData($user, $blockers, $master = 0) {
 	global $wgSharedDB;
 	$oMemc =& wfGetCache(CACHE_MEMCACHED);
 
@@ -219,7 +219,7 @@ function wfGetRegexBlockedData($user, $blockers) {
 
 	if ( empty($cached) ) {
 		/* fetch data from db, concatenate into one string, then fill cache */
-		$dbr = wfGetDB( DB_SLAVE );
+		$dbr = wfGetDB( (empty($master)) ? DB_SLAVE : DB_MASTER );
 
 		foreach($blockers as $blocker) {
 			$oRes = $dbr->select(
@@ -601,6 +601,7 @@ function wfRegexBlockUnsetKeys ($username) {
 	global $wgSharedDB, $wgUser;
 	wfProfileIn( __METHOD__ );
 
+	$readMaster = 1;
 	$oMemc =& wfGetCache(CACHE_MEMCACHED);
 	$key = wfForeignMemcKey( (isset($wgSharedDB)) ? $wgSharedDB : "wikicities", "", REGEXBLOCK_SPECIAL_KEY, REGEXBLOCK_SPECIAL_NUM_RECORD );
 	$oMemc->delete( $key );
@@ -610,11 +611,11 @@ function wfRegexBlockUnsetKeys ($username) {
 	/* blockers */
 	$key = wfForeignMemcKey( (isset($wgSharedDB)) ? $wgSharedDB : "wikicities", "", REGEXBLOCK_BLOCKERS_KEY );
 	$oMemc->delete( $key );
-	$blockers_array = wfRegexBlockGetBlockers();
+	$blockers_array = wfRegexBlockGetBlockers($readMaster);
 	/* blocker's matches */
 	$key = wfForeignMemcKey( (isset($wgSharedDB)) ? $wgSharedDB : "wikicities", "", REGEXBLOCK_BLOCKERS_KEY, "All-In-One" );
 	$oMemc->delete( $key );
-	wfGetRegexBlockedData ($wgUser, $blockers_array);
+	wfGetRegexBlockedData ($wgUser, $blockers_array, $readMaster);
 
 	wfProfileOut( __METHOD__ );
 }

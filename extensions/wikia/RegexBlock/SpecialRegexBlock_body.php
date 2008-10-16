@@ -131,7 +131,7 @@ class RegexBlockForm extends SpecialPage
         $action = $titleObj->escapeLocalURL( "action=submit" )."&".$this->makeListUrlParams();
     
         $expiries = RegexBlockData::getExpireValues();    				
-    				$regexBlockAddress = (empty($this->mRegexBlockedAddress) && ($wgRequest->getVal('ip') != null) && ($wgRequest->getVal('action') == null)) ? $wgRequest->getVal('ip') : $this->mRegexBlockedAddress;
+    	$regexBlockAddress = (empty($this->mRegexBlockedAddress) && ($wgRequest->getVal('ip') != null) && ($wgRequest->getVal('action') == null)) ? $wgRequest->getVal('ip') : $this->mRegexBlockedAddress;
     				
         $oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
         $oTmpl->set_vars( array(
