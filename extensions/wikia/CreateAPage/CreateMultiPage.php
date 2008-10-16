@@ -312,10 +312,10 @@ class CreateMultiPage
 			}
 			if (!empty($section_name))
 			{
-				$boxes[] = array("type" => "", "value" => "<b>".$section_wout_tags."</b>", "display" => 1);
+				$boxes[] = array("type" => "section_display", "value" => "<b>".$section_wout_tags."</b>", "display" => 1);
 				$boxes[] = array("type" => "text", "value" => addslashes($section_name), "display" => 0);
 			} else {
-				$boxes[] = array("type" => "", "value" => "<b>".wfMsg ('createpage_top_of_page') ."</b>", "display" => 1);
+				$boxes[] = array("type" => "section_display", "value" => "<b>".wfMsg ('createpage_top_of_page') ."</b>", "display" => 1);
 			}
 			
 			#--- text without section name
@@ -351,20 +351,17 @@ class CreateMultiPage
 								{
 									$special_tags[$_tag] = $me_tags[3][$id];
 									if ($_tag != 'category') {				
-										$format_tag_text = ($_tag == 'title') ?  "<b><small>%s</small></b>" : "<small>%s</small>";
+										$format_tag_text = ($_tag == 'title') ?  "<b>%s</b>" : "<small>%s</small>";
 									} else {
 										$format_tag_text = "%s" ;
 									}
-									if (!empty($section_name) && ($_tag == 'title'))
-									{
-										$format_tag_text = "<br />".$format_tag_text;
-									}
 									if ($_tag != 'category') {
+										($_tag == 'title') ? $type = "title" : $type = "";
 #--- remove special tags
 										$text = str_replace( "<!---{$_tag}={$brt}".$special_tags[$_tag]."{$brt}--->", "", $text );
 										$text = trim( $text );  // strip unneeded newlines
 #--- add to display
-										$boxes[] = array("type" => "", "value" => sprintf($format_tag_text, $special_tags[$_tag]), "display" => 1);
+										$boxes[] = array("type" => $type, "value" => sprintf($format_tag_text, $special_tags[$_tag]), "display" => 1);
 										$main_tags .= "<!---{$_tag}={$correct_brt}".$special_tags[$_tag]."{$correct_brt}--->\n";
 									} else {
 										$text = str_replace( "<!---{$_tag}={$brt}".$special_tags[$_tag]."{$brt}--->", "[[Category:" . sprintf ($format_tag_text, $special_tags[$_tag]) . "]]", $text );
