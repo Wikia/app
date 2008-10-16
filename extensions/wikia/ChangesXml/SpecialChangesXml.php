@@ -21,7 +21,7 @@ $wgExtensionCredits['specialpage'][] = array(
 );
 
 function wfChangesXml( $rc ) {
-	global $wgEnableSpecialChangesXmlToFeedUrl, $wgContLang, $wgUser;
+	global $wgEnableSpecialChangesXmlToFeedUrl, $wgContLang, $wgUser, $wgServer, $wgArticlePath;
 
 	//get old/new sizes
 	extract( $rc->mExtra );
@@ -44,16 +44,7 @@ function wfChangesXml( $rc ) {
 	$title = $titleObj->getText();
 	$title = str_replace( array( "\n", "\r", '_' ), array( "", "","" ), $title );
 	$url = $titleObj->getFullURL();
-	$wiki = '';
-	if(stripos($url, '/wiki/')!==false ){
-	 $wiki = 'wiki/';	
-	}
-	
-	$base = parse_url( $url );
-
-	$wiki_url = 'http://' . $base['host'] . '/';
-	$wiki_atom = $wiki_url . $wiki . 'Special:Atom';	
-
+	$wiki_atom = str_replace('$1', 'Special:Atom', $wgServer.$wgArticlePath);	
 	$categories = $titleObj->getParentCategories();
 	$category_string = $wgContLang->getNSText( NS_CATEGORY ) . ':';
 	
@@ -67,14 +58,14 @@ function wfChangesXml( $rc ) {
 		$uurl = '';
 	} else {
 		//username;
-		$uurl = '<uri>' . $wiki_url . $wiki . 'User:'. $rc_user_text . '</uri>';
+		$uurl = '<uri>' . str_replace('$1' , 'User:'. $rc_user_text, $wgServer.$wgArticlePath) . '</uri>';
 	} 
 
 	//PUT feed
 	if( !empty( $wgEnableSpecialChangesXmlToFeedUrl ) ) {
 		$a_data =  '<feed xmlns="http://www.w3.org/2005/Atom" >' . "\n";
 		$a_data .= '  <title type="text">'. $title .'</title>' . "\n";
-		$a_data .= '  <link href="' . $wiki_url .'" />' . "\n";
+		$a_data .= '  <link href="' . $wiki_url .'/" />' . "\n";
 		$a_data .= '  <link rel="self" type="application/atom+xml" href="' . $wiki_atom .'" />' . "\n" ;
 		$a_data .= "  <entry>" . "\n";
 		$a_data .= "    <title>" . $title . "</title>" . "\n";
