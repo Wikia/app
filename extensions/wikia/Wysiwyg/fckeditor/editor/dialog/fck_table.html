@@ -40,7 +40,7 @@ var oDOM = oEditor.FCK.EditorDocument ;
 var table ;
 var e = dialog.Selection.GetSelectedElement() ;
 
-if ( ( !e && document.location.search.substr(1) == 'Parent' ) || ( e && e.tagName != 'TABLE' ) )
+if ( ( !e && document.location.search.substr(1,6) == 'Parent' ) || ( e && e.tagName != 'TABLE' ) )
 	e = oEditor.FCKSelection.MoveToAncestorNode( 'TABLE' ) ;
 
 if ( e && e.tagName == "TABLE" )
