@@ -23,13 +23,9 @@ $wgExtensionCredits['specialpage'][] = array(
 function wfChangesXml( $rc ) {
 	global $wgEnableSpecialChangesXmlToFeedUrl, $wgContLang, $wgUser, $wgServer, $wgArticlePath;
 
-	//get old/new sizes
-	extract( $rc->mExtra );
-	extract( $rc->mAttribs ); //only to get user text
-	
-	if( isset( $oldSize ) && isset( $newSize ) ) {
+	if( isset( $rc->mExtra['oldSize'] ) && isset( $rc->mExtra['newSize'] ) ) {
 		//we only look at certain size in main namespace
-		if( abs( $newSize - $oldSize ) < 100 ) {
+		if( abs( $rc->mExtra['newSize'] - $rc->mExtra['oldSize'] ) < 100 ) {
 			return true;
 		}
 	}
@@ -49,11 +45,14 @@ function wfChangesXml( $rc ) {
 	$category_string = $wgContLang->getNSText( NS_CATEGORY ) . ':';
 	
 	//see if user anon or not by ip
+	$rc_user_text = '';
+	if(isset($rc->mAttribs['rc_user_text'])){
+	  $rc_user_text	= $rc->mAttribs['rc_user_text'];
+	}
 	
-	$ut = explode('.',$rc_user_text);
+	$ut = explode('.', $rc_user_text);
 
 	if ( count($ut) == 4 ) {		//ip;
-	
 		//ip;
 		$uurl = '';
 	} else {
