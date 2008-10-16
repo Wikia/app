@@ -4,6 +4,7 @@ class GlobalWatchlistBot {
 
 	private $mDb;
 	private $mDebugMode;
+	private $mDebugMailTo = '';
 	private $mUsers;
 	private $mStartTime;
 	private $mWatchlisters;
@@ -22,6 +23,10 @@ class GlobalWatchlistBot {
 	
 	public function setDbExistsCheck($value) {
 		$this->dbExistsCheck = $value;
+	}
+	
+	public function setDebugMailTo($value) {
+		$this->mDebugMailTo = $value;
 	}
 	
 	/**
@@ -80,7 +85,7 @@ class GlobalWatchlistBot {
 		$oResource = $this->mDb->query("SELECT page_id, wl_namespace, wl_title, wl_notificationtimestamp FROM `" . addslashes($sWikiDb) . "`.watchlist, `" . addslashes($sWikiDb) . "`.page WHERE page_title=wl_title AND page_namespace=wl_namespace AND wl_user='" . addslashes($iUserId) . "' AND (wl_notificationtimestamp IS NOT NULL) ORDER BY wl_notificationtimestamp");
 		if($oResource) {
 			while($oResultRow = $this->mDb->fetchObject($oResource)) {
-				$oRevisionResource = $this->mDb->query("SELECT rev_id, rev_timestamp FROM `" . addslashes($sWikiDb) . "`.revision WHERE rev_page='" . $oResultRow->page_id . "' AND rev_timestamp<'" . $oResultRow->wl_notificationtimestamp . "' ORDER BY rev_timestamp DESC LIMIT 1");
+				$oRevisionResource = $this->mDb->query("SELECT rev_id, rev_timestamp FROM `" . addslashes($sWikiDb) . "`.revision WHERE rev_page='" . $oResultRow->page_id . "' AND rev_timestamp<='" . $oResultRow->wl_notificationtimestamp . "' ORDER BY rev_timestamp DESC LIMIT 1");
 				$oRevisionRow = $this->mDb->fetchObject($oRevisionResource);
 				$aPages[] = array( 
 					'namespace' => $oResultRow->wl_namespace, 
@@ -112,6 +117,7 @@ class GlobalWatchlistBot {
 
 	  	if(count($aPages)) {
 					if(!isset($this->mWikiData[$oResultRow->city_id])) {
+						$sWikiScriptPath = WikiFactory::getVarValueByName('wgScriptPath', $oResultRow->city_id); 
 						$sWikiArticlePath = WikiFactory::getVarValueByName('wgArticlePath', $oResultRow->city_id);
 						$aNamespaces = WikiFactory::getVarValueByName('wgExtraNamespacesLocal', $oResultRow->city_id);
 						if(is_array($aNamespaces)) {
@@ -121,7 +127,7 @@ class GlobalWatchlistBot {
 							$aNamespaces = $wgCanonicalNamespaceNames;			
 						}
 						$sWikiUrl = ( substr( $oResultRow->city_url, -1, 1 ) == '/' ? substr( $oResultRow->city_url, 0, -1 ) : $oResultRow->city_url );
-						$sPageUrl = $sWikiUrl . (!empty($sWikiArticlePath) ? str_replace('$1', '', $sWikiArticlePath) : $wgArticlePath);
+						$sPageUrl = $sWikiUrl . (!empty($sWikiArticlePath) ? str_replace(array('$1', '$wgScriptPath'), array('', $sWikiScriptPath), $sWikiArticlePath) : $wgArticlePath);
 
 						$this->mWikiData[$oResultRow->city_id] = array( 
 							'wikiName' => $oResultRow->city_title,
@@ -259,7 +265,7 @@ class GlobalWatchlistBot {
 					);
 				}
 				$aWikiDigest['pages'][] = array(
-					'title' => (($oResultRow->gwa_namespace != 0) ? ($this->mWikiData[$iWikiId]['wikiNamespaces'][$oResultRow->gwa_namespace] . ":") : "") . $oResultRow->gwa_title,
+					'title' => (($oResultRow->gwa_namespace != 0) ? (urlencode($this->mWikiData[$iWikiId]['wikiNamespaces'][$oResultRow->gwa_namespace]) . ":") : "") . urlencode($oResultRow->gwa_title),
 					'revisionId' => $oResultRow->gwa_rev_id
 				);	  	
 			} // while
@@ -282,8 +288,15 @@ class GlobalWatchlistBot {
 		$oUser = User::newFromId($iUserId);
 		$oUser->load();
 		
-		$oUser->sendMail($sEmailSubject, $sEmailBody, 'Wikia <community@wikia.com>');
-		$this->printDebug("Digest email sent to user: " . $oUser->getName());		
+		$sFrom = 'Wikia <community@wikia.com>';
+		if(empty($this->mDebugMailTo)) {
+			$oUser->sendMail($sEmailSubject, $sEmailBody, $sFrom);
+			$this->printDebug("Digest email sent to user: " . $oUser->getName());								
+		}
+		else {
+			UserMailer::send(new MailAddress($this->mDebugMailTo), new MailAddress($sFrom), $sEmailSubject, $sEmailBody);
+			$this->printDebug("Digest email sent to: " . $this->mDebugMailTo . " (debug mode)");
+		}
 	}
 	
 	private function printDebug($sMessage, $bForceDebugMode = false) {
