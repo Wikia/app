@@ -24,7 +24,9 @@ class ReverseParser {
 	private $protocols;
 
 	function __construct() {
-		$this->dom = new DOMdocument();
+		$this->dom = new DOMdocument('1.0', 'UTF-8');
+		$this->dom->substituteEntities = false;
+
 		$this->protocols = wfUrlProtocols();
 	}
 
@@ -34,8 +36,6 @@ class ReverseParser {
 		$out = '';
 
 		if(is_string($html) && $html != '') {
-			$html = mb_convert_encoding($html, 'HTML-ENTITIES', 'UTF-8');
-
 			// remove whitespace after <br /> and decode &nbsp;
 			$replacements = array(
 				' <p>' => '<p>',
@@ -51,6 +51,9 @@ class ReverseParser {
 
 			$html = str_replace(array_keys($replacements), array_values($replacements), $html);
 
+			// fix for proper encoding of UTF characters
+			$html = '<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/></head><body>'.$html.'</body></html>';
+
 			$this->listLevel = 0;
 			$this->listBullets = '';
 			$this->fckData = $wysiwygData;
@@ -59,7 +62,6 @@ class ReverseParser {
 
 			wfSuppressWarnings();
 			if($this->dom->loadHTML($html)) {
-
 				$body = $this->dom->getElementsByTagName('body')->item(0);
 				$out = $this->parseNode($body);
 
