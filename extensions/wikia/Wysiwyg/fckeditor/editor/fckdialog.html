@@ -641,7 +641,9 @@ var onReadyRegister = function()
 		E.FCKLanguageManager.TranslatePage( document ) ;
 
 		// Create the IFRAME that holds the dialog contents.
-		$( 'innerContents' ).innerHTML = '<iframe id="frmMain" src="' + Args().Page + '?' + FCKConfig.StyleVersion + '" name="frmMain" frameborder="0" width="100%" height="100%" scrolling="auto" style="visibility: hidden;" allowtransparency="true"><\/iframe>' ;
+		iframeSrc = Args().Page + (Args().Page.indexOf('?') != -1 ? '&' : '?') + 'cb=' + FCKConfig.StyleVersion;
+
+		$( 'innerContents' ).innerHTML = '<iframe id="frmMain" src="' + iframeSrc + '" name="frmMain" frameborder="0" width="100%" height="100%" scrolling="auto" style="visibility: hidden;" allowtransparency="true"><\/iframe>' ;
 	} ;
 
 	window.InnerDialogLoaded = function()
