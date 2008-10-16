@@ -21,8 +21,11 @@ class ReverseParser {
 	// bullets stack for nested lists
 	private $listBullets = '';
 
+	private $protocols;
+
 	function __construct() {
 		$this->dom = new DOMdocument();
+		$this->protocols = wfUrlProtocols();
 	}
 
 	public function parse($html, $wysiwygData = array()) {
@@ -530,8 +533,7 @@ class ReverseParser {
 		$text = preg_replace("/(\[{2,})([^]]+)(\]{2,})/", '<nowiki>$1$2$3</nowiki>', $text);
 
 		// 7. wrap [<url protocol>...] using <nowiki>
-		$protocols = wfUrlProtocols();
-		$text = preg_replace("/\[(?=$protocols)([^\]]+)\]/", '<nowiki>[$1]</nowiki>', $text);
+		$text = preg_replace("/\[(?={$this->protocols})([^\]]+)\]/", '<nowiki>[$1]</nowiki>', $text);
 
 		wfProfileOut(__METHOD__);
 		return $text;
@@ -585,8 +587,10 @@ class ReverseParser {
 					}
 					return $refData['description'];
 
-				// __TOC__
+				// __NOTOC__ ...
 				case 'double underscore':
+				// __TOC__
+				case 'double underscore: toc':
 					return $refData['description'];
 
 				// <gallery> parser hook tag
@@ -619,7 +623,7 @@ class ReverseParser {
 
 				// link edited in FCK
 
-				if(preg_match('%^(?:' . wfUrlProtocols() . ')%im', $data['href_new'])) {
+				if(preg_match('%^(?:' . $this->protocols . ')%im', $data['href_new'])) {
 					if($data['type'] != 'external link') {
 						$data['type'] = 'external link: raw';
 					}
@@ -668,7 +672,7 @@ class ReverseParser {
 			// new link (added in FCK)
 
 			$href = $node->getAttribute('href');
-			if(preg_match('%^(?:' . wfUrlProtocols() . ')%im', $href)) {
+			if(preg_match('%^(?:' . $this->protocols . ')%im', $href)) {
 				// external
 				if($href == $content) {
 					return $href;
