@@ -43,7 +43,7 @@ class WysiwygInterface extends SpecialPage {
 		}
 
 		function execute( $par ) {
-			global $wgRequest, $wgOut, $wgTitle, $IP, $FCKmetaData;
+			global $wgRequest, $wgOut, $wgTitle, $wgUser, $IP, $FCKmetaData;
 			$this->setHeaders();
 
 			if(empty($par)) {
@@ -66,6 +66,7 @@ class WysiwygInterface extends SpecialPage {
 			$parser->setOutputType(OT_HTML);
 			global $FCKparseEnable;
 			$FCKparseEnable = true;
+			$wikitext = $parser->preSaveTransform($wikitext, $wgTitle, $wgUser, $options);
 			$out = $parser->parse($wikitext, $wgTitle, $options)->getText();
 			$FCKparseEnable = false;
 
@@ -124,7 +125,9 @@ class WysiwygInterface extends SpecialPage {
 			$wysiwigable = $failsafeFallback->checkWikitext( $wikitext );
 
 			// parse
+//			$wikitext = $parser->preSaveTransform($wikitext, $wgTitle, $wgUser, $options);
 			$parsedOld = $parser->parse($wikitext, $wgTitle, $options)->getText();
+//			$wikitext_parsed = $parser->preSaveTransform($wikitext_parsed, $wgTitle, $wgUser, $options);
 			$parsedNew = $parser->parse($wikitext_parsed, $wgTitle, $options)->getText();
 
 			// diff
