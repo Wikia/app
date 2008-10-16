@@ -13,10 +13,13 @@ $bDebugMode = (isset($options['d']) || isset($options['debug'])) ? true : false;
 $aUserNames = (isset($options['users'])) ? explode(',', $options['users']) : array();
 $bDbExistsCheck = (isset($options['checkdb']) ? true : false);
 $bClearMode = (isset($options['clear']) ? true : false);
+$sDebugMailTo = (isset($options['mailto']) ? $options['mailto'] : '');
 
 if(class_exists('GlobalWatchlistBot')) {
 	$oWatchlistBot = new GlobalWatchlistBot($bDebugMode, $aUserNames);
 	$oWatchlistBot->setDbExistsCheck($bDbExistsCheck);
+	$oWatchlistBot->setDebugMailTo($sDebugMailTo);
+	
 	if($bClearMode) {
 		$oWatchlistBot->clear();
 	}
