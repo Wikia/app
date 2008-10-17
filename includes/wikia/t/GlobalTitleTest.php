@@ -19,12 +19,22 @@ class GlobalTitleCase extends UnitTestCase {
 		$title = GlobalTitle::newFromText( "Test" );
 		$this->assertTrue( $title->getNamespace() === NS_MAIN );
 		$this->assertTrue( $title->getNsText() === "" ) ;
+		$this->assertTrue( $title->getText() === "Test" );
+
+		$title = GlobalTitle::newFromText( "Test_Ze_Spacjami" );
+		$this->assertTrue( $title->getText() === "Test Ze Spacjami", "Underscores, spaces expected" );
+
 	}
 
 	function testNewFromText2Param() {
 		$title = GlobalTitle::newFromText( "Test", NS_TALK );
 		$this->assertTrue( $title->getNamespace() === NS_TALK );
-		$this->assertTrue( $title->getNsText() === "Talk" ) ;
+		$this->assertTrue( $title->getNsText() === "Talk" );
+		$this->assertTrue( $title->getText() === "Test" );
+
+		$title = GlobalTitle::newFromText( "Test_Ze_Spacjami", NS_TALK );
+		$this->assertTrue( $title->getText() === "Test Ze Spacjami", "Underscores, spaces expected" );
+
 	}
 
 };
