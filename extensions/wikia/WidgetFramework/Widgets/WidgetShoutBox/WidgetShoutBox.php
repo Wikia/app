@@ -3,15 +3,20 @@
  * @author Maciej Brencz
 
 CREATE TABLE `shout_box_messages` (
- `id` int(11) NOT NULL auto_increment,
- `wikia` varchar(200) default NULL,
- `user` int(11) default NULL,
- `time` timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
- `message` text,
- PRIMARY KEY  (`id`)
+  `id` int(11) NOT NULL auto_increment,
+  `city` int(9) default NULL,
+  `wikia` varchar(200) default NULL,
+  `user` int(11) default NULL,
+  `time` timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
+  `message` text,
+  PRIMARY KEY  (`id`),
+  KEY `wikia_idx` (`wikia`),
+  KEY `city_idx` (`city`)
 )
 
 CREATE INDEX wikia_idx ON shout_box_messages (wikia);
+ALTER TABLE shout_box_messages ADD city int(9) AFTER id;
+CREATE INDEX city_idx ON shout_box_messages (city);
 
 This is SHARED table (wikicities DB)
 
@@ -219,7 +224,7 @@ function WidgetShoutBox($id, $params) {
 
 function WidgetShoutBoxAddMessage($msg) {
 
-	global $wgUser, $wgMemc;
+	global $wgUser, $wgMemc, $wgCityId;
 
 	wfProfileIn(__METHOD__);
 
@@ -239,10 +244,10 @@ function WidgetShoutBoxAddMessage($msg) {
 	    if (!empty($message)) {
 
 			$row = array (
-				'wikia'	=> WidgetShoutBoxGenerateHostname(),
-				'user'	=> $wgUser->getID(),
-				// 'time'	=> 'NOW()',
-				'message'	=> $message
+				'wikia' => WidgetShoutBoxGenerateHostname(),
+				'city' => $wgCityId,
+				'user' => $wgUser->getID(), // #3813
+				'message' => $message
 			);
 
 			$dbw =& wfGetDB(DB_MASTER);
