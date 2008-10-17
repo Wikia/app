@@ -228,7 +228,7 @@ class WikiaApiQueryProblemReports extends WikiaApiQuery {
 			// add the log entry for problem reports
 			$log = new LogPage('pr_rep_log', true); // true: also add entry to Special:Recentchanges
 			
-			$reportedTitle = Title::newFromText($params['title'], $params['ns']);
+			$reportedTitle = Title::newFromText($params['title'], NS_MAIN);
 			$desc = 'reported a problem';
 			
 			$log->addEntry('prl_rep', $reportedTitle, /*$data['summary']*/ '', array
@@ -329,7 +329,7 @@ class WikiaApiQueryProblemReports extends WikiaApiQuery {
 		if ($ret) {
 			// create title object of reported page
 			$report = self::getReportById($params['report']);
-			$reportedTitle = Title::newFromText($report['title'], $report['ns']);
+			$reportedTitle = Title::newFromText($report['title'], NS_MAIN);
 		
 			// add the log entry for problem reports
 			$log = new LogPage('pr_rep_log', true); // true: also add entry to Special:Recentchanges
@@ -396,7 +396,7 @@ class WikiaApiQueryProblemReports extends WikiaApiQuery {
 		
 		// create title object of reported page
 		$report = self::getReportById($params['report']);
-		$reportedTitle = Title::newFromText($report['title'], $report['ns']);
+		$reportedTitle = Title::newFromText($report['title'], NS_MAIN);
 		
 		// delete row from problem_reports table (use DB_MASTER !!!)
 		$dbw =& wfGetDB( DB_MASTER );
@@ -798,7 +798,7 @@ class WikiaApiQueryProblemReports extends WikiaApiQuery {
 					$params = explode("\n", $params[0]);
 				}
 
-				$titleLink = '[['.$title->getNsText().':'.$title->getPrefixedText().']]';
+				$titleLink = '[['.$title->getPrefixedText().']]';
 
 				$rt = wfMsg( $wgLogActions[$key], $titleLink, '[[Special:ProblemReports/'.$params[1].'|#'.$params[1].']]' );
 				break;
