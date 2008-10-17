@@ -131,6 +131,8 @@ td.main2x { border:1px inset #FFF; text-align:left; font-size:8pt; margin:0px; p
 #ws-article-size {padding:10px; width:auto; overflow:auto; border-top: 1px inset #FFFFFF;display:none; margin:2px;}
 #ws-namespace-count {padding:10px; width:auto; overflow:auto; border-top: 1px inset #FFFFFF;display:none; margin:2px;}
 #ws-page-edits-count {padding:10px; width:auto; overflow:auto; border-top: 1px inset #FFFFFF;display:none; margin:2px;}
+#ws-othernpaces-edits-count {padding:10px; width:auto; overflow:auto; border-top: 1px inset #FFFFFF;display:none; margin:2px;}
+#ws-othernpaces-edits-count-table {text-align:center; font-size:11px; width:100%; overflow:auto;}
 #ws-progress-bar {float:none;text-align:left;width:auto;clear:both;height:10px;}
 #ws-progress-edits-bar {clear:right;text-align:left;width:auto;float:left;}
 #ws-progress-page-edits-bar {clear:right;text-align:left;width:auto;float:left;}

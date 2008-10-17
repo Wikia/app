@@ -666,12 +666,13 @@ class WikiaStatsXLS {
 	public function makeMostEditPagesStats($city_id, &$statsCount, &$mSourceMetaSpace)
 	{
 		global $wgCanonicalNamespaceNames;
-		global $wgLang;
+		global $wgLang, $wgDBname;
 
 		$dbname = $this->getXLSCityDBName($city_id);
 		$cur_month = 1;
 		#----
 		$this->setXLSHeader(wfMsg('wikiastats_filename_other6', $dbname));
+		$centralVersion = ($wgDBname == CENTRAL_WIKIA_ID);
 		#----
 		$this->setXLSFileBegin();
 		$this->writeXLSLabel(1,0,ucfirst($dbname). " - " .str_replace("&gt;", ">", wfMsg('wikiastats_page_edits')) );
@@ -718,12 +719,25 @@ class WikiaStatsXLS {
 					$size = wfMsg('size-megabytes', $wgLang->formatNum(sprintf ("%.1f", $stats['archived'] / $Mb)));
 				}
 				#---
-				$naName = (array_key_exists($stats['namespace'], $wgCanonicalNamespaceNames)) ? $wgCanonicalNamespaceNames[$stats['namespace']] : "";
-				if ($stats['namespace'] == 4)
-				{
-					$naName = (!empty($projectNamespace)) ? $projectNamespace : $naName;
+				
+    			if (!empty($centralVersion)) {
+    				$naName = (array_key_exists($stats['namespace'], $wgCanonicalNamespaceNames)) ? $wgCanonicalNamespaceNames[$stats['namespace']] : "";
+					if (in_array($stats['namespace'], array(NS_PROJECT, NS_PROJECT_TALK))) {
+						$canonName = (array_key_exists($stats['namespace'], $wgCanonicalNamespaceNames)) ? $wgCanonicalNamespaceNames[$stats['namespace']] : "";
+						$naName = (!empty($projectNamespace)) ? $projectNamespace : $canonName;
+						if ( ($stats['namespace'] == NS_PROJECT_TALK) && (!empty($projectNamespace)) ) {
+							$aC = explode("_", $canonName);
+							if ( count( $aC ) > 1 ) {
+								$naName = $projectNamespace."_".$aC[ count( $aC ) - 1 ];
+							}
+						}
+					}
+					$title = ($naName) ? $naName . ":" . $stats['page_title'] : $stats['page_title'];
+				} else {
+					$t = Title::newFromText($stats['page_title'], $stats['namespace']);
+					$title = $t->getPrefixedDBKey();
 				}
-				$title = ($naName) ? $naName . ":" . $stats['page_title'] : $stats['page_title'];
+				
 				#---
 				$this->writeXLSNumber($row, $col, intval($rank));$col++;
 				$this->writeXLSNumber($row, $col, intval($cnt));$col++;
@@ -742,6 +756,97 @@ class WikiaStatsXLS {
 		$this->setXLSFileEnd();
 	}
 	
+
+	public function makeMostEditOtherNspacesStats($city_id, &$statsCount, &$mSourceMetaSpace)
+	{
+		global $wgCanonicalNamespaceNames;
+		global $wgLang, $wgDBname;
+
+		$dbname = $this->getXLSCityDBName($city_id);
+		$cur_month = 1;
+		#----
+		$this->setXLSHeader(wfMsg('wikiastats_filename_other7', $dbname));
+		$centralVersion = ($wgDBname == CENTRAL_WIKIA_ID);
+		#----
+		$this->setXLSFileBegin();
+		$this->writeXLSLabel(1,0,ucfirst($dbname). " - " .str_replace("&gt;", ">", wfMsg('wikiastats_other_nspaces_edits')) );
+		$this->mergeXLSColsRows(1, 0, 1, 6);
+		$this->writeXLSLabel(3,0,wfMsg('wikiastats_other_nspaces_edits_count', count($statsCount)));
+		$this->mergeXLSColsRows(3, 0, 3, 6);
+
+		/*
+		 * Header
+		 */
+		$row = 5;
+		$this->writeXLSLabel($row,0,'#');
+		$this->writeXLSLabel($row,1,wfMsg('wikiastats_edits'));
+		$this->mergeXLSColsRows($row, 1, $row, 2);
+		$this->writeXLSLabel($row,3,wfMsg('wikiastats_unique_users'));
+		$this->mergeXLSColsRows($row, 3, $row, 4);
+		$this->writeXLSLabel($row,5,wfMsg('wikiastats_articles_text'));
+		$this->mergeXLSColsRows($row, 5, $row+1, 5);
+		$this->writeXLSLabel($row,6,wfMsg('wikiastats_archived'));
+		$this->mergeXLSColsRows($row, 6, $row+1, 6);
+		// second row
+		$row++;
+		$this->writeXLSLabel($row,1,ucfirst(wfMsg('wikiastats_total')));
+		$this->writeXLSLabel($row,2,wfMsg('wikiastats_register') . " [%]");
+		$this->writeXLSLabel($row,3,wfMsg('wikiastats_register'));
+		$this->writeXLSLabel($row,4,wfMsg('wikiastats_unregister'));
+
+		$row++;
+		if (!empty($statsCount)) {
+			$Kb = 1024 ;
+			$Mb = $Kb * $Kb ;
+			$Gb = $Kb * $Kb * $Kb ;
+			
+			$rank = 0;
+			foreach ($statsCount as $cnt => $stats) {
+				$col = 0;
+				$rank++;
+				$reg_edits = ($stats['reg_edits']) ? sprintf("%0.0f", ($stats['reg_edits']/$cnt) * 100) : sprintf("%0.0f", $stats['reg_edits']);
+				#---
+				if ($stats['archived'] < $Mb) { 
+					$mbT = wfMsg('size-megabytes', 1);
+					$size = "< " . $mbT; 
+				} else { 
+					$size = wfMsg('size-megabytes', $wgLang->formatNum(sprintf ("%.1f", $stats['archived'] / $Mb)));
+				}
+				#---
+    			if (!empty($centralVersion)) {
+    				$naName = (array_key_exists($stats['namespace'], $wgCanonicalNamespaceNames)) ? $wgCanonicalNamespaceNames[$stats['namespace']] : "";
+					if (in_array($stats['namespace'], array(NS_PROJECT, NS_PROJECT_TALK))) {
+						$canonName = (array_key_exists($stats['namespace'], $wgCanonicalNamespaceNames)) ? $wgCanonicalNamespaceNames[$stats['namespace']] : "";
+						$naName = (!empty($projectNamespace)) ? $projectNamespace : $canonName;
+						if ( ($stats['namespace'] == NS_PROJECT_TALK) && (!empty($projectNamespace)) ) {
+							$aC = explode("_", $canonName);
+							if ( count( $aC ) > 1 ) {
+								$naName = $projectNamespace."_".$aC[ count( $aC ) - 1 ];
+							}
+						}
+					}
+					$title = ($naName) ? $naName . ":" . $stats['page_title'] : $stats['page_title'];
+				} else {
+					$t = Title::newFromText($stats['page_title'], $stats['namespace']);
+					$title = $t->getPrefixedDBKey();
+				}
+				#---
+				$this->writeXLSNumber($row, $col, intval($rank));$col++;
+				$this->writeXLSNumber($row, $col, intval($cnt));$col++;
+				$this->writeXLSNumber($row, $col, $reg_edits);$col++;
+				$this->writeXLSNumber($row, $col, $stats['reg_users']);$col++;
+				$this->writeXLSNumber($row, $col, $stats['unreg_users']);$col++;
+				$this->writeXLSLabel($row, $col, $title);$col++;
+				$this->writeXLSLabel($row, $col, $size);$col++;
+				
+				$row++;
+			}
+		}
+
+		unset($statsCount);
+		unset($mSourceMetaSpace);
+		$this->setXLSFileEnd();
+	}
 	
 	private function makeTrendMeanFormula($row1, $row2, $col1, $col2)
 	{
