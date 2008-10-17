@@ -38,8 +38,11 @@ $wgExtensionMessagesFiles['Inputbox'] = $dir . '/inputbox.i18n.php';
  */
 function registerInputboxExtension()
 {
-    global $wgParser, $wgMessageCache;
+    global $wgParser, $wgHooks;
     $wgParser->setHook('inputbox', 'renderInputbox');
+    // #3483
+    // @see http://www.mediawiki.org/wiki/Manual:Tag_extensions#How_can_I_avoid_modification_of_my_extension.27s_HTML_output.3F
+    $wgHooks['ParserAfterTidy'][] = 'renderInputboxAfterTidy';
 }
 
 /**
@@ -47,6 +50,8 @@ function registerInputboxExtension()
  */
 function renderInputbox($input, $params, &$parser)
 {
+	global $wgInputBoxMarkers;
+
 	$inputbox=new Inputbox( $parser );
 	getBoxOption($inputbox->type,$input,'type');
 	getBoxOption($inputbox->width,$input,'width',true);
@@ -68,13 +73,28 @@ function renderInputbox($input, $params, &$parser)
 	$boxhtml=$inputbox->render();
 	# Maybe support other useful magic words here
 	$boxhtml=str_replace("{{PAGENAME}}",$parser->getTitle()->getText(),$boxhtml);
+
 	if($boxhtml) {
-		return $boxhtml;
+		// #3483: return marker and save actual content
+		$markerId=count($wgInputBoxMarkers);
+		$wgInputBoxMarkers[$markerId]=$boxhtml;
+		return "xx-inputboxmarker-$markerId-xx";
 	} else {
 		return '<div><strong class="error">Input box: type not defined.</strong></div>';
 	}
 }
 
+/**
+ * Find markers and replace them with actual output
+ */
+function renderInputboxAfterTidy(&$parser, &$text) {
+	global $wgInputBoxMarkers;
+
+	for ($m=0; $m<count($wgInputBoxMarkers); $m++) {
+		$text=preg_replace('/xx-inputboxmarker-'.$m.'-xx/', $wgInputBoxMarkers[$m], $text);
+	}
+	return true;
+}
 
 function getBoxOption(&$value,&$input,$name,$isNumber=false) {
 
