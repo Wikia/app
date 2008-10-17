@@ -4,6 +4,11 @@
  * simple class for using titles across WikiFactory installation
  *
  * @author Krzysztof Krzyżaniak <eloy@wikia-inc.com>
+ *
+ * @todo wgContLang simulation
+ * @todo check if parameters working
+ * @todo check if local namespaces works
+ *
  */
 
 class GlobalTitle {
@@ -92,9 +97,13 @@ class GlobalTitle {
 			$this->loadArticlePath();
 		}
 		$namespace = wfUrlencode( $this->getNsText() );
+		if( $this->mNamespace !== NS_MAIN ) {
+			$namespace .= ":";
+		}
 		/**
 		 * replace $1 with article title with namespace
 		 */
+
 		$url = str_replace( '$1', $namespace . $this->mUrlform, $this->mArticlePath );
 		$url = wfAppendQuery( $this->mServer . $url, $query );
 

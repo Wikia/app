@@ -39,7 +39,12 @@ class GlobalTitleCase extends UnitTestCase {
 
 	function testUrls() {
 		$title = GlobalTitle::newFromText( "Timeline", NS_MAIN, 113 ); # memory-alpha
-		$this->assertTrue( $title->getFullURL() === "http://memory-alpha.org/en/wiki/Timeline" );
+		$url = "http://memory-alpha.org/en/wiki/Timeline";
+		$this->assertTrue( $title->getFullURL() === $url, sprintf("%s = %s, NOT MATCH", $title->getFullURL(), $url ) );
+
+		$title = GlobalTitle::newFromText( "Main", 116, 490); # wowwiki
+		$url = "http://www.wowwiki.com/Portal:Main";
+		$this->assertTrue( $title->getFullURL() === $url, sprintf("%s = %s, NOT MATCH", $title->getFullURL(), $url ) );
 	}
 
 };
