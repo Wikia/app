@@ -215,13 +215,15 @@ CREATE TABLE IF NOT EXISTS `wikia_tasks_log` (
 
 CREATE TABLE IF NOT EXISTS `shout_box_messages` (
   `id` int(11) NOT NULL auto_increment,
+  `city` int(9) default NULL,
   `wikia` varchar(200) default NULL,
   `user` int(11) default NULL,
   `time` timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
   `message` text,
-  PRIMARY KEY  (`id`)
+  PRIMARY KEY  (`id`),
+  KEY `wikia_idx` (`wikia`),
+  KEY `city_idx` (`city`)
 ) ENGINE=InnoDB;
-
 
 # default widgets scheme for all wikias
 
