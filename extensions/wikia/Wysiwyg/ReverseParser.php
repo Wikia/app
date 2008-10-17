@@ -292,8 +292,16 @@ class ReverseParser {
 						break;
 
 					case 'tr':
+						$isFirstRow = $node->isSameNode($node->parentNode->firstChild);
 						$attStr = ltrim($this->getAttributesStr($node));
-						$out = "|-{$attStr}\n{$textContent}";
+
+						// don't convert first table row into |- 
+						if ($isFirstRow && $attStr == '') {
+							$out = $textContent;
+						}
+						else {
+							$out = "|-{$attStr}\n{$textContent}";
+						}
 						break;
 
 					case 'th':
