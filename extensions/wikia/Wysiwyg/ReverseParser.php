@@ -43,6 +43,7 @@ class ReverseParser {
 				' <ol' => '<ol',
 				' <ul' => '<ul',
 				' <li' => '<li',
+				' <dl' => '<dl',
 				' </dd>' => '</dd>',
 				' </dt>' => '</dt>',
 				' <pre>' => '<pre>'
