@@ -213,6 +213,7 @@ pageLoaderInit('<?=addslashes(wfMsg('wikiastats_generate_stats_msg'))?>', '<?=ad
 							<li><a href="javascript:void(0);" onClick="XLSStats('5', '<?=$DEF_DATE?>', '<?=date('Y-m')?>');"><?=wfMsg("wikiastats_article_one_link")?></a></li>
 							<li><a href="javascript:void(0);" onClick="XLSStats('6', '<?=$DEF_DATE?>', '<?=date('Y-m')?>');"><?=wfMsg("wikiastats_namespace_records")?></a></li>
 							<li><a href="javascript:void(0);" onClick="XLSStats('7', '<?=$DEF_DATE?>', '<?=date('Y-m')?>');"><?=wfMsg("wikiastats_page_edits")?></a></li>
+							<li><a href="javascript:void(0);" onClick="XLSStats('8', '<?=$DEF_DATE?>', '<?=date('Y-m')?>');"><?=wfMsg("wikiastats_other_nspaces_edits")?></a></li>
 							</ul>
 						</div>
 					</fieldset>

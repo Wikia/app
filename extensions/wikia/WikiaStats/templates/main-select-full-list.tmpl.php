@@ -101,6 +101,7 @@ YAHOO.namespace("wkstatsxlsmenu.container");
                 xlmmenutext += "<li><a href=\"javascript:void(0);\" onClick=\"XLSGenerate('5', '', '', '');\"><?=wfMsg("wikiastats_article_one_link")?></a></li>";
                 xlmmenutext += "<li><a href=\"javascript:void(0);\" onClick=\"XLSGenerate('6', '', '', '');\"><?=wfMsg("wikiastats_namespace_records")?></a></li>";
                 xlmmenutext += "<li><a href=\"javascript:void(0);\" onClick=\"XLSGenerate('7', '', '', '');\"><?=wfMsg("wikiastats_page_edits")?></a></li>";
+                xlmmenutext += "<li><a href=\"javascript:void(0);\" onClick=\"XLSGenerate('8', '', '', '');\"><?=wfMsg("wikiastats_other_nspaces_edits")?></a></li>";
                 xlmmenutext += "</ul>";
                 xlmmenutext += "</div>";
 

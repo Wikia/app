@@ -1455,18 +1455,31 @@ class WikiaGenericStats {
         return $res;
 	}
 
-	static private function setWikiEditPagesOutput($city_id, $statsCount, $mSourceMetaSpace)
+	static private function setWikiEditPagesOutput($city_id, $statsCount, $mSourceMetaSpace, $otherNspaces)
 	{
         global $wgUser, $wgCanonicalNamespaceNames, $wgLang;
+        global $wgDBname, $wgScript;
 		wfProfileIn( __METHOD__ );
+		
+		$aNamespaces = WikiFactory::getVarValueByName('wgExtraNamespacesLocal', $city_id);
+		$_wgScript = ($wgDBname != CENTRAL_WIKIA_ID) ? $wgScript : WikiFactory::getVarValueByName('wgScript', $city_id) ;
+		if ( is_array($aNamespaces) ) {
+			$aNamespaces = array_merge($wgCanonicalNamespaceNames, $aNamespaces);
+		} else {
+			$aNamespaces = $wgCanonicalNamespaceNames;
+		}
+		
 		#---
         $oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
         $oTmpl->set_vars( array(
             "city_url"		=> self::getWikiaCityUrlById($city_id),
             "statsCount" 	=> $statsCount,
             "projectNamespace" => $mSourceMetaSpace,
-            "canonicalNamespace" => $wgCanonicalNamespaceNames,
+            "canonicalNamespace" => $aNamespaces,
+            "centralVersion" => ($wgDBname == CENTRAL_WIKIA_ID),
+            "otherNspaces" => $otherNspaces,
             "wgLang" => $wgLang,
+            "_wgScript" => $_wgScript
         ));
         #---
         $res = $oTmpl->execute("page-counts-stats");
@@ -2181,7 +2194,7 @@ class WikiaGenericStats {
         return $array;
     }
 
-	static public function getWikiPageEditsCount($city_id, $xls = 0)
+	static public function getWikiPageEditsCount($city_id, $xls = 0, $otherNspaces = 0)
 	{
 		global $wgDBStats;
 		#---
@@ -2194,8 +2207,8 @@ class WikiaGenericStats {
 			#---
 			$sortData = array();
 			if (!empty($cityDBName)) {
-				$regCount = self::getPageEdistFromDB($cityDBName, 1, 1, 50);
-				$unregCount = self::getPageEdistFromDB($cityDBName, 1, 0, 50);
+				$regCount = self::getPageEdistFromDB($cityDBName, $otherNspaces, 0, 50);
+				$unregCount = self::getPageEdistFromDB($cityDBName, $otherNspaces, 1, 50);
 				#---
 				$setRegPages = array();
 				foreach ($regCount as $page_id => $values) {
@@ -2255,11 +2268,15 @@ class WikiaGenericStats {
 				}
 				#---
 				if (empty($xls)) {
-					$text = self::setWikiEditPagesOutput($city_id, $sortData, $mSourceMetaSpace);
+					$text = self::setWikiEditPagesOutput($city_id, $sortData, $mSourceMetaSpace, $otherNspaces);
 					$data = array("code" => 1, "text" => $text);
 				} else {
 					wfProfileOut( __METHOD__ );
-					self::makeWikiaMostEditPagesXLS($city_id, $sortData, $mSourceMetaSpace);
+					if ($otherNspaces == 1) {
+						self::makeWikiaMostEditOtherNspacesPagesXLS($city_id, $sortData, $mSourceMetaSpace);
+					} else {
+						self::makeWikiaMostEditPagesXLS($city_id, $sortData, $mSourceMetaSpace);
+					}
 				}
 			}
 		}
@@ -2592,6 +2609,14 @@ class WikiaGenericStats {
 		#---
 		$XLSObj = new WikiaStatsXLS();
 		$XLSObj->makeMostEditPagesStats($city_id, $sortData, $mSourceMetaSpace);
+		return;
+	}
+
+	static private function makeWikiaMostEditOtherNspacesPagesXLS($city_id, $sortData, $mSourceMetaSpace)
+	{
+		#---
+		$XLSObj = new WikiaStatsXLS();
+		$XLSObj->makeMostEditOtherNspacesStats($city_id, $sortData, $mSourceMetaSpace);
 		return;
 	}
 

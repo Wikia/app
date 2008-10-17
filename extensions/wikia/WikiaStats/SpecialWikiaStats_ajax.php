@@ -290,6 +290,46 @@ function axWStatisticsPageEdits($city_id)
     }
 }
 
+function axWStatisticsOtherNpacesPageEdits($city_id)
+{
+    global $wgRequest, $wgUser, $wgMessageCache, $wgWikiaStatsMessages;
+    global $wgCityId, $wgDBname;
+    
+	if (empty($wgUser)) {
+		return false;
+	}
+
+	if ( $wgUser->isBlocked() ) {
+		return;
+	}
+	
+	if ( !$wgUser->isLoggedIn() ) {
+		return;
+	}	
+    
+	if ($wgDBname != CENTRAL_WIKIA_ID) { 
+		// central version
+		$city_id = $wgCityId;
+	}
+
+	require_once ( dirname( __FILE__ ) . '/SpecialWikiaStats.i18n.php' );
+	foreach( $wgWikiaStatsMessages as $key => $value ) 
+	{
+		$wgMessageCache->addMessages( $wgWikiaStatsMessages[$key], $key );
+	}
+
+    $aResponse = WikiaGenericStats::getWikiPageEditsCount($city_id, 0, 1);
+    
+    if (!function_exists('json_encode'))  {
+        $oJson = new Services_JSON();
+        return $oJson->encode($aResponse);
+    }
+    else {
+        return json_encode($aResponse);
+    }
+}
+
+
 function axWStatisticsPageEditsDetails($city_id, $page_id)
 {
     global $wgRequest, $wgUser, $wgMessageCache, $wgWikiaStatsMessages;
@@ -403,8 +443,12 @@ function axWStatisticsXLS($city_id, $param, $others = "", $date_from = "", $date
 			WikiaGenericStats::getWikiPageEditsCount($city_id, $xls);
 			break;
 		}
+		case "8": { // Most edited articles (> 25 edits)
+			WikiaGenericStats::getWikiPageEditsCount($city_id, $xls, 1);
+			break;
+		}
 		// comparisions
-		case "8": { // overview
+		case "9": { // overview
 			$obj_stats = new WikiaGenericStats($wgUser->getID());
 			$cities = array(0 => 0); //initial and default value
 			if (!empty($others)) {
@@ -418,7 +462,7 @@ function axWStatisticsXLS($city_id, $param, $others = "", $date_from = "", $date
 			//WikiaGenericStats::getWikiPageEditsCount($city_id, $xls);
 			break;
 		}
-		case "9": { // creation history
+		case "10": { // creation history
 			$obj_stats = new WikiaGenericStats($wgUser->getID());
 			$obj_stats->getWikiCreationHistoryXLS($city_id);
 			//WikiaGenericStats::getWikiPageEditsCount($city_id, $xls);
@@ -680,6 +724,7 @@ $wgAjaxExportList[] = "axWStatisticsArticleSize";
 $wgAjaxExportList[] = "axWStatisticsNamespaceCount";
 $wgAjaxExportList[] = "axWStatisticsPageEdits";
 $wgAjaxExportList[] = "axWStatisticsPageEditsDetails";
+$wgAjaxExportList[] = "axWStatisticsOtherNpacesPageEdits";
 $wgAjaxExportList[] = "axWStatisticsWikiaList";
 $wgAjaxExportList[] = "axWStatisticsWikiaListJson";
 $wgAjaxExportList[] = "axWStatisticsWikiaInfo";
