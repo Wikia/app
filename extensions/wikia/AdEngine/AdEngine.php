@@ -50,8 +50,12 @@ class AdEngine {
 		'blind'
 	);
 		
-	protected function __construct() {
-		$this->loadConfig();
+	protected function __construct($slots = null) {
+		if (!empty($slots)){
+			$this->slots=$slots;
+		} else {
+			$this->loadConfig();
+		}
 		global $wgAutoloadClasses;
 		foreach($this->providers as $p) {
 			$wgAutoloadClasses['AdProvider' . $p]=dirname(__FILE__) . '/AdProvider'.$p.'.php';
@@ -59,9 +63,9 @@ class AdEngine {
 		$this->bucketNum = mt_rand(0,200);
 	}
 
-	public static function getInstance() {
+	public static function getInstance($slots = null) {
 		if(self::$instance == false) {
-			self::$instance = new AdEngine();
+			self::$instance = new AdEngine($slots);
 		}
 		return self::$instance;
 	}
@@ -141,6 +145,11 @@ class AdEngine {
 		if (! empty($cat)){
 			// This function already called
 			return $cat;
+		}
+
+		if (!empty($_GET['forceCategory'])){
+			// Passed in through the url, or hard coded on a test_page. ;-)
+			return $_GET['forceCategory'];
 		}
 
 		global $wgMemc, $wgCityId;
