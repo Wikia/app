@@ -18,7 +18,7 @@ interface iAdProvider {
 
 class AdEngine {
 
-	const cacheKeyVersion = "1.90";
+	const cacheKeyVersion = "2.0";
 	const cacheTimeout = 1800;
 
 	// TODO: pull these from wikicities.provider
@@ -104,7 +104,7 @@ class AdEngine {
 		$ad_slot_override_table = wfSharedTable('ad_slot_override');
 		$ad_provider_value_table = wfSharedTable('ad_provider_value');
 
-		$sql = "SELECT ad_slot.as_id, ad_slot.slot, ad_slot.size,
+		$sql = "SELECT ad_slot.as_id, ad_slot.slot, ad_slot.size, ad_slot.load_priority,
 				COALESCE(adso.provider_id, ad_slot.default_provider_id) AS provider_id,
 				COALESCE(adso.enabled, ad_slot.default_enabled) AS enabled
 				FROM $ad_slot_table
@@ -119,7 +119,8 @@ class AdEngine {
 				'as_id' => $row->as_id,
 				'size' => $row->size,
 				'provider_id' => $row->provider_id,
-				'enabled' => $row->enabled
+				'enabled' => $row->enabled,
+				'load_priority' => $row->load_priority
 			);
 		}
 
@@ -311,7 +312,7 @@ class AdEngine {
 		$style = ' style="'. implode(" ", $styles) .'" class="wikia_ad_placeholder"';
 
 		// We will use these at the bottom of the page for ads.
-		$this->placeholders[] = $slotname;
+		$this->placeholders[$slotname]=$this->slots[$slotname]['load_priority'];
 		
 		return "<div id=\"$slotname\"$style></div>";
 	}
@@ -355,6 +356,10 @@ class AdEngine {
 			return '<!-- No placeholders called for ' . __METHOD__ . " -->\n";
 		}
 
+		// Sort by load_priority
+		asort($this->placeholders);
+		$this->placeholders = array_reverse($this->placeholders);
+
 		$out = "<!-- #### BEGIN " . __CLASS__ . '::' . __METHOD__ . " ####-->\n";
 
 		$out .=  $this->getBucketTestingCode();
@@ -362,7 +367,7 @@ class AdEngine {
 		$out .= '<script type="text/javascript">TieDivLibrary.timer()</script>';
 
 		// Get the setup code for ad providers used on this page. This is for Ad Providers that support multi-call.
-		foreach ($this->placeholders as $slotname){
+		foreach ($this->placeholders as $slotname => $load_priority){
 	                $AdProvider = $this->getAdProvider($slotname);
 			// Fill in slotsToCall with a list of slotnames that will be used. Needed for getBatchCallHtml
 			$AdProvider->addSlotToCall($slotname);
@@ -371,7 +376,7 @@ class AdEngine {
 			$out .= $AdProvider->getSetupHtml();
 		}
 
-		foreach ($this->placeholders as $slotname){
+		foreach ($this->placeholders as $slotname => $load_priority){
 			$AdProvider = $this->getAdProvider($slotname);
 
 			// Hmm. Should we just use: class="wikia_$adtype"?

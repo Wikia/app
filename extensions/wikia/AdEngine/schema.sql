@@ -17,26 +17,27 @@ CREATE TABLE ad_slot (
   slot VARCHAR(50) NOT NULL, 
   skin VARCHAR(25) NOT NULL, -- monaco, quartz, blah
   size varchar(25),
+  load_priority TINYINT UNSIGNED DEFAULT NULL,
   default_provider_id TINYINT UNSIGNED NOT NULL,
   default_enabled ENUM('Yes', 'No') DEFAULT 'Yes',
   PRIMARY KEY(as_id),
   UNIQUE KEY (slot, skin)
 ) ENGINE=InnoDB;
 
-INSERT INTO ad_slot VALUES (NULL, 'HOME_TOP_LEADERBOARD', 'monaco', '728x90', 1, 'Yes');
-INSERT INTO ad_slot VALUES (NULL, 'HOME_TOP_RIGHT_BOXAD', 'monaco', '300x250', 1, 'Yes');
-INSERT INTO ad_slot VALUES (NULL, 'HOME_LEFT_SKYSCRAPER_1', 'monaco', '160x600', 1, 'Yes');
-INSERT INTO ad_slot VALUES (NULL, 'HOME_LEFT_SKYSCRAPER_2', 'monaco', '160x600', 1, 'Yes');
-INSERT INTO ad_slot VALUES (NULL, 'TOP_LEADERBOARD', 'monaco', '728x90', 1, 'Yes');
-INSERT INTO ad_slot VALUES (NULL, 'TOP_RIGHT_BOXAD', 'monaco', '300x250', 1, 'Yes');
-INSERT INTO ad_slot VALUES (NULL, 'LEFT_SKYSCRAPER_1', 'monaco', '160x600', 1, 'Yes');
-INSERT INTO ad_slot VALUES (NULL, 'LEFT_SKYSCRAPER_2', 'monaco', '160x600', 1, 'Yes');
-INSERT INTO ad_slot VALUES (NULL, 'FOOTER_BOXAD', 'monaco', '300x250', 3, 'Yes');
-INSERT INTO ad_slot VALUES (NULL, 'LEFT_SPOTLIGHT_1', 'monaco', '200x75', 2, 'Yes');
-INSERT INTO ad_slot VALUES (NULL, 'FOOTER_SPOTLIGHT_LEFT', 'monaco', '200x75', 2, 'Yes');
-INSERT INTO ad_slot VALUES (NULL, 'FOOTER_SPOTLIGHT_MIDDLE', 'monaco', '200x75', 2, 'Yes');
-INSERT INTO ad_slot VALUES (NULL, 'FOOTER_SPOTLIGHT_RIGHT', 'monaco', '200x75', 2, 'Yes');
-INSERT INTO ad_slot VALUES (NULL, 'LEFT_SKYSCRAPER_3', 'monaco', '160x600', 2, 'No');
+INSERT INTO ad_slot VALUES (NULL, 'HOME_TOP_LEADERBOARD', 'monaco', '728x90', 15, 1, 'Yes');
+INSERT INTO ad_slot VALUES (NULL, 'HOME_TOP_RIGHT_BOXAD', 'monaco', '300x250', 20, 1, 'Yes');
+INSERT INTO ad_slot VALUES (NULL, 'HOME_LEFT_SKYSCRAPER_1', 'monaco', '160x600', 10, 1, 'Yes');
+INSERT INTO ad_slot VALUES (NULL, 'HOME_LEFT_SKYSCRAPER_2', 'monaco', '160x600', 8, 1, 'Yes');
+INSERT INTO ad_slot VALUES (NULL, 'TOP_LEADERBOARD', 'monaco', '728x90', 15, 1, 'Yes');
+INSERT INTO ad_slot VALUES (NULL, 'TOP_RIGHT_BOXAD', 'monaco', '300x250', 20, 1, 'Yes');
+INSERT INTO ad_slot VALUES (NULL, 'LEFT_SKYSCRAPER_1', 'monaco', '160x600', 10, 1, 'Yes');
+INSERT INTO ad_slot VALUES (NULL, 'LEFT_SKYSCRAPER_2', 'monaco', '160x600', 8, 1, 'Yes');
+INSERT INTO ad_slot VALUES (NULL, 'FOOTER_BOXAD', 'monaco', '300x250', 4, 3, 'Yes');
+INSERT INTO ad_slot VALUES (NULL, 'LEFT_SPOTLIGHT_1', 'monaco', '200x75', 0, 2, 'Yes');
+INSERT INTO ad_slot VALUES (NULL, 'FOOTER_SPOTLIGHT_LEFT', 'monaco', '200x75', 0, 2, 'Yes');
+INSERT INTO ad_slot VALUES (NULL, 'FOOTER_SPOTLIGHT_MIDDLE', 'monaco', '200x75', 0, 2, 'Yes');
+INSERT INTO ad_slot VALUES (NULL, 'FOOTER_SPOTLIGHT_RIGHT', 'monaco', '200x75', 0, 2, 'Yes');
+INSERT INTO ad_slot VALUES (NULL, 'LEFT_SKYSCRAPER_3', 'monaco', '160x600', 6, 2, 'No');
 
 -- Allow wikis to override slots
 DROP TABLE IF EXISTS ad_slot_override;
