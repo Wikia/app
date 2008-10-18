@@ -2,45 +2,419 @@
 <?php
 ini_set('display_errors', true);
 # Mediwiki setup.
-$IP = getenv('DOCUMENT_ROOT');
+/*
 define( 'MEDIAWIKI', true );
 require "$IP/StartProfiler.php";
 require "$IP/includes/Defines.php";
 require "$IP/LocalSettings.php";
 require "$IP/includes/Setup.php";
-class_exists('AdEngine') || require "$IP/extensions/wikia/AdEngine/AdEngine.php";
-$wgShowAds=true;
+*/
+$IP = getenv('DOCUMENT_ROOT');
+require "$IP/includes/memcached-client.php";
+require "$IP/extensions/wikia/AdEngine/AdEngine.php";
+require "$IP/extensions/wikia/AdEngine/AdProviderGAM.php";
+require "$IP/extensions/wikia/AdEngine/AdProviderDART.php";
+require "$IP/extensions/wikia/AdEngine/AdProviderOpenX.php";
+require "$IP/extensions/wikia/AdEngine/AdProviderNull.php";
+require "$IP/extensions/wikia/AdEngine/AdProviderGoogle.php";
+
+// Global variables
+$_GET['forceCategory']=array ( 'id' => '3', 'name' => 'Entertainment');
+$wgShowAds = true;
+$wgDBname = "muppet";
+$wgExtensionsPath='/extensions';
+$wgLanguageCode = "en";
+
+// Configs: Tip: Use var_export to generate these from a real site.
+$slots=array (
+  'HOME_TOP_LEADERBOARD' => 
+  array (
+    'as_id' => '1',
+    'size' => '728x90',
+    'provider_id' => '1',
+    'enabled' => 'Yes',
+    'provider_values' => 
+    array (
+      0 => 
+      array (
+        'keyname' => 'media',
+        'keyvalue' => 'tv',
+      ),
+      1 => 
+      array (
+        'keyname' => 'media',
+        'keyvalue' => 'movie',
+      ),
+      2 => 
+      array (
+        'keyname' => 'egnre',
+        'keyvalue' => 'comic',
+      ),
+      3 => 
+      array (
+        'keyname' => 'egnre',
+        'keyvalue' => 'comedy',
+      ),
+      4 => 
+      array (
+        'keyname' => 'egnre',
+        'keyvalue' => 'family',
+      ),
+      5 => 
+      array (
+        'keyname' => 'age',
+        'keyvalue' => 'yadult',
+      ),
+    ),
+  ),
+  'HOME_TOP_RIGHT_BOXAD' => 
+  array (
+    'as_id' => '2',
+    'size' => '300x250',
+    'provider_id' => '1',
+    'enabled' => 'Yes',
+    'provider_values' => 
+    array (
+      0 => 
+      array (
+        'keyname' => 'media',
+        'keyvalue' => 'tv',
+      ),
+      1 => 
+      array (
+        'keyname' => 'media',
+        'keyvalue' => 'movie',
+      ),
+      2 => 
+      array (
+        'keyname' => 'egnre',
+        'keyvalue' => 'comic',
+      ),
+      3 => 
+      array (
+        'keyname' => 'egnre',
+        'keyvalue' => 'comedy',
+      ),
+      4 => 
+      array (
+        'keyname' => 'egnre',
+        'keyvalue' => 'family',
+      ),
+      5 => 
+      array (
+        'keyname' => 'age',
+        'keyvalue' => 'yadult',
+      ),
+    ),
+  ),
+  'HOME_LEFT_SKYSCRAPER_1' => 
+  array (
+    'as_id' => '3',
+    'size' => '160x600',
+    'provider_id' => '1',
+    'enabled' => 'Yes',
+    'provider_values' => 
+    array (
+      0 => 
+      array (
+        'keyname' => 'media',
+        'keyvalue' => 'tv',
+      ),
+      1 => 
+      array (
+        'keyname' => 'media',
+        'keyvalue' => 'movie',
+      ),
+      2 => 
+      array (
+        'keyname' => 'egnre',
+        'keyvalue' => 'comic',
+      ),
+      3 => 
+      array (
+        'keyname' => 'egnre',
+        'keyvalue' => 'comedy',
+      ),
+      4 => 
+      array (
+        'keyname' => 'egnre',
+        'keyvalue' => 'family',
+      ),
+      5 => 
+      array (
+        'keyname' => 'age',
+        'keyvalue' => 'yadult',
+      ),
+    ),
+  ),
+  'HOME_LEFT_SKYSCRAPER_2' => 
+  array (
+    'as_id' => '4',
+    'size' => '160x600',
+    'provider_id' => '1',
+    'enabled' => 'No',
+    'provider_values' => 
+    array (
+      0 => 
+      array (
+        'keyname' => 'media',
+        'keyvalue' => 'tv',
+      ),
+      1 => 
+      array (
+        'keyname' => 'media',
+        'keyvalue' => 'movie',
+      ),
+      2 => 
+      array (
+        'keyname' => 'egnre',
+        'keyvalue' => 'comic',
+      ),
+      3 => 
+      array (
+        'keyname' => 'egnre',
+        'keyvalue' => 'comedy',
+      ),
+      4 => 
+      array (
+        'keyname' => 'egnre',
+        'keyvalue' => 'family',
+      ),
+      5 => 
+      array (
+        'keyname' => 'age',
+        'keyvalue' => 'yadult',
+      ),
+    ),
+  ),
+  'TOP_LEADERBOARD' => 
+  array (
+    'as_id' => '5',
+    'size' => '728x90',
+    'provider_id' => '1',
+    'enabled' => 'Yes',
+    'provider_values' => 
+    array (
+      0 => 
+      array (
+        'keyname' => 'media',
+        'keyvalue' => 'tv',
+      ),
+      1 => 
+      array (
+        'keyname' => 'media',
+        'keyvalue' => 'movie',
+      ),
+      2 => 
+      array (
+        'keyname' => 'egnre',
+        'keyvalue' => 'comic',
+      ),
+      3 => 
+      array (
+        'keyname' => 'egnre',
+        'keyvalue' => 'comedy',
+      ),
+      4 => 
+      array (
+        'keyname' => 'egnre',
+        'keyvalue' => 'family',
+      ),
+      5 => 
+      array (
+        'keyname' => 'age',
+        'keyvalue' => 'yadult',
+      ),
+    ),
+  ),
+  'TOP_RIGHT_BOXAD' => 
+  array (
+    'as_id' => '6',
+    'size' => '300x250',
+    'provider_id' => '1',
+    'enabled' => 'Yes',
+    'provider_values' => 
+    array (
+      0 => 
+      array (
+        'keyname' => 'media',
+        'keyvalue' => 'tv',
+      ),
+      1 => 
+      array (
+        'keyname' => 'media',
+        'keyvalue' => 'movie',
+      ),
+      2 => 
+      array (
+        'keyname' => 'egnre',
+        'keyvalue' => 'comic',
+      ),
+      3 => 
+      array (
+        'keyname' => 'egnre',
+        'keyvalue' => 'comedy',
+      ),
+      4 => 
+      array (
+        'keyname' => 'egnre',
+        'keyvalue' => 'family',
+      ),
+      5 => 
+      array (
+        'keyname' => 'age',
+        'keyvalue' => 'yadult',
+      ),
+    ),
+  ),
+  'LEFT_SKYSCRAPER_1' => 
+  array (
+    'as_id' => '7',
+    'size' => '160x600',
+    'provider_id' => '1',
+    'enabled' => 'Yes',
+    'provider_values' => 
+    array (
+      0 => 
+      array (
+        'keyname' => 'media',
+        'keyvalue' => 'tv',
+      ),
+      1 => 
+      array (
+        'keyname' => 'media',
+        'keyvalue' => 'movie',
+      ),
+      2 => 
+      array (
+        'keyname' => 'egnre',
+        'keyvalue' => 'comic',
+      ),
+      3 => 
+      array (
+        'keyname' => 'egnre',
+        'keyvalue' => 'comedy',
+      ),
+      4 => 
+      array (
+        'keyname' => 'egnre',
+        'keyvalue' => 'family',
+      ),
+      5 => 
+      array (
+        'keyname' => 'age',
+        'keyvalue' => 'yadult',
+      ),
+    ),
+  ),
+  'LEFT_SKYSCRAPER_2' => 
+  array (
+    'as_id' => '8',
+    'size' => '160x600',
+    'provider_id' => '2',
+    'enabled' => 'Yes',
+  ),
+  'FOOTER_BOXAD' => 
+  array (
+    'as_id' => '9',
+    'size' => '300x250',
+    'provider_id' => '3',
+    'enabled' => 'Yes',
+  ),
+  'LEFT_SPOTLIGHT_1' => 
+  array (
+    'as_id' => '10',
+    'size' => '200x75',
+    'provider_id' => '2',
+    'enabled' => 'Yes',
+  ),
+  'FOOTER_SPOTLIGHT_LEFT' => 
+  array (
+    'as_id' => '11',
+    'size' => '200x75',
+    'provider_id' => '2',
+    'enabled' => 'Yes',
+  ),
+  'FOOTER_SPOTLIGHT_MIDDLE' => 
+  array (
+    'as_id' => '12',
+    'size' => '200x75',
+    'provider_id' => '2',
+    'enabled' => 'Yes',
+  ),
+  'FOOTER_SPOTLIGHT_RIGHT' => 
+  array (
+    'as_id' => '13',
+    'size' => '200x75',
+    'provider_id' => '2',
+    'enabled' => 'Yes',
+  ),
+  'LEFT_SKYSCRAPER_3' => 
+  array (
+    'as_id' => '14',
+    'size' => '160x600',
+    'provider_id' => '2',
+    'enabled' => 'Yes',
+  ),
+);
 ?>
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en" dir="ltr">
 <head>
 <title>Test Page for AdEngine</title>
-<script type="text/javascript" src="AdEngine.js"></script>
-<script type="text/javascript" src="http://yui.yahooapis.com/combo?2.5.2/build/utilities/utilities.js"></script>
-<script>
+<script type= "text/javascript">/*<![CDATA[*/
+var skin = "monaco";
+var stylepath = "http://images.wikia.com/common/releases_current/skins";
+var wgArticlePath = "/wiki/$1";
+var wgScriptPath = "";
+var wgScript = "/index.php";
+var wgVariantArticlePath = false;
+var wgActionPaths = [];
+var wgServer = "http://familyguy.wikia.com";
+var wgCanonicalNamespace = "";
+var wgCanonicalSpecialPageName = false;
+var wgNamespaceNumber = 0;
+var wgPageName = "Main_Page";
+var wgTitle = "Main Page";
+var wgAction = "view";
+var wgArticleId = "2246";
+var wgIsArticle = true;
+var wgUserName = null;
+var wgUserGroups = null;
+var wgUserLanguage = "en";
 var wgContentLanguage = "en";
+var wgBreakFrames = false;
+var wgCurRevisionId = "23804";
+var wgVersion = "1.13.2";
+var wgEnableAPI = true;
+var wgEnableWriteAPI = false;
+var wgRestrictionEdit = ["autoconfirmed"];
+var wgRestrictionMove = ["sysop"];
 var wgCatId = 3;
-function $() {
-	var elements = new Array();
-	for (var i = 0; i < arguments.length; i++) {
-		var element = arguments[i];
-		if (typeof element == 'string')
-			element = document.getElementById(element);
-		if (arguments.length == 1)
-			return element;
-		elements.push(element);
-	}
-	return elements;
+var wgParentCatId = 0;
+var wgCurse = null;
+var wgCityId = "376";
+var wgID = 376;
+var wgEnableAjaxLogin = true;
+var wgReturnTo = "";
+var wgDB = "familyguy";
+var wgPrivateTracker = true;
+var wgMainpage = "Main Page";
+var wgIsMainpage = true;
+var wgStyleVersion = "2662";
+var themename = "custom";
+var wgExtensionsPath = "http://images.wikia.com/common/releases_current/extensions";
+/*]]>*/</script>
+<?php echo AdEngine::getInstance($slots)->getSetupHtml(); // Set up the AdEngine instance with hard coded slots. ?>
+
+<script type="text/javascript" src="http://images.wikia.com/common/releases_current/skins/monaco/js/allinone_non_loggedin.js?2638"></script>
+<script type="text/javascript" src="http://images.wikia.com/common/releases_current/skins/common/ajax.js?2638"></script>
+<script>
+// From custom js
+if (!window.skin) {
+	var skin = 'monaco';
+	var stylepath = 'http://images.wikia.com/common/releases_current/skins';
 }
 
-function toggleAds(ad) {
-	if (ad == 'TOP_LEADERBOARD') {
-		document.getElementById('TOP_LEADERBOARD').style.display = 'block';
-		document.getElementById('TOP_RIGHT_BOXAD').style.display = 'none';
-	} else {
-		document.getElementById('TOP_LEADERBOARD').style.display = 'none';
-		document.getElementById('TOP_RIGHT_BOXAD').style.display = 'block';
-	}
-}
 </script>
 <style type="text/css">
 body {
@@ -104,16 +478,68 @@ body {
 #spotlight_footer {
 	width: 100%;
 }
-#TOP_LEADERBOARD {
-	background: #333;
-	display: none;
+/*** SLOTS STYLES ***/
+#HOME_TOP_LEADERBOARD {
+	margin-bottom: 10px;
+	margin-left: auto;
+}
+#HOME_TOP_RIGHT_BOXAD {
+	float: right;
 	margin-bottom: 10px;
 }
-#TOP_RIGHT_BOXAD {
-	background: #333;
-	float: right;
-	margin: 0 0 10px 10px;
+#HOME_LEFT_SKYSCRAPER_1 {
+	margin: 0 auto 10px auto;
 }
+#HOME_LEFT_SKYSCRAPER_2 {
+	margin: 0 auto;
+}
+
+#LEFT_SKYSCRAPER_1 {
+	margin: 0 auto 10px auto;
+}
+#LEFT_SKYSCRAPER_2 {
+	margin: 0 auto;
+}
+#TOP_LEADERBOARD {
+	margin-bottom: 10px;
+	margin-left: auto;
+}
+#TOP_RIGHT_BOXAD {
+	float: right;
+	margin-left: 10px;
+	margin-bottom: 10px;
+}
+#FOOTER_SPOTLIGHT_LEFT, #FOOTER_SPOTLIGHT_MIDDLE, #FOOTER_SPOTLIGHT_RIGHT {
+	margin: 0 auto;
+}
+
+/* general ads/spotlights styling */
+.wikia_ad {
+	z-index: 15;
+	display: none;
+	position: absolute;
+}
+.wikia_spotlight {
+	display: none;
+	position: absolute;
+}
+#HOME_LEFT_SKYSCRAPER_1_load, #HOME_LEFT_SKYSCRAPER_2_load, #LEFT_SKYSCRAPER_1_load, #LEFT_SKYSCRAPER_2_load, #LEFT_SKYSCRAPER_3_load, #LEFT_SPOTLIGHT_1_load {
+	z-index: 20;
+}
+#LEFT_SKYSCRAPER_1_load, #LEFT_SKYSCRAPER_2_load, #LEFT_SKYSCRAPER_3_load, #HOME_LEFT_SKYSCRAPER_1_load, #HOME_LEFT_SKYSCRAPER_2_load {
+	height: 600px;
+	width: 160px;
+}
+#TOP_LEADERBOARD_load, #HOME_TOP_LEADERBOARD_load {
+	height: 90px;
+	width: 728px;
+}
+#TOP_RIGHT_BOXAD_load, #HOME_TOP_RIGHT_BOXAD_load, #FOOTER_BOXAD_load {
+	height: 250px;
+	width: 300px;
+}
+
+
 </style>
 </head>
 <script>
@@ -127,8 +553,6 @@ $html=file_get_contents(dirname(__FILE__) . '/testfiles/longArticleWithImagesNoC
 ?>
 <body>
 <div id="wikia_header">
-	<input type="button" value="TOP_LEADERBOARD" onclick="toggleAds(this.value);" />
-	<input type="button" value="TOP_RIGHT_BOXAD" onclick="toggleAds(this.value);" />
 </div>
 <div id="background_strip"></div>
 <div id="bodyContent">
@@ -136,8 +560,8 @@ $html=file_get_contents(dirname(__FILE__) . '/testfiles/longArticleWithImagesNoC
 	<div id="wikia_page">
 		<div id="page_bar">controls here</div>
 		<div id="article">
-			<div id="TOP_LEADERBOARD"><?php echo AdEngine::getInstance()->getAd("TOP_LEADERBOARD"); ?></div>
-			<div id="TOP_RIGHT_BOXAD"><?php echo AdEngine::getInstance()->getAd("TOP_RIGHT_BOXAD"); ?></div>
+			<div id="HOME_TOP_LEADERBOARD"><?php echo AdEngine::getInstance()->getPlaceHolderDiv("TOP_LEADERBOARD"); ?></div>
+			<div id="HOME_TOP_RIGHT_BOXAD"><?php echo AdEngine::getInstance()->getPlaceHolderDiv("TOP_RIGHT_BOXAD"); ?></div>
 			<?php echo $html;?>
 			
 		</div><!-- Closing "article" -->
@@ -146,7 +570,7 @@ $html=file_get_contents(dirname(__FILE__) . '/testfiles/longArticleWithImagesNoC
 			Article controls here
 			<div>
 			  Footer Right box ad: <br />
-			  <?php /* echo AdEngine::getInstance()->getAd("FOOTER_BOXAD"); */?>
+			  <?php /* echo AdEngine::getInstance()->getPlaceHolderDiv("FOOTER_BOXAD"); */?>
 			</div>
 -->
 		
@@ -156,15 +580,15 @@ $html=file_get_contents(dirname(__FILE__) . '/testfiles/longArticleWithImagesNoC
 			<tr>
 				<td>
 		  	  		Left spotlight: <br />
-			  		<div id="FOOTER_SPOTLIGHT_LEFT"><?php echo AdEngine::getInstance()->getAd("FOOTER_SPOTLIGHT_LEFT"); ?></div>
+			  		<?php echo AdEngine::getInstance()->getPlaceHolderDiv("FOOTER_SPOTLIGHT_LEFT"); ?>
 			  	</td>
 				<td>
 			  		Right spotlight: <br />
-			  		<div id="FOOTER_SPOTLIGHT_RIGHT"><?php echo AdEngine::getInstance()->getAd("FOOTER_SPOTLIGHT_RIGHT"); ?></div>
+			  		<?php echo AdEngine::getInstance()->getPlaceHolderDiv("FOOTER_SPOTLIGHT_RIGHT"); ?>
 				</td>
 				<td>
 			  		Center spotlight: <br />
-			  		<div id="FOOTER_SPOTLIGHT_MIDDLE"><?php echo AdEngine::getInstance()->getAd("FOOTER_SPOTLIGHT_MIDDLE"); ?></div>
+			  		<?php echo AdEngine::getInstance()->getPlaceHolderDiv("FOOTER_SPOTLIGHT_MIDDLE"); ?>
 				</td>
 			</tr>
 			</table>
@@ -172,17 +596,18 @@ $html=file_get_contents(dirname(__FILE__) . '/testfiles/longArticleWithImagesNoC
 	</div><!-- Closing "wikia_page" -->
 	<div id="widget_sidebar">
 		Left Skyscraper 1:
-		<div id="LEFT_SKYSCRAPER_1"><?php echo AdEngine::getInstance()->getAd("LEFT_SKYSCRAPER_1", false); ?></div>
+		<?php echo AdEngine::getInstance()->getPlaceHolderDiv("LEFT_SKYSCRAPER_1", false); ?>
 		<p>
 		Left Spotlight:
-		<div id="LEFT_SPOTLIGHT_1"><?php echo AdEngine::getInstance()->getAd("LEFT_SPOTLIGHT_1"); ?></div>
+		<?php echo AdEngine::getInstance()->getPlaceHolderDiv("LEFT_SPOTLIGHT_1"); ?>
 
 		<p>
 		Left Skyscraper 2:
-		<div id="LEFT_SKYSCRAPER_2"><?php echo AdEngine::getInstance()->getAd("LEFT_SKYSCRAPER_2", false); ?></div>
+		<?php echo AdEngine::getInstance()->getPlaceHolderDiv("LEFT_SKYSCRAPER_2", false); ?>
 	
 	</div>
   </div><!-- Closing bodyContent -->
 </div><!--Closing "monaco_shrinkwrap" -->
+<?php echo AdEngine::getInstance()->getDelayedLoadingCode() ?>
 </body>
 </html>
