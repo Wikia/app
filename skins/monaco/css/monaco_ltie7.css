@@ -1,33 +1,33 @@
 #wikia_logo {
 	background-image: none;
-	filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='/skins/monaco/images/wikia_logo.png', sizingMethod='crop');
+	filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='http://images.wikia.com/common/skins/monaco/images/wikia_logo.png', sizingMethod='crop');
 }
 #wikia_logo.entertainment span {
 	background-image: none;
-	filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='/skins/monaco/images/hub_entertainment.png', sizingMethod='crop');
+	filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='http://images.wikia.com/common/skins/monaco/images/hub_entertainment.png', sizingMethod='crop');
 }
 .headerMenuButton dt, .headerMenuButton dd {
 	background-image: none;
-	filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='/skins/monaco/images/header_button.png', sizingMethod='crop');
+	filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='http://images.wikia.com/common/skins/monaco/images/header_button.png', sizingMethod='crop');
 }
 a.bigButton big, a.bigButton small {
 	background-image: none;
-	filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='/skins/monaco/images/big_button.png', sizingMethod='crop');
+	filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='http://images.wikia.com/common/skins/monaco/images/big_button.png', sizingMethod='crop');
 }
 #page_controls div {
 	background: none;
-	filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='/skins/monaco/images/sprite.png', sizingMethod='crop');
+	filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='http://images.wikia.com/common/skins/monaco/images/sprite.png', sizingMethod='crop');
 }
 #search_button {
 	background: none;
-	filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='/skins/monaco/images/search.png', sizingMethod='crop');
+	filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='http://images.wikia.com/common/skins/monaco/images/search.png', sizingMethod='crop');
 }
 .shadow, #page_bar, #search_box {
 	background-image: none !important;
 }
 .widget dt div.close span, .widget dt div.edit span, .widget dt div.hide span, #widget_cockpit_close {
 	background-image: none;
-	filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='/skins/monaco/images/widget_sprite.png', sizingMethod='crop');
+	filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='http://images.wikia.com/common/skins/monaco/images/widget_sprite.png', sizingMethod='crop');
 }
 .staffSig {
 	background-image: none !important;
@@ -115,4 +115,9 @@ body.ltr #articleFooter ul.actions li div {
 #monaco_footer {
 	top: 0px !important;
 	margin-top: -155px;
+}
+
+/* fix YUI overlay mask */
+.mask {
+	position: absolute;
 }
