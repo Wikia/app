@@ -59,8 +59,7 @@ FCK.SwitchEditMode = function() {
 			FCK.EditingArea.Focus(); // macbre: moved here from fck.js
 		});
 
-		FCK.Track('/switchMode/wiki2html');
-
+		if (FCK.Track) FCK.Track('/switchMode/wiki2html');
 	}
 
 	return true;
@@ -79,8 +78,7 @@ FCK.Events.AttachEvent( 'OnAfterSetHTML', function() {
 			FCK.EditingArea.Focus(); // macbre: moved here from fck.js
 		});
 
-		FCK.Track('/switchMode/html2wiki');
-
+		if (FCK.Track) FCK.Track('/switchMode/html2wiki');
 	}
 	if(!FCK.wysiwygData) {
 		FCK.wysiwygData = eval("{"+window.parent.document.getElementById('wysiwygData').value+"}");
