@@ -419,11 +419,6 @@ class Parser
 			wfRunHooks( 'ParserLimitReport', array( $this, &$limitReport ) );
 			$text .= "\n<!-- \n$limitReport-->\n";
 		}
-		global $wgWysiwygParserEnabled;
-		if (!empty($wgWysiwygParserEnabled)) {
-			global $wgOut, $wgWysiwygMetaData;
-			$wgOut->addInlineScript('var FCKdata = ' . Wikia::json_encode($wgWysiwygMetaData));
-		}
 		$this->mOutput->setText( $text );
 		$this->mRevisionId = $oldRevisionId;
 		$this->mRevisionTimestamp = $oldRevisionTimestamp;
