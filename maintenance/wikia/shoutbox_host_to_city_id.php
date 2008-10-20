@@ -50,4 +50,4 @@ while ($msg = $dbr->fetchObject($messages) ) {
 $dbw->commit();
 
 $time = microtime(true) - $time_start;
-echo "#3: Updated " . count($messagesCount) . " messages. Execution time: $time seconds\n";
+echo "#3: Updated " . $messagesCount . " messages. Execution time: $time seconds\n";
