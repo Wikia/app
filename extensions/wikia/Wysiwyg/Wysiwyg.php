@@ -197,7 +197,7 @@ function Wysiwyg_CheckEdgeCases($text) {
 }
 
 function Wysiwyg_WikiTextToHtml($wikitext, $articleId = -1, $encode = false) {
-	global $IP, $FCKmetaData, $FCKparseEnable, $wgTitle, $wgUser;
+	global $IP, $FCKmetaData, $FCKparseEnable, $FCKparseEnableTilde, $wgTitle, $wgUser;
 
 	// TODO: Move all needed stuff from WysiwygInterface_body to this file /Inez
 	require("$IP/extensions/wikia/WysiwygInterface/WysiwygInterface_body.php");
@@ -210,8 +210,11 @@ function Wysiwyg_WikiTextToHtml($wikitext, $articleId = -1, $encode = false) {
 	$parser = new WysiwygParser();
 	$parser->setOutputType(OT_HTML);
 
-	$FCKparseEnable = true;
+	$FCKparseEnableTilde = true;
 	$wikitext = $parser->preSaveTransform($wikitext, $title, $wgUser, $options);
+	$FCKparseEnableTilde = false;
+
+	$FCKparseEnable = true;
 	$html = $parser->parse($wikitext, $title, $options)->getText();
 	$FCKparseEnable = false;
 
