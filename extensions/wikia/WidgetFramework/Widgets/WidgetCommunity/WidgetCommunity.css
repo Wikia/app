@@ -16,7 +16,7 @@
 	font-weight: bold;
 }
 .WidgetCommunity .community_toggle {
-	background: url(../images/widget_sprite.png);
+	background: url(http://images.wikia.com/common/skins/monaco/images/widget_sprite.png);
 	clip: rect(0px 7px 12px 0px);
 	cursor: pointer;
 	height: 12px;
