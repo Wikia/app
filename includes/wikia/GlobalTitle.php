@@ -27,6 +27,7 @@ class GlobalTitle {
 	 */
 	private $mServer = false;
 	private $mContLang = false;
+	private $mLang = false;
 	private $mArticlePath = false;
 	private $mNamespaceNames = false;
 
@@ -54,10 +55,14 @@ class GlobalTitle {
 	 *  for that kind of things
 	 */
 	private function loadAll() {
+		$old = $this->loadFromCache();
 		$this->loadServer();
 		$this->loadArticlePath();
 		$this->loadContLang();
 		$this->loadNamespaceNames();
+		if( ! $old ) {
+			$this->storeInCache();
+		}
 	}
 
 	public function getNamespace() {
@@ -227,12 +232,23 @@ class GlobalTitle {
 			return $this->mContLang;
 		}
 
-		$lang = WikiFactory::getVarValueByName( "wgLanguageCode", $this->mCityId );
-		if( !$lang ) {
+		/**
+		 * maybe value from cache
+		 */
+		if( $this->mLang ) {
+			$lang = $this->mLang;
+		}
+		else {
 			/**
-			 * default language is english
+			 * so maybe value from database?
 			 */
-			$lang = "en";
+			$lang = WikiFactory::getVarValueByName( "wgLanguageCode", $this->mCityId );
+			if( !$lang ) {
+				/**
+				 * nope, only default language which is english
+				 */
+				$lang = "en";
+			}
 		}
 		$this->mContLang = Language::factory( $lang );
 
@@ -270,5 +286,50 @@ class GlobalTitle {
 			$this->mNamespaceNames = $wgCanonicalNamespaceNames;
 		}
 		return $this->mNamespaceNames;
+	}
+
+	/**
+	 * @return string
+	 */
+	private function memcKey() {
+		global $wgSharedDB;
+
+		return implode(":", array( $wgSharedDB, "globaltitle", $this->mCityId ) );
+	}
+
+	/**
+	 * @return boolean
+	 */
+	private function loadFromCache() {
+		global $wgMemc;
+
+		$values = $wgMemc->get( $this->memcKey() );
+		if( is_array( $values ) ) {
+			$this->mLang = isset( $value[ "lang" ] ) ? $value[ "lang" ] : false;
+			$this->mServer = isset( $values[ "server" ] ) ? $values[ "server" ] : false;
+			$this->mArticlePath = isset( $values[ "path" ] ) ? $values[ "path" ] : false;
+			$this->mNamespaceNames = isset( $value[ "namespaces" ] ) ? $value[ "namespaces" ] : false;
+
+			return true;
+		}
+		return false;
+	}
+
+	/**
+	 * @return boolean
+	 */
+	private function storeInCache() {
+		global $wgMemc;
+
+		return $wgMemc->set(
+			$this->memcKey(),
+			array(
+				"path" => $this->mArticlePath,
+				"lang" => $this->mLang,
+				"server" => $this->mServer,
+				"namespaces" => $this->mNamespaceNames,
+			),
+			3600
+		);
 	}
 }
