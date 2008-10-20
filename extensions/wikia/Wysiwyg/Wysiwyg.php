@@ -197,7 +197,7 @@ function Wysiwyg_CheckEdgeCases($text) {
 }
 
 function Wysiwyg_WikiTextToHtml($wikitext, $articleId = -1, $encode = false) {
-	global $IP, $FCKmetaData, $FCKparseEnable, $FCKparseEnableTilde, $wgTitle, $wgUser;
+	global $IP, $FCKmetaData, $wgWysiwygParserEnabled, $wgWysiwygParserTildeEnabled, $wgTitle, $wgUser;
 
 	// TODO: Move all needed stuff from WysiwygInterface_body to this file /Inez
 	require("$IP/extensions/wikia/WysiwygInterface/WysiwygInterface_body.php");
@@ -210,13 +210,13 @@ function Wysiwyg_WikiTextToHtml($wikitext, $articleId = -1, $encode = false) {
 	$parser = new WysiwygParser();
 	$parser->setOutputType(OT_HTML);
 
-	$FCKparseEnableTilde = true;
+	$wgWysiwygParserTildeEnabled = true;
 	$wikitext = $parser->preSaveTransform($wikitext, $title, $wgUser, $options);
-	$FCKparseEnableTilde = false;
+	$wgWysiwygParserTildeEnabled = false;
 
-	$FCKparseEnable = true;
+	$wgWysiwygParserEnabled = true;
 	$html = $parser->parse($wikitext, $title, $options)->getText();
-	$FCKparseEnable = false;
+	$wgWysiwygParserEnabled = false;
 
 	// TODO: Consider this step again /Inez
 	$html = mb_convert_encoding($html, 'HTML-ENTITIES', 'UTF-8');
