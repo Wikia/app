@@ -197,7 +197,7 @@ function Wysiwyg_CheckEdgeCases($text) {
 }
 
 function Wysiwyg_WikiTextToHtml($wikitext, $articleId = -1, $encode = false) {
-	global $IP, $FCKmetaData, $wgWysiwygParserEnabled, $wgWysiwygParserTildeEnabled, $wgTitle, $wgUser;
+	global $IP, $wgWysiwygMetaData, $wgWysiwygParserEnabled, $wgWysiwygParserTildeEnabled, $wgTitle, $wgUser;
 
 	// TODO: Move all needed stuff from WysiwygInterface_body to this file /Inez
 	require("$IP/extensions/wikia/WysiwygInterface/WysiwygInterface_body.php");
@@ -224,7 +224,7 @@ function Wysiwyg_WikiTextToHtml($wikitext, $articleId = -1, $encode = false) {
 
 	wfDebug("Wysiwyg_WikiTextToHtml html: {$html}\n");
 
-	return array($html, $encode ? Wikia::json_encode($FCKmetaData, true) : $FCKmetaData);
+	return array($html, $encode ? Wikia::json_encode($wgWysiwygMetaData, true) : $wgWysiwygMetaData);
 }
 
 function Wysiwyg_HtmlToWikiText($html, $wysiwygData, $decode = false) {
@@ -238,9 +238,9 @@ function Wysiwyg_HtmlToWikiText($html, $wysiwygData, $decode = false) {
  */
 function Wysiwyg_SetRefId($type, $params, $addMarker = true, $returnId = false) {
 	// TODO: Rename global variable name /Inez
-	global $FCKmetaData;
+	global $wgWysiwygMetaData;
 
-	$refId = count($FCKmetaData);
+	$refId = count($wgWysiwygMetaData);
 	$data = array('type' => $type);
 	$result = '';
 
@@ -314,7 +314,7 @@ function Wysiwyg_SetRefId($type, $params, $addMarker = true, $returnId = false) 
 		$params['text'] .= "\x1$refId\x1";
 	}
 
-	$FCKmetaData[$refId] = $data;
+	$wgWysiwygMetaData[$refId] = $data;
 	return $returnId ? $refId : $result;
 }
 
