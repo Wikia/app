@@ -354,7 +354,7 @@ class CityListPager extends TablePager {
                 'city_id' => wfMsg( "wf_city_id" ),
                 'city_url' => wfMsg( "wf_city_url" ),
                 'city_lang' => wfMsg( "wf_city_lang" ),
-					 'cat_name' => wfMsg( "wf_cat_name" ),
+					 'cc_name' => wfMsg( "wf_cc_name" ),
                 'city_public' => wfMsg( "wf_city_public" ),
                 'city_title' => wfMsg( "wf_city_title" ),
                 'city_created' => wfMsg( "wf_city_created" ),
@@ -364,23 +364,13 @@ class CityListPager extends TablePager {
     }
 
     function isFieldSortable( $field ) {
-        static $sortable = array( "city_url", "city_public", "city_id", "city_lang", "cat_name" );
+        static $sortable = array( "city_url", "city_public", "city_id", "city_lang", "cc_name" );
         return in_array( $field, $sortable );
     }
 
     function getDefaultSort() {
         return 'city_id';
     }
-
-	function getIndexField() {
-		if ('city_id' == $this->mSort)
-		{
-			return wfSharedTable("city_list").".city_id"; // quick hack, city_cat* aint got unique column names )-:
-		} else
-		{
-			return $this->mSort;
-		}
-	}
 
     function formatValue( $field, $value ) {
         global $wgLang;
@@ -417,22 +407,17 @@ class CityListPager extends TablePager {
     {
         $fields = $this->getFieldNames();
         unset( $fields['links'] );
-        unset($fields['city_id']); // quick hack, city_cat* aint got unique column names )-:
         $fields = array_keys( $fields );
-        $fields[] = wfSharedTable("city_list").".city_id"; // quick hack, city_cat* aint got unique column names )-:
 
 			$query = array(
 				"tables" => array(
 					wfSharedTable("city_list"),
-					wfSharedTable("city_cat_mapping"),
-					wfSharedTable("city_cats"),
+					wfSharedTable("city_cats_view"),
 				),
 				"fields" => $fields,
 				"conds" => array(
 					wfSharedTable("city_list").".city_id = ".
-					wfSharedTable("city_cat_mapping").".city_id",
-					wfSharedTable("city_cat_mapping").".cat_id = ".
-					wfSharedTable("city_cats").".cat_id",
+					wfSharedTable("city_cats_view").".cc_city_id",
 				)
 			);
 
