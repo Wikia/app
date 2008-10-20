@@ -90,9 +90,9 @@ class GlobalTitle {
 	/**
 	 * Get a real URL referring to this title
 	 *
-	 *
 	 * @param string $query an optional query string
 	 * @param string $variant language variant of url (for sr, zh..)
+	 *
 	 * @return string the URL
 	 */
 	public function getFullURL( $query = '', $variant = false ) {
@@ -111,6 +111,18 @@ class GlobalTitle {
 		$url = wfAppendQuery( $this->mServer . $url, $query );
 
 		return $url;
+	}
+
+	/**
+	 * local url doesn't make sense in this context. we always return full URL
+	 *
+	 * @param string $query an optional query string
+	 * @param string $variant language variant of url (for sr, zh..)
+	 * 
+	 * @return string
+	 */
+	public function getLocalURL( $query = '', $variant = false ) {
+		return $this->getFullURL( $query, $variant );
 	}
 
 

@@ -45,6 +45,18 @@ class GlobalTitleCase extends UnitTestCase {
 		$title = GlobalTitle::newFromText( "Main", 116, 490); # wowwiki
 		$url = "http://www.wowwiki.com/Portal:Main";
 		$this->assertTrue( $title->getFullURL() === $url, sprintf("%s = %s, NOT MATCH", $title->getFullURL(), $url ) );
+
+		/**
+		 * Polish wikia
+		 */
+		$title = GlobalTitle::newFromText( "WikiFactory", NS_SPECIAL, 1686 ); # pl.wikia.com
+		$url = "http://pl.wikia.com/wiki/Special:WikiFactory";
+		$this->assertTrue( $title->getFullURL() === $url, sprintf("%s = %s, NOT MATCH", $title->getFullURL(), $url ) );
+
+		$url = "http://pl.wikia.com/wiki/Special:WikiFactory?diff=0&oldid=500";
+		$this->assertTrue( $title->getFullURL( wfArrayToCGI(array( "diff" => 0, "oldid" => 500 ) ) ) === $url, sprintf("%s = %s, NOT MATCH", $title->getFullURL(), $url ) );
+		;
+
 	}
 
 };
