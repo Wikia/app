@@ -93,6 +93,10 @@ TieDivLibrary = new function() {
 					left: offset.left
 				});
 			}
+			//Ad networks might send 300x600 on the homepage. This checks the actual height of the _load div's contents and adjusts the placeholder.
+			if (items[i][0] == 'HOME_TOP_RIGHT_BOXAD') {
+				jQuery("#" + items[i][0]).css("height", jQuery("#" + items[i][0] + "_load").height());
+			}
 		}
 	};
 
