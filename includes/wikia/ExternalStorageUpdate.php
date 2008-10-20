@@ -50,7 +50,7 @@ class ExternalStorageUpdate {
 
 			$dbw = wfGetDBExt( DB_MASTER, $cluster );
 			$ip = ip2long(wfGetIP());
-			
+
 			$ret = $dbw->update(
 				"blobs",
 				array(
@@ -75,7 +75,10 @@ class ExternalStorageUpdate {
 				$Row = $dbw->selectRow(
 					"pages",
 					array( "page_id" ),
-					array( "page_id" => $this->mPageId ),
+					array(
+						"page_id" => $this->mPageId,
+						"page_wikia_id" => $wgCityId
+					),
 					__METHOD__
 				);
 				if( isset( $Row->page_id ) && !empty( $Row->page_id ) ) {
