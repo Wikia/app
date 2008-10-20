@@ -40,16 +40,17 @@ class AjaxPollClass {
 	static public function renderFromTag( $input, $params, &$parser ) {
 		global $wgTitle, $wgOut;
 
-  $oParser = new Parser();
-  $input = $oParser->parse( $input, $wgTitle, $wgOut->parserOptions() );
-  $input = trim( strip_tags( $input->getText() ) );
-
-		$class = new AjaxPollClass;
-
 		/**
 		 * ID of the poll
 		 */
 		$id = strtoupper( md5( $input ) );
+
+		$oParser = new Parser();
+		$input = $oParser->parse( $input, $wgTitle, $wgOut->parserOptions() );
+		$input = trim( strip_tags( $input->getText() ) );
+
+		$class = new AjaxPollClass;
+
 
 		/**
 		 * check if poll exists in database. If not - add it
