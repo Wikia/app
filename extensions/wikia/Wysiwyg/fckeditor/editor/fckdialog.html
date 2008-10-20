@@ -640,6 +640,11 @@ var onReadyRegister = function()
 		// First of all, translate the dialog box contents.
 		E.FCKLanguageManager.TranslatePage( document ) ;
 
+		if (FCK.Track) {
+			srcHtml = Args().Page.split('/').pop();
+			FCK.Track('/dialog/' + srcHtml.substring(0, srcHtml.length - 5));
+		}
+
 		// Create the IFRAME that holds the dialog contents.
 		iframeSrc = Args().Page + (Args().Page.indexOf('?') != -1 ? '&' : '?') + 'cb=' + FCKConfig.StyleVersion;
 
