@@ -67,6 +67,7 @@ FCKToolbarButton.prototype.Click = function()
 {
 	var oToolbarButton = this._ToolbarButton || this ;
 	FCK.ToolbarSet.CurrentInstance.Commands.GetCommand( oToolbarButton.CommandName ).Execute() ;
+	if (FCK.Track) FCK.Track('/toolbar/' + this.Name);
 }
 
 FCKToolbarButton.prototype.Enable = function()

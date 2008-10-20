@@ -40,6 +40,8 @@ var FCKStyles = FCK.Styles =
 
 			FCK.Events.FireEvent( 'OnSelectionChange' ) ;
 		}
+
+		if (FCK.Track) FCK.Track('/toolbar/Format/' + style.Element);
 	},
 
 	RemoveStyle : function( style )
