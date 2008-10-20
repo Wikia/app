@@ -233,10 +233,11 @@ function Wysiwyg_HtmlToWikiText($html, $wysiwygData, $decode = false) {
 }
 
 /**
+ * Adding reference ID with metadata to global $wgWysiwygMetaData and surround passed element with extra code
+ *
  * @author Maciej Błaszkowski <marooned at wikia-inc.com>
  */
 function Wysiwyg_SetRefId($type, $params, $addMarker = true, $returnId = false) {
-	// TODO: Rename global variable name /Inez
 	global $wgWysiwygMetaData;
 
 	$refId = count($wgWysiwygMetaData);
