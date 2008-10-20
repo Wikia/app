@@ -421,8 +421,8 @@ class Parser
 		}
 		global $wgWysiwygParserEnabled;
 		if (!empty($wgWysiwygParserEnabled)) {
-			global $wgOut, $FCKmetaData;
-			$wgOut->addInlineScript('var FCKdata = ' . Wikia::json_encode($FCKmetaData));
+			global $wgOut, $wgWysiwygMetaData;
+			$wgOut->addInlineScript('var FCKdata = ' . Wikia::json_encode($wgWysiwygMetaData));
 		}
 		$this->mOutput->setText( $text );
 		$this->mRevisionId = $oldRevisionId;

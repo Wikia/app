@@ -30,8 +30,8 @@ function wfDirectParserAjax($wikitext, $appendData = false) {
 	$wgWysiwygParserEnabled = false;
 
 	if ( $appendData != false) {
-		global $FCKmetaData;
-		$jsonData = json_encode($FCKmetaData);
+		global $wgWysiwygMetaData;
+		$jsonData = json_encode($wgWysiwygMetaData);
 
 		$out .= 'FCKdata:::separator' . $jsonData;
 	}
@@ -46,10 +46,10 @@ function wfDirectParserAjax($wikitext, $appendData = false) {
 function wfReverseParserAjax($html, $data = array()) {
 
         if (!empty($data)) {
-                $FCKmetaData = json_decode($data);
+                $wgWysiwygMetaData = json_decode($data);
         }
         else {
-                $FCKmetaData = array();
+                $wgWysiwygMetaData = array();
         }
 
 	$html = urldecode($html);
@@ -58,7 +58,7 @@ function wfReverseParserAjax($html, $data = array()) {
         require(dirname(__FILE__).'/ReverseParser.php');
         $reverseParser = new ReverseParser();
 
-        $result = $reverseParser->parse($html, $FCKmetaData);
+        $result = $reverseParser->parse($html, $wgWysiwygMetaData);
 
         $response = new AjaxResponse( $result );
         $response->setContentType('text/plain; charset=utf-8');
@@ -74,9 +74,9 @@ function wfWikisyntaxToHtml($wikitext) {
 
 	$parser = new WysiwygParser();
 	$parser->setOutputType(OT_HTML);
-	global $wgWysiwygParserEnabled, $FCKmetaData;
+	global $wgWysiwygParserEnabled, $wgWysiwygMetaData;
 	$wgWysiwygParserEnabled = true;
-	return $parser->parse($wikitext, $title, $options)->getText() . '--||--' . Wikia::json_encode($FCKmetaData, true);
+	return $parser->parse($wikitext, $title, $options)->getText() . '--||--' . Wikia::json_encode($wgWysiwygMetaData, true);
 }
 
 $wgAjaxExportList[] = 'wfHtmlToWikisyntax';

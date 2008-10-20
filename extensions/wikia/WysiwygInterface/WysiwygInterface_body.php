@@ -43,7 +43,7 @@ class WysiwygInterface extends SpecialPage {
 		}
 
 		function execute( $par ) {
-			global $wgRequest, $wgOut, $wgTitle, $wgUser, $IP, $FCKmetaData;
+			global $wgRequest, $wgOut, $wgTitle, $wgUser, $IP, $wgWysiwygMetaData;
 			$this->setHeaders();
 
 			if(empty($par)) {
@@ -113,10 +113,10 @@ class WysiwygInterface extends SpecialPage {
 			require(dirname(__FILE__).'/../Wysiwyg/ReverseParser.php');
 			$reverseParser = new ReverseParser();
 
-			$wgOut->addHtml('<h5>$FCKmetaData</h5>');
-			$wgOut->addHtml('<pre>'.htmlspecialchars(print_r($FCKmetaData, true)).'</pre>');
+			$wgOut->addHtml('<h5>$wgWysiwygMetaData</h5>');
+			$wgOut->addHtml('<pre>'.htmlspecialchars(print_r($wgWysiwygMetaData, true)).'</pre>');
 
-			$wikitext_parsed = $reverseParser->parse($html, $FCKmetaData);
+			$wikitext_parsed = $reverseParser->parse($html, $wgWysiwygMetaData);
 
 			// check wysiwigability ;)
 			require(dirname(__FILE__).'/FailsafeFallback.php');
