@@ -365,7 +365,16 @@ class UsercreateTemplate extends QuickTemplate {
 		 YAHOO.Wikia.UserRegistration = {
 			init: function() {
 		        	YE.addListener('prefsHelpBirthday', 'click', YAHOO.Wikia.UserRegistration.showHintPanel);
-      			},
+				// initial check, if not empty...
+				if ('' != YD.get( 'wpName2' ).value) {
+					YAHOO.util.Dom.addClass('wpNameTD', 'mw-progress');
+					sajax_do_call('cxValidateUserName', Array (YD.get( 'wpName2' ).value), login_formhandler);
+				}
+				if ('' != YD.get( 'wpEmail' ).value) {
+					checkEmail();
+				}
+			},
+
 			buildHintPanel: function() {
 			        var signupWhy = YD.get( 'signupWhyProvide' );
 			        var signupWhy_copy = document.createElement ('div') ;
