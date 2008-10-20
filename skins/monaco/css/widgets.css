@@ -42,7 +42,7 @@
 	position: relative;
 }
 .widget .widgetToolbox span {
-	background: url(../images/widget_sprite.png);
+	background: url(http://images.wikia.com/common/skins/monaco/images/widget_sprite.png);
 	cursor: pointer;
 	display: block;
 	height: 12px;
@@ -104,7 +104,7 @@
 .widget_loading
 {
     height: 30px;
-    background-image: url('../images/widget_loading.gif');
+    background-image: url('http://images.wikia.com/common/skins/monaco/images/widget_loading.gif');
     background-position: 50% 50%;
     background-repeat: no-repeat;
 }
@@ -131,7 +131,7 @@
 
 /*** SEARCH/NAVIGATION ***/
 #search_box {
-	background-image: url(../images/reflected_shadow.png);
+	background-image: url(http://images.wikia.com/common/skins/monaco/images/reflected_shadow.png);
 	background-position: top left;
 	background-repeat: repeat-x;
 	height: 32px;
@@ -153,7 +153,7 @@
 	color: #000;
 }
 #search_button {
-	background: url(../images/search.png);
+	background: url(http://images.wikia.com/common/skins/monaco/images/search.png);
 	clip: rect(0px 20px 22px 0px);
 	cursor: pointer;
 	height: 44px;

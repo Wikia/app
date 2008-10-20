@@ -114,7 +114,7 @@ ul {
 	list-style-type: square;
 	margin: .3em 0 0 1.5em;
 	padding: 0;
-	list-style-image: url(../../monobook/bullet.gif);
+	list-style-image: url(http://images.wikia.com/common/skins/monobook/bullet.gif);
 }
 ol {
 	line-height: 1.5em;
@@ -526,31 +526,31 @@ div.townBox dl dd {
 */
 #bodyContent a.external,
 #bodyContent a[href ^="gopher://"] {
-	background: url(../../monobook/external.png) center right no-repeat;
+	background: url(http://images.wikia.com/common/skins/monobook/external.png) center right no-repeat;
 	padding-right: 13px;
 }
 #bodyContent a[href ^="https://"],
 .link-https {
-	background: url(../../monobook/lock_icon.gif) center right no-repeat;
+	background: url(http://images.wikia.com/common/skins/monobook/lock_icon.gif) center right no-repeat;
 	padding-right: 16px;
 }
 #bodyContent a[href ^="mailto:"],
 .link-mailto {
-	background: url(../../monobook/mail_icon.gif) center right no-repeat;
+	background: url(http://images.wikia.com/common/skins/monobook/mail_icon.gif) center right no-repeat;
 	padding-right: 18px;
 }
 #bodyContent a[href ^="news://"] {
-	background: url(../../monobook/news_icon.png) center right no-repeat;
+	background: url(http://images.wikia.com/common/skins/monobook/news_icon.png) center right no-repeat;
 	padding-right: 18px;
 }
 #bodyContent a[href ^="ftp://"],
 .link-ftp {
-	background: url(../../monobook/file_icon.gif) center right no-repeat;
+	background: url(http://images.wikia.com/common/skins/monobook/file_icon.gif) center right no-repeat;
 	padding-right: 18px;
 }
 #bodyContent a[href ^="irc://"],
 .link-irc {
-	background: url(../../monobook/discussionitem_icon.gif) center right no-repeat;
+	background: url(http://images.wikia.com/common/skins/monobook/discussionitem_icon.gif) center right no-repeat;
 	padding-right: 18px;
 }
 #bodyContent a.external[href $=".ogg"], #bodyContent a.external[href $=".OGG"],
@@ -560,7 +560,7 @@ div.townBox dl dd {
 #bodyContent a.external[href $=".wav"], #bodyContent a.external[href $=".WAV"],
 #bodyContent a.external[href $=".wma"], #bodyContent a.external[href $=".WMA"],
 .link-audio {
-	background: url("../../monobook/audio.png") center right no-repeat;
+	background: url("http://images.wikia.com/common/skins/monobook/audio.png") center right no-repeat;
 	padding-right: 13px;
 }
 #bodyContent a.external[href $=".ogm"], #bodyContent a.external[href $=".OGM"],
@@ -568,14 +568,14 @@ div.townBox dl dd {
 #bodyContent a.external[href $=".mpeg"], #bodyContent a.external[href $=".MPEG"],
 #bodyContent a.external[href $=".mpg"], #bodyContent a.external[href $=".MPG"],
 .link-video {
-	background: url("../../monobook/video.png") center right no-repeat;
+	background: url("http://images.wikia.com/common/skins/monobook/video.png") center right no-repeat;
 	padding-right: 13px;
 }
 #bodyContent a.external[href $=".pdf"], #bodyContent a.external[href $=".PDF"],
 #bodyContent a.external[href *=".pdf#"], #bodyContent a.external[href *=".PDF#"],
 #bodyContent a.external[href *=".pdf?"], #bodyContent a.external[href *=".PDF?"],
 .link-document {
-	background: url("../../monobook/document.png") center right no-repeat;
+	background: url("http://images.wikia.com/common/skins/monobook/document.png") center right no-repeat;
 	padding-right: 12px;
 }
 
@@ -1224,24 +1224,24 @@ div#mw-recreate-deleted-warn ul li {
 
 /* MW arrow icons */
 .mw-arr-r {
-	background-image: url('../../common/images/Arr_r.png');
+	background-image: url('http://images.wikia.com/common/skins/common/images/Arr_r.png');
 	background-repeat: no-repeat;
 }
 
 .mw-arr-l {
-        background-image: url('../../common/images/Arr_l.png');
+        background-image: url('http://images.wikia.com/common/skins/common/images/Arr_l.png');
         background-repeat: no-repeat;
 }
 
 .mw-arr-d,
 .mw-sort-desc {
-        background-image: url('../../common/images/Arr_d.png');
+        background-image: url('http://images.wikia.com/common/skins/common/images/Arr_d.png');
         background-repeat: no-repeat;
 }
 
 .mw-arr-u,
 .mw-sort-asc {
-        background-image: url('../../common/images/Arr_u.png');
+        background-image: url('http://images.wikia.com/common/skins/common/images/Arr_u.png');
         background-repeat: no-repeat;
 }
 

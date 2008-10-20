@@ -9,7 +9,7 @@
 }
 
 #page_bar {
-	background-image: url(../images/reflected_shadow.png);
+	background-image: url(http://images.wikia.com/common/skins/monaco/images/reflected_shadow.png);
 	background-position: top left;
 	background-repeat: repeat-x;
 	color: white;
@@ -39,7 +39,7 @@
 	position: relative;
 }
 #page_controls div {
-	background-image: url(../images/sprite.png);
+	background-image: url(http://images.wikia.com/common/skins/monaco/images/sprite.png);
 	clip: rect(0px 0px 0px 0px);
 	height: 16px;
 	margin: 8px 2px 0 0;
@@ -178,7 +178,7 @@
 	margin-left: 20px;
 }
 #articleFooter img.sprite {
-	background: url(../images/sprite.png);
+	background: url(http://images.wikia.com/common/skins/monaco/images/sprite.png);
 	height: 16px;
 	margin-right: 16px;
 	position: absolute;
@@ -232,7 +232,7 @@
 	position: absolute;
 }
 #share dt {
-	background: url(http://images.wikia.com/common/skins-1.12/quartz/images/share_hover_bg.png);
+	background: url(http://images.wikia.com/common/skins/quartz/images/share_hover_bg.png);
 	color: #FFF;
 	display: none;
 	font-size: 8.5pt; 
@@ -256,7 +256,7 @@
 	width: 16px;
 }
 #share dd a {
-	background: url(../images/sprite.png);
+	background: url(http://images.wikia.com/common/skins/monaco/images/sprite.png);
 	display: block;
 	height: 16px;
 	position: absolute;

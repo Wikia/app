@@ -12,7 +12,7 @@ body {
 }
 
 .shadow {
-	background-image: url(../images/shadow.png);
+	background-image: url(http://images.wikia.com/common/skins/monaco/images/shadow.png);
 	background-position: bottom left;
 	background-repeat: repeat-x;
 }
