@@ -256,7 +256,7 @@ class GlobalTitle {
 	}
 
 	/**
-	 * loadContLang
+	 * loadNamespaceNames
 	 *
 	 * Determine $wgCanonicalNamespaceNames value from WikiFactory variables
 	 *
@@ -289,6 +289,10 @@ class GlobalTitle {
 	}
 
 	/**
+	 * memcKey
+	 *
+	 * combine/prepare cache keys
+	 *
 	 * @return string
 	 */
 	private function memcKey() {
@@ -298,6 +302,10 @@ class GlobalTitle {
 	}
 
 	/**
+	 * loadFromCache
+	 *
+	 * load from cache values used widely
+	 *
 	 * @return boolean
 	 */
 	private function loadFromCache() {
@@ -316,6 +324,10 @@ class GlobalTitle {
 	}
 
 	/**
+	 * storeInCache
+	 *
+	 * store in cache values used widely
+	 *
 	 * @return boolean
 	 */
 	private function storeInCache() {
