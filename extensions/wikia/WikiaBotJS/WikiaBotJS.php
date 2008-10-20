@@ -37,7 +37,14 @@ function wfWikiaBotJSInsert(&$skin, &$tpl) {
 				url += '&ael_url=' + encodeURIComponent(src);
 				url += '&ael_lno=' + encodeURIComponent(lno);
 				url += '&location=' + encodeURIComponent(document.location);
-				url += '&rand=' + Math.random(); // prevent caching
+
+				// try to add wgUserName
+				if (typeof wgUserName != 'undefined') {
+					url+= '&user=' + encodeURIComponent(wgUserName);
+				}
+
+				// prevent caching
+				url += '&rand=' + Math.random();
 
 				img = new Image();
 				img.src = 'http://ws2.poz.wikia-inc.com/~lukasz/ael.php?' + url;
