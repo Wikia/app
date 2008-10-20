@@ -11,11 +11,11 @@
 	border-color: #135013;
 }
 #search_button {
-	background-image: url(../images/search.png);
+	background-image: url(http://images.wikia.com/common/skins/monaco/jade/images/search.png);
 }
 * html #search_button {
 	background-image: none;
-	filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='/skins/monaco/jade/images/search.png', sizingMethod='crop');
+	filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='http://images.wikia.com/common/skins/monaco/jade/images/search.png', sizingMethod='crop');
 }
 
 /*** HEADER AND FOOTER ***/
@@ -23,16 +23,16 @@
 	color: #228b22;
 }
 #wikia_logo {
-	background-image: url(../images/wikia_logo.png);
+	background-image: url(http://images.wikia.com/common/skins/monaco/jade/images/wikia_logo.png);
 }
 * html #wikia_logo {
 	background-image: none;
-	filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='/skins/monaco/jade/images/wikia_logo.png', sizingMethod='crop');
+	filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='http://images.wikia.com/common/skins/monaco/jade/images/wikia_logo.png', sizingMethod='crop');
 }
 .headerMenuButton dt, .headerMenuButton dd {
-	background-image: url(../images/header_button.png);
+	background-image: url(http://images.wikia.com/common/skins/monaco/jade/images/header_button.png);
 }
 * html .headerMenuButton dt, * html .headerMenuButton dd {
 	background-image: none;
-	filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='/skins/monaco/jade/images/header_button.png', sizingMethod='crop');
+	filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='http://images.wikia.com/common/skins/monaco/jade/images/header_button.png', sizingMethod='crop');
 }
