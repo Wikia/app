@@ -41,11 +41,11 @@
 	border-color: #AAA;
 }
 #search_button {
-	background-image: url(../images/search.png);
+	background-image: url(http://images.wikia.com/common/skins/monaco/gaming/images/search.png);
 }
 * html #search_button {
 	background-image: none;
-	filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='/skins/monaco/gaming/images/search.png', sizingMethod='crop');
+	filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='http://images.wikia.com/common/skins/monaco/gaming/images/search.png', sizingMethod='crop');
 }
 #search_box {
 	background-image: none;
@@ -69,19 +69,19 @@
 	color: #EEE;
 }
 #wikia_logo {
-	background-image: url(../images/wikia_logo.png);
+	background-image: url(http://images.wikia.com/common/skins/monaco/gaming/images/wikia_logo.png);
 }
 * html #wikia_logo {
 	background-image: none;
-	filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='/skins/monaco/gaming/images/wikia_logo.png', sizingMethod='crop');
+	filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='http://images.wikia.com/common/skins/monaco/gaming/images/wikia_logo.png', sizingMethod='crop');
 }
 .headerMenuButton dt, .headerMenuButton dd {
-	background-image: url(../images/header_button.png);
+	background-image: url(http://images.wikia.com/common/skins/monaco/gaming/images/header_button.png);
 	color: #333;
 }
 * html .headerMenuButton dt, * html .headerMenuButton dd {
 	background-image: none;
-	filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='/skins/monaco/gaming/images/header_button.png', sizingMethod='crop');
+	filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='http://images.wikia.com/common/skins/monaco/gaming/images/header_button.png', sizingMethod='crop');
 }
 
 /*** PAGE ***/
@@ -172,5 +172,5 @@ td.diff-addedline {
 * html .star-rating li a.hover,
 * html .star-rating li.current-rating
 {
-	background-image: url('../../images/star-rating.black.png');
+	background-image: url('http://images.wikia.com/common/skins/monaco/images/star-rating.black.png');
 }
