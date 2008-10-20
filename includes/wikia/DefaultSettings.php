@@ -60,6 +60,7 @@ global $wgAutoloadClasses;
  * custom wikia classes
  */
 $wgAutoloadClasses["EasyTemplate"]  =  $GLOBALS["IP"]."/includes/wikia/EasyTemplate.php";
+$wgAutoloadClasses["GlobalTitle"]  =  $GLOBALS["IP"]."/includes/wikia/GlobalTitle.php";
 $wgAutoloadClasses["Wikia"] = "includes/wikia/Wikia.php";
 $wgAutoloadClasses["WikiFactory"] = $GLOBALS["IP"]."/extensions/wikia/WikiFactory/WikiFactory.php";
 $wgAutoloadClasses["WikiMover"] = $GLOBALS["IP"]."/extensions/wikia/WikiFactory/Mover/WikiMover.php";
@@ -157,8 +158,8 @@ include_once( "$IP/extensions/wikia/MostPopularCategories/SpecialMostPopularCate
 include_once( "$IP/extensions/wikia/MostPopularArticles/SpecialMostPopularArticles.php" );
 include_once( "$IP/extensions/wikia/MostVisitedPages/SpecialMostVisitedPages.php" );
 include_once( "$IP/extensions/wikia/WidgetSpecialPage/WidgetsSpecialPage.php" );
-
 include_once( "$IP/extensions/ParserDiffTest/ParserDiffTest.php" );
+
 
 /**
  * Wikia libmemcached client
