@@ -111,6 +111,18 @@ function initEditor() {
 	oFCKeditor.Height = '450px';
 	oFCKeditor.Width = document.all ? '99%' : '100%'; // IE fix
 	oFCKeditor.ReplaceTextarea();
+
+	// macbre: tracking
+	if (typeof YAHOO != 'undefined') {
+		YAHOO.util.Event.addListener(['wpSave', 'wpPreview', 'wpDiff'], 'click', function(e) {
+			var elem = YAHOO.util.Event.getTarget(e);
+
+			var buttonId = elem.id.substring(2).toLowerCase();
+			var editorSourceMode = window.FCKwpTextbox1.FCK.EditMode;
+
+			YAHOO.Wikia.Tracker.trackByStr(e, 'wysiwyg/' + buttonId + '/' + (editorSourceMode ? 'wikitextmode' : 'visualmode'));
+		});
+	}
 }
 addOnloadHook(initEditor);
 </script>
