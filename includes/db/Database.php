@@ -2566,10 +2566,12 @@ class DBQueryError extends DBError {
 	
 	function getSQL() {
 		global $wgShowSQLErrors;
+		$time = wfTimestamp( TS_MW );
+		error_log("DBQueryError: id=$time, SQL=" . $this->sql);
 		if( !$wgShowSQLErrors ) {
-			return $this->msg( 'sqlhidden', 'SQL hidden' );
+			return "/*id=$time*/ " . $this->msg( 'sqlhidden', 'SQL hidden' );
 		} else {
-			return $this->sql;
+			return "/*id=$time*/ " . $this->sql;
 		}
 	}
 	
