@@ -59,6 +59,8 @@ FCK.SwitchEditMode = function() {
 			FCK.EditingArea.Focus(); // macbre: moved here from fck.js
 		});
 
+		FCK.Track('/switchMode/wiki2html');
+
 	}
 
 	return true;
@@ -77,6 +79,8 @@ FCK.Events.AttachEvent( 'OnAfterSetHTML', function() {
 			FCK.EditingArea.Focus(); // macbre: moved here from fck.js
 		});
 
+		FCK.Track('/switchMode/html2wiki');
+
 	}
 	if(!FCK.wysiwygData) {
 		FCK.wysiwygData = eval("{"+window.parent.document.getElementById('wysiwygData').value+"}");
@@ -86,9 +90,24 @@ FCK.Events.AttachEvent( 'OnAfterSetHTML', function() {
 			if(e.target.tagName == 'INPUT') {
 				var refid = e.target.getAttribute('refid');
 				if(refid) {
+					if (FCK.Track && FCK.wysiwygData) {
+						FCK.Track('/wikitextbox/' + (FCK.wysiwygData[refid] ? FCK.wysiwygData[refid].type : 'unknown'));
+					}
 					inputClickCommand.Execute();
 				}
 			}
 		}, true);
 	}
 });
+
+// macbre: setup tracker object
+FCK.Tracker = (typeof window.parent.YAHOO != 'undefined' && typeof window.parent.YAHOO.Wikia != 'undefined') ? window.parent.YAHOO.Wikia.Tracker : false;
+
+FCK.Track = function(fakeUrl) {
+	if (FCK.Tracker) {
+		FCK.Tracker.trackByStr(null, 'wysiwyg'+fakeUrl);
+	}
+}
+
+// track the fact of using FCK + send the name of edited page
+FCK.Track('/init/' + window.parent.wgPageName);
