@@ -280,7 +280,7 @@ class Linker {
 			}
 			$refId = '';
 			if (!empty($FCKparseEnable)) {
-				$refId = wfFCKGetRefId($text);
+				$refId = Wysiwyg_GetRefId($text);
 			}
 			$t = "<a href=\"{$u}\"{$style}{$refId}>{$text}{$inside}</a>";
 
@@ -370,7 +370,7 @@ class Linker {
 		list( $inside, $trail ) = Linker::splitTrail( $trail );
 		$refId = '';
 		if (!empty($FCKparseEnable)) {
-			$refId = wfFCKGetRefId($text);
+			$refId = Wysiwyg_GetRefId($text);
 		}
 		$r = "<a href=\"{$u}\"{$style}{$aprops}{$refId}>{$prefix}{$text}{$inside}</a>{$trail}";
 		wfProfileOut( __METHOD__ );
@@ -418,7 +418,7 @@ class Linker {
 
 		$refId = '';
 		if (!empty($FCKparseEnable)) {
-			$refId = wfFCKGetRefId($text);
+			$refId = Wysiwyg_GetRefId($text);
 		}
 		wfRunHooks( 'BrokenLink', array( &$this, $nt, $query, &$u, &$style, &$prefix, &$text, &$inside, &$trail ) );
 		$s = "<a href=\"{$u}\"{$style}{$refId}>{$prefix}{$text}{$inside}</a>{$trail}";
@@ -524,7 +524,7 @@ class Linker {
 	function makeExternalImage( $url, $alt = '' ) {
 		global $FCKparseEnable;
 		if (!empty($FCKparseEnable)) {
-			$refId = wfFCKGetRefId($url, true);
+			$refId = Wysiwyg_GetRefId($url, true);
 		}
 		if ( '' == $alt ) {
 			$alt = $this->fnamePart( $url );
@@ -861,7 +861,7 @@ class Linker {
 				$style = $this->getInternalLinkAttributesObj( $title, $text, 'new' );
 				$refId = '';
 				if (!empty($FCKparseEnable)) {
-					$refId = wfFCKGetRefId($text);
+					$refId = Wysiwyg_GetRefId($text);
 				}
 				wfProfileOut( __METHOD__ );
 				return '<a href="' . $upload->escapeLocalUrl( $q ) . '"'
@@ -896,7 +896,7 @@ class Linker {
 		global $FCKparseEnable;
 		$refId = '';
 		if (!empty($FCKparseEnable)) {
-			$refId = wfFCKGetRefId($text);
+			$refId = Wysiwyg_GetRefId($text);
 		}
 		if( is_null( $title ) ) {
 			### HOTFIX. Instead of breaking, return empty string.
@@ -935,7 +935,7 @@ class Linker {
 		global $FCKparseEnable;
 		$refId = '';
 		if (!empty($FCKparseEnable)) {
-			$refId = wfFCKGetRefId($text);
+			$refId = Wysiwyg_GetRefId($text);
 		}
 		$style = $this->getExternalLinkAttributes( $url, $text, 'external ' . $linktype );
 		global $wgNoFollowLinks, $wgNoFollowNsExceptions;
