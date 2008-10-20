@@ -83,20 +83,24 @@ class ExternalStorageUpdate {
 				);
 				if( isset( $Row->page_id ) && !empty( $Row->page_id ) ) {
 					/**
-					 * update
+					 * update, but do this only when different
 					 */
-					$dbw->update(
-						"pages",
-						array(
-							"page_wikia_id"  => $wgCityId,
-							"page_namespace" => $Title->getNamespace(),
-							"page_title"     => $Title->getText(),
-						),
-						array(
-							"page_id"        => $this->mPageId,
-						),
-						__METHOD__
-					);
+					$title = $Title->getText();
+					$namespace = $Title->getNamespace()
+					if( $Row->page_title != $title || $Row->page_namespace != $namespace ) {
+						$dbw->update(
+							"pages",
+							array(
+								"page_wikia_id"  => $wgCityId,
+								"page_namespace" => $namespace,
+								"page_title"     => $title,
+							),
+							array(
+								"page_id"        => $this->mPageId,
+							),
+							__METHOD__
+						);
+					}
 				}
 				else {
 					/**
