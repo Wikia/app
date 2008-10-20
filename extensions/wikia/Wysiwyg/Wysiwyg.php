@@ -218,8 +218,6 @@ function Wysiwyg_WikiTextToHtml($wikitext, $articleId = -1, $encode = false) {
 	$html = $parser->parse($wikitext, $title, $options)->getText();
 	$wgWysiwygParserEnabled = false;
 
-	// TODO: Consider this step again /Inez
-	$html = mb_convert_encoding($html, 'HTML-ENTITIES', 'UTF-8');
 	// TODO: Get rid of this preg_replace /Inez
 	$html = preg_replace('%<span refid="(\\d+)">(.*?)</span>%si', '<input type="button" refid="\\1" value="\\2" title="\\2" class="wysiwygDisabled" />', $html);
 	$html = str_replace("\n<input", '<input', $html);
