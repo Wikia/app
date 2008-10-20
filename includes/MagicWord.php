@@ -662,7 +662,7 @@ class MagicWordArray {
 			}
 			if ($FCKparseEnable && preg_match( $regex, $text, $keyword )) {
 				$tmp = $keyword[0];
-				$FCKtmp = wfFCKSetRefId('double underscore', array('text' => &$tmp), false);
+				$FCKtmp = Wysiwyg_SetRefId('double underscore', array('text' => &$tmp), false);
 				$text = preg_replace( $regex, $FCKtmp, $text );
 			} else {	//original code
 				$text = preg_replace( $regex, '', $text );

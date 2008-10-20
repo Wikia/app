@@ -233,12 +233,10 @@ function Wysiwyg_HtmlToWikiText($html, $wysiwygData, $decode = false) {
 }
 
 /**
- * Adding reference ID to the $text variable
- *
  * @author Maciej Błaszkowski <marooned at wikia-inc.com>
  */
-function wfFCKSetRefId($type, $params, $addMarker = true, $returnId = false) {
-	// TODO: Rename function name and global variable name /Inez
+function Wysiwyg_SetRefId($type, $params, $addMarker = true, $returnId = false) {
+	// TODO: Rename global variable name /Inez
 	global $FCKmetaData;
 
 	$refId = count($FCKmetaData);
@@ -324,8 +322,7 @@ function wfFCKSetRefId($type, $params, $addMarker = true, $returnId = false) {
  *
  * @author Maciej Błaszkowski <marooned at wikia-inc.com>
  */
-function wfFCKGetRefId(&$text, $returnIDonly = false) {
-	// TODO: Rename function name /Inez
+function Wysiwyg_GetRefId(&$text, $returnIDonly = false) {
 	preg_match("#\x1([^\x1]+)#", $text, $m);
 	$refId = isset($m[1]) ? ($returnIDonly ? $m[1] : " refid=\"{$m[1]}\"") : '';
 	$text = preg_replace("#\x1[^\x1]+\x1#", '', $text);

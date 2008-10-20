@@ -1339,7 +1339,7 @@ class Parser
 			$trail = $this->replaceFreeExternalLinks( $trail );
 
 			if (!empty($FCKparseEnable)) {
-				wfFCKSetRefId('external link', array('text' => &$text, 'link' => $url, 'wasblank' => $wasblank));
+				Wysiwyg_SetRefId('external link', array('text' => &$text, 'link' => $url, 'wasblank' => $wasblank));
 			}
 
 			# Use the encoded URL
@@ -1426,7 +1426,7 @@ class Parser
 				if ( $text === false ) {
 					$description = $wgContLang->markNoConversion($url);
 					if (!empty($FCKparseEnable)) {
-						wfFCKSetRefId('external link: raw', array('text' => &$description, 'link' => $url));
+						Wysiwyg_SetRefId('external link: raw', array('text' => &$description, 'link' => $url));
 					}
 					# Not an image, make a link
 					$text = $sk->makeExternalLink( $url, $description, true, 'free', $this->mTitle->getNamespace() );
@@ -1497,7 +1497,7 @@ class Parser
 				# Image found
 				global $FCKparseEnable;
 				if (!empty($FCKparseEnable)) {
-					wfFCKSetRefId('external link: raw image', array('text' => &$url));
+					Wysiwyg_SetRefId('external link: raw image', array('text' => &$url));
 				} else {
 				$text = $sk->makeExternalImage( $url );
 			}
@@ -1735,7 +1735,7 @@ class Parser
 						$text = $this->replaceExternalLinks($text);
 						$text = $this->replaceInternalLinks($text);
 						if (!empty($FCKparseEnable)) {
-							$FCKtmp = wfFCKSetRefId('image', array('text' => &$text, 'link' => $link, 'wasblank' => $wasblank, 'noforce' => $noforce), false);
+							$FCKtmp = Wysiwyg_SetRefId('image', array('text' => &$text, 'link' => $link, 'wasblank' => $wasblank, 'noforce' => $noforce), false);
 							$s .= $prefix . $this->armorLinks($FCKtmp) . $trail;
 						} else {	//original action
 							# cloak any absolute URLs inside the image markup, so replaceExternalLinks() won't touch them
@@ -1746,7 +1746,7 @@ class Parser
 						continue;
 					} else {
 						if (!empty($FCKparseEnable)) {
-							$FCKtmp = wfFCKSetRefId('image', array('text' => &$text, 'link' => $link, 'wasblank' => $wasblank, 'noforce' => $noforce), false);
+							$FCKtmp = Wysiwyg_SetRefId('image', array('text' => &$text, 'link' => $link, 'wasblank' => $wasblank, 'noforce' => $noforce), false);
 							$s .= $prefix . $this->armorLinks($FCKtmp) . $trail;
 							continue;	//this continue is added to prevent adding additional link by parser as it's used above
 						} else {	//original action
@@ -1762,7 +1762,7 @@ class Parser
 					wfProfileIn( "$fname-category" );
 					$s = rtrim($s . "\n"); # bug 87
 					if (!empty($FCKparseEnable)) {
-						$FCKtmp = wfFCKSetRefId('category', array('text' => &$text, 'link' => $link, 'wasblank' => $wasblank, 'noforce' => $noforce), false);
+						$FCKtmp = Wysiwyg_SetRefId('category', array('text' => &$text, 'link' => $link, 'wasblank' => $wasblank, 'noforce' => $noforce), false);
 					}
 					if ( $wasblank ) {
 						$sortkey = $this->getDefaultSort();
@@ -1803,7 +1803,7 @@ class Parser
 			# Special and Media are pseudo-namespaces; no pages actually exist in them
 			if( $ns == NS_MEDIA ) {
 				if (!empty($FCKparseEnable)) {
-					$FCKtmp = wfFCKSetRefId('internal link: media', array('text' => &$text, 'link' => $link, 'wasblank' => $wasblank, 'noforce' => $noforce), false);
+					$FCKtmp = Wysiwyg_SetRefId('internal link: media', array('text' => &$text, 'link' => $link, 'wasblank' => $wasblank, 'noforce' => $noforce), false);
 					$s .= $prefix . $FCKtmp . $trail;
 				} else {	//original action
 					# Give extensions a chance to select the file revision for us
@@ -1821,7 +1821,7 @@ class Parser
 				continue;
 			} elseif( $ns == NS_SPECIAL ) {
 				if (!empty($FCKparseEnable)) {
-					wfFCKSetRefId('internal link: special page', array('text' => &$text, 'link' => $link, 'trail' => $trail, 'wasblank' => $wasblank, 'noforce' => $noforce));
+					Wysiwyg_SetRefId('internal link: special page', array('text' => &$text, 'link' => $link, 'trail' => $trail, 'wasblank' => $wasblank, 'noforce' => $noforce));
 				}
 				if( SpecialPage::exists( $nt->getDBkey() ) ) {
 					$s .= $this->makeKnownLinkHolder( $nt, $text, '', $trail, $prefix );
@@ -1836,7 +1836,7 @@ class Parser
 					// upload on the shared repository, and we want to see its
 					// auto-generated page.
 					if (!empty($FCKparseEnable)) {
-						wfFCKSetRefId('internal link: file', array('text' => &$text, 'link' => $link, 'trail' => $trail, 'wasblank' => $wasblank, 'noforce' => $noforce));
+						Wysiwyg_SetRefId('internal link: file', array('text' => &$text, 'link' => $link, 'trail' => $trail, 'wasblank' => $wasblank, 'noforce' => $noforce));
 					}
 					$s .= $this->makeKnownLinkHolder( $nt, $text, '', $trail, $prefix );
 					$this->mOutput->addLink( $nt );
@@ -1844,7 +1844,7 @@ class Parser
 				}
 			}
 			if (!empty($FCKparseEnable)) {
-				wfFCKSetRefId('internal link', array('text' => &$text, 'link' => $link, 'trail' => $trail, 'wasblank' => $wasblank, 'noforce' => $noforce));
+				Wysiwyg_SetRefId('internal link', array('text' => &$text, 'link' => $link, 'trail' => $trail, 'wasblank' => $wasblank, 'noforce' => $noforce));
 			}
 			$s .= $this->makeLinkHolder( $nt, $text, '', $trail, $prefix );
 		}
@@ -2833,7 +2833,7 @@ class Parser
 				$textArgs[] = $args->node->item($i)->textContent;
 			}
 			$templateText = implode('', $frame->virtualBracketedImplode('{{', '|', '}}', $titleWithSpaces, $textArgs));
-			$text = wfFCKSetRefId('curly brackets', array('text' => &$templateText, 'lineStart' => $piece['lineStart']), false);
+			$text = Wysiwyg_SetRefId('curly brackets', array('text' => &$templateText, 'lineStart' => $piece['lineStart']), false);
 			$found = true;
 		}
 
@@ -3339,7 +3339,7 @@ class Parser
 				case 'nowiki':
 					$output = Xml::escapeTagsOnly( $content );
 					if (!empty($FCKparseEnable)) {
-						$output = wfFCKSetRefId('nowiki', array('text' => &$output), false);
+						$output = Wysiwyg_SetRefId('nowiki', array('text' => &$output), false);
 					}
 					break;
 				/*
@@ -3351,7 +3351,7 @@ class Parser
 				case 'gallery':
 					if (!empty($FCKparseEnable)) {
 						$content = "<gallery$attrText>$content</gallery>";
-						$output = wfFCKSetRefId('gallery', array('text' => &$content), false);
+						$output = Wysiwyg_SetRefId('gallery', array('text' => &$content), false);
 					} else {
 						$output = $this->renderImageGallery( $content, $attributes );
 					}
@@ -3366,7 +3366,7 @@ class Parser
 							$tmp = ($content != ''
 								? "<{$name}{$attrText}>{$content}</{$name}>"
 								: "<{$name}{$attrText}/>");
-							$output = wfFCKSetRefId('hook', array('text' => &$tmp), false);
+							$output = Wysiwyg_SetRefId('hook', array('text' => &$tmp), false);
 						} else {
 							$output = call_user_func_array( $this->mTagHooks[$name],
 								array( $content, $attributes, $this ) );
@@ -3447,7 +3447,7 @@ class Parser
 			// Set a placeholder. At the end we'll fill it in with the TOC.
 			if (!empty($FCKparseEnable)) {
 				$tmp = '__TOC__';
-				$FCKtmp = wfFCKSetRefId('double underscore: toc', array('text' => &$tmp), false);
+				$FCKtmp = Wysiwyg_SetRefId('double underscore: toc', array('text' => &$tmp), false);
 				$text = $mw->replace( $FCKtmp, $text, 1 );
 			} else {
 				$text = $mw->replace( '<!--MWTOC-->', $text, 1 );
@@ -3820,7 +3820,7 @@ class Parser
 
 		# Signatures
 		if ($FCKparseEnable) {
-			$text = preg_replace_callback('/~{3,5}/', create_function('$tilde', 'return wfFCKSetRefId("tilde", array("text" => &$tilde[0]), false);'), $text);
+			$text = preg_replace_callback('/~{3,5}/', create_function('$tilde', 'return Wysiwyg_SetRefId("tilde", array("text" => &$tilde[0]), false);'), $text);
 		} else {	//original code
 			$sigText = $this->getUserSig( $user );
 			$text = strtr( $text, array(
@@ -4197,7 +4197,7 @@ class Parser
 						} else {
 							$query .= ', ';
 						}
-	
+
 						$query .= $dbr->addQuotes( $this->mLinkHolders['dbkeys'][$key] );
 					}
 				}
@@ -4595,7 +4595,7 @@ class Parser
 		#  * text-bottom
 
 		if (!empty($FCKparseEnable)) {
-			$refId = wfFCKGetRefId($options, true);
+			$refId = Wysiwyg_GetRefId($options, true);
 		}
 
 		$parts = array_map( 'trim', explode( '|', $options) );
