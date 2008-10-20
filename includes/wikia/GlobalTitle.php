@@ -39,7 +39,7 @@ class GlobalTitle {
 		$title = new GlobalTitle();
 
 		$title->mText = $filteredText;
-		$title->mUrlform = $filteredText;
+		$title->mUrlform = wfUrlencode( str_replace( ' ', '_', $filteredText ) );
 		$title->mTextform = str_replace( '_', ' ', $title->mText );
 		$title->mNamespace = $namespace;
 		$title->mCityId = $city_id;
@@ -118,7 +118,7 @@ class GlobalTitle {
 	 *
 	 * @param string $query an optional query string
 	 * @param string $variant language variant of url (for sr, zh..)
-	 * 
+	 *
 	 * @return string
 	 */
 	public function getLocalURL( $query = '', $variant = false ) {
