@@ -235,7 +235,7 @@ class Linker {
 	 * @param $prefix String: optional prefix. As trail, only before instead of after.
 	 */
 	function makeLinkObj( $nt, $text= '', $query = '', $trail = '', $prefix = '' ) {
-		global $wgUser, $FCKparseEnable;
+		global $wgUser, $wgWysiwygParserEnabled;
 		wfProfileIn( __METHOD__ );
 
 		if ( !$nt instanceof Title ) {
@@ -279,7 +279,7 @@ class Linker {
 				}
 			}
 			$refId = '';
-			if (!empty($FCKparseEnable)) {
+			if (!empty($wgWysiwygParserEnabled)) {
 				$refId = Wysiwyg_GetRefId($text);
 			}
 			$t = "<a href=\"{$u}\"{$style}{$refId}>{$text}{$inside}</a>";
@@ -337,7 +337,7 @@ class Linker {
 	 * @return the a-element
 	 */
 	function makeKnownLinkObj( $title, $text = '', $query = '', $trail = '', $prefix = '' , $aprops = '', $style = '' ) {
-		global $FCKparseEnable;
+		global $wgWysiwygParserEnabled;
 		wfProfileIn( __METHOD__ );
 
 		if ( !$title instanceof Title ) {
@@ -369,7 +369,7 @@ class Linker {
 
 		list( $inside, $trail ) = Linker::splitTrail( $trail );
 		$refId = '';
-		if (!empty($FCKparseEnable)) {
+		if (!empty($wgWysiwygParserEnabled)) {
 			$refId = Wysiwyg_GetRefId($text);
 		}
 		$r = "<a href=\"{$u}\"{$style}{$aprops}{$refId}>{$prefix}{$text}{$inside}</a>{$trail}";
@@ -389,7 +389,7 @@ class Linker {
 	 */
 	function makeBrokenLinkObj( $title, $text = '', $query = '', $trail = '', $prefix = '' ) {
 		wfProfileIn( __METHOD__ );
-		global $FCKparseEnable;
+		global $wgWysiwygParserEnabled;
 
 		if ( !$title instanceof Title ) {
 			# Fail gracefully
@@ -417,7 +417,7 @@ class Linker {
 		list( $inside, $trail ) = Linker::splitTrail( $trail );
 
 		$refId = '';
-		if (!empty($FCKparseEnable)) {
+		if (!empty($wgWysiwygParserEnabled)) {
 			$refId = Wysiwyg_GetRefId($text);
 		}
 		wfRunHooks( 'BrokenLink', array( &$this, $nt, $query, &$u, &$style, &$prefix, &$text, &$inside, &$trail ) );
@@ -522,8 +522,8 @@ class Linker {
 
 	/** @todo document */
 	function makeExternalImage( $url, $alt = '' ) {
-		global $FCKparseEnable;
-		if (!empty($FCKparseEnable)) {
+		global $wgWysiwygParserEnabled;
+		if (!empty($wgWysiwygParserEnabled)) {
 			$refId = Wysiwyg_GetRefId($url, true);
 		}
 		if ( '' == $alt ) {
@@ -538,7 +538,7 @@ class Linker {
 		$params = array(
 			'src' => $url,
 			'alt' => $alt );
-		if ($FCKparseEnable) {
+		if ($wgWysiwygParserEnabled) {
 			$params['refid'] = $refId;
 		}
 		return Xml::element( 'img', $params);
@@ -619,7 +619,7 @@ class Linker {
 			return $res;
 		}
 
-		global $wgContLang, $wgUser, $wgThumbLimits, $wgThumbUpright, $FCKparseEnable;
+		global $wgContLang, $wgUser, $wgThumbLimits, $wgThumbUpright, $wgWysiwygParserEnabled;
 		if ( $file && !$file->allowInlineDisplay() ) {
 			wfDebug( __METHOD__.': '.$title->getPrefixedDBkey()." does not allow inline display\n" );
 			return $this->makeKnownLinkObj( $title );
@@ -709,7 +709,7 @@ class Linker {
 				'img-class' => isset( $fp['border'] ) ? 'thumbborder' : false
 			);
 			$refId = '';
-			if (!empty($FCKparseEnable) && isset($fp['refid'])) {
+			if (!empty($wgWysiwygParserEnabled) && isset($fp['refid'])) {
 				if ($fp['align'] == '') {
 					$attrArr['refid'] = $fp['refid'];
 				} else {
@@ -741,7 +741,7 @@ class Linker {
 	}
 
 	function makeThumbLink2( Title $title, $file, $frameParams = array(), $handlerParams = array(), $time = false, $query = "" ) {
-		global $wgStylePath, $wgContLang, $FCKparseEnable;
+		global $wgStylePath, $wgContLang, $wgWysiwygParserEnabled;
 		$exists = $file && $file->exists();
 
 		# Shortcuts
@@ -801,7 +801,7 @@ class Linker {
 		$more = htmlspecialchars( wfMsg( 'thumbnail-more' ) );
 
 		$refId = '';
-		if (!empty($FCKparseEnable) && isset($fp['refid'])) {
+		if (!empty($wgWysiwygParserEnabled) && isset($fp['refid'])) {
 			$refId = " refid=\"{$fp['refid']}\"";
 		}
 		$s = "<div$refId class=\"thumb t{$fp['align']}\"><div class=\"thumbinner\" style=\"width:{$outerWidth}px;\">";
@@ -842,7 +842,7 @@ class Linker {
 	 * @return string
 	 */
 	public function makeBrokenImageLinkObj( $title, $text = '', $query = '', $trail = '', $prefix = '', $time = false ) {
-		global $wgEnableUploads, $FCKparseEnable;
+		global $wgEnableUploads, $wgWysiwygParserEnabled;
 		if( $title instanceof Title ) {
 			wfProfileIn( __METHOD__ );
 			$currentExists = $time ? ( wfFindFile( $title ) != false ) : false;
@@ -860,7 +860,7 @@ class Linker {
 				list( $inside, $trail ) = self::splitTrail( $trail );
 				$style = $this->getInternalLinkAttributesObj( $title, $text, 'new' );
 				$refId = '';
-				if (!empty($FCKparseEnable)) {
+				if (!empty($wgWysiwygParserEnabled)) {
 					$refId = Wysiwyg_GetRefId($text);
 				}
 				wfProfileOut( __METHOD__ );
@@ -893,9 +893,9 @@ class Linker {
 	 * @todo Handle invalid or missing images better.
 	 */
 	function makeMediaLinkObj( $title, $text = '', $time = false ) {
-		global $FCKparseEnable;
+		global $wgWysiwygParserEnabled;
 		$refId = '';
-		if (!empty($FCKparseEnable)) {
+		if (!empty($wgWysiwygParserEnabled)) {
 			$refId = Wysiwyg_GetRefId($text);
 		}
 		if( is_null( $title ) ) {
@@ -932,9 +932,9 @@ class Linker {
 
 	/** @todo document */
 	function makeExternalLink( $url, $text, $escape = true, $linktype = '', $ns = null ) {
-		global $FCKparseEnable;
+		global $wgWysiwygParserEnabled;
 		$refId = '';
-		if (!empty($FCKparseEnable)) {
+		if (!empty($wgWysiwygParserEnabled)) {
 			$refId = Wysiwyg_GetRefId($text);
 		}
 		$style = $this->getExternalLinkAttributes( $url, $text, 'external ' . $linktype );

@@ -24,10 +24,10 @@ function wfDirectParserAjax($wikitext, $appendData = false) {
 
 	$parser = new WysiwygParser();
 	$parser->setOutputType(OT_HTML);
-	global $FCKparseEnable;
-	$FCKparseEnable = true;
+	global $wgWysiwygParserEnabled;
+	$wgWysiwygParserEnabled = true;
 	$out = $parser->parse($wikitext, $title, $options)->getText();
-	$FCKparseEnable = false;
+	$wgWysiwygParserEnabled = false;
 
 	if ( $appendData != false) {
 		global $FCKmetaData;
@@ -74,8 +74,8 @@ function wfWikisyntaxToHtml($wikitext) {
 
 	$parser = new WysiwygParser();
 	$parser->setOutputType(OT_HTML);
-	global $FCKparseEnable, $FCKmetaData;
-	$FCKparseEnable = true;
+	global $wgWysiwygParserEnabled, $FCKmetaData;
+	$wgWysiwygParserEnabled = true;
 	return $parser->parse($wikitext, $title, $options)->getText() . '--||--' . Wikia::json_encode($FCKmetaData, true);
 }
 

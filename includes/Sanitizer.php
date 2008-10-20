@@ -486,8 +486,8 @@ class Sanitizer {
 					if ( ! $badtag ) {
 						$rest = str_replace( '>', '&gt;', $rest );
 						$close = ( $brace == '/>' && !$slash ) ? ' /' : '';
-						global $FCKparseEnable;
-						if(!empty($FCKparseEnable)) {
+						global $wgWysiwygParserEnabled;
+						if(!empty($wgWysiwygParserEnabled)) {
 							$wasHtml = !$slash && strpos($newparams, ' refid="') === false ? ' wasHtml="1"' : '';
 						} else {
 							$wasHtml = '';
@@ -515,8 +515,8 @@ class Sanitizer {
 					}
 					$newparams = Sanitizer::fixTagAttributes( $params, $t );
 					$rest = str_replace( '>', '&gt;', $rest );
-					global $FCKparseEnable;
-					if(!empty($FCKparseEnable)) {
+					global $wgWysiwygParserEnabled;
+					if(!empty($wgWysiwygParserEnabled)) {
 						$wasHtml = !$slash ? ' wasHtml=1' : '';
 					} else {
 						$wasHtml = '';

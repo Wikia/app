@@ -64,11 +64,11 @@ class WysiwygInterface extends SpecialPage {
 
 			$parser = new WysiwygParser();
 			$parser->setOutputType(OT_HTML);
-			global $FCKparseEnable;
-			$FCKparseEnable = true;
+			global $wgWysiwygParserEnabled;
+			$wgWysiwygParserEnabled = true;
 			$wikitext = $parser->preSaveTransform($wikitext, $wgTitle, $wgUser, $options);
 			$out = $parser->parse($wikitext, $wgTitle, $options)->getText();
-			$FCKparseEnable = false;
+			$wgWysiwygParserEnabled = false;
 
 			// fix UTF issue
 			$out = mb_convert_encoding($out, 'HTML-ENTITIES', "UTF-8");
@@ -167,7 +167,7 @@ class WysiwygInterface extends SpecialPage {
 			$wgOut->addHTML('<pre>' . htmlspecialchars($wikitext_parsed) . '</pre>');
 
 			$wgOut->addHTML('<h3>Wikitext diff</h3>');
-			$wgOut->addHTML( $diff );	
+			$wgOut->addHTML( $diff );
 
 			$wgOut->addHTML('<h3>Visual comparison</h3>');
 			$wgOut->addHTML('<table style="width:100%"><colgroup><col width="50%" /><col width="50%" /></colgroup>');
