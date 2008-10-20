@@ -99,6 +99,7 @@ class GlobalTitle {
 
 		$this->loadAll();
 		$namespace = wfUrlencode( $this->getNsText() );
+
 		if( $this->mNamespace !== NS_MAIN ) {
 			$namespace .= ":";
 		}
@@ -251,12 +252,11 @@ class GlobalTitle {
 		 */
 		$namespaces = WikiFactory::getVarValueByName( "wgExtraNamespacesLocal", $this->mCityId );
 		if( is_array( $namespaces ) ) {
-			$this->mNamespaceNames = array_merge( $wgCanonicalNamespaceNames, $namespaces );
+			$this->mNamespaceNames =  $wgCanonicalNamespaceNames + $namespaces;
 		}
 		else {
 			$this->mNamespaceNames = $wgCanonicalNamespaceNames;
 		}
-
 		return $this->mNamespaceNames;
 	}
 }
