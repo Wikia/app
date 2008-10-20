@@ -5,7 +5,7 @@
  * A WikiFeeds extension for MediaWiki
  * Provides Atom feed
  *
- * @author Andrew Yasinsky <marooned at wikia-inc.com>
+ * @author Andrew Yasinsky
  * @copyright Copyright (C) 2008 Andrew Yasinsky, Wikia Inc.
  * @license http://www.gnu.org/copyleft/gpl.html GNU General Public License 2.0 or later
  * @package MediaWiki
