@@ -2,7 +2,7 @@
 .star-rating li a:hover,
 .star-rating li.current-rating
 {
-	background:transparent url('../images/star-rating.png') repeat-x scroll left top;
+	background:transparent url('http://images.wikia.com/common/skins/monaco/images/star-rating.png') repeat-x scroll left top;
 }
 
 ul.star-rating
@@ -39,7 +39,6 @@ ul.star-rating
     z-index:20;
     top: 0px; /* opera fix */
     cursor: pointer;
-    /*background:transparent url('../images/star-rating.png') repeat-x scroll left top !important;*/
 }
 .star-rating li a:hover,
 * html .star-rating li a.hover
@@ -93,7 +92,7 @@ ul.star-rating
 * html .star-rating li a.hover,
 * html .star-rating li.current-rating
 {
-	background-image: url('../images/star-rating.white.png');
+	background-image: url('http://images.wikia.com/common/skins/monaco/images/star-rating.white.png');
 }
 
 /* macbre: progress wheel stuff */

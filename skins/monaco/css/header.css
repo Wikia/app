@@ -6,7 +6,7 @@
 	position: relative;
 }
 #wikia_logo {
-	background: url(../images/wikia_logo.png) no-repeat;
+	background: url(http://images.wikia.com/common/skins/monaco/images/wikia_logo.png) no-repeat;
 	height: 24px;
 	margin: 0 auto;
 	padding: 0;
@@ -35,7 +35,7 @@
 	line-height: 15px;
 }
 .headerMenuButton dt, .headerMenuButton dd {
-	background: url(../images/header_button.png);
+	background: url(http://images.wikia.com/common/skins/monaco/images/header_button.png);
 }
 .headerMenuButton dt {
 	color: #EEE;
@@ -74,7 +74,7 @@ a.bigButton * {
 	line-height: 21px;
 }
 a.bigButton big, a.bigButton small {
-	background: url(../images/big_button.png) no-repeat;
+	background: url(http://images.wikia.com/common/skins/monaco/images/big_button.png) no-repeat;
 }
 a.bigButton big {
 	color: #EEE;
@@ -293,7 +293,7 @@ a.bigButton small {
 	right: 0;
 }
 #cockpit1_close {
-	background: url(../images/widget_sprite.png);
+	background: url(http://images.wikia.com/common/skins/monaco/images/widget_sprite.png);
 	clip: rect(0px 28px 12px 18px);
 	cursor: pointer;
 	height: 12px;
@@ -353,7 +353,7 @@ div.widget_cockpit_controls {
 	position: relative;
 }
 #widget_cockpit_list li h1 div.add {
-	background-image: url(../images/sprite.png);
+	background-image: url(http://images.wikia.com/common/skins/monaco/images/sprite.png);
 	clip: rect(0px 272px 16px 256px);
 	cursor: pointer;
 	display: block;
@@ -365,95 +365,95 @@ div.widget_cockpit_controls {
 	z-index: 100;
 }
 .WidgetNeedHelpThumb div {
-	background-image: url(../../common/widgets/icons/widget_needshelp.png);
+	background-image: url(http://images.wikia.com/common/skins/common/widgets/icons/widget_needshelp.png);
 }
 .WidgetTopContentThumb div {
-	background-image: url(../../common/widgets/icons/widget_topcontent.png);
+	background-image: url(http://images.wikia.com/common/skins/common/widgets/icons/widget_topcontent.png);
 }
 .WidgetMyEditsThumb div {
-	background-image: url(../../common/widgets/icons/widget_myedits.png);
+	background-image: url(http://images.wikia.com/common/skins/common/widgets/icons/widget_myedits.png);
 }
 .WidgetAncientPagesThumb div {
-	background-image: url(../../common/widgets/icons/widget_stalepages.png);
+	background-image: url(http://images.wikia.com/common/skins/common/widgets/icons/widget_stalepages.png);
 }
 .WidgetJabberThumb div {
-	background-image: url(../../common/widgets/icons/widget_jabber.png);
+	background-image: url(http://images.wikia.com/common/skins/common/widgets/icons/widget_jabber.png);
 }
 .WidgetLastWikisThumb div {
-	background-image: url(../../common/widgets/icons/widget_lastwikis.png);
+	background-image: url(http://images.wikia.com/common/skins/common/widgets/icons/widget_lastwikis.png);
 }
 .WidgetMostVisitedThumb div {
-	background-image: url(../../common/widgets/icons/widget_mostvisited.png);
+	background-image: url(http://images.wikia.com/common/skins/common/widgets/icons/widget_mostvisited.png);
 }
 .WidgetRecentChangesThumb div {
-	background-image: url(../../common/widgets/icons/widget_recentchanges.png);
+	background-image: url(http://images.wikia.com/common/skins/common/widgets/icons/widget_recentchanges.png);
 }
 .WidgetTopUsersThumb div {
-	background-image: url(../../common/widgets/icons/widget_topusers.png);
+	background-image: url(http://images.wikia.com/common/skins/common/widgets/icons/widget_topusers.png);
 }
 .WidgetTopVotedThumb div {
-	background-image: url(../../common/widgets/icons/widget_topvoted.png);
+	background-image: url(http://images.wikia.com/common/skins/common/widgets/icons/widget_topvoted.png);
 }
 .WidgetWatchlistThumb div {
-	background-image: url(../../common/widgets/icons/widget_watchlist.png);
+	background-image: url(http://images.wikia.com/common/skins/common/widgets/icons/widget_watchlist.png);
 }
 .WidgetEditedRecentlyThumb div {
-	background-image: url(../../common/widgets/icons/widget_recenteditors.png);
+	background-image: url(http://images.wikia.com/common/skins/common/widgets/icons/widget_recenteditors.png);
 }
 .WidgetFeedThumb div {
-	background-image: url(../../common/widgets/icons/widget_rss.png);
+	background-image: url(http://images.wikia.com/common/skins/common/widgets/icons/widget_rss.png);
 }
 .WidgetWeatherThumb div {
-	background-image: url(../../common/widgets/icons/widget_weather.png);
+	background-image: url(http://images.wikia.com/common/skins/common/widgets/icons/widget_weather.png);
 }
 .WidgetTipsThumb div {
-	background-image: url(../../common/widgets/icons/widget_tips.png);
+	background-image: url(http://images.wikia.com/common/skins/common/widgets/icons/widget_tips.png);
 }
 .WidgetActiveTalkPagesThumb div {
-	background-image: url(../../common/widgets/icons/widget_activetalkpages.png);
+	background-image: url(http://images.wikia.com/common/skins/common/widgets/icons/widget_activetalkpages.png);
 }
 .WidgetBlockUserThumb div {
-	background-image: url(../../common/widgets/icons/widget_block_user.png);
+	background-image: url(http://images.wikia.com/common/skins/common/widgets/icons/widget_block_user.png);
 }
 .WidgetCountdownThumb div {
-	background-image: url(../../common/widgets/icons/widget_countdown.png);
+	background-image: url(http://images.wikia.com/common/skins/common/widgets/icons/widget_countdown.png);
 }
 .WidgetReferrersThumb div {
-	background-image: url(../../common/widgets/icons/widget_referers.png);
+	background-image: url(http://images.wikia.com/common/skins/common/widgets/icons/widget_referers.png);
 }
 .WidgetShoutBoxThumb div {
-	background-image: url(../../common/widgets/icons/widget_shoutbox.png);
+	background-image: url(http://images.wikia.com/common/skins/common/widgets/icons/widget_shoutbox.png);
 }
 .WidgetSlideshowThumb div {
-	background-image: url(../../common/widgets/icons/widget_slideshow.png);
+	background-image: url(http://images.wikia.com/common/skins/common/widgets/icons/widget_slideshow.png);
 }
 .WidgetNewContributorsThumb div {
-	background-image: url(../../common/widgets/icons/widget_new_contributors.png);
+	background-image: url(http://images.wikia.com/common/skins/common/widgets/icons/widget_new_contributors.png);
 }
 .WidgetProblemReportsThumb div {
-	background-image: url(../../common/widgets/icons/widget_problem_reports.png);
+	background-image: url(http://images.wikia.com/common/skins/common/widgets/icons/widget_problem_reports.png);
 }
 .WidgetWikiaSearchThumb div {
-	background-image: url(../../common/widgets/icons/widget_wikia_search.png);
+	background-image: url(http://images.wikia.com/common/skins/common/widgets/icons/widget_wikia_search.png);
 }
 .WidgetWikiPageThumb div {
-	background-image: url(../../common/widgets/icons/widget_wiki_page.png);
+	background-image: url(http://images.wikia.com/common/skins/common/widgets/icons/widget_wiki_page.png);
 }
 .WidgetHotPagesThumb div {
-	background-image: url(../../common/widgets/icons/widget_hot_pages.png);
+	background-image: url(http://images.wikia.com/common/skins/common/widgets/icons/widget_hot_pages.png);
 }
 .WidgetNewestImagesThumb div {
-	background-image: url(../../common/widgets/icons/widget_newestimages.png);
+	background-image: url(http://images.wikia.com/common/skins/common/widgets/icons/widget_newestimages.png);
 }
 .WidgetRelatedCommunitiesThumb div {
-	background-image: url(../../common/widgets/icons/widget_related_communities.png);
+	background-image: url(http://images.wikia.com/common/skins/common/widgets/icons/widget_related_communities.png);
 }
 .WidgetBookmarkThumb div {
-	background-image: url(../../common/widgets/icons/widget_bookmark.png);
+	background-image: url(http://images.wikia.com/common/skins/common/widgets/icons/widget_bookmark.png);
 }
 .WidgetContribsThumb div {
-	background-image: url(../../common/widgets/icons/widget_contribs.png);
+	background-image: url(http://images.wikia.com/common/skins/common/widgets/icons/widget_contribs.png);
 }
 .WidgetNewPagesThumb div {
-	background-image: url(../../common/widgets/icons/widget_new_pages.png);
+	background-image: url(http://images.wikia.com/common/skins/common/widgets/icons/widget_new_pages.png);
 }
