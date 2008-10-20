@@ -446,8 +446,14 @@ var Tabs = function()
 				$( oTabs[sCode] ).className = 'PopupTab' ;
 		}
 
-		if ( typeof( window.frames["frmMain"].OnDialogTabChange ) == 'function' )
+		if ( typeof( window.frames["frmMain"].OnDialogTabChange ) == 'function' ) {
 			window.frames["frmMain"].OnDialogTabChange( tabCode ) ;
+
+			if (FCK.Track) {
+				srcHtml = window.frames['frmMain'].location.pathname.split('/').pop();
+				FCK.Track('/dialog/tab/' + srcHtml.substring(0, srcHtml.length - 5) + '/' + tabCode);
+			}
+		}
 	}
 
 	function TabDiv_OnClick()
@@ -642,7 +648,7 @@ var onReadyRegister = function()
 
 		if (FCK.Track) {
 			srcHtml = Args().Page.split('/').pop();
-			FCK.Track('/dialog/' + srcHtml.substring(0, srcHtml.length - 5));
+			FCK.Track('/dialog/open/' + srcHtml.substring(0, srcHtml.length - 5));
 		}
 
 		// Create the IFRAME that holds the dialog contents.
