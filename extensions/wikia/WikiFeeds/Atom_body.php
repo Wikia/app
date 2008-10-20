@@ -1,11 +1,34 @@
 <?php
 /**
+ * WikiFeeds
+ *
+ * A WikiFeeds extension for MediaWiki
+ * Provides Atom feed
+ *
+ * @author Andrew Yasinsky <marooned at wikia-inc.com>
+ * @copyright Copyright (C) 2008 Andrew Yasinsky, Wikia Inc.
+ * @license http://www.gnu.org/copyleft/gpl.html GNU General Public License 2.0 or later
+ * @package MediaWiki
+ * @subpackage SpecialPage
+ *
+ * To activate this functionality, place this file in your extensions/
+ * subdirectory, and add the following line to LocalSettings.php:
+ *     require_once("$IP/extensions/wikia/WikiFeeds/Atom.php");
+ */
+ 
+/**
  * Implements Special:Recentchanges
  * @ingroup SpecialPage
  */
+
+if (!defined('MEDIAWIKI')) {
+	echo "This is MediaWiki extension named WikiFeeds.\n";
+	exit(1) ;
+}
+
 class Atom extends SpecialPage {
 	public function __construct() {
-  		SpecialPage::SpecialPage( 'Atom' );
+  		SpecialPage::SpecialPage( 'Atom', '', false );
 		$this->includable( true );
 	}
 
@@ -102,10 +125,10 @@ class Atom extends SpecialPage {
 		}
 
 		$opts = $feedFormat ? $this->feedSetup() : $this->setup( $parameters );
-		
+
 		$opts['namespace'] = 0;
 		$opts['days'] = 30;
-		
+
 		$this->setHeaders();
 		$this->outputHeader();
 
@@ -678,24 +701,3 @@ class Atom extends SpecialPage {
 		return "$note<br />$rclinks<br />$rclistfrom";
 	}
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
