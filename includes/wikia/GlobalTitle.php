@@ -28,6 +28,7 @@ class GlobalTitle {
 	private $mServer = false;
 	private $mContLang = false;
 	private $mArticlePath = false;
+	private $mNamespaceNames = false;
 
 	/**
 	 * static constructor, Create new Title from name of page
@@ -46,6 +47,19 @@ class GlobalTitle {
 		return $title;
 	}
 
+	/**
+	 * loadAll
+	 *
+	 *  constructor doesnt load anything from database. This is the place
+	 *  for that kind of things
+	 */
+	private function loadAll() {
+		$this->loadServer();
+		$this->loadArticlePath();
+		$this->loadContLang();
+		$this->loadNamespaceNames();
+	}
+
 	public function getNamespace() {
 		return $this->mNamespace;
 	}
@@ -55,23 +69,14 @@ class GlobalTitle {
 	 * @return string
 	 */
 	public function getNsText() {
-		global $wgContLang, $wgCanonicalNamespaceNames;
 
-		if( isset( $wgCanonicalNamespaceNames[ $this->mNamespace ] ) ) {
-			return $wgCanonicalNamespaceNames[ $this->mNamespace ];
+		$this->loadAll();
+
+		if( isset( $this->mNamespaceNames[ $this->mNamespace ] ) ) {
+			return $this->mNamespaceNames[ $this->mNamespace ];
 		}
 
-		/**
-		 * get extra namespaces for city_id, they have to be defined in
-		 * $wgExtraNamespacesLocal variable
-		 */
-		$localNamespaces = WikiFactory::getVarValueByName( "wgExtraNamespacesLocal", $this->mCityId );
-
-		if( isset( $localNamespaces[ $this->mNamespace ] ) ) {
-			return $localNamespaces[ $this->mNamespace ];
-		}
-
-		return $wgContLang->getNsText( $this->mNamespace );
+		return $this->mContLang->getNsText( $this->mNamespace );
 	}
 
 	/**
@@ -92,10 +97,7 @@ class GlobalTitle {
 	 */
 	public function getFullURL( $query = '', $variant = false ) {
 
-		if( ! $this->mServer ) {
-			$this->loadServer();
-			$this->loadArticlePath();
-		}
+		$this->loadAll();
 		$namespace = wfUrlencode( $this->getNsText() );
 		if( $this->mNamespace !== NS_MAIN ) {
 			$namespace .= ":";
@@ -194,5 +196,67 @@ class GlobalTitle {
 		}
 		$this->mArticlePath = $path;
 		return $path;
+	}
+
+	/**
+	 * loadContLang
+	 *
+	 * Determine wgContLang value from WikiFactory variables
+	 *
+	 * @return Lang object
+	 */
+	private function loadContLang() {
+
+		/**
+		 * don't do this twice
+		 */
+		if( $this->mContLang ) {
+			return $this->mContLang;
+		}
+
+		$lang = WikiFactory::getVarValueByName( "wgLanguageCode", $this->mCityId );
+		if( !$lang ) {
+			/**
+			 * default language is english
+			 */
+			$lang = "en";
+		}
+		$this->mContLang = Language::factory( $lang );
+
+		return $this->mContLang;
+	}
+
+	/**
+	 * loadContLang
+	 *
+	 * Determine $wgCanonicalNamespaceNames value from WikiFactory variables
+	 *
+	 * @return Array
+	 */
+	private function loadNamespaceNames() {
+		global $wgCanonicalNamespaceNames;
+
+		/**
+		 * don't do this twice
+		 */
+		if( $this->mNamespaceNames ) {
+			return $this->mNamespaceNames;
+		}
+
+		$this->mNamespaceNames = array();
+
+		/**
+		 * get extra namespaces for city_id, they have to be defined in
+		 * $wgExtraNamespacesLocal variable
+		 */
+		$namespaces = WikiFactory::getVarValueByName( "wgExtraNamespacesLocal", $this->mCityId );
+		if( is_array( $namespaces ) ) {
+			$this->mNamespaceNames = array_merge( $wgCanonicalNamespaceNames, $namespaces );
+		}
+		else {
+			$this->mNamespaceNames = $wgCanonicalNamespaceNames;
+		}
+
+		return $this->mNamespaceNames;
 	}
 }
