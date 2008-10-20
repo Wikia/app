@@ -278,17 +278,17 @@ function Wysiwyg_SetRefId($type, $params, $addMarker = true, $returnId = false) 
 			$data['href'] = $params['link'];
 			break;
 
-		case 'curly brackets':
 		case 'nowiki':
-			if (!empty($params['lineStart'])) {	//for curly brackets
-				$data['lineStart'] = 1;
-			}
 			$data['description'] = $params['text'];
 			$result = "<span refid=\"$refId\">" . $params['text'] . "</span>";
 			break;
 
+		case 'curly brackets':
 		case 'gallery':
 		case 'hook':
+			if (!empty($params['lineStart'])) {	//for curly brackets
+				$data['lineStart'] = 1;
+			}
 			$data['description'] = $params['text'];
 			$result = "<span refid=\"$refId\">" . htmlspecialchars($params['text']) . '</span>';
 			break;
