@@ -174,7 +174,7 @@ class Comment{
 			'comment_text' => $text,
 			'comment_date' => date("Y-m-d H:i:s"),
 			'comment_parent_id' => $this->CommentParentID,
-			'Comment_IP' => $_SERVER['REMOTE_ADDR']
+			'Comment_IP' => wfGetIP()
 			), __METHOD__
 		);
 		$comment_id = $dbr->insertId();
@@ -235,7 +235,7 @@ class Comment{
 				'Comment_Vote_user_id' => $this->Userid,
 				'Comment_Vote_Score' => $this->CommentVote,
 				'Comment_Vote_Date' => date("Y-m-d H:i:s"),
-				'Comment_Vote_IP' => $_SERVER['REMOTE_ADDR']
+				'Comment_Vote_IP' => wfGetIP()
 				), __METHOD__
 			);
 			

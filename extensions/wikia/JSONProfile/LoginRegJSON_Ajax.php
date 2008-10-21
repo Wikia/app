@@ -201,7 +201,8 @@ function wfDoRegisterJSONPost(){
 	$wgCaptchaTriggers['createaccount'] = false;
 	
 	// before we do anything - check the reCaptcha
-	$resp = recaptcha_check_answer ($recaptcha_private_key,  $_SERVER["REMOTE_ADDR"], $wgRequest->getVal("wpCaptchaId"), $wgRequest->getVal("wpCaptchaWord"));
+	$ip = wfGetIP();
+	$resp = recaptcha_check_answer ($recaptcha_private_key, $ip, $wgRequest->getVal("wpCaptchaId"), $wgRequest->getVal("wpCaptchaWord"));
 	
 	// if it failed just bail
 	if (!$resp->is_valid) {

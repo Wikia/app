@@ -137,7 +137,7 @@ class Vote{
 				'vote_page_id' => $this->PageID,
 				'vote_value' => $VoteValue,
 				'vote_date' => date("Y-m-d H:i:s"),
-				'vote_ip' => $_SERVER['REMOTE_ADDR']
+				'vote_ip' => wfGetIP()
 				), __METHOD__
 			);
 			
