@@ -1,4 +1,4 @@
-﻿/*
+/*
  * FCKeditor - The text editor for Internet - http://www.fckeditor.net
  * Copyright (C) 2003-2008 Frederico Caldeira Knabben
  *
@@ -209,8 +209,8 @@ FCKConfig.CustomStyles =
 FCKConfig.CoreStyles =
 {
 	// Basic Inline Styles.
-	'Bold'			: { Element : 'strong', Overrides : 'b' },
-	'Italic'		: { Element : 'em', Overrides : 'i' },
+	'Bold'			: { Element : 'b', Overrides : 'strong' },
+	'Italic'		: { Element : 'i', Overrides : 'em' },
 	'Underline'		: { Element : 'u' },
 	'StrikeThrough'	: { Element : 'strike' },
 	'Subscript'		: { Element : 'sub' },
