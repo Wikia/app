@@ -230,7 +230,9 @@ function Wysiwyg_WikiTextToHtml($wikitext, $articleId = -1, $encode = false) {
 	$wgWysiwygParserEnabled = false;
 
 	// replace placeholders with HTML
-	$html = strtr($html, $wgWysiwygMarkers);
+	if (!empty($wgWysiwygMarkers)) {
+		$html = strtr($html, $wgWysiwygMarkers);
+	}
 
 	wfDebug("Wysiwyg_WikiTextToHtml html: {$html}\n");
 
