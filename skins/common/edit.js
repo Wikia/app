@@ -67,7 +67,13 @@ function mwSetupToolbar() {
 function insertTags(tagOpen, tagClose, sampleText) {
 	var txtarea;
 	if (document.editform) {
-		txtarea = document.editform.wpTextbox1;
+		if (window.frames['FCKwpTextbox1']) {
+			// wikia: support for wysiwyg editor
+			txtarea = window.frames['FCKwpTextbox1'].document.getElementById('xEditingArea').firstChild;
+		}
+		else {
+			txtarea = document.editform.wpTextbox1;
+		}
 	} else {
 		// some alternate form? take the first one we can find
 		var areas = document.getElementsByTagName('textarea');

@@ -129,7 +129,9 @@ addOnloadHook(initEditor);
 <style type="text/css">/*<![CDATA[*/
 .mw-editTools,
 #editform #toolbar {
-	display: none
+	position: relative;
+	top: 25px;
+	visibility: hidden;
 }
 #wpTextbox1 {
 	visibility: hidden;
