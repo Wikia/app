@@ -324,6 +324,10 @@ function Wysiwyg_SetRefId($type, $params, $addMarker = true, $returnId = false) 
 		$params['text'] .= "\x1$refId\x1";
 	}
 	if($result != '') {
+		$result = str_replace(' wasHtml="1"', '', $result);
+		if (isset($data['description'])) {
+			$data['description'] =  str_replace(' wasHtml="1"', '', $data['description']);
+		}
 		$result = htmlspecialchars($result);
 		$result = "<input type=\"button\" refid=\"{$refId}\" value=\"{$result}\" title=\"{$result}\" class=\"wysiwygDisabled\" />";
 	}
