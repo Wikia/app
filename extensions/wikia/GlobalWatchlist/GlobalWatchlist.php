@@ -3,9 +3,9 @@
  * GlobalWatchlist extension - sending weekly digest email witch watchlisted pages on all wikis
  *
  * !IMPORTANT! see GlobalWatchlist.sql file for db schema !IMPORTANT!
- *  
- * @author Adrian 'ADi' Wieczorek <adi(at)wikia.com> 
- * 
+ *
+ * @author Adrian 'ADi' Wieczorek <adi(at)wikia.com>
+ *
  */
 
 if (!defined('MEDIAWIKI')) {
@@ -18,6 +18,9 @@ $wgExtensionCredits['specialpage'][] = array(
 	'author' => '[http://www.wikia.com/wiki/User:Adi3ek Adrian \'ADi\' Wieczorek]',
 	'description' => 'Sending weekly digest email witch watchlisted pages on all wikis'
 );
+
+// configuration
+$wgGlobalWatchlistMaxDigestedArticlesPerWiki = 50;
 
 // message file
 $wgExtensionMessagesFiles['GlobalWatchlist'] = dirname(__FILE__) . '/GlobalWatchlist.i18n.php';
@@ -44,40 +47,40 @@ function wfGlobalWatchlistToggle($extraToggles) {
 
 function wfGlobalWatchlistPrefsCustomHtml($prefsForm) {
 	global $wgOut, $wgUser, $wgSharedDB;
-	
-	if($wgUser->isAllowed('globalwatchlist')) {	
+
+	if($wgUser->isAllowed('globalwatchlist')) {
 		$dbr = wfGetDB(DB_SLAVE);
 		$oResource = $dbr->query("SELECT count(*) AS count FROM $wgSharedDB.global_watchlist WHERE gwa_user_id='" . $wgUser->getID() . "'");
 		$oResultRow = $dbr->fetchObject($oResource);
-		
+
 		if($oResultRow->count) {
 			// only for staff members at the moment
 			wfLoadExtensionMessages('GlobalWatchlist');
-	
+
 		 $tname = 'watchlistdigestclear';
 		 $prefsForm->mUsedToggles[$tname] = true;
-	
-			$wgOut->addHtml( $prefsForm->getToggle($tname) );			
+
+			$wgOut->addHtml( $prefsForm->getToggle($tname) );
 		}
-		
+
 	}
-	
+
 	return true;
 }
 
 function wfGlobalWatchlistPrefsEmailToggle($prefsForm, $toggleHtml) {
 	global $wgUser;
 
-	if($wgUser->isAllowed('globalwatchlist')) {	
+	if($wgUser->isAllowed('globalwatchlist')) {
 		// only for staff members at the moment
 		wfLoadExtensionMessages('GlobalWatchlist');
-	 
+
 	 $tname = 'watchlistdigest';
 	 $prefsForm->mUsedToggles[$tname] = true;
-	 
+
 	 $toggleHtml .= $prefsForm->getToggle($tname) . '<br />';
 	}
-	
+
  return true;
 }
 

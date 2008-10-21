@@ -4,6 +4,7 @@ $messages = array();
 $messages["en"] = array(
 	"tog-watchlistdigest" => "E-mail me a Weekly Watchlist Digest",
 	"tog-watchlistdigestclear" => "Mark all pages from my Weekly Watchlist Digest as visited",
+	"globalwatchlist-see-more" => "Please check your local watchlists for more changes",
 	"globalwatchlist-digest-email-subject" => "Weekly Digest",
 	"globalwatchlist-digest-email-body" => "Dear $1,
 
