@@ -3334,7 +3334,7 @@ class Parser
 				case 'nowiki':
 					$output = Xml::escapeTagsOnly( $content );
 					if (!empty($wgWysiwygParserEnabled)) {
-						$output = Wysiwyg_SetRefId('nowiki', array('text' => &$output), false);
+						$output = Wysiwyg_SetRefId('nowiki', array('text' => &$content), false);
 					}
 					break;
 				/*
