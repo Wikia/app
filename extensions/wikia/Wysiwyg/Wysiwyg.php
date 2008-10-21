@@ -209,7 +209,7 @@ function Wysiwyg_CheckEdgeCases($text) {
 }
 
 function Wysiwyg_WikiTextToHtml($wikitext, $articleId = -1, $encode = false) {
-	global $IP, $wgWysiwygMetaData, $wgWysiwygParserEnabled, $wgWysiwygParserTildeEnabled, $wgTitle, $wgUser;
+	global $IP, $wgWysiwygMetaData, $wgWysiwygParserEnabled, $wgWysiwygParserTildeEnabled, $wgTitle, $wgUser, $wgWysiwygMarkers;
 
 	require("$IP/extensions/wikia/Wysiwyg/WysiwygParser.php");
 
@@ -218,18 +218,19 @@ function Wysiwyg_WikiTextToHtml($wikitext, $articleId = -1, $encode = false) {
 	$title = ($articleId == -1) ? $wgTitle : Title::newFromID($articleId);
 
 	$options = new ParserOptions();
-	$parser = new WysiwygParser();
-	$parser->setOutputType(OT_HTML);
+	$wysiwygParser = new WysiwygParser();
+	$wysiwygParser->setOutputType(OT_HTML);
 
 	$wgWysiwygParserTildeEnabled = true;
-	$wikitext = $parser->preSaveTransform($wikitext, $title, $wgUser, $options);
+	$wikitext = $wysiwygParser->preSaveTransform($wikitext, $title, $wgUser, $options);
 	$wgWysiwygParserTildeEnabled = false;
 
 	$wgWysiwygParserEnabled = true;
-	$html = $parser->parse($wikitext, $title, $options)->getText();
+	$html = $wysiwygParser->parse($wikitext, $title, $options)->getText();
 	$wgWysiwygParserEnabled = false;
 
-	$html = str_replace("\n<input", '<input', $html);
+	// replace placeholders with HTML
+	$html = strtr($html, $wgWysiwygMarkers);
 
 	wfDebug("Wysiwyg_WikiTextToHtml html: {$html}\n");
 
@@ -248,7 +249,7 @@ function Wysiwyg_HtmlToWikiText($html, $wysiwygData, $decode = false) {
  * @author Maciej Błaszkowski <marooned at wikia-inc.com>
  */
 function Wysiwyg_SetRefId($type, $params, $addMarker = true, $returnId = false) {
-	global $wgWysiwygMetaData;
+	global $wgWysiwygMetaData, $wgWysiwygParser, $wgWysiwygMarkers;
 
 	$refId = count($wgWysiwygMetaData);
 	$data = array('type' => $type);
@@ -330,6 +331,12 @@ function Wysiwyg_SetRefId($type, $params, $addMarker = true, $returnId = false) 
 		}
 		$result = htmlspecialchars($result);
 		$result = "<input type=\"button\" refid=\"{$refId}\" value=\"{$result}\" title=\"{$result}\" class=\"wysiwygDisabled\" />";
+
+		// macbre: use placeholders
+		$marker = "\x7f-wysiwyg-{$refId}-\x7f";
+		$wgWysiwygMarkers[$marker] = $result;
+
+		$result = $marker;
 	}
 
 	$wgWysiwygMetaData[$refId] = $data;
