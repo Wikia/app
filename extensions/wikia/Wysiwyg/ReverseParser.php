@@ -35,8 +35,8 @@ class ReverseParser {
 		$out = '';
 
 		if(is_string($html) && $html != '') {
-			// remove whitespace after <br /> and decode &nbsp;
 			$replacements = array(
+				// remove whitespace and decode &nbsp;
 				' <p>' => '<p>',
 				'<br /> ' => '<br />',
 				'&nbsp;' => ' ',
@@ -46,10 +46,13 @@ class ReverseParser {
 				' <dl' => '<dl',
 				' </dd>' => '</dd>',
 				' </dt>' => '</dt>',
-				' <pre>' => '<pre>'
+				' <pre>' => '<pre>',
+				// handle nested bold and italic
+				'</b><i><b>' => '<i>',
+				'</i><b><i>' => '<b>',
 			);
 
-			$html = str_replace(array_keys($replacements), array_values($replacements), $html);
+			$html = strtr($html, $replacements);
 
 			// fix for proper encoding of UTF characters
 			$html = '<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/></head><body>'.$html.'</body></html>';
