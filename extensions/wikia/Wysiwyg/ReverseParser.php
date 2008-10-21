@@ -275,7 +275,6 @@ class ReverseParser {
 						// B) closing tags
 						// 1, 2
 						if ($node->nextSibling && $node->nextSibling->hasChildNodes() &&
-							$node->isSameNode($node->parentNode->lastChild) &&
 							in_array($node->nextSibling->nodeName, array('i','b')) &&
 							$node->nextSibling->nodeName != $node->nodeName &&
 							$node->nextSibling->firstChild->nodeName == $node->nodeName) {
@@ -286,6 +285,7 @@ class ReverseParser {
 						
 						// 3, 4
 						if ($node->parentNode && $node->parentNode->nextSibling &&
+							$node->isSameNode($node->parentNode->lastChild) &&
 							in_array($node->parentNode->nodeName, array('i','b')) &&
 							$node->parentNode->nodeName != $node->nodeName &&
 							$node->parentNode->nextSibling->nodeName == $node->nodeName) {
