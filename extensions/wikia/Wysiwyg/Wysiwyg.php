@@ -278,7 +278,7 @@ function Wysiwyg_SetRefId($type, $params, $addMarker = true, $returnId = false) 
 		case 'category':
 			$data['href'] = ($params['noforce'] ? '' : ':') . $params['link'];
 			$data['description'] = $params['wasblank'] ? '' : $params['text'];
-			$result = "[[" . $data['href'] . ($params['wasblank'] ? '' : "|".htmlspecialchars($params['text'])) . "]]";
+			$result = "[[" . $data['href'] . ($params['wasblank'] ? '' : "|".$params['text']) . "]]";
 			break;
 
 		case 'external link: raw image':
@@ -301,7 +301,7 @@ function Wysiwyg_SetRefId($type, $params, $addMarker = true, $returnId = false) 
 				$data['lineStart'] = 1;
 			}
 			$data['description'] = $params['text'];
-			$result = htmlspecialchars($params['text']);
+			$result = $params['text'];
 			break;
 
 		case 'double underscore: toc':
@@ -324,6 +324,7 @@ function Wysiwyg_SetRefId($type, $params, $addMarker = true, $returnId = false) 
 		$params['text'] .= "\x1$refId\x1";
 	}
 	if($result != '') {
+		$result = htmlspecialchars($result);
 		$result = "<input type=\"button\" refid=\"{$refId}\" value=\"{$result}\" title=\"{$result}\" class=\"wysiwygDisabled\" />";
 	}
 
