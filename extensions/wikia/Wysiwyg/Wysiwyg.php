@@ -229,8 +229,6 @@ function Wysiwyg_WikiTextToHtml($wikitext, $articleId = -1, $encode = false) {
 	$html = $parser->parse($wikitext, $title, $options)->getText();
 	$wgWysiwygParserEnabled = false;
 
-	// TODO: Get rid of this preg_replace /Inez
-	$html = preg_replace('%<span refid="(\\d+)">(.*?)</span>%si', '<input type="button" refid="\\1" value="\\2" title="\\2" class="wysiwygDisabled" />', $html);
 	$html = str_replace("\n<input", '<input', $html);
 
 	wfDebug("Wysiwyg_WikiTextToHtml html: {$html}\n");
@@ -280,7 +278,7 @@ function Wysiwyg_SetRefId($type, $params, $addMarker = true, $returnId = false) 
 		case 'category':
 			$data['href'] = ($params['noforce'] ? '' : ':') . $params['link'];
 			$data['description'] = $params['wasblank'] ? '' : $params['text'];
-			$result = "<span refid=\"$refId\">[[" . $data['href'] . ($params['wasblank'] ? '' : "|{$params['text']}") . "]]</span>";
+			$result = "[[" . $data['href'] . ($params['wasblank'] ? '' : "|".htmlspecialchars($params['text'])) . "]]";
 			break;
 
 		case 'external link: raw image':
@@ -293,7 +291,7 @@ function Wysiwyg_SetRefId($type, $params, $addMarker = true, $returnId = false) 
 
 		case 'nowiki':
 			$data['description'] = $params['text'];
-			$result = "<span refid=\"$refId\">" . $params['text'] . "</span>";
+			$result = $params['text'];
 			break;
 
 		case 'curly brackets':
@@ -303,27 +301,30 @@ function Wysiwyg_SetRefId($type, $params, $addMarker = true, $returnId = false) 
 				$data['lineStart'] = 1;
 			}
 			$data['description'] = $params['text'];
-			$result = "<span refid=\"$refId\">" . htmlspecialchars($params['text']) . '</span>';
+			$result = htmlspecialchars($params['text']);
 			break;
 
 		case 'double underscore: toc':
 			$data['description'] = $params['text'];
-			$result = "<span refid=\"$refId\"><!--MWTOC--></span>";
+			$result = "<!--MWTOC-->";
 			break;
 
 		case 'double underscore':
 			$data['description'] = $params['text'];
-			$result = "<span refid=\"$refId\">{$params['text']}</span>";
+			$result = $params['text'];
 			break;
 
 		case 'tilde':
 			$data['description'] = $params['text'];
-			$result = "<span refid=\"$refId\">{$params['text']}</span>";
+			$result = $params['text'];
 			break;
 	}
 
-	if ($addMarker) {
+	if($addMarker) {
 		$params['text'] .= "\x1$refId\x1";
+	}
+	if($result != '') {
+		$result = "<input type=\"button\" refid=\"{$refId}\" value=\"{$result}\" title=\"{$result}\" class=\"wysiwygDisabled\" />";
 	}
 
 	$wgWysiwygMetaData[$refId] = $data;
