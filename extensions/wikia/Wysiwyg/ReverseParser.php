@@ -47,9 +47,18 @@ class ReverseParser {
 				' </dd>' => '</dd>',
 				' </dt>' => '</dt>',
 				' <pre>' => '<pre>',
+
 				// handle nested bold and italic
-				'</b><i><b>' => '<i>',
-				'</i><b><i>' => '<b>',
+				'</b><i><b>' => "\x7f-reverse-italic-\x7f", //'<i>',
+				'</i><b><i>' => "\x7f-reverse-bold-\x7f", //'<b>',
+				'</b></i><b>' => "\x7f-reverse-italic-\x7f", //'</i>',
+				'</i></b><i>' => "\x7f-reverse-bold-\x7f", //'</b>',
+			
+				// DOM doesn't like unvalid HTML
+				'<b>' => "\x7f-reverse-bold-\x7f",
+				'</b>' => "\x7f-reverse-bold-\x7f",
+				'<i>' => "\x7f-reverse-italic-\x7f",
+				'</i>' => "\x7f-reverse-italic-\x7f",
 			);
 
 			$html = strtr($html, $replacements);
@@ -66,8 +75,8 @@ class ReverseParser {
 			wfSuppressWarnings();
 			if($this->dom->loadHTML($html)) {
 				$body = $this->dom->getElementsByTagName('body')->item(0);
+				wfDebug("ReverseParser HTML from DOM: ".$this->dom->saveHTML()."\n");
 				$out = $this->parseNode($body);
-
 			}
 			wfRestoreWarnings();
 
@@ -78,6 +87,14 @@ class ReverseParser {
 				// remove ONE empty line from the beginning of wikitext
 				$out = substr($out, 1);
 			}
+
+			// replace markers
+			$replace = array(
+				"\x7f-reverse-italic-\x7f" => "''",
+				"\x7f-reverse-bold-\x7f" => "'''",
+			);
+
+			$out = strtr($out, $replace);
 
 			wfDebug("ReverseParser wikitext: {$out}\n");
 
@@ -239,39 +256,11 @@ class ReverseParser {
 
 					// text formatting
 					case 'i':
-					case 'em':
-						// handle nested bold and italic
-						// 0''12'''34''56'''789
-						if($node->parentNode && $node->parentNode->nextSibling && in_array($node->parentNode->nextSibling->nodeName, array('i','em'))) {
-							$open = "''";
-							$close = '';
-						}
-						else if ($node->previousSibling && in_array($node->previousSibling->nodeName, array('b','strong')) && $node->previousSibling->hasChildNodes() && in_array($node->previousSibling->lastChild->nodeName, array('i','em'))) {
-							$open = '';
-							$close = "''";
-						} else {
-							$open = $close = "''";
-						}
-
-						$out = "{$open}{$textContent}{$close}";
+						$out = "''{$textContent}{$close}''";
 						break;
 
 					case 'b':
-					case 'strong':
-						// handle nested bold and italic
-						// 0''12'''34''56'''789
-						if($node->parentNode && $node->parentNode->nextSibling && in_array($node->parentNode->nextSibling->nodeName, array('b','strong'))) {
-							$open = "'''";
-							$close = '';
-						}
-						else if ($node->previousSibling && in_array($node->previousSibling->nodeName, array('i','em')) && $node->previousSibling->hasChildNodes() && in_array($node->previousSibling->lastChild->nodeName, array('b','strong'))) {
-							$open = '';
-							$close ="'''";
-						} else {
-							$open = $close = "'''";
-						}
-
-						$out = "{$open}{$textContent}{$close}";
+						$out = "'''{$textContent}'''";
 						break;
 
 					// tables
