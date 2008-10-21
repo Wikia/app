@@ -47,18 +47,6 @@ class ReverseParser {
 				' </dd>' => '</dd>',
 				' </dt>' => '</dt>',
 				' <pre>' => '<pre>',
-
-				// handle nested bold and italic
-				'</b><i><b>' => "\x7f-reverse-italic-\x7f", //'<i>',
-				'</i><b><i>' => "\x7f-reverse-bold-\x7f", //'<b>',
-				'</b></i><b>' => "\x7f-reverse-italic-\x7f", //'</i>',
-				'</i></b><i>' => "\x7f-reverse-bold-\x7f", //'</b>',
-			
-				// DOM doesn't like unvalid HTML
-				'<b>' => "\x7f-reverse-bold-\x7f",
-				'</b>' => "\x7f-reverse-bold-\x7f",
-				'<i>' => "\x7f-reverse-italic-\x7f",
-				'</i>' => "\x7f-reverse-italic-\x7f",
 			);
 
 			$html = strtr($html, $replacements);
@@ -87,14 +75,6 @@ class ReverseParser {
 				// remove ONE empty line from the beginning of wikitext
 				$out = substr($out, 1);
 			}
-
-			// replace markers
-			$replace = array(
-				"\x7f-reverse-italic-\x7f" => "''",
-				"\x7f-reverse-bold-\x7f" => "'''",
-			);
-
-			$out = strtr($out, $replace);
 
 			wfDebug("ReverseParser wikitext: {$out}\n");
 
@@ -255,14 +235,68 @@ class ReverseParser {
 						break;
 
 					// text formatting
+					// 1 '</b><i><b>' => '<i>'
+					// 2 '</i><b><i>' => '<b>'
+					// 3 '</b></i><b>' => '</i>'
+					// 4 '</i></b><i>' => '</b>'
 					case 'i':
-						$out = "''{$textContent}{$close}''";
-						break;
-
 					case 'b':
-						$out = "'''{$textContent}'''";
-						break;
+						switch($node->nodeName) {
+							case 'i':
+								$open = $close = "''";
+								break;
+							case 'b':
+								$open = $close = "'''";
+								break;
+						}
 
+						// A) opening tags
+						// 1, 2
+						if ($node->parentNode && $node->parentNode->previousSibling &&
+							$node->isSameNode($node->parentNode->firstChild) &&
+							in_array($node->parentNode->nodeName, array('i','b')) &&
+							$node->parentNode->nodeName != $node->nodeName &&
+							$node->parentNode->previousSibling->nodeName == $node->nodeName) {
+							// don't open bold (1) / italic (2)
+							wfDebug("ReverseParser: </b><i><b> open\n");
+							$open = '';
+						}
+
+						// 3, 4
+						if ($node->previousSibling && $node->previousSibling->hasChildNodes() &&
+							in_array($node->previousSibling->nodeName, array('i','b')) &&
+							$node->previousSibling->nodeName != $nodeName &&
+							$node->previousSibling->lastChild->nodeName == $node->nodeName) {
+							// don't open bold (3) / italic (4)
+							wfDebug("ReverseParser: </b></i><b> open\n");
+							$open = '';
+						}
+
+						// B) closing tags
+						// 1, 2
+						if ($node->nextSibling && $node->nextSibling->hasChildNodes() &&
+							$node->isSameNode($node->parentNode->lastChild) &&
+							in_array($node->nextSibling->nodeName, array('i','b')) &&
+							$node->nextSibling->nodeName != $node->nodeName &&
+							$node->nextSibling->firstChild->nodeName == $node->nodeName) {
+							// don't close bold (1) / italic (2)
+							wfDebug("ReverseParser: </b><i><b> close\n");
+							$close = '';
+						}
+						
+						// 3, 4
+						if ($node->parentNode && $node->parentNode->nextSibling &&
+							in_array($node->parentNode->nodeName, array('i','b')) &&
+							$node->parentNode->nodeName != $node->nodeName &&
+							$node->parentNode->nextSibling->nodeName == $node->nodeName) {
+							// don't close bold (3) / italic (4)
+							wfDebug("ReverseParser: </i></b><i> close\n");
+							$close = '';
+						}
+						$out = "{$open}{$textContent}{$close}";
+
+						wfDebug("ReverseParser: $out\n");
+						break;
 					// tables
 					// @see http://en.wikipedia.org/wiki/Help:Table
 					case 'table':
