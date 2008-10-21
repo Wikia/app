@@ -5,6 +5,22 @@ var inputClickCommand = new FCKDialogCommand('inputClickCommand', '&nbsp;', FCKC
 
 var originalSwitchEditMode = FCK.SwitchEditMode;
 
+FCK.WysiwygSwitchToolbars = function(switchToWikitext) {
+	var toolbarItems = document.getElementById('xToolbar').getElementsByTagName('tr')[0].childNodes;
+	var MWtoolbar = window.parent.document.getElementById('toolbar');
+
+	// move MW toolbar next to "Source" button
+	MWtoolbar.style.marginLeft = (toolbarItems[1].offsetWidth+27) + 'px';
+
+	// show/hide FCK toolbar items
+	for (t=0; t<toolbarItems.length; t++) {
+		toolbarItems[t].style.display = (switchToWikitext && t > 1) ? 'none' : '';
+	}
+
+	// show/hide MW toolbar	
+	MWtoolbar.style.visibility = switchToWikitext ? 'visible' : 'hidden';
+}
+
 FCK.SwitchEditMode = function() {
 
 	if(FCK.InProgress == true) {
@@ -57,6 +73,7 @@ FCK.SwitchEditMode = function() {
 			FCK.EditingArea.TargetElement.className = '';
 			setTimeout(function() {FCK.InProgress = false;}, 100);
 			FCK.EditingArea.Focus(); // macbre: moved here from fck.js
+			FCK.WysiwygSwitchToolbars(false);
 		});
 
 		if (FCK.Track) FCK.Track('/switchMode/wiki2html');
@@ -76,6 +93,7 @@ FCK.Events.AttachEvent( 'OnAfterSetHTML', function() {
 			FCK.EditingArea.TargetElement.className = '';
 			setTimeout(function() {FCK.InProgress = false;}, 100);
 			FCK.EditingArea.Focus(); // macbre: moved here from fck.js
+			FCK.WysiwygSwitchToolbars(true);
 		});
 
 		if (FCK.Track) FCK.Track('/switchMode/html2wiki');
