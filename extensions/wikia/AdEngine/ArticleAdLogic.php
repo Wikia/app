@@ -326,7 +326,12 @@ class ArticleAdLogic {
 
 	
 	public function isContentPage(){
-                global $wgTitle, $wgContentNamespaces;
+                global $wgTitle, $wgContentNamespaces, $wgRequest;
+		if ($wgRequest->getVal( 'diff') != ''){
+			// Don't display ads on diff pages
+			return false;
+		}
+		
                 if (is_object($wgTitle)){ 
 			return in_array($wgTitle->getNamespace(), array_merge( $wgContentNamespaces, array(NS_MAIN, NS_IMAGE, NS_CATEGORY) ));	
 		} else {

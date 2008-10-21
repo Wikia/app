@@ -364,7 +364,7 @@ class AdEngine {
 
 		$out .=  $this->getBucketTestingCode();
 		
-		$out .= '<script type="text/javascript">TieDivLibrary.timer()</script>';
+		$out .= '<script type="text/javascript">TieDivLibrary.timer()</script>' . "\n";
 
 		// Get the setup code for ad providers used on this page. This is for Ad Providers that support multi-call.
 		foreach ($this->placeholders as $slotname => $load_priority){
@@ -395,7 +395,7 @@ class AdEngine {
 			$out .= '<script type="text/javascript">' .
 				'AdEngine.displaySlotIfAd("'. $slotname .'");' .
 				'TieDivLibrary.tie("'. $slotname .'");' .
-				'</script>';
+				'</script>' . "\n";
 		}
 		$out .= "<!-- #### END " . __CLASS__ . '::' . __METHOD__ . " ####-->\n";
 		return $out;
