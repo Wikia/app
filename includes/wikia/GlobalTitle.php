@@ -105,7 +105,7 @@ class GlobalTitle {
 		$this->loadAll();
 		$namespace = wfUrlencode( $this->getNsText() );
 
-		if( $this->mNamespace !== NS_MAIN ) {
+		if( !empty( $this->mNamespace ) ) {
 			$namespace .= ":";
 		}
 		/**

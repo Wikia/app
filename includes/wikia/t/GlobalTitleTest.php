@@ -64,6 +64,9 @@ class GlobalTitleCase extends UnitTestCase {
 		$this->assertTrue( $title->getFullURL( wfArrayToCGI(array( "diff" => 0, "oldid" => 500 ) ) ) === $url, sprintf("%s = %s, NOT MATCH", $title->getFullURL(), $url ) );
 		;
 
+		$title = GlobalTitle::newFromText( "Strona główna", false, 1686 ); # pl.wikia.com
+		$url = "http://pl.wikia.com/wiki/Strona_g%C5%82%C3%B3wna?diff=0&oldid=500";
+		$this->assertTrue( $title->getFullURL( wfArrayToCGI(array( "diff" => 0, "oldid" => 500 ) ) ) === $url, "NOT MATCH" );
 	}
 
 };
