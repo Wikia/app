@@ -116,7 +116,7 @@ class EditAccount extends SpecialPage {
 			$this->mUser->saveSettings();
 
 			$log = new LogPage('editaccnt');
-			$log->addEntry('passchange', $wgTitle, '', array($this->mUser->getUserPage));
+			$log->addEntry('passchange', $wgTitle, '', array($this->mUser->getUserPage()));
 
 			$this->mStatusMsg = wfMsg('editaccount-success-pass', $this->mUser->mName);
 			return true;
