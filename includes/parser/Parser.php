@@ -2829,9 +2829,7 @@ class Parser
 			}
 			$templateText = implode('', $frame->virtualBracketedImplode('{{', '|', '}}', $titleWithSpaces, $textArgs));
 			$text = Wysiwyg_SetRefId('curly brackets', array('text' => &$templateText, 'lineStart' => $piece['lineStart']), false);
-			wfProfileOut( $fname );
-			// macbre: avoid HTML modifications by MW 
-			return array('text' => $this->insertStripItem( $text ));
+			$found = true;
 		}
 
 		# SUBST
