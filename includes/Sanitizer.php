@@ -344,7 +344,7 @@ class Sanitizer {
 	 * @return string
 	 */
 	static function removeHTMLtags( $text, $processCallback = null, $args = array(), $extratags = array() ) {
-		global $wgUseTidy, $wgWysiwygParserEnabled;
+		global $wgUseTidy;
 
 		static $htmlpairs, $htmlsingle, $htmlsingleonly, $htmlnest, $tabletags,
 			$htmllist, $listtags, $htmlsingleallowed, $htmlelements, $staticInitialised;
@@ -407,7 +407,7 @@ class Sanitizer {
 				}
 
 				$badtag = 0 ;
-				if ( isset( $htmlelements[$t = strtolower( $t )] ) || ($wgWysiwygParserEnabled && $t == 'input')) {
+				if ( isset( $htmlelements[$t = strtolower( $t )] ) ) {
 					# Check our stack
 					if ( $slash ) {
 						# Closing a tag...
@@ -481,11 +481,7 @@ class Sanitizer {
 						}
 
 						# Strip non-approved attributes from the tag
-						if($wgWysiwygParserEnabled && $t == 'input') {
-							$newparams = $params;
-						} else {
-							$newparams = Sanitizer::fixTagAttributes( $params, $t );
-						}
+						$newparams = Sanitizer::fixTagAttributes( $params, $t );
 					}
 					if ( ! $badtag ) {
 						$rest = str_replace( '>', '&gt;', $rest );
