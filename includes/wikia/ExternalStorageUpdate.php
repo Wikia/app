@@ -5,11 +5,18 @@
  */
 
 
-$wgHooks[ "RevisionInsertComplete" ][] = "ExternalStorageUpdate::addDeferredUpdate";
+$wgHooks[ "RevisionInsertComplete" ][]	= "ExternalStorageUpdate::addDeferredUpdate";
+$wgHooks[ "ArticleDeleteComplete" ][]	= "ExternalStorageUpdate::deleteArticleExternal";
+$wgHooks[ "RevisionHiddenComplete" ][]	= "ExternalStorageUpdate::hiddenArticleExternal";
+$wgHooks[ "ArticleRevisionUndeleted" ][] = "ExternalStorageUpdate::undeleteArticleExternal";
 
 class ExternalStorageUpdate {
 
 	private $mId, $mUrl, $mPageId, $mRevision, $mFlags;
+	const 
+		REV_ACTIVE 	= 'active', /*default*/
+		REV_DELETED = 'delete',
+		REV_HIDDEN 	= 'hidden';		
 
 	public function __construct( $url, $revision, $flags ) {
 		$this->mUrl = $url;
@@ -50,7 +57,7 @@ class ExternalStorageUpdate {
 
 			$dbw = wfGetDBExt( DB_MASTER, $cluster );
 			$ip = ip2long(wfGetIP());
-
+			
 			$ret = $dbw->update(
 				"blobs",
 				array(
@@ -75,15 +82,15 @@ class ExternalStorageUpdate {
 				$Row = $dbw->selectRow(
 					"pages",
 					array( "page_id" ),
-					array(
-						"page_id" => $this->mPageId,
-						"page_wikia_id" => $wgCityId
+					array( 
+						"page_id" => $this->mPageId, 
+						"page_wikia_id" => $wgCityId 
 					),
 					__METHOD__
 				);
 				if( isset( $Row->page_id ) && !empty( $Row->page_id ) ) {
 					/**
-					 * update, but do this only when different
+					 * update
 					 */
 					$title = $Title->getText();
 					$namespace = $Title->getNamespace();
@@ -92,8 +99,8 @@ class ExternalStorageUpdate {
 							"pages",
 							array(
 								"page_wikia_id"  => $wgCityId,
-								"page_namespace" => $namespace,
-								"page_title"     => $title,
+								"page_namespace" => $Title->getNamespace(),
+								"page_title"     => $Title->getText(),
 							),
 							array(
 								"page_id"        => $this->mPageId,
@@ -119,6 +126,7 @@ class ExternalStorageUpdate {
 						__METHOD__
 					);
 				}
+
 				/**
 				 * be sure that data is written
 				 */
@@ -158,4 +166,142 @@ class ExternalStorageUpdate {
 		}
 		return true;
 	}
+	
+	/**
+	 * deleteArticleExternal
+	 *
+	 * static method called as hook
+	 *
+	 * @static
+	 * @access public
+	 * @author Piotr Molski <moli@wikia.com>
+	 *
+	 * @param Revision	$oArticle	article object
+	 * @param User		$oUser		user object
+	 * @param string	$reason		reason of object removing 
+	 * @param int		$page_id	page_id to remove
+	 *
+	 * @return true means process other hooks
+	 */
+	static public function deleteArticleExternal(&$oArticle, &$oUser, $reason, $page_id) {
+		global $wgCityId;
+		
+		wfProfileIn( __METHOD__ );
+		if ($oArticle instanceof Article) {
+			$dbw = wfGetDBExt( DB_MASTER );
+			/* begin transaction */			
+			$dbw->begin();
+			/* set revision as 'removed' in blobs table */
+			$where = array( 
+				"rev_page_id"	=> $page_id,
+				"rev_wikia_id"	=> $wgCityId
+			);
+			$ret = $dbw->update( "blobs", array( "rev_status" => self::REV_DELETED), $where, __METHOD__ );
+			/* remove page from pages table */
+			$dbw->delete( "pages", array( "page_id"	=> $page_id, "page_wikia_id" => $wgCityId), __METHOD__ );
+			/* commit */
+			$dbw->immediateCommit();
+		}
+		wfProfileOut( __METHOD__ );
+		return true;
+	}
+	
+	/**
+	 * hiddenArticleExternal
+	 *
+	 * static method called as hook
+	 *
+	 * @static
+	 * @access public
+	 * @author Piotr Molski <moli@wikia.com>
+	 *
+	 * @param Revision	$oRevision revision object
+	 *
+	 * @return true means process other hooks
+	 */
+	static public function hiddenArticleExternal(&$oRevision) {
+		global $wgCityId;
+		
+		wfProfileIn( __METHOD__ );
+		if ($oRevision instanceof Revision) {
+			
+			$dbw = wfGetDBExt( DB_MASTER );
+			/* set revision as 'hidden' in blobs table */
+			$ret = $dbw->update(
+				"blobs",
+				array (
+					"rev_status"	=> self::REV_HIDDEN,
+				),
+				array ( 
+					"rev_id" 		=> $oRevision->getId(),
+					"rev_page_id"	=> $oRevision->getPage(),
+					"rev_wikia_id"	=> $wgCityId,
+				),
+				__METHOD__
+			);
+			if( $dbw->getFlag( DBO_TRX ) ) {
+				$dbw->commit();
+			}
+		}
+		wfProfileOut( __METHOD__ );
+		return true;
+	}
+
+	/**
+	 * deleteArticleExternal
+	 *
+	 * static method called as hook
+	 *
+	 * @static
+	 * @access public
+	 * @author Piotr Molski <moli@wikia.com>
+	 *
+	 * @param Revision	$oArticle	article object
+	 * @param User		$oUser		user object
+	 * @param string	$reason		reason of object removing 
+	 * @param int		$page_id	page_id to remove
+	 *
+	 * @return true means process other hooks
+	 */
+	static public function undeleteArticleExternal(&$oTitle, $oRevision, $page_id) {
+		global $wgCityId;
+		
+		wfProfileIn( __METHOD__ );
+		if ($oRevision instanceof Revision) {
+			$dbw = wfGetDBExt( DB_MASTER );
+			/* update revision mark as 'active' in blobs table */
+			$whereActive = array (
+				"rev_id" 		=> $oRevision->getId(),
+				"rev_wikia_id"	=> $wgCityId,
+				"blob_text is not NULL"
+			);
+
+			$ret = $dbw->update(
+				"blobs",
+				array (
+					"rev_status"	=> self::REV_ACTIVE,
+					"rev_page_id"	=> $oRevision->getPage(),
+				), $whereActive, __METHOD__
+			);
+			$whereNotActive = array( 
+				"rev_id" => $oRevision->getId(), 
+				"rev_page_id"	=> $oRevision->getPage(),
+				"rev_wikia_id" => $wgCityId, 
+				" blob_text is NULL "
+			); 
+
+			$dbw->update( 
+				"blobs", 
+				array (
+					"rev_status"	=> self::REV_DELETED,
+				), $whereNotActive, __METHOD__);
+		}
+
+		if( $dbw->getFlag( DBO_TRX ) ) {
+			$dbw->commit();
+		}
+		wfProfileOut( __METHOD__ );
+		return true;
+	}
+	
 };
