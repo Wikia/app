@@ -44,7 +44,7 @@ function wfWikiaBotJSInsert(&$skin, &$tpl) {
 				}
 
 				// prevent caching
-				url += '&rand=' + Math.random();
+				url += '&rand=' + (new Date() * 1);
 
 				img = new Image();
 				img.src = 'http://ws2.poz.wikia-inc.com/~lukasz/ael.php?' + url;
