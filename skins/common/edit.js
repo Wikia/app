@@ -67,9 +67,9 @@ function mwSetupToolbar() {
 function insertTags(tagOpen, tagClose, sampleText) {
 	var txtarea;
 	if (document.editform) {
-		if (window.frames['FCKwpTextbox1']) {
+		if (typeof FCKeditorAPI != 'undefined') {
 			// wikia: support for wysiwyg editor
-			txtarea = window.frames['FCKwpTextbox1'].document.getElementById('xEditingArea').firstChild;
+			txtarea = FCKeditorAPI.GetInstance('wpTextbox1').EditingArea.TargetElement.firstChild;
 		}
 		else {
 			txtarea = document.editform.wpTextbox1;
