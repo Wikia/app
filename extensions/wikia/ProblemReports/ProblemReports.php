@@ -39,7 +39,7 @@ if (!defined('MEDIAWIKI')) die();
 $wgExtensionCredits['other'][] = array(
 	'name' => 'ProblemReports',
 	'url' => 'http://help.wikia.com/wiki/Help:ProblemReports',
-	'version' => '2.3',
+	'version' => '2.4',
 	'description' => 'Allows users to report problems with wiki-articles and helpers/sysops/janitors/staff to view & resolve them',
 	'author' => '[http://pl.wikia.com/wiki/User:Macbre Maciej Brencz]'
 );
