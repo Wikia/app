@@ -22,7 +22,8 @@ class AdProviderOpenX implements iAdProvider {
 		'LEFT_SKYSCRAPER_1' => 632,
 		'LEFT_SKYSCRAPER_2' => 633,
 		'LEFT_SKYSCRAPER_3' => 652, 
-		'FOOTER_BOXAD' => 634
+		'FOOTER_BOXAD' => 634,
+		'RIGHT_SKYSCRAPER_1' => 452 // Monobook
 	);
 
 	private $spotlightCategoryZones = array(

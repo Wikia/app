@@ -31,7 +31,7 @@ class AdProviderGoogle implements iAdProvider {
 	}
 
         public function getAd($slotname, $slot){
-                global $AdEngine;
+                global $AdEngine, $wgUser;
                 $dim=AdEngine::getHeightWidthFromSize($slot['size']);
 
                 $out = "<!-- " . __CLASS__ . " slot: $slotname -->";
@@ -40,12 +40,20 @@ class AdProviderGoogle implements iAdProvider {
                         google_ad_width     = "' . $dim['width'] . '";
 			google_ad_height    = "' . $dim['height'] . '";
                         google_ad_format    = google_ad_width + "x" + google_ad_height + "_as";
-                        google_ad_type      = "text";
-                        google_color_border = AdEngine.getAdColor("text");
+                        google_ad_type      = "text";' . "\n";
+
+                $skin_name = null;
+                if (is_object($wgUser)){
+                        $skin_name = $wgUser->getSkin()->getSkinName();
+                }
+                if ( $skin_name == 'monaco' ){
+		  // getAdColor only works in monaco
+		  $out.='google_color_border = AdEngine.getAdColor("text");
                         google_color_bg     = AdEngine.getAdColor("bg");
                         google_color_link   = AdEngine.getAdColor("link");
                         google_color_text   = AdEngine.getAdColor("text");
                         google_color_url    = AdEngine.getAdColor("url");' . "\n";
+		}
 	
 		$channel = $this->getChannel();
 	       	$out.= 'google_ad_channel      = "' . addslashes($channel) . '";' . "\n";

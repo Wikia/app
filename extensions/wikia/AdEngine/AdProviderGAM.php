@@ -126,8 +126,14 @@ class AdProviderGAM implements iAdProvider {
 		$channel = $this->getChannel();
 		$out = '';
 
-		if ($channel != "6359157529"){
+		global $wgUser;
+		$skin_name = null;
+		if (is_object($wgUser)){
+			$skin_name = $wgUser->getSkin()->getSkinName();
+		}
+		if ($channel != "6359157529" && $skin_name == 'monaco' ){
 			// Set the colors to match the wiki, except for "6359157529", which is testing white
+			// This is only available in monaco
 			$out .= 'GA_googleAddAdSensePageAttr("google_color_border", AdEngine.getAdColor("text"));' . "\n";
 			$out .= 'GA_googleAddAdSensePageAttr("google_color_bg", AdEngine.getAdColor("bg"));' . "\n";
 			$out .= 'GA_googleAddAdSensePageAttr("google_color_link", AdEngine.getAdColor("link"));' . "\n";
