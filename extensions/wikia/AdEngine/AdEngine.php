@@ -18,7 +18,7 @@ interface iAdProvider {
 
 class AdEngine {
 
-	const cacheKeyVersion = "2.0";
+	const cacheKeyVersion = "2.01b";
 	const cacheTimeout = 1800;
 
 	// TODO: pull these from wikicities.provider
@@ -27,6 +27,8 @@ class AdEngine {
 	private $slots = array();
 
 	private $placeholders = array();
+
+	private $loadType = 'delayed';
 
 	protected static $instance = false;
 	
@@ -82,14 +84,28 @@ class AdEngine {
 		//$wgExtensionsPath='/extensions';
 		$out .= '<script type="text/javascript" src="' . $wgExtensionsPath . '/wikia/AdEngine/AdEngine.js?' . self::cacheKeyVersion . '"></script>'. "\n";
 
+		// If loading the ads inline, call the set up html for each provider.
+		// If loading delayed, this is done in getDelayedAdLoading method instead.
+		if ($this->loadType == 'inline'){
+			foreach($this->slots as $slotname => $slot) {
+                        	$AdProvider = $this->getAdProvider($slotname);        
+                        	// Get setup HTML for each provider. May be empty.
+                        	$out .= $AdProvider->getSetupHtml();
+                        }
+		}
+
 		$out .= "<!-- #### END " . __CLASS__ . '::' . __METHOD__ . " ####-->\n";
 			
 		return $out;
 	}
 
 	public function loadConfig() {
-		$skin_name = 'monaco'; // Hard code for now.
-		global $wgMemc, $wgCityId;
+		global $wgMemc, $wgCityId, $wgUser;
+
+                $skin_name = null;
+                if ( is_object($wgUser)){
+                        $skin_name = $wgUser->getSkin()->getSkinName();
+                }
 
 		$cacheKey = wfMemcKey(__CLASS__ . 'slots', $skin_name, self::cacheKeyVersion);
 		$this->slots = $wgMemc->get($cacheKey);
@@ -311,8 +327,11 @@ class AdEngine {
 
 		$style = ' style="'. implode(" ", $styles) .'" class="wikia_ad_placeholder"';
 
-		// We will use these at the bottom of the page for ads.
+		// We will use these at the bottom of the page for ads, if delayed ad loading is enabled
 		$this->placeholders[$slotname]=$this->slots[$slotname]['load_priority'];
+
+		// Fill in slotsToCall with a list of slotnames that will be used. Needed for getBatchCallHtml
+		$AdProvider->addSlotToCall($slotname);
 		
 		return "<div id=\"$slotname\"$style></div>";
 	}
@@ -369,8 +388,6 @@ class AdEngine {
 		// Get the setup code for ad providers used on this page. This is for Ad Providers that support multi-call.
 		foreach ($this->placeholders as $slotname => $load_priority){
 	                $AdProvider = $this->getAdProvider($slotname);
-			// Fill in slotsToCall with a list of slotnames that will be used. Needed for getBatchCallHtml
-			$AdProvider->addSlotToCall($slotname);
 
 			// Get setup HTML for each provider. May be empty.
 			$out .= $AdProvider->getSetupHtml();
@@ -422,10 +439,25 @@ class AdEngine {
 
 		switch ($this->slots[$slotname]['size']){
 			case '200x75': return 'spotlight';
+			case '120x120': return 'spotlight';
 			case '728x90': return 'leaderboard';
 			case '300x250': return 'boxad';
 			case '160x600': return 'skyscraper';
+			case '120x600': return 'skyscraper';
 			default: return NULL;
+		}
+	}
+
+
+	/* Either 'delayed' or 'inline' */
+	public function setLoadType($loadType){
+		$this->loadType = $loadType;
+		if ($loadType == 'inline'){
+			// Fill in slotsToCall with a list of slotnames that will be used. Needed for getBatchCallHtml
+			foreach($this->slots as $slotname => $slot) {
+				$AdProvider = $this->getAdProvider($slotname);
+				$AdProvider->addSlotToCall($slotname);
+			}
 		}
 	}
 
