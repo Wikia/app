@@ -97,7 +97,9 @@ Software bugs can be reported on the forums. Reports made here will be [[Special
 		
 		'pr_remove_ask'  => 'Permanently remove report?',
 
-		'pr_status_wait' => 'wait...'
+		'pr_status_wait' => 'wait...',
+
+		'pr_read_only' => 'New reports cannot be filled right now, please try again later.',
 	);
 	
 $messages['pl'] = array
@@ -182,6 +184,8 @@ Błędy w oprogramowaniu mogą być zgłaszane na forach. Problemy zgłaszane tu
 		
 		'pr_remove_ask'  => 'Na pewno usunąć raport?',
 
-		'pr_status_wait' => 'czekaj...'
+		'pr_status_wait' => 'czekaj...',
+
+		'pr_read_only' => 'Nowe zgłoszenia nie mogą zostać teraz dodane, prosimy spróbować później.',
 	);
 

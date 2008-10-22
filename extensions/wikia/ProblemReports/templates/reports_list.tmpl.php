@@ -96,7 +96,7 @@
 <?php endif ?><?php if ($isStaff && $problem['anon'] == 0) :?>(<?= $problem['ip'] ?>)
 <?php endif ?>	</td>
 	<td style="text-align: center; width: 65px" id="problemReportsList-problem-<?= $problem['id'] ?>-status"><em class="reportProblemStatus<?= $problem['status'] ?>"><?= wfMsg('pr_status_'.$problem['status']) ?></em></td>
-<?php if ( $can_do_actions ) {
+<?php if ( $can_do_actions && !$is_readonly ) {
 
 	echo "\t".'<td style="width: 120px" id="problemReportsActions-'.$problem['id'].'">';
 
@@ -109,6 +109,8 @@
 	}
 	
 	echo "\n\t</td>";
+} else if ($is_readonly) {
+	echo "\t".'<td style="width: 120px" class="readOnlyInfo">'.wfMsg('readonly').'</td>';
 }
 ?>
 

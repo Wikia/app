@@ -25,6 +25,12 @@
 	margin-left: 2px;
 }
 
+.problemReportsList td.readOnlyInfo {
+	font-size: 0.85em;
+	text-align: center;
+	color: #666;
+}
+
 .problemReportsList .problemReportsDescription div {
 	overflow: auto !important;
 	display: block;
