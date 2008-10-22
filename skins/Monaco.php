@@ -1448,7 +1448,7 @@ if(!$custom_article_footer && $displayArticleFooter) {
 		$this->html('headscripts');
 	}
 
-if (in_array("TOP_RIGHT_BOXAD", AdEngine::getInstance()->getPlaceholders())){
+if (array_key_exists("TOP_RIGHT_BOXAD", AdEngine::getInstance()->getPlaceholders())){
 	// Reset elements with a "clear:none" to "clear:right" when the box ad is displayed
         // Fixes pages like this: http://en.dcdatabaseproject.com/Fang_Zhifu_(New_Earth)
 	echo '<script type="text/javascript">AdEngine.resetCssClear("right");</script>' . "\n";
