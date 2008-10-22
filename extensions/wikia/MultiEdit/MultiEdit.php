@@ -245,7 +245,12 @@ function wfMultiEditFormExt( $rows, $cols, $ew, $textbox1 )
 			}    			
 		}
 		#---	
-	    $wgOut->addHTML( '<tr><td colspan="2"><b>'.$name.'</b>'.$title_for_html.'<br />'.$descr_for_html );
+	    if ('' != $title_for_html) {
+		    $wgOut->addHTML( '<tr><td colspan="2"><b>'.$title_for_html.'</b><br />'.$descr_for_html );
+	    } else {
+		    $wgOut->addHTML( '<tr><td colspan="2"><b>'.$name.'</b><br />'.$descr_for_html );
+
+	    }
 
 		/**********************************************
 		 * 
