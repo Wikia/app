@@ -104,6 +104,7 @@ class ExternalStorageUpdate {
 							),
 							array(
 								"page_id"        => $this->mPageId,
+								"page_wikia_id"  => $wgCityId
 							),
 							__METHOD__
 						);
