@@ -63,7 +63,7 @@ function Wysywig_Ajax($type, $input = false, $wysiwygData = false, $articleId = 
 }
 
 function Wysiwyg_Initial($form) {
-	global $wgUser, $wgOut, $IP, $wgExtensionsPath, $wgStyleVersion, $wgHooks;
+	global $wgUser, $wgOut, $IP, $wgExtensionsPath, $wgStyleVersion, $wgHooks, $wgWysiwygEdgeCasesFound;
 
 	// check user preferences option
 	if($wgUser->getOption('disablewysiwyg') == true) {
@@ -82,12 +82,11 @@ function Wysiwyg_Initial($form) {
 		return true;
 	}
 
-	// do not initialize for articles in which edge case occured
-	$edgeCasesText = Wysiwyg_CheckEdgeCases($form->textbox1);
-	if($edgeCasesText != '') {
-		$wgOut->setSubtitle('<div id="FCKEdgeCaseMessages" class="usermessage">'.$edgeCasesText.'</div>');
-		return true;
-	}
+	// initialize FCK in source mode for articles in which edge case occured
+	$wgWysiwygEdgeCasesFound = Wysiwyg_CheckEdgeCases($form->textbox1) != '' ? 1 : 0;
+
+	//if ($edgeCasesFound) return true;
+
 	$script = <<<EOT
 <script type="text/javascript" src="$wgExtensionsPath/wikia/Wysiwyg/fckeditor/fckeditor.js?$wgStyleVersion"></script>
 <script type="text/javascript">
@@ -101,8 +100,10 @@ function FCKeditor_OnComplete(editorInstance) {
 		}
 	}
 }
+
 function initEditor() {
 	if($('wmuLink')) $('wmuLink').parentNode.style.display = 'none';
+	var edgeCasesFound = $wgWysiwygEdgeCasesFound;
 	var oFCKeditor = new FCKeditor("wpTextbox1");
 	oFCKeditor.wgStyleVersion = wgStyleVersion;
 	oFCKeditor.BasePath = "$wgExtensionsPath/wikia/Wysiwyg/fckeditor/";
@@ -111,6 +112,27 @@ function initEditor() {
 	oFCKeditor.Height = '450px';
 	oFCKeditor.Width = document.all ? '99%' : '100%'; // IE fix
 	oFCKeditor.ReplaceTextarea();
+
+	if (edgeCasesFound) {
+		// fallback to source mode
+		var iFrame = document.getElementById('wpTextbox1___Frame');
+		iFrame.style.visibility = 'hidden';
+
+		var intervalId = setInterval(function() {
+			// wait for FCKeditorAPI to be fully loaded
+			if (typeof FCKeditorAPI != 'undefined') {
+				var FCK = FCKeditorAPI.GetInstance('wpTextbox1');
+				// wait for FCK to be fully loaded
+				if (FCK.Status == FCK_STATUS_COMPLETE) {
+					clearInterval(intervalId);
+					FCK.originalSwitchEditMode.apply(FCK, []);
+					FCK.WysiwygSwitchToolbars(true);
+					FCK.SetData( document.getElementById('wpTextbox1').value );
+					iFrame.style.visibility = 'visible';
+				}
+			}
+		}, 250);
+	}
 
 	// macbre: tracking
 	if (typeof YAHOO != 'undefined') {
@@ -122,6 +144,9 @@ function initEditor() {
 
 			YAHOO.Wikia.Tracker.trackByStr(e, 'wysiwyg/' + buttonId + '/' + (editorSourceMode ? 'wikitextmode' : 'visualmode'));
 		});
+		if (edgeCasesFound) {
+			YAHOO.Wikia.Tracker.trackByStr(null, 'wysiwyg/edgecase');
+		}
 	}
 }
 addOnloadHook(initEditor);
@@ -148,8 +173,14 @@ EOT;
 }
 
 function Wysiwyg_Initial2($form) {
-	global $wgWysiwygData;
-	list($form->textbox1, $wgWysiwygData) = Wysiwyg_WikiTextToHtml($form->textbox1, -1, true);
+	global $wgWysiwygData, $wgWysiwygEdgeCasesFound;
+
+	if (empty($wgWysiwygEdgeCasesFound)) {
+		list($form->textbox1, $wgWysiwygData) = Wysiwyg_WikiTextToHtml($form->textbox1, -1, true);
+	}
+	else {
+		$wgWysiwygData = '';
+	}
 	return true;
 }
 

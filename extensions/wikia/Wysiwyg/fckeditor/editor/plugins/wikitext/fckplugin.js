@@ -3,7 +3,7 @@ FCKCommands.RegisterCommand('Link', new FCKDialogCommand('Link', FCKLang.DlgLnkW
 
 var inputClickCommand = new FCKDialogCommand('inputClickCommand', '&nbsp;', FCKConfig.PluginsPath + 'wikitext/dialogs/inputClick.html', 400, 100);
 
-var originalSwitchEditMode = FCK.SwitchEditMode;
+FCK.originalSwitchEditMode = FCK.SwitchEditMode;
 
 FCK.WysiwygSwitchToolbars = function(switchToWikitext) {
 	var toolbarItems = document.getElementById('xToolbar').getElementsByTagName('tr')[0].childNodes;
@@ -34,7 +34,7 @@ FCK.SwitchEditMode = function() {
 	if(FCK.EditMode == FCK_EDITMODE_WYSIWYG) {
 
 		FCK.EditingArea.TargetElement.className = 'childrenHidden';
-		originalSwitchEditMode.apply(FCK, args);
+		FCK.originalSwitchEditMode.apply(FCK, args);
 
 	} else if(FCK.EditMode == FCK_EDITMODE_SOURCE) {
 
@@ -68,15 +68,14 @@ FCK.SwitchEditMode = function() {
 				var res_array = res.responseText.split('--'+separator+'--');
 				FCK.wysiwygData = eval("{"+res_array[1]+"}");
 				FCK.EditingArea.Textarea.value = res_array[0];
-				originalSwitchEditMode.apply(FCK, args);
+				FCK.originalSwitchEditMode.apply(FCK, args);
+				FCK.WysiwygSwitchToolbars(false);
+				if (FCK.Track) FCK.Track('/switchMode/wiki2html');
 			}
 			FCK.EditingArea.TargetElement.className = '';
 			setTimeout(function() {FCK.InProgress = false;}, 100);
 			FCK.EditingArea.Focus(); // macbre: moved here from fck.js
-			FCK.WysiwygSwitchToolbars(false);
 		});
-
-		if (FCK.Track) FCK.Track('/switchMode/wiki2html');
 	}
 
 	return true;
@@ -94,9 +93,8 @@ FCK.Events.AttachEvent( 'OnAfterSetHTML', function() {
 			setTimeout(function() {FCK.InProgress = false;}, 100);
 			FCK.EditingArea.Focus(); // macbre: moved here from fck.js
 			FCK.WysiwygSwitchToolbars(true);
+			if (FCK.Track) FCK.Track('/switchMode/html2wiki');
 		});
-
-		if (FCK.Track) FCK.Track('/switchMode/html2wiki');
 	}
 	if(!FCK.wysiwygData) {
 		FCK.wysiwygData = eval("{"+window.parent.document.getElementById('wysiwygData').value+"}");
