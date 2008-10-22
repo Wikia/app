@@ -1,10 +1,10 @@
 <!-- user mailer -->
 <fieldset id="mailer">
     <legend><?= wfMsg('emailpage') ?></legend>
-    
-    
-    
-<?php if (empty($problem['email'])) { ?>
+
+<?php if ( $is_readonly ) { ?>
+   <h4><?= wfMsg('readonly') ?></h4>
+<?php } else if (empty($problem['email'])) { ?>
     <p><?= wfMsg('noemailtitle') ?></p>
 <?php } else { ?>
     

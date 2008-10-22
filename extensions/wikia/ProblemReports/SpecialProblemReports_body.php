@@ -556,6 +556,8 @@ class SpecialProblemReports extends SpecialPage
 				'mailer_message'	=> $wgRequest->getVal('msg'),
 				
 				'logs'			=> $logs,
+
+				'is_readonly'		=> wfReadOnly()
 			));
 			
 		    $wgOut->addHTML($tpl->execute('reports_list'));
