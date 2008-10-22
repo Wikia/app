@@ -18,7 +18,7 @@ interface iAdProvider {
 
 class AdEngine {
 
-	const cacheKeyVersion = "2.01b";
+	const cacheKeyVersion = "2.01c";
 	const cacheTimeout = 1800;
 
 	// TODO: pull these from wikicities.provider
@@ -254,8 +254,8 @@ class AdEngine {
 			  case 'de': return $this->getProviderFromId($this->slots[$slotname]['provider_id']);
 
 			  default:
-				if (! in_array($slotname, array('LEFT_SKYSCRAPER_2', 'HOME_LEFT_SKYSCRAPER_2'))){
-					return new AdProviderNull("We only lower skyscraper ads for this language ($wgLanguageCode) ", false);
+				if ( AdEngine::getInstance()->getAdType($slotname) != 'skyscraper' ){
+					return new AdProviderNull("We only serve skyscraper ads for this language ($wgLanguageCode) ", false);
 
 				} else {
 					// Google's TOS prevents serving ads for some languages
@@ -439,7 +439,7 @@ class AdEngine {
 
 		switch ($this->slots[$slotname]['size']){
 			case '200x75': return 'spotlight';
-			case '120x120': return 'spotlight';
+			case '125x125': return 'spotlight';
 			case '728x90': return 'leaderboard';
 			case '300x250': return 'boxad';
 			case '160x600': return 'skyscraper';
