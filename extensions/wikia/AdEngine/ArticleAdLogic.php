@@ -478,6 +478,7 @@ class ArticleAdLogic {
 		switch ($skin_name) {
 			case 'monaco': return 1100; // Assume generous 1300 px browser width, subtract 200 for left nav
 			case 'monobook': return 1030; // Assume generous 1300 px browser width, subtract 150 for left nav and 120 for right nav
+			case 'uncyclopedia': return 1150; // Assume generous 1300 px browser width, subtract 150 for left nav
 			default: return 1100; 
 		}
 	}

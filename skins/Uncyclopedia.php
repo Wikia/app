@@ -276,7 +276,12 @@ class UncyclopediaTemplate extends QuickTemplate {
 	</div>
 	</div>
 
-     <?= AdServer::getInstance()->getAd('l') ?>
+	<?php
+	AdEngine::getInstance()->setLoadType('inline');
+	echo AdEngine::getInstance()->getSetupHtml();
+    	echo AdEngine::getInstance()->getAd('LEFT_SPOTLIGHT_2');
+	?>
+
 
 <!-- END addons -->
 
