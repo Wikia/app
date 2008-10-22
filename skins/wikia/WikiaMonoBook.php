@@ -38,6 +38,7 @@ class WikiaSkinMonoBook extends SkinTemplate {
 
 		$isKennisnet = isset($wgKennisnet) && ($wgKennisnet == true);
 
+		AdEngine::getInstance()->setLoadType('inline');
 		if($this->ads === false) {
 			$tpl->set('pageclass', $tpl->textret('pageclass').' without-adsense');
 			$tpl->set('ads_top', '');
@@ -53,9 +54,11 @@ class WikiaSkinMonoBook extends SkinTemplate {
 			$tpl->set('ads_topright', AdServer::getInstance()->getAd('tr'));
 			$tpl->set('ads_bot', AdServer::getInstance()->getAd('b'));
 		    $tpl->set('ads_columngoogle',  '<!-- USING ad server! -->'."\n".'<div id="column-google" class="noprint">'."\n".
-    			'<!-- ADSERVER top right --><div id="column-google-topright">'.AdServer::getInstance()->getAd('tr').'</div>'."\n".
-			'<!-- ADSERVER right     --><div id="column-google-right">'.AdServer::getInstance()->getAd('r').'</div>'."\n".
-			'<!-- ADSERVER botright  --><div id="column-google-botright">'.AdServer::getInstance()->getAd('br').'</div>'."\n</div>\n"
+	
+			AdEngine::getInstance()->getSetupHtml() . 
+    			'<div id="column-google-topright">'.AdEngine::getInstance()->getAd('RIGHT_SPOTLIGHT_1').'</div>'."\n".
+			'<div id="column-google-right">'.AdEngine::getInstance()->getAd('RIGHT_SKYSCRAPER_1').'</div>'."\n".
+			'<div id="column-google-botright">'.AdEngine::getInstance()->getAd('RIGHT_SPOTLIGHT_2').'</div>'."\n</div>\n"
 			);
 
 			$tpl->set('ads_bottomjs', '<!-- adserver on, injecting bottom JS -->'."\n".
