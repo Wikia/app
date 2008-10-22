@@ -46,23 +46,9 @@ FCK.SwitchEditMode = function() {
 			if(typeof edgecases == "undefined") edgecases = res.getResponseHeader('X-Edgecases');
 			if (edgecases == '1') {
 				messages = res.responseText;
-				//macbre: insert div after contentSub
-				//marooned: move the div into the contentSub like it's when we fallback on editing article with edgecases inside it
-				contentSub = window.parent.document.getElementById('contentSub');
-				messagesDiv = window.parent.document.getElementById('FCKEdgeCaseMessages');
-				if (!messagesDiv) {
-					messagesDiv = window.parent.document.createElement('div');
-					messagesDiv.className = 'usermessage';
-					messagesDiv.id = 'FCKEdgeCaseMessages';
-					contentSub.appendChild(messagesDiv);
-				}
-				messagesDiv.innerHTML = messages;
+				//macbre: just show old-school alert()
+				alert(messages);
 			} else {
-				messagesDiv = window.parent.document.getElementById('FCKEdgeCaseMessages');
-				if (messagesDiv) {
-					messagesDiv.parentNode.removeChild(messagesDiv);
-				}
-
 				var separator = res.getResponseHeader('X-sep');
 				if(typeof separator == "undefined") separator = res.getResponseHeader('X-Sep');
 				var res_array = res.responseText.split('--'+separator+'--');
