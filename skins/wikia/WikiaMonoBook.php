@@ -56,6 +56,7 @@ class WikiaSkinMonoBook extends SkinTemplate {
 		    $tpl->set('ads_columngoogle',  '<!-- USING ad server! -->'."\n".'<div id="column-google" class="noprint">'."\n".
 	
 			AdEngine::getInstance()->getSetupHtml() . 
+			'<div id="wikia_header" style="display:none"></div>' . // Hack because ads have code that references this. Awful.
     			'<div id="column-google-topright">'.AdEngine::getInstance()->getAd('RIGHT_SPOTLIGHT_1').'</div>'."\n".
 			'<div id="column-google-right">'.AdEngine::getInstance()->getAd('RIGHT_SKYSCRAPER_1').'</div>'."\n".
 			'<div id="column-google-botright">'.AdEngine::getInstance()->getAd('RIGHT_SPOTLIGHT_2').'</div>'."\n</div>\n"

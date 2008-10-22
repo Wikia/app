@@ -84,6 +84,7 @@ class AdProviderGAM implements iAdProvider {
 	 * GA_googleFillSlot is what actually calls the ads.
 	 */
 	public function getBatchCallHtml(){
+		global $wgUser;
 
 		$this->batchHtmlCalled = true;
 
@@ -100,6 +101,10 @@ class AdProviderGAM implements iAdProvider {
 		// ###### Our custom key values
 		// Always pass the hub as a key value
 		$out .= $this->getTargetingValue('hub', $this->getHub()) . "\n";
+		// And skin
+		if (is_object($wgUser)){
+			$out .= $this->getTargetingValue('skin_name', $wgUser->getSkin()->getSkinName()) . "\n";
+		}
 		// And languages
 		$out .= 'GA_googleAddAttr("cont_lang", wgContentLanguage);' . "\n";
 		$out .= 'GA_googleAddAttr("user_lang", wgUserLanguage);' . "\n";

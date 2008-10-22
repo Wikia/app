@@ -5,8 +5,8 @@ CREATE TABLE ad_provider (
         PRIMARY KEY(provider_id)
 ) ENGINE=InnoDB;
 INSERT INTO ad_provider VALUES (1, 'DART');
-INSERT INTO ad_provider VALUES (2, 'Google');
-INSERT INTO ad_provider VALUES (3, 'OpenX');
+INSERT INTO ad_provider VALUES (2, 'OpenX');
+INSERT INTO ad_provider VALUES (3, 'Google');
 INSERT INTO ad_provider VALUES (4, 'GAM');
 
 
@@ -42,6 +42,9 @@ INSERT INTO ad_slot VALUES (NULL, 'RIGHT_SPOTLIGHT_1', 'monobook', '125x125', 0,
 INSERT INTO ad_slot VALUES (NULL, 'RIGHT_SKYSCRAPER_1', 'monobook', '120x600', 6, 3, 'Yes');
 INSERT INTO ad_slot VALUES (NULL, 'RIGHT_SPOTLIGHT_2', 'monobook', '125x125', 0, 4, 'Yes');
 INSERT INTO ad_slot VALUES (NULL, 'LEFT_SPOTLIGHT_2', 'uncyclopedia', '125x125', 0, 4, 'Yes');
+INSERT INTO ad_slot VALUES (NULL, 'TOP_RIGHT_BOXAD', 'quartz', '300x250', 20, 1, 'Yes');
+INSERT INTO ad_slot VALUES (NULL, 'RIGHT_SPOTLIGHT_1', 'quartz', '125x125', 0, 4, 'Yes');
+INSERT INTO ad_slot VALUES (NULL, 'RIGHT_SPOTLIGHT_2', 'quartz', '125x125', 0, 4, 'Yes');
 
 -- Allow wikis to override slots
 DROP TABLE IF EXISTS ad_slot_override;
