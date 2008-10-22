@@ -5,8 +5,10 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<meta name="robots" content="noindex, nofollow" />
 	<script type="text/javascript">
-document.domain = 'wikia.com';
-var oEditor		= window.parent.InnerDialogLoaded() ;
+//document.domain = 'wikia.com';
+var dialog	= window.parent ;
+var oEditor = dialog.InnerDialogLoaded() ;
+
 var FCK			= oEditor.FCK ;
 var FCKLang		= oEditor.FCKLang ;
 var FCKConfig	= oEditor.FCKConfig ;
@@ -15,106 +17,222 @@ var FCKTools	= oEditor.FCKTools ;
 
 document.write( '<script src="' + FCKConfig.BasePath + 'dialog/common/fck_dialog_common.js" type="text/javascript"><\/script>' ) ;
 
-	</script>
-	<script type="text/javascript">
-
-// oLink: The actual selected link in the editor.
-var oLink = FCK.Selection.MoveToAncestorNode('A') ;
-if(oLink) {
-	FCK.Selection.SelectNode(oLink);
-}
-var refid = (oLink) ? oLink.getAttribute('refid') : false;
-var updateCaption;
-
+dialog.AddTab( 'internal_link', 'Internal link' ) ;
+dialog.AddTab( 'external_link', 'External link' ) ;
+dialog.AddTab( 'interwiki_link', 'Interwiki link' ) ;
 
 window.onload = function() {
-	// Translate the dialog box texts.
-	oEditor.FCKLanguageManager.TranslatePage(document) ;
-
-	// Load the selected link/text information
-	if(oLink) {
-		if(refid) {
-			if(FCK.wysiwygData[refid].href_new) {
-				GetE('txtTarget').value = FCK.wysiwygData[refid].href_new;
-			} else {
-				GetE('txtTarget').value = FCK.wysiwygData[refid].href;
-			}
-		} else {
-			GetE('txtTarget').value = oLink.getAttribute('href', 2);
-		}
-		if(oLink.innerHTML == GetE('txtTarget').value) {
-			updateCaption = true;
-		} else {
-			updateCaption = false;
-		}
-	} else {
-		var selection = FCK.Selection.GetSelection();
-		GetE('txtTarget').value = selection.type ? selection.createRange().text : selection.toString();
-		updateCaption = false;
-	}
-
-	GetE('txtTarget').focus();
-
-	// Activate the "OK" button.
+	GetE('divInternalLink').style.display = '' ;
 	window.parent.SetOkButton(true) ;
 	window.parent.SetAutoSize(true) ;
 }
 
-function Ok() {
-	var sInnerHtml ;
-	var sUri = GetE('txtTarget').value;
 
-	oEditor.FCKUndo.SaveUndoStep();
-
-	if(refid) {
-		FCK.wysiwygData[refid].href_new = sUri;
-		if(updateCaption) {
-			oLink.innerHTML = sUri;
-		}
-	} else {
-		// If no link is selected, create a new one (it may result in more than one link creation - #220).
-		var aLinks = oLink ? [oLink] : oEditor.FCK.CreateLink(sUri, true);
-
-		// If no selection, no links are created, so use the uri as the link text (by dom, 2006-05-26)
-		var aHasSelection = (aLinks.length > 0);
-		if(!aHasSelection) {
-			if(/^(((http|https|ftp|news):\/\/)|mailto:)/gi.exec(sUri)) {
-				sInnerHtml = '[link]';
-			} else {
-				sInnerHtml = sUri;
-			}
-			aLinks = [oEditor.FCK.InsertElement('a')];
-		}
-		for(var i = 0; i < aLinks.length; i++) {
-			oLink = aLinks[i];
-			if(aHasSelection) {
-				sInnerHtml = oLink.innerHTML;
-			}
-			oLink.href = sUri;
-			oLink.innerHTML = sInnerHtml; // Set (or restore) the innerHTML
-			oLink.title = sUri;
-
-			if(updateCaption) {
-				oLink.innerHTML = sUri;
-			}
-		}
-		// Select the (first) link.
-		//oEditor.FCKSelection.SelectNode(aLinks[0]);
-	}
-
-	return true;
-}
 	</script>
 </head>
-<body scroll="no" style="overflow: hidden">
-	<div id="divInfo">
-		<br />
-		<br />
-		<br />
-		<span>To create a link, enter an article name or external url in the format http:// in the box below</span>
-		<br />
-		<br />
-		<input id="txtTarget" style="width: 100%" type="text" />
-	</div>
-</body>
+	<body scroll="no" style="OVERFLOW: hidden">
+		<div id="divInternalLink" style="DISPLAY: none">
+			<span>Link text:</span>
+			<br />
+			<input id="txtUrl" style="WIDTH: 100%" type="text" />
+			<br /><br />
+			<span>Article name:</span>
+			<input id="txtUrl" style="WIDTH: 100%" type="text" />
+			<br /><br />
+			<span>This is where the explanation text goes...</span>
+		</div>
+
+
+
+		<div id="divUpload" style="DISPLAY: none">
+			<form id="frmUpload" method="post" target="UploadWindow" enctype="multipart/form-data" action="" onsubmit="return CheckUpload();">
+				<span fckLang="DlgLnkUpload">Upload</span><br />
+				<input id="txtUploadFile" style="WIDTH: 100%" type="file" size="40" name="NewFile" /><br />
+				<br />
+				<input id="btnUpload" type="submit" value="Send it to the Server" fckLang="DlgLnkBtnUpload" />
+				<script type="text/javascript">
+					document.write( '<iframe name="UploadWindow" style="display: none" src="' + FCKTools.GetVoidUrl() + '"><\/iframe>' ) ;
+				</script>
+			</form>
+		</div>
+		<div id="divTarget" style="DISPLAY: none">
+			<table cellspacing="0" cellpadding="0" width="100%" border="0">
+				<tr>
+					<td nowrap="nowrap">
+						<span fckLang="DlgLnkTarget">Target</span><br />
+						<select id="cmbTarget" onchange="SetTarget(this.value);">
+							<option value="" fckLang="DlgGenNotSet" selected="selected">&lt;not set&gt;</option>
+							<option value="frame" fckLang="DlgLnkTargetFrame">&lt;frame&gt;</option>
+							<option value="popup" fckLang="DlgLnkTargetPopup">&lt;popup window&gt;</option>
+							<option value="_blank" fckLang="DlgLnkTargetBlank">New Window (_blank)</option>
+							<option value="_top" fckLang="DlgLnkTargetTop">Topmost Window (_top)</option>
+							<option value="_self" fckLang="DlgLnkTargetSelf">Same Window (_self)</option>
+							<option value="_parent" fckLang="DlgLnkTargetParent">Parent Window (_parent)</option>
+						</select>
+					</td>
+					<td>&nbsp;</td>
+					<td id="tdTargetFrame" nowrap="nowrap" width="100%">
+						<span fckLang="DlgLnkTargetFrameName">Target Frame Name</span><br />
+						<input id="txtTargetFrame" style="WIDTH: 100%" type="text" onkeyup="OnTargetNameChange();"
+							onchange="OnTargetNameChange();" />
+					</td>
+					<td id="tdPopupName" style="DISPLAY: none" nowrap="nowrap" width="100%">
+						<span fckLang="DlgLnkPopWinName">Popup Window Name</span><br />
+						<input id="txtPopupName" style="WIDTH: 100%" type="text" />
+					</td>
+				</tr>
+			</table>
+			<br />
+			<table id="tablePopupFeatures" style="DISPLAY: none" cellspacing="0" cellpadding="0" align="center"
+				border="0">
+				<tr>
+					<td>
+						<span fckLang="DlgLnkPopWinFeat">Popup Window Features</span><br />
+						<table cellspacing="0" cellpadding="0" border="0">
+							<tr>
+								<td valign="top" nowrap="nowrap" width="50%">
+									<input id="chkPopupResizable" name="chkFeature" value="resizable" type="checkbox" /><label for="chkPopupResizable" fckLang="DlgLnkPopResize">Resizable</label><br />
+									<input id="chkPopupLocationBar" name="chkFeature" value="location" type="checkbox" /><label for="chkPopupLocationBar" fckLang="DlgLnkPopLocation">Location
+										Bar</label><br />
+									<input id="chkPopupManuBar" name="chkFeature" value="menubar" type="checkbox" /><label for="chkPopupManuBar" fckLang="DlgLnkPopMenu">Menu
+										Bar</label><br />
+									<input id="chkPopupScrollBars" name="chkFeature" value="scrollbars" type="checkbox" /><label for="chkPopupScrollBars" fckLang="DlgLnkPopScroll">Scroll
+										Bars</label>
+								</td>
+								<td></td>
+								<td valign="top" nowrap="nowrap" width="50%">
+									<input id="chkPopupStatusBar" name="chkFeature" value="status" type="checkbox" /><label for="chkPopupStatusBar" fckLang="DlgLnkPopStatus">Status
+										Bar</label><br />
+									<input id="chkPopupToolbar" name="chkFeature" value="toolbar" type="checkbox" /><label for="chkPopupToolbar" fckLang="DlgLnkPopToolbar">Toolbar</label><br />
+									<input id="chkPopupFullScreen" name="chkFeature" value="fullscreen" type="checkbox" /><label for="chkPopupFullScreen" fckLang="DlgLnkPopFullScrn">Full
+										Screen (IE)</label><br />
+									<input id="chkPopupDependent" name="chkFeature" value="dependent" type="checkbox" /><label for="chkPopupDependent" fckLang="DlgLnkPopDependent">Dependent
+										(Netscape)</label>
+								</td>
+							</tr>
+							<tr>
+								<td valign="top" nowrap="nowrap" width="50%">&nbsp;</td>
+								<td></td>
+								<td valign="top" nowrap="nowrap" width="50%"></td>
+							</tr>
+							<tr>
+								<td valign="top">
+									<table cellspacing="0" cellpadding="0" border="0">
+										<tr>
+											<td nowrap="nowrap"><span fckLang="DlgLnkPopWidth">Width</span></td>
+											<td>&nbsp;<input id="txtPopupWidth" type="text" maxlength="4" size="4" /></td>
+										</tr>
+										<tr>
+											<td nowrap="nowrap"><span fckLang="DlgLnkPopHeight">Height</span></td>
+											<td>&nbsp;<input id="txtPopupHeight" type="text" maxlength="4" size="4" /></td>
+										</tr>
+									</table>
+								</td>
+								<td>&nbsp;&nbsp;</td>
+								<td valign="top">
+									<table cellspacing="0" cellpadding="0" border="0">
+										<tr>
+											<td nowrap="nowrap"><span fckLang="DlgLnkPopLeft">Left Position</span></td>
+											<td>&nbsp;<input id="txtPopupLeft" type="text" maxlength="4" size="4" /></td>
+										</tr>
+										<tr>
+											<td nowrap="nowrap"><span fckLang="DlgLnkPopTop">Top Position</span></td>
+											<td>&nbsp;<input id="txtPopupTop" type="text" maxlength="4" size="4" /></td>
+										</tr>
+									</table>
+								</td>
+							</tr>
+						</table>
+					</td>
+				</tr>
+			</table>
+		</div>
+		<div id="divAttribs" style="DISPLAY: none">
+			<table cellspacing="0" cellpadding="0" width="100%" align="center" border="0">
+				<tr>
+					<td valign="top" width="50%">
+						<span fckLang="DlgGenId">Id</span><br />
+						<input id="txtAttId" style="WIDTH: 100%" type="text" />
+					</td>
+					<td width="1"></td>
+					<td valign="top">
+						<table cellspacing="0" cellpadding="0" width="100%" align="center" border="0">
+							<tr>
+								<td width="60%">
+									<span fckLang="DlgGenLangDir">Language Direction</span><br />
+									<select id="cmbAttLangDir" style="WIDTH: 100%">
+										<option value="" fckLang="DlgGenNotSet" selected>&lt;not set&gt;</option>
+										<option value="ltr" fckLang="DlgGenLangDirLtr">Left to Right (LTR)</option>
+										<option value="rtl" fckLang="DlgGenLangDirRtl">Right to Left (RTL)</option>
+									</select>
+								</td>
+								<td width="1%">&nbsp;&nbsp;&nbsp;</td>
+								<td nowrap="nowrap"><span fckLang="DlgGenAccessKey">Access Key</span><br />
+									<input id="txtAttAccessKey" style="WIDTH: 100%" type="text" maxlength="1" size="1" />
+								</td>
+							</tr>
+						</table>
+					</td>
+				</tr>
+				<tr>
+					<td valign="top" width="50%">
+						<span fckLang="DlgGenName">Name</span><br />
+						<input id="txtAttName" style="WIDTH: 100%" type="text" />
+					</td>
+					<td width="1"></td>
+					<td valign="top">
+						<table cellspacing="0" cellpadding="0" width="100%" align="center" border="0">
+							<tr>
+								<td width="60%">
+									<span fckLang="DlgGenLangCode">Language Code</span><br />
+									<input id="txtAttLangCode" style="WIDTH: 100%" type="text" />
+								</td>
+								<td width="1%">&nbsp;&nbsp;&nbsp;</td>
+								<td nowrap="nowrap">
+									<span fckLang="DlgGenTabIndex">Tab Index</span><br />
+									<input id="txtAttTabIndex" style="WIDTH: 100%" type="text" maxlength="5" size="5" />
+								</td>
+							</tr>
+						</table>
+					</td>
+				</tr>
+				<tr>
+					<td valign="top" width="50%">&nbsp;</td>
+					<td width="1"></td>
+					<td valign="top"></td>
+				</tr>
+				<tr>
+					<td valign="top" width="50%">
+						<span fckLang="DlgGenTitle">Advisory Title</span><br />
+						<input id="txtAttTitle" style="WIDTH: 100%" type="text" />
+					</td>
+					<td width="1">&nbsp;&nbsp;&nbsp;</td>
+					<td valign="top">
+						<span fckLang="DlgGenContType">Advisory Content Type</span><br />
+						<input id="txtAttContentType" style="WIDTH: 100%" type="text" />
+					</td>
+				</tr>
+				<tr>
+					<td valign="top">
+						<span fckLang="DlgGenClass">Stylesheet Classes</span><br />
+						<input id="txtAttClasses" style="WIDTH: 100%" type="text" />
+					</td>
+					<td></td>
+					<td valign="top">
+						<span fckLang="DlgGenLinkCharset">Linked Resource Charset</span><br />
+						<input id="txtAttCharSet" style="WIDTH: 100%" type="text" />
+					</td>
+				</tr>
+			</table>
+			<table cellspacing="0" cellpadding="0" width="100%" align="center" border="0">
+				<tr>
+					<td>
+						<span fckLang="DlgGenStyle">Style</span><br />
+						<input id="txtAttStyle" style="WIDTH: 100%" type="text" />
+					</td>
+				</tr>
+			</table>
+		</div>
+	</body>
 </html>
+

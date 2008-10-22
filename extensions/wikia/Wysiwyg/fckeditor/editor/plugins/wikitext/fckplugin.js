@@ -1,6 +1,35 @@
 // Rewrite the link command to use our link.html
 FCKCommands.RegisterCommand('Link', new FCKDialogCommand('Link', FCKLang.DlgLnkWindowTitle, FCKConfig.PluginsPath + 'wikitext/dialogs/link.html', 400, 250));
 
+var FCKTildesCommand = function() {
+	this.Name = 'Tildes' ;
+}
+FCKTildesCommand.prototype = {
+	Execute : function() {
+		FCKUndo.SaveUndoStep() ;
+		FCK.wysiwygData.push({'type':'tilde','description':'~~~~'});
+
+		var input = document.createElement('input');
+		input.value = "~~~~";
+		input.className = 'wysiwygDisabled';
+		input.type = 'button';
+		input.setAttribute('refid', FCK.wysiwygData.length-1);
+
+		FCK.InsertElement( input ) ;
+	},
+	GetState : function() {
+		if ( FCK.EditMode != FCK_EDITMODE_WYSIWYG )
+			return FCK_TRISTATE_DISABLED ;
+		return FCK_TRISTATE_ON;
+	}
+} ;
+FCKCommands.RegisterCommand('Tildes', new FCKTildesCommand());
+var oTildesItem = new FCKToolbarButton( 'Tildes', 'Tildes' ) ;
+//oTildesItem.IconPath = FCKConfig.PluginsPath + 'findreplace/find.gif' ;
+FCKToolbarItems.RegisterItem( 'Tildes', oTildesItem );
+
+
+
 var inputClickCommand = new FCKDialogCommand('inputClickCommand', '&nbsp;', FCKConfig.PluginsPath + 'wikitext/dialogs/inputClick.html', 400, 100);
 
 FCK.originalSwitchEditMode = FCK.SwitchEditMode;
@@ -17,7 +46,7 @@ FCK.WysiwygSwitchToolbars = function(switchToWikitext) {
 		toolbarItems[t].style.display = (switchToWikitext && t > 1) ? 'none' : '';
 	}
 
-	// show/hide MW toolbar	
+	// show/hide MW toolbar
 	MWtoolbar.style.visibility = switchToWikitext ? 'visible' : 'hidden';
 }
 
@@ -53,6 +82,9 @@ FCK.SwitchEditMode = function() {
 				if(typeof separator == "undefined") separator = res.getResponseHeader('X-Sep');
 				var res_array = res.responseText.split('--'+separator+'--');
 				FCK.wysiwygData = eval("{"+res_array[1]+"}");
+				if(!FCK.wysiwygData) {
+					FCK.wysiwygData = [];
+				}
 				FCK.EditingArea.Textarea.value = res_array[0];
 				FCK.originalSwitchEditMode.apply(FCK, args);
 				FCK.WysiwygSwitchToolbars(false);
@@ -84,6 +116,9 @@ FCK.Events.AttachEvent( 'OnAfterSetHTML', function() {
 	}
 	if(!FCK.wysiwygData) {
 		FCK.wysiwygData = eval("{"+window.parent.document.getElementById('wysiwygData').value+"}");
+		if(!FCK.wysiwygData) {
+			FCK.wysiwygData = [];
+		}
 	}
 	if(FCK.EditMode == FCK_EDITMODE_WYSIWYG) {
 		FCK.EditorDocument.addEventListener( 'click', function(e) {
