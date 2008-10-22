@@ -24,12 +24,12 @@ FCKTildesCommand.prototype = {
 	GetState : function() {
 		if ( FCK.EditMode != FCK_EDITMODE_WYSIWYG )
 			return FCK_TRISTATE_DISABLED ;
-		return FCK_TRISTATE_ON;
+		return FCK_TRISTATE_OFF;
 	}
 } ;
 FCKCommands.RegisterCommand('Tildes', new FCKTildesCommand());
 var oTildesItem = new FCKToolbarButton( 'Tildes', 'Tildes' ) ;
-//oTildesItem.IconPath = FCKConfig.PluginsPath + 'findreplace/find.gif' ;
+oTildesItem.IconPath = FCKConfig.PluginsPath + 'wikitext/sig.gif' ;
 FCKToolbarItems.RegisterItem( 'Tildes', oTildesItem );
 
 
