@@ -13,6 +13,7 @@ if (!defined('MEDIAWIKI')) {
 }
 $wgSpecialPages['Widgets'] = 'WidgetsSpecialPage';
 $wgExtensionFunctions[] = 'wfWidgetsSpecialPage';
+$wgExtensionMessagesFiles['WidgetsSpecialPage'] = dirname(__FILE__) . '/WidgetsSpecialPage.i18n.php';
 
 // setup special page
 function wfWidgetsSpecialPage() {

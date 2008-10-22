@@ -11,5 +11,6 @@ if(!defined('MEDIAWIKI')) {
 }
 
 $wgAutoloadClasses['SpecialWidgetDashboard'] = dirname(__FILE__).'/SpecialWidgetDashboard_body.php';
+$wgExtensionMessagesFiles['WidgetDashboard'] = dirname(__FILE__).'/SpecialWidgetDashboard.i18n.php';
 $wgSpecialPages['WidgetDashboard'] = 'SpecialWidgetDashboard';
 $wgSpecialPageGroups['WidgetDashboard'] = 'wikia';
