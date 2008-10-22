@@ -7,6 +7,10 @@ var FCKTildesCommand = function() {
 FCKTildesCommand.prototype = {
 	Execute : function() {
 		FCKUndo.SaveUndoStep() ;
+
+		var text = document.createTextNode('--');
+		FCK.InsertElement(text) ;
+
 		FCK.wysiwygData.push({'type':'tilde','description':'~~~~'});
 
 		var input = document.createElement('input');
@@ -15,7 +19,7 @@ FCKTildesCommand.prototype = {
 		input.type = 'button';
 		input.setAttribute('refid', FCK.wysiwygData.length-1);
 
-		FCK.InsertElement( input ) ;
+		FCK.InsertElement(input) ;
 	},
 	GetState : function() {
 		if ( FCK.EditMode != FCK_EDITMODE_WYSIWYG )
