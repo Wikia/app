@@ -49,6 +49,8 @@ class WidgetsSpecialPage extends SpecialPage
 		global $wgOut, $wgLang, $wgUser, $wgWidgets, $wgExtensionsPath, $wgStyleVersion;
 
 		$this->setHeaders();
+
+		wfLoadExtensionMessages('WidgetsSpecialPage');
 		
 		// load extension JS/CSS
 		$wgOut->addScript('<link rel="stylesheet" type="text/css" href="'.$wgExtensionsPath.'/wikia/WidgetSpecialPage/WidgetsSpecialPage.css?'.$wgStyleVersion.'" />' . "\n");
@@ -60,6 +62,8 @@ class WidgetsSpecialPage extends SpecialPage
 		if ( !in_array( $skinname, array('SkinQuartz', 'SkinMonaco')) ) {  
 			$wgOut->addHTML( '<div id="widgets-info" class="plainlinks">' . wfMsgExt('widgets-specialpage-info', 'parse') . '</div>' );
 		}
+
+		$wgOut->addWikiText(wfMsg('widgets-specialpage-try-dashboard'));
 
 		// get list of widgets and load'em all
 		$widgets = $this->getWidgetsList();

@@ -507,9 +507,6 @@ div.wikiaDialog h2,
 'widget-community-hoursago' => ', {{PLURAL:$1|one hour ago|$1 hours ago}}',
 'widget-community-yesterday' => ', yesterday',
 'widgets' => 'Widgets list',
-'widgets-specialpage-info' => 'Widgets work best with one of the new skins, eg. [{{SERVER}}/index.php?title=Special:Widgets&useskin=monaco Monaco].
-
-Please change [[Special:Preferences#prefsection-1|your preferences]] to use this tool.',
 'widget-empty-list' => '(the list is empty)',
 'wt_click_to_close' => 'Click to close tooltip...',
 'hidebots' => 'Hide bots',
