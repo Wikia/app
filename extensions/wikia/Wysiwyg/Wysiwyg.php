@@ -152,7 +152,9 @@ function initEditor() {
 addOnloadHook(initEditor);
 </script>
 <style type="text/css">/*<![CDATA[*/
-.mw-editTools,
+.mw-editTools {
+	display: none;
+}
 #editform #toolbar {
 	position: relative;
 	top: 25px;
