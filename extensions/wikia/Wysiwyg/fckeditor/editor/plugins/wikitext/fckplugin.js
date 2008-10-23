@@ -146,6 +146,9 @@ FCK.Events.AttachEvent( 'OnAfterSetHTML', function() {
 			}
 		}
 	}
+	
+	// for QA team tests
+	FCK.GetParentForm().className = (FCK.EditMode == FCK_EDITMODE_WYSIWYG ? 'wysiwyg' : 'source') + '_mode';
 });
 
 // macbre: setup tracker object
