@@ -25,7 +25,7 @@ class LookupContribsPage extends SpecialPage {
 	
 	public function execute( $subpage ) {
 		global $wgUser, $wgOut, $wgRequest;
-		wfLoadExtensionMessages("WikiFactory");
+		wfLoadExtensionMessages("SpecialLookupContribs");
 
 		if( $wgUser->isBlocked() ) {
 			$wgOut->blockedPage();

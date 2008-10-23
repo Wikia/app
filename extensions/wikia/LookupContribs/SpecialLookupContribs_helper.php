@@ -18,6 +18,7 @@ class LookupContribsCore {
 
     public function __construct($username) {
         $this->mUsername = $username;
+		wfLoadExtensionMessages("SpecialLookupContribs");        
     }
     
 	/* return if such user exists */
@@ -127,15 +128,22 @@ class LookupContribsCore {
 	}
 	
 	function checkUserActivityExternal($username) {
-		global $wgMemc, $wgSharedDB, $wgDBStats;
+		global $wgMemc, $wgSharedDB, $wgDBStats, $wgContLang;
 		$userActivity = array();
-		$memkey = wfForeignMemcKey( $wgSharedDB, null, "LookupContribs", "UserActivityExt", $username );
+		$oUser = User::newFromName($username);
+		if (!$oUser instanceof User) {
+			wfDebug( "User $username not found\n" );
+			return $userActivity;
+		}
+		$iUserId = $oUser->getId();
+		$memkey = wfForeignMemcKey( $wgSharedDB, null, "LookupContribs", "UserActivityExt", $iUserId );
 		$cached = $wgMemc->get($memkey);
 		if (!is_array ($cached) || LOOKUPCONTRIBS_NO_CACHE) { 
 			$dbext =& wfGetDBExt();
 			if (!is_null($dbext)) {
 				$query = "select rev_wikia_id, max(rev_timestamp) as max_activity, unix_timestamp(rev_timestamp) as max_timestamp ";
-				$query .= "from `dataware`.`blobs` where rev_user_text = ".$dbext->addQuotes($username)." and rev_wikia_id > 0 group by rev_wikia_id";
+				$query .= "from `dataware`.`blobs` where rev_user = ".intval($iUserId)." and rev_wikia_id > 0 and rev_status = 'active' and ";
+				$query .= "blob_text is not null group by rev_wikia_id";
 				$res = $dbext->query ($query);
 				while ($row = $dbext->fetchObject($res)) {
 					$userActivity[$row->max_timestamp] = $row->rev_wikia_id;
@@ -163,13 +171,21 @@ class LookupContribsCore {
 	/* fetch all contributions from that given database */
 	function fetchContribs ($database, $fetch_mode) {
 		global $wgOut, $wgRequest, $wgLang, $wgMemc, $wgSharedDB ;
-		global $wgDBStatsServer, $wgDBStats;
+		global $wgDBStatsServer, $wgDBStats, $wgContLang;
 		wfProfileIn( __METHOD__ );
+		$fetched_data = array ();
+
+		$oUser = User::newFromName($this->mUsername);
+		if (!$oUser instanceof User) {
+			wfDebug( "User $username not found\n" );
+			wfProfileOut( __METHOD__ );
+			return $fetched_data;
+		}
+		$iUserId = $oUser->getId();
 
 		/* todo since there are now TWO modes, we need TWO keys to rule them all */
-		$key = "$database:LookupContribs:$fetch_mode:".$this->mUsername;
+		$key = "$database:LookupContribs:$fetch_mode:".$iUserId;
 		$cached = $wgMemc->get($key);
-		$fetched_data = array ();
 
 		if ( !is_array($cached) || LOOKUPCONTRIBS_NO_CACHE) {
 			/* get that data from database */
@@ -180,39 +196,62 @@ class LookupContribsCore {
 			if ( $fetch_mode == 'normal' ) {
 				$res = $dbr->select(
 					"`{$this->__getDBname($database)}`.`recentchanges`, `{$this->__getDBname($database)}`.`revision`",
-					array( 'rc_title','rev_id','rev_page as page_id','rev_timestamp as timestamp','rc_namespace','rc_new' ),
-					array(
-						'rev_user_text' => $this->mUsername,
+					array ( 
+						'rc_title',
+						'rev_id',
+						'rev_page as page_id',
+						'rev_timestamp as timestamp',
+						'rc_namespace',
+						'rc_new' 
+					),
+					array (
+						'rev_user' => intval($iUserId),
 						' rc_timestamp = rev_timestamp '
 					),
 					__METHOD__,
-					array(
+					array (
 						'ORDER BY'	=> 'rev_timestamp DESC'
 					)
 				);
 			} else if ( $fetch_mode == 'final' ) {
 				$res = $dbr->select(
 					"`{$this->__getDBname($database)}`.`revision`, `{$this->__getDBname($database)}`.`page`",
-					array( 'page_title as rc_title','rev_id','page_id','rev_timestamp as timestamp','page_namespace as rc_namespace', '0 as rc_new' ),
-					array(
-						'rev_user_text' => $this->mUsername,
+					array ( 
+						'page_title as rc_title',
+						'rev_id',
+						'page_id',
+						'rev_timestamp as timestamp',
+						'page_namespace as rc_namespace',
+						'0 as rc_new',
+						'0 as page_remove' 
+					),
+					array (
+						'rev_user' => intval($iUserId),
 						' rev_id = page_latest '
 					),
 					__METHOD__,
-					array(
+					array (
 						'ORDER BY'	=> 'rev_timestamp DESC',
 					)
 				);
 			} else if ( $fetch_mode == 'all' ) {
 				$res = $dbr->select(
 					"`{$this->__getDBname($database)}`.`revision`, `{$this->__getDBname($database)}`.`page`",
-					array( 'page_title as rc_title','rev_id','page_id','rev_timestamp as timestamp','page_namespace as rc_namespace', '0 as rc_new' ),
-					array(
-						'rev_user_text' => $this->mUsername,
+					array ( 
+						'page_title as rc_title',
+						'rev_id',
+						'page_id',
+						'rev_timestamp as timestamp',
+						'page_namespace as rc_namespace',
+						'0 as rc_new',
+						'0 as page_remove' 
+					),
+					array (
+						'rev_user' => intval($iUserId),
 						' page_id = rev_page '
 					),
 					__METHOD__,
-					array(
+					array (
 						'ORDER BY'	=> 'rev_timestamp DESC',
 					)
 				);
@@ -233,18 +272,66 @@ class LookupContribsCore {
 				}
 				$dbr->freeResult( $res );
 				$this->mNumRecords = count($fetched_data);
-				$result_found_already = ($this->mNumRecords > 	0);
+				$result_found_already = ($this->mNumRecords > 0);
 				unset($res) ;
 
 				// this produces additional results...
 				// don't do that if we are in links mode and result was found already
 				if ( empty($result_found_already) ) {
-					$res = $dbr->select(
-						" `{$this->__getDBname($database)}`.`logging` left join ". wfSharedTable('user'). " on log_user=user_id ",
-						array( 'log_timestamp as timestamp','log_namespace as rc_namespace','log_title as rc_title','log_comment','0 as page_id','0 as rev_id','0 as rc_new'),
-						array(
+					$res = $dbr->select (
+						" `{$this->__getDBname($database)}`.`logging` ",
+						array ( 
+							'log_timestamp as timestamp',
+							'log_namespace as rc_namespace',
+							'log_title as rc_title',
+							'log_comment',
+							'0 as page_id',
+							'0 as rev_id',
+							'0 as rc_new',
+							'0 as page_remove'
+						),
+						array (
 							'log_action' => "tag",
-							'user_name'  => $this->mUsername,
+							'log_user' => intval($iUserId),
+						),
+						__METHOD__
+					);
+
+					$num_res = $dbr->numRows( $res );
+					if ( !empty($res) && !empty($num_res) ) {
+						while ( $row = $dbr->fetchObject( $res ) ) {
+							$row->rc_database = $database;
+							$row->rc_url = $wikia->city_url;
+							$row->rc_city_title = $wikia->city_title;
+							$fetched_data[$row->timestamp] = $row;
+						}
+						$dbr->freeResult( $res );
+						$this->mNumRecords = count($fetched_data);
+					}
+					$result_found_already = ($this->mNumRecords > 0);
+					unset($res);
+				}
+				
+				/*
+				 *  get data from archive (remove articles) 
+				 * and display what articles was edited by user 
+				 * 
+				 */
+				if ( empty($result_found_already) && ($fetch_mode == 'all') ) {
+					$res = $dbr->select (
+						" `{$this->__getDBname($database)}`.`archive` ",
+						array ( 
+							'ar_timestamp as timestamp',
+							'ar_namespace as rc_namespace',
+							'ar_title as rc_title',
+							'ar_comment',
+							'ar_page_id as page_id',
+							'ar_rev_id as rev_id',
+							'0 as rc_new',
+							'1 as page_remove'
+						),
+						array (
+							'ar_user' => intval($iUserId),
 						),
 						__METHOD__
 					);
@@ -335,20 +422,42 @@ class LookupContribsCore {
 
 	public function produceLine($row, $username, $mode) {
 		global $wgLang, $wgOut, $wgRequest, $wgUser;
+		$result = array();
 		$sk = $wgUser->getSkin();
 		$page_user = Title::makeTitle (NS_USER, $username);
-		$page_contribs = Title::makeTitle (NS_SPECIAL, "Contributions/{$username}");
+		#---
+		$page_contribs = "";
+		if ($row->page_remove == 1) {
+			$page_contribs = Title::makeTitle (NS_SPECIAL, "Log");
+		} else {
+			$page_contribs = Title::makeTitle (NS_SPECIAL, "Contributions/{$username}");
+		}
 		$meta = strtr($row->rc_city_title,' ','_');
-		$contrib = '('.$this->produceLink ($page_contribs, 'contribs', '', $row->rc_url, $sk, $meta, $row->rc_namespace, $row->page_id ) .')';
-		$result = array();
-
 		$page = Title::makeTitle ($row->rc_namespace, $row->rc_title);
-		$link = $this->produceLink ($page, '', '', $row->rc_url, $sk, $meta, $row->rc_namespace, $row->page_id) . ( $row->log_comment ? " <small>($row->log_comment)</small>" : "" );
-		$time = $wgLang->timeanddate( wfTimestamp( TS_MW, $row->timestamp ), true );
-		$diff = '('.$this->produceLink ($page, 'diff', 'diff=prev&oldid='.$row->rev_id, $row->rc_url, $sk, $meta, $row->rc_namespace, $row->page_id ).')';
 		$user = $sk->makeKnownLinkObj ($page_user, $username);
-		$hist = '('.$this->produceLink ($page, 'hist', 'action=history', $row->rc_url, $sk, $meta, $row->rc_namespace, $row->page_id) . ')';
-		$result = array("link" => $link, "diff" => $diff, "hist" => $hist, "contrib" => $contrib, "time" => $time);
+		#---
+		$contrib = "";
+		if ($row->page_remove == 1) {
+			$contrib = '('.$this->produceLink ($page_contribs, wfMsg('lookupcontribslog'), "page=$page", $row->rc_url, $sk, $meta, $row->rc_namespace, $row->page_id ) .')';			
+		} else {
+			$contrib = '('.$this->produceLink ($page_contribs, wfMsg('lookupcontribscontribs'), '', $row->rc_url, $sk, $meta, $row->rc_namespace, $row->page_id ) .')';
+		}
+
+		$link = $this->produceLink ($page, '', '', $row->rc_url, $sk, $meta, $row->rc_namespace, $row->page_id) . ( $row->log_comment ? " <small>($row->log_comment)</small>" : "" );
+		if ($row->page_remove == 1) {
+			$link = wfMsg('lookupcontribspageremoved') . $link;
+		}
+		$time = $wgLang->timeanddate( wfTimestamp( TS_MW, $row->timestamp ), true );
+		if ($row->page_remove == 1) {
+			$page_undelete = Title::makeTitle(NS_SPECIAL, "Undelete");
+			$diff = '('.$this->produceLink ($page_undelete, wfMsg('lookupcontribsrestore'), "target={$page}&diff=prev&timestamp={$row->timestamp}", $row->rc_url, $sk, $meta, $row->rc_namespace, $row->page_id ).')';
+			$hist = '';
+		} else {
+			$diff = '('.$this->produceLink ($page, wfMsg('lookupcontribsdiff'), 'diff=prev&oldid='.$row->rev_id, $row->rc_url, $sk, $meta, $row->rc_namespace, $row->page_id ).')';
+			$hist = '('.$this->produceLink ($page, wfMsg('lookupcontribshist'), 'action=history', $row->rc_url, $sk, $meta, $row->rc_namespace, $row->page_id) . ')';
+		}
+		#---
+		$result = array("link" => $link, "diff" => $diff, "hist" => $hist, "contrib" => $contrib, "time" => $time, "removed" => $row->page_remove);
 
 		return $result;
 	}

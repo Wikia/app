@@ -39,4 +39,10 @@ $messages["en"] = array(
     'lookupcontribsnbrresult' => 'Number of result: ',
     'lookupcontribsnext' => 'next',
     'lookupcontribsprevious' => 'previous',
+    'lookupcontribspageremoved' => 'Removed: ',
+    'lookupcontribsrestore' => 'restore',
+    'lookupcontribslog' => 'log',
+    'lookupcontribscontribs' => 'contribs',
+    'lookupcontribshist' => 'hist',
+    'lookupcontribsdiff' => 'diff',
 );
