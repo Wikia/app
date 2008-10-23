@@ -165,20 +165,20 @@ YAHOO.lang.extend(YAHOO.example.AutoCompleteTextArea, YAHOO.widget.AutoComplete,
 		var caret = this.getCaret(this._elTextbox);
 
 		for(var i = caret; i >= 0; i--) {
-			if(text.charAt(i - 1) == "[") {
+			if(text.charAt(i - 1) == "[" || text.charAt(i - 1) == "{") {
 				break;
 			}
 		}
 
 		var textBefore = text.substr(0, i);
-		var newVal = textBefore + oItem._oResultData[1] + "]]" + text.substr(i + this._sCurQuery.length);
+		var newVal = textBefore + ((this._bIsTemplate && this._bIsSubstTemplate) ? 'subst:' : '' ) + (this._bIsColon ? ':' : '') + oItem._oResultData[1] + (text.charAt(i - 1) == "{" ? "}}" : "]]") + text.substr(i + this._originalQuery.length);
 		this._elTextbox.value = newVal;
 
 		if(YAHOO.env.ua.ie > 0) {
 			caret = caret - this.row + 1;
 		}
 
-		this.setCaret(this._elTextbox, i + oItem._oResultData[1].length + 2);
+		this.setCaret(this._elTextbox, i + (this._bIsColon ? 1 : 0) + ((this._bIsTemplate && this._bIsSubstTemplate) ? 6 : 0 ) + oItem._oResultData[1].length + 2);
 		this._oCurItem = oItem;
 		this._elTextbox.scrollTop = scrollTop;
 	},
