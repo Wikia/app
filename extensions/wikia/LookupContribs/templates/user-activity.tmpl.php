@@ -35,7 +35,7 @@ function wfJSPager(total,link,page,limit,func) {
 		if (n < (paramNbr-1)) func_param += ",";
 	}
 
-	var nbr_result = "<?=wfMsg('lookupcontribsnbrresult')?> <select id=\"wcLCselect\" style=\"" + selectStyle + "\" ";
+	var nbr_result = "<select id=\"wcLCselect\" style=\"" + selectStyle + "\" ";
 	nbr_result += __makeClickFunc("onChange", func, func_param, "this.value", 0);
 	for (k = 0; k <= 7; k++) {
 		selected = (limit == (5*(parseInt(k)+1))) ? "selected" : "";
@@ -43,8 +43,10 @@ function wfJSPager(total,link,page,limit,func) {
 	}
 	nbr_result += "</select>";
 
-	var pager  = "<table style=\"" + tableStyle + "\" cellpadding=\"3\" cellspacing=\"0\" border=\"0\" width=\"100%\">";
-	pager += "<tr><td nowrap width=\"30%\">" + nbr_result + "</td><td align=\"left\" width=\"70%\">";
+	var pager  = "<table style=\"line-height:1.5em;" + tableStyle + "\" cellpadding=\"3\" cellspacing=\"0\" border=\"0\" width=\"100%\">";
+	pager += "<tr><td valign=\"middle\" style=\"white-space:nowrap;\"><?=wfMsg('lookupcontribsnbrresult')?></td>";
+	pager += "<td valign=\"middle\" align=\"left\">" + nbr_result + "</td>";
+	pager += "<td align=\"center\" valign=\"middle\" style=\"white-space:nowrap;width:100%;\">";
 
 	if (page_count > 1) {
 		if (page != 0) {
@@ -119,27 +121,34 @@ function wkLCshowDetails(dbname, limit, offset)
 			div_details.innerHTML = "";
 			var records = document.getElementById('wkLCUserActivityRow_' + dbname);
 			if (!resData) {
-				records.innerHTML = "<?=wfMsg('lookupcontribsinvalidresults')?>";
+				records.innerHTML = "<div style=\"clear:both;border:1px dashed #D5DDF2;margin:0px 5px 0px 15px;\"><?=wfMsg('lookupcontribsinvalidresults')?></div>";
 			} else if (resData['nbr_records'] == 0) {
-				records.innerHTML = "<?=wfMsg('lookupcontribsnoresultfound')?>";
+				records.innerHTML = "<div style=\"clear:both;border:1px dashed #D5DDF2;margin:0px 5px 0px 15px;\"><?=wfMsg('lookupcontribsnoresultfound')?></div>";
 			} else {
 				//records.innerHTML = resData['nbr_records'];
 				page = resData['offset'];
 				limit = resData['limit'];
-				records.style.borderColor = "#D5DDF2";
-				records.style.borderStyle = "dashed";
-				records.style.borderWidth = "1px";
+				//records.style.borderColor = "#D5DDF2";
+				//records.style.borderStyle = "dashed";
+				//records.style.borderWidth = "1px";
 				pager = wfJSPager(resData['nbr_records'],"/index.php?title=Special:LookupContribs&target=<?=htmlspecialchars($username)?>", page, limit, 'wkLCshowDetails', dbname);
-				records.innerHTML = pager;
- 				records.innerHTML += "<br /><table width=\"100%\">";
+				var _tmp = "<div style=\"clear:both;border:1px dashed #D5DDF2;margin:0px 5px 0px 15px;\">";
+				_tmp += pager;
+ 				_tmp += "<br /><table width=\"100%\" style=\"line-height:1.5em\">";
  				loop = limit * offset;
 				for (i in resData['res']) {
 					loop++;
-					records.innerHTML += "<tr><td>" + loop  + "</td><td>" +resData['res'][i]['link']+ "</td><td>" +resData['res'][i]['diff']+ "</td>" +
-	  	 			"<td>" +resData['res'][i]['hist']+ "</td><td>" +resData['res'][i]['contrib']+ "</td><td>" +resData['res'][i]['time']+ "</td></tr>";
+					var style = (resData['res'][i]['removed']  == 1) ? "style=\"color:#8B0000;padding:0px 1px;\"" : "style=\"padding:0px 2px;\"";
+					var oneRow = "<tr><td style=\"width:15px;white-space:nowrap;\">" + loop  + ".</td>";
+					oneRow += "<td " + style + ">" +resData['res'][i]['link']+ "</td>";
+					oneRow += "<td " + style + ">" +resData['res'][i]['diff']+ "</td>";
+	  	 			oneRow += "<td " + style + ">" +resData['res'][i]['hist']+ "</td>";
+	  	 			oneRow += "<td " + style + ">" +resData['res'][i]['contrib']+ "</td>";
+	  	 			oneRow += "<td " + style + ">" +resData['res'][i]['time']+ "</td></tr>";
+	  	 			_tmp += oneRow;
 				}
-				records.innerHTML += "</table><br />";
-				records.innerHTML += pager + "<br />";
+				_tmp += "</table><br />";
+				records.innerHTML = _tmp + pager + "</div>";
 			}
 		},
 		failure: function( oResponse )
@@ -173,26 +182,27 @@ function wkLCshowDetails(dbname, limit, offset)
 <p><strong><?=wfMsg('lookupcontribsnoresultfound')?></strong></p>
 <? } else { ?>
 <input type="hidden" name="target" id="wkLCUserName" value="<?=htmlspecialchars($username)?>">
-<table valign="middle"><tr>
-<td align="center"><b><?=wfMsg('lookupcontribswiki')?></b></td>
+<table valign="top"><tr>
+<td align="center" colspan="2"><b><?=wfMsg('lookupcontribswiki')?></b></td>
 <td align="center"><b><?=wfMsg('lookupcontribscontribslink')?></b></td>
-<td align="center">&nbsp;</td>
+<td align="center" colspan="2">&nbsp;</td>
 </tr>
-<? foreach ($userActivity as $id => $city_id) {
+<? $loop = 0; foreach ($userActivity as $id => $city_id) {
 	if ( (!empty($city_id)) && (!empty($wikiList[$city_id])) ) {
 		$wikiname = $wikiList[$city_id];
+		$loop++;
 ?>
 <tr bgcolor="#FFFFDF">
+	<td style="white-space:nowrap;padding:0px 10px 0px 1px;"><?=$loop?>.</td>
 	<td><a href="<?=$wikiname->city_url?>" target="new"><?=$wikiname->city_url?></a></td>
-	<td>(<a href="<?php echo $wikiname->city_url?>index.php?title=Special:Contributions/<?php echo urlencode( $username ) ?>" target="new"><?=wfMsg('lookupcontribscontribs')?></a>)</td>
-	<td><?=wfMsg('lookupcontribsdetails')?>&#160;<select name="mode" id="wkLCmode<?=$wikiname->city_dbname?>">
+	<td align="center">(<a href="<?php echo $wikiname->city_url?>index.php?title=Special:Contributions/<?php echo urlencode( $username ) ?>" target="new"><?=wfMsg('lookupcontribscontribs')?></a>)</td>
+	<td><?=wfMsg('lookupcontribsdetails')?>&#160;<select name="mode" id="wkLCmode<?=$wikiname->city_dbname?>" class="small">
 		<option value="normal"><?=wfMsg('lookupcontribsselectmodenormal')?></option><option value="final"><?=wfMsg('lookupcontribsselectmodefinal')?></option><option value="all"><?=wfMsg('lookupcontribsselectmodeall')?></option>
-		</select>&#160;&#160;<input type="button" value="<?=wfMsg('lookupcontribsgo')?>" onclick="javascript:wkLCshowDetails('<?=$wikiname->city_dbname?>');">
+		</select>&#160;&#160;<input type="button" value="<?=wfMsg('lookupcontribsgo')?>" onclick="javascript:wkLCshowDetails('<?=$wikiname->city_dbname?>');" class="small">
 	</td>
-	<td id="wkLCUserActivityInd_<?=$wikiname->city_dbname?>"></td>
+	<td id="wkLCUserActivityInd_<?=$wikiname->city_dbname?>" style="clear:both"></td>
 </tr>
-<tr>
-	<td colspan="3" valign="top" id="wkLCUserActivityRow_<?=$wikiname->city_dbname?>"></td><td></td>
+<tr><td colspan="4" valign="top" id="wkLCUserActivityRow_<?=$wikiname->city_dbname?>" style="line-height:0.3em">&nbsp;</td><td></td>
 </tr>
 <? } } ?>
 </table>
