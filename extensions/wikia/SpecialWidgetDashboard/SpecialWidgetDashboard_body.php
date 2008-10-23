@@ -21,7 +21,7 @@ class SpecialWidgetDashboard extends SpecialPage {
 
 		wfLoadExtensionMessages('WidgetDashboard');
 
-		switch ($wgUser->getSkin()->getSkinName()) {
+		switch (WidgetFramework::getInstance()->GetSkin()) {
 		case 'monaco':
 			$wgOut->addWikiText(wfMsg('widgetdashboard-description'));
 
