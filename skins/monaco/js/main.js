@@ -65,7 +65,7 @@ Event.onDOMReady(function() {
 
 	var submitAutoComplete = function(comp, resultListItem) {
 		YAHOO.Wikia.Tracker.trackByStr(null, 'search/suggestItem/' + escape(YAHOO.util.Dom.get('search_field').value.replace(/ /g, '_')));
-		sUrl = wgServer + wgScriptPath + '?action=ajax&rs=getSuggestedArticleURL&rsargs=' + encodeURI(Dom.get('search_field').value);
+		sUrl = wgServer + wgScriptPath + '?action=ajax&rs=getSuggestedArticleURL&rsargs=' + encodeURIComponent(Dom.get('search_field').value);
 		var request = YAHOO.util.Connect.asyncRequest('GET', sUrl, submitAutoComplete_callback);
 	}
 
