@@ -13,6 +13,11 @@ class ChangesFeed {
 		global $wgSitename, $wgContLanguageCode, $wgFeedClasses, $wgTitle;
 		$feedTitle = "$wgSitename  - {$title} [$wgContLanguageCode]";
 
+		if(!array_key_exists($this->format, $wgFeedClasses)) {
+			// falling back to atom
+			$this->format = 'atom';
+		}
+
 		return new $wgFeedClasses[$this->format](
 			$feedTitle, htmlspecialchars( $description ), $wgTitle->getFullUrl() );
 	}
