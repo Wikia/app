@@ -121,9 +121,9 @@ function wkLCshowDetails(dbname, limit, offset)
 			div_details.innerHTML = "";
 			var records = document.getElementById('wkLCUserActivityRow_' + dbname);
 			if (!resData) {
-				records.innerHTML = "<div style=\"clear:both;border:1px dashed #D5DDF2;margin:0px 5px 0px 15px;\"><?=wfMsg('lookupcontribsinvalidresults')?></div>";
+				records.innerHTML = "<div style=\"clear:both;border:1px dashed #D5DDF2;margin:0px 5px 0px 15px;padding:5px;\"><?=wfMsg('lookupcontribsinvalidresults')?></div>";
 			} else if (resData['nbr_records'] == 0) {
-				records.innerHTML = "<div style=\"clear:both;border:1px dashed #D5DDF2;margin:0px 5px 0px 15px;\"><?=wfMsg('lookupcontribsnoresultfound')?></div>";
+				records.innerHTML = "<div style=\"clear:both;border:1px dashed #D5DDF2;margin:0px 5px 0px 15px;padding:5px;\"><?=wfMsg('lookupcontribsnoresultfound')?></div>";
 			} else {
 				//records.innerHTML = resData['nbr_records'];
 				page = resData['offset'];
