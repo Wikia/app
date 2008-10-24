@@ -257,6 +257,9 @@ function WidgetShoutBoxAddMessage($msg) {
 
 			$insertId = $dbw->insertId();
 
+			// make sure to store message in DB
+			$dbw->commit();
+
 			wfDebug('Shoutbox: msg #' . $insertId. " added\n");
 
 			// add msg also to memcache entry - avoid using unecessary updates queries
