@@ -81,6 +81,12 @@ function Ok() {
 	aLinks[0].innerHTML = linkText;
 	aLinks[0].href = "";
 
+	if(linkText == "" && articleName != "") {
+		linkText = articleName;
+	}
+	if(linkText != "" && articleName == "") {
+		articleName = linkText;
+	}
 	if(linkText.indexOf(articleName) == 0) {
 		trial = linkText.substring(articleName.length);
 		linkText = "";
