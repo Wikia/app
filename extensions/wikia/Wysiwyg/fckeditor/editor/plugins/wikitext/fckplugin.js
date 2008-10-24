@@ -140,7 +140,7 @@ FCK.Events.AttachEvent( 'OnAfterSetHTML', function() {
 		// macbre: fix issue with input tags as last child (can't move to end of the line)
 		var placeholders = FCK.EditorDocument.getElementsByTagName('input');
 		for (p=0; p<placeholders.length; p++) {
-			if (placeholders[p] == placeholders[p].parentNode.lastChild.previousSibling) { // last child is \n
+			if (placeholders[p] == placeholders[p].parentNode.lastChild) {
 				// add 'dirty' <br/>
 				FCKTools.AppendBogusBr(placeholders[p].parentNode);
 			}
