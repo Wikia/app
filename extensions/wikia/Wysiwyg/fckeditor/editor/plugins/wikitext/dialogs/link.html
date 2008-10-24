@@ -93,6 +93,8 @@ function Ok() {
 		var refid = FCK.wysiwygData.length;
 		aLinks[0].setAttribute("refid", refid);
 		FCK.wysiwygData[refid] = {type:"internal link"};
+	} else {
+		var refid = aLinks[0].getAttribute('refid');
 	}
 
 	FCK.wysiwygData[refid].href = articleName;
