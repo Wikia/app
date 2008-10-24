@@ -359,6 +359,9 @@ body, .BackColor
 #throbberBlock
 {
 	z-index: 10;
+	background: transparent url('images/progress_dialog.gif') no-repeat 50% 50%;
+	height: 15px;
+	width: 128px;
 }
 
 #throbberBlock div
