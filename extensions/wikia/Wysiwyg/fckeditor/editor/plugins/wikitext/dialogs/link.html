@@ -4,8 +4,8 @@
 	<title>Link Properties</title>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<meta name="robots" content="noindex, nofollow" />
+	<script src="../../../dialog/common/fck_dialog_common.js" type="text/javascript"></script>
 	<script type="text/javascript">
-//document.domain = 'wikia.com';
 var dialog	= window.parent ;
 var oEditor = dialog.InnerDialogLoaded() ;
 
@@ -14,8 +14,6 @@ var FCKLang		= oEditor.FCKLang ;
 var FCKConfig	= oEditor.FCKConfig ;
 var FCKRegexLib	= oEditor.FCKRegexLib ;
 var FCKTools	= oEditor.FCKTools ;
-
-document.write( '<script src="' + FCKConfig.BasePath + 'dialog/common/fck_dialog_common.js" type="text/javascript"><\/script>' ) ;
 
 dialog.AddTab( 'internal_link', 'Internal link' ) ;
 dialog.AddTab( 'external_link', 'External link' ) ;
