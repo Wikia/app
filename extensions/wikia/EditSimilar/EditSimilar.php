@@ -6,7 +6,7 @@
 * @package MediaWiki
 * @subpackage Extensions
 *
-* @author Bartek Lapinski <bartek@wikia.com>
+* @author Bartek Łapiński <bartek@wikia.com>
 * @copyright Copyright (C) 2008, Wikia Inc.
 * @license http://www.gnu.org/copyleft/gpl.html GNU General Public License 2.0 or later
 */
