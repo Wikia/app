@@ -681,6 +681,10 @@ class ReverseParser {
 						$tag .= $data['trial'];
 					}
 					return $tag;
+
+
+
+
 				case 'external link':
 					if($content == '[link]') {
 						return "[{$data['href']}]";

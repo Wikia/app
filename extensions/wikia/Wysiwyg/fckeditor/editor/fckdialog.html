@@ -30,13 +30,12 @@
 // <![CDATA[
 
 // Domain relaxation logic.
-(function()
-{
-	chunks = document.domain.split('.');
-	d = chunks.pop(); // com
+if(document.domain != 'localhost') {
+	var chunks = document.domain.split('.');
+	var d = chunks.pop(); // com
 	d = chunks.pop() + '.' + d; // wikia.com
 	document.domain = d;
-})() ;
+}
 
 var E = frameElement._DialogArguments.Editor ;
 
