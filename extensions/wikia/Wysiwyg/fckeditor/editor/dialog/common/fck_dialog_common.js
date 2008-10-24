@@ -1,4 +1,4 @@
-﻿/*
+/*
  * FCKeditor - The text editor for Internet - http://www.fckeditor.net
  * Copyright (C) 2003-2008 Frederico Caldeira Knabben
  *
@@ -23,13 +23,12 @@
  */
 
 // Automatically detect the correct document.domain (#123).
-(function()
-{
-	chunks = document.domain.split('.');
-	d = chunks.pop(); // com
+if(document.domain != 'localhost') {
+	var chunks = document.domain.split('.');
+	var d = chunks.pop(); // com
 	d = chunks.pop() + '.' + d; // wikia.com
 	document.domain = d;
-})() ;
+}
 
 // Attention: FCKConfig must be available in the page.
 function GetCommonDialogCss( prefix )
