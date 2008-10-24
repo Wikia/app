@@ -80,28 +80,19 @@ function Ok() {
 
 	}
 
-	aLinks[0].innerHTML = linkText;
-	aLinks[0].href = "";
-
 	if(linkText == "" && articleName != "") {
 		linkText = articleName;
 	}
 	if(linkText != "" && articleName == "") {
 		articleName = linkText;
 	}
-	/*
-	if(linkText.indexOf(articleName) == 0) {
-		trial = linkText.substring(articleName.length);
-		if(/\d/.test(trial)) {
-			trial = "";
-		} else {
-			linkText = "";
-		}
-	}
-	*/
+
 	if(linkText == articleName) {
 		linkText = "";
 	}
+
+	aLinks[0].innerHTML = linkText;
+	aLinks[0].href = "";
 
 	if(LINK_MODE != EXISTING) {
 		var refid = FCK.wysiwygData.length;
