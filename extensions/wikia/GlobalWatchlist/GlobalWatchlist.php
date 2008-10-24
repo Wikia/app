@@ -35,10 +35,6 @@ $wgHooks['getUserProfilePreferencesCustomEmailToggles'][] = 'wfGlobalWatchlistPr
 // user toggles
 $wgHooks['UserToggles'][] = 'wfGlobalWatchlistToggle';
 
-// permissions
-$wgAvailableRights[] = 'globalwatchlist';
-$wgGroupPermissions['staff']['globalwatchlist'] = true;
-
 function wfGlobalWatchlistToggle($extraToggles) {
 	$extraToggles['watchlistdigest'] = 'watchlistdigest';
 	$extraToggles['watchlistdigestclear'] = 'watchlistdigestclear';
@@ -48,21 +44,18 @@ function wfGlobalWatchlistToggle($extraToggles) {
 function wfGlobalWatchlistPrefsCustomHtml($prefsForm) {
 	global $wgOut, $wgUser, $wgSharedDB;
 
-	if($wgUser->isAllowed('globalwatchlist')) {
-		$dbr = wfGetDB(DB_SLAVE);
-		$oResource = $dbr->query("SELECT count(*) AS count FROM $wgSharedDB.global_watchlist WHERE gwa_user_id='" . $wgUser->getID() . "'");
-		$oResultRow = $dbr->fetchObject($oResource);
+	$dbr = wfGetDB(DB_SLAVE);
+	$oResource = $dbr->query("SELECT count(*) AS count FROM $wgSharedDB.global_watchlist WHERE gwa_user_id='" . $wgUser->getID() . "'");
+	$oResultRow = $dbr->fetchObject($oResource);
 
-		if($oResultRow->count) {
-			// only for staff members at the moment
-			wfLoadExtensionMessages('GlobalWatchlist');
+	if($oResultRow->count) {
+		// only for staff members at the moment
+		wfLoadExtensionMessages('GlobalWatchlist');
 
-		 $tname = 'watchlistdigestclear';
-		 $prefsForm->mUsedToggles[$tname] = true;
+	 $tname = 'watchlistdigestclear';
+	 $prefsForm->mUsedToggles[$tname] = true;
 
-			$wgOut->addHtml( $prefsForm->getToggle($tname) );
-		}
-
+		$wgOut->addHtml( $prefsForm->getToggle($tname) );
 	}
 
 	return true;
@@ -71,15 +64,13 @@ function wfGlobalWatchlistPrefsCustomHtml($prefsForm) {
 function wfGlobalWatchlistPrefsEmailToggle($prefsForm, $toggleHtml) {
 	global $wgUser;
 
-	if($wgUser->isAllowed('globalwatchlist')) {
-		// only for staff members at the moment
-		wfLoadExtensionMessages('GlobalWatchlist');
+	// only for staff members at the moment
+	wfLoadExtensionMessages('GlobalWatchlist');
 
-	 $tname = 'watchlistdigest';
-	 $prefsForm->mUsedToggles[$tname] = true;
+	$tname = 'watchlistdigest';
+	$prefsForm->mUsedToggles[$tname] = true;
 
-	 $toggleHtml .= $prefsForm->getToggle($tname) . '<br />';
-	}
+	$toggleHtml .= $prefsForm->getToggle($tname) . '<br />';
 
  return true;
 }

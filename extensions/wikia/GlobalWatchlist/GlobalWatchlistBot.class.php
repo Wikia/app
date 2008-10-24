@@ -90,7 +90,8 @@ class GlobalWatchlistBot {
 				$aPages[] = array(
 					'namespace' => $oResultRow->wl_namespace,
 					'title' => $oResultRow->wl_title,
-					'revisionId' => (!empty($oRevisionRow->rev_id) ? $oRevisionRow->rev_id : 0 )
+					'revisionId' => (!empty($oRevisionRow->rev_id) ? $oRevisionRow->rev_id : 0 ),
+					'timestamp' => $oResultRow->wl_notificationtimestamp
 				);
 			}
 		}
@@ -109,7 +110,7 @@ class GlobalWatchlistBot {
 
 	 $dbw = wfGetDB(DB_MASTER);
 
-		$oResource = $this->mDb->query("SELECT city_id, city_dbname, city_url, city_title FROM " . $wgSharedDB . ".city_list WHERE city_public='1' AND city_useshared='1' ORDER BY city_sitename");
+		$oResource = $this->mDb->query("SELECT city_id, city_dbname, city_lang, city_title FROM " . $wgSharedDB . ".city_list WHERE city_public='1' AND city_useshared='1' ORDER BY city_sitename");
 
 		while($oResultRow = $this->mDb->fetchObject($oResource)) {
 			foreach($this->mWatchlisters as $iUserId => $aUserData) {
@@ -119,11 +120,12 @@ class GlobalWatchlistBot {
 					if(!isset($this->mWikiData[$oResultRow->city_id])) {
 						$this->mWikiData[$oResultRow->city_id] = array(
 							'wikiName' => $oResultRow->city_title,
+							'wikiLangCode' => $oResultRow->city_lang
 						);
 					}
 
 					foreach($aPages as $aPage) {
-						$dbw->query("INSERT INTO " . $wgSharedDB . ".global_watchlist (gwa_user_id, gwa_city_id, gwa_namespace, gwa_title, gwa_rev_id) VALUES ('" . $iUserId . "', '" . $oResultRow->city_id . "','" . $aPage['namespace'] . "', '" . addslashes($aPage['title']) . "', '" . $aPage['revisionId'] . "')");
+						$dbw->query("INSERT INTO " . $wgSharedDB . ".global_watchlist (gwa_user_id, gwa_city_id, gwa_namespace, gwa_title, gwa_rev_id, gwa_timestamp) VALUES ('" . $iUserId . "', '" . $oResultRow->city_id . "','" . $aPage['namespace'] . "', '" . addslashes($aPage['title']) . "', '" . $aPage['revisionId'] . "', '" . $aPage['timestamp']. "')");
 					}
 				}
 			} // foreach
@@ -174,17 +176,23 @@ class GlobalWatchlistBot {
 		global $wgGlobalWatchlistMaxDigestedArticlesPerWiki;
 
 		$sDigests = "";
+		$bTooManyPages = false;
 		foreach($aDigestsData as $aDigest) {
 			$sDigests .= $aDigest['wikiName'] . ":\n";
 
 			$iPagesCount = 1;
 			foreach($aDigest['pages'] as $aPageData) {
 				if($iPagesCount > $wgGlobalWatchlistMaxDigestedArticlesPerWiki) {
-					$sDigests .= wfMsg('globalwatchlist-see-more') . "\n";
+					$bTooManyPages = true;
 					break;
 				}
 				$sDigests .= $aPageData['title']->getFullURL(($aPageData['revisionId'] ? "diff=0&oldid=" . $aPageData['revisionId'] : "")) . "\n";
 				$iPagesCount++;
+			}
+
+			if($bTooManyPages) {
+				$sDigests .= wfMsg('globalwatchlist-see-more') . "\n";
+				break;
 			}
 			$sDigests .= "\n";
 		}
