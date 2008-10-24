@@ -90,7 +90,14 @@ function Wysiwyg_Initial($form) {
 	$script = <<<EOT
 <script type="text/javascript" src="$wgExtensionsPath/wikia/Wysiwyg/fckeditor/fckeditor.js?$wgStyleVersion"></script>
 <script type="text/javascript">
-//document.domain = 'wikia.com';
+(function()
+{
+	chunks = document.domain.split('.');
+	d = chunks.pop(); // com
+	d = chunks.pop() + '.' + d; // wikia.com
+	document.domain = d;
+})() ;
+
 function FCKeditor_OnComplete(editorInstance) {
 	editorInstance.LinkedField.form.onsubmit = function() {
 		if(editorInstance.EditMode == FCK_EDITMODE_SOURCE) {

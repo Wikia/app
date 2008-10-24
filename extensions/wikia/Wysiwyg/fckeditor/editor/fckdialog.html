@@ -32,30 +32,10 @@
 // Domain relaxation logic.
 (function()
 {
-	var d = document.domain ;
-
-	while ( true )
-	{
-		// Test if we can access a parent property.
-		try
-		{
-			var parentDomain = ( Args().TopWindow || E ).document.domain ;
-
-			if ( document.domain != parentDomain )
-				document.domain = parentDomain ;
-
-			break ;
-		}
-		catch( e ) {}
-
-		// Remove a domain part: www.mytest.example.com => mytest.example.com => example.com ...
-		d = d.replace( /.*?(?:\.|$)/, '' ) ;
-
-		if ( d.length == 0 )
-			break ;		// It was not able to detect the domain.
-
-		document.domain = d ;
-	}
+	chunks = document.domain.split('.');
+	d = chunks.pop(); // com
+	d = chunks.pop() + '.' + d; // wikia.com
+	document.domain = d;
 })() ;
 
 var E = frameElement._DialogArguments.Editor ;
