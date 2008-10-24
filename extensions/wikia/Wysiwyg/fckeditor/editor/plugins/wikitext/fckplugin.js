@@ -125,6 +125,15 @@ FCK.Events.AttachEvent( 'OnAfterSetHTML', function() {
 		}
 	}
 	if(FCK.EditMode == FCK_EDITMODE_WYSIWYG) {
+
+		// handle drag&drop
+		FCK.EditorDocument.addEventListener( 'mousedown', function(e) {
+			if(e.target.tagName == 'INPUT') {
+					FCKSelection.SelectNode(e.target);
+			}
+		}, true);
+
+		// open wikitext dialog
 		FCK.EditorDocument.addEventListener( 'click', function(e) {
 			if(e.target.tagName == 'INPUT') {
 				var refid = e.target.getAttribute('refid');
