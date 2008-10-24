@@ -282,7 +282,7 @@ class ReverseParser {
 							wfDebug("ReverseParser: </b><i><b> close\n");
 							$close = '';
 						}
-						
+
 						// 3, 4
 						if ($node->parentNode && $node->parentNode->nextSibling &&
 							$node->isSameNode($node->parentNode->lastChild) &&
@@ -321,7 +321,7 @@ class ReverseParser {
 						$isFirstRow = $node->isSameNode($node->parentNode->firstChild);
 						$attStr = ltrim($this->getAttributesStr($node));
 
-						// don't convert first table row into |- 
+						// don't convert first table row into |-
 						if ($isFirstRow && $attStr == '') {
 							$out = $textContent;
 						}
@@ -554,7 +554,7 @@ class ReverseParser {
 		if ($isFirstChild) {
 			// 3a. wrap list bullets using <nowiki>
 			$text = preg_replace("/^([#*]+)/", '<nowiki>$1</nowiki>', $text);
-	
+
 			// 3b. semicolon at the beginning of the line
 			if(in_array($text{0}, array(':', ';'))) {
 				$text = '<nowiki>' . $text{0} . '</nowiki>' . substr($text, 1);
@@ -660,20 +660,6 @@ class ReverseParser {
 			// existing link
 
 			$data = $this->fckData[$refid];
-
-			if(!empty($data['href_new'])) {
-
-				// link edited in FCK
-
-				if(preg_match('%^(?:' . $this->protocols . ')%im', $data['href_new'])) {
-					if($data['type'] != 'external link') {
-						$data['type'] = 'external link: raw';
-					}
-				} else {
-					$data['type'] = 'internal link';
-				}
-				$data['href'] = $data['href_new'];
-			}
 
 			switch($data['type']) {
 				case 'internal link':
