@@ -264,6 +264,13 @@ function Wysiwyg_WikiTextToHtml($wikitext, $articleId = -1, $encode = false) {
 	$html = $wysiwygParser->parse($wikitext, $title, $options)->getText();
 	$wgWysiwygParserEnabled = false;
 
+	// replace whitespaces before closing tags (</p>, </h2>, ...)
+	$replacements = array(
+		"\n</p>" => '</p>',
+		' </h'   => '</h',
+	);
+	$html = strtr($html, $replacements);
+
 	// replace placeholders with HTML
 	if (!empty($wgWysiwygMarkers)) {
 		$html = strtr($html, $wgWysiwygMarkers);
