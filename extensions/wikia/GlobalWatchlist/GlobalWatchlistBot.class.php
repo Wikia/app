@@ -176,11 +176,11 @@ class GlobalWatchlistBot {
 		global $wgGlobalWatchlistMaxDigestedArticlesPerWiki;
 
 		$sDigests = "";
+		$iPagesCount = 1;
 		$bTooManyPages = false;
 		foreach($aDigestsData as $aDigest) {
-			$sDigests .= $aDigest['wikiName'] . ":\n";
+			$sDigests .= $aDigest['wikiName'] . ($aDigest['wikiLangCode'] != 'en' ?  " (" . $aDigest['wikiLangCode'] . ")": "") . ":\n";
 
-			$iPagesCount = 1;
 			foreach($aDigest['pages'] as $aPageData) {
 				if($iPagesCount > $wgGlobalWatchlistMaxDigestedArticlesPerWiki) {
 					$bTooManyPages = true;
@@ -258,6 +258,7 @@ class GlobalWatchlistBot {
 					$iWikiId = $oResultRow->gwa_city_id;
 					$aWikiDigest = array(
 						'wikiName' => $this->mWikiData[$iWikiId]['wikiName'],
+						'wikiLangCode' => $this->mWikiData[$iWikiId]['wikiLangCode'],
 						'pages' => array()
 					);
 				}
