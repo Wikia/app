@@ -89,6 +89,7 @@ function Ok() {
 	if(linkText != "" && articleName == "") {
 		articleName = linkText;
 	}
+	/*
 	if(linkText.indexOf(articleName) == 0) {
 		trial = linkText.substring(articleName.length);
 		if(/\d/.test(trial)) {
@@ -97,6 +98,7 @@ function Ok() {
 			linkText = "";
 		}
 	}
+	*/
 	if(linkText == articleName) {
 		linkText = "";
 	}
