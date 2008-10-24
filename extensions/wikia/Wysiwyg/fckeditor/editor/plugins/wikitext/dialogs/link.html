@@ -49,8 +49,57 @@ window.onload = function() {
 		GetE("articleName").value = oSelectionText;
 	}
 
-	window.parent.SetOkButton(true) ;
-	window.parent.SetAutoSize(true) ;
+	window.parent.SetOkButton(true);
+	window.parent.SetAutoSize(true);
+}
+
+function Ok() {
+	oEditor.FCKUndo.SaveUndoStep();
+
+	var linkText = GetE("linkText").value;
+	var articleName = GetE("articleName").value;
+	var trial = "";
+
+	if(LINK_MODE == EXISTING) {
+
+		var aLinks = [oLink];
+
+	} else {
+
+		if(LINK_MODE == NEW_SELECTION) {
+
+			var aLinks = oEditor.FCK.CreateLink(articleName, true);
+
+		} else if(LINK_MODE == NEW_NO_SELECTION) {
+
+			var aLinks = [oEditor.FCK.InsertElement('a')];
+
+		}
+
+	}
+
+	aLinks[0].innerHTML = linkText;
+	aLinks[0].href = "";
+
+	if(linkText.indexOf(articleName) == 0) {
+		trial = linkText.substring(articleName.length);
+		linkText = "";
+	}
+	if(linkText == articleName) {
+		linkText = "";
+	}
+
+	if(LINK_MODE != EXISTING) {
+		var refid = FCK.wysiwygData.length;
+		aLinks[0].setAttribute("refid", refid);
+		FCK.wysiwygData[refid] = {type:"internal link"};
+	}
+
+	FCK.wysiwygData[refid].href = articleName;
+	FCK.wysiwygData[refid].description = linkText;
+	FCK.wysiwygData[refid].trial = trial;
+
+	return true;
 }
 
 
