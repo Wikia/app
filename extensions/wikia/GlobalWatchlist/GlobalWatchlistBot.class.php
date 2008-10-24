@@ -154,7 +154,7 @@ class GlobalWatchlistBot {
 					$iCurrentCityId = $oResultRow->gwa_city_id;
 				}
 				if(!empty($sWikiDbName)) {
-					$dbw->query("UPDATE `" . addslashes($sWikiDbName) . "`.watchlist SET wl_notificationtimestamp=NULL WHERE wl_user='" . $iUserId . "' AND wl_namespace='" . $oResultRow->gwa_namespace . "' AND wl_title='" . $oResultRow->gwa_title . "'");
+					$dbw->query("UPDATE `" . addslashes($sWikiDbName) . "`.watchlist SET wl_notificationtimestamp=NULL WHERE wl_user='" . $iUserId . "' AND wl_namespace='" . $oResultRow->gwa_namespace . "' AND wl_title='" . addslashes($oResultRow->gwa_title) . "'");
 				}
 				else {
 					$this->printDebug("ERROR: wiki db name not found for city_id=" . $oResultRow->gwa_city_id);
