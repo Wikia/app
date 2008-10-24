@@ -87,12 +87,12 @@ function Ok() {
 		articleName = linkText;
 	}
 
+	aLinks[0].innerHTML = linkText;
+	aLinks[0].href = "";
+
 	if(linkText == articleName) {
 		linkText = "";
 	}
-
-	aLinks[0].innerHTML = linkText;
-	aLinks[0].href = "";
 
 	if(LINK_MODE != EXISTING) {
 		var refid = FCK.wysiwygData.length;
