@@ -12,7 +12,8 @@ class AdProviderGAM implements iAdProvider {
 
 	protected static $instance = false;
 
-	private $adManagerId = "ca-pub-3862144315477646";
+	//private $adManagerId = "ca-pub-3862144315477646"; gorillamania@gmail.com account
+	private $adManagerId = "ca-pub-4086838842346968"; // Wikia account
 
 	public $batchHtmlCalled = false;
 
@@ -42,13 +43,14 @@ class AdProviderGAM implements iAdProvider {
 				'Toys' => 'toys',
 				'Travel' => 'travel');
 
-	private $channels = array(	'8770790322', // Control
-					'1816018796', // Content Language
-					'1561126031', // User Language
-					'6359157529', // Default colors (instead of matching colors to the wiki)
-					'2086936532', // Hints
-					'4120043396', // Keywords
-					'2695313814'); // Page Url
+	// TODO : Make this an assoc array with the bucket name
+	private $channels = array(	'1089383293', // Control
+					'7297263620', // Content Language
+					'7102419657', // User Language
+					'3156555836', // Default colors (instead of matching colors to the wiki)
+					'9000659297', // Hints
+					'5796745449', // Keywords
+					'4441240368'); // Page Url
 
 	private $slotsToCall = array();
 
@@ -136,8 +138,8 @@ class AdProviderGAM implements iAdProvider {
 		if (is_object($wgUser)){
 			$skin_name = $wgUser->getSkin()->getSkinName();
 		}
-		if ($channel != "6359157529" && $skin_name == 'monaco' ){
-			// Set the colors to match the wiki, except for "6359157529", which is testing white
+		if ($channel != "3156555836" && $skin_name == 'monaco' ){
+			// Set the colors to match the wiki, except for "3156555836", which is testing white
 			// This is only available in monaco
 			$out .= 'GA_googleAddAdSensePageAttr("google_color_border", AdEngine.getAdColor("text"));' . "\n";
 			$out .= 'GA_googleAddAdSensePageAttr("google_color_bg", AdEngine.getAdColor("bg"));' . "\n";
@@ -157,9 +159,9 @@ class AdProviderGAM implements iAdProvider {
 
 		// Bucket testing of different params based on channel
 		switch ($channel){
-		  case '8770790322': break; //control
-		  case '6359157529': // Testing white backgrounds 
-		  case '2086936532':
+		  case '1089383293': break; //control
+		  case '3156555836': // Testing white backgrounds 
+		  case '9000659297':
 			if(!empty($_GET['search'])){
 				// Note that we don't have ads on the search page right now, so this isn't going to do any good
 				$out .= 'GA_googleAddAdSensePageAttr("google_hints", "' . addslashes($_GET['search']) . '";';
@@ -168,7 +170,7 @@ class AdProviderGAM implements iAdProvider {
 				$out .= 'GA_googleAddAdSensePageAttr("google_hints", AdEngine.getKeywords());';
 			}
 			break;
-		  case '2695313814':
+		  case '4441240368':
 			$out .= 'GA_googleAddAdSensePageAttr("google_page_url", "' . addslashes(AdProviderGoogle::getPageUrl()) . '");' . "\n";
 			break;
 
@@ -176,11 +178,11 @@ class AdProviderGAM implements iAdProvider {
 			$out .= 'GA_googleAddAdSensePageAttr("google_language", wgUserLanguage);' . "\n";
 			break;
 
-		  case '1816018796':
+		  case '7297263620':
 			$out .= 'GA_googleAddAdSensePageAttr("google_language", wgContentLanguage);' . "\n";
 			break;
 
-		  case '4120043396':
+		  case '5796745449':
 			if(!empty($_GET['search'])){
 				// Note that we don't have ads on the search page right now, so this isn't going to do any good
 				$out .= 'GA_googleAddAdSensePageAttr("google_kw", "' . addslashes($_GET['search']) . '";';

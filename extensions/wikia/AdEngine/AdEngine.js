@@ -289,14 +289,14 @@ AdEngine.doBucketTest = function () {
 AdEngine.getGoogleChannel = function (){
 	AdEngine.getBucketid();
 	switch (AdEngine.bucketid){
-	  case 'lp_left': return "7665676283";
-	  case 'lp_center': return "1028770315";
-  	  case 'lp_right': return "3592523985";
-	  case 'lp_at_left': return "6506950785";
-	  case 'lp_at_center': return "5436428914";
-	  case 'lp_at_right': return "3293611624";
-	  case 'bp_overline': return "5113403507";
-	  case 'bp_down': return "4971759242";
+	  case 'lp_left': return "7793152260";
+	  case 'lp_center': return "1436236834";
+  	  case 'lp_right': return "6226936120";
+	  case 'lp_at_left': return "8909168217";
+	  case 'lp_at_center': return "3786044824";
+	  case 'lp_at_right': return "1531954547";
+	  case 'bp_overline': return "0569622692";
+	  case 'bp_down': return "1570830585";
 	  default: return "";
 	}
 };

@@ -18,7 +18,7 @@ interface iAdProvider {
 
 class AdEngine {
 
-	const cacheKeyVersion = "2.01f";
+	const cacheKeyVersion = "2.01";
 	const cacheTimeout = 1800;
 
 	// TODO: pull these from wikicities.provider
@@ -62,7 +62,7 @@ class AdEngine {
 		foreach($this->providers as $p) {
 			$wgAutoloadClasses['AdProvider' . $p]=dirname(__FILE__) . '/AdProvider'.$p.'.php';
 		}
-		$this->bucketNum = mt_rand(0,200);
+		$this->bucketNum = mt_rand(0,100);
 	}
 
 	public static function getInstance($slots = null) {
