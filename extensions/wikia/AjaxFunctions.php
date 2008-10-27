@@ -3,36 +3,6 @@
  * Ajax Functions used by Wikia extensions
  */
 
-
-/**
- * Suggests article's title.
- * @Author Gerard Adamczewski (gerard@wikia.com)
- *
- * @Param String $uVal
- * @Return String
- */
-function searchSuggest( $uVal )
-{
-    $DB =& wfGetDB (DB_SLAVE);
-
-    $uVal = str_replace( ' ', '_', htmlspecialchars_decode( $uVal ) );
-
-    $uValS = MySQL_Real_Escape_String ($uVal);
-
-    //Page_Namespace = '0'
-    //$uValS {0} = StrToUpper ($uValS {0});
-    $uValS = mb_strtoupper( mb_substr( $uValS, 0, 1 ) ) . mb_substr( $uValS, 1 );
-    $dbResults = $DB->Query ("SELECT Page_Title FROM `page` WHERE Page_Title LIKE '$uValS%' AND page_is_redirect=0 AND page_namespace=" . NS_MAIN . " ORDER BY Page_Title ASC LIMIT 11;");
-
-	$v = '';
-
-    while ($o = $DB->FetchObject ($dbResults))
-    {
-	$v .= htmlspecialchars( str_replace( '_', ' ', $o->Page_Title) ) . "\n";
-    }
-    return $v;
-}
-
 function getSuggestedArticleURL( $text )
 {
     $title = Title::newFromText( rawurldecode( $text ) );
