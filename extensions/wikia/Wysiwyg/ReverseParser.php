@@ -180,7 +180,7 @@ class ReverseParser {
 						// handle indentations
 						$indentation = $this->getIndentationLevel($node);
 						if ($indentation !== false) {
-							$out = str_repeat(':', $indentation) . $out . "\n";
+							$out = str_repeat(':', $indentation) . $out;
 						}
 
 						// new line logic
