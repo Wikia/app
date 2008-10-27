@@ -15,40 +15,93 @@ var FCKConfig	= oEditor.FCKConfig ;
 var FCKRegexLib	= oEditor.FCKRegexLib ;
 var FCKTools	= oEditor.FCKTools ;
 
-dialog.AddTab( 'internal_link', 'Internal link' ) ;
-
+// Overall classification
+var MODE;
 var EXISTING = 1;
 var NEW_SELECTION = 2;
 var NEW_NO_SELECTION = 3;
 
-var LINK_MODE;
+// In detail classification for EXISTING
+var TYPE;
+var INTERNAL = 4;
+var EXTERNAL = 5;
 
-var oLink = dialog.Selection.GetSelection().MoveToAncestorNode('A');
-if(oLink) {
-	FCK.Selection.SelectNode(oLink);
-	var refid = oLink.getAttribute('refid');
-	LINK_MODE = EXISTING;
-} else {
-	var oSelection = FCK.Selection.GetSelection();
-	var oSelectionText = oSelection.type ? oSelection.createRange().text : oSelection.toString();
-	if(oSelectionText != "") {
-		LINK_MODE = NEW_SELECTION;
+var link = dialog.Selection.GetSelection().MoveToAncestorNode('A');
+var refid = link.getAttribute('refid');
+
+// Determine link MODE and TYPE. Also if it's existing link then expand editor selection.
+if(link) {
+	FCK.Selection.SelectNode(link);
+	var data = FCK.wysiwygData[link.getAttribute('refid')];
+
+	MODE = EXISTING;
+	if(data.type == 'internal link') {
+		TYPE = INTERNAL;
 	} else {
-		LINK_MODE = NEW_NO_SELECTION;
+		TYPE = EXTERNAL;
 	}
+
+} else {
+
+	var selection = FCK.Selection.GetSelection();
+	var selectionText = selection.type ? selection.createRange().text : selection.toString();
+	if(selectionText != "") {
+		MODE = NEW_SELECTION;
+	} else {
+		MODE = NEW_NO_SELECTION;
+	}
+
+}
+
+dialog.AddTab('internal_link', 'Internal link');
+dialog.AddTab('external_link', 'External link');
+
+function OnDialogTabChange(tabCode) {
+	ShowE('divInternalLink', (tabCode == 'internal_link'));
+	ShowE('divExternalLink', (tabCode == 'external_link'));
+
+	dialog.SetAutoSize( true ) ;
 }
 
 window.onload = function() {
-	GetE("divInternalLink").style.display = "";
 
-	if(LINK_MODE == EXISTING) {
-		GetE("articleName").value = FCK.wysiwygData[refid].href;
-		if(GetE("articleName").value != oLink.innerHTML) {
-			GetE("linkText").value = oLink.innerHTML;
+	if(MODE == EXISTING) {
+
+		if(TYPE == INTERNAL) {
+
+			dialog.SetSelectedTab('internal_link');
+
+			GetE("internal_article_name").value = FCK.wysiwygData[refid].href;
+
+			if(GetE("internal_article_name").value != link.innerHTML) {
+				GetE("internal_link_text").value = link.innerHTML;
+			}
+
+		} else if(TYPE == EXTERNAL) {
+
+			dialog.SetSelectedTab('external_link');
+
+			GetE("external_url").value = FCK.wysiwygData[refid].href;
+
+			if(link.innerHTML == "[link]") {
+				GetE("external_link_text").disabled = true;
+				GetE("external_unlabeled_link").checked = true;
+			} else {
+				if(GetE("external_url").value != link.innerHTML) {
+					GetE("external_link_text").value = link.innerHTML;
+				}
+			}
+
 		}
-	} else if(LINK_MODE == NEW_SELECTION) {
-		GetE("articleName").value = oSelectionText;
-		//GetE("linkText").value = oSelectionText;
+
+	} else { // NEW LINKS
+
+		dialog.SetSelectedTab('internal_link');
+
+		if(MODE == NEW_SELECTION) {
+			GetE("internal_article_name").value = selectionText;
+		}
+
 	}
 
 	window.parent.SetOkButton(true);
@@ -56,6 +109,7 @@ window.onload = function() {
 }
 
 function Ok() {
+/*
 	oEditor.FCKUndo.SaveUndoStep();
 
 	var linkText = GetE("linkText").value;
@@ -105,7 +159,7 @@ function Ok() {
 	FCK.wysiwygData[refid].href = articleName;
 	FCK.wysiwygData[refid].description = linkText;
 	FCK.wysiwygData[refid].trial = trial;
-
+*/
 	return true;
 }
 	</script>
@@ -115,14 +169,34 @@ function Ok() {
 
 			<span>Article name:</span>
 			<br />
-			<input id="articleName" style="WIDTH: 100%" type="text" />
+			<input id="internal_article_name" style="WIDTH: 100%" type="text" />
 
 			<br /><br />
 
 			<span>Link text (if different than Article name):</span>
 			<br />
-			<input id="linkText" style="WIDTH: 100%" type="text" />
+			<input id="internal_link_text" style="WIDTH: 100%" type="text" />
 
 		</div>
+
+		<div id="divExternalLink" style="DISPLAY: none">
+
+			<span>URL:</span>
+			<br />
+			<input id="external_url" style="WIDTH: 100%" type="text" />
+
+			<br /><br />
+
+			<span>Link text:</span>
+			<br />
+			<input id="external_link_text" style="WIDTH: 100%" type="text" />
+
+			<br /><br />
+
+			<input id="external_unlabeled_link" type="checkbox" />
+			<label for="external_unlabeled_link">Unlabeled link</label>
+
+		</div>
+
 	</body>
 </html>
