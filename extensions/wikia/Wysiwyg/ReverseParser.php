@@ -158,13 +158,15 @@ class ReverseParser {
 
 					case 'br':
 						// <br /> as first child of <p> will be parsed as line break
-						if($node->parentNode && $node->parentNode->nodeName == 'p' && $node->parentNode->hasChildNodes() && $node->parentNode->childNodes->item(0)->isSameNode($node)) {
+						if($node->parentNode->nodeName == 'p' && $node->parentNode->hasChildNodes() && $node->parentNode->childNodes->item(0)->isSameNode($node)) {
 							$out = "\n";
 						}
 						// remove <br /> when it's the last child of parent being inline element
-						else if ($node->parentNode && $this->isFormattingElement($node->parentNode) && $node->isSameNode($node->parentNode->lastChild) ) {
+						else if ($this->isFormattingElement($node->parentNode) && $node->isSameNode($node->parentNode->lastChild) ) {
 							$out = '';
-						} else {
+						}
+						// render <br /> only when it's inside block element
+						else if ($node->parentNode->nodeName != 'body') {
 							$out = '<br />';
 						}
 
@@ -210,6 +212,13 @@ class ReverseParser {
 					case 'h5':
 					case 'h6':
 						$out = '';
+					
+						// ignore 'empty' headers	
+						if ( trim($textContent) == '' ) {
+							$out = "\n";
+							break;
+						}
+
 						// remove <br /> when it's the first child of header tag
 						// and add empty line before paragraph
 						if ($node->firstChild->nodeType == XML_ELEMENT_NODE && $node->firstChild->nodeName == 'br') {
@@ -440,6 +449,12 @@ class ReverseParser {
 						break;
 
 					default:
+						// remove prohibited HTML tags
+						if ( in_array($node->nodeName, array('script', 'embed')) ) {
+							$out = '';
+							break;
+						}
+
 						// nice formatting of nested HTML in wikimarkup
 						if($node->hasChildNodes() && $node->childNodes->item(0)->nodeType != XML_TEXT_NODE) {
 							// node with child nodes
