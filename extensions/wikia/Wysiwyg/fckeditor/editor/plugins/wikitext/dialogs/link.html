@@ -127,6 +127,8 @@ function Ok() {
 		}
 	}
 
+	var data = {};
+
 	var link_text;
 
 	if(activeTabCode == "internal_link") {
@@ -137,75 +139,32 @@ function Ok() {
 				link_text = link_text.substring(1);
 			}
 		}
+		data.type = "internal link";
+		data.href = GetE("internal_article_name").value;
 	} else if(activeTabCode == "external_link") {
 		if(GetE("external_link_text").disabled != true && GetE("external_link_text").value != "") {
 			link_text = GetE("external_link_text").value;
+			data.type = "external link";
 		} else if(GetE("external_link_text").disabled != true) {
 			link_text = GetE("external_url").value;
+			data.type = "external link: raw";
 		} else {
 			link_text = "[link]";
+			data.type = "external link";
 		}
-
+		data.href = GetE("external_url").value;
 	}
 
 	aLinks[0].innerHTML = link_text;
 	aLinks[0].href = "";
 
-	return true;
-
-
-
-
-
-/*
-	var linkText = GetE("linkText").value;
-	var articleName = GetE("articleName").value;
-	var trial = "";
-
-	if(LINK_MODE == EXISTING) {
-
-		var aLinks = [oLink];
-
-	} else {
-
-		if(LINK_MODE == NEW_SELECTION) {
-
-			var aLinks = oEditor.FCK.CreateLink(articleName, true);
-
-		} else if(LINK_MODE == NEW_NO_SELECTION) {
-
-			var aLinks = [oEditor.FCK.InsertElement('a')];
-
-		}
-
-	}
-
-	if(linkText == "" && articleName != "") {
-		linkText = articleName;
-	}
-	if(linkText != "" && articleName == "") {
-		articleName = linkText;
-	}
-
-	aLinks[0].innerHTML = linkText;
-	aLinks[0].href = "";
-
-	if(linkText == articleName) {
-		linkText = "";
-	}
-
-	if(LINK_MODE != EXISTING) {
-		var refid = FCK.wysiwygData.length;
+	if(!refid) {
+		refid = FCK.wysiwygData.length;
 		aLinks[0].setAttribute("refid", refid);
-		FCK.wysiwygData[refid] = {type:"internal link"};
-	} else {
-		var refid = aLinks[0].getAttribute('refid');
 	}
 
-	FCK.wysiwygData[refid].href = articleName;
-	FCK.wysiwygData[refid].description = linkText;
-	FCK.wysiwygData[refid].trial = trial;
-*/
+	FCK.wysiwygData[refid] = data;
+
 	return true;
 }
 	</script>
