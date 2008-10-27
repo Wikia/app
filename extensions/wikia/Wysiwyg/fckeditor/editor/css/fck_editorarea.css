@@ -51,9 +51,12 @@ body, td
 	font-size: 12px !important;
 }
 
+a.new {
+	color: #BA0000 !important;
+}
+
 a[href]
 {
-	color: -moz-hyperlinktext !important;		/* For Firefox... mark as important, otherwise it becomes black */
 	text-decoration: -moz-anchor-decoration;	/* For Firefox 3, otherwise no underline will be used */
 }
 
