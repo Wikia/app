@@ -16,15 +16,17 @@ var FCKRegexLib	= oEditor.FCKRegexLib ;
 var FCKTools	= oEditor.FCKTools ;
 
 // Overall classification
-var MODE;
 var EXISTING = 1;
 var NEW_SELECTION = 2;
 var NEW_NO_SELECTION = 3;
+var MODE;
 
 // In detail classification for EXISTING
-var TYPE;
 var INTERNAL = 4;
 var EXTERNAL = 5;
+var TYPE = INTERNAL;
+
+var activeTabCode;
 
 var link = dialog.Selection.GetSelection().MoveToAncestorNode('A');
 
@@ -59,7 +61,7 @@ dialog.AddTab('external_link', 'External link');
 function OnDialogTabChange(tabCode) {
 	ShowE('divInternalLink', (tabCode == 'internal_link'));
 	ShowE('divExternalLink', (tabCode == 'external_link'));
-
+	activeTabCode = tabCode;
 	dialog.SetAutoSize( true ) ;
 }
 
@@ -113,9 +115,49 @@ window.onload = function() {
 }
 
 function Ok() {
-/*
 	oEditor.FCKUndo.SaveUndoStep();
 
+	if(MODE == EXISTING) {
+		var aLinks = [link];
+	} else {
+		if(MODE == NEW_SELECTION) {
+			var aLinks = oEditor.FCK.CreateLink(" ", true);
+		} else if(MODE == NEW_NO_SELECTION) {
+			var aLinks = [oEditor.FCK.InsertElement('a')];
+		}
+	}
+
+	var link_text;
+
+	if(activeTabCode == "internal_link") {
+		link_text = GetE("internal_link_text").value;
+		if(link_text == "") {
+			link_text = GetE("internal_article_name").value;
+			if(link_text.substring(0,1) == ":") {
+				link_text = link_text.substring(1);
+			}
+		}
+	} else if(activeTabCode == "external_link") {
+		if(GetE("external_link_text").disabled != true && GetE("external_link_text").value != "") {
+			link_text = GetE("external_link_text").value;
+		} else if(GetE("external_link_text").disabled != true) {
+			link_text = GetE("external_url").value;
+		} else {
+			link_text = "[link]";
+		}
+
+	}
+
+	aLinks[0].innerHTML = link_text;
+	aLinks[0].href = "";
+
+	return true;
+
+
+
+
+
+/*
 	var linkText = GetE("linkText").value;
 	var articleName = GetE("articleName").value;
 	var trial = "";
