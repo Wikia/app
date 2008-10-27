@@ -39,7 +39,7 @@ class AdEngine {
 		1 => 'GAM_leaderboard', // Using Google Ad Manager for leaderboard testing
 		2 => 'GAM_boxad', // Using Google Ad Manager for the box ad
                 3 => 'lp', // Leaderboard placed left-center-right in current spot
-                4 => 'lp_at', // Leaderboard placed above title, left-center-right
+                4 => 'lp', // Leaderboard placed left-center-right in current spot
                 5 => 'bp', // Boxad placement
 	);
 
@@ -50,6 +50,15 @@ class AdEngine {
 		'starcraft',
 		'diablo',
 		'blind'
+	);
+
+	// We only serve ads in certain slots for international
+	private $internationalSlots = array(
+		'HOME_LEFT_SKYSCRAPER_2', 
+		'LEFT_SKYSCRAPER_1',
+		'LEFT_SKYSCRAPER_2',
+		'LEFT_SKYSCRAPER_3',
+		'RIGHT_SKYSCRAPER_1'
 	);
 		
 	protected function __construct($slots = null) {
@@ -254,15 +263,15 @@ class AdEngine {
 			  case 'de': return $this->getProviderFromId($this->slots[$slotname]['provider_id']);
 
 			  default:
-				if ( AdEngine::getInstance()->getAdType($slotname) != 'skyscraper' ){
-					return new AdProviderNull("We only serve skyscraper ads for this language ($wgLanguageCode) ", false);
+				if (!in_array( $slotname, $this->internationalSlots)){
+					return new AdProviderNull("Ads name not served for this language in this slot ($wgLanguageCode) ", false);
 
 				} else {
 					// Google's TOS prevents serving ads for some languages
 					if (! in_array($wgLanguageCode, AdProviderGoogle::getSupportedLanguages())){
 						return new AdProviderNull("Unsupported language for Google Adsense ($wgLanguageCode)", false);
 					} else {
-						return AdProviderGoogle::getInstance();
+						return AdProviderGAM::getInstance();
 					}
 				}
 			}
