@@ -16,7 +16,7 @@ $wgHooks['UserToggles'][] = 'Wysiwyg_Toggle';
 $wgHooks['getEditingPreferencesTab'][] = 'Wysiwyg_Toggle';
 $wgHooks['MagicWordwgVariableIDs'][] = 'Wysiwyg_RegisterMagicWordID';
 $wgHooks['LanguageGetMagic'][] = 'Wysiwyg_GetMagicWord';
-$wgHooks['ParserAfterStrip'][] = 'Wysiwyg_AfterStrip';
+$wgHooks['InternalParseBeforeLinks'][] = 'Wysiwyg_RemoveMagicWord';
 
 function Wysiwyg_RegisterMagicWordID(&$magicWords) {
 	$magicWords[] = 'MAG_NOWYSIWYG';
@@ -28,7 +28,7 @@ function Wysiwyg_GetMagicWord(&$magicWords, $langCode) {
 	return true;
 }
 
-function Wysiwyg_AfterStrip(&$parser, &$text, &$strip_state) {
+function Wysiwyg_RemoveMagicWord(&$parser, &$text, &$strip_state) {
 	MagicWord::get('MAG_NOWYSIWYG')->matchAndRemove($text);
 	return true;
 }
@@ -47,7 +47,6 @@ function Wysywig_Ajax($type, $input = false, $wysiwygData = false, $articleId = 
 		return new AjaxResponse(Wysiwyg_HtmlToWikiText($input, $wysiwygData, true));
 
 	} else if($type == 'wiki2html') {
-
 		$edgeCasesText = Wysiwyg_CheckEdgeCases($input);
 		if ($edgeCasesText != '') {
 			header('X-edgecases: 1');
@@ -222,7 +221,7 @@ function Wysiwyg_CheckEdgeCases($text) {
 		'regular' => array(
 			'<!--' => 'wysiwyg-edgecase-comment', // HTML comments
 			'{{{' => 'wysiwyg-edgecase-triplecurls', // template parameters
-			'__NOWYSIWYG__' => 'wysiwyg-edgecase-nowysiwyg', // new magic word to disable FCK for current article
+			//'__NOWYSIWYG__' => 'wysiwyg-edgecase-nowysiwyg', // new magic word to disable FCK for current article
 			'<span refid=' => 'wysiwyg-edgecase-syntax', // span with fck metadata - shouldn't be used by user
 		),
 		'regexp' => array(
@@ -239,6 +238,20 @@ function Wysiwyg_CheckEdgeCases($text) {
 	foreach($edgeCases['regexp'] as $regexp => $msgkey) {
 		if (preg_match($regexp, $text)) {
 			$edgeCasesFound[] = wfMsg($msgkey);
+		}
+	}
+
+	// macbre: handle __NOWYSIWYG__ in really weird way
+	$mw = MagicWord::get('MAG_NOWYSIWYG');
+	if ($mw->match($text)) {
+		$matches = array();
+		$countNoWysiwygAll = preg_match_all($mw->getRegex(), $text, $matches);
+		$countNoWysiwygInNoWiki = preg_match_all('/\<nowiki\>__NOWYSIWYG__\<\/nowiki\>/si', $text, $matches);
+
+		wfDebug("Wysiwyg: __NOWYSIWYG__ (count: {$countNoWysiwygAll} / in <nowiki>: {$countNoWysiwygInNoWiki})\n");
+
+		if ($countNoWysiwygAll > $countNoWysiwygInNoWiki) {
+			$edgeCasesFound[] = wfMsg('wysiwyg-edgecase-nowysiwyg');
 		}
 	}
 
