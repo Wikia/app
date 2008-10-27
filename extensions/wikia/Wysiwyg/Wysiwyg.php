@@ -283,10 +283,12 @@ function Wysiwyg_WikiTextToHtml($wikitext, $articleId = -1, $encode = false) {
 	$html = $wysiwygParser->parse($wikitext, $title, $options)->getText();
 	$wgWysiwygParserEnabled = false;
 
-	// replace whitespaces before closing tags (</p>, </h2>, ...)
+	// replace whitespaces after opening (<li>) and before closing tags (</p>, </h2>, </li>)
 	$replacements = array(
-		"\n</p>" => '</p>',
-		' </h'   => '</h',
+		"\n</p>"  => '</p>',
+		' </h'    => '</h',
+		'<li> '   => '<li>',
+		"\n</li>" => '</li>',
 	);
 	$html = strtr($html, $replacements);
 
