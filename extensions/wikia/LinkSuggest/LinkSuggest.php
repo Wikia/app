@@ -9,7 +9,7 @@ if(!defined('MEDIAWIKI')) {
 
 $wgExtensionCredits['other'][] = array(
     'name' => 'LinkSuggest',
-    'author' => 'Inez Korczyński',
+    'author' => 'Inez Korczyński, Ciencia Al Poder',
     'version' => '1.5.1' ,
 );
 
@@ -30,10 +30,10 @@ function wfLinkSuggestToggle($toggles, $default_array = false) {
 
 $wgHooks['EditForm::MultiEdit:Form'][] = 'AddLinkSuggest';
 function AddLinkSuggest($a, $b, $c, $d) {
-	global $wgOut, $wgExtensionsPath, $wgStyleVersion, $wgUser, $wgHooks;
+	global $wgOut, $wgExtensionsPath, $wgStyleVersion, $wgUser;
 	if($wgUser->getOption('disablelinksuggest') != true) {
 		$wgOut->addHTML('<div id="wpTextbox1_container" class="yui-ac-container"></div>');
-		$wgOut->addScript('<script type="text/javascript" src="'.$wgExtensionsPath.'wikia/LinkSuggest/LinkSuggest.js?'.$wgStyleVersion.'"></script>');
+		$wgOut->addScript('<script type="text/javascript" src="'.$wgExtensionsPath.'/wikia/LinkSuggest/LinkSuggest.js?'.$wgStyleVersion.'"></script>');
 	}
 	return true;
 }
