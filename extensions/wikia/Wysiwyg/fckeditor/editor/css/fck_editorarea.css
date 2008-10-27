@@ -51,13 +51,14 @@ body, td
 	font-size: 12px !important;
 }
 
-a.new {
-	color: #BA0000 !important;
+a
+{
+	text-decoration: underline !important;
 }
 
-a[href]
+a.new 
 {
-	text-decoration: -moz-anchor-decoration;	/* For Firefox 3, otherwise no underline will be used */
+	color: #BA0000 !important;
 }
 
 input.wysiwygDisabled
