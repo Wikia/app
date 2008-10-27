@@ -165,25 +165,26 @@ YAHOO.lang.extend(YAHOO.example.AutoCompleteTextArea, YAHOO.widget.AutoComplete,
 		var caret = this.getCaret(this._elTextbox);
 
 		for(var i = caret; i >= 0; i--) {
-			if(text.charAt(i - 1) == "[") {
+			if(text.charAt(i - 1) == "[" || text.charAt(i - 1) == "{") {
 				break;
 			}
 		}
 
 		var textBefore = text.substr(0, i);
-		var newVal = textBefore + oItem._oResultData[1] + "]]" + text.substr(i + this._sCurQuery.length);
+		var newVal = textBefore + ((this._bIsTemplate && this._bIsSubstTemplate) ? 'subst:' : '' ) + (this._bIsColon ? ':' : '') + oItem._oResultData[1] + (text.charAt(i - 1) == "{" ? "}}" : "]]") + text.substr(i + this._originalQuery.length);
 		this._elTextbox.value = newVal;
 
 		if(YAHOO.env.ua.ie > 0) {
 			caret = caret - this.row + 1;
 		}
 
-		this.setCaret(this._elTextbox, i + oItem._oResultData[1].length + 2);
+		this.setCaret(this._elTextbox, i + (this._bIsColon ? 1 : 0) + ((this._bIsTemplate && this._bIsSubstTemplate) ? 6 : 0 ) + oItem._oResultData[1].length + 2);
 		this._oCurItem = oItem;
 		this._elTextbox.scrollTop = scrollTop;
 	},
 
 	_sendQuery: function(sQuery) {
+		
 		var text = this._elTextbox.value.replace(/\r/g, "");
 		var caret = this.getCaret(this._elTextbox);
 		var sQueryStartAt;
@@ -194,11 +195,17 @@ YAHOO.lang.extend(YAHOO.example.AutoCompleteTextArea, YAHOO.widget.AutoComplete,
 			if((c == "[") && (text.charAt(i - 1) == "[")) {
 				break ;			
 			}
+			if((c == "{") && (text.charAt(i - 1) == "{")) {
+				break ;			
+			}
 			if((c == "]") && (text.charAt(i - 1) == "]")) {
 				return ;			
 			}
+			if((c == "}") && (text.charAt(i - 1) == "}")) {
+				return ;			
+			}
 		}
-		
+
 		for(var i = caret; i >= 0; i--) {
 			var c = text.charAt(i);
 			if(c == "]" || c == "|") {
@@ -207,19 +214,62 @@ YAHOO.lang.extend(YAHOO.example.AutoCompleteTextArea, YAHOO.widget.AutoComplete,
 				}
 				return;
 			}
+			if(c == "}" || c == "|") {
+				if ( (c == "|") || ( (c == "}") && (text.charAt(i-1) == "}") ) ) {
+					this._toggleContainer(false) ;
+				}
+				return;
+			}
 			if((c == "[") && (text.charAt(i - 1) == "[")) {
-				sQueryReal = text.substr(i + 1, (caret - i - 1));
+				this._originalQuery = text.substr(i + 1, (caret - i - 1));
+				sQueryReal = this._originalQuery
+				if (this._originalQuery.indexOf(':')==0){
+					this._bIsColon = true;
+					sQueryReal = sQueryReal.replace(':','');
+				} else {
+					this._bIsColon = false;
+				}
+				this._bIsTemplate = false;
+				sQueryStartAt = i;
+				break;
+			}
+			if((c == "{") && (text.charAt(i - 1) == "{")) {
+				this._originalQuery = text.substr(i + 1, (caret - i - 1));
+				this._bIsColon = false;
+				if (this._originalQuery.length >= 6 && this._originalQuery.toLowerCase().indexOf('subst:') == 0){
+					sQueryReal = "Template:"+this._originalQuery.replace(/subst:/i,'');
+					this._bIsSubstTemplate = true;
+				} else if (this._originalQuery.indexOf(':')==0){
+					sQueryReal = this._originalQuery.replace(':','');
+					this._bIsColon = true;
+				} else {
+					sQueryReal = "Template:"+this._originalQuery;
+					this._bIsSubstTemplate = false;
+				}
+				this._bIsTemplate = true;
 				sQueryStartAt = i;
 				break;
 			}
 		}
 
 		if(sQueryStartAt >= 0 && sQueryReal.length > 2) {
-			YAHOO.example.AutoCompleteTextArea.superclass._sendQuery.call(this, sQueryReal);
+			YAHOO.example.AutoCompleteTextArea.superclass._sendQuery.call(this, encodeURI(sQueryReal).replace(/%[0-9A-F]{2}/g,'_'));
 		}
 	},
 
 	doBeforeExpandContainer: function(elTextbox, elContainer, sQuery, aResults) {
+		for (var i=0, aList=elContainer.getElementsByTagName('li'); i<aList.length; i++){
+			if (aList[i]._sResultKey){
+				if (this._bIsTemplate){
+					aList[i].innerHTML = aList[i].innerHTML.replace('Template:','');
+					aList[i]._sResultKey = aList[i]._sResultKey.replace('Template:','');
+					for (var j=0; j<aList[i]._oResultData.length; j++){
+						aList[i]._oResultData[j] = aList[i]._oResultData[j].replace('Template:','');
+					}
+				}
+			}
+		}
+
 		var position = this.getCaretPosition(elTextbox);
 		elContainer.style.left = position[0] + 'px'
 		elContainer.style.top = position[1] + 'px'
