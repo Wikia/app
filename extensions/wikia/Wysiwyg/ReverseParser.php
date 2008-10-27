@@ -209,8 +209,16 @@ class ReverseParser {
 					case 'h4':
 					case 'h5':
 					case 'h6':
+						$out = '';
+						// remove <br /> when it's the first child of header tag
+						// and add empty line before paragraph
+						if ($node->firstChild->nodeType == XML_ELEMENT_NODE && $node->firstChild->nodeName == 'br') {
+							$textContent = substr($textContent, 6);
+							$out = "\n\n";
+						}
+
 						$head = str_repeat("=", $node->nodeName{1});
-						$out = "{$head} {$textContent} {$head}";
+						$out .= "{$head} {$textContent} {$head}";
 
 						// new line logic
 						if ($node->previousSibling || ($node->parentNode && $this->isTableCell($node->parentNode))) {
