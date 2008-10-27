@@ -199,7 +199,6 @@ $wgSkipSkins = array(
 		'search',
 		'test',
 		'uncyclopedia',
-		'wikikids',
 		'wowwiki',
 );
 
