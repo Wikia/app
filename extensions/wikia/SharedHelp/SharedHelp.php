@@ -5,6 +5,7 @@
  *
  * @author Inez Korczynski <inez@wikia.com>
  * @author Maciej Brencz <macbre(at)wikia-inc.com>
+ * @author Lucas Garczewski <tor@wikia-inc.com>
  */
 
 if(!defined('MEDIAWIKI')) {
@@ -13,9 +14,9 @@ if(!defined('MEDIAWIKI')) {
 
 $wgExtensionCredits['other'][] = array(
         'name' => 'SharedHelp',
-	'version' => 0.17,
+	'version' => 0.18,
         'description' => 'Takes pages from [[w:c:Help|Help Wikia]] and inserts them into Help namespace on this wiki',
-        'author' => array('Maciej Brencz, Inez Korczyński, Bartek Łapiński')
+        'author' => array('Maciej Brencz', 'Inez Korczyński', 'Bartek Łapiński', "[http://www.wikia.com/wiki/User:TOR Lucas 'TOR' Garczewski]")
 );
 
 $wgHooks['OutputPageBeforeHTML'][] = 'SharedHelpHook';
@@ -90,9 +91,9 @@ class SharedHttp extends Http {
 }
 
 function SharedHelpHook(&$out, &$text) {
-	global $wgTitle, $wgMemc, $wgSharedDB, $wgDBname, $wgCityId, $wgHelpWikiId;
+	global $wgTitle, $wgMemc, $wgSharedDB, $wgDBname, $wgCityId, $wgHelpWikiId, $wgLang, $wgArticlePath;
 
-	if($wgCityId == $wgHelpWikiId) { # Do not process for help.wikia.com
+	if($wgCityId == $wgHelpWikiId) { # Do not process for the help wiki
 		return true;
 	}
 
@@ -102,11 +103,17 @@ function SharedHelpHook(&$out, &$text) {
 
 	if($wgTitle->getNamespace() == 12) { # Process only for pages in namespace Help (12)
 
+		# Initialize shared and local variables
 		$sharedArticleKey = $wgSharedDB . ':sharedArticles:' . $wgTitle->getDBkey();
 		$sharedArticle = $wgMemc->get($sharedArticleKey);
+		$sharedServer = unserialize(WikiFactory::getVarByName('wgServer', $wgHelpWikiId)->cv_value);
+		$sharedScript = unserialize(WikiFactory::getVarByName('wgScript', $wgHelpWikiId)->cv_value);
+		$sharedArticlePath = unserialize(WikiFactory::getVarByName('wgArticlePath', $wgHelpWikiId)->cv_value);
+		$sharedArticlePathClean = str_replace('$1', '', $sharedArticlePath);
+		$localArticlePathClean = str_replace('$1', '', $wgArticlePath);
 
 		# Try to get content from memcache
-		if ( !empty($sharedArticle['timestamp']) ) {
+	if ( !empty($sharedArticle['timestamp']) ) {
 	 		if( (wfTimestamp() - (int) ($sharedArticle['timestamp'])) < 600) {
 	 			if(isset($sharedArticle['cachekey'])) {
 					wfDebug("SharedHelp: trying parser cache {$sharedArticle['cachekey']}\n");
@@ -128,16 +135,8 @@ function SharedHelpHook(&$out, &$text) {
 		}
 		# If getting content from memcache failed (invalidate) then just download it via HTTP
 		if(empty($content)) {
-			global $wgDevelEnvironment;
-			if (empty($wgDevelEnvironment)) {
-	
-				$urlTemplate = "http://help.wikia.com/index.php?title=Help:%s&action=render";
-			}
-			else {
-				$urlTemplate = "http://help.macbre.dev.poz.wikia-inc.com/index.php?title=Help:%s&action=render"; // for testing purposes
-			}
-	
-			$articleUrl = sprintf($urlTemplate, $wgTitle->getDBkey());
+			$urlTemplate = $sharedServer . $sharedScript . "?title=Help:%s&action=render";
+			$articleUrl = sprintf($urlTemplate, urlencode($wgTitle->getDBkey()));
 			list($content, $c) = SharedHttp::get($articleUrl);
 
 			# if we had redirect, then store it somewhere 
@@ -148,7 +147,8 @@ function SharedHelpHook(&$out, &$text) {
 			}
 			if(isset($destinationUrl)) {
 				global $wgServer, $wgArticlePath ;
-				$destinationPage = substr( $destinationUrl, strpos( $destinationUrl, 'Help:') );
+				$helpNs = $wgLang->getNsText(NS_HELP);
+				$destinationPage = substr( $destinationUrl, strpos( $destinationUrl, "$helpNs:") );
 				$out->redirect( $wgServer . str_replace( "$1", $destinationPage, $wgArticlePath ) );
 			} else {
 				$tmp = split("\r\n\r\n", $content, 2);
@@ -171,10 +171,12 @@ function SharedHelpHook(&$out, &$text) {
                         curl_close( $c );
 		}
 
+		# get rid of editsection links
 		$content = preg_replace("|<span class=\"editsection\">\[<a href=\"(.*?)\" title=\"(.*?)\">(.*?)<\/a>\]<\/span>|", "", $content);
-		$content = str_replace("http://help.wikia.com/wiki", "/wiki", $content);
-                $content = str_replace("/wiki/Category", "http://help.wikia.com/wiki/Category", $content);
-                $content = str_replace("/wiki/Advice", "http://help.wikia.com/wiki/Advice", $content);
+
+		# replace help wiki links with local links, except for Category links, which will go to the help wiki
+		$categoryNs = $wgLang->getNsText(NS_CATEGORY);
+		$content = preg_replace("|{$sharedServer}{$sharedArticlePathClean}(?!$categoryNs)(?!Advice)|", $localArticlePathClean, $content);
 
 		// "this text is stored..."
 		$info = '<div class="sharedHelpInfo" style="text-align: right; font-size: smaller;padding: 5px">' . wfMsgExt('shared_help_info', 'parseinline', $wgTitle->getDBkey()) . '</div>';
@@ -191,7 +193,7 @@ function SharedHelpHook(&$out, &$text) {
 function SharedHelpEditPageHook(&$editpage) {
 	global $wgTitle, $wgCityId, $wgHelpWikiId;
 
-	// do not show this message on help.wikia.com
+	// do not show this message on the help wiki
 	if ($wgCityId == $wgHelpWikiId) {
 		return true;
 	}
@@ -211,7 +213,7 @@ function SharedHelpEditPageHook(&$editpage) {
 function SharedHelpSearchHook(&$searchPage, &$term) {
 	global $wgOut, $wgCityId, $wgHelpWikiId;
 
-	// do not show this message on help.wikia.com
+	// do not show this message on the help wiki
 	if ($wgCityId == $wgHelpWikiId) {
 		return true;
 	}
