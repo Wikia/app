@@ -37,10 +37,8 @@ function initAutoComplete() {
 	YAHOO.util.Event.addListener( 'searchfield', 'keypress', function(e) { if(e.keyCode==13) { YAHOO.util.Dom.get('searchform').submit(); } } );
 
 	// Init datasource
-	var oDataSource = new YAHOO.widget.DS_XHR(wgServer + wgScriptPath, [ "\n" ]);
-	oDataSource.responseType = YAHOO.widget.DS_XHR.TYPE_FLAT;
-	oDataSource.scriptQueryParam = "rsargs";
-	oDataSource.scriptQueryAppend = "action=ajax&rs=searchSuggest";
+	var oDataSource = new YAHOO.widget.DS_XHR(wgServer + wgScriptPath, ['results', 'title', 'title_org']);
+	oDataSource.scriptQueryAppend = "action=ajax&rs=getLinkSuggest";
 
 	// Init AutoComplete object and assign datasource object to it
 	var oAutoComp = new YAHOO.widget.AutoComplete('searchfield','searchSuggestContainer', oDataSource);
