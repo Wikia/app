@@ -126,6 +126,18 @@ window.onload = function() {
 function Ok() {
 	oEditor.FCKUndo.SaveUndoStep();
 
+	if(activeTabCode == 'internal_link') {
+		if(GetE('internal_article_name').value == '') {
+			alert('Article name field can not be ampty!');
+			return false;
+		}
+	} else if(activeTabCode == 'external_link') {
+		if(GetE('external_url').value == '') {
+			alert('URL name field can not be ampty!');
+			return false;
+		}
+	}
+
 	if(MODE == EXISTING) {
 		var aLinks = [link];
 	} else {
