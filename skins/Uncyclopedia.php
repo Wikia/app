@@ -12,10 +12,9 @@
 if( !defined( 'MEDIAWIKI' ) )
 	die( -1 );
 
-/** */
 require_once('includes/SkinTemplate.php');
 $wgValidSkinNames['uncyclopedia'] = 'Uncyclopedia default';
-require_once('extensions/wikia/AdServer.php');
+require "extensions/wikia/AnalyticsEngine/AnalyticsEngine.php";
 
 /**
  * Inherit main code from SkinTemplate, set the CSS and template filter.
@@ -330,23 +329,11 @@ class UncyclopediaTemplate extends QuickTemplate {
 
 -->
 <?php endif;
-?>
-<script type="text/javascript" src="http://www.google-analytics.com/urchin.js"></script>
-<?php
-echo AdServer::getInstance()->getAd('js_bot1');
-echo AdServer::getInstance()->getAd('js_bot2');
-echo AdServer::getInstance()->getAd('js_bot3');
+echo AnalyticsEngine::track('GA_Urchin', AnalyticsEngine::EVENT_PAGEVIEW);
+echo AnalyticsEngine::track('QuantServe', AnalyticsEngine::EVENT_PAGEVIEW);
 ?>
 </div><!-- end of globalWrapper -->
 </div><!-- end of container -->
-
-<!-- Start Quantcast tag -->
-<script type="text/javascript" src="http://edge.quantserve.com/quant.js"></script>
-<script type="text/javascript">_qacct="p-8bG6eLqkH6Avk";quantserve();</script>
-<noscript>
-<a href="http://www.quantcast.com/p-8bG6eLqkH6Avk" target="_blank"><img src="http://pixel.quantserve.com/pixel/p-8bG6eLqkH6Avk.gif" style="display: none;" border="0" height="1" width="1" alt="Quantcast"/></a>
-</noscript>
-<!-- End Quantcast tag -->
 
 </body></html>
 <?php
