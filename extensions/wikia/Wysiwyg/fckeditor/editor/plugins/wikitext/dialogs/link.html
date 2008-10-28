@@ -61,15 +61,15 @@ dialog.AddTab('external_link', 'External link');
 function OnDialogTabChange(tabCode) {
 	ShowE('divInternalLink', (tabCode == 'internal_link'));
 	ShowE('divExternalLink', (tabCode == 'external_link'));
-	if(tabCode == 'internal_link') {
-		if(GetE('internal_link_text').value == '') {
+
+	if(activeTabCode) {
+		if(tabCode == 'internal_link') {
 			GetE('internal_link_text').value = GetE('external_link_text').value;
-		}
-	} else if(tabCode == 'external_link') {
-		if(GetE('external_link_text').value == '') {
+		} else if(tabCode == 'external_link') {
 			GetE('external_link_text').value = GetE('internal_link_text').value;
 		}
 	}
+
 	activeTabCode = tabCode;
 	dialog.SetAutoSize( true ) ;
 }
