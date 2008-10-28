@@ -725,7 +725,7 @@ class HomeTemplate extends QuickTemplate {
 			<li><a href="http://www.wikia.com/wiki/Hiring">Hiring</a></li>
 			<li><a href="http://www.wikia.com/wiki/Press">Press</a></li>
 			<li><a href="http://www.wikia.com/wiki/Terms_of_use">Terms of Use</a></li>
-			<li><img src="<?php $this->text('stylepath') ?>/home/images/gp_media.png" border="0" width="128" height="22" style="position: relative; top: 5px;" /></li>
+			<li><img src="<?php $this->text('stylepath') ?>/home/images/gp_media.png" border="0" width="128" height="22" style="vertical-align: top; position: relative; top: 25px" /></li>
 		</ul>
 		<div id="copyright">
 			<img src="<?php $this->text('stylepath') ?>/home/images/footer_logo.gif?<?= $wgStyleVersion ?>" alt="Wikia" /><br />
