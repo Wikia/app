@@ -93,7 +93,7 @@ class AdProviderGAM implements iAdProvider {
 		$out = "<!-- ## BEGIN " . __CLASS__ . '::' . __METHOD__ . " ## -->\n";
 		
 		// Make a call for each slot.
-		$out .= '<script type="text/javascript">';
+		$out .= '<script type="text/javascript">' . "\n";
 		foreach ( $this->slotsToCall as $slotname ){
 			$out .= 'GA_googleAddSlot("' . $this->adManagerId . '","' . $slotname . '");' . "\n";
 			// Set up key values
@@ -112,7 +112,7 @@ class AdProviderGAM implements iAdProvider {
 		$out .= 'GA_googleAddAttr("user_lang", wgUserLanguage);' . "\n";
 
 		// ###### Ad Sense attributes
-		$out .= $this->getAdSenseAttr();
+		$out .= $this->getAdSenseAttr() . "\n";
 		$out .= '</script>' . "\n";
 		
 		// Make the call for all the ads
@@ -160,7 +160,8 @@ class AdProviderGAM implements iAdProvider {
 		// Bucket testing of different params based on channel
 		switch ($channel){
 		  case '1089383293': break; //control
-		  case '3156555836': // Testing white backgrounds 
+                  case '7102419657': break; // Why is this here?
+		  case '3156555836': break; // Testing white backgrounds 
 		  case '9000659297':
 			if(!empty($_GET['search'])){
 				// Note that we don't have ads on the search page right now, so this isn't going to do any good
