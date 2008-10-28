@@ -22,7 +22,14 @@ class AdEngine {
 	const cacheTimeout = 1800;
 
 	// TODO: pull these from wikicities.provider
-	private $providers = array('1' => 'DART', '2' => 'OpenX', '3' => 'Google', '4' => 'GAM', '-1' => 'Null');
+	private $providers = array(
+		'1' => 'DART',
+		'2' => 'OpenX',
+		'3' => 'Google',
+		'4' => 'GAM',
+		'5' => 'PubMatic',
+		'-1' => 'Null'
+	);
 
 	private $slots = array();
 
@@ -289,6 +296,7 @@ class AdEngine {
 			case 'OpenX': return AdProviderOpenX::getInstance();
 			case 'Google': return AdProviderGoogle::getInstance();
 			case 'GAM': return AdProviderGAM::getInstance();
+			case 'PubMatic': return AdProviderPubMatic::getInstance();
 			default: return new AdProviderNull('Unrecognized provider id', true);
 		}
 	}
