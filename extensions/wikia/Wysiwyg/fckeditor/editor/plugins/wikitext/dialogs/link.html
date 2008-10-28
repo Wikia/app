@@ -32,13 +32,17 @@ var link = dialog.Selection.GetSelection().MoveToAncestorNode('A');
 
 // Determine link MODE and TYPE. Also if it's existing link then expand editor selection.
 if(link) {
-	var refid = link.getAttribute('refid');
 	FCK.Selection.SelectNode(link);
-	var data = FCK.wysiwygData[link.getAttribute('refid')];
-
 	MODE = EXISTING;
-	if(data.type == 'internal link') {
-		TYPE = INTERNAL;
+
+	var refid = link.getAttribute('refid');
+	if(refid) {
+		var data = FCK.wysiwygData[refid];
+		if(data.type == 'internal link') {
+			TYPE = INTERNAL;
+		} else {
+			TYPE = EXTERNAL;
+		}
 	} else {
 		TYPE = EXTERNAL;
 	}
@@ -96,7 +100,11 @@ window.onload = function() {
 
 			dialog.SetSelectedTab('external_link');
 
-			GetE('external_url').value = FCK.wysiwygData[refid].href;
+			if(refid) {
+				GetE('external_url').value = FCK.wysiwygData[refid].href;
+			} else {
+				GetE('external_url').value = link.href;
+			}
 
 			if(link.innerHTML == '[link]') { // TODO:
 				GetE('external_link_text').disabled = true;
