@@ -17,6 +17,7 @@ require "$IP/extensions/wikia/AdEngine/AdProviderDART.php";
 require "$IP/extensions/wikia/AdEngine/AdProviderOpenX.php";
 require "$IP/extensions/wikia/AdEngine/AdProviderNull.php";
 require "$IP/extensions/wikia/AdEngine/AdProviderGoogle.php";
+require "$IP/extensions/wikia/AdEngine/AdProviderPubMatic.php";
 
 // Global variables
 $_GET['forceCategory']=array ( 'id' => '3', 'name' => 'Entertainment');

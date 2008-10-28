@@ -8,6 +8,7 @@ INSERT INTO ad_provider VALUES (1, 'DART');
 INSERT INTO ad_provider VALUES (2, 'OpenX');
 INSERT INTO ad_provider VALUES (3, 'Google');
 INSERT INTO ad_provider VALUES (4, 'GAM');
+INSERT INTO ad_provider VALUES (5, 'PubMatic');
 
 
 -- Slots
