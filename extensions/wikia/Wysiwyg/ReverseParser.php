@@ -769,7 +769,7 @@ class ReverseParser {
 					}
 				}
 				else {
-					return $data['href'];
+					return "[{$data['href']} {$content}]";
 				}
 		}
 
