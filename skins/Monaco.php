@@ -1528,11 +1528,12 @@ if(count($wikiafooterlinks) > 0) {
 <?php
 		foreach($wikiafooterlinks as $key => $val) {
 			// Very primitive way to actually have copyright WF variable, not MediaWiki:msg constant.
-			if (('GFDL' == $val['text']) && (!empty($this->data['copyright'])))
-			{
-				$wikiafooterlinksA[] = $this->data['copyright'];
-			} else
-			{
+			// This is only shown when there is copyright data available. It is not shown on special pages for example.
+			if ( 'GFDL' == $val['text'] ) {
+				if (!empty($this->data['copyright'])) {
+					$wikiafooterlinksA[] = $this->data['copyright'];
+				}
+			} else {
 				$wikiafooterlinksA[] = '<a rel="nofollow" href="'.htmlspecialchars($val['href']).'">'.$val['text'].'</a>';
 			}
 		}
