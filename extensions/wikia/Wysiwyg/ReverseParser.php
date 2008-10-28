@@ -712,9 +712,11 @@ class ReverseParser {
 				else if ($data['description'] != '' && substr($data['description'], 0, strlen($data['href'])) == $data['href']) {
 					$trial = substr($data['description'], strlen($data['href']));
 					
-					// validate $trial
-					$data['trial'] = $trial;
-					$data['description'] = '';
+					// validate $trial (might only contain chars)
+					if ( ctype_alpha($trial) ) {
+						$data['trial'] = $trial;
+						$data['description'] = '';
+					}
 				}
 				
 				// generate wikisyntax
