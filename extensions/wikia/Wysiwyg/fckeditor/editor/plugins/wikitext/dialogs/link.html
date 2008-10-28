@@ -47,7 +47,7 @@ if(link) {
 
 	var selection = FCK.Selection.GetSelection();
 	var selectionText = selection.type ? selection.createRange().text : selection.toString();
-	if(selectionText != "") {
+	if(selectionText != '') {
 		MODE = NEW_SELECTION;
 	} else {
 		MODE = NEW_NO_SELECTION;
@@ -61,14 +61,23 @@ dialog.AddTab('external_link', 'External link');
 function OnDialogTabChange(tabCode) {
 	ShowE('divInternalLink', (tabCode == 'internal_link'));
 	ShowE('divExternalLink', (tabCode == 'external_link'));
+	if(tabCode == 'internal_link') {
+		if(GetE('internal_link_text').value == '') {
+			GetE('internal_link_text').value = GetE('external_link_text').value;
+		}
+	} else if(tabCode == 'external_link') {
+		if(GetE('external_link_text').value == '') {
+			GetE('external_link_text').value = GetE('internal_link_text').value;
+		}
+	}
 	activeTabCode = tabCode;
 	dialog.SetAutoSize( true ) ;
 }
 
 window.onload = function() {
 
-	GetE("external_unlabeled_link").onchange = function() {
-		GetE("external_link_text").disabled = GetE("external_unlabeled_link").checked;
+	GetE('external_unlabeled_link').onchange = function() {
+		GetE('external_link_text').disabled = GetE('external_unlabeled_link').checked;
 	}
 
 	if(MODE == EXISTING) {
@@ -77,24 +86,24 @@ window.onload = function() {
 
 			dialog.SetSelectedTab('internal_link');
 
-			GetE("internal_article_name").value = FCK.wysiwygData[refid].href;
+			GetE('internal_article_name').value = FCK.wysiwygData[refid].href;
 
-			if(GetE("internal_article_name").value != link.innerHTML) {
-				GetE("internal_link_text").value = link.innerHTML;
+			if(GetE('internal_article_name').value != link.innerHTML) {
+				GetE('internal_link_text').value = link.innerHTML;
 			}
 
 		} else if(TYPE == EXTERNAL) {
 
 			dialog.SetSelectedTab('external_link');
 
-			GetE("external_url").value = FCK.wysiwygData[refid].href;
+			GetE('external_url').value = FCK.wysiwygData[refid].href;
 
-			if(link.innerHTML == "[link]") { // TODO:
-				GetE("external_link_text").disabled = true;
-				GetE("external_unlabeled_link").checked = true;
+			if(link.innerHTML == '[link]') { // TODO:
+				GetE('external_link_text').disabled = true;
+				GetE('external_unlabeled_link').checked = true;
 			} else {
-				if(GetE("external_url").value != link.innerHTML) {
-					GetE("external_link_text").value = link.innerHTML;
+				if(GetE('external_url').value != link.innerHTML) {
+					GetE('external_link_text').value = link.innerHTML;
 				}
 			}
 
@@ -105,7 +114,7 @@ window.onload = function() {
 		dialog.SetSelectedTab('internal_link');
 
 		if(MODE == NEW_SELECTION) {
-			GetE("internal_article_name").value = selectionText;
+			GetE('internal_article_name').value = selectionText;
 		}
 
 	}
@@ -121,7 +130,7 @@ function Ok() {
 		var aLinks = [link];
 	} else {
 		if(MODE == NEW_SELECTION) {
-			var aLinks = oEditor.FCK.CreateLink(" ", true);
+			var aLinks = oEditor.FCK.CreateLink(' ', true);
 		} else if(MODE == NEW_NO_SELECTION) {
 			var aLinks = [oEditor.FCK.InsertElement('a')];
 		}
@@ -131,36 +140,36 @@ function Ok() {
 
 	var link_text;
 
-	if(activeTabCode == "internal_link") {
-		link_text = GetE("internal_link_text").value;
-		if(link_text == "") {
-			link_text = GetE("internal_article_name").value;
-			if(link_text.substring(0,1) == ":") {
+	if(activeTabCode == 'internal_link') {
+		link_text = GetE('internal_link_text').value;
+		if(link_text == '') {
+			link_text = GetE('internal_article_name').value;
+			if(link_text.substring(0,1) == ':') {
 				link_text = link_text.substring(1);
 			}
 		}
-		data.type = "internal link";
-		data.href = GetE("internal_article_name").value;
-	} else if(activeTabCode == "external_link") {
-		if(GetE("external_link_text").disabled != true && GetE("external_link_text").value != "") {
-			link_text = GetE("external_link_text").value;
-			data.type = "external link";
-		} else if(GetE("external_link_text").disabled != true) {
-			link_text = GetE("external_url").value;
-			data.type = "external link: raw";
+		data.type = 'internal link';
+		data.href = GetE('internal_article_name').value;
+	} else if(activeTabCode == 'external_link') {
+		if(GetE('external_link_text').disabled != true && GetE('external_link_text').value != '') {
+			link_text = GetE('external_link_text').value;
+			data.type = 'external link';
+		} else if(GetE('external_link_text').disabled != true) {
+			link_text = GetE('external_url').value;
+			data.type = 'external link: raw';
 		} else {
-			link_text = "[link]";
-			data.type = "external link";
+			link_text = '[link]';
+			data.type = 'external link';
 		}
-		data.href = GetE("external_url").value;
+		data.href = GetE('external_url').value;
 	}
 
 	aLinks[0].innerHTML = link_text;
-	aLinks[0].href = "";
+	aLinks[0].href = '';
 
 	if(!refid) {
 		refid = FCK.wysiwygData.length;
-		aLinks[0].setAttribute("refid", refid);
+		aLinks[0].setAttribute('refid', refid);
 	}
 
 	FCK.wysiwygData[refid] = data;
