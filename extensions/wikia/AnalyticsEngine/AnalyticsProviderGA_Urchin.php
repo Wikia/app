@@ -17,13 +17,13 @@ class AnalyticsProviderGA_Urchin implements iAnalyticsProvider {
 	public function trackEvent($event, $eventDetails=array()){
 		switch ($event){
 		  case AnalyticsEngine::EVENT_PAGEVIEW:
-			return '<script type="text/javascript">_uff=0;_uacct="UA-288915-1";urchinTracker();</script>' . "\n";
+			return '<script type="text/javascript">_uff=0;_uacct="UA-288915-1";urchinTracker();</script>';
 		  case 'dbname':
 			if (empty($eventDetails[0])){
 				return '<!-- Missing dbname for dbname tracking event -->';
 			}
 			$db = "/" . $eventDetails[0];
-			return '<script type="text/javascript">_uff=0;_uacct="UA-288915-2";urchinTracker("' .addslashes($db).'");</script>' . "\n";
+			return '<script type="text/javascript">_uff=0;_uacct="UA-288915-2";urchinTracker("' .addslashes($db).'");</script>"';
 		  case 'main_page':
 			return '<script type="text/javascript">
 			if ((typeof wgIsMainpage != "undefined") && (wgIsMainpage)) {
