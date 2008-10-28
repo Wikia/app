@@ -682,38 +682,17 @@ class ReverseParser {
 			$href = $node->getAttribute('href');
 
 			if( is_string($href) ) {
-				if (strpos($href, ':')) {
-					list($protocol, $path) = explode(':', $href, 2);
-				}
-				else {
-					// default to http if none protocol provided
-					$protocol = 'http';
-					$path = $href;
-				}
+				// generate new refid
+				$refid = count($this->fckData);
 
-				// make sure to have protocol name in lower case
-				$protocol = strtolower($protocol);
-
-				// put it back together
-				$href = $protocol . ':' . $path;
-
-				// fill FCK data
-				if (preg_match('%^(?:' . $this->protocols . ')%im', $href)) {
-					// generate new refid
-					$refid = count($this->fckData);
-
-					$this->fckData[$refid] = array(
-						'type' => ($content == $href) ? 'external link: raw' : 'external link',
-						'text' => ($node->textContent == '[link]') ? '[link]' : $content,
-						'href' => $href
-					);
-				}
-				// plain URL
-				else {
-					return $href;
-				}
+				$this->fckData[$refid] = array(
+					'type' => ($content == $href) ? 'external link: raw' : 'external link',
+					'text' => ($node->textContent == '[link]') ? '[link]' : $content,
+					'href' => $href
+				);
 			}
 		}
+		
 
 		$data = $this->fckData[$refid];
 
@@ -757,16 +736,38 @@ class ReverseParser {
 				$textBefore = $node->previousSibling && $node->previousSibling->nodeType == XML_TEXT_NODE && substr($node->previousSibling->textContent, -1) != ' ';
 				$textAfter = $node->nextSibling && $node->nextSibling->nodeType == XML_TEXT_NODE && $node->nextSibling->textContent{0} != ' ';
 
-				if ($data['type'] == 'external link: raw' && !$textBefore && !$textAfter) {
-					// use http://foo.com
-					return $content;
+				// validate URL
+				if (strpos($data['href'], ':')) {
+					list($protocol, $path) = explode(':', $data['href'], 2);
 				}
-				else if ($content == '[link]') {
-					// use [http://foo.com] - numbered external links
-					return "[{$data['href']}]";
-				} else {
-					// use [http://foo.com desc]
-					return "[{$data['href']} {$content}]";
+				else {
+					// default to http if none protocol provided
+					$protocol = 'http';
+					$path = '//'.$data['href'];
+				}
+
+				// make sure to have protocol name in lower case
+				$protocol = strtolower($protocol);
+
+				// put it back together
+				$data['href'] = $protocol . ':' . $path;
+
+				// fill FCK data
+				if (preg_match('%^(?:' . $this->protocols . ')%im', $data['href'])) {
+					if ($data['type'] == 'external link: raw' && !$textBefore && !$textAfter) {
+						// use http://foo.com
+						return $data['href'];
+					}
+					else if ($content == '[link]') {
+						// use [http://foo.com] - numbered external links
+						return "[{$data['href']}]";
+					} else {
+						// use [http://foo.com desc]
+						return "[{$data['href']} {$content}]";
+					}
+				}
+				else {
+					return $data['href'];
 				}
 		}
 
