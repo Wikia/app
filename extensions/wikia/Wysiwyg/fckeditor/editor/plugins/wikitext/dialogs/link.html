@@ -126,33 +126,14 @@ window.onload = function() {
 function Ok() {
 	oEditor.FCKUndo.SaveUndoStep();
 
-	if(activeTabCode == 'internal_link') {
-		if(GetE('internal_article_name').value == '') {
-			alert('Article name field can not be ampty!');
-			return false;
-		}
-	} else if(activeTabCode == 'external_link') {
-		if(GetE('external_url').value == '') {
-			alert('URL name field can not be ampty!');
-			return false;
-		}
-	}
-
-	if(MODE == EXISTING) {
-		var aLinks = [link];
-	} else {
-		if(MODE == NEW_SELECTION) {
-			var aLinks = oEditor.FCK.CreateLink(' ', true);
-		} else if(MODE == NEW_NO_SELECTION) {
-			var aLinks = [oEditor.FCK.InsertElement('a')];
-		}
-	}
-
 	var data = {};
-
 	var link_text;
 
 	if(activeTabCode == 'internal_link') {
+		if(GetE('internal_article_name').value == '') {
+			alert('Article name field can not be empty!');
+			return false;
+		}
 		link_text = GetE('internal_link_text').value;
 		if(link_text == '') {
 			link_text = GetE('internal_article_name').value;
@@ -163,6 +144,10 @@ function Ok() {
 		data.type = 'internal link';
 		data.href = GetE('internal_article_name').value;
 	} else if(activeTabCode == 'external_link') {
+		if(GetE('external_url').value == '') {
+			alert('URL name field can not be empty!');
+			return false;
+		}
 		if(GetE('external_link_text').disabled != true && GetE('external_link_text').value != '') {
 			link_text = GetE('external_link_text').value;
 			data.type = 'external link';
@@ -174,6 +159,16 @@ function Ok() {
 			data.type = 'external link';
 		}
 		data.href = GetE('external_url').value;
+	}
+
+	if(MODE == EXISTING) {
+		var aLinks = [link];
+	} else {
+		if(MODE == NEW_SELECTION) {
+			var aLinks = oEditor.FCK.CreateLink(' ', true);
+		} else if(MODE == NEW_NO_SELECTION) {
+			var aLinks = [oEditor.FCK.InsertElement('a')];
+		}
 	}
 
 	aLinks[0].innerHTML = link_text;
