@@ -676,81 +676,98 @@ class ReverseParser {
 	 */
 	private function handleLink($node, $content) {
 
-		$refid = $node->getAttribute('refid'); // handle links with refId attribute
+		$refid = $node->getAttribute('refid');
 
-		if(is_numeric($refid) && isset($this->fckData[$refid])) {
-
-			// existing link
-
-			$data = $this->fckData[$refid];
-
-			switch($data['type']) {
-				case 'internal link':
-				case 'internal link: file':
-				case 'internal link: special page':
-					$tag =  "[[{$data['href']}";
-
-					if($content != $data['href'] . $data['trial'] && $content != $data['description'] . $data['trial']) {
-						$data['description'] = $content;
-						$data['trial'] = null;
-					}
-
-					if(!empty($data['description'])) {
-						$tag .=  "|{$data['description']}]]";
-					} else {
-						$tag .=  "]]";
-					}
-					if(!empty($data['trial'])) {
-						$tag .= $data['trial'];
-					}
-					return $tag;
-
-
-
-
-				case 'external link':
-					if($content == '[link]') {
-						return "[{$data['href']}]";
-					} else {
-						return "[{$data['href']} {$content}]";
-					}
-				case 'external link: raw':
-					if($content == $data['href']) {
-						return $data['href'];
-					} else {
-						return "[{$data['href']} {$content}]";
-					}
-			}
-
-		} else {
-
-			// new link (added in FCK)
-
+		if (!is_numeric($refid) || !isset($this->fckData[$refid])) {
 			$href = $node->getAttribute('href');
-			if(preg_match('%^(?:' . $this->protocols . ')%im', $href)) {
-				// external
-				if($href == $content) {
+
+			if( is_string($href) ) {
+				if (strpos($href, ':')) {
+					list($protocol, $path) = explode(':', $href, 1);
+				}
+				else {
+					// default to http if none protocol provided
+					$protocol = 'http';
+					$path = $href;
+				}
+
+				// make sure to have protocol name in lower case
+				$protocol = strtolower($protocol);
+
+				// put it back together
+				$href = $protocol . ':' . $path;
+
+				// fill FCK data
+				if (preg_match('%^(?:' . $this->protocols . ')%im', $href)) {
+					// generate new refid
+					$refid = count($this->fckData);
+
+					$this->fckData[$refid] = array(
+						'type' => ($content == $href) ? 'external link: raw' : 'external link',
+						'text' => ($node->textContent == '[link]') ? '[link]' : $content,
+						'href' => $href
+					);
+				}
+				// plain URL
+				else {
 					return $href;
-				} else if($content == '[link]') {
-					return "[{$href}]";
-				} else {
-					return "[{$href} {$content}]";
 				}
-			} else {
-				//internal
-				if($href == $content) {
-					$tag = "[[{$href}]]";
-				} else if(strpos($content, $href) === 0) {
-					$tag = "[[{$href}]]".substr($content, strlen($href));
-				} else {
-					$tag = "[[{$href}|{$content}]]";
+			}
+		}
+
+		$data = $this->fckData[$refid];
+
+		switch($data['type']) {
+			case 'internal link':
+			case 'internal link: file':
+			case 'internal link: special page':
+				// take link description from HTML
+				$data['description'] = $content;
+				$data['trial'] = '';
+				
+				// * [[foo|foo]] -> [[foo]]
+				if ($data['href'] == $data['description']) {
+					$data['description'] = '';
 				}
-				if(substr(strtolower($tag), 0, 8) == '[[image:' || substr(strtolower($tag), 0, 8) == '[[media:' || substr(strtolower($tag), 0, 11) == '[[category:') {
-					$tag = '[[:' . substr($tag, 2);
+				// * [[foo|foots]] -> [[foo]]ts (trial can't contain numbers)
+				else if ($data['description'] != '' && substr($data['description'], 0, strlen($data['href'])) == $data['href']) {
+					$trial = substr($data['description'], strlen($data['href']));
+					
+					// validate $trial
+					$data['trial'] = $trial;
+					$data['description'] = '';
+				}
+				
+				// generate wikisyntax
+				$tag =  "[[{$data['href']}";
+
+				if($data['description'] != '') {
+					$tag .=  "|{$data['description']}]]";
+				} else {
+					$tag .=  "]]";
+				}
+				if($data['trial'] != '') {
+					$tag .= $data['trial'];
 				}
 				return $tag;
-			}
 
+			case 'external link':
+			case 'external link: raw':
+				// do we have text before the link?
+				$textBefore = $node->previousSibling && $node->previousSibling->nodeType == XML_TEXT_NODE && substr($node->previousSibling->textContent, -1) != ' ';
+				$textAfter = $node->nextSibling && $node->nextSibling->nodeType == XML_TEXT_NODE && $node->nextSibling->textContent{0} != ' ';
+
+				if ($data['type'] == 'external link: raw' && !$textBefore && !$textAfter) {
+					// use http://foo.com
+					return $content;
+				}
+				else if ($content == '[link]') {
+					// use [http://foo.com] - numbered external links
+					return "[{$data['href']}]";
+				} else {
+					// use [http://foo.com desc]
+					return "[{$data['href']} {$content}]";
+				}
 		}
 
 	}
