@@ -683,7 +683,7 @@ class ReverseParser {
 
 			if( is_string($href) ) {
 				if (strpos($href, ':')) {
-					list($protocol, $path) = explode(':', $href, 1);
+					list($protocol, $path) = explode(':', $href, 2);
 				}
 				else {
 					// default to http if none protocol provided
