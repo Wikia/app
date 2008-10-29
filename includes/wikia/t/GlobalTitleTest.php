@@ -67,6 +67,15 @@ class GlobalTitleCase extends UnitTestCase {
 		$title = GlobalTitle::newFromText( "Strona główna", false, 1686 ); # pl.wikia.com
 		$url = "http://pl.wikia.com/wiki/Strona_g%C5%82%C3%B3wna?diff=0&oldid=500";
 		$this->assertTrue( $title->getFullURL( wfArrayToCGI(array( "diff" => 0, "oldid" => 500 ) ) ) === $url, "NOT MATCH" );
+
+		$title = GlobalTitle::newFromText( "Search_Wikia", 0, 94 ); # search.wikia.com
+		$url = "http://search.wikia.com/wiki/Search_Wikia";
+		$this->assertTrue( $title->getFullURL( ) === $url, "NOT MATCH" );
+
+		$title = GlobalTitle::newFromText( "Search_Wikia", 1, 94 ); # search.wikia.com
+		$url = "http://search.wikia.com/wiki/Talk:Search_Wikia";
+		echo $title->getFullURL();
+
 	}
 
 };
