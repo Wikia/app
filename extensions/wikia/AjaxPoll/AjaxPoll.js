@@ -59,13 +59,15 @@ YAHOO.AjaxPoll.submit = function( e, data ) {
 }
 
 YAHOO.AjaxPoll.init = function() {
-	for( var key in AjaxPollSubmitsArray ) {
-		YAHOO.util.Event.addListener(
-			AjaxPollSubmitsArray[ key ][ "submit" ],
-			"click",
-			YAHOO.AjaxPoll.submit,
-			{ "id":AjaxPollSubmitsArray[ key ][ "pollId" ], "form":AjaxPollSubmitsArray[ key ][ "id" ], "url":AjaxPollSubmitsArray[ key ][ "url" ] }
-		);
+	if( typeof( AjaxPollSubmitsArray ) != "undefined" ) {
+		for( var key in AjaxPollSubmitsArray ) {
+			YAHOO.util.Event.addListener(
+				AjaxPollSubmitsArray[ key ][ "submit" ],
+				"click",
+				YAHOO.AjaxPoll.submit,
+				{ "id":AjaxPollSubmitsArray[ key ][ "pollId" ], "form":AjaxPollSubmitsArray[ key ][ "id" ], "url":AjaxPollSubmitsArray[ key ][ "url" ] }
+			);
+		}
 	}
 };
 
