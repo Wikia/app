@@ -188,7 +188,7 @@ class OutputPage {
 		$timestamp=wfTimestamp(TS_MW,$timestamp);
 		$lastmod = wfTimestamp( TS_RFC2822, max( $timestamp, $wgUser->mTouched, $wgCacheEpoch ) );
 
-		if( !empty( $_SERVER['HTTP_IF_MODIFIED_SINCE'] ) && !$this->mEnableClientCache ) {
+		if( !empty( $_SERVER['HTTP_IF_MODIFIED_SINCE'] ) ) {
 			# IE sends sizes after the date like this:
 			# Wed, 20 Aug 2003 06:51:19 GMT; length=5202
 			# this breaks strtotime().
