@@ -1181,7 +1181,8 @@ class Title {
 		}
 		
 		$specialOKActions = array( 'createaccount', 'execute' );
-		if( NS_SPECIAL == $this->mNamespace && !in_array( $action, $specialOKActions) ) {
+		// #3628 and #3633 fix, 29.10.2008 by Bartek, always allow for Special:Createpage to create a page
+		if( (NS_SPECIAL == $this->mNamespace && !in_array( $action, $specialOKActions)) && ('Createpage' != $this->getText()) && ('create' != $action) ) {
 			$errors[] = array('ns-specialprotected');
 		}
 
