@@ -74,7 +74,7 @@ class GlobalTitleCase extends UnitTestCase {
 
 		$title = GlobalTitle::newFromText( "Search_Wikia", 1, 94 ); # search.wikia.com
 		$url = "http://search.wikia.com/wiki/Talk:Search_Wikia";
-		echo $title->getFullURL();
+		$this->assertTrue( $title->getFullURL( ) === $url, "NOT MATCH" );
 
 	}
 
