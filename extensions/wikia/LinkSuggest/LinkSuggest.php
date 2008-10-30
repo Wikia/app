@@ -41,7 +41,7 @@ global $wgAjaxExportList;
 $wgAjaxExportList[] = 'getLinkSuggest';
 
 function getLinkSuggest() {
-	global $wgRequest;
+	global $wgRequest, $wgContLang;
 
 	$namespace = 0;
 
@@ -56,7 +56,7 @@ function getLinkSuggest() {
 
 	if(isset($namespaceName)) {
 		$namespace = Namespace::getCanonicalIndex(strtolower($namespaceName));
-		$namespaceName = Namespace::getCanonicalName($namespace);
+		$namespaceName = $wgContLang->getNsText($namespace);
 	}
 
 	if(!empty($namespace) || $namespace === 0) {
