@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 $messages = array_merge( $messages, array(
 
 #Wikia Widgets
@@ -82,7 +82,7 @@ Zmień [[Special:Preferences#prefsection-1|swoje preferencje]], aby używać wid
 'cockpit_hide' => 'Ukryj kokpit',
 'widget_name' => 'Nazwa',
 'widget_description' => 'Opis',
-'see_more' => 'Więcej...'
+'see_more' => 'Więcej...',
 'tog-disablelinksuggest' => 'Nie pokazuj sugestii linków',
 'tog-disablewysiwyg' => 'Wyłącz edytor wizualny',
 ) );
