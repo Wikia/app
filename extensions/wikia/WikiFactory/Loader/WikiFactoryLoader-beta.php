@@ -135,11 +135,11 @@ class WikiFactoryLoader {
 				/**
 				 * remove www from domain
 				 */
-				$this->mOldServerName = $this->mServerName;
-				$this->mServerName = preg_replace( "/^www\./", "", $this->mServerName );
+				$name = preg_replace( "/^www\./", "", $this->mServerName );
 				$pattern = "/{$domain}$/";
-				if( preg_match( $pattern, $this->mServerName ) ) {
-					$this->mServerName = str_replace( $domain, "wikia.com", $this->mServerName );
+				if( preg_match( $pattern, $name ) ) {
+					$this->mOldServerName = $this->mServerName;
+					$this->mServerName = str_replace( $domain, "wikia.com", $name );
 					break;
 				}
 			}
