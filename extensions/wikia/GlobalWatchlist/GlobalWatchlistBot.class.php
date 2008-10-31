@@ -172,7 +172,7 @@ class GlobalWatchlistBot {
 	/**
 	 * compose digest email for user
 	 */
-	private function composeMail($iUserId, $aDigestsData) {
+	private function composeMail($oUser, $aDigestsData) {
 		global $wgGlobalWatchlistMaxDigestedArticlesPerWiki;
 
 		$sDigests = "";
@@ -191,19 +191,34 @@ class GlobalWatchlistBot {
 			}
 
 			if($bTooManyPages) {
-				$sDigests .= wfMsg('globalwatchlist-see-more') . "\n";
+				$sDigests .= $this->getLocalizedMsg('globalwatchlist-see-more', $oUser->getOption('language')) . "\n";
 				break;
 			}
 			$sDigests .= "\n";
 		}
 
 		$aEmailArgs = array(
-			0 => ucfirst($this->mWatchlisters[$iUserId]['name']),
+			0 => ucfirst($oUser->getName()),
 			1 => $sDigests
 		);
 
-		$sMessage = wfMsg('globalwatchlist-digest-email-body');
+		$sMessage = $this->getLocalizedMsg('globalwatchlist-digest-email-body', $oUser->getOption('language'));
 		$sBody = wfMsgReplaceArgs($sMessage, $aEmailArgs);
+
+		return $sBody;
+	}
+
+	private function getLocalizedMsg($sMsgKey, $sLangCode) {
+		$sBody = null;
+
+		if(($sLangCode != 'en') && !empty($sLangCode)) {
+			// custom lang translation
+			$sBody = wfMsg("$MsgKey/$sWikiaLang");
+		}
+
+  if(($sBody == null) || wfEmptyMsg("$sMsgKey/$sWikiaLang", $sBody)) {
+  	$sBody = wfMsg($sMsgKey);
+  }
 
 		return $sBody;
 	}
@@ -242,8 +257,6 @@ class GlobalWatchlistBot {
 		global $wgSharedDB;
 		$this->printDebug("Sending digest emails ... ");
 
-		$sEmailSubject = wfMsg('globalwatchlist-digest-email-subject');
-
 		foreach($this->mWatchlisters as $iUserId => $aUserData) {
 			$oResource = $this->mDb->query("SELECT * FROM " . $wgSharedDB . ".global_watchlist WHERE gwa_user_id='" . $iUserId . "' ORDER BY gwa_city_id");
 
@@ -272,7 +285,7 @@ class GlobalWatchlistBot {
 				$aDigestData[] = $aWikiDigest;
 			}
 			if(count($aDigestData)) {
-				$this->sendMail($iUserId, $sEmailSubject, $aDigestData);
+				$this->sendMail($iUserId, $aDigestData);
 			}
 
 		} // foreach
@@ -280,11 +293,12 @@ class GlobalWatchlistBot {
 		$this->printDebug("Sending digest emails ... Done!");
 	}
 
-	private function sendMail($iUserId, $sEmailSubject, $aDigestData) {
-		$sEmailBody = $this->composeMail($iUserId, $aDigestData);
-
+	private function sendMail($iUserId, $aDigestData) {
 		$oUser = User::newFromId($iUserId);
 		$oUser->load();
+
+		$sEmailSubject = $this->getLocalizedMsg('globalwatchlist-digest-email-subject', $oUser->getOption('language'));
+		$sEmailBody = $this->composeMail($oUser, $aDigestData);
 
 		$sFrom = 'Wikia <community@wikia.com>';
 		if(empty($this->mDebugMailTo)) {
