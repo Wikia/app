@@ -213,10 +213,10 @@ class GlobalWatchlistBot {
 
 		if(($sLangCode != 'en') && !empty($sLangCode)) {
 			// custom lang translation
-			$sBody = wfMsg("$sMsgKey/$sWikiaLang");
+			$sBody = wfMsg("$sMsgKey/$sLangCode");
 		}
 
-  if(($sBody == null) || wfEmptyMsg("$sMsgKey/$sWikiaLang", $sBody)) {
+  if(($sBody == null) || wfEmptyMsg("$sMsgKey/$sLangCode", $sBody)) {
   	$sBody = wfMsg($sMsgKey);
   }
 
