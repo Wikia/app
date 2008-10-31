@@ -821,16 +821,11 @@ JAVASCRIPT;
 		var mapIcons = {};
 
 		function addLoadEvent(func) {
-			var oldonload = window.onload;
-			if (typeof oldonload == 'function') {
-				window.onload	= function() {
-					oldonload();
-					func();
-				};
-				} else {
-					window.onload = func;
-				}
+			if (!window.onloadFuncts) {
+				window.onloadFuncts = [];
 			}
+			window.onloadFuncts[window.onloadFuncts.length] = func;
+		}
 JAVASCRIPT;
 
 		// replace multiple spaces with a single space and strip newlines and tabs (make sure no tabs
