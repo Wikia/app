@@ -11,17 +11,16 @@ if( $wgDefaultMessagesDB == $wgDBname ) {
 }
 
 class DefaultMessages {
-	const maxRevId	= 7428;
-	const expire	= 3600;
+	const expire = 3600;
 
 	private static function memcKey() {
 		global $wgDefaultMessagesDB;
-		return $wgDefaultMessagesDB . ':default_messages:' . self::maxRevId;
+		return $wgDefaultMessagesDB . ':default_messages';
 	}
 
 	private static function filecache() {
 		global $wgDefaultMessagesDB;
-		return '/tmp/default_messages_' . self::maxRevId.'.ser';
+		return '/tmp/default_messages.ser';
 	}
 
 	public static function loadMessages() {
@@ -48,7 +47,6 @@ class DefaultMessages {
 							'page_is_redirect' => 0,
 							'page_namespace' => NS_MEDIAWIKI,
 							'page_latest=rev_id',
-							"rev_id > ".self::maxRevId,
 							'rev_text_id=old_id' ),
 							__METHOD__ );
 
