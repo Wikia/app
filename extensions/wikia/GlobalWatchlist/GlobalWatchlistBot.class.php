@@ -213,7 +213,7 @@ class GlobalWatchlistBot {
 
 		if(($sLangCode != 'en') && !empty($sLangCode)) {
 			// custom lang translation
-			$sBody = wfMsg("$MsgKey/$sWikiaLang");
+			$sBody = wfMsg("$sMsgKey/$sWikiaLang");
 		}
 
   if(($sBody == null) || wfEmptyMsg("$sMsgKey/$sWikiaLang", $sBody)) {
