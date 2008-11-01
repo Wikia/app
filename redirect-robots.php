@@ -20,10 +20,6 @@ echo <<<EOT
 # irresponsible, your access to the site may be blocked.
 #
 
-# advertising-related bots:
-User-agent: Mediapartners-Google*
-Disallow: /
-
 # Wikipedia work bots:
 User-agent: IsraBot
 Disallow: /
