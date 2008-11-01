@@ -281,11 +281,17 @@ else {
 die;
 }
 
-$robotwikiset = array('buffy.wikia.com','godzilla.wikia.com','harrypotter.wikia.com','hotwheels.wikia.com','muppet.wikia.com','naruto.wikia.com','pushingdaisies.wikia.com','starwars.wikia.com','tardis.wikia.com','transformers.wikia.com','fp005.sjc.wikia-inc.com', 'www.wowwiki.com');
+$oldrobotswikiset = array(
+	'bttf.wikia.com',
+	'futurama.wikia.com',
+	'irwinallen.wikia.com',
+	'lostodyssey.wikia.com',
+	'bionicle.wikia.com'
+);
 
-if(in_array(strtolower($_SERVER['SERVER_NAME']), $robotwikiset)){
-	newrobots();
-}else{
+if(in_array(strtolower($_SERVER['SERVER_NAME']), $oldrobotswikiset)){
 	oldrobots();
+}else{
+	newrobots();
 }
 ?>
