@@ -21,6 +21,9 @@ function RenderAdSkin() {
 		case "wow_lich_king_warhammer":
 			echo '<link rel="stylesheet" type="text/css" href="'. $wgExtensionsPath .'/wikia/AdSkin/css/wow_lich_king_warhammer.css?'. $wgStyleVersion .'" />';
 			break;
+		case "dragonball_origins":
+			echo '<link rel="stylesheet" type="text/css" href="'. $wgExtensionsPath .'/wikia/AdSkin/css/dragonball_origins.css?'. $wgStyleVersion .'" />';
+			break;
 		}	
 	}
 

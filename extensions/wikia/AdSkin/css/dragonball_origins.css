@@ -1,0 +1,21 @@
+body.mainpage {
+	background-image: url(../images/dragonball_origins.jpg) !important;
+	background-position: top center !important;
+	background-repeat: no-repeat !important;
+}
+body.mainpage .monaco_shrinkwrap {
+	left: 50%;
+	margin-left: -495px;
+	width: 990px;
+}
+body.mainpage #background_strip {
+	background: transparent;
+	border: 0;
+	margin-top: 199px;
+}
+body.mainpage #userData, body.mainpage #request_wiki {
+	top: 20px;
+}
+body.mainpage #wikia_footer, body.mainpage #wikia_footer a {
+	color: #fff
+}
