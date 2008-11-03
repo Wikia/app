@@ -134,3 +134,6 @@ body.mainpage .HOME_TOP_RIGHT_BOXAD, body.mainpage .FAST_HOME2 {
 	height: 90px;
 	width: 728px;
 }
+#HOME_TOP_RIGHT_BOXAD_load, #TOP_RIGHT_BOXAD_load {
+	width: 300px;
+}
