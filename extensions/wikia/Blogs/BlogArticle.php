@@ -22,3 +22,9 @@ $wgNamespacesWithSubpages[ NS_BLOG_ARTICLE ] = true;
 $wgNamespacesWithSubpages[ NS_BLOG_ARTICLE_TALK ] = true;
 $wgNamespacesWithSubpages[ NS_BLOG_LISTING ] = true;
 $wgNamespacesWithSubpages[ NS_BLOG_LISTING_TALK ] = true;
+
+/**
+ * load other parts
+ */
+
+include( dirname( __FILE__ ) . "/BlogCommentsTag.php");
