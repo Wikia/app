@@ -18,7 +18,6 @@ REPLACE INTO interwiki (iw_prefix, iw_url, iw_local, iw_trans) VALUES
 ("brasilwiki","http://rio.ifi.unizh.ch/brasilienwiki/index.php/$1",0,0),
 ("bridgeswiki","http://c2.com/w2/bridges/$1",0,0),
 ("bswiki","http://en.bswiki.com/index.php/$1",0,0),
-("bug","http://www.wikia.com/bugzilla/show_bug.cgi?id=$1",1,1),
 ("c2find","http://c2.com/cgi/wiki?FindPage&value=$1",0,0),
 ("chej","http://esperanto.blahus.cz/cxej/vikio/index.php/$1",0,0),
 ("ciscavate","http://ciscavate.org/index.php/$1",0,0),
