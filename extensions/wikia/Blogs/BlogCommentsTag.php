@@ -7,9 +7,10 @@
 # Define a setup function
 $wgExtensionFunctions[] = 'efBlogCommentsTag_Setup';
 # Add a hook to initialise the magic word
-$wgHooks['LanguageGetMagic'][]       = 'efBlogCommentsTag_Magic';
+$wgHooks[ "LanguageGetMagic" ][] = 'efBlogCommentsTag_Magic';
+$wgHooks[ "ArticleFromTitle" ][] = "efBlogCommentsArticleFromTitle";
 
-function efBlogCommentsTag() {
+function efBlogCommentsTag_Setup() {
         global $wgParser;
         # Set a function hook associating the "example" magic word with our function
         $wgParser->setFunctionHook( 'bloglistcomments', 'efBlogCommentsTag_Render' );
@@ -24,10 +25,34 @@ function efBlogCommentsTag_Magic( &$magicWords, $langCode ) {
         return true;
 }
 
-function efBlogCommentsTag_Render( &$parser, $param1 = '', $param2 = '' ) {
-        # The parser function itself
-        # The input parameters are wikitext with templates expanded
-        # The output should be wikitext too
-        $output = "param1 is $param1 and param2 is $param2";
-        return $output;
+function efBlogCommentsTag_Render( &$parser ) {
+	$args = func_get_args();
+    return print_r( $args, 1 );
+}
+
+function efBlogCommentsArticleFromTitle( &$title, &$article ) {
+
+	/**
+	 * check if namespaces we care
+	 */
+	if( ! in_array( $title->getNamespace(), array( NS_BLOG_ARTICLE_TALK )  ) ){
+		return true;
+	}
+
+	/**
+	 * check if title is subpage, if it is subpage do nothing so far
+	 */
+	if( !$title->isSubpage() ) {
+		return true;
+	}
+
+	/**
+	 * check if article exists
+	 */
+
+
+	/**
+	 * ... and eventually
+	 */
+	return true;
 }
