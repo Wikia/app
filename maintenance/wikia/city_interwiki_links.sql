@@ -221,7 +221,6 @@ REPLACE INTO interwiki (iw_prefix, iw_url, iw_local, iw_trans) VALUES
 ("sitelibrary","http://libraries.wikia.com/wiki/$1",1,1),
 ("libraries","http://libraries.wikia.com/wiki/$1",1,1),
 ("sca21","http://sca21.wikia.com/wiki/$1",1,1),
-("tokipona","http://tokipona.wikia.com/wiki/$1",1,1),
 ("ukrailways","http://ukrailways.wikia.com/wiki/$1",1,1),
 ("wikianswers","http://answers.wikia.com/wiki/$1",1,1),
 ("answers","http://answers.wikia.com/wiki/$1",1,1),
