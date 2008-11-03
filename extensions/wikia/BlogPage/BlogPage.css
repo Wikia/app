@@ -13,19 +13,20 @@ h1.firstHeading {
 }
 
 #blog-page-left {
-	float:left;
-	width:190px;
-	margin:0px 0px 0px 0px;
-	overflow:hidden;
+	position:absolute;
+	right:0px;
+	top:0px;
+	width:20%;
 }
 
 #blog-page-middle {
-	float:left;
-	width:550px;
-	margin:0px 25px;
-	overflow:hidden;
-	padding:8px 0px 0px 0px;
+	margin:0px;
+	width:75%;
+	float:none;
+	overflow:visible;
+	padding:0px;
 }
+
 
 #blog-page-right {
 	float:left;
