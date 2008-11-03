@@ -49,7 +49,7 @@ class ArticlesHome extends SpecialPage {
 	
 		$output .= "<div class=\"main-page-left\">";
 			$output .= '<div class="logged-in-articles">';
-				$output .= '<h2>' . $name . ' <span class="rss-feed"><a href="http://feeds.feedburner.com/Armchairgm"><img src=http://www.armchairgm.com/images/a/a7/Rss-icon.gif border="0"></a> ' . wfMsgForContent( 'ah_rss_feed' ) . '</span></h2>';
+				//$output .= '<h2>' . $name . ' <span class="rss-feed"><a href="http://feeds.feedburner.com/Armchairgm"><img src=http://www.armchairgm.com/images/a/a7/Rss-icon.gif border="0"></a> ' . wfMsgForContent( 'ah_rss_feed' ) . '</span></h2>';
 				$output .= "<p class=\"main-page-sub-links\"><a href=\"" . Title::MakeTitle(NS_MAIN, "Create_Opinion")->escapeFullUrl() ."\">" . wfMsgForContent( 'ah_write_article' ) . "</a> - <a href=\"" . Title::MakeTitle(NS_CATEGORY, date("F j, Y"))->escapeFullUrl() ."\">" . wfMsgForContent( 'ah_todays_articles' ) . "</a> - <a href=\"" . Title::MakeTitle(NS_MAIN, "Main_Page")->escapeFullUrl() ."\">" . wfMsgForContent( 'ah_main_page' ) . "</a></p>";
 				
 		if ($type=="popular") {
