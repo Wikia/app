@@ -479,6 +479,8 @@ class EmailNotification {
 		$keys['$PAGEMINOREDIT']      = $medit;
 		$keys['$PAGESUMMARY']        = $summary;
 
+		$keys['$ACTION']             = $this->action;
+
 		$subject = strtr( $subject, $keys );
 
 		# Reveal the page editor's address as REPLY-TO address only if
