@@ -181,7 +181,7 @@ if($bot == 'goog'){
 
 	$code = $wgContLang->getCode();
 	
-	if( trim( $code ) == ''){
+	if( trim( $code ) != ''){
 		if($code!='en'){
 			$r .= getLangSpecificNamespace( $lang, $code, $bot );				
 		}else{
