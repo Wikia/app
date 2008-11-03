@@ -140,7 +140,7 @@ class RecentChange
 	# Writes the data in this object to the database
 	function save()
 	{
-		global $wgLocalInterwiki, $wgPutIPinRC, $wgRC2UDPAddress, 
+		global $wgLocalInterwiki, $wgPutIPinRC, $wgRC2UDPAddress,
 		$wgRC2UDPPort, $wgRC2UDPPrefix, $wgRC2UDPOmitBots, $wgRC2UDPEnabled;
 		$fname = 'RecentChange::save';
 
@@ -224,11 +224,11 @@ class RecentChange
 		if( $wgUseEnotif || $wgShowUpdatedMarker ) {
 			// Users
 			if( $this->mAttribs['rc_user'] ) {
-				$editor = ($wgUser->getId() == $this->mAttribs['rc_user']) ? 
+				$editor = ($wgUser->getId() == $this->mAttribs['rc_user']) ?
 					$wgUser : User::newFromID( $this->mAttribs['rc_user'] );
 			// Anons
 			} else {
-				$editor = ($wgUser->getName() == $this->mAttribs['rc_user_text']) ? 
+				$editor = ($wgUser->getName() == $this->mAttribs['rc_user_text']) ?
 					$wgUser : User::newFromName( $this->mAttribs['rc_user_text'], false );
 			}
 			# FIXME: this would be better as an extension hook
@@ -238,7 +238,8 @@ class RecentChange
 				$this->mAttribs['rc_timestamp'],
 				$this->mAttribs['rc_comment'],
 				$this->mAttribs['rc_minor'],
-				$this->mAttribs['rc_last_oldid'] );
+				$this->mAttribs['rc_last_oldid'],
+				$this->mAttribs['rc_log_action'] );
 		}
 
 		# Notify extensions

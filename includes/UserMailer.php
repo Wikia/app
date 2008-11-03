@@ -259,7 +259,7 @@ class EmailNotification {
 	 * @private
 	 */
 	var $to, $subject, $body, $replyto, $from;
-	var $user, $title, $timestamp, $summary, $minorEdit, $oldid, $composed_common, $editor;
+	var $user, $title, $timestamp, $summary, $minorEdit, $oldid, $composed_common, $editor, $action;
 	var $mailTargets = array();
 
 	/**@}}*/
@@ -277,7 +277,7 @@ class EmailNotification {
 	 * @param $minorEdit
 	 * @param $oldid (default: false)
 	 */
-	function notifyOnPageChange($editor, $title, $timestamp, $summary, $minorEdit, $oldid = false) {
+	function notifyOnPageChange($editor, $title, $timestamp, $summary, $minorEdit, $oldid = false, $action = '') {
 		global $wgEnotifUseJobQ;
 
 		if( $title->getNamespace() < 0 )
@@ -290,11 +290,12 @@ class EmailNotification {
 				"timestamp" => $timestamp,
 				"summary" => $summary,
 				"minorEdit" => $minorEdit,
-				"oldid" => $oldid);
+				"oldid" => $oldid,
+				"action" => $action);
 			$job = new EnotifNotifyJob( $title, $params );
 			$job->insert();
 		} else {
-			$this->actuallyNotifyOnPageChange($editor, $title, $timestamp, $summary, $minorEdit, $oldid);
+			$this->actuallyNotifyOnPageChange($editor, $title, $timestamp, $summary, $minorEdit, $oldid, $action);
 		}
 
 	}
@@ -312,7 +313,7 @@ class EmailNotification {
 	 * @param $minorEdit
 	 * @param $oldid (default: false)
 	 */
-	function actuallyNotifyOnPageChange($editor, $title, $timestamp, $summary, $minorEdit, $oldid=false) {
+	function actuallyNotifyOnPageChange($editor, $title, $timestamp, $summary, $minorEdit, $oldid=false, $action='') {
 
 		# we use $wgPasswordSender as sender's address
 		global $wgEnotifWatchlist;
@@ -334,6 +335,7 @@ class EmailNotification {
 		$this->summary = $summary;
 		$this->minorEdit = $minorEdit;
 		$this->oldid = $oldid;
+		$this->action = $action;
 		$this->editor = $editor;
 		$this->composed_common = false;
 
@@ -433,8 +435,15 @@ class EmailNotification {
 		# named variables when composing your notification emails while
 		# simply editing the Meta pages
 
-		$subject = wfMsgForContent( 'enotif_subject' );
-		$body    = wfMsgForContent( 'enotif_body' );
+		$subject = wfMsgForContent( 'enotif_subject_' . strtolower($this->action) );
+		if(wfEmptyMsg( 'enotif_subject_' . strtolower($this->action), $subject )) {
+			$subject = wfMsgForContent( 'enotif_subject' );
+		}
+
+		$body    = wfMsgForContent( 'enotif_body_' . strtolower($this->action) );
+		if(wfEmptyMsg( 'enotif_body_' . strtolower($this->action), $body )) {
+			$body   = wfMsgForContent( 'enotif_body' );
+		}
 		$from    = ''; /* fail safe */
 		$replyto = ''; /* fail safe */
 		$keys    = array();
