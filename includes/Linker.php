@@ -351,6 +351,11 @@ class Linker {
 			return "<!-- ERROR -->{$prefix}{$text}{$trail}";
 		}
 
+		$refId = '';
+		if (!empty($wgWysiwygParserEnabled)) {
+			$refId = Wysiwyg_GetRefId($text);
+		}
+
 		$nt = $this->normaliseSpecialPage( $title );
 
 		$u = $nt->escapeLocalURL( $query );
@@ -374,13 +379,7 @@ class Linker {
 
 		list( $inside, $trail ) = Linker::splitTrail( $trail );
 		
-		if (!empty($wgWysiwygParserEnabled)) {
-			$refId = Wysiwyg_GetRefId($text);
-			$r = "<a href=\"{$u}\"$style}{$aprops}{$refId}>{$prefix}{$text}{$inside}</a>{$trail}";
-		}
-		else {
-			$r = "<a href=\"{$u}\"{$style}{$aprops}>{$prefix}{$text}{$inside}</a>{$trail}";
-		}
+		$r = "<a href=\"{$u}\"{$style}{$aprops}{$refId}>{$prefix}{$text}{$inside}</a>{$trail}";
 		wfProfileOut( __METHOD__ );
 		return $r;
 	}
@@ -862,6 +861,10 @@ class Linker {
 			wfProfileIn( __METHOD__ );
 			$currentExists = $time ? ( wfFindFile( $title ) != false ) : false;
 			if( $wgEnableUploads && !$currentExists ) {
+				$refId = '';
+				if (!empty($wgWysiwygParserEnabled)) {
+					$refId = Wysiwyg_GetRefId($text);
+				}
 				$upload = SpecialPage::getTitleFor( 'Upload' );
 				if( $text == '' )
 					$text = htmlspecialchars( $title->getPrefixedText() );
@@ -874,10 +877,6 @@ class Linker {
 					$q .= '&' . $query;
 				list( $inside, $trail ) = self::splitTrail( $trail );
 				$style = $this->getInternalLinkAttributesObj( $title, $text, 'new' );
-				$refId = '';
-				if (!empty($wgWysiwygParserEnabled)) {
-					$refId = Wysiwyg_GetRefId($text);
-				}
 				wfProfileOut( __METHOD__ );
 				return '<a href="' . $upload->escapeLocalUrl( $q ) . '"'
 					. $style . $refId . '>' . $prefix . $text . $inside . '</a>' . $trail;
