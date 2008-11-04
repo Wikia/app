@@ -1,6 +1,6 @@
 <div id="gamespotHeader">
 	<div>
-		<a href="/"><img id="gamespot_wikilogo" src="/skins/quartz/gamespot/images/FinalFantasy_wikia.jpg"/></a>
+		<a href="/"><img id="gamespot_wikilogo" src="/skins/quartz/gamespot/images/FinalFantasy_wikia.png"/></a>
 		<a href="http://www.gamespot.com/"><img id="gamespot_logo" src="/skins/quartz/gamespot/images/gamespot_logo_header.gif"/></a>
 		<br/>
 		<h1><a href="/">Final Fantasy</a></h1>
