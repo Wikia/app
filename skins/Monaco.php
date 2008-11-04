@@ -14,6 +14,8 @@ if(!defined('MEDIAWIKI')) {
 
 $wgAdCalled = array();
 
+require dirname(__FILE__) . "/../extensions/wikia/AnalyticsEngine/AnalyticsEngine.php";
+
 class SkinMonaco extends SkinTemplate {
 
 	/**
@@ -942,18 +944,7 @@ class MonacoTemplate extends QuickTemplate {
 		<meta http-equiv="Content-Type" content="<?php $this->text('mimetype') ?>; charset=<?php $this->text('charset') ?>" />
                 <!-- Skin = <?php echo basename(__FILE__) ?> -->
 		<?php $this->html('headlinks') ?>
-				<?php
-		/* Note: These analytics calls were placed at the top of the page intentionally, so that we
-		   get more accurate stats. Get Michael's permission before moving.
-		*/?>
-		<script src="http://www.google-analytics.com/urchin.js" type="text/javascript"></script>
-		<script type="text/javascript">_uff=0;_uacct="UA-288915-1";_userv=1;urchinTracker();_userv=1;</script>
-		<script type="text/javascript" src="http://edge.quantserve.com/quant.js"></script>
-		<script type="text/javascript">_qacct="p-8bG6eLqkH6Avk";quantserve();</script>
-		<noscript>
-		<a href="http://www.quantcast.com/p-8bG6eLqkH6Avk" target="_blank"><img src="http://pixel.quantserve.com/pixel/p-8bG6eLqkH6Avk.gif" style="display: none;" border="0" height="1" width="1" alt="Quantcast"/></a>
-		</noscript>
-
+		
 		<title><?php $this->text('pagetitle') ?></title>
 		<?php print Skin::makeGlobalVariablesScript( $this->data ); ?>
 		<style type="text/css">/*<![CDATA[*/
@@ -1042,12 +1033,7 @@ wfProfileIn( __METHOD__ . '-header'); ?>
 		<div id="wikia_header" class="reset color2">
 			<div class="monaco_shrinkwrap">
 			<div id="wikiaBranding">
-<?php
-global $wgLangToCentralMap, $wgContLang;
-$central_url = 'http://www.wikia.com/';
-if (!empty($wgLangToCentralMap[$wgContLang->getCode()])) { $central_url = $wgLangToCentralMap[$wgContLang->getCode()]; }
-?>
-				<div id="wikia_logo"><a rel="nofollow" href="<?= $central_url ?>">Wikia</a></div>
+				<div id="wikia_logo"><a rel="nofollow" href="http://www.wikia.com/">Wikia</a></div>
 <?php
 $categorylist = $this->data['data']['categorylist'];
 if(isset($categorylist['nodes']) && count($categorylist['nodes']) > 0 ) {
@@ -1714,53 +1700,24 @@ $this->html('reporttime');
 wfRunHooks('SpecialFooter');
 wfProfileOut( __METHOD__ . '-body');
 ?>
+
+<!-- Begin Analytics -->
+
+<?php
+// Note, these were placed above the Ad calls intentionally because ad code screws with analytics
+echo AnalyticsEngine::track('GA_Urchin', AnalyticsEngine::EVENT_PAGEVIEW);
+echo AnalyticsEngine::track('QuantServe', AnalyticsEngine::EVENT_PAGEVIEW);
+global $wgDBname, $wgCityId;
+echo AnalyticsEngine::track('GA_Urchin', 'dbname', array($wgDBname));
+echo AnalyticsEngine::track('GA_Urchin', 'main_page', array($wgDBname));
+echo AnalyticsEngine::track('GA_Urchin', 'onewiki', array($wgCityId));
+?>
+
+<!-- End Analytics -->
 <?php
 	echo AdEngine::getInstance()->getDelayedLoadingCode();
-
-/* Analytics calls. Pre AdEngine, these were delivered with js_bot2 via the ad server */
 ?>
-<script type='text/javascript'>
-if (typeof urchinTracker == "undefined") {
-	document.write('<scr'+'ipt src="http://www.google-analytics.com/urchin.js" type="text/javascript"></scr'+'ipt>');
-}
-var Key;
-if (typeof wgDB == 'undefined') {
-	Key="/missing/"+location.hostname;
-} else {
-	Key="/"+wgDB;
-}
-_uff=0;_uacct="UA-288915-2";urchinTracker(Key);
 
-if ((typeof wgIsMainpage != 'undefined') && (wgIsMainpage)) {
-	_uff=0;_uacct="UA-288915-6";urchinTracker();
-}
-
-if (typeof wgID == 'number'){
-	var cid_ua = new Array();
-	cid_ua.push(
-	    304,"UA-288915-3", 831,"UA-288915-4", 2965,"UA-288915-5", 147,"UA-288915-7", 462,"UA-288915-8",
-	    410,"UA-288915-9", 530,"UA-288915-10", 324,"UA-288915-11", 602,"UA-288915-12", 2973,"UA-288915-13",
-	    690,"UA-288915-14", 3085,"UA-288915-16", 125,"UA-288915-17", 634,"UA-288915-18", 5711,"UA-288915-19",
-	    528,"UA-288915-20", 3814,"UA-288915-21", 351,"UA-288915-22", 411,"UA-288915-23", 2719,"UA-288915-24",
-	   3355,"UA-288915-26", 534,"UA-288915-28", 1766,"UA-288915-29", 2205,"UA-288915-30", 2962,"UA-288915-31",
-	   2871,"UA-288915-32", 5329,"UA-288915-33", 6966,"UA-288915-34", 51,"UA-2697185-4", 1657,"UA-784542-1",
-	     59,"UA-363124-1", 38,"UA-89493-2", 1323,"UA-89493-2", 769,"UA-992722-1", 1107,"UA-265325-1",
-	    549,"UA-89493-1", 1167,"UA-89493-3", 1870,"UA-346766-6", 1448,"UA-550357-1", 989,"UA-371419-1",
-	    706,"UA-444393-1", 816,"UA-84972-5",  383,"UA-921254-1", 2161,"UA-921115-1", 3616,"UA-145089-1",
-	   3756,"UA-145089-1", 2233,"UA-145089-1", 2234,"UA-145089-1", 2235,"UA-145089-1", 2236,"UA-145089-1",
-	   2237,"UA-145089-4", 2020,"UA-87586-8", 171,"UA-978350-1", 1928,"UA-657201-1", 1864,"UA-855317-1",
-	   1404,"UA-722649-1", 702,"UA-680784-1", 909,"UA-968098-1", 999,"UA-818628-1", 1981,"UA-776391-1",
-	   1916,"UA-1153537-1", 1778,"UA-1068008-1", 2307,"UA-1276867-1", 2166,"UA-1291238-2", 133,"UA-1362746-1",
-	   2342,"UA-1368221-1", 645,"UA-1368532-1", 2193,"UA-1368560-1", 667,"UA-1377241-1", 2195,"UA-1263121-1",
-	   3236,"UA-2100028-5", 193,"UA-1946686-3", 2165,"UA-1946686-2");
-	
-	for (i = 0;i<cid_ua.length;i=i+2) {
-		if (wgID==cid_ua[i]) {
-			_uff=0;_uacct=cid_ua[i+1];urchinTracker();
-		}
-	}
-}
-</script>
 	</body>
 </html>
 <?php
