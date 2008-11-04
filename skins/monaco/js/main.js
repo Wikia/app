@@ -1,3 +1,6 @@
+//macbre: moved here from onejstorule.js
+var $ = YAHOO.util.Dom.get;
+
 (function() {
 var Dom = YAHOO.util.Dom;
 var Event = YAHOO.util.Event;

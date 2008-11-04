@@ -1,3 +1,6 @@
+// macbre: moved here from onejstorule.js
+var $ = YAHOO.util.Dom.get;
+
 YAHOO.util.Event.onDOMReady(function() {
 	initAutoComplete();
 //	YAHOO.util.Event.addListener(window, 'resize', setCarouselNumVisible);
