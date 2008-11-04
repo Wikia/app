@@ -11,6 +11,8 @@ if (!defined('MEDIAWIKI')) die();
  * @license http://www.gnu.org/copyleft/gpl.html GNU General Public License 2.0 or later
  */
 
+require dirname(__FILE__) . "/../extensions/wikia/AnalyticsEngine/AnalyticsEngine.php";
+
 class SkinHome extends SkinTemplate {
 
 	function initPage(&$out) {
@@ -736,35 +738,15 @@ class HomeTemplate extends QuickTemplate {
 </div>
 
 <!-- analytics (start) -->
-<script src="http://www.google-analytics.com/urchin.js" type="text/javascript"></script>
 <?php
-    global $wgServer;
-    if ( !empty($this->data['adserver_ads']) ) {
-        echo "<!-- adserver on, injecting bottom JS.. " . count($this->data['adserver_ads']) . "-->\n";
-        echo $this->data['adserver_ads'][ADSERVER_POS_JS_BOT1];
-        echo $this->data['adserver_ads'][ADSERVER_POS_JS_BOT2];
-        echo $this->data['adserver_ads'][ADSERVER_POS_JS_BOT3];
-    }
-    //Emil - display GoogleAnalytics for wikis that don't use adserver
-    elseif ( preg_match("/wikia.com/",$wgServer) ) {
-?>
-<script src="http://www.google-analytics.com/urchin.js"  type="text/javascript"></script>
-<script type="text/javascript">
-_udn = "none";_uff = 0;_uacct="UA-288915-1"; urchinTracker();
-_udn = "none";_uff = 0;_uacct="UA-288915-3"; urchinTracker();
-</script>
-<?php
-    }
-	$this->html('bottomscripts');
+echo AnalyticsEngine::track('GA_Urchin', AnalyticsEngine::EVENT_PAGEVIEW);
+echo AnalyticsEngine::track('QuantServe', AnalyticsEngine::EVENT_PAGEVIEW);
+global $wgCityId;
+echo AnalyticsEngine::track('GA_Urchin', 'onewiki', array($wgCityId));
+
+$this->html('bottomscripts');
 ?>
 
-<!-- Start Quantcast tag -->
-<script type="text/javascript" src="http://edge.quantserve.com/quant.js"></script>
-<script type="text/javascript">_qacct="p-8bG6eLqkH6Avk";quantserve();</script>
-<noscript>
-<a href="http://www.quantcast.com/p-8bG6eLqkH6Avk" target="_blank"><img src="http://pixel.quantserve.com/pixel/p-8bG6eLqkH6Avk.gif" style="display: none;" border="0" height="1" width="1" alt="Quantcast"/></a>
-</noscript>
-<!-- End Quantcast tag -->
 <!-- analytics (end) -->
 </body>
 </html>
