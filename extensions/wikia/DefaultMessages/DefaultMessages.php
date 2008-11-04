@@ -7,37 +7,59 @@ if( empty( $wgDefaultMessagesDB ) ) {
 if( $wgDefaultMessagesDB == $wgDBname ) {
 	$wgHooks['MessageCacheReplace'][] = 'DefaultMessages::onMessageCacheReplace';
 } else {
-	$wgExtensionFunctions[] = 'efDefaultMessagesSetup';
+	$wgHooks['MessagesGetFromNamespaceAfter'][] = 'DefaultMessages::get';
 }
 
 class DefaultMessages {
 	const expire = 3600;
+	static $cache, $loaded = false;
 
 	private static function memcKey() {
 		global $wgDefaultMessagesDB;
-		return $wgDefaultMessagesDB . ':default_messages';
+		return $wgDefaultMessagesDB . ':default_messages_new';
+	}
+	
+	private static function memcKeyTouched() {
+		global $wgDefaultMessagesDB;
+		return $wgDefaultMessagesDB . ':default_messages:touched';
 	}
 
 	private static function filecache() {
 		global $wgDefaultMessagesDB;
-		return '/tmp/default_messages.ser';
+		return '/tmp/default_messages_new.ser';
 	}
 
-	public static function loadMessages() {
-		global $wgMemc, $wgMessageCache, $wgContLang, $wgDefaultMessagesDB;
-		if( !empty( $wgDefaultMessagesDB ) && is_object( $wgMessageCache ) ) {
-			$_touched = $wgMemc->get( self::memcKey() . ":touched" );
-			$defaultMessages = WikiFactory::fetch( self::filecache(), $_touched );
+	public static function get( $key, $lang, &$message ) {
+		if( $message === false ) {
+			self::load();
 
-			if( empty( $defaultMessages ) ) {
+			if( isset( self::$cache[$key][$lang] ) ) {
+				$message = self::$cache[$key][$lang];
+			}
+		}
+
+		return true;
+	}
+
+	public static function load() {
+		global $wgMemc, $wgContLang, $wgDefaultMessagesDB;
+		if( !empty( $wgDefaultMessagesDB ) ) {
+			if( self::$loaded ) {
+				return;
+			}
+
+			$_touched = $wgMemc->get( self::memcKeyTouched() );
+			self::$cache = WikiFactory::fetch( self::filecache(), $_touched );
+
+			if( empty( self::$cache ) ) {
 				// try memcached
-				$defaultMessages = $wgMemc->get( self::memcKey() );
-				if( !empty( $defaultMessages ) ) {
-					WikiFactory::store( self::filecache(), $defaultMessages, self::expire, $_touched );
+				self::$cache = $wgMemc->get( self::memcKey() );
+				if( !empty( self::$cache ) ) {
+					WikiFactory::store( self::filecache(), self::$cache, self::expire, $_touched );
 				}
 			}
 
-			if( empty( $defaultMessages ) ) {
+			if( empty( self::$cache ) ) {
 				// fetch from db as a last resort
 				$dbr = wfGetDB( DB_SLAVE );
 				$res = $dbr->select(
@@ -50,7 +72,7 @@ class DefaultMessages {
 							'rev_text_id=old_id' ),
 							__METHOD__ );
 
-				$defaultMessages = array();
+				self::$cache = array();
 				for ( $row = $dbr->fetchObject( $res ); $row; $row = $dbr->fetchObject( $res ) ) {
 					$lckey = $wgContLang->lcfirst( $row->page_title );
 					if( strpos( $lckey, '/' ) ) {
@@ -62,25 +84,22 @@ class DefaultMessages {
 						$lang = 'en';
 					}
 					$value = Revision::getRevisionText( $row );
-					$wgMessageCache->addMessage( $key, $value, $lang );
-					$defaultMessages["$key/$lang"] = array( 'key' => $key, 'value' => $value, 'lang' => $lang );
+					self::$cache[$key][$lang] = $value;
 				}
 				$dbr->freeResult( $res );
-				$wgMemc->set( self::memcKey(), $defaultMessages, self::expire );
-				WikiFactory::store( self::filecache(), $defaultMessages, self::expire, $_touched );
-			} else {
-				foreach( $defaultMessages as $msg ) {
-					$wgMessageCache->addMessage( $msg['key'], $msg['value'], $msg['lang'] );
-				}
+				$wgMemc->set( self::memcKey(), self::$cache, self::expire );
+				WikiFactory::store( self::filecache(), self::$cache, self::expire, $_touched );
 			}
+
+			self::$loaded = true;
 		}
 	}
 
 	public static function onMessageCacheReplace( $title, $text ) {
 		global $wgMemc, $wgContLang;
 
-		$defaultMessages = $wgMemc->get( self::memcKey() );
-		if( !empty( $defaultMessages ) ) {
+		self::$cache = $wgMemc->get( self::memcKey() );
+		if( !empty( self::$cache ) ) {
 			$lckey = $wgContLang->lcfirst( $title );
 			if( strpos( $lckey, '/' ) ) {
 				$t = explode( '/', $lckey );
@@ -93,14 +112,14 @@ class DefaultMessages {
 
 			if( $text === false ) {
 				# Article was deleted
-				unset( $defaultMessages["$key/$lang"] );
+				unset( self::$cache[$key][$lang] );
 			} else {
-				$defaultMessages["$key/$lang"] = array( 'key' => $key, 'value' => $text, 'lang' => $lang );
+				self::$cache[$key][$lang] = $text;
 			}
-			$wgMemc->set( self::memcKey(), $defaultMessages, self::expire );
+			$wgMemc->set( self::memcKey(), self::$cache, self::expire );
 			$_touched = time();
-			$wgMemc->set( self::memcKey() . ":touched", $_touched );
-			WikiFactory::store( self::filecache(), $defaultMessages, self::expire, $_touched );
+			$wgMemc->set( self::memcKeyTouched(), $_touched );
+			WikiFactory::store( self::filecache(), self::$cache, self::expire, $_touched );
 		}
 
 		return true;
