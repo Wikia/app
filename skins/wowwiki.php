@@ -289,12 +289,6 @@ class WowWikiTemplate extends QuickTemplate {
 
 <?php
 print google_urchin();
-
-if ( $this->data['adserver_ads'] ) {
-	echo "\n<!-- js_bot1 start -->" . AdServer::getInstance()->getAd('js_bot1') . "<!-- js_bot1 end -->";
-	echo "\n<!-- js_bot2 start -->" . AdServer::getInstance()->getAd('js_bot2') . "<!-- js_bot2 end -->";
-	echo "\n<!-- js_bot3 start -->" . AdServer::getInstance()->getAd('js_bot3') . "<!-- js_bot3 end -->";
-}
 ?>
 <?php if( !empty( $wgCurse ) ) $this->printCustomFooter(); ?>
 </body></html>
@@ -461,6 +455,10 @@ border="0" alt="Google"></img></a>
 }
 
 function google_urchin() {
-   return '<script src="http://www.google-analytics.com/urchin.js" type="text/javascript"></script><script type="text/javascript">_uacct = "UA-288915-4"; urchinTracker();</script>';
+	require dirname(__FILE__) . "/../extensions/wikia/AnalyticsEngine/AnalyticsEngine.php";
+	$out = AnalyticsEngine::track('GA_Urchin', AnalyticsEngine::EVENT_PAGEVIEW);
+	global $wgCityId;
+	$out.= AnalyticsEngine::track('GA_Urchin', 'onewiki', array($wgCityId));
+	$out.= AnalyticsEngine::track('QuantServe', AnalyticsEngine::EVENT_PAGEVIEW);
+	return $out;
 }
-
