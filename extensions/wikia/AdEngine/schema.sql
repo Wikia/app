@@ -68,5 +68,6 @@ CREATE TABLE ad_provider_value (
   keyname VARCHAR(25),
   keyvalue VARCHAR(255),
   PRIMARY KEY (apv_id),
+  UNIQUE KEY (city_id, keyname, keyvalue),
   KEY (provider_id, city_id)
 ) ENGINE=InnoDB;
