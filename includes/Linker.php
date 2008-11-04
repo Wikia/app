@@ -730,7 +730,7 @@ class Linker {
 			$s = $thumb->toHtml( $attrArr );
 		}
 		if ( '' != $fp['align'] ) {
-			$s = "<div$refId class=\"float{$fp['align']}\"><span>{$s}</span></div>";
+			$s = "<div{$fp['refid']} class=\"float{$fp['align']}\"><span>{$s}</span></div>";
 		}
 		return str_replace("\n", ' ', $prefix.$s.$postfix);
 	}
