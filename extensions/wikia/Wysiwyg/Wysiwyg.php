@@ -140,7 +140,7 @@ function wysiwygInitInSourceMode(src) {
 }
 
 function initEditor() {
-	if($('wmuLink') && $('wmuLink').parentNode) $('wmuLink').parentNode.style.display = 'none';
+	if($('wmuLink')) $('wmuLink').parentNode.style.display = 'none';
 	var edgeCasesFound = $wgWysiwygEdgeCasesFound;
 	var oFCKeditor = new FCKeditor("wpTextbox1");
 	oFCKeditor.BasePath = "$wgExtensionsPath/wikia/Wysiwyg/fckeditor/";
