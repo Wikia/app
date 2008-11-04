@@ -18,7 +18,7 @@ interface iAdProvider {
 
 class AdEngine {
 
-	const cacheKeyVersion = "2.01";
+	const cacheKeyVersion = "2.01a";
 	const cacheTimeout = 1800;
 
 	// TODO: pull these from wikicities.provider
@@ -59,8 +59,20 @@ class AdEngine {
 		'blind'
 	);
 
-	// We only serve ads in certain slots for international
-	private $internationalSlots = array(
+	// We treat international differently. Tier one langages see one set of ads, tier 2 see another.
+	// pl, german, spanish, chinese
+	private $tier1Languages = array( 'pl', 'de', 'es', 'zh');
+	private $internationalSlotsTier1 = array(
+		'HOME_LEFT_SKYSCRAPER_2', 
+		'HOME_TOP_LEADERBOARD',
+		'TOP_LEADERBOARD',
+		'LEFT_SKYSCRAPER_1',
+		'LEFT_SKYSCRAPER_2',
+		'LEFT_SKYSCRAPER_3',
+		'RIGHT_SKYSCRAPER_1'
+	);
+
+	private $internationalSlotsTier2 = array(
 		'HOME_LEFT_SKYSCRAPER_2', 
 		'LEFT_SKYSCRAPER_1',
 		'LEFT_SKYSCRAPER_2',
@@ -116,7 +128,7 @@ class AdEngine {
 	}
 
 	public function loadConfig() {
-		global $wgMemc, $wgCityId, $wgUser;
+		global $wgMemc, $wgCityId, $wgUser, $wgRequest;
 
                 $skin_name = null;
                 if ( is_object($wgUser)){
@@ -126,7 +138,7 @@ class AdEngine {
 		$cacheKey = wfMemcKey(__CLASS__ . 'slots', $skin_name, self::cacheKeyVersion);
 		$this->slots = $wgMemc->get($cacheKey);
 
-		if(is_array($this->slots)){
+		if(is_array($this->slots) && $wgRequest->getVal('action') != 'purge') {
 			// Found a cached value
 			return true;
 		}
@@ -249,9 +261,7 @@ class AdEngine {
 		// All of the errors and toggles are handled, now switch based on language
 		} else {
 
-			// More info on logic here: http://staff.wikia-inc.com/wiki/DART_Implementation/NonEnglish
-			switch ($wgLanguageCode) {
-			  case 'en': 
+			if ($wgLanguageCode == 'en' ){
 
 				// Do bucket testing of different providers and different placements
 				if ($slotname == 'TOP_LEADERBOARD' && (
@@ -266,20 +276,22 @@ class AdEngine {
 				} else {
 					return $this->getProviderFromId($this->slots[$slotname]['provider_id']);
 				}
-
-			  case 'de': return $this->getProviderFromId($this->slots[$slotname]['provider_id']);
-
-			  default:
-				if (!in_array( $slotname, $this->internationalSlots)){
+			} else if (in_array($wgLanguageCode, $this->tier1Languages)){
+				
+				if (!in_array($slotname, $this->internationalSlotsTier1)){
 					return new AdProviderNull("Ads name not served for this language in this slot ($wgLanguageCode) ", false);
-
 				} else {
+					return AdProviderGAM::getInstance();
+				}
+
+			} else {
+				if (!in_array( $slotname, $this->internationalSlotsTier2)){
+					return new AdProviderNull("Ads name not served for this language in this slot ($wgLanguageCode) ", false);
+				} else if (! in_array($wgLanguageCode, AdProviderGoogle::getSupportedLanguages())){
 					// Google's TOS prevents serving ads for some languages
-					if (! in_array($wgLanguageCode, AdProviderGoogle::getSupportedLanguages())){
-						return new AdProviderNull("Unsupported language for Google Adsense ($wgLanguageCode)", false);
-					} else {
-						return AdProviderGAM::getInstance();
-					}
+					return new AdProviderNull("Unsupported language for Google Adsense ($wgLanguageCode)", false);
+				} else {
+					return AdProviderGAM::getInstance();
 				}
 			}
 
