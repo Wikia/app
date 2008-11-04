@@ -709,6 +709,7 @@ class Linker {
 			$thumb = false;
 		}
 
+		$refId = '';
 		if ( !$thumb ) {
 			$s = $this->makeBrokenImageLinkObj( $title, '', '', '', '', $time==true );
 		} else {
@@ -719,7 +720,6 @@ class Linker {
 				'valign' => isset( $fp['valign'] ) ? $fp['valign'] : false ,
 				'img-class' => isset( $fp['border'] ) ? 'thumbborder' : false
 			);
-			$refId = '';
 			if (!empty($wgWysiwygParserEnabled) && isset($fp['refid'])) {
 				if ($fp['align'] == '') {
 					$attrArr['refid'] = $fp['refid'];
@@ -730,7 +730,6 @@ class Linker {
 			$s = $thumb->toHtml( $attrArr );
 		}
 		if ( '' != $fp['align'] ) {
-			$refId = isset($fp['refid']) ? " refid=\"{$fp['refid']}\"" : '';
 			$s = "<div$refId class=\"float{$fp['align']}\"><span>{$s}</span></div>";
 		}
 		return str_replace("\n", ' ', $prefix.$s.$postfix);
