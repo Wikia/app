@@ -99,6 +99,12 @@ class AjaxDispatcher {
 				$func = $this->func_name;
 			}
 			try {
+
+				if($func == 'searchSuggest') {
+					echo "Use getLinkSuggest method";
+					return;
+				}
+
 				$result = call_user_func_array($func, $this->args);
 
 				if ( $result === false || $result === NULL ) {

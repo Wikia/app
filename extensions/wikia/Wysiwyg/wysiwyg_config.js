@@ -9,7 +9,8 @@ FCKConfig.StyleVersion = window.parent.wgStyleVersion;
 FCKConfig.EditorAreaCSS = FCKConfig.BasePath + 'css/fck_editorarea.css';
 FCKConfig.EditorAreaStyles = window.parent.stylepath + '/monobook/main.css';
 
-FCKConfig.BodyId = 'fckEditor';
+FCKConfig.BodyId = 'bodyContent';
+FCKConfig.BodyClass = 'fckeditor';
 FCKConfig.Plugins.Add('wikitext');
 
 FCKConfig.FillEmptyBlocks = false;
@@ -19,3 +20,6 @@ FCKConfig.FormatOutput = false;
 
 FCKConfig.AutoDetectLanguage = false;
 FCKConfig.DefaultLanguage = window.parent.wgUserLanguage;
+
+FCKConfig.BackgroundBlockerColor = '#000';
+FCKConfig.BackgroundBlockerOpacity = '0.6';

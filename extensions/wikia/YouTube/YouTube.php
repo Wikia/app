@@ -106,7 +106,7 @@ function embedYouTube($input, $argv, &$parser)
 	if (!empty($ytid))
 	{
 		$url = "http://www.youtube.com/v/{$ytid}";
-		return "<object type=\"application/x-shockwave-flash\" data=\"{$url}\" width=\"{$width}\" height=\"{$height}\"><param name=\"movie\" value=\"{$url}\"/></object>";
+		return "<object type=\"application/x-shockwave-flash\" data=\"{$url}\" width=\"{$width}\" height=\"{$height}\"><param name=\"movie\" value=\"{$url}\"/><param name=\"wmode\" value=\"transparent\"/></object>";
 	}
 }
 
@@ -153,7 +153,7 @@ function embedGoogleVideo($input, $argv, &$parser)
 	if (!empty($gvid))
 	{
 		$url = "http://video.google.com/googleplayer.swf?docId={$gvid}";
-		return "<object type=\"application/x-shockwave-flash\" data=\"{$url}\" width=\"{$width}\" height=\"{$height}\"><param name=\"movie\" value=\"{$url}\"/></object>";
+		return "<object type=\"application/x-shockwave-flash\" data=\"{$url}\" width=\"{$width}\" height=\"{$height}\"><param name=\"movie\" value=\"{$url}\"/><param name=\"wmode\" value=\"transparent\"/></object>";
 	}
 }
 

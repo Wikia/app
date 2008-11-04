@@ -47,6 +47,7 @@ class ReverseParser {
 				' </dd>' => '</dd>',
 				' </dt>' => '</dt>',
 				' <pre>' => '<pre>',
+				' <h'    => '<h',
 			);
 
 			$html = strtr($html, $replacements);
@@ -212,10 +213,16 @@ class ReverseParser {
 					case 'h5':
 					case 'h6':
 						$out = '';
-					
-						// ignore 'empty' headers	
+
+						// ignore 'empty' headers
 						if ( trim($textContent) == '' ) {
 							$out = "\n";
+							break;
+						}
+
+						// ignore headers inside lists
+						if (in_array($node->parentNode->nodeName, array('li', 'dt', 'dd'))) {
+							$out = $textContent;
 							break;
 						}
 
@@ -232,6 +239,11 @@ class ReverseParser {
 						// new line logic
 						if ($node->previousSibling || ($node->parentNode && $this->isTableCell($node->parentNode))) {
 							$out = "\n{$out}";
+						}
+
+						// fix for "external HTML" pasted into FCK
+						if ($node->nextSibling && $node->nextSibling->nodeName != 'p' && !$this->isHeader($node->nextSibling)) {
+							$out = "{$out}\n";
 						}
 						break;
 
@@ -421,9 +433,8 @@ class ReverseParser {
 					case 'a':
 						$out = $this->handleLink($node, $textContent);
 						break;
-					case 'span':
 					case 'input':
-						$out = $this->handleSpan($node, $textContent);
+						$out = $this->handlePlaceholder($node, $textContent);
 						break;
 
 					// ignore tbody tag
@@ -606,7 +617,7 @@ class ReverseParser {
 	 *
 	 * Span is used to wrap various elements like templates etc.
 	 */
-	private function handleSpan($node, $content) {
+	private function handlePlaceholder($node, $content) {
 
 		// handle spans with refId attribute: images, templates etc.
 		$refId = $node->getAttribute('refid');
@@ -687,12 +698,12 @@ class ReverseParser {
 
 				$this->fckData[$refid] = array(
 					'type' => ($content == $href) ? 'external link: raw' : 'external link',
-					'text' => ($node->textContent == '[link]') ? '[link]' : $content,
+					'text' => $content,
 					'href' => $href
 				);
 			}
 		}
-		
+
 
 		$data = $this->fckData[$refid];
 
@@ -703,7 +714,7 @@ class ReverseParser {
 				// take link description from HTML
 				$data['description'] = $content;
 				$data['trial'] = '';
-				
+
 				// * [[foo|foo]] -> [[foo]]
 				if ($data['href'] == $data['description']) {
 					$data['description'] = '';
@@ -711,14 +722,14 @@ class ReverseParser {
 				// * [[foo|foots]] -> [[foo]]ts (trial can't contain numbers)
 				else if ($data['description'] != '' && substr($data['description'], 0, strlen($data['href'])) == $data['href']) {
 					$trial = substr($data['description'], strlen($data['href']));
-					
+
 					// validate $trial (might only contain chars)
 					if ( ctype_alpha($trial) ) {
 						$data['trial'] = $trial;
 						$data['description'] = '';
 					}
 				}
-				
+
 				// generate wikisyntax
 				$tag =  "[[{$data['href']}";
 
@@ -756,11 +767,12 @@ class ReverseParser {
 
 				// fill FCK data
 				if (preg_match('%^(?:' . $this->protocols . ')%im', $data['href'])) {
+					// external links
 					if ($data['type'] == 'external link: raw' && !$textBefore && !$textAfter) {
 						// use http://foo.com
 						return $data['href'];
 					}
-					else if ($content == '[link]') {
+					else if ($this->hasCSSClass($node, 'autonumber') && strlen($content) > 2 && is_numeric(substr($content,1,-1))) {
 						// use [http://foo.com] - numbered external links
 						return "[{$data['href']}]";
 					} else {
@@ -769,6 +781,7 @@ class ReverseParser {
 					}
 				}
 				else {
+					// internal links
 					return "[{$data['href']} {$content}]";
 				}
 		}
@@ -799,14 +812,14 @@ class ReverseParser {
 	 */
 
 	private function isFormattingElement($node) {
-		return in_array($node->nodeName, array('u', 'b', 'strong', 'i', 'em', 'strike', 's'));
+		return in_array($node->nodeName, array('u', 'b', 'strong', 'i', 'em', 'strike', 's', 'code'));
 	}
 
 	/**
 	 * Return true if given node is inline HTNL element or can contain inline elements (p / div)
 	 */
 	private function isInlineElement($node) {
-		return in_array($node->nodeName, array('u', 'b', 'strong', 'i', 'em', 'strike', 's', 'a', 'p', 'div'));
+		return in_array($node->nodeName, array('u', 'b', 'strong', 'i', 'em', 'strike', 's', 'code', 'a', 'p', 'div'));
 	}
 
 	/**
@@ -814,6 +827,13 @@ class ReverseParser {
 	 */
 	private function isTableCell($node) {
 		return in_array($node->nodeName, array('td', 'th', 'caption'));
+	}
+
+	/**
+	 * Return true if given node is heading node
+	*/
+	private function isHeader($node) {
+		return (strlen($node->nodeName) == 2) && ($node->nodeName{0} == 'h') && is_numeric($node->nodeName{1});
 	}
 
 	/**
@@ -835,4 +855,18 @@ class ReverseParser {
 		}
 		return false;
  	}
+
+	/**
+	 * Returns true if given node has CSS class set
+	*/
+	private function hasCSSClass($node, $class) {
+		$classes = $node->getAttribute('class');
+
+		if (is_string($classes)) {
+			return in_array($class, explode(' ', $classes));
+		}
+		else {
+			return false;
+		}
+	}
 }

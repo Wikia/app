@@ -169,7 +169,11 @@ class ThumbnailImage extends MediaTransformOutput {
 			$attribs['class'] = $options['img-class'];
 		}
 		if ( isset( $options['refid'] ) ) {
-			$attribs['refid'] = $options['refid'];
+			if (is_array($linkAttribs)) {
+				$linkAttribs['refid'] = $options['refid'];
+			} else {
+				$linkAttribs = array('refid' => $options['refid']);
+			}
 		}
 		return $this->linkWrap( $linkAttribs, Xml::element( 'img', $attribs ) );
 	}

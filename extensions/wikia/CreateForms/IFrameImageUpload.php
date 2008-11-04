@@ -6,8 +6,8 @@ $wgExtensionFunctions[] = 'wfSpecialIFrameUpload';
 function wfSpecialIFrameUpload(){
   global $wgUser,$IP;
   include_once("includes/SpecialPage.php");
-include_once("includes/SpecialUpload.php");
-include_once("includes/Parser.php");
+include_once("includes/specials/SpecialUpload.php");
+include_once("includes/parser/Parser.php");
 class IFrameUpload extends UnlistedSpecialPage {
 
 	 

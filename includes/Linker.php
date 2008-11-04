@@ -283,7 +283,7 @@ class Linker {
 			}
 			if (!empty($wgWysiwygParserEnabled)) {
 				$refId = Wysiwyg_GetRefId($text);
-				$t = "<a{$style}{$refId}>{$text}{$inside}</a>";
+				$t = "<a href=\"{$u}\"{$style}{$refId}>{$text}{$inside}</a>";
 			}
 			else {
 				$t = "<a href=\"{$u}\"{$style}>{$text}{$inside}</a>";
@@ -376,7 +376,7 @@ class Linker {
 		
 		if (!empty($wgWysiwygParserEnabled)) {
 			$refId = Wysiwyg_GetRefId($text);
-			$r = "<a{$style}{$aprops}{$refId}>{$prefix}{$text}{$inside}</a>{$trail}";
+			$r = "<a href=\"{$u}\"$style}{$aprops}{$refId}>{$prefix}{$text}{$inside}</a>{$trail}";
 		}
 		else {
 			$r = "<a href=\"{$u}\"{$style}{$aprops}>{$prefix}{$text}{$inside}</a>{$trail}";
@@ -428,7 +428,7 @@ class Linker {
 
 		if (!empty($wgWysiwygParserEnabled)) {
 			$refId = Wysiwyg_GetRefId($text);
-			$s = "<a{$style}{$refId}>{$prefix}{$text}{$inside}</a>{$trail}";
+			$s = "<a href=\"{$u}\"{$style}{$refId}>{$prefix}{$text}{$inside}</a>{$trail}";
 		}
 		else  {
 			$s = "<a href=\"{$u}\"{$style}>{$prefix}{$text}{$inside}</a>{$trail}";
@@ -962,7 +962,7 @@ class Linker {
 		global $wgWysiwygParserEnabled;
 		if (!empty($wgWysiwygParserEnabled)) {
 			$refId = Wysiwyg_GetRefId($text);
-			return '<a'.$style.$refId.'>'.$text.'</a>';
+			return '<a href="'.$url.'"'.$style.$refId.'>'.$text.'</a>';
 		}
 		else {
 			return '<a href="'.$url.'"'.$style.'>'.$text.'</a>';

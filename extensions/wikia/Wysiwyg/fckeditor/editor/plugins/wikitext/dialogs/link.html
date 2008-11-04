@@ -15,6 +15,24 @@ var FCKConfig	= oEditor.FCKConfig ;
 var FCKRegexLib	= oEditor.FCKRegexLib ;
 var FCKTools	= oEditor.FCKTools ;
 
+// load wikibits and some of wgFoo JS variables
+window.wgMWSuggestTemplate = window.parent.parent.wgMWSuggestTemplate;
+window.wgSearchNamespaces = window.parent.parent.wgSearchNamespaces;
+window.wgDBname = window.parent.parent.wgDBname;
+window.stylepath = window.parent.parent.stylepath;
+window.wgContentLanguage = window.parent.wgContentLanguage;
+window.sajax_init_object = window.parent.parent.sajax_init_object;
+
+var url = window.parent.parent.stylepath + '/common/wikibits.js?' + FCKConfig.StyleVersion;
+document.write('<scr' + 'ipt type="text/javascript" src="' + url + '"><\/scr' + 'ipt>');
+
+var url = window.parent.parent.stylepath + '/common/shared.css?' + FCKConfig.StyleVersion;
+document.write('<li' + 'nk rel="stylesheet" type="text/css" href="' + url + '"/>');
+
+// load MW suggest
+var url = window.parent.parent.stylepath + '/common/mwsuggest.js?' + FCKConfig.StyleVersion;
+document.write('<scr' + 'ipt type="text/javascript" src="' + url + '"><\/scr' + 'ipt>');
+
 // Overall classification
 var EXISTING = 1;
 var NEW_SELECTION = 2;
@@ -95,6 +113,11 @@ window.onload = function() {
 			if(GetE('internal_article_name').value != link.innerHTML) {
 				GetE('internal_link_text').value = link.innerHTML;
 			}
+			else {
+				GetE('internal_link_text').value = GetE('internal_article_name').value;
+			}
+
+			GetE('internal_article_name').focus();
 
 		} else if(TYPE == EXTERNAL) {
 
@@ -106,7 +129,7 @@ window.onload = function() {
 				GetE('external_url').value = link.href;
 			}
 
-			if(link.innerHTML == '[link]') { // TODO:
+			if(FCK.YAHOO.util.Dom.hasClass(link, 'autonumber')) {
 				GetE('external_link_text').disabled = true;
 				GetE('external_unlabeled_link').checked = true;
 			} else {
@@ -115,6 +138,7 @@ window.onload = function() {
 				}
 			}
 
+			GetE('external_url').focus();
 		}
 
 	} else { // NEW LINKS
@@ -122,13 +146,17 @@ window.onload = function() {
 		dialog.SetSelectedTab('internal_link');
 
 		if(MODE == NEW_SELECTION) {
-			GetE('internal_article_name').value = selectionText;
+			GetE('internal_article_name').value = GetE('internal_link_text').value = selectionText;
 		}
 
+		GetE('internal_article_name').focus();
 	}
 
 	window.parent.SetOkButton(true);
 	window.parent.SetAutoSize(true);
+
+	// setup MW suggest
+	os_enableSuggestionsOn('internal_article_name', 'formInternalLink');
 }
 
 function Ok() {
@@ -136,6 +164,7 @@ function Ok() {
 
 	var data = {};
 	var link_text;
+	var href = '';
 
 	if(activeTabCode == 'internal_link') {
 		if(GetE('internal_article_name').value == '') {
@@ -163,10 +192,10 @@ function Ok() {
 			link_text = GetE('external_url').value;
 			data.type = 'external link: raw';
 		} else {
-			link_text = '[link]';
+			link_text = '';
 			data.type = 'external link';
 		}
-		data.href = GetE('external_url').value;
+		data.href = href = GetE('external_url').value;
 	}
 
 	if(MODE == EXISTING) {
@@ -180,17 +209,52 @@ function Ok() {
 	}
 
 	aLinks[0].innerHTML = link_text;
-	aLinks[0].href = '';
+	aLinks[0].href = href;
+	aLinks[0].removeAttribute('_fcksavedurl');
 
 	if(!refid) {
 		refid = FCK.wysiwygData.length;
 		aLinks[0].setAttribute('refid', refid);
 	}
 
+	// CSS classes handling code
+	if(activeTabCode == 'external_link') {
+		FCK.YAHOO.util.Dom.addClass(aLinks[0], 'external');
+		if (link_text == '') {
+			FCK.YAHOO.util.Dom.addClass(aLinks[0], 'autonumber');
+		}
+		else {
+			FCK.YAHOO.util.Dom.removeClass(aLinks[0], 'autonumber');
+		}
+	}
+	else {
+		FCK.YAHOO.util.Dom.removeClass(aLinks[0], 'external');
+		FCK.YAHOO.util.Dom.removeClass(aLinks[0], 'autonumber');
+	}
+
+	// recalculate autonumbered links - check only a.autonumber tags
+	if (activeTabCode == 'external_link' || TYPE == EXTERNAL) {
+		var numberedLinks = FCK.YAHOO.util.Dom.getElementsByClassName('autonumber', 'a', FCK.EditingArea.Document.body);
+		FCK.log('recalculating '+ numberedLinks.length  + ' numbered external links');
+		for (n=0; n<numberedLinks.length; ) {
+			numberedLinks[n].innerHTML = '[' + (++n) + ']';
+		}
+	}
+
+	// check existance of internal links targets
+	// and fill in href attribute
+	if (activeTabCode == 'internal_link') {
+		FCK.CheckInternalLink(data.href, aLinks[0]);
+	}
+	else {
+		FCK.YAHOO.util.Dom.removeClass(aLinks[0], 'new');
+	}
+
 	FCK.wysiwygData[refid] = data;
 
 	return true;
 }
+
 	</script>
 </head>
 	<body scroll="no" style="OVERFLOW: hidden">
@@ -198,7 +262,9 @@ function Ok() {
 
 			<span>Article name:</span>
 			<br />
-			<input id="internal_article_name" style="WIDTH: 100%" type="text" />
+			<form id="formInternalLink" style="margin:0;padding:0">
+				<input id="internal_article_name" style="WIDTH: 100%" type="text" />
+			</form>
 
 			<br /><br />
 
@@ -220,12 +286,11 @@ function Ok() {
 			<br />
 			<input id="external_link_text" style="WIDTH: 100%" type="text" />
 
-			<div style="text-align: right; padding: 5px 0">
-				<input id="external_unlabeled_link" type="checkbox" style="vertical-align: bottom" />
-				<label for="external_unlabeled_link">Unlabeled link</label>
-			</div>
+			<br /><br />
+
+			<input id="external_unlabeled_link" type="checkbox" />
+			<label for="external_unlabeled_link">create a numbered link</label>
 
 		</div>
-
 	</body>
 </html>
