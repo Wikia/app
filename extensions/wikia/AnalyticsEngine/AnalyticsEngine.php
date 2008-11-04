@@ -9,8 +9,8 @@ interface iAnalyticsProvider {
 	public function trackEvent($eventName, $eventDetails=array());
 }
 
-require 'AnalyticsProviderQuantServe.php';
-require 'AnalyticsProviderGA_Urchin.php';
+require dirname(__FILE__) . '/AnalyticsProviderQuantServe.php';
+require dirname(__FILE__) . '/AnalyticsProviderGA_Urchin.php';
 
 class AnalyticsEngine {
 
@@ -28,7 +28,7 @@ class AnalyticsEngine {
 		}
 
 		$out = "<!-- Start for $provider, $event -->\n";
-		$out .= $AP->getSetupHtml() . "\n";
+		$out .= $AP->getSetupHtml();
 		$out .= $AP->trackEvent($event, $eventDetails) . "\n";
 		$out .= "<!-- End tracking code for $provider, $event -->\n";
 		return $out;
