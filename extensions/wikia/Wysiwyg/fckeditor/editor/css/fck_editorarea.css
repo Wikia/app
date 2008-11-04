@@ -39,7 +39,7 @@ body
 	margin: 0px;
 }
 
-body#fckEditor
+body.fckEditor
 {
 	padding: 0 5px;
 }
@@ -67,7 +67,12 @@ input.wysiwygDisabled
 	background-color: #EFEFDE;
 	font-size: 1em;
 	padding: 1px;
-	margin: 0 1px;
+	margin: 0 2px;
+}
+
+span._moz_dirty
+{
+	margin: 0 2px;
 }
 
 /**

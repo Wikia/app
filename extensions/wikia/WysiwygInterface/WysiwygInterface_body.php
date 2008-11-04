@@ -7,8 +7,7 @@ class WysiwygInterface extends SpecialPage {
 		}
 
 		function execute( $par ) {
-			require(dirname(__FILE__).'/../Wysiwyg/WysiwygParser.php');
-			global $wgRequest, $wgOut, $wgTitle, $wgUser, $IP, $wgWysiwygMetaData;
+			global $wgRequest, $wgOut, $wgTitle, $wgUser, $IP, $wgWysiwygMetaData, $wgParser, $wgWysiwygParserEnabled;
 			$this->setHeaders();
 
 			if(empty($par)) {
@@ -27,17 +26,9 @@ class WysiwygInterface extends SpecialPage {
 			$options = new ParserOptions();
 			//$options->setTidy(true);
 
-			$parser = new WysiwygParser();
-			$parser->setOutputType(OT_HTML);
-			global $wgWysiwygParserEnabled;
-			$wgWysiwygParserEnabled = true;
-			$wikitext = $parser->preSaveTransform($wikitext, $wgTitle, $wgUser, $options);
-			$out = $parser->parse($wikitext, $wgTitle, $options)->getText();
-			$wgWysiwygParserEnabled = false;
-
-			// fix UTF issue
-			$out = mb_convert_encoding($out, 'HTML-ENTITIES', "UTF-8");
-
+			// use simple function to parse wikitext to HTML with FCK extra data
+			list($out, $tmpMetaData) = Wysiwyg_WikiTextToHtml($wikitext);
+	
 			// will be used by reverse parser
 			$html = $out;
 
@@ -69,27 +60,26 @@ class WysiwygInterface extends SpecialPage {
 
 				$geshi = new geshi($out, 'html4strict');
 				$geshi->enable_keyword_links(false);
+				$out = $geshi->parse_code(); 
 			}
 			else {
 				$html = '';
 			}
 
 			// macbre: call ReverseParser to parse HTML back to wikimarkup
-			require(dirname(__FILE__).'/../Wysiwyg/ReverseParser.php');
-			$reverseParser = new ReverseParser();
-
 			$wgOut->addHtml('<h5>$wgWysiwygMetaData</h5>');
 			$wgOut->addHtml('<pre>'.htmlspecialchars(print_r($wgWysiwygMetaData, true)).'</pre>');
 
-			$wikitext_parsed = $reverseParser->parse($html, $wgWysiwygMetaData);
+			$wikitext_parsed = Wysiwyg_HtmlToWikiText($html, $wgWysiwygMetaData);
 
-			// parse
-//			$wikitext = $parser->preSaveTransform($wikitext, $wgTitle, $wgUser, $options);
-			$parsedOld = $parser->parse($wikitext, $wgTitle, $options)->getText();
-//			$wikitext_parsed = $parser->preSaveTransform($wikitext_parsed, $wgTitle, $wgUser, $options);
-			$parsedNew = $parser->parse($wikitext_parsed, $wgTitle, $options)->getText();
+			// parse old and new wikitext to HTML (for visual diff)
+			$options = new ParserOptions();
+			$wgWysiwygParserEnabled = true;
+			$parsedOld = $wgParser->parse($wikitext, $wgTitle, $options)->getText();
+			$parsedNew = $wgParser->parse($wikitext_parsed, $wgTitle, $options)->getText();
+			$wgWysiwygParserEnabled = false;
 
-			// diff
+			// show wikitext diff
 			if ($wikitext == $wikitext_parsed) {
 				$diff = '&lt;empty&gt;';
 			}
@@ -110,17 +100,8 @@ class WysiwygInterface extends SpecialPage {
 			$wgOut->addHTML('<h3>Wikimarkup</h3>');
 			$wgOut->addHTML('<pre>' . htmlspecialchars($wikitext) . '</pre>');
 
-			/*
-			$wgOut->addHTML ('<h4>Wysiwygable</h4>') ;
-			if( $wysiwigable ) {
-				$wgOut->addHTML( 'Article was deemed "appropriate" for Wysiwyg editing.' ) ;
-			} else {
-				$wgOut->addHTML( 'Article was deemed "inapropriate" for Wysiwyg editing.' ) ;
-			}
-			*/
-
 			$wgOut->addHTML('<h3>HTML</h3>');
-			$wgOut->addHTML('<pre>' . htmlspecialchars($html) . '</pre>');
+			$wgOut->addHTML($out);
 
 			$wgOut->addHTML('<h3>Back to wikimarkup</h3>');
 			$wgOut->addHTML('<pre>' . htmlspecialchars($wikitext_parsed) . '</pre>');

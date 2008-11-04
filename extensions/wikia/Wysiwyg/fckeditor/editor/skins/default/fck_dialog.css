@@ -171,7 +171,7 @@ body, .BackColor
 	overflow: hidden;
 	z-index: 1;
 }
-
+/*
 .tl, .tr, .tc, .bl, .br, .bc
 {
 	position: absolute;
@@ -207,7 +207,7 @@ body, .BackColor
 {
 	background-image: url(images/dialog.sides.gif);
 }
-
+*/
 .tl
 {
 	top: 0px;
@@ -356,50 +356,9 @@ body, .BackColor
 	background-position: -16px -687px;
 }
 
-#throbberBlock
+.throbber
 {
-	z-index: 10;
-	background: transparent url('images/progress_dialog.gif') no-repeat 50% 50%;
-	height: 15px;
-	width: 128px;
-}
-
-#throbberBlock div
-{
-	float: left;
-	width: 8px;
-	height: 9px;
-	margin-left: 2px;
-	margin-right: 2px;
-	font-size: 1px;	/* IE6 */
-}
-
-/*
-	Color Gradient Generator:
-	http://www.herethere.net/~samson/php/color_gradient/?cbegin=737357&cend=E3E3C7&steps=4
-*/
-
-.throbber_1
-{
-	background-color: #737357;
-}
-
-.throbber_2
-{
-	background-color: #8f8f73;
-}
-
-.throbber_3
-{
-	background-color: #abab8f;
-}
-
-.throbber_4
-{
-	background-color: #c7c7ab;
-}
-
-.throbber_5
-{
-	background-color: #e3e3c7;
+	background-image: url('images/progress_dialog.gif');
+	background-repeat: no-repeat;
+	background-position: 50% 50%;
 }

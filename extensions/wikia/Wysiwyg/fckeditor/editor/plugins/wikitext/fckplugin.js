@@ -43,7 +43,9 @@ FCK.WysiwygSwitchToolbars = function(switchToWikitext) {
 	var MWtoolbar = window.parent.document.getElementById('toolbar');
 
 	// move MW toolbar next to "Source" button
-	MWtoolbar.style.marginLeft = (toolbarItems[1].offsetWidth+27) + 'px';
+	if (MWtoolbar) {
+		MWtoolbar.style.marginLeft = (toolbarItems[1].offsetWidth+27) + 'px';
+	}
 
 	// show/hide FCK toolbar items
 	for (t=0; t<toolbarItems.length; t++) {
@@ -51,7 +53,9 @@ FCK.WysiwygSwitchToolbars = function(switchToWikitext) {
 	}
 
 	// show/hide MW toolbar
-	MWtoolbar.style.visibility = switchToWikitext ? 'visible' : 'hidden';
+	if (MWtoolbar) {
+		MWtoolbar.style.visibility = switchToWikitext ? 'visible' : 'hidden';
+	}
 }
 
 FCK.SwitchEditMode = function() {
@@ -103,10 +107,17 @@ FCK.SwitchEditMode = function() {
 	return true;
 }
 
+FCK.InsertDirtySpanBefore = function(node) {
+	var span = FCKTools.GetElementDocument(node).createElement('SPAN');
+	span.setAttribute('type', '_moz');
+	span.className = '_moz_dirty';
+	node.parentNode.insertBefore(span, node);
+}
+
 FCK.Events.AttachEvent( 'OnAfterSetHTML', function() {
 	if(FCK.EditingArea.TargetElement.className == 'childrenHidden') {
 		var html = FCK.GetData();
-		var wysiwygDataEncoded =  window.parent.YAHOO.Tools.JSONEncode(FCK.wysiwygData);
+		var wysiwygDataEncoded =  FCK.YAHOO.Tools.encodeArr(FCK.wysiwygData);
 
 		window.parent.sajax_request_type = 'POST';
 		window.parent.sajax_do_call('Wysywig_Ajax', ['html2wiki', html, wysiwygDataEncoded], function(res) {
@@ -123,20 +134,25 @@ FCK.Events.AttachEvent( 'OnAfterSetHTML', function() {
 		if(!FCK.wysiwygData) {
 			FCK.wysiwygData = [];
 		}
+		FCK.log(FCK.wysiwygData);
+
 	}
 	if(FCK.EditMode == FCK_EDITMODE_WYSIWYG) {
 
 		// handle drag&drop
-		FCK.EditorDocument.addEventListener( 'mousedown', function(e) {
-			if(e.target.tagName == 'INPUT') {
-					FCKSelection.SelectNode(e.target);
+		FCKTools.AddEventListener(FCK.EditorDocument, 'mousedown', function(e) {
+			var target = FCK.YAHOO.util.Event.getTarget(e);
+			if(target.tagName == 'INPUT') {
+					FCKSelection.SelectNode(target);
 			}
-		}, true);
+		});
+
 
 		// open wikitext dialog
-		FCK.EditorDocument.addEventListener( 'click', function(e) {
-			if(e.target.tagName == 'INPUT') {
-				var refid = e.target.getAttribute('refid');
+		FCKTools.AddEventListener(FCK.EditorDocument, 'click', function(e) {
+			var target = FCK.YAHOO.util.Event.getTarget(e);
+			if(target.tagName == 'INPUT') {
+				var refid = target.getAttribute('refid');
 				if(refid) {
 					if (FCK.Track && FCK.wysiwygData) {
 						FCK.Track('/wikitextbox/' + (FCK.wysiwygData[refid] ? FCK.wysiwygData[refid].type : 'unknown'));
@@ -144,21 +160,80 @@ FCK.Events.AttachEvent( 'OnAfterSetHTML', function() {
 					inputClickCommand.Execute();
 				}
 			}
-		}, true);
+		});
 
 		// macbre: fix issue with input tags as last child (can't move to end of the line)
 		var placeholders = FCK.EditorDocument.getElementsByTagName('input');
 		for (p=0; p<placeholders.length; p++) {
-			if (placeholders[p] == placeholders[p].parentNode.lastChild) {
-				// add 'dirty' <br/>
-				FCKTools.AppendBogusBr(placeholders[p].parentNode);
+			if (placeholders[p].parentNode.nodeName.IEquals(['p', 'div', 'li', 'dt', 'dd']) &&  placeholders[p] == placeholders[p].parentNode.lastChild) {
+				if (FCKBrowserInfo.IsGecko10) {
+					// add &nbsp; for FF2.x
+					var frag = FCK.EditorDocument.createDocumentFragment();
+					frag.appendChild(FCK.EditorDocument.createTextNode('\xA0'));
+					placeholders[p].parentNode.appendChild(frag);
+				}
+				else {
+					// add 'dirty' <br/>
+					FCKTools.AppendBogusBr(placeholders[p].parentNode);
+				}
+			}
+
+			// insert <span type="_moz"> between input tags
+			if ( (placeholders[p].nextSibling && placeholders[p].nextSibling.nodeName.IEquals('input'))) {
+				FCK.InsertDirtySpanBefore(placeholders[p].nextSibling);
+			}
+
+			// and at the beginning of line
+			if (placeholders[p].parentNode.firstChild == placeholders[p]) {
+				FCK.InsertDirtySpanBefore(placeholders[p]);
 			}
 		}
 	}
-	
 	// for QA team tests
 	FCK.GetParentForm().className = (FCK.EditMode == FCK_EDITMODE_WYSIWYG ? 'wysiwyg' : 'source') + '_mode';
+
 });
+
+// check whether given page exists (API query returns pageid != 0)
+// if not -> add "new" class to simulate MW parser behaviour
+FCK.CheckInternalLink = function(title, link) {
+	var callback = {
+		success: function(o) {
+			FCK = o.argument.FCK;
+			title = o.argument.title;
+			link =  o.argument.link;
+
+			result = eval('(' + o.responseText + ')');
+			pageExists = (typeof result.query.pages[-1] == 'undefined');
+
+			FCK.log('"' + title + '" ' + (pageExists ? 'exists' : 'doesn\'t exist'));
+
+			if (link) {
+				if (pageExists) {
+					FCK.YAHOO.util.Dom.removeClass(link, 'new');
+					link.href = window.parent.wgServer + window.parent.wgArticlePath.replace(/\$1/, encodeURI(title.replace(/ /g, '_')));
+				} else {
+					FCK.YAHOO.util.Dom.addClass(link, 'new');
+					link.href = window.parent.wgServer + window.parent.wgScript + '?title=' + encodeURIComponent(title.replace(/ /g, '_')) + '&action=edit&redlink=1';
+				}
+				FCK.log('href: ' + link.href);
+			}
+		},
+		failure: function(o) {},
+		argument: {'FCK': FCK, 'link': link, 'title': title}
+	}
+	FCK.YAHOO.util.Connect.asyncRequest("POST", window.parent.wgScriptPath + '/api.php', callback, "action=query&format=json&prop=info&titles=" +   encodeURIComponent(title) );
+}
+
+// YUI reference
+FCK.YAHOO = window.parent.YAHOO;
+
+// log functionality
+FCK.log = function(msg) {
+	if (FCK.YAHOO) {
+		FCK.YAHOO.log(msg, 'info', 'Wysiwyg');
+	}
+}
 
 // macbre: setup tracker object
 FCK.Tracker = (typeof window.parent.YAHOO != 'undefined' && typeof window.parent.YAHOO.Wikia != 'undefined') ? window.parent.YAHOO.Wikia.Tracker : false;
@@ -171,3 +246,24 @@ FCK.Track = function(fakeUrl) {
 
 // track the fact of using FCK + send the name of edited page
 FCK.Track('/init/' + window.parent.wgPageName);
+
+// store editor state (current mode and data) when leaving editor
+// IE doesn't seem to support that
+if (!FCKBrowserInfo.IsIE) {
+	FCKTools.AddEventListener(window, 'beforeunload', function() {
+		var typeField = window.parent.document.getElementById('wysiwygTemporarySaveType');
+		var contentField = window.parent.document.getElementById('wysiwygTemporarySaveContent');
+		var metaField = window.parent.document.getElementById('wysiwygData');
+
+		// save editor state in hidden editor fields
+		typeField.value = FCK.EditMode;
+		contentField.value = (FCK.EditMode == FCK_EDITMODE_SOURCE) ? FCK.GetData() : FCK.EditorDocument.body.innerHTML;
+		metaField.value = FCK.YAHOO.Tools.encodeArr(FCK.wysiwygData);
+
+		FCK.log('editor state saved');
+		FCK.Track('/temporarySave/store');
+	});
+}
+else {
+	FCK.log('temporary save not supported in your browser');
+}

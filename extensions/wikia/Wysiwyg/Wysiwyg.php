@@ -9,6 +9,7 @@ $wgExtensionCredits['other'][] = array(
 $dir = dirname(__FILE__).'/';
 $wgExtensionMessagesFiles['Wysiwyg'] = $dir.'Wysiwyg.i18n.php';
 $wgAjaxExportList[] = 'Wysywig_Ajax';
+$wgEnableMWSuggest = true;
 
 $wgHooks['AlternateEdit'][] = 'Wysiwyg_AlternateEdit';
 $wgHooks['EditPage::showEditForm:initial'][] = 'Wysiwyg_Initial';
@@ -17,6 +18,24 @@ $wgHooks['getEditingPreferencesTab'][] = 'Wysiwyg_Toggle';
 $wgHooks['MagicWordwgVariableIDs'][] = 'Wysiwyg_RegisterMagicWordID';
 $wgHooks['LanguageGetMagic'][] = 'Wysiwyg_GetMagicWord';
 $wgHooks['InternalParseBeforeLinks'][] = 'Wysiwyg_RemoveMagicWord';
+$wgHooks['SkinTemplateOutputPageBeforeExec'][] = 'Wysiwyg_SetDomain';
+
+function Wysiwyg_SetDomain(&$skin, &$tpl) {
+
+	$js = <<<EOD
+<script type="text/javascript">/*<![CDATA[*/
+if(document.domain != 'localhost') {
+	var chunks = document.domain.split('.');
+	var d = chunks.pop(); // com
+	d = chunks.pop() + '.' + d; // wikia.com
+	document.domain = d;
+}
+/*]]>*/</script>
+EOD;
+
+	$tpl->data['headlinks'] .= $js;
+	return true;
+}
 
 function Wysiwyg_RegisterMagicWordID(&$magicWords) {
 	$magicWords[] = 'MAG_NOWYSIWYG';
@@ -89,13 +108,6 @@ function Wysiwyg_Initial($form) {
 	$script = <<<EOT
 <script type="text/javascript" src="$wgExtensionsPath/wikia/Wysiwyg/fckeditor/fckeditor.js?$wgStyleVersion"></script>
 <script type="text/javascript">
-if(document.domain != 'localhost') {
-	var chunks = document.domain.split('.');
-	var d = chunks.pop(); // com
-	d = chunks.pop() + '.' + d; // wikia.com
-	document.domain = d;
-}
-
 function FCKeditor_OnComplete(editorInstance) {
 	editorInstance.LinkedField.form.onsubmit = function() {
 		if(editorInstance.EditMode == FCK_EDITMODE_SOURCE) {
@@ -106,11 +118,31 @@ function FCKeditor_OnComplete(editorInstance) {
 	}
 }
 
+// start editor in source mode
+function wysiwygInitInSourceMode(src) {
+	var iFrame = document.getElementById('wpTextbox1___Frame');
+	iFrame.style.visibility = 'hidden';
+
+	var intervalId = setInterval(function() {
+		// wait for FCKeditorAPI to be fully loaded
+		if (typeof FCKeditorAPI != 'undefined') {
+			var FCK = FCKeditorAPI.GetInstance('wpTextbox1');
+			// wait for FCK to be fully loaded
+			if (FCK.Status == FCK_STATUS_COMPLETE) {
+				clearInterval(intervalId);
+				FCK.originalSwitchEditMode.apply(FCK, []);
+				FCK.WysiwygSwitchToolbars(true);
+				FCK.SetData(src);
+				iFrame.style.visibility = 'visible';
+			}
+		}
+	}, 250);
+}
+
 function initEditor() {
 	if($('wmuLink')) $('wmuLink').parentNode.style.display = 'none';
 	var edgeCasesFound = $wgWysiwygEdgeCasesFound;
 	var oFCKeditor = new FCKeditor("wpTextbox1");
-	oFCKeditor.wgStyleVersion = wgStyleVersion;
 	oFCKeditor.BasePath = "$wgExtensionsPath/wikia/Wysiwyg/fckeditor/";
 	oFCKeditor.Config["CustomConfigurationsPath"] = "$wgExtensionsPath/wikia/Wysiwyg/wysiwyg_config.js";
 	oFCKeditor.ready = true;
@@ -118,25 +150,27 @@ function initEditor() {
 	oFCKeditor.Width = document.all ? '99%' : '100%'; // IE fix
 	oFCKeditor.ReplaceTextarea();
 
-	if (edgeCasesFound) {
-		// fallback to source mode
-		var iFrame = document.getElementById('wpTextbox1___Frame');
-		iFrame.style.visibility = 'hidden';
+	// restore editor state?
+	var temporarySaveType = document.getElementById('wysiwygTemporarySaveType').value;
 
-		var intervalId = setInterval(function() {
-			// wait for FCKeditorAPI to be fully loaded
-			if (typeof FCKeditorAPI != 'undefined') {
-				var FCK = FCKeditorAPI.GetInstance('wpTextbox1');
-				// wait for FCK to be fully loaded
-				if (FCK.Status == FCK_STATUS_COMPLETE) {
-					clearInterval(intervalId);
-					FCK.originalSwitchEditMode.apply(FCK, []);
-					FCK.WysiwygSwitchToolbars(true);
-					FCK.SetData( document.getElementById('wpTextbox1').value );
-					iFrame.style.visibility = 'visible';
-				}
-			}
-		}, 250);
+	if (temporarySaveType != '') {
+		var content = document.getElementById('wysiwygTemporarySaveContent').value;
+		YAHOO.log('restoring from temporary save', 'info', 'Wysiwyg');
+		switch( parseInt(temporarySaveType) ) {
+			// wysiwyg
+			case 0:
+				document.getElementById('wpTextbox1').value = content;
+				break;
+
+			// source
+			case 1:
+				wysiwygInitInSourceMode(content);
+				break;
+		}
+	}
+
+	if (edgeCasesFound) {
+		wysiwygInitInSourceMode(document.getElementById('wpTextbox1').value);
 	}
 
 	// macbre: tracking
@@ -151,6 +185,9 @@ function initEditor() {
 		});
 		if (edgeCasesFound) {
 			YAHOO.Wikia.Tracker.trackByStr(null, 'wysiwyg/edgecase');
+		}
+		if (temporarySaveType != '') {
+			YAHOO.Wikia.Tracker.trackByStr(null, 'wysiwyg/temporarySave/restore');
 		}
 	}
 }
@@ -170,6 +207,10 @@ addOnloadHook(initEditor);
 }
 #editform {
 	background: transparent url('$wgExtensionsPath/wikia/Wysiwyg/fckeditor/editor/skins/default/images/progress_transparent.gif') no-repeat 50% 35%;
+}
+#editform.source_mode,
+#editform.wysiwyg_mode {
+	background: none;
 }
 /*]]>*/</style>
 EOT;
@@ -205,6 +246,8 @@ function Wysiwyg_AlternateEdit($form) {
 function Wysiwyg_BeforeDisplayingTextbox($a, $b) {
 	global $wgOut, $wgWysiwygData;
 	$wgOut->addHTML('<input type="hidden" id="wysiwygData" name="wysiwygData" value="'.htmlspecialchars($wgWysiwygData).'" />');
+	$wgOut->addHTML('<input type="hidden" id="wysiwygTemporarySaveType" value="" />');
+	$wgOut->addHTML('<input type="hidden" id="wysiwygTemporarySaveContent" value="" />');
 	return true;
 }
 
@@ -265,7 +308,7 @@ function Wysiwyg_CheckEdgeCases($text) {
 function Wysiwyg_WikiTextToHtml($wikitext, $articleId = -1, $encode = false) {
 	global $IP, $wgWysiwygMetaData, $wgWysiwygParserEnabled, $wgWysiwygParserTildeEnabled, $wgTitle, $wgUser, $wgWysiwygMarkers;
 
-	require("$IP/extensions/wikia/Wysiwyg/WysiwygParser.php");
+	require_once("$IP/extensions/wikia/Wysiwyg/WysiwygParser.php");
 
 	wfDebug("Wysiwyg_WikiTextToHtml wikitext: {$wikitext}\n");
 
@@ -283,12 +326,14 @@ function Wysiwyg_WikiTextToHtml($wikitext, $articleId = -1, $encode = false) {
 	$html = $wysiwygParser->parse($wikitext, $title, $options)->getText();
 	$wgWysiwygParserEnabled = false;
 
-	// replace whitespaces after opening (<li>) and before closing tags (</p>, </h2>, </li>)
+	// replace whitespaces after opening (<li>) and before closing tags (</p>, </h2>, </li>, </dt>, </dd>)
 	$replacements = array(
 		"\n</p>"  => '</p>',
 		' </h'    => '</h',
 		'<li> '   => '<li>',
 		"\n</li>" => '</li>',
+		"\n</dt>" => '</dt>',
+		"\n</dd>" => '</dd>',
 	);
 	$html = strtr($html, $replacements);
 
@@ -303,7 +348,7 @@ function Wysiwyg_WikiTextToHtml($wikitext, $articleId = -1, $encode = false) {
 }
 
 function Wysiwyg_HtmlToWikiText($html, $wysiwygData, $decode = false) {
-	require(dirname(__FILE__).'/ReverseParser.php');
+	require_once(dirname(__FILE__).'/ReverseParser.php');
 	$reverseParser = new ReverseParser();
 	return $reverseParser->parse($html, $decode ? Wikia::json_decode($wysiwygData, true) : $wysiwygData);
 }
@@ -340,11 +385,15 @@ function Wysiwyg_SetRefId($type, $params, $addMarker = true, $returnId = false) 
 			break;
 
 		case 'internal link: media':
-		case 'image':
 		case 'category':
 			$data['href'] = ($params['noforce'] ? '' : ':') . $params['link'];
 			$data['description'] = $params['wasblank'] ? '' : $params['text'];
 			$result = "[[" . $data['href'] . ($params['wasblank'] ? '' : "|".$params['text']) . "]]";
+			break;
+
+		case 'image':
+			$data['href'] = ($params['noforce'] ? '' : ':') . $params['link'];
+			$data['description'] = $params['wasblank'] ? '' : $params['text'];
 			break;
 
 		case 'external link: raw image':

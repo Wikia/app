@@ -200,18 +200,8 @@ var Throbber = function()
 	return {
 		Show : function( waitMilliseconds )
 		{
-			// Center the throbber.
-			var throbberParent = $( 'throbberBlock');
-			var frm = $( 'contents' ) ;
-			var frmCoords = FCKTools.GetDocumentPosition( window, frm ) ;
-			var x = frmCoords.x + ( frm.offsetWidth - throbberParent.offsetWidth ) / 2 ;
-			var y = frmCoords.y + ( frm.offsetHeight - throbberParent.offsetHeight ) / 2 ;
-			throbberParent.style.left = parseInt( x, 10 ) + 'px' ;
-			throbberParent.style.top = parseInt( y, 10 ) + 10 + 'px' ;
-
-			// Show it.
-			throbberParent.innerHTML = '&nbsp;';
-			throbberParent.style.visibility = '';
+			// show throbber
+			$( 'contents' ).className += ' throbber' ;
 
 			// Hide tabs and buttons:
 			$( 'Tabs' ).style.visibility = 'hidden' ;
@@ -220,7 +210,7 @@ var Throbber = function()
 
 		Hide : function()
 		{
-			$( 'throbberBlock' ).style.visibility = 'hidden' ;
+			$( 'contents' ).className = 'contents' ;
 
 			// Show tabs and buttons:
 			$( 'Tabs' ).style.visibility = '' ;
