@@ -712,7 +712,11 @@ class Linker {
 		if ( !$thumb ) {
 			$txt = '';
 			if (!empty($wgWysiwygParserEnabled) && isset($fp['refid'])) {
-				$txt = "\x1{$fp['refid']}\x1";
+				if ($fp['align'] == '') {
+					$txt = "\x1{$fp['refid']}\x1";
+				} else {
+					$refId = " refid=\"{$fp['refid']}\"";
+				}
 			}
 			$s = $this->makeBrokenImageLinkObj( $title, $txt, '', '', '', $time==true );
 		} else {
