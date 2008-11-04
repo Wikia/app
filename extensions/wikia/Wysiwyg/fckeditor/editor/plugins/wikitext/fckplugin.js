@@ -28,7 +28,7 @@ FCKTildesCommand.prototype = {
 	}
 } ;
 FCKCommands.RegisterCommand('Tildes', new FCKTildesCommand());
-var oTildesItem = new FCKToolbarButton( 'Tildes', 'Tildes' ) ;
+var oTildesItem = new FCKToolbarButton( 'Tildes', 'Your signature with timestamp' ) ;
 oTildesItem.IconPath = FCKConfig.PluginsPath + 'wikitext/sig.gif' ;
 FCKToolbarItems.RegisterItem( 'Tildes', oTildesItem );
 
