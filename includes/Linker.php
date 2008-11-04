@@ -711,7 +711,11 @@ class Linker {
 
 		$refId = '';
 		if ( !$thumb ) {
-			$s = $this->makeBrokenImageLinkObj( $title, '', '', '', '', $time==true );
+			$txt = '';
+			if (!empty($wgWysiwygParserEnabled) && isset($fp['refid'])) {
+				$txt = "\x1{$fp['refid']}\x1";
+			}
+			$s = $this->makeBrokenImageLinkObj( $title, $txt, '', '', '', $time==true );
 		} else {
 			$attrArr = array(
 				'desc-link' => true,
