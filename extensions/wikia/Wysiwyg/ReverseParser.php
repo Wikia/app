@@ -333,7 +333,7 @@ class ReverseParser {
 						$out = "{|{$attStr}\n{$textContent}|}\n";
 
 						// there's something before the table or this is nested table - add line break
-						if ($node->previousSibling || ($node->parentNode && $this->isTableCell($node->parentNode))) {
+						if ($node->previousSibling || ($node->parentNode && $this->isBlockElement($node->parentNode))) {
 							$out = "\n{$out}";
 						}
 						break;
@@ -373,6 +373,12 @@ class ReverseParser {
 							$attStr = ltrim("{$attStr}|");
 						}
 						$textContent = rtrim($textContent);
+
+						// |- |+ |} are reserved wikimarkup syntax inside table - just add space before
+						if ($textContent!='' && in_array($textContent{0}, array('-', '+', '}'))) {
+							$textContent = " {$textContent}";
+						}
+
 						$out = "|{$attStr}{$textContent}\n";
 						break;
 
@@ -470,7 +476,7 @@ class ReverseParser {
 							// node with child nodes
 							// add \n only when node is HTML block element
 							if ($this->isInlineElement($node)) {
-								$textContent = trim($textContent);
+								$textContent = $textContent;
 								$trial = '';
 								$prefix = '';
 							}
@@ -846,6 +852,13 @@ class ReverseParser {
 	 */
 	private function isInlineElement($node) {
 		return in_array($node->nodeName, array('u', 'b', 'strong', 'i', 'em', 'strike', 's', 'code', 'a', 'p', 'div'));
+	}
+
+	/**
+	 * Return true if given node is block HTML element
+	 */
+	private function isBlockElement($node) {
+		return in_array($node->nodeName, array('p', 'div', 'tr', 'td' ,'th', 'table'));
 	}
 
 	/**
