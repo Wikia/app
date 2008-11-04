@@ -548,8 +548,9 @@ class MessageCache {
 			}
 			$message = $this->getMsgFromNamespace( $title, $langcode );
 
-			wfRunHooks( 'MessagesGetFromNamespaceAfter', array( $title, $langcode, &$message ) );
 		}
+
+		wfRunHooks( 'MessagesGetFromNamespaceAfter', array( $lckey, $langcode, &$message ) );
 
 		# Try the extension array
 		if ( $message === false && isset( $this->mExtensionMessages[$langcode][$lckey] ) ) {
