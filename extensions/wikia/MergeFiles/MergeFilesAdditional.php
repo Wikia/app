@@ -58,7 +58,6 @@ $MF['quartz_js']['source'] = array(
 	'../extensions/wikia/AjaxLogin/AjaxLogin.js',
 	'../extensions/wikia/ProblemReports/js/ProblemReports-loader.js',
 	'../extensions/wikia/HelperPanel/HelperPanel.js',
-	'../extensions/wikia/onejstorule.js',
 );
 $MF['quartz_js']['source'] = array_merge($MF['quartz_js']['source'], $widgetsAssets['js']);
 
@@ -85,7 +84,6 @@ $MF['monobook_js']['source'] = array(
 	'monobook/tracker.js',
 	'common/tracker.js',
 	'../extensions/wikia/ProblemReports/js/ProblemReports-loader.js',
-	'../extensions/wikia/onejstorule.js',
 );
 
 $MF['monobook_css']['source'] = array(
@@ -117,7 +115,6 @@ $MF['monaco_loggedin_js']['source'] = array(
 	'common/widgets/js/widgetsConfig.js',
 	'common/widgets/js/widgetsFramework.js',
 	'../extensions/wikia/ProblemReports/js/ProblemReports-loader.js',
-	'../extensions/wikia/onejstorule.js',
 	'../extensions/wikia/FAST/FAST.js',
 	'../extensions/wikia/TieDivLibrary/TieDivLibrary.js',
 );
@@ -147,7 +144,6 @@ $MF['monaco_non_loggedin_js']['source'] = array(
 	'common/widgets/js/widgetsFramework.js',
 	'../extensions/wikia/AjaxLogin/AjaxLogin.js',
 	'../extensions/wikia/ProblemReports/js/ProblemReports-loader.js',
-	'../extensions/wikia/onejstorule.js',
 	'../extensions/wikia/FAST/FAST.js',
 	'../extensions/wikia/Userengagement/Userengagement.js',
 	'../extensions/wikia/TieDivLibrary/TieDivLibrary.js',
