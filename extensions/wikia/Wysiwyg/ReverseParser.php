@@ -423,12 +423,11 @@ class ReverseParser {
 						break;
 
 					// images
-					/*
-					case 'img':
-					case 'div': // [[Image:foo.jpg|thumb]]
+					case 'table':
+					case 'div':
 						$out = $this->handleImage($node, $textContent);
 						break;
-					*/
+
 					// handle more complicated tags
 					case 'a':
 						$out = $this->handleLink($node, $textContent);
@@ -708,6 +707,9 @@ class ReverseParser {
 		$data = $this->fckData[$refid];
 
 		switch($data['type']) {
+			case 'image';
+				return $this->handleImage($node, $content);
+			
 			case 'internal link':
 			case 'internal link: file':
 			case 'internal link: special page':
@@ -787,6 +789,30 @@ class ReverseParser {
 		}
 
 	}
+
+	/**
+	 * Returns wikimarkup for image tags
+	 */
+	private function handleImage($node, $content) {
+
+		$refid = $node->getAttribute('refid');
+
+		if (!is_numeric($refid) || !isset($this->fckData[$refid])) {
+			return '';
+		}
+
+		$data = $this->fckData[$refid];
+
+		switch($data['type']) {
+			case 'image':
+				$prefix = ($node->nodeName == 'div') ? "\n\n" : '';
+				$out = $prefix . '[[' . $data['href'] . ($data['description'] != '' ? "|{$data['description']}]]" : ']]');
+				return $out;
+
+			default:
+				return '';
+		}
+	}	
 
 	/**
 	 * Returns HTML string containing node arguments
