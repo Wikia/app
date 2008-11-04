@@ -5,7 +5,7 @@ $wgHooks['BeforePageDisplay'][] = 'wfSocialToolsLoadJs';
 
 function wfSocialToolsLoadJs() {
 	global $wgOut, $wgStyleVersion, $wgExtensionsPath;
-	$wgOut->addScript('<script language="javascript" src="'.$wgExtensionsPath.'/extensions/wikia/onejstorule.js?' . $wgStyleVersion . '"></script>');
+	$wgOut->addScript('<script language="javascript" src="'.$wgExtensionsPath.'/wikia/onejstorule.js?' . $wgStyleVersion . '"></script>');
 	return true;
 }
 
