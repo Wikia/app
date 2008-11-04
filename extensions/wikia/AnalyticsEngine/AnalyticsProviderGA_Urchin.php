@@ -23,13 +23,9 @@ class AnalyticsProviderGA_Urchin implements iAnalyticsProvider {
 				return '<!-- Missing dbname for dbname tracking event -->';
 			}
 			$db = "/" . $eventDetails[0];
-			return '<script type="text/javascript">_uff=0;_uacct="UA-288915-2";urchinTracker("' .addslashes($db).'");</script>"';
+			return '<script type="text/javascript">_uff=0;_uacct="UA-288915-2";urchinTracker("' .addslashes($db).'");</script>';
 		  case 'main_page':
-			return '<script type="text/javascript">
-			if ((typeof wgIsMainpage != "undefined") && (wgIsMainpage)) {
-				_uff=0;_uacct="UA-288915-6";urchinTracker();
-			}
-			</script>';
+			return '<script type="text/javascript">if ((typeof wgIsMainpage != "undefined") && (wgIsMainpage)) { _uff=0;_uacct="UA-288915-6";urchinTracker(); }</script>';
 		  case 'onewiki':
 			return $this->onewiki($eventDetails[0]);
                   default: return '<!-- Unsupported event for ' . __CLASS__ . ' -->';
@@ -56,7 +52,7 @@ class AnalyticsProviderGA_Urchin implements iAnalyticsProvider {
 		    "3236"=>"UA-2100028-5", "193"=>"UA-1946686-3", "2165"=>"UA-1946686-2");
 
 		if (empty($cities[$city_id])){
-			return '<!-- No tracking for this city -->';
+			return '<!-- No tracking for this wiki -->';
 		} else {
 			return '<script type="text/javascript">_uff=0;_uacct="' . addslashes($cities[$city_id]) . '";urchinTracker();</script>';
 		}
