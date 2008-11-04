@@ -14,7 +14,7 @@ define( "NS_BLOG_LISTING", 502 );
 define( "NS_BLOG_LISTING_TALK", 503 );
 
 $wgExtraNamespaces[ NS_BLOG_ARTICLE ] = "User_blog";
-$wgExtraNamespaces[ NS_BLOG_ARTICLE_TALK ]    = "User_blog_comment";
+$wgExtraNamespaces[ NS_BLOG_ARTICLE_TALK ]    = "User_blog_talk";
 $wgExtraNamespaces[ NS_BLOG_LISTING ] = "Blog";
 $wgExtraNamespaces[ NS_BLOG_LISTING_TALK ] = "Blog_talk";
 
