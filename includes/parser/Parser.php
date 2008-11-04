@@ -1724,11 +1724,12 @@ class Parser
 						# actually, this will parse them in any other parameters, too,
 						# but it might be hard to fix that, and it doesn't matter ATM
 						if (!empty($wgWysiwygParserEnabled)) {
-//							$text = $this->replaceExternalLinks($text);
-//							$text = $this->replaceInternalLinks($text);	//this couse refId placeholder is added to title and alt attribute
-							$FCKtmp = Wysiwyg_SetRefId('image', array('text' => &$text, 'link' => $link, 'wasblank' => $wasblank, 'noforce' => $noforce));
+							Wysiwyg_SetRefId('image', array('text' => &$text, 'link' => $link, 'wasblank' => $wasblank, 'noforce' => $noforce));
+							$wgWysiwygParserEnabled = false;
+							$text = $this->replaceExternalLinks($text);
+							$text = $this->replaceInternalLinks($text);
+							$wgWysiwygParserEnabled = true;
 							$s .= $prefix . $this->armorLinks( $this->makeImage( $nt, $text ) ) . $trail;
-//							$s .= $prefix . $this->armorLinks($FCKtmp) . $trail;
 						} else {	//original action
 							$text = $this->replaceExternalLinks($text);
 							$text = $this->replaceInternalLinks($text);
