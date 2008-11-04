@@ -160,7 +160,6 @@ class AdProviderGAM implements iAdProvider {
 		// Bucket testing of different params based on channel
 		switch ($channel){
 		  case '1089383293': break; //control
-                  case '7102419657': break; // Why is this here?
 		  case '3156555836': break; // Testing white backgrounds 
 		  case '9000659297':
 			if(!empty($_GET['search'])){
@@ -175,7 +174,7 @@ class AdProviderGAM implements iAdProvider {
 			$out .= 'GA_googleAddAdSensePageAttr("google_page_url", "' . addslashes(AdProviderGoogle::getPageUrl()) . '");' . "\n";
 			break;
 
-		  case '1561126031':
+		  case '7102419657':
 			$out .= 'GA_googleAddAdSensePageAttr("google_language", wgUserLanguage);' . "\n";
 			break;
 
