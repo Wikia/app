@@ -459,6 +459,7 @@ function google_urchin() {
 	$out = AnalyticsEngine::track('GA_Urchin', AnalyticsEngine::EVENT_PAGEVIEW);
 	global $wgCityId;
 	$out.= AnalyticsEngine::track('GA_Urchin', 'onewiki', array($wgCityId));
+	$out.= AnalyticsEngine::track('GA_Urchin', 'hub', AdEngine::getCachedCategory());
 	$out.= AnalyticsEngine::track('QuantServe', AnalyticsEngine::EVENT_PAGEVIEW);
 	return $out;
 }

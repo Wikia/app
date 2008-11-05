@@ -836,7 +836,9 @@ if( !empty($wgNotificationEnableSend) ) {
 echo AnalyticsEngine::track('GA_Urchin', AnalyticsEngine::EVENT_PAGEVIEW);
 global $wgCityId;
 echo AnalyticsEngine::track('GA_Urchin', 'onewiki', array($wgCityId));
+echo AnalyticsEngine::track('GA_Urchin', 'hub', AdEngine::getCachedCategory());
 echo AnalyticsEngine::track('QuantServe', AnalyticsEngine::EVENT_PAGEVIEW);
+
 ?>
 <!-- analytics (end) -->
 

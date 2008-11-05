@@ -18,14 +18,12 @@ class AnalyticsProviderGA_Urchin implements iAnalyticsProvider {
 		switch ($event){
 		  case AnalyticsEngine::EVENT_PAGEVIEW:
 			return '<script type="text/javascript">_uff=0;_uacct="UA-288915-1";urchinTracker();</script>';
-		  case 'dbname':
-			if (empty($eventDetails[0])){
-				return '<!-- Missing dbname for dbname tracking event -->';
+		  case 'hub':
+			if (empty($eventDetails['name'])){
+				return '<!-- Missing category name  for hub tracking event -->';
 			}
-			$db = "/" . $eventDetails[0];
-			return '<script type="text/javascript">_uff=0;_uacct="UA-288915-2";urchinTracker("' .addslashes($db).'");</script>';
-		  case 'main_page':
-			return '<script type="text/javascript">if ((typeof wgIsMainpage != "undefined") && (wgIsMainpage)) { _uff=0;_uacct="UA-288915-6";urchinTracker(); }</script>';
+			$hub = "/" . str_replace(' ', '_', $eventDetails['name']);
+			return '<script type="text/javascript">_uff=0;_uacct="UA-288915-2";urchinTracker("' .addslashes($hub).'");</script>';
 		  case 'onewiki':
 			return $this->onewiki($eventDetails[0]);
                   default: return '<!-- Unsupported event for ' . __CLASS__ . ' -->';

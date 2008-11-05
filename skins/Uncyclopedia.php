@@ -330,6 +330,7 @@ class UncyclopediaTemplate extends QuickTemplate {
 -->
 <?php endif;
 echo AnalyticsEngine::track('GA_Urchin', AnalyticsEngine::EVENT_PAGEVIEW);
+echo AnalyticsEngine::track('GA_Urchin', 'hub', AdEngine::getCachedCategory());
 echo AnalyticsEngine::track('QuantServe', AnalyticsEngine::EVENT_PAGEVIEW);
 ?>
 </div><!-- end of globalWrapper -->
