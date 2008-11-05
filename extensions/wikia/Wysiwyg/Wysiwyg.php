@@ -220,7 +220,6 @@ addOnloadHook(initEditor);
 }
 #editform #toolbar {
 	position: relative;
-	top: 25px;
 	visibility: hidden;
 }
 #wpTextbox1 {
@@ -228,6 +227,7 @@ addOnloadHook(initEditor);
 }
 #editform {
 	background: transparent url('$wgExtensionsPath/wikia/Wysiwyg/fckeditor/editor/skins/default/images/progress_transparent.gif') no-repeat 50% 35%;
+	clear: both;
 }
 #editform.source_mode,
 #editform.wysiwyg_mode {
