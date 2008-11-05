@@ -152,6 +152,10 @@ class ReverseParser {
 			$textContent = ($childOut != '') ? $childOut : $this->cleanupTextContent($node);
 
 			if(empty($washtml)) {
+				
+				$refid = $node->getAttribute('refid');
+				$hasRefId = (is_numeric($refid) || isset($this->fckData[$refid]));
+
 				switch($node->nodeName) {
 					case 'body':
 						$out = $textContent;
@@ -327,14 +331,20 @@ class ReverseParser {
 						wfDebug("ReverseParser: $out\n");
 						break;
 					// tables
-					// @see http://en.wikipedia.org/wiki/Help:Table
 					case 'table':
-						$attStr = ltrim($this->getAttributesStr($node));
-						$out = "{|{$attStr}\n{$textContent}|}\n";
+						if (!$hasRefId) {
+							// @see http://en.wikipedia.org/wiki/Help:Table
+							$attStr = ltrim($this->getAttributesStr($node));
+							$out = "{|{$attStr}\n{$textContent}|}\n";
 
-						// there's something before the table or this is nested table - add line break
-						if ($node->previousSibling || ($node->parentNode && $this->isBlockElement($node->parentNode))) {
-							$out = "\n{$out}";
+							// there's something before the table or this is nested table - add line break
+							if ($node->previousSibling || ($node->parentNode && $this->isBlockElement($node->parentNode))) {
+								$out = "\n{$out}";
+							}
+						}
+						else {
+							// thumbnail generation error - handle as an image
+							$out = $this->handleImage($node, $textContent);
 						}
 						break;
 
@@ -429,9 +439,10 @@ class ReverseParser {
 						break;
 
 					// images
-					case 'table':
 					case 'div':
-						$out = $this->handleImage($node, $textContent);
+						if ($hasRefId) {
+							$out = $this->handleImage($node, $textContent);
+						}
 						break;
 
 					// handle more complicated tags
@@ -803,13 +814,8 @@ class ReverseParser {
 	 */
 	private function handleImage($node, $content) {
 
-		$refid = $node->getAttribute('refid');
-
-		if (!is_numeric($refid) || !isset($this->fckData[$refid])) {
-			return '';
-		}
-
-		$data = $this->fckData[$refid];
+		// check is perfomed earlier
+		$data = $this->fckData[$node->getAttribute('refid')  ];
 
 		switch($data['type']) {
 			case 'image':
