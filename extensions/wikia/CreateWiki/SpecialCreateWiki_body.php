@@ -627,11 +627,6 @@ class CreateWikiForm extends SpecialPage {
 			"wgEnableNewParser"     => true
 		);
 
-		#--- change default skin to monobook when RTL wiki
-		if (in_array($aWiki["language"], array( "he", "ar", "fa", "ur", "yi", "ku", "dv", "ps", "ks", "arc", "ha"))) {
-			$aLocalSettingsVars["wgDefaultSkin"] = "monobook";
-		}
-
 		#--- insert all wiki variables into city_variables table
 		foreach ($aLocalSettingsVars as $tVariable => $tValue) {
 			// first, get id of variable
