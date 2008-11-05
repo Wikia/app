@@ -90,6 +90,11 @@ class WysiwygInterface extends SpecialPage {
 				$diff = DifferenceEngine::addHeader( $diffBody, "<strong>Wikitext</strong>", "<strong>Parsed from HTML</strong>" );
 			}
 
+			// parse HTML to wikiDOM
+			require_once(dirname(__FILE__).'/../Wysiwyg/ReverseParserDOM.php');
+			$reverseParserDOM = new ReverseParserDOM();
+			$wikidom = $reverseParserDOM->preparse($html);
+
 			// output
 			// 1. wikimarkup
 			// 1a was this Wysiwigable?
@@ -99,6 +104,9 @@ class WysiwygInterface extends SpecialPage {
 			// 5. parsed old and new wikimarkup
 			$wgOut->addHTML('<h3>Wikimarkup</h3>');
 			$wgOut->addHTML('<pre>' . htmlspecialchars($wikitext) . '</pre>');
+
+			$wgOut->addHTML('<h3>Wiki DOM tree</h3>');
+			$wgOut->addHTML('<pre>' . htmlspecialchars($wikidom) . '</pre>');
 
 			$wgOut->addHTML('<h3>HTML</h3>');
 			$wgOut->addHTML($out);
