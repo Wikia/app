@@ -22,7 +22,7 @@ define ('REGEX_PARSE_WHITELIST', '#%s\s*?=\s*?([\'"]?)((?(1)[^\'>"]*|[^\'>" ]*))
 define ('CLASS_PARSE_WHITELIST', '/class\s*?=\s*?"%s\s*?(%s)"/');
 
 // Register hooks
-$wgHooks['OutputPageBeforeHTML'][] = 'wfParserWhiteList' ;
+$wgHooks['ParserAfterTidy'][] = 'wfParserWhiteList' ;
 function wfParserWhiteList ( &$out, &$text) { 
 	$text = wfWhiteListRemoveNoFollowLinks($text);
 	return true;
