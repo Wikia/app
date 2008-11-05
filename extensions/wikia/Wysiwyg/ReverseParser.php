@@ -609,8 +609,10 @@ class ReverseParser {
 		// 6. wrap [[foo]] using <nowiki>
 		$text = preg_replace("/(\[{2,})([^]]+)(\]{2,})/", '<nowiki>$1$2$3</nowiki>', $text);
 
-		// 7. wrap [<url protocol>...] using <nowiki>
-		$text = preg_replace("/\[(?={$this->protocols})([^\]]+)\]/", '<nowiki>[$1]</nowiki>', $text);
+		// 7. wrap [<url protocol>...] using <nowiki> (don't apply to link descriptions)
+		if ($node->parentNode->nodeName != 'a') {
+			$text = preg_replace("/\[(?={$this->protocols})([^\]]+)\]/", '<nowiki>[$1]</nowiki>', $text);
+		}
 
 		wfProfileOut(__METHOD__);
 		return $text;
