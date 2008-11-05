@@ -1706,11 +1706,10 @@ wfProfileOut( __METHOD__ . '-body');
 <?php
 // Note, these were placed above the Ad calls intentionally because ad code screws with analytics
 echo AnalyticsEngine::track('GA_Urchin', AnalyticsEngine::EVENT_PAGEVIEW);
-echo AnalyticsEngine::track('QuantServe', AnalyticsEngine::EVENT_PAGEVIEW);
-global $wgDBname, $wgCityId;
-echo AnalyticsEngine::track('GA_Urchin', 'dbname', array($wgDBname));
-echo AnalyticsEngine::track('GA_Urchin', 'main_page', array($wgDBname));
+echo AnalyticsEngine::track('GA_Urchin', 'hub', AdEngine::getCachedCategory());
+global $wgCityId;
 echo AnalyticsEngine::track('GA_Urchin', 'onewiki', array($wgCityId));
+echo AnalyticsEngine::track('QuantServe', AnalyticsEngine::EVENT_PAGEVIEW);
 ?>
 
 <!-- End Analytics -->
