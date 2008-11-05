@@ -10,11 +10,7 @@
  */
 class ReverseParser {
 
-	// HTML dom
-	private $htmlDOM;
-
-	// wikimarkup dom
-	private $wikiDOM;
+	private $dom;
 
 	// FCK meta data
 	private $fckData = array();
@@ -29,7 +25,7 @@ class ReverseParser {
 	private $protocols;
 
 	function __construct() {
-		$this->htmlDOM = new DOMdocument();
+		$this->dom = new DOMdocument();
 		$this->protocols = wfUrlProtocols();
 	}
 
@@ -66,24 +62,10 @@ class ReverseParser {
 			wfDebug("ReverseParser HTML: {$html}\n");
 
 			wfSuppressWarnings();
-			if($this->htmlDOM->loadHTML($html)) {
-
-				// create DOM for wikimarkup
-				$this->wikiDOM = new DOMdocument();
-				$this->wikiDOM->formatOutput = true;
-
-				// create root node
-				$rootNode = $this->wikiDOM->createElement('wikimarkup');
-				$this->wikiDOM->appendChild($rootNode);
-
-				$body = $this->htmlDOM->getElementsByTagName('body')->item(0);
-				wfDebug("ReverseParser HTML from DOM: ".$this->htmlDOM->saveHTML()."\n");
-
-				// recursively parse HTML DOM nodes
-				$out = $this->parseNode($body, $rootNode);
-
-				// print out wikiDOM structure
-				wfDebug("ReverseParser DOM for wikimarkup: ".$this->wikiDOM->saveXML()."\n");
+			if($this->dom->loadHTML($html)) {
+				$body = $this->dom->getElementsByTagName('body')->item(0);
+				wfDebug("ReverseParser HTML from DOM: ".$this->dom->saveHTML()."\n");
+				$out = $this->parseNode($body);
 			}
 			wfRestoreWarnings();
 
@@ -103,7 +85,7 @@ class ReverseParser {
 		return $out;
 	}
 
-	private function parseNode($node, &$wikiNode, $level = 0) {
+	private function parseNode($node, $level = 0) {
 		wfProfileIn(__METHOD__);
 
 		$childOut = '';
@@ -142,15 +124,7 @@ class ReverseParser {
 			}
 
 			for($i = 0; $i < $nodes->length; $i++) {
-				$newWikiNode = $this->wikiDOM->createElement('node');
-				$wikiNode->appendChild($newWikiNode);
-
-				$out = $this->parseNode($nodes->item($i), $newWikiNode, $level+1);
-				$childOut .= $out;
-
-				if ($out!='') {
-					$newWikiNode->setAttribute('output', $out);
-				}
+				$childOut .= $this->parseNode($nodes->item($i), $level+1);
 			}
 
 			// handle lists
