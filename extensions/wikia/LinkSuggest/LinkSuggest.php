@@ -80,7 +80,7 @@ function getLinkSuggest() {
 		if(count($results) < 10) {
 			$statement = (count($pageIds) > 0) ? ' AND page_id not IN('.implode(',', $pageIds).') ' : '';
 			$sql = "SELECT /* LinkSuggest query 2 */ page_id, page_title, page_namespace FROM `page` WHERE lower(page_title) LIKE '{$query}%' AND page_is_redirect=0 AND page_namespace = {$namespace} {$statement} ORDER BY page_title ASC LIMIT ".(10 - count($results));
-			wfDebugLog( 'linksuggest', "Query1: {$sql}"  );
+			wfDebugLog( 'linksuggest', "Query2: {$sql}"  );
 			$res = $db->query($sql);
 			while($row = $db->fetchObject($res)) {
 				$pageIds[] = $row->page_id;
@@ -94,7 +94,7 @@ function getLinkSuggest() {
 		if(count($results) < 10) {
 			$statement = (count($pageIds) > 0) ? ' AND page_id not IN('.implode(',', $pageIds).') ' : '';
 			$sql = "SELECT /* LinkSuggest query 3 */ page_id, page_title, page_namespace FROM page, searchindex WHERE page_id = si_page AND page_namespace = {$namespace} AND page_is_redirect=0 AND match(si_title) against ('".str_replace('_', ' ', $query)."*') {$statement} LIMIT ".(10 - count($results));
-			wfDebugLog( 'linksuggest', "Query1: {$sql}"  );
+			wfDebugLog( 'linksuggest', "Query3: {$sql}"  );
 			$res = $db->query($sql);
 			while($row = $db->fetchObject($res)) {
 				$pageIds[] = $row->page_id;
