@@ -81,7 +81,7 @@ function Wysywig_Ajax($type, $input = false, $wysiwygData = false, $articleId = 
 }
 
 function Wysiwyg_Initial($form) {
-	global $wgUser, $wgOut, $IP, $wgExtensionsPath, $wgStyleVersion, $wgHooks, $wgWysiwygEdgeCasesFound;
+	global $wgUser, $wgOut, $wgRequest, $IP, $wgExtensionsPath, $wgStyleVersion, $wgHooks, $wgWysiwygEdgeCasesFound;
 
 	// check user preferences option
 	if($wgUser->getOption('disablewysiwyg') == true) {
@@ -100,10 +100,8 @@ function Wysiwyg_Initial($form) {
 		return true;
 	}
 
-	// initialize FCK in source mode for articles in which edge case occured
-	$wgWysiwygEdgeCasesFound = Wysiwyg_CheckEdgeCases($form->textbox1) != '' ? 1 : 0;
-
-	//if ($edgeCasesFound) return true;
+	// initialize FCK in source mode for articles in which edge case occured / user adds fckmode=source to edit page URL
+	$wgWysiwygEdgeCasesFound = (Wysiwyg_CheckEdgeCases($form->textbox1) != '' || $wgRequest->getVal('fckmode', 'wysiwyg') == 'source') ? 1 : 0;
 
 	$script = <<<EOT
 <script type="text/javascript" src="$wgExtensionsPath/wikia/Wysiwyg/fckeditor/fckeditor.js?$wgStyleVersion"></script>
@@ -122,6 +120,8 @@ function FCKeditor_OnComplete(editorInstance) {
 function wysiwygInitInSourceMode(src) {
 	var iFrame = document.getElementById('wpTextbox1___Frame');
 	iFrame.style.visibility = 'hidden';
+
+	YAHOO.log('starting in source mode...');
 
 	var intervalId = setInterval(function() {
 		// wait for FCKeditorAPI to be fully loaded
