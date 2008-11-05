@@ -38,18 +38,13 @@ function wfUnserializeHandler( $errno, $errstr ) {
 class WikiFactoryLoader {
 
 	public $mServerName, $mWikiID, $mCityHost, $mCityID, $mOldServerName;
+	public $mAlternativeDomainUsed;
 	public $mDomain, $mVariables, $mIsWikiaActive, $mAlwaysFromDB;
 	public $mNoRedirect, $mTimestamp, $mAdCategory;
 	public $mExpireDomainCacheTimeout = 86400; #--- 24 hours
 	public $mExpireValuesCacheTimeout = 86400; #--- 24 hours
 
-	public $mDevelDomains = array();
-
-	public static $mDebug;
-
-	private $mDBhandler;
-	private $mDBname;
-
+	private $mDebug, $mDBhandler, $mDBname;
 
 	/**
 	 * __construct
@@ -57,7 +52,7 @@ class WikiFactoryLoader {
 	 * discover which wikia we handle
 	 *
 	 * @access public
-	 * @author Krzysztof Krzyżaniak <eloy@wikia.com>
+	 * @author Krzysztof Krzyżaniak <eloy@wikia-inc.com>
 	 *
 	 * @param integer $id default null	explicite set wiki id
 	 * @param string $server_name default null	explicite set server name
@@ -78,25 +73,33 @@ class WikiFactoryLoader {
 				: $server_name;
 		}
 		elseif( !empty($_SERVER['SERVER_NAME'])) {
+			/**
+			 * normal http request
+			 */
 			$this->mServerName = strtolower( $_SERVER['SERVER_NAME'] );
 			$this->mCityID = null;
 		}
-		elseif( !empty($_ENV['SERVER_ID']) ) { #--- interactive/cmdline
+		elseif( !empty($_ENV['SERVER_ID']) ) {
+			/**
+			 * interactive/cmdline
+			 */
 			$this->mCityID = $_ENV['SERVER_ID'];
 			$this->mServerName = null;
 		}
-		else { #--- hardcoded exit, nothing can be done at this point
+		else {
+			/**
+			 * hardcoded exit, nothing can be done at this point
+			 */
 			echo "Cannot tell which wiki it is (neither SERVER_NAME nor SERVER_ID is defined)\n";
 			exit(1);
 		}
 
-		#--- turn on/off error_log
-		self::$mDebug = 0;
-
 		/**
 		 * initalizations
 		 */
+		$this->mDebug = false;
 		$this->mOldServerName = false;
+		$this->mAlternativeDomainUsed = false;
 		$this->mDBname = "wikicities";
 		$this->mDomain = array();
 		$this->mVariables = array();
@@ -114,7 +117,7 @@ class WikiFactoryLoader {
 				? $wgDevelDomains : array();
 
 			$wgWikiFactoryDomains = array_merge( $wgDevelDomains, $wgWikiFactoryDomains );
-			self::$mDebug = 1;
+			$this->mDebug = true;
 			$this->mAlwaysFromDB = 1;
 		}
 
@@ -137,9 +140,10 @@ class WikiFactoryLoader {
 				 */
 				$name = preg_replace( "/^www\./", "", $this->mServerName );
 				$pattern = "/{$domain}$/";
-				if( preg_match( $pattern, $name ) ) {
+				if( $domain !== "wikia.com" && preg_match( $pattern, $name ) ) {
 					$this->mOldServerName = $this->mServerName;
 					$this->mServerName = str_replace( $domain, "wikia.com", $name );
+					$this->mAlternativeDomainUsed = true;
 					break;
 				}
 			}
@@ -185,7 +189,7 @@ class WikiFactoryLoader {
 		}
 		/**
 		 * and finally fallback to $wgDBserver
-		*/
+		 */
 		if( is_null( $this->mDBhandler ) ) {
 			$this->mDBhandler = new Database( $wgDBserver, $wgDBuser, $wgDBpassword, $this->mDBname );
 			$this->debug( "fallback to wgDBserver {$wgDBserver}" );
@@ -368,7 +372,7 @@ class WikiFactoryLoader {
 		/**
 		 * check if not additional domain was used (then we redirect anyway)
 		 */
-		$cond2 = $host != $this->mOldServerName;
+		$cond2 = $this->mAlternativeDomainUsed && ( $host != $this->mOldServerName );
 
 		if( ( $cond1 || $cond2 ) && empty( $wgDevelEnvironment ) && $this->mNoRedirect === false ) {
 			$url = wfGetCurrentUrl();
@@ -434,9 +438,6 @@ class WikiFactoryLoader {
 				}
 				if (!empty($_SERVER['REMOTE_ADDR'])) {
 					$ips[] = $_SERVER['REMOTE_ADDR'];
-				}
-				if( !empty( self::$mDebug ) ) {
-					error_log(print_r($ips, true));
 				}
 
 				if( !empty($ips[0]) ) {
@@ -635,7 +636,7 @@ class WikiFactoryLoader {
 	 *
 	 * @return array with permissions
 	 */
-	static public function LocalToGlobalPermissions( $local ) {
+	public function LocalToGlobalPermissions( $local ) {
 		global $wgGroupPermissions;
 
 		wfProfileIn( __METHOD__ );
@@ -646,7 +647,6 @@ class WikiFactoryLoader {
 			 * only 3 parts counts
 			 */
 			if ( count( $parts ) != 3 ) {
-				$this->debug( __METHOD__." not 3 parts." ) ;
 				continue;
 			}
 			$wgGroupPermissions[trim($parts[0])][trim($parts[1])] = (bool)trim($parts[2]);
@@ -665,13 +665,12 @@ class WikiFactoryLoader {
 	 *
 	 * @author eloy@wikia-inc.com
 	 * @access public
-	 * @static
 	 *
 	 * @param array $local: array with local values
 	 * @param array $target: array with global values; by reference - local is appended here
 	 * @param bool  $ignore_keys: treat $local as a hash (false) or as an array (true)
 	 */
-	static public function LocalToGlobalArray( $local, &$target, $ignore_keys = false ) {
+	public function LocalToGlobalArray( $local, &$target, $ignore_keys = false ) {
 		if( is_array( $local ) && count($local) ) {
 			#--- target may not be initialised yet
 			if( !is_array( $target ) ) {
@@ -704,7 +703,7 @@ class WikiFactoryLoader {
 	 */
 	private function debug( $message ) {
 		wfDebug("wikifactory: {$message}", true);
-		if( !empty( self::$mDebug ) ) {
+		if( !empty( $this->mDebug ) ) {
 			error_log("wikifactory: {$message}");
 		}
 	}
