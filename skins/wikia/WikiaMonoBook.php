@@ -14,6 +14,8 @@ if(!defined('MEDIAWIKI')) {
 	die(-1);
 }
 
+require dirname(__FILE__) . "/../../extensions/wikia/AnalyticsEngine/AnalyticsEngine.php";
+
 class WikiaSkinMonoBook extends SkinTemplate {
 
 	var $ads;
@@ -62,12 +64,15 @@ class WikiaSkinMonoBook extends SkinTemplate {
 			'<div id="column-google-botright">'.AdEngine::getInstance()->getAd('RIGHT_SPOTLIGHT_2').'</div>'."\n</div>\n"
 			);
 
-			$tpl->set('ads_bottomjs', '<!-- adserver on, injecting bottom JS -->'."\n".
-				str_replace('<script>', '<script type="text/javascript">', AdServer::getInstance()->getAd('js_bot1')).
-				str_replace('<script>', '<script type="text/javascript">', AdServer::getInstance()->getAd('js_bot2')).
-				str_replace('<script>', '<script type="text/javascript">', AdServer::getInstance()->getAd('js_bot3'))
-			);
 		}
+
+		global $wgCityId;
+		$tpl->set('ads_bottomjs', 
+			AnalyticsEngine::track('GA_Urchin', AnalyticsEngine::EVENT_PAGEVIEW) . 
+			AnalyticsEngine::track('GA_Urchin', 'hub', AdEngine::getCachedCategory()) .
+			AnalyticsEngine::track('GA_Urchin', 'onewiki', array($wgCityId)) .
+			AnalyticsEngine::track('QuantServe', AnalyticsEngine::EVENT_PAGEVIEW) 
+		);
 
 		global $wgStyleVersion, $wgStylePath;
 
