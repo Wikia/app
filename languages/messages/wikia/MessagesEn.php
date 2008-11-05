@@ -21,6 +21,77 @@ $messages = array_merge( $messages , array(
 'monaco-whos-online' => 'Who\'s Online',
 'seemoredotdotdot' => 'See more...',
 
+'monaco-category-list' => '*w:Category:Hubs|more wikis
+**w:Gaming|Gaming
+**w:Entertainment|Entertainment
+**w:Sci-Fi|Science Fiction
+**w:Big_wikis|Biggest wikis
+**w:Hobbies|Hobbies
+**w:Technology|Technology',
+
+'monaco-footer-links' => '*Hubs
+**w:Entertainment|Entertainment
+**w:Gaming|Gaming
+**w:Sports|Sports
+**w:Toys|Toys
+**w:Big_wikis|Biggest wikis
+**w:Hubs|see all...
+*Featured
+**http://cocktails.wikia.com|Cocktails
+**http://recipes.wikia.com|Recipes
+**http://green.wikia.com|Green
+**http://help.wikia.com/wiki/Help:Video_demos|Help Videos
+
+*Wikia is hiring
+**w:Hiring|General hiring',
+
+'monaco-footer-wikia-links' => '*http://www.wikia.com/wiki/About_Wikia|About Wikia
+*http://www.wikia.com/wiki/Contact_us|Contact Wikia
+*http://www.wikia.com/wiki/Terms_of_use|Terms
+*http://www.mediawiki.org/|MediaWiki
+*http://www.gnu.org/copyleft/fdl.html|GFDL
+*http://www.wikia.com/wiki/Advertising|Advertise on Wikia
+*http://www.wikia.com/wiki/Terms_of_use#Collection_of_personal_information|<b>Privacy</b>',
+
+'monaco-related-communities' => '*w:Entertainment|Entertainment|TV shows, movies, cartoons and comics.
+*w:Gaming|Gaming|Get your game on with Wikia\'s video game wikis.
+*w:Sci-Fi|Science Fiction|Explore the world of the future.
+*w:Big_wikis|Biggest Wikis|See Wikia\'s biggest wikis.
+*w:Hubs|See all...',
+
+'monaco-related-communities-2' => '*w:c:ssb|Super Smash Bros|Check out the Brawl
+*w:c:aoc|Age of Conan Wiki|Age of Conan
+*w:c:wow|WoWWiki|World of Warcraft
+*w:c:gta|Grand Theft Wiki|Grand Theft Auto 4
+*w:c:guildwars|GuildWiki|Guild Wars
+*w:c:yugioh|Yu-Gi-Oh!
+*w:c:Runescape|Runescape',
+
+'monaco-sidebar' => '*mainpage|{{SITENAME}}
+*mainpage|Top Content
+**#popular#|most_popular
+**#visited#|most_visited
+**#voted#|highest_ratings
+**#newlychanged#|newly_changed
+*portal-url|Community
+**#topusers#|top_users
+**portal-url|portal
+**forum-url|forum
+*#category1#
+*#category2#',
+
+'monaco-toolbox' => '* upload-url|Upload image
+* specialpages-url|specialpages
+* helppage|help
+* recentchanges-url|recentchanges
+* randompage-url|randompage
+* whatlinkshere|whatlinkshere',
+
+
+
+'specialpages-url' => 'Special:Specialpages',
+'upload-url' => 'Special:Upload',
+
 # Widget
 
 'limit' => 'Limit',
