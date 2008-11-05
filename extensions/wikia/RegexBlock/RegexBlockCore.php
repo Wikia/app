@@ -255,6 +255,7 @@ function wfGetRegexBlockedData($user, $blockers, $master = 0) {
 		/* take it from cache */
 		$blockData = $cached;
 	}
+	wfProfileOut( __METHOD__ );
 	return $blockData;
 }
 
