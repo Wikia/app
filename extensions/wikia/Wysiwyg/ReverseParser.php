@@ -840,29 +840,29 @@ class ReverseParser {
 	 }
 
 	/**
-	 * Return true if given node is inline formatting element
+	 * Return true if given node is inline formatting element (used for removal of unneeded <br/> tags)
 	 */
 
 	private function isFormattingElement($node) {
-		return in_array($node->nodeName, array('u', 'b', 'strong', 'i', 'em', 'strike', 's', 'code'));
+		return in_array($node->nodeName, array('u', 'b', 'strong', 'i', 'em', 'strike', 's', 'code', 'tt', 'cite', 'var', 'span'));
 	}
 
 	/**
-	 * Return true if given node is inline HTNL element or can contain inline elements (p / div)
+	 * Return true if given node is inline HTNL element or can contain inline elements (p / div) - used for nice HTML formatting
 	 */
 	private function isInlineElement($node) {
-		return in_array($node->nodeName, array('u', 'b', 'strong', 'i', 'em', 'strike', 's', 'code', 'a', 'p', 'div'));
+		return in_array($node->nodeName, array('u', 'b', 'strong', 'i', 'em', 'strike', 's', 'code', 'tt', 'cite', 'var', 'span', 'a', 'p', 'div'));
 	}
 
 	/**
-	 * Return true if given node is block HTML element
+	 * Return true if given node is block HTML element (used for handling nested tables)
 	 */
 	private function isBlockElement($node) {
 		return in_array($node->nodeName, array('p', 'div', 'tr', 'td' ,'th', 'table'));
 	}
 
 	/**
-	 * Return true if given node is table cell (td/th)
+	 * Return true if given node is table cell (td/th) - used to add newline before certain wikimarkup when is table cell
 	 */
 	private function isTableCell($node) {
 		return in_array($node->nodeName, array('td', 'th', 'caption'));
