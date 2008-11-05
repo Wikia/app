@@ -140,15 +140,18 @@ class BlogComments {
 				/**
 				 * page is Title object
 				 */
-				$comment = new Article( $page, 0 );
+				$revision = Revision::newFromTitle( $page );
 				$template->set_vars(
 					array(
-						"article" => $comment
+						"comment" => $revision,
+						"autor" => User::newFromId( $revision->getUser() )
 					),
 					true /** refresh **/
 				);
 				$output = $template->execute( "comment" );
 			}
+
+			return $output;
 		}
 	}
 }
