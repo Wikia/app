@@ -67,6 +67,7 @@ function getLinkSuggest() {
 		$db =& wfGetDB(DB_SLAVE, 'search');
 
 		$sql = "SELECT /* LinkSuggest query 1 */ DISTINCT page_id, page_title, page_namespace FROM page, querycache WHERE qc_type = 'Mostlinked' AND page_title = qc_title AND page_namespace = qc_namespace AND LOWER(qc_title) LIKE '{$query}%' AND qc_namespace = {$namespace} ORDER BY qc_value DESC LIMIT 10";
+		wfDebugLog( 'linksuggest', "Database: {$db->getDBName()}" );
 		wfDebugLog( 'linksuggest', "Query1: {$sql}"  );
 		$res = $db->query($sql);
 		while($row = $db->fetchObject($res)) {
