@@ -70,7 +70,10 @@ class ReverseParser {
 
 				// create DOM for wikimarkup
 				$this->wikiDOM = new DOMdocument();
-				$rootNode = $this->wikiDOM->createElement('root');
+				$this->wikiDOM->formatOutput = true;
+
+				// create root node
+				$rootNode = $this->wikiDOM->createElement('wikimarkup');
 				$this->wikiDOM->appendChild($rootNode);
 
 				$body = $this->htmlDOM->getElementsByTagName('body')->item(0);
@@ -100,7 +103,7 @@ class ReverseParser {
 		return $out;
 	}
 
-	private function parseNode($node, $wikiNode, $level = 0) {
+	private function parseNode($node, &$wikiNode, $level = 0) {
 		wfProfileIn(__METHOD__);
 
 		$childOut = '';
@@ -139,7 +142,15 @@ class ReverseParser {
 			}
 
 			for($i = 0; $i < $nodes->length; $i++) {
-				$childOut .= $this->parseNode($nodes->item($i), $wikiMode, $level+1);
+				$newWikiNode = $this->wikiDOM->createElement('node');
+				$wikiNode->appendChild($newWikiNode);
+
+				$out = $this->parseNode($nodes->item($i), $newWikiNode, $level+1);
+				$childOut .= $out;
+
+				if ($out!='') {
+					$newWikiNode->setAttribute('output', $out);
+				}
 			}
 
 			// handle lists
