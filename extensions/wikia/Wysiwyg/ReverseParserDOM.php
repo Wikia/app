@@ -78,20 +78,20 @@ class ReverseParserDOM {
 	private function preparseNode($htmlNode, $wikiParentNode, $level = 0) {
 		wfProfileIn(__METHOD__);
 
-		if($htmlNode->hasChildNodes()) {
+		// create new wikiNode and fill it
+		$wikiNode = $this->wikiDOM->createElement('node');
 
+		if($htmlNode->nodeType == XML_ELEMENT_NODE) {
 			// get node attributes
 			$refId = $htmlNode->getAttribute('refid');
 			$hasRefId = is_numeric($refId);
 			$wasHTML = $htmlNode->getAttribute('washtml') == 1;
 
-			// create new wikiNode and fill it
-			$wikiNode = $this->wikiDOM->createElement('node');
-		
+			$wikiNode->setAttribute('name', $htmlNode->nodeName);
+
 			// 1. element with refId - link, template, parser hook...	
 			if ($hasRefId) {
 				$wikiNode->setAttribute('refid', $refId);
-				$wikiNode->setAttribute('name', $htmlNode->nodeName);
 			}
 			// 2. element with wasHTML - <div>, <tt>, <code>, ...
 			else if ($wasHTML) {
@@ -111,27 +111,36 @@ class ReverseParserDOM {
 				
 				$wikiNode->setAttribute('attr', $this->getAttributesStr($htmlNode));
 			}
-			// 3. elements to be parsed back to wikimarkup
-			else {
-				$wikiNode->setAttribute('name', $htmlNode->nodeName);
-			}
+		}
+		else if ($htmlNode->textContent != '' && $htmlNode->parentNode->nodeName != 'body')  {
+			$wikiNode->setAttribute('text', 1);
+			$wikiNode->appendChild( new DOMText($htmlNode->textContent) );
+		}
+		else {
+			$wikiNode = false;
+		}
 
+
+		if ($wikiNode) {
 			// add new node
 			$wikiParentNode->appendChild($wikiNode);
 
-			$nodes = $htmlNode->childNodes;
-
 			// parse child nodes
-			if ( ($nodes->length == 1) && ($htmlNode->firstChild->nodeType == XML_TEXT_NODE) ) {
-				// node contains only text
-				$wikiNode->appendChild(new DOMText($htmlNode->textContent));
-			}
-			else {
+			if ($htmlNode->hasChildNodes()) {
 				$nodes = $htmlNode->childNodes;
-				$level++;
 
-				for($n=0; $n<$nodes->length; $n++) {
-					 $this->preparseNode($nodes->item($n), &$wikiNode, $level);
+				// parse child nodes
+				if ( ($nodes->length == 1) && ($htmlNode->firstChild->nodeType == XML_TEXT_NODE) ) {
+					// node contains only text
+					$wikiNode->appendChild(new DOMText($htmlNode->textContent));
+				}
+				else {
+					$nodes = $htmlNode->childNodes;
+					$level++;
+
+					for($n=0; $n<$nodes->length; $n++) {
+						 $this->preparseNode($nodes->item($n), &$wikiNode, $level);
+					}
 				}
 			}
 		}
