@@ -1,7 +1,7 @@
 <?php
 /**
- * PHP Reverse Parser - Processes html and provides a one-way
- * transformation into wikimarkup
+ * PHP Reverse Parser - Processes given HTML into DOM tree and
+ * transform it into wikimarkup
  *
  * @author Maciej 'macbre' Brencz <macbre(at)wikia-inc.com>
  * @author Inez Korczynski <inez(at)wikia-inc.com>
@@ -819,7 +819,7 @@ class ReverseParser {
 
 		switch($data['type']) {
 			case 'image':
-				$prefix = ($node->nodeName == 'div') ? "\n\n" : '';
+				$prefix = ( in_array($node->nodeName, array('div', 'table')) ) ? "\n\n" : '';
 				$out = $prefix . '[[' . $data['href'] . ($data['description'] != '' ? "|{$data['description']}]]" : ']]');
 				return $out;
 
