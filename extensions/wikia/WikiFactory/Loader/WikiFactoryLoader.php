@@ -412,7 +412,7 @@ class WikiFactoryLoader {
 		 */
 		if( empty( $this->mWikiID ) || empty( $this->mIsWikiaActive ) ) {
 			global $wgNotAValidWikia;
-			$this->debug( "redirected to {$wgNotAValidWikia}" );
+			$this->debug( "redirected to {$wgNotAValidWikia}, {$this->mWikiID} {$this->mIsWikiaActive}" );
 			header("Location: $wgNotAValidWikia");
 			wfProfileOut( __METHOD__ );
 			exit(0);
