@@ -140,6 +140,8 @@ class EditPage {
 
 			$text = $this->mArticle->getContent();
 
+			wfRunHooks( 'EditPageAfterGetContent', array( &$text ) ); // wikia: macbre 
+
 			if ($undo > 0 && $undoafter > 0 && $undo < $undoafter) {
 				# If they got undoafter and undo round the wrong way, switch them
 				list( $undo, $undoafter ) = array( $undoafter, $undo );

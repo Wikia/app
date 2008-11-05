@@ -19,6 +19,7 @@ $wgHooks['MagicWordwgVariableIDs'][] = 'Wysiwyg_RegisterMagicWordID';
 $wgHooks['LanguageGetMagic'][] = 'Wysiwyg_GetMagicWord';
 $wgHooks['InternalParseBeforeLinks'][] = 'Wysiwyg_RemoveMagicWord';
 $wgHooks['SkinTemplateOutputPageBeforeExec'][] = 'Wysiwyg_SetDomain';
+$wgHooks['EditPageAfterGetContent'][] = 'Wysiwyg_CheckEditPageContent';
 
 function Wysiwyg_SetDomain(&$skin, &$tpl) {
 
@@ -49,6 +50,26 @@ function Wysiwyg_GetMagicWord(&$magicWords, $langCode) {
 
 function Wysiwyg_RemoveMagicWord(&$parser, &$text, &$strip_state) {
 	MagicWord::get('MAG_NOWYSIWYG')->matchAndRemove($text);
+	return true;
+}
+
+// macbre: handle __NOWYSIWYG__ in really weird way (get content of whole page, even when editing/adding one section)
+function Wysiwyg_CheckEditPageContent(&$text) {
+	global $wgWysiwygNoWysiwygFound;
+
+	$mw = MagicWord::get('MAG_NOWYSIWYG');
+	if ($mw->match($text)) {
+		$matches = array();
+		$countNoWysiwygAll = preg_match_all($mw->getRegex(), $text, $matches);
+		$countNoWysiwygInNoWiki = preg_match_all('/\<nowiki\>__NOWYSIWYG__\<\/nowiki\>/si', $text, $matches);
+
+		wfDebug("Wysiwyg: __NOWYSIWYG__ (count: {$countNoWysiwygAll} / in <nowiki>: {$countNoWysiwygInNoWiki})\n");
+
+		if ($countNoWysiwygAll > $countNoWysiwygInNoWiki) {
+			$wgWysiwygNoWysiwygFound = true;
+		}
+	}
+
 	return true;
 }
 
@@ -284,18 +305,10 @@ function Wysiwyg_CheckEdgeCases($text) {
 		}
 	}
 
-	// macbre: handle __NOWYSIWYG__ in really weird way
-	$mw = MagicWord::get('MAG_NOWYSIWYG');
-	if ($mw->match($text)) {
-		$matches = array();
-		$countNoWysiwygAll = preg_match_all($mw->getRegex(), $text, $matches);
-		$countNoWysiwygInNoWiki = preg_match_all('/\<nowiki\>__NOWYSIWYG__\<\/nowiki\>/si', $text, $matches);
-
-		wfDebug("Wysiwyg: __NOWYSIWYG__ (count: {$countNoWysiwygAll} / in <nowiki>: {$countNoWysiwygInNoWiki})\n");
-
-		if ($countNoWysiwygAll > $countNoWysiwygInNoWiki) {
-			$edgeCasesFound[] = wfMsg('wysiwyg-edgecase-nowysiwyg');
-		}
+	// macbre: existance of __NOWYSIWYG__ checked in hook handler
+	global $wgWysiwygNoWysiwygFound;
+	if (!empty($wgWysiwygNoWysiwygFound)) {
+		$edgeCasesFound[] = wfMsg('wysiwyg-edgecase-nowysiwyg');
 	}
 
 	// if edge case was found add main information about edge cases, like "Edge cases found:"
