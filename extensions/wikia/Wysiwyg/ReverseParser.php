@@ -719,7 +719,7 @@ class ReverseParser {
 			case 'internal link':
 			case 'internal link: file':
 			case 'internal link: special page':
-				// take link description from HTML
+				// take link description from parsed HTML
 				$data['description'] = $content;
 				$data['trial'] = '';
 
