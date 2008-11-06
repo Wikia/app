@@ -200,15 +200,20 @@ FCK.Events.AttachEvent( 'OnAfterSetHTML', function() {
 				if (target.nodeName.IEquals(['div', 'table']) && target.getAttribute('refId')) {
 					FCK.log('click blocked');
 					FCK.log(target);
+
 					// stop event
 					e.preventDefault();
 					e.stopPropagation();
+
+					// disable context menu
+					target.setAttribute('_fckContextMenuDisabled', true);
 					return;
 				}
 				target = target.parentNode;
 			}
 		});
 	}
+
 	// for QA team tests
 	FCK.GetParentForm().className = (FCK.EditMode == FCK_EDITMODE_WYSIWYG ? 'wysiwyg' : 'source') + '_mode';
 
@@ -287,3 +292,6 @@ if (!FCKBrowserInfo.IsIE) {
 else {
 	FCK.log('temporary save not supported in your browser');
 }
+
+// for us, developers ;)
+window.parent.FCK = FCK;
