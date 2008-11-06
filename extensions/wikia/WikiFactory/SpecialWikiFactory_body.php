@@ -34,7 +34,6 @@ class WikiFactoryPage extends SpecialPage {
 	 *
 	 * main entry point
 	 *
-	 * @author eloy@wikia.com
 	 * @access public
 	 *
 	 * @param string $subpage: subpage of Title
@@ -100,7 +99,6 @@ class WikiFactoryPage extends SpecialPage {
 	 * use subpage as param and try to find wiki which match criteria
 	 *
 	 * @access private
-	 * @author eloy
 	 *
 	 * @param mixed $subpage:
 	 *
@@ -129,19 +127,20 @@ class WikiFactoryPage extends SpecialPage {
 				$domain = $subpage;
 			}
 
-			/**
-			 * if there's no dot in cityname we add .wikia.com
-			 * or if is only one dot (language.domain.wikia.com)
-			 */
-			if( sizeof(explode(".", $domain )) <= 2 && strlen( $domain ) > 0) {
-				$domain = $domain.".wikia.com";
-			}
-			$this->mDomain = $domain;
-
-			$cityid = WikiFactory::DomainToId( $domain );
-
-			if( is_null( $cityid ) && is_numeric( $subpage ) ) {
+			if( is_numeric( $subpage ) ) {
 				$cityid = $subpage;
+			}
+			else {
+				/**
+				 * if there's no dot in cityname we add .wikia.com
+				 * or if is only one dot (language.domain.wikia.com)
+				 */
+				if( sizeof(explode(".", $domain )) <= 2 && strlen( $domain ) > 0) {
+					$domain = $domain.".wikia.com";
+				}
+				$this->mDomain = $domain;
+
+				$cityid = WikiFactory::DomainToId( $domain );
 			}
 		}
 		$this->mTab = $tab;
