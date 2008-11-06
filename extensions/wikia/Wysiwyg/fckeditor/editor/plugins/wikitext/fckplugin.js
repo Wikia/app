@@ -196,7 +196,7 @@ FCK.Events.AttachEvent( 'OnAfterSetHTML', function() {
 			target = FCK.YAHOO.util.Event.getTarget(e);
 
 			// go up to find div/table with refId
-			while( !target.nodeName.IEquals('body') ) {
+			while( target ) {
 				if (target.nodeName.IEquals(['div', 'table']) && target.getAttribute('refId')) {
 					FCK.log('click blocked');
 					FCK.log(target);
