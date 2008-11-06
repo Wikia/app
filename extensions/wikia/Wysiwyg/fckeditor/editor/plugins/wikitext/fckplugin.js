@@ -167,6 +167,10 @@ FCK.Events.AttachEvent( 'OnAfterSetHTML', function() {
 		// macbre: fix issue with input tags as last child (can't move to end of the line)
 		var placeholders = FCK.EditorDocument.getElementsByTagName('input');
 		for (p=0; p<placeholders.length; p++) {
+
+			// disable context menu
+			placeholders[p].setAttribute('_fckContextMenuDisabled', true);
+
 			if (placeholders[p].parentNode.nodeName.IEquals(['p', 'div', 'li', 'dt', 'dd']) &&  placeholders[p] == placeholders[p].parentNode.lastChild) {
 				if (FCKBrowserInfo.IsGecko10) {
 					// add &nbsp; for FF2.x
