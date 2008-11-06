@@ -97,7 +97,7 @@ function FCKContextMenu_Document_OnContextMenu( e )
 	while ( el )
 	{
 		// Wikia: support option to block context menu on certain elements
-		if ( el.getAttribute('_fckContextMenuDisabled') ) {
+		if ( el.getAttribute && el.getAttribute('_fckContextMenuDisabled') ) {
 			FCKTools.CancelEvent(e) ;
 			e.stopPropagation();
 			return false;
