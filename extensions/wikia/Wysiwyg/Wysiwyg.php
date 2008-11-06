@@ -350,6 +350,7 @@ function Wysiwyg_WikiTextToHtml($wikitext, $articleId = -1, $encode = false) {
 		"</dl>\n" => '</dl>',
 		"</ol>\n" => '</ol>',
 		"</ul>\n" => '</ul>',
+		"\n</td>" => '</td>',
 	);
 	$html = strtr($html, $replacements);
 
