@@ -190,6 +190,24 @@ FCK.Events.AttachEvent( 'OnAfterSetHTML', function() {
 				FCK.InsertDirtySpanBefore(placeholders[p]);
 			}
 		}
+
+		// macbre: register onClick handler to protect images
+		FCKTools.AddEventListener( FCK.EditorDocument, 'mousedown', function(e) {
+			target = FCK.YAHOO.util.Event.getTarget(e);
+
+			// go up to find div/table with refId
+			while( !target.nodeName.IEquals('body') ) {
+				if (target.nodeName.IEquals(['div', 'table']) && target.getAttribute('refId')) {
+					FCK.log('click blocked');
+					FCK.log(target);
+					// stop event
+					e.preventDefault();
+					e.stopPropagation();
+					return;
+				}
+				target = target.parentNode;
+			}
+		});
 	}
 	// for QA team tests
 	FCK.GetParentForm().className = (FCK.EditMode == FCK_EDITMODE_WYSIWYG ? 'wysiwyg' : 'source') + '_mode';
