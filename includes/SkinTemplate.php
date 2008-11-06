@@ -392,7 +392,13 @@ class SkinTemplate extends Skin {
 			$tpl->set('credits', false);
 			$tpl->set('numberofwatchingusers', false);
 		} else {
-			$tpl->set('copyright', false);
+			//#2579, fix by Bartek 20081106 - load copyright for edit pages
+			if( 'edit' == $action ) {
+				$tpl->set('copyright', $this->getCopyright());
+			} else {
+				$tpl->set('copyright', false);
+			}
+
 			$tpl->set('viewcount', false);
 			$tpl->set('lastmod', false);
 			$tpl->set('credits', false);
