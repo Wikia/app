@@ -11,7 +11,7 @@ if( $wgDefaultMessagesDB == $wgDBname ) {
 }
 
 class DefaultMessages {
-	const expire = 3600;
+	const expire = 86400;
 	static $cache, $loaded = false;
 
 	private static function memcKey() {
