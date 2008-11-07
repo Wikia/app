@@ -172,7 +172,7 @@ class GlobalWatchlistBot {
 	/**
 	 * compose digest email for user
 	 */
-	private function composeMail($oUser, $aDigestsData) {
+	private function composeMail($oUser, $aDigestsData, $isDigestLimited) {
 		global $wgGlobalWatchlistMaxDigestedArticlesPerWiki;
 
 		$sDigests = "";
@@ -182,19 +182,21 @@ class GlobalWatchlistBot {
 			$sDigests .= $aDigest['wikiName'] . ($aDigest['wikiLangCode'] != 'en' ?  " (" . $aDigest['wikiLangCode'] . ")": "") . ":\n";
 
 			foreach($aDigest['pages'] as $aPageData) {
+/*
 				if($iPagesCount > $wgGlobalWatchlistMaxDigestedArticlesPerWiki) {
 					$bTooManyPages = true;
 					break;
 				}
+*/
 				$sDigests .= $aPageData['title']->getFullURL(($aPageData['revisionId'] ? "diff=0&oldid=" . $aPageData['revisionId'] : "")) . "\n";
 				$iPagesCount++;
 			}
 
-			if($bTooManyPages) {
-				$sDigests .= $this->getLocalizedMsg('globalwatchlist-see-more', $oUser->getOption('language')) . "\n";
-				break;
-			}
 			$sDigests .= "\n";
+		}
+
+		if($isDigestLimited) {
+			$sDigests .= $this->getLocalizedMsg('globalwatchlist-see-more', $oUser->getOption('language')) . "\n";
 		}
 
 		$aEmailArgs = array(
@@ -254,26 +256,40 @@ class GlobalWatchlistBot {
 	}
 
 	private function sendDigests() {
-		global $wgSharedDB;
+		global $wgSharedDB, $wgGlobalWatchlistMaxDigestedArticlesPerWiki;
 		$this->printDebug("Sending digest emails ... ");
 
+		$iEmailsSent = 0;
 		foreach($this->mWatchlisters as $iUserId => $aUserData) {
-			$oResource = $this->mDb->query("SELECT * FROM " . $wgSharedDB . ".global_watchlist WHERE gwa_user_id='" . $iUserId . "' ORDER BY gwa_city_id");
+			$oResource = $this->mDb->query("SELECT * FROM " . $wgSharedDB . ".global_watchlist WHERE gwa_user_id='" . $iUserId . "' ORDER BY gwa_timestamp, gwa_city_id");
+
+			$bTooManyPages = false;
+			if($this->mDb->numRows($oResource) > $wgGlobalWatchlistMaxDigestedArticlesPerWiki) {
+				$bTooManyPages = true;
+				$oResource = $this->mDb->query("SELECT * FROM " . $wgSharedDB . ".global_watchlist WHERE gwa_user_id='" . $iUserId . "' ORDER BY gwa_timestamp, gwa_city_id LIMIT $wgGlobalWatchlistMaxDigestedArticlesPerWiki");
+			}
 
 			$iWikiId = 0;
 			$aDigestData = array();
 			$aWikiDigest = array( 'pages' => array());
+			$aAllWikisDigestData = array();
 			while($oResultRow = $this->mDb->fetchObject($oResource)) {
 				if($iWikiId != $oResultRow->gwa_city_id) {
 					if(count($aWikiDigest['pages'])) {
-						$aDigestData[] = $aWikiDigest;
+						$aDigestData[$iWikiId] = $aWikiDigest;
 					}
+
 					$iWikiId = $oResultRow->gwa_city_id;
-					$aWikiDigest = array(
-						'wikiName' => $this->mWikiData[$iWikiId]['wikiName'],
-						'wikiLangCode' => $this->mWikiData[$iWikiId]['wikiLangCode'],
-						'pages' => array()
-					);
+					if(isset($aDigestData[$iWikiId])) {
+						$aWikiDigest = $aDigestData[$iWikiId];
+					}
+					else {
+						$aWikiDigest = array(
+							'wikiName' => $this->mWikiData[$iWikiId]['wikiName'],
+							'wikiLangCode' => $this->mWikiData[$iWikiId]['wikiLangCode'],
+							'pages' => array()
+						);
+					}
 				}
 				$aWikiDigest['pages'][] = array(
 					'title' => GlobalTitle::newFromText($oResultRow->gwa_title, $oResultRow->gwa_namespace, $iWikiId),
@@ -282,23 +298,24 @@ class GlobalWatchlistBot {
 			} // while
 
 			if(count($aWikiDigest['pages'])) {
-				$aDigestData[] = $aWikiDigest;
+				$aDigestData[$iWikiId] = $aWikiDigest;
 			}
 			if(count($aDigestData)) {
-				$this->sendMail($iUserId, $aDigestData);
+				$iEmailsSent++;
+				$this->sendMail($iUserId, $aDigestData, $bTooManyPages);
 			}
 
 		} // foreach
 
-		$this->printDebug("Sending digest emails ... Done!");
+		$this->printDebug("Sending digest emails ... Done! ($iEmailsSent total)");
 	}
 
-	private function sendMail($iUserId, $aDigestData) {
+	private function sendMail($iUserId, $aDigestData, $isDigestLimited) {
 		$oUser = User::newFromId($iUserId);
 		$oUser->load();
 
 		$sEmailSubject = $this->getLocalizedMsg('globalwatchlist-digest-email-subject', $oUser->getOption('language'));
-		$sEmailBody = $this->composeMail($oUser, $aDigestData);
+		$sEmailBody = $this->composeMail($oUser, $aDigestData, $isDigestLimited);
 
 		$sFrom = 'Wikia <community@wikia.com>';
 		if(empty($this->mDebugMailTo)) {

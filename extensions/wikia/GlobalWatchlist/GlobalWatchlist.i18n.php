@@ -17,6 +17,6 @@ Please visit and edit often...
 Wikia
 
 * To change your preferences for watchlist notifications, please visit http://www.wikia.com/wiki/Special:Preferences
-* To mark all pages from this Weekly Digest as visited see option in \"Watchlist\" tab at Preferences page
+* To mark all pages from this Weekly Digest as visited, see the option in the \"Watchlist\" tab of your Preferences page
 "
 );
