@@ -557,7 +557,7 @@ div.wikiaDialog h2,
 'contactwikiname' => 'Name of the wiki',
 'contactintro' => 'Please read the <a href=http://www.wikia.com/wiki/Report_a_problem>Report a problem</a> page for information on reporting problems and using this contact form.<p />You can contact the Wikia community at the <a href=http://www.wikia.com/wiki/Community_portal>Community portal</a> and report software bugs at <a href=http://bugs.wikia.com>bugs.wikia.com</a>. <p>If you prefer your message to <a href=http://www.wikia.com/wiki/Wikia>Wikia</a> to be private, please use the contact form below. <i>All fields are optional</i>.',
 
-#Special:MultiUpload
+#Special:SharedHelp
 'shared_help_info' => 'This text is stored on the Help Wikia.  [[w:c:Help:Help_talk:$1|Suggest changes here]].',
 'shared_help_edit_info' => 'The help text within the box is stored at [[w:c:help:Help:$1|Help:$1]] on Wikia Help. See [[Help:Shared Help]] for more info.
 
@@ -565,6 +565,8 @@ Any changes that apply to \'\'all\'\' wikis should be made to the Wikia Help cop
 
 Text should be placed on this page if you wish to explain usage, style and policy guidelines which apply only to {{SITENAME}}. Text added in this edit box will be displayed below the boxed help text.',
 'shared_help_search_info' => 'To search for help with editing, please visit the [http://help.wikia.com/wiki/Special:Search?search=$1 Help Wikia]',
+
+#Special:MultiUpload
 'multiplefileuploadsummary' => 'Summary:',
 
 # image upload (all methods) 
