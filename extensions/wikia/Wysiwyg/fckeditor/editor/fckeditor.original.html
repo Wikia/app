@@ -63,39 +63,14 @@ if ( document.location.protocol == 'file:' )
 }
 
 // Save a reference to the default domain.
-var FCK_ORIGINAL_DOMAIN ;
+var FCK_ORIGINAL_DOMAIN = document.domain;
 
-// Automatically detect the correct document.domain (#123).
-(function()
-{
-	var d = FCK_ORIGINAL_DOMAIN = document.domain ;
-
-	while ( true )
-	{
-		// Test if we can access a parent property.
-		try
-		{
-			var test = window.parent.document.domain ;
-			break ;
-		}
-		catch( e ) {}
-
-		// Remove a domain part: www.mytest.example.com => mytest.example.com => example.com ...
-		d = d.replace( /.*?(?:\.|$)/, '' ) ;
-
-		if ( d.length == 0 )
-			break ;		// It was not able to detect the domain.
-
-		try
-		{
-			document.domain = d ;
-		}
-		catch (e)
-		{
-			break ;
-		}
-	}
-})() ;
+if(document.domain != 'localhost') {
+	var chunks = document.domain.split('.');
+	var d = chunks.pop(); // com
+	d = chunks.pop() + '.' + d; // wikia.com
+	document.domain = d;
+}
 
 // Save a reference to the detected runtime domain.
 var FCK_RUNTIME_DOMAIN = document.domain ;
