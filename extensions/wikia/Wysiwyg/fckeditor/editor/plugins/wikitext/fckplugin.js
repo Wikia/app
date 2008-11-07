@@ -202,8 +202,7 @@ FCK.Events.AttachEvent( 'OnAfterSetHTML', function() {
 			// go up to find div/table with refId
 			while( target ) {
 				if (target.nodeName.IEquals(['div', 'table']) && target.getAttribute('refId')) {
-					FCK.log('click blocked');
-					FCK.log(target);
+					//FCK.log('click blocked'); FCK.log(target);
 
 					// stop event
 					e.preventDefault();
@@ -211,6 +210,12 @@ FCK.Events.AttachEvent( 'OnAfterSetHTML', function() {
 
 					// disable context menu
 					target.setAttribute('_fckContextMenuDisabled', true);
+
+					// right mouse button
+					if (e.button == 2) {
+						// this hacky thing will cause image selection to disappear
+						FCK.SetHTML(FCK.GetHTML());
+					}
 					return;
 				}
 				target = target.parentNode;
