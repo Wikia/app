@@ -565,6 +565,7 @@ Any changes that apply to \'\'all\'\' wikis should be made to the Wikia Help cop
 
 Text should be placed on this page if you wish to explain usage, style and policy guidelines which apply only to {{SITENAME}}. Text added in this edit box will be displayed below the boxed help text.',
 'shared_help_search_info' => 'To search for help with editing, please visit the [http://help.wikia.com/wiki/Special:Search?search=$1 Help Wikia]',
+'shared_help_was_redirect' => 'This page is a redirect to $1',
 
 #Special:MultiUpload
 'multiplefileuploadsummary' => 'Summary:',
