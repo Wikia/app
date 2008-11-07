@@ -182,12 +182,6 @@ class GlobalWatchlistBot {
 			$sDigests .= $aDigest['wikiName'] . ($aDigest['wikiLangCode'] != 'en' ?  " (" . $aDigest['wikiLangCode'] . ")": "") . ":\n";
 
 			foreach($aDigest['pages'] as $aPageData) {
-/*
-				if($iPagesCount > $wgGlobalWatchlistMaxDigestedArticlesPerWiki) {
-					$bTooManyPages = true;
-					break;
-				}
-*/
 				$sDigests .= $aPageData['title']->getFullURL(($aPageData['revisionId'] ? "diff=0&oldid=" . $aPageData['revisionId'] : "")) . "\n";
 				$iPagesCount++;
 			}
@@ -272,7 +266,6 @@ class GlobalWatchlistBot {
 			$iWikiId = 0;
 			$aDigestData = array();
 			$aWikiDigest = array( 'pages' => array());
-			$aAllWikisDigestData = array();
 			while($oResultRow = $this->mDb->fetchObject($oResource)) {
 				if($iWikiId != $oResultRow->gwa_city_id) {
 					if(count($aWikiDigest['pages'])) {
