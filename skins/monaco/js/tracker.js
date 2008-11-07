@@ -38,12 +38,14 @@ var initTracker = function() {
 	// Edit links for sections
 	var WysyWigDone = false;
 	var editSections = Dom.getElementsByClassName('editsection', 'span', Dom.get('bodyContent'));
-	Event.addListener(editSections, 'click', function(e) {
-		var el = Event.getTarget(e);
-		if(el.nodeName == 'A') {
-			Tracker.trackByStr(e, 'articleAction/editSection');
-		}
-	});
+	if (editSections.length > 0) {
+		Event.addListener(editSections, 'click', function(e) {
+			var el = Event.getTarget(e);
+			if(el.nodeName == 'A') {
+				Tracker.trackByStr(e, 'articleAction/editSection');
+			}
+		});
+	}
 
 	if( lang.isNull( wgUserName ) ) {
 		// Login - top left corner
