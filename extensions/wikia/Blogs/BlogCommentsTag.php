@@ -122,6 +122,7 @@ class BlogComments {
 	}
 
 	public function render() {
+		global $wgParser, $wgContLang;
 
 		$pages = $this->getCommentPages();
 		/**
@@ -144,11 +145,13 @@ class BlogComments {
 				$template->set_vars(
 					array(
 						"comment" => $revision,
-						"autor" => User::newFromId( $revision->getUser() )
+						"autor" => User::newFromId( $revision->getUser() ),
+						"parser" => $wgParser,
+						"timestamp" => $wgContLang->timeanddate( $revision->getTimestamp() )
 					),
 					true /** refresh **/
 				);
-				$output = $template->execute( "comment" );
+				$output .= $template->execute( "comment" );
 			}
 
 			return $output;
