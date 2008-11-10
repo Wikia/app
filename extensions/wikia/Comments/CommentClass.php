@@ -25,7 +25,7 @@ class Comment{
 		$this->PageID=$pageid;
 		$this->Username =  addslashes ( $wgUser->getName() );
 		$this->Userid =  $wgUser->getID();
-		$this->parser = $parser;
+#		$this->parser = $parser;
 	} 
 
 	/*deprecated*/
@@ -220,6 +220,8 @@ class Comment{
 			);
 		if ( $s !== false ) {
 			$LatestCommentID = $s->CommentID;
+		} else {
+			$LatestCommentID = 0;
 		}
 		return $LatestCommentID;
 	}
