@@ -520,4 +520,17 @@ class CategoryViewer {
 		return wfMsgExt( "category-$type-count", 'parse', $wgLang->formatNum( $rescnt ),
 			$wgLang->formatNum( $totalcnt ) );
 	}
+
+	/**
+	 * getter for private $cat variable, used in Hooks
+	 *
+	 * @author Krzysztof Krzyżaniak <eloy@wikia-inc.com>
+	 * @public
+	 *
+	 * @return Category $cat
+	 */
+	public function getCat() {
+		return $this->cat;
+	}
+
 }
