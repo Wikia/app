@@ -102,7 +102,7 @@ function Wysywig_Ajax($type, $input = false, $wysiwygData = false, $articleId = 
 }
 
 function Wysiwyg_Initial($form) {
-	global $wgUser, $wgOut, $wgRequest, $IP, $wgExtensionsPath, $wgStyleVersion, $wgHooks, $wgWysiwygEdgeCasesFound;
+	global $wgUser, $wgOut, $wgRequest, $IP, $wgExtensionsPath, $wgStyleVersion, $wgHooks, $wgWysiwygEdgeCasesFound, $wgWysiwygFallbackToSourceMode;
 
 	// check user preferences option
 	if($wgUser->getOption('disablewysiwyg') == true) {
@@ -121,8 +121,16 @@ function Wysiwyg_Initial($form) {
 		return true;
 	}
 
-	// initialize FCK in source mode for articles in which edge case occured / user adds fckmode=source to edit page URL
-	$wgWysiwygEdgeCasesFound = (Wysiwyg_CheckEdgeCases($form->textbox1) != '' || $wgRequest->getVal('fckmode', 'wysiwyg') == 'source') ? 1 : 0;
+	// detec edgecases
+	$wgWysiwygEdgeCasesFound = (Wysiwyg_CheckEdgeCases($form->textbox1) != '');
+
+	// initialize FCK in source mode for articles in which edge case occured / user adds fckmode=source to edit page URL / user requested diff/preview when in source mode
+	$wgWysiwygFallbackToSourceMode = $wgWysiwygEdgeCasesFound || 
+		($wgRequest->getVal('fckmode', 'wysiwyg') == 'source') || 
+		($wgRequest->getVal('action') == 'submit' && $wgRequest->getVal('wysiwygTemporarySaveType') == '1');
+
+	// JS value of $wgWysiwygFallbackToSourceMode
+	$fallbackToSourceModeJS = $wgWysiwygFallbackToSourceMode ? 'true' : 'false';
 
 	$script = <<<EOT
 <script type="text/javascript" src="$wgExtensionsPath/wikia/Wysiwyg/fckeditor/fckeditor.js?$wgStyleVersion"></script>
@@ -155,6 +163,7 @@ function wysiwygInitInSourceMode(src) {
 				FCK.WysiwygSwitchToolbars(true);
 				FCK.SetData(src);
 				iFrame.style.visibility = 'visible';
+				document.getElementById('wysiwygTemporarySaveType').value = '1';
 			}
 		}
 	}, 250);
@@ -162,7 +171,7 @@ function wysiwygInitInSourceMode(src) {
 
 function initEditor() {
 	if($('wmuLink')) $('wmuLink').parentNode.style.display = 'none';
-	var edgeCasesFound = $wgWysiwygEdgeCasesFound;
+	var fallbackToSourceMode = $fallbackToSourceModeJS;
 	var oFCKeditor = new FCKeditor("wpTextbox1");
 	oFCKeditor.BasePath = "$wgExtensionsPath/wikia/Wysiwyg/fckeditor/";
 	oFCKeditor.Config["CustomConfigurationsPath"] = "$wgExtensionsPath/wikia/Wysiwyg/wysiwyg_config.js";
@@ -171,10 +180,10 @@ function initEditor() {
 	oFCKeditor.Width = document.all ? '99%' : '100%'; // IE fix
 	oFCKeditor.ReplaceTextarea();
 
-	// restore editor state?
+	// restore editor state after user returns to edit page?
 	var temporarySaveType = document.getElementById('wysiwygTemporarySaveType').value;
 
-	if (temporarySaveType != '') {
+	if (temporarySaveType != '' && !fallbackToSourceMode) {
 		var content = document.getElementById('wysiwygTemporarySaveContent').value;
 		YAHOO.log('restoring from temporary save', 'info', 'Wysiwyg');
 		switch( parseInt(temporarySaveType) ) {
@@ -190,7 +199,8 @@ function initEditor() {
 		}
 	}
 
-	if (edgeCasesFound) {
+	// initialize editor in source mode
+	if (fallbackToSourceMode) {
 		wysiwygInitInSourceMode(document.getElementById('wpTextbox1').value);
 	}
 
@@ -204,7 +214,7 @@ function initEditor() {
 
 			YAHOO.Wikia.Tracker.trackByStr(e, 'wysiwyg/' + buttonId + '/' + (editorSourceMode ? 'wikitextmode' : 'visualmode'));
 		});
-		if (edgeCasesFound) {
+		if (fallbackToSourceMode) {
 			YAHOO.Wikia.Tracker.trackByStr(null, 'wysiwyg/edgecase');
 		}
 		if (temporarySaveType != '') {
@@ -242,9 +252,9 @@ EOT;
 }
 
 function Wysiwyg_Initial2($form) {
-	global $wgWysiwygData, $wgWysiwygEdgeCasesFound;
+	global $wgWysiwygData, $wgWysiwygFallbackToSourceMode;
 
-	if (empty($wgWysiwygEdgeCasesFound)) {
+	if (empty($wgWysiwygFallbackToSourceMode)) {
 		list($form->textbox1, $wgWysiwygData) = Wysiwyg_WikiTextToHtml($form->textbox1, -1, true);
 	}
 	else {
@@ -267,8 +277,8 @@ function Wysiwyg_AlternateEdit($form) {
 function Wysiwyg_BeforeDisplayingTextbox($a, $b) {
 	global $wgOut, $wgWysiwygData;
 	$wgOut->addHTML('<input type="hidden" id="wysiwygData" name="wysiwygData" value="'.htmlspecialchars($wgWysiwygData).'" />');
-	$wgOut->addHTML('<input type="hidden" id="wysiwygTemporarySaveType" value="" />');
-	$wgOut->addHTML('<input type="hidden" id="wysiwygTemporarySaveContent" value="" />');
+	$wgOut->addHTML('<input type="hidden" id="wysiwygTemporarySaveType" name="wysiwygTemporarySaveType" value="" />');
+	$wgOut->addHTML('<input type="hidden" id="wysiwygTemporarySaveContent" name="wysiwygTemporarySaveContent" value="" />');
 	return true;
 }
 

@@ -99,6 +99,7 @@ FCK.SwitchEditMode = function() {
 				FCK.originalSwitchEditMode.apply(FCK, args);
 				FCK.WysiwygSwitchToolbars(false);
 				if (FCK.Track) FCK.Track('/switchMode/wiki2html');
+				window.parent.document.getElementById('wysiwygTemporarySaveType').value = "0";
 			}
 			FCK.EditingArea.TargetElement.className = '';
 			setTimeout(function() {FCK.InProgress = false;}, 100);
@@ -129,6 +130,7 @@ FCK.Events.AttachEvent( 'OnAfterSetHTML', function() {
 			FCK.EditingArea.Focus(); // macbre: moved here from fck.js
 			FCK.WysiwygSwitchToolbars(true);
 			if (FCK.Track) FCK.Track('/switchMode/html2wiki');
+			window.parent.document.getElementById('wysiwygTemporarySaveType').value = "1";
 		});
 	}
 	if(!FCK.wysiwygData) {
