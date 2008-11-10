@@ -144,7 +144,7 @@ class CategoryViewer {
 	}
 
 	/**
-	 * Add a subcategory to the internal lists, using a title object 
+	 * Add a subcategory to the internal lists, using a title object
 	 * @deprectated kept for compatibility, please use addSubcategoryObject instead
 	 */
 	function addSubcategory( $title, $sortkey, $pageLength ) {
@@ -253,7 +253,9 @@ class CategoryViewer {
 			} elseif( $this->showGallery && $title->getNamespace() == NS_IMAGE ) {
 				$this->addImage( $title, $x->cl_sortkey, $x->page_len, $x->page_is_redirect );
 			} else {
-				$this->addPage( $title, $x->cl_sortkey, $x->page_len, $x->page_is_redirect );
+				if( wfRunHooks( "CategoryViewer::addPage", array( &$this, &$title, &$x ) ) ) {
+					$this->addPage( $title, $x->cl_sortkey, $x->page_len, $x->page_is_redirect );
+				}
 			}
 		}
 		$dbr->freeResult( $res );
