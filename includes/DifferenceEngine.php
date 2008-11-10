@@ -583,6 +583,12 @@ CONTROL;
 	 * Replace line numbers with the text in the user's language
 	 */
 	function localiseLineNumbers( $text ) {
+
+		// wikia: #3907
+		if (strpos($text, '<!--LINE ') === false) {
+			return '<tr><td colspan=\'4\' align=\'center\' class=\'diff-nodiff\'>'.wfMsg('nodiff').'</td></tr>';
+		}
+
 		return preg_replace_callback( '/<!--LINE (\d+)-->/',
 			array( &$this, 'localiseLineNumbersCb' ), $text );
 	}
