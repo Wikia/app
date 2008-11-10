@@ -9,6 +9,7 @@ $wgExtensionFunctions[] = 'efBlogCommentsTag_Setup';
 # Add a hook to initialise the magic word
 $wgHooks[ "LanguageGetMagic" ][] = 'efBlogCommentsTag_Magic';
 $wgHooks[ "ArticleFromTitle" ][] = "efBlogCommentsArticleFromTitle";
+$wgHooks[ "CategoryViewer::addPage" ][] = "efBlogCommentsCategoryAddPage";
 
 function efBlogCommentsTag_Setup() {
 	global $wgParser;
@@ -66,6 +67,18 @@ function efBlogCommentsArticleFromTitle( &$title, &$article ) {
 	return true;
 }
 
+
+function efBlogCommentsCategoryAddPage( &$catView, &$title, &$row ) {
+	global $wgContLang;
+
+	if( $row->page_namespace === NS_BLOG_ARTICLE ) {
+		$this->blogs[] = $row->page_is_redirect
+			? '<span class="redirect-in-category">' . $catView->getSkin()->makeKnownLinkObj( $title ) . '</span>'
+			: $catView->getSkin()->makeSizeLinkObj( $row->page_len, $title );
+		$this->blogs_start_char[] = $wgContLang->convert( $wgContLang->firstChar( $row->cl_sortkey ) );
+	}
+	return true;
+}
 
 class BlogComments {
 
