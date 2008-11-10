@@ -102,7 +102,7 @@ function wfDoEmailPassword($username, $returnto){
 	$_REQUEST['wpMailmypassword'] = "true";
 	
 	wfSpecialUserlogin();
-	 
+
 	// see if something bombed
 	$ret = $wgOut->getHTML();
 	if(strpos($ret, 'class="errorbox"') === false){
@@ -165,8 +165,12 @@ function wfDoLoginJSONPost(){
 		$re_pattern = "/<div class=\"errorbox\"\>[^<]*<h2\>Login error\:<\/h2\>([^<]*)<\/div\>/iU";
 		preg_match($re_pattern, $temp_out, $matches);
 		if (sizeof($matches)) {
+			
 			$message = str_replace("\"", "\\\"", trim($matches[1]));
-			$output = "<script type=\"text/javascript\">alert(\"{$message}\"); location.href='{$wpSourceForm}';</script>";
+			$json = new Services_JSON();
+			$message = $json->encode( $message );
+			
+			$output = "<script type=\"text/javascript\">alert({$message}); location.href='{$wpSourceForm}';</script>";
 		}
 		else {
 			$message = "not logged in";
@@ -202,7 +206,7 @@ function wfDoRegisterJSONPost(){
 	
 	// before we do anything - check the reCaptcha
 	$ip = wfGetIP();
-	$resp = recaptcha_check_answer ($recaptcha_private_key, $ip, $wgRequest->getVal("wpCaptchaId"), $wgRequest->getVal("wpCaptchaWord"));
+	$resp = recaptcha_check_answer ($recaptcha_private_key, $ip, $wgRequest->getVal("wpCaptchaId"), $wgRequest->getVal("wpCaptchaWord")); 
 	
 	// if it failed just bail
 	if (!$resp->is_valid) {
