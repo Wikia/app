@@ -92,7 +92,7 @@ class WikiaMiniUpload {
 		global $IP, $wgRequest;
 	
 		$mFileSize = $wgRequest->getFileSize( 'wpUploadFile' );
-		$mSrcName = $wgRequest->getFileName( 'wpUploadFile' );
+		$mSrcName = stripslashes($wgRequest->getFileName( 'wpUploadFile' ));
 //		$mTempPath = $wgRequest->get
 		$filtered = wfStripIllegalFilenameChars( $mSrcName );
 		$form = new UploadForm( $wgRequest );
@@ -180,7 +180,7 @@ class WikiaMiniUpload {
 			$file->upload($wgRequest->getFileTempName('wpUploadFile'), '', '');
 			$props = array();
 			$props['file'] = $file;
-			$props['name'] = $wgRequest->getFileName('wpUploadFile');
+			$props['name'] = stripslashes($wgRequest->getFileName('wpUploadFile'));
 			$props['mwname'] = $tempname;
 			$props['upload'] = true;
 			return $this->detailsPage($props);
