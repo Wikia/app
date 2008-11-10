@@ -48,6 +48,7 @@ class ReverseParser {
 				' </dt>' => '</dt>',
 				' <pre>' => '<pre>',
 				' <h'    => '<h',
+				' <input' => '<input',
 			);
 
 			$html = strtr($html, $replacements);
