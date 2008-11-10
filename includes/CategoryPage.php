@@ -105,6 +105,7 @@ class CategoryViewer {
 			$this->getSubcategorySection() .
 			$this->getPagesSection() .
 			$this->getImageSection() .
+			$this->getOtherSection() .
 			$this->getCategoryBottom();
 
 		// Give a proper message if category is empty
@@ -326,6 +327,12 @@ class CategoryViewer {
 		} else {
 			return '';
 		}
+	}
+
+	function getOtherSection() {
+		$r = "";
+		wfRunHooks( "CategoryViewer::getOtherSection", array( &$this, &$r ) );
+		return $r;
 	}
 
 	function getCategoryBottom() {
