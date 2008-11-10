@@ -14,7 +14,7 @@ if(!defined('MEDIAWIKI')) {
 
 $wgExtensionCredits['other'][] = array(
         'name' => 'SharedHelp',
-	'version' => 0.18,
+	'version' => 0.20,
         'description' => 'Takes pages from [[w:c:Help|Help Wikia]] and inserts them into Help namespace on this wiki',
         'author' => array('Maciej Brencz', 'Inez Korczyński', 'Bartek Łapiński', "[http://www.wikia.com/wiki/User:TOR Lucas 'TOR' Garczewski]")
 );
@@ -145,11 +145,27 @@ function SharedHelpHook(&$out, &$text) {
 					$destinationUrl = $dest_url[1];
 				}
 			}
-			if(isset($destinationUrl)) {
-				global $wgServer, $wgArticlePath ;
-				$helpNs = $wgLang->getNsText(NS_HELP);
+			global $wgServer, $wgArticlePath, $wgRequest, $wgTitle, $wgUser;
+			$helpNs = $wgLang->getNsText(NS_HELP);
+			$sk = $wgUser->getSkin();
+
+			if (!empty ($_SESSION ['SH_redirected'])) {
+				$from_link = Title::newfromText( $helpNs . ":" . $_SESSION ['SH_redirected'] );				
+				$redir = $sk->makeKnownLinkObj( $from_link, '', 'redirect=no', '', '', 'rel="nofollow"' );
+                                $s = wfMsg( 'redirectedfrom', $redir );
+                                $out->setSubtitle( $s );
+				$_SESSION ['SH_redirected'] = '';
+			}
+
+			if(isset($destinationUrl)) {				
 				$destinationPage = substr( $destinationUrl, strpos( $destinationUrl, "$helpNs:") );
-				$out->redirect( $wgServer . str_replace( "$1", $destinationPage, $wgArticlePath ) );
+				$link = $wgServer . str_replace( "$1", $destinationPage, $wgArticlePath );
+				if ( 'no' != $wgRequest->getVal( 'redirect' ) ) {
+					$_SESSION ['SH_redirected'] = $wgTitle->getText();
+					$out->redirect( $link );
+				} else {
+					$content = "\n\n" . wfMsg( 'shared_help_was_redirect', "<a href=" . $link . ">$destinationPage</a>" );
+				} 
 			} else {
 				$tmp = split("\r\n\r\n", $content, 2);
 				$content = $tmp[1];
