@@ -65,13 +65,13 @@ function DisplayComments( $input , $args, &$parser ){
 	$Comment->setVoting($voting);
 	$Comment->setTitle($title);
 
-	if( ($_POST['commentid']) ){
+	if( !empty($_POST['commentid']) ){
 		$Comment->setCommentID($_POST['commentid']);
 		$Comment->delete();
 	}
 	//$output = $Comment->displayOrderForm();
 	
-	$output .=   "<div id=\"allcomments\">" . $Comment->display() . "</div>";
+	$output =   "<div id=\"allcomments\">" . $Comment->display() . "</div>";
 	
 	if(!$wgReadOnly){
 		$output .= $Comment->diplayForm();
