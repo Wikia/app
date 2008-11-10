@@ -85,5 +85,5 @@ Zmień [[Special:Preferences#prefsection-1|swoje preferencje]], aby używać wid
 'see_more' => 'Więcej...',
 'tog-disablelinksuggest' => 'Nie pokazuj sugestii linków',
 'tog-disablewysiwyg' => 'Wyłącz edytor wizualny',
+'nodiff' => 'Brak różnic',
 ) );
-?>
