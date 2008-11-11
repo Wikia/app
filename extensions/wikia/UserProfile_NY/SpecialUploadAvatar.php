@@ -305,16 +305,16 @@ function createThumbnail($imageSrc, $ext,$imgDest,$thumbWidth){
 			 if(is_file($this->avatarUploadDirectory . "/" . $wgDBname . "_" . $wgUser->mId . "_ml.png") ) unlink($this->avatarUploadDirectory . "/" . $wgDBname . "_" . $wgUser->mId . "_ml.png");	
 		}
 		global $wgMemc;
-		$key = wfMemcKey( 'user', 'profile', 'avatar', $wgUser->getID(), "s" );
+		$key = wfMemcKey( 'user', 'profile', 'avatar-1', $wgUser->getID(), "s" );
 		$data = $wgMemc->delete( $key );
 		
-		$key = wfMemcKey( 'user', 'profile', 'avatar', $wgUser->getID(), "m");
+		$key = wfMemcKey( 'user', 'profile', 'avatar-1', $wgUser->getID(), "m");
 		$data = $wgMemc->delete( $key );
 		
-		$key = wfMemcKey( 'user', 'profile', 'avatar', $wgUser->getID() , "l");
+		$key = wfMemcKey( 'user', 'profile', 'avatar-1', $wgUser->getID() , "l");
 		$data = $wgMemc->delete( $key );
 		
-		$key = wfMemcKey( 'user', 'profile', 'avatar', $wgUser->getID() , "ml");
+		$key = wfMemcKey( 'user', 'profile', 'avatar-1', $wgUser->getID() , "ml");
 		$data = $wgMemc->delete( $key );
 		if($type > 0 ){
 			//$dbr =& wfGetDB( DB_SLAVE );

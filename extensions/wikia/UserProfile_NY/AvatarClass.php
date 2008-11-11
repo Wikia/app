@@ -15,14 +15,14 @@ class wAvatar{
 	function getAvatarImage(){
 		global $wgUser, $wgDBname, $wgUploadDirectory, $wgMemc;
 		
-		$key = wfMemcKey( 'user', 'profile', 'avatar', $this->user_id, $this->avatar_size );
+		$key = wfMemcKey( 'user', 'profile', 'avatar-1', $this->user_id, $this->avatar_size );
 		$data = $wgMemc->get( $key );
 		
 		if( $data ){
 			//wfDebug("loaded avatar filename from cache\n");
 			$avatar_filename = $data;
 		}else{
-			$files = glob($wgUploadDirectory . "/avatars/" . $wgDBname . "_" . $this->user_id .  "_" . $this->avatar_size . "*");
+			$files = glob($wgUploadDirectory . "/avatars/*_" . $this->user_id .  "_" . $this->avatar_size . "*");
 			if( !empty( $files[0] ) ) {
 				$avatar_filename  = basename($files[0]) . "?" . filemtime($files[0]);
 			}else{
