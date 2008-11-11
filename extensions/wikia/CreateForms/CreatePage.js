@@ -1,3 +1,23 @@
+var $ = YAHOO.util.Dom.get;
+
+
+function $El(name) {
+	return new YAHOO.util.Element(name);
+}
+
+var $D = YAHOO.util.Dom;
+var $E = YAHOO.util.Event;
+var $$ = YAHOO.util.Dom.getElementsByClassName;
+
+var Class = {
+  create: function() {
+    return function() {
+      this.initialize.apply(this, arguments);
+    }
+  }
+}
+
+
 var wikiwyg_divs = [];
 var wikiwyg;
 
