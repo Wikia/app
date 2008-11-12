@@ -61,11 +61,22 @@ function syncRevsWithBlobs( ) {
 			if( $row->old_flags != $blob->rev_flags ) {
 				$update[ "rev_flags" ] = $row->old_flags;
 			}
-			if( $row->rev_timestamp != $blob->rev_timestamp ) {
-				$update[ "rev_timestamp" ] = $row->rev_timestamp;
+			if( $row->rev_timestamp != wfTimestamp( TS_MW, $blob->rev_timestamp ) ) {
+				$update[ "rev_timestamp" ] = wfTimestamp(TS_DB, $row->rev_timestamp );
+			}
+			if( $row->rev_user != $blob->rev_user ) {
+				$update[ "rev_user" ] = $row->rev_user;
+			}
+			if( $row->rev_user_text != $blob->rev_user_text ) {
+				$update[ "rev_user_text" ] = $row->rev_user_text;
+			}
+			if( $wgCityId != $blob->rev_wikia_id ) {
+				$update[ "rev_wikia_id" ] = $wgCityId;
 			}
 
-			print_r( $update );
+			if( count( $update ) ) {
+				print_r( $update );
+			}
 		}
 		$numMoved++;
 	}
@@ -74,13 +85,6 @@ function syncRevsWithBlobs( ) {
 /**
     [blob_id] => 6
     [rev_wikia_id] => 165
-    [rev_id] => 5090
-    [rev_page_id] => 2425
-    [rev_namespace] => 501
-    [rev_user] => 51098
-    [rev_user_text] => Eloy.wikia
-    [rev_timestamp] => 2008-11-07 13:13:19
-    [blob_text] => KT(�W�J-.Q�JT(�L-J��,	T%W�*d��U*d�����$U
-    [rev_flags] => utf-8,gzip,external
+
     [rev_ip] => 0
  **/
