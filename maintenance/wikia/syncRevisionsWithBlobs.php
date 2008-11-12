@@ -63,6 +63,7 @@ function syncRevsWithBlobs( ) {
 			}
 			if( $row->rev_timestamp != wfTimestamp( TS_MW, $blob->rev_timestamp ) ) {
 				$update[ "rev_timestamp" ] = wfTimestamp(TS_DB, $row->rev_timestamp );
+				echo "{$row->rev_timestamp} vs. {$blob->rev_timestamp}\n";
 			}
 			if( $row->rev_user != $blob->rev_user ) {
 				$update[ "rev_user" ] = $row->rev_user;
