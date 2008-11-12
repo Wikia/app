@@ -9,8 +9,8 @@ interface iAnalyticsProvider {
 	public function trackEvent($eventName, $eventDetails=array());
 }
 
-require dirname(__FILE__) . '/AnalyticsProviderQuantServe.php';
-require dirname(__FILE__) . '/AnalyticsProviderGA_Urchin.php';
+require_once dirname(__FILE__) . '/AnalyticsProviderQuantServe.php';
+require_once dirname(__FILE__) . '/AnalyticsProviderGA_Urchin.php';
 
 class AnalyticsEngine {
 
