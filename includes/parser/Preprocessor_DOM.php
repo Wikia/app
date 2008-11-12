@@ -64,6 +64,7 @@ class Preprocessor_DOM implements Preprocessor {
 	function preprocessToObj( $text, $flags = 0 ) {
 		wfProfileIn( __METHOD__ );
 		wfProfileIn( __METHOD__.'-makexml' );
+		global $wgWysiwygParserEnabled;
 
 		$rules = array(
 			'{' => array(
@@ -448,7 +449,7 @@ class Preprocessor_DOM implements Preprocessor {
 				}
 
 				# Wysiwyg
-				if($count == 2 && $curChar == "{") {
+				if($wgWysiwygParserEnabled && $count == 2 && $curChar == "{") {
 					$openAt[] = $i;
 				}
 
@@ -509,7 +510,7 @@ class Preprocessor_DOM implements Preprocessor {
 					$element .= "<title>$title</title>";
 
 					# Wysiwyg
-					if($count == 2 && $curChar == "}") {
+					if($wgWysiwygParserEnabled && $count == 2 && $curChar == "}") {
 						$closeAt[] = $i;
 						if(count($closeAt) == count($openAt)) {
 							$openIdx = $openAt[0];
@@ -846,6 +847,7 @@ class PPFrame_DOM implements PPFrame {
 	}
 
 	function expand( $root, $flags = 0 ) {
+		global $wgWysiwygParserEnabled;
 		static $depth = 0;
 		if ( is_string( $root ) ) {
 			return $root;
@@ -936,7 +938,15 @@ class PPFrame_DOM implements PPFrame {
 						if ( isset( $ret['object'] ) ) {
 							$newIterator = $ret['object'];
 						} else {
-							$out .= $ret['text'];
+							if($wgWysiwygParserEnabled) {
+								$originalCall = $xpath->query( 'originalCall', $contextNode )->item( 0 );
+								if($originalCall) {
+									$originalCall = $originalCall->textContent;
+									$out .= $ret['text']; # leave it without change for now
+								}
+							} else {
+								$out .= $ret['text'];
+							}
 						}
 					}
 				} elseif ( $contextNode->nodeName == 'tplarg' ) {
