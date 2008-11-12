@@ -14,6 +14,18 @@ class BlogTemplateClass {
 	 */ 	
 	public static $aBlogParams = array(
 		/*
+		 * <title>Cat11</title>
+		 * or 
+		 * title=TITLE
+		 * 
+		 * type: 	string 
+		 * default: Blogs
+		 */
+		'title' 		=> array ( 
+			'type' 		=> 'string',
+			'default' 	=> "Blogs",
+		),
+		/*
 		 * <category>Cat11</category>
 		 * <category>Cat12</category>
 		 * ....
@@ -115,7 +127,7 @@ class BlogTemplateClass {
 		
 		/*
 		 * show date of blog creation
-		 * showtimestamp = false (or true)
+		 * timestamp = false (or true)
 		 * 
 		 * type: 	boolean,
 		 * default: false
@@ -127,7 +139,7 @@ class BlogTemplateClass {
 
 		/*
 		 * show summary
-		 * showsummary = false (or true)
+		 * summary = false (or true)
 		 * 
 		 * type: 	boolean,
 		 * default: false
@@ -173,20 +185,20 @@ class BlogTemplateClass {
 	
 	public static function setup() {
 		global $wgParser, $wgMessageCache;
+		global $wgOut, $wgScriptPath, $wgMergeStyleVersionJS;
 		wfProfileIn( __METHOD__ );
-		
 		// variant as a parser tag: <BLOGTPL_TAG>
 		$wgParser->setHook( BLOGTPL_TAG, array( __CLASS__, "parseTag" ) );
-
 		// set empty value 
 		error_log ("************** setup ******************* \n", 3, "/tmp/moli.log");
+		$rand = $wgMergeStyleVersionJS;
+		$wgOut->addHTML( "<link rel=\"stylesheet\" type=\"text/css\" href=\"{$wgScriptPath}/extensions/wikia/Blogs/css/BlogTemplate.css\" />" );
 		// language file 
 		require_once( "BlogArticle.i18n.php" );
 		foreach( $wgBlogArticleMessages as $sLang => $aMsgs ) {
 			$wgMessageCache->addMessages( $aMsgs, $sLang );
 		}
 		wfProfileOut( __METHOD__ );
-		return true;
 	}
 	
 	public static function setMagicWord( &$magicWords, $langCode ) {
@@ -199,6 +211,7 @@ class BlogTemplateClass {
 
 	public static function parseTag( $input, $params, &$parser ) {
 		wfProfileIn( __METHOD__ );
+
 		error_log ("parseTag: input : ".$input."\n", 3, "/tmp/moli.log");
 		error_log ("parseTag: params : ".print_r($params, true)."\n", 3, "/tmp/moli.log");
 		/* parse input parameters */
@@ -219,6 +232,25 @@ class BlogTemplateClass {
 		error_log ("parseTagFunction: parser : ".print_r($parser, true)."\n", 3, "/tmp/moli.log");
 		wfProfileOut( __METHOD__ );
 		return "parseTagFunction";
+	}
+	
+	public static function getUserNameRecord($username) {
+		wfProfileIn( __METHOD__ );
+		$aResult = array();
+		if (!empty($username)) {
+			$oUser = User::newFromName($username); 
+			if ( $oUser instanceof User ) {
+				$sk = $oUser->getSkin();
+				$aResult = array(
+					"userpage" => $sk->makeLinkObj($oUser->getUserPage(), $oUser->getName()),//"<a href=\"".$oUser->getUserPage()->getLocalURL()."\">{$oUser->getName()}</a>",
+					"talkpage" => $sk->makeLinkObj($oUser->getTalkPage(), wfMsg('talkpagelinktext')),//"<a href=\"".$oUser->getTalkPage()->getLocalURL()."\">".wfMsg('talk')."</a>",
+					"contribs" => $sk->userLink($oUser->getId(), wfMsg('contribslink')),//"<a href=\"".Skin::makeSpecialUrlSubpage('Contributions', $oUser->getName())."\">".wfMsg('contrib')."</a>",
+				);
+				error_log ("result: ".print_r($aResult, true)."\n", 3, "/tmp/moli.log");
+			} 
+		}
+		wfProfileOut( __METHOD__ );
+		return $aResult;
 	}
 
 	/*
@@ -283,20 +315,29 @@ class BlogTemplateClass {
 			self::$aWhere["page_is_redirect"] = 0;
 		}
 		/* default options */
+		/* order */
 		if ( !isset(self::$aOptions['order']) ) {
 			self::__makeOrder('order', self::$aBlogParams['order']['pattern'][self::$aBlogParams['order']['default']]);
 		}
+		/* ordertype */
 		if ( !isset(self::$aOptions['ordertype']) ) {
 			self::__makeListOption('ordertype', self::$aBlogParams['ordertype']['default']);
 		}
+		/* count */
 		if ( !isset(self::$aOptions['count']) ) {
 			self::__makeIntOption('count', self::$aBlogParams['count']['default']);
 		}
+		/* offset */
 		if ( !isset(self::$aOptions['offset']) ) {
 			self::__makeIntOption('offset', self::$aBlogParams['offset']['default']);
 		}
+		/* style */
 		if ( !isset(self::$aOptions['style']) ) {
 			self::__makeListOption('style', self::$aBlogParams['style']['default']);
+		}
+		/* title */
+		if ( !isset(self::$aOptions['title']) ) {
+			self::__makeStringOption('title', wfMsg('blog_defaulttitle'));
 		}
     	wfProfileOut( __METHOD__ );
 	}
@@ -336,6 +377,14 @@ class BlogTemplateClass {
     	wfProfileOut( __METHOD__ );
 	}
 
+	private static function __makeStringOption($sParamName, $sParamValue) {
+    	wfProfileIn( __METHOD__ );
+    	wfDebugLog( __METHOD__, "__makeStringOption: ".$sParamName.",".$sParamValue."\n" );
+		error_log ("__makeStringOption: ".$sParamName.",".$sParamValue."\n", 3, "/tmp/moli.log");
+		self::$aOptions[$sParamName] = $sParamValue;
+    	wfProfileOut( __METHOD__ );
+	}
+
 	private static function __makeIntOption($sParamName, $sParamValue) {
     	wfProfileIn( __METHOD__ );
     	wfDebugLog( __METHOD__, "__makeIntOption: ".$sParamName.",".$sParamValue."\n" );
@@ -353,7 +402,7 @@ class BlogTemplateClass {
 	private static function __addRevisionTable() {
     	wfProfileIn( __METHOD__ );
 		$sRevisionTable = 'revision';
-		if ( !in_array(self::$aTables, $sRevisionTable) ) {
+		if ( !in_array($sRevisionTable, self::$aTables) ) {
 			self::$aWhere[] = "rev_page = page_id";
 			self::$aTables[] = $sRevisionTable;
 			if ( BLOGS_TIMESTAMP ) {
@@ -421,13 +470,64 @@ class BlogTemplateClass {
     	return $aPages;
 	}
 	
+	private static function __getRevisionText($iRev) {
+		global $wgLang;
+		wfProfileIn( __METHOD__ );
+		$sResult = "";
+		/* parse summary */
+		if ( (!empty($iRev)) && (!empty(self::$aOptions['summary'])) ) {
+			$oRev = Revision::newFromId($iRev);
+			$iTruncate = (self::$aOptions['summarylength'] < 0) ? self::$aOptions['summarylength'] : (self::$aOptions['summarylength'] * -1);
+			$sBlogText = $oRev->revText();
+			/* Clear revision. */
+			//$sBlogText = preg_replace('/^\s*=+\s*(.*?)\s*=+\s*$/', '$1', $sBlogText);
+			/* Remove possible unfinished links */
+			//$sBlogText = preg_replace( '/\[\[([^\]]*)\]?$/', '$1', $sBlogText );
+			/* parse truncated text */			
+			$localParser = new Parser();
+			#$sResult = $localParser->stripSectionName($sBlogText);
+			$parserOutput = $localParser->parse($sBlogText, Title::newFromId($oRow->page_id), ParserOptions::newFromUser($wgUser));
+
+			$tmp = preg_replace('/<table[^>]*>.*<\/table>/siU', '', $parserOutput->getText());
+			$tmp = preg_replace('/<div[^>]*>.*<\/div>/siU', '', $tmp);
+			$tmp = preg_replace('/<style[^>]*>.*<\/style>/siU', '', $tmp);
+			$tmp = preg_replace('/<script[^>]*>.*<\/script>/siU', '', $tmp);
+			$tmp = preg_replace('/\n|\t/', ' ', $tmp);
+			$tmp = strip_tags($tmp, '<p>');
+		
+			$matches = null;
+			preg_match_all('/<p>(.*)<\/p>/siU', $tmp, $matches);
+			error_log ("matches = ".print_r($matches, true)."\n", 3, "/tmp/moli.log");
+			if (count($matches)) {
+				$paragraphs = $matches[1];
+				foreach ( $paragraphs as $paragraph ) {
+					$paragraph = trim($paragraph);
+					if (!empty($paragraph)) {
+						$sResult .= $paragraph;
+						if (strlen($sResult) >= self::$aOptions['summarylength']) {
+							break;
+						}
+					}
+				}
+			}
+
+		}
+		wfProfileOut( __METHOD__ );
+		return $sResult;
+	}
+	
 	private static function __getResults() {
+		global $wgLang;
     	wfProfileIn( __METHOD__ );
     	/* main query */
     	$aResult = array();
+    	$aFields = array( 'distinct(page_id) as page_id', 'page_namespace', 'page_title', 'page_touched', 'unix_timestamp(page_touched) as timestamp', 'page_latest as rev_id' );
+    	if ( in_array('revision', self::$aTables) ) {
+    		$aFields[] = 'rev_user_text as username';
+		}
 		$res = self::$dbr->select(
 			array_map(array(self::$dbr, 'tableName'), self::$aTables),  
-			array( 'distinct(page_id) as page_id', 'page_namespace', 'page_title', 'page_touched' ), 
+			$aFields, 
 			self::$aWhere, 
 			__METHOD__, 
 			self::__makeDBOrder() 
@@ -437,7 +537,11 @@ class BlogTemplateClass {
 				"page" 			=> $oRow->page_id,
 				"namespace" 	=> $oRow->page_namespace,
 				"title" 		=> $oRow->page_title,
-				"page_touched" 	=> $oRow->page_touched
+				"page_touched" 	=> $oRow->page_touched,
+				"timestamp" 	=> $oRow->timestamp,
+				"username"		=> (isset($oRow->username)) ? $oRow->username : "",
+				"text"			=> self::__getRevisionText($oRow->rev_id),
+				"revision"		=> $oRow->rev_id,
 			);
 		}
 		self::$dbr->freeResult( $res );
@@ -446,7 +550,7 @@ class BlogTemplateClass {
 	}
 							
     private static function __parse( $aInput, $aParams, &$parser ) {
-    	global $wgLang, $wgUser, $wgCityId;
+    	global $wgLang, $wgUser, $wgCityId, $wgParser;
     	
     	wfProfileIn( __METHOD__ );
     	$sResult = "";
@@ -525,7 +629,14 @@ class BlogTemplateClass {
 					case 'summary'	:
 						if ( !empty($aParamValues) && is_array($aParamValues) ) {
 							list ($sParamValue) = $aParamValues;
+							self::__addRevisionTable();
 							self::__makeBoolOption($sParamName, $sParamValue);
+						}
+						break;
+					case 'title'	:
+						if ( !empty($aParamValues) && is_array($aParamValues) ) {
+							list ($sParamValue) = $aParamValues;
+							self::__makeStringOption($sParamName, $sParamValue);
 						}
 						break;
 				}
@@ -558,9 +669,13 @@ class BlogTemplateClass {
 					case 'summarylength':
 						self::__makeIntOption($sParamName, $sParamValue);
 						break;
-					case 'timestamp':
-					case 'summary'	:
+					case 'timestamp'	:
+					case 'summary'		:
+						self::__addRevisionTable();
 						self::__makeBoolOption($sParamName, $sParamValue);
+						break;
+					case 'title' 		:	
+						self::__makeStringOption($sParamName, $sParamValue);
 						break;
 				}
 			}
@@ -576,7 +691,8 @@ class BlogTemplateClass {
 				"cityId"		=> $wgCityId,
 				"wgLang"		=> $wgLang,
 				"aRows"			=> $aResult,
-				"options"		=> self::$aOptions,
+				"aOptions"		=> self::$aOptions,
+				"wgParser"		=> $wgParser,
 				"comments"		=> 0, // todo
 			));
 
