@@ -1224,7 +1224,7 @@ function editMenuToggle() {
 				}
 			}
 	
-			sXMLHTTP.open("POST","index.php?action=ajax", true );
+			sXMLHTTP.open("POST", wgServer + "/index.php?action=ajax", true );
 	
 			sXMLHTTP.setRequestHeader('Content-Type','application/x-www-form-urlencoded');
 			sXMLHTTP.send('rs=wfCommentSubmit&rsargs[]=' + document.commentform.pid.value + '&rsargs[]=' + ((!document.commentform.comment_parent_id.value)?0:document.commentform.comment_parent_id.value) + '&rsargs[]='+ FixStr(document.commentform.comment_text.value) + '&rsargs[]=' + document.commentform.sid.value + '&rsargs[]=' + document.commentform.mk.value);
