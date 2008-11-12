@@ -450,7 +450,7 @@ CONTROL;
 				$difftext = $wgMemc->get( $key );
 				if ( $difftext ) {
 					wfIncrStats( 'diff_cache_hit' );
-					$difftext = $this->localiseLineNumbers( $difftext );
+					$difftext = $this->localiseLineNumbers( $this->addNoDiffMsg($difftext) );
 					$difftext .= "\n<!-- diff cache key $key -->\n";
 					wfProfileOut( __METHOD__ );
 					return $difftext;
@@ -477,7 +477,7 @@ CONTROL;
 		}
 		// Replace line numbers with the text in the user's language
 		if ( $difftext !== false ) {
-			$difftext = $this->localiseLineNumbers( $difftext );
+			$difftext = $this->localiseLineNumbers( $this->addNoDiffMsg($difftext) );
 		}
 		wfProfileOut( __METHOD__ );
 		return $difftext;
@@ -584,11 +584,6 @@ CONTROL;
 	 */
 	function localiseLineNumbers( $text ) {
 
-		// wikia: #3907
-		if (strpos($text, '<!--LINE ') === false) {
-			return '<tr><td colspan=\'4\' align=\'center\' class=\'diff-nodiff\'>'.wfMsg('nodiff').'</td></tr>';
-		}
-
 		return preg_replace_callback( '/<!--LINE (\d+)-->/',
 			array( &$this, 'localiseLineNumbersCb' ), $text );
 	}
@@ -598,6 +593,15 @@ CONTROL;
 		return wfMsgExt( 'lineno', array('parseinline'), $wgLang->formatNum( $matches[1] ) );
 	}
 
+	// wikia: #3907
+	function addNoDiffMsg( $text ) {
+		if (strpos($text, '<!--LINE ') === false) {
+			return '<tr><td colspan=\'4\' align=\'center\' class=\'diff-nodiff\'>'.wfMsg('nodiff').'</td></tr>';
+		}
+		else {
+			return $text;
+		}
+	}
 
 	/**
 	 * If there are revisions between the ones being compared, return a note saying so.
