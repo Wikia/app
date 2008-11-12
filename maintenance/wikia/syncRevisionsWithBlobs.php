@@ -22,9 +22,8 @@ function syncRevsWithBlobs( ) {
 	$numMoved = 0;
 
 	$res = $dbr->query(
-		"SELECT * FROM revision r1 FORCE INDEX (PRIMARY), text t2, page
+		"SELECT * FROM revision r1 FORCE INDEX (PRIMARY), text t2
 		WHERE old_id = rev_text_id
-		AND rev_page = page_id
 		AND old_flags LIKE '%external%'
 		ORDER BY rev_timestamp, rev_id",
 		$fname
@@ -44,6 +43,7 @@ function syncRevsWithBlobs( ) {
 			array( "blob_id" => $id ),
 			__METHOD__
 		);
+
 		$update = array();
 		if( isset( $blob->blob_id ) ) {
 			/**
@@ -52,12 +52,16 @@ function syncRevsWithBlobs( ) {
 			if( $row->rev_id != $blob->rev_id) {
 				$update[ "rev_id" ] = $row->rev_id;
 			}
-			if( $row->page_id != $blob->rev_page_id ) {
-				$update[ "rev_page_id" ] = $row->page_id;
-			}
-			if( $row->page_namespace != $blob->rev_namespace ) {
-				$update[ "rev_namespace" ] = $row->page_namepace;
-			}
+
+			#find how get page data if not defined
+			#
+			#if( $row->page_id != $blob->rev_page_id ) {
+			#	$update[ "rev_page_id" ] = $row->page_id;
+			#}
+			#if( $row->page_namespace != $blob->rev_namespace ) {
+			#	$update[ "rev_namespace" ] = $row->page_namepace;
+			#}
+
 			if( $row->old_flags != $blob->rev_flags ) {
 				$update[ "rev_flags" ] = $row->old_flags;
 			}
@@ -84,7 +88,6 @@ function syncRevsWithBlobs( ) {
 					),
 					__METHOD__
 				);
-				print_r( $update );
 				$numMoved++;
 			}
 		}
