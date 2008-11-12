@@ -83,7 +83,7 @@ function syncRevsWithBlobs( ) {
 					),
 					__METHOD__
 				);
-				print_r( $count );
+				print_r( $update );
 				$numMoved++;
 			}
 		}
