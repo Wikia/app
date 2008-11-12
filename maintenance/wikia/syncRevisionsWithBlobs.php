@@ -79,10 +79,11 @@ function syncRevsWithBlobs( ) {
 					"blobs",
 					$update,
 					array(
-						"blob_id" => $id
+						"blob_id" => $blob->blob_id
 					),
 					__METHOD__
 				);
+				print_r( $count );
 				$numMoved++;
 			}
 		}
