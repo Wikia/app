@@ -43,7 +43,6 @@ function syncRevsWithBlobs( ) {
 			array( "blob_id" => $id ),
 			__METHOD__
 		);
-
 		$update = array();
 		if( isset( $blob->blob_id ) ) {
 			/**
@@ -89,6 +88,7 @@ function syncRevsWithBlobs( ) {
 					),
 					__METHOD__
 				);
+				$dbwExt->commit();
 				$numMoved++;
 			}
 		}
