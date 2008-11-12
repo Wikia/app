@@ -123,7 +123,8 @@ var FCKDomTools =
 		{
 			eChildNode = node.lastChild ;
 
-			if ( eChildNode && eChildNode.nodeType == 1 && eChildNode.nodeName.toLowerCase() == 'br' )
+			// wikia fix for wasHTML br tags
+			if ( eChildNode && eChildNode.nodeType == 1 && eChildNode.nodeName.toLowerCase() == 'br' && !eChildNode.hasAttribute('washtml') )
 			{
 				// Use "eChildNode.parentNode" instead of "node" to avoid IE bug (#324).
 				eChildNode.parentNode.removeChild( eChildNode ) ;
