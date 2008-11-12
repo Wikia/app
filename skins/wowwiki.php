@@ -455,7 +455,7 @@ border="0" alt="Google"></img></a>
 }
 
 function google_urchin() {
-	require dirname(__FILE__) . "/../extensions/wikia/AnalyticsEngine/AnalyticsEngine.php";
+	require_once dirname(__FILE__) . "/../extensions/wikia/AnalyticsEngine/AnalyticsEngine.php";
 	$out = AnalyticsEngine::track('GA_Urchin', AnalyticsEngine::EVENT_PAGEVIEW);
 	global $wgCityId;
 	$out.= AnalyticsEngine::track('GA_Urchin', 'onewiki', array($wgCityId));

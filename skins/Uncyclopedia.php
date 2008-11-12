@@ -14,7 +14,7 @@ if( !defined( 'MEDIAWIKI' ) )
 
 require_once('includes/SkinTemplate.php');
 $wgValidSkinNames['uncyclopedia'] = 'Uncyclopedia default';
-require "extensions/wikia/AnalyticsEngine/AnalyticsEngine.php";
+require_once "extensions/wikia/AnalyticsEngine/AnalyticsEngine.php";
 
 /**
  * Inherit main code from SkinTemplate, set the CSS and template filter.

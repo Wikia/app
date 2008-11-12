@@ -14,7 +14,7 @@ if(!defined('MEDIAWIKI')) {
 
 $wgAdCalled = array();
 
-require dirname(__FILE__) . "/../extensions/wikia/AnalyticsEngine/AnalyticsEngine.php";
+require_once dirname(__FILE__) . "/../extensions/wikia/AnalyticsEngine/AnalyticsEngine.php";
 
 class SkinMonaco extends SkinTemplate {
 
@@ -944,7 +944,7 @@ class MonacoTemplate extends QuickTemplate {
 		<meta http-equiv="Content-Type" content="<?php $this->text('mimetype') ?>; charset=<?php $this->text('charset') ?>" />
                 <!-- Skin = <?php echo basename(__FILE__) ?> -->
 		<?php $this->html('headlinks') ?>
-		
+
 		<title><?php $this->text('pagetitle') ?></title>
 		<?php print Skin::makeGlobalVariablesScript( $this->data ); ?>
 		<style type="text/css">/*<![CDATA[*/
@@ -1245,10 +1245,10 @@ if ($wgOut->isArticle()){
 ?>
 <?php		wfProfileIn( __METHOD__ . '-article'); ?>
 			<div id="article" <?php if($this->data['body_ondblclick']) { ?>ondblclick="<?php $this->text('body_ondblclick') ?>"<?php } ?>>
-				<?php 
-				// Testing putting the leader board above the title 
+				<?php
+				// Testing putting the leader board above the title
 				if (! ArticleAdLogic::isMainPage() && AdEngine::getInstance()->getBucketName() == 'lp_at'){
-					// Bucket test to put the ad ad the top 
+					// Bucket test to put the ad ad the top
 					echo $topAdCode;
 					$topAdCodeDisplayed = true;
 				}
@@ -1293,14 +1293,14 @@ if ($wgOut->isArticle()){
 			global $wgContLang;
 			if ($wgOut->isArticle() &&
 			    !$wgContLang->isRTL() && // Since this is in the left nav, not suitable for right-to-left languages
-		            !ArticleAdLogic::isMainPage() && 
-			     ArticleAdLogic::isContentPage() && 
-			     ArticleAdLogic::isSuperLongArticle($this->data['bodytext'])) { 
+		            !ArticleAdLogic::isMainPage() &&
+			     ArticleAdLogic::isContentPage() &&
+			     ArticleAdLogic::isSuperLongArticle($this->data['bodytext'])) {
 				echo '<div style="position: absolute; height: 600px; width: 160px; margin-top: -600px; left: -190px;">' .
 					AdEngine::getInstance()->getPlaceHolderDiv('LEFT_SKYSCRAPER_3', true) .
 				     '</div>' . "\n";
 			}
-					
+
 		wfProfileOut( __METHOD__ . '-article'); ?>
 
 			<!-- ARTICLE FOOTER -->

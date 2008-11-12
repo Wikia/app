@@ -11,7 +11,7 @@ if (!defined('MEDIAWIKI')) die();
  * @license http://www.gnu.org/copyleft/gpl.html GNU General Public License 2.0 or later
  */
 
-require dirname(__FILE__) . "/../extensions/wikia/AnalyticsEngine/AnalyticsEngine.php";
+require_once dirname(__FILE__) . "/../extensions/wikia/AnalyticsEngine/AnalyticsEngine.php";
 
 class SkinHome extends SkinTemplate {
 
@@ -344,7 +344,7 @@ class HomeTemplate extends QuickTemplate {
 					</td>
 				</tr>
 				</table>';
-		
+
 		$entertainment_featured = '<h1>Wikia Entertainment is home to over 1,000 wiki fansites built by millions of Movies, TV, Comics and Anime addicts.</h1>
 				<table cellspacing="0">
 				<tr>
@@ -373,9 +373,9 @@ class HomeTemplate extends QuickTemplate {
 					</td>
 				</tr>
 				</table>';
-		
+
 		$gaming_non_featured = '<h1><a href="http://gaming.wikia.com">Gaming</a></h1>
-					Everything from MMO and RPGs to Fighters and Shooters... 
+					Everything from MMO and RPGs to Fighters and Shooters...
 					<ul>
 						<li><a href="http://www.wowwiki.com">World of Warcraft</a></li>
 						<li><a href="http://fallout.wikia.com">Fallout</a></li>
@@ -438,7 +438,7 @@ class HomeTemplate extends QuickTemplate {
 
 <?= Skin::makeGlobalVariablesScript( $this->data ); ?>
 
-<!-- Dependency --> 
+<!-- Dependency -->
 <script type="text/javascript" src="http://yui.yahooapis.com/2.5.2/build/yahoo/yahoo-min.js" ></script>
 
 <!-- Event source file -->
@@ -594,7 +594,7 @@ class HomeTemplate extends QuickTemplate {
 <div class="shrinkwrap clearfix">
 	<div id="homepage_left_outside">
 		<div id="homepage_left_inside">
-		
+
 			<div id="featured_box">
 				<?php
 					echo $featured_hub;
@@ -648,7 +648,7 @@ class HomeTemplate extends QuickTemplate {
 	<div id="homepage_right">
 		<div style="position: absolute; top: 15px; left: 50%;"><a href="http://requests.wikia.com" class="big_button orange" style="margin-left: -50%;"><big>Create a Wiki</big><small></small></a></div>
 		<div class="box yellow" style="background-image: url(<?php $this->text('stylepath') ?>/home/images/new_to_wikis_accent.gif); background-position: 240px 100%; background-repeat: no-repeat; padding-right: 70px;">
-			<h1>New to Wikis?</h1> 
+			<h1>New to Wikis?</h1>
 			"Wiki" comes from the Hawaiian word for fast. Wikia's wikis are websites where editing is simple and quick.<br />
 			<a href="http://help.wikia.com/wiki/Help:Video_demos">Take a video tour</a> to learn more.
 		</div>

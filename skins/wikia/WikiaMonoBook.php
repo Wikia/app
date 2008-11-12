@@ -14,7 +14,7 @@ if(!defined('MEDIAWIKI')) {
 	die(-1);
 }
 
-require dirname(__FILE__) . "/../../extensions/wikia/AnalyticsEngine/AnalyticsEngine.php";
+require_once dirname(__FILE__) . "/../../extensions/wikia/AnalyticsEngine/AnalyticsEngine.php";
 
 class WikiaSkinMonoBook extends SkinTemplate {
 
@@ -56,8 +56,8 @@ class WikiaSkinMonoBook extends SkinTemplate {
 			$tpl->set('ads_topright', AdServer::getInstance()->getAd('tr'));
 			$tpl->set('ads_bot', AdServer::getInstance()->getAd('b'));
 		    $tpl->set('ads_columngoogle',  '<!-- USING ad server! -->'."\n".'<div id="column-google" class="noprint">'."\n".
-	
-			AdEngine::getInstance()->getSetupHtml() . 
+
+			AdEngine::getInstance()->getSetupHtml() .
 			'<div id="wikia_header" style="display:none"></div>' . // Hack because ads have code that references this. Awful.
     			'<div id="column-google-topright">'.AdEngine::getInstance()->getAd('RIGHT_SPOTLIGHT_1').'</div>'."\n".
 			'<div id="column-google-right">'.AdEngine::getInstance()->getAd('RIGHT_SKYSCRAPER_1').'</div>'."\n".
@@ -67,11 +67,11 @@ class WikiaSkinMonoBook extends SkinTemplate {
 		}
 
 		global $wgCityId;
-		$tpl->set('ads_bottomjs', 
-			AnalyticsEngine::track('GA_Urchin', AnalyticsEngine::EVENT_PAGEVIEW) . 
+		$tpl->set('ads_bottomjs',
+			AnalyticsEngine::track('GA_Urchin', AnalyticsEngine::EVENT_PAGEVIEW) .
 			AnalyticsEngine::track('GA_Urchin', 'hub', AdEngine::getCachedCategory()) .
 			AnalyticsEngine::track('GA_Urchin', 'onewiki', array($wgCityId)) .
-			AnalyticsEngine::track('QuantServe', AnalyticsEngine::EVENT_PAGEVIEW) 
+			AnalyticsEngine::track('QuantServe', AnalyticsEngine::EVENT_PAGEVIEW)
 		);
 
 		global $wgStyleVersion, $wgStylePath;
