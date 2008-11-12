@@ -51,7 +51,7 @@ function syncRevsWithBlobs( ) {
 			 */
 			if( $row->rev_id != $blob->rev_id ) {
 				$update[ "rev_id" ] = $blob->rev_id;
-				echo "{$row->rev_id} vs. {$blob->rev_timestamp}\n";
+				echo "{$row->rev_id} vs. {$blob->rev_id}\n";
 			}
 
 			#find how get page data if not defined
