@@ -14,7 +14,7 @@ if (!defined('MEDIAWIKI')) die();
  */
 global $IP;
 require_once("$IP/includes/SkinTemplate.php");
-require("$IP/extensions/wikia/AnalyticsEngine/AnalyticsEngine.php");
+require_once("$IP/extensions/wikia/AnalyticsEngine/AnalyticsEngine.php");
 
 class SkinQuartz extends SkinTemplate {
 
