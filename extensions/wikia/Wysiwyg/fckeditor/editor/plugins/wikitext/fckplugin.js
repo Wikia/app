@@ -169,7 +169,6 @@ FCK.Events.AttachEvent( 'OnAfterSetHTML', function() {
 		// macbre: fix issue with input tags as last child (can't move to end of the line)
 		var placeholders = FCK.EditorDocument.getElementsByTagName('input');
 		for (p=0; p<placeholders.length; p++) {
-
 			// disable context menu
 			placeholders[p].setAttribute('_fckContextMenuDisabled', true);
 
@@ -194,6 +193,13 @@ FCK.Events.AttachEvent( 'OnAfterSetHTML', function() {
 			// and at the beginning of line
 			if (placeholders[p].parentNode.firstChild == placeholders[p]) {
 				FCK.InsertDirtySpanBefore(placeholders[p]);
+			}
+
+			// templates preview
+			refId = placeholders[p].getAttribute('refid');
+
+			if (refId && FCK.wysiwygData[refId] && FCK.wysiwygData[refId].type == 'curly brackets') {
+				FCK.TemplatePreviewAdd(placeholders[p]);
 			}
 		}
 
@@ -259,6 +265,53 @@ FCK.CheckInternalLink = function(title, link) {
 		argument: {'FCK': FCK, 'link': link, 'title': title}
 	}
 	FCK.YAHOO.util.Connect.asyncRequest("POST", window.parent.wgScriptPath + '/api.php', callback, "action=query&format=json&prop=info&titles=" +   encodeURIComponent(title) );
+}
+
+// onmouseover template preview
+FCK.TemplatePreview = false;
+
+FCK.TemplatePreviewAdd = function(placeholder) {
+	FCK.log('registering template preview for refId #' + placeholder.getAttribute('refid'));
+
+	FCKTools.AddEventListener(placeholder, 'mouseover', function(e) {
+		FCK.TemplatePreviewShow(FCK.YAHOO.util.Event.getTarget(e));
+	});
+	
+	FCKTools.AddEventListener(placeholder, 'mouseout', function(e) {
+		FCK.TemplatePreviewHide();
+	});
+
+}
+
+FCK.TemplatePreviewShow = function(placeholder) {
+	var metaData = FCK.wysiwygData[placeholder.getAttribute('refid')];
+	FCK.log(metaData);
+
+	// initialize preview DIV
+	if (!FCK.TemplatePreview) {
+		FCK.TemplatePreview = FCK.EditorDocument.createElement('DIV');
+		FCK.TemplatePreview.id = 'wysiwygTemplatePreview';
+		FCK.TemplatePreview.setAttribute('type', '_moz');
+		FCK.EditorDocument.body.appendChild(FCK.TemplatePreview);
+	}
+
+	// calculate placement
+	var x = placeholder.offsetLeft;
+	var y = placeholder.offsetTop + placeholder.clientHeight + 3;
+
+	FCK.TemplatePreview.style.left = parseInt(x) + 'px';
+	FCK.TemplatePreview.style.top = parseInt(y) + 'px';
+
+	// content
+	FCK.TemplatePreview.innerHTML = '<tt>' + metaData.description + '</tt>';
+
+	// show
+	FCK.TemplatePreview.style.visibility = 'visible';
+}
+
+FCK.TemplatePreviewHide = function() {
+	FCK.log('hide');
+	FCK.TemplatePreview.style.visibility = 'hidden';
 }
 
 // YUI reference

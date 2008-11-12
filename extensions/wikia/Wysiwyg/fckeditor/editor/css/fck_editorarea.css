@@ -75,6 +75,16 @@ span._moz_dirty
 	margin: 0 2px;
 }
 
+#wysiwygTemplatePreview {
+	height: 125px;
+	width: 300px;
+	border: solid 1px #666;
+	background-color: #fff;
+	position: absolute;
+	z-index: 50;
+	visibility: hidden;
+}
+
 /**
  * Just uncomment the following block if you want to avoid spaces between
  * paragraphs. Remember to apply the same style in your output front end page.
