@@ -234,7 +234,7 @@ class ReverseParser {
 						// remove <br /> when it's the first child of header tag
 						// and add empty line before paragraph
 						if ($node->firstChild->nodeType == XML_ELEMENT_NODE && $node->firstChild->nodeName == 'br') {
-							$textContent = substr($textContent, 6);
+							$textContent = substr($textContent, strpos($textContent, '/>')+2); // remove <br /> tag
 							$out = "\n\n";
 						}
 
