@@ -26,7 +26,7 @@ function syncRevsWithBlobs( ) {
 		WHERE old_id = rev_text_id
 		AND old_flags LIKE '%external%'
 		ORDER BY rev_timestamp, rev_id",
-		$fname
+		__METHOD__
 	);
 	$dbrExt = wfGetDBExt( DB_SLAVE );
 	$dbwExt = wfGetDBExt( DB_MASTER );
@@ -49,8 +49,9 @@ function syncRevsWithBlobs( ) {
 			/**
 			 * compare things from revisions with blobs
 			 */
-			if( $row->rev_id != $blob->rev_id) {
-				$update[ "rev_id" ] = $row->rev_id;
+			if( $row->rev_id != $blob->rev_id ) {
+				$update[ "rev_id" ] = $blob->rev_id;
+				echo "{$row->rev_id} vs. {$blob->rev_timestamp}\n";
 			}
 
 			#find how get page data if not defined
