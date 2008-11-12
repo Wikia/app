@@ -7,7 +7,7 @@ var wgIsMainpage=true;
 $wgDBname = "muppet";
 $wgCityId = "831";
 ini_set('display_errors', true);
-require 'AnalyticsEngine.php';
+require_once 'AnalyticsEngine.php';
 echo AnalyticsEngine::track('QuantServe', AnalyticsEngine::EVENT_PAGEVIEW);
 echo AnalyticsEngine::track('GA_Urchin', AnalyticsEngine::EVENT_PAGEVIEW);
 ?>
