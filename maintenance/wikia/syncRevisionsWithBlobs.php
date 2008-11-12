@@ -20,7 +20,6 @@ function syncRevsWithBlobs( ) {
 
 	$ext = new ExternalStoreDB;
 	$numMoved = 0;
-	$numStubs = 0;
 
 	$res = $dbr->query(
 		"SELECT * FROM revision r1 FORCE INDEX (PRIMARY), text t2, page
@@ -76,15 +75,11 @@ function syncRevsWithBlobs( ) {
 
 			if( count( $update ) ) {
 				print_r( $update );
+				$numMoved++;
 			}
 		}
-		$numMoved++;
+
 	}
 	$dbr->freeResult( $res );
+	echo "Updated {$numMoved}\n";
 }
-/**
-    [blob_id] => 6
-    [rev_wikia_id] => 165
-
-    [rev_ip] => 0
- **/
