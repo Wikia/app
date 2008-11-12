@@ -30,6 +30,7 @@ function syncRevsWithBlobs( ) {
 		$fname
 	);
 	$dbrExt = wfGetDBExt( DB_SLAVE );
+	$dbwExt = wfGetDBExt( DB_MASTER );
 
 	while ( $row = $dbr->fetchObject( $res ) ) {
 #		print_r( $row );
@@ -74,12 +75,19 @@ function syncRevsWithBlobs( ) {
 			}
 
 			if( count( $update ) ) {
-				print_r( $update );
+				$dbwExt->update(
+					"blobs",
+					$update,
+					array(
+						"blob_id" => $id
+					),
+					__METHOD__
+				);
 				$numMoved++;
 			}
 		}
 
 	}
 	$dbr->freeResult( $res );
-	echo "Updated {$numMoved}\n";
+	echo "Updated {$numMoved} rows\n";
 }
