@@ -938,12 +938,9 @@ class PPFrame_DOM implements PPFrame {
 						if ( isset( $ret['object'] ) ) {
 							$newIterator = $ret['object'];
 						} else {
-							if($wgWysiwygParserEnabled) {
-								$originalCall = $xpath->query( 'originalCall', $contextNode )->item( 0 );
-								if($originalCall) {
-									$originalCall = $originalCall->textContent;
-									$out .= $ret['text']; # leave it without change for now
-								}
+							if($wgWysiwygParserEnabled && ($originalCall = $xpath->query( 'originalCall', $contextNode )->item( 0 ))) {
+								$originalCall = $originalCall->textContent;
+								$out .= $ret['text']; # leave it without change for now
 							} else {
 								$out .= $ret['text'];
 							}
