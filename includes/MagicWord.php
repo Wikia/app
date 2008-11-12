@@ -659,12 +659,15 @@ class MagicWordArray {
 			foreach ( $matches as $m ) {
 				list( $name, $param ) = $this->parseMatch( $m );
 				$found[$name] = $param;
+
+				if ($wgWysiwygParserEnabled) {
+					$tmp = '__'.strtoupper($name).'__';
+					$FCKtmp = Wysiwyg_SetRefId('double underscore', array('text' => &$tmp), false);
+					$text = preg_replace( "/{$tmp}/iuS", $FCKtmp, $text );
+				}
 			}
-			if ($wgWysiwygParserEnabled && preg_match( $regex, $text, $keyword )) {
-				$tmp = $keyword[0];
-				$FCKtmp = Wysiwyg_SetRefId('double underscore', array('text' => &$tmp), false);
-				$text = preg_replace( $regex, $FCKtmp, $text );
-			} else {	//original code
+			if (!$wgWysiwygParserEnabled) {
+				//original code
 				$text = preg_replace( $regex, '', $text );
 			}
 		}
