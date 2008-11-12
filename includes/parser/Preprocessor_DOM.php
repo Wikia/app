@@ -119,6 +119,7 @@ class Preprocessor_DOM implements Preprocessor {
 		$noMoreGT = false;         # True if there are no more greater-than (>) signs right of $i
 		$findOnlyinclude = $enableOnlyinclude; # True to ignore all input up to the next <onlyinclude>
 		$fakeLineStart = true;     # Do a line-start run without outputting an LF character
+		$openAt = $closeAt = array(); # Wysiwyg
 
 		while ( true ) {
 			//$this->memCheck();
@@ -445,6 +446,12 @@ class Preprocessor_DOM implements Preprocessor {
 					# Add literal brace(s)
 					$accum .= htmlspecialchars( str_repeat( $curChar, $count ) );
 				}
+
+				# Wysiwyg
+				if($count == 2 && $curChar == "{") {
+					$openAt[] = $i;
+				}
+
 				$i += $count;
 			}
 
@@ -500,6 +507,19 @@ class Preprocessor_DOM implements Preprocessor {
 
 					$element = "<$name$attr>";
 					$element .= "<title>$title</title>";
+
+					# Wysiwyg
+					if($count == 2 && $curChar == "}") {
+						$closeAt[] = $i;
+						if(count($closeAt) == count($openAt)) {
+							$openIdx = $openAt[0];
+							$closeIdx = $closeAt[count($closeAt)-1];
+							$originalCall = substr($text, $openIdx, $closeIdx-$openIdx+2);
+							$element .= "<originalCall><![CDATA[$originalCall]]></originalCall>";
+							$openAt = $closeAt = array();
+						}
+					}
+
 					$argIndex = 1;
 					foreach ( $parts as $partIndex => $part ) {
 						if ( isset( $part->eqpos ) ) {
