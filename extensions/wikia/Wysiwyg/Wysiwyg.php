@@ -349,6 +349,11 @@ function Wysiwyg_WikiTextToHtml($wikitext, $articleId = -1, $encode = false) {
 	$html = $wysiwygParser->parse($wikitext, $title, $options)->getText();
 	$wgWysiwygParserEnabled = false;
 
+	// replace placeholders with HTML
+	if (!empty($wgWysiwygMarkers)) {
+		$html = strtr($html, $wgWysiwygMarkers);
+	}
+
 	// replace whitespaces after opening (<li>) and before closing tags (</p>, </h2>, </li>, </dt>, </dd>)
 	$replacements = array(
 		"\n</p>"  => '</p>',
@@ -361,13 +366,9 @@ function Wysiwyg_WikiTextToHtml($wikitext, $articleId = -1, $encode = false) {
 		"</ol>\n" => '</ol>',
 		"</ul>\n" => '</ul>',
 		"\n</td>" => '</td>',
+		"\n<input" => '<input',
 	);
 	$html = strtr($html, $replacements);
-
-	// replace placeholders with HTML
-	if (!empty($wgWysiwygMarkers)) {
-		$html = strtr($html, $wgWysiwygMarkers);
-	}
 
 	wfDebug("Wysiwyg_WikiTextToHtml html: {$html}\n");
 
