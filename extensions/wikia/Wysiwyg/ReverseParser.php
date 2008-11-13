@@ -669,13 +669,14 @@ class ReverseParser {
 					return $refData['description'];
 
 				// {{template}}
-				case 'curly brackets':
+				//case 'curly brackets':
+				case 'template':
 					if(!empty($refData['lineStart'])) {
 						if(!$node->isSameNode($node->parentNode->firstChild)) {
-							return "\n".$refData['description'];
+							return "\n".$refData['originalCall'];
 						}
 					}
-					return $refData['description'];
+					return $refData['originalCall'];
 
 				// __NOTOC__ ...
 				case 'double underscore':
@@ -693,7 +694,7 @@ class ReverseParser {
 
 				// fallback
 				default:
-					return '<!-- unsupported span tag! -->';
+					return '<!-- unsupported placeholder type -->';
 			}
 		}
 		// sometimes FCK adds empty spans with "display: none"
