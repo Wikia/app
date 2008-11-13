@@ -4681,16 +4681,20 @@ class Parser
 			$params['frame']['valign'] = key( $params['vertAlign'] );
 		}
 
-		# Strip bad stuff out of the alt text
-		$alt = $this->replaceLinkHoldersText( $caption );
+		if (!empty($wgWysiwygParserEnabled)) {
+			$params['frame']['alt'] = '';
+		} else {	//original code - add alt&title to images
+			# Strip bad stuff out of the alt text
+			$alt = $this->replaceLinkHoldersText( $caption );
 
-		# make sure there are no placeholders in thumbnail attributes
-		# that are later expanded to html- so expand them now and
-		# remove the tags
-		$alt = $this->mStripState->unstripBoth( $alt );
-		$alt = Sanitizer::stripAllTags( $alt );
+			# make sure there are no placeholders in thumbnail attributes
+			# that are later expanded to html- so expand them now and
+			# remove the tags
+			$alt = $this->mStripState->unstripBoth( $alt );
+			$alt = Sanitizer::stripAllTags( $alt );
 
-		$params['frame']['alt'] = $alt;
+			$params['frame']['alt'] = $alt;
+		}
 		$params['frame']['caption'] = $caption;
 
 		if (!empty($wgWysiwygParserEnabled)) {
