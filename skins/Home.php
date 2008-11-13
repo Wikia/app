@@ -353,8 +353,8 @@ class HomeTemplate extends QuickTemplate {
 						<h2>Movies &amp; TV</h2>
 						<ul>
 							<li><a href="http://starwars.wikia.com">Star Wars</a></li>
-							<li><a href="http://fringe.wikia.com">Fringe</a></li>
-							<li><a href="http://harrypotter.wikia.com">Harry Potter</a></li>
+							<li><a href="http://twilight.wikia.com">Twilight</a></li>
+							<li><a href="http://watchmen.wikia.com">Watchmen</a></li>
 							<li><a href="http://24.wikia.com">24</a></li>
 							<li><a href="http://muppet.wikia.com">Muppets</a></li>
 						</ul>
@@ -365,8 +365,8 @@ class HomeTemplate extends QuickTemplate {
 						<ul>
 							<li><a href="http://en.marveldatabase.com">Marvel Comics</a></li>
 							<li><a href="http://bleach.wikia.com">Bleach</a></li>
-							<li><a href="http://naruto.wikia.com">Naruto</a></li>
-							<li><a href="http://watchmen.wikia.com">Watchmen</a></li>
+							<li><a href="http://familyguy.wikia.com">Family Guy</a></li>
+							<li><a href="http://batman.wikia.com">Batman</a></li>
 							<li><a href="http://southpark.wikia.com">South Park</a></li>
 						</ul>
 						more <a href="http://entertainment.wikia.com/wiki/Comics">comics</a> &amp; <a href="http://entertainment.wikia.com/wiki/Anime">anime wikis</a>
@@ -389,9 +389,9 @@ class HomeTemplate extends QuickTemplate {
 					Movies, TV, Comics, Anime, Books, and more.
 					<ul>
 						<li><a href="http://starwars.wikia.com">Star Wars</a></li>
-						<li><a href="http://en.marveldatabase.com">Marvel Comics</a></li>
+						<li><a href="http://twilight.wikia.com">Twilight</a></li>
 						<li><a href="http://harrypotter.wikia.com">Harry Potter</a></li>
-						<li><a href="http://muppet.wikia.com">Muppets</a></li>
+						<li><a href="http://en.marveldatabase.com">Marvel Comics</a></li>
 						<li><a href="http://watchmen.wikia.com">Watchmen</a></li>
 					</ul>
 					more <a href="http://entertainment.wikia.com">entertainment wikis</a>';
@@ -672,20 +672,20 @@ class HomeTemplate extends QuickTemplate {
 	<div class="shrinkwrap">
 		<table cellspacing="0">
 		<tr>
-			<th class="first">Most Horrifying Characters</th>
+			<th class="first">Fallout 3 Most Wanted Items</th>
 			<th>Wikia's Top Robots</th>
 			<th>WoW's Most Wanted Items</th>
-			<th class="last">Harry Potter's Spells</th>
+			<th class="last">Favorite Twilight Vampires</th>
 		</tr>
 		<tr>
 			<td class="first gaming">
-				<ol>
-					<li><a href="http://residentevil.wikia.com/wiki/Nemesis">Nemesis</a> (<a href="http://residentevil.wikia.com" class="secondary" >Resident Evil</a>)</li>
-					<li><a href="http://silenthill.wikia.com/wiki/The_One_Truth">The One Truth</a> (<a href="http://silenthill.wikia.com" class="secondary">Silent Hill</a>)</li>
-					<li><a href="http://bioshock.wikia.com/wiki/Little_Sisters">Little Sisters</a> (<a href="http://bioshock.wikia.com" class="secondary">BioShock</a>)</li>
-					<li><a href="http://doom.wikia.com/wiki/Vulgar">The Vulgar</a> (<a href="http://doom.wikia.com" class="secondary">Doom</a>)</li>
-					<li><a href="http://animalcrossing.wikia.com/wiki/Agent_S">Agent S</a> (<a href="http://animalcrossing.wikia.com" class="secondary">Animal Crossing</a>)</li>
-				</ol>
+				<ul>
+					<li><a href="http://fallout.wikia.com/wiki/Stimpak">Stimpacks</a></li>
+					<li><a href="http://fallout.wikia.com/wiki/Stealth_Boy">Stealthboy</a></li>
+					<li><a href="http://fallout.wikia.com/wiki/Scrap_Metal">Scrap Metal</a></li>
+					<li><a href="http://fallout.wikia.com/wiki/Rock-It_Launcher">Rock-it Launcher</a></li>
+					<li><a href="http://fallout.wikia.com/wiki/Vault_Boy_Bobblehead">Valut Boy Bobblehead</a></li>
+				</ul>
 			</td>
 			<td class="entertainment">
 				<ul>
@@ -707,11 +707,11 @@ class HomeTemplate extends QuickTemplate {
 			</td>
 			<td class="last entertainment">
 				<ul>
-					<li><a href="http://harrypotter.wikia.com/wiki/Patronus">Patronus</a></li>
-					<li><a href="http://harrypotter.wikia.com/wiki/Cruciatus_Curse">Cruciatus Curse</a></li>
-					<li><a href="http://harrypotter.wikia.com/wiki/Expelliarmus">Expelliarmus</a></li>
-					<li><a href="http://harrypotter.wikia.com/wiki/Imperius_Curse">Imperius Curse</a></li>
-					<li><a href="http://harrypotter.wikia.com/wiki/Avada_Kedavra">Avada Kedavra</a></li>
+					<li><a href="http://twilight.wikia.com/wiki/Bella_Swan">Bella Swan</a></li>
+					<li><a href="http://twilight.wikia.com/wiki/Edward_Cullen">Edward Cullen</a></li>
+					<li><a href="http://twilight.wikia.com/wiki/Alice_Cullen">Alice Cullen</a></li>
+					<li><a href="http://twilight.wikia.com/wiki/Victoria">Victoria</a></li>
+					<li><a href="http://twilight.wikia.com/wiki/Aro">Aro</a></li>
 				</ul>
 			</td>
 		</tr>
