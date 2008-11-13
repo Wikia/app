@@ -294,6 +294,10 @@ FCK.TemplatePreviewAdd = function(placeholder) {
 	
 	previewDiv.id = 'wysiwygTemplatePreview' + refId;
 	previewDiv.innerHTML = preview.value + '<br style="clear:both" />';
+
+	// sometimes innerHTML contains </p> at the beginning -> fix it
+	previewDiv.innerHTML = previewDiv.innerHTML.Trim();
+
 	previewDiv.style.display = 'none';
 
 	// remove preview div from editing area
@@ -315,9 +319,15 @@ FCK.TemplatePreviewShow = function(placeholder) {
 	var refId = placeholder.getAttribute('refid');
 	var preview = FCK.TemplatePreviewCloud.ownerDocument.getElementById('wysiwygTemplatePreview' + refId);
 
+	// reset margin/padding
+	if (preview.firstChild && preview.firstChild.nodeType == 1) {
+		preview.firstChild.style.padding = 0;
+		preview.firstChild.style.margin = 0;
+	}
+
 	// calculate cloud placement
 	var x = placeholder.offsetLeft;
-	var y = placeholder.offsetTop + placeholder.clientHeight + 27;
+	var y = placeholder.offsetTop + placeholder.clientHeight + 32;
 
 	// iframe position
 	var iFrameXY = FCK.YAHOO.util.Dom.getXY('wpTextbox1___Frame');
