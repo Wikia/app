@@ -1,0 +1,36 @@
+#user_masthead {
+	background: #d2d2b6;
+	font-size: 10pt;
+	margin: 2px 2px 0;
+	padding: 4px;
+}
+#user_masthead .avatar {
+	background: #FFF;
+	border: 1px solid #666;
+	float: left;
+	height: 50px;
+	margin-right: 5px;
+	padding: 2px;
+	width: 50px;
+}
+#user_masthead h2 {
+	font-size: 14pt;
+	margin: 7px 0 3px;
+}
+#user_masthead li {
+	float: left;
+	font-size: 9pt;
+	font-weight: bold;
+	padding: 5px;
+}
+#user_masthead li.selected {
+	background: #f2f2da;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+}
+#user_masthead li a {
+	color: #333;
+}
+#user_masthead li a.new {
+	color: inherit;
+}

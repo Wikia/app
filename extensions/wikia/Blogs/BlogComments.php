@@ -69,8 +69,6 @@ function efBlogCommentsArticleFromTitle( &$title, &$article ) {
 	return true;
 }
 
-
-
 class BlogComments {
 
 	private $mText;
