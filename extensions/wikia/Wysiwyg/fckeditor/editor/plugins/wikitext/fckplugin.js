@@ -172,6 +172,11 @@ FCK.Events.AttachEvent( 'OnAfterSetHTML', function() {
 			// disable context menu
 			placeholders[p].setAttribute('_fckContextMenuDisabled', true);
 
+			// templates preview
+			if (FCK.YAHOO.util.Dom.hasClass(placeholders[p], 'wysiwygTemplate')) {
+				FCK.TemplatePreviewAdd(placeholders[p]);
+			}
+
 			if (placeholders[p].parentNode.nodeName.IEquals(['p', 'div', 'li', 'dt', 'dd']) &&  placeholders[p] == placeholders[p].parentNode.lastChild) {
 				if (FCKBrowserInfo.IsGecko10) {
 					// add &nbsp; for FF2.x
@@ -193,13 +198,6 @@ FCK.Events.AttachEvent( 'OnAfterSetHTML', function() {
 			// and at the beginning of line
 			if (placeholders[p].parentNode.firstChild == placeholders[p]) {
 				FCK.InsertDirtySpanBefore(placeholders[p]);
-			}
-
-			// templates preview
-			refId = placeholders[p].getAttribute('refid');
-
-			if (refId && FCK.wysiwygData[refId] && FCK.wysiwygData[refId].type == 'curly brackets') {
-				FCK.TemplatePreviewAdd(placeholders[p]);
 			}
 		}
 
@@ -268,50 +266,78 @@ FCK.CheckInternalLink = function(title, link) {
 }
 
 // onmouseover template preview
-FCK.TemplatePreview = false;
+FCK.TemplatePreviewCloud = false;
 
 FCK.TemplatePreviewAdd = function(placeholder) {
-	FCK.log('registering template preview for refId #' + placeholder.getAttribute('refid'));
 
+	//var docObj = FCK.EditingArea.TargetElement.ownerDocument;
+	var docObj = FCK.LinkedField.ownerDocument;
+
+	// initialize preview cloud
+	if (!FCK.TemplatePreviewCloud) {
+		FCK.TemplatePreviewCloud = docObj.createElement('DIV');
+		docObj.body.appendChild(FCK.TemplatePreviewCloud);
+
+		FCK.TemplatePreviewCloud.id = 'wysiwygTemplatePreviewCloud';
+		FCK.TemplatePreviewCloud.innerHTML = '<div id="wysiwygTemplatePreviewCloudInner"></div>';
+	}
+
+	var refId = placeholder.getAttribute('refid');
+
+	//FCK.log('registering template preview for refId #' + refId);
+
+	// copy template previews to clouds
+	var preview = placeholder.nextSibling;
+	var previewDiv = docObj.createElement('div');
+	
+	FCK.TemplatePreviewCloud.firstChild.appendChild( previewDiv );
+	
+	previewDiv.id = 'wysiwygTemplatePreview' + refId;
+	previewDiv.innerHTML = preview.value + '<br style="clear:both" />';
+	previewDiv.style.display = 'none';
+
+	// remove preview div from editing area
+	preview.parentNode.removeChild(preview);
+
+	// register events handlers
 	FCKTools.AddEventListener(placeholder, 'mouseover', function(e) {
 		FCK.TemplatePreviewShow(FCK.YAHOO.util.Event.getTarget(e));
 	});
 	
 	FCKTools.AddEventListener(placeholder, 'mouseout', function(e) {
-		FCK.TemplatePreviewHide();
+		FCK.TemplatePreviewHide(FCK.YAHOO.util.Event.getTarget(e));
 	});
 
 }
 
 FCK.TemplatePreviewShow = function(placeholder) {
-	var metaData = FCK.wysiwygData[placeholder.getAttribute('refid')];
-	FCK.log(metaData);
+	
+	var refId = placeholder.getAttribute('refid');
+	var preview = FCK.TemplatePreviewCloud.ownerDocument.getElementById('wysiwygTemplatePreview' + refId);
 
-	// initialize preview DIV
-	if (!FCK.TemplatePreview) {
-		FCK.TemplatePreview = FCK.EditorDocument.createElement('DIV');
-		FCK.TemplatePreview.id = 'wysiwygTemplatePreview';
-		FCK.TemplatePreview.setAttribute('type', '_moz');
-		FCK.EditorDocument.body.appendChild(FCK.TemplatePreview);
-	}
-
-	// calculate placement
+	// calculate cloud placement
 	var x = placeholder.offsetLeft;
-	var y = placeholder.offsetTop + placeholder.clientHeight + 3;
+	var y = placeholder.offsetTop + placeholder.clientHeight + 27;
 
-	FCK.TemplatePreview.style.left = parseInt(x) + 'px';
-	FCK.TemplatePreview.style.top = parseInt(y) + 'px';
+	// iframe position
+	var iFrameXY = FCK.YAHOO.util.Dom.getXY('wpTextbox1___Frame');
 
-	// content
-	FCK.TemplatePreview.innerHTML = '<tt>' + metaData.description + '</tt>';
+	FCK.TemplatePreviewCloud.style.left = parseInt(x + iFrameXY[0]) + 'px';
+	FCK.TemplatePreviewCloud.style.top = parseInt(y + iFrameXY[1]) + 'px';
 
-	// show
-	FCK.TemplatePreview.style.visibility = 'visible';
+	// show template preview and cloud
+	preview.style.display = '';
+	FCK.TemplatePreviewCloud.style.visibility = 'visible';
 }
 
-FCK.TemplatePreviewHide = function() {
-	FCK.log('hide');
-	FCK.TemplatePreview.style.visibility = 'hidden';
+FCK.TemplatePreviewHide = function(placeholder) {
+	
+	var refId = placeholder.getAttribute('refid');
+	var preview = FCK.TemplatePreviewCloud.ownerDocument.getElementById('wysiwygTemplatePreview' + refId);
+
+	// hide template preview and cloud
+	preview.style.display = 'none';
+	FCK.TemplatePreviewCloud.style.visibility = 'hidden';
 }
 
 // YUI reference
