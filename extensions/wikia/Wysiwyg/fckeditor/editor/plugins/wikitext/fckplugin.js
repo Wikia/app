@@ -329,11 +329,15 @@ FCK.TemplatePreviewShow = function(placeholder) {
 	var x = placeholder.offsetLeft;
 	var y = placeholder.offsetTop + placeholder.clientHeight + 32;
 
+	// editor area scroll
+	var scrollXY = [FCK.EditorDocument.body.scrollLeft, FCK.EditorDocument.body.scrollTop];
+
 	// iframe position
 	var iFrameXY = FCK.YAHOO.util.Dom.getXY('wpTextbox1___Frame');
 
-	FCK.TemplatePreviewCloud.style.left = parseInt(x + iFrameXY[0]) + 'px';
-	FCK.TemplatePreviewCloud.style.top = parseInt(y + iFrameXY[1]) + 'px';
+	// set
+	FCK.TemplatePreviewCloud.style.left = parseInt(x + iFrameXY[0] - scrollXY[0]) + 'px';
+	FCK.TemplatePreviewCloud.style.top = parseInt(y + iFrameXY[1] - scrollXY[1]) + 'px';
 
 	// show template preview and cloud
 	preview.style.display = '';
