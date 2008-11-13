@@ -72,6 +72,7 @@ function efBlogCommentsArticleFromTitle( &$title, &$article ) {
 class BlogComments {
 
 	private $mText;
+	private $mComments = false;
 
 	static public function newFromTitle( Title $title ) {
 		$comments = new BlogComments();
@@ -85,12 +86,15 @@ class BlogComments {
 			/**
 			 * doesn't exist, lame
 			 */
+			return false;
 		}
 
 		/**
 		 * get talk page for this article
 		 */
-		$talkPage = $blogPage->getTalkPage();
+		$comments = new BlogComments();
+		$comments->setText( $blogPage->getDBkey() );
+		return $comments;
 	}
 
 	public function setText( $text ) {
@@ -98,9 +102,11 @@ class BlogComments {
 	}
 
 	private function getCommentPages() {
-		/**
-		 * from Title::hasSubpages
-		 */
+
+		if( is_array( $this->mComments ) ) {
+			return $this->mComments;
+		}
+
 		$pages = array();
 
 		$dbr = wfGetDB( DB_SLAVE );
@@ -119,9 +125,24 @@ class BlogComments {
 		}
 
 		$dbr->freeResult( $res );
-
-		return $pages;
+		$this->mComments = $pages;
+		return $this->mComments;
 	}
+
+	/**
+	 * count -- just return number of comments
+	 *
+	 * @return integer
+	 */
+	public function count() {
+		$this->getCommentPages();
+		if( is_array( $this->mComments ) ) {
+			return count( $this->mComments );
+		}
+
+		return 0;
+	}
+
 
 	public function render() {
 		global $wgParser, $wgContLang;
