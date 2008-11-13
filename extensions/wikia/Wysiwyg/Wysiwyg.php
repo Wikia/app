@@ -388,13 +388,14 @@ function Wysiwyg_HtmlToWikiText($html, $wysiwygData, $decode = false) {
 	return $reverseParser->parse($html, $decode ? Wikia::json_decode($wysiwygData, true) : $wysiwygData);
 }
 
-function Wysiwyg_WrapTemplate($originalCall, $output) {
+function Wysiwyg_WrapTemplate($originalCall, $output, $lineStart) {
 	global $wgWysiwygMetaData, $wgWysiwygMarkers;
 
 	$refId = count($wgWysiwygMetaData);
 
 	$data = array(	'type' => 'template',
-					'originalCall' => $originalCall);
+					'originalCall' => $originalCall,
+					'lineStart' => $lineStart);
 
 	$templateName = explode('|', substr($originalCall, 2, -2));
 	$templateName = $templateName[0];

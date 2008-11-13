@@ -939,7 +939,7 @@ class PPFrame_DOM implements PPFrame {
 							$newIterator = $ret['object'];
 						} else {
 							if($wgWysiwygParserEnabled && ($originalCall = $xpath->query( 'originalCall', $contextNode )->item( 0 ))) {
-								$out .= Wysiwyg_WrapTemplate($originalCall->textContent, $ret['text']);
+								$out .= Wysiwyg_WrapTemplate($originalCall->textContent, $ret['text'], $lineStart);
 							} else {
 								$out .= $ret['text'];
 							}
