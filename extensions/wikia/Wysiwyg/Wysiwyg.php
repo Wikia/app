@@ -125,8 +125,8 @@ function Wysiwyg_Initial($form) {
 	$wgWysiwygEdgeCasesFound = (Wysiwyg_CheckEdgeCases($form->textbox1) != '');
 
 	// initialize FCK in source mode for articles in which edge case occured / user adds fckmode=source to edit page URL / user requested diff/preview when in source mode
-	$wgWysiwygFallbackToSourceMode = $wgWysiwygEdgeCasesFound || 
-		($wgRequest->getVal('fckmode', 'wysiwyg') == 'source') || 
+	$wgWysiwygFallbackToSourceMode = $wgWysiwygEdgeCasesFound ||
+		($wgRequest->getVal('fckmode', 'wysiwyg') == 'source') ||
 		($wgRequest->getVal('action') == 'submit' && $wgRequest->getVal('wysiwygTemporarySaveType') == '1');
 
 	// JS value of $wgWysiwygFallbackToSourceMode
@@ -370,6 +370,13 @@ function Wysiwyg_WikiTextToHtml($wikitext, $articleId = -1, $encode = false) {
 	);
 	$html = strtr($html, $replacements);
 
+	$html = preg_replace('/\x7f-wtb-(\d+)-\x7f(.*?)\x7f-wte-\1-\x7f/si', "\x7f-wysiwyg-\\1-\x7f<div id=\"template_preview_\\1\" style=\"display: none;\">\\2</div>", $html);
+
+	// replace placeholders with HTML
+	if (!empty($wgWysiwygMarkers)) {
+		$html = strtr($html, $wgWysiwygMarkers);
+	}
+
 	wfDebug("Wysiwyg_WikiTextToHtml html: {$html}\n");
 
 	return array($html, $encode ? Wikia::json_encode($wgWysiwygMetaData, true) : $wgWysiwygMetaData);
@@ -379,6 +386,25 @@ function Wysiwyg_HtmlToWikiText($html, $wysiwygData, $decode = false) {
 	require_once(dirname(__FILE__).'/ReverseParser.php');
 	$reverseParser = new ReverseParser();
 	return $reverseParser->parse($html, $decode ? Wikia::json_decode($wysiwygData, true) : $wysiwygData);
+}
+
+function Wysiwyg_WrapTemplate($originalCall, $output) {
+	global $wgWysiwygMetaData, $wgWysiwygMarkers;
+
+	$refId = count($wgWysiwygMetaData);
+
+	$data = array(	'type' => 'template',
+					'originalCall' => $originalCall);
+
+	$templateName = explode('|', substr($originalCall, 2, -2));
+	$templateName = $templateName[0];
+	$placeHolder = "<input type=\"button\" refid=\"{$refId}\" value=\"{$templateName}\" class=\"wysiwygDisabled\" />";
+
+	$wgWysiwygMarkers["\x7f-wysiwyg-{$refId}-\x7f"] = $placeHolder;
+	$wgWysiwygMetaData[$refId] = $data;
+
+	// wysiwyg template begin - wysiwyg template end
+	return "\x7f-wtb-{$refId}-\x7f{$output}\x7f-wte-{$refId}-\x7f";
 }
 
 /**
