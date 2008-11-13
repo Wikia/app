@@ -23,6 +23,9 @@ $wgNamespacesWithSubpages[ NS_BLOG_ARTICLE_TALK ] = true;
 $wgNamespacesWithSubpages[ NS_BLOG_LISTING ] = true;
 $wgNamespacesWithSubpages[ NS_BLOG_LISTING_TALK ] = true;
 
+// Special page
+extAddSpecialPage(dirname(__FILE__) . '/SpecialCreateBlogPost.php', 'CreateBlogPost', 'CreateBlogPost');
+
 /**
  * load other parts
  */
