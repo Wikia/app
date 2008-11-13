@@ -27,4 +27,4 @@ $wgNamespacesWithSubpages[ NS_BLOG_LISTING_TALK ] = true;
  * load other parts
  */
 
-include( dirname( __FILE__ ) . "/BlogCommentsTag.php");
+include( dirname( __FILE__ ) . "/BlogComments.php");

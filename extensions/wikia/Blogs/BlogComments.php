@@ -9,8 +9,8 @@ $wgExtensionFunctions[] = 'efBlogCommentsTag_Setup';
 # Add a hook to initialise the magic word
 $wgHooks[ "LanguageGetMagic" ][] = 'efBlogCommentsTag_Magic';
 $wgHooks[ "ArticleFromTitle" ][] = "efBlogCommentsArticleFromTitle";
-$wgHooks[ "CategoryViewer::addPage" ][] = "efBlogCategoryAddPage";
-$wgHooks[ "CategoryViewer::getOtherSection" ][] = "efBlogCategoryGetOtherSection";
+$wgHooks[ "CategoryViewer::addPage" ][] = "BlogComments::addCategoryPage";
+$wgHooks[ "CategoryViewer::getOtherSection" ][] = "BlogComments::getOtherSection";
 
 
 function efBlogCommentsTag_Setup() {
@@ -70,62 +70,7 @@ function efBlogCommentsArticleFromTitle( &$title, &$article ) {
 }
 
 
-function efBlogCategoryAddPage( &$catView, &$title, &$row ) {
-	global $wgContLang;
 
-	if( $row->page_namespace == NS_BLOG_ARTICLE ) {
-
-		/**
-		 * initialize CategoryView->blogs array
-		 */
-		if( !isset( $catView->blogs ) ) {
-			$catView->blogs = array();
-		}
-
-		/**
-		 * initialize CategoryView->blogs_start_char array
-		 */
-		if( !isset( $catView->blogs_start_char ) ) {
-			$catView->blogs_start_char = array();
-		}
-
-		$catView->blogs[] = $row->page_is_redirect
-			? '<span class="redirect-in-category">' . $catView->getSkin()->makeKnownLinkObj( $title ) . '</span>'
-			: $catView->getSkin()->makeSizeLinkObj( $row->page_len, $title );
-
-		list( $namespace, $title ) = explode( ":", $row->cl_sortkey, 2 );
-		$catView->blogs_start_char[] = $wgContLang->convert( $wgContLang->firstChar( $title ) );
-
-		/**
-		 * when we return false it won't be displayed as normal category but
-		 * in "other" categories
-		 */
-		return false;
-	}
-	return true;
-}
-
-function efBlogCategoryGetOtherSection( &$catView, &$output ) {
-	$ti = htmlspecialchars( $catView->title->getText() );
-	# Don't show articles section if there are none.
-	$r = '';
-	$cat = $catView->getCat();
-
-	$dbcnt = $cat->getPageCount() - $cat->getSubcatCount() - $cat->getFileCount();
-	$rescnt = count( $catView->blogs );
-#	$countmsg = $catView->getCountMessage( $rescnt, $dbcnt, 'article' );
-
-	if( $rescnt > 0 ) {
-		$r = "<div id=\"mw-pages\">\n";
-		$r .= '<h2>' . wfMsg( 'blogs_header', $ti ) . "</h2>\n";
-#		$r .= $countmsg;
-		$r .= $catView->formatList( $catView->blogs, $catView->blogs_start_char );
-		$r .= "\n</div>";
-	}
-	$output = $r;
-
-	return true;
-}
 class BlogComments {
 
 	private $mText;
@@ -215,5 +160,70 @@ class BlogComments {
 
 			return $output;
 		}
+	}
+
+	/**
+	 * static methods used in Hooks
+	 */
+
+	static public function getOtherSection( &$catView, &$output ) {
+		if( !isset( $catView->blogs ) ) {
+			return true;
+		}
+		$ti = htmlspecialchars( $catView->title->getText() );
+		$r = '';
+		$cat = $catView->getCat();
+
+		$dbcnt = $cat->getPageCount() - $cat->getSubcatCount() - $cat->getFileCount();
+		$rescnt = count( $catView->blogs );
+		#	$countmsg = $catView->getCountMessage( $rescnt, $dbcnt, 'article' );
+
+		if( $rescnt > 0 ) {
+			$r = "<div id=\"mw-pages\">\n";
+			$r .= '<h2>' . wfMsg( "blogs_header", $ti ) . "</h2>\n";
+			#	$r .= $countmsg;
+			$r .= $catView->formatList( $catView->blogs, $catView->blogs_start_char );
+			$r .= "\n</div>";
+		}
+		$output = $r;
+
+		return true;
+	}
+
+	/**
+	 * Hook
+	 */
+	static public function addCategoryPage( &$catView, &$title, &$row ) {
+		global $wgContLang;
+
+		if( $row->page_namespace == NS_BLOG_ARTICLE ) {
+			/**
+			 * initialize CategoryView->blogs array
+			 */
+			if( !isset( $catView->blogs ) ) {
+				$catView->blogs = array();
+			}
+
+			/**
+			 * initialize CategoryView->blogs_start_char array
+			 */
+			if( !isset( $catView->blogs_start_char ) ) {
+				$catView->blogs_start_char = array();
+			}
+
+			$catView->blogs[] = $row->page_is_redirect
+				? '<span class="redirect-in-category">' . $catView->getSkin()->makeKnownLinkObj( $title ) . '</span>'
+				: $catView->getSkin()->makeSizeLinkObj( $row->page_len, $title );
+
+			list( $namespace, $title ) = explode( ":", $row->cl_sortkey, 2 );
+			$catView->blogs_start_char[] = $wgContLang->convert( $wgContLang->firstChar( $title ) );
+
+			/**
+			 * when we return false it won't be displayed as normal category but
+			 * in "other" categories
+			 */
+			return false;
+		}
+		return true;
 	}
 }
