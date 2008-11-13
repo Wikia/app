@@ -420,7 +420,7 @@ function Wysiwyg_WrapTemplate($originalCall, $output, $lineStart) {
 					'lineStart' => $lineStart);
 
 	$templateName = explode('|', substr($originalCall, 2, -2));
-	$templateName = $templateName[0];
+	$templateName = rtrim($templateName[0]);
 	$placeHolder = "<input type=\"button\" refid=\"{$refId}\" value=\"{$templateName}\" class=\"wysiwygDisabled wysiwygTemplate\" />";
 
 	$wgWysiwygMarkers["\x7f-wysiwyg-{$refId}-\x7f"] = $placeHolder;
