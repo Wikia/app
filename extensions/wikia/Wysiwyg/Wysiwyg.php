@@ -246,6 +246,7 @@ addOnloadHook(initEditor);
 
 #wysiwygTemplatePreviewCloud {
 	min-width: 50px;
+	max-width: 300px;
 	background-image: url('$wgExtensionsPath/wikia/Wysiwyg/fckeditor/editor/css/images/template_cloud_bg.gif');
 	background-repeat: no-repeat;
 	background-position: -10px 0;
