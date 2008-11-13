@@ -243,6 +243,26 @@ addOnloadHook(initEditor);
 #editform.wysiwyg_mode {
 	background: none;
 }
+
+#wysiwygTemplatePreviewCloud {
+	min-width: 50px;
+	background-image: url('$wgExtensionsPath/wikia/Wysiwyg/fckeditor/editor/css/images/template_cloud_bg.gif');
+	background-repeat: no-repeat;
+	background-position: -10px 0;
+	padding-top: 9px;
+
+	position: absolute;
+	visibility: hidden;
+	z-index: 10;
+}
+
+#wysiwygTemplatePreviewCloudInner {
+	border: solid 1px #e5e5e5;
+	border-top: none;
+	background: #fffff6;
+	padding: 5px;
+}
+
 /*]]>*/</style>
 EOT;
 	$wgOut->addScript($script);
@@ -300,7 +320,7 @@ function Wysiwyg_CheckEdgeCases($text) {
 		),
 		'regexp' => array(
 			'/\[\[[^|]+\|.*?(?:(?:' . wfUrlProtocols() . ')|{{).*?]]/' => 'wysiwyg-edgecase-complex-description', // external url or template found in the description of a link
-			'/{{[^}]*(?<=\[)[^}]*}}/' => 'wysiwyg-edgecase-template-with-link', // template with link as a parameter
+			//'/{{[^}]*(?<=\[)[^}]*}}/' => 'wysiwyg-edgecase-template-with-link', // template with link as a parameter
 			'/\[\[(?:image|media)[^]|]+\|[^]]+(?:\[\[|(?:' . wfUrlProtocols() . '))(?:[^]]+])?[^]]+]]/si' => 'wysiwyg-edgecase-image-with-link', // template with link as a parameter
 		)
 	);
@@ -370,7 +390,8 @@ function Wysiwyg_WikiTextToHtml($wikitext, $articleId = -1, $encode = false) {
 	);
 	$html = strtr($html, $replacements);
 
-	$html = preg_replace('/\x7f-wtb-(\d+)-\x7f(.*?)\x7f-wte-\1-\x7f/si', "\x7f-wysiwyg-\\1-\x7f<div id=\"template_preview_\\1\" style=\"display: none;\">\\2</div>", $html);
+	// replace placeholders for templates
+	$html = preg_replace('/\x7f-wtb-(\d+)-\x7f(.*?)\x7f-wte-\1-\x7f/sie', "'\x7f-wysiwyg-\\1-\x7f<input value=\"'.htmlspecialchars(stripslashes('\\2')).'\" style=\"display:none\" />'", $html);
 
 	// replace placeholders with HTML
 	if (!empty($wgWysiwygMarkers)) {
@@ -399,7 +420,7 @@ function Wysiwyg_WrapTemplate($originalCall, $output, $lineStart) {
 
 	$templateName = explode('|', substr($originalCall, 2, -2));
 	$templateName = $templateName[0];
-	$placeHolder = "<input type=\"button\" refid=\"{$refId}\" value=\"{$templateName}\" class=\"wysiwygDisabled\" />";
+	$placeHolder = "<input type=\"button\" refid=\"{$refId}\" value=\"{$templateName}\" class=\"wysiwygDisabled wysiwygTemplate\" />";
 
 	$wgWysiwygMarkers["\x7f-wysiwyg-{$refId}-\x7f"] = $placeHolder;
 	$wgWysiwygMetaData[$refId] = $data;
