@@ -48,7 +48,6 @@ class ReverseParser {
 				' </dt>' => '</dt>',
 				' <pre>' => '<pre>',
 				' <h'    => '<h',
-				' <input' => '<input',
 			);
 
 			$html = strtr($html, $replacements);
@@ -593,7 +592,7 @@ class ReverseParser {
 		// is text node the first child of parent node?
 		$isFirstChild = $node->isSameNode($node->parentNode->firstChild);
 
-		wfDebug("WYSIWYG ReverseParser cleanupTextContent for: {$text}\n");
+		wfDebug("WYSIWYG ReverseParser cleanupTextContent for: >>{$text}<<\n");
 
 		// 1. wrap repeating apostrophes using <nowiki>
 		$text = preg_replace("/('{2,})/", '<nowiki>$1</nowiki>', $text);
