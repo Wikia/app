@@ -2821,6 +2821,7 @@ class Parser
 		$args = (null == $piece['parts']) ? array() : $piece['parts'];
 		wfProfileOut( __METHOD__.'-setup' );
 
+		/*
 		# FCK helper
 		if (!empty($wgWysiwygParserEnabled)) {
 			$textArgs = array();
@@ -2831,6 +2832,7 @@ class Parser
 			$text = Wysiwyg_SetRefId('curly brackets', array('text' => &$templateText, 'lineStart' => $piece['lineStart']), false);
 			$found = true;
 		}
+		*/
 
 		# SUBST
 		wfProfileIn( __METHOD__.'-modifiers' );
