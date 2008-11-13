@@ -50,7 +50,7 @@
 	 
 	function ViewComments(pid,ord,end){
 		$("allcomments").innerHTML = _COMMENT_LOADING + "<br><br>";
-		var url = wgServer + "/index.php?title=Special:CommentListGet&pid="+pid+"&ord="+ord;
+		var url = wgScript + "?title=Special:CommentListGet&pid="+pid+"&ord="+ord;
 		var pars = '';
 		var callback = {
 			success: function(oResponse) {
@@ -82,7 +82,7 @@
 				}
 			}
 	
-			sXMLHTTP.open("POST", wgServer + "/index.php?action=ajax", true );
+			sXMLHTTP.open("POST", wgScript + "?action=ajax", true );
 	
 			sXMLHTTP.setRequestHeader('Content-Type','application/x-www-form-urlencoded');
 			sXMLHTTP.send('rs=wfCommentSubmit&rsargs[]=' + document.commentform.pid.value + '&rsargs[]=' + ((!document.commentform.comment_parent_id.value)?0:document.commentform.comment_parent_id.value) + '&rsargs[]='+ FixStr(document.commentform.comment_text.value) + '&rsargs[]=' + document.commentform.sid.value + '&rsargs[]=' + document.commentform.mk.value);
