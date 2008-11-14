@@ -320,9 +320,9 @@ function Wysiwyg_CheckEdgeCases($text) {
 			'<span refid=' => 'wysiwyg-edgecase-syntax', // span with fck metadata - shouldn't be used by user
 		),
 		'regexp' => array(
-			'/\[\[[^|]+\|.*?(?:(?:' . wfUrlProtocols() . ')|{{).*?]]/' => 'wysiwyg-edgecase-complex-description', // external url or template found in the description of a link
+			//'/\[\[[^|]+\|.*?(?:(?:' . wfUrlProtocols() . ')|{{).*?]]/' => 'wysiwyg-edgecase-complex-description', // external url or template found in the description of a link
 			//'/{{[^}]*(?<=\[)[^}]*}}/' => 'wysiwyg-edgecase-template-with-link', // template with link as a parameter
-			'/\[\[(?:image|media)[^]|]+\|[^]]+(?:\[\[|(?:' . wfUrlProtocols() . '))(?:[^]]+])?[^]]+]]/si' => 'wysiwyg-edgecase-image-with-link', // template with link as a parameter
+			//'/\[\[(?:image|media)[^]|]+\|[^]]+(?:\[\[|(?:' . wfUrlProtocols() . '))(?:[^]]+])?[^]]+]]/si' => 'wysiwyg-edgecase-image-with-link', // template with link as a parameter
 		)
 	);
 	foreach($edgeCases['regular'] as $str => $msgkey) {
@@ -421,7 +421,7 @@ function Wysiwyg_WrapTemplate($originalCall, $output, $lineStart) {
 
 	$templateName = explode('|', substr($originalCall, 2, -2));
 	$templateName = rtrim($templateName[0]);
-	$placeHolder = "<input type=\"button\" refid=\"{$refId}\" value=\"{$templateName}\" class=\"wysiwygDisabled wysiwygTemplate\" />";
+	$placeHolder = "<input type=\"button\" refid=\"{$refId}\" _fck_type=\"template\" value=\"{$templateName}\" class=\"wysiwygDisabled wysiwygTemplate\" />";
 
 	$wgWysiwygMarkers["\x7f-wysiwyg-{$refId}-\x7f"] = $placeHolder;
 	$wgWysiwygMetaData[$refId] = $data;
