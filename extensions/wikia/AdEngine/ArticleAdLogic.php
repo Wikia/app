@@ -310,7 +310,7 @@ class ArticleAdLogic {
 		    !self::isDiffPage() &&
 		    !self::isAnonPurgePrompt()) {
 
-			return true	
+			return true;
                 } else {
                         return false;
                 }
