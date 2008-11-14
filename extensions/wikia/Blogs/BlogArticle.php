@@ -34,6 +34,8 @@ $wgExtensionMessagesFiles["Blogs"] = dirname(__FILE__) . '/Blogs.i18n.php';
 extAddSpecialPage(dirname(__FILE__) . '/SpecialCreateBlogPost.php', 'CreateBlogPost', 'CreateBlogPost');
 
 
+
+
 /**
  * load other parts
  */
