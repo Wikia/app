@@ -16,78 +16,102 @@ class CreateBlogPost extends SpecialPage {
 		parent::__construct( 'CreateBlogPost'  /*class*/, 'createblogpost' /*restriction*/, true);
 	}
 
-		public function execute() {
-			global $wgOut, $wgUser, $wgRequest;
+	public function execute() {
+		global $wgOut, $wgUser, $wgRequest;
 
-			if( !$wgUser->isLoggedIn() ) {
-				$wgOut->showErrorPage( 'create-blog-no-login', 'create-blog-login-required');
-				return;
-			}
+		if( !$wgUser->isLoggedIn() ) {
+			$wgOut->showErrorPage( 'create-blog-no-login', 'create-blog-login-required');
+			return;
+		}
 
-			if( $wgUser->isBlocked() ) {
-				$wgOut->blockedPage();
-				return;
-			}
+		if( $wgUser->isBlocked() ) {
+			$wgOut->blockedPage();
+			return;
+		}
 
-			if( wfReadOnly() ) {
-				$wgOut->readOnlyPage();
-				return;
-			}
+		if( wfReadOnly() ) {
+			$wgOut->readOnlyPage();
+			return;
+		}
 
-			$this->mTitle = Title::makeTitle( NS_SPECIAL, 'CreateBlogPost' );
+		$this->mTitle = Title::makeTitle( NS_SPECIAL, 'CreateBlogPost' );
 
-			$wgOut->setPageTitle( wfMsg("create-blog-post-title") );
+		$wgOut->setPageTitle( wfMsg("create-blog-post-title") );
 
-			if($wgRequest->wasPosted()) {
-				$this->parseFormData();
-				if(count($this->mFormErrors) > 0) {
-					$this->renderForm();
-				}
-				else {
-					$this->savePost();
-				}
-			}
-			else {
+		if($wgRequest->wasPosted()) {
+			$this->parseFormData();
+			if(count($this->mFormErrors) > 0) {
 				$this->renderForm();
 			}
-		}
-
-		private function savePost() {
-			global $wgOut, $wgUser;
-
-			$oArticle = new Article($this->mPostTitle, 0);
-			$oArticle->doEdit($this->mFormData['postBody'], "Blog post created." );
-
-			$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
-			$oTmpl->set_vars( array(
-				"title" => $this->mPostTitle)
-			);
-
-			$wgOut->addHTML( $oTmpl->execute("createPostConfirm") );
-			return true;
-		}
-
-		private function parseFormData() {
-			global $wgUser, $wgRequest;
-
-			$this->mFormData['postTitle'] = $wgRequest->getVal('blogPostTitle');
-			$this->mFormData['postBody'] = $wgRequest->getVal('wpTextbox1');
-			$this->mFormData['isVotingEnabled'] = $wgRequest->getCheck('blogPostIsVotingEnabled');
-			$this->mFormData['isCommentingEnabled'] = $wgRequest->getCheck('blogPostIsCommentingEnabled');
-
-			$this->mPostTitle = Title::newFromText( $wgUser->getName() . '/' . $this->mFormData['postTitle'], NS_BLOG_ARTICLE);
-
-			if(empty($this->mFormData['postTitle'])) {
-				$this->mFormErrors[] = wfMsg('create-blog-empty-title-error');
-			}
-			else if(!($this->mPostTitle instanceof Title)) {
-				$this->mFormErrors[] = wfMsg('create-blog-invalid-title-error');
-			}
-
-			if(empty($this->mFormData['postBody'])) {
-				$this->mFormErrors[] = wfMsg('create-blog-empty-post-error');
+			else {
+				$this->savePost();
 			}
 		}
+		else {
+			$this->renderForm();
+		}
+	}
+
+	private function savePost() {
+		global $wgOut, $wgUser;
+
+		$sPostBody = $this->mFormData['postBody'];
+
+		if(!empty($this->mFormData['postCategories'])) {
+			// add categories
+			$aCategories = preg_split ("/\|/", $this->mFormData['postCategories'], -1);
+			$sPostBody .= $this->getCategoriesAsText($aCategories);
+		}
+
+		$oArticle = new Article($this->mPostTitle, 0);
+		$oArticle->doEdit($sPostBody, "Blog post created." );
+
+		$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
+		$oTmpl->set_vars( array(
+			"title" => $this->mPostTitle)
+		);
+
+		$wgOut->addHTML( $oTmpl->execute("createPostConfirm") );
+		return true;
+	}
+
+	private function parseFormData() {
+		global $wgUser, $wgRequest;
+
+		$this->mFormData['postTitle'] = $wgRequest->getVal('blogPostTitle');
+		$this->mFormData['postBody'] = $wgRequest->getVal('wpTextbox1');
+		$this->mFormData['postCategories'] = $wgRequest->getVal('wpCategoryTextarea');
+		$this->mFormData['isVotingEnabled'] = $wgRequest->getCheck('blogPostIsVotingEnabled');
+		$this->mFormData['isCommentingEnabled'] = $wgRequest->getCheck('blogPostIsCommentingEnabled');
+
+		$this->mPostTitle = Title::newFromText( $wgUser->getName() . '/' . $this->mFormData['postTitle'], NS_BLOG_ARTICLE);
+
+		if(empty($this->mFormData['postTitle'])) {
+			$this->mFormErrors[] = wfMsg('create-blog-empty-title-error');
+		}
+		else if(!($this->mPostTitle instanceof Title)) {
+			$this->mFormErrors[] = wfMsg('create-blog-invalid-title-error');
+		}
+
+		if(empty($this->mFormData['postBody'])) {
+			$this->mFormErrors[] = wfMsg('create-blog-empty-post-error');
+		}
+	}
+
+	private function getCategoriesAsText ($aCategories) {
+		global $wgContLang;
+
+		$sText = '';
+		$sCategoryNSName = $wgContLang->getFormattedNsText( NS_CATEGORY );
+
+		foreach($aCategories as $sCategory) {
+			if(!empty($sCategory)) {
+				$sText .= "\n[[" . $sCategoryNSName . ":" . $sCategory . "]]";
+			}
+		}
+
+		return $sText;
+	}
 
 		private function renderForm() {
 			global $wgOut, $wgScriptPath;
@@ -97,11 +121,9 @@ class CreateBlogPost extends SpecialPage {
 			$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
 
 			$oTmpl->set_vars( array(
-				'num' => 0,
 				'cloud' => new TagCloud(),
 				'cols' => 10,
-				'text_category' => '' ,
-				'array_category' => array () )
+				'postCategories' => $this->mFormData['postCategories'] )
 			);
 
 			$sCategoryCloud = $oTmpl->execute("createPostCategoryCloud");
