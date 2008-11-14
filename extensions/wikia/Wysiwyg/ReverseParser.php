@@ -440,6 +440,7 @@ class ReverseParser {
 
 					// images
 					case 'div':
+					case 'iframe':
 						if ($hasRefId) {
 							$out = $this->handleImage($node, $textContent);
 						}
