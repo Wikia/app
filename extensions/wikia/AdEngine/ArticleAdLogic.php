@@ -333,7 +333,7 @@ class ArticleAdLogic {
                 global $wgTitle, $wgContentNamespaces;
 
 		// not a content page if one of the weird edge cases occurs
-		if (self::isDiffPage() || self::isAnonPagePrompt()) {
+		if (self::isDiffPage() || self::isAnonPurgePrompt()) {
 			return false;
 		} 
 		
