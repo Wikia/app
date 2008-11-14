@@ -29,6 +29,12 @@ class InviteEmail extends UnlistedSpecialPage {
 		global $wgUser, $wgOut, $wgRequest;
 		global $wgEmailFrom, $wgSitename;
 
+		# Check blocks
+		if( $wgUser->isBlocked() ) {
+			$wgOut->blockedPage();
+			return;
+		}
+
 		global $wgMessageCache;
 		$wgMessageCache->addMessages( array("inviteemailanontext" => 'Please $1 to send out invite emails.'), "en" );
 		
@@ -39,7 +45,7 @@ class InviteEmail extends UnlistedSpecialPage {
 			$wgOut->addHtml( wfMsgWikiHtml( 'inviteemailanontext', $llink ) );
 			return;
 		}
-			
+
 		$wgOut->addScript("<link rel='stylesheet' type='text/css' href=\"/extensions/wikia/Invite/invite.css?{$wgStyleVersion}\"/>\n");
 		
 		if($wgEmailFrom) {
@@ -211,5 +217,3 @@ class InviteEmail extends UnlistedSpecialPage {
 
  SpecialPage::addPage( new InviteEmail );
 }
-
-?>
