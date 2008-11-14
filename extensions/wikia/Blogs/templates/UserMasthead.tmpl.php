@@ -1,9 +1,6 @@
 <?php
 global $wgStyleVersion, $wgExtensionsPath, $wgTitle;
-	
-/* WHY DOESN'T THIS WORK?
-$wgOut->addScript('<link rel="stylesheet" type="text/css" href="'.$wgExtensionsPath.'/wikia/UserMasthead/css/UserMasthead.css?'.$wgStyleVersion.'" />');
-*/
+
 
 if ($wgTitle->getNamespace() == NS_USER || $wgTitle->getNamespace() == NS_USER_TALK) {
 	global $wgTitle;
@@ -15,12 +12,10 @@ if ($wgTitle == 'Special:Watchlist') {
 }
 
 ?>
-<link rel="stylesheet" type="text/css" href="<?=$wgExtensionsPath?>/wikia/UserMasthead/css/UserMasthead.css?<?=$wgStyleVersion?>" />
 
 <div id="user_masthead" class="reset clearfix">
-	<img src="<?=$wgExtensionsPath?>/wikia/UserMasthead/images/avatar.jpg" class="avatar" />
+	<img src="<?=$wgExtensionsPath?>/wikia/Blogs/images/avatar.jpg" class="avatar" />
 	<h2><?=$data['userspace']?></h2>
-
 	<?
 	if(!empty($nav_urls['blockip'])) {
 		echo '<a href="'. $nav_urls['blockip']['href'] .'">'. wfMsg('blockip') .'</a>';
