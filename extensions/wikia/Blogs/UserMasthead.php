@@ -2,12 +2,11 @@
 $wgHooks['MonacoBeforePageBar'][] = 'userMasthead';
 
 function userMasthead() {
-	global $wgTitle, $wgUser, $userMasthead, $wgOut;
+	global $wgTitle, $wgUser, $userMasthead, $wgOut, $wgExtensionsPath, $wgStyleVersion;
 
 	$namespace = $wgTitle->getNamespace();
 	if ( $namespace == NS_BLOG_ARTICLE || $namespace == NS_USER || $namespace == NS_USER_TALK || $namespace == NS_SPECIAL && ($wgTitle->getDBkey() == 'Watchlist' || $wgTitle->getDBkey() == 'EmailUser' || $wgTitle->getDBkey() == 'WidgetDashboard' || $wgTitle->getDBkey() == 'Preferences')) {
-
-		$wgOut->addScript('<link rel="stylesheet" type="text/css" href="{$wgExtensionsPath}/wikia/Blogs/css/UserMasthead.css?{$wgStyleVersion}" />');
+		$wgOut->addScript("<link rel=\"stylesheet\" type=\"text/css\" href=\"{$wgExtensionsPath}/wikia/Blogs/css/UserMasthead.css?{$wgStyleVersion}\" />");
 
 		$userMasthead = true; //hides article/talk tabs in Monaco.php
 		$out = array();
