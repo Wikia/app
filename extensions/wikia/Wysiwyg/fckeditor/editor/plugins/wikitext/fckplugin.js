@@ -204,7 +204,7 @@ FCK.Events.AttachEvent( 'OnAfterSetHTML', function() {
 		// macbre: protect images
 		var divs = FCK.EditorDocument.getElementsByTagName('div');
 
-		for (d=0; d<divs.length; d++) {
+		for (d=divs.length-1; d>=0; d--) {
 			if (divs[d].hasAttribute('refid')) {
 				FCK.ProtectImage(divs[d]);
 			}
@@ -274,9 +274,14 @@ FCK.CheckInternalLink = function(title, link) {
 	FCK.YAHOO.util.Connect.asyncRequest("POST", window.parent.wgScriptPath + '/api.php', callback, "action=query&format=json&prop=info&titles=" +   encodeURIComponent(title) );
 }
 
+
+
+//
 // support for non-editable images
+//
+
 FCK.ProtectImage = function(image) {
-	//FCK.log(image);
+	FCK.log(image);
 
 	// get image dimensions (including padding)
 	var size = [image.clientWidth, image.clientHeight];
@@ -309,10 +314,17 @@ FCK.ProtectImage = function(image) {
 	FCKTools.AddEventListener(iframe.contentDocument, 'click', function(e) {
 		e.preventDefault();
 		e.stopPropagation();
-		FCK.ProtectImageClick(this.body.getAttribute('refid'));
+		if (e.button == 0) {
+			FCK.ProtectImageClick(this.body.getAttribute('refid'));
+		}
 	});
 
 	FCKTools.AddEventListener(iframe.contentDocument, 'contextmenu', function(e) {
+		e.preventDefault();
+		e.stopPropagation();
+	});
+
+	FCKTools.AddEventListener(iframe.contentDocument, 'mousedown', function(e) {
 		e.preventDefault();
 		e.stopPropagation();
 	});
@@ -357,10 +369,17 @@ FCK.ProtectImageFill = function(refid) {
 	FCKTools.AddEventListener(iframe.contentDocument, 'click', function(e) {
 		e.preventDefault();
 		e.stopPropagation();
-		FCK.ProtectImageClick(this.body.getAttribute('refid'));
+		if (e.button == 0) {
+			FCK.ProtectImageClick(this.body.getAttribute('refid'));
+		}
 	});
 
 	FCKTools.AddEventListener(iframe.contentDocument, 'contextmenu', function(e) {
+		e.preventDefault();
+		e.stopPropagation();
+	});
+
+	FCKTools.AddEventListener(iframe.contentDocument, 'mousedown', function(e) {
 		e.preventDefault();
 		e.stopPropagation();
 	});
@@ -393,10 +412,17 @@ FCK.ProtectImageFill = function(refid) {
 
 FCK.ProtectImageClick = function(refid) {
 	FCK.log('click on image #' + refid);
-	// TODO: handle onclick event
+
+	// TODO: handle onclick event (only left mouse button)
+	inputClickCommand.Execute();
 }
 
+
+
+//
 // onmouseover template preview
+// 
+
 FCK.TemplatePreviewCloud = false;
 
 FCK.TemplatePreviewAdd = function(placeholder) {
@@ -490,6 +516,10 @@ FCK.TemplatePreviewHide = function(placeholder) {
 	preview.style.display = 'none';
 	FCK.TemplatePreviewCloud.style.visibility = 'hidden';
 }
+
+//
+// misc
+//
 
 // YUI reference
 FCK.YAHOO = window.parent.YAHOO;
