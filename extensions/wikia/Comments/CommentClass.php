@@ -161,10 +161,6 @@ class Comment{
 		$dbr =& wfGetDB( DB_MASTER );
 		
 		$text = $this->fixStr(str_replace("'","&quot;",$this->CommentText));
-		$matches = array();
-		if ( $wgSpamRegex && preg_match( $wgSpamRegex, $text, $matches ) ) {
-			return "spam";
-		}
 	
 		$dbr->insert( '`Comments`',
 		array(
