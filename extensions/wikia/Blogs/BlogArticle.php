@@ -29,5 +29,5 @@ extAddSpecialPage(dirname(__FILE__) . '/SpecialCreateBlogPost.php', 'CreateBlogP
 /**
  * load other parts
  */
-
 include( dirname( __FILE__ ) . "/BlogComments.php");
+include( dirname( __FILE__ ) . "/BlogTemplate.php");
