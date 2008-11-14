@@ -1,6 +1,7 @@
 #wk_blogs_box { 
 	width:300px; 
 	border: 1px solid #E7E7E7;
+	font-size: 8pt;
 }
 #wk_blogs_panel {
 	width:auto;
@@ -17,10 +18,14 @@
 #wk_blogs_body {
 	padding: 2px;
 	font-family: Trebuchet MS, Verdana, Arial;
-	font-size: 9.5pt;
 }
-#wk_blogs_body div.wk-blogs-row {
+#wk_blogs_box div.wk-blogs-link {
 	padding: 1px 0px;
+	font-size: 8.5pt;
+}
+#wk_blogs_panel div.wk-blogs-link {
+	padding: 1px 0px;
+	font-size: 9.5pt;
 }
 #wk_blogs_body ul.list {
 	width: auto;
@@ -28,7 +33,6 @@
 	margin-top: 0.5em;
 	margin-bottom: 0.5em;
 	list-style: none;
-	line-height: 1.2em;
 }
 #wk_blogs_body ul.list li {
 	margin: 0;
@@ -37,10 +41,12 @@
 	font-weight: bold;
 	color:#3366CC;
 }
+#wk_blogs_box div.wk_blogs_timestamp {
+	font-size: 8.5pt;
+}
 #wk_blogs_body div.wk_blogs_timestamp {
 	width: auto;
 	display: inline;
-	font-size: 8pt;
 	font-weight: bold;
 	margin: 0px 0.1em;
 	color:#000000;
@@ -58,7 +64,6 @@
 }
 #wk_blogs_body div.wk_blogs_summary {
 	width: auto;
-	font-size: 7pt;
 	font-weight: normal;
 	margin: 0px 0.1em;
 	color:#000000;
@@ -70,10 +75,13 @@
 }
 #wk_blogs_body div.wk_blogs_comments {
 	width: auto;
-	font-size: 8.2pt;
 	font-weight: normal;
 	margin: 0px 0.1em;
 	color:#000000;
 	padding: 0px 5px 5px 0px;
 	text-align:right;
 }
+#wk_blogs_box div.wk_blogs_comments {
+	font-size: 8.5pt;
+}
+
