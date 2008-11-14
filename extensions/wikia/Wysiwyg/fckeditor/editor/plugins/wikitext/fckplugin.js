@@ -276,37 +276,124 @@ FCK.CheckInternalLink = function(title, link) {
 
 // support for non-editable images
 FCK.ProtectImage = function(image) {
-	FCK.log(image);
-/*
+	//FCK.log(image);
+
 	// get image dimensions (including padding)
-	size = [image.clientWidth, image.clientHeight];
-
-	refid = image.getAttribute('refid');
-
-	// create placeholder and image wrapper
-	var placeholder = FCK.EditingArea.Document.createElement('div');
-	placeholder.style.width = size[0] + 'px';
-	placeholder.style.height = size[0] + 'px';
-	placeholder.setAttribute('refid', refid);
-	placeholder.style.border = 'solid 1px red';
-	placeholder.className = image.className;
-
-	var wrapper = FCK.EditingArea.Document.createElement('div');
-	FCK.EditingArea.Document.body.appendChild(wrapper);
-
-	wrapper.id = 'image' + refid;
-	wrapper.innerHTML = image.innerHTML;
-	wrapper.className = image.className;
-	wrapper.style.position = 'absolute';
-	wrapper.style.top = '20px';
-	wrapper.style.zIndex = 50;
-
-	// add/remove nodes
-	image.parentNode.insertBefore(placeholder, image);
-	image.parentNode.removeChild(image);
-*/
+	var size = [image.clientWidth, image.clientHeight];
+	var refid = image.getAttribute('refid');
 	
+	var iframe = FCK.EditingArea.Document.createElement('iframe');
+	iframe.id  = 'image' + refid;
+	iframe.src = 'javascript:void()';
 
+	iframe.setAttribute('refid', refid);
+	iframe.className = image.className;
+
+	iframe.style.width = parseInt(size[0] + 5) + 'px';
+	iframe.style.height = parseInt(size[1] + 5) + 'px';
+	iframe.style.border = 'none';
+	iframe.style.overflow = 'hidden';
+
+	// store innerHTML
+	FCK.wysiwygData[refid].html = image.innerHTML;
+	
+	image.parentNode.insertBefore(iframe, image);
+
+	// fill iframe
+	iframe.contentDocument.write('<style type="text/css">* {cursor: default !important}</style>');
+	iframe.contentDocument.write(image.innerHTML);
+	iframe.contentDocument.close();
+	iframe.contentDocument.body.setAttribute('refid', refid);
+
+	// set event handlers
+	FCKTools.AddEventListener(iframe.contentDocument, 'click', function(e) {
+		e.preventDefault();
+		e.stopPropagation();
+		FCK.ProtectImageClick(this.body.getAttribute('refid'));
+	});
+
+	FCKTools.AddEventListener(iframe.contentDocument, 'contextmenu', function(e) {
+		e.preventDefault();
+		e.stopPropagation();
+	});
+
+	FCKTools.AddEventListener(iframe.contentWindow, 'unload', function(e) {
+		var target = FCK.YAHOO.util.Event.getTarget(e);
+		var refId = target.body.getAttribute('refid');
+
+		FCK.log('iframe #' + refid  + ' unload captured');
+
+		setTimeout('FCK.ProtectImageFill('+refid+')', 500);
+	});
+
+
+	// load CSS files
+	css = document.createElement("link");
+	css.type = "text/css";
+	css.rel = "stylesheet";
+	css.href = FCKConfig.EditorAreaStyles + '?' + FCKConfig.StyleVersion;
+	iframe.contentDocument.getElementsByTagName("head")[0].appendChild(css);
+
+	css = document.createElement("link");
+	css.type = "text/css";
+	css.rel = "stylesheet";
+	css.href = FCKConfig.EditorAreaCSS + '?' + FCKConfig.StyleVersion;
+	iframe.contentDocument.getElementsByTagName("head")[0].appendChild(css);
+
+	// remove image
+	image.parentNode.removeChild(image);
+}
+
+FCK.ProtectImageFill = function(refid) {
+	iframe = FCK.EditingArea.Document.getElementById('image' + refid);
+
+	// fill iframe
+	iframe.contentDocument.write('<style type="text/css">* {cursor: default !important}</style>');
+	iframe.contentDocument.write(FCK.wysiwygData[refid].html);
+	iframe.contentDocument.close();
+	iframe.contentDocument.body.setAttribute('refid', refid);
+
+	// set event handlers
+	FCKTools.AddEventListener(iframe.contentDocument, 'click', function(e) {
+		e.preventDefault();
+		e.stopPropagation();
+		FCK.ProtectImageClick(this.body.getAttribute('refid'));
+	});
+
+	FCKTools.AddEventListener(iframe.contentDocument, 'contextmenu', function(e) {
+		e.preventDefault();
+		e.stopPropagation();
+	});
+
+	FCKTools.AddEventListener(iframe.contentWindow, 'unload', function(e) {
+		var target = FCK.YAHOO.util.Event.getTarget(e);
+		var refId = target.body.getAttribute('refid');
+
+		FCK.log('iframe #' + refid  + ' unload captured');
+
+		setTimeout('FCK.ProtectImageFill('+refid+')', 500);
+	});
+
+
+	// load CSS files
+	css = document.createElement("link");
+	css.type = "text/css";
+	css.rel = "stylesheet";
+	css.href = FCKConfig.EditorAreaStyles + '?' + FCKConfig.StyleVersion;
+	iframe.contentDocument.getElementsByTagName("head")[0].appendChild(css);
+
+	css = document.createElement("link");
+	css.type = "text/css";
+	css.rel = "stylesheet";
+	css.href = FCKConfig.EditorAreaCSS + '?' + FCKConfig.StyleVersion;
+	iframe.contentDocument.getElementsByTagName("head")[0].appendChild(css);
+
+	FCK.log('image #' + refid + ' reloaded');
+}
+
+FCK.ProtectImageClick = function(refid) {
+	FCK.log('click on image #' + refid);
+	// TODO: handle onclick event
 }
 
 // onmouseover template preview
