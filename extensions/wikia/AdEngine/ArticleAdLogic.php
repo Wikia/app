@@ -305,8 +305,12 @@ class ArticleAdLogic {
 
 	public function isMainPage(){
                 global $wgTitle;
-                if (is_object($wgTitle)){ 
-                        return $wgTitle->getArticleId() == Title::newMainPage()->getArticleId();
+                if (is_object($wgTitle) && 
+		    $wgTitle->getArticleId() == Title::newMainPage()->getArticleId() &&
+		    !self::isDiffPage() &&
+		    !self::isAnonPurgePrompt()) {
+
+			return true	
                 } else {
                         return false;
                 }
@@ -326,18 +330,15 @@ class ArticleAdLogic {
 
 	
 	public function isContentPage(){
-                global $wgTitle, $wgContentNamespaces, $wgRequest, $wgUser;
-		if ($wgRequest->getVal( 'diff' ) != ''){
-			// Don't display ads on diff pages
-			return false;
-		}
+                global $wgTitle, $wgContentNamespaces;
 
-		if ($wgRequest->getVal('action') == 'purge' && $wgUser->isAnon() && !$wgRequest->wasPosted()) {
-			// Anons get an additional prompt when they try to purge a page,
-			// we don't display an ad on the prompt page, but we do if the page is actually purged
+		// not a content page if one of the weird edge cases occurs
+		if (self::isDiffPage() || self::isAnonPagePrompt()) {
 			return false;
 		} 
 		
+		// actual content namespace check along with hardcoded override (main, image & category)
+		// note this is NOT used in isMainPage() since that is to ignore content namespaces
                 if (is_object($wgTitle)){ 
 			return in_array($wgTitle->getNamespace(), array_merge( $wgContentNamespaces, array(NS_MAIN, NS_IMAGE, NS_CATEGORY) ));	
 		} else {
@@ -345,6 +346,24 @@ class ArticleAdLogic {
 		}
 	}
 
+	public function isDiffPage() {
+		global $wgRequest;
+		return $wgRequest->getVal( 'diff' ) == '';
+	}
+
+	/*
+	 * @author tor@wikia-inc.com
+	 *
+	 * Anons get an additional prompt when they try to purge a page,
+	 * we don't want to display an ad on the prompt page,
+	 * but we do if the page is actually purged
+	 *
+	 * @return boolean
+	 */
+	public function isAnonPurgePrompt() {
+		global $wgUser, $wgRequest;
+		return ($wgRequest->getVal('action') == 'purge' && $wgUser->isAnon() && !$wgRequest->wasPosted());
+	}
 
 	// Do reporting to compare the javascript based collision detection logic with this one
 	static public function getCollisionCollision($html) {
