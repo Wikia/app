@@ -201,6 +201,15 @@ FCK.Events.AttachEvent( 'OnAfterSetHTML', function() {
 			}
 		}
 
+		// macbre: protect images
+		var divs = FCK.EditorDocument.getElementsByTagName('div');
+
+		for (d=0; d<divs.length; d++) {
+			if (divs[d].hasAttribute('refid')) {
+				FCK.ProtectImage(divs[d]);
+			}
+		}
+
 		// macbre: register onClick handler to protect images
 		FCKTools.AddEventListener( FCK.EditorDocument, 'mousedown', function(e) {
 			target = FCK.YAHOO.util.Event.getTarget(e);
@@ -263,6 +272,41 @@ FCK.CheckInternalLink = function(title, link) {
 		argument: {'FCK': FCK, 'link': link, 'title': title}
 	}
 	FCK.YAHOO.util.Connect.asyncRequest("POST", window.parent.wgScriptPath + '/api.php', callback, "action=query&format=json&prop=info&titles=" +   encodeURIComponent(title) );
+}
+
+// support for non-editable images
+FCK.ProtectImage = function(image) {
+	FCK.log(image);
+/*
+	// get image dimensions (including padding)
+	size = [image.clientWidth, image.clientHeight];
+
+	refid = image.getAttribute('refid');
+
+	// create placeholder and image wrapper
+	var placeholder = FCK.EditingArea.Document.createElement('div');
+	placeholder.style.width = size[0] + 'px';
+	placeholder.style.height = size[0] + 'px';
+	placeholder.setAttribute('refid', refid);
+	placeholder.style.border = 'solid 1px red';
+	placeholder.className = image.className;
+
+	var wrapper = FCK.EditingArea.Document.createElement('div');
+	FCK.EditingArea.Document.body.appendChild(wrapper);
+
+	wrapper.id = 'image' + refid;
+	wrapper.innerHTML = image.innerHTML;
+	wrapper.className = image.className;
+	wrapper.style.position = 'absolute';
+	wrapper.style.top = '20px';
+	wrapper.style.zIndex = 50;
+
+	// add/remove nodes
+	image.parentNode.insertBefore(placeholder, image);
+	image.parentNode.removeChild(image);
+*/
+	
+
 }
 
 // onmouseover template preview
