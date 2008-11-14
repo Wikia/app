@@ -693,6 +693,10 @@ class ReverseParser {
 				case 'tilde':
 					return $refData['description'];
 
+				// link with template inside description
+				case 'internal link':
+					return $this->handleLink($node, $content);
+
 				// fallback
 				default:
 					return '<!-- unsupported placeholder type -->';
