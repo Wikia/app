@@ -1192,6 +1192,7 @@ if( $custom_user_data ) {
 
 	<div class="monaco_shrinkwrap" id="monaco_shrinkwrap_main">
 		<div id="wikia_page">
+			<?php wfRunHooks('MonacoBeforePageBar'); ?>
 			<div id="page_bar" class="reset color1 clearfix">
 				<ul id="page_controls">
 <?php
@@ -1206,7 +1207,8 @@ if(isset($this->data['articlelinks']['left'])) {
 				</ul>
 				<ul id="page_tabs">
 <?php
-if(isset($this->data['articlelinks']['right'])) {
+global $userMasthead;
+if(isset($this->data['articlelinks']['right']) && !$userMasthead ) {
 	foreach($this->data['articlelinks']['right'] as $key => $val) {
 ?>
 					<li class="<?= $val['class'] ?>"><a href="<?= htmlspecialchars($val['href']) ?>" id="ca-<?= $key ?>" <?= $skin->tooltipAndAccesskey('ca-'.$key) ?> class="<?= $val['class'] ?>"><?= htmlspecialchars(ucfirst($val['text'])) ?></a></li>
