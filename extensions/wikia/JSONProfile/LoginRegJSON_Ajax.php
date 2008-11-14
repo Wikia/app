@@ -162,8 +162,16 @@ function wfDoLoginJSONPost(){
 			</script>";
 	}
 	else {
+		//if user forgot password, we need to redirect to mediawiki
+		if( strpos( $temp_out, wfMsg( 'resetpass_announce' ) ) !== false ){
+			return "<script type=\"text/javascript\">
+				location.href='{$wpSourceForm}?reset=1';
+			</script>";
+		}
+		
 		$re_pattern = "/<div class=\"errorbox\"\>[^<]*<h2\>Login error\:<\/h2\>([^<]*)<\/div\>/iU";
 		preg_match($re_pattern, $temp_out, $matches);
+		
 		if (sizeof($matches)) {
 			
 			$message = str_replace("\"", "\\\"", trim($matches[1]));
