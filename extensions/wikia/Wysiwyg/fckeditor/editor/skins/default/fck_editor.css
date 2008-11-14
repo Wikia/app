@@ -472,3 +472,28 @@ td.childrenHidden textarea, td.childrenHidden iframe
     float: left;
     background-color: #c4cdd6;
 }
+
+#wysiwygTemplatePreviewCloud {
+	min-width: 50px;
+	max-width: 300px;
+	max-height: 250px;
+	overflow: auto;
+	background-image: url('../../css/images/template_cloud_bg.gif');
+	background-repeat: no-repeat;
+	background-position: -10px 0;
+	padding-top: 9px;
+
+	position: absolute;
+	visibility: hidden;
+	z-index: 10;
+
+	font-family: sans-serif;
+	font-size: 12px;
+}
+ 
+#wysiwygTemplatePreviewCloudInner {
+	border: solid 1px #e5e5e5;
+	border-top: none;
+	background: #fffff6;
+	padding: 5px;
+}
