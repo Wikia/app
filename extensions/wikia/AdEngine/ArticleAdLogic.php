@@ -326,11 +326,17 @@ class ArticleAdLogic {
 
 	
 	public function isContentPage(){
-                global $wgTitle, $wgContentNamespaces, $wgRequest;
-		if ($wgRequest->getVal( 'diff') != ''){
+                global $wgTitle, $wgContentNamespaces, $wgRequest, $wgUser;
+		if ($wgRequest->getVal( 'diff', false ) !== false){
 			// Don't display ads on diff pages
 			return false;
 		}
+
+		if ($wgRequest->getVal('action') == 'purge' && $wgUser->isAnon() && $wgRequest->getVal('submit', false) === false) {
+			// Anons get an additional prompt when they try to purge a page,
+			// we don't display an ad on the prompt page, but we do if the page is actually purged
+			return false;
+		} 
 		
                 if (is_object($wgTitle)){ 
 			return in_array($wgTitle->getNamespace(), array_merge( $wgContentNamespaces, array(NS_MAIN, NS_IMAGE, NS_CATEGORY) ));	
