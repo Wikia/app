@@ -302,61 +302,15 @@ FCK.ProtectImage = function(image) {
 	// store innerHTML
 	FCK.wysiwygData[refid].html = image.innerHTML;
 	
+	// DOM stuff
 	image.parentNode.insertBefore(iframe, image);
-
-	// fill iframe
-	iframe.contentDocument.write('<style type="text/css">* {cursor: default !important}</style>');
-	iframe.contentDocument.write(image.innerHTML);
-	iframe.contentDocument.close();
-	iframe.contentDocument.body.setAttribute('refid', refid);
-
-	// set event handlers
-	FCKTools.AddEventListener(iframe.contentDocument, 'click', function(e) {
-		e.preventDefault();
-		e.stopPropagation();
-		if (e.button == 0) {
-			FCK.ProtectImageClick(this.body.getAttribute('refid'));
-		}
-	});
-
-	FCKTools.AddEventListener(iframe.contentDocument, 'contextmenu', function(e) {
-		e.preventDefault();
-		e.stopPropagation();
-	});
-
-	FCKTools.AddEventListener(iframe.contentDocument, 'mousedown', function(e) {
-		e.preventDefault();
-		e.stopPropagation();
-	});
-
-	FCKTools.AddEventListener(iframe.contentWindow, 'unload', function(e) {
-		var target = FCK.YAHOO.util.Event.getTarget(e);
-		var refId = target.body.getAttribute('refid');
-
-		FCK.log('iframe #' + refid  + ' unload captured');
-
-		setTimeout('FCK.ProtectImageFill('+refid+')', 500);
-	});
-
-
-	// load CSS files
-	css = document.createElement("link");
-	css.type = "text/css";
-	css.rel = "stylesheet";
-	css.href = FCKConfig.EditorAreaStyles + '?' + FCKConfig.StyleVersion;
-	iframe.contentDocument.getElementsByTagName("head")[0].appendChild(css);
-
-	css = document.createElement("link");
-	css.type = "text/css";
-	css.rel = "stylesheet";
-	css.href = FCKConfig.EditorAreaCSS + '?' + FCKConfig.StyleVersion;
-	iframe.contentDocument.getElementsByTagName("head")[0].appendChild(css);
-
-	// remove image
 	image.parentNode.removeChild(image);
+
+	// fill iframe and setup events
+	FCK.ProtectImageSetup(refid);
 }
 
-FCK.ProtectImageFill = function(refid) {
+FCK.ProtectImageSetup = function(refid) {
 	iframe = FCK.EditingArea.Document.getElementById('image' + refid);
 
 	// fill iframe
@@ -390,7 +344,7 @@ FCK.ProtectImageFill = function(refid) {
 
 		FCK.log('iframe #' + refid  + ' unload captured');
 
-		setTimeout('FCK.ProtectImageFill('+refid+')', 500);
+		setTimeout('FCK.ProtectImageSetup('+refid+')', 500);
 	});
 
 
@@ -407,7 +361,7 @@ FCK.ProtectImageFill = function(refid) {
 	css.href = FCKConfig.EditorAreaCSS + '?' + FCKConfig.StyleVersion;
 	iframe.contentDocument.getElementsByTagName("head")[0].appendChild(css);
 
-	FCK.log('image #' + refid + ' reloaded');
+	FCK.log('set up image #' + refid + ' iframe');
 }
 
 FCK.ProtectImageClick = function(refid) {
