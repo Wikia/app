@@ -344,7 +344,7 @@ FCK.ProtectImageSetup = function(refid) {
 
 		FCK.log('iframe #' + refid  + ' unload captured');
 
-		setTimeout('FCK.ProtectImageSetup('+refid+')', 500);
+		setTimeout('FCK.ProtectImageSetup('+refid+')', 50);
 	});
 
 
