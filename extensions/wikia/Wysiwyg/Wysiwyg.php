@@ -320,9 +320,9 @@ function Wysiwyg_CheckEdgeCases($text) {
 			'<span refid=' => 'wysiwyg-edgecase-syntax', // span with fck metadata - shouldn't be used by user
 		),
 		'regexp' => array(
-			//'/\[\[[^|]+\|.*?(?:(?:' . wfUrlProtocols() . ')|{{).*?]]/' => 'wysiwyg-edgecase-complex-description', // external url or template found in the description of a link
+//			'/\[\[[^|]+\|.*?(?:(?:' . wfUrlProtocols() . ')|{{).*?]]/' => 'wysiwyg-edgecase-complex-description', // external url or template found in the description of a link
 			//'/{{[^}]*(?<=\[)[^}]*}}/' => 'wysiwyg-edgecase-template-with-link', // template with link as a parameter
-			//'/\[\[(?:image|media)[^]|]+\|[^]]+(?:\[\[|(?:' . wfUrlProtocols() . '))(?:[^]]+])?[^]]+]]/si' => 'wysiwyg-edgecase-image-with-link', // template with link as a parameter
+//			'/\[\[(?:image|media)[^]|]+\|[^]]+(?:\[\[|(?:' . wfUrlProtocols() . '))(?:[^]]+])?[^]]+]]/si' => 'wysiwyg-edgecase-image-with-link', // template with link as a parameter
 		)
 	);
 	foreach($edgeCases['regular'] as $str => $msgkey) {
@@ -416,8 +416,10 @@ function Wysiwyg_WrapTemplate($originalCall, $output, $lineStart) {
 	$refId = count($wgWysiwygMetaData);
 
 	$data = array(	'type' => 'template',
-					'originalCall' => $originalCall,
-					'lineStart' => $lineStart);
+					'originalCall' => $originalCall);
+	if (!empty($lineStart)) {
+		$data['lineStart'] = 1;
+	}
 
 	$templateName = explode('|', substr($originalCall, 2, -2));
 	$templateName = rtrim($templateName[0]);
@@ -459,13 +461,15 @@ function Wysiwyg_SetRefId($type, $params, $addMarker = true, $returnId = false) 
 					$data['trial'] = $tmpInside;
 				}
 			}
+			$data['description'] = preg_replace('%\x7f-wtb-(\d+)-\x7f.*?\x7f-wte-\1-\x7f%sie', '$wgWysiwygMetaData[\\1]["originalCall"];', $data['description']);
+			$data['description'] = preg_replace('/<([^ ]+) wasHtml="1"/si', '<\1', $data['description']);
 			break;
 
 		case 'internal link: media':
 		case 'category':
 			$data['href'] = ($params['noforce'] ? '' : ':') . $params['link'];
 			$data['description'] = $params['wasblank'] ? '' : $params['text'];
-			$result = "[[" . $data['href'] . ($params['wasblank'] ? '' : "|".$params['text']) . "]]";
+			$result = '[[' . $data['href'] . ($params['wasblank'] ? '' : '|' . $params['text']) . ']]';
 			break;
 
 		case 'image':
