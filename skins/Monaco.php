@@ -1232,9 +1232,7 @@ if ($wgOut->isArticle()){
 	} else if ( ArticleAdLogic::isContentPage() &&
 		   !ArticleAdLogic::isStubArticle($this->data['bodytext'])) { //valid article
 
-		if (ArticleAdLogic::isShortArticle($this->data['bodytext'])){
-			$topAdCode = AdEngine::getInstance()->getPlaceHolderDiv('TOP_LEADERBOARD');
-		} elseif (ArticleAdLogic::isBoxAdArticle($this->data['bodytext'])) {
+		if (ArticleAdLogic::isBoxAdArticle($this->data['bodytext'])) {
 			$topAdCode = AdEngine::getInstance()->getPlaceHolderDiv('TOP_RIGHT_BOXAD');
 		} else {
 			// Long article, but a collision
