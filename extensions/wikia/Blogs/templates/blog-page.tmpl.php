@@ -10,10 +10,10 @@ if (!empty($aRows)) {
 <ul class="list">
 <?	
 foreach ($aRows as $pageId => $aRow) {
-       $title = Title::newFromText($aRow['title'], $aRow['namespace']);
+       $oTitle = Title::newFromText($aRow['title'], $aRow['namespace']);
 ?>
 <li>
-<div><a href="<?=$title->getLocalUrl()?>"><?=$title->getText()?></a></div>
+<div class="wk-blogs-row"><a href="<?=$oTitle->getLocalUrl()?>"><?=$oTitle->getText()?></a></div>
 <?
 /* s: TIMESTAMP */
 	if ( !empty($aOptions['timestamp']) ) {
@@ -33,6 +33,11 @@ foreach ($aRows as $pageId => $aRow) {
 <div class="wk_blogs_summary"><?= $aRow['text'] ?></div>
 <?		
 	}
+	/* s: COMMENTS */
+?>	
+<div class="wk_blogs_comments"><?=$skin->makeLinkObj($oTitle, wfMsg('blog_comments', $aRow['comments']))?> | <?=$skin->makeLinkObj($oTitle, wfMsg('blog_continuereading'))?></div>
+<?
+	/* e: COMMENTS */
 /* e: SUMMARY */
 ?>
 </li>
