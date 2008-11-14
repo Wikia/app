@@ -523,7 +523,7 @@ function Wysiwyg_SetRefId($type, $params, $addMarker = true, $returnId = false) 
 			$data['description'] =  str_replace(' wasHtml="1"', '', $data['description']);
 		}
 		$result = htmlspecialchars($result);
-		$result = "<input type=\"button\" refid=\"{$refId}\" value=\"{$result}\" title=\"{$result}\" class=\"wysiwygDisabled\" />";
+		$result = "<input type=\"button\" refid=\"{$refId}\" _fck_type=\"{$type}\" value=\"{$result}\" title=\"{$result}\" class=\"wysiwygDisabled\" />";
 
 		// macbre: use placeholders
 		$marker = "\x7f-wysiwyg-{$refId}-\x7f";
