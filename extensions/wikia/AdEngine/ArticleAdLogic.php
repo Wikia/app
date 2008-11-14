@@ -348,7 +348,7 @@ class ArticleAdLogic {
 
 	public function isDiffPage() {
 		global $wgRequest;
-		return $wgRequest->getVal( 'diff' ) == '';
+		return $wgRequest->getVal( 'diff' ) != '';
 	}
 
 	/*
