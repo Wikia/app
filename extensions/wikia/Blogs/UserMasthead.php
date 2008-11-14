@@ -30,8 +30,8 @@ function userMasthead() {
 		} else {
 			$out['nav_links'][] = array('text' => 'email user', 'href' => $wgTitle);
 		}
-		
-		$tmpl = new EasyTemplate(dirname( __FILE__ ));
+
+		$tmpl = new EasyTemplate( dirname( __FILE__ ) . '/templates/' );
 		$tmpl->set_vars( array(
 			'data' => $out
 		));
