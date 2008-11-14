@@ -695,7 +695,7 @@ class ReverseParser {
 
 				// link with template inside description
 				case 'internal link':
-					return $this->handleLink($node, $content);
+					return $this->handleLink($node, $refData['description']);
 
 				// fallback
 				default:
