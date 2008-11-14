@@ -80,7 +80,7 @@ class BlogComments {
 		return $comments;
 	}
 
-	static public function newFromBlogPage( $text ) {
+	static public function newFromText( $text ) {
 		$blogPage = Title::newFromText( $text, NS_BLOG_ARTICLE );
 		if( ! $blogPage ) {
 			/**
