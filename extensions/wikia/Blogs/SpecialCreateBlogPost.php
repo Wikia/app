@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * @addto SpecialPages
+ *
+ * @author Adrian Wieczorek
+ */
 class CreateBlogPost extends SpecialPage {
 
 	private $mFormData;
@@ -72,6 +77,10 @@ class CreateBlogPost extends SpecialPage {
 		);
 
 		$wgOut->addHTML( $oTmpl->execute("createPostConfirm") );
+
+		$this->createListingPage();
+
+		self::invalidateCacheConnected( $this->mPostTitle );
 		return true;
 	}
 
@@ -113,33 +122,66 @@ class CreateBlogPost extends SpecialPage {
 		return $sText;
 	}
 
-		private function renderForm() {
-			global $wgOut, $wgScriptPath;
+	private function renderForm() {
+		global $wgOut, $wgScriptPath;
 
-			$wgOut->addScript( '<script type="text/javascript" src="' . $wgScriptPath . '/skins/common/edit.js"><!-- edit js --></script>');
+		$wgOut->addScript( '<script type="text/javascript" src="' . $wgScriptPath . '/skins/common/edit.js"><!-- edit js --></script>');
 
-			$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
+		$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
 
-			$oTmpl->set_vars( array(
-				'cloud' => new TagCloud(),
-				'cols' => 10,
-				'postCategories' => $this->mFormData['postCategories'] )
-			);
+		$oTmpl->set_vars( array(
+			'cloud' => new TagCloud(),
+			'cols' => 10,
+			'postCategories' => $this->mFormData['postCategories'] )
+		);
 
-			$sCategoryCloud = $oTmpl->execute("createPostCategoryCloud");
+		$sCategoryCloud = $oTmpl->execute("createPostCategoryCloud");
 
-			$oTmpl->set_vars( array(
-				"title" => $this->mTitle,
-				"formErrors" => $this->mFormErrors,
-				"formData" => $this->mFormData,
-				"categoryCloud" => $sCategoryCloud )
-			);
+		$oTmpl->set_vars( array(
+			"title" => $this->mTitle,
+			"formErrors" => $this->mFormErrors,
+			"formData" => $this->mFormData,
+			"categoryCloud" => $sCategoryCloud )
+		);
 
-			$wgOut->addHTML( $oTmpl->execute("createPostForm") );
+		$wgOut->addHTML( $oTmpl->execute("createPostForm") );
 
 
-			return;
-		}
+		return;
+	}
 
+	/**
+	 * purge cache for connected articles
+	 *
+	 * @static
+	 * @access public
+	 * @author Krzysztof Krzyżaniak <eloy@wikia-inc.com>
+	 *
+	 */
+	static public function doPurgeConnected( Title $title ) {
+		$title->invalidateCache();
+		/**
+		 * this should be subpage, invalidate page as well
+		 */
+		list( $page, $subpage ) = explode( "/", $title->getDBkey() );
+		$title = Title::newFromDBkey( $page );
+		$title->invalidateCache();
+	}
+
+	/**
+	 * create listing article
+	 *
+	 * @access private
+	 * @author Krzysztof Krzyżaniak <eloy@wikia-inc.com>
+	 */
+	private function createListingPage() {
+		global $wgUser;
+
+		/**
+		 * it should be done only once
+		 */
+		$listig = Title::newFromText( $wgUser->getName(), NS_BLOG_ARTICLE );
+		$article = new Article( $listing, 0 );
+		// $oArticle->doEdit($sPostBody, "Blog listing created." );
+	}
 }
-
