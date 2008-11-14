@@ -199,7 +199,7 @@ class BlogComments {
 
 		if( $rescnt > 0 ) {
 			$r = "<div id=\"mw-pages\">\n";
-			$r .= '<h2>' . wfMsg( "blogs_header", $ti ) . "</h2>\n";
+			$r .= '<h2>' . wfMsg( "blog-header", $ti ) . "</h2>\n";
 			#	$r .= $countmsg;
 			$r .= $catView->formatList( $catView->blogs, $catView->blogs_start_char );
 			$r .= "\n</div>";

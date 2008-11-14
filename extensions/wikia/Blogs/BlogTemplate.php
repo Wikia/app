@@ -1,6 +1,6 @@
 <?php
 
-/* register as a parser function {{BLOGTPL_TAG}} and a tag <BLOGTPL_TAG> */ 
+/* register as a parser function {{BLOGTPL_TAG}} and a tag <BLOGTPL_TAG> */
 $wgExtensionFunctions[] = array("BlogTemplateClass", "setup");
 $wgHooks['LanguageGetMagic'][] = "BlogTemplateClass::setMagicWord";
 
@@ -16,17 +16,17 @@ define ("BLOGS_OPENED_TAGS", "/^<\s*([^\s>!]+).*?>$/s");
 class BlogTemplateClass {
 	/*
 	 * Tag options
-	 */ 	
+	 */
 	public static $aBlogParams = array(
 		/*
 		 * <title>Cat11</title>
-		 * or 
+		 * or
 		 * title=TITLE
-		 * 
-		 * type: 	string 
+		 *
+		 * type: 	string
 		 * default: Blogs
 		 */
-		'title' 		=> array ( 
+		'title' 		=> array (
 			'type' 		=> 'string',
 			'default' 	=> "Blogs",
 		),
@@ -34,57 +34,57 @@ class BlogTemplateClass {
 		 * <category>Cat11</category>
 		 * <category>Cat12</category>
 		 * ....
-		 * 
-		 * or 
-		 * 
+		 *
+		 * or
+		 *
 		 * <category>
 		 * Cat11
 		 * Cat12
 		 * Cat13
 		 * ....
 		 * </category>
-		 * 
-		 * type: 	string 
+		 *
+		 * type: 	string
 		 * default: null (all categories)
 		 */
-		'category' 		=> array ( 
+		'category' 		=> array (
 			'type' 		=> 'string',
 			'default' 	=> null,
-			'count'		=> 10 
+			'count'		=> 10
 		),
 
         /*
 		 * <author>Author1</author>
 		 * <author>Author2</author>
 		 * ....
-		 * 
-		 * or 
-		 * 
+		 *
+		 * or
+		 *
 		 * <author>
 		 * Author1
 		 * Author2
 		 * Author3
 		 * ....
 		 * </author>
-		 * 
-		 * type: 	string 
+		 *
+		 * type: 	string
          * default: "" (all authors)
          */
-		'author' 		=> array ( 
-			'type' 		=> 'string', 
-			'default' 	=> '', 
-			'count'		=> 10 
+		'author' 		=> array (
+			'type' 		=> 'string',
+			'default' 	=> '',
+			'count'		=> 10
 		),
-		
+
         /*
          * order = date (or title or author)
-		 * 
+		 *
 		 * type: 	element of predefined list (date, title, author)
          * default: timestamp
          */
-		'order' 		=> array ( 
+		'order' 		=> array (
 			'type' 		=> 'list',
-			'default' 	=> 'date', 
+			'default' 	=> 'date',
 			'pattern'	=> array(
 				'date' 	=> 'page_touched',
 				'title' => 'page_title',
@@ -111,41 +111,41 @@ class BlogTemplateClass {
 		 * type: 	number
 		 * default: 5
 		 */
-		'count' 		=> array ( 
-			'type' 		=> 'number', 
-			'default' 	=> '5', 
+		'count' 		=> array (
+			'type' 		=> 'number',
+			'default' 	=> '5',
 			'pattern' 	=> '/^\d*$/',
-			'max'		=> 10 
+			'max'		=> 10
 		),
 
 		/*
 		 * number of results which shall be skipped before display starts.
 		 * offset = /^\d*$/
-		 * 
+		 *
 		 * type: 	number
 		 * default: 0
 		 */
 		'offset' 		=> array (
-			'default' 	=> '0', 
+			'default' 	=> '0',
 			'pattern' 	=> '/^\d*$/'
 		),
-		
+
 		/*
 		 * show date of blog creation
 		 * timestamp = false (or true)
-		 * 
+		 *
 		 * type: 	boolean,
 		 * default: false
 		 */
 		'timestamp' => array (
 			'type' 		=> 'boolean',
 			'default' 	=> false
-		),		
+		),
 
 		/*
 		 * show summary
 		 * summary = false (or true)
-		 * 
+		 *
 		 * type: 	boolean,
 		 * default: false
 		 */
@@ -157,13 +157,13 @@ class BlogTemplateClass {
 		/*
 		 * number of characters in summary
 		 * summarylength = /^\d*$/
-		 * 
+		 *
 		 * type: 	number,
 		 * default: 200
 		 */
 		'summarylength' 	=> array (
 			'type' 		=> 'number',
-			'default' 	=> '200', 
+			'default' 	=> '200',
 			'pattern' 	=> '/^\d*$/'
 		),
 
@@ -185,15 +185,15 @@ class BlogTemplateClass {
 	private static $aTables		= array( );
 	private static $aWhere 		= array( );
 	private static $aOptions	= array( );
-	
+
 	private static $dbr 		= null;
-	
+
 	private static $search 		= array (
 		//'/<table[^>]*>.*<\/table>/siU',
         '/(<table[^>]*>|<\/table>)/i',
-        '/(<tr[^>]*>|<\/tr>)/i', 
+        '/(<tr[^>]*>|<\/tr>)/i',
         '/<td[^>]*>(.*?)<\/td>/i',
-        '/<th[^>]*>(.*?)<\/th>/ie',		
+        '/<th[^>]*>(.*?)<\/th>/ie',
 		'/<div[^>]*>.*<\/div>/siU',
 		'/<style[^>]*>.*<\/style>/siU',
 		'/<script[^>]*>.*<\/script>/siU',
@@ -213,28 +213,25 @@ class BlogTemplateClass {
 		'<br/>', //\n
         '&nbsp;', //\t
 	);
-	
+
 	private static $skipStrinBeforeParse	= "<p><div>";
 	private static $skipStrinAfterParse		= "<p>"; # one tag only!
 	private static $parseTagTruncateText	= "/<p>(.*)<\/p>/siU";
-		
+
 	public static function setup() {
 		global $wgParser, $wgMessageCache;
 		global $wgOut, $wgScriptPath, $wgMergeStyleVersionJS;
 		wfProfileIn( __METHOD__ );
 		// variant as a parser tag: <BLOGTPL_TAG>
 		$wgParser->setHook( BLOGTPL_TAG, array( __CLASS__, "parseTag" ) );
-		// set empty value 
+		// set empty value
 		$rand = $wgMergeStyleVersionJS;
 		$wgOut->addHTML( "<link rel=\"stylesheet\" type=\"text/css\" href=\"{$wgScriptPath}/extensions/wikia/Blogs/css/BlogTemplate.css\" />" );
-		// language file 
-		require_once( "BlogArticle.i18n.php" );
-		foreach( $wgBlogArticleMessages as $sLang => $aMsgs ) {
-			$wgMessageCache->addMessages( $aMsgs, $sLang );
-		}
+		// language file
+		wfLoadExtensionMessages("Blogs");
 		wfProfileOut( __METHOD__ );
 	}
-	
+
 	public static function setMagicWord( &$magicWords, $langCode ) {
 		wfProfileIn( __METHOD__ );
 		/* add the magic word */
@@ -257,19 +254,19 @@ class BlogTemplateClass {
 		wfProfileOut( __METHOD__ );
 		return $res;
 	}
-	
+
 	public static function parseTagFunction(&$parser) {
 		wfProfileIn( __METHOD__ );
 		// not implemented
 		wfProfileOut( __METHOD__ );
 		return "";
 	}
-	
+
 	public static function getUserNameRecord($username) {
 		wfProfileIn( __METHOD__ );
 		$aResult = array();
 		if (!empty($username)) {
-			$oUser = User::newFromName($username); 
+			$oUser = User::newFromName($username);
 			if ( $oUser instanceof User ) {
 				$sk = $oUser->getSkin();
 				$aResult = array(
@@ -277,21 +274,21 @@ class BlogTemplateClass {
 					"talkpage" => $sk->makeLinkObj($oUser->getTalkPage(), wfMsg('talkpagelinktext')),
 					"contribs" => $sk->userLink($oUser->getId(), wfMsg('contribslink')),
 				);
-			} 
+			}
 		}
 		wfProfileOut( __METHOD__ );
 		return $aResult;
 	}
 
 	/*
-	 * private method 
+	 * private method
 	 */
-	
-	private static function __parseXMLTag($string) { 
+
+	private static function __parseXMLTag($string) {
 		wfProfileIn( __METHOD__ );
 		$aResult = array();
 		$aRes = $aTags = array();
-		if (preg_match_all(BLOGS_XML_REGEX, $string, $aTags)) { 
+		if (preg_match_all(BLOGS_XML_REGEX, $string, $aTags)) {
 			list (, $sStartTags, $sTexts, $sEndTags) = $aTags;
 			wfDebugLog( __METHOD__, "found ".count($sStartTags)." tags\n" );
 			foreach ($sStartTags as $id => $sStartTag) {
@@ -322,21 +319,21 @@ class BlogTemplateClass {
 			}
 		}
 		wfProfileOut( __METHOD__ );
-		return $aResult; 
+		return $aResult;
 	}
 
-	private static function __getmicrotime(){ 
-		list($usec, $sec) = explode(" ",microtime()); 
-		return ((float)$usec + (float)$sec); 
-    }   
-	
+	private static function __getmicrotime(){
+		list($usec, $sec) = explode(" ",microtime());
+		return ((float)$usec + (float)$sec);
+    }
+
 	private static function __setDefault() {
 		/* set default options */
     	wfProfileIn( __METHOD__ );
 		/* default tables */
 		if ( !in_array( "page", self::$aTables) ) {
 			self::$aTables[] = "page";
-		} 
+		}
 		/* default conditions */
 		if ( !in_array("page_namespace", array_keys( self::$aWhere )) ) {
 			self::$aWhere["page_namespace"] = NS_BLOG_ARTICLE;
@@ -394,7 +391,7 @@ class BlogTemplateClass {
 		}
     	wfProfileOut( __METHOD__ );
 	}
-	
+
 	private static function __makeBoolOption($sParamName, $sParamValue) {
     	wfProfileIn( __METHOD__ );
     	wfDebugLog( __METHOD__, "__makeBoolOption: ".$sParamName.",".$sParamValue."\n" );
@@ -423,7 +420,7 @@ class BlogTemplateClass {
 		}
     	wfProfileOut( __METHOD__ );
 	}
-	
+
 	private static function __addRevisionTable() {
     	wfProfileIn( __METHOD__ );
 		$sRevisionTable = 'revision';
@@ -475,15 +472,15 @@ class BlogTemplateClass {
 			self::$dbr->query( 'SET group_concat_max_len = '.GROUP_CONCAT, __METHOD__ );
 			/* run query */
 			$res = self::$dbr->select(
-				array( self::$dbr->tableName( 'page' ), self::$dbr->tableName( 'categorylinks' ) ), 
-				array( "cl_to", "GROUP_CONCAT(DISTINCT cl_from SEPARATOR ',') AS cl_page" ), 
-				array( 
+				array( self::$dbr->tableName( 'page' ), self::$dbr->tableName( 'categorylinks' ) ),
+				array( "cl_to", "GROUP_CONCAT(DISTINCT cl_from SEPARATOR ',') AS cl_page" ),
+				array(
 					"page_namespace" => NS_BLOG_ARTICLE,
 					"page_id = cl_from",
 					"cl_to in (".self::$dbr->makeList( $aParamValues ).")",
 					"page_touched >= ".self::$dbr->addQuotes(BLOGS_TIMESTAMP)
-				), 
-				__METHOD__, 
+				),
+				__METHOD__,
 				array( 'GROUP BY' => 'cl_to' )
 			);
 			while ( $oRow = self::$dbr->fetchObject( $res ) ) {
@@ -494,17 +491,17 @@ class BlogTemplateClass {
     	wfProfileOut( __METHOD__ );
     	return $aPages;
 	}
-	
+
 	private static function __truncateText($sText, $iLength = 200, $sEnding = BLOGS_ENDING) {
 		global $wgLang;
-		
+
 		wfProfileIn( __METHOD__ );
 
 		$sResult = "";
 		if ( empty($iLength) ) {
 			$iLength = self::$aOptions['summarylength'];
 		}
-		
+
 		if (mb_strlen(strip_tags($sText)) <= $iLength) {
 			/* if text without HTML is shorter than the maximum length, return text */
 			$sResult = $sText;
@@ -512,9 +509,9 @@ class BlogTemplateClass {
 			/* splits all self::$skipSplitAfterParse to lines */
 			$aLines = array();
 			if (preg_match_all(BLOGS_HTML_PARSE, $sText, $aLines, PREG_SET_ORDER) !== false) {
-				$iTotalLength = mb_strlen($sEnding); 
+				$iTotalLength = mb_strlen($sEnding);
 				$aTags = array();
-				
+
 				//error_log ("aLines = ".print_r($aLines, true). "\n", 3, "/tmp/moli.log");
 				foreach ($aLines as $aLine) {
 					/* HTML-tag exists */
@@ -531,8 +528,8 @@ class BlogTemplateClass {
 						}
 						$sResult .= $aLine[1];
 					}
-					
-					/* calculate special entites */ 
+
+					/* calculate special entites */
 					$iEntLength = mb_strlen(preg_replace(BLOGS_ENTITIES_PARSE, ' ', $aLine[2]));
 					if ( ($iTotalLength + $iEntLength) > $iLength) {
 						$iMaxLength = $iLength - $iTotalLength;
@@ -558,7 +555,7 @@ class BlogTemplateClass {
 						break;
 					}
 				}
-				
+
 				/* wrap correct words - find the last occurance of " " */
 				$iSpacePos = strrpos($sResult, ' ');
 				if ( $iSpace !== false ) {
@@ -596,8 +593,8 @@ class BlogTemplateClass {
 		$sResult = preg_replace('/[\r\n]+/siU', '<br />', trim($sResult));
 		return $sResult;
 	}
-	
-	
+
+
 	private static function __getRevisionText($iRev) {
 		global $wgLang;
 		wfProfileIn( __METHOD__ );
@@ -606,7 +603,7 @@ class BlogTemplateClass {
 		if ( (!empty($iRev)) && (!empty(self::$aOptions['summary'])) ) {
 			$oRev = Revision::newFromId($iRev);
 			$sBlogText = $oRev->revText();
-			/* local parser */			
+			/* local parser */
 			$localParser = new Parser();
 			/* skip HTML tags */
 			$sBlogText = strip_tags($sBlogText, self::$skipStrinBeforeParse);
@@ -625,7 +622,7 @@ class BlogTemplateClass {
 		wfProfileOut( __METHOD__ );
 		return $sResult;
 	}
-	
+
 	private static function __getResults() {
 		global $wgLang;
     	wfProfileIn( __METHOD__ );
@@ -636,16 +633,16 @@ class BlogTemplateClass {
     		$aFields[] = 'rev_user_text as username';
 		}
 		$res = self::$dbr->select(
-			array_map(array(self::$dbr, 'tableName'), self::$aTables),  
-			$aFields, 
-			self::$aWhere, 
-			__METHOD__, 
-			self::__makeDBOrder() 
+			array_map(array(self::$dbr, 'tableName'), self::$aTables),
+			$aFields,
+			self::$aWhere,
+			__METHOD__,
+			self::__makeDBOrder()
 		);
 		while ( $oRow = self::$dbr->fetchObject( $res ) ) {
 			$oComments = BlogComments::newFromText( $oRow->page_title );
 			$iCount = $oComments->count();
-			
+
 			$aResult[$oRow->page_id] = array(
 				"page" 			=> $oRow->page_id,
 				"namespace" 	=> $oRow->page_namespace,
@@ -662,10 +659,10 @@ class BlogTemplateClass {
     	wfProfileOut( __METHOD__ );
     	return $aResult;
 	}
-							
+
     private static function __parse( $aInput, $aParams, &$parser ) {
     	global $wgLang, $wgUser, $wgCityId, $wgParser;
-    	
+
     	wfProfileIn( __METHOD__ );
     	$sResult = "";
 
@@ -688,15 +685,15 @@ class BlogTemplateClass {
 				if ( !in_array($sParamName, array_keys(self::$aBlogParams)) ) {
 					throw new Exception( wfMsg('blog_invalidparam', $sParamName, implode(", ", array_keys(self::$aBlogParams))) );
 				} elseif ( trim($sParamName) == '' ) {
-					throw new Exception(wfMsg('blog_emptyparam'));						
-				} 
+					throw new Exception(wfMsg('blog_emptyparam'));
+				}
 
 				/* ignore comment lines */
-				if ($sParamName[0] == '#') { 
+				if ($sParamName[0] == '#') {
 					wfDebugLog( __METHOD__, "ignore comment line: ".$iKey." \n" );
 					continue;
 				}
-			
+
 				/* parse value of parameter */
 				switch ($sParamName) {
 					case 'category'		:
@@ -784,7 +781,7 @@ class BlogTemplateClass {
 						self::__addRevisionTable();
 						self::__makeBoolOption($sParamName, $sParamValue);
 						break;
-					case 'title' 		:	
+					case 'title' 		:
 						self::__makeStringOption($sParamName, $sParamValue);
 						break;
 				}
