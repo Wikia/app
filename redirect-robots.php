@@ -123,6 +123,11 @@ Disallow: /
 User-agent: WebReaper
 Disallow: /
 
+# Inexplicably, Yahoo! Slurp intentionally 404s using a generated URL that starts with
+# /SlurpConfirm404/ We get over 30k of it per day.
+User-agent: Slurp
+Disallow: /
+
 EOT;
 echo getDynamicRobots('goog');
 echo getDynamicRobots();
