@@ -13,7 +13,7 @@ foreach ($aRows as $pageId => $aRow) {
        $oTitle = Title::newFromText($aRow['title'], $aRow['namespace']);
 ?>
 <li>
-<div class="wk-blogs-row"><a href="<?=$oTitle->getLocalUrl()?>"><?=$oTitle->getText()?></a></div>
+<div class="wk-blogs-link"><a href="<?=$oTitle->getLocalUrl()?>"><?=$oTitle->getText()?></a></div>
 <?
 /* s: TIMESTAMP */
 	if ( !empty($aOptions['timestamp']) ) {
