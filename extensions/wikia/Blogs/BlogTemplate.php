@@ -335,13 +335,13 @@ class BlogTemplateClass {
 			self::$aTables[] = "page";
 		} 
 		/* default conditions */
-		self::$aWhere[] = "page_title like '%/%'";
 		if ( !in_array("page_namespace", array_keys( self::$aWhere )) ) {
 			self::$aWhere["page_namespace"] = NS_BLOG_ARTICLE;
 		}
 		if ( !in_array("page_is_redirect", array_keys( self::$aWhere )) ) {
 			self::$aWhere["page_is_redirect"] = 0;
 		}
+		self::$aWhere[] = "page_title like '%/%'";
 		/* default options */
 		/* order */
 		if ( !isset(self::$aOptions['order']) ) {
@@ -367,6 +367,7 @@ class BlogTemplateClass {
 		if ( !isset(self::$aOptions['title']) ) {
 			self::__makeStringOption('title', wfMsg('blog_defaulttitle'));
 		}
+		error_log ("self::aWhere = ".print_r(self::$aWhere, true)."\n", 3, "/tmp/moli.log");
     	wfProfileOut( __METHOD__ );
 	}
 
