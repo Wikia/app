@@ -391,6 +391,12 @@ FCK.TemplatePreviewAdd = function(placeholder) {
 
 		FCK.TemplatePreviewCloud.id = 'wysiwygTemplatePreviewCloud';
 		FCK.TemplatePreviewCloud.innerHTML = '<div id="wysiwygTemplatePreviewCloudInner"></div>';
+
+		// disallow clicks on template preview
+		FCKTools.AddEventListener(FCK.TemplatePreviewCloud, 'click', function(e) {
+			e.preventDefault();
+			e.stopPropagation();
+		});
 	}
 
 	var refId = placeholder.getAttribute('refid');

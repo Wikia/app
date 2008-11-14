@@ -264,6 +264,10 @@ addOnloadHook(initEditor);
 	padding: 5px;
 }
 
+#wysiwygTemplatePreviewCloudInner * {
+	cursor: default !important;
+}
+
 /*]]>*/</style>
 EOT;
 	$wgOut->addScript($script);
