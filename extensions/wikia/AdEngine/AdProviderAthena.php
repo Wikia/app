@@ -32,7 +32,7 @@ class AdProviderAthena implements iAdProvider {
 		global $wgDBname;
 		$pageVars['wgDBname'] = $wgDBname;
 		$pageVars['hostname'] = getenv('HTTP_HOST');
-		$pageVars['request'] = getenv('REQUEST_PATH');
+		$pageVars['request'] = getenv('SCRIPT_URL');
 		/*
 		$pageVars['skin'] = 
 		$pageVars['wgCityId'] = 
