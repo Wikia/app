@@ -29,7 +29,20 @@ class BlogListPage extends Article {
 	 * @access private
 	 */
 	private function showBlogListing() {
-		global $wgOut, $wgRequest;
+		global $wgOut, $wgRequest, $wgParser;
+
+		$params = array(
+			"author" => $this->mTitle->getDBkey(),
+			"count"  => 50,
+			"summary" => true,
+			"summarylength" => 750,
+			"style" => "plain",
+			"title" => "Blogs",
+			"timestamp" => true,
+			"offset" => 0
+		);
+		error_log( print_r( $params ) );
+		$wgOut->addHTML( BlogTemplateClass::parseTag( "", $params, $wgParser ) );
 	}
 
 	/**
@@ -48,16 +61,18 @@ class BlogListPage extends Article {
 			return true;
 		}
 
-		$feed = $wgRequest->getText( "feed" );
-		if( isset( $feed ) ) {
+		$feed = $wgRequest->getText( "feed", false );
+		if( $feed ) {
 			/**
 			 * return feed for blog
 			 */
+			error_log( __METHOD__. "-feed" );
 		}
 		else {
 			/**
 			 * return article for blog
 			 */
+			error_log( __METHOD__. "-article" );
 			$Article = new BlogListPage( $Title );
 		}
 		return true;
