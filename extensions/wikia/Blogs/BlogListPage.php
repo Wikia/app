@@ -90,8 +90,8 @@ class BlogListPage extends Article {
 			);
 			$listing = BlogTemplateClass::parseTag( "", $params, $wgParser );
 
-			print_pre( $listing );
-			exit(0);
+#			print_pre( $listing );
+#			exit(0);
 			$feed = new $wgFeedClasses[ $format ](
 				"Test title", "Test description", $wgTitle->getFullUrl() );
 
