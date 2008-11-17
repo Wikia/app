@@ -215,7 +215,17 @@ class WikiaMiniUpload {
 				}
 				if($title->exists()) {
 					if($type == 'overwrite') {
-						$title = Title::newFromText($name, 6);
+						$title = Title::newFromText($name, 6);					
+						// is protected?
+						$permErrors = $title->getUserPermissionsErrors( 'edit', $wgUser );
+						$permErrorsUpload = $title->getUserPermissionsErrors( 'upload', $wgUser );
+						$permErrorsCreate = ( $title->exists() ? array() : $title->getUserPermissionsErrors( 'create', $wgUser ) );
+
+						if( $permErrors || $permErrorsUpload || $permErrorsCreate ) {
+							header('X-screen-type: error');
+							return 'This image is protected';							
+						}
+
 						$file_name = new LocalFile($title, RepoGroup::singleton()->getLocalRepo());
 						$file_mwname = new FakeLocalFile(Title::newFromText($mwname, 6), RepoGroup::singleton()->getLocalRepo());
 
