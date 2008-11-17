@@ -178,7 +178,7 @@ class BlogTemplateClass {
 		'style' 	=> array (
 			'type' 		=> 'list',
 			'default' 	=> 'box',
-			'pattern'	=> array( 'box', 'plain' )
+			'pattern'	=> array( 'box', 'plain', 'array', 'noparse' )
 		)
 	);
 
@@ -219,7 +219,7 @@ class BlogTemplateClass {
 	private static $parseTagTruncateText	= "/<p>(.*)<\/p>/siU";
 		
 	public static function setup() {
-		global $wgParser, $wgMessageCache;
+		global $wgParser, $wgMessageCache, $wgRequest;
 		global $wgOut, $wgScriptPath, $wgMergeStyleVersionJS;
 		wfProfileIn( __METHOD__ );
 		// variant as a parser tag: <BLOGTPL_TAG>
@@ -245,6 +245,9 @@ class BlogTemplateClass {
 		/* parse input parameters */
 		$matches = array();
 		$start = self::__getmicrotime();
+		#error_log ("parseTag \n", 3, "/tmp/moli.log");
+		#error_log ("input = ".print_r($input, true)." \n\n", 3, "/tmp/moli.log");
+		#error_log ("params = ".print_r($params, true)." \n\n", 3, "/tmp/moli.log");
 		$aParams = self::__parseXMLTag($input);
 		wfDebugLog( __METHOD__, "parse input parameters\n" );
 		/* parse all and return result */
@@ -280,7 +283,42 @@ class BlogTemplateClass {
 		return $aResult;
 	}
 
-	public static function __getVoteCode($iPage) {
+	/*
+	 * private method 
+	 */
+
+	private static function __getCategory($sPageName, $iPage) {
+		wfProfileIn( __METHOD__ );
+		$aCategories = array();
+		
+		$oFauxRequest = new FauxRequest(
+			array( 
+				"action"	=> "query", 
+				"prop"		=> "categories",
+				"titles"	=> $sPageName,
+			)
+		);
+		$oApi = new ApiMain($oFauxRequest);
+		$oApi->execute();
+		$aResult =& $oApi->GetResultData();
+		
+		if ( count($aResult['query']['pages']) > 0 ) {
+			if (!empty($aResult['query']['pages'][$iPage]['categories'])) {
+				foreach ($aResult['query']['pages'][$iPage]['categories'] as $id => $aCategory) {
+					$oCatTitle = Title::newFromText($aCategory['title'], $aCategory['ns']);
+					if ($oCatTitle instanceof Title) {
+						$aCategories[] = $oCatTitle->getFullURL();
+					}
+				}				
+			}
+		} 
+
+		#---
+		wfProfileOut( __METHOD__ );
+		return $aCategories;
+	}
+
+	private static function __getVoteCode($iPage) {
 		wfProfileIn( __METHOD__ );
 		$oFauxRequest = new FauxRequest(array( "action" => "query", "list" => "wkvoteart", "wkpage" => $iPage, "wkuservote" => true ));
 		$oApi = new ApiMain($oFauxRequest);
@@ -315,10 +353,6 @@ class BlogTemplateClass {
 		wfProfileOut( __METHOD__ );
 		return $oTmpl->execute("blog-page-voting");
 	}
-
-	/*
-	 * private method 
-	 */
 	
 	private static function __parseXMLTag($string) { 
 		wfProfileIn( __METHOD__ );
@@ -403,7 +437,6 @@ class BlogTemplateClass {
 		if ( !isset(self::$aOptions['title']) ) {
 			self::__makeStringOption('title', wfMsg('blog_defaulttitle'));
 		}
-		error_log ("self::aWhere = ".print_r(self::$aWhere, true)."\n", 3, "/tmp/moli.log");
     	wfProfileOut( __METHOD__ );
 	}
 
@@ -639,20 +672,27 @@ class BlogTemplateClass {
 		if ( (!empty($iRev)) && (!empty(self::$aOptions['summary'])) ) {
 			$oRev = Revision::newFromId($iRev);
 			$sBlogText = $oRev->revText();
-			/* local parser */			
+			/* parse or not parse - this is a good question */
 			$localParser = new Parser();
-			/* skip HTML tags */
-			$sBlogText = strip_tags($sBlogText, self::$skipStrinBeforeParse);
-			/* skip invalid Wiki-text  */
-			$sBlogText = preg_replace('/\{\{\/(.*?)\}\}/siU', '', $sBlogText);
-			/* parse truncated text */
-			$parserOutput = $localParser->parse($sBlogText, Title::newFromId($oRow->page_id), ParserOptions::newFromUser($wgUser));
-			/* replace unused HTML tags */
-			$sBlogText = preg_replace(self::$search, self::$replace, $parserOutput->getText());
-			/* skip HTML tags */
-			$sBlogText = strip_tags($sBlogText, self::$skipStrinAfterParse);
-			/* truncate text */
-			$sResult = self::__truncateText($sBlogText, 200, BLOGS_ENDING_TEXT);
+			if ( !in_array(self::$aOptions['style'], array('array', 'noparse')) ) {
+				/* local parser */			
+				/* skip HTML tags */
+				$sBlogText = strip_tags($sBlogText, self::$skipStrinBeforeParse);
+				/* skip invalid Wiki-text  */
+				$sBlogText = preg_replace('/\{\{\/(.*?)\}\}/siU', '', $sBlogText);
+				/* parse truncated text */
+				$parserOutput = $localParser->parse($sBlogText, Title::newFromId($oRow->page_id), ParserOptions::newFromUser($wgUser));
+				/* replace unused HTML tags */
+				$sBlogText = preg_replace(self::$search, self::$replace, $parserOutput->getText());
+				/* skip HTML tags */
+				$sBlogText = strip_tags($sBlogText, self::$skipStrinAfterParse);
+				/* truncate text */
+				$sResult = self::__truncateText($sBlogText, 200, BLOGS_ENDING_TEXT);
+			} else {
+				/* parse revision text */
+				$parserOutput = $localParser->parse($sBlogText, Title::newFromId($oRow->page_id), ParserOptions::newFromUser($wgUser));
+				$sResult = $parserOutput->getText();
+			}
 		}
 		wfProfileOut( __METHOD__ );
 		return $sResult;
@@ -687,19 +727,43 @@ class BlogTemplateClass {
 				"username"		=> (isset($oRow->username)) ? $oRow->username : "",
 				"text"			=> self::__getRevisionText($oRow->rev_id),
 				"revision"		=> $oRow->rev_id,
-				"comments"		=> $iCount
+				"comments"		=> $iCount,
+				"votes"			=> self::__getVoteCode($oRow->page_id),
 			);
 		}
 		self::$dbr->freeResult( $res );
     	wfProfileOut( __METHOD__ );
     	return $aResult;
 	}
+
+	private static function __makeRssOutput($aInput) {
+		wfProfileIn( __METHOD__ );
+		$aOutput = array();
+		if (!empty($aInput)) {
+			foreach ($aInput as $iPage => $aRow) {
+				$oTitle = Title::newFromText($aRow['title'], $aRow['namespace']);
+				if ($oTitle instanceof Title) {
+					$aOutput[$iPage] = array(
+						"title" 		=> $aRow['title'],
+						"url"			=> $oTitle->getFullURL(),
+						"description"	=> $aRow['text'],
+						"author"		=> $aRow['username'],
+						"category"		=> self::__getCategory($oTitle->getFullText(), $iPage),
+						"timestamp"		=> $aRow['timestamp'],
+					);
+				}
+			}
+		}
+		
+		wfProfileOut( __METHOD__ );
+		return $aOutput;
+	}
 							
     private static function __parse( $aInput, $aParams, &$parser ) {
     	global $wgLang, $wgUser, $wgCityId, $wgParser;
     	
     	wfProfileIn( __METHOD__ );
-    	$sResult = "";
+    	$result = "";
 
 		self::$aTables = self::$aWhere = self::$aOptions = array();
 		self::$dbr = null;
@@ -824,22 +888,26 @@ class BlogTemplateClass {
 
 			/* build query */
 			$aResult = self::__getResults();
+			/* set output */
+			if ( self::$aOptions['style'] != 'array' ) {
+				/* run template */
+				$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
+				$oTmpl->set_vars( array(
+					"wgUser"		=> $wgUser,
+					"cityId"		=> $wgCityId,
+					"wgLang"		=> $wgLang,
+					"aRows"			=> $aResult,
+					"aOptions"		=> self::$aOptions,
+					"wgParser"		=> $wgParser,
+					"skin"			=> $wgUser->getSkin(),
+				) );
 
-			/* run template */
-			$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
-			$oTmpl->set_vars( array(
-				"wgUser"		=> $wgUser,
-				"cityId"		=> $wgCityId,
-				"wgLang"		=> $wgLang,
-				"aRows"			=> $aResult,
-				"aOptions"		=> self::$aOptions,
-				"wgParser"		=> $wgParser,
-				"skin"			=> $wgUser->getSkin(),
-			));
-
-			#---
-			$sResult = $oTmpl->execute("blog-page");
-
+				#---
+				$result = $oTmpl->execute("blog-page");
+			} else {
+				unset($result); 
+				$result = self::__makeRssOutput($aResult);
+			}
         }
 		catch (Exception $e) {
 			wfDebugLog( __METHOD__, "parse error: ".$e->getMessage()."\n" );
@@ -847,7 +915,7 @@ class BlogTemplateClass {
 		}
 
     	wfProfileOut( __METHOD__ );
-    	return $sResult;
+    	return $result;
 	}
 
 }
