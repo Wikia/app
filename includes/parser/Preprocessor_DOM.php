@@ -449,7 +449,7 @@ class Preprocessor_DOM implements Preprocessor {
 				}
 
 				# Wysiwyg
-				if($wgWysiwygParserEnabled && $count == 2 && $curChar == "{") {
+				if($flags == 0 && $wgWysiwygParserEnabled && $count == 2 && $curChar == "{") {
 					$openAt[] = $i;
 				}
 
@@ -510,7 +510,7 @@ class Preprocessor_DOM implements Preprocessor {
 					$element .= "<title>$title</title>";
 
 					# Wysiwyg
-					if($wgWysiwygParserEnabled && $count == 2 && $curChar == "}") {
+					if($flags == 0 && $wgWysiwygParserEnabled && $count == 2 && $curChar == "}") {
 						$closeAt[] = $i;
 						if(count($closeAt) == count($openAt)) {
 							$openIdx = $openAt[0];
