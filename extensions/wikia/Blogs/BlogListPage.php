@@ -21,7 +21,7 @@ class BlogListPage extends Article {
 		global $wgOut, $wgUser, $wgRequest;
 
 		$feed = $wgRequest->getText( "feed", false );
-		if( $feed ) {
+		if( $feed && in_array( $feed, array( "rss", "atom" ) ) ) {
 			$this->showFeed( $feed );
 		}
 		else {
@@ -70,8 +70,45 @@ class BlogListPage extends Article {
 	/**
 	 * generate xml feed from returned data
 	 */
-	private function showFeed( $feed ) {
+	private function showFeed( $format ) {
+		global $wgOut, $wgRequest, $wgParser, $wgMemc, $wgFeedClasses, $wgTitle;
 
+		$offset = 0;
+		$user = $this->mTitle->getDBkey();
+
+		wfProfileIn( __METHOD__ );
+		if (1) {
+			$params = array(
+				"author" => $user,
+				"count"  => 50,
+				"summary" => true,
+				"summarylength" => 750,
+				"style" => "array",
+				"title" => "Blogs",
+				"timestamp" => true,
+				"offset" => $offset
+			);
+			$listing = BlogTemplateClass::parseTag( "", $params, $wgParser );
+			$feed = new $wgFeedClasses[ $format ](
+				"Test tile", "description", $wgTitle->getFullUrl() );
+
+			$feed->outHeader();
+			if( is_array( $listing ) ) {
+				foreach( $listing as $item ) {
+					$title = Title::makeTitle( $item["title"], NS_BLOG_ARTICLE );
+					$item = new FeedItem(
+						$title->getPrefixedText(),
+						$item["description"],
+						$item["url"],
+						$item["timestamp"],
+						$item["author"]
+					);
+					$feed->outItem( $item );
+				}
+			}
+			$feed->outFooter();
+		}
+		wfProfileOut( __METHOD__ );
 	}
 
 	/**
