@@ -401,7 +401,8 @@ function Wysiwyg_WikiTextToHtml($wikitext, $articleId = -1, $encode = false) {
 	}
 
 	// extract refid's of templates from template markers
-	preg_match_all('/\x7f-wtb-(\d+)-\x7f.*?\x7f-wte-\1-\x7f/si', $html, $matches);
+	// preg_match_all('/\x7f-wtb-(\d+)-\x7f.*?\x7f-wte-\1-\x7f/si', $html, $matches);
+	preg_match_all('/\x7f-wtb-(\d+)-\x7f/', $html, $matches);
 
 	if(count($matches[1]) > 0) {
 		$templateCallsToParse = array();
