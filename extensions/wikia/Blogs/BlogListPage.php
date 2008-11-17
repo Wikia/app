@@ -61,7 +61,7 @@ class BlogListPage extends Article {
 				"timestamp" => true,
 				"offset" => $offset
 			);
-			$listing = BlogTemplateClass::parseTag( "", $params, $wgParser );
+			$listing = BlogTemplateClass::parseTag( "<author>$user</author>", $params, $wgParser );
 			$wgMemc->set( wfMemcKey( "blog", "listing", $user, $offset ), $listing, 3600 );
 		}
 		$wgOut->addHTML( $listing );
@@ -79,7 +79,6 @@ class BlogListPage extends Article {
 		wfProfileIn( __METHOD__ );
 		if (1) {
 			$params = array(
-				"author" => $user,
 				"count"  => 50,
 				"summary" => true,
 				"summarylength" => 750,
@@ -88,10 +87,8 @@ class BlogListPage extends Article {
 				"timestamp" => true,
 				"offset" => $offset
 			);
-			$listing = BlogTemplateClass::parseTag( "", $params, $wgParser );
+			$listing = BlogTemplateClass::parseTag( "<author>$user</author>", $params, $wgParser );
 
-#			print_pre( $listing );
-#			exit(0);
 			$feed = new $wgFeedClasses[ $format ](
 				"Test title", "Test description", $wgTitle->getFullUrl() );
 
