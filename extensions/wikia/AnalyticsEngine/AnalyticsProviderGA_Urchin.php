@@ -37,7 +37,7 @@ class AnalyticsProviderGA_Urchin implements iAnalyticsProvider {
 		if (empty($wgGoogleAnalyticsAccount)){
 			return '<!-- No tracking for this wiki -->';
 		} else {
-			return '<script type="text/javascript">_uff=0;_uacct="' . $wgGoogleAnalyticsAccount . '";urchinTracker();</script>';
+			return '<script type="text/javascript">_uff=0;_uacct="' . addslashes($wgGoogleAnalyticsAccount) . '";urchinTracker();</script>';
 		}
 
 	}
