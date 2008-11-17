@@ -239,6 +239,15 @@ legend {
 	width: auto !important;
 }
 
+#createpage_optionals {
+	margin-bottom: 15px;	
+}
+
+#createpage_optionals_text {
+	font-weight: bold;
+	font-size: 9pt;	
+}
+
 /* old template chooser */
 #cp-scroller {
 	width:90%;

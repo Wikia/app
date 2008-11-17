@@ -52,6 +52,7 @@ $messages['en'] = array(
 	'createpage_about_info' => 'This is the simplified editor. To find out more go to [[w:c:help:Help:CreatePage|Wikia Help]].' ,
 	'createpage_advanced_text' => 'You can also use the $1.' ,
 	'createpage_advanced_edit' => 'advanced editor' ,
+	'createpage_optionals_text' => 'Add optional sections:',
 	'tog-createpage-redlinks' => 'Use <a href="http://help.wikia.com/wiki/Help:CreatePage">CreatePage</a> when following broken links' ,	
 );
 
@@ -60,7 +61,6 @@ $messages['pl'] = array(
 	'me_edit_muli_editor' => 'Multi-edit Edytor' ,
 	'me_upload' => 'Załaduj obrazek' ,
 	'me_hide' => 'Ukryj' ,
-         // teksty dla createpage'a
         'createpage_title' => 'Stwórz Stronę' ,
         'createpage_title_caption' => 'Tytuł' ,
         'createpage_choose_createplate' => 'Wybierz typ strony' ,
@@ -102,5 +102,6 @@ $messages['pl'] = array(
 	'createpage_about_info' => 'Jesteś w uproszczonym edytorze. Więcej informacji o nim znajdziesz na [[w:c:help:Help:CreatePage|Wikia Help]].' ,
 	'createpage_advanced_text' => 'Możesz też użyć $1' ,
 	'createpage_advanced_edit' => 'zaawansowanego edytora' ,
+	'createpage_optionals_text' => 'Dodaj opcjonalne sekcje:',
 	'tog-createpage-redlinks' => 'Otwórz <a href="http://help.wikia.com/wiki/Help:CreatePage">CreatePage\'a</a> po przejściu do nieistniejącej strony'
 );

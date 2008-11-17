@@ -186,6 +186,46 @@ YWC.FailureCallback = function (oResponse) {
         YD.get ("createpage_image_cancel_section" + oResponse.argument).style.display = 'none' ;
 };
 
+YWC.RestoreSection = function( section, text ) {
+	var section_content = YD.getElementsBy( YWC.OptionalContentTest, '', section );
+	for( var i=0; i < section_content.length; i++ ) {
+		text = text.replace( section_content[i].id, "" );				
+	}		
+	section.style.display = 'block';
+	return text;
+}
+
+YWC.UnuseSection = function( section, text ) {
+	var section_content = YD.getElementsBy( YWC.OptionalContentTest, '', section );
+	var first = true;
+	var ivalue = '';
+	for( var i=0; i < section_content.length; i++ ) {
+		if (first) {
+			if ( '' != text ) {
+				ivalue += ',' ;
+			}
+			first = false;
+		} else {
+			ivalue += ',';
+		}
+		ivalue += section_content[i].id;					
+	}
+	section.style.display = 'none';
+	return text + ivalue;
+}
+
+YWC.ToggleSection = function( e, o ) {
+	var section = YD.get( "createpage_section_" + o.num );
+	var input = YD.get( "wpOptionalInput" + o.num );
+	var optionals = YD.get( "wpOptionals" );
+	var ivalue = '';
+	if (input.checked) {
+		optionals.value = YWC.RestoreSection( section, optionals.value );
+	} else {
+		optionals.value = YWC.UnuseSection( section, optionals.value );
+	}	
+}
+
 YWC.Upload = function (e, o) {
     var oForm = YD.get("createpageform") ;
     YE.preventDefault(e);
@@ -288,6 +328,22 @@ YWC.UploadTest = function (el) {
 
 YWC.EditTextareaTest = function (el) {
 	if (el.id.match ("wpTextboxes") && (el.style.display != 'none') ) {
+		return true ;
+	} else {
+		return false ;
+	}      
+}
+
+YWC.OptionalSectionTest = function (el) {
+	if (el.id.match ("wpOptionalInput") && (el.style.display != 'none') ) {
+		return true ;
+	} else {
+		return false ;
+	}      
+}
+
+YWC.OptionalContentTest = function (el) {
+	if (el.id.match ("wpTextboxes")) {
 		return true ;
 	} else {
 		return false ;
@@ -437,6 +493,21 @@ YWC.multiEditSetupToolbar = function ()  {
 		}
 	}
         return true;
+}
+
+YWC.multiEditSetupOptionalSections = function() {
+	var snum = 0;
+	if (YD.get( 'createpage_optionals_content' )) {
+		var optionals = YD.getElementsBy( YWC.OptionalSectionTest, 'input', YD.get( 'createpage_optionals_content') ); 
+		var optionalsElements = YD.get( 'wpOptionals' );
+		for (i=0; i<optionals.length; i++) {
+			snum = optionals[i].id.replace( 'wpOptionalInput', '' );
+			if ( !YD.get( "wpOptionalInput" + snum ).checked ) {
+				optionalsElements.value = YWC.UnuseSection( YD.get( 'createpage_section_' + snum ), optionalsElements.value );
+			}
+			YE.addListener(optionals[i], "change", YWC.ToggleSection, {num: snum} );
+		}
+	}
 }
 
 YWC.insertMultiEditButton = function (parent, item) {
@@ -653,6 +724,7 @@ YWC.InitialRound = function () {
 		YWC.hideOtherBoxes (el_id) ;
 	}
 	YWC.multiEditSetupToolbar () ;
+	YWC.multiEditSetupOptionalSections();
 	YWC.CheckCategoryCloud () ;
 }
 
@@ -933,6 +1005,7 @@ YWC.MultiEdit = function () {
 			}
 
 			YWC.multiEditSetupToolbar () ;                                        		
+			YWC.multiEditSetupOptionalSections();
 		},
 		failure: function(e) {
 			YD.get('cp-multiedit').innerHTML = '';
