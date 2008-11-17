@@ -1,0 +1,23 @@
+body {
+	background: #000 !important;
+}
+#monaco_footer, #monaco_footer a {
+	color: #FFF;
+}
+body.mainpage .monaco_shrinkwrap {
+	left: 50%;
+	margin-left: -486px;
+	width: 972px;
+}
+#background_accent1 {
+	background: url(../images/dnd_left.jpg) no-repeat;
+	height: 861px;
+	width: 314px;
+	top: -51px;
+}
+#background_accent2 {
+	background: url(../images/dnd_right.jpg) no-repeat;
+	background-position: 481px 0;
+	height: 861px;
+	top: -51px;
+}
