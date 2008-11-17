@@ -419,7 +419,7 @@ function Wysiwyg_WikiTextToHtml($wikitext, $articleId = -1, $encode = false) {
 
 		$templateCallsParsed =  array_combine($matches[1], $templateCallsParsed);
 
-		$html = preg_replace('/\x7f-wtb-(\d+)-\x7f.*?\x7f-wte-\1-\x7f/sie', "'<input type=\"button\" refid=\"\\1\" _fck_type=\"template\" value=\"'.\$wgWysiwygMetaData[\\1]['name'].'\" class=\"wysiwygDisabled wysiwygTemplate\"/><input value=\"'.htmlspecialchars(stripslashes(\$templateCallsParsed[\\1])).'\" style=\"display:none\"/>'", $html);
+		$html = preg_replace('/\x7f-wtb-(\d+)-\x7f.*?\x7f-wte-\1-\x7f/sie', "'<input type=\"button\" refid=\"\\1\" _fck_type=\"template\" value=\"'.\$wgWysiwygMetaData[\\1]['name'].'\" class=\"wysiwygDisabled wysiwygTemplate\" /><input value=\"'.htmlspecialchars(stripslashes(\$templateCallsParsed[\\1])).'\" style=\"display:none\" />'", $html);
 	}
 
 	wfDebug("Wysiwyg_WikiTextToHtml html: {$html}\n");
