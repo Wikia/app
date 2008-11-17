@@ -89,13 +89,16 @@ class BlogListPage extends Article {
 				"offset" => $offset
 			);
 			$listing = BlogTemplateClass::parseTag( "", $params, $wgParser );
+
+			print_pre( $listing );
+			exit(0);
 			$feed = new $wgFeedClasses[ $format ](
-				"Test tile", "description", $wgTitle->getFullUrl() );
+				"Test title", "Test description", $wgTitle->getFullUrl() );
 
 			$feed->outHeader();
 			if( is_array( $listing ) ) {
 				foreach( $listing as $item ) {
-					$title = Title::makeTitle( $item["title"], NS_BLOG_ARTICLE );
+					$title = Title::newFromText( $item["title"], NS_BLOG_ARTICLE );
 					$item = new FeedItem(
 						$title->getPrefixedText(),
 						$item["description"],
