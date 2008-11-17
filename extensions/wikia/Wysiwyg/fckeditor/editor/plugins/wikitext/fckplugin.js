@@ -201,49 +201,45 @@ FCK.Events.AttachEvent( 'OnAfterSetHTML', function() {
 			}
 		});
 
-		// TODO: get all elements with refid attribute and handle them by value of _fck_type attribute
+		// get all elements with refid attribute and handle them by value of _fck_type attribute
+		var nodes = FCK.GetNodesWithRefId();
+		FCK.log(nodes);
 
-		// macbre: fix issue with input tags as last child (can't move to end of the line)
-		var placeholders = FCK.EditorDocument.getElementsByTagName('input');
-		for (p=0; p<placeholders.length; p++) {
-			FCK.SetupWikitextPlaceholder(placeholders[p]);
-		}
+		for (n=nodes.length-1; n>=0; n--) {
+			var node = nodes[n];
+			var refid = node.getAttribute('refid');
+			if (!refid) {
+				continue;
+			}
 
-		// macbre: protect images
-		var divs = FCK.EditorDocument.getElementsByTagName('div');
+			var data = FCK.wysiwygData[refid];
+			var type = node.getAttribute('_fck_type') || data.type;
+			var name = node.nodeName.toLowerCase();
 
-		for (d=divs.length-1; d>=0; d--) {
-			if (divs[d].hasAttribute('refid')) {
-				FCK.ProtectImage(divs[d]);
+			switch(type) {
+				case 'template':
+					FCK.TemplatePreviewAdd(node);
+					break;
+
+				case 'image':
+					FCK.ProtectImage(node);
+					break;
+
+				// add tooltip to links
+				case 'internal link':
+					node.title = data.href;
+					break;
+
+				case 'external link':
+					node.title = data.href;
+					break;
+			}
+
+			// fix issues with input tags and cursor
+			if (name == 'input') {
+				FCK.FixWikitextPlaceholder(node);
 			}
 		}
-
-		// macbre: register onClick handler to protect images
-		FCKTools.AddEventListener( FCK.EditorDocument, 'mousedown', function(e) {
-			target = FCK.YAHOO.util.Event.getTarget(e);
-
-			// go up to find div/table with refId
-			while( target ) {
-				if (target.nodeName.IEquals(['div', 'table']) && target.getAttribute('refId')) {
-					//FCK.log('click blocked'); FCK.log(target);
-
-					// stop event
-					e.preventDefault();
-					e.stopPropagation();
-
-					// disable context menu
-					target.setAttribute('_fckContextMenuDisabled', true);
-
-					// right mouse button
-					if (e.button == 2) {
-						// this hacky thing will cause image selection to disappear
-						FCK.SetHTML(FCK.GetHTML());
-					}
-					return;
-				}
-				target = target.parentNode;
-			}
-		});
 	}
 
 	// for QA team tests
@@ -251,16 +247,10 @@ FCK.Events.AttachEvent( 'OnAfterSetHTML', function() {
 
 });
 
-// setup grey wikitext placeholder: block context menu, add dirty span if needed, setup onclick handler
-FCK.SetupWikitextPlaceholder = function(placeholder) {
+// setup grey wikitext placeholder: block context menu, add dirty span(s) if needed
+FCK.FixWikitextPlaceholder = function(placeholder) {
 	// disable context menu
 	placeholder.setAttribute('_fckContextMenuDisabled', true);
-
-	// templates preview
-	// TODO: use _fck_type attribute
-	if (FCK.YAHOO.util.Dom.hasClass(placeholder, 'wysiwygTemplate')) {
-			FCK.TemplatePreviewAdd(placeholder);
-	}
 
 	// placeholder is last child of p, div, li, dt or dd node - add dirty span
 	if (placeholder.parentNode.nodeName.IEquals(['p', 'div', 'li', 'dt', 'dd']) &&  placeholder == placeholder.parentNode.lastChild) {
@@ -333,6 +323,30 @@ FCK.CheckInternalLink = function(title, link) {
 
 FCK.ProtectImage = function(image) {
 	FCK.log(image);
+
+	// simple image
+	if (image.nodeName.IEquals('a')) {
+		// block onclick / onmousedown events
+		FCKTools.AddEventListener(image, 'click', function(e) {
+			e.preventDefault();
+			e.stopPropagation();
+			if (e.button == 0) {
+				FCK.ProtectImageClick(this.getAttribute('refid'));
+			}
+		});
+
+		FCKTools.AddEventListener(image, 'contextmenu', function(e) {
+			e.preventDefault();
+			e.stopPropagation();
+		});
+
+		FCKTools.AddEventListener(image, 'mousedown', function(e) {
+			e.preventDefault();
+			e.stopPropagation();
+		});
+
+		return;
+	}
 
 	// get image dimensions (including padding)
 	var size = [image.clientWidth, image.clientHeight];
