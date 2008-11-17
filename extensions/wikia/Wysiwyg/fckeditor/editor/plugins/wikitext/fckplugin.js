@@ -324,7 +324,7 @@ FCK.CheckInternalLink = function(title, link) {
 //
 
 FCK.ProtectImage = function(image) {
-	FCK.log(image);
+	//FCK.log(image);
 
 	// simple image
 	if (image.nodeName.IEquals('a')) {
@@ -448,6 +448,7 @@ FCK.ProtectImageClick = function(refid) {
 // 
 
 FCK.TemplatePreviewCloud = false;
+FCK.TemplatePreviewTimeouts = {Tag: false, Cloud: false};
 
 FCK.TemplatePreviewInit = function() {
 	if (FCK.TemplatePreviewCloud) {
@@ -459,7 +460,6 @@ FCK.TemplatePreviewInit = function() {
 FCK.TemplatePreviewAdd = function(placeholder) {
 
 	var docObj = FCK.EditingArea.TargetElement.ownerDocument;
-	//var docObj = FCK.LinkedField.ownerDocument;
 
 	// initialize preview cloud
 	if (!FCK.TemplatePreviewCloud) {
@@ -474,11 +474,20 @@ FCK.TemplatePreviewAdd = function(placeholder) {
 			e.preventDefault();
 			e.stopPropagation();
 		});
+
+		FCKTools.AddEventListener(FCK.TemplatePreviewCloud, 'mouseover', function(e) {
+			// clear timeouts
+			clearTimeout(FCK.TemplatePreviewTimeouts.Tag);
+			clearTimeout(FCK.TemplatePreviewTimeouts.Cloud);
+		});
+	
+		FCKTools.AddEventListener(FCK.TemplatePreviewCloud, 'mouseout', function(e) {
+			// hide preview 1 sec. after mouseout from cloud
+			FCK.TemplatePreviewTimeouts.Cloud = setTimeout('FCK.TemplatePreviewHide()', 1000);
+		});
 	}
 
 	var refId = placeholder.getAttribute('refid');
-
-	//FCK.log('registering template preview for refId #' + refId); FCK.log(placeholder);
 
 	// copy template previews to clouds
 	var preview = placeholder.nextSibling;
@@ -491,7 +500,6 @@ FCK.TemplatePreviewAdd = function(placeholder) {
 
 	// sometimes innerHTML contains whitespices at the end -> fix it
 	previewDiv.innerHTML = previewDiv.innerHTML.Trim();
-
 	previewDiv.style.display = 'none';
 
 	// remove preview div from editing area
@@ -506,12 +514,15 @@ FCK.TemplatePreviewAdd = function(placeholder) {
 	// register events handlers
 	FCKTools.AddEventListener(placeholder, 'mouseover', function(e) {
 		FCK.TemplatePreviewShow(FCK.YAHOO.util.Event.getTarget(e));
+
+		clearTimeout(FCK.TemplatePreviewTimeouts.Tag);
+		clearTimeout(FCK.TemplatePreviewTimeouts.Cloud);
 	});
 	
 	FCKTools.AddEventListener(placeholder, 'mouseout', function(e) {
-		FCK.TemplatePreviewHide();
+		// hide preview 0,5 sec. after mouseout from tag
+		FCK.TemplatePreviewTimeouts.Tag = setTimeout('FCK.TemplatePreviewHide()', 500);
 	});
-
 }
 
 FCK.TemplatePreviewShow = function(placeholder) {
