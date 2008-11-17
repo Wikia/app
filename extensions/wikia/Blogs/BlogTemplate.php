@@ -280,6 +280,42 @@ class BlogTemplateClass {
 		return $aResult;
 	}
 
+	public static function __getVoteCode($iPage) {
+		wfProfileIn( __METHOD__ );
+		$oFauxRequest = new FauxRequest(array( "action" => "query", "list" => "wkvoteart", "wkpage" => $iPage, "wkuservote" => true ));
+		$oApi = new ApiMain($oFauxRequest);
+		$oApi->execute();
+		$aResult =& $oApi->GetResultData();
+		
+		if(count($aResult['query']['wkvoteart']) > 0) {
+			if (!empty($aResult['query']['wkvoteart'][$iPage]['uservote'])) {
+				$voted = true;
+			} else {
+				$voted = false;
+			}
+			$rating = $aResult['query']['wkvoteart'][$iPage]['votesavg'];
+		} else { 
+			$voted = false;
+			$rating = 0;
+		} 
+		
+		$sHiddenStar = $voted ? ' style="display: none;"' : '';
+		$iRating = round($rating * 2)/2;
+		$iRatingPx = round($rating * 17);
+
+		/* run template */
+		$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
+		$oTmpl->set_vars( array(
+			"ratingPx"		=> $iRatingPx,
+			"rating"		=> $iRating,
+			"hidden_star"	=> $sHiddenStar,
+		));
+
+		#---
+		wfProfileOut( __METHOD__ );
+		return $oTmpl->execute("blog-page-voting");
+	}
+
 	/*
 	 * private method 
 	 */
@@ -341,7 +377,7 @@ class BlogTemplateClass {
 		if ( !in_array("page_is_redirect", array_keys( self::$aWhere )) ) {
 			self::$aWhere["page_is_redirect"] = 0;
 		}
-		self::$aWhere[] = "page_title like '%/%'";
+		//self::$aWhere[] = "page_title like '%/%'";
 		/* default options */
 		/* order */
 		if ( !isset(self::$aOptions['order']) ) {
@@ -514,7 +550,6 @@ class BlogTemplateClass {
 				$iTotalLength = mb_strlen($sEnding); 
 				$aTags = array();
 				
-				//error_log ("aLines = ".print_r($aLines, true). "\n", 3, "/tmp/moli.log");
 				foreach ($aLines as $aLine) {
 					/* HTML-tag exists */
 					if ( !empty($aLine[1]) ) {
@@ -576,7 +611,6 @@ class BlogTemplateClass {
 
 			$aMatches = array();
 			preg_match_all(self::$parseTagTruncateText, $sResult, $aMatches);
-			error_log ("matches = ".print_r($aMatches, true)."\n", 3, "/tmp/moli.log");
 			if ( count($aMatches) ) {
 				$aPTags = $aMatches[1];
 				$sResult = '';
@@ -619,12 +653,11 @@ class BlogTemplateClass {
 			$sBlogText = strip_tags($sBlogText, self::$skipStrinAfterParse);
 			/* truncate text */
 			$sResult = self::__truncateText($sBlogText, 200, BLOGS_ENDING_TEXT);
-			error_log ("truncate = ".print_r($sResult, true)."\n", 3, "/tmp/moli.log");
 		}
 		wfProfileOut( __METHOD__ );
 		return $sResult;
 	}
-	
+
 	private static function __getResults() {
 		global $wgLang;
     	wfProfileIn( __METHOD__ );
