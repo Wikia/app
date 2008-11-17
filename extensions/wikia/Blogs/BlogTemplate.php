@@ -750,6 +750,7 @@ class BlogTemplateClass {
 						"author"		=> $aRow['username'],
 						"category"		=> self::__getCategory($oTitle->getFullText(), $iPage),
 						"timestamp"		=> $aRow['timestamp'],
+						"namespace"		=> $aRow['namespace'],
 					);
 				}
 			}
