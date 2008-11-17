@@ -124,6 +124,34 @@ FCK.InsertDirtySpanAfter = function(node) {
 	FCKDomTools.InsertAfterNode(node, span);
 }
 
+FCK.GetNodesWithRefId = function() {
+	var nodes = [];
+
+	// @see http://www.w3schools.com/XPath/xpath_examples.asp
+	// @see http://msdn.microsoft.com/en-us/library/d271ytdx(VS.71).aspx
+	var xpath = '//@refid';
+
+	if (FCKBrowserInfo.IsIE) {
+		// IE
+		var results = FCK.EditorDocument.selectNodes(xpath);
+
+		for (r=0; r<results.length; r++) {
+			nodes.push(results[r]);
+		}
+	}
+	else {
+		// Mozilla-based browser
+		var results = FCK.EditorDocument.evaluate(xpath, FCK.EditorDocument, null, XPathResult.ANY_TYPE, null);
+
+		while (attr = results.iterateNext()) {
+			nodes.push(attr.ownerElement);
+		}
+	}
+
+	FCK.log('returning ' + nodes.length + ' nodes with refId');
+
+	return nodes;
+}
 
 FCK.Events.AttachEvent( 'OnAfterSetHTML', function() {
 	if(FCK.EditingArea.TargetElement.className == 'childrenHidden') {
@@ -229,7 +257,7 @@ FCK.SetupWikitextPlaceholder = function(placeholder) {
 	placeholder.setAttribute('_fckContextMenuDisabled', true);
 
 	// templates preview
-	// TODO: use _fkc_type attribute
+	// TODO: use _fck_type attribute
 	if (FCK.YAHOO.util.Dom.hasClass(placeholder, 'wysiwygTemplate')) {
 			FCK.TemplatePreviewAdd(placeholder);
 	}
