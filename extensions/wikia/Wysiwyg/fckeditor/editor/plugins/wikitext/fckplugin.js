@@ -449,8 +449,8 @@ FCK.TemplatePreviewCloud = false;
 
 FCK.TemplatePreviewAdd = function(placeholder) {
 
-	//var docObj = FCK.EditingArea.TargetElement.ownerDocument;
-	var docObj = FCK.LinkedField.ownerDocument;
+	var docObj = FCK.EditingArea.TargetElement.ownerDocument;
+	//var docObj = FCK.LinkedField.ownerDocument;
 
 	// initialize preview cloud
 	if (!FCK.TemplatePreviewCloud) {
@@ -469,7 +469,7 @@ FCK.TemplatePreviewAdd = function(placeholder) {
 
 	var refId = placeholder.getAttribute('refid');
 
-	//FCK.log('registering template preview for refId #' + refId);
+	//FCK.log('registering template preview for refId #' + refId); FCK.log(placeholder);
 
 	// copy template previews to clouds
 	var preview = placeholder.nextSibling;
@@ -509,6 +509,7 @@ FCK.TemplatePreviewShow = function(placeholder) {
 	
 	var refId = placeholder.getAttribute('refid');
 	var preview = FCK.TemplatePreviewCloud.ownerDocument.getElementById('wysiwygTemplatePreview' + refId);
+	preview.style.display = '';
 
 	// reset margin/padding
 	if (preview.firstChild && preview.firstChild.nodeType == 1) {
@@ -524,15 +525,30 @@ FCK.TemplatePreviewShow = function(placeholder) {
 	var scrollXY = [FCK.EditorDocument.body.scrollLeft, FCK.EditorDocument.body.scrollTop];
 
 	// iframe position
-	var iFrameXY = FCK.YAHOO.util.Dom.getXY('wpTextbox1___Frame');
+	//var iFrameXY = FCK.YAHOO.util.Dom.getXY('wpTextbox1___Frame');
+	var iFrameXY = [0, 0];
 
-	// set
-	FCK.TemplatePreviewCloud.style.left = parseInt(x + iFrameXY[0] - scrollXY[0]) + 'px';
-	FCK.TemplatePreviewCloud.style.top = parseInt(y + iFrameXY[1] - scrollXY[1]) + 'px';
+	// calculate preview position
+	var cloudPos = {x: parseInt(x + iFrameXY[0] - scrollXY[0]), y: parseInt(y + iFrameXY[1] - scrollXY[1])};
+
+	// should we show preview over the placeholder?
+	var iFrameHeight = FCK.EditingArea.IFrame.offsetHeight;
+	var previewHeight = preview.offsetHeight < 250 ? preview.offsetHeight : 250;
+	var showUnder = true;
+
+	if (cloudPos.y + previewHeight > iFrameHeight) {
+		// show it over the placeholder
+		cloudPos.y -= parseInt(placeholder.clientHeight + 25 + previewHeight);
+		showUnder = false;
+	}
+
+	// set preview position
+	FCK.TemplatePreviewCloud.style.left = cloudPos.x + 'px';
+	FCK.TemplatePreviewCloud.style.top = cloudPos.y + 'px';
 
 	// show template preview and cloud
-	preview.style.display = '';
 	FCK.TemplatePreviewCloud.style.visibility = 'visible';
+	FCK.TemplatePreviewCloud.className = showUnder ? 'cloudUnder' : 'cloudOver';
 }
 
 FCK.TemplatePreviewHide = function(placeholder) {
