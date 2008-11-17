@@ -482,12 +482,15 @@ class BlogTemplateClass {
 	private static function __makeIntOption($sParamName, $sParamValue) {
     	wfProfileIn( __METHOD__ );
     	wfDebugLog( __METHOD__, "__makeIntOption: ".$sParamName.",".$sParamValue."\n" );
-		$m = array(); if (preg_match(self::$aBlogParams[$sParamName]['pattern'], $sParamValue, $m) !== FALSE) {
-			/* check max value of int param */
-			if ( array_key_exists('max', self::$aOptions[$sParamName]) && ($sParamValue > self::$aOptions[$sParamName]['max']) ) {
-				$sParamValue = $aOptions[$sParamName]['max'];
+		$m = array(); 
+		if ( array_key_exists($sParamName, self::$aBlogParams) ) {
+			if (preg_match(self::$aBlogParams[$sParamName]['pattern'], $sParamValue, $m) !== FALSE) {
+				/* check max value of int param */
+				if ( array_key_exists('max', self::$aOptions[$sParamName]) && ($sParamValue > self::$aOptions[$sParamName]['max']) ) {
+					$sParamValue = $aOptions[$sParamName]['max'];
+				}
+				self::$aOptions[$sParamName] = $sParamValue;
 			}
-			self::$aOptions[$sParamName] = $sParamValue;
 		}
     	wfProfileOut( __METHOD__ );
 	}
@@ -664,7 +667,7 @@ class BlogTemplateClass {
 	}
 	
 	
-	private static function __getRevisionText($iRev) {
+	private static function __getRevisionText($iPage, $iRev) {
 		global $wgLang, $wgUser;
 		wfProfileIn( __METHOD__ );
 		$sResult = "";
@@ -681,7 +684,7 @@ class BlogTemplateClass {
 				/* skip invalid Wiki-text  */
 				$sBlogText = preg_replace('/\{\{\/(.*?)\}\}/siU', '', $sBlogText);
 				/* parse truncated text */
-				$parserOutput = $localParser->parse($sBlogText, Title::newFromId($oRow->page_id), ParserOptions::newFromUser($wgUser));
+				$parserOutput = $localParser->parse($sBlogText, Title::newFromId($iPage), ParserOptions::newFromUser($wgUser));
 				/* replace unused HTML tags */
 				$sBlogText = preg_replace(self::$search, self::$replace, $parserOutput->getText());
 				/* skip HTML tags */
@@ -725,7 +728,7 @@ class BlogTemplateClass {
 				"page_touched" 	=> $oRow->page_touched,
 				"timestamp" 	=> $oRow->timestamp,
 				"username"		=> (isset($oRow->username)) ? $oRow->username : "",
-				"text"			=> self::__getRevisionText($oRow->rev_id),
+				"text"			=> self::__getRevisionText($oRow->page_id, $oRow->rev_id),
 				"revision"		=> $oRow->rev_id,
 				"comments"		=> $iCount,
 				"votes"			=> self::__getVoteCode($oRow->page_id),
