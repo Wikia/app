@@ -41,10 +41,10 @@ class BlogListPage extends Article {
 		/**
 		 * use cache or skip cache when action=purge
 		 */
-		$user = $this->mTitle->getDBkey();
+		$user    = $this->mTitle->getDBkey();
 		$listing = false;
-		$purge = $wgRequest->getVal( 'action' ) == 'purge';
-		$offset = 0;
+		$purge   = $wgRequest->getVal( 'action' ) == 'purge';
+		$offset  = 0;
 
 		if( !$purge ) {
 			$listing  = $wgMemc->get( wfMemcKey( "blog", "listing", $user, $offset ) );
@@ -73,11 +73,18 @@ class BlogListPage extends Article {
 	private function showFeed( $format ) {
 		global $wgOut, $wgRequest, $wgParser, $wgMemc, $wgFeedClasses, $wgTitle;
 
-		$offset = 0;
-		$user = $this->mTitle->getDBkey();
+		$user    = $this->mTitle->getDBkey();
+		$listing = false;
+		$purge   = $wgRequest->getVal( 'action' ) == 'purge';
+		$offset  = 0;
 
 		wfProfileIn( __METHOD__ );
-		if (1) {
+
+		if( !$purge ) {
+			$listing  = $wgMemc->get( wfMemcKey( "blog", "feed", $user, $offset ) );
+		}
+
+		if ( $listing ) {
 			$params = array(
 				"count"  => 50,
 				"summary" => true,
@@ -87,7 +94,9 @@ class BlogListPage extends Article {
 				"timestamp" => true,
 				"offset" => $offset
 			);
+			
 			$listing = BlogTemplateClass::parseTag( "<author>$user</author>", $params, $wgParser );
+			$wgMemc->set( wfMemcKey( "blog", "feed", $user, $offset ), $listing, 3600 );
 
 			$feed = new $wgFeedClasses[ $format ](
 				"Test title", "Test description", $wgTitle->getFullUrl() );
