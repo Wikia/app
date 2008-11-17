@@ -601,8 +601,8 @@ class ReverseParser {
 		// 2. wrap = using <nowiki>
 		$text = preg_replace("/^(=+)/m", '<nowiki>$1</nowiki>', $text);
 
-		// 3. wrap wikimarkup special characters (only when they're at the beginning of the p/td...)
-		if ($isFirstChild) {
+		// 3. wrap wikimarkup special characters (only when they're at the beginning of the p/td, don't do it for link descriptions...)
+		if ( $isFirstChild && !in_array($node->parentNode->nodeName, array('a')) ) {
 			// 3a. wrap list bullets using <nowiki>
 			$text = preg_replace("/^([#*]+)/", '<nowiki>$1</nowiki>', $text);
 
@@ -744,6 +744,10 @@ class ReverseParser {
 
 				// * [[foo|foo]] -> [[foo]]
 				if ($data['href'] == $data['description']) {
+					$data['description'] = '';
+				}
+				// * [[:foo]]
+				else if ( ($data['href']{0} == ':') && (substr($data['href'],1) == $data['description']) ) {
 					$data['description'] = '';
 				}
 				// * [[foo|foots]] -> [[foo]]ts (trial can't contain numbers)
