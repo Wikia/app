@@ -410,13 +410,9 @@ function Wysiwyg_WikiTextToHtml($wikitext, $articleId = -1, $encode = false) {
 			$templateCallsToParse[] = $wgWysiwygMetaData[$val]['originalCall'];
 		}
 
-		$wgWysiwygParserEnabled = false;
-
 		$templateParser = new Parser();
 		$templateParser->setOutputType(OT_HTML);
 		$templateCallsParsed = explode("\x7f-sep-\x7f", $templateParser->parse(implode("\x7f-sep-\x7f", $templateCallsToParse), $title, $options, false)->getText());
-
-		$wgWysiwygParserEnabled = true;
 
 		$templateCallsParsed =  array_combine($matches[1], $templateCallsParsed);
 
