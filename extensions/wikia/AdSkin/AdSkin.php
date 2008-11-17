@@ -24,6 +24,9 @@ function RenderAdSkin() {
 		case "dragonball_origins":
 			echo '<link rel="stylesheet" type="text/css" href="'. $wgExtensionsPath .'/wikia/AdSkin/css/dragonball_origins.css?'. $wgStyleVersion .'" />';
 			break;
+		case "dnd":
+			echo '<link rel="stylesheet" type="text/css" href="'. $wgExtensionsPath .'/wikia/AdSkin/css/dnd.css?'. $wgStyleVersion .'" />';
+			break;
 		}	
 	}
 
