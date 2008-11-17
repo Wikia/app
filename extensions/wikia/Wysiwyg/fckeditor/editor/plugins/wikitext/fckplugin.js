@@ -117,6 +117,14 @@ FCK.InsertDirtySpanBefore = function(node) {
 	node.parentNode.insertBefore(span, node);
 }
 
+FCK.InsertDirtySpanAfter = function(node) {
+	var span = FCKTools.GetElementDocument(node).createElement('SPAN');
+	span.setAttribute('type', '_moz');
+	span.className = '_moz_dirty';
+	FCKDomTools.InsertAfterNode(node, span);
+}
+
+
 FCK.Events.AttachEvent( 'OnAfterSetHTML', function() {
 	if(FCK.EditingArea.TargetElement.className == 'childrenHidden') {
 		var html = FCK.GetData();
@@ -151,7 +159,6 @@ FCK.Events.AttachEvent( 'OnAfterSetHTML', function() {
 			}
 		});
 
-
 		// open wikitext dialog
 		FCKTools.AddEventListener(FCK.EditorDocument, 'click', function(e) {
 			var target = FCK.YAHOO.util.Event.getTarget(e);
@@ -166,39 +173,12 @@ FCK.Events.AttachEvent( 'OnAfterSetHTML', function() {
 			}
 		});
 
+		// TODO: get all elements with refid attribute and handle them by value of _fck_type attribute
+
 		// macbre: fix issue with input tags as last child (can't move to end of the line)
 		var placeholders = FCK.EditorDocument.getElementsByTagName('input');
 		for (p=0; p<placeholders.length; p++) {
-			// disable context menu
-			placeholders[p].setAttribute('_fckContextMenuDisabled', true);
-
-			// templates preview
-			if (FCK.YAHOO.util.Dom.hasClass(placeholders[p], 'wysiwygTemplate')) {
-				FCK.TemplatePreviewAdd(placeholders[p]);
-			}
-
-			if (placeholders[p].parentNode.nodeName.IEquals(['p', 'div', 'li', 'dt', 'dd']) &&  placeholders[p] == placeholders[p].parentNode.lastChild) {
-				if (FCKBrowserInfo.IsGecko10) {
-					// add &nbsp; for FF2.x
-					var frag = FCK.EditorDocument.createDocumentFragment();
-					frag.appendChild(FCK.EditorDocument.createTextNode('\xA0'));
-					placeholders[p].parentNode.appendChild(frag);
-				}
-				else {
-					// add 'dirty' <br/>
-					FCKTools.AppendBogusBr(placeholders[p].parentNode);
-				}
-			}
-
-			// insert <span type="_moz"> between input tags
-			if ( (placeholders[p].nextSibling && placeholders[p].nextSibling.nodeName.IEquals('input'))) {
-				FCK.InsertDirtySpanBefore(placeholders[p].nextSibling);
-			}
-
-			// and at the beginning of line
-			if (placeholders[p].parentNode.firstChild == placeholders[p]) {
-				FCK.InsertDirtySpanBefore(placeholders[p]);
-			}
+			FCK.SetupWikitextPlaceholder(placeholders[p]);
 		}
 
 		// macbre: protect images
@@ -242,6 +222,49 @@ FCK.Events.AttachEvent( 'OnAfterSetHTML', function() {
 	FCK.GetParentForm().className = (FCK.EditMode == FCK_EDITMODE_WYSIWYG ? 'wysiwyg' : 'source') + '_mode';
 
 });
+
+// setup grey wikitext placeholder: block context menu, add dirty span if needed, setup onclick handler
+FCK.SetupWikitextPlaceholder = function(placeholder) {
+	// disable context menu
+	placeholder.setAttribute('_fckContextMenuDisabled', true);
+
+	// templates preview
+	// TODO: use _fkc_type attribute
+	if (FCK.YAHOO.util.Dom.hasClass(placeholder, 'wysiwygTemplate')) {
+			FCK.TemplatePreviewAdd(placeholder);
+	}
+
+	// placeholder is last child of p, div, li, dt or dd node - add dirty span
+	if (placeholder.parentNode.nodeName.IEquals(['p', 'div', 'li', 'dt', 'dd']) &&  placeholder == placeholder.parentNode.lastChild) {
+		if (FCKBrowserInfo.IsGecko10) {
+			// add &nbsp; for FF2.x
+			var frag = FCK.EditorDocument.createDocumentFragment();
+			frag.appendChild(FCK.EditorDocument.createTextNode('\xA0'));
+			placeholder.parentNode.appendChild(frag);
+		}
+		else {
+			// add 'dirty' <br/>
+			FCKTools.AppendBogusBr(placeholder.parentNode);
+		}
+	}
+
+	// insert <span type="_moz">:
+	// 1. between input tags
+	if ( (placeholder.nextSibling && placeholder.nextSibling.nodeName.IEquals('input'))) {
+		FCK.InsertDirtySpanAfter(placeholder);
+	}
+
+	// 2. at the beginning of the line
+	if (placeholder.parentNode.firstChild == placeholder) {
+		FCK.InsertDirtySpanBefore(placeholder);
+	}
+
+	// 3. after input tag if parent node is body ("<table>" template placeholder)
+	if (placeholder.parentNode.nodeName.IEquals('body')) {
+		FCK.InsertDirtySpanBefore(placeholder);
+		FCK.InsertDirtySpanAfter(placeholder);
+	}
+}
 
 // check whether given page exists (API query returns pageid != 0)
 // if not -> add "new" class to simulate MW parser behaviour
@@ -366,6 +389,9 @@ FCK.ProtectImageSetup = function(refid) {
 
 FCK.ProtectImageClick = function(refid) {
 	FCK.log('click on image #' + refid);
+
+	// tracker
+	FCK.Track('/image/click');
 
 	// TODO: handle onclick event (only left mouse button)
 	inputClickCommand.Execute();
