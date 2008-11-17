@@ -395,12 +395,31 @@ function Wysiwyg_WikiTextToHtml($wikitext, $articleId = -1, $encode = false) {
 	);
 	$html = strtr($html, $replacements);
 
-	// replace placeholders for templates
-	$html = preg_replace('/\x7f-wtb-(\d+)-\x7f(.*?)\x7f-wte-\1-\x7f/sie', "'\x7f-wysiwyg-\\1-\x7f<input value=\"'.htmlspecialchars(stripslashes('\\2')).'\" style=\"display:none\" />'", $html);
-
 	// replace placeholders with HTML
 	if (!empty($wgWysiwygMarkers)) {
 		$html = strtr($html, $wgWysiwygMarkers);
+	}
+
+	// extract refid's of templates from template markers
+	preg_match_all('/\x7f-wtb-(\d+)-\x7f.*?\x7f-wte-\1-\x7f/', $html, $matches);
+
+	if(count($matches[1]) > 0) {
+		$templateCallsToParse = array();
+		foreach($matches[1] as $val) {
+			$templateCallsToParse[] = $wgWysiwygMetaData[$val]['originalCall'];
+		}
+
+		$wgWysiwygParserEnabled = false;
+
+		$templateParser = new Parser();
+		$templateParser->setOutputType(OT_HTML);
+		$templateCallsParsed = explode("\x7f-sep-\x7f", $templateParser->parse(implode("\x7f-sep-\x7f", $templateCallsToParse), $title, $options, false)->getText());
+
+		$wgWysiwygParserEnabled = true;
+
+		$templateCallsParsed =  array_combine($matches[1], $templateCallsParsed);
+
+		$html = preg_replace('/\x7f-wtb-(\d+)-\x7f.*?\x7f-wte-\1-\x7f/sie', "'<input type=\"button\" refid=\"\\1\" _fck_type=\"template\" value=\"'.\$wgWysiwygMetaData[\\1]['name'].'\" class=\"wysiwygDisabled wysiwygTemplate\"/><input value=\"'.htmlspecialchars(stripslashes(\$templateCallsParsed[\\1])).'\" style=\"display:none\"/>'", $html);
 	}
 
 	wfDebug("Wysiwyg_WikiTextToHtml html: {$html}\n");
@@ -415,24 +434,23 @@ function Wysiwyg_HtmlToWikiText($html, $wysiwygData, $decode = false) {
 }
 
 function Wysiwyg_WrapTemplate($originalCall, $output, $lineStart) {
-	global $wgWysiwygMetaData, $wgWysiwygMarkers;
+	global $wgWysiwygMetaData;
 
 	$refId = count($wgWysiwygMetaData);
 
-	$data = array(	'type' => 'template',
-					'originalCall' => $originalCall);
-	if (!empty($lineStart)) {
+	$data = array();
+	$data['type'] = 'template';
+	$data['originalCall'] = $originalCall;
+
+	if(!empty($lineStart)) {
 		$data['lineStart'] = 1;
 	}
 
 	$templateName = explode('|', substr($originalCall, 2, -2));
-	$templateName = rtrim($templateName[0]);
-	$placeHolder = "<input type=\"button\" refid=\"{$refId}\" _fck_type=\"template\" value=\"{$templateName}\" class=\"wysiwygDisabled wysiwygTemplate\" />";
+	$data['name'] = trim($templateName[0]);
 
-	$wgWysiwygMarkers["\x7f-wysiwyg-{$refId}-\x7f"] = $placeHolder;
 	$wgWysiwygMetaData[$refId] = $data;
 
-	// wysiwyg template begin - wysiwyg template end
 	return "\x7f-wtb-{$refId}-\x7f{$output}\x7f-wte-{$refId}-\x7f";
 }
 
