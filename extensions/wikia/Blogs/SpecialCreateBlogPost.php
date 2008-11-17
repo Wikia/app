@@ -158,7 +158,7 @@ class CreateBlogPost extends SpecialPage {
 	 * @author Krzysztof Krzyżaniak <eloy@wikia-inc.com>
 	 *
 	 */
-	static public function doPurgeConnected( Title $title ) {
+	static public function invalidateCacheConnected( Title $title ) {
 		$title->invalidateCache();
 		/**
 		 * this should be subpage, invalidate page as well
@@ -180,7 +180,7 @@ class CreateBlogPost extends SpecialPage {
 		/**
 		 * it should be done only once
 		 */
-		$listig = Title::newFromText( $wgUser->getName(), NS_BLOG_ARTICLE );
+		$listing = Title::newFromText( $wgUser->getName(), NS_BLOG_ARTICLE );
 		$article = new Article( $listing, 0 );
 		// $oArticle->doEdit($sPostBody, "Blog listing created." );
 	}
