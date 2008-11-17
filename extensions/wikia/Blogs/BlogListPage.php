@@ -18,9 +18,16 @@ class BlogListPage extends Article {
 	 * overwritten Article::view function
 	 */
 	public function view() {
-		global $wgOut, $wgUser;
-		Article::view();
-		$this->showBlogListing();
+		global $wgOut, $wgUser, $wgRequest;
+
+		$feed = $wgRequest->getText( "feed", false );
+		if( $feed ) {
+			$this->showFeed( $feed );
+		}
+		else {
+			Article::view();
+			$this->showBlogListing();
+		}
 	}
 
 	/**
@@ -29,20 +36,42 @@ class BlogListPage extends Article {
 	 * @access private
 	 */
 	private function showBlogListing() {
-		global $wgOut, $wgRequest, $wgParser;
+		global $wgOut, $wgRequest, $wgParser, $wgMemc;
 
-		$params = array(
-			"author" => $this->mTitle->getDBkey(),
-			"count"  => 50,
-			"summary" => true,
-			"summarylength" => 750,
-			"style" => "plain",
-			"title" => "Blogs",
-			"timestamp" => true,
-			"offset" => 0
-		);
+		/**
+		 * use cache or skip cache when action=purge
+		 */
+		$user = $this->mTitle->getDBkey();
+		$listing = false;
+		$purge = $wgRequest->getVal( 'action' ) == 'purge';
+		$offset = 0;
 
-		$wgOut->addHTML( BlogTemplateClass::parseTag( "", $params, $wgParser ) );
+		if( !$purge ) {
+			$listing  = $wgMemc->get( wfMemcKey( "blog", "listing", $user, $offset ) );
+		}
+
+		if( !$listing ) {
+			$params = array(
+				"author" => $user,
+				"count"  => 50,
+				"summary" => true,
+				"summarylength" => 750,
+				"style" => "plain",
+				"title" => "Blogs",
+				"timestamp" => true,
+				"offset" => $offset
+			);
+			$listing = BlogTemplateClass::parseTag( "", $params, $wgParser );
+			$wgMemc->set( wfMemcKey( "blog", "listing", $user, $offset ), $listing, 3600 );
+		}
+		$wgOut->addHTML( $listing );
+	}
+
+	/**
+	 * generate xml feed from returned data
+	 */
+	private function showFeed( $feed ) {
+
 	}
 
 	/**
@@ -61,20 +90,9 @@ class BlogListPage extends Article {
 			return true;
 		}
 
-		$feed = $wgRequest->getText( "feed", false );
-		if( $feed ) {
-			/**
-			 * return feed for blog
-			 */
-			Wikia::log( __METHOD__, "feed" );
-		}
-		else {
-			/**
-			 * return article for blog
-			 */
-			Wikia::log( __METHOD__, "article" );
-			$Article = new BlogListPage( $Title );
-		}
+		Wikia::log( __METHOD__, "article" );
+		$Article = new BlogListPage( $Title );
+
 		return true;
 	}
 
