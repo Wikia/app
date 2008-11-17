@@ -21,7 +21,7 @@ function userMasthead() {
 
 		$out['nav_links'] = array (
 			array('text' => 'User page', 'href' => $wgTitle),
-			array('text' => 'Talk page', 'href' => 'http://www.framezero.com'),
+			array('text' => 'Talk page', 'href' => $wgTitle->getTalkPage() ),
 			array('text' => 'Blog', 'href' => 'http://www.framezero.com'),
 			array('text' => 'Contributions', 'href' => 'http://www.framezero.com')
 		);
