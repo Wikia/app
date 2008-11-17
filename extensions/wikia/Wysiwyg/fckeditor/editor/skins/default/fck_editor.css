@@ -474,23 +474,24 @@ td.childrenHidden textarea, td.childrenHidden iframe
 }
 
 #wysiwygTemplatePreviewCloud {
-	background-image: url('../../css/images/template_cloud_bg.gif');
-	background-repeat: no-repeat;
-	background-position: -10px 0;
-	padding-top: 9px;
-
 	position: absolute;
 	visibility: hidden;
 	z-index: 10;
-
+	background-repeat: no-repeat;
 	font-family: sans-serif;
 	font-size: 12px;
 }
 
+.cloudUnder {
+	background-image: url('../../css/images/template_cloud_bg.gif');
+	background-position: -10px 0;
+	padding-top: 9px;
+}
+
 .cloudOver {
-	background-image: url('../../css/images/template_cloud_bg_over.gif') !important;
-	background-position: -10px 100% !important;
-	padding: 0 0 9px 0 !important;
+	background-image: url('../../css/images/template_cloud_bg_over.gif');
+	background-position: -10px 100%;
+	padding-bottom: 9px;
 }
  
 #wysiwygTemplatePreviewCloudInner {
