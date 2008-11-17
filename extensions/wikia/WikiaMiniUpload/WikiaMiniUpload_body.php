@@ -208,6 +208,20 @@ class WikiaMiniUpload {
 				return 'You need to specify file name first!';
 			} else {
 				$name = preg_replace("/[^".Title::legalChars()."]|:/", '-', $name);
+				// did they give no extension at all when they changed the name?
+				$ext = explode( '.', $name );
+				array_shift( $ext );
+				if( count( $ext ) ) {
+					$finalExt = $ext[count( $ext ) - 1];
+				} else {
+					$finalExt = '';
+				}
+
+				if( '' == $finalExt ) {
+					header('X-screen-type: error');
+					return 'Specified filename is empty';					
+				}
+
 				$title = Title::makeTitleSafe(NS_IMAGE, $name);
 				if(is_null($title)) {
 					header('X-screen-type: error');
@@ -216,7 +230,7 @@ class WikiaMiniUpload {
 				if($title->exists()) {
 					if($type == 'overwrite') {
 						$title = Title::newFromText($name, 6);					
-						// is protected?
+						// is the target protected?
 						$permErrors = $title->getUserPermissionsErrors( 'edit', $wgUser );
 						$permErrorsUpload = $title->getUserPermissionsErrors( 'upload', $wgUser );
 						$permErrorsCreate = ( $title->exists() ? array() : $title->getUserPermissionsErrors( 'create', $wgUser ) );
