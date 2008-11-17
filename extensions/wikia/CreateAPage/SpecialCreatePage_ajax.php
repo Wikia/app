@@ -35,9 +35,16 @@ function axMultiEditParse() {
 	$template = $wgRequest->getVal('template');
 	$title = Title::newFromText("Createplate-{$template}", NS_MEDIAWIKI);
 
+	// transfer optional sections data
+	$optional_sections = array();
+	foreach ($_POST as $key => $value) {
+		if( strpos( $key, "wpOptionalInput" ) !== false ) {
+			$optional_sections = str_replace( "wpOptionalInput", "", $key );
+		}
+	}
 	if ($title->exists()) {
 		$rev = Revision::newFromTitle ($title) ;		
-		$me = CreateMultiPage::multiEditParse (10, 10, '?', $rev->getText () ) ;                                       
+		$me = CreateMultiPage::multiEditParse (10, 10, '?', $rev->getText (), $optional_sections ) ;                                       
 	} else {
 		$me = CreateMultiPage::multiEditParse (10, 10, '?', "<!---blanktemplate--->") ;
 	}

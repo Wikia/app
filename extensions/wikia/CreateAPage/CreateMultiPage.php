@@ -35,7 +35,7 @@ define ("TEMPLATE_CLOSING", '/\}\}/') ;
 
 global $wgMultiEditPageTags, $wgMultiEditPageSimpleTags;
 $wgMultiEditPageTags = array('title', 'descr', 'category');
-$wgMultiEditPageSimpleTags = array('lbl', 'categories', 'pagetitle', 'imageupload');
+$wgMultiEditPageSimpleTags = array('lbl', 'categories', 'pagetitle', 'imageupload', 'optional');
 
 //restore what we temporarily encoded
 function wfCreatePageUnescapeKnownMarkupTags (&$text) {
@@ -45,7 +45,6 @@ function wfCreatePageUnescapeKnownMarkupTags (&$text) {
 class CreateMultiPage
 {
 	function __construct() {
-		//
 	}
 
 	static public function unescapeBlankMarker ($text) {
@@ -170,8 +169,7 @@ class CreateMultiPage
 	}	
 
 
-	static public function multiEditParse($rows, $cols, $ew, $sourceText) 
-	{
+	static public function multiEditParse($rows, $cols, $ew, $sourceText, $optional_sections = null) {
 		global $wgTitle;
 		global $wgMultiEditTag;
 		global $wgMultiEditPageSimpleTags, $wgMultiEditPageTags;
@@ -179,15 +177,14 @@ class CreateMultiPage
 
 		$me_content = '' ;
 		$found_categories = array () ;
-		
+
 		$is_used_metag = false;
 		$is_used_category_cloud = false ;
 		$wgMultiEditTag = (empty($wgMultiEditTag)) ? "useMultiEdit" : $wgMultiEditTag;
 		$multiedit_tag = '<!---'.$wgMultiEditTag.'--->';
 
 		#--- is tag set?
-		if ( empty($wgMultiEditTag) || (strpos($sourceText, $multiedit_tag) === false) ) 
-		{    
+		if ( empty($wgMultiEditTag) || (strpos($sourceText, $multiedit_tag) === false) ) {    
 			if (strpos ($sourceText, ISBLANK_TAG_SPECIFIC) !== true) {
 				$sourceText = str_replace (ISBLANK_TAG_SPECIFIC . "\n", "", $sourceText) ;
 				$sourceText = str_replace (ISBLANK_TAG_SPECIFIC, "", $sourceText) ;				
@@ -222,8 +219,7 @@ class CreateMultiPage
 			return false;
 		     }
 		} 
-		else 
-		{
+		else {
 			$sourceText = str_replace($multiedit_tag, "", $sourceText);
 			$is_used_metag = true;		
 		}
@@ -272,6 +268,8 @@ class CreateMultiPage
 		$is_section = ( count( $sections ) > 1 ? true : false );
 
 		$boxes = array(); $num = 0; $loop = 0;
+		$optionals = array();
+
 		if ($is_used_metag) 
 		{
 			$boxes[] = array("type" => "text", "value" => addslashes($multiedit_tag), "display" => 0);
@@ -284,16 +282,13 @@ class CreateMultiPage
 		/*
 		 * parse sections
 		 */	
-		foreach ( $sections as $section ) 
-		{
+		foreach ( $sections as $section ) {
 			#--- empty section 
 			$add = "";
-			if ( ($section[1] == 0) && (empty($section[0])) ) 
-			{
+			if ( ($section[1] == 0) && (empty($section[0])) ) {
 				continue;
 			}
-			elseif ( intval($section[1]) > 0 ) //add last character truncated by preg_split()
-			{
+			elseif ( intval($section[1]) > 0 ) { //add last character truncated by preg_split()
 				$add = substr( $sourceText, $section[1] - 1, 1 );
 			}
 
@@ -305,13 +300,11 @@ class CreateMultiPage
 			#---		
 			$section_name = $section_wout_tags = "";
 			#--- section name
-			if (!empty($name))
-			{
+			if (!empty($name)) {
 				$section_name = $name[0];
 				$section_wout_tags = trim( $name[1] );
 			}
-			if (!empty($section_name))
-			{
+			if (!empty($section_name)) {
 				$boxes[] = array("type" => "section_display", "value" => "<b>".$section_wout_tags."</b>", "display" => 1);
 				$boxes[] = array("type" => "text", "value" => addslashes($section_name), "display" => 0);
 			} else {
@@ -333,22 +326,16 @@ class CreateMultiPage
 			#---
 			preg_match_all( ADDITIONAL_TAG_PARSE, $text, $me_tags );
 
-			if ( isset( $me_tags ) && (!empty( $me_tags[1] )) )
-			{
-				foreach ($me_tags[1] as $id => $_tag)
-				{
+			if ( isset( $me_tags ) && (!empty( $me_tags[1] )) ) {
+				foreach ($me_tags[1] as $id => $_tag) {
 					$brt = $me_tags[2][$id];
 					$correct_brt = ($brt == "&quot;") ? "\"" : $brt;
-					if (in_array($_tag, $wgMultiEditPageTags))
-					{
-						switch ($_tag)
-						{
+					if (in_array($_tag, $wgMultiEditPageTags)) {
+						switch ($_tag) {
 							case "title": 
 							case "descr":
-							case "category" :
-							{
-								if (empty($special_tags[$_tag]) || ($_tag == 'category'))
-								{
+							case "category" : {
+								if (empty($special_tags[$_tag]) || ($_tag == 'category')) {
 									$special_tags[$_tag] = $me_tags[3][$id];
 									if ($_tag != 'category') {				
 										$format_tag_text = ($_tag == 'title') ?  "<b>%s</b>" : "<small>%s</small>";
@@ -387,8 +374,7 @@ class CreateMultiPage
 			 *  Display section name and additional tags as hidden text
 			 * 
 			 */
-			if ( !empty($main_tags) )
-			{
+			if ( !empty($main_tags) ) {
 				$boxes[] = array("type" => "textarea", "value" => $main_tags, "toolbar" => '', "display" => 0);
 			}
 
@@ -400,13 +386,10 @@ class CreateMultiPage
 			preg_match( SIMPLE_TAG_PARSE, $text, $other_tags );
 			$specialTag = ( isset( $other_tags ) && (!empty( $other_tags[1] )) ) ? $other_tags[1] : "generic";
 
-			if ( (!empty($specialTag)) && (!empty($wgMultiEditPageSimpleTags)) && (in_array($specialTag, $wgMultiEditPageSimpleTags)) )
-			{
+			if ( (!empty($specialTag)) && (!empty($wgMultiEditPageSimpleTags)) && (in_array($specialTag, $wgMultiEditPageSimpleTags)) ) {
 				$boxes[] = array("type" => "text", "value" => sprintf(SPECIAL_TAG_FORMAT, $specialTag), "display" => 0);
-				switch ($specialTag)
-				{
-					case "lbl": // <!---lbl---> tag support
-					{
+				switch ($specialTag) {
+					case "lbl": { // <!---lbl---> tag support
 						#---
 						$text_html = str_replace( $other_tags[0], "", $text );  // strip <!---lbl---> tag
 						$text_html = trim( $text_html );  // strip unneeded newlines
@@ -416,8 +399,7 @@ class CreateMultiPage
 						#---
 						break;
 					}
-					case "pagetitle" : // <!---pagetitle---> tag support
-					{
+					case "pagetitle" : { // <!---pagetitle---> tag support
 						#---
 						$text_html = str_replace( $other_tags[0], "", $text );  // strip <!---lbl---> tag
 						$text_html = trim( $text_html );  // strip unneeded newlines
@@ -426,8 +408,22 @@ class CreateMultiPage
 						#---
 						break;
 					}
-					case "imageupload" : //<!---imageupload---> tag support
-					{
+					case "optional" : {  // <!---optional---> tag support
+						$text_html = str_replace( $other_tags[0], "", $text );  // strip the tag
+						$text_html = trim( $text_html );
+						$toolbarid = count ($boxes);
+                               			$toolbar_text = CreateMultiPage::getMultiEditToolbar ($toolbarid);
+						$boxes[] = array(
+								"type" => "optional_textarea", 
+								"value" => $text_html, 
+								"toolbar" => $toolbar_text ,
+								"display" => 1
+								);
+
+						$optionals[] = count( $boxes ) - 1;
+						break;
+					}		
+					case "imageupload" : { //<!---imageupload---> tag support
 						// do a match here, and for each do the thing, yeah
                         			preg_match_all (IMAGEUPLOAD_TAG_SPECIFIC, $text, $image_tags) ;						
 
@@ -440,7 +436,7 @@ class CreateMultiPage
 							$cur_img_count++ ;						
                                                 }
 
-						$text = str_replace("<!---imageupload--->", "", $text);
+						$text = str_replace($other_tags[0], "", $text);
 
 						// get the toolbar
 						$toolbarid = count ($boxes) ;
@@ -481,8 +477,7 @@ class CreateMultiPage
 					}
 				}
 			}
-			elseif ($specialTag == "generic") // generic textarea
-			{
+			elseif ($specialTag == "generic") { // generic textarea
 				// get the toolbar
 				$toolbarid = count ($boxes) ;
 				$toolbar_text = CreateMultiPage::getMultiEditToolbar ($toolbarid) ;
@@ -511,7 +506,9 @@ class CreateMultiPage
 				'ew' => $ew,
 				'is_section' => $is_section,
 				'title' => $wgTitle,
-				'imgpath' => $wgExtensionsPath . '/wikia/CreateAPage/images/'
+				'imgpath' => $wgExtensionsPath . '/wikia/CreateAPage/images/',
+				'optional_text' => wfMsg( 'createpage_optionals_text' ),
+				'optional_sections' => $optional_sections
 			)
 		);
 		#---
@@ -524,8 +521,7 @@ class CreateMultiPage
 			$text_category = ''; $xnum = 0;
 			$array_category = array();
 #---
-			foreach ( $found_categories as $category )
-			{
+			foreach ( $found_categories as $category ) {
 				$cat_text = trim( $category[1] );
 				$text_category .= ( $xnum ? ',' : '' ) . $cat_text;
 				$array_category[$cat_text] = 1;

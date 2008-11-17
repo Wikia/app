@@ -8,7 +8,11 @@
 /*]]>*/
 </style>
 <div style="display:block;" id="wpTableMultiEdit" name="wpTableMultiEdit">
+<input type="hidden" id="wpOptionals" name="wpOptionals" value="">
 <?php
+
+$sections = 0;
+$optionalSections = array();
 
 foreach ($boxes as $id => $box) {
 ?>
@@ -23,10 +27,14 @@ foreach ($boxes as $id => $box) {
 		case 'section_display': {
 			$i = $id;
 			$title_found = false;
+			$visible = '';
 			while( $i < count( $boxes ) - 1 ) {
 				$i++;
-				if ($boxes[$i]['type'] == 'title') {
+				if ( ($boxes[$i]['type'] == 'title') || ($boxes[$i]['type'] == 'optional_textarea') ) {
 					$title_found = true;
+					if ($boxes[$i]['type'] == 'optional_textarea') {
+						$optionalSections[] = array( $sections, $box['value'] );
+					}		
 					break;
 				}
 				if ($boxes[$i]['type'] == 'section_display') {
@@ -34,9 +42,18 @@ foreach ($boxes as $id => $box) {
 				}	
 			}			
 			if ($title_found) {
-				$display = 'none';
+				$clear = "";
 			}
 			$value = $box['value'];
+			if ($sections > 0) {
+			?>
+				</div>
+			<?
+			}
+			?>
+				<div id="createpage_section_<?= $sections ?>">	
+			<?
+			$sections++;
 			break;
 		}
 		case "text":  {
@@ -47,6 +64,7 @@ foreach ($boxes as $id => $box) {
 			$value = "<input type=\"hidden\" {$html} value=\"".$box['value']."\">";
 			break;
 		}
+		case "optional_textarea":
                 case "textarea": {
                         $linenum = count( explode( "\n", $box['value'] ) ) + 1;
                         $linenum = ($linenum > 8) ? 8 : $linenum;
@@ -67,5 +85,31 @@ foreach ($boxes as $id => $box) {
 <?
 }
 ?>
+</div>
+<?
+if( !empty ($optionalSections) ) {
+?>
+	<div id="createpage_optionals"><span id="createpage_optionals_text"><?= $optional_text ?></span><br/>
+	<span id="createpage_optionals_content">
+<?
+	$check = '';
+	foreach( $optionalSections as $opt ) {
+		in_array( $opt[0], $optional_sections ) ? $check = 'checked="checked"' : $check = '';
+?>
+	<span id="wpOptional<?= $opt[0] ?>"><input type="checkbox" id="wpOptionalInput<?= $opt[0] ?>" name="wpOptionalInput<?= $opt[0] ?>" <?= $check ?>/><span id="wpOptionalDesc<?= $opt[0] ?>"><?= $opt[1] ?></span></span>
+<?
+	}
+?>
+	</span>
+	</div>
+<?
+}
+
+
+?>
+
+
+
+
 </div>
 <!-- e:<?= __FILE__ ?> -->

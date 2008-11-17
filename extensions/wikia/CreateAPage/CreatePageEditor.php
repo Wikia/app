@@ -26,25 +26,32 @@ abstract class CreatePageEditor {
 
 //wraps up special multi editor class
 class CreatePageMultiEditor extends CreatePageEditor {	
-	var $mRedLinked, $mInitial ;	
-	function CreatePageEditor ($template, $redlinked = false, $initial = false) {
+	var $mRedLinked, $mInitial, $mPreviewed;	
+	function CreatePageEditor ($template, $redlinked = false, $initial = false, $previewed = false) {
 		$this->mTemplate = $template ;
 		$this->mRedLinked = $redlinked ;		
 		$this->mInitial = $initial ;
+		$this->mPreviewed = $previewed;
 	}
 
 	function GenerateForm ($content = false) {
 		global $wgOut, $wgUser, $wgRequest ;
+		$optional_sections = array();
+		foreach ($_POST as $key => $value) {
+			if( strpos( $key, "wpOptionalInput" ) !== false ) {
+				$optional_sections[] = str_replace( "wpOptionalInput", "", $key );
+			}
+		}
 		if (!$content) {
 			$title = Title::newFromText ('Createplate-' . $this->mTemplate, NS_MEDIAWIKI) ;
 			if ($title->exists()) {
 				$rev = Revision::newFromTitle ($title) ;
-				$me = CreateMultiPage::multiEditParse (10, 10, '?', $rev->getText () ) ;
+				$me = CreateMultiPage::multiEditParse (10, 10, '?', $rev->getText (), $optional_sections ) ;
 			} else {
 				$me = CreateMultiPage::multiEditParse (10, 10, '?', "<!---blanktemplate--->") ;
 			}
 		} else {
-			$me = CreateMultiPage::multiEditParse (10,10,'?', $content) ;
+			$me = CreateMultiPage::multiEditParse (10,10,'?', $content, $optional_sections ) ;
 		}
                 $wgOut->addHTML ("<div id=\"cp-restricted\">") ;
 		$wgOut->addHTML ("
@@ -147,19 +154,27 @@ class CreatePageMultiEditor extends CreatePageEditor {
 		return $text ;
 	}
 
-	function GlueArticle ($preview = false) {		
+	function GlueArticle ($preview = false, $render_option = true) {		
 		global $wgRequest, $wgOut ;
-
         	$text = '' ;
-		$infoboxes = array () ;
-		$categories = array () ;
-		$images = array () ;
-		$all_images = array () ;		
+		$infoboxes = array();
+		$categories = array();
+		$optionals = array();
+		$images = array ();
+		$all_images = array();		
 		$error_once = false ;
 
-		foreach ($_POST as $key => $value) {						
-			if (strpos ($key, "wpTextboxes") !== false) {
-                        	$text .= "\n" . $value ;
+		foreach ($_POST as $key => $value) {									
+			if( strpos( $key, "wpOptionals" ) !== false ) {
+				if ( $render_option ) {
+					// build optional data
+					$optionals = explode( ',', $value  );				
+				}
+			} else if (strpos ($key, "wpTextboxes") !== false) {
+				// check if this was optional				
+				if( !in_array( $key, $optionals ) ) {
+	                        	$text .= "\n" . $value ;
+				}
 			} else if (strpos ($key, "wpInfoboxPar") !==  false ) {
 				$infoboxes[] = $value ; 				
 			} else if (strpos ($key, "category_") !==  false) {
@@ -181,7 +196,6 @@ class CreatePageMultiEditor extends CreatePageEditor {
 					$uploadform->CurlError       = $wgRequest->getUploadError( 'wpUploadFile' . $postfix );
 
 					// required by latest functions
-
 					$par_name = $wgRequest->getText ('wpParName' .$postfix) ;
 					if ($uploadform->mSrcName ) {
 						$file_ext = split ("\.", $uploadform->mSrcName) ;
@@ -230,7 +244,6 @@ class CreatePageMultiEditor extends CreatePageEditor {
 				$uploadform->mFileSize       = $wgRequest->getFileSize( 'wpAllUploadFile' . $postfix );
 				$uploadform->mSrcName        = $wgRequest->getFileName( 'wpAllUploadFile' . $postfix );
 				$uploadform->CurlError       = $wgRequest->getUploadError( 'wpAllUploadFile' . $postfix );
-				//$uploadform->mDesiredDestName = $wgRequest->getText( 'wpAllDestFile' . $postfix );
 
 				// required by latest functions
 				if ($uploadform->mSrcName) {
