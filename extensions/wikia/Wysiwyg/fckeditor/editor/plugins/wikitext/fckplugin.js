@@ -205,6 +205,8 @@ FCK.Events.AttachEvent( 'OnAfterSetHTML', function() {
 		var nodes = FCK.GetNodesWithRefId();
 		FCK.log(nodes);
 
+		FCK.TemplatePreviewInit();
+
 		for (n=nodes.length-1; n>=0; n--) {
 			var node = nodes[n];
 			var refid = node.getAttribute('refid');
@@ -447,6 +449,13 @@ FCK.ProtectImageClick = function(refid) {
 
 FCK.TemplatePreviewCloud = false;
 
+FCK.TemplatePreviewInit = function() {
+	if (FCK.TemplatePreviewCloud) {
+		FCK.TemplatePreviewCloud.parentNode.removeChild(FCK.TemplatePreviewCloud);
+		FCK.TemplatePreviewCloud = false;
+	}
+}
+
 FCK.TemplatePreviewAdd = function(placeholder) {
 
 	var docObj = FCK.EditingArea.TargetElement.ownerDocument;
@@ -500,7 +509,7 @@ FCK.TemplatePreviewAdd = function(placeholder) {
 	});
 	
 	FCKTools.AddEventListener(placeholder, 'mouseout', function(e) {
-		FCK.TemplatePreviewHide(FCK.YAHOO.util.Event.getTarget(e));
+		FCK.TemplatePreviewHide();
 	});
 
 }
@@ -509,6 +518,14 @@ FCK.TemplatePreviewShow = function(placeholder) {
 	
 	var refId = placeholder.getAttribute('refid');
 	var preview = FCK.TemplatePreviewCloud.ownerDocument.getElementById('wysiwygTemplatePreview' + refId);
+
+	// hide all previews / show just the one we need
+	var previews = FCK.TemplatePreviewCloud.firstChild.childNodes;
+
+	for (p=0; p<previews.length; p++) {
+		previews[p].style.display = 'none';
+	}
+
 	preview.style.display = '';
 
 	// reset margin/padding
@@ -551,13 +568,7 @@ FCK.TemplatePreviewShow = function(placeholder) {
 	FCK.TemplatePreviewCloud.className = showUnder ? 'cloudUnder' : 'cloudOver';
 }
 
-FCK.TemplatePreviewHide = function(placeholder) {
-	
-	var refId = placeholder.getAttribute('refid');
-	var preview = FCK.TemplatePreviewCloud.ownerDocument.getElementById('wysiwygTemplatePreview' + refId);
-
-	// hide template preview and cloud
-	preview.style.display = 'none';
+FCK.TemplatePreviewHide = function() {
 	FCK.TemplatePreviewCloud.style.visibility = 'hidden';
 }
 
