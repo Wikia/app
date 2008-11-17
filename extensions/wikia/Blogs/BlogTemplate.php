@@ -632,7 +632,7 @@ class BlogTemplateClass {
 	
 	
 	private static function __getRevisionText($iRev) {
-		global $wgLang;
+		global $wgLang, $wgUser;
 		wfProfileIn( __METHOD__ );
 		$sResult = "";
 		/* parse summary */
