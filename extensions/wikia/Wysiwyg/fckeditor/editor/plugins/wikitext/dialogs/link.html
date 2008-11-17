@@ -165,6 +165,7 @@ function Ok() {
 	var data = {};
 	var link_text;
 	var href = '';
+	var title = '';
 
 	if(activeTabCode == 'internal_link') {
 		if(GetE('internal_article_name').value == '') {
@@ -179,7 +180,7 @@ function Ok() {
 			}
 		}
 		data.type = 'internal link';
-		data.href = GetE('internal_article_name').value;
+		data.href = title = GetE('internal_article_name').value;
 	} else if(activeTabCode == 'external_link') {
 		if(GetE('external_url').value == '') {
 			alert('URL name field can not be empty!');
@@ -195,7 +196,7 @@ function Ok() {
 			link_text = '';
 			data.type = 'external link';
 		}
-		data.href = href = GetE('external_url').value;
+		data.href = title = href = GetE('external_url').value;
 	}
 
 	if(MODE == EXISTING) {
@@ -210,6 +211,7 @@ function Ok() {
 
 	aLinks[0].innerHTML = link_text;
 	aLinks[0].href = href;
+	aLinks[0].title = title;
 	aLinks[0].removeAttribute('_fcksavedurl');
 
 	if(!refid) {
