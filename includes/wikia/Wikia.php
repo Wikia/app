@@ -317,14 +317,13 @@ class Wikia {
      * /opt/wikia/php/bin/php, fp & localhost could use others. Write here Your
      * additional conditions to check
      *
-     * @author eloy@wikia
+	 * @author Krzysztof Krzyżaniak <eloy@wikia-inc.com>
      * @access public
      * @static
      *
      * @return string: path to php binary
      */
-    static public function binphp()
-    {
+    static public function binphp() {
 		wfProfileIn( __METHOD__ );
 
         $path = ( file_exists( "/opt/wikia/php/bin/php" )
@@ -337,4 +336,23 @@ class Wikia {
         return $path;
     }
 
+	/**
+	 * simple logger which log message to STDERR if devel environment is set
+	 *
+	 * @example Wikia::log( __METHOD__, "1", "checking" );
+	 * @author Krzysztof Krzyżaniak <eloy@wikia-inc.com>
+	 *
+	 * @param String $method  -- use __METHOD__
+	 * @param String $sub     -- if more in one method default false
+	 * @param String $message -- additional message default false
+	 *
+	 */
+	static public function log( $method, $sub = false, $message = false ) {
+		global $wgDevelEnvironment;
+
+		$method = $sub ? $method . "-" . $sub : $method;
+		if( $wgDevelEnvironment ) {
+			error_log( $method . ": ", $message );
+		}
+	}
 }

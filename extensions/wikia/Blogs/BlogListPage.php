@@ -41,7 +41,7 @@ class BlogListPage extends Article {
 			"timestamp" => true,
 			"offset" => 0
 		);
-		error_log( print_r( $params ) );
+
 		$wgOut->addHTML( BlogTemplateClass::parseTag( "", $params, $wgParser ) );
 	}
 
@@ -66,13 +66,13 @@ class BlogListPage extends Article {
 			/**
 			 * return feed for blog
 			 */
-			error_log( __METHOD__. "-feed" );
+			Wikia::log( __METHOD__, "feed" );
 		}
 		else {
 			/**
 			 * return article for blog
 			 */
-			error_log( __METHOD__. "-article" );
+			Wikia::log( __METHOD__, "article" );
 			$Article = new BlogListPage( $Title );
 		}
 		return true;
