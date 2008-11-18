@@ -162,8 +162,12 @@ class ReverseParser {
 						break;
 
 					case 'br':
+						// ignore <br type="_moz"> (fix for IE)
+						if ($node->getAttribute('type') == '_moz') {
+							$out = '';
+						}
 						// <br /> as first child of <p> will be parsed as line break
-						if($node->parentNode->nodeName == 'p' && $node->parentNode->hasChildNodes() && $node->parentNode->childNodes->item(0)->isSameNode($node)) {
+						else if($node->parentNode->nodeName == 'p' && $node->parentNode->hasChildNodes() && $node->parentNode->childNodes->item(0)->isSameNode($node)) {
 							$out = "\n";
 						}
 						// remove <br /> when it's the last child of parent being inline element
