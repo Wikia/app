@@ -51,10 +51,6 @@ class CreateBlogPage extends SpecialPage {
 			}
 			else {
 				$this->savePost();
-				if(count($this->mFormErrors) > 0) {
-					// article already exists (or any other saving error to be decided later...)
-					$this->renderForm();
-				}
 			}
 		}
 		else {
