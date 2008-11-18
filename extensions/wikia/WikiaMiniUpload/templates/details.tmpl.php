@@ -1,5 +1,3 @@
-<input id="ImageUploadExtraId" type="hidden" value="<?= isset($props['extraId']) ? urlencode($props['extraId']) : '' ?>" />
-<input id="ImageUploadMWname" type="hidden" value="<?= urlencode($props['mwname']) ?>" />
 <?php
 global $wgExtensionsPath;
 if(isset($props['name'])) {
@@ -80,4 +78,6 @@ if($props['file']->media_type == 'BITMAP' || $props['file']->media_type == 'DRAW
 		</td>
 	</tr>
 </table>
+<input id="ImageUploadExtraId" type="hidden" value="<?= isset($props['extraId']) ? urlencode($props['extraId']) : '' ?>" />
+<input id="ImageUploadMWname" type="hidden" value="<?= urlencode($props['mwname']) ?>" />
 </div>
