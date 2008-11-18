@@ -435,7 +435,7 @@ class BlogTemplateClass {
 		}
 		/* title */
 		if ( !isset(self::$aOptions['title']) ) {
-			self::__makeStringOption('title', wfMsg('blog_defaulttitle'));
+			self::__makeStringOption('title', wfMsg('blog-defaulttitle'));
 		}
     	wfProfileOut( __METHOD__ );
 	}
@@ -786,9 +786,9 @@ class BlogTemplateClass {
 				}
 				/* invalid name of parameter or empty name */
 				if ( !in_array($sParamName, array_keys(self::$aBlogParams)) ) {
-					throw new Exception( wfMsg('blog_invalidparam', $sParamName, implode(", ", array_keys(self::$aBlogParams))) );
+					throw new Exception( wfMsg('blog-invalidparam', $sParamName, implode(", ", array_keys(self::$aBlogParams))) );
 				} elseif ( trim($sParamName) == '' ) {
-					throw new Exception(wfMsg('blog_emptyparam'));						
+					throw new Exception(wfMsg('blog-emptyparam'));						
 				} 
 
 				/* ignore comment lines */
