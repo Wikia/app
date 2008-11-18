@@ -321,12 +321,12 @@ function Wysiwyg_CheckEdgeCases($text) {
 			'<!--' => 'wysiwyg-edgecase-comment', // HTML comments
 			'{{{' => 'wysiwyg-edgecase-triplecurls', // template parameters
 			//'__NOWYSIWYG__' => 'wysiwyg-edgecase-nowysiwyg', // new magic word to disable FCK for current article
-			'<span refid=' => 'wysiwyg-edgecase-syntax', // span with fck metadata - shouldn't be used by user
 		),
 		'regexp' => array(
 //			'/\[\[[^|]+\|.*?(?:(?:' . wfUrlProtocols() . ')|{{).*?]]/' => 'wysiwyg-edgecase-complex-description', // external url or template found in the description of a link
 			//'/{{[^}]*(?<=\[)[^}]*}}/' => 'wysiwyg-edgecase-template-with-link', // template with link as a parameter
 //			'/\[\[(?:image|media)[^]|]+\|[^]]+(?:\[\[|(?:' . wfUrlProtocols() . '))(?:[^]]+])?[^]]+]]/si' => 'wysiwyg-edgecase-image-with-link', // template with link as a parameter
+			'/<span.*?refid/si' => 'wysiwyg-edgecase-syntax', // span with fck metadata - shouldn't be used by user
 		)
 	);
 	foreach($edgeCases['regular'] as $str => $msgkey) {
@@ -507,16 +507,8 @@ function Wysiwyg_SetRefId($type, $params, $addMarker = true, $returnId = false) 
 			break;
 
 		case 'nowiki':
-			$data['description'] = $params['text'];
-			$result = $params['text'];
-			break;
-
-		case 'curly brackets':
 		case 'gallery':
 		case 'hook':
-			if (!empty($params['lineStart'])) {	//for curly brackets
-				$data['lineStart'] = 1;
-			}
 			$data['description'] = $params['text'];
 			$result = $params['text'];
 			break;

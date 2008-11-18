@@ -228,7 +228,7 @@ class HashtableReplacer extends Replacer {
 		global $wgWysiwygMetaData, $wgWysiwygParserEnabled;
 		$result = $this->table[$matches[$this->index]];
 		if (!empty($wgWysiwygParserEnabled)) {
-			if (preg_match('%<a .*?(?:refid="(\d+)")?>(.*?\x7f-wtb-.*?)</a>%si', $result, $matches)) {
+			if (preg_match('%<a .*?(?:refid="(\d+)")?>.*?\x7f-wtb-.*?</a>%si', $result, $matches)) {
 				if ($matches[1] == '') {	//in image
 					$result = preg_replace('%\x7f-wtb-(\d+)-\x7f(.*?)\x7f-wte-\1-\x7f%i', '\2', $result);;
 				} else {	//regular link
