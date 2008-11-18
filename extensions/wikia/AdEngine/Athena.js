@@ -85,7 +85,7 @@ Athena.debug = function (msg, level){
 Athena.reportError = function (error){
 	// TODO send back a javascript call to an error reporter
 	// For now, just do an alert
-	alert("Athena error: " + msg);
+	alert("Athena error: " + error);
 };
 
 /* Load the supplied url inside a script tag  */
