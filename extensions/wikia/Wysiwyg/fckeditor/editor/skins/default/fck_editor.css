@@ -505,6 +505,10 @@ td.childrenHidden textarea, td.childrenHidden iframe
 	padding: 5px;
 }
 
+#wysiwygTemplatePreviewCloudInner * {
+	cursor: default;
+}
+
 .cloudUnder #wysiwygTemplatePreviewCloudInner {
 	border-top: none;
 }
