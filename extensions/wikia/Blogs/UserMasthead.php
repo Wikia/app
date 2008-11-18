@@ -23,7 +23,7 @@ function userMasthead() {
 			array('text' => wfMsg('nstab-user'), 'href' => Title::newFromText( $userspace, NS_USER )->getLocalUrl() ),
 			array('text' => wfMsg('talkpage'), 'href' => Title::newFromText( $userspace, NS_USER_TALK )->getLocalUrl() ),
 			array('text' => wfMsg('blog-page'), 'href' => Title::newFromText( $userspace, NS_BLOG_ARTICLE )->getLocalUrl() ),
-			array('text' => wfMsg('contris'), 'href' => 'http://www.framezero.com')
+			array('text' => wfMsg('contris'), 'href' => Title::newFromText( "Contributions/{$userspace}", NS_SPECIAL )->getLocalUrl() )
 		);
 
 		if ( $wgUser->isLoggedIn() && $wgUser->getName() == $userspace ) {
