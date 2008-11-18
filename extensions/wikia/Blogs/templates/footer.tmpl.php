@@ -1,4 +1,4 @@
-<div>
+<div id="blog-footer">
 	<ul>
 		<li>
 			<?php echo wfMsg("blog-last-edited", array( $edited ) ) ?>
