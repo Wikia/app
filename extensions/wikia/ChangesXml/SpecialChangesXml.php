@@ -17,7 +17,7 @@ EOT;
 $wgExtensionCredits['specialpage'][] = array(
 		'name' => 'ChangesXml',
 		'author' => 'Andrew Yasinsky',
-		'description' => 'ChagesXml feed',
+		'description' => 'ChangesXml feed',
 );
 
 function wfChangesXml( $rc ) {
