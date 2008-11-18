@@ -6,8 +6,8 @@
  */
 
 if ( !defined( 'MEDIAWIKI' ) ) {
-    echo "This is MediaWiki extension.\n";
-    exit( 1 ) ;
+	echo "This is MediaWiki extension.\n";
+	exit( 1 ) ;
 }
 
 $wgHooks[ "ArticleFromTitle" ][] = "BlogListPage::hook";
@@ -28,7 +28,12 @@ class BlogListPage extends Article {
 			/**
 			 * blog article
 			 */
+			$aTitleParts = explode('/', $this->mTitle->mPrefixedText, 2);
+			if(isset($aTitleParts[1]) && !empty($aTitleParts[1])) {
+				$this->mTitle->mPrefixedText = $aTitleParts[1];
+			}
 			Article::view();
+
 			if( 1 ) {
 				$pageid = $this->getLatest();
 				$FauxRequest = new FauxRequest( array(

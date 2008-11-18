@@ -31,10 +31,7 @@ $wgNamespacesWithSubpages[ NS_BLOG_LISTING_TALK ] = true;
 $wgExtensionMessagesFiles["Blogs"] = dirname(__FILE__) . '/Blogs.i18n.php';
 
 // Special page
-extAddSpecialPage(dirname(__FILE__) . '/SpecialCreateBlogPost.php', 'CreateBlogPost', 'CreateBlogPost');
-
-
-
+extAddSpecialPage(dirname(__FILE__) . '/SpecialCreateBlogPage.php', 'CreateBlogPage', 'CreateBlogPage');
 
 /**
  * load other parts

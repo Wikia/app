@@ -5,20 +5,21 @@
  *
  * @author Adrian Wieczorek
  */
-class CreateBlogPost extends SpecialPage {
+class CreateBlogPage extends SpecialPage {
 
 	private $mFormData;
 	private $mFormErrors = array();
-	private $mPostTitle = null;
+	//private $mPostTitle = null;
+	private $mPostArticle;
 
 	public function __construct() {
 		global $wgExtensionMessagesFiles;
 
 		// initialise messages
-		$wgExtensionMessagesFiles['CreateBlogPost'] = dirname(__FILE__) . '/Blogs.i18n.php';
-		wfLoadExtensionMessages('CreateBlogPost');
+		$wgExtensionMessagesFiles['CreateBlogPage'] = dirname(__FILE__) . '/Blogs.i18n.php';
+		wfLoadExtensionMessages('CreateBlogPage');
 
-		parent::__construct( 'CreateBlogPost'  /*class*/, 'createblogpost' /*restriction*/, true);
+		parent::__construct( 'CreateBlogPage'  /*class*/, 'createblogpage' /*restriction*/, true);
 	}
 
 	public function execute() {
@@ -39,7 +40,7 @@ class CreateBlogPost extends SpecialPage {
 			return;
 		}
 
-		$this->mTitle = Title::makeTitle( NS_SPECIAL, 'CreateBlogPost' );
+		$this->mTitle = Title::makeTitle( NS_SPECIAL, 'CreateBlogPage' );
 
 		$wgOut->setPageTitle( wfMsg("create-blog-post-title") );
 
@@ -50,6 +51,10 @@ class CreateBlogPost extends SpecialPage {
 			}
 			else {
 				$this->savePost();
+				if(count($this->mFormErrors) > 0) {
+					// article already exists (or any other saving error to be decided later...)
+					$this->renderForm();
+				}
 			}
 		}
 		else {
@@ -68,19 +73,19 @@ class CreateBlogPost extends SpecialPage {
 			$sPostBody .= $this->getCategoriesAsText($aCategories);
 		}
 
-		$oArticle = new Article($this->mPostTitle, 0);
-		$oArticle->doEdit($sPostBody, "Blog post created." );
+		$this->mPostArticle->doEdit($sPostBody, "Blog post created." );
 
 		$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
 		$oTmpl->set_vars( array(
-			"title" => $this->mPostTitle)
+			"title" => $this->mPostArticle->getTitle())
 		);
 
 		$wgOut->addHTML( $oTmpl->execute("createPostConfirm") );
 
 		$this->createListingPage();
 
-		self::invalidateCacheConnected( $this->mPostTitle );
+		self::invalidateCacheConnected( $this->mPostArticle->getTitle() );
+
 		return true;
 	}
 
@@ -93,13 +98,17 @@ class CreateBlogPost extends SpecialPage {
 		$this->mFormData['isVotingEnabled'] = $wgRequest->getCheck('blogPostIsVotingEnabled');
 		$this->mFormData['isCommentingEnabled'] = $wgRequest->getCheck('blogPostIsCommentingEnabled');
 
-		$this->mPostTitle = Title::newFromText( $wgUser->getName() . '/' . $this->mFormData['postTitle'], NS_BLOG_ARTICLE);
+		$oPostTitle = Title::newFromText( $wgUser->getName() . '/' . $this->mFormData['postTitle'], NS_BLOG_ARTICLE);
+		$this->mPostArticle = new Article($oPostTitle, 0);
 
 		if(empty($this->mFormData['postTitle'])) {
 			$this->mFormErrors[] = wfMsg('create-blog-empty-title-error');
 		}
-		else if(!($this->mPostTitle instanceof Title)) {
+		else if(!($oPostTitle instanceof Title)) {
 			$this->mFormErrors[] = wfMsg('create-blog-invalid-title-error');
+		}
+		else if($this->mPostArticle->exists()) {
+			$this->mFormErrors[] = wfMsg('create-blog-article-already-exists');
 		}
 
 		if(empty($this->mFormData['postBody'])) {
