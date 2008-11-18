@@ -53,6 +53,10 @@ body, .BackColor
 	padding: 0px;
 }
 
+* html .PopupBody {
+	height: 98%;
+}
+
 #header
 {
 	cursor: move;
@@ -76,6 +80,11 @@ body, .BackColor
 	border-top: #d5d59d 1px solid;
 	background-color: #e3e3c7;
 	padding: 7px 10px 7px 10px;
+}
+
+* html .PopupButtons {
+	height: 1%; /* wikia: IE fix */
+	position: relative;
 }
 
 .Button
