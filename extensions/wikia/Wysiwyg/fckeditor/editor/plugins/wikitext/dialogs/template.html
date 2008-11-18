@@ -30,6 +30,13 @@ window.onload = function() {
 	// fill template dialog
 	GetE('template_source').value = data.originalCall;
 	GetE('template_preview').innerHTML = FCK.TemplatePreviewGetHTML(refid);
+
+	// block clicks inside template preview
+	FCKTools.AddEventListener(GetE('template_preview'), 'click', function(e) { 
+		e.preventDefault(); 
+		e.stopPropagation(); 
+	}); 
+
 }
 
 function Ok() {
@@ -54,10 +61,10 @@ function Ok() {
 
 	// get template name
 	var name = wikitext.substring(2, wikitext.length-2).split("|")[0];
-	data.name = name;
 
-	var placeholder = dialog.Selection.GetSelection().MoveToAncestorNode('INPUT');
-	placeholder.value = name;
+	// update metaData and placeholder label
+	data.name = name;
+	FCK.TemplatePreviewSetName(refid, name);
 	
 	return true;
 }
@@ -154,6 +161,10 @@ function CreatePreview(save) {
 	
 		#template_preview p {
 			margin: 0;
+		}
+
+		#template_preview * {
+			cursor: default;
 		}
 	</style>
 </head>

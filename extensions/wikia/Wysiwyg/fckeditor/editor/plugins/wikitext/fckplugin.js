@@ -382,6 +382,11 @@ FCK.ProtectImage = function(image) {
 FCK.ProtectImageSetup = function(refid) {
 	iframe = FCK.EditingArea.Document.getElementById('image' + refid);
 
+	// fired during the switch between wysiwyg and source mode
+	if (!iframe.contentDocument) {
+		return true;
+	}
+
 	// fill iframe
 	iframe.contentDocument.write('<style type="text/css">* {cursor: default !important}</style>');
 	iframe.contentDocument.write(FCK.wysiwygData[refid].html);
@@ -439,8 +444,10 @@ FCK.ProtectImageClick = function(refid) {
 	// tracker
 	FCK.Track('/image/click');
 
+	FCK.ProtectImageRefId = refid;
+
 	// TODO: handle onclick event (only left mouse button)
-	FCK.InputClickCommand.Execute();
+	// wmuShow();
 }
 
 
@@ -471,12 +478,6 @@ FCK.TemplatePreviewAdd = function(placeholder) {
 		FCK.TemplatePreviewCloud.id = 'wysiwygTemplatePreviewCloud';
 		FCK.TemplatePreviewCloud.innerHTML = '<div id="wysiwygTemplatePreviewCloudInner"></div>';
 
-		// disallow clicks on template preview
-		FCKTools.AddEventListener(FCK.TemplatePreviewCloud, 'click', function(e) {
-			e.preventDefault();
-			e.stopPropagation();
-		});
-
 		FCKTools.AddEventListener(FCK.TemplatePreviewCloud, 'mouseover', function(e) {
 			// clear timeouts
 			clearTimeout(FCK.TemplatePreviewTimeouts.Tag);
@@ -498,7 +499,10 @@ FCK.TemplatePreviewAdd = function(placeholder) {
 	FCK.TemplatePreviewCloud.firstChild.appendChild( previewDiv );
 	
 	previewDiv.id = 'wysiwygTemplatePreview' + refId;
+	placeholder.id = 'wysiwygTemplate' + refId;	
+
 	previewDiv.innerHTML = preview.value + '<br style="clear:both" />';
+	previewDiv.setAttribute('refid', refId);
 
 	// sometimes innerHTML contains whitespices at the end -> fix it
 	previewDiv.innerHTML = previewDiv.innerHTML.Trim();
@@ -530,6 +534,14 @@ FCK.TemplatePreviewAdd = function(placeholder) {
 	FCKTools.AddEventListener(placeholder, 'click', function(e) {
 		var target = FCK.YAHOO.util.Event.getTarget(e);
 		FCK.TemplateRefId = target.getAttribute('refid');
+		FCK.TemplateClickCommand.Execute();
+	});
+
+	FCKTools.AddEventListener(previewDiv, 'click', function(e) {
+		e.preventDefault();
+		e.stopPropagation();
+
+		FCK.TemplateRefId = this.getAttribute('refid');
 		FCK.TemplateClickCommand.Execute();
 	});
 }
@@ -610,6 +622,10 @@ FCK.TemplatePreviewGetHTML = function(refid) {
 	return preview.innerHTML;
 }
 
+FCK.TemplatePreviewSetName = function(refid, name) {
+	var input = FCK.EditorDocument.getElementById('wysiwygTemplate' + refid);
+	input.value = name;
+}
 
 //
 // misc
