@@ -1,0 +1,177 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+	<title>Template Editor</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="robots" content="noindex, nofollow" />
+	<script src="../../../dialog/common/fck_dialog_common.js" type="text/javascript"></script>
+	<script type="text/javascript">
+var dialog	= window.parent ;
+var oEditor = dialog.InnerDialogLoaded() ;
+
+var FCK			= oEditor.FCK ;
+var FCKLang		= oEditor.FCKLang ;
+var FCKConfig	= oEditor.FCKConfig ;
+var FCKRegexLib	= oEditor.FCKRegexLib ;
+var FCKTools	= oEditor.FCKTools ;
+
+// get template refid
+var refid = FCK.TemplateRefId;
+var data = FCK.wysiwygData[refid];
+
+var lastWikitext = data.originalCall;
+
+FCK.log(data);
+
+window.onload = function() {
+	window.parent.SetOkButton(true);
+	window.parent.SetAutoSize(true);
+
+	// fill template dialog
+	GetE('template_source').value = data.originalCall;
+	GetE('template_preview').innerHTML = FCK.TemplatePreviewGetHTML(refid);
+}
+
+function Ok() {
+	if ( !CheckWikitext() ) {
+		return false;
+	}
+
+	oEditor.FCKUndo.SaveUndoStep();
+
+	var wikitext = GetWikitext();
+
+	// do we already have a preview?
+	if ( wikitext != lastWikitext ) {
+		CreatePreview(true);
+	}
+	else {
+		FCK.TemplatePreviewSetHTML(refid, GetE('template_preview').innerHTML);
+	}
+
+	// save in metaData
+	data.originalCall = wikitext;
+
+	// get template name
+	var name = wikitext.substring(2, wikitext.length-2).split("|")[0];
+	data.name = name;
+
+	var placeholder = dialog.Selection.GetSelection().MoveToAncestorNode('INPUT');
+	placeholder.value = name;
+	
+	return true;
+}
+
+function GetWikitext() {
+	return FCK.YAHOO.lang.trim(GetE('template_source').value);
+}
+
+function CheckWikitext() {
+	wikitext = GetWikitext();
+
+	// count number of { and }
+	var brackets = 0;
+
+	for(n=0; n<wikitext.length; n++) {
+		if (wikitext[n] == '{') {
+			brackets++;
+		}
+		else if (wikitext[n] == '}') {
+			brackets--;
+		}
+	}
+
+	if (brackets == 0) {
+		// check {{ ... }}
+		if (wikitext.substring(0,2) == '{{' && wikitext.substr(-2) == '}}') {
+			GetE('template_source').value = wikitext;
+			return true;
+		}
+	}
+
+	FCK.log('following wikitext is wrong: ' + wikitext);
+	
+	alert('Wikitext for template is wrong');
+
+	return false;
+}
+
+function CreatePreview(save) {
+
+	// check wikitext {{ .. }}
+	if (!CheckWikitext()) {
+		return false;
+	}
+
+	// block preview button and show progress icon
+	GetE('template_do_preview').disabled = true;
+
+	GetE('template_preview').innerHTML = '';
+	GetE('template_preview').className = 'progress';
+
+	var callback = {
+		success: function(o) {
+			result = eval('(' + o.responseText + ')');
+			html = result.parse.text['*'];
+
+			// remove newPP comment and whitespaces
+			html = FCK.YAHOO.lang.trim(html.split('<!-- \nNewPP limit report')[0]);
+
+			// unblock preview button
+			o.argument.preview.innerHTML = html;
+			o.argument.preview.className = '';
+			o.argument.button.disabled = false;
+
+			// save in cloud preview?
+			if (o.argument.save) {
+				 o.argument.FCK.TemplatePreviewSetHTML(o.argument.refid, o.argument.preview.innerHTML);
+			}
+			else {
+				// store wikitext of last preview
+				lastWikitext = GetWikitext();
+			}
+		},
+		failure: function(o) {
+			o.argument.preview.className = '';
+			o.argument.button.disabled = false;
+		},
+		argument: {'save': save, 'preview': GetE('template_preview'), 'button': GetE('template_do_preview'), 'FCK': FCK, 'refid': window.refid}
+	};
+
+	FCK.YAHOO.util.Connect.asyncRequest(
+		"POST",
+		dialog.parent.wgScriptPath + '/api.php',
+		callback,
+		"action=parse&format=json&prop=text&title=" + encodeURIComponent(dialog.parent.wgPageName) + "&text=" +  encodeURIComponent(GetWikitext())
+	);
+}
+
+	</script>
+	<style type="text/css">
+		.progress {
+			background: transparent url('../../../skins/default/images/progress_transparent.gif') no-repeat 50% 50%;
+		}
+	
+		#template_preview p {
+			margin: 0;
+		}
+	</style>
+</head>
+	<body scroll="no" style="overflow: hidden">
+		<table id="templateEditor" height="240px"><tr>
+			<td width="45%" height="240px">
+				<span>Template wikitext:</span>
+				<br />
+				<textarea id="template_source" style="width: 100%; height: 220px; border: solid 1px #666; font-size: 12px; font-family: monospace"></textarea>
+			</td>
+			<td>
+				<input id="template_do_preview" type="button" value="Preview" onclick="CreatePreview(false)" />
+			</td>
+			<td width="45%">
+				<span>Template preview:</span>
+				<br />
+				<div id="template_preview" style="overflow: auto; height: 220px; background-color: #fff; border: solid 1px #666; font-size: 12px"></div>
+			</td>
+		</tr></table>
+	</body>
+</html>

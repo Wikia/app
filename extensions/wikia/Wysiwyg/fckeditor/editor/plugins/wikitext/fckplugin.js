@@ -595,7 +595,12 @@ FCK.TemplatePreviewHide = function() {
 // set/get preview cloud HTML for given template
 FCK.TemplatePreviewSetHTML = function(refid, html) {
 	var preview = FCKTools.GetElementDocument(FCK.TemplatePreviewCloud).getElementById('wysiwygTemplatePreview' + refid);
-	preview.innerHTML = html + '<br style="clear:both" />';
+	preview.innerHTML = html;
+
+	// add "floats clearing" <br> after complicated infoboxes
+	if ( (!preview.firstChild.nodeName.IEquals('p')) || (preview.childNodes.length != 1) ) {
+		preview.innerHTML += '<br style="clear:both" />';
+	}
 
 	FCK.log('saved template preview for #' + refid);
 }
