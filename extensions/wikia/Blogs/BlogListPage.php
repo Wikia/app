@@ -41,7 +41,7 @@ class BlogListPage extends Article {
 				$oApi->execute();
 				$aResult = $oApi->GetResultData();
 
-				if(count($aResult['query']['wkvoteart']) > 0) {
+				if( count($aResult['query']['wkvoteart']) > 0 ) {
 					if(!empty($aResult['query']['wkvoteart'][ $pageid ]['uservote'])) {
 						$voted = true;
 					}
