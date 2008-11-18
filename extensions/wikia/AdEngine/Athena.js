@@ -1,6 +1,6 @@
 /* Simple Ad Server written in javascript.
  * Pulls Ajax configuration to deliver ads for various Ad Networks
- * Allows for the backup tags to be just "Athena.hop()", which will go to the next network in the list
+ * Allows for the backup tags to be simple and centrally managed
  * Sends a beacon back upon success/failure for reporting
  */
 
@@ -15,10 +15,8 @@ Athena.setup = function (){
  */
 Athena.pullConfig = function (){
 	Athena.debug("pullConfig() called");
-	var passVars = new Array();
-	passVars['pageVars'] = Athena.json_encode(Athena.pageVars);
 	var myConfigUrl = Athena.configUrl + '?athena_debug=' + Athena.debugLevel;
-	myConfigUrl += '&' + Athena.buildQueryString(passVars);
+	myConfigUrl += '&' + Athena.buildQueryString(Athena.pageVars);
 	Athena.loadScript(myConfigUrl, true);
 };
 
@@ -161,7 +159,7 @@ Athena.json_encode = function (arr) {
  * It returns an associative array of url decoded name value pairs
  */
 Athena.parseQueryString = function (qstring){
-  var ret=new Array();
+  var ret = new Array();
   var varName, varValue, nvpairs, intIndex, i;
   
   if (qstring.charAt(0) == '?') qstring = qstring.substr(1);
@@ -171,7 +169,7 @@ Athena.parseQueryString = function (qstring){
   
   nvpairs=qstring.split('&');
 
-  for (i=0; i < nvpairs.length; i++){
+  for (i = 0; i < nvpairs.length; i++){
     if (nvpairs[i].length == 0){
       continue;
     }
@@ -184,7 +182,7 @@ Athena.parseQueryString = function (qstring){
       varValue = '';
     }
 
-    if (varName=='' || varValue==''){
+    if (varName == '' || varValue == ''){
       continue;
     }
 
@@ -193,6 +191,7 @@ Athena.parseQueryString = function (qstring){
 
   return ret;
 };
+
 
 /* Look for a particular value in the query string, and return it. Optional second arg is a default. */
 Athena.getRequestVal = function(varname, defaultval){
@@ -216,6 +215,24 @@ Athena.buildQueryString = function (nvpairs){
 	}
 	return ret;
 };
+
+
+/* Generate random number to use as a cache buster during the call for ad (OpenX and DART) 
+ * AdsCB is referenced in a lot of places, but I'd like for us to use Athena.random() long term
+ */
+var AdsCB = Math.floor(Math.random()*99999999);
+Athena.random = function (){
+	return AdsCB;
+};
+
+
+/* Target based on the minute of the hour */
+Athena.getMinuteTargeting = function (){
+        var myDate = new Date();
+        return myDate.getMinutes() % 15;
+};
+
+
 
 // Init
 Athena.setup();

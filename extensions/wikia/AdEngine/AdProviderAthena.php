@@ -25,23 +25,33 @@ class AdProviderAthena implements iAdProvider {
                 }
                 $called = true;
 
+		global $wgDBname, $wgLang, $wgUser, $wgTitle;
+
 		$out =  '<script type="text/javascript" src="/extensions/wikia/AdEngine/Athena.js"></script>' . "\n";
 
 		// Page vars are variables that you want available in javascript for serving ads
 		$pageVars = array();
-		global $wgDBname;
 		$pageVars['wgDBname'] = $wgDBname;
 		$pageVars['hostname'] = getenv('HTTP_HOST');
 		$pageVars['request'] = getenv('SCRIPT_URL');
-		/*
-		$pageVars['skin'] = 
-		$pageVars['wgCityId'] = 
-		$pageVars['wgUserLanguage'] = 
-		$pageVars['wgContentLanguage'] = 
-		*/
+                if (is_object($wgTitle)){
+                       $pageVars['article_id'] = $wgTitle->getArticleID();
+		}
+		$pageVars['isMainPage'] = ArticleAdLogic::isMainPage();
+		$cat = AdEngine::getCachedCategory();
+		$pageVars['hub'] = $cat['name'];
+		$pageVars['skin'] = $wgUser->getSkin()->getSkinName();
+		$pageVars['user_lang'] = $wgLang->getCode();
+		$pageVars['cont_lang'] = $GLOBALS['wgLanguageCode'];
 
 		$out .= '<script type="text/javascript">' . "\n";
 		foreach ($pageVars as $name => $value){
+			// Type juggling
+			if ($value === true){
+				$value = "true"; // As a string
+			} else if ($value === false){
+				$value = "";
+			}
 			$out.= 'Athena.setPageVar("' . addslashes($name) . '", "' . addslashes($value) . '");' . "\n";
 		}
 
