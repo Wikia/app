@@ -459,8 +459,6 @@ FCK.ProtectImageUpdate = function(refid, wikitext) {
 	FCK.wysiwygData[refid].href = params.shift();
 	FCK.wysiwygData[refid].description = params.join('|');
 
-	FCK.log(FCK.wysiwygData[refid]);
-
 	// get image placeholder
 	iframe = FCK.EditorDocument.getElementById('image' + refid);
 
@@ -483,6 +481,7 @@ FCK.ProtectImageUpdate = function(refid, wikitext) {
 
 			// root element inside iframe (image thumb wrapper)
 			var rootElement = iframe.contentDocument.body.firstChild;
+			FCK.wysiwygData[refid].html = rootElement.innerHTML;
 
 			iframe.className = rootElement.className;
 
@@ -493,6 +492,8 @@ FCK.ProtectImageUpdate = function(refid, wikitext) {
 			
 			// remove rootElement by moving up his children nodes
 			FCKDomTools.RemoveNode(rootElement, true);
+
+			FCK.log(FCK.wysiwygData[refid]);
 		},
 		failure: function(o) {},
 		argument: {'FCK': FCK, 'refid': refid, 'iframe': iframe}
