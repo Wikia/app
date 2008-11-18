@@ -8,7 +8,6 @@
 $wgExtensionFunctions[] = 'efBlogCommentsTag_Setup';
 # Add a hook to initialise the magic word
 $wgHooks[ "LanguageGetMagic" ][] = 'efBlogCommentsTag_Magic';
-$wgHooks[ "ArticleFromTitle" ][] = "efBlogCommentsArticleFromTitle";
 $wgHooks[ "CategoryViewer::addPage" ][] = "BlogComments::addCategoryPage";
 $wgHooks[ "CategoryViewer::getOtherSection" ][] = "BlogComments::getOtherSection";
 
@@ -40,33 +39,6 @@ function efBlogCommentsTag_Render( &$parser ) {
 	$page = BlogComments::newFromTitle( $wgTitle );
 
     return $page->render();
-}
-
-function efBlogCommentsArticleFromTitle( &$title, &$article ) {
-
-	/**
-	 * check if namespaces we care
-	 */
-	if( ! in_array( $title->getNamespace(), array( NS_BLOG_ARTICLE_TALK )  ) ){
-		return true;
-	}
-
-	/**
-	 * check if title is subpage, if it is subpage do nothing so far
-	 */
-	if( !$title->isSubpage() ) {
-		return true;
-	}
-
-	/**
-	 * check if article exists
-	 */
-
-
-	/**
-	 * ... and eventually
-	 */
-	return true;
 }
 
 class BlogComments {

@@ -34,6 +34,7 @@ class BlogListPage extends Article {
 				"edited" => $wgContLang->timeanddate( $this->getTimestamp() )
 			) );
 			$wgOut->addHTML( $tmpl->execute("footer") );
+			$this->showBlogComments();
 		}
 		else {
 			/**
@@ -42,6 +43,15 @@ class BlogListPage extends Article {
 			Article::view();
 			$this->showBlogListing();
 		}
+	}
+
+	/**
+	 * display comments connected with article
+	 *
+	 * @access private
+	 */
+	private function showBlogComments() {
+
 	}
 
 	/**
