@@ -19,12 +19,11 @@ Blog posts can be aggregated by a blog listing page based on the blog post's tag
 	'create-blog-login-required' => 'You must be [[Special:Userlogin|logged in]] to create blog post.',
 	'create-blog-categories-title' => 'Add this blog post to these categories (click to select)',
 	'blog-header' => "Blog articles in category \"$1\"",
-	'blog_invalidparams' => "Invalid parameters",
-	'blog_invalidparam' => "Unknown parameter '$1' is ignored. Please use one of available parameters: <code>$2</code>.",
-	'blog_emptyparam' => "Name of parameter cannot be empty",
-	'blog_defaulttitle' => "Blogs",
-	'blog_continuereading' => "Continue reading &raquo;",
-	'blog_comments' => "$1 comments",
+	'blog-invalidparam' => "Unknown parameter '$1' is ignored. Please use one of available parameters: <code>$2</code>.",
+	'blog-emptyparam' => "Name of parameter cannot be empty",
+	'blog-defaulttitle' => "Blogs",
+	'blog-continuereading' => "Continue reading &raquo;",
+	'blog-comments' => "$1 comments",
 	"blog-last-edited" => "Last edited: $1",
 	"blog-page" => "Blog"
 );
