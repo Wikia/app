@@ -115,7 +115,7 @@ function CreatePreview(save) {
 			html = result.parse.text['*'];
 
 			// remove newPP comment and whitespaces
-			html = FCK.YAHOO.lang.trim(html.split('<!-- \nNewPP limit report')[0]);
+			html = o.argument.FCK.YAHOO.lang.trim(html.split('<!-- \nNewPP limit report')[0]);
 
 			// unblock preview button
 			o.argument.preview.innerHTML = html;
