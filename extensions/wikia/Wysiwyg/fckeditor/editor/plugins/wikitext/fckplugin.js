@@ -127,21 +127,19 @@ FCK.InsertDirtySpanAfter = function(node) {
 FCK.GetNodesWithRefId = function() {
 	var nodes = [];
 
-	// @see http://www.w3schools.com/XPath/xpath_examples.asp
-	// @see http://msdn.microsoft.com/en-us/library/d271ytdx(VS.71).aspx
-	var xpath = '//@refid';
-
+	// get elements using XPath (at least try)
 	if (FCKBrowserInfo.IsIE) {
-		// IE
-		var results = FCK.EditorDocument.selectNodes(xpath);
+		// of course IE has it's own standards...
+		var method = function(node) {
+			return node.hasAttribute('refid');
+		};
 
-		for (r=0; r<results.length; r++) {
-			nodes.push(results[r]);
-		}
+		var nodes = FCK.YAHOO.util.Dom.getElementsBy(method, false, FCK.EditorDocument.body, false);
 	}
 	else {
-		// Mozilla-based browser
-		var results = FCK.EditorDocument.evaluate(xpath, FCK.EditorDocument, null, XPathResult.ANY_TYPE, null);
+		// @see http://www.w3schools.com/XPath/xpath_examples.asp
+		// Mozilla-based browser - use XPath
+		var results = FCK.EditorDocument.evaluate('//@refid', FCK.EditorDocument, null, XPathResult.ANY_TYPE, null);
 
 		while (attr = results.iterateNext()) {
 			nodes.push(attr.ownerElement);
