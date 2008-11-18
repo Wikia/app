@@ -14,22 +14,22 @@ function userMasthead() {
 		if ( in_array( $namespace, array( NS_USER, NS_USER_TALK, NS_BLOG_ARTICLE ) ) ) {
 			$userspace = $wgTitle->getDBkey();
 		}
-		if ($wgTitle == 'Special:Watchlist' || $wgTitle == 'Special:WidgetDashboard' || $wgTitle == 'Special:Preferences') {
+		if ($wgTitle == 'Special:Watchlist' || $wgTitle == 'Special:WidgetDashboard' || $wgTitle == 'Special:Preferences' ) {
 			$userspace = $wgUser->getName();
 		}
 		$out['userspace'] = $userspace;
 
 		$out['nav_links'] = array (
-			array('text' => 'User page', 'href' => $wgTitle),
-			array('text' => 'Talk page', 'href' => $wgTitle->getTalkPage() ),
-			array('text' => 'Blog', 'href' => 'http://www.framezero.com'),
+			array('text' => 'User page', 'href' => Title::newFromText( $userspace, NS_USER )->getLocalUrl() ),
+			array('text' => 'Talk page', 'href' => Title::newFromText( $userspace, NS_USER_TALK )->getLocalUrl() ),
+			array('text' => 'Blog', 'href' => Title::newFromText( $userspace, NS_BLOG_ARTICLE )->getLocalUrl() ),
 			array('text' => 'Contributions', 'href' => 'http://www.framezero.com')
 		);
 
 		if ( $wgUser->isLoggedIn() && $wgUser->getName() == $userspace) {
-			$out['nav_links'][] = array('text' => 'Watchlist', 'href' => 'Special:Watchlist/'. $wgUser->getName());
-			$out['nav_links'][] = array('text' => 'Widget Dashboard', 'href' => 'Special:WidgetDashboard');
-			$out['nav_links'][] = array('text' => 'Preferences', 'href' => 'http://www.framezero.com');
+			$out['nav_links'][] = array('text' => 'Watchlist', 'href' => Title::newFromText("Watchlist", NS_SPECIAL )->getLocalUrl());
+			$out['nav_links'][] = array('text' => 'Widget Dashboard', 'href' => Title::newFromText("WidgetDashboard", NS_SPECIAL )->getLocalUrl());
+			$out['nav_links'][] = array('text' => 'Preferences', 'href' => Title::newFromText("Preferences", NS_SPECIAL )->getLocalUrl());
 		} else {
 			$out['nav_links'][] = array('text' => 'email user', 'href' => $wgTitle);
 		}

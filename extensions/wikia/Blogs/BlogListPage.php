@@ -18,13 +18,22 @@ class BlogListPage extends Article {
 	 * overwritten Article::view function
 	 */
 	public function view() {
-		global $wgOut, $wgUser, $wgRequest;
+		global $wgOut, $wgUser, $wgRequest, $wgTitle;
 
 		$feed = $wgRequest->getText( "feed", false );
 		if( $feed && in_array( $feed, array( "rss", "atom" ) ) ) {
 			$this->showFeed( $feed );
 		}
+		elseif ( $wgTitle->isSubpage() ) {
+			/**
+			 * blog article
+			 */
+			Article::view();
+		}
 		else {
+			/**
+			 * blog listing
+			 */
 			Article::view();
 			$this->showBlogListing();
 		}
@@ -94,7 +103,7 @@ class BlogListPage extends Article {
 				"timestamp" => true,
 				"offset" => $offset
 			);
-			
+
 			$listing = BlogTemplateClass::parseTag( "<author>$user</author>", $params, $wgParser );
 			$wgMemc->set( wfMemcKey( "blog", "feed", $user, $offset ), $listing, 3600 );
 
@@ -132,7 +141,7 @@ class BlogListPage extends Article {
 		/**
 		 * we are only interested in User_blog:Username pages
 		 */
-		if( $Title->getNamespace() !== NS_BLOG_ARTICLE || $Title->isSubpage() ) {
+		if( $Title->getNamespace() !== NS_BLOG_ARTICLE ) {
 			return true;
 		}
 
