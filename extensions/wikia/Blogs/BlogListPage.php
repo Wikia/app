@@ -187,14 +187,10 @@ class BlogListPage extends Article {
 	static public function hook( &$Title, &$Article ) {
 		global $wgRequest;
 
-		/**
-		 * we are only interested in User_blog:Username pages
-		 */
 		if( $Title->getNamespace() !== NS_BLOG_ARTICLE ) {
 			return true;
 		}
-
-		Wikia::log( __METHOD__, "article" );
+		
 		$Article = new BlogListPage( $Title );
 
 		return true;
