@@ -131,7 +131,7 @@ FCK.GetNodesWithRefId = function() {
 	if (FCKBrowserInfo.IsIE) {
 		// of course IE has it's own standards...
 		var method = function(node) {
-			return node.hasAttribute('refid');
+			return (node.getAttribute('refid') != undefined);
 		};
 
 		var nodes = FCK.YAHOO.util.Dom.getElementsBy(method, false, FCK.EditorDocument.body, false);
