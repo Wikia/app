@@ -133,5 +133,21 @@ YAHOO.Wikia.Tracker = {
 
 YAHOO.widget.Logger.enableBrowserConsole();
 Event.onDOMReady(YAHOO.Wikia.Tracker.init, YAHOO.Wikia.Tracker, true);
-
 })();
+
+function onYouTubePlayerReady(playerid) {
+	var ytplayer = document.getElementById("YT_" + playerid);
+	ytplayer.addEventListener("onStateChange", "onytplayerStateChange");
+}
+
+function onytplayerStateChange(newState) {
+	var event;
+	if(newState == 0) {
+		event = "ended";
+	} else if(newState == 1) {
+		event = "playing";
+	}
+	if(event) {
+		YAHOO.Wikia.Tracker.trackByStr(null, "youtube/"+event);
+	}
+}
