@@ -81,7 +81,7 @@ class ExternalStorageUpdate {
 				 */
 				$Row = $dbw->selectRow(
 					"pages",
-					array( "page_id" ),
+					array( "page_id", "page_title" ),
 					array( 
 						"page_id" => $this->mPageId, 
 						"page_wikia_id" => $wgCityId 
