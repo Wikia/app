@@ -1,6 +1,13 @@
 // Rewrite the link command to use our link.html
 FCKCommands.RegisterCommand('Link', new FCKDialogCommand('Link', FCKLang.DlgLnkWindowTitle, FCKConfig.PluginsPath + 'wikitext/dialogs/link.html', 400, 250));
 
+// Register templates editor
+FCK.TemplateClickCommand = new FCKDialogCommand('Template', '&nbsp;', FCKConfig.PluginsPath + 'wikitext/dialogs/template.html', 600, 350);
+
+// Wikitext infobox
+FCK.InputClickCommand = new FCKDialogCommand('inputClickCommand', '&nbsp;', FCKConfig.PluginsPath + 'wikitext/dialogs/inputClick.html', 400, 100);
+
+// signature toolbar button
 var FCKTildesCommand = function() {
 	this.Name = 'Tildes' ;
 }
@@ -31,10 +38,6 @@ FCKCommands.RegisterCommand('Tildes', new FCKTildesCommand());
 var oTildesItem = new FCKToolbarButton( 'Tildes', 'Your signature with timestamp' ) ;
 oTildesItem.IconPath = FCKConfig.PluginsPath + 'wikitext/sig.gif' ;
 FCKToolbarItems.RegisterItem( 'Tildes', oTildesItem );
-
-
-
-var inputClickCommand = new FCKDialogCommand('inputClickCommand', '&nbsp;', FCKConfig.PluginsPath + 'wikitext/dialogs/inputClick.html', 400, 100);
 
 FCK.originalSwitchEditMode = FCK.SwitchEditMode;
 
@@ -190,11 +193,12 @@ FCK.Events.AttachEvent( 'OnAfterSetHTML', function() {
 			var target = FCK.YAHOO.util.Event.getTarget(e);
 			if(target.tagName == 'INPUT') {
 				var refid = target.getAttribute('refid');
-				if(refid) {
+				var type = target.getAttribute('_fck_type');
+				if(refid && type != 'template') {
 					if (FCK.Track && FCK.wysiwygData) {
 						FCK.Track('/wikitextbox/' + (FCK.wysiwygData[refid] ? FCK.wysiwygData[refid].type : 'unknown'));
 					}
-					inputClickCommand.Execute();
+					FCK.InputClickCommand.Execute();
 				}
 			}
 		});
@@ -436,7 +440,7 @@ FCK.ProtectImageClick = function(refid) {
 	FCK.Track('/image/click');
 
 	// TODO: handle onclick event (only left mouse button)
-	inputClickCommand.Execute();
+	FCK.InputClickCommand.Execute();
 }
 
 
@@ -457,7 +461,7 @@ FCK.TemplatePreviewInit = function() {
 
 FCK.TemplatePreviewAdd = function(placeholder) {
 
-	var docObj = FCK.EditingArea.TargetElement.ownerDocument;
+	var docObj = FCKTools.GetElementDocument(FCK.EditingArea.TargetElement);
 
 	// initialize preview cloud
 	if (!FCK.TemplatePreviewCloud) {
@@ -521,12 +525,19 @@ FCK.TemplatePreviewAdd = function(placeholder) {
 		// hide preview 0,5 sec. after mouseout from tag
 		FCK.TemplatePreviewTimeouts.Tag = setTimeout('FCK.TemplatePreviewHide()', 500);
 	});
+
+	// template editor
+	FCKTools.AddEventListener(placeholder, 'click', function(e) {
+		var target = FCK.YAHOO.util.Event.getTarget(e);
+		FCK.TemplateRefId = target.getAttribute('refid');
+		FCK.TemplateClickCommand.Execute();
+	});
 }
 
 FCK.TemplatePreviewShow = function(placeholder) {
 	
 	var refId = placeholder.getAttribute('refid');
-	var preview = FCK.TemplatePreviewCloud.ownerDocument.getElementById('wysiwygTemplatePreview' + refId);
+	var preview = FCKTools.GetElementDocument(FCK.TemplatePreviewCloud).getElementById('wysiwygTemplatePreview' + refId);
 
 	// hide all previews / show just the one we need
 	var previews = FCK.TemplatePreviewCloud.firstChild.childNodes;
@@ -580,6 +591,20 @@ FCK.TemplatePreviewShow = function(placeholder) {
 FCK.TemplatePreviewHide = function() {
 	FCK.TemplatePreviewCloud.style.visibility = 'hidden';
 }
+
+// set/get preview cloud HTML for given template
+FCK.TemplatePreviewSetHTML = function(refid, html) {
+	var preview = FCKTools.GetElementDocument(FCK.TemplatePreviewCloud).getElementById('wysiwygTemplatePreview' + refid);
+	preview.innerHTML = html;
+
+	FCK.log('saved template preview for #' + refid);
+}
+
+FCK.TemplatePreviewGetHTML = function(refid) {
+	var preview = FCKTools.GetElementDocument(FCK.TemplatePreviewCloud).getElementById('wysiwygTemplatePreview' + refid);
+	return preview.innerHTML;
+}
+
 
 //
 // misc
