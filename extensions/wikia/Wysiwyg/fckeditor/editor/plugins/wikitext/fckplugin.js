@@ -380,7 +380,7 @@ FCK.ProtectImage = function(image) {
 }
 
 FCK.ProtectImageSetup = function(refid) {
-	iframe = FCK.EditingArea.Document.getElementById('image' + refid);
+	iframe = FCK.EditorDocument.getElementById('image' + refid);
 
 	// fired during the switch between wysiwyg and source mode
 	if (!iframe.contentDocument) {
@@ -450,7 +450,61 @@ FCK.ProtectImageClick = function(refid) {
 	// wmuShow();
 }
 
+FCK.ProtectImageUpdate = function(refid, wikitext) {
+	// TODO: call it from WMU to update and rescale iframe
+	FCK.log('updating #' + refid +' with >>' + wikitext + '<<');
 
+	// update metaData
+	var params = wikitext.substring(2, wikitext.length-2).split('|');
+	FCK.wysiwygData[refid].href = params.shift();
+	FCK.wysiwygData[refid].description = params.join('|');
+
+	FCK.log(FCK.wysiwygData[refid]);
+
+	// get image placeholder
+	iframe = FCK.EditorDocument.getElementById('image' + refid);
+
+	// parse given wikitext
+	var callback = {
+		success: function(o) {
+			FCK = o.argument.FCK;
+			iframe = o.argument.iframe;
+			refid =  o.argument.refid;
+
+			result = eval('(' + o.responseText + ')');
+			html = result.parse.text['*'];
+
+			// remove newPP comment and whitespaces
+			html = FCK.YAHOO.lang.trim(html.split('<!-- \nNewPP limit report')[0]);
+
+			// fill and rescale iframe
+			FCK.wysiwygData[refid].html = html;
+			FCK.ProtectImageSetup(refid);
+
+			// root element inside iframe (image thumb wrapper)
+			var rootElement = iframe.contentDocument.body.firstChild;
+
+			iframe.className = rootElement.className;
+
+			// get image dimensions (including padding) and rescale iframe
+			var size = [rootElement.clientWidth, rootElement.clientHeight];
+			iframe.style.width = parseInt(size[0] + 5) + 'px';
+			iframe.style.height = parseInt(size[1] + 5) + 'px';
+			
+			// remove rootElement by moving up his children nodes
+			FCKDomTools.RemoveNode(rootElement, true);
+		},
+		failure: function(o) {},
+		argument: {'FCK': FCK, 'refid': refid, 'iframe': iframe}
+	}
+
+	FCK.YAHOO.util.Connect.asyncRequest(
+		'POST',
+		window.parent.wgScriptPath + '/api.php',
+		callback,
+		"action=parse&format=json&prop=text&title=" + encodeURIComponent(window.parent.wgPageName) + "&text=" +  encodeURIComponent(wikitext)
+	);
+}
 
 //
 // onmouseover template preview
