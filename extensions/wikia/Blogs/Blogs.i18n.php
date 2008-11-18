@@ -25,5 +25,6 @@ Blog posts can be aggregated by a blog listing page based on the blog post's tag
 	'blog_defaulttitle' => "Blogs",
 	'blog_continuereading' => "Continue reading &raquo;",
 	'blog_comments' => "$1 comments",
-	"blog-last-edited" => "Last edited: $1"
+	"blog-last-edited" => "Last edited: $1",
+	"blog-page" => "Blog"
 );

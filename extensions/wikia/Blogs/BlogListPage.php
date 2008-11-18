@@ -29,8 +29,42 @@ class BlogListPage extends Article {
 			 * blog article
 			 */
 			Article::view();
+			if( 1 ) {
+				$pageid = $this->getLatest();
+				$FauxRequest = new FauxRequest( array(
+					"action" => "query",
+					"list" => "wkvoteart",
+					"wkpage" => $this->getLatest(),
+					"wkuservote" => true
+				));
+				$oApi = new ApiMain( $FauxRequest );
+				$oApi->execute();
+				$aResult = $oApi->GetResultData();
+
+				if(count($aResult['query']['wkvoteart']) > 0) {
+					if(!empty($aResult['query']['wkvoteart'][ $pageid ]['uservote'])) {
+						$voted = true;
+					}
+					else {
+						$voted = false;
+					}
+					$rating = $aResult['query']['wkvoteart'][ $pageid ]['votesavg'];
+				}
+				else {
+					$voted = false;
+					$rating = 0;
+				}
+
+				$hidden_star = $voted ? ' style="display: none;"' : '';
+				$rating = round($rating * 2)/2;
+				$ratingPx = round($rating * 17);
+			}
 			$tmpl = new EasyTemplate( dirname( __FILE__ ) . '/templates/' );
 			$tmpl->set_vars( array(
+				"voted" => $voted,
+				"rating" => $rating,
+				"hidden_star" => $hidden_star,
+				"ratingPx" => $ratingPx,
 				"edited" => $wgContLang->timeanddate( $this->getTimestamp() )
 			) );
 			$wgOut->addHTML( $tmpl->execute("footer") );
