@@ -178,7 +178,7 @@ class BlogTemplateClass {
 		'style' 	=> array (
 			'type' 		=> 'list',
 			'default' 	=> 'box',
-			'pattern'	=> array( 'box', 'plain', 'array', 'noparse' )
+			'pattern'	=> array( 'box', 'plain', 'array', 'noparse', 'count' )
 		)
 	);
 
@@ -738,6 +738,25 @@ class BlogTemplateClass {
     	wfProfileOut( __METHOD__ );
     	return $aResult;
 	}
+	
+	private static function __getResultsCount() {
+		global $wgLang;
+    	wfProfileIn( __METHOD__ );
+    	/* main query */
+    	$aResult = array();
+    	$aFields = array( 'distinct(page_id) as page_id', 'page_namespace', 'page_title', 'page_touched', 'unix_timestamp(page_touched) as timestamp', 'page_latest as rev_id' );
+    	if ( in_array('revision', self::$aTables) ) {
+    		$aFields[] = 'rev_user_text as username';
+		}
+		$res = self::$dbr->select(
+			array_map(array(self::$dbr, 'tableName'), self::$aTables),  
+			$aFields, 
+			self::$aWhere, 
+			__METHOD__, 
+		);
+    	wfProfileOut( __METHOD__ );
+		return self::$dbr->numRows( $res );
+	}	
 
 	private static function __makeRssOutput($aInput) {
 		wfProfileIn( __METHOD__ );
@@ -891,26 +910,31 @@ class BlogTemplateClass {
 			}
 
 			/* build query */
-			$aResult = self::__getResults();
-			/* set output */
-			if ( self::$aOptions['style'] != 'array' ) {
-				/* run template */
-				$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
-				$oTmpl->set_vars( array(
-					"wgUser"		=> $wgUser,
-					"cityId"		=> $wgCityId,
-					"wgLang"		=> $wgLang,
-					"aRows"			=> $aResult,
-					"aOptions"		=> self::$aOptions,
-					"wgParser"		=> $wgParser,
-					"skin"			=> $wgUser->getSkin(),
-				) );
-
-				#---
-				$result = $oTmpl->execute("blog-page");
+			if ( self::$aOptions['style'] == 'count' ) {
+				/* get results count */
+				$result = self::__getResultsCount();
 			} else {
-				unset($result); 
-				$result = self::__makeRssOutput($aResult);
+				$aResult = self::__getResults();
+				/* set output */
+				if ( self::$aOptions['style'] != 'array' ) {
+					/* run template */
+					$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
+					$oTmpl->set_vars( array(
+						"wgUser"		=> $wgUser,
+						"cityId"		=> $wgCityId,
+						"wgLang"		=> $wgLang,
+						"aRows"			=> $aResult,
+						"aOptions"		=> self::$aOptions,
+						"wgParser"		=> $wgParser,
+						"skin"			=> $wgUser->getSkin(),
+					) );
+
+					#---
+					$result = $oTmpl->execute("blog-page");
+				} else {
+					unset($result); 
+					$result = self::__makeRssOutput($aResult);
+				}
 			}
         }
 		catch (Exception $e) {
