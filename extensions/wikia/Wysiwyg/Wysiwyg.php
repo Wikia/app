@@ -523,7 +523,7 @@ function Wysiwyg_SetRefId($type, $params, $addMarker = true, $returnId = false) 
 
 		case 'double underscore: toc':
 			$data['description'] = $params['text'];
-			$result = "<!--MWTOC-->";
+			$result = '__TOC__';
 			break;
 
 		case 'double underscore':
