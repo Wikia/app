@@ -1,7 +1,7 @@
-body {
+body.mainpage {
 	background: #000 !important;
 }
-#monaco_footer, #monaco_footer a {
+body.mainpage #monaco_footer, #monaco_footer a {
 	color: #FFF;
 }
 body.mainpage .monaco_shrinkwrap {
@@ -9,15 +9,16 @@ body.mainpage .monaco_shrinkwrap {
 	margin-left: -486px;
 	width: 972px;
 }
-#background_accent1 {
+body.mainpage #background_accent1 {
 	background: url(../images/dnd_left.jpg) no-repeat;
 	height: 861px;
 	width: 314px;
 	top: -51px;
 }
-#background_accent2 {
+body.mainpage #background_accent2 {
 	background: url(../images/dnd_right.jpg) no-repeat;
 	background-position: 481px 0;
 	height: 861px;
 	top: -51px;
+	z-index: 0;
 }
