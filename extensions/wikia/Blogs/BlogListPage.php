@@ -18,7 +18,7 @@ class BlogListPage extends Article {
 	 * overwritten Article::view function
 	 */
 	public function view() {
-		global $wgOut, $wgUser, $wgRequest, $wgTitle;
+		global $wgOut, $wgUser, $wgRequest, $wgTitle, $wgContLang;
 
 		$feed = $wgRequest->getText( "feed", false );
 		if( $feed && in_array( $feed, array( "rss", "atom" ) ) ) {
@@ -29,6 +29,11 @@ class BlogListPage extends Article {
 			 * blog article
 			 */
 			Article::view();
+			$tmpl = new EasyTemplate( dirname( __FILE__ ) . '/templates/' );
+			$tmpl->set_vars( array(
+				"edited" => $wgContLang->timeanddate( $this->getTimestamp() )
+			) );
+			$wgOut->addHTML( $tmpl->execute("footer") );
 		}
 		else {
 			/**
