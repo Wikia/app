@@ -353,18 +353,18 @@ FCK.ProtectImage = function(image) {
 	}
 
 	// get image dimensions (including padding)
-	var size = [image.clientWidth, image.clientHeight];
 	var refid = image.getAttribute('refid');
 	
 	var iframe = FCK.EditingArea.Document.createElement('iframe');
 	iframe.id  = 'image' + refid;
-	iframe.src = 'javascript:void()';
+	iframe.src = '';
 
 	iframe.setAttribute('refid', refid);
 	iframe.className = image.className;
 
-	iframe.style.width = parseInt(size[0] + 5) + 'px';
-	iframe.style.height = parseInt(size[1] + 5) + 'px';
+	// external CSS may not be fully loaded - use style value from inline CSS for width
+	iframe.style.width = parseInt(image.firstChild.style.width) + 20 + 'px';
+	iframe.style.height = parseInt(image.clientHeight + 6) + 'px';
 	iframe.style.border = 'none';
 	iframe.style.overflow = 'hidden';
 
@@ -380,21 +380,24 @@ FCK.ProtectImage = function(image) {
 }
 
 FCK.ProtectImageSetup = function(refid) {
-	iframe = FCK.EditorDocument.getElementById('image' + refid);
-
 	// fired during the switch between wysiwyg and source mode
-	if (!iframe.contentDocument) {
+	if (!FCK.EditorDocument) {
 		return true;
 	}
 
+	var iframe = FCK.EditorDocument.getElementById('image' + refid);
+
 	// fill iframe
-	iframe.contentDocument.write('<style type="text/css">* {cursor: default !important}</style>');
-	iframe.contentDocument.write(FCK.wysiwygData[refid].html);
-	iframe.contentDocument.close();
-	iframe.contentDocument.body.setAttribute('refid', refid);
+	var iframeDoc = iframe.contentDocument ? iframe.contentDocument : iframe.document /* ie */;
+	var iframeWin = iframe.contentWindow ? iframe.contentWindow : iframe.window /* ie */;
+
+	iframeDoc.write('<style type="text/css">* {cursor: default}</style>');
+	iframeDoc.write(FCK.wysiwygData[refid].html);
+	iframeDoc.close();
+	iframeDoc.body.setAttribute('refid', refid);
 
 	// set event handlers
-	FCKTools.AddEventListener(iframe.contentDocument, 'click', function(e) {
+	FCKTools.AddEventListener(iframeDoc, 'click', function(e) {
 		e.preventDefault();
 		e.stopPropagation();
 		if (e.button == 0) {
@@ -402,17 +405,17 @@ FCK.ProtectImageSetup = function(refid) {
 		}
 	});
 
-	FCKTools.AddEventListener(iframe.contentDocument, 'contextmenu', function(e) {
+	FCKTools.AddEventListener(iframeDoc, 'contextmenu', function(e) {
 		e.preventDefault();
 		e.stopPropagation();
 	});
 
-	FCKTools.AddEventListener(iframe.contentDocument, 'mousedown', function(e) {
+	FCKTools.AddEventListener(iframeDoc, 'mousedown', function(e) {
 		e.preventDefault();
 		e.stopPropagation();
 	});
 
-	FCKTools.AddEventListener(iframe.contentWindow, 'unload', function(e) {
+	FCKTools.AddEventListener(iframeWin, 'unload', function(e) {
 		var target = FCK.YAHOO.util.Event.getTarget(e);
 		var refId = target.body.getAttribute('refid');
 
@@ -427,13 +430,13 @@ FCK.ProtectImageSetup = function(refid) {
 	css.type = "text/css";
 	css.rel = "stylesheet";
 	css.href = FCKConfig.EditorAreaStyles + '?' + FCKConfig.StyleVersion;
-	iframe.contentDocument.getElementsByTagName("head")[0].appendChild(css);
+	iframeDoc.getElementsByTagName("head")[0].appendChild(css);
 
 	css = document.createElement("link");
 	css.type = "text/css";
 	css.rel = "stylesheet";
 	css.href = FCKConfig.EditorAreaCSS + '?' + FCKConfig.StyleVersion;
-	iframe.contentDocument.getElementsByTagName("head")[0].appendChild(css);
+	iframeDoc.getElementsByTagName("head")[0].appendChild(css);
 
 	FCK.log('set up image #' + refid + ' iframe');
 }
@@ -480,15 +483,16 @@ FCK.ProtectImageUpdate = function(refid, wikitext) {
 			FCK.ProtectImageSetup(refid);
 
 			// root element inside iframe (image thumb wrapper)
-			var rootElement = iframe.contentDocument.body.firstChild;
+			var iframeDoc = iframe.contentDocument ? iframe.contentDocument : iframe.document /* ie */;
+			var rootElement = iframeDoc.body.firstChild;
 			FCK.wysiwygData[refid].html = rootElement.innerHTML;
 
 			iframe.className = rootElement.className;
 
 			// get image dimensions (including padding) and rescale iframe
 			var size = [rootElement.clientWidth, rootElement.clientHeight];
-			iframe.style.width = parseInt(size[0] + 5) + 'px';
-			iframe.style.height = parseInt(size[1] + 5) + 'px';
+			iframe.style.width = parseInt(size[0] + 6) + 'px';
+			iframe.style.height = parseInt(size[1] + 6) + 'px';
 			
 			// remove rootElement by moving up his children nodes
 			FCKDomTools.RemoveNode(rootElement, true);
@@ -599,6 +603,14 @@ FCK.TemplatePreviewAdd = function(placeholder) {
 		FCK.TemplateRefId = this.getAttribute('refid');
 		FCK.TemplateClickCommand.Execute();
 	});
+
+	// reset margin/padding/align
+	if (previewDiv.firstChild && previewDiv.firstChild.nodeType == 1) {
+		previewDiv.firstChild.style.padding = 0;
+		previewDiv.firstChild.style.margin = 0;
+		previewDiv.firstChild.style.float = '';
+		previewDiv.firstChild.removeAttribute('align');
+	}
 }
 
 FCK.TemplatePreviewShow = function(placeholder) {
@@ -614,12 +626,6 @@ FCK.TemplatePreviewShow = function(placeholder) {
 	}
 
 	preview.style.display = '';
-
-	// reset margin/padding
-	if (preview.firstChild && preview.firstChild.nodeType == 1) {
-		preview.firstChild.style.padding = 0;
-		preview.firstChild.style.margin = 0;
-	}
 
 	// calculate cloud placement
 	var x = placeholder.offsetLeft;
@@ -667,6 +673,14 @@ FCK.TemplatePreviewSetHTML = function(refid, html) {
 	// add "floats clearing" <br> after complicated infoboxes
 	if ( (!preview.firstChild.nodeName.IEquals('p')) || (preview.childNodes.length != 1) ) {
 		preview.innerHTML += '<br style="clear:both" />';
+
+		// reset margin/padding/align
+		if (preview.firstChild && preview.firstChild.nodeType == 1) {
+			preview.firstChild.style.padding = 0;
+			preview.firstChild.style.margin = 0;
+			preview.firstChild.style.float = '';
+			preview.firstChild.removeAttribute('align');
+		}
 	}
 
 	FCK.log('saved template preview for #' + refid);
