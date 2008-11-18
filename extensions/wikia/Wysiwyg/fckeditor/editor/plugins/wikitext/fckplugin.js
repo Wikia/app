@@ -595,7 +595,7 @@ FCK.TemplatePreviewHide = function() {
 // set/get preview cloud HTML for given template
 FCK.TemplatePreviewSetHTML = function(refid, html) {
 	var preview = FCKTools.GetElementDocument(FCK.TemplatePreviewCloud).getElementById('wysiwygTemplatePreview' + refid);
-	preview.innerHTML = html;
+	preview.innerHTML = html + '<br style="clear:both" />';
 
 	FCK.log('saved template preview for #' + refid);
 }
