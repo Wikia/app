@@ -692,10 +692,12 @@ FCK.TemplatePreviewAdd = function(placeholder) {
 	preview.parentNode.removeChild(preview);
 
 	// remove any whitespaces from the end of placeholder's parent
+	/*
 	lastChild = placeholder.parentNode.lastChild;
-	if (lastChild.nodeType == 3 && ( (lastChild.textContent || lastChild.innerText).Trim() == '') ) {
+	if (lastChild && lastChild.nodeType == 3 && ( (lastChild.textContent || lastChild.innerText).Trim() == '') ) {
 		lastChild.parentNode.removeChild(lastChild);
 	}
+	*/
 
 	// register events handlers
 	FCKTools.AddEventListener(placeholder, 'mouseover', function(e) {
