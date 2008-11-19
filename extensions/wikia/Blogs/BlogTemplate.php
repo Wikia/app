@@ -752,7 +752,8 @@ class BlogTemplateClass {
 			array_map(array(self::$dbr, 'tableName'), self::$aTables),  
 			$aFields, 
 			self::$aWhere, 
-			__METHOD__, 
+			'',
+			__METHOD__ 
 		);
     	wfProfileOut( __METHOD__ );
 		return self::$dbr->numRows( $res );
