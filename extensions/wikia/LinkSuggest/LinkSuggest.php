@@ -68,13 +68,13 @@ function getLinkSuggest() {
 		
 
 		$sql = "SELECT /* LinkSuggest query 1 */ DISTINCT page_id, page_title, page_namespace FROM page, querycache WHERE qc_type = 'Mostlinked' AND page_title = qc_title AND page_namespace = qc_namespace AND LOWER(qc_title) LIKE '{$query}%' AND qc_namespace = {$namespace} ORDER BY qc_value DESC LIMIT 10";
-		wfDebugLog( 'linksuggest', "Database: {$db->getDBName()}" );
-		wfDebugLog( 'linksuggest', "Query1: {$sql}"  );
+		error_log( "Linksuggest:Database: {$db->getDBName()}" );
+		error_log( "Linksuggest:Query1: {$sql}"  );
 		$t1 = explode( '' , microtime() );
 		$res = $db->query($sql);
 		$t2 = explode( '' , microtime() );
 		$time = ($t2[0] - $t1[0]) + ($t2[1] - $t1[1]); 
-		wfDebugLog( 'linksuggest', "Query1 execution time: {}" );
+		error_log( "Linksuggest:Query1 execution time: {$time}" );
 		while($row = $db->fetchObject($res)) {
 			$pageIds[] = $row->page_id;
 			$results[] = array(
@@ -86,12 +86,12 @@ function getLinkSuggest() {
 		if(count($results) < 10) {
 			$statement = (count($pageIds) > 0) ? ' AND page_id not IN('.implode(',', $pageIds).') ' : '';
 			$sql = "SELECT /* LinkSuggest query 2 */ page_id, page_title, page_namespace FROM `page` WHERE lower(page_title) LIKE '{$query}%' AND page_is_redirect=0 AND page_namespace = {$namespace} {$statement} ORDER BY page_title ASC LIMIT ".(10 - count($results));
-			wfDebugLog( 'linksuggest', "Query2: {$sql}"  );
+			error_log( "Linksuggest:Query2: {$sql}"  );
 			$t1 = explode( '' , microtime() );
 			$res = $db->query($sql);
 			$t2 = explode( '' , microtime() );
 			$time = ($t2[0] - $t1[0]) + ($t2[1] - $t1[1]); 
-			wfDebugLog( 'linksuggest', "Query2 execution time: {}" );
+			error_log( "Linksuggest:Query2 execution time: {$time}" );
 			while($row = $db->fetchObject($res)) {
 				$pageIds[] = $row->page_id;
 				$results[] = array(
@@ -104,12 +104,12 @@ function getLinkSuggest() {
 		if(count($results) < 10) {
 			$statement = (count($pageIds) > 0) ? ' AND page_id not IN('.implode(',', $pageIds).') ' : '';
 			$sql = "SELECT /* LinkSuggest query 3 */ page_id, page_title, page_namespace FROM page, searchindex WHERE page_id = si_page AND page_namespace = {$namespace} AND page_is_redirect=0 AND match(si_title) against ('".str_replace('_', ' ', $query)."*') {$statement} LIMIT ".(10 - count($results));
-			wfDebugLog( 'linksuggest', "Query3: {$sql}"  );
+			error_log( "Linksuggest:Query3: {$sql}"  );
 			$t1 = explode( '' , microtime() );
 			$res = $db->query($sql);
 			$t2 = explode( '' , microtime() );
 			$time = ($t2[0] - $t1[0]) + ($t2[1] - $t1[1]); 
-			wfDebugLog( 'linksuggest', "Query3 execution time: {}" );
+			error_log( "Linksuggest:Query3 execution time: {$time}" );
 			while($row = $db->fetchObject($res)) {
 				$pageIds[] = $row->page_id;
 				$results[] = array(
