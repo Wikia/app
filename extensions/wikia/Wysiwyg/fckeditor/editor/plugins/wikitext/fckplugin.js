@@ -674,7 +674,8 @@ FCK.TemplatePreviewAdd = function(placeholder) {
 	FCK.TemplatePreviewCloud.firstChild.appendChild( previewDiv );
 	
 	previewDiv.id = 'wysiwygTemplatePreview' + refId;
-	placeholder.id = 'wysiwygTemplate' + refId;	
+	placeholder.id = 'wysiwygTemplate' + refId;
+	placeholder.title = 'Click to edit this template';
 
 	previewDiv.innerHTML = preview.value + '<br style="clear:both" />';
 	previewDiv.setAttribute('refid', refId);
