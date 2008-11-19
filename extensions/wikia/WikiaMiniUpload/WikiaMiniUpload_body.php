@@ -90,24 +90,24 @@ class WikiaMiniUpload {
 
 	function checkImage() {
 		global $IP, $wgRequest;
-	
+
 		$mFileSize = $wgRequest->getFileSize( 'wpUploadFile' );
 		$mSrcName = stripslashes($wgRequest->getFileName( 'wpUploadFile' ));
 //		$mTempPath = $wgRequest->get
 		$filtered = wfStripIllegalFilenameChars( $mSrcName );
 		$form = new UploadForm( $wgRequest );
 
-		// no filename or zero size	
+		// no filename or zero size
 		if( trim( $mSrcName ) == '' || empty( $mFileSize ) ) {
                         return UploadForm::EMPTY_FILE;
                 }
-	
+
 		//illegal filename
 		$nt = Title::makeTitleSafe( NS_IMAGE, $filtered );
                 if( is_null( $nt ) ) {
                         return UploadForm::ILLEGAL_FILENAME;
                 }
-	
+
 		// extensions check
 		list( $partname, $ext ) = $form->splitExtensions( $filtered );
 
@@ -146,7 +146,7 @@ class WikiaMiniUpload {
                         return UploadForm::FILETYPE_BADTYPE;
                 }
 
-		return UploadForm::SUCCESS;			
+		return UploadForm::SUCCESS;
 	}
 
 	function translateError ( $error ) {
@@ -184,7 +184,7 @@ class WikiaMiniUpload {
 			$props['mwname'] = $tempname;
 			$props['upload'] = true;
 			return $this->detailsPage($props);
-		} else {			
+		} else {
 			return $this->loadMain( $this->translateError( $check_result ) );
 		}
 	}
@@ -219,7 +219,7 @@ class WikiaMiniUpload {
 
 				if( '' == $finalExt ) {
 					header('X-screen-type: error');
-					return 'Specified filename is empty';					
+					return 'Specified filename is empty';
 				}
 
 				$title = Title::makeTitleSafe(NS_IMAGE, $name);
@@ -229,7 +229,7 @@ class WikiaMiniUpload {
 				}
 				if($title->exists()) {
 					if($type == 'overwrite') {
-						$title = Title::newFromText($name, 6);					
+						$title = Title::newFromText($name, 6);
 						// is the target protected?
 						$permErrors = $title->getUserPermissionsErrors( 'edit', $wgUser );
 						$permErrorsUpload = $title->getUserPermissionsErrors( 'upload', $wgUser );
@@ -237,7 +237,7 @@ class WikiaMiniUpload {
 
 						if( $permErrors || $permErrorsUpload || $permErrorsCreate ) {
 							header('X-screen-type: error');
-							return 'This image is protected';							
+							return 'This image is protected';
 						}
 
 						$file_name = new LocalFile($title, RepoGroup::singleton()->getLocalRepo());
