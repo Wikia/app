@@ -630,7 +630,7 @@ class Linker {
 		}
 
 		global $wgContLang, $wgUser, $wgThumbLimits, $wgThumbUpright, $wgWysiwygParserEnabled, $wgWysiwygMetaData;
-		if (!empty($wgWysiwygParserEnabled) && isset($frameParams['refid'])) {
+		if (!empty($wgWysiwygParserEnabled) && isset($frameParams['refid']) && $file) {
 			$wgWysiwygMetaData[$frameParams['refid']]['url'] = $file->getFullUrl();
 		}
 		if ( $file && !$file->allowInlineDisplay() ) {
