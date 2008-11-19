@@ -4568,7 +4568,7 @@ class Parser
 	 * Parse image options text and use it to make an image
 	 */
 	function makeImage( $title, $options ) {
-		global $wgWysiwygParserEnabled;
+		global $wgWysiwygParserEnabled, $wgWysiwygMetaData;
 		# Check if the options text is of the form "options|alt text"
 		# Options are:
 		#  * thumbnail       	make a thumbnail with enlarge-icon and caption, alignment depends on lang
@@ -4686,6 +4686,12 @@ class Parser
 
 		if (!empty($wgWysiwygParserEnabled)) {
 			$params['frame']['alt'] = '';
+			$params['frame']['refid'] = $refId;
+			if (isset($params['frame']['align'])) $wgWysiwygMetaData[$refId]['align'] = $params['frame']['align'];
+			if (isset($params['frame']['thumbnail'])) $wgWysiwygMetaData[$refId]['thumb'] = 1;
+			if (isset($params['frame']['framed'])) $wgWysiwygMetaData[$refId]['frame'] = 1;
+			if (isset($params['handler']['width'])) $wgWysiwygMetaData[$refId]['width'] = $params['handler']['width'];
+			if ($caption != '') $wgWysiwygMetaData[$refId]['caption'] = $caption;
 		} else {	//original code - add alt&title to images
 			# Strip bad stuff out of the alt text
 			$alt = $this->replaceLinkHoldersText( $caption );
@@ -4699,10 +4705,6 @@ class Parser
 			$params['frame']['alt'] = $alt;
 		}
 		$params['frame']['caption'] = $caption;
-
-		if (!empty($wgWysiwygParserEnabled)) {
-			$params['frame']['refid'] = $refId;
-		}
 
 		wfRunHooks( 'ParserMakeImageParams', array( $title, $file, &$params ) );
 
