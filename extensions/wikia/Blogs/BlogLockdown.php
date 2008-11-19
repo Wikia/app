@@ -24,5 +24,39 @@ class BlogLockdown {
 
 	public static function userCan( $title, $user, $action, &$result ) {
 
+		$namespace = $title->getNamespace();
+
+		/**
+		 * here we only handle Blog articles, everyone can read it
+		 */
+		if( $namespace != NS_BLOG_ARTICLE || $action == "read" ) {
+			$result = true;
+			return true;
+		}
+		/**
+		 * for other actions we demand that user has to be logged in
+		 */
+		if( $user->isAnon( ) ) {
+			Wikia::log( __METHOD__, "user", "anonymous" );
+			return true;
+		}
+
+		if( $title->isSubpage() ) {
+			/**
+			 * blog article page, split title for "/" and get second part
+			 */
+			list( $page, $post ) = explode( "/", $title->getText( ), 2 );
+		}
+		else {
+			$page = $title->getText( );
+		}
+		$username = $user->getName();
+
+		Wikia::log( __METHOD__, "user", $username );
+		Wikia::log( __METHOD__, "title", $page );
+		$result = ( $username == $page ) ? null : false;
+		$return = ( $username == $page );
+
+		return $return;
 	}
 }
