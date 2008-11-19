@@ -15,6 +15,8 @@ var WMU_prevScreen = null;
 var WMU_slider = null;
 var WMU_thumbSize = null;
 var WMU_orgThumbSize = null;
+var WMU_widthChanges;
+var WMU_refid = null;
 
 /*
  * Functions/methods
@@ -47,15 +49,30 @@ function WMU_addHandler() {
 }
 
 function WMU_show(e) {
-	var el = YAHOO.util.Event.getTarget(e);
-	if (el.id == 'wmuLink') {
-		WMU_track('open/fromLinkAboveToolbar'); //tracking
-	} else if (el.id == 'wmuHelpLink') {
-		WMU_track('open/fromEditTips'); //tracking
-	} else if (el.id == 'mw-editbutton-wmu') {
-		WMU_track('open/fromToolbar'); //tracking
+	if(YAHOO.lang.isNumber(e)) {
+		WMU_refid = e;
+		if(WMU_refid == -1) {
+			WMU_track('open/fromWysiwyg/new');
+			// open main screen
+		} else {
+			WMU_track('open/fromWysiwyg/existing');
+			if(FCK.wysiwygData[WMU_refid].exists == false) {
+				// open main screen
+			} else {
+				// open details screen
+			}
+		}
 	} else {
-		WMU_track('open');
+		var el = YAHOO.util.Event.getTarget(e);
+		if (el.id == 'wmuLink') {
+			WMU_track('open/fromLinkAboveToolbar'); //tracking
+		} else if (el.id == 'wmuHelpLink') {
+			WMU_track('open/fromEditTips'); //tracking
+		} else if (el.id == 'mw-editbutton-wmu') {
+			WMU_track('open/fromToolbar'); //tracking
+		} else {
+			WMU_track('open');
+		}
 	}
 
 	YAHOO.util.Dom.setStyle('header_ad', 'display', 'none');
@@ -284,7 +301,7 @@ function WMU_initialCheck( checkedName ) {
 			partname += '.' + ext[i];
 		}
 	}
-	
+
 	if (partname.lenght < 1) {
 		alert (minlength1);
 		return false;
@@ -292,12 +309,12 @@ function WMU_initialCheck( checkedName ) {
 	if (finalExt == '') {
 		alert (filetype_missing) ;
 		return false;
-	} else if (WMU_checkFileExtensionList( ext, file_blacklist ) || ( check_file_extensions 
-			&& strict_file_extensions && !WMU_checkFileExtension( finalExt, file_extensions ) )  ) {		
-			alert (wmu_bad_extension);	
+	} else if (WMU_checkFileExtensionList( ext, file_blacklist ) || ( check_file_extensions
+			&& strict_file_extensions && !WMU_checkFileExtension( finalExt, file_extensions ) )  ) {
+			alert (wmu_bad_extension);
 			return false;
 	}
-	
+
 	return true;
 }
 
@@ -392,7 +409,16 @@ function WMU_insertImage(e, type) {
 					WMU_switchScreen('Summary');
 					$('ImageUploadBack').style.display = 'none';
 					$('ImageUpload' + WMU_curScreen).innerHTML = o.responseText;
-					insertTags($('ImageUploadTag').innerHTML, '', '');
+					if(WMU_refid == null) {
+						insertTags($('ImageUploadTag').innerHTML, '', '');
+					} else {
+						var wikitag = YAHOO.util.Dom.get('ImageUploadTag').innerHTML;
+						if(WMU_refid != -1) {
+							FCK.ProtectImageUpdate(WMU_refid, wikitag);
+						} else {
+							FCK.ProtectImageAdd(wikitag);
+						}
+					}
 					break;
 				case 'existing':
 					WMU_displayDetails(o.responseText);
@@ -463,7 +489,9 @@ function WMU_back(e) {
 }
 
 function WMU_close(e) {
-	YAHOO.util.Event.preventDefault(e);
+	if(e) {
+		YAHOO.util.Event.preventDefault(e);
+	}
 	WMU_track('close/' + WMU_curScreen);
 	WMU_panel.hide();
 	if($('wpTextbox1')) $('wpTextbox1').focus();
