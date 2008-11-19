@@ -465,10 +465,26 @@ function WMU_insertImage(e, type) {
 						insertTags($('ImageUploadTag').innerHTML, '', '');
 					} else {
 						var wikitag = YAHOO.util.Dom.get('ImageUploadTag').innerHTML;
+						var options = {};
+
+						if($('ImageUploadThumbOption').checked) {
+							options.thumb = 1;
+						}
+						if($('ImageUploadWidthCheckbox').checked) {
+							options.width = WMU_slider.getRealValue();
+						}
+						if($('ImageUploadWidthCheckbox').checked) {
+							options.width = WMU_slider.getRealValue();
+						}
+						if($('ImageUploadLayoutLeft').checked) {
+							options.align = 'left';
+						}
+						options.caption = $('ImageUploadCaption').value;
+
 						if(WMU_refid != -1) {
-							FCK.ProtectImageUpdate(WMU_refid, wikitag);
+							FCK.ProtectImageUpdate(WMU_refid, wikitag, options);
 						} else {
-							FCK.ProtectImageAdd(wikitag);
+							FCK.ProtectImageAdd(wikitag, options);
 						}
 					}
 					break;
