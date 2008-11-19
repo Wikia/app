@@ -50,10 +50,18 @@ function Ok() {
 	var wikitext = GetWikitext();
 
 	// do we already have a preview?
+	var save = false;
+
 	if ( wikitext != lastWikitext ) {
-		CreatePreview(true);
+		// no: generate it via AJAX and store in template preview
+		save = true;
+		CreatePreview(save);
+		
+		// don't close dialog -> show throbber -> we'll close dialog in AJAX callback
+		dialog.Throbber.Show();
 	}
 	else {
+		// yes: just copy HTML
 		FCK.TemplatePreviewSetHTML(refid, GetE('template_preview').innerHTML);
 	}
 
@@ -68,8 +76,9 @@ function Ok() {
 	FCK.TemplatePreviewSetName(refid, name);
 
 	FCK.Track('/templateEditor/save');
-	
-	return true;
+
+	// don't close dialog if we're sending AJAX request	
+	return save ? false : true;
 }
 
 function GetWikitext() {
@@ -137,7 +146,10 @@ function CreatePreview(save) {
 
 			// save in cloud preview?
 			if (o.argument.save) {
-				 o.argument.FCK.TemplatePreviewSetHTML(o.argument.refid, o.argument.preview.innerHTML);
+				o.argument.FCK.TemplatePreviewSetHTML(o.argument.refid, o.argument.preview.innerHTML);
+
+				// close dialog
+				o.argument.dialog.CloseDialog();
 			}
 			else {
 				// store wikitext of last preview
@@ -148,7 +160,7 @@ function CreatePreview(save) {
 			o.argument.preview.className = '';
 			o.argument.button.disabled = false;
 		},
-		argument: {'save': save, 'preview': GetE('template_preview'), 'button': GetE('template_do_preview'), 'FCK': FCK, 'refid': window.refid}
+		argument: {'save': save, 'preview': GetE('template_preview'), 'button': GetE('template_do_preview'), 'FCK': FCK, 'refid': window.refid, 'dialog': window.dialog}
 	};
 
 	FCK.YAHOO.util.Connect.asyncRequest(

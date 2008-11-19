@@ -371,3 +371,7 @@ body, .BackColor
 	background-repeat: no-repeat;
 	background-position: 50% 50%;
 }
+
+.throbber #innerContents {
+	visibility: hidden;
+}
