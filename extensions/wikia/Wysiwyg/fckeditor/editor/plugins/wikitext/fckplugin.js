@@ -330,7 +330,7 @@ FCK.CheckInternalLink = function(title, link) {
 //
 
 FCK.ProtectImage = function(image) {
-	//FCK.log(image);
+	FCK.log(image);
 	var refid = image.getAttribute('refid');
 	
 	// simple image
@@ -548,6 +548,12 @@ FCK.ProtectImageAdd = function(wikitext) {
 			var wrapper = FCK.EditorDocument.createElement('DIV');
 			FCK.InsertElement(wrapper);
 			wrapper.innerHTML = html;
+
+			// is "simple" image wrapped by <p></p> ?
+			if (html.substr(0,3) == '<p>') {
+				// remove wrapping <p></p>
+				wrapper.innerHTML = html.substr(3, html.length-7);
+			}
 
 			// ...and "protect" it
 			wrapper.firstChild.setAttribute('refid', refid);
