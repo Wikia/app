@@ -327,7 +327,8 @@ FCK.CheckInternalLink = function(title, link) {
 
 FCK.ProtectImage = function(image) {
 	//FCK.log(image);
-
+	var refid = image.getAttribute('refid');
+	
 	// simple image
 	if (image.nodeName.IEquals('a')) {
 		// block onclick / onmousedown events
@@ -349,12 +350,12 @@ FCK.ProtectImage = function(image) {
 			e.stopPropagation();
 		});
 
+		// check whether given image exists
+		FCK.wysiwygData[refid].exists = (!FCK.YD.hasClass(image, 'new'));
+
 		return;
 	}
 
-	// get image dimensions (including padding)
-	var refid = image.getAttribute('refid');
-	
 	var iframe = FCK.EditingArea.Document.createElement('iframe');
 	iframe.id  = 'image' + refid;
 	iframe.src = '';
@@ -374,6 +375,10 @@ FCK.ProtectImage = function(image) {
 	// DOM stuff
 	image.parentNode.insertBefore(iframe, image);
 	image.parentNode.removeChild(image);
+
+	// check whether given image exists
+	var re = /class=\"new\"/;
+	FCK.wysiwygData[refid].exists = !re.test(FCK.wysiwygData[refid].html);
 
 	// fill iframe and setup events
 	FCK.ProtectImageSetup(refid);
@@ -700,6 +705,8 @@ FCK.TemplatePreviewSetName = function(refid, name) {
 
 // YUI reference
 FCK.YAHOO = window.parent.YAHOO;
+FCK.YD = FCK.YAHOO.util.Dom;
+FCK.YE = FCK.YAHOO.util.Event;
 
 // log functionality
 FCK.log = function(msg) {
