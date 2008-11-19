@@ -693,7 +693,7 @@ FCK.TemplatePreviewAdd = function(placeholder) {
 
 	// remove any whitespaces from the end of placeholder's parent
 	lastChild = placeholder.parentNode.lastChild;
-	if (lastChild.nodeType == 3 && (lastChild.textContent.Trim() == '') ) {
+	if (lastChild.nodeType == 3 && ( (lastChild.textContent || lastChild.innerText).Trim() == '') ) {
 		lastChild.parentNode.removeChild(lastChild);
 	}
 
