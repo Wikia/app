@@ -37,6 +37,7 @@ window.onload = function() {
 		e.stopPropagation(); 
 	}); 
 
+	FCK.Track('/templateEditor/open');
 }
 
 function Ok() {
@@ -65,6 +66,8 @@ function Ok() {
 	// update metaData and placeholder label
 	data.name = name;
 	FCK.TemplatePreviewSetName(refid, name);
+
+	FCK.Track('/templateEditor/save');
 	
 	return true;
 }
@@ -115,6 +118,10 @@ function CreatePreview(save) {
 
 	GetE('template_preview').innerHTML = '';
 	GetE('template_preview').className = 'progress';
+
+	if (!save) {
+		FCK.Track('/templateEditor/preview');
+	}
 
 	var callback = {
 		success: function(o) {
