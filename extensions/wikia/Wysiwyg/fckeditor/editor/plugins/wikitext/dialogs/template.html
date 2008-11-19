@@ -90,10 +90,9 @@ function CheckWikitext() {
 			brackets--;
 		}
 	}
-
 	if (brackets == 0) {
 		// check {{ ... }}
-		if (wikitext.substring(0,2) == '{{' && wikitext.substr(-2) == '}}') {
+		if (wikitext.substring(0,2) == '{{' && wikitext.substring(wikitext.length-2) == '}}') {
 			GetE('template_source').value = wikitext;
 			return true;
 		}
