@@ -9,7 +9,7 @@ class CreateBlogPage extends SpecialPage {
 
 	private $mFormData;
 	private $mFormErrors = array();
-	//private $mPostTitle = null;
+	private $mRenderedPreview = '';
 	private $mPostArticle;
 
 	public function __construct() {
@@ -46,7 +46,7 @@ class CreateBlogPage extends SpecialPage {
 
 		if($wgRequest->wasPosted()) {
 			$this->parseFormData();
-			if(count($this->mFormErrors) > 0) {
+			if(count($this->mFormErrors) > 0 || !empty($this->mRenderedPreview)) {
 				$this->renderForm();
 			}
 			else {
@@ -69,7 +69,19 @@ class CreateBlogPage extends SpecialPage {
 			$sPostBody .= $this->getCategoriesAsText($aCategories);
 		}
 
+		$aPageProps = array();
+		if(!empty($this->mFormData['isVotingEnabled'])) {
+			$aPageProps['voting'] = 1;
+		}
+		if(!empty($this->mFormData['isCommentingEnabled'])) {
+			$aPageProps['commenting'] = 1;
+		}
+
 		$this->mPostArticle->doEdit($sPostBody, "Blog post created." );
+		if(count($aPageProps)) {
+			// save extra properties
+			$this->mPostArticle->saveProps($aPageProps);
+		}
 
 		$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
 		$oTmpl->set_vars( array(
@@ -86,7 +98,7 @@ class CreateBlogPage extends SpecialPage {
 	}
 
 	private function parseFormData() {
-		global $wgUser, $wgRequest;
+		global $wgUser, $wgRequest, $wgOut;
 
 		$this->mFormData['postTitle'] = $wgRequest->getVal('blogPostTitle');
 		$this->mFormData['postBody'] = $wgRequest->getVal('wpTextbox1');
@@ -95,7 +107,7 @@ class CreateBlogPage extends SpecialPage {
 		$this->mFormData['isCommentingEnabled'] = $wgRequest->getCheck('blogPostIsCommentingEnabled');
 
 		$oPostTitle = Title::newFromText( $wgUser->getName() . '/' . $this->mFormData['postTitle'], NS_BLOG_ARTICLE);
-		$this->mPostArticle = new Article($oPostTitle, 0);
+		$this->mPostArticle = new BlogListPage($oPostTitle, 0);
 
 		if(empty($this->mFormData['postTitle'])) {
 			$this->mFormErrors[] = wfMsg('create-blog-empty-title-error');
@@ -109,6 +121,11 @@ class CreateBlogPage extends SpecialPage {
 
 		if(empty($this->mFormData['postBody'])) {
 			$this->mFormErrors[] = wfMsg('create-blog-empty-post-error');
+		}
+
+		if(!count($this->mFormErrors) && $wgRequest->getVal('wpPreview')) {
+			$oParser = new Parser();
+			$this->mRenderedPreview = $oParser->parse( $this->mFormData['postBody'], Title::newFromText($this->mFormData['postTitle']), $wgOut->parserOptions() );
 		}
 	}
 
@@ -146,6 +163,7 @@ class CreateBlogPage extends SpecialPage {
 			"title" => $this->mTitle,
 			"formErrors" => $this->mFormErrors,
 			"formData" => $this->mFormData,
+			"preview" => $this->mRenderedPreview,
 			"categoryCloud" => $sCategoryCloud )
 		);
 
