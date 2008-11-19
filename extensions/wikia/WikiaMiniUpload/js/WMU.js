@@ -469,15 +469,18 @@ function WMU_insertImage(e, type) {
 
 						if($('ImageUploadThumbOption').checked) {
 							options.thumb = 1;
+						} else {
+							options.thumb = null;
 						}
 						if($('ImageUploadWidthCheckbox').checked) {
 							options.width = WMU_slider.getRealValue();
-						}
-						if($('ImageUploadWidthCheckbox').checked) {
-							options.width = WMU_slider.getRealValue();
+						} else {
+							options.width = null;
 						}
 						if($('ImageUploadLayoutLeft').checked) {
 							options.align = 'left';
+						} else {
+							options.align = null;
 						}
 						options.caption = $('ImageUploadCaption').value;
 
