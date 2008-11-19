@@ -5,7 +5,7 @@
  * contains all logic needed for loading and setting configuration data
  * class is used in LocalSettings
  *
- * @author Krzysztof Krzyżaniak (eloy) <eloy@wikia.com> for Wikia Inc.
+ * @author Krzysztof Krzyżaniak (eloy) <eloy@wikia-inc.com> for Wikia Inc.
  */
 
 ini_set( "include_path", "{$IP}:{$IP}/includes:{$IP}/languages:{$IP}/lib:.:" );
@@ -167,7 +167,7 @@ class WikiFactoryLoader {
 	 * available, if yes it will take one of active slaves. If not it fallbacks
 	 * to $wgDBserver
 	 *
-	 * @author Krzysztof Krzyżaniak <eloy@wikia.com>
+	 * @author Krzysztof Krzyżaniak <eloy@wikia-inc.com>
 	 * @access public
 	 *
 	 * @todo change new Database to LoadBalancer factory
@@ -203,7 +203,7 @@ class WikiFactoryLoader {
 	 *
 	 * Main entry point for class
 	 *
-	 * @author Krzysztof Krzyżaniak <eloy@wikia.com>
+	 * @author Krzysztof Krzyżaniak <eloy@wikia-inc.com>
 	 *
 	 * @return integer: wikia id or null if wikia is not handled by WikiFactory
 	 */
@@ -330,7 +330,7 @@ class WikiFactoryLoader {
 		else {
 			/**
 			 * data taken from cache
-			*/
+			 */
 			$this->mWikiID = $this->mDomain["id"];
 			$this->mCityHost = $this->mDomain["host"];
 			$this->mIsWikiaActive = $this->mDomain["active"];
@@ -338,10 +338,7 @@ class WikiFactoryLoader {
 			$this->mAdCategory = empty( $this->mDomain["ad"] ) ? "NONE" : $this->mDomain["ad"];
 		}
 
-		if( ( strpos($this->mServerName, "gamespot") != 0 ) ||
-			( strpos($this->mServerName, "-abc.") != 0 ) ||
-			( strpos( $this->mServerName, "beta." ) === 0 )
-		) {
+		if( strpos($this->mServerName, "-abc.") != 0 || strpos( $this->mServerName, "beta." ) === 0 ) {
 			$this->mNoRedirect = true;
 		}
 
@@ -628,7 +625,7 @@ class WikiFactoryLoader {
 	 * staff|edit|1,
 	 * users|move|0
 	 *
-	 * @author eloy@wikia
+	 * @author Krzysztof Krzyżaniak <eloy@wikia-inc.com>
 	 * @access public
 	 * @static
 	 *
@@ -663,7 +660,7 @@ class WikiFactoryLoader {
 	 * with flat arrays. Why not array_merge? For safety.
 	 *
 	 *
-	 * @author eloy@wikia-inc.com
+	 * @author Krzysztof Krzyżaniak <eloy@wikia-inc.com>
 	 * @access public
 	 *
 	 * @param array $local: array with local values
