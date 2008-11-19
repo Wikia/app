@@ -447,10 +447,8 @@ FCK.ProtectImageClick = function(refid) {
 	// tracker
 	FCK.Track('/image/click');
 
-	FCK.ProtectImageRefId = refid;
-
-	// TODO: handle onclick event (only left mouse button)
-	// wmuShow();
+	// open WikiaMiniUpload
+	window.parent.WMU_show( parseInt(refid) );
 }
 
 FCK.ProtectImageUpdate = function(refid, wikitext) {
