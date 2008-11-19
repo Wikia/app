@@ -5,10 +5,12 @@
  */
 
 Athena = {};
-Athena = beaconData{};
+Athena.beaconData = {};
 Athena.pageVars = new Array();
 Athena.configUrl = "http://athena.dev.wikia-inc.com/athena/configApi.php";
 Athena.beaconUrl = "http://athena.dev.wikia-inc.com/athena/beacon.php";
+Athena.hopTracker = new Array();
+
 Athena.setup = function (){
 	Athena.debugLevel = Athena.getRequestVal('athena_debug', 0);
 };
@@ -27,26 +29,34 @@ Athena.callAd = function (slotname){
 		Athena.print_r(Athena.config['slots'][slotname]), 5); 
 
 	for (i = 0; i < Athena.config['slots'][slotname].length; i++){
+
+		var thisAd = Athena.config['slots'][slotname][i];
 		// Check to see if it has already been called
-		if (Athena.config['slots'][slotname][i]['called'] == true){
+		if (thisAd['called'] != undefined){
 			continue;
 		}
-		
+		Athena.debug("Calling Ad from " + thisAd['network_name']);
+
+		// Mark it as called
+		Athena.config['slots'][slotname][i]['called'] = new Date();
+
+		// Keep track of the current and next tags for hopping and beacon
+		Athena.currentTag = Athena.config['slots'][slotname][i];
+		Athena.currentSlot = slotname;
+
 		// Print the tag
 		document.write(Athena.config['slots'][slotname][i]['tag']); 
 
-		// Mark it as called
-		Athena.config['slots'][slotname][i]['called'] = true;
-		// Save network name for sendBeacon
-		Athena.beaconData.network = Athena.config['slots'][slotname][i]['network'];
 		break;
 	}
 };
 
 Athena.hop = function (slotname){
+
+	Athena.hopTracker[slotname] = 
 	Athena.debug("hop() called");
-	Athena.sendBeacon(false);
-	Athena.callAd(slotname);
+//	Athena.sendBeacon(false);
+	Athena.callAd(Athena.currentSlot);
 };
 
 /* Send a beacon back to our server so we know if it worked */
@@ -68,7 +78,7 @@ Athena.sendBeacon = function ( success ){
 
 	beacon = Athena.json_encode(Athena.beaconData);
 
-	document.write('<img src="' + beaconUrl '??beacon=' + beacon + '" />');
+	document.write('<img src="' + Athena.beaconUrl + '?beacon=' + beacon + '" />');
 };
 
 
