@@ -16,6 +16,12 @@ tr { border: 1px solid #dcdcdc; }
 <br />
 <br />
 <form name="blogPostForm" id="blogPostForm" method="post" action="<?php echo $title->getLocalUrl();?>">
+	<?php if(!empty($preview)): ?>
+		<h2>Preview</h2>
+		<div class='previewnote'><p><strong><?php echo wfMsg('previewnote');?></strong></p></div>
+		<?php echo $preview->getText(); ?>
+		<br />
+	<?php endif; ?>
 	<?php if(count($formErrors)): ?>
 		<div class="formErrors">
 			<?php foreach($formErrors as $error): ?>
@@ -27,8 +33,8 @@ tr { border: 1px solid #dcdcdc; }
 		<label><?php echo wfMsg( "create-blog-form-post-title" ) ?></label>
 		<input type="text" id="blogPostTitle" name="blogPostTitle" value="<?php echo $formData['postTitle']; ?>" size="60" maxlength="255" />
 		<div style="float: left">
-		<input type="checkbox" name="blogPostIsVotingEnabled" value="" />Voting
-		<input type="checkbox" name="blogPostIsCommentingEnabled" value="" />Comments
+		<input type="checkbox" name="blogPostIsVotingEnabled" value="1" <?php echo !empty($formData['isVotingEnabled']) ? "checked" : ""; ?> />Voting
+		<input type="checkbox" name="blogPostIsCommentingEnabled" value="1" <?php echo !empty($formData['isCommentingEnabled']) ? "checked" : ""; ?> />Comments
 		</div>
 	</div>
 	<div class="formBlock">

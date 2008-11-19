@@ -195,10 +195,23 @@ class BlogListPage extends Article {
 		if( $Title->getNamespace() !== NS_BLOG_ARTICLE ) {
 			return true;
 		}
-		
+
 		$Article = new BlogListPage( $Title );
 
 		return true;
+	}
+
+	/**
+	 * save article extra properties to page_props table
+	 *
+	 * @access public
+	 * @param array $aPropsArray array of properties to save (prop name => prop value)
+	 */
+	public function saveProps(Array $aPropsArray) {
+		$dbw = wfGetDB( DB_MASTER );
+		foreach($aPropsArray as $sPropName => $sPropValue) {
+			$dbw->query("INSERT INTO page_props (pp_page, pp_propname, pp_value) VALUES ('" . $this->getID() . "', '" . addslashes($sPropName). "','" . addslashes($sPropValue) . "')");
+		}
 	}
 
 }
