@@ -629,7 +629,10 @@ class Linker {
 			return $res;
 		}
 
-		global $wgContLang, $wgUser, $wgThumbLimits, $wgThumbUpright, $wgWysiwygParserEnabled;
+		global $wgContLang, $wgUser, $wgThumbLimits, $wgThumbUpright, $wgWysiwygParserEnabled, $wgWysiwygMetaData;
+		if (!empty($wgWysiwygParserEnabled) && isset($frameParams['refid'])) {
+			$wgWysiwygMetaData[$frameParams['refid']]['url'] = $file->getFullUrl();
+		}
 		if ( $file && !$file->allowInlineDisplay() ) {
 			wfDebug( __METHOD__.': '.$title->getPrefixedDBkey()." does not allow inline display\n" );
 			return $this->makeKnownLinkObj( $title );

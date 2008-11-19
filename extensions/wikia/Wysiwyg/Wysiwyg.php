@@ -481,7 +481,6 @@ function Wysiwyg_SetRefId($type, $params, $addMarker = true, $returnId = false) 
 				}
 			}
 			$data['description'] = preg_replace('%\x7f-wtb-(\d+)-\x7f.*?\x7f-wte-\1-\x7f%sie', '$wgWysiwygMetaData[\\1]["originalCall"];', $data['description']);
-			$data['description'] = preg_replace('/<([^ ]+) wasHtml="1"/si', '<\1', $data['description']);
 			break;
 
 		case 'internal link: media':
@@ -495,7 +494,6 @@ function Wysiwyg_SetRefId($type, $params, $addMarker = true, $returnId = false) 
 			$data['href'] = ($params['noforce'] ? '' : ':') . $params['link'];
 			$data['description'] = $params['wasblank'] ? '' : $params['text'];
 			$data['description'] = preg_replace('%\x7f-wtb-(\d+)-\x7f.*?\x7f-wte-\1-\x7f%sie', '$wgWysiwygMetaData[\\1]["originalCall"];', $data['description']);
-			$data['description'] = preg_replace('/<([^ ]+) wasHtml="1"/si', '<\1', $data['description']);
 			break;
 
 		case 'external link: raw image':
