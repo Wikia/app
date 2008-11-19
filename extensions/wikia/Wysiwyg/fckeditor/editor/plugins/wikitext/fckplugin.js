@@ -449,7 +449,15 @@ FCK.ProtectImageSetup = function(refid) {
 	var iframeDoc = iframe.contentDocument ? iframe.contentDocument : iframe.document /* ie */;
 	var iframeWin = iframe.contentWindow ? iframe.contentWindow : iframe.window /* ie */;
 
-	iframeDoc.write('<style type="text/css">* {cursor: default}</style>');
+	// CSS
+	iframeDoc.write(
+		'<style type="text/css">' + 
+		'@import "' + FCKConfig.EditorAreaStyles + '?' + FCKConfig.StyleVersion+ '"; ' +
+		'@import "' + FCKConfig.EditorAreaCSS + '?' + FCKConfig.StyleVersion+ '"; ' +
+		'* {cursor: default}'+
+		'</style>');
+
+	// set iframe content
 	iframeDoc.write(FCK.wysiwygData[refid].html);
 	iframeDoc.close();
 	iframeDoc.body.setAttribute('refid', refid);
@@ -481,20 +489,6 @@ FCK.ProtectImageSetup = function(refid) {
 
 		setTimeout('FCK.ProtectImageSetup('+refid+')', 50);
 	});
-
-
-	// load CSS files
-	css = document.createElement("link");
-	css.type = "text/css";
-	css.rel = "stylesheet";
-	css.href = FCKConfig.EditorAreaStyles + '?' + FCKConfig.StyleVersion;
-	iframeDoc.getElementsByTagName("head")[0].appendChild(css);
-
-	css = document.createElement("link");
-	css.type = "text/css";
-	css.rel = "stylesheet";
-	css.href = FCKConfig.EditorAreaCSS + '?' + FCKConfig.StyleVersion;
-	iframeDoc.getElementsByTagName("head")[0].appendChild(css);
 
 	FCK.log('set up image #' + refid + ' iframe');
 }
@@ -556,6 +550,9 @@ FCK.ProtectImageUpdate = function(refid, wikitext, extraData) {
 			// remove wrapper and old image
 			FCKDomTools.RemoveNode(oldImage, false); // including child nodes
 			FCKDomTools.RemoveNode(wrapper, true);
+
+			// fix really strange bug: CSS disappear from iframe
+			setTimeout('FCK.ProtectImageSetup('+refid+')', 500);
 		},
 		failure: function(o) {},
 		argument: {'FCK': FCK, 'refid': refid}
