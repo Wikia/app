@@ -5,8 +5,10 @@
  */
 
 Athena = {};
+Athena = beaconData{};
 Athena.pageVars = new Array();
 Athena.configUrl = "http://athena.dev.wikia-inc.com/athena/configApi.php";
+Athena.beaconUrl = "http://athena.dev.wikia-inc.com/athena/beacon.php";
 Athena.setup = function (){
 	Athena.debugLevel = Athena.getRequestVal('athena_debug', 0);
 };
@@ -35,19 +37,38 @@ Athena.callAd = function (slotname){
 
 		// Mark it as called
 		Athena.config['slots'][slotname][i]['called'] = true;
+		// Save network name for sendBeacon
+		Athena.beaconData.network = Athena.config['slots'][slotname][i]['network'];
 		break;
 	}
 };
 
 Athena.hop = function (slotname){
 	Athena.debug("hop() called");
-	//Athena.sendBeacon(false, ...);
-	Athena.callAd(slotname);	
+	Athena.sendBeacon(false);
+	Athena.callAd(slotname);
 };
 
 /* Send a beacon back to our server so we know if it worked */
-Athena.sendBeacon = function (success, network, networkInfo, geography, site, page){
+Athena.sendBeacon = function ( success ){
 	Athena.debug("sendBeacon() called");
+
+	// success
+	Athena.beaconData.success = success;
+	// network -- already defined by callAd
+	
+	// networkInfo
+	// TODO -- what is this supposed to contain BTW? :P
+	// geography
+	// TODO
+	// site
+	Athena.beaconData.site = Athena.getPageVar('Server');
+	// page
+	Athena.beaconData.page = Athena.getPageVar('PageId');
+
+	beacon = Athena.json_encode(Athena.beaconData);
+
+	document.write('<img src="' + beaconUrl '??beacon=' + beacon + '" />');
 };
 
 
