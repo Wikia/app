@@ -26,6 +26,16 @@ $wgNamespacesWithSubpages[ NS_BLOG_LISTING ] = true;
 $wgNamespacesWithSubpages[ NS_BLOG_LISTING_TALK ] = true;
 
 /**
+ * protections
+ */
+$wgNamespaceProtection[ NS_BLOG_ARTICLE ] = Array("blogs");
+$wgNamespacesWithSubpages[ NS_BLOG_ARTICLE ] = true;
+$wgGroupPermissions['*']['blogs'] = false;
+$wgGroupPermissions['sysop']['blogs'] = true;
+$wgGroupPermissions['staff']['blogs'] = true;
+
+
+/**
  * messages file
  */
 $wgExtensionMessagesFiles["Blogs"] = dirname(__FILE__) . '/Blogs.i18n.php';
@@ -37,6 +47,7 @@ extAddSpecialPage(dirname(__FILE__) . '/SpecialBlogListingCreatePage.php', 'Blog
 /**
  * load other parts
  */
+include( dirname( __FILE__ ) . "/BlogLockdown.php");
 include( dirname( __FILE__ ) . "/BlogTemplate.php");
 include( dirname( __FILE__ ) . "/UserMasthead.php");
 include( dirname( __FILE__ ) . "/BlogListPage.php");
