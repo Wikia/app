@@ -371,7 +371,7 @@ FCK.CheckInternalLink = function(title, link) {
 //
 
 FCK.ProtectImage = function(image) {
-	FCK.log(image);
+	//FCK.log(image);
 	var refid = image.getAttribute('refid');
 	
 	// simple image
@@ -507,6 +507,8 @@ FCK.ProtectImageClick = function(refid) {
 FCK.ProtectImageUpdate = function(refid, wikitext, extraData) {
 	FCK.log('updating #' + refid +' with >>' + wikitext + '<<');
 
+	FCK.Track('/image/update');
+
 	// update metaData
 	var params = wikitext.substring(2, wikitext.length-2).split('|');
 	FCK.wysiwygData[refid].href = params.shift();
@@ -570,6 +572,8 @@ FCK.ProtectImageAdd = function(wikitext, extraData) {
 	var refid = FCK.GetFreeRefId();
 
 	FCK.log('adding new image #' + refid + ' using >>' + wikitext + '<<');
+
+	FCK.Track('/image/add');
 
 	// fill metaData up
 	var params = wikitext.substring(2, wikitext.length-2).split('|');
