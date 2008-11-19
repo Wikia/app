@@ -11,6 +11,7 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 global $wgAvailableRights, $wgGroupPermissions;
 $wgAvailableRights[] = 'findspam';
 $wgGroupPermissions['sysop']['findspam'] = true;
+$wgGroupPermissions['staff']['findspam'] = true;
 
 $wgSpecialPages['FindSpam'] = 'FindSpamPage';
 $wgSpecialPageGroups['FindSpam'] = 'spam';
