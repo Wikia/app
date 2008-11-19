@@ -510,13 +510,16 @@ FCK.ProtectImageClick = function(refid) {
 }
 
 // to simplify things we actually replace old image with the new one
-FCK.ProtectImageUpdate = function(refid, wikitext) {
+FCK.ProtectImageUpdate = function(refid, wikitext, extraData) {
 	FCK.log('updating #' + refid +' with >>' + wikitext + '<<');
 
 	// update metaData
 	var params = wikitext.substring(2, wikitext.length-2).split('|');
 	FCK.wysiwygData[refid].href = params.shift();
 	FCK.wysiwygData[refid].description = params.join('|');
+
+	// merge with extraData
+	FCK.wysiwygData[refid] = FCK.YAHOO.lang.merge(FCK.wysiwygData[refid], extraData);
 
 	FCK.log(FCK.wysiwygData[refid]);
 
@@ -566,7 +569,7 @@ FCK.ProtectImageUpdate = function(refid, wikitext) {
 	);
 }
 
-FCK.ProtectImageAdd = function(wikitext) {
+FCK.ProtectImageAdd = function(wikitext, extraData) {
 	var refid = FCK.GetFreeRefId();
 
 	FCK.log('adding new image #' + refid + ' using >>' + wikitext + '<<');
@@ -579,6 +582,9 @@ FCK.ProtectImageAdd = function(wikitext) {
 		'description': params.join('|'),
 		'exists': true
 	};
+
+	// merge with extraData
+	FCK.wysiwygData[refid] = FCK.YAHOO.lang.merge(FCK.wysiwygData[refid], extraData);
 
 	// parse given wikitext
 	var callback = {
