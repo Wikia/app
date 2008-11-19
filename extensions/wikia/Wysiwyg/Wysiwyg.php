@@ -2,8 +2,8 @@
 $wgExtensionCredits['other'][] = array(
 	'name' => 'Wysiwyg',
 	'description' => 'FCKeditor integration for MediaWiki',
-	'version' => 0.03,
-	'author' => array('Inez Korczyński', 'Maciej Brencz', 'Maciej Błaszkowski (Marooned)', 'Łukasz \'TOR\' Garczewski')
+	'version' => 0.04,
+	'author' => array('Inez Korczyński', '[http://pl.wikia.com/wiki/User:Macbre Maciej Brencz]', 'Maciej Błaszkowski (Marooned)', 'Łukasz \'TOR\' Garczewski')
 );
 
 $dir = dirname(__FILE__).'/';
