@@ -127,6 +127,10 @@ FCK.InsertDirtySpanAfter = function(node) {
 	FCKDomTools.InsertAfterNode(node, span);
 }
 
+FCK.GetFreeRefId = function() {
+	return FCK.wysiwygData.length;
+}
+
 FCK.GetNodesWithRefId = function() {
 	var nodes = [];
 
@@ -504,6 +508,58 @@ FCK.ProtectImageUpdate = function(refid, wikitext) {
 		},
 		failure: function(o) {},
 		argument: {'FCK': FCK, 'refid': refid, 'iframe': iframe}
+	}
+
+	FCK.YAHOO.util.Connect.asyncRequest(
+		'POST',
+		window.parent.wgScriptPath + '/api.php',
+		callback,
+		"action=parse&format=json&prop=text&title=" + encodeURIComponent(window.parent.wgPageName) + "&text=" +  encodeURIComponent(wikitext)
+	);
+}
+
+FCK.ProtectImageAdd = function(wikitext) {
+	var refid = FCK.GetFreeRefId();
+
+	FCK.log('adding new image #' + refid + ' using >>' + wikitext + '<<');
+
+	// fill metaData up
+	var params = wikitext.substring(2, wikitext.length-2).split('|');
+	FCK.wysiwygData[refid] = {
+		'type': 'image',
+		'href': params.shift(),
+		'description': params.join('|'),
+		'exists': true
+	};
+
+	// parse given wikitext
+	var callback = {
+		success: function(o) {
+			FCK = o.argument.FCK;
+			refid =  o.argument.refid;
+
+			result = eval('(' + o.responseText + ')');
+			html = result.parse.text['*'];
+
+			// remove newPP comment and whitespaces
+			html = FCK.YAHOO.lang.trim(html.split('<!-- \nNewPP limit report')[0]);
+
+			// insert html into editing area...
+			var wrapper = FCK.EditorDocument.createElement('DIV');
+			FCK.InsertElement(wrapper);
+			wrapper.innerHTML = html;
+
+			// ...and "protect" it
+			wrapper.firstChild.setAttribute('refid', refid);
+			FCK.ProtectImage(wrapper.firstChild);
+
+			// remove wrapper
+			FCKDomTools.RemoveNode(wrapper, true);
+
+			FCK.log(FCK.wysiwygData[refid]);
+		},
+		failure: function(o) {},
+		argument: {'FCK': FCK, 'refid': refid}
 	}
 
 	FCK.YAHOO.util.Connect.asyncRequest(
