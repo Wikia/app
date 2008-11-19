@@ -352,7 +352,7 @@ class Wikia {
 
 		$method = $sub ? $method . "-" . $sub : $method;
 		if( $wgDevelEnvironment ) {
-			error_log( $method . ": ", $message );
+			error_log( $method . ": " . $message );
 		}
 	}
 }
