@@ -39,6 +39,33 @@ var oTildesItem = new FCKToolbarButton( 'Tildes', 'Your signature with timestamp
 oTildesItem.IconPath = FCKConfig.PluginsPath + 'wikitext/sig.gif' ;
 FCKToolbarItems.RegisterItem( 'Tildes', oTildesItem );
 
+
+// "add image" toolbar button
+var FCKAddImageCommand = function() {
+	this.Name = 'AddImage' ;
+}
+FCKAddImageCommand.prototype = {
+	Execute : function() {
+		FCKUndo.SaveUndoStep() ;
+		FCK.log('opening "add image" dialog');
+		window.parent.WMU_show(-1);
+	},
+	GetState : function() {
+		if ( FCK.EditMode != FCK_EDITMODE_WYSIWYG )
+			return FCK_TRISTATE_DISABLED ;
+		return FCK_TRISTATE_OFF;
+	}
+} ;
+FCKCommands.RegisterCommand('AddImage', new FCKAddImageCommand());
+var oTildesItem = new FCKToolbarButton( 'AddImage', 'Add image' ) ;
+oTildesItem.IconPath = FCKConfig.PluginsPath + 'wikitext/addImage.png' ;
+FCKToolbarItems.RegisterItem( 'AddImage', oTildesItem );
+
+
+//
+// modes switching
+//
+
 FCK.originalSwitchEditMode = FCK.SwitchEditMode;
 
 FCK.WysiwygSwitchToolbars = function(switchToWikitext) {
