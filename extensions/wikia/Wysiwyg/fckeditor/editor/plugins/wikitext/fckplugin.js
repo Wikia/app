@@ -438,6 +438,11 @@ FCK.ProtectImageSetup = function(refid) {
 
 	var iframe = FCK.EditorDocument.getElementById('image' + refid);
 
+	// fired during removal of iframe
+	if (!iframe) {
+		return true;
+	}
+
 	FCK.NodesWithRefId[ refid ] = iframe;
 
 	// fill iframe
@@ -504,26 +509,25 @@ FCK.ProtectImageClick = function(refid) {
 	window.parent.WMU_show( parseInt(refid) );
 }
 
+// to simplify things we actually replace old image with the new one
 FCK.ProtectImageUpdate = function(refid, wikitext) {
 	FCK.log('updating #' + refid +' with >>' + wikitext + '<<');
-
-	var oldImage = FCK.GetElementByRefId(refid);
-	FCK.log(oldImage);
 
 	// update metaData
 	var params = wikitext.substring(2, wikitext.length-2).split('|');
 	FCK.wysiwygData[refid].href = params.shift();
 	FCK.wysiwygData[refid].description = params.join('|');
 
-	// get image placeholder
-	iframe = FCK.EditorDocument.getElementById('image' + refid);
+	FCK.log(FCK.wysiwygData[refid]);
 
 	// parse given wikitext
 	var callback = {
 		success: function(o) {
 			FCK = o.argument.FCK;
-			iframe = o.argument.iframe;
 			refid =  o.argument.refid;
+		
+			var oldImage = FCK.GetElementByRefId(refid);
+			FCK.log(oldImage);
 
 			result = eval('(' + o.responseText + ')');
 			html = result.parse.text['*'];
@@ -531,29 +535,27 @@ FCK.ProtectImageUpdate = function(refid, wikitext) {
 			// remove newPP comment and whitespaces
 			html = FCK.YAHOO.lang.trim(html.split('<!-- \nNewPP limit report')[0]);
 
-			// fill and rescale iframe
-			FCK.wysiwygData[refid].html = html;
-			FCK.ProtectImageSetup(refid);
+			// insert html into editing area (before old image)...
+			var wrapper = FCKTools.GetElementDocument(oldImage).createElement('DIV');
+			oldImage.parentNode.insertBefore(wrapper, oldImage);
+			wrapper.innerHTML = html;
 
-			// root element inside iframe (image thumb wrapper)
-			var iframeDoc = iframe.contentDocument ? iframe.contentDocument : iframe.document /* ie */;
-			var rootElement = iframeDoc.body.firstChild;
-			FCK.wysiwygData[refid].html = rootElement.innerHTML;
+			// is "simple" image wrapped by <p></p> ?
+			if (html.substr(0,3) == '<p>') {
+				// remove wrapping <p></p>
+				wrapper.innerHTML = html.substr(3, html.length-7);
+			}
 
-			iframe.className = rootElement.className;
+			// ...and "protect" it
+			wrapper.firstChild.setAttribute('refid', refid);
+			FCK.ProtectImage(wrapper.firstChild);
 
-			// get image dimensions (including padding) and rescale iframe
-			var size = [rootElement.clientWidth, rootElement.clientHeight];
-			iframe.style.width = parseInt(size[0] + 6) + 'px';
-			iframe.style.height = parseInt(size[1] + 6) + 'px';
-			
-			// remove rootElement by moving up his children nodes
-			FCKDomTools.RemoveNode(rootElement, true);
-
-			FCK.log(FCK.wysiwygData[refid]);
+			// remove wrapper and old image
+			FCKDomTools.RemoveNode(oldImage, false); // including child nodes
+			FCKDomTools.RemoveNode(wrapper, true);
 		},
 		failure: function(o) {},
-		argument: {'FCK': FCK, 'refid': refid, 'iframe': iframe}
+		argument: {'FCK': FCK, 'refid': refid}
 	}
 
 	FCK.YAHOO.util.Connect.asyncRequest(
