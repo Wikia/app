@@ -158,8 +158,16 @@ FCK.GetFreeRefId = function() {
 	return FCK.wysiwygData.length;
 }
 
+FCK.GetElementByRefId = function(refId) {
+	return FCK.NodesWithRefId[refId];
+}
+
+FCK.NodesWithRefId = {};
+
 FCK.GetNodesWithRefId = function() {
 	var nodes = [];
+	
+	FCK.NodesWithRefId = {};
 
 	// get elements using XPath (at least try)
 	if (FCKBrowserInfo.IsIE) {
@@ -168,7 +176,11 @@ FCK.GetNodesWithRefId = function() {
 			return (node.getAttribute('refid') != undefined);
 		};
 
-		var nodes = FCK.YAHOO.util.Dom.getElementsBy(method, false, FCK.EditorDocument.body, false);
+		var add = function(node) {
+			FCK.NodesWithRefId[ node.getAttribute('refid') ] = node;
+		}
+
+		var nodes = FCK.YAHOO.util.Dom.getElementsBy(method, false, FCK.EditorDocument.body, add);
 	}
 	else {
 		// @see http://www.w3schools.com/XPath/xpath_examples.asp
@@ -176,7 +188,9 @@ FCK.GetNodesWithRefId = function() {
 		var results = FCK.EditorDocument.evaluate('//@refid', FCK.EditorDocument, null, XPathResult.ANY_TYPE, null);
 
 		while (attr = results.iterateNext()) {
-			nodes.push(attr.ownerElement);
+			node = attr.ownerElement;
+			nodes.push(node);
+			FCK.NodesWithRefId[ node.getAttribute('refid') ] = node;
 		}
 	}
 
@@ -384,6 +398,7 @@ FCK.ProtectImage = function(image) {
 		// check whether given image exists
 		FCK.wysiwygData[refid].exists = (!FCK.YD.hasClass(image, 'new'));
 
+		FCK.NodesWithRefId[ refid ] = image;
 		return;
 	}
 
@@ -422,6 +437,8 @@ FCK.ProtectImageSetup = function(refid) {
 	}
 
 	var iframe = FCK.EditorDocument.getElementById('image' + refid);
+
+	FCK.NodesWithRefId[ refid ] = iframe;
 
 	// fill iframe
 	var iframeDoc = iframe.contentDocument ? iframe.contentDocument : iframe.document /* ie */;
@@ -488,8 +505,10 @@ FCK.ProtectImageClick = function(refid) {
 }
 
 FCK.ProtectImageUpdate = function(refid, wikitext) {
-	// TODO: call it from WMU to update and rescale iframe
 	FCK.log('updating #' + refid +' with >>' + wikitext + '<<');
+
+	var oldImage = FCK.GetElementByRefId(refid);
+	FCK.log(oldImage);
 
 	// update metaData
 	var params = wikitext.substring(2, wikitext.length-2).split('|');
