@@ -28,11 +28,13 @@ class BlogListPage extends Article {
 			/**
 			 * blog article
 			 */
-			$aTitleParts = explode('/', $this->mTitle->mPrefixedText, 2);
-			if(isset($aTitleParts[1]) && !empty($aTitleParts[1])) {
-				$this->mTitle->mPrefixedText = $aTitleParts[1];
+			$oldPrefixedText = $this->mTitle->mPrefixedText;
+			list( $author, $prefixedText )  = explode('/', $this->mTitle->mPrefixedText, 2);
+			if( isset( $prefixedText ) && !empty( $prefixedText ) ) {
+				$this->mTitle->mPrefixedText = $prefixedText;
 			}
 			Article::view();
+			$this->mTitle->mPrefixedText = $oldPrefixedText;
 
 			if( 1 ) {
 				$pageid = $this->getLatest();

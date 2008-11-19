@@ -36,6 +36,8 @@ class BlogLockdown {
 		/**
 		 * for other actions we demand that user has to be logged in
 		 */
+		Wikia::log( __METHOD__, "action", $action );
+		Wikia::log( __METHOD__, "result", $result );
 		if( $user->isAnon( ) ) {
 			Wikia::log( __METHOD__, "user", "anonymous" );
 			return true;
