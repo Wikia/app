@@ -38,8 +38,9 @@ class BlogListPage extends Article {
 			$this->mTitle->mPrefixedText = $oldPrefixedText;
 
 			$this->mProps = $this->getProps();
+			$templateParams = array();
 
-			if( 1 ) {
+			if( isset( $this->mProps[ "voting" ] ) && $this->mProps[ "voting" ] == 1 ) {
 				$pageid = $this->getLatest();
 				$FauxRequest = new FauxRequest( array(
 					"action" => "query",
@@ -68,15 +69,21 @@ class BlogListPage extends Article {
 				$hidden_star = $voted ? ' style="display: none;"' : '';
 				$rating = round($rating * 2)/2;
 				$ratingPx = round($rating * 17);
+				$templateParams = $templateParams + array(
+					"voted"          => $voted,
+					"rating"         => $rating,
+					"ratingPx"       => $ratingPx,
+					"hidden_star"    => $hidden_star,
+					"voting_enabled" => true,
+				);
 			}
+			else {
+				$templateParams[ "voting_enabled" ] = false;
+			}
+			$templateParams[ "edited" ] = $wgContLang->timeanddate( $this->getTimestamp() );
+
 			$tmpl = new EasyTemplate( dirname( __FILE__ ) . '/templates/' );
-			$tmpl->set_vars( array(
-				"voted" => $voted,
-				"rating" => $rating,
-				"hidden_star" => $hidden_star,
-				"ratingPx" => $ratingPx,
-				"edited" => $wgContLang->timeanddate( $this->getTimestamp() )
-			) );
+			$tmpl->set_vars(  );
 			$wgOut->addHTML( $tmpl->execute("footer") );
 			$this->showBlogComments();
 		}
@@ -251,7 +258,7 @@ class BlogListPage extends Article {
 
 		$dbr = wfGetDB( DB_SLAVE );
 		$res = $dbr->select(
-			array( "pp_page" ),
+			array( "page_props" ),
 			array( "*" ),
 			array( "pp_page" => $this->getID() ),
 			__METHOD__
