@@ -625,6 +625,7 @@ class PreferencesForm {
 				'action' => $titleObj->getLocalUrl(),
 				'method' => 'post',
 				'id'     => 'mw-preferences-form',
+				'enctype'=> 'multipart/form-data',
 			) ) .
 			Xml::openElement( 'div', array( 'id' => 'preferences' ) )
 		);
@@ -767,6 +768,11 @@ class PreferencesForm {
 					)
 				);
 			}
+		}
+
+		$userAdditionalProfileHtml = "";
+		if( wfRunHooks( 'AdditionalUserProfilePreferences', array( $this, &$userAdditionalProfileHtml ) ) ) {
+			$wgOut->addHtml( $userAdditionalProfileHtml );
 		}
 
 		# Password
