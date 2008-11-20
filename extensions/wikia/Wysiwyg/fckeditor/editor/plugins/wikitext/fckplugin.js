@@ -474,11 +474,16 @@ FCK.ProtectImageSetup = function(refid) {
 
 	// block onclick / onmousedown events
 	FCKTools.AddEventListener(iframeDoc, 'click', function(e) {
-		e = FCK.YE.getEvent(e); 
-		FCK.YE.stopEvent( e );
+		var e = FCK.YE.getEvent(e);
+		var target = FCK.YE.getTarget(e);
+
+		// ignore buttons different then left
 		if (e.button == 0) {
-			FCK.ProtectImageClick(this.body.getAttribute('refid'));
+			refid = parseInt(FCKTools.GetElementDocument(target).body.getAttribute('refid'));
+			FCK.ProtectImageClick(refid);
 		}
+
+		FCK.YE.stopEvent(e);
 	});
 
 	FCK.BlockEvent(iframeDoc, 'contextmenu');
@@ -486,8 +491,8 @@ FCK.ProtectImageSetup = function(refid) {
 
 	// reload iframe when moved inside DOM tree (fixes FF bug)
 	FCKTools.AddEventListener(iframeWin, 'unload', function(e) {
-		var target = FCK.YAHOO.util.Event.getTarget(e);
-		var refId = target.body.getAttribute('refid');
+		var target = FCK.YE.getTarget(e);
+		var refid = parseInt(target.body.getAttribute('refid'));
 
 		FCK.log('iframe #' + refid  + ' unload captured');
 
