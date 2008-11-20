@@ -391,8 +391,8 @@ FCK.ProtectImage = function(image) {
 	//FCK.log(image);
 	var refid = image.getAttribute('refid');
 
-	// support IE's contentEditable
-	if (FCKBrowserInfo.IsIE) {
+	// for browsers supporting contentEditable
+	if (FCK.UseContentEditable) {
 		// don't use iframes -> use contentEditable
 		image.setAttribute('contentEditable', false);
 
@@ -463,7 +463,6 @@ FCK.ProtectImage = function(image) {
 	}
 
 	var iframe = FCK.EditingArea.Document.createElement('iframe');
-	iframe.id  = 'image' + refid;
 	iframe.src = '';
 
 	iframe.setAttribute('refid', refid);
@@ -486,6 +485,9 @@ FCK.ProtectImage = function(image) {
 	var re = /class=\"new\"/;
 	FCK.wysiwygData[refid].exists = !re.test(FCK.wysiwygData[refid].html);
 
+	// update list of nodes with refId
+	FCK.NodesWithRefId[refid] = iframe;
+
 	// fill iframe and setup events
 	FCK.ProtectImageSetup(refid);
 }
@@ -496,14 +498,12 @@ FCK.ProtectImageSetup = function(refid) {
 		return true;
 	}
 
-	var iframe = FCK.EditorDocument.getElementById('image' + refid);
+	var iframe = FCK.GetElementByRefId(refid);
 
 	// fired during removal of iframe
 	if (!iframe) {
 		return true;
 	}
-
-	FCK.NodesWithRefId[ refid ] = iframe;
 
 	// fill iframe
 	var iframeDoc = iframe.contentDocument ? iframe.contentDocument : iframe.document /* ie */;
@@ -623,7 +623,7 @@ FCK.ProtectImageUpdate = function(refid, wikitext, extraData) {
 			FCKDomTools.RemoveNode(wrapper, true);
 
 			// fix really strange bug: CSS disappear from iframe
-			if (!FCKBrowserInfo.IsIE) {
+			if (!FCK.UseContentEditable) {
 				setTimeout('FCK.ProtectImageSetup('+refid+')', 500);
 			}
 		},
@@ -880,8 +880,11 @@ FCK.TemplatePreviewSetName = function(refid, name) {
 }
 
 //
-// misc
+// runtime setup
 //
+
+// detect browsers support "contentEditable"
+FCK.UseContentEditable = FCKBrowserInfo.IsIE;
 
 // YUI reference
 FCK.YAHOO = window.parent.YAHOO;
