@@ -14,6 +14,7 @@ $wgHooks[ "ArticleFromTitle" ][] = "BlogListPage::ArticleFromTitle";
 
 class BlogListPage extends Article {
 
+	public $mProps;
 	/**
 	 * overwritten Article::view function
 	 */
@@ -35,6 +36,8 @@ class BlogListPage extends Article {
 			}
 			Article::view();
 			$this->mTitle->mPrefixedText = $oldPrefixedText;
+
+			$this->mProps = $this->getProps();
 
 			if( 1 ) {
 				$pageid = $this->getLatest();
@@ -92,8 +95,10 @@ class BlogListPage extends Article {
 	 * @access private
 	 */
 	private function showBlogComments() {
-		global $wgOut;
-		
+		global $wgOut, $wgDevelEnvironment;
+
+		if( ! $wgDevelEnvironment ) return;
+
 		$page = BlogComments::newFromTitle( $this->mTitle );
 	    $wgOut->addHTML( $page->render() );
 
@@ -230,5 +235,33 @@ class BlogListPage extends Article {
 				__METHOD__
 			);
 		}
+	}
+
+	/**
+	 * get properties for page, maybe it should be cached?
+	 *
+	 * @access public
+	 *
+	 * @return Array
+	 */
+	public function getProps() {
+
+		wfProfileIn( __METHOD__ );
+		$return = array();
+
+		$dbr = wfGetDB( DB_SLAVE );
+		$res = $dbr->select(
+			array( "pp_page" ),
+			array( "*" ),
+			array( "pp_page" => $this->getID() ),
+			__METHOD__
+		);
+		while( $row = $dbr->fetchObject( $res ) ) {
+			$return[ $row->pp_propname ] = $row->pp_value;
+		}
+		$dbr->freeResult( $res );
+		wfProfileOut( __METHOD__ );
+
+		return $return;
 	}
 }
