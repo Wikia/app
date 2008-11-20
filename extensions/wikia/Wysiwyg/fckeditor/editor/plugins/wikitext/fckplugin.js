@@ -795,7 +795,7 @@ FCK.TemplatePreviewAdd = function(placeholder) {
 	if (previewDiv.firstChild && previewDiv.firstChild.nodeType == 1) {
 		previewDiv.firstChild.style.padding = 0;
 		previewDiv.firstChild.style.margin = 0;
-		previewDiv.firstChild.style.float = 'none';
+		previewDiv.firstChild.style.float = 'none !important';
 		previewDiv.firstChild.removeAttribute('align');
 	}
 }
@@ -867,7 +867,7 @@ FCK.TemplatePreviewSetHTML = function(refid, html) {
 		if (preview.firstChild && preview.firstChild.nodeType == 1) {
 			preview.firstChild.style.padding = 0;
 			preview.firstChild.style.margin = 0;
-			preview.firstChild.style.float = 'none';
+			preview.firstChild.style.float = 'none !important';
 			preview.firstChild.removeAttribute('align');
 		}
 	}
