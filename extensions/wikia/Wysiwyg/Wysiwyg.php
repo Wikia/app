@@ -347,7 +347,9 @@ function Wysiwyg_SetRefId($type, $params, $addMarker = true, $returnId = false) 
 		case 'external link':
 			$data['href'] = $params['link'];
 //			$data['description'] = $params['wasblank'] ? '' : $params['text'];
-			$data['original'] = htmlspecialchars_decode(preg_replace($regexPreProcessor['search'], $regexPreProcessor['replace'], $params['original']));
+			if ($params['original'] != '') {
+				$data['original'] = htmlspecialchars_decode(preg_replace($regexPreProcessor['search'], $regexPreProcessor['replace'], $params['original']));
+			}
 			break;
 
 		case 'internal link':
@@ -362,14 +364,18 @@ function Wysiwyg_SetRefId($type, $params, $addMarker = true, $returnId = false) 
 				}
 			}
 //			$data['description'] = preg_replace('%\x7f-wtb-(\d+)-\x7f.*?\x7f-wte-\1-\x7f%sie', '$wgWysiwygMetaData[\\1]["originalCall"];', $data['description']);
-			$data['original'] = htmlspecialchars_decode(preg_replace($regexPreProcessor['search'], $regexPreProcessor['replace'], $params['original']));
+			if ($params['original'] != '') {
+				$data['original'] = htmlspecialchars_decode(preg_replace($regexPreProcessor['search'], $regexPreProcessor['replace'], $params['original']));
+			}
 			break;
 
 		case 'internal link: media':
 		case 'category':
 			$data['href'] = ($params['noforce'] ? '' : ':') . $params['link'];
 //			$data['description'] = $params['wasblank'] ? '' : $params['text'];
-			$data['original'] = htmlspecialchars_decode(preg_replace($regexPreProcessor['search'], $regexPreProcessor['replace'], $params['original']));
+			if ($params['original'] != '') {
+				$data['original'] = htmlspecialchars_decode(preg_replace($regexPreProcessor['search'], $regexPreProcessor['replace'], $params['original']));
+			}
 			$result = '[[' . $data['href'] . ($params['wasblank'] ? '' : '|' . $params['text']) . ']]';
 			break;
 
@@ -377,7 +383,9 @@ function Wysiwyg_SetRefId($type, $params, $addMarker = true, $returnId = false) 
 			$data['href'] = ($params['noforce'] ? '' : ':') . $params['link'];
 //			$data['description'] = $params['wasblank'] ? '' : $params['text'];
 //			$data['description'] = preg_replace('%\x7f-wtb-(\d+)-\x7f.*?\x7f-wte-\1-\x7f%sie', '$wgWysiwygMetaData[\\1]["originalCall"];', $data['description']);
-			$data['original'] = htmlspecialchars_decode(preg_replace($regexPreProcessor['search'], $regexPreProcessor['replace'], $params['original']));
+			if ($params['original'] != '') {
+				$data['original'] = htmlspecialchars_decode(preg_replace($regexPreProcessor['search'], $regexPreProcessor['replace'], $params['original']));
+			}
 			break;
 
 		case 'external link: raw image':
