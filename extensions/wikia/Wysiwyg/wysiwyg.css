@@ -1,0 +1,18 @@
+.mw-editTools {
+	display: none;
+}
+#editform #toolbar {
+	position: relative;
+	visibility: hidden;
+}
+#wpTextbox1 {
+	visibility: hidden;
+}
+#editform {
+	background: transparent url('fckeditor/editor/skins/default/images/progress_transparent.gif') no-repeat 50% 35%;
+	clear: both;
+}
+#editform.source_mode,
+#editform.wysiwyg_mode {
+	background: none;
+}
