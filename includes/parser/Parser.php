@@ -1305,9 +1305,9 @@ class Parser
 
 			if (!empty($wgWysiwygParserEnabled)) {
 				global $wgWikitext;
-				$orginalWikitext = '';
+				$originalWikitext = '';
 				if (preg_match('/start-(\d+)-stop/', $trail, $matches)) {
-					$orginalWikitext = $wgWikitext[$matches[1]];
+					$originalWikitext = $wgWikitext[$matches[1]];
 					$trail = preg_replace('/start-\d+-stop/', '', $trail);
 				}
 			}
@@ -1339,7 +1339,7 @@ class Parser
 			$trail = $this->replaceFreeExternalLinks( $trail );
 
 			if (!empty($wgWysiwygParserEnabled)) {
-				Wysiwyg_SetRefId('external link', array('text' => &$text, 'link' => $url, 'wasblank' => $wasblank, 'original' => $orginalWikitext));
+				Wysiwyg_SetRefId('external link', array('text' => &$text, 'link' => $url, 'wasblank' => $wasblank, 'original' => $originalWikitext));
 			}
 
 			# Use the encoded URL
@@ -1577,9 +1577,9 @@ class Parser
 
 			if (!empty($wgWysiwygParserEnabled)) {
 				global $wgWikitext;
-				$orginalWikitext = '';
+				$originalWikitext = '';
 				if (preg_match('/start-(\d+)-stop/', $line, $matches)) {
-					$orginalWikitext = $wgWikitext[$matches[1]];
+					$originalWikitext = $wgWikitext[$matches[1]];
 					$line = preg_replace('/start-\d+-stop/', '', $line);
 				}
 			}
@@ -1743,7 +1743,7 @@ class Parser
 						# actually, this will parse them in any other parameters, too,
 						# but it might be hard to fix that, and it doesn't matter ATM
 						if (!empty($wgWysiwygParserEnabled)) {
-							Wysiwyg_SetRefId('image', array('text' => &$text, 'link' => $link, 'wasblank' => $wasblank, 'noforce' => $noforce, 'original' => $orginalWikitext));
+							Wysiwyg_SetRefId('image', array('text' => &$text, 'link' => $link, 'wasblank' => $wasblank, 'noforce' => $noforce, 'original' => $originalWikitext));
 							$wgWysiwygParserEnabled = false;
 							$text = $this->replaceExternalLinks($text);
 							$text = $this->replaceInternalLinks($text);
@@ -1760,7 +1760,7 @@ class Parser
 						continue;
 					} else {
 						if (!empty($wgWysiwygParserEnabled)) {
-							$FCKtmp = Wysiwyg_SetRefId('image', array('text' => &$text, 'link' => $link, 'wasblank' => $wasblank, 'noforce' => $noforce, 'original' => $orginalWikitext));
+							$FCKtmp = Wysiwyg_SetRefId('image', array('text' => &$text, 'link' => $link, 'wasblank' => $wasblank, 'noforce' => $noforce, 'original' => $originalWikitext));
 							$s .= $prefix . $this->armorLinks($FCKtmp) . $trail;
 							continue;	//this continue is added to prevent adding additional link by parser as it's used above
 						} else {	//original action
@@ -1776,7 +1776,7 @@ class Parser
 					wfProfileIn( "$fname-category" );
 					$s = rtrim($s . "\n"); # bug 87
 					if (!empty($wgWysiwygParserEnabled)) {
-						$FCKtmp = Wysiwyg_SetRefId('category', array('text' => &$text, 'link' => $link, 'wasblank' => $wasblank, 'noforce' => $noforce, 'original' => $orginalWikitext), false);
+						$FCKtmp = Wysiwyg_SetRefId('category', array('text' => &$text, 'link' => $link, 'wasblank' => $wasblank, 'noforce' => $noforce, 'original' => $originalWikitext), false);
 					}
 					if ( $wasblank ) {
 						$sortkey = $this->getDefaultSort();
@@ -1858,7 +1858,7 @@ class Parser
 				}
 			}
 			if (!empty($wgWysiwygParserEnabled)) {
-				Wysiwyg_SetRefId('internal link', array('text' => &$text, 'link' => $link, 'trail' => $trail, 'wasblank' => $wasblank, 'noforce' => $noforce, 'original' => $orginalWikitext));
+				Wysiwyg_SetRefId('internal link', array('text' => &$text, 'link' => $link, 'trail' => $trail, 'wasblank' => $wasblank, 'noforce' => $noforce, 'original' => $originalWikitext));
 			}
 			$s .= $this->makeLinkHolder( $nt, $text, '', $trail, $prefix );
 		}
