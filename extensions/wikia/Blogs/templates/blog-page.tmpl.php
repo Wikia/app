@@ -35,7 +35,7 @@ foreach ($aRows as $pageId => $aRow) {
 	}
 	/* s: COMMENTS */
 ?>	
-<div class="wk_blogs_comments"><?=$skin->makeLinkObj($oTitle, wfMsg('blog_comments', $aRow['comments']))?> | <?=$skin->makeLinkObj($oTitle, wfMsg('blog_continuereading'))?></div>
+<div class="wk_blogs_comments"><?=$skin->makeLinkObj($oTitle, wfMsg('blog-comments', $aRow['comments']))?> | <?=$skin->makeLinkObj($oTitle, wfMsg('blog-continuereading'))?></div>
 <?
 	/* e: COMMENTS */
 /* e: SUMMARY */

@@ -10,7 +10,7 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 	exit( 1 ) ;
 }
 
-$wgHooks[ "ArticleFromTitle" ][] = "BlogListPage::hook";
+$wgHooks[ "ArticleFromTitle" ][] = "BlogListPage::ArticleFromTitle";
 
 class BlogListPage extends Article {
 
@@ -92,6 +92,10 @@ class BlogListPage extends Article {
 	 * @access private
 	 */
 	private function showBlogComments() {
+		global $wgOut;
+		
+		$page = BlogComments::newFromTitle( $this->mTitle );
+	    $wgOut->addHTML( $page->render() );
 
 	}
 
@@ -191,7 +195,7 @@ class BlogListPage extends Article {
 	 * @static
 	 * @access public
 	 */
-	static public function hook( &$Title, &$Article ) {
+	static public function ArticleFromTitle( &$Title, &$Article ) {
 		global $wgRequest;
 
 		if( $Title->getNamespace() !== NS_BLOG_ARTICLE ) {
@@ -211,9 +215,20 @@ class BlogListPage extends Article {
 	 */
 	public function saveProps(Array $aPropsArray) {
 		$dbw = wfGetDB( DB_MASTER );
-		foreach($aPropsArray as $sPropName => $sPropValue) {
-			$dbw->query("INSERT INTO page_props (pp_page, pp_propname, pp_value) VALUES ('" . $this->getID() . "', '" . addslashes($sPropName). "','" . addslashes($sPropValue) . "')");
+		foreach( $aPropsArray as $sPropName => $sPropValue) {
+			$dbw->replace(
+				"page_props",
+				array(
+					"pp_page",
+					"pp_propname"
+				),
+				array(
+					"pp_page" => $this->getID(),
+					"pp_propname" => $sPropName,
+					"pp_value" => $sPropValue
+				),
+				__METHOD__
+			);
 		}
 	}
-
 }
