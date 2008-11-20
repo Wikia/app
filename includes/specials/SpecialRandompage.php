@@ -24,7 +24,7 @@ class RandomPage extends SpecialPage {
 
 	public function setNamespace ( $ns ) {
 		if( $ns < NS_MAIN ) $ns = NS_MAIN;
-		$this->namespaces = $ns;
+		$this->namespaces = array( $ns );
 	}
 
 	// select redirects instead of normal pages?
