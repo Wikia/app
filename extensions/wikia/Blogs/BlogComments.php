@@ -119,38 +119,37 @@ class BlogComments {
 	public function render() {
 		global $wgParser, $wgContLang;
 
-		$pages = $this->getCommentPages();
 		/**
 		 * $pages is array of comment titles
 		 */
+		$pages    = $this->getCommentPages();
+
+		$template = new EasyTemplate( dirname( __FILE__ ) . '/templates/' );
+
 		if( ! count( $pages ) ) {
 			/**
 			 * no comments at all
 			 */
-			return wfMsg( "blog-zero-comments" );
+			$template->set_vars( array( "comments" => false ) );
 		}
 		else {
-			$output = "";
-			$template = new EasyTemplate( dirname( __FILE__ ) . '/templates/' );
 			foreach( $pages as $page ) {
 				/**
 				 * page is Title object
 				 */
 				$revision = Revision::newFromTitle( $page );
-				$template->set_vars(
-					array(
-						"comment" => $revision,
-						"autor" => User::newFromId( $revision->getUser() ),
-						"parser" => $wgParser,
-						"timestamp" => $wgContLang->timeanddate( $revision->getTimestamp() )
-					),
-					true /** refresh **/
-				);
-				$output .= $template->execute( "comment" );
-			}
 
-			return $output;
+				$comments[] = array(
+					"comment" => $revision,
+					"autor" => User::newFromId( $revision->getUser() ),
+					"parser" => $wgParser,
+					"timestamp" => $wgContLang->timeanddate( $revision->getTimestamp() )
+				);
+			}
+			$template->set_vars( array( "comments" => $comments ) );
 		}
+
+		return $template->execute( "comment" );
 	}
 
 	/**
