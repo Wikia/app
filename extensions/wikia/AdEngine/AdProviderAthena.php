@@ -27,7 +27,8 @@ class AdProviderAthena implements iAdProvider {
 
 		global $wgDBname, $wgLang, $wgUser, $wgTitle;
 
-		$out =  '<script type="text/javascript" src="/extensions/wikia/AdEngine/Athena.js"></script>' . "\n";
+		$out =  '<script tyle="text/javascript" src="/extensions/wikia/AdEngine/json2.js"></script>' . "\n" .
+			'<script type="text/javascript" src="/extensions/wikia/AdEngine/Athena.js"></script>' . "\n";
 
 		// Page vars are variables that you want available in javascript for serving ads
 		$pageVars = array();

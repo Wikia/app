@@ -266,41 +266,6 @@ Athena.print_r = function (arr,level) {
 	return dumped_text;
 };
 
-/*
- * Converts the given data structure to a JSON string.
- * Argument: arr - The data structure that must be converted to JSON
- * http://www.openjs.com/scripts/data/json_encode.php
- */
-Athena.json_encode = function (arr) {
-    var parts = [];
-    var is_list = (Object.prototype.toString.apply(arr) === '[object Array]');
-
-    for(var key in arr) {
-    	var value = arr[key];
-        if(typeof value == "object") { //Custom handling for arrays
-            if(is_list) parts.push(Athena.json_encode(value)); /* :RECURSION: */
-            else parts[key] = Athena.json_encode(value); /* :RECURSION: */
-        } else {
-            var str = "";
-            if(!is_list) str = '"' + key + '":';
-
-            //Custom handling for multiple data types
-            if(typeof value == "number") str += value; //Numbers
-            else if(value === false) str += 'false'; //The booleans
-            else if(value === true) str += 'true';
-            else str += '"' + value + '"'; //All other things
-            // :TODO: Is there any more datatype we should be in the lookout for? (Functions?)
-
-            parts.push(str);
-        }
-    }
-    var json = parts.join(",");
-    
-    if(is_list) return '[' + json + ']';//Return numerical JSON
-    return '{' + json + '}';//Return associative JSON
-};
-
-
 /* Nick wrote: This code looks at the query string supplied in the url and parses it.
  * It returns an associative array of url decoded name value pairs
  */
@@ -380,6 +345,8 @@ Athena.getMinuteTargeting = function (){
 };
 
 
+/* Alias for our JSON encoder; see json2.js for code */
+Athena.json_encode = JSON.stringify;
 
 // Init
 Athena.setup();
