@@ -140,6 +140,10 @@ FCK.SwitchEditMode = function() {
 	return true;
 }
 
+//
+// misc functions
+//
+
 FCK.InsertDirtySpanBefore = function(node) {
 	var span = FCKTools.GetElementDocument(node).createElement('SPAN');
 	span.setAttribute('type', '_moz');
@@ -198,6 +202,19 @@ FCK.GetNodesWithRefId = function() {
 
 	return nodes;
 }
+
+//
+// block given event (prevenDefault + stopPropagation)
+//
+FCK.BlockEvent = function(elem, eventType) {
+	FCKTools.AddEventListener(elem, eventType, function(e) {
+		FCK.YE.stopEvent( FCK.YE.getEvent(e) );
+	});
+}
+
+//
+// setup handlers for placeholders when in wysiwyg mode
+//
 
 FCK.Events.AttachEvent( 'OnAfterSetHTML', function() {
 	if(FCK.EditingArea.TargetElement.className == 'childrenHidden') {
@@ -378,22 +395,15 @@ FCK.ProtectImage = function(image) {
 	if (image.nodeName.IEquals('a')) {
 		// block onclick / onmousedown events
 		FCKTools.AddEventListener(image, 'click', function(e) {
-			e.preventDefault();
-			e.stopPropagation();
+			e = FCK.YE.getEvent(e); 
+			FCK.YE.stopEvent( e );
 			if (e.button == 0) {
 				FCK.ProtectImageClick(this.getAttribute('refid'));
 			}
 		});
 
-		FCKTools.AddEventListener(image, 'contextmenu', function(e) {
-			e.preventDefault();
-			e.stopPropagation();
-		});
-
-		FCKTools.AddEventListener(image, 'mousedown', function(e) {
-			e.preventDefault();
-			e.stopPropagation();
-		});
+		FCK.BlockEvent(image, 'contextmenu');
+		FCK.BlockEvent(image, 'mousedown');
 
 		// check whether given image exists
 		FCK.wysiwygData[refid].exists = (!FCK.YD.hasClass(image, 'new'));
@@ -462,25 +472,19 @@ FCK.ProtectImageSetup = function(refid) {
 	iframeDoc.close();
 	iframeDoc.body.setAttribute('refid', refid);
 
-	// set event handlers
+	// block onclick / onmousedown events
 	FCKTools.AddEventListener(iframeDoc, 'click', function(e) {
-		e.preventDefault();
-		e.stopPropagation();
+		e = FCK.YE.getEvent(e); 
+		FCK.YE.stopEvent( e );
 		if (e.button == 0) {
 			FCK.ProtectImageClick(this.body.getAttribute('refid'));
 		}
 	});
 
-	FCKTools.AddEventListener(iframeDoc, 'contextmenu', function(e) {
-		e.preventDefault();
-		e.stopPropagation();
-	});
+	FCK.BlockEvent(iframeDoc, 'contextmenu');
+	FCK.BlockEvent(iframeDoc, 'mousedown');
 
-	FCKTools.AddEventListener(iframeDoc, 'mousedown', function(e) {
-		e.preventDefault();
-		e.stopPropagation();
-	});
-
+	// reload iframe when moved inside DOM tree (fixes FF bug)
 	FCKTools.AddEventListener(iframeWin, 'unload', function(e) {
 		var target = FCK.YAHOO.util.Event.getTarget(e);
 		var refId = target.body.getAttribute('refid');
@@ -691,14 +695,6 @@ FCK.TemplatePreviewAdd = function(placeholder) {
 	// remove preview div from editing area
 	preview.parentNode.removeChild(preview);
 
-	// remove any whitespaces from the end of placeholder's parent
-	/*
-	lastChild = placeholder.parentNode.lastChild;
-	if (lastChild && lastChild.nodeType == 3 && ( (lastChild.textContent || lastChild.innerText).Trim() == '') ) {
-		lastChild.parentNode.removeChild(lastChild);
-	}
-	*/
-
 	// register events handlers
 	FCKTools.AddEventListener(placeholder, 'mouseover', function(e) {
 		FCK.TemplatePreviewShow(FCK.YAHOO.util.Event.getTarget(e));
@@ -714,16 +710,18 @@ FCK.TemplatePreviewAdd = function(placeholder) {
 
 	// template editor
 	FCKTools.AddEventListener(placeholder, 'click', function(e) {
-		var target = FCK.YAHOO.util.Event.getTarget(e);
+		e = FCK.YE.getEvent(e);
+		var target = FCK.YE.getTarget(e);
 		FCK.TemplateRefId = target.getAttribute('refid');
 		FCK.TemplateClickCommand.Execute();
 	});
 
 	FCKTools.AddEventListener(previewDiv, 'click', function(e) {
-		e.preventDefault();
-		e.stopPropagation();
+		e = FCK.YE.getEvent(e);
+		FCK.YE.stopEvent(e);
 
-		FCK.TemplateRefId = this.getAttribute('refid');
+		// pass refId to template editor
+		FCK.TemplateRefId = FCK.TemplatePreviewCloud.getAttribute('refid');
 		FCK.TemplateClickCommand.Execute();
 	});
 
@@ -782,6 +780,8 @@ FCK.TemplatePreviewShow = function(placeholder) {
 	// show template preview and cloud
 	FCK.TemplatePreviewCloud.style.visibility = 'visible';
 	FCK.TemplatePreviewCloud.className = showUnder ? 'cloudUnder' : 'cloudOver';
+
+	FCK.TemplatePreviewCloud.setAttribute('refid', refId);
 }
 
 FCK.TemplatePreviewHide = function() {
