@@ -85,6 +85,12 @@ span._moz_dirty
 	visibility: hidden;
 }
 
+.ieProtected,
+.ieProtected a,
+.ieProtected div {
+	cursor: default !important;
+}
+
 /**
  * Just uncomment the following block if you want to avoid spaces between
  * paragraphs. Remember to apply the same style in your output front end page.

@@ -390,6 +390,46 @@ FCK.CheckInternalLink = function(title, link) {
 FCK.ProtectImage = function(image) {
 	//FCK.log(image);
 	var refid = image.getAttribute('refid');
+
+	// support IE's contentEditable
+	if (FCKBrowserInfo.IsIE) {
+		// don't use iframes -> use contentEditable
+		image.setAttribute('contentEditable', false);
+
+		FCKTools.AddEventListener(image, 'click', function(e) {
+			var e = FCK.YE.getEvent(e);
+			var target = FCK.YE.getTarget(e);
+
+			FCK.YE.stopEvent(e);
+
+			// ignore buttons different then left
+			if (e.button == 0) {
+				// move to the parent with refId
+				refid = target.getAttribute('refid');
+
+				while ( refid == undefined ) {
+					target = target.parentNode;
+					refid = target.getAttribute('refid');
+				}
+
+				FCK.ProtectImageClick( parseInt(refid) );
+			}
+		});
+
+		FCK.BlockEvent(image, 'contextmenu');
+		FCK.BlockEvent(image, 'mousedown');
+
+		FCK.YD.addClass(image, 'ieProtected');
+
+		// check whether given image exists
+		FCK.wysiwygData[refid].exists = image.nodeName.IEquals('a') 
+			? (!FCK.YD.hasClass(image, 'new'))
+			: !( /class=\"new\"/.test(image.innerHTML) );
+
+		// store node with refId
+		FCK.NodesWithRefId[ refid ] = image;
+		return;
+	}
 	
 	// simple image
 	if (image.nodeName.IEquals('a')) {
