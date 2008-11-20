@@ -83,7 +83,7 @@ class BlogListPage extends Article {
 			$templateParams[ "edited" ] = $wgContLang->timeanddate( $this->getTimestamp() );
 
 			$tmpl = new EasyTemplate( dirname( __FILE__ ) . '/templates/' );
-			$tmpl->set_vars(  );
+			$tmpl->set_vars( $templateParams );
 			$wgOut->addHTML( $tmpl->execute("footer") );
 			$this->showBlogComments();
 		}
