@@ -243,31 +243,6 @@ addOnloadHook(initEditor);
 #editform.wysiwyg_mode {
 	background: none;
 }
-
-#wysiwygTemplatePreviewCloud {
-	min-width: 50px;
-	max-width: 300px;
-	background-image: url('$wgExtensionsPath/wikia/Wysiwyg/fckeditor/editor/css/images/template_cloud_bg.gif');
-	background-repeat: no-repeat;
-	background-position: -10px 0;
-	padding-top: 9px;
-
-	position: absolute;
-	visibility: hidden;
-	z-index: 10;
-}
-
-#wysiwygTemplatePreviewCloudInner {
-	border: solid 1px #e5e5e5;
-	border-top: none;
-	background: #fffff6;
-	padding: 5px;
-}
-
-#wysiwygTemplatePreviewCloudInner * {
-	cursor: default !important;
-}
-
 /*]]>*/</style>
 EOT;
 	$wgOut->addScript($script);
