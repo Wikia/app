@@ -1305,9 +1305,10 @@ class Parser
 
 			if (!empty($wgWysiwygParserEnabled)) {
 				global $wgWikitext;
-				preg_match('/start-(\d+)-stop/', $trail, $matches);
-				$orginalWikitext = $wgWikitext[$matches[1]];
-				$trail = preg_replace('/start-\d+-stop/', '', $trail);
+				if (preg_match('/start-(\d+)-stop/', $trail, $matches)) {
+					$orginalWikitext = $wgWikitext[$matches[1]];
+					$trail = preg_replace('/start-\d+-stop/', '', $trail);
+				}
 			}
 
 			$wasblank = $text == '';
@@ -1575,9 +1576,10 @@ class Parser
 
 			if (!empty($wgWysiwygParserEnabled)) {
 				global $wgWikitext;
-				preg_match('/start-(\d+)-stop/', $line, $matches);
-				$orginalWikitext = $wgWikitext[$matches[1]];
-				$line = preg_replace('/start-\d+-stop/', '', $line);
+				if (preg_match('/start-(\d+)-stop/', $line, $matches)) {
+					$orginalWikitext = $wgWikitext[$matches[1]];
+					$line = preg_replace('/start-\d+-stop/', '', $line);
+				}
 			}
 
 			if ( $useLinkPrefixExtension ) {
