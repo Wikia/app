@@ -117,12 +117,12 @@ class BlogComments {
 
 
 	public function render() {
-		global $wgParser, $wgContLang;
+		global $wgParser, $wgContLang, $wgUser, $wgTitle;
 
 		/**
 		 * $pages is array of comment titles
 		 */
-		$pages    = $this->getCommentPages();
+		$pages = $this->getCommentPages();
 
 		$template = new EasyTemplate( dirname( __FILE__ ) . '/templates/' );
 
@@ -142,14 +142,20 @@ class BlogComments {
 				$comments[] = array(
 					"comment" => $revision,
 					"autor" => User::newFromId( $revision->getUser() ),
-					"parser" => $wgParser,
 					"timestamp" => $wgContLang->timeanddate( $revision->getTimestamp() )
 				);
 			}
-			$template->set_vars( array( "comments" => $comments ) );
+			$template->set_vars( array( "comments" => $comments, "parser" => $wgParser ) );
 		}
 
-		return $template->execute( "comment" );
+		/**
+		 * it's preparsed wikitext, we have to parse it to HTML
+		 */
+		$text = $template->execute( "comment" );
+		$options = new ParserOptions();
+		$options->initialiseFromUser( $wgUser );
+
+		return $wgParser->parse( $text, $wgTitle, $options )->getText();
 	}
 
 	/**

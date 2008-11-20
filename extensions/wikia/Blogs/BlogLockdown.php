@@ -33,6 +33,15 @@ class BlogLockdown {
 			$result = true;
 			return true;
 		}
+
+		/**
+		 * staff & sysops can do anything
+		 */
+		if (in_array('staff',($user->getGroups())) || in_array('sysop',($user->getGroups()))) {
+			Wikia::log( __METHOD__, "user", "staff or sysop" );
+			return true;
+		}
+
 		/**
 		 * for other actions we demand that user has to be logged in
 		 */
