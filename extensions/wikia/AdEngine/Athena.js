@@ -6,7 +6,9 @@
 
 Athena = {};
 Athena.beaconData = {};
+Athena.beaconData.events=Array();
 Athena.pageVars = new Array();
+Athena.loadedTags = new Array();
 Athena.configUrl = "http://athena.dev.wikia-inc.com/athena/configApi.php";
 Athena.beaconUrl = "http://athena.dev.wikia-inc.com/athena/beacon.php";
 Athena.hopTracker = new Array();
@@ -24,68 +26,172 @@ Athena.pullConfig = function (){
 	Athena.loadScript(myConfigUrl, true);
 };
 
+/* Do the work of displaying an ad */
 Athena.callAd = function (slotname){
 	Athena.debug("Config for " + slotname + " is " +
-		Athena.print_r(Athena.config['slots'][slotname]), 5); 
+		Athena.print_r(Athena.config['slots'][slotname]), 7); 
+	
+	Athena.recordHop(slotname);
 
-	for (i = 0; i < Athena.config['slots'][slotname].length; i++){
+	var start;
+	if (Athena.ok2Hop(slotname)){
+		start = 0;
+	} else {
+		// No more hops available. Go to the last one in the list
+		start = Athena.config['slots'][slotname].length-1;
+		Athena.debug("Using the last tag in the list (" + start + ")");
+	}
 
-		var thisAd = Athena.config['slots'][slotname][i];
+	for (i = start; i < Athena.config['slots'][slotname].length; i++){
+		var thisAd;
+
+		thisAd = Athena.config['slots'][slotname][i];
 		// Check to see if it has already been called
-		if (thisAd['called'] != undefined){
+		if (thisAd['started'] != undefined){
 			continue;
 		}
-		Athena.debug("Calling Ad from " + thisAd['network_name']);
 
-		// Mark it as called
-		Athena.config['slots'][slotname][i]['called'] = new Date();
+		Athena.debug("Calling Ad from " + thisAd['network_name']);
+		Athena.debug("Config for this hop #" + Athena.hopTracker[slotname]['count'] +
+			" for " + slotname + " is " +
+			Athena.print_r(thisAd), 5); 
+	
+
+		// Mark it as started
+		Athena.config['slots'][slotname][i]['started'] = new Date();
 
 		// Keep track of the current and next tags for hopping and beacon
 		Athena.currentTag = Athena.config['slots'][slotname][i];
 		Athena.currentSlot = slotname;
+		Athena.recordEvent({
+			"type": "Attempt",
+			"tag_id": thisAd["tag_id"]
+		});
+
+		// Keep track of if the ad loaded.
+		Athena.loadedTags[slotname]={"tag_id": thisAd["tag_id"], "started": new Date()};
+		YAHOO.util.Event.purgeElement(slotname + "_load");
+		YAHOO.util.Event.onContentReady(slotname + "_load", Athena.adLoadHandler, thisAd["tag_id"]);
+
+		// Attach a listener so we know when the ad loads.
 
 		// Print the tag
 		document.write(Athena.config['slots'][slotname][i]['tag']); 
 
 		break;
 	}
+
+	// Rut roh
+	document.write('<!-- No ads to call for ' + slotname + '-->');
 };
 
-Athena.hop = function (slotname){
+/* Handler function for when the _load div is done (when the ad is loaded)
+ * Called from the delayed ad loading code
+ */
+Athena.adLoadHandler = function(tag_id){
+	var now, slotname, hopTime;
 
-	Athena.hopTracker[slotname] = 
+	slotname = this.id.replace(/_load/, '');
+
+	if (Athena.loadedTags[slotname]["tag_id"] != tag_id){
+		return false; // This is the wrong listener. Note that purgeElement isn't working correctly.
+	}
+
+	/* See how long it took. Not working correctly. :(
+	now = new Date();
+	hopTime = now.getMilliseconds() - Athena.loadedTags[slotname]["started"].getMilliseconds();
+	*/
+
+	Athena.recordEvent({
+		"type": "Ad Loaded",
+		"slotname": slotname,
+		"tag_id": Athena.loadedTags[slotname]["tag_id"]
+		// "hopTime": hopTime
+	});
+};
+
+
+/* This is the backup tag used to go to the next ad in the configuration */
+Athena.hop = function (){
+	var now, hopTime;
 	Athena.debug("hop() called");
-//	Athena.sendBeacon(false);
+
+	// See how long it took
+	now = new Date();
+	hopTime = now.getMilliseconds() - Athena.currentTag['started'].getMilliseconds();
+
+	// Note that there was a hop
+	Athena.recordEvent({
+		"type": "Reject",
+		"tag_id": Athena.currentTag['tag_id'],
+		"hopTime": hopTime
+        });
+
+
+	// Call the next ad in the stack
 	Athena.callAd(Athena.currentSlot);
 };
+
+
+/* Keep track of the number of hops, and the total time spent hopping. */
+Athena.recordHop = function (slotname) {
+	// Keep track of the number of hops
+	if (Athena.hopTracker[slotname] == undefined){
+		Athena.hopTracker[slotname] = Array();
+		Athena.hopTracker[slotname]['started'] = new Date();
+		Athena.hopTracker[slotname]['count'] = 1;
+	} else {
+		Athena.hopTracker[slotname]['count']++; 
+	}
+	Athena.debug("Hop Tracker Data: " + Athena.print_r(Athena.hopTracker), 6);
+};
+
+/* Is it ok to do another hop? Check how many hops they have already done and/or
+ * How much time they have already spent waiting. Return true/false
+ */
+Athena.ok2Hop = function (slotname){
+	var now, hopTime;
+
+	// Check the number of hops
+	if (Athena.hopTracker[slotname]['count'] > Athena.config.maxHops){
+		Athena.debug("Maximum number of hops exceeded (" + Athena.config.maxHops + ")..");
+		return false;
+	}
+
+	// Check the time spent on hops
+	now = new Date();
+	hopTime = now.getMilliseconds() - Athena.hopTracker[slotname]['started'].getMilliseconds();
+	if (hopTime > Athena.config.maxHopTime){
+		Athena.debug("Maximum hop time exceeded (" + Athena.config.maxHopTime + ").");
+		return false;
+	}
+
+	// All good
+	return true;
+};
+
+/* Record an event. data arg should have enough info to identify it */
+Athena.recordEvent = function (data){
+	Athena.beaconData.events.push(data);
+	Athena.debug("Event recorded: " + Athena.print_r(data), 4);
+};
+
 
 /* Send a beacon back to our server so we know if it worked */
 Athena.sendBeacon = function ( success ){
 	Athena.debug("sendBeacon() called");
 
-	// success
-	Athena.beaconData.success = success;
-	// network -- already defined by callAd
-	
-	// networkInfo
-	// TODO -- what is this supposed to contain BTW? :P
-	// geography
-	// TODO
-	// site
-	Athena.beaconData.site = Athena.getPageVar('Server');
-	// page
-	Athena.beaconData.page = Athena.getPageVar('PageId');
+	var beacon = Athena.json_encode(Athena.beaconData);
 
-	beacon = Athena.json_encode(Athena.beaconData);
-
-	document.write('<img src="' + Athena.beaconUrl + '?beacon=' + beacon + '" />');
+	document.write('<img src="' + Athena.beaconUrl + '?beacon=' + escape(beacon) + '" style="display:none" />');
 };
+
 
 
 /* Set / get page variables */
 Athena.setPageVar = function (key, value){
 	Athena.pageVars[key]=value;
-	Athena.debug("Page var '" + key + "' set to '" + value + "'", 3);
+	Athena.debug("Page var '" + key + "' set to '" + value + "'", 4);
 	return true;
 };
 
@@ -259,7 +365,8 @@ Athena.random = function (){
 
 /* Target based on the minute of the hour */
 Athena.getMinuteTargeting = function (){
-        var myDate = new Date();
+        var myDate;
+	myDate = new Date();
         return myDate.getMinutes() % 15;
 };
 
