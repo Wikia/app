@@ -554,6 +554,7 @@ FCK.ProtectImageSetup = function(refid) {
 
 FCK.ProtectImageClick = function(refid) {
 	FCK.log('click on image #' + refid);
+	FCK.log(FCK.wysiwygData[refid]);
 
 	// tracker
 	FCK.Track('/image/click');
