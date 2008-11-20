@@ -334,37 +334,50 @@ function Wysiwyg_SetRefId($type, $params, $addMarker = true, $returnId = false) 
 	$data = array('type' => $type);
 	$result = '';
 
+	$regexPreProcessor = array(
+		'search' => array(
+			'%<template><title>[^<]*</title><originalCall><!\[CDATA\[(.*?)]]></originalCall></template>%si',
+			'%<ext><name>([^>]+)</name><attr></attr><inner>([^>]+)</inner><close>[^>]+</close></ext>%si'),
+		'replace' => array(
+			'\1',
+			'<\1>\2</\1>')
+	);
+
 	switch ($type) {
 		case 'external link':
 			$data['href'] = $params['link'];
-			$data['description'] = $params['wasblank'] ? '' : $params['text'];
+//			$data['description'] = $params['wasblank'] ? '' : $params['text'];
+			$data['original'] = htmlspecialchars_decode(preg_replace($regexPreProcessor['search'], $regexPreProcessor['replace'], $params['original']));
 			break;
 
 		case 'internal link':
 		case 'internal link: special page':
 		case 'internal link: file':
 			$data['href'] = ($params['noforce'] ? '' : ':') . $params['link'];
-			$data['description'] = $params['wasblank'] ? '' : $params['text'];
+//			$data['description'] = $params['wasblank'] ? '' : $params['text'];
 			if ($params['trail'] != '') {
 				list($tmpInside, $tmpTrail) = Linker::splitTrail($params['trail']);
 				if ($tmpInside != '') {
 					$data['trial'] = $tmpInside;
 				}
 			}
-			$data['description'] = preg_replace('%\x7f-wtb-(\d+)-\x7f.*?\x7f-wte-\1-\x7f%sie', '$wgWysiwygMetaData[\\1]["originalCall"];', $data['description']);
+//			$data['description'] = preg_replace('%\x7f-wtb-(\d+)-\x7f.*?\x7f-wte-\1-\x7f%sie', '$wgWysiwygMetaData[\\1]["originalCall"];', $data['description']);
+			$data['original'] = htmlspecialchars_decode(preg_replace($regexPreProcessor['search'], $regexPreProcessor['replace'], $params['original']));
 			break;
 
 		case 'internal link: media':
 		case 'category':
 			$data['href'] = ($params['noforce'] ? '' : ':') . $params['link'];
-			$data['description'] = $params['wasblank'] ? '' : $params['text'];
+//			$data['description'] = $params['wasblank'] ? '' : $params['text'];
+			$data['original'] = htmlspecialchars_decode(preg_replace($regexPreProcessor['search'], $regexPreProcessor['replace'], $params['original']));
 			$result = '[[' . $data['href'] . ($params['wasblank'] ? '' : '|' . $params['text']) . ']]';
 			break;
 
 		case 'image':
 			$data['href'] = ($params['noforce'] ? '' : ':') . $params['link'];
-			$data['description'] = $params['wasblank'] ? '' : $params['text'];
-			$data['description'] = preg_replace('%\x7f-wtb-(\d+)-\x7f.*?\x7f-wte-\1-\x7f%sie', '$wgWysiwygMetaData[\\1]["originalCall"];', $data['description']);
+//			$data['description'] = $params['wasblank'] ? '' : $params['text'];
+//			$data['description'] = preg_replace('%\x7f-wtb-(\d+)-\x7f.*?\x7f-wte-\1-\x7f%sie', '$wgWysiwygMetaData[\\1]["originalCall"];', $data['description']);
+			$data['original'] = htmlspecialchars_decode(preg_replace($regexPreProcessor['search'], $regexPreProcessor['replace'], $params['original']));
 			break;
 
 		case 'external link: raw image':
