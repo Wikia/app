@@ -395,11 +395,21 @@ FCK.ProtectImage = function(image) {
 	if (image.nodeName.IEquals('a')) {
 		// block onclick / onmousedown events
 		FCKTools.AddEventListener(image, 'click', function(e) {
-			e = FCK.YE.getEvent(e); 
-			FCK.YE.stopEvent( e );
-			if (e.button == 0) {
-				FCK.ProtectImageClick(this.getAttribute('refid'));
+			var e = FCK.YE.getEvent(e);
+			var target = FCK.YE.getTarget(e);
+
+			// move to <a> node
+			if (target.nodeName.IEquals('img')) {
+				target = target.parentNode;
 			}
+
+			// ignore buttons different then left
+			if (e.button == 0) {
+				refid = parseInt(target.getAttribute('refid'));
+				FCK.ProtectImageClick(refid);
+			}
+
+			FCK.YE.stopEvent(e);
 		});
 
 		FCK.BlockEvent(image, 'contextmenu');
