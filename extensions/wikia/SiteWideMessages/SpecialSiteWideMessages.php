@@ -113,7 +113,7 @@ function SiteWideMessagesGetUserMessagesContent($dismissLink = true, $parse = tr
  */
 function SiteWideMessagesEmptyTalkPageWithMessages(&$out, &$text) {
 	global $wgTitle, $wgOut, $wgUser;
-	if (wfIsTalkPageForCurrentUserDisplayed() && !$wgUser->isBot()) {
+	if (wfIsTalkPageForCurrentUserDisplayed() && !$wgUser->isAllowed('bot')) {
 		$msgContent = SiteWideMessagesGetUserMessagesContent(false, false, false, false);
 		if(!$wgTitle->exists() && $msgContent != '') {
 			//replace message about empty UserTalk only if we have a messages to display
@@ -130,7 +130,7 @@ function SiteWideMessagesEmptyTalkPageWithMessages(&$out, &$text) {
 function SiteWideMessagesGetUserMessages(&$out, &$parseroutput) {
 	global $wgUser;
 	//don't add messages when editing, previewing changes etc. AND don't even try for unlogged or bots
-	if (wfIsTalkPageForCurrentUserDisplayed() && !$wgUser->isBot()) {
+	if (wfIsTalkPageForCurrentUserDisplayed() && !$wgUser->isAllowed('bot')) {
 		//$out->mBodytext = SiteWideMessagesGetUserMessagesContent() . $out->mBodytext;
 		$out->addHTML( SiteWideMessagesGetUserMessagesContent() ); // #2321
 	}
@@ -144,7 +144,7 @@ function SiteWideMessagesGetUserMessages(&$out, &$parseroutput) {
 function SiteWideMessagesUserNewTalks (&$user, &$talks) {
 	global $wgSharedDB, $wgMemc, $wgUser;
 
-	if ($user->isAnon() || $wgUser->isBot()) {	//don't show information for anons and bots
+	if ($user->isAnon() || $wgUser->isAllowed('bot')) {	//don't show information for anons and bots
 		return true;
 	}
 
@@ -195,7 +195,7 @@ function SiteWideMessagesDiff($oTitle, $uMessages) {
 	global $wgUser, $wgTitle, $wgRequest, $wgOut, $wgExtensionsPath, $wgStyleVersion;
 	if ($wgTitle->getNamespace() == NS_USER_TALK &&                      //user talk page?
 		$wgUser->getTitleKey() == $wgTitle->getPartialURL() &&               //*my* user talk page?
-		!$wgUser->isBot() &&                                             //user is not a bot?
+		!$wgUser->isAllowed('bot') &&                                             //user is not a bot?
 		$wgRequest->getVal('diff') != ''                                 //*diff* versions?
 	) {                                                                  //if all above == 'yes' - display user's messages
 		$swmMessages = SiteWideMessagesGetUserMessagesContent(false, false, true);
@@ -215,7 +215,7 @@ function SiteWideMessagesArticleEditor($editPage) {
 	global $wgOut, $wgTitle, $wgUser;
 	if ($wgTitle->getNamespace() == NS_USER_TALK &&                      //user talk page?
 		$wgUser->getName() == $wgTitle->getPartialURL() &&               //*my* user talk page?
-		!$wgUser->isBot()                                                //user is not a bot?
+		!$wgUser->isAllowed('bot')                                                //user is not a bot?
 	) {                                                                  //if all above == 'yes' - display user's messages
 		$wgOut->addHTML(SiteWideMessagesGetUserMessagesContent());
 	}
