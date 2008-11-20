@@ -184,7 +184,7 @@ FCK.GetNodesWithRefId = function() {
 			FCK.NodesWithRefId[ node.getAttribute('refid') ] = node;
 		}
 
-		var nodes = FCK.YAHOO.util.Dom.getElementsBy(method, false, FCK.EditorDocument.body, add);
+		var nodes = FCK.YD.getElementsBy(method, false, FCK.EditorDocument.body, add);
 	}
 	else {
 		// @see http://www.w3schools.com/XPath/xpath_examples.asp
@@ -366,10 +366,10 @@ FCK.CheckInternalLink = function(title, link) {
 
 			if (link) {
 				if (pageExists) {
-					FCK.YAHOO.util.Dom.removeClass(link, 'new');
+					FCK.YD.removeClass(link, 'new');
 					link.href = window.parent.wgServer + window.parent.wgArticlePath.replace(/\$1/, encodeURI(title.replace(/ /g, '_')));
 				} else {
-					FCK.YAHOO.util.Dom.addClass(link, 'new');
+					FCK.YD.addClass(link, 'new');
 					link.href = window.parent.wgServer + window.parent.wgScript + '?title=' + encodeURIComponent(title.replace(/ /g, '_')) + '&action=edit&redlink=1';
 				}
 				FCK.log('href: ' + link.href);
@@ -682,7 +682,6 @@ FCK.TemplatePreviewAdd = function(placeholder) {
 	FCK.TemplatePreviewCloud.firstChild.appendChild( previewDiv );
 	
 	previewDiv.id = 'wysiwygTemplatePreview' + refId;
-	placeholder.id = 'wysiwygTemplate' + refId;
 	placeholder.title = 'Click to edit this template';
 
 	previewDiv.innerHTML = preview.value + '<br style="clear:both" />';
@@ -815,7 +814,7 @@ FCK.TemplatePreviewGetHTML = function(refid) {
 }
 
 FCK.TemplatePreviewSetName = function(refid, name) {
-	var input = FCK.EditorDocument.getElementById('wysiwygTemplate' + refid);
+	var input = FCK.GetElementByRefId(refid);
 	input.value = name;
 }
 
