@@ -595,7 +595,17 @@ FCK.ProtectImageUpdate = function(refid, wikitext, extraData) {
 
 			// insert html into editing area (before old image)...
 			var wrapper = FCKTools.GetElementDocument(oldImage).createElement('DIV');
-			oldImage.parentNode.insertBefore(wrapper, oldImage);
+
+			// fix IE's "unknown runtine error" by always adding wrapper before block elements (FF will try to validate, IE will throw an error)
+			// @see http://piecesofrakesh.blogspot.com/2007/02/ies-unknown-runtime-error-when-using.html
+			if (oldImage.nodeName.IEquals('a') && FCKBrowserInfo.IsIE) {
+				oldImage.parentNode.parentNode.insertBefore(wrapper, oldImage.parentNode);
+			}
+			else {
+				oldImage.parentNode.insertBefore(wrapper, oldImage);
+			}
+
+			// set HTML
 			wrapper.innerHTML = html;
 
 			// is "simple" image wrapped by <p></p> ?
@@ -613,7 +623,9 @@ FCK.ProtectImageUpdate = function(refid, wikitext, extraData) {
 			FCKDomTools.RemoveNode(wrapper, true);
 
 			// fix really strange bug: CSS disappear from iframe
-			setTimeout('FCK.ProtectImageSetup('+refid+')', 500);
+			if (!FCKBrowserInfo.IsIE) {
+				setTimeout('FCK.ProtectImageSetup('+refid+')', 500);
+			}
 		},
 		failure: function(o) {},
 		argument: {'FCK': FCK, 'refid': refid}
