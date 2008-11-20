@@ -48,7 +48,7 @@ if($props['file']->media_type == 'BITMAP' || $props['file']->media_type == 'DRAW
 	<tr id="ImageWidthRow">
 		<th><?= wfMsg('wmu-width') ?></th>
 		<td>
-			<input onclick="MWU_imageWidthChanged(WMU_widthChanges++);" type="checkbox" id="ImageUploadWidthCheckbox" />
+			<input onclick="MWU_imageWidthChanged(WMU_widthChanges++);" type="checkbox" id="ImageUploadWidthCheckbox" checked="checked" />
 			<div id="ImageUploadSlider">
 				<img src="<?= $wgExtensionsPath.'/wikia/WikiaMiniUpload/images/slider_thumb_bg.png' ?>" id="ImageUploadSliderThumb" />
 			</div>
