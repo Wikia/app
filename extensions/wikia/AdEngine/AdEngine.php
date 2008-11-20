@@ -522,6 +522,7 @@ class AdEngine {
                 }
 
 		$out =  '<script type="text/javascript">' . "\n" .
+			'ProviderValues = {};' . "\n" . 
 			'ProviderValues.list = ' . json_encode($list) . ";\n" .
 			'ProviderValues.string = "' . $string . '"' . ";\n" . 
 			'</script>';
