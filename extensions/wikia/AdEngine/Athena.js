@@ -146,6 +146,7 @@ Athena.recordHop = function (slotname) {
 	Athena.debug("Hop Tracker Data: " + Athena.print_r(Athena.hopTracker), 6);
 };
 
+
 /* Is it ok to do another hop? Check how many hops they have already done and/or
  * How much time they have already spent waiting. Return true/false
  */
@@ -170,6 +171,7 @@ Athena.ok2Hop = function (slotname){
 	return true;
 };
 
+
 /* Record an event. data arg should have enough info to identify it */
 Athena.recordEvent = function (data){
 	Athena.beaconData.events.push(data);
@@ -178,14 +180,21 @@ Athena.recordEvent = function (data){
 
 
 /* Send a beacon back to our server so we know if it worked */
-Athena.sendBeacon = function ( success ){
+Athena.sendBeacon = function (){
 	Athena.debug("sendBeacon() called");
+	Athena.beaconData.cookie="my cookie";
+	Athena.debug("Beacon: " + Athena.print_r(Athena.beaconData), 7);
 
 	var beacon = Athena.json_encode(Athena.beaconData);
 
-	document.write('<img src="' + Athena.beaconUrl + '?beacon=' + escape(beacon) + '" style="display:none" />');
+	var head= document.getElementsByTagName('head')[0];
+	var s= document.createElement('script');
+	s.type= 'text/javascript';
+	s.src= Athena.beaconUrl + '?beacon=' + encodeURIComponent(beacon) + '&events=' + encodeURIComponent(Athena.json_encode(Athena.beaconData.events));
+	head.appendChild(s);
 };
 
+YAHOO.util.Event.onDOMReady(Athena.sendBeacon);
 
 
 /* Set / get page variables */
