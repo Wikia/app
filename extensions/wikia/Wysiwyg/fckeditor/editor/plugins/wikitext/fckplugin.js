@@ -751,7 +751,7 @@ FCK.TemplatePreviewAdd = function(placeholder) {
 	previewDiv.id = 'wysiwygTemplatePreview' + refId;
 	placeholder.title = 'Click to edit this template';
 
-	previewDiv.innerHTML = preview.value + '<br style="clear:both" />';
+	previewDiv.innerHTML = preview.value;
 	previewDiv.setAttribute('refid', refId);
 
 	// sometimes innerHTML contains whitespices at the end -> fix it
@@ -793,9 +793,7 @@ FCK.TemplatePreviewAdd = function(placeholder) {
 
 	// reset margin/padding/align
 	if (previewDiv.firstChild && previewDiv.firstChild.nodeType == 1) {
-		previewDiv.firstChild.style.padding = 0;
-		previewDiv.firstChild.style.margin = 0;
-		previewDiv.firstChild.style.float = 'none !important';
+		FCK.YD.addClass(previewDiv.firstChild, 'resetTemplate');
 		previewDiv.firstChild.removeAttribute('align');
 	}
 }
@@ -861,13 +859,9 @@ FCK.TemplatePreviewSetHTML = function(refid, html) {
 
 	// add "floats clearing" <br> after complicated infoboxes
 	if ( (!preview.firstChild.nodeName.IEquals('p')) || (preview.childNodes.length != 1) ) {
-		preview.innerHTML += '<br style="clear:both" />';
-
 		// reset margin/padding/align
 		if (preview.firstChild && preview.firstChild.nodeType == 1) {
-			preview.firstChild.style.padding = 0;
-			preview.firstChild.style.margin = 0;
-			preview.firstChild.style.float = 'none !important';
+			FCK.YD.addClass(preview.firstChild, 'resetTemplate');
 			preview.firstChild.removeAttribute('align');
 		}
 	}
@@ -882,7 +876,7 @@ FCK.TemplatePreviewGetHTML = function(refid) {
 
 FCK.TemplatePreviewSetName = function(refid, name) {
 	var input = FCK.GetElementByRefId(refid);
-	input.value = name;
+	input.value = FCK.YAHOO.lang.trim(name);
 }
 
 //

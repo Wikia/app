@@ -75,16 +75,6 @@ span._moz_dirty
 	margin: 0 2px;
 }
 
-#wysiwygTemplatePreview {
-	height: 125px;
-	width: 300px;
-	border: solid 1px #666;
-	background-color: #fff;
-	position: absolute;
-	z-index: 50;
-	visibility: hidden;
-}
-
 .ieProtected,
 .ieProtected a,
 .ieProtected div {
