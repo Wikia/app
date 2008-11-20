@@ -501,7 +501,9 @@ class Preprocessor_DOM implements Preprocessor {
 					// No element, just literal text
 					$element = $piece->breakSyntax( $matchingCount ) . str_repeat( $rule['end'], $matchingCount );
 					if(!empty($wgWysiwygParserEnabled)) {
-						// ...
+						global $wgWikitext;
+						$wgWikitext[] = $element;
+						$element .= "start-".(count($wgWikitext)-1)."-stop";
 					}
 				} else {
 					# Create XML element
