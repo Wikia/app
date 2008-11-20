@@ -198,11 +198,11 @@ class AdEngine {
 			return $_GET['forceCategory'];
 		}
 
-		global $wgMemc, $wgCityId;
+		global $wgMemc, $wgCityId, $wgRequest;
 		$cacheKey = wfMemcKey(__CLASS__ . 'category', self::cacheKeyVersion);
 
 		$cat = $wgMemc->get($cacheKey);
-		if (!empty($cat)){
+		if (!empty($cat) && $wgRequest->getVal('action') != 'purge'){
 			return $cat;
 		}
 
@@ -413,6 +413,8 @@ class AdEngine {
 		$out = "<!-- #### BEGIN " . __CLASS__ . '::' . __METHOD__ . " ####-->\n";
 
 		$out .=  $this->getBucketTestingCode();
+		global $wgCityId;
+		$out .=  $this->providerValuesAsJavascript($wgCityId);
 		
 		$out .= '<script type="text/javascript">TieDivLibrary.timer()</script>' . "\n";
 
@@ -490,6 +492,43 @@ class AdEngine {
 				$AdProvider->addSlotToCall($slotname);
 			}
 		}
+	}
+
+
+	/* Odd request that I didn't have a better way to handle. Michael wanted the DART
+	 * Key value string as a javascript variable. 
+	 */
+	public function providerValuesAsJavascript($city_id){
+		global $wgMemc, $wgRequest;
+		$cacheKey = wfMemcKey(__CLASS__ . 'dartkeyvalues', self::cacheKeyVersion);
+
+		$out = $wgMemc->get($cacheKey);
+		if (!empty($out) &&  $wgRequest->getVal('action') != 'purge'){
+			return $out;
+		}
+
+		$db = wfGetDB(DB_SLAVE);
+		$ad_provider_value_table = wfSharedTable('ad_provider_value');
+
+                $sql = "SELECT * FROM $ad_provider_value_table WHERE
+                         city_id = ".intval($city_id);
+                $res = $db->query($sql);
+
+		$list = array();
+		$string = '';
+                while($row = $db->fetchObject($res)) {
+			$list[]= array('name'=> $row->keyname, 'value'=>$row->keyvalue);
+			$string .= $row->keyname . '=' . urlencode($row->keyvalue) . ';';
+                }
+
+		$out =  '<script type="text/javascript">' . "\n" .
+			'ProviderValues.list = ' . json_encode($list) . ";\n" .
+			'ProviderValues.string = "' . $string . '"' . ";\n" . 
+			'</script>';
+		       
+		$wgMemc->set($cacheKey, $out, self::cacheTimeout);
+
+		return $out;	
 	}
 
 }
