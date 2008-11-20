@@ -1305,6 +1305,7 @@ class Parser
 
 			if (!empty($wgWysiwygParserEnabled)) {
 				global $wgWikitext;
+				$orginalWikitext = '';
 				if (preg_match('/start-(\d+)-stop/', $trail, $matches)) {
 					$orginalWikitext = $wgWikitext[$matches[1]];
 					$trail = preg_replace('/start-\d+-stop/', '', $trail);
@@ -1576,6 +1577,7 @@ class Parser
 
 			if (!empty($wgWysiwygParserEnabled)) {
 				global $wgWikitext;
+				$orginalWikitext = '';
 				if (preg_match('/start-(\d+)-stop/', $line, $matches)) {
 					$orginalWikitext = $wgWikitext[$matches[1]];
 					$line = preg_replace('/start-\d+-stop/', '', $line);
