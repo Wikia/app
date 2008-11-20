@@ -4,6 +4,7 @@
 			<?php echo wfMsg("blog-last-edited", array( $edited ) ) ?>
 		</li>
 		<li>
+<?php if ( $voting_enabled ): ?>
 			<!-- stars rating / copied from Monaco skin -->
 			<div id="star-rating-wrapper">
 				<ul id="star-rating" class="star-rating">
@@ -16,6 +17,7 @@
 				</ul>
 				<span style="<?= ($voted ? '' : 'display: none;') ?>" id="unrateLink"><a id="unrate" href="#"><?= wfMsg( 'unrate_it' ) ?></a></span>
 			</div>
+<?php endif ?>
 		</li>
 	</ul>
 </div>
