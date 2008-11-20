@@ -84,6 +84,15 @@ class Preprocessor_DOM implements Preprocessor {
 			)
 		);
 
+		if(!empty($wgWysiwygParserEnabled)) {
+			$rules['['] = array(
+				'end' => ']',
+				'names' => array( 1=> 'internal', 2 => null ),
+				'min' => 1,
+				'max' => 2,
+			);
+		}
+
 		$forInclusion = $flags & Parser::PTD_FOR_INCLUSION;
 
 		$xmlishElements = $this->parser->getStripList();
@@ -488,9 +497,12 @@ class Preprocessor_DOM implements Preprocessor {
 					continue;
 				}
 				$name = $rule['names'][$matchingCount];
-				if ( $name === null ) {
+				if ( $name === null || $name == 'internal') {
 					// No element, just literal text
 					$element = $piece->breakSyntax( $matchingCount ) . str_repeat( $rule['end'], $matchingCount );
+					if(!empty($wgWysiwygParserEnabled)) {
+						// ...
+					}
 				} else {
 					# Create XML element
 					# Note: $parts is already XML, does not need to be encoded further
