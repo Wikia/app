@@ -834,7 +834,7 @@ class ReverseParser {
 		switch($data['type']) {
 			case 'image':
 				$prefix = ( in_array($node->nodeName, array('div', 'table')) ) ? "\n\n" : '';
-				$out = $prefix . '[[' . $data['href'] . ($data['description'] != '' ? "|{$data['description']}]]" : ']]');
+				$out = $prefix . $data['original'];
 				return $out;
 
 			default:
