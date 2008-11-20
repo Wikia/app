@@ -883,7 +883,7 @@ FCK.TemplatePreviewSetName = function(refid, name) {
 // runtime setup
 //
 
-// detect browsers support "contentEditable"
+// browsers supporting "contentEditable"
 FCK.UseContentEditable = FCKBrowserInfo.IsIE;
 
 // YUI reference
