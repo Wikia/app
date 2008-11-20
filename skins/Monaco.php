@@ -174,7 +174,7 @@ class SkinMonaco extends SkinTemplate {
 						$data_array['sidebarmenu'][$this->lastExtraIndex] = array(
 							'text' => wfMsg('monaco-edit-this-menu'),
 							'href' => $monacoSidebarUrl,
-							/*'class' => 'yuimenuitemedit1'*/
+							'class' => 'Monaco-sidebar_edit'
 						);
 					}
 				}
@@ -396,11 +396,11 @@ class SkinMonaco extends SkinTemplate {
 				$node['magic'] = true;
 			}
 			$results = DataProvider::$extraWords[strtolower($node['org'])][1]();
-			$results[] = array('url' => Title::makeTitle(NS_SPECIAL, 'Top/'.$extraWords[strtolower($node['org'])][0])->getLocalURL(), 'text' => strtolower(wfMsg('moredotdotdot')), /*'class' => 'yuimenuitemmore'*/);
+			$results[] = array('url' => Title::makeTitle(NS_SPECIAL, 'Top/'.$extraWords[strtolower($node['org'])][0])->getLocalURL(), 'text' => strtolower(wfMsg('moredotdotdot')), 'class' => 'Monaco-sidebar_more');
 			global $wgUser;
 			if( $wgUser->isAllowed( 'editinterface' ) ) {
 				if(strtolower($node['org']) == '#popular#') {
-					$results[] = array('url' => Title::makeTitle(NS_MEDIAWIKI, 'Most popular articles')->getLocalUrl(), 'text' => wfMsg('monaco-edit-this-menu'), /*'class' => 'yuimenuitemedit2'*/);
+					$results[] = array('url' => Title::makeTitle(NS_MEDIAWIKI, 'Most popular articles')->getLocalUrl(), 'text' => wfMsg('monaco-edit-this-menu'), 'class' => 'Monaco-sidebar_edit');
 				}
 			}
 			foreach($results as $key => $val) {
@@ -444,7 +444,7 @@ class SkinMonaco extends SkinTemplate {
 				$node['children'][] = $this->lastExtraIndex;
 				$nodes[$this->lastExtraIndex]['text'] = strtolower(wfMsg('moredotdotdot'));
 				$nodes[$this->lastExtraIndex]['href'] = $node['href'];
-				$nodes[$this->lastExtraIndex]['class'] = 'yuimenuitemmore';
+				$nodes[$this->lastExtraIndex]['class'] = 'Monaco-sidebar_more';
 				$this->lastExtraIndex++;
 			}
 		}
@@ -714,11 +714,11 @@ class SkinMonaco extends SkinTemplate {
 				$node['magic'] = true;
 			}
 			$results = DataProvider::$extraWords[strtolower($node['org'])][1]();
-			$results[] = array('url' => Title::makeTitle(NS_SPECIAL, 'Top/'.$extraWords[strtolower($node['org'])][0])->getLocalURL(), 'text' => strtolower(wfMsg('moredotdotdot')), 'class' => 'yuimenuitemmore');
+			$results[] = array('url' => Title::makeTitle(NS_SPECIAL, 'Top/'.$extraWords[strtolower($node['org'])][0])->getLocalURL(), 'text' => strtolower(wfMsg('moredotdotdot')), 'class' => 'Monaco-sidebar_more');
 			global $wgUser;
 			if( $wgUser->isAllowed( 'editinterface' ) ) {
 				if(strtolower($node['org']) == '#popular#') {
-					$results[] = array('url' => Title::makeTitle(NS_MEDIAWIKI, 'Most popular articles')->getLocalUrl(), 'text' => wfMsg('monaco-edit-this-menu'), 'class' => 'yuimenuitemedit2');
+					$results[] = array('url' => Title::makeTitle(NS_MEDIAWIKI, 'Most popular articles')->getLocalUrl(), 'text' => wfMsg('monaco-edit-this-menu'), 'class' => 'Monaco-sidebar_edit');
 				}
 			}
 			foreach($results as $key => $val) {
