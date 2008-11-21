@@ -1,6 +1,9 @@
 <div class="blog-comment-input">
 	<form action="#" method="post">
 		<!-- avatar -->
+		<?php
+			#echo $avatar->getAvatarImageTag();
+		?>
 		<!-- textarea -->
 		<textarea width="80%" name="wpBlogComment" id="blog-comment-<?php echo $position ?>"></textarea>
 		<!-- submit -->

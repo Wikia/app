@@ -47,6 +47,7 @@ extAddSpecialPage(dirname(__FILE__) . '/SpecialBlogListingCreatePage.php', 'Blog
 /**
  * load other parts
  */
+include( dirname( __FILE__ ) . "/BlogAvatar.php");
 include( dirname( __FILE__ ) . "/BlogLockdown.php");
 include( dirname( __FILE__ ) . "/BlogTemplate.php");
 include( dirname( __FILE__ ) . "/UserMasthead.php");
