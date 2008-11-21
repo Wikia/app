@@ -85,8 +85,12 @@ class BlogComments {
 
 		wfProfileIn( __METHOD__ );
 
+		$Avatar = BlogAvatar::newFromUser( $wgUser );
+		print_pre( $Avatar );
 		$tmpl = new EasyTemplate( dirname( __FILE__ ) . '/templates/' );
-		$tmpl->set_vars( array( "position" => $position, "author" => $wgUser ) );
+		$tmpl->set_vars(
+			array( "position" => $position, "author" => $wgUser, "avatar" => $Avatar )
+		);
 
 		wfProfileOut( __METHOD__ );
 

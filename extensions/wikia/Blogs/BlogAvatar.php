@@ -59,7 +59,7 @@ function wfSaveBlogAvatarForm ($oPrefs, $oUser, &$sMsg, $oldOptions) {
 	/* is user trying to upload something */
 	$isNotUploaded = ( empty( $sUploadedAvatar ) && empty( $sUrl ) );
 	if ( !$isNotUploaded ) {
-		$oAvatarObj = new BlogAvatar($oUser->getID());
+		$oAvatarObj = BlogAvatar::newFromUser( $oUser );
 		/* check is set default avatar for user */
 		if ( empty($sUrl) ) {
 			/* upload user avatar */
@@ -92,46 +92,73 @@ class BlogAvatar {
 	/* avatar path */
 	var $sAvatarPath = "";
 
-    public function __construct($iUserId) {
+	/**
+	 * city_id for messaging.wikia.com, will be used for creating image urls
+	 */
+	private $mMsgCityId = 4036;
+
+	/**
+	 * avatars from mediawiki message
+	 */
+	public $mDefaultAvatars = false;
+
+    public function __construct( User $User ) {
     	wfProfileIn( __METHOD__ );
-    	global $wgMessageCache;
-		global $wgWikiaAvatarUrlPath;
 
-		/* default settings */
-		$this->__setUser($iUserId);
+        wfLoadExtensionMessages( "Blogs" );
+		$this->oUser = $User;
 
-        /* load messages (if not already added) */
-        wfLoadExtensionMessages("Blogs");
+		//		$this->__setUser( $User );
+
         wfProfileOut( __METHOD__ );
 	}
 
 	/**
-	 * static constructor/helper
+	 * static constructor
 	 *
 	 * @static
 	 * @access public
 	 */
-	public static function newFromUser( $User ) {
-		return self::newFromUserId( $User->getId() );
+	public static function newFromUser( User $User ) {
+		return new BlogAvatar( $User );
 	}
 
-	public static function newFromUserID( $iUserId ) {
+	/**
+	 * static constructor
+	 */
+	public static function newFromUserID( $userId ) {
 		wfProfileIn( __METHOD__ );
-		if ($iUserId > 0) {
-			$oUserAvatar = new BlogAvatar($iUserId);
-		} else {
-			$oUserAvatar = NULL;
-		}
+
+		$User = User::newFromId( $userId );
+		$User->load();
+		$Avatar = new BlogAvatar( $User );
+
 		wfProfileOut( __METHOD__ );
-		return $oUserAvatar;
+		return $Avatar;
 	}
 
-	private function __setUser($iUserId) {
+	/**
+	 * static constructor
+	 */
+	public static function newFromUserName( $login ) {
 		wfProfileIn( __METHOD__ );
-		$this->iUserID = $iUserId;
-		$this->oUser = User::newFromId($iUserId);
-		if (is_object( $this->oUser ) && !is_null( $this->oUser )) {
-			$this->oUser->load();
+
+		$User = User::newFromName( $login );
+		$User->load();
+		$Avatar = new BlogAvatar( $User );
+
+		wfProfileOut( __METHOD__ );
+		return $Avatar;
+	}
+
+	private function __setUser( $User ) {
+		wfProfileIn( __METHOD__ );
+
+		$this->oUser = $User;
+
+		if( is_object( $this->oUser ) && !is_null( $this->oUser )) {
+			$this->iUserID = $this->oUser->getId();
+
 			$sAvatarPath = $this->oUser->getOption(AVATAR_USER_OPTION_NAME);
 			if (!empty($sAvatarPath)) {
 				wfDebug( __METHOD__.": found avatar for user {$iUserId}: $sAvatarPath\n" );
@@ -141,62 +168,70 @@ class BlogAvatar {
         wfProfileOut( __METHOD__ );
 	}
 
+	/**
+	 * getDefaultAvatars -- get avatars stored in mediawiki message and return as
+	 * 	array
+	 *
+	 * @author Piotr Molski <moli@wikia-inc.com>
+	 * @author Krzysztof Krzyżaniak <eloy@wikia-inc.com>
+	 */
 	public function getDefaultAvatars() {
-		global $parserMemc, $wgLang, $wgContLang;
-		global $wgWikiaAvatarDefaultImagesMsg;
 
-		$aImgDefPaths = array();
+		/**
+		 * parse message only once per request
+		 */
+		if( is_array( $this->mDefaultAvatars ) && count( $this->mDefaultAvatars )> 0) {
+			return $this->mDefaultAvatars;
+		}
+
 		wfProfileIn( __METHOD__ );
-		if (!empty($wgWikiaAvatarDefaultImagesMsg)) {
-			$aLines = explode( "\n", wfMsgForContent( $wgWikiaAvatarDefaultImagesMsg ) );
-			wfDebug( __METHOD__.": found ".count($aLines)." default avatars\n" );
-			foreach ($aLines as $sLine) {
-				if (strpos($sLine, '*') !== 0) {
-					continue;
-				} else {
-					$sLine = trim($sLine, '* ');
-					$aImgDefPaths[] = $sLine;
-				}
-			}
+
+		$uploadPath = WikiFactory::getVarValueByName( "wgUploadPath", $this->mMsgCityId );
+
+		$this->mDefaultAvatars = array();
+		$images = getMessageAsArray( "blog-avatar-defaults" );
+		foreach( $images as $image ) {
+			$image = FileRepo::getHashPathForLevel( $image, 2 );
+			$url = $uploadPath . '/' . $image;
+			$this->mDefaultAvatars[] = $url;
 		}
     	wfProfileOut( __METHOD__ );
-    	return $aImgDefPaths;
+
+    	return $this->mDefaultAvatars;
 	}
 
-	public function isDefault() {
+	/**
+	 * getImageURL -- return HTML <img> tag
+	 *
+	 * @access public
+	 *
+	 * @param Integer $width default AVATAR_DEFAULT_WIDTH -- width of image
+	 * @param Integer $height default AVATAR_DEFAULT_HEIGHT -- height of image
+	 * @param String  $alt	-- alternate text
+	 */
+	public function getImageURL( $width = AVATAR_DEFAULT_WIDTH, $height = AVATAR_DEFAULT_HEIGHT, $alt = false ) {
 		wfProfileIn( __METHOD__ );
-		$sImageFull = $this->getAvatarFileName();
-		if ( file_exists($sImageFull) ) {
-			$this->bDefault = false;
-		}
-		else {
-			$this->bDefault = true;
+		$path = $this->getAvatarUrlName();
+		if ( ! $alt ) {
+			$alt = $this->oUser->getName();
 		}
 		wfProfileOut( __METHOD__ );
-		return $this->bDefault;
-	}
-
-	public function getAvatarImageTag($iWidth = AVATAR_DEFAULT_WIDTH, $iHeight = AVATAR_DEFAULT_HEIGHT, $sAlt = '') {
-		wfProfileIn( __METHOD__ );
-		$sPath = $this->getAvatarUrlName();
-		if ( empty($sAlt) ) {
-			$sAlt = wfMsg('avatar-blog-alt');
-		}
-		wfProfileOut( __METHOD__ );
-		return Xml::element( 'img', array (
-				'src' 		=> $sPath,
+		return Xml::element( 'img',
+			array (
+				'src' 		=> $path,
 				'border' 	=> 0,
-				'width'		=> $iWidth,
-				'height'	=> $iHeight,
-				'alt' 		=> $sAlt
-			), '', true );
+				'width'		=> $width,
+				'height'	=> $height,
+				'alt' 		=> $alt
+			), '', true
+		);
 	}
 
-	public function getAvatarImageTagWithLink($iWidth = AVATAR_DEFAULT_WIDTH, $iHeight = AVATAR_DEFAULT_HEIGHT, $sAlt = '', $sLinkType = 'upload') {
+	public function getLinkURL($iWidth = AVATAR_DEFAULT_WIDTH, $iHeight = AVATAR_DEFAULT_HEIGHT, $sAlt = '', $sLinkType = 'upload') {
 		global $wgUser;
 		wfProfileIn( __METHOD__ );
 
-		$sPath = $this->getAvatarImageTag($iWidth, $iHeight, $sAlt);
+		$sPath = $this->getImageURL($iWidth, $iHeight, $sAlt);
 		$oSkin = $wgUser->getSkin();
 
 		/* check if this avatar is for wgUser or another */
@@ -241,21 +276,21 @@ class BlogAvatar {
 	}
 
 	public function getAvatarUrlName() {
-		wfProfileIn( __METHOD__ );
+
 		global $wgWikiaAvatarUrlPath, $wgWikiaAvatarDefaultImage;
+
+		wfProfileIn( __METHOD__ );
+
 		$sFilePath = $wgWikiaAvatarDefaultImage;
-		if (!empty($this->oUser)) {
-			$sFilePath = $this->oUser->getOption(AVATAR_USER_OPTION_NAME);
-			/*
-			error_log ("getAvatarUrlName = ".$sFilePath."\n", 3, "/tmp/moli.log");
-			if ( !empty($sFilePath) ) {
-				error_log ("getAvatarUrlName (1) = ".strpos($sFilePath, 'http://')."\n", 3, "/tmp/moli.log");
-				if ( strpos($sFilePath, 'http://') === FALSE ) {
-					//$sFilePath = $wgWikiaAvatarUrlPath . $sFilePath;
-				}
-			}*/
+
+		if( !empty( $this->oUser ) ) {
+			$sFilePath = $this->oUser->getOption( AVATAR_USER_OPTION_NAME );
+			/**
+			 * when avatar for this user is not set we return default avatar
+			 */
+			if( ! $sFilePath ) {
+			}
 		}
-		error_log ("getAvatarUrlName (2) = ".$sFilePath."\n", 3, "/tmp/moli.log");
 		wfProfileOut( __METHOD__ );
 		return $sFilePath;
     }

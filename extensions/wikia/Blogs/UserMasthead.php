@@ -13,11 +13,18 @@ function userMasthead() {
 		//DEFINE USERSPACE - THE USERNAME THAT BELONGS ON THE MASTHEAD
 		if ( in_array( $namespace, array( NS_USER, NS_USER_TALK, NS_BLOG_ARTICLE ) ) ) {
 			$userspace = $wgTitle->getDBkey();
+			$Avatar = BlogAvatar::newFromUserName( $userspace );
 		}
 		if ($wgTitle == 'Special:Watchlist' || $wgTitle == 'Special:WidgetDashboard' || $wgTitle == 'Special:Preferences' ) {
 			$userspace = $wgUser->getName();
+			$Avatar = BlogAvatar::newFromUser( $wgUser );
 		}
 		$out['userspace'] = $userspace;
+
+		/**
+		 * get avatar for this user
+		 */
+
 
 		$out['nav_links'] = array (
 			array('text' => wfMsg('nstab-user'), 'href' => Title::newFromText( $userspace, NS_USER )->getLocalUrl() ),
