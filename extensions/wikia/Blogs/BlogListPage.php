@@ -106,9 +106,19 @@ class BlogListPage extends Article {
 
 		if( ! $wgDevelEnvironment ) return;
 
-		$page = BlogComments::newFromTitle( $this->mTitle );
-	    $wgOut->addHTML( $page->render() );
+		wfProfileIn( __METHOD__ );
 
+		$page = BlogComments::newFromTitle( $this->mTitle );
+		if( $page->count() > 10 ) {
+			/**
+			 * input box on top as well
+			 */
+			$wgOut->addHTML( $page->showInput( "top" ) );
+		}
+	    $wgOut->addHTML( $page->render( true ) );
+		$wgOut->addHTML( $page->showInput( "bottom" ) );
+
+		wfProfileOut( __METHOD__ );
 	}
 
 	/**

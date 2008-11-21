@@ -29,6 +29,8 @@ Blog posts can be aggregated by a blog listing page based on the blog post's tag
 	"blog-last-edited" => "Last edited: $1",
 	"blog-page" => "Blog",
 	"blog-zero-comments" => "No comments!",
+	"blog-comment-post" => "Post comment",
+	"blog-comments" => "Comments",
 	'avatar-blog-alt' => "Avatar",
 	'avatar-blog-preferences-title' => "Avatar:",
 	'avatar-blog-choose-avatar' => "Choose a new avatar",
