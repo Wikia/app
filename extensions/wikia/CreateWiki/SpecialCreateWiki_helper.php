@@ -423,12 +423,7 @@ function axWCreateCheckName()
 
     // check whether or not request page already exists
     $oRequestTitle = Title::newFromText( $sRequestPage, NS_MAIN );
-/*
-echo "<pre>";
-print_r($oRequestTitle);
-*/
-    $oRequestArticle = new Article( $oRequestTitle, 0);
-    if(!$oRequestArticle->exists()) {
+    if(!is_object($oRequestTitle) || !$oRequestTitle->exists()) {
     	$sRequestPage = "none";
     }
 
@@ -449,5 +444,3 @@ print_r($oRequestTitle);
 
 global $wgAjaxExportList;
 $wgAjaxExportList[] = "axWCreateCheckName";
-
-?>
