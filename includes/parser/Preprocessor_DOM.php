@@ -87,7 +87,7 @@ class Preprocessor_DOM implements Preprocessor {
 		if(!empty($wgWysiwygParserEnabled)) {
 			$rules['['] = array(
 				'end' => ']',
-				'names' => array( 1=> 'internal', 2 => null ),
+				'names' => array( 1=> 'external', 2 => null ),
 				'min' => 1,
 				'max' => 2,
 			);
@@ -497,13 +497,20 @@ class Preprocessor_DOM implements Preprocessor {
 					continue;
 				}
 				$name = $rule['names'][$matchingCount];
-				if ( $name === null || $name == 'internal') {
+				if ( $name === null || $name == 'external') {
 					// No element, just literal text
 					$element = $piece->breakSyntax( $matchingCount ) . str_repeat( $rule['end'], $matchingCount );
+
 					if(!empty($wgWysiwygParserEnabled)) {
+
 						global $wgWikitext;
 						$wgWikitext[] = $element;
-						$element .= "\x7e-start-".(count($wgWikitext)-1)."-stop";
+						if($name === null) {
+							$element = sprintf("[[\x7d-%04d", count($wgWikitext)-1).substr($element,2);
+						} else if($name === 'external') {
+							$element .= "\x7e-start-".(count($wgWikitext)-1)."-stop";
+						}
+
 					}
 				} else {
 					# Create XML element

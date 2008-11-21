@@ -1583,10 +1583,10 @@ class Parser
 			if (!empty($wgWysiwygParserEnabled)) {
 				global $wgWikitext;
 				$originalWikitext = '';
-
-				if (preg_match('/\]\]\x7e-start-(\d+)-stop[^\x7e]*$/', $line, $matches)) {
-					$originalWikitext = $wgWikitext[$matches[1]];
-					$line = str_replace("\x7e-start-{$matches[1]}-stop", '', $line);
+				if($line[0] == "\x7d" && $line[1] == "-") {
+					$linkmark = intval(substr($line, 2, 4));
+					$originalWikitext = $wgWikitext[$linkmark];
+					$line = substr($line, 6);
 				}
 			}
 
