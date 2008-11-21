@@ -423,7 +423,7 @@ function axWCreateCheckName()
 
     // check whether or not request page already exists
     $oRequestTitle = Title::newFromText( $sRequestPage, NS_MAIN );
-    if(!is_object($oRequestTitle) || !$oRequestTitle->exists()) {
+    if(!($oRequestTitle instanceof Title) || !$oRequestTitle->exists()) {
     	$sRequestPage = "none";
     }
 
