@@ -885,9 +885,6 @@ FCK.TemplatePreviewReset = function(previewDiv) {
 // runtime setup
 //
 
-// browsers supporting "contentEditable"
-FCK.UseContentEditable = FCKBrowserInfo.IsIE;
-
 // YUI reference
 FCK.YAHOO = window.parent.YAHOO;
 FCK.YD = FCK.YAHOO.util.Dom;
@@ -931,6 +928,13 @@ if (!FCKBrowserInfo.IsIE) {
 }
 else {
 	FCK.log('temporary save not supported in your browser');
+}
+
+// browsers supporting "contentEditable"
+FCK.UseContentEditable = FCKBrowserInfo.IsIE || FCKBrowserInfo.IsGecko19; // IE6+ and FF3
+
+if (FCK.UseContentEditable) {
+	FCK.log('using contentEditable');
 }
 
 // for us, developers ;)
