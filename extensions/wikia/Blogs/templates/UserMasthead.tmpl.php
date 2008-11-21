@@ -14,7 +14,7 @@ if ($wgTitle == 'Special:Watchlist') {
 ?>
 
 <div id="user_masthead" class="reset clearfix">
-	<img src="<?=$wgExtensionsPath?>/wikia/Blogs/images/avatar.jpg" class="avatar" />
+	<?php echo $avatar->getImageTag( 50, 50 ) ?>
 	<h2><?=$data['userspace']?></h2>
 	<?
 	if(!empty($nav_urls['blockip'])) {

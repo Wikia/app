@@ -108,7 +108,7 @@ class BlogAvatar {
         wfLoadExtensionMessages( "Blogs" );
 		$this->oUser = $User;
 
-		//		$this->__setUser( $User );
+		// $sAvatarPath = $this->oUser->getOption( AVATAR_USER_OPTION_NAME );
 
         wfProfileOut( __METHOD__ );
 	}
@@ -151,23 +151,6 @@ class BlogAvatar {
 		return $Avatar;
 	}
 
-	private function __setUser( $User ) {
-		wfProfileIn( __METHOD__ );
-
-		$this->oUser = $User;
-
-		if( is_object( $this->oUser ) && !is_null( $this->oUser )) {
-			$this->iUserID = $this->oUser->getId();
-
-			$sAvatarPath = $this->oUser->getOption(AVATAR_USER_OPTION_NAME);
-			if (!empty($sAvatarPath)) {
-				wfDebug( __METHOD__.": found avatar for user {$iUserId}: $sAvatarPath\n" );
-				$this->sAvatarPath = $sAvatarPath;
-			}
-        }
-        wfProfileOut( __METHOD__ );
-	}
-
 	/**
 	 * getDefaultAvatars -- get avatars stored in mediawiki message and return as
 	 * 	array
@@ -191,8 +174,8 @@ class BlogAvatar {
 		$this->mDefaultAvatars = array();
 		$images = getMessageAsArray( "blog-avatar-defaults" );
 		foreach( $images as $image ) {
-			$image = FileRepo::getHashPathForLevel( $image, 2 );
-			$url = $uploadPath . '/' . $image;
+			$hash = FileRepo::getHashPathForLevel( $image, 2 );
+			$url = $uploadPath . $hash . $image;
 			$this->mDefaultAvatars[] = $url;
 		}
     	wfProfileOut( __METHOD__ );
@@ -200,8 +183,26 @@ class BlogAvatar {
     	return $this->mDefaultAvatars;
 	}
 
+
 	/**
-	 * getImageURL -- return HTML <img> tag
+	 * getUrl -- read url from preferences or from defaults if preference is
+	 * not set
+	 *
+	 * @access private
+	 *
+	 * @return String
+	 */
+	private function getUrl() {
+		$url = $this->oUser->getOption( AVATAR_USER_OPTION_NAME );
+		if( $url ) {
+			return $url;
+		}
+		$defaults = $this->getDefaultAvatars();
+		return array_shift( $defaults );
+	}
+
+	/**
+	 * getImageTag -- return HTML <img> tag
 	 *
 	 * @access public
 	 *
@@ -209,16 +210,18 @@ class BlogAvatar {
 	 * @param Integer $height default AVATAR_DEFAULT_HEIGHT -- height of image
 	 * @param String  $alt	-- alternate text
 	 */
-	public function getImageURL( $width = AVATAR_DEFAULT_WIDTH, $height = AVATAR_DEFAULT_HEIGHT, $alt = false ) {
+	public function getImageTag( $width = AVATAR_DEFAULT_WIDTH, $height = AVATAR_DEFAULT_HEIGHT, $alt = false ) {
 		wfProfileIn( __METHOD__ );
-		$path = $this->getAvatarUrlName();
+
+		$url = $this->getUrl();
+
 		if ( ! $alt ) {
-			$alt = $this->oUser->getName();
+			$alt = "[" .$this->oUser->getName() ."]";
 		}
 		wfProfileOut( __METHOD__ );
 		return Xml::element( 'img',
 			array (
-				'src' 		=> $path,
+				'src' 		=> $url,
 				'border' 	=> 0,
 				'width'		=> $width,
 				'height'	=> $height,
@@ -227,11 +230,11 @@ class BlogAvatar {
 		);
 	}
 
-	public function getLinkURL($iWidth = AVATAR_DEFAULT_WIDTH, $iHeight = AVATAR_DEFAULT_HEIGHT, $sAlt = '', $sLinkType = 'upload') {
+	public function getLinkTag($iWidth = AVATAR_DEFAULT_WIDTH, $iHeight = AVATAR_DEFAULT_HEIGHT, $sAlt = '', $sLinkType = 'upload') {
 		global $wgUser;
 		wfProfileIn( __METHOD__ );
 
-		$sPath = $this->getImageURL($iWidth, $iHeight, $sAlt);
+		$sPath = $this->getImageTag($iWidth, $iHeight, $sAlt);
 		$oSkin = $wgUser->getSkin();
 
 		/* check if this avatar is for wgUser or another */

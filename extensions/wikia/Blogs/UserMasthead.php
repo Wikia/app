@@ -25,7 +25,6 @@ function userMasthead() {
 		 * get avatar for this user
 		 */
 
-
 		$out['nav_links'] = array (
 			array('text' => wfMsg('nstab-user'), 'href' => Title::newFromText( $userspace, NS_USER )->getLocalUrl() ),
 			array('text' => wfMsg('talkpage'), 'href' => Title::newFromText( $userspace, NS_USER_TALK )->getLocalUrl() ),
@@ -43,7 +42,8 @@ function userMasthead() {
 
 		$tmpl = new EasyTemplate( dirname( __FILE__ ) . '/templates/' );
 		$tmpl->set_vars( array(
-			'data' => $out
+			'data' => $out,
+			"avatar" => $Avatar
 		));
 		echo $tmpl->execute('UserMasthead');
 	}
