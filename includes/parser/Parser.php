@@ -4622,7 +4622,7 @@ class Parser
 
 		$parts = array_map( 'trim', explode( '|', $options) );
 		if (!empty($wgWysiwygParserEnabled)) {
-			$parts = array_map( create_function('$par', 'global $wgWysiwygMetaData; return preg_replace(\'%\x7f-wtb-(\d+)-\x7f(.*?)\x7f-wte-\1-\x7f%i\', \'\\2\', $par);'), $parts);
+			$parts = array_map( create_function('$par', 'global $wgWysiwygMetaData; return preg_replace(\'%\x7f-wtb-(\d+)-\x7f(.*?)\x7f-wte-\1-\x7f%si\', \'\\2\', $par);'), $parts);
 		}
 		$sk = $this->mOptions->getSkin();
 
