@@ -509,10 +509,6 @@ td.childrenHidden textarea, td.childrenHidden iframe
 	cursor: default;
 }
 
-#wysiwygTemplatePreviewCloudInner p {
-	margin: 0;
-}
-
 .cloudUnder #wysiwygTemplatePreviewCloudInner {
 	border-top: none;
 }
