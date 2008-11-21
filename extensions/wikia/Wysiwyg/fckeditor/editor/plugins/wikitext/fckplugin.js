@@ -573,6 +573,7 @@ FCK.ProtectImageUpdate = function(refid, wikitext, extraData) {
 	var params = wikitext.substring(2, wikitext.length-2).split('|');
 	FCK.wysiwygData[refid].href = params.shift();
 	FCK.wysiwygData[refid].description = params.join('|');
+	FCK.wysiwygData[refid].original = wikitext;
 
 	// merge with extraData
 	FCK.wysiwygData[refid] = FCK.YAHOO.lang.merge(FCK.wysiwygData[refid], extraData);
@@ -653,6 +654,7 @@ FCK.ProtectImageAdd = function(wikitext, extraData) {
 		'type': 'image',
 		'href': params.shift(),
 		'description': params.join('|'),
+		'original': wikitext,
 		'exists': true
 	};
 
