@@ -390,6 +390,37 @@ function Wysiwyg_SetRefId($type, $params, $addMarker = true, $returnId = false) 
 //			$data['description'] = preg_replace('%\x7f-wtb-(\d+)-\x7f.*?\x7f-wte-\1-\x7f%sie', '$wgWysiwygMetaData[\\1]["originalCall"];', $data['description']);
 			if ($params['original'] != '') {
 				$data['original'] = htmlspecialchars_decode(preg_replace($regexPreProcessor['search'], $regexPreProcessor['replace'], $params['original']));
+				$data['caption'] = '';
+
+				$caption = $data['original'];
+				$captionIsIn = array('template' => 0, 'internal' => 0, 'external' => 0);
+
+				for ($i=strlen($caption)-3; $i >= 2; $i--) {
+					if ($caption{$i} == '}' && $caption{$i-1} == '}') {
+						$captionIsIn['template']++;
+					}
+					else if ($caption{$i} == '{' && $caption{$i-1} == '{') {
+						$captionIsIn['template']--;
+					}
+					else if ($caption{$i} == '[' && $caption{$i-1} == '[') {
+						$captionIsIn['internal']--;
+					}
+					else if ($caption{$i} == ']' && $caption{$i-1} == ']') {
+						$captionIsIn['internal']++;
+					}
+					else if ($caption{$i} == '[' && $caption{$i-1} != '[') {
+						$captionIsIn['external']--;
+					}
+					else if ($caption{$i} == ']' && $caption{$i-1} != ']') {
+						$captionIsIn['external']++;
+					}
+					else if ($caption[$i] == '|') {
+						if ($captionIsIn['template'] == 0 && $captionIsIn['internal'] == 0 && $captionIsIn['external'] == 0) {
+							$data['caption'] = substr($caption, $i+1, -2);
+							break;
+						}
+					}
+				}
 			}
 			break;
 
