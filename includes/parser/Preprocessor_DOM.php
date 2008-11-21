@@ -503,7 +503,7 @@ class Preprocessor_DOM implements Preprocessor {
 					if(!empty($wgWysiwygParserEnabled)) {
 						global $wgWikitext;
 						$wgWikitext[] = $element;
-						$element .= "start-".(count($wgWikitext)-1)."-stop";
+						$element .= "\x7f-start-".(count($wgWikitext)-1)."-stop";
 					}
 				} else {
 					# Create XML element
