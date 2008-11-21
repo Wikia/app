@@ -463,7 +463,7 @@ FCK.ProtectImage = function(image) {
 	}
 
 	var iframe = FCK.EditingArea.Document.createElement('iframe');
-	iframe.src = '';
+	iframe.src = 'javascript:void()';
 
 	iframe.setAttribute('refid', refid);
 	iframe.className = image.className;
@@ -492,6 +492,7 @@ FCK.ProtectImage = function(image) {
 	FCK.ProtectImageSetup(refid);
 }
 
+// setup the image placeholder if browser doesn't support contentEditable
 FCK.ProtectImageSetup = function(refid) {
 	// fired during the switch between wysiwyg and source mode
 	if (!FCK.EditorDocument) {
@@ -508,9 +509,13 @@ FCK.ProtectImageSetup = function(refid) {
 	// fill iframe
 	var iframeDoc = iframe.contentDocument ? iframe.contentDocument : iframe.document /* ie */;
 	var iframeWin = iframe.contentWindow ? iframe.contentWindow : iframe.window /* ie */;
-	
-	iframeDoc.body.setAttribute('refid', refid);
 
+	// wait for iframe to be fully loaded (fix FF2.x bug)
+	if (!iframeDoc) {
+		setTimeout('FCK.ProtectImageSetup('+refid+')', 200);
+		return;
+	}
+	
 	// CSS
 	iframeDoc.write(
 		'<style type="text/css">' + 
@@ -522,7 +527,10 @@ FCK.ProtectImageSetup = function(refid) {
 	// set iframe content
 	iframeDoc.write(FCK.wysiwygData[refid].html);
 	iframeDoc.close();
-	
+
+	// set refid of the iframe
+	iframeWin.refid = refid;
+
 	// block onclick / onmousedown events
 	FCKTools.AddEventListener(iframeDoc, 'click', function(e) {
 		var e = FCK.YE.getEvent(e);
@@ -530,7 +538,7 @@ FCK.ProtectImageSetup = function(refid) {
 
 		// ignore buttons different then left
 		if (e.button == 0) {
-			refid = parseInt(FCKTools.GetElementDocument(target).body.getAttribute('refid'));
+			var refid = parseInt(FCKTools.GetElementWindow(target).refid);
 			FCK.ProtectImageClick(refid);
 		}
 
@@ -542,12 +550,11 @@ FCK.ProtectImageSetup = function(refid) {
 
 	// reload iframe when moved inside DOM tree (fixes FF bug)
 	FCKTools.AddEventListener(iframeWin, 'unload', function(e) {
-		var target = FCK.YE.getTarget(e);
-		var refid = parseInt(target.body.getAttribute('refid'));
+		var refid = parseInt(this.refid);
 
 		FCK.log('iframe #' + refid  + ' unload captured');
 
-		setTimeout('FCK.ProtectImageSetup('+refid+')', 50);
+		setTimeout('FCK.ProtectImageSetup('+refid+')', 500);
 	});
 
 	FCK.log('set up image #' + refid + ' iframe');
