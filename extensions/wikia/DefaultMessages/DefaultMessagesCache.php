@@ -13,11 +13,21 @@ class DefaultMessagesCache {
 	// Variable for tracking which variables are loaded
 	var $mLoadedLanguages = array();
 
+	var $mLocalMessageCache, $mLocalMessageCacheSerialized = true;
+
 	function __construct( &$memCached, $useDB, $expiry ) {
+		global $wgLocalMessageCache;
+
 		$this->mUseCache = !is_null( $memCached );
 		$this->mMemc = &$memCached;
 		$this->mDisable = !$useDB;
 		$this->mExpiry = $expiry;
+
+		if( $wgLocalMessageCache !== false ) {
+			$this->mLocalMessageCache = $wgLocalMessageCache;
+		} else {
+			$this->mLocalMessageCache = '/tmp/messagecache';
+		}
 	}
 
 	private function memcKey( /*... */ ) {
@@ -37,10 +47,9 @@ class DefaultMessagesCache {
 	 * @return false on failure.
 	 */
 	function loadFromLocal( $hash, $code ) {
-		global $wgLocalMessageCache, $wgLocalMessageCacheSerialized;
 		global $wgDefaultMessagesDB;
 
-		$filename = "$wgLocalMessageCache/messages-$wgDefaultMessagesDB-$code";
+		$filename = $this->mLocalMessageCache . "/messages-$wgDefaultMessagesDB-$code";
 
 		# Check file existence
 		wfSuppressWarnings();
@@ -50,7 +59,7 @@ class DefaultMessagesCache {
 			return false; // No cache file
 		}
 
-		if ( $wgLocalMessageCacheSerialized ) {
+		if ( $this->mLocalMessageCacheSerialized ) {
 			// Check to see if the file has the hash specified
 			$localHash = fread( $file, 32 );
 			if ( $hash === $localHash ) {
@@ -82,11 +91,10 @@ class DefaultMessagesCache {
 	 * Save the cache to a local file.
 	 */
 	function saveToLocal( $serialized, $hash, $code ) {
-		global $wgLocalMessageCache;
 		global $wgDefaultMessagesDB;
 
-		$filename = "$wgLocalMessageCache/messages-$wgDefaultMessagesDB-$code";
-		wfMkdirParents( $wgLocalMessageCache, 0777 ); // might fail
+		$filename = $this->mLocalMessageCache . "/messages-$wgDefaultMessagesDB-$code";
+		wfMkdirParents( $this->mLocalMessageCache, 0777 ); // might fail
 
 		wfSuppressWarnings();
 		$file = fopen( $filename, 'w' );
@@ -103,12 +111,11 @@ class DefaultMessagesCache {
 	}
 
 	function saveToScript( $array, $hash, $code ) {
-		global $wgLocalMessageCache;
 		global $wgDefaultMessagesDB;
 
-		$filename = "$wgLocalMessageCache/messages-$wgDefaultMessagesDB-$code";
+		$filename = $this->mLocalMessageCache . "/messages-$wgDefaultMessagesDB-$code";
 		$tempFilename = $filename . '.tmp';
-		wfMkdirParents( $wgLocalMessageCache, 0777 ); // might fail
+		wfMkdirParents( $this->mLocalMessageCache, 0777 ); // might fail
 
 		wfSuppressWarnings();
 		$file = fopen( $tempFilename, 'w');
@@ -169,8 +176,6 @@ class DefaultMessagesCache {
 	 * @param $code String: language to which load messages
 	 */
 	function load( $code = false ) {
-		global $wgLocalMessageCache;
-
 		if ( !$this->mUseCache ) {
 			return true;
 		}
@@ -205,7 +210,7 @@ class DefaultMessagesCache {
 		# (1) local cache
 		# Hash of the contents is stored in memcache, to detect if local cache goes
 		# out of date (due to update in other thread?)
-		if ( $wgLocalMessageCache !== false ) {
+		if ( $this->mLocalMessageCache !== false ) {
 			wfProfileIn( __METHOD__ . '-fromlocal' );
 
 			$hash = $this->mMemc->get( $this->memcKey( 'messages', $code, 'hash' ) );
@@ -274,7 +279,7 @@ class DefaultMessagesCache {
 	 */
 	function loadFromDB( $code = false ) {
 		wfProfileIn( __METHOD__ );
-		global $wgMaxMsgCacheEntrySize, $wgContLanguageCode;
+		global $wgMaxMsgCacheEntrySize;
 		global $wgDefaultMessagesDB;
 		$dbr = wfGetDB( DB_SLAVE );
 		$cache = array();
@@ -288,14 +293,14 @@ class DefaultMessagesCache {
 		if ( $code ) {
 			# Is this fast enough. Should not matter if the filtering is done in the
 			# database or in code.
-			if ( $code !== $wgContLanguageCode ) {
+			if ( $code !== 'en' ) {
 				# Messages for particular language
 				$escapedCode = $dbr->escapeLike( $code );
 				$conds[] = "page_title like '%%/$escapedCode'";
 			} else {
 				# Effectively disallows use of '/' character in NS_MEDIAWIKI for uses
 				# other than language code.
-				$conds[] = "page_title not like '%%/%%'";
+				$conds[] = "(page_title not like '%%/%%') OR (page_title like '%%/en')";
 			}
 		}
 
@@ -341,7 +346,6 @@ class DefaultMessagesCache {
 	 */
 	protected function saveToCaches( $cache, $memc = true, $code = false ) {
 		wfProfileIn( __METHOD__ );
-		global $wgLocalMessageCache, $wgLocalMessageCacheSerialized;
 
 		$cacheKey = $this->memcKey( 'messages', $code );
 		$statusKey = $this->memcKey( 'messages', $code, 'status' );
@@ -362,11 +366,11 @@ class DefaultMessagesCache {
 		}
 
 		# Save to local cache
-		if ( $wgLocalMessageCache !== false ) {
+		if ( $this->mLocalMessageCache !== false ) {
 			$serialized = serialize( $cache );
 			$hash = md5( $serialized );
 			$this->mMemc->set( $this->memcKey( 'messages', $code, 'hash' ), $hash, $this->mExpiry );
-			if ($wgLocalMessageCacheSerialized) {
+			if ($this->mLocalMessageCacheSerialized) {
 				$this->saveToLocal( $serialized, $hash, $code );
 			} else {
 				$this->saveToScript( $cache, $hash, $code );
