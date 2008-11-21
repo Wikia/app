@@ -793,10 +793,7 @@ FCK.TemplatePreviewAdd = function(placeholder) {
 	});
 
 	// reset margin/padding/align
-	if (previewDiv.firstChild && previewDiv.firstChild.nodeType == 1) {
-		FCK.YD.addClass(previewDiv.firstChild, 'resetTemplate');
-		previewDiv.firstChild.removeAttribute('align');
-	}
+	FCK.TemplatePreviewReset(previewDiv);
 }
 
 FCK.TemplatePreviewShow = function(placeholder) {
@@ -858,14 +855,8 @@ FCK.TemplatePreviewSetHTML = function(refid, html) {
 	var preview = FCKTools.GetElementDocument(FCK.TemplatePreviewCloud).getElementById('wysiwygTemplatePreview' + refid);
 	preview.innerHTML = html;
 
-	// add "floats clearing" <br> after complicated infoboxes
-	if ( (!preview.firstChild.nodeName.IEquals('p')) || (preview.childNodes.length != 1) ) {
-		// reset margin/padding/align
-		if (preview.firstChild && preview.firstChild.nodeType == 1) {
-			FCK.YD.addClass(preview.firstChild, 'resetTemplate');
-			preview.firstChild.removeAttribute('align');
-		}
-	}
+	// reset margin/padding/align
+	FCK.TemplatePreviewReset(preview);
 
 	FCK.log('saved template preview for #' + refid);
 }
@@ -878,6 +869,14 @@ FCK.TemplatePreviewGetHTML = function(refid) {
 FCK.TemplatePreviewSetName = function(refid, name) {
 	var input = FCK.GetElementByRefId(refid);
 	input.value = FCK.YAHOO.lang.trim(name);
+}
+
+// reset template preview margins/padding/float/align
+FCK.TemplatePreviewReset = function(previewDiv) {
+	if (previewDiv.firstChild && previewDiv.firstChild.nodeType == 1) {
+		FCK.YD.addClass(previewDiv.firstChild, 'resetTemplate');
+		previewDiv.firstChild.removeAttribute('align');
+	}
 }
 
 //
