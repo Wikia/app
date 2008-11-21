@@ -102,7 +102,7 @@ function Wysywig_Ajax($type, $input = false, $wysiwygData = false, $articleId = 
 }
 
 function Wysiwyg_Initial($form) {
-	global $wgUser, $wgOut, $wgRequest, $IP, $wgExtensionsPath, $wgStyleVersion, $wgHooks, $wgWysiwygEdgeCasesFound, $wgWysiwygFallbackToSourceMode;
+	global $wgUser, $wgOut, $wgRequest, $IP, $wgExtensionsPath, $wgStyleVersion, $wgHooks, $wgWysiwygEdgeCasesFound, $wgWysiwygFallbackToSourceMode, $wgJsMimeType;
 
 	// check user preferences option
 	if($wgUser->getOption('disablewysiwyg') == true) {
@@ -132,8 +132,9 @@ function Wysiwyg_Initial($form) {
 	// JS
 	$wgOut->addInlineScript('var fallbackToSourceMode = '.($wgWysiwygFallbackToSourceMode ? 'true' : 'false'));
 
-	$wgOut->addScriptFile("$wgExtensionsPath/wikia/Wysiwyg/fckeditor/fckeditor.js?$wgStyleVersion");
-	$wgOut->addScriptFile("$wgExtensionsPath/wikia/Wysiwyg/wysiwyg.js?$wgStyleVersion");
+
+	$wgOut->addScript( "<script type=\"{$wgJsMimeType}\" src=\"$wgExtensionsPath/wikia/Wysiwyg/fckeditor/fckeditor.js?$wgStyleVersion\"></script>" );
+	$wgOut->addScript( "<script type=\"{$wgJsMimeType}\" src=\"$wgExtensionsPath/wikia/Wysiwyg/wysiwyg.js?$wgStyleVersion\"></script>" );
 
 	// CSS
  	$wgOut->addLink(array(
