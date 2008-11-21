@@ -49,7 +49,7 @@ class DefaultMessagesCache {
 	function loadFromLocal( $hash, $code ) {
 		global $wgDefaultMessagesDB;
 
-		$filename = $this->mLocalMessageCache . "/messages-$wgDefaultMessagesDB-$code";
+		$filename = $this->mLocalMessageCache . '/' . substr( $wgDefaultMessagesDB, 0, 1 ) . '/' . $wgDefaultMessagesDB . "/messages-$code";
 
 		# Check file existence
 		wfSuppressWarnings();
@@ -93,8 +93,9 @@ class DefaultMessagesCache {
 	function saveToLocal( $serialized, $hash, $code ) {
 		global $wgDefaultMessagesDB;
 
-		$filename = $this->mLocalMessageCache . "/messages-$wgDefaultMessagesDB-$code";
-		wfMkdirParents( $this->mLocalMessageCache, 0777 ); // might fail
+		$dirname = $this->mLocalMessageCache . '/' . substr( $wgDefaultMessagesDB, 0, 1 ) . '/' . $wgDefaultMessagesDB;
+		$filename = "$dirname/messages-$code";
+		wfMkdirParents( $dirname, 0777 ); // might fail
 
 		wfSuppressWarnings();
 		$file = fopen( $filename, 'w' );
