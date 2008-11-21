@@ -389,7 +389,7 @@ FCK.CheckInternalLink = function(title, link) {
 
 FCK.ProtectImage = function(image) {
 	//FCK.log(image);
-	var refid = image.getAttribute('refid');
+	var refid = parseInt(image.getAttribute('refid'));
 
 	// for browsers supporting contentEditable
 	if (FCK.UseContentEditable) {
@@ -508,6 +508,8 @@ FCK.ProtectImageSetup = function(refid) {
 	// fill iframe
 	var iframeDoc = iframe.contentDocument ? iframe.contentDocument : iframe.document /* ie */;
 	var iframeWin = iframe.contentWindow ? iframe.contentWindow : iframe.window /* ie */;
+	
+	iframeDoc.body.setAttribute('refid', refid);
 
 	// CSS
 	iframeDoc.write(
@@ -520,8 +522,7 @@ FCK.ProtectImageSetup = function(refid) {
 	// set iframe content
 	iframeDoc.write(FCK.wysiwygData[refid].html);
 	iframeDoc.close();
-	iframeDoc.body.setAttribute('refid', refid);
-
+	
 	// block onclick / onmousedown events
 	FCKTools.AddEventListener(iframeDoc, 'click', function(e) {
 		var e = FCK.YE.getEvent(e);
