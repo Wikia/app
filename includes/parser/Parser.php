@@ -987,7 +987,7 @@ class Parser
 		$text = $this->replaceExternalLinks( $text );
 
 		if(!empty($wgWysiwygParserEnabled)) {
-			$text = preg_replace('/\x7f-start-\d+-stop/', '', $text);
+			$text = preg_replace('/\x7e-start-\d+-stop/', '', $text);
 		}
 
 		# replaceInternalLinks may sometimes leave behind
@@ -1311,9 +1311,9 @@ class Parser
 			if (!empty($wgWysiwygParserEnabled)) {
 				global $wgWikitext;
 				$originalWikitext = '';
-				if (preg_match('/\]\x7f-start-(\d+)-stop[^\x7f]*$/', $trail, $matches)) {
+				if (preg_match('/\]\x7e-start-(\d+)-stop[^\x7e]*$/', $trail, $matches)) {
 					$originalWikitext = $wgWikitext[$matches[1]];
-					$trail = str_replace("\x7f-start-{$matches[1]}-stop", '', $trail);
+					$trail = str_replace("\x7e-start-{$matches[1]}-stop", '', $trail);
 				}
 			}
 
@@ -1584,9 +1584,9 @@ class Parser
 				global $wgWikitext;
 				$originalWikitext = '';
 
-				if (preg_match('/\]\]\x7f-start-(\d+)-stop[^\x7f]*$/', $line, $matches)) {
+				if (preg_match('/\]\]\x7e-start-(\d+)-stop[^\x7e]*$/', $line, $matches)) {
 					$originalWikitext = $wgWikitext[$matches[1]];
-					$line = str_replace("\x7f-start-{$matches[1]}-stop", '', $line);
+					$line = str_replace("\x7e-start-{$matches[1]}-stop", '', $line);
 				}
 			}
 
