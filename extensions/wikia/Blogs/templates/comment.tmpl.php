@@ -1,4 +1,4 @@
-<hr style="clear: both" />
+<h2><?php echo wfMsg("blog-comments") ?></h2>
 <div id="blog-comments">
 <?php if( ! $comments ): ?>
 <?php echo wfMsg( "blog-zero-comments" ); ?>

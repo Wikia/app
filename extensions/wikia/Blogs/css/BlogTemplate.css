@@ -1,5 +1,5 @@
-#wk_blogs_box { 
-	width:300px; 
+#wk_blogs_box {
+	width:300px;
 	border: 1px solid #E7E7E7;
 	font-size: 8pt;
 }
@@ -7,7 +7,7 @@
 	width:auto;
 }
 #wk_blogs_title {
-	background-color:#3366CC;	
+	background-color:#3366CC;
 	font-family: Trebuchet MS, Verdana, Arial;
 	font-size: 9pt;
 	color: #FFFFFF;
@@ -52,7 +52,7 @@
 	color:#000000;
 	padding: 0px 5px 0px 0px;
 	clear: both;
-	height: 20px;	
+	height: 20px;
 }
 #wk_blogs_body div.wk_blogs_timestamp span.left {
 	clear: left;
@@ -85,3 +85,9 @@
 	font-size: 8.5pt;
 }
 
+/**
+ * comments
+ */
+div.blog-comment-input {
+	background: #e0e0e;
+}

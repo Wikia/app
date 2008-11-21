@@ -73,12 +73,32 @@ class BlogComments {
 		$this->mText = $text;
 	}
 
+	/**
+	 * showInput -- show textarea for adding comments
+	 *
+	 * @param string $position -- top or bottom
+	 *
+	 * @access public
+	 */
+	public function showInput( $position ) {
+		global $wgUser;
+
+		wfProfileIn( __METHOD__ );
+
+		$tmpl = new EasyTemplate( dirname( __FILE__ ) . '/templates/' );
+		$tmpl->set_vars( array( "position" => $position, "author" => $wgUser ) );
+
+		wfProfileOut( __METHOD__ );
+
+		return  $tmpl->execute("comment-post");
+	}
+
 	private function getCommentPages() {
 
 		if( is_array( $this->mComments ) ) {
 			return $this->mComments;
 		}
-
+		wfProfileIn( __METHOD__ );
 		$pages = array();
 
 		$dbr = wfGetDB( DB_SLAVE );
@@ -98,6 +118,9 @@ class BlogComments {
 
 		$dbr->freeResult( $res );
 		$this->mComments = $pages;
+
+		wfProfileOut( __METHOD__ );
+
 		return $this->mComments;
 	}
 
@@ -116,7 +139,7 @@ class BlogComments {
 	}
 
 
-	public function render() {
+	public function render( $input = false ) {
 		global $wgParser, $wgContLang, $wgUser, $wgTitle;
 
 		/**
@@ -130,7 +153,7 @@ class BlogComments {
 			/**
 			 * no comments at all
 			 */
-			$template->set_vars( array( "comments" => false ) );
+			$template->set_vars( array( "comments" => false, "input" => $input ) );
 		}
 		else {
 			foreach( $pages as $page ) {
@@ -145,7 +168,7 @@ class BlogComments {
 					"timestamp" => $wgContLang->timeanddate( $revision->getTimestamp() )
 				);
 			}
-			$template->set_vars( array( "comments" => $comments, "parser" => $wgParser ) );
+			$template->set_vars( array( "comments" => $comments, "parser" => $wgParser, "input" => $input ) );
 		}
 
 		/**

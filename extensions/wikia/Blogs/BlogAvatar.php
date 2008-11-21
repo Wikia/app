@@ -23,7 +23,7 @@ function wfLoadBlogAvatarForm(&$oPrefs, &$sHtml ) {
    	wfProfileIn( __METHOD__ );
 	$oAvatarObj = new BlogAvatar($wgUser->getID());
 	$aDefAvatars = $oAvatarObj->getDefaultAvatars();
-	
+
 	/* run template */
 	$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
 	$oTmpl->set_vars( array(
@@ -50,14 +50,12 @@ function wfSaveBlogAvatarForm ($oPrefs, $oUser, &$sMsg, $oldOptions) {
    	wfProfileIn( __METHOD__ );
    	$result = true;
 
-	error_log (print_r($wgRequest, true), 3, "/tmp/moli.log");
-	error_log (print_r($_FILES, true), 3, "/tmp/moli.log");
-	
+	Wikia::log( __METHOD__, "request", print_r($wgRequest, true) );
+	Wikia::log( __METHOD__, "files", print_r( $_FILES, true) );
+
 	$sUrl = $wgRequest->getVal( 'wkDefaultAvatar' );
-	wfDebug( __METHOD__.": default avatar for user ".$oUser->getID().": $sUrl \n" );
-	error_log ( "sUrl = $sUrl \n", 3, "/tmp/moli.log" );
 	$sUploadedAvatar = $wgRequest->getFileName( AVATAR_UPLOAD_FIELD );
-	
+
 	/* is user trying to upload something */
 	$isNotUploaded = ( empty( $sUploadedAvatar ) && empty( $sUrl ) );
 	if ( !$isNotUploaded ) {
@@ -74,13 +72,12 @@ function wfSaveBlogAvatarForm ($oPrefs, $oUser, &$sMsg, $oldOptions) {
 			}
 		}
 		wfDebug( __METHOD__.": selected avatar for user ".$oUser->getID().": $sUrl \n" );
-		error_log ( "sUrl = $sUrl \n", 3, "/tmp/moli.log" );
 		if ( !empty($sUrl) ) {
 			/* set user option */
 			$oUser->setOption( AVATAR_USER_OPTION_NAME, $sUrl );
 		}
 	}
-	
+
    	wfProfileOut( __METHOD__ );
 	return $result;
 }
@@ -94,7 +91,7 @@ class BlogAvatar {
 	var $bDefault = true;
 	/* avatar path */
 	var $sAvatarPath = "";
-	
+
     public function __construct($iUserId) {
     	wfProfileIn( __METHOD__ );
     	global $wgMessageCache;
@@ -107,7 +104,17 @@ class BlogAvatar {
         wfLoadExtensionMessages("Blogs");
         wfProfileOut( __METHOD__ );
 	}
-	
+
+	/**
+	 * static constructor/helper
+	 *
+	 * @static
+	 * @access public
+	 */
+	public static function newFromUser( $User ) {
+		return self::newFromUserId( $User->getId() );
+	}
+
 	public static function newFromUserID( $iUserId ) {
 		wfProfileIn( __METHOD__ );
 		if ($iUserId > 0) {
@@ -118,7 +125,7 @@ class BlogAvatar {
 		wfProfileOut( __METHOD__ );
 		return $oUserAvatar;
 	}
-	
+
 	private function __setUser($iUserId) {
 		wfProfileIn( __METHOD__ );
 		$this->iUserID = $iUserId;
@@ -129,15 +136,15 @@ class BlogAvatar {
 			if (!empty($sAvatarPath)) {
 				wfDebug( __METHOD__.": found avatar for user {$iUserId}: $sAvatarPath\n" );
 				$this->sAvatarPath = $sAvatarPath;
-			} 
+			}
         }
         wfProfileOut( __METHOD__ );
 	}
-	
+
 	public function getDefaultAvatars() {
 		global $parserMemc, $wgLang, $wgContLang;
 		global $wgWikiaAvatarDefaultImagesMsg;
-		
+
 		$aImgDefPaths = array();
 		wfProfileIn( __METHOD__ );
 		if (!empty($wgWikiaAvatarDefaultImagesMsg)) {
@@ -168,7 +175,7 @@ class BlogAvatar {
 		wfProfileOut( __METHOD__ );
 		return $this->bDefault;
 	}
-    
+
 	public function getAvatarImageTag($iWidth = AVATAR_DEFAULT_WIDTH, $iHeight = AVATAR_DEFAULT_HEIGHT, $sAlt = '') {
 		wfProfileIn( __METHOD__ );
 		$sPath = $this->getAvatarUrlName();
@@ -184,24 +191,24 @@ class BlogAvatar {
 				'alt' 		=> $sAlt
 			), '', true );
 	}
-	
+
 	public function getAvatarImageTagWithLink($iWidth = AVATAR_DEFAULT_WIDTH, $iHeight = AVATAR_DEFAULT_HEIGHT, $sAlt = '', $sLinkType = 'upload') {
 		global $wgUser;
 		wfProfileIn( __METHOD__ );
-		
+
 		$sPath = $this->getAvatarImageTag($iWidth, $iHeight, $sAlt);
 		$oSkin = $wgUser->getSkin();
-		
+
 		/* check if this avatar is for wgUser or another */
 		if ($this->iUserID == $wgUser->getID()) {
 			switch ($sLinkType) {
-				case 'upload': 
+				case 'upload':
 					$sPath = $oSkin->makeLinkObj(Title::newFromText('Preferences', NS_SPECIAL), $sPath);
 					break;
-				case 'user'	: 
+				case 'user'	:
 					$sPath = $oSkin->userLink($wgUser->getId(), $sPath);
 					break;
-				default		: /* no link ? */ 
+				default		: /* no link ? */
 					break;
 			}
 		} else {
@@ -232,7 +239,7 @@ class BlogAvatar {
 		global $wgWikiaAvatarUrlPath;
 		return $wgWikiaAvatarUrlPath."/".$this->setAvatarFileName();
 	}
-	
+
 	public function getAvatarUrlName() {
 		wfProfileIn( __METHOD__ );
 		global $wgWikiaAvatarUrlPath, $wgWikiaAvatarDefaultImage;
@@ -280,7 +287,7 @@ class BlogAvatar {
 	public function removeAvatarFile($iUserID) {
 		wfProfileIn( __METHOD__ );
 		global $wgLogTypes, $wgUser;
-		
+
 		$result = false;
 		if ($this->iUserID == $wgUser->getID()) {
 			$sImageFull = self::getAvatarFilePath($iUserID);
@@ -297,14 +304,14 @@ class BlogAvatar {
 					$sLogComment = "Remove {$sUserText}'s avatars by {$wgUser->getName()}";
 					$oLogPage->addEntry( AVATAR_LOG_NAME, $oUserBlogPage, $sLogComment);
 					/* */
-					$result = true; 
+					$result = true;
 				}
 			}
 		}
 		wfProfileOut( __METHOD__ );
 		return $result;
 	}
-	
+
 	private function __setLogType() {
 		global $wgLogTypes;
 		wfProfileIn(__METHOD__);
@@ -317,9 +324,9 @@ class BlogAvatar {
 	public function uploadAvatar($request, $sFormField = AVATAR_UPLOAD_FIELD) {
 		global $wgTmpDirectory;
 		wfProfileIn(__METHOD__);
-		
+
 		$this->__setLogType();
-		
+
 		if (!isset($wgTmpDirectory) || empty($wgTmpDirectory)) {
 			$wgTmpDirectory = "/tmp";
 		}
@@ -332,9 +339,9 @@ class BlogAvatar {
 			/* file size = 0 */
 			wfDebugLog( __METHOD__, "Empty file: " . $sFormField );
 			wfProfileOut(__METHOD__);
-			return $iErrNo; 
+			return $iErrNo;
 		}
-		
+
 		$sTmpFile = $wgTmpDirectory."/".substr(sha1(uniqid($this->oUser->getID())), 0, 16);
 		error_log ( "sTmpFile = $sTmpFile \n", 3, "/tmp/moli.log" );
 		wfDebugLog( __METHOD__, "Temp file set to {$sTmpFile}" );
@@ -344,7 +351,7 @@ class BlogAvatar {
 
 		if (move_uploaded_file($sTmp, $sTmpFile)) {
 			$aImgInfo = getimagesize($sTmpFile);
-		
+
 			/* check if mimetype is allowed */
 			$aAllowMime = array("image/jpeg", "image/pjpeg", "image/gif", "image/png", "image/x-png", "image/jpg", "image/bmp");
 			error_log ( "aImgInfo[\"mime\"] = ".$aImgInfo["mime"]." \n", 3, "/tmp/moli.log" );
@@ -384,32 +391,32 @@ class BlogAvatar {
 			/* WIDTH > HEIGHT */
 			if ( $aOrigSize["width"] > $aOrigSize["height"] ) {
 				$iImgH = $iImgW * ( $aOrigSize["height"] / $aOrigSize["width"] );
-			} 
+			}
 			/* HEIGHT > WIDTH */
 			if ( $aOrigSize["width"] < $aOrigSize["height"] ) {
 				$iImgW = $iImgH * ( $aOrigSize["width"] / $aOrigSize["height"] );
 			}
-			
+
 			error_log ( "iImgW x iImgH = ".$iImgW." x ". $iImgH ." \n", 3, "/tmp/moli.log" );
 			/* empty image with thumb size on white background */
 			$oImg = @imagecreatetruecolor($iImgW, $iImgH);
 			error_log ( "oImg - ".print_r($oImg, true)." \n", 3, "/tmp/moli.log" );
 			$white = imagecolorallocate($oImg, 255, 255, 255);
 			imagefill($oImg, 0, 0, $white);
-			
+
 			imagecopyresampled(
-				$oImg, 
-				$oImgOrig, 
+				$oImg,
+				$oImgOrig,
 				floor ( ( AVATAR_DEFAULT_WIDTH - $iImgW ) / 2 ) /*dx*/,
 				floor ( ( AVATAR_DEFAULT_HEIGHT - $iImgH ) / 2 ) /*dy*/,
-				0 /*sx*/, 
+				0 /*sx*/,
 				0 /*sy*/,
-				$iImgW /*dw*/, 
+				$iImgW /*dw*/,
 				$iImgH /*dh*/,
-				$aOrigSize["width"]/*sw*/, 
+				$aOrigSize["width"]/*sw*/,
 				$aOrigSize["height"]/*sh*/
 			);
-			
+
 			/* save to new file */
 			if ( !imagepng($oImg, $sFilePath) ) {
 				error_log ( "imagepng - false \n", 3, "/tmp/moli.log" );
