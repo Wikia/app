@@ -953,6 +953,7 @@ class Parser
 	 * @private
 	 */
 	function internalParse( $text ) {
+		global $wgWysiwygParserEnabled;
 		$isMain = true;
 		$fname = 'Parser::internalParse';
 		wfProfileIn( $fname );
@@ -984,6 +985,10 @@ class Parser
 		$text = $this->doAllQuotes( $text );
 		$text = $this->replaceInternalLinks( $text );
 		$text = $this->replaceExternalLinks( $text );
+
+		if(!empty($wgWysiwygParserEnabled)) {
+			$text = preg_replace('/\x7f-start-\d+-stop/', '', $text);
+		}
 
 		# replaceInternalLinks may sometimes leave behind
 		# absolute URLs, which have to be masked to hide them from replaceExternalLinks
@@ -1306,9 +1311,9 @@ class Parser
 			if (!empty($wgWysiwygParserEnabled)) {
 				global $wgWikitext;
 				$originalWikitext = '';
-				if (preg_match('/start-(\d+)-stop/', $trail, $matches)) {
+				if (preg_match('/\]\x7f-start-(\d+)-stop[^\x7f]*$/', $trail, $matches)) {
 					$originalWikitext = $wgWikitext[$matches[1]];
-					$trail = preg_replace('/start-\d+-stop/', '', $trail);
+					$trail = str_replace("\x7f-start-{$matches[1]}-stop", '', $trail);
 				}
 			}
 
@@ -1578,9 +1583,10 @@ class Parser
 			if (!empty($wgWysiwygParserEnabled)) {
 				global $wgWikitext;
 				$originalWikitext = '';
-				if (preg_match('/start-(\d+)-stop/', $line, $matches)) {
+
+				if (preg_match('/\]\]\x7f-start-(\d+)-stop[^\x7f]*$/', $line, $matches)) {
 					$originalWikitext = $wgWikitext[$matches[1]];
-					$line = preg_replace('/start-\d+-stop/', '', $line);
+					$line = str_replace("\x7f-start-{$matches[1]}-stop", '', $line);
 				}
 			}
 

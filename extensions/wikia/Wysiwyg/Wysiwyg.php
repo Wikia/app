@@ -331,6 +331,10 @@ function Wysiwyg_WrapTemplate($originalCall, $output, $lineStart) {
 function Wysiwyg_SetRefId($type, $params, $addMarker = true, $returnId = false) {
 	global $wgWysiwygMetaData, $wgWysiwygParser, $wgWysiwygMarkers;
 
+	if(!empty($params['original'])) {
+		$params['original'] = preg_replace('/\x7f-start-\d+-stop/', '', $params['original']);
+	}
+
 	$refId = count($wgWysiwygMetaData);
 	$data = array('type' => $type);
 	$result = '';
