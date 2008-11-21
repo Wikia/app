@@ -45,12 +45,12 @@ class AdProviderGAM implements iAdProvider {
 
 	// TODO : Make this an assoc array with the bucket name
 	private $channels = array(	'1089383293', // Control
-					'7297263620', // Content Language
-					'7102419657', // User Language
+					'7297263620', // Unused
+					'7102419657', // Unused
 					'3156555836', // Default colors (instead of matching colors to the wiki)
-					'9000659297', // Hints
-					'5796745449', // Keywords
-					'4441240368'); // Page Url
+					'9000659297', // Unused
+					'5796745449', // Unused
+					'4441240368'); // Unused
 
 	private $slotsToCall = array();
 
@@ -155,43 +155,20 @@ class AdProviderGAM implements iAdProvider {
 		}       
 
 		$out .= 'GA_googleAddAdSensePageAttr("google_ad_channel", "' . $channel . '");' . "\n";
-
+		// Pass the page url. This proved to help eCPM in bucket tests.
+		$out .= 'GA_googleAddAdSensePageAttr("google_page_url", "' . addslashes(AdProviderGoogle::getPageUrl()) . '");' . "\n";
+		// Pass the language of the wiki. This proved to perform the best in bucket tests
+		$out .= 'GA_googleAddAdSensePageAttr("google_language", wgContentLanguage);' . "\n";
 
 		// Bucket testing of different params based on channel
 		switch ($channel){
 		  case '1089383293': break; //control
 		  case '3156555836': break; // Testing white backgrounds 
-		  case '9000659297':
-			if(!empty($_GET['search'])){
-				// Note that we don't have ads on the search page right now, so this isn't going to do any good
-				$out .= 'GA_googleAddAdSensePageAttr("google_hints", "' . addslashes($_GET['search']) . '";';
-			} else {
-				// Pull in the same keywords we use for the page.
-				$out .= 'GA_googleAddAdSensePageAttr("google_hints", AdEngine.getKeywords());';
-			}
-			break;
-		  case '4441240368':
-			$out .= 'GA_googleAddAdSensePageAttr("google_page_url", "' . addslashes(AdProviderGoogle::getPageUrl()) . '");' . "\n";
-			break;
-
-		  case '7102419657':
-			$out .= 'GA_googleAddAdSensePageAttr("google_language", wgUserLanguage);' . "\n";
-			break;
-
-		  case '7297263620':
-			$out .= 'GA_googleAddAdSensePageAttr("google_language", wgContentLanguage);' . "\n";
-			break;
-
-		  case '5796745449':
-			if(!empty($_GET['search'])){
-				// Note that we don't have ads on the search page right now, so this isn't going to do any good
-				$out .= 'GA_googleAddAdSensePageAttr("google_kw", "' . addslashes($_GET['search']) . '";';
-			} else {
-				// Pull in the same keywords we use for the page.
-				$out .= 'GA_googleAddAdSensePageAttr("google_kw", AdEngine.getKeywords());';
-			}
-			break;
-
+		  case '9000659297': break; // Unused
+		  case '4441240368': break; // Unused
+		  case '7102419657': break; // Unused
+		  case '7297263620': break; // Unused
+		  case '5796745449': break; // Unused
 		  default: trigger_error("Unrecognized Google Channel ($channel)", E_USER_WARNING);
                 }
 
