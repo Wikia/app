@@ -1751,8 +1751,8 @@ class Parser
 						if (!empty($wgWysiwygParserEnabled)) {
 							Wysiwyg_SetRefId('image', array('text' => &$text, 'link' => $link, 'wasblank' => $wasblank, 'noforce' => $noforce, 'original' => $originalWikitext));
 							$wgWysiwygParserEnabled = false;
-							$text = $this->replaceExternalLinks($text);
-							$text = $this->replaceInternalLinks($text);
+							$text = $this->replaceExternalLinks(preg_replace('/\x7e-start-\d+-stop/', '', $text));
+							$text = $this->replaceInternalLinks(preg_replace('/\x7d-\d{4}/', '', $text));
 							$wgWysiwygParserEnabled = true;
 							$s .= $prefix . $this->armorLinks( $this->makeImage( $nt, $text ) ) . $trail;
 						} else {	//original action
@@ -4716,7 +4716,6 @@ class Parser
 			if (isset($params['frame']['thumbnail'])) $wgWysiwygMetaData[$refId]['thumb'] = 1;
 			if (isset($params['frame']['framed'])) $wgWysiwygMetaData[$refId]['frame'] = 1;
 			if (isset($params['handler']['width'])) $wgWysiwygMetaData[$refId]['width'] = $params['handler']['width'];
-			if ($caption != '') $wgWysiwygMetaData[$refId]['caption'] = $caption;
 		} else {	//original code - add alt&title to images
 			# Strip bad stuff out of the alt text
 			$alt = $this->replaceLinkHoldersText( $caption );
