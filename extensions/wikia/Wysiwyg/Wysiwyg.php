@@ -342,7 +342,7 @@ function Wysiwyg_SetRefId($type, $params, $addMarker = true, $returnId = false) 
 
 	$regexPreProcessor = array(
 		'search' => array(
-			'%<template><title>[^<]*</title><originalCall><!\[CDATA\[(.*?)]]></originalCall>(?:<part><name index="[^"]+" /><value>[^<]+</value></part>)*</template>%si',
+			'%<template><title>[^<]*</title><originalCall><!\[CDATA\[(.*?)]]></originalCall>(?:<part>.*?</part>)*</template>%si',
 			'%<ext><name>([^>]+)</name><attr></attr><inner>([^>]+)</inner><close>[^>]+</close></ext>%si'),
 		'replace' => array(
 			'\1',
