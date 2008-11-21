@@ -332,7 +332,7 @@ function Wysiwyg_SetRefId($type, $params, $addMarker = true, $returnId = false) 
 	global $wgWysiwygMetaData, $wgWysiwygParser, $wgWysiwygMarkers;
 
 	if(!empty($params['original'])) {
-		$params['original'] = preg_replace('/\x7f-start-\d+-stop/', '', $params['original']);
+		$params['original'] = preg_replace('/\x7e-start-\d+-stop/', '', $params['original']);
 	}
 
 	$refId = count($wgWysiwygMetaData);
