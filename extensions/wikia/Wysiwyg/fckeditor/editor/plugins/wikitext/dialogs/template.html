@@ -144,6 +144,9 @@ function CreatePreview(save) {
 			o.argument.preview.className = '';
 			o.argument.button.disabled = false;
 
+			// reset margin/padding/align
+			o.argument.FCK.TemplatePreviewReset(o.argument.preview);
+
 			// save in cloud preview?
 			if (o.argument.save) {
 				o.argument.FCK.TemplatePreviewSetHTML(o.argument.refid, o.argument.preview.innerHTML);
@@ -184,6 +187,12 @@ function CreatePreview(save) {
 		#template_preview * {
 			cursor: default;
 		}
+
+		.resetTemplate {
+			margin: 0 !important;
+			padding: 0 !important;
+			float: none !important;
+		}
 	</style>
 </head>
 	<body scroll="no" style="overflow: hidden">
@@ -199,7 +208,7 @@ function CreatePreview(save) {
 			<td width="45%">
 				<span>Template preview:</span>
 				<br />
-				<div id="template_preview" style="overflow: auto; height: 220px; background-color: #fff; border: solid 1px #666; font-size: 12px"></div>
+				<div id="template_preview" style="overflow: auto; height: 220px; background-color: #fff; border: solid 1px #666; font-size: 12px; padding: 3px"></div>
 			</td>
 		</tr></table>
 	</body>
