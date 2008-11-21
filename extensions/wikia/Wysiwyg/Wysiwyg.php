@@ -333,6 +333,7 @@ function Wysiwyg_SetRefId($type, $params, $addMarker = true, $returnId = false) 
 
 	if(!empty($params['original'])) {
 		$params['original'] = preg_replace('/\x7e-start-\d+-stop/', '', $params['original']);
+		$params['original'] = preg_replace('/\x7d-\d{4}/', '', $params['original']);
 	}
 
 	$refId = count($wgWysiwygMetaData);
