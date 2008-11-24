@@ -30,8 +30,6 @@ class BlogAvatar {
 	 */
 	public $mPath = false;
 
-	/* user id */
-	var $iUserID;
 	/* user object */
 	var $oUser;
 	/* default image */
@@ -184,7 +182,7 @@ class BlogAvatar {
 		$oSkin = $wgUser->getSkin();
 
 		/* check if this avatar is for wgUser or another */
-		if ($this->iUserID == $wgUser->getID()) {
+		if ($this->oUser->getID() == $wgUser->getID()) {
 			switch ($sLinkType) {
 				case 'upload':
 					$sPath = $oSkin->makeLinkObj(Title::newFromText('Preferences', NS_SPECIAL), $sPath);
@@ -215,8 +213,8 @@ class BlogAvatar {
 
 		wfProfileIn( __METHOD__ );
 
-		$image  = "{$this->iUserID}.png";
-		$hash   = sha1( "{$this->iUserID}" );
+		$image  = sprintf("%s.png", $this->oUser->getID() );
+		$hash   = sha1( (string)$this->oUser->getID() );
 		$folder = substr( $hash, 0, 1)."/".substr( $hash, 0, 2 );
 
 		$this->mPath = "{$folder}/{$image}";
@@ -381,7 +379,15 @@ class BlogAvatar {
 				$aOrigSize["height"]/*sh*/
 			);
 
-			/* save to new file */
+			/**
+			 * save to new file ... but create folder for it first
+			 */
+			if ( !is_dir( dirname( $sFilePath ) ) && !wfMkdirParents( dirname( $sFilePath ) ) ) {
+				Wikia::log( __METHOD__, "dir", sprintf("Cannot create directory %s", dirname( $sFilePath ) ) );
+				wfProfileOut( __METHOD__ );
+				return false;
+			}
+
 			if ( !imagepng($oImg, $sFilePath) ) {
 				Wikia::log( __METHOD__, "save", sprintf("Cannot save png Avatar: %s", $sFilePath ));
 			} else {
