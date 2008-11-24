@@ -411,11 +411,6 @@ class BlogPage extends Article{
 		//gets the page id for the query
 		$page_title_id = $wgTitle->getArticleID();
 
-		//get authors
-		foreach($this->authors as $author) {
-			$authors .= " and username<>'{$author["user_name"]}'";
-		}
-
 		$key = wfMemcKey( 'recentvoters', 'list', $page_title_id );
 		$wgMemc->delete( $key );
 		$data = $wgMemc->get( $key );
@@ -424,6 +419,12 @@ class BlogPage extends Article{
 		if(!$data ){
 			wfDebug( "loading recent voters for page {$page_title_id} from db\n" );
 			$dbr =& wfGetDB( DB_SLAVE );
+
+			//get authors
+			foreach($this->authors as $author) {
+				$authors .= " and username<>" . $dbr->addQuotes($author["user_name"]);
+			}
+
 			$sql = "SELECT DISTINCT username, vote_user_id, vote_page_id FROM Vote WHERE vote_page_id = {$page_title_id} and vote_user_id <> 0 {$authors} ORDER BY vote_id desc LIMIT 0,8";
 			$res = $dbr->query($sql);
 			while ($row = $dbr->fetchObject( $res ) ) {
