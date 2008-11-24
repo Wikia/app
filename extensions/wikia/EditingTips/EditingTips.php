@@ -66,13 +66,16 @@ function getEditingTips() {
 
 $wgHooks['UserToggles'][] = 'wfEditingTipsToggle';
 $wgHooks['getEditingPreferencesTab'][] = 'wfEditingTipsToggle';
+$wgHooks['ExtendJSGlobalVars'][] = 'wfEditingTipsSetupVars';
 
 function wfEditingTipsToggle($toggles, $default_array = false) {
 	wfLoadExtensionMessages('EditingTips');
 	if(is_array($default_array)) {
 		$default_array[] = 'disableeditingtips';
+		$default_array[] = 'widescreeneditingtips';		
 	} else {
 		$toggles[] = 'disableeditingtips';
+		$toggles[] = 'widescreeneditingtips';
 	}
 	return true;
 }
@@ -85,6 +88,16 @@ function isEditingTipsEnabled() {
 	} else {
 		return isset($_COOKIE[$wgCookiePrefix.'et']) ? false : true;
 	}
+}
+
+function wfEditingTipsSetupVars($vars) {
+	global $wgUser, $wgCookiePrefix;
+	if($wgUser->isLoggedIn()) {
+		$vars['et_widescreen'] = $wgUser->getOption('widescreeneditingtips');
+	} else {
+		$vars['et_widescreen'] = isset($_COOKIE[$wgCookiePrefix.'etw']) ? 0 : 1;
+	}
+	return true;
 }
 
 $wgHooks['EditPage::showEditForm:initial2'][] = 'AddEditingToggles';
@@ -106,7 +119,7 @@ function AddEditingToggles($o) {
 		if(count(getEditingTips()) > 0) {
 			$wgOut->addHtml($sep . '<a href="" id="toggleEditingTips">'. (isEditingTipsEnabled() ? wfMsg ('editingtips_hide') : wfMsg ('editingtips_show') ).'</a> - ');
 		}
-		$wgOut->addHtml('<a href="" id="toggleWideScreen">' . wfMsg ('editingtips_enter_widescreen') .'</a></div>');
+		$wgOut->addHtml('<a href="" id="toggleWideScreen">' . wfMsg ('editingtips_enter_widescreen') .'</a></div>');		
 		$wgOut->addHtml('
                         <noscript>
                                 <style type="text/css">
@@ -150,6 +163,7 @@ function SaveEditingTipsState() {
 	global $wgRequest, $wgUser;
 	if($wgUser->isLoggedIn()) {
 		$wgUser->setOption('disableeditingtips', ($wgRequest->getVal('open') != 'true'));
+		$wgUser->setOption('widescreeneditingtips', ($wgRequest->getVal('screen') == 'true'));
 		$wgUser->SaveSettings();
 		$dbw = wfGetDB( DB_MASTER );
 		$dbw->commit();
@@ -157,6 +171,7 @@ function SaveEditingTipsState() {
 		global $wgCookieExpiration, $wgCookiePath, $wgCookieDomain, $wgCookieSecure, $wgCookiePrefix;
 		$exp = time() + $wgCookieExpiration;
 		setcookie( $wgCookiePrefix.'et', ($wgRequest->getVal('open') != 'true') ? true : null, $exp, $wgCookiePath, $wgCookieDomain, $wgCookieSecure );
+		setcookie( $wgCookiePrefix.'etw', ($wgRequest->getVal('screen') != 'true') ? true : null, $exp, $wgCookiePath, $wgCookieDomain, $wgCookieSecure );
 	}
 	return new AjaxResponse(array());
 }
