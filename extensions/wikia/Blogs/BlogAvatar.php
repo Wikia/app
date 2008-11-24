@@ -171,7 +171,8 @@ class BlogAvatar {
 				'border' 	=> 0,
 				'width'		=> $width,
 				'height'	=> $height,
-				'alt' 		=> $alt
+				'alt' 		=> $alt,
+				"class"		=> "avatar"
 			), '', true
 		);
 	}
