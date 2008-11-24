@@ -164,16 +164,24 @@ class BlogComments {
 			$template->set_vars( array( "comments" => false, "input" => $input ) );
 		}
 		else {
+			$parser = new Parser();
+			$options = new ParserOptions();
+			$options->initialiseFromUser( $wgUser );
+
 			foreach( $pages as $page ) {
 				/**
 				 * page is Title object
 				 */
 				$revision = Revision::newFromTitle( $page );
-				$autor = User::newFromId( $revision->getUser() );
+				$text     = $parser->parse( $revision->getText(), $wgTitle, $options )->getText();
+				$author   = User::newFromId( $revision->getUser() );
+				$sig      = Xml::element( 'a', array ( "href" => $author->getUserPage()->getFullUrl() ), $author->getName() );
+
 				$comments[] = array(
-					"comment" => $revision,
-					"autor" => $autor,
-					"avatar" => BlogAvatar::newFromUser( $autor ),
+					"sig"       => $sig,
+					"text"      => $text,
+					"author"    => $author,
+					"avatar"    => BlogAvatar::newFromUser( $author )->getImageTag( 50, 50 ),
 					"timestamp" => $wgContLang->timeanddate( $revision->getTimestamp() )
 				);
 			}
@@ -183,12 +191,9 @@ class BlogComments {
 		/**
 		 * it's preparsed wikitext, we have to parse it to HTML
 		 */
-		$parser = new Parser();
 		$text = $template->execute( "comment" );
-		$options = new ParserOptions();
-		$options->initialiseFromUser( $wgUser );
 
-		return $parser->parse( $text, $wgTitle, $options )->getText();
+		return $text;
 	}
 
 	/**
