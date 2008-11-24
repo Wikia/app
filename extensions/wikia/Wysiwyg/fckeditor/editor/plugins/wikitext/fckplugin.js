@@ -455,7 +455,7 @@ FCK.ProtectImage = function(image) {
 		FCK.BlockEvent(image, 'contextmenu');
 		FCK.BlockEvent(image, 'mousedown');
 
-		image.style.cursor = 'pointer';
+		image.className = 'ieProtected';
 
 		// check whether given image exists
 		FCK.wysiwygData[refid].exists = (!FCK.YD.hasClass(image, 'new'));
