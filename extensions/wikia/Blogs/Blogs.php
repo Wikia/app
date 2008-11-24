@@ -28,7 +28,7 @@ $wgNamespacesWithSubpages[ NS_BLOG_LISTING_TALK ] = true;
 /**
  * protections
  */
-$wgNamespaceProtection[ NS_BLOG_ARTICLE ] = Array("blogs");
+$wgNamespaceProtection[ NS_BLOG_ARTICLE ] = array("blogs");
 $wgNamespacesWithSubpages[ NS_BLOG_ARTICLE ] = true;
 $wgGroupPermissions['*']['blogs'] = false;
 $wgGroupPermissions['sysop']['blogs'] = true;

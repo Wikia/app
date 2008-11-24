@@ -148,10 +148,12 @@ class CreateBlogPage extends SpecialPage {
 		global $wgOut, $wgScriptPath;
 
 		$wgOut->addScript( '<script type="text/javascript" src="' . $wgScriptPath . '/skins/common/edit.js"><!-- edit js --></script>');
+		$wgOut->addHTML( '<link rel="stylesheet" type="text/css" href="' . $wgScriptPath . '/extensions/wikia/Blogs/css/BlogCreateForm.css" />' );
 
 		$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
 
 		$oTmpl->set_vars( array(
+			'categoryCloudTitle' => wfMsg('create-blog-categories-title'),
 			'cloud' => new TagCloud(),
 			'cols' => 10,
 			'postCategories' => $this->mFormData['postCategories'] )
@@ -167,7 +169,7 @@ class CreateBlogPage extends SpecialPage {
 			"categoryCloud" => $sCategoryCloud )
 		);
 
-		$wgOut->addHTML( $oTmpl->execute("createPostForm") );
+		$wgOut->addHTML( $oTmpl->execute("createBlogForm") );
 
 
 		return;
