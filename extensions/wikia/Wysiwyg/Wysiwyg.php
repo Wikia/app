@@ -489,3 +489,31 @@ function Wysiwyg_GetRefId(&$text, $returnIDonly = false) {
 	$text = preg_replace("#\x1[^\x1]+\x1#", '', $text);
 	return $refId;
 }
+
+$wgAjaxExportList[] = 'WysiwygImage';
+function WysiwygImage() {
+	global $wgRequest, $wgExtensionsPath, $wgStylePath, $wgStyleVersion;
+
+	$title = Title::newFromID($wgRequest->getInt('articleid'));
+	$options = new ParserOptions();
+	$parser = new Parser();
+	$out = $parser->parse($wgRequest->getText('wikitext'), $title, $options)->getText();
+
+	$html = <<<EOD
+<html>
+<head>
+<style type="text/css">
+@import "$wgExtensionsPath/wikia/Wysiwyg/fckeditor/editor/css/fck_editorarea.css?$wgStyleVersion";
+@import "$wgStylePath/monobook/main.css?$wgStyleVersion";
+* {cursor: default}
+</style>
+</head>
+<body>
+$out
+</body>
+</html>
+EOD;
+
+	echo $html;
+	exit();
+}
