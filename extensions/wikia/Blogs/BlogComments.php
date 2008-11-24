@@ -169,10 +169,11 @@ class BlogComments {
 				 * page is Title object
 				 */
 				$revision = Revision::newFromTitle( $page );
-
+				$autor = User::newFromId( $revision->getUser() );
 				$comments[] = array(
 					"comment" => $revision,
-					"autor" => User::newFromId( $revision->getUser() ),
+					"autor" => $autor,
+					"avatar" => BlogAvatar::newFromUser( $autor ),
 					"timestamp" => $wgContLang->timeanddate( $revision->getTimestamp() )
 				);
 			}

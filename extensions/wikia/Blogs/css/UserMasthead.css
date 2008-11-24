@@ -34,3 +34,12 @@
 #user_masthead li a.new {
 	color: inherit;
 }
+
+div.blog-comment-input {
+	background: #d2d2b6;
+	padding: 4px;
+}
+
+div.blog-comment-input textarea {
+	width: 600px;
+}

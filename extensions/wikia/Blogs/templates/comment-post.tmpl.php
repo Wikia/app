@@ -2,7 +2,7 @@
 	<form action="#" method="post" id="blog-comment-form-<?php echo $position ?>">
 		<!-- avatar -->
 		<?php
-			echo $avatar->getImageTag();
+			echo $avatar->getImageTag( 50, 50 );
 			//  onclick="YAHOO.Wikia.Blogs.submit( 'blog-comment-form-{ echo $position }' )"
 		?>
 		<!-- textarea -->
