@@ -46,6 +46,7 @@ insert into user_groups(ug_user, ug_group) values
 
 delete from user_groups where ug_group="helper";
 insert into user_groups(ug_user, ug_group) values
+(/*BlueDevil*/304359,'helper'),
 (/*Bola*/126681,'helper'),
 (/*Eulalia459678*/223485,'helper'),
 (/*Elocina*/214580,'helper'),
