@@ -354,5 +354,9 @@ class Wikia {
 		if( $wgDevelEnvironment ) {
 			error_log( $method . ": " . $message );
 		}
+		/**
+		 * and use wfDebug as well
+		 */
+		wfDebug( $method . ": " . $message );
 	}
 }
