@@ -481,11 +481,11 @@ class BlogTemplateClass {
 		if ( array_key_exists($sParamName, self::$aBlogParams) ) {
 			if (preg_match(self::$aBlogParams[$sParamName]['pattern'], $sParamValue, $m) !== FALSE) {
 				/* check max value of int param */
-				if ( isset(self::$aOptions[$sParamName]) && 
-					array_key_exists('max', self::$aOptions[$sParamName]) && 
-					($sParamValue > self::$aOptions[$sParamName]['max']) 
+				if ( isset(self::$aBlogParams[$sParamName]) && 
+					array_key_exists('max', self::$aBlogParams[$sParamName]) && 
+					($sParamValue > self::$aBlogParams[$sParamName]['max']) 
 				) {
-					$sParamValue = $aOptions[$sParamName]['max'];
+					$sParamValue = $aBlogParams[$sParamName]['max'];
 				}
 				self::$aOptions[$sParamName] = $sParamValue;
 			}
