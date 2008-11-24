@@ -5,8 +5,14 @@
 
 YAHOO.util.Event.addListener(["toggleEditingTips", "editingTips_close"], "click", function(e) {
         YAHOO.util.Event.preventDefault(e);
+	if(YAHOO.util.Dom.hasClass(document.body, "editingWide")) {
+		isWide = true;	
+	} else {
+		isWide = false;
+	}
+
         if(YAHOO.util.Dom.hasClass(document.body, "editingTips") && YAHOO.util.Dom.hasClass(document.body, "editingWide")) {
-				SaveEditingTipsState(true);
+				SaveEditingTipsState(true, isWide);
 
                 YAHOO.util.Dom.removeClass(document.body, "editingWide");
                 if($("toggleWideScreen")) {
@@ -19,7 +25,7 @@ YAHOO.util.Event.addListener(["toggleEditingTips", "editingTips_close"], "click"
 		YAHOO.Wikia.Tracker.trackByStr(e, 'editingTips/toggle/editingTips/on');
 
         } else if(YAHOO.util.Dom.hasClass(document.body, "editingTips")) {
-				SaveEditingTipsState(false);
+				SaveEditingTipsState(false, isWide);
 
 		YAHOO.Wikia.Tracker.trackByStr(e, 'editingTips/toggle/editingTips/off');
 
@@ -28,7 +34,7 @@ YAHOO.util.Event.addListener(["toggleEditingTips", "editingTips_close"], "click"
                         $("toggleEditingTips").innerHTML = editingTipsShowMsg ;
                 }
         } else {
-				SaveEditingTipsState(true);
+				SaveEditingTipsState(true, isWide);
 
 		YAHOO.Wikia.Tracker.trackByStr(e, 'editingTips/toggle/editingTips/on');
 
@@ -43,21 +49,29 @@ YAHOO.util.Event.addListener(["toggleEditingTips", "editingTips_close"], "click"
         }
 });
 
-function SaveEditingTipsState(open) {
-	YAHOO.util.Connect.asyncRequest('GET', wgScriptPath + '/index.php?action=ajax&rs=SaveEditingTipsState&open='+open);
+function SaveEditingTipsState(open,screen) {
+	YAHOO.util.Connect.asyncRequest('GET', wgScriptPath + '/index.php?action=ajax&rs=SaveEditingTipsState&open='+open+'&screen='+screen);
 }
 
 YAHOO.util.Event.addListener("toggleWideScreen", "click", function(e) {
         YAHOO.util.Event.preventDefault(e);
+	if(YAHOO.util.Dom.hasClass(document.body, "editingTips") && YAHOO.util.Dom.hasClass(document.body, "editingWide")) {
+		iEnabled = false;
+	} else if(YAHOO.util.Dom.hasClass(document.body, "editingTips")) {
+		iEnabled = true;
+	} else {
+		iEnabled = false;
+	}
+
         if(YAHOO.util.Dom.hasClass(document.body, "editingWide")) {
                 YAHOO.util.Dom.removeClass(document.body, "editingWide");
                 YAHOO.util.Dom.removeClass(document.body, "editingTips");
                 if($("toggleWideScreen")) {
                         $("toggleWideScreen").innerHTML = editingTipsEnterMsg ;
                 }
-
+		//save state
+		SaveEditingTipsState(iEnabled, false);	
 		YAHOO.Wikia.Tracker.trackByStr(e, 'editingTips/toggle/widescreen/off');
-
         } else {
                 YAHOO.util.Dom.addClass(document.body, "editingWide");
                 YAHOO.util.Dom.addClass(document.body, "editingTips");
@@ -68,6 +82,8 @@ YAHOO.util.Event.addListener("toggleWideScreen", "click", function(e) {
                         $("toggleEditingTips").innerHTML = editingTipsShowMsg ;
                 }
 
+		//save state
+		SaveEditingTipsState(iEnabled, true);			
 		YAHOO.Wikia.Tracker.trackByStr(e, 'editingTips/toggle/widescreen/on');
         }
 });
@@ -75,6 +91,14 @@ YAHOO.util.Event.addListener("toggleWideScreen", "click", function(e) {
 // tracking
 YAHOO.util.Event.onDOMReady(function() {
 	var editingTipsHeaders = $('editingTips').getElementsByTagName("dt");
+
+	if (1 == et_widescreen) {
+                YAHOO.util.Dom.addClass(document.body, "editingWide");
+                YAHOO.util.Dom.addClass(document.body, "editingTips");
+                if($("toggleWideScreen")) {
+                        $("toggleWideScreen").innerHTML = editingTipsExitMsg ;
+                }		
+	}
 
 	YAHOO.util.Event.addListener(editingTipsHeaders, 'click', function(e) {
 		var el = YAHOO.util.Event.getTarget(e);
