@@ -23,7 +23,6 @@ $wgHooks['AdditionalUserProfilePreferences'][] = "BlogAvatar::additionalUserProf
 $wgHooks['SavePreferences'][] = "BlogAvatar::savePreferences";
 
 
-
 class BlogAvatar {
 
 	/**
@@ -295,7 +294,7 @@ class BlogAvatar {
 		if (!isset($wgTmpDirectory) || empty($wgTmpDirectory)) {
 			$wgTmpDirectory = "/tmp";
 		}
-		wfDebugLog( __METHOD__, "Temp directory set to {$wgTmpDirectory}" );
+		Wikia::log( __METHOD__, "tmp", "Temp directory set to {$wgTmpDirectory}" );
 
 		$iErrNo = false;
 		$iFileSize = $request->getFileSize($sFormField);
@@ -310,11 +309,11 @@ class BlogAvatar {
 		}
 
 		$sTmpFile = $wgTmpDirectory."/".substr(sha1(uniqid($this->oUser->getID())), 0, 16);
-		wfDebugLog( __METHOD__, "Temp file set to {$sTmpFile}" );
+		Wikia::log( __METHOD__, "tmp", "Temp file set to {$sTmpFile}" );
 		$sTmp = $request->getFileTempname($sFormField);
-		wfDebugLog( __METHOD__, "Path to uploaded file is {$sTmp}" );
+		Wikia::log( __METHOD__, "path", "Path to uploaded file is {$sTmp}" );
 
-		if (move_uploaded_file($sTmp, $sTmpFile)) {
+		if( move_uploaded_file( $sTmp, $sTmpFile )  ) {
 			$aImgInfo = getimagesize($sTmpFile);
 
 			/* check if mimetype is allowed */
@@ -364,10 +363,8 @@ class BlogAvatar {
 				$iImgW = $iImgH * ( $aOrigSize["width"] / $aOrigSize["height"] );
 			}
 
-			error_log ( "iImgW x iImgH = ".$iImgW." x ". $iImgH ." \n", 3, "/tmp/moli.log" );
 			/* empty image with thumb size on white background */
 			$oImg = @imagecreatetruecolor($iImgW, $iImgH);
-			error_log ( "oImg - ".print_r($oImg, true)." \n", 3, "/tmp/moli.log" );
 			$white = imagecolorallocate($oImg, 255, 255, 255);
 			imagefill($oImg, 0, 0, $white);
 
@@ -386,7 +383,7 @@ class BlogAvatar {
 
 			/* save to new file */
 			if ( !imagepng($oImg, $sFilePath) ) {
-				wfDebugLog( __METHOD__, sprintf("Cannot save png Avatar: %s", $sFilePath ));
+				Wikia::log( __METHOD__, "save", sprintf("Cannot save png Avatar: %s", $sFilePath ));
 			} else {
 				/* remove tmp file */
 				imagedestroy($oImg);
@@ -400,7 +397,7 @@ class BlogAvatar {
 				$iErrNo = true;
 			}
 		} else {
-			wfDebugLog( __METHOD__, sprintf("Cannot move uploaded file from %s to %s", $sTmp, $sTmpFile ));
+			Wikia::log( __METHOD__, "move", sprintf("Cannot move uploaded file from %s to %s", $sTmp, $sTmpFile ));
 		}
 		wfProfileOut(__METHOD__);
 		return $iErrNo;
@@ -454,30 +451,42 @@ class BlogAvatar {
 		wfProfileIn( __METHOD__ );
 		$result = true;
 
-		$sUrl = $wgRequest->getVal( 'wkDefaultAvatar' );
+		$sUrl = wfBasename( $wgRequest->getVal( 'wkDefaultAvatar' ) );
 		$sUploadedAvatar = $wgRequest->getFileName( AVATAR_UPLOAD_FIELD );
 
-		/* is user trying to upload something */
+		/**
+		 * we store in different way default and uploaded pictures
+		 *
+		 * default: we store only filename
+		 * uploaded: we store relative path to filename
+		 */
+
+		/**
+		 * is user trying to upload something
+		 */
 		$isNotUploaded = ( empty( $sUploadedAvatar ) && empty( $sUrl ) );
 		if ( !$isNotUploaded ) {
 			$oAvatarObj = BlogAvatar::newFromUser( $oUser );
 			/* check is set default avatar for user */
 			if ( empty($sUrl) ) {
 				/* upload user avatar */
-				$isFileUploaded = $oAvatarObj->uploadFile($wgRequest);
+				$isFileUploaded = $oAvatarObj->uploadFile( $wgRequest );
 				if ( !$isFileUploaded ) {
 					$sMsg .= " Cannot save user's avatar ";
 					$result = false;
 				} else {
 					$sUrl = $oAvatarObj->getFullURL();
 				}
+				Wikia::log( __METHOD__, "url", $sUrl );
 			}
-			wfDebug( __METHOD__.": selected avatar for user ".$oUser->getID().": $sUrl \n" );
+
+
 			if ( !empty($sUrl) ) {
 				/* set user option */
 				$oUser->setOption( AVATAR_USER_OPTION_NAME, $sUrl );
 			}
 		}
+		Wikia::log( __METHOD__, "url", "selected avatar for user ".$oUser->getID().": $sUrl" );
 
 		wfProfileOut( __METHOD__ );
 		return $result;
