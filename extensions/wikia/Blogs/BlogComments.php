@@ -4,6 +4,10 @@
  * parser tag for Comments all comments for article
  */
 
+global $wgAjaxExportList;
+$wgAjaxExportList[] = "BlogComments::axPost";
+
+
 # Define a setup function
 $wgExtensionFunctions[] = 'efBlogCommentsTag_Setup';
 # Add a hook to initialise the magic word
@@ -86,7 +90,7 @@ class BlogComments {
 		wfProfileIn( __METHOD__ );
 
 		$Avatar = BlogAvatar::newFromUser( $wgUser );
-		print_pre( $Avatar );
+//		print_pre( $Avatar );
 		$tmpl = new EasyTemplate( dirname( __FILE__ ) . '/templates/' );
 		$tmpl->set_vars(
 			array( "position" => $position, "author" => $wgUser, "avatar" => $Avatar )
@@ -248,5 +252,40 @@ class BlogComments {
 			return false;
 		}
 		return true;
+	}
+
+	/**
+	 * axPost -- static hook/entry for ajax request post
+	 */
+	static public function axPost() {
+
+	}
+
+	/**
+	 * doPost -- static hook/entry for normal request post
+	 */
+	static public function doPost( &$Request, &$User, &$Title ) {
+		if( !$Request->getText( "wpBlogSubmit", false ) ) {
+			return;
+		}
+//		print_pre( $Request );
+
+		$text = $Request->getText("wpBlogComment", false);
+		if( !$text || !strlen( $text ) ) {
+			return;
+		}
+
+		/**
+		 * title for comment is combination of article title and some "random"
+		 * data
+		 */
+		$commentTitleText = sprintf( "%s/%s-%s", $Title->getText(), $User->getName(), wfTimestampNow() );
+		$commentTitle = Title::newFromText( $commentTitleText, NS_BLOG_ARTICLE_TALK );
+
+		/**
+		 * add article
+		 */
+		$article = new Article( $commentTitle, 0 );
+		$article->doEdit( $text, "added new comment" );
 	}
 }
