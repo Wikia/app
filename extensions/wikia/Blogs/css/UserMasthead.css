@@ -43,3 +43,7 @@ div.blog-comment-input {
 div.blog-comment-input textarea {
 	width: 600px;
 }
+
+div.blog-comment {
+	margin-bottom: 4px;
+}

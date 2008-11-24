@@ -6,14 +6,14 @@
 	<?php foreach( $comments as $comment ): ?>
 	<div class="blog-comment">
 		<span>
-			<?php echo $comment["avatar"]->getLinkTag( 50, 50 ); ?>
+			<?php echo $comment["avatar"] ?>
 		</span>
 		<span>
-		Autor: [[User:<?php echo $comment["autor"]->getName() ?>|<?php echo $comment["autor"]->getName() ?>]]
+		<strong><?php echo $comment["sig"] ?></strong>
 		<?php echo $comment["timestamp"] ?>
 		<br />
 		<?php
-			echo $comment["comment"]->getText();
+			echo $comment["text"];
 		?>
 		</span>
 	</div>
