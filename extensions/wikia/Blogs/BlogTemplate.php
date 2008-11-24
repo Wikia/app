@@ -87,8 +87,7 @@ class BlogTemplateClass {
 			'default' 	=> 'date', 
 			'pattern'	=> array(
 				'date' 	=> 'page_touched',
-				'title' => 'page_title',
-				'author'=> 'rev_user_text'
+				'author'=> 'page_title'
 			)
 		),
 
@@ -220,13 +219,12 @@ class BlogTemplateClass {
 		
 	public static function setup() {
 		global $wgParser, $wgMessageCache, $wgRequest;
-		global $wgOut, $wgScriptPath, $wgMergeStyleVersionJS;
+		global $wgOut, $wgExtensionsPath, $wgStyleVersion;
 		wfProfileIn( __METHOD__ );
 		// variant as a parser tag: <BLOGTPL_TAG>
 		$wgParser->setHook( BLOGTPL_TAG, array( __CLASS__, "parseTag" ) );
 		// set empty value 
-		$rand = $wgMergeStyleVersionJS;
-		$wgOut->addHTML( "<link rel=\"stylesheet\" type=\"text/css\" href=\"{$wgScriptPath}/extensions/wikia/Blogs/css/BlogTemplate.css\" />" );
+		$wgOut->addHTML( "<link rel=\"stylesheet\" type=\"text/css\" href=\"{$wgExtensionsPath}/wikia/Blogs/css/BlogTemplate.css?{$wgStyleVersion}\" />" );
 		// language file 
 		wfLoadExtensionMessages("Blogs");
 		wfProfileOut( __METHOD__ );
@@ -411,11 +409,11 @@ class BlogTemplateClass {
 		if ( !in_array("page_is_redirect", array_keys( self::$aWhere )) ) {
 			self::$aWhere["page_is_redirect"] = 0;
 		}
-		self::$aWhere[] = "page_title like '%/%'";
+		//self::$aWhere[] = "page_title like '%/%'";
 		/* default options */
 		/* order */
 		if ( !isset(self::$aOptions['order']) ) {
-			self::__makeOrder('order', self::$aBlogParams['order']['pattern'][self::$aBlogParams['order']['default']]);
+			self::__makeOrder('order', self::$aBlogParams['order']['default']);
 		}
 		/* ordertype */
 		if ( !isset(self::$aOptions['ordertype']) ) {
@@ -445,9 +443,6 @@ class BlogTemplateClass {
     	wfDebugLog( __METHOD__, "__makeOrder: ".$sParamName.",".$sParamValue."\n" );
     	if ( !empty($sParamValue) ) {
 			if ( in_array( $sParamValue, array_keys( self::$aBlogParams[$sParamName]['pattern'] ) ) ) {
-				if ( $sParamValue == 'author' ) {
-					self::__addRevisionTable();
-				}
 				self::$aOptions['order'] = self::$aBlogParams[$sParamName]['pattern'][$sParamValue];
 			}
 		}
@@ -486,7 +481,10 @@ class BlogTemplateClass {
 		if ( array_key_exists($sParamName, self::$aBlogParams) ) {
 			if (preg_match(self::$aBlogParams[$sParamName]['pattern'], $sParamValue, $m) !== FALSE) {
 				/* check max value of int param */
-				if ( array_key_exists('max', self::$aOptions[$sParamName]) && ($sParamValue > self::$aOptions[$sParamName]['max']) ) {
+				if ( isset(self::$aOptions[$sParamName]) && 
+					array_key_exists('max', self::$aOptions[$sParamName]) && 
+					($sParamValue > self::$aOptions[$sParamName]['max']) 
+				) {
 					$sParamValue = $aOptions[$sParamName]['max'];
 				}
 				self::$aOptions[$sParamName] = $sParamValue;
@@ -678,7 +676,6 @@ class BlogTemplateClass {
 			/* parse or not parse - this is a good question */
 			$localParser = new Parser();
 			if ( !in_array(self::$aOptions['style'], array('array', 'noparse')) ) {
-				/* local parser */			
 				/* skip HTML tags */
 				$sBlogText = strip_tags($sBlogText, self::$skipStrinBeforeParse);
 				/* skip invalid Wiki-text  */
@@ -706,10 +703,7 @@ class BlogTemplateClass {
     	wfProfileIn( __METHOD__ );
     	/* main query */
     	$aResult = array();
-    	$aFields = array( 'distinct(page_id) as page_id', 'page_namespace', 'page_title', 'page_touched', 'unix_timestamp(page_touched) as timestamp', 'page_latest as rev_id' );
-    	if ( in_array('revision', self::$aTables) ) {
-    		$aFields[] = 'rev_user_text as username';
-		}
+    	$aFields = array( '/* BLOGS */ page_id', 'page_namespace', 'page_title', 'page_touched', 'unix_timestamp(page_touched) as timestamp', 'page_latest as rev_id' );
 		$res = self::$dbr->select(
 			array_map(array(self::$dbr, 'tableName'), self::$aTables),  
 			$aFields, 
@@ -720,6 +714,8 @@ class BlogTemplateClass {
 		while ( $oRow = self::$dbr->fetchObject( $res ) ) {
 			$oComments = BlogComments::newFromText( $oRow->page_title );
 			$iCount = $oComments->count();
+			
+			/* username */
 			
 			$aResult[$oRow->page_id] = array(
 				"page" 			=> $oRow->page_id,
@@ -744,10 +740,7 @@ class BlogTemplateClass {
     	wfProfileIn( __METHOD__ );
     	/* main query */
     	$aResult = array();
-    	$aFields = array( 'distinct(page_id) as page_id', 'page_namespace', 'page_title', 'page_touched', 'unix_timestamp(page_touched) as timestamp', 'page_latest as rev_id' );
-    	if ( in_array('revision', self::$aTables) ) {
-    		$aFields[] = 'rev_user_text as username';
-		}
+    	$aFields = array( 'page_id', 'page_namespace', 'page_title', 'page_touched', 'unix_timestamp(page_touched) as timestamp', 'page_latest as rev_id' );
 		$res = self::$dbr->select(
 			array_map(array(self::$dbr, 'tableName'), self::$aTables),  
 			$aFields, 
@@ -831,8 +824,11 @@ class BlogTemplateClass {
 					case 'author'		:
 						if ( !empty($aParamValues) ) {
 							$aParamValues = array_slice($aParamValues, 0, self::$aBlogParams[$sParamName]['count']);
-							self::__addRevisionTable();
-							self::$aWhere[] = "rev_user_text in (" . self::$dbr->makeList( $aParamValues ) . ")";
+							if ( !empty($aParamValues) && is_array( $aParamValues ) ) {
+								foreach ( $aParamValues as $id => $sParamValue ) {
+									self::$aWhere[] = "page_title like '{$sParamValue}/%'";
+								}
+							}
 						}
 						break;
 					case 'order'		:
@@ -860,7 +856,6 @@ class BlogTemplateClass {
 					case 'summary'	:
 						if ( !empty($aParamValues) && is_array($aParamValues) ) {
 							list ($sParamValue) = $aParamValues;
-							self::__addRevisionTable();
 							self::__makeBoolOption($sParamName, $sParamValue);
 						}
 						break;
@@ -901,7 +896,6 @@ class BlogTemplateClass {
 						break;
 					case 'timestamp'	:
 					case 'summary'		:
-						self::__addRevisionTable();
 						self::__makeBoolOption($sParamName, $sParamValue);
 						break;
 					case 'title' 		:	
