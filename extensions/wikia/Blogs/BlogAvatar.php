@@ -56,8 +56,6 @@ class BlogAvatar {
         wfLoadExtensionMessages( "Blogs" );
 		$this->oUser = $User;
 
-		// $sAvatarPath = $this->oUser->getOption( AVATAR_USER_OPTION_NAME );
-
         wfProfileOut( __METHOD__ );
 	}
 
@@ -320,7 +318,6 @@ class BlogAvatar {
 
 			/* check if mimetype is allowed */
 			$aAllowMime = array("image/jpeg", "image/pjpeg", "image/gif", "image/png", "image/x-png", "image/jpg", "image/bmp");
-			error_log ( "aImgInfo[\"mime\"] = ".$aImgInfo["mime"]." \n", 3, "/tmp/moli.log" );
 			if (!in_array($aImgInfo["mime"], $aAllowMime)) {
 				wfDebugLog( __METHOD__, "Imvalid mime type - allowed: " . implode(",", $aAllowMime) );
 				wfProfileOut(__METHOD__);
@@ -455,9 +452,6 @@ class BlogAvatar {
 		global $wgRequest;
 		wfProfileIn( __METHOD__ );
 		$result = true;
-
-		Wikia::log( __METHOD__, "request", print_r($wgRequest, true) );
-		Wikia::log( __METHOD__, "files", print_r( $_FILES, true) );
 
 		$sUrl = $wgRequest->getVal( 'wkDefaultAvatar' );
 		$sUploadedAvatar = $wgRequest->getFileName( AVATAR_UPLOAD_FIELD );
