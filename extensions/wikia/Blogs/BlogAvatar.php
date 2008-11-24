@@ -347,7 +347,7 @@ class BlogAvatar {
 			 * generate new image to png format
 			 */
 			$addedAvatars = array();
-			$sFilePath = $this->getAvatarFileFull();
+			$sFilePath = $this->getFullPath();
 
 			/**
 			 * calculate new image size - should be 100 x 100
