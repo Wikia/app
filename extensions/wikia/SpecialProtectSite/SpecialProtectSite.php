@@ -64,11 +64,11 @@ function wfSetupProtectsite() {
 	$persist_data = new MediaWikiBagOStuff();
 
 	/* Get data into the prot hash */
-	$prot = $wgMemc->get('protectsite');
+	$prot = $wgMemc->get(wfMemcKey('protectsite'));
 	if( !$prot ) {
 		$prot = $persist_data->get('protectsite');
 		if( !$prot ) {
-			$wgMemc->set('protectsite', 'disabled');
+			$wgMemc->set(wfMemcKey('protectsite'), 'disabled');
 		}
 	}
 
