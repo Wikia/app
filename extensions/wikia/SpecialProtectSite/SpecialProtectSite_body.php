@@ -48,7 +48,7 @@ class ProtectsiteForm extends HTMLForm
     );
 
     /* Get data into the value variable/array */
-	$prot = $wgMemc->get('protectsite');
+	$prot = $wgMemc->get( wfMemcKey( 'protectsite' ) );
 	if( !$prot ) {
 		$prot = $this->persist_data->get('protectsite');
 	}
@@ -108,7 +108,7 @@ class ProtectsiteForm extends HTMLForm
 
       /* Write the array out to the database */
       $this->persist_data->set('protectsite', $prot, $prot['until']);
-      $wgMemc->set('protectsite', $prot, $prot['until']);
+      $wgMemc->set( wfMemcKey('protectsite'), $prot, $prot['until']);
 
       /* Create a log entry */
       $log = new LogPage('protect');
@@ -130,7 +130,7 @@ class ProtectsiteForm extends HTMLForm
 
     /* Remove the data from the database to disable extension. */
     $this->persist_data->delete('protectsite');
-    $wgMemc->delete('protectsite');
+    $wgMemc->delete( wfMemcKey( 'protectsite' ) );
 
     /* Create a log entry */
     $log = new LogPage('protect');
