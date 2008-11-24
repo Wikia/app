@@ -77,8 +77,9 @@ span._moz_dirty
 
 .ieProtected,
 .ieProtected a,
-.ieProtected div {
-	cursor: default !important;
+.ieProtected div,
+.ieProtected img {
+	cursor: pointer !important;
 }
 
 /**

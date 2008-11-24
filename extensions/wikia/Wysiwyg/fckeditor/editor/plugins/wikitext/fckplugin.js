@@ -455,15 +455,22 @@ FCK.ProtectImage = function(image) {
 		FCK.BlockEvent(image, 'contextmenu');
 		FCK.BlockEvent(image, 'mousedown');
 
+		image.style.cursor = 'pointer';
+
 		// check whether given image exists
 		FCK.wysiwygData[refid].exists = (!FCK.YD.hasClass(image, 'new'));
-
+	
 		FCK.NodesWithRefId[ refid ] = image;
 		return;
 	}
 
 	var iframe = FCK.EditingArea.Document.createElement('iframe');
-	iframe.src = 'javascript:void()';
+	var coveringDiv = FCK.EditingArea.Document.createElement('div');
+
+	// fix FF2.x issue with iframes with "generated content": use "ajax" html provider
+	iframe.src = window.parent.wgServer + window.parent.wgScript + '?action=ajax&rs=WysiwygImage&articleid=' + encodeURIComponent(window.parent.wgArticleId) + '&wikitext=' + encodeURIComponent(FCK.wysiwygData[refid].original);
+
+	iframe.name = 'image' + refid;
 
 	iframe.setAttribute('refid', refid);
 	iframe.className = image.className;
@@ -474,90 +481,70 @@ FCK.ProtectImage = function(image) {
 	iframe.style.border = 'none';
 	iframe.style.overflow = 'hidden';
 
-	// store innerHTML
-	FCK.wysiwygData[refid].html = image.innerHTML;
-	
 	// DOM stuff
 	image.parentNode.insertBefore(iframe, image);
 	image.parentNode.removeChild(image);
 
-	// check whether given image exists
-	var re = /class=\"new\"/;
-	FCK.wysiwygData[refid].exists = !re.test(FCK.wysiwygData[refid].html);
-
 	// update list of nodes with refId
 	FCK.NodesWithRefId[refid] = iframe;
 
-	// fill iframe and setup events
-	FCK.ProtectImageSetup(refid);
+	// iframe covering div
+	var docObj = FCKTools.GetElementDocument(FCK.EditingArea.TargetElement);
+
+	if (!docObj.getElementById('cover' + refid)) {
+		// create cover
+		coveringDiv.id = 'cover' + refid;
+		coveringDiv.setAttribute('refid', refid);
+		docObj.body.appendChild(coveringDiv);
+
+		// add onclick handler
+		FCKTools.AddEventListener(coveringDiv, 'click', function(e) {
+			var e = FCK.YE.getEvent(e);
+			var target = FCK.YE.getTarget(e);
+
+			// ignore buttons different then left
+			if (e.button == 0) {
+				var refid = target.getAttribute('refid');
+				FCK.ProtectImageClick(refid);
+			}
+
+			FCK.YE.stopEvent(e);
+		});
+	}
+
+	coveringDiv.style.width = iframe.style.width;
+	coveringDiv.style.height = iframe.style.height;
+	coveringDiv.style.position = 'absolute';
+	coveringDiv.style.cursor = 'pointer';
+	//coveringDiv.style.border = 'solid 1px red';
+	coveringDiv.innerHTML = '&nbsp;';
+
+	FCK.ProtectImageRepositionCover(refid);
+
+	// check whether given image exists
+	var re = /class=\"new\"/;
+	FCK.wysiwygData[refid].exists = !re.test(image.innerHTML);
 }
 
-// setup the image placeholder if browser doesn't support contentEditable
-FCK.ProtectImageSetup = function(refid) {
-	// fired during the switch between wysiwyg and source mode
-	if (!FCK.EditorDocument) {
-		return true;
+FCK.ProtectImageRepositionCover = function(refid) {
+
+	if (FCK.EditMode == 1) {
+		// leave when switched to source mode
+		return;
 	}
 
 	var iframe = FCK.GetElementByRefId(refid);
+	var cover = FCKTools.GetElementDocument(FCK.EditingArea.TargetElement).getElementById('cover' + refid);
 
-	// fired during removal of iframe
-	if (!iframe) {
-		return true;
-	}
+	var xy = FCK.YD.getXY(iframe);
+	var offsetY = FCK.EditorDocument.body.scrollTop;
 
-	// fill iframe
-	var iframeDoc = iframe.contentDocument ? iframe.contentDocument : iframe.document /* ie */;
-	var iframeWin = iframe.contentWindow ? iframe.contentWindow : iframe.window /* ie */;
+	FCK.YD.setXY(cover, [xy[0],xy[1] -  offsetY + 30]);
+	cover.style.width = iframe.style.width;
+	cover.style.height = iframe.style.height;
 
-	// wait for iframe to be fully loaded (fix FF2.x bug)
-	if (!iframeDoc) {
-		setTimeout('FCK.ProtectImageSetup('+refid+')', 200);
-		return;
-	}
-	
-	// CSS
-	iframeDoc.write(
-		'<style type="text/css">' + 
-		'@import "' + FCKConfig.EditorAreaStyles + '?' + FCKConfig.StyleVersion+ '"; ' +
-		'@import "' + FCKConfig.EditorAreaCSS + '?' + FCKConfig.StyleVersion+ '"; ' +
-		'* {cursor: default}'+
-		'</style>');
-
-	// set iframe content
-	iframeDoc.write(FCK.wysiwygData[refid].html);
-	iframeDoc.close();
-
-	// set refid of the iframe
-	iframeWin.refid = refid;
-
-	// block onclick / onmousedown events
-	FCKTools.AddEventListener(iframeDoc, 'click', function(e) {
-		var e = FCK.YE.getEvent(e);
-		var target = FCK.YE.getTarget(e);
-
-		// ignore buttons different then left
-		if (e.button == 0) {
-			var refid = parseInt(FCKTools.GetElementWindow(target).refid);
-			FCK.ProtectImageClick(refid);
-		}
-
-		FCK.YE.stopEvent(e);
-	});
-
-	FCK.BlockEvent(iframeDoc, 'contextmenu');
-	FCK.BlockEvent(iframeDoc, 'mousedown');
-
-	// reload iframe when moved inside DOM tree (fixes FF bug)
-	FCKTools.AddEventListener(iframeWin, 'unload', function(e) {
-		var refid = parseInt(this.refid);
-
-		FCK.log('iframe #' + refid  + ' unload captured');
-
-		setTimeout('FCK.ProtectImageSetup('+refid+')', 500);
-	});
-
-	FCK.log('set up image #' + refid + ' iframe');
+	// recalculate after 750ms
+	setTimeout('FCK.ProtectImageRepositionCover('+refid+')', 750);
 }
 
 FCK.ProtectImageClick = function(refid) {
@@ -631,11 +618,6 @@ FCK.ProtectImageUpdate = function(refid, wikitext, extraData) {
 			// remove wrapper and old image
 			FCKDomTools.RemoveNode(oldImage, false); // including child nodes
 			FCKDomTools.RemoveNode(wrapper, true);
-
-			// fix really strange bug: CSS disappear from iframe
-			if (!FCK.UseContentEditable) {
-				setTimeout('FCK.ProtectImageSetup('+refid+')', 500);
-			}
 		},
 		failure: function(o) {},
 		argument: {'FCK': FCK, 'refid': refid}
