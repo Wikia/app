@@ -4716,6 +4716,7 @@ class Parser
 			if (isset($params['frame']['thumbnail'])) $wgWysiwygMetaData[$refId]['thumb'] = 1;
 			if (isset($params['frame']['framed'])) $wgWysiwygMetaData[$refId]['frame'] = 1;
 			if (isset($params['handler']['width'])) $wgWysiwygMetaData[$refId]['width'] = $params['handler']['width'];
+			if ($caption == '') unset($wgWysiwygMetaData[$refId]['caption']);
 		} else {	//original code - add alt&title to images
 			# Strip bad stuff out of the alt text
 			$alt = $this->replaceLinkHoldersText( $caption );
