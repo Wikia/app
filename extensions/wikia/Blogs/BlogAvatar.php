@@ -281,11 +281,11 @@ class BlogAvatar {
 	}
 
 	/**
-	 * uploadAvatar -- save file when is in proper format, do resize and
+	 * uploadFile -- save file when is in proper format, do resize and
 	 * other stuffs
 	 *
 	 */
-	public function uploadAvatar($request, $sFormField = AVATAR_UPLOAD_FIELD) {
+	public function uploadFile($request, $sFormField = AVATAR_UPLOAD_FIELD) {
 		global $wgTmpDirectory;
 		wfProfileIn(__METHOD__);
 
@@ -463,12 +463,12 @@ class BlogAvatar {
 			/* check is set default avatar for user */
 			if ( empty($sUrl) ) {
 				/* upload user avatar */
-				$isFileUploaded = $oAvatarObj->uploadAvatar($wgRequest);
+				$isFileUploaded = $oAvatarObj->uploadFile($wgRequest);
 				if ( !$isFileUploaded ) {
 					$sMsg .= " Cannot save user's avatar ";
 					$result = false;
 				} else {
-					$sUrl = $oAvatarObj->getAvatarUrlFull();
+					$sUrl = $oAvatarObj->getFullURL();
 				}
 			}
 			wfDebug( __METHOD__.": selected avatar for user ".$oUser->getID().": $sUrl \n" );
