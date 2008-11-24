@@ -18,10 +18,10 @@ define ("AVATAR_UPLOAD_FIELD", 'wkUserAvatar');
 $wgHooks['AdditionalUserProfilePreferences'][] = "wfLoadBlogAvatarForm";
 $wgHooks['SavePreferences'][] = "wfSaveBlogAvatarForm";
 
-function wfLoadBlogAvatarForm(&$oPrefs, &$sHtml ) {
+function wfLoadBlogAvatarForm(&$oPrefs, &$html ) {
 	global $wgUser, $wgCityId;
    	wfProfileIn( __METHOD__ );
-	$oAvatarObj = new BlogAvatar($wgUser->getID());
+	$oAvatarObj = BlogAvatar::newFromUser( $wgUser );
 	$aDefAvatars = $oAvatarObj->getDefaultAvatars();
 
 	/* run template */
@@ -38,9 +38,9 @@ function wfLoadBlogAvatarForm(&$oPrefs, &$sHtml ) {
 		"sFieldName"	=> AVATAR_UPLOAD_FIELD,
 	) );
 
-	$sHTML .= wfHidden( 'MAX_FILE_SIZE', AVATAR_MAX_SIZE );
+	$html = wfHidden( 'MAX_FILE_SIZE', AVATAR_MAX_SIZE );
 	#---
-	$sHtml .= $oTmpl->execute("pref-avatar-form");
+	$html .= $oTmpl->execute("pref-avatar-form");
    	wfProfileOut( __METHOD__ );
 	return true;
 }
