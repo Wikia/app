@@ -148,7 +148,7 @@ class BlogComments {
 
 
 	public function render( $input = false ) {
-		global $wgParser, $wgContLang, $wgUser, $wgTitle;
+		global $wgContLang, $wgUser, $wgTitle;
 
 		/**
 		 * $pages is array of comment titles
@@ -176,17 +176,18 @@ class BlogComments {
 					"timestamp" => $wgContLang->timeanddate( $revision->getTimestamp() )
 				);
 			}
-			$template->set_vars( array( "comments" => $comments, "parser" => $wgParser, "input" => $input ) );
+			$template->set_vars( array( "comments" => $comments, "input" => $input ) );
 		}
 
 		/**
 		 * it's preparsed wikitext, we have to parse it to HTML
 		 */
+		$parser = new Parser();
 		$text = $template->execute( "comment" );
 		$options = new ParserOptions();
 		$options->initialiseFromUser( $wgUser );
 
-		return $wgParser->parse( $text, $wgTitle, $options )->getText();
+		return $parser->parse( $text, $wgTitle, $options )->getText();
 	}
 
 	/**
@@ -287,5 +288,9 @@ class BlogComments {
 		 */
 		$article = new Article( $commentTitle, 0 );
 		$article->doEdit( $text, "added new comment" );
+
+		/**
+		 * clear comments cache for this article
+		 */
 	}
 }
