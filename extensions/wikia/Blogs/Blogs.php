@@ -34,13 +34,22 @@ $wgGroupPermissions['*']['blogs'] = false;
 $wgGroupPermissions['sysop']['blogs'] = true;
 $wgGroupPermissions['staff']['blogs'] = true;
 
+/**
+ * globals
+ */
+
+$wgWikiaAvatarDirectory = "";
+$wgWikiaAvatarPath = "";
 
 /**
  * messages file
  */
 $wgExtensionMessagesFiles["Blogs"] = dirname(__FILE__) . '/Blogs.i18n.php';
 
-// Special pages
+/**
+ * Special pages
+ */
+
 extAddSpecialPage(dirname(__FILE__) . '/SpecialCreateBlogPage.php', 'CreateBlogPage', 'CreateBlogPage');
 extAddSpecialPage(dirname(__FILE__) . '/SpecialBlogListingCreatePage.php', 'BlogListingCreatePage', 'BlogListingCreatePage');
 

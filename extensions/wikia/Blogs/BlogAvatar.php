@@ -18,12 +18,19 @@ define ("AVATAR_USER_OPTION_NAME", 'avatar');
 define ("AVATAR_MAX_SIZE", 20000);
 define ("AVATAR_UPLOAD_FIELD", 'wkUserAvatar');
 
+
 $wgHooks['AdditionalUserProfilePreferences'][] = "BlogAvatar::additionalUserProfilePreferences";
 $wgHooks['SavePreferences'][] = "BlogAvatar::savePreferences";
 
 
 
 class BlogAvatar {
+
+	/**
+	 * path to file, relative
+	 */
+	public $mPath = false;
+
 	/* user id */
 	var $iUserID;
 	/* user object */
@@ -199,77 +206,52 @@ class BlogAvatar {
 		return $sPath;
 	}
 
-	public function setAvatarFileName() {
+	/**
+	 * getLocalPath -- create file path from user identifier
+     */
+	public function getLocalPath() {
+
+		if( $this->mPath ) {
+			return $this->mPath;
+		}
+
 		wfProfileIn( __METHOD__ );
-		$iUserID = $this->iUserID;
-		$sImage = "{$iUserID}.png";
-		$sHash = sha1("{$iUserID}");
-		$sDir = substr($sHash, 0, 1)."/".substr($sHash, 0, 2);
+
+		$image  = "{$this->iUserID}.png";
+		$hash   = sha1( "{$this->iUserID}" );
+		$folder = substr( $hash, 0, 1)."/".substr( $hash, 0, 2 );
+
+		$this->mPath = "{$folder}/{$$image}";
+
 		wfProfileOut( __METHOD__ );
-		return "{$sDir}/{$sImage}";
+
+		return $this->mPath;
 	}
 
-	public function getAvatarFileFull() {
+	public function getFullPath() {
 		global $wgWikiaAvatarDirectory;
-		return $wgWikiaAvatarDirectory."/".$this->setAvatarFileName();
+		return $wgWikiaAvatarDirectory."/".$this->getLocalPath();
 	}
 
-	public function getAvatarUrlFull() {
-		global $wgWikiaAvatarUrlPath;
-		return $wgWikiaAvatarUrlPath."/".$this->setAvatarFileName();
+	/**
+	 * getFullURL -- return full url to avatar image
+	 */
+	public function getFullURL() {
+		global $wgWikiaAvatarPath;
+		return $wgWikiaAvatarPath."/".$this->getLocalPath();
 	}
 
-	public function getAvatarUrlName() {
-
-		global $wgWikiaAvatarUrlPath, $wgWikiaAvatarDefaultImage;
-
-		wfProfileIn( __METHOD__ );
-
-		$sFilePath = $wgWikiaAvatarDefaultImage;
-
-		if( !empty( $this->oUser ) ) {
-			$sFilePath = $this->oUser->getOption( AVATAR_USER_OPTION_NAME );
-			/**
-			 * when avatar for this user is not set we return default avatar
-			 */
-			if( ! $sFilePath ) {
-			}
-		}
-		wfProfileOut( __METHOD__ );
-		return $sFilePath;
-    }
-
-	public function getAvatarFilePath() {
-		wfProfileIn( __METHOD__ );
-		global $wgWikiaAvatarDirectory, $wgWikiaAvatarDefaultImage;
-		$sFilePath = $wgWikiaAvatarDefaultImage;
-		if (!empty($this->oUser)) {
-			$sTmpPath = $this->oUser->getOption(AVATAR_USER_OPTION_NAME);
-			if ( !empty($sTmpPath) ) {
-				if ( strpos($sTmpPath, 'http://') === FALSE ) {
-					/* not found full url */
-					$sTmpPath = $wgWikiaAvatarDirectory . $sTmpPath;
-					if ( file_exists($sTmpPath) ) {
-						$sFilePath = $sTmpPath;
-					}
-				} else {
-					if ( !file_exists($sTmpPath) ) {
-						$sFilePath = $wgWikiaAvatarDefaultImage;
-					}
-				}
-			}
-		}
-		wfProfileOut( __METHOD__ );
-		return $sFilePath;
-	}
-
-	public function removeAvatarFile($iUserID) {
+	/**
+	 * removeFile -- remove file from directory
+	 */
+	public function removeFile($iUserID) {
 		wfProfileIn( __METHOD__ );
 		global $wgLogTypes, $wgUser;
 
 		$result = false;
 		if ($this->iUserID == $wgUser->getID()) {
-			$sImageFull = self::getAvatarFilePath($iUserID);
+			$sImageFull = $this->getFullPath();
+
 			if (file_exists($sImageFull)) {
 				if (!unlink($sImageFull)) {
 					wfDebug( __METHOD__.": cannot remove avatar's files {$sImageFull}\n" );
@@ -300,6 +282,11 @@ class BlogAvatar {
 		wfProfileOut(__METHOD__);
 	}
 
+	/**
+	 * uploadAvatar -- save file when is in proper format, do resize and
+	 * other stuffs
+	 *
+	 */
 	public function uploadAvatar($request, $sFormField = AVATAR_UPLOAD_FIELD) {
 		global $wgTmpDirectory;
 		wfProfileIn(__METHOD__);
@@ -313,19 +300,19 @@ class BlogAvatar {
 
 		$iErrNo = false;
 		$iFileSize = $request->getFileSize($sFormField);
-		error_log ( "iFileSize = $iFileSize \n", 3, "/tmp/moli.log" );
+
 		if (empty($iFileSize)) {
-			/* file size = 0 */
+			/**
+			 * file size = 0
+			 */
 			wfDebugLog( __METHOD__, "Empty file: " . $sFormField );
 			wfProfileOut(__METHOD__);
 			return $iErrNo;
 		}
 
 		$sTmpFile = $wgTmpDirectory."/".substr(sha1(uniqid($this->oUser->getID())), 0, 16);
-		error_log ( "sTmpFile = $sTmpFile \n", 3, "/tmp/moli.log" );
 		wfDebugLog( __METHOD__, "Temp file set to {$sTmpFile}" );
 		$sTmp = $request->getFileTempname($sFormField);
-		error_log ( "sTmp = $sTmp \n", 3, "/tmp/moli.log" );
 		wfDebugLog( __METHOD__, "Path to uploaded file is {$sTmp}" );
 
 		if (move_uploaded_file($sTmp, $sTmpFile)) {
@@ -358,13 +345,16 @@ class BlogAvatar {
 					break;
 			}
 			$aOrigSize = array("width" => $aImgInfo[0], "height" => $aImgInfo[1]);
-			error_log ( "oImgOrig = ".print_r($oImgOrig, true)." \n", 3, "/tmp/moli.log" );
 
-			/* generate new image to png format */
+			/**
+			 * generate new image to png format
+			 */
 			$addedAvatars = array();
 			$sFilePath = $this->getAvatarFileFull();
-			error_log ( "sFilePath = ".$sFilePath." \n", 3, "/tmp/moli.log" );
-			/* calculate new image size - should be 100 x 100 */
+
+			/**
+			 * calculate new image size - should be 100 x 100
+			 */
 			$iImgW = AVATAR_DEFAULT_WIDTH;
 			$iImgH = AVATAR_DEFAULT_HEIGHT;
 			/* WIDTH > HEIGHT */
@@ -398,25 +388,21 @@ class BlogAvatar {
 
 			/* save to new file */
 			if ( !imagepng($oImg, $sFilePath) ) {
-				error_log ( "imagepng - false \n", 3, "/tmp/moli.log" );
 				wfDebugLog( __METHOD__, sprintf("Cannot save png Avatar: %s", $sFilePath ));
 			} else {
 				/* remove tmp file */
 				imagedestroy($oImg);
-				error_log ( "imagedestroy - false \n", 3, "/tmp/moli.log" );
 
 				$sUserText =  $this->oUser->getName();
 				$oUserBlogPage = Title::newFromText( $sUserText, NS_BLOG_ARTICLE );
 				$oLogPage = new LogPage( AVATAR_LOG_NAME );
 				$sLogComment = "Add/change avatar by {$sUserText}";
 				$oLogPage->addEntry( AVATAR_LOG_NAME, $oUserBlogPage, $sLogComment);
-				error_log ( "oLogPage->addEntry \n", 3, "/tmp/moli.log" );
 				unlink($sTmpFile);
 				$iErrNo = true;
 			}
 		} else {
 			wfDebugLog( __METHOD__, sprintf("Cannot move uploaded file from %s to %s", $sTmp, $sTmpFile ));
-			error_log ( "cannot move \n", 3, "/tmp/moli.log" );
 		}
 		wfProfileOut(__METHOD__);
 		return $iErrNo;
@@ -444,7 +430,7 @@ class BlogAvatar {
 			"cityId"		=> $wgCityId,
 			"aDefAvatars"	=> $aDefAvatars,
 			"oAvatarObj"	=> $oAvatarObj,
-			"sUserImg"		=> $oAvatarObj->getAvatarUrlName(),
+			"sUserImg"		=> $oAvatarObj->getImageTag(),
 			"imgH"			=> AVATAR_DEFAULT_HEIGHT,
 			"imgW"			=> AVATAR_DEFAULT_WIDTH,
 			"sFieldName"	=> AVATAR_UPLOAD_FIELD,
