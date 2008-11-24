@@ -12,7 +12,12 @@ function userMasthead() {
 		$out = array();
 		//DEFINE USERSPACE - THE USERNAME THAT BELONGS ON THE MASTHEAD
 		if ( in_array( $namespace, array( NS_USER, NS_USER_TALK, NS_BLOG_ARTICLE ) ) ) {
-			list ( $userspace, $title ) = explode( "/", $wgTitle->getDBkey(), 2 );
+			if( strpos( $wgTitle->getDBkey(), "/") ) {
+				list ( $userspace, $title ) = explode( "/", $wgTitle->getDBkey(), 2 );
+			}
+			else {
+				$userspace = $wgTitle->getDBkey();
+			}
 			$Avatar = BlogAvatar::newFromUserName( $userspace );
 		}
 		if ($wgTitle == 'Special:Watchlist' || $wgTitle == 'Special:WidgetDashboard' || $wgTitle == 'Special:Preferences' ) {
