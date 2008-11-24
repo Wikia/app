@@ -409,7 +409,7 @@ class BlogTemplateClass {
 		if ( !in_array("page_is_redirect", array_keys( self::$aWhere )) ) {
 			self::$aWhere["page_is_redirect"] = 0;
 		}
-		//self::$aWhere[] = "page_title like '%/%'";
+		self::$aWhere[] = "page_title like '%/%'";
 		/* default options */
 		/* order */
 		if ( !isset(self::$aOptions['order']) ) {
