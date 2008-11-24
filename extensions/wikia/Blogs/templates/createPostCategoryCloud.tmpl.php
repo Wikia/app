@@ -205,7 +205,7 @@ function cloudBuild(o) {
 /*]]>*/
 </style>
 
-<span id="blogPostCategoriesTitle"><?php echo wfMsg('create-blog-categories-title'); ?></span>
+<span id="blogPostCategoriesTitle"><?php echo $categoryCloudTitle; ?></span>
 <div id="createpage_cloud_div" style="display: block;">
 	<div id="createpage_cloud_section">
 		<?php $xnum = 0; foreach( $cloud->tags as $xname => $xtag): ?>

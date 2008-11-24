@@ -20,6 +20,11 @@ Blog posts can be aggregated by a blog listing page based on the blog post's tag
 	'create-blog-categories-title' => 'Add this blog post to these categories (click to select)',
 	'create-blog-article-already-exists' => 'Blog post with that name already exists, please select different name',
 	'create-blog-listing-title' => 'Create a new blog listing page',
+	'create-blog-listing-form-title' => 'What is a blog listing page?',
+	'create-blog-listing-form-info' => 'Blog listing pages are used to aggregate blog listings from different authors together onto a single page.
+Create blog listing pages for categories such as "Barrack Obama", "Fan Fiction", or even combine multiple categories.',
+	'create-blog-listing-page-title' => 'Blog Listing Page Title',
+	'create-blog-listing-blog-post-categories-title' => 'Get blog posts from these categories',
 	'blog-header' => "Blog articles in category \"$1\"",
 	'blog-invalidparam' => "Unknown parameter '$1' is ignored. Please use one of available parameters: <code>$2</code>.",
 	'blog-emptyparam' => "Name of parameter cannot be empty",

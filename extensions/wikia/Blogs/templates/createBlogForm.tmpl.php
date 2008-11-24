@@ -1,15 +1,4 @@
 <!-- s:<?php echo __FILE__ ?> -->
-<style type="text/css">
-/*<![CDATA[*/
-#blogPostForm label { display: block; float: left; padding-right: 1em; text-align: right; font-size: 16px; color: orange; }
-#blogPostForm div.formErrors { color: red; font-weight: bold; }
-#blogPostForm div.formBlock { width: 100%; clear: left; float: left; margin-top: 10px; margin-bottom: 10px; padding-bottom: 20px; border-bottom: 1px dotted gray; }
-#blogPostForm #blogPostTitle { clear: left; float: left; display: block; }
-#CreateWikiForm div.row { padding: 0.8em; display: block !important; clear: both; }
-<?php // #sidebar { display: none } ?>
-tr { border: 1px solid #dcdcdc; }
-/*]]>*/
-</style>
 
 <strong><?php echo wfMsg( "create-blog-form-title" ) ?></strong><br />
 <?php echo wfMsg( "create-blog-form-info" ) ?>
