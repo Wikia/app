@@ -12,6 +12,10 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 
 $wgHooks[ "ArticleFromTitle" ][] = "BlogListPage::ArticleFromTitle";
 
+/**
+ * ajax hooks
+ */
+
 class BlogListPage extends Article {
 
 	public $mProps;
@@ -85,7 +89,21 @@ class BlogListPage extends Article {
 			$tmpl = new EasyTemplate( dirname( __FILE__ ) . '/templates/' );
 			$tmpl->set_vars( $templateParams );
 			$wgOut->addHTML( $tmpl->execute("footer") );
-			$this->showBlogComments();
+
+			/**
+			 * check if something was posted, maybe comment with ajax switched
+			 * off so it wend to $wgRequest
+			 */
+			if( $wgRequest->wasPosted() ) {
+				BlogComments::doPost( $wgRequest, $wgUser, $wgTitle );
+			}
+
+			/**
+			 * show comments for this article (if exists)
+			 */
+			if( $this->exists() ) {
+				$this->showBlogComments();
+			}
 		}
 		else {
 			/**
@@ -102,12 +120,11 @@ class BlogListPage extends Article {
 	 * @access private
 	 */
 	private function showBlogComments() {
-		global $wgOut, $wgDevelEnvironment;
-
-		if( ! $wgDevelEnvironment ) return;
+		global $wgOut, $wgJsMimeType, $wgExtensionsPath, $wgMergeStyleVersionJS;
 
 		wfProfileIn( __METHOD__ );
 
+		$rand = rand();
 		$page = BlogComments::newFromTitle( $this->mTitle );
 		if( $page->count() > 10 ) {
 			/**
@@ -117,6 +134,7 @@ class BlogListPage extends Article {
 		}
 	    $wgOut->addHTML( $page->render( true ) );
 		$wgOut->addHTML( $page->showInput( "bottom" ) );
+		$wgOut->addScript( "<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/Blogs/js/Blogs.js?{$rand}\" ></script>" );
 
 		wfProfileOut( __METHOD__ );
 	}

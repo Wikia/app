@@ -140,7 +140,7 @@ class BlogAvatar {
 	 *
 	 * @return String
 	 */
-	private function getUrl() {
+	public function getUrl() {
 		$url = $this->oUser->getOption( AVATAR_USER_OPTION_NAME );
 		if( $url ) {
 			return $url;
@@ -221,7 +221,7 @@ class BlogAvatar {
 		$hash   = sha1( "{$this->iUserID}" );
 		$folder = substr( $hash, 0, 1)."/".substr( $hash, 0, 2 );
 
-		$this->mPath = "{$folder}/{$$image}";
+		$this->mPath = "{$folder}/{$image}";
 
 		wfProfileOut( __METHOD__ );
 
@@ -430,7 +430,7 @@ class BlogAvatar {
 			"cityId"		=> $wgCityId,
 			"aDefAvatars"	=> $aDefAvatars,
 			"oAvatarObj"	=> $oAvatarObj,
-			"sUserImg"		=> $oAvatarObj->getImageTag(),
+			"sUserImg"		=> $oAvatarObj->getFullURL(),
 			"imgH"			=> AVATAR_DEFAULT_HEIGHT,
 			"imgW"			=> AVATAR_DEFAULT_WIDTH,
 			"sFieldName"	=> AVATAR_UPLOAD_FIELD,
