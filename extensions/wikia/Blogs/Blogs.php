@@ -38,7 +38,7 @@ $wgGroupPermissions['staff']['blogs'] = true;
  * globals
  */
 
-$wgWikiaAvatarDirectory = "";
+$wgWikiaAvatarDirectory = "/images/common/avatars";
 $wgWikiaAvatarPath = "";
 
 /**
