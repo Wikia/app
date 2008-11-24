@@ -28,8 +28,10 @@ function wfGetJsTranslation($lang, $do_on_fly=false) {
 	if (strlen($output)) $output = substr($output, 0, strlen($output)-2);
 	
 	// output the object, and if this is a subsequent call after changes are saved, add the js function calls to translate the text and set the language
-	return "i18n." . $lang . "={" . $output . "};" . ($do_on_fly ? "\nxlateOnFly('{$lang}');\ni18n.setlanguage('{$lang}');" : "");
-	
+	$text = "i18n." . $lang . "={" . $output . "};" . ($do_on_fly ? "\nxlateOnFly('{$lang}');\ni18n.setlanguage('{$lang}');" : "");
+	$response = new AjaxResponse( $text );
+	$response->setContentType( "application/javascript; charset=utf-8" ); 
+	return $response;
 }
 
 function getTransList($lang) {

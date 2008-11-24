@@ -37,7 +37,9 @@ function wfGetUserBulletinsJSON($user_name, $count=18, $type = -1){
 	}
 	$profile_JSON_array["types"] = $type_array;
 	
-	return "var json_bulletins=" . jsonify($profile_JSON_array) . ";\n\nwrite_activity(json_bulletins);";
-
+	$text = "var json_bulletins=" . jsonify($profile_JSON_array) . ";\n\nwrite_activity(json_bulletins);";
+	$response = new AjaxResponse( $text );
+	$response->setContentType( "application/javascript; charset=utf-8" ); 
+	return $response;
 }
 ?>
