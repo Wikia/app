@@ -5,7 +5,8 @@
 <?php else : ?>
 	<?php foreach( $comments as $comment ): ?>
 	<div class="blog-comment">
-		Autor: <?php echo $parser->getUserSig( $comment["autor"] ) . ' ' . $comment["timestamp"] ?>
+		Autor: [[User:<?php echo $comment["autor"]->getName() ?>|<?php echo $comment["autor"]->getName() ?>]]
+		<?php echo $comment["timestamp"] ?>
 		<br />
 		<?php
 			echo $comment["comment"]->getText();
