@@ -1,6 +1,9 @@
 <?php
 /**
  * Avatar extension
+ *
+ * @author Piotr Molski <moli@wikia-inc.com>
+ * @uthor Krzysztof Krzyżaniak <eloy@wikia-inc.com>
  */
 
 if( !defined( 'MEDIAWIKI' ) ) {
@@ -15,72 +18,10 @@ define ("AVATAR_USER_OPTION_NAME", 'avatar');
 define ("AVATAR_MAX_SIZE", 20000);
 define ("AVATAR_UPLOAD_FIELD", 'wkUserAvatar');
 
-$wgHooks['AdditionalUserProfilePreferences'][] = "wfLoadBlogAvatarForm";
-$wgHooks['SavePreferences'][] = "wfSaveBlogAvatarForm";
+$wgHooks['AdditionalUserProfilePreferences'][] = "BlogAvatar::additionalUserProfilePreferences";
+$wgHooks['SavePreferences'][] = "BlogAvatar::savePreferences";
 
-function wfLoadBlogAvatarForm(&$oPrefs, &$html ) {
-	global $wgUser, $wgCityId;
-   	wfProfileIn( __METHOD__ );
-	$oAvatarObj = BlogAvatar::newFromUser( $wgUser );
-	$aDefAvatars = $oAvatarObj->getDefaultAvatars();
 
-	/* run template */
-	$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
-	$oTmpl->set_vars( array(
-		"wgUser"		=> $wgUser,
-		"sUserAvatar"	=> $wgUser->getOption(AVATAR_USER_OPTION_NAME),
-		"cityId"		=> $wgCityId,
-		"aDefAvatars"	=> $aDefAvatars,
-		"oAvatarObj"	=> $oAvatarObj,
-		"sUserImg"		=> $oAvatarObj->getAvatarUrlName(),
-		"imgH"			=> AVATAR_DEFAULT_HEIGHT,
-		"imgW"			=> AVATAR_DEFAULT_WIDTH,
-		"sFieldName"	=> AVATAR_UPLOAD_FIELD,
-	) );
-
-	$html = wfHidden( 'MAX_FILE_SIZE', AVATAR_MAX_SIZE );
-	#---
-	$html .= $oTmpl->execute("pref-avatar-form");
-   	wfProfileOut( __METHOD__ );
-	return true;
-}
-
-function wfSaveBlogAvatarForm ($oPrefs, $oUser, &$sMsg, $oldOptions) {
-	global $wgRequest;
-   	wfProfileIn( __METHOD__ );
-   	$result = true;
-
-	Wikia::log( __METHOD__, "request", print_r($wgRequest, true) );
-	Wikia::log( __METHOD__, "files", print_r( $_FILES, true) );
-
-	$sUrl = $wgRequest->getVal( 'wkDefaultAvatar' );
-	$sUploadedAvatar = $wgRequest->getFileName( AVATAR_UPLOAD_FIELD );
-
-	/* is user trying to upload something */
-	$isNotUploaded = ( empty( $sUploadedAvatar ) && empty( $sUrl ) );
-	if ( !$isNotUploaded ) {
-		$oAvatarObj = BlogAvatar::newFromUser( $oUser );
-		/* check is set default avatar for user */
-		if ( empty($sUrl) ) {
-			/* upload user avatar */
-			$isFileUploaded = $oAvatarObj->uploadAvatar($wgRequest);
-			if ( !$isFileUploaded ) {
-				$sMsg .= " Cannot save user's avatar ";
-				$result = false;
-			} else {
-				$sUrl = $oAvatarObj->getAvatarUrlFull();
-			}
-		}
-		wfDebug( __METHOD__.": selected avatar for user ".$oUser->getID().": $sUrl \n" );
-		if ( !empty($sUrl) ) {
-			/* set user option */
-			$oUser->setOption( AVATAR_USER_OPTION_NAME, $sUrl );
-		}
-	}
-
-   	wfProfileOut( __METHOD__ );
-	return $result;
-}
 
 class BlogAvatar {
 	/* user id */
@@ -479,5 +420,85 @@ class BlogAvatar {
 		}
 		wfProfileOut(__METHOD__);
 		return $iErrNo;
+	}
+
+	/**
+	 * AdditionalUserProfilePreferences -- Hook handler
+	 *
+	 * @param PreferencesForm $oPrefs  -- preferences form instance
+	 * @param String $html -- generated html
+	 */
+	static public function additionalUserProfilePreferences( &$oPrefs, &$html) {
+		global $wgUser, $wgCityId;
+		wfProfileIn( __METHOD__ );
+		$oAvatarObj = BlogAvatar::newFromUser( $wgUser );
+		$aDefAvatars = $oAvatarObj->getDefaultAvatars();
+
+		/**
+		 * run template
+		 */
+		$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
+		$oTmpl->set_vars( array(
+			"wgUser"		=> $wgUser,
+			"sUserAvatar"	=> $wgUser->getOption(AVATAR_USER_OPTION_NAME),
+			"cityId"		=> $wgCityId,
+			"aDefAvatars"	=> $aDefAvatars,
+			"oAvatarObj"	=> $oAvatarObj,
+			"sUserImg"		=> $oAvatarObj->getAvatarUrlName(),
+			"imgH"			=> AVATAR_DEFAULT_HEIGHT,
+			"imgW"			=> AVATAR_DEFAULT_WIDTH,
+			"sFieldName"	=> AVATAR_UPLOAD_FIELD,
+		) );
+
+		$html = wfHidden( 'MAX_FILE_SIZE', AVATAR_MAX_SIZE );
+		$html .= $oTmpl->execute("pref-avatar-form");
+
+		wfProfileOut( __METHOD__ );
+		return true;
+	}
+
+	/**
+	 * AdditionalUserProfilePreferences -- Hook handler
+	 *
+	 * @param PreferencesForm $oPrefs  -- preferences form instance
+	 * @param User $User -- user object
+	 * @param String $sMsg -- status message
+	 * @param $oldOptions
+	 */
+	static public function savePreferences( $oPrefs, $oUser, &$sMsg, $oldOptions ) {
+		global $wgRequest;
+		wfProfileIn( __METHOD__ );
+		$result = true;
+
+		Wikia::log( __METHOD__, "request", print_r($wgRequest, true) );
+		Wikia::log( __METHOD__, "files", print_r( $_FILES, true) );
+
+		$sUrl = $wgRequest->getVal( 'wkDefaultAvatar' );
+		$sUploadedAvatar = $wgRequest->getFileName( AVATAR_UPLOAD_FIELD );
+
+		/* is user trying to upload something */
+		$isNotUploaded = ( empty( $sUploadedAvatar ) && empty( $sUrl ) );
+		if ( !$isNotUploaded ) {
+			$oAvatarObj = BlogAvatar::newFromUser( $oUser );
+			/* check is set default avatar for user */
+			if ( empty($sUrl) ) {
+				/* upload user avatar */
+				$isFileUploaded = $oAvatarObj->uploadAvatar($wgRequest);
+				if ( !$isFileUploaded ) {
+					$sMsg .= " Cannot save user's avatar ";
+					$result = false;
+				} else {
+					$sUrl = $oAvatarObj->getAvatarUrlFull();
+				}
+			}
+			wfDebug( __METHOD__.": selected avatar for user ".$oUser->getID().": $sUrl \n" );
+			if ( !empty($sUrl) ) {
+				/* set user option */
+				$oUser->setOption( AVATAR_USER_OPTION_NAME, $sUrl );
+			}
+		}
+
+		wfProfileOut( __METHOD__ );
+		return $result;
 	}
 }
