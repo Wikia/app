@@ -175,9 +175,11 @@ function wfQueryCounter($callback){
         
         $wgMemc->set( $key, $obj );
         
-        $res = 'var data=' . jsonify($obj) . ";\n\n" . $callback .'(data);';
-        
-        return $res;
+        $text = 'var data=' . jsonify($obj) . ";\n\n" . $callback .'(data);';
+       	$response = new AjaxResponse( $text );
+	$response->setContentType( "application/javascript; charset=utf-8" ); 
+	return $response; 
+
 }
 
 $wgAjaxExportList [] = 'wfSiteMetricsJSON';
@@ -349,9 +351,10 @@ function fetchTrends($metric, $callback){
         $payload["minDate"] = date("m/d/y", $minDate);
         $payload["max"] = round($globalMax * 1.30);
         
-        $result = 'var metricData =' . jsonify($payload) . ";\n\n" . $callback .'(metricData, ' . $metric . ');';
-        
-        return $result;
+        $text = 'var metricData =' . jsonify($payload) . ";\n\n" . $callback .'(metricData, ' . $metric . ');';
+        $response = new AjaxResponse( $text );
+	$response->setContentType( "application/javascript; charset=utf-8" ); 
+	return $response;
 }
 
 function fetchWfMessages($metric, $callback){

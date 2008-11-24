@@ -33,12 +33,15 @@ function wfCheckUserLoginJSONnew($callback_function="handle_user_logged_in("){
 	if( strpos( $callback_function, "(" ) === false ){
 		$callback_function .= "(";
 	}
-	return "var user_logged_in = " . 
+	$text = "var user_logged_in = " . 
 		jsonify($logged_in_info) . 
 		";\n\n" . 
 		"setLoginCookie(user_logged_in);\n\n" . 
 		"set_header_loggedin();\n\n" . 
 		"{$callback_function}user_logged_in);";
+	$response = new AjaxResponse( $text );
+	$response->setContentType( "application/javascript; charset=utf-8" ); 
+	return $response;
 }
 
 //we are keeping this function so the API to the Wikia Search Toolbar doesn't break :)
@@ -198,7 +201,7 @@ function wfGetRegCaptchaJSON($callback_function="process_captcha"){
 	return "var captcha_stuff = ". jsonify($res) . ";\n\n{$callback_function}(captcha_stuff);";
 	
 }
-//"
+
 $wgAjaxExportList [] = 'wfDoRegisterJSONPost';
 function wfDoRegisterJSONPost(){
 	
@@ -306,9 +309,10 @@ function wfInitializeEmail($callback="get_invite_email"){
 	
 	$email_array = array("name"=>$return_name,"url"=>"http://search.wikia.com");
 	
-	
-	
-	return "var email_array = ". jsonify($email_array) . ";\n\n{$callback}(email_array);";
+	$text = "var email_array = ". jsonify($email_array) . ";\n\n{$callback}(email_array);";
+	$response = new AjaxResponse( $text );
+	$response->setContentType( "application/javascript; charset=utf-8" ); 
+	return $response;
 }
 
 $wgAjaxExportList [] = 'wfSendInviteEmail';

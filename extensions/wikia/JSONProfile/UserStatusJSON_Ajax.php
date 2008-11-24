@@ -37,9 +37,14 @@ function wfGetUserStatus($user_id,$rand=0){
 			"cache" => $from_cache
 		);
 		
-		return "var json_status_updates=" . jsonify($profile_JSON_array) . ";\n\nwrite_profile_status(json_status_updates);";
+		$text = "var json_status_updates=" . jsonify($profile_JSON_array) . ";\n\nwrite_profile_status(json_status_updates);";
+	}else{
+		$text = "void(0);";
 	}
-	return "void(0);";
+	
+	$response = new AjaxResponse( $text );
+	$response->setContentType( "application/javascript; charset=utf-8" ); 
+	return $response;
 	
 }
 
@@ -54,7 +59,10 @@ function wfAddUserStatusProfileJSON($text){
 	$key = wfMemcKey( 'user', 'status', 'list', $wgUser->getID(), 10 );
 	$wgMemc->delete( $key );
 		
-	return "get_all_status();";
+	$text = "get_all_status();";
+	$response = new AjaxResponse( $text );
+	$response->setContentType( "application/javascript; charset=utf-8" ); 
+	return $response;
 }
 
 $wgAjaxExportList [] = 'wfAddUserStatusProfile';
@@ -90,7 +98,9 @@ function wfClearUserStatus($us_id){
 	if( $b->doesUserOwnStatusMessage($wgUser->getID(),$us_id) ){
 		$b->clearStatus($us_id);
 	}
-	return "edit_status('yes');";
-
+	$text = "edit_status('yes');";
+	$response = new AjaxResponse( $text );
+	$response->setContentType( "application/javascript; charset=utf-8" ); 
+	return $response;
 }
 ?>

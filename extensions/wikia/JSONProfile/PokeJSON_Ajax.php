@@ -15,15 +15,19 @@ function wfPokeJSON($user_name=false, $is_pokeback, $callback="handlePoked"){
 			$wgMemc->set($key,false);
 			
 			$poke_obj = array("user_name"=>$user_name, "user_name_display"=>user_name_display($user_id, $user_name), "user_id"=>$user_id, "poke_id"=>$is_pokeback, "email_sent"=>$poked);
-			return "//poked\n\nvar poke_obj=" . jsonify($poke_obj) . ";\n\n{$callback}(poke_obj);";
+			$text = "//poked\n\nvar poke_obj=" . jsonify($poke_obj) . ";\n\n{$callback}(poke_obj);";
 		}
 		else {
-			return "//NOT POKED!!!!!";
+			$text = "//NOT POKED!!!!!";
 		}
 	}
 	else {
-		return "// not poked";
+		$text = "// not poked";
 	}
+	
+	$response = new AjaxResponse( $text );
+	$response->setContentType( "application/javascript; charset=utf-8" ); 
+	return $response;
 }
 
 $wgAjaxExportList [] = 'wfRemovePokeJSON';
@@ -36,15 +40,18 @@ function wfRemovePokeJSON($poke_id=0, $callback="handlePokeRemoved"){
 		$poke = new Poke();
 		$poked = $poke->remove_poke($poke_id);
 		if ($poked) {
-			return "//pokeremove\n\n" . $callback."({$poke_id});";
-		}
-		else {
-			return "//POKE NOT REMOVED!!!!!";
+			$text = "//pokeremove\n\n" . $callback."({$poke_id});";
+		}else {
+			$text = "//POKE NOT REMOVED!!!!!";
 		}
 	}
 	else {
-		return "// not removed";
+		$text = "// not removed";
 	}
+	
+	$response = new AjaxResponse( $text );
+	$response->setContentType( "application/javascript; charset=utf-8" ); 
+	return $response;
 }
 
 $wgAjaxExportList [] = 'wfGetOutstandingPokesJSON';
@@ -55,16 +62,14 @@ function wfGetOutstandingPokesJSON($user_name=false, $callback="showPokes"){
 	$user = User::newFromName($user_name);
 	if ($user) {
 		$pokes = wfOutstandingPokesJSON($user_name);
-	}
-	else {
+	}else {
 		$pokes = array();
 	}
 	
-	
-	
-	
-	return "var pokes=" . jsonify($pokes) . ";\n\n{$callback}(pokes);";
-
+	$text = "var pokes=" . jsonify($pokes) . ";\n\n{$callback}(pokes);";
+	$response = new AjaxResponse( $text );
+	$response->setContentType( "application/javascript; charset=utf-8" ); 
+	return $response;
 }
 
 function wfOutstandingPokesJSON($user_name, $r_user_name=false){
@@ -90,8 +95,5 @@ function wfOutstandingPokesJSON($user_name, $r_user_name=false){
 		return array();
 	}
 }
-
-
-
 
 ?>
