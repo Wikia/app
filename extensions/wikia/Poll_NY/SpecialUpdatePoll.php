@@ -45,7 +45,7 @@ function wfSpecialUpdatePoll(){
 				 
 				
 				//Add Choices
-				for($x=1;$x<=5;$x++){
+				for($x=1;$x<=10;$x++){
 					if( $wgRequest->getVal("poll_answer_{$x}") ){
 						$dbr =& wfGetDB( DB_MASTER );
 				
