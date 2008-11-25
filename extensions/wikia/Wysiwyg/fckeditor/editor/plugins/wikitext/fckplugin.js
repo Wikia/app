@@ -240,13 +240,49 @@ FCK.Events.AttachEvent( 'OnAfterSetHTML', function() {
 		FCK.log(FCK.wysiwygData);
 
 	}
-	if(FCK.EditMode == FCK_EDITMODE_WYSIWYG) {
 
+	if(FCK.EditMode == FCK_EDITMODE_WYSIWYG) {
 		// handle drag&drop
 		FCKTools.AddEventListener(FCK.EditorDocument, 'mousedown', function(e) {
 			var target = FCK.YAHOO.util.Event.getTarget(e);
 			if(target.tagName == 'INPUT') {
 					FCKSelection.SelectNode(target);
+			}
+		});
+
+		// handle finish of drag&drop -> regenerate elements with refId
+		FCKTools.AddEventListener(FCK.EditorDocument, 'dragdrop', function(e) {
+			FCK.log('drag&drop finished');
+	
+			// setup elements with refid (templates, images, ...)
+			FCK.SetupElementsWithRefId();
+
+			// remove selection
+			var selection = FCKSelection.GetSelection();
+
+			if (selection.removeAllRanges) {
+				selection.removeAllRanges();
+			}
+
+			// check where image was droped
+			var target = FCK.YE.getTarget(e);
+
+			if (FCK.ImageDragDrop && target.hasAttribute && target.getAttribute('contentEditable') == "false") {
+				while (!target.hasAttribute('refid')) {
+					target = target.parentNode;
+				}
+
+				refid = FCK.ImageDragDrop.getAttribute('refid');
+
+				FCK.log('prohibited drag&drop detected');
+
+				// remove dropped image
+				// add old image from FCK.ImageDragDrop
+				FCKDomTools.RemoveNode( FCK.GetElementByRefId(refid) );
+				FCKDomTools.InsertAfterNode(target, FCK.ImageDragDrop);
+
+				// regenerate elements with refId
+				FCK.SetupElementsWithRefId();
 			}
 		});
 
@@ -265,53 +301,63 @@ FCK.Events.AttachEvent( 'OnAfterSetHTML', function() {
 			}
 		});
 
-		// get all elements with refid attribute and handle them by value of _fck_type attribute
-		var nodes = FCK.GetNodesWithRefId();
-		FCK.log(nodes);
-
-		FCK.TemplatePreviewInit();
-
-		for (n=nodes.length-1; n>=0; n--) {
-			var node = nodes[n];
-			var refid = node.getAttribute('refid');
-			if (!refid) {
-				continue;
-			}
-
-			var data = FCK.wysiwygData[refid];
-			var type = node.getAttribute('_fck_type') || data.type;
-			var name = node.nodeName.toLowerCase();
-
-			switch(type) {
-				case 'template':
-					FCK.TemplatePreviewAdd(node);
-					break;
-
-				case 'image':
-					FCK.ProtectImage(node);
-					break;
-
-				// add tooltip to links
-				case 'internal link':
-					node.title = data.href;
-					break;
-
-				case 'external link':
-					node.title = data.href;
-					break;
-			}
-
-			// fix issues with input tags and cursor
-			if (name == 'input') {
-				FCK.FixWikitextPlaceholder(node);
-			}
-		}
+		// setup elements with refid (templates, images, ...)
+		FCK.SetupElementsWithRefId();
 	}
 
 	// for QA team tests
 	FCK.GetParentForm().className = (FCK.EditMode == FCK_EDITMODE_WYSIWYG ? 'wysiwyg' : 'source') + '_mode';
 
 });
+
+// setup elements with refId (after switching to wysiwyg mode and after drag&drop is finished)
+FCK.SetupElementsWithRefId = function() {
+
+	// init templates preview
+	FCK.TemplatePreviewInit();
+		
+	// get all elements with refid attribute and handle them by value of _fck_type attribute
+	var nodes = FCK.GetNodesWithRefId();
+	FCK.log(nodes);
+
+	for (n=nodes.length-1; n>=0; n--) {
+		var node = nodes[n];
+		var refid = node.getAttribute('refid');
+		if (!refid) {
+			continue;
+		}
+
+		var data = FCK.wysiwygData[refid];
+		var type = node.getAttribute('_fck_type') || data.type;
+		var name = node.nodeName.toLowerCase();
+
+		switch(type) {
+			case 'template':
+				FCK.TemplatePreviewAdd(node);
+				break;
+
+			case 'image':
+				FCK.ProtectImage(node);
+				break;
+
+			// add tooltip to links
+			case 'internal link':
+				node.title = data.href;
+				break;
+
+			case 'external link':
+				node.title = data.href;
+				break;
+		}
+
+		// fix issues with input tags and cursor
+		if (name == 'input') {
+			FCK.FixWikitextPlaceholder(node);
+		}
+	}
+
+	FCK.log('setup of nodes with refid finished');
+}
 
 // setup grey wikitext placeholder: block context menu, add dirty span(s) if needed
 FCK.FixWikitextPlaceholder = function(placeholder) {
@@ -395,6 +441,19 @@ FCK.ProtectImage = function(image) {
 	if (FCK.UseContentEditable) {
 		// don't use iframes -> use contentEditable
 		image.setAttribute('contentEditable', false);
+		image.setAttribute('spellcheck', false);
+
+		// apply contentEditable to all child nodes of image
+		FCK.YD.getElementsBy(
+			function(node) {
+				return true;
+			},
+			false,
+			image,
+			function(node) {
+				node.setAttribute('contentEditable', false);
+			}
+		);
 
 		FCKTools.AddEventListener(image, 'click', function(e) {
 			var e = FCK.YE.getEvent(e);
@@ -416,9 +475,27 @@ FCK.ProtectImage = function(image) {
 			}
 		});
 
-		FCK.BlockEvent(image, 'contextmenu');
-		FCK.BlockEvent(image, 'mousedown');
+		// handle images drag&drop
+		FCKTools.AddEventListener(image, 'mousedown', function(e) {
+			var e = FCK.YE.getEvent(e);
+			var target = FCK.YE.getTarget(e);
 
+			// go up to find image root tag
+			while (target && !target.getAttribute('refid')) {
+				target = target.parentNode;
+			}
+
+			var refid = target.getAttribute('refid');
+
+			FCK.log('image #' + refid  + ' drag&drop catched');
+
+			// select whole image
+			FCK.Selection.SelectNode(target);
+
+			FCK.ImageDragDrop = target;
+		});
+
+		FCK.BlockEvent(image, 'contextmenu');
 		FCK.YD.addClass(image, 'ieProtected');
 
 		// check whether given image exists
@@ -706,6 +783,7 @@ FCK.TemplatePreviewInit = function() {
 	if (FCK.TemplatePreviewCloud) {
 		FCK.TemplatePreviewCloud.parentNode.removeChild(FCK.TemplatePreviewCloud);
 		FCK.TemplatePreviewCloud = false;
+		FCK.TemplatePreviewTimeouts = {Tag: false, Cloud: false};
 	}
 }
 
