@@ -1,9 +1,9 @@
 YAHOO.namespace("Wikia.Blogs");
-YAHOO.util.Event.addListener( "" );
 
 YAHOO.Wikia.Blogs.callback = {
 	success: function( response ) {
-		console.log( "success");
+		console.log( response.responseText );
+		answer = YAHOO.Tools.JSONParse( response.responseText );
 	},
 	failure: function( responde ) {
 		console.log( "failure");
@@ -11,12 +11,14 @@ YAHOO.Wikia.Blogs.callback = {
 	timeout: 50000
 };
 
-YAHOO.Wikia.Blogs.submit = function( form ) {
+YAHOO.Wikia.Blogs.submit = function( event, id ) {
 
-//	console.log( form );
-	var oForm = YAHOO.util.Dom.get( "form" );
+	YAHOO.util.Event.preventDefault( event );
+	console.log( id );
+	var oForm = YAHOO.util.Dom.get( id );
 	YAHOO.util.Connect.setForm( oForm, false );
-	YAHOO.util.Connect.asyncRequest( "POST", "/index.php?action=ajax&rs=BlogComments::axPost", YAHOO.Wikia.Blogs.callback );
-
-	return false;
+	YAHOO.util.Connect.asyncRequest( "POST", wgServer+wgScriptPath+wgScript+"?action=ajax&rs=BlogComments::axPost&title=" + wgTitle , YAHOO.Wikia.Blogs.callback );
 };
+
+YAHOO.util.Event.addListener( "blog-comm-form-top", "submit", YAHOO.Wikia.Blogs.submit, "blog-comm-form-top" );
+YAHOO.util.Event.addListener( "blog-comm-form-bottom", "submit", YAHOO.Wikia.Blogs.submit, "blog-comm-form-bottom" );

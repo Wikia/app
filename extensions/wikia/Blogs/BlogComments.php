@@ -7,44 +7,6 @@
 global $wgAjaxExportList;
 $wgAjaxExportList[] = "BlogComments::axPost";
 
-
-# Define a setup function
-$wgExtensionFunctions[] = 'efBlogCommentsTag_Setup';
-# Add a hook to initialise the magic word
-$wgHooks[ "LanguageGetMagic" ][] = 'efBlogCommentsTag_Magic';
-$wgHooks[ "CategoryViewer::addPage" ][] = "BlogComments::addCategoryPage";
-$wgHooks[ "CategoryViewer::getOtherSection" ][] = "BlogComments::getOtherSection";
-
-
-function efBlogCommentsTag_Setup() {
-	global $wgParser;
-	# Set a function hook associating the "example" magic word with our function
-	$wgParser->setFunctionHook( 'bloglistcomments', 'efBlogCommentsTag_Render' );
-}
-
-function efBlogCommentsTag_Magic( &$magicWords, $langCode ) {
-	# Add the magic word
-	# The first array element is case sensitive, in this case it is not case sensitive
-	# All remaining elements are synonyms for our parser function
-	$magicWords['bloglistcomments'] = array( 0, 'bloglistcomments' );
-	# unless we return true, other parser functions extensions won't get loaded.
-	return true;
-}
-
-function efBlogCommentsTag_Render( &$parser ) {
-	global $wgTitle;
-
-	/**
-	 * for local usage/testing switch off caching
-	 */
-	$parser->disableCache();
-	$args = array_shift( func_get_args() );
-
-	$page = BlogComments::newFromTitle( $wgTitle );
-
-    return $page->render();
-}
-
 class BlogComments {
 
 	private $mText;
@@ -101,6 +63,9 @@ class BlogComments {
 		return  $tmpl->execute("comment-post");
 	}
 
+	/**
+	 * getCommentPages -- take pages connected to comments list
+	 */
 	private function getCommentPages() {
 
 		if( is_array( $this->mComments ) ) {
@@ -181,13 +146,14 @@ class BlogComments {
 				/**
 				 * it's preparsed wikitext, we have to parse it to HTML
 				 */
-				$text     = $parser->parse( $revision->getText(), $wgTitle, $options )->getText();
+				$text     = $parser->parse( $revision->getText(), $page, $options )->getText();
 				$author   = User::newFromId( $revision->getUser() );
 				$sig      = Xml::element( 'a', array ( "href" => $author->getUserPage()->getFullUrl() ), $author->getName() );
 
 				$comments[] = array(
 					"sig"       => $sig,
 					"text"      => $text,
+					"title"     => $page,
 					"author"    => $author,
 					"avatar"    => BlogAvatar::newFromUser( $author )->getImageTag( 50, 50 ),
 					"timestamp" => $wgContLang->timeanddate( $revision->getTimestamp() )
@@ -270,7 +236,17 @@ class BlogComments {
 	 * axPost -- static hook/entry for ajax request post
 	 */
 	static public function axPost() {
+		global $wgRequest, $wgUser, $wgTitle;
+		$article = self::doPost( $wgRequest, $wgUser, $wgTitle );
+		if( !$article ) {
+			return Wikia::json_encode(
+				array( "msg" => "huhu dajmiechu!", "error" => 1 )
+			);
+		}
 
+		return Wikia::json_encode(
+			array( "msg" => "tożem przysolił", "error" => 0 )
+		);
 	}
 
 	/**
@@ -283,7 +259,7 @@ class BlogComments {
 
 		$text = $Request->getText("wpBlogComment", false);
 		if( !$text || !strlen( $text ) ) {
-			return;
+			return false;
 		}
 
 		/**
@@ -297,10 +273,11 @@ class BlogComments {
 		 * add article
 		 */
 		$article = new Article( $commentTitle, 0 );
-		$article->doEdit( $text, "added new comment" );
+		$article->doEdit( $text, "New comment in blog" );
 
 		/**
 		 * clear comments cache for this article
 		 */
+		return $article;
 	}
 }
