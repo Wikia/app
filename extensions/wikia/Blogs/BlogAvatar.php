@@ -165,7 +165,7 @@ class BlogAvatar {
 			$defaults = $this->getDefaultAvatars();
 			$url = array_shift( $defaults );
 		}
-		return $url;
+		return wfReplaceImageServer( $url );
 	}
 
 	/**
