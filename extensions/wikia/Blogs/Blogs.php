@@ -38,8 +38,8 @@ $wgGroupPermissions['staff']['blogs'] = true;
  * globals
  */
 
-$wgWikiaAvatarDirectory = "/images/common/avatars";
-$wgWikiaAvatarPath = "";
+$wgBlogAvatarDirectory = "/images/common/avatars";
+// $wgBlogAvatarPath = "";
 
 /**
  * messages file

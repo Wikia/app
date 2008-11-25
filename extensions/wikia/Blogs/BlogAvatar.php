@@ -30,12 +30,10 @@ class BlogAvatar {
 	 */
 	public $mPath = false;
 
-	/* user object */
-	var $oUser;
-	/* default image */
-	var $bDefault = true;
-	/* avatar path */
-	var $sAvatarPath = "";
+	/**
+	 * user object
+	 */
+	public $mUser = false;
 
 	/**
 	 * city_id for messaging.wikia.com, will be used for creating image urls
@@ -51,7 +49,7 @@ class BlogAvatar {
     	wfProfileIn( __METHOD__ );
 
         wfLoadExtensionMessages( "Blogs" );
-		$this->oUser = $User;
+		$this->mUser = $User;
 
         wfProfileOut( __METHOD__ );
 	}
@@ -68,6 +66,8 @@ class BlogAvatar {
 
 	/**
 	 * static constructor
+	 * @static
+	 * @access public
 	 */
 	public static function newFromUserID( $userId ) {
 		wfProfileIn( __METHOD__ );
@@ -82,6 +82,9 @@ class BlogAvatar {
 
 	/**
 	 * static constructor
+	 *
+	 * @static
+	 * @access public
 	 */
 	public static function newFromUserName( $login ) {
 		wfProfileIn( __METHOD__ );
@@ -129,19 +132,40 @@ class BlogAvatar {
 
 	/**
 	 * getUrl -- read url from preferences or from defaults if preference is
-	 * not set
+	 * not set.
 	 *
 	 * @access private
 	 *
 	 * @return String
 	 */
 	public function getUrl() {
-		$url = $this->oUser->getOption( AVATAR_USER_OPTION_NAME );
+		global $wgBlogAvatarPath;
+		$url = $this->mUser->getOption( AVATAR_USER_OPTION_NAME );
 		if( $url ) {
-			return $url;
+			/**
+			 * if default avatar we glue with messaging.wikia.com
+			 * if uploaded avatar we glue with common avatar path
+			 */
+			if( strpos( $url, "/" ) !== false ) {
+				/**
+				 * uploaded file, we are adding common/avatars path
+				 */
+				$url = $wgBlogAvatarPath . $url;
+			}
+			else {
+				/**
+				 * default avatar, path from messaging.wikia.com
+				 */
+				$uploadPath = WikiFactory::getVarValueByName( "wgUploadPath", $this->mMsgCityId );
+				$hash = FileRepo::getHashPathForLevel( $url, 2 );
+				$url = $uploadPath . $hash . $url;
+			}
 		}
-		$defaults = $this->getDefaultAvatars();
-		return array_shift( $defaults );
+		else {
+			$defaults = $this->getDefaultAvatars();
+			$url = array_shift( $defaults );
+		}
+		return $url;
 	}
 
 	/**
@@ -157,9 +181,10 @@ class BlogAvatar {
 		wfProfileIn( __METHOD__ );
 
 		$url = $this->getUrl();
+		Wikia::log( __METHOD__, "url", $url );
 
 		if ( ! $alt ) {
-			$alt = "[" .$this->oUser->getName() ."]";
+			$alt = "[" .$this->mUser->getName() ."]";
 		}
 		wfProfileOut( __METHOD__ );
 		return Xml::element( 'img',
@@ -182,7 +207,7 @@ class BlogAvatar {
 		$oSkin = $wgUser->getSkin();
 
 		/* check if this avatar is for wgUser or another */
-		if ($this->oUser->getID() == $wgUser->getID()) {
+		if ($this->mUser->getID() == $wgUser->getID()) {
 			switch ($sLinkType) {
 				case 'upload':
 					$sPath = $oSkin->makeLinkObj(Title::newFromText('Preferences', NS_SPECIAL), $sPath);
@@ -213,28 +238,23 @@ class BlogAvatar {
 
 		wfProfileIn( __METHOD__ );
 
-		$image  = sprintf("%s.png", $this->oUser->getID() );
-		$hash   = sha1( (string)$this->oUser->getID() );
+		$image  = sprintf("%s.png", $this->mUser->getID() );
+		$hash   = sha1( (string)$this->mUser->getID() );
 		$folder = substr( $hash, 0, 1)."/".substr( $hash, 0, 2 );
 
-		$this->mPath = "{$folder}/{$image}";
+		$this->mPath = "/{$folder}/{$image}";
 
 		wfProfileOut( __METHOD__ );
 
 		return $this->mPath;
 	}
 
-	public function getFullPath() {
-		global $wgWikiaAvatarDirectory;
-		return $wgWikiaAvatarDirectory."/".$this->getLocalPath();
-	}
-
 	/**
-	 * getFullURL -- return full url to avatar image
+	 * getFullPath -- return full path for image
 	 */
-	public function getFullURL() {
-		global $wgWikiaAvatarPath;
-		return $wgWikiaAvatarPath."/".$this->getLocalPath();
+	public function getFullPath() {
+		global $wgBlogAvatarDirectory;
+		return $wgBlogAvatarDirectory.$this->getLocalPath();
 	}
 
 	/**
@@ -255,11 +275,11 @@ class BlogAvatar {
 				} else {
 					/* add log */
 					$this->__setLogType();
-					$sUserText =  $this->oUser->getName();
-					$oUserBlogPage = Title::newFromText( $sUserText, NS_BLOG_ARTICLE );
+					$sUserText =  $this->mUser->getName();
+					$mUserBlogPage = Title::newFromText( $sUserText, NS_BLOG_ARTICLE );
 					$oLogPage = new LogPage( AVATAR_LOG_NAME );
 					$sLogComment = "Remove {$sUserText}'s avatars by {$wgUser->getName()}";
-					$oLogPage->addEntry( AVATAR_LOG_NAME, $oUserBlogPage, $sLogComment);
+					$oLogPage->addEntry( AVATAR_LOG_NAME, $mUserBlogPage, $sLogComment);
 					/* */
 					$result = true;
 				}
@@ -306,7 +326,7 @@ class BlogAvatar {
 			return $iErrNo;
 		}
 
-		$sTmpFile = $wgTmpDirectory."/".substr(sha1(uniqid($this->oUser->getID())), 0, 16);
+		$sTmpFile = $wgTmpDirectory."/".substr(sha1(uniqid($this->mUser->getID())), 0, 16);
 		Wikia::log( __METHOD__, "tmp", "Temp file set to {$sTmpFile}" );
 		$sTmp = $request->getFileTempname($sFormField);
 		Wikia::log( __METHOD__, "path", "Path to uploaded file is {$sTmp}" );
@@ -314,10 +334,12 @@ class BlogAvatar {
 		if( move_uploaded_file( $sTmp, $sTmpFile )  ) {
 			$aImgInfo = getimagesize($sTmpFile);
 
-			/* check if mimetype is allowed */
-			$aAllowMime = array("image/jpeg", "image/pjpeg", "image/gif", "image/png", "image/x-png", "image/jpg", "image/bmp");
+			/**
+			 * check if mimetype is allowed
+			 */
+			$aAllowMime = array( "image/jpeg", "image/pjpeg", "image/gif", "image/png", "image/x-png", "image/jpg", "image/bmp" );
 			if (!in_array($aImgInfo["mime"], $aAllowMime)) {
-				wfDebugLog( __METHOD__, "Imvalid mime type - allowed: " . implode(",", $aAllowMime) );
+				Wikia::log( __METHOD__, "mime", "Imvalid mime type, allowed: " . implode(",", $aAllowMime) );
 				wfProfileOut(__METHOD__);
 				return $iErrNo;
 			}
@@ -394,11 +416,11 @@ class BlogAvatar {
 				/* remove tmp file */
 				imagedestroy($oImg);
 
-				$sUserText =  $this->oUser->getName();
-				$oUserBlogPage = Title::newFromText( $sUserText, NS_BLOG_ARTICLE );
+				$sUserText =  $this->mUser->getName();
+				$mUserBlogPage = Title::newFromText( $sUserText, NS_BLOG_ARTICLE );
 				$oLogPage = new LogPage( AVATAR_LOG_NAME );
 				$sLogComment = "Add/change avatar by {$sUserText}";
-				$oLogPage->addEntry( AVATAR_LOG_NAME, $oUserBlogPage, $sLogComment);
+				$oLogPage->addEntry( AVATAR_LOG_NAME, $mUserBlogPage, $sLogComment);
 				unlink($sTmpFile);
 				$iErrNo = true;
 			}
@@ -410,7 +432,7 @@ class BlogAvatar {
 	}
 
 	/**
-	 * AdditionalUserProfilePreferences -- Hook handler
+	 * additionalUserProfilePreferences -- Hook handler
 	 *
 	 * @param PreferencesForm $oPrefs  -- preferences form instance
 	 * @param String $html -- generated html
@@ -431,7 +453,7 @@ class BlogAvatar {
 			"cityId"		=> $wgCityId,
 			"aDefAvatars"	=> $aDefAvatars,
 			"oAvatarObj"	=> $oAvatarObj,
-			"sUserImg"		=> $oAvatarObj->getFullURL(),
+			"sUserImg"		=> $oAvatarObj->getURL(),
 			"imgH"			=> AVATAR_DEFAULT_HEIGHT,
 			"imgW"			=> AVATAR_DEFAULT_WIDTH,
 			"sFieldName"	=> AVATAR_UPLOAD_FIELD,
@@ -445,14 +467,14 @@ class BlogAvatar {
 	}
 
 	/**
-	 * AdditionalUserProfilePreferences -- Hook handler
+	 * savePreferences -- Hook handler
 	 *
 	 * @param PreferencesForm $oPrefs  -- preferences form instance
 	 * @param User $User -- user object
 	 * @param String $sMsg -- status message
 	 * @param $oldOptions
 	 */
-	static public function savePreferences( $oPrefs, $oUser, &$sMsg, $oldOptions ) {
+	static public function savePreferences( $oPrefs, $mUser, &$sMsg, $oldOptions ) {
 		global $wgRequest;
 		wfProfileIn( __METHOD__ );
 		$result = true;
@@ -472,7 +494,7 @@ class BlogAvatar {
 		 */
 		$isNotUploaded = ( empty( $sUploadedAvatar ) && empty( $sUrl ) );
 		if ( !$isNotUploaded ) {
-			$oAvatarObj = BlogAvatar::newFromUser( $oUser );
+			$oAvatarObj = BlogAvatar::newFromUser( $mUser );
 			/* check is set default avatar for user */
 			if ( empty($sUrl) ) {
 				/* upload user avatar */
@@ -481,7 +503,7 @@ class BlogAvatar {
 					$sMsg .= " Cannot save user's avatar ";
 					$result = false;
 				} else {
-					$sUrl = $oAvatarObj->getFullURL();
+					$sUrl = $oAvatarObj->getLocalPath();
 				}
 				Wikia::log( __METHOD__, "url", $sUrl );
 			}
@@ -489,10 +511,10 @@ class BlogAvatar {
 
 			if ( !empty($sUrl) ) {
 				/* set user option */
-				$oUser->setOption( AVATAR_USER_OPTION_NAME, $sUrl );
+				$mUser->setOption( AVATAR_USER_OPTION_NAME, $sUrl );
 			}
 		}
-		Wikia::log( __METHOD__, "url", "selected avatar for user ".$oUser->getID().": $sUrl" );
+		Wikia::log( __METHOD__, "url", "selected avatar for user ".$mUser->getID().": $sUrl" );
 
 		wfProfileOut( __METHOD__ );
 		return $result;
