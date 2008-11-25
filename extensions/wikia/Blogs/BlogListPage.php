@@ -165,7 +165,7 @@ class BlogListPage extends Article {
 				"count"  => 50,
 				"summary" => true,
 				"summarylength" => 750,
-				"style" => "plain",
+				"type" => "plain",
 				"title" => "Blogs",
 				"timestamp" => true,
 				"offset" => $offset
@@ -198,7 +198,7 @@ class BlogListPage extends Article {
 				"count"  => 50,
 				"summary" => true,
 				"summarylength" => 750,
-				"style" => "array",
+				"type" => "array",
 				"title" => "Blogs",
 				"timestamp" => true,
 				"offset" => $offset
