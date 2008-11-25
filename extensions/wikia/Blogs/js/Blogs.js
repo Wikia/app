@@ -2,19 +2,24 @@ YAHOO.namespace("Wikia.Blogs");
 
 YAHOO.Wikia.Blogs.callback = {
 	success: function( response ) {
-		console.log( response.responseText );
-		answer = YAHOO.Tools.JSONParse( response.responseText );
+		YAHOO.Wikia.Blogs.add( YAHOO.Tools.JSONParse( response.responseText ) );
 	},
 	failure: function( responde ) {
-		console.log( "failure");
+		answer = YAHOO.Tools.JSONParse( response.responseText );
 	},
 	timeout: 50000
+};
+
+YAHOO.Wikia.Blogs.add = function( answer ) {
+
+	var text = document.createTextNode( answer[ "text" ] );
+	var div = YAHOO.util.Dom.get( "blog-comments" );
+	div.appendChild( text );
 };
 
 YAHOO.Wikia.Blogs.submit = function( event, id ) {
 
 	YAHOO.util.Event.preventDefault( event );
-	console.log( id );
 	var oForm = YAHOO.util.Dom.get( id );
 	YAHOO.util.Connect.setForm( oForm, false );
 	YAHOO.util.Connect.asyncRequest( "POST", wgServer+wgScriptPath+wgScript+"?action=ajax&rs=BlogComments::axPost&title=" + wgTitle , YAHOO.Wikia.Blogs.callback );
