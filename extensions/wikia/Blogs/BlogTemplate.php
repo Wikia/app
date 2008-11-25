@@ -169,7 +169,7 @@ class BlogTemplateClass {
 		/*
 		 * default=box, other option is "plain". box is the 300px width both in style of image shown.
 		 * Plain is just the box content, no styling - so users can do what they want with it.
-		 * style = box | plain
+		 * type = box | plain
 		 *
 		 * type: 	number,
 		 * default: 200
@@ -485,7 +485,7 @@ class BlogTemplateClass {
 					array_key_exists('max', self::$aBlogParams[$sParamName]) && 
 					($sParamValue > self::$aBlogParams[$sParamName]['max']) 
 				) {
-					$sParamValue = self::$aBlogParams[$sParamName]['max'];
+					$sParamValue = $aBlogParams[$sParamName]['max'];
 				}
 				self::$aOptions[$sParamName] = $sParamValue;
 			}
@@ -825,8 +825,12 @@ class BlogTemplateClass {
 						if ( !empty($aParamValues) ) {
 							$aParamValues = array_slice($aParamValues, 0, self::$aBlogParams[$sParamName]['count']);
 							if ( !empty($aParamValues) && is_array( $aParamValues ) ) {
+								$aTmpWhere = array();
 								foreach ( $aParamValues as $id => $sParamValue ) {
-									self::$aWhere[] = "page_title like '{$sParamValue}/%'";
+									 $aTmpWhere[] = "page_title like '{$sParamValue}/%'";
+								}
+								if ( !empty($aTmpWhere) ) {
+									self::$aWhere[] = implode(" OR ", $aTmpWhere);
 								}
 							}
 						}
