@@ -43,7 +43,7 @@ function wfAdsAfterTidy( &$parser, &$text ) {
 	// replace markers with actual output
 	global $wgAdMarkerList;
 	for ($i = 0; $i < count( $wgAdMarkerList ); $i++) {
-		$text = preg_replace( '/xx-marker' . $i . '-xx/', $wgAdMarkerList[$i], $text );
+		$text = str_replace( 'xx-marker' . $i . '-xx', $wgAdMarkerList[$i], $text );
 	}
 	return true;
 }
