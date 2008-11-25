@@ -159,7 +159,7 @@ class BlogComments {
 					"timestamp" => $wgContLang->timeanddate( $revision->getTimestamp() )
 				);
 			}
-			$template->set_vars( array( "comments" => $comments, "input" => $input ) );
+			$template->set_vars( array( "comments" => $comments, "input" => $input, "list" => true ) );
 		}
 
 		$text = $template->execute( "comment" );

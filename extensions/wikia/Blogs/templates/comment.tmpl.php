@@ -1,9 +1,15 @@
+<?php
+	if( $list ):
+?>
 <h2><?php echo wfMsg("blog-comments") ?></h2>
 <div id="blog-comments" class="reset clearfix">
-<?php if( ! $comments ): ?>
-<?php echo wfMsg( "blog-zero-comments" ); ?>
-<?php else : ?>
-	<?php foreach( $comments as $comment ): ?>
+<?php
+	endif; // $list
+	if( ! $comments ):
+		echo wfMsg( "blog-zero-comments" );
+	else:
+		foreach( $comments as $comment ):
+?>
 	<div class="clearfix">
 		<a name="<?php echo $comment["title"]->getDBkey() ?>"></a>
 		<span style="float: left;">
@@ -19,6 +25,9 @@
 		</div>
 	</div>
 	<br />
-	<?php endforeach ?>
-<?php endif ?>
-</div>
+<?php
+		endforeach;
+	endif; // comments
+	if( $list )
+		echo "</div>"
+?>
