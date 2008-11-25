@@ -54,9 +54,8 @@ div.blog-comm div {
 	padding: 4px;
 }
 
-div.blog-comm .avatar {
+#blog-comments .avatar {
 	background: #FFF;
 	border: 1px solid #666;
-	margin-right: 5px;
 	padding: 2px;
 }
