@@ -2389,7 +2389,7 @@ class Title {
 			}
 		}
 
-		// if this is a site css purge it as well
+		// if this is a site css or js purge it as well
 		global $wgSquidMaxage;
 		if( $this->getNamespace() == NS_MEDIAWIKI ) {
 			if( $this->getText() == 'Common.css' ) {
@@ -2399,6 +2399,8 @@ class Title {
 					if( $this->getText() == $skinname.'.css' ) {
 						$urls[] = $this->getInternalURL( "usemsgcache=yes&action=raw&ctype=text/css&smaxage=$wgSquidMaxage" );
 						break;
+					} elseif ( $this->getText() == 'Common.js' ) {
+						$urls[] = Skin::makeUrl('-', "action=raw&gen=js&useskin=" .urlencode( $skinkey ) );
 					}
 				}
 			}
