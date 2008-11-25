@@ -35,15 +35,28 @@
 	color: inherit;
 }
 
-div.blog-comment-input {
+div.blog-comm-input {
 	background: #d2d2b6;
 	padding: 4px;
 }
 
-div.blog-comment-input textarea {
+div.blog-comm-input textarea {
 	width: 600px;
 }
 
-div.blog-comment {
+div.blog-comm {
 	margin-bottom: 4px;
+	display: block;
+	clear: both;
+}
+
+div.blog-comm div {
+	padding: 4px;
+}
+
+div.blog-comm .avatar {
+	background: #FFF;
+	border: 1px solid #666;
+	margin-right: 5px;
+	padding: 2px;
 }
