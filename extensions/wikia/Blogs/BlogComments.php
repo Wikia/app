@@ -146,7 +146,12 @@ class BlogComments {
 		return 0;
 	}
 
-
+	/**
+	 * render - return HTML code for displaying comments
+	 *
+	 * @param Boolean $input -- show/hide input for adding comments default false
+	 *
+	 */
 	public function render( $input = false ) {
 		global $wgContLang, $wgUser, $wgTitle;
 
@@ -173,6 +178,9 @@ class BlogComments {
 				 * page is Title object
 				 */
 				$revision = Revision::newFromTitle( $page );
+				/**
+				 * it's preparsed wikitext, we have to parse it to HTML
+				 */
 				$text     = $parser->parse( $revision->getText(), $wgTitle, $options )->getText();
 				$author   = User::newFromId( $revision->getUser() );
 				$sig      = Xml::element( 'a', array ( "href" => $author->getUserPage()->getFullUrl() ), $author->getName() );
@@ -188,9 +196,6 @@ class BlogComments {
 			$template->set_vars( array( "comments" => $comments, "input" => $input ) );
 		}
 
-		/**
-		 * it's preparsed wikitext, we have to parse it to HTML
-		 */
 		$text = $template->execute( "comment" );
 
 		return $text;
@@ -275,7 +280,6 @@ class BlogComments {
 		if( !$Request->getText( "wpBlogSubmit", false ) ) {
 			return;
 		}
-//		print_pre( $Request );
 
 		$text = $Request->getText("wpBlogComment", false);
 		if( !$text || !strlen( $text ) ) {
