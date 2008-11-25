@@ -461,6 +461,9 @@ FCK.CheckInternalLink = function(title, link) {
 // support for non-editable images
 //
 
+// image overlay with edit/delete link
+FCK.ProtectImageOverlay = false;
+
 FCK.ProtectImage = function(image) {
 	//FCK.log(image);
 	var refid = parseInt(image.getAttribute('refid'));
@@ -485,8 +488,8 @@ FCK.ProtectImage = function(image) {
 
 		FCKTools.AddEventListener(image, 'click', function(e) {
 			var e = FCK.YE.getEvent(e);
-			var target = FCK.YE.getTarget(e);
-
+			var target = originalTarget = FCK.YE.getTarget(e);
+		
 			FCK.YE.stopEvent(e);
 
 			// ignore buttons different then left
@@ -499,7 +502,16 @@ FCK.ProtectImage = function(image) {
 					refid = target.getAttribute('refid');
 				}
 
-				FCK.ProtectImageClick( parseInt(refid) );
+				// choose action based on original target CSS class
+				switch (originalTarget.className) {
+					case 'imageOverlayRemove':
+						FCK.ProtectImageRemove( parseInt(refid) );
+						break;
+
+					case 'imageOverlayEdit':
+					default:
+						FCK.ProtectImageClick( parseInt(refid) );
+				}
 			}
 		});
 
@@ -533,6 +545,10 @@ FCK.ProtectImage = function(image) {
 
 		// store node with refId
 		FCK.NodesWithRefId[ refid ] = image;
+
+		// image overlay menu (edit / delete)
+		FCK.ImageProtectSetupOverlayMenu(refid, image.nodeName.IEquals('a') ? image : image.firstChild);
+
 		return;
 	}
 	
@@ -566,6 +582,9 @@ FCK.ProtectImage = function(image) {
 		FCK.wysiwygData[refid].exists = (!FCK.YD.hasClass(image, 'new'));
 	
 		FCK.NodesWithRefId[ refid ] = image;
+
+		// image overlay menu (edit / delete)
+		FCK.ImageProtectSetupOverlayMenu(refid, image);
 		return;
 	}
 
@@ -629,7 +648,55 @@ FCK.ProtectImage = function(image) {
 	// check whether given image exists
 	var re = /class=\"new\"/;
 	FCK.wysiwygData[refid].exists = !re.test(image.innerHTML);
+
+	// image overlay menu (edit / delete)
+	FCK.ImageProtectSetupOverlayMenu(refid, coveringDiv);
 }
+
+FCK.ImageProtectSetupOverlayMenu = function(refid, div) {
+
+	div.setAttribute('refid', refid);
+
+	var docObj = FCKTools.GetElementDocument(div);
+
+	// firefox will add resize box to <SPAN>, IE doesn't allow us to add <DIV> as a child of <IMG>
+	var overlay = docObj.createElement(FCKBrowserInfo.IsIE ? 'SPAN' : 'DIV');
+
+	overlay.id = 'imageOverlay' + refid;
+	overlay.className = 'imageOverlay';
+	overlay.style.visibility = 'hidden';
+
+	div.style.position = 'relative';
+
+	// move to the upper corner when image is wrapped using <a>
+	if (div.nodeName.IEquals('a') && !FCKBrowserInfo.IsIE) {
+		var height = parseInt(div.firstChild.offsetHeight / 2);
+		overlay.style.top = (-height + 8) + 'px';
+	}
+			
+	div.appendChild(overlay);
+
+	overlay.innerHTML = '<span class="imageOverlayEdit" onclick="FCK.ProtectImageClick('+refid+')">edit</span> | <span class="imageOverlayRemove" onclick="FCK.ProtectImageRemove('+refid+')">remove</span>';
+
+	// show overlay menu
+	FCKTools.AddEventListener(div, 'mouseover', function(e) {
+		var refid = div.getAttribute('refid');
+			
+		FCK.log('show overlay menu for image #' + refid);
+
+		overlay.style.visibility = 'visible';
+	});
+
+	// hide overlay menu
+	FCKTools.AddEventListener(div, 'mouseout', function(e) {
+		var refid = div.getAttribute('refid');
+
+		FCK.log('hide overlay menu for image #' + refid);
+
+		overlay.style.visibility = 'hidden';
+	});
+}	
+
 
 FCK.ProtectImageRepositionCover = function(refid) {
 
@@ -652,7 +719,9 @@ FCK.ProtectImageRepositionCover = function(refid) {
 	setTimeout('FCK.ProtectImageRepositionCover('+refid+')', 750);
 }
 
+// handle click on image
 FCK.ProtectImageClick = function(refid) {
+
 	FCK.log('click on image #' + refid);
 	FCK.log(FCK.wysiwygData[refid]);
 
@@ -661,6 +730,24 @@ FCK.ProtectImageClick = function(refid) {
 
 	// open WikiaMiniUpload
 	window.parent.WMU_show( parseInt(refid) );
+}
+
+// remove image from the article
+FCK.ProtectImageRemove = function(refid, dontAsk) {
+	if (dontAsk || confirm('Are you sure you want to remove this image?')) {
+		FCK.log('removed image #' + refid);
+
+		var node = FCK.GetElementByRefId(refid);
+
+		FCKDomTools.RemoveNode(node);
+
+		// clear meta data
+		delete FCK.wysiwygData[refid];
+		delete FCK.NodesWithRefId[refid];
+
+		// tracker
+		FCK.Track('/image/remove');
+	}
 }
 
 // to simplify things we actually replace old image with the new one
