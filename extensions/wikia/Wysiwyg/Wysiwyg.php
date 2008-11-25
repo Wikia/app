@@ -236,7 +236,7 @@ function Wysiwyg_WikiTextToHtml($wikitext, $articleId = -1, $encode = false) {
 
 	$options = new ParserOptions();
 	$wysiwygParser = new WysiwygParser();
-	$wysiwygParser->setOutputType(OT_HTML);
+	$wysiwygParser->startExternalParse($title, $options, OT_HTML, false);
 
 	$wgWysiwygParserTildeEnabled = true;
 	$wikitext = $wysiwygParser->preSaveTransform($wikitext, $title, $wgUser, $options);
@@ -318,6 +318,11 @@ function Wysiwyg_WrapTemplate($originalCall, $output, $lineStart) {
 	$templateName = explode('|', substr($originalCall, 2, -2));
 	$data['name'] = trim($templateName[0]);
 
+	$params = WysiwygGetTemplateParams($data['name']);
+	if (count($params)) {
+		$data['templateParams'] = $params;
+	}
+
 	$wgWysiwygMetaData[$refId] = $data;
 
 	return "\x7f-wtb-{$refId}-\x7f{$output}\x7f-wte-{$refId}-\x7f";
@@ -329,7 +334,7 @@ function Wysiwyg_WrapTemplate($originalCall, $output, $lineStart) {
  * @author Maciej Błaszkowski <marooned at wikia-inc.com>
  */
 function Wysiwyg_SetRefId($type, $params, $addMarker = true, $returnId = false) {
-	global $wgWysiwygMetaData, $wgWysiwygParser, $wgWysiwygMarkers;
+	global $wgWysiwygMetaData, $wgWysiwygMarkers;
 
 	if(!empty($params['original'])) {
 		$params['original'] = preg_replace('/\x7e-start-\d+-stop/', '', $params['original']);
@@ -518,4 +523,31 @@ EOD;
 
 	echo $html;
 	exit();
+}
+
+/**
+ * Grabbing all parameters from selected template
+ *
+ * @author Maciej Błaszkowski <marooned at wikia-inc.com>
+ */
+function WysiwygGetTemplateParams($name) {
+	global $wgWysiwygMetaData, $wgWysiwygPreprocesorEnabled, $wgWysiwygTemplateParams, $wgParser;
+	$result = null;
+	$name = explode(':', $name, 2);
+	$name = $name[1];
+	echo '<pre>name:'; print_r ($name); echo '</pre>';
+	if ($title = Title::makeTitle(NS_TEMPLATE, $name)) {
+		if ($revision = Revision::newFromTitle($title)) {
+			if (empty($wgParser->mOptions)) {
+				$options = new ParserOptions();
+				$wgParser->mOptions = $options;
+			}
+			$wgWysiwygPreprocesorEnabled = true;
+			$dom = $wgParser->preprocessToDom($revision->getText());
+			$wgWysiwygPreprocesorEnabled = false;
+			$result = $wgWysiwygTemplateParams;
+			unset($wgWysiwygTemplateParams);
+		}
+	}
+	return $result;
 }
