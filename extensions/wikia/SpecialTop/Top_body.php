@@ -32,10 +32,11 @@ class Top extends SpecialPage
 
 			$wgOut->addHtml("<ul>");
 			$results = DataProvider::$topFiveArray[0][$par](25);
-			foreach($results as $val) {
-				$wgOut->addHtml("<li><a href=\"{$val['url']}\">{$val['text']}</a></li>");
+			if ( is_array( $results ) ) {
+				foreach($results as $val) {
+					$wgOut->addHtml("<li><a href=\"{$val['url']}\">{$val['text']}</a></li>");
+				}
 			}
-
 			$wgOut->addHtml("</ul>");
         }
 }
