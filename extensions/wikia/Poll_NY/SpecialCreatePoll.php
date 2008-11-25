@@ -82,7 +82,7 @@ function wfSpecialCreatePoll(){
 				
 				//Put Choices in Wiki Text (so we can track changes)
 				$choices = "";
-				for($x=1;$x<=5;$x++){
+				for($x=1;$x<=10;$x++){
 					if( $wgRequest->getVal("answer_{$x}") ){
 						$choices .= $wgRequest->getVal("answer_{$x}") . "\n";
 					}
@@ -100,7 +100,7 @@ function wfSpecialCreatePoll(){
 				$poll_id = $p->add_poll_question( $wgRequest->getVal("poll_question"), $wgRequest->getVal("poll_image_name"),$new_page_id );
 				
 				//Add Choices
-				for($x=1;$x<=5;$x++){
+				for($x=1;$x<=10;$x++){
 					if( $wgRequest->getVal("answer_{$x}") ){
 						$p->add_poll_choice($poll_id, $wgRequest->getVal("answer_{$x}") ,$x);
 					}
@@ -132,7 +132,7 @@ function wfSpecialCreatePoll(){
 	
 			$form .= "<script>
 					function update_answer_boxes(){
-						for(x=1;x<=4;x++){
+						for(x=1;x<=9;x++){
 						
 							if(\$(\"answer_\"+x).value){
 								YAHOO.widget.Effects.Show(\"poll_answer_\"+(x+1));
@@ -164,7 +164,7 @@ function wfSpecialCreatePoll(){
 					function create_poll(){
 					
 						answers=0;
-						for(x=1;x<=4;x++){
+						for(x=1;x<=9;x++){
 							
 							if(\$(\"answer_\"+x).value){
 								answers++;
@@ -230,7 +230,12 @@ function wfSpecialCreatePoll(){
 					<div class=\"create-poll-answer\" id=\"poll_answer_2\"><span class=\"create-poll-answer-number\">2.</span><input type=\"text\" id=\"answer_2\" name=\"answer_2\" onKeyUp=\"update_answer_boxes();\" /></div>
 					<div class=\"create-poll-answer\" id=\"poll_answer_3\" style=\"display:none;\"><span class=\"create-poll-answer-number\">3.</span><input type=\"text\" id=\"answer_3\" name=\"answer_3\" onKeyUp=\"update_answer_boxes();\" /></div>
 					<div class=\"create-poll-answer\" id=\"poll_answer_4\" style=\"display:none;\"><span class=\"create-poll-answer-number\">4.</span><input type=\"text\" id=\"answer_4\" name=\"answer_4\" onKeyUp=\"update_answer_boxes();\" /></div>
-					<div class=\"create-poll-answer\" id=\"poll_answer_5\" style=\"display:none;\"><span class=\"create-poll-answer-number\">5.</span><input type=\"text\" id=\"answer_5\" name=\"answer_5\"/></div>
+					<div class=\"create-poll-answer\" id=\"poll_answer_5\" style=\"display:none;\"><span class=\"create-poll-answer-number\">5.</span><input type=\"text\" id=\"answer_5\" name=\"answer_5\" onKeyUp=\"update_answer_boxes();\" /></div>
+					<div class=\"create-poll-answer\" id=\"poll_answer_6\" style=\"display:none;\"><span class=\"create-poll-answer-number\">6.</span><input type=\"text\" id=\"answer_6\" name=\"answer_6\" onKeyUp=\"update_answer_boxes();\" /></div>
+					<div class=\"create-poll-answer\" id=\"poll_answer_7\" style=\"display:none;\"><span class=\"create-poll-answer-number\">7.</span><input type=\"text\" id=\"answer_7\" name=\"answer_7\" onKeyUp=\"update_answer_boxes();\" /></div>
+					<div class=\"create-poll-answer\" id=\"poll_answer_8\" style=\"display:none;\"><span class=\"create-poll-answer-number\">8.</span><input type=\"text\" id=\"answer_8\" name=\"answer_8\" onKeyUp=\"update_answer_boxes();\" /></div>
+					<div class=\"create-poll-answer\" id=\"poll_answer_9\" style=\"display:none;\"><span class=\"create-poll-answer-number\">9.</span><input type=\"text\" id=\"answer_9\" name=\"answer_9\" onKeyUp=\"update_answer_boxes();\" /></div>
+					<div class=\"create-poll-answer\" id=\"poll_answer_10\" style=\"display:none;\"><span class=\"create-poll-answer-number\">10.</span><input type=\"text\" id=\"answer_10\" name=\"answer_10\"/></div>
 					
 				</div>
 				
