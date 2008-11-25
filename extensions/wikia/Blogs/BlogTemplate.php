@@ -485,7 +485,7 @@ class BlogTemplateClass {
 					array_key_exists('max', self::$aBlogParams[$sParamName]) && 
 					($sParamValue > self::$aBlogParams[$sParamName]['max']) 
 				) {
-					$sParamValue = $aBlogParams[$sParamName]['max'];
+					$sParamValue = self::$aBlogParams[$sParamName]['max'];
 				}
 				self::$aOptions[$sParamName] = $sParamValue;
 			}
