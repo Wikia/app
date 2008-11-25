@@ -35,13 +35,6 @@ $wgGroupPermissions['sysop']['blogs'] = true;
 $wgGroupPermissions['staff']['blogs'] = true;
 
 /**
- * globals
- */
-
-$wgBlogAvatarDirectory = "/images/common/avatars";
-// $wgBlogAvatarPath = "";
-
-/**
  * messages file
  */
 $wgExtensionMessagesFiles["Blogs"] = dirname(__FILE__) . '/Blogs.i18n.php';
