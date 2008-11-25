@@ -485,32 +485,25 @@ FCK.ProtectImage = function(image) {
 				node.setAttribute('contentEditable', false);
 			}
 		);
-/*
+
 		FCKTools.AddEventListener(image, 'click', function(e) {
 			var e = FCK.YE.getEvent(e);
-			var target = originalTarget = FCK.YE.getTarget(e);
+			var target = FCK.YE.getTarget(e);
 		
 			FCK.YE.stopEvent(e);
 
 			// ignore buttons different then left
 			if (e.button == 0) {
-				// move to the parent with refId
-				refid = target.getAttribute('refid');
-
-				while ( refid == undefined ) {
-					target = target.parentNode;
-					refid = target.getAttribute('refid');
-				}
-
+				FCK.log('image #' + refid  + ' clicked');
 				// choose action based on original target CSS class
-				switch (originalTarget.className) {
+				switch (target.className) {
 					case 'imageOverlayRemove':
-						FCK.ProtectImageRemove( parseInt(refid) );
+						FCK.ProtectImageRemove(refid);
 						break;
 
 					case 'imageOverlayEdit':
-					default:
-						FCK.ProtectImageClick( parseInt(refid) );
+						FCK.ProtectImageClick(refid);
+						break;
 				}
 			}
 		});
@@ -520,23 +513,20 @@ FCK.ProtectImage = function(image) {
 			var e = FCK.YE.getEvent(e);
 			var target = FCK.YE.getTarget(e);
 
-			// go up to find image root tag
-			while (target && !target.getAttribute('refid')) {
-				target = target.parentNode;
+			if (target.className == 'imageOverlayDrag') {
+				FCK.log('image #' + refid  + ' drag&drop catched');
+
+				// select whole image
+				FCK.Selection.SelectNode(image);
+				FCK.ImageDragDrop = image;
 			}
-
-			var refid = target.getAttribute('refid');
-
-			FCK.log('image #' + refid  + ' drag&drop catched');
-
-			// select whole image
-			FCK.Selection.SelectNode(target);
-
-			FCK.ImageDragDrop = target;
+			else {
+				FCK.YE.stopEvent(e);
+			}
 		});
-*/
-		FCK.BlockEvent(image, 'click');
-		FCK.BlockEvent(image, 'mousedown');
+
+		//FCK.BlockEvent(image, 'click');
+		//FCK.BlockEvent(image, 'mousedown');
 		FCK.BlockEvent(image, 'contextmenu');
 		//FCK.YD.addClass(image, 'ieProtected');
 
@@ -666,19 +656,11 @@ FCK.ImageProtectSetupOverlayMenu = function(refid, div) {
 
 	// show overlay menu
 	FCKTools.AddEventListener(div, 'mouseover', function(e) {
-		var refid = div.getAttribute('refid');
-			
-		FCK.log('show overlay menu for image #' + refid);
-
 		overlay.style.visibility = 'visible';
 	});
 
 	// hide overlay menu
 	FCKTools.AddEventListener(div, 'mouseout', function(e) {
-		var refid = div.getAttribute('refid');
-
-		FCK.log('hide overlay menu for image #' + refid);
-
 		overlay.style.visibility = 'hidden';
 	});
 }	
@@ -929,15 +911,19 @@ FCK.TemplatePreviewAdd = function(placeholder) {
 	previewDiv.id = 'wysiwygTemplatePreview' + refId;
 	placeholder.title = 'Click to edit this template';
 
-	previewDiv.innerHTML = preview.value;
+	// try to use cached preview from wysiwygData
+	previewDiv.innerHTML = (FCK.wysiwygData[refId].preview ? FCK.wysiwygData[refId].preview : preview.value);
 	previewDiv.setAttribute('refid', refId);
 
 	// sometimes innerHTML contains whitespices at the end -> fix it
 	previewDiv.innerHTML = previewDiv.innerHTML.Trim();
 	previewDiv.style.display = 'none';
 
-	// remove preview div from editing area
-	preview.parentNode.removeChild(preview);
+	// remove preview div from editing area and store preview in wysiwygData
+	if (preview && preview.nodeName.IEquals('input') && preview.type == 'text') {
+		preview.parentNode.removeChild(preview);
+		FCK.wysiwygData[refId].preview = previewDiv.innerHTML;
+	}
 
 	// register events handlers
 	FCKTools.AddEventListener(placeholder, 'mouseover', function(e) {
@@ -1032,6 +1018,8 @@ FCK.TemplatePreviewSetHTML = function(refid, html) {
 	var preview = FCKTools.GetElementDocument(FCK.TemplatePreviewCloud).getElementById('wysiwygTemplatePreview' + refid);
 	preview.innerHTML = html;
 
+	FCK.wysiwygData[refid].preview = html;
+
 	// reset margin/padding/align
 	FCK.TemplatePreviewReset(preview);
 
@@ -1039,8 +1027,7 @@ FCK.TemplatePreviewSetHTML = function(refid, html) {
 }
 
 FCK.TemplatePreviewGetHTML = function(refid) {
-	var preview = FCKTools.GetElementDocument(FCK.TemplatePreviewCloud).getElementById('wysiwygTemplatePreview' + refid);
-	return preview.innerHTML;
+	return FCK.wysiwygData[refid].preview;
 }
 
 FCK.TemplatePreviewSetName = function(refid, name) {
