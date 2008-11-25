@@ -15,7 +15,7 @@ define ("AVATAR_DEFAULT_WIDTH", 100);
 define ("AVATAR_DEFAULT_HEIGHT", 100);
 define ("AVATAR_LOG_NAME", 'useravatar');
 define ("AVATAR_USER_OPTION_NAME", 'avatar');
-define ("AVATAR_MAX_SIZE", 20000);
+define ("AVATAR_MAX_SIZE", 100000);
 define ("AVATAR_UPLOAD_FIELD", 'wkUserAvatar');
 
 
