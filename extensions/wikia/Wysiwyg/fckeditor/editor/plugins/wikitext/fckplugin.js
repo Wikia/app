@@ -485,7 +485,7 @@ FCK.ProtectImage = function(image) {
 				node.setAttribute('contentEditable', false);
 			}
 		);
-
+/*
 		FCKTools.AddEventListener(image, 'click', function(e) {
 			var e = FCK.YE.getEvent(e);
 			var target = originalTarget = FCK.YE.getTarget(e);
@@ -534,9 +534,11 @@ FCK.ProtectImage = function(image) {
 
 			FCK.ImageDragDrop = target;
 		});
-
+*/
+		FCK.BlockEvent(image, 'click');
+		FCK.BlockEvent(image, 'mousedown');
 		FCK.BlockEvent(image, 'contextmenu');
-		FCK.YD.addClass(image, 'ieProtected');
+		//FCK.YD.addClass(image, 'ieProtected');
 
 		// check whether given image exists
 		FCK.wysiwygData[refid].exists = image.nodeName.IEquals('a') 
@@ -547,7 +549,7 @@ FCK.ProtectImage = function(image) {
 		FCK.NodesWithRefId[ refid ] = image;
 
 		// image overlay menu (edit / delete)
-		FCK.ImageProtectSetupOverlayMenu(refid, image.nodeName.IEquals('a') ? image : image.firstChild);
+		FCK.ImageProtectSetupOverlayMenu(refid, image); // image.nodeName.IEquals('a') ? image : image.firstChild);
 
 		return;
 	}
@@ -555,6 +557,7 @@ FCK.ProtectImage = function(image) {
 	// simple image
 	if (image.nodeName.IEquals('a')) {
 		// block onclick / onmousedown events
+/*
 		FCKTools.AddEventListener(image, 'click', function(e) {
 			var e = FCK.YE.getEvent(e);
 			var target = FCK.YE.getTarget(e);
@@ -572,11 +575,12 @@ FCK.ProtectImage = function(image) {
 
 			FCK.YE.stopEvent(e);
 		});
-
+*/
+		FCK.BlockEvent(image, 'click');
 		FCK.BlockEvent(image, 'contextmenu');
 		FCK.BlockEvent(image, 'mousedown');
 
-		image.className = 'ieProtected';
+		//image.className = 'ieProtected';
 
 		// check whether given image exists
 		FCK.wysiwygData[refid].exists = (!FCK.YD.hasClass(image, 'new'));
@@ -615,13 +619,17 @@ FCK.ProtectImage = function(image) {
 	// iframe covering div
 	var docObj = FCKTools.GetElementDocument(FCK.EditingArea.TargetElement);
 
-	if (!docObj.getElementById('cover' + refid)) {
+	coveringDiv = docObj.getElementById('cover' + refid);
+
+	if (!coveringDiv) {
 		// create cover
+		coveringDiv = docObj.createElement('DIV');
 		coveringDiv.id = 'cover' + refid;
 		coveringDiv.setAttribute('refid', refid);
 		docObj.body.appendChild(coveringDiv);
 
 		// add onclick handler
+/*
 		FCKTools.AddEventListener(coveringDiv, 'click', function(e) {
 			var e = FCK.YE.getEvent(e);
 			var target = FCK.YE.getTarget(e);
@@ -634,8 +642,10 @@ FCK.ProtectImage = function(image) {
 
 			FCK.YE.stopEvent(e);
 		});
+*/
 	}
 
+	coveringDiv.className = 'cover ' + image.className;
 	coveringDiv.style.width = iframe.style.width;
 	coveringDiv.style.height = iframe.style.height;
 	coveringDiv.style.position = 'absolute';
@@ -659,11 +669,10 @@ FCK.ImageProtectSetupOverlayMenu = function(refid, div) {
 
 	var docObj = FCKTools.GetElementDocument(div);
 
-	// firefox will add resize box to <SPAN>, IE doesn't allow us to add <DIV> as a child of <IMG>
-	var overlay = docObj.createElement(FCKBrowserInfo.IsIE ? 'SPAN' : 'DIV');
+	var overlay = docObj.createElement('SPAN');
 
-	overlay.id = 'imageOverlay' + refid;
-	overlay.className = 'imageOverlay';
+	// position menu based on alignment of an image
+	overlay.className = 'imageOverlay ' + (FCK.YD.hasClass(div, 'thumb') ?   'imageOverlay' + (FCK.YD.hasClass(div, 'tright') ? 'Right' : 'Left') : '');
 	overlay.style.visibility = 'hidden';
 
 	div.style.position = 'relative';
@@ -676,7 +685,12 @@ FCK.ImageProtectSetupOverlayMenu = function(refid, div) {
 			
 	div.appendChild(overlay);
 
-	overlay.innerHTML = '<span class="imageOverlayEdit" onclick="FCK.ProtectImageClick('+refid+')">edit</span> | <span class="imageOverlayRemove" onclick="FCK.ProtectImageRemove('+refid+')">remove</span>';
+	overlay.innerHTML = '<span class="imageOverlayEdit" onclick="FCK.ProtectImageClick('+refid+')">edit</span><span class="imageOverlayRemove" onclick="FCK.ProtectImageRemove('+refid+')">remove</span>';
+
+	// add "move" option for images handled by contentEditable
+	if (FCK.UseContentEditable) {
+		overlay.innerHTML += '<span class="imageOverlayDrag" onmousedown="FCK.ProtectImageDrag('+refid+')">move</span>';
+	}
 
 	// show overlay menu
 	FCKTools.AddEventListener(div, 'mouseover', function(e) {
@@ -707,6 +721,12 @@ FCK.ProtectImageRepositionCover = function(refid) {
 
 	var iframe = FCK.GetElementByRefId(refid);
 	var cover = FCKTools.GetElementDocument(FCK.EditingArea.TargetElement).getElementById('cover' + refid);
+
+	if (!iframe) {
+		// image has just been removed
+		FCKDomTools.RemoveNode(cover);
+		return;
+	}
 
 	var xy = FCK.YD.getXY(iframe);
 	var offsetY = FCK.EditorDocument.body.scrollTop;
