@@ -523,3 +523,36 @@ td.childrenHidden textarea, td.childrenHidden iframe
 	float: none !important;
 }
 
+.imageOverlay {
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	padding: 5px;
+	background-color: #333;
+	opacity: 0.8;
+	color: #fff;
+	text-decoration: none;
+	font-size: 10px;
+	font-family: sans-serif;
+}
+
+.imageOverlayLeft {
+	top: 9px;
+	left: 7px;
+}
+
+.imageOverlayRight {
+	top: 9px;
+	right: 4px;
+	left: auto;
+}
+
+.imageOverlay span {
+	cursor: pointer;
+	margin: 0 2px;
+}
+
+.imageOverlay .imageOverlayDrag {
+	cursor: move
+}
+
