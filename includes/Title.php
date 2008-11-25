@@ -2390,10 +2390,11 @@ class Title {
 		}
 
 		// if this is a site css or js purge it as well
-		global $wgSquidMaxage;
-		if( $this->getNamespace() == NS_MEDIAWIKI ) {
+		global $wgUseSiteJs, $wgAllowUserJs;
+		global $wgSquidMaxage, $wgJsMimeType;
+		if( $wgUseSiteJs && $this->getNamespace() == NS_MEDIAWIKI ) {
 			if( $this->getText() == 'Common.css' ) {
-				$urls[] = Title::newFromText( 'MediaWiki:Common.css' )->getInternalURL( "usemsgcache=yes&action=raw&ctype=text/css&smaxage=$wgSquidMaxage" );
+				$urls[] = $this->getInternalURL( "usemsgcache=yes&action=raw&ctype=text/css&smaxage=$wgSquidMaxage" );
 			} else {
 				foreach( Skin::getSkinNames() as $skinkey => $skinname ) {
 					if( $this->getText() == $skinname.'.css' ) {
@@ -2402,6 +2403,15 @@ class Title {
 					} elseif ( $this->getText() == 'Common.js' ) {
 						$urls[] = Skin::makeUrl('-', "action=raw&gen=js&useskin=" .urlencode( $skinkey ) );
 					}
+				}
+			}
+		} elseif( $wgAllowUserJs && $this->getNamespace() == NS_USER && 
+				preg_match( '/^(.*)\/(.*)\.(js|css)$/', $this->getText(), $m ) ) {
+			if( array_key_exists( $m[2], Skin::getSkinNames() ) ) {
+				if( $m[3] == 'js' ) {
+					$urls[] = $this->getInternalURL( 'action=raw&ctype='.$wgJsMimeType );
+				} elseif( $m[3] == 'css' ) {
+					$urls[] = $this->getInternalURL( 'action=raw&ctype=text/css' );
 				}
 			}
 		}
