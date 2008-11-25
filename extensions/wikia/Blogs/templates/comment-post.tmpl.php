@@ -3,7 +3,6 @@
 		<!-- avatar -->
 		<?php
 			echo $avatar->getImageTag( 50, 50 );
-			//  onclick="YAHOO.Wikia.Blogs.submit( 'blog-comment-form-{ echo $position }' )"
 		?>
 		<!-- textarea -->
 		<textarea width="80%" name="wpBlogComment" id="blog-comm-<?php echo $position ?>"></textarea>
