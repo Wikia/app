@@ -2405,14 +2405,11 @@ class Title {
 					}
 				}
 			}
-		} elseif( $wgAllowUserJs && $this->getNamespace() == NS_USER && 
-				preg_match( '/^(.*)\/(.*)\.(js|css)$/', $this->getText(), $m ) ) {
-			if( array_key_exists( $m[2], Skin::getSkinNames() ) ) {
-				if( $m[3] == 'js' ) {
-					$urls[] = $this->getInternalURL( 'action=raw&ctype='.$wgJsMimeType );
-				} elseif( $m[3] == 'css' ) {
-					$urls[] = $this->getInternalURL( 'action=raw&ctype=text/css' );
-				}
+		} elseif( $wgAllowUserJs && $this->isValidCssJsSubpage() ) {
+			if( $this->isJsSubpage() ) {
+				$urls[] = $this->getInternalURL( 'action=raw&ctype='.$wgJsMimeType );
+			} elseif( $this->isCssSubpage() ) {
+				$urls[] = $this->getInternalURL( 'action=raw&ctype=text/css' );
 			}
 		}
 
