@@ -251,6 +251,8 @@ FCK.Events.AttachEvent( 'OnAfterSetHTML', function() {
 		});
 
 		// handle finish of drag&drop -> regenerate elements with refId
+		//
+		// Gecko browsers
 		FCKTools.AddEventListener(FCK.EditorDocument, 'dragdrop', function(e) {
 			FCK.log('drag&drop finished');
 	
@@ -286,6 +288,16 @@ FCK.Events.AttachEvent( 'OnAfterSetHTML', function() {
 			}
 		});
 
+		// IE
+		if (FCKBrowserInfo.IsIE) {
+			FCK.EditorDocument.body.ondrop = function(e) {
+				FCK.log('drag&drop finished');
+
+				// setup elements with refid (templates, images, ...)
+				FCK.SetupElementsWithRefId();
+			};
+		}
+
 		// open wikitext dialog
 		FCKTools.AddEventListener(FCK.EditorDocument, 'click', function(e) {
 			var target = FCK.YAHOO.util.Event.getTarget(e);
@@ -298,6 +310,20 @@ FCK.Events.AttachEvent( 'OnAfterSetHTML', function() {
 					}
 					FCK.InputClickCommand.Execute();
 				}
+			}
+			// probably IE - go up the DOM tree looking for refid element of the image
+			else if (target.getAttribute('contentEditable') == 'false') {
+				while (!target.getAttribute('refid')) {
+					target = target.parentNode;
+				}
+
+				var refid = target.getAttribute('refid');
+
+				// fix list of nodes with refids
+				FCK.NodesWithRefId[refid] = target;
+
+				// call WMU dialog
+				FCK.ProtectImageClick(refid);
 			}
 		});
 
@@ -357,6 +383,8 @@ FCK.SetupElementsWithRefId = function() {
 	}
 
 	FCK.log('setup of nodes with refid finished');
+
+	return true;
 }
 
 // setup grey wikitext placeholder: block context menu, add dirty span(s) if needed
