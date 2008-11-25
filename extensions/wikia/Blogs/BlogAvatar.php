@@ -258,6 +258,22 @@ class BlogAvatar {
 	}
 
 	/**
+	 * isDefault -- check if user use default avatars
+	 */
+	public function isDefault() {
+		$url = $this->mUser->getOption( AVATAR_USER_OPTION_NAME );
+		if( $url ) {
+			/**
+			 * default avatar are only filenames without path
+			 */
+			if( strpos( $url, "/" ) !== false ) {
+				return false;
+			}
+		}
+		return true;
+	}
+
+	/**
 	 * removeFile -- remove file from directory
 	 */
 	public function removeFile($iUserID) {
