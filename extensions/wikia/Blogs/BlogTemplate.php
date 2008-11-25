@@ -174,7 +174,7 @@ class BlogTemplateClass {
 		 * type: 	number,
 		 * default: 200
 		 */
-		'style' 	=> array (
+		'type' 	=> array (
 			'type' 		=> 'list',
 			'default' 	=> 'box',
 			'pattern'	=> array( 'box', 'plain', 'array', 'noparse', 'count' )
@@ -428,8 +428,8 @@ class BlogTemplateClass {
 			self::__makeIntOption('offset', self::$aBlogParams['offset']['default']);
 		}
 		/* style */
-		if ( !isset(self::$aOptions['style']) ) {
-			self::__makeListOption('style', self::$aBlogParams['style']['default']);
+		if ( !isset(self::$aOptions['type']) ) {
+			self::__makeListOption('type', self::$aBlogParams['type']['default']);
 		}
 		/* title */
 		if ( !isset(self::$aOptions['title']) ) {
@@ -675,7 +675,7 @@ class BlogTemplateClass {
 			$sBlogText = $oRev->revText();
 			/* parse or not parse - this is a good question */
 			$localParser = new Parser();
-			if ( !in_array(self::$aOptions['style'], array('array', 'noparse')) ) {
+			if ( !in_array(self::$aOptions['type'], array('array', 'noparse')) ) {
 				/* skip HTML tags */
 				$sBlogText = strip_tags($sBlogText, self::$skipStrinBeforeParse);
 				/* skip invalid Wiki-text  */
@@ -838,7 +838,7 @@ class BlogTemplateClass {
 						}
 						break;
 					case 'ordertype'	:
-					case 'style'		:
+					case 'type'		:
 						if ( !empty($aParamValues) && is_array($aParamValues) ) {
 							list ($sParamValue) = $aParamValues;
 							self::__makeListOption($sParamName, $sParamValue);
@@ -886,7 +886,7 @@ class BlogTemplateClass {
 						self::__makeOrder($sParamName, $sParamValue);
 						break;
 					case 'ordertype'	:
-					case 'style'	:
+					case 'type'	:
 						self::__makeListOption($sParamName, $sParamValue);
 						break;
 					case 'count'		:
@@ -905,13 +905,13 @@ class BlogTemplateClass {
 			}
 
 			/* build query */
-			if ( self::$aOptions['style'] == 'count' ) {
+			if ( self::$aOptions['type'] == 'count' ) {
 				/* get results count */
 				$result = self::__getResultsCount();
 			} else {
 				$aResult = self::__getResults();
 				/* set output */
-				if ( self::$aOptions['style'] != 'array' ) {
+				if ( self::$aOptions['type'] != 'array' ) {
 					/* run template */
 					$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
 					$oTmpl->set_vars( array(
