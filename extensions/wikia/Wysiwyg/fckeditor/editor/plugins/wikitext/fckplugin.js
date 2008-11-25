@@ -554,44 +554,9 @@ FCK.ProtectImage = function(image) {
 		return;
 	}
 	
-	// simple image
-	if (image.nodeName.IEquals('a')) {
-		// block onclick / onmousedown events
-/*
-		FCKTools.AddEventListener(image, 'click', function(e) {
-			var e = FCK.YE.getEvent(e);
-			var target = FCK.YE.getTarget(e);
-
-			// move to <a> node
-			if (target.nodeName.IEquals('img')) {
-				target = target.parentNode;
-			}
-
-			// ignore buttons different then left
-			if (e.button == 0) {
-				refid = parseInt(target.getAttribute('refid'));
-				FCK.ProtectImageClick(refid);
-			}
-
-			FCK.YE.stopEvent(e);
-		});
-*/
-		FCK.BlockEvent(image, 'click');
-		FCK.BlockEvent(image, 'contextmenu');
-		FCK.BlockEvent(image, 'mousedown');
-
-		//image.className = 'ieProtected';
-
-		// check whether given image exists
-		FCK.wysiwygData[refid].exists = (!FCK.YD.hasClass(image, 'new'));
-	
-		FCK.NodesWithRefId[ refid ] = image;
-
-		// image overlay menu (edit / delete)
-		FCK.ImageProtectSetupOverlayMenu(refid, image);
-		return;
-	}
-
+	//
+	// support older browsers
+	//
 	var iframe = FCK.EditingArea.Document.createElement('iframe');
 	var coveringDiv = FCK.EditingArea.Document.createElement('div');
 
@@ -603,9 +568,16 @@ FCK.ProtectImage = function(image) {
 	iframe.setAttribute('refid', refid);
 	iframe.className = image.className;
 
+	if (image.nodeName.IEquals('a')) {
+		var size = {width: image.firstChild.width, height: image.firstChild.height + 6};
+	}
+	else {
+		var size = {width: image.firstChild.style.width, height: image.clientHeight + 6};
+	}
+
 	// external CSS may not be fully loaded - use style value from inline CSS for width
-	iframe.style.width = parseInt(image.firstChild.style.width) + 20 + 'px';
-	iframe.style.height = parseInt(image.clientHeight + 6) + 'px';
+	iframe.style.width = parseInt(size.width) + 20 + 'px';
+	iframe.style.height = parseInt(size.height) + 6 + 'px';
 	iframe.style.border = 'none';
 	iframe.style.overflow = 'hidden';
 
