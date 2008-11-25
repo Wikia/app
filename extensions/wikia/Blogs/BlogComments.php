@@ -240,12 +240,26 @@ class BlogComments {
 		$article = self::doPost( $wgRequest, $wgUser, $wgTitle );
 		if( !$article ) {
 			return Wikia::json_encode(
-				array( "msg" => "huhu dajmiechu!", "error" => 1 )
+				array( "msg" => wfMsg("blog-comment-error"), "error" => 1 )
 			);
 		}
 
+		/**
+		 * parse text from returned article
+		 */
+		$parser = new Parser();
+		$options = new ParserOptions();
+		$options->initialiseFromUser( $wgUser );
+
+		$text = $parser->parse( $article->getContent(), $wgTitle, $options )->getText();
+		// we probably should return whole rendered html
+
 		return Wikia::json_encode(
-			array( "msg" => "tożem przysolił", "error" => 0 )
+			array(
+				"msg" => wfMsg("blog-comment-error"),
+				"error" => 0,
+				"text" => $text,
+			)
 		);
 	}
 
