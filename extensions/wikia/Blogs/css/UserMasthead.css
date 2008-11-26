@@ -48,28 +48,35 @@ div.blog-comm-input .avatar {
 div.blog-comm-input textarea {
 	height:78px;
 	margin:12px;
-	width:580px;
+	width:480px;
 }
 
 div.blog-comm-input input {
 	margin-bottom: 12px;
 }
 
-div.blog-comm {
-	margin-bottom: 4px;
-	display: block;
-	clear: both;
+div.blog-comment {
+	margin: 2px 2px 0;
+	padding: 4px;
 }
 
-div.blog-comm li .left {
-	width: 70px;
+div.blog-comment .avatar {
+	background: #FFF;
+	border: 1px solid #666;
 	float: left;
-	margin: 0;
+	height: 50px;
+	margin-right: 5px;
+	padding: 2px;
+	width: 50px;
 }
 
-div.blog-comm li .right {
-	float: left;
-	margin: 70px;
+div.blog-comment strong {
+	font-weight: bold;
+	font-size: 10pt;
+}
+
+div.blog-comment .text {
+	margin: 4px 0 0 70px;
 }
 
 #blog-comments .avatar {
