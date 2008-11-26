@@ -61,9 +61,11 @@ function wfRenderVideo($matches){
 		}
 		$x++;
 	}
-	if( $video->exists() ){	
-		$output = "<video name=\"{$video->getName()}\" width=\"{$width}\" align=\"{$align}\"></video>";
-		return $output;
+	if ( is_object( $video ) ) {
+		if( $video->exists() ){	
+			$output = "<video name=\"{$video->getName()}\" width=\"{$width}\" align=\"{$align}\"></video>";
+			return $output;
+		}
 	}
 	return $matches[0];
 	
