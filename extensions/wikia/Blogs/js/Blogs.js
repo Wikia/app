@@ -12,9 +12,9 @@ YAHOO.Wikia.Blogs.callback = {
 
 YAHOO.Wikia.Blogs.add = function( answer ) {
 
-	var text = document.createTextNode( answer[ "text" ] );
-	var div = YAHOO.util.Dom.get( "blog-comments" );
-	div.appendChild( text );
+//	var elem = document.createElement( "<li>");
+//	elem.innerHTML = document.createTextNode( answer[ "text" ] );
+	YAHOO.util.Dom.get( "blog-comments-ul" ).appendChild( document.createTextNode( answer[ "text" ] ) );
 };
 
 YAHOO.Wikia.Blogs.submit = function( event, id ) {

@@ -8,14 +8,16 @@
 	if( ! $comments ):
 		echo wfMsg( "blog-zero-comments" );
 	else:
+		echo "<ul id=\"blog-comments-ul\" >";
 		foreach( $comments as $comment ):
+
 ?>
-	<div class="clearfix">
+	<li>
 		<a name="<?php echo $comment["title"]->getDBkey() ?>"></a>
-		<span style="float: left;">
+		<div style="float: left;">
 			<?php echo $comment["avatar"] ?>
-		</span>
-		<div>
+		</div>
+		<div style="float: left;">
 			<strong><?php echo $comment["sig"] ?></strong>
 			<?php echo $comment["timestamp"] ?>
 			<br />
@@ -23,10 +25,11 @@
 				echo $comment["text"];
 			?>
 		</div>
-	</div>
-	<br />
+		<br style="clear: both;" />
+	</li>
 <?php
 		endforeach;
+		echo "</ul>";
 	endif; // comments
 	if( $list )
 		echo "</div>"

@@ -37,11 +37,22 @@
 
 div.blog-comm-input {
 	background: #d2d2b6;
-	padding: 4px;
+	height: 108px;
 }
 
+div.blog-comm-input .avatar {
+	border:1px solid #666666;
+	float:left;
+	margin:12px 0 0 12px;
+}
 div.blog-comm-input textarea {
-	width: 600px;
+	height:78px;
+	margin:12px;
+	width:580px;
+}
+
+div.blog-comm-input input {
+	margin-bottom: 12px;
 }
 
 div.blog-comm {
@@ -50,12 +61,17 @@ div.blog-comm {
 	clear: both;
 }
 
-div.blog-comm div {
-	padding: 4px;
+div.blog-comm li {
+
 }
 
 #blog-comments .avatar {
 	background: #FFF;
 	border: 1px solid #666;
-	padding: 2px;
+	margin: 4px;
+}
+
+#blog-comments li {
+	margin: 4px;
+	width: 100%;
 }
