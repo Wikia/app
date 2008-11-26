@@ -107,7 +107,7 @@ span._moz_dirty
 
 .imageOverlay span {
 	cursor: pointer;
-	margin: 0 2px;
+	margin: 0 4px;
 }
 
 .imageOverlay .imageOverlayDrag {
