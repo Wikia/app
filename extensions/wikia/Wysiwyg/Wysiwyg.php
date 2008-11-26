@@ -533,8 +533,6 @@ EOD;
 function WysiwygGetTemplateParams($name, $templateCall = null, $refId = null) {
 	$result = null;
 	if ($title = Title::newFromText($name, NS_TEMPLATE)) {
-
-
 		if ($revision = Revision::newFromTitle($title)) {
 			preg_match_all('/\{\{\{([^}|]+)/i', $revision->getText(), $result, PREG_PATTERN_ORDER);
 			$result = array_flip($result[1]);
