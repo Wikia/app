@@ -708,7 +708,7 @@ class BlogTemplateClass {
 				/* skip HTML tags */
 				$sBlogText = strip_tags($sBlogText, self::$skipStrinAfterParse);
 				/* truncate text */
-				$sResult = self::__truncateText($sBlogText, intval(self::$aOptions['summarylength']), BLOGS_ENDING_TEXT);
+				$sResult = self::__truncateText($sBlogText, isset(self::$aOptions['summarylength']) ? intval(self::$aOptions['summarylength']) : 200, BLOGS_ENDING_TEXT);
 			} else {
 				/* parse revision text */
 				$parserOutput = $localParser->parse($sBlogText, Title::newFromId($oRow->page_id), ParserOptions::newFromUser($wgUser));
