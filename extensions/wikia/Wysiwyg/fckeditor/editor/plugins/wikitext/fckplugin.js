@@ -61,6 +61,34 @@ var oTildesItem = new FCKToolbarButton( 'AddImage', 'Add image' ) ;
 oTildesItem.IconPath = FCKConfig.PluginsPath + 'wikitext/addImage.png' ;
 FCKToolbarItems.RegisterItem( 'AddImage', oTildesItem );
 
+//
+// InsertTemplate - dropdown in menu
+//
+FCKCommands.RegisterCommand('InsertTemplate', new FCKAddImageCommand());
+
+var FCKToolbarInsertTemplateCombo = function(tooltip, style) {
+	this.CommandName	= 'InsertTemplate';
+	this.Label = this.GetLabel();
+
+	this.Tooltip = tooltip ? tooltip : this.Label;
+	this.Style = style ? style : FCK_TOOLBARITEM_ICONTEXT;
+
+	this.DefaultLabel = 'Insert template';
+	this.FieldWidth = 100 ;
+}
+FCKToolbarInsertTemplateCombo.prototype = new FCKToolbarSpecialCombo;
+FCKToolbarInsertTemplateCombo.prototype.GetLabel = function() {
+	return '';
+}
+FCKToolbarInsertTemplateCombo.prototype.CreateItems = function( targetSpecialCombo ) {
+	targetSpecialCombo.AddItem("1", "1");
+	targetSpecialCombo.AddItem("2", "2");
+	targetSpecialCombo.AddItem("2", "3");
+}
+
+var oInsertTemplateItem = new FCKToolbarInsertTemplateCombo();
+FCKToolbarItems.RegisterItem('InsertTemplate', oInsertTemplateItem);
+
 
 //
 // modes switching
@@ -170,7 +198,7 @@ FCK.NodesWithRefId = {};
 
 FCK.GetNodesWithRefId = function() {
 	var nodes = [];
-	
+
 	FCK.NodesWithRefId = {};
 
 	// get elements using XPath (at least try)
@@ -345,7 +373,7 @@ FCK.SetupElementsWithRefId = function() {
 
 	// init templates preview
 	FCK.TemplatePreviewInit();
-		
+
 	// get all elements with refid attribute and handle them by value of _fck_type attribute
 	var nodes = FCK.GetNodesWithRefId();
 	FCK.log(nodes);
@@ -499,7 +527,7 @@ FCK.ProtectImage = function(image) {
 		FCK.BlockEvent(image, 'contextmenu');
 
 		// check whether given image exists
-		FCK.wysiwygData[refid].exists = image.nodeName.IEquals('a') 
+		FCK.wysiwygData[refid].exists = image.nodeName.IEquals('a')
 			? (!FCK.YD.hasClass(image, 'new'))
 			: !( /class=\"new\"/.test(image.innerHTML) );
 
@@ -511,7 +539,7 @@ FCK.ProtectImage = function(image) {
 
 		return;
 	}
-	
+
 	//
 	// support older browsers
 	//
@@ -595,7 +623,7 @@ FCK.GetParentImage = function(child) {
 FCK.ImageProtectOnClick = function(e) {
 	var e = FCK.YE.getEvent(e);
 	var target = FCK.YE.getTarget(e);
-		
+
 	FCK.YE.stopEvent(e);
 
 	// ignore buttons different then left
@@ -626,7 +654,7 @@ FCK.ImageProtectOnMousedown = function(e) {
 
 		var image = FCK.GetParentImage(target);
 		var refid = parseInt(image.getAttribute('refid'));
-		
+
 		FCK.log('image #' + refid  + ' drag&drop catched');
 
 		FCK.Track('/image/move');
@@ -666,7 +694,7 @@ FCK.ImageProtectSetupOverlayMenu = function(refid, div) {
 		var height = parseInt(div.firstChild.offsetHeight / 2);
 		overlay.style.top = (-height + 8) + 'px';
 	}
-			
+
 	div.appendChild(overlay);
 
 	overlay.innerHTML = '<span class="imageOverlayEdit" onclick="FCK.ProtectImageEdit('+refid+')">edit</span><span class="imageOverlayRemove" onclick="FCK.ProtectImageRemove('+refid+')">remove</span>';
@@ -685,7 +713,7 @@ FCK.ImageProtectSetupOverlayMenu = function(refid, div) {
 	FCKTools.AddEventListener(div, 'mouseout', function(e) {
 		overlay.style.visibility = 'hidden';
 	});
-}	
+}
 
 
 FCK.ProtectImageRepositionCover = function(refid) {
@@ -768,7 +796,7 @@ FCK.ProtectImageUpdate = function(refid, wikitext, extraData) {
 		success: function(o) {
 			FCK = o.argument.FCK;
 			refid =  o.argument.refid;
-		
+
 			var oldImage = FCK.GetElementByRefId(refid);
 			FCK.log(oldImage);
 
@@ -885,7 +913,7 @@ FCK.ProtectImageAdd = function(wikitext, extraData) {
 
 //
 // onmouseover template preview
-// 
+//
 
 FCK.TemplatePreviewCloud = false;
 FCK.TemplatePreviewTimeouts = {Tag: false, Cloud: false};
@@ -915,7 +943,7 @@ FCK.TemplatePreviewAdd = function(placeholder) {
 			clearTimeout(FCK.TemplatePreviewTimeouts.Tag);
 			clearTimeout(FCK.TemplatePreviewTimeouts.Cloud);
 		});
-	
+
 		FCKTools.AddEventListener(FCK.TemplatePreviewCloud, 'mouseout', function(e) {
 			// hide preview 1 sec. after mouseout from cloud
 			FCK.TemplatePreviewTimeouts.Cloud = setTimeout('FCK.TemplatePreviewHide()', 1000);
@@ -927,9 +955,9 @@ FCK.TemplatePreviewAdd = function(placeholder) {
 	// copy template previews to clouds
 	var preview = placeholder.nextSibling;
 	var previewDiv = docObj.createElement('div');
-	
+
 	FCK.TemplatePreviewCloud.firstChild.appendChild( previewDiv );
-	
+
 	previewDiv.id = 'wysiwygTemplatePreview' + refId;
 	placeholder.title = 'Click to edit this template or use drag&drop to move template';
 
@@ -997,7 +1025,7 @@ FCK.TemplatePreviewOnPreviewClick = function(e) {
 
 // show template preview
 FCK.TemplatePreviewShow = function(placeholder) {
-	
+
 	var refId = placeholder.getAttribute('refid');
 	var preview = FCKTools.GetElementDocument(FCK.TemplatePreviewCloud).getElementById('wysiwygTemplatePreview' + refId);
 
