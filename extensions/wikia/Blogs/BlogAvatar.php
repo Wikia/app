@@ -199,32 +199,18 @@ class BlogAvatar {
 		);
 	}
 
-	public function getLinkTag($iWidth = AVATAR_DEFAULT_WIDTH, $iHeight = AVATAR_DEFAULT_HEIGHT, $sAlt = '', $sLinkType = 'upload') {
+	/**
+	 * getLinkTag -- return image with link to user page
+	 */
+	public function getLinkTag($iWidth = AVATAR_DEFAULT_WIDTH, $iHeight = AVATAR_DEFAULT_HEIGHT, $sAlt = '' ) {
 		global $wgUser;
 		wfProfileIn( __METHOD__ );
 
-		$sPath = $this->getImageTag($iWidth, $iHeight, $sAlt);
-		$oSkin = $wgUser->getSkin();
-
-		/* check if this avatar is for wgUser or another */
-		if ($this->mUser->getID() == $wgUser->getID()) {
-			switch ($sLinkType) {
-				case 'upload':
-					$sPath = $oSkin->makeLinkObj(Title::newFromText('Preferences', NS_SPECIAL), $sPath);
-					break;
-				case 'user'	:
-					$sPath = $oSkin->userLink($wgUser->getId(), $sPath);
-					break;
-				default		: /* no link ? */
-					break;
-			}
-		} else {
-			/* never show links */
-			$sPath = "";
-		}
+		$image = $this->getImageTag($iWidth, $iHeight, $sAlt);
 
 		wfProfileOut( __METHOD__ );
-		return $sPath;
+
+		return sprintf("<a href=\"%s\">%s</a>", $this->mUser->getTalkPage()->getFullUrl(), $image );
 	}
 
 	/**

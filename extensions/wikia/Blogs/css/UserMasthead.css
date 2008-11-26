@@ -61,8 +61,15 @@ div.blog-comm {
 	clear: both;
 }
 
-div.blog-comm li {
+div.blog-comm li .left {
+	width: 70px;
+	float: left;
+	margin: 0;
+}
 
+div.blog-comm li .right {
+	float: left;
+	margin: 70px;
 }
 
 #blog-comments .avatar {

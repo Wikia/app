@@ -14,7 +14,7 @@ if ($wgTitle == 'Special:Watchlist') {
 ?>
 
 <div id="user_masthead" class="reset clearfix">
-	<?php echo $avatar->getImageTag( 50, 50 ) ?>
+	<?php echo $avatar->getLinkTag( 50, 50 ) ?>
 	<h2><?=$data['userspace']?></h2>
 	<?
 	if(!empty($nav_urls['blockip'])) {
