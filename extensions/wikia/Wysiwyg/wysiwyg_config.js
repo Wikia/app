@@ -18,6 +18,8 @@ FCKConfig.IgnoreEmptyParagraphValue = true;
 FCKConfig.FormatSource = false;
 FCKConfig.FormatOutput = false;
 
+FCKConfig.DisableObjectResizing = true;
+
 FCKConfig.AutoDetectLanguage = false;
 FCKConfig.DefaultLanguage = window.parent.wgUserLanguage;
 FCKConfig.FirefoxSpellChecker = true;
