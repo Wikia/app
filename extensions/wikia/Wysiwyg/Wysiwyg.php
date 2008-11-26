@@ -318,7 +318,7 @@ function Wysiwyg_WrapTemplate($originalCall, $output, $lineStart) {
 	$templateName = explode('|', substr($originalCall, 2, -2));
 	$data['name'] = trim($templateName[0]);
 
-	$params = WysiwygGetTemplateParams($data['name'], $originalCall, $refId);
+	$params = WysiwygGetTemplateParams($data['name'], $originalCall);
 	if (count($params)) {
 		$data['templateParams'] = $params;
 	}
@@ -530,23 +530,25 @@ EOD;
  *
  * @author Maciej Błaszkowski <marooned at wikia-inc.com>
  */
-function WysiwygGetTemplateParams($name, $templateCall = null, $refId = null) {
+function WysiwygGetTemplateParams($name, $templateCall = null) {
 	$result = null;
 	if ($title = Title::newFromText($name, NS_TEMPLATE)) {
 		if ($revision = Revision::newFromTitle($title)) {
 			preg_match_all('/\{\{\{([^}|]+)/i', $revision->getText(), $result, PREG_PATTERN_ORDER);
 			$result = array_flip($result[1]);
 			array_walk($result, create_function('&$val, $key', '$val = "";'));
-			if (!is_null($templateCall) && !is_null($refId)) {
+			if (!is_null($templateCall)) {
 				$args = explode('|', rtrim($templateCall, '}'));
 				unset($args[0]);
 				foreach($args as $key => $val) {
 					$vals = explode('=', $val, 2);
 					if (count($vals) == 1) {
+						$key = trim($key);
 						if (array_key_exists($key, $result)) {
 							$result[$key] = $val;
 						}
 					} else {
+						$vals[0] = trim($vals[0]);
 						if (array_key_exists($vals[0], $result)) {
 							$result[$vals[0]] = $vals[1];
 						}
