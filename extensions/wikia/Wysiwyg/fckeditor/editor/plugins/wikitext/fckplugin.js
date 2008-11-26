@@ -769,6 +769,9 @@ FCK.ProtectImageEdit = function(refid) {
 // remove image from the article
 FCK.ProtectImageRemove = function(refid, dontAsk) {
 	if (dontAsk || confirm('Are you sure you want to remove this image?')) {
+
+		FCKUndo.SaveUndoStep();
+
 		FCK.log('removed image #' + refid);
 
 		var node = FCK.GetElementByRefId(refid);
@@ -789,6 +792,8 @@ FCK.ProtectImageUpdate = function(refid, wikitext, extraData) {
 	FCK.log('updating #' + refid +' with >>' + wikitext + '<<');
 
 	FCK.Track('/image/update');
+
+	FCKUndo.SaveUndoStep();
 
 	// update metaData
 	var params = wikitext.substring(2, wikitext.length-2).split('|');
