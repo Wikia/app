@@ -18,7 +18,7 @@
 		<a name="<?php echo isset( $comment["anchor"][2] ) ? $comment["anchor"][2] : "" ?>"></a>
 		<?php echo $comment["avatar"] ?>
 		<div class="text">
-			<strong><?php echo $comment["sig"] ?></strong>
+			<strong><?php echo $comment["sig"] ?></strong>&nbsp;|&nbsp;
 			<?php echo $comment["timestamp"] ?>
 			<hr />
 			<?php echo $comment["text"]; ?>
