@@ -196,50 +196,54 @@ function buildHTML($ID, $user, $lines="", $extra_from_ajax="") {
   	$tmp_date = wfMsg("pollYourVote", $lines[ $r[0]-1 ], date("d M Y H:i:s e", strtotime(str_replace(array(" ", ":", "-"), "", $r[1]))));
   }
   //$wgLang->formatNum($num);
-  $ret = "<div id='pollId".$ID."' class='poll'><div class='pollAjax' id='pollAjax".$ID."'".(!empty($extra_from_ajax)?" style='display: block;'":"").">".wfMsg($extra_from_ajax)."</div><div class='pollQuestion'>".strip_tags( $lines[0] )."</div>";
+  if ( is_object( $wgTitle ) ) {
+	  $ret = "<div id='pollId".$ID."' class='poll'><div class='pollAjax' id='pollAjax".$ID."'".(!empty($extra_from_ajax)?" style='display: block;'":"").">".wfMsg($extra_from_ajax)."</div><div class='pollQuestion'>".strip_tags( $lines[0] )."</div>";
 
-  if (isset($r[0]))
-	$ret .= "<div class='pollMisc'>".$tmp_date."</div>";
-  else
-	$ret .= "<div class='pollMisc'>".wfMsg("pollNoVote")."</div>";
+	  if (isset($r[0]))
+		  $ret .= "<div class='pollMisc'>".$tmp_date."</div>";
+	  else
+		  $ret .= "<div class='pollMisc'>".wfMsg("pollNoVote")."</div>";
 
-  $ret .= "<form method='POST' action='".$wgTitle->getLocalURL()."' id='pollIdAnswer".$ID."'><input type='hidden' name='p_id' value='{$ID}' />";
+	  $ret .= "<form method='POST' action='".$wgTitle->getLocalURL()."' id='pollIdAnswer".$ID."'><input type='hidden' name='p_id' value='{$ID}' />";
 
-  for ($i=1; $i<count($lines); $i++) {
-	$ans_no = $i-1;
+	  for ($i=1; $i<count($lines); $i++) {
+		  $ans_no = $i-1;
 
-	if ($t == 0)
-	  $percent = 0;
-	else
-	  $percent = $wgLang->formatNum(round((isset($poll_result[$i+1])?$poll_result[$i+1]:0)*100/$t, 2));
+		  if ($t == 0)
+			  $percent = 0;
+		  else
+			  $percent = $wgLang->formatNum(round((isset($poll_result[$i+1])?$poll_result[$i+1]:0)*100/$t, 2));
 
-	if (isset($r[0]) && $r[0] == $i)
-	  $our = true;
-	else
-	  $our = false;
+		  if (isset($r[0]) && $r[0] == $i)
+			  $our = true;
+		  else
+			  $our = false;
 
-       if ($wgUseAjax)
-         $ajax_no_ajax = "sajax_do_call(\"submitVote\", [\"".$ID."\", \"".$i."\"], document.getElementById(\"pollContainer".$ID."\"));";
-       else
-         $ajax_no_ajax = "document.getElementById(\"pollIdAnswer".$ID."\").submit();";
+		  if ($wgUseAjax)
+			  $ajax_no_ajax = "sajax_do_call(\"submitVote\", [\"".$ID."\", \"".$i."\"], document.getElementById(\"pollContainer".$ID."\"));";
+		  else
+			  $ajax_no_ajax = "document.getElementById(\"pollIdAnswer".$ID."\").submit();";
 
-       $ret .= "<div class='pollAnswer' id='pollAnswer".$ans_no."'><div class='pollAnswerName'>" .
-               "<label for='pollAnswerRadio".$ans_no."' onclick='document.getElementById(\"pollAjax".$ID."\").innerHTML=\"".wfMsg("pollSubmitting")."\"; document.getElementById(\"pollAjax".$ID."\").style.display=\"block\"; this.getElementsByTagName(\"input\")[0].checked = true; ".$ajax_no_ajax."'>" .
-		"<input type='radio' id='p_answer".$ans_no."' name='p_answer' value='".$i."' />".strip_tags( $lines[$i] ) .
-		"</label></div>" .
-		"<div class='pollAnswerVotes".($our?" ourVote":"")."' onmouseover='span=this.getElementsByTagName(\"span\")[0];tmpPollVar=span.innerHTML;span.innerHTML=span.title;span.title=\"\";' onmouseout='span=this.getElementsByTagName(\"span\")[0];span.title=span.innerHTML;span.innerHTML=tmpPollVar;'><span title='".wfMsg("pollPercentVotes",$percent)."'>".((isset($poll_result)&&!empty($poll_result[$i+1]))?$poll_result[$i+1]:0)."</span>" .
-		"<div style='width: ".$percent."%;".($percent==0?" border:0;":"")."'></div>" . 
-		"</div></div>";
+		  $ret .= "<div class='pollAnswer' id='pollAnswer".$ans_no."'><div class='pollAnswerName'>" .
+			  "<label for='pollAnswerRadio".$ans_no."' onclick='document.getElementById(\"pollAjax".$ID."\").innerHTML=\"".wfMsg("pollSubmitting")."\"; document.getElementById(\"pollAjax".$ID."\").style.display=\"block\"; this.getElementsByTagName(\"input\")[0].checked = true; ".$ajax_no_ajax."'>" .
+			  "<input type='radio' id='p_answer".$ans_no."' name='p_answer' value='".$i."' />".strip_tags( $lines[$i] ) .
+			  "</label></div>" .
+			  "<div class='pollAnswerVotes".($our?" ourVote":"")."' onmouseover='span=this.getElementsByTagName(\"span\")[0];tmpPollVar=span.innerHTML;span.innerHTML=span.title;span.title=\"\";' onmouseout='span=this.getElementsByTagName(\"span\")[0];span.title=span.innerHTML;span.innerHTML=tmpPollVar;'><span title='".wfMsg("pollPercentVotes",$percent)."'>".((isset($poll_result)&&!empty($poll_result[$i+1]))?$poll_result[$i+1]:0)."</span>" .
+			  "<div style='width: ".$percent."%;".($percent==0?" border:0;":"")."'></div>" . 
+			  "</div></div>";
+	  }
+
+	  $ret .= "</form>";
+
+	  // Misc
+	  $tmp_date = wfMsg("pollInfo", $t, date("d M Y H:i:s e", strtotime(str_replace(array(" ", ":", "-"), "", $start_date))));
+
+	  $ret .= "<div id='pollInfo'>".$tmp_date."</div>";
+
+	  $ret .= "</div>";
+  } else {
+	$ret = '';
   }
-
-  $ret .= "</form>";
-
-  // Misc
-  $tmp_date = wfMsg("pollInfo", $t, date("d M Y H:i:s e", strtotime(str_replace(array(" ", ":", "-"), "", $start_date))));
-
-  $ret .= "<div id='pollInfo'>".$tmp_date."</div>";
-
-  $ret .= "</div>";
 
   return $ret;
 }
