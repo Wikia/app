@@ -255,7 +255,7 @@ FCK.Events.AttachEvent( 'OnAfterSetHTML', function() {
 		// Gecko browsers
 		FCKTools.AddEventListener(FCK.EditorDocument, 'dragdrop', function(e) {
 			FCK.log('drag&drop finished');
-	
+
 			// setup elements with refid (templates, images, ...)
 			FCK.SetupElementsWithRefId();
 
@@ -285,7 +285,11 @@ FCK.Events.AttachEvent( 'OnAfterSetHTML', function() {
 
 				// regenerate elements with refId
 				FCK.SetupElementsWithRefId();
+
+				FCK.ProtectImage(FCK.ImageDragDrop);
 			}
+
+			FCK.ImageDragDrop = false;
 		});
 
 		// IE
@@ -323,7 +327,7 @@ FCK.Events.AttachEvent( 'OnAfterSetHTML', function() {
 				FCK.NodesWithRefId[refid] = target;
 
 				// call WMU dialog
-				FCK.ProtectImageClick(refid);
+				FCK.ProtectImageEdit(refid);
 			}
 		});
 
@@ -472,7 +476,6 @@ FCK.ProtectImage = function(image) {
 	if (FCK.UseContentEditable) {
 		// don't use iframes -> use contentEditable
 		image.setAttribute('contentEditable', false);
-		image.setAttribute('spellcheck', false);
 
 		// apply contentEditable to all child nodes of image
 		FCK.YD.getElementsBy(
@@ -486,49 +489,14 @@ FCK.ProtectImage = function(image) {
 			}
 		);
 
-		FCKTools.AddEventListener(image, 'click', function(e) {
-			var e = FCK.YE.getEvent(e);
-			var target = FCK.YE.getTarget(e);
-		
-			FCK.YE.stopEvent(e);
+		// setup events (remove listener first to avoid multiple event firing)
+		FCKTools.RemoveEventListener(image, 'click', FCK.ImageProtectOnClick);
+		FCKTools.AddEventListener(image, 'click', FCK.ImageProtectOnClick);
 
-			// ignore buttons different then left
-			if (e.button == 0) {
-				FCK.log('image #' + refid  + ' clicked');
-				// choose action based on original target CSS class
-				switch (target.className) {
-					case 'imageOverlayRemove':
-						FCK.ProtectImageRemove(refid);
-						break;
+		FCKTools.RemoveEventListener(image, 'mousedown', FCK.ImageProtectOnMousedown);
+		FCKTools.AddEventListener(image, 'mousedown', FCK.ImageProtectOnMousedown);
 
-					case 'imageOverlayEdit':
-						FCK.ProtectImageClick(refid);
-						break;
-				}
-			}
-		});
-
-		// handle images drag&drop
-		FCKTools.AddEventListener(image, 'mousedown', function(e) {
-			var e = FCK.YE.getEvent(e);
-			var target = FCK.YE.getTarget(e);
-
-			if (target.className == 'imageOverlayDrag') {
-				FCK.log('image #' + refid  + ' drag&drop catched');
-
-				// select whole image
-				FCK.Selection.SelectNode(image);
-				FCK.ImageDragDrop = image;
-			}
-			else {
-				FCK.YE.stopEvent(e);
-			}
-		});
-
-		//FCK.BlockEvent(image, 'click');
-		//FCK.BlockEvent(image, 'mousedown');
 		FCK.BlockEvent(image, 'contextmenu');
-		//FCK.YD.addClass(image, 'ieProtected');
 
 		// check whether given image exists
 		FCK.wysiwygData[refid].exists = image.nodeName.IEquals('a') 
@@ -589,22 +557,6 @@ FCK.ProtectImage = function(image) {
 		coveringDiv.id = 'cover' + refid;
 		coveringDiv.setAttribute('refid', refid);
 		docObj.body.appendChild(coveringDiv);
-
-		// add onclick handler
-/*
-		FCKTools.AddEventListener(coveringDiv, 'click', function(e) {
-			var e = FCK.YE.getEvent(e);
-			var target = FCK.YE.getTarget(e);
-
-			// ignore buttons different then left
-			if (e.button == 0) {
-				var refid = target.getAttribute('refid');
-				FCK.ProtectImageClick(refid);
-			}
-
-			FCK.YE.stopEvent(e);
-		});
-*/
 	}
 
 	coveringDiv.className = 'cover ' + image.className;
@@ -625,7 +577,77 @@ FCK.ProtectImage = function(image) {
 	FCK.ImageProtectSetupOverlayMenu(refid, coveringDiv);
 }
 
+// go up the DOM tree to find image root element based on its child
+FCK.GetParentImage = function(child) {
+	var node = child;
+	while(node && node.getAttribute && !node.getAttribute('refid')) {
+		node = node.parentNode;
+	}
+
+	if (node.getAttribute('refid')) {
+		return node;
+	}
+	else {
+		return false;
+	}
+}
+
+FCK.ImageProtectOnClick = function(e) {
+	var e = FCK.YE.getEvent(e);
+	var target = FCK.YE.getTarget(e);
+		
+	FCK.YE.stopEvent(e);
+
+	// ignore buttons different then left
+	if (e.button == 0) {
+
+		var image = FCK.GetParentImage(target);
+		var refid = parseInt(image.getAttribute('refid'));
+
+		FCK.log('image #' + refid  + ' clicked');
+		// choose action based on original target CSS class
+		switch (target.className) {
+			case 'imageOverlayRemove':
+				FCK.ProtectImageRemove(refid);
+				break;
+
+			case 'imageOverlayEdit':
+				FCK.ProtectImageEdit(refid);
+				break;
+		}
+	}
+};
+
+FCK.ImageProtectOnMousedown = function(e) {
+	var e = FCK.YE.getEvent(e);
+	var target = FCK.YE.getTarget(e);
+
+	if (target.className == 'imageOverlayDrag') {
+
+		var image = FCK.GetParentImage(target);
+		var refid = parseInt(image.getAttribute('refid'));
+		
+		FCK.log('image #' + refid  + ' drag&drop catched');
+
+		FCK.Track('/image/move');
+
+		// select whole image
+		FCK.Selection.SelectNode(image);
+		FCK.ImageDragDrop = image;
+	}
+	else {
+		FCK.YE.stopEvent(e);
+	}
+};
+
+
+// set images iframe overlaying divs (FF2.x)
 FCK.ImageProtectSetupOverlayMenu = function(refid, div) {
+
+	// remove old overlayMenu (if any)
+	if (div.lastChild && FCK.YD.hasClass(div.lastChild,'imageOverlay')) {
+		FCKDomTools.RemoveNode(div.lastChild);
+	}
 
 	div.setAttribute('refid', refid);
 
@@ -647,7 +669,7 @@ FCK.ImageProtectSetupOverlayMenu = function(refid, div) {
 			
 	div.appendChild(overlay);
 
-	overlay.innerHTML = '<span class="imageOverlayEdit" onclick="FCK.ProtectImageClick('+refid+')">edit</span><span class="imageOverlayRemove" onclick="FCK.ProtectImageRemove('+refid+')">remove</span>';
+	overlay.innerHTML = '<span class="imageOverlayEdit" onclick="FCK.ProtectImageEdit('+refid+')">edit</span><span class="imageOverlayRemove" onclick="FCK.ProtectImageRemove('+refid+')">remove</span>';
 
 	// add "move" option for images handled by contentEditable
 	if (FCK.UseContentEditable) {
@@ -693,8 +715,8 @@ FCK.ProtectImageRepositionCover = function(refid) {
 	setTimeout('FCK.ProtectImageRepositionCover('+refid+')', 750);
 }
 
-// handle click on image
-FCK.ProtectImageClick = function(refid) {
+// handle images edit
+FCK.ProtectImageEdit = function(refid) {
 
 	FCK.log('click on image #' + refid);
 	FCK.log(FCK.wysiwygData[refid]);
@@ -909,7 +931,7 @@ FCK.TemplatePreviewAdd = function(placeholder) {
 	FCK.TemplatePreviewCloud.firstChild.appendChild( previewDiv );
 	
 	previewDiv.id = 'wysiwygTemplatePreview' + refId;
-	placeholder.title = 'Click to edit this template';
+	placeholder.title = 'Click to edit this template or use drag&drop to move template';
 
 	// try to use cached preview from wysiwygData
 	previewDiv.innerHTML = (FCK.wysiwygData[refId].preview ? FCK.wysiwygData[refId].preview : preview.value);
@@ -919,46 +941,61 @@ FCK.TemplatePreviewAdd = function(placeholder) {
 	previewDiv.innerHTML = previewDiv.innerHTML.Trim();
 	previewDiv.style.display = 'none';
 
+	// reset template's margin/padding/align
+	FCK.TemplatePreviewReset(previewDiv);
+
 	// remove preview div from editing area and store preview in wysiwygData
 	if (preview && preview.nodeName.IEquals('input') && preview.type == 'text') {
 		preview.parentNode.removeChild(preview);
 		FCK.wysiwygData[refId].preview = previewDiv.innerHTML;
 	}
 
+	// setup events (remove listener first to avoid multiple event firing)
+	FCKTools.RemoveEventListener(placeholder, 'mouseover', FCK.TemplatePreviewOnPlaceholderMouseover);
+	FCKTools.RemoveEventListener(placeholder, 'mouseout', FCK.TemplatePreviewOnPlaceholderMouseout);
+	FCKTools.RemoveEventListener(placeholder, 'click', FCK.TemplatePreviewOnPlaceholderClick);
+	FCKTools.RemoveEventListener(previewDiv, 'click', FCK.TemplatePreviewOnPreviewClick);
+
 	// register events handlers
-	FCKTools.AddEventListener(placeholder, 'mouseover', function(e) {
-		FCK.TemplatePreviewShow(FCK.YAHOO.util.Event.getTarget(e));
+	FCKTools.AddEventListener(placeholder, 'mouseover', FCK.TemplatePreviewOnPlaceholderMouseover);
+	FCKTools.AddEventListener(placeholder, 'mouseout', FCK.TemplatePreviewOnPlaceholderMouseout);
 
-		clearTimeout(FCK.TemplatePreviewTimeouts.Tag);
-		clearTimeout(FCK.TemplatePreviewTimeouts.Cloud);
-	});
-	
-	FCKTools.AddEventListener(placeholder, 'mouseout', function(e) {
-		// hide preview 0,5 sec. after mouseout from tag
-		FCK.TemplatePreviewTimeouts.Tag = setTimeout('FCK.TemplatePreviewHide()', 500);
-	});
-
-	// template editor
-	FCKTools.AddEventListener(placeholder, 'click', function(e) {
-		e = FCK.YE.getEvent(e);
-		var target = FCK.YE.getTarget(e);
-		FCK.TemplateRefId = target.getAttribute('refid');
-		FCK.TemplateClickCommand.Execute();
-	});
-
-	FCKTools.AddEventListener(previewDiv, 'click', function(e) {
-		e = FCK.YE.getEvent(e);
-		FCK.YE.stopEvent(e);
-
-		// pass refId to template editor
-		FCK.TemplateRefId = FCK.TemplatePreviewCloud.getAttribute('refid');
-		FCK.TemplateClickCommand.Execute();
-	});
-
-	// reset margin/padding/align
-	FCK.TemplatePreviewReset(previewDiv);
+	// events firing template editor
+	FCKTools.AddEventListener(placeholder, 'click', FCK.TemplatePreviewOnPlaceholderClick);
+	FCKTools.AddEventListener(previewDiv, 'click', FCK.TemplatePreviewOnPreviewClick);
 }
 
+FCK.TemplatePreviewOnPlaceholderMouseover = function(e) {
+	FCK.TemplatePreviewShow( FCK.YE.getTarget(e) );
+
+	clearTimeout(FCK.TemplatePreviewTimeouts.Tag);
+	clearTimeout(FCK.TemplatePreviewTimeouts.Cloud);
+}
+
+FCK.TemplatePreviewOnPlaceholderMouseout = function(e) {
+	// hide preview 0,5 sec. after mouseout from tag
+	FCK.TemplatePreviewTimeouts.Tag = setTimeout('FCK.TemplatePreviewHide()', 500);
+}
+
+FCK.TemplatePreviewOnPlaceholderClick = function(e) {
+	var e = FCK.YE.getEvent(e);
+	var target = FCK.YE.getTarget(e);
+
+	FCK.TemplateRefId = target.getAttribute('refid');
+	FCK.TemplateClickCommand.Execute();
+}
+
+FCK.TemplatePreviewOnPreviewClick = function(e) {
+	// prevent clicking on links inside template preview
+	FCK.YE.stopEvent( FCK.YE.getEvent(e) );
+
+	// pass refId to template editor
+	FCK.TemplateRefId = FCK.TemplatePreviewCloud.getAttribute('refid');
+	FCK.TemplateClickCommand.Execute();
+}
+
+
+// show template preview
 FCK.TemplatePreviewShow = function(placeholder) {
 	
 	var refId = placeholder.getAttribute('refid');

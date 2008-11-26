@@ -533,9 +533,8 @@ EOD;
 function WysiwygGetTemplateParams($name) {
 	global $wgWysiwygMetaData, $wgWysiwygPreprocesorEnabled, $wgWysiwygTemplateParams, $wgParser;
 	$result = null;
-	$name = explode(':', $name, 2);
-	$name = $name[1];
-	//echo '<pre>name:'; print_r ($name); echo '</pre>';
+	$name = array_shift(explode(':', $name, 2));
+	//$name = $name[1];
 	if ($title = Title::makeTitle(NS_TEMPLATE, $name)) {
 		if ($revision = Revision::newFromTitle($title)) {
 			if (empty($wgParser->mOptions)) {
