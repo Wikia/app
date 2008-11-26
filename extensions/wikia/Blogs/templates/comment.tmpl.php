@@ -14,17 +14,15 @@
 
 ?>
 	<li>
+		<div class="blog-comment">
 		<a name="<?php echo isset( $comment["anchor"][2] ) ? $comment["anchor"][2] : "" ?>"></a>
-		<div style="float: left; width: 70px; margin-left: 0; margin-top: 0;">
-			<?php echo $comment["avatar"] ?>
-		</div>
-		<div style="float: left; margin-left: 70px; margin-top: 0;">
+		<?php echo $comment["avatar"] ?>
+		<div class="text">
 			<strong><?php echo $comment["sig"] ?></strong>
 			<?php echo $comment["timestamp"] ?>
-			<br />
-			<?php
-				echo $comment["text"];
-			?>
+			<hr />
+			<?php echo $comment["text"]; ?>
+		</div>
 		</div>
 		<br style="clear: both;" />
 	</li>
