@@ -152,7 +152,7 @@ FCKUndo.SaveUndoStep = function()
 		this.CurrentIndex++ ;
 
 	// Save the new level in front of the actual position.
-	this.SavedData[ this.CurrentIndex ] = [ sHtml, bookmark, FCK.wysiwygData ] ;
+	this.SavedData[ this.CurrentIndex ] = [ sHtml, bookmark, FCK.YAHOO.Tools.JSONEncode(FCK.wysiwygData) ] ;
 
 	FCK.Events.FireEvent( "OnSelectionChange" ) ;
 }
@@ -216,7 +216,7 @@ FCKUndo._ApplyUndoLevel = function( level )
 	else
 		FCK.EditorDocument.body.innerHTML = oData[0] ;
 
-	FCK.wysiwygData = oData[2];
+	FCK.wysiwygData = FCK.YAHOO.Tools.JSONParse(oData[2]);
 
 	// Restore the selection
 	this._SelectBookmark( oData[1] ) ;
