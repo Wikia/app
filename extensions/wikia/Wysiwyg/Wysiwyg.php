@@ -535,7 +535,7 @@ function WysiwygGetTemplateParams($name) {
 	$result = null;
 	$name = explode(':', $name, 2);
 	$name = $name[1];
-	echo '<pre>name:'; print_r ($name); echo '</pre>';
+	//echo '<pre>name:'; print_r ($name); echo '</pre>';
 	if ($title = Title::makeTitle(NS_TEMPLATE, $name)) {
 		if ($revision = Revision::newFromTitle($title)) {
 			if (empty($wgParser->mOptions)) {
