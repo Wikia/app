@@ -1,6 +1,7 @@
 <?php
 	if( $list ):
 ?>
+<a name="comments"></a>
 <h2><?php echo wfMsg("blog-comments") ?></h2>
 <div id="blog-comments" class="reset clearfix">
 <?php
