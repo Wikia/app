@@ -15,10 +15,10 @@
 ?>
 	<li>
 		<a name="<?php echo isset( $comment["anchor"][2] ) ? $comment["anchor"][2] : "" ?>"></a>
-		<div style="float: left;">
+		<div style="float: left; width: 70px; margin-left: 0; margin-top: 0;">
 			<?php echo $comment["avatar"] ?>
 		</div>
-		<div style="float: left;">
+		<div style="float: left; margin-left: 70px; margin-top: 0;">
 			<strong><?php echo $comment["sig"] ?></strong>
 			<?php echo $comment["timestamp"] ?>
 			<br />

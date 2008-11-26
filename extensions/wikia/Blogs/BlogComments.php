@@ -157,7 +157,7 @@ class BlogComments {
 					"title"     => $page,
 					"author"    => $author,
 					"anchor"    => $anchor,
-					"avatar"    => BlogAvatar::newFromUser( $author )->getImageTag( 50, 50 ),
+					"avatar"    => BlogAvatar::newFromUser( $author )->getLinkTag( 50, 50 ),
 					"timestamp" => $wgContLang->timeanddate( $revision->getTimestamp() )
 				);
 			}
