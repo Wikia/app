@@ -229,6 +229,8 @@ class BlogTemplateClass {
 	private static $skipStrinBeforeParse	= "<p><div>";
 	private static $skipStrinAfterParse		= "<p>"; # one tag only!
 	private static $parseTagTruncateText	= "/<p>(.*)<\/p>/siU";
+	
+	private static $pageOffsetName 			= "offset";
 		
 	public static function setup() {
 		global $wgParser, $wgMessageCache, $wgRequest;
@@ -1004,7 +1006,8 @@ class BlogTemplateClass {
 				"iPage"			=> $iPage,
 				"iNbrShow"		=> $iNbrShow,
 				"iTotal"		=> $iTotal,
-				"wgTitle"		=> $wgTitle
+				"wgTitle"		=> $wgTitle,
+				"pageOffsetName"=> self::$pageOffsetName
 			) );
 			#---
 			$sPager = $oTmpl->execute("blog-pager");
