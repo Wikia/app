@@ -14,7 +14,7 @@
 
 ?>
 	<li>
-		<a name="<?php echo $comment["title"]->getDBkey() ?>"></a>
+		<a name="<?php echo isset( $comment["title"][2] ) ? $comment["title"][2] : "" ?>"></a>
 		<div style="float: left;">
 			<?php echo $comment["avatar"] ?>
 		</div>
