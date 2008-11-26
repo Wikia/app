@@ -51,7 +51,7 @@ div.blog-comm-input textarea {
 	width:480px;
 }
 
-div.blog-comm-input input {
+div.blog-comm-input .submit {
 	margin-bottom: 12px;
 }
 

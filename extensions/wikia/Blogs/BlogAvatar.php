@@ -202,15 +202,14 @@ class BlogAvatar {
 	/**
 	 * getLinkTag -- return image with link to user page
 	 */
-	public function getLinkTag($iWidth = AVATAR_DEFAULT_WIDTH, $iHeight = AVATAR_DEFAULT_HEIGHT, $sAlt = '' ) {
+	public function getLinkTag( $width = AVATAR_DEFAULT_WIDTH, $height = AVATAR_DEFAULT_HEIGHT, $alt = '' ) {
 		global $wgUser;
+
 		wfProfileIn( __METHOD__ );
-
-		$image = $this->getImageTag($iWidth, $iHeight, $sAlt);
-
+		$image = $this->getImageTag( $width, $height, $alt );
 		wfProfileOut( __METHOD__ );
 
-		return sprintf("<a href=\"%s\">%s</a>", $this->mUser->getTalkPage()->getFullUrl(), $image );
+		return sprintf("<a href=\"%s\">%s</a>", $this->mUser->getUserPage()->getFullUrl(), $image );
 	}
 
 	/**
