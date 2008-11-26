@@ -15,7 +15,7 @@ define ("AVATAR_DEFAULT_WIDTH", 100);
 define ("AVATAR_DEFAULT_HEIGHT", 100);
 define ("AVATAR_LOG_NAME", 'useravatar');
 define ("AVATAR_USER_OPTION_NAME", 'avatar');
-define ("AVATAR_MAX_SIZE", 100000);
+define ("AVATAR_MAX_SIZE", 512000 );
 define ("AVATAR_UPLOAD_FIELD", 'wkUserAvatar');
 
 
@@ -535,7 +535,7 @@ class BlogAvatar {
 							$sMsg .= wfMsg( "blog-avatar-error-cantwrite");
 							break;
 						case UPLOAD_ERR_FORM_SIZE:
-							$sMsg .= wfMsg( "blog-avatar-error-size", AVATAR_MAX_SIZE );
+							$sMsg .= wfMsg( "blog-avatar-error-size", (int)(AVATAR_MAX_SIZE/1024) );
 							break;
 
 						default:
