@@ -346,11 +346,6 @@ class BlogPage extends Article{
 		
 		$page_title_id = $wgTitle->getArticleID();
 		
-		//get authors
-		foreach($this->authors as $author) {
-			$authors .= " and rev_user_text<>'{$author["user_name"]}'";
-		}
-		
 		$key = wfMemcKey( 'recenteditors', 'list', $page_title_id );
 		//$wgMemc->delete($key);
 		$data = $wgMemc->get( $key );
@@ -358,6 +353,12 @@ class BlogPage extends Article{
 		if(!$data ){
 			wfDebug( "loading recent editors for page {$page_title_id} from db\n" );
 			$dbr =& wfGetDB( DB_SLAVE );
+
+			//get authors
+			foreach($this->authors as $author) {
+				$authors .= " and rev_user_text<>" . $dbr->addQuotes($author["user_name"]);
+			}
+
 			$sql = "SELECT DISTINCT rev_user, rev_user_text FROM revision WHERE rev_page = {$page_title_id} and rev_user <> 0 and rev_user_text<>'Mediawiki Default' {$authors} ORDER BY rev_user_text ASC LIMIT 0,8";
 			$res = $dbr->query($sql);
 			while ($row = $dbr->fetchObject( $res ) ) {
