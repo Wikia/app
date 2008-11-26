@@ -469,6 +469,34 @@ FCK.CheckInternalLink = function(title, link) {
 	FCK.YAHOO.util.Connect.asyncRequest("POST", window.parent.wgScriptPath + '/api.php', callback, "action=query&format=json&prop=info&titles=" +   encodeURIComponent(title) );
 }
 
+//
+// InsertTemplate - dropdown in menu
+//
+FCKCommands.RegisterCommand('InsertTemplate', new FCKAddImageCommand());
+
+var FCKToolbarInsertTemplateCombo = function(tooltip, style) {
+	this.CommandName	= 'InsertTemplate';
+	this.Label = this.GetLabel();
+
+	this.Tooltip = tooltip ? tooltip : this.Label;
+	this.Style = style ? style : FCK_TOOLBARITEM_ICONTEXT;
+
+	this.DefaultLabel = 'Insert template';
+	this.FieldWidth = 100 ;
+}
+FCKToolbarInsertTemplateCombo.prototype = new FCKToolbarSpecialCombo;
+FCKToolbarInsertTemplateCombo.prototype.GetLabel = function() {
+	return '';
+}
+FCKToolbarInsertTemplateCombo.prototype.CreateItems = function( targetSpecialCombo ) {
+	targetSpecialCombo.AddItem("1", "1");
+	targetSpecialCombo.AddItem("2", "2");
+	targetSpecialCombo.AddItem("2", "3");
+}
+
+var oInsertTemplateItem = new FCKToolbarInsertTemplateCombo();
+FCKToolbarItems.RegisterItem('InsertTemplate', oInsertTemplateItem);
+
 
 
 //
