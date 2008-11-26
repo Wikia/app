@@ -38,7 +38,10 @@ Create blog listing pages for categories such as "Barrack Obama", "Fan Fiction",
 	"blog-comments" => "Comments",
 	"blog-avatar-defaults" => "Avatar.jpg",
 	'blog-avatar-alt' => "Avatar",
-	'avatar-blog-preferences-title' => "Avatar:",
-	'avatar-blog-choose-avatar' => "Choose a new avatar",
-	'avatar-blog-upload-avatar' => "Upload a new avatar",
+	'blog-avatar-preferences-title' => "Avatar:",
+	'blog-avatar-choose-avatar' => "Choose a new avatar",
+	'blog-avatar-upload-avatar' => "Upload a new avatar",
+	"blog-avatar-error-nofile" => "Please pick up file from disc.",
+	"blog-avatar-error-size" => "Uploaded file is too big, allowed size is up to $1 KB.",
+	"blog-avatar-error-cantwrite" => "Something happen and cannot write the file to disc."
 );

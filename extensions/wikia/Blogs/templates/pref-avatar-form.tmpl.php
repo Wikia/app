@@ -1,7 +1,6 @@
 <!-- s:<?= __FILE__ ?> -->
-<? error_log (__FILE__ . " => ".$sUserImg."\n", 3, "/tmp/moli.log"); ?>
 <tr>
-<td class="pref-label"><label for="wkUserAvatar"><?=wfMsg('avatar-blog-preferences-title')?></label></td>
+<td class="pref-label"><label for="wkUserAvatar"><?=wfMsg('blog-avatar-preferences-title')?></label></td>
 <td class="pref-input">
 <table border="0" width="50" valign="top">
 <tr>
@@ -19,12 +18,12 @@
 			if (document.createTextNode) {
 				var defaultAvatar = YAHOO.util.Dom.get("wkDefaultAvatar");
 				var listDiv = YAHOO.util.Dom.get("wkDefaultAvatarList");
-				if (!listDiv && !defaultAvatar) { 
+				if (!listDiv && !defaultAvatar) {
 					return;
 				}
 				var imgs = new Array();
 <? if ( !empty($aDefAvatars) && is_array($aDefAvatars) ) { $loop = 0; foreach ($aDefAvatars as $id => $sDefAvatarUrl) { ?>
-				imgs[<?=$loop?>] = document.createElement('img'); 
+				imgs[<?=$loop?>] = document.createElement('img');
 				imgs[<?=$loop?>].src = '<?=$sDefAvatarUrl?>';
 				imgs[<?=$loop?>].style.border = '2px solid #FFFFFF';
 				imgs[<?=$loop?>].style.margin = '2px';
@@ -47,17 +46,17 @@
 
 				var chooseDivTxt = YAHOO.util.Dom.get("wkUserChooseDivText");
 				if (chooseDivTxt) {
-					chooseDivTxt.innerHTML = "<?=wfMsg('avatar-blog-choose-avatar')?>";
+					chooseDivTxt.innerHTML = "<?=wfMsg('blog-avatar-choose-avatar')?>";
 				}
-				
+
 				var uploadDivTxt = YAHOO.util.Dom.get("wkUserUploadDivText");
 				if (uploadDivTxt) {
-					uploadDivTxt.innerHTML = "<?=wfMsg('avatar-blog-upload-avatar')?>";
+					uploadDivTxt.innerHTML = "<?=wfMsg('blog-avatar-upload-avatar')?>";
 				}
 
 				var uploadDiv = YAHOO.util.Dom.get("wkUserUploadDiv");
 				if (uploadDiv) {
-					uploadFile = document.createElement('input'); 
+					uploadFile = document.createElement('input');
 					uploadFile.setAttribute('type', 'file');
 					uploadFile.setAttribute('name', '<?=$sFieldName?>');
 					uploadFile.setAttribute('id', '<?=$sFieldName?>');

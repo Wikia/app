@@ -330,7 +330,13 @@ class BlogAvatar {
 		}
 		Wikia::log( __METHOD__, "tmp", "Temp directory set to {$wgTmpDirectory}" );
 
-		$errorNo = UPLOAD_ERR_OK;
+
+		$errorNo = $request->getUploadError( $sFormField );
+		if ( $errorNo != UPLOAD_ERR_OK ) {
+			Wikia::log( __METHOD__, "error", "Upload error {$errorNo}" );
+			wfProfileOut(__METHOD__);
+			return $errorNo;
+		}
 		$iFileSize = $request->getFileSize( $sFormField );
 
 		if( empty( $iFileSize ) ) {
@@ -528,6 +534,9 @@ class BlogAvatar {
 						case UPLOAD_ERR_CANT_WRITE:
 							$sMsg .= wfMsg( "blog-avatar-error-cantwrite");
 							break;
+						case UPLOAD_ERR_FORM_SIZE:
+							$sMsg .= wfMsg( "blog-avatar-error-size", AVATAR_MAX_SIZE );
+							break;
 
 						default:
 							$sMsg .= wfMsg( "blog-avatar-error-cantwrite");
@@ -538,7 +547,6 @@ class BlogAvatar {
 				}
 				Wikia::log( __METHOD__, "url", $sUrl );
 			}
-
 
 			if ( !empty($sUrl) ) {
 				/* set user option */
