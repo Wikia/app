@@ -158,7 +158,7 @@ FCKUndo.SaveUndoStep = function()
 }
 
 FCKUndo.CheckUndoState = function()
-{
+	{
 	return ( this.Changed || this.CurrentIndex > 0 ) ;
 }
 
@@ -182,6 +182,7 @@ FCKUndo.Undo = function()
 		this._ApplyUndoLevel( --this.CurrentIndex ) ;
 
 		FCK.Events.FireEvent( "OnSelectionChange" ) ;
+		FCK.Events.FireEvent( "OnUndoRedo" );
 	}
 }
 
@@ -193,6 +194,7 @@ FCKUndo.Redo = function()
 		this._ApplyUndoLevel( ++this.CurrentIndex ) ;
 
 		FCK.Events.FireEvent( "OnSelectionChange" ) ;
+		FCK.Events.FireEvent( "OnUndoRedo" );
 	}
 }
 
