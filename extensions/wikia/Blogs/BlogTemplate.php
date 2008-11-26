@@ -4,7 +4,7 @@
 $wgExtensionFunctions[] = array("BlogTemplateClass", "setup");
 $wgHooks['LanguageGetMagic'][] = "BlogTemplateClass::setMagicWord";
 
-define ("BLOGS_TIMESTAMP", "20071101000000");
+define ("BLOGS_TIMESTAMP", "20081101000000");
 define ("BLOGS_XML_REGEX", "/\<(.*?)\>(.*?)\<\/(.*?)\>/si");
 define ("GROUP_CONCAT", "64000");
 define ("BLOGS_HTML_PARSE", "/(<.+?>)?([^<>]*)/s");
@@ -12,6 +12,8 @@ define ("BLOGS_ENTITIES_PARSE", "/&[0-9a-z]{2,8};|&#[0-9]{1,7};|&#x[0-9a-f]{1,6}
 define ("BLOGS_ENDING_TEXT", " ... ");
 define ("BLOGS_CLOSED_TAGS", "/^<\s*\/([^\s]+?)\s*>$/s");
 define ("BLOGS_OPENED_TAGS", "/^<\s*([^\s>!]+).*?>$/s");
+define ("BLOGS_PAGER_NBRS", 0);
+define ("BLOGS_PAGER_SHOW_ONLY_PREV_NEXT", 1);
 
 class BlogTemplateClass {
 	/*
@@ -162,7 +164,7 @@ class BlogTemplateClass {
 		 */
 		'summarylength' 	=> array (
 			'type' 		=> 'number',
-			'default' 	=> '200', 
+			'default' 	=> array('box' => '200', 'plain' => '750'), 
 			'pattern' 	=> '/^\d*$/'
 		),
 
@@ -172,12 +174,23 @@ class BlogTemplateClass {
 		 * type = box | plain
 		 *
 		 * type: 	number,
-		 * default: 200
+		 * default: box
 		 */
 		'type' 	=> array (
 			'type' 		=> 'list',
 			'default' 	=> 'box',
 			'pattern'	=> array( 'box', 'plain', 'array', 'noparse', 'count' )
+		),
+
+		/*
+		 * Additional CSS styles
+		 *
+		 * type: 	string,
+		 * default: ""
+		 */
+		'style' => array (
+			'type' 		=> 'string',
+			'default' 	=> '',
 		)
 	);
 
@@ -316,7 +329,7 @@ class BlogTemplateClass {
 		return $aCategories;
 	}
 
-	private static function __getVoteCode($iPage) {
+	public static function __getVoteCode($iPage) {
 		wfProfileIn( __METHOD__ );
 		$oFauxRequest = new FauxRequest(array( "action" => "query", "list" => "wkvoteart", "wkpage" => $iPage, "wkuservote" => true ));
 		$oApi = new ApiMain($oFauxRequest);
@@ -571,7 +584,15 @@ class BlogTemplateClass {
 
 		$sResult = "";
 		if ( empty($iLength) ) {
-			$iLength = self::$aOptions['summarylength'];
+			if (!empty(self::$aOptions['summarylength'])) {
+				$iLength = self::$aOptions['summarylength'];
+			} else {
+				if (self::$aOptions['type'] == 'box') {
+					$iLength = intval(self::$aBlogParams['summarylength']['default']['box']);
+				} else {
+					$iLength = intval(self::$aBlogParams['summarylength']['default']['plain']);
+				}
+			}
 		}
 		
 		if (mb_strlen(strip_tags($sText)) <= $iLength) {
@@ -687,7 +708,7 @@ class BlogTemplateClass {
 				/* skip HTML tags */
 				$sBlogText = strip_tags($sBlogText, self::$skipStrinAfterParse);
 				/* truncate text */
-				$sResult = self::__truncateText($sBlogText, 200, BLOGS_ENDING_TEXT);
+				$sResult = self::__truncateText($sBlogText, intval(self::$aOptions['summarylength']), BLOGS_ENDING_TEXT);
 			} else {
 				/* parse revision text */
 				$parserOutput = $localParser->parse($sBlogText, Title::newFromId($oRow->page_id), ParserOptions::newFromUser($wgUser));
@@ -716,6 +737,11 @@ class BlogTemplateClass {
 			$iCount = $oComments->count();
 			
 			/* username */
+			$oTitle = Title::newFromText($oRow->page_title, NS_USER);
+			$sUsername = ""; 
+			if ($oTitle instanceof Title) {
+				$username = $oTitle->getBaseText();
+			}
 			
 			$aResult[$oRow->page_id] = array(
 				"page" 			=> $oRow->page_id,
@@ -723,7 +749,7 @@ class BlogTemplateClass {
 				"title" 		=> $oRow->page_title,
 				"page_touched" 	=> $oRow->page_touched,
 				"timestamp" 	=> $oRow->timestamp,
-				"username"		=> (isset($oRow->username)) ? $oRow->username : "",
+				"username"		=> (isset($username)) ? $username : "",
 				"text"			=> self::__getRevisionText($oRow->page_id, $oRow->rev_id),
 				"revision"		=> $oRow->rev_id,
 				"comments"		=> $iCount,
@@ -778,6 +804,7 @@ class BlogTemplateClass {
 							
     private static function __parse( $aInput, $aParams, &$parser ) {
     	global $wgLang, $wgUser, $wgCityId, $wgParser;
+    	global $wgExtensionsPath;
     	
     	wfProfileIn( __METHOD__ );
     	$result = "";
@@ -864,6 +891,7 @@ class BlogTemplateClass {
 						}
 						break;
 					case 'title'	:
+					case 'style'	:
 						if ( !empty($aParamValues) && is_array($aParamValues) ) {
 							list ($sParamValue) = $aParamValues;
 							self::__makeStringOption($sParamName, $sParamValue);
@@ -903,11 +931,13 @@ class BlogTemplateClass {
 						self::__makeBoolOption($sParamName, $sParamValue);
 						break;
 					case 'title' 		:	
+					case 'style'		:
 						self::__makeStringOption($sParamName, $sParamValue);
 						break;
 				}
 			}
 
+			error_log ("self::aOptions = ".print_r(self::$aOptions, true). "\n", 3, "/tmp/moli.log");
 			/* build query */
 			if ( self::$aOptions['type'] == 'count' ) {
 				/* get results count */
@@ -916,20 +946,27 @@ class BlogTemplateClass {
 				$aResult = self::__getResults();
 				/* set output */
 				if ( self::$aOptions['type'] != 'array' ) {
+					$sPager = "";
+					if (self::$aOptions['type'] == 'plain') {
+						$iCount = self::__getResultsCount();
+						self::$aOptions['count'] = 2;
+						$sPager = self::__setPager($iCount, intval(self::$aOptions['offset']), BLOGS_PAGER_NBRS, BLOGS_PAGER_SHOW_ONLY_PREV_NEXT);
+					}
 					/* run template */
 					$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
 					$oTmpl->set_vars( array(
-						"wgUser"		=> $wgUser,
-						"cityId"		=> $wgCityId,
-						"wgLang"		=> $wgLang,
-						"aRows"			=> $aResult,
-						"aOptions"		=> self::$aOptions,
-						"wgParser"		=> $wgParser,
-						"skin"			=> $wgUser->getSkin(),
+						"wgUser"			=> $wgUser,
+						"cityId"			=> $wgCityId,
+						"wgLang"			=> $wgLang,
+						"aRows"				=> $aResult,
+						"aOptions"			=> self::$aOptions,
+						"wgParser"			=> $wgParser,
+						"skin"				=> $wgUser->getSkin(),
+						"wgExtensionsPath" 	=> $wgExtensionsPath,
+						"sPager"			=> $sPager,
 					) );
-
 					#---
-					$result = $oTmpl->execute("blog-page");
+					$result = ( self::$aOptions['type'] == 'box' ) ? $oTmpl->execute("blog-page") : $oTmpl->execute("blog-post-page");
 				} else {
 					unset($result); 
 					$result = self::__makeRssOutput($aResult);
@@ -944,5 +981,37 @@ class BlogTemplateClass {
     	wfProfileOut( __METHOD__ );
     	return $result;
 	}
+	
+	private static function __setPager($iTotal, $iPage, $iNbrShow = 5, $bShowNext = 0) {
+		global $wgUser, $wgTitle;
+		wfProfileIn( __METHOD__ );
 
+		$sPager = "";
+		//error_log("setPager($iTotal, $iPage, $bShowNext=0)"); 
+		
+		if ($iTotal<=0 || empty($iTotal)) { 
+			wfDebugLog( __METHOD__, "cannot make pager - no results found: ".$iTotal."\n" );
+		} else {
+			$iPageCount = ceil( $iTotal / self::$aOptions['count'] );
+			/* show only next page */
+			if ($bShowNext == 1) {
+				$iPageCount = $iPage + 1;
+			}
+			#---
+			$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
+			$oTmpl->set_vars( array(
+				"iPageCount"	=> $iPageCount,
+				"bShowNext"		=> $bShowNext,
+				"iPage"			=> $iPage,
+				"iNbrShow"		=> $iNbrShow,
+				"iTotal"		=> $iTotal,
+				"wgTitle"		=> $wgTitle
+			) );
+			#---
+			$sPager = $oTmpl->execute("blog-pager");
+		}
+
+		wfProfileOut( __METHOD__ );
+		return $sPager;
+	}
 }

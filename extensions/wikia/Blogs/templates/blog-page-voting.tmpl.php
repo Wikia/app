@@ -1,1 +1,1 @@
-<div id="star-rating" class="star-rating"><div class="star-rating" style="background-position:left center;position:absolute;text-indent:-9000px;z-index:1;width: <?= $ratingPx ?>px;"></div></div>
+<span><ul class="star-rating" id="star-rating"><li class="current-rating" id="current-rating" style="padding:0px;width: <?= $ratingPx ?>px;"><span>0/5</span></li></ul></span>
