@@ -949,7 +949,6 @@ class BlogTemplateClass {
 					$sPager = "";
 					if (self::$aOptions['type'] == 'plain') {
 						$iCount = self::__getResultsCount();
-						self::$aOptions['count'] = 2;
 						$sPager = self::__setPager($iCount, intval(self::$aOptions['offset']), BLOGS_PAGER_NBRS, BLOGS_PAGER_SHOW_ONLY_PREV_NEXT);
 					}
 					/* run template */
