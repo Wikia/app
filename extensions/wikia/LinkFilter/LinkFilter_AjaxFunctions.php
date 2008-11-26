@@ -16,6 +16,7 @@ function wfLinkFilterStatus($id, $status){
 		'link_id' => $id
 		), ""
 	);
+	$dbw->commit();
 	
 	if( $status == 1 ) {
 		$l = new Link();
