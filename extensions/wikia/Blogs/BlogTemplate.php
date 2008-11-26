@@ -612,7 +612,7 @@ class BlogTemplateClass {
 						if ( preg_match(BLOGS_CLOSED_TAGS, $aLine[1], $aTag) ) {
 							/* closed tags </p> - unset from opened-tags list */
 							if (array_search(trim($aTag[1]), $aTags) !== false) {
-								unset($aTags[$iPos]);
+								unset($aTags[$aTag[1]]);
 							}
 						} else if (preg_match(BLOGS_OPENED_TAGS, $aLine[1], $aTag)) {
 							/* opened tags <p> - add to opened-tags list */
@@ -650,7 +650,7 @@ class BlogTemplateClass {
 				
 				/* wrap correct words - find the last occurance of " " */
 				$iSpacePos = strrpos($sResult, ' ');
-				if ( $iSpace !== false ) {
+				if ( $iSpacePos !== false ) {
 					$sResult = substr($sResult, 0, $iSpacePos);
 				}
 				if ( !empty($sEnding) ) {
