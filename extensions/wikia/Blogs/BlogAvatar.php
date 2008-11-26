@@ -330,16 +330,16 @@ class BlogAvatar {
 		}
 		Wikia::log( __METHOD__, "tmp", "Temp directory set to {$wgTmpDirectory}" );
 
-		$iErrNo = false;
-		$iFileSize = $request->getFileSize($sFormField);
+		$errorNo = UPLOAD_ERR_OK;
+		$iFileSize = $request->getFileSize( $sFormField );
 
-		if (empty($iFileSize)) {
+		if( empty( $iFileSize ) ) {
 			/**
 			 * file size = 0
 			 */
-			wfDebugLog( __METHOD__, "Empty file: " . $sFormField );
+			Wikia::log( __METHOD__, "empty", "Empty file {$sFormField} reported size {$iFileSize}" );
 			wfProfileOut(__METHOD__);
-			return $iErrNo;
+			return UPLOAD_ERR_NO_FILE;
 		}
 
 		$sTmpFile = $wgTmpDirectory."/".substr(sha1(uniqid($this->mUser->getID())), 0, 16);
@@ -357,7 +357,7 @@ class BlogAvatar {
 			if (!in_array($aImgInfo["mime"], $aAllowMime)) {
 				Wikia::log( __METHOD__, "mime", "Imvalid mime type, allowed: " . implode(",", $aAllowMime) );
 				wfProfileOut(__METHOD__);
-				return $iErrNo;
+				return $errorNo;
 			}
 
 			switch ($aImgInfo["mime"]) {
@@ -423,12 +423,14 @@ class BlogAvatar {
 			if ( !is_dir( dirname( $sFilePath ) ) && !wfMkdirParents( dirname( $sFilePath ) ) ) {
 				Wikia::log( __METHOD__, "dir", sprintf("Cannot create directory %s", dirname( $sFilePath ) ) );
 				wfProfileOut( __METHOD__ );
-				return false;
+				return UPLOAD_ERR_CANT_WRITE;
 			}
 
 			if ( !imagepng($oImg, $sFilePath) ) {
 				Wikia::log( __METHOD__, "save", sprintf("Cannot save png Avatar: %s", $sFilePath ));
-			} else {
+				$errorNo = UPLOAD_ERR_CANT_WRITE;
+			}
+			else {
 				/* remove tmp file */
 				imagedestroy($oImg);
 
@@ -438,13 +440,15 @@ class BlogAvatar {
 				$sLogComment = "Add/change avatar by {$sUserText}";
 				$oLogPage->addEntry( AVATAR_LOG_NAME, $mUserBlogPage, $sLogComment);
 				unlink($sTmpFile);
-				$iErrNo = true;
+				$errorNo = UPLOAD_ERR_OK;
 			}
-		} else {
+		}
+		else {
 			Wikia::log( __METHOD__, "move", sprintf("Cannot move uploaded file from %s to %s", $sTmp, $sTmpFile ));
+			$errorNo = UPLOAD_ERR_CANT_WRITE;
 		}
 		wfProfileOut(__METHOD__);
-		return $iErrNo;
+		return $errorNo;
 	}
 
 	/**
@@ -514,9 +518,20 @@ class BlogAvatar {
 			/* check is set default avatar for user */
 			if ( empty($sUrl) ) {
 				/* upload user avatar */
-				$isFileUploaded = $oAvatarObj->uploadFile( $wgRequest );
-				if ( !$isFileUploaded ) {
-					$sMsg .= " Cannot save user's avatar ";
+				$errorNo = $oAvatarObj->uploadFile( $wgRequest );
+				if ( $errorNo != UPLOAD_ERR_OK ) {
+					switch( $errorNo ) {
+						case UPLOAD_ERR_NO_FILE:
+							$sMsg .= wfMsg( "blog-avatar-error-nofile");
+							break;
+
+						case UPLOAD_ERR_CANT_WRITE:
+							$sMsg .= wfMsg( "blog-avatar-error-cantwrite");
+							break;
+
+						default:
+							$sMsg .= wfMsg( "blog-avatar-error-cantwrite");
+					}
 					$result = false;
 				} else {
 					$sUrl = $oAvatarObj->getLocalPath();

@@ -149,12 +149,14 @@ class BlogComments {
 				$text     = $parser->parse( $revision->getText(), $page, $options )->getText();
 				$author   = User::newFromId( $revision->getUser() );
 				$sig      = Xml::element( 'a', array ( "href" => $author->getUserPage()->getFullUrl() ), $author->getName() );
+				$anchor   = explode( "/", $page->getDBkey(), 3 );
 
 				$comments[] = array(
 					"sig"       => $sig,
 					"text"      => $text,
 					"title"     => $page,
 					"author"    => $author,
+					"anchor"    => $anchor,
 					"avatar"    => BlogAvatar::newFromUser( $author )->getImageTag( 50, 50 ),
 					"timestamp" => $wgContLang->timeanddate( $revision->getTimestamp() )
 				);

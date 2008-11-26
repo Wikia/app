@@ -238,6 +238,24 @@ class BlogListPage extends Article {
 	static public function ArticleFromTitle( &$Title, &$Article ) {
 		global $wgRequest;
 
+		if( $Title->getNamespace() === NS_BLOG_ARTICLE_TALK ) {
+			/**
+			 * redirect to proper comment in NS_BLOG_ARTICLE namespace
+			 */
+			global $wgRequest, $wgTitle, $wgOut;
+			$redirect = $wgRequest->getText( "redirect", false );
+			if( $redirect != "no" ) {
+				$text = $wgTitle->getText();
+				list( $user, $title, $anchor ) = explode( "/", $text, 3 );
+				$redirect = Title::newFromText( "{$user}/{$title}", NS_BLOG_ARTICLE );
+				if( $title ) {
+					$url = $redirect->getFullUrl();
+					$wgOut->redirect( "{$url}#{$anchor}" );
+				}
+			}
+			return true;
+		}
+
 		if( $Title->getNamespace() !== NS_BLOG_ARTICLE ) {
 			return true;
 		}
