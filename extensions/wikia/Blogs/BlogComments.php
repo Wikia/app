@@ -131,7 +131,7 @@ class BlogComments {
 			/**
 			 * no comments at all
 			 */
-			$template->set_vars( array( "comments" => false, "input" => $input ) );
+			$template->set_vars( array( "comments" => false, "input" => $input, "list" => true ) );
 		}
 		else {
 			$parser = new Parser();
