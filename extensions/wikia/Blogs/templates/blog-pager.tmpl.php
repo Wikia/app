@@ -6,7 +6,7 @@ $i = 0;
 if ($iPageCount > 1 || $bShowNext) {
 	if ($iPage!=0) {
 ?>		
-<a href="<?=$wgTitle->getFullURL('page='.($iPage - 1))?>">&#171; <?=wfMsg('blog-newerposts')?></a>&nbsp;&nbsp;
+<a href="<?=$wgTitle->getFullURL($pageOffsetName."=".($iPage - 1))?>">&#171; <?=wfMsg('blog-newerposts')?></a>&nbsp;&nbsp;
 <?
 	}
 	if (( $iPage - $iNbrShow) < 0) {
@@ -16,7 +16,7 @@ if ($iPageCount > 1 || $bShowNext) {
 	}
 	if ($i > 0 && $bShowNext == 0) { 
 ?>
-<a href="<?=$wgTitle->getFullURL('page=0')?>">1</a>&nbsp;";
+<a href="<?=$wgTitle->getFullURL($pageOffsetName."=0")?>">1</a>&nbsp;";
 <?
 		if ( $i != 1) {
 ?>
@@ -26,7 +26,7 @@ if ($iPageCount > 1 || $bShowNext) {
 	}
 	for (; $i < $iPage ; $i++) { 
 ?>
-<a href="<?=$wgTitle->getFullURL('page='.$i)?>"><?=($i+1)?></a>&nbsp;&nbsp;
+<a href="<?=$wgTitle->getFullURL($pageOffsetName."=".$i)?>"><?=($i+1)?></a>&nbsp;&nbsp;
 <?
 	}
 ?>
@@ -39,7 +39,7 @@ if ($iPageCount > 1 || $bShowNext) {
 	
 	for ($i = $iPage+1; $i < $to; $i++) {
 ?>
-<a href="<?=$wgTitle->getFullURL('page='.$i)?>"><?=($i+1)?></a>&nbsp;&nbsp;
+<a href="<?=$wgTitle->getFullURL($pageOffsetName."=".$i)?>"><?=($i+1)?></a>&nbsp;&nbsp;
 <?
 	}
 
@@ -50,12 +50,12 @@ if ($iPageCount > 1 || $bShowNext) {
 <?
 		}
 ?>
-<a href="<?=$wgTitle->getFullURL('page='.($iPageCount-1))?>"><?=$iPageCount?></a>
+<a href="<?=$wgTitle->getFullURL($pageOffsetName."=".($iPageCount-1))?>"><?=$iPageCount?></a>
 <?
 	}
 	if ( ($iPage + 1) != $iPageCount || $bShowNext == 1) {
 ?>
-<a href="<?=$wgTitle->getFullURL('page='.($iPage+1))?>"><?=wfMsg('blog-olderposts')?> &#187;</a>
+<a href="<?=$wgTitle->getFullURL($pageOffsetName."=".($iPage+1))?>"><?=wfMsg('blog-olderposts')?> &#187;</a>
 <?
 	}
 } else {
