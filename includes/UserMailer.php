@@ -428,7 +428,7 @@ class EmailNotification {
 
 		$this->composed_common = true;
 
-		$summary = ($this->summary == '') ? ' - ' : $this->summary;
+		$summary = ($this->summary == '') ? wfMsg( 'enotif_no_summary' ) : wfMsg( 'enotif_summary'  ) . '"' . $this->summary . '"';
 		$medit   = ($this->minorEdit) ? wfMsg( 'minoredit' ) : '';
 
 		# You as the WikiAdmin and Sysops can make use of plenty of
