@@ -625,13 +625,6 @@ class Preprocessor_DOM implements Preprocessor {
 				throw new MWException( __METHOD__.' generated invalid XML' );
 			}
 		}
-		global $wgWysiwygPreprocesorEnabled;
-		if (!empty($wgWysiwygPreprocesorEnabled)) {
-			global $wgWysiwygTemplateParams;
-			//catch all template params
-			preg_match_all('%<tplarg><title>([^>]+)</title>%i', $xml, $result, PREG_PATTERN_ORDER);
-			$wgWysiwygTemplateParams = $result[1];
-		}
 		$obj = new PPNode_DOM( $dom->documentElement );
 		wfProfileOut( __METHOD__.'-loadXML' );
 		wfProfileOut( __METHOD__ );
