@@ -759,7 +759,7 @@ class BlogTemplateClass {
     	return $aResult;
 	}
 	
-	private static function __getResultsCount() {
+	public static function getResultsCount() {
 		global $wgLang;
     	wfProfileIn( __METHOD__ );
     	/* main query */
@@ -938,14 +938,14 @@ class BlogTemplateClass {
 			/* build query */
 			if ( self::$aOptions['type'] == 'count' ) {
 				/* get results count */
-				$result = self::__getResultsCount();
+				$result = self::getResultsCount();
 			} else {
 				$aResult = self::__getResults();
 				/* set output */
 				if ( self::$aOptions['type'] != 'array' ) {
 					$sPager = "";
 					if (self::$aOptions['type'] == 'plain') {
-						$iCount = self::__getResultsCount();
+						$iCount = self::getResultsCount();
 						$sPager = self::__setPager($iCount, intval(self::$aOptions['offset']));
 					}
 					/* run template */
