@@ -156,7 +156,10 @@ class BlogComments {
 				 */
 				$text     = $parser->parse( $revision->getText(), $page, $options )->getText();
 				$author   = User::newFromId( $revision->getUser() );
-				$sig      = Xml::element( 'a', array ( "href" => $author->getUserPage()->getFullUrl() ), $author->getName() );
+				$sig      = ( $author->isAnon() )
+					? wfMsg("blog-comments-anonymous")
+					: Xml::element( 'a', array ( "href" => $author->getUserPage()->getFullUrl() ), $author->getName() );
+
 				$anchor   = explode( "/", $page->getDBkey(), 3 );
 
 				$comments[] = array(
