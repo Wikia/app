@@ -164,7 +164,7 @@ div.wk_blogs_post .wk_blogs_comments ul.links li {
 	border: 0;
 	clear: right;
 	float: left;
-	margin: 1px 0.2em;
+	padding: 3px 0.2em 0 0.2em; 
 	color: #DFDFDF;
 }
 div.wk_blogs_post .wk_blogs_pager {
