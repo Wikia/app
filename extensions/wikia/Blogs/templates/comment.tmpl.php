@@ -2,7 +2,7 @@
 <h2 class="wikia_header"><?php echo wfMsg("blog-comments") ?></h2>
 <div id="blog-comments" class="reset clearfix">
 <?php
-	if( count( $comments ) > 10 ):
+	if( count( $comments ) > 10 && isset( $props[ "commenting" ] ) && $props[ "commenting" ] == 1 ):
 		// show top input
 ?>
 <div class="blog-comm-input reset clearfix">
@@ -55,6 +55,8 @@
 		endforeach;
 		echo "</ul>";
 	endif; // comments
+
+	if( isset( $props[ "commenting" ] ) && $props[ "commenting" ] == 1 ):
 ?>
 <div class="blog-comm-input reset clearfix">
 	<form action="#" method="post" id="blog-comm-form-bottom">
@@ -75,5 +77,7 @@
 		</div>
 	</form>
 </div>
-
+<?php
+	endif;
+?>
 </div>
