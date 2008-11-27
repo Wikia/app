@@ -7,6 +7,7 @@ div.wk_blogs_panel {
 	font-size: 10pt;
 	padding: 2px;
 	width: 294px;
+	margin: 0 2px;
 }
 div.wk_blogs_panel ul.list {
 	margin-top: 5px;
