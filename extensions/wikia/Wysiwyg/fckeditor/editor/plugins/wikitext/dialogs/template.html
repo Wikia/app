@@ -105,15 +105,14 @@ function GetWikitextFromStep2() {
 	wikitext = '{{' + GetE('templateName').innerHTML;
 
 	// parameters name and value
-	var params = GetE('templateParameters').getElementsByTagName('textarea');
+	var params =  GetParametersFromStep2();
 
-	for(p=0; p<params.length; p++) {
-		var name = params[p].id.substr(6);
-		var value = params[p].value;
+	for(key in params) {
+		var value = params[key];
 
 		if (value == '') continue; // ignore empty parameters
 
-		wikitext += '|' + name + '=' + value;
+		wikitext += '|' + key + '=' + value;
 	}
 
 	// close template markup
