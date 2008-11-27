@@ -19,11 +19,15 @@ YAHOO.Wikia.Blogs.add = function( answer ) {
 
 YAHOO.Wikia.Blogs.submit = function( event, id ) {
 
-	YAHOO.util.Event.preventDefault( event );
 	var oForm = YAHOO.util.Dom.get( id );
+	oForm.submit();
+
+/**
+	YAHOO.util.Event.preventDefault( event );
 	YAHOO.util.Connect.setForm( oForm, false );
 	YAHOO.util.Connect.asyncRequest( "POST", wgServer+wgScriptPath+wgScript+"?action=ajax&rs=BlogComments::axPost&title=" + wgTitle , YAHOO.Wikia.Blogs.callback );
+**/
 };
 
-// YAHOO.util.Event.addListener( "blog-comm-form-top", "submit", YAHOO.Wikia.Blogs.submit, "blog-comm-form-top" );
-// YAHOO.util.Event.addListener( "blog-comm-form-bottom", "submit", YAHOO.Wikia.Blogs.submit, "blog-comm-form-bottom" );
+YAHOO.util.Event.addListener( "blog-comm-submit-top", "click", YAHOO.Wikia.Blogs.submit, "blog-comm-form-top" );
+YAHOO.util.Event.addListener( "blog-comm-submit-bottom", "click", YAHOO.Wikia.Blogs.submit, "blog-comm-form-bottom" );

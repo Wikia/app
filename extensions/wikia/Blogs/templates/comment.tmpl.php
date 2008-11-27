@@ -1,17 +1,37 @@
-<?php
-	if( $list ):
-?>
 <a name="comments"></a>
 <h2 class="wikia_header"><?php echo wfMsg("blog-comments") ?></h2>
 <div id="blog-comments" class="reset clearfix">
 <?php
-	endif; // $list
+	if( count( $comments ) > 10 ):
+		// show top input
+?>
+<div class="blog-comm-input reset clearfix">
+	<form action="#" method="post" id="blog-comm-form-top">
+		<!-- avatar -->
+		<div class="blog-comm-input-avatar">
+		<?php
+			echo $avatar->getImageTag( 50, 50 );
+		?>
+		</div>
+		<!-- textarea -->
+		<div class="blog-comm-input-text">
+		<textarea name="wpBlogComment" id="blog-comm-top"></textarea><br />
+		<!-- submit -->
+		<a href="#" name="wpBlogSubmit" id="blog-comm-submit-top" class="bigButton">
+			<big><? echo wfMsg("blog-comment-post") ?></big>
+			<small></small>
+		</a>
+		</div>
+	</form>
+</div>
+<?php
+	endif;
+
 	if( ! $comments ):
 		echo wfMsg( "blog-zero-comments" );
 	else:
 		echo "<ul id=\"blog-comments-ul\" >";
 		foreach( $comments as $comment ):
-
 ?>
 	<li>
 		<div class="blog-comment">
@@ -35,6 +55,25 @@
 		endforeach;
 		echo "</ul>";
 	endif; // comments
-	if( $list )
-		echo "</div>"
 ?>
+<div class="blog-comm-input reset clearfix">
+	<form action="#" method="post" id="blog-comm-form-bottom">
+		<!-- avatar -->
+		<div class="blog-comm-input-avatar">
+		<?php
+			echo $avatar->getImageTag( 50, 50 );
+		?>
+		</div>
+		<!-- textarea -->
+		<div class="blog-comm-input-text">
+		<textarea name="wpBlogComment" id="blog-comm-bottom"></textarea><br />
+		<!-- submit -->
+		<a href="#" name="wpBlogSubmit" id="blog-comm-submit-bottom" class="bigButton">
+			<big><? echo wfMsg("blog-comment-post") ?></big>
+			<small></small>
+		</a>
+		</div>
+	</form>
+</div>
+
+</div>
