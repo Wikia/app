@@ -420,7 +420,7 @@ function parseItem($line) {
 				$title = $title->fixSpecialName();
 				$href = $title->getLocalURL();
 			} else {
-				$href = 'INVALID-TITLE';
+				$href = '#';
 			}
 		}
 	}
