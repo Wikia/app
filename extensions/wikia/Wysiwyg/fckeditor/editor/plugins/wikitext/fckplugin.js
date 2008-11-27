@@ -686,7 +686,7 @@ FCK.ImageProtectOnMousedown = function(e) {
 FCK.ImageProtectSetupOverlayMenu = function(refid, div) {
 
 	// remove old overlayMenu (if any)
-	if (div.lastChild && FCK.YD.hasClass(div.lastChild,'imageOverlay')) {
+	if (div.lastChild && div.lastChild.nodeName.IEquals('span') && FCK.YD.hasClass(div.lastChild,'imageOverlay')) {
 		FCKDomTools.RemoveNode(div.lastChild);
 	}
 
