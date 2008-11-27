@@ -19,6 +19,12 @@ $wgHooks[ "ArticleFromTitle" ][] = "BlogListPage::ArticleFromTitle";
 class BlogListPage extends Article {
 
 	public $mProps;
+
+	/**
+	 * how many entries on listing
+	 */
+	private $mCount = 5;
+
 	/**
 	 * overwritten Article::view function
 	 */
@@ -157,7 +163,7 @@ class BlogListPage extends Article {
 		if( !$listing ) {
 			$params = array(
 				"author" => $user,
-				"count"  => 50,
+				"count"  => $this->mCount,
 				"summary" => true,
 				"summarylength" => 750,
 				"type" => "plain",
