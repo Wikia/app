@@ -90,9 +90,16 @@ class BlogAvatar {
 		wfProfileIn( __METHOD__ );
 
 		$User = User::newFromName( $login );
-		$User->load();
-		$Avatar = new BlogAvatar( $User );
-
+		if( $User ) {
+			$User->load();
+			$Avatar = new BlogAvatar( $User );
+		}
+		else {
+			/**
+			 * anonymous
+			 */
+			$Avatar = BlogAvatar::newFromUserID( 0 );
+		}
 		wfProfileOut( __METHOD__ );
 		return $Avatar;
 	}
