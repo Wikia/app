@@ -230,7 +230,7 @@ class BlogTemplateClass {
 	private static $skipStrinAfterParse		= "<p>"; # one tag only!
 	private static $parseTagTruncateText	= "/<p>(.*)<\/p>/siU";
 	
-	private static $pageOffsetName 			= "offset";
+	private static $pageOffsetName 			= "page";
 		
 	public static function setup() {
 		global $wgParser, $wgMessageCache, $wgRequest;
