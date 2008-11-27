@@ -311,6 +311,8 @@ class BlogListPage extends Article {
 		$dbr->freeResult( $res );
 		wfProfileOut( __METHOD__ );
 
+		Wikia::log( __METHOD__, "props", $page_id );
+
 		return $return;
 	}
 }
