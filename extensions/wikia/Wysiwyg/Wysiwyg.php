@@ -130,8 +130,8 @@ function Wysiwyg_Initial($form) {
 		($wgRequest->getVal('action') == 'submit' && $wgRequest->getVal('wysiwygTemporarySaveType') == '1');
 
 	// JS
-	$wgOut->addInlineScript('var fallbackToSourceMode = '.($wgWysiwygFallbackToSourceMode ? 'true' : 'false'));
-
+	$wgOut->addInlineScript('var fallbackToSourceMode = ' . ($wgWysiwygFallbackToSourceMode ? 'true;' : 'false;'));
+	$wgOut->addInlineScript('var templateList = ' . WysiwygGetTemplateList() . ';');
 
 	$wgOut->addScript( "<script type=\"{$wgJsMimeType}\" src=\"$wgExtensionsPath/wikia/Wysiwyg/fckeditor/fckeditor.js?$wgStyleVersion\"></script>" );
 	$wgOut->addScript( "<script type=\"{$wgJsMimeType}\" src=\"$wgExtensionsPath/wikia/Wysiwyg/wysiwyg.js?$wgStyleVersion\"></script>" );
@@ -534,7 +534,7 @@ function WysiwygGetTemplateParams($name, $templateCall = null) {
 	$result = null;
 	if ($title = Title::newFromText($name, NS_TEMPLATE)) {
 		if ($revision = Revision::newFromTitle($title)) {
-			preg_match_all('/\{\{\{([^}|]+)/i', $revision->getText(), $result, PREG_PATTERN_ORDER);
+			preg_match_all('/\{\{\{([^}|]+)/', $revision->getText(), $result, PREG_PATTERN_ORDER);
 			$result = array_flip($result[1]);
 			array_walk($result, create_function('&$val, $key', '$val = "";'));
 			if (!is_null($templateCall)) {
@@ -558,4 +558,27 @@ function WysiwygGetTemplateParams($name, $templateCall = null) {
 		}
 	}
 	return $result;
+}
+
+/**
+ * Grabbing defined list of templates and their parameters
+ *
+ * @author Maciej Błaszkowski <marooned at wikia-inc.com>
+ */
+function WysiwygGetTemplateList() {
+	$lines = getMessageAsArray('editor-template-list');
+	$nodes = array();
+	if(is_array($lines) && count($lines) > 0) {
+		foreach($lines as $line) {
+			$depth = strrpos($line, '*');
+			if($depth === 0) {
+				$node = parseItem($line);
+				$title = Title::newFromText($node['org'], NS_TEMPLATE);
+				if (!$title->exists()) continue;
+				$params = WysiwygGetTemplateParams($node['org']);
+				$nodes[] = array('name' => $node['text'], 'params' => $params);
+			}
+		}
+	}
+	return Wikia::json_encode($nodes, true);
 }
