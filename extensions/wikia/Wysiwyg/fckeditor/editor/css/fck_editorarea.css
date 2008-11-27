@@ -85,7 +85,7 @@ span._moz_dirty
 .imageOverlay {
 	position: absolute;
 	top: 0px;
-	left: 0px;
+	right: 0px;
 	padding: 5px;
 	background-color: #333;
 	opacity: 0.8;
@@ -97,12 +97,12 @@ span._moz_dirty
 .imageOverlayLeft {
 	top: 5px;
 	left: 5px;
+	right: auto;
 }
 
 .imageOverlayRight {
 	top: 5px;
 	right: 5px;
-	left: auto;
 }
 
 .imageOverlay span {
