@@ -300,6 +300,15 @@ FCK.Events.AttachEvent( 'OnAfterSetHTML', function() {
 				FCK.Events.FireEvent("OnSelectionChange");
 			}
 
+			// detect drop outside editing area
+			if (FCK.ImageDragDrop && !FCK.ImageDragDrop.parentNode) {
+				// add image back to editing area
+				FCK.log('adding image back to editing area');
+				FCK.EditorDocument.body.appendChild(FCK.ImageDragDrop);
+
+				FCK.SetupElementsWithRefId();
+			}
+
 			// reload HTML to remove drag/resize box (dirty hack for FF3+)
 			if (FCKBrowserInfo.IsGecko19 && FCK.ImageDragDrop) {
 				var html = FCK.EditorDocument.body.innerHTML;
@@ -551,6 +560,7 @@ FCK.ProtectImage = function(image) {
 		FCKTools.AddEventListener(image, 'mousedown', FCK.ImageProtectOnMousedown);
 
 		FCK.BlockEvent(image, 'contextmenu');
+		FCK.BlockEvent(image, 'mouseup');
 
 		// check whether given image exists
 		FCK.wysiwygData[refid].exists = image.nodeName.IEquals('a') 
