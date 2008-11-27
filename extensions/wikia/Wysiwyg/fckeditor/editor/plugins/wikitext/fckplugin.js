@@ -294,6 +294,14 @@ FCK.Events.AttachEvent( 'OnAfterSetHTML', function() {
 				FCK.Events.FireEvent("OnSelectionChange");
 			}
 
+			// reload HTML to remove drag/resize box (dirty hack for FF3+)
+			if (FCKBrowserInfo.IsGecko19 && FCK.ImageDragDrop) {
+				var html = FCK.EditorDocument.body.innerHTML;
+				FCK.EditorDocument.body.innerHTML = html;
+
+				FCK.SetupElementsWithRefId();
+			}
+
 			// remove drag&drop undo step
 			FCK.DragNDropUndoStep = {};
 
@@ -510,7 +518,6 @@ FCKToolbarItems.RegisterItem('InsertTemplate', oInsertTemplateItem);
 FCK.ProtectImageOverlay = false;
 
 FCK.ProtectImage = function(image) {
-	//FCK.log(image);
 	var refid = parseInt(image.getAttribute('refid'));
 
 	// for browsers supporting contentEditable
