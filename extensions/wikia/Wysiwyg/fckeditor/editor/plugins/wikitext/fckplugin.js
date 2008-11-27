@@ -982,9 +982,16 @@ FCK.TemplatePreviewAdd = function(placeholder) {
 
 	var refId = placeholder.getAttribute('refid');
 
+	// remove any existing preview cloud
+	var previewDiv = docObj.getElementById('wysiwygTemplatePreview' + refId);
+
+	if (previewDiv) {
+		FCKDomTools.RemoveNode(previewDiv);
+	}
+	
 	// copy template previews to clouds
 	var preview = placeholder.nextSibling;
-	var previewDiv = docObj.createElement('div');
+	previewDiv = docObj.createElement('div');
 
 	FCK.TemplatePreviewCloud.firstChild.appendChild( previewDiv );
 
@@ -1139,6 +1146,137 @@ FCK.TemplatePreviewReset = function(previewDiv) {
 	}
 }
 
+//
+// InsertTemplate - dropdown in menu
+//
+var FCKInsertTemplateCommand = function() {
+	this.Name = 'InsertTemplate' ;
+}
+
+FCKInsertTemplateCommand.prototype = {
+	Execute : function(name) {
+		oInsertTemplateItem._Combo.SetLabel(oInsertTemplateItem.DefaultLabel);
+
+		if(name == ':other:') {
+			// user will select template (step #1)
+			FCK.TemplateWizard = {};
+			FCK.TemplateClickCommand.Execute();
+		} else {
+			if(FCK.templateList[name].params) {
+				// template selected from drop down has parameters (step #2)
+				FCK.TemplateWizard = {'name':name, 'params':FCK.templateList[name].params, 'refid':-1};
+				FCK.TemplateClickCommand.Execute();
+			} else {
+				// template selected from drop down has no parameters (add to article)
+				FCK.InsertTemplate(-1, name, null);
+			}
+		}
+	},
+	GetState : function() {
+		if(FCK.EditMode != FCK_EDITMODE_WYSIWYG) return FCK_TRISTATE_DISABLED;
+		return FCK_TRISTATE_OFF;
+	}
+};
+
+// add new / update template
+FCK.InsertTemplate = function(refid, name, params) {
+	FCK.log([refid, name, params]);
+
+	var placeholder;
+
+	if (refid > -1) {
+		FCK.log('updating template #'+refid);
+		var placeholder = FCK.GetElementByRefId(refid);
+	}
+	else {
+		refid = FCK.GetFreeRefId();
+
+		FCK.log('inserting new template as #'+refid);
+
+		// create new placeholder and add it to the article
+		placeholder = FCK.EditorDocument.createElement('INPUT');
+		placeholder.className = 'wysiwygDisabled wysiwygTemplate';
+		placeholder.type = 'button';
+		placeholder.value = name;
+		placeholder.setAttribute('refid', refid);
+		placeholder.setAttribute('_fck_type', 'template');
+
+		FCK.InsertElement(placeholder);
+
+		// add entry to metaData
+		FCK.wysiwygData[refid] = {
+			'type': 'template',
+			'name': name,
+		}
+
+		FCK.NodesWithRefId[refid] = placeholder;
+	}
+
+	// update placeholder data
+	placeholder.value = name;
+
+	// generate new wikitext
+        var wikitext = '';
+
+	wikitext = '{{' + name;
+	
+	// parameters name and value
+	for(key in params) {
+		var value = params[key];
+	
+		if (value == '') continue; // ignore empty parameters
+
+		wikitext += '|' + name + '=' + value;
+	}
+
+	wikitext += '}}';
+
+	// update metaData and send AJAX request to generate template preview
+	FCK.wysiwygData[refid].originalCall = wikitext;
+	FCK.wysiwygData[refid].templateParams = params;
+	FCK.wysiwygData[refid].preview = '<p><em>please wait</em></p>';
+
+	FCK.log(FCK.wysiwygData[refid]);
+
+	// add placeholder event handlers
+	FCK.TemplatePreviewAdd(placeholder);
+
+	// TODO: generate new preview
+}
+
+
+FCKCommands.RegisterCommand('InsertTemplate', new FCKInsertTemplateCommand());
+
+var FCKToolbarInsertTemplateCombo = function(tooltip, style) {
+	this.CommandName	= 'InsertTemplate';
+	this.Label = this.GetLabel();
+
+	this.Tooltip = tooltip ? tooltip : this.Label;
+	this.Style = style ? style : FCK_TOOLBARITEM_ICONTEXT;
+
+	this.DefaultLabel = 'Insert template';
+	this.FieldWidth = 100 ;
+}
+
+FCKToolbarInsertTemplateCombo.prototype = new FCKToolbarSpecialCombo;
+FCKToolbarInsertTemplateCombo.prototype.GetLabel = function() {
+	return '';
+}
+
+FCKToolbarInsertTemplateCombo.prototype.CreateItems = function( targetSpecialCombo ) {
+	// name - description
+	FCK.templateList = window.parent.templateList;
+
+	for(key in FCK.templateList) {
+		targetSpecialCombo.AddItem(key, (FCK.templateList[key].desc) ? FCK.templateList[key].desc : FCK.templateList[key].name);
+	}
+	targetSpecialCombo.AddItem(":other:", "Other template");
+}
+
+var oInsertTemplateItem = new FCKToolbarInsertTemplateCombo();
+FCKToolbarItems.RegisterItem('InsertTemplate', oInsertTemplateItem);
+
+
 // regenerate elements with refid after redo/undo
 FCK.Events.AttachEvent("OnUndoRedo", function() {
 	FCK.log('undo/redo catched');
@@ -1204,66 +1342,4 @@ if (FCK.UseContentEditable) {
 // for us, developers ;)
 window.parent.FCK = FCK;
 
-//
-// InsertTemplate - dropdown in menu
-//
-var FCKInsertTemplateCommand = function() {
-	this.Name = 'InsertTemplate' ;
-}
 
-FCKInsertTemplateCommand.prototype = {
-	Execute : function(name) {
-		oInsertTemplateItem._Combo.SetLabel(oInsertTemplateItem.DefaultLabel);
-
-		if(name == ':other:') {
-			FCK.TemplateWizard = {};
-			FCK.TemplateClickCommand.Execute();
-		} else {
-			if(FCK.templateList[name].params) {
-				FCK.TemplateWizard = {'name':name, 'params':FCK.templateList[name].params};
-				FCK.TemplateClickCommand.Execute();
-			} else {
-				FCK.InsertTemplate(name);
-			}
-		}
-	},
-	GetState : function() {
-		if(FCK.EditMode != FCK_EDITMODE_WYSIWYG) return FCK_TRISTATE_DISABLED;
-		return FCK_TRISTATE_OFF;
-	}
-};
-
-FCK.InsertTemplate = function(name, params) {
-	FCK.log("Call to InsertTemplate");
-	FCK.log("name: " + name);
-	FCK.log("params: " + params);
-}
-
-FCKCommands.RegisterCommand('InsertTemplate', new FCKInsertTemplateCommand());
-
-var FCKToolbarInsertTemplateCombo = function(tooltip, style) {
-	this.CommandName	= 'InsertTemplate';
-	this.Label = this.GetLabel();
-
-	this.Tooltip = tooltip ? tooltip : this.Label;
-	this.Style = style ? style : FCK_TOOLBARITEM_ICONTEXT;
-
-	this.DefaultLabel = 'Insert template';
-	this.FieldWidth = 100 ;
-}
-FCKToolbarInsertTemplateCombo.prototype = new FCKToolbarSpecialCombo;
-FCKToolbarInsertTemplateCombo.prototype.GetLabel = function() {
-	return '';
-}
-FCKToolbarInsertTemplateCombo.prototype.CreateItems = function( targetSpecialCombo ) {
-	// name - description
-	FCK.templateList = window.parent.templateList;
-
-	for(key in FCK.templateList) {
-		targetSpecialCombo.AddItem(key, (FCK.templateList[key].desc) ? FCK.templateList[key].desc : FCK.templateList[key].name);
-	}
-	targetSpecialCombo.AddItem(":other:", "Other template");
-}
-
-var oInsertTemplateItem = new FCKToolbarInsertTemplateCombo();
-FCKToolbarItems.RegisterItem('InsertTemplate', oInsertTemplateItem);

@@ -82,6 +82,22 @@ function SelectStep(stepId) {
 // preview generation
 //
 
+function GetParametersFromStep2() {
+	var params = {};
+
+	// parameters name and value
+	var nodes = GetE('templateParameters').getElementsByTagName('textarea');
+
+	for(n=0; n<nodes.length; n++) {
+		var name = nodes[n].id.substr(6);
+		var value = nodes[n].value;
+
+		params[name] = value;
+	}
+
+	return params;
+}
+
 function GetWikitextFromStep2() {
 	var wikitext = '';
 
@@ -156,6 +172,11 @@ function Ok() {
 	oEditor.FCKUndo.SaveUndoStep();
 
 	FCK.Track('/templateEditor/save');
+
+	// insert / update template
+	FCK.InsertTemplate(FCK.TemplateWizard.refid, FCK.TemplateWizard.name, GetParametersFromStep2());
+
+	return true;
 }
 	</script>
 	<style type="text/css">
