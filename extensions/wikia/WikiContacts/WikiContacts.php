@@ -112,6 +112,9 @@ class WikiContacts
 	if ($token && !$token->isValid()) {
 		return false;
 	}
+	if ( !is_object( $token ) ) {
+		return false;
+	}
 	
 	$delegation_token = $token->getDelegationToken();
 	$cid = $token->getLocationID();
