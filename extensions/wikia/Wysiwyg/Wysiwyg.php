@@ -132,6 +132,7 @@ function Wysiwyg_Initial($form) {
 	// JS
 	$wgOut->addInlineScript('var fallbackToSourceMode = ' . ($wgWysiwygFallbackToSourceMode ? 'true;' : 'false;'));
 	$wgOut->addInlineScript('var templateList = ' . WysiwygGetTemplateList() . ';');
+	$wgOut->addInlineScript('var templateHotList = ' . WysiwygGetTemplateHotList() . ';');
 
 	$wgOut->addScript( "<script type=\"{$wgJsMimeType}\" src=\"$wgExtensionsPath/wikia/Wysiwyg/fckeditor/fckeditor.js?$wgStyleVersion\"></script>" );
 	$wgOut->addScript( "<script type=\"{$wgJsMimeType}\" src=\"$wgExtensionsPath/wikia/Wysiwyg/wysiwyg.js?$wgStyleVersion\"></script>" );
@@ -581,4 +582,30 @@ function WysiwygGetTemplateList() {
 		}
 	}
 	return Wikia::json_encode($nodes, true);
+}
+
+/**
+ * Grabbing list of most included templates and their parameters
+ *
+ * @author Maciej Błaszkowski <marooned at wikia-inc.com>
+ */
+function WysiwygGetTemplateHotList() {
+	global $wgMemc, $wgCityId;
+	$key = "wysiwyg-$wgCityId-template-list";
+	$list = $wgMemc->get($key);
+	if(empty($list)) {
+		$dbr = wfGetDB(DB_SLAVE);
+		$sql = "SELECT * FROM querycache WHERE qc_type = 'Mostlinkedtemplates' AND qc_namespace = " . NS_TEMPLATE . ' ORDER BY qc_value DESC LIMIT 10;';
+		$res = $dbr->query($sql);
+		$list = array();
+		while ($row = $dbr->fetchObject($res)) {
+			$title = Title::newFromText($row->qc_title, NS_TEMPLATE);
+			if (!$title->exists()) continue;
+			$params = WysiwygGetTemplateParams($row->qc_title);
+			$list[$row->qc_title] = $params;
+		}
+		$list = Wikia::json_encode($list, true);
+		$wgMemc->set($key, $list, 60 * 60);
+	}
+	return $list;
 }
