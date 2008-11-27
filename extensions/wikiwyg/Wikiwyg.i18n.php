@@ -12,7 +12,7 @@ $messages = array();
  * @author Bartek Łapiński
  */
 $messages['en'] = array (
-		/* Createpage */
+		/* Createpage
 		'createpage' => 'Create a new article',
 		'createpage-button' => 'Create a new article',
 		'createpage-help' => '',
@@ -28,6 +28,7 @@ $messages['en'] = array (
 		'createpage-hide-cloud' => '[hide category cloud]',
 		'createpage-alternate-creation' => 'or click $1 to use original editor',
 		'createpage-categories-help' => 'Categories help organize information in this wiki. Please choose from the list below or type a new one.',
+		*/
 		/* EZParser */
 		'ezparser' => 'Simple parser test',
 		/* PocketDiff */
@@ -55,7 +56,7 @@ $messages['en'] = array (
  */
 $messages['bg'] = array (
 		/* Createpage */
-		'createpage' => 'Започване на нова страница',
+/*		'createpage' => 'Започване на нова страница',
 		'createpage-button' => 'Създаване на нова страница',
 		'createpage-help' => '',
 		'createpage-caption' => 'заглавие',
@@ -70,6 +71,7 @@ $messages['bg'] = array (
 		'createpage-hide-cloud' => '[скриване на облака с категории]',
 		'createpage-alternate-creation' => 'или натиснете $1 за да използвате оригиналния редактор',
 		'createpage-categories-help' => 'Категориите помагат организирането на информацията в това уики. Изберете от списъка по-долу или създайте нова.',
+*/
 		/* MediaWikiWyg */
 		'save' => 'Съхранение',
 		'edit-summary' => 'Резюме на редакцията',
@@ -80,7 +82,7 @@ $messages['bg'] = array (
  */
 $messages['de'] = array (
 		/* Createpage */
-		'createpage' => 'Neue Seite anlegen',
+/*		'createpage' => 'Neue Seite anlegen',
 		'createpage-button' => 'Neue Seite anlegen',
 		'createpage-help' => '',
 		'createpage-caption' => 'titel',
@@ -88,6 +90,7 @@ $messages['de'] = array (
 		'createpage-categories' => 'Kategorien:',
 		'createpage-title-caption' => 'Titel:',
 		'createpage-here' => 'hier',
+*/
 );
 
 /** Spanish (Español)
@@ -95,7 +98,7 @@ $messages['de'] = array (
  */
 $messages['es'] = array (
 		/* Createpage */
-		'createpage' => 'Crear un artículo nuevo',
+/*		'createpage' => 'Crear un artículo nuevo',
 		'createpage-button' => 'Crear un articulo nuevo',
 		'createpage-help' => '',
 		'createpage-caption' => 'Título:',
@@ -110,6 +113,7 @@ $messages['es'] = array (
 		'createpage-hide-cloud' => '[esconder nube de categorías]',
 		'createpage-alternate-creation' => 'Puedes hacer click $1 pasa usar el editor original.',
 		'createpage-categories-help' => 'Las categorías ayudan a organizar la información de este wiki. Por favor, selecciona al menos una de la lista de más abajo o escribe una nueva.',
+*/
 		/* WikiwygEditing */
 		'wikiwyg-editing-option' => 'o puedes utilizar el editor básico cambiando tus preferencias $1',
 		'wikiwyg-use-cloud' => ', para la edición con CategoryCloud, utilice $1 enlace',
@@ -130,7 +134,7 @@ $messages['es'] = array (
  */
 $messages['fi'] = array (
 		/* Createpage */
-		'createpage' => 'Luo uusi artikkeli',
+/*		'createpage' => 'Luo uusi artikkeli',
 		'createpage-button' => 'Luo uusi artikkeli',
 		'createpage-help' => '',
 		'createpage-caption' => 'otsikko',
@@ -145,6 +149,7 @@ $messages['fi'] = array (
 		'createpage-hide-cloud' => '[piilota luokkapilvi]',
 		'createpage-alternate-creation' => 'tai napsauta $1 käyttääksesi alkuperästä editoria',
 		'createpage-categories-help' => 'Luokat auttavat järjestämään tietoa tässä wikissä. Valitse allaolevasta listatsta tai kirjoita luodaksesi uuden.',
+*/
 		/* WikiwygEditing */
 		'wikiwyg-editing-option' => 'voit vaihtaa vanhaan editoriin asetuksissasi $1',
 		'wikiwyg-use-cloud' => ', muokataksesi luokkapilven kanssa, käytä $1 linkkiä',
@@ -166,7 +171,7 @@ $messages['fi'] = array (
  */
 $messages['it'] = array (
 		/* Createpage */
-		'createpage' => 'Crea un nuovo articolo',
+/*		'createpage' => 'Crea un nuovo articolo',
 		'createpage-button' => 'Crea un nuovo articolo',
 		'createpage-help' => '',
 		'createpage-caption' => 'Titolo',
@@ -181,6 +186,7 @@ $messages['it'] = array (
 		'createpage-hide-cloud' => '[nascondi le categorie]',
 		'createpage-alternate-creation' => 'o clicca $1 per usare l\'editor originale',
 		'createpage-categories-help' => 'Categorie meglio organizzare le informazioni in questo sito. Si prega di scegliere dalla lista qui sotto o digitare una nuova.',
+*/
 		/* WikiwygEditing */
 		'wikiwyg-editing-option' => 'è possibile passare al vecchio editor e preferenze $1',
 		'wikiwyg-use-cloud' => ', per l\'editing con CategoryCloud, usa $1 link',
@@ -201,7 +207,7 @@ $messages['it'] = array (
  */
 $messages['ja'] = array (
 		/* Createpage */
-		'createpage' => '新規記事を作成',
+/*		'createpage' => '新規記事を作成',
 		'createpage-button' => '新規記事を作成',
 		'createpage-help' => '',
 		'createpage-caption' => '項目名',
@@ -216,6 +222,7 @@ $messages['ja'] = array (
 		'createpage-hide-cloud' => '[カテゴリ群を隠す]',
 		'createpage-alternate-creation' => '従来のエディタを使うには、 $1 をクリックしてください。',
 		'createpage-categories-help' => 'カテゴリを使うことで、このウィキアの情報を整理できます。是非とも、下のリストから選ぶか、新しいカテゴリを作成してみてください。',
+*/
 );
 
 /** Russian
@@ -223,7 +230,7 @@ $messages['ja'] = array (
  */
 $messages['ru'] = array (
 		/* Createpage */
-		'createpage' => 'Создать новую статью',
+/*		'createpage' => 'Создать новую статью',
 		'createpage-button' => 'Создать новую статью',
 		'createpage-help' => '',
 		'createpage-caption' => 'заголовок',
@@ -238,6 +245,7 @@ $messages['ru'] = array (
 		'createpage-hide-cloud' => '[скрыть облако категорий]',
 		'createpage-alternate-creation' => 'или кликните $1 , чтобы воспользоваться оригинальным редактором',
 		'createpage-categories-help' => 'Категории помогают организовывать информацию в этой вики. Пожалуйста, выберите из списка ниже или введите новую.',
+*/
 		/* MediaWikiWyg */
 		'insertimage' => 'Вставить изображение',
 		'edit-summary' => 'Описание правки',
