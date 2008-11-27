@@ -559,8 +559,10 @@ FCK.ProtectImage = function(image) {
 		FCKTools.RemoveEventListener(image, 'mousedown', FCK.ImageProtectOnMousedown);
 		FCKTools.AddEventListener(image, 'mousedown', FCK.ImageProtectOnMousedown);
 
+		FCKTools.RemoveEventListener(image, 'mouseup', FCK.ImageProtectOnMouseup);
+		FCKTools.AddEventListener(image, 'mouseup', FCK.ImageProtectOnMouseup);
+
 		FCK.BlockEvent(image, 'contextmenu');
-		FCK.BlockEvent(image, 'mouseup');
 
 		// check whether given image exists
 		FCK.wysiwygData[refid].exists = image.nodeName.IEquals('a') 
@@ -707,6 +709,16 @@ FCK.ImageProtectOnMousedown = function(e) {
 	}
 	else {
 		FCK.YE.stopEvent(e);
+	}
+};
+
+FCK.ImageProtectOnMouseup = function(e) {
+	FCK.YE.stopEvent( FCK.YE.getEvent(e) );
+
+	// unselect any selection
+	var selection = FCKSelection.GetSelection();
+	if (selection.removeAllRanges) {
+		selection.removeAllRanges();
 	}
 };
 
