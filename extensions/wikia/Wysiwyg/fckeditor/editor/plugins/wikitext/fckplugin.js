@@ -1038,17 +1038,18 @@ FCK.TemplatePreviewOnPlaceholderMouseout = function(e) {
 FCK.TemplatePreviewOnPlaceholderClick = function(e) {
 	var e = FCK.YE.getEvent(e);
 	var target = FCK.YE.getTarget(e);
+	var refid = target.getAttribute('refid');
 
-	FCK.TemplateRefId = target.getAttribute('refid');
+	FCK.TemplateWizard = {'name':FCK.wysiwygData[refid].name,'params':FCK.wysiwygData[refid].templateParams,'refid':refid};
 	FCK.TemplateClickCommand.Execute();
 }
 
 FCK.TemplatePreviewOnPreviewClick = function(e) {
 	// prevent clicking on links inside template preview
 	FCK.YE.stopEvent( FCK.YE.getEvent(e) );
+	var refid = FCK.TemplatePreviewCloud.getAttribute('refid');
 
-	// pass refId to template editor
-	FCK.TemplateRefId = FCK.TemplatePreviewCloud.getAttribute('refid');
+	FCK.TemplateWizard = {'name':FCK.wysiwygData[refid].name,'params':FCK.wysiwygData[refid].templateParams,'refid':refid};
 	FCK.TemplateClickCommand.Execute();
 }
 
@@ -1211,15 +1212,33 @@ var FCKInsertTemplateCommand = function() {
 }
 
 FCKInsertTemplateCommand.prototype = {
-	Execute : function(id) {
+	Execute : function(name) {
 		oInsertTemplateItem._Combo.SetLabel(oInsertTemplateItem.DefaultLabel);
-		alert(id);
+
+		if(name == 'other') {
+			FCK.TemplateWizard = {};
+			FCK.TemplateClickCommand.Execute();
+		} else {
+			if(true) {
+				var params = {};
+				FCK.TemplateWizard = {'name':name, 'params':params};
+				FCK.TemplateClickCommand.Execute();
+			} else {
+				FCK.InsertTemplate(name);
+			}
+		}
 	},
 	GetState : function() {
 		if(FCK.EditMode != FCK_EDITMODE_WYSIWYG) return FCK_TRISTATE_DISABLED;
 		return FCK_TRISTATE_OFF;
 	}
-} ;
+};
+
+FCK.InsertTemplate = function(name, params) {
+	FCK.log("Call to InsertTemplate");
+	FCK.log("name: " + name);
+	FCK.log("params: " + params);
+}
 
 FCKCommands.RegisterCommand('InsertTemplate', new FCKInsertTemplateCommand());
 
@@ -1238,6 +1257,7 @@ FCKToolbarInsertTemplateCombo.prototype.GetLabel = function() {
 	return '';
 }
 FCKToolbarInsertTemplateCombo.prototype.CreateItems = function( targetSpecialCombo ) {
+	// name - description
 	targetSpecialCombo.AddItem("temp1", "Template 1");
 	targetSpecialCombo.AddItem("temp2", "Template 2");
 	targetSpecialCombo.AddItem("temp3", "Template 3");
