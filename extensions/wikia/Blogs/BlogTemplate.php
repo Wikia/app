@@ -949,6 +949,7 @@ class BlogTemplateClass {
 						$sPager = self::__setPager($iCount, intval(self::$aOptions['offset']));
 					}
 					/* run template */
+					error_log("self::aOptions = ".print_r(self::$aOptions, true)."\n", 3, "/tmp/moli.log");
 					$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
 					$oTmpl->set_vars( array(
 						"wgUser"			=> $wgUser,
