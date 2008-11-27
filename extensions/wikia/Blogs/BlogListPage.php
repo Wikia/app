@@ -115,7 +115,9 @@ class BlogListPage extends Article {
 			/**
 			 * blog listing
 			 */
-			Article::view();
+			if( $this->exists() ) {
+				Article::view();
+			}
 			$this->showBlogListing();
 		}
 	}

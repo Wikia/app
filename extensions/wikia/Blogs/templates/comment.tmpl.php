@@ -6,7 +6,7 @@
 		// show top input
 ?>
 <div class="blog-comm-input reset clearfix">
-	<form action="#" method="post" id="blog-comm-form-top">
+	<form action="<?php $title->getFullURL() ?>" method="post" id="blog-comm-form-top">
 		<!-- avatar -->
 		<div class="blog-comm-input-avatar">
 		<?php
@@ -59,7 +59,7 @@
 	if( isset( $props[ "commenting" ] ) && $props[ "commenting" ] == 1 ):
 ?>
 <div class="blog-comm-input reset clearfix">
-	<form action="#" method="post" id="blog-comm-form-bottom">
+	<form action="<?php $title->getFullURL() ?>" method="post" id="blog-comm-form-bottom">
 		<!-- avatar -->
 		<div class="blog-comm-input-avatar">
 		<?php
