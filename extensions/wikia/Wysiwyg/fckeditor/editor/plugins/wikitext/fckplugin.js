@@ -161,8 +161,14 @@ FCK.InsertDirtySpanAfter = function(node) {
 // return next free refId
 FCK.GetFreeRefId = function() {
 	// JSONEncode & JSONParse sometimes breaks FCK.wysiwygData.length value
-	for (refid in FCK.wysiwygData) {}
-	return parseInt(refid) + 1;
+	var refid = 0;
+	for (r in FCK.wysiwygData) {
+		r = parseInt(r);
+		if (refid < r) {
+			refid = r;
+		}
+	}
+	return ++refid;
 }
 
 FCK.GetElementByRefId = function(refId) {
