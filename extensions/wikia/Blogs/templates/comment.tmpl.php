@@ -2,7 +2,7 @@
 	if( $list ):
 ?>
 <a name="comments"></a>
-<h2><?php echo wfMsg("blog-comments") ?></h2>
+<h2 class="wikia_header"><?php echo wfMsg("blog-comments") ?></h2>
 <div id="blog-comments" class="reset clearfix">
 <?php
 	endif; // $list
@@ -16,12 +16,17 @@
 	<li>
 		<div class="blog-comment">
 		<a name="<?php echo isset( $comment["anchor"][2] ) ? $comment["anchor"][2] : "" ?>"></a>
-		<?php echo $comment["avatar"] ?>
-		<div class="text">
-			<strong><?php echo $comment["sig"] ?></strong>&nbsp;|&nbsp;
-			<?php echo $comment["timestamp"] ?>
-			<hr />
-			<?php echo $comment["text"]; ?>
+		<div class="comment_avatar">
+			<?php echo $comment["avatar"] ?>
+		</div>
+		<div class="comment">
+			<div class="details">
+				<strong><?php echo $comment["sig"] ?></strong>
+				<span class="timestamp"><?php echo $comment["timestamp"] ?></span>
+			</div>
+			<?php
+				echo $comment["text"];
+			?>
 		</div>
 		</div>
 		<br style="clear: both;" />

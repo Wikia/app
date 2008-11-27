@@ -1,9 +1,9 @@
 <!-- s:<?= __FILE__ ?> -->
-<div id="<?= ( $aOptions['style'] == 'box' ) ? 'wk_blogs_box' : 'wk_blogs_panel'?>">
+<div class="<?= ( $aOptions['style'] == 'plain' ) ? 'wk_blogs_plain' : 'wk_blogs_panel'?> reset">
 <? if ( !empty($aOptions['title']) ) { ?>
-<div id="wk_blogs_title"><?=$aOptions['title']?></div>
+<div class="wk_blogs_title color1"><?=$aOptions['title']?></div>
 <? } ?>
-<div id="wk_blogs_body">
+<div class="wk_blogs_body">
 <?
 if (!empty($aRows)) {
 ?>	
@@ -13,7 +13,7 @@ foreach ($aRows as $pageId => $aRow) {
        $oTitle = Title::newFromText($aRow['title'], $aRow['namespace']);
 ?>
 <li>
-<div class="wk-blogs-link"><a href="<?=$oTitle->getLocalUrl()?>"><?=$oTitle->getText()?></a></div>
+<div class="wk_blogs_link"><a href="<?=$oTitle->getLocalUrl()?>"><?=$oTitle->getText()?></a></div>
 <?
 /* s: TIMESTAMP */
 	if ( !empty($aOptions['timestamp']) ) {
@@ -23,7 +23,7 @@ foreach ($aRows as $pageId => $aRow) {
 			$sUserLinks = $aUserLinks['userpage']." (".$aUserLinks['talkpage']."|".$aUserLinks['contribs'].")";
 		}
 ?>		
-<div class="wk_blogs_timestamp"><span class="left"><?=$wgLang->sprintfDate("F j, Y", wfTimestamp(TS_MW, $aRow['timestamp']))?></span><span class="right"><?=$sUserLinks?></span></div>
+<div class="wk_blogs_details"><span class="wk_blogs_date"><?=$wgLang->sprintfDate("F j, Y", wfTimestamp(TS_MW, $aRow['timestamp']))?></span><span class="wk_blogs_author"><?=$sUserLinks?></span></div>
 <?		
 	}
 /* e: TIMESTAMP */
