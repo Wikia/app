@@ -576,7 +576,7 @@ function WysiwygGetTemplateList() {
 				$title = Title::newFromText($node['org'], NS_TEMPLATE);
 				if (!$title->exists()) continue;
 				$params = WysiwygGetTemplateParams($node['org']);
-				$nodes[$node['org']] = array('desc' => $node['text'], 'params' => $params);
+				$nodes[$node['org']] = array('desc' => $node['text'], 'params' => (!empty($params)) ? $params : null);
 			}
 		}
 	}
