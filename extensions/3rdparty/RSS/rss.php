@@ -205,8 +205,10 @@ function renderRss( $input ) {
         }
 
         if ($DisableCache) {
-                global $wgParser;
-                $wgParser->disableCache();
+               #global $wgParser;
+               #$wgParser->disableCache();
+					global $wgParserCacheExpireTime;
+					$wgParserCacheExpireTime = 3600;
         }
         return $output;
 }
