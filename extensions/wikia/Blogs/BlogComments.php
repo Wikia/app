@@ -29,9 +29,6 @@ class BlogComments {
 			return false;
 		}
 
-		/**
-		 * get talk page for this article
-		 */
 		$comments = new BlogComments();
 		$comments->setText( $blogPage->getDBkey() );
 		return $comments;
@@ -62,7 +59,7 @@ class BlogComments {
 	private function getCommentPages() {
 		global $wgRequest;
 
-		$this->mOrder = $wgRequest->getText("order", "asc" );
+		$order = $wgRequest->getText("order", "asc" );
 		$this->mOrder = ( $order == "dsc" ) ? "desc" : "asc";
 
 		if( is_array( $this->mComments ) ) {
@@ -70,6 +67,9 @@ class BlogComments {
 		}
 		wfProfileIn( __METHOD__ );
 
+		/**
+		 * cache it! but with what key?
+		 */
 		$pages = array();
 
 		$dbr = wfGetDB( DB_SLAVE );
