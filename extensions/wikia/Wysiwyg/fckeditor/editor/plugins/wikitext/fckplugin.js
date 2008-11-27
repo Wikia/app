@@ -1215,13 +1215,12 @@ FCKInsertTemplateCommand.prototype = {
 	Execute : function(name) {
 		oInsertTemplateItem._Combo.SetLabel(oInsertTemplateItem.DefaultLabel);
 
-		if(name == 'other') {
+		if(name == ':other:') {
 			FCK.TemplateWizard = {};
 			FCK.TemplateClickCommand.Execute();
 		} else {
-			if(true) {
-				var params = {};
-				FCK.TemplateWizard = {'name':name, 'params':params};
+			if(FCK.templateList[name].params.length > 0) {
+				FCK.TemplateWizard = {'name':name, 'params':FCK.templateList[name].params};
 				FCK.TemplateClickCommand.Execute();
 			} else {
 				FCK.InsertTemplate(name);
@@ -1258,12 +1257,12 @@ FCKToolbarInsertTemplateCombo.prototype.GetLabel = function() {
 }
 FCKToolbarInsertTemplateCombo.prototype.CreateItems = function( targetSpecialCombo ) {
 	// name - description
-	targetSpecialCombo.AddItem("temp1", "Template 1");
-	targetSpecialCombo.AddItem("temp2", "Template 2");
-	targetSpecialCombo.AddItem("temp3", "Template 3");
-	targetSpecialCombo.AddItem("temp4", "Template 4");
-	targetSpecialCombo.AddItem("temp5", "Template 5");
-	targetSpecialCombo.AddItem("other", "Other template");
+	FCK.templateList = window.parent.templateList;
+
+	for(key in FCK.templateList) {
+		targetSpecialCombo.AddItem(key, (FCK.templateList[key].desc) ? FCK.templateList[key].desc : FCK.templateList[key].name);
+	}
+	targetSpecialCombo.AddItem(":other:", "Other template");
 }
 
 var oInsertTemplateItem = new FCKToolbarInsertTemplateCombo();
