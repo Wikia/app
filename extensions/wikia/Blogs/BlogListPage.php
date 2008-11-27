@@ -41,7 +41,7 @@ class BlogListPage extends Article {
 			Article::view();
 			$this->mTitle->mPrefixedText = $oldPrefixedText;
 
-			$this->mProps = $this->getProps();
+			$this->mProps = self::getProps( $this->getID() );
 			$templateParams = array();
 
 			if( isset( $this->mProps[ "voting" ] ) && $this->mProps[ "voting" ] == 1 ) {
@@ -294,10 +294,11 @@ class BlogListPage extends Article {
 	 * get properties for page, maybe it should be cached?
 	 *
 	 * @access public
+	 * @static
 	 *
 	 * @return Array
 	 */
-	public function getProps() {
+	static public function getProps( $page_id ) {
 
 		wfProfileIn( __METHOD__ );
 		$return = array();
@@ -306,7 +307,7 @@ class BlogListPage extends Article {
 		$res = $dbr->select(
 			array( "page_props" ),
 			array( "*" ),
-			array( "pp_page" => $this->getID() ),
+			array( "pp_page" => $page_id ),
 			__METHOD__
 		);
 		while( $row = $dbr->fetchObject( $res ) ) {
