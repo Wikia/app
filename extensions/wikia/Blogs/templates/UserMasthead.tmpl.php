@@ -24,7 +24,7 @@ if ($wgTitle == 'Special:Watchlist') {
 	<ul>
 		<?
 		foreach( $data['nav_links'] as $navLink ) {
-			echo '<li><a href="'. $navLink['href'] .'">'. $navLink['text'] .'</a></li>';
+			echo "<li ". ( ( $current  == $navLink[ "dbkey" ]) ? 'class="selected">' : ">" ) . '<a href="'. $navLink['href'] .'">'. $navLink['text'] .'</a></li>';
 		}
 		?>
 	</ul>
