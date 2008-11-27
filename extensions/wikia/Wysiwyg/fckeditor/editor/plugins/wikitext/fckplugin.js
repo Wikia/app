@@ -622,11 +622,12 @@ FCK.ProtectImage = function(image) {
 // go up the DOM tree to find image root element based on its child
 FCK.GetParentImage = function(child) {
 	var node = child;
-	while(node && node.getAttribute && !node.getAttribute('refid')) {
+
+	while( node && node.getAttribute && !FCK.YAHOO.lang.isNumber(node.getAttribute('refid')) ) {
 		node = node.parentNode;
 	}
 
-	if (node.getAttribute('refid')) {
+	if ( node && node.getAttribute && FCK.YAHOO.lang.isNumber(node.getAttribute('refid')) ) {
 		return node;
 	}
 	else {
