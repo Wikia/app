@@ -8,6 +8,7 @@ function userMasthead() {
 	$namespace = $wgTitle->getNamespace();
 
 	$dbKey = $wgTitle->getDBkey();
+	$isAnon = $wgUser->isAnon();
 
 	if( $namespace == NS_BLOG_ARTICLE ||
 		$namespace == NS_USER ||
@@ -54,18 +55,18 @@ function userMasthead() {
 		 * get avatar for this user
 		 */
 
-		$out['nav_links'] = array (
-			array('text' => wfMsg('nstab-user'), 'href' => Title::newFromText( $userspace, NS_USER )->getLocalUrl() ),
-			array('text' => wfMsg('talkpage'), 'href' => Title::newFromText( $userspace, NS_USER_TALK )->getLocalUrl() ),
-			array('text' => wfMsg('blog-page'), 'href' => Title::newFromText( $userspace, NS_BLOG_ARTICLE )->getLocalUrl() ),
-			array('text' => wfMsg('contris'), 'href' => Title::newFromText( "Contributions/{$userspace}", NS_SPECIAL )->getLocalUrl() )
-		);
+		$out['nav_links'][] = array('text' => wfMsg('nstab-user'), 'href' => Title::newFromText( $userspace, NS_USER )->getLocalUrl() );
+		$out['nav_links'][] = array('text' => wfMsg('talkpage'), 'href' => Title::newFromText( $userspace, NS_USER_TALK )->getLocalUrl() );
+		$out['nav_links'][] = array('text' => wfMsg('blog-page'), 'href' => Title::newFromText( $userspace, NS_BLOG_ARTICLE )->getLocalUrl() );
+		if( !$isAnon ) {
+			$out['nav_links'][] = array('text' => wfMsg('contris'), 'href' => Title::newFromText( "Contributions/{$userspace}", NS_SPECIAL )->getLocalUrl() );
+		}
 
 		if ( $wgUser->isLoggedIn() && $wgUser->getName() == $userspace ) {
 			$out['nav_links'][] = array('text' => wfMsg('prefs-watchlist'), 'href' => Title::newFromText("Watchlist", NS_SPECIAL )->getLocalUrl());
 			$out['nav_links'][] = array('text' => wfMsg('manage_widgets'), 'href' => Title::newFromText("WidgetDashboard", NS_SPECIAL )->getLocalUrl());
 			$out['nav_links'][] = array('text' => wfMsg('preferences'), 'href' => Title::newFromText("Preferences", NS_SPECIAL )->getLocalUrl());
-		} else {
+		} elseif ( !$isAnon ) {
 			$out['nav_links'][] = array('text' => wfMsg("emailpage"), 'href' => Title::newFromText( "EmailUser/{$userspace}", NS_SPECIAL )->getLocalUrl());
 		}
 
