@@ -1226,7 +1226,7 @@ FCK.InsertTemplate = function(refid, name, params) {
 	
 		if (value == '') continue; // ignore empty parameters
 
-		wikitext += '|' + name + '=' + value;
+		wikitext += '|' + key + '=' + value;
 	}
 
 	wikitext += '}}';
