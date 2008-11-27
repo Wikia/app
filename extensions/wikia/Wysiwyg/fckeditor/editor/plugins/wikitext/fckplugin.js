@@ -567,12 +567,18 @@ FCK.ProtectImage = function(image) {
 	iframe.setAttribute('refid', refid);
 	iframe.className = image.className;
 
+	// get image size to create proper cover
 	if (image.nodeName.IEquals('a')) {
 		var size = {width: image.firstChild.width, height: image.firstChild.height + 6};
+	}
+	else if (image.nodeName.IEquals('iframe')) {
+		var size = {width: image.style.width, height: parseInt(image.style.height) + 6};
 	}
 	else {
 		var size = {width: image.firstChild.style.width, height: image.clientHeight + 6};
 	}
+
+	FCK.log(image); FCK.log(size);
 
 	// external CSS may not be fully loaded - use style value from inline CSS for width
 	iframe.style.width = parseInt(size.width) + 20 + 'px';
