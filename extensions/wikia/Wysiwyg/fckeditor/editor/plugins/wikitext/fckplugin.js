@@ -301,7 +301,7 @@ FCK.Events.AttachEvent( 'OnAfterSetHTML', function() {
 			}
 
 			// detect drop outside editing area
-			if (FCK.ImageDragDrop && !FCK.ImageDragDrop.parentNode) {
+			if ( FCK.ImageDragDrop && !FCK.GetElementByRefId(FCK.ImageDragDrop.getAttribute('refid')) ) {
 				// add image back to editing area
 				FCK.log('adding image back to editing area');
 				FCK.EditorDocument.body.appendChild(FCK.ImageDragDrop);
