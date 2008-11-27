@@ -1,17 +1,15 @@
 <!-- s:<?= __FILE__ ?> -->
-<div id="wk-blogs-panel">
+<div class="wk_blogs_post">
 <?
 if (!empty($aRows)) {
 ?>	
-<div id="wk-blogs-body">
-<ul class="panellist">
+<ul class="list">
 <?
-#echo "<pre>".print_r($aRows, true)."</pre>";
 foreach ($aRows as $pageId => $aRow) {
 	$oTitle = Title::newFromText($aRow['title'], $aRow['namespace']);
 ?>
 <li>
-<div class="wk-blogs-link"><a href="<?=$oTitle->getLocalUrl()?>"><?=$oTitle->getSubpageText()?></a></div>
+<div class="wk_blogs_link"><a href="<?=$oTitle->getLocalUrl()?>"><?=$oTitle->getSubpageText()?></a></div>
 <?
 /* s: TIMESTAMP */
 	if ( !empty($aOptions['timestamp']) ) {
@@ -23,19 +21,19 @@ foreach ($aRows as $pageId => $aRow) {
 			}
 		}
 ?>		
-<div class="wk-blogs-timestamp"><span class="left"><?=$wgLang->sprintfDate("F j, Y", wfTimestamp(TS_MW, $aRow['timestamp']))?></span><span class="right"><?=$sUserLinks?></span></div>
+<div class="wk_date"><span class="left"><?=$wgLang->sprintfDate("F j, Y", wfTimestamp(TS_MW, $aRow['timestamp']))?></span><span class="right"><?=$sUserLinks?></span></div>
 <?		
 	}
 /* e: TIMESTAMP */
 /* s: SUMMARY */
 	if ( !empty($aOptions['summary']) ) {
 ?>
-<div class="wk-blogs-summary"><?= $aRow['text'] ?></div>
+<div class="wk_blogs_summary"><?= $aRow['text'] ?></div>
 <?		
 	}
 	/* s: COMMENTS */
 ?>	
-<div class="wk-blogs-comments">
+<div class="wk_blogs_comments">
 <ul class="links">
 <li><span style="margin:0 2px"><img src="<?=$wgExtensionsPath?>/wikia/Blogs/images/comment.gif" border="0" /></span><?=$skin->makeLinkObj($oTitle, wfMsg('blog-nbrcomments', intval($aRow['comments'])), "#comments")?></li>
 <li>|</li>
@@ -53,11 +51,10 @@ foreach ($aRows as $pageId => $aRow) {
 } /* foreach */
 ?>
 </ul>
-</div>
 <?	
 } /* if (!empty($aRows)) */
 ?>
-<div style="float:right;white-space:nowrap;">
+<div class="wk_blogs_pager">
 <? if (!empty($sPager)) { ?>
 <?=$sPager?>
 <? } ?>
