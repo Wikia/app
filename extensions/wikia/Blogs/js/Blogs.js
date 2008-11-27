@@ -1,32 +1,12 @@
 YAHOO.namespace("Wikia.Blogs");
 
-YAHOO.Wikia.Blogs.callback = {
-	success: function( response ) {
-		YAHOO.Wikia.Blogs.add( YAHOO.Tools.JSONParse( response.responseText ) );
-	},
-	failure: function( responde ) {
-		answer = YAHOO.Tools.JSONParse( response.responseText );
-	},
-	timeout: 50000
-};
-
-YAHOO.Wikia.Blogs.add = function( answer ) {
-
-	var elem = document.createElement( "<li>");
-//	elem.innerHTML = document.createTextNode( answer[ "text" ] );
-	YAHOO.util.Dom.get( "blog-comments-ul" ).appendChild( elem );
-};
-
-YAHOO.Wikia.Blogs.submit = function( event, id ) {
-
-	var oForm = YAHOO.util.Dom.get( id );
-	oForm.submit();
 
 /**
-	YAHOO.util.Event.preventDefault( event );
-	YAHOO.util.Connect.setForm( oForm, false );
-	YAHOO.util.Connect.asyncRequest( "POST", wgServer+wgScriptPath+wgScript+"?action=ajax&rs=BlogComments::axPost&title=" + wgTitle , YAHOO.Wikia.Blogs.callback );
-**/
+ * so far simply submit of form
+ */
+YAHOO.Wikia.Blogs.submit = function( event, id ) {
+	var oForm = YAHOO.util.Dom.get( id );
+	oForm.submit();
 };
 
 YAHOO.util.Event.addListener( "blog-comm-submit-top", "click", YAHOO.Wikia.Blogs.submit, "blog-comm-form-top" );
