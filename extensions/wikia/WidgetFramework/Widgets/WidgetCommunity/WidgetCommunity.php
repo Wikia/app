@@ -36,7 +36,7 @@ function WidgetCommunity($id, $params) {
 	if( class_exists("BlogAvatar") ) {
 		$avatar = BlogAvatar::newFromUser( $wgUser )->getLinkTag( 29, 29, false, false, "community_avatar" );
 	}
-	if(class_exists("WikiaAvatar")) {
+	elseif(class_exists("WikiaAvatar")) {
 		$userAvatar = new WikiaAvatar($wgUser->getId());
 		$image = $userAvatar->getAvatarImage("m");
 		$avatar = '<a rel="nofollow" href="/index.php?title=Special:AvatarUpload"><img src="'.$image.'" id="community_avatar" /></a>';
