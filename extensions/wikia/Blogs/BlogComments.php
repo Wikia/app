@@ -12,6 +12,7 @@ class BlogComments {
 	private $mText;
 	private $mComments = false;
 	private $mProps = false;
+	private $mOrder = false;
 
 	static public function newFromTitle( Title $title ) {
 		$comments = new BlogComments();
@@ -59,11 +60,16 @@ class BlogComments {
 	 * getCommentPages -- take pages connected to comments list
 	 */
 	private function getCommentPages() {
+		global $wgRequest;
+
+		$this->mOrder = $wgRequest->getText("order", "asc" );
+		$this->mOrder = ( $order == "dsc" ) ? "desc" : "asc";
 
 		if( is_array( $this->mComments ) ) {
 			return $this->mComments;
 		}
 		wfProfileIn( __METHOD__ );
+
 		$pages = array();
 
 		$dbr = wfGetDB( DB_SLAVE );
@@ -75,7 +81,7 @@ class BlogComments {
 				"page_title LIKE '" . $dbr->escapeLike( $this->mText ) . "/%'"
 			),
 			__METHOD__,
-			array( "ORDER BY" => "page_touched" )
+			array( "ORDER BY" => "page_touched {$this->mOrder}" )
 		);
 		while( $row = $dbr->fetchObject( $res ) ) {
 			$pages[] = Title::newFromId( $row->page_id );
