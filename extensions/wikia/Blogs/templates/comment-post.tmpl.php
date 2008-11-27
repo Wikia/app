@@ -1,10 +1,22 @@
-<div class="blog-comm-input">
+<div class="blog-comm-input reset clearfix">
 	<form action="#" method="post" id="blog-comm-form-<?php echo $position ?>">
 		<!-- avatar -->
-		<?php echo $avatar->getLinkTag( 50, 50 ); ?>
+		<div class="blog-comm-input-avatar">
+		<?php
+			echo $avatar->getImageTag( 50, 50 );
+		?>
+		</div>
 		<!-- textarea -->
-		<textarea width="80%" name="wpBlogComment" id="blog-comm-<?php echo $position ?>"></textarea>
+		<div class="blog-comm-input-text">
+		<textarea name="wpBlogComment" id="blog-comm-<?php echo $position ?>"></textarea><br />
 		<!-- submit -->
-		<input type="submit" class="submit" name="wpBlogSubmit" id="blog-comm-submit-<?php echo $position ?>" value="<?php echo wfMsg("blog-comment-post") ?>" />
+		<a href="#" name="wpBlogSubmit" id="blog-comm-submit-<?php echo $position ?>" class="bigButton">
+			<big><? echo wfMsg("blog-comment-post") ?></big>
+			<small></small>
+		</a>
+		</div>
+		<!--
+		<input type="submit" name="wpBlogSubmit" id="blog-comm-submit-<?php echo $position ?>" value="<?php echo wfMsg("blog-comment-post") ?>" />
+		-->
 	</form>
 </div>
