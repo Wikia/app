@@ -2,7 +2,7 @@
 FCKCommands.RegisterCommand('Link', new FCKDialogCommand('Link', FCKLang.DlgLnkWindowTitle, FCKConfig.PluginsPath + 'wikitext/dialogs/link.html', 400, 250));
 
 // Register templates editor
-FCK.TemplateClickCommand = new FCKDialogCommand('Template', '&nbsp;', FCKConfig.PluginsPath + 'wikitext/dialogs/template.html', 600, 350);
+FCK.TemplateClickCommand = new FCKDialogCommand('Template', '&nbsp;', FCKConfig.PluginsPath + 'wikitext/dialogs/template.html', 800, 500);
 
 // Wikitext infobox
 FCK.InputClickCommand = new FCKDialogCommand('inputClickCommand', '&nbsp;', FCKConfig.PluginsPath + 'wikitext/dialogs/inputClick.html', 400, 100);
@@ -623,11 +623,11 @@ FCK.ProtectImage = function(image) {
 FCK.GetParentImage = function(child) {
 	var node = child;
 
-	while( node && node.getAttribute && !FCK.YAHOO.lang.isNumber(node.getAttribute('refid')) ) {
+	while (node && node.getAttribute && !FCK.YAHOO.lang.isNumber( parseInt(node.getAttribute('refid'))) ) {
 		node = node.parentNode;
 	}
 
-	if ( node && node.getAttribute && FCK.YAHOO.lang.isNumber(node.getAttribute('refid')) ) {
+	if ( node && node.getAttribute && FCK.YAHOO.lang.isNumber(parseInt(node.getAttribute('refid'))) ) {
 		return node;
 	}
 	else {
@@ -1219,7 +1219,7 @@ FCKInsertTemplateCommand.prototype = {
 			FCK.TemplateWizard = {};
 			FCK.TemplateClickCommand.Execute();
 		} else {
-			if(FCK.templateList[name].params.length > 0) {
+			if(FCK.templateList[name].params) {
 				FCK.TemplateWizard = {'name':name, 'params':FCK.templateList[name].params};
 				FCK.TemplateClickCommand.Execute();
 			} else {
