@@ -716,7 +716,7 @@ FCK.ImageProtectSetupOverlayMenu = function(refid, div) {
 	var overlay = docObj.createElement('SPAN');
 
 	// position menu based on alignment of an image
-	overlay.className = 'imageOverlay ' + (FCK.YD.hasClass(div, 'thumb') ?   'imageOverlay' + (FCK.YD.hasClass(div, 'tright') ? 'Right' : 'Left') : '');
+	overlay.className = 'imageOverlay' + (FCK.YD.hasClass(div, 'thumb') ?  ' imageOverlayRight' : '');
 	overlay.style.visibility = 'hidden';
 
 	div.style.position = 'relative';
