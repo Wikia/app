@@ -66,9 +66,91 @@ function SelectStep(stepId) {
 			}
 
 			GetE('templateParameters').innerHTML = output;
+
+			// focus on first textarea
+			if (FCK.TemplateWizard.params) {
+				GetE('templateParameters').getElementsByTagName('textarea')[0].focus();
+			}
+
+			// create preview
+			CreatePreview();
 			break;
 	}
 }
+
+//
+// preview generation
+//
+
+function GetWikitextFromStep2() {
+	var wikitext = '';
+
+	// template name
+	wikitext = '{{' + GetE('templateName').innerHTML;
+
+	// parameters name and value
+	var params = GetE('templateParameters').getElementsByTagName('textarea');
+
+	for(p=0; p<params.length; p++) {
+		var name = params[p].id.substr(6);
+		var value = params[p].value;
+
+		if (value == '') continue; // ignore empty parameters
+
+		wikitext += '|' + name + '=' + value;
+	}
+
+	// close template markup
+	wikitext += '}}';
+
+	return wikitext;
+}
+
+function CreatePreview() {
+
+	var wikitext = GetWikitextFromStep2();
+	FCK.log('generating preview for >>' + wikitext + '<<');
+
+	// block preview button and show progress icon
+	GetE('templateDoPreview').disabled = true;
+	GetE('templatePreview').innerHTML = '';
+	GetE('templatePreview').className = 'progress';
+
+	FCK.Track('/templateEditor/preview');
+
+	var callback = {
+		success: function(o) {
+			result = eval('(' + o.responseText + ')');
+			html = result.parse.text['*'];
+
+			// remove newPP comment and whitespaces
+			html = o.argument.FCK.YAHOO.lang.trim(html.split('<! \nNewPP limit report')[0]);
+
+			// unblock preview button
+			o.argument.preview.innerHTML = html;
+			o.argument.preview.className = '';
+			o.argument.button.disabled = false;
+
+			// reset margin/padding/align
+			o.argument.FCK.TemplatePreviewReset(o.argument.preview);
+		},
+
+		failure: function(o) {
+			o.argument.preview.className = '';
+			o.argument.button.disabled = false;
+		},
+
+		argument: {'preview': GetE('templatePreview'), 'button': GetE('templateDoPreview'), 'FCK': FCK}
+	};
+
+	FCK.YAHOO.util.Connect.asyncRequest(
+		"POST",
+		dialog.parent.wgScriptPath + '/api.php',
+		callback,
+		"action=parse&format=json&prop=text&title=" + encodeURIComponent(dialog.parent.wgPageName) + "&text=" +  encodeURIComponent(wikitext)
+	);
+}
+
 
 function Ok() {
 	oEditor.FCKUndo.SaveUndoStep();
@@ -181,7 +263,7 @@ function Ok() {
 				<div id="templateParameters"></div>
 			</td>
 			<td>
-				<input id="templateDoPreview" type="button" value="Preview" onclick="CreatePreview(false)" />
+				<input id="templateDoPreview" type="button" value="Preview" onclick="CreatePreview()" />
 			</td>
 			<td width="330">
 				<h2>Preview</h2>
