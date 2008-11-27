@@ -164,7 +164,7 @@ div.wk_blogs_post .wk_blogs_comments ul.links li {
 	border: 0;
 	clear: right;
 	float: left;
-	padding: 3px 0.2em 0 0.2em; 
+	padding: 3px 0.2em 0 0.2em;
 	color: #DFDFDF;
 }
 div.wk_blogs_post .wk_blogs_pager {
@@ -188,4 +188,10 @@ div.blog-comment_input {
 	margin-top: 0.5em;
 	margin-bottom: 0.5em;
 	list-style: none;
+}
+
+
+#blog-comm-form-select select {
+	margin: 0;
+	float: right;
 }

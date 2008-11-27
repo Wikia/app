@@ -59,8 +59,8 @@ class BlogComments {
 	private function getCommentPages() {
 		global $wgRequest;
 
-		$order = $wgRequest->getText("order", "asc" );
-		$this->mOrder = ( $order == "dsc" ) ? "desc" : "asc";
+		$order = $wgRequest->getText("order", false );
+		$this->mOrder = ( $order == "desc" ) ? "desc" : "asc";
 
 		if( is_array( $this->mComments ) ) {
 			return $this->mComments;
@@ -173,6 +173,7 @@ class BlogComments {
 				);
 			}
 			$template->set_vars( array(
+				"order"    => $this->mOrder,
 				"input"    => $input,
 				"title"    => $wgTitle,
 				"props"    => $this->mProps,

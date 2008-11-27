@@ -1,13 +1,13 @@
 <a name="comments"></a>
-<form action="<?php $title->getFullURL() ?>" method="get" id="blog-comm-form-select">
-<select name="order" style="float: right;">
-	<option value="asc" selected="selected"><?php echo wfMsg("blog-comments-asc") ?></option>
-	<option value="dsc"><?php echo wfMsg("blog-comments-dsc") ?></option>
-</select>
-</form
 <h2 class="wikia_header">
 <?php echo wfMsg("blog-comments") ?>
 </h2>
+<form action="<?php $title->getFullURL() ?>" method="get" id="blog-comm-form-select">
+<select name="order">
+	<option value="asc" <?php if ($order=="asc") echo 'selected="selected"' ?>><?php echo wfMsg("blog-comments-asc") ?></option>
+	<option value="desc" <?php if ($order=="desc") echo 'selected="selected"' ?>><?php echo wfMsg("blog-comments-dsc") ?></option>
+</select>
+</form
 <div id="blog-comments" class="reset clearfix">
 <?php
 	if( count( $comments ) > 10 && isset( $props[ "commenting" ] ) && $props[ "commenting" ] == 1 ):
