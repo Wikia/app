@@ -2,11 +2,23 @@
 $wgHooks['MonacoBeforePageBar'][] = 'userMasthead';
 
 function userMasthead() {
-	global $wgTitle, $wgUser, $userMasthead, $wgOut, $wgExtensionsPath, $wgStyleVersion;
+	global $wgTitle, $wgUser, $userMasthead, $wgOut, $wgExtensionsPath, $wgStyleVersion, $wgRequest;
 
 	$wgOut->addHtml("<link rel=\"stylesheet\" type=\"text/css\" href=\"{$wgExtensionsPath}/wikia/Blogs/css/UserMasthead.css?{$wgStyleVersion}\" />");
 	$namespace = $wgTitle->getNamespace();
-	if ( $namespace == NS_BLOG_ARTICLE || $namespace == NS_USER || $namespace == NS_USER_TALK || $namespace == NS_SPECIAL && ($wgTitle->getDBkey() == 'Watchlist' || $wgTitle->getDBkey() == 'WidgetDashboard' || $wgTitle->getDBkey() == 'Preferences')) {
+
+	$dbKey = $wgTitle->getDBkey();
+
+	if( $namespace == NS_BLOG_ARTICLE ||
+		$namespace == NS_USER ||
+		$namespace == NS_USER_TALK ||
+		$namespace == NS_SPECIAL && (
+			$dbKey == 'Watchlist' ||
+			$dbKey == 'WidgetDashboard' ||
+			$dbKey == 'Preferences' ||
+			$dbKey == 'Contributions'
+		)
+	){
 
 		$userMasthead = true; //hides article/talk tabs in Monaco.php
 		$out = array();
@@ -20,9 +32,21 @@ function userMasthead() {
 			}
 			$Avatar = BlogAvatar::newFromUserName( $userspace );
 		}
-		if ($wgTitle == 'Special:Watchlist' || $wgTitle == 'Special:WidgetDashboard' || $wgTitle == 'Special:Preferences' ) {
+		if( $dbKey == 'Watchlist' || $dbKey == 'WidgetDashboard' || $dbKey == 'Preferences' ) {
 			$userspace = $wgUser->getName();
 			$Avatar = BlogAvatar::newFromUser( $wgUser );
+		}
+
+		if( $dbKey == 'Contributions' ) {
+			$reqTitle = $wgRequest->getText("title", false);
+			if( strpos( $reqTitle, "/") !== false ) {
+				list ( $title, $userspace ) = explode( "/", $reqTitle, 2 );
+				$Avatar = BlogAvatar::newFromUserName( $userspace );
+			}
+			else {
+				$userspace = $wgUser->getName();
+				$Avatar = BlogAvatar::newFromUser( $wgUser );
+			}
 		}
 		$out['userspace'] = $userspace;
 
