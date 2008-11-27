@@ -176,8 +176,10 @@ class BlogAvatar {
 	 * @param Integer $width default AVATAR_DEFAULT_WIDTH -- width of image
 	 * @param Integer $height default AVATAR_DEFAULT_HEIGHT -- height of image
 	 * @param String  $alt	-- alternate text
+	 * @param String  $class -- which class should be used for element
+	 * @param String  $id -- DOM identifier
 	 */
-	public function getImageTag( $width = AVATAR_DEFAULT_WIDTH, $height = AVATAR_DEFAULT_HEIGHT, $alt = false ) {
+	public function getImageTag( $width = AVATAR_DEFAULT_WIDTH, $height = AVATAR_DEFAULT_HEIGHT, $alt = false, $class = "avatar", $id = false ) {
 		wfProfileIn( __METHOD__ );
 
 		$url = $this->getUrl();
@@ -187,26 +189,36 @@ class BlogAvatar {
 			$alt = "[" .$this->mUser->getName() ."]";
 		}
 		wfProfileOut( __METHOD__ );
-		return Xml::element( 'img',
-			array (
-				'src' 		=> $url,
-				'border' 	=> 0,
-				'width'		=> $width,
-				'height'	=> $height,
-				'alt' 		=> $alt,
-				"class"		=> "avatar"
-			), '', true
+		$attribs = array (
+			'src' 		=> $url,
+			'border' 	=> 0,
+			'width'		=> $width,
+			'height'	=> $height,
+			'alt' 		=> $alt,
 		);
+		if( $class ) {
+			$attribs[ "class" ] = $class;
+		}
+		if( $id ) {
+			$attribs[ "id" ] = $id;
+		}
+		return Xml::element( 'img', $attribs, '', true );
 	}
 
 	/**
 	 * getLinkTag -- return image with link to user page
+	 *
+	 * @param Integer $width default AVATAR_DEFAULT_WIDTH -- width of image
+	 * @param Integer $height default AVATAR_DEFAULT_HEIGHT -- height of image
+	 * @param String  $alt	-- alternate text
+	 * @param String  $class -- which class should be used for element
+	 * @param String  $id -- DOM identifier
 	 */
-	public function getLinkTag( $width = AVATAR_DEFAULT_WIDTH, $height = AVATAR_DEFAULT_HEIGHT, $alt = '' ) {
+	public function getLinkTag( $width = AVATAR_DEFAULT_WIDTH, $height = AVATAR_DEFAULT_HEIGHT, $alt = false, $class = "avatar", $id = false ) {
 		global $wgUser;
 
 		wfProfileIn( __METHOD__ );
-		$image = $this->getImageTag( $width, $height, $alt );
+		$image = $this->getImageTag( $width, $height, $alt, $class, $id );
 
 		if( $wgUser->getID() == $this->mUser->getID( ) ) {
 			$url = sprintf("<a href=\"%s\">%s</a>", Title::newFromText( "Preferences", NS_SPECIAL)->getFullUrl(), $image );

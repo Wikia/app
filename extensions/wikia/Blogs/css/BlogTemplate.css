@@ -188,10 +188,3 @@ div.blog-comment_input {
 	margin-bottom: 0.5em;
 	list-style: none;
 }
-
-#blog-footer ul li {
-	border: 0;
-	clear: right;
-	float: left;
-	margin: 1px 1em;
-}

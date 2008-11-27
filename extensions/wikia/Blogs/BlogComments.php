@@ -54,6 +54,7 @@ class BlogComments {
 		}
 	}
 
+
 	/**
 	 * getCommentPages -- take pages connected to comments list
 	 */
@@ -163,10 +164,11 @@ class BlogComments {
 				);
 			}
 			$template->set_vars( array(
+				"input"    => $input,
+				"title"    => $wgTitle,
+				"props"    => $this->mProps,
+				"avatar"   => $avatar,
 				"comments" => $comments,
-				"input" => $input,
-				"props" => $this->mProps,
-				"avatar" => $avatar
 			) );
 		}
 
