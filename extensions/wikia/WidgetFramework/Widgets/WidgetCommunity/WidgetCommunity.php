@@ -33,9 +33,13 @@ function WidgetCommunity($id, $params) {
 	$total = $wgLang->formatNum($total);
 
 	$avatar = $wgStylePath.'/monaco/images/community_avatar.gif';
+	if( class_exists("BlogAvatar") ) {
+		$avatar = BlogAvatar::newFromUser( $wgUser )->getLinkTag( 29, 29 );
+	}
 	if(class_exists("WikiaAvatar")) {
 		$userAvatar = new WikiaAvatar($wgUser->getId());
-		$avatar = $userAvatar->getAvatarImage("m");
+		$image = $userAvatar->getAvatarImage("m");
+		$avatar = '<a rel="nofollow" href="/index.php?title=Special:AvatarUpload"><img src="'.$image.'" id="community_avatar" /></a>';
 	}
 
 	// WhosOnline
