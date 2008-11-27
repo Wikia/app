@@ -534,7 +534,7 @@ function WysiwygGetTemplateParams($name, $templateCall = null) {
 	$result = null;
 	if ($title = Title::newFromText($name, NS_TEMPLATE)) {
 		if ($revision = Revision::newFromTitle($title)) {
-			preg_match_all('/\{\{\{([^}|]+)/', $revision->getText(), $result, PREG_PATTERN_ORDER);
+			preg_match_all('/\{\{\{([^}|<]+)/', $revision->getText(), $result, PREG_PATTERN_ORDER);
 			$result = array_flip($result[1]);
 			array_walk($result, create_function('&$val, $key', '$val = "";'));
 			if (!is_null($templateCall)) {
@@ -576,7 +576,7 @@ function WysiwygGetTemplateList() {
 				$title = Title::newFromText($node['org'], NS_TEMPLATE);
 				if (!$title->exists()) continue;
 				$params = WysiwygGetTemplateParams($node['org']);
-				$nodes[] = array('name' => $node['text'], 'params' => $params);
+				$nodes[$node['org']] = array('desc' => $node['text'], 'params' => $params);
 			}
 		}
 	}
