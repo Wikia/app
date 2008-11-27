@@ -258,15 +258,11 @@ class BlogTemplateClass {
 		/* parse input parameters */
 		$matches = array();
 		$start = self::__getmicrotime();
-		#error_log ("parseTag \n", 3, "/tmp/moli.log");
-		#error_log ("input = ".print_r($input, true)." \n\n", 3, "/tmp/moli.log");
-		#error_log ("params = ".print_r($params, true)." \n\n", 3, "/tmp/moli.log");
 		$aParams = self::__parseXMLTag($input);
 		wfDebugLog( __METHOD__, "parse input parameters\n" );
 		/* parse all and return result */
 		$res = self::__parse($aParams, $params, $parser);
 		$end = self::__getmicrotime();
-		error_log("parse: ".($end - $start). " s", 3, "/tmp/moli.log");
 		wfProfileOut( __METHOD__ );
 		return $res;
 	}
@@ -939,7 +935,6 @@ class BlogTemplateClass {
 				}
 			}
 
-			error_log ("self::aOptions = ".print_r(self::$aOptions, true). "\n", 3, "/tmp/moli.log");
 			/* build query */
 			if ( self::$aOptions['type'] == 'count' ) {
 				/* get results count */
@@ -951,7 +946,7 @@ class BlogTemplateClass {
 					$sPager = "";
 					if (self::$aOptions['type'] == 'plain') {
 						$iCount = self::__getResultsCount();
-						$sPager = self::__setPager($iCount, intval(self::$aOptions['offset']), BLOGS_PAGER_NBRS, BLOGS_PAGER_SHOW_ONLY_PREV_NEXT);
+						$sPager = self::__setPager($iCount, intval(self::$aOptions['offset']));
 					}
 					/* run template */
 					$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
@@ -983,20 +978,19 @@ class BlogTemplateClass {
     	return $result;
 	}
 	
-	private static function __setPager($iTotal, $iPage, $iNbrShow = 5, $bShowNext = 0) {
+	private static function __setPager($iTotal, $iPage, $iNbrShow = BLOGS_PAGER_NBRS, $bShowNext = BLOGS_PAGER_SHOW_ONLY_PREV_NEXT) {
 		global $wgUser, $wgTitle;
 		wfProfileIn( __METHOD__ );
 
 		$sPager = "";
-		//error_log("setPager($iTotal, $iPage, $bShowNext=0)"); 
-		
 		if ($iTotal<=0 || empty($iTotal)) { 
 			wfDebugLog( __METHOD__, "cannot make pager - no results found: ".$iTotal."\n" );
 		} else {
 			$iPageCount = ceil( $iTotal / self::$aOptions['count'] );
+			$iPage = (isset(self::$aOptions['count']) && self::$aOptions['count'] > 0) ? ceil($iPage/intval(self::$aOptions['count'])) : 0;
 			/* show only next page */
 			if ($bShowNext == 1) {
-				$iPageCount = $iPage + 1;
+			#	$iPageCount = $iPage + 1;
 			}
 			#---
 			$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
