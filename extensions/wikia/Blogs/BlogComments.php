@@ -11,6 +11,7 @@ class BlogComments {
 
 	private $mText;
 	private $mComments = false;
+	private $mProps = false;
 
 	static public function newFromTitle( Title $title ) {
 		$comments = new BlogComments();
@@ -40,27 +41,17 @@ class BlogComments {
 	}
 
 	/**
-	 * showInput -- show textarea for adding comments
-	 *
-	 * @param string $position -- top or bottom
+	 * setProps -- set value of page_props for that page, there we store
+	 * flags for articles like 'show/hide comments' and 'show/hide voting
 	 *
 	 * @access public
+	 *
+	 * @param Array $props - values from page_props table
 	 */
-	public function showInput( $position ) {
-		global $wgUser;
-
-		wfProfileIn( __METHOD__ );
-
-		$Avatar = BlogAvatar::newFromUser( $wgUser );
-//		print_pre( $Avatar );
-		$tmpl = new EasyTemplate( dirname( __FILE__ ) . '/templates/' );
-		$tmpl->set_vars(
-			array( "position" => $position, "author" => $wgUser, "avatar" => $Avatar )
-		);
-
-		wfProfileOut( __METHOD__ );
-
-		return  $tmpl->execute("comment-post");
+	public function setProps( $props ) {
+		if( is_array( $props ) ) {
+			$this->mProps = $props;
+		}
 	}
 
 	/**
@@ -121,9 +112,14 @@ class BlogComments {
 		global $wgContLang, $wgUser, $wgTitle;
 
 		/**
+		 * get properties for page (ie. we show input comments)
+		 */
+
+		/**
 		 * $pages is array of comment titles
 		 */
 		$pages = $this->getCommentPages();
+		$avatar = BlogAvatar::newFromUser( $wgUser );
 
 		$template = new EasyTemplate( dirname( __FILE__ ) . '/templates/' );
 
@@ -131,7 +127,12 @@ class BlogComments {
 			/**
 			 * no comments at all
 			 */
-			$template->set_vars( array( "comments" => false, "input" => $input, "list" => true ) );
+			$template->set_vars( array(
+				"comments" => false,
+				"input" => $input,
+				"props" => $this->mProps,
+				"avatar" => $avatar
+			));
 		}
 		else {
 			$parser = new Parser();
@@ -161,7 +162,12 @@ class BlogComments {
 					"timestamp" => $wgContLang->timeanddate( $revision->getTimestamp() )
 				);
 			}
-			$template->set_vars( array( "comments" => $comments, "input" => $input, "list" => true ) );
+			$template->set_vars( array(
+				"comments" => $comments,
+				"input" => $input,
+				"props" => $this->mProps,
+				"avatar" => $avatar
+			) );
 		}
 
 		$text = $template->execute( "comment" );
@@ -269,9 +275,6 @@ class BlogComments {
 	 * doPost -- static hook/entry for normal request post
 	 */
 	static public function doPost( &$Request, &$User, &$Title ) {
-		if( !$Request->getText( "wpBlogSubmit", false ) ) {
-			return;
-		}
 
 		$text = $Request->getText("wpBlogComment", false);
 		if( !$text || !strlen( $text ) ) {

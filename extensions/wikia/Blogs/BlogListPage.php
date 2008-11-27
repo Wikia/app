@@ -126,15 +126,10 @@ class BlogListPage extends Article {
 
 		$rand = rand();
 		$page = BlogComments::newFromTitle( $this->mTitle );
-		if( $page->count() > 10 ) {
-			/**
-			 * input box on top as well
-			 */
-			$wgOut->addHTML( $page->showInput( "top" ) );
-		}
-	    $wgOut->addHTML( $page->render( true ) );
-		$wgOut->addHTML( $page->showInput( "bottom" ) );
+		$page->setProps( $this->mProps );
+
 		$wgOut->addScript( "<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/Blogs/js/Blogs.js?{$rand}\" ></script>" );
+	    $wgOut->addHTML( $page->render( true ) );
 
 		wfProfileOut( __METHOD__ );
 	}

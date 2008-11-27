@@ -15,8 +15,5 @@
 			<small></small>
 		</a>
 		</div>
-		<!--
-		<input type="submit" name="wpBlogSubmit" id="blog-comm-submit-<?php echo $position ?>" value="<?php echo wfMsg("blog-comment-post") ?>" />
-		-->
 	</form>
 </div>
