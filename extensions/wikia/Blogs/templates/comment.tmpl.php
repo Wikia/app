@@ -24,7 +24,6 @@ if( isset( $justLi ) ):
 <br style="clear: both;" />
 <?php
 else:
-
 ?>
 <a name="comments"></a>
 <h2 class="wikia_header">
@@ -42,7 +41,7 @@ else:
 		// show top input
 ?>
 <div class="blog-comm-input reset clearfix">
-	<form action="<?php $title->getFullURL() ?>" method="post" id="blog-comm-form-top" disabled="disabled">
+	<form action="<?php $title->getFullURL() ?>" method="post" id="blog-comm-form-top">
 		<!-- avatar -->
 		<div class="blog-comm-input-avatar">
 		<?php
@@ -104,7 +103,7 @@ else:
 		</div>
 		<!-- textarea -->
 		<div class="blog-comm-input-text">
-		<textarea name="wpBlogComment" id="blog-comm-bottom" disabled="disabled"></textarea><br />
+		<textarea name="wpBlogComment" id="blog-comm-bottom"></textarea><br />
 		<!-- submit -->
 		<a href="<?php $title->getFullURL() ?>" name="wpBlogSubmit" id="blog-comm-submit-bottom" class="bigButton">
 			<big><? echo wfMsg("blog-comment-post") ?></big>

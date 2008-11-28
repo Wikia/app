@@ -196,6 +196,7 @@ class BlogComments {
 		global $wgRequest, $wgUser, $wgTitle;
 		$article = self::doPost( $wgRequest, $wgUser, $wgTitle );
 		if( !$article ) {
+			Wikia::log( __METHOD__, "error", "No article created" );
 			return Wikia::json_encode(
 				array( "msg" => wfMsg("blog-comment-error"), "error" => 1 )
 			);
@@ -208,8 +209,26 @@ class BlogComments {
 		$options = new ParserOptions();
 		$options->initialiseFromUser( $wgUser );
 
-		$text = $parser->parse( $article->getContent(), $wgTitle, $options )->getText();
-		// we probably should return whole rendered html
+		$text     = $parser->parse( $article->getContent(), $wgTitle, $options )->getText();
+		$anchor   = explode( "/", $article->getTitle()->getDBkey(), 3 );
+		$sig      = ( $article->getUser()->isAnon() )
+			? wfMsg("blog-comments-anonymous")
+			: Xml::element( 'a', array ( "href" => $author->getUserPage()->getFullUrl() ), $author->getName() );
+
+		$comments = array(
+				"sig"       => $sig,
+				"text"      => $text,
+				"title"     => $article->getTitle(),
+				"author"    => $article->getUser(),
+				"anchor"    => $anchor,
+				"avatar"    => BlogAvatar::newFromUser( $article->getUser() )->getLinkTag( 50, 50 ),
+				"timestamp" => $wgContLang->timeanddate( $article->getTimestamp() )
+		);
+
+		$template = new EasyTemplate( dirname( __FILE__ ) . '/templates/' );
+		$text = $template->execute( "comment" );
+
+		error_log( $text );
 
 		return Wikia::json_encode(
 			array(
