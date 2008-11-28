@@ -564,6 +564,13 @@ function WysiwygGetTemplateParams($name, $templateCall = null) {
 	return $result;
 }
 
+$wgAjaxExportList[] = 'WysiwygGetTemplateParamAjax';
+function WysiwygGetTemplateParamAjax($name) {
+	$params = WysiwygGetTemplateParams($name);
+	echo  Wikia::json_encode(!empty($params) ? $params : null, true);
+	exit();
+}
+
 /**
  * Grabbing defined list of templates and their parameters
  *
