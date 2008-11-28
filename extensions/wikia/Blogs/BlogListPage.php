@@ -13,6 +13,7 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 $wgHooks[ "ArticleFromTitle" ][] = "BlogListPage::ArticleFromTitle";
 $wgHooks[ "CategoryViewer::getOtherSection" ][] = "BlogListPage::getOtherSection";
 $wgHooks[ "CategoryViewer::addPage" ][] = "BlogListPage::addCategoryPage";
+$wgHooks[ "SkinTemplateTabs" ][] = "BlogListPage::skinTemplateTabs";
 /**
  * ajax hooks
  */
@@ -386,6 +387,15 @@ class BlogListPage extends Article {
 			 */
 			return false;
 		}
+		return true;
+	}
+
+	/**
+	 * hook
+	 */
+	static public function skinTemplateTabs( $skin, &$tabs ) {
+		print_pre( $tabs );
+
 		return true;
 	}
 

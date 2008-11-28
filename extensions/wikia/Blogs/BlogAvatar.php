@@ -157,7 +157,7 @@ class BlogAvatar {
 				/**
 				 * uploaded file, we are adding common/avatars path
 				 */
-				$url = $wgBlogAvatarPath . $url . "?" . $this->mTouched;
+				$url = $wgBlogAvatarPath . $url . "?" . $this->mUser->mTouched;
 			}
 			else {
 				/**
