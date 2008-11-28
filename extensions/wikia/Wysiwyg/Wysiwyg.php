@@ -564,8 +564,8 @@ function WysiwygGetTemplateParams($name, $templateCall = null) {
 	return $result;
 }
 
-$wgAjaxExportList[] = 'WysiwygGetTemplateParamAjax';
-function WysiwygGetTemplateParamAjax($name) {
+$wgAjaxExportList[] = 'WysiwygGetTemplateParamsAjax';
+function WysiwygGetTemplateParamsAjax($name) {
 	$params = WysiwygGetTemplateParams($name);
 	echo  Wikia::json_encode(!empty($params) ? $params : null, true);
 	exit();
