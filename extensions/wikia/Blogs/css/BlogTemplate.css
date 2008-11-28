@@ -13,8 +13,8 @@ div.wk_blogs_panel ul.list {
 	margin-top: 5px;
 }
 div.wk_blogs_panel ul.list li {
-	padding: 3px;
-	margin-bottom: 5px;
+	padding: 1px 3px;
+	margin-bottom: 2px;
 }
 div.wk_blogs_panel .wk_blogs_title {
 	font-weight: bold;
@@ -42,6 +42,7 @@ div.wk_blogs_panel .wk_blogs_comments {
 	font-size: 8.5pt;
 	margin-top: 3px;
 	text-align: right;
+	margin-bottom: 5px;
 }
 
 /**

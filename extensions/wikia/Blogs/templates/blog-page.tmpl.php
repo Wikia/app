@@ -31,13 +31,9 @@ foreach ($aRows as $pageId => $aRow) {
 	if ( !empty($aOptions['summary']) ) {
 ?>
 <div class="wk_blogs_summary"><?= $aRow['text'] ?></div>
+<div class="wk_blogs_comments"><?=$skin->makeLinkObj($oTitle, wfMsg('blog-nbrcomments', intval($aRow['comments'])))?> | <?=$skin->makeLinkObj($oTitle, wfMsg('blog-continuereading'))?></div>
 <?		
 	}
-	/* s: COMMENTS */
-?>	
-<div class="wk_blogs_comments"><?=$skin->makeLinkObj($oTitle, wfMsg('blog-nbrcomments', intval($aRow['comments'])))?> | <?=$skin->makeLinkObj($oTitle, wfMsg('blog-continuereading'))?></div>
-<?
-	/* e: COMMENTS */
 /* e: SUMMARY */
 ?>
 </li>
