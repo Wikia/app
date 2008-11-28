@@ -939,6 +939,7 @@ class BlogTemplateClass {
 			if ( self::$aOptions['type'] == 'count' ) {
 				/* get results count */
 				$result = self::getResultsCount();
+				error_log ("resutld = ".print_r($result, true)."\n", 3, "/tmp/moli.log");
 			} else {
 				$aResult = self::__getResults();
 				/* set output */
