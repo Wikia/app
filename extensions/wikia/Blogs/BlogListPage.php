@@ -391,10 +391,25 @@ class BlogListPage extends Article {
 	}
 
 	/**
-	 * hook
+	 * hook, add link to toolbar
 	 */
 	static public function skinTemplateTabs( $skin, &$tabs ) {
-		print_pre( $tabs );
+		global $wgTitle, $wgUser;
+
+		if( $wgTitle->getNamespace() !== NS_BLOG_ARTICLE  ) {
+			return true;
+		}
+		if( ! $wgUser->isLoggedIn() ) {
+			return true;
+		}
+
+		$row = array();
+		$row["blog-create-tab"] = array(
+            "class" => "",
+            "text" => wfMsg("blog-create-label"),
+            "href" => Title::newFromText("CreateBlogPage", NS_SPECIAL)->getLocalUrl()
+		);
+		$tabs = $row + $tabs;
 
 		return true;
 	}

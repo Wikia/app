@@ -69,7 +69,7 @@ function userMasthead() {
 		$out['nav_links'][] = array('text' => wfMsg('talkpage'), 'href' => Title::newFromText( $userspace, NS_USER_TALK )->getLocalUrl(), "dbkey" => NS_USER_TALK );
 		$out['nav_links'][] = array('text' => wfMsg('blog-page'), 'href' => Title::newFromText( $userspace, NS_BLOG_ARTICLE )->getLocalUrl(), "dbkey" => NS_BLOG_ARTICLE );
 		if( !$isAnon ) {
-			$out['nav_links'][] = array('text' => wfMsg('contris'), 'href' => Title::newFromText( "Contributions/{$userspace}", NS_SPECIAL )->getLocalUrl() );
+			$out['nav_links'][] = array('text' => wfMsg('contris'), 'href' => Title::newFromText( "Contributions/{$userspace}", NS_SPECIAL )->getLocalUrl(), "dbkey" => "Contributions" );
 		}
 
 		if ( $wgUser->isLoggedIn() && $wgUser->getName() == $userspace ) {
