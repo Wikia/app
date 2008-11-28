@@ -5,12 +5,7 @@
  *
  * @author Adrian Wieczorek
  */
-class CreateBlogPage extends SpecialPage {
-
-	private $mFormData;
-	private $mFormErrors = array();
-	private $mRenderedPreview = '';
-	private $mPostArticle;
+class CreateBlogPage extends SpecialBlogPage {
 
 	public function __construct() {
 		global $wgExtensionMessagesFiles;
@@ -50,7 +45,7 @@ class CreateBlogPage extends SpecialPage {
 				$this->renderForm();
 			}
 			else {
-				$this->savePost();
+				$this->save();
 			}
 		}
 		else {
@@ -58,7 +53,7 @@ class CreateBlogPage extends SpecialPage {
 		}
 	}
 
-	private function savePost() {
+	protected function save() {
 		global $wgOut, $wgUser;
 
 		$sPostBody = $this->mFormData['postBody'];
@@ -83,21 +78,21 @@ class CreateBlogPage extends SpecialPage {
 			$this->mPostArticle->saveProps($aPageProps);
 		}
 
-		$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
-		$oTmpl->set_vars( array(
-			"title" => $this->mPostArticle->getTitle())
-		);
+		//$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
+		//$oTmpl->set_vars( array(
+		//	"title" => $this->mPostArticle->getTitle())
+		//);
 
-		$wgOut->addHTML( $oTmpl->execute("createPostConfirm") );
+		//$wgOut->addHTML( $oTmpl->execute("createPostConfirm") );
 
 		$this->createListingPage();
 
 		self::invalidateCacheConnected( $this->mPostArticle->getTitle() );
 
-		return true;
+		$wgOut->redirect($this->mPostArticle->getTitle()->getFullUrl());
 	}
 
-	private function parseFormData() {
+	protected function parseFormData() {
 		global $wgUser, $wgRequest, $wgOut;
 
 		$this->mFormData['postTitle'] = $wgRequest->getVal('blogPostTitle');
@@ -129,25 +124,12 @@ class CreateBlogPage extends SpecialPage {
 		}
 	}
 
-	private function getCategoriesAsText ($aCategories) {
-		global $wgContLang;
 
-		$sText = '';
-		$sCategoryNSName = $wgContLang->getFormattedNsText( NS_CATEGORY );
-
-		foreach($aCategories as $sCategory) {
-			if(!empty($sCategory)) {
-				$sText .= "\n[[" . $sCategoryNSName . ":" . $sCategory . "]]";
-			}
-		}
-
-		return $sText;
-	}
-
-	private function renderForm() {
+	protected function renderForm() {
 		global $wgOut, $wgScriptPath;
 
 		$wgOut->addScript( '<script type="text/javascript" src="' . $wgScriptPath . '/skins/common/edit.js"><!-- edit js --></script>');
+		$wgOut->addScript( '<script type="text/javascript" src="' . $wgScriptPath . '/extensions/wikia/Blogs/js/categoryCloud.js"><!-- categoryCloud js --></script>');
 		$wgOut->addHTML( '<link rel="stylesheet" type="text/css" href="' . $wgScriptPath . '/extensions/wikia/Blogs/css/BlogCreateForm.css" />' );
 
 		$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
@@ -156,7 +138,8 @@ class CreateBlogPage extends SpecialPage {
 			'categoryCloudTitle' => wfMsg('create-blog-categories-title'),
 			'cloud' => new TagCloud(),
 			'cols' => 10,
-			'postCategories' => $this->mFormData['postCategories'] )
+			'cloudNo' => 1,
+			'textCategories' => $this->mFormData['postCategories'] )
 		);
 
 		$sCategoryCloud = $oTmpl->execute("createPostCategoryCloud");
