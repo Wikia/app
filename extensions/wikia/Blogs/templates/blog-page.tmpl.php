@@ -10,7 +10,14 @@ if (!empty($aRows)) {
 <ul class="list">
 <?	
 foreach ($aRows as $pageId => $aRow) {
-       $oTitle = Title::newFromText($aRow['title'], $aRow['namespace']);
+	$oTitle = Title::newFromText($aRow['title'], $aRow['namespace']);
+	$isVoting = $isCommenting = 0; 
+	if (isset($aRow['props']) && array_key_exists('voting', $aRow['props'])) {
+		$isVoting = $aRow['props']['voting'];
+	}
+	if (isset($aRow['props']) && array_key_exists('commenting', $aRow['props'])) {
+		$isCommenting = $aRow['props']['commenting'];
+	}
 ?>
 <li>
 <div class="wk_blogs_link"><a href="<?=$oTitle->getLocalUrl()?>"><?=$oTitle->getSubpageText()?></a></div>
@@ -31,7 +38,11 @@ foreach ($aRows as $pageId => $aRow) {
 	if ( !empty($aOptions['summary']) ) {
 ?>
 <div class="wk_blogs_summary"><?= $aRow['text'] ?></div>
-<div class="wk_blogs_comments"><span style="margin:0 2px"><img src="<?=$wgExtensionsPath?>/wikia/Blogs/images/comment.gif" border="0" /></span><?=$skin->makeLinkObj($oTitle, wfMsg('blog-nbrcomments', intval($aRow['comments'])))?> | <?=$skin->makeLinkObj($oTitle, wfMsg('blog-continuereading'))?></div>
+<div class="wk_blogs_comments">
+<? if (!empty($isCommenting)) { ?>
+<span style="margin:0 2px"><img src="<?=$wgExtensionsPath?>/wikia/Blogs/images/comment.gif" border="0" /></span><?=$skin->makeLinkObj($oTitle, wfMsg('blog-nbrcomments', intval($aRow['comments'])))?> | 
+<? } ?>
+<?=$skin->makeLinkObj($oTitle, wfMsg('blog-continuereading'))?></div>
 <?		
 	}
 /* e: SUMMARY */

@@ -265,6 +265,7 @@ class BlogTemplateClass {
 		/* parse all and return result */
 		$res = self::__parse($aParams, $params, $parser);
 		$end = self::__getmicrotime();
+		error_log ("parser time to run: ".($end-$start)." s\n", 3, "/tmp/moli.log");
 		wfProfileOut( __METHOD__ );
 		return $res;
 	}
@@ -754,6 +755,7 @@ class BlogTemplateClass {
 				"revision"		=> $oRow->rev_id,
 				"comments"		=> $iCount,
 				"votes"			=> self::__getVoteCode($oRow->page_id),
+				"props"			=> BlogListPage::getProps($oRow->page_id),
 			);
 		}
 		self::$dbr->freeResult( $res );
