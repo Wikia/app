@@ -138,7 +138,8 @@ class BlogComments {
 				"comments" => false,
 				"input" => $input,
 				"props" => $this->mProps,
-				"avatar" => $avatar
+				"avatar" => $avatar,
+				"title"   => $wgTitle
 			));
 		}
 		else {
@@ -175,7 +176,7 @@ class BlogComments {
 			$template->set_vars( array(
 				"order"    => $this->mOrder,
 				"input"    => $input,
-				"title"    => $wgTitle,
+				"title"   => $wgTitle,
 				"props"    => $this->mProps,
 				"avatar"   => $avatar,
 				"comments" => $comments,
