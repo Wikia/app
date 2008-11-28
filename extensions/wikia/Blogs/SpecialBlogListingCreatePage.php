@@ -42,7 +42,7 @@ class BlogListingCreatePage extends SpecialBlogPage {
 	}
 
 	protected function parseFormData() {
-		global $wgUser, $wgRequest, $wgOut;
+		global $wgUser, $wgRequest, $wgOut, $wgParser;
 
 		$this->mFormData['listingTitle'] = $wgRequest->getVal('blogListingTitle');
 		$this->mFormData['listingCategories'] = $wgRequest->getVal('wpCategoryTextarea1');
@@ -73,8 +73,7 @@ class BlogListingCreatePage extends SpecialBlogPage {
 		}
 
 		if(!count($this->mFormErrors) && $wgRequest->getVal('wpPreview')) {
-			$oParser = new Parser();
-			$this->mRenderedPreview = $oParser->parse( $this->mTagBody, Title::newFromText($this->mFormData['listingTitle']), $wgOut->parserOptions() );
+			$this->mRenderedPreview = BlogTemplateClass::parseTag($this->mTagBody, array(), $wgParser);
 		}
 
 	}
@@ -156,17 +155,29 @@ class BlogListingCreatePage extends SpecialBlogPage {
 	}
 
 	private function buildTag() {
+		$this->mTagBody = "<bloglist>\n";
+		$this->buildTagContent();
+		$this->mTagBody.= "</bloglist>\n";
+	}
+
+	private function buildTagContent() {
 		$aListingCategories = explode('|', $this->mFormData['listingCategories']);
 		$aListingAuthors = explode(',', $this->mFormData['listingAuthors']);
 
-		$this->mTagBody = "<bloglist title=\"" . $this->mFormData['listingTitle'] . "\" type=\"" . $this->mFormData['listingType'] . "\" order=\"" . $this->mFormData['listingSortBy'] . "\">\n";
+		$this->mTagBody .= "<title>" . $this->mFormData['listingTitle'] . "</title>\n";
+		$this->mTagBody .= "<type>" . $this->mFormData['listingType'] . "</type>\n";
+		$this->mTagBody .= "<order>" . $this->mFormData['listingSortBy'] . "</order>\n";
+
 		foreach($aListingCategories as $sCategoryName) {
-			$this->mTagBody .= "<category>" . $sCategoryName . "</category>\n";
+			if(!empty($sCategoryName)) {
+				$this->mTagBody .= "<category>" . $sCategoryName . "</category>\n";
+			}
 		}
 		foreach($aListingAuthors as $sAuthorName) {
-			$this->mTagBody .= "<author>" . $sAuthorName . "</author>\n";
+			if(!empty($sAuthorName)) {
+				$this->mTagBody .= "<author>" . $sAuthorName . "</author>\n";
+			}
 		}
-		$this->mTagBody.= "</bloglist>\n";
 	}
 
 	public function axBlogListingCheckMatches() {
@@ -174,10 +185,11 @@ class BlogListingCreatePage extends SpecialBlogPage {
 
 		$this->mFormData['listingCategories'] = $wgRequest->getVal('categories');
 		$this->mFormData['listingAuthors'] = $wgRequest->getVal('authors');
+		$this->mFormData['listingType'] = 'count';
 
-		$this->buildTag();
+		$this->buildTagContent();
 
-		return (string) BlogTemplateClass::parseTag($this->mTagBody, array( 'type' => 'count'), $wgParser);
+		return (string) BlogTemplateClass::parseTag($this->mTagBody, array(), $wgParser);
 	}
 
 }

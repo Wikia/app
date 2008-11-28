@@ -2,14 +2,14 @@
 
 abstract class SpecialBlogPage extends SpecialPage {
 
-	protected $mFormData;
+	protected $mFormData = array();
 	protected $mFormErrors = array();
 	protected $mRenderedPreview = '';
 	protected $mPostArticle = null;
 
-	abstract protected function renderForm();
-	abstract protected function parseFormData();
-	abstract protected function save();
+	//abstract protected function renderForm();
+	//abstract protected function parseFormData();
+	//abstract protected function save();
 
 	protected function getCategoriesAsText ($aCategories) {
 		global $wgContLang;
