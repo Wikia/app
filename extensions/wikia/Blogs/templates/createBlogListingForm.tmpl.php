@@ -35,7 +35,7 @@ BL.checkMatches = function (e) {
 	<?php if(!empty($preview)): ?>
 		<h2>Preview</h2>
 		<div class='previewnote'><p><strong><?php echo wfMsg('previewnote');?></strong></p></div>
-		<?php echo $preview->getText(); ?>
+		<?php echo $preview; ?>
 		<br />
 	<?php endif; ?>
 	<?php if(count($formErrors)): ?>

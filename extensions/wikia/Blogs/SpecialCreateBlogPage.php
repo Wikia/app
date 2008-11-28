@@ -78,13 +78,6 @@ class CreateBlogPage extends SpecialBlogPage {
 			$this->mPostArticle->saveProps($aPageProps);
 		}
 
-		//$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
-		//$oTmpl->set_vars( array(
-		//	"title" => $this->mPostArticle->getTitle())
-		//);
-
-		//$wgOut->addHTML( $oTmpl->execute("createPostConfirm") );
-
 		$this->createListingPage();
 
 		self::invalidateCacheConnected( $this->mPostArticle );
@@ -97,7 +90,7 @@ class CreateBlogPage extends SpecialBlogPage {
 
 		$this->mFormData['postTitle'] = $wgRequest->getVal('blogPostTitle');
 		$this->mFormData['postBody'] = $wgRequest->getVal('wpTextbox1');
-		$this->mFormData['postCategories'] = $wgRequest->getVal('wpCategoryTextarea');
+		$this->mFormData['postCategories'] = $wgRequest->getVal('wpCategoryTextarea1');
 		$this->mFormData['isVotingEnabled'] = $wgRequest->getCheck('blogPostIsVotingEnabled');
 		$this->mFormData['isCommentingEnabled'] = $wgRequest->getCheck('blogPostIsCommentingEnabled');
 
