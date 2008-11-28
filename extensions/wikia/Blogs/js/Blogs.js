@@ -3,6 +3,7 @@ YAHOO.namespace("Wikia.Blogs");
 YAHOO.Wikia.Blogs.callback = {
     success: function( oResponse ) {
         var data = YAHOO.Tools.JSONParse( oResponse.responseText );
+//		location.reload();
 		YAHOO.Wikia.Blogs.callback.add( data );
     },
     failure: function( oResponse ) {
@@ -29,7 +30,7 @@ YAHOO.Wikia.Blogs.submit = function( event, id ) {
 	else {
 		YAHOO.util.Event.preventDefault( event );
 		YAHOO.util.Connect.setForm( oForm, false );
-		YAHOO.util.Connect.asyncRequest( "POST", wgServer + wgScriptPath + wgScript + "?action=ajax&rs=BlogComments::axPost&title=" + wgTitle, YAHOO.Wikia.Blogs.callback );
+		YAHOO.util.Connect.asyncRequest( "POST", wgServer + wgScriptPath + wgScript + "?action=ajax&rs=BlogComments::axPost&title=" + wgTitle.replace(" ", "_"), YAHOO.Wikia.Blogs.callback );
 	}
 };
 

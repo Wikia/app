@@ -176,7 +176,7 @@ class BlogComments {
 			$template->set_vars( array(
 				"order"    => $this->mOrder,
 				"input"    => $input,
-				"title"   => $wgTitle,
+				"title"    => $wgTitle,
 				"props"    => $this->mProps,
 				"avatar"   => $avatar,
 				"comments" => $comments,
@@ -193,7 +193,7 @@ class BlogComments {
 	 * axPost -- static hook/entry for ajax request post
 	 */
 	static public function axPost() {
-		global $wgRequest, $wgUser, $wgTitle;
+		global $wgRequest, $wgUser, $wgTitle, $wgContLang;
 		$article = self::doPost( $wgRequest, $wgUser, $wgTitle );
 		if( !$article ) {
 			Wikia::log( __METHOD__, "error", "No article created" );
@@ -211,9 +211,9 @@ class BlogComments {
 
 		$text     = $parser->parse( $article->getContent(), $wgTitle, $options )->getText();
 		$anchor   = explode( "/", $article->getTitle()->getDBkey(), 3 );
-		$sig      = ( $article->getUser()->isAnon() )
+		$sig      = ( $wgUser->isAnon() )
 			? wfMsg("blog-comments-anonymous")
-			: Xml::element( 'a', array ( "href" => $author->getUserPage()->getFullUrl() ), $author->getName() );
+			: Xml::element( 'a', array ( "href" => $wgUser->getUserPage()->getFullUrl() ), $wgUser->getName() );
 
 		$comments = array(
 				"sig"       => $sig,
@@ -221,14 +221,13 @@ class BlogComments {
 				"title"     => $article->getTitle(),
 				"author"    => $article->getUser(),
 				"anchor"    => $anchor,
-				"avatar"    => BlogAvatar::newFromUser( $article->getUser() )->getLinkTag( 50, 50 ),
+				"avatar"    => BlogAvatar::newFromUser( $wgUser )->getLinkTag( 50, 50 ),
 				"timestamp" => $wgContLang->timeanddate( $article->getTimestamp() )
 		);
 
 		$template = new EasyTemplate( dirname( __FILE__ ) . '/templates/' );
+		$template->set_vars( array( "single" => true, "comment" => $comments ));
 		$text = $template->execute( "comment" );
-
-		error_log( $text );
 
 		return Wikia::json_encode(
 			array(

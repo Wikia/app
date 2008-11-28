@@ -1,5 +1,5 @@
 <?php
-if( isset( $justLi ) ):
+if( isset( $single ) && $single ):
 /**
  * this is exactly the same comment schema as below between <li>/<li>
  * it's used for ajaxed inserting new child. So if you want to change anything
