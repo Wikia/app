@@ -2,7 +2,7 @@ function WidgetCommunityDetailsToggle(node) {
 
     var Dom = YAHOO.util.Dom;
     var ul = node.parentNode.getElementsByTagName('ul')[0];
-    
+
     Dom.setStyle(ul, 'display', ( Dom.getStyle(ul, 'display') == 'none') ? '' : 'none');
 }
 
@@ -42,18 +42,21 @@ function WidgetCommunity_init(id) {
         });
 
 	// recently edited
-	edits = YAHOO.util.Dom.get(id + '-recently-edited').getElementsByTagName('li');
+	var editsul = YAHOO.util.Dom.get(id + '-recently-edited');
+	if(editsul) {
+		var edits = editsul.getElementsByTagName('li');
 
-	for (e=0; e < edits.length-1; e++) {
-		links = edits[e].getElementsByTagName('a');
-		YAHOO.util.Event.addListener(links[0], 'click', function(ev, id) {
-			YAHOO.Wikia.Tracker.trackByStr(ev, 'widget/WidgetCommunity/RAlink'+id);
-			YAHOO.util.Event.stopPropagation(ev);
-        	}, e+1);
+		for (e=0; e < edits.length-1; e++) {
+			links = edits[e].getElementsByTagName('a');
+			YAHOO.util.Event.addListener(links[0], 'click', function(ev, id) {
+				YAHOO.Wikia.Tracker.trackByStr(ev, 'widget/WidgetCommunity/RAlink'+id);
+				YAHOO.util.Event.stopPropagation(ev);
+				}, e+1);
 
-		YAHOO.util.Event.addListener(links[1], 'click', function(ev, id) { 
-			YAHOO.Wikia.Tracker.trackByStr(ev, 'widget/WidgetCommunity/RAuser'+id);
-			YAHOO.util.Event.stopPropagation(ev);
-        	}, e+1);
+			YAHOO.util.Event.addListener(links[1], 'click', function(ev, id) {
+				YAHOO.Wikia.Tracker.trackByStr(ev, 'widget/WidgetCommunity/RAuser'+id);
+				YAHOO.util.Event.stopPropagation(ev);
+				}, e+1);
+		}
 	}
 }
