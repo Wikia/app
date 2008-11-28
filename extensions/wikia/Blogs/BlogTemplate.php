@@ -256,6 +256,8 @@ class BlogTemplateClass {
 	public static function parseTag( $input, $params, &$parser ) {
 		wfProfileIn( __METHOD__ );
 		/* parse input parameters */
+		error_log ("input = ".print_r($input, true)."\n", 3, "/tmp/moli.log");
+		error_log ("params = ".print_r($params, true)."\n", 3, "/tmp/moli.log");
 		$matches = array();
 		$start = self::__getmicrotime();
 		$aParams = self::__parseXMLTag($input);
