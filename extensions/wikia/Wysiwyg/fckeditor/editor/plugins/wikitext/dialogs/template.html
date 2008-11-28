@@ -54,9 +54,6 @@ window.onload = function() {
 	}
 
 	FCK.Track('/templateEditor/open');
-
-	// setup MW suggest
-	os_enableSuggestionsOn('templateQuery', 'templateSearch');
 }
 
 function InsertTemplateFromSearch() {
@@ -69,7 +66,7 @@ function InsertTemplateFromSearch() {
 	FCK.log(suggestData);
 
 	// only allow template names from suggest results
-	if ( suggestData.results.indexOf(templateName) != -1 ) {
+	if ( suggestData.results && suggestData.results.indexOf(templateName) != -1 ) {
 		// send AJAX query to get template parameters
 		dialog.Throbber.Show();
 		dialog.parent.sajax_request_type = 'POST';
@@ -131,6 +128,9 @@ function SelectStep(stepId) {
 			// set HTML
 			GetE('templatesList1').innerHTML = templatesOutput[0];
 			GetE('templatesList2').innerHTML = templatesOutput[1];
+
+			// setup MW suggest
+			os_enableSuggestionsOn('templateQuery', 'templateSearch');
 			break;
 
 
@@ -162,6 +162,9 @@ function SelectStep(stepId) {
 
 			// create preview
 			CreatePreview();
+
+			// disable MW suggest
+			os_disableSuggestionsOn('templateQuery');
 			break;
 	}
 }
@@ -254,6 +257,11 @@ function CreatePreview() {
 
 
 function Ok() {
+
+	// prevent clicking OK in step #1
+	if (currentStep != 2) {
+		return false;
+	}
 
 	oEditor.FCKUndo.SaveUndoStep();
 
