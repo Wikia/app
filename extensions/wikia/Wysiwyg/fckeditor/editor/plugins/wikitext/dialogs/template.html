@@ -15,6 +15,7 @@ var FCKConfig	= oEditor.FCKConfig ;
 var FCKRegexLib	= oEditor.FCKRegexLib ;
 var FCKTools	= oEditor.FCKTools ;
 
+var currentStep = false;
 
 window.onload = function() {
 	window.parent.SetOkButton(true);
@@ -40,15 +41,28 @@ function SelectTemplate(name, params) {
 	FCK.log('editing template "'+name+'"');
 	FCK.log(params);
 
-	// fill wizard data and select step #2
-	FCK.TemplateWizard = {'name': name, 'params': params, 'refid': -1};
-	SelectStep(2);
+	// if template has no parameters add it to article and close editor
+	if (!params) {
+		oEditor.FCKUndo.SaveUndoStep();
+
+		FCK.Track('/templateEditor/save');
+		FCK.InsertTemplate(-1, name, null);
+
+		dialog.CloseDialog();
+	}
+	else {
+		// fill wizard data and select step #2
+		FCK.TemplateWizard = {'name': name, 'params': params, 'refid': -1};
+		SelectStep(2);
+	}
 }
 
 // change editor step
 function SelectStep(stepId) {
 	GetE('templateEditorStep1').style.display = (stepId == 1) ? 'block' : 'none';
 	GetE('templateEditorStep2').style.display = (stepId == 2) ? 'block' : 'none';
+
+	currentStep = stepId;
 
 	switch(stepId) {
 
@@ -189,6 +203,12 @@ function CreatePreview() {
 
 
 function Ok() {
+
+	// disallow clicks on "Ok" when step #1 is active
+	if (currentStep == 1) {
+		return false;
+	}
+	
 	oEditor.FCKUndo.SaveUndoStep();
 
 	FCK.Track('/templateEditor/save');
