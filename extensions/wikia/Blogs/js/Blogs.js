@@ -14,7 +14,6 @@ YAHOO.Wikia.Blogs.callback.add = function( data ) {
 	var li = document.createElement( "li" );
 	li.innerHTML = data["text"];
 	YAHOO.util.Dom.get("blog-comments-ul").appendChild( li );
-	alert( "nowe li" );
 };
 
 /**
