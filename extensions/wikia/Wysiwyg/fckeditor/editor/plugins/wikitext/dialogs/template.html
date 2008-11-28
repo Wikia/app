@@ -59,6 +59,32 @@ window.onload = function() {
 	os_enableSuggestionsOn('templateQuery', 'templateSearch');
 }
 
+function InsertTemplateFromSearch() {
+	FCK.YE.stopEvent(FCK.YE.getEvent());
+
+	var templateName = GetE('templateQuery').value;
+	var suggestData = window.os_map.templateQuery;
+
+	FCK.log('user typed >>' + templateName + '<< as template name');
+	FCK.log(suggestData);
+
+	// only allow to template names from suggest
+	if (suggestData.query == templateName) {
+		// send AJAX query to get template parameters
+		dialog.Throbber.Show();
+		dialog.parent.sajax_request_type = 'POST';
+		dialog.parent.sajax_do_call('WysiwygGetTemplateParamsAjax', [templateName], function(res) {
+			var params = FCK.YAHOO.Tools.JSONParse(res.responseText);
+
+			// go to step #2
+			dialog.Throbber.Hide();
+			SelectTemplate(templateName, params);
+		});
+	}
+
+	return false;
+}
+
 // select template to be edited in step #2
 function SelectTemplate(name, params) {
 	FCK.log('editing template "'+name+'"');
@@ -341,12 +367,12 @@ function Ok() {
 			float: left;
 			display: inline;
 			list-style: none;
-			margin: 0;
+			margin: 5px 0;
 			padding: 0;
 		}
 
 		#templateEditorStep1 li {
-			line-height: 2em;
+			line-height: 2.25em;
 			font-size: 13px;
 		}
 
@@ -360,7 +386,7 @@ function Ok() {
 	<div id="templateEditorStep1" class="editorStep">
 		<h1 style="float: left">Search for Template</h1>
 		
-		<form id="templateSearch">
+		<form id="templateSearch" onsubmit="InsertTemplateFromSearch()">
 			<input type="text" id="templateQuery" style="width: 300px" />
 			<input type="submit" value="Insert" />
 		</form>
