@@ -17,16 +17,21 @@ var FCKTools	= oEditor.FCKTools ;
 
 var currentStep = false;
 
+// store refid
+var origRefid = FCK.TemplateWizard.refid;
+
 window.onload = function() {
-	window.parent.SetOkButton(true);
-	window.parent.SetAutoSize(true);
+window.parent.SetAutoSize(true);
 
 	// fill editor fields
 
 	// choose correct editor step
 	FCK.log(FCK.TemplateWizard);
 
-	if (FCK.TemplateWizard.name) {
+	// show step 2 for:
+	// * templates existing within article and with parameters
+	// * templates to be inserted into article and with parameters
+	if (FCK.TemplateWizard.name && FCK.TemplateWizard.params) {
 		SelectStep(2);
 	}
 	else {
@@ -46,7 +51,7 @@ function SelectTemplate(name, params) {
 		oEditor.FCKUndo.SaveUndoStep();
 
 		FCK.Track('/templateEditor/save');
-		FCK.InsertTemplate(-1, name, null);
+		FCK.InsertTemplate(origRefid, name, null);
 
 		dialog.CloseDialog();
 	}
@@ -61,6 +66,9 @@ function SelectTemplate(name, params) {
 function SelectStep(stepId) {
 	GetE('templateEditorStep1').style.display = (stepId == 1) ? 'block' : 'none';
 	GetE('templateEditorStep2').style.display = (stepId == 2) ? 'block' : 'none';
+
+	// show OK only in step #2
+	window.parent.SetOkButton( stepId==2 );
 
 	currentStep = stepId;
 
@@ -204,17 +212,12 @@ function CreatePreview() {
 
 function Ok() {
 
-	// disallow clicks on "Ok" when step #1 is active
-	if (currentStep == 1) {
-		return false;
-	}
-	
 	oEditor.FCKUndo.SaveUndoStep();
 
 	FCK.Track('/templateEditor/save');
 
 	// insert / update template
-	FCK.InsertTemplate(FCK.TemplateWizard.refid, FCK.TemplateWizard.name, GetParametersFromStep2());
+	FCK.InsertTemplate(origRefid, FCK.TemplateWizard.name, GetParametersFromStep2());
 
 	return true;
 }
@@ -259,6 +262,20 @@ function Ok() {
 			margin: 0;
 			line-height: 1.7em;
 			padding-bottom: 10px;
+			font-size: 13px;
+			clear: both;
+		}
+
+		#templateName {
+			float: left;
+			margin-right: 50px;
+		}
+
+		#templateChooseAnother {
+			color: #0080C0;
+			cursor: pointer;
+			position: relative;
+			top: 5px;
 			font-size: 13px;
 		}
 
@@ -344,6 +361,7 @@ function Ok() {
 
 	<div id="templateEditorStep2" class="editorStep">
 		<h1 id="templateName">Template</h1>
+		<a id="templateChooseAnother" onclick="SelectStep(1)">choose another template</a>
 		<h3>Change the values on the left and click to preview. When you're done making your edits, click to save</h3>
 
 		<table id="templateEditor" height="330px"><tr>
