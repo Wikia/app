@@ -57,8 +57,6 @@ window.onload = function() {
 }
 
 function InsertTemplateFromSearch() {
-	FCK.YE.stopEvent(FCK.YE.getEvent());
-
 	var templateName = GetE('templateQuery').value;
 	var suggestData = window.os_map.templateQuery;
 
@@ -69,14 +67,32 @@ function InsertTemplateFromSearch() {
 	if ( suggestData.results && suggestData.results.indexOf(templateName) != -1 ) {
 		// send AJAX query to get template parameters
 		dialog.Throbber.Show();
-		dialog.parent.sajax_request_type = 'POST';
-		dialog.parent.sajax_do_call('WysiwygGetTemplateParamsAjax', [templateName], function(res) {
-			var params = FCK.YAHOO.Tools.JSONParse(res.responseText);
+		
+		var callback = {
+			success: function(o) {
+				var params = this.FCK.YAHOO.Tools.JSONParse(o.responseText);
 
-			// go to step #2
-			dialog.Throbber.Hide();
-			SelectTemplate(templateName, params);
-		});
+				// go to step #2
+				this.FCK.log('suggested template: ' + o.argument.templateName);
+				this.FCK.log(params);
+
+				this.dialog.Throbber.Hide();
+				this.SelectTemplate(o.argument.templateName, params);
+			},
+
+			failure: function(o) {},
+
+			scope: window,
+
+			argument: {'templateName': templateName}
+		};
+
+		FCK.YAHOO.util.Connect.asyncRequest(
+			"POST",
+			dialog.parent.wgScript,
+			callback,
+			'action=ajax&rs=WysiwygGetTemplateParamsAjax&rsargs[]=' + encodeURIComponent(templateName)
+		);
 	}
 	return false;
 }
@@ -97,7 +113,7 @@ function SelectTemplate(name, params) {
 	}
 	else {
 		// fill wizard data and select step #2
-		FCK.TemplateWizard = {'name': name, 'params': params, 'refid': -1};
+		FCK.TemplateWizard = {'name': name, 'params': params, 'refid': origRefid};
 		SelectStep(2);
 	}
 }
