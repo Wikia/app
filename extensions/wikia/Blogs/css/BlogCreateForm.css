@@ -21,6 +21,15 @@
 	border-bottom: 1px dotted gray; 
 }
 
+#blogPostForm div.formLastBlock { 
+	width: 100%; 
+	clear: left; 
+	float: left; 
+	margin-top: 10px; 
+	margin-bottom: 10px; 
+	padding-bottom: 20px; 
+}
+
 #blogPostForm #blogPostTitle { 
 	clear: left; 
 	float: left; 
