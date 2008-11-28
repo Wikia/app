@@ -130,9 +130,11 @@ function Wysiwyg_Initial($form) {
 		($wgRequest->getVal('action') == 'submit' && $wgRequest->getVal('wysiwygTemporarySaveType') == '1');
 
 	// JS
-	$wgOut->addInlineScript('var fallbackToSourceMode = ' . ($wgWysiwygFallbackToSourceMode ? 'true;' : 'false;'));
-	$wgOut->addInlineScript('var templateList = ' . WysiwygGetTemplateList() . ';');
-	$wgOut->addInlineScript('var templateHotList = ' . WysiwygGetTemplateHotList() . ';');
+	$wgOut->addInlineScript(
+		'var fallbackToSourceMode = ' . ($wgWysiwygFallbackToSourceMode ? 'true;' : 'false;') . "\n" .
+		'var templateList = ' . WysiwygGetTemplateList() . ";\n" .
+		'var templateHotList = ' . WysiwygGetTemplateHotList() . ';'
+	);
 
 	$wgOut->addScript( "<script type=\"{$wgJsMimeType}\" src=\"$wgExtensionsPath/wikia/Wysiwyg/fckeditor/fckeditor.js?$wgStyleVersion\"></script>" );
 	$wgOut->addScript( "<script type=\"{$wgJsMimeType}\" src=\"$wgExtensionsPath/wikia/Wysiwyg/wysiwyg.js?$wgStyleVersion\"></script>" );
