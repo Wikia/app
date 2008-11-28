@@ -5,7 +5,7 @@
  *
  * @author Adrian Wieczorek
  */
-class BlogListingCreatePage extends SpecialBlogPage {
+class CreateBlogListingPage extends SpecialBlogPage {
 
 	private $mTagBody = '';
 
@@ -13,16 +13,16 @@ class BlogListingCreatePage extends SpecialBlogPage {
 		global $wgExtensionMessagesFiles;
 
 		// initialise messages
-		$wgExtensionMessagesFiles['BlogListingCreatePage'] = dirname(__FILE__) . '/Blogs.i18n.php';
-		wfLoadExtensionMessages('BlogListingCreatePage');
+		$wgExtensionMessagesFiles['CreateBlogListingPage'] = dirname(__FILE__) . '/Blogs.i18n.php';
+		wfLoadExtensionMessages('CreateBlogListingPage');
 
-		parent::__construct( 'BlogListingCreatePage' /*class*/, 'bloglistingcreatepage' /*restriction*/, true);
+		parent::__construct( 'CreateBlogListingPage' /*class*/, 'createbloglistingpage' /*restriction*/, true);
 	}
 
 	public function execute() {
 		global $wgOut, $wgUser, $wgRequest;
 
-		$this->mTitle = Title::makeTitle( NS_SPECIAL, 'BlogListingCreatePage' );
+		$this->mTitle = Title::makeTitle( NS_SPECIAL, 'CreateBlogListingPage' );
 
 		$wgOut->setPageTitle( wfMsg('create-blog-listing-title') );
 
@@ -55,14 +55,14 @@ class BlogListingCreatePage extends SpecialBlogPage {
 			$this->mFormErrors[] = wfMsg('create-blog-empty-title-error');
 		}
 		else {
-			$oPostTitle = Title::newFromText( $this->mFormData['listingTitle'], NS_MAIN );
+			$oPostTitle = Title::newFromText( $this->mFormData['listingTitle'], NS_BLOG_ARTICLE );
 
 			if(!($oPostTitle instanceof Title)) {
 				$this->mFormErrors[] = wfMsg('create-blog-invalid-title-error');
 			}
 			else {
 				$this->mPostArticle = new Article($oPostTitle, 0);
-				if($this->mPostArticle->exists()) {
+				if($this->mPostArticle->exists() && ($this->mFormData['listingType'] == 'plain')) {
 					$this->mFormErrors[] = wfMsg('create-blog-article-already-exists');
 				}
 			}
@@ -73,7 +73,12 @@ class BlogListingCreatePage extends SpecialBlogPage {
 		}
 
 		if(!count($this->mFormErrors) && $wgRequest->getVal('wpPreview')) {
-			$this->mRenderedPreview = BlogTemplateClass::parseTag($this->mTagBody, array(), $wgParser);
+			if($this->mFormData['listingType'] == 'plain') {
+					$this->mRenderedPreview = BlogTemplateClass::parseTag($this->mTagBody, array(), $wgParser);
+			}
+			else {
+				$this->mRenderedPreview = '<pre>' . htmlspecialchars($this->mTagBody) . '</pre>';
+			}
 		}
 
 	}

@@ -27,7 +27,7 @@
 		</div>
 	</div>
 	<div class="formBlock">
-		<label>Text</label>
+		<label><?php echo wfMsg( "create-blog-form-post-text" ) ?></label>
 		<div class="display: block">
 			<?php echo EditPage::getEditToolbar(); ?>
 			<textarea id="wpTextbox1" class="yui-ac-input" cols="80" rows="15" name="wpTextbox1" accesskey="," tabindex="1" autocomplete="off"><?php echo $formData['postBody']; ?></textarea>
@@ -38,7 +38,7 @@
 		<?php echo $categoryCloud; ?>
 	</div>
 
-	<div class="formBlock">
+	<div class="formLastBlock">
 		<div class="editButtons">
 			<input id="wpSave" type="submit" title="Save your changes [ctrl-s]" accesskey="s" value="Save page" tabindex="5" name="wpSave"/>
 			<input id="wpPreview" type="submit" title="Preview your changes, please use this before saving! [ctrl-p]" accesskey="p" value="Show preview" tabindex="6" name="wpPreview"/>
