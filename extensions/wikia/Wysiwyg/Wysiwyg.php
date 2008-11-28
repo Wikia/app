@@ -133,7 +133,8 @@ function Wysiwyg_Initial($form) {
 	$wgOut->addInlineScript(
 		'var fallbackToSourceMode = ' . ($wgWysiwygFallbackToSourceMode ? 'true;' : 'false;') . "\n" .
 		'var templateList = ' . WysiwygGetTemplateList() . ";\n" .
-		'var templateHotList = ' . WysiwygGetTemplateHotList() . ';'
+		'var templateHotList = ' . WysiwygGetTemplateHotList() . ';' .
+		'var magicWordList = ' . Wikia::json_encode(MagicWord::$mVariableIDs, true) . ';'
 	);
 
 	$wgOut->addScript( "<script type=\"{$wgJsMimeType}\" src=\"$wgExtensionsPath/wikia/Wysiwyg/fckeditor/fckeditor.js?$wgStyleVersion\"></script>" );
