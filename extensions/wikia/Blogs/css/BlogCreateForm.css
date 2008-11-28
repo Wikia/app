@@ -37,3 +37,33 @@
 tr { 
 	border: 1px solid #dcdcdc; 
 }
+
+.categoryCloudSection {
+	border: 1px solid lightgray;
+	padding: 15px 15px 15px 15px;
+}
+
+.wpCategoryTextarea {
+	display: none ;
+}
+
+#wpCategoryInput, #wpCategoryButton {
+	margin: 4px 2px 0 2px ;
+}
+
+.wpCategoryInput {
+	width: 450px ;
+}
+
+#blogPostCategoriesTitle {
+	padding-right: 1em;
+	text-align: right;
+	font-size: 16px;
+	color: orange;
+}
+
+.matches-info {
+	font-weight: bold;
+	color: green;
+}
+

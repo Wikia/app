@@ -46,9 +46,21 @@ $wgExtensionMessagesFiles["Blogs"] = dirname(__FILE__) . '/Blogs.i18n.php';
 extAddSpecialPage(dirname(__FILE__) . '/SpecialCreateBlogPage.php', 'CreateBlogPage', 'CreateBlogPage');
 extAddSpecialPage(dirname(__FILE__) . '/SpecialBlogListingCreatePage.php', 'BlogListingCreatePage', 'BlogListingCreatePage');
 
+
+/**
+ * ajax functions
+ */
+$wgAjaxExportList[] = "axBlogListingCheckMatches";
+
+function axBlogListingCheckMatches() {
+	$oSpecialPage = new BlogListingCreatePage;
+	return $oSpecialPage->axBlogListingCheckMatches();
+}
+
 /**
  * load other parts
  */
+include( dirname( __FILE__ ) . "/SpecialBlogPage.php");
 include( dirname( __FILE__ ) . "/BlogAvatar.php");
 include( dirname( __FILE__ ) . "/BlogLockdown.php");
 include( dirname( __FILE__ ) . "/BlogTemplate.php");
