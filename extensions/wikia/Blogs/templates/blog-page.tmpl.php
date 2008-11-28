@@ -31,7 +31,7 @@ foreach ($aRows as $pageId => $aRow) {
 	if ( !empty($aOptions['summary']) ) {
 ?>
 <div class="wk_blogs_summary"><?= $aRow['text'] ?></div>
-<div class="wk_blogs_comments"><?=$skin->makeLinkObj($oTitle, wfMsg('blog-nbrcomments', intval($aRow['comments'])))?> | <?=$skin->makeLinkObj($oTitle, wfMsg('blog-continuereading'))?></div>
+<div class="wk_blogs_comments"><span style="margin:0 2px"><img src="<?=$wgExtensionsPath?>/wikia/Blogs/images/comment.gif" border="0" /></span><?=$skin->makeLinkObj($oTitle, wfMsg('blog-nbrcomments', intval($aRow['comments'])))?> | <?=$skin->makeLinkObj($oTitle, wfMsg('blog-continuereading'))?></div>
 <?		
 	}
 /* e: SUMMARY */
