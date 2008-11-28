@@ -12,6 +12,7 @@ function efWikiaVideo() {
 	'novideo-linktext' => 'add it',
 	'novideo' => 'No video by this name exists, you add a video $1.',
 	'video_embed' => 'Embed',
+	'addvideo' => 'Add Video',
 	'video_addvideo_title' => 'Add Video',
 	'video-addvideo_button' => 'Add Video',
 	'video_addvideo_instructions' => "Adding a video to {{SITENAME}} is easy.  Just paste the video embed code ''or'' the video's URL into the following form, add a name for the video, and press the add video button.  If you want to embed the video on a page use the following format: '''<nowiki>[[Video:Video Title]]</nowiki>'''.\nYou can add a video from: [http://www.youtube.com YouTube], [http://vids.myspace.com/ MySpaceTV], [http://video.google.com/ Google Video], and [http://www.metacafe.com Metacafe].\n===Example of a Video Embed Code===\nThis is an example video embed code from YouTube:\n\n<pre style=\"background-color:#F9F9F9;border:1px dashed #2F6FAB;color:black;line-height:1.1em;padding:1em;\"><nowiki><object width=\"425\" height=\"355\">\n<param name=\"movie\" value=\"http://www.youtube.com/v/hUcFWPgB8oY\"></param>\n<param name=\"wmode\" value=\"transparent\"></param>\n<embed src=\"http://www.youtube.com/v/hUcFWPgB8oY\" type=\"application/x-shockwave-flash\"\nwmode=\"transparent\" width=\"425\" height=\"355\"></embed>\n</object></nowiki></pre>\n\n===Example of a Video URL===\nBelow is an example of a video's URL from YouTube: <pre style=\"background-color:#F9F9F9;border:1px dashed #2F6FAB;color:black;line-height:1.1em;padding:1em;\">http://www.youtube.com/watch?v=hUcFWPgB8oY</pre>	
