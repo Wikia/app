@@ -14,7 +14,7 @@ foreach ($aRows as $pageId => $aRow) {
 /* s: TIMESTAMP */
 	if ( !empty($aOptions['timestamp']) ) {
 		$sUserLinks = ""; 
-		if ($wgUser->getName() != $aRow['username']) { 
+		if ($oTitle->getBaseText() != $aRow['username']) { 
 			$aUserLinks = BlogTemplateClass::getUserNameRecord($aRow['username']);
 			if ( !empty($aUserLinks) ) {
 				$sUserLinks = $aUserLinks['userpage']." (".$aUserLinks['talkpage']."|".$aUserLinks['contribs'].")";
