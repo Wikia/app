@@ -68,8 +68,8 @@ function InsertTemplateFromSearch() {
 	FCK.log('user typed >>' + templateName + '<< as template name');
 	FCK.log(suggestData);
 
-	// only allow to template names from suggest
-	if (suggestData.query == templateName) {
+	// only allow template names from suggest results
+	if ( suggestData.results.indexOf(templateName) != -1 ) {
 		// send AJAX query to get template parameters
 		dialog.Throbber.Show();
 		dialog.parent.sajax_request_type = 'POST';
@@ -81,7 +81,6 @@ function InsertTemplateFromSearch() {
 			SelectTemplate(templateName, params);
 		});
 	}
-
 	return false;
 }
 
