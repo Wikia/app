@@ -1205,8 +1205,7 @@ FCK.InsertTemplate = function(refid, name, params) {
 
 		// add entry to metaData
 		FCK.wysiwygData[refid] = {
-			'type': 'template',
-			'name': name,
+			'type': 'template'
 		}
 
 		FCK.NodesWithRefId[refid] = placeholder;
@@ -1235,6 +1234,7 @@ FCK.InsertTemplate = function(refid, name, params) {
 	wikitext += '}}';
 
 	// update metaData and send AJAX request to generate template preview
+	FCK.wysiwygData[refid].name = name;
 	FCK.wysiwygData[refid].originalCall = wikitext;
 	FCK.wysiwygData[refid].templateParams = params;
 	FCK.wysiwygData[refid].preview = '<p><em>please wait</em></p>';
