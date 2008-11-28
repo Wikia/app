@@ -11,7 +11,7 @@ BL.checkMatchesCallback = {
 	success: function( oResponse ) {
 		var respData = oResponse.responseText;
 		YD.get( "blogListingMatches" ).innerHTML =  '<span class="matches-info">' + (respData ? respData : '0') + ' <?php echo wfMsg('create-blog-listing-matches-info'); ?></span>';
-		YD.get( "blogListingCalculateMatches" ).value = 'Re-calculate';
+		YD.get( "blogListingCalculateMatches" ).value = '<?php echo wfMsg('create-blog-listing-matches-recalculate'); ?>';
 	}
 };
 
@@ -60,13 +60,13 @@ BL.checkMatches = function (e) {
 	</div>
 
 	<div class="formBlock">
-		<label>Matches:</label>
+		<label><?php echo wfMsg('create-blog-listing-matches'); ?>:</label>
 		<span id="blogListingMatches">&nbsp;</span>
-		<input type="button" name="blogListingCalcuateMatches" id="blogListingCalculateMatches" value="Calculate" />
+		<input type="button" name="blogListingCalcuateMatches" id="blogListingCalculateMatches" value="<?php echo wfMsg('create-blog-listing-matches-calculate'); ?>" />
 	</div>
 
 	<div class="formBlock">
-		<label>Sort By:</label>
+		<label><?php echo wfMsg('create-blog-listing-sortby'); ?></label>
 		<select name="blogListingSortBy">
 			<?php foreach($sortByKeys as $sortByKey => $sortByValue): ?>
 				<option value="<?=$sortByKey;?>" <?=($formData['listingSortBy'] == $sortByKey) ? "selected" : "";?> ><?=wfMsg('create-blog-listing-sortby-' . $sortByKey);?></option>
