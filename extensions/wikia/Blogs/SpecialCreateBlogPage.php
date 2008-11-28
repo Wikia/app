@@ -87,7 +87,7 @@ class CreateBlogPage extends SpecialBlogPage {
 
 		$this->createListingPage();
 
-		self::invalidateCacheConnected( $this->mPostArticle->getTitle() );
+		self::invalidateCacheConnected( $this->mPostArticle );
 
 		$wgOut->redirect($this->mPostArticle->getTitle()->getFullUrl());
 	}
@@ -166,7 +166,8 @@ class CreateBlogPage extends SpecialBlogPage {
 	 * @author Krzysztof Krzyżaniak <eloy@wikia-inc.com>
 	 *
 	 */
-	static public function invalidateCacheConnected( Title $title ) {
+	static public function invalidateCacheConnected( BlogListPage $article ) {
+		$title = $article->getTitle();
 		$title->invalidateCache();
 		/**
 		 * this should be subpage, invalidate page as well
@@ -174,6 +175,7 @@ class CreateBlogPage extends SpecialBlogPage {
 		list( $page, $subpage ) = explode( "/", $title->getDBkey() );
 		$title = Title::newFromDBkey( $page );
 		$title->invalidateCache();
+		$article->clearBlogListing();
 	}
 
 	/**

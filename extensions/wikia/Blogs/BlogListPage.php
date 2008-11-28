@@ -155,7 +155,7 @@ class BlogListPage extends Article {
 		/**
 		 * use cache or skip cache when action=purge
 		 */
-		$user    = $this->mTitle->getDBkey();
+		$user    = $this->mTitle->getBaseText();
 		$listing = false;
 		$purge   = $wgRequest->getVal( 'action' ) == 'purge';
 		$offset  = 0;
@@ -181,13 +181,27 @@ class BlogListPage extends Article {
 		$wgOut->addHTML( $listing );
 	}
 
+
+	/**
+	 * clear data from memcache
+	 *
+	 * @access public
+	 */
+	public function clearBlogListing() {
+		global $wgRequest, $wgMemc;
+
+		$user    = $this->mTitle->getBaseText();
+		$offset  = 0;
+		$wgMemc->delete( wfMemcKey( "blog", "listing", $user, $offset ) );
+	}
+
 	/**
 	 * generate xml feed from returned data
 	 */
 	private function showFeed( $format ) {
 		global $wgOut, $wgRequest, $wgParser, $wgMemc, $wgFeedClasses, $wgTitle;
 
-		$user    = $this->mTitle->getDBkey();
+		$user    = $this->mTitle->getBaseText();
 		$listing = false;
 		$purge   = $wgRequest->getVal( 'action' ) == 'purge';
 		$offset  = 0;
