@@ -116,7 +116,9 @@ function SelectStep(stepId) {
 
 		case 1:
 			var templates = dialog.parent.templateHotList;
-			var templatesOutput = ['', ''];
+			var magicWords = dialog.parent.magicWordList;
+
+			var templatesOutput = ['', '', ''];
 
 			// generate two columns of "hot" templates
 			var i = 0;
@@ -125,9 +127,16 @@ function SelectStep(stepId) {
 				i++;
 			}
 
+			// third column is for magic words ({{SITENAME}} etc)
+			for (i=0; i<magicWords.length; i++) {
+				var magicWord = magicWords[i].toUpperCase();
+				templatesOutput[2] += '<li><a onclick="SelectTemplate(\'' + magicWord + '\', null)">' + magicWord + '</a></li>';
+			}
+
 			// set HTML
 			GetE('templatesList1').innerHTML = templatesOutput[0];
 			GetE('templatesList2').innerHTML = templatesOutput[1];
+			GetE('templatesList3').innerHTML = templatesOutput[2];
 
 			// setup MW suggest
 			os_enableSuggestionsOn('templateQuery', 'templateSearch');
@@ -378,7 +387,9 @@ function Ok() {
 		}
 
 		#templateEditorStep1 ul {
-			width: 360px;
+			width: 245px;
+			height: 150px;
+			overflow: auto;
 			float: left;
 			display: inline;
 			list-style: none;
@@ -391,7 +402,7 @@ function Ok() {
 			font-size: 13px;
 		}
 
-		#templateEditorStep1 li a {
+		#templateEditorStep1 a {
 			cursor: pointer;
 			color: #0080C0;
 		}
@@ -409,18 +420,24 @@ function Ok() {
 		<hr />
 
 		<h1>Browse for Template</h1>
-		<h2>Most Frequently Used</h2>
+
+		<h2 style="float: left">Most Frequently Used</h2>
+		<h2 style="float: right; width: 260px"><a href="http://help.wikia.com/wiki/Help:Magic_words" target="_blank">Magic words</a></h2>
+
+		<br style="clear: both" />
 
 		<ul class="templatesList" id="templatesList1"></ul>
 
 		<ul class="templatesList" id="templatesList2"></ul>
+
+		<ul class="templatesList" id="templatesList3"></ul>
 
 		<br style="clear: both" />
 	</div>
 
 	<div id="templateEditorStep2" class="editorStep">
 		<h1 id="templateName">Template</h1>
-		<span id="templateOptions"><a id="templateViewLink" target="_blank">view template (opens a new window)</a> <a onclick="SelectStep(1)">choose another template</a></span>
+		<span id="templateOptions"><a id="templateViewLink" target="_blank">view template page (opens a new window)</a> <a onclick="SelectStep(1)">choose another template</a></span>
 		<h3>Change the values on the left and click to preview. When you're done making your edits, click to save</h3>
 
 		<table id="templateEditor" height="330px"><tr>
