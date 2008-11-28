@@ -135,11 +135,14 @@ function SelectStep(stepId) {
 
 
 		case 2:
-			GetE('templateName').innerHTML = (FCK.TemplateWizard.name.indexOf(':') > -1) ?  FCK.TemplateWizard.name : 'Template:' +  FCK.TemplateWizard.name;
+			name = (FCK.TemplateWizard.name.indexOf(':') > -1) ?  FCK.TemplateWizard.name : 'Template:' +  FCK.TemplateWizard.name;
+			GetE('templateName').innerHTML = name; 
 
-			var output = '';
+			GetE('templateViewLink').href = dialog.parent.wgServer + dialog.parent.wgArticlePath.replace(/\$1/, encodeURI(name.replace(/ /g, '_')));
 
 			// generate params editor
+			var output = '';
+
 			for (param in FCK.TemplateWizard.params) {
 				value = FCK.TemplateWizard.params[param];
 				id = 'param_' + param;
@@ -322,12 +325,17 @@ function Ok() {
 			margin-right: 50px;
 		}
 
-		#templateChooseAnother {
-			color: #0080C0;
-			cursor: pointer;
+		#templateOptions {
 			position: relative;
 			top: 5px;
-			font-size: 13px;
+			font-size: 12px;
+		}
+
+		#templateOptions a {
+			color: #0080C0;
+			cursor: pointer;
+			text-decoration: none;
+			margin: 0 8px;
 		}
 
 		#templateParameters label {
@@ -412,7 +420,7 @@ function Ok() {
 
 	<div id="templateEditorStep2" class="editorStep">
 		<h1 id="templateName">Template</h1>
-		<a id="templateChooseAnother" onclick="SelectStep(1)">choose another template</a>
+		<span id="templateOptions"><a id="templateViewLink" target="_blank">view template (opens a new window)</a> <a onclick="SelectStep(1)">choose another template</a></span>
 		<h3>Change the values on the left and click to preview. When you're done making your edits, click to save</h3>
 
 		<table id="templateEditor" height="330px"><tr>
