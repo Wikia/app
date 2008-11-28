@@ -20,10 +20,25 @@ var currentStep = false;
 // store refid
 var origRefid = FCK.TemplateWizard.refid;
 
-window.onload = function() {
-window.parent.SetAutoSize(true);
+// load wikibits, MW suggest and some of wgFoo JS variables
+window.wgMWSuggestTemplate = window.parent.parent.wgMWSuggestTemplate;
+window.wgSearchNamespaces = window.parent.parent.wgSearchNamespaces;
+window.wgDBname = window.parent.parent.wgDBname;
+window.stylepath = window.parent.parent.stylepath;
+window.wgContentLanguage = window.parent.wgContentLanguage;
+window.sajax_init_object = window.parent.parent.sajax_init_object;
 
-	// fill editor fields
+// search only in NS_TEMPLATE (#10)
+window.wgSearchNamespaces = [10];
+
+document.write( '<scr' + 'ipt type="text/javascript" src="' + dialog.parent.stylepath + '/common/wikibits.js?' + FCKConfig.StyleVersion + '"><\/scr' + 'ipt>' ) ;
+document.write( '<scr' + 'ipt type="text/javascript" src="' + dialog.parent.stylepath + '/common/mwsuggest.js?' + FCKConfig.StyleVersion + '"><\/scr' + 'ipt>' ) ;
+
+document.write('<li' + 'nk rel="stylesheet" type="text/css" href="' + dialog.parent.stylepath + '/common/shared.css?' + FCKConfig.StyleVersion + '"/>');
+
+window.onload = function() {
+
+	dialog.SetAutoSize(true);
 
 	// choose correct editor step
 	FCK.log(FCK.TemplateWizard);
@@ -39,6 +54,9 @@ window.parent.SetAutoSize(true);
 	}
 
 	FCK.Track('/templateEditor/open');
+
+	// setup MW suggest
+	os_enableSuggestionsOn('templateQuery', 'templateSearch');
 }
 
 // select template to be edited in step #2
@@ -68,7 +86,7 @@ function SelectStep(stepId) {
 	GetE('templateEditorStep2').style.display = (stepId == 2) ? 'block' : 'none';
 
 	// show OK only in step #2
-	window.parent.SetOkButton( stepId==2 );
+	dialog.SetOkButton( stepId==2 );
 
 	currentStep = stepId;
 
