@@ -605,7 +605,7 @@ function WysiwygGetTemplateHotList() {
 			$title = Title::newFromText($row->qc_title, NS_TEMPLATE);
 			if (!$title->exists()) continue;
 			$params = WysiwygGetTemplateParams($row->qc_title);
-			$list[$row->qc_title] = $params;
+			$list[$row->qc_title] = (!empty($params)) ? $params : null;
 		}
 		$list = Wikia::json_encode($list, true);
 		$wgMemc->set($key, $list, 60 * 60);
