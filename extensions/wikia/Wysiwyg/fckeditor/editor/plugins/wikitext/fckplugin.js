@@ -1288,7 +1288,7 @@ var FCKToolbarInsertTemplateCombo = function(tooltip, style) {
 	this.Style = style ? style : FCK_TOOLBARITEM_ICONTEXT;
 
 	this.DefaultLabel = 'Insert template';
-	this.FieldWidth = 100 ;
+	this.FieldWidth = 120 ;
 }
 
 FCKToolbarInsertTemplateCombo.prototype = new FCKToolbarSpecialCombo;
@@ -1303,7 +1303,7 @@ FCKToolbarInsertTemplateCombo.prototype.CreateItems = function( targetSpecialCom
 	for(key in FCK.templateList) {
 		targetSpecialCombo.AddItem(key, (FCK.templateList[key].desc) ? FCK.templateList[key].desc : FCK.templateList[key].name);
 	}
-	targetSpecialCombo.AddItem(":other:", "Other template");
+	targetSpecialCombo.AddItem(":other:", "Other template / magic word");
 }
 
 var oInsertTemplateItem = new FCKToolbarInsertTemplateCombo();
@@ -1374,5 +1374,3 @@ if (FCK.UseContentEditable) {
 
 // for us, developers ;)
 window.parent.FCK = FCK;
-
-
