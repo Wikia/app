@@ -15,6 +15,7 @@ YAHOO.Wikia.Blogs.callback.add = function( data ) {
 	var li = document.createElement( "li" );
 	li.innerHTML = data["text"];
 	YAHOO.util.Dom.get("blog-comments-ul").appendChild( li );
+	document.body.style.cursor = 'default';
 };
 
 /**
@@ -28,6 +29,7 @@ YAHOO.Wikia.Blogs.submit = function( event, id ) {
 		oForm.submit();
 	}
 	else {
+		document.body.style.cursor = 'wait';
 		YAHOO.util.Event.preventDefault( event );
 		YAHOO.util.Connect.setForm( oForm, false );
 		YAHOO.util.Connect.asyncRequest( "POST", wgServer + wgScriptPath + wgScript + "?action=ajax&rs=BlogComments::axPost&title=" + wgTitle.replace(" ", "_"), YAHOO.Wikia.Blogs.callback );
