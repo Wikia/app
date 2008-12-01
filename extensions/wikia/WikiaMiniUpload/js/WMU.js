@@ -603,6 +603,9 @@ AIM = {
 		f.setAttribute('target', name);
 	},
 	submit : function(f, c) {
+		// macbre: allow cross-domain
+		f.action += '&domain=' + escape(document.domain);
+
 		AIM.form(f, AIM.frame(c));
 		if (c && typeof(c.onStart) == 'function') {
 			return c.onStart();
