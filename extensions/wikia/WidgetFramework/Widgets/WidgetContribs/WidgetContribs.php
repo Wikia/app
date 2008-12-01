@@ -11,11 +11,13 @@ $wgWidgets['WidgetContribs'] = array(
 	'callback' => 'WidgetContribs',
 	'title' => array(
 		'en' => 'Contributions',
-		'pl' => 'Wkład'
+		'pl' => 'Wkład',
+		'hu' => 'Közremûködések'
 	),
 	'desc' => array(
 		'en' => 'Handy way to view your contributions', 
-		'pl' => 'Pomocna lista ostatnich edycji'
+		'pl' => 'Pomocna lista ostatnich edycji',
+		'hu' => 'Egyszerû módja a közremûködéseid megtekintésének.'
 	),
 	'params' => array(
 		'limit' => array(

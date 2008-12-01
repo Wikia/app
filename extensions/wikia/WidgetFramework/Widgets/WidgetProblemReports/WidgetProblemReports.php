@@ -11,11 +11,13 @@ $wgWidgets['WidgetProblemReports'] = array(
 	'callback' => 'WidgetProblemReports',
 	'title' => array(
 		'en' => 'Problem reports',
-		'pl' => 'Zgłoszone problemy'
+		'pl' => 'Zgłoszone problemy',
+		'hu' => 'Hiba jelentése'
 	),
 	'desc' => array(
 		'en' => 'Displays a list of reported problems for this wiki',
-		'pl' => 'Lista zgłoszonych problemów'
+		'pl' => 'Lista zgłoszonych problemów',
+		'hu' => 'Megjeleníti a wikin jelzett hibák listáját.'
 	),
     	'params' => array(
 		'limit' => array(

@@ -12,11 +12,13 @@ $wgWidgets['WidgetTopContent'] = array(
 	'callback' => 'WidgetTopContent',
 	'title' => array(
 		'en' => 'Top content',
-		'pl' => 'Najlepsze na wiki'
+		'pl' => 'Najlepsze na wiki',
+		'hu' => 'Legjobb tartalom'
 	),
 	'desc' => array(
 		'en' => 'Four widgets in one: Most Popular, Most Visited, Newly Changed, Highest Ratings.',
-		'pl' => '4 w 1: Najpopularniejsze, Najczęściej odwiedzane, Ostatnie zmiany, Najwyżej ocenianie'
+		'pl' => '4 w 1: Najpopularniejsze, Najczęściej odwiedzane, Ostatnie zmiany, Najwyżej ocenianie',
+		'hu' => 'Négy kiegészítõ egyben: a legnépszerûbb, leglátogatottabb, legutóbb változott és legjobbra értékelt szócikkek.'
     ),
     'params' => array (
 	'at' => array(

@@ -11,11 +11,13 @@ $wgWidgets['WidgetTips'] = array(
 	'callback' => 'WidgetTips',
 	'title' => array(
 		'en' => 'Tips',
-		'pl' => 'Czy wiesz, że...'
+		'pl' => 'Czy wiesz, że...',
+		'hu' => 'Tippek'
 	),
 	'desc' => array(
 		'en' => 'Shows random tips',
-		'pl' => 'Pokazuje losowe podpowiedzi'
+		'pl' => 'Pokazuje losowe podpowiedzi',
+		'hu' => 'Véletlenszerûen kiválasztott tippeket mutat.'
 	),
 	'params' => array(),
 	'closeable' => true,

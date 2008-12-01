@@ -11,11 +11,13 @@ $wgWidgets['WidgetActiveTalkPages'] = array(
 	'callback' => 'WidgetActiveTalkPages',
 	'title' => array(
 		'en' => 'Active talk pages',
-		'pl' => 'Aktywne strony dyskusji'
+		'pl' => 'Aktywne strony dyskusji',
+		'hu' => 'Aktív vitalapok'
 	),
 	'desc' => array(
 		'en' => 'A list of recently edited talk pages', 
-		'pl' => 'Lista ostatni edytowanych strony dyskusji'
+		'pl' => 'Lista ostatni edytowanych strony dyskusji',
+		'hu' => 'A legutóbb megváltozott vitalapok listája.'
     ),
 	'params' => array(
 		'limit' => array(

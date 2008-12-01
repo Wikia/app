@@ -11,11 +11,13 @@ $wgWidgets['WidgetMostVisited'] = array(
 	'callback' => 'WidgetMostVisited',
 	'title' => array(
 		'en' => 'Most visited',
-		'pl' => 'Najczęściej odwiedzane'
+		'pl' => 'Najczęściej odwiedzane',
+		'hu' => 'Leglátogatottabb'
 	),
 	'desc' => array(
 		'en' => 'A list of the most visited articles on this wiki', 
-		'pl' => 'Lista najczęściej odwiedzanych artykułów'
+		'pl' => 'Lista najczęściej odwiedzanych artykułów',
+		'hu' => 'Lista a wiki leglátogatottabb szócikkeirõl.'
     ),
     'closeable' => true,
     'editable' => false,

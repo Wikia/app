@@ -23,11 +23,13 @@ $wgWidgets['WidgetNewPages'] = array(
 	'callback' => 'WidgetNewPages',
 	'title' => array(
 		'en' => 'Newest articles',
-		'pl' => 'Najnowsze artykuły'
+		'pl' => 'Najnowsze artykuły',
+		'hu' => 'Legújabb cikkek'
 	),
 	'desc' => array(
 		'en' => 'A list of newest articles on this wiki',
-		'pl' => 'Lista najnowszych artykułów na tej wiki'
+		'pl' => 'Lista najnowszych artykułów na tej wiki',
+		'hu' => 'A wiki legújabb szócikkeinek listája.'
 	),
 	'closeable' => true,
 	'editable' => false

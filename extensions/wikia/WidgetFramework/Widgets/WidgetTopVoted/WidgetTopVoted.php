@@ -11,11 +11,13 @@ $wgWidgets['WidgetTopVoted'] = array(
 	'callback' => 'WidgetTopVoted',
 	'title' => array(
 		'en' => 'Top voted',
-		'pl' => 'Najwyżej oceniane'
+		'pl' => 'Najwyżej oceniane',
+		'hu' => 'Legjobbra értékelt'
 	),
 	'desc' => array(
 		'en' => 'See the highest rated articles, as voted by this wiki\'s community', 
-		'pl' => 'Lista najwyżej ocenionych artykułów na tej wiki'
+		'pl' => 'Lista najwyżej ocenionych artykułów na tej wiki',
+		'hu' => 'Nézd meg, mely szócikkeket értékelt a legjobbra a wiki közössége.'
 
     ),
     'closeable' => true,

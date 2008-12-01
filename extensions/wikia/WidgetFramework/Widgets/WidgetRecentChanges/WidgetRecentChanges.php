@@ -12,11 +12,13 @@ $wgWidgets['WidgetRecentChanges'] = array(
 	'callback' => 'WidgetRecentChanges',
 	'title' => array(
 		'en' => 'Recent changes',
-		'pl' => 'Ostatnie zmiany'
+		'pl' => 'Ostatnie zmiany',
+		'hu' => 'Friss változtatások'
 	),
 	'desc' => array(
 		'en' => 'List of recent changes',
-		'pl' => 'Lista ostatnich zmian'
+		'pl' => 'Lista ostatnich zmian',
+		'hu' => 'A legutóbbi változások listája.'
     ),
 	'params' => array(
 		'limit' => array(
