@@ -132,10 +132,24 @@ class CreatePageMultiEditor extends CreatePageEditor {
 	// get the infobox' text and substitute all known values...
 	function GlueInfobox ($infoboxes_array, $infobox_text) {		
 		$inf_pars = preg_split ("/\|/", $infobox_text, -1) ;		
-		$text = array_shift ($inf_pars) ;
+
+		// correct for additional |'s the users may have put in here...
+		$fixed_par_array = array();
+		$fix_corrector = 0;
+
+		for ($i=0; $i < count($inf_pars); $i++) {
+			if( (strpos( $inf_pars[$i], "=" ) === false) && (0 != $i) ) { //this was cut out from user supplying '|' inside the parameter...
+				$fixed_par_array[$i - ( 1 + $fix_corrector ) ] .= "|" . $inf_pars[$i];                                            
+				$fix_corrector++;
+			} else {
+				$fixed_par_array[] = $inf_pars[$i];
+			}
+		}
+
+		$text = array_shift ($fixed_par_array) ;
 		$inf_par_num = 0 ;
 
-		foreach ($inf_pars as $inf_par) {
+		foreach ($fixed_par_array as $inf_par) {
 			$inf_par_pair = preg_split ("/=/", $inf_par, -1) ;
 			if (is_array ($inf_par_pair)) {
 				$text .= "|" . $inf_par_pair[0] . " = " . $this->escapeKnownMarkupTags (trim ($infoboxes_array [$inf_par_num])) ."\n" ;
