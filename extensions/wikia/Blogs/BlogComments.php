@@ -163,7 +163,7 @@ class BlogComments {
 
 				$anchor   = explode( "/", $page->getDBkey(), 3 );
 
-				$comments[] = array(
+				$comments[ $revision->getTimestamp() ] = array(
 					"sig"       => $sig,
 					"text"      => $text,
 					"title"     => $page,
