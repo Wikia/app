@@ -3,7 +3,6 @@ YAHOO.namespace("Wikia.Blogs");
 YAHOO.Wikia.Blogs.callback = {
     success: function( oResponse ) {
         var data = YAHOO.Tools.JSONParse( oResponse.responseText );
-//		location.reload();
 		YAHOO.Wikia.Blogs.callback.add( data );
     },
     failure: function( oResponse ) {
@@ -12,10 +11,22 @@ YAHOO.Wikia.Blogs.callback = {
 };
 
 YAHOO.Wikia.Blogs.callback.add = function( data ) {
-	var li = document.createElement( "li" );
-	li.innerHTML = data["text"];
-	YAHOO.util.Dom.get("blog-comments-ul").appendChild( li );
-	document.body.style.cursor = 'default';
+	if( ! data[ "error" ] ) {
+		var li = document.createElement( "li" );
+		li.innerHTML = data["text"];
+		YAHOO.util.Dom.get( "blog-comments-ul" ).appendChild( li );
+		document.body.style.cursor = 'default';
+		var bottom = YAHOO.util.Dom.get( "blog-comm-bottom" );
+		if ( bottom ) {
+			bottom.readonly = false;
+			bottom.value = "";
+		}
+		var top = YAHOO.util.Dom.get( "blog-comm-top" );
+		if( top ) {
+			top.readonly = false;
+			top.value = "";
+		}
+	}
 };
 
 /**
@@ -30,6 +41,14 @@ YAHOO.Wikia.Blogs.submit = function( event, id ) {
 	}
 	else {
 		document.body.style.cursor = 'wait';
+		var bottom = YAHOO.util.Dom.get( "blog-comm-bottom" );
+		if( bottom ) {
+			bottom.readonly = true;
+		}
+		var top = YAHOO.util.Dom.get( "blog-comm-top" );
+		if( top ) {
+			top.readonly = true;
+		}
 		YAHOO.util.Event.preventDefault( event );
 		YAHOO.util.Connect.setForm( oForm, false );
 		YAHOO.util.Connect.asyncRequest( "POST", wgServer + wgScriptPath + wgScript + "?action=ajax&rs=BlogComments::axPost&title=" + wgTitle.replace(" ", "_"), YAHOO.Wikia.Blogs.callback );
