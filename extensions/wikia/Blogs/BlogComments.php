@@ -245,6 +245,8 @@ class BlogComments {
 	 */
 	static public function doPost( &$Request, &$User, &$Title ) {
 
+		global $wgMemc;
+
 		$text = $Request->getText("wpBlogComment", false);
 		if( !$text || !strlen( $text ) ) {
 			return false;
@@ -266,6 +268,8 @@ class BlogComments {
 		/**
 		 * clear comments cache for this article
 		 */
+		$key = $Title->getBaseText();
+		$wgMemc->delete( wfMemcKey( "blog", "listing", $key, 0 ) );
 		return $article;
 	}
 }
