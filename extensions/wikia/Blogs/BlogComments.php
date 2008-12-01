@@ -173,6 +173,7 @@ class BlogComments {
 					"timestamp" => $wgContLang->timeanddate( $revision->getTimestamp() )
 				);
 			}
+
 			$template->set_vars( array(
 				"order"    => $this->mOrder,
 				"input"    => $input,
