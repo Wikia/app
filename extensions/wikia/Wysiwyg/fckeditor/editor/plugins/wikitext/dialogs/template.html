@@ -16,17 +16,20 @@ var FCKRegexLib	= oEditor.FCKRegexLib ;
 var FCKTools	= oEditor.FCKTools ;
 
 // load wikibits, MW suggest and some of wgFoo JS variables
-window.wgMWSuggestTemplate = window.parent.parent.wgMWSuggestTemplate;
-window.wgSearchNamespaces = window.parent.parent.wgSearchNamespaces;
-window.wgDBname = window.parent.parent.wgDBname;
-window.stylepath = window.parent.parent.stylepath;
-window.wgContentLanguage = window.parent.wgContentLanguage;
-window.sajax_init_object = window.parent.parent.sajax_init_object;
+window.wgMWSuggestTemplate = dialog.parent.wgMWSuggestTemplate;
+window.wgSearchNamespaces = dialog.parent.wgSearchNamespaces;
+window.wgDBname = dialog.parent.wgDBname;
+window.wgServer = dialog.parent.wgServer;
+window.wgScript = dialog.parent.wgScript;
+window.wgScriptPath = dialog.parent.wgScriptPath;
+window.stylepath = dialog.parent.stylepath;
+window.wgContentLanguage = dialog.parent.wgContentLanguage;
 
 // search only in NS_TEMPLATE (#10)
 window.wgSearchNamespaces = [10];
 
 document.write( '<scr' + 'ipt type="text/javascript" src="' + dialog.parent.stylepath + '/common/wikibits.js?' + FCKConfig.StyleVersion + '"><\/scr' + 'ipt>' ) ;
+document.write( '<scr' + 'ipt type="text/javascript" src="' + dialog.parent.stylepath + '/common/ajax.js?' + FCKConfig.StyleVersion + '"><\/scr' + 'ipt>' ) ;
 document.write( '<scr' + 'ipt type="text/javascript" src="' + dialog.parent.stylepath + '/common/mwsuggest.js?' + FCKConfig.StyleVersion + '"><\/scr' + 'ipt>' ) ;
 
 document.write('<li' + 'nk rel="stylesheet" type="text/css" href="' + dialog.parent.stylepath + '/common/shared.css?' + FCKConfig.StyleVersion + '"/>');
@@ -91,33 +94,19 @@ FCK.TemplateEditor.InsertTemplateFromSearch = function() {
 
 		// clear search field
 		FCK.TemplateEditor.GetE('templateQuery').value = '';
-		
-		var callback = {
-			success: function(o) {
-				var FCK = o.argument.FCK;
 
-				var params = FCK.YAHOO.Tools.JSONParse(o.responseText);
+		FCK.TemplateEditor.win.sajax_request_type = 'POST';
+		FCK.TemplateEditor.win.sajax_do_call('WysiwygGetTemplateParamsAjax', [templateName], function(res) {
+			var params = eval('(' + res.responseText + ')');
 
-				// go to step #2
-				FCK.log('suggested template: ' + o.argument.templateName);
-				FCK.log(params);
+			// go to step #2
+			FCK.log('suggested template: ' + templateName);
+			FCK.log(params);
 				
-				FCK.Track('/templateEditor/suggest');
+			FCK.Track('/templateEditor/suggest');
 	
-				FCK.TemplateEditor.SelectTemplate(o.argument.templateName, params);
-			},
-
-			failure: function(o) {},
-
-			argument: {'templateName': templateName, 'FCK': FCK}
-		};
-
-		FCK.YAHOO.util.Connect.asyncRequest(
-			"POST",
-			FCK.TemplateEditor.Dialog.parent.wgScript,
-			callback,
-			'action=ajax&rs=WysiwygGetTemplateParamsAjax&rsargs[]=' + encodeURIComponent(templateName)
-		);
+			FCK.TemplateEditor.SelectTemplate(templateName, params);
+		});
 	}
 	return false;
 }
@@ -222,8 +211,11 @@ FCK.TemplateEditor.SelectStep = function(stepId) {
 	// hide throbber
 	FCK.TemplateEditor.Dialog.Throbber.Hide();
 
-	// focus on first textarea (value of first template parameter)
-	if (stepId == 2 && FCK.TemplateWizard.params) {
+	// focus on suggest / first textarea (value of first template parameter)
+	if (stepId == 1) {
+		FCK.TemplateEditor.GetE('templateQuery').focus();
+	}
+	else if (FCK.TemplateWizard.params) {
 		FCK.TemplateEditor.GetE('templateParameters').getElementsByTagName('textarea')[0].focus();
 	}
 }
