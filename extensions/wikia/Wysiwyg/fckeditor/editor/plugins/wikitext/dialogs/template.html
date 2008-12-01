@@ -15,11 +15,6 @@ var FCKConfig	= oEditor.FCKConfig ;
 var FCKRegexLib	= oEditor.FCKRegexLib ;
 var FCKTools	= oEditor.FCKTools ;
 
-var currentStep = false;
-
-// store refid
-var origRefid = FCK.TemplateWizard.refid;
-
 // load wikibits, MW suggest and some of wgFoo JS variables
 window.wgMWSuggestTemplate = window.parent.parent.wgMWSuggestTemplate;
 window.wgSearchNamespaces = window.parent.parent.wgSearchNamespaces;
@@ -38,7 +33,7 @@ document.write('<li' + 'nk rel="stylesheet" type="text/css" href="' + dialog.par
 
 window.onload = function() {
 
-	dialog.SetAutoSize(true);
+	FCK.TemplateEditor.Dialog.SetAutoSize(true);
 
 	// choose correct editor step
 	FCK.log(FCK.TemplateWizard);
@@ -47,28 +42,54 @@ window.onload = function() {
 	// * templates existing within article and with parameters
 	// * templates to be inserted into article and with parameters
 	if (FCK.TemplateWizard.name && FCK.TemplateWizard.params) {
-		SelectStep(2);
+		FCK.TemplateEditor.SelectStep(2);
 	}
 	else {
-		SelectStep(1);
+		FCK.TemplateEditor.SelectStep(1);
 	}
 
 	FCK.Track('/templateEditor/open');
 }
 
-function InsertTemplateFromSearch() {
-	var templateName = GetE('templateQuery').value;
-	var suggestData = window.os_map.templateQuery;
+FCK.TemplateEditor = {
+	'Dialog': dialog,
+	'Editor': oEditor,
+
+	'currentStep': false,
+	'origRefid': FCK.TemplateWizard.refid,
+
+	'GetE': function(id) {return FCK.TemplateEditor.doc.getElementById(id)},
+
+	'doc': document,
+	'win': window,
+
+	'IsIE': oEditor.FCKBrowserInfo.IsIE
+};
+
+// turn on/off template name suggestion (step #1)
+FCK.TemplateEditor.EnableTemplateSuggestion = function(enable) {
+	if (enable) {
+		FCK.TemplateEditor.win.os_enableSuggestionsOn.call(FCK.TemplateEditor.win, 'templateQuery', 'templateSearch');
+		FCK.log('enabled template name suggestion');
+	}
+	else {
+		FCK.TemplateEditor.win.os_disableSuggestionsOn.call(FCK.TemplateEditor.win, 'templateQuery');
+		FCK.log('disabled template name suggestion');
+	}
+}
+
+FCK.TemplateEditor.InsertTemplateFromSearch = function() {
+	var templateName = FCK.TemplateEditor.GetE('templateQuery').value;
+	var suggestData =  FCK.TemplateEditor.win.os_map.templateQuery;
 
 	// only allow template names from suggest results
 	if ( suggestData.results && FCK.ArrayIndexOf(suggestData.results, templateName) != -1 ) {
 		// send AJAX query to get template parameters and show progress bar
-		dialog.Throbber.Show();
+		FCK.TemplateEditor.Dialog.Throbber.Show();
 		
 		var callback = {
 			success: function(o) {
 				var FCK = o.argument.FCK;
-				var context = o.argument.context;
 
 				var params = FCK.YAHOO.Tools.JSONParse(o.responseText);
 
@@ -76,8 +97,7 @@ function InsertTemplateFromSearch() {
 				FCK.log('suggested template: ' + o.argument.templateName);
 				FCK.log(params);
 				
-				// call function using current 'window' object as its context
-				context.SelectTemplate.call(context, o.argument.templateName, params);
+				FCK.TemplateEditor.SelectTemplate(o.argument.templateName, params);
 			},
 
 			failure: function(o) {},
@@ -87,7 +107,7 @@ function InsertTemplateFromSearch() {
 
 		FCK.YAHOO.util.Connect.asyncRequest(
 			"POST",
-			dialog.parent.wgScript,
+			FCK.TemplateEditor.Dialog.parent.wgScript,
 			callback,
 			'action=ajax&rs=WysiwygGetTemplateParamsAjax&rsargs[]=' + encodeURIComponent(templateName)
 		);
@@ -96,75 +116,71 @@ function InsertTemplateFromSearch() {
 }
 
 // select template to be edited in step #2
-function SelectTemplate(name, params) {
+FCK.TemplateEditor.SelectTemplate = function(name, params) {
 	FCK.log('editing template "'+name+'"');
 	FCK.log(params);
 
 	// if template has no parameters add it to article and close editor
 	if (!params) {
-		oEditor.FCKUndo.SaveUndoStep();
+		FCK.TemplateEditor.Editor.FCKUndo.SaveUndoStep();
 
 		FCK.Track('/templateEditor/save');
-		FCK.InsertTemplate(origRefid, name, null);
+		FCK.InsertTemplate(FCK.TemplateEditor.origRefid, name, null);
 
-		dialog.CloseDialog();
+		FCK.TemplateEditor.Dialog.CloseDialog();
 	}
 	else {
 		// fill wizard data and select step #2
-		FCK.TemplateWizard = {'name': name, 'params': params, 'refid': origRefid};
-		SelectStep(2);
+		FCK.TemplateWizard = {'name': name, 'params': params, 'refid': FCK.TemplateEditor.origRefid};
+		FCK.TemplateEditor.SelectStep(2);
 	}
 }
 
 // change editor step
-function SelectStep(stepId) {
-	GetE('templateEditorStep1').style.display = (stepId == 1) ? 'block' : 'none';
-	GetE('templateEditorStep2').style.display = (stepId == 2) ? 'block' : 'none';
-
+FCK.TemplateEditor.SelectStep = function(stepId) {
 	// show OK only in step #2
-	dialog.SetOkButton( stepId==2 );
+	FCK.TemplateEditor.Dialog.SetOkButton( stepId==2 );
 
-	currentStep = stepId;
-
-	// hide throbber
-	dialog.Throbber.Hide();
+	FCK.TemplateEditor.currentStep = stepId;
 
 	switch(stepId) {
 
 		case 1:
-			var templates = dialog.parent.templateHotList;
-			var magicWords = dialog.parent.magicWordList;
+			var templates = FCK.TemplateEditor.Dialog.parent.templateHotList;
+			var magicWords = FCK.TemplateEditor.Dialog.parent.magicWordList;
 
 			var templatesOutput = ['', '', ''];
 
 			// generate two columns of "hot" templates
 			var i = 0;
 			for (name in templates) {
-				templatesOutput[i%2] += '<li><a onclick="SelectTemplate(\'' + escape(name) + '\', dialog.parent.templateHotList.'+name+')">' + name + '</a></li>';
+				templatesOutput[i%2] += '<li><a onclick="FCK.TemplateEditor.SelectTemplate(\'' + escape(name) + '\', FCK.TemplateEditor.Dialog.parent.templateHotList.'+name+')">' + name + '</a></li>';
 				i++;
 			}
 
 			// third column is for magic words ({{SITENAME}} etc)
 			for (i=0; i<magicWords.length; i++) {
 				var magicWord = magicWords[i].toUpperCase();
-				templatesOutput[2] += '<li><a onclick="SelectTemplate(\'' + magicWord + '\', null)">' + magicWord + '</a></li>';
+				templatesOutput[2] += '<li><a onclick="FCK.TemplateEditor.SelectTemplate(\'' + magicWord + '\', null)">' + magicWord + '</a></li>';
 			}
 
 			// set HTML
-			GetE('templatesList1').innerHTML = templatesOutput[0];
-			GetE('templatesList2').innerHTML = templatesOutput[1];
-			GetE('templatesList3').innerHTML = templatesOutput[2];
+			FCK.TemplateEditor.GetE('templatesList1').innerHTML = templatesOutput[0];
+			FCK.TemplateEditor.GetE('templatesList2').innerHTML = templatesOutput[1];
+			FCK.TemplateEditor.GetE('templatesList3').innerHTML = templatesOutput[2];
 
 			// setup MW suggest
-			os_enableSuggestionsOn('templateQuery', 'templateSearch');
+			FCK.TemplateEditor.EnableTemplateSuggestion(true);
 			break;
 
 
 		case 2:
+			// show proper template name (with namespace prefix)
 			name = (FCK.TemplateWizard.name.indexOf(':') > -1) ?  FCK.TemplateWizard.name : 'Template:' +  FCK.TemplateWizard.name;
-			GetE('templateName').innerHTML = name; 
+			FCK.TemplateEditor.GetE('templateName').innerHTML = name; 
 
-			GetE('templateViewLink').href = dialog.parent.wgServer + dialog.parent.wgArticlePath.replace(/\$1/, encodeURI(name.replace(/ /g, '_')));
+			// set "view template page" link
+			FCK.TemplateEditor.GetE('templateViewLink').href = FCK.TemplateEditor.Dialog.parent.wgServer + FCK.TemplateEditor.Dialog.parent.wgArticlePath.replace(/\$1/, encodeURI(name.replace(/ /g, '_')));
 
 			// generate params editor
 			var output = '';
@@ -182,29 +198,35 @@ function SelectStep(stepId) {
 				output += '<label for="'+id+'">'+name +'</label><textarea id="'+id+'">'+value+'</textarea>';
 			}
 
-			GetE('templateParameters').innerHTML = output;
+			FCK.TemplateEditor.GetE('templateParameters').innerHTML = output;
 
 			// focus on first textarea
-			if (FCK.TemplateWizard.params) {
-				GetE('templateParameters').getElementsByTagName('textarea')[0].focus();
+			if (FCK.TemplateWizard.params && !FCK.TemplateEditor.IsIE) {
+				FCK.TemplateEditor.GetE('templateParameters').getElementsByTagName('textarea')[0].focus();
 			}
 
 			// create preview
-			CreatePreview();
+			FCK.TemplateEditor.CreatePreview();
 
 			// disable MW suggest
-			os_disableSuggestionsOn('templateQuery');
+			FCK.TemplateEditor.EnableTemplateSuggestion(false);
 			break;
 	}
+
+	// show proper step
+	FCK.TemplateEditor.GetE('templateEditorStep1').style.display = (stepId == 1) ? 'block' : 'none';
+	FCK.TemplateEditor.GetE('templateEditorStep2').style.display = (stepId == 2) ? 'block' : 'none';
+
+	// hide throbber
+	FCK.TemplateEditor.Dialog.Throbber.Hide();
 }
 
-// preview generation
-//
-function GetParametersFromStep2() {
+// get parameteres from template editor
+FCK.TemplateEditor.GetParametersFromStep2 = function() {
 	var params = {};
 
 	// parameters name and value
-	var nodes = GetE('templateParameters').getElementsByTagName('textarea');
+	var nodes = FCK.TemplateEditor.GetE('templateParameters').getElementsByTagName('textarea');
 
 	for(n=0; n<nodes.length; n++) {
 		var name = nodes[n].id.substr(6);
@@ -216,14 +238,15 @@ function GetParametersFromStep2() {
 	return nodes.length ? params : null;
 }
 
-function GetWikitextFromStep2() {
+// generate wikitext from template editor
+FCK.TemplateEditor.GetWikitextFromStep2 = function() {
 	var wikitext = '';
 
 	// template name
-	wikitext = '{{' + GetE('templateName').innerHTML;
+	wikitext = '{{' + FCK.TemplateEditor.GetE('templateName').innerHTML;
 
 	// parameters name and value
-	var params = GetParametersFromStep2();
+	var params = FCK.TemplateEditor.GetParametersFromStep2();
 
 	for(key in params) {
 		var value = params[key];
@@ -239,15 +262,16 @@ function GetWikitextFromStep2() {
 	return wikitext;
 }
 
-function CreatePreview() {
+// generate preview in template editor
+FCK.TemplateEditor.CreatePreview = function() {
 
-	var wikitext = GetWikitextFromStep2();
+	var wikitext = FCK.TemplateEditor.GetWikitextFromStep2();
 	FCK.log('generating preview for >>' + wikitext + '<<');
 
 	// block preview button and show progress icon
-	GetE('templateDoPreview').disabled = true;
-	GetE('templatePreview').innerHTML = '';
-	GetE('templatePreview').className = 'progress';
+	FCK.TemplateEditor.GetE('templateDoPreview').disabled = true;
+	FCK.TemplateEditor.GetE('templatePreview').innerHTML = '';
+	FCK.TemplateEditor.GetE('templatePreview').className = 'progress';
 
 	FCK.Track('/templateEditor/preview');
 
@@ -273,14 +297,14 @@ function CreatePreview() {
 			o.argument.button.disabled = false;
 		},
 
-		argument: {'preview': GetE('templatePreview'), 'button': GetE('templateDoPreview'), 'FCK': FCK}
+		argument: {'preview': FCK.TemplateEditor.GetE('templatePreview'), 'button': FCK.TemplateEditor.GetE('templateDoPreview'), 'FCK': FCK}
 	};
 
 	FCK.YAHOO.util.Connect.asyncRequest(
 		"POST",
-		dialog.parent.wgScriptPath + '/api.php',
+		FCK.TemplateEditor.Dialog.parent.wgScriptPath + '/api.php',
 		callback,
-		"action=parse&format=json&prop=text&title=" + encodeURIComponent(dialog.parent.wgPageName) + "&text=" +  encodeURIComponent(wikitext)
+		"action=parse&format=json&prop=text&title=" + encodeURIComponent(FCK.TemplateEditor.Dialog.parent.wgPageName) + "&text=" +  encodeURIComponent(wikitext)
 	);
 }
 
@@ -288,16 +312,16 @@ function CreatePreview() {
 function Ok() {
 
 	// prevent clicking OK in step #1
-	if (currentStep != 2) {
+	if (FCK.TemplateEditor.currentStep != 2) {
 		return false;
 	}
 
-	oEditor.FCKUndo.SaveUndoStep();
+	FCK.TemplateEditor.Editor.FCKUndo.SaveUndoStep();
 
 	FCK.Track('/templateEditor/save');
 
 	// insert / update template
-	FCK.InsertTemplate(origRefid, FCK.TemplateWizard.name, GetParametersFromStep2());
+	FCK.InsertTemplate(FCK.TemplateEditor.origRefid, FCK.TemplateWizard.name, FCK.TemplateEditor.GetParametersFromStep2());
 
 	return true;
 }
@@ -436,7 +460,7 @@ function Ok() {
 	<div id="templateEditorStep1" class="editorStep">
 		<h1 style="float: left">Search for Template</h1>
 		
-		<form id="templateSearch" onsubmit="InsertTemplateFromSearch()">
+		<form id="templateSearch" onsubmit="FCK.TemplateEditor.InsertTemplateFromSearch()">
 			<input type="text" id="templateQuery" style="width: 300px" />
 			<input type="submit" value="Insert" />
 		</form>
@@ -461,7 +485,7 @@ function Ok() {
 
 	<div id="templateEditorStep2" class="editorStep">
 		<h1 id="templateName">Template</h1>
-		<span id="templateOptions"><a id="templateViewLink" target="_blank">view template page (opens a new window)</a> <a onclick="SelectStep(1)">choose another template</a></span>
+		<span id="templateOptions"><a id="templateViewLink" target="_blank">view template page (opens a new window)</a> <a onclick="FCK.TemplateEditor.SelectStep(1)">choose another template</a></span>
 		<h3>Change the values on the left and click to preview. When you're done making your edits, click to save</h3>
 
 		<table id="templateEditor" height="330px"><tr>
@@ -471,7 +495,7 @@ function Ok() {
 				<div id="templateParameters"></div>
 			</td>
 			<td>
-				<input id="templateDoPreview" type="button" value="Preview" onclick="CreatePreview()" />
+				<input id="templateDoPreview" type="button" value="Preview" onclick="FCK.TemplateEditor.CreatePreview()" />
 			</td>
 			<td width="330">
 				<h2>Preview</h2>
