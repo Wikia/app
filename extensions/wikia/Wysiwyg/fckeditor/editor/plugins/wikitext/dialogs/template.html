@@ -102,9 +102,9 @@ FCK.TemplateEditor.InsertTemplateFromSearch = function() {
 			// go to step #2
 			FCK.log('suggested template: ' + templateName);
 			FCK.log(params);
-				
+
 			FCK.Track('/templateEditor/suggest');
-	
+
 			FCK.TemplateEditor.SelectTemplate(templateName, params);
 		});
 	}
@@ -113,6 +113,7 @@ FCK.TemplateEditor.InsertTemplateFromSearch = function() {
 
 // select template to be edited in step #2
 FCK.TemplateEditor.SelectTemplate = function(name, params) {
+	name = unescape(name);
 	FCK.log('editing template "'+name+'"');
 	FCK.log(params);
 
@@ -150,7 +151,7 @@ FCK.TemplateEditor.SelectStep = function(stepId) {
 			// generate two columns of "hot" templates
 			var i = 0;
 			for (name in templates) {
-				templatesOutput[i%2] += '<li><a onclick="FCK.TemplateEditor.SelectTemplate(\'' + escape(name) + '\', FCK.TemplateEditor.Dialog.parent.templateHotList.'+name+')">' + name + '</a></li>';
+				templatesOutput[i%2] += '<li><a onclick="FCK.TemplateEditor.SelectTemplate(\'' + escape(name) + '\', FCK.TemplateEditor.Dialog.parent.templateHotList[\''+name+'\'])">' + name + '</a></li>';
 				i++;
 			}
 
@@ -173,7 +174,7 @@ FCK.TemplateEditor.SelectStep = function(stepId) {
 		case 2:
 			// show proper template name (with namespace prefix)
 			name = (FCK.TemplateWizard.name.indexOf(':') > -1) ?  FCK.TemplateWizard.name : 'Template:' +  FCK.TemplateWizard.name;
-			FCK.TemplateEditor.GetE('templateName').innerHTML = name; 
+			FCK.TemplateEditor.GetE('templateName').innerHTML = name;
 
 			// set "view template page" link
 			FCK.TemplateEditor.GetE('templateViewLink').href = FCK.TemplateEditor.Dialog.parent.wgServer + FCK.TemplateEditor.Dialog.parent.wgArticlePath.replace(/\$1/, encodeURI(name.replace(/ /g, '_')));
@@ -329,7 +330,7 @@ function Ok() {
 		.progress {
 			background: transparent url('../../../skins/default/images/progress_transparent.gif') no-repeat 50% 50%;
 		}
-	
+
 		#template_preview p {
 			margin: 0;
 		}
@@ -410,7 +411,7 @@ function Ok() {
 			font-family: monospace !important;
 		}
 
-		#templatePreview {		
+		#templatePreview {
 			overflow: auto;
 			height: 300px;
 			background-color: #fff;
@@ -458,7 +459,7 @@ function Ok() {
 <body scroll="no" style="overflow: hidden">
 	<div id="templateEditorStep1" class="editorStep">
 		<h1 style="float: left">Search for Template</h1>
-		
+
 		<form id="templateSearch" onsubmit="return FCK.TemplateEditor.InsertTemplateFromSearch()">
 			<input type="text" id="templateQuery" style="width: 300px" />
 			<input type="submit" value="Insert" />
