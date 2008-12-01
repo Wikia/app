@@ -10,6 +10,7 @@ $wgAjaxExportList[] = "BlogComments::axPost";
 class BlogComments {
 
 	private $mText;
+	private $mOwner;
 	private $mComments = false;
 	private $mProps = false;
 	private $mOrder = false;
