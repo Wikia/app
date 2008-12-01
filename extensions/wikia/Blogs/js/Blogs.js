@@ -15,16 +15,18 @@ YAHOO.Wikia.Blogs.callback.add = function( data ) {
 		var li = document.createElement( "li" );
 		li.innerHTML = data["text"];
 		YAHOO.util.Dom.get( "blog-comments-ul" ).appendChild( li );
-		document.body.style.cursor = 'default';
+		document.body.style.cursor = "default";
 		var bottom = YAHOO.util.Dom.get( "blog-comm-bottom" );
 		if ( bottom ) {
 			bottom.readonly = false;
 			bottom.value = "";
+			bottom.style.cursor = "auto";
 		}
 		var top = YAHOO.util.Dom.get( "blog-comm-top" );
 		if( top ) {
 			top.readonly = false;
 			top.value = "";
+			top.style.cursor = "auto";
 		}
 	}
 };
@@ -40,14 +42,16 @@ YAHOO.Wikia.Blogs.submit = function( event, id ) {
 		oForm.submit();
 	}
 	else {
-		document.body.style.cursor = 'wait';
+		document.body.style.cursor = "wait";
 		var bottom = YAHOO.util.Dom.get( "blog-comm-bottom" );
 		if( bottom ) {
 			bottom.readonly = true;
+			bottom.style.cursor = "wait";
 		}
 		var top = YAHOO.util.Dom.get( "blog-comm-top" );
 		if( top ) {
 			top.readonly = true;
+			top.style.cursor = "wait";
 		}
 		YAHOO.util.Event.preventDefault( event );
 		YAHOO.util.Connect.setForm( oForm, false );
