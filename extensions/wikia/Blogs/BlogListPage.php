@@ -3,6 +3,7 @@
  * blog listing for user, something similar to CategoryPage
  *
  * @author Krzysztof Krzyżaniak <eloy@wikia-inc.com>
+ * @author Adrtian Wieczorek <adi@wkia-inc.com>
  */
 
 if ( !defined( 'MEDIAWIKI' ) ) {
@@ -14,9 +15,6 @@ $wgHooks[ "ArticleFromTitle" ][] = "BlogListPage::ArticleFromTitle";
 $wgHooks[ "CategoryViewer::getOtherSection" ][] = "BlogListPage::getOtherSection";
 $wgHooks[ "CategoryViewer::addPage" ][] = "BlogListPage::addCategoryPage";
 $wgHooks[ "SkinTemplateTabs" ][] = "BlogListPage::skinTemplateTabs";
-/**
- * ajax hooks
- */
 
 class BlogListPage extends Article {
 
@@ -49,15 +47,15 @@ class BlogListPage extends Article {
 			Article::view();
 			$this->mTitle->mPrefixedText = $oldPrefixedText;
 
-			$this->mProps = self::getProps( $this->getID() );
+			$this->mProps = self::getProps( $this->mTitle->getArticleID() );
 			$templateParams = array();
 
 			if( isset( $this->mProps[ "voting" ] ) && $this->mProps[ "voting" ] == 1 ) {
-				$pageid = $this->getLatest();
+				$pageid = $this->mTitle->getArticleID();
 				$FauxRequest = new FauxRequest( array(
 					"action" => "query",
 					"list" => "wkvoteart",
-					"wkpage" => $this->getLatest(),
+					"wkpage" => $pageid,
 					"wkuservote" => true
 				));
 				$oApi = new ApiMain( $FauxRequest );
