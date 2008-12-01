@@ -49,6 +49,8 @@ window.onload = function() {
 	}
 
 	FCK.Track('/templateEditor/open');
+
+	FCK.BlockEvent(GetE('templatePreview'), 'click');
 }
 
 FCK.TemplateEditor = {
@@ -338,7 +340,7 @@ function Ok() {
 			margin: 0;
 		}
 
-		#template_preview * {
+		#templatePreview * {
 			cursor: default;
 		}
 
