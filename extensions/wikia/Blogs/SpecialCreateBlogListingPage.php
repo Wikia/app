@@ -55,7 +55,7 @@ class CreateBlogListingPage extends SpecialBlogPage {
 			$this->mFormErrors[] = wfMsg('create-blog-empty-title-error');
 		}
 		else {
-			$oPostTitle = Title::newFromText( $this->mFormData['listingTitle'], NS_BLOG_ARTICLE );
+			$oPostTitle = Title::newFromText( $this->mFormData['listingTitle'], NS_BLOG_LISTING );
 
 			if(!($oPostTitle instanceof Title)) {
 				$this->mFormErrors[] = wfMsg('create-blog-invalid-title-error');
