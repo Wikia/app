@@ -2,12 +2,12 @@
 <div class="wk_blogs_post">
 <?
 if (!empty($aRows)) {
-?>	
+?>
 <ul class="list">
 <?
 foreach ($aRows as $pageId => $aRow) {
 	$oTitle = Title::newFromText($aRow['title'], $aRow['namespace']);
-	$isVoting = $isCommenting = 0; 
+	$isVoting = $isCommenting = 0;
 	if (isset($aRow['props']) && array_key_exists('voting', $aRow['props'])) {
 		$isVoting = $aRow['props']['voting'];
 	}
@@ -20,26 +20,26 @@ foreach ($aRows as $pageId => $aRow) {
 <?
 /* s: TIMESTAMP */
 	if ( !empty($aOptions['timestamp']) ) {
-		$sUserLinks = ""; 
-		if ($oTitle->getBaseText() != $aRow['username']) { 
+		$sUserLinks = "";
+		if( $wgTitle->getNamespace() != NS_BLOG_ARTICLE ) {
 			$aUserLinks = BlogTemplateClass::getUserNameRecord($aRow['username']);
 			if ( !empty($aUserLinks) ) {
 				$sUserLinks = $aUserLinks['userpage']." (".$aUserLinks['talkpage']."|".$aUserLinks['contribs'].")";
 			}
 		}
-?>		
+?>
 <div class="wk_date"><span class="left"><?=$wgLang->sprintfDate("F j, Y", wfTimestamp(TS_MW, $aRow['timestamp']))?></span><span class="right"><?=$sUserLinks?></span></div>
-<?		
+<?
 	}
 /* e: TIMESTAMP */
 /* s: SUMMARY */
 	if ( !empty($aOptions['summary']) ) {
 ?>
 <div class="wk_blogs_summary"><?= $aRow['text'] ?></div>
-<?		
+<?
 	}
 	/* s: COMMENTS */
-?>	
+?>
 <div class="wk_blogs_comments">
 <ul class="links">
 <? if (!empty($isCommenting)) { ?>
@@ -62,7 +62,7 @@ foreach ($aRows as $pageId => $aRow) {
 } /* foreach */
 ?>
 </ul>
-<?	
+<?
 } /* if (!empty($aRows)) */
 ?>
 <div class="wk_blogs_pager">
