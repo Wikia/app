@@ -244,24 +244,9 @@ class CreateMultiPage
 			$sourceText = str_replace ($to_parametrize, "", $sourceText) ;
 
 			$to_parametrize = preg_replace (TEMPLATE_CLOSING, "", $to_parametrize) ;
-
-			// fix issues with |'s given inside the infobox parameters... 
-			$pre_inf_pars = preg_split( "/\|/", $to_parametrize, -1 );
-
-			$fixed_par_array = array();
-			$fix_corrector = 0;
-
-			for ($i=0; $i < count($pre_inf_pars); $i++) {
-				if( (strpos( $pre_inf_pars[$i], "=" ) === false) && (0 != $i) ) { //this was cut out from user supplying '|' inside the parameter...
-					$fixed_par_array[$i - ( 1 + $fix_corrector ) ] .= "|" . $pre_inf_pars[$i];								
-					$fix_corrector++;
-				} else {
-					$fixed_par_array[] = $pre_inf_pars[$i];
-				}
-			}
-			
-			array_shift ($fixed_par_array) ;
-			array_walk ($fixed_par_array, 'wfCreatePageUnescapeKnownMarkupTags') ;
+			$inf_pars = preg_split ("/\|/", $to_parametrize, -1) ;
+			array_shift ($inf_pars) ;
+			array_walk ($inf_pars, 'wfCreatePageUnescapeKnownMarkupTags') ;
 
 			$num = 0;
 			$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
@@ -271,7 +256,7 @@ class CreateMultiPage
 						'me_hide' => wfMsg('me_hide'),
 						'infobox_legend' => wfMsg ('createpage_infobox_legend') ,
 						'infoboxes' => $to_parametrize,
-						'inf_pars' => $fixed_par_array,
+						'inf_pars' => $inf_pars,
 					     )
 					);
 #---
