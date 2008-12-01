@@ -65,4 +65,5 @@ Create blog listing pages for categories such as "Barrack Obama", "Fan Fiction",
 	"blog-avatar-error-cantwrite" => "Something happen and cannot write the file to disc.",
 	"blog-page-rate" => "Rate this article:",
 	"blog-create-label" => "Create blog article",
+	"blog-create-listing-label" => "Create blog listing"
 );
