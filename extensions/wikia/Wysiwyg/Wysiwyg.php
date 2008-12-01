@@ -567,7 +567,7 @@ function WysiwygGetTemplateParams($name, $templateCall = null) {
 					}
 				}
 
-				$args = explode('|', rtrim($templateCall, '}'));
+				$args = explode('|', substr($templateCall, 0, -2));
 				unset($args[0]);
 				foreach($args as $key => $val) {
 					$val = str_replace('%08X', '|', $val);
