@@ -11,11 +11,13 @@ $wgWidgets['WidgetWatchlist'] = array(
 	'callback' => 'WidgetWatchlist',
 	'title' => array(
 		'en' => 'Watchlist',
-		'pl' => 'Obserwowane'
+		'pl' => 'Obserwowane',
+		'hu' => 'Figyelõlista'
 	),
 	'desc' => array(
 		'en' => 'Easily keep an eye on your watched pages', 
-		'pl' => 'Lista obserwowanych stron na tej wiki'
+		'pl' => 'Lista obserwowanych stron na tej wiki',
+		'hu' => 'Könnyedén szemmel tarthatod a megfigyelt lapokat.'
 	),
 	'closeable' => true,
 	'editable' => false,

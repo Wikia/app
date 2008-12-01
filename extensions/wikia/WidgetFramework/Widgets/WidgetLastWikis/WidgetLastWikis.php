@@ -11,11 +11,13 @@ $wgWidgets['WidgetLastWikis'] = array(
 	'callback' => 'WidgetLastWikis',
 	'title' => array(
 		'en' => 'Last Wikis',
-		'pl' => 'Ostatnio odwiedzone'
+		'pl' => 'Ostatnio odwiedzone',
+		'hu' => 'Legutóbbi wikik'
 	),
 	'desc' => array(
 		'en' => 'Quickly jump back to wikis that you\'ve visited in the past', 
-		'pl' => 'Lista ostatnio odwiedzonych Wikii'
+		'pl' => 'Lista ostatnio odwiedzonych Wikii',
+		'hu' => 'Gyors visszalépés a korábban látogatott wikikre.'
     ),
     'closeable' => true,
     'editable' => false,

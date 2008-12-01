@@ -11,11 +11,13 @@ $wgWidgets['WidgetAncientPages'] = array(
 	'callback' => 'WidgetAncientPages',
 	'title' => array(
 		'en' => 'Stale pages',
-		'pl' => 'Najstarsze strony'
+		'pl' => 'Najstarsze strony',
+		'hu' => 'Elhagyott oldalak'
 	),
 	'desc' => array(
 		'en' => 'See a list of pages that have not been edited in a long time', 
-		'pl' => 'Lista stron nieedytowanych przez dłuższy czas'
+		'pl' => 'Lista stron nieedytowanych przez dłuższy czas',
+		'hu' => 'Nézd meg a legrégebben szerkesztett szócikkeket.'
     ),
 	'params' => array(
 		'limit' => array(

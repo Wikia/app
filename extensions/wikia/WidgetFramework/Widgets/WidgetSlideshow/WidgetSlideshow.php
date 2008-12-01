@@ -11,11 +11,13 @@ $wgWidgets['WidgetSlideshow'] = array(
 	'callback' => 'WidgetSlideshow',
 	'title' => array(
 		'en' => 'Image slideshow',
-		'pl' => 'Pokaz obrazów'
+		'pl' => 'Pokaz obrazów',
+		'hu' => 'Képvetítõ'
 	),
 	'desc' => array(
 		'en' => 'Watch a slideshow of images from this wiki',
-		'pl' => 'Pokaz obrazów z tej wiki'
+		'pl' => 'Pokaz obrazów z tej wiki',
+		'hu' => 'Nézd diavetítésben a wikin használt képeket.'
 	),
     	'params' => array(
 		'show' => array(

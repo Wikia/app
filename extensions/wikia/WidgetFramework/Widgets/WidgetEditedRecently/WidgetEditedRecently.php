@@ -11,11 +11,13 @@ $wgWidgets['WidgetEditedRecently'] = array(
 	'callback' => 'WidgetEditedRecently',
 	'title' => array(
 		'en' => 'Recently edited by',
-		'pl' => 'Ostatnio zmieniane przez'
+		'pl' => 'Ostatnio zmieniane przez',
+		'hu' => 'Utoljára szerkesztette'
 	),
 	'desc' => array(
 		'en' => 'Displays a list of recent editors for any article you visit',
-		'pl' => 'Lista ostatnich edytorów tej strony'
+		'pl' => 'Lista ostatnich edytorów tej strony',
+		'hu' => 'Egy listát jelenít meg azokról a szerkesztõkrõl, akik utoljára változtattak a meglátogatott szócikken.'
     ),
     	'params' => array(
 		'limit' => array(

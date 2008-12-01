@@ -11,11 +11,13 @@ $wgWidgets['WidgetWikiPage'] = array(
 	'callback' => 'WidgetWikiPage',
 	'title' => array(
 		'en' => 'Wiki page in widget',
-		'pl' => 'Strona wiki w widżecie'
+		'pl' => 'Strona wiki w widżecie',
+		'hu' => 'Wikioldal a kiegészítõben'
 	),
 	'desc' => array(
 		'en' => 'Display any article inside a widget. Great for making your own widget',
-		'pl' => 'Umieszcza treść podanej strony wewnątrz widżeta'
+		'pl' => 'Umieszcza treść podanej strony wewnątrz widżeta',
+		'hu' => 'Egy szócikk jeleníthetõ meg a kiegészítõben. Remek lehetõség saját kiegészítõ létrehozására!'
 	),
 	'params' => array(
 		'name' => array(
