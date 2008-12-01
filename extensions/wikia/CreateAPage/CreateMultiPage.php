@@ -249,10 +249,12 @@ class CreateMultiPage
 			$pre_inf_pars = preg_split( "/\|/", $to_parametrize, -1 );
 
 			$fixed_par_array = array();
+			$fix_corrector = 0;
 
 			for ($i=0; $i < count($pre_inf_pars); $i++) {
 				if( (strpos( $pre_inf_pars[$i], "=" ) === false) && (0 != $i) ) { //this was cut out from user supplying '|' inside the parameter...
-					$fixed_par_array[$i - 1] .= "|" . $pre_inf_pars[$i];								
+					$fixed_par_array[$i - ( 1 + $fix_corrector ) ] .= "|" . $pre_inf_pars[$i];								
+					$fix_corrector++;
 				} else {
 					$fixed_par_array[] = $pre_inf_pars[$i];
 				}
