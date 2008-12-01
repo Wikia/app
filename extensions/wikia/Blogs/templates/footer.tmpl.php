@@ -5,9 +5,9 @@
 	</li>
 <?php if ( $voting_enabled ): ?>
 	<li>
-		<?php echo wfMsg( "blog-page-rate" ) ?>
 		<!-- stars rating / copied from Monaco skin -->
-		<span id="star-rating-wrapper">
+		<strong><?php echo wfMsg( "blog-page-rate" ) ?></strong>
+		<div id="star-rating-wrapper">
 			<ul id="star-rating" class="star-rating">
 				<li style="width: <?php echo $ratingPx ?>px;" id="current-rating" class="current-rating"><span><?= $rating ?>/5</span></li>
 				<li><a class="one-star" id="star1" title="1/5"<?=$hidden_star?>><span>1</span></a></li>
@@ -17,7 +17,7 @@
 				<li><a class="five-stars" id="star5" title="5/5"<?=$hidden_star?>><span>5</span></a></li>
 			</ul>
 			<span style="<?= ($voted ? '' : 'display: none;') ?>" id="unrateLink"><a id="unrate" href="#"><?php echo wfMsg( 'unrate_it' ) ?></a></span>
-		</span>
+		</div>
 	</li>
 <?php endif ?>
 </ul>
