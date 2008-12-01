@@ -102,6 +102,8 @@ FCK.TemplateEditor.InsertTemplateFromSearch = function() {
 				FCK.log('suggested template: ' + o.argument.templateName);
 				FCK.log(params);
 				
+				FCK.Track('/templateEditor/suggest');
+	
 				FCK.TemplateEditor.SelectTemplate(o.argument.templateName, params);
 			},
 
