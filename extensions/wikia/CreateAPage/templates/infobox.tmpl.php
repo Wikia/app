@@ -32,7 +32,9 @@ foreach ($inf_pars as $inf_par) {
 			# Replace each template parameter with <!---separator---> as value with:  	 	 
 			?>
 			<div class="createpage-separator">&nbsp;</div> 
+			<input type="hidden" name="wpInfoboxPar<?= $inf_par_num ?>" value="<!---separator--->" id="wpInfoboxPar<?= $inf_par_num ?>" />
 			<?
+			$inf_par_num++;
 		} else {
 ?>			
 <label for="wpInfoboxPar<?=$inf_par_num?>" class="normal-label"><?=$inf_par_pair[0]?></label><input type="text" id="wpInfoboxPar<?=$inf_par_num?>" name="wpInfoboxPar<?=$inf_par_num?>" value="<?= htmlspecialchars (trim($inf_par_pair[1])) ?>" class="normal-input" /><br/>
