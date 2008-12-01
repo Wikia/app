@@ -46,6 +46,9 @@ $wgExtensionMessagesFiles["Blogs"] = dirname(__FILE__) . '/Blogs.i18n.php';
 extAddSpecialPage(dirname(__FILE__) . '/SpecialCreateBlogPage.php', 'CreateBlogPage', 'CreateBlogPage');
 extAddSpecialPage(dirname(__FILE__) . '/SpecialCreateBlogListingPage.php', 'CreateBlogListingPage', 'CreateBlogListingPage');
 
+$wgSpecialPageGroups['CreateBlogPage'] = 'wikia';
+$wgSpecialPageGroups['CreateBlogListingPage'] = 'wikia';
+
 /**
  * ajax functions
  */
