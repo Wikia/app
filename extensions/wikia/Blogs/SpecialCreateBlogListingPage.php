@@ -160,7 +160,7 @@ class CreateBlogListingPage extends SpecialBlogPage {
 	}
 
 	private function buildTag() {
-		$this->mTagBody = "<bloglist>\n";
+		$this->mTagBody = "<bloglist summary=\"true\">\n";
 		$this->buildTagContent();
 		$this->mTagBody.= "</bloglist>\n";
 	}
