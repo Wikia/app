@@ -180,7 +180,7 @@ class CreateBlogListingPage extends SpecialBlogPage {
 		}
 		foreach($aListingAuthors as $sAuthorName) {
 			if(!empty($sAuthorName)) {
-				$this->mTagBody .= "<author>" . $sAuthorName . "</author>\n";
+				$this->mTagBody .= "<author>" . trim($sAuthorName) . "</author>\n";
 			}
 		}
 	}
