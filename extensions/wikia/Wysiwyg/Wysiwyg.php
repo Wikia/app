@@ -134,7 +134,7 @@ function Wysiwyg_Initial($form) {
 		'var fallbackToSourceMode = ' . ($wgWysiwygFallbackToSourceMode ? 'true;' : 'false;') . "\n" .
 		'var templateList = ' . WysiwygGetTemplateList() . ";\n" .
 		'var templateHotList = ' . WysiwygGetTemplateHotList() . ';' .
-		'var magicWordList = ' . Wikia::json_encode(MagicWord::$mVariableIDs, true) . ';'
+		'var magicWordList = ' . Wikia::json_encode(sort(MagicWord::$mVariableIDs), true) . ';'
 	);
 
 	$wgOut->addScript( "<script type=\"{$wgJsMimeType}\" src=\"$wgExtensionsPath/wikia/Wysiwyg/fckeditor/fckeditor.js?$wgStyleVersion\"></script>" );
