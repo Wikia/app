@@ -412,7 +412,7 @@ class CreateWikiForm extends SpecialPage {
             "descriptionIntl"   => $sWikiDescriptionInternational,
             "languages"         => Language::getLanguageNames(),
             "request_prefix"    => $request_prefix,
-            "request_starter"   => in_array($request->request_language, array("en", "ja", "de")) ? 1 : 0
+            "request_starter"   => in_array($request->request_language, array("en", "ja", "de", "fr")) ? 1 : 0
         ));
         $wgOut->addHTML( $oTmpl->execute("request") );
 	}
