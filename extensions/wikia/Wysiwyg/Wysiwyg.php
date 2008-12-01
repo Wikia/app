@@ -543,9 +543,30 @@ function WysiwygGetTemplateParams($name, $templateCall = null) {
 			$result = array_flip($result[1]);
 			array_walk($result, create_function('&$val, $key', '$val = "";'));
 			if (!is_null($templateCall)) {
+
+				$tc = Title::legalChars() . '#%';
+				$e1 = "/^([{$tc}]+)(?:\\|(.+?))?]](.*)\$/sD";
+				$e1_img = "/^([{$tc}]+)\\|(.*)\$/sD";
+
+				$a = explode('[[', ' '.$templateCall);
+				$templateCall = array_shift($a);
+				$templateCall = substr($templateCall, 1);
+
+				for($k = 0; isset($a[$k]); $k++) {
+					$line = $a[$k];
+					if(preg_match($e1, $line, $m)) {
+						$templateCall .= str_replace('|', '-pipe-', '[[' . $m[1] . '|' . $m[2] . ']]') . $m[3];
+					} elseif(preg_match($e1_img, $line, $m)) {
+						$templateCall .=  str_replace('|', '-pipe-', '[[' . $m[1] . '|' . $m[2]);
+					} else {
+						$templateCall .= '[[' . $line ;
+					}
+				}
+
 				$args = explode('|', rtrim($templateCall, '}'));
 				unset($args[0]);
 				foreach($args as $key => $val) {
+					$val = str_replace('-pipe-', '|', $val);
 					$vals = explode('=', $val, 2);
 					if (count($vals) == 1) {
 						$key = trim($key);
