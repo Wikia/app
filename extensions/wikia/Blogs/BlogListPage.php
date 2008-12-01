@@ -155,11 +155,12 @@ class BlogListPage extends Article {
 		 */
 		$user    = $this->mTitle->getBaseText();
 		$listing = false;
-		$purge   = $wgRequest->getVal( 'action' ) == 'purge';
-		$offset  = 0;
+		$purge   = $wgRequest->getVal( "action" ) == 'purge';
+		$page    = $wgRequest->getVal( "page", 0 );
+		$offset  = $page * 5;
 
 		if( !$purge ) {
-			$listing  = $wgMemc->get( wfMemcKey( "blog", "listing", $user, $offset ) );
+			$listing  = $wgMemc->get( wfMemcKey( "blog", "listing", $user, $page ) );
 		}
 
 		if( !$listing ) {
@@ -174,7 +175,7 @@ class BlogListPage extends Article {
 				"offset" => $offset
 			);
 			$listing = BlogTemplateClass::parseTag( "<author>$user</author>", $params, $wgParser );
-			$wgMemc->set( wfMemcKey( "blog", "listing", $user, $offset ), $listing, 3600 );
+			$wgMemc->set( wfMemcKey( "blog", "listing", $user, $offset ), $page, 3600 );
 		}
 		$wgOut->addHTML( $listing );
 	}
@@ -189,8 +190,9 @@ class BlogListPage extends Article {
 		global $wgRequest, $wgMemc;
 
 		$user    = $this->mTitle->getBaseText();
-		$offset  = 0;
-		$wgMemc->delete( wfMemcKey( "blog", "listing", $user, $offset ) );
+		foreach( range(0, 5) as $page ) {
+			$wgMemc->delete( wfMemcKey( "blog", "listing", $user, $page ) );
+		}
 	}
 
 	/**
