@@ -521,6 +521,10 @@ td.childrenHidden textarea, td.childrenHidden iframe
 	margin: 0 !important;
 	padding: 0 !important;
 	float: none !important;
+	position: relative !important;
+	top: 0px !important;
+	left: auto !important;
+	right: auto !important;
 }
 
 .imageOverlay {

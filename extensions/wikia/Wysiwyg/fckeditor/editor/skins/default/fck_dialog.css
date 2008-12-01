@@ -370,8 +370,10 @@ body, .BackColor
 	background-image: url('images/progress_dialog.gif');
 	background-repeat: no-repeat;
 	background-position: 50% 50%;
+	cursor: wait;
 }
 
-.throbber #innerContents {
+.throbber #innerContents,
+.throbber #PopupButtons {
 	visibility: hidden;
 }

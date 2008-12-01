@@ -178,7 +178,7 @@ function SelectStep(stepId) {
 				else {
 					name = param;
 				}
-				output += '<label for="'+id+'">'+name +'</label><textarea id="'+id+'" rows="1">'+value+'</textarea>';
+				output += '<label for="'+id+'">'+name +'</label><textarea id="'+id+'"'+value+'</textarea>';
 			}
 
 			GetE('templateParameters').innerHTML = output;
@@ -318,10 +318,15 @@ function Ok() {
 			margin: 0 !important;
 			padding: 0 !important;
 			float: none !important;
+			position: relative !important;
+			top: 0px !important;
+			left: auto !important;
+			right: auto !important;
 		}
 
 		.editorStep {
 			display: none;
+			font-family: sans-serif !important;
 		}
 
 		.editorStep h1 {
@@ -347,13 +352,13 @@ function Ok() {
 
 		#templateName {
 			float: left;
-			margin-right: 50px;
+			margin-right: 25px;
 		}
 
 		#templateOptions {
 			position: relative;
 			top: 5px;
-			font-size: 12px;
+			font-size: 11px;
 		}
 
 		#templateOptions a {
@@ -377,6 +382,8 @@ function Ok() {
 		#templateParameters textarea {
 			border: solid 1px #666;
 			width: 305px;
+			height: 32px;
+			font-family: monospace !important;
 		}
 
 		#templatePreview {		
