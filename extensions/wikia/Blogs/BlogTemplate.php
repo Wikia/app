@@ -805,7 +805,7 @@ class BlogTemplateClass {
 	}
 							
     private static function __parse( $aInput, $aParams, &$parser ) {
-    	global $wgLang, $wgUser, $wgCityId, $wgParser;
+      global $wgLang, $wgUser, $wgCityId, $wgParser, $wgTitle;
     	global $wgExtensionsPath;
     	
     	wfProfileIn( __METHOD__ );
@@ -954,18 +954,18 @@ class BlogTemplateClass {
 						$sPager = self::__setPager($iCount, intval(self::$aOptions['offset']));
 					}
 					/* run template */
-					error_log("self::aOptions = ".print_r(self::$aOptions, true)."\n", 3, "/tmp/moli.log");
 					$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
 					$oTmpl->set_vars( array(
-						"wgUser"			=> $wgUser,
-						"cityId"			=> $wgCityId,
-						"wgLang"			=> $wgLang,
-						"aRows"				=> $aResult,
-						"aOptions"			=> self::$aOptions,
-						"wgParser"			=> $wgParser,
-						"skin"				=> $wgUser->getSkin(),
+						"wgUser"		=> $wgUser,
+						"cityId"		=> $wgCityId,
+						"wgLang"		=> $wgLang,
+						"aRows"			=> $aResult,
+						"aOptions"		=> self::$aOptions,
+						"wgParser"		=> $wgParser,
+						"skin"			=> $wgUser->getSkin(),
 						"wgExtensionsPath" 	=> $wgExtensionsPath,
-						"sPager"			=> $sPager,
+						"sPager"		=> $sPager,
+						"wgTitle"		=> $wgTitle,
 					) );
 					#---
 					$result = ( self::$aOptions['type'] == 'box' ) ? $oTmpl->execute("blog-page") : $oTmpl->execute("blog-post-page");
