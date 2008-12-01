@@ -29,7 +29,7 @@ else:
 <h2 class="wikia_header">
 <?php echo wfMsg("blog-comments") ?>
 </h2>
-<form action="<?php $title->getFullURL() ?>" method="get" id="blog-comm-form-select">
+<form action="<?php echo $title->getFullURL() ?>" method="get" id="blog-comm-form-select">
 <select name="order">
 	<option value="asc" <?php if ($order=="asc") echo 'selected="selected"' ?>><?php echo wfMsg("blog-comments-asc") ?></option>
 	<option value="desc" <?php if ($order=="desc") echo 'selected="selected"' ?>><?php echo wfMsg("blog-comments-dsc") ?></option>
