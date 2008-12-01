@@ -129,12 +129,16 @@ function Wysiwyg_Initial($form) {
 		($wgRequest->getVal('fckmode', 'wysiwyg') == 'source') ||
 		($wgRequest->getVal('action') == 'submit' && $wgRequest->getVal('wysiwygTemporarySaveType') == '1');
 
+
+	$magicWords = MagicWord::$mVariableIDs;
+	sort($magicWords);
+
 	// JS
 	$wgOut->addInlineScript(
 		'var fallbackToSourceMode = ' . ($wgWysiwygFallbackToSourceMode ? 'true;' : 'false;') . "\n" .
 		'var templateList = ' . WysiwygGetTemplateList() . ";\n" .
 		'var templateHotList = ' . WysiwygGetTemplateHotList() . ';' .
-		'var magicWordList = ' . Wikia::json_encode(sort(MagicWord::$mVariableIDs), true) . ';'
+		'var magicWordList = ' . Wikia::json_encode($magicWords, true) . ';'
 	);
 
 	$wgOut->addScript( "<script type=\"{$wgJsMimeType}\" src=\"$wgExtensionsPath/wikia/Wysiwyg/fckeditor/fckeditor.js?$wgStyleVersion\"></script>" );
