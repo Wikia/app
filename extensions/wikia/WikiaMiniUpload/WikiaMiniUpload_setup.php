@@ -71,5 +71,9 @@ function WMU() {
 
 	$method = $wgRequest->getVal('method');
 	$wmu = new WikiaMiniUpload();
-	return new AjaxResponse($wmu->$method());
+
+	$html = $wmu->$method();
+	$html .= '<script type="text/javascript">document.domain = "' . $wgRequest->getVal('domain')  . '"</script>';
+
+	return new AjaxResponse($html);
 }
