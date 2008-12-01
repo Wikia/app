@@ -5,6 +5,8 @@
 
 $messages = array();
 $messages['en'] = array(
+	'createblogpage' => 'Create Blog',
+	'createbloglistingpage' => 'Create Blog Listing',
 	'create-blog-post-title' => 'Create a new blog post',
 	'create-blog-form-title' => 'What is a blog post?',
 	'create-blog-form-post-text' => 'Blog text',
