@@ -186,7 +186,7 @@ FCK.TemplateEditor.SelectStep = function(stepId) {
 				value = FCK.TemplateWizard.params[param];
 				id = 'param_' + param;
 
-				if (parseInt(param) > 0) {
+				if (!isNaN(param*1)) { // check if it's number or not (but not in sense of it's type)
 					name = '<em>Parameter #' + param + '</em>';
 				}
 				else {
