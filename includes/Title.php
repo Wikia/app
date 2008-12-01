@@ -2390,17 +2390,17 @@ class Title {
 		}
 
 		// if this is a site css or js purge it as well
-		global $wgUseSiteJs, $wgAllowUserJs;
+		global $wgUseSiteJs, $wgUseSiteCss, $wgAllowUserJs;
 		global $wgSquidMaxage, $wgJsMimeType;
-		if( $wgUseSiteJs && $this->getNamespace() == NS_MEDIAWIKI ) {
+		if( $wgUseSiteCss && $this->getNamespace() == NS_MEDIAWIKI ) {
 			if( $this->getText() == 'Common.css' ) {
 				$urls[] = $this->getInternalURL( "usemsgcache=yes&action=raw&ctype=text/css&smaxage=$wgSquidMaxage" );
 			} else {
 				foreach( Skin::getSkinNames() as $skinkey => $skinname ) {
-					if( $this->getText() == $skinname.'.css' ) {
+					if( $this->getText() == ucfirst($skinkey).'.css' ) {
 						$urls[] = $this->getInternalURL( "usemsgcache=yes&action=raw&ctype=text/css&smaxage=$wgSquidMaxage" );
 						break;
-					} elseif ( $this->getText() == 'Common.js' ) {
+					} elseif ( $wgUseSiteJs && $this->getText() == 'Common.js' ) {
 						$urls[] = Skin::makeUrl('-', "action=raw&gen=js&useskin=" .urlencode( $skinkey ) );
 					}
 				}
