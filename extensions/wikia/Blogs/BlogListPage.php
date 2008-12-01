@@ -410,9 +410,10 @@ class BlogListPage extends Article {
 	static public function skinTemplateTabs( $skin, &$tabs ) {
 		global $wgTitle, $wgUser;
 
-		if( $wgTitle->getNamespace() !== NS_BLOG_ARTICLE &&  $wgTitle->getNamespace() !== NS_BLOG_LISITING ) {
+		if( ! in_array( $wgTitle->getNamespace(), array( NS_BLOG_ARTICLE, NS_BLOG_LISTING ) ) ) {
 			return true;
 		}
+
 		if( ! $wgUser->isLoggedIn() ) {
 			return true;
 		}
@@ -421,16 +422,16 @@ class BlogListPage extends Article {
 		switch( $wgTitle->getNamespace()  ) {
 			case NS_BLOG_ARTICLE:
 				$row["blog-create-tab"] = array(
-			    "class" => "",
-			    "text" => wfMsg("blog-create-label"),
-			    "href" => Title::newFromText("CreateBlogPage", NS_SPECIAL)->getLocalUrl()
+					"class" => "",
+					"text" => wfMsg("blog-create-label"),
+					"href" => Title::newFromText("CreateBlogPage", NS_SPECIAL)->getLocalUrl()
 				);
 				break;
 			case NS_BLOG_LISTING:
 				$row["listing-create-tab"] = array(
-			    "class" => "",
-			    "text" => wfMsg("blog-create-listing-label"),
-			    "href" => Title::newFromText( "CreateBlogListingPage", NS_SPECIAL)->getLocalUrl()
+					"class" => "",
+					"text" => wfMsg("blog-create-listing-label"),
+					"href" => Title::newFromText( "CreateBlogListingPage", NS_SPECIAL)->getLocalUrl()
 				);
 				break;
 		}
