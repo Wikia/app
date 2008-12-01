@@ -7,6 +7,7 @@
 $inf_par_num = 0 ;
 $inf_image_num = 0 ;
 #---
+
 foreach ($inf_pars as $inf_par) {
 	$inf_par = preg_replace ("/=/", "<!---equals--->", $inf_par, 1) ;
 	$inf_par_pair = preg_split ("/<\!---equals--->/", $inf_par, -1) ;	
@@ -29,7 +30,9 @@ foreach ($inf_pars as $inf_par) {
 <?
 		} elseif (preg_match(INFOBOX_SEPARATOR, $inf_par_pair[1], $math)) {   	 	 
 			# Replace each template parameter with <!---separator---> as value with:  	 	 
-			echo '<div class="createpage-separator">&nbsp;</div>'; 
+			?>
+			<div class="createpage-separator">&nbsp;</div> 
+			<?
 		} else {
 ?>			
 <label for="wpInfoboxPar<?=$inf_par_num?>" class="normal-label"><?=$inf_par_pair[0]?></label><input type="text" id="wpInfoboxPar<?=$inf_par_num?>" name="wpInfoboxPar<?=$inf_par_num?>" value="<?= htmlspecialchars (trim($inf_par_pair[1])) ?>" class="normal-input" /><br/>
