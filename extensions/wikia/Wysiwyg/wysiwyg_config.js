@@ -26,3 +26,4 @@ FCKConfig.FirefoxSpellChecker = true;
 
 FCKConfig.BackgroundBlockerColor = '#000';
 FCKConfig.BackgroundBlockerOpacity = '0.6';
+FCKConfig.FloatingPanelsZIndex = 1200;
