@@ -189,7 +189,7 @@ class BlogListPage extends Article {
 	public function clearBlogListing() {
 		global $wgRequest, $wgMemc;
 
-		$user    = $this->mTitle->getBaseText();
+		$user = $this->mTitle->getBaseText();
 		foreach( range(0, 5) as $page ) {
 			$wgMemc->delete( wfMemcKey( "blog", "listing", $user, $page ) );
 		}
