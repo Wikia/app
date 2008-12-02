@@ -266,9 +266,9 @@ function WikiaSkinPreferences($pref) {
 
 $wgHooks['AlternateGetSkin'][] = 'WikiaGetSkin';
 function WikiaGetSkin ($user) {
-	global $wgCookiePrefix, $wgCookieExpiration, $wgCookiePath, $wgCookieDomain, $wgCookieSecure, $wgDefaultSkin, $wgDefaultTheme, $wgVisitorSkin, $wgVisitorTheme, $wgOldDefaultSkin, $wgSkinTheme, $wgOut, $wgForceSkin, $wgRequest, $wgHomePageName, $wgHomePageSkin, $wgTitle, $wgAdminSkin;
+	global $wgCookiePrefix, $wgCookieExpiration, $wgCookiePath, $wgCookieDomain, $wgCookieSecure, $wgDefaultSkin, $wgDefaultTheme, $wgVisitorSkin, $wgVisitorTheme, $wgOldDefaultSkin, $wgSkinTheme, $wgOut, $wgForceSkin, $wgRequest, $wgHomePageName, $wgHomePageSkin, $wgTitle, $wgAdminSkin, $wgSkipSkins;
 
-	if(!($wgTitle instanceof Title)) {
+	if(!($wgTitle instanceof Title) || in_array( $user->getOption('skin'), $wgSkipSkins )) {
 		$user->mSkin = &Skin::newFromKey(isset($wgDefaultSkin) ? $wgDefaultSkin : 'monobook');
 		return false;
 	}
