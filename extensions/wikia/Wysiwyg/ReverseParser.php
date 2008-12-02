@@ -59,6 +59,8 @@ class ReverseParser {
 			$this->listBullets = '';
 			$this->fckData = $wysiwygData;
 
+			wfDebug("metaData: ".print_r($this->fckData, true)."\n");
+
 			wfDebug("ReverseParser HTML: {$html}\n");
 
 			wfSuppressWarnings();
@@ -154,7 +156,11 @@ class ReverseParser {
 			if(empty($washtml)) {
 				
 				$refid = $node->getAttribute('refid');
-				$hasRefId = (is_numeric($refid) || isset($this->fckData[$refid]));
+				$hasRefId = (is_numeric($refid) || isset($this->fckData[ $refid ]));
+
+				if ($hasRefId) {
+					wfDebug("ReverseParser refId #{$refid} / {$this->fckData[ $refid ]['type']}\n");
+				}
 
 				switch($node->nodeName) {
 					case 'body':
@@ -721,14 +727,13 @@ class ReverseParser {
 			$href = $node->getAttribute('href');
 
 			if( is_string($href) ) {
-				// generate new refid
-				$refid = count($this->fckData);
-
-				$this->fckData[$refid] = array(
+				array_push($this->fckData, array(
 					'type' => ($content == $href) ? 'external link: raw' : 'external link',
 					'text' => $content,
 					'href' => $href
-				);
+				));
+				// generate new refid
+				$refid = count($this->fckData);
 			}
 		}
 
@@ -829,7 +834,7 @@ class ReverseParser {
 	private function handleImage($node, $content) {
 
 		// check is perfomed earlier
-		$data = $this->fckData[$node->getAttribute('refid')  ];
+		$data = $this->fckData[$node->getAttribute('refid')];
 
 		switch($data['type']) {
 			case 'image':
