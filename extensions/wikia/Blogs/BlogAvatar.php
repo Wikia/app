@@ -207,17 +207,12 @@ class BlogAvatar {
 		);
 		if( $class ) {
 			$attribs[ "class" ] = $class;
+			if( $wgUser->getID() == $this->mUser->getID( ) ) {
+				$attribs[ "class" ] .= " avatar-self";
+			}
 		}
 		if( $id ) {
 			$attribs[ "id" ] = $id;
-		}
-		if( $wgUser->getID() == $this->mUser->getID( ) ) {
-			if( isset( $attribs[ "class" ] ) ) {
-				$attribs[ "class" ] .= " avatar-self";
-			}
-			else {
-				$attribs[ "class" ] = "avatar-self";
-			}
 		}
 
 		return Xml::element( 'img', $attribs, '', true );
