@@ -36,6 +36,9 @@ class CreateBlogListingPage extends SpecialBlogPage {
 			}
 		}
 		else {
+			if($wgRequest->getVal('article') != null) {
+				$this->parseTag($wgRequest->getVal('article'));
+			}
 			$this->renderForm();
 		}
 
@@ -50,6 +53,7 @@ class CreateBlogListingPage extends SpecialBlogPage {
 		$this->mFormData['listingSortBy'] = $wgRequest->getVal('blogListingSortBy');
 		$this->mFormData['listingPageCategories'] = $wgRequest->getVal('wpCategoryTextarea2');
 		$this->mFormData['listingType'] = $wgRequest->getVal('listingType');
+		$this->mFormData['isExistingArticleEditAllowed'] = $wgRequest->getVal('articleEditAllowed');
 
 		if(empty($this->mFormData['listingTitle'])) {
 			$this->mFormErrors[] = wfMsg('create-blog-empty-title-error');
@@ -62,7 +66,7 @@ class CreateBlogListingPage extends SpecialBlogPage {
 			}
 			else {
 				$this->mPostArticle = new Article($oPostTitle, 0);
-				if($this->mPostArticle->exists() && ($this->mFormData['listingType'] == 'plain')) {
+				if($this->mPostArticle->exists() && ($this->mFormData['listingType'] == 'plain') && !$this->mFormData['isExistingArticleEditAllowed']) {
 					$this->mFormErrors[] = wfMsg('create-blog-article-already-exists');
 				}
 			}
@@ -163,6 +167,40 @@ class CreateBlogListingPage extends SpecialBlogPage {
 		$this->mTagBody = "<bloglist summary=\"true\" timestamp=\"true\" count=50>\n";
 		$this->buildTagContent();
 		$this->mTagBody.= "</bloglist>\n";
+	}
+
+	private function parseTag($sTitle) {
+		$oTitle = Title::newFromText($sTitle, NS_BLOG_LISTING);
+		$oArticle = new Article($oTitle, 0);
+		$sArticleBody = $oArticle->getContent();
+
+		$aMatches = null;
+		preg_match('/<bloglist[^>]*>(.*)<\/bloglist>/siU', $sArticleBody, $aMatches);
+
+		if(isset($aMatches[1]) && !empty($aMatches)) {
+			BlogTemplateClass::parseTag($aMatches[1]);
+			$aOptions = BlogTemplateClass::getOptions();
+
+			//echo "<pre>"; print_r($aOptions); echo "</pre>";
+
+			$sPageCategories = '';
+			foreach(array_keys($oTitle->getParentCategories()) as $sCategoryFullName) {
+				$aCategoryNameParts = explode(':', $sCategoryFullName);
+				if(!empty($aCategoryNameParts[1])) {
+					$sPageCategories .= (!empty($sPageCategories) ? "|" : "") . strtr($aCategoryNameParts[1], '_', ' ');
+				}
+			}
+
+			$this->mFormData['listingTitle'] = $aOptions['title'];
+			$this->mFormData['listingCategories'] = implode('|', BlogTemplateClass::getCategoryNames());
+			$this->mFormData['listingSortBy'] = array_search($aOptions['order'], BlogTemplateClass::$aBlogParams['order']['pattern']);
+			$this->mFormData['listingType'] = $aOptions['type'];
+			$this->mFormData['listingPageCategories'] = $sPageCategories;
+			$this->mFormData['isExistingArticleEditAllowed'] = 1;
+		}
+		else {
+			$this->mFormErrors[] = wfMsg('create-blog-listing-tag-format-not-recognized-on-page') . ": <a href=\"" . $oTitle->getFullUrl() . "\">" . $oTitle->getFullText() . "</a>";
+		}
 	}
 
 	private function buildTagContent() {

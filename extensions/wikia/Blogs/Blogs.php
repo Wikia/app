@@ -60,6 +60,22 @@ function axBlogListingCheckMatches() {
 }
 
 /**
+ * hooks
+ */
+$wgHooks['AlternateEdit'][] = 'wfBlogsAlternateEdit';
+
+function wfBlogsAlternateEdit(&$oEditPage) {
+	global $wgOut;
+	echo "<pre>";
+	$oTitle = $oEditPage->mTitle;
+	if($oTitle->getNamespace() == NS_BLOG_LISTING) {
+		$oSpecialPageTitle = Title::newFromText('CreateBlogListingPage', NS_SPECIAL);
+		$wgOut->redirect($oSpecialPageTitle->getFullUrl("article=" . $oTitle->getText()));
+	}
+	return true;
+}
+
+/**
  * load other parts
  */
 include( dirname( __FILE__ ) . "/SpecialBlogPage.php");
