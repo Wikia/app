@@ -121,7 +121,7 @@ class BlogListPage extends Article {
 			else {
 				$wgOut->setArticleFlag( true );
 				$wgOut->setPageTitle( $this->mTitle->getPrefixedText() );
-				$wgOut->addHTML(  Xml::element("h1", array( "class" => "firstHeading" ), $wgTitle->getPrefixedText() ) );
+//				$wgOut->addHTML(  Xml::element("h1", array( "class" => "firstHeading" ), $wgTitle->getPrefixedText() ) );
 			}
 			$this->showBlogListing();
 		}
