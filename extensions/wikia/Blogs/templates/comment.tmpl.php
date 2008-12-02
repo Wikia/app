@@ -65,8 +65,8 @@ else:
 	endif;
 
 	if( ! $comments ):
-		echo "<ul id=\"blog-comments-ul\" ><li>";
-		echo wfMsg( "blog-zero-comments" );
+		echo "<ul id=\"blog-comments-ul\"><li>";
+		echo "<div id=\"blog-comments-zero\">" . wfMsg( "blog-zero-comments" ) . "</div>";
 		echo "</li></ul>";
 	else:
 		echo "<ul id=\"blog-comments-ul\" >";
