@@ -1,5 +1,13 @@
 <?php
-
+$wgExtensionFunctions[] = 'wfPokeReadLang';
+function wfPokeReadLang(){
+	global $IP, $wgMessageCache;
+	require_once ( "$IP/extensions/wikia/Poke/Poke.i18n.php" );
+	foreach( efWikiaPoke() as $lang => $messages ){
+		$wgMessageCache->addMessages( $messages, $lang );
+	}
+}
+		
 $wgAjaxExportList [] = 'wfPokeJSON';
 function wfPokeJSON($user_name=false, $is_pokeback, $callback="handlePoked"){
 	global $wgUser, $wgOut, $IP, $wgMessageCache, $wgRequest, $wgSiteView, $wgMemc;
