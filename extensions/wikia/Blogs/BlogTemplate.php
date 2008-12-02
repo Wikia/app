@@ -3,6 +3,8 @@
 /* register as a parser function {{BLOGTPL_TAG}} and a tag <BLOGTPL_TAG> */ 
 $wgExtensionFunctions[] = array("BlogTemplateClass", "setup");
 $wgHooks['LanguageGetMagic'][] = "BlogTemplateClass::setMagicWord";
+global $wgAjaxExportList;
+$wgAjaxExportList[] = "BlogTemplateClass::axShowCurrentPage";
 
 define ("BLOGS_TIMESTAMP", "20081101000000");
 define ("BLOGS_XML_REGEX", "/\<(.*?)\>(.*?)\<\/(.*?)\>/si");
@@ -12,8 +14,6 @@ define ("BLOGS_ENTITIES_PARSE", "/&[0-9a-z]{2,8};|&#[0-9]{1,7};|&#x[0-9a-f]{1,6}
 define ("BLOGS_ENDING_TEXT", " ... ");
 define ("BLOGS_CLOSED_TAGS", "/^<\s*\/([^\s]+?)\s*>$/s");
 define ("BLOGS_OPENED_TAGS", "/^<\s*([^\s>!]+).*?>$/s");
-define ("BLOGS_PAGER_NBRS", 0);
-define ("BLOGS_PAGER_SHOW_ONLY_PREV_NEXT", 1);
 
 class BlogTemplateClass {
 	/*
@@ -231,9 +231,10 @@ class BlogTemplateClass {
 	private static $parseTagTruncateText	= "/<p>(.*)<\/p>/siU";
 	
 	private static $pageOffsetName 			= "page";
+	private static $oTitle 					= null;
 		
 	public static function setup() {
-		global $wgParser, $wgMessageCache, $wgRequest;
+		global $wgParser, $wgMessageCache;
 		global $wgOut, $wgExtensionsPath, $wgStyleVersion;
 		wfProfileIn( __METHOD__ );
 		// variant as a parser tag: <BLOGTPL_TAG>
@@ -254,11 +255,12 @@ class BlogTemplateClass {
 	}
 
 	public static function parseTag( $input, $params, &$parser ) {
+		global $wgTitle;
 		wfProfileIn( __METHOD__ );
 		/* parse input parameters */
+		self::$oTitle = (is_null(self::$oTitle)) ? $wgTitle : self::$oTitle;
 		error_log ("input = ".print_r($input, true)."\n", 3, "/tmp/moli.log");
 		error_log ("params = ".print_r($params, true)."\n", 3, "/tmp/moli.log");
-		$matches = array();
 		$start = self::__getmicrotime();
 		$aParams = self::__parseXMLTag($input);
 		wfDebugLog( __METHOD__, "parse input parameters\n" );
@@ -803,19 +805,19 @@ class BlogTemplateClass {
 		wfProfileOut( __METHOD__ );
 		return $aOutput;
 	}
-							
-    private static function __parse( $aInput, $aParams, &$parser ) {
-      global $wgLang, $wgUser, $wgCityId, $wgParser, $wgTitle;
-    	global $wgExtensionsPath;
-    	
-    	wfProfileIn( __METHOD__ );
-    	$result = "";
+	
+	private static function __parse( $aInput, $aParams, &$parser ) {
+		global $wgLang, $wgUser, $wgCityId, $wgParser, $wgTitle;
+		global $wgExtensionsPath, $wgRequest;
+		
+		wfProfileIn( __METHOD__ );
+		$result = "";
 
 		self::$aTables = self::$aWhere = self::$aOptions = array();
 		self::$dbr = null;
 		/* default settings for query */
-    	self::__setDefault();
-        try {
+		self::__setDefault();
+		try {
 			/* database connect */
 			self::$dbr = wfGetDB( DB_SLAVE, 'dpl' );
 			/* parse parameters as XML tags */
@@ -939,6 +941,12 @@ class BlogTemplateClass {
 				}
 			}
 
+			$__pageVal = $wgRequest->getVal('page');
+			if ( isset($__pageVal) && (!empty($__pageVal)) ) {
+				$count = intval(self::$aOptions['count']);
+				self::__makeIntOption('offset', $count * $__pageVal);
+			}
+			
 			/* build query */
 			if ( self::$aOptions['type'] == 'count' ) {
 				/* get results count */
@@ -968,7 +976,15 @@ class BlogTemplateClass {
 						"wgTitle"		=> $wgTitle,
 					) );
 					#---
-					$result = ( self::$aOptions['type'] == 'box' ) ? $oTmpl->execute("blog-page") : $oTmpl->execute("blog-post-page");
+					if ( self::$aOptions['type'] == 'box' ) {
+						$result = $oTmpl->execute("blog-page");
+					} else {
+						$page = $oTmpl->execute("blog-post-page");
+						$oTmpl->set_vars( array(
+							"page" => $page
+						) );
+						$result = $oTmpl->execute("blog-article-page");
+					}
 				} else {
 					unset($result); 
 					$result = self::__makeRssOutput($aResult);
@@ -984,36 +1000,92 @@ class BlogTemplateClass {
     	return $result;
 	}
 	
-	private static function __setPager($iTotal, $iPage, $iNbrShow = BLOGS_PAGER_NBRS, $bShowNext = BLOGS_PAGER_SHOW_ONLY_PREV_NEXT) {
-		global $wgUser, $wgTitle;
+	private static function __setPager($iTotal, $iPage) {
+		global $wgUser;
+		global $wgExtensionsPath, $wgStyleVersion;
 		wfProfileIn( __METHOD__ );
 
+		error_log ("title = ".print_r(self::$oTitle, true)."\n",3,"/tmp/moli.log");
 		$sPager = "";
 		if ($iTotal<=0 || empty($iTotal)) { 
 			wfDebugLog( __METHOD__, "cannot make pager - no results found: ".$iTotal."\n" );
 		} else {
 			$iPageCount = ceil( $iTotal / self::$aOptions['count'] );
 			$iPage = (isset(self::$aOptions['count']) && self::$aOptions['count'] > 0) ? ceil($iPage/intval(self::$aOptions['count'])) : 0;
-			/* show only next page */
-			if ($bShowNext == 1) {
-			#	$iPageCount = $iPage + 1;
-			}
 			#---
 			$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
 			$oTmpl->set_vars( array(
-				"iPageCount"	=> $iPageCount,
-				"bShowNext"		=> $bShowNext,
-				"iPage"			=> $iPage,
-				"iNbrShow"		=> $iNbrShow,
-				"iTotal"		=> $iTotal,
-				"wgTitle"		=> $wgTitle,
-				"pageOffsetName"=> self::$pageOffsetName
+				"iPageCount"		=> $iPageCount,
+				"iPage"				=> $iPage,
+				"iTotal"			=> $iTotal,
+				"wgTitle"			=> self::$oTitle,
+				"pageOffsetName"	=> self::$pageOffsetName,
+				"wgExtensionsPath" 	=> $wgExtensionsPath,
+				"wgStyleVersion"	=> $wgStyleVersion,
 			) );
 			#---
-			$sPager = $oTmpl->execute("blog-pager");
+			$sPager = ( NS_BLOG_LISTING == self::$oTitle->getNamespace() ) ? $oTmpl->execute("blog-pager-ajax") : 
+						( ( NS_BLOG_ARTICLE == self::$oTitle->getNamespace() ) ? $oTmpl->execute("blog-pager") : "" );
 		}
 
 		wfProfileOut( __METHOD__ );
 		return $sPager;
 	}
+	
+	public static function axShowCurrentPage ($articleId, $namespace, $offset) {
+		global $wgParser;
+		wfProfileIn( __METHOD__ );
+		$result = "";
+		$offset = intval($offset);
+		if ($offset >= 0) {
+			$oTitle = Title::newFromID($articleId);
+			if ( !empty($oTitle) && ($oTitle instanceof Title) ) {
+				self::$oTitle = $oTitle;
+				$oRevision = Revision::newFromTitle($oTitle);
+				$sText = $oRevision->getText();
+				error_log("text = ".$sText."\n", 3, "/tmp/moli.log");
+				$id = Parser::extractTagsAndParams( array(BLOGTPL_TAG), $oRevision->getText(), $matches, md5(BLOGTPL_TAG, $articleId, $namespace, $offset));
+				if (!empty($matches) && !empty($matches[$id])) {
+					list (, $input, $params, ) = $matches[$id]; 
+					$input = trim($input);
+					if ( !empty($input) && (!empty($params)) ) {
+						error_log("input = ".print_r($input, true)."\n", 3, "/tmp/moli.log");
+						$aTags = array(); 
+						$count = 0;
+						/* try to find count */
+						if (preg_match_all(BLOGS_XML_REGEX, $input, $aTags)) {
+							if ( !empty($aTags) && (!empty($aTags[1])) ) {
+								if (in_array('count', array_values($aTags[1]))) {
+									foreach ($aTags[1] as $id => $key) {
+										if ($key == 'count') {
+											$count = intval($aTags[2][$id]);
+											break;
+										}										
+									}
+								}
+							}
+							error_log("aLines = ".print_r($aTags, true)."\n", 3, "/tmp/moli.log");
+						}
+						if (!empty($params) && (array_key_exists('count', $params))) {
+							$count = intval($params['count']);
+						}
+						if (empty($count)) {
+							$count = int(self::$aBlogParams['count']['default']);
+						}
+						$offset = $count * $offset;
+						/* set new value of offset */
+						$params['offset'] = $offset;
+						/* run parser */
+						error_log("params = ".print_r($params, true)."\n", 3, "/tmp/moli.log");
+						$result = self::parseTag( $input, $params, &$wgParser );
+					}
+				}
+			} else {
+				wfDebugLog( __METHOD__, "Invalid parameters - $articleId, $namespace, $offset \n" );
+			}
+		}
+		wfProfileOut( __METHOD__ );
+		return $result;
+	}
+	
 }
