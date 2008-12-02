@@ -493,7 +493,7 @@ class CreateWikiTask extends BatchTask {
 				$sPage.= $oTmpl->execute("central");
 
 				$this->addLog( "[debug] Page body formatted, launching doEdit() ..." );
-				$oCentralArticle->doEdit( $sPage, "created by task manager" );
+				$oCentralArticle->doEdit( $sPage, "created by task manager", EDIT_FORCE_BOT );
 				$this->addLog( sprintf("Article %s added.", $oCentralTitle->getFullUrl()) );
 			}
 			else {
@@ -503,7 +503,7 @@ class CreateWikiTask extends BatchTask {
 				$sContent = $oCentralArticle->getContent();
 				$sContent.= $oTmpl->execute("central");
 
-				$oCentralArticle->doEdit( $sContent, "modified by task manager");
+				$oCentralArticle->doEdit( $sContent, "modified by task manager", EDIT_FORCE_BOT );
 				$this->addLog( sprintf("Article %s already exists... content added", $oCentralTitle->getFullUrl()) );
 			}
 		}
