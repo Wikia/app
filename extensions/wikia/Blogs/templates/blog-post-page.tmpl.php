@@ -1,5 +1,6 @@
 <!-- s:<?= __FILE__ ?> -->
-<div class="wk_blogs_post">
+<div id="wk_blogs_loader" style="float:right;"></div>
+<div class="wk_blogs_post" id="wk_blogs_post">
 <?
 if (!empty($aRows)) {
 ?>
