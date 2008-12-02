@@ -111,6 +111,7 @@ div.wk_blogs_post {
 }
 div.wk_blogs_post .wk_blogs_link {
 	padding: 1px 0px;
+	font-weight: bold;
 	font-size: 110%;
 }
 div.wk_blogs_post ul.list {
@@ -126,7 +127,6 @@ div.wk_blogs_post ul.list li {
 }
 div.wk_blogs_post .wk_date {
 	display: inline;
-	font-weight: bold;
 	margin: 0px 0.1em;
 	padding: 0px 5px 2px 0px;
 	clear: both;
