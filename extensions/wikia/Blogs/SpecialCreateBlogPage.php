@@ -94,17 +94,21 @@ class CreateBlogPage extends SpecialBlogPage {
 		$this->mFormData['isVotingEnabled'] = $wgRequest->getCheck('blogPostIsVotingEnabled');
 		$this->mFormData['isCommentingEnabled'] = $wgRequest->getCheck('blogPostIsCommentingEnabled');
 
-		$oPostTitle = Title::newFromText( $wgUser->getName() . '/' . $this->mFormData['postTitle'], NS_BLOG_ARTICLE);
-		$this->mPostArticle = new BlogListPage($oPostTitle, 0);
-
 		if(empty($this->mFormData['postTitle'])) {
 			$this->mFormErrors[] = wfMsg('create-blog-empty-title-error');
 		}
-		else if(!($oPostTitle instanceof Title)) {
-			$this->mFormErrors[] = wfMsg('create-blog-invalid-title-error');
-		}
-		else if($this->mPostArticle->exists()) {
-			$this->mFormErrors[] = wfMsg('create-blog-article-already-exists');
+		else {
+			$oPostTitle = Title::newFromText( $wgUser->getName() . '/' . $this->mFormData['postTitle'], NS_BLOG_ARTICLE);
+
+			if(!($oPostTitle instanceof Title)) {
+				$this->mFormErrors[] = wfMsg('create-blog-invalid-title-error');
+			}
+			else {
+				$this->mPostArticle = new BlogListPage($oPostTitle, 0);
+				if($this->mPostArticle->exists()) {
+					$this->mFormErrors[] = wfMsg('create-blog-article-already-exists');
+				}
+			}
 		}
 
 		if(empty($this->mFormData['postBody'])) {
@@ -116,7 +120,6 @@ class CreateBlogPage extends SpecialBlogPage {
 			$this->mRenderedPreview = $oParser->parse( $this->mFormData['postBody'], Title::newFromText($this->mFormData['postTitle']), $wgOut->parserOptions() );
 		}
 	}
-
 
 	protected function renderForm() {
 		global $wgOut, $wgScriptPath;
