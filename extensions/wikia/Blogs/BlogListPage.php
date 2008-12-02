@@ -118,6 +118,11 @@ class BlogListPage extends Article {
 			if( $this->exists() ) {
 				Article::view();
 			}
+			else {
+				$wgOut->setArticleFlag( true );
+				$wgOut->setPageTitle( $this->mTitle->getPrefixedText() );
+				$wgOut->addHTML(  Xml::element("h1", array( "class" => "firstHeading" ), $wgTitle->getPrefixedText() ) );
+			}
 			$this->showBlogListing();
 		}
 	}
