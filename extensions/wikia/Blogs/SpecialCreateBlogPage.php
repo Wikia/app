@@ -135,7 +135,7 @@ class CreateBlogPage extends SpecialBlogPage {
 			'cloud' => new TagCloud(),
 			'cols' => 10,
 			'cloudNo' => 1,
-			'textCategories' => $this->mFormData['postCategories'] )
+			'textCategories' => ( isset($this->mFormData['postCategories']) ? $this->mFormData['postCategories'] : "" ) )
 		);
 
 		$sCategoryCloud = $oTmpl->execute("createPostCategoryCloud");

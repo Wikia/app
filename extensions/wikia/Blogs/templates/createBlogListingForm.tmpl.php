@@ -32,6 +32,7 @@ BL.checkMatches = function (e) {
 <br />
 <br />
 <form name="blogPostForm" id="blogPostForm" class="wikia_form" method="post" action="<?php echo $title->getLocalUrl();?>">
+	<input type="hidden" name="articleEditAllowed" value="<?php echo $formData['isExistingArticleEditAllowed']; ?>" />
 	<?php if(!empty($preview)): ?>
 		<h2>Preview</h2>
 		<div class='previewnote'><p><strong><?php echo wfMsg('previewnote');?></strong></p></div>
