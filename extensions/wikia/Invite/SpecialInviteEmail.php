@@ -15,8 +15,11 @@ function wfInviteContactsReadLang(){
 }
 
 function wfSpecialInviteEmail(){
-  global $wgUser,$IP;
-  include_once("includes/SpecialPage.php");
+	global $IP;
+	include_once("includes/SpecialPage.php");
+	if (!class_exists( 'UserEmailTrack' )) {
+		require_once( "$IP/extensions/wikia/UserStats/UserStatsClass.php" );
+ 	}
 
 
 class InviteEmail extends UnlistedSpecialPage {
