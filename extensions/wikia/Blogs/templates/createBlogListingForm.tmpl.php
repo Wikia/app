@@ -31,7 +31,7 @@ BL.checkMatches = function (e) {
 <?php echo wfMsg( "create-blog-listing-form-info" ) ?>
 <br />
 <br />
-<form name="blogPostForm" id="blogPostForm" method="post" action="<?php echo $title->getLocalUrl();?>">
+<form name="blogPostForm" id="blogPostForm" class="wikia_form" method="post" action="<?php echo $title->getLocalUrl();?>">
 	<?php if(!empty($preview)): ?>
 		<h2>Preview</h2>
 		<div class='previewnote'><p><strong><?php echo wfMsg('previewnote');?></strong></p></div>
