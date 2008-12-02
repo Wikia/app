@@ -398,7 +398,8 @@ class HomeTemplate extends QuickTemplate {
 
 
 
-		$choice = rand(0, 1);
+		//$choice = rand(0, 1);
+		$choice = 0;
 		if ($choice == 0) {
 			$featured_hub = $gaming_featured;
 			$non_featured_hub = $entertainment_non_featured;
