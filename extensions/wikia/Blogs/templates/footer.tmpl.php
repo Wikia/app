@@ -7,6 +7,8 @@
 	<li>
 		<!-- stars rating / copied from Monaco skin -->
 		<strong><?php echo wfMsg( "blog-page-rate" ) ?></strong>
+	</li>
+	<li>
 		<div id="star-rating-wrapper">
 			<ul id="star-rating" class="star-rating">
 				<li style="width: <?php echo $ratingPx ?>px;" id="current-rating" class="current-rating"><span><?= $rating ?>/5</span></li>
