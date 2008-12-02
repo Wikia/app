@@ -121,7 +121,6 @@ class BlogListPage extends Article {
 			else {
 				$wgOut->setArticleFlag( true );
 				$wgOut->setPageTitle( $this->mTitle->getPrefixedText() );
-//				$wgOut->addHTML(  Xml::element("h1", array( "class" => "firstHeading" ), $wgTitle->getPrefixedText() ) );
 			}
 			$this->showBlogListing();
 		}
@@ -431,6 +430,7 @@ class BlogListPage extends Article {
 					"text" => wfMsg("blog-create-label"),
 					"href" => Title::newFromText("CreateBlogPage", NS_SPECIAL)->getLocalUrl()
 				);
+				$tabs = $row + $tabs;
 				break;
 			case NS_BLOG_LISTING:
 				$row["listing-create-tab"] = array(
@@ -438,9 +438,16 @@ class BlogListPage extends Article {
 					"text" => wfMsg("blog-create-listing-label"),
 					"href" => Title::newFromText( "CreateBlogListingPage", NS_SPECIAL)->getLocalUrl()
 				);
+				$tabs = $row + $tabs;
+				$row["listing-refresh-tab"] = array(
+					"class" => "",
+					"text" => wfMsg("blog-refresh-label"),
+					"href" => $wgTitle->getLocalUrl( "action=purge" )
+				);
+				$tabs += $row;
 				break;
 		}
-		$tabs = $row + $tabs;
+
 
 		return true;
 	}
