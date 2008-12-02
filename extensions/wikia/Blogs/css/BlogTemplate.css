@@ -189,6 +189,7 @@ div.blog-comment_input {
 	margin-top: 1,5em;
 	margin-bottom: 0.5em;
 	list-style: none;
+	border-top: 1px solid #dfdfdf;
 }
 #blog-footer ul li { float: left; margin-right: 10px }
 #blog-footer #star-rating-wrapper { top: -6px; }
