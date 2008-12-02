@@ -14,6 +14,8 @@ function userMasthead() {
 	$isAnon = $wgUser->isAnon();
 
 	if( $namespace == NS_BLOG_ARTICLE ||
+		$namespace == NS_BLOG_LISTING ||
+		$namespace == NS_BLOG_LISTING_TALK ||
 		$namespace == NS_USER ||
 		$namespace == NS_USER_TALK ||
 		$namespace == NS_SPECIAL && (
@@ -34,7 +36,7 @@ function userMasthead() {
 		$userMasthead = true; //hides article/talk tabs in Monaco.php
 		$out = array();
 		//DEFINE USERSPACE - THE USERNAME THAT BELONGS ON THE MASTHEAD
-		if ( in_array( $namespace, array( NS_USER, NS_USER_TALK, NS_BLOG_ARTICLE ) ) ) {
+		if ( in_array( $namespace, array( NS_USER, NS_USER_TALK, NS_BLOG_ARTICLE, NS_BLOG_LISTING, NS_BLOG_LISTING_TALK ) ) ) {
 			if( strpos( $wgTitle->getDBkey(), "/") ) {
 				list ( $userspace, $title ) = explode( "/", $wgTitle->getDBkey(), 2 );
 			}
