@@ -44,7 +44,7 @@
 	height: 16px;
 	margin: 8px 2px 0 0;
 	position: absolute;
-	width: 320px;
+	width: 336px;
 }
 #page_controls a {
 	background: transparent;
@@ -94,6 +94,14 @@
 #control_addsection div {
 	clip: rect(0px 288px 16px 272px);
 	left: -272px;
+}
+#control_blog-create-tab div {
+	clip: rect(0px 144px 16px 128px);
+	left: -128px;
+}
+#control_purge div {
+	clip: rect(0px 336px 16px 320px);
+	left: -320px;
 }
 
 #page_tabs {
@@ -182,7 +190,7 @@
 	height: 16px;
 	margin-right: 16px;
 	position: absolute;
-	width: 320px;
+	width: 336px;
 }
 #fe_edit_icon {
 	clip: rect(0px 16px 16px 0px);
@@ -260,7 +268,7 @@
 	display: block;
 	height: 16px;
 	position: absolute;
-	width: 320px;
+	width: 336px;
 }
 #shareDelicious dd a {
 	clip: rect(0px 176px 16px 160px);

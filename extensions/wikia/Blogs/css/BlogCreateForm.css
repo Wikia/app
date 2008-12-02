@@ -1,9 +1,9 @@
 #blogPostForm label { 
+	color: #cc4d33;
 	display: block; 
 	float: left;
 	padding-right: 1em; 
-	text-align: right; 
-	font-size: 16px; 
+	font-size: 12pt; 
 }
 
 #blogPostForm div.formErrors { 
@@ -12,13 +12,11 @@
 }
 
 #blogPostForm div.formBlock { 
-	width: 100%; 
+	border-bottom: 1px dashed #AAA; 
 	clear: left; 
 	float: left; 
-	margin-top: 10px; 
-	margin-bottom: 10px; 
-	padding-bottom: 20px; 
-	border-bottom: 1px dotted gray; 
+	padding: 15px 0; 
+	width: 100%;
 }
 
 #blogPostForm div.formLastBlock { 
@@ -64,13 +62,15 @@ tr {
 }
 
 #blogPostCategoriesTitle {
+	color: #cc4d33;
 	padding-right: 1em;
-	text-align: right;
-	font-size: 16px;
+	font-size: 12pt;
 }
 
 .matches-info {
+	color: #060;
+	font-style: italic;
 	font-weight: bold;
-	color: green;
+	margin-right: 1em;
 }
 
