@@ -66,7 +66,6 @@ $wgHooks['AlternateEdit'][] = 'wfBlogsAlternateEdit';
 
 function wfBlogsAlternateEdit(&$oEditPage) {
 	global $wgOut;
-	echo "<pre>";
 	$oTitle = $oEditPage->mTitle;
 	if($oTitle->getNamespace() == NS_BLOG_LISTING) {
 		$oSpecialPageTitle = Title::newFromText('CreateBlogListingPage', NS_SPECIAL);
