@@ -236,7 +236,9 @@ FCK.BlockEvent = function(elem, eventType) {
 FCK.Events.AttachEvent( 'OnAfterSetHTML', function() {
 	if(FCK.EditingArea.TargetElement.className == 'childrenHidden') {
 		var html = FCK.GetData();
-		var wysiwygDataEncoded =  FCK.YAHOO.Tools.encodeArr(FCK.wysiwygData);
+		var wysiwygDataEncoded = FCK.YAHOO.Tools.JSONEncode(FCK.wysiwygData);
+
+		FCK.log(FCK.wysiwygData);
 
 		window.parent.sajax_request_type = 'POST';
 		window.parent.sajax_do_call('Wysywig_Ajax', ['html2wiki', html, wysiwygDataEncoded], function(res) {
