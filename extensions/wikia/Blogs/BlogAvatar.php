@@ -209,6 +209,10 @@ class BlogAvatar {
 		if( $id ) {
 			$attribs[ "id" ] = $id;
 		}
+		if( $wgUser->getID() == $this->mUser->getID( ) ) {
+			$attribs[ "class" ] .= " avatar-self";
+		}
+
 		return Xml::element( 'img', $attribs, '', true );
 	}
 
@@ -226,13 +230,7 @@ class BlogAvatar {
 
 		wfProfileIn( __METHOD__ );
 		$image = $this->getImageTag( $width, $height, $alt, $class, $id );
-
-		if( $wgUser->getID() == $this->mUser->getID( ) ) {
-			$url = sprintf("<a href=\"%s\">%s</a>", Title::newFromText( "Preferences", NS_SPECIAL)->getFullUrl(), $image );
-		}
-		else {
-			$url = sprintf("<a href=\"%s\">%s</a>", $this->mUser->getUserPage()->getFullUrl(), $image );
-		}
+		$url = sprintf("<a href=\"%s\">%s</a>", $this->mUser->getUserPage()->getFullUrl(), $image );
 		wfProfileOut( __METHOD__ );
 
 		return $url;
