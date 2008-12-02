@@ -373,7 +373,7 @@ class BlogListPage extends Article {
 	static public function addCategoryPage( &$catView, &$title, &$row ) {
 		global $wgContLang;
 
-		if( $row->page_namespace == NS_BLOG_ARTICLE ) {
+		if( in_array( $row->page_namespace, array( NS_BLOG_ARTICLE, NS_BLOG_LISTING ) ) ) {
 			/**
 			 * initialize CategoryView->blogs array
 			 */
