@@ -102,13 +102,18 @@ class UserImageList extends SpecialPage {
 
 			while ($row = $dbr->fetchObject( $res ) ) {
 				$image_path = $row->img_name;
-				$render_image = Image::newFromName ($image_path);
+				$render_image = Image::newFromName($image_path);
 				$thumb_image = $render_image->getThumbNail(128);
+				
+				if( !is_object( $thumb_image ) ) {
+					$total--;
+					continue;
+				}
+				
 				$thumbnail = $thumb_image->toHtml();
 				$image_id = "user-image-{$x}";
 				$image_link = Title::makeTitle(NS_IMAGE, $image_path);
 				
-
 				$output .= "<div class=\"user-gallery-image\" id=\"{$image_id}\" onmouseover=\"doHover('{$image_id}')\" onmouseout=\"endHover('{$image_id}')\">
 					<a href=\"".$image_link->escapeFullURL()."\">{$thumbnail}</a>
 				</div>";
