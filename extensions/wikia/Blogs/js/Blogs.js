@@ -12,6 +12,11 @@ YAHOO.Wikia.Blogs.callback = {
 
 YAHOO.Wikia.Blogs.callback.add = function( data ) {
 	if( ! data[ "error" ] ) {
+		// remove zero comments div
+		var zero = YAHOO.util.Dom.get("blog-comments-zero");
+		if( zero ) {
+			zero.innerHTML = "";
+		}
 		var li = document.createElement( "li" );
 		li.innerHTML = data["text"];
 		YAHOO.util.Dom.get( "blog-comments-ul" ).appendChild( li );
