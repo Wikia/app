@@ -413,8 +413,7 @@ function wfProfileJSON($user_name, $r_user_name="") {
 		
 	}
 	
-	if ($wgUserProfileDisplay['friends'] != false) {
-		
+	if ($wgUserProfileDisplay['friends'] != false) {		
 		$rel_type=1;
 		
 		$count = 8;
@@ -423,44 +422,49 @@ function wfProfileJSON($user_name, $r_user_name="") {
 		
 		if( $user_name != $wgUser->getName() ) {
 			$complete_friends = $rel->getAllRelationships();
-			
+
 			$rel_current_user = new UserRelationship( $wgUser->getName() );
 			$complete_friends_current_user = $rel_current_user->getAllRelationships();
-			
+
 			$mutual_friends = array_intersect_key($complete_friends_current_user, $complete_friends);
-			
+
 			$count= 4;
-			if( $count > count( $mutual_friends ) ){
-				$count = count( $mutual_friends );
-			}
-			
-			$rel_randomized_keys = array_rand( $mutual_friends, $count );
-			if( $count == 1 ){ //if one array_rand just returns index
-				$mutual_friends_randomized[] = $mutual_friends[$rel_randomized_keys];
-			}else{
-				foreach( $rel_randomized_keys as $random ){
-					$mutual_friends_randomized[] = $mutual_friends[ $random ];
+			if ( is_array( $mutual_friends ) ) {
+				if( $count > count( $mutual_friends ) ){
+					$count = count( $mutual_friends );
 				}
-			}
-			$friends_full = array();
-			foreach ($mutual_friends_randomized as $friend) {
-			
-				$user =  Title::makeTitle( NS_USER  , $friend["user_name"]  );
-				$p = new ProfilePhoto( $friend["user_id"] );
-				
-				$friend["avatar"] = $p->getProfileImageURL("l");
-				$friend["friend_display"] = user_name_display($friend["user_id"], $friend["user_name"]);
-				$friend["link"] = $user->escapeFullUrl();
-				$friends_full[] = $friend;
-			}
-		
-			$profile_JSON_array["mutual_friends"] = array(
-			"count"=>count($mutual_friends) . "", //make sure to force string
-			"title"=>"Mutual Friends",
-			"view_all_text"=>wfMsg("user-view-all"),
-			"mutual_friends"=>$friends_full,
-		);
-	
+
+				$rel_randomized_keys = array_rand( $mutual_friends, $count );
+				if( $count == 1 ){ //if one array_rand just returns index
+					$mutual_friends_randomized[] = $mutual_friends[$rel_randomized_keys];
+				} else {
+					if ( is_array( $rel_randomized_keys ) ) {
+						foreach( $rel_randomized_keys as $random ){
+							$mutual_friends_randomized[] = $mutual_friends[ $random ];
+						}
+					}
+				}
+				$friends_full = array();
+				if ( is_array( $mutual_friends_randomized ) ) {
+					foreach ($mutual_friends_randomized as $friend) {
+
+						$user =  Title::makeTitle( NS_USER  , $friend["user_name"]  );
+						$p = new ProfilePhoto( $friend["user_id"] );
+
+						$friend["avatar"] = $p->getProfileImageURL("l");
+						$friend["friend_display"] = user_name_display($friend["user_id"], $friend["user_name"]);
+						$friend["link"] = $user->escapeFullUrl();
+						$friends_full[] = $friend;
+					}
+				}
+
+				$profile_JSON_array["mutual_friends"] = array(
+						"count"=>count($mutual_friends) . "", //make sure to force string
+						"title"=>"Mutual Friends",
+						"view_all_text"=>wfMsg("user-view-all"),
+						"mutual_friends"=>$friends_full,
+						);
+			}	
 		}
 		
 		$user_safe = urlencode(   $user_name  );
@@ -471,8 +475,7 @@ function wfProfileJSON($user_name, $r_user_name="") {
 		
 		$friends_full = array();
 		
-		foreach ($friends as $friend) {
-			
+		foreach ($friends as $friend) {			
 			$user =  Title::makeTitle( NS_USER  , $friend["user_name"]  );
 			$p = new ProfilePhoto( $friend["user_id"] );
 			
@@ -481,20 +484,16 @@ function wfProfileJSON($user_name, $r_user_name="") {
 			$friend["friend_display"] = user_name_display($friend["user_id"], $friend["user_name"]);
 			$friends_full[] = $friend;
 		}
-		
-		
+				
 		$profile_JSON_array["friends"] = array(
 			"count"=>$relationship_count,
 			"title"=>$relationship_title,
 			"view_all"=>$view_all_title,
 			"view_all_text"=>wfMsg("user-view-all"),
 			"friends"=>$friends_full,
-		);
-		
-		
+		);		
 	}
-	
-	
+		
 	if ($wgUserProfileDisplay['foes'] != false) {
 		
 		$rel_type=2;
