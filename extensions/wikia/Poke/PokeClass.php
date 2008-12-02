@@ -3,31 +3,6 @@
  *
  */
 class Poke {
-
-	/**
-	 * All member variables should be considered private
-	 * Please use the accessor functions
-	 */
-
-	 /**#@+
-	 * @private
-	 */
-	
-	
-	/**
-	 * Constructor
-	 * @private
-	 */
-	/* private */ function __construct() {
-
-		//language messages
-		global $wgMessageCache;
-		require_once ( "Poke.i18n.php" );
-		foreach( efWikiaPoke() as $lang => $messages ){
-			$wgMessageCache->addMessages( $messages, $lang );
-		}
-		
-	}
 	
 	public function poke($user_name,$is_pokeback=0){
 		global $wgUser, $wgMemc;
