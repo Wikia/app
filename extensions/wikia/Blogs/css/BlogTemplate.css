@@ -191,6 +191,7 @@ div.blog-comment_input {
 	list-style: none;
 }
 #blog-footer ul li { float: left; margin-right: 10px }
+#blog-footer #star-rating-wrapper { top: -6px; }
 
 #blog-comm-form-select select {
 	margin: 0;
