@@ -187,6 +187,8 @@ class BlogAvatar {
 	 * @param String  $id -- DOM identifier
 	 */
 	public function getImageTag( $width = AVATAR_DEFAULT_WIDTH, $height = AVATAR_DEFAULT_HEIGHT, $alt = false, $class = "avatar", $id = false ) {
+		global $wgUser;
+
 		wfProfileIn( __METHOD__ );
 
 		$url = $this->getUrl();
@@ -226,7 +228,6 @@ class BlogAvatar {
 	 * @param String  $id -- DOM identifier
 	 */
 	public function getLinkTag( $width = AVATAR_DEFAULT_WIDTH, $height = AVATAR_DEFAULT_HEIGHT, $alt = false, $class = "avatar", $id = false ) {
-		global $wgUser;
 
 		wfProfileIn( __METHOD__ );
 		$image = $this->getImageTag( $width, $height, $alt, $class, $id );
