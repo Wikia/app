@@ -36,7 +36,7 @@ function userMasthead() {
 		$userMasthead = true; //hides article/talk tabs in Monaco.php
 		$out = array();
 		//DEFINE USERSPACE - THE USERNAME THAT BELONGS ON THE MASTHEAD
-		if ( in_array( $namespace, array( NS_USER, NS_USER_TALK, NS_BLOG_ARTICLE, NS_BLOG_LISTING, NS_BLOG_LISTING_TALK ) ) ) {
+		if ( in_array( $namespace, array( NS_USER, NS_USER_TALK, NS_BLOG_ARTICLE ) ) ) {
 			if( strpos( $wgTitle->getDBkey(), "/") ) {
 				list ( $userspace, $title ) = explode( "/", $wgTitle->getDBkey(), 2 );
 			}
@@ -45,7 +45,10 @@ function userMasthead() {
 			}
 			$Avatar = BlogAvatar::newFromUserName( $userspace );
 		}
-		if( $dbKey == 'Watchlist' || $dbKey == 'WidgetDashboard' || $dbKey == 'Preferences' ) {
+		if(	in_array( $namespace, array( NS_BLOG_LISTING, NS_BLOG_LISTING_TALK ) ) ||
+		   $dbKey == 'Watchlist' ||
+		   $dbKey == 'WidgetDashboard' ||
+		   $dbKey == 'Preferences' ) {
 			$userspace = $wgUser->getName();
 			$Avatar = BlogAvatar::newFromUser( $wgUser );
 		}
