@@ -48,7 +48,7 @@ BL.checkMatches = function (e) {
 	<?php endif; ?>
 	<div class="formBlock">
 		<label><?php echo wfMsg( "create-blog-listing-page-title" ) ?></label>
-		<input type="text" id="blogPostTitle" name="blogListingTitle" value="<?php echo htmlspecialchars($formData['listingTitle']); ?>" size="60" maxlength="255" />
+		<input type="text" id="blogPostTitle" name="blogListingTitle" value="<?php echo ( isset($formData['listingTitle']) ? htmlspecialchars($formData['listingTitle']) : "" ); ?>" size="60" maxlength="255" />
 	</div>
 
 	<div class="formBlock">
