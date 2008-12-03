@@ -67,5 +67,6 @@ Create blog listing pages for categories such as "Barrack Obama", "Fan Fiction",
 	"blog-page-rate" => "Rate this article:",
 	"blog-create-label" => "Create blog article",
 	"blog-create-listing-label" => "Create blog listing",
-	"blog-refresh-label" => "Refresh"
+	"blog-refresh-label" => "Refresh",
+	"blog-widgets-label" => "Widget Dashboard"
 );
