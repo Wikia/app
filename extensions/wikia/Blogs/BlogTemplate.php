@@ -698,6 +698,12 @@ class BlogTemplateClass {
 		/* parse summary */
 		if ( (!empty($iRev)) && (!empty(self::$aOptions['summary'])) ) {
 			$oRev = Revision::newFromId($iRev);
+			if( !$oRev ) {
+			  /**
+                           * article is deleted! it should be handled in different way
+			   */
+			  return $sResult;
+			}
 			$sBlogText = $oRev->revText();
 			/* parse or not parse - this is a good question */
 			$localParser = new Parser();
