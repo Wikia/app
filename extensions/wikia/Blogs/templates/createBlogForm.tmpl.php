@@ -20,7 +20,7 @@
 	<?php endif; ?>
 	<div class="formBlock">
 		<label><?php echo wfMsg( "create-blog-form-post-title" ) ?></label>
-		<input type="text" id="blogPostTitle" name="blogPostTitle" value="<?php echo htmlspecialchars($formData['postTitle']); ?>" size="60" maxlength="255" />
+		<input type="text" id="blogPostTitle" name="blogPostTitle" value="<?php echo (isset($formData['postTitle']) ? htmlspecialchars($formData['postTitle']) : ""); ?>" size="60" maxlength="255" />
 		<div style="float: left">
 		<input type="checkbox" name="blogPostIsVotingEnabled" value="1" <?php echo (!empty($formData['isVotingEnabled']) || !isset($formData['isVotingEnabled'])) ? "checked" : ""; ?> />Voting
 		<input type="checkbox" name="blogPostIsCommentingEnabled" value="1" <?php echo (!empty($formData['isCommentingEnabled']) || !isset($formData['isCommentingEnabled'])) ? "checked" : ""; ?> />Comments
@@ -30,7 +30,7 @@
 		<label><?php echo wfMsg( "create-blog-form-post-text" ) ?></label>
 		<div class="display: block">
 			<?php echo EditPage::getEditToolbar(); ?>
-			<textarea id="wpTextbox1" class="yui-ac-input" cols="80" rows="15" name="wpTextbox1" accesskey="," autocomplete="off"><?php echo $formData['postBody']; ?></textarea>
+			<textarea id="wpTextbox1" class="yui-ac-input" cols="80" rows="15" name="wpTextbox1" accesskey="," autocomplete="off"><?php echo (isset($formData['postBody']) ? $formData['postBody'] : ""); ?></textarea>
 		</div>
 	</div>
 
