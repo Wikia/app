@@ -197,6 +197,7 @@ class BlogListPage extends Article {
 		foreach( range(0, 5) as $page ) {
 			$wgMemc->delete( wfMemcKey( "blog", "listing", $user, $page ) );
 		}
+		SquidUpdate::newSimplePurge( $this->mTitle );
 	}
 
 	/**
