@@ -241,7 +241,7 @@ class BlogTemplateClass {
 		// variant as a parser tag: <BLOGTPL_TAG>
 		$wgParser->setHook( BLOGTPL_TAG, array( __CLASS__, "parseTag" ) );
 		// set empty value
-		$wgOut->addHTML( "<link rel=\"stylesheet\" type=\"text/css\" href=\"{$wgExtensionsPath}/wikia/Blogs/css/BlogTemplate.css?".rand()."\" />" );
+		$wgOut->addHTML( "<link rel=\"stylesheet\" type=\"text/css\" href=\"{$wgExtensionsPath}/wikia/Blogs/css/BlogTemplate.css?".$wgStyleVersion."\" />" );
 		// language file
 		wfLoadExtensionMessages("Blogs");
 		wfProfileOut( __METHOD__ );
