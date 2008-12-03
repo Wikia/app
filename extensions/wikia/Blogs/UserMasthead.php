@@ -95,5 +95,3 @@ function userMasthead() {
 	}
 	return true;
 }
-
-?>
