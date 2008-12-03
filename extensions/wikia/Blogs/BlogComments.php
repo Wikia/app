@@ -268,6 +268,10 @@ class BlogComments {
 		/**
 		 * clear comments cache for this article
 		 */
+		$updateTitle = Title::newFromText( $commentTitleText, NS_BLOG_ARTICLE );
+		$update = SquidUpdate::newSimplePurge( $updateTitle );
+		$update->doUpdate();
+
 		$key = $Title->getBaseText();
 		$wgMemc->delete( wfMemcKey( "blog", "listing", $key, 0 ) );
 		return $article;
