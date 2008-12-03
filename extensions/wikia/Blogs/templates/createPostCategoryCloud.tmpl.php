@@ -10,8 +10,8 @@
 		<?php $xnum++; endforeach; ?>
 	</div>
 	<textarea accesskey="," name="wpCategoryTextarea<?=$cloudNo;?>" id="wpCategoryTextarea<?=$cloudNo;?>" class="wpCategoryTextarea" rows='3' cols='<?=$cols?>'><?=$textCategories?></textarea>
-	<input type="button" name="wpCategoryButton" id="wpCategoryButton" class="button color1" value="Add Category" onclick="cloudInputAdd(<?=$cloudNo;?>, 'wpCategoryTextarea<?=$cloudNo;?>', 'categoryCloudSection<?=$cloudNo;?>', 'wpCategoryInput<?=$cloudNo;?>'); return false ;" />
-	<input type="text" name="wpCategoryInput<?=$cloudNo;?>" class="wpCategoryInput" id="wpCategoryInput<?=$cloudNo;?>" value="" />
+	Add a new category&nbsp;<input type="text" name="wpCategoryInput<?=$cloudNo;?>" class="wpCategoryInput" id="wpCategoryInput<?=$cloudNo;?>" value="" />
+	<input type="button" name="wpCategoryButton" id="wpCategoryButton" class="button color1" value="Submit" onclick="cloudInputAdd(<?=$cloudNo;?>, 'wpCategoryTextarea<?=$cloudNo;?>', 'categoryCloudSection<?=$cloudNo;?>', 'wpCategoryInput<?=$cloudNo;?>'); return false ;" />
 </div>
 
 <script type="text/javascript">
