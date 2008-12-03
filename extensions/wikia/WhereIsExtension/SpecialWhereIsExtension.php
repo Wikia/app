@@ -23,7 +23,8 @@ if (!defined('MEDIAWIKI')) {
 }
 
 $wgAvailableRights[] = 'WhereIsExtension';
-$wgGroupPermissions['*']['WhereIsExtension'] = true;
+$wgGroupPermissions['staff']['WhereIsExtension'] = true;
+$wgGroupPermissions['wikifactory']['WhereIsExtension'] = true;
 
 $wgExtensionMessagesFiles['WhereIsExtension'] = dirname(__FILE__) . '/SpecialWhereIsExtension.i18n.php';
 
