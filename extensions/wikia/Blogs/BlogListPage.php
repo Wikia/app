@@ -136,7 +136,7 @@ class BlogListPage extends Article {
 
 		wfProfileIn( __METHOD__ );
 
-		$rand = rand();
+		$rand = $wgMergeStyleVersionJS;
 		$page = BlogComments::newFromTitle( $this->mTitle );
 		$page->setProps( $this->mProps );
 
