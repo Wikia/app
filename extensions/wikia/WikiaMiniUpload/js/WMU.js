@@ -311,8 +311,8 @@ function WMU_upload(e) {
 }
 
 function WMU_splitExtensions( filename ) {
-	bits = filename.split( '.' );
-	basename = bits.shift();
+	var bits = filename.split( '.' );
+	var basename = bits.shift();
 	return new Array( basename, bits );
 }
 
@@ -339,13 +339,13 @@ function WMU_checkFileExtensionList( ext, list ) {
 }
 
 function WMU_initialCheck( checkedName ) {
-	list_array = WMU_splitExtensions( checkedName );
-	partname = list_array[0];
-	ext = list_array[1];
+	var list_array = WMU_splitExtensions( checkedName );
+	var partname = list_array[0];
+	var ext = list_array[1];
 	if (ext.length > 0) {
-		finalExt = ext[ext.length -1];
+		var finalExt = ext[ext.length -1];
 	} else {
-		finalExt = '';
+		var finalExt = '';
 	}
 
 	if (ext.lenght > 1) {
