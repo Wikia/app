@@ -181,6 +181,7 @@ class BlogComments {
 				"title"    => $wgTitle,
 				"props"    => $this->mProps,
 				"avatar"   => $avatar,
+				"wgUser"   => $wgUser,
 				"comments" => $comments,
 			) );
 		}
