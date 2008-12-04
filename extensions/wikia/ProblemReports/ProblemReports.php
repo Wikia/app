@@ -39,7 +39,7 @@ if (!defined('MEDIAWIKI')) die();
 $wgExtensionCredits['other'][] = array(
 	'name' => 'ProblemReports',
 	'url' => 'http://help.wikia.com/wiki/Help:ProblemReports',
-	'version' => '2.4',
+	'version' => '2.41',
 	'description' => 'Allows users to report problems with wiki-articles and helpers/sysops/janitors/staff to view & resolve them',
 	'author' => '[http://pl.wikia.com/wiki/User:Macbre Maciej Brencz]'
 );
@@ -70,6 +70,7 @@ function wfProblemReports()
 	
 		// add "Report a problem" link and return html of "Report a problem" dialog
 		$wgHooks['SkinTemplateContentActions'][] = 'wfProblemReportsAddLink';
+		$wgHooks['ExtendJSGlobalVars'][] = 'wfProblemReportsSetupVars';
 	}
 
 	// setup for Special:Log
@@ -115,3 +116,12 @@ function wfProblemReports()
 		wfLoadExtensionMessages('ProblemReports');
 	}
 }
+
+function wfProblemReportsSetupVars($vars) {
+
+        $vars['pr_msg_exceeded'] = wfMsg('pr_msg_exceeded');
+        $vars['pr_msg_exchead'] = wfMsg('pr_msg_exchead') ;
+
+        return true;
+}
+
