@@ -25,14 +25,6 @@ $wgNamespacesWithSubpages[ NS_BLOG_ARTICLE_TALK ] = true;
 $wgNamespacesWithSubpages[ NS_BLOG_LISTING ] = true;
 $wgNamespacesWithSubpages[ NS_BLOG_LISTING_TALK ] = true;
 
-/**
- * protections
- */
-$wgNamespaceProtection[ NS_BLOG_ARTICLE ] = array("blogs");
-$wgNamespacesWithSubpages[ NS_BLOG_ARTICLE ] = true;
-$wgGroupPermissions['*']['blogs'] = false;
-$wgGroupPermissions['sysop']['blogs'] = true;
-$wgGroupPermissions['staff']['blogs'] = true;
 
 /**
  * messages file
