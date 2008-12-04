@@ -29,44 +29,49 @@ class BlogLockdown {
 		/**
 		 * here we only handle Blog articles, everyone can read it
 		 */
-		if( $namespace != NS_BLOG_ARTICLE || $namespace != NS_BLOG_ARTICLE_TALK || $action == "read" ) {
+		if( $namespace != NS_BLOG_ARTICLE && $namespace != NS_BLOG_ARTICLE_TALK ) {
+			Wikia::log( __METHOD__, "namespace", "not valid namespace: {$namespace}"  );
 			$result = true;
 			return true;
+		}
+
+		if( $action == "read" ) {
+			Wikia::log( __METHOD__, "action", "action: {$action}"  );
+			$result = true;
+			return true;
+		}
+
+		if( $action == "move" ) {
+			Wikia::log( __METHOD__, "move", "action: {$action}"  );
+			$result = array();
+			return false;
 		}
 
 		/**
 		 * staff & sysops can do anything
 		 */
 		if (in_array('staff',($user->getGroups())) || in_array('sysop',($user->getGroups()))) {
-			Wikia::log( __METHOD__, "user", "staff or sysop" );
+			Wikia::log( __METHOD__, "user", "staff or sysop: " . implode( ",", $user->getGroups() ) );
 			return true;
 		}
 
 		/**
 		 * for other actions we demand that user has to be logged in
 		 */
-		Wikia::log( __METHOD__, "action", $action );
-		Wikia::log( __METHOD__, "result", $result );
 		if( $user->isAnon( ) ) {
 			Wikia::log( __METHOD__, "user", "anonymous" );
-			return true;
+			return false;
 		}
 
-		if( $title->isSubpage() ) {
-			/**
-			 * blog article page, split title for "/" and get second part
-			 */
-			list( $page, $post ) = explode( "/", $title->getText( ), 2 );
-		}
-		else {
-			$page = $title->getText( );
-		}
+		$owner = $title->getBaseText();
 		$username = $user->getName();
 
-		Wikia::log( __METHOD__, "user", $username );
-		Wikia::log( __METHOD__, "title", $page );
-		$result = ( $username == $page ) ? null : false;
-		$return = ( $username == $page );
+		Wikia::log( __METHOD__, "user", "user: {$username}, owner: {$owne}" );
+
+		if( $username != $owner ) $result = array();
+		$return = ( $username == $owner );
+
+		Wikia::log( __METHOD__, "result", "action: {$action}, result: {$result}, return: {$return}" );
 
 		return $return;
 	}
