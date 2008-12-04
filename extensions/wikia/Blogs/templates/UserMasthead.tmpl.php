@@ -16,10 +16,10 @@ if ($wgTitle == 'Special:Watchlist') {
 <? if ( ( $userspace == $wgUser->getName() ) || ( $wgUser->isAllowed( 'removeavatar' ) ) ) { ?>
 	<span class="avatarOverlay color1" style="visibility: hidden;" id="wk-avatar-change" onmouseover="this.style.visibility='visible';" onmouseout="this.style.visibility='hidden';">
 <? if ( $userspace == $wgUser->getName() ) { ?>	
-		<span onclick="javascript:location='<?php echo Title::newFromText("Preferences", NS_SPECIAL)->getLocalUrl(); ?>'"><?=wfMsg('edit')?></span>
+		<span onclick="javascript:location='<?php echo Title::newFromText("Preferences", NS_SPECIAL)->getLocalUrl(); ?>'"><?=wfMsg('blog-avatar-edit')?></span>
 <? } ?>
 <? if ( ( $wgUser->isAllowed( 'removeavatar' ) ) && ( !$avatar-> isDefault() ) ) { ?>	
-		<span onclick="javascript:location='<?php echo Title::newFromText("RemoveAvatar", NS_SPECIAL)->getLocalUrl("action=search_user&av_user={$avatar->getUserName()}"); ?>'"><?=wfMsg('delete')?></span>
+		<span onclick="javascript:location='<?php echo Title::newFromText("RemoveAvatar", NS_SPECIAL)->getLocalUrl("action=search_user&av_user={$avatar->getUserName()}"); ?>'"><?=wfMsg('blog-avatar-delete')?></span>
 <? } ?>		
 	</span>
 <? } ?>
