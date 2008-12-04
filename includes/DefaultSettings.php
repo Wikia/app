@@ -3304,5 +3304,10 @@ $wgSitemapNamespaces = false;
  */
 $wgUseAutomaticEditSummaries = true;
 
+/**
+ * Integer defining default number of entries to show on
+ * Special:Whatlinkshere
+ */
+$wgWhatlinkshereLimit = 50; 
 
 require_once( "$IP/includes/wikia/DefaultSettings.php" );

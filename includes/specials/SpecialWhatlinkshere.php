@@ -40,13 +40,13 @@ class WhatLinksHerePage {
 	}
 
 	function execute() {
-		global $wgOut;
+		global $wgOut, $wgWhatlinkshereLimit;
 
 		$opts = new FormOptions();
 
 		$opts->add( 'target', '' );
 		$opts->add( 'namespace', '', FormOptions::INTNULL );
-		$opts->add( 'limit', 50 );
+		$opts->add( 'limit', $wgWhatlinkshereLimit );
 		$opts->add( 'from', 0 );
 		$opts->add( 'back', 0 );
 		$opts->add( 'hideredirs', false );
