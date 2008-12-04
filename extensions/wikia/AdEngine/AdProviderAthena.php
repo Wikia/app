@@ -28,10 +28,13 @@ class AdProviderAthena implements iAdProvider {
 		global $wgDBname, $wgLang, $wgUser, $wgTitle;
 
 		if (empty($_GET['athena_dev_hosts'])){
-			$out =  '<script type="text/javascript" src="http://athena-ads.wikia.com/athena/Athena.js"></script>' . "\n";
+			$host = "athena-ads.wikia.com";
 		} else {
-			$out =  '<script type="text/javascript" src="http://athena.dev.wikia-inc.com/athena/Athena.js"></script>' . "\n";
+			$host = "athena.dev.wikia-inc.com";
 		}
+		$out =  '<script type="text/javascript" src="http://'. $host .'/athena/Athena.js"></script>' . "\n";
+		// Not thrilled about having this here, but had to because of an IE bug.
+		$out .= '<script type="text/javascript" src="http://'. $host .'/athena/AdNetworks/AthenaDART.js"></script>' . "\n";
 
 		// Page vars are variables that you want available in javascript for serving ads
 		$pageVars = array();
