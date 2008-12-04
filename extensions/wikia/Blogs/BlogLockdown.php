@@ -66,7 +66,7 @@ class BlogLockdown {
 		$owner = $title->getBaseText();
 		$username = $user->getName();
 
-		Wikia::log( __METHOD__, "user", "user: {$username}, owner: {$owne}" );
+		Wikia::log( __METHOD__, "user", "user: {$username}, owner: {$owner}" );
 
 		if( $username != $owner ) $result = array();
 		$return = ( $username == $owner );
