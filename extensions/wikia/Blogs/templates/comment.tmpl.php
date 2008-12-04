@@ -39,7 +39,7 @@ else:
 <?php endif ?>
 <div id="blog-comments" class="reset clearfix">
 <?php
-	if( count( $comments ) > 10 && isset( $props[ "commenting" ] ) && $props[ "commenting" ] == 1  && $wgUser->isAllowed("edit") ):
+	if( count( $comments ) > 10 && isset( $props[ "commenting" ] ) && $props[ "commenting" ] == 1 ):
 		// show top input
 ?>
 <div class="blog-comm-input reset clearfix">
@@ -95,7 +95,7 @@ else:
 		echo "</ul>";
 	endif; // comments
 
-	if( isset( $props[ "commenting" ] ) && $props[ "commenting" ] == 1 && $wgUser->isAllowed("edit") ):
+	if( isset( $props[ "commenting" ] ) && $props[ "commenting" ] == 1 ):
 ?>
 <div class="blog-comm-input reset clearfix">
 	<form action="<?php $title->getFullURL() ?>" method="post" id="blog-comm-form-bottom">
