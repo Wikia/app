@@ -13,7 +13,7 @@ $wgExtensionCredits['other'][] = array(
 class ArticleAdLogic {
 
 	// Play with these levels, once we get more test cases.
-	const stubArticleThreshold = 400; // what defines a "short" article, in characters.
+	const stubArticleThreshold = 400; // what defines a "stub" article, in characters.
 	const shortArticleThreshold = 650; // what defines a "short" article, in pixel height 
 	const longArticleThreshold = 1200; // what defines a "long" article, in pixel height. 
 	const superLongArticleThreshold = 2500; // what defines a "super long" article, in pixel height. (3 skyscrapers) 
