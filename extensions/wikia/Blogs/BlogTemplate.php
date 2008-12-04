@@ -289,8 +289,8 @@ class BlogTemplateClass {
 				$sk = $oUser->getSkin();
 				$aResult = array(
 					"userpage" => $sk->makeLinkObj($oUser->getUserPage(), $oUser->getName()),
-					"talkpage" => $sk->makeLinkObj($oUser->getTalkPage(), wfMsg('talkpagelinktext')),
-					"contribs" => $sk->userLink($oUser->getId(), wfMsg('contribslink')),
+					"talkpage" => $sk->makeLinkObj($oUser->getTalkPage(), wfMsg('blog-avatar-talk')),
+					"contribs" => $sk->makeLinkObj(Title::newFromText('Contributions', NS_SPECIAL), wfMsg('blog-avatar-contrib'), "target={$oUser->getName()}"),
 				);
 			}
 		}
