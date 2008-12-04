@@ -595,7 +595,8 @@ CONTROL;
 
 	// wikia: #3907
 	function addNoDiffMsg( $text ) {
-		if (strpos($text, '<!--LINE ') === false) {
+		global $wgRequest;
+		if ( (strpos($text, '<!--LINE ') === false) && ('rollback' != $wgRequest->getVal( 'action' )) ) {
 			return '<tr><td colspan=\'4\' align=\'center\' class=\'diff-nodiff\'>'.wfMsg('nodiff').'</td></tr>';
 		}
 		else {
