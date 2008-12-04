@@ -60,3 +60,20 @@ div.blog-comment strong {
 	font-size: 10pt;
 }
 
+avatarOverlayRight {
+	right:5px;
+	top:5px;
+}
+
+.avatarOverlay {
+	border: 1px solid #000;
+	margin: 6px -6px;
+	padding: 3px;
+	position: absolute;
+	top:0;
+}
+
+.avatarOverlay span {
+	cursor:pointer;
+	margin:0 3px;
+}
