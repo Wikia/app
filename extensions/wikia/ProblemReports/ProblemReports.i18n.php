@@ -100,6 +100,9 @@ Software bugs can be reported on the forums. Reports made here will be [[Special
 		'pr_status_wait' => 'wait...',
 
 		'pr_read_only' => 'New reports cannot be filled right now, please try again later.',
+		
+		'pr_msg_exceeded' => 'The maximum number of characters in the Message field is 512. Please rewrite your message.',
+		'pr_msg_exchead' => 'Message is too long',
 	);
 	
 $messages['pl'] = array
@@ -187,5 +190,8 @@ Błędy w oprogramowaniu mogą być zgłaszane na forach. Problemy zgłaszane tu
 		'pr_status_wait' => 'czekaj...',
 
 		'pr_read_only' => 'Nowe zgłoszenia nie mogą zostać teraz dodane, prosimy spróbować później.',
+
+                'pr_msg_exceeded' => 'Maksymalna liczba znaków w polu Wiadomości wynosi 512, prosimy o zmianę zawartości tego pola.',
+                'pr_msg_exchead' => 'Wiadomość jest zbyt długa',
 	);
 
