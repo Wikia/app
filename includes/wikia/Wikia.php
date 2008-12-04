@@ -357,6 +357,6 @@ class Wikia {
 		/**
 		 * and use wfDebug as well
 		 */
-		wfDebug( $method . ": " . $message );
+		wfDebug( $method . ": " . $message . "\n" );
 	}
 }
