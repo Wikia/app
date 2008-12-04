@@ -79,7 +79,7 @@ function userMasthead() {
 
 		if ( $wgUser->isLoggedIn() && $wgUser->getName() == $userspace ) {
 			$out['nav_links'][] = array('text' => wfMsg('prefs-watchlist'), 'href' => Title::newFromText("Watchlist", NS_SPECIAL )->getLocalUrl(), "dbkey" => "Watchlist" );
-			$out['nav_links'][] = array('text' => wfMsg( "blog-widgets-label" ), 'href' => Title::newFromText("WidgetDashboard", NS_SPECIAL )->getLocalUrl(), "dbkey" => "WidgetDashboard" );
+			$out['nav_links'][] = array('text' => wfMsg('blog-widgets-label'), 'href' => Title::newFromText("WidgetDashboard", NS_SPECIAL )->getLocalUrl(), "dbkey" => "WidgetDashboard" );
 			$out['nav_links'][] = array('text' => wfMsg('preferences'), 'href' => Title::newFromText("Preferences", NS_SPECIAL )->getLocalUrl(), "dbkey" => "Preferences" );
 		} elseif ( !$isAnon ) {
 			$out['nav_links'][] = array('text' => wfMsg("emailpage"), 'href' => Title::newFromText( "EmailUser/{$userspace}", NS_SPECIAL )->getLocalUrl(), "dbkey" => "EmailUser" );
@@ -89,6 +89,7 @@ function userMasthead() {
 		$tmpl->set_vars( array(
 			'data' => $out,
 			"avatar" => $Avatar,
+			"userspace" => $userspace,
 			"current" => $dbKey
 		));
 		echo $tmpl->execute('UserMasthead');
