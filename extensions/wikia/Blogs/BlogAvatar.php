@@ -367,39 +367,42 @@ class BlogAvatar {
 	 * uploadFile -- save file when is in proper format, do resize and
 	 * other stuffs
 	 *
+	 * @param Request $request -- WebRequest instance
+	 * @param String $input    -- name of file input in form
+	 *
+	 * @return Integer -- error code of operation
 	 */
-	public function uploadFile($request, $sFormField = AVATAR_UPLOAD_FIELD) {
+	public function uploadFile($request, $input = AVATAR_UPLOAD_FIELD) {
 		global $wgTmpDirectory;
 		wfProfileIn(__METHOD__);
 
 		$this->__setLogType();
 
-		if (!isset($wgTmpDirectory) || empty($wgTmpDirectory)) {
+		if( !isset( $wgTmpDirectory ) || !is_dir( $wgTmpDirectory ) ) {
 			$wgTmpDirectory = "/tmp";
 		}
 		Wikia::log( __METHOD__, "tmp", "Temp directory set to {$wgTmpDirectory}" );
 
-
-		$errorNo = $request->getUploadError( $sFormField );
+		$errorNo = $request->getUploadError( $input );
 		if ( $errorNo != UPLOAD_ERR_OK ) {
 			Wikia::log( __METHOD__, "error", "Upload error {$errorNo}" );
 			wfProfileOut(__METHOD__);
 			return $errorNo;
 		}
-		$iFileSize = $request->getFileSize( $sFormField );
+		$iFileSize = $request->getFileSize( $input );
 
 		if( empty( $iFileSize ) ) {
 			/**
 			 * file size = 0
 			 */
-			Wikia::log( __METHOD__, "empty", "Empty file {$sFormField} reported size {$iFileSize}" );
+			Wikia::log( __METHOD__, "empty", "Empty file {$input} reported size {$iFileSize}" );
 			wfProfileOut(__METHOD__);
 			return UPLOAD_ERR_NO_FILE;
 		}
 
 		$sTmpFile = $wgTmpDirectory."/".substr(sha1(uniqid($this->mUser->getID())), 0, 16);
 		Wikia::log( __METHOD__, "tmp", "Temp file set to {$sTmpFile}" );
-		$sTmp = $request->getFileTempname($sFormField);
+		$sTmp = $request->getFileTempname($input);
 		Wikia::log( __METHOD__, "path", "Path to uploaded file is {$sTmp}" );
 
 		if( move_uploaded_file( $sTmp, $sTmpFile )  ) {
@@ -492,7 +495,7 @@ class BlogAvatar {
 				$sUserText =  $this->mUser->getName();
 				$mUserBlogPage = Title::newFromText( $sUserText, NS_BLOG_ARTICLE );
 				$oLogPage = new LogPage( AVATAR_LOG_NAME );
-				$sLogComment = "Add/change avatar by {$sUserText}";
+				$sLogComment = "Avatar added or changed by {$sUserText}";
 				$oLogPage->addEntry( AVATAR_LOG_NAME, $mUserBlogPage, $sLogComment);
 				unlink($sTmpFile);
 				$errorNo = UPLOAD_ERR_OK;
@@ -612,7 +615,7 @@ class BlogAvatar {
 class BlogAvatarRemovePage extends SpecialPage {
 	var $mAvatar;
 	var $mTitle;
-	var $mPosted; 
+	var $mPosted;
 	var $mUser;
 	var $mCommitRemoved;
 
@@ -624,11 +627,11 @@ class BlogAvatarRemovePage extends SpecialPage {
 		$this->mTitle = Title::makeTitle( NS_SPECIAL, "RemoveAvatar" );
 		parent::__construct( "RemoveAvatar", 'removeavatar');
 	}
-	
+
 	public function execute() {
 		global $wgUser, $wgOut, $wgRequest;
 		wfProfileIn( __METHOD__ );
-		
+
 		if ( $wgUser->isBlocked() ) {
 			$wgOut->blockedPage();
 			wfProfileOut( __METHOD__ );
@@ -651,15 +654,15 @@ class BlogAvatarRemovePage extends SpecialPage {
 		}
 
 		$wgOut->setPageTitle( wfMsg("blog-avatar-removeavatar") );
-		
+
 		if ($wgRequest->getVal("action") === "search_user") {
 			$this->mPosted = true;
 		}
-		
+
 		if ($wgRequest->getVal("action") === "remove_avatar") {
 			$this->mCommitRemoved = true;
 		}
-		
+
 		wfProfileOut( __METHOD__ );
 		$this->removeForm();
 	}
