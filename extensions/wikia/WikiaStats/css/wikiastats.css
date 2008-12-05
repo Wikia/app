@@ -112,6 +112,19 @@ td.main2x { border:1px inset #FFF; text-align:left; font-size:8pt; margin:0px; p
 .yui-dialog .ft, .yui-simple-dialog .ft {width:230px;}
 .wk-stats-legend-values {padding: 1px 7px 1px 7px;}
 .wk-column-group {font-weight: bold; padding: 10px 0px 2px 0px;}
+.ws-tpv {clear:both;float:left;font-size:6.5pt}
+.ws-tpvl {clear:both;margin-left:auto;margin-right:auto;font-size:7pt;font-weight:bold;}
+.ws-pv-50 {white-space:nowrap;width:25px;background-color:#ff3737;border:1px outset #B1B1B1;}
+.ws-pv-40 {white-space:nowrap;width:25px;background-color:#ff5f5f;border:1px outset #B1B1B1;}
+.ws-pv-30 {white-space:nowrap;width:25px;background-color:#ff8787;border:1px outset #B1B1B1;}
+.ws-pv-20 {white-space:nowrap;width:25px;background-color:#ffafaf;border:1px outset #B1B1B1;}
+.ws-pv-10 {white-space:nowrap;width:25px;background-color:#ffd7d7;border:1px outset #B1B1B1;}
+.ws-pv0 {white-space:nowrap;width:25px;background-color:#ffffff;border:1px outset #B1B1B1;}
+.ws-pv10 {white-space:nowrap;width:25px;background-color:#d7ffd7;border:1px outset #B1B1B1;}
+.ws-pv20 {white-space:nowrap;width:25px;background-color:#afffaf;border:1px outset #B1B1B1;}
+.ws-pv30 {white-space:nowrap;width:25px;background-color:#87ff87;border:1px outset #B1B1B1;}
+.ws-pv40 {white-space:nowrap;width:25px;background-color:#5fff5f;border:1px outset #B1B1B1;}
+.ws-pv50 {white-space:nowrap;width:25px;background-color:#37ff37;border:1px outset #B1B1B1;}
 
 #ws-title {margin: 1em; padding: 1em;}
 #ws-upload {text-align: left;}
@@ -125,10 +138,12 @@ td.main2x { border:1px inset #FFF; text-align:left; font-size:8pt; margin:0px; p
 #ws-main-table-stats {text-align:center; font-size:11px; width:500px; overflow:auto;}
 #ws-page-edits-count-table {text-align:center; font-size:11px; width:100%; overflow:auto;}
 #ws-page-edits-table-stats {text-align:left; font-size:11px; width:100%; overflow:auto;}
+#ws-page-views-table-stats {text-align:left; font-size:11px; width:100%; overflow:auto;}
 #ws-edits-article {padding:10px; width:auto; overflow:auto; border-top: 0px inset #FFFFFF;display:none; margin:2px;}
 #ws-active-wikians {padding:10px; width:auto; overflow:auto; border-top: 1px inset #FFFFFF;display:none;margin:2px;}
 #ws-anon-wikians {padding:10px; width:auto; overflow:auto; border-top: 1px inset #FFFFFF;display:none; margin:2px;}
 #ws-article-size {padding:10px; width:auto; overflow:auto; border-top: 1px inset #FFFFFF;display:none; margin:2px;}
+#ws-pageviews-count {padding:10px; width:auto; overflow:auto; border-top: 1px inset #FFFFFF;display:none; margin:2px;}
 #ws-namespace-count {padding:10px; width:auto; overflow:auto; border-top: 1px inset #FFFFFF;display:none; margin:2px;}
 #ws-page-edits-count {padding:10px; width:auto; overflow:auto; border-top: 1px inset #FFFFFF;display:none; margin:2px;}
 #ws-othernpaces-edits-count {padding:10px; width:auto; overflow:auto; border-top: 1px inset #FFFFFF;display:none; margin:2px;}

@@ -12,7 +12,7 @@ $xlsMenuHeader = addslashes(wfMsg("wikiastats_select_statistics"));
 #---
 $loop = 0;
 $wikia_rows = "<div id=\"ws-select-cities\">
-<select name=\"ws-city-list\" width=\"200\" id=\"ws-city-list\" class=\"ws-input\" size=\"27\" onChange=\"XLSShowMenu(this.value); WikiaStatsGetInfo('wk-stats-info-panel', this.value);\">";
+<select name=\"ws-city-list\" width=\"200\" id=\"ws-city-list\" class=\"ws-input\" size=\"29\" onChange=\"XLSShowMenu(this.value); WikiaStatsGetInfo('wk-stats-info-panel', this.value);\">";
 $y = 0;
 foreach ($cityStats as $id => $cityId) {
 	#if ($loop >= 100) break;
@@ -203,7 +203,10 @@ pageLoaderInit('<?=addslashes(wfMsg('wikiastats_generate_stats_msg'))?>', '<?=ad
 					<fieldset style="margin:0px">
 						<legend><?=wfMsg('wikiastats_generate_XLS_file_title')?></legend>
 						<div class="wk-stats-main-panel" id="wk-stats-main-panel">
-							<ul><li id="wk-xls-pagetitle"><a href="javascript:void(0);" onClick="XLSStats('1', '<?=$DEF_DATE?>', '<?=date('Y-m')?>');"><?=wfMsg("wikiastats_pagetitle")?></a></li></ul>
+							<ul>
+								<li id="wk-xls-pagetitle"><a href="javascript:void(0);" onClick="XLSStats('1', '<?=$DEF_DATE?>', '<?=date('Y-m')?>');"><?=wfMsg("wikiastats_pagetitle")?></a></li>
+								<li><a href="javascript:void(0);" onClick="XLSStats('9', '<?=$DEF_DATE?>', '<?=date('Y-m')?>');"><?=wfMsg("wikiastats_pageviews")?></a></li>
+							</ul>	
 						</div>
 						<div class="wk-stats-main-panel" id="wk-stats-panel">
 							<ul>

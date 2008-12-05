@@ -79,8 +79,7 @@ function axWStatisticsDistribEditsGenerate($city_id)
 	}
     
 	require_once ( dirname( __FILE__ ) . '/SpecialWikiaStats.i18n.php' );
-	foreach( $wgWikiaStatsMessages as $key => $value ) 
-	{
+	foreach( $wgWikiaStatsMessages as $key => $value ) {
 		$wgMessageCache->addMessages( $wgWikiaStatsMessages[$key], $key );
 	}
 
@@ -118,8 +117,7 @@ function axWStatisticsWikiansRank($city_id, $month = 1)
 	}
     
 	require_once ( dirname( __FILE__ ) . '/SpecialWikiaStats.i18n.php' );
-	foreach( $wgWikiaStatsMessages as $key => $value ) 
-	{
+	foreach( $wgWikiaStatsMessages as $key => $value ) {
 		$wgMessageCache->addMessages( $wgWikiaStatsMessages[$key], $key );
 	}
 
@@ -157,8 +155,7 @@ function axWStatisticsAnonUsers($city_id)
 	}
     
 	require_once ( dirname( __FILE__ ) . '/SpecialWikiaStats.i18n.php' );
-	foreach( $wgWikiaStatsMessages as $key => $value ) 
-	{
+	foreach( $wgWikiaStatsMessages as $key => $value ) {
 		$wgMessageCache->addMessages( $wgWikiaStatsMessages[$key], $key );
 	}
 
@@ -196,8 +193,7 @@ function axWStatisticsArticleSize ($city_id, $sizeList = "")
 	}
 
 	require_once ( dirname( __FILE__ ) . '/SpecialWikiaStats.i18n.php' );
-	foreach( $wgWikiaStatsMessages as $key => $value ) 
-	{
+	foreach( $wgWikiaStatsMessages as $key => $value ) {
 		$wgMessageCache->addMessages( $wgWikiaStatsMessages[$key], $key );
 	}
 
@@ -235,8 +231,7 @@ function axWStatisticsNamespaceCount($city_id)
 	}
     
 	require_once ( dirname( __FILE__ ) . '/SpecialWikiaStats.i18n.php' );
-	foreach( $wgWikiaStatsMessages as $key => $value ) 
-	{
+	foreach( $wgWikiaStatsMessages as $key => $value ) {
 		$wgMessageCache->addMessages( $wgWikiaStatsMessages[$key], $key );
 	}
 
@@ -274,8 +269,7 @@ function axWStatisticsPageEdits($city_id)
 	}
 
 	require_once ( dirname( __FILE__ ) . '/SpecialWikiaStats.i18n.php' );
-	foreach( $wgWikiaStatsMessages as $key => $value ) 
-	{
+	foreach( $wgWikiaStatsMessages as $key => $value ) {
 		$wgMessageCache->addMessages( $wgWikiaStatsMessages[$key], $key );
 	}
 
@@ -313,8 +307,7 @@ function axWStatisticsOtherNpacesPageEdits($city_id)
 	}
 
 	require_once ( dirname( __FILE__ ) . '/SpecialWikiaStats.i18n.php' );
-	foreach( $wgWikiaStatsMessages as $key => $value ) 
-	{
+	foreach( $wgWikiaStatsMessages as $key => $value ) {
 		$wgMessageCache->addMessages( $wgWikiaStatsMessages[$key], $key );
 	}
 
@@ -353,8 +346,7 @@ function axWStatisticsPageEditsDetails($city_id, $page_id)
 	}
     
 	require_once ( dirname( __FILE__ ) . '/SpecialWikiaStats.i18n.php' );
-	foreach( $wgWikiaStatsMessages as $key => $value ) 
-	{
+	foreach( $wgWikiaStatsMessages as $key => $value ) {
 		$wgMessageCache->addMessages( $wgWikiaStatsMessages[$key], $key );
 	}
 
@@ -447,8 +439,12 @@ function axWStatisticsXLS($city_id, $param, $others = "", $date_from = "", $date
 			WikiaGenericStats::getWikiPageEditsCount($city_id, $xls, 1);
 			break;
 		}
+		case "9": { // page views
+			WikiaGenericStats::getWikiPageViewsCount($city_id, $xls, 0);
+			break;
+		}
 		// comparisions
-		case "9": { // overview
+		case "10": { // overview
 			$obj_stats = new WikiaGenericStats($wgUser->getID());
 			$cities = array(0 => 0); //initial and default value
 			if (!empty($others)) {
@@ -462,14 +458,14 @@ function axWStatisticsXLS($city_id, $param, $others = "", $date_from = "", $date
 			//WikiaGenericStats::getWikiPageEditsCount($city_id, $xls);
 			break;
 		}
-		case "10": { // creation history
+		case "11": { // creation history
 			$obj_stats = new WikiaGenericStats($wgUser->getID());
 			$obj_stats->getWikiCreationHistoryXLS($city_id);
 			//WikiaGenericStats::getWikiPageEditsCount($city_id, $xls);
 			break;
 		}
 		default : { // comparisions 
-			if ( ($param > 9) && ($param < 35) ) {
+			if ( ($param > 11) && ($param < 35) ) {
 				$obj_stats = new WikiaGenericStats($wgUser->getID());
 				$cities = array(0 => 0); //initial and default value
 				if (!empty($others)) {
@@ -571,8 +567,7 @@ function axWStatisticsWikiaListJson($limit=25, $offset=0) {
 	}
 	
 	require_once ( dirname( __FILE__ ) . '/SpecialWikiaStats.i18n.php' );
-	foreach( $wgWikiaStatsMessages as $key => $value ) 
-	{
+	foreach( $wgWikiaStatsMessages as $key => $value ) {
 		$wgMessageCache->addMessages( $wgWikiaStatsMessages[$key], $key );
 	}
 	
@@ -715,6 +710,44 @@ function axWStatisticsSearchWikis($search_text) {
 	}
 }
 
+function axWStatisticsPageViews($city_id)
+{
+    global $wgRequest, $wgUser, $wgMessageCache, $wgWikiaStatsMessages;
+    global $wgCityId, $wgDBname;
+    
+	if (empty($wgUser)) { 
+		return false;
+	}
+
+	if ( $wgUser->isBlocked() ) {
+		return;
+	}
+	
+	if ( !$wgUser->isLoggedIn() ) {
+		return;
+	}	
+    
+	if ($wgDBname != CENTRAL_WIKIA_ID) { 
+		// central version
+		$city_id = $wgCityId;
+	}
+
+	require_once ( dirname( __FILE__ ) . '/SpecialWikiaStats.i18n.php' );
+	foreach( $wgWikiaStatsMessages as $key => $value ) {
+		$wgMessageCache->addMessages( $wgWikiaStatsMessages[$key], $key );
+	}
+
+    $aResponse = WikiaGenericStats::getWikiPageViewsCount($city_id);
+    
+    if (!function_exists('json_encode'))  {
+        $oJson = new Services_JSON();
+        return $oJson->encode($aResponse);
+    }
+    else {
+        return json_encode($aResponse);
+    }
+}
+
 global $wgAjaxExportList;
 $wgAjaxExportList[] = "axWStatisticsGenerate";
 $wgAjaxExportList[] = "axWStatisticsDistribEditsGenerate";
@@ -729,6 +762,7 @@ $wgAjaxExportList[] = "axWStatisticsWikiaList";
 $wgAjaxExportList[] = "axWStatisticsWikiaListJson";
 $wgAjaxExportList[] = "axWStatisticsWikiaInfo";
 $wgAjaxExportList[] = "axWStatisticsSearchWikis";
+$wgAjaxExportList[] = "axWStatisticsPageViews";
 //xls-functions
 $wgAjaxExportList[] = "axWStatisticsXLS";
 

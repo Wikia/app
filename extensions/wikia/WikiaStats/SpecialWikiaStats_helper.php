@@ -28,7 +28,7 @@ class WikiaGenericStats {
     var $mSelectedCityId = -1;
 
     const MONTHLY_STATS = 7;
-    const USE_MEMC = 1;
+    const USE_MEMC = 0;
     const USE_OLD_DB = 0;
 	const IGNORE_WIKIS = "5, 11, 6745";
    	
@@ -861,6 +861,81 @@ class WikiaGenericStats {
 		return $result;
 	}
 
+	static private function getPageViewsFromDB($city_id)
+	{
+    	global $wgMemc, $wgContentNamespaces;
+    	#---
+		wfProfileIn( __METHOD__ );
+		#---
+		$result = array();
+		#---
+		$namespaces = array_merge(array(NS_MAIN), $wgContentNamespaces);
+		$memkey = 'wikiacitystatspageviews_'.$city_id;
+		#---
+		if (self::USE_MEMC) $result = $wgMemc->get($memkey);
+
+    	$no_ip = array();
+		if (empty($result)) {
+			if (!is_null($city_id)) {
+				if (self::USE_OLD_DB == 1) {
+					$dbs =& wfGetDBStats();
+				} else {
+					$dbs =& wfGetDBExt();
+				}
+				#---
+				$where_city = ($city_id > 0) ? " pv_city_id = {$city_id} " : " pv_city_id > 0 ";
+				$sql = "set @day = date_format(now(), '%d') + 1";
+				$res = $dbs->query($sql);
+				$sql = "select pv_use_date, sum(pv_views) as cnt, pv_namespace from `dbstats`.`city_page_views` ";
+				$sql .= "where {$where_city} and pv_use_date >= last_day(now() - interval @day day) group by pv_use_date, pv_namespace order by pv_use_date";
+				$res = $dbs->query($sql);
+				#---
+				$prevValues = array();
+				while ( $row = $dbs->fetchObject( $res ) ) {
+					$nspace = (in_array($row->pv_namespace, $namespaces)) ? NS_MAIN : $row->pv_namespace;
+					$result['months'][$row->pv_use_date][$nspace] = intval($row->cnt);
+					if (isset($prevValues[$nspace])) {
+						$result['trends'][$row->pv_use_date][$nspace] = self::calculateTrend($result['months'][$row->pv_use_date][$nspace], $prevValues[$nspace]);
+					}
+					$prevValues[$nspace] = $result['months'][$row->pv_use_date][$nspace];
+					if (!isset($result['namespaces'][$nspace])) {
+						$result['namespaces'][$nspace] = 0;
+					}
+					$result['namespaces'][$nspace] += intval($row->cnt);
+				} 
+
+				unset($prevValues);
+				$prevValues = array();
+				$result_months = array();
+
+				$sql = "select date_format(pv_use_date, '%Y-%m') as pv_date, sum(pv_views) as cnt, pv_namespace from `dbstats`.`city_page_views` ";
+				$sql .= "where {$where_city} and date_format(pv_use_date, '%Y-%m') <= date_format(now(), '%Y-%m') group by pv_date, pv_namespace order by pv_date";
+				$res = $dbs->query($sql);
+				#---
+				while ( $row = $dbs->fetchObject( $res ) ) {
+					$nspace = (in_array($row->pv_namespace, $namespaces)) ? NS_MAIN : $row->pv_namespace;
+					$result['months'][$row->pv_date][$nspace] = intval($row->cnt);
+					if (isset($prevValues[$nspace])) {
+						$result['trends'][$row->pv_date][$nspace] = self::calculateTrend($result['months'][$row->pv_date][$nspace], $prevValues[$nspace]);
+					}
+					$prevValues[$nspace] = $result['months'][$row->pv_date][$nspace];
+					if (!isset($result['namespaces'][$nspace])) {
+						$result['namespaces'][$nspace] = 0;
+					}
+					$result['namespaces'][$nspace] += intval($row->cnt);
+				}
+				$dbs->freeResult( $res );
+
+				#---
+				if (self::USE_MEMC) $wgMemc->set($memkey, $result, 60*60*3);
+			}
+		}
+
+		wfProfileOut( __METHOD__ );
+		#---
+		return $result;
+	}
+
 	static private function getPageEdistDetailsFromDB($cityDBName, $page_id, $reg_users = 0, $limit=30)
 	{
     	global $wgMemc;
@@ -1483,6 +1558,36 @@ class WikiaGenericStats {
         ));
         #---
         $res = $oTmpl->execute("page-counts-stats");
+        #---
+		wfProfileOut( __METHOD__ );
+        return $res;
+	}
+
+	static private function setWikiPageViewsOutput($city_id, $statsCount, $mSourceMetaSpace)
+	{
+        global $wgUser, $wgCanonicalNamespaceNames, $wgLang;
+        global $wgDBname, $wgScript;
+		wfProfileIn( __METHOD__ );
+		
+		$aNamespaces = WikiFactory::getVarValueByName('wgExtraNamespacesLocal', $city_id);
+		if ( is_array($aNamespaces) ) {
+			$aNamespaces = array_merge($wgCanonicalNamespaceNames, $aNamespaces);
+		} else {
+			$aNamespaces = $wgCanonicalNamespaceNames;
+		}
+		
+		#---
+        $oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
+        $oTmpl->set_vars( array(
+            "city_url"		=> self::getWikiaCityUrlById($city_id),
+            "statsCount" 	=> $statsCount,
+            "projectNamespace" => $mSourceMetaSpace,
+            "canonicalNamespace" => $aNamespaces,
+            "centralVersion" => ($wgDBname == CENTRAL_WIKIA_ID),
+            "wgLang" => $wgLang,
+        ));
+        #---
+        $res = $oTmpl->execute("pageviews-counts-stats");
         #---
 		wfProfileOut( __METHOD__ );
         return $res;
@@ -2193,6 +2298,42 @@ class WikiaGenericStats {
 		wfProfileOut( __METHOD__ );
         return $array;
     }
+    
+    static private function calculateTrend($new_value, $prev_value) {
+    	$res = $new_value;
+    	if ($prev_value > 0) {
+    		$res = 100 * (($new_value - $prev_value)/$prev_value);
+		} 
+		return $res;
+	}
+	
+	static public function getHtmlColorValue($R, $G, $B) {	
+		$colorValue = '#' . (strlen($R) == 1 ? ('0' . $R) : $R);
+		$colorValue.= (strlen($G) == 1 ? ('0' . $G) : $G);
+		$colorValue.= (strlen($B) == 1 ? ('0' . $B) : $B);
+		return $colorValue;
+	}	
+	
+	static public function colorizeTrend($value) {
+		$res = "#FFFFFF";
+		$oryg_value = $value;
+		$value = sprintf("%0.0f", $value);
+		if ($value != 0) {
+			$dec = abs(($value < -50) ? -5 : (($value > 50) ? 5 : floor($value/10)));
+			$value = ($value < -50) ? -5 : (($value > 50) ? 5 : ceil($value/10)) - 1;
+			if ($value < 0) {
+				$redComponent = dechex(255);
+				$greenComponent = dechex(255 - 20 * ($dec - $value + 1));
+				$blueComponent = dechex(255 - 20 * ($dec - $value + 1));
+			} else {
+				$redComponent = dechex(255 - 40 * ($dec + 1));
+				$greenComponent = dechex(255);
+				$blueComponent = dechex(255 - 40 * ($dec + 1));
+			}
+			$res = self::getHtmlColorValue($redComponent, $greenComponent, $blueComponent);  
+		}
+		return $res;				
+	}
 
 	static public function getWikiPageEditsCount($city_id, $xls = 0, $otherNspaces = 0)
 	{
@@ -2278,6 +2419,39 @@ class WikiaGenericStats {
 						self::makeWikiaMostEditPagesXLS($city_id, $sortData, $mSourceMetaSpace);
 					}
 				}
+			}
+		}
+
+		#---
+		wfProfileOut( __METHOD__ );
+		return $data;
+	}
+
+	static public function getWikiPageViewsCount($city_id, $xls = 0, $otherNspaces = 0)
+	{
+		global $wgDBStats;
+		#---
+		wfProfileIn( __METHOD__ );
+		#---
+		$data = array("code" => 0, "text" => "");
+		#---
+		if (!is_null($city_id)) {
+			$cityDBName = (!empty($city_id)) ? self::getWikiaDBCityListById($city_id) : "wikicities";
+			#---
+			if (!empty($cityDBName)) {
+				$pageViewsCount = self::getPageViewsFromDB( $city_id );
+				if (!empty($pageViewsCount)) {
+					$city_id = (!empty($city_id)) ? $city_id : WikiFactory::DBtoID($cityDBName);
+					$mSourceMetaSpace = WikiFactory::getVarValueByName( "wgMetaNamespace", $city_id );
+					if (empty($xls)) {
+						$text = self::setWikiPageViewsOutput($city_id, $pageViewsCount, $mSourceMetaSpace, $otherNspaces);
+						$data = array("code" => 1, "text" => $text);
+					} else {
+						wfProfileOut( __METHOD__ );
+						self::makeWikiaPageViewsXLS($city_id, $pageViewsCount, $mSourceMetaSpace, $otherNspaces);
+						//self::makeWikiaMostEditOtherNspacesPagesXLS($city_id, $sortData, $mSourceMetaSpace);
+					}
+				}				
 			}
 		}
 
@@ -2434,6 +2608,29 @@ class WikiaGenericStats {
         return $file_size ; 
     }
     
+
+    static public function getNumberFormat($value) 
+    {
+    	global $wgLang;
+    	
+		wfProfileIn( __METHOD__ );
+		$Kb = 1000;
+		$Mb = $Kb * $Kb;
+		$Gb = $Kb * $Kb * $Kb;
+		$Tb = $Kb * $Kb * $Kb * $Kb;
+		$res = $value;
+		if ($value < $Kb) {
+			$res = $wgLang->formatNum(sprintf("%0.1f", $value));
+		} elseif ($value < $Mb) {
+			$res = $wgLang->formatNum(sprintf("%0.1f", $value/$Kb)) . "K";
+		} elseif ($value < $Gb) {
+			$res = $wgLang->formatNum(sprintf("%0.1f", $value/$Mb)) . "M";
+		} else {
+			$res = $wgLang->formatNum(sprintf("%0.1f", $value/$Gb)) . "G";
+		}
+		wfProfileOut( __METHOD__ );
+        return $res; 
+    }
 
 	public function getStatisticsPager($total, $page, $link, $order="", $offset, $only_next=0)
 	{
@@ -2601,6 +2798,14 @@ class WikiaGenericStats {
 		#---
 		$XLSObj = new WikiaStatsXLS();
 		$XLSObj->makeDBNamespaceStats($city_id, $namespaceCount, $nspaces, $allowedNamespace);
+		return;
+	}
+	
+	static private function makeWikiaPageViewsXLS($city_id, $pageViewsCount, $mSourceMetaSpace, $otherNspaces)
+	{
+		#---
+		$XLSObj = new WikiaStatsXLS();
+		$XLSObj->makePageViewsXLS($city_id, $pageViewsCount, $mSourceMetaSpace, $otherNspaces);
 		return;
 	}
 

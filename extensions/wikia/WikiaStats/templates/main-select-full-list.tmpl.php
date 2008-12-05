@@ -98,6 +98,7 @@ YAHOO.namespace("wkstatsxlsmenu.container");
                 xlmmenutext += "<li><a href=\"javascript:void(0);\" onClick=\"XLSGenerate('2', '', '', '');\"><?=wfMsg("wikiastats_distrib_article")?></a></li>";
                 xlmmenutext += "<li><a href=\"javascript:void(0);\" onClick=\"XLSGenerate('3', '', '', '');\"><?=wfMsg("wikiastats_active_absent_wikians")?></a></li>";
                 xlmmenutext += "<li><a href=\"javascript:void(0);\" onClick=\"XLSGenerate('4', '', '', '');\"><?=wfMsg("wikiastats_anon_wikians")?></a></li>";
+                xlmmenutext += "<li><a href=\"javascript:void(0);\" onClick=\"XLSGenerate('9', '', '', '');\"><?=wfMsg("wikiastats_pageviews")?></a></li>";
                 xlmmenutext += "<li><a href=\"javascript:void(0);\" onClick=\"XLSGenerate('5', '', '', '');\"><?=wfMsg("wikiastats_article_one_link")?></a></li>";
                 xlmmenutext += "<li><a href=\"javascript:void(0);\" onClick=\"XLSGenerate('6', '', '', '');\"><?=wfMsg("wikiastats_namespace_records")?></a></li>";
                 xlmmenutext += "<li><a href=\"javascript:void(0);\" onClick=\"XLSGenerate('7', '', '', '');\"><?=wfMsg("wikiastats_page_edits")?></a></li>";

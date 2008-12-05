@@ -243,8 +243,9 @@ YAHOO.util.Event.onDOMReady(function () {
 					if (_otherStats.style.display == 'block') {
 						document.getElementById( "ws-edits-article" ).style.display = "block";
 						document.getElementById( "ws-active-wikians" ).style.display = "block";
-						document.getElementById( "wk-select-month-wikians-div" ).style.display = "none";
+						document.getElementById( "wk-select-month-wikians-div" ).style.display = "block";
 						document.getElementById( "ws-anon-wikians" ).style.display = "block";
+						document.getElementById( "ws-pageviews-count" ).style.display = "block";
 						document.getElementById( "ws-article-size" ).style.display = "block";
 						document.getElementById( "ws-namespace-count" ).style.display = "block";
 						document.getElementById( "ws-page-edits-count" ).style.display = "block";
@@ -256,10 +257,11 @@ YAHOO.util.Event.onDOMReady(function () {
 					document.getElementById( "ws-active-wikians" ).style.display = "none";
 					document.getElementById( "wk-select-month-wikians-div" ).style.display = "none";
 					document.getElementById( "ws-anon-wikians" ).style.display = "none";
+					document.getElementById( "ws-pageviews-count" ).style.display = "none";
 					document.getElementById( "ws-article-size" ).style.display = "none";
 					document.getElementById( "ws-namespace-count" ).style.display = "none";
 					document.getElementById( "ws-page-edits-count" ).style.display = "none";
-					document.getElementById( "ws-othernpaces-edits-count" ).style.display = "block";
+					document.getElementById( "ws-othernpaces-edits-count" ).style.display = "none";
 					document.getElementById( "ws-other-stats-panel" ).style.display = "none";
 				}
 			}
@@ -276,6 +278,7 @@ YAHOO.util.Event.onDOMReady(function () {
 		document.getElementById( "ws-edits-article-table" ).innerHTML = "";
 		document.getElementById( "ws-wikians-active-absent-table" ).innerHTML = "";
 		document.getElementById( "ws-anon-wikians-table" ).innerHTML = "";
+		document.getElementById( "ws-pageviews-table" ).innerHTML = "";
 		document.getElementById( "ws-articles-size-table" ).innerHTML = "";
 		document.getElementById( "ws-namespace-count-table" ).innerHTML = "";
 		document.getElementById( "ws-page-edits-count-table" ).innerHTML = "";
@@ -357,6 +360,21 @@ YAHOO.util.Event.onDOMReady(function () {
 		{
 			YD.get("ws-anon-wikians-table").innerHTML = "<?= wfMsg("wikiastats_nostats_found") ?>";
 			YD.get("ws-progress-anon-bar").innerHTML = "&nbsp;";
+		}
+	};
+
+	YAHOO.Wikia.Statistics.PageViewsStatisticCallback = 
+	{
+		success: function( oResponse ) 
+		{
+			var resData = YAHOO.Tools.JSONParse(oResponse.responseText);
+			YD.get("ws-pageviews-table").innerHTML = resData['text'];
+			YD.get("ws-progress-pageviews-bar").innerHTML = "&nbsp;";
+		},
+		failure: function( oResponse ) 
+		{
+			YD.get("ws-pageviews-table").innerHTML = "<?= wfMsg("wikiastats_nostats_found") ?>";
+			YD.get("ws-progress-pageviews-bar").innerHTML = "&nbsp;";
 		}
 	};
 
@@ -457,6 +475,19 @@ YAHOO.util.Event.onDOMReady(function () {
 		//---
 		var baseurl = wgScript + "?action=ajax&rs=axWStatisticsAnonUsers" + params;
 		YAHOO.util.Connect.asyncRequest( "GET", baseurl, YAHOO.Wikia.Statistics.UserAnonStatisticCallback);
+	};
+
+	YAHOO.Wikia.Statistics.PageViewsStats = function(e) 
+	{
+		var city 	= document.getElementById( "wk-stats-city-id" );
+		document.getElementById( "ws-pageviews-table" ).innerHTML = "";
+		var params 	= "&rsargs[0]=" + city.value;
+		//---
+		YE.preventDefault(e);
+		YD.get("ws-progress-pageviews-bar").innerHTML="&nbsp;<img src=\"/extensions/wikia/WikiaStats/images/ajax_loader.gif\" />";
+		//---
+		var baseurl = wgScript + "?action=ajax&rs=axWStatisticsPageViews" + params;
+		YAHOO.util.Connect.asyncRequest( "GET", baseurl, YAHOO.Wikia.Statistics.PageViewsStatisticCallback);
 	};
 
 	YAHOO.Wikia.Statistics.ArticlesSizeStats = function(e) 
@@ -573,6 +604,7 @@ YAHOO.util.Event.onDOMReady(function () {
 			}
 			default : {
 				var id = this.id;
+				wk_stats_city_id = parseInt(document.getElementById("wk-stats-city-id").value); 
 				id = id.replace("ws-xls-", "");
 				XLSGenerate(id, '', '', ''); 
 			}
@@ -586,6 +618,7 @@ YAHOO.util.Event.onDOMReady(function () {
 	YE.addListener("ws-wikians-rank-show", "click", YAHOO.Wikia.Statistics.WikiansRankStats);
 	YE.addListener("ws-wikians-active-btn", "click", YAHOO.Wikia.Statistics.WikiansRankStats);
 	YE.addListener("ws-anon-users-show", "click", YAHOO.Wikia.Statistics.AnonUsersStats);
+	YE.addListener("ws-pageviews-show", "click", YAHOO.Wikia.Statistics.PageViewsStats);
 	YE.addListener("ws-article-size-show", "click", YAHOO.Wikia.Statistics.ArticlesSizeStats);
 	YE.addListener("ws-namespace-count-show", "click", YAHOO.Wikia.Statistics.NamespaceStats); 
 	YE.addListener("ws-page-edits-count-show", "click", YAHOO.Wikia.Statistics.PageEditsStats);
@@ -593,7 +626,7 @@ YAHOO.util.Event.onDOMReady(function () {
 	YE.addListener("ws-othernspaces-edits-count-show", "click", YAHOO.Wikia.Statistics.OtherNpacesEditsStats);
 	YE.addListener("ws-page-edits-details-show", "click", YAHOO.Wikia.Statistics.OtherNpacesEditsStats);
 
-	for (k=2; k<9; k++) {
+	for (k=2; k<=9; k++) {
 		YE.addListener("ws-xls-" + k, "click", YAHOO.Wikia.Statistics.GenerateXLSStats);
 	}	
 });
@@ -742,6 +775,21 @@ for ($i = 1; $i <= 6; $i++)
 	<div id="ws-anon-wikians-table"></div>
 </div>
 <!-- END OF ANONYMOUS USERS -->
+<!-- PAGE VIEWS -->
+<div id="ws-pageviews-count">
+	<div id="ws-pageviews-title" style="clear:left;width:auto;float:left">
+		<div valign="middle">
+			<a href="javascript:void(0)" id="ws-pageviews-show"><?= wfMsg('wikiastats_pageviews'); ?></a>
+			<span style="padding:5px 2px;"><input type="image" id="ws-xls-9" value="<?= wfMsg("wikiastats_export_xls") ?>" src="/extensions/wikia/WikiaStats/images/xls.gif" /></span>
+		</div>	
+		<span class="small"><?= wfMsg('wikiastats_pageviews_subtext') ?></span><br />
+		<span class="small"><?= wfMsg('wikiastats_pageviews_counting') ?></span>
+	</div>
+	<div id="ws-progress-pageviews-bar"></div>
+	<div class="clear">&nbsp;</div>
+	<div id="ws-pageviews-table"></div>
+</div>
+<!-- END OF PAGE VIEWS -->
 <!-- ARTICLE SIZE -->
 <div id="ws-article-size">
 	<div id="ws-articles-title" style="clear:left;width:auto;float:left">
@@ -822,6 +870,7 @@ document.getElementById( "ws-edits-article" ).style.display = "block";
 document.getElementById( "ws-active-wikians" ).style.display = "block";
 document.getElementById( "wk-select-month-wikians-div" ).style.display = "none";
 document.getElementById( "ws-anon-wikians" ).style.display = "block";
+document.getElementById( "ws-pageviews-count" ).style.display = "block";
 document.getElementById( "ws-article-size" ).style.display = "block";
 document.getElementById( "ws-namespace-count" ).style.display = "block";
 document.getElementById( "ws-page-edits-count" ).style.display = "block";
