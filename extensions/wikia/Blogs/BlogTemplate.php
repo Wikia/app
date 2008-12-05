@@ -874,7 +874,8 @@ class BlogTemplateClass {
 							if ( !empty($aParamValues) && is_array( $aParamValues ) ) {
 								$aTmpWhere = array();
 								foreach ( $aParamValues as $id => $sParamValue ) {
-									 $aTmpWhere[] = "page_title like '{$sParamValue}/%'";
+									$sParamValue = str_replace(" ", "_", $sParamValue);
+									$aTmpWhere[] = "page_title like '{$sParamValue}/%'";
 								}
 								if ( !empty($aTmpWhere) ) {
 									self::$aWhere[] = implode(" OR ", $aTmpWhere);
