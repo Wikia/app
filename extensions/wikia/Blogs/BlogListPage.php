@@ -15,9 +15,8 @@ $wgHooks[ "ArticleFromTitle" ][] = "BlogListPage::ArticleFromTitle";
 $wgHooks[ "CategoryViewer::getOtherSection" ][] = "BlogListPage::getOtherSection";
 $wgHooks[ "CategoryViewer::addPage" ][] = "BlogListPage::addCategoryPage";
 $wgHooks[ "SkinTemplateTabs" ][] = "BlogListPage::skinTemplateTabs";
-//$wgParserOutputHooks[ "BlogArticle" ][] = "BlogListPage::parserOutput";
 $wgHooks[ "EditPage::showEditForm:checkboxes" ][] = "BlogListPage::editPageCheckboxes";
-$wgHooks[ "ArticleEditUpdates" ][] = "BlogListPage::articleEditUpdates";
+$wgHooks[ "LinksUpdate" ][] = "BlogListPage::linksUpdate";
 
 class BlogListPage extends Article {
 
@@ -498,10 +497,10 @@ class BlogListPage extends Article {
 	/**
 	 * store properties for updated article
 	 */
-	static public function articleEditUpdates( &$Article, &$editInfo, $changed ) {
+	static public function linksUpdate( &$LinksUpdate ) {
 		Wikia::log( __METHOD__, "entry" );
 
-		if( $Article->mTitle->getNamespace() != NS_BLOG_ARTICLE ) {
+		if( $LinksUpdate->mTitle->getNamespace() != NS_BLOG_ARTICLE ) {
 			return true;
 		}
 
@@ -511,12 +510,14 @@ class BlogListPage extends Article {
 		/**
 		 * restore/change properties for blog article
 		 */
-		$voting = $wgRequest->getValue( "wpVoting", 0 );
-		$commenting = $wgRequest->getValue( "wpCommenting", 0 );
-		$id = $Article->getId();
+		$voting = $wgRequest->getVal( "wpVoting", 0 );
+		$commenting = $wgRequest->getVal( "wpCommenting", 0 );
+		$id = $LinksUpdate->mTitle->getArticleId();
+
 		Wikia::log( __METHOD__, "save", "voting: {$voting}, commenting: {$commenting}, id: {$id}" );
 		if( $id ) {
-			self::saveProps( $id, array( "voting" => $voting, "commenting" => $commenting ) );
+			$LinksUpdate->mProperties = array( "voting" => $voting, "commenting" => $commenting );
+			// self::saveProps( $id, array( "voting" => $voting, "commenting" => $commenting ) );
 		}
 		wfProfileOut( __METHOD__ );
 
