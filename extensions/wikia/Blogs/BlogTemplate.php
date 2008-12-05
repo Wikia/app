@@ -862,9 +862,12 @@ class BlogTemplateClass {
 					case 'category'		:
 						if ( !empty($aParamValues) ) {
 							$aParamValues = array_slice($aParamValues, 0, self::$aBlogParams[$sParamName]['count']);
+							$aParamValues = str_replace (" ", "_", $aParamValues);
 							$aPages = self::__getCategories ($aParamValues);
 							if ( !empty($aPages) ) {
 								self::$aWhere[] = "page_id in (" . implode(",", $aPages) . ")";
+							} else {
+								self::$aWhere[] = "page_id = 0";
 							}
 						}
 						break;
@@ -972,39 +975,48 @@ class BlogTemplateClass {
 			} else {
 				$aResult = self::__getResults();
 				/* set output */
-				if ( self::$aOptions['type'] != 'array' ) {
-					$sPager = "";
-					if (self::$aOptions['type'] == 'plain') {
-						$iCount = self::getResultsCount();
-						$sPager = self::__setPager($iCount, intval(self::$aOptions['offset']));
-					}
-					/* run template */
-					$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
-					$oTmpl->set_vars( array(
-						"wgUser"		=> $wgUser,
-						"cityId"		=> $wgCityId,
-						"wgLang"		=> $wgLang,
-						"aRows"			=> $aResult,
-						"aOptions"		=> self::$aOptions,
-						"wgParser"		=> $wgParser,
-						"skin"			=> $wgUser->getSkin(),
-						"wgExtensionsPath" 	=> $wgExtensionsPath,
-						"sPager"		=> $sPager,
-						"wgTitle"		=> $wgTitle,
-					) );
-					#---
-					if ( self::$aOptions['type'] == 'box' ) {
-						$result = $oTmpl->execute("blog-page");
-					} else {
-						$page = $oTmpl->execute("blog-post-page");
+				if (!empty($aResult)) {
+					if ( self::$aOptions['type'] != 'array' ) {
+						$sPager = "";
+						if (self::$aOptions['type'] == 'plain') {
+							$iCount = self::getResultsCount();
+							$sPager = self::__setPager($iCount, intval(self::$aOptions['offset']));
+						}
+						/* run template */
+						$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
 						$oTmpl->set_vars( array(
-							"page" => $page
+							"wgUser"		=> $wgUser,
+							"cityId"		=> $wgCityId,
+							"wgLang"		=> $wgLang,
+							"aRows"			=> $aResult,
+							"aOptions"		=> self::$aOptions,
+							"wgParser"		=> $wgParser,
+							"skin"			=> $wgUser->getSkin(),
+							"wgExtensionsPath" 	=> $wgExtensionsPath,
+							"sPager"		=> $sPager,
+							"wgTitle"		=> $wgTitle,
 						) );
-						$result = $oTmpl->execute("blog-article-page");
+						#---
+						if ( self::$aOptions['type'] == 'box' ) {
+							$result = $oTmpl->execute("blog-page");
+						} else {
+							$page = $oTmpl->execute("blog-post-page");
+							$oTmpl->set_vars( array(
+								"page" => $page
+							) );
+							$result = $oTmpl->execute("blog-article-page");
+						}
+					} else {
+						unset($result);
+						$result = self::__makeRssOutput($aResult);
 					}
 				} else {
-					unset($result);
-					$result = self::__makeRssOutput($aResult);
+					if ( self::$aOptions['type'] != 'array' ) {
+						$sk = $wgUser->getSkin();
+						$result = wfMsg('blog-nopostfound') . " " . $sk->makeLinkObj(Title::newFromText('CreateBlogPage', NS_SPECIAL), wfMsg('blog-writeone'));
+					} else {
+						$result = "";
+					}
 				}
 			}
         }
