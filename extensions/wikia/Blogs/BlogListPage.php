@@ -165,6 +165,8 @@ class BlogListPage extends Article {
 		$page    = $wgRequest->getVal( "page", 0 );
 		$offset  = $page * 5;
 
+		$wgOut->setSyndicated( true );
+
 		if( !$purge ) {
 			$listing  = $wgMemc->get( wfMemcKey( "blog", "listing", $user, $page ) );
 		}
@@ -183,6 +185,12 @@ class BlogListPage extends Article {
 			$listing = BlogTemplateClass::parseTag( "<author>$user</author>", $params, $wgParser );
 			$wgMemc->set( wfMemcKey( "blog", "listing", $user, $offset ), $page, 3600 );
 		}
+		
+		$wgOut->addScript (
+			$this->__makefeedLink( 'rss', 'application/rss+xml' ) .
+			$this->__makefeedLink( 'atom', 'application/atom+xml' ) 
+		);
+		
 		$wgOut->addHTML( $listing );
 	}
 
@@ -219,7 +227,7 @@ class BlogListPage extends Article {
 			$listing  = $wgMemc->get( wfMemcKey( "blog", "feed", $user, $offset ) );
 		}
 
-		if ( $listing ) {
+		if ( !$listing ) {
 			$params = array(
 				"count"  => 50,
 				"summary" => true,
@@ -232,27 +240,41 @@ class BlogListPage extends Article {
 
 			$listing = BlogTemplateClass::parseTag( "<author>$user</author>", $params, $wgParser );
 			$wgMemc->set( wfMemcKey( "blog", "feed", $user, $offset ), $listing, 3600 );
-
-			$feed = new $wgFeedClasses[ $format ](
-				"Test title", "Test description", $wgTitle->getFullUrl() );
-
-			$feed->outHeader();
-			if( is_array( $listing ) ) {
-				foreach( $listing as $item ) {
-					$title = Title::newFromText( $item["title"], NS_BLOG_ARTICLE );
-					$item = new FeedItem(
-						$title->getPrefixedText(),
-						$item["description"],
-						$item["url"],
-						$item["timestamp"],
-						$item["author"]
-					);
-					$feed->outItem( $item );
-				}
-			}
-			$feed->outFooter();
 		}
+
+		$feed = new $wgFeedClasses[ $format ](
+			"Test title", "Test description", $wgTitle->getFullUrl() );
+
+		$feed->outHeader();
+		if( is_array( $listing ) ) {
+			foreach( $listing as $item ) {
+				$title = Title::newFromText( $item["title"], NS_BLOG_ARTICLE );
+				$item = new FeedItem(
+					$title->getPrefixedText(),
+					$item["description"],
+					$item["url"],
+					$item["timestamp"],
+					$item["author"]
+				);
+				$feed->outItem( $item );
+			}
+		}
+		$feed->outFooter();
+		
 		wfProfileOut( __METHOD__ );
+	}
+		
+	/**
+	 * private function 
+	 *
+	 * @access private
+	 */
+	private function __makefeedLink( $type, $mime ) {
+		return wfElement( 'link', array(
+			'rel' => 'alternate',
+			'type' => $mime,
+			'href' => $this->mTitle->getLocalUrl( "feed={$type}" ) ) 
+		);
 	}
 
 	/**
