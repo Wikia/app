@@ -17,6 +17,7 @@ $wgHooks[ "CategoryViewer::addPage" ][] = "BlogListPage::addCategoryPage";
 $wgHooks[ "SkinTemplateTabs" ][] = "BlogListPage::skinTemplateTabs";
 //$wgParserOutputHooks[ "BlogArticle" ][] = "BlogListPage::parserOutput";
 $wgHooks[ "EditPage::showEditForm:checkboxes" ][] = "BlogListPage::editPageCheckboxes";
+$wgHooks[ "ArticleEditUpdates" ][] = "BlogListPage::articleEditUpdates";
 
 class BlogListPage extends Article {
 
@@ -295,11 +296,15 @@ class BlogListPage extends Article {
 	 * save article extra properties to page_props table
 	 *
 	 * @access public
-	 * @param array $aPropsArray array of properties to save (prop name => prop value)
+	 * @static
+	 *
+	 * @param array $props array of properties to save (prop name => prop value)
 	 */
-	public function saveProps(Array $aPropsArray) {
+	static public function saveProps( $page_id, Array $props ) {
+
+		wfProfileIn( __METHOD__ );
 		$dbw = wfGetDB( DB_MASTER );
-		foreach( $aPropsArray as $sPropName => $sPropValue) {
+		foreach( $props as $sPropName => $sPropValue) {
 			$dbw->replace(
 				"page_props",
 				array(
@@ -307,13 +312,14 @@ class BlogListPage extends Article {
 					"pp_propname"
 				),
 				array(
-					"pp_page" => $this->getID(),
+					"pp_page" => $page_id,
 					"pp_propname" => $sPropName,
 					"pp_value" => $sPropValue
 				),
 				__METHOD__
 			);
 		}
+		wfProfileOut( __METHOD__ );
 	}
 
 	/**
@@ -473,19 +479,47 @@ class BlogListPage extends Article {
 			$props = self::getProps( $EditPage->mTitle->mArticleID );
 			$output["voting"] = wfCheckLabel(
 				wfMsg("blog-voting-label"),
-				"wpVotingLabel",
-				false,
+				"wpVoting",
+				"wpVoting",
 				isset( $props["voting"] ) && $props[ "voting" ] == 1
 			);
 			$output["commenting"] = wfCheckLabel(
 				wfMsg("blog-comments-label"),
 				"wpCommenting",
-				false,
+				"wpCommenting",
 				isset( $props["commenting"] ) && $props[ "commenting"] == 1
 			);
 		}
 		$checkboxes += $output;
 		wfProfileOut( __METHOD__ );
+		return true;
+	}
+
+	/**
+	 * store properties for updated article
+	 */
+	static public function articleEditUpdates( &$Article, &$editInfo, $changed ) {
+		Wikia::log( __METHOD__, "entry" );
+
+		if( $Article->mTitle->getNamespace() != NS_BLOG_ARTICLE ) {
+			return true;
+		}
+
+		wfProfileIn( __METHOD__ );
+		global $wgRequest;
+
+		/**
+		 * restore/change properties for blog article
+		 */
+		$voting = $wgRequest->getValue( "wpVoting", 0 );
+		$commenting = $wgRequest->getValue( "wpCommenting", 0 );
+		$id = $Article->getId();
+		Wikia::log( __METHOD__, "save", "voting: {$voting}, commenting: {$commenting}, id: {$id}" );
+		if( $id ) {
+			self::saveProps( $id, array( "voting" => $voting, "commenting" => $commenting ) );
+		}
+		wfProfileOut( __METHOD__ );
+
 		return true;
 	}
 }
