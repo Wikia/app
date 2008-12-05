@@ -15,6 +15,8 @@ $wgHooks[ "ArticleFromTitle" ][] = "BlogListPage::ArticleFromTitle";
 $wgHooks[ "CategoryViewer::getOtherSection" ][] = "BlogListPage::getOtherSection";
 $wgHooks[ "CategoryViewer::addPage" ][] = "BlogListPage::addCategoryPage";
 $wgHooks[ "SkinTemplateTabs" ][] = "BlogListPage::skinTemplateTabs";
+//$wgParserOutputHooks[ "BlogArticle" ][] = "BlogListPage::parserOutput";
+$wgHooks[ "EditPage::showEditForm:checkboxes" ][] = "BlogListPage::editPageCheckboxes";
 
 class BlogListPage extends Article {
 
@@ -453,4 +455,37 @@ class BlogListPage extends Article {
 		return true;
 	}
 
+	/**
+	 * write additinonal checkboxes on editpage
+	 */
+	static public function editPageCheckboxes( &$EditPage, &$checkboxes ) {
+
+		global $wgOut;
+
+		if( $EditPage->mTitle->getNamespace() != NS_BLOG_ARTICLE ) {
+			return true;
+		}
+		wfProfileIn( __METHOD__ );
+		Wikia::log( __METHOD__ );
+
+		$output = array();
+		if( $EditPage->mTitle->mArticleID ) {
+			$props = self::getProps( $EditPage->mTitle->mArticleID );
+			$output["voting"] = wfCheckLabel(
+				wfMsg("blog-voting-label"),
+				"wpVotingLabel",
+				false,
+				isset( $props["voting"] ) && $props[ "voting" ] == 1
+			);
+			$output["commenting"] = wfCheckLabel(
+				wfMsg("blog-comments-label"),
+				"wpCommenting",
+				false,
+				isset( $props["commenting"] ) && $props[ "commenting"] == 1
+			);
+		}
+		$checkboxes += $output;
+		wfProfileOut( __METHOD__ );
+		return true;
+	}
 }
