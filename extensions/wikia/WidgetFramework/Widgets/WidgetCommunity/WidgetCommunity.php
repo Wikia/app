@@ -52,6 +52,7 @@ function WidgetCommunity($id, $params) {
 		}
 	}
 
+	global $wgContentNamespaces;
 	// recently edited
 	$aResult = WidgetFrameworkCallAPI(array(
 		"action" => "query",
@@ -59,7 +60,7 @@ function WidgetCommunity($id, $params) {
 		"rclimit" => 2,
 		"rctype" => "edit|new",
 		"rcshow" => "!anon|!bot",
-		"rcnamespace" => "0|1|2|3|6|7",
+		"rcnamespace" => "0|1|2|3|6|7" . '|' . implode('|', $wgContentNamespaces),
 		"rcprop" => "title|timestamp|user"));
 
 	if(!empty($aResult['query']['recentchanges'])) {
