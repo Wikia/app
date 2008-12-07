@@ -29,12 +29,14 @@ class AdProviderAthena implements iAdProvider {
 
 		if (empty($_GET['athena_dev_hosts'])){
 			$host = "athena-ads.wikia.com";
+			$version = "1";
 		} else {
 			$host = "athena.dev.wikia-inc.com";
+			$version = mt_rand();
 		}
-		$out =  '<script type="text/javascript" src="http://'. $host .'/athena/Athena.js"></script>' . "\n";
+		$out =  '<script type="text/javascript" src="http://'. $host .'/athena/Athena.js?' . $version . '"></script>' . "\n";
 		// Not thrilled about having this here, but had to because of an IE bug.
-		$out .= '<script type="text/javascript" src="http://'. $host .'/athena/AdNetworks/AthenaDART.js"></script>' . "\n";
+		$out .= '<script type="text/javascript" src="http://'. $host .'/athena/AdNetworks/AthenaDART.js?' . $version . '"></script>' . "\n";
 
 		// Page vars are variables that you want available in javascript for serving ads
 		$pageVars = array();
@@ -67,7 +69,6 @@ class AdProviderAthena implements iAdProvider {
 		$out .= '</script>';
 
 		return $out;
-			
 	}
 
 	public static function getInstance() {
@@ -80,14 +81,5 @@ class AdProviderAthena implements iAdProvider {
         public function getAd($slotname, $slot){
 		return '<script type="text/javascript">Athena.callAd("' . $slotname . '");</script>' . "\n";
         }
-
-	private function getKadId($slotname){
-		$adtype = AdEngine::getInstance()->getAdType($slotname);
-		if (isset($this->kadids[$adtype])){
-			return $this->kadids[$adtype];
-		} else {
-			return false;
-		}
-	}
 
 }

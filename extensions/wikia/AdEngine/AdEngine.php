@@ -246,6 +246,11 @@ class AdEngine {
 			// ... and we always use Google Ad Manager
 			return AdProviderGAM::getInstance();
 
+		// Turning on Athena for all boxads.
+		} else if ( AdEngine::getInstance()->getAdType($slotname) == 'boxad' ){
+			// ... and we always use Google Ad Manager
+			return AdProviderAthena::getInstance();
+
 		// Now some toggles based on preferences and logged in/out
 		} else if (! ArticleAdLogic::isMandatoryAd($slotname) &&
 			     empty($_GET['showads']) && $wgShowAds == false ){
