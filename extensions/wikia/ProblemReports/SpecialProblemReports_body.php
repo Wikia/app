@@ -162,8 +162,9 @@ class SpecialProblemReports extends SpecialPage
 			$log = new LogPage('pr_rep_log', true); // true: also add entry to Special:Recentchanges
 			
 			$reportedTitle = Title::newFromText($report['title'], $report['ns']);
+			$spTitle = Title::newFromText( 'ProblemReports', NS_SPECIAL );
 				
-			$log->addEntry('prl_eml', $reportedTitle, '', array
+			$log->addEntry('prl_eml', $spTitle, '', array
 			(
 				$reportedTitle,
 				$wgUser->getName(),
