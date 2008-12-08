@@ -36,6 +36,8 @@ function GetLinksArrayFromMessage($messagename) { // feel free to suggest better
 	$bar = array();
 	$lines = explode( "\n", wfMsgForContent( $messagename ) );
 	foreach ($lines as $line) {
+		if (strlen($line) == 0) // ignore empty lines
+			continue;
 		if (strpos($line, '*') !== 0)
 			continue;
 		if (strpos($line, '**') !== 0) {
