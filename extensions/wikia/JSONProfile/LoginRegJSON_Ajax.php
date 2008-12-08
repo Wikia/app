@@ -68,12 +68,15 @@ function wfCheckUserLoginJSON($callback_function="handle_user_logged_in"){
 		if (isset($user_groups['staff'])||isset($user_groups['bureaucrat'])||isset($user_groups['sysop'])) $logged_in_info["adminhash"] = md5($wgUser->getName()."HasAdminRights"); 
 	}
 
-	return "var user_logged_in = " . 
+	$text =  "var user_logged_in = " . 
 		jsonify($logged_in_info) . 
 		";\n\n" . 
 		"setLoginCookie(user_logged_in);\n\n" . 
 		"set_header_loggedin();\n\n" . 
 		"{$callback_function}(user_logged_in);";
+	$response = new AjaxResponse( $text );
+	$response->setContentType( "application/javascript; charset=utf-8" ); 
+	return $response;
 
 }
 
@@ -193,19 +196,28 @@ function wfDoLoginJSONPost(){
 }
 
 $wgAjaxExportList [] = 'wfGetRegCaptchaJSON';
-function wfGetRegCaptchaJSON($callback_function="process_captcha"){
+function wfGetRegCaptchaJSON($callback_function="process_captcha", $recaptcha_domain = "re.search.wikia.com"){
 	
-	global $wgOut, $wgCaptchaTriggers, $IP, $recaptcha_public_key;
+	global $wgOut, $wgCaptchaTriggers, $IP, $recaptcha_public_key, $recaptcha_keys;
 	$res = array();
-	$res["public_key"] = $recaptcha_public_key;
+	//fallback to previous config
+	if( $recaptcha_keys[$recaptcha_domain]["public"] ){
+		$key = $recaptcha_keys[$recaptcha_domain]["public"];
+	}else{
+		$key = $recaptcha_public_key;
+	}
+	$res["public_key"] = $key;
 	return "var captcha_stuff = ". jsonify($res) . ";\n\n{$callback_function}(captcha_stuff);";
+	$response = new AjaxResponse( $text );
+	$response->setContentType( "application/javascript; charset=utf-8" ); 
+	return $response;
 	
 }
 
 $wgAjaxExportList [] = 'wfDoRegisterJSONPost';
-function wfDoRegisterJSONPost(){
+function wfDoRegisterJSONPost( $recaptcha_domain = "re.search.wikia.com" ){
 	
-	global $IP, $wgOut,$wgRequest, $wgUser, $wgServer,$wgArticlePath,  $wgScriptPath, $recaptcha_private_key, $wgCaptchaTriggers;
+	global $IP, $wgOut,$wgRequest, $wgUser, $wgServer,$wgArticlePath,  $wgScriptPath, $recaptcha_keys, $recaptcha_private_key, $wgCaptchaTriggers;
 	
 	$wpSourceForm = $_POST['wpSourceForm'];
 	$wpName = $_POST['wpName'];
@@ -217,14 +229,21 @@ function wfDoRegisterJSONPost(){
 	
 	// before we do anything - check the reCaptcha
 	$ip = wfGetIP();
-	$resp = recaptcha_check_answer ($recaptcha_private_key, $ip, $wgRequest->getVal("wpCaptchaId"), $wgRequest->getVal("wpCaptchaWord")); 
+	//fallback to previous config
+	if( $recaptcha_keys[$recaptcha_domain]["private"] ){
+		$key = $recaptcha_keys[$recaptcha_domain]["private"];
+	}else{
+		$key = $recaptcha_private_key;
+	}
+	$resp = recaptcha_check_answer($key, $ip, $wgRequest->getVal("wpCaptchaId"), $wgRequest->getVal("wpCaptchaWord")); 
 	
 	// if it failed just bail
 	if (!$resp->is_valid) {
-		return "<script type=\"text/javascript\">
+		$text =  "<script type=\"text/javascript\">
 				alert(\"CAPTCHA check failed! Please try again.\"); 
 				location.href='{$wpSourceForm}?error=true';
 			</script>";
+		return $text;
 	}
 	
 	$_REQUEST['action']="submitlogin";
@@ -269,10 +288,7 @@ function wfDoRegisterJSONPost(){
 				location.href='{$wpSourceForm}?error=true';
 			 </script>";
 	}
-	
-	return $output;
-	
-	
+	return $output;	
 }
 
 function registerSetBdayGender($birthday, $gender) {
@@ -364,11 +380,13 @@ function wfcheckBlocksJSON($callback_function="handle_block_check"){
 		else $logged_in_blocked["hash"] = md5($logged_in_blocked["name"] + $logged_in_blocked["UTC"] + "Rhymenocerous");
 	}
 
-	return "var user_blocked = " . 
+	$text = "var user_blocked = " . 
 		jsonify($logged_in_blocked) . 
 		";\n\n" . 
 		"{$callback_function}(user_blocked);";
-
+	$response = new AjaxResponse( $text );
+	$response->setContentType( "application/javascript; charset=utf-8" ); 
+	return $response;
 }
 
 ?>
