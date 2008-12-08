@@ -85,6 +85,6 @@ Create blog listing pages for categories such as "Barrack Obama", "Fan Fiction",
 	"blog-refresh-label" => "Refresh",
 	"blog-widgets-label" => "Widget Dashboard",
 	"blog-listing-zero-self" => "",
-	"blog-listing-zero-other" => "",
+	"blog-listing-zero-other" => "This user has not written any blog posts yet!",
     "removeavatar" => "Remove user's avatar",
 );
