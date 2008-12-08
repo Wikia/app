@@ -659,7 +659,7 @@ class SkinMonaco extends SkinTemplate {
 			$js[] = array('url' => $tpl->data['userjs'], 'mime' => 'text/javascript');
 		}
 		if($tpl->data['userjsprev']) {
-			$js[] = array('url' => $tpl->data['userjsprev'], 'mime' => 'text/javascript');
+			$js[] = array('content' => $tpl->data['userjsprev'], 'mime' => 'text/javascript');
 		}
 		// JS - end
 
@@ -975,9 +975,16 @@ class MonacoTemplate extends QuickTemplate {
 	if($wgRequest->getVal('action') != '' || $wgTitle->getNamespace() == NS_SPECIAL) {
 		echo $wgUser->isLoggedIn() ? GetReferences("monaco_loggedin_js") : GetReferences("monaco_non_loggedin_js");
 		foreach($this->data['references']['js'] as $script) {
+			if (!empty($script['url'])) {
 ?>
 		<script type="<?= $script['mime'] ?>" src="<?= htmlspecialchars($script['url']) ?>"></script>
 <?php
+			}
+			else if (!empty($script['content'])) {
+?>
+		<script type="<?= $script['mime'] ?>"><?= $script['content'] ?></script>
+<?php
+			}
 		}
 		$this->html('headscripts');
 	}
