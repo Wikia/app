@@ -112,9 +112,6 @@ class BlogListPage extends Article {
 			if( $this->exists() ) {
 				$this->showBlogComments();
 			}
-			else {
-				$wgOut->addHTML( wfMsg("blog-listing-zero-other") );
-			}
 		}
 		else {
 			/**
@@ -126,6 +123,7 @@ class BlogListPage extends Article {
 			else {
 				$wgOut->setArticleFlag( true );
 				$wgOut->setPageTitle( $this->mTitle->getPrefixedText() );
+				$wgOut->addHTML( wfMsg("blog-listing-zero-other") );
 			}
 			$this->showBlogListing();
 		}
