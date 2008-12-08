@@ -569,7 +569,6 @@ class EmailNotification {
 	 * @private
 	 */
 	function sendPersonalised( $watchingUser ) {
-		global $wgLang;
 		// From the PHP manual:
 		//     Note:  The to parameter cannot be an address in the form of "Something <someone@example.com>".
 		//     The mail command will not parse this properly while talking with the MTA.
@@ -581,8 +580,12 @@ class EmailNotification {
 		# $PAGEEDITDATE is the time and date of the page change
 		# expressed in terms of individual local time of the notification
 		# recipient, i.e. watching user
+		
+		// RT #1294 Bartek 5.12.2008, use the language object with the code the user does
+		$wlang = Language::factory( $watchingUser->getOption( 'language' ) );	
+
 		$body = str_replace('$PAGEEDITDATE',
-			$wgLang->timeanddate( $this->timestamp, true, false, $timecorrection ),
+			$wlang->timeanddate( $this->timestamp, true, false, $timecorrection ),
 			$body);
 
 		return UserMailer::send($to, $this->from, $this->subject, $body, $this->replyto);
