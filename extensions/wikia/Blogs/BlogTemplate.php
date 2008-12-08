@@ -260,6 +260,9 @@ class BlogTemplateClass {
 		wfProfileIn( __METHOD__ );
 		/* parse input parameters */
 		self::$oTitle = (is_null(self::$oTitle)) ? $wgTitle : self::$oTitle;
+		error_log ("input = ".print_r($input, true)."\n", 3, "/tmp/moli.log");
+		error_log ("params = ".print_r($params, true)."\n", 3, "/tmp/moli.log");
+		error_log ("title = ".print_r($wgTitle, true)."\n", 3, "/tmp/moli.log");
 		$aParams = self::__parseXMLTag($input);
 		wfDebugLog( __METHOD__, "parse input parameters\n" );
 		/* parse all and return result */
@@ -1011,11 +1014,15 @@ class BlogTemplateClass {
 						$result = self::__makeRssOutput($aResult);
 					}
 				} else {
-					if ( self::$aOptions['type'] != 'array' ) {
-						$sk = $wgUser->getSkin();
-						$result = wfMsg('blog-nopostfound') . " " . $sk->makeLinkObj(Title::newFromText('CreateBlogPage', NS_SPECIAL), wfMsg('blog-writeone'));
+					if ($wgTitle->getNamespace() == NS_BLOG_ARTICLE) {
+						$result = wfMsg('blog-empty-user-blog');
 					} else {
-						$result = "";
+						if ( self::$aOptions['type'] != 'array' ) {
+							$sk = $wgUser->getSkin();
+							$result = wfMsg('blog-nopostfound') . " " . $sk->makeLinkObj(Title::newFromText('CreateBlogPage', NS_SPECIAL), wfMsg('blog-writeone'));
+						} else {
+							$result = "";
+						}
 					}
 				}
 			}

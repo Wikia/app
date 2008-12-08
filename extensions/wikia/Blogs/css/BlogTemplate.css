@@ -20,6 +20,10 @@ div.wk_blogs_panel .wk_blogs_title {
 	font-weight: bold;
 	padding: 3px 5px;
 }
+div.wk_blogs_title_refresh {
+	float:right;
+	margin: -15px 0px 0px 0px;
+}
 div.wk_blogs_panel .wk_blogs_link {
 	font-weight: bold;
 	padding: 1px 0px;
