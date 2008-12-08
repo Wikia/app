@@ -210,6 +210,7 @@ class BlogTemplateClass {
 		'/<div[^>]*>.*<\/div>/siU',
 		'/<style[^>]*>.*<\/style>/siU',
 		'/<script[^>]*>.*<\/script>/siU',
+		'/<h\d>.*<\/h\d>/siU',
 		'/[\n]{2,}/siU',
 		'/[\t]+/siU',
 	);
@@ -223,13 +224,14 @@ class BlogTemplateClass {
 		'', //div
 		'', //style
 		'', //script
+		'', //<h\d>
 		'<br/>', //\n
         '&nbsp;', //\t
 	);
 
-	private static $skipStrinBeforeParse	= "<p><div>";
-	private static $skipStrinAfterParse		= "<p>"; # one tag only!
-	private static $parseTagTruncateText	= "/<p>(.*)<\/p>/siU";
+	private static $skipStrinBeforeParse	= "<p><div><a>";
+	private static $skipStrinAfterParse		= "<p><a>"; # one tag only!
+	private static $parseTagTruncateText	= "/<(p|a(.*))>(.*)<\/(p|a)>/siU";
 
 	private static $pageOffsetName 			= "page";
 	private static $oTitle 					= null;
@@ -260,9 +262,9 @@ class BlogTemplateClass {
 		wfProfileIn( __METHOD__ );
 		/* parse input parameters */
 		self::$oTitle = (is_null(self::$oTitle)) ? $wgTitle : self::$oTitle;
-		error_log ("input = ".print_r($input, true)."\n", 3, "/tmp/moli.log");
-		error_log ("params = ".print_r($params, true)."\n", 3, "/tmp/moli.log");
-		error_log ("title = ".print_r($wgTitle, true)."\n", 3, "/tmp/moli.log");
+		#error_log ("input = ".print_r($input, true)."\n", 3, "/tmp/moli.log");
+		#error_log ("params = ".print_r($params, true)."\n", 3, "/tmp/moli.log");
+		#error_log ("title = ".print_r($wgTitle, true)."\n", 3, "/tmp/moli.log");
 		$aParams = self::__parseXMLTag($input);
 		wfDebugLog( __METHOD__, "parse input parameters\n" );
 		/* parse all and return result */
@@ -586,7 +588,7 @@ class BlogTemplateClass {
     	return $aPages;
 	}
 
-	private static function __truncateText($sText, $iLength = 200, $sEnding = BLOGS_ENDING) {
+	private static function __truncateText($sText, $iLength = 200, $sEnding = BLOGS_ENDING_TEXT) {
 		global $wgLang;
 
 		wfProfileIn( __METHOD__ );
@@ -604,7 +606,7 @@ class BlogTemplateClass {
 			}
 		}
 
-		if (mb_strlen(strip_tags($sText)) <= $iLength) {
+		if (mb_strlen(strip_tags($sText)) <= 10 /*$iLength*/) {
 			/* if text without HTML is shorter than the maximum length, return text */
 			$sResult = $sText;
 		} else {
@@ -616,22 +618,25 @@ class BlogTemplateClass {
 
 				foreach ($aLines as $aLine) {
 					/* HTML-tag exists */
+					$currentTag = "";
 					if ( !empty($aLine[1]) ) {
 						$aTag = array();
 						if ( preg_match(BLOGS_CLOSED_TAGS, $aLine[1], $aTag) ) {
-							/* closed tags </p> - unset from opened-tags list */
-							if (array_search(trim($aTag[1]), $aTags) !== false) {
-								unset($aTags[$aTag[1]]);
+							$__find = array_search(strtolower(trim($aTag[1])), $aTags);
+							/* closed tags </p|a> - unset from opened-tags list */
+							if ( $__find !== false ) {
+								unset($aTags[$__find]);
 							}
 						} else if (preg_match(BLOGS_OPENED_TAGS, $aLine[1], $aTag)) {
-							/* opened tags <p> - add to opened-tags list */
-							array_unshift( $aTags, $wgLang->lc(trim($aTag[1])));
+							/* opened tags <p|a> - add to opened-tags list */
+							$currentTag = strtolower(trim($aTag[1]));
+							array_unshift( $aTags, $currentTag );
 						}
-						$sResult .= $aLine[1];
+						$sResult .= ($currentTag == "a") ? " ".$aLine[1] : $aLine[1];
 					}
 
 					/* calculate special entites */
-					$iEntLength = mb_strlen(preg_replace(BLOGS_ENTITIES_PARSE, ' ', $aLine[2]));
+					$iEntLength = mb_strlen(preg_replace(BLOGS_ENTITIES_PARSE, ' ', trim($aLine[2])));
 					if ( ($iTotalLength + $iEntLength) > $iLength) {
 						$iMaxLength = $iLength - $iTotalLength;
 						$iEntLength = 0;
@@ -646,10 +651,10 @@ class BlogTemplateClass {
 								}
 							}
 						}
-						$sResult .= substr($aLine[2], 0, $iMaxLength + $iEntLength);
+						$sResult .= substr(trim($aLine[2]), 0, $iMaxLength + $iEntLength);
 						break;
 					} else {
-						$sResult .= $aLine[2];
+						$sResult .= trim($aLine[2]);
 						$iTotalLength += $iEntLength;
 					}
 					if($iTotalLength >= $iLength) {
@@ -658,6 +663,7 @@ class BlogTemplateClass {
 				}
 
 				/* wrap correct words - find the last occurance of " " */
+				/* MOLI FIXED 8.12.2008
 				$iSpacePos = strrpos($sResult, ' ');
 				if ( $iSpacePos !== false ) {
 					$sResult = substr($sResult, 0, $iSpacePos);
@@ -665,6 +671,7 @@ class BlogTemplateClass {
 				if ( !empty($sEnding) ) {
 					$sResult .= $sEnding;
 				}
+				MOLI */
 				/* close all opened tags */
 				foreach ($aTags as $sTag) {
 					$sResult .= "</{$sTag}>";
@@ -674,6 +681,7 @@ class BlogTemplateClass {
 			}
 
 			$aMatches = array();
+			/* MOLI FIXED 8.12.2008
 			preg_match_all(self::$parseTagTruncateText, $sResult, $aMatches);
 			if ( count($aMatches) ) {
 				$aPTags = $aMatches[1];
@@ -688,6 +696,7 @@ class BlogTemplateClass {
 					}
 				}
 			}
+			MOLI */
 		}
 
 		$sResult = preg_replace('/[\r\n]+/siU', '<br />', trim($sResult));
