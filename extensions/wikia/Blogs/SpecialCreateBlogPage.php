@@ -75,7 +75,7 @@ class CreateBlogPage extends SpecialBlogPage {
 		$this->mPostArticle->doEdit($sPostBody, "Blog post created." );
 		if( count( $aPageProps ) ) {
 			// save extra properties
-			BlogListPage::saveProps( $this->mPostArticle->gtId(), $aPageProps );
+			BlogListPage::saveProps( $this->mPostArticle->getId(), $aPageProps );
 		}
 
 		$this->createListingPage();
