@@ -1,12 +1,10 @@
 <!-- s:<?= __FILE__ ?> -->
 <div class="wk_blogs_panel reset" style="<?=(isset($aOptions['style']))?$aOptions['style']:''?>">
-<? if ( !empty($aOptions['title']) ) { ?>
-<div class="wk_blogs_title color1"><?=$aOptions['title']?></div>
-<? } ?>
+<div class="wk_blogs_title color1"><div><?= ( !empty($aOptions['title']) ) ? $aOptions['title'] : "" ?></div>
+<div class="wk_blogs_title_refresh"><?=$skin->makeLinkObj($wgTitle, "<img src=\"{$wgExtensionsPath}/wikia/Blogs/images/refresh.gif\" border=0 />", "action=purge")?></div>
+</div>
 <div class="wk_blogs_body">
-<?
-if (!empty($aRows)) {
-?>	
+<? if (!empty($aRows)) { ?>	
 <ul class="list">
 <?	
 foreach ($aRows as $pageId => $aRow) {

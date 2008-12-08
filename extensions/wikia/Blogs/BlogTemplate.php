@@ -190,7 +190,7 @@ class BlogTemplateClass {
 		 */
 		'style' => array (
 			'type' 		=> 'string',
-			'default' 	=> '',
+			'default' 	=> 'float:right;clear:left;',
 		)
 	);
 
@@ -260,15 +260,10 @@ class BlogTemplateClass {
 		wfProfileIn( __METHOD__ );
 		/* parse input parameters */
 		self::$oTitle = (is_null(self::$oTitle)) ? $wgTitle : self::$oTitle;
-		//error_log ("input = ".print_r($input, true)."\n", 3, "/tmp/moli.log");
-		//error_log ("params = ".print_r($params, true)."\n", 3, "/tmp/moli.log");
-		$start = self::__getmicrotime();
 		$aParams = self::__parseXMLTag($input);
 		wfDebugLog( __METHOD__, "parse input parameters\n" );
 		/* parse all and return result */
 		$res = self::__parse($aParams, $params, $parser);
-		$end = self::__getmicrotime();
-		//error_log ("parser time to run: ".($end-$start)." s\n", 3, "/tmp/moli.log");
 		wfProfileOut( __METHOD__ );
 		return $res;
 	}
@@ -444,13 +439,19 @@ class BlogTemplateClass {
 		if ( !isset(self::$aOptions['offset']) ) {
 			self::__makeIntOption('offset', self::$aBlogParams['offset']['default']);
 		}
-		/* style */
+		/* type */
 		if ( !isset(self::$aOptions['type']) ) {
 			self::__makeListOption('type', self::$aBlogParams['type']['default']);
 		}
 		/* title */
 		if ( !isset(self::$aOptions['title']) ) {
 			self::__makeStringOption('title', wfMsg('blog-defaulttitle'));
+		}
+		/* style */
+		if ( !isset(self::$aOptions['style']) ) {
+			if (self::$aOptions['type'] == 'box') {
+				self::__makeStringOption('style', self::$aBlogParams['style']['default']);
+			}
 		}
     	wfProfileOut( __METHOD__ );
 	}
@@ -971,7 +972,6 @@ class BlogTemplateClass {
 			if ( self::$aOptions['type'] == 'count' ) {
 				/* get results count */
 				$result = self::getResultsCount();
-				//error_log ("resutld = ".print_r($result, true)."\n", 3, "/tmp/moli.log");
 			} else {
 				$aResult = self::__getResults();
 				/* set output */
@@ -998,14 +998,14 @@ class BlogTemplateClass {
 						) );
 						#---
 						if ( self::$aOptions['type'] == 'box' ) {
-							$result = $oTmpl->execute("blog-page");
+							$page = $oTmpl->execute("blog-page");
 						} else {
 							$page = $oTmpl->execute("blog-post-page");
-							$oTmpl->set_vars( array(
-								"page" => $page
-							) );
-							$result = $oTmpl->execute("blog-article-page");
 						}
+						$oTmpl->set_vars( array(
+							"page" => $page
+						) );
+						$result = $oTmpl->execute("blog-article-page");
 					} else {
 						unset($result);
 						$result = self::__makeRssOutput($aResult);
@@ -1034,7 +1034,6 @@ class BlogTemplateClass {
 		global $wgExtensionsPath, $wgStyleVersion;
 		wfProfileIn( __METHOD__ );
 
-		//error_log ("title = ".print_r(self::$oTitle, true)."\n",3,"/tmp/moli.log");
 		$sPager = "";
 		if ($iTotal<=0 || empty($iTotal)) {
 			wfDebugLog( __METHOD__, "cannot make pager - no results found: ".$iTotal."\n" );
@@ -1072,13 +1071,11 @@ class BlogTemplateClass {
 				self::$oTitle = $oTitle;
 				$oRevision = Revision::newFromTitle($oTitle);
 				$sText = $oRevision->getText();
-				//error_log("text = ".$sText."\n", 3, "/tmp/moli.log");
 				$id = Parser::extractTagsAndParams( array(BLOGTPL_TAG), $oRevision->getText(), $matches, md5(BLOGTPL_TAG, $articleId, $namespace, $offset));
 				if (!empty($matches) && !empty($matches[$id])) {
 					list (, $input, $params, ) = $matches[$id];
 					$input = trim($input);
 					if ( !empty($input) && (!empty($params)) ) {
-					     //error_log("input = ".print_r($input, true)."\n", 3, "/tmp/moli.log");
 						$aTags = array();
 						$count = 0;
 						/* try to find count */
@@ -1093,7 +1090,6 @@ class BlogTemplateClass {
 									}
 								}
 							}
-							//error_log("aLines = ".print_r($aTags, true)."\n", 3, "/tmp/moli.log");
 						}
 						if (!empty($params) && (array_key_exists('count', $params))) {
 							$count = intval($params['count']);
@@ -1105,7 +1101,6 @@ class BlogTemplateClass {
 						/* set new value of offset */
 						$params['offset'] = $offset;
 						/* run parser */
-						//error_log("params = ".print_r($params, true)."\n", 3, "/tmp/moli.log");
 						$result = self::parseTag( $input, $params, &$wgParser );
 					}
 				}
