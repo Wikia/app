@@ -875,7 +875,7 @@ class MonacoTemplate extends QuickTemplate {
 				//$mouseout = ' onmouseout="clearBackground(\'_' . $count . '\')"';
 				$menu_output .='<div class="menu-item' .
 				(($count==sizeof($this->navmenu[$id]['children'])) ? ' border-fix' : '') . '" id="' . ($level ? 'sub-' : '') . 'menu-item' . ($level ? $last_count . '_' :'_') .$count . '">';
-				$menu_output .= '<a id="' . ($level ? 'a-sub-' : 'a-') . 'menu-item' . ($level ? $last_count . '_' : '_') .$count . '" href="'.(!empty($this->navmenu[$child]['href']) ? htmlspecialchars($this->navmenu[$child]['href']) : '#').'"' . $extraAttributes . '>';
+				$menu_output .= '<a id="' . ($level ? 'a-sub-' : 'a-') . 'menu-item' . ($level ? $last_count . '_' : '_') .$count . '" href="'.(!empty($this->navmenu[$child]['href']) ? htmlspecialchars($this->navmenu[$child]['href']) : '#').'" class="'.(!empty($this->navmenu[$child]['class']) ? htmlspecialchars($this->navmenu[$child]['class']) : '').'"' . $extraAttributes . '>';
 
 				if (($fixed_art_path) == $this->navmenu[$child]['href']) {
 					$prevent_blank = '.onclick = YAHOO.util.Event.preventDefault ; ' ;
