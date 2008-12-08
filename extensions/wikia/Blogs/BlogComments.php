@@ -82,7 +82,7 @@ class BlogComments {
 				"page_title LIKE '" . $dbr->escapeLike( $this->mText ) . "/%'"
 			),
 			__METHOD__,
-			array( "ORDER BY" => "page_touched {$this->mOrder}" )
+			array( "ORDER BY" => "page_id {$this->mOrder}" )
 		);
 		while( $row = $dbr->fetchObject( $res ) ) {
 			$pages[] = Title::newFromId( $row->page_id );
@@ -126,8 +126,10 @@ class BlogComments {
 		/**
 		 * $pages is array of comment titles
 		 */
-		$pages = $this->getCommentPages();
-		$avatar = BlogAvatar::newFromUser( $wgUser );
+		$pages   = $this->getCommentPages();
+		$avatar  = BlogAvatar::newFromUser( $wgUser );
+		$isSysop = ( in_array('sysop', $wgUser->getGroups()) || in_array('staff', $wgUser->getGroups() ) );
+		$canEdit = $wgUser->isAllowed( "edit" );
 
 		$template = new EasyTemplate( dirname( __FILE__ ) . '/templates/' );
 
@@ -182,6 +184,8 @@ class BlogComments {
 				"props"    => $this->mProps,
 				"avatar"   => $avatar,
 				"wgUser"   => $wgUser,
+				"isSysop"  => $isSysop,
+				"canEdit"  => $canEdit,
 				"comments" => $comments,
 			) );
 		}
