@@ -1,0 +1,12 @@
+<!-- Some Ad Networks require a redirect to an iframe for their backup tag.
+	This must be served from the same site as the original Athena content due
+	to XSS limitations.
+
+	DON'T serve it from the CDN. It won't work because the domain won't match. It must 
+	be an exact match, not just wikia.com
+ -->
+<html>
+<body>
+<script type="text/javascript">parent.Athena.hop()</script>
+</body>
+</html>
