@@ -1010,14 +1010,14 @@ class BlogTemplateClass {
 						) );
 						#---
 						if ( self::$aOptions['type'] == 'box' ) {
-							$page = $oTmpl->execute("blog-page");
+							$result = $oTmpl->execute("blog-page");
 						} else {
 							$page = $oTmpl->execute("blog-post-page");
+							$oTmpl->set_vars( array(
+								"page" => $page
+							) );
+							$result = $oTmpl->execute("blog-article-page");
 						}
-						$oTmpl->set_vars( array(
-							"page" => $page
-						) );
-						$result = $oTmpl->execute("blog-article-page");
 					} else {
 						unset($result);
 						$result = self::__makeRssOutput($aResult);
