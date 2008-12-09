@@ -219,13 +219,13 @@ class WikiaMiniUpload {
 
 				if( '' == $finalExt ) {
 					header('X-screen-type: error');
-					return 'Specified filename is empty';
+					return wfMsg( 'wmu-filetype-missing' );
 				}
 
 				$title = Title::makeTitleSafe(NS_IMAGE, $name);
 				if(is_null($title)) {
 					header('X-screen-type: error');
-					return 'Specified file name is incorrect!';
+					return wfMsg ( 'wmu-filetype-incorrect' ); 
 				}
 				if($title->exists()) {
 					if($type == 'overwrite') {

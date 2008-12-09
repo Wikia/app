@@ -41,5 +41,7 @@ $messages['en'] = array(
 	'wmu-imagelink' => '<b>New!</b> Add Images',
 	'wmu-imagebutton' => 'Add Images' ,
 	'wmu-license-cc' => 'Licenced under Creative Commons Attribution-Share Alike 3.0',
-	'wmu-bad-extension' => 'You tried to upload an illegal file type. Please try again.'
+	'wmu-bad-extension' => 'You tried to upload an illegal file type. Please try again.',
+	'wmu-filetype-missing' => 'This upload is missing its file extension',
+	'wmu-filetype-incorrect' => 'This upload has an incorrect file extension',
 );
