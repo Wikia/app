@@ -81,45 +81,43 @@ function wfMessageAddRemoveUserPage($addremove, $id, $style){
 	
 	if ($addremove==1){
 		
-	$Number=+1;
+		$Number=+1;
+			
+		$dbr = wfGetDB( DB_MASTER );
+		$dbr->insert( '`user_fantag`',
+			array(
+				'userft_fantag_id' => $id,
+				'userft_user_id' => $wgUser->getID(),
+				'userft_user_name' => $wgUser->getName(),
+				'userft_date' => date("Y-m-d H:i:s"),
+				), __METHOD__
+			);	
+		$dbr->commit();
 		
-	$dbr = wfGetDB( DB_MASTER );
-	$dbr->insert( '`user_fantag`',
-		array(
-			'userft_fantag_id' => $id,
-			'userft_user_id' => $wgUser->getID(),
-			'userft_user_name' => $wgUser->getName(),
-			'userft_date' => date("Y-m-d H:i:s"),
-			), __METHOD__
-		);	
-	
-	
-	$out.= "<div class=\"$style\">". wfMsgForContent( 'fanbox_successful_add' ) ."</div>";
-		
+		$out.= "<div class=\"$style\">". wfMsgForContent( 'fanbox_successful_add' ) ."</div>";
 	}
 
 	if ($addremove==2){
-	$Number=-1;
-	
-	$dbr =& wfGetDB( DB_MASTER );
-	$sql = "DELETE FROM user_fantag WHERE userft_user_name = '{$wgUser->getName()}' && userft_fantag_id = {$id}";
-	$res = $dbr->query($sql);
-
-	$out.= "<div class=\"$style\">". wfMsgForContent( 'fanbox_successful_remove' ) ."</div>";
+		$Number=-1;
+		
+		$dbr =& wfGetDB( DB_MASTER );
+		$dbr->delete( 'user_fantag',array( 'userft_user_id' =>  $wgUser->getID(), "userft_fantag_id" => $id ),__METHOD__ );
+		$dbr->commit();
+		
+		$out.= "<div class=\"$style\">". wfMsgForContent( 'fanbox_successful_remove' ) ."</div>";
 	}
-
-
-	$sql = "SELECT fantag_count FROM fantag WHERE fantag_id= {$id}";		
-	$res = $dbr->query($sql);
-	$row = $dbr->fetchObject( $res );
-	$count=$row->fantag_count;
-	$sql2 = "UPDATE fantag SET fantag_count={$count}+{$Number} WHERE fantag_id= {$id}";
-	$res2 = $dbr->query($sql2);
 	
-	
+	$dbr->update( '`fantag`',
+		array( /* SET */
+			"fantag_count=fantag_count+{$Number}"
+			
+		), array( /* WHERE */
+			'fantag_id' => $id
+		), ""
+	);
+	$dbr->commit();
 
 	return $out;
-
 }
 
 
