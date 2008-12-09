@@ -116,7 +116,7 @@ class BlogTemplateClass {
 			'type' 		=> 'number',
 			'default' 	=> '5',
 			'pattern' 	=> '/^\d*$/',
-			'max'		=> 10
+			'max'		=> 50
 		),
 
 		/*
@@ -1088,8 +1088,9 @@ class BlogTemplateClass {
 				$oRevision = Revision::newFromTitle($oTitle);
 				$sText = $oRevision->getText();
 				$id = Parser::extractTagsAndParams( array(BLOGTPL_TAG), $oRevision->getText(), $matches, md5(BLOGTPL_TAG . $articleId . $namespace . $offset));
-				if (!empty($matches) && !empty($matches[$id])) {
-					list (, $input, $params, ) = $matches[$id];
+				if (!empty($matches)) {
+					list ($sKey, $aValues) = each ($matches);
+					list (, $input, $params, ) = $matches[$sKey];
 					$input = trim($input);
 					if ( !empty($input) && (!empty($params)) ) {
 						$aTags = array();
