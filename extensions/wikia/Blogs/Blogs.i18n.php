@@ -20,6 +20,8 @@ Blog posts can be aggregated by a blog listing page based on the blog post's tag
 	'create-blog-no-login' => 'Not logged in',
 	'create-blog-login-required' => 'You must be [[Special:Userlogin|logged in]] to create blog post.',
 	'create-blog-categories-title' => 'Add this blog post to these categories (click to select)',
+	'create-blog-categories-textinput' => 'Add a new category',
+	'create-blog-categories-submit' => 'Submit',
 	'create-blog-article-already-exists' => 'Blog post with that name already exists, please select different name',
 	'create-blog-listing-title' => 'Create a new blog listing page',
 	'create-blog-listing-form-title' => 'What is a blog listing page?',

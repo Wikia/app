@@ -40,11 +40,11 @@
 
 	<div class="formLastBlock">
 		<div class="editButtons">
-			<input id="wpSave" type="submit" title="Save your changes [ctrl-s]" accesskey="s" value="Save page" name="wpSave"/>
-			<input id="wpPreview" type="submit" title="Preview your changes, please use this before saving! [ctrl-p]" accesskey="p" value="Show preview" name="wpPreview"/>
+			<input id="wpSave" type="submit" title="<?=wfMsg( 'tooltip-save' ).' ['.wfMsg( 'accesskey-save' ).']'?>" accesskey="s" value="<?=wfMsg('create-blog-save')?>" name="wpSave"/>
+			<input id="wpPreview" type="submit" title="<?=wfMsg( 'tooltip-preview' ).' ['.wfMsg( 'accesskey-preview' ).']'?>" accesskey="p" value="<?=wfMsg('create-blog-preview')?>" name="wpPreview"/>
 			<span class="editHelp">
-				<a id="wpCancel" title="<?php echo $title->getText(); ?>" href="<?php echo $title->getLocalUrl();?>">Cancel</a> |
-				<a id="wpEdithelp" href="" target="helpwindow">Editing help</a> (opens in new window)
+				<a id="wpCancel" title="<?php echo $title->getText(); ?>" href="<?php echo $title->getLocalUrl();?>"><?=wfMsgExt('cancel', array('parseinline'))?></a> |
+				<a id="wpEdithelp" href="<?=Skin::makeInternalOrExternalUrl( wfMsgForContent( 'edithelppage' ))?>" target="helpwindow"><?=htmlspecialchars( wfMsg('edithelp') )?></a> <?=htmlspecialchars( wfMsg( 'newwindow' ) )?>
 			</span>
 		</div>
 	</div>
