@@ -29,7 +29,7 @@ foreach ($aRows as $pageId => $aRow) {
 			}
 		}
 ?>
-<div class="wk_date"><span class="left"><?=$wgLang->sprintfDate("F j, Y", wfTimestamp(TS_MW, $aRow['timestamp']))?></span><span class="right"><?=$sUserLinks?></span></div>
+<div class="wk_date"><span class="left"><?=$wgLang->sprintfDate("F j, Y", $aRow['rev_timestamp'])?></span><span class="right"><?=$sUserLinks?></span></div>
 <?
 	}
 /* e: TIMESTAMP */

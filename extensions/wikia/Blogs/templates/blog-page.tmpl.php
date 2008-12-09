@@ -28,7 +28,7 @@ foreach ($aRows as $pageId => $aRow) {
 			$sUserLinks = $aUserLinks['userpage']." (".$aUserLinks['talkpage']."|".$aUserLinks['contribs'].")";
 		}
 ?>		
-<div class="wk_blogs_details"><span class="wk_blogs_date"><?=$wgLang->sprintfDate("F j, Y", wfTimestamp(TS_MW, $aRow['timestamp']))?></span><span class="wk_blogs_author"><?=$sUserLinks?></span></div>
+<div class="wk_blogs_details"><span class="wk_blogs_date"><?=$wgLang->sprintfDate("F j, Y", $aRow['rev_timestamp'])?></span><span class="wk_blogs_author"><?=$sUserLinks?></span></div>
 <?		
 	}
 /* e: TIMESTAMP */
