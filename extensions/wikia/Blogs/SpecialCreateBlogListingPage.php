@@ -170,6 +170,7 @@ class CreateBlogListingPage extends SpecialBlogPage {
 	}
 
 	private function parseTag($sTitle) {
+		global $wgParser;
 		$oTitle = Title::newFromText($sTitle, NS_BLOG_LISTING);
 		$oArticle = new Article($oTitle, 0);
 		$sArticleBody = $oArticle->getContent();
@@ -178,7 +179,7 @@ class CreateBlogListingPage extends SpecialBlogPage {
 		preg_match('/<bloglist[^>]*>(.*)<\/bloglist>/siU', $sArticleBody, $aMatches);
 
 		if(isset($aMatches[1]) && !empty($aMatches)) {
-			BlogTemplateClass::parseTag($aMatches[1]);
+			BlogTemplateClass::parseTag($aMatches[1], array(), $wgParser);
 			$aOptions = BlogTemplateClass::getOptions();
 
 			//echo "<pre>"; print_r($aOptions); echo "</pre>";
