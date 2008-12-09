@@ -37,7 +37,7 @@ if ( !function_exists( 'extAddSpecialPage' ) ) {
 #--- permissions
 $wgAvailableRights[] = 'removeavatar';
 $wgGroupPermissions['staff']['removeavatar'] = true;
-#$wgGroupPermissions['sysop']['removeavatar'] = true;
+$wgGroupPermissions['sysop']['removeavatar'] = true;
 extAddSpecialPage( '', 'RemoveAvatar', 'BlogAvatarRemovePage' );
 $wgSpecialPageGroups['RemoveAvatar'] = 'users';
 
