@@ -1087,7 +1087,7 @@ class BlogTemplateClass {
 				self::$oTitle = $oTitle;
 				$oRevision = Revision::newFromTitle($oTitle);
 				$sText = $oRevision->getText();
-				$id = Parser::extractTagsAndParams( array(BLOGTPL_TAG), $oRevision->getText(), $matches, md5(BLOGTPL_TAG, $articleId, $namespace, $offset));
+				$id = Parser::extractTagsAndParams( array(BLOGTPL_TAG), $oRevision->getText(), $matches, md5(BLOGTPL_TAG . $articleId . $namespace . $offset));
 				if (!empty($matches) && !empty($matches[$id])) {
 					list (, $input, $params, ) = $matches[$id];
 					$input = trim($input);
