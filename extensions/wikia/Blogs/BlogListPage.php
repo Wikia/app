@@ -100,7 +100,7 @@ class BlogListPage extends Article {
 
 			/**
 			 * check if something was posted, maybe comment with ajax switched
-			 * off so it wend to $wgRequest
+			 * off so it went to $wgRequest
 			 */
 			if( $wgRequest->wasPosted() ) {
 				BlogComments::doPost( $wgRequest, $wgUser, $wgTitle );

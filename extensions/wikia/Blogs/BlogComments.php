@@ -142,7 +142,9 @@ class BlogComments {
 				"input" => $input,
 				"props" => $this->mProps,
 				"avatar" => $avatar,
-				"title"   => $wgTitle
+				"title"   => $wgTitle,
+				"isSysop"  => $isSysop,
+				"canEdit"  => $canEdit,
 			));
 		}
 		else {
