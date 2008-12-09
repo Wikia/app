@@ -30,7 +30,6 @@ class BlogLockdown {
 		 * here we only handle Blog articles, everyone can read it
 		 */
 		if( $namespace != NS_BLOG_ARTICLE && $namespace != NS_BLOG_ARTICLE_TALK ) {
-			Wikia::log( __METHOD__, "namespace", "not valid namespace: {$namespace}"  );
 			$result = true;
 			return true;
 		}
