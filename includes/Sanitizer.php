@@ -374,10 +374,10 @@ class Sanitizer {
 				'td', 'th', 'tr',
 			);
 			$htmllist = array( # Tags used by list
-				'ul','ol',
+				'ul', 'ol', 'dl'
 			);
 			$listtags = array( # Tags that can appear in a list
-				'li',
+				'li', 'dt', 'dd'
 			);
 
 			$htmlsingleallowed = array_merge( $htmlsingle, $tabletags );
