@@ -185,7 +185,7 @@ class BlogListPage extends Article {
 			$listing = BlogTemplateClass::parseTag( "<author>$user</author>", $params, $wgParser );
 			$wgMemc->set( wfMemcKey( "blog", "listing", $user, $offset ), $page, 3600 );
 		}
-		
+
 		$wgOut->addHTML( $listing );
 	}
 
@@ -255,12 +255,12 @@ class BlogListPage extends Article {
 			}
 		}
 		$feed->outFooter();
-		
+
 		wfProfileOut( __METHOD__ );
 	}
-		
+
 	/**
-	 * private function 
+	 * private function
 	 *
 	 * @access private
 	 */
@@ -268,7 +268,7 @@ class BlogListPage extends Article {
 		return wfElement( 'link', array(
 			'rel' => 'alternate',
 			'type' => $mime,
-			'href' => $this->mTitle->getLocalUrl( "feed={$type}" ) ) 
+			'href' => $this->mTitle->getLocalUrl( "feed={$type}" ) )
 		);
 	}
 
@@ -539,5 +539,25 @@ class BlogListPage extends Article {
 		wfProfileOut( __METHOD__ );
 
 		return true;
+	}
+
+	/**
+	 * getOwner -- static function for guessing owner from Title
+	 *
+	 * @static
+	 * @access public
+	 *
+	 * @return String -- guessed owner name or false when no match
+	 */
+	static public function getOwner( $title ) {
+		if( $title instanceof Title ) {
+			$title = $title->getBaseText();
+		}
+
+		if( strpos( $title, "/" ) === false ) {
+			return $title;
+		}
+		$parts = explode( "/", $title );
+		return $parts[0];
 	}
 }

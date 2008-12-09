@@ -63,10 +63,21 @@ class BlogLockdown {
 			return false;
 		}
 
-		$owner = $title->getBaseText();
+		$owner = BlogListPage::getOwner( $title );
 		$username = $user->getName();
-
 		Wikia::log( __METHOD__, "user", "user: {$username}, owner: {$owner}" );
+
+		/**
+		 * only creator of comment cant edit comment
+		 */
+		if( $namespace == NS_BLOG_ARTICLE_TALK && $action == "edit" ) {
+			/**
+			 * get article creator
+			 */
+			$revId = $title->getLatestRevID( GAID_FOR_UPDATE );
+			Wikia::log( __METHOD__, "edit", "revision id: {$revId}" );
+			return false;
+		}
 
 		if( $username != $owner ) $result = array();
 		$return = ( $username == $owner );

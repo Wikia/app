@@ -82,6 +82,9 @@ else:
 			<div class="details">
 				<strong><?php echo $comment["sig"] ?></strong>
 				<span class="timestamp"><?php echo $comment["timestamp"] ?></span>
+<?php if( $canDelete ): ?>
+				| <a href="<?php echo $comment[ "title" ]->getLocalUrl( "redirect=no&action=delete" ) ?>">delete</a>
+<?php endif ?>
 			</div>
 			<?php
 				echo $comment["text"];
@@ -111,7 +114,7 @@ else:
 		<!-- submit -->
 		<a href="<?php $title->getFullURL() ?>" name="wpBlogSubmit" id="blog-comm-submit-bottom" class="bigButton">
 			<big><? echo wfMsg("blog-comment-post") ?></big>
-			<small></small>
+			<small>Inne info</small>
 		</a>
 		</div>
 	</form>
