@@ -317,6 +317,7 @@ class Skin extends Linker {
 		global $wgVersion, $wgEnableAPI, $wgEnableWriteAPI;
 		global $wgRestrictionTypes, $wgLivePreview;
 		global $wgMWSuggestTemplate, $wgDBname, $wgEnableMWSuggest;
+		global $wgEnableNewParser;
 
 		$ns = $wgTitle->getNamespace();
 		$nsname = isset( $wgCanonicalNamespaceNames[ $ns ] ) ? $wgCanonicalNamespaceNames[ $ns ] : $wgTitle->getNsText();
@@ -347,6 +348,7 @@ class Skin extends Linker {
 			'wgVersion' => $wgVersion,
 			'wgEnableAPI' => $wgEnableAPI,
 			'wgEnableWriteAPI' => $wgEnableWriteAPI,
+			'wgEnableNewParser' => $wgEnableNewParser,
 		);
 		
 		if( $wgUseAjax && $wgEnableMWSuggest && !$wgUser->getOption( 'disablesuggest', false )){
