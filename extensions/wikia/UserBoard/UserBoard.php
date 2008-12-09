@@ -14,7 +14,7 @@ function wfUserBoardReadLang(){
 $wgUserBoard = true;
 
 $wgAutoloadClasses['BoardBlast'] = "{$wgUserBoardDirectory}/SpecialSendBoardBlast.php";
-$wgSpecialPages['BoardBlast'] = 'BoardBlast';
+$wgSpecialPages['SendBoardBlast'] = 'BoardBlast';
 
 $wgAutoloadClasses['ViewUserBoard'] = "{$wgUserBoardDirectory}/SpecialUserBoard.php";
 $wgSpecialPages['UserBoard'] = 'ViewUserBoard';
