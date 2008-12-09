@@ -762,8 +762,6 @@ class BlogTemplateClass {
 			
 			$oRevision = Revision::newFromId($oRow->rev_id);
 			
-			error_log("timestamp = ".$oRow->timestamp.", touched = ". $oRow->page_touched . ", getTimestamp() = ".$oRevision->getTimestamp()." \n", 3, "/tmp/moli.log");
-			
 			$aResult[$oRow->page_id] = array(
 				"page" 			=> $oRow->page_id,
 				"namespace" 	=> $oRow->page_namespace,
