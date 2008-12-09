@@ -58,6 +58,7 @@ else:
 			<big><? echo wfMsg("blog-comment-post") ?></big>
 			<small></small>
 		</a>
+		<div class="right"><?php echo wfMsg("blog-comments-info") ?></div>
 		</div>
 	</form>
 </div>
@@ -116,6 +117,7 @@ else:
 			<big><? echo wfMsg("blog-comment-post") ?></big>
 			<small>Inne info</small>
 		</a>
+		<div class="right"><?php echo wfMsg("blog-comments-info") ?></div>
 		</div>
 	</form>
 </div>
