@@ -88,7 +88,7 @@ class BlogTemplateClass {
 			'type' 		=> 'list',
 			'default' 	=> 'date',
 			'pattern'	=> array(
-				'date' 	=> 'page_touched',
+				'date' 	=> 'rev_timestamp',
 				'author'=> 'page_title'
 			)
 		),
@@ -539,6 +539,8 @@ class BlogTemplateClass {
     			$dbOption['ORDER BY'] .= " " . self::$aOptions['ordertype'];
 			}
 		}
+		/* GROUP BY */
+		$dbOption['GROUP BY'] = "page_id";
     	/* LIMIT  */
     	if ( isset(self::$aOptions['count']) ) {
     		$dbOption['LIMIT'] = intval(self::$aOptions['count']);
@@ -560,10 +562,6 @@ class BlogTemplateClass {
 		self::$aCategoryNames = $aParamValues;
 		$aPages = array();
     	if ( !empty($aParamValues) ) {
-			$sql = "select cl_to, GROUP_CONCAT(DISTINCT cl_from SEPARATOR ',') AS cl_page from categorylinks, page  ";
-			$sql .= "where page_id = cl_from and cl_to in (".self::$dbr->makeList( $aParamValues ).") ";
-			$sql .= "and page_namespace = " . NS_BLOG_ARTICLE . " and page_touched >= ".self::$dbr->addQuotes(BLOGS_TIMESTAMP)." group by cl_to";
-
 			/* set max length of group concat query */
 			self::$dbr->query( 'SET group_concat_max_len = '.GROUP_CONCAT, __METHOD__ );
 			/* run query */
@@ -741,7 +739,7 @@ class BlogTemplateClass {
     	wfProfileIn( __METHOD__ );
     	/* main query */
     	$aResult = array();
-    	$aFields = array( '/* BLOGS */ page_id', 'page_namespace', 'page_title', 'page_touched', 'unix_timestamp(page_touched) as timestamp', 'page_latest as rev_id' );
+    	$aFields = array( '/* BLOGS */ rev_page as page_id','page_namespace','page_title','unix_timestamp(rev_timestamp) as timestamp','rev_timestamp','min(rev_id) as rev_id','rev_user' );
 		$res = self::$dbr->select(
 			array_map(array(self::$dbr, 'tableName'), self::$aTables),
 			$aFields,
@@ -766,8 +764,8 @@ class BlogTemplateClass {
 				"page" 			=> $oRow->page_id,
 				"namespace" 	=> $oRow->page_namespace,
 				"title" 		=> $oRow->page_title,
-				"page_touched" 	=> $oRow->page_touched,
-				"rev_timestamp"	=> $oRevision->getTimestamp(),
+				"page_touched" 	=> $oRevision->getTimestamp(),
+				"rev_timestamp"	=> $oRow->rev_timestamp,
 				"timestamp" 	=> $oRow->timestamp,
 				"username"		=> (isset($username)) ? $username : "",
 				"text"			=> self::__getRevisionText($oRow->page_id, $oRevision),
@@ -975,6 +973,9 @@ class BlogTemplateClass {
 				$count = intval(self::$aOptions['count']);
 				self::__makeIntOption('offset', $count * $__pageVal);
 			}
+			
+			# use revision table to get results
+			self::__addRevisionTable();
 
 			/* build query */
 			if ( self::$aOptions['type'] == 'count' ) {
