@@ -177,6 +177,20 @@ div.wk_blogs_post .wk_blogs_pager {
 	white-space:nowrap;
 }
 
+#control_listing-create-blog-post-tab div {
+	clip:rect(0px, 16px, 16px, 0px);
+	left:0px;
+}
+
+#control_listing-create-tab div {
+	clip:rect(0px, 16px, 16px, 0px);
+	left:0px;
+}
+
+#control_listing-refresh-tab div {
+	clip:rect(0px, 336px, 16px, 320px);
+	left:-320px;
+}
 
 /**
  * comments
