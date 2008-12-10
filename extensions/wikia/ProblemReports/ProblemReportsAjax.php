@@ -12,17 +12,17 @@ if (!defined('MEDIAWIKI')) die();
 
 
 // AJAX callback for sending problem reports dialog
-function wfProblemReportsAjaxGetDialog($ns, $title)
-{
+function wfProblemReportsAjaxGetDialog($ns) {
 	wfProfileIn(__METHOD__);
 
-	global $wgUser, $wgOut;
+	global $wgUser, $wgOut, $wgTitle;
 
 	// load extension messages
    	wfLoadExtensionMessages( 'ProblemReports' );
     
 	// use template
 	$tpl = new EasyTemplate( dirname( __FILE__ )."/templates/" );
+	$title = $wgTitle->getText();
 
 	// check for read-only mode
 	if ( wfReadOnly() ) {
