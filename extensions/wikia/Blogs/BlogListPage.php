@@ -100,7 +100,7 @@ class BlogListPage extends Article {
 
 			/**
 			 * check if something was posted, maybe comment with ajax switched
-			 * off so it went to $wgRequest
+			 * off so it wend to $wgRequest
 			 */
 			if( $wgRequest->wasPosted() ) {
 				BlogComments::doPost( $wgRequest, $wgUser, $wgTitle );
@@ -185,7 +185,7 @@ class BlogListPage extends Article {
 			$listing = BlogTemplateClass::parseTag( "<author>$user</author>", $params, $wgParser );
 			$wgMemc->set( wfMemcKey( "blog", "listing", $user, $offset ), $page, 3600 );
 		}
-
+		
 		$wgOut->addHTML( $listing );
 	}
 
@@ -255,12 +255,12 @@ class BlogListPage extends Article {
 			}
 		}
 		$feed->outFooter();
-
+		
 		wfProfileOut( __METHOD__ );
 	}
-
+		
 	/**
-	 * private function
+	 * private function 
 	 *
 	 * @access private
 	 */
@@ -268,7 +268,7 @@ class BlogListPage extends Article {
 		return wfElement( 'link', array(
 			'rel' => 'alternate',
 			'type' => $mime,
-			'href' => $this->mTitle->getLocalUrl( "feed={$type}" ) )
+			'href' => $this->mTitle->getLocalUrl( "feed={$type}" ) ) 
 		);
 	}
 
@@ -443,10 +443,6 @@ class BlogListPage extends Article {
 			return true;
 		}
 
-		if( ! $wgUser->isLoggedIn() ) {
-			return true;
-		}
-
 		$row = array();
 		switch( $wgTitle->getNamespace()  ) {
 			case NS_BLOG_ARTICLE:
@@ -458,6 +454,14 @@ class BlogListPage extends Article {
 				$tabs = $row + $tabs;
 				break;
 			case NS_BLOG_LISTING:
+				if( $wgUser->isLoggedIn() ) {
+					$row["listing-create-blog-post-tab"] = array(
+						"class" => "",
+						"text" => wfMsg("blog-create-post-label"),
+						"href" => Title::newFromText( "CreateBlogPage", NS_SPECIAL)->getLocalUrl()
+					);
+					$tabs = $row + $tabs;
+				}
 				$row["listing-create-tab"] = array(
 					"class" => "",
 					"text" => wfMsg("blog-create-listing-label"),
@@ -539,25 +543,5 @@ class BlogListPage extends Article {
 		wfProfileOut( __METHOD__ );
 
 		return true;
-	}
-
-	/**
-	 * getOwner -- static function for guessing owner from Title
-	 *
-	 * @static
-	 * @access public
-	 *
-	 * @return String -- guessed owner name or false when no match
-	 */
-	static public function getOwner( $title ) {
-		if( $title instanceof Title ) {
-			$title = $title->getBaseText();
-		}
-
-		if( strpos( $title, "/" ) === false ) {
-			return $title;
-		}
-		$parts = explode( "/", $title );
-		return $parts[0];
 	}
 }
