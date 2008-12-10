@@ -237,15 +237,14 @@ class BlogListPage extends Article {
 			$wgMemc->set( wfMemcKey( "blog", "feed", $user, $offset ), $listing, 3600 );
 		}
 
-		$feed = new $wgFeedClasses[ $format ](
-			"Test title", "Test description", $wgTitle->getFullUrl() );
-
+		$feed = new $wgFeedClasses[ $format ]( $this->mTitle->getFullText(), "", $wgTitle->getFullUrl() );
+		
 		$feed->outHeader();
 		if( is_array( $listing ) ) {
 			foreach( $listing as $item ) {
 				$title = Title::newFromText( $item["title"], NS_BLOG_ARTICLE );
 				$item = new FeedItem(
-					$title->getPrefixedText(),
+					$title->getSubpageText(),
 					$item["description"],
 					$item["url"],
 					$item["timestamp"],
