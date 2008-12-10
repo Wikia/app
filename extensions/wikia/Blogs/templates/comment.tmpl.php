@@ -29,17 +29,22 @@ else:
 <h2 class="wikia_header">
 <?php echo wfMsg("blog-comments") ?>
 </h2>
-<?php if( isset( $props[ "commenting" ] ) && $props[ "commenting" ] == 1  && count( $comments ) > 1 && $canEdit ): ?>
+<?php
+if( isset( $props[ "commenting" ] ) && $props[ "commenting" ] == 1  && count( $comments ) > 1 ):
+?>
 <form action="<?php echo $title->getFullURL() ?>" method="get" id="blog-comm-form-select">
 <select name="order">
 	<option value="asc" <?php if ($order=="asc") echo 'selected="selected"' ?>><?php echo wfMsg("blog-comments-asc") ?></option>
 	<option value="desc" <?php if ($order=="desc") echo 'selected="selected"' ?>><?php echo wfMsg("blog-comments-dsc") ?></option>
 </select>
 </form>
-<?php endif ?>
+<?php
+endif;
+?>
 <div id="blog-comments" class="reset clearfix">
 <?php
-	if( count( $comments ) > 10 && isset( $props[ "commenting" ] ) && $props[ "commenting" ] == 1 ):
+if( count( $comments ) > 10 && isset( $props[ "commenting" ] ) && $props[ "commenting" ] == 1 ):
+	if( $canEdit ):
 		// show top input
 ?>
 <div class="blog-comm-input reset clearfix">
@@ -63,7 +68,10 @@ else:
 	</form>
 </div>
 <?php
+	else:
+		echo wfMsg("blog-comments-login", SpecialPage::getTitleFor("UserLogin")->getLocalUrl() );
 	endif;
+endif;
 
 	if( ! $comments ):
 		echo "<ul id=\"blog-comments-ul\"><li>";
@@ -99,7 +107,8 @@ else:
 		echo "</ul>";
 	endif; // comments
 
-	if( isset( $props[ "commenting" ] ) && $props[ "commenting" ] == 1 && $canEdit ):
+	if( isset( $props[ "commenting" ] ) && $props[ "commenting" ] == 1 ):
+		if( $canEdit ):
 ?>
 <div class="blog-comm-input reset clearfix">
 	<form action="<?php $title->getFullURL() ?>" method="post" id="blog-comm-form-bottom">
@@ -122,6 +131,9 @@ else:
 	</form>
 </div>
 <?php
+		else:
+			echo wfMsg("blog-comments-login", SpecialPage::getTitleFor("UserLogin")->getLocalUrl() );
+		endif;
 	endif;
 	echo "</div>";
 endif; # $justLi
