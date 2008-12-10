@@ -56,38 +56,23 @@ class UserFanBoxes {
 	
 	//used on SpecialViewFanBoxes page to get hte count of a user's fanboxes so can build the prev/next bar
 	static function getFanBoxCountByUsername($user_name){
-		$dbr =& wfGetDB( DB_MASTER );
-		$sql = "SELECT count(*) as count
-			FROM user_fantag
-			WHERE userft_user_name = '{$user_name}'
-			LIMIT 0,1";
-		$res = $dbr->query($sql);
-		$row = $dbr->fetchObject( $res );
-		$user_fanbox_count = 0;
-		if($row){
-			$user_fanbox_count=$row->count;
-		}
-		return $user_fanbox_count;		
+		$dbr =& wfGetDB( DB_SLAVE );
+		$s = $dbr->selectRow( '`user_fantag`', 
+			array( 'count(*) as count' ), 
+			array( 'userft_user_name'=>$user_name ), $fname );
+		
+		return $s->count;		
 	}
 
 	//used on SpecialViewFanBoxes to know whether popupbox should be Add or Remove fanbox
 	public function checkIfUserHasFanbox($userft_fantag_id){
 		global $wgUser;
-		$dbr =& wfGetDB( DB_MASTER );
-		$sql = "SELECT count(*) as count
-			FROM user_fantag
-			WHERE userft_user_name = '{$wgUser->getName()}' && userft_fantag_id = {$userft_fantag_id}";
-		$res = $dbr->query($sql);
-		$row = $dbr->fetchObject( $res );
-		if($row){
-			$check_fanbox_count=$row->count;
-		}
-		return $check_fanbox_count;		
+		$dbr =& wfGetDB( DB_SLAVE );
+		$s = $dbr->selectRow( '`user_fantag`', 
+			array( 'count(*) as count' ), 
+			array( 'userft_user_id'=>$wgUser->getID(), "userft_fantag_id" => $userft_fantag_id), $fname );
+		return $s->count;		
 	}
-	
-	
-
-	
 }
 	
 ?>
