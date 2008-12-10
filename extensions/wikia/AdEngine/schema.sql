@@ -1,4 +1,5 @@
 -- Providers DROP TABLE IF EXISTS ad_provider;
+DROP TABLE IF EXISTS ad_provider;
 CREATE TABLE ad_provider (
         provider_id TINYINT UNSIGNED AUTO_INCREMENT NOT NULL,
         provider_name VARCHAR(25),
