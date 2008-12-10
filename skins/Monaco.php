@@ -1215,7 +1215,7 @@ if(isset($this->data['articlelinks']['left'])) {
 				<ul id="page_tabs">
 <?php
 global $userMasthead;
-if(isset($this->data['articlelinks']['right']) && !$userMasthead ) {
+if(isset($this->data['articlelinks']['right'])  ) { 
 	foreach($this->data['articlelinks']['right'] as $key => $val) {
 ?>
 					<li class="<?= $val['class'] ?>"><a href="<?= htmlspecialchars($val['href']) ?>" id="ca-<?= $key ?>" <?= $skin->tooltipAndAccesskey('ca-'.$key) ?> class="<?= $val['class'] ?>"><?= htmlspecialchars(ucfirst($val['text'])) ?></a></li>
