@@ -32,6 +32,8 @@ class BlogListPage extends Article {
 	 */
 	public function view() {
 		global $wgOut, $wgUser, $wgRequest, $wgTitle, $wgContLang;
+		global $wgStylePath, $wgLang;
+		global $wgProblemReportsEnable, $wgNotificationEnableSend;
 
 		$feed = $wgRequest->getText( "feed", false );
 		if( $feed && in_array( $feed, array( "rss", "atom" ) ) ) {
@@ -82,18 +84,30 @@ class BlogListPage extends Article {
 				$rating = round($rating * 2)/2;
 				$ratingPx = round($rating * 17);
 				$templateParams = $templateParams + array(
-					"voted"          => $voted,
-					"rating"         => $rating,
-					"ratingPx"       => $ratingPx,
-					"hidden_star"    => $hidden_star,
-					"voting_enabled" => true,
+					"voted"				=> $voted,
+					"rating"			=> $rating,
+					"ratingPx"			=> $ratingPx,
+					"hidden_star"		=> $hidden_star,
+					"voting_enabled"	=> true,
 				);
 			}
 			else {
 				$templateParams[ "voting_enabled" ] = false;
 			}
 			$templateParams[ "edited" ] = $wgContLang->timeanddate( $this->getTimestamp() );
-
+			$templateParams[ "oTitle" ] = $this->mTitle;
+			$templateParams[ "wgStylePath" ] = $wgStylePath;
+			$templateParams[ "lastUpdate" ] = $wgLang->date($this->getTimestamp());
+			$templateParams[ "wgProblemReportsEnable" ] = $wgProblemReportsEnable;
+			$templateParams[ "wgNotificationEnableSend" ] = $wgNotificationEnableSend;
+						
+			if ($this->getUser() > 0) {
+				$username = $this->getUserText();
+				$oUserTitle = Title::makeTitle(NS_USER, $username);
+				$templateParams[ "username" ] = $username;
+				$templateParams[ "oUserTitle" ] = $oUserTitle;
+			}
+			
 			$tmpl = new EasyTemplate( dirname( __FILE__ ) . '/templates/' );
 			$tmpl->set_vars( $templateParams );
 			$wgOut->addHTML( $tmpl->execute("footer") );
@@ -155,6 +169,7 @@ class BlogListPage extends Article {
 	 */
 	private function showBlogListing() {
 		global $wgOut, $wgRequest, $wgParser, $wgMemc;
+		global $displayArticleFooter;
 
 		/**
 		 * use cache or skip cache when action=purge
