@@ -1314,7 +1314,7 @@ function editMenuToggle() {
 //listpages
 
 	function ViewPage(pg,id,options){
-		var url = "index.php?title=Special:ListPagesAction&x=1";
+		var url = "Special:ListPagesAction";
 		var pars = 'pg=' + pg
 		for(name in options){pars+= "&" + name + "=" + options[name]}
 
