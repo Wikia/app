@@ -17,6 +17,7 @@ $wgHooks[ "CategoryViewer::addPage" ][] = "BlogListPage::addCategoryPage";
 $wgHooks[ "SkinTemplateTabs" ][] = "BlogListPage::skinTemplateTabs";
 $wgHooks[ "EditPage::showEditForm:checkboxes" ][] = "BlogListPage::editPageCheckboxes";
 $wgHooks[ "LinksUpdate" ][] = "BlogListPage::linksUpdate";
+$wgHooks[ "LinksUpdateComplete" ][] = "BlogListPage::linksUpdateComplete";
 
 class BlogListPage extends Article {
 
@@ -185,7 +186,7 @@ class BlogListPage extends Article {
 			$listing = BlogTemplateClass::parseTag( "<author>$user</author>", $params, $wgParser );
 			$wgMemc->set( wfMemcKey( "blog", "listing", $user, $offset ), $page, 3600 );
 		}
-		
+
 		$wgOut->addHTML( $listing );
 	}
 
@@ -238,7 +239,7 @@ class BlogListPage extends Article {
 		}
 
 		$feed = new $wgFeedClasses[ $format ]( $this->mTitle->getFullText(), "", $wgTitle->getFullUrl() );
-		
+
 		$feed->outHeader();
 		if( is_array( $listing ) ) {
 			foreach( $listing as $item ) {
@@ -254,12 +255,12 @@ class BlogListPage extends Article {
 			}
 		}
 		$feed->outFooter();
-		
+
 		wfProfileOut( __METHOD__ );
 	}
-		
+
 	/**
-	 * private function 
+	 * private function
 	 *
 	 * @access private
 	 */
@@ -267,7 +268,7 @@ class BlogListPage extends Article {
 		return wfElement( 'link', array(
 			'rel' => 'alternate',
 			'type' => $mime,
-			'href' => $this->mTitle->getLocalUrl( "feed={$type}" ) ) 
+			'href' => $this->mTitle->getLocalUrl( "feed={$type}" ) )
 		);
 	}
 
@@ -530,17 +531,52 @@ class BlogListPage extends Article {
 		/**
 		 * restore/change properties for blog article
 		 */
-		$voting = $wgRequest->getVal( "wpVoting", 0 );
-		$commenting = $wgRequest->getVal( "wpCommenting", 0 );
-		$id = $LinksUpdate->mTitle->getArticleId();
+		$pageId = $LinksUpdate->mTitle->getArticleId();
 
-		Wikia::log( __METHOD__, "save", "voting: {$voting}, commenting: {$commenting}, id: {$id}" );
-		if( $id ) {
+		if( $wgRequest->wasPosted() ) {
+			$voting = $wgRequest->getVal( "wpVoting", 0 );
+			$commenting = $wgRequest->getVal( "wpCommenting", 0 );
 			$LinksUpdate->mProperties = array( "voting" => $voting, "commenting" => $commenting );
-			// self::saveProps( $id, array( "voting" => $voting, "commenting" => $commenting ) );
 		}
+		else {
+			/**
+			 * read current values from database
+			 */
+			$props = self::getProps( $pageId );
+			print_r( $props );
+			$voting = isset( $props["voting"] ) ? $props["voting"] : 0;
+			$commenting = isset( $props["commenting"] ) ? $props["commenting"] : 0;
+		}
+
+
+		Wikia::log( __METHOD__, "save", "voting: {$voting}, commenting: {$commenting}, id: {$pageId}" );
+		if( $pageId ) {
+			$LinksUpdate->mProperties = array( "voting" => $voting, "commenting" => $commenting );
+		}
+
 		wfProfileOut( __METHOD__ );
 
 		return true;
+	}
+
+	/**
+	 * store properties for updated article
+	 */
+	static public function linksUpdateComplete( &$LinksUpdate ) {
+
+		// self::saveProps( $id, array( "voting" => $voting, "commenting" => $commenting ) );
+
+		return true;
+	}
+
+	static public function getOwner( $title ) {
+		if( $title instanceof Title ) {
+			$title = $title->getBaseText();
+		}
+		if( strpos( $title, "/" ) === false ) {
+			return $title;
+		}
+		$parts = explode( "/", $title );
+		return $parts[0];
 	}
 }
