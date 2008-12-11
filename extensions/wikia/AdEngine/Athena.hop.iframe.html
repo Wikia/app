@@ -7,6 +7,13 @@
  -->
 <html>
 <body>
-<script type="text/javascript">parent.Athena.hop()</script>
+<script type="text/javascript">
+// Assign an id to the containing iframe, then pass that id to get the slot
+var frameid = "frameid_" + Math.random();
+window.frameElement.id = frameid;
+top.Athena.debug("Athena.hop being called inside iframe from " + window.location.href);
+slotname = top.Athena.getSlotnameFromDom(frameid);
+top.Athena.hop(slotname);
+</script>
 </body>
 </html>
