@@ -63,7 +63,7 @@ if( count( $comments ) > 10 && isset( $props[ "commenting" ] ) && $props[ "comme
 			<big><? echo wfMsg("blog-comment-post") ?></big>
 			<small></small>
 		</a>
-		<div class="right"><?php echo wfMsg("blog-comments-info") ?></div>
+		<div class="right" style="font-style: italic;"><?php echo wfMsg("blog-comments-info") ?></div>
 		</div>
 	</form>
 </div>
@@ -131,7 +131,7 @@ endif;
 			<big><? echo wfMsg("blog-comment-post") ?></big>
 			<small>Inne info</small>
 		</a>
-		<div class="right"><?php echo wfMsg("blog-comments-info") ?></div>
+		<div class="right" style="font-style: italic;"><?php echo wfMsg("blog-comments-info") ?></div>
 		</div>
 	</form>
 </div>
