@@ -379,7 +379,7 @@ class BlogComments {
 		$commentId = $wgRequest->getVal( "id", false );
 		$props = BlogListPage::getProps( $commentId );
 		if( isset( $props["hiddencomm"] ) ) {
-			
+			$hiddencomm = empty( $props["hiddencomm"] ) ? 1 : 0;
 		}
 		else {
 			$hiddencomm = 1;
