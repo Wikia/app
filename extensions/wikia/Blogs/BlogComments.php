@@ -6,6 +6,7 @@
 
 global $wgAjaxExportList;
 $wgAjaxExportList[] = "BlogComments::axPost";
+$wgAjaxExportList[] = "BlogComments::axHide";
 
 class BlogComments {
 
@@ -362,5 +363,22 @@ class BlogComments {
 		wfProfileOut( __METHOD__ );
 
 		return $article;
+	}
+
+	/**
+	 * axPost -- static hook/entry for ajax request post
+	 *
+	 * @static
+	 * @access public
+	 *
+	 * @return String -- json-ized array`
+	 */
+	static public function axHide() {
+		global $wgRequest, $wgUser, $wgTitle;
+
+		$commentId = $wgRequest->getVal( "id", false );
+		return Wikia::json_encode(
+			array( "id" => $commentId )
+		);
 	}
 }

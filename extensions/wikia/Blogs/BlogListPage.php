@@ -100,14 +100,14 @@ class BlogListPage extends Article {
 			$templateParams[ "lastUpdate" ] = $wgLang->date($this->getTimestamp());
 			$templateParams[ "wgNotificationEnableSend" ] = $wgNotificationEnableSend;
 			$templateParams[ "wgProblemReportsEnable" ] = $wgProblemReportsEnable;
-						
+
 			if ($this->getUser() > 0) {
 				$username = $this->getUserText();
 				$oUserTitle = Title::makeTitle(NS_USER, $username);
 				$templateParams[ "username" ] = $username;
 				$templateParams[ "oUserTitle" ] = $oUserTitle;
 			}
-			
+
 			$tmpl = new EasyTemplate( dirname( __FILE__ ) . '/templates/' );
 			$tmpl->set_vars( $templateParams );
 			$wgOut->addHTML( $tmpl->execute("footer") );
@@ -573,7 +573,6 @@ class BlogListPage extends Article {
 		return true;
 	}
 
-
 	/**
 	 * guess Owner of blog from title
 	 *
@@ -583,13 +582,15 @@ class BlogListPage extends Article {
 	 * @return String -- guessed name
 	 */
 	static public function getOwner( $title ) {
+		wfProfileIn( __METHOD__ );
 		if( $title instanceof Title ) {
 			$title = $title->getBaseText();
 		}
-		if( strpos( $title, "/" ) === false ) {
-			return $title;
+		if( strpos( $title, "/" ) !== false ) {
+			list( $title, $rest) = explode( "/", $title, 2 );
 		}
-		$parts = explode( "/", $title );
-		return $parts[0];
+		wfProfileOut( __METHOD__ );
+
+		return $title;
 	}
 }
