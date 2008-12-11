@@ -567,13 +567,15 @@ class BlogListPage extends Article {
 	 * @return String -- guessed name
 	 */
 	static public function getOwner( $title ) {
+		wfProfileIn( __METHOD__ );
 		if( $title instanceof Title ) {
 			$title = $title->getBaseText();
 		}
-		if( strpos( $title, "/" ) === false ) {
-			return $title;
+		if( strpos( $title, "/" ) !== false ) {
+			list( $title, $rest) = explode( "/", $title, 2 );
 		}
-		$parts = explode( "/", $title );
-		return $parts[0];
+		wfProfileOut( __METHOD__ );
+
+		return $title;
 	}
 }
