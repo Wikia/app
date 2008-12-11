@@ -371,12 +371,19 @@ class BlogComments {
 	 * @static
 	 * @access public
 	 *
-	 * @return String -- json-ized array`
+	 * @return String -- json-ized array
 	 */
 	static public function axHide() {
 		global $wgRequest, $wgUser, $wgTitle;
 
 		$commentId = $wgRequest->getVal( "id", false );
+		$props = BlogListPage::getProps( $commentId );
+		if( isset( $props["hiddencomm"] ) ) {
+			
+		}
+		else {
+			$hiddencomm = 1;
+		}
 		return Wikia::json_encode(
 			array( "id" => $commentId )
 		);
