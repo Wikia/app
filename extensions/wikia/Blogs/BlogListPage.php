@@ -17,7 +17,6 @@ $wgHooks[ "CategoryViewer::addPage" ][] = "BlogListPage::addCategoryPage";
 $wgHooks[ "SkinTemplateTabs" ][] = "BlogListPage::skinTemplateTabs";
 $wgHooks[ "EditPage::showEditForm:checkboxes" ][] = "BlogListPage::editPageCheckboxes";
 $wgHooks[ "LinksUpdate" ][] = "BlogListPage::linksUpdate";
-$wgHooks[ "LinksUpdateComplete" ][] = "BlogListPage::linksUpdateComplete";
 
 class BlogListPage extends Article {
 
@@ -543,7 +542,6 @@ class BlogListPage extends Article {
 			 * read current values from database
 			 */
 			$props = self::getProps( $pageId );
-			print_r( $props );
 			$voting = isset( $props["voting"] ) ? $props["voting"] : 0;
 			$commenting = isset( $props["commenting"] ) ? $props["commenting"] : 0;
 		}
@@ -559,16 +557,15 @@ class BlogListPage extends Article {
 		return true;
 	}
 
+
 	/**
-	 * store properties for updated article
+	 * guess Owner of blog from title
+	 *
+	 * @static
+	 * @access public
+	 *
+	 * @return String -- guessed name
 	 */
-	static public function linksUpdateComplete( &$LinksUpdate ) {
-
-		// self::saveProps( $id, array( "voting" => $voting, "commenting" => $commenting ) );
-
-		return true;
-	}
-
 	static public function getOwner( $title ) {
 		if( $title instanceof Title ) {
 			$title = $title->getBaseText();
