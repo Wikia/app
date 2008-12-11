@@ -17,6 +17,7 @@ $wgHooks[ "CategoryViewer::addPage" ][] = "BlogListPage::addCategoryPage";
 $wgHooks[ "SkinTemplateTabs" ][] = "BlogListPage::skinTemplateTabs";
 $wgHooks[ "EditPage::showEditForm:checkboxes" ][] = "BlogListPage::editPageCheckboxes";
 $wgHooks[ "LinksUpdate" ][] = "BlogListPage::linksUpdate";
+$wgHooks[ "CustomArticleFooter" ][] = "BlogListPage::getCustomArticleFooter";
 
 class BlogListPage extends Article {
 
@@ -593,4 +594,21 @@ class BlogListPage extends Article {
 
 		return $title;
 	}
+	
+	/**
+	 * disable default footer
+	 *
+	 * @static
+	 * @access public
+	 *
+	 * @return true
+	 */
+	static public function getCustomArticleFooter( &$skin, &$tpl, &$custom_article_footer ) {
+		global $wgTitle;
+		if ( in_array($wgTitle->getNamespace(), array(NS_BLOG_ARTICLE, NS_BLOG_LISTING)) ) {
+			$custom_article_footer .= "<!-- ".wfMsg('blog-defaulttitle')."-->";
+		}
+		return true;
+	}
+	
 }
