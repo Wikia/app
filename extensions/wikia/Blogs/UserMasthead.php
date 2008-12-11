@@ -13,17 +13,14 @@ function userMasthead() {
 	$dbKey = $wgTitle->getDBkey();
 	$isAnon = $wgUser->isAnon();
 
-	$allowedNamespaces = array (
-		0 => array(NS_BLOG_ARTICLE, NS_USER, NS_USER_TALK),
-		1 => array(NS_BLOG_LISTING, NS_BLOG_LISTING_TALK)
-	);
+	$allowedNamespaces = array ( NS_BLOG_ARTICLE, NS_USER, NS_USER_TALK );
 	$allowedPages = array (
-		0 => array('Watchlist', 'WidgetDashboard', 'Preferences'), 
+		0 => array('Watchlist', 'WidgetDashboard', 'Preferences'),
 		1 => array('Contributions')
 	);
-	
-	if ( in_array( $namespace, array_merge($allowedNamespaces[0], $allowedNamespaces[1]) ) || 
-		 ( ($namespace == NS_SPECIAL) && ( in_array( $dbKey, array_merge($allowedPages[0],$allowedPages[1]) ) ) ) 
+
+	if( in_array( $namespace, $allowedNamespaces ) ||
+		( ($namespace == NS_SPECIAL) && ( in_array( $dbKey, array_merge($allowedPages[0],$allowedPages[1]) ) ) )
 	) {
 		/**
 		 * change dbkey for nonspecial articles, in this case we use NAMESPACE
@@ -32,22 +29,16 @@ function userMasthead() {
 		if ( $namespace != NS_SPECIAL ) {
 			$dbKey = $namespace;
 		}
-		
+
 		/* hides article/talk tabs in Monaco.php */
-		$userMasthead = true; 
+		$userMasthead = true;
 		$Avatar = null;
 		$userspace = "";
 		$out = array();
 		/* check conditions */
-		if ( in_array( $namespace, $allowedNamespaces[0] ) ) {
-			#---
+		if ( in_array( $namespace, $allowedNamespaces ) ) {
 			$userspace = $wgTitle->getBaseText();
 			$Avatar = BlogAvatar::newFromUserName( $userspace );
-		} 
-		if ( in_array( $namespace, $allowedNamespaces[1] ) || in_array( $dbKey, $allowedPages[0] ) ) {
-			#---
-			$userspace = $wgUser->getName();
-			$Avatar = BlogAvatar::newFromUser( $wgUser );
 		}
 
 		if ( in_array( $dbKey, $allowedPages[1] ) ) {
@@ -63,20 +54,20 @@ function userMasthead() {
 		if ($userspace != "") {
 			$out['userspace'] = $userspace;
 
-			$oTitle = Title::newFromText( $userspace, NS_USER ); 
+			$oTitle = Title::newFromText( $userspace, NS_USER );
 			if ($oTitle instanceof Title) {
 				$out['nav_links'][] = array('text' => wfMsg('nstab-user'), 'href' => $oTitle->getLocalUrl(), "dbkey" => NS_USER );
 			}
-			$oTitle = Title::newFromText( $userspace, NS_USER_TALK ); 
+			$oTitle = Title::newFromText( $userspace, NS_USER_TALK );
 			if ($oTitle instanceof Title) {
 				$out['nav_links'][] = array('text' => wfMsg('talkpage'), 'href' => $oTitle->getLocalUrl(), "dbkey" => NS_USER_TALK );
 			}
-			$oTitle = Title::newFromText( $userspace, NS_BLOG_ARTICLE ); 
+			$oTitle = Title::newFromText( $userspace, NS_BLOG_ARTICLE );
 			if ($oTitle instanceof Title) {
 				$out['nav_links'][] = array('text' => wfMsg('blog-page'), 'href' => $oTitle->getLocalUrl(), "dbkey" => NS_BLOG_ARTICLE );
 			}
 			if( !$isAnon ) {
-				$oTitle = Title::newFromText( "Contributions/{$userspace}", NS_SPECIAL ); 
+				$oTitle = Title::newFromText( "Contributions/{$userspace}", NS_SPECIAL );
 				if ($oTitle instanceof Title) {
 					$out['nav_links'][] = array('text' => wfMsg('contris'), 'href' => $oTitle->getLocalUrl(), "dbkey" => "Contributions" );
 				}
@@ -87,7 +78,7 @@ function userMasthead() {
 				$out['nav_links'][] = array('text' => wfMsg('blog-widgets-label'), 'href' => Title::newFromText("WidgetDashboard", NS_SPECIAL )->getLocalUrl(), "dbkey" => "WidgetDashboard" );
 				$out['nav_links'][] = array('text' => wfMsg('preferences'), 'href' => Title::newFromText("Preferences", NS_SPECIAL )->getLocalUrl(), "dbkey" => "Preferences" );
 			} elseif ( !$isAnon ) {
-				$oTitle = Title::newFromText( "EmailUser/{$userspace}", NS_SPECIAL ); 
+				$oTitle = Title::newFromText( "EmailUser/{$userspace}", NS_SPECIAL );
 				if ($oTitle instanceof Title) {
 					$out['nav_links'][] = array('text' => wfMsg("emailpage"), 'href' => $oTitle->getLocalUrl(), "dbkey" => "EmailUser" );
 				}
