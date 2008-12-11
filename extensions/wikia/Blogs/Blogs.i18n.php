@@ -95,5 +95,7 @@ Create blog listing pages for categories such as "Barrack Obama", "Fan Fiction",
 	"blog-widgets-label" => "Widget Dashboard",
 	"blog-listing-zero-self" => "",
 	"blog-listing-zero-other" => "This user has not written any blog posts yet!",
+	"blog-userblog" => "$1's blog",
+	"blog-fromsitename" => "From $1",
     "removeavatar" => "Remove user's avatar",
 );
