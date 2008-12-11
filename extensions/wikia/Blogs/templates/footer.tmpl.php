@@ -3,7 +3,8 @@
 $url = htmlspecialchars( $oTitle->getFullURL() );
 $title = htmlspecialchars( $oTitle->getText() );
 ?>
-<div id="articleFooter" class="reset">
+<br />
+<div id="articleFooter" class="reset" style="clear:both;">
 	<table cellspacing="0">
 		<tr>
 			<td class="col1">
@@ -32,7 +33,7 @@ $title = htmlspecialchars( $oTitle->getText() );
 				<ul class="actions" id="articleFooterActions2">
 					<li><a rel="nofollow" id="fe_random_icon" href="<?= Skin::makeSpecialUrl( 'Randompage' ) ?>"><img src="<?= $wgStylePath ?>/monobook/blank.gif" id="fe_random_icon" class="sprite" alt="<?= wfMsg('randompage') ?>" /></a> <div><a rel="nofollow" id="fe_random_link" href="<?= Skin::makeSpecialUrl( 'Randompage' ) ?>"><?= wfMsg('footer_6') ?></a></div></li>
 <?php if ( !empty($wgProblemReportsEnable) ): ?>
-					<li><img src="<?= $wgStylePath ?>/monobook/blank.gif" id="fe_report_icon" class="sprite" alt="<?= wfMsg('reportproblem') ?>" /> <div><a style="cursor:pointer" id="fe_report_link"><?= wfMsg('reportproblem'); ?></a></div></li>
+					<li><img src="<?= $wgStylePath ?>/monobook/blank.gif" id="fe_report_icon" class="sprite" alt="<?= wfMsg('reportproblem') ?>" /> <div><a style="cursor:pointer" id="fe_report_link"><?= wfMsg('reportproblem') ?></a></div></li>
 <?php endif ?>
 <?php if ( !empty($wgNotificationEnableSend) ): ?>
 					<li><img src="<?= $wgStylePath ?>/monobook/blank.gif" id="fe_email_icon" class="sprite" alt="email" /> <div><a href="#" id="shareEmail_a"><?= wfMsg('footer_7') ?></a></div></li>
