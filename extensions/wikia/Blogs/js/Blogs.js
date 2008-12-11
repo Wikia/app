@@ -10,6 +10,21 @@ YAHOO.Wikia.Blogs.callback = {
     timeout: 500000
 };
 
+YAHOO.Wikia.Blogs.hideCallback = {
+    success: function( oResponse ) {
+        var data = YAHOO.Tools.JSONParse( oResponse.responseText );
+		YAHOO.Wikia.Blogs.callback.toggle( data );
+    },
+    failure: function( oResponse ) {
+    },
+    timeout: 500000
+};
+
+YAHOO.Wikia.Blogs.callback.toggle = function( data ) {
+	var div = YAHOO.util.Dom.get( data["id"] );
+	YAHOO.util.Dom.setStyle( "comm-" + data["id"], 'border', '1px solid red' );
+};
+
 YAHOO.Wikia.Blogs.callback.add = function( data ) {
 	if( ! data[ "error" ] ) {
 		// remove zero comments div
@@ -67,30 +82,15 @@ YAHOO.Wikia.Blogs.submit = function( event, id ) {
 	}
 };
 
-YAHOO.Wikia.Blogs.mouseover = function( event ) {
+YAHOO.Wikia.Blogs.toggle = function( event ) {
 	console.log( event );
-	var overlay = document.createElement( "span" );
-	var div = event.relatedTarget;
-	div.style.position = 'relative';
-
-	overlay.className = "avatar-overlay";
-	overlay.style.visibility = 'visible';
-	overlay.innerHTML = "blabla";
-	overlay.id = "blog-avatar-overlay";
-	div.appendChild( overlay );
-};
-
-YAHOO.Wikia.Blogs.mouseout = function( event ) {
-	console.log( event.currentTarget );
+	var id = event.target.id;
+	YAHOO.util.Connect.asyncRequest( "GET", wgServer + wgScriptPath + wgScript + "?action=ajax&rs=BlogComments::axHide&id=" + event.target.id, YAHOO.Wikia.Blogs.hideCallback );
 };
 
 YAHOO.util.Event.addListener( "blog-comm-submit-top", "click", YAHOO.Wikia.Blogs.submit, "blog-comm-form-top" );
 YAHOO.util.Event.addListener( "blog-comm-submit-bottom", "click", YAHOO.Wikia.Blogs.submit, "blog-comm-form-bottom" );
 YAHOO.util.Event.addListener( "blog-comm-form-select", "change", YAHOO.Wikia.Blogs.submit, "blog-comm-form-select" );
 
-// dropdown for images
-/**
-YAHOO.Wikia.Blogs.images = YAHOO.util.Dom.getElementsByClassName( "avatar-self","img" );
-YAHOO.util.Event.addListener( YAHOO.Wikia.Blogs.images, "mouseover", YAHOO.Wikia.Blogs.mouseover );
-YAHOO.util.Event.addListener( YAHOO.Wikia.Blogs.images, "mouseout", YAHOO.Wikia.Blogs.mouseout );
-**/
+YAHOO.Wikia.Blogs.actions = YAHOO.util.Dom.getElementsByClassName( "blog-comm-hide", "a" );
+YAHOO.util.Event.addListener( YAHOO.Wikia.Blogs.actions, "click", YAHOO.Wikia.Blogs.toggle );
