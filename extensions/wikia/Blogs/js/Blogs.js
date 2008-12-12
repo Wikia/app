@@ -22,7 +22,12 @@ YAHOO.Wikia.Blogs.hideCallback = {
 
 YAHOO.Wikia.Blogs.callback.toggle = function( data ) {
 	var div = YAHOO.util.Dom.get( data["id"] );
-	YAHOO.util.Dom.setStyle( "comm-" + data["id"], 'border', '1px solid red' );
+	if( data[ "hidden" ] == 1 ) {
+		YAHOO.util.Dom.setStyle( "comm-" + data["id"], 'border', '2px solid red' );
+	}
+	else {
+		YAHOO.util.Dom.setStyle( "comm-" + data["id"], 'border', '2px solid black' );
+	}
 };
 
 YAHOO.Wikia.Blogs.callback.add = function( data ) {
