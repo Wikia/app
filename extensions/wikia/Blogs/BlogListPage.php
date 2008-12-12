@@ -42,89 +42,85 @@ class BlogListPage extends Article {
 		}
 		elseif ( $wgTitle->isSubpage() ) {
 			/**
-			 * blog article
+			 * blog article, show if exists
 			 */
-			$oldPrefixedText = $this->mTitle->mPrefixedText;
-			list( $author, $prefixedText )  = explode('/', $this->mTitle->mPrefixedText, 2);
-			if( isset( $prefixedText ) && !empty( $prefixedText ) ) {
-				$this->mTitle->mPrefixedText = $prefixedText;
-			}
-			Article::view();
-			$this->mTitle->mPrefixedText = $oldPrefixedText;
+			if( $this->exists() ) {
+				$oldPrefixedText = $this->mTitle->mPrefixedText;
+				list( $author, $prefixedText )  = explode('/', $this->mTitle->mPrefixedText, 2);
+				if( isset( $prefixedText ) && !empty( $prefixedText ) ) {
+					$this->mTitle->mPrefixedText = $prefixedText;
+				}
+				Article::view();
+				$this->mTitle->mPrefixedText = $oldPrefixedText;
 
-			$this->mProps = self::getProps( $this->mTitle->getArticleID() );
-			$templateParams = array();
+				$this->mProps = self::getProps( $this->mTitle->getArticleID() );
+				$templateParams = array();
 
-			if( isset( $this->mProps[ "voting" ] ) && $this->mProps[ "voting" ] == 1 ) {
-				$pageid = $this->mTitle->getArticleID();
-				$FauxRequest = new FauxRequest( array(
-					"action" => "query",
-					"list" => "wkvoteart",
-					"wkpage" => $pageid,
-					"wkuservote" => true
-				));
-				$oApi = new ApiMain( $FauxRequest );
-				$oApi->execute();
-				$aResult = $oApi->GetResultData();
+				if( isset( $this->mProps[ "voting" ] ) && $this->mProps[ "voting" ] == 1 ) {
+					$pageid = $this->mTitle->getArticleID();
+					$FauxRequest = new FauxRequest( array(
+						"action" => "query",
+						"list" => "wkvoteart",
+						"wkpage" => $pageid,
+						"wkuservote" => true
+					));
+					$oApi = new ApiMain( $FauxRequest );
+					$oApi->execute();
+					$aResult = $oApi->GetResultData();
 
-				if( count($aResult['query']['wkvoteart']) > 0 ) {
-					if(!empty($aResult['query']['wkvoteart'][ $pageid ]['uservote'])) {
-						$voted = true;
+					if( count($aResult['query']['wkvoteart']) > 0 ) {
+						if(!empty($aResult['query']['wkvoteart'][ $pageid ]['uservote'])) {
+							$voted = true;
+						}
+						else {
+							$voted = false;
+						}
+						$rating = $aResult['query']['wkvoteart'][ $pageid ]['votesavg'];
 					}
 					else {
 						$voted = false;
+						$rating = 0;
 					}
-					$rating = $aResult['query']['wkvoteart'][ $pageid ]['votesavg'];
+
+					$hidden_star = $voted ? ' style="display: none;"' : '';
+					$rating = round($rating * 2)/2;
+					$ratingPx = round($rating * 17);
+					$templateParams = $templateParams + array(
+						"voted"				=> $voted,
+						"rating"			=> $rating,
+						"ratingPx"			=> $ratingPx,
+						"hidden_star"		=> $hidden_star,
+						"voting_enabled"	=> true,
+					);
 				}
 				else {
-					$voted = false;
-					$rating = 0;
+					$templateParams[ "voting_enabled" ] = false;
+				}
+				$templateParams[ "edited" ] = $wgContLang->timeanddate( $this->getTimestamp() );
+				$templateParams[ "oTitle" ] = $this->mTitle;
+				$templateParams[ "wgStylePath" ] = $wgStylePath;
+				$templateParams[ "lastUpdate" ] = $wgLang->date($this->getTimestamp());
+				$templateParams[ "wgNotificationEnableSend" ] = $wgNotificationEnableSend;
+				$templateParams[ "wgProblemReportsEnable" ] = $wgProblemReportsEnable;
+
+				if ($this->getUser() > 0) {
+					$username = $this->getUserText();
+					$oUserTitle = Title::makeTitle(NS_USER, $username);
+					$templateParams[ "username" ] = $username;
+					$templateParams[ "oUserTitle" ] = $oUserTitle;
 				}
 
-				$hidden_star = $voted ? ' style="display: none;"' : '';
-				$rating = round($rating * 2)/2;
-				$ratingPx = round($rating * 17);
-				$templateParams = $templateParams + array(
-					"voted"				=> $voted,
-					"rating"			=> $rating,
-					"ratingPx"			=> $ratingPx,
-					"hidden_star"		=> $hidden_star,
-					"voting_enabled"	=> true,
-				);
-			}
-			else {
-				$templateParams[ "voting_enabled" ] = false;
-			}
-			$templateParams[ "edited" ] = $wgContLang->timeanddate( $this->getTimestamp() );
-			$templateParams[ "oTitle" ] = $this->mTitle;
-			$templateParams[ "wgStylePath" ] = $wgStylePath;
-			$templateParams[ "lastUpdate" ] = $wgLang->date($this->getTimestamp());
-			$templateParams[ "wgNotificationEnableSend" ] = $wgNotificationEnableSend;
-			$templateParams[ "wgProblemReportsEnable" ] = $wgProblemReportsEnable;
+				$tmpl = new EasyTemplate( dirname( __FILE__ ) . '/templates/' );
+				$tmpl->set_vars( $templateParams );
+				$wgOut->addHTML( $tmpl->execute("footer") );
 
-			if ($this->getUser() > 0) {
-				$username = $this->getUserText();
-				$oUserTitle = Title::makeTitle(NS_USER, $username);
-				$templateParams[ "username" ] = $username;
-				$templateParams[ "oUserTitle" ] = $oUserTitle;
-			}
-
-			$tmpl = new EasyTemplate( dirname( __FILE__ ) . '/templates/' );
-			$tmpl->set_vars( $templateParams );
-			$wgOut->addHTML( $tmpl->execute("footer") );
-
-			/**
-			 * check if something was posted, maybe comment with ajax switched
-			 * off so it wend to $wgRequest
-			 */
-			if( $wgRequest->wasPosted() ) {
-				BlogComments::doPost( $wgRequest, $wgUser, $wgTitle );
-			}
-
-			/**
-			 * show comments for this article (if exists)
-			 */
-			if( $this->exists() ) {
+				/**
+				 * check if something was posted, maybe comment with ajax switched
+				 * off so it wend to $wgRequest
+				 */
+				if( $wgRequest->wasPosted() ) {
+					BlogComments::doPost( $wgRequest, $wgUser, $wgTitle );
+				}
 				$this->showBlogComments();
 			}
 		}
@@ -350,7 +346,9 @@ class BlogListPage extends Article {
 				),
 				__METHOD__
 			);
+			Wikia::log( __METHOD__, "save", "id: {$page_id}, key: {$sPropName}, value: {$sPropValue}" );
 		}
+		$dbw->commit(); #--- for ajax
 		wfProfileOut( __METHOD__ );
 	}
 
@@ -535,9 +533,9 @@ class BlogListPage extends Article {
 	 * store properties for updated article
 	 */
 	static public function linksUpdate( &$LinksUpdate ) {
-		Wikia::log( __METHOD__, "entry" );
 
-		if( $LinksUpdate->mTitle->getNamespace() != NS_BLOG_ARTICLE ) {
+		$namespace = $LinksUpdate->mTitle->getNamespace();
+		if( !in_array( $namespace, array( NS_BLOG_ARTICLE, NS_BLOG_ARTICLE_TALK ) ) ) {
 			return true;
 		}
 
@@ -548,25 +546,33 @@ class BlogListPage extends Article {
 		 * restore/change properties for blog article
 		 */
 		$pageId = $LinksUpdate->mTitle->getArticleId();
+		$keep   = array();
 
 		if( $wgRequest->wasPosted() ) {
-			$voting = $wgRequest->getVal( "wpVoting", 0 );
-			$commenting = $wgRequest->getVal( "wpCommenting", 0 );
-			$LinksUpdate->mProperties = array( "voting" => $voting, "commenting" => $commenting );
+			$keep[ "voting" ]     = $wgRequest->getVal( "wpVoting", 0 );
+			$keep[ "commenting" ] = $wgRequest->getVal( "wpCommenting", 0 );
 		}
 		else {
 			/**
 			 * read current values from database
 			 */
 			$props = self::getProps( $pageId );
-			$voting = isset( $props["voting"] ) ? $props["voting"] : 0;
-			$commenting = isset( $props["commenting"] ) ? $props["commenting"] : 0;
+			switch( $namespace ) {
+				case NS_BLOG_ARTICLE:
+					$keep[ "voting" ]     = isset( $props["voting"] ) ? $props["voting"] : 0;
+					$keep[ "commenting" ] = isset( $props["commenting"] ) ? $props["commenting"] : 0;
+					break;
+
+				case NS_BLOG_ARTICLE_TALK:
+					$keep[ "hiddencomm" ] = isset( $props["hiddencomm"] ) ? $props["hiddencomm"] : 0;
+					break;
+			}
 		}
 
 
-		Wikia::log( __METHOD__, "save", "voting: {$voting}, commenting: {$commenting}, id: {$pageId}" );
+		Wikia::log( __METHOD__, "save", "id: {$pageId}, props: " . print_r( $keep, 1) );
 		if( $pageId ) {
-			$LinksUpdate->mProperties = array( "voting" => $voting, "commenting" => $commenting );
+			$LinksUpdate->mProperties += $keep;
 		}
 
 		wfProfileOut( __METHOD__ );
@@ -594,7 +600,7 @@ class BlogListPage extends Article {
 
 		return $title;
 	}
-	
+
 	/**
 	 * disable default footer
 	 *
@@ -610,5 +616,5 @@ class BlogListPage extends Article {
 		}
 		return true;
 	}
-	
+
 }

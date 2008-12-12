@@ -103,7 +103,7 @@ class BlogComments {
 		/**
 		 * action "purge" beats cache
 		 */
-		if( $action != "purge" ) {
+		if( 0 && $action != "purge" ) {
 			/**
 			 * maybe already loaded
 			 */
@@ -111,12 +111,14 @@ class BlogComments {
 				/**
 				 * sort properly result
 				 */
+				Wikia::log( __METHOD__ , "cache", "already read" );
 				wfProfileOut( __METHOD__ );
 				return $this->sort();
 			}
 
 			$this->mComments = $wgMemc->get( wfMemcKey( "blog", "comm", $this->getTitle()->getArticleId() ) );
 			if( is_array( $this->mComments ) ) {
+				Wikia::log( __METHOD__ , "cache", "from cache" );
 				wfProfileOut( __METHOD__ );
 				return $this->sort();
 			}
@@ -139,13 +141,18 @@ class BlogComments {
 			array( "ORDER BY" => "page_id {$this->mOrder}" )
 		);
 		while( $row = $dbr->fetchObject( $res ) ) {
-			$pages[ $row->page_id ] = Title::newFromId( $row->page_id );
+			$pages[ $row->page_id ] = array(
+				"title" => Title::newFromId( $row->page_id ),
+				"props" => BlogListPage::getProps( $row->page_id )
+			);
 		}
 
 		$dbr->freeResult( $res );
 
 		$this->mComments = $pages;
 		$wgMemc->set( wfMemcKey( "blog", "comm", $this->getTitle()->getArticleId() ), $pages, 3600 );
+		Wikia::log( __METHOD__ , "cache", "from database" );
+
 
 		wfProfileOut( __METHOD__ );
 
@@ -216,24 +223,28 @@ class BlogComments {
 				/**
 				 * page is Title object
 				 */
-				$revision = Revision::newFromTitle( $page );
+				$revision = Revision::newFromTitle( $page["title"] );
 				/**
 				 * it's preparsed wikitext, we have to parse it to HTML
 				 */
-				$text     = $parser->parse( $revision->getText(), $page, $options )->getText();
+				$text     = $parser->parse( $revision->getText(), $page["title"], $options )->getText();
 				$author   = User::newFromId( $revision->getUser() );
 				$sig      = ( $author->isAnon() )
 					? wfMsg("blog-comments-anonymous")
 					: Xml::element( 'a', array ( "href" => $author->getUserPage()->getFullUrl() ), $author->getName() );
+				$hidden   = isset( $page[ "props" ][ "hiddencomm" ] )
+					? (bool )$page[ "props" ][ "hiddencomm" ]
+					: false;
 
-				$anchor   = explode( "/", $page->getDBkey(), 3 );
+				$anchor   = explode( "/", $page["title"]->getDBkey(), 3 );
 
 				$comments[ $revision->getTimestamp() ] = array(
 					"sig"       => $sig,
 					"text"      => $text,
-					"title"     => $page,
+					"title"     => $page["title"],
 					"author"    => $author,
 					"anchor"    => $anchor,
+					"hidden"	=> $hidden,
 					"avatar"    => BlogAvatar::newFromUser( $author )->getLinkTag( 50, 50 ),
 					"timestamp" => $wgContLang->timeanddate( $revision->getTimestamp() )
 				);
@@ -298,6 +309,7 @@ class BlogComments {
 				"author"    => $article->getUser(),
 				"anchor"    => $anchor,
 				"avatar"    => BlogAvatar::newFromUser( $wgUser )->getLinkTag( 50, 50 ),
+				"hidden"	=> false,
 				"timestamp" => $wgContLang->timeanddate( $article->getTimestamp() )
 		);
 
@@ -374,16 +386,27 @@ class BlogComments {
 	 * @return String -- json-ized array
 	 */
 	static public function axHide() {
-		global $wgRequest, $wgUser, $wgTitle;
+		global $wgRequest, $wgUser, $wgTitle, $wgMemc;
 
 		$commentId = $wgRequest->getVal( "id", false );
+		$articleId = $wgRequest->getVal( "article", false );
 		$props = BlogListPage::getProps( $commentId );
+
 		if( isset( $props["hiddencomm"] ) ) {
-			$hiddencomm = empty( $props["hiddencomm"] ) ? 1 : 0;
+			/**
+			 * toggle option: 0 -> 1, 1 -> 0
+			 */
+			$props["hiddencomm"] = empty( $props["hiddencomm"] ) ? 1 : 0;
 		}
 		else {
-			$hiddencomm = 1;
+			$props["hiddencomm"] = 1;
 		}
+
+		BlogListPage::saveProps( $commentId, $props );
+		if( $articleId ) {
+			$wgMemc->delete( wfMemcKey( "blog", "comm", $articleId ) );
+		}
+
 		return Wikia::json_encode(
 			array( "id" => $commentId )
 		);
