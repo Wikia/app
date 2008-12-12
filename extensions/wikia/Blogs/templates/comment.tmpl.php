@@ -83,6 +83,9 @@ endif;
 ?>
 	<li id="comm-<?php echo $comment[ "title" ]->getArticleId() ?>">
 		<div class="blog-comment">
+<?php
+	if( ! $comment[ "hidden" ] ):
+?>
 		<a name="<?php echo isset( $comment["anchor"][2] ) ? $comment["anchor"][2] : "" ?>"></a>
 		<div class="comment_avatar">
 			<?php echo $comment["avatar"] ?>
@@ -95,7 +98,7 @@ endif;
 				<a href="<?php echo $comment[ "title" ]->getLocalUrl( "redirect=no&action=delete" ) ?>">delete</a>
 <?php endif;
 	if( !empty( $GLOBALS["wgDevelEnvironment"]) ):
-		echo '<a href="#" class="blog-comm-hide" id="'.$comment[ "title" ]->getArticleId().'">hide this</a>';
+		echo '&nbsp;<a href="#" class="blog-comm-hide" id="'.$comment[ "title" ]->getArticleId().'">hide</a>';
 	endif;
 ?>
 
@@ -104,6 +107,12 @@ endif;
 				echo $comment["text"];
 			?>
 		</div>
+<?php
+	else:
+		echo wfMsg( "blogs-comment-hidden" );
+		echo '&nbsp;<a href="#" class="blog-comm-hide" id="'.$comment[ "title" ]->getArticleId().'">unhide</a>';
+	endif; ### comment[ "hiddent" ]
+?>
 		</div>
 		<br style="clear: both;" />
 	</li>

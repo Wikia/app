@@ -92,5 +92,4 @@ YAHOO.util.Event.addListener( "blog-comm-submit-bottom", "click", YAHOO.Wikia.Bl
 YAHOO.util.Event.addListener( "blog-comm-form-select", "change", YAHOO.Wikia.Blogs.submit, "blog-comm-form-select" );
 
 YAHOO.Wikia.Blogs.actions = YAHOO.util.Dom.getElementsByClassName( "blog-comm-hide", "a" );
-console.log( YAHOO.Wikia.Blogs.actions );
 YAHOO.util.Event.addListener( YAHOO.Wikia.Blogs.actions, "click", YAHOO.Wikia.Blogs.toggle );
