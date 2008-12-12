@@ -408,7 +408,10 @@ class BlogComments {
 		}
 
 		return Wikia::json_encode(
-			array( "id" => $commentId )
+			array(
+				"id" => $commentId,
+				"hidden" => $props["hiddencomm"]
+			)
 		);
 	}
 }
