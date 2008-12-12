@@ -218,11 +218,13 @@ class ImportReporter {
 			$comment = $detail; // quick
 			$dbw = wfGetDB( DB_MASTER );
 			$nullRevision = Revision::newNullRevision( $dbw, $title->getArticleId(), $comment, true );
-			$nullRevision->insertOn( $dbw );
-			$article = new Article( $title );
-			# Update page record
-			$article->updateRevisionOn( $dbw, $nullRevision );
-			wfRunHooks( 'NewRevisionFromEditComplete', array($article, $nullRevision, false) );
+			if (!is_null($nullRevision)) {
+				$nullRevision->insertOn( $dbw );
+				$article = new Article( $title );
+				# Update page record
+				$article->updateRevisionOn( $dbw, $nullRevision );
+				wfRunHooks( 'NewRevisionFromEditComplete', array($article, $nullRevision, false) );
+			}
 		} else {
 			$wgOut->addHtml( '<li>' . wfMsgHtml( 'import-nonewrevisions' ) . '</li>' );
 		}
