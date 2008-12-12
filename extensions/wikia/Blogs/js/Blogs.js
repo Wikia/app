@@ -83,9 +83,8 @@ YAHOO.Wikia.Blogs.submit = function( event, id ) {
 };
 
 YAHOO.Wikia.Blogs.toggle = function( event ) {
-	console.log( event );
-	var id = event.target.id;
-	YAHOO.util.Connect.asyncRequest( "GET", wgServer + wgScriptPath + wgScript + "?action=ajax&rs=BlogComments::axHide&id=" + event.target.id, YAHOO.Wikia.Blogs.hideCallback );
+	YAHOO.util.Event.preventDefault( event );
+	YAHOO.util.Connect.asyncRequest( "GET", wgServer + wgScriptPath + wgScript + "?action=ajax&rs=BlogComments::axHide&id=" + event.target.id + "&article=" + wgArticleId, YAHOO.Wikia.Blogs.hideCallback );
 };
 
 YAHOO.util.Event.addListener( "blog-comm-submit-top", "click", YAHOO.Wikia.Blogs.submit, "blog-comm-form-top" );
@@ -93,4 +92,5 @@ YAHOO.util.Event.addListener( "blog-comm-submit-bottom", "click", YAHOO.Wikia.Bl
 YAHOO.util.Event.addListener( "blog-comm-form-select", "change", YAHOO.Wikia.Blogs.submit, "blog-comm-form-select" );
 
 YAHOO.Wikia.Blogs.actions = YAHOO.util.Dom.getElementsByClassName( "blog-comm-hide", "a" );
+console.log( YAHOO.Wikia.Blogs.actions );
 YAHOO.util.Event.addListener( YAHOO.Wikia.Blogs.actions, "click", YAHOO.Wikia.Blogs.toggle );
