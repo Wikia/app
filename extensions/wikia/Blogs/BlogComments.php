@@ -162,7 +162,6 @@ class BlogComment {
 
 		$props = BlogListPage::getProps( $commentId );
 
-		print_pre( $props );
 		if( isset( $props["hiddencomm"] ) ) {
 			/**
 			 * toggle option: 0 -> 1, 1 -> 0
