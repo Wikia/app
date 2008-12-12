@@ -192,8 +192,13 @@ class CreateBlogListingPage extends SpecialBlogPage {
 				}
 			}
 
+			$sListingCategories = '';
+			foreach(BlogTemplateClass::getCategoryNames() as $sCategoryName) {
+				$sListingCategories .= (!empty($sListingCategories) ? "|" : "") . strtr($sCategoryName, '_', ' ');
+			}
+
 			$this->mFormData['listingTitle'] = $aOptions['title'];
-			$this->mFormData['listingCategories'] = implode('|', BlogTemplateClass::getCategoryNames());
+			$this->mFormData['listingCategories'] = $sListingCategories;
 			$this->mFormData['listingSortBy'] = array_search($aOptions['order'], BlogTemplateClass::$aBlogParams['order']['pattern']);
 			$this->mFormData['listingType'] = $aOptions['type'];
 			$this->mFormData['listingPageCategories'] = $sPageCategories;
@@ -204,7 +209,7 @@ class CreateBlogListingPage extends SpecialBlogPage {
 		}
 	}
 
-	private function buildTagContent() {
+	public function buildTagContent() {
 		$aListingCategories = explode('|', $this->mFormData['listingCategories']);
 		$aListingAuthors = explode(',', $this->mFormData['listingAuthors']);
 
@@ -222,18 +227,20 @@ class CreateBlogListingPage extends SpecialBlogPage {
 				$this->mTagBody .= "<author>" . trim($sAuthorName) . "</author>\n";
 			}
 		}
+
+		return $this->mTagBody;
 	}
 
-	public function axBlogListingCheckMatches() {
+	public static function axBlogListingCheckMatches() {
 		global $wgRequest, $wgParser;
 
-		$this->mFormData['listingCategories'] = $wgRequest->getVal('categories');
-		$this->mFormData['listingAuthors'] = $wgRequest->getVal('authors');
-		$this->mFormData['listingType'] = 'count';
+		$oSpecialPage = new CreateBlogListingPage;
 
-		$this->buildTagContent();
+		$oSpecialPage->setFormData('listingCategories', $wgRequest->getVal('categories'));
+		$oSpecialPage->setFormData('listingAuthors', $wgRequest->getVal('authors'));
+		$oSpecialPage->setFormData('listingType', 'count');
 
-		return (string) BlogTemplateClass::parseTag($this->mTagBody, array(), $wgParser);
+		return (string) BlogTemplateClass::parseTag($oSpecialPage->buildTagContent(), array(), $wgParser);
 	}
 
 }

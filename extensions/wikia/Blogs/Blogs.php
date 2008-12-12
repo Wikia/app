@@ -16,7 +16,7 @@ define( "BLOGTPL_TAG", "bloglist" );
 
 
 $wgExtraNamespaces[ NS_BLOG_ARTICLE ] = "User_blog";
-$wgExtraNamespaces[ NS_BLOG_ARTICLE_TALK ]    = "User_blog_comment";
+$wgExtraNamespaces[ NS_BLOG_ARTICLE_TALK ] = "User_blog_comment";
 $wgExtraNamespaces[ NS_BLOG_LISTING ] = "Blog";
 $wgExtraNamespaces[ NS_BLOG_LISTING_TALK ] = "Blog_talk";
 
@@ -47,27 +47,12 @@ $wgSpecialPageGroups['CreateBlogListingPage'] = 'wikia';
 /**
  * ajax functions
  */
-$wgAjaxExportList[] = "axBlogListingCheckMatches";
-
-function axBlogListingCheckMatches() {
-	$oSpecialPage = new CreateBlogListingPage;
-	return $oSpecialPage->axBlogListingCheckMatches();
-}
+$wgAjaxExportList[] = "CreateBlogListingPage::axBlogListingCheckMatches";
 
 /**
  * hooks
  */
-$wgHooks['AlternateEdit'][] = 'wfBlogsAlternateEdit';
-
-function wfBlogsAlternateEdit(&$oEditPage) {
-	global $wgOut;
-	$oTitle = $oEditPage->mTitle;
-	if($oTitle->getNamespace() == NS_BLOG_LISTING) {
-		$oSpecialPageTitle = Title::newFromText('CreateBlogListingPage', NS_SPECIAL);
-		$wgOut->redirect($oSpecialPageTitle->getFullUrl("article=" . $oTitle->getText()));
-	}
-	return true;
-}
+$wgHooks['AlternateEdit'][] = 'SpecialBlogPage::alternateEditHook';
 
 /**
  * load other parts
