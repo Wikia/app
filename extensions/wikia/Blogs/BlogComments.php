@@ -10,7 +10,7 @@
 
 global $wgAjaxExportList;
 $wgAjaxExportList[] = "BlogComments::axPost";
-$wgAjaxExportList[] = "BlogComments::axHide";
+$wgAjaxExportList[] = "BlogComment::axToggle";
 
 
 /**
@@ -80,9 +80,7 @@ class BlogComment {
 		/**
 		 * if $props are not cache we read them from database
 		 */
-		if( !$this->mProps || ! is_array( $this->mProps ) ) {
-			$this->mProps = BlogListPage::getProps( $this->mTitle->getArticleID() );
-		}
+		$this->getProps();
 
 		$text     = $Parser->parse( $Revision->getText(), $this->mTitle, $Options )->getText();
 		$anchor   = explode( "/", $this->mTitle->getDBkey(), 3 );
@@ -96,7 +94,7 @@ class BlogComment {
 		$comments = array(
 			"sig"       => $sig,
 			"text"      => $text,
-			"title"     => $Title,
+			"title"     => $this->mTitle,
 			"author"    => $User,
 			"anchor"    => $anchor,
 			"avatar"    => BlogAvatar::newFromUser( $User )->getLinkTag( 50, 50 ),
@@ -109,6 +107,89 @@ class BlogComment {
 		$text = $template->execute( "comment" );
 
 		return $text;
+	}
+
+	/**
+	 * setProps -- change props for comment article
+	 *
+	 */
+	public function setProps( $props, $update = false ) {
+
+		wfProfileIn( __METHOD__ );
+		Wikia::log( __METHOD__, "props", print_r( $props, 1 ) );
+		if( $update ) {
+			BlogListPage::saveProps( $this->mTitle->getArticleID(), $props );
+		}
+		$this->mProps = $props;
+
+		wfProfileOut( __METHOD__ );
+	}
+
+	/**
+	 * getProps -- get props for comment article
+	 *
+	 */
+	public function getProps() {
+		if( ! $this->mProps || ! is_array( $this->mProps ) ) {
+			$this->mProps = BlogListPage::getProps( $this->mTitle->getArticleID() );
+		}
+		return $this->mProps;
+	}
+
+	/**
+	 * axToggle -- static hook/entry for ajax request post -- toggle visbility
+	 * of comment
+	 *
+	 * @static
+	 * @access public
+	 *
+	 * @return String -- json-ized array
+	 */
+	static public function axToggle() {
+		global $wgRequest, $wgUser, $wgTitle, $wgMemc;
+
+		$commentId = $wgRequest->getVal( "id", false );
+		$articleId = $wgRequest->getVal( "article", false );
+		$error     = 0;
+
+		/**
+		 * check owner of blog
+		 */
+		$Title = Title::newFromID( $articleId );
+		if( ! $Title ) {
+			$error = 1;
+		}
+
+		$props = BlogListPage::getProps( $commentId );
+
+		print_pre( $props );
+		if( isset( $props["hiddencomm"] ) ) {
+			/**
+			 * toggle option: 0 -> 1, 1 -> 0
+			 */
+			$props["hiddencomm"] = empty( $props["hiddencomm"] ) ? 1 : 0;
+		}
+		else {
+			$props["hiddencomm"] = 1;
+		}
+
+		/**
+		 * clear listing cache
+		 */
+		$wgMemc->delete( wfMemcKey( "blog", "comm", $articleId ) );
+
+		$Comment = BlogComment::newFromId( $commentId );
+		$Comment->setProps( $props, true );
+		$text = $Comment->render();
+
+		return Wikia::json_encode(
+			array(
+				"id"     => $commentId,
+				"error"  => $error,
+				"hidden" => $props["hiddencomm"],
+				"text"	 => $text
+			)
+		);
 	}
 }
 
@@ -377,63 +458,6 @@ class BlogComments {
 		return $text;
 	}
 
-
-	/**
-	 * static function used for rendering HTML for single comment
-	 * used in Ajax functions
-	 *
-	 * @static
-	 * @access public
-	 *
-	 * @param Title $title -- Title instance with comment article
-	 * @param Array $props -- array with page_props values default false
-	 *
-	 * @return String -- generated HTML
-	 */
-	static public function renderSingle( Title $Title, $props = false ) {
-		global $wgContLang;
-
-		$Revision = Revision::newFromTitle( $Title );
-		$User     = User::newFromId( $Revision->getUser( ) );
-
-		$Parser  = new Parser( );
-		$Options = new ParserOptions( );
-		$Options->initialiseFromUser( $User );
-
-		/**
-		 * if $props are not cache we read them from database
-		 */
-		if( !$props || ! is_array( $props ) ) {
-			$props   = BlogListPage::getProps( $Title->getArticleID() );
-		}
-
-		$text     = $Parser->parse( $Revision->getText(), $Title, $Options )->getText();
-		$anchor   = explode( "/", $Title->getDBkey(), 3 );
-		$sig      = ( $User->isAnon() )
-			? wfMsg("blog-comments-anonymous")
-			: Xml::element( 'a', array ( "href" => $User->getUserPage()->getFullUrl() ), $User->getName() );
-		$hidden   = isset( $props[ "hiddencomm" ] )
-			? (bool )$props[ "hiddencomm" ]
-			: false;
-
-		$comments = array(
-				"sig"       => $sig,
-				"text"      => $text,
-				"title"     => $Title,
-				"author"    => $User,
-				"anchor"    => $anchor,
-				"avatar"    => BlogAvatar::newFromUser( $User )->getLinkTag( 50, 50 ),
-				"hidden"	=> $hidden,
-				"timestamp" => $wgContLang->timeanddate( $Revision->getTimestamp() )
-		);
-
-		$template = new EasyTemplate( dirname( __FILE__ ) . '/templates/' );
-		$template->set_vars( array( "single" => true, "comment" => $comments ));
-		$text = $template->execute( "comment" );
-
-		return $text;
-	}
-
 	/**
 	 * axPost -- static hook/entry for ajax request post
 	 *
@@ -538,58 +562,5 @@ class BlogComments {
 		wfProfileOut( __METHOD__ );
 
 		return $article;
-	}
-
-	/**
-	 * axHide -- static hook/entry for ajax request post -- toggle visbility
-	 * of comment
-	 *
-	 * @static
-	 * @access public
-	 *
-	 * @return String -- json-ized array
-	 */
-	static public function axHide() {
-		global $wgRequest, $wgUser, $wgTitle, $wgMemc;
-
-		$commentId = $wgRequest->getVal( "id", false );
-		$articleId = $wgRequest->getVal( "article", false );
-		$error     = 0;
-
-		/**
-		 * check owner of blog
-		 */
-		$Title = Title::newFromID( $articleId );
-		if( ! $Title ) {
-			$error = 1;
-		}
-
-		$props = BlogListPage::getProps( $commentId );
-
-
-		if( isset( $props["hiddencomm"] ) ) {
-			/**
-			 * toggle option: 0 -> 1, 1 -> 0
-			 */
-			$props["hiddencomm"] = empty( $props["hiddencomm"] ) ? 1 : 0;
-		}
-		else {
-			$props["hiddencomm"] = 1;
-		}
-
-		BlogListPage::saveProps( $commentId, $props );
-		if( $articleId ) {
-			$wgMemc->delete( wfMemcKey( "blog", "comm", $articleId ) );
-		}
-		$text = BlogComments::renderSingle( $Title, $props );
-
-		return Wikia::json_encode(
-			array(
-				"id"     => $commentId,
-				"error"  => $error,
-				"hidden" => $props["hiddencomm"],
-				"text"	 => $text
-			)
-		);
 	}
 }
