@@ -176,6 +176,8 @@ class BlogComment {
 		 * clear listing cache
 		 */
 		$wgMemc->delete( wfMemcKey( "blog", "comm", $articleId ) );
+		$update = SquidUpdate::newSimplePurge( $Title );
+		$update->doUpdate();
 
 		$Comment = BlogComment::newFromId( $commentId );
 		$Comment->setProps( $props, true );
