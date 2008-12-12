@@ -97,5 +97,6 @@ Create blog listing pages for categories such as "Barrack Obama", "Fan Fiction",
 	"blog-listing-zero-other" => "This user has not written any blog posts yet!",
 	"blog-userblog" => "$1's blog",
 	"blog-fromsitename" => "From $1",
+	"blogs-reportproblem" => "Report problem",
     "removeavatar" => "Remove user's avatar",
 );
