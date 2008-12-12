@@ -1,13 +1,120 @@
 <?php
 
 /**
- * parser tag for Comments all comments for article
+ * @author Krzysztof Krzyżaniak <eloy@wikia.inc>
+ *
+ * @name BlogComment -- single comment
+ * @name BlogComments -- listing
+ *
  */
 
 global $wgAjaxExportList;
 $wgAjaxExportList[] = "BlogComments::axPost";
 $wgAjaxExportList[] = "BlogComments::axHide";
 
+
+/**
+ * BlogComment is article, this class is used for manipulation on it
+ */
+class BlogComment {
+
+	public
+		$mProps,
+		$mTitle;
+
+	public function __construct( $Title ) {
+		/**
+		 * initialization
+		 */
+		$this->mTitle = $Title;
+		$this->mProps = false;
+	}
+
+	/**
+	 * newFromTitle -- static constructor
+	 *
+	 * @static
+	 * @access public
+	 *
+	 * @param Title $title -- Title object connected to comment
+	 *
+	 * @return BlogComment object
+	 */
+	static public function newFromTitle( Title $Title ) {
+		return new BlogComment( $Title );
+	}
+
+	/**
+	 * newFromId -- static constructor
+	 *
+	 * @static
+	 * @access public
+	 *
+	 * @param Integer $id -- identifier from page_id
+	 *
+	 * @return BlogComment object
+	 */
+	static public function newFromId( $id ) {
+		$Title = Title::newFromID( $id );
+		if( ! $Title ) {
+			return false;
+		}
+		return new BlogComment( $Title );
+	}
+
+	/**
+	 * render -- generate HTML for displaying comment
+	 *
+	 * @return String -- generated HTML text
+	 */
+	public function render() {
+		global $wgContLang;
+
+		$Revision = Revision::newFromTitle( $this->mTitle );
+		$User     = User::newFromId( $Revision->getUser( ) );
+
+		$Parser  = new Parser( );
+		$Options = new ParserOptions( );
+		$Options->initialiseFromUser( $User );
+
+		/**
+		 * if $props are not cache we read them from database
+		 */
+		if( !$this->mProps || ! is_array( $this->mProps ) ) {
+			$this->mProps = BlogListPage::getProps( $this->mTitle->getArticleID() );
+		}
+
+		$text     = $Parser->parse( $Revision->getText(), $this->mTitle, $Options )->getText();
+		$anchor   = explode( "/", $this->mTitle->getDBkey(), 3 );
+		$sig      = ( $User->isAnon() )
+			? wfMsg("blog-comments-anonymous")
+			: Xml::element( 'a', array ( "href" => $User->getUserPage()->getFullUrl() ), $User->getName() );
+		$hidden   = isset( $this->mProps[ "hiddencomm" ] )
+			? (bool )$this->mProps[ "hiddencomm" ]
+			: false;
+
+		$comments = array(
+			"sig"       => $sig,
+			"text"      => $text,
+			"title"     => $Title,
+			"author"    => $User,
+			"anchor"    => $anchor,
+			"avatar"    => BlogAvatar::newFromUser( $User )->getLinkTag( 50, 50 ),
+			"hidden"	=> $hidden,
+			"timestamp" => $wgContLang->timeanddate( $Revision->getTimestamp() )
+		);
+
+		$template = new EasyTemplate( dirname( __FILE__ ) . '/templates/' );
+		$template->set_vars( array( "single" => true, "comment" => $comments ));
+		$text = $template->execute( "comment" );
+
+		return $text;
+	}
+}
+
+/**
+ * BlogComment is listing, basicly it's array of comments
+ */
 class BlogComments {
 
 	private $mTitle;
