@@ -14,6 +14,12 @@ YAHOO.Wikia.Blogs.hideCallback = {
     success: function( oResponse ) {
         var data = YAHOO.Tools.JSONParse( oResponse.responseText );
 		YAHOO.Wikia.Blogs.callback.toggle( data );
+
+		/**
+		 * connect signals again
+		 */
+		YAHOO.Wikia.Blogs.actions = YAHOO.util.Dom.getElementsByClassName( "blog-comm-hide", "a" );
+		YAHOO.util.Event.addListener( YAHOO.Wikia.Blogs.actions, "click", YAHOO.Wikia.Blogs.toggle );
     },
     failure: function( oResponse ) {
     },
@@ -21,12 +27,12 @@ YAHOO.Wikia.Blogs.hideCallback = {
 };
 
 YAHOO.Wikia.Blogs.callback.toggle = function( data ) {
-	var div = YAHOO.util.Dom.get( data["id"] );
-	if( data[ "hidden" ] == 1 ) {
-		YAHOO.util.Dom.setStyle( "comm-" + data["id"], 'border', '2px solid red' );
-	}
-	else {
-		YAHOO.util.Dom.setStyle( "comm-" + data["id"], 'border', '2px solid black' );
+	if( ! data[ "error" ] ) {
+		YAHOO.util.Dom.get( "comm-" + data["id"]).innerHTML = data["text"];
+
+		if (typeof TieDivLibrary != "undefined" ) {
+			TieDivLibrary.calculate();
+		}
 	}
 };
 

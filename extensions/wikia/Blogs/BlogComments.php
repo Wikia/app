@@ -272,6 +272,62 @@ class BlogComments {
 
 
 	/**
+	 * static function used for rendering HTML for single comment
+	 * used in Ajax functions
+	 *
+	 * @static
+	 * @access public
+	 *
+	 * @param Title $title -- Title instance with comment article
+	 * @param Array $props -- array with page_props values default false
+	 *
+	 * @return String -- generated HTML
+	 */
+	static public function renderSingle( Title $Title, $props = false ) {
+		global $wgContLang;
+
+		$Revision = Revision::newFromTitle( $Title );
+		$User     = User::newFromId( $Revision->getUser( ) );
+
+		$Parser  = new Parser( );
+		$Options = new ParserOptions( );
+		$Options->initialiseFromUser( $User );
+
+		/**
+		 * if $props are not cache we read them from database
+		 */
+		if( !$props || ! is_array( $props ) ) {
+			$props   = BlogListPage::getProps( $Title->getArticleID() );
+		}
+
+		$text     = $Parser->parse( $Revision->getText(), $Title, $Options )->getText();
+		$anchor   = explode( "/", $Title->getDBkey(), 3 );
+		$sig      = ( $User->isAnon() )
+			? wfMsg("blog-comments-anonymous")
+			: Xml::element( 'a', array ( "href" => $User->getUserPage()->getFullUrl() ), $User->getName() );
+		$hidden   = isset( $props[ "hiddencomm" ] )
+			? (bool )$props[ "hiddencomm" ]
+			: false;
+
+		$comments = array(
+				"sig"       => $sig,
+				"text"      => $text,
+				"title"     => $Title,
+				"author"    => $User,
+				"anchor"    => $anchor,
+				"avatar"    => BlogAvatar::newFromUser( $User )->getLinkTag( 50, 50 ),
+				"hidden"	=> $hidden,
+				"timestamp" => $wgContLang->timeanddate( $Revision->getTimestamp() )
+		);
+
+		$template = new EasyTemplate( dirname( __FILE__ ) . '/templates/' );
+		$template->set_vars( array( "single" => true, "comment" => $comments ));
+		$text = $template->execute( "comment" );
+
+		return $text;
+	}
+
+	/**
 	 * axPost -- static hook/entry for ajax request post
 	 *
 	 * @static
@@ -378,7 +434,8 @@ class BlogComments {
 	}
 
 	/**
-	 * axPost -- static hook/entry for ajax request post
+	 * axHide -- static hook/entry for ajax request post -- toggle visbility
+	 * of comment
 	 *
 	 * @static
 	 * @access public
@@ -390,7 +447,18 @@ class BlogComments {
 
 		$commentId = $wgRequest->getVal( "id", false );
 		$articleId = $wgRequest->getVal( "article", false );
+		$error     = 0;
+
+		/**
+		 * check owner of blog
+		 */
+		$Title = Title::newFromID( $articleId );
+		if( ! $Title ) {
+			$error = 1;
+		}
+
 		$props = BlogListPage::getProps( $commentId );
+
 
 		if( isset( $props["hiddencomm"] ) ) {
 			/**
@@ -406,11 +474,14 @@ class BlogComments {
 		if( $articleId ) {
 			$wgMemc->delete( wfMemcKey( "blog", "comm", $articleId ) );
 		}
+		$text = BlogComments::renderSingle( $Title, $props );
 
 		return Wikia::json_encode(
 			array(
-				"id" => $commentId,
-				"hidden" => $props["hiddencomm"]
+				"id"     => $commentId,
+				"error"  => $error,
+				"hidden" => $props["hiddencomm"],
+				"text"	 => $text
 			)
 		);
 	}
