@@ -49,6 +49,9 @@ class CreateBlogPage extends SpecialBlogPage {
 			}
 		}
 		else {
+			if($wgRequest->getVal('article') != null) {
+				$this->parseArticle($wgRequest->getVal('article'));
+			}
 			$this->renderForm();
 		}
 	}
@@ -93,6 +96,7 @@ class CreateBlogPage extends SpecialBlogPage {
 		$this->mFormData['postCategories'] = $wgRequest->getVal('wpCategoryTextarea1');
 		$this->mFormData['isVotingEnabled'] = $wgRequest->getCheck('blogPostIsVotingEnabled');
 		$this->mFormData['isCommentingEnabled'] = $wgRequest->getCheck('blogPostIsCommentingEnabled');
+		$this->mFormData['isExistingArticleEditAllowed'] = $wgRequest->getVal('articleEditAllowed');
 
 		if(empty($this->mFormData['postTitle'])) {
 			$this->mFormErrors[] = wfMsg('create-blog-empty-title-error');
@@ -105,7 +109,7 @@ class CreateBlogPage extends SpecialBlogPage {
 			}
 			else {
 				$this->mPostArticle = new BlogListPage($oPostTitle, 0);
-				if($this->mPostArticle->exists()) {
+				if($this->mPostArticle->exists() && !$this->mFormData['isExistingArticleEditAllowed']) {
 					$this->mFormErrors[] = wfMsg('create-blog-article-already-exists');
 				}
 			}
@@ -152,6 +156,33 @@ class CreateBlogPage extends SpecialBlogPage {
 
 
 		return;
+	}
+
+	private function parseArticle($sTitle) {
+		global $wgParser, $wgContLang;
+
+		$oTitle = Title::newFromText($sTitle, NS_BLOG_ARTICLE);
+		$oArticle = new Article($oTitle, 0);
+		$sArticleBody = $oArticle->getContent();
+		$aPageProps = BlogListPage::getProps($oArticle->getId());
+		$aTitleParts = explode('/', $oTitle->getText(), 2);
+
+		$this->mFormData['postTitle'] = $aTitleParts[1];
+		$this->mFormData['postBody'] = trim(preg_replace('/\[\[' . $wgContLang->getFormattedNsText( NS_CATEGORY ) . ':(.*)\]\]/siU', '', $sArticleBody));
+		$this->mFormData['postCategories'] = implode('|', $this->getCategoriesFromArticleContent($sArticleBody));
+		$this->mFormData['isVotingEnabled'] = $aPageProps['voting'];
+		$this->mFormData['isCommentingEnabled'] = $aPageProps['commenting'];
+		$this->mFormData['isExistingArticleEditAllowed'] = 1;
+
+	}
+
+	private function getCategoriesFromArticleContent($sArticleContent) {
+		global $wgContLang;
+
+		$aMatches = null;
+		preg_match_all('/\[\[' . $wgContLang->getFormattedNsText( NS_CATEGORY ) . ':(.*)\]\]/siU', $sArticleContent, $aMatches);
+
+		return ( is_array($aMatches) ? $aMatches[1] : array() );
 	}
 
 	/**

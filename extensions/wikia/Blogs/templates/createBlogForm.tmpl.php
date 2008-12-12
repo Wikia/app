@@ -5,6 +5,7 @@
 <br />
 <br />
 <form name="blogPostForm" id="blogPostForm" method="post" action="<?php echo $title->getLocalUrl();?>">
+	<input type="hidden" name="articleEditAllowed" value="<?php echo $formData['isExistingArticleEditAllowed']; ?>" />
 	<?php if(!empty($preview)): ?>
 		<h2>Preview</h2>
 		<div class='previewnote'><p><strong><?php echo wfMsg('previewnote');?></strong></p></div>
@@ -20,10 +21,17 @@
 	<?php endif; ?>
 	<div class="formBlock">
 		<label><?php echo wfMsg( "create-blog-form-post-title" ) ?></label>
-		<input type="text" id="blogPostTitle" name="blogPostTitle" value="<?php echo (isset($formData['postTitle']) ? htmlspecialchars($formData['postTitle']) : ""); ?>" size="60" maxlength="255" />
+		<?php if($formData['isExistingArticleEditAllowed']): ?>
+			<input type="hidden" name="blogPostTitle" value="<?=$formData['postTitle']; ?>" />
+			<div id="blogPostTitle">
+				<strong><?=$formData['postTitle']; ?></strong>
+			</div>
+		<?php else: ?>
+			<input type="text" id="blogPostTitle" name="blogPostTitle" value="<?php echo (isset($formData['postTitle']) ? htmlspecialchars($formData['postTitle']) : ""); ?>" size="60" maxlength="255" />
+		<?php endif; ?>
 		<div style="float: left">
-		<input type="checkbox" name="blogPostIsVotingEnabled" value="1" <?php echo (!empty($formData['isVotingEnabled']) || !isset($formData['isVotingEnabled'])) ? "checked" : ""; ?> /><?php echo wfMsg("blog-voting-label") ?>
-		<input type="checkbox" name="blogPostIsCommentingEnabled" value="1" <?php echo (!empty($formData['isCommentingEnabled']) || !isset($formData['isCommentingEnabled'])) ? "checked" : ""; ?> /><?php echo wfMsg("blog-comments-label") ?>
+			<input type="checkbox" name="blogPostIsVotingEnabled" value="1" <?php echo (!empty($formData['isVotingEnabled']) || !isset($formData['isVotingEnabled'])) ? "checked" : ""; ?> /><?php echo wfMsg("blog-voting-label") ?>
+			<input type="checkbox" name="blogPostIsCommentingEnabled" value="1" <?php echo (!empty($formData['isCommentingEnabled']) || !isset($formData['isCommentingEnabled'])) ? "checked" : ""; ?> /><?php echo wfMsg("blog-comments-label") ?>
 		</div>
 	</div>
 	<div class="formBlock">

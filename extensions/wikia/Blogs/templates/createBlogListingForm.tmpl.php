@@ -19,7 +19,7 @@ BL.checkMatches = function (e) {
 	var listingCategories = YD.get( "wpCategoryTextarea1" ).value;
 	//var listingAuthors = YD.get( "blogListingAuthors" ).value;
 	YD.get( "blogListingMatches" ).innerHTML =  '<?php echo Wikia::ImageProgress() ?>';
-	YAHOO.util.Connect.asyncRequest( "GET", "<?php echo $title->getLocalUrl('action=ajax&rs=axBlogListingCheckMatches')?>&categories=" + listingCategories, BL.checkMatchesCallback);
+	YAHOO.util.Connect.asyncRequest( "GET", "<?php echo $title->getLocalUrl('action=ajax&rs=CreateBlogListingPage::axBlogListingCheckMatches')?>&categories=" + listingCategories, BL.checkMatchesCallback);
 };
 
 
@@ -48,7 +48,14 @@ BL.checkMatches = function (e) {
 	<?php endif; ?>
 	<div class="formBlock">
 		<label><?php echo wfMsg( "create-blog-listing-page-title" ) ?></label>
-		<input type="text" id="blogPostTitle" name="blogListingTitle" value="<?php echo ( isset($formData['listingTitle']) ? htmlspecialchars($formData['listingTitle']) : "" ); ?>" size="60" maxlength="255" />
+		<?php if($formData['isExistingArticleEditAllowed']): ?>
+			<input type="hidden" name="blogListingTitle" value="<?=$formData['listingTitle']; ?>" />
+			<div id="blogPostTitle">
+				<strong><?=$formData['listingTitle']; ?></strong>
+			</div>
+			<?php else: ?>
+				<input type="text" id="blogPostTitle" name="blogListingTitle" value="<?php echo ( isset($formData['listingTitle']) ? htmlspecialchars($formData['listingTitle']) : "" ); ?>" size="60" maxlength="255" />
+			<?php endif; ?>
 	</div>
 
 	<div class="formBlock">
