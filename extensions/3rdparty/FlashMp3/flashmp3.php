@@ -153,6 +153,3 @@ function getFlashMP3Title($file)
     $path = $img->getViewURL(false);
     return $path;
 }
- 
-?>
-
