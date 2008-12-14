@@ -246,10 +246,6 @@ class AdEngine {
 			// ... and we always use Google Ad Manager
 			return AdProviderGAM::getInstance();
 
-		// Turning on Athena for all boxads.
-		} else if ( AdEngine::getInstance()->getAdType($slotname) == 'boxad' ){
-			// ... and we always use Google Ad Manager
-			return AdProviderAthena::getInstance();
 
 		// Now some toggles based on preferences and logged in/out
 		} else if (! ArticleAdLogic::isMandatoryAd($slotname) &&
@@ -268,20 +264,8 @@ class AdEngine {
 		} else {
 
 			if ($wgLanguageCode == 'en' ){
-
-				// Do bucket testing of different providers and different placements
-				if ($slotname == 'TOP_LEADERBOARD' && (
-				    $this->getBucketName() == 'GAM_leaderboard' ||
-				    $this->getBucketName() == 'lp' ||
-				    $this->getBucketName() == 'lp_at')){
-					return AdProviderGAM::getInstance();
-				} else if ($slotname == 'TOP_RIGHT_BOXAD' && (
-				    $this->getBucketName() == 'GAM_boxad'  ||
-				    $this->getBucketName() == 'bp')){
-					return AdProviderGAM::getInstance();
-				} else {
-					return $this->getProviderFromId($this->slots[$slotname]['provider_id']);
-				}
+			
+			 	return $this->getProviderFromId($this->slots[$slotname]['provider_id']);
 			} else if (in_array($wgLanguageCode, $this->tier1Languages)){
 				
 				if (!in_array($slotname, $this->internationalSlotsTier1)){
