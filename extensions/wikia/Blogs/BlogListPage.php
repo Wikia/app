@@ -119,7 +119,7 @@ class BlogListPage extends Article {
 				 * off so it wend to $wgRequest
 				 */
 				if( $wgRequest->wasPosted() ) {
-					BlogComments::doPost( $wgRequest, $wgUser, $wgTitle );
+					BlogCommentList::doPost( $wgRequest, $wgUser, $wgTitle );
 				}
 				$this->showBlogComments();
 			}
@@ -150,7 +150,7 @@ class BlogListPage extends Article {
 		wfProfileIn( __METHOD__ );
 
 		$rand = $wgMergeStyleVersionJS;
-		$page = BlogComments::newFromTitle( $this->mTitle );
+		$page = BlogCommentList::newFromTitle( $this->mTitle );
 		$page->setProps( $this->mProps );
 
 		$wgOut->addScript( "<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/Blogs/js/Blogs.js?{$rand}\" ></script>" );
