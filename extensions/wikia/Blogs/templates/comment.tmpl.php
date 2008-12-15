@@ -10,6 +10,9 @@
 		<div class="details">
 			<strong><?php echo $comment["sig"] ?></strong>
 			<span class="timestamp"><?php echo $comment["timestamp"] ?></span>
+		<?php if( $canDelete ): ?>
+			<a href="<?php echo $comment[ "title" ]->getLocalUrl( "redirect=no&action=delete" ) ?>">delete</a>
+		<?php endif; ?>
 		</div>
 		<?php
 			echo $comment["text"];

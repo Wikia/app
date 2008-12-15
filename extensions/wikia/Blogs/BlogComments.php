@@ -111,12 +111,13 @@ class BlogComment {
 	 * @return String -- generated HTML text
 	 */
 	public function render() {
-		global $wgContLang;
+		global $wgContLang, $wgUser;
 
 		if( ! $this->mRevision ) {
 			$this->mRevision = Revision::newFromTitle( $this->mTitle );
 		}
 		$User     = User::newFromId( $this->mRevision->getUser( ) );
+		$canDelete = $wgUser->isAllowed( "delete" );
 
 		$Parser  = new Parser( );
 		$Options = new ParserOptions( );
@@ -148,7 +149,12 @@ class BlogComment {
 		);
 
 		$template = new EasyTemplate( dirname( __FILE__ ) . '/templates/' );
-		$template->set_vars( array( "single" => true, "comment" => $comments ));
+		$template->set_vars(
+			array(
+				"comment" => $comments,
+				"canDelete" => $canDelete
+			)
+		);
 		$text = $template->execute( "comment" );
 
 		return $text;
@@ -246,8 +252,17 @@ class BlogComment {
 	 * @return String -- json-ized array`
 	 */
 	static public function axPost() {
-		global $wgRequest, $wgUser, $wgTitle, $wgContLang;
-		$article = self::doPost( $wgRequest, $wgUser, $wgTitle );
+		global $wgRequest, $wgUser;
+
+		$articleId = $wgRequest->getVal( "article", false );
+
+		$Title = Title::newFromID( $articleId );
+		if( ! $Title ) {
+			Wikia::log( __METHOD__, "error", "Cannot create title" );
+			return Wikia::json_encode( array( "error" => 1 ) );
+		}
+
+		$article = self::doPost( $wgRequest, $wgUser, $Title );
 		if( !$article ) {
 			Wikia::log( __METHOD__, "error", "No article created" );
 			return Wikia::json_encode(
@@ -305,13 +320,12 @@ class BlogComment {
 		/**
 		 * clear comments cache for this article
 		 */
-		$updateTitle = Title::newFromText( $Title->getText(), NS_BLOG_ARTICLE );
-		$update = SquidUpdate::newSimplePurge( $updateTitle );
+		$update = SquidUpdate::newSimplePurge( $Title );
 		$update->doUpdate();
 
 		$key = $Title->getBaseText();
 		$wgMemc->delete( wfMemcKey( "blog", "listing", $key, 0 ) );
-		$wgMemc->delete( wfMemcKey( "blog", "comm", $updateTitle->getArticleID() ) );
+		$wgMemc->delete( wfMemcKey( "blog", "comm", $Title->getArticleID() ) );
 
 		wfProfileOut( __METHOD__ );
 
@@ -405,12 +419,17 @@ class BlogCommentList {
 	 * getCommentPages -- take pages connected to comments list
 	 */
 	private function getCommentPages() {
-		global $wgRequest;
+		global $wgRequest, $wgMemc;
 
 		wfProfileIn( __METHOD__ );
 
 		$order  = $wgRequest->getText("order", false );
+		$action = $wgRequest->getText( "action", false );
+
 		$this->mOrder = ( $order == "desc" ) ? "desc" : "asc";
+		if( $action != "purge" ) {
+			$this->mComments = $wgMemc->get( wfMemcKey( "blog", "comm", $this->getTitle()->getArticleId() ) );
+		}
 
 		if( ! is_array( $this->mComments ) ) {
 			/**
@@ -434,6 +453,7 @@ class BlogCommentList {
 			}
 			$dbr->freeResult( $res );
 			$this->mComments = $pages;
+			$wgMemc->set( wfMemcKey( "blog", "comm", $this->getTitle()->getArticleId() ), $this->mComments, 3600 );
 		}
 
 		wfProfileOut( __METHOD__ );
@@ -462,12 +482,11 @@ class BlogCommentList {
 	 * @return String HTML text with rendered comments section
 	 */
 	public function render() {
-		global $wgUser, $wgTitle, $wgMemc, $wgRequest;
+		global $wgUser, $wgTitle, $wgRequest;
 
 		/**
 		 * $pages is array of comment articles
 		 */
-		$action    = $wgRequest->getText( "action", false );
 		$owner     = $this->mTitle->getBaseText();
 		$avatar    = BlogAvatar::newFromUser( $wgUser );
 		$isSysop   = ( in_array('sysop', $wgUser->getGroups()) || in_array('staff', $wgUser->getGroups() ) );
@@ -492,7 +511,6 @@ class BlogCommentList {
 		) );
 
 		$text = $template->execute( "comment-list" );
-		$wgMemc->set( wfMemcKey( "blog", "comm", $this->getTitle()->getArticleId() ), $text, 3600 );
 
 		return $text;
 	}
