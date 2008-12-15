@@ -677,10 +677,14 @@ class SkinMonaco extends SkinTemplate {
 	private function getArticleLinks($tpl) {
 		wfProfileIn( __METHOD__ );
 		$links = array();
+
+		# @todo: might actually be useful to move this to a global var and handle this in extension files --TOR
+		$force_right = array( 'userprofile', 'talk', 'TheoryTab' );
+
 		foreach($tpl->data['content_actions'] as $key => $val) {
 			if($key == 'report-problem') {
 				// Do nothing
-			} else if($key == 'userprofile' || $key == 'talk' || strpos($key, 'nstab-') === 0) {
+			} else if( strpos($key, 'nstab-') === 0 || in_array($key, $force_right) ) {
 				$links['right'][$key] = $val;
 			} else {
 				$links['left'][$key] = $val;
