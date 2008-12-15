@@ -24,6 +24,9 @@
 //
 //////////////////////////////////////////////////////////////////////////
 
+echo "This script is insecure and shouldn't be used on a public wiki.\n";
+exit( 1 );
+
 $IP = getenv( 'MW_INSTALL_PATH' );
 if ( $IP === false ) { 
 	$IP = dirname( __FILE__ ) .'/../..';

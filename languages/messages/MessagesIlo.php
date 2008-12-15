@@ -5,6 +5,7 @@
  * @file
  *
  * @author Saluyot
+ * @author Urhixidur
  * @author לערי ריינהארט
  */
 
@@ -339,7 +340,7 @@ Mabalinmo nga ituloy ti agaramat iti {{SITENAME}} a kas di am-ammo, wenno makast
 Laglagipem a sumagmamano a pampanid ti mabalin a nakaparang latta a kasla nakaloginka pay laeng, agingga a dim' pay dalusan ti cache ti browsermo.",
 'welcomecreation'            => '== Dumanonka, $1! ==
 Naparnuayen ti accountmo.
-Dimo liplipatan a sukatan dagiti preferenciam iti {{SITENAME}}.',
+Dimo liplipatan a sukatan dagiti preferenciam iti [[Special:Preferences|{{SITENAME}} preferences]].',
 'loginpagetitle'             => 'Pagserkan ti agar-aramat',
 'yourname'                   => 'Nagan:',
 'yourpassword'               => 'Pasesbalikas:',
@@ -354,7 +355,7 @@ Dimo liplipatan a sukatan dagiti preferenciam iti {{SITENAME}}.',
 'logout'                     => 'Rummuar',
 'userlogout'                 => 'Rummuar',
 'notloggedin'                => 'Saan a naka-logged in',
-'nologin'                    => 'Awan pay ti pagserrekmo? $1.',
+'nologin'                    => "Awan kad' pay accountmo? $1.",
 'nologinlink'                => 'Mangaramid iti account',
 'createaccount'              => 'Mangaramid iti baro nga account',
 'gotaccount'                 => 'Addaanka kadin iti account? $1.',
@@ -509,7 +510,7 @@ No dimo kayat a ti sinuratmo ket maedit wenno mabalbaliwan nga awanan-asi ken ma
 Kasta met nga ikarim kadakami a bukodmo a sinurat wenno gapuanan daytoy, wenno kinopiam ngem iti maysa a nawaya a pagtagikuaan ti publiko wenno pumadmad a libre a pagtaudan (kitaen ti $1 para iti detalie).
 <strong>SAAN A MANGIPAN ITI ADDAAN COPYRIGHT NGA OBRA NO AWANAN PAMMALUBOS!</strong>',
 'longpagewarning'                  => '<strong>BALLAAG: Agatiddog daytoy a panid iti $1 a kilobytes;
-amangan ta sumagmamano a browsers ket agparikut iti panagedit iti pampanid a dandani 32kb, wenno ad-adu pay, ti kaatiddogna.
+amangan ta sumagmamano a browsers ket agparikut iti panagedit iti pampanid a dandani 32 kb, wenno ad-adu pay, ti kaatiddogna.
 Pangngaasim ta padasem a pasetpasetem ti panid iti babbabassit a benneg.</strong>',
 'longpageerror'                    => "<strong>BIDDUT: Ti texto nga insumitem ket agatiddog iti $1 a kilobytes, nga at-atiddog nga amang ngem ti maximum a $2 a kilobytes.
 Isut' gapuna a saan a maidulin.</strong>",
@@ -583,7 +584,7 @@ Legend: (agdama) = paggidiatan iti agdama a version,
 'rev-deleted-event'       => '(naikkat ti log action)',
 'rev-delundel'            => 'ipakita/ilemmeng',
 'revdelete-nooldid-title' => 'Saan a valido a target revision',
-'revdelete-selected'      => '{{PLURAL:$2|Napili a revision|Napili a revisions}} ti [[:$1]]:',
+'revdelete-selected'      => "'''{{PLURAL:$2|Napili a revision|Napili a revisions}} ti [[:$1]]:'''",
 'revdelete-legend'        => 'Iplastar ti visibility restrictions',
 'revdelete-hide-text'     => 'Ilemmeng ti texto ti revision',
 'revdelete-hide-name'     => 'Ilemmeng ti action ken target',
@@ -612,6 +613,7 @@ Legend: (agdama) = paggidiatan iti agdama a version,
 'suppressionlog' => 'Log ti suppression',
 
 # History merging
+'mergehistory'                => 'Pagtitipkelen dagiti pakasaritaan ti pampanid',
 'mergehistory-box'            => 'Pagtiponen dagiti revisions dagiti dua a pampanid:',
 'mergehistory-from'           => 'Panid ti taudan:',
 'mergehistory-into'           => 'Destinasion a panid:',

@@ -196,7 +196,7 @@ $messages = array(
 == پيلول ==
 * [http://www.mediawiki.org/wiki/Manual:Configuration_settings Configuration settings list]
 * [http://www.mediawiki.org/wiki/Manual:FAQ د ميډياويکي ډېرځليزې پوښتنې]
-* [http://lists.wikimedia.org/mailman/listinfo/mediawiki-announce MediaWiki release mailing list]",
+* [https://lists.wikimedia.org/mailman/listinfo/mediawiki-announce MediaWiki release mailing list]",
 
 'about'          => 'په اړه',
 'article'        => 'د منځپانګې مخ',
@@ -239,7 +239,7 @@ $messages = array(
 'delete'            => 'ړنګول',
 'deletethispage'    => 'دا مخ ړنګ کړه',
 'protect'           => 'ژغورل',
-'protect_change'    => 'د ژغورنې بدلون',
+'protect_change'    => 'بدلون',
 'protectthispage'   => 'همدا مخ ژغورل',
 'unprotect'         => 'نه ژغورل',
 'unprotectthispage' => 'همدا مخ نه ژغورل',
@@ -386,14 +386,15 @@ $messages = array(
 'logout'                     => 'وتل',
 'userlogout'                 => 'وتل',
 'notloggedin'                => 'غونډال کې نه ياست ننوتي',
-'nologin'                    => 'کارن نوم نه لرې ؟ $1.',
+'nologin'                    => 'کارن-نوم نه لرې؟ $1.',
 'nologinlink'                => 'يو کارن-حساب جوړول',
 'createaccount'              => 'کارن-حساب جوړول',
 'gotaccount'                 => 'آيا وار دمخې يو کارن-حساب لری؟ $1.',
 'gotaccountlink'             => 'ننوتل',
 'createaccountmail'          => 'د برېښليک له مخې',
 'badretype'                  => 'دا پټنوم چې تاسو ليکلی د پخواني پټنوم سره ورته نه دی.',
-'userexists'                 => 'کوم کارن نوم چې تاسو ورکړی هغه بل چا کارولی. لطفاً يو بل ډول نوم وټاکۍ.',
+'userexists'                 => 'کوم کارن نوم چې تاسو ورکړ هغه بل چا کارولی.
+لطفاً يو بل نوم وټاکۍ.',
 'youremail'                  => 'برېښليک *',
 'username'                   => 'کارن-نوم:',
 'uid'                        => 'د کارونکي پېژندنه:',
@@ -418,14 +419,14 @@ $messages = array(
 'wrongpasswordempty'         => 'تاسو پټنوم نه دی ليکلی. لطفاً سر له نوي يې وليکۍ.',
 'passwordtooshort'           => 'ستاسو پټنوم ناسم دی او يا هم ډېر لنډ دی.
 بايد چې پټنوم مو لږ تر لږه {{PLURAL:$1|1 توری|$1 توري}} ولري او پکار ده چې د پټنوم او کارن-نوم ترمېنځ مو هم توپير وي.',
-'mailmypassword'             => 'پټنوم رابرېښليک کول',
+'mailmypassword'             => 'نوی پټنوم برېښليک کول',
 'passwordremindertitle'      => 'د {{SITENAME}} لپاره نوی لنډمهاله پټنوم',
-'passwordremindertext'       => 'يو چا (کېدای شي چې تاسو، د $1 IP پتې نه)
+'passwordremindertext'       => 'يو چا (کېدای شي چې ستاسو، د  IPپتې $1 نه)
 د {{SITENAME}} ($4) وېبځي لپاره د يوه نوي پټنوم د ورلېږلو غوښتنه کړې.
-د "$2" په نوم کارونکي لپاره نوی پټنوم اوس "$3" دی.
-تاسو بايد چې اوس غونډال ته په همدغه پټنوم ورننوځی او بيا وروسته خپل پټنوم په خپله خوښه بدل کړی.
+د "$2" لپاره يو نوی لنډمهاله پټنوم اوس "$3" دی.
+که چېرته همدا غوښتنه ستاسو لخوا شوي وي نو اوس تاسو غونډال ته په همدغه پټنوم ورننوځی او بيا خپل پټنوم په خپله خوښه بدل کړی.
 
-که چېرته ستاسو نه پرته کوم بل چا دغه غوښتنه کړې وي او يا هم تاسو ته بېرته خپل پټنوم در پزړه شوی وي او تاسو د خپل د پټنوم د بدلولو هيله نه لری، نو تاسو همدا پيغام بابېزه وګڼی او د پخوا په څېر خپل هماغه پخوانی پټنوم وکاروی.',
+که چېرته ستاسو نه پرته کوم بل چا دغه غوښتنه کړې وي او يا هم تاسو ته بېرته خپل پټنوم در پزړه شوی وي او تاسو د خپل پټنوم بدلول نه غواړۍ، نو تاسو همدا پيغام بابېزه وګڼۍ او د پخوا په څېر خپل هماغه پخوانی پټنوم وکاروی.',
 'noemail'                    => 'د "$1" کارونکي په نامه هېڅ کومه برېښليک پته نه ده ثبته شوې.',
 'passwordsent'               => 'د "$1" په نوم ثبت شوي غړي/غړې لپاره يو نوی پټنوم د هغه/هغې د برېښليک پتې ته ولېږل شو.
 لطفاً کله چې پټنوم مو ترلاسه کړ نو بيا غونډال ته ننوځۍ.',
@@ -751,8 +752,8 @@ $messages = array(
 'sharedupload'              => 'دا يوه ګډه دوتنه ده او کېدای شي چې په نورو پروژو کې به هم کارېږي.',
 'shareduploadwiki'          => 'لطفاً د لا نورو مالوماتو لپاره $1 وګورۍ.',
 'shareduploadwiki-linktext' => 'د دوتنې د څرګندونې مخ',
-'noimage'                   => 'په دې نوم هېڅ کومه دوتنه نه شته، تاسو کولای شی چې $1.',
-'noimage-linktext'          => 'همدا غونډال ته پورته کول',
+'noimage'                   => 'په دې نوم هېڅ کومه دوتنه نه شته، خو تاسو کولای شی چې $1.',
+'noimage-linktext'          => 'يوه دوتنه پورته کول',
 'uploadnewversion-linktext' => 'د همدغې دوتنې نوې بڼه پورته کول',
 
 # File reversion
@@ -843,6 +844,8 @@ $messages = array(
 'ancientpages'            => 'تر ټولو زاړه مخونه',
 'move'                    => 'لېږدول',
 'movethispage'            => 'دا مخ ولېږدوه',
+'pager-newer-n'           => '{{PLURAL:$1|نوی 1|نوي $1}}',
+'pager-older-n'           => '{{PLURAL:$1|زوړ 1|زاړه $1}}',
 
 # Book sources
 'booksources'               => 'د کتاب سرچينې',
@@ -904,24 +907,24 @@ $messages = array(
 'emailsenttext'   => 'ستاسو برېښليکي پيغام ولېږل شو.',
 
 # Watchlist
-'watchlist'            => 'زما کتلی لړليک',
-'mywatchlist'          => 'زما کتلی لړليک',
+'watchlist'            => 'زما کتنلړليک',
+'mywatchlist'          => 'زما کتنلړليک',
 'watchlistfor'         => "(د '''$1''')",
 'nowatchlist'          => 'ستاسو په کتلي لړليک کې هېڅ نه شته.',
 'watchnologin'         => 'غونډال کې نه ياست ننوتي.',
 'watchnologintext'     => 'ددې لپاره چې خپل کتل شوي لړليک کې بدلون راولی نو تاسو ته پکار ده چې لومړی غونډال کې [[Special:UserLogin|ننوتنه]] ترسره کړی.',
 'addedwatch'           => 'په کتلي لړليک کې ورګډ شو.',
-'addedwatchtext'       => "د \"[[:\$1]]\" په نوم يو مخ ستاسو [[Special:Watchlist|کتلي لړليک]] کې ورګډ شو.
-په راتلونکې کې چې په دغه مخ او ددغه مخ په اړونده بحث کې کوم بدلونونه راځي نو هغه به ستاسو کتلي لړليک کې وښوولی شي,
-او په همدې توګه هغه مخونه به د [[Special:RecentChanges|وروستي بدلونونو]] په لړليک کې په '''روڼ''' ليک ليکل شوی وي ترڅو په اسانۍ سره څوک وپوهېږي چې په کوم کوم مخونو کې بدلونونه ترسره شوي.
+'addedwatchtext'       => "د \"[[:\$1]]\" په نوم يو مخ ستاسو [[Special:Watchlist|کتنلړليک]] کې ورګډ شو.
+په راتلونکې کې چې په دغه مخ او د ده د خبرواترو مخ کې کوم بدلونونه راځي نو هغه به ستاسو په کتنلړليک کې ښکاره شي،
+او په همدې توګه هغه مخونه به د [[Special:RecentChanges|وروستي بدلونونو]] په لړليک کې په '''روڼ''' ليک ښکاري ترڅو په اسانۍ سره څوک وپوهېږي چې په کوم کوم مخونو کې بدلونونه ترسره شوي.
 
-که چېرته تاسو بيا وروسته غواړۍ چې کومه پاڼه د خپل کتلي لړليک نه ليرې کړۍ، نو په \"نه کتل\" تڼۍ باندې ټک ورکړۍ.",
-'removedwatch'         => 'د کتلي لړليک نه لرې شو',
-'removedwatchtext'     => 'د "[[:$1]]" په نامه مخ ستاسو له کتلي لړليک نه لرې شو.',
+که چېرته تاسو بيا وروسته غواړۍ چې کوم مخ د خپل کتنلړليک نه ليرې کړۍ، نو په \"نه کتل\" تڼۍ باندې ټک ورکړۍ.",
+'removedwatch'         => 'د کتنلړليک نه لرې شو',
+'removedwatchtext'     => 'د "[[:$1]]" په نامه مخ ستاسو له کتنلړليک نه لرې شو.',
 'watch'                => 'کتل',
 'watchthispage'        => 'همدا مخ کتل',
 'unwatch'              => 'نه کتل',
-'watchlist-details'    => '{{PLURAL:$1|$1 مخ|$1 مخونه}} کتل شوي په دې کې د خبرواترو مخونه نه دي شمېر شوي.',
+'watchlist-details'    => 'ستاسو په کتنلړليک کې {{PLURAL:$1|$1 مخ دی|$1 مخونه دي}}، د خبرو اترو مخونه مو پکې نه دي شمېرلي.',
 'wlheader-enotif'      => 'د برېښليک له لارې خبرول چارن شوی.*',
 'wlheader-showupdated' => "* هغه مخونه چې وروستی ځل ستاسو د کتلو نه وروسته بدلون موندلی په '''روڼ''' ليک نښه شوي.",
 'wlshowlast'           => 'وروستي $1 ساعتونه $2 ورځې $3 ښکاره کړه',
@@ -1186,7 +1189,7 @@ $messages = array(
 'filedeleteerror-short' => 'د دوتنې د ړنګولو ستونزه: $1',
 
 # Browsing diffs
-'previousdiff' => 'تېر توپير →',
+'previousdiff' => 'تېر توپير ←',
 'nextdiff'     => '← بل توپير',
 
 # Media information
@@ -1231,6 +1234,7 @@ $messages = array(
 * focallength', # Do not translate list items
 
 # EXIF tags
+'exif-datetime'         => 'د دوتنې د بدلون وخت او نېټه',
 'exif-imagedescription' => 'د انځور سرليک',
 'exif-model'            => 'د کامرې ماډل',
 'exif-artist'           => 'ليکوال',
@@ -1264,7 +1268,7 @@ $messages = array(
 
 # External editor support
 'edit-externally'      => 'د باندنيو پروګرامونو په کارولو سره دا دوتنه سمادول',
-'edit-externally-help' => 'د نورو مالوماتو لپاره د [http://www.mediawiki.org/wiki/Manual:External_editors امستنو لارښوونې] وګورۍ.',
+'edit-externally-help' => 'د نورو مالوماتو لپاره [http://www.mediawiki.org/wiki/Manual:External_editors د امستنو لارښوونې] وګورۍ.',
 
 # 'all' in various places, this might be different for inflected languages
 'recentchangesall' => 'ټول',
@@ -1283,7 +1287,7 @@ $messages = array(
 'confirmemail_error'     => 'ستاسو د برېښليک پتې د تاييد په خوندي کولو کې يوه ستونزه رامېنڅ ته شوه.',
 
 # Scary transclusion
-'scarytranscludetoolong' => '[اوبخښۍ؛ URL مو ډېر اوږد دی]',
+'scarytranscludetoolong' => '[URL مو ډېر اوږد دی]',
 
 # Trackbacks
 'trackbackremove' => '([$1 ړنګول])',

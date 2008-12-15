@@ -70,6 +70,13 @@ abstract class ApiFormatBase extends ApiBase {
 	}
 
 	/**
+	 * Get the internal format name
+	 */
+	public function getFormat() {
+		return $this->mFormat;
+	}
+
+	/**
 	 * Specify whether or not ampersands should be escaped to '&amp;' when rendering. This
 	 * should only be set to true for the help message when rendered in the default (xmlfm)
 	 * format. This is a temporary special-case fix that should be removed once the help
@@ -232,7 +239,7 @@ See <a href='http://www.mediawiki.org/wiki/API'>complete documentation</a>, or
 	}
 
 	public static function getBaseVersion() {
-		return __CLASS__ . ': $Id: ApiFormatBase.php 36153 2008-06-10 15:20:22Z tstarling $';
+		return __CLASS__ . ': $Id: ApiFormatBase.php 44569 2008-12-14 08:31:04Z tstarling $';
 	}
 }
 
@@ -293,6 +300,6 @@ class ApiFormatFeedWrapper extends ApiFormatBase {
 	}
 
 	public function getVersion() {
-		return __CLASS__ . ': $Id: ApiFormatBase.php 36153 2008-06-10 15:20:22Z tstarling $';
+		return __CLASS__ . ': $Id: ApiFormatBase.php 44569 2008-12-14 08:31:04Z tstarling $';
 	}
 }
