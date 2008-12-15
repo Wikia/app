@@ -275,9 +275,11 @@ function wfDoRegisterJSONPost( $recaptcha_domain = "re.search.wikia.com" ){
 		$re_pattern = "/<div class=\"errorbox\"\>[^<]*<h2\>Login error\:<\/h2\>([^<]*)<\/div\>/iU";
 		preg_match($re_pattern, $temp_out, $matches);
 		if (sizeof($matches)) {
-			$output = str_replace("\"", "\\\"", trim($matches[1]));
+			$message = str_replace("\"", "\\\"", trim($matches[1]));
+			$json = new Services_JSON();
+			$message = $json->encode( $message );
 			$output = "<script type=\"text/javascript\">
-					alert(\"{$output}\"); 
+					alert({$message}); 
 					location.href='{$wpSourceForm}?error=true';
 				   </script>";
 		}
