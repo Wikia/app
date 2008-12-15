@@ -75,7 +75,7 @@ endif;
 		<!-- submit -->
 		<a href="<?php $title->getFullURL() ?>" name="wpBlogSubmit" id="blog-comm-submit-bottom" class="bigButton">
 			<big><? echo wfMsg("blog-comment-post") ?></big>
-			<small>Inne info</small>
+			<small></small>
 		</a>
 		<div class="right" style="font-style: italic;"><?php echo wfMsg("blog-comments-info") ?></div>
 		</div>
