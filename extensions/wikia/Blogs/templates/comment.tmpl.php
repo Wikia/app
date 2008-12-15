@@ -1,3 +1,4 @@
+<!-- s:<?= __FILE__ ?> -->
 <div class="blog-comment">
 <?php
 	if( ! $comment[ "hidden" ] ):
@@ -26,3 +27,5 @@
 ?>
 </div>
 <br style="clear: both;" />
+<!-- e:<?= __FILE__ ?> -->
+

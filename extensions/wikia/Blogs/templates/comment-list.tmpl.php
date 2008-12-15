@@ -19,7 +19,7 @@ endif;
 if( count( $comments ) > 10 && isset( $props[ "commenting" ] ) && $props[ "commenting" ] == 1 ):
 	if( $canEdit ):
 ?>
-<div class="blog-comm-input reset clearfix">
+	<div class="blog-comm-input reset clearfix">
 	<form action="<?php $title->getFullURL() ?>" method="post" id="blog-comm-form-top">
 		<!-- avatar -->
 		<div class="blog-comm-input-avatar">
@@ -38,7 +38,7 @@ if( count( $comments ) > 10 && isset( $props[ "commenting" ] ) && $props[ "comme
 		<div class="right" style="font-style: italic;"><?php echo wfMsg("blog-comments-info") ?></div>
 		</div>
 	</form>
-</div>
+	</div>
 <?php
 	else:
 		echo wfMsg("blog-comments-login", SpecialPage::getTitleFor("UserLogin")->getLocalUrl() );
@@ -87,3 +87,5 @@ endif;
 			echo wfMsg("blog-comments-login", SpecialPage::getTitleFor("UserLogin")->getLocalUrl() );
 		endif;
 	endif;
+?>
+</div>
