@@ -11,7 +11,6 @@ insert into user_groups(ug_user, ug_group) values
 (/*CatherineMunro*/108559,'staff'),
 (/*Crucially*/182546,'staff'),
 (/*Dmurphy*/138300,'staff'),
-(/*DNL*/56870,'staff'),
 (/*Eloy.wikia*/51098,'staff'),
 (/*Emil*/27301,'staff'),
 (/*Galezewski*/189276,'staff'),
@@ -40,7 +39,6 @@ insert into user_groups(ug_user, ug_group) values
 (/*Untethered*/136195,'staff'),
 (/*Wiffle*/305670,'staff'),
 (/*WikiaBot*/269919,'staff'),
-(/*Yukichi*/126117,'staff'),
 (/*Zuirdj*/47,'staff')
 ;
 
