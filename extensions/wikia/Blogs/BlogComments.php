@@ -117,6 +117,8 @@ class BlogComment {
 			$this->mRevision = Revision::newFromTitle( $this->mTitle );
 		}
 		$User     = User::newFromId( $this->mRevision->getUser( ) );
+
+		$isSysop   = ( in_array('sysop', $wgUser->getGroups()) || in_array('staff', $wgUser->getGroups() ) );
 		$canDelete = $wgUser->isAllowed( "delete" );
 
 		$Parser  = new Parser( );
