@@ -9,7 +9,7 @@
  */
 
 global $wgAjaxExportList;
-$wgAjaxExportList[] = "BlogCommentList::axPost";
+$wgAjaxExportList[] = "BlogComment::axPost";
 $wgAjaxExportList[] = "BlogComment::axToggle";
 
 
@@ -191,6 +191,112 @@ class BlogComment {
 				"text"	 => $text
 			)
 		);
+	}
+
+	/**
+	 * axPost -- static hook/entry for ajax request post
+	 *
+	 * @static
+	 * @access public
+	 *
+	 * @return String -- json-ized array`
+	 */
+	static public function axPost() {
+		global $wgRequest, $wgUser, $wgTitle, $wgContLang;
+		$article = self::doPost( $wgRequest, $wgUser, $wgTitle );
+		if( !$article ) {
+			Wikia::log( __METHOD__, "error", "No article created" );
+			return Wikia::json_encode(
+				array( "msg" => wfMsg("blog-comment-error"), "error" => 1 )
+			);
+		}
+
+		/**
+		 * parse text from returned article
+		 */
+		$parser  = new Parser();
+		$options = new ParserOptions();
+		$options->initialiseFromUser( $wgUser );
+
+		$text     = $parser->parse( $article->getContent(), $wgTitle, $options )->getText();
+		$anchor   = explode( "/", $article->getTitle()->getDBkey(), 3 );
+		$sig      = ( $wgUser->isAnon() )
+			? wfMsg("blog-comments-anonymous")
+			: Xml::element( 'a', array ( "href" => $wgUser->getUserPage()->getFullUrl() ), $wgUser->getName() );
+
+		$comments = array(
+				"sig"       => $sig,
+				"text"      => $text,
+				"title"     => $article->getTitle(),
+				"author"    => $article->getUser(),
+				"anchor"    => $anchor,
+				"avatar"    => BlogAvatar::newFromUser( $wgUser )->getLinkTag( 50, 50 ),
+				"hidden"	=> false,
+				"timestamp" => $wgContLang->timeanddate( $article->getTimestamp() )
+		);
+
+		$template = new EasyTemplate( dirname( __FILE__ ) . '/templates/' );
+		$template->set_vars( array( "single" => true, "comment" => $comments ));
+		$text = $template->execute( "comment" );
+
+		return Wikia::json_encode(
+			array(
+				"msg" => wfMsg("blog-comment-error"),
+				"error" => 0,
+				"text" => $text,
+			)
+		);
+	}
+
+	/**
+	 * doPost -- static hook/entry for normal request post
+	 *
+	 * @static
+	 * @access public
+	 *
+	 * @param WebRequest $Request -- instance of WebRequest
+	 * @param User       $User    -- instance of User
+	 * @param Title      $Title   -- instance of Title
+	 *
+	 * @return Article -- newly created article
+	 */
+	static public function doPost( &$Request, &$User, &$Title ) {
+
+		global $wgMemc;
+
+		$text = $Request->getText("wpBlogComment", false);
+		if( !$text || !strlen( $text ) ) {
+			return false;
+		}
+		wfProfileIn( __METHOD__ );
+
+		/**
+		 * title for comment is combination of article title and some "random"
+		 * data
+		 */
+		$commentTitleText = sprintf( "%s/%s-%s", $Title->getText(), $User->getName(), wfTimestampNow() );
+		$commentTitle = Title::newFromText( $commentTitleText, NS_BLOG_ARTICLE_TALK );
+
+		/**
+		 * add article
+		 */
+		$article = new Article( $commentTitle, 0 );
+		$article->doEdit( $text, "New comment in blog" );
+
+		/**
+		 * clear comments cache for this article
+		 */
+		$updateTitle = Title::newFromText( $Title->getText(), NS_BLOG_ARTICLE );
+		$update = SquidUpdate::newSimplePurge( $updateTitle );
+		$update->doUpdate();
+
+		$key = $Title->getBaseText();
+		$wgMemc->delete( wfMemcKey( "blog", "listing", $key, 0 ) );
+		$wgMemc->delete( wfMemcKey( "blog", "comm", $updateTitle->getArticleID() ) );
+
+		wfProfileOut( __METHOD__ );
+
+		return $article;
 	}
 }
 
@@ -457,111 +563,5 @@ class BlogCommentList {
 		$text = $template->execute( "comment" );
 
 		return $text;
-	}
-
-	/**
-	 * axPost -- static hook/entry for ajax request post
-	 *
-	 * @static
-	 * @access public
-	 *
-	 * @return String -- json-ized array`
-	 */
-	static public function axPost() {
-		global $wgRequest, $wgUser, $wgTitle, $wgContLang;
-		$article = self::doPost( $wgRequest, $wgUser, $wgTitle );
-		if( !$article ) {
-			Wikia::log( __METHOD__, "error", "No article created" );
-			return Wikia::json_encode(
-				array( "msg" => wfMsg("blog-comment-error"), "error" => 1 )
-			);
-		}
-
-		/**
-		 * parse text from returned article
-		 */
-		$parser  = new Parser();
-		$options = new ParserOptions();
-		$options->initialiseFromUser( $wgUser );
-
-		$text     = $parser->parse( $article->getContent(), $wgTitle, $options )->getText();
-		$anchor   = explode( "/", $article->getTitle()->getDBkey(), 3 );
-		$sig      = ( $wgUser->isAnon() )
-			? wfMsg("blog-comments-anonymous")
-			: Xml::element( 'a', array ( "href" => $wgUser->getUserPage()->getFullUrl() ), $wgUser->getName() );
-
-		$comments = array(
-				"sig"       => $sig,
-				"text"      => $text,
-				"title"     => $article->getTitle(),
-				"author"    => $article->getUser(),
-				"anchor"    => $anchor,
-				"avatar"    => BlogAvatar::newFromUser( $wgUser )->getLinkTag( 50, 50 ),
-				"hidden"	=> false,
-				"timestamp" => $wgContLang->timeanddate( $article->getTimestamp() )
-		);
-
-		$template = new EasyTemplate( dirname( __FILE__ ) . '/templates/' );
-		$template->set_vars( array( "single" => true, "comment" => $comments ));
-		$text = $template->execute( "comment" );
-
-		return Wikia::json_encode(
-			array(
-				"msg" => wfMsg("blog-comment-error"),
-				"error" => 0,
-				"text" => $text,
-			)
-		);
-	}
-
-	/**
-	 * doPost -- static hook/entry for normal request post
-	 *
-	 * @static
-	 * @access public
-	 *
-	 * @param WebRequest $Request -- instance of WebRequest
-	 * @param User       $User    -- instance of User
-	 * @param Title      $Title   -- instance of Title
-	 *
-	 * @return Article -- newly created article
-	 */
-	static public function doPost( &$Request, &$User, &$Title ) {
-
-		global $wgMemc;
-
-		$text = $Request->getText("wpBlogComment", false);
-		if( !$text || !strlen( $text ) ) {
-			return false;
-		}
-		wfProfileIn( __METHOD__ );
-
-		/**
-		 * title for comment is combination of article title and some "random"
-		 * data
-		 */
-		$commentTitleText = sprintf( "%s/%s-%s", $Title->getText(), $User->getName(), wfTimestampNow() );
-		$commentTitle = Title::newFromText( $commentTitleText, NS_BLOG_ARTICLE_TALK );
-
-		/**
-		 * add article
-		 */
-		$article = new Article( $commentTitle, 0 );
-		$article->doEdit( $text, "New comment in blog" );
-
-		/**
-		 * clear comments cache for this article
-		 */
-		$updateTitle = Title::newFromText( $Title->getText(), NS_BLOG_ARTICLE );
-		$update = SquidUpdate::newSimplePurge( $updateTitle );
-		$update->doUpdate();
-
-		$key = $Title->getBaseText();
-		$wgMemc->delete( wfMemcKey( "blog", "listing", $key, 0 ) );
-		$wgMemc->delete( wfMemcKey( "blog", "comm", $updateTitle->getArticleID() ) );
-
-		wfProfileOut( __METHOD__ );
-
-		return $article;
 	}
 }
