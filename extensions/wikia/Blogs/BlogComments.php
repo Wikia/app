@@ -20,7 +20,8 @@ class BlogComment {
 
 	public
 		$mProps,
-		$mTitle;
+		$mTitle,
+		$mRevision;
 
 	public function __construct( $Title ) {
 		/**
@@ -45,6 +46,29 @@ class BlogComment {
 	}
 
 	/**
+	 * newFromTitle -- static constructor
+	 *
+	 * @static
+	 * @access public
+	 *
+	 * @param Title $title -- Title object connected to comment
+	 *
+	 * @return BlogComment object
+	 */
+	static public function newFromArticle( Article $Article ) {
+		$Title = $Article->getTitle();
+
+		$Comment = new BlogComment( $Title );
+		if( $Article->isCurrent() ) {
+			/**
+			 * hack, $this->mRevision is marked as private
+			 */
+			$Comment->setRevision( $Article->mRevision );
+		}
+		return $Comment;
+	}
+
+	/**
 	 * newFromId -- static constructor
 	 *
 	 * @static
@@ -63,6 +87,23 @@ class BlogComment {
 	}
 
 	/**
+	 * setRevision -- setter
+	 *
+	 * @param Revision $revision -- object of revision
+	 */
+	public function setRevision( Revision $revision ) {
+		$this->mRevision = $revision;
+	}
+
+	/**
+	 * getTitle -- getter/accessor
+	 *
+	 */
+	public function getTitle() {
+		return $this->mTitle;
+	}
+
+	/**
 	 * render -- generate HTML for displaying comment
 	 *
 	 * @return String -- generated HTML text
@@ -70,8 +111,10 @@ class BlogComment {
 	public function render() {
 		global $wgContLang;
 
-		$Revision = Revision::newFromTitle( $this->mTitle );
-		$User     = User::newFromId( $Revision->getUser( ) );
+		if( ! $this->mRevision ) {
+			$this->mRevision = Revision::newFromTitle( $this->mTitle );
+		}
+		$User     = User::newFromId( $this->mRevision->getUser( ) );
 
 		$Parser  = new Parser( );
 		$Options = new ParserOptions( );
@@ -82,7 +125,7 @@ class BlogComment {
 		 */
 		$this->getProps();
 
-		$text     = $Parser->parse( $Revision->getText(), $this->mTitle, $Options )->getText();
+		$text     = $Parser->parse( $this->mRevision->getText(), $this->mTitle, $Options )->getText();
 		$anchor   = explode( "/", $this->mTitle->getDBkey(), 3 );
 		$sig      = ( $User->isAnon() )
 			? wfMsg("blog-comments-anonymous")
@@ -99,7 +142,7 @@ class BlogComment {
 			"anchor"    => $anchor,
 			"avatar"    => BlogAvatar::newFromUser( $User )->getLinkTag( 50, 50 ),
 			"hidden"	=> $hidden,
-			"timestamp" => $wgContLang->timeanddate( $Revision->getTimestamp() )
+			"timestamp" => $wgContLang->timeanddate( $this->mRevision->getTimestamp() )
 		);
 
 		$template = new EasyTemplate( dirname( __FILE__ ) . '/templates/' );
@@ -114,9 +157,8 @@ class BlogComment {
 	 *
 	 */
 	public function setProps( $props, $update = false ) {
-
 		wfProfileIn( __METHOD__ );
-		Wikia::log( __METHOD__, "props", print_r( $props, 1 ) );
+
 		if( $update ) {
 			BlogListPage::saveProps( $this->mTitle->getArticleID(), $props );
 		}
@@ -211,33 +253,8 @@ class BlogComment {
 			);
 		}
 
-		/**
-		 * parse text from returned article
-		 */
-		$parser  = new Parser();
-		$options = new ParserOptions();
-		$options->initialiseFromUser( $wgUser );
-
-		$text     = $parser->parse( $article->getContent(), $wgTitle, $options )->getText();
-		$anchor   = explode( "/", $article->getTitle()->getDBkey(), 3 );
-		$sig      = ( $wgUser->isAnon() )
-			? wfMsg("blog-comments-anonymous")
-			: Xml::element( 'a', array ( "href" => $wgUser->getUserPage()->getFullUrl() ), $wgUser->getName() );
-
-		$comments = array(
-				"sig"       => $sig,
-				"text"      => $text,
-				"title"     => $article->getTitle(),
-				"author"    => $article->getUser(),
-				"anchor"    => $anchor,
-				"avatar"    => BlogAvatar::newFromUser( $wgUser )->getLinkTag( 50, 50 ),
-				"hidden"	=> false,
-				"timestamp" => $wgContLang->timeanddate( $article->getTimestamp() )
-		);
-
-		$template = new EasyTemplate( dirname( __FILE__ ) . '/templates/' );
-		$template->set_vars( array( "single" => true, "comment" => $comments ));
-		$text = $template->execute( "comment" );
+		$comment = BlogComment::newFromArticle( $article );
+		$text = $comment->render();
 
 		return Wikia::json_encode(
 			array(
@@ -386,72 +403,39 @@ class BlogCommentList {
 	 * getCommentPages -- take pages connected to comments list
 	 */
 	private function getCommentPages() {
-		global $wgRequest, $wgMemc;
+		global $wgRequest;
 
 		wfProfileIn( __METHOD__ );
 
 		$order  = $wgRequest->getText("order", false );
-		$action = $wgRequest->getText( "action", false );
-
 		$this->mOrder = ( $order == "desc" ) ? "desc" : "asc";
 
-		/**
-		 * action "purge" beats cache
-		 */
-		if( 0 && $action != "purge" ) {
+		if( ! is_array( $this->mComments ) ) {
 			/**
-			 * maybe already loaded
+			 * cache it! but with what key?
 			 */
-			if( is_array( $this->mComments ) ) {
-				/**
-				 * sort properly result
-				 */
-				Wikia::log( __METHOD__ , "cache", "already read" );
-				wfProfileOut( __METHOD__ );
-				return $this->sort();
-			}
+			$pages = array();
 
-			$this->mComments = $wgMemc->get( wfMemcKey( "blog", "comm", $this->getTitle()->getArticleId() ) );
-			if( is_array( $this->mComments ) ) {
-				Wikia::log( __METHOD__ , "cache", "from cache" );
-				wfProfileOut( __METHOD__ );
-				return $this->sort();
-			}
-		}
-
-		/**
-		 * cache it! but with what key?
-		 */
-		$pages = array();
-
-		$dbr = wfGetDB( DB_SLAVE );
-		$res = $dbr->select(
-			array( "page" ),
-			array( "page_id" ),
-			array(
-				"page_namespace" => NS_BLOG_ARTICLE_TALK,
-				"page_title LIKE '" . $dbr->escapeLike( $this->mText ) . "/%'"
-			),
-			__METHOD__,
-			array( "ORDER BY" => "page_id {$this->mOrder}" )
-		);
-		while( $row = $dbr->fetchObject( $res ) ) {
-			$pages[ $row->page_id ] = array(
-				"title" => Title::newFromId( $row->page_id ),
-				"props" => BlogListPage::getProps( $row->page_id )
+			$dbr = wfGetDB( DB_SLAVE );
+			$res = $dbr->select(
+				array( "page" ),
+				array( "page_id" ),
+				array(
+					"page_namespace" => NS_BLOG_ARTICLE_TALK,
+					"page_title LIKE '" . $dbr->escapeLike( $this->mText ) . "/%'"
+				),
+				__METHOD__,
+				array( "ORDER BY" => "page_id {$this->mOrder}" )
 			);
+			while( $row = $dbr->fetchObject( $res ) ) {
+				$pages[ $row->page_id ] = BlogComment::newFromId( $row->page_id );
+			}
+			$dbr->freeResult( $res );
+			$this->mComments = $pages;
 		}
-
-		$dbr->freeResult( $res );
-
-		$this->mComments = $pages;
-		$wgMemc->set( wfMemcKey( "blog", "comm", $this->getTitle()->getArticleId() ), $pages, 3600 );
-		Wikia::log( __METHOD__ , "cache", "from database" );
-
 
 		wfProfileOut( __METHOD__ );
-
-		return $this->mComments;
+		return $this->sort();
 	}
 
 	/**
@@ -473,94 +457,40 @@ class BlogCommentList {
 	 *
 	 * @access public
 	 *
-	 * @param Boolean $input -- show/hide input for adding comments default false
-	 *
 	 * @return String HTML text with rendered comments section
 	 */
-	public function render( $input = false ) {
-		global $wgContLang, $wgUser, $wgTitle;
+	public function render() {
+		global $wgUser, $wgTitle, $wgMemc, $wgRequest;
 
 		/**
-		 * $pages is array of comment titles
+		 * $pages is array of comment articles
 		 */
+		$action    = $wgRequest->getText( "action", false );
 		$owner     = $this->mTitle->getBaseText();
-		$pages     = $this->getCommentPages();
 		$avatar    = BlogAvatar::newFromUser( $wgUser );
 		$isSysop   = ( in_array('sysop', $wgUser->getGroups()) || in_array('staff', $wgUser->getGroups() ) );
 		$isOwner   = ( $owner == $wgUser->getName() );
 		$canEdit   = $wgUser->isAllowed( "edit" );
+		$comments  = $this->getCommentPages();
 		$canDelete = $wgUser->isAllowed( "delete" );
 
 		$template = new EasyTemplate( dirname( __FILE__ ) . '/templates/' );
 
-		if( ! count( $pages ) ) {
-			/**
-			 * no comments at all
-			 */
-			$template->set_vars( array(
-				"input"     => $input,
-				"props"     => $this->mProps,
-				"avatar"    => $avatar,
-				"title"     => $wgTitle,
-				"isSysop"   => $isSysop,
-				"isOwner"   => $isOwner,
-				"canEdit"   => $canEdit,
-				"comments"  => false,
-				"canDelete" => $canDelete,
-			));
-		}
-		else {
-			$parser = new Parser();
-			$options = new ParserOptions();
-			$options->initialiseFromUser( $wgUser );
+		$template->set_vars( array(
+			"order"     => $this->mOrder,
+			"title"     => $wgTitle,
+			"props"     => $this->mProps,
+			"avatar"    => $avatar,
+			"wgUser"    => $wgUser,
+			"isSysop"   => $isSysop,
+			"isOwner"   => $isOwner,
+			"canEdit"   => $canEdit,
+			"comments"  => $comments,
+			"canDelete" => $canDelete,
+		) );
 
-			foreach( $pages as $page ) {
-				/**
-				 * page is Title object
-				 */
-				$revision = Revision::newFromTitle( $page["title"] );
-				/**
-				 * it's preparsed wikitext, we have to parse it to HTML
-				 */
-				$text     = $parser->parse( $revision->getText(), $page["title"], $options )->getText();
-				$author   = User::newFromId( $revision->getUser() );
-				$sig      = ( $author->isAnon() )
-					? wfMsg("blog-comments-anonymous")
-					: Xml::element( 'a', array ( "href" => $author->getUserPage()->getFullUrl() ), $author->getName() );
-				$hidden   = isset( $page[ "props" ][ "hiddencomm" ] )
-					? (bool )$page[ "props" ][ "hiddencomm" ]
-					: false;
-
-				$anchor   = explode( "/", $page["title"]->getDBkey(), 3 );
-
-				$comments[ $revision->getTimestamp() ] = array(
-					"sig"       => $sig,
-					"text"      => $text,
-					"title"     => $page["title"],
-					"author"    => $author,
-					"anchor"    => $anchor,
-					"hidden"	=> $hidden,
-					"avatar"    => BlogAvatar::newFromUser( $author )->getLinkTag( 50, 50 ),
-					"timestamp" => $wgContLang->timeanddate( $revision->getTimestamp() )
-				);
-			}
-
-			$template->set_vars( array(
-				"order"     => $this->mOrder,
-				"input"     => $input,
-				"title"     => $wgTitle,
-				"props"     => $this->mProps,
-				"avatar"    => $avatar,
-				"wgUser"    => $wgUser,
-				"isSysop"   => $isSysop,
-				"isOwner"   => $isOwner,
-				"canEdit"   => $canEdit,
-				"comments"  => $comments,
-				"canDelete" => $canDelete,
-			) );
-		}
-
-		$text = $template->execute( "comment" );
+		$text = $template->execute( "comment-list" );
+		$wgMemc->set( wfMemcKey( "blog", "comm", $this->getTitle()->getArticleId() ), $text, 3600 );
 
 		return $text;
 	}

@@ -119,7 +119,7 @@ class BlogListPage extends Article {
 				 * off so it wend to $wgRequest
 				 */
 				if( $wgRequest->wasPosted() ) {
-					BlogCommentList::doPost( $wgRequest, $wgUser, $wgTitle );
+					BlogComment::doPost( $wgRequest, $wgUser, $wgTitle );
 				}
 				$this->showBlogComments();
 			}
