@@ -1,3 +1,4 @@
+<!-- s:<?= __FILE__ ?> -->
 <a name="comments"></a>
 <h2 class="wikia_header">
 <?php echo wfMsg("blog-comments") ?>
@@ -23,9 +24,7 @@ if( count( $comments ) > 10 && isset( $props[ "commenting" ] ) && $props[ "comme
 	<form action="<?php $title->getFullURL() ?>" method="post" id="blog-comm-form-top">
 		<!-- avatar -->
 		<div class="blog-comm-input-avatar">
-		<?php
-			echo $avatar->getImageTag( 50, 50 );
-		?>
+			<?php echo $avatar->getImageTag( 50, 50 ); ?>
 		</div>
 		<!-- textarea -->
 		<div class="blog-comm-input-text">
@@ -89,3 +88,4 @@ endif;
 	endif;
 ?>
 </div>
+<!-- e:<?= __FILE__ ?> -->

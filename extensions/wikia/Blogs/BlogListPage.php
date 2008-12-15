@@ -54,66 +54,67 @@ class BlogListPage extends Article {
 				$this->mTitle->mPrefixedText = $oldPrefixedText;
 
 				$this->mProps = self::getProps( $this->mTitle->getArticleID() );
-				$templateParams = array();
+				if( get_class( $wgUser->getSkin() ) == 'SkinMonaco' ) {
+					$templateParams = array();
 
-				if( isset( $this->mProps[ "voting" ] ) && $this->mProps[ "voting" ] == 1 ) {
-					$pageid = $this->mTitle->getArticleID();
-					$FauxRequest = new FauxRequest( array(
-						"action" => "query",
-						"list" => "wkvoteart",
-						"wkpage" => $pageid,
-						"wkuservote" => true
-					));
-					$oApi = new ApiMain( $FauxRequest );
-					$oApi->execute();
-					$aResult = $oApi->GetResultData();
+					if( isset( $this->mProps[ "voting" ] ) && $this->mProps[ "voting" ] == 1 ) {
+						$pageid = $this->mTitle->getArticleID();
+						$FauxRequest = new FauxRequest( array(
+							"action" => "query",
+							"list" => "wkvoteart",
+							"wkpage" => $pageid,
+							"wkuservote" => true
+						));
+						$oApi = new ApiMain( $FauxRequest );
+						$oApi->execute();
+						$aResult = $oApi->GetResultData();
 
-					if( count($aResult['query']['wkvoteart']) > 0 ) {
-						if(!empty($aResult['query']['wkvoteart'][ $pageid ]['uservote'])) {
-							$voted = true;
+						if( count($aResult['query']['wkvoteart']) > 0 ) {
+							if(!empty($aResult['query']['wkvoteart'][ $pageid ]['uservote'])) {
+								$voted = true;
+							}
+							else {
+								$voted = false;
+							}
+							$rating = $aResult['query']['wkvoteart'][ $pageid ]['votesavg'];
 						}
 						else {
 							$voted = false;
+							$rating = 0;
 						}
-						$rating = $aResult['query']['wkvoteart'][ $pageid ]['votesavg'];
+
+						$hidden_star = $voted ? ' style="display: none;"' : '';
+						$rating = round($rating * 2)/2;
+						$ratingPx = round($rating * 17);
+						$templateParams = $templateParams + array(
+							"voted"				=> $voted,
+							"rating"			=> $rating,
+							"ratingPx"			=> $ratingPx,
+							"hidden_star"		=> $hidden_star,
+							"voting_enabled"	=> true,
+						);
 					}
 					else {
-						$voted = false;
-						$rating = 0;
+						$templateParams[ "voting_enabled" ] = false;
+					}
+					$templateParams[ "edited" ] = $wgContLang->timeanddate( $this->getTimestamp() );
+					$templateParams[ "oTitle" ] = $this->mTitle;
+					$templateParams[ "wgStylePath" ] = $wgStylePath;
+					$templateParams[ "lastUpdate" ] = $wgLang->date($this->getTimestamp());
+					$templateParams[ "wgNotificationEnableSend" ] = $wgNotificationEnableSend;
+					$templateParams[ "wgProblemReportsEnable" ] = $wgProblemReportsEnable;
+
+					if ($this->getUser() > 0) {
+						$username = $this->getUserText();
+						$oUserTitle = Title::makeTitle(NS_USER, $username);
+						$templateParams[ "username" ] = $username;
+						$templateParams[ "oUserTitle" ] = $oUserTitle;
 					}
 
-					$hidden_star = $voted ? ' style="display: none;"' : '';
-					$rating = round($rating * 2)/2;
-					$ratingPx = round($rating * 17);
-					$templateParams = $templateParams + array(
-						"voted"				=> $voted,
-						"rating"			=> $rating,
-						"ratingPx"			=> $ratingPx,
-						"hidden_star"		=> $hidden_star,
-						"voting_enabled"	=> true,
-					);
+					$tmpl = new EasyTemplate( dirname( __FILE__ ) . '/templates/' );
+					$tmpl->set_vars( $templateParams );
+					$wgOut->addHTML( $tmpl->execute("footer") );
 				}
-				else {
-					$templateParams[ "voting_enabled" ] = false;
-				}
-				$templateParams[ "edited" ] = $wgContLang->timeanddate( $this->getTimestamp() );
-				$templateParams[ "oTitle" ] = $this->mTitle;
-				$templateParams[ "wgStylePath" ] = $wgStylePath;
-				$templateParams[ "lastUpdate" ] = $wgLang->date($this->getTimestamp());
-				$templateParams[ "wgNotificationEnableSend" ] = $wgNotificationEnableSend;
-				$templateParams[ "wgProblemReportsEnable" ] = $wgProblemReportsEnable;
-
-				if ($this->getUser() > 0) {
-					$username = $this->getUserText();
-					$oUserTitle = Title::makeTitle(NS_USER, $username);
-					$templateParams[ "username" ] = $username;
-					$templateParams[ "oUserTitle" ] = $oUserTitle;
-				}
-
-				$tmpl = new EasyTemplate( dirname( __FILE__ ) . '/templates/' );
-				$tmpl->set_vars( $templateParams );
-				$wgOut->addHTML( $tmpl->execute("footer") );
-
 				/**
 				 * check if something was posted, maybe comment with ajax switched
 				 * off so it wend to $wgRequest
