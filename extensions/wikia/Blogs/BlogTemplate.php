@@ -748,7 +748,7 @@ class BlogTemplateClass {
 			self::__makeDBOrder()
 		);
 		while ( $oRow = self::$dbr->fetchObject( $res ) ) {
-			$oComments = BlogComments::newFromText( $oRow->page_title );
+			$oComments = BlogCommentList::newFromText( $oRow->page_title );
 			$iCount = $oComments->count();
 
 			/* username */
@@ -757,9 +757,9 @@ class BlogTemplateClass {
 			if ($oTitle instanceof Title) {
 				$username = $oTitle->getBaseText();
 			}
-			
+
 			$oRevision = Revision::newFromId($oRow->rev_id);
-			
+
 			$aResult[$oRow->page_id] = array(
 				"page" 			=> $oRow->page_id,
 				"namespace" 	=> $oRow->page_namespace,
@@ -973,7 +973,7 @@ class BlogTemplateClass {
 				$count = intval(self::$aOptions['count']);
 				self::__makeIntOption('offset', $count * $__pageVal);
 			}
-			
+
 			# use revision table to get results
 			self::__addRevisionTable();
 

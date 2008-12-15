@@ -4,12 +4,12 @@
  * @author Krzysztof Krzyżaniak <eloy@wikia.inc>
  *
  * @name BlogComment -- single comment
- * @name BlogComments -- listing
+ * @name BlogCommentList -- listing
  *
  */
 
 global $wgAjaxExportList;
-$wgAjaxExportList[] = "BlogComments::axPost";
+$wgAjaxExportList[] = "BlogCommentList::axPost";
 $wgAjaxExportList[] = "BlogComment::axToggle";
 
 
@@ -197,7 +197,7 @@ class BlogComment {
 /**
  * BlogComment is listing, basicly it's array of comments
  */
-class BlogComments {
+class BlogCommentList {
 
 	private $mTitle;
 	private $mText;
@@ -207,7 +207,7 @@ class BlogComments {
 	private $mOrder = false;
 
 	static public function newFromTitle( Title $title ) {
-		$comments = new BlogComments();
+		$comments = new BlogCommentList();
 		$comments->setTitle( $title );
 		$comments->setText( $title->getDBkey( ) );
 		return $comments;
@@ -222,7 +222,7 @@ class BlogComments {
 			return false;
 		}
 
-		$comments = new BlogComments();
+		$comments = new BlogCommentList();
 		$comments->setText( $blogPage->getDBkey() );
 		$comments->setTitle( $blogPage );
 		return $comments;
