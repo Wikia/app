@@ -5,6 +5,7 @@
  * @file
  *
  * @author Slomox
+ * @author Urhixidur
  * @author לערי ריינהארט
  */
 
@@ -211,7 +212,7 @@ $messages = array(
 'tog-watchlisthidebots'       => 'Ännern vun Bots op de Oppasslist nich wiesen',
 'tog-watchlisthideminor'      => 'Lütte Ännern op de Oppasslist nich wiesen',
 'tog-nolangconversion'        => 'Variantenkonverschoon utschalten',
-'tog-ccmeonemails'            => 'vun Nettbreven, de ik wegschick, an mi sülvst Kopien schicken',
+'tog-ccmeonemails'            => 'vun Nettbreven, de ik wegschick, mi sülvst Kopien tostüren',
 'tog-diffonly'                => "Na ''{{int:showdiff}}'' nich de kumplette Sied wiesen",
 'tog-showhiddencats'          => 'Wies verstekene Kategorien',
 
@@ -300,7 +301,7 @@ un dat [http://meta.wikimedia.org/wiki/MediaWiki_User%27s_Guide Brukerhandbook] 
 'qbfind'         => 'Finnen',
 'qbbrowse'       => 'Blädern',
 'qbedit'         => 'Ännern',
-'qbpageoptions'  => 'Siedenopschonen',
+'qbpageoptions'  => 'Disse Sied',
 'qbpageinfo'     => 'Sietendaten',
 'qbmyoptions'    => 'Instellen',
 'qbspecialpages' => 'Spezialsieten',
@@ -430,7 +431,7 @@ un dat [http://meta.wikimedia.org/wiki/MediaWiki_User%27s_Guide Brukerhandbook] 
 
 # Short words for each namespace, by default used in the namespace tab in monobook
 'nstab-main'      => 'Artikel',
-'nstab-user'      => 'Siet vun den Bruker',
+'nstab-user'      => 'Brukersied',
 'nstab-media'     => 'Media',
 'nstab-special'   => 'Spezial',
 'nstab-project'   => 'Över',
@@ -575,7 +576,7 @@ Vergeet nich, de Sied för di persönlich [[Special:Preferences|intostellen]].',
 'loginsuccesstitle'          => 'Anmellen hett Spood',
 'loginsuccess'               => 'Du büst nu as „$1“ bi {{SITENAME}} anmellt.',
 'nosuchuser'                 => 'Den Brukernaam „$1“ gifft dat nich.
-Kiek de Schrievwies na oder [[Special:Userlogin/signup|mell di as ne’en Bruker an]].',
+Kiek de Schrievwies na oder [[Special:UserLogin/signup|mell di as ne’en Bruker an]].',
 'nosuchusershort'            => 'De Brukernaam „<nowiki>$1</nowiki>“ existeert nich. Prööv de Schrievwies.',
 'nouserspecified'            => 'Du musst en Brukernaam angeven',
 'wrongpassword'              => 'Dat Passwoort, wat du ingeven hest, is verkehrt. Kannst dat aver noch wedder versöken.',
@@ -588,11 +589,11 @@ Dat Passwoord för Bruker „$2“ is nu „$3“. Mell di nu an un änner dien 
 
 Wenn du nich sülvst för en nee Passwoord beden hest, denn bruukst di wegen disse Naricht nich to kümmern un kannst dien oold Passwoord wiederbruken.',
 'noemail'                    => 'Bruker „$1“ hett kene E-Mail-Adress angeven.',
-'passwordsent'               => 'En nee Passwoort is an de E-Mail-Adress vun Bruker „$1“ schickt worrn. Mell di an, wenn du dat Passwoort kregen hest.',
+'passwordsent'               => 'En nee Passwoord is de E-Mail-Adress vun Bruker „$1“ tostüürt worrn. Mell di an, wenn du dat Passwoord kregen hest.',
 'blocked-mailpassword'       => 'Dien IP-Adress is sperrt. Missbruuk to verhinnern, is dat Toschicken vun en nee Passwoord ok sperrt.',
-'eauthentsent'               => 'Ene Bestätigungs-E-Mail is an de angevene Adress schickt worrn.
+'eauthentsent'               => 'En Bestätigungs-E-Mail is de angeven Adress tostüürt worrn.
 Ehrdat E-Mails vun annere Brukers över de E-Mail-Funkschoon kamen köönt, mutt de Adress eerst noch bestätigt warrn.
-In de E-Mail steiht, wie dat geiht.',
+In de E-Mail steiht, wat du doon musst.',
 'throttled-mailpassword'     => 'Binnen de {{PLURAL:$1|letzte Stünn|letzten $1 Stünnen}} is al mal en neet Passwoort toschickt worrn. Dat disse Funkschoon nich missbruukt warrt, kann blot {{PLURAL:$1|jede Stünn|alle $1 Stünnen}} een Maal en neet Passwoort toschickt warrn.',
 'mailerror'                  => 'Fehler bi dat Sennen vun de E-Mail: $1',
 'acct_creation_throttle_hit' => 'Du hest al $1 Brukerkontos anleggt. Du kannst nich noch mehr anleggen.',
@@ -698,7 +699,7 @@ Wenn du över de Sperr snacken wist, denn mell di bi $1 oder een vun de [[{{Medi
 'loginreqlink'                     => 'anmellen',
 'loginreqpagetext'                 => 'Du musst di $1, dat du annere Sieden ankieken kannst.',
 'accmailtitle'                     => 'Passwoort is toschickt worrn.',
-'accmailtext'                      => 'Dat Passwoort vun $1 is an $2 schickt worrn.',
+'accmailtext'                      => 'Dat Passwoord vun $1 is $2 tostüürt worrn.',
 'newarticle'                       => '(Nee)',
 'newarticletext'                   => 'Hier den Text vun de ne’e Siet indregen. Jümmer in ganze Sätz schrieven un kene Texten vun Annern, de en Oorheverrecht ünnerliggt, hierher kopeern.',
 'anontalkpagetext'                 => "---- ''Dit is de Diskuschoonssiet vun en nich anmellt Bruker, de noch keen Brukerkonto anleggt hett oder dat jüst nich bruukt.
@@ -749,7 +750,7 @@ Wenn du dat nich wullst, dröffst du dien Text hier nich apentlich maken.<br />
 
 Du bestätigst ok, dat du den Text sülvst schreven hest oder ut en „Public Domain“-Born oder en annere fre'e Born kopeert hest (Kiek ok $1 för Details).
 <strong>Kopeer kene Warken, de enen Oorheverrecht ünnerliggt, ahn Verlööv vun de Copyright-Inhebbers!</strong>",
-'longpagewarning'                  => '<strong>Wohrscho: Disse Siet is $1 KB groot; en poor Browser köönt Probleme hebben, Sieten to bearbeiden, de grötter as 32 KB sünd.
+'longpagewarning'                  => '<strong>Wohrscho: Disse Siet is $1 kB groot; en poor Browser köönt Probleme hebben, Sieten to bearbeiden, de grötter as 32 kB sünd.
 Bedenk of disse Siet vilicht in lüttere Afsnitten opdeelt warrn kann.</strong>',
 'longpageerror'                    => "'''Fehler: Dien Text is $1 Kilobytes lang. Dat is länger as dat Maximum vun $2 Kilobytes. Kann den Text nich spiekern.'''",
 'readonlywarning'                  => '<strong>Wohrscho: De Datenbank is wiel dat Ännern vun de
@@ -772,7 +773,7 @@ Bruker mit Sysop-Rechten doran arbeiden könnt.</strong>',
 'nocreate-loggedin'                => 'Du hest keen Verlööf, ne’e Sieden antoleggen.',
 'permissionserrors'                => 'Fehlers mit de Rechten',
 'permissionserrorstext'            => 'Du hest keen Verlööf, dat to doon. De {{PLURAL:$1|Grund is|Grünn sünd}}:',
-'permissionserrorstext-withaction' => 'Du hest nich de Rechten üm $2. Dat hett {{PLURAL:$1|dissen Grund|disse Grünn}}:',
+'permissionserrorstext-withaction' => 'Du hest nich de Rechten $2. Dat hett {{PLURAL:$1|dissen Grund|disse Grünn}}:',
 'recreate-deleted-warn'            => "'''Wohrschau: Du stellst jüst en Siet wedder nee op, de vördem al mal wegsmeten worrn is.'''
 
 Överlegg genau, wat du würklich de Siet nee opstellen wist.
@@ -808,7 +809,7 @@ De Grund weer: ''$2''",
 'currentrev'          => 'Aktuelle Version',
 'revisionasof'        => 'Version vun’n $1',
 'revision-info'       => '<div id="viewingold-warning" style="background: #ffbdbd; border: 1px solid #BB7979; font-weight: bold; padding: .5em 1em;">
-Dit is en ole Version vun disse Siet, so as <span id="mw-revision-name">$2</span> de <span id="mw-revision-date">$1</span> ännert hett. De Version kann temlich stark vun de <a href="{{FULLURL:{{FULLPAGENAME}}}}" title="{{FULLPAGENAME}}">aktuelle Version</a> afwieken.
+Dit is en ole Version vun disse Siet, so as $2 de $1 ännert hett. De Version kann temlich stark vun de <a href="{{FULLURL:{{FULLPAGENAME}}}}" title="{{FULLPAGENAME}}">aktuelle Version</a> afwieken.
 </div>',
 'previousrevision'    => 'Nächstöllere Version→',
 'nextrevision'        => 'Ne’ere Version →',
@@ -853,11 +854,11 @@ Mehr över dat Wegsmieten is in dat [{{fullurl:Special:Log/delete|page={{FULLPAG
 'revisiondelete'              => 'Versionen wegsmieten/wedderhalen',
 'revdelete-nooldid-title'     => 'kene Versionen dor, de passt',
 'revdelete-nooldid-text'      => 'Du hest keen Version för disse Akschoon angeven, de utwählte Version gifft dat nich oder du versöchst, de ne’este Version wegtodoon.',
-'revdelete-selected'          => '{{PLURAL:$2|Wählte Version|Wählte Versionen}} vun [[:$1]]:',
-'logdelete-selected'          => '{{PLURAL:$1|Wählt Logbook-Indrag|Wählte Logbook-Indrääg}}:',
-'revdelete-text'              => 'Wegsmetene Versionen staht noch jümmer in de Versionsgeschicht, sünd aver nich mehr apen intosehn.
+'revdelete-selected'          => "'''{{PLURAL:$2|Wählte Version|Wählte Versionen}} vun [[:$1]]:'''",
+'logdelete-selected'          => "'''{{PLURAL:$1|Wählt Logbook-Indrag|Wählte Logbook-Indrääg}}:'''",
+'revdelete-text'              => "'''Wegsmetene Versionen staht noch jümmer in de Versionsgeschicht, sünd aver nich mehr apen intosehn.'''
 
-{{SITENAME}}-Administraters köönt de Sieden noch jümmer sehn un ok wedderhalen, solang dat nich extra fastleggt is, dat ok Administraters dat nich mehr mehr dröfft.',
+{{SITENAME}}-Administraters köönt de Sieden noch jümmer sehn un ok wedderhalen, solang dat nich extra fastleggt is, dat ok Administraters dat nich mehr mehr dröfft.",
 'revdelete-legend'            => 'Inschränkungen för de Sichtborkeit setten',
 'revdelete-hide-text'         => 'Versiontext versteken',
 'revdelete-hide-name'         => 'Akschoon un Teel versteken',
@@ -974,7 +975,7 @@ de aver nich jümmer den aktuellsten Stand weerspegelt.<p>',
 'mypreferences'            => 'För mi Instellen',
 'prefs-edits'              => 'Wo faken du in dit Wiki Sieden ännert hest:',
 'prefsnologin'             => 'Nich anmellt',
-'prefsnologintext'         => 'Du musst <span class="plainlinks">[{{fullurl:Special:Userlogin|returnto=$1}} anmellt]</span> wesen, dat du dien Instellen ännern kannst.',
+'prefsnologintext'         => 'Du musst <span class="plainlinks">[{{fullurl:Special:UserLogin|returnto=$1}} anmellt]</span> wesen, dat du dien Instellen ännern kannst.',
 'prefsreset'               => 'Instellen sünd op Standard trüchsett.',
 'qbsettings'               => 'Siedenliest',
 'qbsettings-none'          => 'Keen',
@@ -1138,8 +1139,7 @@ de aver nich jümmer den aktuellsten Stand weerspegelt.<p>',
 # Recent changes
 'nchanges'                          => '{{PLURAL:$1|Een Ännern|$1 Ännern}}',
 'recentchanges'                     => 'Toletzt ännert',
-'recentchangestext'                 => '
-Disse Siet warrt wiel dat Laden automatsch aktualiseert. Wiest warrn Sieten, de toletzt bearbeid worrn sünd, dorto de Tied un de Naam vun de Autor.',
+'recentchangestext'                 => 'Op disse Sied warrt de Sieden wiest, de toletzt ännert worrn sünd.',
 'recentchanges-feed-description'    => 'Behool mit dissen Feed de ne’esten Ännern op dit Wiki in’t Oog.',
 'rcnote'                            => "Hier sünd de letzten '''$1''' Ännern vun {{PLURAL:$2|den letzten Dag|de letzten '''$2''' Daag}} (Stand $5, $4). ('''N''' - Ne’e Sieden; '''L''' - Lütte Ännern)",
 'rcnotefrom'                        => 'Dit sünd de Ännern siet <b>$2</b> (bet to <b>$1</b> wiest).',
@@ -1207,6 +1207,7 @@ Kiek bi de [[Special:NewImages|Galerie vun ne’e Datein]] för en Översicht mi
 'illegalfilename'             => 'In den Dateinaam „$1“ snd Teken in, de nich de Naams vun Sieden nich verlööft sünd. Söök di en annern Naam ut un denn versöök de Datei noch wedder hoochtoladen.',
 'badfilename'                 => 'De Bildnaam is na „$1“ ännert worrn.',
 'filetype-badmime'            => 'Datein vun den MIME-Typ „$1“ dröfft nich hoochlaadt warrn.',
+'filetype-bad-ie-mime'        => 'Disse Datei kann nich hoochladen warrn. De Internet Explorer hett ehr as „$1“ kennt, wat en nich verlöövten Dateityp is, de womööglich Schaden toföögt.',
 'filetype-unwanted-type'      => "'''„.$1“''' as Dateiformat schall beter nich bruukt warrn. As Dateityp beter {{PLURAL:$3|is|sünd}}: $2.",
 'filetype-banned-type'        => "'''„.$1“''' is as Dateiformat nich tolaten. {{PLURAL:$3|As Dateityp verlöövt is|Verlöövte Dateitypen sünd}}: $2.",
 'filetype-missing'            => 'Disse Datei hett keen Ennen (so as „.jpg“).',
@@ -1354,7 +1355,7 @@ Kann angahn, dat dat beter geiht, wenn du dat to en Tiet versöchst, to de op de
 
 # Unused templates
 'unusedtemplates'     => 'Nich bruukte Vörlagen',
-'unusedtemplatestext' => 'Disse Sied wiest all Sieden in’n Vörlagen-Naamruum, de nich op annere Sieden inbunnen warrt.
+'unusedtemplatestext' => 'Disse Sied wiest all Sieden in’n Naamruum „{{ns:template}}“, de nich op annere Sieden inbunnen warrt.
 Denk dor an, natokieken, wat nich noch annere Sieden na de Vörlagen wiest, ehrdat du jem wegsmittst.',
 'unusedtemplateswlh'  => 'Annere Lenken',
 
@@ -1417,7 +1418,7 @@ to den vun den tweeten Wiederleiden wiest warrt, un to den de eerste Wiederleide
 'nviews'                  => '$1 {{PLURAL:$1|Affraag|Affragen}}',
 'specialpage-empty'       => 'Disse Siet is leddig.',
 'lonelypages'             => 'Weetsieden',
-'lonelypagestext'         => 'Op disse Sieden wiest kene annern Sieden vun {{SITENAME}}.',
+'lonelypagestext'         => 'Op disse Sieden wiest kene annern Sieden vun {{SITENAME}} un se sünd ok narms inbunnen.',
 'uncategorizedpages'      => 'Sieden ahn Kategorie',
 'uncategorizedcategories' => 'Kategorien ahn Kategorie',
 'uncategorizedimages'     => 'Datein ahn Kategorie',
@@ -1521,14 +1522,14 @@ Mehr Informatschonen över enkelte Rechten staht ünner [[{{MediaWiki:Listgroupr
 
 # E-mail user
 'mailnologin'     => 'Du büst nich anmellt.',
-'mailnologintext' => 'Du musst [[Special:UserLogin|anmellt wesen]] un in diene [[Special:Preferences|Instellungen]] en güllige E-Mail-Adress hebben, dat du annere Brukers E-Mails schicken kannst.',
+'mailnologintext' => 'Du musst [[Special:UserLogin|anmellt wesen]] un in diene [[Special:Preferences|Instellungen]] en güllige E-Mail-Adress hebben, dat du annere Brukers E-Mails tostüren kannst.',
 'emailuser'       => 'E-Mail an dissen Bruker',
 'emailpage'       => 'E-Mail an Bruker',
-'emailpagetext'   => 'Wenn disse Bruker en güllige E-Mail-Adress angeven hett, kannst du em mit dit Formular en E-Mail tostüren. As Afsenner warrt de E-Mail-Adress ut dien [[Special:Preferences|Instellen]] indragen, dat de Bruker di antern kann.',
+'emailpagetext'   => 'Du kannst dissen Bruker mit dit Formular en E-Mail tostüren. As Afsenner warrt de E-Mail-Adress ut dien [[Special:Preferences|Instellen]] indragen, dat de Bruker di antern kann.',
 'usermailererror' => 'Dat Mail-Objekt hett en Fehler trüchgeven:',
 'defemailsubject' => '{{SITENAME}} E-Mail',
 'noemailtitle'    => 'Kene E-Mail-Adress',
-'noemailtext'     => 'Disse Bruker hett kene güllige E-Mail-Adress angeven, oder will kene E-Mail vun annere Bruker sennt kriegen.',
+'noemailtext'     => 'Disse Bruker hett kene güllige E-Mail-Adress angeven, oder will kene E-Mail vun annere Bruker tostüürt kriegen.',
 'emailfrom'       => 'Vun:',
 'emailto'         => 'An:',
 'emailsubject'    => 'Bedrap:',
@@ -1538,7 +1539,7 @@ Mehr Informatschonen över enkelte Rechten staht ünner [[{{MediaWiki:Listgroupr
 'emailccsubject'  => 'Kopie vun diene Naricht an $1: $2',
 'emailsent'       => 'E-Mail afsennt',
 'emailsenttext'   => 'Dien E-Mail is afsennt worrn.',
-'emailuserfooter' => 'Disse E-Mail hett $1 över de Funkschoon „{{int:emailuser}}“ vun {{SITENAME}} an $2 schickt.',
+'emailuserfooter' => 'Disse E-Mail hett $1 över de Funkschoon „{{int:emailuser}}“ vun {{SITENAME}} $2 tostüürt.',
 
 # Watchlist
 'watchlist'            => 'Mien Oppasslist',
@@ -1562,7 +1563,7 @@ Mehr Informatschonen över enkelte Rechten staht ünner [[{{MediaWiki:Listgroupr
 'watchnochange'        => 'Kene Siet op dien Oppasslist is in den wiesten Tietruum ännert worrn.',
 'watchlist-details'    => '{{PLURAL:$1|Ene Siet is|$1 Sieden sünd}} op dien Oppasslist (ahn Diskuschoonssieden).',
 'wlheader-enotif'      => 'Benarichtigen per E-Mail is anstellt.',
-'wlheader-showupdated' => "* Sieden, de ännert worrn sünd siet dien letzten Besöök, warrt '''fett''' dorstellt.",
+'wlheader-showupdated' => "* Sieden, de siet dien letzten Besöök ännert worrn sünd, warrt '''fett''' wiest.",
 'watchmethod-recent'   => 'letzte Ännern no Oppasslist pröven',
 'watchmethod-list'     => 'Oppasslist na letzte Ännern nakieken',
 'watchlistcontains'    => 'Diene Oppasslist bargt {{PLURAL:$1|ene Siet|$1 Sieden}}.',
@@ -1743,6 +1744,8 @@ In dat [[Special:Log/delete|Lösch-Logbook]] steiht en Översicht över de wegsm
 'undelete-error-long'          => 'Fehlers bi dat Wedderhalen vun de Datei:
 
 $1',
+'undelete-show-file-confirm'   => 'Wullt du worraftig en wegsmeten Version vun de Datei „<nowiki>$1</nowiki>“ vun $2, $3 ankieken?',
+'undelete-show-file-submit'    => 'Jo',
 
 # Namespace form on various pages
 'namespace'      => 'Naamruum:',
@@ -1821,7 +1824,7 @@ Ok den Grund för dat Blocken indregen.',
 'ipb-edit-dropdown'               => 'Blockgrünn bearbeiden',
 'ipb-unblock-addr'                => '„$1“ freegeven',
 'ipb-unblock'                     => 'IP-Adress/Bruker freegeven',
-'ipb-blocklist-addr'              => 'Aktuelle Sperren för „$1“ wiesen',
+'ipb-blocklist-addr'              => 'Aktuelle Sperren för „$1“',
 'ipb-blocklist'                   => 'Aktuelle Sperren wiesen',
 'unblockip'                       => 'IP-Adress freegeven',
 'unblockiptext'                   => 'Bruuk dat Formular, üm en blockte IP-Adress freetogeven.',
@@ -1945,7 +1948,7 @@ De Siet „[[:$1]]“ gifft dat al. Wullt du ehr wegsmieten, dat disse Siet scha
 'delete_and_move_reason'  => 'wegsmeten, Platz to maken för Schuven',
 'selfmove'                => 'Utgangs- un Teelnaam sünd desülve; en Siet kann nich över sik sülvst röver schaven warrn.',
 'immobile_namespace'      => 'De Utgangs- oder Teelnaamruum is schuult; Schuven na oder ut dissen Naamruum geiht nich.',
-'imagenocrossnamespace'   => 'Datein köönt nich na buten den {{ns:image}}-Naamruum schaven warrn',
+'imagenocrossnamespace'   => 'Datein köönt nich na buten den Datei-Naamruum schaven warrn',
 'imagetypemismatch'       => 'De ne’e Dateiennen passt nich to de ole',
 'imageinvalidfilename'    => 'De ne’e Dateinaam is ungüllig',
 'fix-double-redirects'    => 'All Redirects, de na den olen Titel wiest, op den ne’en ännern',
@@ -1989,7 +1992,7 @@ De Versionsdaten un Brukernaams blievt dor bi vörhannen.
 All Transwiki-Import-Akschonen staht later ok in dat [[Special:Log/import|Import-Logbook]].',
 'import-interwiki-history'   => 'Importeer all Versionen vun disse Siet',
 'import-interwiki-submit'    => 'Rinhalen',
-'import-interwiki-namespace' => 'Siet in Naamruum halen:',
+'import-interwiki-namespace' => 'Sied in dissen Naamruum halen:',
 'importtext'                 => 'Exporteer de Siet vun dat Utgangswiki mit Special:Export un laad de Datei denn över disse Siet weer hooch.',
 'importstart'                => 'Sieden warrt rinhaalt...',
 'import-revision-count'      => '$1 {{PLURAL:$1|Version|Versionen}}',
@@ -2011,6 +2014,8 @@ All Transwiki-Import-Akschonen staht later ok in dat [[Special:Log/import|Import
 'import-nonewrevisions'      => 'Gifft kene ne’en Versionen to importeren, all Versionen sünd al vördem importeert worrn.',
 'xml-error-string'           => '$1 Reeg $2, Spalt $3, (Byte $4): $5',
 'import-upload'              => 'XML-Daten hoochladen',
+'import-token-mismatch'      => 'Session-Daten sünd verloren gahn. Versöök dat noch wedder.',
+'import-invalid-interwiki'   => 'Ut dat angevene Wiki is en Import nich mööglich.',
 
 # Import log
 'importlogpage'                    => 'Import-Logbook',
@@ -2057,7 +2062,7 @@ All Transwiki-Import-Akschonen staht later ok in dat [[Special:Log/import|Import
 'tooltip-feed-rss'                => 'RSS-Feed för disse Siet',
 'tooltip-feed-atom'               => 'Atom-Feed för disse Siet',
 'tooltip-t-contributions'         => 'List vun de Bidreeg vun dissen Bruker',
-'tooltip-t-emailuser'             => 'En E-Mail an dissen Bruker sennen',
+'tooltip-t-emailuser'             => 'Dissen Bruker en E-Mail tostüren',
 'tooltip-t-upload'                => 'Biller oder Mediendatein hoochladen',
 'tooltip-t-specialpages'          => 'List vun alle Spezialsieden',
 'tooltip-t-print'                 => 'Druckversion vun disse Siet',
@@ -2450,7 +2455,7 @@ Wat denn noch an Lenken kummt in de Reeg, dat sünd Utnahmen, bi de dat Bild lie
 
 # External editor support
 'edit-externally'      => 'Änner disse Datei mit en extern Programm',
-'edit-externally-help' => '<span class="plainlinks">Lees de [http://www.mediawiki.org/wiki/Manual:External_editors Installatschoonshelp] wenn du dor mehr to weten wist.</span>',
+'edit-externally-help' => '(Lees de [http://www.mediawiki.org/wiki/Manual:External_editors Installatschoonshelp] wenn du dor mehr to weten wullt)',
 
 # 'all' in various places, this might be different for inflected languages
 'recentchangesall' => 'all',
@@ -2462,9 +2467,9 @@ Wat denn noch an Lenken kummt in de Reeg, dat sünd Utnahmen, bi de dat Bild lie
 # E-mail address confirmation
 'confirmemail'             => 'Nettbreefadress bestätigen',
 'confirmemail_noemail'     => 'Du hest kene bestätigte Nettbreefadress in diene [[Special:Preferences|Instellen]] angeven.',
-'confirmemail_text'        => '{{SITENAME}} verlangt, dat du diene Nettbreefadress bestätigst, ehrder du de Nettbreeffunkschonen bruken kannst. Klick op den Knopp wieder ünnen, dat die en Bestätigungskood schickt warrt.',
+'confirmemail_text'        => '{{SITENAME}} verlangt, dat du diene Nettbreefadress bestätigst, ehrder du de Nettbreeffunkschonen bruken kannst. Klick op den Knopp wieder ünnen, dat di en Bestätigungskood tostüürt warrt.',
 'confirmemail_pending'     => '<div class="error">Di is al en Bestätigungs-Kood över E-Mail toschickt worrn. Wenn du dien Brukerkonto nu eerst nee opstellt hest, denn tööv doch noch en poor Minuten op de E-Mail, ehrdat du di en ne’en Kood toschicken lettst.</div>',
-'confirmemail_send'        => 'Bestätigungskood schicken.',
+'confirmemail_send'        => 'Bestätigungskood tostüren.',
 'confirmemail_sent'        => 'Bestätigungsnettbreef afschickt.',
 'confirmemail_oncreate'    => 'Du hest en Bestätigungs-Kood an dien E-Mail-Adress kregen. Disse Kood is för dat Anmellen nich nödig. He warrt blot bruukt, dat du de E-Mail-Funkschonen in dat Wiki bruken kannst.',
 'confirmemail_sendfailed'  => '{{SITENAME}} kunn di keen Bestätigungsnettbreef tostüren. Schasst man nakieken, wat de Adress ok nich verkehrt schreven is.

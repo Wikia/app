@@ -410,7 +410,7 @@ class ApiMain extends ApiBase {
 		 * tell the printer not to escape ampersands so that our links do
 		 * not break. */
 		$printer->setUnescapeAmps ( ( $this->mAction == 'help' || $isError )
-				&& $this->getParameter('format') == ApiMain::API_DEFAULT_FORMAT );
+				&& $printer->getFormat() == 'XML' && $printer->getIsHtml() );
 
 		$printer->initPrinter($isError);
 
@@ -610,7 +610,7 @@ class ApiMain extends ApiBase {
 	public function getVersion() {
 		$vers = array ();
 		$vers[] = 'MediaWiki ' . SpecialVersion::getVersion();
-		$vers[] = __CLASS__ . ': $Id: ApiMain.php 37349 2008-07-08 20:53:41Z catrope $';
+		$vers[] = __CLASS__ . ': $Id: ApiMain.php 44569 2008-12-14 08:31:04Z tstarling $';
 		$vers[] = ApiBase :: getBaseVersion();
 		$vers[] = ApiFormatBase :: getBaseVersion();
 		$vers[] = ApiQueryBase :: getBaseVersion();

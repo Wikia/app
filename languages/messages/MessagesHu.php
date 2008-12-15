@@ -12,6 +12,7 @@
  * @author Dorgan
  * @author Gondnok
  * @author Samat
+ * @author Terik
  * @author Tgr
  */
 
@@ -399,7 +400,7 @@ $messages = array(
 == Alapok (angol nyelven) ==
 * [http://www.mediawiki.org/wiki/Manual:Configuration_settings Beállítások listája]
 * [http://www.mediawiki.org/wiki/Manual:FAQ MediaWiki GyIK]
-* [http://lists.wikimedia.org/mailman/listinfo/mediawiki-announce MediaWiki-kiadások levelezőlistája]",
+* [https://lists.wikimedia.org/mailman/listinfo/mediawiki-announce MediaWiki-kiadások levelezőlistája]",
 
 'about'          => 'Névjegy',
 'article'        => 'Szócikk',
@@ -470,7 +471,7 @@ $messages = array(
 'otherlanguages'    => 'Más nyelveken',
 'redirectedfrom'    => '($1 szócikkből átirányítva)',
 'redirectpagesub'   => 'Átirányító lap',
-'lastmodifiedat'    => 'A lap utolsó módosítása $2, $1.', # $1 date, $2 time
+'lastmodifiedat'    => 'A lap utolsó módosítása: $1, $2', # $1 date, $2 time
 'viewcount'         => 'Ezt a lapot {{PLURAL:$1|egy|$1}} alkalommal keresték föl.',
 'protectedpage'     => 'Védett lap',
 'jumpto'            => 'Ugrás:',
@@ -529,7 +530,7 @@ $messages = array(
 'restorelink'             => '{{PLURAL:$1|Egy|$1}} törölt szerkesztés',
 'feedlinks'               => 'Hírcsatorna:',
 'feed-invalid'            => 'Érvénytelen a figyelt hírcsatorna típusa.',
-'feed-unavailable'        => 'Nincs elérhető hírcsatorna a(z) {{SITENAME}} wikin',
+'feed-unavailable'        => 'A wikin nincs elérhető hírcsatorna',
 'site-rss-feed'           => '$1 RSS csatorna',
 'site-atom-feed'          => '$1 Atom hírcsatorna',
 'page-rss-feed'           => '„$1” RSS hírcsatorna',
@@ -699,12 +700,14 @@ Ellenőrizd, hogy helyesen írtad-e be.',
 Legalább {{PLURAL:$1|egy|$1}} karakterből kell állnia, és nem egyezhet meg a felhasználói neveddel.',
 'mailmypassword'             => 'Új jelszó küldése e-mailben',
 'passwordremindertitle'      => 'Ideiglenes jelszó a(z) {{SITENAME}} wikire',
-'passwordremindertext'       => 'Valaki (vélhetően te, a(z) $1 IP-címről)
-azt kérte, hogy küldjünk neked új {{SITENAME}}-jelszót ($4).
-A(z) "$2" nevű szerkesztő jelszava jelenleg "$3".
-Lépj be, és változtasd meg.
+'passwordremindertext'       => 'Valaki (vélhetően te, a(z) $1 IP-címről) új jelszót kért a(z)
+{{SITENAME}} wikis ($4) felhasználói fiókjához.
+"$2" számára most egy ideiglenes jelszót készítettünk: "$3".
+Ha te kértél új jelszót, lépj be, és változtasd meg.
 
-Ha nem kértél új jelszót, vagy közben eszedbe jutott a régi, és már nem akarod megváltoztatni, nyugodtan hagyd figyelmen kívül ezt az értesítést, és használd továbbra is a régi jelszavadat.',
+Ha nem te küldted a kérést, vagy közben eszedbe jutott a régi,
+és már nem akarod megváltoztatni, nyugodtan hagyd figyelmen kívül
+ezt az üzenetet, és használd továbbra is a régi jelszavadat.',
 'noemail'                    => '„$1” e-mail címe nincs megadva.',
 'passwordsent'               => 'Az új jelszót elküldtük „$1” e-mail címére.
 Lépj be a levélben található adatokkal.',
@@ -733,11 +736,11 @@ Ha nem kértél új azonosítót, és tévedésből kaptad ezt a levelet, nyugod
 'resetpass'               => 'A fiók jelszavának módosítása',
 'resetpass_announce'      => 'Az e-mailben elküldött ideiglenes kóddal jelentkeztél be. A bejelentkezés befejezéséhez meg kell megadnod egy új jelszót:',
 'resetpass_text'          => '<!-- Ide írd a szöveget -->',
-'resetpass_header'        => 'Jelszó módosítása',
+'resetpass_header'        => 'A fiókhoz tartozó jelszó megváltoztatása',
 'resetpass_submit'        => 'Add meg a jelszót és jelentkezz be',
 'resetpass_success'       => 'A jelszavad megváltoztatása sikeresen befejeződött! Bejelentkezés...',
 'resetpass_bad_temporary' => 'Az ideiglenes jelszó hibás. Lehet, hogy már sikeresen megváltoztattad a jelszavadat, vagy új ideiglenes jelszót kértél.',
-'resetpass_forbidden'     => 'A jelszavak nem változtathatóak meg ebben a wikiben',
+'resetpass_forbidden'     => 'A jelszavak nem változtathatóak meg',
 'resetpass_missing'       => 'Az űrlap adatai hiányoznak.',
 
 # Edit page toolbar
@@ -895,10 +898,10 @@ egy szövegfájlba, amit elmenthetsz későbbre.</strong>',
 'nocreatetitle'                    => 'Az oldallétrehozás korlátozott',
 'nocreatetext'                     => 'Ezen a webhelyen korlátozták az új oldalak készítését.
 Visszamehetsz és szerkeszthetsz egy létező lapot, valamint [[Special:UserLogin|bejelentkezhetsz vagy készíthetsz egy felhasználói fiókot]].',
-'nocreate-loggedin'                => 'Nem hozhatsz létre új lapokat a(z) {{SITENAME}} wikiben.',
+'nocreate-loggedin'                => 'Nincs jogod új lapokat létrehozni.',
 'permissionserrors'                => 'Engedélyezési hiba',
 'permissionserrorstext'            => 'A művelet elvégzése nem engedélyezett a számodra, a következő {{PLURAL:$1|ok|okok}} miatt:',
-'permissionserrorstext-withaction' => 'Nincs jogosultságod a(z) $2 elvégzéséhez, az alábbi {{PLURAL:$1|ok|okok}} miatt:',
+'permissionserrorstext-withaction' => 'Nincs jogosultságod a következő művelet elvégzéséhez: $2, az alábbi {{PLURAL:$1|ok|okok}} miatt:',
 'recreate-deleted-warn'            => "'''Vigyázat: egy olyan lapot akarsz létrehozni, amelyet korábban már töröltünk.'''
 
 Mielőtt létrehoznád, nézd meg, miért került korábban törlésre és ellenőrizd,
@@ -974,13 +977,13 @@ Mivel adminisztrátor vagy ezen a webhelyen, te megtekintheted; további részle
 'revdelete-nooldid-title'     => 'Érvénytelen célváltozat',
 'revdelete-nooldid-text'      => 'Nem adtad meg a célváltozato(ka)t, a megadott változat nem létezik,
 vagy a legutolsó változatot próbáltad meg elrejteni.',
-'revdelete-selected'          => "{{PLURAL:$2|Kiválasztott változat|Kiválasztott változatok}} - '''$1:'''",
-'logdelete-selected'          => '{{PLURAL:$1|Kiválasztott naplóesemény|Kiválasztott naplóesemények}}:',
-'revdelete-text'              => 'A törölt változatok és események még láthatók lesznek a lap előzményeiben és naplójában,
-azonban a tartalmuknak csak egy része lesz a nyilvánosság számára hozzáférhetetlen.
+'revdelete-selected'          => "'''{{PLURAL:$2|Kiválasztott változat|Kiválasztott változatok}} - $1:'''",
+'logdelete-selected'          => "'''{{PLURAL:$1|Kiválasztott naplóesemény|Kiválasztott naplóesemények}}:'''",
+'revdelete-text'              => "'''A törölt változatok és események még láthatók lesznek a lap előzményeiben és naplójában,
+azonban a tartalmuknak csak egy része lesz a nyilvánosság számára hozzáférhetetlen.'''
 
 Ezen wiki többi adminisztrátora még hozzá tud férni a rejtett tartalomhoz, és
-vissza tudja ugyanezen a kezelőfelületen keresztül állítani, ha nincs megadva további korlátozás.',
+vissza tudja ugyanezen a kezelőfelületen keresztül állítani, ha nincs megadva további korlátozás.",
 'revdelete-legend'            => 'Korlátozások megadása:',
 'revdelete-hide-text'         => 'Változat szövegének elrejtése',
 'revdelete-hide-name'         => 'Művelet és cél elrejtése',
@@ -1094,7 +1097,7 @@ Győződj meg róla, hogy a laptörténet folytonossága megmarad.',
 'mypreferences'            => 'beállításaim',
 'prefs-edits'              => 'Szerkesztéseid száma:',
 'prefsnologin'             => 'Nem jelentkeztél be',
-'prefsnologintext'         => 'Saját beállításaid elmentéséhez <span class="plainlinks">[{{fullurl:Special:Userlogin|returnto=$1}} be kell jelentkezned.] </span>',
+'prefsnologintext'         => 'Saját beállításaid elmentéséhez <span class="plainlinks">[{{fullurl:Special:UserLogin|returnto=$1}} be kell jelentkezned.] </span>',
 'prefsreset'               => 'A beállítások visszaállításra kerültek a tárolóból.',
 'qbsettings'               => 'Gyorsmenü',
 'qbsettings-none'          => 'Nincs',
@@ -1359,7 +1362,7 @@ Ha rendelkezel a teljesméretű képpel, akkor töltsd fel azt, egyébként kér
 'uploadedimage'               => '„[[$1]]” felküldve',
 'overwroteimage'              => 'feltöltötte a(z) „[[$1]]” kép új változatát',
 'uploaddisabled'              => 'Feltöltések kikapcsolva',
-'uploaddisabledtext'          => 'A fájlfeltöltés nincs engedélyezve a(z) {{SITENAME}} wikin',
+'uploaddisabledtext'          => 'A fájlfeltöltés nem engedélyezett.',
 'uploadscripted'              => 'Ez a fájl olyan HTML- vagy parancsfájlkódot tartalmaz, melyet tévedésből egy webböngésző esetleg értelmezni próbálhatna.',
 'uploadcorrupt'               => 'A fájl sérült vagy hibás a kiterjesztése. Légy szíves ellenőrizd a fájlt és próbálkozz újra!',
 'uploadvirus'                 => 'Ez a fájl vírust tartalmaz! A részletek: $1',
@@ -1469,7 +1472,7 @@ Az oszlopok címeire kattintva változtathatod meg a rendezést.',
 'filedelete-submit'           => 'Törlés',
 'filedelete-success'          => "A(z) '''$1''' médiafájlt törölted.",
 'filedelete-success-old'      => "A(z) '''[[Media:$1|$1]]''' $3, $2-kori változata sikeresen törölve lett.",
-'filedelete-nofile'           => "'''$1''' nevű fájl nem létezik ezen a wikin.",
+'filedelete-nofile'           => "'''$1''' nem létezik.",
 'filedelete-nofile-old'       => "A(z) '''$1''' fájlnak nincs a megadott tulajdonságokkal rendelkező archivált változata.",
 'filedelete-iscurrent'        => 'A fájl aktuális változatát próbáltad meg törölni.
 Először állítsd vissza az egyik régebbi változatot.',
@@ -1494,7 +1497,8 @@ Először állítsd vissza az egyik régebbi változatot.',
 
 # Unused templates
 'unusedtemplates'     => 'Nem használt sablonok',
-'unusedtemplatestext' => 'Ez a lap azon sablon névtérben lévő lapokat gyűjti össze, melyek nem találhatók meg más lapokon. Ellenőrizd a hivatkozásokat, mielőtt törölnéd őket.',
+'unusedtemplatestext' => 'Ez a lap azon {{ns:template}} névtérbe tartozó lapokat gyűjti össze, melyek nincsenek használva egyetlen lapon sem.
+Ellenőrizd a meglévő hivatkozásokat, mielőtt törölnéd őket.',
 'unusedtemplateswlh'  => 'más hivatkozások',
 
 # Random page
@@ -1554,7 +1558,7 @@ Egy oldal egyértelműsítő lapnak számít, ha tartalmazza a [[MediaWiki:Disam
 'nviews'                  => '$1 megtekintés',
 'specialpage-empty'       => 'Ez az oldal üres.',
 'lonelypages'             => 'Magányos lapok',
-'lonelypagestext'         => 'A következő lapokra nem mutat belső link.',
+'lonelypagestext'         => 'A következő lapok nincsenek linkelve vagy beillesztve más lapokra a(z) {{SITENAME}} wikin.',
 'uncategorizedpages'      => 'Kategorizálatlan lapok',
 'uncategorizedcategories' => 'Kategorizálatlan kategóriák',
 'uncategorizedimages'     => 'Kategorizálatlan képek',
@@ -1594,7 +1598,7 @@ hivatkozhatnak egy fájl URL-jére, ezért szerepelhet itt annak
 ellenére, hogy aktívan használják.</p>',
 'unusedcategoriestext'    => 'A következő kategóriákban egyetlen szócikk, illetve alkategória sem szerepel.',
 'notargettitle'           => 'Nincs cél',
-'notargettext'            => 'Nem adtál meg lapot vagy usert keresési célpontnak.',
+'notargettext'            => 'Nem adtad meg annak a lapnak vagy szerkesztőnek a nevét, amin a műveletet végre akartad hajtani.',
 'nopagetitle'             => 'A megadott céllap nem létezik',
 'nopagetext'              => 'A megadott céllap nem létezik.',
 'pager-newer-n'           => '{{PLURAL:$1|1 újabb|$1 újabb}}',
@@ -1664,7 +1668,8 @@ Az egyes csoportokról további információt [[{{MediaWiki:Listgrouprights-help
 'mailnologintext' => 'Ahhoz hogy másoknak e-mailt küldhess, [[Special:UserLogin|be kell jelentkezned]] és meg kell adnod egy érvényes e-mail címet a [[Special:Preferences|beállításaidban]].',
 'emailuser'       => 'E-mail küldése ezen szerkesztőnek',
 'emailpage'       => 'E-mail küldése',
-'emailpagetext'   => 'Ha ez a szerkesztő érvényes e-mail-címet adott meg a beállításainál, akkor ezen űrlap kitöltésével üzenetet tudsz neki küldeni. Feladóként a beállításaid között megadott e-mail-címed fog szerepelni, így a címzett tud majd válaszolni.',
+'emailpagetext'   => 'A szerkesztő e-mail-címére ezen űrlap kitöltésével üzenetet tudsz küldeni.
+Feladóként a [[Special:Preferences|beállításaid]]nál megadott e-mail-címed fog szerepelni, így a címzett közvetlenül neked tud majd válaszolni.',
 'usermailererror' => 'A postázó objektum által visszaadott hiba:',
 'defemailsubject' => '{{SITENAME}} e-mail',
 'noemailtitle'    => 'Nincs e-mail cím',
@@ -1901,6 +1906,8 @@ Lásd a [[Special:Log/delete|törlési naplót]] a legutóbbi törlések és hel
 'undelete-error-long'          => 'Hiba történt a fájl helyreállítása során:
 
 $1',
+'undelete-show-file-confirm'   => 'Biztosan meg akarod nézni a(z) "<nowiki>$1</nowiki>" fájl $2, $3-kori törölt változatát?',
+'undelete-show-file-submit'    => 'Igen',
 
 # Namespace form on various pages
 'namespace'      => 'Névtér:',
@@ -1978,7 +1985,7 @@ $1',
 'ipb-edit-dropdown'               => 'Blokkolási okok szerkesztése',
 'ipb-unblock-addr'                => '$1 blokkjának feloldása',
 'ipb-unblock'                     => 'Felhasználónév vagy IP-cím blokkolásának feloldása',
-'ipb-blocklist-addr'              => '$1 aktív blokkjainak megtekintése',
+'ipb-blocklist-addr'              => '$1 aktív blokkjai',
 'ipb-blocklist'                   => 'Létező blokkok megtekintése',
 'unblockip'                       => 'Blokk feloldása',
 'unblockiptext'                   => 'Itt tudod visszaadni egy blokkolt felhasználónévnek vagy IP-nek a szerkesztési jogosultságot.',
@@ -2072,7 +2079,7 @@ győződj meg a folytatás előtt arról, hogy tisztában vagy-e a következmén
 
 Ezen esetekben a vitalapot külön, kézzel kell átnevezned a kívánságaid szerint.",
 'movearticle'             => 'Lap átnevezése',
-'movenotallowed'          => 'A lapok áthelyezése ebben a wikiben számodra nem engedélyezett.',
+'movenotallowed'          => 'Nincs jogod a lapok átnevezéséhez.',
 'newtitle'                => 'Az új cím:',
 'move-watch'              => 'Figyeld a lapot',
 'movepagebtn'             => 'Lap átnevezése',
@@ -2179,6 +2186,8 @@ Valamennyi transwiki importálási művelet az [[Special:Log/import|importálás
 'import-nonewrevisions'      => 'A korábban importált összes változat.',
 'xml-error-string'           => '$1 a(z) $2. sorban, $3. oszlopban ($4. bájt): $5',
 'import-upload'              => 'XML-adatok feltöltése',
+'import-token-mismatch'      => 'Elveszett a session adat, próbálkozz újra.',
+'import-invalid-interwiki'   => 'A kijelölt wikiből nem lehet importálni.',
 
 # Import log
 'importlogpage'                    => 'Importnapló',
@@ -2213,8 +2222,8 @@ Valamennyi transwiki importálási művelet az [[Special:Log/import|importálás
 'tooltip-search'                  => 'Keresés a wikin',
 'tooltip-search-go'               => 'Ugrás a megadott lapra, ha létezik',
 'tooltip-search-fulltext'         => 'Oldalak keresése a megadott szöveg alapján',
-'tooltip-p-logo'                  => 'Főlap',
-'tooltip-n-mainpage'              => 'A főlap felkeresése',
+'tooltip-p-logo'                  => 'Kezdőlap',
+'tooltip-n-mainpage'              => 'A kezdőlap felkeresése',
 'tooltip-n-portal'                => 'A közösségről, miben segíthetsz, mit hol találsz meg',
 'tooltip-n-currentevents'         => 'Háttérinformáció az aktuális eseményekről',
 'tooltip-n-recentchanges'         => 'A wikiben történt legutóbbi változtatások listája',
@@ -2625,7 +2634,7 @@ tartalmazni fogja. A többi alapértelmezésként rejtett marad.
 
 # External editor support
 'edit-externally'      => 'A fájl szerkesztése külső alkalmazással',
-'edit-externally-help' => 'Lásd a [http://www.mediawiki.org/wiki/Manual:External_editors „setup instructions”] leírást (angolul) ennek használatához.',
+'edit-externally-help' => '(Lásd a [http://www.mediawiki.org/wiki/Manual:External_editors használati utasítást] (angolul) a beállításához.)',
 
 # 'all' in various places, this might be different for inflected languages
 'recentchangesall' => 'összes',

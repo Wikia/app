@@ -7,6 +7,7 @@
  * @author Consta
  * @author Omnipaedista
  * @author Sinopeus
+ * @author Urhixidur
  */
 
 $namespaceNames = array(
@@ -208,6 +209,8 @@ $messages = array(
 'disclaimerpage'       => 'Project:Ιμπρέσουμ',
 'edithelp'             => "Βοήθεια για τ' αλλαγμαν",
 'edithelppage'         => 'Help:Άλλαγμαν',
+'faq'                  => 'Πολλά ερωτήσεις (FAQ)',
+'faqpage'              => 'Project:Πολλά ερωτήσεις (FAQ)',
 'helppage'             => 'Help:Περιεχόμενα',
 'mainpage'             => 'Αρχικόν σελίδα',
 'mainpage-description' => 'Αρχικόν σελίδα',
@@ -324,7 +327,7 @@ $messages = array(
 'loginsuccesstitle'       => "Έντον τ' εσέβεμαν",
 'loginsuccess'            => "'''Εσήβετεν σο {{SITENAME}} ους \"\$1\".'''",
 'nosuchuser'              => 'Αδά \'κ εχ\' χρήστεν με τ\' όνεμαν "$1".
-Το γράψιμον ωρία γιά [[Special:Userlogin/signup|ποίσον καινούρεον λογαρίαν]].',
+Το γράψιμον ωρία γιά [[Special:UserLogin/signup|ποίσον καινούρεον λογαρίαν]].',
 'nosuchusershort'         => 'Αδά \'κ εχ\' χρήστεν με τ\' όνομα "<nowiki>$1</nowiki>".
 Το γράψιμονις ωρία.',
 'nouserspecified'         => "Πρέπ' να ψιλίζετε έναν όνεμαν.",
@@ -439,7 +442,7 @@ $messages = array(
 Εάν 'κ θέλετε ατό να ίνεται, να μην εφτάτε το αποθήκεμαν.<br />
 Καμμίαν κι ανασπάλλετε: Αδακά 'κ εν ο τόπον για να θέκουμε γράψιμον ντ' έγραψαν αλλ. Βαλέστε άρθρα όνταν κατέχετε τα δικαιώματα πνευματί μαναχόν. 
 <strong>ΚΑΜΜΙΑΝ 'Κ ΘΕΚΕΤΕ ΓΡΑΨΙΜΟΝ ΑΔΑΚΑ ΟΝΤΕΣ 'Κ ΕΧΕΤΕ ΤΑ ΔΙΚΑΙΩΜΑΤΑ ΠΝΕΥΜΑΤΙ!</strong>",
-'longpagewarning'        => "<strong>ΩΡΙΑ: Αβούτεν η σελίδαν έχ' μέγεθος $1kb. Μερικά browser 'κ επορούν ν' επεξεργάσκουνταν σελίδας ντ' έχνε 32kb κιαν. Επορείτε να λύετε το πρόβλημαν αν εφτάτεν ατέναν μικρά κομμάται.</strong>",
+'longpagewarning'        => "<strong>ΩΡΙΑ: Αβούτεν η σελίδαν έχ' μέγεθος $1 kb. Μερικά browser 'κ επορούν ν' επεξεργάσκουνταν σελίδας ντ' έχνε 32 kb κιαν. Επορείτε να λύετε το πρόβλημαν αν εφτάτεν ατέναν μικρά κομμάται.</strong>",
 'templatesused'          => "Πρότυπα το μεταχειρίσκουνταν σ' αβούτεν την σελίδαν:",
 'templatesusedpreview'   => "Πρότυπα σ' αβούτον το πρώτον τέρεμαν:",
 'template-protected'     => '(ασπαλιγμένον)',
@@ -464,9 +467,9 @@ $messages = array(
 'currentrevisionlink' => 'Ατωριζνόν μορφήν',
 'cur'                 => 'ατωριζνόν',
 'next'                => 'επόμενον',
-'last'                => 'υστερνόν',
+'last'                => 'τελευταίον',
 'page_first'          => 'πρώτον',
-'page_last'           => 'υστερνόν',
+'page_last'           => 'τελευταίον',
 'histlegend'          => 'Σύγκριμα διαφορίων: βαλέστεν τα μορφάς το θέλετε και τερέστεν τα διαφοράσατουν. Για να τερείτε τα διαφοράς, ποίστεν έναν κλικ σο πεδίον το λεει "Γαρσουλαεύτε...". <br />
 Πληροφορία: (ατωριζνόν) = διαφοράς με τ\' ατωριζνόν τη μορφήν,
 (υστερνόν) = διαφοράς με τ\' υστερνόν τη μορφήν, μ = μικρά διαφοράς.',
@@ -506,8 +509,11 @@ $messages = array(
 'search-external'          => 'Εύρον σα εξ μερέαν',
 
 # Preferences page
-'preferences'       => 'Προτιμήσαι',
-'mypreferences'     => "Τ' εμά τα προτιμήσαι",
+'preferences'       => 'Αγαπεμένα',
+'mypreferences'     => "Τ' εμά τ' αγαπεμένα",
+'changepassword'    => 'Άλλαξον σημάδιν',
+'dateformat'        => 'Μορφή ημερομηνίας',
+'datetime'          => 'Ημερομηνίαν και ώραν',
 'prefs-misc'        => 'Διαφ',
 'saveprefs'         => 'Αποθήκεμαν',
 'oldpassword'       => 'Παλαιόν σημάδιν:',
@@ -516,6 +522,8 @@ $messages = array(
 'searchresultshead' => 'Εύρον',
 
 # Groups
+'group-user'  => 'Χρήστες',
+'group-bot'   => 'Bots',
 'group-sysop' => 'Νοματέοι',
 'group-all'   => '(ούλαι)',
 
@@ -526,6 +534,13 @@ $messages = array(
 'grouppage-sysop' => '{{ns:project}}:Νοματέοι',
 
 # Rights
+'right-read'          => 'Δέβασον σελίδας',
+'right-edit'          => 'Άλλαξον σελίδας',
+'right-createpage'    => "Ποίσον σελίδας (ντο 'κ εν σελίδας καλατζεματί)",
+'right-createtalk'    => 'Ποίσον σελίδας καλατζεματί',
+'right-createaccount' => 'Ποίσον καινούρεα λογαρίας χρηστίων',
+'right-upload'        => 'Φόρτωσον αρχεία',
+'right-upload_by_url' => "Φόρτωσον αρχείον ασ' έναν URL",
 'right-delete'        => 'Σβήσον σελίδας',
 'right-bigdelete'     => 'Σβήσον σελίδας με τρανά ιστορίας',
 'right-browsearchive' => 'Αράεμαν σα σβημένα σελίδας',
@@ -560,15 +575,15 @@ $messages = array(
 # Recent changes linked
 'recentchangeslinked'          => 'Σχετικά αλλαγάς',
 'recentchangeslinked-title'    => 'Αλλαγάς τη "$1"',
-'recentchangeslinked-noresult' => "Σ' αβούτα τα σελίδας 'κ εγένταν αλλάγματα.",
+'recentchangeslinked-noresult' => "Σ' αβούτα τα σελίδας 'κ εγένταν αλλαγάς.",
 'recentchangeslinked-summary'  => "Αβούτος εν κατάλογον με τ' υστερνά τ' αλλαγάς σελιδίων με σύνδεσμον ασ' έναν συγκεκριμένον σελίδαν (για σε σελίδας συγκεκριμένου κατηγορίας).
 Τα σελίδας σον [[Special:Watchlist|κατάλογον ωριαγματί]] είν' '''σκηρά'''.",
 'recentchangeslinked-page'     => 'Όνεμαν σελίδας:',
 
 # Upload
-'upload'            => 'Φόρτωμα αρχείου',
-'uploadbtn'         => 'Φόρτωμα αρχείου',
-'reupload'          => 'Αξάν φόρτωμαν',
+'upload'            => 'Φόρτωσον αρχείον',
+'uploadbtn'         => 'Φόρτωσον αρχείον',
+'reupload'          => 'Φόρτωσον αξάν',
 'uploadnologin'     => "'Κ είστουν απές. Εμπάτε σην λογαρίανεσουν.",
 'uploadnologintext' => "Πρεπ' σην σελίδαν [[Special:UserLogin|απές]] να είσνε (log in) για πορείτε να φορτώνετε αρχεία.",
 'uploaderror'       => 'Έντον λάθος σο φόρτωμαν',
@@ -678,6 +693,8 @@ $messages = array(
 'ancientpages'            => 'Ασ’ όλιον παλαιά σελίδας',
 'move'                    => 'Ετεροχλάεμαν',
 'movethispage'            => "Άλλαξον τ' όνεμα τη σελίδας",
+'pager-newer-n'           => '{{PLURAL:$1|κιάλλο καινούρεο 1|κιάλλο καινούρεα $1}}',
+'pager-older-n'           => '{{PLURAL:$1|κιάλλο παλαιόν 1|κιάλλο παλαιά $1}}',
 
 # Book sources
 'booksources'               => 'Βιβλιογραφικά πηγάς',
@@ -779,6 +796,9 @@ $messages = array(
 'restriction-type'            => 'Δικαίωμαν:',
 'restriction-level'           => 'Επίπεδον περιορισμού:',
 
+# Restrictions (nouns)
+'restriction-upload' => "Σκώσ' ατό",
+
 # Undelete
 'undeletebtn'            => 'Ποίσον ξαν',
 'undelete-search-submit' => 'Εύρον',
@@ -800,6 +820,7 @@ $messages = array(
 'sp-contributions-newbies-sub' => 'Για τα καινούρεα τοι λογαρίας',
 'sp-contributions-blocklog'    => 'Αρχείον ασπαλιγματίων',
 'sp-contributions-search'      => 'Εύρον συνεισφοράντας',
+'sp-contributions-username'    => 'Διεύθυνσην IP γιά όνεμαν χρήστε:',
 'sp-contributions-submit'      => 'Αράεμαν',
 
 # What links here
@@ -1034,7 +1055,7 @@ $messages = array(
 
 # External editor support
 'edit-externally'      => "Αλλαγήν τ' αρχείου με προγράμματα ασα εξ μερέα",
-'edit-externally-help' => 'Τερέστεν τα [http://www.mediawiki.org/wiki/Manual:External_editors setup instructions] και θα ευρίετε κι άλλα γνώσιας.',
+'edit-externally-help' => '(Τερέστεν τα [http://www.mediawiki.org/wiki/Manual:External_editors setup instructions] και θα ευρίετε κι άλλα πληροφορίας)',
 
 # 'all' in various places, this might be different for inflected languages
 'recentchangesall' => 'ούλαι',

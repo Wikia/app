@@ -8,6 +8,7 @@
  * @author Kaustubh
  * @author Shyam
  * @author Sunil Mohan
+ * @author Taxman
  * @author לערי ריינהארט
  */
 
@@ -167,7 +168,7 @@ $messages = array(
 == शुरुवात करें ==
 * [http://www.mediawiki.org/wiki/Manual:Configuration_settings कॉन्फिगरेशन सेटींगकी सूची]
 * [http://www.mediawiki.org/wiki/Manual:FAQ मीडियाविकिके बारे में प्राय: पूछे जाने वाले सवाल]
-* [http://lists.wikimedia.org/mailman/listinfo/mediawiki-announce मीडियाविकि मेलिंग लिस्ट]',
+* [https://lists.wikimedia.org/mailman/listinfo/mediawiki-announce मीडियाविकि मेलिंग लिस्ट]',
 
 'about'          => 'अबाउट',
 'article'        => 'लेख',
@@ -744,11 +745,11 @@ Don't forget to personalize your {{SITENAME}} preferences.",
 'revisiondelete'              => 'अवतरण हटायें/पुनर्स्थापित करें',
 'revdelete-nooldid-title'     => 'लक्ष्य अवतरण गलत',
 'revdelete-nooldid-text'      => 'इस क्रिया को करने के लिये आपने लक्ष्य अवतरण नहीं दियें हैं, या फिर आपने दिया हुआ अवतरण अस्तित्वमें नहीं हैं या फिर आप सद्य अवतरणको छुपा रहें हैं।',
-'revdelete-selected'          => '[[:$1]] {{PLURAL:$2|का चुना हुआ अवतरण|के चुने हुए अवतरण}}:',
-'logdelete-selected'          => '{{PLURAL:$1|चुना हुआ लॉग इवेंट|चुने हुए लॉग इवेंट्स}}:',
-'revdelete-text'              => 'हटायें गयें अवतरण और घटनायें अभी भी पन्ने के इतिहास और लॉग सूचीमें नजर आयेंगे, पर इसके पाठ सामान्य सदस्य देख नहीं पायेंगे।
+'revdelete-selected'          => "'''[[:$1]] {{PLURAL:$2|का चुना हुआ अवतरण|के चुने हुए अवतरण}}:'''",
+'logdelete-selected'          => "'''{{PLURAL:$1|चुना हुआ लॉग इवेंट|चुने हुए लॉग इवेंट्स}}:'''",
+'revdelete-text'              => "'''हटायें गयें अवतरण और घटनायें अभी भी पन्ने के इतिहास और लॉग सूचीमें नजर आयेंगे, पर इसके पाठ सामान्य सदस्य देख नहीं पायेंगे।'''
 
-{{SITENAME}} अन्य प्रबंधक अभी भी इसे देख सकते हैं और पुनर्स्थापित भी कर सकतें हैं, जब तक इससे ज्यादा प्रतिबंध ना लगायें जायें।',
+{{SITENAME}} अन्य प्रबंधक अभी भी इसे देख सकते हैं और पुनर्स्थापित भी कर सकतें हैं, जब तक इससे ज्यादा प्रतिबंध ना लगायें जायें।",
 'revdelete-legend'            => 'दृश्य प्रतिबंध निश्चित करें',
 'revdelete-hide-text'         => 'अवरतणका पाठ छुपायें',
 'revdelete-hide-name'         => 'क्रिया और लक्ष्य को छुपायें',
@@ -1704,7 +1705,7 @@ $1',
 
 # What links here
 'whatlinkshere'            => 'यहाँ क्या जुड़ता है',
-'whatlinkshere-title'      => '$1को जुडे हुए पन्ने',
+'whatlinkshere-title'      => '$1 से जुड़े हुए पन्ने',
 'whatlinkshere-page'       => 'पन्ना:',
 'whatlinkshere-barrow'     => '>',
 'linklistsub'              => '(कडियों की सूची)',

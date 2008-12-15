@@ -24,6 +24,10 @@
 //
 //////////////////////////////////////////////////////////////////////////
 
+echo "This script is insecure and shouldn't be used on a public wiki.\n";
+exit( 1 );
+
+
 include "wh_main.php";
 
 if(array_key_exists("lang", $_GET)) {
