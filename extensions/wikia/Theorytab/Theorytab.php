@@ -14,7 +14,7 @@ if(!defined('MEDIAWIKI')) {
  * @author Justin Bremer - Lostpedia
  * @license http://www.gnu.org/copyleft/gpl.html GNU General Public License 2.0 or later
  */
-$wgExtensionMessageFiles['Theorytab'] = dir( __FILE__ ) . '/Theorytab.i18n.php';
+$wgExtensionMessagesFiles['Theorytab'] = dirname( __FILE__ ) . '/Theorytab.i18n.php';
 $wgExtensionCredits['other'][] = array(
     'name' => 'Theory Tab',
     'description' => 'Adds a theories tab to articles',
