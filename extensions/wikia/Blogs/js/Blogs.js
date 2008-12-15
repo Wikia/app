@@ -89,7 +89,7 @@ YAHOO.Wikia.Blogs.submit = function( event, id ) {
 		}
 		YAHOO.util.Event.preventDefault( event );
 		YAHOO.util.Connect.setForm( oForm, false );
-		YAHOO.util.Connect.asyncRequest( "POST", wgServer + wgScriptPath + wgScript + "?action=ajax&rs=BlogComments::axPost&title=" + wgTitle.replace(" ", "_"), YAHOO.Wikia.Blogs.callback );
+		YAHOO.util.Connect.asyncRequest( "POST", wgServer + wgScriptPath + wgScript + "?action=ajax&rs=BlogComment::axPost&title=" + wgTitle.replace(" ", "_"), YAHOO.Wikia.Blogs.callback );
 	}
 };
 
