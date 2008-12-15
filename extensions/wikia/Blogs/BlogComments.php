@@ -91,8 +91,10 @@ class BlogComment {
 	 *
 	 * @param Revision $revision -- object of revision
 	 */
-	public function setRevision( Revision $revision ) {
-		$this->mRevision = $revision;
+	public function setRevision( $revision ) {
+		if( $revision ) {
+			$this->mRevision = $revision;
+		}
 	}
 
 	/**
