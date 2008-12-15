@@ -5,7 +5,7 @@ return{version:'1.0'}}();YAHOO.Tools.getHeight=function(elm){var elm=$(elm);var 
 return h;}
 YAHOO.Tools.getCenter=function(elm){var elm=$(elm);var cX=Math.round(($D.getViewportWidth()-parseInt($D.getStyle(elm,'width')))/2);var cY=Math.round(($D.getViewportHeight()-parseInt(this.getHeight(elm)))/2);return[cX,cY];}
 YAHOO.Tools.makeTextObject=function(txt){return document.createTextNode(txt);}
-YAHOO.Tools.makeChildren=function(arr,elm){var elm=$(elm);for(var i in arr){_val=arr[i];if(typeof _val=='string'){_val=this.makeTxtObject(_val);}
+YAHOO.Tools.makeChildren=function(arr,elm){var elm=$(elm);for(var i in arr){_val=arr[i];if(typeof _val=='string'){_val=this.makeTextObject(_val);}
 elm.appendChild(_val);}}
 YAHOO.Tools.styleToCamel=function(str){var _tmp=str.split('-');var _new_style=_tmp[0];for(var i=1;i<_tmp.length;i++){_new_style+=_tmp[i].substring(0,1).toUpperCase()+_tmp[i].substring(1,_tmp[i].length);}
 return _new_style;}
