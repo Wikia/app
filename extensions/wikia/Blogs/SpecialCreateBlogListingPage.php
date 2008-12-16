@@ -11,7 +11,7 @@ class CreateBlogListingPage extends SpecialBlogPage {
 
 	public function __construct() {
 		// initialise messages
-		wfLoadExtensionMessages('CreateBlogListingPage');
+		wfLoadExtensionMessages( "Blogs" );
 		parent::__construct( 'CreateBlogListingPage' /*class*/, '' /*restriction*/, true);
 	}
 
