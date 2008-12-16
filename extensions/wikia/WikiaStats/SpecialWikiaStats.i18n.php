@@ -46,6 +46,7 @@ $wgWikiaStatsMessages["en"] = array(
 	"wikiastats_page_edits_count" => "$1 most edited articles found",
 	"wikiastats_other_nspaces_edits_count" => "$1 most edited pages found",
 	"wikiastats_active_wikians_date" => "Show changes for last",
+	"wikiastats_active_day" => "day",
 	"wikiastats_active_month" => "month",
 	"wikiastats_active_year" => "year",
 	"wikiastats_active_months" => "months",
@@ -293,5 +294,7 @@ $wgWikiaStatsMessages["en"] = array(
 	"wikiastats_nbr_mega" => "M = K x 1000",
 	"wikiastats_nbr_giga" => "G = M x 1000",
 	"wikiastats_nbr_format" => "Numbers format: ",
+	"wikiastats_pageviews_daily" => "Daily stats (current month)",
+	"wikiastats_pageviews_month" => "Monthly stats",
 );
 ?>

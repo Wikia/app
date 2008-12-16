@@ -365,6 +365,21 @@ class WikiaGenericStats {
 		return $columnName;
 	}
 
+	static private function getContentNamespaces() {
+		global $wgContentNamespaces;
+		$namespaces = array_merge(array(NS_MAIN), $wgContentNamespaces);
+
+		/* DON'T CHANGE IT AND REMOVE IT !!!! */		
+		$otherNamespace = array(
+			500 /* NS_BLOG_ARTICLE */,  
+			502 /* NS_BLOG_LISTING */
+		);
+		
+		$namespaces = array_merge($namespaces, $otherNamespace);
+		
+		return $namespaces;
+	}
+
 	static private function makeWikiNameFromUrl($urlshort) {
 		$shorturl = "";
 		if (is_array($urlshort)) {
@@ -421,7 +436,7 @@ class WikiaGenericStats {
 
 	static private function getUserEditCountFromDB($cityDBName, $value)
 	{
-    	global $wgMemc, $wgContentNamespaces;
+    	global $wgMemc;
     	#---
 		wfProfileIn( __METHOD__ );
 		$result = array('count' => 0, 'sum' => 0);
@@ -429,7 +444,7 @@ class WikiaGenericStats {
 		$memkey = 'wikiacitystatseditcount_'.$cityDBName.'_'.$value;
 		$wikiacityedits = "";
 		#---
-		$namespaces = array_merge(array(NS_MAIN), $wgContentNamespaces);
+		$namespaces = self::getContentNamespaces();
 		
 		if (self::USE_MEMC) $wikiacityedits = $wgMemc->get($memkey);
 		if (empty($wikiacityedits)) {
@@ -576,12 +591,12 @@ class WikiaGenericStats {
 
 	static private function getWikiansListStatsFromDB($cityDBName, $namespace=0, $limit=STATS_WIKIANS_RANK_NBR, $stats_date=0, $userlist=array())
 	{
-    	global $wgMemc, $wgContentNamespaces;
+    	global $wgMemc;
     	#---
 		wfProfileIn( __METHOD__ );
 		#---
 		$namespace = intval($namespace);
-		$namespaces = array_merge(array(NS_MAIN), $wgContentNamespaces);
+		$namespaces = self::getContentNamespaces();
 		$namespaceList = implode(",", $namespaces);
 		#---
 		$whereUserList = "";
@@ -647,12 +662,12 @@ class WikiaGenericStats {
 
 	static private function getArticlesCountsFromDB($cityDBName, $size = 0, $namespace=0)
 	{
-    	global $wgMemc, $wgContentNamespaces;
+    	global $wgMemc;
     	#---
 		wfProfileIn( __METHOD__ );
 		$result = array();
 		$memkey = 'wikiacitystatsarticlecount_'.$cityDBName.'_'.$size.'_'.$namespace;
-		$namespaces = array_merge(array(NS_MAIN), $wgContentNamespaces);
+		$namespaces = self::getContentNamespaces();
 		$namespaceList = implode(",", $namespaces);
 		#---
 		if (self::USE_MEMC) $result = $wgMemc->get($memkey);
@@ -732,12 +747,12 @@ class WikiaGenericStats {
 
 	static private function getAnonUserStatisticsFromDB($cityDBName, $namespace=0, $limit=50)
 	{
-    	global $wgMemc, $wgContentNamespaces;
+    	global $wgMemc;
     	#---
 		wfProfileIn( __METHOD__ );
 		#---
 		$namespace = intval($namespace);
-		$namespaces = array_merge(array(NS_MAIN), $wgContentNamespaces);
+		$namespaces = self::getContentNamespaces();
 		$namespaceList = implode(",", $namespaces);
 		$result = array();
 		#---
@@ -799,13 +814,13 @@ class WikiaGenericStats {
 
 	static private function getPageEdistFromDB($cityDBName, $namespace = 0, $reg_users = 0, $limit=50)
 	{
-    	global $wgMemc, $wgContentNamespaces;
+    	global $wgMemc;
     	#---
 		wfProfileIn( __METHOD__ );
 		#---
 		$namespace = intval($namespace);
-		$namespaces = array_merge(array(NS_MAIN), $wgContentNamespaces);
-		$namespaceList = implode(",", $wgContentNamespaces);
+		$namespaces = self::getContentNamespaces();
+		$namespaceList = implode(",", $namespaces);
 		
 		$result = array();
 		#---
@@ -863,13 +878,13 @@ class WikiaGenericStats {
 
 	static private function getPageViewsFromDB($city_id)
 	{
-    	global $wgMemc, $wgContentNamespaces;
+    	global $wgMemc;
     	#---
 		wfProfileIn( __METHOD__ );
 		#---
 		$result = array();
 		#---
-		$namespaces = array_merge(array(NS_MAIN), $wgContentNamespaces);
+		$namespaces = self::getContentNamespaces();
 		$memkey = 'wikiacitystatspageviews_'.$city_id;
 		#---
 		if (self::USE_MEMC) $result = $wgMemc->get($memkey);
@@ -890,19 +905,34 @@ class WikiaGenericStats {
 				$sql .= "where {$where_city} and pv_use_date >= last_day(now() - interval @day day) group by pv_use_date, pv_namespace order by pv_use_date";
 				$res = $dbs->query($sql);
 				#---
-				$prevValues = array();
 				while ( $row = $dbs->fetchObject( $res ) ) {
 					$nspace = (in_array($row->pv_namespace, $namespaces)) ? NS_MAIN : $row->pv_namespace;
-					$result['months'][$row->pv_use_date][$nspace] = intval($row->cnt);
-					if (isset($prevValues[$nspace])) {
-						$result['trends'][$row->pv_use_date][$nspace] = self::calculateTrend($result['months'][$row->pv_use_date][$nspace], $prevValues[$nspace]);
+					if (isset($result['months'][$row->pv_use_date][$nspace])) {
+						$result['months'][$row->pv_use_date][$nspace] += intval($row->cnt);
+					} else {
+						$result['months'][$row->pv_use_date][$nspace] = intval($row->cnt);
 					}
-					$prevValues[$nspace] = $result['months'][$row->pv_use_date][$nspace];
 					if (!isset($result['namespaces'][$nspace])) {
 						$result['namespaces'][$nspace] = 0;
 					}
 					$result['namespaces'][$nspace] += intval($row->cnt);
 				} 
+
+				$prevValues = array();
+				if (!empty($result) && is_array($result['months'])) {
+					foreach ($result['months'] as $date => $rowNspace) {
+						foreach ($rowNspace as $nspace => $value) {
+							if (isset($prevValues[$nspace])) {
+								if (isset($result['trends'][$date][$nspace])) {
+									$result['trends'][$date][$nspace] += self::calculateTrend($result['months'][$date][$nspace], $prevValues[$nspace]);
+								} else {
+									$result['trends'][$date][$nspace] = self::calculateTrend($result['months'][$date][$nspace], $prevValues[$nspace]);
+								}
+							}
+							$prevValues[$nspace] = $result['months'][$date][$nspace];
+						}
+					}
+				}
 
 				unset($prevValues);
 				$prevValues = array();
@@ -914,18 +944,40 @@ class WikiaGenericStats {
 				#---
 				while ( $row = $dbs->fetchObject( $res ) ) {
 					$nspace = (in_array($row->pv_namespace, $namespaces)) ? NS_MAIN : $row->pv_namespace;
-					$result['months'][$row->pv_date][$nspace] = intval($row->cnt);
-					if (isset($prevValues[$nspace])) {
-						$result['trends'][$row->pv_date][$nspace] = self::calculateTrend($result['months'][$row->pv_date][$nspace], $prevValues[$nspace]);
+					if (isset($result_month['months'][$row->pv_date][$nspace])) {
+						$result_month['months'][$row->pv_date][$nspace] += intval($row->cnt);
+					} else {
+						$result_month['months'][$row->pv_date][$nspace] = intval($row->cnt);
 					}
-					$prevValues[$nspace] = $result['months'][$row->pv_date][$nspace];
 					if (!isset($result['namespaces'][$nspace])) {
 						$result['namespaces'][$nspace] = 0;
 					}
 					$result['namespaces'][$nspace] += intval($row->cnt);
 				}
+				
+				if (!empty($result_month) && is_array($result_month['months'])) {
+					foreach ($result_month['months'] as $date => $rowNspace) {
+						foreach ($rowNspace as $nspace => $value) {
+							if (isset($prevValues[$nspace])) {
+								if (isset($result_month['trends'][$date][$nspace])) {
+									$result_month['trends'][$date][$nspace] += self::calculateTrend($result_month['months'][$date][$nspace], $prevValues[$nspace]);
+								} else {
+									$result_month['trends'][$date][$nspace] = self::calculateTrend($result_month['months'][$date][$nspace], $prevValues[$nspace]);
+								}
+							}
+							$prevValues[$nspace] = $result_month['months'][$date][$nspace];
+						}
+					}
+				}
+				
+				if (isset($result['trends']) && isset($result_month['trends'])) {
+					$result['trends'] = array_merge($result['trends'], $result_month['trends']);
+				}
+				if (isset($result['months']) && isset($result_month['months'])) {
+					$result['months'] = array_merge($result['months'], $result_month['months']);
+				}
+				
 				$dbs->freeResult( $res );
-
 				#---
 				if (self::USE_MEMC) $wgMemc->set($memkey, $result, 60*60*3);
 			}
@@ -1576,21 +1628,90 @@ class WikiaGenericStats {
 			$aNamespaces = $wgCanonicalNamespaceNames;
 		}
 		
+		#- charts 
+		$chartHTML = "";
+		if (!empty($statsCount)) {
+			$stats = $statsCount['months'];
+			$nspaces = $statsCount['namespaces'];
+			$chartData = self::makePageViewsChartsData($stats, $nspaces);
+
+			#---
+			$chartSettings = array(
+				'maxsize' => MAX_CHART_HEIGHT,
+				'barwidth' => CHART_BAR_WIDTH,
+				'barunit' => CHART_BAR_WIDTH_UNIT,
+			);
+			
+			$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
+			$oTmpl->set_vars( array(
+				"city_id"				=> $city_id,
+				"statsKind"				=> "daily",
+				"chartValues"			=> $chartData['days'],
+				"days"					=> $chartData['date-days'],
+				"nspaces"				=> $nspaces,
+				"projectNamespace"		=> $mSourceMetaSpace,
+				"canonicalNamespace"	=> $aNamespaces,
+				"centralVersion" 		=> ($wgDBname == CENTRAL_WIKIA_ID),
+				"wgLang" 				=> $wgLang,
+				"chartSettings"			=> $chartSettings
+			));
+			#---
+			$chartHTML = $oTmpl->execute("pageviews-charts");
+
+			$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
+			$oTmpl->set_vars( array(
+				"city_id"				=> $city_id,
+				"statsKind"				=> "monthly",
+				"chartValues"			=> $chartData['months'],
+				"days"					=> $chartData['date-years'],
+				"nspaces"				=> $nspaces,
+				"projectNamespace"		=> $mSourceMetaSpace,
+				"canonicalNamespace"	=> $aNamespaces,
+				"centralVersion" 		=> ($wgDBname == CENTRAL_WIKIA_ID),
+				"wgLang" 				=> $wgLang,
+				"chartSettings"			=> $chartSettings
+			));
+
+			$chartHTML .= $oTmpl->execute("pageviews-charts");
+		}
+
 		#---
         $oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
         $oTmpl->set_vars( array(
-            "city_url"		=> self::getWikiaCityUrlById($city_id),
-            "statsCount" 	=> $statsCount,
-            "projectNamespace" => $mSourceMetaSpace,
-            "canonicalNamespace" => $aNamespaces,
-            "centralVersion" => ($wgDBname == CENTRAL_WIKIA_ID),
-            "wgLang" => $wgLang,
+            "city_url"				=> self::getWikiaCityUrlById($city_id),
+            "statsCount"			=> $statsCount,
+            "projectNamespace"		=> $mSourceMetaSpace,
+            "canonicalNamespace"	=> $aNamespaces,
+            "centralVersion"		=> ($wgDBname == CENTRAL_WIKIA_ID),
+            "wgLang"				=> $wgLang,
+            "chartHTML"				=> $chartHTML
         ));
         #---
         $res = $oTmpl->execute("pageviews-counts-stats");
+		        
         #---
 		wfProfileOut( __METHOD__ );
         return $res;
+	}
+
+	static private function makePageViewsChartsData($statsData, $nspaces) {
+		wfProfileIn( __METHOD__ );
+		$result = array( 'days' => array(), 'months' => array(), 'date-days' => array(), 'date-years' => array() );
+		if (!empty($statsData) && !empty($nspaces)) {
+			foreach ($statsData as $date => $row) {
+				$dateArr = explode("-",$date);
+				$is_month = 0;
+				if (!isset($dateArr[2])) {
+					$is_month = 1;
+				}
+				$result[($is_month == 1) ? 'date-years' : 'date-days'][$date] = 1;
+				foreach ($row as $n => $value) {
+					$result[($is_month == 1) ? 'months' : 'days'][$n][$date] = $value;
+				}
+			}
+		}
+		wfProfileOut( __METHOD__ );
+		return $result;
 	}
 
 	static private function setWikiEditPageDetailsOutput($city_id, $regCount, $unregCount)
@@ -2451,7 +2572,8 @@ class WikiaGenericStats {
 						self::makeWikiaPageViewsXLS($city_id, $pageViewsCount, $mSourceMetaSpace, $otherNspaces);
 						//self::makeWikiaMostEditOtherNspacesPagesXLS($city_id, $sortData, $mSourceMetaSpace);
 					}
-				}				
+				}
+				
 			}
 		}
 
