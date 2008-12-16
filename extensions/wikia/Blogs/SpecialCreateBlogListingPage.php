@@ -10,12 +10,8 @@ class CreateBlogListingPage extends SpecialBlogPage {
 	private $mTagBody = '';
 
 	public function __construct() {
-		global $wgExtensionMessagesFiles;
-
 		// initialise messages
-		$wgExtensionMessagesFiles['CreateBlogListingPage'] = dirname(__FILE__) . '/Blogs.i18n.php';
 		wfLoadExtensionMessages('CreateBlogListingPage');
-
 		parent::__construct( 'CreateBlogListingPage' /*class*/, '' /*restriction*/, true);
 	}
 
