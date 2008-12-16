@@ -65,12 +65,11 @@ class BlogAvatar {
 	public $mDefaultAvatars = false;
 
     public function __construct( User $User ) {
+
     	wfProfileIn( __METHOD__ );
-
-        wfLoadExtensionMessages( "Blogs" );
 		$this->mUser = $User;
-
         wfProfileOut( __METHOD__ );
+		
 	}
 
 	/**

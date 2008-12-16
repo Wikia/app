@@ -1,3 +1,79 @@
+#blogPostForm label { 
+	color: #cc4d33;
+	display: block; 
+	float: left;
+	padding-right: 1em; 
+	font-size: 12pt; 
+}
+
+#blogPostForm div.formErrors { 
+	color: red; 
+	font-weight: bold; 
+}
+
+#blogPostForm div.formBlock { 
+	border-bottom: 1px dashed #AAA; 
+	clear: left; 
+	float: left; 
+	padding: 15px 0; 
+	width: 100%;
+}
+
+#blogPostForm div.formLastBlock { 
+	width: 100%; 
+	clear: left; 
+	float: left; 
+	margin-top: 10px; 
+	margin-bottom: 10px; 
+	padding-bottom: 20px; 
+}
+
+#blogPostForm #blogPostTitle { 
+	clear: left; 
+	float: left; 
+	display: block; 
+}
+
+#CreateWikiForm div.row { 
+	padding: 0.8em; 
+	display: block !important; 
+	clear: both; 
+}
+
+tr { 
+	border: 1px solid #dcdcdc; 
+}
+
+.categoryCloudSection {
+	border: 1px solid lightgray;
+	padding: 15px 15px 15px 15px;
+}
+
+.wpCategoryTextarea {
+	display: none ;
+}
+
+#wpCategoryInput, #wpCategoryButton {
+	margin: 4px 2px 0 2px ;
+}
+
+.wpCategoryInput {
+	width: 230px ;
+}
+
+#blogPostCategoriesTitle {
+	color: #cc4d33;
+	padding-right: 1em;
+	font-size: 12pt;
+}
+
+.matches-info {
+	color: #060;
+	font-style: italic;
+	font-weight: bold;
+	margin-right: 1em;
+}
+
 /**
  *  Blog template
  */
@@ -228,4 +304,87 @@ span.avatar-overlay {
 #blog-comm-form-select select {
 	margin: 0;
 	float: right;
+}
+#user_masthead {
+	background: #d2d2b6;
+	font-size: 10pt;
+	margin: 2px 2px 0;
+	padding: 4px;
+}
+#user_masthead .avatar {
+	background: #FFF;
+	border: 1px solid #666;
+	float: left;
+	height: 50px;
+	margin-right: 5px;
+	padding: 2px;
+	width: 50px;
+}
+#user_masthead h2 {
+	font-size: 14pt;
+	margin: 7px 0 3px;
+}
+#user_masthead li {
+	float: left;
+	font-size: 9pt;
+	font-weight: bold;
+	padding: 5px;
+}
+#user_masthead li.selected {
+	background: #f2f2da;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+}
+#user_masthead li a {
+	color: #333;
+}
+#user_masthead li a.new {
+	color: inherit;
+}
+
+div.blog-comm-input {
+	background: #d2d2b6;
+	padding: 10px;
+}
+
+div.blog-comment {
+	margin: 2px 2px 0;
+	padding: 4px;
+}
+
+div.blog-comment p {
+	margin-bottom: 1em;
+}
+
+div.blog-comment .avatar {
+	background: #FFF;
+	border: 1px solid #666;
+	float: left;
+	height: 50px;
+	margin-right: 5px;
+	padding: 2px;
+	width: 50px;
+}
+
+div.blog-comment strong {
+	font-weight: bold;
+	font-size: 10pt;
+}
+
+avatarOverlayRight {
+	right:5px;
+	top:5px;
+}
+
+.avatarOverlay {
+	border: 1px solid #000;
+	margin: 6px -6px;
+	padding: 3px;
+	position: absolute;
+	top:0;
+}
+
+.avatarOverlay span {
+	cursor:pointer;
+	margin:0 3px;
 }

@@ -29,6 +29,19 @@ class BlogListPage extends Article {
 	private $mCount = 5;
 
 	/**
+	 * setup -- called on initialization
+	 *
+	 * @access public
+	 * @static
+	 */
+	public static function setup() {
+		global $wgOut, $wgStyleVersion, $wgExtensionsPath, $wgMergeStyleVersionJS, $wgJsMimeType;
+		$wgOut->addHtml( "<link rel=\"stylesheet\" type=\"text/css\" href=\"{$wgExtensionsPath}/wikia/Blogs/css/Blogs.css?{$wgStyleVersion}\" />" );
+		$wgOut->addScript( "<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/Blogs/js/Blogs.js?{$wgMergeStyleVersionJS}\" ></script>" );
+		wfLoadExtensionMessages( "Blogs" );
+	}
+
+	/**
 	 * overwritten Article::view function
 	 */
 	public function view() {
@@ -146,15 +159,12 @@ class BlogListPage extends Article {
 	 * @access private
 	 */
 	private function showBlogComments() {
-		global $wgOut, $wgJsMimeType, $wgExtensionsPath, $wgMergeStyleVersionJS;
+		global $wgOut;
 
 		wfProfileIn( __METHOD__ );
 
-		$rand = $wgMergeStyleVersionJS;
 		$page = BlogCommentList::newFromTitle( $this->mTitle );
 		$page->setProps( $this->mProps );
-
-		$wgOut->addScript( "<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/Blogs/js/Blogs.js?{$rand}\" ></script>" );
 	    $wgOut->addHTML( $page->render( true ) );
 
 		wfProfileOut( __METHOD__ );

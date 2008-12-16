@@ -4,12 +4,7 @@ $wgHooks['MonacoBeforePageBar'][] = 'userMasthead';
 function userMasthead() {
 	global $wgTitle, $wgUser, $userMasthead, $wgOut, $wgExtensionsPath, $wgStyleVersion, $wgRequest;
 
-	/**
-	 * we want to match in another way current used links
-	 */
-	$wgOut->addHtml("<link rel=\"stylesheet\" type=\"text/css\" href=\"{$wgExtensionsPath}/wikia/Blogs/css/UserMasthead.css?{$wgStyleVersion}\" />");
 	$namespace = $wgTitle->getNamespace();
-
 	$dbKey = $wgTitle->getDBkey();
 	$isAnon = $wgUser->isAnon();
 
