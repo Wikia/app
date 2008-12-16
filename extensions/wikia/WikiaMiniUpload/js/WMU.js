@@ -28,7 +28,6 @@ function WMU_loadDetails() {
 
 	var callback = {
 		success: function(o) {
-			WMU_width = null;
 			WMU_displayDetails(o.responseText);
 
 			$('ImageUploadBack').style.display = 'none';
@@ -436,7 +435,7 @@ function WMU_initialCheck( checkedName ) {
 
 function WMU_displayDetails(responseText) {
 	WMU_switchScreen('Details');
-
+	WMU_width = null;
 	$('ImageUploadBack').style.display = 'inline';
 
 	$('ImageUpload' + WMU_curScreen).innerHTML = responseText;
