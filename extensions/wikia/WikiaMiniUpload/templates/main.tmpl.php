@@ -21,7 +21,7 @@ if($wgUser->isLoggedIn()) {
 	}
 ?>
 			<form onsubmit="return AIM.submit(this, WMU_uploadCallback)" action="<?= $wgScriptPath ?>/index.php?action=ajax&rs=WMU&method=uploadImage" id="ImageUploadForm" method="POST" enctype="multipart/form-data">
-				<input id="ImageUploadFile" name="wpUploadFile" type="file" size="40" />
+				<input id="ImageUploadFile" name="wpUploadFile" type="file" size="32" />
 				<input type="submit" value="<?= wfMsg('wmu-upload-btn') ?>" onclick="return WMU_upload(event);" />
 			</form>
 <?php
