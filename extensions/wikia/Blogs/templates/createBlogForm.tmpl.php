@@ -21,10 +21,10 @@
 	<?php endif; ?>
 	<div class="formBlock">
 		<label><?php echo wfMsg( "create-blog-form-post-title" ) ?></label>
-		<?php if($formData['isExistingArticleEditAllowed']): ?>
+		<?php if(isset($formData['isExistingArticleEditAllowed']) && $formData['isExistingArticleEditAllowed']): ?>
 			<input type="hidden" name="blogPostTitle" value="<?=$formData['postTitle']; ?>" />
-			<div id="blogPostTitle">
-				<strong><?=$formData['postTitle']; ?></strong>
+			<div id="blogPostROTitle">
+				<?=$formData['postTitle']; ?>
 			</div>
 		<?php else: ?>
 			<input type="text" id="blogPostTitle" name="blogPostTitle" value="<?php echo (isset($formData['postTitle']) ? htmlspecialchars($formData['postTitle']) : ""); ?>" size="60" maxlength="255" />

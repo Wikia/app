@@ -48,10 +48,10 @@ BL.checkMatches = function (e) {
 	<?php endif; ?>
 	<div class="formBlock">
 		<label><?php echo wfMsg( "create-blog-listing-page-title" ) ?></label>
-		<?php if($formData['isExistingArticleEditAllowed']): ?>
+		<?php if(isset($formData['isExistingArticleEditAllowed']) && $formData['isExistingArticleEditAllowed']): ?>
 			<input type="hidden" name="blogListingTitle" value="<?=$formData['listingTitle']; ?>" />
-			<div id="blogPostTitle">
-				<strong><?=$formData['listingTitle']; ?></strong>
+			<div id="blogPostROTitle">
+				<?=$formData['listingTitle']; ?>
 			</div>
 			<?php else: ?>
 				<input type="text" id="blogPostTitle" name="blogListingTitle" value="<?php echo ( isset($formData['listingTitle']) ? htmlspecialchars($formData['listingTitle']) : "" ); ?>" size="60" maxlength="255" />
