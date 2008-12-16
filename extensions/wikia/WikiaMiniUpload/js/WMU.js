@@ -98,6 +98,7 @@ function WMU_licenseSelectorCheck() {
 			selector.selectedIndex = 0;
 		}
 	}
+	WMU_track('loadLicense/' + selection); // tracking
 	WMU_loadLicense( selection );
 }
 
@@ -621,10 +622,12 @@ function WMU_toggleMainMesg(e) {
 	if ('none' == $('ImageUploadMessage').style.display) {
 		$('ImageUploadMessage').style.display = '';
 		$('ImageUploadMessageLink').innerHTML = '[' + wmu_hide_message  + ']';
+		WMU_track( 'mainMessage/show' ); // tracking
 		document.cookie = "wmumainmesg=1";
 	} else {
 		$('ImageUploadMessage').style.display = 'none';
 		$('ImageUploadMessageLink').innerHTML = '[' + wmu_show_message  + ']';
+		WMU_track( 'mainMessage/hide' ); // tracking
 		document.cookie = "wmumainmesg=0";
 	}
 }
@@ -634,10 +637,12 @@ function WMU_toggleLicenseMesg(e) {
 	if ('none' == $('ImageUploadLicenseText').style.display) {
 		$('ImageUploadLicenseText').style.display = '';
 		$('ImageUploadLicenseLink').innerHTML = '[' + wmu_hide_license_message  + ']';
+		WMU_track( 'licenseText/show' ); // tracking
 		document.cookie = "wmulicensemesg=1";
 	} else {
 		$('ImageUploadLicenseText').style.display = 'none';
 		$('ImageUploadLicenseLink').innerHTML = '[' + wmu_show_license_message  + ']';
+		WMU_track( 'licenseText/hide' ); // tracking
 		document.cookie = "wmulicensemesg=0";
 	}
 }
