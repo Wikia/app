@@ -13,12 +13,12 @@ if(isset($props['name'])) {
 			<input id="ImageUploadExtension" type="hidden" value="<?= $props['extension'] ?>" />
 			</td>
 		</tr>
+		<?php
+			if(!empty($props['upload'])) {
+		?>
 		<tr class="ImageUploadNoBorder ImageUploadThin">
 			<th><?= wfMsg('license') ?></th>
 			<td>
-			<?php
-			if(!empty($props['upload'])) {
-			?>
 			<span id="ImageUploadLicenseSpan">
 			<?php
 				$licenses = new Licenses();
@@ -29,9 +29,6 @@ if(isset($props['name'])) {
 					<?= $licensehtml ?>
 				</select>
 			</span>
-			<?php
-			}
-			?>
 			</td>
 		</tr>		
 		<tr class="ImageUploadNoBorder ImageUploadNoSpace">
@@ -41,10 +38,14 @@ if(isset($props['name'])) {
 			</td>
 		</tr>
 		<tr class="ImageUploadNoBorder">
-			<td colspan="2">
-				<div id="ImageUploadLicenseText">&nbsp;</div>			
-			</td>
+		<td colspan="2">
+		<div id="ImageUploadLicenseText">&nbsp;</div>			
+		</td>
 		</tr>
+		<?php
+			}
+		?>
+
 	</table>
 </div>
 <?php
