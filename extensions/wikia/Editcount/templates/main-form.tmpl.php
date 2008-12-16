@@ -1,6 +1,6 @@
 <!-- s:<?= __FILE__ ?> -->
 <style>
-.ecmaintable {background-color:#ffffdd; border:1px solid #808080;font-size:7.7pt;line-height:1.1em;width:350px;}
+.ecmaintable {background-color:#ffffdd; color: #000; border:1px solid #808080;font-size:7.7pt;line-height:1.1em;width:350px;}
 .ecrowright { border:1px outset #FFFFFF; text-align:right;}
 .ecrowcenter { border:1px outset #FFFFFF; text-align:center;}
 .ecrowleft { border:1px outset #FFFFFF; text-align:left;}
