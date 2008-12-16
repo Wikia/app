@@ -14,7 +14,6 @@ if (!empty($statsCount)) {
 	$rows_month = array();
 	if (!empty($statsCount['months'])) {
 		$prev_value = array(0,0);
-		error_log ("statsCount['months'] = ".print_r($statsCount['months'], true)."\n", 3, "/tmp/moli.log");
 		foreach ($statsCount['months'] as $date => $values) {
 			$row = "";
 			$dateArr = explode("-",$date);
@@ -31,8 +30,9 @@ if (!empty($statsCount)) {
 			$all = 0;
 			foreach ($aNamespaces as $id => $value) {
 				$_tmp = (isset($values[$id])) ? $values[$id] : 0;
-				$row .= "<td class=\"rb\" style=\"width:40px;font-size:7.5pt;background-color:".WikiaGenericStats::colorizeTrend($statsCount['trends'][$date][$id])."\">";
-				$row .= "<div class=\"ws-tpv\">".$wgLang->formatNum(sprintf("%0.1f", $statsCount['trends'][$date][$id]))."%</div>";
+				$_v = (isset($statsCount['trends'][$date][$id])) ? $statsCount['trends'][$date][$id] : 0;
+				$row .= "<td class=\"rb\" style=\"width:40px;font-size:7.5pt;background-color:".WikiaGenericStats::colorizeTrend($_v)."\">";
+				$row .= "<div class=\"ws-tpv\">".$wgLang->formatNum(sprintf("%0.1f", $_v))."%</div>";
 				$row .= "<div class=\"ws-tpvl\">".WikiaGenericStats::getNumberFormat($_tmp)."</div></td>";
 				$all += $_tmp;
 			}
@@ -67,6 +67,10 @@ if (!empty($statsCount)) {
 </table>
 <br />
 <div style="float:left; padding-bottom: 5px; width:100%; max-width:100%; max-height:600px;overflow-y:auto;">
+<!-- CHARTS -->
+<?=$chartHTML?>
+<!-- END OF CHARTS -->
+<br />
 <table cellspacing="0" cellpadding="0" border="1" id="table_page_edited_stats" style="width:auto;font-size:9pt;background-color:#ffffdd;">
 <tr bgcolor="#FFFFDD">
 	<td class="cb" rowspan="2"><?=wfMsg('wikiastats_date')?></td>
