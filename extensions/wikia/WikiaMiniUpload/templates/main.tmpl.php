@@ -1,4 +1,11 @@
 <div id="ImageUploadError"></div>
+<div id="ImageUploadMessageControl"><a id="ImageUploadMessageLink" href="#" onclick="WMU_toggleMainMesg(event);" >[<?= wfMsg( 'wmu-hide-message' ) ?>]</a></div>
+<?php
+	$uploadmesg = wfMsgExt( 'wmu-uploadtext', 'parse' );
+	$uploadmesg = preg_replace( '/(<a[^>]+)/', '$1 target="_new" ', $uploadmesg );
+
+?>
+<div id="ImageUploadMessage"><?= $uploadmesg ?></div>
 
 <table cellspacing="0" style="width: 100%;" id="ImageUploadInputTable">
 	<tr id="ImageUploadUpload">
@@ -14,7 +21,7 @@ if($wgUser->isLoggedIn()) {
 	}
 ?>
 			<form onsubmit="return AIM.submit(this, WMU_uploadCallback)" action="<?= $wgScriptPath ?>/index.php?action=ajax&rs=WMU&method=uploadImage" id="ImageUploadForm" method="POST" enctype="multipart/form-data">
-				<input id="ImageUploadFile" name="wpUploadFile" type="file" />
+				<input id="ImageUploadFile" name="wpUploadFile" type="file" size="40" />
 				<input type="submit" value="<?= wfMsg('wmu-upload-btn') ?>" onclick="return WMU_upload(event);" />
 			</form>
 <?php

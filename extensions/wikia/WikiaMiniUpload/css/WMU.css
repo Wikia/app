@@ -1,5 +1,5 @@
 #ImageUpload {
-	height: 437px;
+	height: 587px;
 	padding: 25px 10px 10px;
 	position: relative;
 	width: 722px;
@@ -8,7 +8,7 @@
 	background-color: #000;
 	border: 1px solid #FFF;
 	filter: alpha(opacity=60);
-	height: 435px;
+	height: 585px;
 	left: 0;
 	opacity: .6;
 	position: absolute;
@@ -17,7 +17,7 @@
 }
 #ImageUploadBody {
 	background: #FFF;
-	height: 370px;
+	height: 520px;
 	opacity: 1;
 	overflow: hidden;
 	padding: 15px;
@@ -174,7 +174,7 @@
 }
 .ImageUploadOptionsTable td, .ImageUploadOptionsTable th {
 	border-bottom: 1px solid #CCC;
-	padding: 10px 5px;
+	padding: 5px 5px;
 }
 ImageUploadOptionsTable img {
 	vertical-align: middle;
@@ -185,6 +185,14 @@ ImageUploadOptionsTable img {
 .ImageUploadNoBorder td, .ImageUploadNoBorder th {
 	border: 0 !important;
 }
+.ImageUploadNoSpace td, .ImageUploadNoSpace th {
+	padding: 0 !important;
+}
+
+.ImageUploadThin td, .ImageUploadThin th {
+	padding: 10px 5px 2px 2px !important;
+}
+
 #ImageUploadSection {
 	background: #EEE;
 	border-bottom: 1px solid #CCC;
@@ -238,4 +246,34 @@ ImageUploadOptionsTable img {
 
 #WMU_error_box {
 	display: none;
+}
+
+#ImageUploadMessage {
+	border: 1px solid gray;
+	padding: 6px 6px 6px 6px;	
+	margin-bottom: 16px;
+}
+
+#ImageUploadLicenseSpan {
+	font-size: 8pt;
+}
+
+#ImageUploadMessageControl {
+	position: absolute;
+	font-size: 9pt;
+	right: 24px;
+	top: 18px;
+}
+
+#ImageUploadLicenseControl, #ImageUploadLicenseText {
+	font-size: 9pt;
+}
+
+#ImageUploadLicenseLink {
+	margin-left: 4px;
+}
+
+
+#ImageUploadManualWidth {
+	width: 40px;
 }
