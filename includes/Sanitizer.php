@@ -487,6 +487,7 @@ class Sanitizer {
 						$rest = str_replace( '>', '&gt;', $rest );
 						$close = ( $brace == '/>' && !$slash ) ? ' /' : '';
 						global $wgWysiwygParserEnabled;
+						//Wysiwyg: add wasHtml attribute to HTML written by user in the article so the reverseParser knows which tags convert to wikitext and which don't
 						if(!empty($wgWysiwygParserEnabled)) {
 							$wasHtml = !$slash && strpos($newparams, ' refid="') === false ? ' wasHtml="1"' : '';
 						} else {
@@ -516,6 +517,7 @@ class Sanitizer {
 					$newparams = Sanitizer::fixTagAttributes( $params, $t );
 					$rest = str_replace( '>', '&gt;', $rest );
 					global $wgWysiwygParserEnabled;
+					//Wysiwyg: add wasHtml attribute to HTML written by user in the article so the reverseParser knows which tags convert to wikitext and which don't
 					if(!empty($wgWysiwygParserEnabled)) {
 						$wasHtml = !$slash ? ' wasHtml=1' : '';
 					} else {

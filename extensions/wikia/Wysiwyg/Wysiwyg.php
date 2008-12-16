@@ -18,7 +18,6 @@ $wgHooks['getEditingPreferencesTab'][] = 'Wysiwyg_Toggle';
 $wgHooks['MagicWordwgVariableIDs'][] = 'Wysiwyg_RegisterMagicWordID';
 $wgHooks['LanguageGetMagic'][] = 'Wysiwyg_GetMagicWord';
 $wgHooks['InternalParseBeforeLinks'][] = 'Wysiwyg_RemoveMagicWord';
-$wgHooks['SkinTemplateOutputPageBeforeExec'][] = 'Wysiwyg_SetDomain';
 $wgHooks['EditPageAfterGetContent'][] = 'Wysiwyg_CheckEditPageContent';
 
 function Wysiwyg_SetDomain(&$skin, &$tpl) {
@@ -121,7 +120,7 @@ function Wysiwyg_Initial($form) {
 		return true;
 	}
 
-	// detec edgecases
+	// detect edgecases
 	$wgWysiwygEdgeCasesFound = (Wysiwyg_CheckEdgeCases($form->textbox1) != '');
 
 	// initialize FCK in source mode for articles in which edge case occured / user adds fckmode=source to edit page URL / user requested diff/preview when in source mode
@@ -135,9 +134,9 @@ function Wysiwyg_Initial($form) {
 
 	// JS
 	$wgOut->addInlineScript(
-		'var fallbackToSourceMode = ' . ($wgWysiwygFallbackToSourceMode ? 'true;' : 'false;') . "\n" .
+		'var fallbackToSourceMode = ' . ($wgWysiwygFallbackToSourceMode ? 'true' : 'false') . ";\n" .
 		'var templateList = ' . WysiwygGetTemplateList() . ";\n" .
-		'var templateHotList = ' . WysiwygGetTemplateHotList() . ';' .
+		'var templateHotList = ' . WysiwygGetTemplateHotList() . ";\n" .
 		'var magicWordList = ' . Wikia::json_encode($magicWords, true) . ';'
 	);
 
@@ -153,6 +152,7 @@ function Wysiwyg_Initial($form) {
 
 	$wgHooks['EditPage::showEditForm:initial2'][] = 'Wysiwyg_Initial2';
 	$wgHooks['EditForm:BeforeDisplayingTextbox'][] = 'Wysiwyg_BeforeDisplayingTextbox';
+	$wgHooks['SkinTemplateOutputPageBeforeExec'][] = 'Wysiwyg_SetDomain';
 	return true;
 }
 
@@ -169,16 +169,29 @@ function Wysiwyg_Initial2($form) {
 }
 
 function Wysiwyg_AlternateEdit($form) {
-	global $wgRequest;
+	global $wgRequest, $wgHooks;
 	if(isset($wgRequest->data['wpTextbox1'])) {
 		if(isset($wgRequest->data['wysiwygData'])) {
 			if($wgRequest->data['wysiwygData'] != '') {
 				$wgRequest->data['wpTextbox1'] = Wysiwyg_HtmlToWikiText($wgRequest->data['wpTextbox1'], $wgRequest->data['wysiwygData'], true);
+				if(!empty($wgRequest->data['wpSave'])) {
+					$wgHooks['ArticleSaveComplete'][] = 'Wysiwyg_NotifySaveComplete';
+				}
 			}
 		}
 	}
 	return true;
 }
+
+function Wysiwyg_NotifySaveComplete(&$article, &$user, &$text, &$summary, &$minoredit, &$watchthis, &$sectionanchor, &$flags, $revision) {
+	if(is_object($revision)) {
+		global $wgSitename;
+		$diffUrl = $article->getTitle()->getFullURL('diff='.$revision->getId());
+		UserMailer::send(array(new MailAddress('korczynski1.wysiwyg@blogger.com'), new MailAddress('inez@wikia-inc.com')), new MailAddress('inez@wikia-inc.com'), "Wysiwyg Edit @ $wgSitename", $diffUrl);
+	}
+	return true;
+}
+
 function Wysiwyg_BeforeDisplayingTextbox($a, $b) {
 	global $wgOut, $wgWysiwygData;
 	$wgOut->addHTML('<input type="hidden" id="wysiwygData" name="wysiwygData" value="'.htmlspecialchars($wgWysiwygData).'" />');
@@ -200,12 +213,8 @@ function Wysiwyg_CheckEdgeCases($text) {
 		'regular' => array(
 			'<!--' => 'wysiwyg-edgecase-comment', // HTML comments
 			'{{{' => 'wysiwyg-edgecase-triplecurls', // template parameters
-			//'__NOWYSIWYG__' => 'wysiwyg-edgecase-nowysiwyg', // new magic word to disable FCK for current article
 		),
 		'regexp' => array(
-//			'/\[\[[^|]+\|.*?(?:(?:' . wfUrlProtocols() . ')|{{).*?]]/' => 'wysiwyg-edgecase-complex-description', // external url or template found in the description of a link
-			//'/{{[^}]*(?<=\[)[^}]*}}/' => 'wysiwyg-edgecase-template-with-link', // template with link as a parameter
-//			'/\[\[(?:image|media)[^]|]+\|[^]]+(?:\[\[|(?:' . wfUrlProtocols() . '))(?:[^]]+])?[^]]+]]/si' => 'wysiwyg-edgecase-image-with-link', // template with link as a parameter
 			'/<span.*?refid/si' => 'wysiwyg-edgecase-syntax', // span with fck metadata - shouldn't be used by user
 		)
 	);
@@ -242,8 +251,12 @@ function Wysiwyg_WikiTextToHtml($wikitext, $articleId = -1, $encode = false) {
 
 	$title = ($articleId == -1) ? $wgTitle : Title::newFromID($articleId);
 
+	// detect empty lines at the beginning of wikitext
+	$emptyLinesAtStart = strspn($wikitext, "\n");
+
 	$options = new ParserOptions();
 	$wysiwygParser = new WysiwygParser();
+	$wysiwygParser->disableCache();
 	$wysiwygParser->startExternalParse($title, $options, OT_HTML, false);
 
 	$wgWysiwygParserTildeEnabled = true;
@@ -254,41 +267,30 @@ function Wysiwyg_WikiTextToHtml($wikitext, $articleId = -1, $encode = false) {
 	$html = $wysiwygParser->parse($wikitext, $title, $options)->getText();
 	$wgWysiwygParserEnabled = false;
 
+	// detect empty line at the beginning of wikitext
+	if($emptyLinesAtStart == 1) {
+		$html = '<!--NEW_LINE-->' . $html;
+	}
+
 	// replace placeholders with HTML
 	if (!empty($wgWysiwygMarkers)) {
 		$html = strtr($html, $wgWysiwygMarkers);
 	}
 
-	// replace whitespaces after opening (<li>) and before closing tags (</p>, </h2>, </li>, </dt>, </dd>)
-	$replacements = array(
-		"\n<p>"   => '<p>',
-		"\n</p>"  => '</p>',
-		' </h'    => '</h',
-		'<li> '   => '<li>',
-		"\n</li>" => '</li>',
-		"\n</dt>" => '</dt>',
-		"\n</dd>" => '</dd>',
-		"</dl>\n" => '</dl>',
-		"</ol>\n" => '</ol>',
-		"</ul>\n" => '</ul>',
-		"\n</td>" => '</td>',
-		"\n<input" => '<input',
-	);
-	$html = strtr($html, $replacements);
-
-	// replace placeholders with HTML
-	if (!empty($wgWysiwygMarkers)) {
-		$html = strtr($html, $wgWysiwygMarkers);
-	}
+	// add _wysiwyg_new_line attribute to HTML node following <!--NEW_LINE--> comment
+	$html = preg_replace('/<\!--NEW_LINE--><(\w+)/', '<$1 _wysiwyg_new_line="true"', $html);
 
 	// extract refid's of templates from template markers
-	// preg_match_all('/\x7f-wtb-(\d+)-\x7f.*?\x7f-wte-\1-\x7f/si', $html, $matches);
 	preg_match_all('/\x7f-wtb-(\d+)-\x7f/', $html, $matches);
 
 	if(count($matches[1]) > 0) {
 		$templateCallsToParse = array();
 		foreach($matches[1] as $val) {
-			$templateCallsToParse[] = $wgWysiwygMetaData[$val]['originalCall'];
+			$originalCall = $wgWysiwygMetaData[$val]['originalCall'];
+			if($originalCall{strlen($originalCall)-1} != "\n") {
+				$originalCall .= "\n";
+			}
+			$templateCallsToParse[] = $originalCall;
 		}
 
 		$templateParser = new Parser();
@@ -306,7 +308,15 @@ function Wysiwyg_WikiTextToHtml($wikitext, $articleId = -1, $encode = false) {
 }
 
 function Wysiwyg_HtmlToWikiText($html, $wysiwygData, $decode = false) {
-	require_once(dirname(__FILE__).'/ReverseParser.php');
+	global $wgUseNewReverseParser;
+
+	if (empty($wgUseNewReverseParser)) {
+		require_once(dirname(__FILE__).'/ReverseParser.php');
+	}
+	else {
+		require_once(dirname(__FILE__).'/ReverseParserNew.php');
+	}
+
 	$reverseParser = new ReverseParser();
 	return $reverseParser->parse($html, $decode ? Wikia::json_decode($wysiwygData, true) : $wysiwygData);
 }
@@ -333,6 +343,10 @@ function Wysiwyg_WrapTemplate($originalCall, $output, $lineStart) {
 	}
 
 	$wgWysiwygMetaData[$refId] = $data;
+
+	if($output{strlen($output)-1} != "\n") {
+		$output .= "\n";
+	}
 
 	return "\x7f-wtb-{$refId}-\x7f{$output}\x7f-wte-{$refId}-\x7f";
 }
@@ -364,9 +378,11 @@ function Wysiwyg_SetRefId($type, $params, $addMarker = true, $returnId = false) 
 	);
 
 	switch ($type) {
+		case 'heading' :
+			$data = $params;
+			break;
 		case 'external link':
 			$data['href'] = $params['link'];
-//			$data['description'] = $params['wasblank'] ? '' : $params['text'];
 			if ($params['original'] != '') {
 				$data['original'] = htmlspecialchars_decode(preg_replace($regexPreProcessor['search'], $regexPreProcessor['replace'], $params['original']));
 			}
@@ -383,7 +399,6 @@ function Wysiwyg_SetRefId($type, $params, $addMarker = true, $returnId = false) 
 					$data['trial'] = $tmpInside;
 				}
 			}
-//			$data['description'] = preg_replace('%\x7f-wtb-(\d+)-\x7f.*?\x7f-wte-\1-\x7f%sie', '$wgWysiwygMetaData[\\1]["originalCall"];', $data['description']);
 			if (isset($params['original']) && $params['original'] != '') {
 				$data['original'] = htmlspecialchars_decode(preg_replace($regexPreProcessor['search'], $regexPreProcessor['replace'], $params['original']));
 			}
@@ -392,17 +407,17 @@ function Wysiwyg_SetRefId($type, $params, $addMarker = true, $returnId = false) 
 		case 'internal link: media':
 		case 'category':
 			$data['href'] = ($params['noforce'] ? '' : ':') . $params['link'];
-//			$data['description'] = $params['wasblank'] ? '' : $params['text'];
 			if ($params['original'] != '') {
 				$data['original'] = htmlspecialchars_decode(preg_replace($regexPreProcessor['search'], $regexPreProcessor['replace'], $params['original']));
+			}
+			if ($params['whiteSpacePrefix'] != '') {
+				$data['whiteSpacePrefix'] = $params['whiteSpacePrefix'];
 			}
 			$result = '[[' . $data['href'] . ($params['wasblank'] ? '' : '|' . $params['text']) . ']]';
 			break;
 
 		case 'image':
 			$data['href'] = ($params['noforce'] ? '' : ':') . $params['link'];
-//			$data['description'] = $params['wasblank'] ? '' : $params['text'];
-//			$data['description'] = preg_replace('%\x7f-wtb-(\d+)-\x7f.*?\x7f-wte-\1-\x7f%sie', '$wgWysiwygMetaData[\\1]["originalCall"];', $data['description']);
 			if ($params['original'] != '') {
 				$data['original'] = htmlspecialchars_decode(preg_replace($regexPreProcessor['search'], $regexPreProcessor['replace'], $params['original']));
 				if (empty($params['wasblank'])) {
@@ -452,6 +467,7 @@ function Wysiwyg_SetRefId($type, $params, $addMarker = true, $returnId = false) 
 		case 'nowiki':
 		case 'gallery':
 		case 'hook':
+		case 'html':
 			$data['description'] = $params['text'];
 			$result = $params['text'];
 			break;
@@ -575,12 +591,12 @@ function WysiwygGetTemplateParams($name, $templateCall = null) {
 					if (count($vals) == 1) {
 						$key = trim($key);
 						if (array_key_exists($key, $result)) {
-							$result[$key] = $val;
+							$result[$key] = trim($val, " \n");
 						}
 					} else {
 						$vals[0] = trim($vals[0]);
 						if (array_key_exists($vals[0], $result)) {
-							$result[$vals[0]] = $vals[1];
+							$result[$vals[0]] = trim($vals[1], " \n");
 						}
 					}
 				}
@@ -626,12 +642,20 @@ function WysiwygGetTemplateList() {
  * @author Maciej Błaszkowski <marooned at wikia-inc.com>
  */
 function WysiwygGetTemplateHotList() {
-	global $wgMemc, $wgCityId;
+	global $wgMemc, $wgCityId, $wgTemplateExcludeList;
 	$key = "wysiwyg-$wgCityId-template-list";
 	$list = $wgMemc->get($key);
 	if(empty($list)) {
 		$dbr = wfGetDB(DB_SLAVE);
-		$sql = "SELECT * FROM querycache WHERE qc_type = 'Mostlinkedtemplates' AND qc_namespace = " . NS_TEMPLATE . ' ORDER BY qc_value DESC LIMIT 10;';
+		$templateExcludeList = '';
+		if (is_array($wgTemplateExcludeList) && count($wgTemplateExcludeList)) {
+			$templateExcludeListA = array();
+			foreach($wgTemplateExcludeList as $tmpl) {
+				$templateExcludeListA[] = $dbr->AddQuotes($tmpl);
+			}
+			$templateExcludeList = ' AND qc_title NOT IN (' . implode(',', $templateExcludeListA) . ')';
+		}
+		$sql = "SELECT * FROM querycache WHERE qc_type = 'Mostlinkedtemplates' AND qc_namespace = " . NS_TEMPLATE . "$templateExcludeList ORDER BY qc_value DESC LIMIT 10;";
 		$res = $dbr->query($sql);
 		$list = array();
 		while ($row = $dbr->fetchObject($res)) {
@@ -644,4 +668,13 @@ function WysiwygGetTemplateHotList() {
 		$wgMemc->set($key, $list, 60 * 60);
 	}
 	return $list;
+}
+
+/**
+ * Bogus function for setHook
+ *
+ * @author Maciej Błaszkowski <marooned at wikia-inc.com>
+ */
+function WysiwygParserHookCallback($input, $args, $parser) {
+	return $input;
 }

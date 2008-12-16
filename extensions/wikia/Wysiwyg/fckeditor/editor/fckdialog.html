@@ -516,13 +516,14 @@ var onReadyRegister = function()
 		FCKTools.DisableSelection( document.body ) ;
 
 		// Make the title area draggable.
+		/*
 		var titleElement = $( 'header' ) ;
 		titleElement.onmousedown = DragAndDrop.MouseDownHandler ;
 
 		// Connect mousemove and mouseup events from dialog frame and outer window to dialog dragging logic.
 		DragAndDrop.RegisterHandlers( window ) ;
 		DragAndDrop.RegisterHandlers( Args().TopWindow ) ;
-
+		*/
 		// Disable the previous dialog if it exists.
 		if ( ParentDialog() )
 		{
@@ -623,6 +624,23 @@ var onReadyRegister = function()
 		$('btnOk').style.visibility = ( showIt ? '' : 'hidden' ) ;
 	} ;
 
+	window.SetCancelButton = function( showIt )
+	{
+		$('btnCancel').style.display = ( showIt ? 'block' : 'none' ) ;
+	} ;
+
+	window.SetBackButton = function( html )
+	{
+		if (!html) {
+			$('backButton').style.display = 'none';
+			$('backButton').innerHTML = html;
+		}
+		else {
+			$('backButton').style.display = 'block';
+			$('backButton').innerHTML = html;
+		}
+	} ;
+
 	window.Ok = function()
 	{
 		Selection.EnsureSelection() ;
@@ -696,16 +714,14 @@ var onReadyRegister = function()
 		</script>
 	</head>
 	<body onload="Init();" class="PopupBody">
+		<div id="border"></div>
+		<div id="TitleArea"><script type="text/javascript">// <![CDATA[
+			document.write( Args().Title );
+		// ]]></script></div>
+		<div id="backButton"></div>
+		<div id="closeButton" onclick="Cancel();">close</div>
 		<div class="contents" id="contents">
 			<div id="header">
-				<div id="TitleArea" class="PopupTitle PopupTitleBorder">
-					<script type="text/javascript">
-// <![CDATA[
-document.write( Args().Title ) ;
-// ]]>
-					</script>
-					<div id="closeButton" onclick="Cancel();"></div>
-				</div>
 				<div id="TabsRow" class="PopupTabArea" style="display: none">
 					<table border="0" cellpadding="0" cellspacing="0" width="100%">
 						<tr id="Tabs">
@@ -716,27 +732,11 @@ document.write( Args().Title ) ;
 				</div>
 			</div>
 			<div id="innerContents"></div>
-			<div id="PopupButtons" class="PopupButtons">
-				<table border="0" cellpadding="0" cellspacing="0">
-					<tr>
-						<td width="100%">&nbsp;</td>
-						<td nowrap="nowrap">
-							<input id="btnOk" style="visibility: hidden;" type="button" value="Ok" class="Button" onclick="Ok();" fckLang="DlgBtnOK" />
-							&nbsp;
-							<input id="btnCancel" type="button" value="Cancel" class="Button" onclick="Cancel();" fckLang="DlgBtnCancel" />
-						</td>
-					</tr>
-				</table>
+			<div id="PopupButtons">
+				<input id="btnOk" style="visibility: hidden;" type="button" value="Ok" onclick="Ok();" fckLang="DlgBtnOK" />
+				<input id="btnCancel" type="button" value="Cancel" onclick="Cancel();" fckLang="DlgBtnCancel" />
 			</div>
 		</div>
-		<div class="tl"></div>
-		<div class="tc"></div>
-		<div class="tr"></div>
-		<div class="ml"></div>
-		<div class="mr"></div>
-		<div class="bl"></div>
-		<div class="bc"></div>
-		<div class="br"></div>
 		<div class="cover" id="cover" style="display:none"></div>
 		<div id="throbberBlock" style="position: absolute; visibility: hidden"></div>
 		<script type="text/javascript">

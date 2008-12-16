@@ -188,20 +188,28 @@ class ReverseParser {
 						break;
 
 					case 'p':
-						if($textContent{0} == ' ') {
-							$textContent = '<nowiki> </nowiki>' . substr($textContent, 1);
+						// detect indented paragraph (margin-left CSS property)
+						$indentation = $this->getIndentationLevel($node);
+
+						// handle <dt> elements being rendered as p.definitionTerm
+						if ($this->hasCSSClass($node, 'definitionTerm')) {
+							$out = ';' . $textContent;
+						}
+						// replace initial space with &nbsp;
+						else if($textContent{0} == ' ' && $indentation === false) {
+							$out = '&nbsp;' . substr($textContent, 1);
+						}
+						else {
+							$out = $textContent;
 						}
 
-						$out = $textContent;
-
 						// handle indentations
-						$indentation = $this->getIndentationLevel($node);
 						if ($indentation !== false) {
 							$out = str_repeat(':', $indentation) . $out;
 						}
 
 						// new line logic
-						if($node->previousSibling && $node->previousSibling->nodeName == 'p') {
+						if($node->previousSibling && $node->previousSibling->nodeName == 'p' && !$indentation) {
 							// paragraph after paragraph
 							$out = "\n\n{$out}";
 						} else {
@@ -670,6 +678,10 @@ class ReverseParser {
 				case 'nowiki':
 					return "<nowiki>{$refData['description']}</nowiki>";
 
+				// <html></html>
+				case 'html':
+					return "<html>{$refData['description']}</html>";
+
 				// [[Category:foo]]
 				case 'category':
 					$pipe = ($refData['description'] != '') ? '|'.$refData['description'] : '';
@@ -858,7 +870,7 @@ class ReverseParser {
 		$attStr = '';
 
 		foreach ($node->attributes as $attrName => $attrNode) {
-			if ($attrName == 'washtml') {
+			if( in_array($attrName, array('washtml', '_wysiwyg_new_line', '_wysiwyg_line_start')) ) {
 				continue;
 			}
 			$attStr .= ' ' . $attrName . '="' . $attrNode->nodeValue  . '"';
@@ -871,14 +883,14 @@ class ReverseParser {
 	 */
 
 	private function isFormattingElement($node) {
-		return in_array($node->nodeName, array('u', 'b', 'strong', 'i', 'em', 'strike', 's', 'code', 'tt', 'cite', 'var', 'span', 'font'));
+		return in_array($node->nodeName, array('u', 'b', 'strong', 'i', 'em', 'strike', 's', 'code', 'tt', 'cite', 'var', 'span', 'font', 'big', 'small'));
 	}
 
 	/**
 	 * Return true if given node is inline HTNL element or can contain inline elements (p / div) - used for nice HTML formatting
 	 */
 	private function isInlineElement($node) {
-		return in_array($node->nodeName, array('u', 'b', 'strong', 'i', 'em', 'strike', 's', 'code', 'tt', 'cite', 'var', 'span', 'font', 'a', 'p', 'div'));
+		return in_array($node->nodeName, array('u', 'b', 'strong', 'i', 'em', 'strike', 's', 'code', 'tt', 'cite', 'var', 'span', 'font', 'big', 'small', 'a', 'p', 'div'));
 	}
 
 	/**

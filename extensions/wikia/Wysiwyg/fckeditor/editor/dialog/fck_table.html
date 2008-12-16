@@ -55,6 +55,9 @@ window.onload = function()
 
 	if (table)
 	{
+		// wikia: change dialog title when editing existing table
+		dialog.$('TitleArea').innerHTML = dialog.E.FCKLang.TableProperties;
+
 		document.getElementById('txtRows').value    = table.rows.length ;
 		document.getElementById('txtColumns').value = table.rows[0].cells.length ;
 
@@ -92,8 +95,12 @@ window.onload = function()
 		document.getElementById('txtColumns').disabled = true ;
 		SelectField( 'txtWidth' ) ;
 	}
-	else
+	else {
+		// wikia: change dialog title when adding new table
+		dialog.$('TitleArea').innerHTML = dialog.E.FCKLang.InsertTable;
+
 		SelectField( 'txtRows' ) ;
+	}
 
 	dialog.SetOkButton( true ) ;
 	dialog.SetAutoSize( true ) ;

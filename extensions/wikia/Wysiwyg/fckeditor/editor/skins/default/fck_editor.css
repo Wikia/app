@@ -99,6 +99,7 @@ td.childrenHidden textarea, td.childrenHidden iframe
     height: 16px;
 }
 
+.TB_Start,
 .TB_End
 {
     display: none;

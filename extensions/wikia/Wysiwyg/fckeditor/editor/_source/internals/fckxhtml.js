@@ -1,4 +1,4 @@
-﻿/*
+/*
  * FCKeditor - The text editor for Internet - http://www.fckeditor.net
  * Copyright (C) 2003-2008 Frederico Caldeira Knabben
  *
@@ -142,7 +142,9 @@ FCKXHtml._AppendChildNodes = function( xmlNode, htmlNode, isBlockElement )
 	// BRs at the end of them.
 	if ( isBlockElement && htmlNode.tagName && htmlNode.tagName.toLowerCase() != 'pre' )
 	{
-		FCKDomTools.TrimNode( xmlNode ) ;
+		if(!xmlNode.nodeName.IEquals(['h1', 'h2', 'h3', 'h4', 'h5', 'h6'])) {
+			FCKDomTools.TrimNode( xmlNode ) ;
+		}
 
 		if ( FCKConfig.FillEmptyBlocks )
 		{

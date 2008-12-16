@@ -15,6 +15,9 @@ var FCKConfig	= oEditor.FCKConfig ;
 var FCKRegexLib	= oEditor.FCKRegexLib ;
 var FCKTools	= oEditor.FCKTools ;
 
+// hide Cancel button
+dialog.SetCancelButton(false);
+
 // load wikibits, MW suggest and some of wgFoo JS variables
 window.wgMWSuggestTemplate = dialog.parent.wgMWSuggestTemplate;
 window.wgSearchNamespaces = dialog.parent.wgSearchNamespaces;
@@ -168,6 +171,9 @@ FCK.TemplateEditor.SelectStep = function(stepId) {
 
 			// setup MW suggest
 			FCK.TemplateEditor.EnableTemplateSuggestion(true);
+
+			// clear back button
+			FCK.TemplateEditor.Dialog.SetBackButton(false);
 			break;
 
 
@@ -202,6 +208,9 @@ FCK.TemplateEditor.SelectStep = function(stepId) {
 
 			// disable MW suggest
 			FCK.TemplateEditor.EnableTemplateSuggestion(false);
+
+			// clear back button
+			FCK.TemplateEditor.Dialog.SetBackButton('<span onclick="FCK.TemplateEditor.SelectStep(1)">choose another template</span>');
 			break;
 	}
 
@@ -240,33 +249,13 @@ FCK.TemplateEditor.GetParametersFromStep2 = function() {
 
 // generate wikitext from template editor
 FCK.TemplateEditor.GetWikitextFromStep2 = function() {
-	var wikitext = '';
-
-	// template name
-	wikitext = '{{' + FCK.TemplateEditor.GetE('templateName').innerHTML;
-
-	// parameters name and value
-	var params = FCK.TemplateEditor.GetParametersFromStep2();
-
-	for(key in params) {
-		var value = params[key];
-
-		if (value == '') continue; // ignore empty parameters
-
-		wikitext += '|' + key + '=' + value;
-	}
-
-	// close template markup
-	wikitext += '}}';
-
-	return wikitext;
+	return FCK.GenerateTemplateWikitext( FCK.TemplateEditor.GetE('templateName').innerHTML, FCK.TemplateEditor.GetParametersFromStep2() );
 }
 
 // generate preview in template editor
 FCK.TemplateEditor.CreatePreview = function() {
 
 	var wikitext = FCK.TemplateEditor.GetWikitextFromStep2();
-	FCK.log('generating preview for >>' + wikitext + '<<');
 
 	// block preview button and show progress icon
 	FCK.TemplateEditor.GetE('templateDoPreview').disabled = true;
@@ -414,8 +403,6 @@ function Ok() {
 		#templatePreview {
 			overflow: auto;
 			height: 300px;
-			background-color: #fff;
-			border: solid 1px #666;
 			font-size: 12px;
 			padding: 3px;
 		}
@@ -485,7 +472,7 @@ function Ok() {
 
 	<div id="templateEditorStep2" class="editorStep">
 		<h1 id="templateName">Template</h1>
-		<span id="templateOptions"><a id="templateViewLink" target="_blank">view template page (opens a new window)</a> <a onclick="FCK.TemplateEditor.SelectStep(1)">choose another template</a></span>
+		<span id="templateOptions"><a id="templateViewLink" target="_blank">view template page (opens a new window)</a></span>
 		<h3>Change the values on the left and click to preview. When you're done making your edits, click to save</h3>
 
 		<table id="templateEditor" height="330px"><tr>
