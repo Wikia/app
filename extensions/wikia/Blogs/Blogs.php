@@ -28,6 +28,11 @@ $wgNamespacesWithSubpages[ NS_BLOG_LISTING_TALK ] = true;
 $wgContentNamespaces[] = NS_BLOG_ARTICLE;
 $wgContentNamespaces[] = NS_BLOG_LISTING;
 
+/**
+ * setup function
+ */
+$wgAutoloadClasses[ "BlogListPage" ] = dirname(__FILE__) . '/BlogListPage.php';
+$wgExtensionFunctions[] = "BlogListPage::setup";
 
 /**
  * messages file
@@ -35,7 +40,7 @@ $wgContentNamespaces[] = NS_BLOG_LISTING;
 $wgExtensionMessagesFiles["Blogs"] = dirname(__FILE__) . '/Blogs.i18n.php';
 
 /**
- * Special pages
+ * Special page
  */
 
 extAddSpecialPage(dirname(__FILE__) . '/SpecialCreateBlogPage.php', 'CreateBlogPage', 'CreateBlogPage');
