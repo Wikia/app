@@ -70,6 +70,11 @@ input.wysiwygDisabled
 	margin: 0 2px;
 }
 
+.definitionTerm {
+	font-weight: bold;
+	margin-bottom: 0.1em;
+}
+
 span._moz_dirty
 {
 	margin: 0 2px;

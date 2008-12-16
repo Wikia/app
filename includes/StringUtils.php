@@ -227,11 +227,12 @@ class HashtableReplacer extends Replacer {
 	function replace( $matches ) {
 		global $wgWysiwygMetaData, $wgWysiwygParserEnabled;
 		$result = $this->table[$matches[$this->index]];
+		//Wysiwyg: replace HTML anchor tag to proper markup (see below) for links with templates inside
 		if (!empty($wgWysiwygParserEnabled)) {
 			if (preg_match('%<a .*?(?:refid="(\d+)")?>.*?\x7f-wtb-.*?</a>%si', $result, $matches)) {
-				if ($matches[1] == '') {	//in image
+				if ($matches[1] == '') {	//for images: remove markers
 					$result = preg_replace('%\x7f-wtb-(\d+)-\x7f(.*?)\x7f-wte-\1-\x7f%i', '\2', $result);;
-				} else {	//regular link
+				} else {	//for regular links: change link into placeholder with original wikitext
 					$result = '[[' . $wgWysiwygMetaData[$matches[1]]['href'] . '|' . $wgWysiwygMetaData[$matches[1]]['description'] . ']]';
 					$result = htmlspecialchars($result);
 					$result = "<input type=\"button\" refid=\"{$matches[1]}\" _fck_type=\"" . $wgWysiwygMetaData[$matches[1]]['type'] . "\" value=\"{$result}\" title=\"{$result}\" class=\"wysiwygDisabled\" />";

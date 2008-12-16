@@ -1,4 +1,4 @@
-﻿/*
+/*
  * FCKeditor - The text editor for Internet - http://www.fckeditor.net
  * Copyright (C) 2003-2008 Frederico Caldeira Knabben
  *
@@ -139,6 +139,11 @@ FCKEnterKey.prototype.DoBackspace = function()
 	// Get the current selection.
 	var oRange = new FCKDomRange( this.Window ) ;
 	oRange.MoveToSelection() ;
+
+	// Wikia
+	if(oRange._Range.startOffset == 1 && oRange.StartNode.previousSibling && oRange.StartNode.previousSibling.nodeType == 8) {
+		oRange.StartNode.parentNode.removeChild(oRange.StartNode.previousSibling);
+	}
 
 	// Kludge for #247
 	if ( FCKBrowserInfo.IsIE && this._CheckIsAllContentsIncluded( oRange, this.Window.document.body ) )
@@ -347,6 +352,11 @@ FCKEnterKey.prototype.DoDelete = function()
 	// Get the current selection.
 	var oRange = new FCKDomRange( this.Window ) ;
 	oRange.MoveToSelection() ;
+
+	// Wikia
+	if(oRange._Range.startOffset + 1 == oRange.StartNode.length && oRange.StartNode.nextSibling && oRange.StartNode.nextSibling.nodeType == 8) {
+		oRange.StartNode.parentNode.removeChild(oRange.StartNode.nextSibling);
+	}
 
 	// Kludge for #247
 	if ( FCKBrowserInfo.IsIE && this._CheckIsAllContentsIncluded( oRange, this.Window.document.body ) )

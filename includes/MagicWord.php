@@ -660,6 +660,7 @@ class MagicWordArray {
 				list( $name, $param ) = $this->parseMatch( $m );
 				$found[$name] = $param;
 
+				//Wysiwyg: mark element and add metadata to wysiwyg array
 				if ($wgWysiwygParserEnabled) {
 					$tmp = '__'.strtoupper($name).'__';
 					$FCKtmp = Wysiwyg_SetRefId('double underscore', array('text' => &$tmp), false);

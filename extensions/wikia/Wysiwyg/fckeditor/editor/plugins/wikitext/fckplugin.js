@@ -2,7 +2,7 @@
 FCKCommands.RegisterCommand('Link', new FCKDialogCommand('Link', FCKLang.DlgLnkWindowTitle, FCKConfig.PluginsPath + 'wikitext/dialogs/link.html', 400, 250));
 
 // Register templates editor
-FCK.TemplateClickCommand = new FCKDialogCommand('Template', '&nbsp;', FCKConfig.PluginsPath + 'wikitext/dialogs/template.html', 800, 500);
+FCK.TemplateClickCommand = new FCKDialogCommand('Template', '&nbsp;', FCKConfig.PluginsPath + 'wikitext/dialogs/template.html', 780, 490);
 
 // Wikitext infobox
 FCK.InputClickCommand = new FCKDialogCommand('inputClickCommand', '&nbsp;', FCKConfig.PluginsPath + 'wikitext/dialogs/inputClick.html', 400, 100);
@@ -71,12 +71,10 @@ FCK.originalSwitchEditMode = FCK.SwitchEditMode;
 FCK.WysiwygSwitchToolbars = function(switchToWikitext) {
 	var toolbarItems = document.getElementById('xToolbar').getElementsByTagName('tr')[0].childNodes;
 	var MWtoolbar = window.parent.document.getElementById('toolbar');
-	var FCKiframe = window.parent.document.getElementById('wpTextbox1___Frame');
 
 	// move MW toolbar next to "Source" button
 	if (MWtoolbar) {
-		MWtoolbar.style.marginLeft = (toolbarItems[1].offsetWidth+27) + 'px';
-		MWtoolbar.style.top = (FCKiframe.offsetTop - FCK.GetParentForm().offsetTop + 3) + 'px';
+		MWtoolbar.style.marginLeft = (toolbarItems[1].offsetWidth + 4) + 'px';
 	}
 
 	// show/hide FCK toolbar items
@@ -251,6 +249,8 @@ FCK.Events.AttachEvent( 'OnAfterSetHTML', function() {
 			window.parent.document.getElementById('wysiwygTemporarySaveType').value = "1";
 		});
 	}
+
+	// initialize meta data
 	if(!FCK.wysiwygData) {
 		FCK.wysiwygData = eval("{"+window.parent.document.getElementById('wysiwygData').value+"}");
 		if(!FCK.wysiwygData) {
@@ -260,6 +260,7 @@ FCK.Events.AttachEvent( 'OnAfterSetHTML', function() {
 
 	}
 
+	// setup wysiwyg mode
 	if(FCK.EditMode == FCK_EDITMODE_WYSIWYG) {
 		// handle drag&drop
 		FCKTools.AddEventListener(FCK.EditorDocument, 'mousedown', function(e) {
@@ -380,6 +381,26 @@ FCK.Events.AttachEvent( 'OnAfterSetHTML', function() {
 
 		// setup elements with refid (templates, images, ...)
 		FCK.SetupElementsWithRefId();
+	}
+	// setup source mode
+	else {
+		// hide currently shown template preview
+		FCK.TemplatePreviewInit();
+
+		// add Tab handler -> move to summary field
+		FCKTools.AddEventListener(FCK.EditingArea.Textarea, 'keydown', function(e) {
+			e = FCK.YE.getEvent(e);
+			if (e.keyCode == 9) {
+				FCK.log('tab key pressed');
+				FCK.YE.stopEvent(e);
+
+				// focus on #wpSummary
+				var summary = window.parent.document.getElementById('wpSummary');
+				if (summary) {
+					summary.focus();
+				}
+			}
+		});
 	}
 
 	// for QA team tests
@@ -1088,25 +1109,30 @@ FCK.TemplatePreviewShow = function(placeholder) {
 	preview.style.display = '';
 
 	// calculate cloud placement
-	var x = placeholder.offsetLeft;
-	var y = placeholder.offsetTop + placeholder.clientHeight + 32;
+	var x = FCK.YD.getX(placeholder);
+	var y = FCK.YD.getY(placeholder) + placeholder.clientHeight + 32;
 
 	// editor area scroll
 	var scrollXY = [FCK.EditorDocument.body.scrollLeft, FCK.EditorDocument.body.scrollTop];
 
-	// iframe position
-	//var iFrameXY = FCK.YAHOO.util.Dom.getXY('wpTextbox1___Frame');
-	var iFrameXY = [0, 0];
-
 	// calculate preview position
-	var cloudPos = {x: parseInt(x + iFrameXY[0] - scrollXY[0]), y: parseInt(y + iFrameXY[1] - scrollXY[1])};
+	var cloudPos = {x: parseInt(x - scrollXY[0]), y: parseInt(y - scrollXY[1])};
 
 	// should we show preview over the placeholder?
 	var iFrameHeight = FCK.EditingArea.IFrame.offsetHeight;
 	var previewHeight = preview.offsetHeight < 250 ? preview.offsetHeight : 250;
 	var showUnder = true;
 
+	// reset preview height
+	FCK.TemplatePreviewCloud.firstChild.style.height = 'auto';
+
 	if (cloudPos.y + previewHeight > iFrameHeight) {
+		// if needed decrease preview height
+		if (cloudPos.y < 280) {
+			previewHeight = cloudPos.y - 80;
+			FCK.TemplatePreviewCloud.firstChild.style.height = previewHeight + 'px';
+		}
+
 		// show it over the placeholder
 		cloudPos.y -= parseInt(placeholder.clientHeight + 25 + previewHeight);
 		showUnder = false;
@@ -1173,6 +1199,7 @@ FCKInsertTemplateCommand.prototype = {
 			FCK.TemplateWizard = {};
 			FCK.TemplateClickCommand.Execute();
 		} else {
+			FCK.Track('/templateEditor/dropdown/' + name);
 			if(FCK.templateList[name].params) {
 				// template selected from drop down has parameters (step #2)
 				FCK.TemplateWizard = {'name':name, 'params':FCK.templateList[name].params, 'refid':-1};
@@ -1188,6 +1215,43 @@ FCKInsertTemplateCommand.prototype = {
 		return FCK_TRISTATE_OFF;
 	}
 };
+
+// generate wikitext for template
+FCK.GenerateTemplateWikitext = function(name, params) {
+	var wikitext = '';
+
+	wikitext = '{{' + name;
+
+	var paramsCount = 0;
+	var longestParam = 0;
+
+	// find length of the longest param
+	for (key in params) {
+		if ( (params[key] != '') && (longestParam < key.length) ) {
+			longestParam = key.length;
+		}
+	}
+	
+	// parameters name and value
+	for(key in params) {
+		var value = FCK.YAHOO.Tools.trim(params[key]);
+	
+		if (value == '') continue; // ignore empty parameters
+
+		var fill = FCK.YAHOO.Tools.stringRepeat(' ', longestParam - key.length);
+
+		wikitext += '\n|' + key + fill + ' = ' + value;
+		paramsCount++;
+	}
+
+	// close template markup
+	wikitext += (paramsCount ? '\n}}' : '}}');
+
+	// debug
+	FCK.log('template wikisyntax >>' + wikitext + '<< (longest param: ' + longestParam + ')');
+
+	return wikitext;
+}
 
 // add new / update template
 FCK.InsertTemplate = function(refid, name, params) {
@@ -1229,20 +1293,7 @@ FCK.InsertTemplate = function(refid, name, params) {
 	placeholder.value = name;
 
 	// generate new wikitext
-        var wikitext = '';
-
-	wikitext = '{{' + name;
-	
-	// parameters name and value
-	for(key in params) {
-		var value = params[key];
-	
-		if (value == '') continue; // ignore empty parameters
-
-		wikitext += '|' + key + '=' + value;
-	}
-
-	wikitext += '}}';
+        var wikitext = FCK.GenerateTemplateWikitext(name, params);
 
 	// update metaData and send AJAX request to generate template preview
 	FCK.wysiwygData[refid].name = name;

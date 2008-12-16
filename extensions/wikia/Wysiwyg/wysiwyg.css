@@ -2,7 +2,8 @@
 	display: none;
 }
 #editform #toolbar {
-	position: relative;
+	position: absolute;
+	top: 3px;
 	visibility: hidden;
 }
 #wpTextbox1 {
@@ -11,6 +12,7 @@
 #editform {
 	background: transparent url('fckeditor/editor/skins/default/images/progress_transparent.gif') no-repeat 50% 35%;
 	clear: both;
+	position: relative;
 }
 #editform.source_mode,
 #editform.wysiwyg_mode {

@@ -41,34 +41,21 @@ body, td, input, select, textarea
 
 body, .BackColor
 {
-	background-color: #f1f1e3;
+	background-color: #fff;
 }
 
 .PopupBody
 {
 	height: 100%;
 	width: 100%;
-	overflow: hidden;
+	
+	padding-right: 20px;overflow: hidden;
 	background-color: transparent;
 	padding: 0px;
 }
 
 * html .PopupBody {
 	height: 98%;
-}
-
-#header
-{
-	cursor: move;
-}
-
-.PopupTitle
-{
-	font-weight: bold;
-	font-size: 14pt;
-	color: #737357;
-	background-color: #e3e3c7;
-	padding: 3px 10px 3px 10px;
 }
 
 .PopupButtons
@@ -116,40 +103,40 @@ body, .BackColor
 
 .PopupTabArea
 {
-	color: #737357;
-	background-color: #e3e3c7;
+	color: #333;
+	padding-top: 10px;
+	background: #fff url(images/tabs_bg.png) repeat-x bottom;
 }
 
 .PopupTabEmptyArea
 {
 	padding-left: 10px;
-	border-bottom: #d5d59d 1px solid;
+	border-bottom: #aaa solid 1px;
 }
 
 .PopupTab, .PopupTabSelected
 {
-	border-right: #d5d59d 1px solid;
-	border-top: #d5d59d 1px solid;
-	border-left: #d5d59d 1px solid;
+	border-right: #666 1px solid;
+	border-top: #666 1px solid;
+	border-left: #666 1px solid;
 	padding: 3px 5px 3px 5px;
-	color: #737357;
+	color: #333;
+	background-color: #fff;
 }
 
 .PopupTab
 {
 	margin-top: 1px;
-	border-bottom: #d5d59d 1px solid;
+	border-bottom: #666 1px solid;
 	cursor: pointer;
 	cursor: hand;
+	background-color: #f5f5f5;
 }
 
 .PopupTabSelected
 {
-	font-weight: bold;
 	cursor: default;
 	padding-top: 4px;
-	border-bottom: #f1f1e3 1px solid;
-	background-color: #f1f1e3;
 }
 
 .PopupSelectionBox
@@ -169,146 +156,42 @@ body, .BackColor
  * Dialog frame related styles.
  */
 
+#border {
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background: #000;
+	border: solid 1px #fff;
+	opacity: 0.6;
+}
+
+#TitleArea {
+	margin: 4px 12px;
+	font-size: 13px;
+	color: #fff;
+	position: absolute;
+}
+
+#PopupButtons {
+	text-align: right;
+}
+
+#PopupButtons input {
+	margin-right: 10px;
+}
+
 .contents
 {
 	position: absolute;
-	top: 2px;
-	left: 16px;
-	right: 16px;
-	bottom: 20px;
-	background-color: #f1f1e3;
+	top: 24px;
+	left: 10px;
+	right: 10px;
+	bottom: 10px;
+	background-color: #fff;
 	overflow: hidden;
 	z-index: 1;
-}
-/*
-.tl, .tr, .tc, .bl, .br, .bc
-{
-	position: absolute;
-	background-image: url(images/sprites.png);
-	background-repeat: no-repeat;
-}
-
-* html .tl, * html .tr, * html .tc, * html .bl, * html .br, * html .bc
-{
-	background-image: url(images/sprites.gif);
-}
-
-.ml, .mr
-{
-	position: absolute;
-	background-image: url(images/dialog.sides.png);
-	background-repeat: repeat-y;
-}
-
-* html .ml, * html .mr
-{
-	background-image: url(images/dialog.sides.gif);
-}
-
-.rtl .ml, .rtl .mr
-{
-	position: absolute;
-	background-image: url(images/dialog.sides.rtl.png);
-	background-repeat: repeat-y;
-}
-
-* html .rtl .ml, * html .rtl .mr
-{
-	background-image: url(images/dialog.sides.gif);
-}
-*/
-.tl
-{
-	top: 0px;
-	left: 0px;
-	width: 16px;
-	height: 16px;
-	background-position: -16px -16px;
-}
-
-.rtl .tl
-{
-	background-position: -16px -397px;
-}
-
-.tr
-{
-	top: 0px;
-	right: 0px;
-	width: 16px;
-	height: 16px;
-	background-position: -16px -76px;
-}
-
-.rtl .tr
-{
-	background-position: -16px -457px;
-}
-
-.tc
-{
-	top: 0px;
-	right: 16px;
-	left: 16px;
-	height: 16px;
-	background-position: 0px -136px;
-	background-repeat: repeat-x;
-}
-
-.ml
-{
-	top: 16px;
-	left: 0px;
-	width: 16px;
-	bottom: 51px;
-	background-position: 0px 0px;
-}
-
-.mr
-{
-	top: 16px;
-	right: 0px;
-	width: 16px;
-	bottom: 51px;
-	background-position: -16px 0px;
-}
-
-.bl
-{
-	bottom: 0px;
-	left: 0px;
-	width: 30px;
-	height: 51px;
-	background-position: -16px -196px;
-}
-
-.rtl .bl
-{
-	background-position: -16px -517px;
-}
-
-.br
-{
-	bottom: 0px;
-	right: 0px;
-	width: 30px;
-	height: 51px;
-	background-position: -16px -263px;
-}
-
-.rtl .br
-{
-	background-position: -16px -584px;
-}
-
-.bc
-{
-	bottom: 0px;
-	right: 30px;
-	left: 30px;
-	height: 51px;
-	background-position: 0px -330px;
-	background-repeat: repeat-x;
 }
 
 /* For IE6. Do not change it. */
@@ -332,25 +215,36 @@ body, .BackColor
 	z-index: 11;
 }
 
+#backButton {
+	margin: 4px 10px;
+	position: absolute;
+	left: 0px;
+	top: 0px;
+}
+
+#backButton span {
+	background-image: url(images/back.png);
+	background-repeat: no-repeat;
+	background-position: left 50%;
+	padding-left: 20px;
+	font-size: 13px;
+	color: #fff;
+	cursor: pointer;
+}
+
 #closeButton
 {
+	margin: 4px 10px;
+	padding-left: 20px;
+	font-size: 13px;
+	color: #fff;
 	position: absolute;
 	right: 0px;
 	top: 0px;
-	margin-top: 5px;
-	margin-right: 10px;
-	width: 20px;
-	height: 20px;
 	cursor: pointer;
-	background-image: url(images/sprites.png);
+	background-image: url(images/close.png);
 	background-repeat: no-repeat;
-	background-position: -16px -651px;
-}
-
-* html #closeButton
-{
-	cursor: hand;
-	background-image: url(images/sprites.gif);
+	background-position: left 50%;
 }
 
 .rtl #closeButton
@@ -358,11 +252,6 @@ body, .BackColor
 	right: auto;
 	left: 10px;
 	margin-right: 0px;
-}
-
-#closeButton:hover
-{
-	background-position: -16px -687px;
 }
 
 .throbber

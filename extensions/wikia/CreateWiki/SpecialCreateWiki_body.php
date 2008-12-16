@@ -627,6 +627,10 @@ class CreateWikiForm extends SpecialPage {
 			"wgEnableNewParser"     => true
 		);
 
+		if($aLocalSettingsVars['wgLanguageCode'] == 'en') {
+			$aLocalSettingsVars['wgEnableWysiwygExt'] = true;
+		}
+
 		#--- insert all wiki variables into city_variables table
 		foreach ($aLocalSettingsVars as $tVariable => $tValue) {
 			// first, get id of variable
@@ -733,7 +737,7 @@ class CreateWikiForm extends SpecialPage {
 					$wgWikiaLocalSettingsPath
 				);
 				wfShellExec( $cmd );
-				
+
 				wfDebugLog( "createwiki", sprintf("Copying starter database: %F", wfTime() - $fExecTimeCur ));
 				$fExecTimeCur = wfTime();
 			}

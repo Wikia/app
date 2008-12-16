@@ -108,6 +108,7 @@ class Linker {
 		if( $class !== '' ) {
 			$r .= " class=\"$class\"";
 		}
+		//Wysiwyg: don't add title when parsing in wysiwyg mode
 		if (empty($wgWysiwygParserEnabled)) {
 			$r .= " title=\"$title\"";
 		}
@@ -281,6 +282,7 @@ class Linker {
 					$trail = $m[2];
 				}
 			}
+			//Wysiwyg: get refId from wikitext and add it to the HTML
 			if (!empty($wgWysiwygParserEnabled)) {
 				$refId = Wysiwyg_GetRefId($text);
 				$t = "<a href=\"{$u}\"{$style}{$refId}>{$text}{$inside}</a>";
@@ -352,6 +354,7 @@ class Linker {
 		}
 
 		$refId = '';
+		//Wysiwyg: get refId from passed wikitext
 		if (!empty($wgWysiwygParserEnabled)) {
 			$refId = Wysiwyg_GetRefId($text);
 		}
@@ -378,7 +381,7 @@ class Linker {
 		if ( $aprops !== '' ) $aprops = ' ' . $aprops;
 
 		list( $inside, $trail ) = Linker::splitTrail( $trail );
-		
+
 		$r = "<a href=\"{$u}\"{$style}{$aprops}{$refId}>{$prefix}{$text}{$inside}</a>{$trail}";
 		wfProfileOut( __METHOD__ );
 		return $r;
@@ -425,6 +428,7 @@ class Linker {
 
 		wfRunHooks( 'BrokenLink', array( &$this, $nt, $query, &$u, &$style, &$prefix, &$text, &$inside, &$trail ) );
 
+		//Wysiwyg: get refId from wikitext and add it to the HTML
 		if (!empty($wgWysiwygParserEnabled)) {
 			$refId = Wysiwyg_GetRefId($text);
 			$s = "<a href=\"{$u}\"{$style}{$refId}>{$prefix}{$text}{$inside}</a>{$trail}";
@@ -533,6 +537,7 @@ class Linker {
 	/** @todo document */
 	function makeExternalImage( $url, $alt = '' ) {
 		global $wgWysiwygParserEnabled;
+		//Wysiwyg: get refId from wikitext
 		if (!empty($wgWysiwygParserEnabled)) {
 			$refId = Wysiwyg_GetRefId($url, true);
 		}
@@ -548,6 +553,7 @@ class Linker {
 		$params = array(
 			'src' => $url,
 			'alt' => $alt );
+		//Wysiwyg: pass refId to image params - it will be used to build HTML
 		if ($wgWysiwygParserEnabled) {
 			$params['refid'] = $refId;
 		}
@@ -630,6 +636,7 @@ class Linker {
 		}
 
 		global $wgContLang, $wgUser, $wgThumbLimits, $wgThumbUpright, $wgWysiwygParserEnabled, $wgWysiwygMetaData;
+		//Wysiwyg: add proper URL to file to metadata array when file exists
 		if (!empty($wgWysiwygParserEnabled) && isset($frameParams['refid']) && $file) {
 			$wgWysiwygMetaData[$frameParams['refid']]['url'] = $file->getFullUrl();
 		}
@@ -714,6 +721,7 @@ class Linker {
 		$refId = '';
 		if ( !$thumb ) {
 			$txt = '';
+			//Wysiwyg: add refId to proper place according to align element (thanks to that refId will be added to the parent HTML element of image snippet)
 			if (!empty($wgWysiwygParserEnabled) && isset($fp['refid'])) {
 				if ($fp['align'] == '') {
 					$txt = "\x1{$fp['refid']}\x1";
@@ -730,6 +738,7 @@ class Linker {
 				'valign' => isset( $fp['valign'] ) ? $fp['valign'] : false ,
 				'img-class' => isset( $fp['border'] ) ? 'thumbborder' : false
 			);
+			//Wysiwyg: add refId to proper place according to align element (thanks to that refId will be added to the parent HTML element of image snippet)
 			if (!empty($wgWysiwygParserEnabled) && isset($fp['refid'])) {
 				if ($fp['align'] == '') {
 					$attrArr['refid'] = $fp['refid'];
@@ -822,6 +831,7 @@ class Linker {
 		$more = htmlspecialchars( wfMsg( 'thumbnail-more' ) );
 
 		$refId = '';
+		//Wysiwyg: add refId to HTML is it was passed as an image parameter
 		if (!empty($wgWysiwygParserEnabled) && isset($fp['refid'])) {
 			$refId = " refid=\"{$fp['refid']}\"";
 		}
@@ -869,6 +879,7 @@ class Linker {
 			$currentExists = $time ? ( wfFindFile( $title ) != false ) : false;
 			if( $wgEnableUploads && !$currentExists ) {
 				$refId = '';
+				//Wysiwyg: get refId from wikitext
 				if (!empty($wgWysiwygParserEnabled)) {
 					$refId = Wysiwyg_GetRefId($text);
 				}
@@ -916,6 +927,7 @@ class Linker {
 	function makeMediaLinkObj( $title, $text = '', $time = false ) {
 		global $wgWysiwygParserEnabled;
 		$refId = '';
+		//Wysiwyg: get refId from wikitext
 		if (!empty($wgWysiwygParserEnabled)) {
 			$refId = Wysiwyg_GetRefId($text);
 		}
@@ -968,8 +980,9 @@ class Linker {
 			wfDebug("Hook LinkerMakeExternalLink changed the output of link with url {$url} and text {$text} to {$link}", true);
 			return $link;
 		}
-	
+
 		global $wgWysiwygParserEnabled;
+		//Wysiwyg: get refId from wikitext and add it to HTML
 		if (!empty($wgWysiwygParserEnabled)) {
 			$refId = Wysiwyg_GetRefId($text);
 			return '<a href="'.$url.'"'.$style.$refId.'>'.$text.'</a>';

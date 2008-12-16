@@ -38,7 +38,7 @@ function WMUSetup($editform) {
 	return true;
 }
 
-function WMUSetupVars($vars) {	
+function WMUSetupVars($vars) {
 	global $wgFileBlacklist, $wgCheckFileExtensions, $wgStrictFileExtensions, $wgFileExtensions;
 
 	$vars['wmu_back'] = wfMsg('wmu-back');
@@ -82,6 +82,5 @@ function WMU() {
 	if(!empty($domain)) {
 		$html .= '<script type="text/javascript">document.domain = "' . $domain  . '"</script>';
 	}
-
 	return new AjaxResponse($html);
 }

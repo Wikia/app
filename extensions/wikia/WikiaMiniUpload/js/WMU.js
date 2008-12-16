@@ -26,7 +26,6 @@ function WMU_loadDetails() {
 	YAHOO.util.Dom.setStyle('ImageUploadMain', 'display', 'none');
 	WMU_indicator(1, true);
 
-
 	var callback = {
 		success: function(o) {
 			WMU_displayDetails(o.responseText);
@@ -714,6 +713,7 @@ AIM = {
 		f.setAttribute('target', name);
 	},
 	submit : function(f, c) {
+
 		// macbre: allow cross-domain
 		if(document.domain != 'localhost' && typeof FCK != 'undefined') {
 			f.action += ((f.action.indexOf('?') > 0) ? '&' : '?') + 'domain=' + escape(document.domain);
