@@ -45,6 +45,10 @@ div.blog-comment {
 	padding: 4px;
 }
 
+div.blog-comment p {
+	margin-bottom: 1em;
+}
+
 div.blog-comment .avatar {
 	background: #FFF;
 	border: 1px solid #666;
