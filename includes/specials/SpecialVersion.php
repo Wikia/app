@@ -412,7 +412,7 @@ class SpecialVersion {
 					if( $xml->entry[0]['name'] == '' ) {
 						// The directory entry should always have a revision marker.
 						if( $entry['url'] ) {
-							return str_replace( 'https://svn.wikia-inc.com/svn/wikia/', '', $entry['url'] );
+							return str_replace( 'https://svn.wikia-code.com', '', $entry['url'] );
 						}
 					}
 				}
