@@ -622,12 +622,13 @@ class BlogTemplateClass {
 								unset($aTags[$__find]);
 							}
 							$currentTag = strtolower(trim($aTag[1]));
-							$sResult .= ($currentTag == "a") ? $aLine[1] . " " : $aLine[1];
+							#$sResult .= ($currentTag == "a") ? $aLine[1] . " " : $aLine[1];
+							$sResult .= $aLine[1];
 						} else if (preg_match(BLOGS_OPENED_TAGS, $aLine[1], $aTag)) {
 							/* opened tags <p|a> - add to opened-tags list */
 							$currentTag = strtolower(trim($aTag[1]));
 							array_unshift( $aTags, $currentTag );
-							$sResult .= ($currentTag == "a") ? " ".$aLine[1] : $aLine[1];
+							$sResult .= $aLine[1];
 						}
 					}
 
@@ -647,10 +648,10 @@ class BlogTemplateClass {
 								}
 							}
 						}
-						$sResult .= substr(trim($aLine[2]), 0, $iMaxLength + $iEntLength);
+						$sResult .= substr($aLine[2], 0, $iMaxLength + $iEntLength);
 						break;
 					} else {
-						$sResult .= trim($aLine[2]);
+						$sResult .= $aLine[2];
 						$iTotalLength += $iEntLength;
 					}
 					if($iTotalLength >= $iLength) {
