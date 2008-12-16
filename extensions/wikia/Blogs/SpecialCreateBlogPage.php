@@ -8,12 +8,8 @@
 class CreateBlogPage extends SpecialBlogPage {
 
 	public function __construct() {
-		global $wgExtensionMessagesFiles;
-
 		// initialise messages
-		$wgExtensionMessagesFiles['CreateBlogPage'] = dirname(__FILE__) . '/Blogs.i18n.php';
-		wfLoadExtensionMessages('CreateBlogPage');
-
+		wfLoadExtensionMessages( "Blogs" );
 		parent::__construct( 'CreateBlogPage'  /*class*/, '' /*restriction*/, true);
 	}
 
