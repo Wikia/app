@@ -57,7 +57,7 @@ class CreateWikiTask extends BatchTask {
 		$wgExtensionMessagesFiles["CreateWikiTask"] = dirname(__FILE__) . '/CreateWikiTask/CreateWikiTask.i18n.php';
 		wfLoadExtensionMessages( "CreateWikiTask" );
 		*/
-		
+
 		$this->mData = $params;
 
 		/**
@@ -141,7 +141,7 @@ class CreateWikiTask extends BatchTask {
 			$this->addLog( "Running {$cmd}");
 			$retval = wfShellExec( $cmd, $status );
 			$this->addLog( $retval );
-			
+
 			#--- modify wiki's variables based on hub and $wgHubCreationVariables values
 	                $this->addCreationSettings( $this->mParams["params"]["wpCreateWikiCategory"], $wgHubCreationVariables, 'hub' );
 		}
@@ -246,26 +246,26 @@ class CreateWikiTask extends BatchTask {
         return true;
     }
 
-    /**
-     * setWelcomeTalkPage
-     *
-     * @author eloy@wikia
-     * @access private
-     *
-     * @return boolean status
-     */
-    private function setWelcomeTalkPage() {
-        global $IP, $wgWikiaLocalSettingsPath, $wgWikiaAdminSettingsPath;
+	/**
+	 * setWelcomeTalkPage
+	 *
+	 * @author eloy@wikia
+	 * @access private
+	 *
+	 * @return boolean status
+	 */
+	private function setWelcomeTalkPage() {
+		global $IP, $wgWikiaLocalSettingsPath, $wgWikiaAdminSettingsPath;
 
-        $this->addLog( "Setting welcome talk page on new wiki..." );
+		$this->addLog( "Setting welcome talk page on new wiki..." );
 
-        $oTalkPage = $this->mFounder->getTalkPage();
-        $sWikiaName = WikiFactory::GetVarValueByName( "wgSitename", $this->mWikiID);
-        $sWikiaLang = WikiFactory::GetVarValueByName( "wgLanguageCode", $this->mWikiID);
+		$oTalkPage = $this->mFounder->getTalkPage();
+		$sWikiaName = WikiFactory::GetVarValueByName( "wgSitename", $this->mWikiID);
+		$sWikiaLang = WikiFactory::GetVarValueByName( "wgLanguageCode", $this->mWikiID);
 
-        // set apropriate staff member
-        $oStaffUser = CreateWikiTask::getStaffUserByLang($sWikiaLang);
-        $oStaffUser = is_object($oStaffUser) ? $oStaffUser : $this->mStaff;
+		// set apropriate staff member
+		$oStaffUser = CreateWikiTask::getStaffUserByLang($sWikiaLang);
+		$oStaffUser = is_object($oStaffUser) ? $oStaffUser : $this->mStaff;
 
 		$aPageParams = array(
 			0 => $this->mFounder->getName(),
@@ -273,48 +273,47 @@ class CreateWikiTask extends BatchTask {
 			2 => $oStaffUser->getRealName(),
 			3 => $sWikiaName
 		);
+
 		$sBody = null;
-		$sWelcomeTalkLang = $sWikiaLang;
-		if(($sWikiaLang != 'en') && !empty($sWikiaLang)) {
+		if(!empty($sWikiaLang)) {
 			// custom lang translation
-			$sBody = wfMsg("createwiki_welcometalk/$sWikiaLang", $aPageParams);
+			$sBody = wfMsgExt("createwiki_welcometalk", array( 'language' => $sWikiaLang ), $aPageParams);
 		}
 
-        if(($sBody == null) || wfEmptyMsg( "createwiki_welcometalk/$sWikiaLang", $sBody)) {
-        	/**
-			 * default lang (english)
+		if(($sBody == null)) {
+			/**
+			 * wfMsgExt should always return message, but just in case...
 			 */
-        	$sBody = wfMsg("createwiki_welcometalk", $aPageParams);
-       		$sWelcomeTalkLang = 'en';
-        }
+			$sBody = wfMsg("createwiki_welcometalk", $aPageParams);
+		}
 
-        $sCommand = sprintf(
-            "SERVER_ID=%d php %s/maintenance/wikia/edit.php -u '%s' '%s' --conf %s --aconf %s",
-            $this->mWikiID,
-            $IP,
-            $oStaffUser->getName(),
-            $oTalkPage->getPrefixedText(),
-            $wgWikiaLocalSettingsPath,
+		$sCommand = sprintf(
+			"SERVER_ID=%d php %s/maintenance/wikia/edit.php -u '%s' '%s' --conf %s --aconf %s",
+			$this->mWikiID,
+			$IP,
+			$oStaffUser->getName(),
+			$oTalkPage->getPrefixedText(),
+			$wgWikiaLocalSettingsPath,
 			$wgWikiaAdminSettingsPath
-        );
+		);
 
-        $this->addLog( $sCommand );
-        if(!empty($this->mWikiID)) {
-            $oHandler = popen( $sCommand, "w" );
-            fwrite( $oHandler, $sBody );
-            pclose( $oHandler );
-            $this->addLog( sprintf(
-                "Founder talk page %s%s set (lang: $sWelcomeTalkLang).",
-                rtrim($this->mWikiParams->city_url, "/"),
-                $this->mFounder->getTalkPage()->getLocalURL()
-            ));
-        }
-        else {
-            $this->addLog( "Unknown wiki id. Founder talk page not set." );
-        }
+		$this->addLog( $sCommand );
+		if(!empty($this->mWikiID)) {
+			$oHandler = popen( $sCommand, "w" );
+			fwrite( $oHandler, $sBody );
+			pclose( $oHandler );
+			$this->addLog( sprintf(
+				"Founder talk page %s%s set.",
+				rtrim($this->mWikiParams->city_url, "/"),
+				$this->mFounder->getTalkPage()->getLocalURL()
+			));
+		}
+		else {
+			$this->addLog( "Unknown wiki id. Founder talk page not set." );
+		}
 
-        return true;
-    }
+		return true;
+	}
 
 	/**
 	 * set images timestamp to current date (see: #1687)
@@ -334,36 +333,36 @@ class CreateWikiTask extends BatchTask {
 		$dbw->immediateCommit();
 	}
 
-    /**
-     * sendWelcomeMail
-     *
-     * sensd welcome email to founder (if founder has set email address)
-     *
-     * @author eloy@wikia.com
-     * @author adi@wikia.com
-     * @access private
-     *
-     * @return boolean status
-     */
-    private function sendWelcomeMail() {
-        global $wgDevelEnvironment, $wgUser, $wgPasswordSender;
+	/**
+	 * sendWelcomeMail
+	 *
+	 * sensd welcome email to founder (if founder has set email address)
+	 *
+	 * @author eloy@wikia.com
+	 * @author adi@wikia.com
+	 * @access private
+	 *
+	 * @return boolean status
+	 */
+	private function sendWelcomeMail() {
+		global $wgDevelEnvironment, $wgUser, $wgPasswordSender;
 
-        $oReceiver = $this->mFounder;
-        if( !empty( $wgDevelEnvironment ) ) {
-            $oReceiver = $wgUser;
-        }
+		$oReceiver = $this->mFounder;
+		if( !empty( $wgDevelEnvironment ) ) {
+			$oReceiver = $wgUser;
+		}
 
-        $sWikiaName = WikiFactory::GetVarValueByName( "wgSitename", $this->mWikiID);
-        $sWikiaLang = WikiFactory::GetVarValueByName( "wgLanguageCode", $this->mWikiID);
+		$sWikiaName = WikiFactory::GetVarValueByName( "wgSitename", $this->mWikiID);
+		$sWikiaLang = WikiFactory::GetVarValueByName( "wgLanguageCode", $this->mWikiID);
 
-        // set apropriate staff member
-        $oStaffUser = CreateWikiTask::getStaffUserByLang($sWikiaLang);
-        $oStaffUser = is_object($oStaffUser) ? $oStaffUser : $this->mStaff;
+		// set apropriate staff member
+		$oStaffUser = CreateWikiTask::getStaffUserByLang($sWikiaLang);
+		$oStaffUser = is_object($oStaffUser) ? $oStaffUser : $this->mStaff;
 
-        $from = new MailAddress( $wgPasswordSender, "The Wikia Community Team" );
-        $sTo = $oReceiver->getEmail();
+		$from = new MailAddress( $wgPasswordSender, "The Wikia Community Team" );
+		$sTo = $oReceiver->getEmail();
 
-        $aBodyParams = array(
+		$aBodyParams = array(
 			0 => $this->mWikiParams->city_url,
 			1 => $oReceiver->getName(),
 			2 => $oStaffUser->getRealName(),
@@ -374,36 +373,36 @@ class CreateWikiTask extends BatchTask {
 			),
 		);
 
-        $sBody = null;
-        $sSubject = null;
-        if(($sWikiaLang != 'en') && !empty($sWikiaLang)) {
-        	// custom lang translation
-        	$sBody = wfMsg("createwiki_welcomebody/$sWikiaLang", $aBodyParams);
-        	$sSubject = wfMsg("createwiki_welcomesubject/$sWikiaLang", array($sWikiaName));
-        }
+		$sBody = null;
+		$sSubject = null;
+		if(!empty($sWikiaLang)) {
+			// custom lang translation
+			$sBody = wfMsgExt("createwiki_welcomebody", array( 'language' => $sWikiaLang ), $aBodyParams);
+			$sSubject = wfMsgExt("createwiki_welcomesubject", array( 'language' => $sWikiaLang ), array($sWikiaName));
+		}
 
-        if(($sBody == null) || wfEmptyMsg( "createwiki_welcomebody/$sWikiaLang", $sBody)) {
-        	// default lang (english)
-        	$sBody = wfMsg("createwiki_welcomebody", $aBodyParams);
-        }
-        if(($sSubject == null) || wfEmptyMsg( "createwiki_welcomesubject/$sWikiaLang", $sSubject)) {
-        	// default lang (english)
-        	$sSubject = wfMsg("createwiki_welcomesubject", array($sWikiaName));
-        }
+		if($sBody == null) {
+			// default lang (english)
+			$sBody = wfMsg("createwiki_welcomebody", $aBodyParams);
+		}
+		if($sSubject == null) {
+			// default lang (english)
+			$sSubject = wfMsg("createwiki_welcomesubject", array($sWikiaName));
+		}
 
-        if( !empty($sTo) ) {
-            $bStatus = $oReceiver->sendMail($sSubject, $sBody, $from );
-            if( $bStatus === true ) {
-                $this->addLog( "Mail to founder {$sTo} sent.");
-            }
-            else {
-                $this->addLog( "Mail to founder {$sTo} probably not sent. sendMail returned false.");
-            }
-        }
-        else {
-            $this->addLog( "Founder email is not set. Welcome email is not sent" );
-        }
-    }
+		if( !empty($sTo) ) {
+			$bStatus = $oReceiver->sendMail($sSubject, $sBody, $from );
+			if( $bStatus === true ) {
+				$this->addLog( "Mail to founder {$sTo} sent.");
+			}
+			else {
+				$this->addLog( "Mail to founder {$sTo} probably not sent. sendMail returned false.");
+			}
+		}
+		else {
+			$this->addLog( "Founder email is not set. Welcome email is not sent" );
+		}
+	}
 
 	/**
 	 * addDomains
