@@ -41,6 +41,7 @@ function WMU_loadDetails() {
 				}
 				if(FCK.wysiwygData[WMU_refid].width) {
 					WMU_slider.setValue(FCK.wysiwygData[WMU_refid].width / (WMU_slider.getRealValue() / WMU_slider.getValue()), true);
+					WMU_width = FCK.wysiwygData[WMU_refid].width;
 				}
 			}, 200);
 
@@ -436,7 +437,9 @@ function WMU_displayDetails(responseText) {
 	if($('ImageUploadThumb')) {
 		WMU_orgThumbSize = null;
 		var image = $('ImageUploadThumb').firstChild;
-		WMU_width = image.width;
+		if ( null == WMU_width ) {
+			WMU_width = image.width;
+		}
 		var thumbSize = [image.width, image.height];
 		WMU_orgThumbSize = null;
 		WMU_slider = YAHOO.widget.Slider.getHorizSlider('ImageUploadSlider', 'ImageUploadSliderThumb', 0, 200);
