@@ -28,6 +28,7 @@ function WMU_loadDetails() {
 
 	var callback = {
 		success: function(o) {
+			WMU_width = null;
 			WMU_displayDetails(o.responseText);
 
 			$('ImageUploadBack').style.display = 'none';
@@ -42,6 +43,12 @@ function WMU_loadDetails() {
 				if(FCK.wysiwygData[WMU_refid].width) {
 					WMU_slider.setValue(FCK.wysiwygData[WMU_refid].width / (WMU_slider.getRealValue() / WMU_slider.getValue()), true);
 					WMU_width = FCK.wysiwygData[WMU_refid].width;
+					MWU_imageWidthChanged( WMU_width );
+					$( 'ImageUploadSlider' ).style.visibility = 'visible';
+					$( 'ImageUploadInputWidth' ).style.display = '';
+					$( 'ImageUploadWidthCheckbox' ).checked = true;
+					$( 'ImageUploadManualWidth' ).value = WMU_width;
+					WMU_manualWidthInput( $( 'ImageUploadManualWidth' ) );
 				}
 			}, 200);
 
