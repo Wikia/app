@@ -1512,7 +1512,7 @@ if (array_key_exists("TOP_RIGHT_BOXAD", AdEngine::getInstance()->getPlaceholders
                 $links = array();
                 if(isset($val['childs'])) {
                     foreach($val['childs'] as $childKey => $childVal){
-                        $links[] = '<a rel="nofollow" href="'.htmlspecialchars($childVal['href']).'">'.$childVal['text'].'</a>';
+                        $links[] = '<a href="'.htmlspecialchars($childVal['href']).'">'.$childVal['text'].'</a>';
                     }
 ?>
                 <tr>
