@@ -333,7 +333,7 @@ class ArticleAdLogic {
                 global $wgTitle, $wgContentNamespaces;
 
 		// not a content page if one of the weird edge cases occurs
-		if (self::isDiffPage() || self::isAnonPurgePrompt()) {
+		if ( self::isDiffPage() || self::isAnonPurgePrompt() || self::isActionCompleted() ) {
 			return false;
 		} 
 		
@@ -349,6 +349,17 @@ class ArticleAdLogic {
 	public function isDiffPage() {
 		global $wgRequest;
 		return $wgRequest->getVal( 'diff' ) != '';
+	}
+
+	/*
+	 * @author tor@wikia-inc.com
+	 *
+	 * Catch all check for "Action completed" pages,
+	 * currently only delete, move is done on a NS_SPECIAL page
+	 */
+	public function isActionCompleted() {
+		global $wgRequest;
+		return $wgRequest->getVal( 'action' ) == 'delete';
 	}
 
 	/*
