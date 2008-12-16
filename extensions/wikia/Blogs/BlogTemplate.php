@@ -261,9 +261,6 @@ class BlogTemplateClass {
 		wfProfileIn( __METHOD__ );
 		/* parse input parameters */
 		self::$oTitle = (is_null(self::$oTitle)) ? $wgTitle : self::$oTitle;
-		#error_log ("input = ".print_r($input, true)."\n", 3, "/tmp/moli.log");
-		#error_log ("params = ".print_r($params, true)."\n", 3, "/tmp/moli.log");
-		#error_log ("title = ".print_r($wgTitle, true)."\n", 3, "/tmp/moli.log");
 		$aParams = self::__parseXMLTag($input);
 		wfDebugLog( __METHOD__, "parse input parameters\n" );
 		/* parse all and return result */
@@ -624,12 +621,14 @@ class BlogTemplateClass {
 							if ( $__find !== false ) {
 								unset($aTags[$__find]);
 							}
+							$currentTag = strtolower(trim($aTag[1]));
+							$sResult .= ($currentTag == "a") ? $aLine[1] . " " : $aLine[1];
 						} else if (preg_match(BLOGS_OPENED_TAGS, $aLine[1], $aTag)) {
 							/* opened tags <p|a> - add to opened-tags list */
 							$currentTag = strtolower(trim($aTag[1]));
 							array_unshift( $aTags, $currentTag );
+							$sResult .= ($currentTag == "a") ? " ".$aLine[1] : $aLine[1];
 						}
-						$sResult .= ($currentTag == "a") ? " ".$aLine[1] : $aLine[1];
 					}
 
 					/* calculate special entites */
@@ -751,13 +750,12 @@ class BlogTemplateClass {
 			$iCount = $oComments->count();
 
 			/* username */
-			$oTitle = Title::newFromText($oRow->page_title, NS_USER);
+			$oTitle = Title::newFromText($oRow->page_title, $oRow->page_namespace);
 			$sUsername = "";
-			if ($oTitle instanceof Title) {
-				$username = $oTitle->getBaseText();
-			}
+			if (! $oTitle instanceof Title) continue;
+			$username = BlogListPage::getOwner( $oTitle );
 
-			$oRevision = Revision::newFromId($oRow->rev_id);
+			$oRevision = Revision::newFromTitle($oTitle);
 
 			$aResult[$oRow->page_id] = array(
 				"page" 			=> $oRow->page_id,
