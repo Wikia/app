@@ -473,12 +473,13 @@ function WMU_displayDetails(responseText) {
 	$( 'ImageUploadSlider' ).style.visibility = 'hidden';
 	$( 'ImageUploadInputWidth' ).style.display = 'none';
 
-	var cookieMsg = document.cookie.indexOf("wmulicensemesg=");
-	if (cookieMsg > -1 && document.cookie.charAt(cookieMsg + 15) == 0) {
-		$('ImageUploadLicenseText').style.display = 'none';
-		$('ImageUploadLicenseLink').innerHTML = '[' + wmu_show_license_message  + ']';
+	if ( $( 'ImageUploadLicenseText' ) ) {
+		var cookieMsg = document.cookie.indexOf("wmulicensemesg=");
+		if (cookieMsg > -1 && document.cookie.charAt(cookieMsg + 15) == 0) {
+			$('ImageUploadLicenseText').style.display = 'none';
+			$('ImageUploadLicenseLink').innerHTML = '[' + wmu_show_license_message  + ']';
+		}
 	}
-
 	WMU_indicator(1, false);
 }
 
