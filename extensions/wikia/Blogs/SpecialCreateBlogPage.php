@@ -165,8 +165,8 @@ class CreateBlogPage extends SpecialBlogPage {
 		$this->mFormData['postTitle'] = $aTitleParts[1];
 		$this->mFormData['postBody'] = trim(preg_replace('/\[\[' . $wgContLang->getFormattedNsText( NS_CATEGORY ) . ':(.*)\]\]/siU', '', $sArticleBody));
 		$this->mFormData['postCategories'] = implode('|', $this->getCategoriesFromArticleContent($sArticleBody));
-		$this->mFormData['isVotingEnabled'] = $aPageProps['voting'];
-		$this->mFormData['isCommentingEnabled'] = $aPageProps['commenting'];
+		$this->mFormData['isVotingEnabled'] = isset($aPageProps['voting']) ? $aPageProps['voting'] : 0;
+		$this->mFormData['isCommentingEnabled'] = isset($aPageProps['commenting']) ? $aPageProps['commenting'] : 0;
 		$this->mFormData['isExistingArticleEditAllowed'] = 1;
 
 	}
