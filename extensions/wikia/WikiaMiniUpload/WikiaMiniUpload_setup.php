@@ -8,7 +8,7 @@ if(!defined('MEDIAWIKI')) {
 }
 
 $wgExtensionCredits['other'][] = array(
-        'name' => 'WikiaMiniUpload',
+        'name' => 'WikiaMiniUpload (Add Images)',
         'author' => 'Inez Korczyński, Bartek Łapiński',
 );
 
@@ -52,6 +52,11 @@ function WMUSetupVars($vars) {
 	$vars['file_blacklist'] = $wgFileBlacklist;
 	$vars['check_file_extensions'] = $wgCheckFileExtensions;
 	$vars['strict_file_extensions'] = $wgStrictFileExtensions;
+	$vars['wmu_show_message'] = wfMsg('wmu-show-message');
+	$vars['wmu_hide_message'] = wfMsg('wmu-hide-message');
+	$vars['wmu_show_license_message'] = wfMsg('wmu-show-license-msg');
+	$vars['wmu_hide_license_message'] = wfMsg('wmu-hide-license-msg');
+	$vars['wmu_max_thumb'] = wfMsg('wmu-max-thumb');
 
 	return true;
 }
@@ -73,7 +78,10 @@ function WMU() {
 	$wmu = new WikiaMiniUpload();
 
 	$html = $wmu->$method();
-	$html .= '<script type="text/javascript">document.domain = "' . $wgRequest->getVal('domain')  . '"</script>';
+	$domain = $wgRequest->getVal('domain', null);
+	if(!empty($domain)) {
+		$html .= '<script type="text/javascript">document.domain = "' . $domain  . '"</script>';
+	}
 
 	return new AjaxResponse($html);
 }

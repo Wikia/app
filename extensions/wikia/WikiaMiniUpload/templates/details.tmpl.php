@@ -8,14 +8,41 @@ if(isset($props['name'])) {
 		<tr class="ImageUploadNoBorder">
 			<th><?= wfMsg('wmu-name') ?></th>
 			<td>
+			<input id="ImageUploadName" type="text" size="30" value="<?= $props['partname'] ?>" />
+			<label for="ImageUploadName">.<?= $props['extension'] ?></label>
+			<input id="ImageUploadExtension" type="hidden" value="<?= $props['extension'] ?>" />
+			</td>
+		</tr>
+		<tr class="ImageUploadNoBorder ImageUploadThin">
+			<th><?= wfMsg('license') ?></th>
+			<td>
 			<?php
 			if(!empty($props['upload'])) {
 			?>
-			<span style="float: right; font-size: 8pt;"><input type="checkbox" id="CC_license"/> <label for="CC_license"><?= wfMsg('wmu-license-cc') ?></label></span>
+			<span id="ImageUploadLicenseSpan">
+			<?php
+				$licenses = new Licenses();
+				$licensehtml = $licenses->getHtml();	
+			?>
+				<select name="ImageUploadLicense" id="ImageUploadLicense" onchange="WMU_licenseSelectorCheck()" />
+					<option><?= wfMsg( 'nolicense' ) ?></option>
+					<?= $licensehtml ?>
+				</select>
+			</span>
 			<?php
 			}
 			?>
-			<input id="ImageUploadName" type="text" size="30" value="<?= $props['name'] ?>" />
+			</td>
+		</tr>		
+		<tr class="ImageUploadNoBorder ImageUploadNoSpace">
+			<th>&nbsp;</th>	
+			<td>
+				<div id="ImageUploadLicenseControl"><a id="ImageUploadLicenseLink" href="#" onclick="WMU_toggleLicenseMesg(event);" >[<?= wfMsg( 'wmu-hide-license-msg' ) ?>]</a></div>
+			</td>
+		</tr>
+		<tr class="ImageUploadNoBorder">
+			<td colspan="2">
+				<div id="ImageUploadLicenseText">&nbsp;</div>			
 			</td>
 		</tr>
 	</table>
@@ -48,11 +75,14 @@ if($props['file']->media_type == 'BITMAP' || $props['file']->media_type == 'DRAW
 	<tr id="ImageWidthRow">
 		<th><?= wfMsg('wmu-width') ?></th>
 		<td>
-			<input onclick="MWU_imageWidthChanged(WMU_widthChanges++);" type="checkbox" id="ImageUploadWidthCheckbox" checked="checked" />
+			<input onclick="MWU_imageWidthChanged(WMU_widthChanges++);" type="checkbox" id="ImageUploadWidthCheckbox" />
 			<div id="ImageUploadSlider">
 				<img src="<?= $wgExtensionsPath.'/wikia/WikiaMiniUpload/images/slider_thumb_bg.png' ?>" id="ImageUploadSliderThumb" />
 			</div>
 			<span id="ImageSize"></span>
+			<div id="ImageUploadInputWidth">
+				<?= wfMsg( 'wmu-manual-width' ) ?> <input type="text" id="ImageUploadManualWidth" name="ImageUploadManualWidth" value="" onchange="WMU_manualWidthInput(this)" onkeyup="WMU_manualWidthInput(this)" /> px
+			<div>
 		</td>
 	</tr>
 	<tr id="ImageLayoutRow">

@@ -15,9 +15,12 @@ var WMU_prevScreen = null;
 var WMU_slider = null;
 var WMU_thumbSize = null;
 var WMU_orgThumbSize = null;
-var WMU_widthChanges;
+var WMU_width = null;
+var WMU_widthChanges = 1;
 var WMU_refid = null;
 var WMU_wysiwygStart = 1;
+var WMU_ratio = 1;
+var WMU_shownMax = false;
 
 function WMU_loadDetails() {
 	YAHOO.util.Dom.setStyle('ImageUploadMain', 'display', 'none');
@@ -45,7 +48,6 @@ function WMU_loadDetails() {
 			if(FCK.wysiwygData[WMU_refid].caption) {
 				$('ImageUploadCaption').value = FCK.wysiwygData[WMU_refid].caption;
 			}
-
 		}
 	}
 
@@ -86,6 +88,41 @@ function WMU_addHandler() {
   		return;
   	}
   	YAHOO.util.Event.addListener(['wmuLink', 'wmuHelpLink', btn], 'click',  WMU_show);
+}
+
+function WMU_licenseSelectorCheck() {
+	var selector = document.getElementById( "ImageUploadLicense" );
+	var selection = selector.options[selector.selectedIndex].value;
+	if( selector.selectedIndex > 0 ) {
+		if( selection == "" ) {
+			selector.selectedIndex = 0;
+		}
+	}
+	WMU_loadLicense( selection );
+}
+
+function WMU_manualWidthInput( elem ) {
+	var image = $( 'ImageUploadThumb' ).firstChild;
+	if( WMU_orgThumbSize == null ) {
+		var WMU_orgThumbSize = [image.width, image.height];
+	}
+	if ( elem.value > WMU_width ) {
+		if (!WMU_shownMax) {
+			image.width = WMU_width;
+			image.height = WMU_width / WMU_ratio;
+			WMU_thumbSize = [image.width, image.height];
+			$( 'ImageSize' ).innerHTML = image.width + 'px';		
+			$( 'ImageUploadManualWidth' ).value = image.width;
+			WMU_shownMax = true;
+			alert (wmu_max_thumb);
+		}
+	} else {
+		image.height = elem.value / WMU_ratio;
+		image.width = elem.value;
+		WMU_thumbSize = [image.width, image.height];
+		$( 'ImageSize' ).innerHTML = elem.value + 'px';
+		WMU_shownMax = false;			
+	}
 }
 
 function WMU_show(e) {
@@ -148,7 +185,7 @@ function WMU_show(e) {
 	var element = document.createElement('div');
 	element.id = 'WMU_div';
 	element.style.width = '722px';
-	element.style.height = '437px';
+	element.style.height = '587px';
 	element.innerHTML = html;
 
 	document.body.appendChild(element);
@@ -181,10 +218,29 @@ function WMU_loadMain() {
 			$('ImageUploadMain').innerHTML = o.responseText;
 			WMU_indicator(1, false);
 			if($('ImageQuery') && WMU_panel.element.style.visibility == 'visible') $('ImageQuery').focus();
+			var cookieMsg = document.cookie.indexOf("wmumainmesg=");
+			if (cookieMsg > -1 && document.cookie.charAt(cookieMsg + 12) == 0) {
+				$('ImageUploadMessage').style.display = 'none';
+		                $('ImageUploadMessageLink').innerHTML = '[' + wmu_show_message  + ']';
+			}
 		}
 	}
 	WMU_indicator(1, true);
 	YAHOO.util.Connect.asyncRequest('GET', wgScriptPath + '/index.php?action=ajax&rs=WMU&method=loadMain', callback);
+	WMU_curSourceId = 0;
+
+
+}
+
+function WMU_loadLicense( license ) {
+	var callback = {
+		success: function(o) {			
+			$('ImageUploadLicenseText').innerHTML = o.responseText;
+			WMU_indicator(1, false);
+		}
+	}
+	WMU_indicator(1, false);
+	YAHOO.util.Connect.asyncRequest('GET', wgScriptPath + '/index.php?action=ajax&rs=WMU&method=loadLicense&license='+license, callback);
 	WMU_curSourceId = 0;
 }
 
@@ -380,29 +436,47 @@ function WMU_displayDetails(responseText) {
 	if($('ImageUploadThumb')) {
 		WMU_orgThumbSize = null;
 		var image = $('ImageUploadThumb').firstChild;
+		WMU_width = image.width;
 		var thumbSize = [image.width, image.height];
 		WMU_orgThumbSize = null;
 		WMU_slider = YAHOO.widget.Slider.getHorizSlider('ImageUploadSlider', 'ImageUploadSliderThumb', 0, 200);
+		WMU_slider.initialRound = true;
 		WMU_slider.getRealValue = function() {
 			return Math.max(2, Math.round(this.getValue() * (thumbSize[0] / 200)));
 		}
 		WMU_slider.subscribe("change", function(offsetFromStart) {
-			$('ImageSize').innerHTML = WMU_slider.getRealValue() + 'px';
+			if (WMU_slider.initialRound) {
+				$('ImageSize').innerHTML = '';
+				WMU_slider.initialRound = false;	
+			} else {
+				$('ImageSize').innerHTML = WMU_slider.getRealValue() + 'px';
+			}
 			image.width = WMU_slider.getRealValue();
+			$('ImageUploadManualWidth').value = image.width;			
 			image.height = image.width / (thumbSize[0] / thumbSize[1]);
 			if(WMU_orgThumbSize == null) {
 				WMU_orgThumbSize = [image.width, image.height];
+				WMU_ratio = image.width / image.height;
 			}
 			WMU_thumbSize = [image.width, image.height];
 		});
+		
 		if(image.width < 250) {
 			WMU_slider.setValue(200, true);
 		} else {
 			WMU_slider.setValue(125, true);
-		}
+		}		
 	}
 	if ($( 'WMU_error_box' )) {
 		alert( $( 'WMU_error_box' ).innerHTML );
+	}
+	$( 'ImageUploadSlider' ).style.visibility = 'hidden';
+	$( 'ImageUploadInputWidth' ).style.display = 'none';
+
+	var cookieMsg = document.cookie.indexOf("wmulicensemesg=");
+	if (cookieMsg > -1 && document.cookie.charAt(cookieMsg + 15) == 0) {
+		$('ImageUploadLicenseText').style.display = 'none';
+		$('ImageUploadLicenseLink').innerHTML = '[' + wmu_show_license_message  + ']';
 	}
 
 	WMU_indicator(1, false);
@@ -423,12 +497,12 @@ function WMU_insertImage(e, type) {
 		params.push('name='+$('ImageUploadRenameName').value);
 	} else {
 		if($('ImageUploadName')) {
-			params.push('name='+$('ImageUploadName').value);
+			params.push('name='+$('ImageUploadName').value + '.' + $('ImageUploadExtension').value);
 		}
 	}
 
-	if($('CC_license')) {
-		params.push('CC_license='+$('CC_license').checked);
+	if($('ImageUploadLicense')) {
+		params.push('ImageUploadLicense='+$('ImageUploadLicense').value);
 	}
 
 	if($('ImageUploadExtraId')) {
@@ -507,15 +581,17 @@ function WMU_insertImage(e, type) {
 
 function MWU_imageWidthChanged(changes) {
 	var image = $('ImageUploadThumb').firstChild;
-	if(changes%2 == 0) {
-		$('ImageSize').innerHTML = 'Default size';
-		$('ImageUploadSlider').style.display = 'none';
+	if( !$( 'ImageUploadWidthCheckbox' ).checked ) {
+		$('ImageSize').innerHTML = '';
+		$('ImageUploadSlider').style.visibility = 'hidden';
+		$('ImageUploadInputWidth').style.display = 'none';
 		image.width = WMU_orgThumbSize[0];
 		image.height = WMU_orgThumbSize[1];
 		WMU_track('slider/disable'); // tracking
 	} else {
 		$('ImageSize').innerHTML = WMU_slider.getRealValue() + 'px';
-		$('ImageUploadSlider').style.display = '';
+		$('ImageUploadSlider').style.visibility = 'visible';
+		$('ImageUploadInputWidth').style.display = '';
 		image.width = WMU_thumbSize[0];
 		image.height = WMU_thumbSize[1];
 		WMU_track('slider/enable'); // tracking
@@ -530,10 +606,38 @@ function MWU_imageSizeChanged(size) {
 		if(size == 'thumb') {
 			image.width = WMU_thumbSize[0];
 			image.height = WMU_thumbSize[1];
+			$('ImageUploadManualWidth').value = WMU_thumbSize[0];
 		} else {
 			image.width = WMU_orgThumbSize[0];
 			image.height = WMU_orgThumbSize[1];
+			$('ImageUploadManualWidth').value = WMU_orgThumbSize[0];
 		}
+	}
+}
+
+function WMU_toggleMainMesg(e) {
+	YAHOO.util.Event.preventDefault(e);
+	if ('none' == $('ImageUploadMessage').style.display) {
+		$('ImageUploadMessage').style.display = '';
+		$('ImageUploadMessageLink').innerHTML = '[' + wmu_hide_message  + ']';
+		document.cookie = "wmumainmesg=1";
+	} else {
+		$('ImageUploadMessage').style.display = 'none';
+		$('ImageUploadMessageLink').innerHTML = '[' + wmu_show_message  + ']';
+		document.cookie = "wmumainmesg=0";
+	}
+}
+
+function WMU_toggleLicenseMesg(e) {
+	YAHOO.util.Event.preventDefault(e);
+	if ('none' == $('ImageUploadLicenseText').style.display) {
+		$('ImageUploadLicenseText').style.display = '';
+		$('ImageUploadLicenseLink').innerHTML = '[' + wmu_hide_license_message  + ']';
+		document.cookie = "wmulicensemesg=1";
+	} else {
+		$('ImageUploadLicenseText').style.display = 'none';
+		$('ImageUploadLicenseLink').innerHTML = '[' + wmu_show_license_message  + ']';
+		document.cookie = "wmulicensemesg=0";
 	}
 }
 
@@ -566,7 +670,7 @@ function WMU_close(e) {
 	}
 	WMU_track('close/' + WMU_curScreen);
 	WMU_panel.hide();
-	if(!FCK && $('wpTextbox1')) $('wpTextbox1').focus();
+	if(typeof FCK == 'undefined' && $('wpTextbox1')) $('wpTextbox1').focus();
 	WMU_switchScreen('Main');
 	WMU_loadMain();
 	YAHOO.util.Dom.setStyle('header_ad', 'display', 'block');
@@ -605,7 +709,9 @@ AIM = {
 	},
 	submit : function(f, c) {
 		// macbre: allow cross-domain
-		f.action += '&domain=' + escape(document.domain);
+		if(document.domain != 'localhost' && typeof FCK != 'undefined') {
+			f.action += ((f.action.indexOf('?') > 0) ? '&' : '?') + 'domain=' + escape(document.domain);
+		}
 
 		AIM.form(f, AIM.frame(c));
 		if (c && typeof(c.onStart) == 'function') {

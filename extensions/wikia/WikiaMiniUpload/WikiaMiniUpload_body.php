@@ -16,6 +16,13 @@ class WikiaMiniUpload {
 		return $tmpl->execute("main");
 	}
 
+	function loadLicense() {
+		global $wgRequest, $IP;
+		$license = $wgRequest->getText('license');
+		require_once($IP . '/includes/specials/SpecialUpload.php');
+		return preg_replace( '/(<a[^>]+)/', '$1 target="_new" ', UploadForm::ajaxGetLicensePreview( $license ) );		
+	}
+
 	function recentlyUploaded() {
 		global $IP, $wmu;
 		require_once($IP . '/includes/SpecialPage.php');
@@ -93,7 +100,6 @@ class WikiaMiniUpload {
 
 		$mFileSize = $wgRequest->getFileSize( 'wpUploadFile' );
 		$mSrcName = stripslashes($wgRequest->getFileName( 'wpUploadFile' ));
-//		$mTempPath = $wgRequest->get
 		$filtered = wfStripIllegalFilenameChars( $mSrcName );
 		$form = new UploadForm( $wgRequest );
 
@@ -190,8 +196,27 @@ class WikiaMiniUpload {
 	}
 
 	function detailsPage($props) {
+		$data = array('wpUpload' => 1, 'wpSourceType' => 'web', 'wpUploadFileURL' => '');
+		$form = new UploadForm(new FauxRequest($data, true));
+
 		$tmpl = new EasyTemplate(dirname(__FILE__).'/templates/');
-		$tmpl->set_vars(array('props' => $props));
+		list( $partname, $ext ) = $form->splitExtensions( $props['name'] );
+
+		if( count( $ext ) ) {
+			$finalExt = $ext[count( $ext ) - 1];
+		} else {
+			$finalExt = '';
+		}
+
+                // for more than one "extension"
+                if( count( $ext ) > 1 ) {
+                        for( $i = 0; $i < count( $ext ) - 1; $i++ )
+                                $partname .= '.' . $ext[$i];
+                }
+	
+		$props['partname'] = $partname;
+		$props['extension'] = strtolower( $finalExt );
+		$tmpl->set_vars(array('props' => $props));	
 		return $tmpl->execute('details');
 	}
 
@@ -273,6 +298,16 @@ class WikiaMiniUpload {
 						return $tmpl->execute('conflict');
 					}
 				} else {
+					// is the target protected?
+					$permErrors = $title->getUserPermissionsErrors( 'edit', $wgUser );
+					$permErrorsUpload = $title->getUserPermissionsErrors( 'upload', $wgUser );
+					$permErrorsCreate = ( $title->exists() ? array() : $title->getUserPermissionsErrors( 'create', $wgUser ) );
+
+					if( $permErrors || $permErrorsUpload || $permErrorsCreate ) {
+						header('X-screen-type: error');
+						return 'This image is protected';
+					}
+
 					$temp_file = new LocalFile(Title::newFromText($mwname, 6), RepoGroup::singleton()->getLocalRepo());
 					$file = new LocalFile($title, RepoGroup::singleton()->getLocalRepo());
 
@@ -287,7 +322,14 @@ class WikiaMiniUpload {
 
 						$caption = '{{MediaWiki:Flickr'.intval($license).'|1='.wfEscapeWikiText($extraId).'|2='.wfEscapeWikiText($nsid).'|3='.wfEscapeWikiText($username).'}}';
 					} else {
-						$caption = $wgRequest->getVal('CC_license') == 'true' ? "== Licensing ==\n{{cc-by-sa-3.0}}" : '';
+						// get the supplied license value
+						$license = $wgRequest->getVal( 'ImageUploadLicense' );
+						
+						if ( $license != '' ) {
+			                                $caption = '== ' . wfMsgForContent( 'license' ) . " ==\n" . '{{' . $license . '}}' . "\n";
+                        			} else {
+							$caption = "";
+						}						 
 					}
 
 					$file->upload($temp_file->getPath(), '', $caption);
