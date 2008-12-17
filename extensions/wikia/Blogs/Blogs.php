@@ -9,7 +9,7 @@
  * @author Adrian Wieczorek <adi@wikia-inc.com>
  */
 $wgExtensionCredits['other'][] = array(
-	"name" => "BlogArticle",
+	"name" => "BlogArticles",
 	"description" => "Blog Articles",
 	"version" => preg_replace( '/^.* (\d\d\d\d-\d\d-\d\d).*$/', '\1', '$Id: WikiFactory.php 13985 2008-06-16 15:20:38Z eloy $' ),
 	"author" => "[http://www.wikia.com/wiki/User:Eloy.wikia Krzysztof Krzyżaniak (eloy)], Piotr Molski, Adrian Wieczorek"
