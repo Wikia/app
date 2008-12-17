@@ -703,7 +703,7 @@ class BlogTemplateClass {
 				$sResult = self::__truncateText($sBlogText, isset(self::$aOptions['summarylength']) ? intval(self::$aOptions['summarylength']) : BLOGS_DEFAULT_LENGTH, BLOGS_ENDING_TEXT);
 			} else {
 				/* parse revision text */
-				$parserOutput = $localParser->parse($sBlogText, Title::newFromId($oRow->page_id), ParserOptions::newFromUser($wgUser));
+				$parserOutput = $localParser->parse($sBlogText, Title::newFromId($iPage), ParserOptions::newFromUser($wgUser));
 				$sResult = $parserOutput->getText();
 			}
 		}
