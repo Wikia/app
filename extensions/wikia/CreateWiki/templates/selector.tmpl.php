@@ -7,7 +7,7 @@
         <select name="request" id="request">
         <?php
             foreach ($requests as $rq):
-                $default = ($request == $rq->request_id) ? "default=\"default\"" : $default = "";
+                $default = ($request == $rq->request_id) ? "selected" : "";
                 echo "<option value=\"{$rq->request_id}\" {$default}>";
                 echo wfRequestTitle( $rq->request_name, $rq->request_language )->getText();
                 echo "</option>";
