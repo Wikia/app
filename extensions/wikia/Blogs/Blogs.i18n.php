@@ -18,7 +18,7 @@ Blog posts can be aggregated by a blog listing page based on the blog post's tag
 	'create-blog-invalid-title-error' => 'Invalid title',
 	'create-listing-confirm-info' => 'Copy and paste the following code:',
 	'create-blog-no-login' => 'Not logged in',
-	'create-blog-login-required' => 'You must be [[Special:Userlogin|logged in]] to create blog post.',
+	'create-blog-login-required' => 'You must be [[Special:Userlogin|logged in]] to create blog post or listing.',
 	'create-blog-categories-title' => 'Add this blog post to these categories (click to select)',
 	'create-blog-categories-textinput' => 'Add a new category',
 	'create-blog-categories-submit' => 'Submit',

@@ -18,6 +18,11 @@ class CreateBlogListingPage extends SpecialBlogPage {
 	public function execute() {
 		global $wgOut, $wgUser, $wgRequest;
 
+		if( !$wgUser->isLoggedIn() ) {
+			$wgOut->showErrorPage( 'create-blog-no-login', 'create-blog-login-required');
+			return;
+		}
+
 		$this->mTitle = Title::makeTitle( NS_SPECIAL, 'CreateBlogListingPage' );
 
 		$wgOut->setPageTitle( wfMsg('create-blog-listing-title') );
