@@ -1,9 +1,7 @@
 <!-- s:<?= __FILE__ ?> -->
 <div id="wk_blogs_loader" style="float:right;"></div>
 <div class="wk_blogs_post" id="wk_blogs_post">
-<?
-if (!empty($aRows)) {
-?>
+<? if (!empty($aRows)) { ?>
 <ul class="list">
 <?
 foreach ($aRows as $pageId => $aRow) {
@@ -16,8 +14,7 @@ foreach ($aRows as $pageId => $aRow) {
 		$isCommenting = $aRow['props']['commenting'];
 	}
 ?>
-<li>
-<div class="wk_blogs_link"><a href="<?=$oTitle->getLocalUrl()?>"><?=$oTitle->getSubpageText()?></a></div>
+<li class="list"><div class="wk_blogs_link"><a href="<?=$oTitle->getLocalUrl()?>"><?=$oTitle->getSubpageText()?></a></div>
 <?
 /* s: TIMESTAMP */
 	if ( !empty($aOptions['timestamp']) ) {
@@ -41,16 +38,9 @@ foreach ($aRows as $pageId => $aRow) {
 	}
 	/* s: COMMENTS */
 ?>
-<div class="wk_blogs_comments">
-<ul class="links">
-<? if (!empty($isCommenting)) { ?>
-<li><span style="margin:0 2px"><img src="<?=$wgExtensionsPath?>/wikia/Blogs/images/comment.gif" border="0" /></span><?=$skin->makeLinkObj($oTitle, wfMsg('blog-nbrcomments', intval($aRow['comments'])), "#comments")?></li>
-<li>|</li>
-<? } ?>
-<? if (!empty($isVoting)) { ?>
-<li><?=$aRow['votes']?></li>
-<li>|</li>
-<? } ?>
+<div class="wk_blogs_comments"><ul class="links">
+<? if (!empty($isCommenting)) { ?><li><span style="margin:0 2px"><img src="<?=$wgExtensionsPath?>/wikia/Blogs/images/comment.gif" border="0" /></span><?=$skin->makeLinkObj($oTitle, wfMsg('blog-nbrcomments', intval($aRow['comments'])), "#comments")?></li><li>|</li><? } ?>
+<? if (!empty($isVoting)) { ?><li><?=$aRow['votes']?></li><li>|</li><? } ?>
 <li><?=$skin->makeLinkObj($oTitle, wfMsg('blog-readfullpost'))?></li>
 </ul>
 </div>
@@ -66,10 +56,6 @@ foreach ($aRows as $pageId => $aRow) {
 <?
 } /* if (!empty($aRows)) */
 ?>
-<div class="wk_blogs_pager">
-<? if (!empty($sPager)) { ?>
-<?=$sPager?>
-<? } ?>
-</div>
+<div class="wk_blogs_pager"><? if (!empty($sPager)) { ?><?=$sPager?><? } ?></div>
 </div>
 <!-- e:<?= __FILE__ ?> -->
