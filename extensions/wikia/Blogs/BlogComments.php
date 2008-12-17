@@ -116,7 +116,11 @@ class BlogComment {
 		if( ! $this->mRevision ) {
 			$this->mRevision = Revision::newFromTitle( $this->mTitle );
 		}
-		$User     = User::newFromId( $this->mRevision->getUser( ) );
+		$revUser = $this->mRevision->getUser( );
+		if( ! $revUser ) {
+			return false;
+		}
+		$User     = User::newFromId( $revUser );
 
 		$isSysop   = ( in_array('sysop', $wgUser->getGroups()) || in_array('staff', $wgUser->getGroups() ) );
 		$isOwner   = (bool )( $User->getId() == $wgUser->getId() && ! $wgUser->isAnon() && ( $wgCityId == 4832 || $wgDevelEnvironment ) );
