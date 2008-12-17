@@ -13,20 +13,25 @@
 		<td>
 <?php
 global $wgStylePath, $wgUser, $wgScriptPath;
-if($wgUser->isLoggedIn()) {
-	if ($error) {
-?>
-		<span id="WMU_error_box"><?= $error ?></span>
-<?php
+
+if( !$wgUser->isAllowed( 'upload' ) ) {
+	if( !$wgUser->isLoggedIn() ) {
+		echo wfMsg( 'wmu-notlogged' );
+	} else {
+		echo wfMsg( 'wmu-notallowed' ); 
 	}
-?>
+} else {
+	if ($error) {
+		?>
+			<span id="WMU_error_box"><?= $error ?></span>
+			<?php
+	}
+	?>
 			<form onsubmit="return AIM.submit(this, WMU_uploadCallback)" action="<?= $wgScriptPath ?>/index.php?action=ajax&rs=WMU&method=uploadImage" id="ImageUploadForm" method="POST" enctype="multipart/form-data">
 				<input id="ImageUploadFile" name="wpUploadFile" type="file" size="32" />
 				<input type="submit" value="<?= wfMsg('wmu-upload-btn') ?>" onclick="return WMU_upload(event);" />
 			</form>
-<?php
-} else {
-	echo wfMsg('wmu-notlogged');
+	<?php
 }
 ?>
 		</td>
@@ -35,7 +40,7 @@ if($wgUser->isLoggedIn()) {
 		<td><h1><?= wfMsg('wmu-find') ?></h1></td>
 		<td>
 <?php
-if($wgUser->isLoggedIn()) {
+if( ( $wgUser->isLoggedIn() ) && ( $wgUser->isAllowed( 'upload' ) ) ) {
 ?>
 			<div onclick="WMU_changeSource(event);" style="font-size: 9pt; float: right; margin-top: 5px;">
 				<a id="WMU_source_0" href="#" style="font-weight: bold;"><?= wfMsg('wmu-thiswiki') ?></a> |

@@ -53,4 +53,5 @@ To view or search previously uploaded files go to the [[Special:ImageList|list o
 	'wmu-show-license-msg' => 'show license text',
 	'wmu-manual-width' => 'edit: ',
 	'wmu-max-thumb' => 'maximum thumbnail size exceeded, reverting to original size',
+	'wmu-notallowed' => 'You cannot upload images on this wiki',
 );
