@@ -494,7 +494,7 @@ class BlogListPage extends Article {
 					"href" => Title::newFromText( "CreateBlogListingPage", NS_SPECIAL)->getLocalUrl()
 				);
 				$tabs = $row + $tabs;
-				if (!empty($wgEnableSemanticMediaWikiExt)) {
+				if (empty($wgEnableSemanticMediaWikiExt)) {
 					$row["listing-refresh-tab"] = array(
 						"class" => "",
 						"text" => wfMsg("blog-refresh-label"),
