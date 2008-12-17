@@ -69,6 +69,11 @@ function WidgetCommunity($id, $params) {
 		$recentlyEdited = array();
 	}
 
+	global $wgHideRCinCommunityWidget;
+	if ($wgHideRCinCommunityWidget) {
+		$recentlyEdited = array();
+	}
+
 	// template stuff
 	$tmpl = new EasyTemplate(dirname( __FILE__ ));
 	$tmpl->set_vars(array(
