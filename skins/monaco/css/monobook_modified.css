@@ -1190,6 +1190,7 @@ div.mw-lag-warn-high {
 	padding: 3px;
 	text-align: center;
 	margin: 3px auto;
+	color: #000;
 }
 div.mw-lag-warn-normal {
 	border: 1px solid #FFCC66;
