@@ -111,7 +111,7 @@ class BlogComment {
 	 * @return String -- generated HTML text
 	 */
 	public function render() {
-		global $wgContLang, $wgUser;
+		global $wgContLang, $wgUser, $wgCityId, $wgDevelEnvironment;
 
 		if( ! $this->mRevision ) {
 			$this->mRevision = Revision::newFromTitle( $this->mTitle );
@@ -119,6 +119,7 @@ class BlogComment {
 		$User     = User::newFromId( $this->mRevision->getUser( ) );
 
 		$isSysop   = ( in_array('sysop', $wgUser->getGroups()) || in_array('staff', $wgUser->getGroups() ) );
+		$isOwner   = (bool )( $User->getId() == $wgUser->getId() && ! $wgUser->isAnon() && ( $wgCityId == 4832 || $wgDevelEnvironment ) );
 		$canDelete = $wgUser->isAllowed( "delete" );
 
 		$Parser  = new Parser( );
@@ -154,7 +155,8 @@ class BlogComment {
 		$template->set_vars(
 			array(
 				"comment" => $comments,
-				"canDelete" => $canDelete
+				"isOwner" => $isOwner,
+				"canDelete" => $canDelete,
 			)
 		);
 		$text = $template->execute( "comment" );
@@ -225,9 +227,10 @@ class BlogComment {
 		}
 
 		/**
-		 * clear listing cache
+		 * clear article/listing cache for this article
 		 */
 		$wgMemc->delete( wfMemcKey( "blog", "comm", $articleId ) );
+		$Title->invalidateCache();
 		$update = SquidUpdate::newSimplePurge( $Title );
 		$update->doUpdate();
 

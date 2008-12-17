@@ -14,6 +14,9 @@
 		<?php if( $canDelete ): ?>
 			<a href="<?php echo $comment[ "title" ]->getLocalUrl( "redirect=no&action=delete" ) ?>">delete</a>
 		<?php endif; ?>
+		<?php if( $isOwner ): ?>
+			<a href="#" class="blog-comm-hide" id="<?php echo $comment[ "title" ]->getArticleId() ?>">hide</a>
+		<?php endif; ?>
 		</div>
 		<?php
 			echo $comment["text"];
@@ -21,11 +24,10 @@
 	</div>
 <?php
 	else:
-		echo wfMsg( "blogs-comment-hidden" );
+		echo "<em>" . wfMsg( "blogs-comment-hidden" ) . "</em>";
 		echo '&nbsp;<a href="#" class="blog-comm-hide" id="'.$comment[ "title" ]->getArticleId().'">unhide</a>';
 	endif; ### comment[ "hiddent" ]
 ?>
 </div>
 <br style="clear: both;" />
 <!-- e:<?= __FILE__ ?> -->
-
