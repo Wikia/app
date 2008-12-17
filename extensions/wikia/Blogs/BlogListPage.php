@@ -261,7 +261,7 @@ class BlogListPage extends Article {
 			$wgMemc->set( wfMemcKey( "blog", "feed", $user, $offset ), $listing, 3600 );
 		}
 
-		$feed = new $wgFeedClasses[ $format ]( wfMsg("blog-userblog", $this->getUserText()), wfMsg("blog-fromsitename", $wgSitename), $wgTitle->getFullUrl() );
+		$feed = new $wgFeedClasses[ $format ]( wfMsg("blog-userblog", $user), wfMsg("blog-fromsitename", $wgSitename), $wgTitle->getFullUrl() );
 
 		$feed->outHeader();
 		if( is_array( $listing ) ) {
