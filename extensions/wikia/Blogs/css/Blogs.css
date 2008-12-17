@@ -1,57 +1,57 @@
-#blogPostForm label { 
+#blogPostForm label {
 	color: #cc4d33;
-	display: block; 
+	display: block;
 	float: left;
-	padding-right: 1em; 
-	font-size: 12pt; 
+	padding-right: 1em;
+	font-size: 12pt;
 }
 
-#blogPostForm div.formErrors { 
-	color: red; 
-	font-weight: bold; 
+#blogPostForm div.formErrors {
+	color: red;
+	font-weight: bold;
 }
 
-#blogPostForm div.formBlock { 
-	border-bottom: 1px dashed #AAA; 
-	clear: left; 
-	float: left; 
-	padding: 15px 0; 
+#blogPostForm div.formBlock {
+	border-bottom: 1px dashed #AAA;
+	clear: left;
+	float: left;
+	padding: 15px 0;
 	width: 100%;
 }
 
-#blogPostForm div.formLastBlock { 
-	width: 100%; 
-	clear: left; 
-	float: left; 
-	margin-top: 10px; 
-	margin-bottom: 10px; 
-	padding-bottom: 20px; 
+#blogPostForm div.formLastBlock {
+	width: 100%;
+	clear: left;
+	float: left;
+	margin-top: 10px;
+	margin-bottom: 10px;
+	padding-bottom: 20px;
 }
 
-#blogPostForm #blogPostTitle { 
-	clear: left; 
-	float: left; 
-	display: block; 
+#blogPostForm #blogPostTitle {
+	clear: left;
+	float: left;
+	display: block;
 }
 
 #blogPostROTitle {
-	clear: left; 
-	float: left; 
-	display: block; 
+	clear: left;
+	float: left;
+	display: block;
 	font-weight: bold;
 	padding: 5px;
-	margin-right: 15px; 
+	margin-right: 15px;
 
 }
 
-#CreateWikiForm div.row { 
-	padding: 0.8em; 
-	display: block !important; 
-	clear: both; 
+#CreateWikiForm div.row {
+	padding: 0.8em;
+	display: block !important;
+	clear: both;
 }
 
-tr { 
-	border: 1px solid #dcdcdc; 
+tr {
+	border: 1px solid #dcdcdc;
 }
 
 .categoryCloudSection {
@@ -133,6 +133,7 @@ div.wk_blogs_panel .wk_blogs_comments {
 	margin-top: 3px;
 	text-align: right;
 	margin-bottom: 5px;
+	clear: both;
 }
 
 /**
@@ -188,14 +189,6 @@ div.blog-comm-input-text textarea {
 	padding: 3px;
 	width: 450px;
 }
-
-
-
-
-
-/**
- * blog-post page templates
- */
 div.wk_blogs_post {
 	width:100%;
 }
@@ -278,28 +271,8 @@ div.wk_blogs_post .wk_blogs_pager {
 	left:-320px;
 }
 
-/**
- * comments
- */
 div.blog-comment_input {
 	background: #e0e0e;
-}
-
-/**
- * footer
- */
-
-span.avatar-overlay {
-/**	background: url(http://images.wikia.com/common/skins/monaco/images/widget_sprite.png); **/
-/**	clip: rect(0px 7px 12px 0px); **/
-	background: white;
-	border: red;
-	cursor: pointer;
-	height: 12px;
-	position: absolute;
-	right: -17px;
-	top: 4px;
-	width: 28px;
 }
 
 #blog-footer ul {
