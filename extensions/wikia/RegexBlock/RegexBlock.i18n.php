@@ -48,4 +48,5 @@ $wgRegexBlockMessages["en"] = array(
     "regexblock_stats_title" => "Statistics for regular-expression name: ",
     "regexblock_match_stats_record" => "$1 blocked '$2' on '$3' at '$4', logging from address '$5'",
     "regexblock_nodata_found" => "No data found",
+	 "right-regexblock" => "Block users from editing on all Wikia",
 );
