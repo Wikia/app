@@ -102,7 +102,7 @@ body {
 	color: #809def;
 }
 #wikia_page code {
-	background-color: #060;
+	background-color: #112266;
 	color: #FFF;
 }
 #page_tabs li {
@@ -197,5 +197,11 @@ td.diff-addedline {
 	background-image: url('http://images.wikia.com/common/skins/monaco/images/star-rating.black.png');
 }
 
-.mw-plusminus-pos { color: #00FF00; }
-.mw-plusminus-neg { color: #FF0000; }
+.mw-plusminus-pos { color: #00FF00 !important; }
+.mw-plusminus-neg { color: #FF0000 !important; }
+
+.editsectionbutton {
+	background-color: #09101d;
+	border: 1px solid #ffcb3b;
+	color: #09101d;
+}

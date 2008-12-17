@@ -48,3 +48,8 @@
 	background-image: none;
 	filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='http://images.wikia.com/common/skins/monaco/smoke/images/header_button.png', sizingMethod='crop');
 }
+
+.editsectionbutton {
+	background-color: #FFC;
+	color: #FFC;
+}
