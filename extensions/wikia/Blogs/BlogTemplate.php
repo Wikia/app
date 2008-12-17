@@ -9,9 +9,10 @@ $wgAjaxExportList[] = "BlogTemplateClass::axShowCurrentPage";
 define ("BLOGS_TIMESTAMP", "20081101000000");
 define ("BLOGS_XML_REGEX", "/\<(.*?)\>(.*?)\<\/(.*?)\>/si");
 define ("GROUP_CONCAT", "64000");
+define ("BLOGS_DEFAULT_LENGTH", "400");
 define ("BLOGS_HTML_PARSE", "/(<.+?>)?([^<>]*)/s");
 define ("BLOGS_ENTITIES_PARSE", "/&[0-9a-z]{2,8};|&#[0-9]{1,7};|&#x[0-9a-f]{1,6};/i");
-define ("BLOGS_ENDING_TEXT", " ... ");
+define ("BLOGS_ENDING_TEXT", " (...) ");
 define ("BLOGS_CLOSED_TAGS", "/^<\s*\/([^\s]+?)\s*>$/s");
 define ("BLOGS_OPENED_TAGS", "/^<\s*([^\s>!]+).*?>$/s");
 
@@ -229,8 +230,8 @@ class BlogTemplateClass {
         '&nbsp;', //\t
 	);
 
-	private static $skipStrinBeforeParse	= "<p><div><a>";
-	private static $skipStrinAfterParse		= "<p><a>"; # one tag only!
+	private static $skipStrinBeforeParse	= "<p><div><a><b><del><i><ins><u><font><big><small><sub><sup><cite><code><em><s><strike><strong><tt><var><center><blockquote><ol><ul><dl><u><q><abbr><acronym><li><dt><dd><span>";
+	private static $skipStrinAfterParse		= "<p><a><b><del><i><ins><u><font><big><small><sub><sup><cite><code><em><s><strike><strong><tt><var><center><blockquote><ol><ul><dl><u><q><abbr><acronym><li><dt><dd><span>";
 	private static $parseTagTruncateText	= "/<(p|a(.*))>(.*)<\/(p|a)>/siU";
 
 	private static $pageOffsetName 			= "page";
@@ -582,7 +583,7 @@ class BlogTemplateClass {
     	return $aPages;
 	}
 
-	private static function __truncateText($sText, $iLength = 200, $sEnding = BLOGS_ENDING_TEXT) {
+	private static function __truncateText($sText, $iLength = BLOGS_DEFAULT_LENGTH, $sEnding = BLOGS_ENDING_TEXT) {
 		global $wgLang;
 
 		wfProfileIn( __METHOD__ );
@@ -659,17 +660,10 @@ class BlogTemplateClass {
 					}
 				}
 
-				/* wrap correct words - find the last occurance of " " */
-				/* MOLI FIXED 8.12.2008
-				$iSpacePos = strrpos($sResult, ' ');
-				if ( $iSpacePos !== false ) {
-					$sResult = substr($sResult, 0, $iSpacePos);
-				}
+				/* close all opened tags */
 				if ( !empty($sEnding) ) {
 					$sResult .= $sEnding;
 				}
-				MOLI */
-				/* close all opened tags */
 				foreach ($aTags as $sTag) {
 					$sResult .= "</{$sTag}>";
 				}
@@ -678,25 +672,9 @@ class BlogTemplateClass {
 			}
 
 			$aMatches = array();
-			/* MOLI FIXED 8.12.2008
-			preg_match_all(self::$parseTagTruncateText, $sResult, $aMatches);
-			if ( count($aMatches) ) {
-				$aPTags = $aMatches[1];
-				$sResult = '';
-				foreach ( $aPTags as $sPTag ) {
-					$sPTag = trim($sPTag);
-					if ( !empty($sPTag) ) {
-						$sResult .= "<p>".$sPTag."</p>";
-						if ( mb_strlen($sResult) >= self::$aOptions['summarylength']) {
-							break;
-						}
-					}
-				}
-			}
-			MOLI */
 		}
 
-		$sResult = preg_replace('/[\r\n]+/siU', '<br />', trim($sResult));
+		$sResult = preg_replace('/[\r\n]{2,}/siU', '<br />', trim($sResult));
 		return $sResult;
 	}
 
@@ -722,7 +700,7 @@ class BlogTemplateClass {
 				/* skip HTML tags */
 				$sBlogText = strip_tags($sBlogText, self::$skipStrinAfterParse);
 				/* truncate text */
-				$sResult = self::__truncateText($sBlogText, isset(self::$aOptions['summarylength']) ? intval(self::$aOptions['summarylength']) : 200, BLOGS_ENDING_TEXT);
+				$sResult = self::__truncateText($sBlogText, isset(self::$aOptions['summarylength']) ? intval(self::$aOptions['summarylength']) : BLOGS_DEFAULT_LENGTH, BLOGS_ENDING_TEXT);
 			} else {
 				/* parse revision text */
 				$parserOutput = $localParser->parse($sBlogText, Title::newFromId($oRow->page_id), ParserOptions::newFromUser($wgUser));

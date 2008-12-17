@@ -203,7 +203,7 @@ div.wk_blogs_post ul.list {
 	margin-bottom: 0.5em;
 	list-style: none;
 }
-div.wk_blogs_post ul.list li {
+div.wk_blogs_post ul.list li.list {
 	padding: 5px 0px 3px 0px;
 	border-bottom: 1px solid #DFDFDF;
 	margin: 0 0 10px
