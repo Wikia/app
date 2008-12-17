@@ -332,3 +332,16 @@
 #editingTips {
 	height: 363px;
 }
+.editsectionbutton {
+	background-color: #FFC;
+	border: 1px solid #999;
+	color: #FFC;
+	float: none;
+	padding: 3px 1px;
+	position: relative;
+	top: -2px;
+}
+.editsectionbutton a {
+	background: transparent !important;
+	color: #333;
+}
