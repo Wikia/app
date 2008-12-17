@@ -89,13 +89,13 @@ YAHOO.Wikia.Blogs.submit = function( event, id ) {
 		}
 		YAHOO.util.Event.preventDefault( event );
 		YAHOO.util.Connect.setForm( oForm, false );
-		YAHOO.util.Connect.asyncRequest( "POST", wgServer + wgScriptPath + wgScript + "?action=ajax&rs=BlogComment::axPost&article=" + wgArticleId, YAHOO.Wikia.Blogs.callback );
+		YAHOO.util.Connect.asyncRequest( "POST", wgServer + wgScript + "?action=ajax&rs=BlogComment::axPost&article=" + wgArticleId, YAHOO.Wikia.Blogs.callback );
 	}
 };
 
 YAHOO.Wikia.Blogs.toggle = function( event ) {
 	YAHOO.util.Event.preventDefault( event );
-	YAHOO.util.Connect.asyncRequest( "GET", wgServer + wgScriptPath + wgScript + "?action=ajax&rs=BlogComment::axToggle&id=" + event.target.id + "&article=" + wgArticleId, YAHOO.Wikia.Blogs.hideCallback );
+	YAHOO.util.Connect.asyncRequest( "GET", wgServer + wgScript + "?action=ajax&rs=BlogComment::axToggle&id=" + event.target.id + "&article=" + wgArticleId, YAHOO.Wikia.Blogs.hideCallback );
 };
 
 YAHOO.util.Event.addListener( "blog-comm-submit-top", "click", YAHOO.Wikia.Blogs.submit, "blog-comm-form-top" );
