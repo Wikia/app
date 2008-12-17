@@ -45,4 +45,5 @@ $messages["en"] = array(
     'lookupcontribscontribs' => 'contribs',
     'lookupcontribshist' => 'hist',
     'lookupcontribsdiff' => 'diff',
+	 'right-lookupcontribs' => 'View user\'s global edits',
 );
