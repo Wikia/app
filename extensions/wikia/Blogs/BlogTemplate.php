@@ -601,7 +601,7 @@ class BlogTemplateClass {
 			}
 		}
 
-		if (mb_strlen(strip_tags($sText)) <= 10 /*$iLength*/) {
+		if (mb_strlen(strip_tags($sText)) <= $iLength) {
 			/* if text without HTML is shorter than the maximum length, return text */
 			$sResult = $sText;
 		} else {
