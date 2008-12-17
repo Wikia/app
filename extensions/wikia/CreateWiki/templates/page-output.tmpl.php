@@ -11,7 +11,7 @@ You can check <a href="<?= $title->getFullUrl() ?>">request page</a> for this Wi
     	<li>
     		<a href="http://www.wikia.com/index.php?title=<?= $link ?>">
     		http://www.wikia.com/index.php?title=<?= urlencode($link); ?>
-    		</a>.
+    		</a>
     	</li>
     	<li>
 						<a href="http://www.wikia.com/index.php?title=Template:List_of_Wikia_New">

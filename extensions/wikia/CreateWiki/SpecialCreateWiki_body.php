@@ -362,6 +362,8 @@ class CreateWikiForm extends SpecialPage {
             $request_prefix = 0;
         }
 
+		$request_starter = in_array($request->request_language, array("en", "ja", "de", "fr")) ? 1 : 0;
+
 		if( $request->request_language == 'en' ) {
 			$sWikiDescription = $request->request_description_international;
 			$sWikiDescriptionInternational = '';
@@ -412,7 +414,7 @@ class CreateWikiForm extends SpecialPage {
             "descriptionIntl"   => $sWikiDescriptionInternational,
             "languages"         => Language::getLanguageNames(),
             "request_prefix"    => $request_prefix,
-            "request_starter"   => in_array($request->request_language, array("en", "ja", "de", "fr")) ? 1 : 0
+            "request_starter"   => $request_starter
         ));
         $wgOut->addHTML( $oTmpl->execute("request") );
 	}

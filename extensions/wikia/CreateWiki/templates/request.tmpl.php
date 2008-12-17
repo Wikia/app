@@ -226,11 +226,11 @@ YAHOO.util.Event.addListener( "wc-language", "change", WC.domainWatch );
 <div class="column">
     <div class="row">
         <label class="long">Include language prefix in URL</label>
-        <input type="checkbox" name="wpCreateWikiLangPrefix" <?=($wgRequest->wasPosted() ? ($wgRequest->getCheck('wpCreateWikiLangPrefix') ? "checked=\"checked\"" : "") : (!empty($request_prefix) ? "checked=\"checked\"" : ""));?> id="wc-prefix" />
+        <input type="checkbox" name="wpCreateWikiLangPrefix" value="1" <?=!empty($request_prefix) ? "checked=\"checked\"" : "";?> id="wc-prefix" />
     </div>
     <div class="row">
         <label class="long">Import content from <a href="http://starter.wikia.com/">starter.wikia.com</a></label>
-        <input type="checkbox" name="wpCreateWikiImportStarter" <?=($wgRequest->wasPosted() ? ($wgRequest->getCheck('wpCreateWikiImportStarter') ? "checked=\"checked\"" : "") : (!empty($request_starter) ? "checked=\"checked\"" : ""));?> />
+        <input type="checkbox" name="wpCreateWikiImportStarter" value="1" <?=!empty($request_starter) ? "checked=\"checked\"" : "";?> />
     </div>
 </div>
 <!-- Right column /End -->
