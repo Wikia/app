@@ -493,12 +493,14 @@ class BlogListPage extends Article {
 					"href" => Title::newFromText( "CreateBlogListingPage", NS_SPECIAL)->getLocalUrl()
 				);
 				$tabs = $row + $tabs;
-				$row["listing-refresh-tab"] = array(
-					"class" => "",
-					"text" => wfMsg("blog-refresh-label"),
-					"href" => $wgTitle->getLocalUrl( "action=purge" )
-				);
-				$tabs += $row;
+				if (empty($tabs['purge'])) {
+					$row["listing-refresh-tab"] = array(
+						"class" => "",
+						"text" => wfMsg("blog-refresh-label"),
+						"href" => $wgTitle->getLocalUrl( "action=purge" )
+					);
+					$tabs += $row;
+				}
 				break;
 		}
 
