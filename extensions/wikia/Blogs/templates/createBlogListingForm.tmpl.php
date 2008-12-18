@@ -34,7 +34,7 @@ BL.checkMatches = function (e) {
 <form name="blogPostForm" id="blogPostForm" class="wikia_form" method="post" action="<?php echo $title->getLocalUrl();?>">
 	<input type="hidden" name="articleEditAllowed" value="<?php echo isset($formData['isExistingArticleEditAllowed']) ? $formData['isExistingArticleEditAllowed'] : "0"; ?>" />
 	<?php if(!empty($preview)): ?>
-		<h2>Preview</h2>
+		<h2><?=wfMsg('create-blog-listing-preview')?></h2>
 		<div class='previewnote'><p><strong><?php echo wfMsg('previewnote');?></strong></p></div>
 		<?php echo $preview; ?>
 		<br />
@@ -94,8 +94,8 @@ BL.checkMatches = function (e) {
 			<input type="radio" name="listingType" value="box" <?=($formData['listingType'] == 'box')?"checked=\"yes\"":"";?> />&nbsp;<?php echo wfMsg('create-blog-listing-output-as-box');?>
 		</div>
 		<div class="editButtons">
-			<input id="wpSave" type="submit" title="Save your changes [ctrl-s]" accesskey="s" value="Save page" tabindex="5" name="wpSave"/>
-			<input id="wpPreview" type="submit" title="Preview your changes, please use this before saving! [ctrl-p]" accesskey="p" value="Show preview" tabindex="6" name="wpPreview"/>
+			<input id="wpSave" type="submit" title="Save your changes [ctrl-s]" accesskey="s" value="<?=wfMsg('create-blog-save')?>" tabindex="5" name="wpSave"/>
+			<input id="wpPreview" type="submit" title="Preview your changes, please use this before saving! [ctrl-p]" accesskey="p" value="<?=wgMsg('create-blog-preview')?>" tabindex="6" name="wpPreview"/>
 		</div>
 	</div>
 

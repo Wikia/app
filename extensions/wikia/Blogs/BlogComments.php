@@ -378,7 +378,7 @@ class BlogComment {
 		 * add article
 		 */
 		$article = new Article( $commentTitle, 0 );
-		$article->doEdit( $text, "New comment in blog" );
+		$article->doEdit( $text, wfMsg('blog-comments-new') );
 
 		/**
 		 * clear comments cache for this article
