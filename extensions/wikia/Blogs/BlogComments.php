@@ -139,7 +139,6 @@ class BlogComment {
 
 		$text = false;
 		if( !$this->isDeleted() ) {
-			$isSysop   = ( in_array('sysop', $wgUser->getGroups()) || in_array('staff', $wgUser->getGroups() ) );
 			$canDelete = $wgUser->isAllowed( "delete" );
 
 			$Parser  = new Parser( );
@@ -214,14 +213,20 @@ class BlogComment {
 		return $this->mProps;
 	}
 
+	/**
+	 * check if current user can toggle show/hide comment
+	 *
+	 * @access private
+	 */
 	private function canToggle() {
 		global $wgUser, $wgCityId, $wgDevelEnvironment;
 
 		$devel    = $wgCityId == 4832 || $wgDevelEnvironment;
 		$isAuthor = $this->mUser->getId() == $wgUser->getId() && ! $wgUser->isAnon();
 		$isOwner  = $this->mOwner->getId() == $wgUser->getId();
+		$isSysop = ( in_array('sysop', $wgUser->getGroups()) || in_array('staff', $wgUser->getGroups() ) );
 
-		return $devel && ($isAuthor || $isOwner);
+		return $devel && ($isAuthor || $isOwner || $isSysop );
 	}
 
 	/**
@@ -232,14 +237,13 @@ class BlogComment {
 	 * @return Boolean -- new status
 	 */
 	public function toggle() {
-		global $wgMemc, $wgUser, $wgCityId, $wgDevelEnvironment;
+		global $wgUser;
 
 		wfProfileIn( __METHOD__ );
 
 		$this->load();
-		$isSysop = ( in_array('sysop', $wgUser->getGroups()) || in_array('staff', $wgUser->getGroups() ) );
 
-		if( $isSysop || $this->canToggle() ) {
+		if( $this->canToggle() ) {
 			if( isset( $this->mProps["hiddencomm"] ) ) {
 				$this->mProps["hiddencomm"] = empty( $this->mProps["hiddencomm"] ) ? 1 : 0;
 			}

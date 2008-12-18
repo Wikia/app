@@ -14,7 +14,7 @@
 		<?php if( $canDelete ): ?>
 			<a href="<?php echo $comment[ "title" ]->getLocalUrl( "redirect=no&action=delete" ) ?>">delete</a>
 		<?php endif; ?>
-		<?php if( $canToggle || $isSysop ): ?>
+		<?php if( $canToggle ): ?>
 			<a href="#" class="blog-comm-hide" id="<?php echo $comment[ "title" ]->getArticleId() ?>">hide</a>
 		<?php endif; ?>
 		</div>
@@ -26,7 +26,7 @@
 	else:
 		echo "<div class=\"blog-comment-hidden\">\n";
 		echo wfMsg( "blogs-comment-hidden" );
-		if( $canToggle || $isSysop ):
+		if( $canToggle ):
 			echo '&nbsp;<a href="#" class="blog-comm-hide" id="'.$comment[ "title" ]->getArticleId().'">unhide</a>';
 		endif;
 		echo "</div>\n";
