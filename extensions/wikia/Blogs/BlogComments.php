@@ -21,7 +21,8 @@ class BlogComment {
 	public
 		$mProps,
 		$mTitle,
-		$mRevision;
+		$mRevision,
+		$mUser;
 
 	public function __construct( $Title ) {
 		/**
@@ -59,12 +60,6 @@ class BlogComment {
 		$Title = $Article->getTitle();
 
 		$Comment = new BlogComment( $Title );
-		if( $Article->isCurrent() ) {
-			/**
-			 * hack, $this->mRevision is marked as private
-			 */
-			$Comment->setRevision( $Article->mRevision );
-		}
 		return $Comment;
 	}
 
@@ -87,13 +82,17 @@ class BlogComment {
 	}
 
 	/**
-	 * setRevision -- setter
+	 * load -- set variables, load data from database
 	 *
-	 * @param Revision $revision -- object of revision
+	 * @access private
 	 */
-	public function setRevision( $revision ) {
-		if( $revision ) {
-			$this->mRevision = $revision;
+	private function load() {
+		if( $this->mTitle ) {
+			$this->mRevision = Revision::newFromTitle( $this->mTitle );
+			if( $this->mRevision ) {
+				$this->mUser = User::newFromId( $this->mRevision->getUser() );
+			}
+			$this->getProps();
 		}
 	}
 
@@ -111,9 +110,7 @@ class BlogComment {
 	 * @access public
 	 */
 	public function isDeleted() {
-		if( ! $this->mRevision ) {
-			$this->mRevision = Revision::newFromTitle( $this->mTitle );
-		}
+		$this->load();
 		if( $this->mRevision ) {
 			$deleted = $this->mRevision->isDeleted( Revision::DELETED_TEXT );
 		}
@@ -136,14 +133,13 @@ class BlogComment {
 
 		$text = false;
 		if( !$this->isDeleted() ) {
-			$User      = User::newFromId( $this->mRevision->getUser() );
 			$isSysop   = ( in_array('sysop', $wgUser->getGroups()) || in_array('staff', $wgUser->getGroups() ) );
-			$isOwner   = (bool )( $User->getId() == $wgUser->getId() && ! $wgUser->isAnon() && ( $wgCityId == 4832 || $wgDevelEnvironment ) );
+			$isOwner   = (bool )( $this->mUser->getId() == $wgUser->getId() && ! $wgUser->isAnon() && ( $wgCityId == 4832 || $wgDevelEnvironment ) );
 			$canDelete = $wgUser->isAllowed( "delete" );
 
 			$Parser  = new Parser( );
 			$Options = new ParserOptions( );
-			$Options->initialiseFromUser( $User );
+			$Options->initialiseFromUser( $this->mUser );
 
 			/**
 			 * if $props are not cache we read them from database
@@ -152,9 +148,10 @@ class BlogComment {
 
 			$text     = $Parser->parse( $this->mRevision->getText(), $this->mTitle, $Options )->getText();
 			$anchor   = explode( "/", $this->mTitle->getDBkey(), 3 );
-			$sig      = ( $User->isAnon() )
+			$sig      = ( $this->mUser->isAnon() )
 				? wfMsg("blog-comments-anonymous")
-				: Xml::element( 'a', array ( "href" => $User->getUserPage()->getFullUrl() ), $User->getName() );
+				: Xml::element( 'a', array ( "href" => $this->mUser->getUserPage()->getFullUrl() ), $this->mUser->getName() );
+
 			$hidden   = isset( $this->mProps[ "hiddencomm" ] )
 				? (bool )$this->mProps[ "hiddencomm" ]
 				: false;
@@ -163,9 +160,9 @@ class BlogComment {
 				"sig"       => $sig,
 				"text"      => $text,
 				"title"     => $this->mTitle,
-				"author"    => $User,
+				"author"    => $this->mUser,
 				"anchor"    => $anchor,
-				"avatar"    => BlogAvatar::newFromUser( $User )->getLinkTag( 50, 50 ),
+				"avatar"    => BlogAvatar::newFromUser( $this->mUser )->getLinkTag( 50, 50 ),
 				"hidden"	=> $hidden,
 				"timestamp" => $wgContLang->timeanddate( $this->mRevision->getTimestamp() )
 			);
@@ -220,20 +217,25 @@ class BlogComment {
 	 * @return Boolean -- new status
 	 */
 	public function toggle() {
-		global $wgMemc;
+		global $wgMemc, $wgUser, $wgCityId, $wgDevelEnvironment;
 
 		wfProfileIn( __METHOD__ );
 
-		$this->getProps();
-		if( isset( $this->mProps["hiddencomm"] ) ) {
-			$this->mProps["hiddencomm"] = empty( $this->mProps["hiddencomm"] ) ? 1 : 0;
-		}
-		else {
-			$this->mProps["hiddencomm"] = 1;
-		}
-		BlogListPage::saveProps( $this->mTitle->getArticleID(), $this->mProps );
-		$wgMemc->delete( wfMemcKey( "blog", "comm", $this->mTitle->getArticleID() ) );
+		$this->load();
 
+		$isSysop = ( in_array('sysop', $wgUser->getGroups()) || in_array('staff', $wgUser->getGroups() ) );
+		$isOwner = (bool )( $this->mUser->getId() == $wgUser->getId() && ! $wgUser->isAnon() && ( $wgCityId == 4832 || $wgDevelEnvironment ) );
+
+		if( $isSysop || $isOwner ) {
+			if( isset( $this->mProps["hiddencomm"] ) ) {
+				$this->mProps["hiddencomm"] = empty( $this->mProps["hiddencomm"] ) ? 1 : 0;
+			}
+			else {
+				$this->mProps["hiddencomm"] = 1;
+			}
+			BlogListPage::saveProps( $this->mTitle->getArticleID(), $this->mProps );
+			$wgMemc->delete( wfMemcKey( "blog", "comm", $this->mTitle->getArticleID() ) );
+		}
 		wfProfileOut( __METHOD__ );
 
 		return (bool )$this->mProps["hiddencomm"];
