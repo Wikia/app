@@ -1297,6 +1297,7 @@ class EditPage {
 			$summarypreview = $summarytext && $this->preview ? "<div class=\"mw-summary-preview\">".wfMsg('summary-preview').':'.$sk->commentBlock( $this->summary, $this->mTitle )."</div>\n" : '';
 			$subjectpreview = '';
 		}
+		wfRunHooks('EditPageSummaryBox', array(&$editsummary) );
 
 		# Set focus to the edit box on load, except on preview or diff, where it would interfere with the display
 		if( !$this->preview && !$this->diff ) {
