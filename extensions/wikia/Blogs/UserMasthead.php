@@ -2,20 +2,23 @@
 $wgHooks['MonacoBeforePageBar'][] = 'userMasthead';
 
 function userMasthead() {
-	global $wgTitle, $wgUser, $userMasthead, $wgOut, $wgExtensionsPath, $wgStyleVersion, $wgRequest;
+	global $wgTitle, $wgUser, $userMasthead, $wgOut, $wgExtensionsPath,
+		$wgStyleVersion, $wgRequest;
 
 	$namespace = $wgTitle->getNamespace();
-	$dbKey = $wgTitle->getDBkey();
+	$dbKey = SpecialPage::resolveAlias( $wgTitle->getDBkey() );
 	$isAnon = $wgUser->isAnon();
 
 	$allowedNamespaces = array ( NS_BLOG_ARTICLE, NS_USER, NS_USER_TALK );
 	$allowedPages = array (
-		0 => array('Watchlist', 'WidgetDashboard', 'Preferences'),
-		1 => array('Contributions')
+		'Watchlist',
+		'WidgetDashboard',
+		'Preferences',
+		'Contributions',
+		'Emailuser'
 	);
-
 	if( in_array( $namespace, $allowedNamespaces ) ||
-		( ($namespace == NS_SPECIAL) && ( in_array( $dbKey, array_merge($allowedPages[0],$allowedPages[1]) ) ) )
+		( ( $namespace == NS_SPECIAL ) && ( in_array( $dbKey, $allowedPages ) ) )
 	) {
 		/**
 		 * change dbkey for nonspecial articles, in this case we use NAMESPACE
@@ -36,7 +39,7 @@ function userMasthead() {
 			$Avatar = BlogAvatar::newFromUserName( $userspace );
 		}
 
-		if ( in_array( $dbKey, $allowedPages[1] ) ) {
+		if ( in_array( $dbKey, $allowedPages ) ) {
 			$reqTitle = $wgRequest->getText("title", false);
 			if ( strpos( $reqTitle, "/") !== false ) {
 				list ( , $userspace ) = explode( "/", $reqTitle, 2 );
@@ -75,16 +78,16 @@ function userMasthead() {
 			} elseif ( !$isAnon ) {
 				$oTitle = Title::newFromText( "EmailUser/{$userspace}", NS_SPECIAL );
 				if ($oTitle instanceof Title) {
-					$out['nav_links'][] = array('text' => wfMsg("emailpage"), 'href' => $oTitle->getLocalUrl(), "dbkey" => "EmailUser" );
+					$out['nav_links'][] = array('text' => wfMsg("emailpage"), 'href' => $oTitle->getLocalUrl(), "dbkey" => "Emailuser" );
 				}
 			}
 
 			$tmpl = new EasyTemplate( dirname( __FILE__ ) . '/templates/' );
 			$tmpl->set_vars( array(
-				'data' => $out,
-				"avatar" => $Avatar,
+				'data'      => $out,
+				"avatar"    => $Avatar,
+				"current"   => $dbKey,
 				"userspace" => $userspace,
-				"current" => $dbKey
 			));
 			echo $tmpl->execute('UserMasthead');
 		}
