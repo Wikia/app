@@ -5,9 +5,14 @@
 	$uploadmesg = preg_replace( '/(<a[^>]+)/', '$1 target="_new" ', $uploadmesg );
 
 ?>
-<div id="ImageUploadMessage"><?= $uploadmesg ?></div>
 
 <table cellspacing="0" style="width: 100%;" id="ImageUploadInputTable">
+	<tr id="ImageUploadTextCont">
+		<td colspan="2">
+			<div id="ImageUploadMessage"><?= $uploadmesg ?></div>
+		</td>
+	</tr>
+
 	<tr id="ImageUploadUpload">
 		<td><h1><?= wfMsg('wmu-upload') ?></h1></td>
 		<td>

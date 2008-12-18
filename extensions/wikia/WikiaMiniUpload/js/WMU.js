@@ -227,7 +227,7 @@ function WMU_loadMain() {
 			if($('ImageQuery') && WMU_panel.element.style.visibility == 'visible') $('ImageQuery').focus();
 			var cookieMsg = document.cookie.indexOf("wmumainmesg=");
 			if (cookieMsg > -1 && document.cookie.charAt(cookieMsg + 12) == 0) {
-				$('ImageUploadMessage').style.display = 'none';
+				$('ImageUploadTextCont').style.display = 'none';
 		                $('ImageUploadMessageLink').innerHTML = '[' + wmu_show_message  + ']';
 			}
 		}
@@ -627,13 +627,13 @@ function MWU_imageSizeChanged(size) {
 
 function WMU_toggleMainMesg(e) {
 	YAHOO.util.Event.preventDefault(e);
-	if ('none' == $('ImageUploadMessage').style.display) {
-		$('ImageUploadMessage').style.display = '';
+	if ('none' == $('ImageUploadTextCont').style.display) {
+		$('ImageUploadTextCont').style.display = '';
 		$('ImageUploadMessageLink').innerHTML = '[' + wmu_hide_message  + ']';
 		WMU_track( 'mainMessage/show' ); // tracking
 		document.cookie = "wmumainmesg=1";
 	} else {
-		$('ImageUploadMessage').style.display = 'none';
+		$('ImageUploadTextCont').style.display = 'none';
 		$('ImageUploadMessageLink').innerHTML = '[' + wmu_show_message  + ']';
 		WMU_track( 'mainMessage/hide' ); // tracking
 		document.cookie = "wmumainmesg=0";
