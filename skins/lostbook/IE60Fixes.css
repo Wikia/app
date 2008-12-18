@@ -1,0 +1,119 @@
+/* 6.0 - only fixes */
+/* content area */
+/* workaround for various ie float bugs */
+
+#column-content {
+	float: none;
+	margin-left: 0;
+	height: 1%;
+}
+#column-content #content {
+  margin: 8.9em 0 1em 12.2em;
+  padding: 0 1em 1.5em 1em;
+	height: 1%;
+	background: white;
+	color: black;
+	border: 1px solid #aaa;
+	border-right: none;
+	line-height: 1.5em;
+	position: relative;
+	z-index: 6;
+}
+#column-one {
+	position: absolute;
+	top: 0;
+	left: 0;
+	z-index: 4;
+}
+
+#google-ads {
+    text-align: center;
+    width: 728px;
+    position: relative;
+    margin: 1em 2em 1em 13.6em;
+}
+
+#footer {
+  margin: 1em 2em 1em 13.6em;
+  border: 1px solid #fabd23;
+}
+
+/* the tabs */
+
+#p-cactions {
+	position: absolute;
+	top: 7.8em;
+	left: 11.5em;
+	margin: 0;
+	white-space: nowrap;
+	width: 76%;
+	line-height: 1.1em;
+	overflow: visible;
+	background: none;
+	border-collapse: collapse;
+	padding-left: 1em;
+	list-style: none;
+	font-size: 95%;
+  z-index: 3;
+}
+
+#p-cactions li {
+  display: inline;
+  border-left: 1px solid #AAAAAA;
+  border-right: 1px solid #AAAAAA;
+  border-bottom: none;
+  padding-bottom: 0 !important;
+  margin: 0 0.3em 0 0;
+  overflow: visible;
+  background-color:#EEEEEE;
+ 	cursor: default;
+	float: none !important;
+}
+/* offsets to distinguish the tab groups */
+	li#ca-talk {
+		margin-right: 1.6em;
+	}
+	li#ca-watch, li#ca-unwatch, li#ca-varlang-0, li#ca-print {
+		margin-left: 1.6em;
+	}
+	#p-cactions .pBody {
+		font-size: 1em;
+		background-color: transparent;
+		color: inherit;
+		border-collapse: inherit;
+		border: 0;
+		padding: 0;
+	}
+#p-navigation a {
+	display: inline-block;
+	width: 100%;
+}
+#portal-personaltools {
+	padding-bottom: 0.1em;
+}
+#bodyContent a.external {
+	background: url(external.png) center right no-repeat;
+	padding-right: 13px;
+}
+
+/* show the hand */
+#p-logo a,
+#p-logo a:hover {
+	cursor: pointer;
+}
+div.visualClear {
+	width:100%;
+	line-height: 0;
+}
+textarea {
+	width: 96%;
+}
+
+div.editsection,
+#catlinks,
+div.tright,
+div.tleft {
+	position: relative;
+}
+/*{ border:1px solid Red !important;}*/
+
