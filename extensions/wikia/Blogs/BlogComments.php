@@ -232,7 +232,7 @@ class BlogComment {
 			$this->mProps["hiddencomm"] = 1;
 		}
 		BlogListPage::saveProps( $this->mTitle->getArticleID(), $this->mProps );
-		$wgMemc->delete( wfMemcKey( "blog", "comm", $articleId ) );
+		$wgMemc->delete( wfMemcKey( "blog", "comm", $this->mTitle->getArticleID() ) );
 
 		wfProfileOut( __METHOD__ );
 
