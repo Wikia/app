@@ -29,6 +29,7 @@ class AdEngine {
 		'4' => 'GAM',
 		'5' => 'PubMatic',
 		'6' => 'Athena',
+		'7' => 'ContextWeb',
 		'-1' => 'Null'
 	);
 
@@ -300,6 +301,7 @@ class AdEngine {
 			case 'GAM': return AdProviderGAM::getInstance();
 			case 'PubMatic': return AdProviderPubMatic::getInstance();
 			case 'Athena': return AdProviderAthena::getInstance();
+			case 'ContextWeb': return AdProviderContextWeb::getInstance();
 			default: return new AdProviderNull('Unrecognized provider id', true);
 		}
 	}
