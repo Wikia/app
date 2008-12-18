@@ -106,7 +106,7 @@ class BlogComment {
 	}
 
 	/**
-	 * isDeleted -- checks (of course)  is deleted
+	 * isDeleted -- checks (of course) is deleted
 	 *
 	 * @access public
 	 */
@@ -114,7 +114,14 @@ class BlogComment {
 		if( ! $this->mRevision ) {
 			$this->mRevision = Revision::newFromTitle( $this->mTitle );
 		}
-		return $this->mRevision->isDeleted( Revision::DELETED_TEXT );
+		if( $this->mRevision ) {
+			$deleted = $this->mRevision->isDeleted( Revision::DELETED_TEXT );
+		}
+		else {
+			$deleted = true;
+		}
+
+		return $deleted;
 	}
 
 	/**
@@ -125,57 +132,56 @@ class BlogComment {
 	public function render() {
 		global $wgContLang, $wgUser, $wgCityId, $wgDevelEnvironment;
 
-		if( ! $this->mRevision ) {
-			$this->mRevision = Revision::newFromTitle( $this->mTitle );
+		wfProfileIn( __METHOD__ );
+
+		$text = false;
+		if( !$this->isDeleted() ) {
+			$User      = User::newFromId( $this->mRevision->getUser() );
+			$isSysop   = ( in_array('sysop', $wgUser->getGroups()) || in_array('staff', $wgUser->getGroups() ) );
+			$isOwner   = (bool )( $User->getId() == $wgUser->getId() && ! $wgUser->isAnon() && ( $wgCityId == 4832 || $wgDevelEnvironment ) );
+			$canDelete = $wgUser->isAllowed( "delete" );
+
+			$Parser  = new Parser( );
+			$Options = new ParserOptions( );
+			$Options->initialiseFromUser( $User );
+
+			/**
+			 * if $props are not cache we read them from database
+			 */
+			$this->getProps();
+
+			$text     = $Parser->parse( $this->mRevision->getText(), $this->mTitle, $Options )->getText();
+			$anchor   = explode( "/", $this->mTitle->getDBkey(), 3 );
+			$sig      = ( $User->isAnon() )
+				? wfMsg("blog-comments-anonymous")
+				: Xml::element( 'a', array ( "href" => $User->getUserPage()->getFullUrl() ), $User->getName() );
+			$hidden   = isset( $this->mProps[ "hiddencomm" ] )
+				? (bool )$this->mProps[ "hiddencomm" ]
+				: false;
+
+			$comments = array(
+				"sig"       => $sig,
+				"text"      => $text,
+				"title"     => $this->mTitle,
+				"author"    => $User,
+				"anchor"    => $anchor,
+				"avatar"    => BlogAvatar::newFromUser( $User )->getLinkTag( 50, 50 ),
+				"hidden"	=> $hidden,
+				"timestamp" => $wgContLang->timeanddate( $this->mRevision->getTimestamp() )
+			);
+
+			$template = new EasyTemplate( dirname( __FILE__ ) . '/templates/' );
+			$template->set_vars(
+				array(
+					"comment" => $comments,
+					"isOwner" => $isOwner,
+					"canDelete" => $canDelete,
+				)
+			);
+			$text = $template->execute( "comment" );
 		}
-		$revUser = $this->mRevision->getUser( );
-		if( ! $revUser ) {
-			return false;
-		}
-		$User     = User::newFromId( $revUser );
 
-		$isSysop   = ( in_array('sysop', $wgUser->getGroups()) || in_array('staff', $wgUser->getGroups() ) );
-		$isOwner   = (bool )( $User->getId() == $wgUser->getId() && ! $wgUser->isAnon() && ( $wgCityId == 4832 || $wgDevelEnvironment ) );
-		$canDelete = $wgUser->isAllowed( "delete" );
-
-		$Parser  = new Parser( );
-		$Options = new ParserOptions( );
-		$Options->initialiseFromUser( $User );
-
-		/**
-		 * if $props are not cache we read them from database
-		 */
-		$this->getProps();
-
-		$text     = $Parser->parse( $this->mRevision->getText(), $this->mTitle, $Options )->getText();
-		$anchor   = explode( "/", $this->mTitle->getDBkey(), 3 );
-		$sig      = ( $User->isAnon() )
-			? wfMsg("blog-comments-anonymous")
-			: Xml::element( 'a', array ( "href" => $User->getUserPage()->getFullUrl() ), $User->getName() );
-		$hidden   = isset( $this->mProps[ "hiddencomm" ] )
-			? (bool )$this->mProps[ "hiddencomm" ]
-			: false;
-
-		$comments = array(
-			"sig"       => $sig,
-			"text"      => $text,
-			"title"     => $this->mTitle,
-			"author"    => $User,
-			"anchor"    => $anchor,
-			"avatar"    => BlogAvatar::newFromUser( $User )->getLinkTag( 50, 50 ),
-			"hidden"	=> $hidden,
-			"timestamp" => $wgContLang->timeanddate( $this->mRevision->getTimestamp() )
-		);
-
-		$template = new EasyTemplate( dirname( __FILE__ ) . '/templates/' );
-		$template->set_vars(
-			array(
-				"comment" => $comments,
-				"isOwner" => $isOwner,
-				"canDelete" => $canDelete,
-			)
-		);
-		$text = $template->execute( "comment" );
+		wfProfileOut( __METHOD__ );
 
 		return $text;
 	}
