@@ -805,6 +805,11 @@ class WikiaApiQueryProblemReports extends WikiaApiQuery {
 		
 			// problem reports status is changed
 			case 'pr_rep_log/prl_chn':
+				// dirty hack
+				if (empty($params[1])) {
+					$params = explode("\n", $params[0]);
+				}
+
 				$rt = wfMsg( $wgLogActions[$key], '[[Special:ProblemReports/'.$params[1].'|#'.$params[1].']]', ucfirst(wfMsg('pr_status_'.$params[2])) );
 				break;
 			
