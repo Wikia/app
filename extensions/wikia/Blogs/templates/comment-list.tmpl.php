@@ -51,9 +51,11 @@ endif;
 	else:
 		echo "<ul id=\"blog-comments-ul\" >";
 		foreach( $comments as $comment ):
-			echo "<li id=\"comm-{$comment->getTitle()->getArticleId()}\">\n";
-			echo $comment->render();
-			echo "\n</li>\n";
+			if( ! $comment->isDeleted() ):
+				echo "<li id=\"comm-{$comment->getTitle()->getArticleId()}\">\n";
+				echo $comment->render();
+				echo "\n</li>\n";
+			endif;
 		endforeach;
 		echo "</ul>";
 	endif;

@@ -106,6 +106,18 @@ class BlogComment {
 	}
 
 	/**
+	 * isDeleted -- checks (of course)  is deleted
+	 *
+	 * @access public
+	 */
+	public function isDeleted() {
+		if( ! $this->mRevision ) {
+			$this->mRevision = Revision::newFromTitle( $this->mTitle );
+		}
+		return $this->mRevision->isDeleted( Revision::DELETED_TEXT );
+	}
+
+	/**
 	 * render -- generate HTML for displaying comment
 	 *
 	 * @return String -- generated HTML text
@@ -195,6 +207,26 @@ class BlogComment {
 	}
 
 	/**
+	 * toggle -- toggle hidden/show flag
+	 *
+	 * @access public
+	 *
+	 * @return Boolean -- new status
+	 */
+	public function toggle() {
+		$this->getProps();
+
+		if( isset( $this->mProps["hiddencomm"] ) ) {
+			$this->mProps["hiddencomm"] = empty( $this->mProps["hiddencomm"] ) ? 1 : 0;
+		}
+		else {
+			$this->mProps["hiddencomm"] = 1;
+		}
+		BlogListPage::saveProps( $this->mTitle->getArticleID(), $this->mProps );
+		return (bool )$this->mProps["hiddencomm"];
+	}
+
+	/**
 	 * axToggle -- static hook/entry for ajax request post -- toggle visbility
 	 * of comment
 	 *
@@ -218,17 +250,12 @@ class BlogComment {
 			$error = 1;
 		}
 
-		$props = BlogListPage::getProps( $commentId );
-
-		if( isset( $props["hiddencomm"] ) ) {
-			/**
-			 * toggle option: 0 -> 1, 1 -> 0
-			 */
-			$props["hiddencomm"] = empty( $props["hiddencomm"] ) ? 1 : 0;
-		}
-		else {
-			$props["hiddencomm"] = 1;
-		}
+		/**
+		 * toggle
+		 */
+		$Comment = BlogComment::newFromId( $commentId );
+		$status  = $Comment->toggle();
+		$text    = $Comment->render();
 
 		/**
 		 * clear article/listing cache for this article
@@ -238,15 +265,11 @@ class BlogComment {
 		$update = SquidUpdate::newSimplePurge( $Title );
 		$update->doUpdate();
 
-		$Comment = BlogComment::newFromId( $commentId );
-		$Comment->setProps( $props, true );
-		$text = $Comment->render();
-
 		return Wikia::json_encode(
 			array(
 				"id"     => $commentId,
 				"error"  => $error,
-				"hidden" => $props["hiddencomm"],
+				"hidden" => $status,
 				"text"	 => $text
 			)
 		);
