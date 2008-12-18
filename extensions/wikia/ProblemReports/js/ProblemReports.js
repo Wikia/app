@@ -12,12 +12,12 @@ YAHOO.wikia.ProblemReportsDialog.prototype = {
 
 	// add onlick event for 'report a problem' action tabs
 	init: function(links) {
-		YAHOO.util.Event.addListener(links, "click", this.onClick, {ns: wgNamespaceNumber, namespace: wgCanonicalNamespace, title: wgTitle, obj: this});
+		YAHOO.util.Event.addListener(links, "click", this.onClick, {title: wgPageName, obj: this});
 	},
 
 	// onClick event handler for lazy loading approach
 	fire: function() {
-		this.onClick(false, {ns: wgNamespaceNumber, namespace: wgCanonicalNamespace, title: wgTitle, obj: this});
+		this.onClick(false, {title: wgPageName, obj: this});
 	},
 
 	// keep "elem" value length below 512 (+ 1)
@@ -65,11 +65,8 @@ YAHOO.wikia.ProblemReportsDialog.prototype = {
 				argument: args.obj
 			}
 
-			// add namespace to page title
-			title = (args.namespace.length > 0 ? args.namespace + ':' : '') + args.title;
-
 			// format AJAX request params
-			YAHOO.util.Connect.asyncRequest("POST", ((wgScript == null) ? (wgScriptPath + "/index.php") : wgScript), callback, "action=ajax&rs=wfProblemReportsAjaxGetDialog&rsargs[]=" + args.ns + "&title=" +   encodeURIComponent(title) );
+			YAHOO.util.Connect.asyncRequest("POST", ((wgScript == null) ? (wgScriptPath + "/index.php") : wgScript), callback, "action=ajax&rs=wfProblemReportsAjaxGetDialog&title=" +   encodeURIComponent(args.title) );
 		}
 		else {
 			// yeah, we have problem reports form content - show it...
