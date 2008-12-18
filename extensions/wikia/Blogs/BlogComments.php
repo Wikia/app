@@ -237,7 +237,7 @@ class BlogComment {
 	 * @return Boolean -- new status
 	 */
 	public function toggle() {
-		global $wgUser;
+		global $wgUser, $wgMemc;
 
 		wfProfileIn( __METHOD__ );
 
