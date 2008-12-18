@@ -14,7 +14,7 @@ EditEnhancements = function() {
 
 		var viewport = Dom.getViewportHeight();
 		var textareaTop = jQuery("#" + textbox).offset().top;
-		var toolbar = jQuery("#edit_enhancements_toolbar").outerHeight();
+		var toolbar = jQuery("#edit_enhancements_toolbar").outerHeight(true);
 		var heightDiff = jQuery("#" + textbox).outerHeight(true) - jQuery("#" + textbox).height();
 		
 		var targetHeight = viewport - textareaTop - toolbar - heightDiff + 'px';
@@ -26,6 +26,19 @@ EditEnhancements = function() {
 	this.calculate();
 }
 
-YAHOO.util.Event.on(window, 'load', EditEnhancements);
+EditEnhancementsLoad = function() {
+	this.EditEnhancementsLoop = function() {
+		if (count == 3) {
+			clearInterval(interval);
+		} else {
+			EditEnhancements();
+			count++;
+		}
+	}
+	var count = 0;
+	var interval = setInterval("EditEnhancementsLoop()", 500);
+}
+
+YAHOO.util.Event.on(window, 'load', EditEnhancementsLoad);
 YAHOO.util.Event.on(window, 'resize', EditEnhancements);
 </script>
