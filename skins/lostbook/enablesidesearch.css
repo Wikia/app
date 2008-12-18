@@ -1,0 +1,35 @@
+/* disable the top search bar */
+#p-search { display: none; }
+
+/*
+
+** Search portlet
+*/
+/* @media screen, projection { */
+ #p-sidesearch {
+		display: block;
+                position: relative;
+		z-index: 3;
+                margin-top: .35em;
+               }
+/* } */
+input.searchButton {
+	margin-top: 1px;
+	font-size: 95%;
+}
+#searchGoButton {
+	padding-left: .5em;
+	padding-right: .5em;
+	font-weight: bold;
+}
+#searchInput {
+	width: 10.9em;
+	margin-top: .35em;
+	font-size: 95%;
+}
+#p-search .pBody {
+	padding: .5em .4em .4em .4em;
+	text-align: center;
+}
+
+
