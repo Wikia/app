@@ -24,8 +24,10 @@
 	</div>
 <?php
 	else:
-		echo "<em>" . wfMsg( "blogs-comment-hidden" ) . "</em>";
+		echo "<div class=\"blog-comment-hidden\">\n";
+		echo wfMsg( "blogs-comment-hidden" );
 		echo '&nbsp;<a href="#" class="blog-comm-hide" id="'.$comment[ "title" ]->getArticleId().'">unhide</a>';
+		echo "</div>\n";
 	endif; ### comment[ "hiddent" ]
 ?>
 </div>

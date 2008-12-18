@@ -336,8 +336,11 @@ div.blog-comment p {
 	margin-bottom: 1em;
 }
 
-div.blog-comment em {
+div.blog-comment .blog-comment-hidden {
 	font-style: italic;
+	border: 1px dotted #AAA;
+	padding: 1em;
+	text-align: left;
 }
 
 div.blog-comment .avatar {
