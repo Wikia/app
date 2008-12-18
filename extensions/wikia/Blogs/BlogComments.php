@@ -22,7 +22,8 @@ class BlogComment {
 		$mProps,
 		$mTitle,
 		$mRevision,
-		$mUser;
+		$mUser,	 ### comment creator
+		$mOwner; ### owner of blog
 
 	public function __construct( $Title ) {
 		/**
@@ -93,6 +94,11 @@ class BlogComment {
 				$this->mUser = User::newFromId( $this->mRevision->getUser() );
 			}
 			$this->getProps();
+			/**
+			 * set blog owner
+			 */
+			$owner = BlogListPage::getOwner( $this->mTitle );
+			$this->mOwner = User::newFromName( $owner );
 		}
 	}
 
@@ -134,7 +140,6 @@ class BlogComment {
 		$text = false;
 		if( !$this->isDeleted() ) {
 			$isSysop   = ( in_array('sysop', $wgUser->getGroups()) || in_array('staff', $wgUser->getGroups() ) );
-			$isOwner   = (bool )( $this->mUser->getId() == $wgUser->getId() && ! $wgUser->isAnon() && ( $wgCityId == 4832 || $wgDevelEnvironment ) );
 			$canDelete = $wgUser->isAllowed( "delete" );
 
 			$Parser  = new Parser( );
@@ -171,7 +176,7 @@ class BlogComment {
 			$template->set_vars(
 				array(
 					"comment" => $comments,
-					"isOwner" => $isOwner,
+					"canToggle" => $this->canToggle(),
 					"canDelete" => $canDelete,
 				)
 			);
@@ -209,6 +214,16 @@ class BlogComment {
 		return $this->mProps;
 	}
 
+	private function canToggle() {
+		global $wgUser, $wgCityId, $wgDevelEnvironment;
+
+		$devel    = $wgCityId == 4832 || $wgDevelEnvironment;
+		$isAuthor = $this->mUser->getId() == $wgUser->getId() && ! $wgUser->isAnon();
+		$isOwner  = $this->mOwner->getId() == $wgUser->getId();
+
+		return $devel && ($isAuthor || $isOwner);
+	}
+
 	/**
 	 * toggle -- toggle hidden/show flag
 	 *
@@ -222,11 +237,9 @@ class BlogComment {
 		wfProfileIn( __METHOD__ );
 
 		$this->load();
-
 		$isSysop = ( in_array('sysop', $wgUser->getGroups()) || in_array('staff', $wgUser->getGroups() ) );
-		$isOwner = (bool )( $this->mUser->getId() == $wgUser->getId() && ! $wgUser->isAnon() && ( $wgCityId == 4832 || $wgDevelEnvironment ) );
 
-		if( $isSysop || $isOwner ) {
+		if( $isSysop || $this->canToggle() ) {
 			if( isset( $this->mProps["hiddencomm"] ) ) {
 				$this->mProps["hiddencomm"] = empty( $this->mProps["hiddencomm"] ) ? 1 : 0;
 			}
