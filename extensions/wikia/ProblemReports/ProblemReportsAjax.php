@@ -12,7 +12,7 @@ if (!defined('MEDIAWIKI')) die();
 
 
 // AJAX callback for sending problem reports dialog
-function wfProblemReportsAjaxGetDialog($ns) {
+function wfProblemReportsAjaxGetDialog() {
 	wfProfileIn(__METHOD__);
 
 	global $wgUser, $wgOut, $wgTitle;
@@ -22,7 +22,8 @@ function wfProblemReportsAjaxGetDialog($ns) {
     
 	// use template
 	$tpl = new EasyTemplate( dirname( __FILE__ )."/templates/" );
-	$title = $wgTitle->getText();
+	$title = $wgTitle->getPrefixedText();
+	$ns = $wgTitle->getNamespace();
 
 	// check for read-only mode
 	if ( wfReadOnly() ) {
@@ -39,7 +40,7 @@ function wfProblemReportsAjaxGetDialog($ns) {
 			'user'				=> & $wgUser,
 			'url'				=> '',
 			'pageTitle'			=> htmlspecialchars($title),
-			'pageNamespace'			=> (int) $ns,
+			'pageNamespace'			=> $ns,
 			'introductoryText'		=> $wgOut->parse(wfMsg('pr_introductory_text')),
 			'what_problem_options' 		=> array('pr_what_problem_spam', 'pr_what_problem_vandalised','pr_what_problem_incorrect_content', 
 						    		'pr_what_problem_software_bug', 'pr_what_problem_other')
