@@ -494,7 +494,7 @@ class BlogAvatar {
 				$sUserText =  $this->mUser->getName();
 				$mUserBlogPage = Title::newFromText( $sUserText, NS_BLOG_ARTICLE );
 				$oLogPage = new LogPage( AVATAR_LOG_NAME );
-				$sLogComment = "Avatar added or changed by {$sUserText}";
+				$sLogComment = wfMsg('blog-avatar-changed-log', $sUserText);
 				$oLogPage->addEntry( AVATAR_LOG_NAME, $mUserBlogPage, $sLogComment);
 				unlink($sTmpFile);
 				$errorNo = UPLOAD_ERR_OK;

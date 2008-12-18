@@ -71,7 +71,7 @@ class CreateBlogPage extends SpecialBlogPage {
 			$aPageProps['commenting'] = 1;
 		}
 
-		$this->mPostArticle->doEdit($sPostBody, "Blog post created or updated." );
+		$this->mPostArticle->doEdit($sPostBody, wfMsg('create-blog-updated') );
 		if( count( $aPageProps ) ) {
 			// save extra properties
 			BlogListPage::saveProps( $this->mPostArticle->getId(), $aPageProps );
