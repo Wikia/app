@@ -46,7 +46,7 @@ class CreateBlogPage extends SpecialBlogPage {
 		}
 		else {
 			if($wgRequest->getVal('article') != null) {
-				$this->parseArticle($wgRequest->getVal('article'));
+				$this->parseArticle(urldecode($wgRequest->getVal('article')));
 			}
 			$this->renderForm();
 		}
@@ -71,7 +71,7 @@ class CreateBlogPage extends SpecialBlogPage {
 			$aPageProps['commenting'] = 1;
 		}
 
-		$this->mPostArticle->doEdit($sPostBody, "Blog post created." );
+		$this->mPostArticle->doEdit($sPostBody, "Blog post created or updated." );
 		if( count( $aPageProps ) ) {
 			// save extra properties
 			BlogListPage::saveProps( $this->mPostArticle->getId(), $aPageProps );
@@ -87,6 +87,7 @@ class CreateBlogPage extends SpecialBlogPage {
 	protected function parseFormData() {
 		global $wgUser, $wgRequest, $wgOut;
 
+		$this->mFormData['postId'] = $wgRequest->getVal('blogPostId');
 		$this->mFormData['postTitle'] = $wgRequest->getVal('blogPostTitle');
 		$this->mFormData['postBody'] = $wgRequest->getVal('wpTextbox1');
 		$this->mFormData['postCategories'] = $wgRequest->getVal('wpCategoryTextarea1');
@@ -94,21 +95,34 @@ class CreateBlogPage extends SpecialBlogPage {
 		$this->mFormData['isCommentingEnabled'] = $wgRequest->getCheck('blogPostIsCommentingEnabled');
 		$this->mFormData['isExistingArticleEditAllowed'] = $wgRequest->getVal('articleEditAllowed');
 
-		if(empty($this->mFormData['postTitle'])) {
-			$this->mFormErrors[] = wfMsg('create-blog-empty-title-error');
-		}
-		else {
-			$oPostTitle = Title::newFromText( $wgUser->getName() . '/' . $this->mFormData['postTitle'], NS_BLOG_ARTICLE);
-
-			if(!($oPostTitle instanceof Title)) {
-				$this->mFormErrors[] = wfMsg('create-blog-invalid-title-error');
+		if(empty($this->mFormData['postId'])) {
+			if(empty($this->mFormData['postTitle'])) {
+				$this->mFormErrors[] = wfMsg('create-blog-empty-title-error');
 			}
 			else {
-				$this->mPostArticle = new BlogListPage($oPostTitle, 0);
-				if($this->mPostArticle->exists() && !$this->mFormData['isExistingArticleEditAllowed']) {
-					$this->mFormErrors[] = wfMsg('create-blog-article-already-exists');
+				$oPostTitle = Title::newFromText( $wgUser->getName() . '/' . $this->mFormData['postTitle'], NS_BLOG_ARTICLE);
+
+				if(!($oPostTitle instanceof Title)) {
+					$this->mFormErrors[] = wfMsg('create-blog-invalid-title-error');
+				}
+				else {
+					$this->mPostArticle = new BlogListPage($oPostTitle, 0);
+					if($this->mPostArticle->exists() && !$this->mFormData['isExistingArticleEditAllowed']) {
+						$this->mFormErrors[] = wfMsg('create-blog-article-already-exists');
+					}
 				}
 			}
+		}
+		else { // we have an article id
+			$isSysop = ( in_array('sysop', $wgUser->getGroups()) || in_array('staff', $wgUser->getGroups() ) );
+
+			$oPostTitle = Title::newFromID($this->mFormData['postId']);
+			$this->mPostArticle = new BlogListPage($oPostTitle, 0);
+
+			if((strtolower($wgUser->getName()) != strtolower(BlogListPage::getOwner($oPostTitle))) && !$isSysop) {
+				$this->mFormErrors[] = wfMsg('create-blog-permission-denied');
+			}
+
 		}
 
 		if(empty($this->mFormData['postBody'])) {
@@ -162,6 +176,7 @@ class CreateBlogPage extends SpecialBlogPage {
 		$aPageProps = BlogListPage::getProps($oArticle->getId());
 		$aTitleParts = explode('/', $oTitle->getText(), 2);
 
+		$this->mFormData['postId'] = $oArticle->getId();
 		$this->mFormData['postTitle'] = $aTitleParts[1];
 		$this->mFormData['postBody'] = trim(preg_replace('/\[\[' . $wgContLang->getFormattedNsText( NS_CATEGORY ) . ':(.*)\]\]/siU', '', $sArticleBody));
 		$this->mFormData['postCategories'] = implode('|', $this->getCategoriesFromArticleContent($sArticleBody));

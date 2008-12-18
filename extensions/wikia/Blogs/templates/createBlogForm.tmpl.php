@@ -22,7 +22,8 @@
 	<div class="formBlock">
 		<label><?php echo wfMsg( "create-blog-form-post-title" ) ?></label>
 		<?php if(isset($formData['isExistingArticleEditAllowed']) && $formData['isExistingArticleEditAllowed']): ?>
-			<input type="hidden" name="blogPostTitle" value="<?=$formData['postTitle']; ?>" />
+			<input type="hidden" name="blogPostTitle" value="<?=isset($formData['postTitle']) ? $formData['postTitle'] : 0; ?>" />
+			<input type="hidden" name="blogPostId" value="<?=isset($formData['postId']) ? $formData['postId'] : 0; ?>" />
 			<div id="blogPostROTitle">
 				<?=$formData['postTitle']; ?>
 			</div>

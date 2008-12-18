@@ -38,7 +38,7 @@ class CreateBlogListingPage extends SpecialBlogPage {
 		}
 		else {
 			if($wgRequest->getVal('article') != null) {
-				$this->parseTag($wgRequest->getVal('article'));
+				$this->parseTag(urldecode($wgRequest->getVal('article')));
 			}
 			$this->renderForm();
 		}
