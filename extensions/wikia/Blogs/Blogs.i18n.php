@@ -24,6 +24,7 @@ Blog posts can be aggregated by a blog listing page based on the blog post's tag
 	'create-blog-categories-submit' => 'Submit',
 	'create-blog-save' => 'Save page',
 	'create-blog-preview' => 'Show preview',
+	'create-blog-permission-denied' => 'Error while saving blog page: Permission Denied',
 	'create-blog-article-already-exists' => 'Blog post with that name already exists, please select different name',
 	'create-blog-listing-title' => 'Create a new blog listing page',
 	'create-blog-listing-form-title' => 'What is a blog listing page?',

@@ -31,11 +31,11 @@ abstract class SpecialBlogPage extends SpecialPage {
 		$oTitle = $oEditPage->mTitle;
 		if($oTitle->getNamespace() == NS_BLOG_LISTING) {
 			$oSpecialPageTitle = Title::newFromText('CreateBlogListingPage', NS_SPECIAL);
-			$wgOut->redirect($oSpecialPageTitle->getFullUrl("article=" . $oTitle->getText()));
+			$wgOut->redirect($oSpecialPageTitle->getFullUrl("article=" . urlencode($oTitle->getText())));
 		}
 		if($oTitle->getNamespace() == NS_BLOG_ARTICLE) {
 			$oSpecialPageTitle = Title::newFromText('CreateBlogPage', NS_SPECIAL);
-			$wgOut->redirect($oSpecialPageTitle->getFullUrl("article=" . $oTitle->getText()));
+			$wgOut->redirect($oSpecialPageTitle->getFullUrl("article=" . urlencode($oTitle->getText())));
 		}
 		return true;
 	}
