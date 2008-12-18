@@ -214,8 +214,11 @@ class BlogComment {
 	 * @return Boolean -- new status
 	 */
 	public function toggle() {
-		$this->getProps();
+		global $wgMemc;
 
+		wfProfileIn( __METHOD__ );
+
+		$this->getProps();
 		if( isset( $this->mProps["hiddencomm"] ) ) {
 			$this->mProps["hiddencomm"] = empty( $this->mProps["hiddencomm"] ) ? 1 : 0;
 		}
@@ -223,6 +226,10 @@ class BlogComment {
 			$this->mProps["hiddencomm"] = 1;
 		}
 		BlogListPage::saveProps( $this->mTitle->getArticleID(), $this->mProps );
+		$wgMemc->delete( wfMemcKey( "blog", "comm", $articleId ) );
+
+		wfProfileOut( __METHOD__ );
+
 		return (bool )$this->mProps["hiddencomm"];
 	}
 
@@ -236,7 +243,7 @@ class BlogComment {
 	 * @return String -- json-ized array
 	 */
 	static public function axToggle() {
-		global $wgRequest, $wgUser, $wgTitle, $wgMemc;
+		global $wgRequest, $wgUser, $wgTitle;
 
 		$commentId = $wgRequest->getVal( "id", false );
 		$articleId = $wgRequest->getVal( "article", false );
@@ -260,7 +267,6 @@ class BlogComment {
 		/**
 		 * clear article/listing cache for this article
 		 */
-		$wgMemc->delete( wfMemcKey( "blog", "comm", $articleId ) );
 		$Title->invalidateCache();
 		$update = SquidUpdate::newSimplePurge( $Title );
 		$update->doUpdate();
