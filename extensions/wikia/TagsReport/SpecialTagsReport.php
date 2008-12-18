@@ -23,4 +23,4 @@ $wgGroupPermissions['staff']['tagsreport'] = true;
 $wgGroupPermissions['sysop']['tagsreport'] = true;
 
 extAddSpecialPage( dirname(__FILE__) . '/SpecialTagsReport_body.php', 'TagsReport', 'TagsReportPage' );
-$wgSpecialPageGroups['TagsReport'] = 'users';
+$wgSpecialPageGroups['TagsReport'] = 'maintenance';
