@@ -80,10 +80,9 @@ if($props['file']->media_type == 'BITMAP' || $props['file']->media_type == 'DRAW
 			<div id="ImageUploadSlider">
 				<img src="<?= $wgExtensionsPath.'/wikia/WikiaMiniUpload/images/slider_thumb_bg.png' ?>" id="ImageUploadSliderThumb" />
 			</div>
-			<span id="ImageSize"></span>
-			<div id="ImageUploadInputWidth">
-				<?= wfMsg( 'wmu-manual-width' ) ?> <input type="text" id="ImageUploadManualWidth" name="ImageUploadManualWidth" value="" onchange="WMU_manualWidthInput(this)" onkeyup="WMU_manualWidthInput(this)" /> px
-			<div>
+			<span id="ImageUploadInputWidth">
+				<input type="text" id="ImageUploadManualWidth" name="ImageUploadManualWidth" value="" onchange="WMU_manualWidthInput(this)" onkeyup="WMU_manualWidthInput(this)" /> px
+			<span>
 		</td>
 	</tr>
 	<tr id="ImageLayoutRow">

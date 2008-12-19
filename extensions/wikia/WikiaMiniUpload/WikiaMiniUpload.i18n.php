@@ -51,7 +51,6 @@ $messages['en'] = array(
 	'wmu-hide-message' => 'hide message',
 	'wmu-hide-license-msg' => 'hide license text',
 	'wmu-show-license-msg' => 'show license text',
-	'wmu-manual-width' => 'edit: ',
 	'wmu-max-thumb' => 'maximum thumbnail size exceeded, reverting to original size',
 	'wmu-notallowed' => 'You cannot upload images on this wiki',
 );

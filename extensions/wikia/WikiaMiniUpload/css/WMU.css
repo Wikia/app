@@ -165,7 +165,6 @@
 
 /***INSERT OPTIONS***/
 .ImageUploadOptionsTable {
-	width: 400px;
 	color: #000;
 }
 .ImageUploadOptionsTable th {
@@ -278,5 +277,6 @@ ImageUploadOptionsTable img {
 
 
 #ImageUploadManualWidth {
-	width: 40px;
+	width: 36px;
+	height: 16px;
 }
