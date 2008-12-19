@@ -1,12 +1,5 @@
 <?php
 
-$namespaceNames = array_merge($namespaceNames, array(
-500 => 'Benutzer_Blog',
-501 => 'Benutzer_Blog_Kommentare',
-502 => 'Blog',
-503 => 'Blog_Diskussion',
-));
-
 $messages = array_merge( $messages, array(
 #Overrides for MediaWiki defaults
 'recentchangestext' => "<div style='border:solid 3px #e9e9e9; margin-bottom:0.3em;'>
