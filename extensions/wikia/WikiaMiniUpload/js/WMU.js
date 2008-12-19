@@ -44,7 +44,7 @@ function WMU_loadDetails() {
 					WMU_width = FCK.wysiwygData[WMU_refid].width;
 					MWU_imageWidthChanged( WMU_width );
 					$( 'ImageUploadSlider' ).style.visibility = 'visible';
-					$( 'ImageUploadInputWidth' ).style.display = '';
+					$( 'ImageUploadInputWidth' ).style.visibility = 'visible';
 					$( 'ImageUploadWidthCheckbox' ).checked = true;
 					$( 'ImageUploadManualWidth' ).value = WMU_width;
 					WMU_manualWidthInput( $( 'ImageUploadManualWidth' ) );
@@ -110,26 +110,37 @@ function WMU_licenseSelectorCheck() {
 
 function WMU_manualWidthInput( elem ) {
 	var image = $( 'ImageUploadThumb' ).firstChild;
+	var val = parseInt( elem.value );
+	if ( isNaN( val ) ) {
+		return false;
+	}
+
 	if( WMU_orgThumbSize == null ) {
 		var WMU_orgThumbSize = [image.width, image.height];
 	}
-	if ( elem.value > WMU_width ) {
+	if ( val > WMU_width ) {
 		if (!WMU_shownMax) {
 			image.width = WMU_width;
 			image.height = WMU_width / WMU_ratio;
 			WMU_thumbSize = [image.width, image.height];
-			$( 'ImageSize' ).innerHTML = image.width + 'px';		
 			$( 'ImageUploadManualWidth' ).value = image.width;
 			WMU_shownMax = true;
 			alert (wmu_max_thumb);
 		}
 	} else {
-		image.height = elem.value / WMU_ratio;
-		image.width = elem.value;
+		image.height = val / WMU_ratio;
+		image.width = val;
 		WMU_thumbSize = [image.width, image.height];
-		$( 'ImageSize' ).innerHTML = elem.value + 'px';
+		$( 'ImageUploadManualWidth' ).value = val;
+		WMU_readjustSlider( val );
+
 		WMU_shownMax = false;			
 	}
+}
+
+function WMU_readjustSlider( value ) {
+	value = Math.max(2, Math.round( ( value * 200 ) / WMU_width ) );	
+	WMU_slider.setValue(value, true);
 }
 
 function WMU_show(e) {
@@ -455,10 +466,10 @@ function WMU_displayDetails(responseText) {
 		}
 		WMU_slider.subscribe("change", function(offsetFromStart) {
 			if (WMU_slider.initialRound) {
-				$('ImageSize').innerHTML = '';
+				$('ImageUploadManualWidth').value = '';
 				WMU_slider.initialRound = false;	
 			} else {
-				$('ImageSize').innerHTML = WMU_slider.getRealValue() + 'px';
+				$('ImageUploadManualWidth').value = WMU_slider.getRealValue();
 			}
 			image.width = WMU_slider.getRealValue();
 			$('ImageUploadManualWidth').value = image.width;			
@@ -480,7 +491,7 @@ function WMU_displayDetails(responseText) {
 		alert( $( 'WMU_error_box' ).innerHTML );
 	}
 	$( 'ImageUploadSlider' ).style.visibility = 'hidden';
-	$( 'ImageUploadInputWidth' ).style.display = 'none';
+	$( 'ImageUploadInputWidth' ).style.visibility = 'hidden';
 
 	if ( $( 'ImageUploadLicenseText' ) ) {
 		var cookieMsg = document.cookie.indexOf("wmulicensemesg=");
@@ -521,7 +532,7 @@ function WMU_insertImage(e, type) {
 
 	if($('ImageUploadThumb')) {
 		params.push('size=' + ($('ImageUploadThumbOption').checked ? 'thumb' : 'full'));
-		params.push('width=' + $('ImageSize').innerHTML);
+		params.push('width=' + $('ImageUploadManualWidth').value) + 'px';
 		params.push('layout=' + ($('ImageUploadLayoutLeft').checked ? 'left' : 'right'));
 		params.push('caption=' + $('ImageUploadCaption').value);
 		params.push('slider=' + $('ImageUploadWidthCheckbox').checked);
@@ -592,16 +603,16 @@ function WMU_insertImage(e, type) {
 function MWU_imageWidthChanged(changes) {
 	var image = $('ImageUploadThumb').firstChild;
 	if( !$( 'ImageUploadWidthCheckbox' ).checked ) {
-		$('ImageSize').innerHTML = '';
+		$('ImageUploadManualWidth').value = '';
 		$('ImageUploadSlider').style.visibility = 'hidden';
-		$('ImageUploadInputWidth').style.display = 'none';
+		$('ImageUploadInputWidth').style.visibility = 'hidden';
 		image.width = WMU_orgThumbSize[0];
 		image.height = WMU_orgThumbSize[1];
 		WMU_track('slider/disable'); // tracking
 	} else {
-		$('ImageSize').innerHTML = WMU_slider.getRealValue() + 'px';
+		$('ImageUploadManualWidth').value = WMU_slider.getRealValue();
 		$('ImageUploadSlider').style.visibility = 'visible';
-		$('ImageUploadInputWidth').style.display = '';
+		$('ImageUploadInputWidth').style.visibility = 'visible';
 		image.width = WMU_thumbSize[0];
 		image.height = WMU_thumbSize[1];
 		WMU_track('slider/enable'); // tracking
