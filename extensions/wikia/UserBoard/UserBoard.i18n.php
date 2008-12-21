@@ -19,8 +19,6 @@ $wgUserBoardMessages['en'] = array(
 	'boardlinkunselectall'          => 'Unselect All',
 	'boardlinkselectfriends'          => 'Select Friends',
 	'boardlinkunselectfriends'          => 'Unselect Friends',
-	'boardlinkselectfoes'          => 'Select Foes',
-	'boardlinkunselectfoes'          => 'Unselect Foes',
 	'boardsendbutton'          => 'Send Board Blast',
 	'boardnofriends' 	=> 'You have no friends to send a message to! <a href="index.php?title=Special:InviteEmail">Add Some!</a>',
 	'messagesentsuccess'	=> 'Your message was successfully sent',

@@ -6,7 +6,7 @@ textarea#message {
 	width:60%;
 }
 
-#blast-friends-list div.blast-friend-selected, #blast-friends-list div.blast-foe-selected {
+#blast-friends-list div.blast-friend-selected {
 	background-color:#FFFCA9;
 	border:1px solid #FDC745;
 	color:#285C98;
@@ -24,7 +24,7 @@ textarea#message {
 	
 }
 
-#blast-friends-list div.blast-friend-unselected, #blast-friends-list div.blast-foe-unselected {
+#blast-friends-list div.blast-friend-unselected {
 	border:1px solid #dcdcdc;
 	color:#285C98;
 	font-weight:bold;
