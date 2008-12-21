@@ -93,15 +93,6 @@ class BoardBlast extends SpecialPage {
 					<a href=\"javascript:void(0);\" onclick=\"javascript:select_all()\">" . wfMsgForContent( 'boardlinkselectall' ) . "</a> -
 					<a href=\"javascript:void(0);\" onclick=\"javascript:unselect_all()\">" . wfMsgForContent( 'boardlinkunselectall' ) . "</a> ";
 					
-					if( $stats_data["friend_count"] > 0 && $stats_data["foe_count"] > 0 ){
-						$output .= "- <a href=\"javascript:void(0);\" onclick=\"javascript:toggle_friends(1)\">" . wfMsgForContent( 'boardlinkselectfriends' ) . "</a> -";
-						$output .= "<a href=\"javascript:void(0);\" onclick=\"javascript:toggle_friends(0)\">" . wfMsgForContent( 'boardlinkunselectfriends' ) . "</a>";
-					}
-					
-					if( $stats_data["foe_count"] > 0 && $stats_data["friend_count"] > 0){
-						$output .= "- <a href=\"javascript:void(0);\" onclick=\"javascript:toggle_foes(1)\">" . wfMsgForContent( 'boardlinkselectfoes' ) . "</a> -";
-						$output .= "<a href=\"javascript:void(0);\" onclick=\"javascript:toggle_foes(0)\">" . wfMsgForContent( 'boardlinkunselectfoes' ) . "</a>";
-					}
 				$output .= "</div>
 		
 		</div>";
@@ -115,7 +106,7 @@ class BoardBlast extends SpecialPage {
 		$per_row = 3;
 		if( count($relationships) > 0 ){
 			foreach($relationships as $relationship){
-				$output .= "<div class=\"blast-" . (($relationship["type"]==1)?"friend":"foe") . "-unselected\" id=\"user-{$relationship["user_id"]}\" onclick=\"javascript:toggle_user({$relationship["user_id"]})\">
+				$output .= "<div class=\"blast-friend-unselected\" id=\"user-{$relationship["user_id"]}\" onclick=\"javascript:toggle_user({$relationship["user_id"]})\">
 						{$relationship["user_name"]}
 					</div>";
 					if($x==count($relationships) || $x!=1 && $x%$per_row ==0)$output .= "<div class=\"cleared\"></div>";

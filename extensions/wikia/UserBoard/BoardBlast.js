@@ -4,13 +4,6 @@ function toggle_user(user_id){
         }else if ($D.hasClass("user-" + user_id ,'blast-friend-unselected')){
 		$D.replaceClass("user-" + user_id,'blast-friend-unselected','blast-friend-selected');
 	}
-	
-        if ($D.hasClass("user-" + user_id ,'blast-foe-selected')){
-		$D.replaceClass("user-" + user_id,'blast-foe-selected','blast-foe-unselected');
-        }else if ($D.hasClass("user-" + user_id ,'blast-foe-unselected')){
-		$D.replaceClass("user-" + user_id,'blast-foe-selected','blast-foe-unselected');
-	}	
- 
 }
 
 function toggle_type(method,on,off){
@@ -34,17 +27,11 @@ function toggle_friends(method){
 	toggle_type(method,'blast-friend-selected','blast-friend-unselected')
 }
 
-function toggle_foes(method){
-	toggle_type(method,'blast-foe-selected','blast-foe-unselected')
-}
-
 function select_all(){
 	toggle_friends(1)
-	toggle_foes(1)
 }
 function unselect_all(){
 	toggle_friends(0)
-	toggle_foes(0)
 }
 
 submitted = 0;
@@ -57,13 +44,6 @@ function send_messages( ){
 	user_ids_to = "";
 	
 	list = $$('blast-friend-selected','div','blast-friends-list')
-	for(x=0;x<=list.length-1;x++){
-		el = list[x];
-		selected++;
-		user_id = el.id.replace("user-","");
-		user_ids_to += ((user_ids_to)?",":"") + user_id	 
-	} 
-	list = $$('blast-foe-selected','div','blast-friends-list')
 	for(x=0;x<=list.length-1;x++){
 		el = list[x];
 		selected++;
