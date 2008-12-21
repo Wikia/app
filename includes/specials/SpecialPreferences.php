@@ -669,7 +669,8 @@ class PreferencesForm {
 
 			$this->tableRow(
 				wfMsgHtml( 'prefs-edits' ),
-				$wgLang->formatNum( User::edits( $wgUser->getId() ) )
+				/* $wgLang->formatNum( User::edits( $wgUser->getId() ) )  RT#5022 */
+				$sk->makeKnownLinkObj( SpecialPage::getTitleFor( 'Editcount', $wgUser->getName() ), wfMsg( 'seeeditcount' ) )
 			);
 
 		if( wfRunHooks( 'PreferencesUserInformationPanel', array( $this, &$userInformationHtml ) ) ) {
