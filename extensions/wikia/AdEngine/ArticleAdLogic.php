@@ -308,7 +308,8 @@ class ArticleAdLogic {
                 if (is_object($wgTitle) && 
 		    $wgTitle->getArticleId() == Title::newMainPage()->getArticleId() &&
 		    !self::isDiffPage() &&
-		    !self::isAnonPurgePrompt()) {
+		    !self::isAnonPurgePrompt() &&
+		    !self::isActionPage()) {
 
 			return true;
                 } else {
@@ -333,7 +334,7 @@ class ArticleAdLogic {
                 global $wgTitle, $wgContentNamespaces;
 
 		// not a content page if one of the weird edge cases occurs
-		if ( self::isDiffPage() || self::isAnonPurgePrompt() || self::isActionCompleted() ) {
+		if ( self::isDiffPage() || self::isAnonPurgePrompt() || self::isActionPage() ) {
 			return false;
 		} 
 		
@@ -354,12 +355,19 @@ class ArticleAdLogic {
 	/*
 	 * @author tor@wikia-inc.com
 	 *
-	 * Catch all check for "Action completed" pages,
-	 * currently only delete, move is done on a NS_SPECIAL page
+	 * Catch all check for page actions
 	 */
-	public function isActionCompleted() {
+	public function isActionPage() {
 		global $wgRequest;
-		return $wgRequest->getVal( 'action' ) == 'delete';
+
+		$noAdActions = array(
+			'delete',
+			'watch',
+			'unwatch',
+			'protect',
+			'unprotect');
+
+		return in_array($wgRequest->getVal( 'action' ), $noAdActions);
 	}
 
 	/*
