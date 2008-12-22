@@ -70,10 +70,18 @@ $wgExtensionMessagesFiles["Blogs"] = dirname(__FILE__) . '/Blogs.i18n.php';
  * permissions (eventually will be moved to CommonSettings.php)
  */
 $wgAvailableRights[] = 'blog-comments-toggle';
+$wgAvailableRights[] = 'blog-comments-delete';
+
 $wgGroupPermissions['*'][ 'blog-comments-toggle' ] = false;
 $wgGroupPermissions['sysop'][ 'blog-comments-toggle' ] = true;
 $wgGroupPermissions['staff'][ 'blog-comments-toggle' ] = true;
 $wgGroupPermissions['helper'][ 'blog-comments-toggle' ] = true;
+
+$wgGroupPermissions['*'][ 'blog-comments-delete' ] = false;
+$wgGroupPermissions['sysop'][ 'blog-comments-delete' ] = true;
+$wgGroupPermissions['staff'][ 'blog-comments-delete' ] = true;
+$wgGroupPermissions['helper'][ 'blog-comments-delete' ] = true;
+
 
 /**
  * Special pages

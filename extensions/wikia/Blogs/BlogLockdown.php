@@ -52,11 +52,16 @@ class BlogLockdown {
 			return true;
 		}
 
+		if( $namespace == NS_BLOG_ARTICLE_TALK && $action == "delete" && $user->isAllowed("blog-comments-delete")) {
+			Wikia::log( __METHOD__, "action", "action: {$action} allowed for certain groups."  );
+			$result = true;
+			return true;
+		}
 
 		/**
 		 * staff & sysops can do anything
 		 */
-		if (in_array('staff',($user->getGroups())) || in_array('sysop',($user->getGroups()))) {
+		if( in_array('staff',($user->getGroups())) || in_array('sysop',($user->getGroups()))) {
 			Wikia::log( __METHOD__, "user", "staff or sysop: " . implode( ",", $user->getGroups() ) );
 			return true;
 		}
