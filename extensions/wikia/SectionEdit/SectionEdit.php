@@ -10,15 +10,13 @@ function SectionEditStyle() {
 	
 	echo '<script type="text/javascript">
 	if (skin == "monaco") {
-	var elements = YAHOO.util.Dom.getElementsByClassName("editsection");
-	for (i=0; i<elements.length; i++) {
-		//Move it
-		sibling = YAHOO.util.Dom.getNextSibling(elements[i]);
-		YAHOO.util.Dom.insertAfter(elements[i], sibling);
-		//Style it
-		YAHOO.util.Dom.addClass(elements[i], "color1");
-		YAHOO.util.Dom.addClass(elements[i], "editsectionbutton");
-	}
+	jQuery.noConflict();
+	jQuery("h2 span.editsection").each(function(i) {
+	//remove nodes in the editsection that are not anchors
+		jQuery(this).contents().not("a").remove();
+	//add elements and styling
+		jQuery(this).find("a").addClass("bigButton").contents().wrap("<big></big>").end().append("<small></small>").parent().css("position", "relative").css("top", "-3px").css("margin-bottom", "-2px");
+	});
 	}
 	</script>';
 	return true;
