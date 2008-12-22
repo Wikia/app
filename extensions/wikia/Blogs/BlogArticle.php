@@ -339,7 +339,7 @@ class BlogArticle extends Article {
 	 *
 	 * @param array $props array of properties to save (prop name => prop value)
 	 */
-	static public function saveProps( $page_id, Array $props ) {
+	static public function setProps( $page_id, Array $props ) {
 
 		wfProfileIn( __METHOD__ );
 		$dbw = wfGetDB( DB_MASTER );

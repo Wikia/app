@@ -195,7 +195,7 @@ class BlogComment {
 		wfProfileIn( __METHOD__ );
 
 		if( $update ) {
-			BlogArticle::saveProps( $this->mTitle->getArticleID(), $props );
+			BlogArticle::setProps( $this->mTitle->getArticleID(), $props );
 		}
 		$this->mProps = $props;
 
@@ -250,7 +250,7 @@ class BlogComment {
 			else {
 				$this->mProps["hiddencomm"] = 1;
 			}
-			BlogArticle::saveProps( $this->mTitle->getArticleID(), $this->mProps );
+			BlogArticle::setProps( $this->mTitle->getArticleID(), $this->mProps );
 			$wgMemc->delete( wfMemcKey( "blog", "comm", $this->mTitle->getArticleID() ) );
 		}
 		wfProfileOut( __METHOD__ );
