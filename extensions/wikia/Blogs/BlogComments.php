@@ -325,22 +325,28 @@ class BlogComment {
 			return Wikia::json_encode( array( "error" => 1 ) );
 		}
 
-		$article = self::doPost( $wgRequest, $wgUser, $Title );
-		if( !$article ) {
-			Wikia::log( __METHOD__, "error", "No article created" );
-			return Wikia::json_encode(
-				array( "msg" => wfMsg("blog-comment-error"), "error" => 1 )
-			);
-		}
+		list( $status, $article ) = self::doPost( $wgRequest, $wgUser, $Title );
+		$error  = false;
 
-		$comment = BlogComment::newFromArticle( $article );
-		$text = $comment->render();
+		switch( $status ) {
+			case EditPage::AS_SUCCESS_UPDATE:
+			case EditPage::AS_SUCCESS_NEW_ARTICLE:
+				$comment = BlogComment::newFromArticle( $article );
+				$text = $comment->render();
+				$message = false;
+				break;
+			default:
+				Wikia::log( __METHOD__, "error", "No article created" );
+				$text  = false;
+				$error = true;
+				$message = wfMsg("blog-comment-error");
+		}
 
 		return Wikia::json_encode(
 			array(
-				"msg" => wfMsg("blog-comment-error"),
-				"error" => 0,
-				"text" => $text,
+				"msg" => $message,
+				"error" => $error,
+				"text"  => $text,
 			)
 		);
 	}
@@ -371,14 +377,22 @@ class BlogComment {
 		 * title for comment is combination of article title and some "random"
 		 * data
 		 */
-		$commentTitleText = sprintf( "%s/%s-%s", $Title->getText(), $User->getName(), wfTimestampNow() );
-		$commentTitle = Title::newFromText( $commentTitleText, NS_BLOG_ARTICLE_TALK );
+		$commentTitle = Title::newFromText(
+			sprintf( "%s/%s-%s", $Title->getText(), $User->getName(), wfTimestampNow() ),
+			NS_BLOG_ARTICLE_TALK );
 
 		/**
-		 * add article
+		 * add article using EditPage class (for hooks)
 		 */
-		$article = new Article( $commentTitle, 0 );
-		$article->doEdit( $text, wfMsg('blog-comments-new') );
+		$result   = null;
+		$article  = new Article( $commentTitle, 0 );
+		$editPage = new EditPage( $article );
+		$editPage->textbox1 = $text;
+		$editpage->summary  = wfMsg('blog-comments-new');
+		$retval = $editPage->internalAttemptSave( $result );
+		Wikia::log( __METHOD__, "editpage", "Returned value {$retval}" );
+
+		// $article->doEdit( $text, wfMsg('blog-comments-new') );
 
 		/**
 		 * clear comments cache for this article
@@ -392,7 +406,7 @@ class BlogComment {
 
 		wfProfileOut( __METHOD__ );
 
-		return $article;
+		return array( $retval, $article );
 	}
 }
 
