@@ -95,7 +95,7 @@ BL.checkMatches = function (e) {
 		</div>
 		<div class="editButtons">
 			<input id="wpSave" type="submit" title="Save your changes [ctrl-s]" accesskey="s" value="<?=wfMsg('create-blog-save')?>" tabindex="5" name="wpSave"/>
-			<input id="wpPreview" type="submit" title="Preview your changes, please use this before saving! [ctrl-p]" accesskey="p" value="<?=wgMsg('create-blog-preview')?>" tabindex="6" name="wpPreview"/>
+			<input id="wpPreview" type="submit" title="Preview your changes, please use this before saving! [ctrl-p]" accesskey="p" value="<?=wfMsg('create-blog-preview')?>" tabindex="6" name="wpPreview"/>
 		</div>
 	</div>
 
