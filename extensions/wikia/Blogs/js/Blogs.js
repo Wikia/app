@@ -46,26 +46,26 @@ YAHOO.Wikia.Blogs.callback.add = function( data ) {
 		var li = document.createElement( "li" );
 		li.innerHTML = data["text"];
 		YAHOO.util.Dom.get( "blog-comments-ul" ).appendChild( li );
-		document.body.style.cursor = "default";
-		var bottom = YAHOO.util.Dom.get( "blog-comm-bottom" );
-		if ( bottom ) {
-			bottom.readonly = false;
-			bottom.value = "";
-			bottom.style.cursor = "auto";
-		}
-		var top = YAHOO.util.Dom.get( "blog-comm-top" );
-		if( top ) {
-			top.readonly = false;
-			top.value = "";
-			top.style.cursor = "auto";
-		}
-		if (typeof TieDivLibrary != "undefined" ) {
-			TieDivLibrary.calculate();
-		}
 		YAHOO.util.Dom.get("blog-comm-bottom-info").innerHTML = "";
 	}
 	else {
 		YAHOO.util.Dom.get("blog-comm-bottom-info").innerHTML = data[ "msg" ];
+	}
+	document.body.style.cursor = "default";
+	var bottom = YAHOO.util.Dom.get( "blog-comm-bottom" );
+	if ( bottom ) {
+		bottom.readonly = false;
+		bottom.value = "";
+		bottom.style.cursor = "auto";
+	}
+	var top = YAHOO.util.Dom.get( "blog-comm-top" );
+	if( top ) {
+		top.readonly = false;
+		top.value = "";
+		top.style.cursor = "auto";
+	}
+	if (typeof TieDivLibrary != "undefined" ) {
+		TieDivLibrary.calculate();
 	}
 };
 
