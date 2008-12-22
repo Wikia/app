@@ -58,8 +58,8 @@ if ('de' == $wgLanguageCode) {
 /**
  * setup function
  */
-$wgAutoloadClasses[ "BlogListPage" ] = dirname(__FILE__) . '/BlogListPage.php';
-$wgExtensionFunctions[] = "BlogListPage::setup";
+$wgAutoloadClasses[ "BlogArticle" ] = dirname(__FILE__) . '/BlogArticle.php';
+$wgExtensionFunctions[] = "BlogArticle::setup";
 
 /**
  * messages file
@@ -101,6 +101,6 @@ include( dirname( __FILE__ ) . "/SpecialBlogPage.php");
 include( dirname( __FILE__ ) . "/BlogAvatar.php");
 include( dirname( __FILE__ ) . "/BlogTemplate.php");
 include( dirname( __FILE__ ) . "/UserMasthead.php");
-include( dirname( __FILE__ ) . "/BlogListPage.php");
+include( dirname( __FILE__ ) . "/BlogArticle.php");
 include( dirname( __FILE__ ) . "/BlogComments.php");
 include( dirname( __FILE__ ) . "/BlogLockdown.php");

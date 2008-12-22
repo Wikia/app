@@ -97,7 +97,7 @@ class BlogComment {
 			/**
 			 * set blog owner
 			 */
-			$owner = BlogListPage::getOwner( $this->mTitle );
+			$owner = BlogArticle::getOwner( $this->mTitle );
 			$this->mOwner = User::newFromName( $owner );
 		}
 	}
@@ -195,7 +195,7 @@ class BlogComment {
 		wfProfileIn( __METHOD__ );
 
 		if( $update ) {
-			BlogListPage::saveProps( $this->mTitle->getArticleID(), $props );
+			BlogArticle::saveProps( $this->mTitle->getArticleID(), $props );
 		}
 		$this->mProps = $props;
 
@@ -208,7 +208,7 @@ class BlogComment {
 	 */
 	public function getProps() {
 		if( ! $this->mProps || ! is_array( $this->mProps ) ) {
-			$this->mProps = BlogListPage::getProps( $this->mTitle->getArticleID() );
+			$this->mProps = BlogArticle::getProps( $this->mTitle->getArticleID() );
 		}
 		return $this->mProps;
 	}
@@ -250,7 +250,7 @@ class BlogComment {
 			else {
 				$this->mProps["hiddencomm"] = 1;
 			}
-			BlogListPage::saveProps( $this->mTitle->getArticleID(), $this->mProps );
+			BlogArticle::saveProps( $this->mTitle->getArticleID(), $this->mProps );
 			$wgMemc->delete( wfMemcKey( "blog", "comm", $this->mTitle->getArticleID() ) );
 		}
 		wfProfileOut( __METHOD__ );

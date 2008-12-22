@@ -74,7 +74,7 @@ class CreateBlogPage extends SpecialBlogPage {
 		$this->mPostArticle->doEdit($sPostBody, wfMsg('create-blog-updated') );
 		if( count( $aPageProps ) ) {
 			// save extra properties
-			BlogListPage::saveProps( $this->mPostArticle->getId(), $aPageProps );
+			BlogArticle::saveProps( $this->mPostArticle->getId(), $aPageProps );
 		}
 
 		$this->createListingPage();
@@ -106,7 +106,7 @@ class CreateBlogPage extends SpecialBlogPage {
 					$this->mFormErrors[] = wfMsg('create-blog-invalid-title-error');
 				}
 				else {
-					$this->mPostArticle = new BlogListPage($oPostTitle, 0);
+					$this->mPostArticle = new BlogArticle($oPostTitle, 0);
 					if($this->mPostArticle->exists() && !$this->mFormData['isExistingArticleEditAllowed']) {
 						$this->mFormErrors[] = wfMsg('create-blog-article-already-exists');
 					}
@@ -117,9 +117,9 @@ class CreateBlogPage extends SpecialBlogPage {
 			$isSysop = ( in_array('sysop', $wgUser->getGroups()) || in_array('staff', $wgUser->getGroups() ) );
 
 			$oPostTitle = Title::newFromID($this->mFormData['postId']);
-			$this->mPostArticle = new BlogListPage($oPostTitle, 0);
+			$this->mPostArticle = new BlogArticle($oPostTitle, 0);
 
-			if((strtolower($wgUser->getName()) != strtolower(BlogListPage::getOwner($oPostTitle))) && !$isSysop) {
+			if((strtolower($wgUser->getName()) != strtolower( BlogArticle::getOwner($oPostTitle))) && !$isSysop) {
 				$this->mFormErrors[] = wfMsg('create-blog-permission-denied');
 			}
 
@@ -173,7 +173,7 @@ class CreateBlogPage extends SpecialBlogPage {
 		$oTitle = Title::newFromText($sTitle, NS_BLOG_ARTICLE);
 		$oArticle = new Article($oTitle, 0);
 		$sArticleBody = $oArticle->getContent();
-		$aPageProps = BlogListPage::getProps($oArticle->getId());
+		$aPageProps = BlogArticle::getProps($oArticle->getId());
 		$aTitleParts = explode('/', $oTitle->getText(), 2);
 
 		$this->mFormData['postId'] = $oArticle->getId();
@@ -203,7 +203,7 @@ class CreateBlogPage extends SpecialBlogPage {
 	 * @author Krzysztof Krzyżaniak <eloy@wikia-inc.com>
 	 *
 	 */
-	static public function invalidateCacheConnected( BlogListPage $article ) {
+	static public function invalidateCacheConnected( BlogArticle $article ) {
 		$title = $article->getTitle();
 		$title->invalidateCache();
 		/**

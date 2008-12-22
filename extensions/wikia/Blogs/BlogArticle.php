@@ -11,15 +11,15 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 	exit( 1 ) ;
 }
 
-$wgHooks[ "ArticleFromTitle" ][] = "BlogListPage::ArticleFromTitle";
-$wgHooks[ "CategoryViewer::getOtherSection" ][] = "BlogListPage::getOtherSection";
-$wgHooks[ "CategoryViewer::addPage" ][] = "BlogListPage::addCategoryPage";
-$wgHooks[ "SkinTemplateTabs" ][] = "BlogListPage::skinTemplateTabs";
-$wgHooks[ "EditPage::showEditForm:checkboxes" ][] = "BlogListPage::editPageCheckboxes";
-$wgHooks[ "LinksUpdate" ][] = "BlogListPage::linksUpdate";
-$wgHooks[ "CustomArticleFooter" ][] = "BlogListPage::getCustomArticleFooter";
+$wgHooks[ "ArticleFromTitle" ][] = "BlogArticle::ArticleFromTitle";
+$wgHooks[ "CategoryViewer::getOtherSection" ][] = "BlogArticle::getOtherSection";
+$wgHooks[ "CategoryViewer::addPage" ][] = "BlogArticle::addCategoryPage";
+$wgHooks[ "SkinTemplateTabs" ][] = "BlogArticle::skinTemplateTabs";
+$wgHooks[ "EditPage::showEditForm:checkboxes" ][] = "BlogArticle::editPageCheckboxes";
+$wgHooks[ "LinksUpdate" ][] = "BlogArticle::linksUpdate";
+$wgHooks[ "CustomArticleFooter" ][] = "BlogArticle::getCustomArticleFooter";
 
-class BlogListPage extends Article {
+class BlogArticle extends Article {
 
 	public $mProps;
 
@@ -326,7 +326,7 @@ class BlogListPage extends Article {
 			return true;
 		}
 
-		$Article = new BlogListPage( $Title );
+		$Article = new BlogArticle( $Title );
 
 		return true;
 	}
