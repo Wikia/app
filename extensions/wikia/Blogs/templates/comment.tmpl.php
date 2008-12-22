@@ -12,10 +12,10 @@
 			<strong><?php echo $comment["sig"] ?></strong>
 			<span class="timestamp"><?php echo $comment["timestamp"] ?></span>
 		<?php if( $canDelete ): ?>
-			<a href="<?php echo $comment[ "title" ]->getLocalUrl( "redirect=no&action=delete" ) ?>">delete</a>
+			<a href="<?php echo $comment[ "title" ]->getLocalUrl( "redirect=no&action=delete" ) ?>"><?=wfMsg('blog-comment-delete')?></a>
 		<?php endif; ?>
 		<?php if( $canToggle ): ?>
-			<a href="#" class="blog-comm-hide" id="<?php echo $comment[ "title" ]->getArticleId() ?>">hide</a>
+			<a href="#" class="blog-comm-hide" id="<?php echo $comment[ "title" ]->getArticleId() ?>"><?=wfMsg('blog-comment-hide')?></a>
 		<?php endif; ?>
 		</div>
 		<?php
@@ -27,7 +27,7 @@
 		echo "<div class=\"blog-comment-hidden\">\n";
 		echo wfMsg( "blogs-comment-hidden" );
 		if( $canToggle ):
-			echo '&nbsp;<a href="#" class="blog-comm-hide" id="'.$comment[ "title" ]->getArticleId().'">unhide</a>';
+			echo '&nbsp;<a href="#" class="blog-comm-hide" id="'.$comment[ "title" ]->getArticleId().'">' . wfMsg('blog-comment-unhide') . '</a>';
 		endif;
 		echo "</div>\n";
 	endif; ### comment[ "hiddent" ]
