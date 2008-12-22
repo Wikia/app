@@ -64,7 +64,7 @@ endif;
 		if( $canEdit ):
 ?>
 <div class="blog-comm-input reset clearfix">
-	<div id="blog-comm-bottom-info"></div>
+	<div id="blog-comm-bottom-info">&nbsp;</div>
 	<form action="<?php $title->getFullURL() ?>" method="post" id="blog-comm-form-bottom">
 		<!-- avatar -->
 		<div class="blog-comm-input-avatar">
