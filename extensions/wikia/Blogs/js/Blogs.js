@@ -62,6 +62,10 @@ YAHOO.Wikia.Blogs.callback.add = function( data ) {
 		if (typeof TieDivLibrary != "undefined" ) {
 			TieDivLibrary.calculate();
 		}
+		YAHOO.util.Dom.get("blog-comm-bottom-info").innerHTML = "";
+	}
+	else {
+		YAHOO.util.Dom.get("blog-comm-bottom-info").innerHTML = data[ "msg" ];
 	}
 };
 
