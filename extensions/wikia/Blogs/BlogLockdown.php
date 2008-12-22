@@ -46,6 +46,13 @@ class BlogLockdown {
 			return false;
 		}
 
+		if( $namespace == NS_BLOG_ARTICLE_TALK && $action == "create" ) {
+			Wikia::log( __METHOD__, "action", "action: {$action} allowed for comments."  );
+			$result = true;
+			return true;
+		}
+
+
 		/**
 		 * staff & sysops can do anything
 		 */
