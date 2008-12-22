@@ -224,9 +224,9 @@ class BlogComment {
 		$devel    = $wgCityId == 4832 || $wgDevelEnvironment;
 		$isAuthor = $this->mUser->getId() == $wgUser->getId() && ! $wgUser->isAnon();
 		$isOwner  = $this->mOwner->getId() == $wgUser->getId();
-		$isSysop  = ( in_array('sysop', $wgUser->getGroups()) || in_array('staff', $wgUser->getGroups() ) );
+		$isSysop  = $wgUser->isAllowed( "blog-comments-toggle" );
 
-		return $devel && ($isAuthor || $isOwner || $isSysop );
+		return $devel && ( $isOwner || $isSysop );
 	}
 
 	/**

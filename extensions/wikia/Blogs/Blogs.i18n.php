@@ -108,4 +108,5 @@ Create blog listing pages for categories such as "Barrack Obama", "Fan Fiction",
 	"blogs-reportproblem" => "Report problem",
 	"blogs-comment-hidden" => "Comment hidden.",
     "removeavatar" => "Remove user's avatar",
+	"right-blog-comments-toggle" => "Show/Hide comments on Blog Articles"
 );

@@ -67,9 +67,17 @@ $wgExtensionFunctions[] = "BlogListPage::setup";
 $wgExtensionMessagesFiles["Blogs"] = dirname(__FILE__) . '/Blogs.i18n.php';
 
 /**
- * Special page
+ * permissions (eventually will be moved to CommonSettings.php)
  */
+$wgAvailableRights[] = 'blog-comments-toggle';
+$wgGroupPermissions['*'][ 'blog-comments-toggle' ] = false;
+$wgGroupPermissions['sysop'][ 'blog-comments-toggle' ] = true;
+$wgGroupPermissions['staff'][ 'blog-comments-toggle' ] = true;
+$wgGroupPermissions['helper'][ 'blog-comments-toggle' ] = true;
 
+/**
+ * Special pages
+ */
 extAddSpecialPage(dirname(__FILE__) . '/SpecialCreateBlogPage.php', 'CreateBlogPage', 'CreateBlogPage');
 extAddSpecialPage(dirname(__FILE__) . '/SpecialCreateBlogListingPage.php', 'CreateBlogListingPage', 'CreateBlogListingPage');
 
