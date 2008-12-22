@@ -71,17 +71,28 @@ class CreateBlogPage extends SpecialBlogPage {
 			$aPageProps['commenting'] = 1;
 		}
 
-		$this->mPostArticle->doEdit($sPostBody, wfMsg('create-blog-updated') );
-		if( count( $aPageProps ) ) {
-			// save extra properties
-			BlogArticle::setProps( $this->mPostArticle->getId(), $aPageProps );
+//		$this->mPostArticle->doEdit($sPostBody, wfMsg('create-blog-updated') );
+
+		$editPage = new EditPage( $this->mPostArticle );
+		$editPage->textbox1 = $sPostBody;
+		$editpage->summary  = wfMsg('create-blog-updated');
+		$status = $editPage->internalAttemptSave( $result );
+		switch( $status ) {
+			case EditPage::AS_SUCCESS_UPDATE:
+			case EditPage::AS_SUCCESS_NEW_ARTICLE:
+				if( count( $aPageProps ) ) {
+					BlogArticle::setProps( $this->mPostArticle->getId(), $aPageProps );
+				}
+				self::invalidateCacheConnected( $this->mPostArticle );
+				$wgOut->redirect($this->mPostArticle->getTitle()->getFullUrl());
+				break;
+
+			default:
+				$this->mFormErrors[] = wfMsg('create-blog-spam');
+				$this->renderForm();
+				break;
 		}
 
-		$this->createListingPage();
-
-		self::invalidateCacheConnected( $this->mPostArticle );
-
-		$wgOut->redirect($this->mPostArticle->getTitle()->getFullUrl());
 	}
 
 	protected function parseFormData() {
