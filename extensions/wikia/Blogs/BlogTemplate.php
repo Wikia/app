@@ -732,8 +732,7 @@ class BlogTemplateClass {
 			$oTitle = Title::newFromText($oRow->page_title, $oRow->page_namespace);
 			$sUsername = "";
 			if (! $oTitle instanceof Title) continue;
-			$username = BlogListPage::getOwner( $oTitle );
-
+			$username = BlogArticle::getOwner( $oTitle );
 			$oRevision = Revision::newFromTitle($oTitle);
 
 			$aResult[$oRow->page_id] = array(
@@ -748,7 +747,7 @@ class BlogTemplateClass {
 				"revision"		=> $oRow->rev_id,
 				"comments"		=> $iCount,
 				"votes"			=> self::__getVoteCode($oRow->page_id),
-				"props"			=> BlogListPage::getProps($oRow->page_id),
+				"props"			=> BlogArticle::getProps($oRow->page_id),
 			);
 		}
 		self::$dbr->freeResult( $res );

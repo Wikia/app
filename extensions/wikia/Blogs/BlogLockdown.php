@@ -62,7 +62,7 @@ class BlogLockdown {
 			return false;
 		}
 
-		$owner = BlogListPage::getOwner( $title );
+		$owner = BlogArticle::getOwner( $title );
 		$username = $user->getName();
 		Wikia::log( __METHOD__, "user", "user: {$username}, owner: {$owner}" );
 
