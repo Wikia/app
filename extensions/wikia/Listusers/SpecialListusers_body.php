@@ -204,7 +204,7 @@ class ListUsers extends SpecialPage {
 				}
 				
 				if (!empty($text)) {
-					$aWhere[] = " lu_username like '".$dbs->escapeLike($text)."%' ";
+					$aWhere[] = " lu_user_name like '".$dbs->escapeLike($text)."%' ";
 				}
 
 				if (!empty($contrib)) {
@@ -227,6 +227,14 @@ class ListUsers extends SpecialPage {
 					if ( !empty($__groups) && is_array($__groups) ) {
 						$sGroups = implode(", ", $__groups);
 					}
+					
+					$aLinks = array (
+						0 => $sk->makeLinkObj(Title::newFromText('Contributions', NS_SPECIAL), wfMsg('listuserscontribs'), "target={$oUser->getName()}"),
+						1 => $sk->makeLinkObj(Title::newFromText("Editcount/{$oUser->getName()}", NS_SPECIAL), wfMsg('listusersedits'), ""),
+						2 => $sk->makeLinkObj(Title::newFromText("BlockIP/{$oUser->getName()}", NS_SPECIAL), wfMsg('listusersblock')),
+						3 => $sk->makeLinkObj(Title::newFromText('UserRights', NS_SPECIAL), wfMsg('listusersrights'), "user={$oUser->getName()}"),
+					);
+					
 					$aUsers['data'][$oRow->lu_user_id] = array(
 						'user_id' 		=> $oRow->lu_user_id,
 						'user_name' 	=> $oRow->lu_user_name,
@@ -235,7 +243,7 @@ class ListUsers extends SpecialPage {
 						'groups' 		=> $sGroups,
 						'rev_cnt' 		=> $oRow->lu_rev_cnt,
 						'blcked'		=> $oRow->lu_blocked,
-						'contribs'		=> $sk->makeLinkObj(Title::newFromText('Contributions', NS_SPECIAL), wfMsg('listuserscontribs'), "target={$oUser->getName()}"),
+						'links'			=> implode(" - ", $aLinks),
 					);
 				}
 				$dbs->freeResult( $res );
@@ -329,9 +337,10 @@ class ListUsers extends SpecialPage {
 			$result['data'] = (isset($aUsers['data'])) ? $aUsers['data'] : "";
 		}
 
-#		error_log ("result = ".print_r($result, true) . "\n", 3, "/tmp/moli.log");
+		#error_log ("result = ".print_r($result, true) . "\n", 3, "/tmp/moli.log");
 
         wfProfileOut( __METHOD__ );
+
 		if (!function_exists('json_encode')) {
 			$oJson = new Services_JSON();
 			return $oJson->encode($result);
