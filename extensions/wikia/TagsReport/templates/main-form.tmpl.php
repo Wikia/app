@@ -7,7 +7,7 @@
 <? foreach ($tagList as $tag => $cnt) { ?>
 <div style="margin:4px 10px">
 <span style="vertical-align: middle"><input type="radio" name="target" value="<?=$tag?>" "<?=($tag == $mTag)?"checked":""?>"></span>
-<span style="vertical-align: middle"><?=$tag?> (<?= wfMsg('tagsreportpages', $cnt) ?>)</span>
+<span style="vertical-align: middle"><?=$tag?> (<?= ($cnt == 1) ? wfMsg('tagsreportpage', $cnt) : wfMsg('tagsreportpages', $cnt) ?>)</span>
 </div>
 <? } ?>
 <? } ?>
