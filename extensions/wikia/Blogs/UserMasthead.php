@@ -43,6 +43,8 @@ function userMasthead() {
 			$reqTitle = $wgRequest->getText("title", false);
 			if ( strpos( $reqTitle, "/") !== false ) {
 				list ( , $userspace ) = explode( "/", $reqTitle, 2 );
+				$user = User::newFromName($userspace);
+				$userspace = $user->getName();
 				$Avatar = BlogAvatar::newFromUserName( $userspace );
 			} else {
 				$userspace = $wgUser->getName();
