@@ -209,12 +209,12 @@ class GlobalWatchlistBot {
 
 		if(($sLangCode != 'en') && !empty($sLangCode)) {
 			// custom lang translation
-			$sBody = wfMsg("$sMsgKey/$sLangCode");
+			$sBody = wfMsgExt($sMsgKey, array( 'language' => $sLangCode ));
 		}
 
-  if(($sBody == null) || wfEmptyMsg("$sMsgKey/$sLangCode", $sBody)) {
-  	$sBody = wfMsg($sMsgKey);
-  }
+		if($sBody == null) {
+			$sBody = wfMsg($sMsgKey);
+		}
 
 		return $sBody;
 	}
