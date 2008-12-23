@@ -183,7 +183,7 @@ function wkLUshowDetails(limit, offset)
 				oneRow += "<th class=\"lu_row\"><?=wfMsg('listusersrev-cnt')?></th>";
 				oneRow += "<th class=\"lu_row\"><?=wfMsg('listuserslast-loggedin')?></th>";
 				oneRow += "<th class=\"lu_row\"><?=wfMsg('listuserslast-edited')?></th>";
-				oneRow += "<th class=\"lu_row\"><?=wfMsg('listuserscontribs')?></th></tr>";
+				oneRow += "<th class=\"lu_row\"><?=wfMsg('listusersoptions')?></th></tr>";
 				_tmp += oneRow;
  				loop = limit * offset;
  				if (resData['data']) {
@@ -196,7 +196,7 @@ function wkLUshowDetails(limit, offset)
 						oneRow += "<td class=\"lu_row\" " + blocked + " >" +resData['data'][i]['rev_cnt']+ "</td>";
 						oneRow += "<td class=\"lu_row\" " + blocked + " >" + ((resData['data'][i]['last_login']) ? resData['data'][i]['last_login'] : "-") + "</td>";
 						oneRow += "<td class=\"lu_row\" " + blocked + " >" + ((resData['data'][i]['last_edited']) ? resData['data'][i]['last_edited'] : "-") + "</td>";
-						oneRow += "<td class=\"lu_row\" " + blocked + " >" + resData['data'][i]['contribs'] + "</td></tr>";
+						oneRow += "<td class=\"lu_row\" " + blocked + " >" + resData['data'][i]['links'] + "</td></tr>";
 						_tmp += oneRow;
 					}
 				}
@@ -235,7 +235,9 @@ YAHOO.util.Event.onDOMReady(function () {
 	wkLUshowDetails();
 	
 	YAHOO.Wikia.ListUsers.ShowUsers = function(e) {
-		wkLUshowDetails(30, 0);
+		var select_pages = document.getElementById('wcLUselect');
+		var cnt = (select_pages) ? select_pages.value : 30;
+		wkLUshowDetails(cnt, 0);
 	};
 
 	YAHOO.util.Event.addListener("lu-showusers", "click", YAHOO.Wikia.ListUsers.ShowUsers);
