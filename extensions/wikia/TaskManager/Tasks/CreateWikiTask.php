@@ -98,10 +98,15 @@ class CreateWikiTask extends BatchTask {
 			return false;
 		}
 
-		$success = $this->setCentralPages();
-		if( !$success ) {
-			echo "setCentralPages() method failed... task aborted.\n";
-			return false;
+		if(isset($this->mTaskData["testWiki"]) && !empty($this->mTaskData["testWiki"])) {
+			$this->addLog( "testWiki flag is set, setCentralPages() method skipped." );
+		}
+		else {
+			$success = $this->setCentralPages();
+			if( !$success ) {
+				echo "setCentralPages() method failed... task aborted.\n";
+				return false;
+			}
 		}
 
 		/**

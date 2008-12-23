@@ -26,6 +26,7 @@ $wgCreateWikiMessages['en'] = array(
     'createwikisubmitcomplete' => 'Your submission is complete.  If you gave an email address, you will be contacted regarding the new Wiki.  Thank you for using {{SITENAME}}.',
     'createwikicreatecomplete' => 'Your wiki creation is complete.  ',
     'createwikichangecomplete' => 'Your changes have been saved.',
+    'createtestwiki' => 'Create test wiki<br /><i>(no pages on central)</i>',
     'createwikilang' => 'Default language',
     'createwikibademail' => "The email you provided is not a proper email address, please retype it correctly.",
     "createwikifounder" => "Founder",

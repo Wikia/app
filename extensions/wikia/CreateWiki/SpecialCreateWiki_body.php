@@ -117,6 +117,7 @@ class CreateWikiForm extends SpecialPage {
 												$this->mParams["wpCreateWikiDescPageTitle"] = $wgRequest->getVal("wpCreateWikiDescPageTitle");
             $this->mParams["wpCreateWikiCategoryStarter"] = $wgRequest->getVal("wpCreateWikiCategoryStarter");
             $this->mParams["wpCreateWikiDomains"] = $wgRequest->getVal("wpCreateWikiDomains");
+            $this->mParams["wpCreateTestWiki"] = $wgRequest->getCheck("wpCreateTestWiki");
         }
 
         $wgOut->setPageTitle( wfMsg("createwikipagetitle").wfMsg("createwikistep")."1" );
@@ -508,6 +509,7 @@ class CreateWikiForm extends SpecialPage {
 		$aWiki["dbname"]    = substr($aWiki["name"], 0, 64);
 		$aWiki["path"]      = "/usr/wikia/docroot/wiki.factory";
 		$aWiki["images"]    = $WikiImagesDir . $aWiki["name"];
+		$aWiki["testWiki"]  = ($this->mParams["wpCreateTestWiki"] ? 1 : 0);
 
 		if (!empty($this->mParams["wpCreateWikiLangPrefix"]) && $this->mParams["wpCreateWikiLang"] != "") {
 			$aWiki["subdomain"] = strtolower($this->mParams["wpCreateWikiLang"]) . "." . $aWiki["name"];

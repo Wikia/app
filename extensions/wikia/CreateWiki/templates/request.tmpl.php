@@ -299,6 +299,10 @@ YAHOO.util.Event.addListener( "wc-language", "change", WC.domainWatch );
 <!-- Right column /Start -->
 <div class="column">
  <!-- empty -->
+ <div class="row">
+		<label><?php echo wfMsg( "createtestwiki" ) ?></label>
+		<input type="checkbox" name="wpCreateTestWiki" value="1" />
+ </div>
 </div>
 <!-- Right column /End -->
 
