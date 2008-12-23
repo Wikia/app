@@ -8,9 +8,9 @@
 /**
  * Entry point
  */
-function wfSpecialUpload() {
+function wfSpecialUpload( $par = '' ) {
 	global $wgRequest;
-	$form = new UploadForm( $wgRequest );
+	$form = new UploadForm( $wgRequest, $par );
 	$form->execute();
 }
 
@@ -58,11 +58,16 @@ class UploadForm {
 	 * Get data POSTed through the form and assign them to the object
 	 * @param $request Data posted.
 	 */
-	function UploadForm( &$request ) {
+	function UploadForm( &$request, $par ) {
 		global $wgAllowCopyUploads;
 		$this->mDesiredDestName   = $request->getText( 'wpDestFile' );
 		$this->mIgnoreWarning     = $request->getCheck( 'wpIgnoreWarning' );
 		$this->mComment           = $request->getText( 'wpUploadDescription' );
+
+		# Check for [[Special:Upload/Filename.ext]]
+		if ('' == $this->mDesiredDestName && '' != $par) {
+			$this->mDesiredDestName = $par;
+		}
 
 		if( !$request->wasPosted() ) {
 			# GET requests just give the main form; no data except destination
