@@ -243,7 +243,7 @@ class ListUsers extends SpecialPage {
 						'groups' 		=> $sGroups,
 						'rev_cnt' 		=> $oRow->lu_rev_cnt,
 						'blcked'		=> $oRow->lu_blocked,
-						'links'			=> implode(" - ", $aLinks),
+						'links'			=> "(" . implode(") &#183; (", $aLinks) . ")",
 					);
 				}
 				$dbs->freeResult( $res );
