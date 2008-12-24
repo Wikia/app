@@ -9,31 +9,42 @@
 }
 .lu_row {
 	border: 1px dashed #E0E4EF;
-	font-size:85%;
+	font-size:100%;
 	padding: 1px 3px;
+	text-align: left;
+	white-space:normal;
 }
 .lu_result {
-	height:30px;
-	padding:2px 5px;
+	padding:2px;
 	font-size:90%;
-	white-space: nowrap;
 	border:1px solid black;
 	width:110px;
 	text-align:center;
 	border-left:0px;
-	border-bottom:0px
+	border-bottom:0px;
 }
 .lu_header {
-	height:30px;
 	valign:top;
 	border:1px solid black;
 	border-left:0px;
 	border-bottom:0px;
 }
 .lu_left {
-	white-space:nowrap;
 	font-size:85%;
 	border:1px solid black;	
+}
+.lu_filter {
+	padding: 2px;
+}
+.lu_first {
+	padding-left: 5px;
+}
+.lu_groups {
+	list-style:none;
+	height:65px;
+	overflow-y:scroll;
+	padding:1px 5px;
+	margin:1px;
 }
 </style>
 <script type="text/javascript">
@@ -177,13 +188,13 @@ function wkLUshowDetails(limit, offset)
 				var _tmp = "<div>";
 				_tmp += pager;
  				_tmp += "<br /><table width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" valign=\"top\">";
-				var oneRow = "<tr><th class=\"lu_row\">#</th>";
-				oneRow += "<th class=\"lu_row\"><?=wfMsg('listusers-username')?></th>";
-				oneRow += "<th class=\"lu_row\"><?=wfMsg('listusers-groups')?></th>";
-				oneRow += "<th class=\"lu_row\"><?=wfMsg('listusersrev-cnt')?></th>";
-				oneRow += "<th class=\"lu_row\"><?=wfMsg('listuserslast-loggedin')?></th>";
-				oneRow += "<th class=\"lu_row\"><?=wfMsg('listuserslast-edited')?></th>";
-				oneRow += "<th class=\"lu_row\"><?=wfMsg('listusersoptions')?></th></tr>";
+				var oneRow = "<tr><th class=\"lu_row\" rowspan=\"2\">#</th>";
+				oneRow += "<th class=\"lu_row\" rowspan=\"2\"><?=wfMsg('listusers-username')?></th>";
+				oneRow += "<th class=\"lu_row\" rowspan=\"2\"><?=wfMsg('listusers-groups')?></th>";
+				oneRow += "<th class=\"lu_row\" rowspan=\"2\"><?=wfMsg('listusersrev-cnt')?></th>";
+				oneRow += "<th class=\"lu_row\" colspan=\"2\"><?=wfMsg('listusers-last')?></th></tr>";
+				oneRow += "<tr><th class=\"lu_row\"><?=wfMsg('listusers-loggedin')?></th>";
+				oneRow += "<th class=\"lu_row\"><?=wfMsg('listusers-edited')?></th></tr>";
 				_tmp += oneRow;
  				loop = limit * offset;
  				if (resData['data']) {
@@ -191,12 +202,12 @@ function wkLUshowDetails(limit, offset)
 						loop++;
 						var blocked = (resData['data'][i]['blcked'] == 1) ? "style=\"color:#DF2930\"" : "";
 						oneRow = "<tr><td class=\"lu_row\" " + blocked + " >" + loop  + ".</td>";
-						oneRow += "<td class=\"lu_row\" " + blocked + " >" +resData['data'][i]['user_link']+ "</td>";
+						oneRow += "<td class=\"lu_row\" " + blocked + " ><span style=\"font-size:90%;font-weight:bold;\">" +resData['data'][i]['user_link']+ "</span> <span style=\"font-size:77%; padding-left:8px;\">" + resData['data'][i]['links'] + "</span></td>";
 						oneRow += "<td class=\"lu_row\" " + blocked + " >" +resData['data'][i]['groups']+ "</td>";
 						oneRow += "<td class=\"lu_row\" " + blocked + " >" +resData['data'][i]['rev_cnt']+ "</td>";
 						oneRow += "<td class=\"lu_row\" " + blocked + " >" + ((resData['data'][i]['last_login']) ? resData['data'][i]['last_login'] : "-") + "</td>";
 						oneRow += "<td class=\"lu_row\" " + blocked + " >" + ((resData['data'][i]['last_edited']) ? resData['data'][i]['last_edited'] : "-") + "</td>";
-						oneRow += "<td class=\"lu_row\" " + blocked + " >" + resData['data'][i]['links'] + "</td></tr>";
+						oneRow += "</tr>";
 						_tmp += oneRow;
 					}
 				}
@@ -248,43 +259,36 @@ YAHOO.util.Event.onDOMReady(function () {
 <p class='error'><?=$error?></p>
 <form method="post" action="<?=$action?>" id="lu-form">
 <table style="width:100%;" cellpadding="0" cellspacing="0"><tr>
-<td rowspan="2" style="" valign="top" class="lu_left">
+<td valign="middle" class="lu_left" style="border-bottom:0px;width:230px;">
 <? $found = 0; ?>	
 <? if ( !empty($groupList) && (!empty($aGroups)) ) { ?>
+	<ul class="lu_groups">
 	<? foreach ($aGroups as $groupName => $userGroupName) { ?>
 		<? $found += (in_array($groupName, $mGroup) && isset($groupList[$groupName])) ? $groupList[$groupName] : 0 ?>
-		<div style="margin:4px 5px">
-		<span style="vertical-align: middle"><input type="checkbox" name="lu_target" id="lu_target" value="<?=$groupName?>" "<?=(in_array($groupName, $mGroup))?"checked":""?>"></span>
-		<span style="vertical-align: middle"><strong><?=$wgContLang->ucfirst($userGroupName)?></strong> (<?= wfMsg('listuserscount', (isset($groupList[$groupName]))?$groupList[$groupName]:0 ) ?>)</span>
-		</div>
+		<li style="height:15px"><span style="vertical-align: middle"><input type="checkbox" name="lu_target" id="lu_target" value="<?=$groupName?>" "<?=(in_array($groupName, $mGroup))?"checked":""?>"></span>
+			<span style="padding-bottom:5px;"><strong><?=$wgContLang->ucfirst($userGroupName)?></strong> (<?= wfMsg('listuserscount', (isset($groupList[$groupName]))?$groupList[$groupName]:0 ) ?>)</span>
+		</li>
 	<? } ?>
+	</ul>
 <? } ?>
 </td>
 <td class="lu_header">
-	<table><tr>
-		<td valign="middle" class="lu_td">
-			<?= wfMsg('listusersstartingtext') ?>
-		</td>	
-		<td valign="middle" class="lu_td">
-			<input type="text" name="lu_search" id="lu_search" size="10">
-		</td>	
-		<td valign="middle" class="lu_td">
-			<?= wfMsg('listuserscontributed') ?>
-		</td>
-		<td valign="middle" class="lu_td">
-			<select name="lu_contributed" id="lu_contributed" ><? foreach ($contributed as $val => $text) { ?><option <?= ($val == $selContrib) ? "selected" : "" ?> value="<?=$val?>"><?=$text?><? } ?></select>
-		</td>
-		<td valign="middle" class="lu_td">
-			<input type="button" value="<?=wfMsg('listusersdetails')?>" id="lu-showusers">
-		</td>	
-	</tr></table>
+	<div class="lu_filter">
+		<span class="lu_filter lu_first"><?= wfMsg('listusersstartingtext') ?></span>
+		<span class="lu_filter"><input type="text" name="lu_search" id="lu_search" size="5"></span>
+	</div>
+	<div class="lu_filter">
+		<span class="lu_filter lu_first"><?= wfMsg('listuserscontributed') ?></span>
+		<span class="lu_filter"><select name="lu_contributed" id="lu_contributed" ><? foreach ($contributed as $val => $text) { ?><option <?= ($val == $selContrib) ? "selected" : "" ?> value="<?=$val?>"><?=$text?><? } ?></select></span>
+		<span class="lu_filter"><input type="button" value="<?=wfMsg('listusersdetails')?>" id="lu-showusers"></span>
+	</div>	
 </td>
 <td valign="middle" class="lu_result">
-	<div style="padding:3px;font-size:85%;" id="listusers-result"><?=wfMsg('listusersfound', $found)?></div>
+	<div style="font-size:85%;" id="listusers-result"><?=wfMsg('listusersfound', $found)?></div>
 </td>
 </tr>
 <tr>
-<td valign="top" colspan="3" style="border:1px solid black;text-align:center;border-left:0px" id="lu-result"></td>
+<td valign="top" colspan="3" class="lu_left" id="lu-result" style="font-size:100%"></td>
 </tr>
 </table>
 </form>
