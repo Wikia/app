@@ -348,6 +348,8 @@ class EmailNotification {
 					wfDebug( __METHOD__.": user talk page edited, but user does not exist\n" );
 				} elseif ( $targetUser->getId() == $editor->getId() ) {
 					wfDebug( __METHOD__.": user edited their own talk page, no notification sent\n" );
+				} elseif ( !$targetUser->canReceiveEmail() ) {
+					wfDebug( __METHOD__.": user doesn't have confirmed e-mail or has disabled e-mail notification in his options\n" );
 				} elseif( $targetUser->getOption( 'enotifusertalkpages' ) ) {
 					wfDebug( __METHOD__.": sending talk page update notification\n" );
 					$this->compose( $targetUser );
@@ -580,9 +582,9 @@ class EmailNotification {
 		# $PAGEEDITDATE is the time and date of the page change
 		# expressed in terms of individual local time of the notification
 		# recipient, i.e. watching user
-		
+
 		// RT #1294 Bartek 5.12.2008, use the language object with the code the user does
-		$wlang = Language::factory( $watchingUser->getOption( 'language' ) );	
+		$wlang = Language::factory( $watchingUser->getOption( 'language' ) );
 
 		$body = str_replace('$PAGEEDITDATE',
 			$wlang->timeanddate( $this->timestamp, true, false, $timecorrection ),
