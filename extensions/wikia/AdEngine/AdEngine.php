@@ -272,12 +272,12 @@ class AdEngine {
 				if (!in_array($slotname, $this->internationalSlotsTier1)){
 					return new AdProviderNull("Ads name not served for this language in this slot ($wgLanguageCode) ", false);
 				} else {
-					return AdProviderGAM::getInstance();
+					return AdProviderAthena::getInstance();
 				}
 
 			} else {
 				if (!in_array( $slotname, $this->internationalSlotsTier2)){
-					return new AdProviderNull("Ads name not served for this language in this slot ($wgLanguageCode) ", false);
+				return new AdProviderNull("Ads name not served for this language in this slot ($wgLanguageCode) ", false);
 				} else if (! in_array($wgLanguageCode, AdProviderGoogle::getSupportedLanguages())){
 					// Google's TOS prevents serving ads for some languages
 					return new AdProviderNull("Unsupported language for Google Adsense ($wgLanguageCode)", false);
