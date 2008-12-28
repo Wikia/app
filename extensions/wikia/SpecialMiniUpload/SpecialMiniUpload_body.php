@@ -20,7 +20,7 @@ class MiniUpload extends SpecialPage {
 	}
 
 	function MiniUpload() {
-		SpecialPage::SpecialPage("MiniUpload");
+		UnlistedSpecialPage::UnlistedSpecialPage("MiniUpload");
 		self::loadMessages();
 	}
 
