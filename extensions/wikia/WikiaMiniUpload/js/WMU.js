@@ -124,6 +124,7 @@ function WMU_manualWidthInput( elem ) {
 			image.height = WMU_width / WMU_ratio;
 			WMU_thumbSize = [image.width, image.height];
 			$( 'ImageUploadManualWidth' ).value = image.width;
+			WMU_readjustSlider( image.width );
 			WMU_shownMax = true;
 			alert (wmu_max_thumb);
 		}
