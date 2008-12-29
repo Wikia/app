@@ -133,7 +133,6 @@ function WMU_manualWidthInput( elem ) {
 		image.width = val;
 		WMU_thumbSize = [image.width, image.height];
 		$( 'ImageUploadManualWidth' ).value = val;
-		WMU_readjustSlider( val );
 
 		WMU_shownMax = false;			
 	}
