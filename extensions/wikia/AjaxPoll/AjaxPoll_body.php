@@ -147,6 +147,7 @@ class AjaxPollClass {
 	 * @return array: votes for this pool
 	 */
 	public function getVotes() {
+		global $wgLang;
 
 		if ( is_null( $this->mId ) ) {
 			return null;
@@ -179,6 +180,7 @@ class AjaxPollClass {
 		 */
 		foreach( $votes as $nr => $vote ) {
 			$percent = $vote[ "value" ] / $total * 100;
+			$percent = $wgLang->formatNum(round($percent, 2));
 			$votes[ $nr ][ "percent" ] = $percent;
 			$votes[ $nr ][ "title" ] = $percent . "%&nbsp;" . wfMsg("ajaxpoll-percentVotes");
 			$votes[ $nr ][ "pixels" ] = $this->percent2pixels( $percent );
