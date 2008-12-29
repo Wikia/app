@@ -17,6 +17,7 @@ $wgExtensionFunctions[] = 'wfBlackTitlelistMessageLoader';
 $wgHooks['SpecialMovepageBeforeMove'][] = 'wfSpamBlackTitleBeforeMove';
 $wgHooks['EditFilter'][] = 'wfSpamBlackTitleListCallback';
 $wgHooks['UploadForm:BeforeProcessing'][] = 'wfSpamBlackTitleSpecialUpload';
+$wgHooks['WikiaMiniUpload:BeforeProcessing'][] = 'wfSpamBlackTitleWikiaMiniUpload';
 
 // other functions
 function wfBlackTitleListParseSetup() {
@@ -104,6 +105,21 @@ function wfSpamBlackTitleSpecialUpload($uploadForm) {
 		}
 	}
 
+	wfProfileOut( __METHOD__ );
+	return $retVal;
+}
+
+//used in WikiaMiniUpload
+function wfSpamBlackTitleWikiaMiniUpload($fileName) {
+	global $useSpamRegexNoHttp;
+	wfProfileIn( __METHOD__ );
+	$useSpamRegexNoHttp = true;
+	$retVal = true;
+
+	$title = Title::newFromText($fileName, NS_IMAGE);
+	if ($title instanceof Title) {
+		$retVal = wfBlackListTitleParse($title);
+	}
 	wfProfileOut( __METHOD__ );
 	return $retVal;
 }
