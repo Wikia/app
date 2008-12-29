@@ -82,7 +82,7 @@ class WikiaMiniUpload {
 			$flickrResult = $flickrAPI->photos_getInfo($itemId);
 			$url = "http://farm{$flickrResult['farm']}.static.flickr.com/{$flickrResult['server']}/{$flickrResult['id']}_{$flickrResult['secret']}.jpg";
 			$data = array('wpUpload' => 1, 'wpSourceType' => 'web', 'wpUploadFileURL' => $url);
-			$form = new UploadForm(new FauxRequest($data, true));
+			$form = new UploadForm(new FauxRequest($data, true), '');
 			$tempname = 'Temp_file_'.$wgUser->getID().'_'.rand(0, 1000);
 			$file = new FakeLocalFile(Title::newFromText($tempname, 6), RepoGroup::singleton()->getLocalRepo());
 			$file->upload($form->mTempPath, '', '');
@@ -101,27 +101,27 @@ class WikiaMiniUpload {
 		$mFileSize = $wgRequest->getFileSize( 'wpUploadFile' );
 		$mSrcName = stripslashes($wgRequest->getFileName( 'wpUploadFile' ));
 		$filtered = wfStripIllegalFilenameChars( $mSrcName );
-		$form = new UploadForm( $wgRequest );
+		$form = new UploadForm( $wgRequest, '' );
 
 		// no filename or zero size
 		if( trim( $mSrcName ) == '' || empty( $mFileSize ) ) {
-                        return UploadForm::EMPTY_FILE;
-                }
+			return UploadForm::EMPTY_FILE;
+		}
 
 		//illegal filename
 		$nt = Title::makeTitleSafe( NS_IMAGE, $filtered );
-                if( is_null( $nt ) ) {
-                        return UploadForm::ILLEGAL_FILENAME;
-                }
+		if( is_null( $nt ) ) {
+			return UploadForm::ILLEGAL_FILENAME;
+		}
 
 		// extensions check
 		list( $partname, $ext ) = $form->splitExtensions( $filtered );
 
-                if( count( $ext ) ) {
-                        $finalExt = $ext[count( $ext ) - 1];
-                } else {
-                        $finalExt = '';
-                }
+		if( count( $ext ) ) {
+			$finalExt = $ext[count( $ext ) - 1];
+		} else {
+			$finalExt = '';
+		}
 
 		// for more than one "extension"
 		if( count( $ext ) > 1 ) {
@@ -142,15 +142,20 @@ class WikiaMiniUpload {
 			return UploadForm::VERIFICATION_ERROR;
 		}
 
-                global $wgCheckFileExtensions, $wgStrictFileExtensions;
-                global $wgFileExtensions, $wgFileBlacklist;
-                if ($finalExt == '') {
-                        return UploadForm::FILETYPE_MISSING;
-                } elseif ( $form->checkFileExtensionList( $ext, $wgFileBlacklist ) ||
-                                ($wgCheckFileExtensions && $wgStrictFileExtensions &&
-                                        !$form->checkFileExtension( $finalExt, $wgFileExtensions ) ) ) {
-                        return UploadForm::FILETYPE_BADTYPE;
-                }
+		global $wgCheckFileExtensions, $wgStrictFileExtensions;
+		global $wgFileExtensions, $wgFileBlacklist;
+		if ($finalExt == '') {
+			return UploadForm::FILETYPE_MISSING;
+		} elseif ( $form->checkFileExtensionList( $ext, $wgFileBlacklist ) ||
+				($wgCheckFileExtensions && $wgStrictFileExtensions &&
+					!$form->checkFileExtension( $finalExt, $wgFileExtensions ) ) ) {
+			return UploadForm::FILETYPE_BADTYPE;
+		}
+
+		if(!wfRunHooks('WikiaMiniUpload:BeforeProcessing', $mSrcName)) {
+			wfDebug( "Hook 'WikiaMiniUpload:BeforeProcessing' broke processing the file." );
+			return UploadForm::VERIFICATION_ERROR;
+		}
 
 		return UploadForm::SUCCESS;
 	}
@@ -197,7 +202,7 @@ class WikiaMiniUpload {
 
 	function detailsPage($props) {
 		$data = array('wpUpload' => 1, 'wpSourceType' => 'web', 'wpUploadFileURL' => '');
-		$form = new UploadForm(new FauxRequest($data, true));
+		$form = new UploadForm(new FauxRequest($data, true), '');
 
 		$tmpl = new EasyTemplate(dirname(__FILE__).'/templates/');
 		list( $partname, $ext ) = $form->splitExtensions( $props['name'] );
@@ -208,11 +213,11 @@ class WikiaMiniUpload {
 			$finalExt = '';
 		}
 
-                // for more than one "extension"
-                if( count( $ext ) > 1 ) {
-                        for( $i = 0; $i < count( $ext ) - 1; $i++ )
-                                $partname .= '.' . $ext[$i];
-                }
+		// for more than one "extension"
+		if( count( $ext ) > 1 ) {
+			for( $i = 0; $i < count( $ext ) - 1; $i++ )
+				$partname .= '.' . $ext[$i];
+		}
 	
 		$props['partname'] = $partname;
 		$props['extension'] = strtolower( $finalExt );
@@ -326,8 +331,8 @@ class WikiaMiniUpload {
 						$license = $wgRequest->getVal( 'ImageUploadLicense' );
 						
 						if ( $license != '' ) {
-			                                $caption = '== ' . wfMsgForContent( 'license' ) . " ==\n" . '{{' . $license . '}}' . "\n";
-                        			} else {
+							$caption = '== ' . wfMsgForContent( 'license' ) . " ==\n" . '{{' . $license . '}}' . "\n";
+						} else {
 							$caption = "";
 						}						 
 					}
@@ -394,7 +399,7 @@ class FakeLocalFile extends LocalFile {
 	// change on production!
 	var $tempFolder = "/images/metalgear";
 /*
-        function upload( $srcPath, $comment, $pageText, $flags = 0, $props = false, $timestamp = false ) {
+	function upload( $srcPath, $comment, $pageText, $flags = 0, $props = false, $timestamp = false ) {
 		global $wgServer;
 		$oldrepo = $this->repo;
 		$this->repo->directory = $this->tempFolder;
@@ -402,35 +407,35 @@ class FakeLocalFile extends LocalFile {
 		$status = parent::upload(  $srcPath, $comment, $pageText, $flags, $props, $timestamp );
 		$this->repo = $oldrepo;
 		
-                return $status;
-        }
+		return $status;
+	}
 
-        function delete( $reason, $suppress = false ) {
+	function delete( $reason, $suppress = false ) {
 		$oldrepo = $this->repo;
 		$this->repo->directory = $this->tempFolder;
 		$this->repo->url = $wgServer . $this->tempFolder;
 		$status = parent::delete( $reason, $suppress );
 		$this->repo = $oldrepo;
 
-                return $status;
-        }
+		return $status;
+	}
 
-        function publish( $srcPath, $flags = 0 ) {
-                $this->lock();
-                $archiveName = $this->getName();
+	function publish( $srcPath, $flags = 0 ) {
+		$this->lock();
+		$archiveName = $this->getName();
 		$dstRel = $archiveName;
-                $archiveRel =  $archiveName;
-                $flags = $flags & File::DELETE_SOURCE ? LocalRepo::DELETE_SOURCE : 0;
-                $status = $this->repo->publish( $srcPath, $dstRel, $archiveRel, $flags );
-                if ( $status->value == 'new' ) {
-                        $status->value = '';
-                } else {
-                        $status->value = $archiveName;
-                }
-                $this->unlock();
+		$archiveRel =  $archiveName;
+		$flags = $flags & File::DELETE_SOURCE ? LocalRepo::DELETE_SOURCE : 0;
+		$status = $this->repo->publish( $srcPath, $dstRel, $archiveRel, $flags );
+		if ( $status->value == 'new' ) {
+			$status->value = '';
+		} else {
+			$status->value = $archiveName;
+		}
+		$this->unlock();
 
-                return $status;
-        }
+		return $status;
+	}
 */
 	function recordUpload2( $oldver, $comment, $pageText, $props = false, $timestamp = false ) {
 		global $wgUser;
