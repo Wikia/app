@@ -38,31 +38,11 @@ class WikiaApiQueryDomains extends ApiQueryBase {
 		/**
 		 * query builder
 		 */
-		if( $activeonly ) {
-			$tbl_cd = array(
-				wfSharedTable( "city_domains" ),
-				wfSharedTable( "city_list" )
-			);
-			$this->addWhere(
-				wfSharedTable( "city_domains" ).".city_id = " .
-				wfSharedTable( "city_list" ).".city_id"
-			);
-			$this->addWhereFld(
-				wfSharedTable( "city_list" ).".city_public", $active
-			);
-			$this->addFields( array(
-				wfSharedTable( "city_domains" ).".city_id",
-				wfSharedTable( "city_domains" ).".city_domain"
-			));
-		}
-		else {
-			list( $tbl_cd ) = $db->tableNamesN( wfSharedTable( "city_domains" ) );
-			if (!is_null( $wikia )) {
-				$this->addWhereFld( "city_id", $wikia );
-			}
-			$this->addFields( array( "city_id", "city_domain" ));
-		}
-		$this->addTables( $tbl_cd );
+		$this->addTables(array(wfSharedTable('city_list')));
+		$this->addFields(array('city_id', 'city_url'));
+
+		if ($activeonly) $this->addWhereFld('city_public', 1);
+		if ($wikia) $this->addWhereFld('city_id', $wikia);
 
 		$this->addOption( "ORDER BY ", "city_id" );
 
@@ -70,11 +50,16 @@ class WikiaApiQueryDomains extends ApiQueryBase {
 		$data = array();
 		$res = $this->select(__METHOD__);
 		while ($row = $db->fetchObject($res)) {
-			$data[$row->city_id] = array(
-				"id"		=> $row->city_id,
-				"domain"	=> $row->city_domain,
-			);
-			ApiResult :: setContent( $data[$row->city_id], $row->city_domain );
+			$domain = $row->city_url;
+			$domain =  preg_replace('/^http:\/\//', '', $domain);
+			$domain =  preg_replace('/\/$/',        '', $domain);
+			if ($domain) {
+				$data[$row->city_id] = array(
+					"id"		=> $row->city_id,
+					"domain"	=> $domain,
+				);
+				ApiResult :: setContent( $data[$row->city_id], $domain );
+			}
 		}
 		$db->freeResult($res);
 
