@@ -11,8 +11,8 @@ require_once( dirname(__FILE__) . '/languages/Language.php' );
 function newrobots(){
 
 header("Content-Type: text/plain");
-header("Pragma: no-cache");
-header("Expires: 0");
+#header("Pragma: no-cache");
+#header("Expires: 0");
 echo <<<EOT
 #
 # Please note: There are a lot of pages on this site, and there are
@@ -266,8 +266,8 @@ if (!empty($_SERVER['SERVER_NAME'])) {
 }
 
 header("Content-type: text/plain");
-header("Pragma: no-cache");
-header("Expires: 0");
+#header("Pragma: no-cache");
+#header("Expires: 0");
 if (file_exists($sRobots)) {
 	@readfile($sRobots);
 }
