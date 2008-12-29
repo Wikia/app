@@ -745,7 +745,7 @@ class User {
 		$this->mEmailTokenExpires = null;
 		$this->mRegistration = wfTimestamp( TS_MW );
 		$this->mGroups = array();
-		$this->mMonacoData = null;		
+		$this->mMonacoData = null;
 
 		wfRunHooks( 'UserLoadDefaults', array( $this, $name ) );
 
@@ -821,6 +821,7 @@ class User {
 		if ( ( $sName == $this->mName ) && $passwordCorrect ) {
 			$_SESSION['wsToken'] = $this->mToken;
 			wfDebug( "Logged in from $from\n" );
+			wfRunHooks( 'UserLoadFromSessionInfo', array( $this, $from ) );
 			return true;
 		} else {
 			# Invalid credentials
@@ -850,7 +851,7 @@ class User {
 		$dbr = wfGetDB( DB_MASTER );
 		if ( !is_object( $dbr ) ) {
 			$this->loadDefaults();
-			return false;			
+			return false;
 		}
 
 		$s = $dbr->selectRow( 'user', '*', array( 'user_id' => $this->mId ), __METHOD__ );
@@ -892,7 +893,7 @@ class User {
 		$this->mEmailToken = $row->user_email_token;
 		$this->mEmailTokenExpires = wfTimestampOrNull( TS_MW, $row->user_email_token_expires );
 		$this->mRegistration = wfTimestampOrNull( TS_MW, $row->user_registration );
-		$this->mEditCount = $row->user_editcount; 
+		$this->mEditCount = $row->user_editcount;
 	}
 
 	/**
@@ -1015,7 +1016,7 @@ class User {
 		// due to -1 !== 0. Probably session-related... Nothing should be
 		// overwriting mBlockedby, surely?
 		$this->load();
-		
+
 		$this->mBlockedby = 0;
 		$this->mHideName = 0;
 		$ip = wfGetIP();
@@ -1065,7 +1066,7 @@ class User {
 		    $this->mBlock->mBy = $this->mBlockedby;
 		    $this->mBlock->mReason = $this->mBlockreason;
         }
-		
+
 		wfProfileOut( __METHOD__ );
 	}
 
@@ -1583,12 +1584,12 @@ class User {
 		$this->mNewpassword = '';
 		$this->mNewpassTime = null;
 	}
-	
+
 	function getToken() {
 		$this->load();
 		return $this->mToken;
 	}
-	
+
 	/**
 	 * Set the random token (used for persistent authentication)
 	 * Called from loadDefaults() among other places.
@@ -1918,7 +1919,7 @@ class User {
 			// In the spirit of DWIM
 			return true;
 
-		# Use strict parameter to avoid matching numeric 0 accidentally inserted 
+		# Use strict parameter to avoid matching numeric 0 accidentally inserted
 		# by misconfiguration: 0 == 'foo'
 		return in_array( $action, $this->getRights(), true );
 	}
@@ -2110,7 +2111,7 @@ class User {
 			}
 		}
 	}
-	
+
 	protected function setCookie( $name, $value, $exp=0 ) {
 		global $wgCookiePrefix,$wgCookieDomain,$wgCookieSecure,$wgCookieExpiration, $wgCookieHttpOnly;
 		if( $exp == 0 ) {
@@ -2146,7 +2147,7 @@ class User {
 				$wgCookieSecure );
 		}
 	}
-	
+
 	protected function clearCookie( $name ) {
 		$this->setCookie( $name, '', time() - 86400 );
 	}
@@ -2154,7 +2155,7 @@ class User {
 	function setCookies() {
 		$this->load();
 		if ( 0 == $this->mId ) return;
-		$session = array( 
+		$session = array(
 			'wsUserID' => $this->mId,
 			'wsToken' => $this->mToken,
 			'wsUserName' => $this->getName()
@@ -2471,27 +2472,27 @@ class User {
 	function isNewbie() {
 		return !$this->isAllowed( 'autoconfirmed' );
 	}
-	
+
 	/**
 	 * Is the user active? We check to see if they've made at least
 	 * X number of edits in the last Y days.
-	 * 
+	 *
 	 * @return bool true if the user is active, false if not
 	 */
 	public function isActiveEditor() {
 		global $wgActiveUserEditCount, $wgActiveUserDays;
 		$dbr = wfGetDB( DB_SLAVE );
-		
+
 		// Stolen without shame from RC
 		$cutoff_unixtime = time() - ( $wgActiveUserDays * 86400 );
 		$cutoff_unixtime = $cutoff_unixtime - ( $cutoff_unixtime % 86400 );
 		$oldTime = $dbr->addQuotes( $dbr->timestamp( $cutoff_unixtime ) );
-		
+
 		$res = $dbr->select( 'revision', '1',
 				array( 'rev_user_text' => $this->getName(), "rev_timestamp > $oldTime"),
 				__METHOD__,
 				array('LIMIT' => $wgActiveUserEditCount ) );
-		
+
 		$count = $dbr->numRows($res);
 		$dbr->freeResult($res);
 
@@ -2651,7 +2652,7 @@ class User {
 		$url = $this->confirmationTokenUrl( $token );
 		$invalidateURL = $this->invalidationTokenUrl( $token );
 		$this->saveSettings();
-		
+
 		return $this->sendMail( wfMsg( 'confirmemail_subject' ),
 			wfMsg( 'confirmemail_body',
 				wfGetIP(),
@@ -2724,7 +2725,7 @@ class User {
 	function invalidationTokenUrl( $token ) {
 		return $this->getTokenUrl( 'Invalidateemail', $token );
 	}
-	
+
 	/**
 	 * Internal function to format the e-mail validation/invalidation URLs.
 	 * This uses $wgArticlePath directly as a quickie hack to use the
@@ -3058,7 +3059,7 @@ class User {
 	function encryptPasswordId($id, $p) {
 		return wfEncryptPassword($id, $p);
 	}
-	
+
 	static function getRightDescription( $right ) {
 		global $wgMessageCache;
 		$wgMessageCache->loadAllMessages();
