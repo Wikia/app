@@ -20,16 +20,20 @@ class UserChangesHistory {
 	 * LoginHistoryHook
 	 *
 	 * store information about when & where user logged in, for stats
-	 * purposes, called by Hook UserLoginComplete and UserLoadFromSession
+	 * purposes, called by Hook UserLoginComplete and UserLoadFromSessionInfo
 	 * Data is stored in external storage archive1
 	 *
 	 * @author Krzysztof Krzyżaniak (eloy) <eloy@wikia-inc.com>
 	 * @access public
 	 * @static
 	 *
+	 * @param Integer $from -- which hook call this
+	 * @param User    $User -- User class instance
+	 * @param String  $type -- UserLoadFromSessionInfo set this to 'cookie' or 'session'
+	 *
 	 * @return true		process other hooks
 	 */
-	static public function LoginHistoryHook( $from, $User ) {
+	static public function LoginHistoryHook( $from, $User, $type = false ) {
 		global $wgCityId; #--- private wikia identifier, you can use wgDBname
 
 		wfProfileIn( __METHOD__ );
@@ -41,19 +45,24 @@ class UserChangesHistory {
 		$id = $User->getId();
 		if ( $id ) {
 
-			$dbw = wfGetDBExt( DB_MASTER ) ;
+			if( $from == self::LOGIN_AUTO && $type == "session" ) {
+				# ignore
+			}
+			else {
+				$dbw = wfGetDBExt( DB_MASTER ) ;
 
-			$status = $dbw->insert(
-				"user_login_history",
-				array(
-					"user_id"   => $id,
-					"city_id"   => $wgCityId,
-					"ulh_from"  => $from
-				),
-				__METHOD__
-			);
-			if ( $dbw->getFlag( DBO_TRX ) ) {
-				$dbw->commit();
+				$status = $dbw->insert(
+					"user_login_history",
+					array(
+						"user_id"   => $id,
+						"city_id"   => $wgCityId,
+						"ulh_from"  => $from
+					),
+					__METHOD__
+				);
+				if ( $dbw->getFlag( DBO_TRX ) ) {
+					$dbw->commit();
+				}
 			}
 		}
 
