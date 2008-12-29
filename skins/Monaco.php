@@ -463,6 +463,9 @@ class SkinMonaco extends SkinTemplate {
 		$i = 0;
 		if(is_array($lines)) {
 			foreach($lines as $line) {
+				if (strlen($line) == 0) { # ignore empty lines
+					continue;
+				}
 				$node = parseItem($line);
 				$node['depth'] = strrpos($line, '*') + 1;
 				if($node['depth'] == $lastDepth) {
