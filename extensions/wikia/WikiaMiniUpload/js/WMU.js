@@ -532,7 +532,7 @@ function WMU_insertImage(e, type) {
 
 	if($('ImageUploadThumb')) {
 		params.push('size=' + ($('ImageUploadThumbOption').checked ? 'thumb' : 'full'));
-		params.push('width=' + $('ImageUploadManualWidth').value) + 'px';
+		params.push( 'width=' + $( 'ImageUploadManualWidth' ).value + 'px' );
 		params.push('layout=' + ($('ImageUploadLayoutLeft').checked ? 'left' : 'right'));
 		params.push('caption=' + $('ImageUploadCaption').value);
 		params.push('slider=' + $('ImageUploadWidthCheckbox').checked);
