@@ -21,9 +21,10 @@ class BlogComment {
 	public
 		$mProps,
 		$mTitle,
-		$mRevision,
-		$mUser,	 ### comment creator
-		$mOwner; ### owner of blog
+		$mLastRevision,  ### for displaying text
+		$mFirstRevision, ### for author & time
+		$mUser,	         ### comment creator
+		$mOwner;         ### owner of blog
 
 	public function __construct( $Title ) {
 		/**
@@ -89,9 +90,11 @@ class BlogComment {
 	 */
 	private function load() {
 		if( $this->mTitle ) {
-			$this->mRevision = Revision::newFromTitle( $this->mTitle );
-			if( $this->mRevision ) {
-				$this->mUser = User::newFromId( $this->mRevision->getUser() );
+			$this->mLastRevision = Revision::newFromTitle( $this->mTitle );
+			$this->mFirstRevision = Revision::newFromId( $this->getFirstRevID());
+
+			if( $this->mFirstRevision ) {
+				$this->mUser = User::newFromId( $this->mFirstRevision->getUser() );
 			}
 			$this->getProps();
 			/**
@@ -102,6 +105,33 @@ class BlogComment {
 		}
 	}
 
+	/**
+	 * getFirstRevID -- What is id for first revision
+	 * @see Title::getLatestRevID
+	 *
+	 * @param Integer $flags a bit field; may be GAID_FOR_UPDATE to select for update
+	 *
+	 * @return Integer
+	 */
+	private function getFirstRevID( $flags = 0 ) {
+		wfProfileIn( __METHOD__ );
+
+		$id = false;
+
+		if( $this->mTitle ) {
+			$db = ($flags & GAID_FOR_UPDATE) ? wfGetDB(DB_MASTER) : wfGetDB(DB_SLAVE);
+			$id = $db->selectField(
+				"revision",
+				"min(rev_id)",
+				array( "rev_page" => $this->mTitle->getArticleID( $flags ) ),
+				__METHOD__
+			);
+		}
+
+		wfProfileOut( __METHOD__ );
+
+		return $id;
+	}
 	/**
 	 * getTitle -- getter/accessor
 	 *
@@ -117,8 +147,8 @@ class BlogComment {
 	 */
 	public function isDeleted() {
 		$this->load();
-		if( $this->mRevision ) {
-			$deleted = $this->mRevision->isDeleted( Revision::DELETED_TEXT );
+		if( $this->mLastRevision ) {
+			$deleted = $this->mLastRevision->isDeleted( Revision::DELETED_TEXT );
 		}
 		else {
 			$deleted = true;
@@ -150,7 +180,7 @@ class BlogComment {
 			 */
 			$this->getProps();
 
-			$text     = $Parser->parse( $this->mRevision->getText(), $this->mTitle, $Options )->getText();
+			$text     = $Parser->parse( $this->mLastRevision->getText(), $this->mTitle, $Options )->getText();
 			$anchor   = explode( "/", $this->mTitle->getDBkey(), 3 );
 			$sig      = ( $this->mUser->isAnon() )
 				? wfMsg("blog-comments-anonymous")
@@ -168,7 +198,7 @@ class BlogComment {
 				"anchor"    => $anchor,
 				"avatar"    => BlogAvatar::newFromUser( $this->mUser )->getLinkTag( 50, 50 ),
 				"hidden"	=> $hidden,
-				"timestamp" => $wgContLang->timeanddate( $this->mRevision->getTimestamp() )
+				"timestamp" => $wgContLang->timeanddate( $this->mFirstRevision->getTimestamp() )
 			);
 
 			$template = new EasyTemplate( dirname( __FILE__ ) . '/templates/' );
