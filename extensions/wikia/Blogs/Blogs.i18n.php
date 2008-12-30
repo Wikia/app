@@ -16,6 +16,8 @@ Blog posts can be aggregated by a blog listing page based on the blog post's tag
 	'create-blog-form-post-title' => 'Blog post title',
 	'create-blog-empty-title-error' => 'Title required',
 	'create-blog-empty-post-error' => 'Post body is empty',
+	'create-blog-empty-article' => "\n",
+	'create-blog-empty-article-log' => "Created article for blog listing",
 	'create-blog-invalid-title-error' => 'Invalid title',
 	'create-listing-confirm-info' => 'Copy and paste the following code:',
 	'create-blog-no-login' => 'Not logged in',

@@ -33,7 +33,7 @@ abstract class SpecialBlogPage extends SpecialPage {
 			$oSpecialPageTitle = Title::newFromText('CreateBlogListingPage', NS_SPECIAL);
 			$wgOut->redirect($oSpecialPageTitle->getFullUrl("article=" . urlencode($oTitle->getText())));
 		}
-		if($oTitle->getNamespace() == NS_BLOG_ARTICLE) {
+		if($oTitle->getNamespace() == NS_BLOG_ARTICLE && $oTitle->isSubpage() ) {
 			$oSpecialPageTitle = Title::newFromText('CreateBlogPage', NS_SPECIAL);
 			$wgOut->redirect($oSpecialPageTitle->getFullUrl("article=" . urlencode($oTitle->getText())));
 		}
