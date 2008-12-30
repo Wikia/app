@@ -935,7 +935,7 @@ function wfSpecialPictureGameHome(){
 			// if imgID is -1 then we need some random ids
 			if($imgID == -1){
 				$order = ( (time() % 2 == 0) ? "ASC" : "DESC" );
-				$sql = "SELECT * FROM picturegame_images WHERE picturegame_images.id NOT IN (SELECT picid FROM picturegame_votes WHERE picturegame_votes.username='" . addslashes($wgUser->getName()) . "') AND flag != 'FLAGGED' and img1<> '' and img2<> '' ORDER BY RAND() LIMIT 1;";
+				$sql = "SELECT * FROM picturegame_images WHERE picturegame_images.id NOT IN (SELECT picid FROM picturegame_votes WHERE picturegame_votes.username='" . addslashes($wgUser->getName()) . "') AND flag != 'FLAGGED' and img1<> '' and img2<> '' LIMIT 1;";
 
 				$res = $dbr->query($sql);
 				$row = $dbr->fetchObject( $res );
@@ -951,7 +951,7 @@ function wfSpecialPictureGameHome(){
 			if($imgID){
 				global $wgPictureGameID;
 				$wgPictureGameID = $imgID;
-				$sql = "SELECT * FROM picturegame_images WHERE picturegame_images.id <> {$imgID} and  picturegame_images.id NOT IN (SELECT picid FROM picturegame_votes WHERE picturegame_votes.username='" . addslashes($wgUser->getName()) . "') AND flag != 'FLAGGED' and img1<> '' and img2<> ''   ORDER BY RAND() LIMIT 1;";
+				$sql = "SELECT * FROM picturegame_images WHERE picturegame_images.id <> {$imgID} and  picturegame_images.id NOT IN (SELECT picid FROM picturegame_votes WHERE picturegame_votes.username='" . addslashes($wgUser->getName()) . "') AND flag != 'FLAGGED' and img1<> '' and img2<> '' LIMIT 1;";
 				$nextres = $dbr->query($sql);
 				$nextrow = $dbr->fetchObject( $nextres );
 				$next_id = $nextrow->id;
@@ -959,12 +959,12 @@ function wfSpecialPictureGameHome(){
 				if($next_id){
 					
 					$img_one = Image::newFromName( $nextrow->img1 );
-					$preload_thumb = $img_one->getThumbnail( 256  );
-					$preload_one_tag = $preload_thumb->toHtml();
+					if( is_object( $img_one ) ) $preload_thumb = $img_one->getThumbnail( 256  );
+					if( is_object( $preload_thumb ) ) $preload_one_tag = $preload_thumb->toHtml();
 					
 					$img_two = Image::newFromName( $nextrow->img2 );
-					$preload_thumb = $img_two->getThumbnail( 256  );
-					$preload_two_tag = $preload_thumb->toHtml();
+					if( is_object( $img_two ) ) $preload_thumb = $img_two->getThumbnail( 256  );
+					if( is_object( $preload_thumb ) ) $preload_two_tag = $preload_thumb->toHtml();
 					
 					$preload = $preload_one_tag . $preload_two_tag;
 				}
@@ -1040,16 +1040,20 @@ function wfSpecialPictureGameHome(){
 			
 			// I assume MediaWiki does some caching with these functions"
 			$img_one = Image::newFromName( $row->img1 );
-			$thumb_one_url = $img_one->createThumb(256);
-			$imageOneWidth = $img_one->getWidth();
+			if( is_object( $img_one ) ) { 
+				$thumb_one_url = $img_one->createThumb(256); 
+				$imageOneWidth = $img_one->getWidth(); 
+			} 
 			//$imgOne =  '<img width="' . ($imageOneWidth >= 256 ? 256 : $imageOneWidth) . '" alt="" src="' . $thumb_one_url . ' "/>';
 			//$imageOneWidth = ($imageOneWidth >= 256 ? 256 : $imageOneWidth);
 			//$imageOneWidth += 10;
 			$imgOne =  '<img style="width:100%;" alt="" src="' . $thumb_one_url . ' "/>';
 			
 			$img_two = Image::newFromName( $row->img2 );
-			$thumb_two_url = $img_two->createThumb(256);
-			$imageTwoWidth = $img_two->getWidth();
+			if( is_object( $img_two ) ) { 
+				$thumb_two_url = $img_two->createThumb(256); 
+				$imageTwoWidth = $img_two->getWidth(); 
+			} 
 			//$imgTwo =   '<img width="' . ($imageTwoWidth >= 256 ? 256 : $imageTwoWidth) . '" alt="" src="' . $thumb_two_url . ' "/>';
 			//$imageTwoWidth = ($imageTwoWidth >= 256 ? 256 : $imageTwoWidth);
 			//$imageTwoWidth += 10;
@@ -1084,11 +1088,11 @@ function wfSpecialPictureGameHome(){
 			}
 			
 			if($isPermalink || $isShowVotes){
-				$vote_one_thumb = $img_one->getThumbnail( 40  );
-				$vote_one_tag = $vote_one_thumb->toHtml();
+				if( is_object( $img_one ) ) $vote_one_thumb = $img_one->getThumbnail( 40  );
+				if( is_object( $vote_one_thumb ) ) $vote_one_tag = $vote_one_thumb->toHtml();
 
-				$vote_two_thumb = $img_two->getThumbnail( 40  );
-				$vote_two_tag = $vote_two_thumb->toHtml();
+				if( is_object( $img_two ) ) $vote_two_thumb = $img_two->getThumbnail( 40  );
+				if( is_object( $vote_two_thumb ) ) $vote_two_tag = $vote_two_thumb->toHtml();
 				
 				$totalVotes = $imgOneCount + $imgTwoCount;
 				
@@ -1452,7 +1456,7 @@ function wfSpecialPictureGameHome(){
 				
 				$threshold_reason = "";
 				foreach( $wgCreatePictureGameThresholds as $field => $threshold ){
-					if ( $stats_data[ $field ] < $threshold ){
+					if ( str_replace(",","",$stats_data[ $field ]) < $threshold ){ 
 						$can_create = false;
 						$threshold_reason .= (($threshold_reason)?", ":"") . "$threshold $field";
 					}
@@ -1475,7 +1479,7 @@ function wfSpecialPictureGameHome(){
 			//"
 
 			$dbr =& wfGetDB( DB_MASTER );
-			$sql = "SELECT COUNT(*) AS mycount FROM picturegame_images WHERE picturegame_images.id NOT IN (SELECT picid FROM picturegame_votes WHERE picturegame_votes.username='" . addslashes($wgUser->getName()) . "') AND flag != 'FLAGGED' and img1<>'' and img2<> '' ORDER BY RAND() LIMIT 1;";
+			$sql = "SELECT COUNT(*) AS mycount FROM picturegame_images WHERE picturegame_images.id NOT IN (SELECT picid FROM picturegame_votes WHERE picturegame_votes.username='" . addslashes($wgUser->getName()) . "') AND flag != 'FLAGGED' and img1<>'' and img2<> '' LIMIT 1;";
 			$res = $dbr->query($sql);
 			$row = $dbr->fetchObject( $res );
 
