@@ -71,8 +71,6 @@ class CreateBlogPage extends SpecialBlogPage {
 			$aPageProps['commenting'] = 1;
 		}
 
-//		$this->mPostArticle->doEdit($sPostBody, wfMsg('create-blog-updated') );
-
 		$editPage = new EditPage( $this->mPostArticle );
 		$editPage->textbox1 = $sPostBody;
 		$editpage->summary  = wfMsg('create-blog-updated');
@@ -84,6 +82,7 @@ class CreateBlogPage extends SpecialBlogPage {
 					BlogArticle::setProps( $this->mPostArticle->getId(), $aPageProps );
 				}
 				self::invalidateCacheConnected( $this->mPostArticle );
+				$this->createListingPage();
 				$wgOut->redirect($this->mPostArticle->getTitle()->getFullUrl());
 				break;
 
@@ -227,7 +226,7 @@ class CreateBlogPage extends SpecialBlogPage {
 	}
 
 	/**
-	 * create listing article
+	 * createListingPage -- create listing article if not exists
 	 *
 	 * @access private
 	 * @author Krzysztof Krzyżaniak <eloy@wikia-inc.com>
@@ -235,11 +234,18 @@ class CreateBlogPage extends SpecialBlogPage {
 	private function createListingPage() {
 		global $wgUser;
 
-		/**
-		 * it should be done only once
-		 */
-		$listing = Title::newFromText( $wgUser->getName(), NS_BLOG_ARTICLE );
-		$article = new Article( $listing, 0 );
-		// $oArticle->doEdit($sPostBody, "Blog listing created." );
+		$oTitle = Title::newFromText( $wgUser->getName(), NS_BLOG_ARTICLE );
+		$oArticle = new Article( $oTitle, 0 );
+		if( !$oArticle->exists( ) ) {
+			/**
+			 * add empty article for newlycreated blog
+			 */
+			$oArticle->doEdit(
+				wfMsg("create-blog-empty-article"),     # body
+				wfMsg("create-blog-empty-article-log"), # summary
+				EDIT_NEW | EDIT_MINOR | EDIT_FORCE_BOT  # flags
+			);
+		}
+
 	}
 }
