@@ -69,7 +69,7 @@ class BlogAvatar {
     	wfProfileIn( __METHOD__ );
 		$this->mUser = $User;
         wfProfileOut( __METHOD__ );
-		
+
 	}
 
 	/**
@@ -195,7 +195,7 @@ class BlogAvatar {
 				/**
 				 * default avatar, path from messaging.wikia.com
 				 */
-				$uploadPath = WikiFactory::getVarValueByName( "wgUploadPath", $this->mMsgCityId );
+				$uploadPath = rtrim( WikiFactory::getVarValueByName( "wgUploadPath", $this->mMsgCityId ), "/" ) . "/";
 				$hash = FileRepo::getHashPathForLevel( $url, 2 );
 				$url = $uploadPath . $hash . $url;
 			}
