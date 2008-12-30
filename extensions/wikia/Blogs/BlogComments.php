@@ -163,7 +163,7 @@ class BlogComment {
 	 * @return String -- generated HTML text
 	 */
 	public function render() {
-		global $wgContLang, $wgUser, $wgCityId, $wgDevelEnvironment, $wgParser;
+		global $wgContLang, $wgUser, $wgParser;
 
 		wfProfileIn( __METHOD__ );
 
