@@ -231,6 +231,7 @@ class WikiaMiniUpload {
 		$name = $wgRequest->getVal('name');
 		$mwname = $wgRequest->getVal('mwname');
 		$extraId = $wgRequest->getVal('extraId');
+		$newFile =  true;
 
 		if($name !== NULL) {
 			if($name == '') {
@@ -289,6 +290,7 @@ class WikiaMiniUpload {
 
 						$file_name->upload($file_mwname->getPath(), '', $caption);
 						$file_mwname->delete('');
+						$newFile = false;
 					} else if($type == 'existing') {
 						header('X-screen-type: existing');
 						$file = wfFindFile(Title::newFromText($name, 6));
@@ -340,7 +342,10 @@ class WikiaMiniUpload {
 					$file->upload($temp_file->getPath(), '', $caption);
 					$temp_file->delete('');
 				}
-				$wgUser->addWatch($title);
+
+				if( $wgUser->getOption( 'watchdefault' ) || ( $newFile && $wgUser->getOption( 'watchcreations' ) ) ) {
+					$wgUser->addWatch($title);
+				}
 				$db =& wfGetDB(DB_MASTER);
 				$db->commit();
 			}
