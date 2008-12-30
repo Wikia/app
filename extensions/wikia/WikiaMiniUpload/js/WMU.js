@@ -622,6 +622,7 @@ function MWU_imageWidthChanged(changes) {
 	if( !$( 'ImageUploadWidthCheckbox' ).checked ) {
 		$('ImageUploadManualWidth').value = '';
 		$('ImageUploadSlider').style.visibility = 'hidden';
+		$('ImageUploadSliderThumb').style.visibility = 'hidden';
 		$('ImageUploadInputWidth').style.visibility = 'hidden';
 		image.width = WMU_orgThumbSize[0];
 		image.height = WMU_orgThumbSize[1];
@@ -629,6 +630,7 @@ function MWU_imageWidthChanged(changes) {
 	} else {
 		$('ImageUploadManualWidth').value = WMU_slider.getRealValue();
 		$('ImageUploadSlider').style.visibility = 'visible';
+		$('ImageUploadSliderThumb').style.visibility = 'visible';
 		$('ImageUploadInputWidth').style.visibility = 'visible';
 		image.width = WMU_thumbSize[0];
 		image.height = WMU_thumbSize[1];
