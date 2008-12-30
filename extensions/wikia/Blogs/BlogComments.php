@@ -163,7 +163,7 @@ class BlogComment {
 	 * @return String -- generated HTML text
 	 */
 	public function render() {
-		global $wgContLang, $wgUser, $wgCityId, $wgDevelEnvironment;
+		global $wgContLang, $wgUser, $wgCityId, $wgDevelEnvironment, $wgParser;
 
 		wfProfileIn( __METHOD__ );
 
@@ -171,7 +171,6 @@ class BlogComment {
 		if( !$this->isDeleted() ) {
 			$canDelete = $wgUser->isAllowed( "delete" );
 
-			$Parser  = new Parser( );
 			$Options = new ParserOptions( );
 			$Options->initialiseFromUser( $this->mUser );
 
@@ -180,7 +179,7 @@ class BlogComment {
 			 */
 			$this->getProps();
 
-			$text     = $Parser->parse( $this->mLastRevision->getText(), $this->mTitle, $Options )->getText();
+			$text     = $wgParser->parse( $this->mLastRevision->getText(), $this->mTitle, $Options, true, false )->getText();
 			$anchor   = explode( "/", $this->mTitle->getDBkey(), 3 );
 			$sig      = ( $this->mUser->isAnon() )
 				? wfMsg("blog-comments-anonymous")
