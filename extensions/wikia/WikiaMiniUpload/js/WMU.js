@@ -506,9 +506,10 @@ function WMU_displayDetails(responseText) {
 	if ($( 'WMU_error_box' )) {
 		alert( $( 'WMU_error_box' ).innerHTML );
 	}
-	$( 'ImageUploadSlider' ).style.visibility = 'hidden';
-	$( 'ImageUploadInputWidth' ).style.visibility = 'hidden';
-
+	if ( $( 'ImageUploadSlider' ) ) {
+		$( 'ImageUploadSlider' ).style.visibility = 'hidden';
+		$( 'ImageUploadInputWidth' ).style.visibility = 'hidden';
+	}
 	if ( $( 'ImageUploadLicenseText' ) ) {
 		var cookieMsg = document.cookie.indexOf("wmulicensemesg=");
 		if (cookieMsg > -1 && document.cookie.charAt(cookieMsg + 15) == 0) {
