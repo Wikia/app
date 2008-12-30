@@ -16,6 +16,7 @@ var WMU_slider = null;
 var WMU_thumbSize = null;
 var WMU_orgThumbSize = null;
 var WMU_width = null;
+var WMU_height = null;
 var WMU_widthChanges = 1;
 var WMU_refid = null;
 var WMU_wysiwygStart = 1;
@@ -133,14 +134,25 @@ function WMU_manualWidthInput( elem ) {
 		image.width = val;
 		WMU_thumbSize = [image.width, image.height];
 		$( 'ImageUploadManualWidth' ).value = val;
-
+		WMU_readjustSlider( val );
 		WMU_shownMax = false;			
 	}
 }
 
 function WMU_readjustSlider( value ) {
-	value = Math.max(2, Math.round( ( value * 200 ) / WMU_width ) );	
-	WMU_slider.setValue(value, true);
+		if ( 400 < value ) { // too big, hide slider
+			if ( 'hidden' != $( 'ImageUploadSliderThumb' ).style.visibility ) {
+				$( 'ImageUploadSliderThumb' ).style.visibility = 'hidden';				
+				WMU_slider.setValue( 200, true, true, true );
+			}
+		} else {
+			if ( 'hidden' == $( 'ImageUploadSliderThumb' ).style.visibility ) {
+				$( 'ImageUploadSliderThumb' ).style.visibility = 'visible';				
+			}
+			var fixed_width = Math.min( 400, WMU_width );
+			value = Math.max(2, Math.round( ( value * 200 ) / fixed_width ) );	
+			WMU_slider.setValue( value, true, true, true );
+		}		
 }
 
 function WMU_show(e) {
@@ -455,7 +467,8 @@ function WMU_displayDetails(responseText) {
 		WMU_orgThumbSize = null;
 		var image = $('ImageUploadThumb').firstChild;
 		if ( null == WMU_width ) {
-			WMU_width = image.width;
+			WMU_width = $( 'ImageRealWidth' ).value;
+			WMU_height = $( 'ImageRealHeight' ).value;
 		}
 		var thumbSize = [image.width, image.height];
 		WMU_orgThumbSize = null;
@@ -465,6 +478,9 @@ function WMU_displayDetails(responseText) {
 			return Math.max(2, Math.round(this.getValue() * (thumbSize[0] / 200)));
 		}
 		WMU_slider.subscribe("change", function(offsetFromStart) {
+			if ( 'hidden' == $( 'ImageUploadSliderThumb' ).style.visibility ) {
+				$( 'ImageUploadSliderThumb' ).style.visibility = 'visible';				
+			}			
 			if (WMU_slider.initialRound) {
 				$('ImageUploadManualWidth').value = '';
 				WMU_slider.initialRound = false;	
@@ -476,7 +492,7 @@ function WMU_displayDetails(responseText) {
 			image.height = image.width / (thumbSize[0] / thumbSize[1]);
 			if(WMU_orgThumbSize == null) {
 				WMU_orgThumbSize = [image.width, image.height];
-				WMU_ratio = image.width / image.height;
+				WMU_ratio = WMU_width / WMU_height;
 			}
 			WMU_thumbSize = [image.width, image.height];
 		});
