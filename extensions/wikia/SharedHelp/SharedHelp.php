@@ -13,10 +13,10 @@ if(!defined('MEDIAWIKI')) {
 }
 
 $wgExtensionCredits['other'][] = array(
-        'name' => 'SharedHelp',
+	'name' => 'SharedHelp',
 	'version' => 0.20,
-        'description' => 'Takes pages from [[w:c:Help|Help Wikia]] and inserts them into Help namespace on this wiki',
-        'author' => array('Maciej Brencz', 'Inez Korczyński', 'Bartek Łapiński', "[http://www.wikia.com/wiki/User:TOR Lucas 'TOR' Garczewski]")
+	'description' => 'Takes pages from [[w:c:Help|Help Wikia]] and inserts them into Help namespace on this wiki',
+	'author' => array('Maciej Brencz', 'Inez Korczyński', 'Bartek Łapiński', "[http://www.wikia.com/wiki/User:TOR Lucas 'TOR' Garczewski]", '[http://www.wikia.com/wiki/User:Marooned Maciej Błaszkowski (Marooned)]')
 );
 
 $wgHooks['OutputPageBeforeHTML'][] = 'SharedHelpHook';
@@ -25,16 +25,15 @@ $wgHooks['SearchBeforeResults'][] = 'SharedHelpSearchHook';
 $wgHooks['BrokenLink'][] = 'SharedHelpBrokenLink';
 
 class SharedHttp extends Http {
+	static function get( $url, $timeout = 'default' ) {
+		return self::request( "GET", $url, $timeout );
+	}
 
-        static function get( $url, $timeout = 'default' ) {
-                return self::request( "GET", $url, $timeout );
-        }
+	static function post( $url, $timeout = 'default' ) {
+		return self::request( "POST", $url, $timeout );
+	}
 
-        static function post( $url, $timeout = 'default' ) {
-                return self::request( "POST", $url, $timeout );
-        }
-
-        static function request( $method, $url, $timeout = 'default' ) {
+	static function request( $method, $url, $timeout = 'default' ) {
 		global $wgHTTPTimeout, $wgHTTPProxy, $wgVersion, $wgTitle;
 
 		wfDebug( __METHOD__ . ": $method $url\n" );
@@ -75,23 +74,22 @@ class SharedHttp extends Http {
 			$text = ob_get_contents();
 			ob_end_clean();
 
-                        # Don't return the text of error messages, return false on error
-                        if ( ( curl_getinfo( $c, CURLINFO_HTTP_CODE ) != 200 ) && ( curl_getinfo( $c, CURLINFO_HTTP_CODE ) != 301 ) ) {
-                        	$text = false;
+			# Don't return the text of error messages, return false on error
+			if ( ( curl_getinfo( $c, CURLINFO_HTTP_CODE ) != 200 ) && ( curl_getinfo( $c, CURLINFO_HTTP_CODE ) != 301 ) ) {
+				$text = false;
 			}
-                        # Don't return truncated output
-                        if ( curl_errno( $c ) != CURLE_OK ) {
-                                $text = false;
-                        }
-                } else {
-                }
-                return array( $text, $c );
+			# Don't return truncated output
+			if ( curl_errno( $c ) != CURLE_OK ) {
+				$text = false;
+			}
+		} else {
+		}
+		return array( $text, $c );
 	}
-
 }
 
 function SharedHelpHook(&$out, &$text) {
-	global $wgTitle, $wgMemc, $wgSharedDB, $wgDBname, $wgCityId, $wgHelpWikiId, $wgLang, $wgArticlePath;
+	global $wgTitle, $wgMemc, $wgSharedDB, $wgDBname, $wgCityId, $wgHelpWikiId, $wgContLang, $wgArticlePath;
 
 	if($wgCityId == $wgHelpWikiId) { # Do not process for the help wiki
 		return true;
@@ -102,7 +100,6 @@ function SharedHelpHook(&$out, &$text) {
 	}
 
 	if($wgTitle->getNamespace() == 12) { # Process only for pages in namespace Help (12)
-
 		# Initialize shared and local variables
 		$sharedArticleKey = $wgSharedDB . ':sharedArticles:' . $wgTitle->getDBkey();
 		$sharedArticle = $wgMemc->get($sharedArticleKey);
@@ -113,14 +110,14 @@ function SharedHelpHook(&$out, &$text) {
 		$localArticlePathClean = str_replace('$1', '', $wgArticlePath);
 
 		# Try to get content from memcache
-	if ( !empty($sharedArticle['timestamp']) ) {
-	 		if( (wfTimestamp() - (int) ($sharedArticle['timestamp'])) < 600) {
-	 			if(isset($sharedArticle['cachekey'])) {
+		if ( !empty($sharedArticle['timestamp']) ) {
+			if( (wfTimestamp() - (int) ($sharedArticle['timestamp'])) < 600) {
+				if(isset($sharedArticle['cachekey'])) {
 					wfDebug("SharedHelp: trying parser cache {$sharedArticle['cachekey']}\n");
 					$key1 = str_replace('-1!', '-0!', $sharedArticle['cachekey']);
-	 				$key2 = str_replace('-0!', '-1!', $sharedArticle['cachekey']);
-	 				$parser = $wgMemc->get($key1);
-	 				if(!empty($parser) && is_object($parser)) {
+					$key2 = str_replace('-0!', '-1!', $sharedArticle['cachekey']);
+					$parser = $wgMemc->get($key1);
+					if(!empty($parser) && is_object($parser)) {
 						$content = $parser->mText;
 					} else {
 						$parser = $wgMemc->get($key2);
@@ -129,7 +126,7 @@ function SharedHelpHook(&$out, &$text) {
 						}
 					}
 				} else if($sharedArticle['exists'] == 0) {
-	 				return true;
+					return true;
 				}
 			}
 		}
@@ -146,14 +143,14 @@ function SharedHelpHook(&$out, &$text) {
 				}
 			}
 			global $wgServer, $wgArticlePath, $wgRequest, $wgTitle, $wgUser;
-			$helpNs = $wgLang->getNsText(NS_HELP);
+			$helpNs = $wgContLang->getNsText(NS_HELP);
 			$sk = $wgUser->getSkin();
 
 			if (!empty ($_SESSION ['SH_redirected'])) {
 				$from_link = Title::newfromText( $helpNs . ":" . $_SESSION ['SH_redirected'] );				
 				$redir = $sk->makeKnownLinkObj( $from_link, '', 'redirect=no', '', '', 'rel="nofollow"' );
-                                $s = wfMsg( 'redirectedfrom', $redir );
-                                $out->setSubtitle( $s );
+				$s = wfMsg( 'redirectedfrom', $redir );
+				$out->setSubtitle( $s );
 				$_SESSION ['SH_redirected'] = '';
 			}
 
@@ -163,6 +160,7 @@ function SharedHelpHook(&$out, &$text) {
 				if ( 'no' != $wgRequest->getVal( 'redirect' ) ) {
 					$_SESSION ['SH_redirected'] = $wgTitle->getText();
 					$out->redirect( $link );
+					$wasRedirected = true;
 				} else {
 					$content = "\n\n" . wfMsg( 'shared_help_was_redirect', "<a href=" . $link . ">$destinationPage</a>" );
 				} 
@@ -184,23 +182,26 @@ function SharedHelpHook(&$out, &$text) {
 				$wgMemc->set($sharedArticleKey, $sharedArticle);
 				wfDebug("SharedHelp: using parser cache {$sharedArticle['cachekey']}\n");
 			}
-                        curl_close( $c );
+			curl_close( $c );
 		}
 
-		# get rid of editsection links
-		$content = preg_replace("|<span class=\"editsection\">\[<a href=\"(.*?)\" title=\"(.*?)\">(.*?)<\/a>\]<\/span>|", "", $content);
+		//process article if not redirected before
+		if (empty($wasRedirected)) {
+			# get rid of editsection links
+			$content = preg_replace("|<span class=\"editsection\">\[<a href=\".*?\" title=\".*?\">.*?<\/a>\]<\/span>|", "", $content);
 
-		# replace help wiki links with local links, except for Category links, which will go to the help wiki
-		$categoryNs = $wgLang->getNsText(NS_CATEGORY);
-		$content = preg_replace("|{$sharedServer}{$sharedArticlePathClean}(?!$categoryNs)(?!Advice)|", $localArticlePathClean, $content);
+			# replace help wiki links with local links, except for Category links, which will go to the help wiki
+			$categoryNs = $wgContLang->getNsText(NS_CATEGORY);
+			$content = preg_replace("|{$sharedServer}{$sharedArticlePathClean}(?!$categoryNs)(?!Advice)|", $localArticlePathClean, $content);
 
-		// "this text is stored..."
-		$info = '<div class="sharedHelpInfo" style="text-align: right; font-size: smaller;padding: 5px">' . wfMsgExt('shared_help_info', 'parseinline', $wgTitle->getDBkey()) . '</div>';
+			// "this text is stored..."
+			$info = '<div class="sharedHelpInfo" style="text-align: right; font-size: smaller;padding: 5px">' . wfMsgExt('shared_help_info', 'parseinline', $wgTitle->getDBkey()) . '</div>';
 
-		if(strpos($text, '"noarticletext"') > 0) {
-			$text = '<div style="border: solid 1px; padding: 10px; margin: 5px" class="sharedHelp">' . $info . $content . '<div style="clear:both"></div></div>';
-		} else {
-			$text = '<div style="border: solid 1px; padding: 10px; margin: 5px" class="sharedHelp">' . $info . $content . '<div style="clear:both"></div></div><br/>' . $text;
+			if(strpos($text, '"noarticletext"') > 0) {
+				$text = '<div style="border: solid 1px; padding: 10px; margin: 5px" class="sharedHelp">' . $info . $content . '<div style="clear:both"></div></div>';
+			} else {
+				$text = '<div style="border: solid 1px; padding: 10px; margin: 5px" class="sharedHelp">' . $info . $content . '<div style="clear:both"></div></div><br/>' . $text;
+			}
 		}
 	}
 	return true;
@@ -241,7 +242,6 @@ function SharedHelpSearchHook(&$searchPage, &$term) {
 	return true;
 }
 
-
 function SharedHelpBrokenLink( $linker, $nt, $query, $u, $style, $prefix, $text, $inside, $trail  ) {
 	if ($nt->getNamespace() == 12) {
 		//not red, blue
@@ -252,4 +252,3 @@ function SharedHelpBrokenLink( $linker, $nt, $query, $u, $style, $prefix, $text,
 	}
 	return true;
 }
-
