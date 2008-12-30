@@ -6,7 +6,7 @@
 $wgHooks['AbortAutoblock'][] = 'wfWikiaAbortAutoblock';
 
 function wfWikiaAbortAutoblock( $autoblockip, $block ) {
-	if ( 0 === strpos( $autoblockip, '10.' ) ) {
+	if ( !IP::isPublic( $autoblockip ) ) {
 		wfDebug( "IP $autoblockip was prevented from being autoblocked by 10.* autoblock" );
 		return false;                 
 	}
