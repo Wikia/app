@@ -142,7 +142,7 @@ class LookupContribsCore {
 			$dbext =& wfGetDBExt();
 			if (!is_null($dbext)) {
 				$query = "select rev_wikia_id, max(rev_timestamp) as max_activity, unix_timestamp(rev_timestamp) as max_timestamp ";
-				$query .= "from `dataware`.`blobs` where rev_user = ".intval($iUserId)." and rev_wikia_id > 0 ";
+				$query .= "from `dataware`.`blobs` where rev_user = ".intval($iUserId)." and rev_wikia_id > 0 and rev_user > 0 ";
 				//$query .= "and rev_status = 'active' and blob_text is not null ";
 				$query .= "group by rev_wikia_id";
 				$res = $dbext->query ($query);
