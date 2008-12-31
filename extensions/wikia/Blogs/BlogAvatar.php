@@ -146,7 +146,7 @@ class BlogAvatar {
 		$images = getMessageAsArray( "blog-avatar-defaults" );
 		foreach( $images as $image ) {
 			$hash = FileRepo::getHashPathForLevel( $image, 2 );
-			$url = $uploadPath . $hash . $image;
+			$url = $uploadPath . '/' . $hash . $image;
 			$this->mDefaultAvatars[] = $url;
 		}
     	wfProfileOut( __METHOD__ );
