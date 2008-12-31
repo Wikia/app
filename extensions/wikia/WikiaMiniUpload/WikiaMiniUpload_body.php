@@ -401,47 +401,7 @@ class WikiaMiniUpload {
 }
 
 class FakeLocalFile extends LocalFile {
-	// change on production!
-	var $tempFolder = "/images/metalgear";
-/*
-	function upload( $srcPath, $comment, $pageText, $flags = 0, $props = false, $timestamp = false ) {
-		global $wgServer;
-		$oldrepo = $this->repo;
-		$this->repo->directory = $this->tempFolder;
-		$this->repo->url = $wgServer . $this->tempFolder;
-		$status = parent::upload(  $srcPath, $comment, $pageText, $flags, $props, $timestamp );
-		$this->repo = $oldrepo;
-		
-		return $status;
-	}
 
-	function delete( $reason, $suppress = false ) {
-		$oldrepo = $this->repo;
-		$this->repo->directory = $this->tempFolder;
-		$this->repo->url = $wgServer . $this->tempFolder;
-		$status = parent::delete( $reason, $suppress );
-		$this->repo = $oldrepo;
-
-		return $status;
-	}
-
-	function publish( $srcPath, $flags = 0 ) {
-		$this->lock();
-		$archiveName = $this->getName();
-		$dstRel = $archiveName;
-		$archiveRel =  $archiveName;
-		$flags = $flags & File::DELETE_SOURCE ? LocalRepo::DELETE_SOURCE : 0;
-		$status = $this->repo->publish( $srcPath, $dstRel, $archiveRel, $flags );
-		if ( $status->value == 'new' ) {
-			$status->value = '';
-		} else {
-			$status->value = $archiveName;
-		}
-		$this->unlock();
-
-		return $status;
-	}
-*/
 	function recordUpload2( $oldver, $comment, $pageText, $props = false, $timestamp = false ) {
 		global $wgUser;
 		$dbw = $this->repo->getMasterDB();
