@@ -91,7 +91,7 @@ class BlogComment {
 	private function load() {
 		if( $this->mTitle ) {
 			$this->mLastRevision = Revision::newFromTitle( $this->mTitle );
-			$this->mFirstRevision = Revision::newFromId( $this->getFirstRevID());
+			$this->mFirstRevision = Revision::newFromId( $this->getFirstRevID( GAID_FOR_UPDATE ));
 
 			if( $this->mFirstRevision ) {
 				$this->mUser = User::newFromId( $this->mFirstRevision->getUser() );
