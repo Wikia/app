@@ -22,6 +22,7 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 # web. Change it if required ($wgScriptPath is the path to the base directory
 # of your wiki). No final slash.
 ##
+if (!isset($smwgScriptPath))
 $smwgScriptPath = $wgScriptPath . '/extensions/SemanticMediaWiki';
 ##
 
@@ -29,6 +30,7 @@ $smwgScriptPath = $wgScriptPath . '/extensions/SemanticMediaWiki';
 # This is the path to your installation of Semantic MediaWiki as seen on your
 # local filesystem. Used against some PHP file path issues.
 ##
+if (!isset($smwgIP))
 $smwgIP = $IP . '/extensions/SemanticMediaWiki';
 ##
 
