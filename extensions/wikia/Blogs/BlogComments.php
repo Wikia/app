@@ -203,12 +203,12 @@ class BlogComment {
 		$text = false;
 		if( $this->load() ) {
 			$canDelete = $wgUser->isAllowed( "delete" );
-#			if ( ! $wgParser ) {
+			if ( ! $wgParser ) {
 				$Parser = new Parser();
-#			}
-#			else {
-#				$Parser = $wgParser;
-#			}
+			}
+			else {
+				$Parser = $wgParser;
+			}
 			$Options = new ParserOptions( );
 			$Options->initialiseFromUser( $wgUser );
 
