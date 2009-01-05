@@ -146,8 +146,6 @@ class objRend
 
 	// set generic error class
 	$arr['class'] = $strErrClass;
-	global $wgOut;
-	$wgOut->addHTML("");
       }
 			
       // post-processing: black-list control, actualizing the file template
@@ -165,9 +163,8 @@ class objRend
       // derive the outfile hash
       $strHash = md5($strTex);
 
-      global $wgOut;
       // FIXME: graceless exception on inaccessibility
-      $wgOut->addHTML("\n<!-- wikitex attempt on $strDir $strHash with $strTex-->\n");
+      wfDebug( __METHOD__ . ": wikitex attempt on $strDir $strHash with $strTex\n" );
 
       $outDirSuffix = substr($strHash, 0, 1) . "/" . substr($strHash, 0, 2) . "/" . substr($strHash, 0, 3) . "/";
       $outDir = $strDir . $outDirSuffix;
@@ -181,10 +178,10 @@ class objRend
       if($obj = fopen($outDir . $strHash, 'w')) {
 	fwrite($obj, $strTex);
 	fclose($obj);
-        $wgOut->addHTML("\n<!-- wikitex file written -->\n");
+	wfDebug( __METHOD__ . ": wikitex file written\n" );
       }
 
-      $wgOut->addHTML("\n<!-- wikitex attempt as \"".sprintf($strBash, $strHash, $arr['class'], $strURI, $outDirSuffix, $strDir)."\"-->\n");
+	wfDebug( __METHOD__ . ": wikitex attempt as \"".sprintf($strBash, $strHash, $arr['class'], $strURI, $outDirSuffix, $strDir)."\n" );
 
       // If the script is unavailable, roll our own error.
       if (!is_executable(substr($strBash, 0, strpos($strBash, ' ')))) {
