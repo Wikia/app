@@ -237,6 +237,16 @@ class BlogTemplateClass {
 	private static $pageOffsetName 			= "page";
 	private static $oTitle 					= null;
 
+	private static $blogTAGS = array(
+		"/\[\[Image\:(.*)\]\]/siU",
+		"/\{\{#dpl(.*)\}\}/siU",
+		"/\{\{#dplchapter(.*)\}\}/siU",
+		"/<(dpl|dynamicpagelist(.*))>(.*)<\/(dpl|dynamicpagelist)>/siU",
+		"/<(youtube|gvideo|aovideo|aoaudio|wegame|tangler|gtrailer|nicovideo|ggtube(.*))>(.*)<\/(youtube|gvideo|aovideo|aoaudio|wegame|tangler|gtrailer|nicovideo|ggtube)>/siU",
+		"/<(inputbox|widget|googlemap|imagemap|poll|rss|math|googlespreadsheet(.*))>(.*)<\/(inputbox|widget|googlemap|imagemap|poll|rss|math|googlespreadsheet)>/siU",
+	);
+
+
 	public static function setup() {
 		global $wgParser, $wgMessageCache;
 		global $wgOut, $wgExtensionsPath, $wgStyleVersion;
@@ -693,6 +703,13 @@ class BlogTemplateClass {
 				$sBlogText = strip_tags($sBlogText, self::$skipStrinBeforeParse);
 				/* skip invalid Wiki-text  */
 				$sBlogText = preg_replace('/\{\{\/(.*?)\}\}/siU', '', $sBlogText);
+				$sBlogText = preg_replace('/\{\{(.*?)\}\}/siU', '', $sBlogText);
+				if (!empty(self::$blogTAGS)) {
+					/* skip some wiki-text and special tags  */
+					foreach (self::$blogTAGS as $id => $tag) {
+						$sBlogText = preg_replace($tag, '', $sBlogText); 
+					}
+				}
 				/* parse truncated text */
 				$parserOutput = $localParser->parse($sBlogText, Title::newFromId($iPage), ParserOptions::newFromUser($wgUser));
 				/* replace unused HTML tags */
