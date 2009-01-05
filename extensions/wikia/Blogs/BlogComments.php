@@ -102,8 +102,8 @@ class BlogComment {
 			 * then if no answer we check master
 			 */
 			$firstRev = $this->getFirstRevID();
-			if( !$firstRev ) {
-				 $firstRev = $this->getFirstRevID( GAID_FOR_UPDATE );
+			if( !$this->mFirstRevId ) {
+				 $this->mFirstRevId = $this->getFirstRevID( GAID_FOR_UPDATE );
 			}
 			if( !$this->mLastRevId ) {
 				$this->mLastRevId = $this->mTitle->getLatestRevID();
@@ -114,25 +114,25 @@ class BlogComment {
 			if( !$this->mLastRevId ) {
 				$this->mLastRevId = $this->mTitle->getLatestRevID( GAID_FOR_UPDATE );
 			}
-			if( $this->mLastRevId != $firstRev ) {
-				if( $this->mLastRevId && $firstRev ) {
+			if( $this->mLastRevId != $this->mFirstRevId ) {
+				if( $this->mLastRevId && $this->mFirstRevId ) {
 					$this->mLastRevision = Revision::newFromId( $this->mLastRevId );
-					$this->mFirstRevision = Revision::newFromId( $firstRev );
-					Wikia::log( __METHOD__, "ne", "{$this->mLastRevId} ne {$firstRev}" );
+					$this->mFirstRevision = Revision::newFromId( $this->mFirstRevId );
+					Wikia::log( __METHOD__, "ne", "{$this->mLastRevId} ne {$this->mFirstRevId}" );
 				}
 				else {
-					$this->mFirstRevision = Revision::newFromId( $firstRev );
+					$this->mFirstRevision = Revision::newFromId( $this->mFirstRevId );
 					$this->mLastRevision = $this->mFirstRevision;
-					$this->mLastRevId = $firstRev;
-					Wikia::log( __METHOD__, "ne", "getting {$firstRev} as lastRev" );
+					$this->mLastRevId = $this->mFirstRevId;
+					Wikia::log( __METHOD__, "ne", "getting {$this->mFirstRevId} as lastRev" );
 				}
 			}
 			else {
 				Wikia::log( __METHOD__, "eq" );
-				if( $firstRev ) {
-					$this->mFirstRevision = Revision::newFromId( $firstRev );
+				if( $this->mFirstRevId ) {
+					$this->mFirstRevision = Revision::newFromId( $this->mFirstRevId );
 					$this->mLastRevision = $this->mFirstRevision;
-					Wikia::log( __METHOD__, "eq", "{$this->mLastRevId} eq {$firstRev}" );
+					Wikia::log( __METHOD__, "eq", "{$this->mLastRevId} eq {$this->mFirstRevId}" );
 				}
 				else {
 					$result = false;
