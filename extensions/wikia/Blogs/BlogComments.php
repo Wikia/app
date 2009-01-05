@@ -139,13 +139,17 @@ class BlogComment {
 				}
 			}
 
-			$this->getProps();
-			$this->mUser = User::newFromId( $this->mFirstRevision->getUser() );
-			/**
-			 * set blog owner
-			 */
-			$owner = BlogArticle::getOwner( $this->mTitle );
-			$this->mOwner = User::newFromName( $owner );
+			if( $this->mFirstRevision ) {
+				$this->mUser = User::newFromId( $this->mFirstRevision->getUser() );
+				$this->getProps();
+				$owner = BlogArticle::getOwner( $this->mTitle );
+				$this->mOwner = User::newFromName( $owner );
+			}
+			else {
+				$result = false;
+			}
+
+
 		}
 		else {
 			$result = false;
