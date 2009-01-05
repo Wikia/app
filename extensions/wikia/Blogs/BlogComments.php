@@ -21,6 +21,8 @@ class BlogComment {
 	public
 		$mProps,
 		$mTitle,
+		$mLastRevId,
+		$mFirstRevId,
 		$mLastRevision,  ### for displaying text
 		$mFirstRevision, ### for author & time
 		$mUser,	         ### comment creator
@@ -103,30 +105,34 @@ class BlogComment {
 			if( !$firstRev ) {
 				 $firstRev = $this->getFirstRevID( GAID_FOR_UPDATE );
 			}
-			$lastRev = $this->mTitle->getLatestRevID();
-			if( !$lastRev ) {
-				$lastRev = $this->mTitle->getLatestRevID( GAID_FOR_UPDATE );
+			if( !$this->mLastRevId ) {
+				$this->mLastRevId = $this->mTitle->getLatestRevID();
 			}
-			if( $lastRev != $firstRev ) {
-				if( $lastRev && $firstRev ) {
-					$this->mLastRevision = Revision::newFromId( $lastRev );
+			/**
+			 * still not defined?
+			 */
+			if( !$this->mLastRevId ) {
+				$this->mLastRevId = $this->mTitle->getLatestRevID( GAID_FOR_UPDATE );
+			}
+			if( $this->mLastRevId != $firstRev ) {
+				if( $this->mLastRevId && $firstRev ) {
+					$this->mLastRevision = Revision::newFromId( $this->mLastRevId );
 					$this->mFirstRevision = Revision::newFromId( $firstRev );
-					Wikia::log( __METHOD__, "ne", "{$lastRev} ne {$firstRev}" );
+					Wikia::log( __METHOD__, "ne", "{$this->mLastRevId} ne {$firstRev}" );
 				}
 				else {
 					$this->mFirstRevision = Revision::newFromId( $firstRev );
 					$this->mLastRevision = $this->mFirstRevision;
+					$this->mLastRevId = $firstRev;
 					Wikia::log( __METHOD__, "ne", "getting {$firstRev} as lastRev" );
 				}
-
 			}
 			else {
 				Wikia::log( __METHOD__, "eq" );
 				if( $firstRev ) {
 					$this->mFirstRevision = Revision::newFromId( $firstRev );
 					$this->mLastRevision = $this->mFirstRevision;
-					$this->mUser = User::newFromId( $this->mFirstRevision->getUser() );
-					Wikia::log( __METHOD__, "eq", "{$lastRev} eq {$firstRev}" );
+					Wikia::log( __METHOD__, "eq", "{$this->mLastRevId} eq {$firstRev}" );
 				}
 				else {
 					$result = false;
@@ -134,6 +140,7 @@ class BlogComment {
 			}
 
 			$this->getProps();
+			$this->mUser = User::newFromId( $this->mFirstRevision->getUser() );
 			/**
 			 * set blog owner
 			 */
@@ -210,9 +217,7 @@ class BlogComment {
 			 */
 			$this->getProps();
 
-#			$text     = $Parser->parse( $this->mLastRevision->getText(), $this->mTitle, $Options, true, false )->getText();
-			$text     = $Parser->parse( $this->mLastRevision->getText(), $this->mTitle, $Options, true, true )->getText();
-			Wikia::log( __METHOD__, "parse", $text );
+			$text     = $Parser->parse( $this->mLastRevision->getText(), $this->mTitle, $Options, true, false )->getText();
 			$anchor   = explode( "/", $this->mTitle->getDBkey(), 3 );
 			$sig      = ( $this->mUser->isAnon() )
 				? wfMsg("blog-comments-anonymous")
