@@ -3,7 +3,7 @@ $wgHooks['CustomArticleFooter'][] = 'wfCustomArticleFooter';
 
 function wfCustomArticleFooter(  $skin , &$tpl, &$custom_article_footer ) {
 	
-	global $IP, $wgUser, $wgTitle, $wgOut,$wgUploadPath, $wgMemc, $wgSitename;
+	global $IP, $wgUser, $wgTitle, $wgOut,$wgUploadPath, $wgMemc, $wgSitename, $wgProblemReportsEnable;
 	
 	$page_title_id = $wgTitle->getArticleID();
 	
@@ -48,11 +48,17 @@ function wfCustomArticleFooter(  $skin , &$tpl, &$custom_article_footer ) {
 						<li>
 							<a id=\"fe_random_icon\" href=\"" . Title::makeTitle(NS_SPECIAL,"Random")->escapeFullURL() . "\"><img src=\"/skins/monobook/blank.gif\" id=\"fe_random_icon\" class=\"sprite\" /></a> 
 							<div><a id=\"fe_random_link\" href=\"" . Title::makeTitle(NS_SPECIAL,"Random")->escapeFullURL() . "\">".wfMsg('footer_6')."</a></div>
-						</li>
+						</li>";
+
+				if (!empty($wgProblemReportsEnable)) {
+					$custom_article_footer .= "
 						<li id=\"fe_report_link\">
 							<a id=\"fe_create_icon\" href=\"#wikia_header\"><img src=\"/skins/monobook/blank.gif\" id=\"fe_report_icon\" class=\"sprite\" /></a> 
 							<div><a href=\"#wikia_header\">".wfMsg('reportproblem')."</a></div>
-						</li>
+						</li>";
+				}
+
+				$custom_article_footer .= "
 					</ul>
 				</td>";
 				
