@@ -30,7 +30,7 @@ function wfExtendJSGlobalVars($vars) {
 		$vars['ajaxLogin2'] = wfMsg('ajaxLogin2');
 	}
 	$vars['wgMainpage'] = wfMsgForContent( 'mainpage' );
-	$vars['wgIsMainpage'] = $wgTitle->getArticleId() == Title::newMainPage()->getArticleId();
+	$vars['wgIsMainpage'] = ($wgTitle->getArticleId() == Title::newMainPage()->getArticleId() && $wgTitle->getArticleId() != 0);
 	if(!$vars['wgIsMainpage']) {
 		if(!empty($wgArticle->mRedirectedFrom)) {
 			if($vars['wgMainpage'] == $wgArticle->mRedirectedFrom->getPrefixedText()) {
@@ -48,4 +48,3 @@ function wfExtendJSGlobalVars($vars) {
 
 	return true;
 }
-?>

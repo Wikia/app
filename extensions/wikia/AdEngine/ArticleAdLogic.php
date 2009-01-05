@@ -307,6 +307,7 @@ class ArticleAdLogic {
                 global $wgTitle;
                 if (is_object($wgTitle) && 
 		    $wgTitle->getArticleId() == Title::newMainPage()->getArticleId() &&
+		    $wgTitle->getArticleId() != 0 && # caused problems on central due to NS_SPECIAL main page
 		    !self::isDiffPage() &&
 		    !self::isAnonPurgePrompt() &&
 		    !self::isActionPage()) {
