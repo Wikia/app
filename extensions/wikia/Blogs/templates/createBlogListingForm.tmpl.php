@@ -79,7 +79,7 @@ BL.checkMatches = function (e) {
 		<label><?php echo wfMsg('create-blog-listing-sortby'); ?></label>
 		<select name="blogListingSortBy">
 			<?php foreach($sortByKeys as $sortByKey => $sortByValue): ?>
-				<option value="<?=$sortByKey;?>" <?=($formData['listingSortBy'] == $sortByKey) ? "selected" : "";?> ><?=wfMsg('create-blog-listing-sortby-' . $sortByKey);?></option>
+				<option value="<?=$sortByKey;?>" <?=(isset($formData['listingSortBy']) && ($formData['listingSortBy'] == $sortByKey)) ? "selected" : "";?> ><?=wfMsg('create-blog-listing-sortby-' . $sortByKey);?></option>
 			<?php endforeach; ?>
 		</select>
 	</div>
@@ -91,7 +91,7 @@ BL.checkMatches = function (e) {
 	<div class="formLastBlock">
 		<div style="padding-bottom: 15px;">
 			<input type="radio" name="listingType" value="plain" <?=(empty($formData['listingType']) || ($formData['listingType'] == 'plain'))?"checked=\"yes\"":"";?> />&nbsp;<?php echo wfMsg('create-blog-listing-output-as-page');?>
-			<input type="radio" name="listingType" value="box" <?=($formData['listingType'] == 'box')?"checked=\"yes\"":"";?> />&nbsp;<?php echo wfMsg('create-blog-listing-output-as-box');?>
+			<input type="radio" name="listingType" value="box" <?=(isset($formData['listingType']) && ($formData['listingType'] == 'box'))?"checked=\"yes\"":"";?> />&nbsp;<?php echo wfMsg('create-blog-listing-output-as-box');?>
 		</div>
 		<div class="editButtons">
 			<input id="wpSave" type="submit" title="Save your changes [ctrl-s]" accesskey="s" value="<?=wfMsg('create-blog-save')?>" tabindex="5" name="wpSave"/>
