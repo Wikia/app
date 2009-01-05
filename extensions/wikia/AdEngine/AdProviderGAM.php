@@ -93,7 +93,8 @@ class AdProviderGAM implements iAdProvider {
 		$out = "<!-- ## BEGIN " . __CLASS__ . '::' . __METHOD__ . " ## -->\n";
 		
 		// Make a call for each slot.
-		$out .= '<script type="text/javascript">' . "\n";
+		$out .= '<script type="text/javascript">' . "\n" .
+			'try {' . "\n";
 		foreach ( $this->slotsToCall as $slotname ){
 			$out .= 'GA_googleAddSlot("' . $this->adManagerId . '","' . $slotname . '");' . "\n";
 			// Set up key values
@@ -112,11 +113,15 @@ class AdProviderGAM implements iAdProvider {
 		$out .= 'GA_googleAddAttr("user_lang", wgUserLanguage);' . "\n";
 
 		// ###### Ad Sense attributes
-		$out .= $this->getAdSenseAttr() . "\n";
-		$out .= '</script>' . "\n";
+		$out .= $this->getAdSenseAttr() . "\n" .
+			// Google Ad Call failed, probably because of AdBlock
+			// Hide these errors from Athena error reporting.
+			// Consider putting something else here for tracking?
+			'} catch (e) { }' . "\n" . 
+			'</script>' . "\n";
 		
 		// Make the call for all the ads
-		$out .= '<script type="text/javascript">GA_googleFetchAds()</script>' . "\n";
+		$out .= '<script type="text/javascript">try{GA_googleFetchAds()}catch(e){}</script>' . "\n";
 		
 
 		$out .= "<!-- ## END " . __CLASS__ . '::' . __METHOD__ . " ## -->\n";
