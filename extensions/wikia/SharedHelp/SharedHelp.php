@@ -244,7 +244,9 @@ function SharedHelpSearchHook(&$searchPage, &$term) {
 }
 
 function SharedHelpBrokenLink( $linker, $nt, $query, $u, $style, $prefix, $text, $inside, $trail  ) {
-	if ($nt->getNamespace() == 12) {
+	global $wgTitle;
+	$specialpage = SpecialPage::resolveAlias( $wgTitle->getDBkey() );
+	if( ( $nt->getNamespace() == 12 ) && ( 'Wantedpages' != $specialpage ) ) {
 		//not red, blue
 		$style = $linker->getInternalLinkAttributesObj( $nt, $text, '' );
 		$u = str_replace( "&amp;action=edit&amp;redlink=1", "", $u );
