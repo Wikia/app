@@ -90,12 +90,30 @@ class BlogComment {
 	 */
 	private function load() {
 		if( $this->mTitle ) {
-			$this->mLastRevision = Revision::newFromTitle( $this->mTitle );
-			$this->mFirstRevision = Revision::newFromId( $this->getFirstRevID( GAID_FOR_UPDATE ));
-
-			if( $this->mFirstRevision ) {
-				$this->mUser = User::newFromId( $this->mFirstRevision->getUser() );
+			/**
+			 * if we lucky we got only one revision, we check slave first
+			 * then if no answer we check master
+			 */
+			$firstRev = $this->getFirstRevID();
+			if( !$firstRev ) {
+				 $firstRev = $this->getFirstRevID( GAID_FOR_UPDATE );
 			}
+			$lastRev = $this->mTitle->getLatestRevID();
+			if( !$lastRev ) {
+				$this->mTitle->getLatestRevID( GAID_FOR_UPDATE );
+			}
+			if( $lastRev != $firstRev ) {
+				$this->mLastRevision = Revision::newFromId( $lastRev );
+				$this->mFirstRevision = Revision::newFromId( $firstRev );
+			}
+			else {
+				if( $firstRev ) {
+					$this->mFirstRevision = Revision::newFromId( $firstRev );
+					$this->mLastRevision = $this->mFirstRevision;
+					$this->mUser = User::newFromId( $this->mFirstRevision->getUser() );
+				}
+			}
+
 			$this->getProps();
 			/**
 			 * set blog owner
