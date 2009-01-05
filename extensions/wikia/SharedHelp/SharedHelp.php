@@ -14,7 +14,7 @@ if(!defined('MEDIAWIKI')) {
 
 $wgExtensionCredits['other'][] = array(
 	'name' => 'SharedHelp',
-	'version' => 0.21,
+	'version' => 0.23,
 	'description' => 'Takes pages from [[w:c:Help|Help Wikia]] and inserts them into Help namespace on this wiki',
 	'author' => array('Maciej Brencz', 'Inez Korczyński', 'Bartek Łapiński', "[http://www.wikia.com/wiki/User:TOR Lucas 'TOR' Garczewski]", '[http://www.wikia.com/wiki/User:Marooned Maciej Błaszkowski (Marooned)]')
 );
@@ -23,6 +23,7 @@ $wgHooks['OutputPageBeforeHTML'][] = 'SharedHelpHook';
 $wgHooks['EditPage::showEditForm:initial'][] = 'SharedHelpEditPageHook';
 $wgHooks['SearchBeforeResults'][] = 'SharedHelpSearchHook';
 $wgHooks['BrokenLink'][] = 'SharedHelpBrokenLink';
+$wgHooks['WantedPages::getSQL'][] = 'SharedHelpWantedPagesSql';
 
 class SharedHttp extends Http {
 	static function get( $url, $timeout = 'default' ) {
@@ -252,3 +253,39 @@ function SharedHelpBrokenLink( $linker, $nt, $query, $u, $style, $prefix, $text,
 	}
 	return true;
 }
+
+// basically modify the Wantedpages query to exclude pages that appear on the help wiki, as per #5866
+function SharedHelpWantedPagesSql( $page, $sql ) {
+	global $wgWantedPagesThreshold, $wgHelpWikiId, $wgDBname;
+	$count = $wgWantedPagesThreshold - 1;
+
+	$dbr = wfGetDB( DB_SLAVE );
+	$helpdb = WikiFactory::IDtoDB( $wgHelpWikiId  );
+
+	$pagelinks = "`$wgDBname`." . $dbr->tableName( 'pagelinks' );
+	$page_table = $dbr->tableName( 'page' );
+	$page      = "`$wgDBname`." . $page_table;
+	$helppage  = "`$helpdb`." . $page_table;
+
+	$sql =   "SELECT 'Wantedpages' AS type,
+		$pagelinks.pl_namespace AS namespace,
+		$pagelinks.pl_title AS title,
+		COUNT(*) AS value
+			FROM $pagelinks
+			LEFT JOIN $page AS pg1
+			ON pl_namespace = pg1.page_namespace AND pl_title = pg1.page_title
+			LEFT JOIN $page AS pg2
+			ON pl_from = pg2.page_id
+			LEFT JOIN $helppage AS pg3
+			ON pg2.page_id = pg3.page_id
+			WHERE pg1.page_namespace IS NULL
+			AND (pl_namespace NOT IN ( 2, 3, 12 )
+			OR (pl_namespace = 12 AND pl_title!= pg3.page_title))
+			AND pg2.page_namespace != 8
+			$page->excludetitles
+			GROUP BY pl_namespace, pl_title
+			HAVING COUNT(*) > $count";
+
+	return true;
+}
+
