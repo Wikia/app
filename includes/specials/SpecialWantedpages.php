@@ -31,8 +31,7 @@ class WantedPagesPage extends QueryPage {
 		$dbr = wfGetDB( DB_SLAVE );
 		$pagelinks = $dbr->tableName( 'pagelinks' );
 		$page      = $dbr->tableName( 'page' );
-		return
-			"SELECT 'Wantedpages' AS type,
+		$sql =   "SELECT 'Wantedpages' AS type,
 			        pl_namespace AS namespace,
 			        pl_title AS title,
 			        COUNT(*) AS value
@@ -47,6 +46,9 @@ class WantedPagesPage extends QueryPage {
 			 $this->excludetitles
 			 GROUP BY pl_namespace, pl_title
 			 HAVING COUNT(*) > $count";
+
+		wfRunHooks( 'WantedPages::getSQL', array( &$this, &$sql ) ); // wikia: Bartek
+		return $sql;
 	}
 
 	/**
