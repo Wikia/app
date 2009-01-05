@@ -210,7 +210,7 @@ class BlogComment {
 #				$Parser = $wgParser;
 #			}
 			$Options = new ParserOptions( );
-			$Options->initialiseFromUser( $this->mUser );
+			$Options->initialiseFromUser( $wgUser );
 
 			/**
 			 * if $props are not cache we read them from database
