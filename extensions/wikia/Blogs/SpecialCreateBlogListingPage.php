@@ -108,7 +108,7 @@ class CreateBlogListingPage extends SpecialBlogPage {
 			'cloud' => new TagCloud(10, $sQuery),
 			'cols' => 10,
 			'cloudNo' => 1,
-			'textCategories' => $this->mFormData['listingCategories'] )
+			'textCategories' => (isset($this->mFormData['listingCategories'])) ? $this->mFormData['listingCategories'] : "" )
 		);
 
 		$sBlogCategoryCloud = $oTmpl->execute("createPostCategoryCloud");
@@ -118,7 +118,7 @@ class CreateBlogListingPage extends SpecialBlogPage {
 			'cloud' => new TagCloud(),
 			'cols' => 10,
 			'cloudNo' => 2,
-			'textCategories' => $this->mFormData['listingPageCategories'] )
+			'textCategories' => (isset($this->mFormData['listingPageCategories'])) ? $this->mFormData['listingPageCategories'] : "")
 		);
 
 		$sPageCategoryCloud = $oTmpl->execute("createPostCategoryCloud");
