@@ -234,7 +234,7 @@ div.wk_blogs_post .wk_blogs_comments {
 	font-weight: normal;
 	padding: 0px 5px 5px 0px;
 	text-align:left;
-	clear: both;
+	#clear: both;
 }
 div.wk_blogs_post .wk_blogs_comments ul.links {
 	margin: 0.3em 0 0.5em 0;
@@ -244,13 +244,24 @@ div.wk_blogs_post .wk_blogs_comments ul.links {
 div.wk_blogs_post .wk_blogs_comments ul.links li {
 	border: 0;
 	clear: right;
-	float: left;
+	#float: left;
 	padding: 3px 0.2em 0 0.2em;
 	color: #DFDFDF;
+	display:inline;
 }
 div.wk_blogs_post .wk_blogs_pager {
 	float:right;
 	white-space:nowrap;
+}
+
+ul.star-rating {
+	float:none;
+	display: inline;
+	position: absolute;
+}
+
+li.wk_star_list {
+	padding: 0px 80px 0px 0px !important;
 }
 
 #control_listing-create-blog-post-tab div {
