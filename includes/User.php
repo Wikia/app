@@ -1338,6 +1338,14 @@ class User {
 			# Check memcached separately for anons, who have no
 			# entire User object stored in there.
 			if( !$this->mId ) {
+				# hack: don't check it for our varnish ip addresses
+				global $wgSquidServers, $wgSquidServersNoPurge;
+				if( in_array( $this->getName(), $wgSquidServers ) || 
+					in_array( $this->getName(), $wgSquidServersNoPurge )
+				) {
+					return $this->mNewtalk;
+				}
+
 				global $wgMemc;
 				$key = wfMemcKey( 'newtalk', 'ip', $this->getName() );
 				$newtalk = $wgMemc->get( $key );
