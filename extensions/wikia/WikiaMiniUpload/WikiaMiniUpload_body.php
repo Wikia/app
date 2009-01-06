@@ -20,7 +20,7 @@ class WikiaMiniUpload {
 		global $wgRequest, $IP;
 		$license = $wgRequest->getText('license');
 		require_once($IP . '/includes/specials/SpecialUpload.php');
-		return preg_replace( '/(<a[^>]+)/', '$1 target="_new" ', UploadForm::ajaxGetLicensePreview( $license ) );		
+		return preg_replace( '/(<a[^>]+)/', '$1 target="_new" ', UploadForm::ajaxGetLicensePreview( $license ) );
 	}
 
 	function recentlyUploaded() {
@@ -82,7 +82,7 @@ class WikiaMiniUpload {
 			$flickrResult = $flickrAPI->photos_getInfo($itemId);
 			$url = "http://farm{$flickrResult['farm']}.static.flickr.com/{$flickrResult['server']}/{$flickrResult['id']}_{$flickrResult['secret']}.jpg";
 			$data = array('wpUpload' => 1, 'wpSourceType' => 'web', 'wpUploadFileURL' => $url);
-			$form = new UploadForm(new FauxRequest($data, true), '');
+			$form = new UploadForm(new FauxRequest($data, true));
 			$tempname = 'Temp_file_'.$wgUser->getID().'_'.rand(0, 1000);
 			$file = new FakeLocalFile(Title::newFromText($tempname, 6), RepoGroup::singleton()->getLocalRepo());
 			$file->upload($form->mTempPath, '', '');
@@ -101,7 +101,7 @@ class WikiaMiniUpload {
 		$mFileSize = $wgRequest->getFileSize( 'wpUploadFile' );
 		$mSrcName = stripslashes($wgRequest->getFileName( 'wpUploadFile' ));
 		$filtered = wfStripIllegalFilenameChars( $mSrcName );
-		$form = new UploadForm( $wgRequest, '' );
+		$form = new UploadForm( $wgRequest );
 
 		// no filename or zero size
 		if( trim( $mSrcName ) == '' || empty( $mFileSize ) ) {
@@ -202,7 +202,7 @@ class WikiaMiniUpload {
 
 	function detailsPage($props) {
 		$data = array('wpUpload' => 1, 'wpSourceType' => 'web', 'wpUploadFileURL' => '');
-		$form = new UploadForm(new FauxRequest($data, true), '');
+		$form = new UploadForm(new FauxRequest($data, true));
 
 		$tmpl = new EasyTemplate(dirname(__FILE__).'/templates/');
 		list( $partname, $ext ) = $form->splitExtensions( $props['name'] );
@@ -218,10 +218,10 @@ class WikiaMiniUpload {
 			for( $i = 0; $i < count( $ext ) - 1; $i++ )
 				$partname .= '.' . $ext[$i];
 		}
-	
+
 		$props['partname'] = $partname;
 		$props['extension'] = strtolower( $finalExt );
-		$tmpl->set_vars(array('props' => $props));	
+		$tmpl->set_vars(array('props' => $props));
 		return $tmpl->execute('details');
 	}
 
@@ -256,7 +256,7 @@ class WikiaMiniUpload {
 				$title = Title::makeTitleSafe(NS_IMAGE, $name);
 				if(is_null($title)) {
 					header('X-screen-type: error');
-					return wfMsg ( 'wmu-filetype-incorrect' ); 
+					return wfMsg ( 'wmu-filetype-incorrect' );
 				}
 				if($title->exists()) {
 					if($type == 'overwrite') {
@@ -331,12 +331,12 @@ class WikiaMiniUpload {
 					} else {
 						// get the supplied license value
 						$license = $wgRequest->getVal( 'ImageUploadLicense' );
-						
+
 						if ( $license != '' ) {
 							$caption = '== ' . wfMsgForContent( 'license' ) . " ==\n" . '{{' . $license . '}}' . "\n";
 						} else {
 							$caption = "";
-						}						 
+						}
 					}
 
 					$file->upload($temp_file->getPath(), '', $caption);
