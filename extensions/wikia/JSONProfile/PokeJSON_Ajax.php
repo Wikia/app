@@ -90,7 +90,7 @@ function wfOutstandingPokesJSON($user_name, $r_user_name=false){
 	require_once("$IP/extensions/wikia/Poke/PokeClass.php");
 	$user = User::newFromName($user_name);
 	if ($user) {
-		$poke = new Poke( $user_name );
+		$poke = new Poke();
 		$pokes = $poke->getOutstanding($user_name, $r_user_name);
 		if ($pokes) {
 			return $pokes;
