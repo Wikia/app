@@ -4,7 +4,7 @@
  */
 class Poke {
 	
-	public function poke($user_name,$is_pokeback=0){
+	public function poke($user_name=false,$is_pokeback=0){
 		global $wgUser, $wgMemc;
 		if ($wgUser->isLoggedIn()) {
 			$poke_from = $wgUser->getName();
