@@ -245,13 +245,15 @@ function SharedHelpSearchHook(&$searchPage, &$term) {
 
 function SharedHelpBrokenLink( $linker, $nt, $query, $u, $style, $prefix, $text, $inside, $trail  ) {
 	global $wgTitle;
-	$specialpage = SpecialPage::resolveAlias( $wgTitle->getDBkey() );
-	if( ( $nt->getNamespace() == 12 ) && ( 'Wantedpages' != $specialpage ) ) {
-		//not red, blue
-		$style = $linker->getInternalLinkAttributesObj( $nt, $text, '' );
-		$u = str_replace( "&amp;action=edit&amp;redlink=1", "", $u );
-		$u = str_replace( "?action=edit&amp;redlink=1&amp;", "?", $u );
-		$u = str_replace( "?action=edit&amp;redlink=1", "", $u );	
+	if ($wgTitle instanceof Title) {
+		$specialpage = SpecialPage::resolveAlias( $wgTitle->getDBkey() );
+		if( ( $nt->getNamespace() == 12 ) && ( 'Wantedpages' != $specialpage ) ) {
+			//not red, blue
+			$style = $linker->getInternalLinkAttributesObj( $nt, $text, '' );
+			$u = str_replace( "&amp;action=edit&amp;redlink=1", "", $u );
+			$u = str_replace( "?action=edit&amp;redlink=1&amp;", "?", $u );
+			$u = str_replace( "?action=edit&amp;redlink=1", "", $u );	
+		}
 	}
 	return true;
 }
