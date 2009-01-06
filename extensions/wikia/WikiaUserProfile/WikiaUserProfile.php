@@ -287,7 +287,19 @@ class WikiaProfileUserTitle extends Article{
 				$text .=	'<style type="text/css">/*<![CDATA[*/ @import "'.$wgScriptPath.'/extensions/wikia/WikiaUserProfile/css/avatar.css?'.$wgStyleVersion.'"; /*]]>*/</style>'."\n";
 			}
 			$wgOut->addHTML($text);
-            $wgOut->addHTML($this->getUserPageMenu ($this->userName));
+			$wgOut->addHTML($this->getUserPageMenu ($this->userName));
+
+			// macbre: fixes RT6379
+			$wgOut->addInlineScript('
+			(function(){
+				var userMsg  = YAHOO.util.Dom.getElementsByClassName("usermessage");
+				var userFeed = YAHOO.util.Dom.getElementsByClassName("user-feed-title");
+				if (userMsg.length && userFeed.length) {
+					var msg    = userMsg[0];
+					var before = userFeed[0].nextSibling;
+					msg.parentNode.insertBefore(msg, before);
+				}
+			})()');
 		}
 
 		wfProfileOut( __METHOD__ );

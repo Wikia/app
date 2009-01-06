@@ -20,10 +20,9 @@
 }
 
 .usermessage {
-	margin:15px 0pt 1em 82px;
-	padding:0.5em 0.6em;
-	position:absolute;
-	vertical-align:middle;
-	z-index:10;
-	-ie-xp: expression( this.style.left = '10px' );
+	clear: both;
+	position: relative;
+	top: -75px;
+	margin: 0 0 -50px 82px;
+	z-index: 10;
 }
