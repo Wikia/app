@@ -208,34 +208,13 @@ class BlogComment {
 		$text = false;
 		if( $this->load() ) {
 			$canDelete = $wgUser->isAllowed( "delete" );
-/*	to remove?
-  			if ( !$wgParser ) {
-				$Parser = new Parser();
-				error_log ("parser => new Parser \n", 3, "/tmp/moli.log");
-				$clear = true;
-			}
-			else {
-				$Parser = $wgParser;
-				$clear = false;
-				error_log ("parser => wgParser \n", 3, "/tmp/moli.log");
-				if ( $wgUser->isAnon() ) {
-					$clear = true;
-				}
-			}
-			
-			$Options = new ParserOptions( );
-			$Options->initialiseFromUser( $wgUser );
-*/
-			
+
 			/**
 			 * if $props are not cache we read them from database
 			 */
 			$this->getProps();
 
-			$text = $wgOut->parse( $this->mLastRevision->getText() );
-/* to remove? 
-			$text     = $Parser->parse( $this->mLastRevision->getText(), $this->mTitle, $Options, true, $clear )->getText(); 
-*/
+			$text     = $wgOut->parse( $this->mLastRevision->getText() );
 			$anchor   = explode( "/", $this->mTitle->getDBkey(), 3 );
 			$sig      = ( $this->mUser->isAnon() )
 				? wfMsg("blog-comments-anonymous")
