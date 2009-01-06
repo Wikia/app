@@ -263,7 +263,12 @@ class AdEngine {
 
 		// All of the errors and toggles are handled, now switch based on language
 		} else {
-		 	return $this->getProviderFromId($this->slots[$slotname]['provider_id']);
+			if (in_array($wgLanguageCode, AdProviderGoogle::getSupportedLanguages())){
+				return $this->getProviderFromId($this->slots[$slotname]['provider_id']);
+			} else {
+				// Google's TOS prevents serving ads for some languages
+				return new AdProviderNull("Unsupported language for Google Adsense ($wgLanguageCode)", false);
+			}
 		}
 
 		// Should never happen, but be sure that an AdProvider object is always returned.
