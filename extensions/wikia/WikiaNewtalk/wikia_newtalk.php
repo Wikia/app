@@ -63,6 +63,15 @@ function wfSetWikiaNewtalk( &$article )
 function wfGetWikiaNewtalk( &$user, &$talks ) {
 	global $wgSharedDB, $wgMemc, $wgWikiaNewtalkExpiry;
 
+	# hack: don't check it for our varnish ip addresses
+	global $wgSquidServers, $wgSquidServersNoPurge;
+	if( !$user->mId && ( 
+		in_array( $user->getName(), $wgSquidServers ) ||
+		in_array( $user->getName(), $wgSquidServersNoPurge )
+	) ) {
+		return true;
+	}
+
 	$key = 'wikia:shared_newtalk:'.$user->getID().':'.str_replace( ' ', '_', $user->getName() );
 	$wikia_talks = $wgMemc->get( $key );
 	if( !is_array( $wikia_talks ) ) {
