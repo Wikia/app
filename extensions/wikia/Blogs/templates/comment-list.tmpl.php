@@ -59,7 +59,7 @@ endif;
 	endif;
 
 	if( isset( $props[ "commenting" ] ) && $props[ "commenting" ] == 1 ):
-		if( $canEdit ):
+		if( $canEdit && !$isBlocked ):
 ?>
 <div class="blog-comm-input reset clearfix">
 	<div id="blog-comm-bottom-info">&nbsp;</div>
@@ -84,7 +84,15 @@ endif;
 </div>
 <?php
 		else:
-			echo wfMsg("blog-comments-login", SpecialPage::getTitleFor("UserLogin")->getLocalUrl() );
+			if ( $isBlocked ) :
+?>			
+<div class="blog-comm-input reset clearfix">
+	<div id="blog-comm-bottom-info"><p><?=wfMsg("blog-comment-cannot-add")?></p><br/><p><?=$output->parse($reason)?></p></div>
+</div>	
+<?php	
+			else :
+				echo wfMsg("blog-comments-login", SpecialPage::getTitleFor("UserLogin")->getLocalUrl() );
+			endif;
 		endif;
 	endif;
 ?>

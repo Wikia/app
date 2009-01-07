@@ -625,6 +625,7 @@ class BlogCommentList {
 	 */
 	public function render() {
 		global $wgUser, $wgTitle, $wgRequest;
+		global $wgOut;
 
 		/**
 		 * $pages is array of comment articles
@@ -633,7 +634,9 @@ class BlogCommentList {
 		$avatar    = BlogAvatar::newFromUser( $wgUser );
 		$isSysop   = ( in_array('sysop', $wgUser->getGroups()) || in_array('staff', $wgUser->getGroups() ) );
 		$isOwner   = ( $owner == $wgUser->getName() );
-		$canEdit   = $wgUser->isAllowed( "edit" );
+		$canEdit   = $wgUser->isAllowed( "edit" ); 
+		$isBlocked = $wgUser->isBlocked();
+		error_log ("user is blocked = " . intval($wgUser->isBlocked()) . " can edit = " . $canEdit . " \n", 3, "/tmp/moli.log");
 		$comments  = $this->getCommentPages();
 		$canDelete = $wgUser->isAllowed( "delete" );
 
@@ -648,6 +651,9 @@ class BlogCommentList {
 			"isSysop"   => $isSysop,
 			"isOwner"   => $isOwner,
 			"canEdit"   => $canEdit,
+			"isBlocked" => $isBlocked,
+			"reason"	=> $isBlocked ? $this->blockedPage() : "",
+			"output"	=> $wgOut,
 			"comments"  => $comments,
 			"canDelete" => $canDelete,
 		) );
@@ -655,5 +661,50 @@ class BlogCommentList {
 		$text = $template->execute( "comment-list" );
 
 		return $text;
+	}
+	
+	/**
+	 * blockedPage -- return HTML code for displaying reason of user block
+	 *
+	 * @access public
+	 *
+	 * @return String HTML text 
+	 */
+	public function blockedPage() {
+		global $wgUser, $wgLang, $wgContLang;
+
+		list ($blockerName, $reason, $ip, $blockid, $blockTimestamp, $blockExpiry, $intended) = array( 
+			User::whoIs( $wgUser->blockedBy() ), 
+			$wgUser->blockedFor() ? $wgUser->blockedFor() : wfMsg( 'blockednoreason' ), 
+			wfGetIP(),
+			$wgUser->mBlock->mId, 
+			$wgLang->timeanddate( wfTimestamp( TS_MW, $wgUser->mBlock->mTimestamp ), true ),
+			$wgUser->mBlock->mExpiry, 
+			$wgUser->mBlock->mAddress
+		);
+
+		$blockerLink = '[[' . $wgContLang->getNsText( NS_USER ) . ":{$blockerName}|{$blockerName}]]";
+
+		if ( $blockExpiry == 'infinity' ) {
+			$scBlockExpiryOptions = wfMsg( 'ipboptions' );
+			foreach ( explode( ',', $scBlockExpiryOptions ) as $option ) {
+				if ( strpos( $option, ":" ) === false ) continue;
+				list( $show, $value ) = explode( ":", $option );
+				if ( $value == 'infinite' || $value == 'indefinite' ) {
+					$blockExpiry = $show;
+					break;
+				}
+			}
+		} else {
+			$blockExpiry = $wgLang->timeanddate( wfTimestamp( TS_MW, $blockExpiry ), true );
+		}
+
+		if ( $wgUser->mBlock->mAuto ) {
+			$msg = 'autoblockedtext';
+		} else {
+			$msg = 'blockedtext';
+		}
+
+		return wfMsgExt( $msg, "", $blockerLink, $reason, $ip, $blockerName, $blockid, $blockExpiry, $intended, $blockTimestamp );
 	}
 }
