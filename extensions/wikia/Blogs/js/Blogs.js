@@ -7,7 +7,7 @@ YAHOO.Wikia.Blogs.callback = {
     },
     failure: function( oResponse ) {
     },
-    timeout: 500000
+    timeout: 5000000
 };
 
 YAHOO.Wikia.Blogs.hideCallback = {
@@ -17,7 +17,7 @@ YAHOO.Wikia.Blogs.hideCallback = {
     },
     failure: function( oResponse ) {
     },
-    timeout: 500000
+    timeout: 5000000
 };
 
 YAHOO.Wikia.Blogs.callback.toggle = function( data ) {
