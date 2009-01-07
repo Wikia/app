@@ -344,7 +344,8 @@ function Wysiwyg_WrapTemplate($originalCall, $output, $lineStart) {
 
 	$wgWysiwygMetaData[$refId] = $data;
 
-	if($output{strlen($output)-1} != "\n") {
+	// macbre: add \n to the end of multiline templates
+	if( (strpos($output, "\n") !== false) && ($output{strlen($output)-1} != "\n") ) {
 		$output .= "\n";
 	}
 
