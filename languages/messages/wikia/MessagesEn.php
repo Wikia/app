@@ -718,4 +718,5 @@ Text should be placed on this page if you wish to explain usage, style and polic
 'atom' => 'Wikia Atom',
 'feed-watom' => 'Wikia Atom',
 'nodiff' => 'No changes',
+'specialpages-group-wikia' => 'Wikia pages',
 ));
