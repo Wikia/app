@@ -263,12 +263,29 @@ class AdEngine {
 
 		// All of the errors and toggles are handled, now switch based on language
 		} else {
-			if (in_array($wgLanguageCode, AdProviderGoogle::getSupportedLanguages())){
-				return $this->getProviderFromId($this->slots[$slotname]['provider_id']);
+
+			if ($wgLanguageCode == 'en' ){
+			
+			 	return $this->getProviderFromId($this->slots[$slotname]['provider_id']);
+			} else if (in_array($wgLanguageCode, $this->tier1Languages)){
+				
+				if (!in_array($slotname, $this->internationalSlotsTier1)){
+					return new AdProviderNull("Ads name not served for this language in this slot ($wgLanguageCode) ", false);
+				} else {
+					return AdProviderAthena::getInstance();
+				}
+
 			} else {
-				// Google's TOS prevents serving ads for some languages
-				return new AdProviderNull("Unsupported language for Google Adsense ($wgLanguageCode)", false);
+				if (!in_array( $slotname, $this->internationalSlotsTier2)){
+					return new AdProviderNull("Ads name not served for this language in this slot ($wgLanguageCode) ", false);
+				} else if (! in_array($wgLanguageCode, AdProviderGoogle::getSupportedLanguages())){
+					// Google's TOS prevents serving ads for some languages
+					return new AdProviderNull("Unsupported language for Google Adsense ($wgLanguageCode)", false);
+				} else {
+					return AdProviderAthena::getInstance();
+				}
 			}
+
 		}
 
 		// Should never happen, but be sure that an AdProvider object is always returned.
