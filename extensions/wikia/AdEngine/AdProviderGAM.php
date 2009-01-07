@@ -13,7 +13,7 @@ class AdProviderGAM implements iAdProvider {
 	protected static $instance = false;
 
 	//private $adManagerId = "ca-pub-3862144315477646"; gorillamania@gmail.com account
-	private $adManagerId = "ca-pub-4086838842346968"; // Wikia account
+	public $adManagerId = "ca-pub-4086838842346968"; // Wikia account
 
 	public $batchHtmlCalled = false;
 
@@ -73,10 +73,16 @@ class AdProviderGAM implements iAdProvider {
 		// Download the necessary required javascript
 		
 		$out .= '<script type="text/javascript" src="http://partner.googleadservices.com/gampad/google_service.js"></script>' . "\n" .
-			'<script type="text/javascript">' . "\n" . 
-			'GS_googleAddAdSenseService("' . $this->adManagerId . '");' . "\n" . 
-			'GS_googleEnableAllServices();' . "\n" .
-			'</script>' . "\n";
+			// Set up a try/catch to see if the user has AdBcock enabled presumably because the above call failed to download
+			'<script type="text/javascript">
+			wgAdBlockEnabled=false;
+			try {
+			  GS_googleAddAdSenseService("' . $this->adManagerId . '");
+			  GS_googleEnableAllServices();
+			} catch (e){
+			  wgAdBlockEnabled=true;
+			}
+			</script>' . "\n";
 		$out .= "<!-- ## END " . __CLASS__ . '::' . __METHOD__ . " ## -->\n";
 		return $out;
         }
