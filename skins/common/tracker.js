@@ -99,6 +99,7 @@ YAHOO.Wikia.Tracker = {
 		if(skin == 'monobook') { skinname = 'monobook';}
 		else if (skin == 'quartz') { skinname = 'vs2'; }
 		else if (skin == 'monaco') { skinname = 'monaco'; }
+		else if (skin == 'home') { skinname = 'home'; }
 
 		if(window.skinname && YAHOO.lang.isFunction(urchinTracker)) {
 			_uacct = "UA-2871474-1";
