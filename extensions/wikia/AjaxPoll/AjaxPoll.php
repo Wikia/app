@@ -39,12 +39,12 @@ require_once( dirname(__FILE__) . '/AjaxPoll_body.php' );
  * @global
  */
 function wfAjaxPollTag() {
-	global $wgParser, $wgOut, $wgJsMimeType, $wgScriptPath, $wgMergeStyleVersionJS;
+     global $wgParser, $wgOut, $wgJsMimeType, $wgExtensionsPath, $wgMergeStyleVersionJS;
 	$rand = $wgMergeStyleVersionJS;
 
 	$wgParser->setHook( "poll", array( "AjaxPollClass", "renderFromTag" ) );
-	$wgOut->addScript( "<script type=\"{$wgJsMimeType}\" src=\"{$wgScriptPath}/extensions/wikia/AjaxPoll/AjaxPoll.js?{$rand}\" ></script>" );
-	$wgOut->addScript( "<link rel=\"stylesheet\" type=\"text/css\" href=\"{$wgScriptPath}/extensions/wikia/AjaxPoll/AjaxPoll.css?{$rand}\" />" );
+	$wgOut->addScript( "<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/AjaxPoll/AjaxPoll.js?{$rand}\" ></script>" );
+	$wgOut->addScript( "<link rel=\"stylesheet\" type=\"text/css\" href=\"{$wgExtensionsPath}/wikia/AjaxPoll/AjaxPoll.css?{$rand}\" />" );
 }
 
 /**
