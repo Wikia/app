@@ -33,10 +33,11 @@ a.bigButton big, a.bigButton small {
 	background-image: none !important;
 	filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='http://images.wikia.com/wikia/images/e/e9/WikiaStaff.png', sizingMethod='scale');
 }
-
+/*
+ * macbre: fixed problem with tables and headings border, but caused problems with infoboxes (RT 3884)
 body.ns-0 #bodyContent table {
 	position: relative;
-}
+}*/
 #wikia_header #headerButtonHub {
 	margin-left: -30%;
 }
