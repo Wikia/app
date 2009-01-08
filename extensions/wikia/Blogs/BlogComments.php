@@ -398,7 +398,6 @@ class BlogComment {
 				$comment = BlogComment::newFromArticle( $article );
 				$text = $comment->render();
 				$message = false;
-				Wikia::log( __METHOD__, "render", $text );
 				break;
 			default:
 				Wikia::log( __METHOD__, "error", "No article created" );
@@ -634,7 +633,7 @@ class BlogCommentList {
 		$avatar    = BlogAvatar::newFromUser( $wgUser );
 		$isSysop   = ( in_array('sysop', $wgUser->getGroups()) || in_array('staff', $wgUser->getGroups() ) );
 		$isOwner   = ( $owner == $wgUser->getName() );
-		$canEdit   = $wgUser->isAllowed( "edit" ); 
+		$canEdit   = $wgUser->isAllowed( "edit" );
 		$isBlocked = $wgUser->isBlocked();
 		error_log ("user is blocked = " . intval($wgUser->isBlocked()) . " can edit = " . $canEdit . " \n", 3, "/tmp/moli.log");
 		$comments  = $this->getCommentPages();
@@ -662,24 +661,24 @@ class BlogCommentList {
 
 		return $text;
 	}
-	
+
 	/**
 	 * blockedPage -- return HTML code for displaying reason of user block
 	 *
 	 * @access public
 	 *
-	 * @return String HTML text 
+	 * @return String HTML text
 	 */
 	public function blockedPage() {
 		global $wgUser, $wgLang, $wgContLang;
 
-		list ($blockerName, $reason, $ip, $blockid, $blockTimestamp, $blockExpiry, $intended) = array( 
-			User::whoIs( $wgUser->blockedBy() ), 
-			$wgUser->blockedFor() ? $wgUser->blockedFor() : wfMsg( 'blockednoreason' ), 
+		list ($blockerName, $reason, $ip, $blockid, $blockTimestamp, $blockExpiry, $intended) = array(
+			User::whoIs( $wgUser->blockedBy() ),
+			$wgUser->blockedFor() ? $wgUser->blockedFor() : wfMsg( 'blockednoreason' ),
 			wfGetIP(),
-			$wgUser->mBlock->mId, 
+			$wgUser->mBlock->mId,
 			$wgLang->timeanddate( wfTimestamp( TS_MW, $wgUser->mBlock->mTimestamp ), true ),
-			$wgUser->mBlock->mExpiry, 
+			$wgUser->mBlock->mExpiry,
 			$wgUser->mBlock->mAddress
 		);
 
