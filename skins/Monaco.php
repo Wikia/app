@@ -1704,15 +1704,6 @@ wfProfileOut( __METHOD__ . '-widgets');
 // curse like cobranding
 $this->printCustomFooter();
 
-global $wgEnableAdEngineCollisionTest, $wgArticle;
-if ($wgEnableAdEngineCollisionTest &&
-    ! ArticleAdLogic::isMainPage() &&
-    ! ArticleAdLogic::isShortArticle($this->data['bodytext']) &&
-      ArticleAdLogic::isContentPage() &&
-      empty($_GET['action'])){
-        echo ArticleAdLogic::getCollisionCollision($this->data['bodytext']);
-}
-
 echo '</div>';
 $this->html('bottomscripts'); /* JS call to runBodyOnloadHook */
 $this->html('reporttime');
