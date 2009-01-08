@@ -1,24 +1,3 @@
-var search_terms = [ 
-	['Spider-Man', 'marvel'],
-	['Spore', 'spore'],
-	['Grand Theft Auto', 'gta'],
-	['Super Smash Bros', 'ssb'],
-	['Indiana Jones', 'indianajones'],
-	['Nascar Racing', 'thirdturn'],
-	['Harry Potter', 'harrypotter'],
-	['Star Wars', 'starwars'],
-	['Star Trek', 'memoryalpha'],
-	['Lost', 'lost'],
-	['Muppets', 'muppets'],
-	['Jack Bauer', '24'],
-	['Simpsons', 'simpsons'],
-	['Family Guy', 'familyguy'],
-	['South Park', 'southpark'],
-	['Wrestling', 'prowrestling'],
-	['Transformers', 'transformers'],
-	['Godzilla', 'godzilla'],
-	['Pixar Movies', 'pixar']
-];
 var search_term_index = '';
 
 function doSubmit() {
@@ -26,6 +5,10 @@ function doSubmit() {
 }
 
 function get_search_term() {
+	if (!search_terms) {
+		search_query = search_site = '';
+		return;
+	}
 	if (!search_term_index) {
 		search_term_index = Math.floor(search_terms.length * Math.random());
 	} else if (search_term_index == search_terms.length - 1) {
@@ -76,3 +59,21 @@ YAHOO.util.Event.onDOMReady(function() {
 function wikia_search() {
 	document.location = 'http://re.search.wikia.com/search.html#' + YAHOO.util.Dom.get('wikia_search_field').value;
 }
+
+//Add tracking for links
+//Author: Maciej B³aszkowski <marooned at wikia-inc.com>
+var initTracker = function() {
+	var Tracker = YAHOO.Wikia.Tracker;
+	var Event = YAHOO.util.Event;
+
+	Event.addListener(['navigation','featured_box','featured_hubs','all_hubs','feature_footer'], 'click', function(e) {
+		var el = Event.getTarget(e);
+		if(el.nodeName == 'IMG') {
+			el = el.parentNode;
+		}
+		if(el.nodeName == 'A') {
+			var str  = 'main_page/' + el.id;
+			Tracker.trackByStr(e, str);
+		}
+	});
+};

@@ -75,7 +75,8 @@ Event.onDOMReady(function() {
 	Event.addListener('search_field', 'keypress', function(e) {if(e.keyCode==13) {Dom.get('searchform').submit();}});
 
 	// Init datasource
-	var oDataSource = new YAHOO.widget.DS_XHR(wgServer + wgScriptPath, ['results', 'title', 'title_org']);
+	var oDataSource = new YAHOO.widget.DS_XHR(wgServer + wgScriptPath, ["\n"]);
+	oDataSource.responseType = YAHOO.widget.DS_XHR.TYPE_FLAT;
 	oDataSource.scriptQueryAppend = "action=ajax&rs=getLinkSuggest";
 
 	// Init AutoComplete object and assign datasource object to it
