@@ -2700,294 +2700,308 @@ class ExtDynamicPageList2
             $output .= "DPL debug -- Query=<br>\n<tt>".$sSqlSelectFrom . $sSqlWhere."</tt>\n\n";
         }
          
-        try {
-            $res = $dbr->query($sSqlSelectFrom . $sSqlWhere, "DPL");
-        }
-        catch (Exception $e) {
-        	$result = '';
-        	if (!$logger->getSuppressErrors) {
-				$result = "The DPL extension (version ".self::VERSION.") produced a SQL statement which lead to a Database error.<br>\n"
-						."The reason may be an internal error of DPL or an error which you made,<br>\n"
-						."especially when using DPL options like titleregexp.<br>\n"
-						."Query text is:<br>\n<tt>".$sSqlSelectFrom . $sSqlWhere."</tt>\n\n"
-						."Error message is:<br>\n<tt>".$dbr->lastError()."</tt>\n\n";
+		global $wgMessageCache, $wgMemc;
+		$__cacheKey = sha1($sSqlSelectFrom . $sSqlWhere);
+       	$wgMessageCache->lock($__cacheKey);
+		$mem_key = wfMemcKey( 'dpl', 'query', $__cacheKey );
+		$mem_key_counter = wfMemcKey( 'dpl', 'counter' );
+		$data = $wgMemc->get( $mem_key );
+		if ( empty($data) ) {
+			try {
+				$res = $dbr->query($sSqlSelectFrom . $sSqlWhere, "DPL");
 			}
-            return $result;
-        }
-        
-        if ($dbr->numRows( $res ) <= 0) {
-            if ($sNoResultsHeader != '')	$output .= 	str_replace( '\n', "\n", str_replace( "¶", "\n", $sNoResultsHeader));
-            if ($sNoResultsFooter != '')	$output .= 	str_replace( '\n', "\n", str_replace( "¶", "\n", $sNoResultsFooter));
-            if ($sNoResultsHeader == '' && $sNoResultsFooter == '')	$output .= $logger->escapeMsg(DPL2_i18n::WARN_NORESULTS);
-            $dbr->freeResult( $res );
-            return $output;
-        }
+			catch (Exception $e) {
+				$result = '';
+				if (!$logger->getSuppressErrors) {
+					$result = "The DPL extension (version ".self::VERSION.") produced a SQL statement which lead to a Database error.<br>\n"
+							."The reason may be an internal error of DPL or an error which you made,<br>\n"
+							."especially when using DPL options like titleregexp.<br>\n"
+							."Query text is:<br>\n<tt>".$sSqlSelectFrom . $sSqlWhere."</tt>\n\n"
+							."Error message is:<br>\n<tt>".$dbr->lastError()."</tt>\n\n";
+				}
+				return $result;
+			}
+			
+			if ($dbr->numRows( $res ) <= 0) {
+				if ($sNoResultsHeader != '')	$output .= 	str_replace( '\n', "\n", str_replace( "¶", "\n", $sNoResultsHeader));
+				if ($sNoResultsFooter != '')	$output .= 	str_replace( '\n', "\n", str_replace( "¶", "\n", $sNoResultsFooter));
+				if ($sNoResultsHeader == '' && $sNoResultsFooter == '')	$output .= $logger->escapeMsg(DPL2_i18n::WARN_NORESULTS);
+				$dbr->freeResult( $res );
+				return $output;
+			}
 
-        $sk =& $wgUser->getSkin();
-        // generate title for Special:Contributions (used if adduser=true)
-        $sSpecContribs = '[[:Special:Contributions|Contributions]]';
-        
-        $aHeadings = array(); // maps heading to count (# of pages under each heading)
-        $aArticles = array();
-        
-        // pick some elements by random
-        $pick[0]=true;
-        
-        if (isset($iRandomCount)) {
-            $nResults = $dbr->numRows( $res );
-            if (isset($iRandomSeed)) mt_srand($iRandomSeed);
-            else mt_srand((float) microtime() * 10000000);
-            if ($iRandomCount>$nResults) $iRandomCount = $nResults;
-            $r=0;
-            while (true) {
-                $rnum = mt_rand(1,$nResults);
-                if (!isset($pick[$rnum])) {
-                    $pick[$rnum] = true;
-                    $r++;
-                    if ($r>=$iRandomCount) break;
-                }
-            }
-        }
-    
-        
-        $iArticle = 0;
-    
-        while( $row = $dbr->fetchObject ( $res ) ) {
-            $iArticle++;
+			$sk =& $wgUser->getSkin();
+			// generate title for Special:Contributions (used if adduser=true)
+			$sSpecContribs = '[[:Special:Contributions|Contributions]]';
+			
+			$aHeadings = array(); // maps heading to count (# of pages under each heading)
+			$aArticles = array();
+			
+			// pick some elements by random
+			$pick[0]=true;
+			
+			if (isset($iRandomCount)) {
+				$nResults = $dbr->numRows( $res );
+				if (isset($iRandomSeed)) mt_srand($iRandomSeed);
+				else mt_srand((float) microtime() * 10000000);
+				if ($iRandomCount>$nResults) $iRandomCount = $nResults;
+				$r=0;
+				while (true) {
+					$rnum = mt_rand(1,$nResults);
+					if (!isset($pick[$rnum])) {
+						$pick[$rnum] = true;
+						$r++;
+						if ($r>=$iRandomCount) break;
+					}
+				}
+			}
+		
+			
+			$iArticle = 0;
+		
+			while( $row = $dbr->fetchObject ( $res ) ) {
+				$iArticle++;
 
-            // in random mode skip articles which were not chosen
-            if (isset($iRandomCount) && !isset($pick[$iArticle]))  continue;
-            
-            if ($sGoal=='categories') {
-                $pageNamespace = 14;  // CATEGORY
-                $pageTitle     = $row->cl_to;
-            } else if ($acceptOpenReferences) {
-                // existing PAGE TITLE
-                $pageNamespace = $row->pl_namespace;
-                $pageTitle     = $row->pl_title;
-            }
-            else {
-                // maybe non-existing title
-                $pageNamespace = $row->page_namespace;
-                $pageTitle     = $row->page_title;
-            }
-    
-            // if subpages are to be excluded: skip them
-            if (!$bIncludeSubpages && (!(strpos($pageTitle,'/')===false))) continue;
-    
-            // maybe we will somewhen support namespace protections
-            // do not allow access to protected Namespaces
-            // if (count($wgNonincludableNamespaces)>0 && in_array($pageNamespace,$wgNonincludableNamespaces) ) continue;
-            // we should produce an error message if debug >= 3
-            
-            $title = Title::makeTitle($pageNamespace, $pageTitle);
-            
-            if ( !($title instanceof Title) || !($wgTitle instanceof Title) ) {
-            	continue;
-            }
-            
-            // block recursion: avoid to show the page which contains the DPL statement as part of the result
-            if ($bSkipThisPage && ($title->getNamespace() == $wgTitle->getNamespace() && 
-                $title->getText() == $wgTitle->getText())) {
-                // $output.= 'BLOCKED '.$wgTitle->getText().' DUE TO RECURSION'."\n";
-                continue;
-            }
-            
-            $dplArticle = new DPL2Article( $title, $pageNamespace );
-            //PAGE LINK
-            $sTitleText = $title->getText();
-            if (is_array($aReplaceInTitle) && ($aReplaceInTitle[0]!='')) $sTitleText = preg_replace($aReplaceInTitle[0],(!empty($aReplaceInTitle[1])) ? $aReplaceInTitle[1] : "",$sTitleText);
+				// in random mode skip articles which were not chosen
+				if (isset($iRandomCount) && !isset($pick[$iArticle]))  continue;
+				
+				if ($sGoal=='categories') {
+					$pageNamespace = 14;  // CATEGORY
+					$pageTitle     = $row->cl_to;
+				} else if ($acceptOpenReferences) {
+					// existing PAGE TITLE
+					$pageNamespace = $row->pl_namespace;
+					$pageTitle     = $row->pl_title;
+				}
+				else {
+					// maybe non-existing title
+					$pageNamespace = $row->page_namespace;
+					$pageTitle     = $row->page_title;
+				}
+		
+				// if subpages are to be excluded: skip them
+				if (!$bIncludeSubpages && (!(strpos($pageTitle,'/')===false))) continue;
+		
+				// maybe we will somewhen support namespace protections
+				// do not allow access to protected Namespaces
+				// if (count($wgNonincludableNamespaces)>0 && in_array($pageNamespace,$wgNonincludableNamespaces) ) continue;
+				// we should produce an error message if debug >= 3
+				
+				$title = Title::makeTitle($pageNamespace, $pageTitle);
+				
+				if ( !($title instanceof Title) || !($wgTitle instanceof Title) ) {
+					continue;
+				}
+				
+				// block recursion: avoid to show the page which contains the DPL statement as part of the result
+				if ($bSkipThisPage && ($title->getNamespace() == $wgTitle->getNamespace() && 
+					$title->getText() == $wgTitle->getText())) {
+					// $output.= 'BLOCKED '.$wgTitle->getText().' DUE TO RECURSION'."\n";
+					continue;
+				}
+				
+				$dplArticle = new DPL2Article( $title, $pageNamespace );
+				//PAGE LINK
+				$sTitleText = $title->getText();
+				if (is_array($aReplaceInTitle) && ($aReplaceInTitle[0]!='')) $sTitleText = preg_replace($aReplaceInTitle[0],(!empty($aReplaceInTitle[1])) ? $aReplaceInTitle[1] : "",$sTitleText);
 
-            //chop off title if "too long"
-            if( isset($iTitleMaxLen) && (strlen($sTitleText) > $iTitleMaxLen) )
-                $sTitleText = substr($sTitleText, 0, $iTitleMaxLen) . '...';
-            if ($bShowNamespace)
-                //Adapted from Title::getPrefixedText()
-                $sTitleText = str_replace( '_', ' ', $title->prefix($sTitleText) );
-            if ($bEscapeLinks && ($pageNamespace==14 || $pageNamespace==6) ) {
-                // links to categories or images need an additional ":"
-                $articleLink = '[[:'.$title->getPrefixedText().'|'.$wgContLang->convert( $sTitleText ).']]';
-            } else {
-                $articleLink = '[['.$title->getPrefixedText().'|'.$wgContLang->convert( $sTitleText ).']]';
-            }
-            $dplArticle->mLink = $articleLink;
-            
-            //get first char used for category-style output
-            if( isset($row->sortkey) ) {
-                $dplArticle->mStartChar = $wgContLang->convert($wgContLang->firstChar($row->sortkey));
-            }
-            //SHOW PAGE_COUNTER
-            if( isset($row->page_counter) )
-                $dplArticle->mCounter = $row->page_counter;
-            
-            //SHOW PAGE_SIZE
-            if( isset($row->page_len) )
-                $dplArticle->mSize = $row->page_len;
-    
-            //STORE initially selected PAGE	
-            if ( count($aLinksTo)>0  || count($aLinksFrom)>0 ) {
-                if (!isset($row->sel_title)) {
-                    $dplArticle->mSelTitle     = 'unknown page';
-                    $dplArticle->mSelNamespace = 0;
-                } else {
-                    $dplArticle->mSelTitle     = $row->sel_title;
-                    $dplArticle->mSelNamespace = $row->sel_ns;
-                }
-            }
-    
-            if ($bGoalIsPages) {
-                //REVISION SPECIFIED
-                if( $sLastRevisionBefore.$sAllRevisionsBefore.$sFirstRevisionSince.$sAllRevisionsSince !='') {
-                    $dplArticle->mRevision = $row->rev_id;
-                    $dplArticle->mUser = $row->rev_user_text;
-                    $dplArticle->mDate = $row->rev_timestamp;
-                }
-                
-                //SHOW "PAGE_TOUCHED" DATE, "FIRSTCATEGORYDATE" OR (FIRST/LAST) EDIT DATE
-                if($bAddPageTouchedDate) 		$dplArticle->mDate = $row->page_touched;
-                elseif ($bAddFirstCategoryDate)	$dplArticle->mDate = $row->cl_timestamp;
-                elseif ($bAddEditDate)			$dplArticle->mDate = $row->rev_timestamp;
-                
-                if ($dplArticle->mDate!='' && $sUserDateFormat!='') {
-                    // we add one space for nicer formatting
-                    $dplArticle->myDate = gmdate($sUserDateFormat,wfTimeStamp(TS_UNIX,$dplArticle->mDate)).' ';
-                }
-                // CONTRIBUTION, CONTRIBUTOR
-                if($bAddContribution) {
-                    $dplArticle->mContribution = $row->contribution;
-                    $dplArticle->mContributor  = $row->contributor;
-                    $dplArticle->mContrib      = substr('*****************',0,round(log($row->contribution)));
-                }
-                
-                
-                //USER/AUTHOR(S)
-                // because we are going to do a recursive parse at the end of the output phase
-                // we have to generate wiki syntax for linking to a user�s homepage
-                if($bAddUser || $bAddAuthor || $bAddLastEditor || $sLastRevisionBefore.$sAllRevisionsBefore.$sFirstRevisionSince.$sAllRevisionsSince != '') {
-                    $dplArticle->mUserLink  = '[[User:'.$row->rev_user_text.'|'.$row->rev_user_text.']]';
-                    $dplArticle->mUser = $row->rev_user_text;
-                }
-                
-                //CATEGORY LINKS FROM CURRENT PAGE 
-                if($bAddCategories && $bGoalIsPages && ($row->cats != '')) {
-                    $artCatNames = explode(' | ', $row->cats);
-                    foreach($artCatNames as $iArtCat => $artCatName) {
-                        $dplArticle->mCategoryLinks[] = '[[:Category:'.$artCatName.'|'.str_replace('_',' ',$artCatName).']]';
-                        $dplArticle->mCategoryTexts[] = str_replace('_',' ',$artCatName);
-                    }
-                }
-                // PARENT HEADING (category of the page, editor (user) of the page, etc. Depends on ordermethod param)
-                if($sHListMode != 'none') {
-                    switch($aOrderMethods[0]) {
-                        case 'category':
-                            //count one more page in this heading
-                            $aHeadings[$row->cl_to] = isset($aHeadings[$row->cl_to]) ? $aHeadings[$row->cl_to] + 1 : 1;
-                            if($row->cl_to == '') {
-                                //uncategorized page (used if ordermethod=category,...)
-                                $dplArticle->mParentHLink = '[[:Special:Uncategorizedpages|'.wfMsg('uncategorizedpages').']]';
-                            } else {
-                                $dplArticle->mParentHLink = '[[:Category:'.$row->cl_to.'|'.str_replace('_',' ',$row->cl_to).']]';
-                            }
-                            break;
-                        case 'user':
-                            $aHeadings[$row->rev_user_text] = isset($aHeadings[$row->rev_user_text]) ? $aHeadings[$row->rev_user_text] + 1 : 1;
-                            if($row->rev_user == 0) { //anonymous user
-                                $dplArticle->mParentHLink = '[[User:'.$row->rev_user_text.'|'.$row->rev_user_text.']]';
-        
-                            } else {
-                                $dplArticle->mParentHLink = '[[User:'.$row->rev_user_text.'|'.$row->rev_user_text.']]';
-                            }
-                            break;
-                    }
-                }
-            }
-                    
-            $aArticles[] = $dplArticle;
-        }
-        $dbr->freeResult( $res );
-    
-    // ###### SHOW OUTPUT ######
-    
-        $listMode = new DPL2ListMode($sPageListMode, $aSecSeparators, $aMultiSecSeparators, $sInlTxt, $sListHtmlAttr, 
-                                     $sItemHtmlAttr, $aListSeparators, $iOffset, $iDominantSection);
-    
-        $hListMode = new DPL2ListMode($sHListMode, $aSecSeparators, $aMultiSecSeparators, '', $sHListHtmlAttr, 
-                                      $sHItemHtmlAttr, $aListSeparators, $iOffset, $iDominantSection);
-                                                        
-        $dpl = new DPL2($aHeadings, $bHeadingCount, $iColumns, $iRows, $iRowSize, $sRowColFormat, $aArticles, 
-                        $aOrderMethods[0], $hListMode, $listMode, $bEscapeLinks, $bIncPage, $iIncludeMaxLen, 
-                        $aSecLabels, $aSecLabelsMatch, $aSecLabelsNotMatch, $parser, $logger, $aReplaceInTitle, 
-                        $iTitleMaxLen, $defaultTemplateSuffix, $aTableRow);
-                        
-        $dpl2result = $dpl->getText();
-        $header='';
-        if ($sOneResultHeader != '' && $dpl->getRowCount()==1) {
-            $header = str_replace('%PAGES%',1,$sOneResultHeader);
-        } else if ($dpl->getRowCount()==0) {
-            if ($sNoResultsHeader != '')	$output .= 	str_replace( '\n', "\n", str_replace( "¶", "\n", $sNoResultsHeader));
-            if ($sNoResultsFooter != '')	$output .= 	str_replace( '\n', "\n", str_replace( "¶", "\n", $sNoResultsFooter));
-            if ($sNoResultsHeader == '' && $sNoResultsFooter == '')	$output .= $logger->escapeMsg(DPL2_i18n::WARN_NORESULTS);
-        }
-        else {
-            if ($sResultsHeader != '')	$header = str_replace('%PAGES%',$dpl->getRowCount(),$sResultsHeader);
-        }
-        $header = str_replace( '\n', "\n", str_replace( "¶", "\n", $header ));
-        $footer='';
-        if ($sOneResultFooter != '' && $dpl->getRowCount()==1) {
-            $footer = str_replace('%PAGES%',1,$sOneResultFooter);
-        } else {
-            if ($sResultsFooter != '')	$footer = str_replace('%PAGES%',$dpl->getRowCount(),$sResultsFooter);
-        }
-        $footer = str_replace( '\n', "\n", str_replace( "¶", "\n", $footer ));
-        
-        $output .= $header . $dpl2result . $footer;
-        
-        // The following requires an extra parser step which may consume some time
-        // we parse the DPL output and save all referenced found in that output in a global list
-        // in a final user exit after the whole document processing we eliminate all these links
-        // we use a local parser to avoid interference with the main parser
-        
-        if ($bReset[4] || $bReset[5] || $bReset[6] || $bReset[7] ) {
-            // register a hook to reset links which were produced during parsing DPL output
-            global $wgHooks;
-            if (!isset($wgHooks['ParserAfterTidy']) ||
-                !(in_array(__CLASS__ . '::endEliminate',$wgHooks['ParserAfterTidy']) ||
-                  in_array( array( __CLASS__, 'endEliminate'),$wgHooks['ParserAfterTidy']))) {
-            	// changed back to globals, gs
-   	            // $wgHooks['ParserAfterTidy'][]   = __CLASS__ . '::endEliminate';
-   	            $wgHooks['ParserAfterTidy'][]   = __CLASS__ . '__endEliminate';
-            }
-            $parserOutput= $localParser->parse($output,$parser->mTitle,$parser->mOptions);
-        }
-        if ($bReset[4]) {	// LINKS
-            // we trigger the mediawiki parser to find links, images, categories etc. which are contained in the DPL output
-            // this allows us to remove these links from the link list later
-            // If the article containing the DPL statement itself uses one of these links they will be thrown away!!
-            foreach ($parserOutput->getLinks() as $link) {
-                foreach ($link as $key => $val) {
-                    self::$createdLinks[0][$key]=$val;
-                    // $output.= "storing link $val($key).";
-                }
-            }
-        }
-        if ($bReset[5]) {	// TEMPLATES
-            foreach ($parserOutput->getTemplates() as $tpl) {
-                foreach ($tpl as $key => $val) {
-                    self::$createdLinks[1][$key]=$val;
-                    // $output.= "storing use of template $val($key).";
-                }
-            }
-        }
-        if ($bReset[6]) {	// CATEGORIES
-            foreach ($parserOutput->mCategories as $catname => $catkey) {
-                self::$createdLinks[2][$catname] = $catname;
-            }
-        }
-        if ($bReset[7]) {	// IMAGES
-            foreach ($parserOutput->mImages as $imgid => $dummy) {
-                self::$createdLinks[3][$imgid] = $imgid;
-            }
-        }
+				//chop off title if "too long"
+				if( isset($iTitleMaxLen) && (strlen($sTitleText) > $iTitleMaxLen) )
+					$sTitleText = substr($sTitleText, 0, $iTitleMaxLen) . '...';
+				if ($bShowNamespace)
+					//Adapted from Title::getPrefixedText()
+					$sTitleText = str_replace( '_', ' ', $title->prefix($sTitleText) );
+				if ($bEscapeLinks && ($pageNamespace==14 || $pageNamespace==6) ) {
+					// links to categories or images need an additional ":"
+					$articleLink = '[[:'.$title->getPrefixedText().'|'.$wgContLang->convert( $sTitleText ).']]';
+				} else {
+					$articleLink = '[['.$title->getPrefixedText().'|'.$wgContLang->convert( $sTitleText ).']]';
+				}
+				$dplArticle->mLink = $articleLink;
+				
+				//get first char used for category-style output
+				if( isset($row->sortkey) ) {
+					$dplArticle->mStartChar = $wgContLang->convert($wgContLang->firstChar($row->sortkey));
+				}
+				//SHOW PAGE_COUNTER
+				if( isset($row->page_counter) )
+					$dplArticle->mCounter = $row->page_counter;
+				
+				//SHOW PAGE_SIZE
+				if( isset($row->page_len) )
+					$dplArticle->mSize = $row->page_len;
+		
+				//STORE initially selected PAGE	
+				if ( count($aLinksTo)>0  || count($aLinksFrom)>0 ) {
+					if (!isset($row->sel_title)) {
+						$dplArticle->mSelTitle     = 'unknown page';
+						$dplArticle->mSelNamespace = 0;
+					} else {
+						$dplArticle->mSelTitle     = $row->sel_title;
+						$dplArticle->mSelNamespace = $row->sel_ns;
+					}
+				}
+		
+				if ($bGoalIsPages) {
+					//REVISION SPECIFIED
+					if( $sLastRevisionBefore.$sAllRevisionsBefore.$sFirstRevisionSince.$sAllRevisionsSince !='') {
+						$dplArticle->mRevision = $row->rev_id;
+						$dplArticle->mUser = $row->rev_user_text;
+						$dplArticle->mDate = $row->rev_timestamp;
+					}
+					
+					//SHOW "PAGE_TOUCHED" DATE, "FIRSTCATEGORYDATE" OR (FIRST/LAST) EDIT DATE
+					if($bAddPageTouchedDate) 		$dplArticle->mDate = $row->page_touched;
+					elseif ($bAddFirstCategoryDate)	$dplArticle->mDate = $row->cl_timestamp;
+					elseif ($bAddEditDate)			$dplArticle->mDate = $row->rev_timestamp;
+					
+					if ($dplArticle->mDate!='' && $sUserDateFormat!='') {
+						// we add one space for nicer formatting
+						$dplArticle->myDate = gmdate($sUserDateFormat,wfTimeStamp(TS_UNIX,$dplArticle->mDate)).' ';
+					}
+					// CONTRIBUTION, CONTRIBUTOR
+					if($bAddContribution) {
+						$dplArticle->mContribution = $row->contribution;
+						$dplArticle->mContributor  = $row->contributor;
+						$dplArticle->mContrib      = substr('*****************',0,round(log($row->contribution)));
+					}
+					
+					
+					//USER/AUTHOR(S)
+					// because we are going to do a recursive parse at the end of the output phase
+					// we have to generate wiki syntax for linking to a user�s homepage
+					if($bAddUser || $bAddAuthor || $bAddLastEditor || $sLastRevisionBefore.$sAllRevisionsBefore.$sFirstRevisionSince.$sAllRevisionsSince != '') {
+						$dplArticle->mUserLink  = '[[User:'.$row->rev_user_text.'|'.$row->rev_user_text.']]';
+						$dplArticle->mUser = $row->rev_user_text;
+					}
+					
+					//CATEGORY LINKS FROM CURRENT PAGE 
+					if($bAddCategories && $bGoalIsPages && ($row->cats != '')) {
+						$artCatNames = explode(' | ', $row->cats);
+						foreach($artCatNames as $iArtCat => $artCatName) {
+							$dplArticle->mCategoryLinks[] = '[[:Category:'.$artCatName.'|'.str_replace('_',' ',$artCatName).']]';
+							$dplArticle->mCategoryTexts[] = str_replace('_',' ',$artCatName);
+						}
+					}
+					// PARENT HEADING (category of the page, editor (user) of the page, etc. Depends on ordermethod param)
+					if($sHListMode != 'none') {
+						switch($aOrderMethods[0]) {
+							case 'category':
+								//count one more page in this heading
+								$aHeadings[$row->cl_to] = isset($aHeadings[$row->cl_to]) ? $aHeadings[$row->cl_to] + 1 : 1;
+								if($row->cl_to == '') {
+									//uncategorized page (used if ordermethod=category,...)
+									$dplArticle->mParentHLink = '[[:Special:Uncategorizedpages|'.wfMsg('uncategorizedpages').']]';
+								} else {
+									$dplArticle->mParentHLink = '[[:Category:'.$row->cl_to.'|'.str_replace('_',' ',$row->cl_to).']]';
+								}
+								break;
+							case 'user':
+								$aHeadings[$row->rev_user_text] = isset($aHeadings[$row->rev_user_text]) ? $aHeadings[$row->rev_user_text] + 1 : 1;
+								if($row->rev_user == 0) { //anonymous user
+									$dplArticle->mParentHLink = '[[User:'.$row->rev_user_text.'|'.$row->rev_user_text.']]';
+			
+								} else {
+									$dplArticle->mParentHLink = '[[User:'.$row->rev_user_text.'|'.$row->rev_user_text.']]';
+								}
+								break;
+						}
+					}
+				}
+						
+				$aArticles[] = $dplArticle;
+			}
+			$dbr->freeResult( $res );
+		
+		// ###### SHOW OUTPUT ######
+		
+			$listMode = new DPL2ListMode($sPageListMode, $aSecSeparators, $aMultiSecSeparators, $sInlTxt, $sListHtmlAttr, 
+										 $sItemHtmlAttr, $aListSeparators, $iOffset, $iDominantSection);
+		
+			$hListMode = new DPL2ListMode($sHListMode, $aSecSeparators, $aMultiSecSeparators, '', $sHListHtmlAttr, 
+										  $sHItemHtmlAttr, $aListSeparators, $iOffset, $iDominantSection);
+															
+			$dpl = new DPL2($aHeadings, $bHeadingCount, $iColumns, $iRows, $iRowSize, $sRowColFormat, $aArticles, 
+							$aOrderMethods[0], $hListMode, $listMode, $bEscapeLinks, $bIncPage, $iIncludeMaxLen, 
+							$aSecLabels, $aSecLabelsMatch, $aSecLabelsNotMatch, $parser, $logger, $aReplaceInTitle, 
+							$iTitleMaxLen, $defaultTemplateSuffix, $aTableRow);
+							
+			$dpl2result = $dpl->getText();
+			$header='';
+			if ($sOneResultHeader != '' && $dpl->getRowCount()==1) {
+				$header = str_replace('%PAGES%',1,$sOneResultHeader);
+			} else if ($dpl->getRowCount()==0) {
+				if ($sNoResultsHeader != '')	$output .= 	str_replace( '\n', "\n", str_replace( "¶", "\n", $sNoResultsHeader));
+				if ($sNoResultsFooter != '')	$output .= 	str_replace( '\n', "\n", str_replace( "¶", "\n", $sNoResultsFooter));
+				if ($sNoResultsHeader == '' && $sNoResultsFooter == '')	$output .= $logger->escapeMsg(DPL2_i18n::WARN_NORESULTS);
+			}
+			else {
+				if ($sResultsHeader != '')	$header = str_replace('%PAGES%',$dpl->getRowCount(),$sResultsHeader);
+			}
+			$header = str_replace( '\n', "\n", str_replace( "¶", "\n", $header ));
+			$footer='';
+			if ($sOneResultFooter != '' && $dpl->getRowCount()==1) {
+				$footer = str_replace('%PAGES%',1,$sOneResultFooter);
+			} else {
+				if ($sResultsFooter != '')	$footer = str_replace('%PAGES%',$dpl->getRowCount(),$sResultsFooter);
+			}
+			$footer = str_replace( '\n', "\n", str_replace( "¶", "\n", $footer ));
+			
+			$output .= $header . $dpl2result . $footer;
+			
+			// The following requires an extra parser step which may consume some time
+			// we parse the DPL output and save all referenced found in that output in a global list
+			// in a final user exit after the whole document processing we eliminate all these links
+			// we use a local parser to avoid interference with the main parser
+			
+			if ($bReset[4] || $bReset[5] || $bReset[6] || $bReset[7] ) {
+				// register a hook to reset links which were produced during parsing DPL output
+				global $wgHooks;
+				if (!isset($wgHooks['ParserAfterTidy']) ||
+					!(in_array(__CLASS__ . '::endEliminate',$wgHooks['ParserAfterTidy']) ||
+					  in_array( array( __CLASS__, 'endEliminate'),$wgHooks['ParserAfterTidy']))) {
+					// changed back to globals, gs
+					// $wgHooks['ParserAfterTidy'][]   = __CLASS__ . '::endEliminate';
+					$wgHooks['ParserAfterTidy'][]   = __CLASS__ . '__endEliminate';
+				}
+				$parserOutput= $localParser->parse($output,$parser->mTitle,$parser->mOptions);
+			}
+			if ($bReset[4]) {	// LINKS
+				// we trigger the mediawiki parser to find links, images, categories etc. which are contained in the DPL output
+				// this allows us to remove these links from the link list later
+				// If the article containing the DPL statement itself uses one of these links they will be thrown away!!
+				foreach ($parserOutput->getLinks() as $link) {
+					foreach ($link as $key => $val) {
+						self::$createdLinks[0][$key]=$val;
+						// $output.= "storing link $val($key).";
+					}
+				}
+			}
+			if ($bReset[5]) {	// TEMPLATES
+				foreach ($parserOutput->getTemplates() as $tpl) {
+					foreach ($tpl as $key => $val) {
+						self::$createdLinks[1][$key]=$val;
+						// $output.= "storing use of template $val($key).";
+					}
+				}
+			}
+			if ($bReset[6]) {	// CATEGORIES
+				foreach ($parserOutput->mCategories as $catname => $catkey) {
+					self::$createdLinks[2][$catname] = $catname;
+				}
+			}
+			if ($bReset[7]) {	// IMAGES
+				foreach ($parserOutput->mImages as $imgid => $dummy) {
+					self::$createdLinks[3][$imgid] = $imgid;
+				}
+			}
+			
+		} else {
+			$wgMemc->incr( $mem_key_counter, 1 );
+			$output = $mem_key;
+		}
+		
+		$wgMessageCache->unlock($__cacheKey);
     
         return $output;
     
