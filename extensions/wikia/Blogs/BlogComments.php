@@ -635,7 +635,7 @@ class BlogCommentList {
 		$isOwner   = ( $owner == $wgUser->getName() );
 		$canEdit   = $wgUser->isAllowed( "edit" );
 		$isBlocked = $wgUser->isBlocked();
-		error_log ("user is blocked = " . intval($wgUser->isBlocked()) . " can edit = " . $canEdit . " \n", 3, "/tmp/moli.log");
+
 		$comments  = $this->getCommentPages();
 		$canDelete = $wgUser->isAllowed( "delete" );
 
