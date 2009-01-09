@@ -26,6 +26,7 @@ class SkinHome extends SkinTemplate {
 		$this->template  = 'HomeTemplate';
 
 		$wgOut->addInlineScript('var search_terms = ' . wfSearchPropositions() . ';');
+		$wgOut->addInlineScript('var search_terms_extra = ' . wfSearchPropositions('_extra') . ';');
 
 		wfProfileOut(__METHOD__);
 	}
@@ -837,13 +838,13 @@ class HomeDataProvider {
 	}
 }
 
-function wfSearchPropositions() {
+function wfSearchPropositions($extra='') {
 	global $wgMemc;
-	$key = 'wikia:main_page:search_terms';
+	$key = 'wikia:main_page:search_terms' . $extra;
 	$items = $wgMemc->get($key);
 	if(!$items) {
 		$prefix = 'Main-page-';
-		$msgKey = 'search-terms';
+		$msgKey = 'search-terms' . $extra;
 		if (!wfEmptyMsg($prefix . $msgKey, $msg = wfMsg($prefix . $msgKey))) {
 			$msg = explode("\n", $msg);
 			$items = array();

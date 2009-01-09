@@ -28,8 +28,14 @@ function change_search_value() {
 
 function perform_search() {
 	for (i=0; i<search_terms.length; i++) {
-		if (searchField.value == search_terms[i][0]) {
+		if ( (searchField.value+'').toLowerCase() == search_terms[i][0].toLowerCase()) {
 			document.location = 'http://' + search_terms[i][1] + '.wikia.com';
+			exit;
+		}
+	}
+	for (i=0; i<search_terms_extra.length; i++) {
+		if ( (searchField.value+'').toLowerCase() == search_terms_extra[i][0].toLowerCase()) {
+			document.location = 'http://' + search_terms_extra[i][1] + '.wikia.com';
 			exit;
 		}
 	}
