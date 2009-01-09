@@ -845,19 +845,19 @@ function wfSpecialPictureGameHome(){
 				$output .= "<div class=\"page-nav\">";
 
 				if($page > 1) {
-					$output .= "<a href=\"\index.php?title=Special:PictureGameHome&picGameAction=gallery&page=" . ($page - 1) . "&type={$type}&direction={$direction}\">prev</a> ";
+					$output .= "<a href=\"/index.php?title=Special:PictureGameHome&picGameAction=gallery&page=" . ($page - 1) . "&type={$type}&direction={$direction}\">prev</a> ";
 				}
 
 				for($i = 1; $i <= $numofpages; $i++) {
 					if($i == $page) {
 					    $output .= ($i . " ");
 					} else {
-						$output .="<a href=\"\index.php?title=Special:PictureGameHome&picGameAction=gallery&page={$i}&type={$type}&direction={$direction}\">{$i}</a> ";
+						$output .="<a href=\"/index.php?title=Special:PictureGameHome&picGameAction=gallery&page={$i}&type={$type}&direction={$direction}\">{$i}</a> ";
 					}
 				}
 
 				if( $page < $numofpages ){
-					$output .=" <a href=\"\index.php?title=Special:PictureGameHome&picGameAction=gallery&page=" . ($page + 1) . "&type={$type}&direction={$direction}\">next</a>";
+					$output .=" <a href=\"/index.php?title=Special:PictureGameHome&picGameAction=gallery&page=" . ($page + 1) . "&type={$type}&direction={$direction}\">next</a>";
 				}
 
 				$output .= "</div>";

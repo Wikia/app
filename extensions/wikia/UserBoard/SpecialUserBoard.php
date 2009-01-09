@@ -174,7 +174,7 @@
 			if($numofpages>1){
 				$output .= "<div class=\"page-nav\">";
 				if($page > 1){ 
-					$output .= "<a href=\"\index.php?title=Special:UserBoard&user={$user_safe}&page=" . ($page-1) . "{$qs}\">" . wfMsg("userboard_prevpage") . "</a> ";
+					$output .= "<a href=\"/index.php?title=Special:UserBoard&user={$user_safe}&page=" . ($page-1) . "{$qs}\">" . wfMsg("userboard_prevpage") . "</a> ";
 				}
 				
 				
@@ -188,12 +188,12 @@
 					if($i == $page){
 					    $output .=($i." ");
 					}else{
-					    $output .="<a href=\"\index.php?title=Special:UserBoard&user={$user_safe}&page=$i{$qs}\">$i</a> ";
+					    $output .="<a href=\"/index.php?title=Special:UserBoard&user={$user_safe}&page=$i{$qs}\">$i</a> ";
 					}
 				}
 		
 				if(($total - ($per_page * $page)) > 0){
-					$output .=" <a href=\"\index.php?title=Special:UserBoard&user={$user_safe}&page=" . ($page+1) . "{$qs}\">" . wfMsg("userboard_nextpage") . "</a>"; 
+					$output .=" <a href=\"/index.php?title=Special:UserBoard&user={$user_safe}&page=" . ($page+1) . "{$qs}\">" . wfMsg("userboard_nextpage") . "</a>"; 
 				}
 				$output .= "</div><p>";
 			}
