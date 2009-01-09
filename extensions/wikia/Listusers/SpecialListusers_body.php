@@ -229,10 +229,10 @@ class ListUsers extends SpecialPage {
 					}
 					
 					$aLinks = array (
-						0 => $sk->makeLinkObj(Title::newFromText('Contributions', NS_SPECIAL), wfMsg('listuserscontribs'), "target={$oUser->getName()}"),
-						1 => $sk->makeLinkObj(Title::newFromText("Editcount/{$oUser->getName()}", NS_SPECIAL), wfMsg('listusersedits'), ""),
-						2 => $sk->makeLinkObj(Title::newFromText("BlockIP/{$oUser->getName()}", NS_SPECIAL), wfMsg('listusersblock')),
-						3 => $sk->makeLinkObj(Title::newFromText('UserRights', NS_SPECIAL), wfMsg('listusersrights'), "user={$oUser->getName()}"),
+						0 => $sk->makeLinkObj(Title::newFromText('Contributions', NS_SPECIAL), $wgLang->ucfirst(wfMsg('contribslink')), "target={$oUser->getName()}"),
+						1 => $sk->makeLinkObj(Title::newFromText("Editcount/{$oUser->getName()}", NS_SPECIAL), $wgLang->ucfirst(wfMsg('listusersedits')), ""),
+						2 => $sk->makeLinkObj(Title::newFromText("BlockIP/{$oUser->getName()}", NS_SPECIAL), $wgLang->ucfirst(wfMsg('blocklink'))),
+						3 => $sk->makeLinkObj(Title::newFromText('UserRights', NS_SPECIAL), $wgLang->ucfirst(wfMsg('listgrouprights-rights')), "user={$oUser->getName()}"),
 					);
 					
 					$aUsers['data'][$oRow->lu_user_id] = array(

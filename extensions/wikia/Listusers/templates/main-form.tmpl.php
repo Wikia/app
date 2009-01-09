@@ -8,7 +8,8 @@
 	white-space: nowrap;
 }
 .lu_row {
-	border: 1px dashed #E0E4EF;
+	border-bottom: 1px outset #E0E4EF;
+	border-right: 1px outset #E0E4EF;
 	font-size:100%;
 	padding: 1px 3px;
 	text-align: left;
@@ -74,7 +75,7 @@ function wfJSPager(total,link,page,limit,func) {
 	var selectStyle = "font-size:8.5pt;font-weight:normal;";
 	var tdStyle = "";
 	var tableStyle = "font-size:8.5pt;font-weight:normal;margin:5px;";
-	var linkStyle = "background-color:#FFFFFF;border:1px solid #CBCBCB;padding:2px 6px;";
+	var linkStyle = "padding:2px 6px;";
 
 	limit = typeof(limit) != 'undefined' ?limit : 20;
 	page = typeof(page) != 'undefined' ? page : 0;
@@ -177,7 +178,7 @@ function wkLUshowDetails(limit, offset)
 			div_details.innerHTML = "";
 			var records = document.getElementById('lu-result');
 			if ( (!resData) || (resData['nbr_records'] == 0) ) {
-				records.innerHTML = "<div style=\"clear:both;border:1px dashed #D5DDF2;margin:0px 5px 0px 15px;padding:5px;\"><?=wfMsg('listusersnodata')?></div>";
+				records.innerHTML = "<br /><div style=\"clear:both;border:1px dashed #D5DDF2;margin:4px 5px 4px 15px;padding:5px;\"><?=wfMsg('listusersnodata')?></div><br />";
 			} else { 
 				page = resData['page'];
 				limit = resData['limit'];
