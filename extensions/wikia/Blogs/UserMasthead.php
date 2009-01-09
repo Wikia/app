@@ -43,7 +43,15 @@ function userMasthead() {
 			$reqTitle = $wgRequest->getText("title", false);
 			if ( strpos( $reqTitle, "/") !== false ) {
 				list ( , $userspace ) = explode( "/", $reqTitle, 2 );
-				$user = User::newFromName($userspace);
+				$user = User::newFromName( $userspace );
+				if( ! $user ) {
+					/**
+					 * means that url is malformed or page doesn't exists
+					 * or user doesn't exist. We don't know what user it is
+					 * and we give up
+					 */
+					return true;
+				}
 				$userspace = $user->getName();
 				$Avatar = BlogAvatar::newFromUserName( $userspace );
 			} else {
