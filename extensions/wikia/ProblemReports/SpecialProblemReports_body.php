@@ -61,10 +61,12 @@ class SpecialProblemReports extends SpecialPage
 				    $problem['reporter'] .= ' ('.$problem['ip'].')';
 				}
 				
+				$problemTitle = Title::makeTitle($problem['ns'],$problem['title'])->getFullText();
+				
 				// format date
 				$item = new FeedItem
 				(
-					$problem['title'] . ' - ' . str_replace('http://', '', $problem['server']),
+					$problemTitle . ' - ' . str_replace('http://', '', $problem['server']),
 					'<a href="'.$user_url.'">'.htmlspecialchars(trim($problem['reporter'])).'</a>: '. wfMsg('pr_table_problem_type'). ' - '. $this->problemTypes[$problem['type']] .
 						$wgOut->parse( $problem['summary'] ),
 					$url,
@@ -162,9 +164,8 @@ class SpecialProblemReports extends SpecialPage
 			$log = new LogPage('pr_rep_log', true); // true: also add entry to Special:Recentchanges
 			
 			$reportedTitle = Title::newFromText($report['title'], $report['ns']);
-			$spTitle = Title::newFromText( 'ProblemReports', NS_SPECIAL );
 				
-			$log->addEntry('prl_eml', $spTitle, '', array
+			$log->addEntry('prl_eml', $reportedTitle, '', array
 			(
 				$reportedTitle,
 				$wgUser->getName(),

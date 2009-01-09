@@ -42,7 +42,7 @@
 <?php
 
 	// change hostname to the one set in pr_server
-	$url = Title::makeTitle(NS_MAIN,$problem['title'])->getFullURL();
+	$url = Title::makeTitle($problem['ns'],$problem['title'])->getFullURL();
 	$url = str_replace($wgServer, $problem['server'], $url);
     
 	// comments page - red links only for not existing local project_talk pages (use parser for this)
@@ -89,7 +89,7 @@
 <?php endif ?></td>
 	<td><a href="<?= $more_url ?>" title="<?= wfMsg('pr_raports_from_this_wikia') ?>"><?= str_replace(array('http://', '.wikia.com', '.wikia-inc.com'), '', $problem['server']) ?></a>&nbsp;<sup><a href="<?= Title::newFromText('ProblemReports', NS_SPECIAL)->escapeLocalURL('showall=1&lang='.$problem['lang']) ?>"><?= $problem['lang'] ?></a></sup></td>
 	<td style="text-align: center; width: 40px"><?= htmlspecialchars($problemTypes[$problem['type']]) ?></td>
-	<td><a href="<?= $url ?>"><?= wordwrap(htmlspecialchars($problem['title']), 30, ' <br />', true) ?></a></td>
+	<td><a href="<?= $url ?>"><?= wordwrap(htmlspecialchars(Title::makeTitle($problem['ns'],$problem['title'])->getFullText()), 30, ' <br />', true) ?></a></td>
 	<td style="text-align: center"><?= $date ?></td>
 	<td><a href="<?= htmlspecialchars($user_url) ?>"><?= htmlspecialchars(shortenText($user_name,30)) ?></a>
 	<?php if (!empty($problem['email']) && $can_do_actions):?><a href="<?= Title::newFromText('ProblemReports/'.$problem['id'], NS_SPECIAL)->escapeLocalURL() ?>" title="<?= wfMsg('email')?>" style="text-decoration: none"><img src="<?= $wgExtensionsPath ?>/wikia/ProblemReports/images/mail_icon.gif" alt="@" width="16" height="16"/></a>
