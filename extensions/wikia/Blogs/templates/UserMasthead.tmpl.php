@@ -12,7 +12,7 @@ if ($wgTitle == 'Special:Watchlist') {
 ?>
 
 <div id="user_masthead" class="reset clearfix">
-	<?php echo $avatar->getLinkTag( 50, 50, false, "avatar", false, ( ( $userspace == $wgUser->getName() ) || ( $wgUser->isAllowed( 'removeavatar' ) && ( !$avatar-> isDefault() ) ) ) ) ?>
+	<?php echo $avatar->display( 50, 50, false, "avatar", false, ( ( $userspace == $wgUser->getName() ) || ( $wgUser->isAllowed( 'removeavatar' ) && ( !$avatar-> isDefault() ) ) ) ) ?>
 <? if ( ( $userspace == $wgUser->getName() ) || ( $wgUser->isAllowed( 'removeavatar' ) ) ) { ?>
 	<span class="avatarOverlay color1" style="visibility: hidden;" id="wk-avatar-change" onmouseover="this.style.visibility='visible';" onmouseout="this.style.visibility='hidden';">
 <? if ( $userspace == $wgUser->getName() ) { ?>	

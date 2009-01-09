@@ -34,7 +34,7 @@ function WidgetCommunity($id, $params) {
 
 	$avatar = $wgStylePath.'/monaco/images/community_avatar.gif';
 	if( class_exists("BlogAvatar") ) {
-		$avatar = BlogAvatar::newFromUser( $wgUser )->getLinkTag( 29, 29, false, false, "community_avatar" );
+		$avatar = BlogAvatar::newFromUser( $wgUser )->display( 29, 29, false, false, "community_avatar" );
 	}
 	elseif(class_exists("WikiaAvatar")) {
 		$userAvatar = new WikiaAvatar($wgUser->getId());
