@@ -133,8 +133,14 @@ class SkinMonaco extends SkinTemplate {
 				wfDebugLog('monaco', 'There is user data for toolboxlinks');
 				$data_array['toolboxlinks'] = $wgUser->mMonacoData['toolboxlinks'];
 			}
-
 		}
+
+		# Used for page load time tracking
+		$tpl->data['headlinks'] .= <<<EOS
+		<script type="text/javascript">/*<![CDATA[*/
+		var wgNow = new Date();		
+		/*]]>*/</script>
+EOS;
 
 		foreach($data_array['toolboxlinks'] as $key => $val) {
 			if(isset($val['org']) && $val['org'] == 'whatlinkshere') {
