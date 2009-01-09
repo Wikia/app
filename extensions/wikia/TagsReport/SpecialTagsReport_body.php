@@ -109,7 +109,7 @@ class TagsReportPage extends SpecialPage {
 		global $wgMemc, $wgSharedDB, $wgDBStats;
 		global $wgCityId;
 		$tagsList = array();
-		$memkey = wfForeignMemcKey( $wgSharedDB, null, "TagsReport", "list", $wgCityId );
+		$memkey = wfForeignMemcKey( $wgSharedDB, null, "TagsReport", $wgCityId );
 		$cached = $wgMemc->get($memkey);
 		if (!is_array ($cached)) { 
 			$dbs = wfGetDBExt();
@@ -133,7 +133,7 @@ class TagsReportPage extends SpecialPage {
 		global $wgMemc, $wgSharedDB, $wgDBStats;
 		global $wgCityId;
 		$tagsArticles = array();
-		$memkey = wfForeignMemcKey( $wgSharedDB, null, "TagsReport", "articles", $this->mTag );
+		$memkey = wfForeignMemcKey( $wgSharedDB, null, "TagsReport", $this->mTag, $wgCityId );
 		$cached = $wgMemc->get($memkey);
 		if (!is_array ($cached)) { 
 			$dbs = wfGetDBExt();
