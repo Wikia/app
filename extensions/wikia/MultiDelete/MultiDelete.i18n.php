@@ -16,6 +16,7 @@ $messages['en'] = array(
 	'multidelete-error-empty-selection' => 'Please supply the list of selected wikis',
 	'multidelete-error-empty-pages' => 'Please choose either one specified page or a given list of pages.',
 	'multidelete-error-multi-page' => 'Only one title at a time allowed for multi-wiki deletion.',
+	'multidelete-info-empty-list' => 'Provided title was not found on any selected wikis.',
 	'multidelete-task-added' => 'Multi delete task #$1 was added.',
 	'multidelete-task-error' => 'There was an error in adding the multi delete task.',
 	'multidelete-task-none-selected' => 'You didn\'t select any articles. The task was not added.',

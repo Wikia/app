@@ -108,6 +108,8 @@ class MultiDelete extends SpecialPage {
 		$username = $mMode == 'script' ? 'delete page script' : $wgUser->getName();
 		$wikis = array();
 
+		$wgOut->SetPageTitle(wfMsg('multidelete-title'));
+
 		switch ($mRange) {
 			case 'one':
 				$wikis[$wgCityId] = '';
@@ -122,6 +124,7 @@ class MultiDelete extends SpecialPage {
 				break;
 
 			case 'all-confirmed':
+				$mPages = unserialize(htmlspecialchars_decode($mPages[0]));
 				$wikis = $this->getWikisWithTitles($wgRequest->getArray('mSelectedWikis'), $mPages);
 				break;
 
@@ -145,6 +148,7 @@ class MultiDelete extends SpecialPage {
 					array('city_list.city_id = city_domains.city_id', "city_domain IN ($selectedWikis)"),
 					__METHOD__
 				);
+
 				foreach ($res as $row) {
 					$wikis[$row->city_id] = $row->city_domain;
 				}
@@ -153,8 +157,6 @@ class MultiDelete extends SpecialPage {
 				$formData['editToken'] = htmlspecialchars($wgUser->editToken());
 				$formData['wikis'] = $wikis;
 				$formData['mPages'] = $mPages;
-
-				$wgOut->SetPageTitle(wfMsg('multidelete-title'));
 
 				$oTmpl = new EasyTemplate(dirname( __FILE__ ) . '/templates/');
 				$oTmpl->set_vars( array(
@@ -207,7 +209,7 @@ class MultiDelete extends SpecialPage {
 			$titleNormalized = str_replace(' ', '_', $page->getText());
 
 			$where = array('page_namespace' => $namespace,
-					'page_title' => $dbr->addQuotes($titleNormalized));
+					'page_title' => $titleNormalized);
 			if (!is_null($wikis)) {
 				$where[] = $selectedWikis;
 			}
