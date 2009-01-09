@@ -270,8 +270,25 @@ class RegexBlockForm extends SpecialPage
         
         $result = false;
         $ip = $wgRequest->getVal('ip');
+        $blckid = intval($wgRequest->getVal('blckid'));
         $blocker = $wgRequest->getVal('blocker') ;
         $titleObj = Title::makeTitle( NS_SPECIAL, 'Regexblock' ) ;
+
+		if (empty($ip) && !empty($blckid)) {
+			$dbr = wfGetDB( DB_SLAVE );
+			$oRes = $dbr->select(
+				wfSharedTable(REGEXBLOCK_TABLE),
+				array("blckby_name", "blckby_blocker"),
+				array("blckby_id = '". $blckid  ."'"),
+				__METHOD__
+			);
+			if ( $oRow = $dbr->fetchObject( $oRes ) ) {
+				/* if still valid or infinite, ok to block user */
+				$ip = $oRow->blckby_name;
+				$blocker = $oRow->blckby_blocker;
+			}
+			$dbr->freeResult ($oRes);
+		}
 
         if (function_exists('wfRegexBlockClearExpired')) {
             $result = wfRegexBlockClearExpired($ip, $blocker);
@@ -280,10 +297,10 @@ class RegexBlockForm extends SpecialPage
             $dbw =& wfGetDB( DB_MASTER );
             
             $dbw->delete(
-                    wfSharedTable(REGEXBLOCK_TABLE), 
-                    array("blckby_name = {$dbw->addQuotes($ip)}"),
-                    __METHOD__
-                );
+            	wfSharedTable(REGEXBLOCK_TABLE), 
+            	array("blckby_name = {$dbw->addQuotes($ip)}"),
+            	__METHOD__
+            );
                 
             if ( $dbw->affectedRows() ) {
                 /* success, remember to delete cache key  */

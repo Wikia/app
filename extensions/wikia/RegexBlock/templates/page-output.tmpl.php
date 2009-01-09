@@ -38,7 +38,7 @@ if (is_array($blockers)) {
 <li style="border-bottom:1px dashed #778899; padding-bottom:2px;font-size:11px">
    <b><font style="color:#3B7F07; font-size:12px"><?=$row['blckby_name']?></font> <?=$coma?> <?=$exact_match?> <?=$create_block?></b> <?=$coma?> 
    (<?=wfMsg('regexblock_blocker_name')?>: <b><?=$row['blocker']?></b>, <?=$reason?>) <?=wfMsg('regexblock_on_time')?> <?=$row['time']?> <?=$coma?> 
-   (<a href="<?=$action_unblock?>&ip=<?=$row['ublock_ip']?>&blocker=<?=$row['ublock_blocker']?>"><?=wfMsg('regexblock_unblock')?></a>) <?=$coma?> <?=$row['expiry']?> <?=$coma?> (<?=$stats_link?>)
+   (<a href="<?=$action_unblock?>&blckid=<?=urlencode($row['blckid'])?>&blocker=<?=$row['ublock_blocker']?>"><?=wfMsg('regexblock_unblock')?></a>) <?=$coma?> <?=$row['expiry']?> <?=$coma?> (<?=$stats_link?>)
 </li>
 <? } ?>
 </ul>
