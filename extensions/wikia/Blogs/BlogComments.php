@@ -217,7 +217,7 @@ class BlogComment {
 			$text     = $wgOut->parse( $this->mLastRevision->getText() );
 			$anchor   = explode( "/", $this->mTitle->getDBkey(), 3 );
 			$sig      = ( $this->mUser->isAnon() )
-				? Xml::span( wfMsg("blog-comments-anonymous"), false, array( "title" => $this->mUser->getName() ) )
+				? Xml::span( wfMsg("blog-comments-anonymous"), false, array( "title" => $this->mFirstRevision->getUserText() ) )
 				: Xml::element( 'a', array ( "href" => $this->mUser->getUserPage()->getFullUrl() ), $this->mUser->getName() );
 
 			$hidden   = isset( $this->mProps[ "hiddencomm" ] )
