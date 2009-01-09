@@ -251,7 +251,7 @@ class BlogAvatar {
 	}
 
 	/**
-	 * getLinkTag -- return image with link to user page
+	 * display -- return image with link to user page
 	 *
 	 * @param Integer $width default AVATAR_DEFAULT_WIDTH -- width of image
 	 * @param Integer $height default AVATAR_DEFAULT_HEIGHT -- height of image
@@ -259,7 +259,7 @@ class BlogAvatar {
 	 * @param String  $class -- which class should be used for element
 	 * @param String  $id -- DOM identifier
 	 */
-	public function getLinkTag( $width = AVATAR_DEFAULT_WIDTH, $height = AVATAR_DEFAULT_HEIGHT, $alt = false, $class = "avatar", $id = false, $showEditMenu = false ) {
+	public function display( $width = AVATAR_DEFAULT_WIDTH, $height = AVATAR_DEFAULT_HEIGHT, $alt = false, $class = "avatar", $id = false, $showEditMenu = false ) {
 
 		wfProfileIn( __METHOD__ );
 		$image = $this->getImageTag( $width, $height, $alt, $class, $id );
@@ -269,7 +269,12 @@ class BlogAvatar {
 			$hideEditDiv = "document.getElementById('wk-avatar-change').style.visibility='hidden'";
 			$additionalAttribs = "onmouseover=\"{$showEditDiv}\" onmouseout=\"{$hideEditDiv}\"";
 		}
-		$url = sprintf("<a href=\"%s\" %s>%s</a>", $this->mUser->getUserPage()->getFullUrl(), $additionalAttribs, $image );
+		if( ! $this->mUser->isAnon() ) {
+			$url = sprintf("<a href=\"%s\" %s>%s</a>", $this->mUser->getUserPage()->getFullUrl(), $additionalAttribs, $image );
+		}
+		else {
+			$url = $image;
+		}
 		wfProfileOut( __METHOD__ );
 
 		return $url;

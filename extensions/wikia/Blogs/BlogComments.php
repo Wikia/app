@@ -230,8 +230,8 @@ class BlogComment {
 				"title"     => $this->mTitle,
 				"author"    => $this->mUser,
 				"anchor"    => $anchor,
-				"avatar"    => BlogAvatar::newFromUser( $this->mUser )->getLinkTag( 50, 50 ),
-				"hidden"	=> $hidden,
+				"avatar"    => BlogAvatar::newFromUser( $this->mUser )->display( 50, 50 ),
+				"hidden"    => $hidden,
 				"timestamp" => $wgContLang->timeanddate( $this->mFirstRevision->getTimestamp() )
 			);
 
