@@ -251,3 +251,11 @@ h4.mw-specialpagesgroup {
 #shared-image-dup, #shared-image-conflict {
 	font-style: italic;
 }
+
+/*
+ * macbre: fix empty list items render bug in FF
+ */
+
+#bodyContent li {
+	min-height: 1.5em;
+}
