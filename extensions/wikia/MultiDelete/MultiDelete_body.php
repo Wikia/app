@@ -7,6 +7,7 @@
  * Deletes batch of pages on selected wikis
  *
  * @author Maciej B³aszkowski (Marooned) <marooned at wikia-inc.com>
+ * @author Bartek £apiñski <bartek at wikia-inc.com>
  * @date 2009-01-09
  * @copyright Copyright (C) 2009 Maciej B³aszkowski, Wikia Inc.
  * @license http://www.gnu.org/copyleft/gpl.html GNU General Public License 2.0 or later
@@ -30,14 +31,14 @@ class MultiDelete extends SpecialPage {
 	 * contructor
 	 */
 	function  __construct() {
-		parent::__construct('MultiDelete' /*class*/, 'MultiDelete' /*restriction*/);
+		parent::__construct('MultiDelete' /*class*/, 'multidelete' /*restriction*/);
 	}
 
 	function execute($subpage) {
 		global $wgUser, $wgOut, $wgRequest, $wgTitle, $wgParser;
 
-		if(!$wgUser->isAllowed('MultiDelete')) {
-			$wgOut->permissionRequired('MultiDelete');
+		if(!$wgUser->isAllowed('multidelete')) {
+			$wgOut->permissionRequired('multidelete');
 			return;
 		}
 
