@@ -10,8 +10,8 @@
 		if (empty($formData['wikis'])) {
 			echo wfMsg('multidelete-info-empty-list');
 		} else {
-			foreach ($formData['wikis'] as $wikiId => $wikiDomain) {
-				echo "<label><input name=\"mSelectedWikis[]\" type=\"checkbox\" value=\"$wikiId\" />$wikiDomain</label><br/>\n";
+			foreach ($formData['wikis'] as $wikiId => $wikiData) {
+				echo "<label><input name=\"mSelectedWikis[]\" type=\"checkbox\" value=\"$wikiId\" />{$wikiData['domain']}</label><br/>\n";
 			}
 		}
 		?>
