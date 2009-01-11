@@ -10,6 +10,7 @@ if (!defined('MEDIAWIKI')) die();
 # seen from the web. Change it if required ($wgScriptPath is the
 # path to the base directory of your wiki). No final slash.
 ##
+if (!isset($sfgScriptPath))
 $sfgScriptPath = $wgScriptPath . '/extensions/SemanticForms';
 ##
 
@@ -18,6 +19,7 @@ $sfgScriptPath = $wgScriptPath . '/extensions/SemanticForms';
 # seen on your local filesystem. Used against some PHP file path
 # issues.
 ##
+if (!isset($sfgIP))
 $sfgIP = $IP . '/extensions/SemanticForms';
 ##
 
