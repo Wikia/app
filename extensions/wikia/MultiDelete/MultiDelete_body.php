@@ -120,10 +120,23 @@ class MultiDelete extends SpecialPage {
 				if (count($mPages) > 1) {
 					return wfMsg('multidelete-error-multi-page');
 				}
-				$wikis = $this->getWikisWithTitles(null, $mPages);
+
+				$wikisWithTitle = $this->getWikisWithTitles(null, $mPages);
+
+				$formData['editToken'] = htmlspecialchars($wgUser->editToken());
+				$formData['wikis'] = $wikisWithTitle;
+				$formData['mPages'] = $mPages;
+
+				$oTmpl = new EasyTemplate(dirname( __FILE__ ) . '/templates/');
+				$oTmpl->set_vars( array(
+						'title' => $wgTitle,
+						'formData' => $formData
+					));
+				$wgOut->addHTML($oTmpl->execute('selection'));
+				return;
 				break;
 
-			case 'all-confirmed':
+			case 'confirmed':
 				$mPages = unserialize(htmlspecialchars_decode($mPages[0]));
 				$wikis = $this->getWikisWithTitles($wgRequest->getArray('mSelectedWikis'), $mPages);
 				break;
@@ -142,6 +155,7 @@ class MultiDelete extends SpecialPage {
 				array_walk($selectedWikis, create_function('&$item, $key', '$item = "\'" . mysql_real_escape_string(trim($item)) . "\'";'));
 				$selectedWikis = implode(',', $selectedWikis);
 
+				//get selected wikis
 				$res = $dbr->select(
 					array(wfSharedTable('city_list'), wfSharedTable('city_domains')),
 					array('city_list.city_id', 'city_domain'),
@@ -154,8 +168,11 @@ class MultiDelete extends SpecialPage {
 				}
 				$dbr->freeResult($res);
 
+				//get wikis with selected titles
+				$wikisWithTitle = getWikisWithTitles($wikis, $mPages);
+
 				$formData['editToken'] = htmlspecialchars($wgUser->editToken());
-				$formData['wikis'] = $wikis;
+				$formData['wikis'] = $wikisWithTitle;
 				$formData['mPages'] = $mPages;
 
 				$oTmpl = new EasyTemplate(dirname( __FILE__ ) . '/templates/');
@@ -174,6 +191,7 @@ class MultiDelete extends SpecialPage {
 					}
 					$lang = substr($mRange, 5);
 
+					//get selected wikis
 					$dbr = wfGetDB(DB_SLAVE);
 					$res = $dbr->select(
 						array(wfSharedTable('city_list'), wfSharedTable('city_domains')),
@@ -185,7 +203,21 @@ class MultiDelete extends SpecialPage {
 						$wikis[$row->city_id] = $row->city_domain;
 					}
 					$dbr->freeResult($res);
-					$wikis = $this->getWikisWithTitles($wikis, $mPages);
+
+					//get wikis with selected titles
+					$wikisWithTitle = getWikisWithTitles($wikis, $mPages);
+
+					$formData['editToken'] = htmlspecialchars($wgUser->editToken());
+					$formData['wikis'] = $wikisWithTitle;
+					$formData['mPages'] = $mPages;
+
+					$oTmpl = new EasyTemplate(dirname( __FILE__ ) . '/templates/');
+					$oTmpl->set_vars( array(
+							'title' => $wgTitle,
+							'formData' => $formData
+						));
+					$wgOut->addHTML($oTmpl->execute('selection'));
+					return;
 				}
 				break;
 		}
@@ -203,7 +235,7 @@ class MultiDelete extends SpecialPage {
 		$wikisArr = array();
 		$dbr = wfGetDBExt(DB_SLAVE);
 		foreach ($titles as $title) {
-			list($title, $tmp) = explode('|', $title, 2);
+			list($title, $reason) = explode('|', $title, 2);
 			$page = Title::newFromText($title);
 			if (!is_object($page)) {
 				continue;
@@ -223,7 +255,7 @@ class MultiDelete extends SpecialPage {
 				__METHOD__
 			);
 			foreach ($res as $row) {
-				$wikisArr[$row->page_wikia_id][] = array($namespace, $page->getText());
+				$wikisArr[$row->page_wikia_id][] = array($namespace, $titleNormalized, $reason);
 			}
 			$dbr->freeResult($res);
 		}
@@ -240,8 +272,7 @@ class MultiDelete extends SpecialPage {
 					$chunkId++;
 					$chunkCount = 0;
 				}
-				@list($title, $reason) = explode('|', $titleData[1], 2);
-				$chunks[$chunkId][$wikiId][] = array('namespace' => $titleData[0], 'title' => $title, 'reason' => $reason);
+				$chunks[$chunkId][$wikiId][] = array('namespace' => $titleData[0], 'title' => $titleData[1], 'reason' => $titleData[3]);
 				$chunkCount++;
 			}
 		}
