@@ -192,6 +192,8 @@ class MultiDelete extends SpecialPage {
 
 		if (count($wikis)) {
 			$this->deletePagesOnWikis($wikis, $username);
+		} else {
+			$wgOut->addHtml(wfMsg('multidelete-info-empty-list'));
 		}
 	}
 
@@ -201,6 +203,7 @@ class MultiDelete extends SpecialPage {
 		$wikisArr = array();
 		$dbr = wfGetDBExt(DB_SLAVE);
 		foreach ($titles as $title) {
+			list($title, $tmp) = explode('|', $title, 2);
 			$page = Title::newFromText($title);
 			if (!is_object($page)) {
 				continue;
