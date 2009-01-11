@@ -255,7 +255,7 @@ class MultiDelete extends SpecialPage {
 				__METHOD__
 			);
 			foreach ($res as $row) {
-				$wikisArr[$row->page_wikia_id][] = array($namespace, $titleNormalized, $reason);
+				$wikisArr[$row->page_wikia_id][] = array('namespace' => $namespace, 'title' => $titleNormalized, 'reason' => $reason, 'domain' => $wikis[$row->page_wikia_id]);
 			}
 			$dbr->freeResult($res);
 		}
@@ -272,7 +272,7 @@ class MultiDelete extends SpecialPage {
 					$chunkId++;
 					$chunkCount = 0;
 				}
-				$chunks[$chunkId][$wikiId][] = array('namespace' => $titleData[0], 'title' => $titleData[1], 'reason' => $titleData[3]);
+				$chunks[$chunkId][$wikiId][] = array('namespace' => $titleData['namespace'], 'title' => $titleData['title'], 'reason' => $titleData['reason']);
 				$chunkCount++;
 			}
 		}
