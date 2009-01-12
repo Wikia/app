@@ -214,15 +214,22 @@ function wkLUshowDetails(limit, offset)
 				}
 				_tmp += "</table><br />";
 				records.innerHTML = _tmp + pager + "</div>";
+				if (typeof TieDivLibrary != "undefined" ) {
+					TieDivLibrary.calculate();
+				};
 			}
 		},
 		failure: function( oResponse )
 		{
+			var resData = YAHOO.Tools.JSONParse(oResponse.responseText);
 			var records = document.getElementById('lu-result');
 			div_details.innerHTML = "";
 			if (!resData) {
 				records.innerHTML = "<?=wfMsg('lookupcontribsinvalidresults')?>";
 			}
+			if (typeof TieDivLibrary != "undefined" ) {
+				TieDivLibrary.calculate();
+			}; 
 		}
 	};
 
