@@ -31,6 +31,7 @@ class WikiMover {
 	public $mFrom = null;                      #--- used on load(), determine of method
 	public $mType = null;                      #--- used on load(), determine if external
 	public $mOverwrite = false;                #--- startes overwrite articles no matter what
+	public $mMoveUserGroups = true;            #--- toggle for user groups transfer
 	public $mDataLoaded = false;
 	public $mInternalLogger = array();
 	public $mTargetTextFields = array();       #--- contains fields from "text" table
@@ -718,6 +719,11 @@ class WikiMover {
 	 */
 	public function moveUserGroups()
 	{
+		if (empty( $this->mMoveUserGroups )) {
+			$this->log('Skipped moving user groups as instructed');
+			return true;
+		}
+
 		if (empty( $this->mSourceName )) {
 			wfDebug("wikimover: source database name is empty", true);
 			return false;

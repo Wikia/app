@@ -136,6 +136,7 @@ class CreateWikiTask extends BatchTask {
 				$this->mParams["wikia_id"]
 			);
 			$oWikiMover->setOverwrite( true );
+			$oWikiMover->mMoveUserGroups = false;
 			$oWikiMover->load();
 			$oWikiMover->move();
 
