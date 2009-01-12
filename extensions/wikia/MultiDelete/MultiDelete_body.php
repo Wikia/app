@@ -260,7 +260,7 @@ class MultiDelete extends SpecialPage {
 			}
 			$res = $dbr->select(
 				'pages',
-				'page_wikia_id',
+				'DISTINCT page_wikia_id',
 				array(	'page_namespace' => $namespace,
 					'page_title' => $titleNormalized,
 					'page_wikia_id IN (' . implode(',', array_keys($wikis)) . ')'
