@@ -17,7 +17,7 @@
 		?>
 		<input type='hidden' name='mEditToken' value="<?= $formData['editToken'] ?>" />
 		<input type='hidden' name='mRange' value="confirmed" />
-		<input type='hidden' name='mPages' value="<?= htmlspecialchars(serialize($formData['mPages'])) ?>" />
+		<input type='hidden' name='mTitles' value="<?= htmlspecialchars(serialize($formData['mTitles'])) ?>" />
 		<input name="mAction" type="submit" value="<?= wfMsg('multidelete-button') ?>"/>
 	</form>
 </div>
