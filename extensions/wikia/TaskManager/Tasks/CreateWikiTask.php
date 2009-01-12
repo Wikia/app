@@ -47,7 +47,7 @@ class CreateWikiTask extends BatchTask {
 	function execute( $params = null ) {
 		global $IP, $wgDevelEnvironment;
 		global $wgWikiaLocalSettingsPath, $wgWikiaAdminSettingsPath; // $wgExtensionMessagesFiles;
-		global $wgHubCreationVariables, $wgLangCreationVariables;
+		global $wgHubCreationVariables, $wgLangCreationVariables, $wgUniversalCreationVariables;
 
 		if( !isset( $wgWikiaAdminSettingsPath ) ) {
 			$wgWikiaAdminSettingsPath = dirname( $wgWikiaLocalSettingsPath ) . "/../AdminSettings.php";
@@ -122,6 +122,9 @@ class CreateWikiTask extends BatchTask {
 		 *   preferences). The return address is community@wikia.com.
 		 */
 		$this->sendWelcomeMail();
+
+		#--- modify wiki's variables
+		$this->addCreationSettings( 0, $wgUniversalCreationVariables, 'universal' );
 
 		#--- modify wiki's variables based on language and $wgLangCreationVariables values
 		$this->addCreationSettings( $this->mTaskData['language'], $wgLangCreationVariables, 'language' );
