@@ -273,24 +273,26 @@ class ListUsers extends SpecialPage {
 					$dbs->freeResult( $res );
 					
 					# last edited 
+					$city_dbname = WikiFactory::IDtoDB( $wgCityId );
+					$dbr = wfGetDB( DB_SLAVE );
 					$aWhere = array( 
-						"rev_wikia_id" => $wgCityId, 
-						" rev_user in (". $dbs->makeList( array_keys($aUsers['data']) ).") " 
+						"page_id = rev_page",
+						" rev_user in (". $dbr->makeList( array_keys($aUsers['data']) ).") " 
 					);
- 					$res = $dbs->select(
-						array( '`dataware`.`blobs`' ),
-						array( "rev_user as user_id", "rev_page_id", "rev_namespace", "max(rev_timestamp) as ts" ),
+ 					$res = $dbr->select(
+						array( "`$city_dbname`.`revision`, `$city_dbname`.`page` " ),
+						array( "rev_user as user_id", "page_id", "page_title", "page_namespace", "max(rev_timestamp) as ts " ),
 						$aWhere,
 						__METHOD__,
-						array( 'GROUP BY' => 'rev_page_id, rev_namespace' )
+						array( 'GROUP BY' => 'user_id' )
 					);
-					while ( $oRow = $dbs->fetchObject( $res ) ) {
+					while ( $oRow = $dbr->fetchObject( $res ) ) {
 						if (isset($aUsers['data'][$oRow->user_id])) {
 							$last_edited = $wgLang->timeanddate( wfTimestamp( TS_MW, $oRow->ts ), true );
-							$aUsers['data'][$oRow->user_id]['last_edited'] = $sk->makeLinkObj(Title::newFromId($oRow->rev_page_id), $last_edited);
+							$aUsers['data'][$oRow->user_id]['last_edited'] = $sk->makeLinkObj(Title::newFromText( $oRow->page_title, $oRow->page_namespace ), $last_edited);
 						}
 					}
-					$dbs->freeResult( $res );
+					$dbr->freeResult( $res );
 				}
 				
 				$wgMemc->set( $memkey, $aUsers, 60*60*3 );
