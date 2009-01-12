@@ -1370,7 +1370,7 @@ if(!$custom_article_footer && $displayArticleFooter) {
 <?php
 	$FauxRequest = new FauxRequest(array( "action" => "query", "list" => "wkvoteart", "wkpage" => $this->data['articleid'], "wkuservote" => true ));
 	$oApi = new ApiMain($FauxRequest);
-	$oApi->execute();
+	try { $oApi->execute(); } catch (Exception $e) {};
 	$aResult =& $oApi->GetResultData();
 
 	if(count($aResult['query']['wkvoteart']) > 0) {
@@ -1379,7 +1379,11 @@ if(!$custom_article_footer && $displayArticleFooter) {
 		} else {
 			$voted = false;
 		}
-		$rating = $aResult['query']['wkvoteart'][$this->data['articleid']]['votesavg'];
+		if (!empty($aResult['query']['wkvoteart'][$this->data['articleid']]['votesavg'])) {
+			$rating = $aResult['query']['wkvoteart'][$this->data['articleid']]['votesavg'];
+		} else {
+			$rating = 0;
+		}
 	} else {
 		$voted = false;
 		$rating = 0;
