@@ -27,7 +27,6 @@
 .lu_header {
 	valign:top;
 	border:1px solid black;
-	border-left:0px;
 	border-bottom:0px;
 }
 .lu_left {
@@ -267,32 +266,37 @@ YAHOO.util.Event.onDOMReady(function () {
 <div style="clear:both">
 <form method="post" action="<?=$action?>" id="lu-form">
 <table style="width:100%;" cellpadding="0" cellspacing="0"><tr>
-<td valign="middle" class="lu_left" style="border-bottom:0px;width:230px;">
 <? $found = 0; ?>	
+<td valign="middle" class="lu_left" style="border-bottom:0px;">
 <? if ( !empty($groupList) && (!empty($aGroups)) ) { ?>
-	<ul class="lu_groups">
-	<? foreach ($aGroups as $groupName => $userGroupName) { ?>
+	<table><tr>
+	<? $i = 0; foreach ($aGroups as $groupName => $userGroupName) { ?>
+		<? if ($i % 3 == 0) { ?>
+	</tr><tr>
+		<? } ?>
 		<? $found += (in_array($groupName, $mGroup) && isset($groupList[$groupName])) ? $groupList[$groupName] : 0 ?>
-		<li style="height:15px"><span style="vertical-align: middle"><input type="checkbox" name="lu_target" id="lu_target" value="<?=$groupName?>" "<?=(in_array($groupName, $mGroup))?"checked":""?>"></span>
-			<span style="padding-bottom:5px;"><strong><?=$wgContLang->ucfirst($userGroupName)?></strong> (<?= wfMsg('listuserscount', (isset($groupList[$groupName]))?$groupList[$groupName]:0 ) ?>)</span>
-		</li>
+	<td valign="middle" style="padding:0px 3px;">
+		<span style="vertical-align:middle"><input type="checkbox" name="lu_target" id="lu_target" value="<?=$groupName?>" "<?=(in_array($groupName, $mGroup))?"checked":""?>"></span>
+		<span style="padding-bottom:5px;"><strong><?=$wgContLang->ucfirst($userGroupName)?></strong> (<?=wfMsg('listuserscount', (isset($groupList[$groupName]))?$groupList[$groupName]:0 )?>)</span>
+	</td>
+		<? $i++; ?>
 	<? } ?>
-	</ul>
+	</tr></table>
 <? } ?>
 </td>
+<td valign="middle" class="lu_result" rowspan="2">
+	<div style="font-size:85%;" id="listusers-result"><?=wfMsg('listusersfound', $found)?></div>
+</td>
+</tr>
+<tr>
 <td class="lu_header">
 	<div class="lu_filter">
 		<span class="lu_filter lu_first"><?= wfMsg('listusersstartingtext') ?></span>
 		<span class="lu_filter"><input type="text" name="lu_search" id="lu_search" size="5"></span>
-	</div>
-	<div class="lu_filter">
 		<span class="lu_filter lu_first"><?= wfMsg('listuserscontributed') ?></span>
 		<span class="lu_filter"><select name="lu_contributed" id="lu_contributed" ><? foreach ($contributed as $val => $text) { ?><option <?= ($val == $selContrib) ? "selected" : "" ?> value="<?=$val?>"><?=$text?><? } ?></select></span>
 		<span class="lu_filter"><input type="button" value="<?=wfMsg('listusersdetails')?>" id="lu-showusers"></span>
 	</div>	
-</td>
-<td valign="middle" class="lu_result">
-	<div style="font-size:85%;" id="listusers-result"><?=wfMsg('listusersfound', $found)?></div>
 </td>
 </tr>
 <tr>
