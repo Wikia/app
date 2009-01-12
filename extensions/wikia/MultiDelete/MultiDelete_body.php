@@ -52,7 +52,7 @@ class MultiDelete extends SpecialPage {
 		}
 
 		$formData['wikiInbox'] = $wgRequest->getText('mWikiInbox');
-		$formData['page'] = $wgRequest->getText('mPages');
+		$formData['titles'] = $wgRequest->getText('mTitles');
 		$formData['mode'] = $wgRequest->getVal('mMode');
 		$formData['modes'] = array(
 			'script' => wfMsg('multidelete-select-script'),
@@ -96,15 +96,15 @@ class MultiDelete extends SpecialPage {
 
 	function doSubmit() {
 		global $wgCityId, $wgRequest, $wgUser, $wgOut, $wgTitle;
-		$mPages = trim($wgRequest->getText('mPages'));
-		if ($mPages == '') {
+		$mTitles = trim($wgRequest->getText('mTitles'));
+		if ($mTitles == '') {
 			return wfMsg('multidelete-error-empty-pages');
 		}
 		$mMode = $wgRequest->getVal('mMode');
 		$mRange = $wgRequest->getVal('mRange');
 		$mWikiInbox = trim($wgRequest->getText('mWikiInbox'));
 
-		$mPages = explode("\n", $mPages);
+		$mTitles = explode("\n", $mTitles);
 		$username = $mMode == 'script' ? 'delete page script' : $wgUser->getName();
 		$wikis = array();
 
@@ -113,19 +113,20 @@ class MultiDelete extends SpecialPage {
 		switch ($mRange) {
 			case 'one':
 				$wikis[$wgCityId] = '';
-				$wikis = $this->getWikisWithTitles($wikis, $mPages);
+				$wikis = $this->getWikisWithTitles($wikis, $mTitles);
+				$this->deletePagesOnWikis($wikis, $mTitles, $username, 'single');
 				break;
 
 			case 'all':
-				if (count($mPages) > 1) {
+				if (count($mTitles) > 1) {
 					return wfMsg('multidelete-error-multi-page');
 				}
 
-				$wikisWithTitle = $this->getWikisWithTitles(null, $mPages);
+				$wikisWithTitle = $this->getWikisWithTitles(null, $mTitles);
 
 				$formData['editToken'] = htmlspecialchars($wgUser->editToken());
 				$formData['wikis'] = $wikisWithTitle;
-				$formData['mPages'] = $mPages;
+				$formData['mTitles'] = $mTitles;
 
 				$oTmpl = new EasyTemplate(dirname( __FILE__ ) . '/templates/');
 				$oTmpl->set_vars( array(
@@ -133,19 +134,23 @@ class MultiDelete extends SpecialPage {
 						'formData' => $formData
 					));
 				$wgOut->addHTML($oTmpl->execute('selection'));
-				return;
 				break;
 
 			case 'confirmed':
-				$mPages = unserialize(htmlspecialchars_decode($mPages[0]));
-				$wikis = $this->getWikisWithTitles($wgRequest->getArray('mSelectedWikis'), $mPages);
+				$mTitles = unserialize(htmlspecialchars_decode($mTitles[0]));
+				$wikis = $wgRequest->getArray('mSelectedWikis');
+				if (count($wikis)) {
+					$this->deletePagesOnWikis($wikis, $mTitles, $username);
+				} else {
+					$wgOut->addHtml(wfMsg('multidelete-info-empty-list'));
+				}
 				break;
 
 			case 'selected':
 				if ($mWikiInbox == '') {
 					return wfMsg('multidelete-error-empty-selection');
 				}
-				if (count($mPages) > 1) {
+				if (count($mTitles) > 1) {
 					return wfMsg('multidelete-error-multi-page');
 				}
 
@@ -169,11 +174,11 @@ class MultiDelete extends SpecialPage {
 				$dbr->freeResult($res);
 
 				//get wikis with selected titles
-				$wikisWithTitle = getWikisWithTitles($wikis, $mPages);
+				$wikisWithTitle = getWikisWithTitles($wikis, $mTitles);
 
 				$formData['editToken'] = htmlspecialchars($wgUser->editToken());
 				$formData['wikis'] = $wikisWithTitle;
-				$formData['mPages'] = $mPages;
+				$formData['mTitles'] = $mTitles;
 
 				$oTmpl = new EasyTemplate(dirname( __FILE__ ) . '/templates/');
 				$oTmpl->set_vars( array(
@@ -181,12 +186,11 @@ class MultiDelete extends SpecialPage {
 						'formData' => $formData
 					));
 				$wgOut->addHTML($oTmpl->execute('selection'));
-				return;
 				break;
 
 			default:
 				if (strpos($mRange, 'lang:') !== false) {
-					if (count($mPages) > 1) {
+					if (count($mTitles) > 1) {
 						return wfMsg('multidelete-error-multi-page');
 					}
 					$lang = substr($mRange, 5);
@@ -205,11 +209,11 @@ class MultiDelete extends SpecialPage {
 					$dbr->freeResult($res);
 
 					//get wikis with selected titles
-					$wikisWithTitle = getWikisWithTitles($wikis, $mPages);
+					$wikisWithTitle = getWikisWithTitles($wikis, $mTitles);
 
 					$formData['editToken'] = htmlspecialchars($wgUser->editToken());
 					$formData['wikis'] = $wikisWithTitle;
-					$formData['mPages'] = $mPages;
+					$formData['mTitles'] = $mTitles;
 
 					$oTmpl = new EasyTemplate(dirname( __FILE__ ) . '/templates/');
 					$oTmpl->set_vars( array(
@@ -217,15 +221,8 @@ class MultiDelete extends SpecialPage {
 							'formData' => $formData
 						));
 					$wgOut->addHTML($oTmpl->execute('selection'));
-					return;
 				}
 				break;
-		}
-
-		if (count($wikis)) {
-			$this->deletePagesOnWikis($wikis, $username);
-		} else {
-			$wgOut->addHtml(wfMsg('multidelete-info-empty-list'));
 		}
 	}
 
@@ -262,20 +259,41 @@ class MultiDelete extends SpecialPage {
 		return $wikisArr;
 	}
 
-	function deletePagesOnWikis($wikis, $username) {
+	function deletePagesOnWikis($wikis, $titles, $username, $mode = 'multi') {
 		global $wgUser, $wgOut;
 		$chunks = array();
 		$chunkId = $chunkCount = 0;
-		foreach ($wikis as $wikiId => $titles) {
-			foreach ($titles as $titleData) {
+		if ($mode == 'multi') {		//many wiki, single title
+			list($title, $reason) = explode('|', $titles[0], 2);
+			$page = Title::newFromText($title);
+			if (!is_object($page)) {
+				$wgOut->addHtml(wfMsg('multidelete-task-error'));
+				return;
+			}
+			$namespace = $page->getNamespace();
+			$titleNormalized = str_replace(' ', '_', $page->getText());
+
+			foreach ($wikis as $wikiId) {
 				if ($chunkCount >= CHUNK_SIZE) {
 					$chunkId++;
 					$chunkCount = 0;
 				}
-				$chunks[$chunkId][$wikiId][] = array('namespace' => $titleData['namespace'], 'title' => $titleData['title'], 'reason' => $titleData['reason']);
+				$chunks[$chunkId][$wikiId][] = array('namespace' => $namespace, 'title' => $titleNormalized, 'reason' => $reason);
 				$chunkCount++;
 			}
+		} else {					//single wiki, many titles
+			foreach ($wikis as $wikiId => $titles) {
+				foreach ($titles as $titleData) {
+					if ($chunkCount >= CHUNK_SIZE) {
+						$chunkId++;
+						$chunkCount = 0;
+					}
+					$chunks[$chunkId][$wikiId][] = array('namespace' => $titleData['namespace'], 'title' => $titleData['title'], 'reason' => $titleData['reason']);
+					$chunkCount++;
+				}
+			}
 		}
+
 		foreach ($chunks as $chunk) {
 			$thisTask = new MultiDeleteTask;
 			$thisTask->mArguments = $chunk;

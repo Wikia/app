@@ -54,7 +54,7 @@
 					<?= wfMsg('multidelete-page') ?>
 				</td>
 				<td>
-					<textarea name="mPages" id="mPages" cols="40" rows="10"><?= empty($formData['page']) ? '' : $formData['page'] ?></textarea>
+					<textarea name="mTitles" id="mTitles" cols="40" rows="10"><?= empty($formData['titles']) ? '' : $formData['titles'] ?></textarea>
 				</td>
 			</tr>
 
