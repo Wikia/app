@@ -122,7 +122,22 @@ class MultiDelete extends SpecialPage {
 					return wfMsg('multidelete-error-multi-page');
 				}
 
-				$wikisWithTitle = $this->getWikisWithTitles(null, $mTitles);
+				$dbr = wfGetDB(DB_SLAVE);
+
+				//get selected wikis
+				$res = $dbr->select(
+					array(wfSharedTable('city_list'), wfSharedTable('city_domains')),
+					array('city_list.city_id', 'city_domain'),
+					array('city_list.city_id = city_domains.city_id'),
+					__METHOD__
+				);
+
+				foreach ($res as $row) {
+					$wikis[$row->city_id] = $row->city_domain;
+				}
+				$dbr->freeResult($res);
+
+				$wikisWithTitle = $this->getWikisWithTitles($wikis, $mTitles);
 
 				$formData['editToken'] = htmlspecialchars($wgUser->editToken());
 				$formData['wikis'] = $wikisWithTitle;
@@ -142,7 +157,7 @@ class MultiDelete extends SpecialPage {
 				if (count($wikis)) {
 					$this->deletePagesOnWikis($wikis, $mTitles, $username);
 				} else {
-					$wgOut->addHtml(wfMsg('multidelete-info-empty-list'));
+					$wgOut->addHtml(wfMsg('multidelete-task-none-selected'));
 				}
 				break;
 
@@ -174,7 +189,7 @@ class MultiDelete extends SpecialPage {
 				$dbr->freeResult($res);
 
 				//get wikis with selected titles
-				$wikisWithTitle = getWikisWithTitles($wikis, $mTitles);
+				$wikisWithTitle = $this->getWikisWithTitles($wikis, $mTitles);
 
 				$formData['editToken'] = htmlspecialchars($wgUser->editToken());
 				$formData['wikis'] = $wikisWithTitle;
@@ -209,7 +224,7 @@ class MultiDelete extends SpecialPage {
 					$dbr->freeResult($res);
 
 					//get wikis with selected titles
-					$wikisWithTitle = getWikisWithTitles($wikis, $mTitles);
+					$wikisWithTitle = $this->getWikisWithTitles($wikis, $mTitles);
 
 					$formData['editToken'] = htmlspecialchars($wgUser->editToken());
 					$formData['wikis'] = $wikisWithTitle;
@@ -227,8 +242,6 @@ class MultiDelete extends SpecialPage {
 	}
 
 	function getWikisWithTitles($wikis, $titles) {
-		$selectedWikis = is_null($wikis) ? '' : ('page_wikia_id IN (' . implode(',', array_keys($wikis)) . ')');
-
 		$wikisArr = array();
 		$dbr = wfGetDBExt(DB_SLAVE);
 		foreach ($titles as $title) {
@@ -248,7 +261,10 @@ class MultiDelete extends SpecialPage {
 			$res = $dbr->select(
 				'pages',
 				'page_wikia_id',
-				$where,
+				array(	'page_namespace' => $namespace,
+					'page_title' => $titleNormalized,
+					'page_wikia_id IN (' . implode(',', array_keys($wikis)) . ')'
+				),
 				__METHOD__
 			);
 			foreach ($res as $row) {
