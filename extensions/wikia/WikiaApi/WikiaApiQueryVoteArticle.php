@@ -95,7 +95,7 @@ class WikiaApiQueryVoteArticle extends WikiaApiQuery {
 					throw new WikiaApiQueryError(2);
 				}
 
-				$select_user_vote = "(select vote from page_vote p2 where p2.article_id = p1.article_id and ";
+				$select_user_vote = "(select max(vote) from page_vote p2 where p2.article_id = p1.article_id and ";
 
 				if (! empty($user_id) ) {
 					$this->setCacheKey ($lcache_key, 'U', $user_id);
