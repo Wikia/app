@@ -1,15 +1,13 @@
 <!-- s:<?= __FILE__ ?> -->
-<style type="text/css">
-.TablePager td, .TablePager th {padding: 5px; border: 1px solid silver}
-.noactive {background-color: #FFEAEA ! important}
-</style>
-
 <div id="PaneList">
 	<form method="post" id="mainForm" action="<?= $title->getLocalUrl() ?>">
 		<?php
 		if (empty($formData['wikis'])) {
 			echo wfMsg('multidelete-info-empty-list');
 		} else {
+			?>
+			<label><input id="mSelectAllWikis" type="checkbox" /><?= wfMsg('multidelete-select-all') ?></label><br/><br/>
+			<?php
 			foreach ($formData['wikis'] as $wikiId => $wikiData) {
 				foreach ($wikiData as $titleData) {
 					echo "<label><input name=\"mSelectedWikis[]\" type=\"checkbox\" value=\"$wikiId\" />{$titleData['domain']}</label><br/>\n";
@@ -25,4 +23,16 @@
 		?>
 	</form>
 </div>
+<script type="text/javascript">
+addOnloadHook(function () {
+	YAHOO.util.Event.addListener('mSelectAllWikis', 'click',  selectAll);
+});
+
+function selectAll() {
+	var wikis = document.getElementsByName('mSelectedWikis[]');
+	for (i=wikis.length-1; i>=0; i--) {
+		wikis[i].checked = this.checked;
+	}
+}
+</script>
 <!-- e:<?= __FILE__ ?> -->

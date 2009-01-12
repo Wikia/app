@@ -21,6 +21,7 @@ $messages['en'] = array(
 	'multidelete-task-error' => 'There was an error in adding the multi delete task.',
 	'multidelete-task-none-selected' => 'You didn\'t select any articles. The task was not added.',
 	'multidelete-task-link' => 'You can check your task ',
+	'multidelete-select-all' => 'Select all',
 	'multidelete-on' => 'on',
 	'multidelete-page' => "Pages to be deleted" ,
 	'multidelete-reason' => 'Reason for deletion',
