@@ -226,6 +226,7 @@ li {
 	font-family:arial;
 	font-size:12px;
 	z-index:2;
+	padding-bottom:50px;
 }
 
 #side-navigation a {
