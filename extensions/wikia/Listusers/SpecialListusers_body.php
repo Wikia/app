@@ -204,7 +204,7 @@ class ListUsers extends SpecialPage {
 				}
 				
 				if (!empty($text)) {
-					$aWhere[] = " lu_user_name like '".$dbs->escapeLike($text)."%' ";
+					$aWhere[] = " lu_user_name >= ".$dbs->addQuotes($text)." ";
 				}
 
 				if (!empty($contrib)) {

@@ -189,12 +189,11 @@ function wkLUshowDetails(limit, offset)
 				var _tmp = "<div style=\"clear:both\">";
 				_tmp += pager;
  				_tmp += "<br /><table width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" valign=\"top\">";
-				var oneRow = "<tr><th class=\"lu_row\" rowspan=\"2\">#</th>";
-				oneRow += "<th class=\"lu_row\" rowspan=\"2\"><?=wfMsg('listusers-username')?></th>";
-				oneRow += "<th class=\"lu_row\" rowspan=\"2\"><?=wfMsg('listusers-groups')?></th>";
-				oneRow += "<th class=\"lu_row\" rowspan=\"2\"><?=wfMsg('listusersrev-cnt')?></th>";
-				oneRow += "<th class=\"lu_row\" colspan=\"2\"><?=wfMsg('listusers-last')?></th></tr>";
-				oneRow += "<tr><th class=\"lu_row\"><?=wfMsg('listusers-loggedin')?></th>";
+				var oneRow = "<tr><th class=\"lu_row\">#</th>";
+				oneRow += "<th class=\"lu_row\"><?=wfMsg('listusers-username')?></th>";
+				oneRow += "<th class=\"lu_row\"><?=wfMsg('listusers-groups')?></th>";
+				oneRow += "<th class=\"lu_row\"><?=wfMsg('listusersrev-cnt')?></th>";
+				oneRow += "<th class=\"lu_row\"><?=wfMsg('listusers-loggedin')?></th>";
 				oneRow += "<th class=\"lu_row\"><?=wfMsg('listusers-edited')?></th></tr>";
 				_tmp += oneRow;
  				loop = limit * offset;
