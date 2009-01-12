@@ -33,9 +33,6 @@ $wgNamespacesWithSubpages[ NS_BLOG_ARTICLE_TALK ] = true;
 $wgNamespacesWithSubpages[ NS_BLOG_LISTING ] = true;
 $wgNamespacesWithSubpages[ NS_BLOG_LISTING_TALK ] = true;
 
-$wgContentNamespaces[] = NS_BLOG_ARTICLE;
-$wgContentNamespaces[] = NS_BLOG_LISTING;
-
 /**
  * localized blog ns - proof of concept aka quick hack
  *
