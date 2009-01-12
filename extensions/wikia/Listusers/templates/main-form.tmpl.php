@@ -186,7 +186,7 @@ function wkLUshowDetails(limit, offset)
 				div_details.innerHTML = foundText.replace("CNT", resData['nbr_records']);
 				//
 				pager = wfJSPager(resData['nbr_records'],"/index.php?title=Special:Listusers", page, limit, 'wkLUshowDetails');
-				var _tmp = "<div>";
+				var _tmp = "<div style=\"clear:both\">";
 				_tmp += pager;
  				_tmp += "<br /><table width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" valign=\"top\">";
 				var oneRow = "<tr><th class=\"lu_row\" rowspan=\"2\">#</th>";
@@ -258,6 +258,7 @@ YAHOO.util.Event.onDOMReady(function () {
 /*]]>*/
 </script>
 <p class='error'><?=$error?></p>
+<div style="clear:both">
 <form method="post" action="<?=$action?>" id="lu-form">
 <table style="width:100%;" cellpadding="0" cellspacing="0"><tr>
 <td valign="middle" class="lu_left" style="border-bottom:0px;width:230px;">
@@ -293,5 +294,6 @@ YAHOO.util.Event.onDOMReady(function () {
 </tr>
 </table>
 </form>
+</div>
 <!-- END OF DISTRIBUTION TABLE -->
 <!-- e:<?= __FILE__ ?> -->
