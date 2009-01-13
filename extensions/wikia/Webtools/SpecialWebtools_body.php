@@ -132,10 +132,10 @@ class WebtoolsHTML extends Webtools {
 				"<td valign=\"top\">" . $this->getSearchForm() . "</td></tr>\n</table>\n" .
 
 				"<table >" .
-				"<tr><td><h1 class=\"mw-headline\">". wfMsgHtml( 'wt_search_stats' ) . "</h1></td>" .
-				"<td><h1 class=\"mw-headline\">". wfMsgHtml( 'wt_click_stats' ) . "</h1></td></tr>\n" .
-				"<tr><td valign=\"top\">". $this->getSearchStats( $search_query ) . "</h1></td>" .
-				"<td valign=\"top\">". $this->getSearchStats( $click_query ) . "</h1></td></tr>\n</table>\n";
+				"<tr><td><h2 class=\"mw-headline\">". wfMsgHtml( 'wt_search_stats' ) . "</h2></td>" .
+				"<td><h2 class=\"mw-headline\">". wfMsgHtml( 'wt_click_stats' ) . "</h2></td></tr>\n" .
+				"<tr><td valign=\"top\">". $this->getSearchStats( $search_query ) . "</td>" .
+				"<td valign=\"top\">". $this->getSearchStats( $click_query ) . "</td></tr>\n</table>\n";
 
 		$wgOut->addHTML( $out );
 	}
