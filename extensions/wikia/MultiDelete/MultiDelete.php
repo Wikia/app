@@ -6,9 +6,9 @@
  * A MultiDelete extension for MediaWiki
  * Deletes batch of pages
  *
- * @author Maciej B≥aszkowski (Marooned) <marooned at wikia-inc.com>
+ * @author Maciej B≈Åaszkowski (Marooned) <marooned at wikia-inc.com>
  * @date 2009-01-09
- * @copyright Copyright (C) 2009 Maciej B≥aszkowski, Wikia Inc.
+ * @copyright Copyright (C) 2009 Maciej B≈Çaszkowski, Wikia Inc.
  * @license http://www.gnu.org/copyleft/gpl.html GNU General Public License 2.0 or later
  * @package MediaWiki
  * @subpackage SpecialPage
@@ -25,7 +25,7 @@ if (!defined('MEDIAWIKI')) {
 
 $wgExtensionCredits['specialpage'][] = array(
 	'name' => 'MultiDelete',
-	'author' => '[http://www.wikia.com/wiki/User:Marooned Maciej B≥aszkowski (Marooned)]',
+	'author' => '[http://www.wikia.com/wiki/User:Marooned Maciej B≈Çaszkowski (Marooned)]',
 	'description' => 'This extension deletes a batch of pages or a page on multiple wikis.'
 );
 
