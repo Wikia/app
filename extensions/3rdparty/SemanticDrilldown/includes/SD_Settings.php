@@ -5,6 +5,7 @@
 # seen from the web. Change it if required ($wgScriptPath is the
 # path to the base directory of your wiki). No final slash.
 ##
+if (!isset($sdgScriptPath))
 $sdgScriptPath = $wgScriptPath . '/extensions/SemanticDrilldown';
 ##
 
@@ -13,6 +14,7 @@ $sdgScriptPath = $wgScriptPath . '/extensions/SemanticDrilldown';
 # seen on your local filesystem. Used against some PHP file path
 # issues.
 ##
+if (!isset($sdgIP))
 $sdgIP = $IP . '/extensions/SemanticDrilldown';
 ##
 
