@@ -7,7 +7,7 @@ if (!defined('MEDIAWIKI')) die();
  * @subpackage Extensions
  *
  * @author Tomasz Klim <tomek@wikia.com>
- * @author Maciej B³aszkowski (Marooned) <marooned@wikia.com> [new way for registering SpecialPage]
+ * @author Maciej BÅ‚aszkowski (Marooned) <marooned@wikia.com> [new way for registering SpecialPage]
  * @copyright Copyright (C) 2007 Tomasz Klim, Wikia Inc.
  * @license http://www.gnu.org/copyleft/gpl.html GNU General Public License 2.0 or later
  *
