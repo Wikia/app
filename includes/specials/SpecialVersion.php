@@ -32,13 +32,14 @@ class SpecialVersion {
 		$wgMessageCache->loadAllMessages();
 
 		$wgOut->addHTML( '<div dir="ltr">' );
-		$text = 
+		$text =
 			$this->MediaWikiCredits() .
 			$this->softwareInformation() .
 			$this->extensionCredits();
 		if  ( $wgSpecialVersionShowHooks ) {
 			$text .= $this->wgHooks();
 		}
+		Wikia::log( __METHOD__, "execute", $text );
 		$wgOut->addWikiText( $text );
 		$wgOut->addHTML( $this->IPInfo() );
 		$wgOut->addHTML( '</div>' );
@@ -158,9 +159,9 @@ class SpecialVersion {
 				foreach ( $wgExtensionCredits[$type] as $extension ) {
 					if ( isset( $extension['version'] ) ) {
 						$version = $extension['version'];
-					} elseif ( isset( $extension['svn-revision'] ) && 
-						preg_match( '/\$(?:Rev|LastChangedRevision|Revision): *(\d+)/', 
-							$extension['svn-revision'], $m ) ) 
+					} elseif ( isset( $extension['svn-revision'] ) &&
+						preg_match( '/\$(?:Rev|LastChangedRevision|Revision): *(\d+)/',
+							$extension['svn-revision'], $m ) )
 					{
 						$version = 'r' . $m[1];
 					} else {

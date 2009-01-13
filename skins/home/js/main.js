@@ -54,9 +54,9 @@ function search_field_blur() {
 }
 
 YAHOO.util.Event.onDOMReady(function() {
-	YAHOO.util.Event.addListener('search_button', "click", perform_search); 
-	YAHOO.util.Event.addListener('search_field', "focus", search_field_focus); 
-	YAHOO.util.Event.addListener('search_field', "blur", search_field_blur); 
+	YAHOO.util.Event.addListener('search_button', "click", perform_search);
+	YAHOO.util.Event.addListener('search_field', "focus", search_field_focus);
+	YAHOO.util.Event.addListener('search_field', "blur", search_field_blur);
 	searchField = YAHOO.util.Dom.get('search_field');
 	change_search_value();
 	search_timer = setInterval(change_search_value, 5000);
@@ -67,7 +67,7 @@ function wikia_search() {
 }
 
 //Add tracking for links
-//Author: Maciej B³aszkowski <marooned at wikia-inc.com>
+//Author: Maciej BÅ‚aszkowski <marooned at wikia-inc.com>
 var initTracker = function() {
 	var Tracker = YAHOO.Wikia.Tracker;
 	var Event = YAHOO.util.Event;
