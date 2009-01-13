@@ -43,87 +43,47 @@ $wgAjaxExportList[] = 'getLinkSuggest';
 function getLinkSuggest() {
 	global $wgRequest, $wgContLang;
 
-	$namespace = 0;
+	// default namespace to search in
+	$namespace = NS_MAIN;
 
+	// trim passed query and replace spaces by underscores
+	// - this is how MediaWiki store article titles in database
 	$query = str_replace(' ', '_', trim($wgRequest->getText('query')));
 
-	$queryA = split(':', $query);
+	// explode passed query by ':' to get namespace and article title
+	$queryParts = explode(':', $query, 2);
 
-	if(count($queryA) > 1) {
-		$namespaceName = $queryA[0];
-		$query = $queryA[1];
-	}
+	if(count($queryParts) == 2) {
+		$query = $queryParts[1];
 
-	if(isset($namespaceName)) {
+		$namespaceName = $queryParts[0];
 		$namespace = Namespace::getCanonicalIndex(strtolower($namespaceName));
 		$namespaceName = $wgContLang->getNsText($namespace);
 	}
 
+	$results = array();
+
 	if(!empty($namespace) || $namespace === 0) {
 		$query = addslashes(strtolower($query));
-		$results = array();
-		$pageIds = array();
-
 		$db =& wfGetDB(DB_SLAVE, 'search');
-		
 
-		$sql = "SELECT /* LinkSuggest query 1 */ DISTINCT page_id, page_title, page_namespace FROM page, querycache WHERE qc_type = 'Mostlinked' AND page_title = qc_title AND page_namespace = qc_namespace AND LOWER(qc_title) LIKE '{$query}%' AND qc_namespace = {$namespace} ORDER BY qc_value DESC LIMIT 10";
-		error_log( "Linksuggest:Database: {$db->getDBName()}" );
-		error_log( "Linksuggest:Query1: {$sql}"  );
-		$t1 = explode( ' ' , microtime() );
+		$sql = "SELECT qc_title FROM querycache WHERE qc_type = 'Mostlinked' AND LOWER(qc_title) LIKE '{$query}%' AND qc_namespace = {$namespace} ORDER BY qc_value DESC LIMIT 10;";
 		$res = $db->query($sql);
-		$t2 = explode( ' ' , microtime() );
-		$time = ($t2[0] - $t1[0]) + ($t2[1] - $t1[1]); 
-		error_log( "Linksuggest:Query1 execution time: {$time}" );
 		while($row = $db->fetchObject($res)) {
-			$pageIds[] = $row->page_id;
-			$results[] = array(
-				'title_org' => str_replace('_', ' ', (!empty($namespaceName)) ? $namespaceName . ':' . $row->page_title : $row->page_title),
-				'title' => (!empty($namespaceName) ? $namespaceName . ':' : '') . str_replace('_', ' ', $row->page_title)
-			);
+			$results[] = str_replace('_', ' ', (!empty($namespaceName) ? $namespaceName . ':' : '') . $row->qc_title);
 		}
 
-		if(count($results) < 10) {
-			$statement = (count($pageIds) > 0) ? ' AND page_id not IN('.implode(',', $pageIds).') ' : '';
-			$sql = "SELECT /* LinkSuggest query 2 */ page_id, page_title, page_namespace FROM `page` WHERE lower(page_title) LIKE '{$query}%' AND page_is_redirect=0 AND page_namespace = {$namespace} {$statement} ORDER BY page_title ASC LIMIT ".(10 - count($results));
-			error_log( "Linksuggest:Query2: {$sql}"  );
-			$t1 = explode( ' ' , microtime() );
-			$res = $db->query($sql);
-			$t2 = explode( ' ' , microtime() );
-			$time = ($t2[0] - $t1[0]) + ($t2[1] - $t1[1]); 
-			error_log( "Linksuggest:Query2 execution time: {$time}" );
-			while($row = $db->fetchObject($res)) {
-				$pageIds[] = $row->page_id;
-				$results[] = array(
-					'title_org' => str_replace('_', ' ', (!empty($namespaceName)) ? $namespaceName . ':' . $row->page_title : $row->page_title),
-					'title' => (!empty($namespaceName) ? $namespaceName . ':' : '') . str_replace('_', ' ', $row->page_title)
-				);
-			}
+		$sql = "SELECT page_title FROM page WHERE lower(page_title) LIKE '{$query}%' AND page_is_redirect=0 AND page_namespace = {$namespace} ORDER BY page_title ASC LIMIT ".(15 - count($results));
+		$res = $db->query($sql);
+		while($row = $db->fetchObject($res)) {
+			$results[] = str_replace('_', ' ', (!empty($namespaceName) ? $namespaceName . ':' : '') . $row->page_title);
 		}
 
-		if(count($results) < 10) {
-			$statement = (count($pageIds) > 0) ? ' AND page_id not IN('.implode(',', $pageIds).') ' : '';
-			$sql = "SELECT /* LinkSuggest query 3 */ page_id, page_title, page_namespace FROM page, searchindex WHERE page_id = si_page AND page_namespace = {$namespace} AND page_is_redirect=0 AND match(si_title) against ('".str_replace('_', ' ', $query)."*') {$statement} LIMIT ".(10 - count($results));
-			error_log( "Linksuggest:Query3: {$sql}"  );
-			$t1 = explode( ' ' , microtime() );
-			$res = $db->query($sql);
-			$t2 = explode( ' ' , microtime() );
-			$time = ($t2[0] - $t1[0]) + ($t2[1] - $t1[1]); 
-			error_log( "Linksuggest:Query3 execution time: {$time}" );
-			while($row = $db->fetchObject($res)) {
-				$pageIds[] = $row->page_id;
-				$results[] = array(
-					'title_org' => str_replace('_', ' ', (!empty($namespaceName)) ? $namespaceName . ':' . $row->page_title : $row->page_title),
-					'title' => (!empty($namespaceName) ? $namespaceName . ':' : '') . str_replace('_', ' ', $row->page_title)
-				);
-			}
-		}
-	} else {
-		$results = array();
+		$results = array_unique($results);
 	}
 
-	$ar = new AjaxResponse(Wikia::json_encode(array('results' => $results)));
-	$ar->setCacheDuration(60 * 20);
+	$ar = new AjaxResponse(implode("\n", $results));
+	$ar->setCacheDuration(60 * 60); // cache results for one hour
 
 	return $ar;
 }

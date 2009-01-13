@@ -40,7 +40,7 @@ class AdEngine {
 	private $loadType = 'delayed';
 
 	protected static $instance = false;
-	
+
 	public $bucketName = null;
 	public $bucketNum = -1;
 
@@ -65,7 +65,7 @@ class AdEngine {
 	// pl, german, spanish, chinese
 	private $tier1Languages = array( 'pl', 'de', 'es', 'zh');
 	private $internationalSlotsTier1 = array(
-		'HOME_LEFT_SKYSCRAPER_2', 
+		'HOME_LEFT_SKYSCRAPER_2',
 		'HOME_TOP_LEADERBOARD',
 		'TOP_LEADERBOARD',
 		'LEFT_SKYSCRAPER_1',
@@ -75,13 +75,13 @@ class AdEngine {
 	);
 
 	private $internationalSlotsTier2 = array(
-		'HOME_LEFT_SKYSCRAPER_2', 
+		'HOME_LEFT_SKYSCRAPER_2',
 		'LEFT_SKYSCRAPER_1',
 		'LEFT_SKYSCRAPER_2',
 		'LEFT_SKYSCRAPER_3',
 		'RIGHT_SKYSCRAPER_1'
 	);
-		
+
 	protected function __construct($slots = null) {
 		if (!empty($slots)){
 			$this->slots=$slots;
@@ -102,30 +102,29 @@ class AdEngine {
 		return self::$instance;
 	}
 
-	// Load up all the providers. For each one, set up 
+	// Load up all the providers. For each one, set up
 
 	public function getSetupHtml(){
 
 		$out = "<!-- #### BEGIN " . __CLASS__ . '::' . __METHOD__ . " ####-->\n";
 
-		/* TODO move this to allinone, and find a better spot for this code after I talk to Christian.
-                         This is an experiment to see if moving it higher on the page makes it better */
-		global $wgExtensionsPath;
-		//$wgExtensionsPath='/extensions';
-		$out .= '<script type="text/javascript" src="' . $wgExtensionsPath . '/wikia/AdEngine/AdEngine.js?' . self::cacheKeyVersion . '"></script>'. "\n";
-
 		// If loading the ads inline, call the set up html for each provider.
 		// If loading delayed, this is done in getDelayedAdLoading method instead.
 		if ($this->loadType == 'inline'){
+			// for loadType set to inline we have to load AdEngine.js here
+			// for loadType set to delayed AdEngine.js should be inside of allinone.js
+			global $wgExtensionsPath;
+			$out .= '<script type="text/javascript" src="' . $wgExtensionsPath . '/wikia/AdEngine/AdEngine.js?' . self::cacheKeyVersion . '"></script>'. "\n";
+
 			foreach($this->slots as $slotname => $slot) {
-                        	$AdProvider = $this->getAdProvider($slotname);        
+                        	$AdProvider = $this->getAdProvider($slotname);
                         	// Get setup HTML for each provider. May be empty.
                         	$out .= $AdProvider->getSetupHtml();
                         }
 		}
 
 		$out .= "<!-- #### END " . __CLASS__ . '::' . __METHOD__ . " ####-->\n";
-			
+
 		return $out;
 	}
 
@@ -265,10 +264,10 @@ class AdEngine {
 		} else {
 
 			if ($wgLanguageCode == 'en' ){
-			
+
 			 	return $this->getProviderFromId($this->slots[$slotname]['provider_id']);
 			} else if (in_array($wgLanguageCode, $this->tier1Languages)){
-				
+
 				if (!in_array($slotname, $this->internationalSlotsTier1)){
 					return new AdProviderNull("Ads name not served for this language in this slot ($wgLanguageCode) ", false);
 				} else {
@@ -354,19 +353,19 @@ class AdEngine {
 
 		// Fill in slotsToCall with a list of slotnames that will be used. Needed for getBatchCallHtml
 		$AdProvider->addSlotToCall($slotname);
-		
+
 		return "<div id=\"$slotname\"$style></div>";
 	}
 
 	public function getBucketTestingCode(){
 		// Bucket testing leaderboard ad placement
-		$out = "<script type='text/javascript'>\n" . 
-			"AdEngine.bucketTests = " . json_encode($this->bucketTests) . "\n" . 
+		$out = "<script type='text/javascript'>\n" .
+			"AdEngine.bucketTests = " . json_encode($this->bucketTests) . "\n" .
 			'AdEngine.bucketName = "' . addslashes($this->getBucketName()) . '"' . ";\n" .
 			"AdEngine.doBucketTest();\n" .
 			"AdEngine.bucketDebug();\n" .
 			"</script>";
-			
+
 		return $out;
 	}
 
@@ -406,7 +405,7 @@ class AdEngine {
 		$out .=  $this->getBucketTestingCode();
 		global $wgCityId;
 		$out .=  $this->providerValuesAsJavascript($wgCityId);
-		
+
 		$out .= '<script type="text/javascript">TieDivLibrary.timer()</script>' . "\n";
 
 		// Get the setup code for ad providers used on this page. This is for Ad Providers that support multi-call.
@@ -487,7 +486,7 @@ class AdEngine {
 
 
 	/* Odd request that I didn't have a better way to handle. Michael wanted the DART
-	 * Key value string as a javascript variable. 
+	 * Key value string as a javascript variable.
 	 */
 	public function providerValuesAsJavascript($city_id){
 		global $wgMemc, $wgRequest;
@@ -513,14 +512,14 @@ class AdEngine {
                 }
 
 		$out =  '<script type="text/javascript">' . "\n" .
-			'ProviderValues = {};' . "\n" . 
+			'ProviderValues = {};' . "\n" .
 			'ProviderValues.list = ' . json_encode($list) . ";\n" .
-			'ProviderValues.string = "' . $string . '"' . ";\n" . 
+			'ProviderValues.string = "' . $string . '"' . ";\n" .
 			'</script>';
-		       
+
 		$wgMemc->set($cacheKey, $out, self::cacheTimeout);
 
-		return $out;	
+		return $out;
 	}
 
 }

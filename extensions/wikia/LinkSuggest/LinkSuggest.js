@@ -12,15 +12,15 @@ YAHOO.lang.extend(YAHOO.example.AutoCompleteTextArea, YAHOO.widget.AutoComplete,
 
 	_suggestionSuccessful: false,
 
-	_onTextboxKeyDown2: function(v,oSelf) {	
+	_onTextboxKeyDown2: function(v,oSelf) {
 		if ((v.keyCode == 221)) { //double brackets
 			var text = oSelf._elTextbox.value.replace(/\r/g, "");
-			var caret = oSelf.getCaret(oSelf._elTextbox);			
+			var caret = oSelf.getCaret(oSelf._elTextbox);
                         if(text.charAt(i) == "]") {
-				oSelf._toggleContainer(false);		
-                        }			
+				oSelf._toggleContainer(false);
+                        }
 		}
-	
+
 		if(v.keyCode== 27) {
 			YAHOO.util.Event.preventDefault(v);
 		}
@@ -37,7 +37,7 @@ YAHOO.lang.extend(YAHOO.example.AutoCompleteTextArea, YAHOO.widget.AutoComplete,
 				YAHOO.util.Event.preventDefault(v);
 				YAHOO.log('UP/DOWN: stopEvent()');
 				break;
-			
+
 			// enter
 			case 13:
 				 if(oSelf._oCurItem) {
@@ -53,7 +53,7 @@ YAHOO.lang.extend(YAHOO.example.AutoCompleteTextArea, YAHOO.widget.AutoComplete,
                     			oSelf._toggleContainer(false);
                 		}
 			break;
-	
+
 			// right
 			case 39:
 				oSelf._jumpSelection();
@@ -171,14 +171,15 @@ YAHOO.lang.extend(YAHOO.example.AutoCompleteTextArea, YAHOO.widget.AutoComplete,
 		}
 
 		var textBefore = text.substr(0, i);
-		var newVal = textBefore + oItem._oResultData[1] + "]]" + text.substr(i + this._sCurQuery.length);
+
+		var newVal = textBefore + oItem._oResultData[0] + "]]" + text.substr(i + this._sCurQuery.length);
 		this._elTextbox.value = newVal;
 
 		if(YAHOO.env.ua.ie > 0) {
 			caret = caret - this.row + 1;
 		}
 
-		this.setCaret(this._elTextbox, i + oItem._oResultData[1].length + 2);
+		this.setCaret(this._elTextbox, i + oItem._oResultData[0].length + 2);
 		this._oCurItem = oItem;
 		this._elTextbox.scrollTop = scrollTop;
 	},
@@ -192,13 +193,13 @@ YAHOO.lang.extend(YAHOO.example.AutoCompleteTextArea, YAHOO.widget.AutoComplete,
 		for(var i = caret; i < text.length; i++) {
 			var c = text.charAt (i) ;
 			if((c == "[") && (text.charAt(i - 1) == "[")) {
-				break ;			
+				break ;
 			}
 			if((c == "]") && (text.charAt(i - 1) == "]")) {
-				return ;			
+				return ;
 			}
 		}
-		
+
 		for(var i = caret; i >= 0; i--) {
 			var c = text.charAt(i);
 			if(c == "]" || c == "|") {
@@ -348,6 +349,7 @@ function LS_PrepareTextarea (textarea, oDS) {
 	oAutoComp.typeAhead = oAutoComp.animHoriz = oAutoComp.animVert = oAutoComp.autoHighlight = oAutoComp.forceSelection = oAutoComp.useShadow = false;
 	oAutoComp.minQueryLength = 1;
 	oAutoComp.maxResultsDisplayed = 10;
+	oAutoComp.queryDelay = 0.4;
 
 	oAutoComp.containerExpandEvent.subscribe(function(o) {
 			YAHOO.util.Event.removeListener(this._elTextbox, "keydown");
@@ -374,12 +376,13 @@ function LS_PrepareTextarea (textarea, oDS) {
 addOnloadHook(function() {
 	// So far this extension works only in Firefox and Internet Explorer
 	if(YAHOO.env.ua.ie > 0 || YAHOO.env.ua.gecko > 0) {
-		var oDS = new YAHOO.widget.DS_XHR(wgServer + wgScriptPath, ['results', 'title', 'title_org']);
+		var oDS = new YAHOO.widget.DS_XHR(wgServer + wgScriptPath, ["\n"]);
+		oDS.responseType = YAHOO.widget.DS_XHR.TYPE_FLAT;
 		oDS.scriptQueryAppend = 'action=ajax&rs=getLinkSuggest';
 
 		// todo remember about old createpage...
 		if ('createpage' != wgCanonicalSpecialPageName) {
-			LS_PrepareTextarea ('wpTextbox1', oDS) ;		
+			LS_PrepareTextarea ('wpTextbox1', oDS) ;
 		} else {
 			var content_root = YAHOO.util.Dom.get ('wpTableMultiEdit') ;
 			var edit_textareas = YD.getElementsBy (function (el) {
@@ -390,7 +393,7 @@ addOnloadHook(function() {
 					}
 				}, 'textarea', content_root, function (el) {
 					LS_PrepareTextarea (el.id, oDS) ;
-				}) ;							
+				}) ;
 		}
 	}
 });
