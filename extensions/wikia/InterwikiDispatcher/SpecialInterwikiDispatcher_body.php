@@ -2,11 +2,11 @@
 /**
  * InterwikiDispatcher - see ticket #2954
  *
- * @author Maciej B�aszkowski (Marooned) <marooned@wikia.com>
+ * @author Maciej Błaszkowski (Marooned) <marooned@wikia.com>
  * @author Adrian 'ADi' Wieczorek <adi(at)wikia.com>
  * 
  * @date 2008-07-08
- * @copyright Copyright (C) 2008 Maciej B�aszkowski, Wikia Inc.
+ * @copyright Copyright (C) 2008 Maciej Błaszkowski, Wikia Inc.
  * @license http://www.gnu.org/copyleft/gpl.html GNU General Public License 2.0 or later
  * @package MediaWiki
  * @subpackage SpecialPage
