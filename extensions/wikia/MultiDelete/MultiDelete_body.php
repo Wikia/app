@@ -6,10 +6,10 @@
  * A MultiDelete extension for MediaWiki
  * Deletes batch of pages on selected wikis
  *
- * @author Maciej B≥aszkowski (Marooned) <marooned at wikia-inc.com>
- * @author Bartek £apiÒski <bartek at wikia-inc.com>
+ * @author Maciej B≈Åaszkowski (Marooned) <marooned at wikia-inc.com>
+ * @author Bartek ≈Åapi≈Ñski <bartek at wikia-inc.com>
  * @date 2009-01-09
- * @copyright Copyright (C) 2009 Maciej B≥aszkowski, Wikia Inc.
+ * @copyright Copyright (C) 2009 Maciej B≈Çaszkowski, Wikia Inc.
  * @license http://www.gnu.org/copyleft/gpl.html GNU General Public License 2.0 or later
  * @package MediaWiki
  * @subpackage SpecialPage
