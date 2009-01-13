@@ -18,11 +18,11 @@ EditEnhancementsPreview = function() {
 			bodyContentLeft = jQuery("#bodyContent").offset().left;
 			bodyContentWidth = jQuery("#bodyContent").width();
 			widthDiff = jQuery("#edit_enhancements_toolbar").outerWidth(true) - jQuery("#edit_enhancements_toolbar").width();
-	
-			jQuery("#edit_enhancements_toolbar").css({'left' : bodyContentLeft + 'px', 'width' : parseInt(bodyContentWidth) - parseInt(widthDiff) + 'px', 'position' : 'fixed', 'bottom' : '0px', 'margin' : '0px', 'z-index' : '500'});
+
+			jQuery("#edit_enhancements_toolbar").css({'left' : bodyContentLeft + 'px', 'width' : parseInt(bodyContentWidth) - parseInt(widthDiff) + 'px'}).removeClass('edit_enhancements_toolbar_static').addClass('edit_enhancements_toolbar_fixed');
 		}
 		else {
-			jQuery("#edit_enhancements_toolbar").css({'position' : 'static', 'margin' : '5px 0px', 'width': 'auto'});
+			jQuery("#edit_enhancements_toolbar").removeClass('edit_enhancements_toolbar_fixed').addClass('edit_enhancements_toolbar_static');
 		}
 	}
 	

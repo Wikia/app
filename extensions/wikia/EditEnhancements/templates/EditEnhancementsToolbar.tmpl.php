@@ -3,6 +3,16 @@
 		margin: 5px 0;
 		padding: 5px;
 	}
+	.edit_enhancements_toolbar_fixed {
+		position: fixed;
+		bottom: 0px;
+		margin: 0px !important;
+		z-index: 500;
+	}
+	.edit_enhancements_toolbar_static {
+		position: static;
+		width: auto;
+	}
 	#edit_enhancements_toolbar ul {
 		margin: 0;
 	}
