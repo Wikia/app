@@ -119,9 +119,9 @@ function wfStringFunctions ( ) {
 	global $wgStringFunctionsLimitPad;
 
 	$wgExtStringFunctions = new ExtStringFunctions ( );
-	$wgStringFunctionsLimitSearch  =  30;
-	$wgStringFunctionsLimitReplace =  30;
-	$wgStringFunctionsLimitPad     = 100;
+	if (!isset($wgStringFunctionsLimitSearch))  $wgStringFunctionsLimitSearch  =  30;
+	if (!isset($wgStringFunctionsLimitReplace)) $wgStringFunctionsLimitReplace =  30;
+	if (!isset($wgStringFunctionsLimitPad))     $wgStringFunctionsLimitPad     = 100;
 
 	$wgParser->setFunctionHook('len',      array(&$wgExtStringFunctions,'runLen'      ));
 	$wgParser->setFunctionHook('pos',      array(&$wgExtStringFunctions,'runPos'      ));
