@@ -21,14 +21,11 @@
 </style>
 
 <div class="color1 clearfix" id="edit_enhancements_toolbar">
-	<?
-	global $EditEnhancementsButtons, $EditEnhancementsCheckboxes, $EditEnhancementsSummaryBox;
-	?>
 	<ul>
-		<li><?=$EditEnhancementsSummaryBox .'</div>';?></li>
-		<li><?=$EditEnhancementsButtons['save'];?></li>
-		<li><?=$EditEnhancementsButtons['preview'];?></li>
-		<li><?=$EditEnhancementsCheckboxes['minor'];?></li>
-		<li><?=$EditEnhancementsCheckboxes['watch'];?></li>
+		<li><?=$summary ?></div></li>
+		<li><?=$buttons['save'] ?></li>
+		<li><?=$buttons['preview'] ?></li>
+		<li><?=$checkboxes['minor'] ?></li>
+		<li><?=$checkboxes['watch'] ?></li>
 	</ul>
 </div>
