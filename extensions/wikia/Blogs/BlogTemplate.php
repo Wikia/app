@@ -707,7 +707,7 @@ class BlogTemplateClass {
 				if (!empty(self::$blogTAGS)) {
 					/* skip some wiki-text and special tags  */
 					foreach (self::$blogTAGS as $id => $tag) {
-						$sBlogText = preg_replace($tag, '', $sBlogText); 
+						$sBlogText = preg_replace($tag, '', $sBlogText);
 					}
 				}
 				/* parse truncated text */
@@ -1107,7 +1107,7 @@ class BlogTemplateClass {
 						/* set new value of offset */
 						$params['offset'] = $offset;
 						/* run parser */
-						$result = self::parseTag( $input, $params, &$wgParser );
+						$result = self::parseTag( $input, $params, $wgParser );
 					}
 				}
 			} else {
