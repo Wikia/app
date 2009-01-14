@@ -629,7 +629,8 @@ class CreateWikiForm extends SpecialPage {
 			'wgDefaultSkin'				=> 'monaco',
 			'wgDefaultTheme'			=> 'sapphire',
 			'wgEnableNewParser'			=> true,
-			'wgEnableEditEnhancements'	=> true
+			'wgEnableEditEnhancements'	=> true,
+			'wgEnableSectionEdit'	=> true,
 		);
 
 		if($aLocalSettingsVars['wgLanguageCode'] == 'en') {
