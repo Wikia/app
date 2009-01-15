@@ -46,3 +46,7 @@ body {
 	z-index: -1;
 }
 
+/* IE <ol> numbering bug (RT 9961) */
+ol li {
+	display: list-item;
+}
