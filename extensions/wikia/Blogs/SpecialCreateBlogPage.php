@@ -53,7 +53,7 @@ class CreateBlogPage extends SpecialBlogPage {
 	}
 
 	protected function save() {
-		global $wgOut, $wgUser;
+		global $wgOut, $wgUser, $wgContLang;
 
 		$sPostBody = $this->mFormData['postBody'];
 
@@ -61,6 +61,16 @@ class CreateBlogPage extends SpecialBlogPage {
 			// add categories
 			$aCategories = preg_split ("/\|/", $this->mFormData['postCategories'], -1);
 			$sPostBody .= $this->getCategoriesAsText($aCategories);
+		}
+
+		/**
+		 * add category for blogs (if defined in message)
+		 * @author eloy
+		 */
+		$catName = wfMsg("create-blog-post-category");
+		if( $catName && $catName !== "-" ) {
+			$sCategoryNSName = $wgContLang->getFormattedNsText( NS_CATEGORY );
+			$sPostBody .= "\n[[" . $sCategoryNSName . ":" . $catName . "]]";
 		}
 
 		$aPageProps = array();
