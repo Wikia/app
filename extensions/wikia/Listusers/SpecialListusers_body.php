@@ -227,14 +227,19 @@ class ListUsers extends SpecialPage {
 					if ( !empty($__groups) && is_array($__groups) ) {
 						$sGroups = implode(", ", $__groups);
 					}
-					
+
 					$aLinks = array (
-						0 => $sk->makeLinkObj(Title::newFromText('Contributions', NS_SPECIAL), $wgLang->ucfirst(wfMsg('contribslink')), "target={$oUser->getName()}"),
-						1 => $sk->makeLinkObj(Title::newFromText("Editcount/{$oUser->getName()}", NS_SPECIAL), $wgLang->ucfirst(wfMsg('listusersedits')), ""),
-						2 => $sk->makeLinkObj(Title::newFromText("BlockIP/{$oUser->getName()}", NS_SPECIAL), $wgLang->ucfirst(wfMsg('blocklink'))),
-						3 => $sk->makeLinkObj(Title::newFromText('UserRights', NS_SPECIAL), $wgLang->ucfirst(wfMsg('listgrouprights-rights')), "user={$oUser->getName()}"),
+						0 => $sk->makeLinkObj(Title::newFromText($oUser->getName(), NS_USER_TALK), $wgLang->ucfirst(wfMsg('talkpagelinktext'))),
+						1 => $sk->makeLinkObj(Title::newFromText('Contributions', NS_SPECIAL), $wgLang->ucfirst(wfMsg('contribslink')), "target={$oUser->getName()}"),
+						2 => $sk->makeLinkObj(Title::newFromText("Editcount/{$oUser->getName()}", NS_SPECIAL), $wgLang->ucfirst(wfMsg('listusersedits')), "")
 					);
-					
+					if ( $wgUser->isAllowed( 'block' ) ) {
+						$aLinks[3] = $sk->makeLinkObj(Title::newFromText("BlockIP/{$oUser->getName()}", NS_SPECIAL), $wgLang->ucfirst(wfMsg('blocklink')));
+					}
+					if ( $wgUser->isAllowed( 'userrights' ) ) {
+						$aLinks[4] = $sk->makeLinkObj(Title::newFromText('UserRights', NS_SPECIAL), $wgLang->ucfirst(wfMsg('listgrouprights-rights')), "user={$oUser->getName()}");
+					};
+
 					$aUsers['data'][$oRow->lu_user_id] = array(
 						'user_id' 		=> $oRow->lu_user_id,
 						'user_name' 	=> $oRow->lu_user_name,
@@ -253,7 +258,7 @@ class ListUsers extends SpecialPage {
 				$oRow = $dbs->fetchObject ( $res );
 				$aUsers['cnt'] = $oRow->rowcount;
 				$dbs->freeResult( $res );
-				
+
 				# last logged in 
 				$aWhere = array();
 				if ( !empty($aUsers['data']) && is_array($aUsers['data']) ) {
@@ -294,13 +299,13 @@ class ListUsers extends SpecialPage {
 					}
 					$dbr->freeResult( $res );
 				}
-				
+
 				$wgMemc->set( $memkey, $aUsers, 60*60*3 );
 			}
-		} else { 
+		} else {
 			$aUsers = $cached;
 		}
-		
+
         wfProfileOut( __METHOD__ );
 		return $aUsers;
 	}
