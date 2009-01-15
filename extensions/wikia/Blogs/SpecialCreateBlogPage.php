@@ -276,5 +276,23 @@ class CreateBlogPage extends SpecialBlogPage {
 				}
 			}
 		}
+
+		/**
+		 * create Category:Blog page if not exists
+		 */
+		$catName = wfMsg("create-blog-post-category");
+		if( $catName && $catName !== "-" ) {
+			$oTitle = Title::newFromText( $catName, NS_CATEGORY );
+			if( $oTitle ) {
+				$oArticle = new Article( $oTitle, 0 );
+				if( !$oArticle->exists( ) ) {
+					$oArticle->doEdit(
+						wfMsg( "create-blog-post-category-body" ),
+						wfMsg( "create-blog-post-category-log" ),
+						EDIT_NEW | EDIT_MINOR | EDIT_FORCE_BOT  # flags
+					);
+				}
+			}
+		}
 	}
 }

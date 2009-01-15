@@ -10,6 +10,7 @@ $messages['en'] = array(
 	"create-blog-spam" => "Looks like spam",
 	"create-blog-post-category" => 'Blog posts',
 	"create-blog-post-category-body" => "This is an automatically generated list of blog posts",
+	"create-blog-post-category-log" => "Created category article for blog posts",
 	"create-blog-post-recent-listing" => 'Recent posts',
 	"create-blog-post-recent-listing-title" => 'Recent posts',
 	"create-blog-post-recent-listing-log" => "Created article for recent blog posts",
