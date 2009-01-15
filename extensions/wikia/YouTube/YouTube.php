@@ -40,10 +40,10 @@ $wgExtensionFunctions[] = 'wfYouTube';
 $wgExtensionCredits['parserhook'][] = array
 (
 	'name'        => 'YouTube',
-	'version'     => '1.8',
+	'version'     => '1.9',
 	'author'      => 'Przemek Piotrowski',
 	'url'         => 'http://help.wikia.com/wiki/Help:YouTube',
-	'description' => 'embeds YouTube and Google Video movies + Archive.org audio and video + WeGame and Gametrailers video + Tangler forum + GoGreenTube video',
+	'description' => 'embeds YouTube and Google Video movies + Archive.org audio and video + WeGame and Gametrailers video + Tangler forum + GoGreenTube video + Crispy Gamer',
 );
 
 function wfYouTube()
@@ -59,6 +59,7 @@ function wfYouTube()
 	$wgParser->setHook('gtrailer', 'embedGametrailers');
 	$wgParser->setHook('nicovideo', 'embedNicovideo');
 	$wgParser->setHook('ggtube', 'embedGoGreenTube');
+	$wgParser->setHook('cgamer', 'embedCrispyGamer');
 }
 
 function embedYouTube_url2ytid($url)
@@ -462,3 +463,33 @@ function embedGoGreenTube($input, $argv, &$parser)
 		return "<script type=\"text/javascript\" src=\"{$url}\"></script>";
 	}
 }
+
+function embedYouTube_url2cvid($url)
+{
+	$id = $url;
+
+	preg_match('/([0-9]+)/', $id, $preg);
+	$id = $preg[1];
+
+	return $id;
+}
+
+function embedCrispyGamer($input, $argv, &$parser)
+{
+	$cvid = '';
+
+	if (!empty($argv['vid']))
+	{
+		$cvid = embedYouTube_url2cvid($argv['vid']);
+	} elseif (!empty($input))
+	{
+		$cvid = embedYouTube_url2cvid($input);
+	}
+
+	if (!empty($cvid))
+	{
+		$url = "http://qa.crispygamer.com:1080/partners/wikia.aspx?pid=0&amp;vid={$cvid}";
+		return "<script type=\"text/javascript\" src=\"{$url}\"></script>";
+	}
+}
+
