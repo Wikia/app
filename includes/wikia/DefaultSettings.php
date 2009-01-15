@@ -26,9 +26,9 @@ if( !defined( 'MEDIAWIKI' ) ) {
 /**
  * Use revision number
  */
-$wgStyleVersion         = '5014';
-$wgMergeStyleVersionJS  = '4860';
-$wgMergeStyleVersionCSS = '5014';
+$wgStyleVersion         = '5016';
+$wgMergeStyleVersionJS  = '5016';
+$wgMergeStyleVersionCSS = '5016';
 
 /**
  * @name $wgCityId
@@ -87,7 +87,6 @@ $wgAutoloadClasses["WikiaApiAjaxLogin"] = "extensions/wikia/WikiaApi/WikiaApiAja
 $wgAutoloadClasses["ApiImageThumb"] = $GLOBALS["IP"]."/extensions/wikia/Our404Handler/ApiImageThumb.php";
 //$wgAutoloadClasses["ApiRecentChangesCombined"] = "extensions/wikia/RecentChangesCombined/ApiRecentChangesCombined.php";
 $wgAutoloadClasses["WikiaApiQuerySiteInfo"] = "extensions/wikia/WikiaApi/WikiaApiQuerySiteinfo.php";
-$wgAutoloadClasses["ApiQueryProblemReportsLog"] = "extensions/wikia/ProblemReports/ApiQueryProblemReportsLog.php";
 
 
 /**
@@ -103,7 +102,6 @@ $wgApiQueryListModules["wkeditpage"] = "WikiaApiQueryLastEditPages";
 $wgApiQueryListModules["wkedituser"] = "WikiaApiQueryTopEditUsers";
 $wgApiQueryListModules["wkmostvisit"] = "WikiaApiQueryMostVisitedPages";
 $wgApiQueryListModules["wkreferer"] = "WikiaApiQueryReferers";
-$wgApiQueryListModules["prlog"] = "ApiQueryProblemReportsLog";
 
 /**
  * registered API methods
