@@ -234,10 +234,10 @@ class ListUsers extends SpecialPage {
 						2 => $sk->makeLinkObj(Title::newFromText("Editcount/{$oUser->getName()}", NS_SPECIAL), $wgLang->ucfirst(wfMsg('listusersedits')), "")
 					);
 					if ( $wgUser->isAllowed( 'block' ) ) {
-						$aLinks[3] = $sk->makeLinkObj(Title::newFromText("BlockIP/{$oUser->getName()}", NS_SPECIAL), $wgLang->ucfirst(wfMsg('blocklink')));
+						$aLinks[] = $sk->makeLinkObj(Title::newFromText("BlockIP/{$oUser->getName()}", NS_SPECIAL), $wgLang->ucfirst(wfMsg('blocklink')));
 					}
 					if ( $wgUser->isAllowed( 'userrights' ) ) {
-						$aLinks[4] = $sk->makeLinkObj(Title::newFromText('UserRights', NS_SPECIAL), $wgLang->ucfirst(wfMsg('listgrouprights-rights')), "user={$oUser->getName()}");
+						$aLinks[] = $sk->makeLinkObj(Title::newFromText('UserRights', NS_SPECIAL), $wgLang->ucfirst(wfMsg('listgrouprights-rights')), "user={$oUser->getName()}");
 					};
 
 					$aUsers['data'][$oRow->lu_user_id] = array(
