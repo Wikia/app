@@ -66,7 +66,7 @@ if( !is_null( $sourceTitle ) ) {
             print $sourceTitle->getPrefixedText() . ' --> ' . $targetTitle->getPrefixedText();
             $err = $sourceTitle->moveTo( $targetTitle, false, "SEO" );
             if( $err !== true ) {
-                print " - Moving FAILED: $err\n";
+                print " - Moving FAILED: ". var_dump($err) . "\n";
             }
             else {
                 /**
@@ -77,6 +77,21 @@ if( !is_null( $sourceTitle ) ) {
 
                 $mwMainPageArticle->doEdit( $targetTitle->getText(), "SEO", EDIT_MINOR | EDIT_FORCE_BOT );
                 print " - Page moved.\n";
+
+		/**
+		 * also move associated talk page if it exists
+		 */
+		$sourceTalkTitle = $sourceTitle->getTalkPage();
+		$targetTalkTitle = $targetTitle->getTalkPage();
+		if ( $sourceTalkTitle instanceof Title && $sourceTalkTitle->exists() && $targetTalkTitle instanceof Title ) {
+			print $sourceTalkTitle->getPrefixedText() . ' --> ' . $targetTalkTitle->getPrefixedText();
+			$err = $sourceTalkTitle->moveTo( $targetTitle->getTalkPage(), false, "SEO");
+			if ( $err === true ) {
+				print " - Moved talk page.\n";
+			} else {
+				print " - Found talk page but moving FAILED: " . var_dump($err) . "\n";
+			}
+		}
             }
         }
         else {
