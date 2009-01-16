@@ -29,6 +29,7 @@ YAHOO.Wikia.Blogs.callback.toggle = function( data ) {
 		 */
 		YAHOO.Wikia.Blogs.actions = YAHOO.util.Dom.get( data[ "id" ] );
 		YAHOO.util.Event.addListener( YAHOO.Wikia.Blogs.actions, "click", YAHOO.Wikia.Blogs.toggle );
+		document.body.style.cursor = "default";
 
 		if (typeof TieDivLibrary != "undefined" ) {
 			TieDivLibrary.calculate();
@@ -99,6 +100,7 @@ YAHOO.Wikia.Blogs.submit = function( event, id ) {
 
 YAHOO.Wikia.Blogs.toggle = function( event ) {
 	YAHOO.util.Event.preventDefault( event );
+	document.body.style.cursor = "wait";
 	YAHOO.util.Connect.asyncRequest( "GET", wgServer + wgScript + "?action=ajax&rs=BlogComment::axToggle&id=" + event.target.id + "&article=" + wgArticleId, YAHOO.Wikia.Blogs.hideCallback );
 };
 
