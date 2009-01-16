@@ -723,6 +723,16 @@ class BlogCommentList {
 
 	/**
 	 * Hook
+	 *
+	 * @param Article $Article -- instance of Article class
+	 * @param User    $User    -- current user
+	 * @param string  $reason  -- deleting reason
+	 * @param integer $id      -- article id
+	 *
+	 * @static
+	 * @access public
+	 *
+	 * @return true -- because it's hook
 	 */
 	static public function articleDeleteComplete( &$Article, &$User, $reason, $id ) {
 
