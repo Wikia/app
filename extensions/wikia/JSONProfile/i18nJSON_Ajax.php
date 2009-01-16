@@ -9,6 +9,11 @@ function wfGetJsTranslation($lang, $do_on_fly=false) {
 		$lang_array[$id] = $id;
 	}
 	
+	// macbre: load MW language class to check whether given language is RTL
+	$langObj = Language::factory($lang);
+	$isRTL = is_object($langObj) && $langObj->isRTL();
+	$text = 'i18n.isRTL=' . ($isRTL ? 'true' : 'false') . ";\n";
+
 	// now get the list for the current language
 	$lang_array_lang = getTransList($lang);
 	
@@ -17,18 +22,16 @@ function wfGetJsTranslation($lang, $do_on_fly=false) {
 	foreach ($lang_array_lang as $id=>$val) {
 		$lang_array[$id] = $val;
 	}
-	// create the output string that will return the javascript object for the language translation
-	$output = "";
-	foreach ($lang_array as $id=>$val) {
-		$output .= "\"".$id."\"" . ":" . "\"".$val."\",\n";
+
+	// macbre: use it for proper UTF encoding
+	$json = Wikia::json_encode($lang_array);
+	$text .= "i18n.{$lang}={$json};";
+
+	// and if this is a subsequent call after changes are saved, add the js function calls to translate the text and set the language
+	if ($do_on_fly) {
+		$text .= "\nxlateOnFly('{$lang}');\ni18n.setlanguage('{$lang}');";
 	}
-	
-	//if there is anything there will be a comma and a newline at the end of this string
-	// having a comma after the last property of a js object makes IE and opera barf, so cut out the last two characters
-	if (strlen($output)) $output = substr($output, 0, strlen($output)-2);
-	
-	// output the object, and if this is a subsequent call after changes are saved, add the js function calls to translate the text and set the language
-	$text = "i18n." . $lang . "={" . $output . "};" . ($do_on_fly ? "\nxlateOnFly('{$lang}');\ni18n.setlanguage('{$lang}');" : "");
+
 	$response = new AjaxResponse( $text );
 	$response->setContentType( "application/javascript; charset=utf-8" ); 
 	return $response;
@@ -147,4 +150,3 @@ function saveTransListMulti() {
 	return "<script type=\"text/javascript\">location.href='{$wpSourceForm}?saved=1';</script>";
 	
 }
-?>
