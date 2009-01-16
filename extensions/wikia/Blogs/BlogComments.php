@@ -12,6 +12,7 @@ global $wgAjaxExportList;
 $wgAjaxExportList[] = "BlogComment::axPost";
 $wgAjaxExportList[] = "BlogComment::axToggle";
 
+$wgHooks[ "ArticleDeleteComplete" ][] = "BlogCommentList::articleDeleteComplete";
 
 /**
  * BlogComment is article, this class is used for manipulation on it
@@ -285,7 +286,7 @@ class BlogComment {
 	private function canToggle() {
 		global $wgUser, $wgCityId, $wgDevelEnvironment;
 
-		$devel    = $wgCityId == 4832 || $wgDevelEnvironment;
+		$devel    = 1; #$wgCityId == 4832 || $wgDevelEnvironment;
 		$isAuthor = $this->mUser->getId() == $wgUser->getId() && ! $wgUser->isAnon();
 		$isOwner  = $this->mOwner->getId() == $wgUser->getId();
 		$isSysop  = $wgUser->isAllowed( "blog-comments-toggle" );
@@ -705,5 +706,29 @@ class BlogCommentList {
 		}
 
 		return wfMsgExt( $msg, "", $blockerLink, $reason, $ip, $blockerName, $blockid, $blockExpiry, $intended, $blockTimestamp );
+	}
+
+	/**
+	 * remove lising from cache and mark title for squid as invalid
+	 */
+	public function purge() {
+		global $wgMemc;
+
+		$wgMemc->delete( wfMemcKey( "blog", "comm", $this->mTitle->getArticleID() ) );
+
+		$this->mTitle->invalidateCache();
+		$update = SquidUpdate::newSimplePurge( $this->mTitle );
+		$update->doUpdate();
+	}
+
+	/**
+	 * Hook
+	 */
+	static public function articleDeleteComplete( &$Article, &$User, $reason, $id ) {
+
+		$listing = BlogCommentList::newFromTitle( $Article->getTitle() );
+		$listing->purge();
+
+		return true;
 	}
 }
