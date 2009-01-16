@@ -12,7 +12,6 @@ define ("GROUP_CONCAT", "64000");
 define ("BLOGS_DEFAULT_LENGTH", "400");
 define ("BLOGS_HTML_PARSE", "/(<.+?>)?([^<>]*)/s");
 define ("BLOGS_ENTITIES_PARSE", "/&[0-9a-z]{2,8};|&#[0-9]{1,7};|&#x[0-9a-f]{1,6};/i");
-define ("BLOGS_ENDING_TEXT", " (...) ");
 define ("BLOGS_CLOSED_TAGS", "/^<\s*\/([^\s]+?)\s*>$/s");
 define ("BLOGS_OPENED_TAGS", "/^<\s*([^\s>!]+).*?>$/s");
 
@@ -593,7 +592,7 @@ class BlogTemplateClass {
     	return $aPages;
 	}
 
-	private static function __truncateText($sText, $iLength = BLOGS_DEFAULT_LENGTH, $sEnding = BLOGS_ENDING_TEXT) {
+	private static function __truncateText( $sText, $iLength = BLOGS_DEFAULT_LENGTH, $sEnding ) {
 		global $wgLang;
 
 		wfProfileIn( __METHOD__ );
@@ -717,7 +716,8 @@ class BlogTemplateClass {
 				/* skip HTML tags */
 				$sBlogText = strip_tags($sBlogText, self::$skipStrinAfterParse);
 				/* truncate text */
-				$sResult = self::__truncateText($sBlogText, isset(self::$aOptions['summarylength']) ? intval(self::$aOptions['summarylength']) : BLOGS_DEFAULT_LENGTH, BLOGS_ENDING_TEXT);
+				$cutSign = wfMsg( "blug-cut-sign" );
+				$sResult = self::__truncateText($sBlogText, isset(self::$aOptions['summarylength']) ? intval(self::$aOptions['summarylength']) : BLOGS_DEFAULT_LENGTH, $cutSign );
 			} else {
 				/* parse revision text */
 				$parserOutput = $localParser->parse($sBlogText, Title::newFromId($iPage), ParserOptions::newFromUser($wgUser));
