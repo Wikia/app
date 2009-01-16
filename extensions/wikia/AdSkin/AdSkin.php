@@ -6,7 +6,7 @@
 $wgHooks['GetHTMLAfterBody'][] = 'RenderAdSkin';
 		
 function RenderAdSkin() {
-	global $wgAdSkin, $wgExtensionsPath, $wgUser, $wgStyleVersion;
+	global $wgAdSkin, $wgExtensionsPath, $wgUser, $wgStyleVersion, $wgWikiaLogo;
 
 	// Disable for logged in users
 	if (is_object($wgUser) && $wgUser->isLoggedIn() ){
@@ -26,6 +26,14 @@ function RenderAdSkin() {
 			break;
 		case "dnd":
 			echo '<link rel="stylesheet" type="text/css" href="'. $wgExtensionsPath .'/wikia/AdSkin/css/dnd.css?'. $wgStyleVersion .'" />';
+			break;
+		case "underworld":
+			echo '<link rel="stylesheet" type="text/css" href="'. $wgExtensionsPath .'/wikia/AdSkin/css/underworld.css?'. $wgStyleVersion .'" />';
+			echo '<style type="text/css">';
+			echo 'body.mainpage #wikia_header {
+				background: url('. $wgWikiaLogo .') 10px 2px no-repeat;
+			}';
+			echo '</style>';
 			break;
 		}	
 	}
