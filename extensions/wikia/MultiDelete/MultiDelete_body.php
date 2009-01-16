@@ -251,24 +251,19 @@ class MultiDelete extends SpecialPage {
 				continue;
 			}
 			$namespace = $page->getNamespace();
-			$titleNormalized = str_replace(' ', '_', $page->getText());
+			$titleName = $page->getText();
 
-			$where = array('page_namespace' => $namespace,
-					'page_title' => $titleNormalized);
-			if (!is_null($wikis)) {
-				$where[] = $selectedWikis;
-			}
 			$res = $dbr->select(
 				'pages',
 				'DISTINCT page_wikia_id',
 				array(	'page_namespace' => $namespace,
-					'page_title' => $titleNormalized,
+					'page_title' => $titleName,
 					'page_wikia_id IN (' . implode(',', array_keys($wikis)) . ')'
 				),
 				__METHOD__
 			);
 			foreach ($res as $row) {
-				$wikisArr[$row->page_wikia_id][] = array('namespace' => $namespace, 'title' => $titleNormalized, 'reason' => $reason, 'domain' => $wikis[$row->page_wikia_id]);
+				$wikisArr[$row->page_wikia_id][] = array('namespace' => $namespace, 'title' => $titleName, 'reason' => $reason, 'domain' => $wikis[$row->page_wikia_id]);
 			}
 			$dbr->freeResult($res);
 		}
@@ -287,14 +282,14 @@ class MultiDelete extends SpecialPage {
 				return;
 			}
 			$namespace = $page->getNamespace();
-			$titleNormalized = str_replace(' ', '_', $page->getText());
+			$titleName = $page->getText();
 
 			foreach ($wikis as $wikiId) {
 				if ($chunkCount >= CHUNK_SIZE) {
 					$chunkId++;
 					$chunkCount = 0;
 				}
-				$chunks[$chunkId][$wikiId][] = array('namespace' => $namespace, 'title' => $titleNormalized, 'reason' => $reason);
+				$chunks[$chunkId][$wikiId][] = array('namespace' => $namespace, 'title' => $titleName, 'reason' => $reason);
 				$chunkCount++;
 			}
 		} else {					//single wiki, many titles
