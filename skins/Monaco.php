@@ -1714,6 +1714,8 @@ wfProfileOut( __METHOD__ . '-widgets');
 // curse like cobranding
 $this->printCustomFooter();
 
+echo AdEngine::getInstance()->getDelayedLoadingCode();
+
 echo '</div>';
 $this->html('bottomscripts'); /* JS call to runBodyOnloadHook */
 $this->html('reporttime');
@@ -1733,9 +1735,6 @@ echo AnalyticsEngine::track('QuantServe', AnalyticsEngine::EVENT_PAGEVIEW);
 ?>
 
 <!-- End Analytics -->
-<?php
-	echo AdEngine::getInstance()->getDelayedLoadingCode();
-?>
 
 	</body>
 </html>

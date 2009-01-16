@@ -80,17 +80,18 @@ TieDivLibrary = new function() {
 		for(i = 0; i < items.length; i++) {
 			jQuery.noConflict();
 			var offset = jQuery("#" + items[i][0]).offset();
+			offset.top -= jQuery("#monaco_shrinkwrap_main").offset().top;
 			if (YAHOO.util.Dom.getStyle(items[i][0], "float") == 'right') {
 				jQuery("#" + items[i][0] + "_load").css({
 					display: "block",
 					top: offset.top,
-					right: YAHOO.util.Dom.getViewportWidth() - offset.left - jQuery("#" + items[i][0]).width()
+					right: YAHOO.util.Dom.getViewportWidth() - offset.left - jQuery("#monaco_shrinkwrap_main").offset().left - jQuery("#" + items[i][0]).width()
 				});
 			} else {
 				jQuery("#" + items[i][0] + "_load").css({
 					display: "block",
 					top: offset.top,
-					left: offset.left
+					left: offset.left - jQuery("#monaco_shrinkwrap_main").offset().left
 				});
 			}
 			//Ad networks might send 300x600 on the homepage. This checks the actual height of the _load div's contents and adjusts the placeholder.
