@@ -63,7 +63,7 @@ class ListUsers extends SpecialPage {
 		}
 
 		if (empty($this->mGroup)) {
-			$this->mGroup = array('all');
+			$this->mGroup = array('all','bot','sysop','rollback','bureaucrat');
 		}
 
 		/**
@@ -83,6 +83,7 @@ class ListUsers extends SpecialPage {
 		$groupList = $this->getGroupList($aGroups);
 		$contributed = array( 
 			0 => wfMsg('listusersallusers'),
+			1 => wfMsg('listusers-1contribution'),
 			5 => wfMsg('listusers-5contributions'),
 			10 => wfMsg('listusers-10contributions'),
 			20 => wfMsg('listusers-20contributions'),
@@ -169,11 +170,20 @@ class ListUsers extends SpecialPage {
 		// todo
 	}
 	
-	private static function __getUsersFromDB($groups, $text = "", $contrib = 0, $limit = 30, $offset = 0) {
+	private static function __getUsersFromDB($groups, $text = "", $contrib = 0, $limit = 30, $offset = 0, $order = 'username', $desc = -1) {
 		global $wgMemc, $wgSharedDB, $wgDBStats;
 		global $wgCityId, $wgLang;
 		global $wgUser;
         wfProfileIn( __METHOD__ );
+		
+		$descOrder = ($desc == -1) ? "" : "desc";
+		$orderOption = array(
+			"username" => "lu_user_name $descOrder",
+			"groups" => "lu_allgroups $descOrder, lu_numgroups $descOrder",
+			"revcnt" => "lu_rev_cnt $descOrder",
+			"loggedin" => "ts $descOrder"
+		);
+		$orderby = (isset($orderOption[$order])) ? $orderOption[$order] : $orderOption["username"];
 		
 		$aUsers = array('cnt' => 0, 'data' => array());
 		$memkey = wfForeignMemcKey( $wgSharedDB, null, "ListUsers", "articles", str_replace(" ", "_", $groups.$text.$contrib.$offset) );
@@ -212,11 +222,11 @@ class ListUsers extends SpecialPage {
 				}
 				
 				$res = $dbs->select(
-					array ( '`dataware`.`city_local_users`' ),
-					array ( "lu_user_id", "lu_user_name", "lu_numgroups", "lu_allgroups", "lu_rev_cnt", "lu_blocked" ),
+					array ( '`dataware`.`city_local_users` left join `dataware`.`user_login_history` on (lu_user_id = user_id)' ),
+					array ( "lu_user_id", "lu_user_name", "lu_numgroups", "lu_allgroups", "lu_rev_cnt", "lu_blocked", "ifnull(max(ulh_timestamp), '') as ts" ),
 					$aWhere,
 					__METHOD__,
-					array ( 'ORDER BY' => 'lu_user_name', 'LIMIT' => $limit, 'OFFSET' => intval($offset) * $limit, 'SQL_CALC_FOUND_ROWS' )
+					array ( 'GROUP BY' => 'lu_user_id', 'ORDER BY' => $orderby, 'LIMIT' => $limit, 'OFFSET' => intval($offset) * $limit, 'SQL_CALC_FOUND_ROWS' )
 				);
 				$sk = $wgUser->getSkin();
 
@@ -249,6 +259,7 @@ class ListUsers extends SpecialPage {
 						'rev_cnt' 		=> $oRow->lu_rev_cnt,
 						'blcked'		=> $oRow->lu_blocked,
 						'links'			=> "(" . implode(") &#183; (", $aLinks) . ")",
+						'last_login'	=> $oRow->ts
 					);
 				}
 				$dbs->freeResult( $res );
@@ -262,7 +273,7 @@ class ListUsers extends SpecialPage {
 				# last logged in 
 				$aWhere = array();
 				if ( !empty($aUsers['data']) && is_array($aUsers['data']) ) {
-					$aWhere = array( " user_id in (". $dbs->makeList( array_keys($aUsers['data']) ).") " );
+					/*$aWhere = array( " user_id in (". $dbs->makeList( array_keys($aUsers['data']) ).") " );
 					$res = $dbs->select(
 						array( '`dataware`.`user_login_history`' ),
 						array( "user_id", "max(ulh_timestamp) as ts" ),
@@ -275,7 +286,7 @@ class ListUsers extends SpecialPage {
 							$aUsers['data'][$oRow->user_id]['last_login'] = $wgLang->timeanddate( wfTimestamp( TS_MW, $oRow->ts ), true );
 						}
 					}
-					$dbs->freeResult( $res );
+					$dbs->freeResult( $res );*/
 					
 					# last edited 
 					$city_dbname = WikiFactory::IDtoDB( $wgCityId );
@@ -310,7 +321,7 @@ class ListUsers extends SpecialPage {
 		return $aUsers;
 	}
 	
-	public static function axShowUsers ( $groups, $userSearch, $contrib, $limit = 30, $page = 0 ) {
+	public static function axShowUsers ( $groups, $userSearch, $contrib, $limit = 30, $page = 0, $order = 'username', $desc = -1 ) {
 		global $wgRequest, $wgUser,	$wgCityId, $wgDBname;
 		global $wgContLang;
 		
@@ -336,8 +347,8 @@ class ListUsers extends SpecialPage {
 			return;
 		}
 		
-		$result = array('nbr_records' => 0, 'limit' => $limit, 'page' => $page) ;
-		$aUsers = self::__getUsersFromDB($groups, $userSearch, $contrib, $limit, $page);
+		$result = array('nbr_records' => 0, 'limit' => $limit, 'page' => $page, 'order' => $order, 'desc' => $desc);
+		$aUsers = self::__getUsersFromDB($groups, $userSearch, $contrib, $limit, $page, $order, $desc);
 		
 		if (!empty($aUsers) && is_array($aUsers)) {
 			$result['nbr_records'] = (isset($aUsers['cnt'])) ? intval($aUsers['cnt']) : 0;
