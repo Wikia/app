@@ -655,11 +655,11 @@ function buildActionBar(){
 			//article doesn't exist or is deleted
 			if( $wgUser->isAllowed( 'delete' ) ) {
 				if( $n = $wgTitle->isDeleted() ) {
-					$undelTitle = SpecialPage::getTitleFor( 'Undelete' );
+					$undelTitle = SpecialPage::getTitleFor( 'Undelete', $wgTitle );
 					$content_actions['undelete'] = array(
 						'class' => false,
 						'text' => wfMsgExt( 'undelete_short', array( 'parsemag' ), $n ),
-						'href' => $undelTitle->getLocalUrl( 'target=' . urlencode( $this->thispage ) )
+						'href' => $undelTitle->getLocalUrl() 
 						#'href' => self::makeSpecialUrl( "Undelete/$this->thispage" )
 					);
 				}
