@@ -155,8 +155,13 @@ function SharedHelpHook(&$out, &$text) {
 				$_SESSION ['SH_redirected'] = '';
 			}
 
-			if(isset($destinationUrl)) {				
-				$destinationPage = substr( $destinationUrl, strpos( $destinationUrl, "$helpNs:") );
+			if(isset($destinationUrl)) {
+				$destinationPageIndex = strpos( $destinationUrl, "$helpNs:" );
+				# if $helpNs was not found, assume we're on help.wikia.com and try again
+				# TODO: this is ugly, might use a rewrite
+				if ( $destinationPageIndex === false )
+					$destinationPageIndex = strpos( $destinationUrl, "Help:" );
+				$destinationPage = substr( $destinationUrl, $destinationPageIndex );
 				$link = $wgServer . str_replace( "$1", $destinationPage, $wgArticlePath );
 				if ( 'no' != $wgRequest->getVal( 'redirect' ) ) {
 					$_SESSION ['SH_redirected'] = $wgTitle->getText();
