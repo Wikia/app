@@ -9,11 +9,6 @@ function wfGetJsTranslation($lang, $do_on_fly=false) {
 		$lang_array[$id] = $id;
 	}
 	
-	// macbre: load MW language class to check whether given language is RTL
-	$langObj = Language::factory($lang);
-	$isRTL = is_object($langObj) && $langObj->isRTL();
-	$text = 'i18n.isRTL=' . ($isRTL ? 'true' : 'false') . ";\n";
-
 	// now get the list for the current language
 	$lang_array_lang = getTransList($lang);
 	
@@ -25,7 +20,7 @@ function wfGetJsTranslation($lang, $do_on_fly=false) {
 
 	// macbre: use it for proper UTF encoding
 	$json = Wikia::json_encode($lang_array);
-	$text .= "i18n.{$lang}={$json};";
+	$text = "i18n.{$lang}={$json};";
 
 	// and if this is a subsequent call after changes are saved, add the js function calls to translate the text and set the language
 	if ($do_on_fly) {
