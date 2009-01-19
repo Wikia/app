@@ -644,7 +644,7 @@ function buildActionBar(){
 				);
 			}
 			if ( $wgTitle->quickUserCan( 'move' ) ) {
-				$moveTitle = SpecialPage::getTitleFor( 'Movepage', $this->thispage );
+				$moveTitle = SpecialPage::getTitleFor( 'Movepage', $wgTitle );
 				$content_actions['move'] = array(
 					'class' => $wgTitle->isSpecial( 'Movepage' ) ? 'selected' : false,
 					'text' => wfMsg('move'),
