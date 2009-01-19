@@ -242,6 +242,24 @@ class RecentChange
 				$this->mAttribs['rc_log_action'] );
 		}
 
+		// temporary code begin /Inez
+		if($this->mAttribs['rc_type'] == RC_NEW) {
+			$eventType = 'new';
+		} else if($this->mAttribs['rc_type'] == RC_EDIT) {
+			$eventType = 'edit';
+		} else if($this->mAttribs['rc_type'] == RC_LOG && $this->mAttribs['rc_namespace'] == NS_IMAGE) {
+			$eventType = 'upload';
+		}
+		if(!empty($eventType)) {
+			global $wgMemc;
+			$key = $eventType.date('Ymd_Hi00');
+			$ret = $wgMemc->incr($key);
+			if(empty($ret)) {
+				$wgMemc->set($key, 1, 60*5);
+			}
+		}
+		// temporary code end
+
 		# Notify extensions
 		wfRunHooks( 'RecentChange_save', array( &$this ) );
 	}
