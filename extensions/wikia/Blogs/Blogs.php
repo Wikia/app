@@ -109,3 +109,10 @@ include( dirname( __FILE__ ) . "/UserMasthead.php");
 include( dirname( __FILE__ ) . "/BlogArticle.php");
 include( dirname( __FILE__ ) . "/BlogComments.php");
 include( dirname( __FILE__ ) . "/BlogLockdown.php");
+
+/**
+ * add task
+ */
+if( function_exists( "extAddBatchTask" ) ) {
+	extAddBatchTask( dirname(__FILE__)."/BlogTask.php", "blog", "BlogTask" );
+}
