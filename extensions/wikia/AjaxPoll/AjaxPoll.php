@@ -44,7 +44,7 @@ function wfAjaxPollTag() {
 
 	$wgParser->setHook( "poll", array( "AjaxPollClass", "renderFromTag" ) );
 	$wgOut->addScript( "<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/AjaxPoll/AjaxPoll.js?{$rand}\" ></script>\n" );
-	$wgOut->addScript( "<style type=\"text/css\">@import \"{$wgExtensionsPath}/wikia/AjaxPoll/AjaxPoll.css?{$rand}\";</style>\n" );
+	$wgOut->addScript( "<style type=\"text/css\">/*<![CDATA[*/@import \"{$wgExtensionsPath}/wikia/AjaxPoll/AjaxPoll.css?{$rand}\";/*]]>*/</style>\n" );
 }
 
 /**
