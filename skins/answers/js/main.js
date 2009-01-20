@@ -122,7 +122,7 @@ YAHOO.widget.Effects.Fade = function( id ){
 //Sidebar Widgets
 $("#recent_unanswered_questions").ready(function() {
 	
-	url = wgServer + "/api.php?action=query&list=wkpagesincat&wkcategory=Un-answered questions&format=json&wklimit=10"
+	url = wgServer + "/api.php?action=query&list=wkpagesincat&wkcategory=" + wgUnAnsweredCategory  + "&format=json&wklimit=10"
 	jQuery.get( url, "", function( oResponse ){
 		eval("j=" + oResponse)
 		if( j.query.wkpagesincat ){
@@ -139,7 +139,7 @@ $("#recent_unanswered_questions").ready(function() {
 
 $("#related_answered_questions").ready(function() {
 	
-	url = wgServer + "/api.php?action=query&list=wkpagesincat&wkcategory=Answered questions&format=json&wklimit=5"
+	url = wgServer + "/api.php?action=query&list=wkpagesincat&wkcategory=" + wgAnsweredCategory + "&format=json&wklimit=5"
 	jQuery.get( url, "", function( oResponse ){
 		eval("j=" + oResponse)
 		if( j.query.wkpagesincat ){
@@ -175,3 +175,43 @@ $("#popular_categories").ready(function() {
 		
 	});
 });
+
+//main page
+$(document).ready(function() {
+if( wgIsMainpage == true ){
+	$("#homepage_new_questions").ready(function() {
+		
+		url = wgServer + "/api.php?action=query&list=wkpagesincat&wkcategory=" + wgUnAnsweredCategory  + "&format=json&wklimit=5"
+		jQuery.get( url, "", function( oResponse ){
+			eval("j=" + oResponse)
+			if( j.query.wkpagesincat ){
+				html = ""
+				for( item in j.query.wkpagesincat ){
+					page = j.query.wkpagesincat[item]
+					html += "<li><a href=\"" + page.url + "\">" + page.title.replace(/_/g," ") + "?</a></li>"
+				}
+				$("#homepage_new_questions").prepend( html )
+			}
+			
+		});
+	});
+	
+	$("#homepage_recently_answered_questions").ready(function() {
+		
+		url = wgServer + "/api.php?action=query&list=wkpagesincat&wkcategory=" + wgAnsweredCategory + "&format=json&&wkorder=edit&wklimit=6"
+		jQuery.get( url, "", function( oResponse ){
+			eval("j=" + oResponse)
+			if( j.query.wkpagesincat ){
+				html = ""
+				for( item in j.query.wkpagesincat ){
+					page = j.query.wkpagesincat[item]
+					if( page.title != wgPageName ){
+						html += "<li><a href=\"" + page.url + "\">" + page.title.replace(/_/g," ") + "?</a></li>"
+					}
+				}
+				$("#homepage_recently_answered_questions").prepend( html )
+			}
+			
+		});
+	});
+}});
