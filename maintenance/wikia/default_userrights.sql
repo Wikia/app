@@ -17,7 +17,6 @@ insert into user_groups(ug_user, ug_group) values
 (/*Gil*/20251,'staff'),
 (/*Gorillamania*/414904,'staff'),
 (/*Inez*/51654,'staff'),
-(/*Jeffrey Tierney*/181462,'staff'),
 (/*Jeremie*/123457,'staff'),
 (/*Jimbo Wales*/13,'staff'),
 (/*Kirkburn*/126761,'staff'),
@@ -33,6 +32,7 @@ insert into user_groups(ug_user, ug_group) values
 (/*Scarecroe*/10637, 'staff'),
 (/*TOR*/23865,'staff'),
 (/*Toughpigs*/10370,'staff'),
+(/*Uberfuzzy*/161697, 'staff'),
 (/*Untethered*/136195,'staff'),
 (/*WikiaBot*/269919,'staff'),
 (/*Zuirdj*/47,'staff')
@@ -54,7 +54,6 @@ insert into user_groups(ug_user, ug_group) values
 (/*Richard1990*/25261,'helper'),
 (/*Spartan 688*/364299,'helper'),
 (/*Tommy6*/239851,'helper'),
-(/*Uberfuzzy*/161697, 'helper'),
 (/*MtaÄ*/826221, 'helper')
 ;
 
@@ -67,13 +66,4 @@ insert into user_groups(ug_user, ug_group) values
 (/*Default*/49312,'bot'),
 (/*Maintenance script*/375130,'bot'),
 (/*WikiaBot*/269919,'bot')
-;
-
-delete from user_groups where ug_user in (
-/*Uberfuzzy*/161697
-) and (ug_group="checkuser" or ug_group="regexblock" or ug_group="spamregex");
-insert into user_groups(ug_user, ug_group) values
-(/*Uberfuzzy*/161697, 'checkuser'),
-(/*Uberfuzzy*/161697, 'regexblock'),
-(/*Uberfuzzy*/161697, 'spamregex')
 ;
