@@ -301,7 +301,10 @@ wfRunHooks('GetHTMLAfterBody', array (&$this));
 		}
 		if ($is_question) {
 		?>
-		<div id="google_ad_1" class="google_ad"></div>
+		<div id="bottom_ads"> 
+			<div id="google_ad_1" class="google_ad"></div>
+			<div id="google_ad_2" class="google_ad"></div> 
+		</div> 
 		
 		<div id="huge_buttons" class="clearfix">
 			<? if ( $answer_page->isArticleAnswered() ) { ?>
@@ -324,7 +327,7 @@ wfRunHooks('GetHTMLAfterBody', array (&$this));
 			<h2><?= wfMsg("related_answered_questions") ?></h2>
 			<ul id="related_answered_questions">
 			</ul>
-			<div id="google_ad_4" class="google_ad"></div>
+			<div id="google_ad_5" class="google_ad"></div>
 		</div>
 		<? } ?>
 		</div><?/*answers_article*/?>
@@ -430,7 +433,7 @@ wfRunHooks('GetHTMLAfterBody', array (&$this));
 			<ul id="recent_unanswered_questions">
 				<? 
 				if ($is_question) {	
-				echo '<li><div id="google_ad_2" class="google_ad"></div></li>';
+				echo '<li><div id="google_ad_3" class="google_ad"></div></li>';
 				} 
 				?>
 			</ul>
@@ -441,7 +444,7 @@ wfRunHooks('GetHTMLAfterBody', array (&$this));
 			<ul id="popular_categories">
 				<? 
 				if ($is_question) {	
-				echo '<li><div id="google_ad_3" class="google_ad"></div></li>';
+				echo '<li><div id="google_ad_4" class="google_ad"></div></li>';
 				}
 				?>
 			</ul>
@@ -640,5 +643,6 @@ echo 'google_hints = \''. implode(', ', $category_text) .'\';';
 		}
         }
 } // end of class
+
 
 

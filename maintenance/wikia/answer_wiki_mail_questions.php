@@ -51,16 +51,21 @@ $time_start = microtime(true);
 
 //calculate cutoff time
 
-$cutoff_unixtime = time() - ( $days * 86400 );
-//$cutoff_unixtime = $cutoff_unixtime - ($cutoff_unixtime % 86400);
-$cutoff = $dbr->timestamp( $cutoff_unixtime );
+$cutoff_unixtime_start = time() - ( $days * 86400 );
+$cutoff_unixtime_start = $cutoff_unixtime_start - ($cutoff_unixtime_start % 86400);
+$cutoff_unixtime_end = $cutoff_unixtime_start + ( $days * 86400 );
+
+$cutoff_start = $dbr->timestamp( $cutoff_unixtime_start );
+$cutoff_end = $dbr->timestamp( $cutoff_unixtime_end );
 
 //GET PAGES FOR EMAIL BODY
 list ($page,$recentchanges) = $dbr->tableNamesN('page','recentchanges');
 $res = $dbr->select( "$page, $recentchanges ", 
 		array( 'page_title','rc_timestamp' ),
-	array("page_id = rc_cur_id","rc_new" => 1, 'rc_timestamp >= ' . $dbr->addQuotes( $cutoff ), "page_namespace" => NS_MAIN, "page_is_redirect" => 0 ), __METHOD__, 
-	array("ORDER BY" => "rc_timestamp desc", "LIMIT" => 10 )
+		array("page_id = rc_cur_id","rc_new" => 1, 'rc_timestamp >= ' . $dbr->addQuotes( $cutoff_start ), 
+			'rc_timestamp <= ' . $dbr->addQuotes( $cutoff_end ),
+			"page_namespace" => NS_MAIN, "page_is_redirect" => 0 ), __METHOD__, 
+	array("ORDER BY" => "rc_timestamp desc"  )
 );
 
 $body = "<div><b>New Questions on answer.wikia.com</b></div>
@@ -72,6 +77,9 @@ while ($row = $dbr->fetchObject( $res ) ) {
 	$body .= "<div style='padding-bottom:4px;'>* <a href=\"" . $title->escapeFullURL() . "\">" . $title->getText() . "</a> | <a href=\"" . $title->escapeFullURL("action=edit") . "\">" . "Answer this" . "</a> | <a href=\"" . $title->escapeFullURL("action=delete") . "\">" . wfMsg("delete") . "</a></div>";
 }
 
+echo $body;
+	exit();
+	
 //BUILD LIST OF ALL USERS IN THIS GROUP
 $groups = User::getAllGroups();
 if( !in_array( $group, $groups ) ){
