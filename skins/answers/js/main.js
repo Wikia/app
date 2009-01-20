@@ -1,37 +1,37 @@
-$("#answers_ask_field").ready(function() {
+jQuery("#answers_ask_field").ready(function() {
 	var answers_field_default = wgAskFormTitle;
-	$("#answers_ask_field").focus(function() {
-		if ($(this).attr('value') == answers_field_default) {
-			$(this).removeClass('alt').attr('value', '');
+	jQuery("#answers_ask_field").focus(function() {
+		if (jQuery(this).attr('value') == answers_field_default) {
+			jQuery(this).removeClass('alt').attr('value', '');
 		}
 	}).blur(function() {
-		if ($(this).attr('value') == '') {
-			$(this).addClass('alt').attr('value', answers_field_default);
+		if (jQuery(this).attr('value') == '') {
+			jQuery(this).addClass('alt').attr('value', answers_field_default);
 		}
 	});
 });
 
-$("#header_menu_user").ready(function() {
-	$("#header_button_user").bind("click", function() {
-		$("#header_menu_user").slideDown("fast");
+jQuery("#header_menu_user").ready(function() {
+	jQuery("#header_button_user").bind("click", function() {
+		jQuery("#header_menu_user").slideDown("fast");
 		alignCenter('header_menu_user', 'header_button_user');
 		return false;
 	});
 });
 
 function stopProp() {
-        $(this).find("*").mouseout(function(e) {
+        jQuery(this).find("*").mouseout(function(e) {
                 e.stopPropagation();
         });
 }
 
 function closeMenus() {
-	$(".header_menu").slideUp("fast");
+	jQuery(".header_menu").slideUp("fast");
 }
 
 function alignCenter(e, target) {
-	var center = $(window).width() - $("#"+target).offset().left - $("#"+target).outerWidth() / 2;
-	$("#"+e).css("right", center - $("#"+e).outerWidth() / 2);
+	var center = jQuery(window).width() - jQuery("#"+target).offset().left - jQuery("#"+target).outerWidth() / 2;
+	jQuery("#"+e).css("right", center - jQuery("#"+e).outerWidth() / 2);
 }
 
 function askQuestion(){
@@ -51,7 +51,7 @@ function askQuestion(){
 			eval("j=" + oResponse)
 			
 			page = j.query.pages["-1"]
-			path = wgServer + wgArticlePath.replace("$1","");
+			path = wgServer + wgArticlePath.replace("jQuery1","");
 			if( typeof( page ) != "object" ){
 				url = path + q
 			}else{
@@ -62,11 +62,11 @@ function askQuestion(){
 	);
 }
 	
-$(document).ready(function() {
-	$("#ask_form").submit(askQuestion);
-	$("#ask_button").click(askQuestion);
-	$(".header_menu").hover(stopProp, closeMenus);
-	$(document).click(closeMenus);
+jQuery(document).ready(function() {
+	jQuery("#ask_form").submit(askQuestion);
+	jQuery("#ask_button").click(askQuestion);
+	jQuery(".header_menu").hover(stopProp, closeMenus);
+	jQuery(document).click(closeMenus);
 });
 
 
@@ -93,14 +93,14 @@ function google_ad_render( google_ads, i ){
 		google_ads[i].url + '" onmouseout="window.status=\'\'" onmouseover="window.status=\'go to ' +
 		google_ads[i].visible_url + '\';return true" class="google_url">' +
 		google_ads[i].visible_url + '</span></a><br />';
-		$("#google_ad_" + (i + 1)).html(s);
+		jQuery("#google_ad_" + (i + 1)).html(s);
 	}
 }
 
 //YUI Helper Functions
 
 //So Ajax werks
-var YAHOO={ util: { Connect: {} } }
+YAHOO.util.Connect = {}
 YAHOO.util.Connect.asyncRequest = function(method,url,callback,pars){
 	success = callback.success
 	if( method.toUpperCase() == "POST" )jQuery.post( url, pars, success);
@@ -110,17 +110,17 @@ YAHOO.util.Connect.asyncRequest = function(method,url,callback,pars){
 //Make fade and appear become show/hide
 YAHOO.widget = { Effects:{} };
 YAHOO.widget.Effects.Appear = function( id ){
-	$("#" + id).show();
+	jQuery("#" + id).show();
 }
 YAHOO.widget.Effects.Hide = function( id ){
-	$("#" + id).hide();
+	jQuery("#" + id).hide();
 }
 YAHOO.widget.Effects.Fade = function( id ){
-	$("#" + id).hide();
+	jQuery("#" + id).hide();
 }
 
 //Sidebar Widgets
-$("#recent_unanswered_questions").ready(function() {
+jQuery("#recent_unanswered_questions").ready(function() {
 	
 	url = wgServer + "/api.php?action=query&list=wkpagesincat&wkcategory=" + wgUnAnsweredCategory  + "&format=json&wklimit=10"
 	jQuery.get( url, "", function( oResponse ){
@@ -131,13 +131,13 @@ $("#recent_unanswered_questions").ready(function() {
 				page = j.query.wkpagesincat[item]
 				html += "<li><a href=\"" + page.url + "\">" + page.title.replace(/_/g," ") + "?</a></li>"
 			}
-			$("#recent_unanswered_questions").prepend( html )
+			jQuery("#recent_unanswered_questions").prepend( html )
 		}
 		
 	});
 });
 
-$("#related_answered_questions").ready(function() {
+jQuery("#related_answered_questions").ready(function() {
 	
 	url = wgServer + "/api.php?action=query&list=wkpagesincat&wkcategory=" + wgAnsweredCategory + "&format=json&wklimit=5"
 	jQuery.get( url, "", function( oResponse ){
@@ -148,13 +148,13 @@ $("#related_answered_questions").ready(function() {
 				page = j.query.wkpagesincat[item]
 				html += "<li><a href=\"" + page.url + "\">" + page.title.replace(/_/g," ") + "?</a></li>"
 			}
-			$("#related_answered_questions").prepend( html )
+			jQuery("#related_answered_questions").prepend( html )
 		}
 		
 	});
 });
 
-$("#popular_categories").ready(function() {
+jQuery("#popular_categories").ready(function() {
 	
 	url = wgServer + "/api.php?action=query&list=wkmostcat&format=json&wklimit=15"
 	jQuery.get( url, "", function( oResponse ){
@@ -170,16 +170,16 @@ $("#popular_categories").ready(function() {
 					count++
 				}
 			}
-			$("#popular_categories").prepend( html )
+			jQuery("#popular_categories").prepend( html )
 		}
 		
 	});
 });
 
 //main page
-$(document).ready(function() {
+jQuery(document).ready(function() {
 if( wgIsMainpage == true ){
-	$("#homepage_new_questions").ready(function() {
+	jQuery("#homepage_new_questions").ready(function() {
 		
 		url = wgServer + "/api.php?action=query&list=wkpagesincat&wkcategory=" + wgUnAnsweredCategory  + "&format=json&wklimit=5"
 		jQuery.get( url, "", function( oResponse ){
@@ -190,13 +190,13 @@ if( wgIsMainpage == true ){
 					page = j.query.wkpagesincat[item]
 					html += "<li><a href=\"" + page.url + "\">" + page.title.replace(/_/g," ") + "?</a></li>"
 				}
-				$("#homepage_new_questions").prepend( html )
+				jQuery("#homepage_new_questions").prepend( html )
 			}
 			
 		});
 	});
 	
-	$("#homepage_recently_answered_questions").ready(function() {
+	jQuery("#homepage_recently_answered_questions").ready(function() {
 		
 		url = wgServer + "/api.php?action=query&list=wkpagesincat&wkcategory=" + wgAnsweredCategory + "&format=json&&wkorder=edit&wklimit=6"
 		jQuery.get( url, "", function( oResponse ){
@@ -209,7 +209,7 @@ if( wgIsMainpage == true ){
 						html += "<li><a href=\"" + page.url + "\">" + page.title.replace(/_/g," ") + "?</a></li>"
 					}
 				}
-				$("#homepage_recently_answered_questions").prepend( html )
+				jQuery("#homepage_recently_answered_questions").prepend( html )
 			}
 			
 		});
