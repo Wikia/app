@@ -56,7 +56,9 @@ class AnswersTemplate extends MonacoTemplate {
 		global $wgRequest, $wgUser, $wgStyleVersion, $wgStylePath, $wgTitle;
 		$this->skin = $skin = $this->data['skin'];
 		$action = $wgRequest->getText( 'action' );
-		(Answer::isQuestion()) ? $question_mark = '?' : $question_mark = '';
+		$answer_page = Answer::newFromTitle( $wgTitle );
+		$is_question = $answer_page->isQuestion();
+		($is_question) ? $question_mark = '?' : $question_mark = '';
 
 ?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="<?php $this->text('xhtmldefaultnamespace') ?>" <?php
@@ -127,7 +129,7 @@ wfRunHooks('GetHTMLAfterBody', array (&$this));
 	<div id="answers_page">
 		<?php
 		if ( 
-			(!Answer::isQuestion() || in_array( 'staff', $wgUser->getGroups() ) || in_array( 'admin', $wgUser->getGroups() ) ) &&
+			(!$is_question || in_array( 'staff', $wgUser->getGroups() ) || in_array( 'admin', $wgUser->getGroups() ) ) &&
 			$wgTitle->getNamespace() != NS_CATEGORY
 		) {
 		?>
@@ -171,8 +173,8 @@ wfRunHooks('GetHTMLAfterBody', array (&$this));
 		<?php if($this->data['sitenotice']) { ?><div id="siteNotice"><?php $this->html('sitenotice') ?></div><?php } ?>
 
 		<?php
-		if (Answer::isQuestion()) {
-			$author = Answer::getOriginalAuthor();
+		if ($is_question) {
+			$author = $answer_page->getOriginalAuthor();
 			
 			$category_text = array();
 			global $wgOut;
@@ -226,7 +228,7 @@ wfRunHooks('GetHTMLAfterBody', array (&$this));
 		
 		<?
 		global $wgTitle;
-		if ( Answer::isQuestion() && Answer::isArticleAnswered() ) {
+		if ( $is_question && $answer_page->isArticleAnswered() ) {
 			echo '<div class="sectionedit">[<a href="'. $this->data['content_actions']['edit']['href'] .'">'. wfMsg('editsection') .'</a>]</div>';
 			echo '<div id="answer_title">'. wfMsg("answer_title") .'</div>';
 			$bodyContentClass = ' class="question"';
@@ -252,7 +254,7 @@ wfRunHooks('GetHTMLAfterBody', array (&$this));
 
 		<?php
 		global $wgTitle;
-		if ($wgUser->isAnon() && !Answer::isArticleAnswered() && $_GET['state'] == 'asked') {
+		if ($wgUser->isAnon() && !$answer_page->isArticleAnswered() && $_GET['state'] == 'asked') {
 			$submit_title = SpecialPage::getTitleFor( 'Userlogin' );
 			$submit_url = $submit_title->escapeFullURL("type=signup&action=submitlogin");
 			
@@ -297,12 +299,12 @@ wfRunHooks('GetHTMLAfterBody', array (&$this));
 			</div>
 			<?php
 		}
-		if (Answer::isQuestion()) {
+		if ($is_question) {
 		?>
 		<div id="google_ad_1" class="google_ad"></div>
 		
 		<div id="huge_buttons" class="clearfix">
-			<? if ( Answer::isArticleAnswered() ) { ?>
+			<? if ( $answer_page->isArticleAnswered() ) { ?>
 			<a href="<?= $wgTitle->getEditURL() ?>" class="huge_button edit"><div></div><?= wfMsg("improve_this_answer") ?></a>	
 			<a href="<?= $wgTitle->escapeFullURL("action=watch") ?>" class="huge_button watchlist"><div></div><?= wfMsg("notify_improved") ?></a>
 			<? } else { ?>
@@ -317,7 +319,7 @@ wfRunHooks('GetHTMLAfterBody', array (&$this));
 		<!-- XIAN: Pull content that is now in "AnswersAfterArticle" hook -->
 
                 <!-- NICK: Related answered questions -->
-		<? if ( Answer::isQuestion() ) { ?>
+		<? if ( $is_question ) { ?>
 		<div id="related_questions" class="reset widget">
 			<h2><?= wfMsg("related_answered_questions") ?></h2>
 			<ul id="related_answered_questions">
@@ -427,7 +429,7 @@ wfRunHooks('GetHTMLAfterBody', array (&$this));
 			<h2><?= wfMsg("recent_unanswered_questions") ?></h2>
 			<ul id="recent_unanswered_questions">
 				<? 
-				if (Answer::isQuestion()) {	
+				if ($is_question) {	
 				echo '<li><div id="google_ad_2" class="google_ad"></div></li>';
 				} 
 				?>
@@ -438,7 +440,7 @@ wfRunHooks('GetHTMLAfterBody', array (&$this));
 			<h2><?= wfMsg("popular_categories") ?></h2>
 			<ul id="popular_categories">
 				<? 
-				if (Answer::isQuestion()) {	
+				if ($is_question) {	
 				echo '<li><div id="google_ad_3" class="google_ad"></div></li>';
 				}
 				?>
