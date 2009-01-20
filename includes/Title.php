@@ -3090,6 +3090,10 @@ class Title {
 		// isn't needed. So we strip the language part away.
 		// Also, extension messages which are not loaded, are shown as red, because
 		// we don't call MessageCache::loadAllMessages.
+		global $wgEnableCategoryBlueLinks;
+		if ($wgEnableCategoryBlueLinks && $this->mNamespace == NS_CATEGORY){
+			return true;
+		}
 		list( $basename, /* rest */ ) = explode( '/', $this->mDbkeyform, 2 );
 		return $this->isExternal()
 			|| ( $this->mNamespace == NS_MAIN && $this->mDbkeyform == '' )
