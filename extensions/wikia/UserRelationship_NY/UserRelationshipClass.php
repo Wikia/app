@@ -458,7 +458,7 @@ class UserRelationship {
 		$key = wfMemcKey( 'user_relationship', 'open_request', $rel_type, $user_id );
 		$dbr =& wfGetDB( DB_MASTER );
 		$request_count = 0;
-		$s = $dbr->selectRow( '`user_relationship_request`', array( 'count(*) as count' ), array( 'ur_user_id_to' => $user_id, 'ur_status' => 0, 'ur_type' => $rel_type ), $fname );
+		$s = $dbr->selectRow( '`user_relationship_request`', array( 'count(*) as count' ), array( 'ur_user_id_to' => $user_id, 'ur_status' => 0, 'ur_type' => $rel_type ), __METHOD__ );
 		if ( $s !== false )$request_count = $s->count;	
 	
 		$wgMemc->set($key,$request_count);
