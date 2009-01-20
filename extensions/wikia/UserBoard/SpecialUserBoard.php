@@ -6,7 +6,7 @@
 * @subpackage SpecialPage
 *
 * @author David Pean <david.pean@gmail.com>
-* @copyright Copyright © 2007, Wikia Inc.
+* @copyright Copyright ï¿½ 2007, Wikia Inc.
 * @license http://www.gnu.org/copyleft/gpl.html GNU General Public License 2.0 or later
 */
 
@@ -107,19 +107,19 @@
 				var _DELETE_CONFIRM = \"" . wfMsg("userboard_confirmdelete") . "\"
 				var posted = 0;
 				function send_message(){
-					if(\$(\"message\").value && !posted){
+					if(document.getElementById(\"message\").value && !posted){
 						posted = 1;
 						var url = \"index.php?action=ajax\";
-						var pars = 'rs=wfSendBoardMessage&rsargs[]=' + escape(\$(\"user_name_to\").value) +'&rsargs[]=' + escape(\$(\"message\").value) + '&rsargs[]=' + \$(\"message_type\").value + '&rsargs[]={$per_page}'
+						var pars = 'rs=wfSendBoardMessage&rsargs[]=' + escape(document.getElementById(\"user_name_to\").value) +'&rsargs[]=' + escape(document.getElementById(\"message\").value) + '&rsargs[]=' + document.getElementById(\"message_type\").value + '&rsargs[]={$per_page}'
 						 
 						var callback = {
 							success: function(originalRequest){
 								posted = 0;
-								if(\$(\"user_name_from\").value){ //its a board to board
-									user_1 = \$(\"user_name_from\").value
-									user_2 = \$(\"user_name_to\").value
+								if(document.getElementById(\"user_name_from\").value){ //its a board to board
+									user_1 = document.getElementById(\"user_name_from\").value
+									user_2 = document.getElementById(\"user_name_to\").value
 								}else{
-									user_1 = \$(\"user_name_to\").value
+									user_1 = document.getElementById(\"user_name_to\").value
 									user_2 = \"\";
 								}
 								user_1 = escape(user_1);
@@ -174,7 +174,7 @@
 			if($numofpages>1){
 				$output .= "<div class=\"page-nav\">";
 				if($page > 1){ 
-					$output .= "<a href=\"/index.php?title=Special:UserBoard&user={$user_safe}&page=" . ($page-1) . "{$qs}\">" . wfMsg("userboard_prevpage") . "</a> ";
+					$output .= "<a href=\"\index.php?title=Special:UserBoard&user={$user_safe}&page=" . ($page-1) . "{$qs}\">" . wfMsg("userboard_prevpage") . "</a> ";
 				}
 				
 				
@@ -188,12 +188,12 @@
 					if($i == $page){
 					    $output .=($i." ");
 					}else{
-					    $output .="<a href=\"/index.php?title=Special:UserBoard&user={$user_safe}&page=$i{$qs}\">$i</a> ";
+					    $output .="<a href=\"\index.php?title=Special:UserBoard&user={$user_safe}&page=$i{$qs}\">$i</a> ";
 					}
 				}
 		
 				if(($total - ($per_page * $page)) > 0){
-					$output .=" <a href=\"/index.php?title=Special:UserBoard&user={$user_safe}&page=" . ($page+1) . "{$qs}\">" . wfMsg("userboard_nextpage") . "</a>"; 
+					$output .=" <a href=\"\index.php?title=Special:UserBoard&user={$user_safe}&page=" . ($page+1) . "{$qs}\">" . wfMsg("userboard_nextpage") . "</a>"; 
 				}
 				$output .= "</div><p>";
 			}

@@ -39,6 +39,12 @@ class UserRelationship {
 	
 	public function addRelationshipRequest($user_to,$type,$message, $email=true, $trust=0){
 		$user_id_to = User::idFromName($user_to);
+		if( !$user_id_to ){ //in case auto friending is on, slave might not have id yet in idFromName immediately after registering
+			$dbr = wfGetDB( DB_MASTER );
+			$s = $dbr->selectRow( 'user', array( 'user_id' ), array( 'user_name' => $user_to ), __METHOD__ );
+			$user_id_to = $s->user_id;
+		}
+		if( !$user_id_to )return false;
 		
 		$dbr =& wfGetDB( DB_MASTER );
 		
@@ -401,12 +407,7 @@ class UserRelationship {
 	public function getRequestList($status,$limit=0){
 		$dbr =& wfGetDB( DB_MASTER );
 		
-		if ($limit>0) {
-			$limit_sql = " LIMIT 0,{$limit} ";
-		}
-		else {
-			$limit_sql = '';
-		}
+		if($limit>0)$limit_sql = " LIMIT 0,{$limit} ";
 		
 		$sql = "SELECT ur_id, ur_user_id_from, ur_user_name_from, ur_type, ur_message, ur_date
 			FROM user_relationship_request 
