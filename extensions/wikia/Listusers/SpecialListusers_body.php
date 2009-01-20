@@ -221,9 +221,15 @@ class ListUsers extends SpecialPage {
 					$aWhere[] = " lu_rev_cnt >= ".intval($contrib);
 				}
 				
+				$aTables = array('`dataware`.`city_local_users`');
+				$aWhat = array ( "lu_user_id", "lu_user_name", "lu_numgroups", "lu_allgroups", "lu_rev_cnt", "lu_blocked", "'' as ts" );
+				if (!$wgUser->isAnon()) {
+					$aTables = array ( '`dataware`.`city_local_users` left join `dataware`.`user_login_history` on (lu_user_id = user_id)' );
+					$aWhat = array ( "lu_user_id", "lu_user_name", "lu_numgroups", "lu_allgroups", "lu_rev_cnt", "lu_blocked", "ifnull(max(ulh_timestamp), '') as ts" );
+				}
 				$res = $dbs->select(
-					array ( '`dataware`.`city_local_users` left join `dataware`.`user_login_history` on (lu_user_id = user_id)' ),
-					array ( "lu_user_id", "lu_user_name", "lu_numgroups", "lu_allgroups", "lu_rev_cnt", "lu_blocked", "ifnull(max(ulh_timestamp), '') as ts" ),
+					$aTables,
+					$aWhat,
 					$aWhere,
 					__METHOD__,
 					array ( 'GROUP BY' => 'lu_user_id', 'ORDER BY' => $orderby, 'LIMIT' => $limit, 'OFFSET' => intval($offset) * $limit, 'SQL_CALC_FOUND_ROWS' )
@@ -259,7 +265,7 @@ class ListUsers extends SpecialPage {
 						'rev_cnt' 		=> $oRow->lu_rev_cnt,
 						'blcked'		=> $oRow->lu_blocked,
 						'links'			=> "(" . implode(") &#183; (", $aLinks) . ")",
-						'last_login'	=> $wgLang->timeanddate( wfTimestamp( TS_MW, $oRow->ts ), true )
+						'last_login'	=> (!empty($oRow->ts)) ? $wgLang->timeanddate( wfTimestamp( TS_MW, $oRow->ts ), true ) : "",
 					);
 				}
 				$dbs->freeResult( $res );
@@ -272,7 +278,7 @@ class ListUsers extends SpecialPage {
 
 				# last logged in 
 				$aWhere = array();
-				if ( !empty($aUsers['data']) && is_array($aUsers['data']) ) {
+				if ( !empty($aUsers['data']) && is_array($aUsers['data']) && ($wgUser->isLoggedIn()) ) {
 					# last edited 
 					$city_dbname = WikiFactory::IDtoDB( $wgCityId );
 					$dbr = wfGetDB( DB_SLAVE );

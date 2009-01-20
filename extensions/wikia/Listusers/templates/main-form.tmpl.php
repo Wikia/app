@@ -203,9 +203,11 @@ function wkLUshowDetails(limit, offset, ord, desc)
 				oneRow += "<th><a id=\"TablePager_groups\" style=\"cursor:pointer;" + ((order == 'groups') ? "color:#006400;" : "") + "\">" + _th + " <?=wfMsg('listusers-groups')?></a></th>";
 				_th = (order == 'revcnt') ? ((desc == -1) ? "&darr;" : "&uarr;") : "";
 				oneRow += "<th><a id=\"TablePager_revcnt\" style=\"cursor:pointer;" + ((order == 'revcnt') ? "color:#006400;" : "") + "\">" + _th + " <?=wfMsg('listusersrev-cnt')?></a></th>";
-				_th = (order == 'loggedin') ? ((desc == -1) ? "&darr;" : "&uarr;") : "";
-				oneRow += "<th><a id=\"TablePager_loggedin\" style=\"cursor:pointer;" + ((order == 'loggedin') ? "color:#006400;" : "") + "\">" + _th + " <?=wfMsg('listusers-loggedin')?></a></th>";
-				oneRow += "<th><?=wfMsg('listusers-edited')?></th></tr>";
+				if (wgUserName) {
+					_th = (order == 'loggedin') ? ((desc == -1) ? "&darr;" : "&uarr;") : "";
+					oneRow += "<th><a id=\"TablePager_loggedin\" style=\"cursor:pointer;" + ((order == 'loggedin') ? "color:#006400;" : "") + "\">" + _th + " <?=wfMsg('listusers-loggedin')?></a></th>";
+					oneRow += "<th><?=wfMsg('listusers-edited')?></th></tr>";
+				}
 				_tmp += oneRow;
  				loop = limit * offset;
  				if (resData['data']) {
@@ -216,8 +218,10 @@ function wkLUshowDetails(limit, offset, ord, desc)
 						oneRow += "<td " + blocked + " ><span style=\"font-size:90%;font-weight:bold;\">" +resData['data'][i]['user_link']+ "</span> <span style=\"font-size:77%; padding-left:8px;\">" + resData['data'][i]['links'] + "</span></td>";
 						oneRow += "<td " + blocked + " >" +resData['data'][i]['groups']+ "</td>";
 						oneRow += "<td " + blocked + " >" +resData['data'][i]['rev_cnt']+ "</td>";
-						oneRow += "<td " + blocked + " >" + ((resData['data'][i]['last_login']) ? resData['data'][i]['last_login'] : "-") + "</td>";
-						oneRow += "<td " + blocked + " >" + ((resData['data'][i]['last_edited']) ? resData['data'][i]['last_edited'] : "-") + "</td>";
+						if (wgUserName) {
+							oneRow += "<td " + blocked + " >" + ((resData['data'][i]['last_login']) ? resData['data'][i]['last_login'] : "-") + "</td>";
+							oneRow += "<td " + blocked + " >" + ((resData['data'][i]['last_edited']) ? resData['data'][i]['last_edited'] : "-") + "</td>";
+						}
 						oneRow += "</tr>";
 						_tmp += oneRow;
 					}
