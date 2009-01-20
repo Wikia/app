@@ -54,7 +54,8 @@ class WikiaApiQueryPagesyByCategory extends WikiaApiQuery {
 		
         #--- blank variables
         $category = null;
-
+	$order = null;
+	
         #--- initial parameters (dbname, limit, offset ...)
 		extract($this->getInitialParams());
 
@@ -84,6 +85,7 @@ class WikiaApiQueryPagesyByCategory extends WikiaApiQuery {
 			$this->addWhere ( "page_id=cl_from" );
 			$this->addWhere ( array("cl_to" => $category_db)  );
 		
+			$this->setCacheKey ($lcache_key, 'C', $category);
 			
 			#--- limit
 			if ( !empty($limit)  ) { //WikiaApiQuery::DEF_LIMIT
@@ -103,14 +105,26 @@ class WikiaApiQueryPagesyByCategory extends WikiaApiQuery {
 				$this->setCacheKey ($lcache_key, 'LO', $limit);
 			}
 			
-			#--- order by
-			$this->addOption( "ORDER BY", "page_id desc" );
+			$order_field = "page_id";
+			if ( !empty($order)  ) { //WikiaApiQuery::DEF_LIMIT_COUNT
+
+				switch( $order ){
+					case "edit":
+						$order_field = "page_touched";
+						break;
+				}
+				$this->setCacheKey ($lcache_key, 'ORD', $order);
+				
+			}
+		
+			$this->addOption( "ORDER BY", "{$order_field} desc" );
+			
 			#--- group by
 			#$this->addOption( "GROUP BY", "article_id" );
 
 			$data = array();
 			// check data from cache ...
-			//$cached = $this->getDataFromCache($lcache_key);
+			$cached = $this->getDataFromCache($lcache_key);
 			if (!is_array($cached)) {
 				$res = $this->select(__METHOD__);
 				while ($row = $db->fetchObject($res)) {
@@ -183,6 +197,9 @@ class WikiaApiQueryPagesyByCategory extends WikiaApiQuery {
 	protected function getAllowedQueryParams() {
 		return array (
 			"category" => array (
+				ApiBase :: PARAM_TYPE => 'string'
+			),
+			"order" => array (
 				ApiBase :: PARAM_TYPE => 'string'
 			)
 		);
