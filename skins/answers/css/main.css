@@ -578,6 +578,20 @@ body .header_menu_button * {
 	border: 0;
 }
 
+/*** SOCIAL TOOLS ***/
+#profile-top {
+	background: #EEE;
+}
+.cleared {
+	clear: both;
+}
+.user-section-title {
+	margin-top: 15px;
+}
+.page-Special_UploadAvatar #firstHeading, .page-Special_UploadAvatar #contentSub, .page-Special_UpdateProfile #firstHeading, .page-Special_UpdateProfile #contentSub {
+	display: none;
+}
+
 /*** RANDOM ***/
 .clearfix:after {
 	content: ".";
