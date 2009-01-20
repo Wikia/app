@@ -259,7 +259,7 @@ class ListUsers extends SpecialPage {
 						'rev_cnt' 		=> $oRow->lu_rev_cnt,
 						'blcked'		=> $oRow->lu_blocked,
 						'links'			=> "(" . implode(") &#183; (", $aLinks) . ")",
-						'last_login'	=> $wgLang->timeanddate( wfTimestamp( TS_MW, $oRow->ts ), true );
+						'last_login'	=> $wgLang->timeanddate( wfTimestamp( TS_MW, $oRow->ts ), true )
 					);
 				}
 				$dbs->freeResult( $res );
