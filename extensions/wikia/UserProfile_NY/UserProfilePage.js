@@ -1,12 +1,18 @@
 var posted = 0;
 function send_message(){
-	if($("message").value && !posted){
+
+	if(document.getElementById("message").value && !posted){
 		posted = 1;
 		var url = "index.php?action=ajax";
-		var pars = 'rs=wfSendBoardMessage&rsargs[]=' + $("user_name_to").value +'&rsargs[]=' + escape($("message").value) + '&rsargs[]=' + $("message_type").value +'&rsargs[]=10'
+		var pars = 'rs=wfSendBoardMessage&rsargs[]=' + document.getElementById("user_name_to").value +'&rsargs[]=' + escape(document.getElementById("message").value) + '&rsargs[]=' + document.getElementById("message_type").value +'&rsargs[]=10'
 		var callback = {
 			success: function(originalRequest){
-				$("user-page-board").innerHTML = originalRequest.responseText
+				if( typeof( originalRequest ) == "object" ){
+					response = originalRequest.responseText
+				}else{
+					response = originalRequest
+				}
+				document.getElementById("user-page-board").innerHTML = response
 				posted = 0;
 				$("message").value='';
 			}

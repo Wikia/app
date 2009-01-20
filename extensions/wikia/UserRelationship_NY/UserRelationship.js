@@ -4,7 +4,7 @@
 		YAHOO.widget.Effects.Hide('request_action_'+id);
 		var callback = {
 			success: function( oResponse ) {
-				$('request_action_'+id).innerHTML = oResponse.responseText;
+				document.getElementById('request_action_'+id).innerHTML = oResponse.responseText
 				YAHOO.widget.Effects.Appear('request_action_'+id,{duration:2.0} );
 			}
 		};

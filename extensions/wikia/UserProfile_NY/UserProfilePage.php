@@ -976,8 +976,8 @@ class UserProfilePage extends Article{
 			$output .= "
 			<a href=\"".$update_profile->escapeFullURL()."\">".wfMsg("user-edit-profile")."</a> |
 			<a href=\"".$upload_avatar->escapeFullURL()."\">".wfMsg("user-upload-avatar")."</a> |
-			<a href=\"".$watchlist->escapeFullURL()."\">".wfMsg("user-watchlist")."</a> |
-			<a href=\"".$friends_activity->escapeFullURL()."\">".wfMsg("user-friends-activity")."</a> |";
+			<a href=\"".$watchlist->escapeFullURL()."\">".wfMsg("user-watchlist")."</a> |";
+			//"<a href=\"".$friends_activity->escapeFullURL()."\">".wfMsg("user-friends-activity")."</a> |";
 		} else if ($wgUser->isLoggedIn()) {
 			if($relationship==false) {
 				$output .= "<a href=\"".$add_relationship->escapeFullURL('user='.$user_safe.'&rel_type=1')."\" rel=\"nofollow\">".wfMsg("user-add-friend")."</a> |";
