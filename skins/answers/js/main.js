@@ -51,7 +51,7 @@ function askQuestion(){
 			eval("j=" + oResponse)
 			
 			page = j.query.pages["-1"]
-			path = wgServer + wgArticlePath.replace("jQuery1","");
+			path = wgServer + wgArticlePath.replace("$1","");
 			if( typeof( page ) != "object" ){
 				url = path + q
 			}else{

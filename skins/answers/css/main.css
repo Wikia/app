@@ -4,6 +4,11 @@ body {
 	font-size: 10pt;
 	margin: 0;
 }
+.color1 {
+	background: #36C;
+	color: #FFF;
+}
+
 
 /*** HEADER ***/
 #answers_header {
