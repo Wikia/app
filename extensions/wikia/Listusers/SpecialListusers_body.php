@@ -32,10 +32,10 @@ class ListUsers extends SpecialPage {
 			$wgOut->readOnlyPage();
 			return;
 		}
-		if( !$wgUser->isAllowed( 'listusers' ) ) {
+		/*if( !$wgUser->isAllowed( 'listusers' ) ) {
 			$this->displayRestrictionError();
 			return;
-		}
+		}*/
 		
 		/**
 		 * initial output
@@ -129,7 +129,7 @@ class ListUsers extends SpecialPage {
 		$memkey = wfForeignMemcKey( $wgSharedDB, null, "getGroupList");
 		$cached = "";#$wgMemc->get($memkey);
 		if (!is_array ($cached)) { 
-			$dbs = wfGetDBExt();
+			$dbs = wfGetDBExt(DB_SLAVE);
 			if (!is_null($dbs)) {
 				$aQuery = array();
 				if (!empty($aGroups) && is_array($aGroups)) {
@@ -189,7 +189,7 @@ class ListUsers extends SpecialPage {
 		$memkey = wfForeignMemcKey( $wgSharedDB, null, "ListUsers", "articles", str_replace(" ", "_", $groups.$text.$contrib.$offset) );
 		$cached = ""; #$wgMemc->get($memkey);
 		if (!is_array ($cached)) { 
-			$dbs = wfGetDBExt();
+			$dbs = wfGetDBExt(DB_SLAVE);
 			if (!is_null($dbs)) {
 				$aGroups = array(); 
 				$aWhere = array(" lu_wikia_id = {$wgCityId} ");
@@ -259,7 +259,7 @@ class ListUsers extends SpecialPage {
 						'rev_cnt' 		=> $oRow->lu_rev_cnt,
 						'blcked'		=> $oRow->lu_blocked,
 						'links'			=> "(" . implode(") &#183; (", $aLinks) . ")",
-						'last_login'	=> $oRow->ts
+						'last_login'	=> $wgLang->timeanddate( wfTimestamp( TS_MW, $oRow->ts ), true );
 					);
 				}
 				$dbs->freeResult( $res );
@@ -273,27 +273,12 @@ class ListUsers extends SpecialPage {
 				# last logged in 
 				$aWhere = array();
 				if ( !empty($aUsers['data']) && is_array($aUsers['data']) ) {
-					/*$aWhere = array( " user_id in (". $dbs->makeList( array_keys($aUsers['data']) ).") " );
-					$res = $dbs->select(
-						array( '`dataware`.`user_login_history`' ),
-						array( "user_id", "max(ulh_timestamp) as ts" ),
-						$aWhere,
-						__METHOD__,
-						array( 'GROUP BY' => 'user_id' )
-					);
-					while ( $oRow = $dbs->fetchObject( $res ) ) {
-						if (isset($aUsers['data'][$oRow->user_id])) {
-							$aUsers['data'][$oRow->user_id]['last_login'] = $wgLang->timeanddate( wfTimestamp( TS_MW, $oRow->ts ), true );
-						}
-					}
-					$dbs->freeResult( $res );*/
-					
 					# last edited 
 					$city_dbname = WikiFactory::IDtoDB( $wgCityId );
 					$dbr = wfGetDB( DB_SLAVE );
 					$aWhere = array( 
 						"page_id = rev_page",
-						" rev_user in (". $dbr->makeList( array_keys($aUsers['data']) ).") " 
+						" rev_user in (". $dbr->makeList( array_keys($aUsers['data']) ).") ",
 					);
  					$res = $dbr->select(
 						array( "`$city_dbname`.`revision`, `$city_dbname`.`page` " ),
@@ -327,37 +312,20 @@ class ListUsers extends SpecialPage {
 		
         wfProfileIn( __METHOD__ );
 
-		if (empty($wgUser)) { 
-			return false;
-		}
-
-		if ( $wgUser->isBlocked() ) {
-			return;
-		}
-		
-		if( wfReadOnly() ) {
-			$wgOut->readOnlyPage();
-			return;
-		}
-
-		wfLoadExtensionMessages("ListUsers");
-
-		if( !$wgUser->isAllowed( 'listusers' ) ) {
-			$this->displayRestrictionError();
-			return;
-		}
-		
 		$result = array('nbr_records' => 0, 'limit' => $limit, 'page' => $page, 'order' => $order, 'desc' => $desc);
-		$aUsers = self::__getUsersFromDB($groups, $userSearch, $contrib, $limit, $page, $order, $desc);
-		
-		if (!empty($aUsers) && is_array($aUsers)) {
-			$result['nbr_records'] = (isset($aUsers['cnt'])) ? intval($aUsers['cnt']) : 0;
-			$result['data'] = (isset($aUsers['data'])) ? $aUsers['data'] : "";
-		}
 
-		#error_log ("result = ".print_r($result, true) . "\n", 3, "/tmp/moli.log");
+		if ( (!empty($wgUser)) && (!$wgUser->isBlocked()) ) {
+			wfLoadExtensionMessages("ListUsers");
+			
+			$aUsers = self::__getUsersFromDB($groups, $userSearch, $contrib, $limit, $page, $order, $desc);
+			
+			if (!empty($aUsers) && is_array($aUsers)) {
+				$result['nbr_records'] = (isset($aUsers['cnt'])) ? intval($aUsers['cnt']) : 0;
+				$result['data'] = (isset($aUsers['data'])) ? $aUsers['data'] : "";
+			}
+		} 
 
-        wfProfileOut( __METHOD__ );
+		wfProfileOut( __METHOD__ );
 
 		if (!function_exists('json_encode')) {
 			$oJson = new Services_JSON();
