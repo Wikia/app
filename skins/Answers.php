@@ -68,7 +68,7 @@ class AnswersTemplate extends MonacoTemplate {
 		<?php $this->html('headlinks') ?>
 	        <link rel="stylesheet" type="text/css" href="<?=$wgStylePath?>/answers/css/monobook_modified.css?<?=$wgStyleVersion?>" />
 	        <link rel="stylesheet" type="text/css" href="<?=$wgStylePath?>/answers/css/reset_modified.css?<?=$wgStyleVersion?>" />
-		<?/*<script type="text/javascript" src="/skins/common/jquery-1.2.6.min.js"></script>*/?>
+		<script type="text/javascript" src="http://yui.yahooapis.com/combo?2.5.2/build/yahoo-dom-event/yahoo-dom-event.js"></script> 
 		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.3/jquery.min.js"></script>
 		<script type="text/javascript" src="<?=$wgStylePath?>/answers/js/main.js?<?=$wgStyleVersion?>"></script>
 		
@@ -102,6 +102,12 @@ class AnswersTemplate extends MonacoTemplate {
 <body<?php if($this->data['body_ondblclick']) { ?> ondblclick="<?php $this->text('body_ondblclick') ?>"<?php } ?>
 <?php if($this->data['body_onload']) { ?> onload="<?php $this->text('body_onload') ?>"<?php } ?>
  class="mediawiki <?php $this->text('dir') ?> <?php $this->text('pageclass') ?> <?php $this->text('skinnameclass') ?>">
+
+<!--GetHTMLAfterBody-->
+<?
+wfRunHooks('GetHTMLAfterBody', array (&$this));
+?>
+<!--GetHTMLAfterBody-->
 
 	<!-- ##### Begin main content #### -->
         <div id="answers_header" class="reset">
