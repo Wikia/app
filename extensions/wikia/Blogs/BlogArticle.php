@@ -37,7 +37,6 @@ class BlogArticle extends Article {
 	public static function setup() {
 		global $wgOut, $wgStyleVersion, $wgExtensionsPath, $wgMergeStyleVersionJS, $wgJsMimeType;
 		// hack - addScript should be changed to addStyle (but not OutputPage::addStyle which is more like addStyleFile) but it wont work outside wgStylePath
-		$wgOut->addScript( "<link rel=\"stylesheet\" type=\"text/css\" href=\"{$wgExtensionsPath}/wikia/Blogs/css/Blogs.css?{$wgStyleVersion}\" />" );
 		$wgOut->addScript( "<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/Blogs/js/Blogs.js?{$wgMergeStyleVersionJS}\" ></script>" );
 		wfLoadExtensionMessages( "Blogs" );
 	}
