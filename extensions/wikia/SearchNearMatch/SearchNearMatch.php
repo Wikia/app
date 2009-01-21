@@ -22,11 +22,11 @@ $wgHooks['SearchGetNearMatch'][] = 'SearchNearMatch::allCapitalOneLower';
 $wgHooks['SearchGetNearMatch'][] = 'SearchNearMatch::fullCapitalAndLowerMix';
 
 if ($wgWikiaEnableSharedHelpExt) {
-	$wgHooks['SearchGetNearMatch'][] = 'SearchNearMatch::checkHelpWikia';
+#	$wgHooks['SearchGetNearMatch'][] = 'SearchNearMatch::checkHelpWikia';
 }
 
 if ($wgEnableLinkSuggestExt) {
-	$wgHooks['SearchGetNearMatch'][] = 'SearchNearMatch::emulateLinkSuggest';
+#	$wgHooks['SearchGetNearMatch'][] = 'SearchNearMatch::emulateLinkSuggest';
 }
 
 
