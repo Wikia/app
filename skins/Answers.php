@@ -118,7 +118,7 @@ wfRunHooks('GetHTMLAfterBody', array (&$this));
 		<div id="answers_ask">
 			<form method="get" action="" onsubmit="return false" name="ask_form" id="ask_form">
 				<input type="text" id="answers_ask_field" value="<?=htmlentities(wfMsg("ask_a_question"))?>" class="alt" /><span>?</span>
-				<a href="javascript:void(0);" id="ask_button" class="huge_button green"><div></div>Ask</a>
+				<a href="javascript:void(0);" id="ask_button" class="huge_button green"><div></div><?= wfMsg("ask_button") ?></a>
 			</form>
 		</div><?/*answers_ask*/?>
 
@@ -213,7 +213,7 @@ wfRunHooks('GetHTMLAfterBody', array (&$this));
 			} 
 			?>
 			<div>
-			<span>Question asked by <a href="<?= $url ?>"><?= $author["user_name"] ?></a></span>
+			<span><?= wfMsg("question_asked_by")?> <a href="<?= $url ?>"><?= $author["user_name"] ?></a></span>
 			<a href="<?= $url ?>"><?= $author["avatar"]?></a>
 			</div>
 			<div id="question_tail"></div>
@@ -391,7 +391,7 @@ wfRunHooks('GetHTMLAfterBody', array (&$this));
 			if ($wgUser->isLoggedIn()) {
 			?>
 				<div id="toolbox_inside">
-					<h6>Wikianswers toolbox</h6>
+					<h6><?= wfMsg("answers_toolbox")?></h6>
 					
 					<table>
 					<tr>
@@ -420,9 +420,7 @@ wfRunHooks('GetHTMLAfterBody', array (&$this));
 			?>
 				<div id="toolbox_inside">
 					<img src="/skins/answers/images/mr_wales.jpg" class="portrait" />
-					<i>"Wikianswers leverages the unique characterstics of a wiki to form the very best answers to any question."</i><br /><br />
-					<b>Jimmy Wales</b><br />
-					founder of Wikipedia and Wikianswers
+					<?= wfMsgExt( 'toolbox_anon_message', "parse" )?>
 				</div>
 			<?php
 			}
