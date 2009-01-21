@@ -39,7 +39,10 @@ function wfSpecialMovepage( $par = null ) {
 		return;
 	}
 
-	$form = new MovePageForm( $oldTitle, $newTitle );
+	$form = null;
+	wfRunHooks( 'MovePageForm', array( &$oldTitle, &$newTitle, &$form ) );
+	if( $form == null )
+		$form = new MovePageForm( $oldTitle, $newTitle );
 
 	if ( 'submit' == $action && $wgRequest->wasPosted()
 		&& $wgUser->matchEditToken( $wgRequest->getVal( 'wpEditToken' ) ) ) {
