@@ -13,9 +13,8 @@
 }
 
 .ub-layer-title div {
-    border: 0px
+    border: 0px;
     height: 18px;
-    width: 100px;
 }
 
 .ub-layer-logo {
@@ -33,7 +32,6 @@
 	font-weight: bold;
 	font-size: 10pt;
 	color: #000000;
-	width: 140px;
 	cursor: move;
 	margin:0;
 	position: relative;
@@ -42,7 +40,6 @@
 }
 
 .ub-layer-username-url {
-	width: 120px;
 	cursor: move;
 	margin:0;
 	position: relative;
@@ -60,7 +57,6 @@
 	font-weight: bold;
 	font-size: 10pt;
 	color: #000000;
-	width: 45px;
 	cursor: move;
 	margin:0;
 	position: relative;
@@ -69,7 +65,6 @@
 }
 
 .ub-layer-edits-value {
-	width: 25px;
 	cursor: move;
 	margin:0;
 	position: relative;
@@ -111,5 +106,5 @@
     padding: 0px;
     background-color: #FFFFFF;
     height: 70px;
-    top: 20px !important;
+    top: 0px !important;
 }
