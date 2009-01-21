@@ -605,14 +605,32 @@ body .header_menu_button * {
 	clear: both;
 	visibility: hidden;
 }
+.editsection {
+	float: right;
+}
 .google_ad {
 	line-height: 1.2em;
 }
 .google_label {
 	color: #000 !important;
 }
+#bottom_ads .google_label {
+	color: #002BB8 !important;
+	font-family: "Arial Narrow", "Arial", sans-serif;
+	font-weight: bold;
+	font-size: 18pt;
+	line-height: normal;
+}
+#google_ad_1 {
+	padding-right: 10px;
+}
+#google_ad_2 {
+	padding-left: 10px;
+}
+#google_ad_2 .google_label {
+	visibility: hidden;
+}
 .google_label:hover {
-	cursor: default;
 	text-decoration: none;
 }
 .google_link:hover {

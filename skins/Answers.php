@@ -301,10 +301,12 @@ wfRunHooks('GetHTMLAfterBody', array (&$this));
 		}
 		if ($is_question) {
 		?>
-		<div id="bottom_ads"> 
-			<div id="google_ad_1" class="google_ad"></div>
-			<div id="google_ad_2" class="google_ad"></div> 
-		</div> 
+		<table id="bottom_ads"> 
+		<tr>
+			<td id="google_ad_1" class="google_ad"></td>
+			<td id="google_ad_2" class="google_ad"></td> 
+		</tr>
+		</table> 
 		
 		<div id="huge_buttons" class="clearfix">
 			<? if ( $answer_page->isArticleAnswered() ) { ?>
