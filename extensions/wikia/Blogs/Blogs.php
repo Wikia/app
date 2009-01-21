@@ -92,7 +92,7 @@ $wgSpecialPageGroups['CreateBlogListingPage'] = 'wikia';
 /**
  * ajax functions
  */
-$wgAjaxExportList[] = "CreateBlogListingPage::axBlogListingCheckMatches";
+$wgAjaxExportList[] = "CreateBlogListingPage::axBlogListingCheckMatc	hes";
 
 /**
  * hooks
@@ -102,10 +102,11 @@ $wgHooks['AlternateEdit'][] = 'SpecialBlogPage::alternateEditHook';
 /**
  * load other parts
  */
+if (empty($wgWikiaEnableUserMasthead)) {
+	$wgWikiaEnableUserMasthead = true;
+}
 include( dirname( __FILE__ ) . "/SpecialBlogPage.php");
-include( dirname( __FILE__ ) . "/BlogAvatar.php");
 include( dirname( __FILE__ ) . "/BlogTemplate.php");
-include( dirname( __FILE__ ) . "/UserMasthead.php");
 include( dirname( __FILE__ ) . "/BlogArticle.php");
 include( dirname( __FILE__ ) . "/BlogComments.php");
 include( dirname( __FILE__ ) . "/BlogLockdown.php");
