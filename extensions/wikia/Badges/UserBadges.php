@@ -127,9 +127,8 @@ class UserBadges {
 		/**
 		 * run template
 		 */
-		#$wgOut->addScript( "<script type=\"text/javascript\" src=\"/skins/common/yui_2.5.2/yahoo-dom-event/yahoo-dom-event.js\"></script>");
 		$wgOut->addScript( "<script type=\"text/javascript\" src=\"/skins/common/yui_2.5.2/dragdrop/dragdrop-min.js\"></script> ");
-		$wgOut->addScript( "<link rel=\"stylesheet\" type=\"text/css\" href=\"{$wgExtensionsPath}/wikia/Badges/css/UserBadges.css?{$wgStyleVersion}\" />" );
+		$wgOut->addScript( "<link rel=\"stylesheet\" type=\"text/css\" href=\"{$wgExtensionsPath}/wikia/Badges/css/UserBadges.css\" />" );
 		$wgOut->addScript( "<script type=\"text/javascript\" src=\"{$wgExtensionsPath}/wikia/Badges/js/UserBadges.js\"></script>");
 		$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
 		$oTmpl->set_vars( array(
