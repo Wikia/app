@@ -173,6 +173,7 @@ else {
 }
 
 $wgSkipSkins = array(
+		'answers',
 		'armchairgm',
 		'cars',
 		'chick',
