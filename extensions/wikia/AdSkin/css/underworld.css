@@ -1,5 +1,5 @@
 body.mainpage {
-	background: #000 url(../images/underworld_header_skin.jpg) 50% 80px no-repeat !important;
+	background: #000 url(../images/underworld_header_skin.jpg?2) 50% 80px no-repeat !important;
 }
 body.mainpage #background_strip {
 	display: none;
