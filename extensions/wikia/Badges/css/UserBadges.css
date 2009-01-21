@@ -93,6 +93,7 @@
 	width: 300px;
 	height: 90px;
 	top: 0px !important;
+	position: static;
 }
 
 #user-badges-title {
