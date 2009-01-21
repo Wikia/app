@@ -1,0 +1,115 @@
+.ub-layer-title {
+    position: relative;
+    text-align: center;
+    color: #fff;
+    cursor: move;
+    height: 20px;
+    width: 100px;
+    margin: 0;
+    top: 0px !important;
+    font-family: Verdana;
+    font-weight: bold;
+    font-size: 11pt;
+}
+
+.ub-layer-title div {
+    border: 0px
+    height: 18px;
+    width: 100px;
+}
+
+.ub-layer-logo {
+	width: 80px;
+	padding: 0px;
+	height: 80px;
+	cursor: move;
+	margin: 0;
+	position: relative;
+	top: -10px;
+}
+
+.ub-layer-username-title {
+	font-family: Verdana;
+	font-weight: bold;
+	font-size: 10pt;
+	color: #000000;
+	width: 140px;
+	cursor: move;
+	margin:0;
+	position: relative;
+	top: -85px;
+	left: 95px;
+}
+
+.ub-layer-username-url {
+	width: 120px;
+	cursor: move;
+	margin:0;
+	position: relative;
+	top: -85px;
+	left: 95px;
+	font-family: Helvetica;
+	font-weight: normal;
+	font-size: 13pt;
+	color: #1B00FF;
+	font-style: underline;
+}
+
+.ub-layer-edits-title {
+	font-family: Verdana;
+	font-weight: bold;
+	font-size: 10pt;
+	color: #000000;
+	width: 45px;
+	cursor: move;
+	margin:0;
+	position: relative;
+	top: -85px;
+	left: 95px;
+}
+
+.ub-layer-edits-value {
+	width: 25px;
+	cursor: move;
+	margin:0;
+	position: relative;
+	font-family: Helvetica;
+	font-weight: normal;
+	font-size: 13pt;
+	top: -85px;
+	left: 95px;
+}
+
+.ub-layer-wikia-title {
+	width: 56px;
+	padding: 0px;
+	height: 15px;
+	cursor: move;
+	margin: 0;
+	position: relative;
+	top: -105px;
+	left: 233px;
+}
+
+#user-badges-canvas {
+	background-color: transparent;
+	border: 1px solid #000000;
+	padding: 0px;
+	width: 300px;
+	height: 90px;
+	top: 0px !important;
+}
+
+#user-badges-title {
+    padding: 0px;
+    background-color: #0C4620;
+    height: 20px;
+    top: 0px !important;
+}
+
+#user-badges-body {
+    padding: 0px;
+    background-color: #FFFFFF;
+    height: 70px;
+    top: 20px !important;
+}
