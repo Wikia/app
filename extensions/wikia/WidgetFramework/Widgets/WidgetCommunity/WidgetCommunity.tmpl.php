@@ -47,6 +47,7 @@
 		</li>
 	</ul>
 	<br />
+	</div>
 <?php
 	}
 	if(is_array($users) && count($users) > 0) {
@@ -65,4 +66,3 @@
 <?php
 	}
 ?>
-</div>
