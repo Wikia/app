@@ -547,7 +547,7 @@ class BlogAvatar {
 			"sFieldName"	=> AVATAR_UPLOAD_FIELD,
 		) );
 
-		$html = wfHidden( 'MAX_FILE_SIZE', AVATAR_MAX_SIZE );
+		$html .= wfHidden( 'MAX_FILE_SIZE', AVATAR_MAX_SIZE );
 		$html .= $oTmpl->execute("pref-avatar-form");
 
 		wfProfileOut( __METHOD__ );
