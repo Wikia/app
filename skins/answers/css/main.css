@@ -361,7 +361,7 @@ div.inline_form_inside {
 .inline_form #wpCaptchaWord {
 	width: 80%;
 }
-.inline_form p {
+.inline_form .captcha p {
 	text-align: center;
 }
 .inline_form #wpCaptchaWord {
@@ -614,6 +614,9 @@ body .header_menu_button * {
 .google_label {
 	color: #000 !important;
 }
+#bottom_ads {
+	margin-top: 20px;
+}
 #bottom_ads .google_label {
 	color: #002BB8 !important;
 	font-family: "Arial Narrow", "Arial", sans-serif;
@@ -638,4 +641,7 @@ body .header_menu_button * {
 }
 .google_url {
 	color: #008000;
+}
+#answers_sidebar .google_ad {
+	margin-top: 10px;
 }

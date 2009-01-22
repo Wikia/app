@@ -272,6 +272,7 @@ wfRunHooks('GetHTMLAfterBody', array (&$this));
 				<div class="inline_form_inside">
 					<form name="register" method="post" id="register" action="<?= $submit_url ?>">
 						<?= $captcha ?>
+						<div style="padding: 10px 0 0 15px;"><b><?= wfMsg("createaccount") ?></b> | <a href="<?php echo htmlspecialchars(Skin::makeSpecialUrl( 'Userlogin', 'returnto=' . $wgTitle->getPrefixedURL()) )?>"><?= wfMsg("log_in") ?></a></div>
 						<table>
 						<tr>
 							<td><?= wfMsg("yourname") ?></td>
@@ -290,15 +291,31 @@ wfRunHooks('GetHTMLAfterBody', array (&$this));
 							<td><input type="password" value="" name="wpRetype" id="wpRetype"></td>
 						</tr>
 						</table>
+						<div style="padding: 0 0 10px 15px;"><?php $this->msgWiki('prefs-help-terms'); ?></div>
 						<input type="hidden" name="wpRemember" value="1" id="wpRemember"/>
 						<div class="toolbar">
 							<input type='submit' name="wpCreateaccount" id="wpCreateaccount" value="<?= wfMsg("createaccount") ?>">
+							<a href="#" class="skip_link"><?= wfMsg("skip_this") ?></a>
 						</div>
 					</form>
 				</div>
 			</div>
 			<?php
 		}
+		
+		if ($wgUser->isLoggedin() && !$answer_page->isArticleAnswered() && $_GET['state'] == 'registered') {
+		?>
+			<div class="inline_form reset">
+				<h1><?= wfMsg("inline-welcome") ?>, <?= $wgUser->getName() ?></h1>
+				<div class="inline_form_inside">
+					<div style="padding: 10px;">
+					Thanks for the rockin' question!
+					</div>
+				</div>
+			</div>
+
+		<?
+		}	
 		if ($is_question) {
 		?>
 		<table id="bottom_ads"> 
