@@ -18,6 +18,7 @@ $wgHooks[ "SkinTemplateTabs" ][] = "BlogArticle::skinTemplateTabs";
 $wgHooks[ "EditPage::showEditForm:checkboxes" ][] = "BlogArticle::editPageCheckboxes";
 $wgHooks[ "LinksUpdate" ][] = "BlogArticle::linksUpdate";
 $wgHooks[ "CustomArticleFooter" ][] = "BlogArticle::getCustomArticleFooter";
+$wgHooks[ "WikiFactoryChanged" ][] = "BlogArticle::WikiFactoryChanged";
 
 class BlogArticle extends Article {
 
@@ -644,7 +645,7 @@ class BlogArticle extends Article {
 		 */
 		$recentPosts = wfMsg("create-blog-post-recent-listing");
 		if( $recentPosts ) {
-			echo "Creating {$recentPosts}\n";
+			echo "Creating {$recentPosts}";
 			$oTitle = Title::newFromText( $recentPosts,  NS_BLOG_LISTING );
 			if( $oTitle ) {
 				$wgTitle = $oTitle;
@@ -657,10 +658,15 @@ class BlogArticle extends Article {
 						wfMsg("create-blog-post-recent-listing-log"),
 						EDIT_NEW | EDIT_MINOR | EDIT_FORCE_BOT  # flags
 					);
+					echo "... done.\n";
+				}
+				else {
+					echo "... already exists.\n";
 				}
 				/**
 				 * Edit sidebar, add link to recent blog posts
 				 */
+				echo "Updating Monaco-sidebar";
 				$sidebar = wfMsg('Monaco-sidebar');
 				$sidebar .= sprintf("\n* %s|%s", $oTitle->getPrefixedText(), wfMsg("create-blog-post-recent-listing-title") );
 				/**
@@ -675,6 +681,7 @@ class BlogArticle extends Article {
 						EDIT_MINOR | EDIT_FORCE_BOT  # flags
 					);
 				}
+				echo "... done.\n";
 			}
 		}
 
@@ -693,8 +700,30 @@ class BlogArticle extends Article {
 						wfMsg( "create-blog-post-category-log" ),
 						EDIT_NEW | EDIT_MINOR | EDIT_FORCE_BOT  # flags
 					);
+					echo "... done.\n";
+				}
+				else {
+					echo "... already exists.\n";
 				}
 			}
 		}
+	}
+
+	/**
+	 * Hook handler
+	 *
+	 * @access public
+	 * @static
+	 */
+	static public function wikiFactoryChanged( $cv_name, $city_id, $value ) {
+		Wikia::log( __METHOD__, $city_id, "{$cv_name} = {$value}" );
+		if( $cv_name == "wgEnableBlogArticles" && $value == true ) {
+			/**
+			 * add task to TaskManager
+			 */
+			$Task = new BlogTask();
+			$Task->createTask( array( "city_id" => $city_id ), TASK_QUEUED );
+		}
+		return true;
 	}
 }
