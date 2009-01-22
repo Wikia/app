@@ -119,7 +119,7 @@ wfRunHooks('GetHTMLAfterBody', array (&$this));
         <div id="answers_header" class="reset">
 		<a href="/" id="wikianswers_logo"><img src="/skins/answers/images/wikianswers_logo.png" /></a>
 
-		<div class="yui-skin-sam">
+		<div class="yui-skin-sam" id="ask_wrapper">
 	
 		<div id="answers_ask">
 			<form method="get" action="" onsubmit="return false" name="ask_form" id="ask_form">

@@ -21,15 +21,17 @@ body {
 	position: absolute; 
 }
 #answers_ask { 
-	bottom: 18px; 
 	color: #FFF; 
 	font-family: "Arial Narrow", "Arial", sans-serif; 
 	font-size: 28pt; 
-	left: 30px; 
-	position: absolute; 
 }
 #answers_ask * { 
 	float: left; 
+}
+#ask_wrapper {
+	position: absolute;
+	left: 30px;
+	bottom: 18px;
 }
 #answers_ask span { 
 	line-height: 34px; 
@@ -41,11 +43,17 @@ body {
 	font-size: 18pt; 
 	font-weight: bold; 
 	padding: 2px 5px; 
+	position: static;
 	width: 450px; 
 }
 #answers_ask_field.alt { 
 	color: #999; 
 	font-weight: normal; 
+}
+#answers_suggest {
+	left: 5px;
+	top: 2.8em;
+	width: 450px;
 }
 #user_data {
 	position: absolute;
