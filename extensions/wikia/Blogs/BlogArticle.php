@@ -631,4 +631,70 @@ class BlogArticle extends Article {
 		return true;
 	}
 
+	/**
+	 * wfMaintenance -- wiki factory maintenance
+	 *
+	 * @static
+	 */
+	static public function wfMaintenance() {
+		global $wgTitle;
+		echo "Blog Article maintenance.\n";
+		/**
+		 * create Blog:Recent posts page if not exists
+		 */
+		$recentPosts = wfMsg("create-blog-post-recent-listing");
+		if( $recentPosts ) {
+			echo "Creating {$recentPosts}\n";
+			$oTitle = Title::newFromText( $recentPosts,  NS_BLOG_LISTING );
+			if( $oTitle ) {
+				$wgTitle = $oTitle;
+				$oArticle = new Article( $oTitle, 0 );
+				if( !$oArticle->exists( ) ) {
+					$oArticle->doEdit(
+						'<bloglist summary="true" timestamp="true" count=50><title>'
+						. wfMsg("create-blog-post-recent-listing-title")
+						.'</title><type>plain</type><order>date</order></bloglist>',
+						wfMsg("create-blog-post-recent-listing-log"),
+						EDIT_NEW | EDIT_MINOR | EDIT_FORCE_BOT  # flags
+					);
+				}
+				/**
+				 * Edit sidebar, add link to recent blog posts
+				 */
+				$sidebar = wfMsg('Monaco-sidebar');
+				$sidebar .= sprintf("\n* %s|%s", $oTitle->getPrefixedText(), wfMsg("create-blog-post-recent-listing-title") );
+				/**
+				 * should we check if position already exists?
+				 */
+				$msgTitle = Title::newFromText( 'Monaco-sidebar', NS_MEDIAWIKI );
+				if( $msgTitle ) {
+					$oArticle = new Article( $oTitle, 0 );
+					$oArticle->doEdit(
+						$sidebar,
+						wfMsg("create-blog-post-recent-listing-log"),
+						EDIT_MINOR | EDIT_FORCE_BOT  # flags
+					);
+				}
+			}
+		}
+
+		/**
+		 * create Category:Blog page if not exists
+		 */
+		$catName = wfMsg("create-blog-post-category");
+		if( $catName && $catName !== "-" ) {
+			echo "Creating {$catName}\n";
+			$oTitle = Title::newFromText( $catName, NS_CATEGORY );
+			if( $oTitle ) {
+				$oArticle = new Article( $oTitle, 0 );
+				if( !$oArticle->exists( ) ) {
+					$oArticle->doEdit(
+						wfMsg( "create-blog-post-category-body" ),
+						wfMsg( "create-blog-post-category-log" ),
+						EDIT_NEW | EDIT_MINOR | EDIT_FORCE_BOT  # flags
+					);
+				}
+			}
+		}
+	}
 }

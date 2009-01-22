@@ -256,43 +256,5 @@ class CreateBlogPage extends SpecialBlogPage {
 				EDIT_NEW | EDIT_MINOR | EDIT_FORCE_BOT  # flags
 			);
 		}
-
-		/**
-		 * create Blog:Recent posts page if not exists
-		 */
-		$recentPosts = wfMsg("create-blog-post-recent-listing");
-		if( $recentPosts ) {
-			$oTitle = Title::newFromText( $recentPosts,  NS_BLOG_LISTING );
-			if( $oTitle ) {
-				$oArticle = new Article( $oTitle, 0 );
-				if( !$oArticle->exists( ) ) {
-					$oArticle->doEdit(
-						'<bloglist summary="true" timestamp="true" count=50><title>'
-						. wfMsg("create-blog-post-recent-listing-title")
-						.'</title><type>plain</type><order>date</order></bloglist>',
-						wfMsg("create-blog-post-recent-listing-log"),
-						EDIT_NEW | EDIT_MINOR | EDIT_FORCE_BOT  # flags
-					);
-				}
-			}
-		}
-
-		/**
-		 * create Category:Blog page if not exists
-		 */
-		$catName = wfMsg("create-blog-post-category");
-		if( $catName && $catName !== "-" ) {
-			$oTitle = Title::newFromText( $catName, NS_CATEGORY );
-			if( $oTitle ) {
-				$oArticle = new Article( $oTitle, 0 );
-				if( !$oArticle->exists( ) ) {
-					$oArticle->doEdit(
-						wfMsg( "create-blog-post-category-body" ),
-						wfMsg( "create-blog-post-category-log" ),
-						EDIT_NEW | EDIT_MINOR | EDIT_FORCE_BOT  # flags
-					);
-				}
-			}
-		}
 	}
 }
