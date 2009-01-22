@@ -668,7 +668,7 @@ class BlogArticle extends Article {
 				 */
 				$msgTitle = Title::newFromText( 'Monaco-sidebar', NS_MEDIAWIKI );
 				if( $msgTitle ) {
-					$oArticle = new Article( $oTitle, 0 );
+					$oArticle = new Article( $msgTitle, 0 );
 					$oArticle->doEdit(
 						$sidebar,
 						wfMsg("create-blog-post-recent-listing-log"),
