@@ -16,6 +16,7 @@ if( !defined( 'MEDIAWIKI' ) ) {
 
 class BlogTask extends BatchTask {
 
+	private $mParams;
 
 	/**
 	 * contructor
@@ -42,6 +43,21 @@ class BlogTask extends BatchTask {
 	 * @return boolean - status of operation
 	 */
 	public function execute( $params = null ) {
+		global $IP, $wgWikiaLocalSettingsPath;
+
+		$this->mParams = unserialize( $params->task_arguments );
+		$city_id = $this->mParams["city_id"];
+		if( $city_id ) {
+			/**
+			 * execute maintenance script
+			 */
+			$cmd = sprintf("SERVER_ID={$city_id} php {$IP}/extensions/wikia/Blogs/maintenance.php --conf {$wgWikiaLocalSettingsPath} --aconf {$wgWikiaAdminSettingsPath}");
+			$this->addLog( "Running {$cmd}");
+			$retval = wfShellExec( $cmd, $status );
+			$this->addLog( $retval );
+		}
+
+		return true;
 	}
 
     /**
