@@ -9,6 +9,19 @@ jQuery("#answers_ask_field").ready(function() {
 			jQuery(this).addClass('alt').attr('value', answers_field_default);
 		}
 	});
+	
+	var oDS = new YAHOO.util.XHRDataSource(  "/extensions/wikia/SuperDeduper/"); 
+	// Set the responseType 
+	oDS.responseType = YAHOO.util.XHRDataSource.TYPE_JSON; 
+	// Define the schema of the JSON results 
+	oDS.responseSchema = { 
+	resultsList : "ResultSet.Result", 
+	fields : ["title", "rank"] 
+	}; 
+	var myAutoComp = new YAHOO.widget.AutoComplete("answers_ask_field","answers_suggest", oDS); 
+	myAutoComp.maxResultsDisplayed = 10;  
+	myAutoComp.minQueryLength = 5; 
+
 });
 
 jQuery("#header_menu_user").ready(function() {
@@ -99,16 +112,9 @@ function google_ad_render( google_ads, i ){
 
 //YUI Helper Functions
 
-//So Ajax werks
-YAHOO.util.Connect = {}
-YAHOO.util.Connect.asyncRequest = function(method,url,callback,pars){
-	success = callback.success
-	if( method.toUpperCase() == "POST" )jQuery.post( url, pars, success);
-	if( method.toUpperCase() == "GET" )jQuery.get( url, pars, success);
-}
-
 //Make fade and appear become show/hide
-YAHOO.widget = { Effects:{} };
+//YAHOO.widget = { Effects:{} };
+YAHOO.widget.Effects = {}
 YAHOO.widget.Effects.Appear = function( id ){
 	jQuery("#" + id).show();
 }
@@ -122,7 +128,7 @@ YAHOO.widget.Effects.Fade = function( id ){
 //Sidebar Widgets
 jQuery("#recent_unanswered_questions").ready(function() {
 	
-	url = wgServer + "/api.php?action=query&list=wkpagesincat&wkcategory=" + wgUnAnsweredCategory  + "&format=json&wklimit=10"
+	url = wgServer + "/api.php?smaxage=60&action=query&list=wkpagesincat&wkcategory=" + wgUnAnsweredCategory  + "&format=json&wklimit=10"
 	jQuery.get( url, "", function( oResponse ){
 		eval("j=" + oResponse)
 		if( j.query.wkpagesincat ){
@@ -139,7 +145,7 @@ jQuery("#recent_unanswered_questions").ready(function() {
 
 jQuery("#related_answered_questions").ready(function() {
 	
-	url = wgServer + "/api.php?action=query&list=wkpagesincat&wkcategory=" + wgAnsweredCategory + "&format=json&wklimit=5"
+	url = wgServer + "/api.php?smaxage=60&action=query&list=wkpagesincat&wkcategory=" + wgAnsweredCategory + "&format=json&wklimit=5"
 	jQuery.get( url, "", function( oResponse ){
 		eval("j=" + oResponse)
 		if( j.query.wkpagesincat ){
@@ -173,7 +179,7 @@ jQuery(document).ready(function() {
 
 jQuery("#popular_categories").ready(function() {
 	
-	url = wgServer + "/api.php?action=query&list=wkmostcat&format=json&wklimit=15"
+	url = wgServer + "/api.php?smaxage=60&action=query&list=wkmostcat&format=json&wklimit=15"
 	jQuery.get( url, "", function( oResponse ){
 		eval("j=" + oResponse)
 		if( j.query.wkmostcat ){
@@ -198,7 +204,7 @@ jQuery(document).ready(function() {
 if( wgIsMainpage == true ){
 	jQuery("#homepage_new_questions").ready(function() {
 		
-		url = wgServer + "/api.php?action=query&list=wkpagesincat&wkcategory=" + wgUnAnsweredCategory  + "&format=json&wklimit=5"
+		url = wgServer + "/api.php?smaxage=60&action=query&list=wkpagesincat&wkcategory=" + wgUnAnsweredCategory  + "&format=json&wklimit=5"
 		jQuery.get( url, "", function( oResponse ){
 			eval("j=" + oResponse)
 			if( j.query.wkpagesincat ){
@@ -215,7 +221,7 @@ if( wgIsMainpage == true ){
 	
 	jQuery("#homepage_recently_answered_questions").ready(function() {
 		
-		url = wgServer + "/api.php?action=query&list=wkpagesincat&wkcategory=" + wgAnsweredCategory + "&format=json&&wkorder=edit&wklimit=6"
+		url = wgServer + "/api.php?smaxage=60&action=query&list=wkpagesincat&wkcategory=" + wgAnsweredCategory + "&format=json&&wkorder=edit&wklimit=6"
 		jQuery.get( url, "", function( oResponse ){
 			eval("j=" + oResponse)
 			if( j.query.wkpagesincat ){
