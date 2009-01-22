@@ -1713,18 +1713,9 @@ wfProfileOut( __METHOD__ . '-widgets');
 
 // curse like cobranding
 $this->printCustomFooter();
-
-echo AdEngine::getInstance()->getDelayedLoadingCode();
-
-echo '</div>';
-$this->html('bottomscripts'); /* JS call to runBodyOnloadHook */
-$this->html('reporttime');
-wfRunHooks('SpecialFooter');
-wfProfileOut( __METHOD__ . '-body');
 ?>
 
 <!-- Begin Analytics -->
-
 <?php
 // Note, these were placed above the Ad calls intentionally because ad code screws with analytics
 echo AnalyticsEngine::track('GA_Urchin', AnalyticsEngine::EVENT_PAGEVIEW);
@@ -1733,8 +1724,17 @@ global $wgCityId;
 echo AnalyticsEngine::track('GA_Urchin', 'onewiki', array($wgCityId));
 echo AnalyticsEngine::track('QuantServe', AnalyticsEngine::EVENT_PAGEVIEW);
 ?>
-
 <!-- End Analytics -->
+
+<?
+echo AdEngine::getInstance()->getDelayedLoadingCode();
+
+echo '</div>';
+$this->html('bottomscripts'); /* JS call to runBodyOnloadHook */
+$this->html('reporttime');
+wfRunHooks('SpecialFooter');
+wfProfileOut( __METHOD__ . '-body');
+?>
 
 	</body>
 </html>
