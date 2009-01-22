@@ -363,6 +363,7 @@ class ArticleAdLogic {
 
 		$noAdActions = array(
 			'delete',
+			'formedit',
 			'watch',
 			'unwatch',
 			'protect',
