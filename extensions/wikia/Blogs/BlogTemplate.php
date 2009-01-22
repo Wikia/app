@@ -1012,7 +1012,7 @@ class BlogTemplateClass {
 						$result = self::__makeRssOutput($aResult);
 					}
 				} else {
-					if ($wgTitle->getNamespace() == NS_BLOG_ARTICLE) {
+					if ( $wgTitle->getNamespace() == NS_BLOG_ARTICLE) {
 						$result = wfMsg('blog-empty-user-blog');
 					} else {
 						if ( self::$aOptions['type'] != 'array' ) {
