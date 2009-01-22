@@ -18,10 +18,11 @@ function efDefaultMessagesSetup() {
 	}
 }
 
-function efGetDefaultMessage( $title, $lang, &$message ) {
+function efGetDefaultMessage( $lckey, $lang, &$message ) {
 	if( $message === false ) {
-		global $wgDefaultMessagesCache;
+		global $wgDefaultMessagesCache, $wgContLang;
 		if( is_object( $wgDefaultMessagesCache ) ) {
+			$title = $wgContLang->ucfirst( $lckey );
 			if( $lang !== 'en' ) {
 				$pos = strrpos( $title, '/' );
 				if( $pos === false ) {
