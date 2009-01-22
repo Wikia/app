@@ -34,6 +34,10 @@ http://developer.yahoo.com/yui/autocomplete/
     var myAutoComp = new YAHOO.widget.AutoComplete("myInput","myContainer", oDS); 
     myAutoComp.maxResultsDisplayed = 10;  
     myAutoComp.minQueryLength = 5; 
+    myAutoComp.formatResult = function(oResultData, sQuery, sResultMatch) {
+   	 var sMarkup = (sResultMatch) ? sResultMatch + '?' : "";
+    	return sMarkup;
+    };
 
 </script> 
 
