@@ -154,6 +154,23 @@ jQuery("#related_answered_questions").ready(function() {
 	});
 });
 
+jQuery(document).ready(function() {
+	jQuery(".skip_link").each(function() {
+		jQuery(this).bind("click", function() {
+		/*
+			jQuery(this).closest(".inline_form").animate({
+				height: "1px",
+				opacity: "0"
+			}, "slow");
+			return false;
+		*/
+			jQuery(this).closest(".inline_form").animate({ opacity: 0 }).animate({ height: "0px" }, function() { jQuery(this).hide() });
+			return false;
+		});
+	});
+});
+
+
 jQuery("#popular_categories").ready(function() {
 	
 	url = wgServer + "/api.php?action=query&list=wkmostcat&format=json&wklimit=15"
