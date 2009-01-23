@@ -1,7 +1,11 @@
 function int2Hex(i) {
-	var hex = parseInt(i).toString(16); 
-	return (hex.length < 2) ? "0" + hex : hex; 
-}  
+	var hex = parseInt(i).toString(16);
+	return (hex.length < 2) ? "0" + hex : hex;
+}
+
+function int2rgb(s) {
+	return [s.substr(0, 2), s.substr(2, 2), s.substr(4, 2)];
+}
 
 function hex2rgb(h,e,x) {
 	return [parseInt(h,16), parseInt(e, 16), parseInt(x, 16)];
@@ -104,9 +108,7 @@ colorDialog = function() {
             Event.on(["ub-header-txt-color", "ub-header-bg-color", "ub-body-bg-color", "ub-body-label-color", "ub-body-data-color"], "click", function(e) {
 				__id = this.id;
 				var color = YAHOO.util.Dom.getStyle(this.id, 'backgroundColor');
-				var rgbColor = YAHOO.util.Color.hex2rgb(color2hex(color, 1));
-				YAHOO.util.Dom.setStyle('yui-picker-swatch', 'backgroundColor', color);
-				YAHOO.util.Dom.get('yui-picker-hex').value = color2hex(color, 1);
+				var rgbColor = int2rgb(color2hex(color, 1));
 				__colorDialog.show();
 				picker.setValue(rgbColor, false);
             });

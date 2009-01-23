@@ -3,7 +3,7 @@ body {
 	padding:0;
 }
 
-#ub-layer-logo { 
+#ub-layer-logo {
 	width:80px;
 	padding:0;
 	height:80px;
@@ -11,14 +11,14 @@ body {
 	position:relative;
 }
 #ub-layer-title {
-	position:relative; 
+	position:relative;
 	text-align:right;
 	color:#fff;
-	height:20px; 
+	height:20px;
 	margin: 0 0 0 auto;
 	font-family:Verdana;
 	font-weight:bold;
-	font-size:10pt; 
+	font-size:10pt;
 	padding:0px 5px;
 }
 #ub-layer-title div {border: 0px; height: 18px; }
@@ -67,16 +67,23 @@ body {
 	width:300px;
 	height:90px;
 	text-align:left;
+	position:relative;
 }
 #user-badges-title {
 	padding:0px;
 	background-color:#0C4620;
 	height:20px;
+	top:0px;
+	width:300px;
+	position:absolute;
 }
 #user-badges-body {
 	padding:0px;
 	background-color:#FFFFFF;
 	height:70px;
+	padding-top:20px;
+	width:300px;
+	clear:both;
 }
 #color-picker-panel {
 	position: relative;
@@ -93,14 +100,14 @@ body {
 }
 .wk-badge-button {
 	width:60px;
-	color:transparent;
+	color: rgba(0, 0, 0, 0.0);
 	border:1px solid #BFB399;
 	margin: 0px 6px;
 	cursor: pointer;
 	outline: none;
 }
 .wk-badge-button-bg {
-	border:1px solid #BFB399; 
+	border:1px solid #BFB399;
 	padding:5px;
 }
 .wk-badge-label {
