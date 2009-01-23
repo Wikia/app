@@ -97,6 +97,7 @@ class CreateBlogPage extends SpecialBlogPage {
 				break;
 
 			default:
+				Wikia::log( __METHOD__, "editpage", $status );
 				$this->mFormErrors[] = wfMsg('create-blog-spam');
 				$this->renderForm();
 				break;
