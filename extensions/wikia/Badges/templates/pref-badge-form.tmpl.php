@@ -17,14 +17,14 @@ ColorTxt["DIALOG_HEADER"] = "<?=wfMsg("user-badge-dialog-title")?>";
 </tr>
 <tr>
 <td class="pref-label" valign="top">Create Your badge:</td>
-<td class="pref-input">	
+<td class="pref-input">
 	<table border=0><tr>
 		<td style="margin:0px" valign="top">
 			<fieldset class="wk-badge-fieldset"><legend>Header and body:</legend>
 			<table>
 				<tr><td>Header text color:</td><td class="wk-badge-button-bg"><input type="button" name="ub-header-txt-color" id="ub-header-txt-color" value="" class="wk-badge-button"></td></tr>
 				<tr><td>Header background color:</td><td class="wk-badge-button-bg"><input type="button" name="ub-header-bg-color" id="ub-header-bg-color" value="" class="wk-badge-button"></td></tr>
-				<tr><td>Body background color:</td><td class="wk-badge-button-bg"><input type="button" name="ub-body-bg-color" id="ub-body-bg-color" value="" class="wk-badge-button"></td></tr>		
+				<tr><td>Body background color:</td><td class="wk-badge-button-bg"><input type="button" name="ub-body-bg-color" id="ub-body-bg-color" value="" class="wk-badge-button"></td></tr>
 				<tr><td>Header text align:</td><td style="padding:6px"><select name="ub-header-txt-align" id="ub-header-txt-align"><option value="left">left</option><option value="center">center</option><option value="right" selected>right</option></select></td></tr>
 			</table>
 			</fieldset>
@@ -39,12 +39,9 @@ ColorTxt["DIALOG_HEADER"] = "<?=wfMsg("user-badge-dialog-title")?>";
 			</table>
 			</fieldset>
 		</td>
-		<td style="margin:0;padding:0">
-<!--<div id="yui-picker-panel" class="yui-picker-panel"><div class="hd">Please choose a color:</div><div class="bd"><div class="yui-picker" id="yui-picker"></div></div><div class="ft"></div></div>-->
-		</td>
 	</tr>
 	<tr>
-		<td style="padding:5px 25%;" valign="top" colspan="3">
+		<td style="padding:5px 25%;" valign="top" colspan="2">
 			<div class="user-badges-canvas">
 				<div id="user-badges-title">
 					<div id="ub-layer-title"><?=$wgSitename?></div>
