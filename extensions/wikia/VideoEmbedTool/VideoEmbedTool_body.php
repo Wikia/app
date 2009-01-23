@@ -191,6 +191,17 @@ class VideoEmbedTool {
 		return $this->detailsPage($props);
 	}
 
+	function getVideoFromName() {
+                global $wgRequest, $wgUser, $wgContLang, $IP;
+                require_once( "$IP/extensions/wikia/WikiaVideo/VideoPage.php" );
+
+                $name = $wgRequest->getVal('name');		
+		$title = Title::makeTitle( NS_VIDEO, $name );
+		$video = new VideoPage( $title );
+		$video->load();
+		return $video->getEmbedCode();
+	}
+
 	function detailsPage($props) {
 		$tmpl = new EasyTemplate(dirname(__FILE__).'/templates/');
 
