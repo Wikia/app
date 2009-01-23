@@ -91,7 +91,7 @@ class VideoPage extends Article {
 		global $wgStylePath;
 		$code = $this->getEmbedCode( $width );
 		if ( 'false' == $thumb ) {
-			return $code;
+			return "<div class=\"t{$align}\">" . $code . "</div>";
 		}
 		$s = "<div class=\"thumb t{$align}\"><div class=\"thumbinner\" style=\"width:{$width}px;\">";
 		$s .= $code;
