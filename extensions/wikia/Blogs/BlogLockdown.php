@@ -33,6 +33,9 @@ class BlogLockdown {
 			$result = true;
 			return true;
 		}
+
+		$owner = BlogArticle::getOwner( $title );
+		$username = $user->getName();
 		$result = array();
 		$return = false;
 
@@ -51,9 +54,13 @@ class BlogLockdown {
 				/**
 				 * commenting
 				 */
-				if( $namespace == NS_BLOG_ARTICLE_TALK) {
+				if( $namespace == NS_BLOG_ARTICLE_TALK ) {
 					$result = true;
 					$return = true;
+				}
+				if( $namespace == NS_BLOG_ARTICLE ) {
+					$return = ( $username == $owner );
+					$result = ( $username == $owner );
 				}
 				break;
 
@@ -75,8 +82,6 @@ class BlogLockdown {
 					$return = false;
 				}
 				else {
-					$owner = BlogArticle::getOwner( $title );
-					$username = $user->getName();
 					if( $username != $owner ) $result = array();
 					$return = ( $username == $owner );
 				}
