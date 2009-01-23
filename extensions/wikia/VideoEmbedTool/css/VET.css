@@ -1,0 +1,316 @@
+#VideoEmbed {
+	height: 507px;
+	padding: 25px 10px 10px;
+	position: relative;
+	width: 812px;
+}
+#VideoEmbedBorder {
+	background-color: #000;
+	filter: alpha(opacity=60);
+	height: 505px;
+	left: 0;
+	opacity: .6;
+	position: absolute;
+	top: 0;
+	width: 810px;
+}
+#VideoEmbedBody {
+	background: #FFF;
+	height: 440px;
+	opacity: 1;
+	overflow: hidden;
+	padding: 15px;
+	position: relative;
+	width: 760px;
+	color: #000 !important;
+}
+#VideoEmbed h1 {
+	color: #222;
+	font-weight: bold;
+	font-size: 15pt;
+	letter-spacing: -1px;
+}
+#VideoEmbed h2 {
+	font-size: 12pt;
+	font-weight: bold;
+}
+#VideoEmbedBack {
+	left: 10px;
+	padding-left: 18px;
+	position: absolute;
+	top: 5px;
+	display: none;
+}
+
+#VideoQuery {
+	height: 35px;
+	width: 300px;
+}
+
+#VideoEmbedBack a {
+	color: #FFF;
+}
+#VideoEmbedBack div {
+	background: url(../../../../skins/monaco/images/sprite.png);
+	clip: rect(0px 304px 16px 288px);
+	height: 16px;
+	left: -288px;
+	position: absolute;
+	width: 320px;
+	cursor: pointer;
+}
+* html #VideoEmbedBack div {
+	background: none;
+	filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='http://images.wikia.com/common/skins/monaco/images/sprite.png', sizingMethod='crop');
+}
+#VideoEmbedClose {
+	right: 30px;
+	padding-left: 18px;
+	position: absolute;
+	top: 5px;
+}
+#VideoEmbedClose a {
+	color: #FFF;
+}
+
+#VideoEmbedClose div {
+	background: url(../../../../skins/monaco/images/sprite.png);
+	clip: rect(0px 320px 16px 304px);
+	height: 16px;
+	left: -304px;
+	position: absolute;
+	width: 320px;
+	cursor: pointer;
+}
+* html #VideoEmbedClose div {
+	background: none;
+	filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='http://images.wikia.com/common/skins/monaco/images/sprite.png', sizingMethod='crop');
+}
+.VideoEmbedProgress {
+	background: url(../../../../skins/monaco/images/widget_loading.gif) no-repeat;
+	height: 11px;
+	width: 70px;
+}
+#VideoEmbedProgress1 {
+	position: absolute;
+	left: 326px;
+	top: 9px;
+	display: none;
+}
+
+/*** CONFLICT ***/
+#VideoEmbedConflictTable {
+	margin: 15px 0 10px;
+	width: 100%;
+}
+#VideoEmbedConflictTable td {
+	padding: 5px 20px 10px;
+	text-align: center;
+	vertical-align: top;
+	width: 50%;
+}
+#VideoEmbedCompare td {
+	background: url(../images/conflict_background.png) center center no-repeat;
+	height: 220px;
+	padding: 0;
+	vertical-align: middle;
+}
+* html #VideoEmbedCompare td {
+	background: none;
+}
+#VideoEmbedCompare img {
+	line-height: 280px;
+}
+
+#VideoEmbedSearch label {
+	margin-right: 6px;
+	font-weight: bold;
+}
+
+#VideoEmbedFile {
+	width: 264px;
+}
+
+#VideoEmbedSupported {
+	float: left:
+	font-size: 11pt;
+	font-weight: bold;
+	text-align: center;
+	width: 275px;
+	height: 125px;
+	background-color: #e3f2f3;	
+}
+
+/*** UPLOAD/FIND ***/
+#VideoEmbedPagination {
+	font-size: 9pt;
+	float: right;
+}
+#VideoEmbedHeadline {
+	margin: 6px 0 5px;
+}
+#VideoEmbedInputTable {
+	margin-top: -5px;
+}
+#VideoEmbedInputTable td {
+	padding: 4px 0;
+}
+
+#VideoEmbedTitle td {
+	padding: 8px 0;
+}
+
+#VideoEmbedFind td, #VideoEmbedUpload td {
+	font-weight: bold;
+}
+
+#VideoEmbedUpload td {
+	padding-top: 8px;
+}
+
+#VideoEmbedFindTable {
+	background: #EEE;
+	margin: 0 0 5px;
+	width: 100%;
+}
+#VideoEmbedFindTable td {
+	font-size: 8pt;
+	font-weight: bold;
+	text-align: center;
+}
+#VideoEmbedFindTable tr.VideoEmbedFindImages td {
+	padding-top: 10px;
+	vertical-align: bottom;
+}
+#VideoEmbedFindTable tr.VideoEmbedFindLinks td {
+	padding: 5px 0 10px;
+}
+#VideoEmbedFindTable img {
+	display: block;
+	margin: 0 auto;
+	max-height: 90px;
+	max-width: 120px;
+	/*height: expression(this.height > this.width && this.height > 90 ? '90px' : 'auto');*/
+	/*width: expression(this.height < this.width && this.width > 120 ? '120px' : true);*/
+}
+#VideoEmbedFindNext {
+	float: right;
+}
+
+/***INSERT OPTIONS***/
+.VideoEmbedOptionsTable {
+	color: #000;
+}
+.VideoEmbedOptionsTable th {
+	font-weight: bold;
+	font-size: 11pt;
+}
+.VideoEmbedOptionsTable td, .VideoEmbedOptionsTable th {
+	border-bottom: 1px solid #CCC;
+	padding: 5px 5px;
+}
+VideoEmbedOptionsTable img {
+	vertical-align: middle;
+}
+.VideoEmbedOptionsTable label {
+	margin-right: 10px;
+}
+.VideoEmbedNoBorder td, .VideoEmbedNoBorder th {
+	border: 0 !important;
+}
+.VideoEmbedNoSpace td, .VideoEmbedNoSpace th {
+	padding: 0 !important;
+}
+
+.VideoEmbedThin td, .VideoEmbedThin th {
+	padding: 10px 5px 2px 2px !important;
+}
+
+#VideoEmbedSection {
+	background: #EEE;
+	border-bottom: 1px solid #CCC;
+	margin-bottom: 15px;
+	padding: 5px;
+}
+#VideoEmbedWidthCheckbox {
+	float: left;
+	margin-right: 5px;
+}
+#VideoEmbedSlider {
+	background: url(../images/slider_groove.png) center center repeat-x;
+	height: 16px;
+	float: left;
+	margin-right: 5px;
+	position: relative;
+	width: 208px;
+}
+#VideoEmbedSliderThumb {
+	position: absolute;
+}
+
+#VideoEmbedError {
+	background: #252525;
+	color: #FFF;
+	font-size: 11pt;
+	font-weight: bold;
+	left: 2px;
+	padding: 30px 20px 30px 20px !important;
+	position: absolute;
+	text-align: center;
+	top: 2px;
+	width: 656px;
+	display: none;
+}
+#VideoEmbedError a {
+	color: #EEE;
+	text-decoration: underline;
+}
+
+#VET_div {
+    background: transparent;
+    border: 0;
+}
+
+.VideoEmbedSourceNote {
+	color: #666;
+	font-size: 11pt;
+	margin-top: 10px !important;
+}
+
+#VET_error_box {
+	display: none;
+}
+
+#VideoEmbedMessage p {
+	line-height:1.5em !important;
+	margin:0.4em 0 0.5em !important;
+}
+
+#VideoEmbedLicenseSpan {
+	font-size: 8pt;
+}
+
+#VideoEmbedMessageControl {
+	position: absolute;
+	font-size: 9pt;
+	right: 24px;
+	top: 6px;
+}
+
+#VideoEmbedTextCont td {
+	padding-top: 0;
+}
+
+#VideoEmbedLicenseControl, #VideoEmbedLicenseText {
+	font-size: 9pt;
+}
+
+#VideoEmbedLicenseLink {
+	margin-left: 4px;
+}
+
+
+#VideoEmbedManualWidth {
+	width: 36px;
+	height: 16px;
+}
