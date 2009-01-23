@@ -127,8 +127,11 @@ class UserBadges {
 		/**
 		 * run template
 		 */
-		$wgOut->addScript( "<script type=\"text/javascript\" src=\"/skins/common/yui_2.5.2/dragdrop/dragdrop-min.js\"></script> ");
+		
+		$wgOut->addScript( "<link rel=\"stylesheet\" type=\"text/css\" href=\"/skins/common/yui_2.5.2/colorpicker/assets/skins/sam/colorpicker.css\" />" );
 		$wgOut->addScript( "<link rel=\"stylesheet\" type=\"text/css\" href=\"{$wgExtensionsPath}/wikia/Badges/css/UserBadges.css\" />" );
+		$wgOut->addScript( "<script type=\"text/javascript\" src=\"/skins/common/yui_2.5.2/slider/slider-min.js\"></script>" );
+		$wgOut->addScript( "<script type=\"text/javascript\" src=\"/skins/common/yui_2.5.2/colorpicker/colorpicker-min.js\"></script> ");
 		$wgOut->addScript( "<script type=\"text/javascript\" src=\"{$wgExtensionsPath}/wikia/Badges/js/UserBadges.js\"></script>");
 		$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
 		$oTmpl->set_vars( array(
@@ -139,7 +142,6 @@ class UserBadges {
 			"wgSitename"	=> $wgSitename,
 			"sk"			=> $sk,
 		) );
-
 		$html .= $oTmpl->execute("pref-badge-form");
 
 		wfProfileOut( __METHOD__ );
