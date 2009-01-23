@@ -29,7 +29,7 @@
 		list-style: none;
 		margin: 0 5px 0 0;
 	}
-	#wpSummary {
+	#editOptions #wpSummary {
 		width: 200px !important;
 	}
 	#wpSave {
