@@ -33,6 +33,26 @@ EditEnhancementsPreview = {
 			// remove margin-top from #editpage-copywarn to keep the same scroll height
 			jQuery('#editpage-copywarn').css('marginTop', '0px');
 		}
+
+		// rescale summary box
+		var Dom = YAHOO.util.Dom;
+		var items = Dom.get('edit_enhancements_toolbar').getElementsByTagName('li');
+		var summaryBox = jQuery('#wpSummaryEnhanced');
+		var itemsWidth = 0;
+		
+		for (i=0; i<items.length; i++) {
+			itemsWidth += jQuery(items[i]).innerWidth() + 5;
+		}
+
+		itemsWidth -= summaryBox.innerWidth();
+
+		var newSummaryWidth =  (jQuery("#edit_enhancements_toolbar").innerWidth() - 10) - itemsWidth - 10;
+
+		newSummaryWidth = Math.max(newSummaryWidth, 200);
+		newSummaryWidth = Math.min(newSummaryWidth, 500);
+
+		Dom.setStyle('wpSummaryEnhanced', 'width', newSummaryWidth + 'px');
+
 	},
 
 	onEvent: function() {
@@ -61,7 +81,12 @@ EditEnhancementsPreview = {
 	}
 };
 
-YAHOO.util.Event.on(window, 'load',   function() {EditEnhancementsPreview.onEvent();});
+YAHOO.util.Event.on(window, 'load',   function() {
+	// change the id of summary box, so changing its size works in IE
+	jQuery('#wpSummary').attr('id', 'wpSummaryEnhanced');
+
+	EditEnhancementsPreview.onEvent();
+});
 YAHOO.util.Event.on(window, 'resize', function() {EditEnhancementsPreview.onEvent();});
 YAHOO.util.Event.on(window, 'scroll', function() {EditEnhancementsPreview.onEvent();});
 </script>
