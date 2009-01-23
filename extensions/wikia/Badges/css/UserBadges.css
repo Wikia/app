@@ -1,111 +1,116 @@
-.ub-layer-title {
-    position: relative;
-    text-align: center;
-    color: #fff;
-    cursor: move;
-    height: 20px;
-    width: 100px;
-    margin: 0;
-    top: 0px !important;
-    font-family: Verdana;
-    font-weight: bold;
-    font-size: 11pt;
-}
-
-.ub-layer-title div {
-    border: 0px;
-    height: 18px;
-}
-
-.ub-layer-logo {
-	width: 80px;
-	padding: 0px;
-	height: 80px;
-	cursor: move;
-	margin: 0;
-	position: relative;
-	top: -10px;
-}
-
-.ub-layer-username-title {
-	font-family: Verdana;
-	font-weight: bold;
-	font-size: 10pt;
-	color: #000000;
-	cursor: move;
+body {
 	margin:0;
-	position: relative;
-	top: -85px;
-	left: 95px;
+	padding:0;
 }
 
-.ub-layer-username-url {
-	cursor: move;
-	margin:0;
-	position: relative;
-	top: -85px;
-	left: 95px;
-	font-family: Helvetica;
-	font-weight: normal;
-	font-size: 13pt;
-	color: #1B00FF;
-	font-style: underline;
+#ub-layer-logo { 
+	width:80px;
+	padding:0;
+	height:80px;
+	margin:-15px 0 0 5px;
+	position:relative;
 }
-
-.ub-layer-edits-title {
-	font-family: Verdana;
-	font-weight: bold;
-	font-size: 10pt;
-	color: #000000;
-	cursor: move;
-	margin:0;
-	position: relative;
-	top: -85px;
-	left: 95px;
+#ub-layer-title {
+	position:relative; 
+	text-align:right;
+	color:#fff;
+	height:20px; 
+	margin: 0 0 0 auto;
+	font-family:Verdana;
+	font-weight:bold;
+	font-size:10pt; 
+	padding:0px 5px;
 }
-
-.ub-layer-edits-value {
-	cursor: move;
-	margin:0;
-	position: relative;
-	font-family: Helvetica;
-	font-weight: normal;
-	font-size: 13pt;
-	top: -85px;
-	left: 95px;
+#ub-layer-title div {border: 0px; height: 18px; }
+#ub-layer-username-title { 
+	font-family:Verdana; 
+	font-weight:bold; 
+	font-size:10pt;
+	margin:0 95px 0;
+	position:relative;
 }
-
-.ub-layer-wikia-title {
-	width: 56px;
-	padding: 0px;
-	height: 15px;
-	cursor: move;
-	margin: 0;
-	position: relative;
-	top: -105px;
-	left: 233px;
+#ub-layer-username-url {
+	margin:-4px 95px 0;
+	position:relative;
+	font-family:Helvetica,"Trebuchet MS";
+	font-weight:normal;
+	font-size:14pt;
+	color:#1B00FF;
+	font-style:underline; 
 }
-
-#user-badges-canvas {
-	background-color: transparent;
-	border: 1px solid #000000;
-	padding: 0px;
-	width: 300px;
-	height: 90px;
-	top: 0px !important;
-	position: static;
+#ub-layer-edits-title { 
+	font-family:Verdana;
+	font-weight:bold;
+	font-size:10pt;
+	margin:2px 95px 0;
+	position:relative;
 }
-
+#ub-layer-edits-value {
+	margin:-4px 95px 0;
+	position:relative;
+	font-family:Helvetica;
+	font-weight:normal;
+	font-size:14pt;
+	color:#000000; 
+}
+#ub-layer-wikia-title {
+	width:56px; 
+	padding:0 5px;
+	height:15px;
+	margin:-20px 0 0 auto;
+	position:relative;
+}
+.user-badges-canvas { 
+	background-color:transparent;
+	border:1px solid #000000;
+	padding:0px;
+	width:300px;
+	height:90px;
+	text-align:left;
+}
 #user-badges-title {
-    padding: 0px;
-    background-color: #0C4620;
-    height: 20px;
-    top: 0px !important;
+	padding:0px;
+	background-color:#0C4620;
+	height:20px;
+}
+#user-badges-body {
+	padding:0px;
+	background-color:#FFFFFF;
+	height:70px;
+}
+#color-picker-panel {
+	position: relative;
+	display: block;
+}
+.wk-badge-fieldset {
+	padding: 1px 5px; 
+	margin: 1px;
+	height: 170px;
+	width: 300px;
+} 
+.wk-badge-fieldset legend {
+	padding: 0px 5px;
+}
+.wk-badge-button {
+	width:60px;
+	color:transparent;
+	border:1px solid #BFB399;
+	margin: 0px 6px;
+	cursor: pointer;
+	outline: none;
+}
+.wk-badge-button-bg {
+	border:1px solid #BFB399; 
+	padding:5px;
+}
+.wk-badge-label {
+	color:#000000; 
 }
 
-#user-badges-body {
-    padding: 0px;
-    background-color: #FFFFFF;
-    height: 70px;
-    top: 0px !important;
+/* yui */
+.yui-picker-controls li {
+	height:22px;
+	padding:0;
 }
+#yui-picker-panel { visibility:hidden; }
+.yui-picker-controls a { }
