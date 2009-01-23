@@ -107,7 +107,7 @@ colorDialog = function() {
 				var rgbColor = YAHOO.util.Color.hex2rgb(color2hex(color, 1));
 				YAHOO.util.Dom.setStyle('yui-picker-swatch', 'backgroundColor', color);
 				YAHOO.util.Dom.get('yui-picker-hex').value = color2hex(color, 1);
-				__colorDialog.show();            	
+				__colorDialog.show();
 				picker.setValue(rgbColor, false);
             });
             Event.on(["ub-header-txt-align"], "change", function(e) {
@@ -118,7 +118,7 @@ colorDialog = function() {
 			});
             //Event.on(["ub-header-txt-color", "ub-header-bg-color", "ub-body-bg-color", "ub-body-label-color", "ub-body-data-color"], "click", this.dialog.show, this.dialog, true);
 		},
-		
+
 		handleSubmit: function() {
 			if (__id) {
 				var pickerColor = YAHOO.util.Dom.getStyle('yui-picker-swatch', 'backgroundColor');
@@ -128,10 +128,10 @@ colorDialog = function() {
 			}
 			this.hide();
 		},
- 
+
 		handleCancel: function() {
 			this.cancel();
-		},
+		}
 	}
 }();
 
