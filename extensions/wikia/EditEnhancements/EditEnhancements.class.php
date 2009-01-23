@@ -5,29 +5,31 @@ class EditEnhancements {
 	private $buttons;
 	private $checkboxes;
 	private $summary;
-
+	private $action;
 	private $tmpl;
 
 	function __construct($action) {
 		global $wgHooks;
 
-		if ($action == 'edit') {
-			$wgHooks['GetHTMLAfterBody'][] = array(&$this, 'editPageJS');
-		} else if ($action == 'submit') {
-			$wgHooks['GetHTMLAfterBody'][] = array(&$this, 'previewJS');
-		}
-
-		$wgHooks['EditForm::MultiEdit:Form'][] = array(&$this, 'showToolbar');
-		$wgHooks['EditPageBeforeEditButtons'][] = array(&$this, 'showButtons');
-		$wgHooks['EditPage::showEditForm:checkboxes'][] = array(&$this, 'showCheckboxes');
+		$this->action = $action;
 		$wgHooks['EditPageSummaryBox'][] = array(&$this, 'summaryBox');
-
 		$this->tmpl = new EasyTemplate( dirname( __FILE__ ) . '/templates/' );
 	}
 	
 	public function summaryBox($summary) {
-		$this->summary = $summary;
-		$summary = '<div>';
+		global $wgUser, $wgHooks;
+		if(get_class($wgUser->getSkin()) == 'SkinMonaco') {
+			$wgHooks['EditPage::showEditForm:checkboxes'][] = array(&$this, 'showCheckboxes');
+                        if($this->action == 'edit') {
+                                $wgHooks['GetHTMLAfterBody'][] = array(&$this, 'editPageJS');
+                        } else if ($this->action == 'submit') {
+                                $wgHooks['GetHTMLAfterBody'][] = array(&$this, 'previewJS');
+                        }
+			$wgHooks['EditForm::MultiEdit:Form'][] = array(&$this, 'showToolbar');
+			$wgHooks['EditPageBeforeEditButtons'][] = array(&$this, 'showButtons');			
+			$this->summary = $summary;
+			$summary = '<div>';
+		}
 		return true;
 	}
 
@@ -69,7 +71,7 @@ class EditEnhancements {
 
 	function showCheckboxes($EditPage, &$checkboxes) {
 		$this->checkboxes = $checkboxes;
-	
+
 		// Change it to hide
 		$checkboxes['minor'] = $checkboxes['watch'] = '';
 		return true;
