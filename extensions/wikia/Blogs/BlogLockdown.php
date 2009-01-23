@@ -33,68 +33,54 @@ class BlogLockdown {
 			$result = true;
 			return true;
 		}
+		$result = array();
+		$return = false;
 
-		if( $action == "read" ) {
-			Wikia::log( __METHOD__, "action", "action: {$action}"  );
-			$result = true;
-			return true;
+		switch( $action ) {
+			case "move":
+				$result = array( "moving is not possible" );
+				$return = false;
+				break;
+
+			case "read":
+				$result = true;
+				$return = true;
+				break;
+
+			case "create":
+				/**
+				 * commenting
+				 */
+				if( $namespace == NS_BLOG_ARTICLE_TALK) {
+					$result = true;
+					$return = true;
+				}
+				break;
+
+			case "delete":
+				if( $namespace == NS_BLOG_ARTICLE_TALK &&
+					$user->isAllowed("blog-comments-delete")
+				) {
+					$result = true;
+					$return = true;
+				}
+				break;
+
+			default:
+				/**
+				 * for other actions we demand that user has to be logged in
+				 */
+				if( $user->isAnon( ) ) {
+					$result = array( "{$action} is forbidden for anon user" );
+					$return = false;
+				}
+				else {
+					$owner = BlogArticle::getOwner( $title );
+					$username = $user->getName();
+					if( $username != $owner ) $result = array();
+					$return = ( $username == $owner );
+				}
 		}
-
-		if( $action == "move" ) {
-			Wikia::log( __METHOD__, "move", "action: {$action}"  );
-			$result = array();
-			return false;
-		}
-
-		if( $namespace == NS_BLOG_ARTICLE_TALK && $action == "create" ) {
-			Wikia::log( __METHOD__, "action", "action: {$action} allowed for comments."  );
-			$result = true;
-			return true;
-		}
-
-		if( $namespace == NS_BLOG_ARTICLE_TALK && $action == "delete" && $user->isAllowed("blog-comments-delete")) {
-			Wikia::log( __METHOD__, "action", "action: {$action} allowed for certain groups."  );
-			$result = true;
-			return true;
-		}
-
-		/**
-		 * staff & sysops can do anything
-		 */
-		if( in_array('staff',($user->getGroups())) || in_array('sysop',($user->getGroups()))) {
-			Wikia::log( __METHOD__, "user", "staff or sysop: " . implode( ",", $user->getGroups() ) );
-			return true;
-		}
-
-		/**
-		 * for other actions we demand that user has to be logged in
-		 */
-		if( $user->isAnon( ) ) {
-			Wikia::log( __METHOD__, "user", "anonymous" );
-			return false;
-		}
-
-		$owner = BlogArticle::getOwner( $title );
-		$username = $user->getName();
-		Wikia::log( __METHOD__, "user", "user: {$username}, owner: {$owner}" );
-
-		/**
-		 * only creator of comment cant edit comment
-		 */
-		if( $namespace == NS_BLOG_ARTICLE_TALK && $action == "edit" ) {
-			/**
-			 * get article creator
-			 */
-			$revId = $title->getLatestRevID( GAID_FOR_UPDATE );
-			Wikia::log( __METHOD__, "edit", "revision id: {$revId}" );
-			return false;
-		}
-
-		if( $username != $owner ) $result = array();
-		$return = ( $username == $owner );
-
-		Wikia::log( __METHOD__, "result", "action: {$action}, result: {$result}, return: {$return}" );
-
 		return $return;
 	}
 }
