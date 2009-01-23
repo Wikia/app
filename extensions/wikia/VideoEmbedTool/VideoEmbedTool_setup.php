@@ -101,7 +101,6 @@ function VETSetup($editform) {
 			$marg =  'clear: both;' ;
 			$editform->ImageSeparator = ' - ' ;
 		}
-		$wgOut->addHtml('<div id="vetLinkDiv" style="float: left; margin-top: 20px;' . $marg .'">' . $sep . '<a href="#" id="vetLink">' . wfMsg ('vet-imagelink') . '</a></div>');
 	}
 	return true;
 }
