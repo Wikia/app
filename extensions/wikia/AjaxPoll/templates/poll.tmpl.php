@@ -31,9 +31,8 @@
 			<br style="clear: both;" />
 			<div>
 			<?php
-				$summary = wfMsg("ajaxpoll-summary", array($created));
 				$span = sprintf("<span class=\"total\" id=\"wpPollTotal%s\">%d</span>&nbsp;", $id, $total );
-				$summary = str_replace( '##vote-span##', $span, $summary );
+				$summary = wfMsg("ajaxpoll-summary", array( $created, $span ));
 				echo $summary;
 			?>
 			</div>
