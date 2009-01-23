@@ -19,18 +19,22 @@
 		<?php endif ?>
 		</div>
 		<div class='pollAnswerVotes' onmouseover='span=this.getElementsByTagName("span")[0];tmpPollVar=span.innerHTML;span.innerHTML=span.title;span.title="";' onmouseout='span=this.getElementsByTagName("span")[0];span.title=span.innerHTML;span.innerHTML=tmpPollVar;'>
+			<?php
+				$percent = isset( $votes[ $nr ][ "percent" ] )
+					? $votes[ $nr ][ "percent" ] : 0;
+			?>
 			<span id="wpPollVote<?php echo $id ?>-<?php echo $nr ?>" title='<?php echo ( isset($votes[ $nr ][ "percent" ]) ? ($votes[ $nr ][ "percent" ] . "%&nbsp;" . wfMsg("ajaxpoll-percentVotes") ): 0 ); ?>'><?php echo isset( $votes[ $nr ][ "value" ] ) ? $votes[ $nr ][ "value" ] : 0 ?></span>
-			<div class="wpPollBar<?php echo $id ?>" id="wpPollBar<?php echo $id ?>-<?php echo $nr ?>" style='width: <?php echo ( isset( $votes[ $nr ][ "percent" ] ) ? $votes[ $nr ][ "percent" ] : 0 );?>%;<?php echo ($votes[ $nr ][ "percent" ] == 0?" border:0;":""); ?>'>&nbsp;</div>
+			<div class="wpPollBar<?php echo $id ?>" id="wpPollBar<?php echo $id; ?>-<?php echo $nr; ?>" style="width: <?php echo $percent;?>%;<?php if ($percent) echo " border:0;"; ?>">&nbsp;</div>
 		</div>
 		</div>
 		<?php endforeach ?>
 			<br style="clear: both;" />
 			<div>
 			<?php
-				$summ = wfMsg("ajaxpoll-summary", array($created));
+				$summary = wfMsg("ajaxpoll-summary", array($created));
 				$span = sprintf("<span class=\"total\" id=\"wpPollTotal%s\">%d</span>&nbsp;", $id, $total );
-				$summ = str_replace( '##vote-span##', $span, $summ );
-				echo $summ;
+				$summary = str_replace( '##vote-span##', $span, $summary );
+				echo $summary;
 			?>
 			</div>
 		</div>
