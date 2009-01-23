@@ -17,9 +17,9 @@ EditEnhancements = function() {
 		var toolbar = jQuery("#edit_enhancements_toolbar").outerHeight(true);
 		var heightDiff = jQuery("#" + textbox).outerHeight(true) - jQuery("#" + textbox).height();
 		
-		var targetHeight = viewport - textareaTop - toolbar - heightDiff + 'px';
-		if (parseInt(targetHeight) > 200) {
-			Dom.setStyle(textbox, 'height', targetHeight);
+		var targetHeight = viewport - textareaTop - toolbar - heightDiff;
+		if ( targetHeight > 200 && targetHeight < 800 ) {
+			Dom.setStyle(textbox, 'height', targetHeight + 'px');
 		}
 	}
 	
