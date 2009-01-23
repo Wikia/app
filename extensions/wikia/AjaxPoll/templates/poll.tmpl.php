@@ -9,27 +9,29 @@
 	<form action="#" method="post" id="axPoll<?php echo $id ?>">
 		<input type="hidden" name="wpPollId" value="<?php echo $id ?>" />
 		<div id="ajax-poll-area">
-			<?php foreach( $answers as $nr => $answer ): ?>
-    <div class='pollAnswer' id='pollAnswer<?php echo $nr ?>'>
-     <div class='pollAnswerName'>
-					<?php if( $status === "open" ): ?>
-	    	<label for='pollAnswerRadio<?php echo $id ?>'>
-							<input type='radio' name='wpPollRadio<?php echo $id ?>' id='wpPollRadio<?php echo $id ?>' value='<?php echo $nr ?>' /><?=$answer; ?>
-						</label>
-					<?php endif ?>
-					</div>
-					<div class='pollAnswerVotes' onmouseover='span=this.getElementsByTagName("span")[0];tmpPollVar=span.innerHTML;span.innerHTML=span.title;span.title="";' onmouseout='span=this.getElementsByTagName("span")[0];span.title=span.innerHTML;span.innerHTML=tmpPollVar;'>
-					 <span id="wpPollVote<?php echo $id ?>-<?php echo $nr ?>" title='<?php echo ( isset($votes[ $nr ][ "percent" ]) ? ($votes[ $nr ][ "percent" ] . "%&nbsp;" . wfMsg("ajaxpoll-percentVotes") ): 0 ); ?>'><?php echo isset( $votes[ $nr ][ "value" ] ) ? $votes[ $nr ][ "value" ] : 0 ?></span>
-						<div class="wpPollBar<?php echo $id ?>" id="wpPollBar<?php echo $id ?>-<?php echo $nr ?>" style='width: <?php echo ( isset( $votes[ $nr ][ "percent" ] ) ? $votes[ $nr ][ "percent" ] : 0 );?>%;<?php echo ($votes[ $nr ][ "percent" ] == 0?" border:0;":""); ?>'>&nbsp;</div> 
-					</div>
-				</div>
-			<?php endforeach ?>
+		<?php foreach( $answers as $nr => $answer ): ?>
+		<div class='pollAnswer' id='pollAnswer<?php echo $nr ?>'>
+		<div class='pollAnswerName'>
+		<?php if( $status === "open" ): ?>
+			<label for='pollAnswerRadio<?php echo $id ?>'>
+				<input type='radio' name='wpPollRadio<?php echo $id ?>' id='wpPollRadio<?php echo $id ?>' value='<?php echo $nr ?>' /><?=$answer; ?>
+			</label>
+		<?php endif ?>
+		</div>
+		<div class='pollAnswerVotes' onmouseover='span=this.getElementsByTagName("span")[0];tmpPollVar=span.innerHTML;span.innerHTML=span.title;span.title="";' onmouseout='span=this.getElementsByTagName("span")[0];span.title=span.innerHTML;span.innerHTML=tmpPollVar;'>
+			<span id="wpPollVote<?php echo $id ?>-<?php echo $nr ?>" title='<?php echo ( isset($votes[ $nr ][ "percent" ]) ? ($votes[ $nr ][ "percent" ] . "%&nbsp;" . wfMsg("ajaxpoll-percentVotes") ): 0 ); ?>'><?php echo isset( $votes[ $nr ][ "value" ] ) ? $votes[ $nr ][ "value" ] : 0 ?></span>
+			<div class="wpPollBar<?php echo $id ?>" id="wpPollBar<?php echo $id ?>-<?php echo $nr ?>" style='width: <?php echo ( isset( $votes[ $nr ][ "percent" ] ) ? $votes[ $nr ][ "percent" ] : 0 );?>%;<?php echo ($votes[ $nr ][ "percent" ] == 0?" border:0;":""); ?>'>&nbsp;</div>
+		</div>
+		</div>
+		<?php endforeach ?>
 			<br style="clear: both;" />
 			<div>
-				<?php echo wfMsg("ajaxpoll-created")." {$created}" ?>
-				<?php echo wfMsg("ajaxpoll-total") ?>
-				<span class="total" id="wpPollTotal<?php echo $id ?>"><?php echo $total ?></span>&nbsp;
-				<?php echo wfMsg("ajaxpoll-voted") ?>
+			<?php
+				$summ = wfMsg("ajaxpoll-summary", array($created));
+				$span = sprintf("<span class=\"total\" id=\"wpPollTotal%s\">%d</span>&nbsp;", $id, $total );
+				$summ = str_replace( '##vote-span##', $span, $summ );
+				echo $summ;
+			?>
 			</div>
 		</div>
 		<?php if( $status === "open" ): ?>
