@@ -141,8 +141,8 @@ jQuery("#recent_unanswered_questions").ready(function() {
 		eval("j=" + oResponse);
 		if( j.query.wkpagesincat ){
 			html = "";
-			for( item in j.query.wkpagesincat ){
-				page = j.query.wkpagesincat[item];
+			for( recent_q in j.query.wkpagesincat ){
+				page = j.query.wkpagesincat[recent_q];
 				html += "<li><a href=\"" + page.url + "\">" + page.title.replace(/_/g," ") + "?</a></li>";
 			}
 			jQuery("#recent_unanswered_questions").prepend( html );
@@ -158,8 +158,8 @@ jQuery("#related_answered_questions").ready(function() {
 		eval("j=" + oResponse);
 		if( j.query.wkpagesincat ){
 			html = "";
-			for( item in j.query.wkpagesincat ){
-				page = j.query.wkpagesincat[item];
+			for( related_q in j.query.wkpagesincat ){
+				page = j.query.wkpagesincat[related_q];
 				html += "<li><a href=\"" + page.url + "\">" + page.title.replace(/_/g," ") + "?</a></li>";
 			}
 			jQuery("#related_answered_questions").prepend( html );
@@ -217,8 +217,8 @@ if( wgIsMainpage == true ){
 			eval("j=" + oResponse);
 			if( j.query.wkpagesincat ){
 				html = "";
-				for( item in j.query.wkpagesincat ){
-					page = j.query.wkpagesincat[item];
+				for( new_q in j.query.wkpagesincat ){
+					page = j.query.wkpagesincat[new_q];
 					html += "<li><a href=\"" + page.url + "\">" + page.title.replace(/_/g," ") + "?</a></li>";
 				}
 				jQuery("#homepage_new_questions").prepend( html );
@@ -234,8 +234,8 @@ if( wgIsMainpage == true ){
 			eval("j=" + oResponse);
 			if( j.query.wkpagesincat ){
 				html = "";
-				for( item in j.query.wkpagesincat ){
-					page = j.query.wkpagesincat[item];
+				for( recent_q in j.query.wkpagesincat ){
+					page = j.query.wkpagesincat[recent_q];
 					if( page.title != wgPageName ){
 						html += "<li><a href=\"" + page.url + "\">" + page.title.replace(/_/g," ") + "?</a></li>";
 					}
