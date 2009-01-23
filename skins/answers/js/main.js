@@ -15,12 +15,20 @@ jQuery("#answers_ask_field").ready(function() {
 	oDS.responseType = YAHOO.util.XHRDataSource.TYPE_JSON; 
 	// Define the schema of the JSON results 
 	oDS.responseSchema = { 
-	resultsList : "ResultSet.Result", 
-	fields : ["title", "rank"] 
+  		resultsList : "ResultSet.Result", 
+		fields : ["title", "rank"] 
 	}; 
 	var myAutoComp = new YAHOO.widget.AutoComplete("answers_ask_field","answers_suggest", oDS); 
 	myAutoComp.maxResultsDisplayed = 10;  
 	myAutoComp.minQueryLength = 5; 
+
+	// Add a question mark to the end of the result
+	myAutoComp.formatResult = function(oResultData, sQuery, sResultMatch) {
+	        var sMarkup = (sResultMatch) ? sResultMatch + '?' : "";
+		return sMarkup;
+	};
+	// Don't highlight the first result
+	myAutoComp.autoHighlight = false; 
 
 });
 
@@ -52,8 +60,8 @@ function askQuestion(){
 	if( !q )return;
 	if( q == wgAskFormTitle )return;
 	
-	q = q.replace(/\?/g,"") //removes question mark
-	q = q.replace(/_+/g,"_") //we only want one space
+	q = q.replace(/\?/g,""); //removes question mark
+	q = q.replace(/_+/g,"_"); //we only want one space
 	q = encodeURIComponent( q );
 	
 	var url = wgServer + "/api.php?action=query&titles=" + q + "&format=json";
@@ -61,16 +69,16 @@ function askQuestion(){
 	
 	jQuery.get( url, "", function (oResponse){
 			
-			eval("j=" + oResponse)
+			eval("j=" + oResponse);
 			
-			page = j.query.pages["-1"]
+			page = j.query.pages["-1"];
 			path = wgServer + wgArticlePath.replace("$1","");
 			if( typeof( page ) != "object" ){
-				url = path + q
+				url = path + q;
 			}else{
-				url = path + "Special:CreateQuestionPage?questiontitle=" + q.charAt(0).toUpperCase() + q.substring(1)
+				url = path + "Special:CreateQuestionPage?questiontitle=" + q.charAt(0).toUpperCase() + q.substring(1);
 			}
-			window.location = url
+			window.location = url;
 		}
 	);
 }
@@ -93,10 +101,10 @@ function google_ad_request_done(google_ads) {
 }
 
 function google_ad_render( google_ads, i ){
-	i = i - 1
+	i = i - 1;
 	if( google_ads[i] ){
 		s = "";
-		s += '<a href=\"' + google_info.feedback_url + '\" class="google_label">Ads by Google</a><br>'
+		s += '<a href=\"' + google_info.feedback_url + '\" class="google_label">Ads by Google</a><br>';
 		s += '<a style="text-decoration:none" href="' +
 		google_ads[i].url + '" onmouseout="window.status=\'\'" onmouseover="window.status=\'go to ' +
 		google_ads[i].visible_url + '\';return true" class="google_link">' +
@@ -114,30 +122,30 @@ function google_ad_render( google_ads, i ){
 
 //Make fade and appear become show/hide
 //YAHOO.widget = { Effects:{} };
-YAHOO.widget.Effects = {}
+YAHOO.widget.Effects = {};
 YAHOO.widget.Effects.Appear = function( id ){
 	jQuery("#" + id).show();
-}
+};
 YAHOO.widget.Effects.Hide = function( id ){
 	jQuery("#" + id).hide();
-}
+};
 YAHOO.widget.Effects.Fade = function( id ){
 	jQuery("#" + id).hide();
-}
+};
 
 //Sidebar Widgets
 jQuery("#recent_unanswered_questions").ready(function() {
 	
-	url = wgServer + "/api.php?smaxage=60&action=query&list=wkpagesincat&wkcategory=" + wgUnAnsweredCategory  + "&format=json&wklimit=10"
+	url = wgServer + "/api.php?smaxage=60&action=query&list=wkpagesincat&wkcategory=" + wgUnAnsweredCategory  + "&format=json&wklimit=10";
 	jQuery.get( url, "", function( oResponse ){
-		eval("j=" + oResponse)
+		eval("j=" + oResponse);
 		if( j.query.wkpagesincat ){
-			html = ""
+			html = "";
 			for( item in j.query.wkpagesincat ){
-				page = j.query.wkpagesincat[item]
-				html += "<li><a href=\"" + page.url + "\">" + page.title.replace(/_/g," ") + "?</a></li>"
+				page = j.query.wkpagesincat[item];
+				html += "<li><a href=\"" + page.url + "\">" + page.title.replace(/_/g," ") + "?</a></li>";
 			}
-			jQuery("#recent_unanswered_questions").prepend( html )
+			jQuery("#recent_unanswered_questions").prepend( html );
 		}
 		
 	});
@@ -145,16 +153,16 @@ jQuery("#recent_unanswered_questions").ready(function() {
 
 jQuery("#related_answered_questions").ready(function() {
 	
-	url = wgServer + "/api.php?smaxage=60&action=query&list=wkpagesincat&wkcategory=" + wgAnsweredCategory + "&format=json&wklimit=5"
+	url = wgServer + "/api.php?smaxage=60&action=query&list=wkpagesincat&wkcategory=" + wgAnsweredCategory + "&format=json&wklimit=5";
 	jQuery.get( url, "", function( oResponse ){
-		eval("j=" + oResponse)
+		eval("j=" + oResponse);
 		if( j.query.wkpagesincat ){
-			html = ""
+			html = "";
 			for( item in j.query.wkpagesincat ){
-				page = j.query.wkpagesincat[item]
-				html += "<li><a href=\"" + page.url + "\">" + page.title.replace(/_/g," ") + "?</a></li>"
+				page = j.query.wkpagesincat[item];
+				html += "<li><a href=\"" + page.url + "\">" + page.title.replace(/_/g," ") + "?</a></li>";
 			}
-			jQuery("#related_answered_questions").prepend( html )
+			jQuery("#related_answered_questions").prepend( html );
 		}
 		
 	});
@@ -170,7 +178,7 @@ jQuery(document).ready(function() {
 			}, "slow");
 			return false;
 		*/
-			jQuery(this).closest(".inline_form").animate({ opacity: 0 }).animate({ height: "0px" }, function() { jQuery(this).hide() });
+			jQuery(this).closest(".inline_form").animate({ opacity: 0 }).animate({ height: "0px" }, function() { jQuery(this).hide(); });
 			return false;
 		});
 	});
@@ -179,21 +187,21 @@ jQuery(document).ready(function() {
 
 jQuery("#popular_categories").ready(function() {
 	
-	url = wgServer + "/api.php?smaxage=60&action=query&list=wkmostcat&format=json&wklimit=15"
+	url = wgServer + "/api.php?smaxage=60&action=query&list=wkmostcat&format=json&wklimit=15";
 	jQuery.get( url, "", function( oResponse ){
-		eval("j=" + oResponse)
+		eval("j=" + oResponse);
 		if( j.query.wkmostcat ){
-			html = ""
-			count = 1
+			html = "";
+			count = 1;
 			for( category in j.query.wkmostcat ){
 				if( count > 10 )break;
 				category_check = category.toLowerCase().replace(/_/g," ");
 				if ( category_check != wgAnsweredCategory.toLowerCase() && category_check != wgUnAnsweredCategory.toLowerCase()){
-					html += "<li><a href=\"" + j.query.wkmostcat[category].url + "\">" + category.replace(/_/g," ") + "</a></li>"
-					count++
+					html += "<li><a href=\"" + j.query.wkmostcat[category].url + "\">" + category.replace(/_/g," ") + "</a></li>";
+					count++;
 				}
 			}
-			jQuery("#popular_categories").prepend( html )
+			jQuery("#popular_categories").prepend( html );
 		}
 		
 	});
@@ -204,16 +212,16 @@ jQuery(document).ready(function() {
 if( wgIsMainpage == true ){
 	jQuery("#homepage_new_questions").ready(function() {
 		
-		url = wgServer + "/api.php?smaxage=60&action=query&list=wkpagesincat&wkcategory=" + wgUnAnsweredCategory  + "&format=json&wklimit=5"
+		url = wgServer + "/api.php?smaxage=60&action=query&list=wkpagesincat&wkcategory=" + wgUnAnsweredCategory  + "&format=json&wklimit=5";
 		jQuery.get( url, "", function( oResponse ){
-			eval("j=" + oResponse)
+			eval("j=" + oResponse);
 			if( j.query.wkpagesincat ){
-				html = ""
+				html = "";
 				for( item in j.query.wkpagesincat ){
-					page = j.query.wkpagesincat[item]
-					html += "<li><a href=\"" + page.url + "\">" + page.title.replace(/_/g," ") + "?</a></li>"
+					page = j.query.wkpagesincat[item];
+					html += "<li><a href=\"" + page.url + "\">" + page.title.replace(/_/g," ") + "?</a></li>";
 				}
-				jQuery("#homepage_new_questions").prepend( html )
+				jQuery("#homepage_new_questions").prepend( html );
 			}
 			
 		});
@@ -221,18 +229,18 @@ if( wgIsMainpage == true ){
 	
 	jQuery("#homepage_recently_answered_questions").ready(function() {
 		
-		url = wgServer + "/api.php?smaxage=60&action=query&list=wkpagesincat&wkcategory=" + wgAnsweredCategory + "&format=json&&wkorder=edit&wklimit=6"
+		url = wgServer + "/api.php?smaxage=60&action=query&list=wkpagesincat&wkcategory=" + wgAnsweredCategory + "&format=json&&wkorder=edit&wklimit=6";
 		jQuery.get( url, "", function( oResponse ){
-			eval("j=" + oResponse)
+			eval("j=" + oResponse);
 			if( j.query.wkpagesincat ){
-				html = ""
+				html = "";
 				for( item in j.query.wkpagesincat ){
-					page = j.query.wkpagesincat[item]
+					page = j.query.wkpagesincat[item];
 					if( page.title != wgPageName ){
-						html += "<li><a href=\"" + page.url + "\">" + page.title.replace(/_/g," ") + "?</a></li>"
+						html += "<li><a href=\"" + page.url + "\">" + page.title.replace(/_/g," ") + "?</a></li>";
 					}
 				}
-				jQuery("#homepage_recently_answered_questions").prepend( html )
+				jQuery("#homepage_recently_answered_questions").prepend( html );
 			}
 			
 		});
