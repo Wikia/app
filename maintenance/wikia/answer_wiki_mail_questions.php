@@ -14,13 +14,13 @@
  *
  */
 
-function wfMailNewQuestions( $user, $subject, $body ){
+function wfMailQuestions( $user, $subject, $body ){
 	
 	$headers = "From: $wgEmailFrom\n";
 	$headers .= "Reply-To: $wgEmailFrom\n";
 	$headers .= "Return-Path:$wgEmailFrom\n";
 	$headers .= "MIME-Version: 1.0\n";
-	$headers .= "Content-Type: text/html; charset=ISO-8859-1\n";
+	$headers .= "Content-Type: text/html; charset=UTF-8\n";
 	
 	mail( $user->getEmail(), $subject, $body, $headers );
 	return 1;
@@ -46,7 +46,9 @@ if ( !isset($options['group']) ){
 
 $group = $options['group'];
 $days = 1;
-$subject = "New answer.wikia Questions";
+$subject = "New Questions on $wgSitename";
+$edits_subject = "Edited Questions on $wgSitename";
+
 $time_start = microtime(true);
 
 //calculate cutoff time
@@ -59,6 +61,7 @@ $cutoff_start = $dbr->timestamp( $cutoff_unixtime_start );
 $cutoff_end = $dbr->timestamp( $cutoff_unixtime_end );
 
 //GET PAGES FOR EMAIL BODY
+//NEW QUESTIONS
 list ($page,$recentchanges) = $dbr->tableNamesN('page','recentchanges');
 $res = $dbr->select( "$page, $recentchanges ", 
 		array( 'page_title','rc_timestamp' ),
@@ -68,18 +71,35 @@ $res = $dbr->select( "$page, $recentchanges ",
 	array("ORDER BY" => "rc_timestamp desc"  )
 );
 
-$body = "<div><b>New Questions on answer.wikia.com</b></div>
-	<div><a href=\"" . SpecialPage::getTitleFor( 'Recentchanges' )->escapeFullURL() . "\">See all changes</a></div><p>";
+$body = "<table cellpadding='5'><tr><td><b>New Questions on answer.wikia.com</b></td></tr>
+	<tr><td><a href=\"" . SpecialPage::getTitleFor( 'Recentchanges' )->escapeFullURL() . "\">" . wfMsg("see_all_changes") . "</a></td></tr>";
 	
 while ($row = $dbr->fetchObject( $res ) ) {
 	$title = Title::newFromDBKey( $row->page_title );
 	
-	$body .= "<div style='padding-bottom:4px;'>* <a href=\"" . $title->escapeFullURL() . "\">" . $title->getText() . "</a> | <a href=\"" . $title->escapeFullURL("action=edit") . "\">" . "Answer this" . "</a> | <a href=\"" . $title->escapeFullURL("action=delete") . "\">" . wfMsg("delete") . "</a></div>";
+	$body .= "<tr><td>* <a href=\"" . $title->escapeFullURL() . "\">" . $title->getText() . "</a> | <a href=\"" . $title->escapeFullURL("action=edit") . "\">" . wfMsg("answer_this_question") . "</a> | <a href=\"" . $title->escapeFullURL("action=delete") . "\">" . wfMsg("delete") . "</a></td></tr>\n";
 }
+$body .= "</table>";
 
-echo $body;
-	exit();
+//ALL EDITS
+$res = $dbr->select( "$page, $recentchanges ", 
+		array( 'page_title','rc_timestamp' ),
+		array("page_id = rc_cur_id","rc_new" => 0, 'rc_timestamp >= ' . $dbr->addQuotes( $cutoff_start ), 
+			'rc_timestamp <= ' . $dbr->addQuotes( $cutoff_end ),
+			"page_namespace" => NS_MAIN, "page_is_redirect" => 0 ), __METHOD__, 
+	array("ORDER BY" => "rc_timestamp desc"  )
+);
+
+$edits_body = "<table cellpadding='5'><tr><td><b>Edited Questions on answer.wikia.com</b></td></tr>
+	<tr><td><a href=\"" . SpecialPage::getTitleFor( 'Recentchanges' )->escapeFullURL() . "\">" . wfMsg("see_all_changes") . "</a></td></tr>";
 	
+while ($row = $dbr->fetchObject( $res ) ) {
+	$title = Title::newFromDBKey( $row->page_title );
+	
+	$edits_body .= "<tr><td>* <a href=\"" . $title->escapeFullURL() . "\">" . $title->getText() . "</a> | <a href=\"" . $title->escapeFullURL("action=edit") . "\">" . wfMsg("answer_this_question") . "</a> | <a href=\"" . $title->escapeFullURL("action=delete") . "\">" . wfMsg("delete") . "</a></td></tr>\n";
+}
+$edits_body .= "</table>";
+
 //BUILD LIST OF ALL USERS IN THIS GROUP
 $groups = User::getAllGroups();
 if( !in_array( $group, $groups ) ){
@@ -89,7 +109,7 @@ if( !in_array( $group, $groups ) ){
 list ($user,$user_groups) = $dbr->tableNamesN('user','user_groups');
 $res = $dbr->select( "$user_groups  LEFT JOIN $user ON user_id=ug_user", 
 		array( 'user_name','user_id' ),
-	array("ug_group"=>$group), __METHOD__, 
+	array("ug_group"=>$group, "user_name" => "Pean"), __METHOD__, 
 	""
 );
 
@@ -99,7 +119,8 @@ while ($row = $dbr->fetchObject( $res ) ) {
 	$user = User::newFromName( $row->user_name );
 	$user->load();
 	if( $user->getEmail() ){
-		wfMailNewQuestions( $user, $subject, $body );
+		wfMailQuestions( $user, $subject, $body );
+		wfMailQuestions( $user, $edits_subject, $edits_body );
 		$emails_sent++;
 	}
 	//echo $row->user_name . " (" . $user->getEmail(). ")\n";

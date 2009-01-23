@@ -112,6 +112,9 @@ class WikiaApiQueryPagesyByCategory extends WikiaApiQuery {
 					case "edit":
 						$order_field = "page_touched";
 						break;
+					case "random":
+						$this->addWhere ( "page_random >= " . wfRandom() );
+						break;
 				}
 				$this->setCacheKey ($lcache_key, 'ORD', $order);
 				
