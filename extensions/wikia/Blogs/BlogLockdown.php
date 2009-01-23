@@ -41,7 +41,7 @@ class BlogLockdown {
 
 		switch( $action ) {
 			case "move":
-				$result = array( "moving is not possible" );
+				$result = array();
 				$return = false;
 				break;
 
@@ -86,6 +86,7 @@ class BlogLockdown {
 					$return = ( $username == $owner );
 				}
 		}
+		Wikia::log( __METHOD__, $action, "result: {$result}; return: {$return}");
 		return $return;
 	}
 }
