@@ -18,8 +18,8 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 /**
  * order is important, put heavy queries at the end
  */
-$wgHooks['SearchGetNearMatch'][] = 'SearchNearMatch::allCapitalOneLower';
-$wgHooks['SearchGetNearMatch'][] = 'SearchNearMatch::fullCapitalAndLowerMix';
+#$wgHooks['SearchGetNearMatch'][] = 'SearchNearMatch::allCapitalOneLower';
+#$wgHooks['SearchGetNearMatch'][] = 'SearchNearMatch::fullCapitalAndLowerMix';
 
 if ($wgWikiaEnableSharedHelpExt) {
 #	$wgHooks['SearchGetNearMatch'][] = 'SearchNearMatch::checkHelpWikia';
