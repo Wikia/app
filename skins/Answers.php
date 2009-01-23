@@ -503,6 +503,16 @@ echo 'google_hints = \''. implode(', ', $category_text) .'\';';
 ?>
 </script>
 <script language="JavaScript" src="http://pagead2.googlesyndication.com/pagead/show_ads.js"></script>
+
+<?php
+// Note, these were placed above the Ad calls intentionally because ad code screws with analytics
+echo AnalyticsEngine::track('GA_Urchin', AnalyticsEngine::EVENT_PAGEVIEW);
+echo AnalyticsEngine::track('GA_Urchin', 'hub', 'answers');
+global $wgCityId;
+echo AnalyticsEngine::track('QuantServe', AnalyticsEngine::EVENT_PAGEVIEW);
+?>
+<!-- End Analytics -->
+
 </body></html>
 <?php
 	wfRestoreWarnings();
