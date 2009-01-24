@@ -41,11 +41,14 @@ class SharedHttp extends Http {
 		# Use curl if available
 		if ( function_exists( 'curl_init' ) ) {
 			$c = curl_init( $url );
+			/*
 			if ( self::isLocalURL( $url ) ) {
 				curl_setopt( $c, CURLOPT_PROXY, 'localhost:80' );
 			} else if ($wgHTTPProxy) {
 				curl_setopt($c, CURLOPT_PROXY, $wgHTTPProxy);
 			}
+			*/
+			curl_setopt( $c, CURLOPT_PROXY, 'localhost:80' );
 
 			if ( $timeout == 'default' ) {
 				$timeout = $wgHTTPTimeout;
