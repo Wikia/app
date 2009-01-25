@@ -1,12 +1,12 @@
 <?php
 $messages = array();
 $messages['en'] = array(
-	'vet-upload' => 'URL',
+	'vet-upload' => 'Full URL',
 	'vet-notlogged' => 'Log in or register to insert videos',
 	'vet-find' => 'Find a video',
 	'vet-thiswiki' => 'This Wiki',
 	'vet-flickr' => 'Flickr',
-	'vet-upload-btn' => 'ADD',
+	'vet-upload-btn' => 'Insert',
 	'vet-find-btn' => 'Search',
 	'vet-flickr-inf' => 'Search properly licensed free photos from Flickr and import them into your wiki.',
 	'vet-conflict-inf' => '<h1>Oops, a video with that name already exists.</h1>What do you want to do about <b>$1</b>?',
@@ -57,4 +57,5 @@ $messages['en'] = array(
 	'vet-supported' => 'Supported video sites:',
 	'vet-preview' => '<i>this is just a scaled down preview</i>',
 	'vet-bad-url' => 'the supplied url is invalid',
+	'vet-main-info' => 'Input the full video URL from one of the supported sites displayed on the right',
 );
