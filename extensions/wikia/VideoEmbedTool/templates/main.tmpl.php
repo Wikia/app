@@ -1,7 +1,7 @@
 <div id="VideoEmbedError"></div>
 <?php
 	$uploadmesg = wfMsgExt( 'vet-uploadtext', 'parse' );
-	$uploadmesg = preg_replace( '/(<a[^>]+)/', '$1 target="_new" ', $uploadmesg );
+	$uploadmesg = preg_replace( '/(<a[^>]+)/', '$1 target="_blank" ', $uploadmesg );
 
 ?>
 
@@ -51,41 +51,41 @@
 <table id="VideoEmbedToolProvidersTable" class="gallery" cellpadding="6" cellspacing="6">
 	<tbody><tr>
 		<td><div class="gallerybox">
-			<div class="thumb" style="padding: 47px 0pt; width: 160px;"><div style="margin-left: auto; margin-right: auto; width: 120px;"><a href="http://gamevideos.1up.com/" class="image" title="Gamevideos.jpg"  target="_new"><img alt="Gamevideos" src="<?= $wgExtensionsPath; ?>/wikia/VideoEmbedTool/images/gamevideos.jpg" height="51" width="120" border="0"></a></div></div>
+			<div class="thumb" style="padding: 47px 0pt; width: 160px;"><div style="margin-left: auto; margin-right: auto; width: 120px;"><a href="http://gamevideos.1up.com/" class="image" title="Gamevideos.jpg"  target="_blank"><img alt="Gamevideos" src="<?= $wgExtensionsPath; ?>/wikia/VideoEmbedTool/images/gamevideos.jpg" height="51" width="120" border="0"></a></div></div>
 			<div class="gallerytext">
 
 			</div>
 		</div></td>
 		<td><div class="gallerybox" style="width: 170px;">
-			<div class="thumb" style="padding: 49px 0pt; width: 165px;"><div style="margin-left: auto; margin-right: auto; width: 120px;"><a href="http://www.5min.com" class="image" title="5min.gif" target="_new"><img alt="" src="<?= $wgExtensionsPath; ?>/wikia/VideoEmbedTool/images/5min.gif" height="47" width="120" border="0"></a></div></div>
+			<div class="thumb" style="padding: 49px 0pt; width: 165px;"><div style="margin-left: auto; margin-right: auto; width: 120px;"><a href="http://www.5min.com" class="image" title="5min.gif" target="_blank"><img alt="" src="<?= $wgExtensionsPath; ?>/wikia/VideoEmbedTool/images/5min.gif" height="47" width="120" border="0"></a></div></div>
 			<div class="gallerytext">
 			</div>
 		</div></td>
 		<td><div class="gallerybox" style="width: 170px;">
-			<div class="thumb" style="padding: 30px 0pt; width: 165px;"><div style="margin-left: auto; margin-right: auto; width: 120px;"><a href="http://www.youtube.com" class="image" title="YouTube.jpg" target="_new"><img alt="" src="<?= $wgExtensionsPath; ?>/wikia/VideoEmbedTool/images/youtube.jpg" height="85" width="120" border="0"></a></div></div>
+			<div class="thumb" style="padding: 30px 0pt; width: 165px;"><div style="margin-left: auto; margin-right: auto; width: 120px;"><a href="http://www.youtube.com" class="image" title="YouTube.jpg" target="_blank"><img alt="" src="<?= $wgExtensionsPath; ?>/wikia/VideoEmbedTool/images/youtube.jpg" height="85" width="120" border="0"></a></div></div>
 			<div class="gallerytext">
 			</div>
 		</div></td>
 		<td><div class="gallerybox" style="width: 170px;">
-			<div class="thumb" style="padding: 56px 0pt; width: 165px;"><div style="margin-left: auto; margin-right: auto; width: 120px;"><a href="http://www.metacafe.com" class="image" title="Metacafe.gif" target="_new"><img alt="" src="<?= $wgExtensionsPath; ?>/wikia/VideoEmbedTool/images/metacafe.gif" height="33" width="120" border="0"></a></div></div>
+			<div class="thumb" style="padding: 56px 0pt; width: 165px;"><div style="margin-left: auto; margin-right: auto; width: 120px;"><a href="http://www.metacafe.com" class="image" title="Metacafe.gif" target="_blank"><img alt="" src="<?= $wgExtensionsPath; ?>/wikia/VideoEmbedTool/images/metacafe.gif" height="33" width="120" border="0"></a></div></div>
 			<div class="gallerytext">
 			</div>
 		</div></td>
 	</tr>
 	<tr>
 		<td><div class="gallerybox" style="width: 170px;">
-			<div class="thumb" style="padding: 62px 0pt; width: 165px;"><div style="margin-left: auto; margin-right: auto; width: 120px;"><a href="http://en.sevenload.com" class="image" title="Sevenload.jpg" target="_new"><img alt="" src="<?= $wgExtensionsPath; ?>/wikia/VideoEmbedTool/images/sevenload.jpg" height="21" width="120" border="0"></a></div></div>
+			<div class="thumb" style="padding: 62px 0pt; width: 165px;"><div style="margin-left: auto; margin-right: auto; width: 120px;"><a href="http://en.sevenload.com" class="image" title="Sevenload.jpg" target="_blank"><img alt="" src="<?= $wgExtensionsPath; ?>/wikia/VideoEmbedTool/images/sevenload.jpg" height="21" width="120" border="0"></a></div></div>
 			<div class="gallerytext">
 			</div>
 		</div></td>
 		<td><div class="gallerybox" style="width: 170px;">
-			<div class="thumb" style="padding: 37px 0pt; width: 165px;"><div style="margin-left: auto; margin-right: auto; width: 120px;"><a href="http://www.vimeo.com" class="image" title="Vimeo.png" target="_new"><img alt="" src="<?= $wgExtensionsPath; ?>/wikia/VideoEmbedTool/images/vimeo.png" height="72" width="120" border="0"></a></div></div>
+			<div class="thumb" style="padding: 37px 0pt; width: 165px;"><div style="margin-left: auto; margin-right: auto; width: 120px;"><a href="http://www.vimeo.com" class="image" title="Vimeo.png" target="_blank"><img alt="" src="<?= $wgExtensionsPath; ?>/wikia/VideoEmbedTool/images/vimeo.png" height="72" width="120" border="0"></a></div></div>
 			<div class="gallerytext">
 
 			</div>
 		</div></td>
 		<td><div class="gallerybox" style="width: 170px;">
-			<div class="thumb" style="padding: 55px 0pt; width: 165px;"><div style="margin-left: auto; margin-right: auto; width: 120px;"><a href="http://www.myvideo.de" class="image" title="Myvideo.jpg" target="_new"><img alt="" src="<?= $wgExtensionsPath; ?>/wikia/VideoEmbedTool/images/myvideo.jpg" height="35" width="120" border="0"></a></div></div>
+			<div class="thumb" style="padding: 55px 0pt; width: 165px;"><div style="margin-left: auto; margin-right: auto; width: 120px;"><a href="http://www.myvideo.de" class="image" title="Myvideo.jpg" target="_blank"><img alt="" src="<?= $wgExtensionsPath; ?>/wikia/VideoEmbedTool/images/myvideo.jpg" height="35" width="120" border="0"></a></div></div>
 			<div class="gallerytext">
 			</div>
 		</div></td>
