@@ -124,9 +124,12 @@ function axWFactoryDomainCRUD($type="add") {
             }
             break;
         case "remove":
-            $dbw->delete(wfSharedTable("city_domains"), array( "city_id" => $iCityId, "city_domain" => $sDomain ), __METHOD__);
-			$dbw->commit();
-            $sInfo .= "Success: Domain <em>{$sDomain}</em> removed.";
+		$removed = WikiFactory::removeDomain( $iCityId, $sDomain );
+		if ( $removed ) {
+			$sInfo .= "Success: Domain <em>{$sDomain}</em> removed.";
+		} else {
+			$sInfo .= "Failed: Domain <em>{$sDomain}</em> was not removed.";
+		}
             break;
         case "status":
             $iNewStatus = $wgRequest->getVal("status");

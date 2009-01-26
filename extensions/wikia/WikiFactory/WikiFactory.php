@@ -211,6 +211,44 @@ class WikiFactory {
 	}
 
 	/**
+	 * removeDomain
+	 * 
+	 * removes domain from city_domains table
+	 *
+	 * @author tor@wikia-inc.com
+	 *
+	 * @param integer $wiki: wiki identifier in city_list
+	 * @param string $domain: domain name
+	 *
+	 * @return boolean: true - removed, false otherwise
+	 */
+	static public function removeDomain ( $wiki, $domain ) {
+		if( ! self::isUsed() ) {
+			wfDebug( __METHOD__ . ": WikiFactory is not used.");
+			return null;
+		}
+
+		wfProfileIn( __METHOD__ );
+		$dbw->getDB(DB_MASTER);
+		$dbw->begin();
+
+		if ( ! $dbw->delete(wfSharedTable("city_domains"), array( "city_id" => $city, "city_domain" => $domain ), __METHOD__) ) {
+			$dbw->rollback();
+
+			wfProfileOut( __METHOD__ );
+
+			return false;
+		}
+			
+		self::log( self::LOG_DOMAIN, "{$domain} removed.", $wiki );
+		$dbw->commit();
+
+		wfProfileOut( __METHOD__ );
+
+		return true;
+	}
+
+	/**
 	 * DomainToID
 	 *
 	 * @access public
