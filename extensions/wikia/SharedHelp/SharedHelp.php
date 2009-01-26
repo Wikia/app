@@ -21,7 +21,6 @@ $wgExtensionCredits['other'][] = array(
 
 $wgHooks['OutputPageBeforeHTML'][] = 'SharedHelpHook';
 $wgHooks['EditPage::showEditForm:initial'][] = 'SharedHelpEditPageHook';
-$wgHooks['SearchBeforeResults'][] = 'SharedHelpSearchHook';
 $wgHooks['BrokenLink'][] = 'SharedHelpBrokenLink';
 $wgHooks['WantedPages::getSQL'][] = 'SharedHelpWantedPagesSql';
 
@@ -232,21 +231,6 @@ function SharedHelpEditPageHook(&$editpage) {
 	$msg = '<div style="border: solid 1px; padding: 10px; margin: 5px" class="sharedHelpEditInfo">'.wfMsgExt('shared_help_edit_info', 'parseinline', $wgTitle->getDBkey()).'</div>';
 
 	$editpage->editFormPageTop .= $msg;
-
-	return true;
-}
-
-function SharedHelpSearchHook(&$searchPage, &$term) {
-	global $wgOut, $wgCityId, $wgHelpWikiId;
-
-	// do not show this message on the help wiki
-	if ($wgCityId == $wgHelpWikiId) {
-		return true;
-	}
-
-	$msg = '<div style="border: solid 1px; padding: 10px; margin: 5px" class="sharedHelpSearchInfo plainlinks">'.wfMsgExt('shared_help_search_info', 'parseinline', urlencode($term)).'</div>';
-
-	$wgOut->addHTML($msg);
 
 	return true;
 }
