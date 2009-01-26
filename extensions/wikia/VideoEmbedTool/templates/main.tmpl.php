@@ -12,9 +12,11 @@
 		</td>
 	</tr>
 <?php
-	global $wgStylePath, $wgUser, $wgScriptPath;
+	global $wgStylePath, $wgUser, $wgScriptPath, $wgExtensionsPath;
 ?>
 	<tr id="VideoEmbedSearch">
+		<th><h1><?= wfMsg('vet-upload') ?></h1></th>
+
 		<td>
 			<img src="<?= $wgStylePath; ?>/monaco/images/widget_loading.gif" id="VideoEmbedProgress2" style="visibility: hidden;"/>
 			<?php
@@ -32,72 +34,63 @@
 				}
 				?>
 					<form onsubmit="return AIM.submit(this, VET_uploadCallback)" action="<?= $wgScriptPath ?>/index.php?action=ajax&rs=VET&method=insertVideo" id="VideoEmbedForm" method="POST" enctype="multipart/form-data">
-					<label for="VideoEmbedUrl"><?= wfMsg('vet-upload') ?></label><input id="VideoEmbedUrl" name="wpVideoEmbedUrl" type="text" size="32" />
-					<input type="submit" value="<?= wfMsg('vet-upload-btn') ?>" onclick="return VET_upload(event);" />
+					<input id="VideoEmbedUrl" name="wpVideoEmbedUrl" type="text" size="32" />
+					<input id="VideoEmbedUrlSubmit" type="submit" value="<?= wfMsg('vet-upload-btn') ?>" onclick="return VET_upload(event);" />
 					<div id="VideoEmbedMainMesg"><?= wfMsg( 'vet-main-info' ) ?></div>
 					</form>
 					<?php
 			}
 ?>
 </td>
-<td>
-<?
-if( ( $wgUser->isLoggedIn() ) && ( $wgUser->isAllowed( 'upload' ) ) ) {
-	global $wgExtensionsPath;
-?>
-		</td>
-<?php
-}
-	global $wgExtensionsPath;
-?>
-	</tr>
+</tr>
 </table>
 
 <div id="VET_results_0">
 	<?= $result ?>
 </div>
-<table class="gallery" cellpadding="0" cellspacing="0">
+<table id="VideoEmbedToolProvidersTable" class="gallery" cellpadding="6" cellspacing="6">
 	<tbody><tr>
-		<td><div class="gallerybox" style="width: 155px;">
-			<div class="thumb" style="padding: 47px 0pt; width: 150px;"><div style="margin-left: auto; margin-right: auto; width: 120px;"><a href="" class="image" title="Gamevideos.jpg"><img alt="Gamevideos" src="<?= $wgExtensionsPath; ?>/wikia/VideoEmbedTool/images/gamevideos.jpg" height="51" width="120" border="0"></a></div></div>
+		<td><div class="gallerybox">
+			<div class="thumb" style="padding: 47px 0pt; width: 160px;"><div style="margin-left: auto; margin-right: auto; width: 120px;"><a href="" class="image" title="Gamevideos.jpg"><img alt="Gamevideos" src="<?= $wgExtensionsPath; ?>/wikia/VideoEmbedTool/images/gamevideos.jpg" height="51" width="120" border="0"></a></div></div>
 			<div class="gallerytext">
 
 			</div>
 		</div></td>
-		<td><div class="gallerybox" style="width: 155px;">
-			<div class="thumb" style="padding: 49px 0pt; width: 150px;"><div style="margin-left: auto; margin-right: auto; width: 120px;"><a href="" class="image" title="5min.gif"><img alt="" src="<?= $wgExtensionsPath; ?>/wikia/VideoEmbedTool/images/5min.gif" height="47" width="120" border="0"></a></div></div>
+		<td><div class="gallerybox" style="width: 170px;">
+			<div class="thumb" style="padding: 49px 0pt; width: 165px;"><div style="margin-left: auto; margin-right: auto; width: 120px;"><a href="" class="image" title="5min.gif"><img alt="" src="<?= $wgExtensionsPath; ?>/wikia/VideoEmbedTool/images/5min.gif" height="47" width="120" border="0"></a></div></div>
 			<div class="gallerytext">
 			</div>
 		</div></td>
-		<td><div class="gallerybox" style="width: 155px;">
-			<div class="thumb" style="padding: 30px 0pt; width: 150px;"><div style="margin-left: auto; margin-right: auto; width: 120px;"><a href="" class="image" title="YouTube.jpg"><img alt="" src="<?= $wgExtensionsPath; ?>/wikia/VideoEmbedTool/images/youtube.jpg" height="85" width="120" border="0"></a></div></div>
+		<td><div class="gallerybox" style="width: 170px;">
+			<div class="thumb" style="padding: 30px 0pt; width: 165px;"><div style="margin-left: auto; margin-right: auto; width: 120px;"><a href="" class="image" title="YouTube.jpg"><img alt="" src="<?= $wgExtensionsPath; ?>/wikia/VideoEmbedTool/images/youtube.jpg" height="85" width="120" border="0"></a></div></div>
 			<div class="gallerytext">
 			</div>
 		</div></td>
-		<td><div class="gallerybox" style="width: 155px;">
-			<div class="thumb" style="padding: 56px 0pt; width: 150px;"><div style="margin-left: auto; margin-right: auto; width: 120px;"><a href="" class="image" title="Metacafe.gif"><img alt="" src="<?= $wgExtensionsPath; ?>/wikia/VideoEmbedTool/images/metacafe.gif" height="33" width="120" border="0"></a></div></div>
+		<td><div class="gallerybox" style="width: 170px;">
+			<div class="thumb" style="padding: 56px 0pt; width: 165px;"><div style="margin-left: auto; margin-right: auto; width: 120px;"><a href="" class="image" title="Metacafe.gif"><img alt="" src="<?= $wgExtensionsPath; ?>/wikia/VideoEmbedTool/images/metacafe.gif" height="33" width="120" border="0"></a></div></div>
 			<div class="gallerytext">
 			</div>
 		</div></td>
 	</tr>
 
 	<tr>
-		<td><div class="gallerybox" style="width: 155px;">
-			<div class="thumb" style="padding: 62px 0pt; width: 150px;"><div style="margin-left: auto; margin-right: auto; width: 120px;"><a href="" class="image" title="Sevenload.jpg"><img alt="" src="<?= $wgExtensionsPath; ?>/wikia/VideoEmbedTool/images/sevenload.jpg" height="21" width="120" border="0"></a></div></div>
+		<td><div class="gallerybox" style="width: 170px;">
+			<div class="thumb" style="padding: 62px 0pt; width: 165px;"><div style="margin-left: auto; margin-right: auto; width: 120px;"><a href="" class="image" title="Sevenload.jpg"><img alt="" src="<?= $wgExtensionsPath; ?>/wikia/VideoEmbedTool/images/sevenload.jpg" height="21" width="120" border="0"></a></div></div>
 			<div class="gallerytext">
 			</div>
 		</div></td>
-		<td><div class="gallerybox" style="width: 155px;">
-			<div class="thumb" style="padding: 37px 0pt; width: 150px;"><div style="margin-left: auto; margin-right: auto; width: 120px;"><a href="" class="image" title="Vimeo.png"><img alt="" src="<?= $wgExtensionsPath; ?>/wikia/VideoEmbedTool/images/vimeo.png" height="72" width="120" border="0"></a></div></div>
+		<td><div class="gallerybox" style="width: 170px;">
+			<div class="thumb" style="padding: 37px 0pt; width: 165px;"><div style="margin-left: auto; margin-right: auto; width: 120px;"><a href="" class="image" title="Vimeo.png"><img alt="" src="<?= $wgExtensionsPath; ?>/wikia/VideoEmbedTool/images/vimeo.png" height="72" width="120" border="0"></a></div></div>
 			<div class="gallerytext">
 
 			</div>
 		</div></td>
-		<td><div class="gallerybox" style="width: 155px;">
-			<div class="thumb" style="padding: 55px 0pt; width: 150px;"><div style="margin-left: auto; margin-right: auto; width: 120px;"><a href="" class="image" title="Myvideo.jpg"><img alt="" src="<?= $wgExtensionsPath; ?>/wikia/VideoEmbedTool/images/myvideo.jpg" height="35" width="120" border="0"></a></div></div>
+		<td><div class="gallerybox" style="width: 170px;">
+			<div class="thumb" style="padding: 55px 0pt; width: 165px;"><div style="margin-left: auto; margin-right: auto; width: 120px;"><a href="" class="image" title="Myvideo.jpg"><img alt="" src="<?= $wgExtensionsPath; ?>/wikia/VideoEmbedTool/images/myvideo.jpg" height="35" width="120" border="0"></a></div></div>
 			<div class="gallerytext">
 			</div>
 		</div></td>
+		<td></td>
 	</tr>
 </tbody></table>
 
