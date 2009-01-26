@@ -3,27 +3,6 @@
 // use the same namespace as in old NY extension
 define( 'NS_VIDEO', 400 );
 
-global $wgWikiaVideoProviders;
-$wgWikiaVideoProviders = array(
-		VideoPage::V_GAMETRAILERS => 'gametrailers',
-		VideoPage::V_GAMEVIDEOS => 'gamevideos',
-		VideoPage::V_GAMESPOT => 'gamespot',
-		VideoPage::V_MTVGAMES => 'mtvgames',
-		VideoPage::V_5MIN => '5min',
-		VideoPage::V_YOUTUBE => 'youtube',
-		VideoPage::V_HULU => 'hulu',
-		VideoPage::V_VEOH => 'veoh',
-		VideoPage::V_FANCAST => 'fancast',
-		VideoPage::V_IN2TV => 'in2tv',
-		VideoPage::V_BLIPTV => 'bliptv',
-		VideoPage::V_METACAFE => 'metacafe',
-		VideoPage::V_SEVENLOAD => 'sevenload',
-		VideoPage::V_VIMEO => 'vimeo',
-		VideoPage::V_CLIPFISH => 'clipfish',
-		VideoPage::V_MYVIDEO => 'myvideo'	
-		);
-
-
 // main video page class
 class VideoPage extends Article {
 
@@ -520,6 +499,26 @@ class VideoPage extends Article {
 		$wgOut->addHTML( $this->getEmbedCode() );
 	}
 }
+
+global $wgWikiaVideoProviders;
+$wgWikiaVideoProviders = array(
+		VideoPage::V_GAMETRAILERS => 'gametrailers',
+		VideoPage::V_GAMEVIDEOS => 'gamevideos',
+		VideoPage::V_GAMESPOT => 'gamespot',
+		VideoPage::V_MTVGAMES => 'mtvgames',
+		VideoPage::V_5MIN => '5min',
+		VideoPage::V_YOUTUBE => 'youtube',
+		VideoPage::V_HULU => 'hulu',
+		VideoPage::V_VEOH => 'veoh',
+		VideoPage::V_FANCAST => 'fancast',
+		VideoPage::V_IN2TV => 'in2tv',
+		VideoPage::V_BLIPTV => 'bliptv',
+		VideoPage::V_METACAFE => 'metacafe',
+		VideoPage::V_SEVENLOAD => 'sevenload',
+		VideoPage::V_VIMEO => 'vimeo',
+		VideoPage::V_CLIPFISH => 'clipfish',
+		VideoPage::V_MYVIDEO => 'myvideo'	
+		);
 
 class VideoHistoryList {
 	var $mTitle;
