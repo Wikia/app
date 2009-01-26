@@ -16,7 +16,7 @@ FCKConfig.Plugins.Add('wikitext');
 
 if (typeof window.parent.vet_enabled != 'undefined') {
 	FCKConfig.Plugins.Add('video');
-	toolbarItems.push('AddVideo');
+	toolbarItems.splice(20, 0, 'AddVideo');
 }
 
 FCKConfig.ToolbarSets["Default"] = [ toolbarItems ];
