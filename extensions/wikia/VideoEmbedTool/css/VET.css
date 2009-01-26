@@ -16,13 +16,17 @@
 }
 
 #VideoEmbedUrl {
-	width: 300px;
+	width: 460px;
 	padding: 6px;
 	height: 20px;
 	font-family: sans-serif;			
 }
 
-
+#VideoEmbedSearch label {
+	font-size: 15pt;
+	font-weight: bold;
+	letter-spacing: -1px;
+}
 
 #VideoEmbedBody {
 	background: #FFF;
