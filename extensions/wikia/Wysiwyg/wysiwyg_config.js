@@ -14,7 +14,7 @@ FCKConfig.BodyClass = 'fckeditor';
 
 FCKConfig.Plugins.Add('wikitext');
 
-if (typeof vet_enabled !=' undefined') {
+if (typeof window.parent.vet_enabled != 'undefined') {
 	FCKConfig.Plugins.Add('video');
 	toolbarItems.push('AddVideo');
 }
