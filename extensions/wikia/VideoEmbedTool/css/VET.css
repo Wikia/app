@@ -14,6 +14,16 @@
 	top: 0;
 	width: 810px;
 }
+
+#VideoEmbedUrl {
+	width: 300px;
+	padding: 6px;
+	height: 20px;
+	font-family: sans-serif;			
+}
+
+
+
 #VideoEmbedBody {
 	background: #FFF;
 	height: 440px;

@@ -41,16 +41,14 @@
 ?>
 </td>
 <td>
-<?php
-
+<?
 if( ( $wgUser->isLoggedIn() ) && ( $wgUser->isAllowed( 'upload' ) ) ) {
+	global $wgExtensionsPath;
 ?>
-			<div id="VideoEmbedSupported">
-				<?= wfMsg( 'vet-supported' ) ?>
-			</div>
 		</td>
 <?php
 }
+	global $wgExtensionsPath;
 ?>
 	</tr>
 </table>
@@ -58,9 +56,57 @@ if( ( $wgUser->isLoggedIn() ) && ( $wgUser->isAllowed( 'upload' ) ) ) {
 <div id="VET_results_0">
 	<?= $result ?>
 </div>
+<div id="VideoEmbedSupported">
+<?= wfMsg( 'vet-supported' ) ?>
+
+<table class="gallery" cellpadding="0" cellspacing="0">
+	<tbody><tr>
+		<td><div class="gallerybox" style="width: 155px;">
+			<div class="thumb" style="padding: 47px 0pt; width: 150px;"><div style="margin-left: auto; margin-right: auto; width: 120px;"><a href="" class="image" title="Gamevideos.jpg"><img alt="Gamevideos" src="<?= $wgExtensionsPath; ?>/wikia/VideoEmbedTool/images/gamevideos.jpg" height="51" width="120" border="0"></a></div></div>
+			<div class="gallerytext">
+
+			</div>
+		</div></td>
+		<td><div class="gallerybox" style="width: 155px;">
+			<div class="thumb" style="padding: 49px 0pt; width: 150px;"><div style="margin-left: auto; margin-right: auto; width: 120px;"><a href="" class="image" title="5min.gif"><img alt="" src="<?= $wgExtensionsPath; ?>/wikia/VideoEmbedTool/images/5min.gif" height="47" width="120" border="0"></a></div></div>
+			<div class="gallerytext">
+			</div>
+		</div></td>
+		<td><div class="gallerybox" style="width: 155px;">
+			<div class="thumb" style="padding: 30px 0pt; width: 150px;"><div style="margin-left: auto; margin-right: auto; width: 120px;"><a href="" class="image" title="YouTube.jpg"><img alt="" src="<?= $wgExtensionsPath; ?>/wikia/VideoEmbedTool/images/youtube.jpg" height="85" width="120" border="0"></a></div></div>
+			<div class="gallerytext">
+			</div>
+		</div></td>
+		<td><div class="gallerybox" style="width: 155px;">
+			<div class="thumb" style="padding: 56px 0pt; width: 150px;"><div style="margin-left: auto; margin-right: auto; width: 120px;"><a href="" class="image" title="Metacafe.gif"><img alt="" src="<?= $wgExtensionsPath; ?>/wikia/VideoEmbedTool/images/metacafe.gif" height="33" width="120" border="0"></a></div></div>
+			<div class="gallerytext">
+			</div>
+		</div></td>
+	</tr>
+
+	<tr>
+		<td><div class="gallerybox" style="width: 155px;">
+			<div class="thumb" style="padding: 62px 0pt; width: 150px;"><div style="margin-left: auto; margin-right: auto; width: 120px;"><a href="" class="image" title="Sevenload.jpg"><img alt="" src="<?= $wgExtensionsPath; ?>/wikia/VideoEmbedTool/images/sevenload.jpg" height="21" width="120" border="0"></a></div></div>
+			<div class="gallerytext">
+			</div>
+		</div></td>
+		<td><div class="gallerybox" style="width: 155px;">
+			<div class="thumb" style="padding: 37px 0pt; width: 150px;"><div style="margin-left: auto; margin-right: auto; width: 120px;"><a href="" class="image" title="Vimeo.png"><img alt="" src="<?= $wgExtensionsPath; ?>/wikia/VideoEmbedTool/images/vimeo.png" height="72" width="120" border="0"></a></div></div>
+			<div class="gallerytext">
+
+			</div>
+		</div></td>
+		<td><div class="gallerybox" style="width: 155px;">
+			<div class="thumb" style="padding: 55px 0pt; width: 150px;"><div style="margin-left: auto; margin-right: auto; width: 120px;"><a href="" class="image" title="Myvideo.jpg"><img alt="" src="<?= $wgExtensionsPath; ?>/wikia/VideoEmbedTool/images/myvideo.jpg" height="35" width="120" border="0"></a></div></div>
+			<div class="gallerytext">
+			</div>
+		</div></td>
+	</tr>
+</tbody></table>
+</div>
 
 <div id="VET_results_1" style="display: none;">
-	<br/><br/><br/><br/><br/>
+<br/><br/><br/><br/><br/>
 	<div style="text-align: center;">
 		<img src="<?= $wgStylePath ?>/../extensions/wikia/VideoEmbedTool/images/flickr_logo.gif" />
 		<div class="VideoEmbedSourceNote"><?= wfMsg('vet-flickr-inf') ?></div>
