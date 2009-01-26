@@ -56,9 +56,6 @@ if( ( $wgUser->isLoggedIn() ) && ( $wgUser->isAllowed( 'upload' ) ) ) {
 <div id="VET_results_0">
 	<?= $result ?>
 </div>
-<div id="VideoEmbedSupported">
-<?= wfMsg( 'vet-supported' ) ?>
-
 <table class="gallery" cellpadding="0" cellspacing="0">
 	<tbody><tr>
 		<td><div class="gallerybox" style="width: 155px;">
@@ -103,7 +100,6 @@ if( ( $wgUser->isLoggedIn() ) && ( $wgUser->isAllowed( 'upload' ) ) ) {
 		</div></td>
 	</tr>
 </tbody></table>
-</div>
 
 <div id="VET_results_1" style="display: none;">
 <br/><br/><br/><br/><br/>
