@@ -328,3 +328,7 @@ VideoEmbedOptionsTable img {
 	width: 36px;
 	height: 16px;
 }
+
+#VideoEmbedToolProvidersTable td {
+	background: #fff;
+}
