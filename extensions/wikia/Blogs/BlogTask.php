@@ -53,6 +53,7 @@ class BlogTask extends BatchTask {
 			 */
 			$cmd = sprintf("SERVER_ID={$city_id} php {$IP}/extensions/wikia/Blogs/maintenance.php --conf {$wgWikiaLocalSettingsPath} --aconf {$wgWikiaAdminSettingsPath}");
 			$this->addLog( "Running {$cmd}");
+			$this->addLog( $cmd );
 			$retval = wfShellExec( $cmd, $status );
 			$this->addLog( $retval );
 		}
