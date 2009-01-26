@@ -600,7 +600,3 @@ class VideoHistoryList {
                 return "</table>\n";
         }
 }
-
-?>
-
-
