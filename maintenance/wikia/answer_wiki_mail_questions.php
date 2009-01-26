@@ -93,10 +93,12 @@ $res = $dbr->select( "$page, $recentchanges ",
 $edits_body = "<table cellpadding='5'><tr><td><b>Edited Questions on answer.wikia.com</b></td></tr>
 	<tr><td><a href=\"" . SpecialPage::getTitleFor( 'Recentchanges' )->escapeFullURL() . "\">" . wfMsg("see_all_changes") . "</a></td></tr>";
 	
+$edits = array();
 while ($row = $dbr->fetchObject( $res ) ) {
 	$title = Title::newFromDBKey( $row->page_title );
-	
+	if( in_array( $row->page_title, $edits ) ) continue;
 	$edits_body .= "<tr><td>* <a href=\"" . $title->escapeFullURL() . "\">" . $title->getText() . "</a> | <a href=\"" . $title->escapeFullURL("action=edit") . "\">" . wfMsg("answer_this_question") . "</a> | <a href=\"" . $title->escapeFullURL("action=delete") . "\">" . wfMsg("delete") . "</a></td></tr>\n";
+	$edits[] = $row->page_title;
 }
 $edits_body .= "</table>";
 
@@ -109,7 +111,7 @@ if( !in_array( $group, $groups ) ){
 list ($user,$user_groups) = $dbr->tableNamesN('user','user_groups');
 $res = $dbr->select( "$user_groups  LEFT JOIN $user ON user_id=ug_user", 
 		array( 'user_name','user_id' ),
-	array("ug_group"=>$group, "user_name" => "Pean"), __METHOD__, 
+	array("ug_group"=>$group ), __METHOD__, 
 	""
 );
 
