@@ -3,6 +3,27 @@
 // use the same namespace as in old NY extension
 define( 'NS_VIDEO', 400 );
 
+global $wgWikiaVideoProviders;
+$wgWikiaVideoProviders = array(
+		VideoPage::V_GAMETRAILERS => 'gametrailers',
+		VideoPage::V_GAMEVIDEOS => 'gamevideos',
+		VideoPage::V_GAMESPOT => 'gamespot',
+		VideoPage::V_MTVGAMES => 'mtvgames',
+		VideoPage::V_5MIN => '5min',
+		VideoPage::V_YOUTUBE => 'youtube',
+		VideoPage::V_HULU => 'hulu',
+		VideoPage::V_VEOH => 'veoh',
+		VideoPage::V_FANCAST => 'fancast',
+		VideoPage::V_IN2TV => 'in2tv',
+		VideoPage::V_BLIPTV => 'bliptv',
+		VideoPage::V_METACAFE => 'metacafe',
+		VideoPage::V_SEVENLOAD => 'sevenload',
+		VideoPage::V_VIMEO => 'vimeo',
+		VideoPage::V_CLIPFISH => 'clipfish',
+		VideoPage::V_MYVIDEO => 'myvideo'	
+		);
+
+
 // main video page class
 class VideoPage extends Article {
 
@@ -27,25 +48,7 @@ class VideoPage extends Article {
 		$mId,
 		$mProvider,
 		$mData,
-		$mDataline,
-		$mProviders = array(
-			self::V_GAMETRAILERS => 'gametrailers',
-			self::V_GAMEVIDEOS => 'gamevideos',
-			self::V_GAMESPOT => 'gamespot',
-			self::V_MTVGAMES => 'mtvgames',
-			self::V_5MIN => '5min',
-			self::V_YOUTUBE => 'youtube',
-			self::V_HULU => 'hulu',
-			self::V_VEOH => 'veoh',
-			self::V_FANCAST => 'fancast',
-			self::V_IN2TV => 'in2tv',
-			self::V_BLIPTV => 'bliptv',
-			self::V_METACAFE => 'metacafe',
-			self::V_SEVENLOAD => 'sevenload',
-			self::V_VIMEO => 'vimeo',
-			self::V_CLIPFISH => 'clipfish',
-			self::V_MYVIDEO => 'myvideo'	
-		);
+		$mDataline;
 
         function __construct (&$title){
                 parent::__construct(&$title);
@@ -189,6 +192,21 @@ class VideoPage extends Article {
 			}
 		}
 
+		$text = strpos( $fixed_url, "MYVIDEO.DE" );
+		if( false !== $text ) { // myvideo
+			$provider = self::V_MYVIDEO;
+			$parsed = split( "/", $url );
+			if( is_array( $parsed ) ) {
+				$mdata = array_pop( $parsed );	
+				$this->mProvider = $provider;
+				$this->mId = array_pop( $parsed );
+				$this->mData = array(
+						$mdata
+				);					
+				return true;
+			}
+		}
+
 		$text = strpos( $fixed_url, "GAMEVIDEOS.1UP.COM" );
 		if( false !== $text ) { // gamevideos
 			$provider = self::V_GAMEVIDEOS;
@@ -201,30 +219,64 @@ class VideoPage extends Article {
 			}
 		}
 
+
+		$text = strpos( $fixed_url, "VIMEO.COM" );
+		if( false !== $text ) { // vimeo
+			$provider = self::V_VIMEO;
+			$parsed = split( "/", $url );			
+			if( is_array( $parsed ) ) {
+				$this->mProvider = $provider;
+				$this->mId = array_pop( $parsed );
+				$this->mData = array();					
+				return true;
+			}
+		}
+
+		$text = strpos( $fixed_url, "5MIN.COM" );
+		if( false !== $text ) { // 5min
+			$provider = self::V_5MIN;
+			$parsed = split( "/", $url );			
+			if( is_array( $parsed ) ) {
+				$this->mProvider = $provider;
+				$ids = array_pop( $parsed );
+				$parsed_twice = split( "-", $ids );
+				$this->mId = array_pop( $parsed_twice );
+				$this->mData = array();					
+				return true;
+			}
+		}
+
 		return false;
 	}
 
 	public function getRatio() {
-		switch( $this->mProviders[$this->mProvider] ) {
+		global $wgWikiaVideoProviders;
+		switch( $wgWikiaVideoProviders[$this->mProvider] ) {
 			case "metacafe": 
 				return (40 / 35);
-				break;
-			
+				break;			
 			case "youtube": 
 				return (425 / 355);
 				break;
-
 			case "sevenload":
 				return (500 / 408);
 				break;
 			case "gamevideos":
 				return (500 / 319);
 				break;
+			case "5min":
+				return (480 / 401);
+				break;
+			case "vimeo":
+				return (400 / 225);
+				break;
+			case "myvideo":
+				return (470 / 406);
+				break;
 			default:
 				return 1;
 				break;
 		}
-
 	}
 
 	function loadFromPars( $provider, $id, $data ) {
@@ -235,6 +287,37 @@ class VideoPage extends Article {
 
 	public function setName( $name ) {
 		$this->mName = $name;
+	}
+
+	public static function getUrl( $metadata ) {
+		global $wgWikiaVideoProviders;
+		$meta = split( ",", $metadata );
+		if ( is_array( $meta ) ) {
+			$provider = $meta[0];
+			$id = $meta[1];
+			array_splice( $meta, 0, 2 );
+			if ( count( $meta ) > 0 ) {
+				foreach( $meta as $data  ) {
+					$mData[] = $data;
+				}
+			}
+		}
+		switch( $wgWikiaVideoProviders[$provider] ) {
+			case "metacafe": 
+				return 'http://www.metacafe.com/watch/' . $id . '/' . $mData[0];
+			case "youtube": 
+				return 'http://www.youtube.com/watch?v=' . $id;
+			case "sevenload":
+				return '';
+			case "gamevideos":
+				return 'http://gamevideos.1up.com/video/id/' . $id;
+				break;
+			case "5min":
+				return '';
+				break;
+			default:
+				return '';
+		}
 	}
 
 	public function getProvider() {
@@ -260,16 +343,15 @@ class VideoPage extends Article {
 	
 		switch( $this->mProviders[$this->mProvider] ) {
 			case 'metacafe':		
+			case 'sevenload':					
+			case 'myvideo':
 				$metadata = $this->mProvider . ',' . $this->mId . ',' . $this->mData[0];
 				break;
 			case 'youtube':		
-				$metadata = $this->mProvider . ',' . $this->mId . ',';
-				break;
-			case 'sevenload':		
-				$metadata = $this->mProvider . ',' . $this->mId . ',' . $this->mData[0];
-				break;			
 			case 'gamevideos':
-				$metadata = $this->mProvider . ',' . $this->mId . ',';				
+			case '5min':
+			case 'vimeo':		
+				$metadata = $this->mProvider . ',' . $this->mId . ',';
 				break;
 			default: 
 				$metadata = '';
@@ -382,10 +464,11 @@ class VideoPage extends Article {
 	}
 
         public function getEmbedCode( $width = 300 ) {
+		global $wgWikiaVideoProviders;
                 $embed = "";
 		$code = 'standard';
 		$height = round( $width / $this->getRatio() );
-                switch( $this->mProviders[$this->mProvider] ) {
+                switch( $wgWikiaVideoProviders[$this->mProvider] ) {
                         case "metacafe":
 				$url = 'http://www.metacafe.com/fplayer/' . $this->mId . '/' . $this->mData[0];
                                 break;
@@ -396,9 +479,21 @@ class VideoPage extends Article {
 				$code = 'custom';
 				$embed = '<object style="visibility: visible;" id="sevenloadPlayer_' . $this->mId . '" data="http://static.sevenload.com/swf/player/player.swf" type="application/x-shockwave-flash" height="' . $height . '" width="' . $width . '"><param value="always" name="allowScriptAccess"><param value="true" name="allowFullscreen"><param value="configPath=http%3A%2F%2Fflash.sevenload.com%2Fplayer%3FportalId%3Den%26autoplay%3D0%26itemId%3D' . $this->mId . '&amp;locale=en_US&amp;autoplay=0&amp;environment=" name="flashvars"></object>';
 				break;
+			case 'myvideo':
+				$code = 'custom';
+				$embed = "<object style='width:{$width}px;height:{$height}px;' type='application/x-shockwave-flash' data='http://www.myvideo.de/movie/{$this->mId}'> <param name='movie' value='http://www.myvideo.de/movie/{$this->mId}' /> <param name='AllowFullscreen?' value='true' /> </object>";	
+				break;
 			case "gamevideos":
 				$code = 'custom';
 				$embed = '<embed type="application/x-shockwave-flash" width="' . $width . '" height="' . $height . '" src="http://gamevideos.1up.com/swf/gamevideos12.swf?embedded=1&amp;fullscreen=1&amp;autoplay=0&amp;src=http://gamevideos.1up.com/do/videoListXML%3Fid%3D' . $this->mId . '%26adPlay%3Dtrue" align="middle"></embed>';
+				break;
+			case "5min":
+				$code = 'custom';
+				$embed = "<object width='{$width}' height='{$height}' id='FiveminPlayer' classid='clsid:d27cdb6e-ae6d-11cf-96b8-444553540000'><param name='allowfullscreen' value='true'/><param name='allowScriptAccess' value='always'/><param name='movie' value='http://www.5min.com/Embeded/{$this->mId}/'/><embed src='http://www.5min.com/Embeded/{$this->mId}/' type='application/x-shockwave-flash' width='{$width}' height='{$height}' allowfullscreen='true' allowScriptAccess='always'></embed></object>";
+				break;
+			case 'vimeo':
+				$code = 'custom';
+				$embed = '<object width="'.$width.'" height="'.$height.'"><param name="allowfullscreen" value="true" /><param name="allowscriptaccess" value="always" /><param name="movie" value="http://vimeo.com/moogaloop.swf?clip_id='.$this->mId.'&amp;server=vimeo.com&amp;show_title=1&amp;show_byline=1&amp;show_portrait=0&amp;color=&amp;fullscreen=1" /><embed src="http://vimeo.com/moogaloop.swf?clip_id='.$this->mId.'&amp;server=vimeo.com&amp;show_title=1&amp;show_byline=1&amp;show_portrait=0&amp;color=&amp;fullscreen=1" type="application/x-shockwave-flash" allowfullscreen="true" allowscriptaccess="always" width="'.$width.'" height="'.$height.'"></embed></object>';
 				break;
                         default: break;
                 }	
@@ -438,6 +533,7 @@ class VideoHistoryList {
 		global $wgOut, $wgUser, $wgLang;
 		
 		$dbr = wfGetDB( DB_SLAVE );		
+		$sk = $wgUser->getSkin();
 
 		if ( $iscur ) {
 			// load from current db
@@ -457,9 +553,14 @@ class VideoHistoryList {
 			if ( 0 == $dbr->numRows( $history ) ) {
 				return '';
 			} else {
-				$s = '';				
 				$row = $dbr->fetchObject( $history );
-				return '<tr>' . '<td>' . $wgLang->timeAndDate( $row->img_timestamp, true ) . '</td>' . '<td>' . $row->img_user_text .'</td></tr>';
+				$user = $row->img_user;
+				$usertext = $row->img_user_text;
+				$url = VideoPage::getUrl( $row->img_metadata );
+				$line = '<tr>' . '<td><a href="' . $url . '">' . $wgLang->timeAndDate( $row->img_timestamp, true ) . '</a></td>' . '<td>';				
+				$line .= $sk->userLink( $user, $usertext ) . " <span style='white-space: nowrap;'>" . $sk->userToolLinks( $user, $usertext ) . "</span>";
+				$line .= '</td></tr>';
+				return $line;
 			}			
 		} else {
 			// load from old video db
@@ -478,7 +579,12 @@ class VideoHistoryList {
 					);
 			$s = '';
 			while( $row = $dbr->fetchObject( $history ) ) {
-				$s .= '<tr>' . '<td>' . $wgLang->timeAndDate( $row->img_timestamp, true ) . '</td>' . '<td>' . $row->img_user_text .'</td></tr>';	
+				$user = $row->img_user;
+				$usertext = $row->img_user_text;
+				$url = VideoPage::getUrl( $row->img_metadata );	
+				$s .= '<tr>' . '<td><a href="' . $url . '">' . $wgLang->timeAndDate( $row->img_timestamp, true ) . '</a></td>' . '<td>';
+				$s .= $sk->userLink( $user, $usertext ) . " <span style='white-space: nowrap;'>" . $sk->userToolLinks( $user, $usertext ) . "</span>";
+				$s .= '</td></tr>';	
 			}			
 			return $s;
 		}
