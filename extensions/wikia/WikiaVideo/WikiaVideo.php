@@ -47,7 +47,15 @@ function WikiaVideoRenderVideo( $matches ) {
                 $x++;
         }
 
-	$output = "<video name=\"{$video_name}\" width=\"{$width}\" align=\"{$align}\" caption=\"{$caption}\" thumb=\"{$thumb}\"></video>";
+	// macbre: add FCK support
+	global $wgWysiwygParserEnabled;
+
+	if (empty($wgWysiwygParserEnabled)) {
+		$output = "<video name=\"{$video_name}\" width=\"{$width}\" align=\"{$align}\" caption=\"{$caption}\" thumb=\"{$thumb}\"></video>";
+	}
+	else {
+		$output = "<video>[[Video:{$matches[2]}]]</video>";
+	}
 	return $output;
 }
 
