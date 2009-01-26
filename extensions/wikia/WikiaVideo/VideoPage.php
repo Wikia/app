@@ -318,6 +318,9 @@ class VideoPage extends Article {
 			case "5min":
 				return 'http://www.5min.com/Video/' . $mData[0] . $id;
 				break;
+			case "myvideo":
+				return 'http://www/myvideo.de/watch/' . $id;
+				break;
 			case "vimeo":
 				return 'http://www.vimeo.com/' . $id;
 				break;
