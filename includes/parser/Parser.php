@@ -3435,6 +3435,12 @@ class Parser
 						$output = $this->renderImageGallery( $content, $attributes );
 					}
 					break;
+				// support for WikiaVideo
+				case 'video':
+					if (!empty($wgWysiwygParserEnabled)) {
+						$output = Wysiwyg_SetRefId('video', array('text' => &$content), false);
+						break;
+					}
 				default:
 					if( isset( $this->mTagHooks[$name] ) ) {
 						# Workaround for PHP bug 35229 and similar
