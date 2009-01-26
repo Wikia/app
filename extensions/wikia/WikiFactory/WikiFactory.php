@@ -229,7 +229,7 @@ class WikiFactory {
 		}
 
 		wfProfileIn( __METHOD__ );
-		$dbw->getDB(DB_MASTER);
+		$dbw = wfGetDB( DB_MASTER );
 		$dbw->begin();
 
 		if ( ! $dbw->delete(wfSharedTable("city_domains"), array( "city_id" => $city, "city_domain" => $domain ), __METHOD__) ) {
