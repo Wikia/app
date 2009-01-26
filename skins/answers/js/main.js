@@ -62,6 +62,7 @@ function askQuestion(){
 	
 	q = q.replace(/\?/g,""); //removes question mark
 	q = q.replace(/_+/g,"_"); //we only want one space
+	q = q.replace(/#/g,""); //we only want one space
 	q = encodeURIComponent( q );
 	
 	var url = wgServer + "/api.php?action=query&titles=" + q + "&format=json";
