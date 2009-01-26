@@ -142,6 +142,8 @@ class VideoPage extends Article {
 
 			if( $standard_url !== false){
 				$id = substr( $url , $standard_url+8, strlen($url) );
+			} else {
+				return false;
 			}
 			if(!$id){
 				$id_test = str_replace("http://www.youtube.com/v/","",$url);
