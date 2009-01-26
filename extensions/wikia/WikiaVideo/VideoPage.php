@@ -333,7 +333,7 @@ class VideoPage extends Article {
 	}
 	
 	public function save() {
-		global $wgUser;
+		global $wgUser, $wgWikiaVideoProviders;
 
 		$this->mTitle = Title::makeTitle( NS_VIDEO, $this->mName );
 		$desc = "added video [[" . $this->mTitle->getPrefixedText() . "]]";			
@@ -341,7 +341,7 @@ class VideoPage extends Article {
                 $dbw = wfGetDB( DB_MASTER );
                 $now = $dbw->timestamp();
 	
-		switch( $this->mProviders[$this->mProvider] ) {
+		switch( $wgWikiaVideoProviders[$this->mProvider] ) {
 			case 'metacafe':		
 			case 'sevenload':					
 			case 'myvideo':
