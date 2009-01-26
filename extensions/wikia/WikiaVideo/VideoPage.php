@@ -117,6 +117,7 @@ class VideoPage extends Article {
 		$provider = '';
 		$id = '';
 
+		$url = trim( $url );
 		// todo make sure to check just http://something.else/ part, omit whatever follows
 		$fixed_url = strtoupper( $url );
 		$test = strpos( $fixed_url, "HTTP://" );
@@ -241,7 +242,9 @@ class VideoPage extends Article {
 				$ids = array_pop( $parsed );
 				$parsed_twice = split( "-", $ids );
 				$this->mId = array_pop( $parsed_twice );
-				$this->mData = array();					
+				$this->mData = array(
+						implode( '-', $parsed_twice ) . '-'
+					);					
 				return true;
 			}
 		}
@@ -308,12 +311,13 @@ class VideoPage extends Article {
 			case "youtube": 
 				return 'http://www.youtube.com/watch?v=' . $id;
 			case "sevenload":
-				return '';
+				return 'http://www.sevenload.com/videos/' . $id;
 			case "gamevideos":
 				return 'http://gamevideos.1up.com/video/id/' . $id;
 				break;
 			case "5min":
-				return '';
+				return 'http://www.5min.com/Video/' . $mData[0] . $id;
+				break;
 			case "vimeo":
 				return 'http://www.vimeo.com/' . $id;
 				break;
@@ -347,11 +351,11 @@ class VideoPage extends Article {
 			case 'metacafe':		
 			case 'sevenload':					
 			case 'myvideo':
+			case '5min':
 				$metadata = $this->mProvider . ',' . $this->mId . ',' . $this->mData[0];
 				break;
 			case 'youtube':		
 			case 'gamevideos':
-			case '5min':
 			case 'vimeo':		
 				$metadata = $this->mProvider . ',' . $this->mId . ',';
 				break;
@@ -598,10 +602,5 @@ class VideoHistoryList {
 }
 
 ?>
-
-
-
-
-
 
 
