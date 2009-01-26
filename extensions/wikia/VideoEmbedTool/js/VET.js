@@ -522,9 +522,9 @@ function VET_insertFinalVideo(e, type) {
 						options.caption = $('VideoEmbedCaption').value;
 
 						if(VET_refid != -1) {
-							FCK.ProtectImageUpdate(VET_refid, wikitag, options);
+							//FCK.ProtectImageUpdate(VET_refid, wikitag, options);
 						} else {
-							FCK.ProtectImageAdd(wikitag, options);
+							FCK.VideoAdd(wikitag, options);
 						}
 					}
 					break;
