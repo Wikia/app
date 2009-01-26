@@ -127,6 +127,9 @@ function VETSetupVars($vars) {
 	$vars['vet_max_thumb'] = wfMsg('vet-max-thumb');
 	$vars['vet_title'] = wfMsg('vet-title');
 
+	// macbre: for FCK
+	$vars['vet_enabled'] = true;
+
 	return true;
 }
 
