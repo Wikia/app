@@ -18,8 +18,11 @@
 #VideoEmbedUrl {
 	width: 460px;
 	padding: 6px;
-	height: 20px;
 	font-family: sans-serif;			
+}
+
+#VideoEmbedUrlSubmit {
+	padding: 6px;
 }
 
 #VideoEmbedSearch label {
