@@ -314,6 +314,8 @@ class VideoPage extends Article {
 				break;
 			case "5min":
 				return '';
+			case "vimeo":
+				return 'http://www.vimeo.com/' . $id;
 				break;
 			default:
 				return '';
