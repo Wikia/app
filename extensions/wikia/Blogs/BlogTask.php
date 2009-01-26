@@ -43,7 +43,7 @@ class BlogTask extends BatchTask {
 	 * @return boolean - status of operation
 	 */
 	public function execute( $params = null ) {
-		global $IP, $wgWikiaLocalSettingsPath;
+		global $IP, $wgWikiaLocalSettingsPath, $wgWikiaAdminSettingsPath;
 
 		$this->mParams = unserialize( $params->task_arguments );
 		$city_id = $this->mParams["city_id"];
