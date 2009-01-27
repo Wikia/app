@@ -56,7 +56,7 @@
 			</div>
 		</div></td>
 		<td><div class="gallerybox">
-			<div class="thumb" style="padding: 47px 0pt; width: 160px;"><div style="margin-left: auto; margin-right: auto; width: 120px;"><a href="http://gamevideos.1up.com/" class="image" title="Gamevideos"  target="_blank"><img alt="Gamevideos" src="<?= $wgExtensionsPath; ?>/wikia/VideoEmbedTool/images/gamevideos.jpg" height="51" width="120" border="0"></a></div></div>
+			<div class="thumb" style="padding: 47px 0pt; width: 165px;"><div style="margin-left: auto; margin-right: auto; width: 120px;"><a href="http://gamevideos.1up.com/" class="image" title="Gamevideos"  target="_blank"><img alt="Gamevideos" src="<?= $wgExtensionsPath; ?>/wikia/VideoEmbedTool/images/gamevideos.jpg" height="51" width="120" border="0"></a></div></div>
 			<div class="gallerytext">
 
 			</div>
