@@ -384,7 +384,7 @@ class UserBoard {
 			}
 		} else if ($wgUser->getName()==$wgTitle->getText()) {
 			$output .= "<div class=\"no-info-container\">
-				No board messages.
+				" . wfMsg("userboard_nomessages") . "
 			</div>";
 		
 		}
