@@ -15,7 +15,7 @@ body {
 	background: #252525;
 	height: 100px;
 	position: relative;
-	z-index: 2;
+	z-index: 10;
 }
 #wikianswers_logo { 
 	left: 30px; 
@@ -86,7 +86,7 @@ body {
 	position: absolute;
 	right: 35px;
 	top: 28px;
-	z-index: 4;
+	z-index: 30;
 }
 .header_menu li {
 	padding: 3px 0;
@@ -523,7 +523,7 @@ body .header_menu_button * {
 	position: absolute;
 	right: 5px;
 	top: 30px;
-	z-index: 3;
+	z-index: 20;
 }
 #toolbox {
 	background: #e1e1b4 url(/skins/answers/images/toolbox_bg.png) repeat-x;
@@ -614,7 +614,13 @@ body .header_menu_button * {
 	height: 0;
 	clear: both;
 	visibility: hidden;
+	overflow: hidden;
 }
+.clearfix { display:inline-block; }
+/* Hide from IE Mac \*/
+.clearfix { display:block; }
+/* End hide from IE Mac */
+
 .editsection {
 	float: right;
 }
@@ -631,7 +637,7 @@ body .header_menu_button * {
 	color: #002BB8 !important;
 	font-family: "Arial Narrow", "Arial", sans-serif;
 	font-weight: bold;
-	font-size: 18pt;
+	font-size: 15pt;
 	line-height: normal;
 }
 #google_ad_1 {
@@ -653,5 +659,8 @@ body .header_menu_button * {
 	color: #008000;
 }
 #answers_sidebar .google_ad {
-	margin-top: 10px;
+	margin-top: 15px;
+}
+#answers_sidebar .google_label {
+	font-weight: bold;
 }
