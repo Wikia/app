@@ -56,6 +56,6 @@ $messages['en'] = array(
 	'vet-title' => 'Add a video to your article',
 	'vet-supported' => 'Supported video sites:',
 	'vet-preview' => '<i>this is just a scaled down preview</i>',
-	'vet-bad-url' => 'the supplied URL is invalid',
+	'vet-bad-url' => 'The supplied URL is invalid',
 	'vet-main-info' => '<i>Input the full video URL from one of the supported sites displayed below.</i>',
 );
