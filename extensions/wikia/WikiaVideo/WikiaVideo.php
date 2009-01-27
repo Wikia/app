@@ -29,6 +29,10 @@ function WikiaVideoRenderVideo( $matches ) {
         $name = $matches[2];
         $params = explode( "|", $name );
         $video_name = $params[0];
+	global $wgCapitalLinks;
+	if( $wgCapitalLinks ) {
+		$video_name = ucfirst( $video_name );
+	}
 
         $x = 1;
 
