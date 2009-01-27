@@ -31,6 +31,8 @@ function wfGetUserBulletinsJSON($user_name, $count=18, $type = -1, $page = 1){
 			"activity"=>$bulletins,
 	);
 
+	$profile_JSON_array["type"] = $type;
+
 	$types = UserBulletin::$bulletin_types;
 	foreach( $types as $id => $type ){
 		$type_array[] = array( "id" => $id, "type" => $type );
