@@ -488,7 +488,7 @@ function embedCrispyGamer($input, $argv, &$parser)
 
 	if (!empty($cvid))
 	{
-		$url = "http://qa.crispygamer.com:1080/partners/wikia.aspx?pid=0&amp;vid={$cvid}";
+		$url = "http://www.crispygamer.com/partners/wikia.aspx?pid=0&amp;vid={$cvid}";
 		return "<script type=\"text/javascript\" src=\"{$url}\"></script>";
 	}
 }
