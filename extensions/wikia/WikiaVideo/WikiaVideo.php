@@ -5,7 +5,15 @@ if(!defined('MEDIAWIKI')) {
 
 $wgHooks['ParserBeforeStrip'][] = 'WikiaVideoParserBeforeStrip';
 $wgHooks['ArticleFromTitle'][] = 'WikiaVideoArticleFromTitle';
+$wgHooks['MWNamespace:isMovable'][] = 'WikiaVideoIsNotMovable';
 
+
+function WikiaVideoIsNotMovable( $result, $index ) {
+	global $IP;
+        require_once( "$IP/extensions/wikia/WikiaVideo/VideoPage.php" );
+	$result = !( $index < NS_MAIN || ($index == NS_IMAGE && !$wgAllowImageMoving) || ( $index == NS_VIDEO )  || $index == NS_CATEGORY );
+	return true;
+}
 
 function WikiaVideoParserBeforeStrip($parser, $text, $strip_state) {
 	// TODO change this to accomodate more cases ie parser inside, links and all
