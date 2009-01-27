@@ -28,6 +28,7 @@ body {
 	font-size:10pt;
 	margin:0 95px 0;
 	position:relative;
+	white-space:nowrap;
 }
 #ub-layer-username-url {
 	margin:-4px 95px 0;
@@ -37,6 +38,7 @@ body {
 	font-size:14pt;
 	color:#1B00FF;
 	font-style:underline; 
+	white-space:nowrap;
 }
 #ub-layer-edits-title { 
 	font-family:Verdana;
@@ -92,10 +94,17 @@ body {
 .wk-badge-fieldset {
 	padding: 1px 5px; 
 	margin: 1px;
-	height: 170px;
+	height: 240px;
 	width: 300px;
 } 
 .wk-badge-fieldset legend {
+	padding: 0px 5px;
+}
+.wk-badge-fieldset-code {
+	padding: 1px 5px; 
+	margin: 1px;
+} 
+.wk-badge-fieldset-code legend {
 	padding: 0px 5px;
 }
 .wk-badge-button {
@@ -112,6 +121,9 @@ body {
 }
 .wk-badge-label {
 	color:#000000; 
+}
+#ub_configurator-href {
+	cursor:pointer;
 }
 
 /* yui */

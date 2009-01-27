@@ -8,34 +8,121 @@ ColorTxt["CURRENT_COLOR"] = "<?=wfMsg("user-badge-selected-color")?>";
 ColorTxt["CLOSEST_WEBSAFE"] = "<?=wfMsg("user-badge-web-color")?>";
 ColorTxt["DIALOG_HEADER"] = "<?=wfMsg("user-badge-dialog-title")?>";
 </script>
+<tr><td class="pref-label" colspan="2"><h2><?=wfMsg('user-badge-title')?></h2></td></tr>
+<? if (!empty($sUserBadgeUrl)) { ?> 
 <tr>
-	<td class="pref-label" colspan="2"><h2><?=wfMsg('user-badge-title')?></h2></td>
+	<td class="pref-input"><p><img src="<?=$sUserBadgeUrl?>" /></p></td>
+	<td class="pref-input">
+		<fieldset class="wk-badge-fieldset-code">
+		<legend><?=wfMsg('user-bagde-copypaste-code')?></legend>
+			<code><?=htmlspecialchars("<a href=\"{$wgServer}\"><img src=\"{$sUserBadgeUrl}\" border=\"0\" /></a>");?></code>
+		</fieldset>
+	</td>
+</tr>		
+<tr>
+	<td class="pref-input" colspan="2">	<p><?=wfMsg('user-badge-use-configurator')?></p> </td>	
+</tr>	
+<? } else { ?> 		
+<tr>
+	<td class="pref-input" colspan="2">
+		<p><?=wfMsg('user-badge-not-found')?> <?=wfMsg('user-badge-use-configurator')?></p>
+	</td>
 </tr>
-<tr>
-	<td class="pref-label" valign="top">Current badge:</td>
-	<td class="pref-input">No badge found!<br />Use configurator to create new one!</td>
+<? } ?>		
+	</td>
 </tr>
-<tr>
-<td class="pref-label" valign="top">Create Your badge:</td>
-<td class="pref-input">
-	<table border=0><tr>
+<tr style="display:none" id="ub_configurator-panel">
+<td class="pref-input" colspan="2">
+	<p><?=wfMsg('user-badge-create')?></p>
+	<table border=0>
+	<tr>
 		<td style="margin:0px" valign="top">
-			<fieldset class="wk-badge-fieldset"><legend>Header and body:</legend>
+			<fieldset class="wk-badge-fieldset"><legend><?=wfMsg('user-badge-header-body-box')?></legend>
 			<table>
-				<tr><td>Header text color:</td><td class="wk-badge-button-bg"><input type="button" name="ub-header-txt-color" id="ub-header-txt-color" value="" class="wk-badge-button"></td></tr>
-				<tr><td>Header background color:</td><td class="wk-badge-button-bg"><input type="button" name="ub-header-bg-color" id="ub-header-bg-color" value="" class="wk-badge-button"></td></tr>
-				<tr><td>Body background color:</td><td class="wk-badge-button-bg"><input type="button" name="ub-body-bg-color" id="ub-body-bg-color" value="" class="wk-badge-button"></td></tr>
-				<tr><td>Header text align:</td><td style="padding:6px"><select name="ub-header-txt-align" id="ub-header-txt-align"><option value="left">left</option><option value="center">center</option><option value="right" selected>right</option></select></td></tr>
+				<tr>
+					<td><?=wfMsg('user-badge-header-text')?></td>
+					<td class="wk-badge-button-bg">
+						<input type="button" name="ub-header-btn-txt-color" id="ub-header-btn-txt-color" value="" class="wk-badge-button" style="background-color:<?=$mCurrentOptions->getHeaderTxtColor()?>;">
+						<input type="hidden" name="ub-header-txt-color" id="ub-header-txt-color" value="" class="wk-badge-button">
+					</td>
+				</tr>
+				<tr>
+					<td><?=wfMsg('user-badge-header-bgcolor')?></td>
+					<td class="wk-badge-button-bg">
+						<input type="button" name="ub-header-btn-bg-color" id="ub-header-btn-bg-color" value="" class="wk-badge-button" style="background-color:<?=$mCurrentOptions->getHeaderBgColor()?>;">
+						<input type="hidden" name="ub-header-bg-color" id="ub-header-bg-color" value="">
+					</td>
+				</tr>
+				<tr>
+					<td><?=wfMsg('user-badge-body-bgcolor')?></td>
+					<td class="wk-badge-button-bg">
+						<input type="button" name="ub-body-btn-bg-color" id="ub-body-btn-bg-color" value="" class="wk-badge-button" style="background-color:<?=$mCurrentOptions->getBodyBgColor()?>">
+						<input type="hidden" name="ub-body-bg-color" id="ub-body-bg-color" value="">
+					</td>
+				</tr>
+				<tr>
+					<td><?=wfMsg('user-badge-text-align')?></td>
+					<td style="padding:6px">
+						<select name="ub-header-txt-align" id="ub-header-txt-align">
+							<option value="left" <?= (("left" == $mCurrentOptions->getHeaderTxtAlign()) ? "selected" : "") ?>><?=wfMsg('user-badge-left-align')?></option>
+							<option value="center" <?= (("center" == $mCurrentOptions->getHeaderTxtAlign()) ? "selected" : "") ?>><?=wfMsg('user-badge-center-align')?></option>
+							<option value="right" <?= (("right" == $mCurrentOptions->getHeaderTxtAlign()) ? "selected" : "") ?>><?=wfMsg('user-badge-right-align')?></option>
+						</select>
+					</td>
+				</tr>
+				<tr>
+					<td><?=wfMsg('user-badge-label-color')?></td>
+					<td class="wk-badge-button-bg">
+						<input type="button" name="ub-body-btn-label-color" id="ub-body-btn-label-color" value="" class="wk-badge-button" style="background-color:<?=$mCurrentOptions->getBodyLabelColor()?>">
+						<input type="hidden" name="ub-body-label-color" id="ub-body-label-color" value="">
+					</td>
+				</tr>
+				<tr>
+					<td><?=wfMsg('user-badge-data-color')?></td>
+					<td class="wk-badge-button-bg">
+						<input type="button" name="ub-body-btn-data-color" id="ub-body-btn-data-color" value="" class="wk-badge-button" style="background-color:<?=$mCurrentOptions->getBodyDataColor()?>">
+						<input type="hidden" name="ub-body-data-color" id="ub-body-data-color" value="">
+					</td>
+				</tr>
 			</table>
 			</fieldset>
 		</td>
 		<td style="margin:0px" valign="top">
-			<fieldset class="wk-badge-fieldset"><legend>Body options:</legend>
+			<fieldset class="wk-badge-fieldset"><legend><?=wfMsg('user-badge-logo-opt')?></legend>
 			<table>
-				<tr><td>Wikia logo position:</td><td style="padding:6px"><select name="ub-header-logo-align" id="ub-header-logo-align"><option value="-15px auto 0 5px" selected>left</option><option value="-15px 5px 0 auto">right</option></select></td></tr>
-				<tr><td>Small Wikia logo position:</td><td style="padding:6px"><select name="ub-header-small-logo-align" id="ub-header-small-logo-align"><option value="-20px auto 0 0">left</option><option value="-20px 0 0 auto" selected>right</option></select></td></tr>
-				<tr><td>Label color (username, edits):</td><td class="wk-badge-button-bg"><input type="button" name="ub-body-label-color" id="ub-body-label-color" value="" class="wk-badge-button"></td></tr>
-				<tr><td>Data color:</td><td class="wk-badge-button-bg"><input type="button" name="ub-body-data-color" id="ub-body-data-color" value="" class="wk-badge-button"></td></tr>
+				<tr>
+					<td><?=wfMsg('user-badge-wikia-logo-pos')?></td>
+					<td style="padding:6px">
+						<select name="ub-body-logo-align" id="ub-body-logo-align">
+<?php if ($defOptions && $defOptions['body-logo']) { foreach ($defOptions['body-logo'] as $txt => $values) { ?>
+						<option value="<?=$values['value']?>" <?=(isset($values['default']) && ($values['default'] == 1)) ? 'selected':'' ?>><?=$values['text']?></option>
+<?php } } ?>						
+						</select>
+					</td>
+				</tr>
+				<tr>
+					<td><?=wfMsg('user-badge-small-wikia-logo-pos')?></td>
+					<td style="padding:6px">
+						<select name="ub-body-small-logo-align" id="ub-body-small-logo-align">
+<?php if ($defOptions && $defOptions['body-small-logo']) { foreach ($defOptions['body-small-logo'] as $txt => $values) { ?>
+						<option value="<?=$values['value']?>" <?=(isset($values['default']) && ($values['default'] == 1)) ? 'selected':'' ?>><?=$values['text']?></option>
+<?php } } ?>						
+						</select>
+					</td>
+				</tr>
+				<tr>
+					<td><?=wfMsg('user-badge-small-wikia-logo-color')?></td>
+					<td style="padding:6px" valign="top">
+<?php if ($defOptions && $defOptions['small-logo-color']) { 
+	foreach ($defOptions['small-logo-color'] as $id => $path) { 
+		$checked = ""; if ($id == $mCurrentOptions->getSmallLogoColor()) $checked = " checked=\"checked\" "; 
+?>
+						<p><input type="radio" name="ub-body-small-logo-color" id="ub-body-small-logo-color-<?=$id?>" value="<?=$id?>" <?=$checked?> onclick="changeSmallLogo('<?=$id?>', '<?=$wgStylePath . $path?>');" />
+						<img src="<?=$wgStylePath . $path?>" width="<?=USER_BADGES_SMALL_LOGO_WIDTH?>" height="<?=USER_BADGES_SMALL_LOGO_HEIGHT?>" /></p>
+<?php } } ?>						
+						</select>
+					</td>
+				</tr>
 			</table>
 			</fieldset>
 		</td>
@@ -43,20 +130,25 @@ ColorTxt["DIALOG_HEADER"] = "<?=wfMsg("user-badge-dialog-title")?>";
 	<tr>
 		<td style="padding:5px 25%;" valign="top" colspan="2">
 			<div class="user-badges-canvas">
-				<div id="user-badges-title">
-					<div id="ub-layer-title"><?=$wgSitename?></div>
+				<div id="user-badges-title" style="background-color:<?=$mCurrentOptions->getHeaderBgColor()?>;">
+					<div id="ub-layer-title" style="color:<?=$mCurrentOptions->getHeaderTxtColor()?>;"><?=$wgSitename?></div>
 					<div id="ub-layer-logo"><img src="<?=$wgLogo?>" width="80" height="80" /></div>			
 				</div>
-				<div id="user-badges-body">
-					<div id="ub-layer-username-title" class=>Username</div>
-					<div id="ub-layer-username-url"><u><?=$wgUser->getName()?></u></div>
-					<div id="ub-layer-edits-title">Edits</div>
-					<div id="ub-layer-edits-value">78</div>
-					<div id="ub-layer-wikia-title"><img src="http://images.wikia.com/common/skins/monaco/smoke/images/wikia_logo.png" width="56" height="15"/></div>
+				<div id="user-badges-body" style="background-color:<?=$mCurrentOptions->getBodyBgColor()?>;">
+					<div id="ub-layer-username-title" style="color:<?=$mCurrentOptions->getBodyLabelColor()?>;"><?=wfMsg('username')?></div>
+					<div id="ub-layer-username-url" style="color:<?=$mCurrentOptions->getBodyDataColor()?>;"><?=$wgUser->getName()?></div>
+					<div id="ub-layer-edits-title" style="color:<?=$mCurrentOptions->getBodyLabelColor()?>;"><?=wfMsg('user-badge-edits-txt')?></div>
+					<div id="ub-layer-edits-value" style="color:<?=$mCurrentOptions->getBodyDataColor()?>;">76</div>
+<? 
+	$logocolor = $mCurrentOptions->getSmallLogoColor(); 
+	$logocolor = ( !empty($logocolor) && isset($defOptions['small-logo-color'][$logocolor]) ) ? $logocolor : "yellow"; 
+?> 
+					<div id="ub-layer-wikia-title"><img src="<?= $wgStylePath . $defOptions['small-logo-color'][$logocolor] ?>" width="<?=USER_BADGES_SMALL_LOGO_WIDTH?>" height="<?=USER_BADGES_SMALL_LOGO_HEIGHT?>" id="ub-small-logo-img"/></div>
 				</div>
 			</div>
 		</td>
 	</tr>
+	<tr><td colspan="2" style="padding:5px 25%;"><input type="checkbox" name="ub-overwrite-badge"> <?=wfMsg('user-badge-overwrite-msg')?></td></tr>
 	</table>
 </td>
 </tr>

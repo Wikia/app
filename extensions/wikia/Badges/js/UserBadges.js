@@ -1,3 +1,15 @@
+var badgesUpdate = new Array();
+badgesUpdate["ub-header-btn-txt-color"] = new Array("ub-layer-title", "color", "ub-header-txt-color");
+badgesUpdate["ub-header-btn-bg-color"] = new Array("user-badges-title", "backgroundColor", "ub-header-bg-color");
+badgesUpdate["ub-body-btn-bg-color"] = new Array("user-badges-body", "backgroundColor", "ub-body-bg-color");
+badgesUpdate["ub-body-btn-label-color"] = new Array("ub-layer-username-title", "color", "ub-body-label-color");
+badgesUpdate["ub-body-btn-label-color-edits"] = new Array("ub-layer-edits-title", "color", "ub-body-label-color");
+badgesUpdate["ub-body-btn-data-color"] = new Array("ub-layer-edits-value", "color", "ub-body-data-color");
+badgesUpdate["ub-body-btn-data-color-username"] = new Array("ub-layer-username-url", "color", "ub-body-label-color");
+badgesUpdate["ub-header-txt-align"] = new Array("ub-layer-title", "textAlign");
+badgesUpdate["ub-body-logo-align"] = new Array("ub-layer-logo", "margin");
+badgesUpdate["ub-body-small-logo-align"] = new Array("ub-layer-wikia-title", "margin");
+
 function int2Hex(i) {
 	var hex = parseInt(i).toString(16);
 	return (hex.length < 2) ? "0" + hex : hex;
@@ -28,15 +40,16 @@ function color2hex(color, wout) {
 	return ((!wout) ? '#' : "") + int2Hex(c[0]) + int2Hex(c[1]) + int2Hex(c[2]);
 }
 
-var badgesUpdate = new Array();
-badgesUpdate["ub-header-txt-color"] = new Array("ub-layer-title", "color");
-badgesUpdate["ub-header-bg-color"] = new Array("user-badges-title", "backgroundColor");
-badgesUpdate["ub-body-bg-color"] = new Array("user-badges-body", "backgroundColor");
-badgesUpdate["ub-body-label-color"] = new Array("ub-layer-username-title", "color");
-badgesUpdate["ub-body-data-color"] = new Array("ub-layer-edits-value", "color");
-badgesUpdate["ub-header-txt-align"] = new Array("ub-layer-title", "textAlign");
-badgesUpdate["ub-header-logo-align"] = new Array("ub-layer-logo", "margin");
-badgesUpdate["ub-header-small-logo-align"] = new Array("ub-layer-wikia-title", "margin");
+function color2RGBArray(color) {
+	var c = new Array();
+	if(color.indexOf('rgb')<=-1) {
+		c = hex2rgb(color.substring(1,3),color.substring(3,5),color.substring(5,7));
+	} else {
+		c = color.substring(4,color.length-1).split(',');
+	}
+	return c;
+}
+
 
 colorDialog = function() {
 	var Event=YAHOO.util.Event,
@@ -105,20 +118,23 @@ colorDialog = function() {
 
 			__colorDialog = this.dialog;
 			//document.getElementById('yui-picker-panel_h').innerHTML = ColorTxt["DIALOG_HEADER"];
-            Event.on(["ub-header-txt-color", "ub-header-bg-color", "ub-body-bg-color", "ub-body-label-color", "ub-body-data-color"], "click", function(e) {
+            Event.on(["ub-header-btn-txt-color", "ub-header-btn-bg-color", "ub-body-btn-bg-color", "ub-body-btn-label-color", "ub-body-btn-data-color"], "click", function(e) {
 				__id = this.id;
 				var color = YAHOO.util.Dom.getStyle(this.id, 'backgroundColor');
-				var rgbColor = int2rgb(color2hex(color, 1));
+				//var rgbColor = int2rgb(color2hex(color, 1));
+				var rgbColor = color2RGBArray(color);
 				__colorDialog.show();
 				picker.setValue(rgbColor, false);
             });
             Event.on(["ub-header-txt-align"], "change", function(e) {
             	YAHOO.util.Dom.setStyle("ub-layer-title", "textAlign", this.value);
 			});
-            Event.on(["ub-header-txt-align", "ub-header-logo-align", "ub-header-small-logo-align"], "change", function(e) {
+            Event.on(["ub-header-txt-align", "ub-body-logo-align", "ub-body-small-logo-align"], "change", function(e) {
             	YAHOO.util.Dom.setStyle(badgesUpdate[this.id][0], badgesUpdate[this.id][1], this.value);
 			});
-            //Event.on(["ub-header-txt-color", "ub-header-bg-color", "ub-body-bg-color", "ub-body-label-color", "ub-body-data-color"], "click", this.dialog.show, this.dialog, true);
+			Event.on("ub_configurator-href", "click", function(e) {
+				YAHOO.util.Dom.get("ub_configurator-panel").style.display = "";
+			});
 		},
 
 		handleSubmit: function() {
@@ -126,7 +142,15 @@ colorDialog = function() {
 				var pickerColor = YAHOO.util.Dom.getStyle('yui-picker-swatch', 'backgroundColor');
 				YAHOO.util.Dom.setStyle(__id, 'backgroundColor', pickerColor);
 				YAHOO.util.Dom.setStyle(badgesUpdate[__id][0], badgesUpdate[__id][1], pickerColor);
-				document.getElementById(__id).value = color2hex(pickerColor);
+				if (__id == 'ub-body-btn-label-color') {
+					var _tmp = 'ub-body-btn-label-color-edits';
+					YAHOO.util.Dom.setStyle(badgesUpdate[_tmp][0], badgesUpdate[_tmp][1], pickerColor);
+				}
+				if (__id == 'ub-body-btn-data-color') {
+					var _tmp = 'ub-body-btn-data-color-username';
+					YAHOO.util.Dom.setStyle(badgesUpdate[_tmp][0], badgesUpdate[_tmp][1], pickerColor);
+				}
+				document.getElementById(badgesUpdate[__id][2]).value = color2hex(pickerColor);
 			}
 			this.hide();
 		},
@@ -140,46 +164,28 @@ colorDialog = function() {
 YAHOO.util.Event.onDOMReady(function() {
 	colorDialog.init();
 	//colorDialog, true
-	getHdTextColor();
-	getHdBgColor();
-	getBodyBgColor();
-	//
-	getBodyLabelColor();
-	getBodyDataColor();	
+	
+	if (badgesUpdate) {
+		for (i in badgesUpdate) {
+			if (badgesUpdate[i][2]) {
+				getDefaultColor(i, badgesUpdate);
+			}
+		}
+	}
+	YAHOO.util.Dom.setStyle("ub-layer-title", "textAlign", YAHOO.util.Dom.get('ub-header-txt-align').value);
+	YAHOO.util.Dom.setStyle("ub-layer-logo", "margin", YAHOO.util.Dom.get('ub-body-logo-align').value);
+	YAHOO.util.Dom.setStyle("ub-layer-wikia-title", "margin", YAHOO.util.Dom.get('ub-body-small-logo-align').value);
 });
 
-function getHdTextColor() {
-	var id = 'ub-header-txt-color';
-	var color = YAHOO.util.Dom.getStyle(badgesUpdate[id][0], badgesUpdate[id][1]);
-	YAHOO.util.Dom.setStyle('ub-header-txt-color', 'backgroundColor', color);
-	document.getElementById('ub-header-txt-color').value = color2hex(color);
+function getDefaultColor(id, obj) {
+	if (obj && obj[id]) {
+		var color = YAHOO.util.Dom.getStyle(obj[id][0], obj[id][1]);
+		YAHOO.util.Dom.setStyle(id, 'backgroundColor', color);
+		document.getElementById(obj[id][2]).value = color2hex(color);
+	}
 }
 
-function getHdBgColor() {
-	var id = 'ub-header-bg-color';
-	var color = YAHOO.util.Dom.getStyle(badgesUpdate[id][0], badgesUpdate[id][1]);
-	YAHOO.util.Dom.setStyle('ub-header-bg-color', 'backgroundColor', color);
-	document.getElementById('ub-header-bg-color').value = color2hex(color);
+function changeSmallLogo(id, path) {
+	var smallLogo = document.getElementById('ub-small-logo-img');
+	smallLogo.src = path;
 }
-
-function getBodyBgColor() {
-	var id = 'ub-body-bg-color';
-	var color = YAHOO.util.Dom.getStyle(badgesUpdate[id][0], badgesUpdate[id][1]);
-	YAHOO.util.Dom.setStyle('ub-body-bg-color', 'backgroundColor', color);
-	document.getElementById('ub-body-bg-color').value = color2hex(color);
-}
-
-function getBodyLabelColor() {
-	var id = 'ub-body-label-color';
-	var color = YAHOO.util.Dom.getStyle(badgesUpdate[id][0], badgesUpdate[id][1]);
-	YAHOO.util.Dom.setStyle('ub-body-label-color', 'backgroundColor', color);
-	document.getElementById('ub-body-label-color').value = color2hex(color);
-}
-
-function getBodyDataColor() {
-	var id = 'ub-body-data-color';
-	var color = YAHOO.util.Dom.getStyle(badgesUpdate[id][0], badgesUpdate[id][1]);
-	YAHOO.util.Dom.setStyle('ub-body-data-color', 'backgroundColor', color);
-	document.getElementById('ub-body-data-color').value = color2hex(color);
-}
-
