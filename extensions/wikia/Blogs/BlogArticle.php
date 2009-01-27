@@ -668,20 +668,24 @@ class BlogArticle extends Article {
 				 */
 				echo "Updating Monaco-sidebar";
 				$sidebar = wfMsg('Monaco-sidebar');
-				$sidebar .= sprintf("\n* %s|%s", $oTitle->getPrefixedText(), wfMsg("create-blog-post-recent-listing-title") );
-				/**
-				 * should we check if position already exists?
-				 */
-				$msgTitle = Title::newFromText( 'Monaco-sidebar', NS_MEDIAWIKI );
-				if( $msgTitle ) {
-					$oArticle = new Article( $msgTitle, 0 );
-					$oArticle->doEdit(
-						$sidebar,
-						wfMsg("create-blog-post-recent-listing-log"),
-						EDIT_MINOR | EDIT_FORCE_BOT  # flags
-					);
+				$newline = sprintf("\n* %s|%s", $oTitle->getPrefixedText(), wfMsg("create-blog-post-recent-listing-title") );
+				if( strpos( $sidebar, $newline ) !== false ) {
+					$sidebar .= $newline;
+					$msgTitle = Title::newFromText( 'Monaco-sidebar', NS_MEDIAWIKI );
+					if( $msgTitle ) {
+						$oArticle = new Article( $msgTitle, 0 );
+						$oArticle->doEdit(
+							$sidebar,
+							wfMsg("create-blog-post-recent-listing-log"),
+							EDIT_MINOR | EDIT_FORCE_BOT  # flags
+						);
+					}
+					echo "... done.\n";
 				}
-				echo "... done.\n";
+				else {
+					echo "... already added.\n";
+				}
+
 			}
 		}
 
