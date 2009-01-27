@@ -71,7 +71,7 @@ function VET_loadDetails() {
  */
 if(mwCustomEditButtons) {
 	mwCustomEditButtons[mwCustomEditButtons.length] = {
-		"imageFile": stylepath + '/../extensions/wikia/VideoEmbedTool/images/button_vet.png',
+		"imageFile": stylepath + '/../extensions/wikia/VideoEmbedTool/images/button_vet2.png',
 		"speedTip": vet_imagebutton,
 		"tagOpen": "",
 		"tagClose": "",
