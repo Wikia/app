@@ -694,7 +694,7 @@ class BlogArticle extends Article {
 		 */
 		$catName = wfMsg("create-blog-post-category");
 		if( $catName && $catName !== "-" ) {
-			echo "Creating {$catName}\n";
+			echo "Creating {$catName}";
 			$oTitle = Title::newFromText( $catName, NS_CATEGORY );
 			if( $oTitle ) {
 				$oArticle = new Article( $oTitle, 0 );
