@@ -175,7 +175,7 @@ class VideoEmbedTool {
 		// todo some safeguard here to take care of bad urls
 		if( !$video->parseUrl( $url ) ) {
 			header('X-screen-type: error');
-			return wfMsg( 'vet-bad-url' );
+			return $this->loadMain( wfMsg( 'vet-bad-url' ) );
 		}
 			
 		$props['provider'] = $video->getProvider();
