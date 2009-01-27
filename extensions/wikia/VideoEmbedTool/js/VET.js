@@ -1,5 +1,5 @@
 /*
- * Author: Inez Korczynski
+ * Author: Inez Korczynski, Bartek Lapinski
  */
 
 /*
