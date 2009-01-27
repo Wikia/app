@@ -6,7 +6,7 @@
 
 $wgAjaxExportList [] = 'wfGetUserBulletinsJSON';
 
-function wfGetUserBulletinsJSON($user_name, $count=18, $type = -1){  
+function wfGetUserBulletinsJSON($user_name, $count=18, $type = -1, $page = 1){  
 	global $IP, $wgUser;
 	$user_name = urldecode( $user_name );
 	$id = User::idFromName( $user_name );
@@ -18,7 +18,7 @@ function wfGetUserBulletinsJSON($user_name, $count=18, $type = -1){
 		
 	if( $user_name == $wgUser->getName() || ( $p->getPrivacyCheckForUser("VIEW_FULL") && $p->getPrivacyCheckForUser("VIEW_BULLETINS") ) ){	
 		$b = new UserBulletinList( $user_name );
-		$bulletins = $b->getList($type,$count);
+		$bulletins = $b->getList($type, $count, $page);
 	}else{
 		$bulletins = array();	
 	}
@@ -37,9 +37,8 @@ function wfGetUserBulletinsJSON($user_name, $count=18, $type = -1){
 	}
 	$profile_JSON_array["types"] = $type_array;
 	
-	$text = "var json_bulletins=" . jsonify($profile_JSON_array) . ";\n\nwrite_activity(json_bulletins);";
+	$text = "write_activity(" . jsonify($profile_JSON_array) . ");";
 	$response = new AjaxResponse( $text );
 	$response->setContentType( "application/javascript; charset=utf-8" ); 
 	return $response;
 }
-?>
