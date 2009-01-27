@@ -498,7 +498,7 @@ class VideoPage extends Article {
 		global $wgOut;
 		$this->getContent();
 		$this->load();	
-		$wgOut->addHTML( $this->getEmbedCode() );
+		$wgOut->addHTML( $this->getEmbedCode( 400) );
 	}
 }
 
@@ -567,7 +567,7 @@ class VideoHistoryList {
 				$user = $row->img_user;
 				$usertext = $row->img_user_text;
 				$url = VideoPage::getUrl( $row->img_metadata );
-				$line = '<tr>' . '<td><a href="' . $url . '">' . $wgLang->timeAndDate( $row->img_timestamp, true ) . '</a></td>' . '<td>';				
+				$line = '<tr>' . '<td><a href="' . $url . '">' . $wgLang->timeAndDate( $row->img_timestamp, true ) . '</a></td>' . '<td>';
 				$line .= $sk->userLink( $user, $usertext ) . " <span style='white-space: nowrap;'>" . $sk->userToolLinks( $user, $usertext ) . "</span>";
 				$line .= '</td></tr>';
 				return $line;
