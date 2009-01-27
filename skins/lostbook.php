@@ -344,11 +344,6 @@ else {include ("adsense.php");}
 <li id="footer-cssby">CSS by jabberwock & plkrtn</li>
 			</ul>
 		</div>
-<div class="center" id="jupiter">
-<a href="http://www.jupiterhosting.com/"><img
- src="/images/jupiter.jpg" alt="Powered by Jupiter Hosting" border="0" /></a>
-</div>
-
 	<?php $this->html('bottomscripts'); /* JS call to runBodyOnloadHook */ ?>
 </div>
 
