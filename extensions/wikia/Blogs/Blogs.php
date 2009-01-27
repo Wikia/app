@@ -92,7 +92,7 @@ $wgSpecialPageGroups['CreateBlogListingPage'] = 'wikia';
 /**
  * ajax functions
  */
-$wgAjaxExportList[] = "CreateBlogListingPage::axBlogListingCheckMatc	hes";
+$wgAjaxExportList[] = "CreateBlogListingPage::axBlogListingCheckMatches";
 
 /**
  * hooks
