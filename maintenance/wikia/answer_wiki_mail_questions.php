@@ -71,13 +71,13 @@ $res = $dbr->select( "$page, $recentchanges ",
 	array("ORDER BY" => "rc_timestamp desc"  )
 );
 
-$body = "<table cellpadding='5'><tr><td><b>New Questions on answer.wikia.com</b></td></tr>
-	<tr><td><a href=\"" . SpecialPage::getTitleFor( 'Recentchanges' )->escapeFullURL() . "\">" . wfMsg("see_all_changes") . "</a></td></tr>";
+$body = "<table cellpadding='5'><tr><td><b>New Questions on answer.wikia.com</b><br><br></td></tr>
+	<tr><td><a href=\"" . SpecialPage::getTitleFor( 'Recentchanges' )->escapeFullURL() . "\">" . wfMsg("see_all_changes") . "</a><br><br></td></tr>";
 	
 while ($row = $dbr->fetchObject( $res ) ) {
 	$title = Title::newFromDBKey( $row->page_title );
 	
-	$body .= "<tr><td>* <a href=\"" . $title->escapeFullURL() . "\">" . $title->getText() . "</a> | <a href=\"" . $title->escapeFullURL("action=edit") . "\">" . wfMsg("answer_this_question") . "</a> | <a href=\"" . $title->escapeFullURL("action=delete") . "\">" . wfMsg("delete") . "</a></td></tr>\n";
+	$body .= "<tr><td height='30' style='border-bottom:1px solid #eeeeee'>* <b><a href=\"" . $title->escapeFullURL() . "\">" . $title->getText() . "</a></b> | <a href=\"" . $title->escapeFullURL("action=edit") . "\">" . wfMsg("answer_this_question") . "</a> | <a href=\"" . SpecialPage::getTitleFor( 'Movepage', $title->getText() )->escapeFullURL() . "\">" . wfMsg("movepagebtn") . "</a> | <a href=\"" . $title->escapeFullURL("action=delete") . "\">" . wfMsg("delete") . "</a></td></tr>\n";
 }
 $body .= "</table>";
 
@@ -90,14 +90,14 @@ $res = $dbr->select( "$page, $recentchanges ",
 	array("ORDER BY" => "rc_timestamp desc"  )
 );
 
-$edits_body = "<table cellpadding='5'><tr><td><b>Edited Questions on answer.wikia.com</b></td></tr>
-	<tr><td><a href=\"" . SpecialPage::getTitleFor( 'Recentchanges' )->escapeFullURL() . "\">" . wfMsg("see_all_changes") . "</a></td></tr>";
+$edits_body = "<table cellpadding='5'><tr><td><b>Edited Questions on answer.wikia.com</b><br><br></td></tr>
+	<tr><td><a href=\"" . SpecialPage::getTitleFor( 'Recentchanges' )->escapeFullURL() . "\">" . wfMsg("see_all_changes") . "</a><br><br></td></tr>";
 	
 $edits = array();
 while ($row = $dbr->fetchObject( $res ) ) {
 	$title = Title::newFromDBKey( $row->page_title );
 	if( in_array( $row->page_title, $edits ) ) continue;
-	$edits_body .= "<tr><td>* <a href=\"" . $title->escapeFullURL() . "\">" . $title->getText() . "</a> | <a href=\"" . $title->escapeFullURL("action=edit") . "\">" . wfMsg("answer_this_question") . "</a> | <a href=\"" . $title->escapeFullURL("action=delete") . "\">" . wfMsg("delete") . "</a></td></tr>\n";
+	$edits_body .= "<tr><td height='30' style='border-bottom:1px solid #eeeeee'>* <b><a href=\"" . $title->escapeFullURL() . "\">" . $title->getText() . "</a></b> | <a href=\"" . $title->escapeFullURL("action=edit") . "\">" . wfMsg("answer_this_question") . "</a> | <a href=\"" . SpecialPage::getTitleFor( 'Movepage', $title->getText() )->escapeFullURL() . "\">" . wfMsg("movepagebtn") . "</a> | <a href=\"" . $title->escapeFullURL("action=delete") . "\">" . wfMsg("delete") . "</a></td></tr>\n";
 	$edits[] = $row->page_title;
 }
 $edits_body .= "</table>";
