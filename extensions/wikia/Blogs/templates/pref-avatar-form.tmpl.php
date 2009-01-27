@@ -1,5 +1,8 @@
 <!-- s:<?= __FILE__ ?> -->
 <tr>
+	<td class="pref-label" colspan="2"><h2>Avatar</h2></td>
+</tr>
+<tr>
 <td class="pref-label"><label for="wkUserAvatar"><?=wfMsg('blog-avatar-preferences-title')?></label></td>
 <td class="pref-input">
 <table border="0" width="50" valign="top">
