@@ -325,7 +325,7 @@ class VideoPage extends Article {
 	public function save() {
 		global $wgUser, $wgWikiaVideoProviders;
 
-		$this->mTitle = Title::makeTitle( NS_VIDEO, $this->mName );
+		$this->mTitle = Title::newFromText($this->mName, NS_VIDEO );
 		$desc = "added video [[" . $this->mTitle->getPrefixedText() . "]]";			
 
                 $dbw = wfGetDB( DB_MASTER );
