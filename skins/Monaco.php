@@ -634,13 +634,10 @@ EOS;
 		}
 
 		if(isset($this->themename)) {
-			if($this->themename == 'custom') {
-				global $wgSquidMaxage;
-				$css[] = array('url' => Skin::makeNSUrl('Monaco.css', "usemsgcache=yes&action=raw&ctype=text/css&smaxage=$wgSquidMaxage", NS_MEDIAWIKI));
-			} else if($this->themename == 'sapphire') {
+			if($this->themename == 'sapphire') {
 				 // ...do nothing
-		    } else if($this->themename != '') {
-		    	$css[] = array('url' => $wgStylePath.'/monaco/'.$this->themename.'/css/main.css?'.$wgStyleVersion);
+			} else if($this->themename != '') {
+				$css[] = array('url' => $wgStylePath.'/monaco/'.$this->themename.'/css/main.css?'.$wgStyleVersion);
 			}
 		}
 
