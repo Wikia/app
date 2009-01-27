@@ -1,0 +1,26 @@
+.question_widget{
+	border:1px solid #000000;
+	width:175px;
+	background-color:#FFFFFF;
+}
+
+.question_widget_title{
+	text-align:center;
+}
+
+.question_widget ul{
+	margin:0px;
+	padding:5px;
+	list-style:none; 
+	list-style-image: none;
+}
+
+.question_widget li{
+	margin:0px;
+	padding:5px 0;
+	border-bottom:1px dotted #008000;
+}
+
+#question_widget_logo{
+	text-align:center;background-color:#252525;
+}
