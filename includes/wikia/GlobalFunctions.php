@@ -104,6 +104,7 @@ function print_pre($param, $return = 0)
 }
 
 function wfReplaceImageServer($url) {
+	return $url;
 	global $wgImagesServers;
 
 	if(isset($wgImagesServers) && is_int($wgImagesServers)) {
