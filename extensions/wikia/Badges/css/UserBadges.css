@@ -125,6 +125,16 @@ body {
 	cursor:pointer;
 }
 
+/* IE6 fix */
+* html .yui-picker-bg {
+	background-image: none;
+	filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='http://images.wikia.com/skins/common/yui_2.5.2/colorpicker/assets/picker_mask.png', sizingMethod='scale');
+}
+
+* html .yui-picker-controls ul {
+	width: 60px;
+}
+
 .yui-picker-controls li {
 	height:22px;
 	padding:0;
@@ -140,7 +150,7 @@ body {
 
 /* container.css */
 .yui-panel .hd {
-	background:transparent url(/skins/common/yui_2.5.2/assets/skins/sam/sprite.png) repeat-x scroll 0 -200px;
+	background:transparent url('http://images.wikia.com/skins/common/yui_2.5.2/assets/skins/sam/sprite.png') repeat-x scroll 0 -200px;
 	color:#000000;
 	font-size:93%;
 	font-weight:bold;
