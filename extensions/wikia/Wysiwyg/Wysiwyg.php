@@ -113,6 +113,11 @@ function Wysiwyg_Initial($form) {
 		return true;
 	}
 
+	// RT #10170: do not initialize for user JS/CSS subpages
+	if ($form->mTitle->isCssJsSubpage()) {
+		return true;
+	}
+
 	require("$IP/extensions/wikia/Wysiwyg/fckeditor/fckeditor_php5.php");
 
 	// do not initialize for not compatible browsers
