@@ -1,39 +1,3 @@
-<?php
-global $wgExtensionsPath;
-if(isset($props['name'])) {
-?>
-<div id="VideoEmbedSection">
-	<?= wfMsg('vet-details-inf') ?>
-	<table class="VideoEmbedOptionsTable" style="width: 100%;">
-		<tr class="VideoEmbedNoBorder">
-			<th><?= wfMsg('vet-name') ?></th>
-			<td>
-			<input id="VideoEmbedName" type="text" size="30" value="" />
-			</td>
-		</tr>
-		<?php
-			if(!empty($props['upload'])) {
-		?>
-		<tr class="VideoEmbedNoBorder VideoEmbedNoSpace">
-			<th>&nbsp;</th>	
-			<td>
-				<div id="VideoEmbedLicenseControl"><a id="VideoEmbedLicenseLink" href="#" onclick="VET_toggleLicenseMesg(event);" >[<?= wfMsg( 'vet-hide-license-msg' ) ?>]</a></div>
-			</td>
-		</tr>
-		<tr class="VideoEmbedNoBorder">
-		<td colspan="2">
-		<div id="VideoEmbedLicenseText">&nbsp;</div>			
-		</td>
-		</tr>
-		<?php
-			}
-		?>
-
-	</table>
-</div>
-<?php
-}
-?>
 <div style="position: absolute; z-index: 4; left: 0; width: 420px; height: 400px; background: #FFF; opacity: .9; filter: alpha(opacity=90);"></div>
 <div id="VideoEmbedThumb" style="text-align: right; position: absolute; z-index: 1000; right: 15px; height: <?= isset($props['name']) ? '255' : '370' ?>px;">
 <?= $props['code'] ?>
@@ -45,13 +9,19 @@ echo wfMsg('vet-details-inf2')
 ?>
 <table class="VideoEmbedOptionsTable">
 <?php
+global $wgExtensionsPath;
+if('' == $props['oname']) {
 ?>
+
 	<tr>
 		<th><?= wfMsg( 'vet-name' ) ?></th>
 		<td>
 			<input type="text" id="VideoEmbedName" name="wpVideoEmbedName" />
 		</td>
 	</tr>
+<?
+}
+?>
 	<tr>
 		<th><?= wfMsg('vet-size') ?></th>
 		<td>
@@ -93,6 +63,7 @@ echo wfMsg('vet-details-inf2')
 </table>
 <input id="VideoEmbedId" type="hidden" value="<?= isset($props['id']) ? urlencode($props['id']) : '' ?>" />
 <input id="VideoEmbedProvider" type="hidden" value="<?= urlencode($props['provider']) ?>" />
+<input id="VideoEmbedOname" type="hidden" value="<?= urlencode($props['oname']) ?>" />
 <input id="VideoEmbedMetadata" type="hidden" value="<?= isset($props['metadata']) ? urlencode($props['metadata']) : '' ?>" />
 
 </div>

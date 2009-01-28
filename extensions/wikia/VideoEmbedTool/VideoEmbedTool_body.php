@@ -187,6 +187,7 @@ class VideoEmbedTool {
 			$props['metadata'] = '';		
 		}
 		$props['code'] = $video->getEmbedCode( VIDEO_PREVIEW );
+		$props['oname'] = '';
 
 		return $this->detailsPage($props);
 	}
@@ -217,6 +218,10 @@ class VideoEmbedTool {
 		$id = $wgRequest->getVal('id');
 		$provider = $wgRequest->getVal('provider');
 		$name = $wgRequest->getVal('name');
+		$oname = $wgRequest->getVal('oname');
+		if ('' == $name) {
+			$name = $oname;
+		}
 
 		$title = Title::makeTitle( NS_VIDEO, $name );
 					
@@ -274,19 +279,22 @@ class VideoEmbedTool {
 							$props['metadata'] = '';
 						}
 						$props['code'] = $video->getEmbedCode( VIDEO_PREVIEW );
+						$props['oname'] = $name;
 
 						return $this->detailsPage($props);
 					} else {
-						header('X-screen-type: conflict');
-						$tmpl = new EasyTemplate(dirname(__FILE__).'/templates/');
-						$tmpl->set_vars( array(
-							'name' => $name,
-							'id' => $id,
-							'provider' => $provider,
-							'metadata' => $metadata,	
-							)
-						);
-						return $tmpl->execute('conflict');
+						if ('' == $oname) {
+							header('X-screen-type: conflict');
+							$tmpl = new EasyTemplate(dirname(__FILE__).'/templates/');
+							$tmpl->set_vars( array(
+										'name' => $name,
+										'id' => $id,
+										'provider' => $provider,
+										'metadata' => $metadata,	
+									      )
+								       );
+							return $tmpl->execute('conflict');
+						}
 					}
 				} else {
 					// is the target protected?
