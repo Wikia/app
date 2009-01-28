@@ -169,7 +169,6 @@ body {
 .yui-panel .bd {
 	position:static;
 	padding:1em;
-	position:relative; 
 	z-index:1; 
 	zoom:1;
 }
