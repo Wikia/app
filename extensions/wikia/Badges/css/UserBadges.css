@@ -141,7 +141,7 @@ body {
 .yui-picker-controls a { }
 
 /* container.css */
-.yui-skin-sam .yui-panel .hd {
+.yui-panel .hd {
 	background:transparent url(/skins/common/yui_2.5.2/assets/skins/sam/sprite.png) repeat-x scroll 0 -200px;
 	color:#000000;
 	font-size:93%;
@@ -149,17 +149,17 @@ body {
 	line-height:2;
 	padding:0 10px;
 }
-.yui-skin-sam .yui-panel .hd { border-bottom:1px solid #CCCCCC; }
-.yui-skin-sam .yui-panel .hd, .yui-skin-sam .yui-panel .bd, .yui-skin-sam .yui-panel .ft {
+.yui-panel .hd { border-bottom:1px solid #CCCCCC; }
+.yui-panel .hd, .yui-panel .bd, .yui-panel .ft {
 	border-color:#808080;
 	border-style:solid;
 	border-width:0 1px;
 	margin:0 -1px;
 }
 
-.yui-skin-sam .yui-panel .bd { padding:10px; }
-.yui-skin-sam .yui-panel .bd, .yui-skin-sam .yui-panel .ft { background-color:#F2F2F2; }
-.yui-skin-sam .yui-panel .hd, .yui-skin-sam .yui-panel .bd, .yui-skin-sam .yui-panel .ft { 
+.yui-panel .bd { padding:10px; }
+.yui-panel .bd, .yui-panel .ft { background-color:#F2F2F2; }
+.yui-panel .hd, .yui-panel .bd, .yui-panel .ft { 
 	border-color:#808080; 
 	border-style:solid;
 	border-width:0 1px;
@@ -181,10 +181,10 @@ body {
 	padding:0;
 }
 
-.yui-skin-sam .yui-dialog .ft .button-group { display:block; text-align:right; }
-.yui-skin-sam .yui-dialog .ft { font-size:100%; }
-.yui-skin-sam .yui-panel .ft { font-size:77%; }
-.yui-skin-sam .yui-panel .hd, .yui-skin-sam .yui-panel .bd, .yui-skin-sam .yui-panel .ft { border-style:solid; }
-.yui-skin-sam .yui-panel { border-style:solid; }
-.yui-skin-sam .yui-dialog .ft span.default { background-position:0 -1400px; border-color:#304369; }
-.yui-skin-sam .yui-dialog .ft span.default .first-child { border-color:#304369; }
+.yui-dialog .ft .button-group { display:block; text-align:right; }
+.yui-dialog .ft { font-size:100%; }
+.yui-panel .ft { font-size:77%; }
+.yui-panel .hd, .yui-panel .bd, .yui-panel .ft { border-style:solid; }
+.yui-panel { border-style:solid; }
+.yui-dialog .ft span.default { background-position:0 -1400px; border-color:#304369; }
+.yui-dialog .ft span.default .first-child { border-color:#304369; }
