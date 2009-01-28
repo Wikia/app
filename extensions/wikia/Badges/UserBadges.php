@@ -485,9 +485,9 @@ class UserBadges {
 				$sLogo = $oLogo->getPath();
 			} 
 			$body = array(
-				'labelfontsize' => 9, 
+				'labelfontsize' => 10, 
 				'logo' =>  $sLogo,
-				'datafontsize' => 11,
+				'datafontsize' => 12,
 				'smalllogo' => $wgStyleDirectory . $this->mDefOptions['small-logo-color']['yellow'],
 			);
 			// small logo
@@ -524,7 +524,7 @@ class UserBadges {
 				}			
 			} 
 			// label Username 
-			$body['labelUsernameText'] = wfMsg('username');
+			$body['labelUsernameText'] = str_replace(":", "", wfMsg('username'));
 			$body['labelUsernameX'] = USER_BADGES_LOGO_WIDTH + 2 * (USER_BADGES_BODY_MARGIN); 
 			$body['labelUsernameY'] = $body['labelfontsize'] + USER_BADGES_HEADER_HEIGHT + USER_BADGES_BODY_MARGIN;
 			

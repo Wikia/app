@@ -135,6 +135,7 @@ colorDialog = function() {
 			});
 			Event.on("ub_configurator-href", "click", function(e) {
 				YAHOO.util.Dom.get("ub_configurator-panel").style.display = "";
+				YAHOO.util.Dom.get("ub-overwrite-badge").checked = "checked";
 			});
 		},
 
