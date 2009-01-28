@@ -111,16 +111,21 @@ ColorTxt["DIALOG_HEADER"] = "<?=wfMsg("user-badge-dialog-title")?>";
 					</td>
 				</tr>
 				<tr>
-					<td><?=wfMsg('user-badge-small-wikia-logo-color')?></td>
-					<td style="padding:6px" valign="top">
+					<td style="padding:6px" valign="top" align="center" colspan="2">
+					<fieldset style="margin:0 auto 0 auto;width:100%">
+					<legend><?=wfMsg('user-badge-small-wikia-logo-color')?></legend>
+						<table>
 <?php if ($defOptions && $defOptions['small-logo-color']) { 
 	foreach ($defOptions['small-logo-color'] as $id => $path) { 
 		$checked = ""; if ($id == $mCurrentOptions->getSmallLogoColor()) $checked = " checked=\"checked\" "; 
 ?>
-						<p><input type="radio" name="ub-body-small-logo-color" id="ub-body-small-logo-color-<?=$id?>" value="<?=$id?>" <?=$checked?> onclick="changeSmallLogo('<?=$id?>', '<?=$wgStylePath . $path?>');" />
-						<img src="<?=$wgStylePath . $path?>" width="<?=USER_BADGES_SMALL_LOGO_WIDTH?>" height="<?=USER_BADGES_SMALL_LOGO_HEIGHT?>" /></p>
+						<tr>
+							<td valign="middle"><input type="radio" name="ub-body-small-logo-color" id="ub-body-small-logo-color-<?=$id?>" value="<?=$id?>" <?=$checked?> onclick="changeSmallLogo('<?=$id?>', '<?=$wgStylePath . $path?>');" /></td>
+							<td valign="middle"><img src="<?=$wgStylePath . $path?>" width="<?=USER_BADGES_SMALL_LOGO_WIDTH?>" height="<?=USER_BADGES_SMALL_LOGO_HEIGHT?>" /></td>
+						</tr>
 <?php } } ?>						
-						</select>
+						</table>
+					</fieldset>
 					</td>
 				</tr>
 			</table>
