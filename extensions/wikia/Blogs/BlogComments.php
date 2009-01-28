@@ -409,9 +409,10 @@ class BlogComment {
 
 		return Wikia::json_encode(
 			array(
-				"msg" => $message,
-				"error" => $error,
-				"text"  => $text,
+				"msg"    => $message,
+				"error"  => $error,
+				"text"   => $text,
+				"status" => $status
 			)
 		);
 	}
