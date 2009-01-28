@@ -5,7 +5,7 @@ badgesUpdate["ub-body-btn-bg-color"] = new Array("user-badges-body", "background
 badgesUpdate["ub-body-btn-label-color"] = new Array("ub-layer-username-title", "color", "ub-body-label-color");
 badgesUpdate["ub-body-btn-label-color-edits"] = new Array("ub-layer-edits-title", "color", "ub-body-label-color");
 badgesUpdate["ub-body-btn-data-color"] = new Array("ub-layer-edits-value", "color", "ub-body-data-color");
-badgesUpdate["ub-body-btn-data-color-username"] = new Array("ub-layer-username-url", "color", "ub-body-label-color");
+badgesUpdate["ub-body-btn-data-color-username"] = new Array("ub-layer-username-url", "color", "ub-body-data-color");
 badgesUpdate["ub-header-txt-align"] = new Array("ub-layer-title", "textAlign");
 badgesUpdate["ub-body-logo-align"] = new Array("ub-layer-logo", "margin");
 badgesUpdate["ub-body-small-logo-align"] = new Array("ub-layer-wikia-title", "margin");
@@ -70,7 +70,7 @@ colorDialog = function() {
 
             this.dialog = new YAHOO.widget.Dialog("yui-picker-panel", {
 				width : "380px",
-				height: "260px",
+				height: "272px",
 				close: true,
 				fixedcenter: true,
 				visible: false,
