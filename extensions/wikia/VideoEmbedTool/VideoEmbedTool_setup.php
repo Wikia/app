@@ -28,8 +28,7 @@ if ( !function_exists( 'extAddSpecialPage' ) ) {
     require( "$IP/extensions/ExtensionFunctions.php" );
 }
 
-extAddSpecialPage( dirname(__FILE__) . '/QuickVideoAdd_body.php', 'QuickVideoAdd', 'QuickVideoAddForm' );
-
+//extAddSpecialPage( dirname(__FILE__) . '/QuickVideoAdd_body.php', 'QuickVideoAdd', 'QuickVideoAddForm' );
 
 $wgExtensionFunctions[] = "VETSetupHook";
 $wgExtensionMessagesFiles['VideoEmbedTool'] = $dir.'/VideoEmbedTool.i18n.php';
