@@ -112,8 +112,7 @@ ColorTxt["DIALOG_HEADER"] = "<?=wfMsg("user-badge-dialog-title")?>";
 				</tr>
 				<tr>
 					<td style="padding:6px" valign="top" align="center" colspan="2">
-					<fieldset style="margin:0 auto 0 auto;width:100%">
-					<legend><?=wfMsg('user-badge-small-wikia-logo-color')?></legend>
+					<fieldset style="margin:0 auto;width:100%"><legend><?=wfMsg('user-badge-small-wikia-logo-color')?></legend>
 						<table>
 <?php if ($defOptions && $defOptions['small-logo-color']) { 
 	foreach ($defOptions['small-logo-color'] as $id => $path) { 
