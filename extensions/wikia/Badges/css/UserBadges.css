@@ -109,7 +109,6 @@ body {
 }
 .wk-badge-button {
 	width:60px;
-	color: rgba(0, 0, 0, 0.0);
 	border:1px solid #BFB399;
 	margin: 0px 6px;
 	cursor: pointer;
@@ -126,19 +125,18 @@ body {
 	cursor:pointer;
 }
 
-/* yui */
-/* IE6 fix
-.yui-picker-bg {
-	background-image: none;
-	filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='/skins/common/yui_2.5.2/colorpicker/assets/picker_mask.png', sizingMethod='scale');
-}*/
-
 .yui-picker-controls li {
 	height:22px;
 	padding:0;
 }
 #yui-picker-panel { visibility:hidden; }
-.yui-picker-controls a { }
+
+#yui-picker-panel .bd {
+	height: 200px;
+}
+#yui-picker-panel .bd .bd {
+	height: auto;
+}
 
 /* container.css */
 .yui-panel .hd {
@@ -201,7 +199,9 @@ body {
 .yui-dialog .ft span.default { background-position:0 -1400px; border-color:#304369; }
 .yui-dialog .ft span.default .first-child { border-color:#304369; }
 
-.yui-picker-rgb-controls ul { 
+.yui-picker-rgb-controls,
+.yui-picker-hex_summary,
+.yui-picker-hsv-controls { 
 	margin-top: 2px;
 	float:left;
 	margin:0;
