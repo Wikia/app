@@ -634,7 +634,9 @@ EOS;
 		}
 
 		if(isset($this->themename)) {
-			if($this->themename == 'sapphire') {
+			if($this->themename == 'custom') {
+				// ...do nothing - CSS will be added by MW core
+			} else if($this->themename == 'sapphire') {
 				 // ...do nothing
 			} else if($this->themename != '') {
 				$css[] = array('url' => $wgStylePath.'/monaco/'.$this->themename.'/css/main.css?'.$wgStyleVersion);
