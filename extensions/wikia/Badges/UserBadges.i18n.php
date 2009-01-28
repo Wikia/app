@@ -14,7 +14,7 @@ $messages = array(
 		'user-badge-center-align' => 'center',
 		'user-badge-current' => 'Badge:',
 		'user-badge-not-found' => 'No badge found!',
-		'user-badge-use-configurator' => 'Use <a name="ub_configurator" id="ub_configurator-href">configurator</a> to create new badge!',
+		'user-badge-use-configurator' => 'Use <a name="ub_configurator" id="ub_configurator-href">the configurator</a> to create a new badge!',
 		'user-badge-create' => 'Create badge:',
 		'user-badge-overwrite-msg' => 'Overwrite existing badge',
 		'user-badge-header-body-box' => 'Header and body:',
