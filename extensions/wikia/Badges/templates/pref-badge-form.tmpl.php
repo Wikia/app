@@ -140,7 +140,7 @@ ColorTxt["DIALOG_HEADER"] = "<?=wfMsg("user-badge-dialog-title")?>";
 					<div id="ub-layer-logo"><img src="<?=$wgLogo?>" width="80" height="80" /></div>			
 				</div>
 				<div id="user-badges-body" style="background-color:<?=$mCurrentOptions->getBodyBgColor()?>;">
-					<div id="ub-layer-username-title" style="color:<?=$mCurrentOptions->getBodyLabelColor()?>;"><?=wfMsg('username')?></div>
+					<div id="ub-layer-username-title" style="color:<?=$mCurrentOptions->getBodyLabelColor()?>;"><?=str_replace(":", "", wfMsg('username'))?></div>
 					<div id="ub-layer-username-url" style="color:<?=$mCurrentOptions->getBodyDataColor()?>;"><?=$wgUser->getName()?></div>
 					<div id="ub-layer-edits-title" style="color:<?=$mCurrentOptions->getBodyLabelColor()?>;"><?=wfMsg('user-badge-edits-txt')?></div>
 					<div id="ub-layer-edits-value" style="color:<?=$mCurrentOptions->getBodyDataColor()?>;">76</div>
@@ -155,7 +155,7 @@ ColorTxt["DIALOG_HEADER"] = "<?=wfMsg("user-badge-dialog-title")?>";
 	</tr>
 	<tr>
 		<td colspan="2" style="padding:5px 25%;">
-			<input type="checkbox" name="ub-overwrite-badge" <?=(empty($sUserBadgeUrl)) ? "checked" : "";?> <?=(empty($sUserBadgeUrl))?" style=\"display:none;\" " : "" ?>> 
+			<input type="checkbox" name="ub-overwrite-badge" id="ub-overwrite-badge" <?=(empty($sUserBadgeUrl)) ? "checked" : "";?> <?=(empty($sUserBadgeUrl))?" style=\"display:none;\" " : "" ?>> 
 <? if (!empty($sUserBadgeUrl)) { ?>
 		<?=wfMsg('user-badge-overwrite-msg')?>
 <? } ?>		
