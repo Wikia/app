@@ -855,6 +855,12 @@ class ReverseParser {
 		switch($data['type']) {
 			case 'image':
 				$prefix = ( in_array($node->nodeName, array('div', 'table')) ) ? "\n\n" : '';
+
+				// RT #10030 (quick fix) - image is at the beginning of wikitext
+				if ( ($node->parentNode->nodeName == 'body') && empty($node->previousSibling) ) {
+					$prefix = '';
+				}
+
 				$out = $prefix . $data['original'];
 				return $out;
 
