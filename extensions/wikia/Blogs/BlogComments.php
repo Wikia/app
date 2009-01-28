@@ -446,6 +446,9 @@ class BlogComment {
 		$commentTitle = Title::newFromText(
 			sprintf( "%s/%s-%s", $Title->getText(), $User->getName(), wfTimestampNow() ),
 			NS_BLOG_ARTICLE_TALK );
+		/**
+		 * because we save different tile via Ajax request
+		 */
 		$wgTitle = $commentTitle;
 
 		/**
