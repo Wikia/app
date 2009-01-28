@@ -256,7 +256,7 @@ class ReverseParser {
 						}
 
 						$head = str_repeat("=", $node->nodeName{1});
-						$out .= "{$head} {$textContent} {$head}";
+						$out .= "{$head}{$textContent}{$head}";
 
 						// new line logic
 						if ($node->previousSibling || ($node->parentNode && $this->isTableCell($node->parentNode))) {
