@@ -148,7 +148,14 @@ ColorTxt["DIALOG_HEADER"] = "<?=wfMsg("user-badge-dialog-title")?>";
 			</div>
 		</td>
 	</tr>
-	<tr><td colspan="2" style="padding:5px 25%;"><input type="checkbox" name="ub-overwrite-badge"> <?=wfMsg('user-badge-overwrite-msg')?></td></tr>
+	<tr>
+		<td colspan="2" style="padding:5px 25%;">
+			<input type="checkbox" name="ub-overwrite-badge" <?=(empty($sUserBadgeUrl)) ? "checked" : "";?> <?=(empty($sUserBadgeUrl))?" style=\"display:none;\" " : "" ?>> 
+<? if (!empty($sUserBadgeUrl)) { ?>
+		<?=wfMsg('user-badge-overwrite-msg')?>
+<? } ?>		
+		</td>
+	</tr>
 	</table>
 </td>
 </tr>
