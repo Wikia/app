@@ -68,33 +68,34 @@ colorDialog = function() {
         init: function() {
 			YAHOO.util.Dom.get('body').appendChild(pickerPanel);
 
-            this.dialog = new YAHOO.widget.Dialog("yui-picker-panel", { 
+            this.dialog = new YAHOO.widget.Dialog("yui-picker-panel", {
 				width : "380px",
+				height: "250px",
 				close: true,
 				fixedcenter: true,
-				visible: false, 
+				visible: false,
 				draggable: true,
 				constraintoviewport: true,
 				buttons: [ { text:"Submit", handler:this.handleSubmit, isDefault:true },
 							{ text:"Cancel", handler:this.handleCancel } ]
              });
-             
+
             this.dialog.renderEvent.subscribe(function() {
-				if (!picker) { 
+				if (!picker) {
 					picker = new YAHOO.widget.ColorPicker("yui-picker", {
 						container: this.dialog,
 						images: {
 							PICKER_THUMB: "/skins/common/yui_2.5.2/colorpicker/assets/picker_thumb.png",
 							HUE_THUMB: "/skins/common/yui_2.5.2/colorpicker/assets/hue_thumb.png"
 						},
-						txt: { 
+						txt: {
 							ILLEGAL_HEX: ColorTxt["ILLEGAL_HEX"],
 							SHOW_CONTROLS: ColorTxt["SHOW_CONTROLS"],
 							HIDE_CONTROLS: ColorTxt["HIDE_CONTROLS"],
 							CURRENT_COLOR: ColorTxt["CURRENT_COLOR"],
 							CLOSEST_WEBSAFE: ColorTxt["CLOSEST_WEBSAFE"],
-      						R: "R",  
-							G: "G", 
+      						R: "R",
+							G: "G",
 							B: "B",
 							HEX: "#",
 							PERCENT: "%"
@@ -109,8 +110,8 @@ colorDialog = function() {
 					picker.on("rgbChange", function(o) {
 					});
 				}
-			});	
-			
+			});
+
             this.dialog.validate = function() {
 				return true;
             };
