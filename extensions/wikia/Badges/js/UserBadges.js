@@ -71,6 +71,7 @@ colorDialog = function() {
             this.dialog = new YAHOO.widget.Dialog("yui-picker-panel", {
 				width : "380px",
 				height: "280px",
+				zIndex: 20,
 				close: true,
 				fixedcenter: true,
 				visible: false,
