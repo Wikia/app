@@ -166,6 +166,19 @@ body {
 	margin:0 -1px;
 }
 
+.yui-panel .bd {
+	position:static;
+	padding:1em;
+	position:relative; 
+	z-index:1; 
+	zoom:1;
+}
+
+.yui-panel .bd .bd {
+	padding:0; 
+	position:static;
+}
+
 .yui-picker-controls a {
 	-x-system-font:none;
 	color:#000000;
@@ -188,3 +201,23 @@ body {
 .yui-panel { border-style:solid; }
 .yui-dialog .ft span.default { background-position:0 -1400px; border-color:#304369; }
 .yui-dialog .ft span.default .first-child { border-color:#304369; }
+
+.yui-picker-rgb-controls ul { 
+	margin-top: 2px;
+	float:left;
+	margin:0;
+	padding:0 2px 0 0;
+	list-style-image:none;
+	list-style-position:outside;
+	list-style-type:disc;
+	margin-bottom:0.7em;
+	margin-left:30px;
+}
+
+.yui-picker-rgb-controls input {
+	font-family:inherit;
+	font-size:inherit;
+	font-weight:inherit;
+	margin:0;
+	padding:0;
+}
