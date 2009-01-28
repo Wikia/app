@@ -281,7 +281,9 @@ JAVASCRIPT;
 			}
 			return false;
 		};
-		document.getElementById('toolbar').appendChild(image);
+		if (document.getElementById('toolbar')) {
+			document.getElementById('toolbar').appendChild(image);
+		}
 	}
 	window.unload = function() { GUnload() };
 
