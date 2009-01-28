@@ -14,6 +14,7 @@ $messages = array(
 		'editaccount-label-pass'	=> 'Set new password',
 		'editaccount-submit-email'	=> 'Save E-Mail',
 		'editaccount-submit-pass'	=> 'Save Password',
+		'editaccount-submit-close'	=> 'Close Account'
 		'editaccount-status'		=> 'Status message',
 		'editaccount-success-email'	=> 'Successfully changed e-mail for account $1 to $2.',
 		'editaccount-success-pass'	=> 'Successfully changed password for account $1.',

@@ -34,6 +34,15 @@
 		</td>
 		</form>
 	</tr>
+	<tr>
+		<td colspan="2">
+		<form method="post" action="">
+			<input type="submit" value="<?= wfMsg('editaccount-submit-close') ?>" />
+			<input type="hidden" name="wpAction" value="closeaccount" />
+			<input type="hidden" name="wpUserName" value="<?= $user ?>" />
+		</form>
+		</td>
+	</tr>
 	</table>
 </fieldset>
 <!-- e:<?= __FILE__ ?> -->
