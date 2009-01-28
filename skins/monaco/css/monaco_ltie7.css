@@ -122,3 +122,8 @@ body.ltr #articleFooter ul.actions li div {
 .mask {
 	position: absolute;
 }
+
+/* Special:Preferences tabs */
+#preftoc {
+	position: relative;
+}
