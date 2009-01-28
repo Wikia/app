@@ -2,7 +2,7 @@
 
 $messages = array(
 	'en' => array(
-		'user-badge-title' => 'User\'s badge',
+		'user-badge-title' => 'User Badge',
 		'user-badge-invalid-color' => 'Illegal hex value entered',
 		'user-badge-show-color' => 'Show color details',
 		'user-badge-hide-color' => 'Hide color details',
