@@ -169,6 +169,7 @@ class UserBadges {
 		
 		$wgOut->addScript( "<link rel=\"stylesheet\" type=\"text/css\" href=\"/skins/common/yui_2.5.2/colorpicker/assets/skins/sam/colorpicker.css?{$wgStyleVersion}\" />" );
 		$wgOut->addScript( "<link rel=\"stylesheet\" type=\"text/css\" href=\"{$wgExtensionsPath}/wikia/Badges/css/UserBadges.css?{$wgStyleVersion}\" />" );
+		$wgOut->addScript( "<script type=\"text/javascript\" src=\"http://yui.yahooapis.com/2.6.0/build/container/container-min.js{$wgStyleVersion}\"></script>");
 		$wgOut->addScript( "<script type=\"text/javascript\" src=\"/skins/common/yui_2.5.2/slider/slider-min.js?{$wgStyleVersion}\"></script>" );
 		$wgOut->addScript( "<script type=\"text/javascript\" src=\"/skins/common/yui_2.5.2/colorpicker/colorpicker-min.js?{$wgStyleVersion}\"></script> ");
 		$wgOut->addScript( "<script type=\"text/javascript\" src=\"{$wgExtensionsPath}/wikia/Badges/js/UserBadges.js?{$wgStyleVersion}\"></script>");
