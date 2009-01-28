@@ -22,6 +22,7 @@ if (!defined('MEDIAWIKI')) {
 class EditAccount extends SpecialPage {
 	var $mUser = null;
 	var $mStatus = null;
+	var $mLog = true;
 	var $mStatusMsg;
 
 	function EditAccount() {
@@ -65,6 +66,10 @@ class EditAccount extends SpecialPage {
 				$this->mStatus = $this->setPassword($newPass);
 				$template = $this->mStatus ? 'selectuser' : 'displayuser';
 				break;
+			case 'closeaccount':
+				$this->mStatus = $this->closeAccount();
+				$template = $this->mStatus ? 'selectuser' : 'displayuser';
+				break;
 			case 'displayuser':
 				$template = 'displayuser';
 				break;
@@ -94,8 +99,10 @@ class EditAccount extends SpecialPage {
 			if ($this->mUser->getEmail() == $email) {
 				global $wgUser, $wgTitle;
 
-				$log = new LogPage('editaccnt');
-				$log->addEntry('mailchange', $wgTitle, '', array($this->mUser->getUserPage()));
+				if ($this->mLog) {
+					$log = new LogPage('editaccnt');
+					$log->addEntry('mailchange', $wgTitle, '', array($this->mUser->getUserPage()));
+				}
 
 				$this->mStatusMsg = wfMsg('editaccount-success-email', $this->mUser->mName, $email);
 				return true;
@@ -110,13 +117,15 @@ class EditAccount extends SpecialPage {
 	}
 
 	function setPassword($pass) {
-		if ($this->mUser->setPassword($pass)) {
+		if ($this->mUser>setPassword($pass)) {
 			global $wgUser, $wgTitle;
 
 			$this->mUser->saveSettings();
 
-			$log = new LogPage('editaccnt');
-			$log->addEntry('passchange', $wgTitle, '', array($this->mUser->getUserPage()));
+			if ($this->mLog) {
+				$log = new LogPage('editaccnt');
+				$log->addEntry('passchange', $wgTitle, '', array($this->mUser->getUserPage()));
+			}
 
 			$this->mStatusMsg = wfMsg('editaccount-success-pass', $this->mUser->mName);
 			return true;
@@ -124,5 +133,23 @@ class EditAccount extends SpecialPage {
 			$this->mStatusMsg = wfMsg('editaccount-error-pass', $this->mUser->mName);
 			return false;
 		}
+	}
+
+	function closeAccount() {
+		$this->mLog = false;
+
+		# scramble the user's password
+		$this->setPassword( wfGenerateToken() );
+
+		# remove any email address attached to the account
+		$this->setEmail( '' );
+
+		# show on the user's contributions pages "this account is disabled
+		# TODO: update user table for external hook
+
+		# remove the nick from Special:ListUsers
+		# TODO: update colum in dataware
+
+		return true;
 	}
 }
