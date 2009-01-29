@@ -28,11 +28,17 @@ define ("USER_BADGES_LOGO_WIDTH", '80');
 define ("USER_BADGES_LOGO_HEIGHT", '80');
 define ("USER_BADGES_SMALL_LOGO_WIDTH", '56');
 define ("USER_BADGES_SMALL_LOGO_HEIGHT", '15');
+define ("USER_BADGES_TAG", "badge");
 
 $wgExtensionMessagesFiles["UserBadges"] = dirname(__FILE__) . '/UserBadges.i18n.php';
 
+$wgExtensionFunctions[] = array("UserBadges", "setup");
+
 $wgHooks['AdditionalUserProfilePreferences'][] = "UserBadges::addPreferences";
 $wgHooks['SavePreferences'][] = "UserBadges::savePreferences";
+
+# use <badge> as internal tag
+$wgHooks['LanguageGetMagic'][] = "UserBadges::setMagicWord";
 
 class UserBadges {
 
@@ -172,10 +178,15 @@ class UserBadges {
 		$wgOut->addScript( "<script type=\"text/javascript\" src=\"/skins/common/yui_2.5.2/slider/slider-min.js?{$wgStyleVersion}\"></script>" );
 		$wgOut->addScript( "<script type=\"text/javascript\" src=\"/skins/common/yui_2.5.2/colorpicker/colorpicker-min.js?{$wgStyleVersion}\"></script> ");
 		$wgOut->addScript( "<script type=\"text/javascript\" src=\"{$wgExtensionsPath}/wikia/Badges/js/UserBadges.js?{$wgStyleVersion}\"></script>");
+		
+		$domains = WikiFactory::getDomains($User_badge->mCity);
+		$domain = (!empty($domains) && is_array($domains)) ? $domains[count($domains)-1] : "";
+		error_log ("domains = ".print_r($domains, true));
 		$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
 		$oTmpl->set_vars( array(
 			"wgUser"		=> $wgUser,
 			"cityId"		=> $User_badge->mCity,
+			"domain"		=> $domain,
 			"oUserBadge"	=> $User_badge,
 			"sUserBadgeUrl" => $User_badge->getFullUrl(),
 			"wgLogo" 		=> $wgLogo,
@@ -216,6 +227,61 @@ class UserBadges {
 	}
 	
 	/**
+	 * setup function to parse <badge> tag
+	 *
+	 * @access public
+	 *
+	 * @return 
+	 */
+	public static function setup() {
+		global $wgParser, $wgMessageCache;
+		global $wgOut, $wgExtensionsPath, $wgStyleVersion;
+		wfProfileIn( __METHOD__ );
+		$wgParser->setHook( USER_BADGES_TAG, array( __CLASS__, "parseTag" ) );
+		wfLoadExtensionMessages("UserBadges");
+		wfProfileOut( __METHOD__ );
+	}
+
+	/**
+	 * setMagicWord
+	 *
+	 * @access public
+	 *
+	 * @return true
+	 */
+	public static function setMagicWord( &$magicWords, $langCode ) {
+		wfProfileIn( __METHOD__ );
+		/* add the magic word */
+		$magicWords[USER_BADGES_TAG] = array( 0, USER_BADGES_TAG );
+		wfProfileOut( __METHOD__ );
+		return true;
+	}
+
+	public static function parseTag( $input, $params, &$parser ) {
+		global $wgUser, $wgCityId, $wgServer;
+		wfProfileIn( __METHOD__ );
+		/* parse input parameters */
+		$res = "";
+		wfDebugLog( __METHOD__, "parse input parameters\n" );
+		$oUser = (isset($params['user'])) ? User::newFromName($params['user']) : $wgUser;
+		if (!empty($oUser)) {
+			$User_badge = self::newFromUser( $oUser );
+			if (isset($params['wikia'])) {
+				$User_badge->mCity = WikiFactory::DomainToID($params['wikia']);
+			} else {
+				$User_badge->mCity = $wgCityId;
+			}
+			$badgeUrl = $User_badge->getFullUrl();
+			error_log("badgeUrl = $badgeUrl ");
+			if (!empty($badgeUrl)) {
+				$res = 	"<a href=\"{$wgServer}\"><img src=\"{$badgeUrl}\" border=\"0\" /></a>";
+			}
+		} 
+		wfProfileOut( __METHOD__ );
+		return $res;
+	}
+	
+	/**
 	 * getUserOptions -- read badges from preferences 
 	 *
 	 * @access private
@@ -249,7 +315,7 @@ class UserBadges {
 		) {
 			$sUrl = $this->mOptions[$this->mCity]->getUrl();
 			if( strpos( $sUrl, "/" ) !== false ) {
-				$sPath = $wgUploadDirectory . $sUrl . "?" . $this->mUser->mTouched;
+				$sPath = $wgUploadDirectory . $sUrl;
 			} else {
 				$uploadPath = rtrim( WikiFactory::getVarValueByName( "wgUploadPath", $this->mMsgCityId ), "/" ) . "/";
 				$hash = FileRepo::getHashPathForLevel( $sUrl, 2 );
