@@ -29,7 +29,9 @@ $messages = array(
 		'user-badge-small-wikia-logo-color' => 'Wikia logo color:',
 		'user-badge-data-color' => 'Data color:',
 		'user-badge-edits-txt' => 'Edits',
-		'user-bagde-copypaste-code' => 'Copy and paste',
+		'user-bagde-copypaste-ext-code' => 'Copy & paste (external sites)',
+		'user-bagde-copypaste-int-code' => 'Copy & paste (this Wikia)',
+		'user-bagde-copypaste-int-other-code' => 'Copy & paste (other Wikia)',
 		'user-badge-save-info' => 'If you want to save changes <a href="#prefcontrol">go to bottom</a> and press "Save" button'
 	),
 );

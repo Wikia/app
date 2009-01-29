@@ -11,12 +11,26 @@ ColorTxt["DIALOG_HEADER"] = "<?=wfMsg("user-badge-dialog-title")?>";
 <tr><td class="pref-label" colspan="2"><h2><?=wfMsg('user-badge-title')?></h2></td></tr>
 <? if (!empty($sUserBadgeUrl)) { ?> 
 <tr>
-	<td class="pref-input"><p><img src="<?=$sUserBadgeUrl?>" /></p></td>
+	<td class="pref-input" valign="middle"><p><img src="<?=$sUserBadgeUrl?>" /></p></td>
 	<td class="pref-input">
+		<p>
+			<fieldset class="wk-badge-fieldset-code">
+			<legend><?=wfMsg('user-bagde-copypaste-int-code')?></legend>
+				<code><?=htmlspecialchars("<badge />");?></code>
+			</fieldset>
+		</p>			
+		<p>
 		<fieldset class="wk-badge-fieldset-code">
-		<legend><?=wfMsg('user-bagde-copypaste-code')?></legend>
+		<legend><?=wfMsg('user-bagde-copypaste-int-other-code')?></legend>
+			<code><?=htmlspecialchars("<badge user=\"".$wgUser->getName()."\" wikia=\"".$domain."\" />");?></code>
+		</fieldset>
+		</p>			
+		<p>
+		<fieldset class="wk-badge-fieldset-code">
+		<legend><?=wfMsg('user-bagde-copypaste-ext-code')?></legend>
 			<code><?=htmlspecialchars("<a href=\"{$wgServer}\"><img src=\"{$sUserBadgeUrl}\" border=\"0\" /></a>");?></code>
 		</fieldset>
+		</p>			
 	</td>
 </tr>		
 <tr>
