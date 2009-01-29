@@ -103,8 +103,16 @@ function print_pre($param, $return = 0)
 	}
 }
 
+/**
+ * wfReplaceImageServer -- replace hostname of image servers
+ *
+ * @author Inez Korczyński <inez@wikia-inc.com>
+ *
+ * @param String $url -- old url
+ *
+ * @return String -- new url
+ */
 function wfReplaceImageServer($url) {
-	return $url;
 	global $wgImagesServers;
 
 	if(isset($wgImagesServers) && is_int($wgImagesServers)) {
