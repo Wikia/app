@@ -1,7 +1,9 @@
 <?php
 /*
  * LinkSuggest
- * @author Inez Korczyński
+ * @author Inez Korczyński <inez@wikia-inc.com>
+ * @author Bartek Łapiński <bartek@wikia-inc.com>
+ * @author Lucas Garczewski (TOR) <tor@wikia-inc.com>
  */
 if(!defined('MEDIAWIKI')) {
 	die(1);
@@ -43,9 +45,6 @@ $wgAjaxExportList[] = 'getLinkSuggest';
 function getLinkSuggest() {
 	global $wgRequest, $wgContLang;
 
-	// default namespace to search in
-	$namespace = NS_MAIN;
-
 	// trim passed query and replace spaces by underscores
 	// - this is how MediaWiki store article titles in database
 	$query = str_replace(' ', '_', trim($wgRequest->getText('query')));
@@ -57,30 +56,46 @@ function getLinkSuggest() {
 		$query = $queryParts[1];
 
 		$namespaceName = $queryParts[0];
+
+		// try to get the index by canonical name first
 		$namespace = Namespace::getCanonicalIndex(strtolower($namespaceName));
-		$namespaceName = $wgContLang->getNsText($namespace);
+		if ( $namespace == null ) {
+			// if we failed, try looking through localized namespace names
+			$namespace = array_search(ucfirst($namespaceName), $wgContLang->getNamespaces());
+			if (empty($namespace)) {
+				// getting here means our "namespace" is not real and can only be part of the title
+				$query = $namespaceName . ':' . $query;
+			}
+		}
 	}
 
 	$results = array();
 
-	if(!empty($namespace) || $namespace === 0) {
-		$query = addslashes(strtolower($query));
-		$db =& wfGetDB(DB_SLAVE, 'search');
+	if (empty($namespace))
+		// default namespace to search in
+		$namespace = NS_MAIN;
 
-		$sql = "SELECT qc_title FROM querycache WHERE qc_type = 'Mostlinked' AND LOWER(qc_title) LIKE '{$query}%' AND qc_namespace = {$namespace} ORDER BY qc_value DESC LIMIT 10;";
-		$res = $db->query($sql);
-		while($row = $db->fetchObject($res)) {
-			$results[] = str_replace('_', ' ', (!empty($namespaceName) ? $namespaceName . ':' : '') . $row->qc_title);
-		}
+	// get localized namespace name
+	$namespaceName = $wgContLang->getNsText($namespace);
+	// and prepare it for later use...
+	$namespacePrefix = (!empty($namespaceName)) ? $namespaceName . ':' : '';
 
-		$sql = "SELECT page_title FROM page WHERE lower(page_title) LIKE '{$query}%' AND page_is_redirect=0 AND page_namespace = {$namespace} ORDER BY page_title ASC LIMIT ".(15 - count($results));
-		$res = $db->query($sql);
-		while($row = $db->fetchObject($res)) {
-			$results[] = str_replace('_', ' ', (!empty($namespaceName) ? $namespaceName . ':' : '') . $row->page_title);
-		}
+	$query = addslashes(strtolower($query));
+	$db =& wfGetDB(DB_SLAVE, 'search');
 
-		$results = array_unique($results);
+	$sql = "SELECT qc_title FROM querycache WHERE qc_type = 'Mostlinked' AND LOWER(qc_title) LIKE '{$query}%' AND qc_namespace = {$namespace} ORDER BY qc_value DESC LIMIT 10;";
+	$res = $db->query($sql);
+	while($row = $db->fetchObject($res)) {
+		$results[] = str_replace('_', ' ', $namespacePrefix . $row->qc_title);
 	}
+
+	$sql = "SELECT page_title FROM page WHERE lower(page_title) LIKE '{$query}%' AND page_is_redirect=0 AND page_namespace = {$namespace} ORDER BY page_title ASC LIMIT ".(15 - count($results));
+	$res = $db->query($sql);
+	while($row = $db->fetchObject($res)) {
+		$results[] = str_replace('_', ' ', $namespacePrefix . $row->page_title);
+	}
+
+	$results = array_unique($results);
 
 	$ar = new AjaxResponse(implode("\n", $results));
 	$ar->setCacheDuration(60 * 60); // cache results for one hour
