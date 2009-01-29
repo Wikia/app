@@ -191,7 +191,7 @@ body {
 	color:#000000;
 	display:block;
 	font-family:arial,helvetica,clean,sans-serif;
-	font-size:1em;
+	font-size:11px;
 	font-size-adjust:none;
 	font-stretch:normal;
 	font-style:normal;
@@ -203,11 +203,14 @@ body {
 
 .yui-dialog .ft .button-group { display:block; text-align:right; }
 .yui-dialog .ft { font-size:100%; }
-.yui-panel .ft { font-size:77%; }
-.yui-panel .hd, .yui-panel .bd, .yui-panel .ft { border-style:solid; }
+.yui-panel .ft { font-size:95%; }
+.yui-panel .hd, .yui-panel .bd, .yui-panel .ft { border-style:solid; font-size:11px; }
 .yui-panel { border-style:solid; }
 .yui-dialog .ft span.default { background-position:0 -1400px; border-color:#304369; }
 .yui-dialog .ft span.default .first-child { border-color:#304369; }
+.button-group button { font-size: 96%; }
+.yui-picker-controls { font-size:11px; }
+.yui-picker-hex-controls input { width:50px; }
 
 .yui-picker-rgb-controls,
 .yui-picker-hex_summary,
@@ -229,8 +232,5 @@ body {
 	font-weight:inherit;
 	margin:0;
 	padding:0;
-}
-
-.button-group button {
-	font-size: 96%;
+	width:30px;
 }
