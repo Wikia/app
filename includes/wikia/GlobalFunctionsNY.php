@@ -74,12 +74,12 @@ function date_diff($dt1, $dt2) {
 
 function get_time_offset($time,$timeabrv,$timename){
 	if($time[$timeabrv]>0){
-		$timeStr = wfMsgExt( "time_{$timename}", "parsemag", $time[$timeabrv] );
-		//$timeStr = $time[$timeabrv] . " " . $timename;
-		//if($time[$timeabrv]>1)$timeStr .= "s";
+		$timeStr = wfMsgExt( "time_{$timename}", "parsemag", $time[$timeabrv] ) . ' ';
+		return $timeStr;
 	}
-	if($timeStr)$timeStr .= " ";
-	return $timeStr;
+	else {
+		return '';
+	}
 }
 
 function get_time_ago($time){
