@@ -145,7 +145,13 @@ class EditAccount extends SpecialPage {
 		$this->mUser->setEmail('');
 
 		if ( $this->mUser->setPassword( wfGenerateToken() ) ) {
+			global $wgUser, $wgtitle;
+
 			$this->mUser->saveSettings();
+
+			$log = new LogPage('editaccnt');
+			$log->addEntry('closeaccnt', $wgTitle, '', array($this->mUser->getUserPage()));
+
 			$this->mStatusMsg = wfMsg('editaccount-success-close', $this->mUser->mName);
 			return true;	
 		} else {	
