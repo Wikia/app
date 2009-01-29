@@ -281,7 +281,7 @@ class UserBadges {
 					/**
 					 * uploaded file, we are adding common/avatars path
 					 */
-					$url = $wgUploadPath . $url . "?" . $this->mUser->mTouched;
+					$url = $wgUploadPath . $url;
 				} else {
 					/**
 					 * default avatar, path from messaging.wikia.com
