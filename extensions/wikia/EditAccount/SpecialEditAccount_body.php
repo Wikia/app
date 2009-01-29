@@ -22,7 +22,6 @@ if (!defined('MEDIAWIKI')) {
 class EditAccount extends SpecialPage {
 	var $mUser = null;
 	var $mStatus = null;
-	var $mLog = true;
 	var $mStatusMsg;
 
 	function EditAccount() {
@@ -99,10 +98,8 @@ class EditAccount extends SpecialPage {
 			if ($this->mUser->getEmail() == $email) {
 				global $wgUser, $wgTitle;
 
-				if ($this->mLog) {
-					$log = new LogPage('editaccnt');
-					$log->addEntry('mailchange', $wgTitle, '', array($this->mUser->getUserPage()));
-				}
+				$log = new LogPage('editaccnt');
+				$log->addEntry('mailchange', $wgTitle, '', array($this->mUser->getUserPage()));
 
 				$this->mStatusMsg = wfMsg('editaccount-success-email', $this->mUser->mName, $email);
 				return true;
@@ -117,15 +114,13 @@ class EditAccount extends SpecialPage {
 	}
 
 	function setPassword($pass) {
-		if ($this->mUser>setPassword($pass)) {
+		if ($this->mUser->setPassword($pass)) {
 			global $wgUser, $wgTitle;
 
 			$this->mUser->saveSettings();
 
-			if ($this->mLog) {
-				$log = new LogPage('editaccnt');
-				$log->addEntry('passchange', $wgTitle, '', array($this->mUser->getUserPage()));
-			}
+			$log = new LogPage('editaccnt');
+			$log->addEntry('passchange', $wgTitle, '', array($this->mUser->getUserPage()));
 
 			$this->mStatusMsg = wfMsg('editaccount-success-pass', $this->mUser->mName);
 			return true;
@@ -135,21 +130,27 @@ class EditAccount extends SpecialPage {
 		}
 	}
 
+	/* 
+	 * closeAccount
+	 *
+	 * Scrables user's password, sets an empty e-mail and marks as disabled
+	 */
 	function closeAccount() {
-		$this->mLog = false;
+		# Set flag for Special:Contributions
+		# NOTE: requires FlagClosedAccounts.php to be included separately
+		if (defined('CLOSED_ACCOUNT_FLAG')) {
+			$this->mUser->setRealName( CLOSED_ACCOUNT_FLAG );
+		}
 
-		# scramble the user's password
-		$this->setPassword( wfGenerateToken() );
+		$this->mUser->setEmail('');
 
-		# remove any email address attached to the account
-		$this->setEmail( '' );
-
-		# show on the user's contributions pages "this account is disabled
-		# TODO: update user table for external hook
-
-		# remove the nick from Special:ListUsers
-		# TODO: update colum in dataware
-
-		return true;
+		if ( $this->mUser->setPassword( wfGenerateToken() ) ) {
+			$this->mUser->saveSettings();
+			$this->mStatusMsg = wfMsg('editaccount-success-close', $this->mUser->mName);
+			return true;	
+		} else {	
+			$this->mStatusMsg = wfMsg('editaccount-error-close', $this->mUser->mName);
+			return false;
+		}
 	}
 }
