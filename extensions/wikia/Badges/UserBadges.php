@@ -93,8 +93,8 @@ class UserBadges {
 			'small-logo-color' => array(
 				'blue' => "/monaco/images/wikia_logo.png",
 				'yellow' => "/monaco/smoke/images/wikia_logo.png",
-				'lightyellow' => "/monaco/beach/images/wikia_logo.png",
-				'green' => "/monaco/jade/images/wikia_logo.png"
+				'black' => "/monaco/images/wikia_logo_black.png",
+				'green' => "/monaco/jade/images/wikia_logo.png",
 			)
 		);
 		
@@ -158,7 +158,7 @@ class UserBadges {
 		global $wgUser, $wgOut;
 		global $wgStyleVersion, $wgExtensionsPath;
 		global $wgLogo, $wgSitename;
-		global $wgStylePath, $wgServer;
+		global $wgStylePath, $wgServer, $wgLang;
 		
 		wfProfileIn( __METHOD__ );
 		$User_badge = self::newFromUser( $wgUser );
@@ -182,6 +182,7 @@ class UserBadges {
 			"wgSitename"	=> $wgSitename,
 			"defOptions"	=> $User_badge->mDefOptions,
 			"sk"			=> $sk,
+			"wgLang"		=> $wgLang,
 			"wgStylePath"	=> $wgStylePath,
 			"wgServer"		=> $wgServer,
 			"mCurrentOptions" => $User_badge->mCurrentOptions,
@@ -431,7 +432,7 @@ class UserBadges {
 	 */
 	private function createImage($options, $mUser) {
 		global $wgExtensionsPath;
-		global $wgSitename, $wgLogo;
+		global $wgSitename, $wgLogo, $wgLang;
 		global $wgStyleDirectory, $wgUploadDirectory;
 		wfProfileIn( __METHOD__ );
 		$sPath = "";
@@ -526,22 +527,22 @@ class UserBadges {
 			// label Username 
 			$body['labelUsernameText'] = str_replace(":", "", wfMsg('username'));
 			$body['labelUsernameX'] = USER_BADGES_LOGO_WIDTH + 2 * (USER_BADGES_BODY_MARGIN); 
-			$body['labelUsernameY'] = $body['labelfontsize'] + USER_BADGES_HEADER_HEIGHT + USER_BADGES_BODY_MARGIN;
+			$body['labelUsernameY'] = $body['labelfontsize'] + USER_BADGES_HEADER_HEIGHT + 1;
 			
 			// data username 
 			$body['dataUsernameText'] = $mUser->getName();
 			$body['dataUsernameX'] = USER_BADGES_LOGO_WIDTH + 2 * (USER_BADGES_BODY_MARGIN); 
-			$body['dataUsernameY'] = $body['labelUsernameY'] + $body['datafontsize'] + USER_BADGES_BODY_MARGIN;
+			$body['dataUsernameY'] = $body['labelUsernameY'] + $body['datafontsize'] + ceil(USER_BADGES_BODY_MARGIN/2);
 
 			// label Edits
 			$body['labelEditsText'] = wfMsg('user-badge-edits-txt');
 			$body['labelEditsX'] = USER_BADGES_LOGO_WIDTH + 2 * (USER_BADGES_BODY_MARGIN); 
-			$body['labelEditsY'] = $body['dataUsernameY'] + $body['labelfontsize'] + USER_BADGES_BODY_MARGIN;
+			$body['labelEditsY'] = $body['dataUsernameY'] + (2 * intval($body['labelfontsize']));
 			
 			// data Edits
-			$body['dataEditsText'] = intval(User::edits($mUser->getId()));
+			$body['dataEditsText'] = $wgLang->formatNum(intval(User::edits($mUser->getId())));
 			$body['dataEditsX'] = USER_BADGES_LOGO_WIDTH + 2 * (USER_BADGES_BODY_MARGIN); 
-			$body['dataEditsY'] = $body['labelEditsY'] + $body['datafontsize'] + USER_BADGES_BODY_MARGIN;
+			$body['dataEditsY'] = $body['labelEditsY'] + $body['datafontsize'] + ceil(USER_BADGES_BODY_MARGIN/2);
 
 			// small logo 
 			$aSmallBodyLogo = $this->createImageFromPath($body['smalllogo']);

@@ -132,7 +132,7 @@ ColorTxt["DIALOG_HEADER"] = "<?=wfMsg("user-badge-dialog-title")?>";
 		</td>
 	</tr>
 	<tr>
-		<td style="padding:5px 25%;" valign="top" colspan="2">
+		<td style="padding:7px" valign="top" align="left">
 			<div class="user-badges-canvas">
 				<div id="user-badges-title" style="background-color:<?=$mCurrentOptions->getHeaderBgColor()?>;">
 					<div id="ub-layer-title" style="color:<?=$mCurrentOptions->getHeaderTxtColor()?>;"><?=$wgSitename?></div>
@@ -142,7 +142,7 @@ ColorTxt["DIALOG_HEADER"] = "<?=wfMsg("user-badge-dialog-title")?>";
 					<div id="ub-layer-username-title" style="color:<?=$mCurrentOptions->getBodyLabelColor()?>;"><?=str_replace(":", "", wfMsg('username'))?></div>
 					<div id="ub-layer-username-url" style="color:<?=$mCurrentOptions->getBodyDataColor()?>;"><?=$wgUser->getName()?></div>
 					<div id="ub-layer-edits-title" style="color:<?=$mCurrentOptions->getBodyLabelColor()?>;"><?=wfMsg('user-badge-edits-txt')?></div>
-					<div id="ub-layer-edits-value" style="color:<?=$mCurrentOptions->getBodyDataColor()?>;">76</div>
+					<div id="ub-layer-edits-value" style="color:<?=$mCurrentOptions->getBodyDataColor()?>;"><?=$wgLang->formatNum(intval(User::edits($wgUser->getId())))?></div>
 <? 
 	$logocolor = $mCurrentOptions->getSmallLogoColor(); 
 	$logocolor = ( !empty($logocolor) && isset($defOptions['small-logo-color'][$logocolor]) ) ? $logocolor : "yellow"; 
@@ -151,15 +151,13 @@ ColorTxt["DIALOG_HEADER"] = "<?=wfMsg("user-badge-dialog-title")?>";
 				</div>
 			</div>
 		</td>
-	</tr>
-	<tr>
-		<td colspan="2" style="padding:5px 25%;">
-			<input type="checkbox" name="ub-overwrite-badge" id="ub-overwrite-badge" <?=(empty($sUserBadgeUrl)) ? "checked" : "";?> <?=(empty($sUserBadgeUrl))?" style=\"display:none;\" " : "" ?>> 
-<? if (!empty($sUserBadgeUrl)) { ?>
-		<?=wfMsg('user-badge-overwrite-msg')?>
-<? } ?>		
-		</td>
-	</tr>
+		<td style="padding:5px" valign="top">
+			<p><input type="checkbox" name="ub-overwrite-badge" id="ub-overwrite-badge" <?=(empty($sUserBadgeUrl)) ? "checked" : "";?> <?=(empty($sUserBadgeUrl))?" style=\"display:none;\" " : "" ?>> 
+<? if (!empty($sUserBadgeUrl)) { ?><?=wfMsg('user-badge-overwrite-msg')?><? } ?>		
+			</p>
+			<p style="padding:0 5px;"><?=wfMsg('user-badge-save-info')?></p>
+		</td>	
+	</tr>	
 	</table>
 </td>
 </tr>

@@ -26,16 +26,16 @@ body {
 	font-family:Verdana; 
 	font-weight:bold; 
 	font-size:10pt;
-	margin:0 95px 0;
+	margin:-1px 95px 2px;
 	position:relative;
 	white-space:nowrap;
 }
 #ub-layer-username-url {
 	margin:-4px 95px 0;
 	position:relative;
-	font-family:Helvetica,"Trebuchet MS";
+	font-family:Arial,"Trebuchet MS";
 	font-weight:normal;
-	font-size:14pt;
+	font-size:17px;
 	color:#1B00FF;
 	font-style:underline; 
 	white-space:nowrap;
@@ -44,15 +44,15 @@ body {
 	font-family:Verdana;
 	font-weight:bold;
 	font-size:10pt;
-	margin:2px 95px 0;
+	margin:1px 95px 2px;
 	position:relative;
 }
 #ub-layer-edits-value {
-	margin:-4px 95px 0;
+	margin:-5px 95px 0;
 	position:relative;
-	font-family:Helvetica;
+	font-family:Arial;
 	font-weight:normal;
-	font-size:14pt;
+	font-size:17px;
 	color:#000000; 
 }
 #ub-layer-wikia-title {
@@ -115,7 +115,7 @@ body {
 	outline: none;
 }
 .wk-badge-button-bg {
-	border:1px solid #BFB399;
+	border:1px none #BFB399;
 	padding:5px;
 }
 .wk-badge-label {
@@ -229,4 +229,8 @@ body {
 	font-weight:inherit;
 	margin:0;
 	padding:0;
+}
+
+.button-group button {
+	font-size: 96%;
 }
