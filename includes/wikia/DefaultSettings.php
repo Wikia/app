@@ -172,6 +172,13 @@ else {
 	$wgMemCachedClass = "MemCachedClientforWiki"; #  "MemcachePoolClientForWiki";
 }
 
+/**
+ * @name $wgSkipSkins
+ *
+ * NOTE: a few wikis may have local override for this var,
+ * you need to modify those by hand.
+ * A SELECT on city_variables will get you a list.
+ */
 $wgSkipSkins = array(
 		'answers',
 		'armchairgm',
@@ -200,7 +207,8 @@ $wgSkipSkins = array(
 		'test',
 		'uncyclopedia',
 		'wowwiki',
-		'lostbook'
+		'lostbook',
+		'monaconew',
 );
 
 /**
