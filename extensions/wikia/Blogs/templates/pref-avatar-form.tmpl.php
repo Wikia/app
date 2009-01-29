@@ -1,8 +1,7 @@
 <!-- s:<?= __FILE__ ?> -->
-<tr><td class="pref-label" colspan="2"><h2>Avatar</h2></td></tr>
+<tr><td class="pref-label" colspan="2"><h2><?=wfMsg('blog-avatar-preferences-title')?></h2></td></tr>
 <tr>
-<td class="pref-label"><label for="wkUserAvatar"><?=wfMsg('blog-avatar-preferences-title')?></label></td>
-<td class="pref-input">
+<td class="pref-input" colspan="2">
 <table border="0" width="50" valign="top">
 <tr>
 	<td valign="top">
@@ -99,4 +98,5 @@
 </table>
 </td>
 </tr>
-<!-- e:<?= __FILE__ ?> -->
+<tr><td colspan="2"><?=wfMsg('blog-avatar-save-info')?></td></tr>	
+<!-- e:<?= __FILE__ ?> -->	

@@ -94,7 +94,7 @@ Create blog listing pages for categories such as "Barrack Obama", "Fan Fiction",
 	'blog-avatar-delete' => "Delete",
 	'blog-avatar-talk' => "talk",
 	'blog-avatar-contrib' => "contrib",
-	'blog-avatar-preferences-title' => "Avatar:",
+	'blog-avatar-preferences-title' => "Avatar",
 	'blog-avatar-choose-avatar' => "Choose a new avatar",
 	'blog-avatar-upload-avatar' => "Upload a new avatar",
 	"blog-avatar-nouser" => "Cannot found this user!",
@@ -121,5 +121,6 @@ Create blog listing pages for categories such as "Barrack Obama", "Fan Fiction",
 	"blogs-comment-hidden" => "Comment hidden.",
     "removeavatar" => "Remove user's avatar",
 	"right-blog-comments-toggle" => "Permission for toggling comments on Blog Articles",
-	"right-blog-comments-delete" => "Permission for deleting comments on Blog Articles"
+	"right-blog-comments-delete" => "Permission for deleting comments on Blog Articles",
+	'blog-avatar-save-info' => 'If you want to save changes <a href="#prefcontrol">go to bottom</a> and press "Save" button'
 );
