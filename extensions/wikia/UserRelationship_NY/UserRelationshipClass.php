@@ -366,7 +366,7 @@ class UserRelationship {
 	
 	static function getUserRelationshipByID($user1,$user2){
 		$dbr =& wfGetDB( DB_MASTER );
-		$s = $dbr->selectRow( '`user_relationship`', array( 'r_type' ), array( 'r_user_id' => $user1, 'r_user_id_relation' => $user2 ), $fname );
+		$s = $dbr->selectRow( '`user_relationship`', array( 'r_type' ), array( 'r_user_id' => $user1, 'r_user_id_relation' => $user2 ), __METHOD__ );
 		if ( $s !== false ) {
 			return $s->r_type;
 		}else{

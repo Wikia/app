@@ -105,14 +105,19 @@ class ProfilePrivacy {
 			$dbr =& wfGetDB( DB_MASTER );
 			$res = $dbr->select( '`user_profile_privacy`', 
 					array( 'p_type', 'p_check' ),
-				array( 'p_user_id' => $user_id ), __METHOD__, 
-				$params
+				array( 'p_user_id' => $user_id ), __METHOD__ 
 			);
 			
 			$privacy = array();
 			while ($row = $dbr->fetchObject( $res ) ) {
-				$privacy[self::$privacy_checks[ $row->p_check ]] = self::$privacy_types[ $row->p_type ];
-				
+				if ( isset(self::$privacy_checks[ $row->p_check ]) ) {
+					if ( isset(self::$privacy_types[ $row->p_type ]) ) {
+						$privacy[self::$privacy_checks[ $row->p_check ]] = self::$privacy_types[ $row->p_type ];
+					}
+					else {
+						$privacy[self::$privacy_checks[ $row->p_check ]] = '';
+					}
+				}
 			}
 			$wgMemc->set( $key, $privacy );
 		}
@@ -121,7 +126,3 @@ class ProfilePrivacy {
 	}
 
 }
-	
-
-
-?>
