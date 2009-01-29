@@ -2,7 +2,7 @@
 
 $messages = array(
 	'en' => array(
-		'user-badge-title' => 'User Badge',
+		'user-badge-title' => 'User\'s badge',
 		'user-badge-invalid-color' => 'Illegal hex value entered',
 		'user-badge-show-color' => 'Show color details',
 		'user-badge-hide-color' => 'Hide color details',
@@ -29,6 +29,7 @@ $messages = array(
 		'user-badge-small-wikia-logo-color' => 'Wikia logo color:',
 		'user-badge-data-color' => 'Data color:',
 		'user-badge-edits-txt' => 'Edits',
-		'user-bagde-copypaste-code' => 'Copy and paste'
+		'user-bagde-copypaste-code' => 'Copy and paste',
+		'user-badge-save-info' => 'If you want to save changes <a href="#prefcontrol">go to bottom</a> and press "Save" button'
 	),
 );

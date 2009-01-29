@@ -66,11 +66,10 @@ colorDialog = function() {
 
 	return {
         init: function() {
-			YAHOO.util.Dom.get('body').appendChild(pickerPanel);
+			document.body.appendChild(pickerPanel);
 
             this.dialog = new YAHOO.widget.Dialog("yui-picker-panel", {
 				width : "380px",
-				height: "280px",
 				zIndex: 20,
 				close: true,
 				fixedcenter: true,
