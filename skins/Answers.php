@@ -495,7 +495,6 @@ google_max_num_ads = '10';
 google_ad_type = 'text_html';
 google_image_size = '728x90';
 google_feedback = 'on';
-google_adtest = 'on';
 <?
 if ($category_text) {
 echo 'google_hints = \''. implode(', ', $category_text) .'\';';
