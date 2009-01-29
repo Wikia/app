@@ -6,7 +6,7 @@
 $wgHooks['ExtendJSGlobalVars'][] = 'wfExtendJSGlobalVars';
 
 function wfExtendJSGlobalVars($vars) {
-	global $wgCurse, $wgCityId, $wgEnableAjaxLogin, $wgUser, $wgDBname, $wgPrivateTracker, $wgWikiaAdvertiserCategory, $wgExtensionsPath, $wgTitle, $wgArticle, $wgStyleVersion;
+	global $wgCurse, $wgCityId, $wgEnableAjaxLogin, $wgUser, $wgDBname, $wgPrivateTracker, $wgWikiaAdvertiserCategory, $wgExtensionsPath, $wgTitle, $wgArticle, $wgStyleVersion, $wgSitename;
 
 	$cats = wfGetBreadCrumb();
 	$idx = count($cats)-2;
@@ -45,6 +45,8 @@ function wfExtendJSGlobalVars($vars) {
 	}
 
 	$vars['wgExtensionsPath'] = $wgExtensionsPath;
+
+	$vars['wgSitename'] = $wgSitename;
 
 	return true;
 }
