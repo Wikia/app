@@ -40,6 +40,7 @@ $wgLogNames['editaccnt'] = 'editaccount-log';
 $wgLogHeaders['editaccnt'] = 'editaccount-log-header';
 $wgLogActions['editaccnt/mailchange'] = 'editaccount-log-entry-email';
 $wgLogActions['editaccnt/passchange'] = 'editaccount-log-entry-pass';
+$wgLogActions['editaccnt/closeaccnt'] = 'editaccount-log-entry-close';
 
 //Register special page
 if (!function_exists('extAddSpecialPage')) {

@@ -31,6 +31,7 @@ $messages = array(
 		'editaccount-log-header'	=> 'This page lists changes made to user preferences by Wikia Staff.',
 		'editaccount-log-entry-email'	=> 'changed e-mail for user $2',
 		'editaccount-log-entry-pass'	=> 'changed password for user $2',
+		'editaccount-log-entry-close'	=> 'disabled account $2',
 		'edit-account-closed-flag'	=> '<div style="border: 1px solid black; padding: 1em">This account has been disabled.</div>',
 	),
 );
