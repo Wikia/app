@@ -79,6 +79,10 @@ $wgGroupPermissions['sysop'][ 'blog-comments-delete' ] = true;
 $wgGroupPermissions['staff'][ 'blog-comments-delete' ] = true;
 $wgGroupPermissions['helper'][ 'blog-comments-delete' ] = true;
 
+$wgGroupPermissions['*'][ "blog-articles-edit" ] = false;
+$wgGroupPermissions['sysop'][ "blog-articles-edit" ] = true;
+$wgGroupPermissions['staff'][ "blog-articles-edit" ] = true;
+$wgGroupPermissions['helper'][ "blog-articles-edit" ] = true;
 
 /**
  * Special pages
