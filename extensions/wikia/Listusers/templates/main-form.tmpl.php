@@ -179,7 +179,14 @@ function wkLUshowDetails(limit, offset, ord, desc)
 	LocalUsersShowDetailsCallback = {
 		success: function( oResponse )
 		{
-			var resData = YAHOO.Tools.JSONParse(oResponse.responseText);
+			var resData = "";
+			if (YAHOO.Tools) {
+				resData = YAHOO.Tools.JSONParse(oResponse.responseText);
+			} else if ((YAHOO.lang) && (YAHOO.lang.JSON)) {
+				resData = YAHOO.lang.JSON.parse(oResponse.responseText);
+			} else {
+				resData = eval(oResponse.responseText);
+			}
 			div_details.innerHTML = "";
 			var records = document.getElementById('lu-result');
 			if ( (!resData) || (resData['nbr_records'] == 0) ) {
