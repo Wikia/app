@@ -426,6 +426,10 @@ body.rtl .widgetToolbox {
 	background-image: url('../icons/widget_tips.png');
 	text-indent: -500px;
 }
+.WidgetAnswersThumb {
+	background-image: url('../icons/widget_answers.png');
+	text-indent: -500px;
+}
 .WidgetActiveTalkPagesThumb {
 	background-image: url('../icons/widget_activetalkpages.png');
 	text-indent: -500px;

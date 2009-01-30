@@ -181,6 +181,13 @@ li.widget table {
 	text-indent: -500px;
 }
 
+* html .WidgetAnswersThumb
+{
+	background: none;
+  filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src="http://images.wikia.com/common/widgets/icons/widget_answers.png",sizingMethod="image");
+	text-indent: -500px;
+}
+
 * html .WidgetActiveTalkPagesThumb
 {
 	background: none;
