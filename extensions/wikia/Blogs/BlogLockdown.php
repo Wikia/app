@@ -36,6 +36,7 @@ class BlogLockdown {
 
 		$owner = BlogArticle::getOwner( $title );
 		$username = $user->getName();
+		$isOwner =  (bool)( $username == $owner );
 		$result = array();
 		$return = false;
 
@@ -64,8 +65,19 @@ class BlogLockdown {
 				}
 				break;
 
+			/**
+			 * edit permissions -- owner of blog and one who has
+			 *	 "blog-articles-edit" permission
+			 */
+			case "edit":
+				if( $namespace == NS_BLOG_ARTICLE && ( $wgUser->isAllowed( "blog-articles-edit" ) || $isOwner ) ) {
+					$result = true;
+					$return = true;
+				}
+				break;
+
 			case "delete":
-				if( $namespace == NS_BLOG_ARTICLE_TALK && $user->isAllowed("blog-comments-delete") ) {
+				if( $namespace == NS_BLOG_ARTICLE_TALK && $user->isAllowed( "blog-comments-delete" ) ) {
 					$result = true;
 					$return = true;
 				}
