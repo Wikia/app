@@ -185,7 +185,7 @@ function wkLUshowDetails(limit, offset, ord, desc)
 			} else if ((YAHOO.lang) && (YAHOO.lang.JSON)) {
 				resData = YAHOO.lang.JSON.parse(oResponse.responseText);
 			} else {
-				resData = eval(oResponse.responseText);
+				resData = eval('(' + oResponse.responseText + ')');
 			}
 			div_details.innerHTML = "";
 			var records = document.getElementById('lu-result');
