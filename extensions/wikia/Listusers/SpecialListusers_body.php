@@ -133,9 +133,9 @@ class ListUsers extends SpecialPage {
 			if (!is_null($dbs)) {
 				$aQuery = array();
 				if (!empty($aGroups) && is_array($aGroups)) {
-					$aQuery[] = "select '' as groupName, count(*) as cnt from `dataware`.`city_local_users` where lu_wikia_id = {$wgCityId} and lu_numgroups = 0 ";
+					$aQuery[] = "select '' as groupName, count(*) as cnt from `dataware`.`city_local_users` where lu_wikia_id = {$wgCityId} and lu_numgroups = 0 and lu_closed = 0 ";
 					foreach ($aGroups as $groupName => $userGroupName) {
-						$aQuery[] = "select '{$groupName}' as groupName, count(*) as cnt from `dataware`.`city_local_users` where lu_wikia_id = {$wgCityId} and lu_allgroups like '%{$groupName}%' group by groupName";
+						$aQuery[] = "select '{$groupName}' as groupName, count(*) as cnt from `dataware`.`city_local_users` where lu_wikia_id = {$wgCityId} and lu_allgroups like '%{$groupName}%' and lu_closed = 0 group by groupName";
 					}
 				}
 				if (!empty($aQuery)) {
@@ -192,7 +192,7 @@ class ListUsers extends SpecialPage {
 			$dbs = wfGetDBExt(DB_SLAVE);
 			if (!is_null($dbs)) {
 				$aGroups = array(); 
-				$aWhere = array(" lu_wikia_id = {$wgCityId} ");
+				$aWhere = array(" lu_wikia_id = {$wgCityId} and lu_closed = 0 ");
 				
 				if (!empty($groups)) {
 					$aGroups = explode(",", $groups);
