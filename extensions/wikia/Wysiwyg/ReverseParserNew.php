@@ -330,6 +330,21 @@ class ReverseParser {
 							if ($node->parentNode->nodeName != 'body') {
 								$out = "\n$out";
 							}
+
+							// we have non-table content after current table
+							if ( $node->nextSibling && ($node->nextSibling->nodeName != 'table') ) {
+
+								switch($node->nextSibling->nodeName) {
+									case 'p':
+										if ($node->nextSibling->hasAttribute('_new_lines_before')) {
+											$out = "$out\n";
+										}
+									break;
+
+									default:
+										$out = "$out\n";
+								}
+							}
 						}
 						else {
 							// thumbnail generation error - handle as an image
