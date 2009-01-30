@@ -217,6 +217,13 @@ class ReverseParser {
 							if($isDefinitionList && $node->previousSibling) {
 								$textContent = "\n{$textContent}";
 							}
+
+							// <p> is second child of <td> and previous sibling is text node
+							// and first child of parent node
+							if ( ($node->parentNode->nodeName == 'td') && $node->previousSibling && $node->previousSibling->isSameNode($node->parentNode->firstChild) && ($node->previousSibling->nodeType == XML_TEXT_NODE) ) {
+								$textContent = "\n{$textContent}";
+							}
+
 						}
 
 						$out = $textContent;
