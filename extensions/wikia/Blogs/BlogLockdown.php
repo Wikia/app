@@ -70,14 +70,14 @@ class BlogLockdown {
 			 *	 "blog-articles-edit" permission
 			 */
 			case "edit":
-				if( $namespace == NS_BLOG_ARTICLE && ( $wgUser->isAllowed( "blog-articles-edit" ) || $isOwner ) ) {
+				if( $namespace == NS_BLOG_ARTICLE && ( $user->isAllowed( "blog-articles-edit" ) || $isOwner ) ) {
 					$result = true;
 					$return = true;
 				}
 				break;
 
 			case "delete":
-				if( $namespace == NS_BLOG_ARTICLE_TALK && $wgUser->isAllowed( "blog-comments-delete" ) ) {
+				if( $namespace == NS_BLOG_ARTICLE_TALK && $user->isAllowed( "blog-comments-delete" ) ) {
 					$result = true;
 					$return = true;
 				}
