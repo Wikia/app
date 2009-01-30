@@ -73,11 +73,11 @@
 					
 					$out = "";
 					
-					$out .= $wgOut->setPagetitle( wfMsg("ur-add-sent-title", $label, $this->user_name_to));
+					$wgOut->setPagetitle( wfMsg("ur-add-sent-title", $label, $this->user_name_to));
 							
 					$out .= "<div class=\"relationship-action\">
 						{$avatar_img}
-						".wfMsg("ur-add-sent-message", $label, $this->user_name_to)."
+						" . wfMsgExt("ur-add-sent-message", array('parse'), array($label, $this->user_name_to)) . "
 						<div class=\"relationship-buttons\" >
 							<input type=\"button\" class=\"site-button\" value=\"".wfMsg('ur-main-page')."\" size=\"20\" onclick=\"window.location='index.php?title=Main_Page'\"/> 
 							<input type=\"button\" class=\"site-button\" value=\"".wfMsg('ur-your-profile')."\" size=\"20\" onclick=\"window.location='".$wgUser->getUserPage()->escapeFullURL() . "'\"/>
@@ -120,7 +120,7 @@
 		   	$form .= "<form action=\"\" method=\"post\" enctype=\"multipart/form-data\" name=\"form1\">
 		   		<div class=\"relationship-action\">
 					{$avatar_img}
-					".wfMsg("ur-add-message", $this->user_name_to, $label, $label1)."
+					".wfMsgExt("ur-add-message", array('parse'), array($this->user_name_to, $label, $label1))."
 					<div class=\"cleared\"></div>
 		   		</div>
 		   		<div class=\"relationship-textbox-title\">
