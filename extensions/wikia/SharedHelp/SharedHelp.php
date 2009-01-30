@@ -92,7 +92,7 @@ class SharedHttp extends Http {
 }
 
 function SharedHelpHook(&$out, &$text) {
-	global $wgTitle, $wgMemc, $wgSharedDB, $wgDBname, $wgCityId, $wgHelpWikiId, $wgContLang, $wgArticlePath;
+	global $wgTitle, $wgMemc, $wgSharedDB, $wgDBname, $wgCityId, $wgHelpWikiId, $wgContLang, $wgLanguageCode, $wgArticlePath;
 
 	if($wgCityId == $wgHelpWikiId) { # Do not process for the help wiki
 		return true;
@@ -160,9 +160,8 @@ function SharedHelpHook(&$out, &$text) {
 			if(isset($destinationUrl)) {
 				$destinationPageIndex = strpos( $destinationUrl, "$helpNs:" );
 				# if $helpNs was not found, assume we're on help.wikia.com and try again
-				# TODO: this is ugly, might use a rewrite
 				if ( $destinationPageIndex === false )
-					$destinationPageIndex = strpos( $destinationUrl, "Help:" );
+					$destinationPageIndex = strpos( $destinationUrl, Namespace::getCanonicalName(NS_HELP) . ":" );
 				$destinationPage = substr( $destinationUrl, $destinationPageIndex );
 				$link = $wgServer . str_replace( "$1", $destinationPage, $wgArticlePath );
 				if ( 'no' != $wgRequest->getVal( 'redirect' ) ) {
@@ -198,9 +197,18 @@ function SharedHelpHook(&$out, &$text) {
 			# get rid of editsection links
 			$content = preg_replace("|<span class=\"editsection\">\[<a href=\".*?\" title=\".*?\">.*?<\/a>\]<\/span>|", "", $content);
 
-			# replace help wiki links with local links, except for Category links, which will go to the help wiki
-			$categoryNs = $wgContLang->getNsText(NS_CATEGORY);
-			$content = preg_replace("|{$sharedServer}{$sharedArticlePathClean}(?!$categoryNs)(?!Advice)|", $localArticlePathClean, $content);
+			# namespaces to skip when replacing links
+			$skupNamespaces = array();
+			$skipNamespaces[] = $wgContLang->getNsText(NS_CATEGORY);
+			$skipNamespaces[] = $wgContLang->getNsText(NS_IMAGE);
+			$skipNamespaces[] = "Advice";
+			if ($wgLanguageCode != 'en') {
+				$skipNamespaces[] = Namespace::getCanonicalName(NS_CATEGORY);
+				$skipNamespaces[] = Namespace::getCanonicalName(NS_IMAGE);
+			}
+
+			# replace help wiki links with local links, except for special namespaces defined above
+			$content = preg_replace("|{$sharedServer}{$sharedArticlePathClean}(?!" . implode("|", $skipNamespaces) . ")|", $localArticlePathClean, $content);
 
 			// "this text is stored..."
 			$info = '<div class="sharedHelpInfo" style="text-align: right; font-size: smaller;padding: 5px">' . wfMsgExt('shared_help_info', 'parseinline', $wgTitle->getDBkey()) . '</div>';
