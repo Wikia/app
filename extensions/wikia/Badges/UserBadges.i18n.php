@@ -2,7 +2,7 @@
 
 $messages = array(
 	'en' => array(
-		'user-badge-title' => 'User\'s badge',
+		'user-badge-title' => 'User badge',
 		'user-badge-invalid-color' => 'Illegal hex value entered',
 		'user-badge-show-color' => 'Show color details',
 		'user-badge-hide-color' => 'Hide color details',
@@ -12,7 +12,8 @@ $messages = array(
 		'user-badge-left-align' => 'left',
 		'user-badge-right-align' => 'right',
 		'user-badge-center-align' => 'center',
-		'user-badge-current' => 'Badge:',
+		'user-badge-current' => 'Current badge',
+		'user-badge-configure' => 'Configure Your badge',
 		'user-badge-not-found' => 'No badge found!',
 		'user-badge-use-configurator' => 'Use <a name="ub_configurator" id="ub_configurator-href">the configurator</a> to create a new badge!',
 		'user-badge-create' => 'Create badge:',
@@ -32,6 +33,6 @@ $messages = array(
 		'user-bagde-copypaste-ext-code' => 'Copy & paste (external sites)',
 		'user-bagde-copypaste-int-code' => 'Copy & paste (this Wikia)',
 		'user-bagde-copypaste-int-other-code' => 'Copy & paste (other Wikia)',
-		'user-badge-save-info' => 'If you want to save changes <a href="#prefcontrol">go to bottom</a> and press "Save" button'
+		'user-badge-save-info' => 'If you want to save changes, scroll to the page end and press the "Save" button',
 	),
 );

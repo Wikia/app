@@ -8,33 +8,42 @@ ColorTxt["CURRENT_COLOR"] = "<?=wfMsg("user-badge-selected-color")?>";
 ColorTxt["CLOSEST_WEBSAFE"] = "<?=wfMsg("user-badge-web-color")?>";
 ColorTxt["DIALOG_HEADER"] = "<?=wfMsg("user-badge-dialog-title")?>";
 </script>
-<tr><td class="pref-label" colspan="2"><h2><?=wfMsg('user-badge-title')?></h2></td></tr>
 <? if (!empty($sUserBadgeUrl)) { ?> 
+<table>
 <tr>
-	<td class="pref-input" valign="middle"><p><img src="<?=$sUserBadgeUrl?>" /></p></td>
-	<td class="pref-input">
-		<p>
-			<fieldset class="wk-badge-fieldset-code">
-			<legend><?=wfMsg('user-bagde-copypaste-int-code')?></legend>
-				<code><?=htmlspecialchars("<badge />");?></code>
-			</fieldset>
-		</p>			
-		<p>
+	<td class="pref-input" valign="middle" colspan="2"><h2><?=wfMsg('user-badge-current')?></h2></td>
+</tr>	
+<tr>
+	<td class="pref-input" valign="top" colspan="2"><p><img src="<?=$sUserBadgeUrl?>" /></p></td>
+</tr>	
+	<td class="pref-input" colspan="2">
 		<fieldset class="wk-badge-fieldset-code">
-		<legend><?=wfMsg('user-bagde-copypaste-int-other-code')?></legend>
-			<code><?=htmlspecialchars("<badge user=\"".$wgUser->getName()."\" wikia=\"".$domain."\" />");?></code>
+			<legend style="font-weight:normal"><?=wfMsg('user-bagde-copypaste-int-code')?></legend>
+			<code style="margin:5px"><?=htmlspecialchars("<badge user=\"".$wgUser->getName()."\"/>");?></code>
 		</fieldset>
-		</p>			
-		<p>
+	</td>
+</tr>
+</tr>	
+	<td class="pref-input" colspan="2">
 		<fieldset class="wk-badge-fieldset-code">
-		<legend><?=wfMsg('user-bagde-copypaste-ext-code')?></legend>
-			<code><?=htmlspecialchars("<a href=\"{$wgServer}\"><img src=\"{$sUserBadgeUrl}\" border=\"0\" /></a>");?></code>
+		<legend style="font-weight:normal"><?=wfMsg('user-bagde-copypaste-int-other-code')?></legend>
+			<code style="margin:5px"><?=htmlspecialchars("<badge user=\"".$wgUser->getName()."\" wikia=\"".$domain."\" />");?></code>
 		</fieldset>
-		</p>			
 	</td>
 </tr>		
+</tr>	
+	<td class="pref-input" colspan="2">
+		<fieldset class="wk-badge-fieldset-code">
+		<legend style="font-weight:normal"><?=wfMsg('user-bagde-copypaste-ext-code')?></legend>
+			<code style="margin:5px"><?=htmlspecialchars("<a href=\"{$wgServer}\"><img src=\"{$sUserBadgeUrl}\" border=\"0\" /></a>");?></code>
+		</fieldset>
+	</td>
+</tr>
 <tr>
-	<td class="pref-input" colspan="2">	<p><?=wfMsg('user-badge-use-configurator')?></p> </td>	
+	<td class="pref-input" style="padding:15px 0px 0px;" valign="middle" colspan="2"><h2><?=wfMsg('user-badge-configure')?></h2></td>
+</tr>
+<tr>
+	<td class="pref-input" colspan="2"><p><?=wfMsg('user-badge-use-configurator')?></p> </td>	
 </tr>	
 <? } else { ?> 		
 <tr>
@@ -46,7 +55,7 @@ ColorTxt["DIALOG_HEADER"] = "<?=wfMsg("user-badge-dialog-title")?>";
 	</td>
 </tr>
 <tr style="display:none" id="ub_configurator-panel">
-<td class="pref-input" colspan="2">
+<td class="pref-input" colspan="2" >
 	<p><?=wfMsg('user-badge-create')?></p>
 	<table border=0>
 	<tr>
@@ -156,7 +165,7 @@ ColorTxt["DIALOG_HEADER"] = "<?=wfMsg("user-badge-dialog-title")?>";
 					<div id="ub-layer-username-title" style="color:<?=$mCurrentOptions->getBodyLabelColor()?>;"><?=str_replace(":", "", wfMsg('username'))?></div>
 					<div id="ub-layer-username-url" style="color:<?=$mCurrentOptions->getBodyDataColor()?>;"><?=$wgUser->getName()?></div>
 					<div id="ub-layer-edits-title" style="color:<?=$mCurrentOptions->getBodyLabelColor()?>;"><?=wfMsg('user-badge-edits-txt')?></div>
-					<div id="ub-layer-edits-value" style="color:<?=$mCurrentOptions->getBodyDataColor()?>;"><?=$wgLang->formatNum(intval(User::edits($wgUser->getId())))?></div>
+					<div id="ub-layer-edits-value" style="color:<?=$mCurrentOptions->getBodyDataColor()?>;"><?=UserBadges::getEditCount($wgUser->getId())?></div>
 <? 
 	$logocolor = $mCurrentOptions->getSmallLogoColor(); 
 	$logocolor = ( !empty($logocolor) && isset($defOptions['small-logo-color'][$logocolor]) ) ? $logocolor : "yellow"; 
@@ -167,12 +176,12 @@ ColorTxt["DIALOG_HEADER"] = "<?=wfMsg("user-badge-dialog-title")?>";
 		</td>
 		<td style="padding:5px" valign="top">
 			<p><input type="checkbox" name="ub-overwrite-badge" id="ub-overwrite-badge" <?=(empty($sUserBadgeUrl)) ? "checked" : "";?> <?=(empty($sUserBadgeUrl))?" style=\"display:none;\" " : "" ?>> 
-<? if (!empty($sUserBadgeUrl)) { ?><?=wfMsg('user-badge-overwrite-msg')?><? } ?>		
+<? if (!empty($sUserBadgeUrl)) { ?><?=wfMsg('user-badge-overwrite-msg')?><? } ?>
 			</p>
-			<p style="padding:0 5px;"><?=wfMsg('user-badge-save-info')?></p>
 		</td>	
 	</tr>	
 	</table>
 </td>
 </tr>
+</table>
 <!-- e:<?= __FILE__ ?> -->
