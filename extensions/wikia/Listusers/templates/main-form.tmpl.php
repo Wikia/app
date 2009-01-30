@@ -258,7 +258,6 @@ function wkLUshowDetails(limit, offset, ord, desc)
 		params += "&rsargs[5]=" + ord;
 		params += "&rsargs[6]=" + desc;
 		//---
-		YAHOO.util.Event.preventDefault(e);
 		div_details.innerHTML="<img src=\"<?=$wgExtensionsPath?>/wikia/Listusers/images/ajax-loader-s.gif\" />";
 		//---
 		var baseurl = wgScript + "?action=ajax&rs=ListUsers::axShowUsers" + params;
