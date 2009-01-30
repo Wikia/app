@@ -3,12 +3,13 @@
 /**
  * BlogLockdown extension - implements restrictions on blog namespaces
  *
- * @package MediaWiki
- * @subpackage Extensions
+ * @file
+ * @ingroup Extensions
  *
- * @author
- * @licence GNU General Public Licence 2.0 or later
+ * @author Krzysztof Krzyżaniak (eloy) <eloy@wikia-inc.com>
  *
+ * @copyright Copyright © 2008 Krzysztof Krzyżaniak, Wikia Inc.
+ * @license http://www.gnu.org/copyleft/gpl.html GNU General Public License 2.0
  *
  * Based on Lockdown extension from Daniel Kinzler, brightbyte.de
  */
