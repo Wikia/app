@@ -2263,8 +2263,12 @@ class Parser
 						if ($this->mLastSection != 'pre') {
 							$paragraphStack = false;
 							$close = $this->closeParagraph();
-							// in wysiwyg don't add line break before <pre> tag
-							$output .= (!empty($wgWysiwygParserEnabled) ? rtrim($close) : $close).'<pre'.(!empty($newLines) ? ' _wysiwyg_new_line="true"' : '').'>';
+							if (!empty($wgWysiwygParserEnabled)) {
+								$output .= $close .'<pre'.(!empty($newLines) ? ' _wysiwyg_new_line="true"' : '').'>';
+							}
+							else {
+								$output .= $close . '<pre>';
+							}
 							$this->mLastSection = 'pre';
 						}
 						$t = substr( $t, 1 );
