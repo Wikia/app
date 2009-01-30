@@ -208,7 +208,7 @@ function SharedHelpHook(&$out, &$text) {
 			}
 
 			# replace help wiki links with local links, except for special namespaces defined above
-			$content = preg_replace("|{$sharedServer}{$sharedArticlePathClean}(?!" . implode("|", $skipNamespaces) . ")|", $localArticlePathClean, $content);
+			$content = preg_replace("|{$sharedServer}{$sharedArticlePathClean}(?!" . implode(")(?!", $skipNamespaces) . ")|", $localArticlePathClean, $content);
 
 			// "this text is stored..."
 			$info = '<div class="sharedHelpInfo" style="text-align: right; font-size: smaller;padding: 5px">' . wfMsgExt('shared_help_info', 'parseinline', $wgTitle->getDBkey()) . '</div>';
