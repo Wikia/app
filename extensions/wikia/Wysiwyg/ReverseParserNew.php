@@ -206,6 +206,12 @@ class ReverseParser {
 						} else if($textContent == ""){
 							// empty paragraph
 							$textContent = "\n";
+
+							// add \n if previous node is <pre>
+							if ($previousNode && $previousNode->nodeName == 'pre') {
+								$textContent = "\n{$textContent}";
+							}
+
 						} else {
 							// add new lines before paragraph
 							$newLinesBefore = $node->getAttribute('_new_lines_before');
@@ -224,6 +230,10 @@ class ReverseParser {
 								$textContent = "\n{$textContent}";
 							}
 
+							// add \n if previous node is <pre>
+							if ($previousNode && $previousNode->nodeName == 'pre') {
+								$textContent = "\n{$textContent}";
+							}
 						}
 
 						$out = $textContent;
@@ -772,8 +782,13 @@ class ReverseParser {
 		}
 
 		// they start new line, but we don't have to add new line before them
-		if (in_array($node->nodeName, array('p', 'pre'))) {
+		if ($node->nodeName == 'p') {
 			return false;
+		}
+
+		// add \n before <pre>
+		if ($node->nodeName == 'pre') {
+			return true;
 		}
 
 		// HTML tags in wikitext
