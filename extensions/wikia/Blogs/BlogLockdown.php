@@ -77,7 +77,7 @@ class BlogLockdown {
 				break;
 
 			case "delete":
-				if( $namespace == NS_BLOG_ARTICLE_TALK && $user->isAllowed( "blog-comments-delete" ) ) {
+				if( $namespace == NS_BLOG_ARTICLE_TALK && $wgUser->isAllowed( "blog-comments-delete" ) ) {
 					$result = true;
 					$return = true;
 				}
