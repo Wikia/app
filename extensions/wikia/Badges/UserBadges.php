@@ -34,7 +34,8 @@ $wgExtensionMessagesFiles["UserBadges"] = dirname(__FILE__) . '/UserBadges.i18n.
 
 $wgExtensionFunctions[] = array("UserBadges", "setup");
 
-$wgHooks['AdditionalUserProfilePreferences'][] = "UserBadges::addPreferences";
+#$wgHooks['AdditionalUserProfilePreferences'][] = "UserBadges::addPreferences";
+$wgHooks['RenderPreferencesForm'][] = "UserBadges::addPreferences";
 $wgHooks['SavePreferences'][] = "UserBadges::savePreferences";
 
 # use <badge> as internal tag
@@ -160,7 +161,7 @@ class UserBadges {
 	 * @param PreferencesForm $oPrefs  -- preferences form instance
 	 * @param String $html -- generated html
 	 */
-	static public function addPreferences( &$oPrefs, &$html) {
+	static public function addPreferences( &$oPrefs, $oOut) {
 		global $wgUser, $wgOut;
 		global $wgStyleVersion, $wgExtensionsPath;
 		global $wgLogo, $wgSitename;
@@ -173,11 +174,13 @@ class UserBadges {
 		 * run template
 		 */
 		
-		$wgOut->addScript( "<link rel=\"stylesheet\" type=\"text/css\" href=\"{$wgStylePath}/common/yui_2.5.2/colorpicker/assets/skins/sam/colorpicker.css?{$wgStyleVersion}\" />" );
-		$wgOut->addScript( "<link rel=\"stylesheet\" type=\"text/css\" href=\"{$wgExtensionsPath}/wikia/Badges/css/UserBadges.css?{$wgStyleVersion}\" />" );
-		$wgOut->addScript( "<script type=\"text/javascript\" src=\"/skins/common/yui_2.5.2/slider/slider-min.js?{$wgStyleVersion}\"></script>" );
-		$wgOut->addScript( "<script type=\"text/javascript\" src=\"/skins/common/yui_2.5.2/colorpicker/colorpicker-min.js?{$wgStyleVersion}\"></script> ");
-		$wgOut->addScript( "<script type=\"text/javascript\" src=\"{$wgExtensionsPath}/wikia/Badges/js/UserBadges.js?{$wgStyleVersion}\"></script>");
+		$oOut->addScript( "<link rel=\"stylesheet\" type=\"text/css\" href=\"{$wgStylePath}/common/yui_2.5.2/colorpicker/assets/skins/sam/colorpicker.css?{$wgStyleVersion}\" />" );
+		$oOut->addScript( "<link rel=\"stylesheet\" type=\"text/css\" href=\"{$wgExtensionsPath}/wikia/Badges/css/UserBadges.css?{$wgStyleVersion}\" />" );
+		$oOut->addScript( "<script type=\"text/javascript\" src=\"/skins/common/yui_2.5.2/slider/slider-min.js?{$wgStyleVersion}\"></script>" );
+		$oOut->addScript( "<script type=\"text/javascript\" src=\"/skins/common/yui_2.5.2/colorpicker/colorpicker-min.js?{$wgStyleVersion}\"></script> ");
+		$oOut->addScript( "<script type=\"text/javascript\" src=\"{$wgExtensionsPath}/wikia/Badges/js/UserBadges.js?{$wgStyleVersion}\"></script>");
+		
+		$oOut->addHtml( '<fieldset><legend>' . wfMsgHtml( 'user-badge-title' ) . '</legend>' );
 		
 		$domains = WikiFactory::getDomains($User_badge->mCity);
 		$domain = (!empty($domains) && is_array($domains)) ? $domains[count($domains)-1] : "";
@@ -198,7 +201,8 @@ class UserBadges {
 			"wgServer"		=> $wgServer,
 			"mCurrentOptions" => $User_badge->mCurrentOptions,
 		) );
-		$html .= $oTmpl->execute("pref-badge-form");
+		$oOut->addHtml($oTmpl->execute("pref-badge-form"));
+		$oOut->addHtml( '</fieldset>' );
 
 		wfProfileOut( __METHOD__ );
 		return true;
@@ -263,7 +267,7 @@ class UserBadges {
 		/* parse input parameters */
 		$res = "";
 		wfDebugLog( __METHOD__, "parse input parameters\n" );
-		$oUser = (isset($params['user'])) ? User::newFromName($params['user']) : $wgUser;
+		$oUser = (isset($params['user'])) ? User::newFromName($params['user']) : null;
 		if (!empty($oUser)) {
 			$User_badge = self::newFromUser( $oUser );
 			if (isset($params['wikia'])) {
@@ -606,7 +610,7 @@ class UserBadges {
 			$body['labelEditsY'] = $body['dataUsernameY'] + (2 * intval($body['labelfontsize']));
 			
 			// data Edits
-			$body['dataEditsText'] = $wgLang->formatNum(intval(User::edits($mUser->getId())));
+			$body['dataEditsText'] = self::getEditCount($mUser->getId());
 			$body['dataEditsX'] = USER_BADGES_LOGO_WIDTH + 2 * (USER_BADGES_BODY_MARGIN); 
 			$body['dataEditsY'] = $body['labelEditsY'] + $body['datafontsize'] + ceil(USER_BADGES_BODY_MARGIN/2);
 
@@ -718,6 +722,34 @@ class UserBadges {
 		}
 		wfProfileOut(__METHOD__);
 		return array($oImgOrig, $aImgInfo[0], $aImgInfo[1]);
+	}
+	
+	public static function getEditCount($uid) {
+		global $wgContLang;
+		global $wgCityId;
+		wfProfileIn(__METHOD__);
+		
+		$editCount = 0;
+		if (class_exists("Editcount")) {
+			$editCount = $wgContLang->formatNum( Editcount::getTotal( Editcount::editsByNs( $uid ) ) );
+		} else {
+			$dbs = wfGetDBExt(DB_SLAVE);
+			$res = $dbs->select(
+				array( '`dbstats`.`city_local_users`' ),
+				array( 'count(*) as cnt' ),
+				array(
+					'lu_wikia_id' => $wgCityId,
+					'lu_user_id' => $uid
+				),
+				$fname
+			);
+			if ( $row = $dbs->fetchObject( $res ) ) { 
+				$editCount = $row->cnt;
+			}
+		}
+		
+		wfProfileOut(__METHOD__);
+		return $editCount;
 	}
 	
 }
