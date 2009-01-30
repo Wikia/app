@@ -371,6 +371,12 @@ class ReverseParser {
 							$textContent = " {$textContent}";
 						}
 
+						// if first child of table cell is paragraph,
+						// then add linebreak after pipe beginning the table cell
+						if ( !empty($node->firstChild) && ($node->firstChild->nodeName == 'p') ) {
+							$textContent = "\n{$textContent}";
+						}
+
 						$out = "|{$attStr}{$textContent}\n";
 						break;
 
