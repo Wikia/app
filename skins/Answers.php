@@ -489,7 +489,7 @@ wfRunHooks('GetHTMLAfterBody', array (&$this));
 <?php endif; ?>
 <script>
 google_ad_client = 'pub-4086838842346968'; // substitute your client_id (pub-#)
-google_ad_channel = '';
+google_ad_channel = '7000000004';
 google_ad_output = 'js';
 google_max_num_ads = '10';
 google_ad_type = 'text_html';
@@ -497,7 +497,13 @@ google_image_size = '728x90';
 google_feedback = 'on';
 <?
 if ($category_text) {
-echo 'google_hints = \''. implode(', ', $category_text) .'\';';
+	$google_hints = "";
+	foreach($category_text as $ctg){
+		if( strtoupper($ctg) != strtoupper(wfMsg("unanswered_category")) && strtoupper($ctg) != strtoupper(wfMsg("answered_category")) ){
+			$google_hints .= (( $google_hints ) ? ", " : "" ) . $ctg;
+		}
+	}
+	echo 'google_hints = \''. $google_hints .'\';';
 }
 ?>
 </script>
