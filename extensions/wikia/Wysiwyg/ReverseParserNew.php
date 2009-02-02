@@ -787,7 +787,7 @@ class ReverseParser {
 			return false;
 		}
 
-		if($node->getAttribute('_wysiwyg_new_line') && !$this->isHeaderNode($node)) {
+		if($node->getAttribute('_wysiwyg_new_line')) {
 			return true;
 		}
 
