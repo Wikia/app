@@ -137,7 +137,7 @@ wfRunHooks('GetHTMLAfterBody', array (&$this));
 	<div id="answers_page">
 		<?php
 		if ( 
-			(!$is_question || in_array( 'staff', $wgUser->getGroups() ) || in_array( 'admin', $wgUser->getGroups() ) ) &&
+			(!$is_question || $wgUser->isLoggedIn() ) &&
 			$wgTitle->getNamespace() != NS_CATEGORY
 		) {
 		?>
