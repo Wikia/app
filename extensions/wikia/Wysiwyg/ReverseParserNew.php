@@ -488,12 +488,12 @@ class ReverseParser {
 			// if current processed node contains _wysiwyg_new_line attribute (added in Parser.php)
 			// then add new line before it
 			if($this->nodeHasNewLineBefore($node)) {
-				$out = "\n" . $out;
+				$out = "\n{$out}";
 			}
 			
 			// do the same with nodes containing _wysiwyg_line_start and washtml attributes (added in Parser.php)
 			if($this->nodeHasLineStart($node)) {
-				$out = "\n" . $out;
+				$out = "\n{$out}";
 			}
 		} else if($node->nodeType == XML_COMMENT_NODE) {
 
@@ -798,7 +798,7 @@ class ReverseParser {
 	 */
 	private function nodeHasLineStart($node) {
 
-		if (!$node->previousSibling) {
+		if (empty($node->previousSibling) && ($node->parentNode->nodeName == 'body')) {
 			return false;
 		}
 
