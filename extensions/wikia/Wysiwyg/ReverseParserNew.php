@@ -250,8 +250,7 @@ class ReverseParser {
 							$prevNode = $this->getPreviousElementNode($node);
 							$nextNode = $this->getNextElementNode($node);
 
-							// heading following another heading or is at the beginning of wikitext
-							$linesBefore = (($prevNode && $this->isHeaderNode($prevNode)) || empty($node->previousSibling)) ? 0 : ($nodeData['linesBefore']+1)%2;
+							$linesBefore = 0;
 							$linesAfter = $nodeData['linesAfter']-1;
 
 							// do not remove one lineAfter if paragraph is following
