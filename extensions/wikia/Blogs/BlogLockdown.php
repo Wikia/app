@@ -37,7 +37,12 @@ class BlogLockdown {
 
 		$owner = BlogArticle::getOwner( $title );
 		$username = $user->getName();
-		$isOwner =  (bool)( $username == $owner );
+		$isOwner = (bool)( $username == $owner );
+		$isArticle = (bool )( $namespace == NS_BLOG_ARTICLE );
+
+		/**
+		 * returned values
+		 */
 		$result = array();
 		$return = false;
 
@@ -52,17 +57,19 @@ class BlogLockdown {
 				$return = true;
 				break;
 
+			/**
+			 * creating permissions:
+			 * 	-- article can be created only by blog owner
+			 *	-- comment can be created by everyone
+			 */
 			case "create":
-				/**
-				 * commenting
-				 */
-				if( $namespace == NS_BLOG_ARTICLE_TALK ) {
-					$result = true;
-					$return = true;
-				}
-				if( $namespace == NS_BLOG_ARTICLE ) {
+				if( $isArticle) {
 					$return = ( $username == $owner );
 					$result = ( $username == $owner );
+				}
+				else {
+					$result = true;
+					$return = true;
 				}
 				break;
 
@@ -71,14 +78,14 @@ class BlogLockdown {
 			 *	 "blog-articles-edit" permission
 			 */
 			case "edit":
-				if( $namespace == NS_BLOG_ARTICLE && ( $user->isAllowed( "blog-articles-edit" ) || $isOwner ) ) {
+				if( $isArticle && ( $user->isAllowed( "blog-articles-edit" ) || $isOwner ) ) {
 					$result = true;
 					$return = true;
 				}
 				break;
 
 			case "delete":
-				if( $namespace == NS_BLOG_ARTICLE_TALK && $user->isAllowed( "blog-comments-delete" ) ) {
+				if( !$isArticle && $user->isAllowed( "blog-comments-delete" ) ) {
 					$result = true;
 					$return = true;
 				}
