@@ -422,6 +422,13 @@ class ReverseParser {
 					case 'ol':
 						// rtrim used to remove \n added by the last list item
 						$out = rtrim($textContent, " \n");
+
+						// add newline if next node is paragraph
+						$nextNode = $this->getNextElementNode($node);
+
+						if ( $nextNode && in_array($nextNode->nodeName, array('p')) ) {
+							$out = "$out\n";
+						}
 						break;
 
 					// lists elements
@@ -739,9 +746,18 @@ class ReverseParser {
 	}
 
 	private function getPreviousElementNode($node) {
-		$temp = $node;
 		while($node->previousSibling) {
 			$node = $node->previousSibling;
+			if($node->nodeType == XML_ELEMENT_NODE) {
+				return $node;
+			}
+		}
+		return false;
+	}
+
+	private function getNextElementNode($node) {
+		while($node->nextSibling) {
+			$node = $node->nextSibling;
 			if($node->nodeType == XML_ELEMENT_NODE) {
 				return $node;
 			}
