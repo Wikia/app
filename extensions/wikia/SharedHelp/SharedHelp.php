@@ -198,7 +198,7 @@ function SharedHelpHook(&$out, &$text) {
 			$content = preg_replace("|<span class=\"editsection\">\[<a href=\".*?\" title=\".*?\">.*?<\/a>\]<\/span>|", "", $content);
 
 			# namespaces to skip when replacing links
-			$skupNamespaces = array();
+			$skipNamespaces = array();
 			$skipNamespaces[] = $wgContLang->getNsText(NS_CATEGORY);
 			$skipNamespaces[] = $wgContLang->getNsText(NS_IMAGE);
 			$skipNamespaces[] = "Advice";
