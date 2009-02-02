@@ -191,7 +191,7 @@ class UserBadges {
 			"cityId"		=> $User_badge->mCity,
 			"domain"		=> $domain,
 			"oUserBadge"	=> $User_badge,
-			"sUserBadgeUrl" => $User_badge->getFullUrl(),
+			"sUserBadgeUrl" => $User_badge->getFullUrl(1),
 			"wgLogo" 		=> $wgLogo,
 			"wgSitename"	=> $wgSitename,
 			"defOptions"	=> $User_badge->mDefOptions,
@@ -337,7 +337,7 @@ class UserBadges {
 	 *
 	 * @return String
 	 */
-	public function getFullUrl() {
+	public function getFullUrl($touched = 0) {
 		global $wgUploadPath;
 		$url = "";
 		if ( !empty($this->mCurrentOptions) && ($this->mCurrentOptions instanceof UserBadgesOptions) ) {
@@ -352,6 +352,9 @@ class UserBadges {
 					 * uploaded file, we are adding common/avatars path
 					 */
 					$url = $wgUploadPath . $url;
+					if (!empty($touched)) {
+						$url = $url . "?" . $this->mUser->mTouched;
+					}
 				} else {
 					/**
 					 * default avatar, path from messaging.wikia.com
