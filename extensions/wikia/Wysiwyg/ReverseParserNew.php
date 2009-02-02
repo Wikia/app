@@ -264,8 +264,8 @@ class ReverseParser {
 							$textContent = " ".trim($textContent)." ";
 						}
 
-						// headings inside table cell
-						if ( $this->isTableCell($node->parentNode) ) {
+						// heading at the beginning of table cell
+						if ( $this->isTableCell($node->parentNode) && $node->isSameNode($node->parentNode->firstChild) ) {
 							$linesBefore++;
 						}
 
