@@ -358,7 +358,10 @@ class ReverseParser {
 										if ($node->nextSibling->hasAttribute('_new_lines_before')) {
 											$out = "$out\n";
 										}
-									break;
+										break;
+
+									case 'pre':
+										break;
 
 									default:
 										$out = "$out\n";
