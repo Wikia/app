@@ -248,14 +248,40 @@ function SharedHelpBrokenLink( $linker, $nt, $query, $u, $style, $prefix, $text,
 	if ($wgTitle instanceof Title) {
 		$specialpage = SpecialPage::resolveAlias( $wgTitle->getDBkey() );
 		if( ( $nt->getNamespace() == 12 ) && ( 'Wantedpages' != $specialpage ) ) {
-			//not red, blue
-			$style = $linker->getInternalLinkAttributesObj( $nt, $text, '' );
-			$u = str_replace( "&amp;action=edit&amp;redlink=1", "", $u );
-			$u = str_replace( "?action=edit&amp;redlink=1&amp;", "?", $u );
-			$u = str_replace( "?action=edit&amp;redlink=1", "", $u );	
+
+			if (SharedHelpArticleExists()) {
+				//not red, blue
+				$style = $linker->getInternalLinkAttributesObj( $nt, $text, '' );
+				$u = str_replace( "&amp;action=edit&amp;redlink=1", "", $u );
+				$u = str_replace( "?action=edit&amp;redlink=1&amp;", "?", $u );
+				$u = str_replace( "?action=edit&amp;redlink=1", "", $u );	
+			}
 		}
 	}
 	return true;
+}
+
+/**
+ * does $title article exist @help.wikia?
+ *
+ * uses info cached by SharedHelpHook
+ * in border cases may be inacurate up to cachetime (600 sec right now)
+ *
+ * @see SharedHelpHook
+ */
+function SharedHelpArticleExists() {
+	global $wgTitle, $wgMemc, $wgSharedDB;
+
+	$exists = false;
+
+	$sharedArticleKey = $wgSharedDB . ':sharedArticles:' . $wgTitle->getDBkey();
+	$sharedArticle = $wgMemc->get($sharedArticleKey);
+
+	if ( !empty($sharedArticle['timestamp']) ) {
+		$exists =  true;
+	}
+
+	return $exists;
 }
 
 // basically modify the Wantedpages query to exclude pages that appear on the help wiki, as per #5866
