@@ -822,11 +822,6 @@ class ReverseParser {
 			return true;
 		}
 
-		// HTML tags in wikitext
-		if ($node->getAttribute('_wysiwyg_line_start')) {
-			return true;
-		}
-
 		return false;
 	}
 
