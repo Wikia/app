@@ -454,6 +454,14 @@ class ReverseParser {
 					case 'iframe':
 						if (!empty($nodeData)) {
 							$out = $this->handleImage($node, $textContent);
+
+							// add newline if next node is paragraph
+							// and was in next line of wikitext
+							$nextNode = $this->getNextElementNode($node);
+
+							if ( $nextNode && ($nextNode->nodeName == 'p') && $nextNode->hasAttribute('_new_lines_before') ) {
+								$out = "$out\n";
+							}
 						}
 						break;
 
@@ -729,8 +737,7 @@ class ReverseParser {
 
 		switch($data['type']) {
 			case 'image':
-				$prefix = ''; //( in_array($node->nodeName, array('div', 'table')) ) ? "\n\n" : '';
-				$out = $prefix . $data['original'];
+				$out = $data['original'];
 				return $out;
 
 			default:
