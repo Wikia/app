@@ -51,6 +51,7 @@
 	margin: 1px 0px;
 	padding: 0px 2px 2px;
 	width: 60%;
+	white-space: nowrap;
 }
 </style>
 <script type="text/javascript">
