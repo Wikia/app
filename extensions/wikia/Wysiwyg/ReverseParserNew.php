@@ -575,6 +575,10 @@ class ReverseParser {
 				case 'internal link':
 					return $this->handleLink($node, $refData['description']);
 
+				// WikiaVideo
+				case 'video':
+					return $refData['description'];
+
 				// fallback
 				default:
 					return '<!-- unsupported placeholder type -->';
