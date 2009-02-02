@@ -137,8 +137,7 @@ wfRunHooks('GetHTMLAfterBody', array (&$this));
 	<div id="answers_page">
 		<?php
 		if ( 
-			(!$is_question || $wgUser->isLoggedIn() ) &&
-			$wgTitle->getNamespace() != NS_CATEGORY
+			$wgTitle->getNamespace() != NS_CATEGORY || in_array( 'staff', $wgUser->getGroups() )
 		) {
 		?>
 		<div id="page_bar" class="reset color1 clearfix">
