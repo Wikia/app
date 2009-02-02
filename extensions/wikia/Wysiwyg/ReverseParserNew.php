@@ -247,8 +247,17 @@ class ReverseParser {
 					case 'h6':
 						$head = str_repeat("=", $node->nodeName{1});
 						if(!empty($nodeData)) {
-							$linesBefore = ((($previousNode = $this->getPreviousElementNode($node)) && $this->isHeaderNode($previousNode)) || empty($node->previousSibling)) ? 0 : ($nodeData['linesBefore']+1)%2;
+							$prevNode = $this->getPreviousElementNode($node);
+							$nextNode = $this->getNextElementNode($node);
+
+							// heading following another heading or is at the beginning of wikitext
+							$linesBefore = (($prevNode && $this->isHeaderNode($prevNode)) || empty($node->previousSibling)) ? 0 : ($nodeData['linesBefore']+1)%2;
 							$linesAfter = $nodeData['linesAfter']-1;
+
+							// do not remove one lineAfter if paragraph is following
+							if ( $nextNode && ($nextNode->nodeName == 'p') ) {
+								$linesAfter++;
+							}
 						} else {
 							$linesBefore = 0;
 							$linesAfter = 1;
