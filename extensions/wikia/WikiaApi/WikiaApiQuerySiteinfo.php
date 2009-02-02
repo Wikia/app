@@ -48,6 +48,9 @@ class WikiaApiQuerySiteinfo extends ApiQuerySiteinfo {
 				case 'variables':	
 					$this->appendVariables($p);
 					break;
+				default : 
+					parent::execute();
+					break;
 			}
 		}				
 	}
