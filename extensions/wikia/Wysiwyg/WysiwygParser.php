@@ -33,18 +33,18 @@ class WysiwygParser extends Parser {
 		$result = $this->closeParagraph();
 		if ( ':' == $char) {
 			if ( substr($this->mCurrentPrefix, -1) == ':' && $this->mLastCommonPrefix ) {
-				$this->mLast = 'open';
 				$this->mListLevel = strlen($this->mCurrentPrefix);
 				$style = ' style="margin-left:'.($this->mListLevel*40).'px"';
 				if ($this->mListLevel > 1) {
-					$result = "</p><p{$style}>";
+					$result .= ($this->mLast != 'close' ? '</p>' : ''). "<p{$style}>";
 				}
 				else {
 					if ($this->mEmptyLineCounter%2 == 1) {
 						$style .= ' _wysiwyg_new_line="true"';
 					}
-					$result = "<p{$style}>";
+					$result .= "<p{$style}>";
 				}
+				$this->mLast = 'open';
 			}
 			else {
 				$result = '';
