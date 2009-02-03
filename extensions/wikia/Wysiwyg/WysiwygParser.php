@@ -110,10 +110,10 @@ class WysiwygParser extends Parser {
 				$text = '</p>';
 			}
 			else {
-				$text ='';
+				return '';
 			}
 		}
-		else if ( '*' == $char ) { $text = '</li></ul>'; $this->bulletLevel--; }
+		else if ( '*' == $char ) { $text = '</li></ul>'; $this->bulletLevel--; $this->mLast = 'close'; }
 		else if ( '#' == $char ) { $text = '</li></ol>'; $this->bulletLevel--; }
 		else {	return '<!-- ERR 3 -->'; }
 		return $text."\n";
