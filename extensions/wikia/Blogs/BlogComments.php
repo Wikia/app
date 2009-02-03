@@ -457,6 +457,7 @@ class BlogComment {
 		$result   = null;
 		$article  = new Article( $commentTitle, 0 );
 		$editPage = new EditPage( $article );
+		$editPage->edittime = $article->getTimestamp();
 		$editPage->textbox1 = $text;
 		$editpage->summary  = wfMsg('blog-comments-new');
 		$retval = $editPage->internalAttemptSave( $result );

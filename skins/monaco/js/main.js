@@ -377,3 +377,122 @@ function doClearAll() {
 	}
 	last_displayed = '';
 }
+
+// By Inez
+var menuInitCalled = false;
+var submenu_array = new Array();
+var submenuitem_array = new Array();
+var menuitem_array = new Array();
+var magicItemsCounter = 0;
+var menuInitCalled = false;
+var magicCounter = 1000;
+var editthispage = false;
+function menuInit() {
+	if(menuInitCalled) {
+		return;
+	}
+	menuInitCalled = true;
+	if($('ca-edit')) {
+		editthispage = $('ca-edit').href;
+	}
+	if(typeof wgMenuEdit != 'undefined') menuArray[2000] = {'href' : YAHOO.util.Dom.hasClass('navigation', 'userMenu') ? wgScript + '?title=User:'+wgUserName+'/Monaco-sidebar&action=edit' : wgScript + '?title=MediaWiki:Monaco-sidebar&action=edit', 'text' : wgMenuEdit, 'className' : 'Monaco-sidebar_edit'};
+	for(var i in menuArray.mainMenu) {
+		var out = '<div class="sub-menu widget" id="sub-menu_'+i+'" style="display:none">';
+		var items = new Array();
+		if(typeof menuArray.mainMenu[i] == 'object') {
+			if(typeof wgMenuEdit != 'undefined') menuArray.mainMenu[i].push(2000);
+			for(var j = 0; j < menuArray.mainMenu[i].length; j++) {
+				var id = menuArray.mainMenu[i][j];
+				if(menuArray[id]['href'] == 'editthispage') {
+					if(editthispage) {
+						menuArray[id]['href'] = editthispage;
+					} else {
+						continue;
+					}
+				}
+				out += '<div class="menu-item'+(j == menuArray.mainMenu[i].length-1 ? ' border-fix' : '')+'" id="sub-menu-item_'+i+'_'+id+'">';
+				out += '<a'+(menuArray[id]['className'] ? ' class="'+menuArray[id]['className']+'"' : '')+' id="a-sub-menu-item_'+i+'_'+id+'" href="'+menuArray[id]['href']+'" rel="nofollow">'+menuArray[id]['text']+(menuArray[id]['children'] || menuArray[id]['magic'] ? '<em>&rsaquo;</em>' : '')+'</a>';
+				out += '</div>';
+				submenuitem_array['sub-menu-item_'+i+'_'+id] = '_'+i+'_'+id;
+				items.push('a-sub-menu-item_'+i+'_'+id);
+			}
+		} else {
+			for(var j = 0; j < magicWords[menuArray.mainMenu[i]].length; j++) {
+				if(magicWords[menuArray.mainMenu[i]][j]['text'] == '-edit-') {
+					if(typeof wgMenuEdit == 'undefined') continue;
+					magicWords[menuArray.mainMenu[i]][j]['text'] = wgMenuEdit;
+				} else if(magicWords[menuArray.mainMenu[i]][j]['text'] == '-more-') {
+					magicWords[menuArray.mainMenu[i]][j]['text'] = wgMenuMore;
+				}
+				out += '<div class="menu-item'+(j == magicWords[menuArray.mainMenu[i]].length-1 ? ' border-fix' : '')+'" id="sub-menu-item_'+i+'_'+magicCounter+'">';
+				out += '<a'+(magicWords[menuArray.mainMenu[i]][j]['className'] ? ' class="'+magicWords[menuArray.mainMenu[i]][j]['className']+'"' : '')+' id="a-sub-menu-item_'+i+'_'+magicCounter+'" href="'+magicWords[menuArray.mainMenu[i]][j]['url']+'" rel="nofollow">'+magicWords[menuArray.mainMenu[i]][j]['text']+'</a>';
+				out += '</div>';
+				submenuitem_array['sub-menu-item_'+i+'_'+magicCounter] = '_'+i+'_'+magicCounter;
+				items.push('a-sub-menu-item_'+i+'_'+magicCounter);
+				magicCounter++
+			}
+		}
+		out += '</div>';
+		var div = document.createElement('div');
+		div.id = 'navigation_'+i;
+		div.innerHTML = out;
+		YAHOO.util.Dom.insertAfter(div, $('a-menu-item_'+i));
+		submenu_array['sub-menu_'+i] = '_'+i;
+		$('sub-menu_'+i).onmouseout = clearMenu;
+		if($('sub-menu_'+i).captureEvents) $('sub-menu_'+i).captureEvents(Event.MOUSEOUT);
+		YAHOO.util.Event.on(items, 'mouseover', sub_menuItemAction_wrap)
+		menuitem_array['menu-item_'+i]= '_'+i;
+		$('a-menu-item_'+i).onmouseover = menuItemAction;
+		if($('a-menu-item_'+i).captureEvents) $('a-menu-item_'+i).captureEvents(Event.MOUSEOVER);
+		$('a-menu-item_'+i).onmouseout = clearBackground;
+		if($('a-menu-item_'+i).captureEvents) $('a-menu-item_'+i).captureEvents(Event.MOUSEOUT);
+	}
+	$('navigation_widget').onmouseout = clearMenu;
+}
+function sub_menuItemAction_wrap(e) {
+	if(!e) var e = window.event;
+	var elId = YAHOO.util.Event.getTarget(e).id;
+	var menu_id = elId.split('_');
+	menu_id = menu_id[menu_id.length-1];
+
+	if(menuArray[menu_id] && (menuArray[menu_id].children || menuArray[menu_id].magic)) {
+		var name_part = submenuitem_array[elId.substring(2)];
+		var out = '<div class="sub-menu widget" id="sub-menu'+name_part+'" style="display:none">';
+		var items = new Array();
+		if(menuArray[menu_id].children) {
+			for(var j = 0; j < menuArray[menu_id].children.length; j++) {
+				var id = menuArray[menu_id].children[j];
+				out += '<div class="menu-item'+(j == menuArray[menu_id].children.length-1 ? ' border-fix' : '')+'" id="sub-menu-item'+name_part+'_'+id+'">';
+				out += '<a id="a-sub-menu-item'+name_part+'_'+id+'" href="'+menuArray[id].href+'" rel="nofollow">'+menuArray[id].text+(menuArray[id].children || menuArray[id].magic ? '<em>&rsaquo;</em>' : '')+'</a>';
+				out += '</div>';
+				submenuitem_array['sub-menu-item'+name_part+'_'+id] = name_part+'_'+id;
+				items.push('a-sub-menu-item'+name_part+'_'+id);
+			}
+		} else {
+			for(var j = 0; j < magicWords[menuArray[menu_id].magic].length; j++) {
+				if(magicWords[menuArray[menu_id].magic][j]['text'] == '-edit-') {
+					if(typeof wgMenuEdit == 'undefined') continue;
+					magicWords[menuArray[menu_id].magic][j]['text'] = wgMenuEdit;
+				} else if(magicWords[menuArray[menu_id].magic][j]['text'] == '-more-') {
+					magicWords[menuArray[menu_id].magic][j]['text'] = wgMenuMore;
+				}
+				out += '<div class="menu-item'+(j == magicWords[menuArray[menu_id].magic].length-1 ? ' border-fix' : '')+'" id="sub-menu-item'+name_part+'_'+magicCounter+'">';
+				out += '<a'+(magicWords[menuArray[menu_id].magic][j]['className'] ? ' class="'+magicWords[menuArray[menu_id].magic][j]['className']+'"' : '')+' id="a-sub-menu-item'+name_part+'_'+magicCounter+'" href="'+magicWords[menuArray[menu_id].magic][j]['url']+'" rel="nofollow">'+magicWords[menuArray[menu_id].magic][j]['text']+'</a>';
+				out += '</div>';
+				submenuitem_array['sub-menu-item'+name_part+'_'+j] = name_part+'_'+magicCounter;
+				items.push('a-sub-menu-item'+name_part+'_'+magicCounter);
+				magicCounter++
+			}
+		}
+		out += '</div>';
+		var div = document.createElement('div');
+		div.id = 'navigation'+name_part;
+		div.innerHTML = out;
+		YAHOO.util.Dom.insertAfter(div, $('a-sub-menu-item'+name_part));
+		submenu_array['sub-menu'+name_part+'_'+menu_id] = name_part+'_'+menu_id;
+		YAHOO.util.Event.on(items, 'mouseover', sub_menuItemAction_wrap);
+		menuArray[menu_id].children = false;
+		menuArray[menu_id].magic = false;
+	}
+	return sub_menuItemAction(e);
+}

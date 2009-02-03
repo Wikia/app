@@ -106,6 +106,7 @@ class User {
 		# user_group table
 		'mGroups',
 		'mMonacoData',
+		'mMonacoSidebar'
 	);
 
 	/**
@@ -160,7 +161,7 @@ class User {
 	 */
 	var $mId, $mName, $mRealName, $mPassword, $mNewpassword, $mNewpassTime,
 		$mEmail, $mOptions, $mTouched, $mToken, $mEmailAuthenticated,
-		$mEmailToken, $mEmailTokenExpires, $mRegistration, $mGroups, $mMonacoData;
+		$mEmailToken, $mEmailTokenExpires, $mRegistration, $mGroups, $mMonacoData, $mMonacoSidebar;
 
 	/**
 	 * Whether the cache variables have been loaded
@@ -746,6 +747,7 @@ class User {
 		$this->mRegistration = wfTimestamp( TS_MW );
 		$this->mGroups = array();
 		$this->mMonacoData = null;
+		$this->mMonacoSidebar = null;
 
 		wfRunHooks( 'UserLoadDefaults', array( $this, $name ) );
 
@@ -862,6 +864,7 @@ class User {
 			$this->mGroups = null; // deferred
 			$this->getEditCount(); // revalidation for nulls
 			$this->mMonacoData = null;
+			$this->mMonacoSidebar = null;
 			return true;
 		} else {
 			# Invalid user_id
@@ -1340,7 +1343,7 @@ class User {
 			if( !$this->mId ) {
 				# hack: don't check it for our varnish ip addresses
 				global $wgSquidServers, $wgSquidServersNoPurge;
-				if( in_array( $this->getName(), $wgSquidServers ) || 
+				if( in_array( $this->getName(), $wgSquidServers ) ||
 					in_array( $this->getName(), $wgSquidServersNoPurge )
 				) {
 					return $this->mNewtalk;
@@ -2179,7 +2182,9 @@ class User {
 		}
 
 		wfRunHooks( 'UserSetCookies', array( $this, &$session, &$cookies ) );
-		$_SESSION = $session + $_SESSION;
+		if(is_array($session) && is_array($_SESSION)) {
+			$_SESSION = $session + $_SESSION;
+		}
 		foreach ( $cookies as $name => $value ) {
 			if ( $value === false ) {
 				$this->clearCookie( $name );
