@@ -345,3 +345,24 @@
 	background: transparent !important;
 	color: #333;
 }
+
+/*** Search results ***/
+ul.mw-search-results {
+	list-style-type: none;
+	list-style-image: none;
+	font-family: "Arial", sans-serif;
+}
+div.searchresult {
+	width: 42em;
+	font-size: small;
+}
+.mw-search-results a {
+	font-size: medium;
+	text-decoration: underline;
+}
+.mw-search-result-data {
+	font-size: 70%;
+}
+span.searchmatch {
+	color: inherit;
+}
