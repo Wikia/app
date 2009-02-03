@@ -114,7 +114,7 @@ class WysiwygParser extends Parser {
 			}
 		}
 		else if ( '*' == $char ) { $text = '</li></ul>'; $this->bulletLevel--; $this->mLast = 'close'; }
-		else if ( '#' == $char ) { $text = '</li></ol>'; $this->bulletLevel--; }
+		else if ( '#' == $char ) { $text = '</li></ol>'; $this->bulletLevel--; $this->mLast = 'close'; }
 		else {	return '<!-- ERR 3 -->'; }
 		return $text."\n";
 	}
