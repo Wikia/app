@@ -203,13 +203,6 @@ class ReverseParser {
 						// if the first previous XML_ELEMENT_NODE (so no text and no comment) of the current
 						// node is <p> then add new line before the current one
 						if ($previousNode && $previousNode->nodeName == 'p') {
-
-							// previous <p> node was related to definion lists
-							// take just _new_lines_before value under consideration
-							if ( ($this->hasCSSClass($previousNode, 'definitionTerm') || $this->getIndentationLevel($previousNode) > 0 ) && $prefix == "\n\n") {
-								$newLinesBefore = $node->getAttribute('_new_lines_before');
-								$prefix = str_repeat("\n",  $newLinesBefore);
-							}
 							$textContent = $prefix . $textContent;
 						} else if($textContent == ""){
 							// empty paragraph
