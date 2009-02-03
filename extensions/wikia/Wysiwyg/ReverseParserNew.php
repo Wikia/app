@@ -15,6 +15,11 @@ class ReverseParser {
 	// Wysiwyg/FCK meta data
 	private $data = array();
 
+	// lists handling
+	private $listLevel;
+	private $listBullets;
+	private $listIndent;
+
 	// cache results of wfUrlProtocols()
 	private $urlProtocols;
 
@@ -95,7 +100,10 @@ class ReverseParser {
 					if (in_array($node->nodeName, array('ol','ul'))) {
 						$indentation = $this->getIndentationLevel($node);
 						if ($indentation !== false) {
-							$this->listBullets = str_repeat(':', $indentation);
+							$this->listIndent = str_repeat(':', $indentation);
+						}
+						else {
+							$this->listIndent = '';
 						}
 					}
 					$this->listLevel++;
@@ -757,7 +765,7 @@ class ReverseParser {
 					// *** bar
 					return $content . "\n";
 				} else {
-					return $this->listBullets . ' ' . ltrim($content) . "\n";
+					return $this->listIndent . $this->listBullets . ' ' . ltrim($content) . "\n";
 				}
 			break;
 		}
