@@ -127,7 +127,7 @@ class ListUsers extends SpecialPage {
         wfProfileIn( __METHOD__ );
 		$aResult = array();
 		$memkey = wfForeignMemcKey( $wgSharedDB, null, "getGroupList");
-		$cached = "";#$wgMemc->get($memkey);
+		$cached = $wgMemc->get($memkey);
 		if (!is_array ($cached)) { 
 			$dbs = wfGetDBExt(DB_SLAVE);
 			if (!is_null($dbs)) {
