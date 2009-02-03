@@ -380,7 +380,7 @@ class BlogComment {
 	 * @return String -- json-ized array`
 	 */
 	static public function axPost() {
-		global $wgRequest, $wgUser;
+		global $wgRequest, $wgUser, $wgDevelEnvironment, $wgDBname;
 
 		$articleId = $wgRequest->getVal( "article", false );
 
@@ -401,10 +401,13 @@ class BlogComment {
 				$message = false;
 				break;
 			default:
-				Wikia::log( __METHOD__, "error", "No article created" );
+				$wgDevelEnvironment = true;
+				$userId = $wgUser->getId();
+				Wikia::log( __METHOD__, "error", "No article created. Status: {$status}; DB: {$wgDBname}; User: {$userId}" );
 				$text  = false;
 				$error = true;
 				$message = wfMsg("blog-comment-error");
+				$wgDevelEnvironment = false;
 		}
 
 		return Wikia::json_encode(
