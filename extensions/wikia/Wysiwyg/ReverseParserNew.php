@@ -920,17 +920,16 @@ class ReverseParser {
 	 * Returns level of indentation from value of margin-left CSS property
 	 */
 	private function getIndentationLevel($node) {
-		if(!$node->hasAttributes()) {
-			return false;
+		while (!empty($node->parentNode)) {
+			$cssStyle = $node->getAttribute('style');
+			
+			if(!empty($cssStyle)) {
+				$margin = (substr($cssStyle, 0, 11) == 'margin-left') ? intval(substr($cssStyle, 12)) : 0;
+				return intval($margin/40);
+			}
+
+			$node = $node->parentNode;
 		}
-
-		$cssStyle = $node->getAttribute('style');
-
-		if(!empty($cssStyle)) {
-			$margin = (substr($cssStyle, 0, 11) == 'margin-left') ? intval(substr($cssStyle, 12)) : 0;
-			return intval($margin/40);
-		}
-
 		return false;
 	}
 
