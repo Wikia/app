@@ -1,11 +1,16 @@
 <?php
 
 /**
- * Welcome user after first edit
+ * HAWelcomeJob -- Welcome user after first edit
+ *
+ * @file
+ * @ingroup JobQueue
  *
  * @copyright Copyright © Krzysztof Krzyżaniak for Wikia Inc.
  * @author Krzysztof Krzyżaniak (eloy) <eloy@wikia-inc.com>
- * @ingroup JobQueue
+ * @date 2009-02-02
+ * @version 0.1
+ * @license http://www.gnu.org/copyleft/gpl.html GNU General Public License 2.0 or later
  */
 
 /**
@@ -63,15 +68,27 @@ class HAWelcomeJob extends Job {
 			 * check again if talk page exists
 			 */
 			$talkPage  = $this->mUser->getUserPage()->getTalkPage();
-			$wgUser    = $this->getLastSysop();
-			$sysopPage = $wgUser->getUserPage()->getTalkPage();
+			if( $talkPage ) {
+				$wgUser    = $this->getLastSysop();
+				$sysopPage = $wgUser->getUserPage()->getTalkPage();
 
-			$welcomeMsg = wfMsg( "hawelcome-message-user",
-				array( sprintf("%s:%s", $this->title->getNsText(), $this->title->getText() ) ),
-				array( sprintf("%s:%s", $sysopPage->getNsText(), $sysopPage->getText() ) )
-			);
-			$talkArticle = new Article( $talkPage, 0 );
-			$talkArticle->doEdit( $welcomeMsg, wfMsg( "hawelcome-message-log" ) );
+				if( $this->isAnon ) {
+					$welcomeMsg = wfMsg( "hawelcome-message-anon",
+						array( sprintf("%s:%s", $this->title->getNsText(), $this->title->getText() ) ),
+						array( sprintf("%s:%s", $sysopPage->getNsText(), $sysopPage->getText() ) )
+					);
+				}
+				else {
+					$welcomeMsg = wfMsg( "hawelcome-message-user",
+						array( sprintf("%s:%s", $this->title->getNsText(), $this->title->getText() ) ),
+						array( sprintf("%s:%s", $sysopPage->getNsText(), $sysopPage->getText() ) )
+					);
+				}
+				$talkArticle = new Article( $talkPage, 0 );
+				if( ! $talkArticle->exists ) {
+					$talkArticle->doEdit( $welcomeMsg, wfMsg( "hawelcome-message-log" ) );
+				}
+			}
 		}
 
 		$wgUser = $tmpUser;
