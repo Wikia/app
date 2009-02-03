@@ -25,7 +25,8 @@ $wgExtensionMessagesFiles["HAWelcome"] = dirname(__FILE__) . '/HAWelcome.i18n.ph
 
 class HAWelcomeJob extends Job {
 
-	private $mUser;
+	private $mUser,
+		$isAnon;
 
 	/**
 	 * Construct a job
@@ -34,9 +35,12 @@ class HAWelcomeJob extends Job {
 	 * @param integer $id job_id
 	 */
 	public function __construct( $title, $params, $id = 0 ) {
+		Wikia::log( __METHOD__, $params );
 		wfLoadExtensionMessages( "HAWelcome" );
 		parent::__construct( "HAWelcome", $title, $params, $id );
 		$user_id = $params[ "user_id" ];
+
+		$this->isAnon = (bool )$params[ "is_anon" ];
 		$this->mUser = User::newFromId( $user_id );
 	}
 
@@ -47,22 +51,30 @@ class HAWelcomeJob extends Job {
 	 */
 	public function run() {
 
-		print $this->title->getText();
-		print $this->title->getNsText();
+		global $wgUser;
+
+		/**
+		 * overwrite $wgUser for ~~~~ expanding
+		 */
+		$tmpUser = $wgUser;
+
 		if( $this->mUser ) {
 			/**
 			 * check again if talk page exists
 			 */
-			$talkPage = $this->mUser->getUserPage()->getTalkPage();
+			$talkPage  = $this->mUser->getUserPage()->getTalkPage();
+			$wgUser    = $this->getLastSysop();
+			$sysopPage = $wgUser->getUserPage()->getTalkPage();
+
 			$welcomeMsg = wfMsg( "hawelcome-message-user",
-				array(
-					sprintf("%s:%s", $this->title->getNsText(),  $this->title->getText() )
-				)
+				array( sprintf("%s:%s", $this->title->getNsText(), $this->title->getText() ) ),
+				array( sprintf("%s:%s", $sysopPage->getNsText(), $sysopPage->getText() ) )
 			);
 			$talkArticle = new Article( $talkPage, 0 );
-			$talkArticle->doEdit( $welcomeMsg, "test" );
+			$talkArticle->doEdit( $welcomeMsg, wfMsg( "hawelcome-message-log" ) );
 		}
 
+		$wgUser = $tmpUser;
 		return true;
 	}
 
@@ -72,9 +84,24 @@ class HAWelcomeJob extends Job {
 	 *
 	 * @access public
 	 */
-	public function getLastSysyop() {
+	public function getLastSysop() {
 		global $wgCityId;
-#		select max(rev_timestamp), lu_user_name from city_local_users, blobs where lu_user_name = rev_user_text and lu_allgroups like '%staff%' and rev_wikia_id = 165 group by lu_user_name order by 1 desc limit 1;
+
+		$dbr = wfGetDBExt( DB_SLAVE );
+		$Row = $dbr->selectRow(
+			array( "city_local_users", "blobs" ),
+			array( "rev_timestamp", "lu_user_id" ),
+			array(
+				"lu_user_id = rev_user",
+				"lu_allgroups like '%sysop%'",
+				"rev_wikia_id" => $wgCityId
+			),
+			__METHOD__,
+			array( "order by" => "rev_timestamp desc" )
+		);
+
+		return User::newFromId( $Row->lu_user_id );
+#		select rev_timestamp, lu_user_name from city_local_users, blobs where lu_user_name = rev_user_text and lu_allgroups like '%sysop%' and rev_wikia_id = 165 order by rev_timestamp desc limit 1;
 	}
 
 	/**
