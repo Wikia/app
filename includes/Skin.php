@@ -132,7 +132,12 @@ class Skin extends Linker {
 				// Preload base classes to work around APC/PHP5 bug
 				$deps = "{$wgStyleDirectory}/{$skinName}.deps.php";
 				if( file_exists( $deps ) ) include_once( $deps );
-				require_once( "{$wgStyleDirectory}/{$skinName}.php" );
+				global $wgMonacoNewSidebar, $wgRequest;
+				if(!empty($wgMonacoNewSidebar) && $skinName == 'Monaco' && $wgRequest->getVal('useold') != 'true') {
+					require_once( "{$wgStyleDirectory}/{$skinName}New.php" );
+				} else {
+					require_once( "{$wgStyleDirectory}/{$skinName}.php" );
+				}
 			}
 
 			# Check if we got if not failback to default skin
@@ -350,7 +355,7 @@ class Skin extends Linker {
 			'wgEnableWriteAPI' => $wgEnableWriteAPI,
 			'wgEnableNewParser' => $wgEnableNewParser,
 		);
-		
+
 		if( $wgUseAjax && $wgEnableMWSuggest && !$wgUser->getOption( 'disablesuggest', false )){
 			$vars['wgMWSuggestTemplate'] = SearchEngine::getMWSuggestTemplate();
 			$vars['wgDBname'] = $wgDBname;
@@ -1014,7 +1019,7 @@ END;
 
 		// Ensure unique id's for search boxes made after the first
 		$this->searchboxes = $this->searchboxes == '' ? 2 : $this->searchboxes + 1;
-		
+
 		return $s;
 	}
 

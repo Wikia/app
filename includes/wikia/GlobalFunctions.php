@@ -581,3 +581,84 @@ function wfGetCurrentUrl() {
 
 	return $arr;
 }
+
+global $wgAjaxExportList;
+$wgAjaxExportList[] = 'getMenu';
+function getMenu() {
+	global $wgRequest, $wgMemc, $wgCityId;
+
+	$id = $wgRequest->getVal('id');
+	if($id) {
+		error_log("NewSidebar: wgCityId: $wgCityId id: $id");
+		$menuArray = $wgMemc->get($id);
+		$content = 'var menuArray = '.Wikia::json_encode($menuArray).';YAHOO.util.Event.on(\'navigation_widget\', \'mouseover\', menuInit);YAHOO.util.Event.onDOMReady(menuInit);';
+		$duration = 60 * 60 * 24 * 7; // one week
+	}
+
+	$words = $wgRequest->getVal('words');
+	if($words) {
+		error_log("NewSidebar: wgCityId: $wgCityId words: $words");
+		$magicWords = array();
+		$map = array('voted' => array('highest_ratings', 'GetTopVotedArticles'), 'popular' => array('most_popular', 'GetMostPopularArticles'), 'visited' => array('most_visited', 'GetMostVisitedArticles'), 'newlychanged' => array('newly_changed', 'GetNewlyChangedArticles'), 'topusers' => array('community', 'GetTopFiveUsers'));
+		$words = split(',', $words);
+		foreach($words as $word) {
+			if(isset($map[$word])) {
+				$magicWords[$word] = DataProvider::$map[$word][1]();
+				$magicWords[$word][] = array('className' => 'Monaco-sidebar_more', 'url' => Title::makeTitle(NS_SPECIAL, 'Top/'.$map[$word][0])->getLocalURL(), 'text' => '-more-');
+				if($word == 'popular') {
+					$magicWords[$word][] = array('className' => 'Monaco-sidebar_edit', 'url' => Title::makeTitle(NS_MEDIAWIKI, 'Most popular articles')->getLocalUrl(), 'text' => '-edit-');
+				}
+			} else if(substr($word, 0, 8) == 'category') {
+				$name = substr($word, 8);
+				$articles = getMenuHelper($name);
+				foreach($articles as $key => $val) {
+					$title = Title::newFromId($val);
+					if(is_object($title)) {
+						$magicWords[$word][] = array('text' => $title->getText(), 'url' => $title->getLocalUrl());
+					}
+				}
+				$magicWords[$word][] = array('className' => 'Monaco-sidebar_more', 'url' => Title::makeTitle(NS_CATEGORY, $name)->getLocalURL(), 'text' => '-more-');
+			}
+		}
+		$content = 'var magicWords = '.Wikia::json_encode($magicWords).';';
+		$duration = 60 * 60 * 48; // two days
+	}
+
+	if(!empty($content)) {
+		header("Cache-Control: s-maxage={$duration}, must-revalidate, max-age=0");
+		header("X-Pass-Cache-Control: max-age={$duration}");
+		echo $content;
+		exit();
+	}
+}
+
+function getMenuHelper($name, $limit = 7) {
+	global $wgMemc;
+	$key = wfMemcKey('popular-art');
+	$data = $wgMemc->get($key);
+
+	if(!empty($data) && isset($data[$name])) {
+		return $data[$name];
+	}
+
+	$dbr =& wfGetDB( DB_SLAVE );
+	$query = "SELECT cl_from FROM categorylinks USE INDEX (cl_from), page_visited USE INDEX (page_visited_cnt_inx) WHERE article_id = cl_from AND cl_to = '".addslashes($name)."' ORDER BY COUNT DESC LIMIT $limit";
+	$res = $dbr->query($query);
+	$result = array();
+	while($row = $dbr->fetchObject($res)) {
+		$result[] = $row->cl_from;
+	}
+	if(count($result) < $limit) {
+		$query = "SELECT cl_from FROM categorylinks WHERE cl_to = '".addslashes($name)."' ".(count($result) > 0 ? " AND cl_from NOT IN (".implode(',', $result).") " : "")." LIMIT ".($limit - count($result));
+		$res = $dbr->query($query);
+		while($row = $dbr->fetchObject($res)) {
+			$result[] = $row->cl_from;
+		}
+	}
+	if(empty($data) || !is_array($data)) {
+		$data = array($data);
+	}
+	$data[$name] = $result;
+	$wgMemc->set($key, $data, 60 * 60 * 6);
+	return $result;
+}

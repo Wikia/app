@@ -45,8 +45,11 @@ function wfExtendJSGlobalVars($vars) {
 	}
 
 	$vars['wgExtensionsPath'] = $wgExtensionsPath;
-
 	$vars['wgSitename'] = $wgSitename;
 
+	$vars['wgMenuMore'] = strtolower(wfMsg('moredotdotdot'));
+	if($wgUser->isAllowed('editinterface')) {
+		$vars['wgMenuEdit'] = wfMsg('monaco-edit-this-menu');
+	}
 	return true;
 }
