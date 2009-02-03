@@ -260,8 +260,8 @@ wfRunHooks('GetHTMLAfterBody', array (&$this));
 		</div><?/*bodyContent*/?>
 
 		<?php
-		global $wgTitle;
-		if ($wgUser->isAnon() && !$answer_page->isArticleAnswered() && $_GET['state'] == 'asked') {
+		global $wgTitle, $wgAnswersShowInlineRegister;
+		if ($wgAnswersShowInlineRegister && $wgUser->isAnon() && !$answer_page->isArticleAnswered() && $_GET['state'] == 'asked') {
 			$submit_title = SpecialPage::getTitleFor( 'Userlogin' );
 			$submit_url = $submit_title->escapeFullURL("type=signup&action=submitlogin");
 			
