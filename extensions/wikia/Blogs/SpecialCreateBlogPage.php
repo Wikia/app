@@ -67,7 +67,7 @@ class CreateBlogPage extends SpecialBlogPage {
 		 * add category for blogs (if defined in message and not existed already)
 		 * @author eloy
 		 */
-		$catName = wfMsg("create-blog-post-category");
+		$catName = wfMsgForContent("create-blog-post-category");
 		if( $catName && $catName !== "-" && !$this->mPostArticle->exists()) {
 			$sCategoryNSName = $wgContLang->getFormattedNsText( NS_CATEGORY );
 			$sPostBody .= "\n[[" . $sCategoryNSName . ":" . $catName . "]]";

@@ -31,7 +31,7 @@ $wgExtensionMessagesFiles["HAWelcome"] = dirname(__FILE__) . '/HAWelcome.i18n.ph
 class HAWelcomeJob extends Job {
 
 	private $mUser,
-		$isAnon;
+		$mAnon;
 
 	/**
 	 * Construct a job
@@ -45,7 +45,7 @@ class HAWelcomeJob extends Job {
 		parent::__construct( "HAWelcome", $title, $params, $id );
 		$user_id = $params[ "user_id" ];
 
-		$this->isAnon = (bool )$params[ "is_anon" ];
+		$this->mAnon = (bool )$params[ "is_anon" ];
 		$this->mUser = User::newFromId( $user_id );
 	}
 
@@ -72,7 +72,7 @@ class HAWelcomeJob extends Job {
 				$wgUser    = $this->getLastSysop();
 				$sysopPage = $wgUser->getUserPage()->getTalkPage();
 
-				if( $this->isAnon ) {
+				if( $this->mAnon ) {
 					$welcomeMsg = wfMsg( "hawelcome-message-anon",
 						array( sprintf("%s:%s", $this->title->getNsText(), $this->title->getText() ) ),
 						array( sprintf("%s:%s", $sysopPage->getNsText(), $sysopPage->getText() ) )
@@ -85,7 +85,7 @@ class HAWelcomeJob extends Job {
 					);
 				}
 				$talkArticle = new Article( $talkPage, 0 );
-				if( ! $talkArticle->exists ) {
+				if( ! $talkArticle->exists() ) {
 					$talkArticle->doEdit( $welcomeMsg, wfMsg( "hawelcome-message-log" ) );
 				}
 			}
