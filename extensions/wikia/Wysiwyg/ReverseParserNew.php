@@ -582,7 +582,18 @@ class ReverseParser {
 				// {{template}}
 				//case 'curly brackets':
 				case 'template':
-					return $refData['originalCall'];
+					$prefix = '';
+
+					// add new line before templates with lineStart meta-attribute set
+					if ( !empty($refData['wrapper']) && !empty($refData['lineStart']) ) {
+						// only add newline before templates not being first child of it parents
+						// infoboxes using <table> don't need this fix
+						if ( !$node->isSameNode($node->parentNode->firstChild) && in_array($refData['wrapper'], array('div')) ) {
+							$prefix = "\n";
+						}
+					}
+
+					return $prefix . $refData['originalCall'];
 
 				// __NOTOC__ ...
 				case 'double underscore':
