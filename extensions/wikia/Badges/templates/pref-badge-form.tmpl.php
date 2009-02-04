@@ -14,7 +14,7 @@ ColorTxt["DIALOG_HEADER"] = "<?=wfMsg("user-badge-dialog-title")?>";
 	<td class="pref-input" valign="middle" colspan="2"><h2><?=wfMsg('user-badge-current')?></h2></td>
 </tr>	
 <tr>
-	<td class="pref-input" valign="top" colspan="2"><p><img src="<?=$sUserBadgeUrl?>" /></p></td>
+	<td class="pref-input" valign="top" colspan="2"><p><img src="<?=$sUserBadgeImg?>" /></p></td>
 </tr>	
 	<td class="pref-input" colspan="2">
 		<fieldset class="wk-badge-fieldset-code">
