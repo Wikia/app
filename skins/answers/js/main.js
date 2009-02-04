@@ -84,6 +84,13 @@ function askQuestion(){
 	);
 }
 	
+function anonWatch(){
+	jQuery.get( wgServer + "/index.php?action=ajax&rs=wfHoldWatchForAnon&rsargs[]=" + wgPageName, "", 
+	function (oResponse){
+		window.location = oResponse
+	});
+}
+
 jQuery(document).ready(function() {
 	jQuery("#ask_form").submit(askQuestion);
 	jQuery("#ask_button").click(askQuestion);
@@ -247,3 +254,49 @@ if( wgIsMainpage == true ){
 		});
 	});
 }});
+
+jQuery("#facebook-connect").ready(function() {
+	if( !wgEnableFacebookConnect )return false;
+	updateFacebookBox()
+
+});
+
+
+function updateFacebookBox(){
+	if( ! document.getElementById("facebook-user-placeholder") )return false
+		
+	fb_uid = YAHOO.util.Cookie.get(wgFacebookAnswersAppID + "_user");
+	if( ! fb_uid ){
+		jQuery("#facebook-connect-login").show()
+		jQuery("#facebook-connect-ask").hide()
+	}else{
+		jQuery("#facebook-connect-login").hide()
+		fb_html = "<div id='fb-pic' uid='" + fb_uid + "' facebook-logo='true' style='float:left'></div>";
+		fb_html += "<div style='float:left'>Hello <span id='fb-name' useyou='false' uid='" + fb_uid + "'></span>,<br/>";
+		fb_html += "You are signed into Facebook Connect<br/>"
+		fb_html += "<a href='#' onclick='FB.Connect.logoutAndRedirect(window.location.href)'>Sign Out</a></div>";
+		fb_html += "<div style='clear:both'></div>";
+		
+		document.getElementById("facebook-user-placeholder").innerHTML = fb_html;
+		FB.XFBML.Host.autoParseDomTree = false; 
+		FB.XFBML.Host.addElement(new FB.XFBML.Name(document.getElementById("fb-name"))); 
+		FB.XFBML.Host.addElement(new FB.XFBML.ProfilePic(document.getElementById("fb-pic"))); 
+	
+		jQuery("#facebook-connect-logout").show()
+		
+		document.getElementById("facebook-connect-ask").innerHTML = "<a href='javascript:facebook_publish_feed_story()'>Ask This on Facebook</a>";
+		jQuery("#facebook-connect-ask").show()
+	}
+}
+
+function facebook_login_handler(){
+	window.location = document.location.href
+}
+	
+function facebook_publish_feed_story() {
+	// Load the feed form
+	FB.ensureInit(function() {  
+	  template_data = {"question" : wgTitle + "?", "url" : wgServer + wgArticlePath.replace("$1",wgPageName) }
+	  FB.Connect.showFeedDialog(wgFacebookAnswersTemplateID, template_data,  null, null, FB.FeedStorySize.oneLine, FB.RequireConnect.require );
+	});
+}
