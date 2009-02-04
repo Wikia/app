@@ -46,7 +46,7 @@ class WysiwygParser extends Parser {
 				}
 				else {
 					if ($this->mEmptyLineCounter%2 == 1) {
-						$style .= ' _wysiwyg_new_line="true"';
+						$style .= ' _wysiwyg_new_line="true" _new_lines_before="1"';
 					}
 					$result .= "<p{$style}>";
 				}
