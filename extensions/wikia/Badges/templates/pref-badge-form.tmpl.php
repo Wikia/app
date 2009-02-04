@@ -54,7 +54,7 @@ ColorTxt["DIALOG_HEADER"] = "<?=wfMsg("user-badge-dialog-title")?>";
 <? } ?>		
 	</td>
 </tr>
-<tr style="display:none" id="ub_configurator-panel">
+<tr id="ub_configurator-panel">
 <td class="pref-input" colspan="2" >
 	<p><?=wfMsg('user-badge-create')?></p>
 	<table border=0>
