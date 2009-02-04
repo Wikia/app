@@ -256,7 +256,7 @@ if( wgIsMainpage == true ){
 }});
 
 jQuery("#facebook-connect").ready(function() {
-	if( !wgEnableFacebookConnect )return false;
+	if( !wgEnableFacebookConnect || !wgIsQuestion )return false;
 	updateFacebookBox()
 
 });
