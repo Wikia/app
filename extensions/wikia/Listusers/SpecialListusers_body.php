@@ -126,30 +126,23 @@ class ListUsers extends SpecialPage {
 		global $wgCityId;
         wfProfileIn( __METHOD__ );
 		$aResult = array();
-		$memkey = wfForeignMemcKey( $wgSharedDB, null, "getGroupList");
-		$cached = $wgMemc->get($memkey);
-		if (!is_array ($cached)) { 
-			$dbs = wfGetDBExt(DB_SLAVE);
-			if (!is_null($dbs)) {
-				$aQuery = array();
-				if (!empty($aGroups) && is_array($aGroups)) {
-					$aQuery[] = "select '' as groupName, count(*) as cnt from `dataware`.`city_local_users` where lu_wikia_id = {$wgCityId} and lu_numgroups = 0 and lu_closed = 0 ";
-					foreach ($aGroups as $groupName => $userGroupName) {
-						$aQuery[] = "select '{$groupName}' as groupName, count(*) as cnt from `dataware`.`city_local_users` where lu_wikia_id = {$wgCityId} and lu_allgroups like '%{$groupName}%' and lu_closed = 0 group by groupName";
-					}
-				}
-				if (!empty($aQuery)) {
-					$query = implode(' union ', $aQuery);
-					$res = $dbs->query ($query);
-					while ($row = $dbs->fetchObject($res)) {
-						$aResult[(empty($row->groupName)) ? "all" : $row->groupName] = $row->cnt;
-					}
-					$dbs->freeResult($res);
-					$wgMemc->set( $memkey, $aResult, 60*60 );
+		$dbs = wfGetDBExt(DB_SLAVE);
+		if (!is_null($dbs)) {
+			$aQuery = array();
+			if (!empty($aGroups) && is_array($aGroups)) {
+				$aQuery[] = "select '' as groupName, count(*) as cnt from `dataware`.`city_local_users` where lu_wikia_id = {$wgCityId} and lu_numgroups = 0 and lu_closed = 0 ";
+				foreach ($aGroups as $groupName => $userGroupName) {
+					$aQuery[] = "select '{$groupName}' as groupName, count(*) as cnt from `dataware`.`city_local_users` where lu_wikia_id = {$wgCityId} and lu_allgroups like '%{$groupName}%' and lu_closed = 0 group by groupName";
 				}
 			}
-		} else { 
-			$aResult = $cached;
+			if (!empty($aQuery)) {
+				$query = implode(' union ', $aQuery);
+				$res = $dbs->query ($query);
+				while ($row = $dbs->fetchObject($res)) {
+					$aResult[(empty($row->groupName)) ? "all" : $row->groupName] = $row->cnt;
+				}
+				$dbs->freeResult($res);
+			}
 		}
 		
         wfProfileOut( __METHOD__ );
