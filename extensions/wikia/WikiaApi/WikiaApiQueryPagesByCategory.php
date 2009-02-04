@@ -84,7 +84,8 @@ class WikiaApiQueryPagesyByCategory extends WikiaApiQuery {
 				));
 			$this->addWhere ( "page_id=cl_from" );
 			$this->addWhere ( array("cl_to" => $category_db)  );
-		
+			$this->addWhere ( "page_is_redirect=0" );
+			
 			$this->setCacheKey ($lcache_key, 'C', $category);
 			
 			#--- limit
