@@ -1,8 +1,4 @@
 <?php
-
-// use the same namespace as in old NY extension
-define( 'NS_VIDEO', 400 );
-
 // main video page class
 class VideoPage extends Article {
 
