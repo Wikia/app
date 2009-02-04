@@ -53,7 +53,7 @@ class AnswersTemplate extends MonacoTemplate {
 	 * @access private
 	 */
 	function execute() {
-		global $wgRequest, $wgUser, $wgStyleVersion, $wgStylePath, $wgTitle;
+		global $wgRequest, $wgUser, $wgStyleVersion, $wgStylePath, $wgTitle, $wgEnableFacebookConnect;
 		$this->skin = $skin = $this->data['skin'];
 		$action = $wgRequest->getText( 'action' );
 		$answer_page = Answer::newFromTitle( $wgTitle );
@@ -78,7 +78,13 @@ class AnswersTemplate extends MonacoTemplate {
 		<script type="text/javascript" src="http://yui.yahooapis.com/2.6.0/build/autocomplete/autocomplete-min.js"></script>
 		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.3/jquery.min.js"></script>
 		<script type="text/javascript" src="<?=$wgStylePath?>/answers/js/main.js?<?=$wgStyleVersion?>"></script>
-
+		<?php
+		if( $wgEnableFacebookConnect ){
+		?>
+		<script type="text/javascript" src="http://yui.yahooapis.com/2.6.0/build/cookie/cookie-min.js"></script>
+		<script src="http://static.ak.connect.facebook.com/js/api_lib/v0.4/FeatureLoader.js.php" type="text/javascript"></script>
+		<?php } ?>
+		
 		<title><?php $this->text('pagetitle') ?></title>
 		<?php $this->html('csslinks') ?>
 
@@ -324,6 +330,11 @@ wfRunHooks('GetHTMLAfterBody', array (&$this));
 		<?
 		}	
 		if ($is_question) {
+			if( $wgUser->isLoggedIn() ){
+				$watchlist_url = $wgTitle->escapeFullURL("action=watch");
+			}else{
+				$watchlist_url = "javascript:anonWatch();";
+			}
 		?>
 		<table id="bottom_ads"> 
 		<tr>
@@ -335,14 +346,41 @@ wfRunHooks('GetHTMLAfterBody', array (&$this));
 		<div id="huge_buttons" class="clearfix">
 			<? if ( $answer_page->isArticleAnswered() ) { ?>
 			<a href="<?= $wgTitle->getEditURL() ?>" class="huge_button edit"><div></div><?= wfMsg("improve_this_answer") ?></a>	
-			<a href="<?= $wgTitle->escapeFullURL("action=watch") ?>" class="huge_button watchlist"><div></div><?= wfMsg("notify_improved") ?></a>
+			<a href="<?= $watchlist_url ?>" class="huge_button watchlist"><div></div><?= wfMsg("notify_improved") ?></a>
 			<? } else { ?>
 			<a href="<?= $wgTitle->getEditURL() ?>" class="huge_button edit"><div></div><?= wfMsg("answer_this_question") ?></a>	
-			<a href="<?= $wgTitle->escapeFullURL("action=watch") ?>" class="huge_button watchlist"><div></div><?= wfMsg("notify_answered") ?></a>
+			<a href="<?= $watchlist_url ?>" class="huge_button watchlist"><div></div><?= wfMsg("notify_answered") ?></a>
 			<? } ?>
+			<?
+			if( $wgEnableFacebookConnect == true ){
+			?>
+			<div id="facebook-connect-login" style="display:none">
+				<fb:login-button size="small" background="light" length="short" onlogin="facebook_login_handler()"></fb:login-button> and Ask Your Facebook Friends!
+			</div>
+			<div id="facebook-connect-ask" style="display:none">
+			</div>
+			
+			<script type="text/javascript">  FB.init(wgFacebookAnswersAppID, <?= $wgServer ?>"/extensions/wikia/FacebookConnect/xd_receiver.htm"); </script>
+			<div id="facebook-connet"></div>
+			<?php 
+				if( $_GET['state'] == "asked" && facebook_client()->get_loggedin_user() ){
+					echo "<script>facebook_publish_feed_story()</script>";
+				}
+			} 
+			
+			?>
+		</div>
+
+		<?php
+		$tiny_url = Http::get("http://tinyurl.com/api-create.php?url={$wgTitle->getFullURL()}");
+		$twitter_question = substr( $wgTitle->getText(), 0, 99 );
+		$twitter_url = str_replace(" ","%20","http://twitter.com/home?status=#" . wfMsg("twitter_hashtag") . " " . $twitter_question . "? " . $tiny_url);
+		?>
+		<div id="twitter-post">
+		<a href="<?=$twitter_url?>"><img src="http://www.twitip.com/wp-content/uploads/2008/11/1806347785.png" width="50" border="0"/></a>
 		</div>
 		<?php } ?>
-
+		
 		<?php if($this->data['catlinks']) { $this->html('catlinks'); } ?>
 
 		<!-- XIAN: Pull content that is now in "AnswersAfterArticle" hook -->
@@ -384,6 +422,13 @@ wfRunHooks('GetHTMLAfterBody', array (&$this));
 	$wikiafooterlinks = $this->data['data']['wikiafooterlinks'];
 	if(count($wikiafooterlinks) > 0) {
 		echo '<div id="wikia_footer">';
+		
+		if( $wgEnableFacebookConnect ){
+			echo '<div id="facebook-connect-logout" style="display:none">
+				<div id="facebook-user-placeholder"></div>
+			</div>';
+		}
+		
 		$wikiafooterlinksA = array();
 		foreach($wikiafooterlinks as $key => $val) {
 			// Very primitive way to actually have copyright WF variable, not MediaWiki:msg constant.
