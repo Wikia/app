@@ -12,7 +12,6 @@ $wgHooks['MWNamespace:isMovable'][] = 'WikiaVideoIsNotMovable';
 
 function WikiaVideoIsNotMovable( $result, $index ) {
 	global $IP, $wgAllowImageMoving;
-        require_once( "$IP/extensions/wikia/WikiaVideo/VideoPage.php" );
 	$result = !( $index < NS_MAIN || ($index == NS_IMAGE && !$wgAllowImageMoving) || ( $index == NS_VIDEO )  || $index == NS_CATEGORY );
 	return true;
 }
