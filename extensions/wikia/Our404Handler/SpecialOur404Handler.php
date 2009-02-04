@@ -1,32 +1,30 @@
 <?php
-
 /**
- * lazy loader for Special:Our404Handler
+ * Lazy loader for Special:Our404Handler
  *
- * @package MediaWiki
- * @subpackage SpecialPage
- * @author Krzysztof Krzyżaniak <eloy@wikia.com> for Wikia.com
- * @copyright (C) 2007, Wikia Inc.
- * @licence GNU General Public Licence 2.0 or later
- * @version: $Id$
+ * @file
+ * @ingroup Extensions
+ * @author Krzysztof Krzyżaniak <eloy@wikia-inc.com> for Wikia.com
+ * @copyright © 2007, Wikia Inc.
+ * @license http://www.gnu.org/copyleft/gpl.html GNU General Public License 2.0 or later
+ * @version 1.0
  */
 
 if ( !defined( 'MEDIAWIKI' ) ) {
-    echo "This is MediaWiki extension and cannot be used standalone.\n";
-    exit( 1 ) ;
+	echo "This is a MediaWiki extension and cannot be used standalone.\n";
+	exit( 1 );
 }
 
+// Extension credits that will show up on Special:Version
 $wgExtensionCredits['specialpage'][] = array(
-    "name" => "Our404Handler",
-    "description" => "Our 404 handler for making thumbs and other magic",
-    "author" => "[http://www.wikia.com/wiki/User:Eloy.wikia Krzysztof Krzyźaniak (eloy)]"
+	'name' => 'Our404Handler',
+	'version' => '1.0',
+	'author' => 'Krzysztof Krzyźaniak',
+	'description' => 'Our 404 handler for making thumbs and other magic',
 );
 
-#--- messages file
-$wgExtensionMessagesFiles["Our404Handler"] = dirname(__FILE__) . '/SpecialOur404Handler.i18n.php';
-
-#--- register special page (MW 1.10 way)
-if ( !function_exists( 'extAddSpecialPage' ) ) {
-    require( "$IP/extensions/ExtensionFunctions.php" );
-}
-extAddSpecialPage( dirname(__FILE__) . '/SpecialOur404Handler_body.php', 'Our404Handler', 'Our404HandlerPage' );
+// Set up the new special page
+$dir = dirname(__FILE__) . '/';
+$wgExtensionMessagesFiles['Our404Handler'] = $dir . 'SpecialOur404Handler.i18n.php';
+$wgAutoloadClasses['Our404HandlerPage'] = $dir. 'SpecialOur404Handler_body.php';
+$wgSpecialPages['Our404Handler'] = 'Our404HandlerPage';
