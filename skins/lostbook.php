@@ -67,6 +67,15 @@ class lostbookTemplate extends QuickTemplate {
 		<!--[if IE 6]><style type="text/css">@import "<?php $this->text('stylepath') ?>/<?php $this->text('stylename') ?>/IE60Fixes.css?<?php echo $GLOBALS['wgStyleVersion'] ?>";</style><![endif]-->
 		<!--[if IE 7]><style type="text/css">@import "<?php $this->text('stylepath') ?>/<?php $this->text('stylename') ?>/IE70Fixes.css?<?php echo $GLOBALS['wgStyleVersion'] ?>";</style><![endif]-->
 		<!--[if lt IE 7]><script type="<?php $this->text('jsmimetype') ?>" src="<?php $this->text('stylepath') ?>/common/IEFixes.js?<?php echo $GLOBALS['wgStyleVersion'] ?>"></script>
+<?php
+	if( isset( $GLOBALS['wgTitle'] ) && defined( "NS_BLOG_ARTICLE" ) && $GLOBALS['wgTitle']->getNamespace() == NS_BLOG_ARTICLE ):
+?>
+		<script type="<?php $this->text('jsmimetype') ?>" src="http://yui.yahooapis.com/2.6.0/build/yahoo-dom-event/yahoo-dom-event.js"></script>
+		<script type="<?php $this->text('jsmimetype') ?>" src="http://yui.yahooapis.com/2.6.0/build/connection/connection-min.js"></script>
+		<script type="<?php $this->text('jsmimetype') ?>" src="http://yui.yahooapis.com/2.6.0/build/json/json-min.js"></script>
+<?php
+	endif;
+?>
 		<meta http-equiv="imagetoolbar" content="no" /><![endif]-->
 
 		<?php print Skin::makeGlobalVariablesScript( $this->data ); ?>
@@ -253,7 +262,7 @@ class lostbookTemplate extends QuickTemplate {
 			  </div></form>
   </div>
 </div>
-	
+
 <?php
 		if( $this->data['language_urls'] ) { ?>
 	<div id="p-lang" class="portlet">

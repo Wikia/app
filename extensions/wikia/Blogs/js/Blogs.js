@@ -2,7 +2,12 @@ YAHOO.namespace("Wikia.Blogs");
 
 YAHOO.Wikia.Blogs.callback = {
     success: function( oResponse ) {
-        var data = YAHOO.Tools.JSONParse( oResponse.responseText );
+		if (typeof YAHOO.lang.JSON != "undefined" ) {
+			var data = YAHOO.lang.JSON.parse( oResponse.responseText )
+		}
+		else {
+			var data = YAHOO.Tools.JSONParse( oResponse.responseText );
+		}
 		YAHOO.Wikia.Blogs.callback.add( data );
     },
     failure: function( oResponse ) {
@@ -12,7 +17,12 @@ YAHOO.Wikia.Blogs.callback = {
 
 YAHOO.Wikia.Blogs.hideCallback = {
     success: function( oResponse ) {
-        var data = YAHOO.Tools.JSONParse( oResponse.responseText );
+		if (typeof YAHOO.lang.JSON != "undefined" ) {
+			var data = YAHOO.lang.JSON.parse( oResponse.responseText )
+		}
+		else {
+			var data = YAHOO.Tools.JSONParse( oResponse.responseText );
+		}
 		YAHOO.Wikia.Blogs.callback.toggle( data );
     },
     failure: function( oResponse ) {
