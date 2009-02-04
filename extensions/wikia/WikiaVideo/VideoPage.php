@@ -1,4 +1,9 @@
 <?php
+
+$dir = dirname(__FILE__).'/';
+global $wgExtensionMessagesFiles;
+$wgExtensionMessagesFiles['WikiaVideo'] = $dir.'/WikiaVideo.i18n.php';
+
 // main video page class
 class VideoPage extends Article {
 
@@ -26,7 +31,8 @@ class VideoPage extends Article {
 		$mDataline;
 
         function __construct (&$title){
-                parent::__construct(&$title);
+		wfLoadExtensionMessages('WikiaVideo');
+		parent::__construct(&$title);
         }
 
         function render() {
