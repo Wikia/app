@@ -539,6 +539,19 @@ class ReverseParser {
 				$textContent = substr($textContent, 0, -1);
 			}
 
+			// check whether we should allow whitespaces inclusion into wikitext
+			// e.g. we don't want to add whitespaces inside tables HTML markup
+			else if ( strspn($textContent, ' ') == strlen($textContent) ) {
+				switch($node->parentNode->nodeName) {
+					case 'table':
+					case 'tbody':
+					case 'tr':
+						$textContent = '';
+						break;
+					default:
+				}
+			}
+
 			$out = $textContent;
 
 		}
