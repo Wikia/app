@@ -515,6 +515,29 @@ body .header_menu_button * {
 	width: 300px;
 }
 
+/*** SOCIAL NETWORKS ***/
+#social_networks {
+	font-size: 11pt;
+	margin-top: 5px;
+}
+#social_networks label {
+	color: #252525;
+	font-family: "Arial Narrow", "Arial", sans-serif;
+	font-size: 13pt;
+	font-weight: bold;
+}
+#social_networks img {
+	position: relative;
+	top: -2px;
+}
+#facebook-connect-login, #facebook-connect-ask, #twitter-post {
+	display: inline;
+}
+#twitter-post img {
+	border: 0;
+	vertical-align: middle;
+}
+
 
 /*** SIDEBAR ***/
 #answers_sidebar {

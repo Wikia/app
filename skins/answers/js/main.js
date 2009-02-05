@@ -284,7 +284,7 @@ function updateFacebookBox(){
 	
 		jQuery("#facebook-connect-logout").show()
 		
-		document.getElementById("facebook-connect-ask").innerHTML = "<a href='javascript:facebook_publish_feed_story()'>Ask This on Facebook</a>";
+		document.getElementById("facebook-connect-ask").innerHTML = "<a href='javascript:facebook_publish_feed_story()'><img src=\"http://b.static.ak.fbcdn.net/images/fbconnect/login-buttons/connect_light_small_short.gif?8:121638\"></a> <a href='javascript:facebook_publish_feed_story()'>Facebook</a>";
 		jQuery("#facebook-connect-ask").show()
 	}
 }
