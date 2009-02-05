@@ -353,12 +353,13 @@ wfRunHooks('GetHTMLAfterBody', array (&$this));
 			<? } ?>
 		</div>
 		<div id="social_networks">
-		<label>Click to ask your friends on:</label>
+		<label>Ask your friends to help answer:</label>
 			<?
 			if( $wgEnableFacebookConnect == true ){
 			?>
 			<div id="facebook-connect-login" style="display:none">
-				<fb:login-button size="small" background="light" length="short" onlogin="facebook_login_handler()"></fb:login-button> <a href="javascript:FB.Connect.requireSession()">Facebook</a>
+				<?/*<fb:login-button size="small" background="light" length="short" onlogin="facebook_login_handler()"></fb:login-button> <a href="javascript:FB.Connect.requireSession()">Facebook</a>*/?>
+				<fb:login-button size="medium" background="white" length="long" onlogin="facebook_login_handler()"></fb:login-button>
 			</div>
 			<div id="facebook-connect-ask" style="display:none">
 			</div>
@@ -380,7 +381,7 @@ wfRunHooks('GetHTMLAfterBody', array (&$this));
 
 		?>
 		<div id="twitter-post">
-			<a href="<?=$twitter_url?>" onclick="window.open('<?=$twitter_url?>', 'twitter'); return false;"><img src="/skins/answers/images/twitter_icon.png" /></a> <a href="<?=$twitter_url?>" onclick="window.open('<?=$twitter_url?>', 'twitter'); return false;">Twitter</a>
+			<a href="<?=$twitter_url?>" onclick="window.open('<?=$twitter_url?>', 'twitter'); return false;"><img src="/skins/answers/images/twitter_icon.png" /></a> <a href="<?=$twitter_url?>" onclick="window.open('<?=$twitter_url?>', 'twitter'); return false;">Ask on Twitter</a>
 		</div>
 		</div><?/* social_networks */?>
 		<?php } ?>
