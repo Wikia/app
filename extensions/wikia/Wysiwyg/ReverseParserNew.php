@@ -32,6 +32,7 @@ class ReverseParser {
 
 	function __construct() {
 		$this->dom = new DOMdocument();
+		$this->dom->preserveWhiteSpace = true;
 	}
 
 	public function parse($html, $data = array()) {
@@ -41,23 +42,23 @@ class ReverseParser {
 
 		if(is_string($html) && $html != '') {
 
-			// fix for proper encoding of UTF characters
+			// form proper XML string
+			$xml = "<?xml version=\"1.0\" encoding=\"UTF-8\"?><body>{$html}</body>";
+			wfDebug("Wysiwyg ReverseParserNew XML: {$xml}\n");
 
-			wfDebug("Wysiwyg ReverseParserNew HTML original: $html\n");
-
-			$html = '<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/></head><body>'.$html.'</body></html>';
-
+			// save meta-data
 			$this->data = $data;
-
 			wfDebug("Wysiwyg ReverseParserNew data: ".print_r($this->data, true)."\n");
 
-			wfDebug("Wysiwyg ReverseParserNew HTML: $html\n");
-
+			// try to parse XML
 			wfSuppressWarnings();
-			if($this->dom->loadHTML($html)) {
+			if($this->dom->loadXML($xml)) {
 				$body = $this->dom->getElementsByTagName('body')->item(0);
-				wfDebug("Wysiwyg ReverseParserNew HTML from DOM: ".$this->dom->saveHTML()."\n");
+				wfDebug("Wysiwyg ReverseParserNew XML from DOM: ".$this->dom->saveXML()."\n");
 				$out = $this->parseNode($body);
+			}
+			else {
+				wfDebug("Wysiwyg ReverseParserNew HTML: error loading XML!\n");
 			}
 			wfRestoreWarnings();
 
