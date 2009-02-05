@@ -32,7 +32,6 @@ class ReverseParser {
 
 	function __construct() {
 		$this->dom = new DOMdocument();
-		$this->dom->preserveWhiteSpace = true;
 	}
 
 	public function parse($html, $data = array()) {
