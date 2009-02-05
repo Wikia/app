@@ -55,8 +55,7 @@ class HAWelcomeJob extends Job {
 	 * @access public
 	 */
 	public function run() {
-
-		global $wgUser;
+		global $wgUser, $wgDevelEnvironment;
 
 		/**
 		 * overwrite $wgUser for ~~~~ expanding
@@ -73,7 +72,7 @@ class HAWelcomeJob extends Job {
 				$sysopPage = $wgUser->getUserPage()->getTalkPage();
 
 				$talkArticle = new Article( $talkPage, 0 );
-				if( ! $talkArticle->exists() || 1 ) { // for while every edition create job
+				if( ! $talkArticle->exists() || $wgDevelEnvironment ) {
 					if( $this->mAnon ) {
 						$welcomeMsg = wfMsg( "hawelcome-message-anon", array(
 							sprintf("%s:%s", $this->title->getNsText(), $this->title->getText() ),
@@ -135,7 +134,7 @@ class HAWelcomeJob extends Job {
 	 * @return true means process other hooks
 	 */
 	public static function revisionInsertComplete( &$revision, &$url, &$flags ) {
-		global $wgTitle, $wgUser;
+		global $wgTitle, $wgUser, $wgDevelEnvironment;
 
 		/**
 		 * check if talk page for wgUser exists
@@ -145,7 +144,7 @@ class HAWelcomeJob extends Job {
 		$talkPage = $wgUser->getUserPage()->getTalkPage();
 		if( $talkPage ) {
 			$talkArticle = new Article( $talkPage, 0 );
-			if( !$talkArticle->exists( ) || 1 ) { // for while every edition create job
+			if( !$talkArticle->exists( ) || $wgDevelEnvironment ) {
 				$welcomeJob = new HAWelcomeJob(
 					$wgTitle,
 					array(
