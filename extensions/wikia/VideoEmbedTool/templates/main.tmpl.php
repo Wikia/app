@@ -51,6 +51,16 @@
 <table id="VideoEmbedToolProvidersTable" class="gallery" cellpadding="6" cellspacing="6">
 	<tbody><tr>
 		<td><div class="gallerybox" style="width: 170px;">
+			<div class="thumb" style="padding: 56px 0pt; width: 165px;"><div style="margin-left: auto; margin-right: auto; width: 120px;"><a href="http://www.metacafe.com" class="image" title="Metacafe" target="_blank"><img alt="" src="<?= $wgExtensionsPath; ?>/wikia/VideoEmbedTool/images/metacafe.gif" height="33" width="120" border="0"></a></div></div>
+			<div class="gallerytext">
+			</div>
+		</div></td>
+		<td><div class="gallerybox" style="width: 170px;">
+			<div class="thumb" style="padding: 30px 0pt; width: 165px;"><div style="margin-left: auto; margin-right: auto; width: 120px;"><a href="http://www.youtube.com" class="image" title="YouTube" target="_blank"><img alt="" src="<?= $wgExtensionsPath; ?>/wikia/VideoEmbedTool/images/youtube.jpg" height="85" width="120" border="0"></a></div></div>
+			<div class="gallerytext">
+			</div>
+		</div></td>
+		<td><div class="gallerybox" style="width: 170px;">
 			<div class="thumb" style="padding: 49px 0pt; width: 165px;"><div style="margin-left: auto; margin-right: auto; width: 120px;"><a href="http://www.5min.com" class="image" title="5min" target="_blank"><img alt="" src="<?= $wgExtensionsPath; ?>/wikia/VideoEmbedTool/images/5min.gif" height="47" width="120" border="0"></a></div></div>
 			<div class="gallerytext">
 			</div>
@@ -59,16 +69,6 @@
 			<div class="thumb" style="padding: 47px 0pt; width: 165px;"><div style="margin-left: auto; margin-right: auto; width: 120px;"><a href="http://gamevideos.1up.com/" class="image" title="Gamevideos"  target="_blank"><img alt="Gamevideos" src="<?= $wgExtensionsPath; ?>/wikia/VideoEmbedTool/images/gamevideos.jpg" height="51" width="120" border="0"></a></div></div>
 			<div class="gallerytext">
 
-			</div>
-		</div></td>
-		<td><div class="gallerybox" style="width: 170px;">
-			<div class="thumb" style="padding: 56px 0pt; width: 165px;"><div style="margin-left: auto; margin-right: auto; width: 120px;"><a href="http://www.metacafe.com" class="image" title="Metacafe" target="_blank"><img alt="" src="<?= $wgExtensionsPath; ?>/wikia/VideoEmbedTool/images/metacafe.gif" height="33" width="120" border="0"></a></div></div>
-			<div class="gallerytext">
-			</div>
-		</div></td>
-		<td><div class="gallerybox" style="width: 170px;">
-			<div class="thumb" style="padding: 55px 0pt; width: 165px;"><div style="margin-left: auto; margin-right: auto; width: 120px;"><a href="http://www.myvideo.de" class="image" title="Myvideo" target="_blank"><img alt="" src="<?= $wgExtensionsPath; ?>/wikia/VideoEmbedTool/images/myvideo.jpg" height="35" width="120" border="0"></a></div></div>
-			<div class="gallerytext">
 			</div>
 		</div></td>
 	</tr>
@@ -85,11 +85,10 @@
 			</div>
 		</div></td>
 		<td><div class="gallerybox" style="width: 170px;">
-			<div class="thumb" style="padding: 30px 0pt; width: 165px;"><div style="margin-left: auto; margin-right: auto; width: 120px;"><a href="http://www.youtube.com" class="image" title="YouTube" target="_blank"><img alt="" src="<?= $wgExtensionsPath; ?>/wikia/VideoEmbedTool/images/youtube.jpg" height="85" width="120" border="0"></a></div></div>
+			<div class="thumb" style="padding: 55px 0pt; width: 165px;"><div style="margin-left: auto; margin-right: auto; width: 120px;"><a href="http://www.myvideo.de" class="image" title="Myvideo" target="_blank"><img alt="" src="<?= $wgExtensionsPath; ?>/wikia/VideoEmbedTool/images/myvideo.jpg" height="35" width="120" border="0"></a></div></div>
 			<div class="gallerytext">
 			</div>
 		</div></td>
-
 		<td></td>
 	</tr>
 </tbody></table>
