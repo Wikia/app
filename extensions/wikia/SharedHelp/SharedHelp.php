@@ -216,7 +216,7 @@ function SharedHelpHook(&$out, &$text) {
 			if(strpos($text, '"noarticletext"') > 0) {
 				$text = '<div style="border: solid 1px; padding: 10px; margin: 5px" class="sharedHelp">' . $info . $content . '<div style="clear:both"></div></div>';
 			} else {
-				$text = '<div style="border: solid 1px; padding: 10px; margin: 5px" class="sharedHelp">' . $info . $content . '<div style="clear:both"></div></div><br/>' . $text;
+				$text = $text . '<div style="border: solid 1px; padding: 10px; margin: 5px" class="sharedHelp">' . $info . $content . '<div style="clear:both"></div></div>';
 			}
 		}
 	}
