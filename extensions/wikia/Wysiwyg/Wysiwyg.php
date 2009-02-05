@@ -317,6 +317,10 @@ function Wysiwyg_WikiTextToHtml($wikitext, $articleId = -1, $encode = false) {
 					$parsed = trim( substr($parsed, 4) );
 				}
 
+				if ( substr($parsed, -3) == '<p>' ) {
+					$parsed = trim( substr($parsed, 0, -3) );
+				}
+
 				// get first HTML tag
 				$wrapper = substr($parsed, 1, strpos($parsed, '>') - 1);
 
@@ -324,9 +328,11 @@ function Wysiwyg_WikiTextToHtml($wikitext, $articleId = -1, $encode = false) {
 				if (strpos($wrapper, ' ') !== false) {
 					$wrapper = substr($wrapper, 0, strpos($wrapper, ' '));
 				}
+
+				// save cleaned HTML for preview in wysiwyg mode
+				$templateCallsParsed[$refid] = $parsed;
 			}
 			$wgWysiwygMetaData[$refid]['wrapper'] = $wrapper;
-			//$wgWysiwygMetaData[$refid]['parsed'] = $parsed;
 		}
 
 		$html = preg_replace('/\x7f-wtb-(\d+)-\x7f.*?\x7f-wte-\1-\x7f/sie', "'<input type=\"button\" refid=\"\\1\" _fck_type=\"template\" value=\"'.\$wgWysiwygMetaData[\\1]['name'].'\" class=\"wysiwygDisabled wysiwygTemplate\" /><input value=\"'.htmlspecialchars(stripslashes(\$templateCallsParsed[\\1])).'\" style=\"display:none\" />'", $html);
