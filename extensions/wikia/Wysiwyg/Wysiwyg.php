@@ -277,7 +277,7 @@ function Wysiwyg_WikiTextToHtml($wikitext, $articleId = -1, $encode = false) {
 		$html = '<!--NEW_LINE-->' . $html;
 	}
 
-	// replace placeholders with HTML
+	// replace placeholders with <input> grey boxes
 	if (!empty($wgWysiwygMarkers)) {
 		$html = strtr($html, $wgWysiwygMarkers);
 	}
@@ -532,6 +532,7 @@ function Wysiwyg_SetRefId($type, $params, $addMarker = true, $returnId = false) 
 		$result = "<input type=\"button\" refid=\"{$refId}\" _fck_type=\"{$type}\" value=\"{$result}\" title=\"{$result}\" class=\"wysiwygDisabled\" />";
 
 		// macbre: use placeholders
+		// they will be replaced with <input> grey boxes
 		$marker = "\x7f-wysiwyg-{$refId}-\x7f";
 		$wgWysiwygMarkers[$marker] = $result;
 
