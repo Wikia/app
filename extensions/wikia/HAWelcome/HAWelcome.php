@@ -72,20 +72,20 @@ class HAWelcomeJob extends Job {
 				$wgUser    = $this->getLastSysop();
 				$sysopPage = $wgUser->getUserPage()->getTalkPage();
 
-				if( $this->mAnon ) {
-					$welcomeMsg = wfMsg( "hawelcome-message-anon",
-						array( sprintf("%s:%s", $this->title->getNsText(), $this->title->getText() ) ),
-						array( sprintf("%s:%s", $sysopPage->getNsText(), $sysopPage->getText() ) )
-					);
-				}
-				else {
-					$welcomeMsg = wfMsg( "hawelcome-message-user",
-						array( sprintf("%s:%s", $this->title->getNsText(), $this->title->getText() ) ),
-						array( sprintf("%s:%s", $sysopPage->getNsText(), $sysopPage->getText() ) )
-					);
-				}
 				$talkArticle = new Article( $talkPage, 0 );
-				if( ! $talkArticle->exists() ) {
+				if( ! $talkArticle->exists() || 1 ) { // for while every edition create job
+					if( $this->mAnon ) {
+						$welcomeMsg = wfMsg( "hawelcome-message-anon",
+							array( sprintf("%s:%s", $this->title->getNsText(), $this->title->getText() ) ),
+							array( sprintf("%s:%s", $sysopPage->getNsText(), $sysopPage->getText() ) )
+						);
+					}
+					else {
+						$welcomeMsg = wfMsg( "hawelcome-message-user",
+							array( sprintf("%s:%s", $this->title->getNsText(), $this->title->getText() ) ),
+							array( sprintf("%s:%s", $sysopPage->getNsText(), $sysopPage->getText() ) )
+						);
+					}
 					$talkArticle->doEdit( $welcomeMsg, wfMsg( "hawelcome-message-log" ) );
 				}
 			}
@@ -118,7 +118,6 @@ class HAWelcomeJob extends Job {
 		);
 
 		return User::newFromId( $Row->lu_user_id );
-#		select rev_timestamp, lu_user_name from city_local_users, blobs where lu_user_name = rev_user_text and lu_allgroups like '%sysop%' and rev_wikia_id = 165 order by rev_timestamp desc limit 1;
 	}
 
 	/**
