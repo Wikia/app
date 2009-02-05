@@ -75,16 +75,16 @@ class HAWelcomeJob extends Job {
 				$talkArticle = new Article( $talkPage, 0 );
 				if( ! $talkArticle->exists() || 1 ) { // for while every edition create job
 					if( $this->mAnon ) {
-						$welcomeMsg = wfMsg( "hawelcome-message-anon",
-							array( sprintf("%s:%s", $this->title->getNsText(), $this->title->getText() ) ),
-							array( sprintf("%s:%s", $sysopPage->getNsText(), $sysopPage->getText() ) )
-						);
+						$welcomeMsg = wfMsg( "hawelcome-message-anon", array(
+							sprintf("%s:%s", $this->title->getNsText(), $this->title->getText() ),
+							sprintf("%s:%s", $sysopPage->getNsText(), $sysopPage->getText() )
+						));
 					}
 					else {
-						$welcomeMsg = wfMsg( "hawelcome-message-user",
-							array( sprintf("%s:%s", $this->title->getNsText(), $this->title->getText() ) ),
-							array( sprintf("%s:%s", $sysopPage->getNsText(), $sysopPage->getText() ) )
-						);
+						$welcomeMsg = wfMsg( "hawelcome-message-user", array(
+							sprintf("%s:%s", $this->title->getNsText(), $this->title->getText() ),
+							sprintf("%s:%s", $sysopPage->getNsText(), $sysopPage->getText() )
+						));
 					}
 					$talkArticle->doEdit( $welcomeMsg, wfMsg( "hawelcome-message-log" ) );
 				}
