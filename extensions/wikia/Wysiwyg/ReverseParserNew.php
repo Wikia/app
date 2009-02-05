@@ -53,11 +53,11 @@ class ReverseParser {
 			wfSuppressWarnings();
 			if($this->dom->loadXML($xml)) {
 				$body = $this->dom->getElementsByTagName('body')->item(0);
-				wfDebug("Wysiwyg ReverseParserNew XML from DOM: ".$this->dom->saveXML()."\n");
+				wfDebug("Wysiwyg ReverseParserNew XML (as seen by DOM): ".$this->dom->saveXML()."\n");
 				$out = $this->parseNode($body);
 			}
 			else {
-				wfDebug("Wysiwyg ReverseParserNew HTML: error loading XML!\n");
+				wfDebug("Wysiwyg ReverseParserNew: error loading XML!\n");
 			}
 			wfRestoreWarnings();
 
