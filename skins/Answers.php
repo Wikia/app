@@ -351,17 +351,20 @@ wfRunHooks('GetHTMLAfterBody', array (&$this));
 			<a href="<?= $wgTitle->getEditURL() ?>" class="huge_button edit"><div></div><?= wfMsg("answer_this_question") ?></a>	
 			<a href="<?= $watchlist_url ?>" class="huge_button watchlist"><div></div><?= wfMsg("notify_answered") ?></a>
 			<? } ?>
+		</div>
+		<div id="social_networks">
+		<label>Click to ask your friends on:</label>
 			<?
 			if( $wgEnableFacebookConnect == true ){
 			?>
 			<div id="facebook-connect-login" style="display:none">
-				<fb:login-button size="small" background="light" length="short" onlogin="facebook_login_handler()"></fb:login-button> and Ask Your Facebook Friends!
+				<fb:login-button size="small" background="light" length="short" onlogin="facebook_login_handler()"></fb:login-button> <a href="javascript:FB.Connect.requireSession()">Facebook</a>
 			</div>
 			<div id="facebook-connect-ask" style="display:none">
 			</div>
 			
 			<script type="text/javascript">  FB.init(wgFacebookAnswersAppID, <?= $wgServer ?>"/extensions/wikia/FacebookConnect/xd_receiver.htm"); </script>
-			<div id="facebook-connet"></div>
+			<!--<div id="facebook-connet"></div>-->
 			<?php 
 				if( $_GET['state'] == "asked" && facebook_client()->get_loggedin_user() ){
 					echo "<script>facebook_publish_feed_story()</script>";
@@ -369,16 +372,17 @@ wfRunHooks('GetHTMLAfterBody', array (&$this));
 			} 
 			
 			?>
-		</div>
 
 		<?php
 		$tiny_url = Http::get("http://tinyurl.com/api-create.php?url={$wgTitle->getFullURL()}");
 		$twitter_question = substr( $wgTitle->getText(), 0, 99 );
-		$twitter_url = str_replace(" ","%20","http://twitter.com/home?status=#" . wfMsg("twitter_hashtag") . " " . $twitter_question . "? " . $tiny_url);
+		$twitter_url = "http://twitter.com/home?status=" . urlencode("#" . wfMsg("twitter_hashtag") . " " . $twitter_question . "? " . $tiny_url);
+
 		?>
 		<div id="twitter-post">
-		<a href="<?=$twitter_url?>"><img src="http://www.twitip.com/wp-content/uploads/2008/11/1806347785.png" width="50" border="0"/></a>
+			<a href="<?=$twitter_url?>" onclick="window.open('<?=$twitter_url?>', 'twitter'); return false;"><img src="/skins/answers/images/twitter_icon.png" /></a> <a href="<?=$twitter_url?>" onclick="window.open('<?=$twitter_url?>', 'twitter'); return false;">Twitter</a>
 		</div>
+		</div><?/* social_networks */?>
 		<?php } ?>
 		
 		<?php if($this->data['catlinks']) { $this->html('catlinks'); } ?>
