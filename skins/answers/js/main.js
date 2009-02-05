@@ -296,7 +296,7 @@ function facebook_login_handler(){
 function facebook_publish_feed_story() {
 	// Load the feed form
 	FB.ensureInit(function() {  
-	  template_data = {"question" : wgTitle + "?", "url" : wgServer + wgArticlePath.replace("$1",wgPageName) }
+	  template_data = {"question" : wgTitle + "?", "url" : wgServer + wgArticlePath.replace("$1",wgPageName), "editurl" : wgServer + wgScript + "?title=" + wgPageName + "&action=edit" }
 	  FB.Connect.showFeedDialog(wgFacebookAnswersTemplateID, template_data,  null, null, FB.FeedStorySize.oneLine, FB.RequireConnect.require );
 	});
 }
