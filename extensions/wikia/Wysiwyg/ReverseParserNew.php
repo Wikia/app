@@ -213,6 +213,11 @@ class ReverseParser {
 								$textContent = "\n{$textContent}";
 							}
 
+							// add \n if previous node has wasHTML attribute set
+							if ($previousNode && $previousNode->hasAttribute('washtml')) {
+								$textContent = "\n{$textContent}";
+							}
+
 						} else {
 							// add new lines before paragraph
 							$newLinesBefore = $node->getAttribute('_new_lines_before');
@@ -233,6 +238,11 @@ class ReverseParser {
 
 							// add \n if previous node is <pre>
 							if ($previousNode && $previousNode->nodeName == 'pre') {
+								$textContent = "\n{$textContent}";
+							}
+
+							// add \n if previous node has wasHTML attribute set
+							if ($previousNode && $previousNode->hasAttribute('washtml')) {
 								$textContent = "\n{$textContent}";
 							}
 						}
