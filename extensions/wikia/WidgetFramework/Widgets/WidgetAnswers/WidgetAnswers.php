@@ -10,7 +10,7 @@ global $wgWidgets;
 $wgWidgets['WidgetAnswers'] = array(
 	'callback' => 'WidgetAnswers',
 	'title' => array(
-		'en' => 'Wikia Answers'
+		'en' => ''
 	),
 	'desc' => array(
 		'en' => 'See a list of top un answered questions'
@@ -25,16 +25,11 @@ function WidgetAnswers($id, $params) {
     wfProfileIn(__METHOD__);
 
 	// HTML for the Ask a Question 
-	$h = '
-	<style type="text/css">
-	</style>
-		<div id="answers_ask">
-			<form method="get" action="" onsubmit="return false" name="ask_form" id="ask_form">
-				<input type="text" id="answers_ask_field" value="Ask a question" class="alt" /><span>?</span>
-				<a href="javascript:void(0);" id="ask_button" class="huge_button green"><div></div>Ask</a>
-			</form>
-		</div>';
+	$h = '<form method="get" action="" onsubmit="return false" name="ask_form" id="ask_form">
+			<input type="text" id="answers_ask_field" value="Ask a question" class="alt" />
+		</form>';
 	
+	$h .= '<div style="padding: 7px;">';
 	$h .= '<b>Recent Questions</b>';
 	$h .= '<ul id="recent_unanswered_questions"></ul>';
 	/* Note that varnish_answer_redirect is a proxy to work around cross domain limitations
@@ -79,7 +74,7 @@ jQuery("#recent_unanswered_questions").ready(function() {
 });
 	</script>
 	<noscript><A href="http://answers.wikia.com">Get your questions answered on answers.wikia.com</a></noscript>';
-
+	$h .= '</div>';
 
     wfProfileOut( __METHOD__ );
     
