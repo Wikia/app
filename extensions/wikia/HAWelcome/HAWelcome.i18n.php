@@ -14,5 +14,5 @@ Please leave a message on [[$2|my talk page]] if I can help with anything! -- ~~
 '''[[Special:Userlogin|Please sign in and create a user name]]'''. It's an easy way to keep track of your contributions and helps you communicate with the rest of the community.
 
 Please leave a message on [[$2|my talk page]] if I can help with anything! -- ~~~~",
-	"hawelcome-message-log" => "Friendly welcome"
+	"hawelcome-message-log" => "welcoming new contributor"
 );

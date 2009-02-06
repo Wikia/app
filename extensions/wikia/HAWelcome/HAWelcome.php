@@ -13,6 +13,19 @@
  * @license http://www.gnu.org/copyleft/gpl.html GNU General Public License 2.0 or later
  */
 
+if ( !defined( 'MEDIAWIKI' ) ) {
+	echo "This is a MediaWiki extension and cannot be used standalone.\n";
+	exit( 1 );
+}
+
+$wgExtensionCredits['misc'][] = array(
+	'name' => 'HAWelcome',
+	'version' => '0.1',
+	'author' => 'Krzysztof Krzyźaniak',
+	'description' => 'Highly Automated Welcome Tool ',
+);
+
+
 /**
  * used hooks
  */
