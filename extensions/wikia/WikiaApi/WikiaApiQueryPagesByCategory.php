@@ -73,20 +73,31 @@ class WikiaApiQueryPagesyByCategory extends WikiaApiQuery {
 				//throw new DBConnectionError($db, 'Connection error');
 				throw new WikiaApiQueryError(0);
 			}
-			
-			$category_db = Title::newFromText( $category );
-			$category_db = $category_db->getDbKey();
+
 			$this->addTables( array( "page", "categorylinks" ) );
 			$this->addFields( array(
 				'page_id',
 				'page_namespace',
-				'page_title'
+				'page_title',
+				'cl_to'
 				));
 			$this->addWhere ( "page_id=cl_from" );
-			$this->addWhere ( array("cl_to" => $category_db)  );
+
+			$cats = explode('|', $category);
+			$encodedCats = array();
+			foreach ($cats as $cat){
+				$categoryTitle = Title::newFromText( $cat );
+				if (is_object($categoryTitle)){
+					$encodedCats[] = $db->strencode($categoryTitle->getDbKey());
+				}
+			}
+			if (empty($encodedCats)){
+				throw new WikiaApiQueryError("Missing category");
+			}
+			$this->addWhere ( "cl_to IN ('". implode("','", $encodedCats) . "')");
 			$this->addWhere ( "page_is_redirect=0" );
 			
-			$this->setCacheKey ($lcache_key, 'C', $category);
+			$this->setCacheKey ($lcache_key, 'CCX', serialize($encodedCats));
 			
 			#--- limit
 			if ( !empty($limit)  ) { //WikiaApiQuery::DEF_LIMIT
@@ -103,15 +114,14 @@ class WikiaApiQueryPagesyByCategory extends WikiaApiQuery {
 					throw new WikiaApiQueryError(1);
 				}
 				$this->addOption( "OFFSET", $offset );
-				$this->setCacheKey ($lcache_key, 'LO', $limit);
+				$this->setCacheKey ($lcache_key, 'LO', $offset);
 			}
 			
-			$order_field = "page_id";
-			if ( !empty($order)  ) { //WikiaApiQuery::DEF_LIMIT_COUNT
+			if ( !empty($order)  ) {
 
 				switch( $order ){
 					case "edit":
-						$order_field = "page_touched";
+						$order_field = "page_touched DESC";
 						break;
 					case "random":
 						$this->addWhere ( "page_random >= " . wfRandom() );
@@ -119,9 +129,14 @@ class WikiaApiQueryPagesyByCategory extends WikiaApiQuery {
 				}
 				$this->setCacheKey ($lcache_key, 'ORD', $order);
 				
+			} else if (count($encodedCats) > 1){
+				$order_field = "cl_to, page_id DESC";
+				$this->setCacheKey ($lcache_key, 'ORD', $order_field);
 			}
 		
-			$this->addOption( "ORDER BY", "{$order_field} desc" );
+			if (!empty($order_field)){
+				$this->addOption( "ORDER BY", "{$order_field}" );
+			}
 			
 			#--- group by
 			#$this->addOption( "GROUP BY", "article_id" );
@@ -135,6 +150,7 @@ class WikiaApiQueryPagesyByCategory extends WikiaApiQuery {
 					$data[$row->page_id] = array(
 						"id"			=> $row->page_id,
 						"namespace"		=> $row->page_namespace,
+						"category"		=> $row->cl_to,
 						"title"			=> $row->page_title,
 						"url"			=> Title::makeTitle( $row->page_namespace, $row->page_title)->escapeFullURL()
 					);
