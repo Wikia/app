@@ -44,12 +44,13 @@ function WidgetAnswers($id, $params) {
 	    ProxyPass       /varnish_answer_redirect.php  http://answers.wikia.com/api.php
 	*/
 
+	global $wgSitename;
 	$apiparams = array(
 		'smaxage'=>300,
 		'maxage'=> 300,
 		'action'=> 'query',
 		'list'=>'wkpagesincat',
-		'wkcategory'=> 'un-answered questions',
+		'wkcategory'=> 'un-answered questions' . '|' . $wgSitename,
 		'format'=>'json',
 		'wklimit'=>'5'
 	);

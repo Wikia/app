@@ -71,6 +71,13 @@ class WidgetFramework {
 						array('type' => 'WidgetRelatedCommunities', 'id' => 104),
 					),
 				);
+
+				// Turn this widget on for anons if the wiki factory variable is on
+				global $wgEnableAnswersMonacoWidget;
+				if ($wgEnableAnswersMonacoWidget){
+					array_unshift($this->config[1], array('type' => 'WidgetAnswers', 'id' => 142));
+				}
+				
 			} else if($this->skinname == "quartz") {
 				$this->config = array(
 					1 => array(
