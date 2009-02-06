@@ -162,8 +162,9 @@ class ReverseParser {
 							$out = '';
 						}
 
-						// <br /> inside paragraphs (without <!--NEW_LINE_1--> comment following it)
-						if($node->nextSibling && $node->nextSibling->nodeType != XML_COMMENT_NODE) {
+						// <br /> inside paragraphs (without ' <!--NEW_LINE_1-->' following it)
+						if($node->nextSibling && $node->nextSibling->nextSibling && 
+							$node->nextSibling->nextSibling->nodeType != XML_COMMENT_NODE) {
 							$out = "<br />";
 						}
 						
