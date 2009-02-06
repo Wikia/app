@@ -18,7 +18,7 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 	exit( 1 );
 }
 
-$wgExtensionCredits['misc'][] = array(
+$wgExtensionCredits['other'][] = array(
 	'name' => 'HAWelcome',
 	'version' => '0.1',
 	'author' => 'Krzysztof Krzyźaniak',
