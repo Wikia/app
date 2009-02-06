@@ -239,7 +239,7 @@ class VideoPage extends Article {
 			$parsed = split( "/", $url );
 			if( is_array( $parsed ) ) {
 				$mdata = array_pop( $parsed );	
-				if ('' != $mdata) {
+				if ( ('' != $mdata ) && ( false === strpos( $mdata, "?" ) ) ) {
 					$this->mId = $mdata;
 				} else {
 					$this->mId = array_pop( $parsed );				
