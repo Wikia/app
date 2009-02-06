@@ -1,0 +1,22 @@
+.WidgetAnswers dt.widget_title {
+	background: #252525 url(wikianswers.png) 0px -1px no-repeat;
+	height: 15px;
+}
+.WidgetAnswers dd.widget_contents {
+	padding: 0;
+}
+#ask_form {
+	background: #CCC;
+	padding: 5px 3px;
+}
+#answers_ask_field {
+	background: #FFF url(field_bg.png) repeat-x;
+	border: 1px solid #093;
+	color: #000;
+	margin: 0;
+	padding: 2px;
+	width: 188px;
+}
+#answers_ask_field.alt {
+	color: #999;
+}
