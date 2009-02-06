@@ -487,22 +487,11 @@ class Sanitizer {
 						$rest = str_replace( '>', '&gt;', $rest );
 						$close = ( $brace == '/>' && !$slash ) ? ' /' : '';
 						global $wgWysiwygParserEnabled;
-
-						// Wysiwyg: add wasHtml attribute to HTML written by user in the article
-						// so the reverseParser knows which tags convert to wikitext and which don't
-						$wasHtml = '';
+						//Wysiwyg: add wasHtml attribute to HTML written by user in the article so the reverseParser knows which tags convert to wikitext and which don't
 						if(!empty($wgWysiwygParserEnabled)) {
-							if (!$slash && strpos($newparams, ' refid="') === false) {
-								$wasHtml = ' washtml="1"';
-
-								// store inline CSS style in _wysiwyg_style
-								// so FCK won't break it
-								if (!empty($newparams)) {
-									if( preg_match( '/style="([^"]+)"/', $newparams, $res ) ) {
-										$wasHtml .= ' _wysiwyg_style="'.htmlspecialchars($res[1]).'"';
-									}
-								}
-							}
+							$wasHtml = !$slash && strpos($newparams, ' refid="') === false ? ' wasHtml="1"' : '';
+						} else {
+							$wasHtml = '';
 						}
 						$text .= "<$slash$t$wasHtml$newparams$close>$rest";
 						continue;
