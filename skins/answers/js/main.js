@@ -272,9 +272,9 @@ function updateFacebookBox(){
 	}else{
 		jQuery("#facebook-connect-login").hide()
 		fb_html = "<div id='fb-pic' uid='" + fb_uid + "' facebook-logo='true' style='float:left'></div>";
-		fb_html += "<div style='float:left'>Hello <span id='fb-name' useyou='false' uid='" + fb_uid + "'></span>,<br/>";
-		fb_html += "You are signed into Facebook Connect<br/>"
-		fb_html += "<a href='#' onclick='FB.Connect.logoutAndRedirect(window.location.href)'>Sign Out</a></div>";
+		fb_html += "<div style='float:left'><span id='fb-name' useyou='false' uid='" + fb_uid + "'></span><br/>";
+		fb_html += wgFacebookSignedInMsg + "<br/>"
+		fb_html += "<a href='#' onclick='FB.Connect.logoutAndRedirect(window.location.href)'>" + wgFacebookLogoutMsg + "</a></div>";
 		fb_html += "<div style='clear:both'></div>";
 		
 		document.getElementById("facebook-user-placeholder").innerHTML = fb_html;
@@ -284,7 +284,7 @@ function updateFacebookBox(){
 	
 		jQuery("#facebook-connect-logout").show()
 		
-		document.getElementById("facebook-connect-ask").innerHTML = "<a href='javascript:facebook_publish_feed_story()'><img src=\"http://b.static.ak.fbcdn.net/images/fbconnect/login-buttons/connect_light_small_short.gif?8:121638\"></a> <a href='javascript:facebook_publish_feed_story()'>Ask on Facebook</a>";
+		document.getElementById("facebook-connect-ask").innerHTML = "<a href='javascript:facebook_ask()'><img src=\"http://b.static.ak.fbcdn.net/images/fbconnect/login-buttons/connect_light_small_short.gif?8:121638\"></a> <a href='javascript:facebook_ask()'>" + wgFacebookAskMsg + "</a><span id='facebook_finish'></span>";
 		jQuery("#facebook-connect-ask").show()
 	}
 }
@@ -293,10 +293,24 @@ function facebook_login_handler(){
 	window.location = document.location.href
 }
 	
+var facebook_clicked_ask = false;
+function facebook_ask(){
+	facebook_clicked_ask = true;
+	facebook_publish_feed_story()
+}
+
+function facebook_publish_finish(){
+	if( facebook_clicked_ask ){
+		document.getElementById("facebook_finish").innerHTML = "<img src='" + stylepath  + "/wikia/img/ok.png'>" ;
+		facebook_clicked_ask = false;
+	}
+	return false;
+}
+
 function facebook_publish_feed_story() {
 	// Load the feed form
 	FB.ensureInit(function() {  
 	  template_data = {"question" : wgTitle + "?", "url" : wgServer + wgArticlePath.replace("$1",wgPageName), "editurl" : wgServer + wgScript + "?title=" + wgPageName + "&action=edit" }
-	  FB.Connect.showFeedDialog(wgFacebookAnswersTemplateID, template_data,  null, null, FB.FeedStorySize.oneLine, FB.RequireConnect.require );
+	  FB.Connect.showFeedDialog(wgFacebookAnswersTemplateID, template_data,  null , null, FB.FeedStorySize.oneLine, FB.RequireConnect.require, facebook_publish_finish );
 	});
 }

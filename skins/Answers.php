@@ -353,10 +353,16 @@ wfRunHooks('GetHTMLAfterBody', array (&$this));
 			<? } ?>
 		</div>
 		<div id="social_networks">
-		<label>Ask your friends to help answer:</label>
+		<label><?= wfMsg("ask_friends")?></label>
 			<?
+			
 			if( $wgEnableFacebookConnect == true ){
 			?>
+			<script>
+			var wgFacebookAskMsg = "<?= wfMsg("facebook_ask")?>";
+			var wgFacebookSignedInMsg = "<?= wfMsg("facebook_signed_in")?>";
+			var wgFacebookLogoutMsg = "<?= wfMsg("logout")?>";
+			</script>
 			<div id="facebook-connect-login" style="display:none">
 				<?/*<fb:login-button size="small" background="light" length="short" onlogin="facebook_login_handler()"></fb:login-button> <a href="javascript:FB.Connect.requireSession()">Facebook</a>*/?>
 				<fb:login-button size="medium" background="white" length="long" onlogin="facebook_login_handler()"></fb:login-button>
@@ -364,12 +370,8 @@ wfRunHooks('GetHTMLAfterBody', array (&$this));
 			<div id="facebook-connect-ask" style="display:none">
 			</div>
 			
-			<script type="text/javascript">  FB.init(wgFacebookAnswersAppID, <?= $wgServer ?>"/extensions/wikia/FacebookConnect/xd_receiver.htm"); </script>
-			<!--<div id="facebook-connet"></div>-->
 			<?php 
-				if( $_GET['state'] == "asked" && facebook_client()->get_loggedin_user() ){
-					echo "<script>facebook_publish_feed_story()</script>";
-				}
+			
 			} 
 			
 			?>
@@ -381,10 +383,34 @@ wfRunHooks('GetHTMLAfterBody', array (&$this));
 
 		?>
 		<div id="twitter-post">
-			<a href="<?=$twitter_url?>" onclick="window.open('<?=$twitter_url?>', 'twitter'); return false;"><img src="/skins/answers/images/twitter_icon.png" /></a> <a href="<?=$twitter_url?>" onclick="window.open('<?=$twitter_url?>', 'twitter'); return false;">Ask on Twitter</a>
+			<a href="<?=$twitter_url?>" onclick="window.open('<?=$twitter_url?>', 'twitter'); return false;"><img src="/skins/answers/images/twitter_icon.png" /></a> <a href="<?=$twitter_url?>" onclick="window.open('<?=$twitter_url?>', 'twitter'); return false;"><?= wfMsg("twitter_ask")?></a>
 		</div>
 		</div><?/* social_networks */?>
-		<?php } ?>
+		<?
+		if( $wgEnableFacebookConnect == true ){
+		?>
+			<div><a href='javascript:void(0);' onclick='jQuery("#facebook-send-request").toggle();'><?=  wfMsg("facebook_send_request")?></a></div>
+			<div id="facebook-send-request" style="display:none;">
+			<fb:serverfbml>
+			<script type="text/fbml" >
+			<fb:fbml> 
+			<fb:request-form invite="false"  type="Wikianswers" action="<?= $wgTitle->getFullURL() ?>" content="<?= wfMsg("facebook_send_request_content", htmlentities("<a href='" . $wgTitle->getFullURL() . "'>" . $wgTitle->getText() . "</a>") )?>  " style="height:300px">
+			<fb:multi-friend-input border_color="#8496ba"></fb:multi-friend-input>
+			<fb:request-form-submit /> 
+			</fb:request-form>
+			</fb:fbml> 
+			</script>
+			</fb:serverfbml>
+			</div>
+			<script type="text/javascript">  FB.init(wgFacebookAnswersAppID, <?= $wgServer ?>"/extensions/wikia/FacebookConnect/xd_receiver.htm");  </script>
+			<!--<div id="facebook-connet"></div>-->
+			<?php 
+				if( $_GET['state'] == "asked" && facebook_client()->get_loggedin_user() ){
+					echo "<script>facebook_publish_feed_story()</script>";
+				}
+		} 
+		} 
+		?>
 		
 		<?php if($this->data['catlinks']) { $this->html('catlinks'); } ?>
 
