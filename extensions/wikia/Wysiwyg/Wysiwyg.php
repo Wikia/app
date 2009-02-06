@@ -385,6 +385,12 @@ function Wysiwyg_WrapTemplate($originalCall, $output, $lineStart) {
 		$output .= "\n";
 	}
 
+	// macbre: fix for templates wrapped by <div> tags (e.g. Template:Navigation on lot of wikis)
+	// paragraphs will be added, so newline info won't be lost
+	if ( substr($output, 0, 4) == '<div') {
+		$output = "\n".trim($output)."\n";
+	}
+
 	return "\x7f-wtb-{$refId}-\x7f{$output}\x7f-wte-{$refId}-\x7f";
 }
 
