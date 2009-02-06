@@ -57,6 +57,7 @@ class HAWelcomeJob extends Job {
 	public function run() {
 		global $wgUser, $wgDevelEnvironment;
 
+		wfProfileIn( __METHOD__ );
 		/**
 		 * overwrite $wgUser for ~~~~ expanding
 		 */
@@ -91,6 +92,8 @@ class HAWelcomeJob extends Job {
 		}
 
 		$wgUser = $tmpUser;
+		wfProfileOut( __METHOD__ );
+
 		return true;
 	}
 
@@ -136,26 +139,31 @@ class HAWelcomeJob extends Job {
 	public static function revisionInsertComplete( &$revision, &$url, &$flags ) {
 		global $wgTitle, $wgUser, $wgDevelEnvironment;
 
-		/**
-		 * check if talk page for wgUser exists
-		 *
-		 * @todo check editcount for user
-		 */
-		$talkPage = $wgUser->getUserPage()->getTalkPage();
-		if( $talkPage ) {
-			$talkArticle = new Article( $talkPage, 0 );
-			if( !$talkArticle->exists( ) || $wgDevelEnvironment ) {
-				$welcomeJob = new HAWelcomeJob(
-					$wgTitle,
-					array(
-						"is_anon" => $wgUser->isAnon(),
-						"user_id" => $wgUser->getId(),
-						"user_name" => $wgUser->getName(),
-					)
-				);
-				$welcomeJob->insert();
+		wfProfileIn( __METHOD__ );
+		if( trim( wfMsg( "hawelcome" ) ) !== "@disabled" ) {
+			/**
+			 * check if talk page for wgUser exists
+			 *
+			 * @todo check editcount for user
+			 */
+			$talkPage = $wgUser->getUserPage()->getTalkPage();
+			if( $talkPage ) {
+				$talkArticle = new Article( $talkPage, 0 );
+				if( !$talkArticle->exists( ) || $wgDevelEnvironment ) {
+					$welcomeJob = new HAWelcomeJob(
+						$wgTitle,
+						array(
+							"is_anon" => $wgUser->isAnon(),
+							"user_id" => $wgUser->getId(),
+							"user_name" => $wgUser->getName(),
+						)
+					);
+					$welcomeJob->insert();
+				}
 			}
 		}
+		wfProfileOut( __METHOD__ );
+
 		return true;
 	}
 
