@@ -933,6 +933,13 @@ class ReverseParser {
 		if(!$node->hasAttributes()) {
 			return '';
 		}
+
+		// replace style attribute with _wysiwyg_style
+		if ($node->hasAttribute('_wysiwyg_style')) {
+			$node->setAttribute('style', $node->getAttribute('_wysiwyg_style'));
+			$node->removeAttribute('_wysiwyg_style');
+		}
+
 		$attStr = '';
 		foreach ($node->attributes as $attrName => $attrNode) {
 			if( in_array($attrName, array('washtml', '_wysiwyg_new_line', '_wysiwyg_line_start')) ) {
