@@ -717,6 +717,8 @@ class Sanitizer {
 	 * @return string
 	 */
 	static function fixTagAttributes( $text, $element ) {
+		global $wgWysiwygParserEnabled;
+
 		if( trim( $text ) == '' ) {
 			return '';
 		}
@@ -730,6 +732,11 @@ class Sanitizer {
 			$encValue = Sanitizer::safeEncodeAttribute( $value );
 
 			$attribs[] = "$encAttribute=\"$encValue\"";
+
+			// Wysiwyg: store inline CSS style in _wysiwyg_style attribute, so FCK won't brake it
+			if ( !empty($wgWysiwygParserEnabled) && ($encAttribute == 'style') ) {
+				$attribs[] = "_wysiwyg_style=\"$encValue\"";
+			}
 		}
 		return count( $attribs ) ? ' ' . implode( ' ', $attribs ) : '';
 	}
