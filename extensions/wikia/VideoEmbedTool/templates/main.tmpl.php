@@ -1,4 +1,5 @@
 <div id="VideoEmbedError"></div>
+
 <?php
 	$uploadmesg = wfMsgExt( 'vet-uploadtext', 'parse' );
 	$uploadmesg = preg_replace( '/(<a[^>]+)/', '$1 target="_blank" ', $uploadmesg );
@@ -79,7 +80,7 @@
 			</div>
 		</div></td>
 		<td><div class="gallerybox" style="width: 170px;">
-			<div class="thumb" style="padding: 37px 0pt; width: 165px;"><div style="margin-left: auto; margin-right: auto; width: 120px;"><a href="http://www.vimeo.com" class="image" title="Vimeo" target="_blank"><img alt="" src="<?= $wgExtensionsPath; ?>/wikia/VideoEmbedTool/images/vimeo.png" height="72" width="120" border="0"></a></div></div>
+			<div class="thumb" style="padding: 37px 0pt; width: 165px;"><div style="margin-left: auto; margin-right: auto; width: 120px;"><a href="http://www.vimeo.com" class="image" title="Vimeo" target="_blank"><img alt="" src="<?= $wgExtensionsPath; ?>/wikia/VideoEmbedTool/images/vimeo.png" height="71" width="120" border="0"></a></div></div>
 			<div class="gallerytext">
 
 			</div>
@@ -89,7 +90,11 @@
 			<div class="gallerytext">
 			</div>
 		</div></td>
-		<td></td>
+		<td><div class="gallerybox" style="width: 170px;">
+			<div class="thumb" style="padding: 54px 0pt; width: 165px;"><div style="margin-left: auto; margin-right: auto; width: 120px;"><a href="http://www.southparkstudios.com" class="image" title="Southparkstudios" target="_blank"><img alt="" src="<?= $wgExtensionsPath; ?>/wikia/VideoEmbedTool/images/southparkstudios.png" height="37" width="120" border="0"></a></div></div>
+			<div class="gallerytext">
+			</div>
+		</div></td>
 	</tr>
 </tbody></table>
 
