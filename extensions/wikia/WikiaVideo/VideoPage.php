@@ -511,12 +511,12 @@ class VideoPage extends Article {
 				$code = 'custom';
 				$embed = '<object width="'.$width.'" height="'.$height.'"><param name="allowfullscreen" value="true" /><param name="wmode" value="transparent"><param name="allowscriptaccess" value="always" /><param name="movie" value="http://vimeo.com/moogaloop.swf?clip_id='.$this->mId.'&amp;server=vimeo.com&amp;show_title=1&amp;show_byline=1&amp;show_portrait=0&amp;color=&amp;fullscreen=1" /><embed src="http://vimeo.com/moogaloop.swf?clip_id='.$this->mId.'&amp;server=vimeo.com&amp;show_title=1&amp;show_byline=1&amp;show_portrait=0&amp;color=&amp;fullscreen=1" type="application/x-shockwave-flash" allowfullscreen="true" allowscriptaccess="always" width="'.$width.'" height="'.$height.'"></embed></object>';
 				break;
-                        default: break;
-                }	
 			case 'southparkstudios':
 				$code = 'custom';
 				$embed = '<embed src="http://media.mtvnservices.com/mgid:cms:item:southparkstudios.com:' . $this->mId . '" width="' . $width . '" height="' . $height . '" type="application/x-shockwave-flash" wmode="window" flashVars="autoPlay=false&dist=http://www.southparkstudios.com&orig=" allowFullScreen="true" allowScriptAccess="always" allownetworking="all" bgcolor="#000000"></embed>';
 				break;
+                        default: break;
+                }	
 			if( 'custom' != $code ) { 
                                 $embed = "<embed src=\"{$url}\" width=\"{$width}\" height=\"{$height}\" wmode=\"transparent\" pluginspage=\"http://www.macromedia.com/go/getflashplayer\" type=\"application/x-shockwave-flash\"> </embed>";
 			}
@@ -550,7 +550,7 @@ $wgWikiaVideoProviders = array(
 		VideoPage::V_VIMEO => 'vimeo',
 		VideoPage::V_CLIPFISH => 'clipfish',
 		VideoPage::V_MYVIDEO => 'myvideo',
-		VideoPage:V_SOUTHPARKSTUDIOS => 'southparkstudios',
+		VideoPage::V_SOUTHPARKSTUDIOS => 'southparkstudios',
 		);
 
 class VideoHistoryList {
