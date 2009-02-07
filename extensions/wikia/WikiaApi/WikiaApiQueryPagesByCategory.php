@@ -132,6 +132,9 @@ class WikiaApiQueryPagesyByCategory extends WikiaApiQuery {
 			} else if (count($encodedCats) > 1){
 				$order_field = "cl_to, page_id DESC";
 				$this->setCacheKey ($lcache_key, 'ORD', $order_field);
+			} else {
+				$order_field = "page_id DESC";
+				$this->setCacheKey ($lcache_key, 'ORD', $order_field);
 			}
 		
 			if (!empty($order_field)){
