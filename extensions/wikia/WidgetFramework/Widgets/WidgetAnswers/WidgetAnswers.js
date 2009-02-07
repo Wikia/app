@@ -13,7 +13,10 @@ function answers_widget_handler(e) {
 	} else if (e.type == 'keypress') {
 		var keycode = e.which || window.event.keyCode;
 		if (keycode == 13 && $('answers_ask_field').value != '' ) {
-			window.open('http://answers.wikia.com/index.php?title=Special:CreateQuestionPage&questiontitle=' + $('answers_ask_field').value + '&categories=' + wgSitename, 'wikianswers');
+			var widget_answers_question = $('answers_ask_field').value;
+			window.open('http://answers.wikia.com/index.php?title=Special:CreateQuestionPage&questiontitle=' + widget_answers_question + '&categories=' + wgSitename, 'wikianswers');
+			YAHOO.util.Dom.addClass('answers_ask_field', 'alt');
+			$('answers_ask_field').value = widget_answers_placeholder;
 		}
 	}
 } 
