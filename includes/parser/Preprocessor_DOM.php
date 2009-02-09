@@ -125,10 +125,6 @@ class Preprocessor_DOM implements Preprocessor {
 			$ignoredTags = $ignoredElements = array();
 			$xmlishElements[] = 'noinclude';
 			$xmlishElements[] = 'onlyinclude';
-//			global $wgParser;
-//			$wgParser->setHook('noinclude', 'CategorySelectParserHookCallback');
-//			$wgParser->setHook('includeonly', 'CategorySelectParserHookCallback');
-//			$wgParser->setHook('onlyinclude', 'CategorySelectParserHookCallback');
 		}
 
 		$xmlishRegex = implode( '|', array_merge( $xmlishElements, $ignoredTags ) );
@@ -524,7 +520,7 @@ class Preprocessor_DOM implements Preprocessor {
 					$element = $piece->breakSyntax( $matchingCount ) . str_repeat( $rule['end'], $matchingCount );
 
 					//Wysiwyg: add proper marker to internal or external link
-					if(!empty($wgWysiwygParserEnabled) /*|| !empty($wgCategorySelectEnabled)*/) {
+					if(!empty($wgWysiwygParserEnabled)) {
 						global $wgWikitext;
 						$wgWikitext[] = $element;
 						if($name === null) {
