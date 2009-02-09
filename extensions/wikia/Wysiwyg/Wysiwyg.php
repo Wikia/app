@@ -448,6 +448,11 @@ function Wysiwyg_SetRefId($type, $params, $addMarker = true, $returnId = false) 
 			break;
 
 		case 'internal link: media':
+			$data['href'] = $params['link'];
+			$data['description'] = (!empty($params['wasblank']) ? '' : $params['text']);
+			$result = '[[' . $params['link'] . (!empty($params['wasblank']) ? '' : '|' . $params['text']) . ']]';
+			break;
+
 		case 'category':
 			$data['href'] = ($params['noforce'] ? '' : ':') . $params['link'];
 			if ($params['original'] != '') {
@@ -456,7 +461,7 @@ function Wysiwyg_SetRefId($type, $params, $addMarker = true, $returnId = false) 
 			if ($params['whiteSpacePrefix'] != '') {
 				$data['whiteSpacePrefix'] = $params['whiteSpacePrefix'];
 			}
-			$result = '[[' . $data['href'] . ($params['wasblank'] ? '' : '|' . $params['text']) . ']]';
+			$result = $data['original'];
 			break;
 
 		case 'image':
