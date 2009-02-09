@@ -49,26 +49,26 @@ if ($row = $dbw->fetchObject($res)) {
 }
 
 # Check if "to" user exists
-$res = $dbw->select('user','user_id','user_name = '. $to_text);
+$res = $dbw->select('user', array('user_id', 'user_name'),'user_name = '. $to_text);
 if ($row = $dbw->fetchObject($res) xor isset($options['merge'])) {
 	$error = "Fatal error: User $to_text ";
 	$error .= (isset($options['merge'])) ? "doesn't exist. Cannot merge." : "exists. Cannot move.";
 	$error .= "\n";
 	die($error);
 } else
-		$to_id = $row->user_id;
+		$newid = $row->user_id;
 
 $dbw->selectDB($wgDBname);
 
 if (isset($options['merge'])) {
 	# Change user IDs if merging two accounts
-	alterTable($dbw->tableName( 'archive' ),"ar_user",$row->user_name,$newid,"ar_user_text");
+	alterTable($dbw->tableName( 'archive' ),"ar_user", $dbw->addQuotes($row->user_name),$newid,"ar_user_text");
 	alterTable($dbw->tableName( 'filearchive' ),"fa_user",$row->user_id,$newid);
-	alterTable($dbw->tableName( 'image' ),"img_user",$row->user_name,$newid,"img_user_text");
+	alterTable($dbw->tableName( 'image' ),"img_user", $dbw->addQuotes($row->user_name),$newid,"img_user_text");
 	alterTable($dbw->tableName( 'ipblocks' ),"ipb_user",$row->user_id,$newid);
 	alterTable($dbw->tableName( 'logging' ),"log_user",$row->user_id,$newid);
-	alterTable($dbw->tableName( 'oldimage' ),"oi_user",$row->user_name,$newid,"oi_user_text");
-	alterTable($dbw->tableName( 'recentchanges' ),"rc_user",$row->user_name,$newid,"rc_user_text");
+	alterTable($dbw->tableName( 'oldimage' ),"oi_user",$dbw->addQuotes($row->user_name),$newid,"oi_user_text");
+	alterTable($dbw->tableName( 'recentchanges' ),"rc_user",$dbw->addQuotes($row->user_name),$newid,"rc_user_text");
 	alterTable($dbw->tableName( 'revision' ),"rev_user",$row->user_id,$newid);
 	alterTable($dbw->tableName( 'user_groups' ),"ug_user",$row->user_id,$newid);
 	alterTable($dbw->tableName( 'user_newtalk' ),"user_id",$row->user_id,$newid);
