@@ -1892,8 +1892,19 @@ class Parser
 			//Wysiwyg: mark element and add metadata to wysiwyg array
 			if (!empty($wgWysiwygParserEnabled)) {
 				Wysiwyg_SetRefId('internal link', array('text' => &$text, 'link' => $link, 'trail' => $trail, 'wasblank' => $wasblank, 'noforce' => $noforce, 'original' => $originalWikitext));
+
+				// sometimes we may get placeholder instead of link content 
+				// e.g. [[foo|{{bar}}]] will produce placeholder
+				if (substr($text, 0, 6) == '<input') {
+					$s .= $prefix . $text . $trail;
+				}
+				else {
+					$s .= $this->makeLinkHolder( $nt, $text, '', $trail, $prefix );
+				}
 			}
-			$s .= $this->makeLinkHolder( $nt, $text, '', $trail, $prefix );
+			else {
+				$s .= $this->makeLinkHolder( $nt, $text, '', $trail, $prefix );
+			}
 		}
 		wfProfileOut( $fname );
 		return $s;
