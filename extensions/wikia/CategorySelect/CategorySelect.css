@@ -1,0 +1,119 @@
+#csSuggestContainer {
+	position: relative;
+	top: 4px;
+	left: 0;
+	width: 250px;
+}
+
+#csMainContainer {
+	border: 1px solid #AAA;
+	padding: 5px 5px 2px 5px;
+}
+#csItemsContainer {
+	position: relative;
+}
+
+#csCategoryInput {
+	border: 0;
+	display: block;
+	float: left;
+}
+
+#csCodeView {
+	float: right;
+}
+
+.CSitem {
+	background: #9Cf;
+	border: 1px solid #82add8;
+	color: #000 !important;
+	cursor: default;
+	display: block;
+	float: left;
+	font-size: 11px;
+	line-height: 16px;
+	margin: 0 5px 3px 0;
+	white-space: nowrap;
+	position: relative;
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
+}
+
+.CSaddCategory {
+	background: #DDD;
+	border-color: #BBB;
+	cursor: pointer;
+}
+
+.CSitemOuter {
+	margin: 0 35px 0 4px;
+}
+
+.CSitemOuterAddCategory {
+	margin: 0 4px 0 18px;
+}
+
+.CSitem:hover {
+	text-decoration: none;
+}
+
+.CSitem:visited, .CSitem:active {
+	color: black;
+}
+
+/*** Control buttons ***/
+.CScontrol {
+	background-image: url(sprite.png);
+	cursor: pointer;
+	display: block;
+	height: 14px;
+	position: absolute;
+	top: 1px;
+	width: 48px;
+	overflow: hidden;
+}
+
+.CScontrolAdd {
+	background-position: top left;
+	left: 2px;
+	width: 12px;
+}
+
+.CScontrolRemove {
+	clip: rect(0px 48px 14px 36px);
+	right: 4px;
+}
+
+/** fix for Opera **/
+html>/**/body .CSitemOuter > .CScontrolRemove {
+	clip: rect(auto, auto, auto, auto);
+	background-position: right center;
+	width: 12px;
+	z-index: 2;
+}
+
+.CScontrolSort {
+	clip: rect(0px 36px 14px 24px);
+	right: 4px;
+}
+
+.CScontrolSorted {
+	clip: rect(0px 24px 14px 12px);
+	right: -8px;
+}
+
+.CSsuggestHover {
+	background-color: #D2E3FF;
+}
+
+/** IE6 fixes **/
+* html #csMainContainer,
+* html .CSitem {
+	height: 1%;
+}
+
+/** TODO: when merged with trunk, change the path to http://images.wikia.com/common/extensions/wikia/CategorySelect/sprite.png **/
+* html .CScontrol {
+	background-image: none;
+	filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='sprite.png', sizingMethod='crop');
+}

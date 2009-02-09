@@ -661,6 +661,9 @@ END;
 		global $wgOut, $wgTitle, $wgUseCategoryBrowser;
 		global $wgContLang, $wgUser;
 
+		if( !wfRunHooks( 'getCategoryLinks', array( &$alternativeCategoryLinks ) ) )
+			return $alternativeCategoryLinks;
+
 		if( count( $wgOut->mCategoryLinks ) == 0 ) return '';
 
 		# Separator

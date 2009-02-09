@@ -64,7 +64,7 @@ class Preprocessor_DOM implements Preprocessor {
 	function preprocessToObj( $text, $flags = 0 ) {
 		wfProfileIn( __METHOD__ );
 		wfProfileIn( __METHOD__.'-makexml' );
-		global $wgWysiwygParserEnabled, $wgWysiwygParserTildeEnabled;
+		global $wgWysiwygParserEnabled, $wgWysiwygParserTildeEnabled, $wgCategorySelectEnabled;
 
 		$rules = array(
 			'{' => array(
@@ -120,6 +120,17 @@ class Preprocessor_DOM implements Preprocessor {
 			$wgParser->setHook('onlyinclude', 'WysiwygParserHookCallback');
 		}
 
+		//CategorySelect
+		if (!empty($wgCategorySelectEnabled)) {
+			$ignoredTags = $ignoredElements = array();
+			$xmlishElements[] = 'noinclude';
+			$xmlishElements[] = 'onlyinclude';
+//			global $wgParser;
+//			$wgParser->setHook('noinclude', 'CategorySelectParserHookCallback');
+//			$wgParser->setHook('includeonly', 'CategorySelectParserHookCallback');
+//			$wgParser->setHook('onlyinclude', 'CategorySelectParserHookCallback');
+		}
+
 		$xmlishRegex = implode( '|', array_merge( $xmlishElements, $ignoredTags ) );
 
 		// Use "A" modifier (anchored) instead of "^", because ^ doesn't work with an offset
@@ -140,7 +151,7 @@ class Preprocessor_DOM implements Preprocessor {
 		$noMoreGT = false;         # True if there are no more greater-than (>) signs right of $i
 		$findOnlyinclude = $enableOnlyinclude; # True to ignore all input up to the next <onlyinclude>
 		$fakeLineStart = true;     # Do a line-start run without outputting an LF character
-		$openAt = $closeAt = array(); # Wysiwyg
+		$openAt = $closeAt = array(); # Wysiwyg && CategorySelect
 
 		while ( true ) {
 			//$this->memCheck();
@@ -469,7 +480,7 @@ class Preprocessor_DOM implements Preprocessor {
 				}
 
 				# Wysiwyg
-				if($flags == 0 && $wgWysiwygParserEnabled && $count == 2 && $curChar == "{") {
+				if($flags == 0 && ($wgWysiwygParserEnabled || $wgCategorySelectEnabled) && $count == 2 && $curChar == "{") {
 					$openAt[] = $i;
 				}
 
@@ -513,7 +524,7 @@ class Preprocessor_DOM implements Preprocessor {
 					$element = $piece->breakSyntax( $matchingCount ) . str_repeat( $rule['end'], $matchingCount );
 
 					//Wysiwyg: add proper marker to internal or external link
-					if(!empty($wgWysiwygParserEnabled)) {
+					if(!empty($wgWysiwygParserEnabled) /*|| !empty($wgCategorySelectEnabled)*/) {
 						global $wgWikitext;
 						$wgWikitext[] = $element;
 						if($name === null) {
@@ -540,8 +551,8 @@ class Preprocessor_DOM implements Preprocessor {
 					$element = "<$name$attr>";
 					$element .= "<title>$title</title>";
 
-					//Wysiwyg: add original wikitext for template call to XML
-					if($flags == 0 && $wgWysiwygParserEnabled && $count == 2 && $curChar == "}") {
+					//Wysiwyg + CategorySelect: add original wikitext for template call to XML
+					if($flags == 0 && ($wgWysiwygParserEnabled || $wgCategorySelectEnabled) && $count == 2 && $curChar == '}') {
 						$closeAt[] = $i;
 						if(count($closeAt) == count($openAt)) {
 							$openIdx = $openAt[0];

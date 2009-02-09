@@ -1522,7 +1522,7 @@ class Parser
 	 * @private
 	 */
 	function replaceInternalLinks( $s ) {
-		global $wgContLang, $wgWysiwygParserEnabled;
+		global $wgContLang, $wgWysiwygParserEnabled, $wgCategorySelectEnabled, $wgCategorySelectMetaData;
 		static $fname = 'Parser::replaceInternalLinks' ;
 
 		wfProfileIn( $fname );
@@ -1586,7 +1586,7 @@ class Parser
 			$line = $a[$k];
 
 			//Wysiwyg: restore original internal link
-			if (!empty($wgWysiwygParserEnabled)) {
+			if (!empty($wgWysiwygParserEnabled) /*|| !empty($wgCategorySelectEnabled)*/) {
 				global $wgWikitext;
 				$originalWikitext = '';
 				if($line[0] == "\x7d" && $line[1] == "-") {
@@ -1805,6 +1805,13 @@ class Parser
 							$extraTrial = $extraTrial[1];
 						}
 						$FCKtmp = Wysiwyg_SetRefId('category', array('text' => &$text, 'link' => $link, 'wasblank' => $wasblank, 'noforce' => $noforce, 'original' => $originalWikitext, 'whiteSpacePrefix' => $extraTrial), false);
+					}
+					if (!empty($wgCategorySelectEnabled)) {
+						//TODO: extract 'name' and 'sortkey' and add it to $wgCategorySelectMetaData
+//						$categoryTitle = Title::newFromText($link);
+//						$categoryDBkey = $categoryTitle->getDBkey();
+//						print_pre(array('sortkey' => $wasblank ? '' : $text, 'link' => $link, 'noforce' => $noforce, 'original' => htmlspecialchars($originalWikitext), 'db' => $categoryDBkey));
+//						$wgCategorySelectMetaData[$categoryDBkey]['original'] = htmlspecialchars($originalWikitext);
 					}
 					if ( $wasblank ) {
 						$sortkey = $this->getDefaultSort();
