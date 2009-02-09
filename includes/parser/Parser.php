@@ -1741,8 +1741,16 @@ class Parser
 				wfProfileIn( "$fname-interwiki" );
 				if( $iw && $this->mOptions->getInterwikiMagic() && $nottalk && $wgContLang->getLanguageName( $iw ) ) {
 					$this->mOutput->addLanguageLink( $nt->getFullText() );
-					$s = rtrim($s . $prefix);
-					$s .= trim($trail, "\n") == '' ? '': $prefix . $trail;
+
+					// Wysiwyg: add placeholder
+					if (!empty($wgWysiwygParserEnabled)) {
+						$FCKtmp= Wysiwyg_SetRefId('interwiki', array('text' => &$text, 'link' => $link, 'wasblank' => $wasblank, 'noforce' => $noforce));
+						$s .= $prefix . $FCKtmp . $trail;
+					}
+					else {
+						$s = rtrim($s . $prefix);
+						$s .= trim($trail, "\n") == '' ? '': $prefix . $trail;
+					}
 					wfProfileOut( "$fname-interwiki" );
 					continue;
 				}
@@ -2340,7 +2348,6 @@ class Parser
 			$output .= '</' . $this->mLastSection . '>';
 			$this->mLastSection = '';
 		}
-
 		wfProfileOut( $fname );
 		return $output;
 	}
