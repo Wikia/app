@@ -16,9 +16,11 @@ EditEnhancements = function() {
 		var viewport = Dom.getViewportHeight();
 		var textareaTop = jQuery("#" + textbox).offset().top;
 		var toolbar = jQuery("#edit_enhancements_toolbar").outerHeight(true);
-		var heightDiff = jQuery("#" + textbox).outerHeight(true) - jQuery("#" + textbox).height();
-		
-		var targetHeight = viewport - textareaTop - toolbar - heightDiff;
+		//count height of elements between bottom of textarea and top of EditEnhancements box
+		var otherStuff = jQuery("#edit_enhancements_toolbar").offset().top - (textareaTop + jQuery("#" + textbox).height());
+		//var heightDiff = jQuery("#" + textbox).outerHeight(true) - jQuery("#" + textbox).height();
+		//+4 is for extra margin
+		var targetHeight = viewport - textareaTop - toolbar - otherStuff + 4;
 
 		targetHeight = Math.max(targetHeight, 200);
 		targetHeight = Math.min(targetHeight, 800);
@@ -29,7 +31,7 @@ EditEnhancements = function() {
 		var items = Dom.get('edit_enhancements_toolbar').getElementsByTagName('li');
 		var summaryBox = jQuery('#wpSummaryEnhanced');
 		var itemsWidth = 0;
-		
+
 		for (i=0; i<items.length; i++) {
 			itemsWidth += jQuery(items[i]).innerWidth() + 5;
 		}
@@ -43,7 +45,7 @@ EditEnhancements = function() {
 
 		Dom.setStyle('wpSummaryEnhanced', 'width', newSummaryWidth + 'px');
 	}
-	
+
 	this.calculate();
 }
 
