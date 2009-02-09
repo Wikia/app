@@ -31,7 +31,7 @@ require_once( "$IP/includes/SiteConfiguration.php" );
 $wgConf = new SiteConfiguration;
 
 /** MediaWiki version number */
-$wgVersion			= '1.13.3';
+$wgVersion			= '1.13.4';
 
 /** Name of the site. It must be changed in LocalSettings.php */
 $wgSitename         = 'MediaWiki';
@@ -2293,7 +2293,7 @@ $wgAutoloadClasses = array();
  * $wgExtensionCredits[$type][] = array(
  * 	'name' => 'Example extension',
  *  'version' => 1.9,
- *  'svn-revision' => '$LastChangedRevision: 44568 $',
+ *  'svn-revision' => '$LastChangedRevision: 46957 $',
  *	'author' => 'Foo Barstein',
  *	'url' => 'http://wwww.example.com/Example%20Extension/',
  *	'description' => 'An example extension',

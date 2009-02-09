@@ -453,6 +453,7 @@ function efFlaggedRevsSchemaUpdates() {
 	global $wgDBtype, $wgExtNewFields, $wgExtPGNewFields, $wgExtNewIndexes, $wgExtNewTables;
 	$base = dirname(__FILE__);
 	if( $wgDBtype == 'mysql' ) {
+		$wgExtNewTables[] = array( 'flaggedrevs', "$base/FlaggedRevs.sql" ); // Initial install tables
 		$wgExtNewFields[] = array( 'flaggedpage_config', 'fpc_expiry', "$base/archives/patch-fpc_expiry.sql" );
 		$wgExtNewIndexes[] = array('flaggedpage_config', 'fpc_expiry', "$base/archives/patch-expiry-index.sql" );
 		$wgExtNewTables[] = array( 'flaggedrevs_promote', "$base/archives/patch-flaggedrevs_promote.sql" );
@@ -460,6 +461,7 @@ function efFlaggedRevsSchemaUpdates() {
 		$wgExtNewFields[] = array( 'flaggedrevs', 'fr_img_name', "$base/archives/patch-fr_img_name.sql" );
 		$wgExtNewTables[] = array( 'reader_feedback', "$base/archives/patch-reader_feedback.sql" );
 	} else if( $wgDBtype == 'postgres' ) {
+		$wgExtNewTables[] = array( 'flaggedrevs', "$base/FlaggedRevs.sql" ); // Initial install tables
 		$wgExtPGNewFields[] = array('flaggedpage_config', 'fpc_expiry', "TIMESTAMPTZ NULL" );
 		$wgExtNewIndexes[] = array('flaggedpage_config', 'fpc_expiry', "$base/postgres/patch-expiry-index.sql" );
 		$wgExtNewTables[] = array( 'flaggedrevs_promote', "$base/postgres/patch-flaggedrevs_promote.sql" );
