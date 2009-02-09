@@ -70,7 +70,7 @@ function CategorySelectAjaxGetCategories() {
 
 	$categories = '';
 	while($row = $dbr->fetchObject($res)) {
-		$categories .= $row->cat_title . "\n";
+		$categories .= str_replace('_', ' ', $row->cat_title) . "\n";
 	}
 
 	$ar = new AjaxResponse($categories);
