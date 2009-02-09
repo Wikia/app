@@ -1744,8 +1744,9 @@ class Parser
 
 					// Wysiwyg: add placeholder
 					if (!empty($wgWysiwygParserEnabled)) {
-						$FCKtmp= Wysiwyg_SetRefId('interwiki', array('text' => &$text, 'link' => $link, 'wasblank' => $wasblank, 'noforce' => $noforce));
-						$s .= $prefix . $FCKtmp . $trail;
+						$FCKtmp= Wysiwyg_SetRefId('interwiki', array('text' => &$text, 'original' => $originalWikitext));
+						$s .= $prefix . $this->armorLinks( $FCKtmp ) . $trail;
+						wfDebug("Interwiki: {$text}\n");
 					}
 					else {
 						$s = rtrim($s . $prefix);
