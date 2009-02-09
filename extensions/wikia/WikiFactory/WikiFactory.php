@@ -232,7 +232,7 @@ class WikiFactory {
 		$dbw = wfGetDB( DB_MASTER );
 		$dbw->begin();
 
-		if ( ! $dbw->delete(wfSharedTable("city_domains"), array( "city_id" => $city, "city_domain" => $domain ), __METHOD__) ) {
+		if ( ! $dbw->delete(wfSharedTable("city_domains"), array( "city_id" => $wiki, "city_domain" => $domain ), __METHOD__) ) {
 			$dbw->rollback();
 
 			wfProfileOut( __METHOD__ );
