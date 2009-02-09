@@ -513,9 +513,8 @@ function Wysiwyg_SetRefId($type, $params, $addMarker = true, $returnId = false) 
 			break;
 
 		case 'interwiki':
-			$data['href'] = $params['link'];
-			$data['description'] = (!empty($params['wasblank']) ? '' : $params['text']);
-			$result = '[[' . $params['link'] . (!empty($params['wasblank']) ? '' : '|' . $params['text']) . ']]';
+			$data['originalCall'] = htmlspecialchars_decode(preg_replace($regexPreProcessor['search'], $regexPreProcessor['replace'], $params['original']));
+			$result = $data['originalCall']; 
 			break;
 
 		case 'nowiki':

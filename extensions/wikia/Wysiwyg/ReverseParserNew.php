@@ -579,10 +579,11 @@ class ReverseParser {
 				case 'image':
 				// [[Media:foo.jpg]]
 				case 'internal link: media':
-				// [[en:foo]]
-				case 'interwiki':
 					$pipe = ($refData['description'] != '') ? '|'.$refData['description'] : '';
 					return "[[{$refData['href']}{$pipe}]]";
+				// [[en:foo]]
+				case 'interwiki':
+					return $refData['originalCall'];
 
 				// <gallery></gallery>
 				case 'gallery':
