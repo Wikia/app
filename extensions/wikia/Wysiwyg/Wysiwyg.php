@@ -512,6 +512,12 @@ function Wysiwyg_SetRefId($type, $params, $addMarker = true, $returnId = false) 
 			$data['href'] = $params['link'];
 			break;
 
+		case 'interwiki':
+			$data['href'] = $params['link'];
+			$data['description'] = (!empty($params['wasblank']) ? '' : $params['text']);
+			$result = '[[' . $params['link'] . (!empty($params['wasblank']) ? '' : '|' . $params['text']) . ']]';
+			break;
+
 		case 'nowiki':
 		case 'gallery':
 		case 'hook':
