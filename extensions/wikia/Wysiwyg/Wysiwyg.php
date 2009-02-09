@@ -304,7 +304,7 @@ function Wysiwyg_WikiTextToHtml($wikitext, $articleId = -1, $encode = false) {
 
 		$templateCallsParsed =  array_combine($matches[1], $templateCallsParsed);
 
-		// save name of template output wrapping HTML tag
+		// save name of HTML tag wrapping template output
 		foreach($templateCallsParsed as $refid => $parsed) {
 			$parsed = trim($parsed);
 
