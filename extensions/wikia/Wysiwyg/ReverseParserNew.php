@@ -596,8 +596,9 @@ class ReverseParser {
 
 				// [[Category:foo]]
 				case 'category':
+					$prefix = !empty($refData['whiteSpacePrefix']) ? $refData['whiteSpacePrefix'] : '';
 					$pipe = ($refData['description'] != '') ? '|'.$refData['description'] : '';
-					return "[[{$refData['href']}{$pipe}]]{$refData['trial']}";
+					return "{$prefix}[[{$refData['href']}{$pipe}]]{$refData['trial']}";
 
 				// parser hooks
 				case 'hook':
