@@ -435,7 +435,7 @@ function Wysiwyg_SetRefId($type, $params, $addMarker = true, $returnId = false) 
 		case 'internal link: special page':
 		case 'internal link: file':
 			$data['href'] = ($params['noforce'] ? '' : ':') . $params['link'];
-//			$data['description'] = $params['wasblank'] ? '' : $params['text'];
+			$data['description'] = $params['wasblank'] ? '' : $params['text'];
 			if ($params['trail'] != '') {
 				list($tmpInside, $tmpTrail) = Linker::splitTrail($params['trail']);
 				if ($tmpInside != '') {
