@@ -411,6 +411,10 @@ function Wysiwyg_SetRefId($type, $params, $addMarker = true, $returnId = false) 
 	$data = array('type' => $type);
 	$result = '';
 
+	// macbre: whether to replace $params['text'] with placeholder
+	// used for links with templates (e.g. [[foo|{{bar}}]]
+	$returnPlaceholder = false;
+
 	$regexPreProcessor = array(
 		'search' => array(
 			'%<template><title>[^<]*</title><originalCall><!\[CDATA\[(.*?)]]></originalCall>(?:<part>.*?</part>)*</template>%si',
@@ -444,7 +448,16 @@ function Wysiwyg_SetRefId($type, $params, $addMarker = true, $returnId = false) 
 			}
 			if (isset($params['original']) && $params['original'] != '') {
 				$data['original'] = htmlspecialchars_decode(preg_replace($regexPreProcessor['search'], $regexPreProcessor['replace'], $params['original']));
+				// do we have template inside link description? -> use placeholder
+				if (strpos($data['original'], '{{') !== false) {
+					$data['type'] = 'internal link: placeholder';
+					unset($data['href']);
+					unset($data['description']);
+					$result = $data['original'];
+					$returnPlaceholder = true;
+				}
 			}
+
 			break;
 
 		case 'internal link: media':
@@ -555,9 +568,11 @@ function Wysiwyg_SetRefId($type, $params, $addMarker = true, $returnId = false) 
 
 		// macbre: use placeholders
 		// they will be replaced with <input> grey boxes
+		if ($returnPlaceholder) {
+			$params['text'] = $result;
+		}
 		$marker = "\x7f-wysiwyg-{$refId}-\x7f";
 		$wgWysiwygMarkers[$marker] = $result;
-
 		$result = $marker;
 	}
 
