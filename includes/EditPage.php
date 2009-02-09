@@ -654,6 +654,8 @@ class EditPage {
 		$this->live = $request->getCheck( 'live' );
 		$this->editintro = $request->getText( 'editintro' );
 
+		wfRunHooks( 'EditPage::importFormData::finished', array( &$this, $request ) );
+
 		wfProfileOut( $fname );
 	}
 
@@ -1444,10 +1446,15 @@ END
 <div class='templatesUsed'>
 {$formattedtemplates}
 </div>
+");
+
+		$categoriesText =  "
 <div class='hiddencats'>
 {$formattedhiddencats}
 </div>
-");
+";
+		wfRunHooks('EditPage::CategoryBox', array(&$categoriesText));
+		$wgOut->addHTML($categoriesText);
 
 		if ( $this->isConflict && wfRunHooks( 'EditPageBeforeConflictDiff', array( &$this, &$wgOut ) ) ) {
 			$wgOut->wrapWikiMsg( '==$1==', "yourdiff" );
