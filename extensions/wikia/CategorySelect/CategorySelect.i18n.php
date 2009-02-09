@@ -24,7 +24,9 @@ if (!defined('MEDIAWIKI')) {
 
 $messages = array(
 	'en' => array(
-		'categoryselect-code-view'	=> 'Code view'
+		'categoryselect-code-view'	=> 'Code view',
+		'categoryselect-provide-sortkey' => 'Provide sortkey',
+		'categoryselect-addcategory-button' => 'Add category'
 	)
 );
 ?>

@@ -11,7 +11,6 @@ csWikitextContainerId = 'csWikitextContainer';
 csCodeViewId = 'csCodeView';
 csSourceTypeId = 'wpCategorySelectSourceType';
 csCategoryFieldId = 'wpCategorySelectWikitext';
-csAddCategoryButtonText = 'Add category';	//TODO: move to wfMsg
 csDefaultNamespace = 'Category';	//TODO: default namespace
 
 function deleteCategory(e) {
@@ -26,8 +25,12 @@ function modifyCategory(e) {
 	var catId = e.parentNode.parentNode.getAttribute('catId');
 	YAHOO.log('catId = ' + catId);
 	YAHOO.log(categories[catId]);
-	var sortkey = prompt('Provide sortkey', categories[catId].sortkey);
+	defaultSortkey = categories[catId].sortkey != '' ? categories[catId].sortkey : (csDefaultSort != '' ? csDefaultSort : wgTitle);
+	var sortkey = prompt(csProvideCategoryText, defaultSortkey);
 	if (sortkey != null) {
+		if (sortkey == wgTitle || sortkey == csDefaultSort) {
+			sortkey = '';
+		}
 		categories[catId].sortkey = sortkey;
 	}
 	if (categories[catId].sortkey == '') {
