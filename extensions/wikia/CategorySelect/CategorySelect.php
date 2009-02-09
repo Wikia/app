@@ -47,7 +47,23 @@ function CategorySelectInit() {
 	$wgHooks['EditPage::showEditForm:fields'][] = 'CategorySelectAddFormFields';
 	$wgHooks['EditForm::MultiEdit:Form'][] = 'CategorySelectDisplayCategoryBox';
 	$wgHooks['getCategoryLinks'][] = 'CategorySelectGetCategoryLinks';
+	$wgHooks['ExtendJSGlobalVars'][] = 'CategorySelectSetupVars';
 	wfLoadExtensionMessages('CategorySelect');
+}
+
+/**
+ * Set variables for JS usage
+ *
+ * @author Maciej Błaszkowski <marooned at wikia-inc.com>
+ */
+function CategorySelectSetupVars($vars) {
+	global $wgParser;
+
+	$vars['csAddCategoryButtonText'] = wfMsg('categoryselect-addcategory-button');
+	$vars['csProvideCategoryText'] = wfMsg('categoryselect-provide-sortkey');
+	$vars['csDefaultSort'] = $wgParser->getDefaultSort();
+
+	return true;
 }
 
 /**
