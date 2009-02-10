@@ -77,6 +77,7 @@ class HAWelcomeJob extends Job {
 		 * overwrite $wgUser for ~~~~ expanding
 		 */
 		$tmpUser = $wgUser;
+		$wgUser  = User::newFromName( "Wikia" );
 
 		if( $this->mUser ) {
 			/**
@@ -84,8 +85,8 @@ class HAWelcomeJob extends Job {
 			 */
 			$talkPage  = $this->mUser->getUserPage()->getTalkPage();
 			if( $talkPage ) {
-				$wgUser    = $this->getLastSysop();
-				$sysopPage = $wgUser->getUserPage()->getTalkPage();
+				$sysop     = $this->getLastSysop();
+				$sysopPage = $sysop->getUserPage()->getTalkPage();
 				$signature = $this->expandSig();
 
 				$talkArticle = new Article( $talkPage, 0 );
@@ -200,12 +201,22 @@ class HAWelcomeJob extends Job {
 	 * @access private
 	 */
 	private function expandSig( ) {
-		global $wgUser;
+
+		global $wgContLang, $wgUser;
 
 		wfProfileIn( __METHOD__ );
 
+		$Sysop = $this->getLastSysop();
 		$tmpUser = $wgUser;
-		$signature = wfMsg( "hawelcome-signature" );
+		$wgUser = $Sysop;
+		$signature = sprintf(
+			"-- [[User:%s|%s]] ([[User talk:%s|%s]]) %s",
+			wfEscapeWikiText( $Sysop->getName() ),
+			wfEscapeWikiText( $Sysop->getName() ),
+			wfEscapeWikiText( $Sysop->getName() ),
+			wfMsg( "talkpagelinktext" ),
+			$wgContLang->timeanddate( wfTimestampNow( TS_MW ) )
+		);
 		$wgUser = $tmpUser;
 
 		wfProfileOut( __METHOD__ );

@@ -15,5 +15,4 @@ Please leave a message on [[$2|my talk page]] if I can help with anything! $3",
 
 Please leave a message on [[$2|my talk page]] if I can help with anything! $3",
 	"hawelcome-message-log" => "welcoming new contributor",
-	"hawelcome-signature" => "-- ~~~~"
 );
