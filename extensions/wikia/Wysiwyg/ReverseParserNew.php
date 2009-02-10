@@ -43,13 +43,15 @@ class ReverseParser {
 
 			// HTML cleanup
 			// trying to fix RT #9466
-			// </b><a ...><b>  => <a ...>
-			// </b></a><b>     => </a>
-			// formatting tags: b,i,u,strike
+			// </b><a ...><b>     => <a ...>
+			// </b></a><b>        => </a>
+			// </b></a><a ...><b> => </a><a>
+			// formatting tags: one of b, i, u, strike
 			$formatTags = '(b|i|u|strike)';
 			$replacements = array(
 				"/<\/{$formatTags}>(<a[^>]+>)<{$formatTags}>/si" => '$2',
 				"/<\/{$formatTags}>(<\/a>)<{$formatTags}>/si"     => '$2',
+				"/<\/{$formatTags}>(<\/a>)(<a[^>]+>)<{$formatTags}>/si" => '$2$3'
 			);
 
 			$html = preg_replace(array_keys($replacements), array_values($replacements), $html);
@@ -364,6 +366,11 @@ class ReverseParser {
 					// <strike>foo</strike>
 					case 'strike':
 						$out ="<strike>{$textContent}</strike>";
+						break;
+
+					// <u>foo</u>
+					case 'u':
+						$out = "<u>{$textContent}</u>";
 						break;
 
 					// tables
