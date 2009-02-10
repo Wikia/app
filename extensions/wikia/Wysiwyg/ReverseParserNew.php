@@ -49,9 +49,9 @@ class ReverseParser {
 			// formatting tags: one of b, i, u, strike
 			$formatTags = '(b|i|u|strike)';
 			$replacements = array(
-				"/<\/{$formatTags}>(<a[^>]+>)<{$formatTags}>/si" => '$2',
-				"/<\/{$formatTags}>(<\/a>)<{$formatTags}>/si"     => '$2',
-				"/<\/{$formatTags}>(<\/a>)(<a[^>]+>)<{$formatTags}>/si" => '$2$3'
+				"#<\/{$formatTags}>(<a[^>]+>)<\\1>#i"		=> '$2',
+				"#<\/{$formatTags}>(<\/a>)<\\1>#i"		=> '$2',
+				"#<\/{$formatTags}>(<\/a><a[^>]+>)<\\1>#i"	=> '$2'
 			);
 
 			$html = preg_replace(array_keys($replacements), array_values($replacements), $html);
