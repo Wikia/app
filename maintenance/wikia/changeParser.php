@@ -59,7 +59,7 @@ $dbr = wfGetDB( DB_SLAVE );
 $res = $dbr->select(
 	wfSharedTable( "city_list" ),
 	array( "city_id", "city_dbname" ),
-	array( "city_public"  => 1 ),
+	false, // array( "city_public"  => 1 ),
 	__FILE__,
 	array( "ORDER BY" => "city_id" )
 );
@@ -73,10 +73,10 @@ while ( $row = $dbr->fetchObject( $res ) ) {
 		$cities[] = $row->city_id;
 	}
 }
-$dbr->close();
 echo "Removed {$matched} (" . count($exclude ) . "), will set ". count($cities)." wikis.\n";
 
 foreach( $cities as $city_id ) {
-	WikiFactory::setVarByName( "wgEnableNewParser", $city_id, true );
+	WikiFactory::setVarByName( "wgEnableNewParser", $city_id, 1 );
 	WikiFactory::clearCache( $city_id );
 }
+$dbr->close();
