@@ -127,22 +127,25 @@ class HAWelcomeJob extends Job {
 		global $wgCityId;
 
 		wfProfileIn( __METHOD__ );
-# select rev_user, rev_timestamp from revision where revision.rev_user in (select ug_user from user_groups where ug_group in ( 'staff', 'sysop', 'helper') ) order by rev_timestamp desc limit 1;
-		if( ! $this->mSysop instanceof User ) {
-			$dbr = wfGetDBExt( DB_SLAVE );
-			$Row = $dbr->selectRow(
-				array( "city_local_users", "blobs" ),
-				array( "rev_timestamp", "lu_user_id" ),
-				array(
-					"lu_user_id = rev_user",
-					"lu_allgroups like '%sysop%'",
-					"rev_wikia_id" => $wgCityId
-				),
-				__METHOD__,
-				array( "order by" => "rev_timestamp desc" )
-			);
 
-			$this->mSysop = User::newFromId( $Row->lu_user_id );
+		if( ! $this->mSysop instanceof User ) {
+			$dbr = wfGetDB( DB_SLAVE );
+			$res = $dbr->query("
+				SELECT rev_user, rev_timestamp
+				FROM revision
+				WHERE revision.rev_user IN (
+					SELECT ug_user
+					FROM user_groups
+					WHERE ug_group IN ( 'staff', 'sysop', 'helper')
+				)
+				ORDER BY rev_timestamp DESC
+				LIMIT 1",
+				__METHOD__
+			);
+			$row = $dbr->fetchObject( $res );
+			$dbr->freeResult( $res );
+
+			$this->mSysop = User::newFromId( $row->rev_user );
 		}
 
 		wfProfileOut( __METHOD__ );
