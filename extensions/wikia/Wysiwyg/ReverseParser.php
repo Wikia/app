@@ -670,6 +670,14 @@ class ReverseParser {
 					$pipe = ($refData['description'] != '') ? '|'.$refData['description'] : '';
 					return "[[{$refData['href']}{$pipe}]]";
 
+				// [[foo|{{bar}}]]
+				case 'internal link: placeholder':
+					return $refData['original'];
+
+				// [[en:foo]]
+				case 'interwiki':
+					return $refData['originalCall'];
+
 				// <gallery></gallery>
 				case 'gallery':
 					return $refData['description'];
