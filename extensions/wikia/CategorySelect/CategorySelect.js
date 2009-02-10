@@ -69,7 +69,7 @@ function addAddCategoryButton() {
 	elementSpan.onclick = function(e) {replaceAddToInput(this); return false;};
 	elementSpanOuter.appendChild(elementSpan);
 
-	$(csItemsContainerId).insertBefore(elementA, $(csSuggestContainerId));
+	$(csItemsContainerId).appendChild(elementA);
 	YAHOO.log('addAddCategoryButton: end');
 }
 
@@ -187,7 +187,7 @@ Event.onDOMReady(function() {
 	YAHOO.util.Event.addListener(csCategoryInputId, 'blur', inputBlur);
 
 	var regularEditorSubmit = function(e) {
-		$(csCategoryFieldId).value = YAHOO.Tools.JSONEncode(categories);	//generateWikitextForCategories();
+		$(csCategoryFieldId).value = YAHOO.Tools.JSONEncode(categories);
 	}
 
 	YAHOO.util.Event.addListener(formId, 'submit', regularEditorSubmit);
