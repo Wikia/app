@@ -22,7 +22,7 @@ EditEnhancements = function() {
 		//+4 is for extra margin
 		var targetHeight = viewport - textareaTop - toolbar - otherStuff + 4;
 
-		targetHeight = Math.max(targetHeight, 200);
+		targetHeight = Math.max(targetHeight, 300);
 		targetHeight = Math.min(targetHeight, 800);
 
 		Dom.setStyle(textbox, 'height', targetHeight + 'px');
