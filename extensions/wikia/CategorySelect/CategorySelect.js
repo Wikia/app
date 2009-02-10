@@ -178,8 +178,8 @@ Event.onDOMReady(function() {
 				addCategory(category);
 			}
 		}
-		$(csSuggestContainerId).style.top = $(csCategoryInputId).offsetTop + parseInt(Dom.getStyle(csCategoryInputId, 'height')) + 5 + 'px';
-		$(csSuggestContainerId).style.left = $(csCategoryInputId).offsetLeft + 'px';
+		$(csSuggestContainerId).style.top = $(csCategoryInputId).offsetTop + jQuery("#" + csCategoryInputId).height() + 5 + 'px';
+		$(csSuggestContainerId).style.left = Math.min($(csCategoryInputId).offsetLeft, (Dom.getViewportWidth() - jQuery('#' + csItemsContainerId).offset().left - jQuery("#" + csSuggestContainerId).width() - 10)) + 'px';
 	};
 
 	//handle [enter] for non existing categories
