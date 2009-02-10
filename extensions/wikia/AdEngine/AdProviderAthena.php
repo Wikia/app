@@ -64,6 +64,8 @@ class AdProviderAthena implements iAdProvider {
 			$out.= 'Athena.setPageVar("' . addslashes($name) . '", "' . addslashes($value) . '");' . "\n";
 		}
 
+		$out.= 'Athena.setPageVar( "browser", Athena.getBrowser() );' . "\n";
+
 		// Pull the configs
 		$out.= 'Athena.pullConfig();';
 		$out .= '</script>';
