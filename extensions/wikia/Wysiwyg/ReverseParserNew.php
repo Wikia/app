@@ -41,6 +41,19 @@ class ReverseParser {
 
 		if(is_string($html) && $html != '') {
 
+			// HTML cleanup
+			// trying to fix RT #9466
+			// </b><a ...><b>  => <a ...>
+			// </b></a><b>     => </a>
+			// formatting tags: b,i,u,strike
+			$formatTags = '(b|i|u|strike)';
+			$replacements = array(
+				"/<\/{$formatTags}>(<a[^>]+>)<{$formatTags}>/si" => '$2',
+				"/<\/{$formatTags}>(<\/a>)<{$formatTags}>/si"     => '$2',
+			);
+
+			$html = preg_replace(array_keys($replacements), array_values($replacements), $html);
+
 			// form proper XML string
 			$xml = "<?xml version=\"1.0\" encoding=\"UTF-8\"?><body>{$html}</body>";
 			wfDebug("Wysiwyg ReverseParserNew XML: {$xml}\n");
@@ -346,6 +359,11 @@ class ReverseParser {
 						}
 
 						$out = "{$open}{$textContent}{$close}";
+						break;
+
+					// <strike>foo</strike>
+					case 'strike':
+						$out ="<strike>{$textContent}</strike>";
 						break;
 
 					// tables
