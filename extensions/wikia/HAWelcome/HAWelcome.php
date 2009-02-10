@@ -127,7 +127,7 @@ class HAWelcomeJob extends Job {
 		global $wgCityId;
 
 		wfProfileIn( __METHOD__ );
-
+# select rev_user, rev_timestamp from revision where revision.rev_user in (select ug_user from user_groups where ug_group in ( 'staff', 'sysop', 'helper') ) order by rev_timestamp desc limit 1;
 		if( ! $this->mSysop instanceof User ) {
 			$dbr = wfGetDBExt( DB_SLAVE );
 			$Row = $dbr->selectRow(
