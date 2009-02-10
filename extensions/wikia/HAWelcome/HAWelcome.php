@@ -43,8 +43,10 @@ $wgExtensionMessagesFiles["HAWelcome"] = dirname(__FILE__) . '/HAWelcome.i18n.ph
 
 class HAWelcomeJob extends Job {
 
-	private $mUser,
-		$mAnon;
+	private
+		$mUser,
+		$mAnon,
+		$mSysop;
 
 	/**
 	 * Construct a job
@@ -84,19 +86,23 @@ class HAWelcomeJob extends Job {
 			if( $talkPage ) {
 				$wgUser    = $this->getLastSysop();
 				$sysopPage = $wgUser->getUserPage()->getTalkPage();
+				$signature = $this->expandSig();
 
 				$talkArticle = new Article( $talkPage, 0 );
+
 				if( ! $talkArticle->exists() || $wgDevelEnvironment ) {
 					if( $this->mAnon ) {
 						$welcomeMsg = wfMsg( "hawelcome-message-anon", array(
 							sprintf("%s:%s", $this->title->getNsText(), $this->title->getText() ),
-							sprintf("%s:%s", $sysopPage->getNsText(), $sysopPage->getText() )
+							sprintf("%s:%s", $sysopPage->getNsText(), $sysopPage->getText() ),
+							$signature
 						));
 					}
 					else {
 						$welcomeMsg = wfMsg( "hawelcome-message-user", array(
 							sprintf("%s:%s", $this->title->getNsText(), $this->title->getText() ),
-							sprintf("%s:%s", $sysopPage->getNsText(), $sysopPage->getText() )
+							sprintf("%s:%s", $sysopPage->getNsText(), $sysopPage->getText() ),
+							$signature
 						));
 					}
 					$talkArticle->doEdit( $welcomeMsg, wfMsg( "hawelcome-message-log" ) );
@@ -119,20 +125,28 @@ class HAWelcomeJob extends Job {
 	public function getLastSysop() {
 		global $wgCityId;
 
-		$dbr = wfGetDBExt( DB_SLAVE );
-		$Row = $dbr->selectRow(
-			array( "city_local_users", "blobs" ),
-			array( "rev_timestamp", "lu_user_id" ),
-			array(
-				"lu_user_id = rev_user",
-				"lu_allgroups like '%sysop%'",
-				"rev_wikia_id" => $wgCityId
-			),
-			__METHOD__,
-			array( "order by" => "rev_timestamp desc" )
-		);
+		wfProfileIn( __METHOD__ );
 
-		return User::newFromId( $Row->lu_user_id );
+		if( ! $this->mSysop instanceof User ) {
+			$dbr = wfGetDBExt( DB_SLAVE );
+			$Row = $dbr->selectRow(
+				array( "city_local_users", "blobs" ),
+				array( "rev_timestamp", "lu_user_id" ),
+				array(
+					"lu_user_id = rev_user",
+					"lu_allgroups like '%sysop%'",
+					"rev_wikia_id" => $wgCityId
+				),
+				__METHOD__,
+				array( "order by" => "rev_timestamp desc" )
+			);
+
+			$this->mSysop = User::newFromId( $Row->lu_user_id );
+		}
+
+		wfProfileOut( __METHOD__ );
+
+		return $this->mSysop;
 	}
 
 	/**
@@ -178,6 +192,25 @@ class HAWelcomeJob extends Job {
 		wfProfileOut( __METHOD__ );
 
 		return true;
+	}
+
+	/**
+	 * expandSig -- hack, expand signature from message for sysop
+	 *
+	 * @access private
+	 */
+	private function expandSig( ) {
+		global $wgUser;
+
+		wfProfileIn( __METHOD__ );
+
+		$tmpUser = $wgUser;
+		$signature = wfMsg( "hawelcome-signature" );
+		$wgUser = $tmpUser;
+
+		wfProfileOut( __METHOD__ );
+
+		return $signature;
 	}
 
 	/**
