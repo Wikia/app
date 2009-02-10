@@ -77,6 +77,6 @@ $dbr->close();
 echo "Removed {$matched} (" . count($exclude ) . "), will set ". count($cities)." wikis.\n";
 
 foreach( $cities as $city_id ) {
-#WikiFactory::setVarByName( "wgEnableNewParser", $city_id, true );
-#WikiFactory::clearCache( $city_id );
+	WikiFactory::setVarByName( "wgEnableNewParser", $city_id, true );
+	WikiFactory::clearCache( $city_id );
 }
