@@ -3,7 +3,9 @@
 define( 'NS_USER_PROFILE', 202 );
 define( 'NS_USER_WIKI', 200 );
 
-$wgSocialUserPage = true;
+if( empty($wgSocialUserPage) ){
+	$wgSocialUserPage = true;
+}
 
 //setup special pages
 $wgAutoloadClasses['ToggleUserPage'] = "{$wgUserProfileDirectory}/SpecialToggleUserPageType.php";
