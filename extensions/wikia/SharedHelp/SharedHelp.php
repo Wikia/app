@@ -94,7 +94,7 @@ class SharedHttp extends Http {
 function SharedHelpHook(&$out, &$text) {
 	global $wgTitle, $wgMemc, $wgSharedDB, $wgDBname, $wgCityId, $wgHelpWikiId, $wgContLang, $wgArticlePath;
 
-	if($wgCityId == $wgHelpWikiId) { # Do not process for the help wiki
+	if(empty($wgHelpWikiId) || $wgCityId == $wgHelpWikiId) { # Do not proceed if we don't have a help wiki or are on it
 		return true;
 	}
 
