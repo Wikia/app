@@ -287,9 +287,9 @@ function CategorySelectGenerateHTML($formId = '') {
 	$result = '
 	<script type="text/javascript">document.write(\'<style type="text/css">#csWikitextContainer {display: none}</style>\');</script>
 	<div id="csMainContainer">
+		<div id="csSuggestContainer"></div>
 		<div id="csItemsContainer">
 			<input id="csCategoryInput" type="text" style="display: none" />
-			<div id="csSuggestContainer"></div>
 		</div>
 		<div id="csWikitextContainer"><textarea id="csWikitext" name="csWikitext">' . $categories . '</textarea></div>
 		<div id="csCodeView"><a href="#" onclick="toggleCodeView(); return false;" onfocus="this.blur()" tabindex="-1">' . wfMsg('categoryselect-code-view') . '</a></div>
