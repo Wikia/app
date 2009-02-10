@@ -66,7 +66,7 @@ $res = $dbr->select(
 $matched = 0;
 while ( $row = $dbr->fetchObject( $res ) ) {
 	if( isset( $exclude[ strtolower( $row->city_dbname ) ] ) && $exclude[ strtolower( $row->city_dbname ) ] ) {
-		echo "remove {$row->city_dbname} from list.\n";
+		echo "removing {$row->city_dbname} from list.\n";
 		$matched++;
 	}
 	else {
@@ -74,9 +74,9 @@ while ( $row = $dbr->fetchObject( $res ) ) {
 	}
 }
 $dbr->close();
-echo "Removed {$matched}, " . count($exclude ) . "\n";
+echo "Removed {$matched} (" . count($exclude ) . "), will set ". count($cities)." wikis.\n";
 
 foreach( $cities as $city_id ) {
-#	WikiFactory::setVarByName( "wgEnableNewParser", $city_id, true );
-# WikiFactory::clearCache( $city_id );
+#WikiFactory::setVarByName( "wgEnableNewParser", $city_id, true );
+#WikiFactory::clearCache( $city_id );
 }
