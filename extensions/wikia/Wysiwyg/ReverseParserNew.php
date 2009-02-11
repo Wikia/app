@@ -599,6 +599,13 @@ class ReverseParser {
 				$textContent = substr($textContent, 0, -1);
 			}
 
+			// remove last space from last child of paragraph
+			// this way we keep whitespaces at the end of paragraphs and remove
+			// extra space added by FCK (after convertion of \n)
+			else if ( substr($textContent, -1) == ' ' && $node->parentNode->nodeName == 'p' && $node->isSameNode($node->parentNode->lastChild)) {
+				$textContent = substr($textContent, 0, -1);
+			}
+
 			// check whether we should allow whitespaces inclusion into wikitext
 			// e.g. we don't want to add whitespaces inside tables HTML markup
 			else if ( strspn($textContent, ' ') == strlen($textContent) ) {
@@ -617,13 +624,6 @@ class ReverseParser {
 			// before HTML tag with _wysiwyg_line_start attribute
 			// e.g. ' <div _wysiwyg_new_line="true">...' => '\n<div>...'
 			else if ( substr($textContent, -1) == ' ' && $this->nextSiblingIsInNextLine($node)) {
-				$textContent = substr($textContent, 0, -1);
-			}
-
-			// remove last space from last child of paragraph
-			// this way we keep whitespaces at the end of paragraphs and remove
-			// extra space added by FCK (after convertion of \n)
-			else if ( substr($textContent, -1) == ' ' && $node->parentNode->nodeName == 'p' && $node->isSameNode($node->parentNode->lastChild)) {
 				$textContent = substr($textContent, 0, -1);
 			}
 
