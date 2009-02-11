@@ -717,6 +717,7 @@ Text should be placed on this page if you wish to explain usage, style and polic
 'tog-disablewysiwyg' => 'Disable Rich Text Editing',
 'wysiwyg-first-edit-title' => 'Welcome to the new Wikia editor',
 'wysiwyg-first-edit-message' => 'You are using the new Wikia Rich Text Editor. To view wikitext mode click the "Source" button. See [[Help:New editor]] for more details',
+'wysiwyg-first-edit-dismiss' => 'Dismiss',
 'atom' => 'Wikia Atom',
 'feed-watom' => 'Wikia Atom',
 'nodiff' => 'No changes',
