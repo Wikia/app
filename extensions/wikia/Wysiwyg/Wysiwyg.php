@@ -170,6 +170,9 @@ function Wysiwyg_Initial2($form) {
 	else {
 		$wgWysiwygData = '';
 	}
+
+	// show first edit messages when needed
+	//WysiwygFirstEditMessage();
 	return true;
 }
 
@@ -747,4 +750,22 @@ function WysiwygGetTemplateHotList() {
  */
 function WysiwygParserHookCallback($input, $args, $parser) {
 	return $input;
+}
+
+/**
+ * Show first edit message
+*
+* @author Maciej Brencz <macbre at wikia-inc.com>
+* @todo add logic deciding when to show this message
+ */
+function WysiwygFirstEditMessage() {
+	global $wgOut;
+
+	// properly encode values for JS
+	$title =  Xml::encodeJsVar( wfMsg('wysiwyg-first-edit-title') );
+	$messsage =  Xml::encodeJsVar( wfMsgExt('wysiwyg-first-edit-message', 'parse') );
+	$dismiss = Xml::encodeJsVar( wfMsg('wysiwyg-first-edit-dismiss') );
+
+	$wgOut->addInlineScript('addOnloadHook(function() { wysiwygShowFirstEditMessage(' . $title . ', ' . $messsage . ', ' . $dismiss  . '); });');
+	return;
 }
