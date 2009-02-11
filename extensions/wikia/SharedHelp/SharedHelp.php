@@ -106,7 +106,7 @@ function SharedHelpHook(&$out, &$text) {
 		# Initialize shared and local variables
 		# Canonical namespace is added here in case we ever want to share other namespaces (e.g. Advice)
 		$sharedArticleKey = $wgSharedDB . ':sharedArticles:' . $wgHelpWikiId . ':' . 
-			MWNamespace::getCanonicalNamespace( $wgTitle->getNamespace() ) .  ':' . $wgTitle->getDBkey();
+			MWNamespace::getCanonicalName( $wgTitle->getNamespace() ) .  ':' . $wgTitle->getDBkey();
 		$sharedArticle = $wgMemc->get($sharedArticleKey);
 		$sharedServer = unserialize(WikiFactory::getVarByName('wgServer', $wgHelpWikiId)->cv_value);
 		$sharedScript = unserialize(WikiFactory::getVarByName('wgScript', $wgHelpWikiId)->cv_value);
