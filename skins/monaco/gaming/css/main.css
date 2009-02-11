@@ -205,3 +205,11 @@ td.diff-addedline {
 	border: 1px solid #ffcb3b;
 	color: #09101d;
 }
+
+/* Special pages */
+#lu-result .TablePager a {
+	color:blue;
+}
+#lu-result .TablePager a.new {
+	color:red;
+}
