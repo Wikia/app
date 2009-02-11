@@ -474,7 +474,7 @@ class ReverseParser {
 					case 'ul':
 					case 'ol':
 						// rtrim used to remove \n added by the last list item
-						$out = rtrim($textContent, " \n");
+						$out = rtrim($textContent, "\n");
 
 						// add newline if next node is paragraph
 						$nextNode = $this->getNextElementNode($node);
@@ -820,7 +820,7 @@ class ReverseParser {
 					// *** bar
 					return $content . "\n";
 				} else {
-					return $this->listIndent . $this->listBullets . rtrim($content) . "\n";
+					return $this->listIndent . $this->listBullets . substr($content, 0, -1) . "\n";
 				}
 			break;
 		}
