@@ -25,7 +25,7 @@ if (!defined('MEDIAWIKI')) {
 $messages = array(
 	'en' => array(
 		'categoryselect-code-view'	=> 'Code view',
-		'categoryselect-provide-sortkey' => 'Provide sortkey',
+		'categoryselect-provide-sortkey' => 'Alphabetize this article on the "$1" category page under the name:',
 		'categoryselect-addcategory-button' => 'Add category'
 	)
 );

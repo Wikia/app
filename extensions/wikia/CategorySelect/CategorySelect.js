@@ -26,7 +26,7 @@ function modifyCategory(e) {
 	YAHOO.log('catId = ' + catId);
 	YAHOO.log(categories[catId]);
 	defaultSortkey = categories[catId].sortkey != '' ? categories[catId].sortkey : (csDefaultSort != '' ? csDefaultSort : wgTitle);
-	var sortkey = prompt(csProvideCategoryText, defaultSortkey);
+	var sortkey = prompt(csProvideCategoryText.replace('$1', categories[catId].category), defaultSortkey);
 	if (sortkey != null) {
 		if (sortkey == wgTitle || sortkey == csDefaultSort) {
 			sortkey = '';
@@ -141,6 +141,35 @@ function toggleCodeView() {
 		$(csCategoryFieldId).value = '';	//remove JSON - this will inform PHP to use wikitext instead
 		$(csSourceTypeId).value = 'wiki';	//inform PHP what source should it use
 	}
+}
+
+function moveElement(movedId, prevSibbId) {
+	movedItem = categories[movedId];
+	newCat = new Array();
+	if (movedId < prevSibbId) {	//move right
+		newCat = newCat.concat(categories.slice(0, movedId),
+			categories.slice(movedId+1, prevSibbId+1),
+			movedItem,
+			categories.slice(prevSibbId+1));
+	} else {	//move left
+		if (prevSibbId != -1) {
+			newCat = newCat.concat(categories.slice(0, prevSibbId+1));
+		}		
+		newCat = newCat.concat(movedItem,
+			categories.slice(prevSibbId+1, movedId),
+			categories.slice(movedId+1));
+	}
+	//reorder catId in HTML elements
+	var itemId = 0;
+	var items = $(csItemsContainerId).getElementsByTagName('a');
+	for (catId in newCat) {
+		if (newCat[catId] == undefined) {
+			continue;
+		}
+		items[itemId++].setAttribute('catId', catId);
+	}
+	//save changes into main array
+	categories = newCat;
 }
 
 Event.onDOMReady(function() {
