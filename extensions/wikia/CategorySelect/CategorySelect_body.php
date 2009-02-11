@@ -33,7 +33,7 @@ class CategorySelect {
 			return $wgCategorySelectMetaData;
 		}
 
-		global $wgParser, $wgTitle, $wgCategorySelectEnabled;
+		global $wgParser, $wgTitle, $wgContLang, $wgCategorySelectEnabled;
 		//enable changes in Preprocessor and Parser
 		$wgCategorySelectEnabled = true;
 		//prepare Parser
@@ -47,8 +47,7 @@ class CategorySelect {
 
 		//init variables
 		self::$nodeLevel = 0;
-		//TODO: add here "|CategoryKeywordInLocalLanguage"
-		self::$categoryNamespace = 'Category';
+		self::$categoryNamespace = 'Category|' . $wgContLang->getNsText(NS_CATEGORY);
 
 		//create XML DOM document from provided XML
 		$dom = new DOMDocument();
@@ -64,7 +63,7 @@ class CategorySelect {
 		//replace markers back to wikitext
 		$modifiedWikitext = $wgParser->mStripState->unstripBoth($modifiedWikitext);
 
-		$wgCategorySelectMetaData = array('wikitext' => $modifiedWikitext, 'categories' => $categories, 'xml' => $xml /* TODO: remove - debug only */, 'root' => $root /* TODO: remove - debug only */);
+		$wgCategorySelectMetaData = array('wikitext' => $modifiedWikitext, 'categories' => $categories);
 		return $wgCategorySelectMetaData;
 	}
 
