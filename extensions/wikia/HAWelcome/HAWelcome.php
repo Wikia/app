@@ -53,6 +53,8 @@ class HAWelcomeJob extends Job {
 		$mAnon,
 		$mSysop;
 
+	const WELCOMEUSER = "Wikia";
+
 	/**
 	 * Construct a job
 	 * @param Title $title The title linked to
@@ -82,9 +84,9 @@ class HAWelcomeJob extends Job {
 		 * overwrite $wgUser for ~~~~ expanding
 		 */
 		$tmpUser = $wgUser;
-		$wgUser  = User::newFromName( "Wikia" );
+		$wgUser  = User::newFromName( self::WELCOMEUSER );
 
-		if( $this->mUser ) {
+		if( $this->mUser && $this->mUser->getName() !== self::WELCOMEUSER ) {
 			/**
 			 * check again if talk page exists
 			 */
