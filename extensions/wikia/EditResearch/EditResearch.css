@@ -1,0 +1,36 @@
+#wpTextbox1{
+	width:55%;	
+}
+
+#research-container{
+	float:right;
+}
+
+#research-inner{
+	border:1px solid #eeeeee;
+	min-height:400px;
+}
+
+#research_box{
+	width:400px;
+	padding:5px;
+	max-height:380px;
+}
+
+#research-search{
+	padding:5px;
+	color:#FFFFFF;
+	background-color:#000000;
+}
+
+#research-search-nav a{
+	font-weight:800;
+}
+
+.research-search-result{
+	margin-bottom:2px;
+	padding:3px;
+	border-bottom:1px solid #eeeeee;
+}
+
+
