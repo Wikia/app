@@ -606,6 +606,7 @@ class ReverseParser {
 					case 'table':
 					case 'tbody':
 					case 'tr':
+					case 'body':
 						$textContent = '';
 						break;
 					default:
