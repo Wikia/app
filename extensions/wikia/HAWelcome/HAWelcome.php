@@ -173,7 +173,7 @@ class HAWelcomeJob extends Job {
 	 * @return true means process other hooks
 	 */
 	public static function revisionInsertComplete( &$revision, &$url, &$flags ) {
-		global $wgTitle, $wgUser, $wgDevelEnvironment;
+		global $wgTitle, $wgUser, $wgDevelEnvironment, $wgCityId;
 
 		wfProfileIn( __METHOD__ );
 		if( trim( wfMsg( "hawelcome" ) ) !== "@disabled" ) {
@@ -195,6 +195,12 @@ class HAWelcomeJob extends Job {
 						)
 					);
 					$welcomeJob->insert();
+
+					/**
+					 * inform task manager
+					 */
+					$Task = new HAWelcomeTask();
+					$Task->createTask( array( "city_id" => $wgCityId ), TASK_QUEUED  );
 				}
 			}
 		}
