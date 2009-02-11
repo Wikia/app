@@ -104,7 +104,9 @@ function SharedHelpHook(&$out, &$text) {
 
 	if($wgTitle->getNamespace() == 12) { # Process only for pages in namespace Help (12)
 		# Initialize shared and local variables
-		$sharedArticleKey = $wgSharedDB . ':sharedArticles:' . $wgHelpWikiId . ':' . $wgTitle->getPrefixedDBkey();
+		# Canonical namespace is added here in case we ever want to share other namespaces (e.g. Advice)
+		$sharedArticleKey = $wgSharedDB . ':sharedArticles:' . $wgHelpWikiId . ':' . 
+			MWNamespace::getCanonicalNamespace( $wgTitle->getNamespace() ) .  ':' . $wgTitle->getDBkey();
 		$sharedArticle = $wgMemc->get($sharedArticleKey);
 		$sharedServer = unserialize(WikiFactory::getVarByName('wgServer', $wgHelpWikiId)->cv_value);
 		$sharedScript = unserialize(WikiFactory::getVarByName('wgScript', $wgHelpWikiId)->cv_value);
