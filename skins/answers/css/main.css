@@ -687,3 +687,14 @@ body .header_menu_button * {
 #answers_sidebar .google_label {
 	font-weight: bold;
 }
+
+.editquestion{
+	background:none;
+}
+
+.editquestion #answers_sidebar{
+	display:none;
+}
+.editquestion #answers_page {
+	margin-right: 0px;
+}
