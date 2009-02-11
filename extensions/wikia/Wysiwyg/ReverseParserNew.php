@@ -373,6 +373,11 @@ class ReverseParser {
 						$out = "<u>{$textContent}</u>";
 						break;
 
+					// ----
+					case 'hr':
+						$out = "----\n";
+						break;
+
 					// tables
 					// @see http://en.wikipedia.org/wiki/Help:Table
 					case 'table':
