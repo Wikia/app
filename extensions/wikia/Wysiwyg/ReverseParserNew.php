@@ -815,7 +815,7 @@ class ReverseParser {
 					// *** bar
 					return $content . "\n";
 				} else {
-					return $this->listIndent . $this->listBullets . ' ' . ltrim($content) . "\n";
+					return $this->listIndent . $this->listBullets . rtrim($content) . "\n";
 				}
 			break;
 		}

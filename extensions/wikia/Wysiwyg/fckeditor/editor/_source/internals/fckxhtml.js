@@ -142,7 +142,7 @@ FCKXHtml._AppendChildNodes = function( xmlNode, htmlNode, isBlockElement )
 	// BRs at the end of them.
 	if ( isBlockElement && htmlNode.tagName && htmlNode.tagName.toLowerCase() != 'pre' )
 	{
-		if(!xmlNode.nodeName.IEquals(['h1', 'h2', 'h3', 'h4', 'h5', 'h6'])) {
+		if(!xmlNode.nodeName.IEquals(['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'li'])) {
 			FCKDomTools.TrimNode( xmlNode ) ;
 		}
 
