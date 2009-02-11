@@ -113,7 +113,9 @@ class AnswersTemplate extends MonacoTemplate {
 	</head>
 <body<?php if($this->data['body_ondblclick']) { ?> ondblclick="<?php $this->text('body_ondblclick') ?>"<?php } ?>
 <?php if($this->data['body_onload']) { ?> onload="<?php $this->text('body_onload') ?>"<?php } ?>
- class="mediawiki <?php $this->text('dir') ?> <?php $this->text('pageclass') ?> <?php $this->text('skinnameclass') ?>">
+ class="mediawiki <?php $this->text('dir') ?> <?php $this->text('pageclass') ?> <?php $this->text('skinnameclass') ?>
+ <?php if($answer_page->isQuestion(false,false) && $action=="edit") { ?>editquestion<?php } ?>"> 
+ 
 
 <!--GetHTMLAfterBody-->
 <?
@@ -527,7 +529,7 @@ wfRunHooks('GetHTMLAfterBody', array (&$this));
 			?>
 			</div><?/*toolbox_stroke*/?>
 		</div><?/*toolbox*/?>
-
+		
 		<div class="widget">
 			<h2><?= wfMsg("recent_unanswered_questions") ?></h2>
 			<ul id="recent_unanswered_questions">
@@ -549,6 +551,7 @@ wfRunHooks('GetHTMLAfterBody', array (&$this));
 				?>
 			</ul>
 		</div>
+		
 	</div><?/*answers_sidebar*/?>
 
 	<div id="footer">
