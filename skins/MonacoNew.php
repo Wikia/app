@@ -1988,6 +1988,7 @@ if(count($wikiafooterlinks) > 0) {
 			<?php
 				// Logic for skyscrapers defined here: http://staff.wikia-inc.com/wiki/DART_Implementation/Skyscrapers
 				global $wgOut;
+				echo AdEngine::getInstance()->getPlaceHolderDiv('LEFT_NAVBOX_1', false);
 				if ($wgOut->isArticle() ){
 					if (ArticleAdLogic::isMainPage()) { //main page
 						echo '<div style="text-align: center; margin-bottom: 10px;">'. AdEngine::getInstance()->getPlaceHolderDiv('HOME_LEFT_SKYSCRAPER_1', false) .'</div>';
@@ -2004,6 +2005,7 @@ if(count($wikiafooterlinks) > 0) {
 			<?= WidgetFramework::getInstance()->Draw(1) ?>
 
 			<?php
+				echo AdEngine::getInstance()->getPlaceHolderDiv('LEFT_NAVBOX_2', false);
 				if ($wgOut->isArticle() ){
 					if (ArticleAdLogic::isMainPage()) { //main page
 						echo '<div style="text-align: center; margin-bottom: 10px;">'. AdEngine::getInstance()->getPlaceHolderDiv('HOME_LEFT_SKYSCRAPER_2', false) .'</div>';
