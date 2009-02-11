@@ -2169,6 +2169,9 @@ END
 		$oldtext = $this->mArticle->fetchContent();
 		$newtext = $this->mArticle->replaceSection(
 			$this->section, $this->textbox1, $this->summary, $this->edittime );
+
+		wfRunHooks( 'EditPage::showDiff::begin', array( &$this, &$oldtext, &$newtext ) );
+
 		$newtext = $this->mArticle->preSaveTransform( $newtext );
 		$oldtitle = wfMsgExt( 'currentrev', array('parseinline') );
 		$newtitle = wfMsgExt( 'yourtext', array('parseinline') );
