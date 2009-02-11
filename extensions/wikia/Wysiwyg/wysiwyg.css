@@ -22,3 +22,12 @@
 #editingTips {
 	left: -215px
 }
+
+#wysiwygInfobox {
+	font-family: arial, sans-serif;
+	font-size: 0.9em;
+}
+
+#wysiwygInfobox p {
+	margin: 0 5px 0 25px;
+}
