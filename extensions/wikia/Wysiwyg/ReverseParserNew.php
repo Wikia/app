@@ -34,12 +34,46 @@ class ReverseParser {
 		$this->dom = new DOMdocument();
 	}
 
+	private function parseToDOM($html, $parseAsXML = true) {
+
+			$ret = false;
+
+			wfSuppressWarnings();
+
+			if ($parseAsXML) {
+				// form proper XML string
+				$xml = "<?xml version=\"1.0\" encoding=\"UTF-8\"?><body>{$html}</body>";
+
+				// try to parse as XML
+				if($this->dom->loadXML($xml)) {
+					$ret = $this->dom->getElementsByTagName('body')->item(0);
+				}
+			}
+			else {
+				// form proper HTML string
+				$html = "<html><head><meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\"/></head><body>{$html}</body></html>";
+
+				// try to parse as HTML
+				if($this->dom->loadHTML($html)) {
+					$ret = $this->dom->getElementsByTagName('body')->item(0);
+				}
+			}
+
+			wfRestoreWarnings();
+
+			// return <body> node or false if XML parsing failed
+			return $ret;
+	}
+
 	public function parse($html, $data = array()) {
 		wfProfileIn(__METHOD__);
 
 		$out = '';
 
 		if(is_string($html) && $html != '') {
+
+			// save meta-data
+			$this->data = $data;
 
 			// HTML cleanup
 			// trying to fix RT #9466
@@ -54,29 +88,31 @@ class ReverseParser {
 				"#<\/{$formatTags}>(<\/a><a[^>]+>)<\\1>#i"	=> '$2'
 			);
 
-			$html = preg_replace(array_keys($replacements), array_values($replacements), $html);
+			$htmlFixed = preg_replace(array_keys($replacements), array_values($replacements), $html, -1, $count);
+			wfDebug("Wysiwyg ReverseParserNew: made {$count} replacements for RT #9466\n");
 
-			// form proper XML string
-			$xml = "<?xml version=\"1.0\" encoding=\"UTF-8\"?><body>{$html}</body>";
-			wfDebug("Wysiwyg ReverseParserNew XML: {$xml}\n");
+			// try to parse fixed HTML as XML
+			$bodyNode = $this->parseToDOM($htmlFixed);
 
-			// save meta-data
-			$this->data = $data;
-			wfDebug("Wysiwyg ReverseParserNew data: ".print_r($this->data, true)."\n");
+			// in some edge-cases it may fail - then try to parse original HTML as HTML
+			if (empty($bodyNode)) {
+				wfDebug("Wysiwyg ReverseParserNew: parsing as XML failed! Trying HTML parser\n");
+				$bodyNode = $this->parseToDOM($html, false);
+			}
 
-			// try to parse XML
-			wfSuppressWarnings();
-			if($this->dom->loadXML($xml)) {
-				$body = $this->dom->getElementsByTagName('body')->item(0);
+			// now we should have properly parsed HTML
+			if (!empty($bodyNode)) {
 				wfDebug("Wysiwyg ReverseParserNew XML (as seen by DOM): ".$this->dom->saveXML()."\n");
-				$out = $this->parseNode($body);
+
+				// do recursive reverse parsing
+				$out = $this->parseNode($bodyNode);
+
+				wfDebug("Wysiwyg ReverseParserNew wikitext: {$out}\n");
 			}
 			else {
-				wfDebug("Wysiwyg ReverseParserNew: error loading XML!\n");
+				wfDebug("Wysiwyg ReverseParserNew: HTML parsing failed!\n");
+				$out = '';
 			}
-			wfRestoreWarnings();
-
-			wfDebug("Wysiwyg ReverseParserNew wikitext: {$out}\n");
 		}
 
 		wfProfileOut(__METHOD__);
@@ -695,7 +731,7 @@ class ReverseParser {
 					'href' => $href
 				));
 				// generate new refid
-				$refid = count($this->fckData);
+				$refid = count($this->data);
 			}
 		}
 
