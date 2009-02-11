@@ -226,7 +226,7 @@ class HAWelcomeJob extends Job {
 		$tmpUser = $wgUser;
 		$wgUser = $Sysop;
 		$signature = sprintf(
-			"-- [[User:%s|%s]] ([[User talk:%s|%s]]) %s",
+			"-- [[User:%s|%s]] ([[User_talk:%s|%s]]) %s",
 			wfEscapeWikiText( $Sysop->getName() ),
 			wfEscapeWikiText( $Sysop->getName() ),
 			wfEscapeWikiText( $Sysop->getName() ),
