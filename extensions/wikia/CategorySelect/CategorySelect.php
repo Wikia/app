@@ -57,11 +57,12 @@ function CategorySelectInit() {
  * @author Maciej Błaszkowski <marooned at wikia-inc.com>
  */
 function CategorySelectSetupVars($vars) {
-	global $wgParser;
+	global $wgParser, $wgContLang;
 
 	$vars['csAddCategoryButtonText'] = wfMsg('categoryselect-addcategory-button');
 	$vars['csProvideCategoryText'] = wfMsg('categoryselect-provide-sortkey');
 	$vars['csDefaultSort'] = $wgParser->getDefaultSort();
+	$vars['csCategoryNamespaces'] = 'Category|' . $wgContLang->getNsText(NS_CATEGORY);
 
 	return true;
 }
