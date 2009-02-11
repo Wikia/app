@@ -104,7 +104,7 @@ function SharedHelpHook(&$out, &$text) {
 
 	if($wgTitle->getNamespace() == 12) { # Process only for pages in namespace Help (12)
 		# Initialize shared and local variables
-		$sharedArticleKey = $wgSharedDB . ':sharedArticles:' . $wgTitle->getDBkey();
+		$sharedArticleKey = $wgSharedDB . ':sharedArticles:' . $wgHelpWikiId . ':' . $wgTitle->getPrefixedDBkey();
 		$sharedArticle = $wgMemc->get($sharedArticleKey);
 		$sharedServer = unserialize(WikiFactory::getVarByName('wgServer', $wgHelpWikiId)->cv_value);
 		$sharedScript = unserialize(WikiFactory::getVarByName('wgScript', $wgHelpWikiId)->cv_value);
