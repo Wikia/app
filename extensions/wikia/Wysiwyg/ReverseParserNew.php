@@ -725,16 +725,16 @@ class ReverseParser {
 			$href = $node->getAttribute('href');
 
 			if( is_string($href) ) {
-				array_push($this->data, array(
+				// generate new refid
+				$refid = max( array_keys($this->data) ) + 1;
+
+				$this->data[$refid] = array(
 					'type' => ($content == $href) ? 'external link: raw' : 'external link',
 					'text' => $content,
 					'href' => $href
-				));
-				// generate new refid
-				$refid = count($this->data);
+				);
 			}
 		}
-
 
 		$data = $this->data[$refid];
 
