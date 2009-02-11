@@ -599,13 +599,6 @@ class ReverseParser {
 				$textContent = substr($textContent, 0, -1);
 			}
 
-			// remove last space (added by FCK after convertion of \n) from text node
-			// before HTML tag with _wysiwyg_line_start attribute
-			// e.g. ' <div _wysiwyg_new_line="true">...' => '\n<div>...'
-			else if ( substr($textContent, -1) == ' ' && $this->nextSiblingIsInNextLine($node) ) {
-				$textContent = substr($textContent, 0, -1);
-			}
-
 			// check whether we should allow whitespaces inclusion into wikitext
 			// e.g. we don't want to add whitespaces inside tables HTML markup
 			else if ( strspn($textContent, ' ') == strlen($textContent) ) {
@@ -619,8 +612,14 @@ class ReverseParser {
 				}
 			}
 
-			$out = $textContent;
+			// remove last space (added by FCK after convertion of \n) from text node
+			// before HTML tag with _wysiwyg_line_start attribute
+			// e.g. ' <div _wysiwyg_new_line="true">...' => '\n<div>...'
+			else if ( substr($textContent, -1) == ' ' && $this->nextSiblingIsInNextLine($node) ) {
+				$textContent = substr($textContent, 0, -1);
+			}
 
+			$out = $textContent;
 		}
 
 		wfProfileOut(__METHOD__);
