@@ -39,7 +39,12 @@ $wgJobClasses[ "HAWelcome" ] = "HAWelcomeJob";
 /**
  * used messages
  */
-$wgExtensionMessagesFiles["HAWelcome"] = dirname(__FILE__) . '/HAWelcome.i18n.php';
+$wgExtensionMessagesFiles[ "HAWelcome" ] = dirname(__FILE__) . '/HAWelcome.i18n.php';
+
+/**
+ * register task
+ */
+$wgWikiaBatchTasks[ "HAWelcome" ] = "HAWelcomeTask";
 
 class HAWelcomeJob extends Job {
 
@@ -234,5 +239,117 @@ class HAWelcomeJob extends Job {
 	 */
 	public function getTitle() {
 		return $this->title;
+	}
+}
+
+
+/**
+ * Task, will run runJobs for specified city_id
+ */
+class HAWelcomeTask extends BatchTask {
+
+	private $mParams;
+
+	/**
+	 * contructor
+	 * @access public
+	 */
+	public function  __construct() {
+		$this->mType = "welcome";
+		$this->mVisible = false;
+		$this->mTTL = 1800;
+		parent::__construct();
+		$this->mDebug = true;
+	}
+
+	/**
+	 * execute
+	 *
+	 * entry point for TaskExecutor
+	 *
+	 * @access public
+	 * @author eloy@wikia
+	 *
+	 * @param mixed $params default null - task data from wikia_tasks table
+	 *
+	 * @return boolean - status of operation
+	 */
+	public function execute( $params = null ) {
+		global $IP, $wgWikiaLocalSettingsPath, $wgWikiaAdminSettingsPath;
+
+		$this->mParams = unserialize( $params->task_arguments );
+		$city_id = $this->mParams["city_id"];
+		if( $city_id ) {
+			/**
+			 * execute maintenance script
+			 */
+			$cmd = sprintf( "SERVER_ID={$city_id} php {$IP}/maintenance/runJobs.php --type HAWelcome --conf {$wgWikiaLocalSettingsPath} --aconf {$wgWikiaAdminSettingsPath}" );
+			$this->addLog( "Running {$cmd}");
+			$this->addLog( $cmd );
+			$retval = wfShellExec( $cmd, $status );
+			$this->addLog( $retval );
+		}
+
+		return true;
+	}
+
+	/**
+	 * getForm
+	 *
+	 * this task is not visible in selector so it doesn't have real HTML form
+	 *
+	 * @access public
+	 * @author eloy@wikia
+	 *
+	 * @param Title $title: Title struct
+	 * @param mixes $data: params from HTML form
+	 *
+	 * @return false
+	 */
+	public function getForm( $title, $data = false ) {
+		return false;
+	}
+
+	/**
+	 * getType
+	 *
+	 * return string with codename type of task
+	 *
+	 * @access public
+	 * @author eloy@wikia
+	 *
+	 * @return string: unique name
+	 */
+	public function getType() {
+		return $this->mType;
+	}
+
+	/**
+	 * isVisible
+	 *
+	 * check if class is visible in TaskManager from dropdown
+	 *
+	 * @access public
+	 * @author eloy@wikia
+	 *
+	 * @return boolean: visible or not
+	 */
+	public function isVisible() {
+		return $this->mVisible;
+	}
+
+	/**
+	 * submitForm
+	 *
+	 * since this task is invisible for form selector we use this method for
+	 * saving request data in database
+	 *
+	 * @access public
+	 * @author eloy@wikia
+	 *
+	 * @return true
+	 */
+	public function submitForm() {
+		return true;
 	}
 }
