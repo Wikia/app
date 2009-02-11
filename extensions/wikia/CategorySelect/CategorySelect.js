@@ -1,6 +1,6 @@
 var Event = YAHOO.util.Event;
 var Dom = YAHOO.util.Dom;
-var categories;
+var categories, fixCategoryRegexp;
 //HTML IDs
 csCategoryInputId = 'csCategoryInput';
 csSuggestContainerId = 'csSuggestContainer';
@@ -89,6 +89,8 @@ function addCategory(category, params, index) {
 	if (index == undefined) {
 		index = categories.length;
 	}
+	//replace full wikitext that user may provide (eg. [[category:abc]]) to just a name (abc)
+	category = category.replace(fixCategoryRegexp, '$1');
 
 	categories[index] = {'namespace': csDefaultNamespace, 'category': category, 'outerTag': params['outerTag'], 'sortkey': params['sortkey']};
 
@@ -178,6 +180,7 @@ Event.onDOMReady(function() {
 	//move categories metadata from hidden field [JSON encoded] into array
 	cats = $(csCategoryFieldId).value;
 	categories = cats == '' ? new Array() : eval(cats);
+	fixCategoryRegexp = new RegExp('\\[\\[(?:' + csCategoryNamespaces + '):([^\\]]+)]]', 'i');
 
 	//inform PHP what source should it use
 	$(csSourceTypeId).value = 'json';
