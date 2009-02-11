@@ -45,6 +45,7 @@ function CategorySelectInit() {
 	$wgHooks['EditPage::CategoryBox'][] = 'CategorySelectCategoryBox';
 	$wgHooks['EditPage::importFormData::finished'][] = 'CategorySelectImportFormData';
 	$wgHooks['EditPage::showEditForm:fields'][] = 'CategorySelectAddFormFields';
+	$wgHooks['EditPage::showDiff::begin'][] = 'CategorySelectDiffArticle';
 	$wgHooks['EditForm::MultiEdit:Form'][] = 'CategorySelectDisplayCategoryBox';
 	$wgHooks['getCategoryLinks'][] = 'CategorySelectGetCategoryLinks';
 	$wgHooks['ExtendJSGlobalVars'][] = 'CategorySelectSetupVars';
@@ -211,6 +212,7 @@ function CategorySelectAddFormFields($editPage, $wgOut) {
  * @author Maciej Błaszkowski <marooned at wikia-inc.com>
  */
 function CategorySelectImportFormData($editPage, $request) {
+	global $wgCategorySelectCategoriesInWikitext;
 	if ($request->wasPosted()) {
 		$sourceType = $request->getVal('wpCategorySelectSourceType');
 		if ($sourceType == 'wiki') {
@@ -220,15 +222,29 @@ function CategorySelectImportFormData($editPage, $request) {
 			$categories = CategorySelectChangeFormat($categories, 'json', 'wiki');
 		}
 
-		if ($editPage->preview) {
+		if ($editPage->preview || $editPage->diff) {
 			CategorySelect::SelectCategoryAPIgetData($categories);
 		} else {	//saving article
 			$editPage->textbox1 .= "\n" . $categories;
 		}
+		$wgCategorySelectCategoriesInWikitext = $categories;
 	}
 	return true;
 }
 
+/**
+ * Add categories to article for DiffEngine
+ *
+ * @author Maciej Błaszkowski <marooned at wikia-inc.com>
+ */
+function CategorySelectDiffArticle($editPage, $oldtext, $newtext) {
+	global $wgCategorySelectCategoriesInWikitext;
+	//add categories only for whole article editing
+	if ($editPage->section == '' && isset($wgCategorySelectCategoriesInWikitext)) {
+		$newtext .= "\n" . $wgCategorySelectCategoriesInWikitext;
+	}
+	return true;
+}
 
 /**
  * Display category box
