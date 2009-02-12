@@ -29,7 +29,8 @@
 	float: left;
 }
 
-#csCodeView {
+#csSwitchViewContainer {
+	display: none;
 	float: right;
 	white-space: pre;
 }

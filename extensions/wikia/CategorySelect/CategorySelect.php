@@ -31,6 +31,7 @@ $wgExtensionCredits['other'][] = array(
 $wgExtensionFunctions[] = 'CategorySelectInit';
 $wgExtensionMessagesFiles['CategorySelect'] = dirname(__FILE__) . '/CategorySelect.i18n.php';
 $wgAjaxExportList[] = 'CategorySelectAjaxGetCategories';
+$wgAjaxExportList[] = 'CategorySelectAjaxParseCategories';
 
 /**
  * Initialize hooks
@@ -66,6 +67,8 @@ function CategorySelectSetupVars($vars) {
 	$vars['csProvideCategorySave'] = wfMsg('save');
 	$vars['csDefaultSort'] = $wgParser->getDefaultSort();
 	$vars['csCategoryNamespaces'] = 'Category|' . $wgContLang->getNsText(NS_CATEGORY);
+	$vars['csCodeView'] = wfMsg('categoryselect-code-view');
+	$vars['csVisualView'] = wfMsg('categoryselect-visual-view');
 
 	return true;
 }
@@ -97,6 +100,22 @@ function CategorySelectAjaxGetCategories() {
 	$ar->setCacheDuration(60 * 20);
 
 	return $ar;
+}
+
+/**
+ * Parse categories via AJAX from wikitext to JSON
+ * Return error on not handled syntax
+ *
+ * @author Maciej Błaszkowski <marooned at wikia-inc.com>
+ */
+function CategorySelectAjaxParseCategories($wikitext) {
+	$data = CategorySelect::SelectCategoryAPIgetData($wikitext);
+	if (trim($data['wikitext']) == '') {	//all categories handled
+		$result['categories'] = $data['categories'];//CategorySelectChangeFormat($data['categories'], 'array', 'json');
+	} else {	//unhandled syntax
+		$result['error'] = wfMsg('categoryselect-unhandled-syntax');
+	}
+	return Wikia::json_encode($result);
 }
 
 /**
@@ -313,7 +332,7 @@ function CategorySelectGenerateHTML($formId = '') {
 			<input id="csCategoryInput" type="text" style="display: none" />
 		</div>
 		<div id="csWikitextContainer"><textarea id="csWikitext" name="csWikitext">' . $categories . '</textarea></div>
-		<div id="csCodeView"><a href="#" onclick="toggleCodeView(); return false;" onfocus="this.blur()" tabindex="-1">' . wfMsg('categoryselect-code-view') . '</a></div>
+		<div id="csSwitchViewContainer"><a id="csSwitchView" href="#" onclick="toggleCodeView(); return false;" onfocus="this.blur()" tabindex="-1">' . wfMsg('categoryselect-code-view') . '</a></div>
 		<div class="clearfix"></div>
 	</div>
 	';

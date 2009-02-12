@@ -9,9 +9,11 @@ csMainContainerId = 'csMainContainer';
 csItemsContainerId = 'csItemsContainer';
 csWikitextId = 'csWikitext';
 csWikitextContainerId = 'csWikitextContainer';
-csCodeViewId = 'csCodeView';
+csSwitchViewContainerId = 'csSwitchViewContainer';
+csSwitchViewId = 'csSwitchView';
 csSourceTypeId = 'wpCategorySelectSourceType';
 csCategoryFieldId = 'wpCategorySelectWikitext';
+csAddCategoryButtonId = 'csAddCategoryButton';
 csDefaultNamespace = 'Category';	//TODO: default namespace
 
 function positionSuggestBox() {
@@ -103,7 +105,7 @@ function modifyCategory(e) {
 }
 
 function replaceAddToInput(e) {
-	e.parentNode.removeChild(e);
+	$(csAddCategoryButtonId).style.display = 'none';
 	$(csCategoryInputId).style.display = 'block';
 	positionSuggestBox();
 	$(csHintContainerId).style.display = 'block';
@@ -111,27 +113,30 @@ function replaceAddToInput(e) {
 }
 
 function addAddCategoryButton() {
-	YAHOO.log('addAddCategoryButton: begin');
-	elementA = document.createElement('a');
-	elementA.className = 'CSitem CSaddCategory'; //setAttribute doesn't work in IE
-	elementA.tabindex = '-1';
-	elementA.onfocus = 'this.blur()';
-	elementA.onclick = function(e) {replaceAddToInput(this); return false;};
+	if ($(csAddCategoryButtonId) != null) {
+		$(csAddCategoryButtonId).style.display = 'block';
+	} else {
+		elementA = document.createElement('a');
+		elementA.id = 'csAddCategoryButton';
+		elementA.className = 'CSitem CSaddCategory'; //setAttribute doesn't work in IE
+		elementA.tabindex = '-1';
+		elementA.onfocus = 'this.blur()';
+		elementA.onclick = function(e) {replaceAddToInput(this); return false;};
 
-	elementSpanOuter = document.createElement('span');
-	elementSpanOuter.className = 'CSitemOuterAddCategory';
-	elementA.appendChild(elementSpanOuter);
+		elementSpanOuter = document.createElement('span');
+		elementSpanOuter.className = 'CSitemOuterAddCategory';
+		elementA.appendChild(elementSpanOuter);
 
-	elementText = document.createTextNode(csAddCategoryButtonText);
-	elementSpanOuter.appendChild(elementText);
+		elementText = document.createTextNode(csAddCategoryButtonText);
+		elementSpanOuter.appendChild(elementText);
 
-	elementSpan = document.createElement('span');
-	elementSpan.className = 'CScontrol CScontrolAdd';
-	elementSpan.onclick = function(e) {replaceAddToInput(this); return false;};
-	elementSpanOuter.appendChild(elementSpan);
+		elementSpan = document.createElement('span');
+		elementSpan.className = 'CScontrol CScontrolAdd';
+		elementSpan.onclick = function(e) {replaceAddToInput(this); return false;};
+		elementSpanOuter.appendChild(elementSpan);
 
-	$(csItemsContainerId).appendChild(elementA);
-	YAHOO.log('addAddCategoryButton: end');
+		$(csItemsContainerId).appendChild(elementA);
+	}
 }
 
 function inputBlur() {
@@ -196,14 +201,59 @@ function generateWikitextForCategories() {
 	return categoriesStr;
 }
 
+function initializeCategories(cats) {
+	//move categories metadata from hidden field [JSON encoded] into array
+	if (cats == undefined) {
+		cats = $(csCategoryFieldId).value;
+		categories = cats == '' ? new Array() : eval(cats);
+	} else {
+		categories = cats;
+	}
+
+	//inform PHP what source should it use
+	$(csSourceTypeId).value = 'json';
+
+	addAddCategoryButton();
+	for(c in categories) {
+		addCategory(categories[c].category, {'outerTag': categories[c].outerTag, 'sortkey': categories[c].sortkey}, c);
+	}
+}
+
 function toggleCodeView() {
-	if ($(csWikitextContainerId).style.display != 'block') {
+	if ($(csWikitextContainerId).style.display != 'block') {	//switch to code view
 		$(csWikitextId).value = generateWikitextForCategories();
 		$(csItemsContainerId).style.display = 'none';
-		$(csCodeViewId).style.display = 'none';
+		$(csSwitchViewId).innerHTML = csVisualView;
 		$(csWikitextContainerId).style.display = 'block';
 		$(csCategoryFieldId).value = '';	//remove JSON - this will inform PHP to use wikitext instead
 		$(csSourceTypeId).value = 'wiki';	//inform PHP what source should it use
+	} else {	//switch to visual code
+		var ajaxUrl = wgServer + wgScript + '?action=ajax';
+		var pars = 'rs=CategorySelectAjaxParseCategories&rsargs=' + escape($(csWikitextId).value);
+		var callback = {
+			success: function(originalRequest) {
+				result = eval('(' + originalRequest.responseText + ')');
+				if (result['error'] != undefined) {
+					YAHOO.log('AJAX result: error');
+					alert(result['error']);
+				} else if (result['categories'] != undefined) {
+					YAHOO.log('AJAX result: OK');
+					//delete old categories [HTML items]
+					var items = $(csItemsContainerId).getElementsByTagName('a');
+					for (i=items.length-1; i>=0; i--) {
+						if (items[i].getAttribute('catId') != null) {
+							items[i].parentNode.removeChild(items[i]);
+						}
+					}
+					initializeCategories(result['categories']);
+					$(csSwitchViewId).innerHTML = csVisualView;
+					$(csWikitextContainerId).style.display = 'none';
+					$(csItemsContainerId).style.display = 'block';
+				}
+			},
+			timeout: 30000
+		};
+		YAHOO.util.Connect.asyncRequest('POST', ajaxUrl, callback, pars);
 	}
 }
 
@@ -239,25 +289,12 @@ function moveElement(movedId, prevSibbId) {
 Event.onDOMReady(function() {
 	YAHOO.log('onDOMReady');
 
-	//move categories metadata from hidden field [JSON encoded] into array
-	cats = $(csCategoryFieldId).value;
-	categories = cats == '' ? new Array() : eval(cats);
 	fixCategoryRegexp = new RegExp('\\[\\[(?:' + csCategoryNamespaces + '):([^\\]]+)]]', 'i');
-
-	//inform PHP what source should it use
-	$(csSourceTypeId).value = 'json';
-
-	addAddCategoryButton();
-	for(c in categories) {
-		addCategory(categories[c].category, {'outerTag': categories[c].outerTag, 'sortkey': categories[c].sortkey}, c);
-	}
+	initializeCategories();
+	//show switch after loading categories
+	$(csSwitchViewContainerId).style.display = 'block';
 
 	var submitAutoComplete = function(comp, resultListItem) {
-//		YAHOO.Wikia.Tracker.trackByStr(null, 'search/suggestItem/' + escape(YAHOO.util.Dom.get('search_field').value.replace(/ /g, '_')));
-//		sUrl = wgServer + wgScriptPath + '?action=ajax&rs=getSuggestedArticleURL&rsargs=' + encodeURIComponent(Dom.get('search_field').value);
-//		var request = YAHOO.util.Connect.asyncRequest('GET', sUrl, submitAutoComplete_callback);
-		YAHOO.log('category selected');
-		YAHOO.log('event type:' + comp);
 		YAHOO.log('selected category:' + resultListItem[2]);
 		addCategory(resultListItem[2][0]);
 	};
