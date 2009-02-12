@@ -182,9 +182,7 @@ class UserBadges {
 		
 		$oOut->addHtml( '<fieldset><legend>' . wfMsgHtml( 'user-badge-title' ) . '</legend>' );
 		
-		$domains = WikiFactory::getDomains($User_badge->mCity);
-		$domain = (!empty($domains) && is_array($domains)) ? $domains[count($domains)-1] : "";
-		error_log ("domains = ".print_r($domains, true));
+		$domain = str_replace("http://", "", $wgServer);
 		$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
 		$oTmpl->set_vars( array(
 			"wgUser"		=> $wgUser,
@@ -272,12 +270,11 @@ class UserBadges {
 		if (!empty($oUser)) {
 			$User_badge = self::newFromUser( $oUser );
 			if (isset($params['wikia'])) {
-				$User_badge->mCity = WikiFactory::DomainToID($params['wikia']);
+				$User_badge->mCity = WikiFactory::VarValueToID("http://".$params['wikia']);
 			} else {
 				$User_badge->mCity = $wgCityId;
 			}
 			$badgeUrl = $User_badge->getFullUrl();
-			error_log("badgeUrl = $badgeUrl ");
 			if (!empty($badgeUrl)) {
 				$res = 	"<a href=\"{$wgServer}\"><img src=\"{$badgeUrl}\" border=\"0\" /></a>";
 			}
