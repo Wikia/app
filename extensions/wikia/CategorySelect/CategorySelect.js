@@ -72,7 +72,7 @@ function modifyCategory(e) {
 	modifyCategoryDialog({
 		'catId': catId,
 		'caption': csProvideCategoryCaption,
-		'content': '<label for=""csInfoboxSortKey">' + csProvideCategoryText.replace('$1', categories[catId].category) + '</label>' + 
+		'content': '<label for="csInfoboxSortKey">' + csProvideCategoryText.replace('$1', categories[catId].category) + '</label>' + 
 			'<input type="text" id="csInfoboxSortKey" value="'+escape(defaultSortkey)+'" />',
 		'save': csProvideCategorySave
 	},
