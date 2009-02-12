@@ -250,3 +250,10 @@ $wgExtensionsPath = false; /// defaults to "{$wgScriptPath}/extensions"
  */
 $wgHubCreationVariables = array();
 $wgLangCreationVariables = array();
+
+/**
+ * Define Video namespace (used by WikiaVideo extensions)
+ * Can not be define directly in extension since it is used in Parser.php and extension is not always enabled
+ */
+define('NS_VIDEO', '400');
+$wgExtraNamespaces[NS_VIDEO] = 'Video';
