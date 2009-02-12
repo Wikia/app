@@ -606,10 +606,11 @@ class WikiFactoryLoader {
 		 * set/replace $wgDBname in $wgDBservers
 		 */
 		if( isset( $wgDBservers ) && is_array( $wgDBservers ) && isset( $this->mVariables["wgDBname"] ) ) {
-			error_log( __METHOD__ .": " . print_pre( $wgDBservers, 1 ) );
+			error_log( __METHOD__ ."-before: " . print_pre( $wgDBservers, 1 ) );
 			foreach( $wgDBservers as $index => $server ) {
 				$wgDBservers[ $index ][ "dbname" ] = $this->mVariables["wgDBname"];
 			}
+			error_log( __METHOD__ ."-after: " . print_pre( $wgDBservers, 1 ) );
 		}
 
 		wfProfileOut( __METHOD__ );
