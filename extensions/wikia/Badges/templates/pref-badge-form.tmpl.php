@@ -8,11 +8,11 @@ ColorTxt["CURRENT_COLOR"] = "<?=wfMsg("user-badge-selected-color")?>";
 ColorTxt["CLOSEST_WEBSAFE"] = "<?=wfMsg("user-badge-web-color")?>";
 ColorTxt["DIALOG_HEADER"] = "<?=wfMsg("user-badge-dialog-title")?>";
 </script>
-<? if (!empty($sUserBadgeUrl)) { ?> 
 <table>
 <tr>
 	<td class="pref-input" valign="middle" colspan="2"><h2><?=wfMsg('user-badge-current')?></h2></td>
 </tr>	
+<? if (!empty($sUserBadgeUrl)) { ?> 
 <tr>
 	<td class="pref-input" valign="top" colspan="2"><p><img src="<?=$sUserBadgeImg?>" /></p></td>
 </tr>	
@@ -47,10 +47,14 @@ ColorTxt["DIALOG_HEADER"] = "<?=wfMsg("user-badge-dialog-title")?>";
 </tr>	
 <? } else { ?> 		
 <tr>
-	<td class="pref-input" colspan="2">
-		<p><?=wfMsg('user-badge-not-found')?> <?=wfMsg('user-badge-use-configurator')?></p>
-	</td>
+	<td class="pref-input" colspan="2"><?=wfMsg('user-badge-not-found')?></td>
 </tr>
+<tr>
+	<td class="pref-input" style="padding:15px 0px 0px;" valign="middle" colspan="2"><h2><?=wfMsg('user-badge-configure')?></h2></td>
+</tr>
+<tr>
+	<td class="pref-input" colspan="2"><p><?=wfMsg('user-badge-use-configurator')?></p> </td>	
+</tr>	
 <? } ?>		
 	</td>
 </tr>
