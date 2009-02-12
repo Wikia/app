@@ -1691,7 +1691,7 @@ class Parser
 
 			if ($might_be_img) { # if this is actually an invalid link
 				wfProfileIn( "$fname-might_be_img" );
-				if ($ns == NS_IMAGE && $noforce) { #but might be an image
+				if (($ns == NS_IMAGE || $ns == NS_VIDEO) && $noforce) { #but might be an image
 					$found = false;
 					while (isset ($a[$k+1]) ) {
 						#look at the next 'line' to see if we can close it there
@@ -1756,6 +1756,18 @@ class Parser
 					continue;
 				}
 				wfProfileOut( "$fname-interwiki" );
+
+				if($ns == NS_VIDEO) {
+					if(!empty($wgEnableWikiaVideoExt)) {
+						wfProfileIn("$fname-video");
+						$text = $this->replaceExternalLinks($text);
+						$text = $this->replaceInternalLinks($text);
+						$s .= $prefix . $this->armorLinks(WikiaVideo_makeVideo($nt, $text)).$trail;
+						$this->mOutput->addImage(':'.$nt->getDBkey());
+						wfProfileOut("$fname-video");
+						continue;
+					}
+				}
 
 				if ( $ns == NS_IMAGE ) {
 					wfProfileIn( "$fname-image" );
