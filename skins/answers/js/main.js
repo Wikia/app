@@ -87,7 +87,7 @@ function askQuestion(){
 function anonWatch(){
 	jQuery.get( wgServer + "/index.php?action=ajax&rs=wfHoldWatchForAnon&rsargs[]=" + wgPageName, "", 
 	function (oResponse){
-		window.location = oResponse
+		window.location = oResponse;
 	});
 }
 
@@ -257,23 +257,22 @@ if( wgIsMainpage == true ){
 
 jQuery("#facebook-connect").ready(function() {
 	if( !wgEnableFacebookConnect || !wgIsQuestion )return false;
-	updateFacebookBox()
-
+	updateFacebookBox();
 });
 
 
 function updateFacebookBox(){
-	if( ! document.getElementById("facebook-user-placeholder") )return false
+	if( ! document.getElementById("facebook-user-placeholder") )return false;
 		
 	fb_uid = YAHOO.util.Cookie.get(wgFacebookAnswersAppID + "_user");
 	if( ! fb_uid ){
-		jQuery("#facebook-connect-login").show()
-		jQuery("#facebook-connect-ask").hide()
+		jQuery("#facebook-connect-login").show();
+		jQuery("#facebook-connect-ask").hide();
 	}else{
-		jQuery("#facebook-connect-login").hide()
+		jQuery("#facebook-connect-login").hide();
 		fb_html = "<div id='fb-pic' uid='" + fb_uid + "' facebook-logo='true' style='float:left'></div>";
 		fb_html += "<div style='float:left'><span id='fb-name' useyou='false' uid='" + fb_uid + "'></span><br/>";
-		fb_html += wgFacebookSignedInMsg + "<br/>"
+		fb_html += wgFacebookSignedInMsg + "<br/>";
 		fb_html += "<a href='#' onclick='FB.Connect.logoutAndRedirect(window.location.href)'>" + wgFacebookLogoutMsg + "</a></div>";
 		fb_html += "<div style='clear:both'></div>";
 		
@@ -282,21 +281,21 @@ function updateFacebookBox(){
 		FB.XFBML.Host.addElement(new FB.XFBML.Name(document.getElementById("fb-name"))); 
 		FB.XFBML.Host.addElement(new FB.XFBML.ProfilePic(document.getElementById("fb-pic"))); 
 	
-		jQuery("#facebook-connect-logout").show()
+		jQuery("#facebook-connect-logout").show();
 		
 		document.getElementById("facebook-connect-ask").innerHTML = "<a href='javascript:facebook_ask()'><img src=\"http://b.static.ak.fbcdn.net/images/fbconnect/login-buttons/connect_light_small_short.gif?8:121638\"></a> <a href='javascript:facebook_ask()'>" + wgFacebookAskMsg + "</a><span id='facebook_finish'></span>";
-		jQuery("#facebook-connect-ask").show()
+		jQuery("#facebook-connect-ask").show();
 	}
 }
 
 function facebook_login_handler(){
-	window.location = document.location.href
+	window.location = document.location.href;
 }
 	
 var facebook_clicked_ask = false;
 function facebook_ask(){
 	facebook_clicked_ask = true;
-	facebook_publish_feed_story()
+	facebook_publish_feed_story();
 }
 
 function facebook_publish_finish(){
@@ -310,7 +309,83 @@ function facebook_publish_finish(){
 function facebook_publish_feed_story() {
 	// Load the feed form
 	FB.ensureInit(function() {  
-	  template_data = {"question" : wgTitle + "?", "url" : wgServer + wgArticlePath.replace("$1",wgPageName), "editurl" : wgServer + wgScript + "?title=" + wgPageName + "&action=edit" }
+	  template_data = {"question" : wgTitle + "?", "url" : wgServer + wgArticlePath.replace("$1",wgPageName), "editurl" : wgServer + wgScript + "?title=" + wgPageName + "&action=edit" };
 	  FB.Connect.showFeedDialog(wgFacebookAnswersTemplateID, template_data,  null , null, FB.FeedStorySize.oneLine, FB.RequireConnect.require, facebook_publish_finish );
 	});
 }
+
+/* Function to take an array and turn it into a url encoded string. Handy for ajax requests. ;) */
+function http_build_query( formdata, numeric_prefix, arg_separator ) {
+    // http://kevin.vanzonneveld.net
+    // +   original by: Kevin van Zonneveld (http://kevin.vanzonneveld.net)
+    // +   improved by: Legaev Andrey
+    // +   improved by: Michael White (http://getsprink.com)
+    // +   improved by: Kevin van Zonneveld (http://kevin.vanzonneveld.net)
+    // *     example 1: http_build_query({foo: 'bar', php: 'hypertext processor', baz: 'boom', cow: 'milk'}, '', '&amp;');
+    // *     returns 1: 'foo=bar&amp;php=hypertext+processor&amp;baz=boom&amp;cow=milk'
+    // *     example 2: http_build_query({'php': 'hypertext processor', 0: 'foo', 1: 'bar', 2: 'baz', 3: 'boom', 'cow': 'milk'}, 'myvar_');
+    // *     returns 2: 'php=hypertext+processor&myvar_0=foo&myvar_1=bar&myvar_2=baz&myvar_3=boom&cow=milk'
+ 
+    var key, use_val, use_key, i = 0, j=0, tmp_arr = [];
+ 
+    if (!arg_separator) {
+        arg_separator = '&';
+    }
+ 
+    for (key in formdata) {
+        use_val = escape(formdata[key].toString());
+        use_key = escape(key);
+ 
+        if (numeric_prefix && !isNaN(key)) {
+            use_key = numeric_prefix + j;
+            j++;
+        }
+        tmp_arr[i++] = use_key + '=' + use_val;
+    }
+ 
+    return tmp_arr.join(arg_separator);
+}
+
+
+
+// Magic answer
+MagicAnswer = {};
+MagicAnswer.appid  = 'GD2UGdfIkY1gi6EBoIck4Exv2xLUsVrm'; // From search
+MagicAnswer.region = '';
+MagicAnswer.apiUrl = 'http://answers.yahooapis.com/AnswersService/V1/';
+
+MagicAnswer.getAnswer = function  (question, callbackFunction) {
+        var params = Array();
+        params["search_in"] = "question";
+        params["type"] = "resolved";
+        params["results"] = "1";
+        MagicAnswer.questionSearch(question, params, callbackFunction);
+};
+
+MagicAnswer.questionSearch = function(question, params, callbackFunction){
+        var defaultParams = Array();
+        // http://developer.yahoo.com/answers/V1/questionSearch.html
+        defaultParams["search_in"] = "all"; // all|question|best_answer
+        defaultParams["category_id"] = "";
+        defaultParams["category_name"] = "";
+        defaultParams["region"] = MagicAnswer.region;
+        defaultParams["date_range"] = "all";
+        defaultParams["sort"] = "relevance"; // relevance|date_desc|date_asc
+        defaultParams["appid"] = MagicAnswer.appid;
+        defaultParams["type"] = "all"; // all|resolved|open|undecided
+        defaultParams["results"] = "10";
+        defaultParams["output"] = "json";
+        defaultParams["callback"] = callbackFunction;
+
+        var formData = defaultParams;
+        for (var param in params){
+                formData[param]=params[param];
+        }
+        if (!params["query"]) { formData["query"] = question; }
+
+        var s = document.createElement("script");
+        s.type = "text/javascript";
+        s.src = MagicAnswer.apiUrl + 'questionSearch?' + http_build_query(formData);
+        document.getElementsByTagName('head')[0].appendChild(s);
+};
+
