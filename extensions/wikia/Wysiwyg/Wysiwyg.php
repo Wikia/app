@@ -125,6 +125,8 @@ function Wysiwyg_Initial($form) {
 		return true;
 	}
 
+	wfLoadExtensionMessages('Wysiwyg');
+
 	// detect edgecases
 	$wgWysiwygEdgeCasesFound = (Wysiwyg_CheckEdgeCases($form->textbox1) != '');
 
@@ -173,6 +175,7 @@ function Wysiwyg_Initial2($form) {
 
 	// show first edit messages when needed
 	//WysiwygFirstEditMessage();
+
 	return true;
 }
 
@@ -214,7 +217,6 @@ function Wysiwyg_BeforeDisplayingTextbox($a, $b) {
  * @author Maciej Błaszkowski <marooned at wikia-inc.com>
  */
 function Wysiwyg_CheckEdgeCases($text) {
-	wfLoadExtensionMessages('Wysiwyg');
 	$out = '';
 	$edgeCasesFound = array();
 	$edgeCases = array(
@@ -761,9 +763,13 @@ function WysiwygParserHookCallback($input, $args, $parser) {
 function WysiwygFirstEditMessage() {
 	global $wgOut;
 
+	// HTML for popup body
+	$body =  wfMsgExt('wysiwyg-first-edit-message', 'parse') . '<input type="checkbox" id="wysiwyg-first-edit-dont-show-me" />'.
+		'<label for="wysiwyg-first-edit-dont-show-me">' . wfMsg('wysiwyg-first-edit-dont-show-me') . '</label>';
+
 	// properly encode values for JS
 	$title =  Xml::encodeJsVar( wfMsg('wysiwyg-first-edit-title') );
-	$messsage =  Xml::encodeJsVar( wfMsgExt('wysiwyg-first-edit-message', 'parse') );
+	$messsage =  Xml::encodeJsVar($body);
 	$dismiss = Xml::encodeJsVar( wfMsg('wysiwyg-first-edit-dismiss') );
 
 	$wgOut->addInlineScript('addOnloadHook(function() { wysiwygShowFirstEditMessage(' . $title . ', ' . $messsage . ', ' . $dismiss  . '); });');
