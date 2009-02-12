@@ -304,7 +304,9 @@ function CategorySelectGenerateHTML($formId = '') {
 	$result = '
 	<script type="text/javascript">document.write(\'<style type="text/css">#csWikitextContainer {display: none}</style>\');</script>
 	<div id="csMainContainer">
-		<div id="csSuggestContainer"></div>
+		<div id="csSuggestContainer">
+			<div id="csHintContainer">' . wfMsg('categoryselect-suggest-hint') . '</div>
+		</div>
 		<div id="csItemsContainer">
 			<input id="csCategoryInput" type="text" style="display: none" />
 		</div>

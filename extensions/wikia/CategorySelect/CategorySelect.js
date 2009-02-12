@@ -3,6 +3,7 @@ var Dom = YAHOO.util.Dom;
 var categories, fixCategoryRegexp;
 //HTML IDs
 csCategoryInputId = 'csCategoryInput';
+csHintContainerId = 'csHintContainer';
 csSuggestContainerId = 'csSuggestContainer';
 csMainContainerId = 'csMainContainer';
 csItemsContainerId = 'csItemsContainer';
@@ -12,6 +13,11 @@ csCodeViewId = 'csCodeView';
 csSourceTypeId = 'wpCategorySelectSourceType';
 csCategoryFieldId = 'wpCategorySelectWikitext';
 csDefaultNamespace = 'Category';	//TODO: default namespace
+
+function positionSuggestBox() {
+	$(csSuggestContainerId).style.top = $(csCategoryInputId).offsetTop + jQuery("#" + csCategoryInputId).height() + 5 + 'px';
+	$(csSuggestContainerId).style.left = Math.min($(csCategoryInputId).offsetLeft, (Dom.getViewportWidth() - jQuery('#' + csItemsContainerId).offset().left - jQuery("#" + csSuggestContainerId).width() - 10)) + 'px';
+}
 
 function deleteCategory(e) {
 	var catId = e.parentNode.parentNode.getAttribute('catId');
@@ -46,6 +52,8 @@ function modifyCategory(e) {
 function replaceAddToInput(e) {
 	e.parentNode.removeChild(e);
 	$(csCategoryInputId).style.display = 'block';
+	positionSuggestBox();
+	$(csHintContainerId).style.display = 'block';
 	$(csCategoryInputId).focus();
 }
 
@@ -76,6 +84,7 @@ function addAddCategoryButton() {
 function inputBlur() {
 	if ($(csCategoryInputId).value == '') {
 		$(csCategoryInputId).style.display = 'none';
+		$(csHintContainerId).style.display = 'none';
 		addAddCategoryButton();
 	}
 }
@@ -200,6 +209,14 @@ Event.onDOMReady(function() {
 		addCategory(resultListItem[2][0]);
 	};
 
+	var collapseAutoComplete = function() {
+		$(csHintContainerId).style.display = 'block';
+	}
+
+	var expandAutoComplete = function(sQuery , aResults) {
+		$(csHintContainerId).style.display = 'none';
+	}
+
 	var inputKeyPress = function(e) {
 		if(e.keyCode == 13) {
 			//TODO: stop AJAX call for AutoComplete
@@ -210,8 +227,7 @@ Event.onDOMReady(function() {
 				addCategory(category);
 			}
 		}
-		$(csSuggestContainerId).style.top = $(csCategoryInputId).offsetTop + jQuery("#" + csCategoryInputId).height() + 5 + 'px';
-		$(csSuggestContainerId).style.left = Math.min($(csCategoryInputId).offsetLeft, (Dom.getViewportWidth() - jQuery('#' + csItemsContainerId).offset().left - jQuery("#" + csSuggestContainerId).width() - 10)) + 'px';
+		positionSuggestBox();
 	};
 
 	//handle [enter] for non existing categories
@@ -236,4 +252,6 @@ Event.onDOMReady(function() {
 	oAutoComp.highlightClassName = 'CSsuggestHover';
 	oAutoComp.queryMatchContains = true;
 	oAutoComp.itemSelectEvent.subscribe(submitAutoComplete);
+	oAutoComp.containerCollapseEvent.subscribe(collapseAutoComplete);
+	oAutoComp.containerExpandEvent.subscribe(expandAutoComplete);
 });

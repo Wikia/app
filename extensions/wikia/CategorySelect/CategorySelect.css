@@ -9,8 +9,18 @@
 	border: 1px solid #AAA;
 	padding: 5px 5px 2px 5px;
 }
+
 #csItemsContainer {
 	position: relative;
+}
+
+#csHintContainer {
+	display: none;
+	position: absolute;
+	padding: 2px 4px;
+	background: #DDD;
+	border: 1px solid #777;
+	font-size: 11px;
 }
 
 #csCategoryInput {
