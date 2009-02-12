@@ -210,7 +210,8 @@ class WikiFactoryLoader {
 	public function execute() {
 
 		wfProfileIn(__METHOD__);
-		global $wgCityId, $wgDevelEnvironment, $wgWikiaAdvertiserCategory;
+		global $wgCityId, $wgDevelEnvironment, $wgWikiaAdvertiserCategory,
+			$wgDBservers;
 
 		/**
 		 * local cache, change to CACHE_ACCEL for local
@@ -601,6 +602,15 @@ class WikiFactoryLoader {
 		 */
 		$wgWikiaAdvertiserCategory = $this->mAdCategory;
 
+		/**
+		 * set/replace $wgDBname in $wgDBservers
+		 */
+		if( isset( $wgDBservers ) and is_array( $wgDBservers ) ) {
+			error_log( print_pre( $wgDBservers, 1 ) );
+			foreach( $wgDBservers as $index => $server ) {
+				$wgDBservers[ $index ][ "dbname" ] = $this->mVariables["wgDBname"];
+			}
+		}
 
 		wfProfileOut( __METHOD__ );
 
