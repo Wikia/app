@@ -1,9 +1,9 @@
 <?php
 /***************************************************************************
- *                               gwbbcode.php
+ *                                common.php
  *                            -------------------
- *   begin                : Tuesday, Apr 21, 2005
- *   copyright            : (C) 2006-2007 Pierre 'pikiou' Scelles
+ *   begin                : Thursday, 9 Aug, 2005
+ *   copyright            : (C) 2007 Pierre 'pikiou' Scelles
  *   email                : liu.pi.vipi@gmail.com
  *
  ***************************************************************************/
@@ -17,19 +17,11 @@
  *
  *   All images, skill names and descriptions are (C) ArenaNet.
  ***************************************************************************/
-
-if (!defined('GWBBCODE_ROOT'))
-   define('GWBBCODE_ROOT', "$IP/extensions/3rdparty/PvX/gwbbcode");
-require_once(GWBBCODE_ROOT.'/gwbbcode.inc.php');
-
-//var_export(get_defined_vars());
-
-if (!USE_GWBBCODE)
-   return;
-
-if (defined('IN_PHPBB') || defined('PUN_ROOT') || defined('SMF'))
-   if (isset($message))
-      $message = parse_gwbbcode($message);
-   else
-      $text = parse_gwbbcode($text);
+require_once (GWBBCODE_ROOT.'/constants.inc.php');
+if (@file_exists(CONFIG_PATH)) {
+   require_once (CONFIG_PATH);
+}
+else {
+   require_once (DEFAULT_CONFIG_PATH);
+}
 ?>

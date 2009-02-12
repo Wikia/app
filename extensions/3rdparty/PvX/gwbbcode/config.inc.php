@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *                               gwbbcode.php
+ *                              config.inc.php
  *                            -------------------
  *   begin                : Tuesday, Apr 21, 2005
  *   copyright            : (C) 2006-2007 Pierre 'pikiou' Scelles
@@ -18,18 +18,19 @@
  *   All images, skill names and descriptions are (C) ArenaNet.
  ***************************************************************************/
 
-if (!defined('GWBBCODE_ROOT'))
-   define('GWBBCODE_ROOT', "$IP/extensions/3rdparty/PvX/gwbbcode");
-require_once(GWBBCODE_ROOT.'/gwbbcode.inc.php');
+require_once (GWBBCODE_ROOT.'/constants.inc.php');
 
-//var_export(get_defined_vars());
+//Change "false" to "true" in the following line if you want gwBBCode
+//to store/access skills from your SQL database. Then run install.php again.
+define('GWBBCODE_SQL', false);
+define('GWBBCODE_VERSION', $gwbbcode_version . (GWBBCODE_SQL ? '-sql' : ''));
 
-if (!USE_GWBBCODE)
-   return;
+//Chose between Kurzick and Luxon in order to adapt allegiance skills
+define('GWBBCODE_ALLEGIANCE', 'Kurzick');
 
-if (defined('IN_PHPBB') || defined('PUN_ROOT') || defined('SMF'))
-   if (isset($message))
-      $message = parse_gwbbcode($message);
-   else
-      $text = parse_gwbbcode($text);
+//use gwBBCode?
+define('USE_GWBBCODE', true);
+
+//List templates not to hook gwbbcode into
+$not_to_hook = Array();
 ?>

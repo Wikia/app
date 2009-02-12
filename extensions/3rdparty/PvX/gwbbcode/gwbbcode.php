@@ -19,7 +19,7 @@
  ***************************************************************************/
 
 if (!defined('GWBBCODE_ROOT'))
-   define('GWBBCODE_ROOT', "$IP/extensions/3rdparty/PvX/gwbbcode");
+	define('GWBBCODE_ROOT', defined('NUKE_FILE') ? 'modules/Forums/gwbbcode' : './gwbbcode');
 require_once(GWBBCODE_ROOT.'/gwbbcode.inc.php');
 
 //var_export(get_defined_vars());

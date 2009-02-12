@@ -71,7 +71,7 @@ function wfPvXConvert()
 							}}<br>
 							{{skill bar|Echo|Dust Trap|Barbed Trap|Flame Trap|Trappers Speed|Troll Unguent|Whirling Defense|Resurrection Signet}}</code>
 							<p>Enter old style GuildWiki &quot;Attributes and Skills&quot; template:</p>
-							<form action="/wiki/" method="get">
+							<form action="' . $_SERVER["PHP_SELF"] . '" method="get">
 							<input name="title" type="hidden" value="Special:PvXconvert" />
 							<p><textarea name="wpBuild" cols="80" rows="10" wrap="virtual"></textarea></p>
 							<p>Give new build template a name (optional):</p>
@@ -109,7 +109,7 @@ function cnv_skils($skl)
     $i = 0;
     while ($i <= count($out))
     {
-        if ($skills[$i + 1])
+        if (isset($skills[$i + 1]))
         {
             $out[$i] = "[" . $skills[$i + 1] . "]";
         }

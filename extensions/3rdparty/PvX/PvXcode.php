@@ -1,7 +1,7 @@
 <?php
 # Example WikiMedia extension
 
-if (!defined('GWBBCODE_ROOT')) define('GWBBCODE_ROOT', 'gwbbcode');
+if (!defined('GWBBCODE_ROOT')) define('GWBBCODE_ROOT', "$IP/extensions/3rdparty/PvX/gwbbcode");
 require_once(GWBBCODE_ROOT.'/gwbbcode.inc.php');
 
 //var_export(get_defined_vars());
