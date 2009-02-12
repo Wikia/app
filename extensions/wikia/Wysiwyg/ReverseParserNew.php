@@ -756,7 +756,7 @@ class ReverseParser {
 				// leave already existing link which hasn't been edited
 				// as for feedback from Tor
 				// don't try to make everyone happy :)
-				if ($data['description'] != $content) {
+				if ( isset($data['description']) && ($data['description'] != $content) ) {
 					$data['description'] = $content;
 					$data['trial'] = '';
 
@@ -779,16 +779,19 @@ class ReverseParser {
 						}
 					}
 				}
+				else if (!isset($data['description'])) {
+					$data['description'] = $content;
+				}
 
 				// generate wikisyntax
 				$tag =  "[[{$data['href']}";
 
-				if($data['description'] != '') {
+				if ($data['description'] != '') {
 					$tag .=  "|{$data['description']}]]";
 				} else {
 					$tag .=  "]]";
 				}
-				if( isset($data['trial']) && ($data['trial'] != '') ) {
+				if ( isset($data['trial']) && ($data['trial'] != '') ) {
 					$tag .= $data['trial'];
 				}
 				return $tag;
