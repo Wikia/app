@@ -752,26 +752,31 @@ class ReverseParser {
 			case 'internal link':
 			case 'internal link: file':
 			case 'internal link: special page':
-				// take link description from parsed HTML
-				$data['description'] = $content;
-				$data['trial'] = '';
 
-				// * [[foo|foo]] -> [[foo]]
-				if ($data['href'] == $data['description']) {
-					$data['description'] = '';
-				}
-				// * [[:foo]]
-				else if ( ($data['href']{0} == ':') && (substr($data['href'],1) == $data['description']) ) {
-					$data['description'] = '';
-				}
-				// * [[foo|foots]] -> [[foo]]ts (trial can't contain numbers)
-				else if ($data['description'] != '' && substr($data['description'], 0, strlen($data['href'])) == $data['href']) {
-					$trial = substr($data['description'], strlen($data['href']));
+				// leave already existing link which hasn't been edited
+				// as for feedback from Tor
+				// don't try to make everyone happy :)
+				if ($data['description'] != $content) {
+					$data['description'] = $content;
+					$data['trial'] = '';
 
-					// validate $trial (might only contain chars)
-					if ( ctype_alpha($trial) ) {
-						$data['trial'] = $trial;
+					// * [[foo|foo]] -> [[foo]]
+					if ($data['href'] == $data['description']) {
 						$data['description'] = '';
+					}
+					// * [[:foo]]
+					else if ( ($data['href']{0} == ':') && (substr($data['href'],1) == $data['description']) ) {
+						$data['description'] = '';
+					}
+					// * [[foo|foots]] -> [[foo]]ts (trial can't contain numbers)
+					else if ($data['description'] != '' && substr($data['description'], 0, strlen($data['href'])) == $data['href']) {
+						$trial = substr($data['description'], strlen($data['href']));
+
+						// validate $trial (might only contain chars)
+						if ( ctype_alpha($trial) ) {
+							$data['trial'] = $trial;
+							$data['description'] = '';
+						}
 					}
 				}
 
@@ -783,7 +788,7 @@ class ReverseParser {
 				} else {
 					$tag .=  "]]";
 				}
-				if($data['trial'] != '') {
+				if( isset($data['trial']) && ($data['trial'] != '') ) {
 					$tag .= $data['trial'];
 				}
 				return $tag;
