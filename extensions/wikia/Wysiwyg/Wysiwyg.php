@@ -183,7 +183,7 @@ function Wysiwyg_AlternateEdit($form) {
 			if($wgRequest->data['wysiwygData'] != '') {
 				$wgRequest->data['wpTextbox1'] = Wysiwyg_HtmlToWikiText($wgRequest->data['wpTextbox1'], $wgRequest->data['wysiwygData'], true);
 				if(!empty($wgRequest->data['wpSave'])) {
-					$wgHooks['ArticleSaveComplete'][] = 'Wysiwyg_NotifySaveComplete';
+					//$wgHooks['ArticleSaveComplete'][] = 'Wysiwyg_NotifySaveComplete';
 				}
 			}
 		}
