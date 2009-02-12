@@ -139,7 +139,7 @@ function submitVote($ID, $answer) {
   if ($wgUser->mName == "") $user = $IP;
   else                      $user = $wgUser->mName;
 
-  if ($wgUser->isBot())
+  if ($wgUser->isAllowed('bot'))
     return buildHTML($ID, $user);
 
   $answer = mysql_escape_string(++$answer);
