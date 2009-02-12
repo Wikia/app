@@ -689,12 +689,17 @@ body .header_menu_button * {
 }
 
 .editquestion{
-	background:none;
+	background: none;
 }
-
 .editquestion #answers_sidebar{
-	display:none;
+	display: none;
 }
-.editquestion #answers_page {
-	margin-right: 0px;
+.editquestion #answers_page, .editquestion #wikia_footer {
+	margin-right: 0;
+}
+.editquestion #ask_wrapper {
+	display: none;
+}
+.editquestion #answers_header {
+	height: 30px;
 }

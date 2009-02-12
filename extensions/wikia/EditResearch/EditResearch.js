@@ -16,6 +16,12 @@ jQuery("#research_box").ready(function() {
 			insertTags("","", sel)
 		}
 	});
+	jQuery("#search_input").keydown(function(e) {
+		if (e.keyCode == 13) {
+			research();
+			return false;
+		}
+	});
 });
 	
 
@@ -23,7 +29,8 @@ function research(){
 	search = document.getElementById("search_input").value;
 	if( !search ) return;
 	
-	document.getElementById("research_box").style.overflow="";
+	jQuery("#research_box").css("overflow", "");
+	jQuery("#research-inner").css("background-color", "#FFF").css("background-image", "none");
 	url = wikipedia_server + "/w/api.php?action=query&list=search&srsearch=" + search + "&sroffset=" + (research_page * research_page_limit) + "&format=json&callback=?";
 	jQuery.getJSON( url, "", function( data ){	
 		

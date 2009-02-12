@@ -1,13 +1,19 @@
-#wpTextbox1{
-	width:55%;	
+#wpTextbox1 {
+	height: 300px;
 }
 
 #research-container{
-	float:right;
+	margin-top: 4px;
+	position: absolute;
+	right: 0;
+	top: 0;
 }
-
+#research-container h3 {
+	margin: 0;
+	padding: 0;
+}
 #research-inner{
-	border:1px solid #eeeeee;
+	border:1px solid #999;
 	min-height:400px;
 }
 
@@ -18,9 +24,9 @@
 }
 
 #research-search{
+	background-color:#36C;
 	padding:5px;
 	color:#FFFFFF;
-	background-color:#000000;
 }
 
 #research-search-nav a{
@@ -33,4 +39,7 @@
 	border-bottom:1px solid #eeeeee;
 }
 
-
+#editform {
+	padding-right: 440px;
+	position: relative;
+}
