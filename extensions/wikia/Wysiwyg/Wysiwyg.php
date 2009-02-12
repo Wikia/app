@@ -174,7 +174,7 @@ function Wysiwyg_Initial2($form) {
 	}
 
 	// show first edit messages when needed
-	//WysiwygFirstEditMessage();
+	WysiwygFirstEditMessage();
 
 	return true;
 }
@@ -754,24 +754,86 @@ function WysiwygParserHookCallback($input, $args, $parser) {
 	return $input;
 }
 
+
+/**
+ * Decide whether we should show first time edit popup
+ */
+function WysiwygFirstEditMessageShow() {
+	global $wgUser, $wgCityId;
+
+	// for anon users we have JS logic
+	if ($wgUser->isAnon()) {
+		return true;
+	}
+
+	// for logged in users get comma separated list of city ids
+	$cities = explode(',', $wgUser->getOption('wysiwyg-cities-edits', ''));
+
+	wfDebug('wysiwyg-cities-edits: ' . print_r($cities, true) . "\n");
+
+	// check for current city id
+	return !in_array($wgCityId, $cities);
+}
+
+/**
+ * Store list of cities id where we shouldn't show first time edit popup anymore
+ */
+function WysiwygFirstEditMessageSave() {
+	global $wgUser, $wgCityId;
+
+	// ignore if user is anon
+	if ($wgUser->isAnon()) {
+		return;
+	}
+
+	// get comma separated list of city ids
+	$cities = explode(',', $wgUser->getOption('wysiwyg-cities-edits', ''));
+
+	// add current city id
+	if (!in_array($wgCityId, $cities)) {
+		$cities[] = $wgCityId;
+
+		// store up to 50 city ids
+		$cities = array_slice($cities, -50);
+	}
+
+	$value = trim(implode(',', $cities), ',');
+
+	wfDebug("wysiwyg-cities-edits: {$value}\n");
+
+	// store new value in user settings
+	$wgUser->setOption('wysiwyg-cities-edits', $value);
+	$wgUser->saveSettings();
+
+	// commit
+	$dbw = wfGetDB( DB_MASTER );
+	$dbw->commit();
+
+	return new AjaxResponse('ok');
+}
+$wgAjaxExportList[] = 'WysiwygFirstEditMessageSave';
+
 /**
  * Show first edit message
-*
-* @author Maciej Brencz <macbre at wikia-inc.com>
-* @todo add logic deciding when to show this message
+ *
+ * @author Maciej Brencz <macbre at wikia-inc.com>
+ * @todo add logic deciding when to show this message
  */
 function WysiwygFirstEditMessage() {
 	global $wgOut;
 
-	// HTML for popup body
-	$body =  wfMsgExt('wysiwyg-first-edit-message', 'parse') . '<input type="checkbox" id="wysiwyg-first-edit-dont-show-me" />'.
-		'<label for="wysiwyg-first-edit-dont-show-me">' . wfMsg('wysiwyg-first-edit-dont-show-me') . '</label>';
+	if ( WysiwygFirstEditMessageShow() ) {
+		// HTML for popup body
+		$body = wfMsgExt('wysiwyg-first-edit-message', 'parse') . '<input type="checkbox" id="wysiwyg-first-edit-dont-show-me" />'.
+			'<label for="wysiwyg-first-edit-dont-show-me">' . wfMsg('wysiwyg-first-edit-dont-show-me') . '</label>';
 
-	// properly encode values for JS
-	$title =  Xml::encodeJsVar( wfMsg('wysiwyg-first-edit-title') );
-	$messsage =  Xml::encodeJsVar($body);
-	$dismiss = Xml::encodeJsVar( wfMsg('wysiwyg-first-edit-dismiss') );
+		// properly encode values for JS
+		$title = Xml::encodeJsVar( wfMsg('wysiwyg-first-edit-title') );
+		$body = Xml::encodeJsVar($body);
+		$dismiss = Xml::encodeJsVar( wfMsg('wysiwyg-first-edit-dismiss') );
 
-	$wgOut->addInlineScript('addOnloadHook(function() { wysiwygShowFirstEditMessage(' . $title . ', ' . $messsage . ', ' . $dismiss  . '); });');
+		$wgOut->addInlineScript('addOnloadHook(function() { wysiwygShowFirstEditMessage(' . $title . ', ' . $body . ', ' . $dismiss  . '); });');
+	}
+
 	return;
 }
