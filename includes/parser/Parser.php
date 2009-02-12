@@ -1522,7 +1522,7 @@ class Parser
 	 * @private
 	 */
 	function replaceInternalLinks( $s ) {
-		global $wgContLang, $wgWysiwygParserEnabled;
+		global $wgContLang, $wgWysiwygParserEnabled, $wgEnableWikiaVideoExt;
 		static $fname = 'Parser::replaceInternalLinks' ;
 
 		wfProfileIn( $fname );
@@ -1762,7 +1762,7 @@ class Parser
 						wfProfileIn("$fname-video");
 						$text = $this->replaceExternalLinks($text);
 						$text = $this->replaceInternalLinks($text);
-						$s .= $prefix . $this->armorLinks(WikiaVideo_makeVideo($nt, $text)).$trail;
+						$s .= $prefix . $this->armorLinks(WikiaVideo_makeVideo($nt, $text, $sk)).$trail;
 						$this->mOutput->addImage(':'.$nt->getDBkey());
 						wfProfileOut("$fname-video");
 						continue;
@@ -1905,7 +1905,7 @@ class Parser
 			if (!empty($wgWysiwygParserEnabled)) {
 				Wysiwyg_SetRefId('internal link', array('text' => &$text, 'link' => $link, 'trail' => $trail, 'wasblank' => $wasblank, 'noforce' => $noforce, 'original' => $originalWikitext));
 
-				// sometimes we may get placeholder instead of link content 
+				// sometimes we may get placeholder instead of link content
 				// e.g. [[foo|{{bar}}]] will produce placeholder
 				if (substr($text, 0, 6) == '<input') {
 					$s .= $prefix . $text . $trail;
