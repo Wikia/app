@@ -208,7 +208,6 @@ $wgSkipSkins = array(
 		'uncyclopedia',
 		'wowwiki',
 		'lostbook',
-		'monaconew',
 );
 
 /**
