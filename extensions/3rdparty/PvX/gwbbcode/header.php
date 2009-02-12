@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *                               gwbbcode.php
+ *                                header.php
  *                            -------------------
  *   begin                : Tuesday, Apr 21, 2005
  *   copyright            : (C) 2006-2007 Pierre 'pikiou' Scelles
@@ -19,17 +19,14 @@
  ***************************************************************************/
 
 if (!defined('GWBBCODE_ROOT'))
-   define('GWBBCODE_ROOT', "$IP/extensions/3rdparty/PvX/gwbbcode");
-require_once(GWBBCODE_ROOT.'/gwbbcode.inc.php');
+	define('GWBBCODE_ROOT', defined('NUKE_FILE') ? 'modules/Forums/gwbbcode' : './gwbbcode');
+require_once(GWBBCODE_ROOT.'/common.inc.php');
 
-//var_export(get_defined_vars());
+if (USE_GWBBCODE) {
+   $gwbbcode_root_path = GWBBCODE_ROOT;
+   return str_replace('{gwbbcode_root_path}', $gwbbcode_root_path, file_get_contents(GWBBCODE_ROOT.'/overall_header.tpl'));
+}
 
-if (!USE_GWBBCODE)
-   return;
-
-if (defined('IN_PHPBB') || defined('PUN_ROOT') || defined('SMF'))
-   if (isset($message))
-      $message = parse_gwbbcode($message);
-   else
-      $text = parse_gwbbcode($text);
+//else
+return '';
 ?>
