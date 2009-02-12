@@ -65,6 +65,21 @@ function wysiwygShowFirstEditMessage(title, message, dismiss) {
 	// create and show YUI message
 	wysiwygShowInfobox(title, message, dismiss, function() {
 		this.hide();
+
+		var checkbox = document.getElementById('wysiwyg-first-edit-dont-show-me');
+
+		if (checkbox && checkbox.checked) {
+			YAHOO.log('Wysiwyg: storing new value of wysiwyg-cities-edits');
+			// for logged in store in DB
+			if (wgUserName) {
+				// send AJAX request
+				sajax_do_call('WysiwygFirstEditMessageSave', [], function() {});
+			}
+			// for anon store in cookie
+			else {
+
+			}
+		}
 	});
 }
 
