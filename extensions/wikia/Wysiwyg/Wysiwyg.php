@@ -1,8 +1,8 @@
 <?php
 $wgExtensionCredits['other'][] = array(
-	'name' => 'Wysiwyg',
+	'name' => 'Wikia Rich Text Editor (Wysiwyg)',
 	'description' => 'FCKeditor integration for MediaWiki',
-	'version' => 0.04,
+	'version' => 0.1,
 	'author' => array('Inez Korczyński', '[http://pl.wikia.com/wiki/User:Macbre Maciej Brencz]', 'Maciej Błaszkowski (Marooned)', 'Łukasz \'TOR\' Garczewski')
 );
 
