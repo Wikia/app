@@ -1290,4 +1290,48 @@ class WikiFactory {
 			__METHOD__
 		);
 	}
+	
+	/**
+	 * VarValueToID
+	 *
+	 * Read variable data from database by value of this variable
+	 *
+	 * @author moli@wikia
+	 * @access public
+	 * @static
+	 *
+	 * @param string	$cv_value	variable value
+	 *
+	 *
+	 * @return integer: city ID or null if not found
+	 */
+	static public function VarValueToID( $cv_value ) {
+
+		if( ! self::isUsed() ) {
+			wfDebug( __METHOD__ . ": WikiFactory is not used.");
+			return null;
+		}
+
+		/**
+		 * $wiki could be empty, but we have to know which variable read
+		 */
+		if ( is_null( $cv_value ) ) {
+			return null;
+		}
+
+		wfProfileIn( __METHOD__ );
+
+		$dbr = wfGetDB( DB_SLAVE );
+
+		$oRow = $dbr->selectRow(
+			array( wfSharedTable("city_variables") ),
+			array( "cv_city_id" ),
+			array( "cv_value" => @serialize($cv_value) ),
+			__METHOD__
+		);
+
+		wfProfileOut( __METHOD__ );
+		return isset( $oRow->city_id ) ? $oRow->city_id : null;
+	}
+	
 };
