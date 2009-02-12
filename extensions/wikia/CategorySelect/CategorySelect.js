@@ -27,11 +27,63 @@ function deleteCategory(e) {
 	delete categories[catId];
 }
 
+function modifyCategoryDialog(data, handler) {
+	Dialog = new YAHOO.widget.SimpleDialog('csModifyCategoryDialog',
+	{
+		width: "300px",
+		zIndex: 999,
+		effect: {effect: YAHOO.widget.ContainerEffect.FADE, duration: 0.25},
+		fixedcenter: true,
+		modal: true,
+		draggable: true,
+		close: true
+	});
+
+	YAHOO.log(data);
+
+	var buttons = [ { text: data.save, handler: function() {
+		// close dialog
+		this.hide();
+
+		var returnObject = {
+			'params': data,
+			'sortkey': document.getElementById('csInfoboxSortKey').value
+		};
+
+		// return control to handler
+		handler(returnObject);
+
+	}, isDefault: true} ];
+
+	Dialog.setHeader(data.caption);
+	Dialog.setBody(data.content);
+	Dialog.cfg.queueProperty("buttons", buttons);
+
+	Dialog.render(document.body);
+	Dialog.show();
+}
+
 function modifyCategory(e) {
 	var catId = e.parentNode.parentNode.getAttribute('catId');
 	YAHOO.log('catId = ' + catId);
 	YAHOO.log(categories[catId]);
 	defaultSortkey = categories[catId].sortkey != '' ? categories[catId].sortkey : (csDefaultSort != '' ? csDefaultSort : wgTitle);
+
+	modifyCategoryDialog({
+		'catId': catId,
+		'caption': csProvideCategoryCaption,
+		'content': '<label for=""csInfoboxSortKey">' + csProvideCategoryText.replace('$1', categories[catId].category) + '</label>' + 
+			'<input type="text" id="csInfoboxSortKey" value="'+escape(defaultSortkey)+'" />',
+		'save': csProvideCategorySave
+	},
+	function(data) {
+		YAHOO.log(data);
+
+		// TODO: do something :)
+		// ...
+
+	});
+/*
 	var sortkey = prompt(csProvideCategoryText.replace('$1', categories[catId].category), defaultSortkey);
 	if (sortkey != null) {
 		if (sortkey == wgTitle || sortkey == csDefaultSort) {
@@ -47,6 +99,7 @@ function modifyCategory(e) {
 		newClassName = 'CScontrolSorted';
 	}
 	Dom.replaceClass(e, oldClassName , newClassName);
+*/
 }
 
 function replaceAddToInput(e) {
