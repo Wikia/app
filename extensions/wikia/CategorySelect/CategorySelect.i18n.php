@@ -28,6 +28,7 @@ $messages = array(
 		'categoryselect-provide-sort-order' => 'Sort order',
 		'categoryselect-provide-sortkey' => 'Alphabetize this article on the "$1" category page under the name:',
 		'categoryselect-addcategory-button' => 'Add category',
-		'categoryselect-suggest-hint' => 'Press Enter when done'
+		'categoryselect-suggest-hint' => 'Press Enter when done',
+		'categoryselect-tooltip' => "'''New!''' Category tagging toolbar. Try it out or see help to learn more",
 	)
 );
