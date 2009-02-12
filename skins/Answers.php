@@ -77,7 +77,7 @@ class AnswersTemplate extends MonacoTemplate {
 		<script type="text/javascript" src="http://yui.yahooapis.com/2.6.0/build/connection/connection-min.js"></script>
 		<script type="text/javascript" src="http://yui.yahooapis.com/2.6.0/build/autocomplete/autocomplete-min.js"></script>
 		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.3/jquery.min.js"></script>
-		<script type="text/javascript" src="<?=$wgStylePath?>/answers/js/main.js?<?=$wgStyleVersion?>"></script>
+		<script type="text/javascript" src="/skins/answers/js/main.js?<?=$wgStyleVersion?>"></script>
 		<?php
 		if( $wgEnableFacebookConnect ){
 		?>
@@ -239,9 +239,40 @@ wfRunHooks('GetHTMLAfterBody', array (&$this));
 		<h1 id="firstHeading" class="firstHeading"><?php $this->data['displaytitle']!=""?$this->html('title'):$this->text('title') ?></h1>
 		<?php
 		}
+
+		// Magic Answer
+		if (!empty($_GET['state']) && $_GET['state'] == 'asked'){
+		?>
+		<div id="magicAnswer" style="display:none"><!-- display is shown in web service callback function -->
+		We don't have an answer for that question, but we looked around for you and found one on <a href="http://answers.yahoo.com">answers.yahoo.com</a>:
+		<form action="<?php echo $wgTitle->getLocalUrl() ?>" method="post">
+		<input type="hidden" action="edit"/>
+		<textarea name="magicAnswer" id="magicAnswerBox"></textarea>
+		<br />
+		Does this look like a good answer to your question?
+		<br />
+		<input type="submit" value="Yes"/>
+		<input type="button" value="No" onClick="jQuery('#magicAnswer').hide()"/>
+		</form>
+		</div>
+		<script type="text/javascript">
+		MagicAnswer.getAnswer("<?php echo addslashes($this->data['title'])?>", "magicAnswerCallback");
+		function magicAnswerCallback(result){
+		        console.dir(result);
+		        try {
+				document.getElementById('magicAnswerBox').value = result.all.questions[0]["ChosenAnswer"];
+				jQuery('#magicAnswer').show();
+        		} catch (e){
+				console.dir(e);
+			}
+		}
+		</script>
+		<?php
+		} // state = asked
 		?>
 		
-		<?
+		
+		<?php
 		global $wgTitle;
 		if ( $is_question && $answer_page->isArticleAnswered() ) {
 			echo '<div class="sectionedit">[<a href="'. $this->data['content_actions']['edit']['href'] .'">'. wfMsg('editsection') .'</a>]</div>';
@@ -588,7 +619,6 @@ if ($category_text) {
 <script language="JavaScript" src="http://pagead2.googlesyndication.com/pagead/show_ads.js"></script>
 
 <?php
-// Note, these were placed above the Ad calls intentionally because ad code screws with analytics
 echo AnalyticsEngine::track('GA_Urchin', AnalyticsEngine::EVENT_PAGEVIEW);
 echo AnalyticsEngine::track('GA_Urchin', 'hub', 'answers');
 global $wgCityId;
