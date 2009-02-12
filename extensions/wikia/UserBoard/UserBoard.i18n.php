@@ -9,7 +9,7 @@ $wgUserBoardMessages = array();
 
 $wgUserBoardMessages['en'] = array(
 	'boardblastlogintitle'           => 'You must be logged in to send board blasts',
-	'boardblastlogintext'       => 'You must be logged in to send board blasts.  Click <a href="index.php?title=Special:Login">here to login</a>',
+	'boardblastlogintext'       => 'You must be logged in to send board blasts.',
 	'messagesenttitle'          => 'Messages Sent',
 	'boardblasttitle'          => 'Send Board Blast',
 	'boardblaststep1'          => 'Step 1 - Write Your Message',
@@ -20,7 +20,7 @@ $wgUserBoardMessages['en'] = array(
 	'boardlinkselectfriends'          => 'Select Friends',
 	'boardlinkunselectfriends'          => 'Unselect Friends',
 	'boardsendbutton'          => 'Send Board Blast',
-	'boardnofriends' 	=> 'You have no friends to send a message to! <a href="index.php?title=Special:InviteEmail">Add Some!</a>',
+	'boardnofriends' 	=> 'You have no friends to send a message to!',
 	'messagesentsuccess'	=> 'Your message was successfully sent',
 	'userboard_noexist' => 'The user you are trying to view does not exist.',
 	'userboard_yourboard' => 'Your Board',
@@ -39,9 +39,9 @@ $wgUserBoardMessages['en'] = array(
 	'userboard_messagetype' => 'Message Type',
 	'userboard_nextpage' => 'next',
 	'userboard_prevpage' => 'prev',
-	'userboard_nomessages' => 'No messages.  <a href="$1">Invite some</a> friends to talk to you!',
+	'userboard_nomessages' => 'No messages. ',
 	'userboard_sendbutton' => 'send',
-	'userboard_loggedout' => 'You must be <a href="$1">logged in</a> to post messages to other users.',
+	'userboard_loggedout' => 'You must be logged in to post messages to other users.',
 	'userboard_showingmessages' => 'Showing $2-$3 of {{PLURAL:$1|$1 Message|$1 Messages}}',
 	'message_received_subject' => '$1 wrote on your board on {{SITENAME}}',
 	'message_received_body' => 'Hi $1:
