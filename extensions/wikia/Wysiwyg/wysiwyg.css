@@ -31,3 +31,7 @@
 #wysiwygInfobox p {
 	margin: 0 5px 0 25px;
 }
+
+#wysiwygInfobox .bd input {
+	margin: 5px 5px 5px 25px;
+}

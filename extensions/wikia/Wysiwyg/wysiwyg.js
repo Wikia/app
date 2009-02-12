@@ -36,7 +36,7 @@ function wysiwygInitInSourceMode(src) {
 function wysiwygShowInfobox(header, body, labelOk, handlerOk) {
 		Dialog = new YAHOO.widget.SimpleDialog("wysiwygInfobox",
 		{
-			width: "350px",
+			width: "450px",
 			zIndex: 999,
 			effect: {effect: YAHOO.widget.ContainerEffect.FADE, duration: 0.25},
 			fixedcenter: true,
