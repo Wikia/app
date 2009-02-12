@@ -431,7 +431,7 @@ class DataProvider
 			while ( $row = $dbr->fetchObject($res) ) {
 				$user = User::newFromID( $row->rev_user );
 
-				if (!$user->isBlocked() && !$user->isBot() && $user->getUserPage()->exists() ) {
+				if (!$user->isBlocked() && !$user->isAllowed('bot') && $user->getUserPage()->exists() ) {
 					$article['url'] = $user->getUserPage()->getLocalUrl();
 					$article['text'] = $user->getName();
 					$results[] = $article;
