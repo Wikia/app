@@ -569,7 +569,10 @@ function Wysiwyg_SetRefId($type, $params, $addMarker = true, $returnId = false) 
 			$data['description'] =  str_replace(' wasHtml="1"', '', $data['description']);
 		}
 		$result = htmlspecialchars($result);
-		$result = "<input type=\"button\" refid=\"{$refId}\" _fck_type=\"{$type}\" value=\"{$result}\" title=\"{$result}\" class=\"wysiwygDisabled\" />";
+
+		// CSS class based on type of placeholder
+		$className = 'wysiwyg' . strtr(ucwords($type), array(':' => '', ' ' => ''));
+		$result = "<input type=\"button\" refid=\"{$refId}\" _fck_type=\"{$type}\" value=\"{$result}\" title=\"{$result}\" class=\"wysiwygDisabled {$className}\" />";
 
 		// macbre: use placeholders
 		// they will be replaced with <input> grey boxes
