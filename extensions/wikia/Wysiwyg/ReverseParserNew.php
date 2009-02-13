@@ -321,7 +321,7 @@ class ReverseParser {
 								$linesAfter++;
 							}
 						} else {
-							$linesBefore = 0;
+							$linesBefore = 2;
 							$linesAfter = 1;
 							$textContent = " ".trim($textContent)." ";
 						}
