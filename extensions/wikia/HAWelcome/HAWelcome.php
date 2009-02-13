@@ -62,13 +62,18 @@ class HAWelcomeJob extends Job {
 	 * @param integer $id job_id
 	 */
 	public function __construct( $title, $params, $id = 0 ) {
-		Wikia::log( __METHOD__, $params );
 		wfLoadExtensionMessages( "HAWelcome" );
 		parent::__construct( "HAWelcome", $title, $params, $id );
 		$user_id = $params[ "user_id" ];
+		$user_ip = $params[ "user_ip" ];
 
 		$this->mAnon = (bool )$params[ "is_anon" ];
-		$this->mUser = User::newFromId( $user_id );
+		if( $this->mAnon ) {
+			$this->mUser = User::newFromName( $user_ip, false );
+		}
+		else {
+			$this->mUser = User::newFromId( $user_id );
+		}
 	}
 
 	/**
@@ -80,11 +85,18 @@ class HAWelcomeJob extends Job {
 		global $wgUser, $wgDevelEnvironment;
 
 		wfProfileIn( __METHOD__ );
+
 		/**
 		 * overwrite $wgUser for ~~~~ expanding
 		 */
 		$tmpUser = $wgUser;
-		$wgUser  = User::newFromName( self::WELCOMEUSER );
+		$welcomer = trim( wfMsg( "welcome-user" ) );
+		if( $welcomer === "-" && $welcomer !== "@disabled" ) {
+			$wgUser  = User::newFromName( $welcomer );
+		}
+		else {
+			$wgUser  = User::newFromName( self::WELCOMEUSER );
+		}
 
 		if( $this->mUser && $this->mUser->getName() !== self::WELCOMEUSER ) {
 			/**
@@ -100,25 +112,26 @@ class HAWelcomeJob extends Job {
 
 				if( ! $talkArticle->exists() || $wgDevelEnvironment ) {
 					if( $this->mAnon ) {
-						$welcomeMsg = wfMsg( "hawelcome-message-anon", array(
+						$welcomeMsg = wfMsg( "welcome-message-anon", array(
 							sprintf("%s:%s", $this->title->getNsText(), $this->title->getText() ),
 							sprintf("%s:%s", $sysopPage->getNsText(), $sysopPage->getText() ),
 							$signature
 						));
 					}
 					else {
-						$welcomeMsg = wfMsg( "hawelcome-message-user", array(
+						$welcomeMsg = wfMsg( "welcome-message-user", array(
 							sprintf("%s:%s", $this->title->getNsText(), $this->title->getText() ),
 							sprintf("%s:%s", $sysopPage->getNsText(), $sysopPage->getText() ),
 							$signature
 						));
 					}
-					$talkArticle->doEdit( $welcomeMsg, wfMsg( "hawelcome-message-log" ) );
+					$talkArticle->doEdit( $welcomeMsg, wfMsg( "welcome-message-log" ) );
 				}
 			}
 		}
 
 		$wgUser = $tmpUser;
+		
 		wfProfileOut( __METHOD__ );
 
 		return true;
@@ -178,7 +191,8 @@ class HAWelcomeJob extends Job {
 		global $wgTitle, $wgUser, $wgDevelEnvironment, $wgCityId;
 
 		wfProfileIn( __METHOD__ );
-		if( trim( wfMsg( "hawelcome" ) ) !== "@disabled" ) {
+		$welcomer = trim( wfMsg( "welcome-user" ) );
+		if( $welcomer !== "@disabled" && $welcomer !== "-" ) {
 			/**
 			 * check if talk page for wgUser exists
 			 *
@@ -191,8 +205,9 @@ class HAWelcomeJob extends Job {
 					$welcomeJob = new HAWelcomeJob(
 						$wgTitle,
 						array(
-							"is_anon" => $wgUser->isAnon(),
-							"user_id" => $wgUser->getId(),
+							"is_anon"   => $wgUser->isAnon(),
+							"user_id"   => $wgUser->getId(),
+							"user_ip"   => wfGetIP(),
 							"user_name" => $wgUser->getName(),
 						)
 					);
