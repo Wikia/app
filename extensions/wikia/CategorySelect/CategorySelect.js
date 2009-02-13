@@ -55,7 +55,7 @@ function modifyCategoryDialog(data, handler) {
 		// return control to handler
 		handler(returnObject);
 
-	}, isDefault: true} ];
+	}} ];
 
 	Dialog.setHeader(data.caption);
 	Dialog.setBody(data.content);
@@ -63,6 +63,8 @@ function modifyCategoryDialog(data, handler) {
 
 	Dialog.render(document.body);
 	Dialog.show();
+	//focus input on displayed dialog
+	$('csInfoboxSortKey').focus();
 }
 
 function modifyCategory(e) {
@@ -74,34 +76,29 @@ function modifyCategory(e) {
 	modifyCategoryDialog({
 		'catId': catId,
 		'caption': csProvideCategoryCaption,
-		'content': '<label for="csInfoboxSortKey">' + csProvideCategoryText.replace('$1', categories[catId].category) + '</label>' + 
+		'content': '<label for="csInfoboxSortKey">' + csProvideCategoryText.replace('$1', categories[catId].category) + '</label>' +
 			'<input type="text" id="csInfoboxSortKey" value="'+escape(defaultSortkey)+'" />',
 		'save': csProvideCategorySave
 	},
 	function(data) {
 		YAHOO.log(data);
 
-		// TODO: do something :)
-		// ...
-
-	});
-/*
-	var sortkey = prompt(csProvideCategoryText.replace('$1', categories[catId].category), defaultSortkey);
-	if (sortkey != null) {
-		if (sortkey == wgTitle || sortkey == csDefaultSort) {
-			sortkey = '';
+		var sortkey = data['sortkey'];
+		if (sortkey != null) {
+			if (sortkey == wgTitle || sortkey == csDefaultSort) {
+				sortkey = '';
+			}
+			categories[catId].sortkey = sortkey;
 		}
-		categories[catId].sortkey = sortkey;
-	}
-	if (categories[catId].sortkey == '') {
-		oldClassName = 'CScontrolSorted';
-		newClassName = 'CScontrolSort';
-	} else {
-		oldClassName = 'CScontrolSort';
-		newClassName = 'CScontrolSorted';
-	}
-	Dom.replaceClass(e, oldClassName , newClassName);
-*/
+		if (categories[catId].sortkey == '') {
+			oldClassName = 'CScontrolSorted';
+			newClassName = 'CScontrolSort';
+		} else {
+			oldClassName = 'CScontrolSort';
+			newClassName = 'CScontrolSorted';
+		}
+		Dom.replaceClass(e, oldClassName , newClassName);
+	});
 }
 
 function replaceAddToInput(e) {
@@ -268,7 +265,7 @@ function moveElement(movedId, prevSibbId) {
 	} else {	//move left
 		if (prevSibbId != -1) {
 			newCat = newCat.concat(categories.slice(0, prevSibbId+1));
-		}		
+		}
 		newCat = newCat.concat(movedItem,
 			categories.slice(prevSibbId+1, movedId),
 			categories.slice(movedId+1));
