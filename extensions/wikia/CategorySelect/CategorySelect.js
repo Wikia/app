@@ -344,4 +344,17 @@ Event.onDOMReady(function() {
 	oAutoComp.itemSelectEvent.subscribe(submitAutoComplete);
 	oAutoComp.containerCollapseEvent.subscribe(collapseAutoComplete);
 	oAutoComp.containerExpandEvent.subscribe(expandAutoComplete);
+
+	// Init tooltip
+	var tooltip =  YAHOO.util.Dom.get('csTooltip');
+
+	if (tooltip) {
+		tooltip.style.display = 'block';
+		tooltip.style.top = ((jQuery('#csTooltip').height() + 8) * -1) + 'px';
+		YAHOO.util.Event.addListener('csTooltipClose', 'click', function(e) {
+			YAHOO.log('CS: closing tooltip');
+			YAHOO.util.Dom.get('csTooltip').style.display = 'none';
+			sajax_do_call('CategorySelectRemoveTooltip', [], function() {});
+		});
+	}
 });

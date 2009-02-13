@@ -321,10 +321,12 @@ function CategorySelectGenerateHTML($formId = '') {
 	$wgOut->addScript("<link rel=\"stylesheet\" type=\"text/css\" href=\"$wgExtensionsPath/wikia/CategorySelect/CategorySelect.css?$wgStyleVersion\" />");
 
 	$categories = is_null($wgCategorySelectMetaData) ? '' : CategorySelectChangeFormat($wgCategorySelectMetaData['categories'], 'array', 'wiki');
+	$tooltip = CategorySelectAddTooltip();
 
 	$result = '
 	<script type="text/javascript">document.write(\'<style type="text/css">#csWikitextContainer {display: none}</style>\');</script>
 	<div id="csMainContainer">
+		' . $tooltip . '
 		<div id="csSuggestContainer">
 			<div id="csHintContainer">' . wfMsg('categoryselect-suggest-hint') . '</div>
 		</div>
@@ -339,3 +341,28 @@ function CategorySelectGenerateHTML($formId = '') {
 
 	return $result;
 }
+
+/**
+ * Add tooltip on first usage of Category Select
+ *
+ * @author Maciej Brencz <macbre at wikia-inc.com>
+ */
+function CategorySelectAddTooltip() {
+
+	// TODO: add logic to check whether we should show tooltip
+	// ...
+	return '<div id="csTooltip">'.wfMsgExt('categoryselect-tooltip' , 'parse').'<span id="csTooltipClose">&nbsp;</span></div>';
+}
+
+/**
+ * Permanently remove tooltip
+ *
+ * @author Maciej Brencz <macbre at wikia-inc.com>
+ */
+function CategorySelectRemoveTooltip() {
+
+	// TODO: store in user settings
+	// ...
+	return new AjaxResponse('ok');
+}
+$wgAjaxExportList[] = 'CategorySelectRemoveTooltip';
