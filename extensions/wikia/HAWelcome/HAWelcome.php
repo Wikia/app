@@ -113,6 +113,18 @@ class HAWelcomeJob extends Job {
 						));
 					}
 					else {
+						/**
+						 * now create user page (if not exists of course)
+						 */
+						$userPage = $this->mUser->getUserPage();
+						if( $userPage ) {
+							$userArticle = new Article( $userPage, 0 );
+							if( ! $userArticle->exists() || $wgDevelEnvironment ) {
+								$welcomeMsg = wfMsg( "welcome-user-page" );
+								$userArticle->doEdit( $welcomeMsg, wfMsg( "welcome-message-log" ) );
+							}
+						}
+
 						$welcomeMsg = wfMsg( "welcome-message-user", array(
 							sprintf("%s:%s", $this->title->getNsText(), $this->title->getText() ),
 							sprintf("%s:%s", $sysopPage->getNsText(), $sysopPage->getText() ),
@@ -120,18 +132,6 @@ class HAWelcomeJob extends Job {
 						));
 					}
 					$talkArticle->doEdit( $welcomeMsg, wfMsg( "welcome-message-log" ) );
-
-					/**
-					 * now create user page (if not exists of course)
-					 */
-					$userPage = $this->mUser->getUserPage();
-					if( $userPage ) {
-						$userArticle = new Article( $userPage, 0 );
-						if( ! $userArticle->exists() || $wgDevelEnvironment ) {
-							$welcomeMsg = wfMsg( "welcome-user-page" );
-							$userArticle->doEdit( $welcomeMsg, wfMsg( "welcome-message-log" ) );
-						}
-					}
 				}
 			}
 		}
@@ -157,7 +157,7 @@ class HAWelcomeJob extends Job {
 		if( ! $this->mSysop instanceof User ) {
 
 			$sysop = trim( wfMsg( "welcome-user" ) );
-			if( $sysop !== "-" && $sysop !== "@latest" ) {
+			if( $sysop !== "-" && $sysop !== "@latest" && $sysop !== "@disabled" ) {
 				$this->mSysop = User::newFromName( $sysop );
 			}
 			else {
