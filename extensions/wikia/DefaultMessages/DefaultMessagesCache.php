@@ -176,7 +176,7 @@ class DefaultMessagesCache {
 	 *
 	 * @param $code String: language to which load messages
 	 */
-	function load( $code = false ) {
+	function load( $code = false, $useDB ) {
 		if ( !$this->mUseCache ) {
 			return true;
 		}
@@ -238,7 +238,7 @@ class DefaultMessagesCache {
 
 		# (3)
 		# Nothing in caches... so we need create one and store it in caches
-		if ( !$success ) {
+		if ( !$success && $useDB) {
 			$where[] = 'cache is empty';
 			$where[] = 'loading from database';
 
@@ -423,12 +423,12 @@ class DefaultMessagesCache {
 	 * @param $title String: Message cache key with initial uppercase letter.
 	 * @param $code String: code denoting the language to try.
 	 */
-	function get( $title, $code ) {
+	function get( $title, $code, $useDB=true ) {
 		$type = false;
 		$message = false;
 
 		if ( $this->mUseCache ) {
-			$this->load( $code );
+			$this->load( $code, $useDB );
 			if (isset( $this->mCache[$code][$title] ) ) {
 				$entry = $this->mCache[$code][$title];
 				$type = substr( $entry, 0, 1 );
@@ -466,29 +466,31 @@ class DefaultMessagesCache {
 			}
 		}
 
-		# Try loading it from the DB
-		global $wgDefaultMessagesDB;
-		$t = Title::makeTitle( NS_MEDIAWIKI, $title );
-		$db = wfGetDB( DB_SLAVE );
-		$row = $db->selectRow( array( "`$wgDefaultMessagesDB`.`page`", "`$wgDefaultMessagesDB`.`revision`", "`$wgDefaultMessagesDB`.`text`" ),
-			array( '*' ),
-			array(
-				'page_namespace' => $t->getNamespace(),
-				'page_title' => $t->getDBkey(),
-				'page_latest = rev_id',
-				'old_id = rev_text_id'
-			) );
-		if( $row ) {
-			$message = Revision::getRevisionText( $row );
-			if ($this->mUseCache) {
-				$this->mCache[$code][$title] = ' ' . $message;
-				$this->mMemc->set( $titleKey, $message, $this->mExpiry );
+		if( $useDB ) {
+			// Try loading it from the DB
+			global $wgDefaultMessagesDB;
+			$t = Title::makeTitle( NS_MEDIAWIKI, $title );
+			$db = wfGetDB( DB_SLAVE );
+			$row = $db->selectRow( array( "`$wgDefaultMessagesDB`.`page`", "`$wgDefaultMessagesDB`.`revision`", "`$wgDefaultMessagesDB`.`text`" ),
+					array( '*' ),
+					array(
+						'page_namespace' => $t->getNamespace(),
+						'page_title' => $t->getDBkey(),
+						'page_latest = rev_id',
+						'old_id = rev_text_id'
+					     ) );
+			if( $row ) {
+				$message = Revision::getRevisionText( $row );
+				if ($this->mUseCache) {
+					$this->mCache[$code][$title] = ' ' . $message;
+					$this->mMemc->set( $titleKey, $message, $this->mExpiry );
+				}
+			} else {
+				// Negative caching
+				// Use some special text instead of false, because false gets converted to '' somewhere
+				$this->mMemc->set( $titleKey, '!NONEXISTENT', $this->mExpiry );
+				$this->mCache[$code][$title] = false;
 			}
-		} else {
-			# Negative caching
-			# Use some special text instead of false, because false gets converted to '' somewhere
-			$this->mMemc->set( $titleKey, '!NONEXISTENT', $this->mExpiry );
-			$this->mCache[$code][$title] = false;
 		}
 		return $message;
 	}
