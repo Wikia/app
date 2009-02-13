@@ -90,13 +90,7 @@ class HAWelcomeJob extends Job {
 		 * overwrite $wgUser for ~~~~ expanding
 		 */
 		$tmpUser = $wgUser;
-		$welcomer = trim( wfMsg( "welcome-user" ) );
-		if( $welcomer === "-" && $welcomer !== "@disabled" ) {
-			$wgUser  = User::newFromName( $welcomer );
-		}
-		else {
-			$wgUser  = User::newFromName( self::WELCOMEUSER );
-		}
+		$wgUser  = User::newFromName( self::WELCOMEUSER );
 
 		if( $this->mUser && $this->mUser->getName() !== self::WELCOMEUSER ) {
 			/**
@@ -131,7 +125,7 @@ class HAWelcomeJob extends Job {
 		}
 
 		$wgUser = $tmpUser;
-		
+
 		wfProfileOut( __METHOD__ );
 
 		return true;
@@ -149,23 +143,30 @@ class HAWelcomeJob extends Job {
 		wfProfileIn( __METHOD__ );
 
 		if( ! $this->mSysop instanceof User ) {
-			$dbr = wfGetDB( DB_SLAVE );
-			$res = $dbr->query("
-				SELECT rev_user, rev_timestamp
-				FROM revision
-				WHERE revision.rev_user IN (
-					SELECT ug_user
-					FROM user_groups
-					WHERE ug_group IN ( 'staff', 'sysop', 'helper')
-				)
-				ORDER BY rev_timestamp DESC
-				LIMIT 1",
-				__METHOD__
-			);
-			$row = $dbr->fetchObject( $res );
-			$dbr->freeResult( $res );
 
-			$this->mSysop = User::newFromId( $row->rev_user );
+			$sysop = trim( wfMsg( "welcome-user" ) );
+			if( $sysop !== "-" && $sysop !== "@latest" ) {
+				$this->mSysop = User::newFromName( $sysop );
+			}
+			else {
+				$dbr = wfGetDB( DB_SLAVE );
+				$res = $dbr->query("
+					SELECT rev_user, rev_timestamp
+					FROM revision
+					WHERE revision.rev_user IN (
+						SELECT ug_user
+						FROM user_groups
+						WHERE ug_group IN ( 'staff', 'sysop', 'helper')
+					)
+					ORDER BY rev_timestamp DESC
+					LIMIT 1",
+					__METHOD__
+				);
+				$row = $dbr->fetchObject( $res );
+				$dbr->freeResult( $res );
+
+				$this->mSysop = User::newFromId( $row->rev_user );
+			}
 		}
 
 		wfProfileOut( __METHOD__ );
