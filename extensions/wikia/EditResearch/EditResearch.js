@@ -4,14 +4,7 @@ var research_page_limit = 10;
 
 jQuery("#research_box").ready(function() {
 	jQuery("#research_box").mouseup(function() {
-		var sel = "";
-		if(document.getSelection) {
-			sel = document.getSelection();
-		} else if(document.selection) { 
-			sel = document.selection.createRange().text;
-		} else if(window.getSelection) {
-			sel = window.getSelection();
-		}
+		sel = getSelection()
 		if(sel){
 			insertTags("","", sel)
 		}
@@ -24,6 +17,27 @@ jQuery("#research_box").ready(function() {
 	});
 });
 	
+jQuery("#firstHeading").ready(function() {
+	jQuery("#firstHeading").mouseup(function() {
+		sel = getSelection()
+		if(sel){
+			document.getElementById("search_input").value = sel
+			research();
+		}
+	});
+});
+
+function getSelection(){
+	var sel = "";
+	if(document.getSelection) {
+		sel = document.getSelection();
+	} else if(document.selection) { 
+		sel = document.selection.createRange().text;
+	} else if(window.getSelection) {
+		sel = window.getSelection();
+	}
+	return sel;
+}
 
 function research(){
 	search = document.getElementById("search_input").value;
@@ -58,10 +72,13 @@ function research_paginate(dir){
 function research_wikipedia_article( article ){
 	injectSpinner( document.getElementById("research_box"), "wikipedia");
 	
+	//sometimes Wikipedia links have a hash to point to a section...need to strip that out for the API
+	article = article.replace(/#.*/g,"")
+	
 	document.getElementById("research_box").innerHTML = ""
 	document.getElementById("research_box").style.overflow="";
 	url = wikipedia_server + "/w/api.php?action=parse&page=" + article + "&format=json&callback=?";
-
+	
 	jQuery.getJSON( url, "", function( data ){
 		html = data.parse.text["*"];
 		
