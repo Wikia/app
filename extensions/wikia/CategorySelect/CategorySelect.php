@@ -349,9 +349,18 @@ function CategorySelectGenerateHTML($formId = '') {
  */
 function CategorySelectAddTooltip() {
 
-	// TODO: add logic to check whether we should show tooltip
-	// ...
-	return '<div id="csTooltip">'.wfMsgExt('categoryselect-tooltip' , 'parse').'<span id="csTooltipClose">&nbsp;</span></div>';
+	// logic to check whether we should show tooltip
+	global $wgUser;
+
+	if ($wgUser->isAnon()) {
+		// don't show for anon user
+		$closed = true;
+	}
+	else {
+		$closed = $wgUser->getOption('category-select-closed', 0) ? true : false;
+	}
+
+	return ($closed ? '' : '<div id="csTooltip">'.wfMsgExt('categoryselect-tooltip' , 'parse').'<span id="csTooltipClose">&nbsp;</span></div>');
 }
 
 /**
@@ -361,8 +370,20 @@ function CategorySelectAddTooltip() {
  */
 function CategorySelectRemoveTooltip() {
 
-	// TODO: store in user settings
-	// ...
+	// store in user settings
+	global $wgUser;
+
+	if ($wgUser->isAnon()) {
+		return;
+	}
+
+	$wgUser->setOption('category-select-closed', 1);
+	$wgUser->saveSettings();
+
+	// commit
+	$dbw = wfGetDB( DB_MASTER );
+	$dbw->commit();
+
 	return new AjaxResponse('ok');
 }
 $wgAjaxExportList[] = 'CategorySelectRemoveTooltip';

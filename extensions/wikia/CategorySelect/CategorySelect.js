@@ -352,7 +352,6 @@ Event.onDOMReady(function() {
 		tooltip.style.display = 'block';
 		tooltip.style.top = ((jQuery('#csTooltip').height() + 8) * -1) + 'px';
 		YAHOO.util.Event.addListener('csTooltipClose', 'click', function(e) {
-			YAHOO.log('CS: closing tooltip');
 			YAHOO.util.Dom.get('csTooltip').style.display = 'none';
 			sajax_do_call('CategorySelectRemoveTooltip', [], function() {});
 		});
