@@ -805,13 +805,13 @@ echo AnalyticsEngine::track('QuantServe', AnalyticsEngine::EVENT_PAGEVIEW);
 		});
 		MagicAnswer.getAnswer("<?php echo addslashes($this->data['title'])?>", "magicAnswerCallback");
 		function magicAnswerCallback(result){
-		        if (console.dir) { console.dir(result); }
+		        //if (console.dir) { console.dir(result); }
 		        try {
 				jQuery("#magicAnswerBox").html(result.all.questions[0]["ChosenAnswer"]);
 				jQuery("#magicAnswerField").val(result.all.questions[0]["Subject"]);
 				jQuery('#magicAnswer').show();
         		} catch (e){
-				console.dir(e);
+			//	console.dir(e);
 			}
 		}
 		</script>
