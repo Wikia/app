@@ -34,26 +34,37 @@ function wysiwygInitInSourceMode(src) {
 
 // render and show YUI infobox
 function wysiwygShowInfobox(header, body, labelOk, handlerOk) {
-		Dialog = new YAHOO.widget.SimpleDialog("wysiwygInfobox",
-		{
-			width: "450px",
-			zIndex: 999,
-			effect: {effect: YAHOO.widget.ContainerEffect.FADE, duration: 0.25},
-			fixedcenter: true,
-			modal: true,
-			draggable: true,
-			close: false
-		});
+	Dialog = new YAHOO.widget.SimpleDialog("wysiwygInfobox",
+	{
+		width: "450px",
+		zIndex: 999,
+		effect: {effect: YAHOO.widget.ContainerEffect.FADE, duration: 0.25},
+		fixedcenter: true,
+		modal: true,
+		draggable: true,
+		close: false
+	});
 
-		var buttons = [ { text: labelOk, handler: handlerOk, isDefault: true} ];
+	var buttons = [ { text: labelOk, handler: handlerOk, isDefault: true} ];
 
-		Dialog.setHeader(header);
-		Dialog.setBody(body);
-		Dialog.cfg.setProperty('icon', YAHOO.widget.SimpleDialog.ICON_INFO);
-		Dialog.cfg.queueProperty("buttons", buttons);
+	Dialog.setHeader(header);
+	Dialog.setBody(body);
+	Dialog.cfg.setProperty('icon', YAHOO.widget.SimpleDialog.ICON_INFO);
+	Dialog.cfg.queueProperty("buttons", buttons);
 
-		Dialog.render(document.body);
-		Dialog.show();
+	Dialog.render(document.body);
+	Dialog.show();
+
+	// make link to open in new window
+	links = document.getElementById('wysiwygInfobox').getElementsByTagName('a');
+
+	for (i=0; i<links.length; i++) {
+		links[i].onclick = function(e) {
+			var newWindow = window.open(this.getAttribute('href'), '_blank');
+			newWindow.focus();
+			return false;
+		}
+	}
 }
 
 // show first time edit message
