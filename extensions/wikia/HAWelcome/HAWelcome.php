@@ -120,6 +120,18 @@ class HAWelcomeJob extends Job {
 						));
 					}
 					$talkArticle->doEdit( $welcomeMsg, wfMsg( "welcome-message-log" ) );
+
+					/**
+					 * now create user page (if not exists of course)
+					 */
+					$userPage = $this->mUser->getUserPage();
+					if( $userPage ) {
+						$userArticle = new Article( $userPage, 0 );
+						if( ! $userArticle->exists() || $wgDevelEnvironment ) {
+							$welcomeMsg = wfMsg( "welcome-user-page" );
+							$userArticle->doEdit( $welcomeMsg, wfMsg( "welcome-message-log" ) );
+						}
+					}
 				}
 			}
 		}
