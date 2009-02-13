@@ -16,17 +16,13 @@ class VideoEmbedTool {
 		return $tmpl->execute("main");
 	}
 
-	function loadLicense() {
-		global $wgRequest, $IP;
-		$license = $wgRequest->getText('license');
-		require_once($IP . '/includes/specials/SpecialUpload.php');
-		return preg_replace( '/(<a[^>]+)/', '$1 target="_new" ', UploadForm::ajaxGetLicensePreview( $license ) );		
-	}
 
 	function recentlyUploaded() {
 		global $IP, $wmu;
 		require_once($IP . '/includes/SpecialPage.php');
 		require_once($IP . '/includes/specials/SpecialNewimages.php');
+		// this needs to be revritten, since we will not display recently uploaded, but embedded
+
 		$isp = new IncludableSpecialPage('Newimages', '', 1, 'wfSpecialNewimages', $IP . '/includes/specials/SpecialNewimages.php');
 		wfSpecialNewimages(8, $isp);
 		$tmpl = new EasyTemplate(dirname(__FILE__).'/templates/');
@@ -41,22 +37,46 @@ class VideoEmbedTool {
 		$page = $wgRequest->getVal('page');
 		$sourceId = $wgRequest->getVal('sourceId');
 
-		if($sourceId == 1) {
-			require_once($IP.'/extensions/3rdparty/ImportFreeImages/phpFlickr-2.2.0/phpFlickr.php');
-			$flickrAPI = new phpFlickr('bac0bd138f5d0819982149f67c0ca734');
-			$flickrResult = $flickrAPI->photos_search(array('tags' => $query, 'tag_mode' => 'all', 'page' => $page, 'per_page' => 8, 'license' => '4,5', 'sort' => 'interestingness-desc'));
+		if($sourceId == 0) { // metacafe
+			$page ? $start = ($page - 1) * 8 : $start = 0;
+			$query = str_replace(" ", "+", $query);
+			$file = @file_get_contents( "http://www.metacafe.com/api/videos?vq=" . $query, FALSE );
+                                if ($file) {
+                                        $doc = new DOMDocument;
+                                        @$doc->loadXML( $file );
+					$items = $doc->getElementsByTagName('item');
+					$metacafeResult = array();
+					$preResult = array();
+
+					$metacafeResult['page'] = $page;
+					$count = 0;
+					foreach( $items as $item ) {
+						$links = split( "/", $item->getElementsByTagName('link')->item(0)->textContent );
+						$link = $links[count( $links ) -2];
+						$preResult[] = array(
+							'provider' => 'metacafe',
+							'title' => $item->getElementsByTagName('title')->item(0)->textContent,
+							'id' => $item->getElementsByTagName('id')->item(0)->textContent,
+							'link' => $link,
+						);
+						$count++;
+					}
+					$metacafeResult['total'] = $count;
+					$metacafeResult['pages'] = ceil( $metacafeResult['total'] / 8 );
+                                }
+			$metacafeResult['item'] = array_slice( $preResult, $start, 8 );
 			$tmpl = new EasyTemplate(dirname(__FILE__).'/templates/');
-			$tmpl->set_vars(array('results' => $flickrResult, 'query' => addslashes($query)));
-			return $tmpl->execute('results_flickr');
-		} else if($sourceId == 0) {
+			$tmpl->set_vars(array('results' => $metacafeResult, 'query' => addslashes($query)));
+			return $tmpl->execute('results_metacafe');
+		} else if($sourceId == 1) { // this wiki, to be done later
 			$db =& wfGetDB(DB_SLAVE);
-			$res = $db->query("SELECT count(*) as count FROM `page` WHERE lower(page_title) LIKE '%".strtolower($db->escapeLike($query))."%' AND page_namespace = 6 ORDER BY page_title ASC LIMIT 8");
+			$res = $db->query("SELECT count(*) as count FROM `page` WHERE lower(page_title) LIKE '%".strtolower($db->escapeLike($query))."%' AND page_namespace = 400 ORDER BY page_title ASC LIMIT 8");
 			$row = $db->fetchRow($res);
 			$results = array();
 			$results['total'] = $row['count'];
 			$results['pages'] = ceil($row['count']/8);
 			$results['page'] = $page;
-			$res = $db->query("SELECT page_title FROM `page` WHERE lower(page_title) LIKE '%".strtolower($db->escapeLike($query))."%' AND page_namespace = 6 ORDER BY page_title ASC LIMIT 8 OFFSET ".($page*8-8));
+			$res = $db->query("SELECT page_title FROM `page` WHERE lower(page_title) LIKE '%".strtolower($db->escapeLike($query))."%' AND page_namespace = 400 ORDER BY page_title ASC LIMIT 8 OFFSET ".($page*8-8));
 			while($row = $db->fetchObject($res)) {
 				$results['images'][] = array('title' => $row->page_title);
 			}
@@ -67,107 +87,43 @@ class VideoEmbedTool {
 	}
 
 	function chooseImage() {
-
 		global $wgRequest, $wgUser, $IP;
+
 		$itemId = $wgRequest->getVal('itemId');
 		$sourceId = $wgRequest->getInt('sourceId');
+		$itemLink = $wgRequest->getVal('itemLink') . '.swf';
+		$itemTitle = $wgRequest->getVal('itemTitle');
+		require_once( "$IP/extensions/wikia/WikiaVideo/VideoPage.php" );
 
-		// todo this is unused now, since there is currently now search
-		// to be applied later
+		switch( $sourceId ) {
+			case 0: //metacafe
+				$tempname = 'Temp_video_'.$wgUser->getID().'_'.rand(0, 1000);
+				$title = Title::makeTitle( NS_VIDEO, $tempname );
+				$video = new VideoPage( $title );
+
+				$video->loadFromPars( VideoPage::V_METACAFE, $itemId, array( $itemLink ) );
+				$video->setName( $tempname );
+				$props['oname'] = '';
+				$props['provider'] = VideoPage::V_METACAFE;
+				$props['id'] = $itemId;
+				$props['vname'] = $itemTitle;
+				$props['metadata'] = $itemLink;
+				$props['code'] = $video->getEmbedCode( VIDEO_PREVIEW, true );
+				break;
+			default:
+				break;
+		}
 
 		return $this->detailsPage($props);
 	}
 
-	function checkImage() {
-		global $IP, $wgRequest;
-
-		$mFileSize = $wgRequest->getFileSize( 'wpUploadFile' );
-		$mSrcName = stripslashes($wgRequest->getFileName( 'wpUploadFile' ));
-		$filtered = wfStripIllegalFilenameChars( $mSrcName );
-		$form = new UploadForm( $wgRequest, '' );
-
-		// no filename or zero size
-		if( trim( $mSrcName ) == '' || empty( $mFileSize ) ) {
-			return UploadForm::EMPTY_FILE;
-		}
-
-		//illegal filename
-		$nt = Title::makeTitleSafe( NS_IMAGE, $filtered );
-		if( is_null( $nt ) ) {
-			return UploadForm::ILLEGAL_FILENAME;
-		}
-
-		// extensions check
-		list( $partname, $ext ) = $form->splitExtensions( $filtered );
-
-		if( count( $ext ) ) {
-			$finalExt = $ext[count( $ext ) - 1];
-		} else {
-			$finalExt = '';
-		}
-
-		// for more than one "extension"
-		if( count( $ext ) > 1 ) {
-			for( $i = 0; $i < count( $ext ) - 1; $i++ )
-				$partname .= '.' . $ext[$i];
-		}
-
-		if( strlen( $partname ) < 1 ) {
-			return UploadForm::MIN_LENGHT_PARTNAME;
-		}
-
-		$form->mFileProps = File::getPropsFromPath( $form->mTempPath, $finalExt );
-		$form->checkMacBinary();
-		$veri = $form->verify( $form->mTempPath, $finalExt );
-
-		if( $veri !== true ) { //it's a wiki error...
-//			$resultDetails = array( 'veri' => $veri );
-			return UploadForm::VERIFICATION_ERROR;
-		}
-
-		global $wgCheckFileExtensions, $wgStrictFileExtensions;
-		global $wgFileExtensions, $wgFileBlacklist;
-		if ($finalExt == '') {
-			return UploadForm::FILETYPE_MISSING;
-		} elseif ( $form->checkFileExtensionList( $ext, $wgFileBlacklist ) ||
-				($wgCheckFileExtensions && $wgStrictFileExtensions &&
-					!$form->checkFileExtension( $finalExt, $wgFileExtensions ) ) ) {
-			return UploadForm::FILETYPE_BADTYPE;
-		}
-
-		if(!wfRunHooks('WikiaMiniUpload:BeforeProcessing', $mSrcName)) {
-			wfDebug( "Hook 'WikiaMiniUpload:BeforeProcessing' broke processing the file." );
-			return UploadForm::VERIFICATION_ERROR;
-		}
-
-		return UploadForm::SUCCESS;
-	}
-
-	function translateError ( $error ) {
-		switch( $error ) {
-			case UploadForm::SUCCESS:
-				return false;
-			case UploadForm::EMPTY_FILE:
-				return wfMsg( 'emptyfile' );
-			case UploadForm::MIN_LENGHT_PARTNAME:
-				return wfMsg( 'minlength1' );
-			case UploadForm::ILLEGAL_FILENAME:
-				return wfMsg( 'illegalfilename' );
-			case UploadForm::FILETYPE_MISSING:
-				return wfMsg( 'filetype-missing' );
-			case UploadForm::FILETYPE_BADTYPE:
-				return wfMsg( 'filetype-bad-extension' );
-			case UploadForm::VERIFICATION_ERROR:
-				return "File type verification error!" ;
-			default:
-				return false;
-		}
-	}
-
 	function insertVideo() {
-		global $IP, $wgRequest, $wgUser;
+		global $IP, $wgRequest, $wgUser, $wgTitle;
 		require_once( "$IP/extensions/wikia/WikiaVideo/VideoPage.php" );
-		$url = $wgRequest->getVal( 'wpVideoEmbedUrl' );			
+
+		$ns = $wgTitle->getNamespace();
+
+		$url = $wgRequest->getVal( 'wpVideoEmbedUrl' );
 		$tempname = 'Temp_video_'.$wgUser->getID().'_'.rand(0, 1000);
 		$title = Title::makeTitle( NS_VIDEO, $tempname );
 		$video = new VideoPage( $title );
@@ -177,14 +133,20 @@ class VideoEmbedTool {
 			header('X-screen-type: error');
 			return $this->loadMain( wfMsg( 'vet-bad-url' ) );
 		}
-			
+
+		if( !$video->checkIfVideoExists() ) {
+			header('X-screen-type: error');
+			return $this->loadMain( wfMsg( 'vet-non-existing' ) );
+		}
+
 		$props['provider'] = $video->getProvider();
 		$props['id'] = $video->getVideoId();
+		$props['vname'] = $video->getVideoName();
 		$data = $video->getData();
 		if (is_array( $data ) ) {
 			$props['metadata'] = implode( ",", $video->getData() );
 		} else {
-			$props['metadata'] = '';		
+			$props['metadata'] = '';
 		}
 		$props['code'] = $video->getEmbedCode( VIDEO_PREVIEW );
 		$props['oname'] = '';
@@ -196,7 +158,7 @@ class VideoEmbedTool {
                 global $wgRequest, $wgUser, $wgContLang, $IP;
                 require_once( "$IP/extensions/wikia/WikiaVideo/VideoPage.php" );
 
-                $name = $wgRequest->getVal('name');		
+                $name = $wgRequest->getVal('name');
 		$title = Title::makeTitle( NS_VIDEO, $name );
 		$video = new VideoPage( $title );
 		$video->load();
@@ -206,7 +168,7 @@ class VideoEmbedTool {
 	function detailsPage($props) {
 		$tmpl = new EasyTemplate(dirname(__FILE__).'/templates/');
 
-		$tmpl->set_vars(array('props' => $props));	
+		$tmpl->set_vars(array('props' => $props));
 		return $tmpl->execute('details');
 	}
 
@@ -224,7 +186,7 @@ class VideoEmbedTool {
 		}
 
 		$title = Title::makeTitle( NS_VIDEO, $name );
-					
+
 		$extra = 0;
 		$metadata = array();
 		while( '' != $wgRequest->getVal( 'metadata' . $extra ) ) {
@@ -242,7 +204,7 @@ class VideoEmbedTool {
 				$title = Title::makeTitleSafe(NS_VIDEO, $name);
 				if(is_null($title)) {
 					header('X-screen-type: error');
-					return wfMsg ( 'wmu-filetype-incorrect' ); 
+					return wfMsg ( 'wmu-filetype-incorrect' );
 				}
 				if($title->exists()) {
 					if($type == 'overwrite') {
@@ -259,15 +221,15 @@ class VideoEmbedTool {
 
 						$video = new VideoPage( $title );
 						if ($video instanceof VideoPage) {
-							$video->loadFromPars( $provider, $id, $metadata );					
+							$video->loadFromPars( $provider, $id, $metadata );
 							$video->setName( $name );
-							$video->save();					
+							$video->save();
 						}
 					} else if($type == 'existing') {
 						header('X-screen-type: existing');
-						$title = Title::makeTitle( NS_VIDEO, $name );						
+						$title = Title::makeTitle( NS_VIDEO, $name );
 						$video = new VideoPage( $title );
-						
+
 						$props = array();
 						$video->load();
 						$props['provider'] = $video->getProvider();
@@ -290,7 +252,7 @@ class VideoEmbedTool {
 										'name' => $name,
 										'id' => $id,
 										'provider' => $provider,
-										'metadata' => $metadata,	
+										'metadata' => $metadata,
 									      )
 								       );
 							return $tmpl->execute('conflict');
@@ -312,7 +274,7 @@ class VideoEmbedTool {
 					if ($video instanceof VideoPage) {
 						$video->loadFromPars( $provider, $id, $metadata );
 						$video->setName( $name );
-						$video->save();					
+						$video->save();
 					}
 				}
 			}
@@ -348,12 +310,6 @@ class VideoEmbedTool {
 		$tmpl = new EasyTemplate(dirname(__FILE__).'/templates/');
 		$tmpl->set_vars(array('tag' => $tag));
 		return $tmpl->execute('summary');
-	}
-
-	function clean() {
-		global $wgRequest;
-		$file = new FakeLocalFile(Title::newFromText($wgRequest->getVal('mwname'), 6), RepoGroup::singleton()->getLocalRepo());
-		$file->delete('');
 	}
 }
 

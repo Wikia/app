@@ -12,15 +12,31 @@ if(!defined('MEDIAWIKI')) {
 $wgExtensionCredits['other'][] = array(
         'name' => 'Video Embed Tool',
         'author' => 'Bartek Łapiński, Inez Korczyński',
-	'version' => '0.51',
+	'version' => '0.70',
 );
 
 $dir = dirname(__FILE__).'/';
 
 define( 'VIDEO_PREVIEW', 350 );
 
-$wgExtraNamespaces[400] = "Video";
-$wgExtraNamespaces[401] = "Video_talk";
+switch( $wgLanguageCode ) {
+
+/*
+        case "pl" :
+        $wgExtraNamespaces[400] = 'Wideo';
+        $wgExtraNamespaces[401] = 'Dyskusja_wideo';
+
+        $wgNamespaceAliases['Video'] = 400;
+        $wgNamespaceAliases['Video_talk'] = 401;
+        break;
+*/
+        case "en" :
+	default :
+		$wgExtraNamespaces[400] = "Video";
+		$wgExtraNamespaces[401] = "Video_talk";
+		break;
+}
+
 require_once( "$IP/extensions/wikia/WikiaVideo/WikiaVideo.php" );
 
 #--- register special page (MW 1.1x way)
@@ -28,11 +44,66 @@ if ( !function_exists( 'extAddSpecialPage' ) ) {
     require( "$IP/extensions/ExtensionFunctions.php" );
 }
 
-//extAddSpecialPage( dirname(__FILE__) . '/QuickVideoAdd_body.php', 'QuickVideoAdd', 'QuickVideoAddForm' );
+$wgExtensionMessagesFiles['WikiaVideoAdd'] = dirname(__FILE__) . '/WikiaVideoAdd.i18n.php';
+extAddSpecialPage( dirname(__FILE__) . '/WikiaVideoAdd_body.php', 'WikiaVideoAdd', 'WikiaVideoAddForm' );
 
 $wgExtensionFunctions[] = "VETSetupHook";
 $wgExtensionMessagesFiles['VideoEmbedTool'] = $dir.'/VideoEmbedTool.i18n.php';
 $wgHooks['EditPage::showEditForm:initial2'][] = 'VETSetup';
+$wgHooks['WikiaVideo::View:RedLink'][] = 'VETWIkiaVideoRedLink';
+$wgHooks['WikiaVideo::View:BlueLink'][] = 'VETWIkiaVideoBlueLink';
+
+function VETWikiaVideoBlueLink() {
+        global $wgOut, $wgStylePath, $wgExtensionsPath, $wgStyleVersion, $wgHooks, $wgUser, $wgArticlePath, $wgContLang, $wgTitle;
+
+	//display the link for "replacing the video"
+	$special = $wgContLang->getFormattedNsText( NS_SPECIAL );
+	$url = $wgArticlePath;
+	$name = $wgTitle->getDBKey();
+	if( false !== strpos( '?', $wgArticlePath ) ) {
+		$url = str_replace( '$1', $special . ':WikiaVideoAdd&name=' . $name, $url );
+	} else {
+		$url = str_replace( '$1', $special . ':WikiaVideoAdd?name=' . $name, $url );		
+	}
+
+	$s = '<br/><a id="VideoEmbedReplace" href="' . $url . '">' . wfMsg( 'wikiavideo-replace' ) . '<a/><br/><br/>';
+	$wgOut->addHTML( $s );
+
+        if(get_class($wgUser->getSkin()) == 'SkinMonaco') {
+                wfLoadExtensionMessages('VideoEmbedTool');
+                $wgHooks['ExtendJSGlobalVars'][] = 'VETSetupVars';
+                $wgOut->addScript('<script type="text/javascript" src="'.$wgStylePath.'/common/yui_2.5.2/slider/slider-min.js?'.$wgStyleVersion.'"></script>');
+                $wgOut->addScript('<script type="text/javascript" src="'.$wgExtensionsPath.'/wikia/VideoEmbedTool/js/VET.js?'.$wgStyleVersion.'"></script>');
+                $wgOut->addScript('<link rel="stylesheet" type="text/css" href="'.$wgExtensionsPath.'/wikia/VideoEmbedTool/css/VET.css?'.$wgStyleVersion.'" />');
+        }
+	return true;
+}
+
+function VETWikiaVideoRedLink() {
+        global $wgOut, $wgStylePath, $wgExtensionsPath, $wgStyleVersion, $wgHooks, $wgUser, $wgContLang, $wgTitle, $wgArticlePath;
+
+	//display the link for "adding the video"
+	$special = $wgContLang->getFormattedNsText( NS_SPECIAL );
+	$url = $wgArticlePath;
+	$name = $wgTitle->getDBKey();
+	if( false !== strpos( '?', $wgArticlePath ) ) {
+		$url = str_replace( '$1', $special . ':WikiaVideoAdd&name=' . $name, $url );
+	} else {
+		$url = str_replace( '$1', $special . ':WikiaVideoAdd?name=' . $name, $url );		
+	}
+	
+	$s = '<br/><a id="VideoEmbedCreate" href="' . $url . '">' . wfMsg( 'wikiavideo-create' ) . '<a/><br/><br/>';
+	$wgOut->addHTML( $s );
+
+        if(get_class($wgUser->getSkin()) == 'SkinMonaco') {
+                wfLoadExtensionMessages('VideoEmbedTool');
+                $wgHooks['ExtendJSGlobalVars'][] = 'VETSetupVars';
+                $wgOut->addScript('<script type="text/javascript" src="'.$wgStylePath.'/common/yui_2.5.2/slider/slider-min.js?'.$wgStyleVersion.'"></script>');
+                $wgOut->addScript('<script type="text/javascript" src="'.$wgExtensionsPath.'/wikia/VideoEmbedTool/js/VET.js?'.$wgStyleVersion.'"></script>');
+                $wgOut->addScript('<link rel="stylesheet" type="text/css" href="'.$wgExtensionsPath.'/wikia/VideoEmbedTool/css/VET.css?'.$wgStyleVersion.'" />');
+        }
+	return true;
+}
 
 function VETSetupHook() {
 	global $wgParser;		
@@ -75,9 +146,15 @@ function VETParserHook( $input, $argv, $parser ) {
 	$video = new VideoPage( $title );
 	$video->load();
 
-        if (!empty($argv['width']) && settype($argv['width'], 'integer') && ($width_max >= $argv['width']))
-        {
-                $width = $argv['width'];
+	if (!empty($argv['width']) && settype($argv['width'], 'integer') && ($width_max >= $argv['width'])) {
+		$width = $argv['width'];
+	}
+
+	global $wgVideoLinks;
+	$dbk = ":" . $title->getDBkey();
+        if ( !isset( $wgVideoLinks[$dbk] ) ) {
+                $id = $title->getArticleID();
+                $wgVideoLinks[$dbk] = 1;
         }
 
 	$output = $video->generateWindow( $align, $width, $caption, $thumb );

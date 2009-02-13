@@ -6,6 +6,7 @@
 }
 #VideoEmbedBorder {
 	background-color: #000;
+	border 1px solid #FFF;
 	filter: alpha(opacity=60);
 	height: 505px;
 	left: 0;
@@ -16,13 +17,18 @@
 }
 
 #VideoEmbedUrl {
-	width: 460px;
-	padding: 6px;
+	width: 260px;
+	padding: 2px;
+	margin-left: 40px;
 	font-family: sans-serif;			
 }
 
+#VideoEmbedName {
+	width: 315px;	
+}
+
 #VideoEmbedUrlSubmit {
-	padding: 6px;
+	padding: 2px;
 }
 
 #VideoEmbedSearch label {
@@ -60,8 +66,12 @@
 }
 
 #VideoQuery {
-	height: 35px;
-	width: 300px;
+	padding: 6px;
+	width: 374px;
+}
+
+#VideoQuerySearch {
+	padding: 2px;	
 }
 
 #VideoEmbedBack a {

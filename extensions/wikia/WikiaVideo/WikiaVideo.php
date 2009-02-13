@@ -3,82 +3,120 @@ if(!defined('MEDIAWIKI')) {
 	exit(1);
 }
 
-define('NS_VIDEO', '400');
+$wgExtensionFunctions[] = 'WikiaVideo_init';
 
-$wgHooks['ParserBeforeStrip'][] = 'WikiaVideoParserBeforeStrip';
-$wgHooks['ArticleFromTitle'][] = 'WikiaVideoArticleFromTitle';
-$wgHooks['MWNamespace:isMovable'][] = 'WikiaVideoIsNotMovable';
-
-
-function WikiaVideoIsNotMovable( $result, $index ) {
-	global $IP, $wgAllowImageMoving;
-	$result = !( $index < NS_MAIN || ($index == NS_IMAGE && !$wgAllowImageMoving) || ( $index == NS_VIDEO )  || $index == NS_CATEGORY );
+function WikiaVideo_init() {
+	global $wgExtraNamespaces, $wgAutoloadClasses, $wgParser;
+	$wgExtraNamespaces[NS_VIDEO] = 'Video';
+	$wgAutoloadClasses['VideoPage'] = dirname(__FILE__). '/VideoPage.php';
+	$wgParser->setHook('videogallery', 'WikiaVideo_renderVideoGallery');
 	return true;
 }
 
-function WikiaVideoParserBeforeStrip($parser, $text, $strip_state) {
-	// TODO change this to accomodate more cases ie parser inside, links and all
-	// MW parser stuff 
-      	$pattern = "@(\[\[Video:)([^\]]*?)].*?\]@si";   	 	 
-	$text = preg_replace_callback($pattern, 'WikiaVideoRenderVideo', $text);
-	return true;
-}
+function WikiaVideo_renderVideoGallery($input, $args, $parser) {
+	$out = '';
+	$videos = array();
 
-function WikiaVideoRenderVideo( $matches ) {
-        global $IP, $wgOut;
-        require_once( "$IP/extensions/wikia/WikiaVideo/VideoPage.php" );
-        $name = $matches[2];
-        $params = explode( "|", $name );
-        $video_name = $params[0];
-	global $wgCapitalLinks;
-	if( $wgCapitalLinks ) {
-		$video_name = ucfirst( $video_name );
+	$lines = explode("\n", $input);
+	foreach($lines as $line) {
+		$matches = array();
+		preg_match( "/^([^|]+)(\\|(.*))?$/", $line, $matches );
+
+		if(count($matches) == 0) {
+			continue;
+		}
+
+		if(strpos($matches[0], '%') !== false) {
+			$matches[1] = urldecode($matches[1]);
+		}
+
+		$tp = Title::newFromText($matches[1]);
+		$nt =& $tp;
+
+		if(is_null($nt)) {
+			continue;
+		}
+
+		if(isset($matches[3])) {
+			$html = $parser->recursiveTagParse(trim($matches[3]));
+		} else {
+			$html = '';
+		}
+
+		$videos[] = array($tp, $html);
 	}
 
-        $x = 1;
+	if(count($videos) > 0) {
+		$out .= '<table class="gallery" cellspacing="0" cellpadding="0"><tr>';
 
-        $width = 300;
-        $align = 'left';
-        $caption = '';
-	$thumb = '';
+		for($i = 0; $i < count($videos); $i++) {
+			$video = new VideoPage($videos[$i][0]);
+			$video->load();
+			$out .= '<td><div class="gallerybox" style="width: 335px;"><div class="thumb" style="padding: 13px 0; width: 330px;"><div style="margin-left: auto; margin-right: auto; width: 300px;">'.$video->getEmbedCode().'</div></div><div class="gallerytext">'.(!empty($videos[$i][1]) ? $videos[$i][1] : '').'</div></div></td>';
 
-        foreach($params as $param){
-                if($x > 1) {
-                        $width_check = strpos( $param, "px" );				
-                        if( false !== $width_check ) {
-                                $width = str_replace("px", "", $param);
-			} else if ('thumb' == $param) {
+			if($i%2 == 1) {
+				$out .= '</tr></tr>';
+			}
+		}
+
+		$out .= '</tr></table>';
+	}
+
+	return $out;
+}
+
+function WikiaVideo_makeVideo($title, $options, $sk) {
+	wfProfileIn('WikiaVideo_makeVideo');
+	if(!$title->exists()) {
+		$out = $sk->makeColouredLinkObj(Title::newFromText('WikiaVideoAdd', NS_SPECIAL), 'new', $title->getPrefixedText(), 'name=' . $title->getDBKey());
+	} else {
+		// defaults
+		$width = 400;
+		$thumb = '';
+		$caption = '';
+
+		$params = explode('|', $options);
+		foreach($params as $param) {
+			$width_check = strpos($param, 'px');
+			if($width_check > -1) {
+				$width = str_replace('px', '', $param);
+			} else if('thumb' == $param) {
 				$thumb = 'thumb';
-				
+			} else if(('left' == $param) || ('right' == $param)) {
+				$align = $param;
+			} else {
+				$caption = $param;
+			}
+		}
 
-                        } else if ( ( 'left' == $param ) || ( 'right' == $param ) ) {
-                                $align = $param;
-                        } else {
-                                $caption = $param;
-                        }
-                }
-                $x++;
-        }
+		if(empty($align)) {
+			if($thumb == 'thumb') {
+				$align = 'right';
+			} else {
+				$align = 'left';
+			}
+		}
 
-	// macbre: add FCK support
-	global $wgWysiwygParserEnabled;
-
-	if (empty($wgWysiwygParserEnabled)) {
-		$output = "<video name=\"{$video_name}\" width=\"{$width}\" align=\"{$align}\" caption=\"{$caption}\" thumb=\"{$thumb}\"></video>";
+		$video = new VideoPage($title);
+		$video->load();
+		$out = $video->generateWindow($align, $width, $caption, $thumb);
 	}
-	else {
-		$output = "<video>[[Video:{$matches[2]}]]</video>";
-	}
-	return $output;
+	wfProfileOut('WikiaVideo_makeVideo');
+	return $out;
 }
 
-function WikiaVideoArticleFromTitle( $title, $article ) {
-        global $IP;
-
-        if( NS_VIDEO == $title->getNamespace() ) {
-		require_once( "$IP/extensions/wikia/WikiaVideo/VideoPage.php" );
-                $article = new VideoPage( $title );
-        }
-        return true;
+$wgHooks['MWNamespace:isMovable'][] = 'WikiaVideo_isMovable';
+function WikiaVideo_isMovable($result, $index) {
+	if($index == NS_VIDEO) {
+		$result = false;
+	}
+	return true;
 }
 
+$wgHooks['ArticleFromTitle'][] = 'WikiaVideoArticleFromTitle';
+function WikiaVideoArticleFromTitle($title, $article) {
+	if(NS_VIDEO == $title->getNamespace()) {
+		$article = new VideoPage($title);
+	}
+	return true;
+}
