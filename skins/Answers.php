@@ -770,26 +770,44 @@ echo AnalyticsEngine::track('QuantServe', AnalyticsEngine::EVENT_PAGEVIEW);
 		global $wgTitle;
 		?>
 		<div id="magicAnswer" style="display:none"><!-- display is shown in web service callback function -->
-		We don't have an answer for that question, but we looked around for you and found one on <a href="http://answers.yahoo.com">answers.yahoo.com</a>:
-		<form action="<?php echo $wgTitle->getLocalUrl() ?>" method="get"><!-- Must be GET or the edit form does preview -->
-		<?php/* Note there is a hook called displayMagicAnswer in Answers.php on the Edit form that looks for "magic Answer" in theurl */?>
-		<input type="hidden" name="action" value="edit"/>
-		<input type="hidden" id="magicAnswerField" name="magicAnswer" value=""/><!-- Filled in with js -->
-		<textarea id="magicAnswerBox"></textarea>
-		<br />
-		Does this look like a good answer to your question?
-		<br />
-		<input type="submit" value="Yes, save this answer"/>
-		<input type="button" value="No" onClick="jQuery('#magicAnswer').hide()"/>
-		</form>
+			<div id="magicAnswerLeft"><div id="magicAnswerRight"><div id="magicAnswerCurtainLeft"></div><div id="magicAnswerCurtainRight"></div><div id="magicAnswerHat"></div>
+			<img src="/skins/answers/images/magic_answer.png" /><br />
+			<form action="<?php echo $wgTitle->getLocalUrl() ?>" method="get" id="magicAnswerForm"><!-- Must be GET or the edit form does preview -->
+			<?php/* Note there is a hook called displayMagicAnswer in Answers.php on the Edit form that looks for "magic Answer" in theurl */?>
+			<input type="hidden" name="action" value="edit"/>
+			<input type="hidden" id="magicAnswerField" name="magicAnswer" value=""/><!-- Filled in with js -->
+			<div id="magicAnswerBox"></div>
+			<div id="magicAnswerButtons" class="clearfix">	
+				<a id="magicAnswerYes" href="#" class="magicAnswerButton green"><div></div>Yes, this is right (or close enough)</a>
+				<a id="magicAnswerNo" href="#" class="magicAnswerButton blue"><div></div>No, don't use this</a>
+			</div>
+			<!--
+			<input type="submit" value="Yes, save this answer"/>
+			<input type="button" value="No" onClick="jQuery('#magicAnswer').hide()"/>
+			-->
+			</form>
+			<div id="magicAnswerStage">
+				<a href="http://answers.yahoo.com" rel="nofollow">Provided by Yahoo Answers</a>
+			</div>
+			</div></div><?/*right, left*/?>
 		</div>
 		<script type="text/javascript">
+		jQuery("#magicAnswerNo").bind("click", function(e) {
+			$("#magicAnswer").animate({opacity: "0"}, function() {
+				$(this).slideUp()
+			});
+			return false;
+		});
+		jQuery("#magicAnswerYes").bind("click", function(e) {
+			jQuery("#magicAnswerForm").submit();
+			return false;
+		});
 		MagicAnswer.getAnswer("<?php echo addslashes($this->data['title'])?>", "magicAnswerCallback");
 		function magicAnswerCallback(result){
 		        if (console.dir) { console.dir(result); }
 		        try {
-				document.getElementById('magicAnswerBox').value = result.all.questions[0]["ChosenAnswer"];
-				document.getElementById('magicAnswerField').value = result.all.questions[0]["Subject"];
+				jQuery("#magicAnswerBox").html(result.all.questions[0]["ChosenAnswer"]);
+				jQuery("#magicAnswerField").val(result.all.questions[0]["Subject"]);
 				jQuery('#magicAnswer').show();
         		} catch (e){
 				console.dir(e);

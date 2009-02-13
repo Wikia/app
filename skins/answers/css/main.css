@@ -538,6 +538,93 @@ body .header_menu_button * {
 	vertical-align: middle;
 }
 
+/*** MAGIC ANSWER***/
+#magicAnswer {
+	background: #000 url(/skins/answers/images/magic_answer_backdrop.png) bottom left repeat-x;
+	color: #FFF;
+	font-size: 11pt;
+	position: relative;
+	text-align: center;
+}
+#magicAnswerLeft {
+	background: url(/skins/answers/images/magic_answer_curtain_left.png) repeat-y;
+	overflow: hidden;
+}
+#magicAnswerRight {
+	background: url(/skins/answers/images/magic_answer_curtain_right.png) top right repeat-y;
+}
+#magicAnswerCurtainLeft, #magicAnswerCurtainRight {
+	background: url(/skins/answers/images/magic_answer_curtains.png) no-repeat;
+	height: 108px;
+	position: absolute;
+	top: 0;
+	width: 44px;
+}
+#magicAnswerCurtainLeft {
+	background-position: -44px 0;
+	left: 0;
+}
+#magicAnswerCurtainRight {
+	right: 0;
+}
+#magicAnswerHat {
+	background: url(/skins/answers/images/magic_answer_hat.jpg) no-repeat;
+	position: absolute;
+	bottom: 0;
+	height: 45px;
+	left: 30px;
+	width: 51px;
+}
+#magicAnswerBox {
+	margin: 10px 50px;
+}
+#magicAnswerButtons {
+	display: inline-block;
+	margin-bottom: 20px;
+	position: relative;
+}
+.magicAnswerButton {
+	background: url(/skins/answers/images/magic_answer_buttons.png) 100% 0;
+	color: #FFF;
+	display: block;
+	float: left;
+	font-family: "Verdana", "Arial", sans-serif;
+	font-size: 8pt;
+	font-weight: bold;
+	height: 19px;
+	line-height: 19px;
+	margin-right: 5px;
+	padding-right: 8px;
+}
+.magicAnswerButton:hover, .magicAnswerButton:active, .magicAnswerButton:visited {
+	color: #FFF;
+	text-decoration: none;
+}
+.magicAnswerButton div {
+	background: url(/skins/answers/images/magic_answer_buttons.png);
+	float: left;
+	height: 19px;
+	width: 8px;
+}
+.magicAnswerButton.blue {
+	background-position: 100% -19px;
+}
+.magicAnswerButton.blue div {
+	background-position: 0 -19px;
+}
+#magicAnswerStage {
+	background: url(/skins/answers/images/magic_answer_stage.jpg) repeat-x;
+	font-size: 8pt;
+	height: 18px;
+	line-height: 18px;
+	margin: 0 12px;
+	padding-right: 10px;
+	text-align: right;
+}
+#magicAnswerStage a {
+	color: #FFF;
+}
+
 
 /*** SIDEBAR ***/
 #answers_sidebar {
