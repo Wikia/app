@@ -576,8 +576,7 @@ google_ad_client = 'pub-4086838842346968'; // substitute your client_id (pub-#)
 google_ad_channel = (( wgIsAnswered )?'7000000004':'7000000003');
 google_ad_output = 'js';
 google_max_num_ads = '10';
-google_ad_type = 'text_html';
-google_image_size = '728x90';
+google_ad_type = 'text';
 google_feedback = 'on';
 <?
 if ($category_text) {
