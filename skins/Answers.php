@@ -386,7 +386,7 @@ wfRunHooks('GetHTMLAfterBody', array (&$this));
 
 		<?php
 		$tiny_url = Http::get("http://tinyurl.com/api-create.php?url={$wgTitle->getFullURL()}");
-		$twitter_question = substr( $wgTitle->getText(), 0, 99 );
+		$twitter_question = urlencode( substr( $wgTitle->getText(), 0, 99 ) );
 		$twitter_url = "http://twitter.com/home?status=" . $twitter_question . "? " . $tiny_url . " " . urlencode("#" . wfMsg("twitter_hashtag"));
 
 		?>
