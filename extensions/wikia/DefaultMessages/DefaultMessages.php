@@ -18,7 +18,7 @@ function efDefaultMessagesSetup() {
 	}
 }
 
-function efGetDefaultMessage( $lckey, $lang, &$message ) {
+function efGetDefaultMessage( $lckey, $lang, &$message, $useDB ) {
 	if( $message === false ) {
 		global $wgDefaultMessagesCache, $wgContLang;
 		if( is_object( $wgDefaultMessagesCache ) ) {
@@ -29,7 +29,7 @@ function efGetDefaultMessage( $lckey, $lang, &$message ) {
 					$title .= '/' . $lang;
 				}
 			}
-			$message = $wgDefaultMessagesCache->get( $title, $lang );
+			$message = $wgDefaultMessagesCache->get( $title, $lang, $useDB );
 		}
 	}
 	return true;
