@@ -30,7 +30,7 @@ $messages = array(
 		'categoryselect-provide-sortkey' => 'Alphabetize this article on the "$1" category page under the name:',
 		'categoryselect-addcategory-button' => 'Add category',
 		'categoryselect-suggest-hint' => 'Press Enter when done',
-		'categoryselect-tooltip' => "'''New!''' Category tagging toolbar. Try it out or see help to learn more",
+		'categoryselect-tooltip' => "'''New!''' Category tagging toolbar. Try it out or see [[Help:CategorySelect|help]] to learn more",
 		'categoryselect-unhandled-syntax' => 'Unhandled syntax detected - switching back to visual mode impossible.'
 	)
 );
