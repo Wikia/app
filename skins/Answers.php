@@ -573,7 +573,7 @@ wfRunHooks('GetHTMLAfterBody', array (&$this));
 <?php endif; ?>
 <script>
 google_ad_client = 'pub-4086838842346968'; // substitute your client_id (pub-#)
-google_ad_channel = '7000000004';
+google_ad_channel = (( wgIsAnswered )?'7000000004':'7000000003');
 google_ad_output = 'js';
 google_max_num_ads = '10';
 google_ad_type = 'text_html';
@@ -587,6 +587,8 @@ if ($category_text) {
 			$google_hints .= (( $google_hints ) ? ", " : "" ) . $ctg;
 		}
 	}
+	if( $google_hints == "" ) $google_hints = str_replace("'","\'",$wgTitle->getText() );
+	
 	echo 'google_hints = \''. $google_hints .'\';';
 }
 ?>

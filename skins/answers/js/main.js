@@ -112,7 +112,7 @@ function google_ad_render( google_ads, i ){
 	i = i - 1;
 	if( google_ads[i] ){
 		s = "";
-		s += '<a href=\"' + google_info.feedback_url + '\" class="google_label">Ads by Google</a><br>';
+		s += '<a href=\"' + google_info.feedback_url + '\" class="google_label">' + wgAdsByGoogleMsg + '</a><br>';
 		s += '<a style="text-decoration:none" href="' +
 		google_ads[i].url + '" onmouseout="window.status=\'\'" onmouseover="window.status=\'go to ' +
 		google_ads[i].visible_url + '\';return true" class="google_link">' +
