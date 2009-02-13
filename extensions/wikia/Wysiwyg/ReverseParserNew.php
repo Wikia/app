@@ -185,7 +185,7 @@ class ReverseParser {
 		// parse current node
 		$out = '';
 
-		$textContent = ($childOut != '') ? $childOut : $node->textContent;
+		$textContent = ($childOut != '') ? $childOut : $this->cleanupTextContent($node);
 
 		if($node->nodeType == XML_ELEMENT_NODE) {
 
@@ -632,6 +632,64 @@ class ReverseParser {
 
 		wfProfileOut(__METHOD__);
 		return $out;
+	}
+
+	/**
+	 * Clean up node text content
+	 */
+	private function cleanupTextContent($node) {
+		wfProfileIn(__METHOD__);
+
+		$text = $node->textContent;
+
+		$text = strtr($text, array('<' => '&lt;', '>' => '&gt;'));
+
+		if($text == '') {
+			wfProfileOut(__METHOD__);
+			return '';
+		}
+
+		// is text node the first child of parent node?
+		$isFirstChild = $node->isSameNode($node->parentNode->firstChild);
+
+		wfDebug("ReverseParserNew cleanupTextContent for: >>{$text}<<\n");
+
+		// 1. wrap repeating apostrophes using <nowiki>
+		$text = preg_replace("/('{2,})/", '<nowiki>$1</nowiki>', $text);
+
+		// 2. wrap = using <nowiki>
+		$text = preg_replace("/^(=+)/m", '<nowiki>$1</nowiki>', $text);
+
+		// 3. wrap wikimarkup special characters (only when they're at the beginning of the p/td, don't do it for link descriptions...)
+		if ( $isFirstChild && !in_array($node->parentNode->nodeName, array('a')) ) {
+			// 3a. wrap list bullets using <nowiki>
+			$text = preg_replace("/^([#*]+)/", '<nowiki>$1</nowiki>', $text);
+
+			// 3b. semicolon at the beginning of the line
+			if(in_array($text{0}, array(':', ';'))) {
+				$text = '<nowiki>' . $text{0} . '</nowiki>' . substr($text, 1);
+			}
+		}
+
+		// 4. wrap curly brackets {{ }} using <nowiki>
+		$text = preg_replace("/({{2,3})([^}]+)(}{2,3})/", '<nowiki>$1$2$3</nowiki>', $text);
+
+		// 5. wrap magic words __ __ using <nowiki>
+		$text = preg_replace("/__([\d\D]+)__/", '<nowiki>__$1__</nowiki>', $text);
+
+		// 6. wrap [[foo]] using <nowiki>
+		$text = preg_replace("/(\[{2,})([^]]+)(\]{2,})/", '<nowiki>$1$2$3</nowiki>', $text);
+
+		// 7. wrap [<url protocol>...] using <nowiki> (don't apply to link descriptions)
+		if ($node->parentNode->nodeName != 'a') {
+			$text = preg_replace("/\[(?=".$this->getUrlProtocols().")([^\]]+)\]/", '<nowiki>[$1]</nowiki>', $text);
+		}
+
+		// 8. wrap repeating ~ using <nowiki>
+		$text = preg_replace("/(~{3,5})/", '<nowiki>$1</nowiki>', $text);
+
+		wfProfileOut(__METHOD__);
+		return $text;
 	}
 
 	/**
