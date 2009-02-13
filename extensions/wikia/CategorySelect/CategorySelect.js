@@ -246,7 +246,7 @@ function toggleCodeView() {
 						}
 					}
 					initializeCategories(result['categories']);
-					$(csSwitchViewId).innerHTML = csVisualView;
+					$(csSwitchViewId).innerHTML = csCodeView;
 					$(csWikitextContainerId).style.display = 'none';
 					$(csItemsContainerId).style.display = 'block';
 				}
