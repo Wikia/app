@@ -1,25 +1,40 @@
 <form name="quickaddform" method="post" action="<?=$action?>">
 <table>
+<?php
+if ('' == $name) {
+?> 
 <tr><td width="120">
-Enter the name:
+<?= wfMsg( 'wva-name' ); ?>
 </td>
 <td>
-<input type="text" name="wpQuickVideoAddName" size="50" />
+<input type="text" id="wpWikiaVideoAddName" name="wpWikiaVideoAddName" size="50" />
 </td>
 </tr>
+<?php
+}
+?>
 <tr><td>
-Enter the URL:
+<?= wfMsg( 'wva-url' ); ?>
 </td>
 <td>
-<input type="text" name="wpQuickVideoAddUrl" size="50" />
+<input type="text" id="wpWikiaVideoAddUrl" name="wpWikiaVideoAddUrl" size="50" />
 </td>
 </tr>
 <tr>
 <td colspan="2">
-<input type="submit" value="Add" />
+<input type="submit" value="<?= wfMsg( 'wva-add' ); ?>" />
 </td>
 </tr>
 </table>
+
+<?php
+if ('' != $name) {
+?>
+<input type="hidden" name="wpWikiaVideoAddPrefilled" value="<?= $name ?>" id="wpWikiaVideoAddPrefilled"  />
+<?php
+}
+?>
+
 </form>
 
 
