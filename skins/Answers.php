@@ -242,33 +242,8 @@ wfRunHooks('GetHTMLAfterBody', array (&$this));
 
 		// Magic Answer
 		if (!empty($_GET['state']) && $_GET['state'] == 'asked'){
-		?>
-		<div id="magicAnswer" style="display:none"><!-- display is shown in web service callback function -->
-		We don't have an answer for that question, but we looked around for you and found one on <a href="http://answers.yahoo.com">answers.yahoo.com</a>:
-		<form action="<?php echo $wgTitle->getLocalUrl() ?>" method="post">
-		<input type="hidden" action="edit"/>
-		<textarea name="magicAnswer" id="magicAnswerBox"></textarea>
-		<br />
-		Does this look like a good answer to your question?
-		<br />
-		<input type="submit" value="Yes"/>
-		<input type="button" value="No" onClick="jQuery('#magicAnswer').hide()"/>
-		</form>
-		</div>
-		<script type="text/javascript">
-		MagicAnswer.getAnswer("<?php echo addslashes($this->data['title'])?>", "magicAnswerCallback");
-		function magicAnswerCallback(result){
-		        console.dir(result);
-		        try {
-				document.getElementById('magicAnswerBox').value = result.all.questions[0]["ChosenAnswer"];
-				jQuery('#magicAnswer').show();
-        		} catch (e){
-				console.dir(e);
-			}
+			$this->displayMagicAnswer();
 		}
-		</script>
-		<?php
-		} // state = asked
 		?>
 		
 		
@@ -790,6 +765,39 @@ echo AnalyticsEngine::track('QuantServe', AnalyticsEngine::EVENT_PAGEVIEW);
 <?php
 		}
         }
+
+	function displayMagicAnswer(){
+		global $wgTitle;
+		?>
+		<div id="magicAnswer" style="display:none"><!-- display is shown in web service callback function -->
+		We don't have an answer for that question, but we looked around for you and found one on <a href="http://answers.yahoo.com">answers.yahoo.com</a>:
+		<form action="<?php echo $wgTitle->getLocalUrl() ?>" method="get"><!-- Must be GET or the edit form does preview -->
+		<?php/* Note there is a hook called displayMagicAnswer in Answers.php on the Edit form that looks for "magic Answer" in theurl */?>
+		<input type="hidden" name="action" value="edit"/>
+		<input type="hidden" id="magicAnswerField" name="magicAnswer" value=""/><!-- Filled in with js -->
+		<textarea id="magicAnswerBox"></textarea>
+		<br />
+		Does this look like a good answer to your question?
+		<br />
+		<input type="submit" value="Yes, save this answer"/>
+		<input type="button" value="No" onClick="jQuery('#magicAnswer').hide()"/>
+		</form>
+		</div>
+		<script type="text/javascript">
+		MagicAnswer.getAnswer("<?php echo addslashes($this->data['title'])?>", "magicAnswerCallback");
+		function magicAnswerCallback(result){
+		        if (console.dir) { console.dir(result); }
+		        try {
+				document.getElementById('magicAnswerBox').value = result.all.questions[0]["ChosenAnswer"];
+				document.getElementById('magicAnswerField').value = result.all.questions[0]["Subject"];
+				jQuery('#magicAnswer').show();
+        		} catch (e){
+				console.dir(e);
+			}
+		}
+		</script>
+		<?php
+	}
 } // end of class
 
 
