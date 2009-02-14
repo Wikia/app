@@ -465,14 +465,14 @@ a.bigButton small {
 	height: 41px; 
 	width: 36px; 
 }
-.huge_button.green { 
+.huge_button_green { 
 	background-position: top right; 
 	color: #FFF; 
 	font-size: 18pt;
 	font-weight: normal;
 	height: 37px; 
 }
-.huge_button.green div { 
+.huge_button_green div { 
 	background-position: top left; 
 	height: 37px; 
 	width: 10px; 
@@ -493,6 +493,7 @@ body .header_menu_button {
 	position: relative;
 }
 body .header_menu_button * {
+	display: inline;
 	float: left;
 	font-size: 8pt;
 	font-weight: bold;
@@ -545,6 +546,7 @@ body .header_menu_button * {
 	font-size: 11pt;
 	position: relative;
 	text-align: center;
+	width: 100%;
 }
 #magicAnswerLeft {
 	background: url(/skins/answers/images/magic_answer_curtain_left.png) repeat-y;
@@ -558,14 +560,15 @@ body .header_menu_button * {
 	height: 108px;
 	position: absolute;
 	top: 0;
-	width: 44px;
+	width: 88px;
 }
 #magicAnswerCurtainLeft {
-	background-position: -44px 0;
-	left: 0;
+	clip: rect(0px 88px 108px 44px);
+	left: -44px;
 }
 #magicAnswerCurtainRight {
-	right: 0;
+	clip: rect(0px 44px 108px 0px);
+	right: -44px;
 }
 #magicAnswerHat {
 	background: url(/skins/answers/images/magic_answer_hat.jpg) no-repeat;
@@ -575,42 +578,20 @@ body .header_menu_button * {
 	left: 30px;
 	width: 51px;
 }
+#magicAnswer h6 {
+	color: #007AC8;
+	font-size: 11pt;
+}
 #magicAnswerBox {
-	margin: 10px 50px;
+	margin: 0 50px 10px;
 }
 #magicAnswerButtons {
-	display: inline-block;
 	margin-bottom: 20px;
 	position: relative;
+	text-align: center;
 }
-.magicAnswerButton {
-	background: url(/skins/answers/images/magic_answer_buttons.png) 100% 0;
-	color: #FFF;
-	display: block;
-	float: left;
-	font-family: "Verdana", "Arial", sans-serif;
-	font-size: 8pt;
-	font-weight: bold;
-	height: 19px;
-	line-height: 19px;
+#magicAnswerButtons button {
 	margin-right: 5px;
-	padding-right: 8px;
-}
-.magicAnswerButton:hover, .magicAnswerButton:active, .magicAnswerButton:visited {
-	color: #FFF;
-	text-decoration: none;
-}
-.magicAnswerButton div {
-	background: url(/skins/answers/images/magic_answer_buttons.png);
-	float: left;
-	height: 19px;
-	width: 8px;
-}
-.magicAnswerButton.blue {
-	background-position: 100% -19px;
-}
-.magicAnswerButton.blue div {
-	background-position: 0 -19px;
 }
 #magicAnswerStage {
 	background: url(/skins/answers/images/magic_answer_stage.jpg) repeat-x;
@@ -624,6 +605,7 @@ body .header_menu_button * {
 #magicAnswerStage a {
 	color: #FFF;
 }
+
 
 
 /*** SIDEBAR ***/
@@ -731,6 +713,32 @@ body .header_menu_button * {
 .clearfix { display:block; }
 /* End hide from IE Mac */
 
+.button_small {
+	text-align: center;
+	background: left center no-repeat;
+	border: 0;
+	cursor: pointer;
+	margin: 0;
+	padding: 0 0 0 3px;
+	overflow: visible;
+}
+.button_small span {
+	position: relative;
+	display: block;
+	white-space: nowrap;
+	height: 20px;
+	color: #fff;
+	font: bold 10px/20px "Verdana", "Arial", sans-serif;
+	background: right center no-repeat;
+	padding: 0 8px 0 5px;
+}
+.button_small_green, .button_small_green span {
+	background-image: url(/skins/answers/images/button_small_green.png);
+}
+.button_small_blue, .button_small_blue span {
+	background-image: url(/skins/answers/images/button_small_blue.png);
+}
+
 .editsection {
 	float: right;
 }
@@ -741,6 +749,7 @@ body .header_menu_button * {
 	color: #000 !important;
 }
 #bottom_ads {
+	border-collapse: collapse;
 	margin-top: 20px;
 }
 #bottom_ads .google_label {

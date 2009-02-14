@@ -1,0 +1,11 @@
+#magicAnswerCurtainLeft, #magicAnswerCurtainRight {	
+	background-image: none;
+	filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='/skins/answers/images/magic_answer_curtains.png', sizingMethod='crop');
+}
+#page_bar {
+	background-image: none;
+}
+#page_controls div {
+	background: none;
+	filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='/skins/answers/images/sprite.png', sizingMethod='crop');
+}
