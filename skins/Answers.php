@@ -94,6 +94,9 @@ class AnswersTemplate extends MonacoTemplate {
 		<!-- Head Scripts -->
 <?php $this->html('headscripts') ?>
 	        <link rel="stylesheet" type="text/css" href="<?=$wgStylePath?>/answers/css/main.css?<?=$wgStyleVersion?>" />
+		<!--[if IE 6]>
+	        <link rel="stylesheet" type="text/css" href="<?=$wgStylePath?>/answers/css/ie6.css?<?=$wgStyleVersion?>" />
+		<![endif]-->
 <?php	if($this->data['jsvarurl']) { ?>
 		<script type="<?php $this->text('jsmimetype') ?>" src="<?php $this->text('jsvarurl') ?>"><!-- site js --></script>
 <?php	} ?>
@@ -132,7 +135,7 @@ wfRunHooks('GetHTMLAfterBody', array (&$this));
 		<div id="answers_ask">
 			<form method="get" action="" onsubmit="return false" name="ask_form" id="ask_form">
 				<input type="text" id="answers_ask_field" value="<?=htmlentities(wfMsg("ask_a_question"))?>" class="alt" /><span>?</span>
-				<a href="javascript:void(0);" id="ask_button" class="huge_button green"><div></div><?= wfMsg("ask_button") ?></a>
+				<a href="javascript:void(0);" id="ask_button" class="huge_button huge_button_green"><div></div><?= wfMsg("ask_button") ?></a>
 			</form>
 		</div><?/*answers_ask*/?>
 		<div id="answers_suggest"></div>
@@ -772,23 +775,20 @@ echo AnalyticsEngine::track('QuantServe', AnalyticsEngine::EVENT_PAGEVIEW);
 		?>
 		<div id="magicAnswer" style="display:none"><!-- display is shown in web service callback function -->
 			<div id="magicAnswerLeft"><div id="magicAnswerRight"><div id="magicAnswerCurtainLeft"></div><div id="magicAnswerCurtainRight"></div><div id="magicAnswerHat"></div>
-			<img src="/skins/answers/images/magic_answer.png" /><br />
+			<img id="magicAnswerLogo" src="/skins/answers/images/magic_answer.png" />
 			<form action="<?php echo $wgTitle->getLocalUrl() ?>" method="get" id="magicAnswerForm"><!-- Must be GET or the edit form does preview -->
 			<?php/* Note there is a hook called displayMagicAnswer in Answers.php on the Edit form that looks for "magic Answer" in theurl */?>
 			<input type="hidden" name="action" value="edit"/>
 			<input type="hidden" id="magicAnswerField" name="magicAnswer" value=""/><!-- Filled in with js -->
+			<h6><?=wfMsg("magic_answer_headline") ?></h6>
 			<div id="magicAnswerBox"></div>
 			<div id="magicAnswerButtons" class="clearfix">	
-				<a id="magicAnswerYes" href="#" class="magicAnswerButton green"><div></div>Yes, this is right (or close enough)</a>
-				<a id="magicAnswerNo" href="#" class="magicAnswerButton blue"><div></div>No, don't use this</a>
+				<button id="magicAnswerYes" class="button_small button_small_green"><span><?=wfMsg("magic_answer_yes")?></span></button>
+				<button id="magicAnswerNo" class="button_small button_small_blue"><span><?=wfMsg("magic_answer_no")?></span></button>
 			</div>
-			<!--
-			<input type="submit" value="Yes, save this answer"/>
-			<input type="button" value="No" onClick="jQuery('#magicAnswer').hide()"/>
-			-->
 			</form>
 			<div id="magicAnswerStage">
-				<a href="http://answers.yahoo.com" rel="nofollow">Provided by Yahoo Answers</a>
+				<a href="http://answers.yahoo.com" rel="nofollow"><?=wfMsg("magic_answer_credit")?></a>
 			</div>
 			</div></div><?/*right, left*/?>
 		</div>

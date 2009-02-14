@@ -18,15 +18,16 @@
 }
 
 #research_box{
-	width:400px;
 	padding:5px;
 	max-height:380px;
+	height: 380px;
+	width: 400px;
 }
 
 #research-search{
 	background-color:#36C;
 	padding:5px;
-	color:#FFFFFF;
+	color:#FFF;
 }
 
 #research-search-nav a{
@@ -36,10 +37,11 @@
 .research-search-result{
 	margin-bottom:2px;
 	padding:3px;
-	border-bottom:1px solid #eeeeee;
+	border-bottom:1px solid #eee;
 }
 
 #editform {
 	padding-right: 440px;
 	position: relative;
+	height: 1%;
 }
