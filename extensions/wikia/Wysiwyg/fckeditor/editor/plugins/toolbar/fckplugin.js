@@ -19,7 +19,7 @@ WikiaToolbar.prototype.Create = function(parentElement) {
 	// add toolbar items
 	if (parentElement) {
 		// toolbar HTML
-		parentElement.innerHTML = '<table id="fck_toolbar"><tr><td class="last"><div class="clearfix"><label>Label</label><ul id="fck_toolbar_items"></ul></div></td></tr></table>';
+		parentElement.innerHTML = '<table id="fck_toolbar"><tr><td class="last"><div class="clearfix"><label class="color1">Label</label><ul id="fck_toolbar_items"></ul></div></td></tr></table>';
 
 		var toolbar = parentDoc.getElementById('fck_toolbar_items');
 
@@ -150,15 +150,15 @@ WikiaButtonUI.prototype.ChangeState = function( newState, force )
 	switch ( parseInt( newState, 10 ) )
 	{
 		case FCK_TRISTATE_OFF :
-			e.className		= 'fwysiwygToolbarButtonOff' ;
+			e.className		= 'fck_button_of' ;
 			break ;
 
 		case FCK_TRISTATE_ON :
-			e.className		= 'wysiwygToolbarButtonOn' ;
+			e.className		= 'fck_button_on' ;
 			break ;
 
 		case FCK_TRISTATE_DISABLED :
-			e.className		= 'wysiwygToolbarButtonDisabled' ;
+			e.className		= 'fck_button_disabled' ;
 			break ;
 	}
 
@@ -168,10 +168,10 @@ WikiaButtonUI.prototype.ChangeState = function( newState, force )
 function WikiaButtonUI_OnMouseOver( ev, button )
 {
 	if ( button.State == FCK_TRISTATE_OFF ) {
-		this.className = 'wysiwygToolbarButtonOffOver' ;
+		this.className = 'fck_button_off_over' ;
 	}
 	else if ( button.State == FCK_TRISTATE_ON ) {
-		this.className = 'wysiwygToolbarButtonOnOver' ;
+		this.className = 'fck_button_on_over' ;
 	}
 
 	// change section label
@@ -182,9 +182,9 @@ function WikiaButtonUI_OnMouseOver( ev, button )
 function WikiaButtonUI_OnMouseOut( ev, button )
 {
 	if ( button.State == FCK_TRISTATE_OFF )
-		this.className = 'wysiwygToolbarButtonOff' ;
+		this.className = 'fck_button_off' ;
 	else if ( button.State == FCK_TRISTATE_ON )
-		this.className = 'wysiwygToolvarButtonOn' ;
+		this.className = 'fck_button_on' ;
 }
 
 function WikiaButtonUI_OnClick( ev, button )
