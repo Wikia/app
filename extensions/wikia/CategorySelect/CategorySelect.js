@@ -62,6 +62,8 @@ function modifyCategoryDialog(data, handler) {
 	Dialog.cfg.queueProperty("buttons", buttons);
 
 	Dialog.render(document.body);
+	//fill up initial values
+	$('csInfoboxSortKey').value = data['data']['sortkey'];
 	Dialog.show();
 	//focus input on displayed dialog
 	$('csInfoboxSortKey').focus();
@@ -77,7 +79,8 @@ function modifyCategory(e) {
 		'catId': catId,
 		'caption': csProvideCategoryCaption,
 		'content': '<label for="csInfoboxSortKey">' + csProvideCategoryText.replace('$1', categories[catId].category) + '</label>' +
-			'<input type="text" id="csInfoboxSortKey" value="'+escape(defaultSortkey)+'" />',
+			'<input type="text" id="csInfoboxSortKey" />',
+		'data': {'sortkey': defaultSortkey},
 		'save': csProvideCategorySave
 	},
 	function(data) {
