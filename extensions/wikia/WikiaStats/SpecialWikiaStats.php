@@ -31,7 +31,7 @@ define ("CENTRAL_WIKIA_ID", 'wikicities');
 
 $wgExtensionCredits['specialpage'][] = array(
     'name' => 'WikiaStats',
-    'url' => 'http://help.wikia.com/wiki/Help:WikiaStats'
+    'url' => 'http://help.wikia.com/wiki/Help:WikiaStats',
     "description" => "Gathers a wide array of statistics for this wiki and adds an GUI to browse them. Inspired by and partially based on the original [http://meta.wikimedia.org/wiki/Wikistats WikiStats] written by Erik Zachte",
     "author" => "Piotr Molski (moli) <moli@wikia-inc.com>"
 );
