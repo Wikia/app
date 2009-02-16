@@ -165,7 +165,7 @@ function Wysiwyg_Initial($form) {
 	if (!empty($wgWysiwygUseNewToolbar)) {
 		$wgOut->addLink(array(
 			'rel' => 'stylesheet',
-			'href' => "$wgExtensionsPath/wikia/Wysiwyg/toolbar.css?$wgStyleVersion",
+			'href' => "$wgExtensionsPath/wikia/Wysiwyg/toolbar/toolbar.css?$wgStyleVersion",
 			'type' => 'text/css'
 		));
 	}
