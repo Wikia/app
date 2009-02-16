@@ -271,15 +271,52 @@ class GathererQuery {
 	
 	public function execute() {
 		$un = urlencode( $this->name );
-		$c1 = @file_get_contents( 'http://beta.gatherer.wizards.com/Pages/Card/Details.aspx?name=' . $un );
-		$c2 = @file_get_contents( 'http://beta.gatherer.wizards.com/Pages/Card/Printings.aspx?name=' . $un );
-		if( !$c1 || !$c2 ) {
-			$this->err = 'gatherer-nocard';
+		$c1 = $this->fetchCardInfo( 'http://beta.gatherer.wizards.com/Pages/Card/Details.aspx?name=' . $un );
+		$c2 = $this->fetchCardInfo( 'http://beta.gatherer.wizards.com/Pages/Card/Printings.aspx?name=' . $un );
+		if( empty($c1) || empty($c2)  ) {
 			return false;
+		} else {
+			$this->detailStr( $c1 );
+			$this->printStr( $c2 );
+			return $this->err === '';
 		}
-		$this->detailStr( $c1 );
-		$this->printStr( $c2 );
-		return $this->err === '';
+	}
+
+	function fetchCardInfo( $url ) {
+			global $wgHTTPTimeout, $wgHTTPProxy, $wgVersion, $wgTitle;
+
+			$c = curl_init( $url );
+
+			curl_setopt( $c, CURLOPT_PROXY, $wgHTTPProxy );
+			curl_setopt( $c, CURLOPT_TIMEOUT, $wgHTTPTimeout );
+
+			curl_setopt( $c, CURLOPT_HEADER, false );
+
+			# Don't follow -- catches 302 code, see below
+			curl_setopt( $c, CURLOPT_FOLLOWLOCATION, false );
+
+			# Let's be nice and introduce ourselves
+			curl_setopt( $c, CURLOPT_USERAGENT, "MediaWiki/$wgVersion" );
+                        if ( is_object( $wgTitle ) ) {
+                                curl_setopt( $c, CURLOPT_REFERER, $wgTitle->getFullURL() );
+                        }
+
+			$text = curl_exec( $c );
+
+                        # Don't return the text of error messages, return false on error
+			# 302 means card was not found
+                        if ( curl_getinfo( $c, CURLINFO_HTTP_CODE ) == 302 ) {
+				$this->err = 'gatherer-nocard';
+                                $text = false;
+                        }
+
+			# If we get anything else besides 200, something went horribly wrong
+			if ( curl_errno( $c ) != CURLE_OK ) {
+				$this->err = 'gatherer-connerror';
+                                $text = false;
+			}
+
+			return $text;
 	}
 	
 	public function cleanup() {
