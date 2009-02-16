@@ -21,6 +21,7 @@ $messages['en'] = array(
 	'gatherer-card-com' => 'Uploading card image using [[Special:Gatherer|Gatherer]]',
 	'gatherer-submit' => 'Submit',
 	'gatherer-nocard' => 'The card does not exist. Check your spelling.',
+	'gatherer-connerror' => 'Encountered a connection error. Please try again later.',
 	'gatherer-imgerr' => 'The card images could not be retrieved. Please check to make sure that Gatherer is online, then try again.',
 	'gatherer-phperr' => "PHP's ''allow_url_fopen'' directive is off, and as such this page will not work.
 
