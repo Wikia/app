@@ -6,11 +6,6 @@
  * @subpackage Extensions
 */
 
-global $wgMostPopularCategoriesMessages;
-$wgMostPopularCategoriesMessages = array();
-
-$wgMostPopularCategoriesMessages['en'] = array(
+$messages['en'] = array(
 	'mostpopularcategories' => 'Most popular categories',
 );
-
-?>

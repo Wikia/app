@@ -4,19 +4,9 @@ class MostpopularcategoriesSpecialPage extends SpecialPage {
     private $mpc = null;
 
 	function __construct() {
-		self::load_messages();
+		wfLoadExtensionMessages('Mostpopularcategories');
 		parent::__construct( 'Mostpopularcategories' );
 	}
-
-	function load_messages() {
-		require_once( dirname(__FILE__).'/SpecialMostPopularCategories.i18n.php' );
-		global $wgMessageCache, $wgMostPopularCategoriesMessages;
-
-		foreach( $wgMostPopularCategoriesMessages as $lang => $messages ) {
-			$wgMessageCache->addMessages( $messages, $lang );
-		}
-		return true;
-    }
 
 	function execute($limit = "", $offset = "", $show = true) {
 		if (empty($limit) && empty($offset)) {
