@@ -20,7 +20,13 @@ function getTextOfDomElement($element) {
 }
 
 function getEditingTips() {
-	global $wgTitle, $wgParser, $wgOut, $wgEditingTipsContent;
+	global $wgTitle, $wgParser, $wgOut, $wgEditingTipsContent, $wgWysiwygEdit;
+
+	// macbre: don't show editing tips when editing using wysiwyg
+	if (!empty($wgWysiwygEdit)) {
+		return array();
+	}
+
 	if(!empty($wgEditingTipsContent)) {
 		return $wgEditingTipsContent;
 	} else {
