@@ -88,7 +88,6 @@ WikiaButtonUI.prototype.Create = function( parentElement )
 	}
 	else
 	{
-		/*
 		var oTable = oMainElement.appendChild( oDoc.createElement( 'TABLE' ) ) ;
 		oTable.cellPadding = 0 ;
 		oTable.cellSpacing = 0 ;
@@ -132,7 +131,6 @@ WikiaButtonUI.prototype.Create = function( parentElement )
 		// The last padding cell.
 		oCell = oRow.insertCell(-1) ;
 		oCell.appendChild( this._CreatePaddingElement( oDoc ) ) ;
-		*/
 	}
 
 	parentElement.appendChild( oMainElement ) ;
@@ -169,10 +167,16 @@ WikiaButtonUI.prototype.ChangeState = function( newState, force )
 
 function WikiaButtonUI_OnMouseOver( ev, button )
 {
-	if ( button.State == FCK_TRISTATE_OFF )
+	if ( button.State == FCK_TRISTATE_OFF ) {
 		this.className = 'wysiwygToolbarButtonOffOver' ;
-	else if ( button.State == FCK_TRISTATE_ON )
+	}
+	else if ( button.State == FCK_TRISTATE_ON ) {
 		this.className = 'wysiwygToolbarButtonOnOver' ;
+	}
+
+	// change section label
+	var label = this.parentNode.parentNode.firstChild;
+	label.innerHTML = button.Label;
 }
 
 function WikiaButtonUI_OnMouseOut( ev, button )
