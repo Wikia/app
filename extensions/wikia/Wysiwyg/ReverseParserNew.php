@@ -35,6 +35,7 @@ class ReverseParser {
 	}
 
 	private function parseToDOM($html, $parseAsXML = true) {
+			wfProfileIn(__METHOD__);
 
 			$ret = false;
 
@@ -60,6 +61,8 @@ class ReverseParser {
 			}
 
 			wfRestoreWarnings();
+
+			wfProfileOut(__METHOD__);
 
 			// return <body> node or false if XML parsing failed
 			return $ret;
