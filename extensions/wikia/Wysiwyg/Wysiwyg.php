@@ -101,7 +101,7 @@ function Wysywig_Ajax($type, $input = false, $wysiwygData = false, $articleId = 
 }
 
 function Wysiwyg_Initial($form) {
-	global $wgUser, $wgOut, $wgRequest, $IP, $wgExtensionsPath, $wgStyleVersion, $wgHooks, $wgWysiwygEdgeCasesFound, $wgWysiwygFallbackToSourceMode, $wgJsMimeType, $wgWysiwygEdit;
+	global $wgUser, $wgOut, $wgRequest, $IP, $wgExtensionsPath, $wgStyleVersion, $wgHooks, $wgWysiwygEdgeCasesFound, $wgWysiwygFallbackToSourceMode, $wgJsMimeType, $wgWysiwygEdit, $wgWysiwygUseNewToolbar;
 
 	// check user preferences option
 	if($wgUser->getOption('disablewysiwyg') == true) {
@@ -147,7 +147,8 @@ function Wysiwyg_Initial($form) {
 		'var fallbackToSourceMode = ' . ($wgWysiwygFallbackToSourceMode ? 'true' : 'false') . ";\n" .
 		'var templateList = ' . WysiwygGetTemplateList() . ";\n" .
 		'var templateHotList = ' . WysiwygGetTemplateHotList() . ";\n" .
-		'var magicWordList = ' . Wikia::json_encode($magicWords, true) . ';'
+		'var magicWordList = ' . Wikia::json_encode($magicWords, true) . ";\n" .
+		'var wysiwygUseNewToolbar = ' . (!empty($wgWysiwygUseNewToolbar) ? 'true' : 'false') . ";"
 	);
 
 	$wgOut->addScript( "<script type=\"{$wgJsMimeType}\" src=\"$wgExtensionsPath/wikia/Wysiwyg/fckeditor/fckeditor.js?$wgStyleVersion\"></script>" );
@@ -159,6 +160,15 @@ function Wysiwyg_Initial($form) {
 		'href' => "$wgExtensionsPath/wikia/Wysiwyg/wysiwyg.css?$wgStyleVersion",
 		'type' => 'text/css'
 	));
+
+	// add support for new toolbar
+	if (!empty($wgWysiwygUseNewToolbar)) {
+		$wgOut->addLink(array(
+			'rel' => 'stylesheet',
+			'href' => "$wgExtensionsPath/wikia/Wysiwyg/toolbar.css?$wgStyleVersion",
+			'type' => 'text/css'
+		));
+	}
 
 	$wgHooks['EditPage::showEditForm:initial2'][] = 'Wysiwyg_Initial2';
 	$wgHooks['EditForm:BeforeDisplayingTextbox'][] = 'Wysiwyg_BeforeDisplayingTextbox';
