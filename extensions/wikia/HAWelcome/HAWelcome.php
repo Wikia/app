@@ -9,7 +9,7 @@
  * @copyright Copyright © Krzysztof Krzyżaniak for Wikia Inc.
  * @author Krzysztof Krzyżaniak (eloy) <eloy@wikia-inc.com>
  * @date 2009-02-02
- * @version 0.1
+ * @version 0.2
  * @license http://www.gnu.org/copyleft/gpl.html GNU General Public License 2.0 or later
  */
 
@@ -20,7 +20,7 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 
 $wgExtensionCredits['other'][] = array(
 	'name' => 'HAWelcome',
-	'version' => '0.1',
+	'version' => '0.2',
 	'author' => 'Krzysztof Krzyźaniak',
 	'description' => 'Highly Automated Welcome Tool ',
 );
