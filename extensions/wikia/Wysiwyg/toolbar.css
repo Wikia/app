@@ -7,5 +7,11 @@
 }
 
 #article {
-	padding: 0 1px;
+	padding: 0 1px !important;
+}
+
+#wysiwygToolbar img {
+	width: 16px;
+	height: 16px;
+	margin: 3px;
 }

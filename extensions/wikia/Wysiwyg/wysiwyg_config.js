@@ -12,11 +12,16 @@ FCKConfig.EditorAreaStyles = window.parent.stylepath + '/monobook/main.css';
 FCKConfig.BodyId = 'bodyContent';
 FCKConfig.BodyClass = 'fckeditor';
 
+// load plugins
 FCKConfig.Plugins.Add('wikitext');
 
 if (typeof window.parent.vet_enabled != 'undefined') {
 	FCKConfig.Plugins.Add('video');
 	toolbarItems.splice(20, 0, 'AddVideo');
+}
+
+if (window.parent.wysiwygUseNewToolbar) {
+	FCKConfig.Plugins.Add('toolbar');
 }
 
 FCKConfig.ToolbarSets["Default"] = [ toolbarItems ];
