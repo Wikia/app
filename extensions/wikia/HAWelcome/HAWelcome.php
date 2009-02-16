@@ -269,7 +269,7 @@ class HAWelcomeJob extends Job {
 			wfEscapeWikiText( $Sysop->getName() ),
 			wfEscapeWikiText( $Sysop->getName() ),
 			wfEscapeWikiText( $Sysop->getName() ),
-			wfMsg( "talkpagelinktext" ),
+			$wgContLang->lc( wfMsg( "talkpagelinktext" ) ),
 			$wgContLang->timeanddate( wfTimestampNow( TS_MW ) )
 		);
 		$wgUser = $tmpUser;
