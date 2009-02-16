@@ -71,10 +71,12 @@ FCK.originalSwitchEditMode = FCK.SwitchEditMode;
 FCK.WysiwygSwitchToolbars = function(switchToWikitext) {
 	var toolbarItems = document.getElementById('xToolbar').getElementsByTagName('tr')[0].childNodes;
 	var MWtoolbar = window.parent.document.getElementById('toolbar');
+	var iframe = window.parent.document.getElementById('wpTextbox1___Frame');
 
 	// move MW toolbar next to "Source" button
-	if (MWtoolbar) {
+	if (MWtoolbar && iframe) {
 		MWtoolbar.style.marginLeft = (toolbarItems[1].offsetWidth + 4) + 'px';
+		MWtoolbar.style.top = (iframe.offsetTop + 3) + 'px';
 	}
 
 	// show/hide FCK toolbar items
@@ -401,11 +403,13 @@ FCK.Events.AttachEvent( 'OnAfterSetHTML', function() {
 				}
 			}
 		});
+
+		// initial toolbar positioning
+		FCK.WysiwygSwitchToolbars(1);
 	}
 
 	// for QA team tests
 	FCK.GetParentForm().className = (FCK.EditMode == FCK_EDITMODE_WYSIWYG ? 'wysiwyg' : 'source') + '_mode';
-
 });
 
 // setup elements with refId (after switching to wysiwyg mode and after drag&drop is finished)
