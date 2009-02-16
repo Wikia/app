@@ -201,22 +201,26 @@ class HAWelcomeJob extends Job {
 	 * @return true means process other hooks
 	 */
 	public static function revisionInsertComplete( &$revision, &$url, &$flags ) {
-		global $wgUser, $wgDevelEnvironment, $wgCityId;
+		global $wgUser, $wgDevelEnvironment, $wgCityId, $wgCommandLineMode;
 
 		wfProfileIn( __METHOD__ );
+
+		wfLoadExtensionMessages( "HAWelcome" );
 
 		/**
 		 * Revision has valid Title field
 		 */
 		$Title = $revision->getTitle();
-		if( $Title ) {
-			$welcomer = trim( wfMsg( "welcome-user" ) );
-			if( $welcomer !== "@disabled" && $welcomer !== "-" && $isValid ) {
+		if( $Title && ! $wgCommandLineMode ) {
+			$welcomer = trim( wfMsgForContent( "welcome-user" ) );
+			Wikia::log( __METHOD__, "welcomer", $welcomer );
+			if( $welcomer !== "@disabled" && $welcomer !== "-" ) {
 				/**
 				 * check if talk page for wgUser exists
 				 *
 				 * @todo check editcount for user
 				 */
+				Wikia::log( __METHOD__, "user", $wgUser->getName() );
 				$talkPage = $wgUser->getUserPage()->getTalkPage();
 				if( $talkPage ) {
 					$talkArticle = new Article( $talkPage, 0 );
