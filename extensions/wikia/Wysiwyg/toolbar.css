@@ -1,0 +1,11 @@
+#siteNotice,
+.firstHeading,
+#siteSub,
+#contentSub,
+#editingTipsToggleDiv {
+	display: none !important;
+}
+
+#article {
+	padding: 0 1px;
+}
