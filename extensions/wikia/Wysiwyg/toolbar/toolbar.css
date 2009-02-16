@@ -12,7 +12,6 @@
 
 #page_bar {
 	display: none;
-	color: inherit !important;
 }
 
 #page_bar * {
@@ -63,7 +62,8 @@
 	-moz-border-radius: 4px;
 	-webkit-border-radius: 4px;
 }
-#fck_toolbar li:hover {
+#fck_toolbar li:hover,
+#fck_toolbar li.fck_button_on {
 	background: #FFC;
 	border-color: #000;	
 }
