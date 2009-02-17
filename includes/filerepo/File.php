@@ -153,7 +153,7 @@ abstract class File {
 	 * Return the associated title object
 	 */
 	public function getTitle() { return $this->title; }
-	
+
 	/**
 	 * Return the title used to find this file
 	 */
@@ -170,7 +170,7 @@ abstract class File {
 		if ( !isset( $this->url ) ) {
 			$this->url = $this->repo->getZoneUrl( 'public' ) . '/' . $this->getUrlRel();
 		}
-		return wfReplaceImageServer( $this->url );
+		return wfReplaceImageServer( $this->url, $this->getTimestamp() );
 	}
 
 	/**
@@ -571,9 +571,9 @@ abstract class File {
 					$thumb = $this->handler->getTransform( $this, $thumbPath, $thumbUrl, $params );
 				}
 			}
-			
-			// Purge. Useful in the event of Core -> Squid connection failure or squid 
-			// purge collisions from elsewhere during failure. Don't keep triggering for 
+
+			// Purge. Useful in the event of Core -> Squid connection failure or squid
+			// purge collisions from elsewhere during failure. Don't keep triggering for
 			// "thumbs" which have the main image URL though (bug 13776)
 			if ( $wgUseSquid && ($thumb->isError() || $thumb->getUrl() != $this->getURL()) ) {
 				SquidUpdate::purge( array( $thumbUrl ) );
@@ -767,7 +767,7 @@ abstract class File {
 		} else {
 			$path .= rawurlencode( $suffix );
 		}
-		return wfReplaceImageServer( $path );
+		return wfReplaceImageServer( $path, $this->getTimestamp() );
 	}
 
 	/** Get the URL of the thumbnail directory, or a particular file if $suffix is specified */
@@ -776,7 +776,7 @@ abstract class File {
 		if ( $suffix !== false ) {
 			$path .= '/' . rawurlencode( $suffix );
 		}
-		return wfReplaceImageServer( $path );
+		return wfReplaceImageServer( $path, $this->getTimestamp() );
 	}
 
 	/** Get the virtual URL for an archive file or directory */
@@ -1237,7 +1237,7 @@ abstract class File {
 	function getRedirected() {
 		return $this->redirected;
 	}
-	
+
 	function getRedirectedTitle() {
 		if ( $this->redirected ) {
 			if ( !$this->redirectTitle )

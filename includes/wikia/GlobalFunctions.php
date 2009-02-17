@@ -109,10 +109,11 @@ function print_pre($param, $return = 0)
  * @author Inez Korczyński <inez@wikia-inc.com>
  *
  * @param String $url -- old url
+ * @param String $timestamp -- last change timestamp
  *
  * @return String -- new url
  */
-function wfReplaceImageServer($url) {
+function wfReplaceImageServer( $url, $timestamp = false ) {
 	global $wgImagesServers;
 
 	if(isset($wgImagesServers) && is_int($wgImagesServers)) {
@@ -122,6 +123,9 @@ function wfReplaceImageServer($url) {
 
 			$serverNo = $inthash%($wgImagesServers-1);
 			$serverNo++;
+			if( $timestamp ) {
+				$url .= "#" . $timestamp;
+			}
 
 			return str_replace('http://images.wikia.com/',sprintf('http://images%s.wikia.nocookie.net/',$serverNo),$url);
 		}
