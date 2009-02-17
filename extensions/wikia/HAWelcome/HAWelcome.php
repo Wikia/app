@@ -53,7 +53,7 @@ class HAWelcomeJob extends Job {
 		$mAnon,
 		$mSysop;
 
-	const WELCOMEUSER = "Wikia welcomer";
+	const WELCOMEUSER = "Wikia-welcome";
 
 	/**
 	 * Construct a job
@@ -121,7 +121,7 @@ class HAWelcomeJob extends Job {
 							$userArticle = new Article( $userPage, 0 );
 							if( ! $userArticle->exists() || $wgDevelEnvironment ) {
 								$welcomeMsg = wfMsg( "welcome-user-page" );
-								$userArticle->doEdit( $welcomeMsg, wfMsg( "welcome-message-log" ), EDIT_FORCE_BOT );
+								$userArticle->doEdit( $welcomeMsg, false, EDIT_FORCE_BOT );
 							}
 						}
 
