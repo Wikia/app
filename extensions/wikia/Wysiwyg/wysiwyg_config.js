@@ -25,10 +25,15 @@ if (typeof window.parent.wysiwygUseNewToolbar != 'undefined') {
 	toolbarItems = [
 		'-', 'Bold', 'Italic', 'Underline', 'StrikeThrough', 'Outdent', 'Indent',
 		'-', 'UnorderedList', 'OrderedList', 'Link', 'Unlink',
-		'-', 'AddImage', /*'AddVideo',*/ 'Table', 'Tildes',
+		'-', 'AddImage', 'Table', 'Tildes',
 		'-', 'InsertTemplate',
 		'-', 'Undo', 'Redo', 'Source'
 	];
+
+	// add WikiaVideo
+	if (typeof window.parent.vet_enabled != 'undefined') {
+		toolbarItems.splice(14, 0, 'AddVideo');
+	}
 
 	FCKConfig.Plugins.Add('toolbar');
 }
