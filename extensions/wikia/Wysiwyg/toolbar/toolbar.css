@@ -73,6 +73,10 @@
 	background: #FFC;
 	border-color: #000;	
 }
+#fck_toolbar li.fck_button_disabled {
+	background: #aaa;
+	cursor: default;
+}
 #fck_toolbar li img {
 	vertical-align: middle;	
 }
