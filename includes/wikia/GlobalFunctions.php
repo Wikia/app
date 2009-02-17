@@ -116,6 +116,10 @@ function print_pre($param, $return = 0)
 function wfReplaceImageServer( $url, $timestamp = false ) {
 	global $wgImagesServers;
 
+	if( $timestamp ) {
+		$url .= "#" . $timestamp;
+	}
+	
 	if(isset($wgImagesServers) && is_int($wgImagesServers)) {
 		if(strlen($url) > 7 && substr($url,0,7) == 'http://') {
 			$hash = sha1($url);
@@ -123,9 +127,6 @@ function wfReplaceImageServer( $url, $timestamp = false ) {
 
 			$serverNo = $inthash%($wgImagesServers-1);
 			$serverNo++;
-			if( $timestamp ) {
-				$url .= "#" . $timestamp;
-			}
 
 			return str_replace('http://images.wikia.com/',sprintf('http://images%s.wikia.nocookie.net/',$serverNo),$url);
 		}
