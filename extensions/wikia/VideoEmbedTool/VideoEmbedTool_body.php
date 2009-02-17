@@ -39,8 +39,10 @@ class VideoEmbedTool {
 
 		if($sourceId == 0) { // metacafe
 			$page ? $start = ($page - 1) * 8 : $start = 0;
-			$query = str_replace(" ", "+", $query);
-			$file = @file_get_contents( "http://www.metacafe.com/api/videos?vq=" . $query, FALSE );
+//			$query = str_replace(" ", "+", $query);
+			$query = str_replace(" ", "_", $query);		
+//			$file = @file_get_contents( "http://www.metacafe.com/api/videos?vq=" . $query, FALSE );
+			$file = @file_get_contents( "http://www.metacafe.com/tags/" . $query . '/rss.xml', FALSE );
                                 if ($file) {
                                         $doc = new DOMDocument;
                                         @$doc->loadXML( $file );
@@ -291,20 +293,29 @@ class VideoEmbedTool {
 		$caption = $wgRequest->getVal('caption');
 		$slider = $wgRequest->getVal('slider');
 
-		$ns_img = $wgContLang->getFormattedNsText( NS_VIDEO );
+		$ns_vid = $wgContLang->getFormattedNsText( NS_VIDEO );
 
-		$tag = '[[' . $ns_img . ':'.$name;
+		if( 'gallery' != $layout ) {
+			$tag = '[[' . $ns_vid . ':'.$name;
+			if($size != 'full') {
+				$tag .= '|thumb';
+			}
+			$tag .= '|'.$width;
+			$tag .= '|'.$layout;
 
-		if($size != 'full') {
-			$tag .= '|thumb';
-		}
-
-		$tag .= '|'.$width;
-		$tag .= '|'.$layout;
-		if($caption != '') {
-			$tag .= '|'.$caption.']]';
-		} else {
-			$tag .= ']]';
+			if($caption != '') {
+				$tag .= '|'.$caption.']]';
+			} else {
+				$tag .= ']]';
+			}
+		} else { // gallery needs to be treated differently...
+			$tag = "<videogallery>\n";
+			$tag .= $ns_vid . ":" . $name;			
+			if($caption != '') {
+				$tag .= "|".$caption."\n</videogallery>";
+			} else {
+				$tag .= "\n</videogallery>";
+			}
 		}
 
 		$tmpl = new EasyTemplate(dirname(__FILE__).'/templates/');
