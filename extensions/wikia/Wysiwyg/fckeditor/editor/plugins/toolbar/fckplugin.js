@@ -1,6 +1,5 @@
 FCK.log('new toolbar enabled...');
 
-
 // WikiaSeparator class for separating buckets
 var WikiaSeparator = function( bucket  ) { this.Bucket = bucket;  };
 
@@ -51,7 +50,7 @@ WikiaToolbar.prototype.Create = function(parentElement) {
 				// create new bucket
 				var toolbarCell = toolbarRow.insertCell(-1);
 				toolbarCell.innerHTML = '<div class="clearfix">' + 
-					'<label title="' + item.Bucket.name + '">' + item.Bucket.name  + '</label><ul></ul></div>';
+					'<label title="' + item.Bucket.name + '" class="color1">' + item.Bucket.name  + '</label><ul></ul></div>';
 
 				// set CSS class for last bucket
 				if (item.Bucket.last) {
@@ -89,7 +88,7 @@ var WikiaButtonUI = function( name, label, tooltip, iconPathOrStripInfoArray, st
 {
 	this.Name		= name ;
 	this.Label		= label || name ;
-	this.Tooltip	= tooltip || this.Label ;
+	this.Tooltip		= tooltip || this.Label ;
 	this.Style		= style || FCK_TOOLBARITEM_ONLYICON ;
 	this.State		= state || FCK_TRISTATE_OFF ;
 
@@ -97,20 +96,50 @@ var WikiaButtonUI = function( name, label, tooltip, iconPathOrStripInfoArray, st
 
 	if ( FCK.IECleanup )
 		FCK.IECleanup.AddItem( this, FCKToolbarButtonUI_Cleanup ) ;
-
-	FCK.log(this);
 }
 
 // WikiaButtonUI class extends FCKToolbarButtonUI
 FCK.YAHOO.lang.extend(WikiaButtonUI, FCKToolbarButtonUI);
 
+WikiaButtonUI.prototype.IconsPath = window.parent.wgExtensionsPath + '/wikia/Wysiwyg/toolbar/';
+
+WikiaButtonUI.prototype.Icons = {
+	'Bold': 	'text_bold.png',
+	'Italic':	'text_italic.png',
+	'Underline':	'text_underline.png',
+	'StrikeThrough':'text_strikethrough.png',
+	'Indent':	'text_indent.png',
+	'Outdent':	'text_indent_remove.png',
+
+	'InsertUnorderedList':	'text_list_bullets.png',
+	'InsertOrderedList':	'text_list_numbers.png',
+	'Link':			'link.png',
+	'Unlink':		'link_break.png',
+
+	'AddImage':	'photo.png',
+	'AddVideo':	'film.png',
+	'Table':	'table.png',
+	'Tildes':	'icon_signature.png',
+
+	'Undo':		'arrow_undo.png',
+	'Redo':		'arrow_redo.png',
+	'Source':	'application_xp_terminal.png'
+};
+
 WikiaButtonUI.prototype.Create = function( parentElement )
 {
+	// try to use customized icons
+	if (this.Icons[this.Name]) {
+		src = this.IconsPath + this.Icons[this.Name];
+		this.Icon = new FCKIcon( src );
+	}
+
 	var oDoc = FCKTools.GetElementDocument( parentElement ) ;
 
 	// create main wrapping element
 	var oMainElement = this.MainElement = oDoc.createElement( 'LI' ) ;
 	oMainElement.title = this.Tooltip ;
+	oMainElement.id = 'fck_button_' + this.Name.toLowerCase();
 
 	// The following will prevent the button from catching the focus.
 	if ( FCKBrowserInfo.IsGecko )
