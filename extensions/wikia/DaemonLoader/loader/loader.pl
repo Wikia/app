@@ -2,7 +2,8 @@
 
 my $wikia_lib;
 BEGIN {
-	$wikia_lib = "/home/wikicities/conf/mediawiki/wikia-utils/lib/";
+	$wikia_lib = "/home/moli/wikia/wikia-utils/lib/";
+	#my $wikia_lib = "/home/wikicities/conf/mediawiki/wikia-utils/lib";
 }
 
 use DBI;
@@ -98,7 +99,6 @@ sub parse_config($)
     my @config = ();
 
 	my $today = substr (&ParseDate("today"), 0, 8);
-	$today = '20090213';
     foreach ( @{$tasks} ) {
         $counter++;
         my $mask = "0:1:0:0:0:0:0";
