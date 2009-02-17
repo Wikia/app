@@ -25,7 +25,7 @@ if('' == $props['oname']) {
 	<tr>
 		<th><?= wfMsg('vet-size') ?></th>
 		<td>
-			<input onclick="VET_imageSizeChanged('thumb');" type="checkbox" name="fullthumb" id="VideoEmbedThumbOption" checked=checked /> <label for="VideoEmbedThumbOption" onclick="VET_imageSizeChanged('thumb');"><?= wfMsg('vet-thumbnail') ?></label>
+			<input type="checkbox" name="fullthumb" id="VideoEmbedThumbOption" checked=checked /> <label for="VideoEmbedThumbOption" ><?= wfMsg('vet-thumbnail') ?></label>
 			&nbsp;
 		</td>
 	</tr>
@@ -48,6 +48,8 @@ if('' == $props['oname']) {
 			<label for="VideoEmbedLayoutLeft"><img src="<?= $wgExtensionsPath.'/wikia/VideoEmbedTool/images/image_upload_left.png' ?>" /></label>
 			<input type="radio" id="VideoEmbedLayoutRight" name="layout" checked="checked" />
 			<label for="VideoEmbedLayoutRight"><img src="<?= $wgExtensionsPath.'/wikia/VideoEmbedTool/images/image_upload_right.png' ?>" /></label>
+			<input type="radio" id="VideoEmbedLayoutGallery" name="layout" />
+			<label for="VideoEmbedLayoutGallery"><img src="<?= $wgExtensionsPath.'/wikia/VideoEmbedTool/images/image_upload_gallery.png' ?>" /></label>
 		</td>
 	</tr>
 	<tr>

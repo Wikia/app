@@ -42,8 +42,7 @@ $messages['en'] = array(
 	'vet-imagelink' => '<b>New!</b> Insert Videos',
 	'vet-imagebutton' => 'Insert Videos' ,
 	'vet-license-cc' => 'Licenced under Creative Commons Attribution-Share Alike 3.0',
-	'vet-filetype-missing' => 'This upload is missing its file extension',
-	'vet-filetype-incorrect' => 'This upload has an incorrect file extension',
+	'vet-name-incorrect' => 'This video name contains invalid characters',
 	'vet-uploadtext' => '\'\'\'This form allows you to quickly upload and display files in articles.\'\'\'
 
 \'\'See also the [[Special:Log/upload|upload log]] and a [[Special:ImageList|list of all uploaded files]].\'\'',
