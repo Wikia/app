@@ -1760,10 +1760,23 @@ class Parser
 				if($ns == NS_VIDEO) {
 					if(!empty($wgEnableWikiaVideoExt)) {
 						wfProfileIn("$fname-video");
-						$text = $this->replaceExternalLinks($text);
-						$text = $this->replaceInternalLinks($text);
-						$s .= $prefix . $this->armorLinks(WikiaVideo_makeVideo($nt, $text, $sk)).$trail;
-						$this->mOutput->addImage(':'.$nt->getDBkey());
+
+						// Wysiwyg: mark videos
+						if (!empty($wgWysiwygParserEnabled)) {
+							$text = Wysiwyg_SetRefId('video', array('text' => &$text, 'link' => $link, 'wasblank' => $wasblank, 'noforce' => $noforce, 'original' => $originalWikitext));
+
+							$wgWysiwygParserEnabled = false;
+							$text = $this->replaceExternalLinks(preg_replace('/\x7e-start-\d+-stop/', '', $text));
+							$text = $this->replaceInternalLinks(preg_replace('/\x7d-\d{4}/', '', $text));
+							$wgWysiwygParserEnabled = true;
+							$s .= $prefix . $text . $trail;
+						}
+						else {
+							$text = $this->replaceExternalLinks($text);
+							$text = $this->replaceInternalLinks($text);
+							$s .= $prefix . $this->armorLinks(WikiaVideo_makeVideo($nt, $text, $sk)).$trail;
+							$this->mOutput->addImage(':'.$nt->getDBkey());
+						}
 						wfProfileOut("$fname-video");
 						continue;
 					}
@@ -3470,12 +3483,6 @@ class Parser
 						$output = $this->renderImageGallery( $content, $attributes );
 					}
 					break;
-				// support for WikiaVideo
-				case 'video':
-					if (!empty($wgWysiwygParserEnabled)) {
-						$output = Wysiwyg_SetRefId('video', array('text' => &$content), false);
-						break;
-					}
 				default:
 					if( isset( $this->mTagHooks[$name] ) ) {
 						# Workaround for PHP bug 35229 and similar
