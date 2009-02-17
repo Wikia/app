@@ -32,6 +32,9 @@ $wgExtensionFunctions[] = 'CategorySelectInit';
 $wgExtensionMessagesFiles['CategorySelect'] = dirname(__FILE__) . '/CategorySelect.i18n.php';
 $wgAjaxExportList[] = 'CategorySelectAjaxGetCategories';
 $wgAjaxExportList[] = 'CategorySelectAjaxParseCategories';
+$wgAjaxExportList[] = 'CategorySelectAjaxSaveCategories';
+$wgAjaxExportList[] = 'CategorySelectRemoveTooltip';
+$wgAjaxExportList[] = 'CategorySelectGenerateHTMLforView';
 
 /**
  * Initialize hooks
@@ -48,7 +51,8 @@ function CategorySelectInit() {
 	$wgHooks['EditPage::showEditForm:fields'][] = 'CategorySelectAddFormFields';
 	$wgHooks['EditPage::showDiff::begin'][] = 'CategorySelectDiffArticle';
 	$wgHooks['EditForm::MultiEdit:Form'][] = 'CategorySelectDisplayCategoryBox';
-	$wgHooks['getCategoryLinks'][] = 'CategorySelectGetCategoryLinks';
+	$wgHooks['Skin::getCategoryLinks::begin'][] = 'CategorySelectGetCategoryLinksBegin';
+	$wgHooks['Skin::getCategoryLinks::end'][] = 'CategorySelectGetCategoryLinksEnd';
 	$wgHooks['ExtendJSGlobalVars'][] = 'CategorySelectSetupVars';
 	wfLoadExtensionMessages('CategorySelect');
 }
@@ -119,6 +123,28 @@ function CategorySelectAjaxParseCategories($wikitext) {
 }
 
 /**
+ * Save categories sent via AJAX into article
+ *
+ * @author Maciej Błaszkowski <marooned at wikia-inc.com>
+ */
+function CategorySelectAjaxSaveCategories($articleId, $categories) {
+	$categories = CategorySelectChangeFormat($categories, 'json', 'wiki');
+	$title = Title::newFromID($articleId);
+	if (is_null($title)) {
+		return "error: article [id=$articleId] not exists";
+	} else {
+		global $wgUser;
+		$article = new Article($title);
+		$article_text = $article->fetchContent();
+		$article_text .= $categories;
+		$edit_summary = wfMsg('categoryselect-edit-summary');
+		$flags = EDIT_UPDATE;
+		$article->doEdit($article_text, $edit_summary, $flags);
+		return 'ok';
+	}
+}
+
+/**
  * Replace content of edited article [with cutted out categories]
  *
  * @author Maciej Błaszkowski <marooned at wikia-inc.com>
@@ -176,7 +202,7 @@ function CategorySelectOutput($out, $text) {
 		}
 	}
 
-	$html = CategorySelectGenerateHTML();
+	$html = CategorySelectGenerateHTMLforEdit();
 	$wgOut->addHTML($html);
 
 	return true;
@@ -286,17 +312,17 @@ function CategorySelectDisplayCategoryBox($rows, $cols, $ew, $textbox) {
 			}
 		}
 
-		$wgOut->addHTML( CategorySelectGenerateHTML('editform') );
+		$wgOut->addHTML( CategorySelectGenerateHTMLforEdit('editform') );
 	}
 	return true;
 }
 
 /**
- * Remove regular category list under article
+ * Remove regular category list under article (in edit mode)
  *
  * @author Maciej Błaszkowski <marooned at wikia-inc.com>
  */
-function CategorySelectGetCategoryLinks($categoryLinks) {
+function CategorySelectGetCategoryLinksBegin($categoryLinks) {
 	global $wgRequest;
 
 	$action = $wgRequest->getVal('action', 'view');
@@ -309,11 +335,26 @@ function CategorySelectGetCategoryLinks($categoryLinks) {
 }
 
 /**
- * Add required JS & CSS and return HTML
+ * Add 'add category' button next to category list under article (in view mode)
  *
  * @author Maciej Błaszkowski <marooned at wikia-inc.com>
  */
-function CategorySelectGenerateHTML($formId = '') {
+function CategorySelectGetCategoryLinksEnd($categoryLinks) {
+	global $wgRequest;
+
+	$action = $wgRequest->getVal('action', 'view');
+	if ($action == 'view' || $action == 'purge') {
+		$categoryLinks .= ' <div id="csAddCategorySwitch" style="float:right"><a href="#" onclick="YAHOO.util.Get.script(wgExtensionsPath+\'/wikia/CategorySelect/CategorySelect.js?\'+wgStyleVersion,{onSuccess:function(){showCSpanel();}});return false;" onfocus="this.blur();">' . wfMsg('categoryselect-addcategory-button') . '</a></div>';
+	}
+	return true;
+}
+
+/**
+ * Add required JS & CSS and return HTML [for 'edit article' mode]
+ *
+ * @author Maciej Błaszkowski <marooned at wikia-inc.com>
+ */
+function CategorySelectGenerateHTMLforEdit($formId = '') {
 	global $wgOut, $wgExtensionsPath, $wgStyleVersion, $wgCategorySelectMetaData;
 
 	$wgOut->addScript("<script type=\"text/javascript\">var formId = '$formId';</script>");
@@ -340,6 +381,37 @@ function CategorySelectGenerateHTML($formId = '') {
 	';
 
 	return $result;
+}
+
+/**
+ * Add required JS & CSS and return HTML [for 'view article' mode]
+ *
+ * @author Maciej Błaszkowski <marooned at wikia-inc.com>
+ */
+function CategorySelectGenerateHTMLforView() {
+	global $wgExtensionsPath, $wgStyleVersion;
+
+	$result = '
+	<link rel="stylesheet" type="text/css" href="' . $wgExtensionsPath . '/wikia/CategorySelect/CategorySelect.css?' . $wgStyleVersion . '" />
+	<div id="csMainContainer">
+		<div id="csSuggestContainer">
+			<div id="csHintContainer">' . wfMsg('categoryselect-suggest-hint') . '</div>
+		</div>
+		<div id="csItemsContainer">
+			<input id="csCategoryInput" type="text" style="display: none" />
+		</div>
+		<div class="clearfix"></div>
+		<div id="csButtonsContainer">
+			<input type="button" onclick="csSave()" value="' . wfMsg('categoryselect-button-save') . '" />
+			<input type="button" onclick="csCancel()" value="' . wfMsg('categoryselect-button-cancel') . '" />
+		</div>
+	</div>
+	';
+
+	$ar = new AjaxResponse($result);
+	$ar->setCacheDuration(60 * 60);
+
+	return $ar;
 }
 
 /**
@@ -386,4 +458,3 @@ function CategorySelectRemoveTooltip() {
 
 	return new AjaxResponse('ok');
 }
-$wgAjaxExportList[] = 'CategorySelectRemoveTooltip';

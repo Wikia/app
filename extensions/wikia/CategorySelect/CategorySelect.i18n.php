@@ -31,6 +31,9 @@ $messages = array(
 		'categoryselect-addcategory-button' => 'Add category',
 		'categoryselect-suggest-hint' => 'Press Enter when done',
 		'categoryselect-tooltip' => "'''New!''' Category tagging toolbar. Try it out or see [[Help:CategorySelect|help]] to learn more",
-		'categoryselect-unhandled-syntax' => 'Unhandled syntax detected - switching back to visual mode impossible.'
+		'categoryselect-unhandled-syntax' => 'Unhandled syntax detected - switching back to visual mode impossible.',
+		'categoryselect-edit-summary' => 'Adding categories',
+		'categoryselect-button-save' => 'Save',
+		'categoryselect-button-cancel' => 'Cancel'
 	)
 );

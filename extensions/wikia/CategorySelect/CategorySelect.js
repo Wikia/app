@@ -1,24 +1,14 @@
 var Event = YAHOO.util.Event;
 var Dom = YAHOO.util.Dom;
-var categories, fixCategoryRegexp;
-//HTML IDs
-csCategoryInputId = 'csCategoryInput';
-csHintContainerId = 'csHintContainer';
-csSuggestContainerId = 'csSuggestContainer';
-csMainContainerId = 'csMainContainer';
-csItemsContainerId = 'csItemsContainer';
-csWikitextId = 'csWikitext';
-csWikitextContainerId = 'csWikitextContainer';
-csSwitchViewContainerId = 'csSwitchViewContainer';
-csSwitchViewId = 'csSwitchView';
-csSourceTypeId = 'wpCategorySelectSourceType';
-csCategoryFieldId = 'wpCategorySelectWikitext';
-csAddCategoryButtonId = 'csAddCategoryButton';
-csDefaultNamespace = 'Category';	//TODO: default namespace
+var categories;
+var fixCategoryRegexp = new RegExp('\\[\\[(?:' + csCategoryNamespaces + '):([^\\]]+)]]', 'i');
+var ajaxUrl = wgServer + wgScript + '?action=ajax';
+var csType = 'edit';
+var csDefaultNamespace = 'Category';	//TODO: default namespace
 
 function positionSuggestBox() {
-	$(csSuggestContainerId).style.top = $(csCategoryInputId).offsetTop + jQuery("#" + csCategoryInputId).height() + 5 + 'px';
-	$(csSuggestContainerId).style.left = Math.min($(csCategoryInputId).offsetLeft, (Dom.getViewportWidth() - jQuery('#' + csItemsContainerId).offset().left - jQuery("#" + csSuggestContainerId).width() - 10)) + 'px';
+	$('csSuggestContainer').style.top = $('csCategoryInput').offsetTop + jQuery("#" + 'csCategoryInput').height() + 5 + 'px';
+	$('csSuggestContainer').style.left = Math.min($('csCategoryInput').offsetLeft, (Dom.getViewportWidth() - jQuery('#' + 'csItemsContainer').offset().left - jQuery("#" + 'csSuggestContainer').width() - 10)) + 'px';
 }
 
 function deleteCategory(e) {
@@ -105,16 +95,16 @@ function modifyCategory(e) {
 }
 
 function replaceAddToInput(e) {
-	$(csAddCategoryButtonId).style.display = 'none';
-	$(csCategoryInputId).style.display = 'block';
+	$('csAddCategoryButton').style.display = 'none';
+	$('csCategoryInput').style.display = 'block';
 	positionSuggestBox();
-	$(csHintContainerId).style.display = 'block';
-	$(csCategoryInputId).focus();
+	$('csHintContainer').style.display = 'block';
+	$('csCategoryInput').focus();
 }
 
 function addAddCategoryButton() {
-	if ($(csAddCategoryButtonId) != null) {
-		$(csAddCategoryButtonId).style.display = 'block';
+	if ($('csAddCategoryButton') != null) {
+		$('csAddCategoryButton').style.display = 'block';
 	} else {
 		elementA = document.createElement('a');
 		elementA.id = 'csAddCategoryButton';
@@ -135,14 +125,14 @@ function addAddCategoryButton() {
 		elementSpan.onclick = function(e) {replaceAddToInput(this); return false;};
 		elementSpanOuter.appendChild(elementSpan);
 
-		$(csItemsContainerId).appendChild(elementA);
+		$('csItemsContainer').appendChild(elementA);
 	}
 }
 
 function inputBlur() {
-	if ($(csCategoryInputId).value == '') {
-		$(csCategoryInputId).style.display = 'none';
-		$(csHintContainerId).style.display = 'none';
+	if ($('csCategoryInput').value == '') {
+		$('csCategoryInput').style.display = 'none';
+		$('csHintContainer').style.display = 'none';
 		addAddCategoryButton();
 	}
 }
@@ -184,9 +174,9 @@ function addCategory(category, params, index) {
 	elementSpan.onclick = function(e) {modifyCategory(this); return false;};
 	elementSpanOuter.appendChild(elementSpan);
 
-	$(csItemsContainerId).insertBefore(elementA, $(csCategoryInputId));
+	$('csItemsContainer').insertBefore(elementA, $('csCategoryInput'));
 
-	$(csCategoryInputId).value = '';
+	$('csCategoryInput').value = '';
 }
 
 function generateWikitextForCategories() {
@@ -204,14 +194,16 @@ function generateWikitextForCategories() {
 function initializeCategories(cats) {
 	//move categories metadata from hidden field [JSON encoded] into array
 	if (cats == undefined) {
-		cats = $(csCategoryFieldId).value;
+		cats = $('wpCategorySelectWikitext') == null ? '' : $('wpCategorySelectWikitext').value;
 		categories = cats == '' ? new Array() : eval(cats);
 	} else {
 		categories = cats;
 	}
 
-	//inform PHP what source should it use
-	$(csSourceTypeId).value = 'json';
+	//inform PHP what source should it use [this field exists only in 'edit page' mode]
+	if ($('wpCategorySelectSourceType') != null) {
+		$('wpCategorySelectSourceType').value = 'json';
+	}
 
 	addAddCategoryButton();
 	for(c in categories) {
@@ -220,16 +212,15 @@ function initializeCategories(cats) {
 }
 
 function toggleCodeView() {
-	if ($(csWikitextContainerId).style.display != 'block') {	//switch to code view
-		$(csWikitextId).value = generateWikitextForCategories();
-		$(csItemsContainerId).style.display = 'none';
-		$(csSwitchViewId).innerHTML = csVisualView;
-		$(csWikitextContainerId).style.display = 'block';
-		$(csCategoryFieldId).value = '';	//remove JSON - this will inform PHP to use wikitext instead
-		$(csSourceTypeId).value = 'wiki';	//inform PHP what source should it use
+	if ($('csWikitextContainer').style.display != 'block') {	//switch to code view
+		$('csWikitext').value = generateWikitextForCategories();
+		$('csItemsContainer').style.display = 'none';
+		$('csSwitchView').innerHTML = csVisualView;
+		$('csWikitextContainer').style.display = 'block';
+		$('wpCategorySelectWikitext').value = '';	//remove JSON - this will inform PHP to use wikitext instead
+		$('wpCategorySelectSourceType').value = 'wiki';	//inform PHP what source should it use
 	} else {	//switch to visual code
-		var ajaxUrl = wgServer + wgScript + '?action=ajax';
-		var pars = 'rs=CategorySelectAjaxParseCategories&rsargs=' + escape($(csWikitextId).value);
+		var pars = 'rs=CategorySelectAjaxParseCategories&rsargs=' + encodeURIComponent($('csWikitext').value);
 		var callback = {
 			success: function(originalRequest) {
 				result = eval('(' + originalRequest.responseText + ')');
@@ -239,16 +230,16 @@ function toggleCodeView() {
 				} else if (result['categories'] != undefined) {
 					YAHOO.log('AJAX result: OK');
 					//delete old categories [HTML items]
-					var items = $(csItemsContainerId).getElementsByTagName('a');
+					var items = $('csItemsContainer').getElementsByTagName('a');
 					for (i=items.length-1; i>=0; i--) {
 						if (items[i].getAttribute('catId') != null) {
 							items[i].parentNode.removeChild(items[i]);
 						}
 					}
 					initializeCategories(result['categories']);
-					$(csSwitchViewId).innerHTML = csCodeView;
-					$(csWikitextContainerId).style.display = 'none';
-					$(csItemsContainerId).style.display = 'block';
+					$('csSwitchView').innerHTML = csCodeView;
+					$('csWikitextContainer').style.display = 'none';
+					$('csItemsContainer').style.display = 'block';
 				}
 			},
 			timeout: 30000
@@ -275,7 +266,7 @@ function moveElement(movedId, prevSibbId) {
 	}
 	//reorder catId in HTML elements
 	var itemId = 0;
-	var items = $(csItemsContainerId).getElementsByTagName('a');
+	var items = $('csItemsContainer').getElementsByTagName('a');
 	for (catId in newCat) {
 		if (newCat[catId] == undefined) {
 			continue;
@@ -286,57 +277,45 @@ function moveElement(movedId, prevSibbId) {
 	categories = newCat;
 }
 
-Event.onDOMReady(function() {
-	YAHOO.log('onDOMReady');
-
-	fixCategoryRegexp = new RegExp('\\[\\[(?:' + csCategoryNamespaces + '):([^\\]]+)]]', 'i');
-	initializeCategories();
-	//show switch after loading categories
-	$(csSwitchViewContainerId).style.display = 'block';
-
-	var submitAutoComplete = function(comp, resultListItem) {
-		YAHOO.log('selected category:' + resultListItem[2]);
-		addCategory(resultListItem[2][0]);
-	};
-
-	var collapseAutoComplete = function() {
-		$(csHintContainerId).style.display = 'block';
-	}
-
-	var expandAutoComplete = function(sQuery , aResults) {
-		$(csHintContainerId).style.display = 'none';
-	}
-
-	var inputKeyPress = function(e) {
-		if(e.keyCode == 13) {
-			//TODO: stop AJAX call for AutoComplete
-			YAHOO.util.Event.preventDefault(e);
-			category = $(csCategoryInputId).value;
-			YAHOO.log('enter pressed, value = ' + category);
-			if (category != '') {
-				addCategory(category);
-			}
+function inputKeyPress(e) {
+	if(e.keyCode == 13) {
+		//TODO: stop AJAX call for AutoComplete
+		YAHOO.util.Event.preventDefault(e);
+		category = $('csCategoryInput').value;
+		YAHOO.log('enter pressed, value = ' + category);
+		if (category != '') {
+			addCategory(category);
 		}
-		positionSuggestBox();
-	};
-
-	//handle [enter] for non existing categories
-	YAHOO.util.Event.addListener(csCategoryInputId, 'keypress', inputKeyPress);
-	YAHOO.util.Event.addListener(csCategoryInputId, 'blur', inputBlur);
-
-	var regularEditorSubmit = function(e) {
-		$(csCategoryFieldId).value = YAHOO.Tools.JSONEncode(categories);
 	}
+	positionSuggestBox();
+}
 
-	YAHOO.util.Event.addListener(formId, 'submit', regularEditorSubmit);
+function submitAutoComplete(comp, resultListItem) {
+	YAHOO.log('selected category:' + resultListItem[2]);
+	addCategory(resultListItem[2][0]);
+}
 
+function collapseAutoComplete() {
+	$('csHintContainer').style.display = 'block';
+}
+
+function expandAutoComplete(sQuery , aResults) {
+	$('csHintContainer').style.display = 'none';
+}
+
+function regularEditorSubmit(e) {
+	$('wpCategorySelectWikitext').value = YAHOO.Tools.JSONEncode(categories);
+}
+
+function initAutoComplete() {
+	YAHOO.log('initAutoComplete');
 	// Init datasource
 	var oDataSource = new YAHOO.widget.DS_XHR(wgServer + wgScriptPath + '/', ["\n"]);
 	oDataSource.responseType = YAHOO.widget.DS_XHR.TYPE_FLAT;
 	oDataSource.scriptQueryAppend = 'action=ajax&rs=CategorySelectAjaxGetCategories';
 
 	// Init AutoComplete object and assign datasource object to it
-	var oAutoComp = new YAHOO.widget.AutoComplete(csCategoryInputId, csSuggestContainerId, oDataSource);
+	var oAutoComp = new YAHOO.widget.AutoComplete('csCategoryInput', 'csSuggestContainer', oDataSource);
 	oAutoComp.autoHighlight = false;
 	oAutoComp.queryDelay = 0.5;
 	oAutoComp.highlightClassName = 'CSsuggestHover';
@@ -344,7 +323,22 @@ Event.onDOMReady(function() {
 	oAutoComp.itemSelectEvent.subscribe(submitAutoComplete);
 	oAutoComp.containerCollapseEvent.subscribe(collapseAutoComplete);
 	oAutoComp.containerExpandEvent.subscribe(expandAutoComplete);
+}
 
+function initHandlers() {
+	YAHOO.log('initHandlers: begin');
+	//handle [enter] for non existing categories
+	YAHOO.util.Event.addListener('csCategoryInput', 'keypress', inputKeyPress);
+	YAHOO.log('initHandlers: keypress done');
+	YAHOO.util.Event.addListener('csCategoryInput', 'blur', inputBlur);
+	YAHOO.log('initHandlers: blur done');
+	if (typeof formId != 'undefined') {
+		YAHOO.util.Event.addListener(formId, 'submit', regularEditorSubmit);
+	}
+	YAHOO.log('initHandlers: end');
+}
+
+function initTooltip() {
 	// Init tooltip
 	var tooltip =  YAHOO.util.Dom.get('csTooltip');
 
@@ -355,5 +349,57 @@ Event.onDOMReady(function() {
 			YAHOO.util.Dom.get('csTooltip').style.display = 'none';
 			sajax_do_call('CategorySelectRemoveTooltip', [], function() {});
 		});
+	}
+}
+
+//`view article` mode
+function showCSpanel() {
+	var pars = 'rs=CategorySelectGenerateHTMLforView';
+	var callback = {
+		success: function(originalRequest) {
+			$('csAddCategorySwitch').style.display = 'none';
+			var el = document.createElement('div');
+			el.innerHTML = originalRequest.responseText;
+			$('catlinks').appendChild(el);
+			YAHOO.log('category html added');
+			csType = 'view';
+			initHandlers();
+			initAutoComplete();
+			initializeCategories();
+		},
+		timeout: 30000
+	};
+	YAHOO.util.Connect.asyncRequest('POST', ajaxUrl, callback, pars);
+}
+
+function csSave() {
+	var pars = 'rs=CategorySelectAjaxSaveCategories&rsargs[]=' + wgArticleId + '&rsargs[]=' + encodeURIComponent(YAHOO.Tools.JSONEncode(categories));
+	var callback = {
+		success: function(originalRequest) {
+			if (originalRequest.responseText == 'ok') {
+				csCancel();
+			}
+		},
+		timeout: 30000
+	};
+	YAHOO.util.Connect.asyncRequest('POST', ajaxUrl, callback, pars);
+}
+
+function csCancel() {
+	$('csMainContainer').parentNode.removeChild($('csMainContainer'));
+	$('csAddCategorySwitch').style.display = 'block';
+}
+
+Event.onDOMReady(function() {
+	YAHOO.log('onDOMReady');
+	if (csType == 'edit') {
+		initHandlers();
+		initAutoComplete();
+		initializeCategories();
+		//show switch after loading categories
+		$('csSwitchViewContainer').style.display = 'block';
+
+		// Init tooltip
+		initTooltip();
 	}
 });
