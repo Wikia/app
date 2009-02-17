@@ -37,7 +37,7 @@ WikiaToolbar.prototype.Create = function(parentElement) {
 
 	var toolbar = parentDoc.createElement('TABLE');
 	toolbar.id = 'fck_toolbar';
-	toolbar.className = 'color1';
+	toolbar.className = 'color1 reset';
 	toolbarPlaceholder.appendChild(toolbar);
 
 	parentElement.insertBefore(toolbarPlaceholder, parentElement.firstChild);

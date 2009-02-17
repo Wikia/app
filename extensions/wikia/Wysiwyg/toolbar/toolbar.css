@@ -16,8 +16,9 @@
 
 #fck_toolbar_wrapper {
 	position: relative;
-	height: 45px;
+	height: 47px;
 	margin-top: 1px;
+	z-index: 50;
 }
 
 #fck_toolbar {
@@ -27,6 +28,7 @@
 	width: 100%;
 	position: absolute;
 	top: 0px;
+	height: 48px;
 }
 #fck_toolbar td {
 	padding: 0;
