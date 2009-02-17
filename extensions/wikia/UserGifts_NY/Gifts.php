@@ -1,5 +1,6 @@
 <?php
 
+$wgEnableGifts = true;
 $wgAvailableRights[] = 'giftadmin';
 $wgGroupPermissions['staff']['giftadmin'] = true;
 $wgGroupPermissions['sysop']['giftadmin'] = true;
