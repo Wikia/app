@@ -30,15 +30,20 @@ WikiaToolbar.prototype.Create = function(parentElement) {
 
 	// setup new toolbar
 	var parentDoc = window.parent.document;
-	parentElement = parentDoc.getElementById('page_bar');
+	parentElement = parentDoc.getElementById('article');
+
+	var toolbarPlaceholder = parentDoc.createElement('DIV');
+	toolbarPlaceholder.id = 'fck_toolbar_wrapper';
+
+	var toolbar = parentDoc.createElement('TABLE');
+	toolbar.id = 'fck_toolbar';
+	toolbar.className = 'color1';
+	toolbarPlaceholder.appendChild(toolbar);
+
+	parentElement.insertBefore(toolbarPlaceholder, parentElement.firstChild);
 
 	if (parentElement) {
-		// setup HTML
-		parentElement.innerHTML = '<table id="fck_toolbar"></table>';
-
-		var toolbar = parentDoc.getElementById('fck_toolbar');
 		var toolbarRow = toolbar.insertRow(-1);
-
 		var currentBucket;
 
 		// add toolbar items
