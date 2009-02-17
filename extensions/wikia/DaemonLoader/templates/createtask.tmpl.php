@@ -140,10 +140,16 @@ YAHOO.util.Event.onDOMReady(function() {
 				divDaemonInfo.innerHTML = "";
 			}
 			divCreatorLoader.innerHTML = "";
+			if (typeof TieDivLibrary != "undefined" ) {
+				TieDivLibrary.calculate();
+			};
 		},
 		failure: function( oResponse ) {
 			divCreatorLoader.innerHTML = "";
 			divDaemonInfo.innerHTML = "";
+			if (typeof TieDivLibrary != "undefined" ) {
+				TieDivLibrary.calculate();
+			};
 		}
 	};
 
@@ -160,11 +166,17 @@ YAHOO.util.Event.onDOMReady(function() {
 			YAHOO.util.Dom.get(resDiv).appendChild(input);
 			YAHOO.util.Event.addListener('dt-btn-' + loadDiv, "click", addDBToList, [loadDiv]);
 			loadDiv = null;
+			if (typeof TieDivLibrary != "undefined" ) {
+				TieDivLibrary.calculate();
+			};
 		},
 		failure: function( oResponse )
 		{
 			var resDiv = 'dt-list-' + loadDiv;
 			YAHOO.util.Dom.get(resDiv).innerHTML = oResponse.responseText;
+			if (typeof TieDivLibrary != "undefined" ) {
+				TieDivLibrary.calculate();
+			};
 		}
 	}
 		
@@ -203,11 +215,17 @@ YAHOO.util.Event.onDOMReady(function() {
 			divCreatorLoader.innerHTML = "";
 			setPreviousStep(2);
 			setCurrentStep(3);
+			if (typeof TieDivLibrary != "undefined" ) {
+				TieDivLibrary.calculate();
+			};
 		},
 		failure: function( oResponse )
 		{
 			divCreatorLoader.innerHTML = "";
 			YAHOO.util.Dom.get("dt-task-3step").innerHTML = "";
+			if (typeof TieDivLibrary != "undefined" ) {
+				TieDivLibrary.calculate();
+			};
 		}		
 	}
 
@@ -281,11 +299,17 @@ YAHOO.util.Event.onDOMReady(function() {
 			divCreatorLoader.innerHTML = "";
 			setPreviousStep(1);
 			setCurrentStep(2);
+			if (typeof TieDivLibrary != "undefined" ) {
+				TieDivLibrary.calculate();
+			};
 		},
 		failure: function( oResponse )
 		{
 			divCreatorLoader.innerHTML = "";
 			YAHOO.util.Dom.get("dt-task-2step").innerHTML = "";
+			if (typeof TieDivLibrary != "undefined" ) {
+				TieDivLibrary.calculate();
+			};
 		}
 	};
 
