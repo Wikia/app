@@ -55,7 +55,7 @@ WikiaToolbar.prototype.Create = function(parentElement) {
 			if (item.Bucket) {
 				// create new bucket
 				var toolbarCell = toolbarRow.insertCell(-1);
-				toolbarCell.innerHTML = '<div class="clearfix">' + 
+				toolbarCell.innerHTML = '<div class="clearfix color1">' + 
 					'<label title="' + item.Bucket.name + '" class="color1">' + item.Bucket.name  + '</label><ul></ul></div>';
 
 				// set CSS class for last bucket
