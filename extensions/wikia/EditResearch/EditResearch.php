@@ -12,8 +12,18 @@ $wgExtensionMessagesFiles['EditResearch'] = dirname(__FILE__).'/'.'EditResearch.
 
 $wgHooks['EditForm:BeforeDisplayingTextbox'][] = 'AddEditResearch';
 function AddEditResearch($o) {
-	global $wgUser, $wgOut, $wgHooks,$wgStylePath, $wgStyleVersion, $wgExtensionsPath ;
+	global $wgUser, $wgOut, $wgHooks, $wgTitle, $wgStylePath, $wgStyleVersion, $wgExtensionsPath, $wgEditResearchNamespaces ;
 	
+	if( ! empty($wgEditResearchNamespaces) ){
+		if( $wgEditResearchNamespaces[ $wgTitle->getNamespace() ] != true ){
+			return true;
+		}
+	}else{
+		if( $wgTitle->getNamespace() != NS_MAIN ){
+			return true;
+		}
+	}
+
 	wfLoadExtensionMessages('EditResearch');
 	
 	$wgOut->addScript('<link rel="stylesheet" type="text/css" href="'.$wgExtensionsPath.'/wikia/EditResearch/EditResearch.css?'.$wgStyleVersion.'"/>');
