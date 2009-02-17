@@ -412,13 +412,10 @@ class DaemonLoader extends SpecialPage {
 		global $wgRequest, $wgUser,	$wgCityId, $wgDBname;
 		global $wgContLang, $wgOut;
 		
-        wfProfileIn( __METHOD__ );
-
-		$result = array('nbr_records' => 0, 'data' => array());
+		$res = array('nbr_records' => 0, 'data' => array());
 
 		if ( !$wgUser->isAllowed( 'daemonloader' ) ) {
-			$wgOut->readOnlyPage(); #--- later change to something reasonable
-			return;
+			return $res;
 		}
 
 		if ( (!empty($wgUser)) && (!$wgUser->isBlocked()) ) {
@@ -426,38 +423,31 @@ class DaemonLoader extends SpecialPage {
 			$data = self::getAllDaemons($dt_id);
 			
 			if (!empty($data) && is_array($data) && !empty($data[$dt_id])) {
-				$result['nbr_records'] = count($data[$dt_id]);
+				$res['nbr_records'] = count($data[$dt_id]);
 				foreach ($data[$dt_id] as $key => $value) {
 					if ($key == 'dt_input_params') {
-						$result['data']['dt_params'] = @unserialize($value);
+						$res['data']['dt_params'] = @unserialize($value);
 					} else {
-						$result['data'][$key] = $value;
+						$res['data'][$key] = $value;
 					}
 				}
 			}
 		} 
 
-		wfProfileOut( __METHOD__ );
-
 		if (!function_exists('json_encode')) {
 			$oJson = new Services_JSON();
-			return $oJson->encode($result);
+			return $oJson->encode($res);
 		} else {
-			return json_encode($result);
+			return json_encode($res);
 		}
 	}
 
 	public static function axJobsList($limit = 30, $offset = 0, $order = 'dj_id', $desc = 0) {
-		global $wgRequest, $wgUser,	$wgCityId, $wgDBname;
-		global $wgContLang, $wgOut;
-		
-        wfProfileIn( __METHOD__ );
+		global $wgUser;
 
-		$result = array('nbr_records' => 0, 'data' => array(), 'limit' => $limit, 'page' => $offset, 'order' => $order, 'desc' => $desc);
-
+		$res = array('nbr_records' => 0, 'data' => array(), 'limit' => $limit, 'page' => $offset, 'order' => $order, 'desc' => $desc);
 		if ( !$wgUser->isAllowed( 'daemonloader' ) ) {
-			$wgOut->readOnlyPage(); #--- later change to something reasonable
-			return;
+			return $res;
 		}
 
 		if ( (!empty($wgUser)) && (!$wgUser->isBlocked()) ) {
@@ -470,107 +460,83 @@ class DaemonLoader extends SpecialPage {
 				$sHtml = "";
 				if ($oTaskHTML) {
 					$sHtml = $oTaskHTML->jobsListTableForm($aData);
-					$result['data'] = $sHtml;
-					$result['nbr_records'] = $count;
+					$res['data'] = $sHtml;
+					$res['nbr_records'] = $count;
 				}
 			}
 		} 
 
-		wfProfileOut( __METHOD__ );
-
 		if (!function_exists('json_encode')) {
 			$oJson = new Services_JSON();
-			return $oJson->encode($result);
+			return $oJson->encode($res);
 		} else {
-			return json_encode($result);
+			return json_encode($res);
 		}
 	}
 
-	public static function axGetWikiList ( $name ) {
-		global $wgRequest, $wgUser,	$wgCityId, $wgDBname;
-		global $wgContLang, $wgOut;
+	public static function axGetWikiList ( $name, $value ) {
+		global $wgUser;
 		
-        wfProfileIn( __METHOD__ );
-
-		$result = "";
-
+		$res = "";
 		if ( !$wgUser->isAllowed( 'daemonloader' ) ) {
-			$wgOut->readOnlyPage(); #--- later change to something reasonable
-			return;
+			return $res;
 		}
 
 		if ( (!empty($wgUser)) && (!$wgUser->isBlocked()) ) {
 			wfLoadExtensionMessages(self::$oName);
-			$wikiOptions = self::getWikisDB();
-			$result = Xml::openElement( 'select', array( 'name' => 'dt-select-' . $name, 'id' => 'dt-select-' . $name ) ) . $wikiOptions . Xml::closeElement( 'select' );			
+			$wikiOptions = self::getWikisDB( $value );
+			$res = Xml::openElement( 'select', array( 'name' => 'dt-select-' . $name, 'id' => 'dt-select-' . $name ) ) . $wikiOptions . Xml::closeElement( 'select' );			
 		}
-
-		wfProfileOut( __METHOD__ );
-
-		return $result;
+		return $res;
 	}
 	
 	public static function axGetTaskParams ( ) {
-		global $wgRequest, $wgUser,	$wgCityId, $wgDBname;
-		global $wgContLang, $wgOut;
-		
-        wfProfileIn( __METHOD__ );
+		global $wgUser;
 
-		$result = "";
-
+		$res = "";
 		if ( !$wgUser->isAllowed( 'daemonloader' ) ) {
-			$wgOut->readOnlyPage(); #--- later change to something reasonable
-			return;
+			return $res;
 		}
 
 		if ( (!empty($wgUser)) && (!$wgUser->isBlocked()) ) {
 			wfLoadExtensionMessages(self::$oName);
 			$oTaskHTML = new DaemonLoaderHTML();
 			if ($oTaskHTML) {
-				$result = $oTaskHTML->taskParamsForm();
+				$res = $oTaskHTML->taskParamsForm();
 			}
 		}
-
-		wfProfileOut( __METHOD__ );
-
-		return $result;
+		return $res;
 	}
 
-	public static function axRemoveJobsList ($id) {
-		global $wgRequest, $wgUser,	$wgCityId, $wgDBname;
-		global $wgContLang, $wgOut;
+	public static function axRemoveJobsList($id) {
+		global $wgUser;
 		
-        wfProfileIn( __METHOD__ );
-
-		$result = array('nbr_records' => 0);
-
+		$res = array('nbr_records' => 0);
+		
 		if ( !$wgUser->isAllowed( 'daemonloader' ) ) {
-			$wgOut->readOnlyPage(); #--- later change to something reasonable
-			return;
+			return $res;
 		}
 
 		if ( (!empty($wgUser)) && (!$wgUser->isBlocked()) ) {
 			wfLoadExtensionMessages(self::$oName);
-			$result['nbr_records'] = self::closeJob($id);
+			$res['nbr_records'] = self::closeJob($id);
 		}
-
-		wfProfileOut( __METHOD__ );
-
-		return $result;
+		return $res;
 	}
 
-	function getWikisDB() {
+	function getWikisDB( $name ) {
 		global $wgSharedDB, $wgMemc;
 		wfProfileIn( __METHOD__ );
 
-		$memkey = wfForeignMemcKey( $wgSharedDB, null, __METHOD__);
+		$limit = (empty($name)) ? "search" : "search$name";
+		$memkey = wfForeignMemcKey( $wgSharedDB, $limit, __METHOD__);
 		$domains = ""; #$wgMemc->get($memkey);
 		if (empty($domains)) { 
 			$dbr = wfGetDB( DB_SLAVE );
 			$oRes = $dbr->select(
 				array( wfSharedTable("city_list") ),
 				array( "city_dbname, city_url" ),
-				array( "city_public" => 1 ),
+				array( "city_public" => 1, "city_url like '%".$dbr->escapeLike($name)."%'" ),
 				__METHOD__,
 				array("ORDER BY" => "city_url")
 			);
