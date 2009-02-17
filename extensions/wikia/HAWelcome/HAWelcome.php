@@ -211,7 +211,7 @@ class HAWelcomeJob extends Job {
 		 * Revision has valid Title field
 		 */
 		$Title = $revision->getTitle();
-		if( $Title && ! $wgCommandLineMode && ! $wgUser->isAllowed( "bot" ) ) {
+		if( $Title && ! $wgCommandLineMode ) {
 			$welcomer = trim( wfMsgForContent( "welcome-user" ) );
 			Wikia::log( __METHOD__, "welcomer", $welcomer );
 			if( $welcomer !== "@disabled" && $welcomer !== "-" ) {
