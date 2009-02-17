@@ -142,22 +142,42 @@ YAHOO.widget.Effects.Fade = function( id ){
 };
 
 //Sidebar Widgets
-jQuery("#recent_unanswered_questions").ready(function() {
+var recent_questions_page = 0;
+var recent_questions_limit = 10;
+function renderQuestions() {
 	
-	url = wgServer + "/api.php?smaxage=60&action=query&list=wkpagesincat&wkcategory=" + wgUnAnsweredCategory  + "&format=json&wklimit=10";
-	jQuery.get( url, "", function( oResponse ){
-		eval("j=" + oResponse);
+	url = wgServer + "/api.php?smaxage=60&action=query&list=wkpagesincat&wkcategory=" + wgUnAnsweredCategory  + "&format=json&wklimit=" + recent_questions_limit + "&wkoffset=" + (recent_questions_limit * recent_questions_page);
+	jQuery.getJSON( url, "", function( j ){
 		if( j.query.wkpagesincat ){
 			html = "";
 			for( recent_q in j.query.wkpagesincat ){
 				page = j.query.wkpagesincat[recent_q];
 				html += "<li><a href=\"" + page.url + "\">" + page.title.replace(/_/g," ") + "?</a></li>";
 			}
-			jQuery("#recent_unanswered_questions").prepend( html );
+			/*
+			nav = ""
+			if( recent_questions_page > 0 )nav+= "<a href=javascript:void(0); onclick='questionsNavClick(-1);'>&lt;</a>";
+			nav += " <a href=javascript:void(0); onclick='questionsNavClick(1);'>&gt;</a>";
+			jQuery("#recent_unanswered_questions_nav").html( nav );
+			*/
+			jQuery("#recent_unanswered_questions").html( html );
+			//jQuery("#recent_unanswered_questions").animate({opacity: 100}, 500);
+			
 		}
 		
 	});
-});
+}
+
+function questionsNavClick( dir ){
+	recent_questions_page = recent_questions_page + dir
+	
+	$("#recent_unanswered_questions").animate({opacity: 0},500);
+	renderQuestions()
+}
+
+    
+jQuery("#recent_unanswered_questions").ready( renderQuestions );
+
 
 jQuery("#related_answered_questions").ready(function() {
 	
@@ -189,29 +209,6 @@ jQuery(document).ready(function() {
 			jQuery(this).closest(".inline_form").animate({ opacity: 0 }).animate({ height: "0px" }, function() { jQuery(this).hide(); });
 			return false;
 		});
-	});
-});
-
-
-jQuery("#popular_categories").ready(function() {
-	
-	url = wgServer + "/api.php?smaxage=60&action=query&list=wkmostcat&format=json&wklimit=15";
-	jQuery.get( url, "", function( oResponse ){
-		eval("j=" + oResponse);
-		if( j.query.wkmostcat ){
-			html = "";
-			count = 1;
-			for( category in j.query.wkmostcat ){
-				if( count > 10 )break;
-				category_check = category.toLowerCase().replace(/_/g," ");
-				if ( category_check != wgAnsweredCategory.toLowerCase() && category_check != wgUnAnsweredCategory.toLowerCase()){
-					html += "<li><a href=\"" + j.query.wkmostcat[category].url + "\">" + category.replace(/_/g," ") + "</a></li>";
-					count++;
-				}
-			}
-			jQuery("#popular_categories").prepend( html );
-		}
-		
 	});
 });
 
