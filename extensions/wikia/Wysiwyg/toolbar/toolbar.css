@@ -17,7 +17,7 @@
 #fck_toolbar_wrapper {
 	position: relative;
 	height: 47px;
-	margin-top: 1px;
+	margin: 2px 1px 0 1px;
 	z-index: 50;
 }
 
