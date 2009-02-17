@@ -34,6 +34,8 @@ $wgHooks['getUserProfilePreferencesCustomEmailToggles'][] = 'wfGlobalWatchlistPr
 
 // user toggles
 $wgHooks['UserToggles'][] = 'wfGlobalWatchlistToggle';
+$wgHooks['WatchArticleComplete'][] = 'wfGlobalWatchArticleComplete';
+$wgHooks['UnwatchArticleComplete'][] = 'wfGlobalUnwatchArticleComplete';
 
 function wfGlobalWatchlistToggle($extraToggles) {
 	$extraToggles['watchlistdigest'] = 'watchlistdigest';
@@ -73,5 +75,26 @@ function wfGlobalWatchlistPrefsEmailToggle($prefsForm, $toggleHtml) {
 	$toggleHtml .= $prefsForm->getToggle($tname) . '<br />';
 
  return true;
+}
+
+function wfGlobalWatchArticleComplete($oUser, $oArticle) {
+	global $wgSharedDB, $wgCityId;
+
+	echo "<pre>";
+	//echo $oArticle->getTitle()->getNamespace();
+	echo $oArticle->getTitle()->getPrefixedURL();
+	print_r($oArticle);
+	exit;
+
+	$dbw = wfGetDB(DB_MASTER);
+
+	$dbw->query("INSERT INTO " . $wgSharedDB . ".global_watchlist (gwa_user_id, gwa_city_id, gwa_namespace, gwa_title, gwa_rev_id, gwa_timestamp) VALUES ('" . $oUser->getId() . "', '" . $wgCityId . "','" . $aPage['namespace'] . "', '" . addslashes($aPage['title']) . "', '" . $aPage['revisionId'] . "', '" . $aPage['timestamp']. "')");
+
+	return true;
+}
+
+function wfGlobalUnwatchArticleComplete($user, $artile) {
+
+	return true;
 }
 
