@@ -14,8 +14,10 @@
 	display: none;
 }
 
-#page_bar * {
-	float: none !important;
+#fck_toolbar_wrapper {
+	position: relative;
+	height: 45px;
+	margin-top: 1px;
 }
 
 #fck_toolbar {
@@ -23,6 +25,8 @@
 	font-family: "Verdana", "Arial", sans-serif;
 	font-size: 10px;
 	width: 100%;
+	position: absolute;
+	top: 0px;
 }
 #fck_toolbar td {
 	padding: 0;
