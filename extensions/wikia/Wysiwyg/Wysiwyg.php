@@ -556,7 +556,6 @@ function Wysiwyg_SetRefId($type, $params, $addMarker = true, $returnId = false) 
 		case 'nowiki':
 		case 'gallery':
 		case 'hook':
-		case 'video':
 		case 'html':
 			$data['description'] = $params['text'];
 			$result = $params['text'];
@@ -575,6 +574,11 @@ function Wysiwyg_SetRefId($type, $params, $addMarker = true, $returnId = false) 
 		case 'tilde':
 			$data['description'] = $params['text'];
 			$result = $params['text'];
+			break;
+
+		case 'video':
+			$data['original'] = $params['original'];
+			$result = $params['original'];
 			break;
 	}
 

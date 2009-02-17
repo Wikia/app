@@ -770,7 +770,7 @@ class ReverseParser {
 
 				// WikiaVideo
 				case 'video':
-					return $refData['description'];
+					return $refData['original'];
 
 				// fallback
 				default:
