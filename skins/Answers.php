@@ -333,7 +333,7 @@ wfRunHooks('GetHTMLAfterBody', array (&$this));
 				<h1><?= wfMsg("inline-welcome") ?>, <?= $wgUser->getName() ?></h1>
 				<div class="inline_form_inside">
 					<div style="padding: 10px;">
-					Thanks for the rockin' question!
+					<?= wfMsg("ask_thanks") ?>
 					</div>
 				</div>
 			</div>
@@ -540,20 +540,30 @@ wfRunHooks('GetHTMLAfterBody', array (&$this));
 		</div><?/*toolbox*/?>
 		
 		<div class="widget">
-			<h2><?= wfMsg("recent_unanswered_questions") ?></h2>
+			<h2><?= wfMsg("recent_unanswered_questions") ?> <span id="recent_unanswered_questions_nav"></span></h2>
 			<ul id="recent_unanswered_questions">
-				<? 
-				if ($is_question) {	
-				echo '<li><div id="google_ad_3" class="google_ad"></div></li>';
-				} 
-				?>
 			</ul>
+			<? 
+			if ($is_question) {	
+			echo '<li><div id="google_ad_3" class="google_ad"></div></li>';
+			}
+			?>
 		</div>
 
 		<div class="widget">
 			<h2><?= wfMsg("popular_categories") ?></h2>
 			<ul id="popular_categories">
 				<? 
+				$lines = getMessageAsArray("sidebar-popular-categories");
+				foreach($lines as $line) {
+					$item = parseItem(trim($line, ' *'));
+					$popular_categories[] = $item;
+				}
+				if( is_array( $popular_categories ) ){
+					foreach( $popular_categories as $popular_category ){
+						echo '<li><a href="' . $popular_category["href"] . '">' . $popular_category["text"] . '</a></li>';
+					}
+				}
 				if ($is_question) {	
 				echo '<li><div id="google_ad_4" class="google_ad"></div></li>';
 				}
