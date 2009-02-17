@@ -74,7 +74,8 @@
 	border-color: #000;	
 }
 #fck_toolbar li.fck_button_disabled {
-	background: #aaa;
+	background: #bbb;
+	border-color: #888;
 	cursor: default;
 }
 #fck_toolbar li img {
