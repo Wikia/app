@@ -179,8 +179,8 @@ class VideoEmbedTool {
 		$type = $wgRequest->getVal('type');
 		$id = $wgRequest->getVal('id');
 		$provider = $wgRequest->getVal('provider');
-		$name = $wgRequest->getVal('name');
-		$oname = $wgRequest->getVal('oname');
+		$name = urldecode( $wgRequest->getVal('name') );
+		$oname = urldecode( $wgRequest->getVal('oname') );
 		if ('' == $name) {
 			$name = $oname;
 		}
@@ -204,7 +204,7 @@ class VideoEmbedTool {
 				$title = Title::makeTitleSafe(NS_VIDEO, $name);
 				if(is_null($title)) {
 					header('X-screen-type: error');
-					return wfMsg ( 'wmu-filetype-incorrect' );
+					return wfMsg ( 'vet-name-incorrect' );
 				}
 				if($title->exists()) {
 					if($type == 'overwrite') {

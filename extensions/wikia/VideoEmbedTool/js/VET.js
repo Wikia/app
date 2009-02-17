@@ -183,8 +183,6 @@ function VET_showPreview(e) {
 	}
 
 	YAHOO.util.Event.addListener('VideoEmbedPreviewClose', 'click', VET_previewClose);
-
-
 }
 
 function VET_show(e) {
@@ -292,27 +290,10 @@ function VET_loadMain() {
 			$('VideoEmbedMain').innerHTML = o.responseText;
 			VET_indicator(1, false);
 			if($('VideoQuery') && VET_panel.element.style.visibility == 'visible') $('VideoQuery').focus();
-			var cookieMsg = document.cookie.indexOf("vetmainmesg=");
-			if (cookieMsg > -1 && document.cookie.charAt(cookieMsg + 12) == 0) {
-				$('VideoEmbedTextCont').style.display = 'none';
-		                $('VideoEmbedMessageLink').innerHTML = '[' + vet_show_message  + ']';
-			}
 		}
 	}
 	VET_indicator(1, true);
 	YAHOO.util.Connect.asyncRequest('GET', wgScriptPath + '/index.php?action=ajax&rs=VET&method=loadMain', callback);
-	VET_curSourceId = 0;
-}
-
-function VET_loadLicense( license ) {
-	var callback = {
-		success: function(o) {			
-			$('VideoEmbedLicenseText').innerHTML = o.responseText;
-			VET_indicator(1, false);
-		}
-	}
-	VET_indicator(1, false);
-	YAHOO.util.Connect.asyncRequest('GET', wgScriptPath + '/index.php?action=ajax&rs=VET&method=loadLicense&license='+license, callback);
 	VET_curSourceId = 0;
 }
 
@@ -323,10 +304,10 @@ function VET_recentlyUploaded(param, pagination) {
 	var callback = {
 		success: function(o) {
 			$('VET_results_0').innerHTML = o.responseText;
-			VET_indicator(2, false);
+			VET_indicator(1, false);
 		}
 	}
-	VET_indicator(2, true);
+	VET_indicator(1, true);
 	YAHOO.util.Connect.asyncRequest('GET', wgScriptPath + '/index.php?action=ajax&rs=VET&method=recentlyUploaded&'+param, callback);
 }
 
@@ -383,12 +364,12 @@ function VET_sendQuery(query, page, sourceId, pagination) {
 	var callback = {
 		success: function(o) {
 			$('VET_results_' + o.argument[0]).innerHTML = o.responseText;
-			VET_indicator(2, false);
+			VET_indicator(1, false);
 		},
 		argument: [sourceId]
 	}
 	VET_lastQuery[sourceId] = query;
-	VET_indicator(2, true);
+	VET_indicator(1, true);
 	YAHOO.util.Connect.abort(VET_asyncTransaction)
 	VET_asyncTransaction = YAHOO.util.Connect.asyncRequest('GET', wgScriptPath + '/index.php?action=ajax&rs=VET&method=query&' + 'query=' + query + '&page=' + page + '&sourceId=' + sourceId, callback);
 }
@@ -428,58 +409,17 @@ function VET_upload(e) {
 		alert(vet_warn2);
 		return false;
 	} else {
-		if (VET_initialCheck( $('VideoEmbedUrl').value )) {
+		var query = $('VideoEmbedUrl').value;
 
-			var query = $('VideoEmbedUrl').value;
-
-			if ( !( query.match( 'http://' ) || query.match( 'www.' ) ) ) {
-				VET_sendQuery(query, 1, VET_curSourceId);
-				return false;
-			} else {
-				VET_track('insert/defined'); // tracking
-				VET_indicator(1, true);
-				return true;				
-			}
-		} else {
+		if ( !( query.match( 'http://' ) || query.match( 'www.' ) ) ) {
+			VET_sendQuery(query, 1, VET_curSourceId);
 			return false;
+		} else {
+			VET_track('insert/defined'); // tracking
+			VET_indicator(1, true);
+			return true;				
 		}
 	}
-}
-
-function VET_splitExtensions( filename ) {
-	var bits = filename.split( '.' );
-	var basename = bits.shift();
-	return new Array( basename, bits );
-}
-
-function VET_in_array( elem, a_array ) {
-	for ( key in a_array ) {
-		if ( elem == a_array[key] ) {
-			return true;
-		}
-	}
-	return false;
-}
-
-function VET_checkFileExtension( ext, list) {
-	return VET_in_array( ext.toLowerCase(), list );
-}
-
-function VET_checkFileExtensionList( ext, list ) {
-	for ( elem in ext ) {
-		if ( VET_in_array( ext[elem].toLowerCase(), list )) {
-			return true;
-		}
-	}
-	return false;
-}
-
-function VET_initialCheck( checkedName ) {
-	// todo this is to be completely rewritten
-	// we can check if we have a valid url here, and
-	// if we have any of the supported providers
-
-	return true;
 }
 
 function VET_displayDetails(responseText) {
@@ -516,14 +456,6 @@ function VET_displayDetails(responseText) {
 		alert( $( 'VET_error_box' ).innerHTML );
 	}
 
-	if ( $( 'VideoEmbedLicenseText' ) ) {
-		var cookieMsg = document.cookie.indexOf("vetlicensemesg=");
-		if (cookieMsg > -1 && document.cookie.charAt(cookieMsg + 15) == 0) {
-			$('VideoEmbedLicenseText').style.display = 'none';
-			$('VideoEmbedLicenseLink').innerHTML = '[' + vet_show_license_message  + ']';
-		}
-	}
-
 	if ( ( 400 == wgNamespaceNumber ) ) {
 		if( $( 'VideoEmbedName' ) ) {
 			$( 'VideoEmbedName' ).value = wgTitle;	
@@ -545,13 +477,16 @@ function VET_insertFinalVideo(e, type) {
 	if(!$('VideoEmbedName')) {
 		if ($( 'VideoEmbedOname' ) ) {
 			if ('' == $( 'VideoEmbedOname' ).value)	 {
-				alert( 'vet_warn3');
+				alert( vet_warn3 );
 				return false;
 			}
 		} else {
-			alert( 'vet_warn3');
+			alert( vet_warn3 );
 			return false;
 		}
+	} else if ('' == $( 'VideoEmbedName' ).value ) {
+		alert( vet_warn3 );
+		return false;		
 	}
 
 	params.push('id='+$('VideoEmbedId').value);
@@ -565,17 +500,15 @@ function VET_insertFinalVideo(e, type) {
 		}
 	}
 
-	params.push('oname='+$('VideoEmbedOname').value);
+	params.push('oname='+encodeURIComponent( $('VideoEmbedOname').value ) );
 
 	if(type == 'overwrite') {
-		params.push('name='+$('VideoEmbedExistingName').value);
+		params.push('name='+encodeURIComponent( $('VideoEmbedExistingName').value ) );
 	} else if(type == 'rename') {
-		params.push('name='+$('VideoEmbedRenameName').value);
+		params.push('name='+encodeURIComponent( $('VideoEmbedRenameName').value ) );
 	} else {
 		if ($( 'VideoEmbedName' )) {
-			params.push('name='+$('VideoEmbedName').value);
-		} else {
-			params.push('oname='+$('VideoEmbedOname').value);			
+			params.push('name='+encodeURIComponent( $('VideoEmbedName').value) );
 		}
 	}
 
@@ -583,7 +516,7 @@ function VET_insertFinalVideo(e, type) {
 		params.push('size=' + ($('VideoEmbedThumbOption').checked ? 'thumb' : 'full'));
 		params.push( 'width=' + $( 'VideoEmbedManualWidth' ).value + 'px' );
 		params.push('layout=' + ($('VideoEmbedLayoutLeft').checked ? 'left' : 'right'));
-		params.push('caption=' + $('VideoEmbedCaption').value);
+		params.push('caption=' + encodeURIComponent( $('VideoEmbedCaption').value ) );
 	}
 
 	var callback = {
@@ -664,40 +597,6 @@ function VET_imageWidthChanged(changes) {
 	}
 }
 
-function VET_imageSizeChanged(size) {
-	//leave that empty for now
-}
-
-function VET_toggleMainMesg(e) {
-	YAHOO.util.Event.preventDefault(e);
-	if ('none' == $('VideoEmbedTextCont').style.display) {
-		$('VideoEmbedTextCont').style.display = '';
-		$('VideoEmbedMessageLink').innerHTML = '[' + vet_hide_message  + ']';
-		VET_track( 'mainMessage/show' ); // tracking
-		document.cookie = "vetmainmesg=1";
-	} else {
-		$('VideoEmbedTextCont').style.display = 'none';
-		$('VideoEmbedMessageLink').innerHTML = '[' + vet_show_message  + ']';
-		VET_track( 'mainMessage/hide' ); // tracking
-		document.cookie = "vetmainmesg=0";
-	}
-}
-
-function VET_toggleLicenseMesg(e) {
-	YAHOO.util.Event.preventDefault(e);
-	if ('none' == $('VideoEmbedLicenseText').style.display) {
-		$('VideoEmbedLicenseText').style.display = '';
-		$('VideoEmbedLicenseLink').innerHTML = '[' + vet_hide_license_message  + ']';
-		VET_track( 'licenseText/show' ); // tracking
-		document.cookie = "vetlicensemesg=1";
-	} else {
-		$('VideoEmbedLicenseText').style.display = 'none';
-		$('VideoEmbedLicenseLink').innerHTML = '[' + vet_show_license_message  + ']';
-		VET_track( 'licenseText/hide' ); // tracking
-		document.cookie = "vetlicensemesg=0";
-	}
-}
-
 function VET_switchScreen(to) {
 	VET_prevScreen = VET_curScreen;
 	VET_curScreen = to;
@@ -718,8 +617,6 @@ function VET_back(e) {
 	}
 }
 
-
-
 function VET_previewClose(e) {
 	if(e) {
 		YAHOO.util.Event.preventDefault(e);
@@ -727,7 +624,6 @@ function VET_previewClose(e) {
 	VET_track('closePreview/' + VET_curScreen);
 	VET_previewPanel.hide();
 }
-
 
 function VET_close(e) {
 	if(e) {
