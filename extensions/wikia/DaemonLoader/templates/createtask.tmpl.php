@@ -100,6 +100,12 @@ endif;
 </div>
 </form>
 <script>
+var loadImg = "<img src=\"/skins/monaco/images/widget_loading.gif\" />";
+var divCreatorLoader = YAHOO.util.Dom.get("dt-creator-loader");
+var divDaemonInfo = YAHOO.util.Dom.get("dt-daemon-info");
+var loadDiv = null;
+var loadId = null;
+
 function getResponseData(res) {
 	resData = "";
 	if (YAHOO.Tools) {
@@ -124,12 +130,57 @@ function setCurrentStep(i) {
 	YAHOO.util.Dom.get("dt-span-" + i + "step").style.color = '#BF002C';
 }
 
+function DTGetWikis(element, value, name) {
+	var func = function() { loadWikiList(value, name) };
+
+	if ( element.zid ) {
+		clearTimeout(element.zid);
+	}
+	element.zid = setTimeout(func,800);
+}
+
+function loadWikiList(value, txtname) {
+	__ShowWikiListCallback = {
+		success: function( oResponse )
+		{
+			var resData = oResponse.responseText;
+			var resDiv = 'dt-wikia-search-result';
+
+			var input = document.createElement('input');
+			input.setAttribute('type', 'button');
+			input.value = '...';
+			input.setAttribute('id', 'dt-btn-add-wiki');
+
+			YAHOO.util.Dom.get(resDiv).innerHTML = resData;
+			YAHOO.util.Dom.get(resDiv).appendChild(input);
+			YAHOO.util.Event.addListener('dt-btn-add-wiki', "click", function (e, args) {
+				var txtName = args[0];
+				var txtArea = YAHOO.util.Dom.get('dt-txtArea-' + txtName);
+				var select = YAHOO.util.Dom.get('dt-select-' + txtName);
+				txtArea.value = txtArea.value + ((txtArea.value != '') ? ',' + select.value : select.value);
+			}, [txtname]);
+
+			if (typeof TieDivLibrary != "undefined" ) {
+				TieDivLibrary.calculate();
+			};
+		},
+		failure: function( oResponse )
+		{
+			YAHOO.util.Dom.get('dt-wikia-search-result').innerHTML = oResponse.responseText;
+			if (typeof TieDivLibrary != "undefined" ) {
+				TieDivLibrary.calculate();
+			};
+		}
+	}
+
+	YAHOO.util.Dom.get("dt-wikia-search-result").innerHTML = loadImg;
+	var params = "&rsargs[0]=" + txtname + "&rsargs[1]=" + value;
+	//---
+	var baseurl = wgScript + "?action=ajax&rs=DaemonLoader::axGetWikiList" + params;
+	YAHOO.util.Connect.asyncRequest( "GET", baseurl, __ShowWikiListCallback);
+}
+
 YAHOO.util.Event.onDOMReady(function() {
-	var loadImg = "<img src=\"/skins/monaco/images/widget_loading.gif\" />";
-	var divCreatorLoader = YAHOO.util.Dom.get("dt-creator-loader");
-	var divDaemonInfo = YAHOO.util.Dom.get("dt-daemon-info");
-	var loadDiv = null;
-	var loadId = null;
 
 	__ShowDaemonInfoCallback = {
 		success: function( oResponse ) {
@@ -152,33 +203,6 @@ YAHOO.util.Event.onDOMReady(function() {
 			};
 		}
 	};
-
-	__ShowWikiListCallback = {
-		success: function( oResponse )
-		{
-			var resData = oResponse.responseText;
-			var input = document.createElement('input');
-			var resDiv = 'dt-list-' + loadDiv;
-			input.setAttribute('type', 'button');
-			input.value = '...';
-			input.setAttribute('id', 'dt-btn-' + loadDiv);
-			YAHOO.util.Dom.get(resDiv).innerHTML = resData;
-			YAHOO.util.Dom.get(resDiv).appendChild(input);
-			YAHOO.util.Event.addListener('dt-btn-' + loadDiv, "click", addDBToList, [loadDiv]);
-			loadDiv = null;
-			if (typeof TieDivLibrary != "undefined" ) {
-				TieDivLibrary.calculate();
-			};
-		},
-		failure: function( oResponse )
-		{
-			var resDiv = 'dt-list-' + loadDiv;
-			YAHOO.util.Dom.get(resDiv).innerHTML = oResponse.responseText;
-			if (typeof TieDivLibrary != "undefined" ) {
-				TieDivLibrary.calculate();
-			};
-		}
-	}
 		
 	function createInput(el, name, value, size) {
 		var input = el.appendChild(document.createElement('input'));
@@ -195,14 +219,15 @@ YAHOO.util.Event.onDOMReady(function() {
 		var txtAreaId = 'dt-txtArea-' + name;
 		
 		hdr.style.height = "25px";
-		hdr.style.textAlign = "right";
+		hdr.style.textAlign = "left";
 		hdr.setAttribute('id', 'dt-list-' + name);
-		hdr.innerHTML = '<a id="dt-wikia-list-' + name + '" style="cursor:pointer"><?=wfMsg('daemonloader_selectlist')?></a>';
-		YAHOO.util.Event.addListener("dt-wikia-list-" + name, "click", loadWikiList, [name]);
+		sInfo = '<div style="font-size:0.9em;"><span><?=wfMsg("daemonloader_search")?> <input type="text" id="dt-wikia-search" value="" size="15" autocomplete="off" onkeyup = "DTGetWikis(this, this.value, \''+name+'\');"></span>';
+		sInfo += '<span id="dt-wikia-search-result" style="white-space:nowrap;"></span></div>';
+		hdr.innerHTML = sInfo;
 
 		var bottom = el.appendChild(document.createElement('div'));
 		var inputText = bottom.appendChild(document.createElement('textarea'));
-		inputText.setAttribute('cols', '40');
+		inputText.style.width = '550px';
 		inputText.setAttribute('rows', '7');
 		inputText.setAttribute('id', txtAreaId);
 		inputText.setAttribute('name', name);
@@ -247,19 +272,25 @@ YAHOO.util.Event.onDOMReady(function() {
 				divTxt.appendChild(span1);
 				// table
 				var tbl = document.createElement('table');
-				tbl.setAttribute('class', "TablePager");
+				//tbl.setAttribute('class', "TablePager");
 				tbl.style.margin = "2px 15px 2px 0";
 				for (i in params) {
 					if (i) {
 						var tr = tbl.appendChild(document.createElement('tr'));
 						//<th>
-						var th = tr.appendChild(document.createElement('th'));
-						th.innerHTML = i;
+						var th = tr.appendChild(document.createElement('td'));
+						th.innerHTML = "<i>" + params[i].desc + "</i>";
 						th.setAttribute('valign', 'top');
+						th.setAttribute('align', 'left');
+						th.style.fontFamily = 'Arial';
+						th.style.fontSize = '1.1em';
+						th.style.fontWeight = 'normal';
+						th.style.padding = '2px 0px 2px 10px';
 						// <td>
-						var td1 = tr.appendChild(document.createElement('td'));
+						var tr2 = tbl.appendChild(document.createElement('tr'));
+						var td1 = tr2.appendChild(document.createElement('td'));
 						td1.style.textAlign = 'left';
-						td1.style.padding = '2px 15px';
+						td1.style.padding = '2px 0px 2px 35px';
 						
 						switch (params[i].type) {
 							case "1" : { // string
@@ -271,13 +302,13 @@ YAHOO.util.Event.onDOMReady(function() {
 								break;
 							}
 							default : {
-								var input = createInput(td1, i, params[i].default, 20);
+								var input = createInput(td1, i, params[i].default, 15);
 								break;
 							}
 						};
 						// <td>
-						var td2 = tr.appendChild(document.createElement('td'));
-						td2.innerHTML = params[i].desc;
+						/*var td2 = tr.appendChild(document.createElement('td'));
+						td2.innerHTML = params[i].desc;*/
 						row++;
 					}
 				}
@@ -320,16 +351,6 @@ YAHOO.util.Event.onDOMReady(function() {
 		txtArea.value = txtArea.value + ((txtArea.value != '') ? ',' + select.value : select.value);
 	}
 
-	var loadWikiList = function (e, args) {
-		var divList = args[0];
-		YAHOO.util.Dom.get(this.id).innerHTML = loadImg;
-		var params = "&rsargs[0]=" + divList;
-		loadDiv = divList;
-		//---
-		var baseurl = wgScript + "?action=ajax&rs=DaemonLoader::axGetWikiList" + params;
-		YAHOO.util.Connect.asyncRequest( "GET", baseurl, __ShowWikiListCallback);
-	}
-
 	var showTaskParams = function (e, args) {
 		divCreatorLoader.innerHTML = loadImg;
 		//---
@@ -360,7 +381,7 @@ YAHOO.util.Event.onDOMReady(function() {
 	
 	YAHOO.util.Event.addListener("dt-load-task", "click", loadDaemonTask);
 	YAHOO.util.Event.addListener("dt-daemons-list", "change", infoDaemon);
-	
+
 	setCurrentStep(1);
 });
 </script>
