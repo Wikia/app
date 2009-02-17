@@ -150,8 +150,31 @@ function CategorySelectAjaxSaveCategories($articleId, $categories) {
  * @author Maciej Błaszkowski <marooned at wikia-inc.com>
  */
 function CategorySelectReplaceContent($text) {
-	$data = CategorySelect::SelectCategoryAPIgetData($text);
-	$text = $data['wikitext'];
+	global $wgRequest;
+	$undoafter = $wgRequest->getVal('undoafter');
+	$undo = $wgRequest->getVal('undo');
+
+	if ($undoafter) {
+		$undorev = Revision::newFromId($undo);
+		$oldrev = Revision::newFromId($undoafter);
+	} else {
+		$undorev = Revision::newFromId($undo);
+		$oldrev = $undorev ? $undorev->getPrevious() : null;
+	}
+
+	if (is_null($undorev) || is_null($oldrev)) {
+		$wikitext = $text;
+	} else {
+		$wikitext = $oldrev->getText();
+	}
+
+	//analyze proper revision
+	$data = CategorySelect::SelectCategoryAPIgetData($wikitext);
+
+	//do not replace text in 'undo' mode
+	if (is_null($undorev) || is_null($oldrev)) {
+		$text = $data['wikitext'];
+	}
 	return true;
 }
 
