@@ -515,7 +515,13 @@ function VET_insertFinalVideo(e, type) {
 	if($('VideoEmbedThumb')) {
 		params.push('size=' + ($('VideoEmbedThumbOption').checked ? 'thumb' : 'full'));
 		params.push( 'width=' + $( 'VideoEmbedManualWidth' ).value + 'px' );
-		params.push('layout=' + ($('VideoEmbedLayoutLeft').checked ? 'left' : 'right'));
+		if( $('VideoEmbedLayoutLeft').checked ) {
+			params.push( 'layout=left' );
+		} else if( $('VideoEmbedLayoutGallery').checked ) {
+			params.push( 'layout=gallery' );
+		} else {
+			params.push( 'layout=right' );
+		}
 		params.push('caption=' + encodeURIComponent( $('VideoEmbedCaption').value ) );
 	}
 
