@@ -235,6 +235,7 @@ class HAWelcomeJob extends Job {
 							)
 						);
 						$welcomeJob->insert();
+						Wikia::log( __METHOD__, "job" );
 
 						/**
 						 * inform task manager
@@ -243,6 +244,9 @@ class HAWelcomeJob extends Job {
 						$Task->createTask( array( "city_id" => $wgCityId ), TASK_QUEUED  );
 					}
 				}
+			}
+			else {
+				Wikia::log( __METHOD__, "disabled" );
 			}
 		}
 		wfProfileOut( __METHOD__ );
