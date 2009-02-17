@@ -34,10 +34,11 @@ WikiaToolbar.prototype.Create = function(parentElement) {
 
 	var toolbarPlaceholder = parentDoc.createElement('DIV');
 	toolbarPlaceholder.id = 'fck_toolbar_wrapper';
+	toolbarPlaceholder.className = 'color1 reset';
 
 	var toolbar = parentDoc.createElement('TABLE');
 	toolbar.id = 'fck_toolbar';
-	toolbar.className = 'color1 reset';
+	toolbar.className = 'reset';
 	toolbarPlaceholder.appendChild(toolbar);
 
 	parentElement.insertBefore(toolbarPlaceholder, parentElement.firstChild);
