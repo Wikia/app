@@ -1,11 +1,28 @@
 FCK.log('new toolbar enabled...');
 
+
+// WikiaSeparator class for separating buckets
+var WikiaSeparator = function( bucket  ) { this.Bucket = bucket;  };
+
+WikiaSeparator.prototype.Create = function(node) {
+	//FCK.log( this.Bucket );
+}
+
 var WikiaToolbar = function() { };
 
 // WikiaToolbar class extends FCKToolbar
 FCK.YAHOO.lang.extend(WikiaToolbar, FCKToolbar);
 
 // overload FCKToolbar methods
+WikiaToolbar.prototype.CurrentBucket = 0;
+
+WikiaToolbar.prototype.AddSeparator = function()
+{
+	var bucketName = window.parent.wysiwygToolbarBuckets[this.CurrentBucket++];
+
+	this.AddItem( new WikiaSeparator({'name': bucketName, 'last': (this.CurrentBucket == window.parent.wysiwygToolbarBuckets.length)}) );
+}
+
 WikiaToolbar.prototype.Create = function(parentElement) {
 	FCK.log('toolbar rendering');
 
@@ -16,15 +33,38 @@ WikiaToolbar.prototype.Create = function(parentElement) {
 	var parentDoc = window.parent.document;
 	parentElement = parentDoc.getElementById('page_bar');
 
-	// add toolbar items
 	if (parentElement) {
-		// toolbar HTML
-		parentElement.innerHTML = '<table id="fck_toolbar"><tr><td class="last"><div class="clearfix"><label class="color1">Label</label><ul id="fck_toolbar_items"></ul></div></td></tr></table>';
+		// setup HTML
+		parentElement.innerHTML = '<table id="fck_toolbar"></table>';
 
-		var toolbar = parentDoc.getElementById('fck_toolbar_items');
+		var toolbar = parentDoc.getElementById('fck_toolbar');
+		var toolbarRow = toolbar.insertRow(-1);
 
+		var currentBucket;
+
+		// add toolbar items
 		for ( var i = 0 ; i < this.Items.length ; i++ ) {
-			this.Items[i].Create( toolbar ) ;
+
+			var item = this.Items[i];
+
+			if (item.Bucket) {
+				// create new bucket
+				var toolbarCell = toolbarRow.insertCell(-1);
+				toolbarCell.innerHTML = '<div class="clearfix">' + 
+					'<label title="' + item.Bucket.name + '">' + item.Bucket.name  + '</label><ul></ul></div>';
+
+				// set CSS class for last bucket
+				if (item.Bucket.last) {
+					toolbarCell.className = 'last';
+				}
+
+				// get <ul> node - new items will be added there
+				currentBucket = toolbarCell.getElementsByTagName('ul')[0];
+			}
+			else {
+				// add item to current bucket
+				item.Create( currentBucket ) ;
+			}
 		}
 	}
 
@@ -34,7 +74,7 @@ WikiaToolbar.prototype.Create = function(parentElement) {
 
 WikiaToolbar.prototype.AddItem = function( item )
 {
-	FCK.log( item );
+	//FCK.log( item );
         return this.Items[ this.Items.length ] = item ;
 }
 
@@ -174,17 +214,23 @@ function WikiaButtonUI_OnMouseOver( ev, button )
 		this.className = 'fck_button_on_over' ;
 	}
 
-	// change section label
+	// change bucket label
 	var label = this.parentNode.parentNode.firstChild;
 	label.innerHTML = button.Label;
 }
 
 function WikiaButtonUI_OnMouseOut( ev, button )
 {
-	if ( button.State == FCK_TRISTATE_OFF )
+	if ( button.State == FCK_TRISTATE_OFF ) {
 		this.className = 'fck_button_off' ;
-	else if ( button.State == FCK_TRISTATE_ON )
+	}
+	else if ( button.State == FCK_TRISTATE_ON ) {
 		this.className = 'fck_button_on' ;
+	}
+
+	// change bucket label
+	var label = this.parentNode.parentNode.firstChild;
+	label.innerHTML = label.title;
 }
 
 function WikiaButtonUI_OnClick( ev, button )

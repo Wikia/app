@@ -20,7 +20,16 @@ if (typeof window.parent.vet_enabled != 'undefined') {
 	toolbarItems.splice(20, 0, 'AddVideo');
 }
 
-if (window.parent.wysiwygUseNewToolbar) {
+if (typeof window.parent.wysiwygUseNewToolbar != 'undefined') {
+	// toolbar buttons are grouped using buckets
+	toolbarItems = [
+		'-', 'Bold', 'Italic', 'Underline', 'StrikeThrough', 'Outdent', 'Indent',
+		'-', 'UnorderedList', 'OrderedList', 'Link', 'Unlink',
+		'-', 'AddImage', /*'AddVideo',*/ 'Table', 'Tildes',
+		'-', 'InsertTemplate',
+		'-', 'Undo', 'Redo', 'Source'
+	];
+
 	FCKConfig.Plugins.Add('toolbar');
 }
 

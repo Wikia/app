@@ -147,12 +147,8 @@ function Wysiwyg_Initial($form) {
 		'var fallbackToSourceMode = ' . ($wgWysiwygFallbackToSourceMode ? 'true' : 'false') . ";\n" .
 		'var templateList = ' . WysiwygGetTemplateList() . ";\n" .
 		'var templateHotList = ' . WysiwygGetTemplateHotList() . ";\n" .
-		'var magicWordList = ' . Wikia::json_encode($magicWords, true) . ";\n" .
-		'var wysiwygUseNewToolbar = ' . (!empty($wgWysiwygUseNewToolbar) ? 'true' : 'false') . ";"
+		'var magicWordList = ' . Wikia::json_encode($magicWords, true) . ";"
 	);
-
-	$wgOut->addScript( "<script type=\"{$wgJsMimeType}\" src=\"$wgExtensionsPath/wikia/Wysiwyg/fckeditor/fckeditor.js?$wgStyleVersion\"></script>" );
-	$wgOut->addScript( "<script type=\"{$wgJsMimeType}\" src=\"$wgExtensionsPath/wikia/Wysiwyg/wysiwyg.js?$wgStyleVersion\"></script>" );
 
 	// CSS
  	$wgOut->addLink(array(
@@ -168,7 +164,16 @@ function Wysiwyg_Initial($form) {
 			'href' => "$wgExtensionsPath/wikia/Wysiwyg/toolbar/toolbar.css?$wgStyleVersion",
 			'type' => 'text/css'
 		));
+
+		// TODO: i18n
+		$wgOut->addInlineScript(
+			"var wysiwygUseNewToolbar = true;\n" .
+			"var wysiwygToolbarBuckets = ['Text Appearance', 'Lists and Links', 'Insert', 'Wiki Templates', 'Controls'];"
+		);
 	}
+
+	$wgOut->addScript( "<script type=\"{$wgJsMimeType}\" src=\"$wgExtensionsPath/wikia/Wysiwyg/fckeditor/fckeditor.js?$wgStyleVersion\"></script>" );
+	$wgOut->addScript( "<script type=\"{$wgJsMimeType}\" src=\"$wgExtensionsPath/wikia/Wysiwyg/wysiwyg.js?$wgStyleVersion\"></script>" );
 
 	$wgHooks['EditPage::showEditForm:initial2'][] = 'Wysiwyg_Initial2';
 	$wgHooks['EditForm:BeforeDisplayingTextbox'][] = 'Wysiwyg_BeforeDisplayingTextbox';
