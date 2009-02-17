@@ -656,7 +656,7 @@ END;
 		global $wgOut, $wgTitle, $wgUseCategoryBrowser;
 		global $wgContLang, $wgUser;
 
-		if( !wfRunHooks( 'getCategoryLinks', array( &$alternativeCategoryLinks ) ) )
+		if( !wfRunHooks( 'Skin::getCategoryLinks::begin', array( &$alternativeCategoryLinks ) ) )
 			return $alternativeCategoryLinks;
 
 		if( count( $wgOut->mCategoryLinks ) == 0 ) return '';
@@ -713,6 +713,8 @@ END;
 			# Output one per line
 			$s .= implode("<br />\n", $tempout);
 		}
+
+		wfRunHooks( 'Skin::getCategoryLinks::end', array( &$s ) );
 
 		return $s;
 	}
