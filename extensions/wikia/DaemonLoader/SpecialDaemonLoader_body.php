@@ -85,7 +85,7 @@ class DaemonLoader extends SpecialPage {
 		$memkey = wfForeignMemcKey( $wgSharedDB, null, "getAllDaemons", $dt_id);
 		$cached = "";#$wgMemc->get($memkey);
 		if (!is_array ($cached)) { 
-			$dbs = wfGetDBExt(DB_SLAVE);
+			$dbs = wfGetDBExt();
 			if (!is_null($dbs)) {
 				$where = ($dt_id > 0) ? " and dt_id = ".intval($dt_id) : "";
 				$oRes = $dbs->select(
@@ -123,7 +123,7 @@ class DaemonLoader extends SpecialPage {
 		$memkey = wfForeignMemcKey( $wgSharedDB, null, "getAllJobs", $dj_id, $limit, $offset);
 		$cached = "";#$wgMemc->get($memkey);
 		if (!is_array ($cached)) { 
-			$dbs = wfGetDBExt(DB_SLAVE);
+			$dbs = wfGetDBExt();
 			if (!is_null($dbs)) {
 				$orderby = (empty($orderby)) ? "dj_id" : $orderby;
 				$where = ($dj_id > 0) ? " and dj_id = ".intval($dj_id) : "";
@@ -591,7 +591,6 @@ class DaemonLoader extends SpecialPage {
 		wfProfileOut( __METHOD__ );
 		return $domains;
 	}
-	
 
 }
 
