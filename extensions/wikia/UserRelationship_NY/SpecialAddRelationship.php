@@ -9,7 +9,7 @@
 * @subpackage SpecialPage
 *
 * @author David Pean <david.pean@gmail.com>
-* @copyright Copyright © 2007, Wikia Inc.
+* @copyright Copyright ï¿½ 2007, Wikia Inc.
 * @license http://www.gnu.org/copyleft/gpl.html GNU General Public License 2.0 or later
 */
 
@@ -124,7 +124,7 @@
 					<div class=\"cleared\"></div>
 		   		</div>
 		   		<div class=\"relationship-textbox-title\">
-					Add a Personal Message
+					" . wfMsg("ur-add-personal-message") . "
 				</div>
 		   		<textarea name=\"message\" id=\"message\" rows=\"3\" cols=\"50\"></textarea>
 		   		<div class=\"relationship-buttons\" id=\"rel-buttons\">

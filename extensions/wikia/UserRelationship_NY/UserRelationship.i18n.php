@@ -14,6 +14,7 @@ function efWikiaUserRelationship() {
 		'ur-relationship-count'=>'$1 has $2 {{PLURAL:$2|$3|$3s}}. Want more $3s? <a href="$4">Invite them</a>.',
 		'ur-add-friends'=>' Want more friends? <a href="$1">Invite Them</a>',
 		'ur-add-friend'=>'Add as Friend',
+		'ur-add-personal-message' => 'Add a Personal Message',
 		'ur-add-foe'=>'Add as Foe',
 		'ur-remove-relationship'=>'Remove as $1',
 		'ur-give-gift'=>'Give a Gift',
@@ -70,7 +71,7 @@ and change your settings to disable email notifications.',
 		'foe_request_subject' => 'It\'s war! $1 has added you to as a foe on {{SITENAME}}!',
 		'foe_request_body' => 'Hi $1:
 
-$2 just listed you as a foe on {{SITENAME}}.  We want to make sure that you two are actually mortal enemies – or at least having an argument.
+$2 just listed you as a foe on {{SITENAME}}.  We want to make sure that you two are actually mortal enemies ï¿½ or at least having an argument.
 
 Please click this link to confirm the grudge match.
 

@@ -3,6 +3,26 @@
 define( 'NS_USER_PROFILE', 202 );
 define( 'NS_USER_WIKI', 200 );
 
+/**
+ * localized ns - proof of concept aka quick hack
+ *
+ * @see SMW includes/SMW_GlobalFunctions.php::smwfInitNamespaces
+ * FIXME generalize
+ */
+
+if ('de' == $wgLanguageCode) {
+	// make en ns point (alias) to "main ns" - at this point themselves
+	foreach (array(200, 201, 202, 203) as $ns) {
+		$wgNamespaceAliases[$wgExtraNamespaces[$ns]] = $ns;
+	}
+	// translate "main ns" into de
+	$wgExtraNamespaces[200] = 'BenutzerWiki';
+	$wgExtraNamespaces[201] = 'BenutzerWiki Diskussion';
+	$wgExtraNamespaces[202] = 'Benutzerprofil ';
+	$wgExtraNamespaces[203] = 'BenutzerWiki Diskussion ';
+	// the end: de name is the "main ns", en is just an alias (redirect)
+}
+
 if( empty($wgSocialUserPage) ){
 	$wgSocialUserPage = true;
 }

@@ -28,8 +28,8 @@ class UserProfilePage extends Article{
 		global $wgOut, $wgUser, $wgRequest, $wgTitle, $wgSitename, $wgUserProfileScripts;
 					
 		$sk = $wgUser->getSkin();
-		$wgOut->setHTMLTitle(  "User:{$this->user_name}" );
-		$wgOut->setPageTitle(  "User:{$this->user_name}"  );
+		$wgOut->setHTMLTitle(  $wgTitle->getPrefixedText() );
+		$wgOut->setPageTitle(  $wgTitle->getPrefixedText() );
 		
 		# No need to display noarticletext, we use our own message
 		if ( !$this->user_id ) {
@@ -987,12 +987,13 @@ class UserProfilePage extends Article{
 				if ($relationship==2 && !$wgDisableFoeing )$output .= "<a href=\"".$remove_relationship->escapeFullURL('user='.$user_safe)."\">".wfMsg("user-remove-foe")."</a> |";
 			}
 			
-			global $wgUserBoard;
+			global $wgUserBoard, $wgEnableGifts;
 			if( $wgUserBoard ){
 				$output .= "<a href=\"".$send_message->escapeFullURL('user='.$wgUser->getName().'&conv='.$user_safe)."\" rel=\"nofollow\">".wfMsg("user-send-message")."</a> | ";
 			}
+			if( $wgEnableGifts ){
 			$output .= "<a href=\"".$give_gift->escapeFullURL('user='.$user_safe)."\" rel=\"nofollow\">".wfMsg("user-send-gift")."</a> |";
-			
+			}
 		}
 		
 			$output .= "<a href=\"".$contributions->escapeFullURL()."\" rel=\"nofollow\">".wfMsg("user-contributions")."</a>";
@@ -1573,10 +1574,10 @@ class UserProfilePage extends Article{
 			if($wgUser->isLoggedIn() && !$wgUser->isBlocked()){
 				$output .= "<div class=\"user-page-message-form\">
 						<input type=\"hidden\" id=\"user_name_to\" name=\"user_name_to\" value=\"" . addslashes($user_name)."\"/>
-						<span style=\"color:#797979;\">Message Type</span> <select id=\"message_type\"><option value=\"0\">public</option><option value=\"1\">private</option></select><p>
+						<span style=\"color:#797979;\">" . wfMsg("userboard_messagetype") . "</span> <select id=\"message_type\"><option value=\"0\">" . wfMsg("userboard_public") . "</option><option value=\"1\">" . wfMsg("userboard_private") . "</option></select><p>
 						<textarea name=\"message\" id=\"message\" cols=\"43\" rows=\"4\"/></textarea>
 						<div class=\"user-page-message-box-button\">
-							<input type=\"button\" value=\"Send\" class=\"site-button\" onclick=\"javascript:send_message();\">
+							<input type=\"button\" value=\"" . wfMsg("userboard_sendbutton") . "\" class=\"site-button\" onclick=\"javascript:send_message();\">
 						</div>
 					</div>";
 			} else {
