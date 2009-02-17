@@ -15,7 +15,7 @@ class SearchRankBot {
 	private $mDebugMode = false;
 	private $mCacheDir = false;
 	private $mCacheExpire = 4; // in hours
-	private $mMaxResultFetched = 500;
+	private $mMaxResultFetched = 100;
 	private $mUserAgent = 'Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.2; SV1; .NET CLR 1.1.4322)';
 	private $mCurlEngine = null;
 
@@ -72,7 +72,8 @@ class SearchRankBot {
 		global $wgSharedDB, $wgSearchRankTrackerConfig;
 		$this->printDebug("Starting SearchRankBot ...", $bVerbose);
 
-		$sCurrentTime = date('Y-m-d H:i:s');
+//		$sCurrentTime = date('Y-m-d H:i:s');
+		$sCurrentTime = date('Y-m-d', strtotime('last sunday'));
 		$iCurrentYear = date('Y', strtotime($sCurrentTime));
 		$iCurrentMonth = date('m', strtotime($sCurrentTime));
 		$iCurrentDay = date('d', strtotime($sCurrentTime));
