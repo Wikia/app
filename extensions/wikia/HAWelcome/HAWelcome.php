@@ -21,7 +21,7 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 $wgExtensionCredits['other'][] = array(
 	'name' => 'HAWelcome',
 	'version' => '0.2',
-	'author' => 'Krzysztof Krzyźaniak',
+	'author' => 'Krzysztof Krzyżaniak',
 	'description' => 'Highly Automated Welcome Tool ',
 );
 
@@ -210,7 +210,7 @@ class HAWelcomeJob extends Job {
 		/**
 		 * Revision has valid Title field
 		 */
-		$Title = $revision->getTitle();
+		$Title = Title::newFromId( $revision->getPage() );
 		if( $Title && ! $wgCommandLineMode ) {
 			$welcomer = trim( wfMsgForContent( "welcome-user" ) );
 			Wikia::log( __METHOD__, "welcomer", $welcomer );
