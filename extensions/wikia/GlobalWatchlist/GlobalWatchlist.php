@@ -34,8 +34,8 @@ $wgHooks['getUserProfilePreferencesCustomEmailToggles'][] = 'wfGlobalWatchlistPr
 
 // user toggles
 $wgHooks['UserToggles'][] = 'wfGlobalWatchlistToggle';
-$wgHooks['WatchArticleComplete'][] = 'wfGlobalWatchArticleComplete';
-$wgHooks['UnwatchArticleComplete'][] = 'wfGlobalUnwatchArticleComplete';
+//$wgHooks['WatchArticleComplete'][] = 'wfGlobalWatchArticleComplete';
+//$wgHooks['UnwatchArticleComplete'][] = 'wfGlobalUnwatchArticleComplete';
 
 function wfGlobalWatchlistToggle($extraToggles) {
 	$extraToggles['watchlistdigest'] = 'watchlistdigest';
@@ -77,6 +77,7 @@ function wfGlobalWatchlistPrefsEmailToggle($prefsForm, $toggleHtml) {
  return true;
 }
 
+/*
 function wfGlobalWatchArticleComplete($oUser, $oArticle) {
 	global $wgSharedDB, $wgCityId;
 
@@ -97,4 +98,4 @@ function wfGlobalUnwatchArticleComplete($user, $artile) {
 
 	return true;
 }
-
+*/
