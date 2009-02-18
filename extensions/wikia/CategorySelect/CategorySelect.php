@@ -416,7 +416,7 @@ function CategorySelectGenerateHTMLforView() {
 
 	$result = '
 	<link rel="stylesheet" type="text/css" href="' . $wgExtensionsPath . '/wikia/CategorySelect/CategorySelect.css?' . $wgStyleVersion . '" />
-	<div id="csMainContainer">
+	<div id="csMainContainer" class="csViewMode">
 		<div id="csSuggestContainer">
 			<div id="csHintContainer">' . wfMsg('categoryselect-suggest-hint') . '</div>
 		</div>
@@ -424,7 +424,7 @@ function CategorySelectGenerateHTMLforView() {
 			<input id="csCategoryInput" type="text" style="display: none" />
 		</div>
 		<div class="clearfix"></div>
-		<div id="csButtonsContainer">
+		<div id="csButtonsContainer" class="color1">
 			<input type="button" onclick="csSave()" value="' . wfMsg('categoryselect-button-save') . '" />
 			<input type="button" onclick="csCancel()" value="' . wfMsg('categoryselect-button-cancel') . '" />
 		</div>
