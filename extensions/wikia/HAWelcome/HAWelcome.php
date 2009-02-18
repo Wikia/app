@@ -109,13 +109,13 @@ class HAWelcomeJob extends Job {
 				if( ! $talkArticle->exists() || $wgDevelEnvironment ) {
 					if( $this->mAnon ) {
 						$welcomeMsg = wfMsg( "welcome-message-anon", array(
-							sprintf("%s:%s", $this->title->getNsText(), $this->title->getText() ),
-							sprintf("%s:%s", $sysopPage->getNsText(), $sysopPage->getText() ),
+							$this->expandTitle( $this->title ),
+							$this->expandTitle( $sysopPage ),
 							$signature
 						));
 						$welcomeMsgAlt = wfMsgForContent( "welcome-message-anon", array(
-							sprintf("%s:%s", $this->title->getNsText(), $this->title->getText() ),
-							sprintf("%s:%s", $sysopPage->getNsText(), $sysopPage->getText() ),
+							$this->expandTitle( $this->title ),
+							$this->expandTitle( $sysopPage ),
 							$signature
 						));
 						if( $welcomeMsgAlt !== $welcomeMsg ){
@@ -136,13 +136,13 @@ class HAWelcomeJob extends Job {
 						}
 
 						$welcomeMsg = wfMsg( "welcome-message-user", array(
-							sprintf("%s:%s", $this->title->getNsText(), $this->title->getText() ),
-							sprintf("%s:%s", $sysopPage->getNsText(), $sysopPage->getText() ),
+							$this->expandTitle( $this->title ),
+							$this->expandTitle( $sysopPage ),
 							$signature
 						));
 						$welcomeMsgAlt = wfMsgForContent( "welcome-message-user", array(
-							sprintf("%s:%s", $this->title->getNsText(), $this->title->getText() ),
-							sprintf("%s:%s", $sysopPage->getNsText(), $sysopPage->getText() ),
+							$this->expandTitle( $this->title ),
+							$this->expandTitle( $sysopPage ),
 							$signature
 						));
 						if( $welcomeMsgAlt !== $welcomeMsg ){
@@ -159,6 +159,10 @@ class HAWelcomeJob extends Job {
 		wfProfileOut( __METHOD__ );
 
 		return true;
+	}
+
+	private function expandTitle( Title $Title ) {
+		return sprintf("%s:%s",str_replace( '_', ' ', $Title->getNsText() ), $Title->getPrefixedText() );
 	}
 
 	/**
@@ -227,7 +231,7 @@ class HAWelcomeJob extends Job {
 		wfLoadExtensionMessages( "HAWelcome" );
 
 		$wgDevelEnvironment = true;
-		
+
 		/**
 		 * Revision has valid Title field but sometimes not filled
 		 */
