@@ -223,7 +223,7 @@ WikiaButtonUI.prototype.ChangeState = function( newState, force )
 	switch ( parseInt( newState, 10 ) )
 	{
 		case FCK_TRISTATE_OFF :
-			e.className		= 'fck_button_of' ;
+			e.className		= 'fck_button_off' ;
 			break ;
 
 		case FCK_TRISTATE_ON :
