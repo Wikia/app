@@ -2,7 +2,7 @@
 
 my $wikia_lib;
 BEGIN {
-	my $wikia_lib = "/home/wikicities/conf/mediawiki/wikia-utils/lib";
+	$wikia_lib = "/home/wikicities/conf/mediawiki/wikia-utils/lib";
 }
 
 use DBI;
