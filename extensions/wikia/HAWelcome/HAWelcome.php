@@ -22,7 +22,7 @@ $wgExtensionCredits['other'][] = array(
 	'name' => 'HAWelcome',
 	'version' => '0.2',
 	'author' => 'Krzysztof Krzyżaniak',
-	'description' => 'Highly Automated Welcome Tool ',
+	'description' => 'Highly Automated Welcome Tool',
 );
 
 
@@ -49,6 +49,9 @@ $wgWikiaBatchTasks[ "welcome" ] = "HAWelcomeTask";
 class HAWelcomeJob extends Job {
 
 	private
+		$mUserId,
+		$mUserName,
+		$mUserIP,
 		$mUser,
 		$mAnon,
 		$mSysop;
@@ -64,15 +67,23 @@ class HAWelcomeJob extends Job {
 	public function __construct( $title, $params, $id = 0 ) {
 		wfLoadExtensionMessages( "HAWelcome" );
 		parent::__construct( "HAWelcome", $title, $params, $id );
-		$user_id = $params[ "user_id" ];
-		$user_ip = $params[ "user_ip" ];
+		$this->mUserId = $params[ "user_id" ];
+		$this->mUserIP = $params[ "user_ip" ];
+		$this->mUserName = $params[ "user_name" ];
 
 		$this->mAnon = (bool )$params[ "is_anon" ];
 		if( $this->mAnon ) {
-			$this->mUser = User::newFromName( $user_ip, false );
+			$this->mUser = User::newFromName( $this->mUserIP, false );
 		}
 		else {
-			$this->mUser = User::newFromId( $user_id );
+			$this->mUser = User::newFromId( $this->mUserId );
+		}
+
+		/**
+		 * fallback
+		 */
+		if( ! $this->mUser ) {
+			$this->mUser = User::newFromName( $this->mUserName );
 		}
 	}
 
@@ -240,7 +251,7 @@ class HAWelcomeJob extends Job {
 			$Title = Title::newFromId( $revision->getPage() );
 			$revision->setTitle( $Title );
 		}
-		
+
 		if( $Title && ! $wgCommandLineMode && ! $wgUser->isAllowed( "bot" ) ) {
 
 			Wikia::log( __METHOD__, "title", $Title->getFullURL() );
@@ -341,11 +352,14 @@ class HAWelcomeTask extends BatchTask {
 	 * @access public
 	 */
 	public function  __construct() {
+		global $wgDebugLogFile;
+
 		$this->mType = "welcome";
 		$this->mVisible = false;
 		$this->mTTL = 1800;
 		parent::__construct();
 		$this->mDebug = false;
+		$wgDebugLogFile  = "/tmp/welcome-task.log";
 	}
 
 	/**
@@ -363,7 +377,9 @@ class HAWelcomeTask extends BatchTask {
 	public function execute( $params = null ) {
 		global $IP, $wgWikiaLocalSettingsPath, $wgWikiaAdminSettingsPath;
 
+		$this->mTaskID = $params->task_id;
 		$this->mParams = unserialize( $params->task_arguments );
+
 		$city_id = $this->mParams["city_id"];
 		if( $city_id ) {
 			/**
