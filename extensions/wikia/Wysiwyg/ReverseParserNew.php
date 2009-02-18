@@ -193,6 +193,7 @@ class ReverseParser {
 		if($node->nodeType == XML_ELEMENT_NODE) {
 
 			$washtml = $node->getAttribute('washtml');
+			$newNode = $node->getAttribute('_wysiwyg_new');
 
 			if(empty($washtml)) {
 
@@ -584,6 +585,26 @@ class ReverseParser {
 			if($this->nodeHasLineStart($node)) {
 				$out = "\n{$out}";
 			}
+
+			// add newlines before/after wikimarkup if current node has been added in FCK wysiwyg mode
+			// FCK formats HTML a bit different then MW parser
+			if ($newNode) {
+				$prevNode = $this->getPreviousElementNode($node);
+
+				if (!empty($prevNode)) {
+					switch($node->nodeName) {
+						case 'ol':
+						case 'ul':
+							$out = "\n\n{$out}\n";
+							break;
+
+						case 'table':
+							$out = "\n\n{$out}\n";
+							break;
+					}
+				}
+			}
+			
 		} else if($node->nodeType == XML_COMMENT_NODE) {
 
 			// if the next sibling node of the current one comment node is text or node (so any sibling)
