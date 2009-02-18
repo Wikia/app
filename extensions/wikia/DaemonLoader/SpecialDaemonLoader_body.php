@@ -46,15 +46,17 @@ class DaemonLoader extends SpecialPage {
 			switch ($action) {
 				case "save" : {
 					$res = $this->saveDaemon();
+					$res = (!empty($res)) ? 1 : "";
 					break;
 				}
 				case "savetask" : {
 					$res = $this->saveTask();
+					$res = (!empty($res)) ? 2 : "";
 					break;
 				}
 			}
 			$titleObj = Title::makeTitle( NS_SPECIAL, 'DaemonLoader' );
-			$saved = "saved=" . ((empty($res)) ? "-1" : "1");
+			$saved = "saved=" . ((empty($res)) ? "-1" : $res);
 			$check = $titleObj->getFullURL( $saved );
 			return $wgOut->redirect( $check );
 		} elseif ($par == 'report') {
