@@ -15,6 +15,7 @@ var VET_prevScreen = null;
 var VET_slider = null;
 var VET_thumbSize = null;
 var VET_orgThumbSize = null;
+var VET_gallery = false;
 var VET_width = null;
 var VET_height = null;
 var VET_widthChanges = 1;
@@ -70,13 +71,15 @@ function VET_loadDetails() {
  * Functions/methods
  */
 if(mwCustomEditButtons) {
-	mwCustomEditButtons[mwCustomEditButtons.length] = {
-		"imageFile": stylepath + '/../extensions/wikia/VideoEmbedTool/images/button_vet2.png',
-		"speedTip": vet_imagebutton,
-		"tagOpen": "",
-		"tagClose": "",
-		"sampleText": "",
-		"imageId": "mw-editbutton-vet"};
+	if(typeof VET_gallery == "undefined") {
+		mwCustomEditButtons[mwCustomEditButtons.length] = {
+			"imageFile": stylepath + '/../extensions/wikia/VideoEmbedTool/images/button_vet2.png',
+			"speedTip": vet_imagebutton,
+			"tagOpen": "",
+			"tagClose": "",
+			"sampleText": "",
+			"imageId": "mw-editbutton-vet"};
+	}
 }
 
 if(skin == 'monaco') {
@@ -185,9 +188,14 @@ function VET_showPreview(e) {
 	YAHOO.util.Event.addListener('VideoEmbedPreviewClose', 'click', VET_previewClose);
 }
 
-function VET_show(e) {
+function VET_show(e, gallery) {
 	VET_refid = null;
 	VET_wysiwygStart = 1;
+
+	if(typeof gallery != "undefined") {
+		VET_gallery = gallery;		
+	}
+
 	if(YAHOO.lang.isNumber(e)) {
 		VET_refid = e;
 		if(VET_refid == -1) {
