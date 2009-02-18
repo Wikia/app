@@ -128,7 +128,7 @@ if (!@dates) {
 =get task info
 =cut
 $oConf->log("\n\nTask ID: $TASKID started");
-$oConf->log("Processing: ".scalar keys(%$databases));
+$oConf->log("Processing: ".scalar keys(%$databases)." Wikis");
 
 my $task = $db_ext->get_daemon_task($TASKID);
 
