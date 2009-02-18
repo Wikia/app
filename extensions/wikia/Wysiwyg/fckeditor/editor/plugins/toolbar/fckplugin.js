@@ -290,24 +290,11 @@ FCK.YAHOO.lang.extend(FCKToolbarButtonUI, WikiaButtonUI);
 var StyleCommand = function(id, name) {
         this.Name = name;
 	this.Command = new FCKCoreStyleCommand(id);
-	this.Style = FCKStyles.GetStyle('_FCK_' + id);
+	this.IsActive = false;
+
+	FCKStyles.AttachStyleStateChange(this.Command.StyleName, this._OnStyleStateChange, this);
 }
 StyleCommand.prototype = {
-	IsActive: function() {
-		var startElement = FCK.Selection.GetBoundaryParentElement( true ) ;
-
-		if ( startElement ) {
-			var path = new FCKElementPath( startElement ) ;
-			var blockElement = path.Block ;
-
-			if ( blockElement ) {
- 				if ( this.Style.CheckElementRemovable( blockElement ) ) {
-					return true;
-				}
-			}
-		}
-		return false;
-	},
         Execute : function() {
 		this.Command.Execute();
         },
@@ -316,9 +303,22 @@ StyleCommand.prototype = {
 			return FCK_TRISTATE_DISABLED ;
 		}
 		else {
-			return this.IsActive() ? FCK_TRISTATE_ON : FCK_TRISTATE_OFF ;
+			return this.IsActive ? FCK_TRISTATE_ON : FCK_TRISTATE_OFF ;
 		}
-	 }
+	 },
+	_OnStyleStateChange : function( styleName, isActive ) {
+		this.IsActive = isActive;
+
+		if (isActive) {
+			FCK.log('current style: ' + this.Name);
+		}
+
+		// hack: refresh toolbar items state
+		var items = FCK.ToolbarSet.Items;
+		for (i=0; i<items.length; i++) {
+			items[i].RefreshState();
+		}
+	}
 } ;
 
 // register new toolbar items
