@@ -1,25 +1,22 @@
 FCK.log('new toolbar enabled...');
 
 // WikiaSeparator class for separating buckets
-var WikiaSeparator = function( bucket  ) { this.Bucket = bucket;  };
+var WikiaSeparator = function( bucket  ) { this.Bucket = bucket; };
+WikiaSeparator.prototype.Create = function(node) { }
 
-WikiaSeparator.prototype.Create = function(node) {
-	//FCK.log( this.Bucket );
-}
-
-var WikiaToolbar = function() { };
+var WikiaToolbar = function() {
+	this.Buckets = window.parent.wysiwygToolbarBuckets;
+	this.CurrentBucket = 0;
+ };
 
 // WikiaToolbar class extends FCKToolbar
-FCK.YAHOO.lang.extend(WikiaToolbar, FCKToolbar);
+WikiaToolbar.prototype = new FCKToolbar;
 
 // overload FCKToolbar methods
-WikiaToolbar.prototype.CurrentBucket = 0;
+WikiaToolbar.prototype.AddSeparator = function() {
+	var bucketName = this.Buckets[this.CurrentBucket++];
 
-WikiaToolbar.prototype.AddSeparator = function()
-{
-	var bucketName = window.parent.wysiwygToolbarBuckets[this.CurrentBucket++];
-
-	this.AddItem( new WikiaSeparator({'name': bucketName, 'last': (this.CurrentBucket == window.parent.wysiwygToolbarBuckets.length)}) );
+	this.AddItem( new WikiaSeparator({'name': bucketName, 'last': (this.CurrentBucket == this.Buckets.length)}) );
 }
 
 WikiaToolbar.prototype.Create = function(parentElement) {
@@ -83,9 +80,8 @@ WikiaToolbar.prototype.AddItem = function( item )
         return this.Items[ this.Items.length ] = item ;
 }
 
-// override default toolbar from FCK
-FCK.YAHOO.lang.extend(FCKToolbar, WikiaToolbar);
-
+// override default FCK toolbar class
+FCKToolbar.prototype = new WikiaToolbar;
 
 //
 // buttons styling
@@ -100,41 +96,40 @@ var WikiaButtonUI = function( name, label, tooltip, iconPathOrStripInfoArray, st
 
 	this.Icon = new FCKIcon( iconPathOrStripInfoArray ) ;
 
+	this.IconsPath = window.parent.wgExtensionsPath + '/wikia/Wysiwyg/toolbar/';
+	this.Icons = {
+		'H2':		'text_heading_2.png',
+		'H3':		'text_heading_3.png',
+		'Bold': 	'text_bold.png',
+		'Italic':	'text_italic.png',
+		'Underline':	'text_underline.png',
+		'StrikeThrough':'text_strikethrough.png',
+		'Normal':	'icon_normal.png',
+		'Pre':		'icon_pre.png',
+		'Indent':	'text_indent.png',
+		'Outdent':	'text_indent_remove.png',
+
+		'InsertUnorderedList':	'text_list_bullets.png',
+		'InsertOrderedList':	'text_list_numbers.png',
+		'Link':			'link.png',
+		'Unlink':		'link_break.png',
+
+		'AddImage':	'photo.png',
+		'AddVideo':	'film.png',
+		'Table':	'table.png',
+		'Tildes':	'icon_signature.png',
+
+		'Undo':		'arrow_undo.png',
+		'Redo':		'arrow_redo.png',
+		'Source':	'application_xp_terminal.png'
+	};
+
 	if ( FCK.IECleanup )
 		FCK.IECleanup.AddItem( this, FCKToolbarButtonUI_Cleanup ) ;
 }
 
 // WikiaButtonUI class extends FCKToolbarButtonUI
-FCK.YAHOO.lang.extend(WikiaButtonUI, FCKToolbarButtonUI);
-
-WikiaButtonUI.prototype.IconsPath = window.parent.wgExtensionsPath + '/wikia/Wysiwyg/toolbar/';
-
-WikiaButtonUI.prototype.Icons = {
-	'H2':		'text_heading_2.png',
-	'H3':		'text_heading_3.png',
-	'Bold': 	'text_bold.png',
-	'Italic':	'text_italic.png',
-	'Underline':	'text_underline.png',
-	'StrikeThrough':'text_strikethrough.png',
-	'Normal':	'icon_normal.png',
-	'Pre':		'icon_pre.png',
-	'Indent':	'text_indent.png',
-	'Outdent':	'text_indent_remove.png',
-
-	'InsertUnorderedList':	'text_list_bullets.png',
-	'InsertOrderedList':	'text_list_numbers.png',
-	'Link':			'link.png',
-	'Unlink':		'link_break.png',
-
-	'AddImage':	'photo.png',
-	'AddVideo':	'film.png',
-	'Table':	'table.png',
-	'Tildes':	'icon_signature.png',
-
-	'Undo':		'arrow_undo.png',
-	'Redo':		'arrow_redo.png',
-	'Source':	'application_xp_terminal.png'
-};
+WikiaButtonUI.prototype = new FCKToolbarButtonUI;
 
 WikiaButtonUI.prototype.Create = function( parentElement )
 {
@@ -149,7 +144,6 @@ WikiaButtonUI.prototype.Create = function( parentElement )
 	// create main wrapping element
 	var oMainElement = this.MainElement = oDoc.createElement( 'LI' ) ;
 	oMainElement.title = this.Tooltip ;
-	oMainElement.id = 'fck_button_' + this.Name.toLowerCase();
 
 	// The following will prevent the button from catching the focus.
 	if ( FCKBrowserInfo.IsGecko )
@@ -278,8 +272,8 @@ function WikiaButtonUI_OnClick( ev, button )
 		button.OnClick( button ) ;
 }
 
-// override default button from FCK
-FCK.YAHOO.lang.extend(FCKToolbarButtonUI, WikiaButtonUI);
+// override default FCK button class
+FCKToolbarButtonUI.prototype = new WikiaButtonUI;
 
 
 //
