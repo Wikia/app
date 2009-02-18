@@ -352,7 +352,7 @@ function CategorySelectGetCategoryLinksEnd($categoryLinks) {
 
 	$action = $wgRequest->getVal('action', 'view');
 	if ($action == 'view' || $action == 'purge') {
-		$categoryLinks .= ' <div id="csAddCategorySwitch" style="float:right"><a href="#" onclick="YAHOO.util.Get.script(wgExtensionsPath+\'/wikia/CategorySelect/CategorySelect.js?\'+wgStyleVersion,{onSuccess:function(){showCSpanel();}});$(\'catlinks\').className+=\' csLoading\';return false;" onfocus="this.blur();">' . wfMsg('categoryselect-addcategory-button') . '</a></div>';
+		$categoryLinks .= ' <div id="csAddCategorySwitch" style="float:right;background:#ddd;border: 1px solid #888;-moz-border-radius:3px;padding:0 4px"><a href="#" onclick="YAHOO.util.Get.script(wgExtensionsPath+\'/wikia/CategorySelect/CategorySelect.js?\'+wgStyleVersion,{onSuccess:function(){showCSpanel();}});$(\'catlinks\').className+=\' csLoading\';return false;" onfocus="this.blur();" style="color:#000;font-size:0.85em;text-decoration:none">' . wfMsg('categoryselect-addcategory-button') . '</a></div>';
 	}
 	return true;
 }
