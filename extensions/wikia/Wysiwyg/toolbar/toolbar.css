@@ -10,7 +10,7 @@
 	padding: 0 1px !important;
 }
 
-#page_bar {
+#page_bar, .articleBar {
 	display: none;
 }
 
