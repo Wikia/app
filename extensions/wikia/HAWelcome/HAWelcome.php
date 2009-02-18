@@ -109,13 +109,13 @@ class HAWelcomeJob extends Job {
 				if( ! $talkArticle->exists() || $wgDevelEnvironment ) {
 					if( $this->mAnon ) {
 						$welcomeMsg = wfMsg( "welcome-message-anon", array(
-							$this->expandTitle( $this->title ),
-							$this->expandTitle( $sysopPage ),
+							$this->title->getPrefixedText(),
+							$sysopPage->getPrefixedText(),
 							$signature
 						));
 						$welcomeMsgAlt = wfMsgForContent( "welcome-message-anon", array(
-							$this->expandTitle( $this->title ),
-							$this->expandTitle( $sysopPage ),
+							$this->title->getPrefixedText(),
+							$sysopPage->getPrefixedText(),
 							$signature
 						));
 						if( $welcomeMsgAlt !== $welcomeMsg ){
@@ -136,13 +136,13 @@ class HAWelcomeJob extends Job {
 						}
 
 						$welcomeMsg = wfMsg( "welcome-message-user", array(
-							$this->expandTitle( $this->title ),
-							$this->expandTitle( $sysopPage ),
+							$this->title->getPrefixedText(),
+							$sysopPage->getPrefixedText(),
 							$signature
 						));
 						$welcomeMsgAlt = wfMsgForContent( "welcome-message-user", array(
-							$this->expandTitle( $this->title ),
-							$this->expandTitle( $sysopPage ),
+							$this->title->getPrefixedText(),
+							$sysopPage->getPrefixedText(),
 							$signature
 						));
 						if( $welcomeMsgAlt !== $welcomeMsg ){
