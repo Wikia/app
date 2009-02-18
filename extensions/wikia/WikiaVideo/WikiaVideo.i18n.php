@@ -9,7 +9,6 @@ $messages['en'] = array(
 	'wikiavideo-replace' => 'Replace Video',
 	'wikiavideo-category' => 'Videos',
 	'wikiavideo-links' => 'Links',
-	'wikiavideo-gallery-template' => 'This video gallery is within a template, and is not editable from the view mode. Please edit the appriopriate template.',
 );
 
 $messages['pl'] = array(
@@ -20,5 +19,4 @@ $messages['pl'] = array(
 	'wikiavideo-replace' => 'Zamień wideo',
 	'wikiavideo-category' => 'Wideo',
 	'wikiavideo-links' => 'Linki',
-	'wikiavideo-gallery-template' => 'ta galeria wideo znajduje się w szablonie, i nie jest edytowalna w trybie podglądu. Proszę edytować odpowiedni szablon.',
 );
