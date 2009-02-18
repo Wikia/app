@@ -166,6 +166,18 @@ html>/**/body .CSitemOuter > .CScontrolRemove {
 	padding: 5px 0;
 }
 
+.csLoading {
+	background-image: url('http://images.wikia.com/common/skins/monaco/images/widget_loading.gif');
+	background-repeat: no-repeat;
+	background-position: 99% 50%;
+}
+
+.csSaving {
+	background-image: url('http://images.wikia.com/common/skins/monaco/images/widget_loading.gif');
+	background-repeat: no-repeat;
+	background-position: 99% 50%;
+}
+
 /** IE6 fixes **/
 * html #csMainContainer,
 * html .CSitem {
