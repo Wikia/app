@@ -162,10 +162,11 @@ class HAWelcomeJob extends Job {
 	}
 
 	/**
-	 * get last active sysop for this wiki, use local user database and blobs
-	 * from dataware
+	 * get last active sysop for this wiki, use local user database
 	 *
 	 * @access public
+	 *
+	 * @return User class instance
 	 */
 	public function getLastSysop() {
 		global $wgCityId;
@@ -233,6 +234,8 @@ class HAWelcomeJob extends Job {
 			$Title = Title::newFromId( $revision->getPage() );
 			$revision->setTitle( $Title );
 		}
+		Wikia::log( __METHOD__, "title", $Title->getFullURL() );
+		Wikia::log( __METHOD__, "isbot", $wgUser->isAllowed( "bot" ) );
 		if( $Title && ! $wgCommandLineMode && ! $wgUser->isAllowed( "bot" ) ) {
 
 			$welcomer = trim( wfMsgForContent( "welcome-user" ) );
