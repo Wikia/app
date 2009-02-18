@@ -27,7 +27,7 @@ use Wikia::DB;
 my @CHECK_ALLOWED = ("day", "week", "month");
 my $DEF_WEEK = "6";
 my $email_title = "Referrer report";
-my $XLS_FILE = "/tmp/referrer_" . substr (&ParseDate("today"), 0, 8) . ".xls";
+my $XLS_FILE = "/home/reports/referrer/referrer_" . substr (&ParseDate("today"), 0, 8) . ".xls";
 
 =help function
 =cut
@@ -40,6 +40,7 @@ referrer [--help] [--usedb=s]
 	check - check every days|weeks|months - default "weeks"
 	fromWiki - identifier of Wikia as begin of range. This parameter can be used when 'usedb' is not set!
 	toWiki - identifier of Wikia as end of range. This parameter can be used when 'usedb' is not set!
+	TASKID - identifier of job
 EOF
 ;	
 }
@@ -227,6 +228,8 @@ my $res = ();
 =XLS - default settings ========================
 =init XLS spreadsheet
 =cut
+my $dir = "/home/reports/referrer/";
+mkdir($dir) if (!(-e $dir)) ;
 unlink ($XLS_FILE);
 my $workbook = Spreadsheet::WriteExcel->new($XLS_FILE);
 my @cols = (A..Z);
