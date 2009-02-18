@@ -9,33 +9,29 @@
 
 <?php $entriesCount = count($entries); ?>
 <a href="<?=$title->getFullUrl('action=edit');?>"><b>[add new entry]</b></a>
-<?php if($entriesCount): ?>
-	<a href="<?=$title->getFullUrl();?>">[refresh]</a>
-<?php endif; ?>
 <div id="entry-list">
 	<?php if($entriesCount): ?>
-	 <?php foreach($entries as $entry): ?>
-	  <div class="entry">
-		  <div id="entry-desc">
-					<div id="entry-controls">
-						<a href="<?=$title->getFullUrl('action=edit&entryId=' . $entry->getId());?>">[edit entry]</a>
-						<a href="<?=$title->getFullUrl('action=delete&entryId=' . $entry->getId());?>" onClick="javascript: return confirm('Are you sure?');">[remove entry]</a>
-					</div>
-
-			  <label>Search phrase:</label>
-			  <div id="entry-search-phrase">"<?=$entry->getPhrase();?>",</div>
-			  <label>Page URL:</label>
-			  <div id="entry-page-url"><a href="<?=$entry->getPageUrl();?>" target="_blank"><?=$entry->getPageUrl();?></a></div>
-				</div>
-				<div class="entry-graph">
-					<img src="<?=$title->getFullUrl('action=renderGraph&entryId=' . $entry->getId() . '&date=' . date('Y-m-d'));?>" />
-				</div>
-	  </div>
-	 <?php endforeach; ?>
+		<table border="1" cellspacing="0" cellpadding="6" valign="top">
+			<tr bgcolor="#eeeeee">
+				<th>Date</th>
+			<?php foreach($entries as $entry): ?>
+				<th><a href="<?=$title->getFullUrl('action=list&entryId=' . $entry->getId());?>"><?=$entry->getPhrase();?></a></th>
+			<?php endforeach; ?>
+			</tr>
+			<?php foreach($resultDates as $date): ?>
+			<tr>
+				<td><strong><?=date('M d, Y', strtotime($date));?></strong></td>
+				<?php foreach($entries as $entry): ?>
+					<? $rank = $entry->getRankResultByDate($date); ?>
+					<td align="center"><?=($rank == null) ? "-" : $rank; ?></td>
+				<?php endforeach; ?>
+			</tr>
+			<?php endforeach; ?>
+		</table>
 	<?php else: ?>
-	 <br />
-	 <br />
-	 <i><?=wfMsg('searchranktracker-empty-list'); ?>
+		<br />
+		<br />
+		<i><?=wfMsg('searchranktracker-empty-list'); ?>
 	<?php endif; // count($entries) ?>
 </div>
 <!-- e:<?= __FILE__ ?> -->
