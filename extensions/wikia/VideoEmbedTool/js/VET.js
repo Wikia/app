@@ -568,7 +568,9 @@ function VET_insertFinalVideo(e, type) {
 					$('VideoEmbed' + VET_curScreen).innerHTML = o.responseText;
 					if ( !$( 'VideoEmbedCreate'  ) && !$( 'VideoEmbedReplace' ) ) {
 						if(VET_refid == null) {
-							insertTags($('VideoEmbedTag').innerHTML, '', '');
+							if ('-1' == VET_gallery) {
+								insertTags($('VideoEmbedTag').innerHTML, '', '');
+							}
 						} else {
 							var wikitag = YAHOO.util.Dom.get('VideoEmbedTag').innerHTML;
 							var options = {};
