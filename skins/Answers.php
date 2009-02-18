@@ -555,9 +555,11 @@ wfRunHooks('GetHTMLAfterBody', array (&$this));
 			<ul id="popular_categories">
 				<? 
 				$lines = getMessageAsArray("sidebar-popular-categories");
-				foreach($lines as $line) {
-					$item = parseItem(trim($line, ' *'));
-					$popular_categories[] = $item;
+				if( is_array( $lines ) ){
+					foreach($lines as $line) {
+						$item = parseItem(trim($line, ' *'));
+						$popular_categories[] = $item;
+					}
 				}
 				if( is_array( $popular_categories ) ){
 					foreach( $popular_categories as $popular_category ){
