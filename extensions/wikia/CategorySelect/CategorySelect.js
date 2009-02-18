@@ -366,6 +366,7 @@ function showCSpanel() {
 			initHandlers();
 			initAutoComplete();
 			initializeCategories();
+			YAHOO.util.Dom.removeClass('catlinks', 'csLoading');
 		},
 		timeout: 30000
 	};
@@ -383,6 +384,11 @@ function csSave() {
 		timeout: 30000
 	};
 	YAHOO.util.Connect.asyncRequest('POST', ajaxUrl, callback, pars);
+
+	// add loading indicator and disable buttons
+	YAHOO.util.Dom.addClass('csButtonsContainer', 'csSaving');
+	$('csSave').disabled = true;
+	$('csCancel').disabled = true;
 }
 
 function csCancel() {
