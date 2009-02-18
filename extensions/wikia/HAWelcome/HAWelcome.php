@@ -86,6 +86,8 @@ class HAWelcomeJob extends Job {
 
 		wfProfileIn( __METHOD__ );
 
+		$wgDevelEnvironment = true;
+
 		/**
 		 * overwrite $wgUser for ~~~~ expanding
 		 */
@@ -111,6 +113,14 @@ class HAWelcomeJob extends Job {
 							sprintf("%s:%s", $sysopPage->getNsText(), $sysopPage->getText() ),
 							$signature
 						));
+						$welcomeMsgAlt = wfMsgForContent( "welcome-message-anon", array(
+							sprintf("%s:%s", $this->title->getNsText(), $this->title->getText() ),
+							sprintf("%s:%s", $sysopPage->getNsText(), $sysopPage->getText() ),
+							$signature
+						));
+						if( $welcomeMsgAlt !== $welcomeMsg ){
+							Wikia::log( __METHOD__, "diff", "{$welcomeMsgAlt} vs. {$welcomeMsg}");
+						}
 					}
 					else {
 						/**
@@ -130,6 +140,14 @@ class HAWelcomeJob extends Job {
 							sprintf("%s:%s", $sysopPage->getNsText(), $sysopPage->getText() ),
 							$signature
 						));
+						$welcomeMsgAlt = wfMsgForContent( "welcome-message-user", array(
+							sprintf("%s:%s", $this->title->getNsText(), $this->title->getText() ),
+							sprintf("%s:%s", $sysopPage->getNsText(), $sysopPage->getText() ),
+							$signature
+						));
+						if( $welcomeMsgAlt !== $welcomeMsg ){
+							Wikia::log( __METHOD__, "diff", "{$welcomeMsgAlt} vs. {$welcomeMsg}");
+						}
 					}
 					$talkArticle->doEdit( $welcomeMsg, wfMsg( "welcome-message-log" ), EDIT_FORCE_BOT );
 				}
@@ -208,13 +226,20 @@ class HAWelcomeJob extends Job {
 		wfLoadExtensionMessages( "HAWelcome" );
 
 		/**
-		 * Revision has valid Title field
+		 * Revision has valid Title field but sometimes not filled
 		 */
-		$Title = Title::newFromId( $revision->getPage() );
-		if( $Title && ! $wgCommandLineMode ) {
+		$Title = $revision->getTitle();
+		if( !$Title ) {
+			$Title = Title::newFromId( $revision->getPage() );
+			$revision->setTitle( $Title );
+		}
+		if( $Title && ! $wgCommandLineMode && ! $wgUser->isAllowed( "bot" ) ) {
+
 			$welcomer = trim( wfMsgForContent( "welcome-user" ) );
 			Wikia::log( __METHOD__, "welcomer", $welcomer );
+
 			if( $welcomer !== "@disabled" && $welcomer !== "-" ) {
+
 				/**
 				 * check if talk page for wgUser exists
 				 *
