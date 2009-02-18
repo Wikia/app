@@ -251,13 +251,9 @@ class DaemonLoader extends SpecialPage {
 	}
 
 	public static function closeJob($dj_id) {
-		global $wgCityId, $wgUser;
-		global $wgRequest;
 		$res = 0;
-		
 		if ( $dj_id > 0 ) {
 			$dbs = wfGetDBExt();
-			// remove (so set as non-visible)
 			$dbs->begin();
 			$dbs->update(
 				"`dataware`.`daemon_tasks_jobs`",
@@ -558,7 +554,6 @@ class DaemonLoader extends SpecialPage {
 		}
 
 		if ( (!empty($wgUser)) && (!$wgUser->isBlocked()) ) {
-			wfLoadExtensionMessages(self::$oName);
 			$res['nbr_records'] = self::closeJob($id);
 		}
 		return $res;
