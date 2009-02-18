@@ -1564,15 +1564,3 @@ span.searchmatch {
 .os-suggest {
 	font-size: 127%;
 }
-
-/*** Added by Wikia ***/
-
-/* Monaco-like style for Monobook (#11074) */
-.color1, .color1 a {
-	background-color: #36C;
-	color: white;
-}
-
-.color2 {
-	background-color: #F5F5F5;
-}

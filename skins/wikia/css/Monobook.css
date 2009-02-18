@@ -232,6 +232,15 @@ body.rtl #column-google {
         display: none;
 }
 
+/* Monaco-like style for Monobook (#11074) */
+.color1, .color1 a {
+	background-color: #36C;
+	color: white;
+}
+
+.color2 {
+	background-color: #F5F5F5;
+}
 
 /* IE fixes */
 * html .staffSig {
