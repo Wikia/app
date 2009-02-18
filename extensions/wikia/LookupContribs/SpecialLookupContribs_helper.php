@@ -136,6 +136,10 @@ class LookupContribsCore {
 			return $userActivity;
 		}
 		$iUserId = $oUser->getId();
+		if ($iUserId == 0) {
+			wfDebug( "User $username not found\n" );
+			return $userActivity;
+		}
 		$memkey = wfForeignMemcKey( $wgSharedDB, null, "LookupContribs", "UserActivityExt", $iUserId );
 		$cached = $wgMemc->get($memkey);
 		if (!is_array ($cached) || LOOKUPCONTRIBS_NO_CACHE) { 
