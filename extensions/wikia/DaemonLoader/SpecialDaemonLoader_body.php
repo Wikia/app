@@ -299,10 +299,17 @@ class DaemonLoader extends SpecialPage {
 					$saveParams = implode(" ", $_tmp);
 				}
 				# other task params
-				$dt_start = $wgRequest->getVal("dt_start");
-				$dt_end = $wgRequest->getVal("dt_end");
+				$dt_start = trim($wgRequest->getVal("dt_start"));
+				$dt_end = trim($wgRequest->getVal("dt_end"));
 				$dt_frequency = $wgRequest->getVal("dt_frequency");
 				$dt_emails = $wgRequest->getVal("dt_emails");
+				
+				if (empty($dt_start) || (strlen($dt_start) != 8)) {
+					$dt_start = date("Ymd", mktime(0,0,0,date("m"),date("d")+1,date("Y")));
+				}
+				if (empty($dt_end) || (strlen($dt_end) != 8)) {
+					$dt_end = date("Ymd", mktime(0,0,0,date("m")+6,date("d"),date("Y")));
+				}
 				
 				$dbs = wfGetDBExt(DB_MASTER);
 				$dbs->begin();
@@ -474,6 +481,41 @@ class DaemonLoader extends SpecialPage {
 		}
 	}
 
+	public static function axGetJobInfo($id) {
+		global $wgUser;
+		
+		$res = array('nbr_records' => 0, 'data' => array());
+		if ( !$wgUser->isAllowed( 'daemonloader' ) ) {
+			return $res;
+		}
+		
+		if (empty($id)) {
+			return $res;
+		}
+
+		if ( (!empty($wgUser)) && (!$wgUser->isBlocked()) ) {
+			$data = self::getAllJobs($id);
+			
+			if (!empty($data) && is_array($data)) {
+				list ($count, $aData) = $data;
+				$info = $aData[0];
+				$params = $info['param_values'];
+				if (!empty($params)) {
+					$info['param_values'] = self::parseParams($params);
+				}
+				$res['data'] = $info;
+				$res['nbr_records'] = $count;
+			}
+		} 
+
+		if (!function_exists('json_encode')) {
+			$oJson = new Services_JSON();
+			return $oJson->encode($res);
+		} else {
+			return json_encode($res);
+		}
+	}
+
 	public static function axGetWikiList ( $name, $value ) {
 		global $wgUser;
 		
@@ -524,6 +566,25 @@ class DaemonLoader extends SpecialPage {
 		return $res;
 	}
 
+	private static function parseParams($sParams) {
+		wfProfileIn( __METHOD__ );
+		$aParams = array();
+		if (!empty($sParams)) {
+			$matches = preg_split('/\s/', $sParams);
+			if (!empty($matches) && is_array($matches)) {
+				foreach ($matches as $id => $str) {
+					if (preg_match('/^\-\-(.*)\=(.*)?/', $str, $m)) {
+						list (, $key, $value) = $m;
+						$aParams[trim($key)] = trim($value);
+					}
+				}
+			}
+		}
+		wfProfileOut( __METHOD__ );
+		error_log (print_r($aParams, true));
+		return $aParams;
+	}
+
 	function getWikisDB( $name ) {
 		global $wgSharedDB, $wgMemc;
 		wfProfileIn( __METHOD__ );
@@ -567,9 +628,9 @@ class DaemonLoaderHTML extends DaemonLoader {
 	}
 
 	function outputHTML( ) {
-		global $wgTitle, $wgOut, $wgLang, $wgUser;
+		global $wgOut, $wgLang, $wgUser;
 		global $wgStylePath, $wgStyleVersion;
-		global $wgRequest;
+		global $wgRequest, $wgDaemonLoaderAdmins;
 
 		$saved = $wgRequest->getVal('saved');
 
@@ -582,7 +643,8 @@ class DaemonLoaderHTML extends DaemonLoader {
 			"createTaskForm"	=> $this->createTaskForm(),
 			"listTaskTab"		=> $this->taskListForm(),
 			"saved" 			=> $saved,
-			'wgUser' 			=> $wgUser			
+			"wgUser" 			=> $wgUser,
+			"wgDaemonLoaderAdmins" => $wgDaemonLoaderAdmins
 		));
 		$wgOut->addHTML( $oTmpl->execute("main-form") );
 		wfProfileOut( __METHOD__ );

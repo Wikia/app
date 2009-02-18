@@ -24,7 +24,9 @@
 	<td><?=$aRow['result_xls_files']?></td>
 	<td><?=($aRow['createdby']) ? $aRow['createdby']->getName() : "" ?></td>
 	<td><?=$wgLang->date( wfTimestamp( TS_MW, $aRow['added'] ), true )?></td>
-	<td><a id="dt-remove-<?=$aRow['id']?>" style="cursor:pointer" onclick="removeJobTask('<?=$aRow['id']?>');"><?=wfMsg('delete')?></a></td>
+	<td><a id="dt-remove-<?=$aRow['id']?>" style="cursor:pointer" onclick="removeJobTask('<?=$aRow['id']?>');"><?=wfMsg('delete')?></a><br />
+		<a id="dt-change-<?=$aRow['id']?>" style="cursor:pointer" onclick="changeJobTask('<?=$aRow['id']?>');"><?=wfMsg('daemonloader_newtask')?></a>
+	</td>
 </tr>	
 <?php 
 		}

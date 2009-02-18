@@ -45,6 +45,9 @@
 }
 -->
 </style>
+<script>
+var tabView;
+</script>
 <?php if (!empty($saved)) { ?>
 <?php if ($saved == 1) { ?> 
 	<div class="successbox"><strong><?=wfMsg('daemonloader_daemonchanged')?></strong></div>
@@ -57,18 +60,22 @@
 	<ul class="yui-nav reset color1 clearfix" style="float:none; background-color:none;">
 		<li class="selected"><a href="#createtask"><em><?=wfMsg('daemonloader_createtask')?></em></a></li>
 		<li><a href="#tasklists"><em><?=wfMsg('daemonloader_listtask')?></em></a></li>
+<?php if (in_array($wgUser->getName(), $wgDaemonLoaderAdmins)) : ?>
 		<li><a href="#addscript"><em><?=wfMsg('daemonloader_configure')?></em></a></li>
+<?php endif ?>		
 	</ul>
 	<div class="yui-content">
 		<div id="createtask"><p><?=$createTaskForm?></p></div>
 		<div id="tasklists"><p><?=$listTaskTab?></p></div>
+<?php if (in_array($wgUser->getName(), $wgDaemonLoaderAdmins)) : ?>
 		<div id="addscript"><p><?=$addDaemonForm?></p></div>
+<?php endif ?>		
 	</div>
 </div>
 <script>
 <!--
 (function() {
-    var tabView = new YAHOO.widget.TabView('daemontasks-tabs');
+    tabView = new YAHOO.widget.TabView('daemontasks-tabs');
 })();
 -->
 </script>
