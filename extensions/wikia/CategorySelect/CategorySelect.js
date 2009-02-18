@@ -39,6 +39,7 @@ function modifyCategoryDialog(data, handler) {
 
 		var returnObject = {
 			'params': data,
+			'category': document.getElementById('csInfoboxCategory').value,
 			'sortkey': document.getElementById('csInfoboxSortKey').value
 		};
 
@@ -53,10 +54,11 @@ function modifyCategoryDialog(data, handler) {
 
 	Dialog.render(document.body);
 	//fill up initial values
+	$('csInfoboxCategory').value = data['data']['category'];
 	$('csInfoboxSortKey').value = data['data']['sortkey'];
 	Dialog.show();
 	//focus input on displayed dialog
-	$('csInfoboxSortKey').focus();
+	$('csInfoboxCategory').focus();
 }
 
 function modifyCategory(e) {
@@ -67,15 +69,27 @@ function modifyCategory(e) {
 
 	modifyCategoryDialog({
 		'catId': catId,
-		'caption': csProvideCategoryCaption,
-		'content': '<label for="csInfoboxSortKey">' + csProvideCategoryText.replace('$1', categories[catId].category) + '</label>' +
+		'caption': csInfoboxCaption,
+		'content': '<label for="csInfoboxCategory">' + csInfoboxCategoryText + '</label>' +
+			'<input type="text" id="csInfoboxCategory" />' +
+			'<br/><label for="csInfoboxSortKey">' + csInfoboxSortkeyText.replace('$1', categories[catId].category) + '</label>' +
 			'<input type="text" id="csInfoboxSortKey" />',
-		'data': {'sortkey': defaultSortkey},
-		'save': csProvideCategorySave
+		'data': {'category': categories[catId].category, 'sortkey': defaultSortkey},
+		'save': csInfoboxSave
 	},
 	function(data) {
 		YAHOO.log(data);
 
+		if (categories[catId].category != data['category']) {
+			categories[catId].category = data['category'];
+			var items = $('csItemsContainer').getElementsByTagName('a');
+			for (i=0; i<items.length; i++) {
+				if (items[i].getAttribute('catId') == catId) {
+					items[i].firstChild.firstChild.nodeValue = data['category'];
+					break;
+				}
+			}
+		}
 		var sortkey = data['sortkey'];
 		if (sortkey != null) {
 			if (sortkey == wgTitle || sortkey == csDefaultSort) {
