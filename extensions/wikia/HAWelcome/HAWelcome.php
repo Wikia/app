@@ -226,6 +226,8 @@ class HAWelcomeJob extends Job {
 
 		wfLoadExtensionMessages( "HAWelcome" );
 
+		$wgDevelEnvironment = true;
+		
 		/**
 		 * Revision has valid Title field but sometimes not filled
 		 */
