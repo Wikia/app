@@ -69,7 +69,15 @@ FCKToolbarItems.RegisterItem( 'AddImage', oTildesItem );
 FCK.originalSwitchEditMode = FCK.SwitchEditMode;
 
 FCK.WysiwygSwitchToolbars = function(switchToWikitext) {
-	var toolbarItems = document.getElementById('xToolbar').getElementsByTagName('tr')[0].childNodes;
+	var toolbar = document.getElementById('xToolbar').getElementsByTagName('tr');
+
+	// using new toolbar?
+	if (!toolbar.length) {
+		// don't do anything for now
+		return;
+	}
+
+	var toolbarItems = toolbar[0].childNodes;
 	var MWtoolbar = window.parent.document.getElementById('toolbar');
 	var iframe = window.parent.document.getElementById('wpTextbox1___Frame');
 

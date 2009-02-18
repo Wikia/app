@@ -30,7 +30,7 @@ WikiaToolbar.prototype.Create = function(parentElement) {
 
 	// setup new toolbar
 	var parentDoc = window.parent.document;
-	parentElement = parentDoc.getElementById('article');
+	parentElement = parentDoc.getElementById('bodyContent');
 
 	var toolbarPlaceholder = parentDoc.createElement('DIV');
 	toolbarPlaceholder.id = 'fck_toolbar_wrapper';
