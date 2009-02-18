@@ -151,7 +151,7 @@ html>/**/body .CSitemOuter > .CScontrolRemove {
 	cursor: pointer;
 }
 
-/** Edit mode **/
+/** View mode **/
 .csViewMode {
 	border: none !important;
 }
