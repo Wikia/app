@@ -151,6 +151,21 @@ html>/**/body .CSitemOuter > .CScontrolRemove {
 	cursor: pointer;
 }
 
+/** Edit mode **/
+.csViewMode {
+	border: none !important;
+}
+
+.csViewMode #csButtonsContainer {
+	float: none;
+	margin: 8px -10px -12px -10px;
+	padding: 5px;
+}
+
+.csViewMode #csItemsContainer {
+	padding: 5px 0;
+}
+
 /** IE6 fixes **/
 * html #csMainContainer,
 * html .CSitem {
