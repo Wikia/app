@@ -344,16 +344,16 @@ class UserBoard {
 				$message_type_label = "";
 				$delete_link = "";
 				if($wgUser->getName()!=$message["user_name_from"]){
-					$board_to_board = "<a href=\"" . UserBoard::getUserBoardToBoardURL($message["user_name"],$message["user_name_from"])."\">Board-to-Board</a>";
-					$board_link = "<a href=\"" . UserBoard::getUserBoardURL($message["user_name_from"])."\">Send {$message["user_name_from"]} A Message</a>";
+					$board_to_board = "<a href=\"" . UserBoard::getUserBoardToBoardURL($message["user_name"],$message["user_name_from"])."\">" . wfMsg("userboard_boardtoboard") . "</a>";
+					$board_link = "<a href=\"" . UserBoard::getUserBoardURL($message["user_name_from"])."\">" . wfMsg("userboard_sendmessage",$message["user_name_from"]) . "</a>";
 				}
 				if($wgUser->getName()==$message["user_name"]){
 					$delete_link = "<span class=\"user-board-red\">
-							<a href=\"javascript:void(0);\" onclick=\"javascript:delete_message({$message["id"]})\">delete</a>
+							<a href=\"javascript:void(0);\" onclick=\"javascript:delete_message({$message["id"]})\">" . wfMsg("delete") . "</a>
 						</span>";
 				}
 				if($message["type"] == 1){
-					$message_type_label = "(private)";
+					$message_type_label = "(" . wfMsg("userboard_private") . ")";
 				}
 				
 				$max_link_text_length = 50;
@@ -364,7 +364,7 @@ class UserBoard {
 					<a href=\"{$user->escapeFullURL()}\" title=\"{$message["user_name_from"]}\">{$message["user_name_from"]}</a> {$message_type_label} 
 					</div>	
 					<div class=\"user-board-message-time\">
-						posted " . get_time_ago($message["timestamp"]) . " ago
+						" . wfMsg("time_posted") . " " . get_time_ago($message["timestamp"]) . " " . wfMsg("time_ago") . "
 					</div>
 					<div class=\"user-board-message-content\">
 						<div class=\"user-board-message-image\">
