@@ -352,7 +352,7 @@ function CategorySelectGetCategoryLinksEnd($categoryLinks) {
 
 	$action = $wgRequest->getVal('action', 'view');
 	if ($action == 'view' || $action == 'purge') {
-		$categoryLinks .= ' <div id="csAddCategorySwitch" style="float:right"><a href="#" onclick="YAHOO.util.Get.script(wgExtensionsPath+\'/wikia/CategorySelect/CategorySelect.js?\'+wgStyleVersion,{onSuccess:function(){showCSpanel();}});return false;" onfocus="this.blur();">' . wfMsg('categoryselect-addcategory-button') . '</a></div>';
+		$categoryLinks .= ' <div id="csAddCategorySwitch" style="float:right"><a href="#" onclick="YAHOO.util.Get.script(wgExtensionsPath+\'/wikia/CategorySelect/CategorySelect.js?\'+wgStyleVersion,{onSuccess:function(){showCSpanel();}});$(\'catlinks\').className+=\' csLoading\';return false;" onfocus="this.blur();">' . wfMsg('categoryselect-addcategory-button') . '</a></div>';
 	}
 	return true;
 }
@@ -410,8 +410,8 @@ function CategorySelectGenerateHTMLforView() {
 		</div>
 		<div class="clearfix"></div>
 		<div id="csButtonsContainer" class="color1">
-			<input type="button" onclick="csSave()" value="' . wfMsg('categoryselect-button-save') . '" />
-			<input type="button" onclick="csCancel()" value="' . wfMsg('categoryselect-button-cancel') . '" />
+			<input type="button" id="csSave" onclick="csSave()" value="' . wfMsg('categoryselect-button-save') . '" />
+			<input type="button" id="csCancel" onclick="csCancel()" value="' . wfMsg('categoryselect-button-cancel') . '" />
 		</div>
 	</div>
 	';
