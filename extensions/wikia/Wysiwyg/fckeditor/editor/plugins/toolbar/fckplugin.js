@@ -110,10 +110,14 @@ FCK.YAHOO.lang.extend(WikiaButtonUI, FCKToolbarButtonUI);
 WikiaButtonUI.prototype.IconsPath = window.parent.wgExtensionsPath + '/wikia/Wysiwyg/toolbar/';
 
 WikiaButtonUI.prototype.Icons = {
+	'H2':		'text_heading_2.png',
+	'H3':		'text_heading_3.png',
 	'Bold': 	'text_bold.png',
 	'Italic':	'text_italic.png',
 	'Underline':	'text_underline.png',
 	'StrikeThrough':'text_strikethrough.png',
+	'Normal':	'icon_normal.png',
+	'Pre':		'icon_pre.png',
 	'Indent':	'text_indent.png',
 	'Outdent':	'text_indent_remove.png',
 
@@ -276,3 +280,56 @@ function WikiaButtonUI_OnClick( ev, button )
 
 // override default button from FCK
 FCK.YAHOO.lang.extend(FCKToolbarButtonUI, WikiaButtonUI);
+
+
+//
+// extra toolbar buttons used for text styling
+//
+
+// general class
+var StyleCommand = function(id, name) {
+        this.Name = name;
+	this.Command = new FCKCoreStyleCommand(id);
+	this.Style = FCKStyles.GetStyle('_FCK_' + id);
+}
+StyleCommand.prototype = {
+	IsActive: function() {
+		var startElement = FCK.Selection.GetBoundaryParentElement( true ) ;
+
+		if ( startElement ) {
+			var path = new FCKElementPath( startElement ) ;
+			var blockElement = path.Block ;
+
+			if ( blockElement ) {
+ 				if ( this.Style.CheckElementRemovable( blockElement ) ) {
+					return true;
+				}
+			}
+		}
+		return false;
+	},
+        Execute : function() {
+		this.Command.Execute();
+        },
+        GetState : function() {
+		if ( FCK.EditMode != FCK_EDITMODE_WYSIWYG ) {
+			return FCK_TRISTATE_DISABLED ;
+		}
+		else {
+			return this.IsActive() ? FCK_TRISTATE_ON : FCK_TRISTATE_OFF ;
+		}
+	 }
+} ;
+
+// register new toolbar items
+FCKCommands.RegisterCommand('H2', new StyleCommand('h2', 'Heading 2'));
+FCKToolbarItems.RegisterItem('H2', new FCKToolbarButton('H2', 'Headline 2')  );
+
+FCKCommands.RegisterCommand('H3', new StyleCommand('h3', 'Heading 3'));
+FCKToolbarItems.RegisterItem('H3', new FCKToolbarButton('H3', 'Headline 3'));
+
+FCKCommands.RegisterCommand('Pre', new StyleCommand('pre', 'Preformatted'));
+FCKToolbarItems.RegisterItem('Pre', new FCKToolbarButton('Pre', 'Preformatted'));
+
+FCKCommands.RegisterCommand('Normal', new StyleCommand('p', 'Normal Text'));
+FCKToolbarItems.RegisterItem('Normal', new FCKToolbarButton('Normal', 'Normal Text'));
