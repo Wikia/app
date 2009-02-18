@@ -240,9 +240,10 @@ class HAWelcomeJob extends Job {
 			$Title = Title::newFromId( $revision->getPage() );
 			$revision->setTitle( $Title );
 		}
-		Wikia::log( __METHOD__, "title", $Title->getFullURL() );
-		Wikia::log( __METHOD__, "isbot", $wgUser->isAllowed( "bot" ) );
+		
 		if( $Title && ! $wgCommandLineMode && ! $wgUser->isAllowed( "bot" ) ) {
+
+			Wikia::log( __METHOD__, "title", $Title->getFullURL() );
 
 			$welcomer = trim( wfMsgForContent( "welcome-user" ) );
 			Wikia::log( __METHOD__, "welcomer", $welcomer );
