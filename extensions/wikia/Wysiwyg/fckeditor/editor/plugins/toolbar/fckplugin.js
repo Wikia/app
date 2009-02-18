@@ -133,6 +133,11 @@ WikiaButtonUI.prototype = new FCKToolbarButtonUI;
 
 WikiaButtonUI.prototype.Create = function( parentElement )
 {
+	// change Source button style, so only icon will be shown
+	if (this.Name == 'Source') {
+		this.Style = 0;
+	}
+
 	// try to use customized icons
 	if (this.Icons[this.Name]) {
 		src = this.IconsPath + this.Icons[this.Name];
