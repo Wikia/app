@@ -55,6 +55,12 @@ function VET_loadDetails() {
 			if(FCK.wysiwygData[VET_refid].caption) {
 				$('VideoEmbedCaption').value = FCK.wysiwygData[VET_refid].caption;
 			}
+			if( VET_gallery ) {
+				$( 'VideoEmbedSlider' ).style.visibility = 'hidden';
+				$( 'VideoEmbedInputWidth' ).style.visibility = 'hidden';
+				$( 'VideoEmbedWidthCheckbox' ).style.visibility = 'hidden';
+				$( 'VideoEmbedManualWidth' ).style.visibility = 'hidden';
+			}
 		}
 	}
 
@@ -63,7 +69,10 @@ function VET_loadDetails() {
 	var params = Array();
 	params.push('sourceId=0');
 	params.push('itemId='+FCK.wysiwygData[VET_refid].href.split(":")[1]);
-
+	if( VET_gallery ) {
+		params.push( 'gallery=true' );
+	}
+	
 	VET_asyncTransaction = YAHOO.util.Connect.asyncRequest('GET', wgScriptPath + '/index.php?action=ajax&rs=VET&method=chooseImage&' + params.join('&'), callback);
 }
 
