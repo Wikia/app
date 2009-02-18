@@ -63,6 +63,10 @@ function WikiaVideo_renderVideoGallery($input, $args, $parser) {
 	}
 
 	if(count($videos) > 0) {
+		// todo check if VET enabled
+		global $wgUser;
+		
+		// for first gallery, load VET js
 		$out .= '<table class="gallery" cellspacing="0" cellpadding="0"><tr>';
 
 		for($i = 0; $i < count($videos); $i++) {
@@ -77,7 +81,16 @@ function WikiaVideo_renderVideoGallery($input, $args, $parser) {
 
 		if (count($videos) < 4) { // fill up 
 			if( isset( $args['id'] ) ) {
-				$inside = '<a href="#" class="bigButton" style="margin-left: 105px; margin-top: 110px;"><big>' . wfMsg( 'wikiavideo-create' ) . '</big><small>&nbsp;</small></a>';
+				if( ( 0 == $args['id'] ) && get_class( $wgUser->getSkin() ) == 'SkinMonaco' ) {
+					global $wgStylePath, $wgOut, $wgExtensionsPath, $wgStyleVersion, $wgUser;			
+					wfLoadExtensionMessages('VideoEmbedTool');
+					$wgHooks['ExtendJSGlobalVars'][] = 'VETSetupVars';
+					$wgOut->addScript('<script type="text/javascript" src="'.$wgStylePath.'/common/yui_2.5.2/slider/slider-min.js?'.$wgStyleVersion.'"></script>');
+					$wgOut->addScript('<script type="text/javascript" src="'.$wgExtensionsPath.'/wikia/VideoEmbedTool/js/VET.js?'.$wgStyleVersion.'"></script>');
+					$wgOut->addScript('<link rel="stylesheet" type="text/css" href="'.$wgExtensionsPath.'/wikia/VideoEmbedTool/css/VET.css?'.$wgStyleVersion.'" />');
+				}
+
+				$inside = '<a href="#" class="bigButton" style="margin-left: 105px; margin-top: 110px;" onclick="VET_show( this, ' . $args['id'] .')"><big>' . wfMsg( 'wikiavideo-create' ) . '</big><small>&nbsp;</small></a>';
 			} else {
 				$inside = wfMsg( 'wikiavideo-gallery-template' );
 			}
@@ -90,7 +103,6 @@ function WikiaVideo_renderVideoGallery($input, $args, $parser) {
 		}
 		$out .= '</tr></table>';
 	}
-
 	return $out;
 }
 
