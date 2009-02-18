@@ -49,9 +49,7 @@
 var tabView;
 </script>
 <?php if (!empty($saved)) { ?>
-<?php if ($saved == 1) { ?> 
-	<div class="successbox"><strong><?=wfMsg('daemonloader_daemonchanged')?></strong></div>
-<? } else {	?>
+<?php if ($saved == -1) { ?> 
 	<div class="errorbox"><strong><?=wfMsg('daemonloader_daemonnotchanged')?></strong></div>
 <? } ?>
 <br clear="all" />
@@ -76,6 +74,10 @@ var tabView;
 <!--
 (function() {
     tabView = new YAHOO.widget.TabView('daemontasks-tabs');
+	var act_saved = '<?=$saved?>';
+	if (act_saved == 2) {
+		tabView.set('activeIndex', 1);
+	}
 })();
 -->
 </script>
