@@ -65,23 +65,9 @@ function askQuestion(){
 	q = q.replace(/#/g,""); //we only want one space
 	q = encodeURIComponent( q );
 	
-	var url = wgServer + "/api.php?action=query&titles=" + q + "&format=json";
-	var params = '';
-	
-	jQuery.get( url, "", function (oResponse){
-			
-			eval("j=" + oResponse);
-			
-			page = j.query.pages["-1"];
-			path = wgServer + wgArticlePath.replace("$1","");
-			if( typeof( page ) != "object" ){
-				url = path + q;
-			}else{
-				url = path + "Special:CreateQuestionPage?questiontitle=" + q.charAt(0).toUpperCase() + q.substring(1);
-			}
-			window.location = url;
-		}
-	);
+	path = wgServer + wgArticlePath.replace("$1","");
+	url = path + "Special:CreateQuestionPage?questiontitle=" + q.charAt(0).toUpperCase() + q.substring(1);
+	window.location = url;
 }
 	
 function anonWatch(){
