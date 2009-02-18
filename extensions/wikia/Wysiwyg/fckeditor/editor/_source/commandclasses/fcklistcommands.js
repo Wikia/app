@@ -312,6 +312,7 @@ FCKListCommand.prototype =
 		// Insert the list to the DOM tree.
 		var insertAnchor = listContents[listContents.length - 1].nextSibling ;
 		var listNode = doc.createElement( this.TagName ) ;
+		listNode.setAttribute('_wysiwyg_new', 'true');
 		listsCreated.push( listNode ) ;
 		while ( listContents.length )
 		{

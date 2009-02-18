@@ -130,6 +130,8 @@ function Ok()
 	SetAttribute( table, 'cellSpacing'	, GetE('txtCellSpacing').value ) ;
 	SetAttribute( table, 'summary'		, GetE('txtSummary').value ) ;
 
+	SetAttribute( table, '_wysiwyg_new'	, 'true' );
+
 	var eCaption = oEditor.FCKDomTools.GetFirstChild( table, 'CAPTION' ) ;
 
 	if ( document.getElementById('txtCaption').value != '')
