@@ -250,14 +250,13 @@ class DaemonLoader extends SpecialPage {
 		return $res;
 	}
 
-	public function closeJob($dj_id) {
+	public static function closeJob($dj_id) {
 		global $wgCityId, $wgUser;
 		global $wgRequest;
 		$res = 0;
-        wfProfileIn( __METHOD__ );
 		
 		if ( $dj_id > 0 ) {
-			$dbs = wfGetDBExt(DB_MASTER);
+			$dbs = wfGetDBExt();
 			// remove (so set as non-visible)
 			$dbs->begin();
 			$dbs->update(
@@ -270,7 +269,6 @@ class DaemonLoader extends SpecialPage {
 			$res = 1;
 		} 
         
-        wfProfileOut( __METHOD__ );
 		return $res;
 	}
 
