@@ -2,7 +2,8 @@
 
 my $wikia_lib;
 BEGIN {
-	$wikia_lib = "/home/wikicities/conf/mediawiki/wikia-utils/lib/";
+	$wikia_lib = "/home/moli/wikia/wikia-utils/lib/";
+	#my $wikia_lib = "/home/wikicities/conf/mediawiki/wikia-utils/lib";
 }
 
 =needed modules
@@ -58,13 +59,13 @@ my @ltime = localtime;
 
 =checking args
 =cut
-if ( (!$usedb) && (!$weeks) && (!$fromWiki) && (!$toWiki) ) {
-	print STDERR "Use option --help to know how to use script \n";
-	exit;
-} elsif ($help) {
+if ($help) {
 	&usage();
 	exit;
-}
+} elsif ( (!$usedb) && (!$weeks) && (!$fromWiki) && (!$toWiki) ) {
+	print STDERR "Use option --help to know how to use script \n";
+	exit;
+} 
 
 =config -> set logfile 
 =cut
