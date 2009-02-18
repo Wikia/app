@@ -4,6 +4,22 @@ if(!defined('MEDIAWIKI')) {
 }
 
 $wgExtensionFunctions[] = 'WikiaVideo_init';
+$wgHooks['ParserBeforeStrip'][] = 'WikiaVideoParserBeforeStrip';
+$wgWikiaVideoGalleryId = 0;
+
+function WikiaVideoParserBeforeStrip($parser, $text, $strip_state) {
+	global $wgExtraNamespaces;
+	$pattern = "/<videogallery/";                   
+	$text = preg_replace_callback($pattern, 'WikiaVideoPreRenderVideoGallery', $text);
+	return true;
+}
+
+function WikiaVideoPreRenderVideoGallery( $matches ) {
+	global $wgWikiaVideoGalleryId;	
+	$result = $matches[0] . ' id="' . $wgWikiaVideoGalleryId . '"';
+	$wgWikiaVideoGalleryId++;
+	return $result;
+}
 
 function WikiaVideo_init() {
 	global $wgExtraNamespaces, $wgAutoloadClasses, $wgParser;
@@ -60,8 +76,13 @@ function WikiaVideo_renderVideoGallery($input, $args, $parser) {
 		}
 
 		if (count($videos) < 4) { // fill up 
+			if( isset( $args['id'] ) ) {
+				$inside = '<a href="#" class="bigButton" style="margin-left: 105px; margin-top: 110px;"><big>' . wfMsg( 'wikiavideo-create' ) . '</big><small>&nbsp;</small></a>';
+			} else {
+				$inside = wfMsg( 'wikiavideo-gallery-template' );
+			}
 			for($i = count($videos); $i < 4; $i++) {
-				$out .= '<td><div class="gallerybox" style="width: 335px;"><div class="thumb" style="padding: 13px 0; width: 330px;"><div style="margin-left: auto; margin-right: auto; width: 300px; height: 250px;"><a href="#" class="bigButton" style="margin-left: 105px; margin-top: 110px;"><big>' . wfMsg( 'wikiavideo-create' ) . '</big><small>&nbsp;</small></a></div></div><div class="gallerytext"></div></div></td>';
+				$out .= '<td><div class="gallerybox" style="width: 335px;"><div class="thumb" style="padding: 13px 0; width: 330px;"><div style="margin-left: auto; margin-right: auto; width: 300px; height: 250px;">' . $inside . '</div></div><div class="gallerytext"></div></div></td>';
 				if($i%2 == 1) {
 					$out .= '</tr><tr>';
 				}
