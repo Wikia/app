@@ -42,6 +42,14 @@ $wgAjaxExportList[] = 'CategorySelectGenerateHTMLforView';
  * @author Maciej Błaszkowski <marooned at wikia-inc.com>
  */
 function CategorySelectInit() {
+	global $wgRequest;
+	$undoafter = $wgRequest->getVal('undoafter');
+	$undo = $wgRequest->getVal('undo');
+	//don't use CategorySelect for undo edits
+	if ($undo > 0 && $undoafter > 0) {
+		return true;
+	}
+
 	global $wgHooks, $wgCategorySelectEnabled, $wgAutoloadClasses;
 	$wgAutoloadClasses['CategorySelect'] = 'extensions/wikia/CategorySelect/CategorySelect_body.php';
 //	$wgHooks['OutputPageBeforeHTML'][] = 'CategorySelectOutput';
@@ -150,31 +158,8 @@ function CategorySelectAjaxSaveCategories($articleId, $categories) {
  * @author Maciej Błaszkowski <marooned at wikia-inc.com>
  */
 function CategorySelectReplaceContent($text) {
-	global $wgRequest;
-	$undoafter = $wgRequest->getVal('undoafter');
-	$undo = $wgRequest->getVal('undo');
-
-	if ($undoafter) {
-		$undorev = Revision::newFromId($undo);
-		$oldrev = Revision::newFromId($undoafter);
-	} else {
-		$undorev = Revision::newFromId($undo);
-		$oldrev = $undorev ? $undorev->getPrevious() : null;
-	}
-
-	if (is_null($undorev) || is_null($oldrev)) {
-		$wikitext = $text;
-	} else {
-		$wikitext = $oldrev->getText();
-	}
-
-	//analyze proper revision
-	$data = CategorySelect::SelectCategoryAPIgetData($wikitext);
-
-	//do not replace text in 'undo' mode
-	if (is_null($undorev) || is_null($oldrev)) {
-		$text = $data['wikitext'];
-	}
+	$data = CategorySelect::SelectCategoryAPIgetData($text);
+	$text = $data['wikitext'];
 	return true;
 }
 
