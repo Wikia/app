@@ -29,13 +29,13 @@ function wfRelationshipRequestResponse($response, $request_id){
 			$rel->addRelationship($request_id);
 			$out.= "<div class=\"relationship-action red-text\">
 				{$avatar_img}
-				".wfMsg("ur-requests-added-message", $user_name_from, $rel_type)."
+				".wfMsg("ur-requests-added-message", $user_name_from, wfMsg("ur-{$rel_type}") )."
 				<div class=\"cleared\"></div>
 			</div>";
 		}else {
 			$out.="<div class=\"relationship-action red-text\">
 				{$avatar_img}
-				".wfMsg("ur-requests-reject-message", $user_name_from, $rel_type)."
+				".wfMsg("ur-requests-reject-message", $user_name_from, wfMsg("ur-{$rel_type}") )."
 				<div class=\"cleared\"></div>
 			</div>";
 		}
