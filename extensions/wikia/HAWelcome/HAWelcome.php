@@ -93,12 +93,15 @@ class HAWelcomeJob extends Job {
 		 */
 		$tmpUser = $wgUser;
 		$wgUser  = User::newFromName( self::WELCOMEUSER );
+		Wikia::log( __METHOD__, "user", $this->mUser->getName() );
 
 		if( $this->mUser && $this->mUser->getName() !== self::WELCOMEUSER ) {
 			/**
 			 * check again if talk page exists
 			 */
 			$talkPage  = $this->mUser->getUserPage()->getTalkPage();
+			Wikia::log( __METHOD__, "talk", $talkPage->getLocalUrl() );
+
 			if( $talkPage ) {
 				$sysop     = $this->getLastSysop();
 				$sysopPage = $sysop->getUserPage()->getTalkPage();
@@ -150,6 +153,7 @@ class HAWelcomeJob extends Job {
 						}
 					}
 					$talkArticle->doEdit( $welcomeMsg, wfMsg( "welcome-message-log" ), EDIT_FORCE_BOT );
+					Wikia::log( __METHOD__, "edit", $welcomeMsg );
 				}
 			}
 		}
@@ -159,10 +163,6 @@ class HAWelcomeJob extends Job {
 		wfProfileOut( __METHOD__ );
 
 		return true;
-	}
-
-	private function expandTitle( Title $Title ) {
-		return sprintf("%s:%s",str_replace( '_', ' ', $Title->getNsText() ), $Title->getPrefixedText() );
 	}
 
 	/**
