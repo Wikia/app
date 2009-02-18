@@ -74,9 +74,10 @@ function CategorySelectSetupVars($vars) {
 	global $wgParser, $wgContLang;
 
 	$vars['csAddCategoryButtonText'] = wfMsg('categoryselect-addcategory-button');
-	$vars['csProvideCategoryCaption'] = wfMsg('categoryselect-provide-sort-order');
-	$vars['csProvideCategoryText'] = wfMsg('categoryselect-provide-sortkey');
-	$vars['csProvideCategorySave'] = wfMsg('save');
+	$vars['csInfoboxCaption'] = wfMsg('categoryselect-infobox-caption');
+	$vars['csInfoboxCategoryText'] = wfMsg('categoryselect-infobox-category');
+	$vars['csInfoboxSortkeyText'] = wfMsg('categoryselect-infobox-sortkey');
+	$vars['csInfoboxSave'] = wfMsg('save');
 	$vars['csDefaultSort'] = $wgParser->getDefaultSort();
 	$vars['csCategoryNamespaces'] = 'Category|' . $wgContLang->getNsText(NS_CATEGORY);
 	$vars['csCodeView'] = wfMsg('categoryselect-code-view');
