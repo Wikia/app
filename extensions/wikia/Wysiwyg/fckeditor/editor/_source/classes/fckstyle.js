@@ -686,6 +686,9 @@ FCKStyle.prototype =
 			}
 		}
 
+		// mark this node as added in wysiwyg
+		el.setAttribute('_wysiwyg_new', 'true');
+
 		// Assign the style attribute.
 		if ( this._GetStyleText().length > 0 )
 			el.style.cssText = this.GetFinalStyleValue() ;
