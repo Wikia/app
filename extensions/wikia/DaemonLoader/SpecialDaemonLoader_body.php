@@ -412,13 +412,12 @@ class DaemonLoader extends SpecialPage {
 	public static function axShowDaemon ( $dt_id ) {
 		global $wgRequest, $wgUser,	$wgCityId, $wgDBname;
 		global $wgContLang, $wgOut;
-		
-		$res = array('nbr_records' => 0, 'data' => array());
 
 		if ( !$wgUser->isAllowed( 'daemonloader' ) ) {
-			return $res;
+			return "";
 		}
 
+		$res = array('nbr_records' => 0, 'data' => array());
 		if ( (!empty($wgUser)) && (!$wgUser->isBlocked()) ) {
 			wfLoadExtensionMessages(self::$oName);
 			$data = self::getAllDaemons($dt_id);
@@ -446,11 +445,12 @@ class DaemonLoader extends SpecialPage {
 	public static function axJobsList($limit = 30, $offset = 0, $order = 'dj_id', $desc = 0) {
 		global $wgUser;
 
-		$res = array('nbr_records' => 0, 'data' => array(), 'limit' => $limit, 'page' => $offset, 'order' => $order, 'desc' => $desc);
+		$res = "";
 		if ( !$wgUser->isAllowed( 'daemonloader' ) ) {
 			return $res;
 		}
 
+		$res = array('nbr_records' => 0, 'data' => array(), 'limit' => $limit, 'page' => $offset, 'order' => $order, 'desc' => $desc);
 		if ( (!empty($wgUser)) && (!$wgUser->isBlocked()) ) {
 			wfLoadExtensionMessages(self::$oName);
 			$data = self::getAllJobs(0, $order, $limit, $offset, $desc);
@@ -477,8 +477,8 @@ class DaemonLoader extends SpecialPage {
 
 	public static function axGetJobInfo($id) {
 		global $wgUser;
-		
-		$res = array('nbr_records' => 0, 'data' => array());
+
+		$res = "";	
 		if ( !$wgUser->isAllowed( 'daemonloader' ) ) {
 			return $res;
 		}
@@ -487,6 +487,7 @@ class DaemonLoader extends SpecialPage {
 			return $res;
 		}
 
+		$res = array('nbr_records' => 0, 'data' => array());
 		if ( (!empty($wgUser)) && (!$wgUser->isBlocked()) ) {
 			$data = self::getAllJobs($id);
 			
@@ -547,16 +548,21 @@ class DaemonLoader extends SpecialPage {
 	public static function axRemoveJobsList($id) {
 		global $wgUser;
 		
-		$res = array('nbr_records' => 0);
-		
 		if ( !$wgUser->isAllowed( 'daemonloader' ) ) {
-			return $res;
+			return "";
 		}
 
+		$res = array('nbr_records' => 0);
 		if ( (!empty($wgUser)) && (!$wgUser->isBlocked()) ) {
 			$res['nbr_records'] = self::closeJob($id);
 		}
-		return $res;
+
+		if (!function_exists('json_encode')) {
+			$oJson = new Services_JSON();
+			return $oJson->encode($res);
+		} else {
+			return json_encode($res);
+		}
 	}
 
 	private static function parseParams($sParams) {
