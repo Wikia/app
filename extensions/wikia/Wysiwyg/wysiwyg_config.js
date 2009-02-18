@@ -23,7 +23,7 @@ if (typeof window.parent.vet_enabled != 'undefined') {
 if (typeof window.parent.wysiwygUseNewToolbar != 'undefined') {
 	// toolbar buttons are grouped using buckets
 	toolbarItems = [
-		'-', 'Bold', 'Italic', 'Underline', 'StrikeThrough', 'Outdent', 'Indent',
+		'-', 'H2', 'H3', 'Bold', 'Italic', 'Underline', 'StrikeThrough', 'Normal', 'Pre', 'Outdent', 'Indent',
 		'-', 'UnorderedList', 'OrderedList', 'Link', 'Unlink',
 		'-', 'AddImage', 'Table', 'Tildes',
 		'-', 'InsertTemplate',
@@ -32,7 +32,7 @@ if (typeof window.parent.wysiwygUseNewToolbar != 'undefined') {
 
 	// add WikiaVideo
 	if (typeof window.parent.vet_enabled != 'undefined') {
-		toolbarItems.splice(14, 0, 'AddVideo');
+		toolbarItems.splice(18, 0, 'AddVideo');
 	}
 
 	FCKConfig.Plugins.Add('toolbar');
