@@ -15,7 +15,7 @@ var VET_prevScreen = null;
 var VET_slider = null;
 var VET_thumbSize = null;
 var VET_orgThumbSize = null;
-var VET_gallery = false;
+var VET_gallery = -1;
 var VET_width = null;
 var VET_height = null;
 var VET_widthChanges = 1;
@@ -55,7 +55,7 @@ function VET_loadDetails() {
 			if(FCK.wysiwygData[VET_refid].caption) {
 				$('VideoEmbedCaption').value = FCK.wysiwygData[VET_refid].caption;
 			}
-			if( VET_gallery ) {
+			if( '-1' == VET_gallery ) {
 				$( 'VideoEmbedSlider' ).style.visibility = 'hidden';
 				$( 'VideoEmbedInputWidth' ).style.visibility = 'hidden';
 				$( 'VideoEmbedWidthCheckbox' ).style.visibility = 'hidden';
@@ -69,7 +69,8 @@ function VET_loadDetails() {
 	var params = Array();
 	params.push('sourceId=0');
 	params.push('itemId='+FCK.wysiwygData[VET_refid].href.split(":")[1]);
-	if( VET_gallery ) {
+
+	if( '-1' == VET_gallery ) {
 		params.push( 'gallery=true' );
 	}
 	
@@ -80,7 +81,7 @@ function VET_loadDetails() {
  * Functions/methods
  */
 if(mwCustomEditButtons) {
-	if(typeof VET_gallery == "undefined") {
+	if( VET_gallery > -1 ) {
 		mwCustomEditButtons[mwCustomEditButtons.length] = {
 			"imageFile": stylepath + '/../extensions/wikia/VideoEmbedTool/images/button_vet2.png',
 			"speedTip": vet_imagebutton,
@@ -487,7 +488,7 @@ function VET_insertFinalVideo(e, type) {
 	VET_track('insertVideo/' + type); // tracking
 
 	YAHOO.util.Event.preventDefault(e);
-
+	
 	var params = Array();
 	params.push('type='+type);
 
@@ -515,6 +516,10 @@ function VET_insertFinalVideo(e, type) {
 		for( var i=0; i < metadata.length; i++ ) {
 			params.push( 'metadata' + i  + '=' + metadata[i] );
 		}
+	}
+
+	if( '-1' != VET_gallery ) {
+		params.push( 'gallery=' + VET_gallery );
 	}
 
 	params.push('oname='+encodeURIComponent( $('VideoEmbedOname').value ) );
