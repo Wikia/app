@@ -20,7 +20,7 @@
 <h4><?=wfMsg('daemonloader_configtaskparams')?></h4>
 <table class="dt-task-params">
 <tr><th valign="middle"><?=wfMsg('daemonloader_period')?> (<?=wfMsg('daemonloader_dateformat')?>)</th></tr>	
-<tr><td valign="middle"><input type="text" name="dt_start" id="dt_start" value="<?=date("Ymd")?>" size="8"/> : <input type="text" name="dt_end" id="dt_end" value="<?=date("Ymd", time()+(60*60*24*7))?>" size="8" /></td></tr>
+<tr><td valign="middle"><input type="text" name="dt_start" id="dt_start" value="<?=date("Ymd", mktime(0,0,0,date("m"),date("d")+1,date("Y")))?>" size="8"/> : <input type="text" name="dt_end" id="dt_end" value="<?=date("Ymd", mktime(0,0,0,date("m")+6,date("d"),date("Y")))?>" size="8" /></td></tr>
 <tr><th valign="middle"><?=wfMsg('daemonloader_frequency')?></th></tr>
 <tr><td valign="middle">
 	<select name="dt_frequency" id="dt_frequency">
@@ -30,7 +30,7 @@
 </select></td>
 </tr>
 <tr><th valign="middle"><?=wfMsg('daemonloader_emails')?></th></tr>
-<tr><td valign="middle"><div><?=wfMsg('daemonloader_emails_info')?></div><div><textarea name="dt_emails" cols="25" rows="5"></textarea></div></td></tr>
+<tr><td valign="middle"><div><?=wfMsg('daemonloader_emails_info')?></div><div><textarea name="dt_emails" cols="25" rows="5" id="dt_emails"></textarea></div></td></tr>
 </table>
 </div>
 <hr />

@@ -57,9 +57,12 @@ $wgAjaxExportList[] = "DaemonLoader::axGetWikiList";
 $wgAjaxExportList[] = "DaemonLoader::axGetTaskParams";
 $wgAjaxExportList[] = "DaemonLoader::axJobsList";
 $wgAjaxExportList[] = "DaemonLoader::axRemoveJobsList";
+$wgAjaxExportList[] = "DaemonLoader::axGetJobInfo";
 
 $wgAvailableRights[] = 'daemonloader';
 $wgGroupPermissions['staff']['daemonloader'] = true;
+
+$wgDaemonLoaderAdmins = array("Eloy.wikia", "Moli.wikia");
 
 $dir =  dirname( __FILE__ );
 $wgAutoloadClasses['DaemonLoader'] = $dir . '/SpecialDaemonLoader_body.php';

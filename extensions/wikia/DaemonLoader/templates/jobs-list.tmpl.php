@@ -173,7 +173,6 @@ function removeJobTask(id) {
 		},
 		failure: function( oResponse )
 		{
-			records.innerHTML = "<?=wfMsg('daemonloader_nojobsfound')?>";
 			if (typeof TieDivLibrary != "undefined" ) {
 				TieDivLibrary.calculate();
 			}; 
@@ -189,8 +188,50 @@ function removeJobTask(id) {
 			var baseurl = wgScript + "?action=ajax&rs=DaemonLoader::axRemoveJobsList" + params;
 			YAHOO.util.Connect.asyncRequest( "GET", baseurl, DTRemoveJobCallback);
 		}
-	}
+	}	
+}
+
+function changeJobTask(id) {
+	var divClick = YAHOO.util.Dom.get("dt-change-" + id);
+	var jobsLoader = document.getElementById('dt-jobs-loader');
+	var createtaskDiv = YAHOO.util.Dom.get("createtaskDiv");
+
+	DTChangeJobCallback = {
+		success: function( oResponse ) {
+			var resData = YAHOO.Tools.JSONParse(oResponse.responseText);
+			if (resData['data']) {
+				var data = resData['data'];
+				var YD = YAHOO.util.Dom;
+				if (YD.get('dt-daemons-list')) {
+					YD.get('dt-daemons-list').value = data.dt_id;
+					loadDaemonById(data.param_values);
+					showSecondStep(data);
+				}
+			}
+
+			tabView.set('activeIndex', 0);
+			jobsLoader.innerHTML = "";
+			if (typeof TieDivLibrary != "undefined" ) {
+				TieDivLibrary.calculate();
+			}; 
+		},
+		failure: function( oResponse )
+		{
+			jobsLoader.innerHTML = "";
+			if (typeof TieDivLibrary != "undefined" ) {
+				TieDivLibrary.calculate();
+			}; 
+		}
+	};
 	
+	if (tabView) {
+		var params = "&rsargs[0]=" + id;
+		//---
+		jobsLoader.innerHTML = "<img src=\"/skins/monaco/images/widget_loading.gif\" />";
+		//---
+		var baseurl = wgScript + "?action=ajax&rs=DaemonLoader::axGetJobInfo" + params;
+		YAHOO.util.Connect.asyncRequest( "GET", baseurl, DTChangeJobCallback );
+	}
 }
 
 /*]]>*/
@@ -199,7 +240,7 @@ function removeJobTask(id) {
 <?php 
 $jsListeners = array();
 ?>
-<div id="dt-jobs-loader"></div>
+<div id="dt-jobs-loader" style="height:15px"></div>
 <div class="dt-jobs-list" id="dt-jobs-list"></div>
 <script>
 YAHOO.util.Event.onDOMReady(function() {
