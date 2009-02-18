@@ -1082,7 +1082,7 @@ class ReverseParser {
 
 		$attStr = '';
 		foreach ($node->attributes as $attrName => $attrNode) {
-			if( in_array($attrName, array('washtml', '_wysiwyg_new_line', '_wysiwyg_line_start')) ) {
+			if( in_array($attrName, array('washtml', '_wysiwyg_new_line', '_wysiwyg_line_start', '_wysiwyg_new')) ) {
 				continue;
 			}
 			$attStr .= ' ' . $attrName . '="' . $attrNode->nodeValue  . '"';
