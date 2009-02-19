@@ -82,10 +82,12 @@ function Wysiwyg_Toggle($toggles, $default_array = false) {
 }
 
 function Wysywig_Ajax($type, $input = false, $wysiwygData = false, $articleId = -1) {
+
 	if($type == 'html2wiki') {
 		return new AjaxResponse(Wysiwyg_HtmlToWikiText($input, $wysiwygData, true));
 
 	} else if($type == 'wiki2html') {
+		wfLoadExtensionMessages('Wysiwyg');
 		$edgeCasesText = Wysiwyg_CheckEdgeCases($input);
 		if ($edgeCasesText != '') {
 			header('X-edgecases: 1');
