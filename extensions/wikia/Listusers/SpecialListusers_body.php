@@ -45,6 +45,9 @@ class ListUsers extends SpecialPage {
 		$wgOut->setRobotpolicy( 'noindex,nofollow' );
 		$wgOut->setArticleRelated( false );
 		$target = $wgRequest->getVal('target');
+		if (empty($target)) {
+			$target = $wgRequest->getVal('group');
+		}
 
 		if (!empty($target)) { 
 			if ( strpos($target, ",") !== false )  {
