@@ -237,7 +237,7 @@ function toggleCodeView() {
 		var pars = 'rs=CategorySelectAjaxParseCategories&rsargs=' + encodeURIComponent($('csWikitext').value);
 		var callback = {
 			success: function(originalRequest) {
-				result = eval('(' + originalRequest.responseText + ')');
+				var result = eval('(' + originalRequest.responseText + ')');
 				if (result['error'] != undefined) {
 					YAHOO.log('AJAX result: error');
 					alert(result['error']);
@@ -391,9 +391,13 @@ function csSave() {
 	var pars = 'rs=CategorySelectAjaxSaveCategories&rsargs[]=' + wgArticleId + '&rsargs[]=' + encodeURIComponent(YAHOO.Tools.JSONEncode(categories));
 	var callback = {
 		success: function(originalRequest) {
-			if (originalRequest.responseText == 'ok') {
-				csCancel();
+			var result = eval('(' + originalRequest.responseText + ')');
+			if (result['info'] == 'ok') {
+				tmpDiv = document.createElement('div');
+				tmpDiv.innerHTML = result['html'];
+				$('catlinks').parentNode.replaceChild(tmpDiv.firstChild, $('catlinks'));
 			}
+			csCancel();
 		},
 		timeout: 30000
 	};

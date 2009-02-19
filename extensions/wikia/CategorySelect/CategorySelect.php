@@ -124,7 +124,7 @@ function CategorySelectAjaxGetCategories() {
 function CategorySelectAjaxParseCategories($wikitext) {
 	$data = CategorySelect::SelectCategoryAPIgetData($wikitext);
 	if (trim($data['wikitext']) == '') {	//all categories handled
-		$result['categories'] = $data['categories'];//CategorySelectChangeFormat($data['categories'], 'array', 'json');
+		$result['categories'] = $data['categories'];
 	} else {	//unhandled syntax
 		$result['error'] = wfMsg('categoryselect-unhandled-syntax');
 	}
@@ -138,19 +138,31 @@ function CategorySelectAjaxParseCategories($wikitext) {
  */
 function CategorySelectAjaxSaveCategories($articleId, $categories) {
 	$categories = CategorySelectChangeFormat($categories, 'json', 'wiki');
-	$title = Title::newFromID($articleId);
-	if (is_null($title)) {
-		return "error: article [id=$articleId] not exists";
+	if ($categories == '') {
+		$result['info'] = 'Nothing to add.';
 	} else {
-		global $wgUser;
-		$article = new Article($title);
-		$article_text = $article->fetchContent();
-		$article_text .= $categories;
-		$edit_summary = wfMsg('categoryselect-edit-summary');
-		$flags = EDIT_UPDATE;
-		$article->doEdit($article_text, $edit_summary, $flags);
-		return 'ok';
+		$title = Title::newFromID($articleId);
+		if (is_null($title)) {
+			$result['error'] = "Article [id=$articleId] does not exist.";
+		} else {
+			global $wgUser, $wgOut;
+			$article = new Article($title);
+			$article_text = $article->fetchContent();
+			$article_text .= $categories;
+			$edit_summary = wfMsg('categoryselect-edit-summary');
+			$flags = EDIT_UPDATE;
+			$article->doEdit($article_text, $edit_summary, $flags);
+
+			//return HTML with new categories
+			$wgOut->tryParserCache($article, $wgUser);
+			$sk = $wgUser->getSkin();
+			$cats = $sk->getCategories();
+
+			$result['info'] = 'ok';
+			$result['html'] = $cats;
+		}
 	}
+	return Wikia::json_encode($result);
 }
 
 /**
