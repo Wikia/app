@@ -6,6 +6,7 @@ if(!defined('MEDIAWIKI')) {
 $wgExtensionFunctions[] = 'WikiaVideo_init';
 $wgHooks['ParserBeforeStrip'][] = 'WikiaVideoParserBeforeStrip';
 $wgWikiaVideoGalleryId = 0;
+$wgWikiaVETLoaded = false;
 
 function WikiaVideoParserBeforeStrip($parser, $text, $strip_state) {
 	global $wgExtraNamespaces;
@@ -64,7 +65,7 @@ function WikiaVideo_renderVideoGallery($input, $args, $parser) {
 
 	if(count($videos) > 0) {
 		// todo check if VET enabled
-		global $wgUser;
+		global $wgUser, $wgWikiaVETLoaded;
 		
 		// for first gallery, load VET js
 		$out .= '<table class="gallery" cellspacing="0" cellpadding="0"><tr>';
@@ -79,25 +80,32 @@ function WikiaVideo_renderVideoGallery($input, $args, $parser) {
 			}
 		}
 
-		if (count($videos) < 4) { // fill up 
-			if( isset( $args['id'] ) ) {
-				if( ( 0 == $args['id'] ) && get_class( $wgUser->getSkin() ) == 'SkinMonaco' ) {
-					global $wgStylePath, $wgOut, $wgExtensionsPath, $wgStyleVersion, $wgUser, $wgHooks;			
-					wfLoadExtensionMessages('VideoEmbedTool');
-					$wgHooks['ExtendJSGlobalVars'][] = 'VETSetupVars';
-					$wgOut->addScript('<script type="text/javascript" src="'.$wgStylePath.'/common/yui_2.5.2/slider/slider-min.js?'.$wgStyleVersion.'"></script>');
-					$wgOut->addScript('<script type="text/javascript" src="'.$wgExtensionsPath.'/wikia/VideoEmbedTool/js/VET.js?'.$wgStyleVersion.'"></script>');
-					$wgOut->addScript('<link rel="stylesheet" type="text/css" href="'.$wgExtensionsPath.'/wikia/VideoEmbedTool/css/VET.css?'.$wgStyleVersion.'" />');
-				}
-
-				$inside = '<a href="#" class="bigButton" style="margin-left: 105px; margin-top: 110px;" onclick="VET_show( event, ' . $args['id'] .')"><big>' . wfMsg( 'wikiavideo-create' ) . '</big><small>&nbsp;</small></a>';
-			} else {
-				$inside = wfMsg( 'wikiavideo-gallery-template' );
+		if( isset( $args['id'] ) ) {
+			if( ( !$wgWikiaVETLoaded ) && get_class( $wgUser->getSkin() ) == 'SkinMonaco' ) {
+				global $wgStylePath, $wgOut, $wgExtensionsPath, $wgStyleVersion, $wgUser, $wgHooks;			
+				wfLoadExtensionMessages('VideoEmbedTool');
+				$wgHooks['ExtendJSGlobalVars'][] = 'VETSetupVars';
+				$wgOut->addScript('<script type="text/javascript" src="'.$wgStylePath.'/common/yui_2.5.2/slider/slider-min.js?'.$wgStyleVersion.'"></script>');
+				$wgOut->addScript('<script type="text/javascript" src="'.$wgExtensionsPath.'/wikia/VideoEmbedTool/js/VET.js?'.$wgStyleVersion.'"></script>');
+				$wgOut->addScript('<link rel="stylesheet" type="text/css" href="'.$wgExtensionsPath.'/wikia/VideoEmbedTool/css/VET.css?'.$wgStyleVersion.'" />');
+				$wgWikiaVETLoaded = true;
 			}
-			for($i = count($videos); $i < 4; $i++) {
-				$out .= '<td><div class="gallerybox" style="width: 335px;"><div class="thumb" style="padding: 13px 0; width: 330px;"><div style="margin-left: auto; margin-right: auto; width: 300px; height: 250px;">' . $inside . '</div></div><div class="gallerytext"></div></div></td>';
-				if($i%2 == 1) {
-					$out .= '</tr><tr>';
+		}
+
+		if( isset( $args['id'] ) ) {
+			if (count($videos) < 4) { // fill up 
+				global $wgUser;
+				for($i = count($videos); $i < 4; $i++) {
+					if( get_class( $wgUser->getSkin() ) == 'SkinMonaco' ) {
+						$inside = '<a href="#" class="bigButton" style="margin-left: 105px; margin-top: 110px;" id="WikiaVideoGalleryPlaceholder' . $args['id'] . 'x' .  $i . '" onclick="VET_show( event, ' . $args['id'] .', ' . $i . ')"><big>' . wfMsg( 'wikiavideo-create' ) . '</big><small>&nbsp;</small></a>';
+					} else { // todo maybe add some icon here not text, as we agreed
+						$inside = wfMsg( 'wikiavideo-not-supported' );				
+					}
+
+					$out .= '<td><div class="gallerybox" style="width: 335px;"><div class="thumb" style="padding: 13px 0; width: 330px;"><div style="margin-left: auto; margin-right: auto; width: 300px; height: 250px;">' . $inside . '</div></div><div class="gallerytext"></div></div></td>';
+					if($i%2 == 1) {
+						$out .= '</tr><tr>';
+					}
 				}
 			}
 		}
