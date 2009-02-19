@@ -97,8 +97,6 @@ class HAWelcomeJob extends Job {
 
 		wfProfileIn( __METHOD__ );
 
-		$wgDevelEnvironment = true;
-
 		/**
 		 * overwrite $wgUser for ~~~~ expanding
 		 */
@@ -240,8 +238,6 @@ class HAWelcomeJob extends Job {
 		wfProfileIn( __METHOD__ );
 
 		wfLoadExtensionMessages( "HAWelcome" );
-
-		$wgDevelEnvironment = true;
 
 		/**
 		 * Revision has valid Title field but sometimes not filled
