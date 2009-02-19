@@ -684,6 +684,10 @@ body .header_menu_button * {
 #answers_sidebar .widget li:last-child {
 	border: 0;
 }
+#recent_changes_link a{
+	font-size:11px;
+	font-weight:normal;
+}
 
 /*** SOCIAL TOOLS ***/
 #profile-top {
