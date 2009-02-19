@@ -798,6 +798,7 @@ EOD;
 		$s .= ', provider: <a href="' . $purl . '" class="external" target="_blank">' . $provider . '</a>)</div>' ;
 		$wgOut->addHTML( $s );
 	}
+
 }
 
 global $wgWikiaVideoProviders;
