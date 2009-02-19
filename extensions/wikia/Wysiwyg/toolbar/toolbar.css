@@ -3,13 +3,21 @@
 #siteSub,
 #contentSub,
 #mw-anon-edit-warning,
-#mw-newarticletext,
+.mw-newarticletext,
 #editingTipsToggleDiv {
 	display: none !important;
 }
 
 #article, #content {
 	padding: 0 1px !important;
+}
+
+#csMainContainer {
+	margin: 0 1px;
+}
+
+#edit_enhancements_toolbar {
+	margin: 2px 1px 0 1px !important;
 }
 
 #page_bar, .articleBar {
