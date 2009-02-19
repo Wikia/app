@@ -50,9 +50,8 @@ function CategorySelectInit() {
 		return true;
 	}
 
-	global $wgHooks, $wgCategorySelectEnabled, $wgAutoloadClasses;
+	global $wgHooks, $wgAutoloadClasses;
 	$wgAutoloadClasses['CategorySelect'] = 'extensions/wikia/CategorySelect/CategorySelect_body.php';
-//	$wgHooks['OutputPageBeforeHTML'][] = 'CategorySelectOutput';
 	$wgHooks['EditPageAfterGetContent'][] = 'CategorySelectReplaceContent';
 	$wgHooks['EditPage::CategoryBox'][] = 'CategorySelectCategoryBox';
 	$wgHooks['EditPage::importFormData::finished'][] = 'CategorySelectImportFormData';
@@ -183,49 +182,6 @@ function CategorySelectReplaceContent($text) {
  */
 function CategorySelectCategoryBox($text) {
 	$text = '';
-	return true;
-}
-
-/**
- * Get categories via AJAX
- *
- * @author Maciej Błaszkowski <marooned at wikia-inc.com>
- */
-//function CategorySelectAjaxGetCategoriesXYZ($titleName) {
-//	$result = array('error' => null, 'wikitext' => null, 'categories' => null);
-//	$title = Title::newFromText($titleName);
-//	if($title->exists()) {
-//		$rev = Revision::newFromTitle($title);
-//		$wikitext = $rev->getText();
-//		$data = CategorySelect::SelectCategoryAPIgetData($wikitext);
-//		$result = array_merge($results, $data);
-//	} else {
-//		$result['error'] = wfMsg('');
-//	}
-//	$ar = new AjaxResponse(Wikia::json_encode($results));
-//	$ar->setCacheDuration(60 * 20);
-//	return $ar;
-//}
-
-/**
- * Test function - display CS above article in view mode
- *
- * @author Maciej Błaszkowski <marooned at wikia-inc.com>
- */
-function CategorySelectOutput($out, $text) {
-	global $wgOut, $wgExtensionsPath, $wgStyleVersion, $wgTitle, $wgCategorySelectMetaData;
-
-	if (!is_array($wgCategorySelectMetaData)) {
-		$rev = Revision::newFromTitle($wgTitle);
-		if (!is_null($rev)) {
-			$wikitext = $rev->getText();
-			CategorySelect::SelectCategoryAPIgetData($wikitext);
-		}
-	}
-
-	$html = CategorySelectGenerateHTMLforEdit();
-	$wgOut->addHTML($html);
-
 	return true;
 }
 
