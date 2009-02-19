@@ -344,12 +344,15 @@ function CategorySelectDisplayCategoryBox($rows, $cols, $ew, $textbox) {
  * @author Maciej Błaszkowski <marooned at wikia-inc.com>
  */
 function CategorySelectGetCategoryLinksBegin($categoryLinks) {
-	global $wgRequest;
+	global $wgRequest, $wgOut;
 
 	$action = $wgRequest->getVal('action', 'view');
 	//remove it for edit page
 	if ($action == 'edit' || $action == 'submit') {
 		$categoryLinks = '';
+		return false;
+	} elseif (($action == 'view' || $action == 'purge') && count($wgOut->mCategoryLinks) == 0) {
+		CategorySelectGetCategoryLinksEnd(&$categoryLinks);
 		return false;
 	}
 	return true;
