@@ -12,28 +12,20 @@ FCKConfig.EditorAreaStyles = window.parent.stylepath + '/monobook/main.css';
 FCKConfig.BodyId = 'bodyContent';
 FCKConfig.BodyClass = 'fckeditor';
 
+//
 // load plugins
+//
+
+// main wikia plugin
 FCKConfig.Plugins.Add('wikitext');
 
-if (typeof window.parent.vet_enabled != 'undefined') {
-	FCKConfig.Plugins.Add('video');
-	toolbarItems.splice(20, 0, 'AddVideo');
-}
+// video embed tool
+FCKConfig.Plugins.Add('video');
+toolbarItems.splice(20, 0, 'AddVideo');
 
+// new toolbar
 if (typeof window.parent.wysiwygUseNewToolbar != 'undefined') {
-	// toolbar buttons are grouped using buckets
-	toolbarItems = [
-		'-', 'H2', 'H3', 'Bold', 'Italic', 'Underline', 'StrikeThrough', 'Normal', 'Pre', 'Outdent', 'Indent',
-		'-', 'UnorderedList', 'OrderedList', 'Link', 'Unlink',
-		'-', 'AddImage', 'Table', 'Tildes',
-		'-', 'InsertTemplate',
-		'-', 'Undo', 'Redo', 'Source'
-	];
-
-	// add WikiaVideo
-	if (typeof window.parent.vet_enabled != 'undefined') {
-		toolbarItems.splice(18, 0, 'AddVideo');
-	}
+	toolbarItems = window.parent.wysiwygToolbarItems;
 
 	FCKConfig.Plugins.Add('toolbar');
 }

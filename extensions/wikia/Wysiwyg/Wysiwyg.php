@@ -165,10 +165,47 @@ function Wysiwyg_Initial($form) {
 			'type' => 'text/css'
 		));
 
+		// toolbar data
+		// TODO: get it from MW article
 		// TODO: i18n
+		$toolbarData = array(
+			array(
+				'name'  => 'Text Appearance', 
+				'items' => array('H2', 'H3', 'Bold', 'Italic', 'Underline', 'StrikeThrough', 'Normal', 'Pre', 'Outdent', 'Indent')
+			),
+			array(
+				'name'  => 'Lists and Links', 
+				'items' => array('UnorderedList', 'OrderedList', 'Link', 'Unlink')
+			),
+			array(
+				'name'  => 'Insert', 
+				'items' => array('AddImage', 'AddVideo', 'Table', 'Tildes')
+			),
+			array(
+				'name'  => 'Wiki Templates', 
+				'items' => array('InsertTemplate')
+			),
+			array(
+				'name'  => 'Controls', 
+				'items' => array('Undo', 'Redo', 'Source')
+			),
+		);
+
+		// generate buckets and items data
+		$toolbarBuckets = array();
+		$toolbarItems = array();
+
+		foreach($toolbarData as $bucket) {
+			$toolbarBuckets[] = $bucket['name'];
+
+			$toolbarItems[] = '-';
+			$toolbarItems = array_merge($toolbarItems, $bucket['items']);
+		}
+
 		$wgOut->addInlineScript(
 			"var wysiwygUseNewToolbar = true;\n" .
-			"var wysiwygToolbarBuckets = ['Text Appearance', 'Lists and Links', 'Insert', 'Wiki Templates', 'Controls'];"
+			"var wysiwygToolbarBuckets = " . json_encode($toolbarBuckets) . ";\n" . 
+			"var wysiwygToolbarItems = " . json_encode($toolbarItems) . ";"
 		);
 	}
 
