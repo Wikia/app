@@ -395,7 +395,12 @@ function csSave() {
 			if (result['info'] == 'ok') {
 				tmpDiv = document.createElement('div');
 				tmpDiv.innerHTML = result['html'];
-				$('mw-normal-catlinks').parentNode.replaceChild(tmpDiv.firstChild, $('mw-normal-catlinks'));
+				var innerCatlinks = $('mw-normal-catlinks');
+				if (innerCatlinks) {
+					$('mw-normal-catlinks').parentNode.replaceChild(tmpDiv.firstChild, $('mw-normal-catlinks'));
+				} else {
+					$('catlinks').insertBefore(tmpDiv.firstChild, $('catlinks').firstChild);
+				}
 			}
 			csCancel();
 		},
