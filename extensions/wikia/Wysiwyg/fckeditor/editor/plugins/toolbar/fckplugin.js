@@ -280,6 +280,66 @@ function WikiaButtonUI_OnClick( ev, button )
 // override default FCK button class
 FCKToolbarButtonUI.prototype = new WikiaButtonUI;
 
+//
+// simple combo boxes
+//
+var WikiaCombo = function()
+{
+	this.Items = new Object() ;
+}
+
+WikiaCombo.prototype = FCKSpecialCombo.prototype;
+
+WikiaCombo.prototype.AddItem = function( id, html, label, bgColor )
+{
+	this.Items[ id.toString() ] = {'html': html, 'label': label};
+}
+
+WikiaCombo.prototype.Create = function( targetElement )
+{
+	var oDoc = FCKTools.GetElementDocument( targetElement ) ;
+
+	// create the main SELECT node
+	this.Select = oDoc.createElement('SELECT');
+	targetElement.appendChild( this.Select );
+
+	this.Select.style.width = this.FieldWidth + 'px';
+
+	// add OPTION nodes
+	this.Select.appendChild( oDoc.createElement('OPTION') );
+
+	for (Item in this.Items) {
+		var option = oDoc.createElement('OPTION');
+
+		option.value = Item;
+		option.innerHTML = this.Items[Item].html;
+
+		this.Select.appendChild(option);
+	}
+
+	// change bucket style
+	this.Select.parentNode.parentNode.style.overflow = 'visible';
+
+	// Event handlers
+	FCKTools.AddEventListenerEx( this.Select, 'change', WikiaCombo_OnClick, [ this ] ) ;
+}
+
+WikiaCombo.prototype.SetLabel = function( text ) { }
+
+function WikiaCombo_OnClick(ev, combo) {
+	var selectedValue = combo.Select.options[ combo.Select.selectedIndex ].value;
+
+	// switch back to default value
+	combo.Select.selectedIndex = 0;
+
+	FCK.log('WikiaCombo: selected ' + selectedValue);
+
+	// create and execute command associated with combo
+	var command = FCKCommands.GetCommand(combo.CommandName);
+	command.Execute(selectedValue);
+}
+
+FCKSpecialCombo.prototype = new WikiaCombo;
 
 //
 // extra toolbar buttons used for text styling
