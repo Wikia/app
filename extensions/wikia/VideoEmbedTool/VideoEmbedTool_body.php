@@ -181,6 +181,9 @@ class VideoEmbedTool {
 		$type = $wgRequest->getVal('type');
 		$id = $wgRequest->getVal('id');
 		$provider = $wgRequest->getVal('provider');
+		( '' != $wgRequest->getVal( 'gallery' ) ) ? $gallery = $wgRequest->getVal( 'gallery' ) : $gallery = '' ;
+		( '' != $wgRequest->getVal( 'article' ) ) ? $title_main = urldecode( $wgRequest->getVal( 'article' ) ) : $title_main = '' ;
+		( '' != $wgRequest->getVal( 'ns' ) ) ? $ns = $wgRequest->getVal( 'ns' ) : $ns = '' ;
 		$name = urldecode( $wgRequest->getVal('name') );
 		$oname = urldecode( $wgRequest->getVal('oname') );
 		if ('' == $name) {
@@ -195,6 +198,8 @@ class VideoEmbedTool {
 			$metadata[] = $wgRequest->getVal( 'metadata' . $extra );
 			$extra++;
 		}
+
+		$embed_code = '';
 
 		if($name !== NULL) {
 			if($name == '') {
@@ -226,6 +231,9 @@ class VideoEmbedTool {
 							$video->loadFromPars( $provider, $id, $metadata );
 							$video->setName( $name );
 							$video->save();
+							if ('' != $gallery) { // for gallery, return also embed code to insert live on page
+								$embed_code = $video->getEmbedCode( 300 );
+							}						
 						}
 					} else if($type == 'existing') {
 						header('X-screen-type: existing');
@@ -277,6 +285,9 @@ class VideoEmbedTool {
 						$video->loadFromPars( $provider, $id, $metadata );
 						$video->setName( $name );
 						$video->save();
+						if ('' != $gallery) { // for gallery, return also embed code to insert live on page
+							$embed_code = $video->getEmbedCode( 300 );							
+						}						
 					}
 				}
 			}
@@ -284,42 +295,67 @@ class VideoEmbedTool {
 			$title = Title::newFromText($mwname, 6);
 		}
 
-
-		header('X-screen-type: summary');
-
-		$size = $wgRequest->getVal('size');
-		$width = $wgRequest->getVal('width');
-		$layout = $wgRequest->getVal('layout');
-		$caption = $wgRequest->getVal('caption');
-		$slider = $wgRequest->getVal('slider');
-
 		$ns_vid = $wgContLang->getFormattedNsText( NS_VIDEO );
 
-		if( 'gallery' != $layout ) {
-			$tag = '[[' . $ns_vid . ':'.$name;
-			if($size != 'full') {
-				$tag .= '|thumb';
-			}
-			$tag .= '|'.$width;
-			$tag .= '|'.$layout;
+		if ('' != $gallery) {
+			$title_obj = Title::newFromText( $title_main, $ns );
+			$article_obj = new Article( $title_obj );
+			$text = $article_obj->getContent();
 
-			if($caption != '') {
-				$tag .= '|'.$caption.']]';
+			// todo nowiki?
+			preg_match_all( '/<videogallery>[^<]*/s', $text, $matches, PREG_OFFSET_CAPTURE );
+			if( is_array( $matches ) ) {
+				$our_gallery = $matches[0][$gallery][0];				
+				$our_gallery_modified = $our_gallery . "\n" . $ns_vid . ":" . $name . "\n";	
+				$text = substr_replace( $text, $our_gallery_modified, $matches[0][$gallery][1], strlen( $our_gallery ) );
+			}	
+
+			$summary = wfMsg( 'vet-added-from-gallery' ) ;
+			$success = $article_obj->doEdit( $text, $summary);
+			if ( $success ) {
+				header('X-screen-type: summary');				
+				$tag = '';
 			} else {
-				$tag .= ']]';
+				// todo well, communicate failure
 			}
-		} else { // gallery needs to be treated differently...
-			$tag = "<videogallery>\n";
-			$tag .= $ns_vid . ":" . $name;			
-			if($caption != '') {
-				$tag .= "|".$caption."\n</videogallery>";
-			} else {
-				$tag .= "\n</videogallery>";
+		} else {
+			header('X-screen-type: summary');
+
+			$size = $wgRequest->getVal('size');
+			$width = $wgRequest->getVal('width');
+			$layout = $wgRequest->getVal('layout');
+			$caption = $wgRequest->getVal('caption');
+			$slider = $wgRequest->getVal('slider');
+
+			if( 'gallery' != $layout ) {
+				$tag = '[[' . $ns_vid . ':'.$name;
+				if($size != 'full') {
+					$tag .= '|thumb';
+				}
+				$tag .= '|'.$width;
+				$tag .= '|'.$layout;
+
+				if($caption != '') {
+					$tag .= '|'.$caption.']]';
+				} else {
+					$tag .= ']]';
+				}
+			} else { // gallery needs to be treated differently...
+				$tag = "<videogallery>\n";
+				$tag .= $ns_vid . ":" . $name;			
+				if($caption != '') {
+					$tag .= "|".$caption."\n</videogallery>";
+				} else {
+					$tag .= "\n</videogallery>";
+				}
 			}
 		}
 
 		$tmpl = new EasyTemplate(dirname(__FILE__).'/templates/');
-		$tmpl->set_vars(array('tag' => $tag));
+		$tmpl->set_vars(array(
+			'tag' => $tag,
+			'code' => $embed_code,
+			));
 		return $tmpl->execute('summary');
 	}
 }
