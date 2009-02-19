@@ -140,14 +140,16 @@ function renderQuestions() {
 				page = j.query.wkpagesincat[recent_q];
 				html += "<li><a href=\"" + page.url + "\">" + page.title.replace(/_/g," ") + "?</a></li>";
 			}
-			/*
-			nav = ""
-			if( recent_questions_page > 0 )nav+= "<a href=javascript:void(0); onclick='questionsNavClick(-1);'>&lt;</a>";
-			nav += " <a href=javascript:void(0); onclick='questionsNavClick(1);'>&gt;</a>";
-			jQuery("#recent_unanswered_questions_nav").html( nav );
-			*/
+		
+			//nav
+			html += "<li class='sidebar-nav'>"
+			if( recent_questions_page > 0 )html+= "<a href=javascript:void(0); onclick='questionsNavClick(-1);'>" + wgPrevPageMsg + "</a> |";
+			html += " <a href=javascript:void(0); onclick='questionsNavClick(1);'>" + wgNextPageMsg + "</a> |";
+			html += " <a href='" + wgUnansweredRecentChangesURL + "'>" + wgUnansweredRecentChangesText + "</a>";
+			html += "</li>";
+			
 			jQuery("#recent_unanswered_questions").html( html );
-			//jQuery("#recent_unanswered_questions").animate({opacity: 100}, 500);
+			jQuery("#recent_unanswered_questions").animate({opacity: 1.0}, "normal");
 			
 		}
 		
@@ -372,3 +374,19 @@ MagicAnswer.questionSearch = function(question, params, callbackFunction){
         document.getElementsByTagName('head')[0].appendChild(s);
 };
 
+jQuery("#random_users_with_avatars").ready(function() {
+	if( !document.getElementById("random_users_with_avatars") )return false;
+	
+	url = wgServer + "/api.php?smaxage=60&action=query&list=wkuserswithavatars&format=json&wklimit=6&wkavatarsize=l";
+	jQuery.getJSON( url, "", function( j ){	
+		if( j.query.wkuserswithavatars ){
+			html = "";
+			for( user_name in j.query.wkuserswithavatars ){
+				user = j.query.wkuserswithavatars[user_name];
+				html += "<div class='random_user_avatar'><a href='" + user.user_page_url + "'><img src='" + user.user_avatar + "' border='0'></a></div>";		
+			}
+			html += "<div style='clear:both'></div>";
+			jQuery("#random_users_with_avatars").html( html );
+		}
+	});
+});
