@@ -321,7 +321,7 @@ function loadWikiList(value, txtname) {
 				var txtName = args[0];
 				var txtArea = YAHOO.util.Dom.get('dt-txtArea-' + txtName);
 				var select = YAHOO.util.Dom.get('dt-select-' + txtName);
-				txtArea.value = txtArea.value + ((txtArea.value != '') ? ',' + select.value : select.value);
+				txtArea.value = txtArea.value + ((txtArea.value != '') ? ', ' + select.value : select.value);
 			}, [txtname]);
 
 			if (typeof TieDivLibrary != "undefined" ) {
@@ -370,6 +370,7 @@ function createWikiListTxtArea( el, name, value ) {
 	var inputText = bottom.appendChild(document.createElement('textarea'));
 	inputText.style.width = '550px';
 	inputText.setAttribute('rows', '7');
+	inputText.setAttribute('wrap', 'on');
 	inputText.setAttribute('id', txtAreaId);
 	inputText.setAttribute('name', name);
 }
