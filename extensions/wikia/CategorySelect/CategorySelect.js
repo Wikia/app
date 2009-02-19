@@ -395,7 +395,7 @@ function csSave() {
 			if (result['info'] == 'ok') {
 				tmpDiv = document.createElement('div');
 				tmpDiv.innerHTML = result['html'];
-				$('catlinks').parentNode.replaceChild(tmpDiv.firstChild, $('catlinks'));
+				$('mw-normal-catlinks').parentNode.replaceChild(tmpDiv.firstChild, $('mw-normal-catlinks'));
 			}
 			csCancel();
 		},
@@ -411,14 +411,8 @@ function csSave() {
 
 function csCancel() {
 	var csMainContainer = $('csMainContainer');
-
-	if (csMainContainer) {
-		csMainContainer.parentNode.removeChild(csMainContainer);
-	}
-
-	if ($('csAddCategorySwitch')) {
-		$('csAddCategorySwitch').style.display = 'block';
-	}
+	csMainContainer.parentNode.removeChild(csMainContainer);
+	$('csAddCategorySwitch').style.display = 'block';
 }
 
 Event.onDOMReady(function() {
