@@ -540,7 +540,10 @@ wfRunHooks('GetHTMLAfterBody', array (&$this));
 		</div><?/*toolbox*/?>
 		
 		<div class="widget">
-			<h2><?= wfMsg("recent_unanswered_questions") ?> <span id="recent_unanswered_questions_nav"></span></h2>
+			<?php
+			$unanswered_category_title = Title::makeTitle(NS_CATEGORY, Answer::getSpecialCategory("unanswered") );
+			?>
+			<h2><?= wfMsg("recent_unanswered_questions") ?> <span id="recent_changes_link"><a href="<?= SpecialPage::getTitleFor( 'RecentChangesLinked' )->escapeFullURL() . "/" .  $unanswered_category_title->getPrefixedText() ?>"><?= wfMsg("more") ?></span><span id="recent_unanswered_questions_nav"></span></h2>
 			<ul id="recent_unanswered_questions">
 			</ul>
 			<? 
