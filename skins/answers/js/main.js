@@ -142,10 +142,10 @@ function renderQuestions() {
 			}
 		
 			//nav
-			html += "<li class='sidebar-nav'>"
-			if( recent_questions_page > 0 )html+= "<a href=javascript:void(0); onclick='questionsNavClick(-1);'>" + wgPrevPageMsg + "</a> |";
-			html += " <a href=javascript:void(0); onclick='questionsNavClick(1);'>" + wgNextPageMsg + "</a> |";
-			html += " <a href='" + wgUnansweredRecentChangesURL + "'>" + wgUnansweredRecentChangesText + "</a>";
+			html += "<li class='sidebar_nav'>"
+			if( recent_questions_page > 0 )html+= "<div class=\"sidebar_nav_prev\"><a href=javascript:void(0); onclick='questionsNavClick(-1);'>" + wgPrevPageMsg + "</a></div>";
+			html += "<div class=\"sidebar_nav_next\"><a href=javascript:void(0); onclick='questionsNavClick(1);'>" + wgNextPageMsg + "</a></div>";
+			html += "<a href='" + wgUnansweredRecentChangesURL + "'>" + wgUnansweredRecentChangesText + "</a>";
 			html += "</li>";
 			
 			jQuery("#recent_unanswered_questions").html( html );
