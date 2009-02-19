@@ -109,17 +109,13 @@ function print_pre($param, $return = 0)
  * @author Inez Korczyński <inez@wikia-inc.com>
  *
  * @param String $url -- old url
- * @param String $timestamp -- last change timestamp
+ * @param String $timestamp -- last change timestamp IGNORED
  *
  * @return String -- new url
  */
 function wfReplaceImageServer( $url, $timestamp = false ) {
 	global $wgImagesServers;
 
-	if( $timestamp ) {
-		$url .= "#" . $timestamp;
-	}
-	
 	if(isset($wgImagesServers) && is_int($wgImagesServers)) {
 		if(strlen($url) > 7 && substr($url,0,7) == 'http://') {
 			$hash = sha1($url);
