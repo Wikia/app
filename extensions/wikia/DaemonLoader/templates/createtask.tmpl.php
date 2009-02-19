@@ -5,16 +5,16 @@
 	font-size:110%;
 }
 .dt-creator select {
-	font-size:95%;
+	font-size:98%;
 }
 .dt-creator input {
-	font-size:95%;
+	font-size:98%;
 }
 .dt-creator {
-	font-size:93%;
+	font-size:96%;
 }
 .dt-creator textarea {
-	font-size:95%;
+	font-size:98%;
 }
 .dt-creator td {
 	padding:5px;
@@ -362,7 +362,7 @@ function createWikiListTxtArea( el, name, value ) {
 	hdr.style.height = "25px";
 	hdr.style.textAlign = "left";
 	hdr.setAttribute('id', 'dt-list-' + name);
-	sInfo = '<div style="font-size:0.9em;"><span><?=wfMsg("daemonloader_search")?> <input type="text" id="dt-wikia-search" value="" size="15" autocomplete="off" onkeyup = "DTGetWikis(this, this.value, \''+name+'\');"></span>';
+	sInfo = '<div style="font-size:0.99em;"><span><?=wfMsg("daemonloader_search")?> <input type="text" id="dt-wikia-search" value="" size="15" autocomplete="off" onkeyup = "DTGetWikis(this, this.value, \''+name+'\');"></span>';
 	sInfo += '<span id="dt-wikia-search-result" style="white-space:nowrap;"></span></div>';
 	hdr.innerHTML = sInfo;
 
