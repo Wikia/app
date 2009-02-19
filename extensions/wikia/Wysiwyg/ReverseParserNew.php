@@ -222,6 +222,11 @@ class ReverseParser {
 							$node->nextSibling->nextSibling->nodeType != XML_COMMENT_NODE) {
 							$out = "<br />";
 						}
+
+						// <br /> added in FCK by pressing Shift+ENTER
+						else if ($newNode) {
+							$out = "\n";
+						}
 						
 						break;
 
