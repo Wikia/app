@@ -2,6 +2,7 @@
 .firstHeading,
 #siteSub,
 #contentSub,
+#mw-anon-edit-warning,
 #editingTipsToggleDiv {
 	display: none !important;
 }
