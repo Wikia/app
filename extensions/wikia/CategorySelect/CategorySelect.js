@@ -380,6 +380,7 @@ function showCSpanel() {
 			initHandlers();
 			initAutoComplete();
 			initializeCategories();
+			replaceAddToInput();
 			YAHOO.util.Dom.removeClass('catlinks', 'csLoading');
 		},
 		timeout: 30000
