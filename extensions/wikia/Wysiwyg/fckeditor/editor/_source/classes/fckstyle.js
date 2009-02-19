@@ -686,8 +686,10 @@ FCKStyle.prototype =
 			}
 		}
 
-		// mark this node as added in wysiwyg
-		el.setAttribute('_wysiwyg_new', 'true');
+		// mark block styles with _wysiwyg_new attribute
+		if ( this.GetType() == FCK_STYLE_BLOCK ) {
+			el.setAttribute('_new_wysiwyg', 'true');
+		}
 
 		// Assign the style attribute.
 		if ( this._GetStyleText().length > 0 )
