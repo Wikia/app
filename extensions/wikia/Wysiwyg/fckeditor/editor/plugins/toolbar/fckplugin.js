@@ -324,6 +324,10 @@ WikiaCombo.prototype.Create = function( targetElement )
 	FCKTools.AddEventListenerEx( this.Select, 'change', WikiaCombo_OnClick, [ this ] ) ;
 }
 
+WikiaCombo.prototype.SetEnabled = function( isEnabled ) {
+	this.Select.disabled = isEnabled ? false : true;
+}
+
 WikiaCombo.prototype.SetLabel = function( text ) { }
 
 function WikiaCombo_OnClick(ev, combo) {
