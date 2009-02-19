@@ -1,11 +1,11 @@
 <!-- s:<?= __FILE__ ?> -->
 <style>
 .dt-jobs-list th {
-	font-size:86%;
+	font-size:92%;
 	padding:4px;
 }
 .dt-jobs-list td {
-	font-size:85%;
+	font-size:90%;
 	padding:4px;
 }
 </style>
