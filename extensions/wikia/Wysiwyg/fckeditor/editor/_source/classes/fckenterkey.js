@@ -596,8 +596,10 @@ FCKEnterKey.prototype._ExecuteEnterBr = function( blockTag )
 			bIsPre = sStartBlockTag.IEquals( 'pre' ) ;
 			if ( bIsPre )
 				eLineBreak = this.Window.document.createTextNode( FCKBrowserInfo.IsIE ? '\r' : '\n' ) ;
-			else
+			else {
 				eLineBreak = this.Window.document.createElement( 'br' ) ;
+				eLineBreak.setAttribute('_wysiwyg_new', 'true');
+			}
 
 			oRange.InsertNode( eLineBreak ) ;
 
@@ -619,8 +621,10 @@ FCKEnterKey.prototype._ExecuteEnterBr = function( blockTag )
 				var dummy = null ;
 				if ( FCKBrowserInfo.IsOpera )
 					dummy = this.Window.document.createElement( 'span' ) ;
-				else
+				else {
 					dummy = this.Window.document.createElement( 'br' ) ;
+					dummy.setAttribute('_wysiwyg_new', 'true');
+				}
 
 				eLineBreak.parentNode.insertBefore( dummy, eLineBreak.nextSibling ) ;
 
