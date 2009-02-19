@@ -288,6 +288,7 @@ class DaemonLoader extends SpecialPage {
 					$_tmp = array();
 					foreach ( $aParams as $key => $values ) {
 						$keyValue = $wgRequest->getVal($key);
+						$keyValue = str_replace(" ", "", $keyValue);
 						if ( isset($keyValue) && !empty($keyValue) ) {
 							$_tmp[] = "--$key=$keyValue";
 						}

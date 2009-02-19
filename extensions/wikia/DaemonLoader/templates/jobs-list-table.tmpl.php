@@ -20,7 +20,7 @@
 	<td><?=$allDaemons[$aRow['dt_id']]['dt_name']?></td>
 	<td style="white-space:nowrap;"><?=$aRow['start']?> : <?=$aRow['end']?></td>
 	<td><?=wfMsg('daemonloader_' . $aRow['frequency'])?></td>
-	<td><?=$aRow['param_values']?></td>
+	<td><?=wordwrap($aRow['param_values'],50,"<br />", true)?></td>
 	<td><?=$aRow['result_xls_files']?></td>
 	<td><?=($aRow['createdby']) ? $aRow['createdby']->getName() : "" ?></td>
 	<td><?=$wgLang->date( wfTimestamp( TS_MW, $aRow['added'] ), true )?></td>
