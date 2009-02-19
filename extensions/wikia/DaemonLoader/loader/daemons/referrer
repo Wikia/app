@@ -15,7 +15,7 @@ use Data::Dumper;
 
 use Date::Manip;
 use Switch;
-use Spreadsheet::WriteExcel;
+use Spreadsheet::WriteExcel::Big;
 
 use lib $wikia_lib;
 use Wikia::Config;
@@ -113,7 +113,7 @@ $weeks = $DEF_WEEK unless $weeks;
 
 =build dates structure 
 =cut
-my $daysago = $weeks*7;
+my $daysago = ($weeks+1)*7;
 my $dates = $oUtils->get_dates($daysago, $check, "now");
 my @dates = ();
 if (scalar @$dates) {
@@ -231,7 +231,7 @@ my $res = ();
 my $dir = "/home/reports/referrer/";
 mkdir($dir) if (!(-e $dir)) ;
 unlink ($XLS_FILE);
-my $workbook = Spreadsheet::WriteExcel->new($XLS_FILE);
+my $workbook = Spreadsheet::WriteExcel::Big->new($XLS_FILE);
 my @cols = (A..Z);
 
 my $formatHdrMerge = $workbook->add_format( bold => 1, color => 'black', valign => 'vcenter', align => 'center' );
@@ -343,12 +343,14 @@ foreach my $city_id (keys %$DATA) {
 }
 $workbook->close();
 
-my %updata = ("-dj_result_file" => "concat_ws(',', dj_result_file, '".$XLS_FILE."')");
+system("gzip -c $XLS_FILE > $XLS_FILE.gz") if ( -e $XLS_FILE );
+
+my %updata = ("-dj_result_file" => "concat_ws(',', dj_result_file, '".$XLS_FILE.".gz')");
 $oConf->log("update task info in database");
 my $q_up = $db_ext->update_daemon_task( \%updata, $TASKID );
 if ( $q_up ) {
 	$oConf->log("send emails with report");
-	$oUtils->send_file( $email_title, $task->{dj_result_emails}, $XLS_FILE );
+	$oUtils->send_file( $email_title, $task->{dj_result_emails}, $XLS_FILE . ".gz" );
 }
 $oConf->log("process done");
 

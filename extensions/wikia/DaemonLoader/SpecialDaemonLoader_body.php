@@ -368,7 +368,7 @@ class DaemonLoader extends SpecialPage {
         wfProfileIn( __METHOD__ );
 		$len = filesize($filename);
 		$file = basename($filename);
-		$ctype="application/vnd.ms-excel";
+		$ctype="application/x-gzip";
 
 		header("HTTP/1.0 200 OK");
 		header("Pragma: public");
