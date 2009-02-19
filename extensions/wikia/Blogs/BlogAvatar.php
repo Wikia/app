@@ -531,7 +531,7 @@ class BlogAvatar {
 		$oAvatarObj = BlogAvatar::newFromUser( $wgUser );
 		$aDefAvatars = $oAvatarObj->getDefaultAvatars();
 
-		if ( $mUser->isBlocked() ) {
+		if ( $wgUser->isBlocked() ) {
 			# if user is blocked - don't show avatar form
 			return true;
 		}
