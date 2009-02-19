@@ -357,11 +357,65 @@ class DaemonLoader extends SpecialPage {
 				}
 			}
 			if (!empty($fileToSave)) {
-				$this->getXLSHeader($fileToSave);
+				$this->getFileFromServer($fileToSave);
 			}
 		}
         wfProfileOut( __METHOD__ );
 		return $res;
+	}
+
+	public function getFileFromServer ( $path ) {
+        wfProfileIn( __METHOD__ );
+		if(!file_exists($path)) {
+	        wfProfileOut( __METHOD__ );
+			exit;
+		}
+
+		$size = filesize($path);
+		$file = basename($path);
+		$time=date('r',filemtime($path));
+		$fm = @fopen($path,'rb');
+		if (!$fm) {
+	        wfProfileOut( __METHOD__ );
+			exit;
+		}
+
+		$beginSize = 0;
+		$endSize = $size;
+
+		if (isset($_SERVER['HTTP_RANGE'])) {
+			if(preg_match('/bytes=\h*(\d+)-(\d*)[\D.*]?/i', $_SERVER['HTTP_RANGE'], $matches)) {
+				$beginSize = intval($matches[0]);
+				if (!empty($matches[1])) {
+					$endSize = intval($matches[1]);
+				}
+			}
+		}
+
+		if($beginSize > 0 || $endSize < $size) {
+			header('HTTP/1.0 206 Partial Content');
+		} else {
+			header('HTTP/1.0 200 OK');
+		}
+
+		header("Content-Type: application/octet-stream");
+		header('Cache-Control: public, must-revalidate, max-age=0');
+		header('Pragma: no-cache');
+		header('Accept-Ranges: bytes');
+		header('Content-Length:'.($endSize - $beginSize));
+		header("Content-Range: bytes $beginSize - $endSize/$size");
+		header("Content-Disposition: inline; filename=$file");
+		header("Content-Transfer-Encoding: binary\n");
+		header("Last-Modified: $time");
+		header('Connection: close');
+		$curSeek  = $beginSize;
+		fseek($fm, $beginSize, 0);
+		while (!feof($fm) && $curSeek<$endSize && (connection_status()==0) ) {
+			print fread($fm, min(1024*16,$endSize - $curSeek));
+			$curSeek += 1024*16;
+		}
+        wfProfileOut( __METHOD__ );
+		exit;
 	}
 
 	public function getXLSHeader($filename) {
@@ -374,7 +428,7 @@ class DaemonLoader extends SpecialPage {
 		header("Pragma: public");
 		header("Expires: 0");
 		header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
-		header("Cache-Control: public"); 
+		header("Cache-Control: public");
 		header("Content-Description: File Transfer");
 		header("Content-Type: $ctype");
 		header("Content-Disposition: attachment; filename=".$file.";");
@@ -382,7 +436,7 @@ class DaemonLoader extends SpecialPage {
 		header("Content-Length: ".$len);
 		@readfile($filename);
         wfProfileOut( __METHOD__ );
-		exit;		
+		exit;
 	}
 
 	public static function listXLSFiles($jobId, $sFiles) {
