@@ -204,8 +204,8 @@ function Wysiwyg_Initial($form) {
 
 		$wgOut->addInlineScript(
 			"var wysiwygUseNewToolbar = true;\n" .
-			"var wysiwygToolbarBuckets = " . json_encode($toolbarBuckets) . ";\n" . 
-			"var wysiwygToolbarItems = " . json_encode($toolbarItems) . ";"
+			"var wysiwygToolbarBuckets = " . Wikia::json_encode($toolbarBuckets) . ";\n" . 
+			"var wysiwygToolbarItems = " . Wikia::json_encode($toolbarItems) . ";"
 		);
 	}
 
