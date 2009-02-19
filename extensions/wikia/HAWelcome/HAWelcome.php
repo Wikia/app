@@ -20,7 +20,7 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 
 $wgExtensionCredits['other'][] = array(
 	'name' => 'HAWelcome',
-	'version' => '0.2',
+	'version' => '0.4',
 	'author' => 'Krzysztof Krzyżaniak',
 	'description' => 'Highly Automated Welcome Tool',
 );
