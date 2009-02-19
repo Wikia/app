@@ -34,6 +34,12 @@ function WikiaVideo_renderVideoGallery($input, $args, $parser) {
 	$out = '';
 	$videos = array();
 
+	global $wgHooks;
+	wfLoadExtensionMessages('VideoEmbedTool');
+	$wgHooks['ExtendJSGlobalVars'][] = 'VETSetupVars';
+	
+
+
 	$lines = explode("\n", $input);
 	foreach($lines as $line) {
 		$matches = array();
@@ -69,6 +75,21 @@ function WikiaVideo_renderVideoGallery($input, $args, $parser) {
 		
 		// for first gallery, load VET js
 		$out .= '<table class="gallery" cellspacing="0" cellpadding="0"><tr>';
+		$out .= '<script type="text/javascript">';
+		$out .= 'var vet_back = \'' . wfMsg('vet-back') . '\';';
+		$out .= 'var vet_imagebutton = \'' . wfMsg('vet-imagebutton') . '\';';
+		$out .= 'var vet_close = \'' . wfMsg('vet-close') . '\';';
+		$out .= 'var vet_warn1 = \'' . wfMsg('vet-warn1') . '\';';
+		$out .= 'var vet_warn2 = \'' . wfMsg('vetwarn2') . '\';';
+		$out .= 'var vet_warn3 = \'' . wfMsg('vetwarn3') . '\';';
+
+		$out .= 'var vet_bad_extension = \'' . wfMsg('vet-bad-extension') . '\';';
+		$out .= 'var vet_show_message = \'' . wfMsg('vet-show-message') . '\';';
+		$out .= 'var vet_hide_message = \'' . wfMsg('vet-hide-message') . '\';';
+		$out .= 'var vet_title = \'' . wfMsg('vet-title') . '\';';
+		$out .= 'var vet_max_thumb = \'' . wfMsg('vet-max-thumb') . '\';';
+
+		$out .= '</script>';
 
 		for($i = 0; $i < count($videos); $i++) {
 			$video = new VideoPage($videos[$i][0]);
@@ -85,9 +106,6 @@ function WikiaVideo_renderVideoGallery($input, $args, $parser) {
 				global $wgStylePath, $wgOut, $wgExtensionsPath, $wgStyleVersion, $wgUser, $wgHooks;			
 				wfLoadExtensionMessages('VideoEmbedTool');
 				$wgHooks['ExtendJSGlobalVars'][] = 'VETSetupVars';
-				$wgOut->addScript('<script type="text/javascript" src="'.$wgStylePath.'/common/yui_2.5.2/slider/slider-min.js?'.$wgStyleVersion.'"></script>');
-				$wgOut->addScript('<script type="text/javascript" src="'.$wgExtensionsPath.'/wikia/VideoEmbedTool/js/VET.js?'.$wgStyleVersion.'"></script>');
-				$wgOut->addScript('<link rel="stylesheet" type="text/css" href="'.$wgExtensionsPath.'/wikia/VideoEmbedTool/css/VET.css?'.$wgStyleVersion.'" />');
 				$wgWikiaVETLoaded = true;
 			}
 		}
@@ -97,7 +115,11 @@ function WikiaVideo_renderVideoGallery($input, $args, $parser) {
 				global $wgUser;
 				for($i = count($videos); $i < 4; $i++) {
 					if( get_class( $wgUser->getSkin() ) == 'SkinMonaco' ) {
-						$inside = '<a href="#" class="bigButton" style="margin-left: 105px; margin-top: 110px;" id="WikiaVideoGalleryPlaceholder' . $args['id'] . 'x' .  $i . '" onclick="VET_show( event, ' . $args['id'] .', ' . $i . ')"><big>' . wfMsg( 'wikiavideo-create' ) . '</big><small>&nbsp;</small></a>';
+						global $wgStylePath;
+						$function = 'YAHOO.util.Get.script([wgExtensionsPath+\'/wikia/VideoEmbedTool/js/VET.js?\'+wgStyleVersion, stylepath+\'/common/yui_2.5.2/slider/slider-min.js?\'+wgStyleVersion], {onSuccess:function(o) { VET_show( o.data, ' . $args['id'] . ', ' . $i . ' )  }, data:YAHOO.util.Event.getEvent() }); YAHOO.util.Get.css( wgExtensionsPath+\'/wikia/VideoEmbedTool/css/VET.css?\'+wgStyleVersion )';
+						
+
+						$inside = '<a href="#" class="bigButton" style="margin-left: 105px; margin-top: 110px;" id="WikiaVideoGalleryPlaceholder' . $args['id'] . 'x' .  $i . '" onclick="' . $function . '"><big>' . wfMsg( 'wikiavideo-create' ) . '</big><small>&nbsp;</small></a>';
 					} else { // todo maybe add some icon here not text, as we agreed
 						$inside = wfMsg( 'wikiavideo-not-supported' );				
 					}
