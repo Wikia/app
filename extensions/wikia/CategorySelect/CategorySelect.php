@@ -156,7 +156,7 @@ function CategorySelectAjaxSaveCategories($articleId, $categories) {
 			//return HTML with new categories
 			$wgOut->tryParserCache($article, $wgUser);
 			$sk = $wgUser->getSkin();
-			$cats = $sk->getCategories();
+			$cats = $sk->getCategoryLinks();
 
 			$result['info'] = 'ok';
 			$result['html'] = $cats;
