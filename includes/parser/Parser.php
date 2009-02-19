@@ -1522,7 +1522,7 @@ class Parser
 	 * @private
 	 */
 	function replaceInternalLinks( $s ) {
-		global $wgContLang, $wgWysiwygParserEnabled, $wgEnableWikiaVideoExt;
+		global $wgContLang, $wgWysiwygParserEnabled, $wgEnableVideoToolExt;
 		static $fname = 'Parser::replaceInternalLinks' ;
 
 		wfProfileIn( $fname );
@@ -1758,7 +1758,7 @@ class Parser
 				wfProfileOut( "$fname-interwiki" );
 
 				if($ns == NS_VIDEO) {
-					if(!empty($wgEnableWikiaVideoExt)) {
+					if(!empty($wgEnableVideoToolExt)) {
 						wfProfileIn("$fname-video");
 
 						// Wysiwyg: mark videos
