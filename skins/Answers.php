@@ -191,7 +191,7 @@ wfRunHooks('GetHTMLAfterBody', array (&$this));
 		<?php if($this->data['sitenotice']) { ?><div id="siteNotice"><?php $this->html('sitenotice') ?></div><?php } ?>
 
 		<?php
-		if ($is_question) {
+		if ( $answer_page->isQuestion(true) ) {
 			$author = $answer_page->getOriginalAuthor();
 			
 			$category_text = array();
