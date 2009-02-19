@@ -4,6 +4,7 @@
 #contentSub,
 #mw-anon-edit-warning,
 .mw-newarticletext,
+.usermessage,
 #editingTipsToggleDiv {
 	display: none !important;
 }
