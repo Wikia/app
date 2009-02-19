@@ -69,9 +69,6 @@ WikiaToolbar.prototype.Create = function(parentElement) {
 			}
 		}
 	}
-
-	// and finally, show new toolar
-	parentElement.style.display = 'block';
 }
 
 WikiaToolbar.prototype.AddItem = function( item )
