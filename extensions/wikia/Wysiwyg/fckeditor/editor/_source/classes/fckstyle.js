@@ -688,7 +688,7 @@ FCKStyle.prototype =
 
 		// mark block styles with _wysiwyg_new attribute
 		if ( this.GetType() == FCK_STYLE_BLOCK ) {
-			el.setAttribute('_new_wysiwyg', 'true');
+			el.setAttribute('_wysiwyg_new', 'true');
 		}
 
 		// Assign the style attribute.
