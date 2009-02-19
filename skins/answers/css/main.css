@@ -230,7 +230,8 @@ body {
 	background-position: bottom left;
 	background-repeat: repeat-x;
 	border: 1px solid #36C;
-	margin-right: 50px;
+	height: 1%;
+	position: relative;
 }
 #question .top {
 	background-position: -1980px -42px;
@@ -267,11 +268,22 @@ body {
 	line-height: normal;
 	margin: 0 20px;
 	overflow: hidden;
-	padding: 0;
+	padding: 0 0 15px;
+}
+#question h1 a {
+	font-size: 8pt;
+	white-space: nowrap;
 }
 #question div.categories {
 	font-size: 8pt;
 	margin: 0 20px;
+}
+#question_actions {
+	bottom: 3px;
+	*bottom: 2px;
+	left: 15px;
+	position: absolute;
+	z-index: 2;
 }
 #attribution {
 	border-bottom: 1px solid #AAA;
@@ -723,6 +735,7 @@ body .header_menu_button * {
 	border: 0;
 	cursor: pointer;
 	margin: 0;
+	*margin-right: 5px;
 	padding: 0 0 0 3px;
 	overflow: visible;
 }

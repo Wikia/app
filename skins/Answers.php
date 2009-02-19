@@ -203,19 +203,32 @@ wfRunHooks('GetHTMLAfterBody', array (&$this));
 				}
 			}
 		?>
-		<div class="sectionedit">[<a href="<?=$this->data['content_actions']['move']['href']?>"><?=wfMsg('editsection')?></a>]</div>
 		<div id="question">
 			<div class="top"><span></span></div>
-			<h1 id="firstHeading" class="firstHeading"><?php $this->data['displaytitle']!=""?$this->html('title'):$this->text('title') ?><?=$question_mark?></h1>
-			<div class="categories">
+			<h1 id="firstHeading" class="firstHeading"><?php $this->data['displaytitle']!=""?$this->html('title'):$this->text('title') ?><?=$question_mark?> <a href="<?=$this->data['content_actions']['move']['href']?>"><?=wfMsg('rephrase')?></a></h1>
+			<!--<div class="categories">
 			<?php
+			/*
 				foreach($category_text as $ctg){
 					$category_title = Title::makeTitle(NS_CATEGORY, $ctg );
 					if( $categories ) $categories .= ", ";
 					$categories .=  "<a href=\"" . $category_title->escapeFullURL() . "\">{$ctg}</a>";
 				}
 				echo wfMsg("categories") . ": " . $categories;
+				*/
 				?>
+			</div>-->
+			<?
+			if( $wgUser->isLoggedIn() ){
+				$watchlist_url = $wgTitle->escapeFullURL("action=watch");
+			}else{
+				$watchlist_url = "javascript:anonWatch();";
+			}
+			?>
+			<div id="question_actions">
+				<button class="button_small button_small_green" onclick="document.location='<?=$wgTitle->getEditURL()?>';"><span><? echo ($answer_page->isArticleAnswered() ? wfMsg("improve_this_answer") : wfMsg("answer_this_question"));?></span></button>
+				<button class="button_small button_small_blue" onclick="document.location='<?=$wgTitle->getEditURL()?>';"><span>Research this</span></button>
+				<button class="button_small button_small_blue" onclick="document.location='<?=$watchlist_url?>';"><span><? echo ($answer_page->isArticleAnswered() ? wfMsg("notify_improved") : wfMsg("notify_answered"));?></span></button>
 			</div>
 			<div class="bottom"><span></span></div>
 		</div>
@@ -354,6 +367,8 @@ wfRunHooks('GetHTMLAfterBody', array (&$this));
 		</tr>
 		</table> 
 		
+		<?
+		/*
 		<div id="huge_buttons" class="clearfix">
 			<? if ( $answer_page->isArticleAnswered() ) { ?>
 			<a href="<?= $wgTitle->getEditURL() ?>" class="huge_button edit"><div></div><?= wfMsg("improve_this_answer") ?></a>	
@@ -363,6 +378,8 @@ wfRunHooks('GetHTMLAfterBody', array (&$this));
 			<a href="<?= $watchlist_url ?>" class="huge_button watchlist"><div></div><?= wfMsg("notify_answered") ?></a>
 			<? } ?>
 		</div>
+		*/
+		?>
 		<div id="social_networks">
 		<label><?= wfMsg("ask_friends")?></label>
 			<?
