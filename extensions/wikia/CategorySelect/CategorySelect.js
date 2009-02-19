@@ -410,8 +410,15 @@ function csSave() {
 }
 
 function csCancel() {
-	$('csMainContainer').parentNode.removeChild($('csMainContainer'));
-	$('csAddCategorySwitch').style.display = 'block';
+	var csMainContainer = $('csMainContainer');
+
+	if (csMainContainer) {
+		csMainContainer.parentNode.removeChild(csMainContainer);
+	}
+
+	if ($('csAddCategorySwitch')) {
+		$('csAddCategorySwitch').style.display = 'block';
+	}
 }
 
 Event.onDOMReady(function() {
