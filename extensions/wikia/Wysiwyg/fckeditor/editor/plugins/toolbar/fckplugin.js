@@ -42,7 +42,8 @@ WikiaToolbar.prototype.Create = function(parentElement) {
 
 	if (parentElement) {
 		var toolbarRow = toolbar.insertRow(-1);
-		var currentBucket;
+		var currentBucket = false;
+		var currentBucketItems = 0;
 
 		// add toolbar items
 		for ( var i = 0 ; i < this.Items.length ; i++ ) {
@@ -50,6 +51,11 @@ WikiaToolbar.prototype.Create = function(parentElement) {
 			var item = this.Items[i];
 
 			if (item.Bucket) {
+				// set width of previous bucket <UL>
+				if (currentBucket && currentBucketItems > 1) {
+					currentBucket.style.maxWidth = (currentBucketItems*28) + 'px';
+				}
+
 				// create new bucket
 				var toolbarCell = toolbarRow.insertCell(-1);
 				toolbarCell.innerHTML = '<div class="clearfix color1">' + 
@@ -62,11 +68,18 @@ WikiaToolbar.prototype.Create = function(parentElement) {
 
 				// get <ul> node - new items will be added there
 				currentBucket = toolbarCell.getElementsByTagName('ul')[0];
+				currentBucketItems = 0;
 			}
 			else {
 				// add item to current bucket
 				item.Create( currentBucket ) ;
+
+				currentBucketItems++;
 			}
+		}
+		// set width of last bucket <UL>
+		if (currentBucket && currentBucketItems > 1) {
+			currentBucket.style.maxWidth = (currentBucketItems*28) + 'px';
 		}
 	}
 }
