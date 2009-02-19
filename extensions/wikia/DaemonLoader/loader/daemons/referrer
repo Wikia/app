@@ -148,9 +148,6 @@ foreach my $num (sort ( map { sprintf("%012u",$_) } (keys %$databases) )) {
 	
 	$db_ext->handler->ping();
 	
-	my $end_sec = time();
-	my @ts = gmtime($end_sec - $start_sec);
-	
 =main loop for every wiki and every period
 =cut
 	my $prevdate;
@@ -209,6 +206,9 @@ foreach my $num (sort ( map { sprintf("%012u",$_) } (keys %$databases) )) {
 	}
 =end of main loop
 =cut
+	my $end_sec = time();
+	my @ts = gmtime($end_sec - $start_sec);
+
 	$oConf->log($databases->{$city_id} . " processed ".sprintf ("%d hours %d minutes %d seconds",@ts[2,1,0]));
 }
 
