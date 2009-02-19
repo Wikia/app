@@ -1,6 +1,8 @@
 // "add image" toolbar button
 var FCKAddVideoCommand = function() {
 	this.Name = 'AddVideo' ;
+
+	this.IsEnabled = (typeof window.parent.vet_enabled != 'undefined');
 }
 FCKAddVideoCommand.prototype = {
 	Execute : function() {
@@ -9,7 +11,7 @@ FCKAddVideoCommand.prototype = {
 		window.parent.VET_show(-1);
 	},
 	GetState : function() {
-		if ( FCK.EditMode != FCK_EDITMODE_WYSIWYG )
+		if ( (FCK.EditMode != FCK_EDITMODE_WYSIWYG) || (this.IsEnabled == false) )
 			return FCK_TRISTATE_DISABLED ;
 		return FCK_TRISTATE_OFF;
 	}
