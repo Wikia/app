@@ -22,6 +22,10 @@
 	font-family: sans-serif;			
 }
 
+#VideoEmbedMainMesg {
+	margin-top: 6px;
+}
+
 #VideoEmbedName {
 	width: 315px;	
 }

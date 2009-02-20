@@ -38,6 +38,7 @@
 					<?php
 			}
 ?>
+<div id="VideoEmbedMainMesg"><?= wfMsg( 'vet-main-info' ) ?></div>
 </td>
 <td width="200">
 <a href="http://www.youtube.com" class="image" title="YouTube" target="_blank"><img alt="" src="<?= $wgExtensionsPath; ?>/wikia/VideoEmbedTool/images/youtube.jpg" height="42" width="60" border="0"></a>
@@ -50,7 +51,6 @@
 </td>
 </tr>
 </table>
-<div id="VideoEmbedMainMesg"><?= wfMsg( 'vet-main-info' ) ?></div>
 <br/>
 <div id="VET_results_0">
 	<?= $result ?>
