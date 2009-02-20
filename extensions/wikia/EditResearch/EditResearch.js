@@ -27,6 +27,7 @@ jQuery("#firstHeading").ready(function() {
 		sel = getSelection()
 		if(sel){
 			document.getElementById("search_input").value = sel
+			document.getElementById("search_input").focus();
 			research();
 		}
 	});
