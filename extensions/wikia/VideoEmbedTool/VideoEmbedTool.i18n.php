@@ -61,4 +61,5 @@ $messages['en'] = array(
 	'vet-page-success' => 'Video page was successfully updated. You may have to purge the video page to see the change.',
 	'vet-add-button' => 'Add Video',
 	'vet-added-from-gallery' => 'video added from video gallery',
+	'vet-see-all' => 'see all',
 );
