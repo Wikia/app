@@ -1,5 +1,5 @@
-<div id="ImageUploadHeadline">
-<div id="ImageUploadPagination">
+<div id="VideoEmbedHeadline">
+<div id="VideoEmbedPagination">
 <?php
 if($results['page'] > 1) {
 ?>
@@ -21,12 +21,12 @@ if($results['page'] < $results['pages']) {
 <?= wfMsg('vet-metacafe', $results['total']) ?>
 </div>
 
-<table cellspacing="0" id="ImageUploadFindTable">
+<table cellspacing="0" id="VideoEmbedFindTable">
 	<tbody>
 <?php
 for($j = 0; $j < ceil(count($results['item']) / 4); $j++) {
 ?>
-		<tr class="ImageUploadFindImages">
+		<tr class="VideoEmbedFindImages">
 <?php
 	for($i = $j*4; $i < ($j+1)*4; $i++) {
 		if(isset($results['item'][$i])) {
@@ -37,7 +37,7 @@ for($j = 0; $j < ceil(count($results['item']) / 4); $j++) {
 	}
 ?>
 		</tr>
-		<tr class="ImageUploadFindLinks">
+		<tr class="VideoEmbedFindLinks">
 <?php
 	for($i = $j*4; $i < ($j+1)*4; $i++) {
 		if(isset($results['item'][$i])) {
