@@ -46,6 +46,11 @@
 <a href="http://www.myvideo.de" class="image" title="Myvideo" target="_blank"><img alt="" src="<?= $wgExtensionsPath; ?>/wikia/VideoEmbedTool/images/myvideo.jpg" height="17" width="60" border="0"></a>
 <a href="http://en.sevenload.com" class="image" title="Sevenload" target="_blank"><img alt="" src="<?= $wgExtensionsPath; ?>/wikia/VideoEmbedTool/images/sevenload.jpg" height="11" width="60" border="0"></a>
 <a href="http://www.vimeo.com" class="image" title="Vimeo" target="_blank"><img alt="" src="<?= $wgExtensionsPath; ?>/wikia/VideoEmbedTool/images/vimeo.png" height="36" width="60" border="0"></a>
+/*				$wgOut->addScript('<script type="text/javascript" src="'.$wgStylePath.'/common/yui_2.5.2/slider/slider-min.js?'.$wgStyleVersion.'"></script>');
+				$wgOut->addScript('<script type="text/javascript" src="'.$wgExtensionsPath.'/wikia/VideoEmbedTool/js/VET.js?'.$wgStyleVersion.'"></script>');
+				$wgOut->addScript('<link rel="stylesheet" type="text/css" href="'.$wgExtensionsPath.'/wikia/VideoEmbedTool/css/VET.css?'.$wgStyleVersion.'" />');
+*/
+<a href="http://help.wikia.com/wiki/Help:Video_Embed_Tool" target="_blank"><?= wfMsg( 'vet-see-all' ) ?></a>
 </td>
 </tr>
 </table>
