@@ -645,6 +645,16 @@ class ReverseParser {
 					case 'body':
 						$textContent = '';
 						break;
+
+					case 'li':
+						// we may have single space before <ul> nested inside another <li>
+						// e.g.
+						// * <strike>foo</strike>
+						// ** test
+						if ( $node->nextSibling && $this->isList($node->nextSibling) ) {
+							$textContent = substr($textContent, 0, -1);
+						}
+						break;
 					default:
 				}
 			}
@@ -958,7 +968,13 @@ class ReverseParser {
 					// *** bar
 					return $content . "\n";
 				} else {
-					return $this->listIndent . $this->listBullets . rtrim($content) . "\n";
+					// remove last char only (if space) from list items containing only text
+					// so without nested lists
+					if (substr($content, -1) == ' ') {
+						$content = substr($content, 0, -1);
+					}
+
+					return $this->listIndent . $this->listBullets . $content . "\n";
 				}
 			break;
 		}
