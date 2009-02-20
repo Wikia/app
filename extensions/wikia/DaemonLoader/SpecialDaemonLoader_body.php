@@ -420,7 +420,11 @@ class DaemonLoader extends SpecialPage {
 			error_log (" print  = " . $endSize - $curSeek ." \n" );
 			print fread($fm, min(1024*16,$endSize - $curSeek));
 			$curSeek += 1024*16;
+			flush();
+        	ob_flush();
 		}
+		fclose($fm);
+		error_log (" read all and handle is closed \n" );
         wfProfileOut( __METHOD__ );
 		exit;
 	}
