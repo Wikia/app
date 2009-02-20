@@ -586,19 +586,23 @@ function wfGetCurrentUrl() {
 global $wgAjaxExportList;
 $wgAjaxExportList[] = 'getMenu';
 function getMenu() {
-	global $wgRequest, $wgMemc, $wgCityId;
+	global $wgRequest, $wgMemc, $wgCityId, $wgScript;
+	$content = '';
 
 	$id = $wgRequest->getVal('id');
 	if($id) {
-		error_log("NewSidebar: wgCityId: $wgCityId id: $id");
 		$menuArray = $wgMemc->get($id);
-		$content = 'var menuArray = '.Wikia::json_encode($menuArray).';YAHOO.util.Event.on(\'navigation_widget\', \'mouseover\', menuInit);YAHOO.util.Event.onDOMReady(menuInit);';
+		if(!empty($menuArray['magicWords'])) {
+			$content .= "document.write('<scr'+'ipt type=\"text/javascript\" src=\"$wgScript?action=ajax&rs=getMenu&v=".$wgRequest->getVal('v')."&words=".urlencode(join(',', $menuArray['magicWords']))."\"></scr'+'ipt>');";
+			unset($menuArray['magicWords']);
+		}
+
+		$content .= 'var menuArray = '.Wikia::json_encode($menuArray).';YAHOO.util.Event.on(\'navigation_widget\', \'mouseover\', menuInit);YAHOO.util.Event.onDOMReady(menuInit);';
 		$duration = 60 * 60 * 24 * 7; // one week
 	}
 
-	$words = $wgRequest->getVal('words');
+	$words = urldecode($wgRequest->getVal('words'));
 	if($words) {
-		error_log("NewSidebar: wgCityId: $wgCityId words: $words");
 		$magicWords = array();
 		$map = array('voted' => array('highest_ratings', 'GetTopVotedArticles'), 'popular' => array('most_popular', 'GetMostPopularArticles'), 'visited' => array('most_visited', 'GetMostVisitedArticles'), 'newlychanged' => array('newly_changed', 'GetNewlyChangedArticles'), 'topusers' => array('community', 'GetTopFiveUsers'));
 		$words = split(',', $words);
@@ -621,7 +625,7 @@ function getMenu() {
 				$magicWords[$word][] = array('className' => 'Monaco-sidebar_more', 'url' => Title::makeTitle(NS_CATEGORY, $name)->getLocalURL(), 'text' => '-more-');
 			}
 		}
-		$content = 'var magicWords = '.Wikia::json_encode($magicWords).';';
+		$content .= 'var magicWords = '.Wikia::json_encode($magicWords).';';
 		$duration = 60 * 60 * 48; // two days
 	}
 
