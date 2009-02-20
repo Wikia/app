@@ -261,6 +261,12 @@ class ReverseParser {
 
 						$previousNode = $this->getPreviousElementNode($node);
 
+						// <p><br /> </p>
+						if ( ($textContent == ' ') && ($node->firstChild->nodeType == XML_ELEMENT_NODE) && 
+							($node->firstChild->nodeName == 'br') ) {
+							$textContent = '';
+						}
+
 						// if the first previous XML_ELEMENT_NODE (so no text and no comment) of the current
 						// node is <p> then add new line before the current one
 						if ($previousNode && $previousNode->nodeName == 'p') {
