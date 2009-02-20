@@ -25,6 +25,7 @@
 }
 
 #csCategoryInput {
+	background: transparent;
 	border: 0;
 	display: block;
 	float: left;
