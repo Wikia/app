@@ -37,7 +37,7 @@ FCK.VideoAdd = function(wikitext, options) {
 	// add meta data entry
 	FCK.wysiwygData[refid] = {
 		'type': 'video',
-		'description': wikitext
+		'original': wikitext
 	};
 
 	// create new placeholder and add it to the article
