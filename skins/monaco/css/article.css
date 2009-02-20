@@ -288,6 +288,13 @@
 	clip: rect(0px 192px 16px 176px);
 	left: -176px;
 }
+#shareFacebook {
+	left: 40px;
+}
+#shareFaceboook dd a {
+	clip: rect(0px 352px 16px 336px);
+	left: -336px;
+}
 #articleFooter .col2 strong {
 	display: block;
 }
