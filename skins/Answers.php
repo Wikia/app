@@ -227,7 +227,14 @@ wfRunHooks('GetHTMLAfterBody', array (&$this));
 			?>
 			<div id="question_actions">
 				<button class="button_small button_small_green" onclick="document.location='<?=$wgTitle->getEditURL()?>';"><span><? echo ($answer_page->isArticleAnswered() ? wfMsg("improve_this_answer") : wfMsg("answer_this_question"));?></span></button>
-				<button class="button_small button_small_blue" onclick="document.location='<?=$wgTitle->getEditURL()?>';"><span>Research this</span></button>
+				<?php
+				global $wgEnableEditResearch;
+				if( $wgEnableEditResearch ){
+				?>
+					<button class="button_small button_small_blue" onclick="document.location='<?=$wgTitle->getEditURL()?>';"><span><?=wfMsg("research_this")?></span></button>
+				<?php
+				}
+				?>
 				<button class="button_small button_small_blue" onclick="document.location='<?=$watchlist_url?>';"><span><? echo ($answer_page->isArticleAnswered() ? wfMsg("notify_improved") : wfMsg("notify_answered"));?></span></button>
 			</div>
 			<div class="bottom"><span></span></div>
