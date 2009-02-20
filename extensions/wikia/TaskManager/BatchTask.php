@@ -47,7 +47,7 @@ abstract class BatchTask {
     );
 
     const DEFAULT_TTL = 86400; #--- one day
-    public $mDebug, $mTaskID, $mData, $mTTL;
+    public $mDebug, $mTaskID, $mData, $mTTL, $mVisible;
 
     /**
      * contructor
@@ -64,15 +64,33 @@ abstract class BatchTask {
      */
     abstract function getForm( $title, $errors = false );
 
-    /**
-     * @return type of task, for dropdown selector
-     */
-    abstract function getType();
+	/**
+	 * getType
+	 *
+	 * return string with codename type of task
+	 *
+	 * @access public
+	 * @author eloy@wikia
+	 *
+	 * @return string: unique name
+	 */
+	public function getType() {
+		return $this->mType;
+	}
 
-    /**
-     * if true is show in dropdown box on TaskManager page
-     */
-    abstract function isVisible();
+	/**
+	 * isVisible
+	 *
+	 * check if class is visible in TaskManager from dropdown
+	 *
+	 * @access public
+	 * @author eloy@wikia
+	 *
+	 * @return boolean: visible or not
+	 */
+	public function isVisible() {
+		return $this->mVisible;
+	}
 
     /**
      * @return true if form is submitted with success
@@ -112,8 +130,7 @@ abstract class BatchTask {
      *
      * @return array static array $mStatuses
      */
-    static public function getStatuses( )
-    {
+    static public function getStatuses( ) {
         return self::$mStatuses;
     }
 
@@ -185,6 +202,27 @@ abstract class BatchTask {
             return null;
         }
     }
+
+	/**
+	 * execute
+	 *
+	 * entry point for TaskExecutor
+	 *
+	 * @access public
+	 * @author eloy@wikia
+	 *
+	 * @param mixed $params default null - task data from wikia_tasks table
+	 *
+	 * @return boolean - status of operation
+	 */
+	public function execute( $params = null ) {
+
+		if( isset( $params->task_id ) ) {
+			$this->mTaskID = $params->task_id;
+		}
+
+		return true;
+	}
 
     /**
      * getID
