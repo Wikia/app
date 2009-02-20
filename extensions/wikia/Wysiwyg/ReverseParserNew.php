@@ -952,13 +952,13 @@ class ReverseParser {
 	private function handleListItem($node, $content) {
 		switch($node->nodeName) {
 			case 'li':
-				if( $node->hasChildNodes() && in_array($node->childNodes->item(0)->nodeName, array('ul', 'ol')) ) {
+				if( $node->hasChildNodes() && in_array($node->firstChild->nodeName, array('ul', 'ol')) ) {
 					// nested lists like
 					// *** foo
 					// *** bar
 					return $content . "\n";
 				} else {
-					return $this->listIndent . $this->listBullets . substr($content, 0, -1) . "\n";
+					return $this->listIndent . $this->listBullets . rtrim($content) . "\n";
 				}
 			break;
 		}
