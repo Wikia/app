@@ -371,10 +371,15 @@ class DaemonLoader extends SpecialPage {
 			exit;
 		}
 
+		error_log (" path = $path \n" );
 		$size = filesize($path);
+		error_log (" size = $size \n" );
 		$file = basename($path);
+		error_log (" file = $file \n" );
 		$time=date('r',filemtime($path));
+		error_log (" open = $path \n" );
 		$fm = @fopen($path,'rb');
+		error_log (" got it  = $fm \n" );
 		if (!$fm) {
 	        wfProfileOut( __METHOD__ );
 			exit;
@@ -382,7 +387,7 @@ class DaemonLoader extends SpecialPage {
 
 		$beginSize = 0;
 		$endSize = $size;
-
+		
 		if (isset($_SERVER['HTTP_RANGE'])) {
 			if(preg_match('/bytes=\h*(\d+)-(\d*)[\D.*]?/i', $_SERVER['HTTP_RANGE'], $matches)) {
 				$beginSize = intval($matches[0]);
@@ -409,6 +414,7 @@ class DaemonLoader extends SpecialPage {
 		header("Last-Modified: $time");
 		header('Connection: close');
 		$curSeek  = $beginSize;
+		error_log (" start reading  = $curSeek \n" );
 		fseek($fm, $beginSize, 0);
 		while (!feof($fm) && $curSeek<$endSize && (connection_status()==0) ) {
 			print fread($fm, min(1024*16,$endSize - $curSeek));
