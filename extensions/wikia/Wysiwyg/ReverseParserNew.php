@@ -173,9 +173,9 @@ class ReverseParser {
 			if($isListNode) {
 				// fix for different list types on the same level of nesting
 				if($node->previousSibling && in_array($node->previousSibling->nodeName, array('ol', 'ul', 'dl')) && $this->listLevel > 1) {
-					$childOut = "\n" . trim($childOut);
+					$childOut = "\n" . $childOut;
 				} else {
-					$childOut = trim($childOut);
+					$childOut = $childOut;
 				}
 
 				if (!$node->getAttribute('washtml')) {
