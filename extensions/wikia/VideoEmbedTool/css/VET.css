@@ -166,13 +166,7 @@
 }
 
 #VideoEmbedSupported {
-	float: left;
-	font-size: 11pt;
-	font-weight: bold;
-	text-align: center;
-	width: 275px;
-	height: 125px;
-	background-color: #e3f2f3;	
+	text-align: right;
 }
 
 /*** UPLOAD/FIND ***/
