@@ -417,6 +417,7 @@ class DaemonLoader extends SpecialPage {
 		error_log (" start reading  = $curSeek \n" );
 		fseek($fm, $beginSize, 0);
 		while (!feof($fm) && $curSeek<$endSize && (connection_status()==0) ) {
+			error_log (" print  = " . $endSize - $curSeek ." \n" );
 			print fread($fm, min(1024*16,$endSize - $curSeek));
 			$curSeek += 1024*16;
 		}
