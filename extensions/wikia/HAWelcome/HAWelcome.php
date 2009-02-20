@@ -348,14 +348,12 @@ class HAWelcomeTask extends BatchTask {
 	 * @access public
 	 */
 	public function  __construct() {
-		global $wgDebugLogFile;
 
+		parent::__construct();
 		$this->mType = "welcome";
 		$this->mVisible = false;
 		$this->mTTL = 1800;
-		parent::__construct();
 		$this->mDebug = false;
-		$wgDebugLogFile  = "/tmp/welcome-task.log";
 	}
 
 	/**
