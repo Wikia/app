@@ -39,6 +39,11 @@ class VideoEmbedTool {
 
 		if($sourceId == 0) { // metacafe
 			$page ? $start = ($page - 1) * 8 : $start = 0;
+			/*	those two searches are because Metacafe gives two kinds of searches: tag based, and in title, desc and such
+				the problem is that one day the second didn't work on their site...
+				so I replaced it with tag based and included commented code for the second
+				just in case we needed to replace it			  
+			*/
 //			$query = str_replace(" ", "+", $query);
 			$query = str_replace(" ", "_", $query);		
 //			$file = @file_get_contents( "http://www.metacafe.com/api/videos?vq=" . $query, FALSE );
