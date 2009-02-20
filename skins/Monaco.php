@@ -18,7 +18,7 @@ $wgHooks['MessageCacheReplace'][] = 'MonacoSidebar::invalidateCache';
 
 class MonacoSidebar {
 
-	const version = '0.02';
+	const version = '0.03';
 
 	static function invalidateCache() {
 		global $wgMemc;
@@ -124,7 +124,6 @@ class MonacoSidebar {
 				$magicWords = $nodes[0]['magicWords'];
 				$magicWords = array_unique($magicWords);
 				sort($magicWords);
-				$magicWords = join(',', $magicWords);
 			}
 
 			$menuHash = hash('md5', serialize($nodes));
@@ -139,12 +138,11 @@ class MonacoSidebar {
 			}
 
 			$nodes['mainMenu'] = $mainMenu;
+			if(!empty($magicWords)) {
+				$nodes['magicWords'] = $magicWords;
+			}
 
 			$wgMemc->set($menuHash, $nodes, 60 * 60 * 24 * 3); // three days
-
-			if(isset($magicWords)) {
-				$menu .= '<script type="text/javascript" src="'.$wgScript.'?action=ajax&rs=getMenu&v='.self::version.'&words='.$magicWords.'"></script>';
-			}
 
 			$menu .= '<script type="text/javascript" src="'.$wgScript.'?action=ajax&v='.self::version.'&rs=getMenu&id='.$menuHash.'"></script>';
 
