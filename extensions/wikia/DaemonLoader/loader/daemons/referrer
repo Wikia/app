@@ -26,7 +26,8 @@ use Wikia::DB;
 =cut
 my @CHECK_ALLOWED = ("day", "week", "month");
 my $DEF_WEEK = "6";
-my $email_title = "Referrer report";
+my $email_title = "Referrers report";
+my $XLS_FILE_DETAILS = "/home/reports/referrer/referrer_details_" . substr (&ParseDate("today"), 0, 8) . ".xls";
 my $XLS_FILE = "/home/reports/referrer/referrer_" . substr (&ParseDate("today"), 0, 8) . ".xls";
 
 =help function
@@ -136,7 +137,11 @@ my $task = $db_ext->get_daemon_task($TASKID);
 my $DATA = ();
 my $DATACOUNT = ();
 
+my $DATADOMAINS = ();
+my $DATADOMAINS_COUNT = ();
+
 my $DOMAINS = ();
+my $SUBDOMAINS = ();
 =foreach wiki generate data 
 =cut
 foreach my $num (sort ( map { sprintf("%012u",$_) } (keys %$databases) )) {
@@ -165,12 +170,31 @@ foreach my $num (sort ( map { sprintf("%012u",$_) } (keys %$databases) )) {
 			my $sth = $db_ext->select_many($select, $from, \@where, \@options);
 			if ($sth) {
 				while(my $values = $sth->fetchrow_hashref()) {
+					# details
 					$DATA->{$city_id}->{$_}->{$values->{domain}}->{count} = $values->{cnt};
 					my $curvalue = $DATA->{$city_id}->{$_}->{$values->{domain}}->{count};
 					my $prevvalue = 0;
 					$prevvalue = $DATA->{$city_id}->{$prevdate}->{$values->{domain}}->{count} if ($DATA->{$city_id}->{$prevdate});
 					$DATA->{$city_id}->{$_}->{$values->{domain}}->{change} = $oUtils->get_increase($curvalue, $prevvalue);
+					#-- 
 					$DOMAINS->{$city_id}->{$values->{domain}} += $values->{cnt};
+					
+					# only subdomains
+					my $dom = $values->{domain};
+					if ($oUtils->is_ip($dom)) {
+						my @m = split(/\./, $dom);
+						$dom = join(".", @m[0,1]).".*";
+					} else {
+						$dom = $oUtils->get_subdomain($dom);
+					}
+					$DATADOMAINS->{$city_id}->{$_}->{$dom}->{count} = 0 unless ($DATADOMAINS->{$city_id}->{$_}->{$dom}->{count});
+					$DATADOMAINS->{$city_id}->{$_}->{$dom}->{count} += $values->{cnt}; 
+					$curvalue = $DATADOMAINS->{$city_id}->{$_}->{$dom}->{count};
+					$prevvalue = 0;
+					$prevvalue = $DATADOMAINS->{$city_id}->{$prevdate}->{$dom}->{count} if ($DATADOMAINS->{$city_id}->{$prevdate});
+					$DATADOMAINS->{$city_id}->{$_}->{$dom}->{change} = $oUtils->get_increase($curvalue, $prevvalue);
+					#-- 
+					$SUBDOMAINS->{$city_id}->{$dom} += $values->{cnt};
 				}
 				$sth->finish();
 			}
@@ -193,11 +217,27 @@ foreach my $num (sort ( map { sprintf("%012u",$_) } (keys %$databases) )) {
 			my $sth = $db_ext->select_many($select, $from, \@where, \@options);
 			if ($sth) {
 				while(my $values = $sth->fetchrow_hashref()) {
+					#-- details
 					$DATACOUNT->{$city_id}->{$_}->{$values->{domain}}->{count} = $values->{cnt};
 					my $curvalue = $DATACOUNT->{$city_id}->{$_}->{$values->{domain}}->{count};
 					my $prevvalue = 0;
 					$prevvalue = $DATACOUNT->{$city_id}->{$prevdate}->{$values->{domain}}->{count} if ($DATACOUNT->{$city_id}->{$prevdate});
 					$DATACOUNT->{$city_id}->{$_}->{$values->{domain}}->{change} = $oUtils->get_increase($curvalue, $prevvalue);
+					
+					#- subdomains
+					my $dom = $values->{domain};
+					if ($oUtils->is_ip($dom)) {
+						my @m = split(/\./, $dom);
+						$dom = join(".", @m[0,1]).".*";
+					} else {
+						$dom = $oUtils->get_subdomain($dom);
+					}
+					$DATADOMAINS_COUNT->{$city_id}->{$_}->{$dom}->{count} = 0 unless ($DATADOMAINS_COUNT->{$city_id}->{$_}->{$dom}->{count});
+					$DATADOMAINS_COUNT->{$city_id}->{$_}->{$dom}->{count} += $values->{cnt};
+					$curvalue = $DATADOMAINS_COUNT->{$city_id}->{$_}->{$dom}->{count};
+					$prevvalue = 0;
+					$prevvalue = $DATADOMAINS_COUNT->{$city_id}->{$prevdate}->{$dom}->{count} if ($DATADOMAINS_COUNT->{$city_id}->{$prevdate});
+					$DATADOMAINS_COUNT->{$city_id}->{$_}->{$dom}->{change} = $oUtils->get_increase($curvalue, $prevvalue);					
 				}
 				$sth->finish();
 			}
@@ -230,8 +270,9 @@ my $res = ();
 =cut
 my $dir = "/home/reports/referrer/";
 mkdir($dir) if (!(-e $dir)) ;
+unlink ($XLS_FILE_DETAILS);
 unlink ($XLS_FILE);
-my $workbook = Spreadsheet::WriteExcel::Big->new($XLS_FILE);
+my $workbook = Spreadsheet::WriteExcel::Big->new($XLS_FILE_DETAILS);
 my @cols = (A..Z);
 
 my $formatHdrMerge = $workbook->add_format( bold => 1, color => 'black', valign => 'vcenter', align => 'center' );
@@ -242,6 +283,8 @@ my $formatBodySum = $workbook->add_format( bold => 1, color => 'black', valign =
 
 my $sheets = ();
 
+=details stats
+=cut
 foreach my $city_id (keys %$DATA) {
 	my $sheet = $workbook->add_worksheet($databases->{$city_id});
 	$sheets->{$city_id} = $sheet;
@@ -343,11 +386,129 @@ foreach my $city_id (keys %$DATA) {
 }
 $workbook->close();
 
-system("gzip -c $XLS_FILE > $XLS_FILE.gz") if ( -e $XLS_FILE );
+=subdomains stats
+=cut
+$workbook = Spreadsheet::WriteExcel::Big->new($XLS_FILE);
+foreach my $city_id (keys %$DATADOMAINS) {
+	my $sheet = $workbook->add_worksheet($databases->{$city_id});
+	$sheets->{$city_id} = $sheet;
+	$sheet->activate();
+	my ($col, $row) = (0, 2); 
+	# database name
+	$sheet->write($row, $col, $databases->{$city_id}, $formatHdr); $row+=2;
+	# first column
+	$sheet->write($row, $col, "Pageviews\nReferrers", $formatHdr); $col++;
+	
+	my $i = 0;
+	foreach my $date (sort keys %{$DATADOMAINS->{$city_id}}) {
+		my $range = $cols[$col] . $row . ":" . $cols[$col+1] . $row;
+		# date 
+		$sheet->merge_range($range, UnixDate($date, "%d.%m.%Y"), $formatHdrMerge); 
+		# first column
+		$sheet->write($row, $col, "count", $formatHdr); 
+		$sheet->write($row, $col+1, "% change", $formatHdr);
+		#----
 
-my %updata = ("-dj_result_file" => "concat_ws(',', dj_result_file, '".$XLS_FILE.".gz')");
-$oConf->log("update task info in database");
+		# set 0 value for all ceils
+		for ($r = $row+1; $r <= scalar keys %{$SUBDOMAINS->{$city_id}}; $r++) {
+			$sheet->write($r, $col, "0"); 
+			$sheet->write($r, $col+1, "0"); 
+		}
+
+		my $d_row = $row + 1; 
+		my $sum = 0;
+		if ($SUBDOMAINS->{$city_id}) {
+			foreach my $domain (sort keys %{$SUBDOMAINS->{$city_id}}) {
+				#----
+				if ($i == 0) {
+					$sheet->write($d_row, $col-1, $domain, $formatBodyDomain);
+				}
+				my $count = $change = 0;
+				#----
+				if ($DATADOMAINS->{$city_id}->{$date}->{$domain}) {
+					$count = $DATADOMAINS->{$city_id}->{$date}->{$domain}->{count};
+					$change = $DATADOMAINS->{$city_id}->{$date}->{$domain}->{change};
+				}
+				#----
+				$sheet->write($d_row, $col, $count, $formatBody);
+				$sheet->write($d_row, $col+1, sprintf("%0.2f", $change), $formatBody);
+				$sum+=$count;
+				$d_row++;
+			}
+		}
+		$sheet->write($d_row, 0, "Total", $formatBodySum);
+		$sheet->write($d_row, $col, $sum, $formatBodySum);
+		$col+=2;
+		$i++;
+	}
+	$row = scalar(keys %{$SUBDOMAINS->{$city_id}}) + 10;
+	$col = 0;
+	$sheet->write($row, $col, "Unique visits\nReferrers", $formatHdr); $col++;
+	
+	$i = 0;
+	foreach my $date (sort keys %{$DATADOMAINS_COUNT->{$city_id}}) {
+		my $range = $cols[$col] . $row . ":" . $cols[$col+1] . $row;
+		# date 
+		$sheet->merge_range($range, UnixDate($date, "%d.%m.%Y"), $formatHdrMerge); 
+		# first column
+		$sheet->write($row, $col, "count", $formatHdr); 
+		$sheet->write($row, $col+1, "% change", $formatHdr);
+		#----
+
+		# set 0 value for all ceils
+		for ($r = $row+1; $r <= scalar keys %{$SUBDOMAINS->{$city_id}}; $r++) {
+			$sheet->write($r, $col, "0"); 
+			$sheet->write($r, $col+1, "0"); 
+		}
+
+		my $d_row = $row + 1; 
+		my $sum = 0;
+		if ($DOMAINS->{$city_id}) {
+			foreach my $domain (sort keys %{$SUBDOMAINS->{$city_id}}) {
+				#----
+				if ($i == 0) {
+					$sheet->write($d_row, $col-1, $domain, $formatBodyDomain);
+				}
+				my $count = $change = 0;
+				#----
+				if ($DATADOMAINS_COUNT->{$city_id}->{$date}->{$domain}) {
+					$count = $DATADOMAINS_COUNT->{$city_id}->{$date}->{$domain}->{count};
+					$change = $DATADOMAINS_COUNT->{$city_id}->{$date}->{$domain}->{change};
+				}
+				#----
+				$sheet->write($d_row, $col, $count, $formatBody);
+				$sheet->write($d_row, $col+1, sprintf("%0.2f", $change), $formatBody);
+				$sum+=$count;
+				$d_row++;
+			}
+		}
+		$sheet->write($d_row, 0, "Total", $formatBodySum);
+		$sheet->write($d_row, $col, $sum, $formatBodySum);
+		$col+=2;
+		$i++;
+	}	
+}
+$workbook->close();
+
+=finish
+=cut
+system("gzip -c $XLS_FILE_DETAILS > $XLS_FILE_DETAILS.gz") if ( -e $XLS_FILE_DETAILS );
+
+my %updata = ("-dj_result_file" => "concat_ws(',', dj_result_file, '".$XLS_FILE_DETAILS.".gz')");
+$oConf->log("update task info in database (datails)");
 my $q_up = $db_ext->update_daemon_task( \%updata, $TASKID );
+if ( $q_up ) {
+	$oConf->log("send emails with report");
+	$oUtils->send_file( $email_title, $task->{dj_result_emails}, $XLS_FILE_DETAILS . ".gz" );
+}
+
+=subdomains details
+=cut
+
+system("gzip -c $XLS_FILE > $XLS_FILE.gz") if ( -e $XLS_FILE );
+%updata = ("-dj_result_file" => "concat_ws(',', dj_result_file, '".$XLS_FILE.".gz')");
+$oConf->log("update task info in database (subdomains)");
+$q_up = $db_ext->update_daemon_task( \%updata, $TASKID );
 if ( $q_up ) {
 	$oConf->log("send emails with report");
 	$oUtils->send_file( $email_title, $task->{dj_result_emails}, $XLS_FILE . ".gz" );
