@@ -9,7 +9,13 @@ $wgWikiaVideoGalleryId = 0;
 $wgWikiaVETLoaded = false;
 
 function WikiaVideoParserBeforeStrip($parser, $text, $strip_state) {
-	global $wgExtraNamespaces;
+	global $wgExtraNamespaces, $wgWysiwygParserEnabled;
+
+	// macbre: don't touch anything when parsing for FCK
+	if (!empty($wgWysiwygParserEnabled)) {
+		return true;
+	}
+
 	$pattern = "/<videogallery/";                   
 	$text = preg_replace_callback($pattern, 'WikiaVideoPreRenderVideoGallery', $text);
 	return true;
