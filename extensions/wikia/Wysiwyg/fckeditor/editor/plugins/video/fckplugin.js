@@ -25,7 +25,7 @@ var oTildesItem = new FCKToolbarButton( 'AddVideo', 'Add video' ) ;
 oTildesItem.IconPath = FCKConfig.PluginsPath + 'video/addVideo.png';
 
 // register toolbar item
-FCKToolbarItems.RegisterItem( 'AddVideo', oTildesItem );	
+FCKToolbarItems.RegisterItem( 'AddVideo', oTildesItem );
 
 FCK.VideoAdd = function(wikitext, options) {
 	var refid = FCK.GetFreeRefId();
@@ -49,4 +49,32 @@ FCK.VideoAdd = function(wikitext, options) {
 	placeholder.setAttribute('_fck_type', 'video');
 
 	FCK.InsertElement(placeholder);
+}
+
+// setup <videogallery> hook placeholder
+FCK.VideoSetupGalleryPlaceholder = function(placeholder) {
+	FCK.log(placeholder);
+
+	// change HTML
+	placeholder.value = '<videogallery>';
+	placeholder.className = 'wysiwygDisabled wysiwygVideoGallery';
+	placeholder.setAttribute('_fck_type', 'videogallery');
+
+	// add onclick handler
+	FCKTools.AddEventListener(placeholder, 'click', FCK.VideoGalleryClick);
+}
+
+FCK.VideoGalleryClick = function(e) {
+	var e = FCK.YE.getEvent(e);
+	var target = FCK.YE.getTarget(e);
+
+	FCK.YE.stopEvent(e);
+
+	var refid = parseInt(target.getAttribute('refid'));
+
+	FCK.log('<videogallery> #' + refid + ' click');
+
+	if (typeof window.parent.VET_show != 'undefined') {
+		window.parent.VET_show(refid, 1);
+	}
 }

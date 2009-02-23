@@ -458,6 +458,13 @@ FCK.SetupElementsWithRefId = function() {
 			case 'external link':
 				node.title = data.href;
 				break;
+
+			// hooks
+			case 'hook':
+				// setup <videogallery>
+				if ( (typeof FCK.VideoSetupGalleryPlaceholder != 'undefined') && (data.name == 'videogallery') ) {
+					FCK.VideoSetupGalleryPlaceholder(node);
+				}
 		}
 
 		// fix issues with input tags and cursor
