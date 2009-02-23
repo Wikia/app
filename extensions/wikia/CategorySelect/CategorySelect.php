@@ -42,10 +42,17 @@ $wgAjaxExportList[] = 'CategorySelectGenerateHTMLforView';
  * @author Maciej Błaszkowski <marooned at wikia-inc.com>
  */
 function CategorySelectInit() {
-	global $wgRequest;
+	global $wgRequest, $wgRequest;
+
+	//do not initialize for articles in namespaces different than main, image or user [the same condition like for WYSIWYG editor]
+	$title = Title::newFromText($wgRequest->data['title']);	//$wgTitle == null at this place
+	if(!in_array($title->mNamespace, array(NS_MAIN, NS_IMAGE, NS_USER))) {
+		return true;
+	}
+
+	//don't use CategorySelect for undo edits
 	$undoafter = $wgRequest->getVal('undoafter');
 	$undo = $wgRequest->getVal('undo');
-	//don't use CategorySelect for undo edits
 	if ($undo > 0 && $undoafter > 0) {
 		return true;
 	}
