@@ -190,6 +190,7 @@ class VideoEmbedTool {
 		( '' != $wgRequest->getVal( 'article' ) ) ? $title_main = urldecode( $wgRequest->getVal( 'article' ) ) : $title_main = '' ;
 		( '' != $wgRequest->getVal( 'ns' ) ) ? $ns = $wgRequest->getVal( 'ns' ) : $ns = '' ;
 		( '' != $wgRequest->getCheck( 'fck' ) ) ? $fck = $wgRequest->getCheck( 'ns' ) : $fck = false ;
+		( '' != $wgRequest->getVal( 'mwgalpos' ) ) ? $mwInGallery = $wgRequest->getVal( 'mwgalpos' ) : $mwInGallery = '' ;
 		
 		$name = urldecode( $wgRequest->getVal('name') );
 		$oname = urldecode( $wgRequest->getVal('oname') );
@@ -347,18 +348,26 @@ class VideoEmbedTool {
 			$slider = $wgRequest->getVal('slider');
 
 			if( 'gallery' != $layout ) {
-				$tag = '[[' . $ns_vid . ':'.$name;
-				if($size != 'full') {
-					$tag .= '|thumb';
-				}
-				$tag .= '|'.$width;
-				$tag .= '|'.$layout;
+				if( '' == $mwInGallery ) { // not adding gallery, not in gallery
+					$tag = '[[' . $ns_vid . ':'.$name;
+					if($size != 'full') {
+						$tag .= '|thumb';
+					}
+					$tag .= '|'.$width;
+					$tag .= '|'.$layout;
 
-				if($caption != '') {
-					$tag .= '|'.$caption.']]';
-				} else {
-					$tag .= ']]';
-				}
+					if($caption != '') {
+						$tag .= '|'.$caption.']]';
+					} else {
+						$tag .= ']]';
+					}
+				} else { // we were in gallery
+					$tag = "\n" . $ns_vid . ":" . $name ;
+					if($caption != '') {
+						$tag .= "|".$caption;
+					}
+					$embed_code = $mwInGallery; // extra data
+				}	
 			} else { // gallery needs to be treated differently...
 				$tag = "<videogallery>\n";
 				$tag .= $ns_vid . ":" . $name;			
