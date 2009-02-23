@@ -13,7 +13,7 @@
 
 class ImageGrabberTask extends BatchTask {
 
-	private $mType, $mVisible, $mBaseUrl, $mMediaWikiVersion;
+	private $mBaseUrl, $mMediaWikiVersion;
 
 
 	/* constructor */
