@@ -46,7 +46,7 @@ function CategorySelectInit() {
 
 	//do not initialize for articles in namespaces different than main, image or user [the same condition like for WYSIWYG editor]
 	$title = Title::newFromText($wgRequest->data['title']);	//$wgTitle == null at this place
-	if(!in_array($title->mNamespace, array(NS_MAIN, NS_IMAGE, NS_USER))) {
+	if(!in_array($title->mNamespace, array(NS_MAIN, NS_IMAGE, NS_USER)) || !$title->exists()) {
 		return true;
 	}
 
