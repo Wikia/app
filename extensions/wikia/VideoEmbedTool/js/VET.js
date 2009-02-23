@@ -57,7 +57,7 @@ function VET_loadDetails() {
 			if(FCK.wysiwygData[VET_refid].caption) {
 				$('VideoEmbedCaption').value = FCK.wysiwygData[VET_refid].caption;
 			}
-			if( '-1' != VET_gallery ) {
+			if( ( '-1' != VET_gallery ) || VET_inGalleryPosition ) {
 				$( 'VideoEmbedSlider' ).style.visibility = 'hidden';
 				$( 'VideoEmbedInputWidth' ).style.visibility = 'hidden';
 				$( 'VideoEmbedWidthCheckbox' ).style.visibility = 'hidden';
@@ -517,7 +517,7 @@ function VET_displayDetails(responseText) {
 		alert( $( 'VET_error_box' ).innerHTML );
 	}
 
-	if ( '-1' != VET_gallery ) {
+	if ( ( '-1' != VET_gallery ) || VET_inGalleryPosition ) {
 		$( 'ImageWidthRow' ).style.visibility = 'hidden';
 		$( 'ImageLayoutRow' ).style.display = 'none';
 		$( 'VideoEmbedThumbOption' ).style.visibility = 'hidden';
