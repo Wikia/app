@@ -52,7 +52,7 @@ function CategorySelectInit() {
 
 	global $wgHooks, $wgAutoloadClasses;
 	$wgAutoloadClasses['CategorySelect'] = 'extensions/wikia/CategorySelect/CategorySelect_body.php';
-	$wgHooks['EditPageAfterGetContent'][] = 'CategorySelectReplaceContent';
+	$wgHooks['EditPage::getContent::end'][] = 'CategorySelectReplaceContent';
 	$wgHooks['EditPage::CategoryBox'][] = 'CategorySelectCategoryBox';
 	$wgHooks['EditPage::importFormData::finished'][] = 'CategorySelectImportFormData';
 	$wgHooks['EditPage::showEditForm:fields'][] = 'CategorySelectAddFormFields';
@@ -169,7 +169,7 @@ function CategorySelectAjaxSaveCategories($articleId, $categories) {
  *
  * @author Maciej Błaszkowski <marooned at wikia-inc.com>
  */
-function CategorySelectReplaceContent($text) {
+function CategorySelectReplaceContent($editPage, $text) {
 	$data = CategorySelect::SelectCategoryAPIgetData($text);
 	$text = $data['wikitext'];
 	return true;
@@ -280,15 +280,7 @@ function CategorySelectDisplayCategoryBox($rows, $cols, $ew, $textbox) {
 
 	$action = $wgRequest->getVal('action', 'view');
 	if ($action != 'view' && $action != 'purge') {
-		if (!is_array($wgCategorySelectMetaData)) {
-			global $wgTitle;
-			$rev = Revision::newFromTitle($wgTitle);
-			if (!is_null($rev)) {
-				$wikitext = $rev->getText();
-				CategorySelect::SelectCategoryAPIgetData($wikitext);
-			}
-		}
-
+		CategorySelect::SelectCategoryAPIgetData($textbox);
 		$wgOut->addHTML( CategorySelectGenerateHTMLforEdit('editform') );
 	}
 	return true;
