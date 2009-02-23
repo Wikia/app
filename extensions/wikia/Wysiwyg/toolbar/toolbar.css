@@ -13,6 +13,14 @@
 	padding: 0 1px !important;
 }
 
+#wikiPreview {
+	padding: 10px;
+}
+
+#wikiPreview > :first-child {
+	display: none;
+}
+
 #csMainContainer {
 	margin: 0 1px;
 }
