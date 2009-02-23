@@ -71,9 +71,9 @@ function modifyCategory(e) {
 		'catId': catId,
 		'caption': csInfoboxCaption,
 		'content': '<label for="csInfoboxCategory">' + csInfoboxCategoryText + '</label>' +
-			'<input type="text" id="csInfoboxCategory" />' +
+			'<br/><input type="text" id="csInfoboxCategory" />' +
 			'<br/><label for="csInfoboxSortKey">' + csInfoboxSortkeyText.replace('$1', categories[catId].category) + '</label>' +
-			'<input type="text" id="csInfoboxSortKey" />',
+			'<br/><input type="text" id="csInfoboxSortKey" />',
 		'data': {'category': categories[catId].category, 'sortkey': defaultSortkey},
 		'save': csInfoboxSave
 	},
