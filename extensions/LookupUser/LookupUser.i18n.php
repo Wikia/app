@@ -23,6 +23,7 @@ $messages['en'] = array(
 	'lookupuser_touched'           => 'User record last touched: $1',
 	'lookupuser_authenticated'     => 'E-mail authentication: $1',
 	'lookupuser_useroptions'       => 'User options:',
+	'lookupuser_foundmoreusers'    => 'Found more than one\'s user',
 );
 
 /** Arabic (العربية)
@@ -429,6 +430,7 @@ $messages['pl'] = array(
 	'lookupuser_realname'        => 'Imię i nazwisko $1',
 	'lookupuser_registration'    => 'Zarejestrowany $1',
 	'lookupuser_no_registration' => 'taki użytkownik nie istnieje',
+	'lookupuser_foundmoreusers'  => 'Znaleziono więcej niż jednego użytkownika'
 );
 
 /** Pashto (پښتو)
