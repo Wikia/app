@@ -34,6 +34,7 @@ $messages = array(
 		'categoryselect-tooltip' => "'''New!''' Category tagging toolbar. Try it out or see [[Help:CategorySelect|help]] to learn more",
 		'categoryselect-unhandled-syntax' => 'Unhandled syntax detected - switching back to visual mode impossible.',
 		'categoryselect-edit-summary' => 'Adding categories',
+		'categoryselect-empty-name' => 'Provide category name (part before |)',
 		'categoryselect-button-save' => 'Save',
 		'categoryselect-button-cancel' => 'Cancel'
 	)
