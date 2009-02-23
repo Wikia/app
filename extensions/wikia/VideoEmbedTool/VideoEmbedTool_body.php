@@ -366,7 +366,6 @@ class VideoEmbedTool {
 					if($caption != '') {
 						$tag .= "|".$caption;
 					}
-					$tag .= "\n";
 				}	
 			} else { // gallery needs to be treated differently...
 				$tag = "<videogallery>\n";
