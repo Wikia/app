@@ -189,6 +189,8 @@ class VideoEmbedTool {
 		( '' != $wgRequest->getVal( 'gallery' ) ) ? $gallery = $wgRequest->getVal( 'gallery' ) : $gallery = '' ;
 		( '' != $wgRequest->getVal( 'article' ) ) ? $title_main = urldecode( $wgRequest->getVal( 'article' ) ) : $title_main = '' ;
 		( '' != $wgRequest->getVal( 'ns' ) ) ? $ns = $wgRequest->getVal( 'ns' ) : $ns = '' ;
+		( '' != $wgRequest->getCheck( 'fck' ) ) ? $fck = $wgRequest->getCheck( 'ns' ) : $fck = false ;
+		
 		$name = urldecode( $wgRequest->getVal('name') );
 		$oname = urldecode( $wgRequest->getVal('oname') );
 		if ('' == $name) {
@@ -301,32 +303,40 @@ class VideoEmbedTool {
 		}
 
 		$ns_vid = $wgContLang->getFormattedNsText( NS_VIDEO );
+		$caption = $wgRequest->getVal('caption');
 
 		if ('' != $gallery) {
-			$title_obj = Title::newFromText( $title_main, $ns );
-			$article_obj = new Article( $title_obj );
-			$text = $article_obj->getContent();
+			if (!$fck) { // of course, don't edit article for fck...
+				$title_obj = Title::newFromText( $title_main, $ns );
+				$article_obj = new Article( $title_obj );
+				$text = $article_obj->getContent();
 
-			// todo nowiki?
-			preg_match_all( '/<videogallery>[^<]*/s', $text, $matches, PREG_OFFSET_CAPTURE );
-			if( is_array( $matches ) ) {
-				$our_gallery = $matches[0][$gallery][0];				
-				$our_gallery_modified = $our_gallery . "\n" . $ns_vid . ":" . $name;	
-				$caption = $wgRequest->getVal('caption');
-				if( $caption != '' ) {
-					$our_gallery_modified .= '|' . $caption;
-				}				
-				$our_gallery_modified .= "\n";
-				$text = substr_replace( $text, $our_gallery_modified, $matches[0][$gallery][1], strlen( $our_gallery ) );
-			}	
+				// todo nowiki?
+				preg_match_all( '/<videogallery>[^<]*/s', $text, $matches, PREG_OFFSET_CAPTURE );
+				if( is_array( $matches ) ) {
+					$our_gallery = $matches[0][$gallery][0];				
+					$our_gallery_modified = $our_gallery . "\n" . $ns_vid . ":" . $name;	
+					if( $caption != '' ) {
+						$our_gallery_modified .= '|' . $caption;
+					}				
+					$our_gallery_modified .= "\n";
+					$text = substr_replace( $text, $our_gallery_modified, $matches[0][$gallery][1], strlen( $our_gallery ) );
+				}	
 
-			$summary = wfMsg( 'vet-added-from-gallery' ) ;
-			$success = $article_obj->doEdit( $text, $summary);
-			if ( $success ) {
-				header('X-screen-type: summary');				
-				$tag = '';
+				$summary = wfMsg( 'vet-added-from-gallery' ) ;
+				$success = $article_obj->doEdit( $text, $summary);
+				if ( $success ) {
+					header('X-screen-type: summary');				
+					$tag = '';
+				} else {
+					// todo well, communicate failure
+				}
 			} else {
-				// todo well, communicate failure
+				header('X-screen-type: summary');				
+				$tag = $ns_vid . ":" . $name ;
+				if($caption != '') {
+					$tag .= "|".$caption;
+				}
 			}
 		} else {
 			header('X-screen-type: summary');
@@ -334,7 +344,6 @@ class VideoEmbedTool {
 			$size = $wgRequest->getVal('size');
 			$width = $wgRequest->getVal('width');
 			$layout = $wgRequest->getVal('layout');
-			$caption = $wgRequest->getVal('caption');
 			$slider = $wgRequest->getVal('slider');
 
 			if( 'gallery' != $layout ) {
