@@ -9,7 +9,9 @@ $wgWikiaVideoGalleryId = 0;
 $wgWikiaVETLoaded = false;
 
 function WikiaVideoParserBeforeStrip($parser, $text, $strip_state) {
-	global $wgExtraNamespaces, $wgWysiwygParserEnabled;
+	global $wgExtraNamespaces, $wgWysiwygParserEnabled, $wgWikiaVideoGalleryId;
+
+	$wgWikiaVideoGalleryId = 0;
 
 	// macbre: don't touch anything when parsing for FCK
 	if (!empty($wgWysiwygParserEnabled)) {
