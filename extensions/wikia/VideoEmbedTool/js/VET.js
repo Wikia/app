@@ -534,6 +534,9 @@ function VET_insertFinalVideo(e, type) {
 		params.push( 'box=' + VET_box );
 		params.push( 'article='+encodeURIComponent( wgTitle ) );
 		params.push( 'ns='+wgNamespaceNumber );
+		if( VET_refid != null ) {
+			params.push( 'fck=true' );
+		}
 	}
 
 	params.push('oname='+encodeURIComponent( $('VideoEmbedOname').value ) );
@@ -608,7 +611,7 @@ function VET_insertFinalVideo(e, type) {
 							options.caption = $('VideoEmbedCaption').value;
 
 							if(VET_refid != -1) {
-								//FCK.ProtectImageUpdate(VET_refid, wikitag, options);
+								FCK.VideoGalleryUpdate( VET_refid, wikitag );
 							} else {
 								FCK.VideoAdd(wikitag, options);
 							}
