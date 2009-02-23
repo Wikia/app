@@ -204,6 +204,7 @@ class EditPage {
 				}
 			}
 		}
+		wfRunHooks( 'EditPage::getContent::end', array( &$this, &$text ) );
 
 		wfProfileOut( __METHOD__ );
 		return $text;
