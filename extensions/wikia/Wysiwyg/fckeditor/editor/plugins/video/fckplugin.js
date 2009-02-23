@@ -78,3 +78,22 @@ FCK.VideoGalleryClick = function(e) {
 		window.parent.VET_show(refid, 1);
 	}
 }
+
+// add video to <videogallery>
+FCK.VideoGalleryUpdate = function(refid, newVideo) {
+	FCK.log('<videogallery> #' + refid + ': new video - "' + newVideo + '"');
+
+	var data = FCK.wysiwygData[refid];
+
+	if ( data && (data.type == 'hook') ) {
+		// add new video wikitext before </videogallery>
+		var desc = data.description;
+		desc = desc.substr(0, desc.length - 15);
+		desc += newVideo + "\n</videogallery>";
+
+		// update metadata entry
+		data.description = desc;
+
+		FCK.log('<videogallery> updated to: ' + data.description);
+	}
+}
