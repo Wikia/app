@@ -4,6 +4,9 @@
 require_once( "ImageRating.i18n.php" );
 
 $wgExtensionFunctions[] = 'wfImageRating';
+$wgAvailableRights[] = 'rateimage';
+$wgGroupPermissions['*']['rateimage'] = false;
+$wgGroupPermissions['user']['rateimage'] = true;
 
 function wfImageRating(){
   global $wgUser,$IP;
@@ -20,6 +23,25 @@ class ImageRating extends SpecialPage {
 	
 	function execute(){
 		global $wgRequest, $IP, $wgOut, $wgUser, $wgMemc, $wgStyleVersion, $wgContLang, $wgVoteDirectory, $wgVoteScripts;
+
+		$this->setHeaders();
+
+		# If the user isn't permitted to access this special page, display an error
+		if( !$wgUser->isAllowed( 'rateimage' ) ) {
+			$wgOut->permissionRequired( 'rateimage' );
+			return;
+		}
+
+		# Show a message if the database is in read-only mode
+		if ( wfReadOnly() ) {
+			$wgOut->readOnlyPage();
+			return;
+		}
+
+		if ( $wgUser->isBlocked() ) {
+			$wgOut->blockedPage();
+			return;
+		}
 	 
 		# Add messages
 		global $wgMessageCache, $wgImageRatingMessages;
