@@ -428,13 +428,15 @@ class Linker {
 
 		wfRunHooks( 'BrokenLink', array( &$this, $nt, $query, &$u, &$style, &$prefix, &$text, &$inside, &$trail ) );
 
+		$nofollow = ' rel="nofollow"';
+
 		//Wysiwyg: get refId from wikitext and add it to the HTML
 		if (!empty($wgWysiwygParserEnabled)) {
 			$refId = Wysiwyg_GetRefId($text);
-			$s = "<a href=\"{$u}\"{$style}{$refId}>{$prefix}{$text}{$inside}</a>{$trail}";
+			$s = "<a href=\"{$u}\"{$style}{$refId}{$nofollow}>{$prefix}{$text}{$inside}</a>{$trail}";
 		}
 		else  {
-			$s = "<a href=\"{$u}\"{$style}>{$prefix}{$text}{$inside}</a>{$trail}";
+			$s = "<a href=\"{$u}\"{$style}{$nofollow}>{$prefix}{$text}{$inside}</a>{$trail}";
 		}
 
 		wfProfileOut( __METHOD__ );
@@ -902,9 +904,10 @@ class Linker {
 					$q .= '&' . $query;
 				list( $inside, $trail ) = self::splitTrail( $trail );
 				$style = $this->getInternalLinkAttributesObj( $title, $text, 'new' );
+				$nofollow = ' rel="nofollow"';
 				wfProfileOut( __METHOD__ );
 				return '<a href="' . $upload->escapeLocalUrl( $q ) . '"'
-					. $style . $refId . '>' . $prefix . $text . $inside . '</a>' . $trail;
+					. $style . $refId . $nofollow . '>' . $prefix . $text . $inside . '</a>' . $trail;
 			} else {
 				wfProfileOut( __METHOD__ );
 				return $this->makeKnownLinkObj( $title, $text, $query, $trail, $prefix );
@@ -946,17 +949,19 @@ class Linker {
 			if( $img ) {
 				$url  = $img->getURL();
 				$class = 'internal';
+				$nofollow = '';
 			} else {
 				$upload = SpecialPage::getTitleFor( 'Upload' );
 				$url = $upload->getLocalUrl( 'wpDestFile=' . urlencode( $title->getDBkey() ) );
 				$class = 'new';
+				$nofollow = ' rel="nofollow"';
 			}
 			$alt = htmlspecialchars( $title->getText() );
 			if( $text == '' ) {
 				$text = $alt;
 			}
 			$u = htmlspecialchars( $url );
-			return "<a href=\"{$u}\" class=\"$class\" title=\"{$alt}\"{$refId}>{$text}</a>";
+			return "<a href=\"{$u}\" class=\"$class\" title=\"{$alt}\"{$refId}{$nofollow}>{$text}</a>";
 		}
 	}
 
