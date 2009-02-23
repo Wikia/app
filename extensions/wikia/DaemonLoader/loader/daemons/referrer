@@ -115,7 +115,7 @@ $weeks = $DEF_WEEK unless $weeks;
 =build dates structure 
 =cut
 my $daysago = ($weeks+1)*7;
-my $dates = $oUtils->get_dates($daysago, $check, "now");
+my $dates = $oUtils->get_dates($daysago, $check, "20090203");
 my @dates = ();
 if (scalar @$dates) {
 	@dates = map { substr ($_, 0, 8) } @$dates;
@@ -134,14 +134,9 @@ $oConf->log("Processing: ".scalar keys(%$databases)." Wikis");
 
 my $task = $db_ext->get_daemon_task($TASKID);
 
-my $DATA = ();
-my $DATACOUNT = ();
+my ($DATA, $DATACOUNT, $DATA_SORT, $DATACOUNT_SORT) = ();
+my ($DATADOMAINS, $DATADOMAINS_COUNT, $DATADOMAINS_SORT, $DATADOMAINS_COUNT_SORT) = ();
 
-my $DATADOMAINS = ();
-my $DATADOMAINS_COUNT = ();
-
-my $DOMAINS = ();
-my $SUBDOMAINS = ();
 =foreach wiki generate data 
 =cut
 foreach my $num (sort ( map { sprintf("%012u",$_) } (keys %$databases) )) {
@@ -165,10 +160,21 @@ foreach my $num (sort ( map { sprintf("%012u",$_) } (keys %$databases) )) {
 				"date_format(ref_timestamp, '%Y%m%d') > ".$db_ext->handler->quote($prevdate),
 				"date_format(ref_timestamp, '%Y%m%d') <= ".$db_ext->handler->quote($_)
 			);
-			my @options = ("group by ref_domain order by cnt desc");
+			my @options = ("group by ref_domain order by cnt desc, dt");
 			
 			my $sth = $db_ext->select_many($select, $from, \@where, \@options);
 			if ($sth) {
+				
+				# clear data to order by last day period 
+				if ($dates[scalar(@dates)-1] eq $_) {
+					foreach my $domain (keys %{$DATA_SORT->{$city_id}}) {
+						$DATA_SORT->{$city_id}->{$domain} = 0;
+					}
+					foreach my $domain (keys %{$DATADOMAINS_SORT->{$city_id}}) {
+						$DATADOMAINS_SORT->{$city_id}->{$domain} = 0;
+					}
+				}
+				
 				while(my $values = $sth->fetchrow_hashref()) {
 					# details
 					$DATA->{$city_id}->{$_}->{$values->{domain}}->{count} = $values->{cnt};
@@ -176,9 +182,9 @@ foreach my $num (sort ( map { sprintf("%012u",$_) } (keys %$databases) )) {
 					my $prevvalue = 0;
 					$prevvalue = $DATA->{$city_id}->{$prevdate}->{$values->{domain}}->{count} if ($DATA->{$city_id}->{$prevdate});
 					$DATA->{$city_id}->{$_}->{$values->{domain}}->{change} = $oUtils->get_increase($curvalue, $prevvalue);
-					#-- 
-					$DOMAINS->{$city_id}->{$values->{domain}} += $values->{cnt};
-					
+					#--
+					$DATA_SORT->{$city_id}->{$values->{domain}} = $values->{cnt};
+
 					# only subdomains
 					my $dom = $values->{domain};
 					if ($oUtils->is_ip($dom)) {
@@ -189,12 +195,12 @@ foreach my $num (sort ( map { sprintf("%012u",$_) } (keys %$databases) )) {
 					}
 					$DATADOMAINS->{$city_id}->{$_}->{$dom}->{count} = 0 unless ($DATADOMAINS->{$city_id}->{$_}->{$dom}->{count});
 					$DATADOMAINS->{$city_id}->{$_}->{$dom}->{count} += $values->{cnt}; 
-					$curvalue = $DATADOMAINS->{$city_id}->{$_}->{$dom}->{count};
 					$prevvalue = 0;
 					$prevvalue = $DATADOMAINS->{$city_id}->{$prevdate}->{$dom}->{count} if ($DATADOMAINS->{$city_id}->{$prevdate});
-					$DATADOMAINS->{$city_id}->{$_}->{$dom}->{change} = $oUtils->get_increase($curvalue, $prevvalue);
-					#-- 
-					$SUBDOMAINS->{$city_id}->{$dom} += $values->{cnt};
+					$DATADOMAINS->{$city_id}->{$_}->{$dom}->{change} = $oUtils->get_increase($DATADOMAINS->{$city_id}->{$_}->{$dom}->{count}, $prevvalue);
+					#--
+					$DATADOMAINS_SORT->{$city_id}->{$dom} = 0 unless($DATADOMAINS_SORT->{$city_id}->{$dom});
+					$DATADOMAINS_SORT->{$city_id}->{$dom} += $values->{cnt};
 				}
 				$sth->finish();
 			}
@@ -212,10 +218,20 @@ foreach my $num (sort ( map { sprintf("%012u",$_) } (keys %$databases) )) {
 				"date_format(ref_timestamp, '%Y%m%d') > ".$db_ext->handler->quote($prevdate),
 				"date_format(ref_timestamp, '%Y%m%d') <= ".$db_ext->handler->quote($_)
 			);
-			my @options = ("group by ref_domain order by cnt desc");
+			my @options = ("group by ref_domain order by cnt desc, dt");
 			
 			my $sth = $db_ext->select_many($select, $from, \@where, \@options);
 			if ($sth) {
+				# clear data to order by last day period 
+				if ($dates[scalar(@dates)-1] eq $_) {
+					foreach my $domain (keys %{$DATACOUNT_SORT->{$city_id}}) {
+						$DATACOUNT_SORT->{$city_id}->{$domain} = 0;
+					}
+					foreach my $domain (keys %{$DATADOMAINS_COUNT_SORT->{$city_id}}) {
+						$DATADOMAINS_COUNT_SORT->{$city_id}->{$domain} = 0;
+					}
+				}
+
 				while(my $values = $sth->fetchrow_hashref()) {
 					#-- details
 					$DATACOUNT->{$city_id}->{$_}->{$values->{domain}}->{count} = $values->{cnt};
@@ -223,6 +239,8 @@ foreach my $num (sort ( map { sprintf("%012u",$_) } (keys %$databases) )) {
 					my $prevvalue = 0;
 					$prevvalue = $DATACOUNT->{$city_id}->{$prevdate}->{$values->{domain}}->{count} if ($DATACOUNT->{$city_id}->{$prevdate});
 					$DATACOUNT->{$city_id}->{$_}->{$values->{domain}}->{change} = $oUtils->get_increase($curvalue, $prevvalue);
+					#--
+					$DATACOUNT_SORT->{$city_id}->{$values->{domain}} = $values->{cnt};
 					
 					#- subdomains
 					my $dom = $values->{domain};
@@ -237,7 +255,10 @@ foreach my $num (sort ( map { sprintf("%012u",$_) } (keys %$databases) )) {
 					$curvalue = $DATADOMAINS_COUNT->{$city_id}->{$_}->{$dom}->{count};
 					$prevvalue = 0;
 					$prevvalue = $DATADOMAINS_COUNT->{$city_id}->{$prevdate}->{$dom}->{count} if ($DATADOMAINS_COUNT->{$city_id}->{$prevdate});
-					$DATADOMAINS_COUNT->{$city_id}->{$_}->{$dom}->{change} = $oUtils->get_increase($curvalue, $prevvalue);					
+					$DATADOMAINS_COUNT->{$city_id}->{$_}->{$dom}->{change} = $oUtils->get_increase($curvalue, $prevvalue);
+					
+					$DATADOMAINS_COUNT_SORT->{$city_id}->{$dom} = 0 unless ($DATADOMAINS_COUNT_SORT->{$city_id}->{$dom});
+					$DATADOMAINS_COUNT_SORT->{$city_id}->{$dom} += $values->{cnt};
 				}
 				$sth->finish();
 			}
@@ -285,6 +306,7 @@ my $sheets = ();
 
 =details stats
 =cut
+
 foreach my $city_id (keys %$DATA) {
 	my $sheet = $workbook->add_worksheet($databases->{$city_id});
 	$sheets->{$city_id} = $sheet;
@@ -306,15 +328,15 @@ foreach my $city_id (keys %$DATA) {
 		#----
 
 		# set 0 value for all ceils
-		for ($r = $row+1; $r <= scalar keys %{$DOMAINS->{$city_id}}; $r++) {
+		for ($r = $row+1; $r <= scalar keys %{$DATA_SORT->{$city_id}}; $r++) {
 			$sheet->write($r, $col, "0"); 
 			$sheet->write($r, $col+1, "0"); 
 		}
 
 		my $d_row = $row + 1; 
 		my $sum = 0;
-		if ($DOMAINS->{$city_id}) {
-			foreach my $domain (sort keys %{$DOMAINS->{$city_id}}) {
+		if ($DATA_SORT->{$city_id}) {
+			foreach my $domain (sort { $DATA_SORT->{$city_id}->{$b} <=> $DATA_SORT->{$city_id}->{$a} } keys %{$DATA_SORT->{$city_id}}) {
 				#----
 				if ($i == 0) {
 					$sheet->write($d_row, $col-1, $domain, $formatBodyDomain);
@@ -337,7 +359,7 @@ foreach my $city_id (keys %$DATA) {
 		$col+=2;
 		$i++;
 	}
-	$row = scalar(keys %{$DOMAINS->{$city_id}}) + 10;
+	$row = scalar(keys %{$DATA_SORT->{$city_id}}) + 10;
 	$col = 0;
 	$sheet->write($row, $col, "Unique visits\nReferrers", $formatHdr); $col++;
 	
@@ -352,15 +374,16 @@ foreach my $city_id (keys %$DATA) {
 		#----
 
 		# set 0 value for all ceils
-		for ($r = $row+1; $r <= scalar keys %{$DOMAINS->{$city_id}}; $r++) {
+		for ($r = $row+1; $r <= scalar keys %{$DATACOUNT_SORT->{$city_id}}; $r++) {
 			$sheet->write($r, $col, "0"); 
 			$sheet->write($r, $col+1, "0"); 
 		}
 
 		my $d_row = $row + 1; 
 		my $sum = 0;
-		if ($DOMAINS->{$city_id}) {
-			foreach my $domain (sort keys %{$DOMAINS->{$city_id}}) {
+		if ($DATACOUNT_SORT->{$city_id}) {
+			foreach my $domain (sort { $DATACOUNT_SORT->{$city_id}->{$b} <=> $DATACOUNT_SORT->{$city_id}->{$a} } keys %{$DATACOUNT_SORT->{$city_id}}) {
+			#foreach my $domain (sort keys %{$DATACOUNT_SORT->{$city_id}}) {
 				#----
 				if ($i == 0) {
 					$sheet->write($d_row, $col-1, $domain, $formatBodyDomain);
@@ -386,9 +409,16 @@ foreach my $city_id (keys %$DATA) {
 }
 $workbook->close();
 
+undef($workbook);
 =subdomains stats
 =cut
 $workbook = Spreadsheet::WriteExcel::Big->new($XLS_FILE);
+$formatHdrMerge = $workbook->add_format( bold => 1, color => 'black', valign => 'vcenter', align => 'center' );
+$formatHdr = $workbook->add_format( bold => 1, color => 'black', align => 'center');
+$formatBody = $workbook->add_format( bold => 0, color => 'black', valign => 'vcenter', align => 'right');
+$formatBodyDomain = $workbook->add_format( bold => 0, color => 'blue', valign => 'vcenter', align => 'left');
+$formatBodySum = $workbook->add_format( bold => 1, color => 'black', valign => 'vcenter', align => 'right');
+
 foreach my $city_id (keys %$DATADOMAINS) {
 	my $sheet = $workbook->add_worksheet($databases->{$city_id});
 	$sheets->{$city_id} = $sheet;
@@ -410,15 +440,16 @@ foreach my $city_id (keys %$DATADOMAINS) {
 		#----
 
 		# set 0 value for all ceils
-		for ($r = $row+1; $r <= scalar keys %{$SUBDOMAINS->{$city_id}}; $r++) {
+		for ($r = $row+1; $r <= scalar keys %{$DATADOMAINS_SORT->{$city_id}}; $r++) {
 			$sheet->write($r, $col, "0"); 
 			$sheet->write($r, $col+1, "0"); 
 		}
 
 		my $d_row = $row + 1; 
 		my $sum = 0;
-		if ($SUBDOMAINS->{$city_id}) {
-			foreach my $domain (sort keys %{$SUBDOMAINS->{$city_id}}) {
+		if ($DATADOMAINS_SORT->{$city_id}) {
+			foreach my $domain (sort { $DATADOMAINS_SORT->{$city_id}->{$b} <=> $DATADOMAINS_SORT->{$city_id}->{$a} } keys %{$DATADOMAINS_SORT->{$city_id}}) {
+			#foreach my $domain (sort keys %{$DATADOMAINS_SORT->{$city_id}}) {
 				#----
 				if ($i == 0) {
 					$sheet->write($d_row, $col-1, $domain, $formatBodyDomain);
@@ -441,7 +472,7 @@ foreach my $city_id (keys %$DATADOMAINS) {
 		$col+=2;
 		$i++;
 	}
-	$row = scalar(keys %{$SUBDOMAINS->{$city_id}}) + 10;
+	$row = scalar(keys %{$DATADOMAINS_SORT->{$city_id}}) + 10;
 	$col = 0;
 	$sheet->write($row, $col, "Unique visits\nReferrers", $formatHdr); $col++;
 	
@@ -456,15 +487,16 @@ foreach my $city_id (keys %$DATADOMAINS) {
 		#----
 
 		# set 0 value for all ceils
-		for ($r = $row+1; $r <= scalar keys %{$SUBDOMAINS->{$city_id}}; $r++) {
+		for ($r = $row+1; $r <= scalar keys %{$DATADOMAINS_COUNT_SORT->{$city_id}}; $r++) {
 			$sheet->write($r, $col, "0"); 
 			$sheet->write($r, $col+1, "0"); 
 		}
 
 		my $d_row = $row + 1; 
 		my $sum = 0;
-		if ($DOMAINS->{$city_id}) {
-			foreach my $domain (sort keys %{$SUBDOMAINS->{$city_id}}) {
+		if ($DATADOMAINS_COUNT_SORT->{$city_id}) {
+			foreach my $domain (sort { $DATADOMAINS_COUNT_SORT->{$city_id}->{$b} <=> $DATADOMAINS_COUNT_SORT->{$city_id}->{$a} } keys %{$DATADOMAINS_COUNT_SORT->{$city_id}}) {
+			#foreach my $domain (sort keys %{$DATADOMAINS_COUNT_SORT->{$city_id}}) {
 				#----
 				if ($i == 0) {
 					$sheet->write($d_row, $col-1, $domain, $formatBodyDomain);
