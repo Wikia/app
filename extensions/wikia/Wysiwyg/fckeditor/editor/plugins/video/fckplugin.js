@@ -115,13 +115,13 @@ FCK.VideoGalleryUpdate = function(refid, newVideo) {
 	var data = FCK.wysiwygData[refid];
 
 	if ( data && (data.type == 'hook') ) {
-		// add new video wikitext before </videogallery>
+		// add new video wikitext to the end of wikitext
 		var desc = data.description;
-		desc = desc.substr(0, desc.length - 15);
-		desc += newVideo + "\n</videogallery>";
+		desc = desc.substr(14, desc.length - 29);
+		desc = FCK.YAHOO.Tools.trim(desc);
 
-		// update metadata entry
-		data.description = desc;
+		// update entry in meta data
+		data.description = "<videogallery>\n" + desc + "\n" + newVideo + "\n</videogallery>";
 
 		FCK.log('<videogallery> updated to: ' + data.description);
 	}
