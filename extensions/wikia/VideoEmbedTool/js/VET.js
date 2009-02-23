@@ -125,6 +125,14 @@ function VET_addHandler() {
   	YAHOO.util.Event.addListener(['vetLink', 'vetHelpLink', btn], 'click',  VET_show);
 }
 
+function VET_toggleSizing( enable ) {
+	if( enable ) {
+		$( 'VideoEmbedThumbOption' ).disabled = false;	
+	} else {
+		$( 'VideoEmbedThumbOption' ).disabled = true;			
+	}
+}
+
 function VET_manualWidthInput( elem ) {
         var val = parseInt( elem.value );
         if ( isNaN( val ) ) {
