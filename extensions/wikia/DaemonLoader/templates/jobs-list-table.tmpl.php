@@ -1,5 +1,5 @@
 <!-- s:<?= __FILE__ ?> -->
-<table class="TablePager">
+<table class="TablePager" style="width:100%">
 <tr>
 	<th>#</th>
 	<th><?=wfMsg('daemonloader_daemonname')?></th>
