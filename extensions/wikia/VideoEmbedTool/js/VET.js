@@ -129,8 +129,10 @@ function VET_addHandler() {
 function VET_toggleSizing( enable ) {
 	if( enable ) {
 		$( 'VideoEmbedThumbOption' ).disabled = false;
+		$( 'ImageWidthRow' ).style.visibility = 'visible';				
 	} else {
 		$( 'VideoEmbedThumbOption' ).disabled = true;
+		$( 'ImageWidthRow' ).style.visibility = 'hidden';
 	}
 }
 
