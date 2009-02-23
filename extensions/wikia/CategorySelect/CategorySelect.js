@@ -11,6 +11,15 @@ function positionSuggestBox() {
 	$('csSuggestContainer').style.left = Math.min($('csCategoryInput').offsetLeft, (Dom.getViewportWidth() - jQuery('#' + 'csItemsContainer').offset().left - jQuery("#" + 'csSuggestContainer').width() - 10)) + 'px';
 }
 
+function extractSortkey(text) {
+	var result = {'name': text, 'sort' : ''};
+	if ((p = text.indexOf('|')) != -1) {
+		result['name'] = text.slice(0, p);
+		result['sort'] = text.slice(p+1);
+	}
+	return result;
+}
+
 function deleteCategory(e) {
 	var catId = e.parentNode.parentNode.getAttribute('catId');
 	YAHOO.log('deleting catId = ' + catId);
@@ -80,6 +89,14 @@ function modifyCategory(e) {
 	function(data) {
 		YAHOO.log(data);
 
+		extractedParams = extractSortkey(data['category']);
+		data['category'] = extractedParams['name'];
+
+		if (data['category'] == '') {
+			alert(csEmptyName);
+			return;
+		}
+
 		if (categories[catId].category != data['category']) {
 			categories[catId].category = data['category'];
 			var items = $('csItemsContainer').getElementsByTagName('a');
@@ -95,6 +112,7 @@ function modifyCategory(e) {
 			if (sortkey == wgTitle || sortkey == csDefaultSort) {
 				sortkey = '';
 			}
+			sortkey = extractedParams['sort'] + sortkey;
 			categories[catId].sortkey = sortkey;
 		}
 		if (categories[catId].sortkey == '') {
@@ -162,6 +180,15 @@ function addCategory(category, params, index) {
 	}
 	//replace full wikitext that user may provide (eg. [[category:abc]]) to just a name (abc)
 	category = category.replace(fixCategoryRegexp, '$1');
+	//if user provides "abc|def" explode this into category "abc" and sortkey "def"
+	extractedParams = extractSortkey(category);
+	category = extractedParams['name'];
+	params['sortkey'] = extractedParams['sort'];
+
+	if (category == '') {
+		alert(csEmptyName);
+		return;
+	}
 
 	categories[index] = {'namespace': csDefaultNamespace, 'category': category, 'outerTag': params['outerTag'], 'sortkey': params['sortkey']};
 

@@ -77,6 +77,7 @@ function CategorySelectSetupVars($vars) {
 	$vars['csInfoboxCategoryText'] = wfMsg('categoryselect-infobox-category');
 	$vars['csInfoboxSortkeyText'] = wfMsg('categoryselect-infobox-sortkey');
 	$vars['csInfoboxSave'] = wfMsg('save');
+	$vars['csEmptyName'] = wfMsg('categoryselect-empty-name');
 	$vars['csDefaultSort'] = $wgParser->getDefaultSort();
 	$vars['csCategoryNamespaces'] = 'Category|' . $wgContLang->getNsText(NS_CATEGORY);
 	$vars['csCodeView'] = wfMsg('categoryselect-code-view');
