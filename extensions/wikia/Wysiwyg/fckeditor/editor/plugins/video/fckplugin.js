@@ -27,6 +27,7 @@ oTildesItem.IconPath = FCKConfig.PluginsPath + 'video/addVideo.png';
 // register toolbar item
 FCKToolbarItems.RegisterItem( 'AddVideo', oTildesItem );
 
+// add new [[Video:foo]] link
 FCK.VideoAdd = function(wikitext, options) {
 	var refid = FCK.GetFreeRefId();
 
@@ -49,6 +50,34 @@ FCK.VideoAdd = function(wikitext, options) {
 	placeholder.setAttribute('_fck_type', 'video');
 
 	FCK.InsertElement(placeholder);
+}
+
+// add new <videogallery>
+FCK.VideoGalleryAdd = function(wikitext) {
+	var refid = FCK.GetFreeRefId();
+
+	FCK.log('adding new <videogallery> #' + refid + ': ' + wikitext);
+
+	FCK.Track('/video/add/gallery');
+
+	// add meta data entry
+	FCK.wysiwygData[refid] = {
+		'type': 'hook',
+		'name': 'videogallery',
+		'description': wikitext
+	};
+
+	// create new placeholder and add it to the article
+	placeholder = FCK.EditorDocument.createElement('INPUT');
+	placeholder.type = 'button';
+	placeholder.value = '<videogallery>';
+	placeholder.setAttribute('refid', refid);
+	placeholder.setAttribute('_fck_type', 'videogallery');
+
+	FCK.InsertElement(placeholder);
+
+	// setup placeholder
+	FCK.VideoSetupGalleryPlaceholder(placeholder);
 }
 
 // setup <videogallery> hook placeholder
