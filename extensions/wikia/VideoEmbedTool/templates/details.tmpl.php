@@ -44,11 +44,11 @@ if('' == $props['oname']) {
 	<tr id="ImageLayoutRow">
 		<th><?= wfMsg('vet-layout') ?></th>
 		<td>
-			<input type="radio" id="VideoEmbedLayoutLeft" name="layout" />
+			<input type="radio" id="VideoEmbedLayoutLeft" name="layout" onchange="VET_toggleSizing( true );" />
 			<label for="VideoEmbedLayoutLeft"><img src="<?= $wgExtensionsPath.'/wikia/VideoEmbedTool/images/image_upload_left.png' ?>" /></label>
-			<input type="radio" id="VideoEmbedLayoutRight" name="layout" checked="checked" />
+			<input type="radio" id="VideoEmbedLayoutRight" name="layout" checked="checked" onchange="VET_toggleSizing( true );" />
 			<label for="VideoEmbedLayoutRight"><img src="<?= $wgExtensionsPath.'/wikia/VideoEmbedTool/images/image_upload_right.png' ?>" /></label>
-			<input type="radio" id="VideoEmbedLayoutGallery" name="layout" />
+			<input type="radio" id="VideoEmbedLayoutGallery" name="layout" onchange="VET_toggleSizing( false );" />
 			<label for="VideoEmbedLayoutGallery"><img src="<?= $wgExtensionsPath.'/wikia/VideoEmbedTool/images/image_upload_gallery.png' ?>" /></label>
 		</td>
 	</tr>
