@@ -1,0 +1,13 @@
+#siteNotice,
+.firstHeading,
+#siteSub,
+#contentSub,
+#mw-anon-edit-warning,
+.mw-newarticletext,
+.usermessage {
+	display: none !important;
+}
+
+#editingTipsToggleDiv {
+	margin: 0 !important;
+}
