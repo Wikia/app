@@ -594,9 +594,14 @@ function Wysiwyg_SetRefId($type, $params, $addMarker = true, $returnId = false) 
 
 		case 'nowiki':
 		case 'gallery':
-		case 'hook':
 		case 'html':
 			$data['description'] = $params['text'];
+			$result = $params['text'];
+			break;
+
+		case 'hook':
+			$data['description'] = $params['text'];
+			$data['name'] = $params['name'];
 			$result = $params['text'];
 			break;
 

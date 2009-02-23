@@ -3494,7 +3494,7 @@ class Parser
 							$tmp = ($content != ''
 								? "<{$name}{$attrText}>{$content}</{$name}>"
 								: "<{$name}{$attrText}/>");
-							$output = Wysiwyg_SetRefId('hook', array('text' => &$tmp), false);
+							$output = Wysiwyg_SetRefId('hook', array('text' => &$tmp, 'name' => $name), false);
 						} else {
 							$output = call_user_func_array( $this->mTagHooks[$name],
 								array( $content, $attributes, $this ) );
