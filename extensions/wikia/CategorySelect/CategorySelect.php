@@ -204,7 +204,7 @@ function CategorySelectChangeFormat($categories, $from, $to) {
 			}
 			$categoriesStr .= $catTmp . "\n";
 		}
-		return "\n" . $categoriesStr;
+		return "\n" . rtrim($categoriesStr);
 	} elseif ($to == 'array') {
 		return $categories;
 	}
