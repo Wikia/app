@@ -115,7 +115,7 @@ $weeks = $DEF_WEEK unless $weeks;
 =build dates structure 
 =cut
 my $daysago = ($weeks+1)*7;
-my $dates = $oUtils->get_dates($daysago, $check, "20090203");
+my $dates = $oUtils->get_dates($daysago, $check, "now");
 my @dates = ();
 if (scalar @$dates) {
 	@dates = map { substr ($_, 0, 8) } @$dates;
