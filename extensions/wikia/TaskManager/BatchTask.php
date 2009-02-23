@@ -47,7 +47,7 @@ abstract class BatchTask {
     );
 
     const DEFAULT_TTL = 86400; #--- one day
-    public $mDebug, $mTaskID, $mData, $mTTL, $mVisible;
+    public $mDebug, $mTaskID, $mData, $mTTL, $mVisible, $mType;
 
     /**
      * contructor
