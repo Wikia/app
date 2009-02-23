@@ -366,7 +366,7 @@ class VideoEmbedTool {
 					if($caption != '') {
 						$tag .= "|".$caption;
 					}
-					$embed_code = $mwInGallery; // extra data
+					$tag .= "\n";
 				}	
 			} else { // gallery needs to be treated differently...
 				$tag = "<videogallery>\n";
