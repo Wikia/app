@@ -82,8 +82,6 @@ FCK.VideoGalleryAdd = function(wikitext) {
 
 // setup <videogallery> hook placeholder
 FCK.VideoSetupGalleryPlaceholder = function(placeholder) {
-	FCK.log(placeholder);
-
 	// change HTML
 	placeholder.value = '<videogallery>';
 	placeholder.className = 'wysiwygDisabled wysiwygVideoGallery';
@@ -101,8 +99,6 @@ FCK.VideoGalleryClick = function(e) {
 
 	var refid = parseInt(target.getAttribute('refid'));
 
-	FCK.log('<videogallery> #' + refid + ' click');
-
 	if (typeof window.parent.VET_show != 'undefined') {
 		window.parent.VET_show(refid, 1);
 	}
@@ -110,8 +106,6 @@ FCK.VideoGalleryClick = function(e) {
 
 // add video to <videogallery>
 FCK.VideoGalleryUpdate = function(refid, newVideo) {
-	FCK.log('<videogallery> #' + refid + ': new video - "' + newVideo + '"');
-
 	var data = FCK.wysiwygData[refid];
 
 	if ( data && (data.type == 'hook') ) {
@@ -123,6 +117,6 @@ FCK.VideoGalleryUpdate = function(refid, newVideo) {
 		// update entry in meta data
 		data.description = "<videogallery>\n" + desc + "\n" + newVideo + "\n</videogallery>";
 
-		FCK.log('<videogallery> updated to: ' + data.description);
+		FCK.log('<videogallery> #' + refid + ' updated to: ' + data.description);
 	}
 }
