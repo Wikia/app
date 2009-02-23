@@ -628,7 +628,14 @@ function VET_insertFinalVideo(e, type) {
 					if ( !$( 'VideoEmbedCreate'  ) && !$( 'VideoEmbedReplace' ) ) {
 						if(VET_refid == null) {
 							if ('-1' == VET_gallery) {
-								insertTags($('VideoEmbedTag').innerHTML, '', '');
+								if (!VET_inGalleryPosition) { 
+									insertTags($('VideoEmbedTag').innerHTML, '', '');
+								} else {
+									var txtarea = $( 'wpTextbox1' );	
+									txtarea.value = txtarea.value.substring(0, VET_inGalleryPosition)
+						                        + $( 'VideoEmbedTag' ).innerHTML
+						                        + txtarea.value.substring(VET_inGalleryPosition + 1, txtarea.value.length);
+								}
 							} else {
 								if( $( 'WikiaVideoGalleryPlaceholder' + VET_gallery + 'x' + VET_box ) ) {
 									var to_update = $( 'WikiaVideoGalleryPlaceholder' + VET_gallery + 'x' + VET_box );
