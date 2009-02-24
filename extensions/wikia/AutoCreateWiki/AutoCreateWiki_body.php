@@ -15,7 +15,7 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 	exit( 1 );
 }
 
-class Our404HandlerPage extends SpecialPage {
+class AutoCreateWikiPage extends SpecialPage {
 
 	private
 		$mTitle,
@@ -76,6 +76,7 @@ class Our404HandlerPage extends SpecialPage {
 		$this->mAction = $wgRequest->getVal( "action", false );
 		$this->mSubpage = $subpage;
 
+		$this->create();
 	}
 
 	/**
@@ -87,7 +88,7 @@ class Our404HandlerPage extends SpecialPage {
 		 * this will clean test database and fill mWikiData with test data
 		 */
 		$this->prepareTest();
-
+		print_pre( $this->mWikiData );
 	}
 
 	/**
@@ -96,11 +97,11 @@ class Our404HandlerPage extends SpecialPage {
 	private function prepareTest() {
 
 		$dbw = wfGetDB( DB_MASTER );
-		$dbw->query( sprintf( "DROP DATABSE %s", self::TESTDB ) );
+		$dbw->query( sprintf( "DROP DATABASE IF EXISTS %s", self::TESTDB ) );
 
 		$this->mWikiData[ "hub" ]		= 1;
-        $this->mWikiData[ "name"]       = strtolower( trim( "testdb" ) );
-        $this->mWikiData[ "title" ]     = trim( "TestDB Wiki" );
+        $this->mWikiData[ "name"]       = strtolower( trim( self::TESTDB ) );
+        $this->mWikiData[ "title" ]     = trim( self::TESTDB . " Wiki" );
         $this->mWikiData[ "language" ]  = trim( "en" );
         $this->mWikiData[ "subdomain" ] = $this->mWikiData[ "name"];
         $this->mWikiData[ "redirect"]   = $this->mWikiData[ "name"];
@@ -117,5 +118,9 @@ class Our404HandlerPage extends SpecialPage {
 			$this->mWikiData[ "dbname"] = strtolower(str_replace("-","", $this->mWikiData[ "language" ] ). $this->mWikiData[ "dbname"] );
 			$this->mWikiData[ "dir_part"] .= "/".strtolower( $this->mWikiData[ "language" ] );
 		}
+
+		/**
+		 * clear wikifactory tables: city_list, city_variables, city_domains
+		 */
 	}
 }
