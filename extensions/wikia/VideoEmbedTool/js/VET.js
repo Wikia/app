@@ -134,7 +134,7 @@ function VET_toggleSizing( enable ) {
 	} else {
 		$( 'VideoEmbedThumbOption' ).disabled = true;
 		$( 'ImageWidthRow' ).style.visibility = 'hidden';
-		$( 'VideoEmbedSizeRow' ).style.display = 'none';				
+		$( 'VideoEmbedSizeRow' ).style.display = '';				
 	}
 }
 
