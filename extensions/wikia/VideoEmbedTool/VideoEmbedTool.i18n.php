@@ -62,4 +62,5 @@ $messages['en'] = array(
 	'vet-add-button' => 'Add Video',
 	'vet-added-from-gallery' => 'video added from video gallery',
 	'vet-see-all' => 'see all',
+	'vet-bad-search' => 'Error loading search query.',
 );
