@@ -40,6 +40,16 @@ WikiaToolbar.prototype.Create = function(parentElement) {
 
 	parentElement.insertBefore(toolbarPlaceholder, parentElement.firstChild);
 
+	// add preview notice if needed
+	if (typeof window.parent.wysiwygPreview != 'undefined') {
+		var previewNotice = parentDoc.createElement('DIV');
+		previewNotice.id = 'fck_preview_notice';
+
+		parentElement.insertBefore(previewNotice, parentElement.firstChild);
+
+		previewNotice.innerHTML = window.parent.wysiwygPreview;
+	}
+
 	if (parentElement) {
 		var toolbarRow = toolbar.insertRow(-1);
 		var currentBucket = false;
