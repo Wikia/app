@@ -62,7 +62,7 @@ while ($line=fgetcsv($fh)){
   switch ($line[0]){
     case 'wowwiki.com': $city_id = 490; break;
     case 'smashwiki': $city_id=2714; break;
-    case 'memory-alpha.org/en/': $city_id = 113; break;
+    case 'http://memory-alpha.org/en/': $city_id = 113; break;
   }
 
   // Get the city id from city_list
