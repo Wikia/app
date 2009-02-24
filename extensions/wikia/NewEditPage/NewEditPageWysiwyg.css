@@ -1,0 +1,45 @@
+#siteNotice,
+.firstHeading,
+#siteSub,
+#contentSub,
+#mw-anon-edit-warning,
+.mw-newarticletext,
+.usermessage,
+.previewnote,
+#editingTipsToggleDiv {
+	display: none !important;
+}
+
+#editform {
+	padding-top: 2px;
+}
+
+#article, #content {
+	padding: 0 1px !important;
+}
+
+#wikiPreview > :first-child {
+	display: none;
+}
+
+#csMainContainer {
+	margin: 0 1px;
+}
+
+#edit_enhancements_toolbar {
+	margin: 2px 1px 0 1px !important;
+}
+
+#page_bar, .articleBar {
+	display: none;
+}
+
+#fck_preview_notice {
+	background-color: #c00;
+	color: #fff;
+	margin: 2px 1px -2px 1px;
+	padding: 8px;
+	text-align: center;
+	font-weight: bold;
+	font-size: 1.1em;
+}
