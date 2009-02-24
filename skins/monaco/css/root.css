@@ -137,7 +137,3 @@ body.mainpage .HOME_TOP_RIGHT_BOXAD, body.mainpage .FAST_HOME2 {
 #HOME_TOP_RIGHT_BOXAD_load, #TOP_RIGHT_BOXAD_load {
 	width: 300px;
 }
-#LEFT_NAVBOX_1_load, #LEFT_NAVBOX_2_load {
-	width: 200px;
-	height: 200px;
-}
