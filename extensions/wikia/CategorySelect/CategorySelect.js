@@ -13,9 +13,31 @@ function positionSuggestBox() {
 
 function extractSortkey(text) {
 	var result = {'name': text, 'sort' : ''};
-	if ((p = text.indexOf('|')) != -1) {
-		result['name'] = text.slice(0, p);
-		result['sort'] = text.slice(p+1);
+	var len = text.length;
+	var curly = square = pipePos = 0;
+	for (i = 0; i < len && !pipePos; i++) {
+		switch (text.charAt(i)) {
+			case '{':
+				curly++;
+				break;
+			case '}':
+				curly--;
+				break;
+			case '[':
+				square++;
+				break;
+			case ']':
+				square--;
+				break;
+			case '|':
+				if (curly == 0 && square == 0) {
+					pipePos = i;
+			}
+		}
+	}
+	if (pipePos) {
+		result['name'] = text.slice(0, pipePos);
+		result['sort'] = text.slice(pipePos + 1);
 	}
 	return result;
 }

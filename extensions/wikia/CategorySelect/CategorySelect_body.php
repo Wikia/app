@@ -148,7 +148,7 @@ class CategorySelect {
 							$newCategory = trim($newCategory, '[]');
 							preg_match('/^(' . self::$categoryNamespace . '):/i', $newCategory, $m);
 							$catNamespace = $m[1];
-							$newCategory = preg_replace('/^' . self::$categoryNamespace . ':/i', '', $newCategory);
+							$newCategory = preg_replace('/^(?:' . self::$categoryNamespace . '):/i', '', $newCategory);
 							$len = strlen($newCategory);
 							$pipePos = 0;
 							$curly = $square = 0;
