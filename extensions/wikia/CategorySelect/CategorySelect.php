@@ -42,18 +42,7 @@ $wgAjaxExportList[] = 'CategorySelectGenerateHTMLforView';
  * @author Maciej Błaszkowski <marooned at wikia-inc.com>
  */
 function CategorySelectInit() {
-	global $wgRequest, $wgRequest;
-
-	//do not initialize for articles in namespaces different than main, image or user [the same condition like for WYSIWYG editor]
-	$title = Title::newFromText($wgRequest->data['title']);	//$wgTitle == null at this place
-	if(!in_array($title->mNamespace, array(NS_MAIN, NS_IMAGE, NS_USER))) {
-		return true;
-	} else {
-		$action = $wgRequest->getVal('action', 'view');
-		if (($action == 'view' || $action == 'purge') && !$title->exists()) {
-			return true;
-		}
-	}
+	global $wgRequest;
 
 	//don't use CategorySelect for undo edits
 	$undoafter = $wgRequest->getVal('undoafter');
@@ -64,16 +53,34 @@ function CategorySelectInit() {
 
 	global $wgHooks, $wgAutoloadClasses;
 	$wgAutoloadClasses['CategorySelect'] = 'extensions/wikia/CategorySelect/CategorySelect_body.php';
+	$wgHooks['ArticleFromTitle'][] = 'CategorySelectInitializeHooks';
+	$wgHooks['EditPage::importFormData::finished'][] = 'CategorySelectImportFormData';
+	wfLoadExtensionMessages('CategorySelect');
+}
+
+function CategorySelectInitializeHooks($title, $article) {
+	global $wgHooks, $wgRequest;
+
+	//do not initialize for articles in namespaces different than main, image or user [the same condition like for WYSIWYG editor]
+	if(!in_array($title->mNamespace, array(NS_MAIN, NS_IMAGE, NS_USER))) {
+		return true;
+	} else {
+		$action = $wgRequest->getVal('action', 'view');
+		if (($action == 'view' || $action == 'purge') && !$title->exists()) {
+			return true;
+		}
+	}
+
 	$wgHooks['EditPage::getContent::end'][] = 'CategorySelectReplaceContent';
 	$wgHooks['EditPage::CategoryBox'][] = 'CategorySelectCategoryBox';
-	$wgHooks['EditPage::importFormData::finished'][] = 'CategorySelectImportFormData';
 	$wgHooks['EditPage::showEditForm:fields'][] = 'CategorySelectAddFormFields';
 	$wgHooks['EditPage::showDiff::begin'][] = 'CategorySelectDiffArticle';
 	$wgHooks['EditForm::MultiEdit:Form'][] = 'CategorySelectDisplayCategoryBox';
 	$wgHooks['Skin::getCategoryLinks::begin'][] = 'CategorySelectGetCategoryLinksBegin';
 	$wgHooks['Skin::getCategoryLinks::end'][] = 'CategorySelectGetCategoryLinksEnd';
 	$wgHooks['ExtendJSGlobalVars'][] = 'CategorySelectSetupVars';
-	wfLoadExtensionMessages('CategorySelect');
+
+	return true;
 }
 
 /**
