@@ -633,11 +633,11 @@ function VET_insertFinalVideo(e, type) {
 						if(VET_refid == null) {
 							if ('-1' == VET_gallery) {
 								if (!VET_inGalleryPosition) { 
-									insertTags($('VideoEmbedTag').innerHTML, '', '');
+									insertTags( $('VideoEmbedTag').value, '', '');
 								} else {
 									var txtarea = $( 'wpTextbox1' );	
 									txtarea.value = txtarea.value.substring(0, VET_inGalleryPosition)
-						                        + $( 'VideoEmbedTag' ).innerHTML + '\n'
+						                        + $( 'VideoEmbedTag' ).value + '\n'
 						                        + txtarea.value.substring(VET_inGalleryPosition + 1, txtarea.value.length);
 								}
 							} else {
@@ -648,7 +648,7 @@ function VET_insertFinalVideo(e, type) {
 								}
 							}
 						} else {
-							var wikitag = YAHOO.util.Dom.get('VideoEmbedTag').innerHTML;
+							var wikitag = YAHOO.util.Dom.get('VideoEmbedTag').value;
 							var options = {};
 
 							if($('VideoEmbedThumbOption').checked) {
