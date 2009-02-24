@@ -94,7 +94,7 @@ body.mainpage .HOME_TOP_RIGHT_BOXAD, body.mainpage .FAST_HOME2 {
 	margin: 0 auto;
 }
 
-#LEFT_SKYSCRAPER_1 {
+#LEFT_SKYSCRAPER_1, #LEFT_NAVBOX_1, #LEFT_NAVBOX_2 {
 	margin: 0 auto 10px auto;
 }
 #LEFT_SKYSCRAPER_2 {
@@ -123,7 +123,7 @@ body.mainpage .HOME_TOP_RIGHT_BOXAD, body.mainpage .FAST_HOME2 {
 	display: none;
 	position: absolute;
 }
-#HOME_LEFT_SKYSCRAPER_1_load, #HOME_LEFT_SKYSCRAPER_2_load, #LEFT_SKYSCRAPER_1_load, #LEFT_SKYSCRAPER_2_load, #LEFT_SKYSCRAPER_3_load, #LEFT_SPOTLIGHT_1_load {
+#HOME_LEFT_SKYSCRAPER_1_load, #HOME_LEFT_SKYSCRAPER_2_load, #LEFT_SKYSCRAPER_1_load, #LEFT_SKYSCRAPER_2_load, #LEFT_SKYSCRAPER_3_load, #LEFT_SPOTLIGHT_1_load, #LEFT_NAVBOX_1_load, #LEFT_NAVBOX_2_load {
 	z-index: 20;
 }
 #LEFT_SKYSCRAPER_1_load, #LEFT_SKYSCRAPER_2_load, #LEFT_SKYSCRAPER_3_load, #HOME_LEFT_SKYSCRAPER_1_load, #HOME_LEFT_SKYSCRAPER_2_load {
@@ -136,4 +136,8 @@ body.mainpage .HOME_TOP_RIGHT_BOXAD, body.mainpage .FAST_HOME2 {
 }
 #HOME_TOP_RIGHT_BOXAD_load, #TOP_RIGHT_BOXAD_load {
 	width: 300px;
+}
+#LEFT_NAVBOX_1_load, #LEFT_NAVBOX_2_load {
+	width: 200px;
+	height: 200px;
 }
