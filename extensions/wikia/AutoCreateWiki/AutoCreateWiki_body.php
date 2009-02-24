@@ -31,6 +31,8 @@ class AutoCreateWikiPage extends SpecialPage {
 	 * test database, CAUTION! content will be destroyed during tests
 	 */
 	const TESTDB = "testdb";
+	const GAMING = 2;
+	const ENTERTAINMENT = 3;
 
 	/**
 	 * constructor
@@ -96,13 +98,18 @@ class AutoCreateWikiPage extends SpecialPage {
 	 */
 	private function prepareTest() {
 
+		global $wgContLang;
+
+		$languages = array( "de", "en", "pl", "fr", "es" );
+		shuffle( $languages );
+
 		$dbw = wfGetDB( DB_MASTER );
 		$dbw->query( sprintf( "DROP DATABASE IF EXISTS %s", self::TESTDB ) );
 
-		$this->mWikiData[ "hub" ]		= 1;
+		$this->mWikiData[ "hub" ]		= rand( 1, 19 );
         $this->mWikiData[ "name"]       = strtolower( trim( self::TESTDB ) );
-        $this->mWikiData[ "title" ]     = trim( self::TESTDB . " Wiki" );
-        $this->mWikiData[ "language" ]  = trim( "en" );
+        $this->mWikiData[ "title" ]     = trim( $wgContLang->ucfirst( self::TESTDB ) . " Wiki" );
+        $this->mWikiData[ "language" ]  = array_shift( $languages );
         $this->mWikiData[ "subdomain" ] = $this->mWikiData[ "name"];
         $this->mWikiData[ "redirect"]   = $this->mWikiData[ "name"];
 		$this->mWikiData[ "dir_part"]   = $this->mWikiData[ "name"];
