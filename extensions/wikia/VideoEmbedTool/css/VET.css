@@ -22,6 +22,12 @@
 	font-family: sans-serif;			
 }
 
+#VideoEmbedVisualTag {
+	white-space: pre;
+	text-align: left;
+	overflow: auto;	
+}
+
 #VideoEmbedMainMesg {
 	margin-top: 6px;
 }
