@@ -330,7 +330,7 @@ class VideoEmbedTool {
 				$success = $article_obj->doEdit( $text, $summary);
 				if ( $success ) {
 					header('X-screen-type: summary');				
-					$tag = $our_gallery_modified;
+					$tag = $our_gallery_modified . "\n</videogallery>";
 				} else {
 					// todo well, communicate failure
 				}
