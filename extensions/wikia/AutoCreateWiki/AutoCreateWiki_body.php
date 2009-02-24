@@ -25,7 +25,8 @@ class AutoCreateWikiPage extends SpecialPage {
 		$mMYSQLdump,
 		$mMYSQLbin,
 		$mPHPbin,
-		$mImagesDir;
+		$mImagesDir,
+		$mCurrTime;
 
 	/**
 	 * test database, CAUTION! content will be destroyed during tests
@@ -33,6 +34,7 @@ class AutoCreateWikiPage extends SpecialPage {
 	const TESTDB = "testdb";
 	const GAMING = 2;
 	const ENTERTAINMENT = 3;
+	const LOG = "autocreatewiki";
 
 	/**
 	 * constructor
@@ -86,11 +88,20 @@ class AutoCreateWikiPage extends SpecialPage {
 	 */
 	private function create() {
 
+		global $wgDebugLogGroups;
+		$wgDebugLogGroups[ self::LOG ] = "/tmp/autocreatewiki.log";
+
+		wfProfileIn( __METHOD__ );
+
 		/**
 		 * this will clean test database and fill mWikiData with test data
 		 */
 		$this->prepareTest();
 		print_pre( $this->mWikiData );
+
+		$this->mCurrTime = wfTime();
+
+		wfProfileOut( __METHOD__ );
 	}
 
 	/**
@@ -119,7 +130,7 @@ class AutoCreateWikiPage extends SpecialPage {
         $this->mWikiData[ "testWiki"]   = true;
 
         if( isset( $this->mWikiData[ "language" ] ) && $this->mWikiData[ "language" ] !== "en" ) {
-			$this->mWikiData[ "subdomain"] = strtolower( $this->mWikiData[ "subdomain"] ) . "." . $this->mWikiData[ "name"];
+			$this->mWikiData[ "subdomain"] = strtolower( $this->mWikiData[ "language"] ) . "." . $this->mWikiData[ "name"];
 			$this->mWikiData[ "redirect"] = strtolower( $this->mWikiData[ "language" ] ) . "." . ucfirst( $this->mWikiData[ "name"] );
 			$this->mWikiData[ "images"] .= "/" . strtolower( $this->mWikiData[ "language" ] );
 			$this->mWikiData[ "dbname"] = strtolower(str_replace("-","", $this->mWikiData[ "language" ] ). $this->mWikiData[ "dbname"] );
@@ -129,5 +140,40 @@ class AutoCreateWikiPage extends SpecialPage {
 		/**
 		 * clear wikifactory tables: city_list, city_variables, city_domains
 		 */
+		$city_id = WikiFactory::DBtoID( self::TESTDB );
+		if( $city_id ) {
+			$dbw->begin();
+			$dbw->delete(
+				wfSharedTable( "city_domains" ),
+				array( "city_id" => $city_id ),
+				__METHOD__
+			);
+			$dbw->delete(
+				wfSharedTable( "city_variables" ),
+				array( "cv_city_id" => $city_id ),
+				__METHOD__
+			);
+			$dbw->delete(
+				wfSharedTable( "city_cat_mapping" ),
+				array( "city_id" => $city_id ),
+				__METHOD__
+			);
+			$dbw->commit();
+
+		}
+	}
+
+	/**
+	 * common log function
+	 */
+	private function log( $info ) {
+		global $wgOut;
+
+		$info = sprintf( "%s: %F", $info, wfTime() - $this->mCurrTime );
+		wfDebugLog( self::log, $info );
+		Wikia::log( self::log, $info );
+		$wgOut->addHtml( $info ."<br />" );
+
+		$this->mCurrTime = wfTime();
 	}
 }
