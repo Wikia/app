@@ -375,7 +375,10 @@ class VideoEmbedTool {
 					$title_obj = Title::newFromText( $title_main, $ns );
 					$article_obj = new Article( $title_obj );
 					$text = $article_obj->getContent();					
-					$fake_tag = '';	
+
+					$first_half = substr( $text, 0, $mwInGallery );
+					$second_half = substr( $text, $mwInGallery );
+					$fake_tag = $tag;	
 				}	
 			} else { // gallery needs to be treated differently...
 				$tag = "<videogallery>\n";
