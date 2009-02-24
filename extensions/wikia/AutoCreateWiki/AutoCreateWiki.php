@@ -30,5 +30,5 @@ $wgExtensionCredits['specialpage'][] = array(
  */
 $dir = dirname(__FILE__) . '/';
 $wgExtensionMessagesFiles[ "AutoCreateWiki" ] = $dir . "AutoCreateWiki.i18n.php";
-$wgAutoloadClasses[ "AutoCreateWiki" ] = $dir. "AutoCreateWiki_body.php";
+$wgAutoloadClasses[ "AutoCreateWikiPage" ] = $dir. "AutoCreateWiki_body.php";
 $wgSpecialPages[ "AutoCreateWiki" ] = "AutoCreateWikiPage";

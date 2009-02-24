@@ -8,4 +8,6 @@
 
 $messages = array();
 
-$messages['en'] = array();
+$messages['en'] = array(
+	"autocreatewiki" => "Create new Wiki"
+);
