@@ -57,3 +57,6 @@ if ( defined( 'MW_SUPPORTS_PARSERFIRSTCALLINIT' ) ) {
 	// Legacy
 	$wgExtensionFunctions[] = array( 'InputBoxHooks', 'register' );
 }
+
+include("$IP/extensions/3rdparty/InputBox/create.php");
+
