@@ -189,37 +189,36 @@ class CreateWikiForm extends SpecialPage {
      * "request more info" action method
      */
     public static function requestMoreInfoAction($requestId, $page = null) {
-				    global $wgOut;
+		global $wgOut;
 
-				    // load request from database
-				    $dbr = wfGetDB(DB_SLAVE);
-				    $dbr->selectDB('wikicities');
+		// load request from database
+		$dbr = wfGetDB(DB_SLAVE);
+		$dbr->selectDB('wikicities');
 
-				    $request = $dbr->selectRow("city_list_requests", array( "*" ), array( "request_id" => $requestId ), __METHOD__);
+		$request = $dbr->selectRow("city_list_requests", array( "*" ), array( "request_id" => $requestId ), __METHOD__);
+			if($page != null) {
+				if(!isset($_SESSION['founderId'])) {
+					// call from hook
+					$predefinedResponseText = "{{I|" . $request->request_language . "}}\n\n~~~~";
+					$page->textbox1 .= ($page->textbox1 ? "\n" : "") . $predefinedResponseText;
 
-								if($page != null) {
-												if(!isset($_SESSION['founderId'])) {
-																// call from hook
-																$predefinedResponseText = "{{I|" . $request->request_language . "}}\n\n~~~~";
-																$page->textbox1 .= ($page->textbox1 ? "\n" : "") . $predefinedResponseText;
+					$_SESSION['founderId'] = $request->request_user_id;
+				}
+				return true;
+			}
+			else {
+				// normal call
+				if(!empty($request->request_user_id)) {
+					$oRequestPageTitle = wfRequestTitle($request->request_name, $request->request_language);
+					$_SESSION['requestId'] = $requestId;
+					$_SESSION['requestPageTitle'] = $oRequestPageTitle;
+					$_SESSION['requestName'] = $request->request_name . '.wikia.com';
+					unset($_SESSION['founderId']);
 
-																$_SESSION['founderId'] = $request->request_user_id;
-												}
-												return true;
-								}
-								else {
-								    // normal call
-								    if(!empty($request->request_user_id)) {
-																$oRequestPageTitle = wfRequestTitle($request->request_name, $request->request_language);
-																$_SESSION['requestId'] = $requestId;
-																$_SESSION['requestPageTitle'] = $oRequestPageTitle;
-																$_SESSION['requestName'] = $request->request_name . '.wikia.com';
-																unset($_SESSION['founderId']);
-
-																$wgOut->redirect($oRequestPageTitle->getTalkPage()->getFullUrl('action=edit'));
-								    }
-								    return true;
-								}
+					$wgOut->redirect($oRequestPageTitle->getTalkPage()->getFullUrl('action=edit'));
+				}
+				return true;
+			}
 
     }
 
@@ -335,14 +334,14 @@ class CreateWikiForm extends SpecialPage {
         $request = $dbr->selectRow("city_list_requests", array( "*" ),
                 array( "request_id" => $this->mRequest ), __METHOD__);
 
-	#--- stop if request has been already rejected
-	if($request->request_status == 2) {
-    	    $oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
-	    $oTmpl->set_vars( array( "message" => "This request has been rejected already." ));
+		#--- stop if request has been already rejected
+		if($request->request_status == 2) {
+				$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
+			$oTmpl->set_vars( array( "message" => "This request has been rejected already." ));
 
-	    $wgOut->addHTML( $oTmpl->execute("request-error") );
-	    return;
-	}
+			$wgOut->addHTML( $oTmpl->execute("request-error") );
+			return;
+		}
 
         if (!empty($request->request_user_id)) {
             $founder = User::newFromId($request->request_user_id);
@@ -399,7 +398,7 @@ class CreateWikiForm extends SpecialPage {
 
         $oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
         $oTmpl->set_vars( array(
-												"wgRequest"         => $wgRequest,
+			"wgRequest"         => $wgRequest,
             "data"              => $formData,
             "name"              => $sName,
             "talk"              => $sTalkPage,
@@ -420,9 +419,10 @@ class CreateWikiForm extends SpecialPage {
         $wgOut->addHTML( $oTmpl->execute("request") );
 	}
 
-    #--- getLock ------------------------------------------------------------
-				function getLock($numAttempts = 3)
-    {
+    /**
+	 * getLock
+	 */
+	function getLock($numAttempts = 3) {
         global $wgUser;
 
         $sUserName = $wgUser->getName();
