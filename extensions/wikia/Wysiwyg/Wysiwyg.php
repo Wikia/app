@@ -161,12 +161,6 @@ function Wysiwyg_Initial($form) {
 
 	// add support for new toolbar
 	if (!empty($wgWysiwygUseNewToolbar)) {
-		$wgOut->addLink(array(
-			'rel' => 'stylesheet',
-			'href' => "$wgExtensionsPath/wikia/Wysiwyg/toolbar/toolbar.css?$wgStyleVersion",
-			'type' => 'text/css'
-		));
-
 		// toolbar data
 		// TODO: get it from MW article
 		// TODO: i18n

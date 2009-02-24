@@ -22,26 +22,28 @@ WikiaToolbar.prototype.AddSeparator = function() {
 WikiaToolbar.prototype.Create = function(parentElement) {
 	FCK.log('toolbar rendering');
 
-	// hide default FCK toolbar
-	parentElement.style.display = 'none';
-
 	// setup new toolbar
-	var parentDoc = window.parent.document;
-	parentElement = parentDoc.getElementById('bodyContent');
+	parentElement.className = 'color1';
 
-	var toolbarPlaceholder = parentDoc.createElement('DIV');
-	toolbarPlaceholder.id = 'fck_toolbar_wrapper';
-	toolbarPlaceholder.className = 'color1 reset';
-
-	var toolbar = parentDoc.createElement('TABLE');
+	var toolbarDoc = FCKTools.GetElementDocument(parentElement);
+	var toolbar = toolbarDoc.createElement('TABLE');
 	toolbar.id = 'fck_toolbar';
 	toolbar.className = 'reset';
-	toolbarPlaceholder.appendChild(toolbar);
 
-	parentElement.insertBefore(toolbarPlaceholder, parentElement.firstChild);
+	parentElement.appendChild(toolbar);
+
+	// add new toolbar CSS
+	FCKTools.AppendStyleSheet(toolbarDoc, window.parent.wgExtensionsPath + '/wikia/Wysiwyg/toolbar/toolbar.css?' + window.parent.wgStyleVersion);
+
+	// set toolbar background color based on #page_bar (.color1 CSS class)
+	var color = (new FCK.YAHOO.util.Element('page_bar')).getStyle('backgroundColor');
+	toolbar.style.backgroundColor = color;
 
 	// add preview notice if needed
 	if (typeof window.parent.wysiwygPreview != 'undefined') {
+		var parentDoc = window.parent.document;
+		parentElement = parentDoc.getElementById('bodyContent');
+
 		var previewNotice = parentDoc.createElement('DIV');
 		previewNotice.id = 'fck_preview_notice';
 
@@ -50,47 +52,45 @@ WikiaToolbar.prototype.Create = function(parentElement) {
 		previewNotice.innerHTML = window.parent.wysiwygPreview;
 	}
 
-	if (parentElement) {
-		var toolbarRow = toolbar.insertRow(-1);
-		var currentBucket = false;
-		var currentBucketItems = 0;
+	var toolbarRow = toolbar.insertRow(-1);
+	var currentBucket = false;
+	var currentBucketItems = 0;
 
-		// add toolbar items
-		for ( var i = 0 ; i < this.Items.length ; i++ ) {
+	// add toolbar items
+	for ( var i = 0 ; i < this.Items.length ; i++ ) {
 
-			var item = this.Items[i];
+		var item = this.Items[i];
 
-			if (item.Bucket) {
-				// set width of previous bucket <UL>
-				if (currentBucket && currentBucketItems > 1) {
-					currentBucket.style.maxWidth = (currentBucketItems*28) + 'px';
-				}
-
-				// create new bucket
-				var toolbarCell = toolbarRow.insertCell(-1);
-				toolbarCell.innerHTML = '<div class="clearfix color1">' + 
-					'<label title="' + item.Bucket.name + '" class="color1">' + item.Bucket.name  + '</label><ul></ul></div>';
-
-				// set CSS class for last bucket
-				if (item.Bucket.last) {
-					toolbarCell.className = 'last';
-				}
-
-				// get <ul> node - new items will be added there
-				currentBucket = toolbarCell.getElementsByTagName('ul')[0];
-				currentBucketItems = 0;
+		if (item.Bucket) {
+			// set width of previous bucket <UL>
+			if (currentBucket && currentBucketItems > 1) {
+				currentBucket.style.maxWidth = (currentBucketItems*28) + 'px';
 			}
-			else {
-				// add item to current bucket
-				item.Create( currentBucket ) ;
 
-				currentBucketItems++;
+			// create new bucket
+			var toolbarCell = toolbarRow.insertCell(-1);
+			toolbarCell.innerHTML = '<div class="clearfix color1">' + 
+				'<label title="' + item.Bucket.name + '" class="color1">' + item.Bucket.name  + '</label><ul></ul></div>';
+
+			// set CSS class for last bucket
+			if (item.Bucket.last) {
+				toolbarCell.className = 'last';
 			}
+
+			// get <ul> node - new items will be added there
+			currentBucket = toolbarCell.getElementsByTagName('ul')[0];
+			currentBucketItems = 0;
 		}
-		// set width of last bucket <UL>
-		if (currentBucket && currentBucketItems > 1) {
-			currentBucket.style.maxWidth = (currentBucketItems*28) + 'px';
+		else {
+			// add item to current bucket
+			item.Create( currentBucket ) ;
+
+			currentBucketItems++;
 		}
+	}
+	// set width of last bucket <UL>
+	if (currentBucket && currentBucketItems > 1) {
+		currentBucket.style.maxWidth = (currentBucketItems*28) + 'px';
 	}
 }
 
