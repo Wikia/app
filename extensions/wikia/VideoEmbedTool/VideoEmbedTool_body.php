@@ -331,6 +331,7 @@ class VideoEmbedTool {
 				if ( $success ) {
 					header('X-screen-type: summary');				
 					$tag = $our_gallery_modified . "\n</videogallery>";
+					$fake_tag = $tag;
 				} else {
 					// todo well, communicate failure
 				}
@@ -340,6 +341,7 @@ class VideoEmbedTool {
 				if($caption != '') {
 					$tag .= "|".$caption;
 				}
+				$fake_tag = $tag;
 			}
 		} else {
 			header('X-screen-type: summary');
@@ -363,11 +365,17 @@ class VideoEmbedTool {
 					} else {
 						$tag .= ']]';
 					}
+					$fake_tag = $tag;					
 				} else { // we were in gallery
 					$tag = "\n" . $ns_vid . ":" . $name ;
 					if($caption != '') {
 						$tag .= "|".$caption;
 					}
+					// now, parse back and return the whole code of the gallery we inserted INTO ^_^
+					$title_obj = Title::newFromText( $title_main, $ns );
+					$article_obj = new Article( $title_obj );
+					$text = $article_obj->getContent();					
+					$fake_tag = '';	
 				}	
 			} else { // gallery needs to be treated differently...
 				$tag = "<videogallery>\n";
@@ -377,6 +385,7 @@ class VideoEmbedTool {
 				} else {
 					$tag .= "\n</videogallery>";
 				}
+				$fake_tag = $tag;				
 			}
 		}
 
