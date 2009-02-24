@@ -1127,9 +1127,12 @@ FCK.TemplatePreviewShow = function(placeholder) {
 
 	preview.style.display = '';
 
+	// toolbar height (the one build in FCK)
+	var toolbarY = FCK.ToolbarSet._TargetElement.offsetHeight;
+
 	// calculate cloud placement
 	var x = FCK.YD.getX(placeholder);
-	var y = FCK.YD.getY(placeholder) + placeholder.clientHeight + 32;
+	var y = FCK.YD.getY(placeholder) + placeholder.clientHeight + toolbarY + 5;
 
 	// editor area scroll
 	var scrollXY = [FCK.EditorDocument.body.scrollLeft, FCK.EditorDocument.body.scrollTop];
