@@ -72,7 +72,7 @@ FCK.WysiwygSwitchToolbars = function(switchToWikitext) {
 	var toolbar = document.getElementById('xToolbar').getElementsByTagName('tr');
 
 	// using new toolbar?
-	if (!toolbar.length) {
+	if (!toolbar.length || toolbar.length < 2) {
 		// don't do anything for now
 		return;
 	}
