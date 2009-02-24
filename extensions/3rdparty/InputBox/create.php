@@ -12,7 +12,7 @@
 
 */
 
-$wgHooks['UnknownAction'][] = 'actionCreate';
+$wgHooks['UnknownAction'][] = 'old_actionCreate';
 $wgExtensionCredits['parserhook'][] = array(
 'name' => 'actionCreate',
 'author' => 'Algorithm',
@@ -23,7 +23,7 @@ $wgExtensionCredits['parserhook'][] = array(
 $wgCreateMessages = array('create' => "Create",
     'createmessage' => "'''ERROR:''' The article you are attempting to create already exists.");
 
-function actionCreate($action, $article)
+function old_actionCreate($action, $article)
 {
     if($action != 'create') return true;
     global $wgRequest, $wgTitle, $wgOut;
@@ -36,17 +36,17 @@ function actionCreate($action, $article)
             $wgTitle = Title::newFromText( wfMsgForContent( 'badtitle' ) );
             $wgOut->errorpage( 'badtitle', 'badtitletext' );
         } else if($title->getArticleID() == 0) {
-            acRedirect($title, 'edit');
+            old_acRedirect($title, 'edit');
         } else {
-            acRedirect($title, 'create');
+            old_acRedirect($title, 'create');
         }
     } else if( $wgRequest->getVal('section')=='new' || $article->getID() == 0 ) {
-        acRedirect($article->getTitle(), 'edit');
+        old_acRedirect($article->getTitle(), 'edit');
     } else {
         $text = $wgTitle->getPrefixedText();
         $wgOut->setPageTitle( $text );
-        $wgOut->setHTMLTitle(wfMsg('pagetitle', $text.' - '.acMsg('create')));
-        $text = "<div align='center'>" . acMsg('createmessage') .
+        $wgOut->setHTMLTitle(wfMsg('pagetitle', $text.' - '.old_acMsg('create')));
+        $text = "<div align='center'>" . old_acMsg('createmessage') .
             "</div>\n<inputbox>\ntype=create\ndefault=" . $text;
         if($arg = $wgRequest->getVal('preload'))
             $text .= "\npreload=" . $arg;
@@ -57,7 +57,7 @@ function actionCreate($action, $article)
     return false;
 }
 
-function acMsg($key)
+function old_acMsg($key)
 {
     $msg = wfMsg($key);
     if( $msg === "&lt;$key&gt;" ) // NOTE: Replace with wfEmptyMsg when defined
@@ -68,7 +68,7 @@ function acMsg($key)
     return $msg;
 }
 
-function acRedirect($title, $action)
+function old_acRedirect($title, $action)
 {
     global $wgRequest, $wgOut;
     $query = "action={$action}&section=" . $wgRequest->getVal('section') .
