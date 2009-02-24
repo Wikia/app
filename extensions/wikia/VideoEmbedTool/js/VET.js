@@ -574,6 +574,8 @@ function VET_insertFinalVideo(e, type) {
 
 	if( VET_inGalleryPosition ) {
 		params.push( 'mwgalpos=' + VET_inGalleryPosition );
+		params.push( 'article='+encodeURIComponent( wgTitle ) );
+		params.push( 'ns='+wgNamespaceNumber );
 	}
 
 	if( '-1' != VET_gallery ) {
