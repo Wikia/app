@@ -525,6 +525,7 @@ function VET_displayDetails(responseText) {
 		$( 'ImageWidthRow' ).style.visibility = 'hidden';
 		$( 'ImageLayoutRow' ).style.display = 'none';
 		$( 'VideoEmbedThumbOption' ).style.visibility = 'hidden';
+		$( 'VideoEmbedSizeRow' ).style.display = 'none';						
 	}
 
 	if ( ( 400 == wgNamespaceNumber ) ) {
