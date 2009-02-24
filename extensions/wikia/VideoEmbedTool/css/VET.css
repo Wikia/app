@@ -26,6 +26,8 @@
 	white-space: pre;
 	text-align: left;
 	overflow: auto;	
+	font-family: Arial;
+	margin-left: 300px;
 }
 
 #VideoEmbedMainMesg {
