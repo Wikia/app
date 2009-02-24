@@ -5,6 +5,7 @@
 #mw-anon-edit-warning,
 .mw-newarticletext,
 .usermessage,
+.previewnote,
 #editingTipsToggleDiv {
 	display: none !important;
 }
@@ -31,6 +32,16 @@
 
 #page_bar, .articleBar {
 	display: none;
+}
+
+#fck_preview_notice {
+	background-color: #c00;
+	color: #fff;
+	margin: 2px 1px -2px 1px;
+	padding: 8px;
+	text-align: center;
+	font-weight: bold;
+	font-size: 1.1em;
 }
 
 #fck_toolbar_wrapper {
