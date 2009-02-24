@@ -73,10 +73,12 @@ my @ltime = localtime;
 if ($help) {
 	&usage();
 	exit;
-} elsif ( (!$all) && (!$usedb) && (!$fromWiki) && (!$toWiki) ) {
+} elsif ( (!$usedb) && (!$fromWiki) && (!$toWiki) ) {
+	$all = 1;
+} elsif (!$TASKID) {
 	print STDERR "Use option --help to know how to use script \n";
 	exit;
-} 
+}
 
 =config -> set logfile 
 =cut
@@ -416,11 +418,11 @@ $workbook->close();
 system("gzip -c $XLS_FILE > $XLS_FILE.gz") if ( -e $XLS_FILE );
 %updata = ("-dj_result_file" => "concat_ws(',', dj_result_file, '".$XLS_FILE.".gz')");
 $oConf->log("update task info in database (subdomains)");
-#$q_up = $db_ext->update_daemon_task( \%updata, $TASKID );
-#if ( $q_up ) {
-#	$oConf->log("send emails with report");
-#	$oUtils->send_file( $email_title, $task->{dj_result_emails}, $XLS_FILE . ".gz" );
-#}
+$q_up = $db_ext->update_daemon_task( \%updata, $TASKID );
+if ( $q_up ) {
+	$oConf->log("send emails with report");
+	$oUtils->send_file( $email_title, $task->{dj_result_emails}, $XLS_FILE . ".gz" );
+}
 $oConf->log("process done");
 
 1;
