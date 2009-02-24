@@ -16,7 +16,6 @@ class VideoEmbedTool {
 		return $tmpl->execute("main");
 	}
 
-
 	function recentlyUploaded() {
 		global $IP, $wmu;
 		require_once($IP . '/includes/SpecialPage.php');
@@ -70,7 +69,10 @@ class VideoEmbedTool {
 					}
 					$metacafeResult['total'] = $count;
 					$metacafeResult['pages'] = ceil( $metacafeResult['total'] / 8 );
-                                }
+                                } else {
+					return wfMsg( 'vet-bad-search' );
+				}
+
 			$metacafeResult['item'] = array_slice( $preResult, $start, 8 );
 			$tmpl = new EasyTemplate(dirname(__FILE__).'/templates/');
 			$tmpl->set_vars(array('results' => $metacafeResult, 'query' => addslashes($query)));
