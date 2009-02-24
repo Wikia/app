@@ -130,11 +130,11 @@ function VET_toggleSizing( enable ) {
 	if( enable ) {
 		$( 'VideoEmbedThumbOption' ).disabled = false;
 		$( 'ImageWidthRow' ).style.visibility = 'visible';				
-		$( 'VideoEmbedSizeRow' ).style.display = 'none';						
+		$( 'VideoEmbedSizeRow' ).style.display = '';						
 	} else {
 		$( 'VideoEmbedThumbOption' ).disabled = true;
 		$( 'ImageWidthRow' ).style.visibility = 'hidden';
-		$( 'VideoEmbedSizeRow' ).style.display = '';				
+		$( 'VideoEmbedSizeRow' ).style.display = 'none';				
 	}
 }
 
