@@ -79,7 +79,7 @@ function wfPvXDecode()
 							OANWQiiYkD3yXG1DkdJPqRkyTfA
 							</code>
 							<p>Enter Guild Wars template code:</p>
-							<form action="/wiki/" method="get">
+							<form action="" method="get">
 							<input name="title" type="hidden" value="Special:PvXDecode" />
 							<p><input name="wpBuild" type="text" size="80" maxlength="60" /></p>
 							<p>Give new build template a name (optional):</p>
@@ -95,4 +95,3 @@ function wfPvXDecode()
 
     SpecialPage::addPage(new SpecialPvXDecode);
 }
-?>
