@@ -30,15 +30,17 @@ function wfNewEditPageArticleView($title) {
 function wfNewEditPageAddCSS() {
 	global $wgWysiwygEdit, $wgOut, $wgExtensionsPath, $wgStyleVersion;
 
-	// only change old MW edit page
 	if (!empty($wgWysiwygEdit)) {
-		return true;
+		$cssFile = 'NewEditPageWysiwyg.css';
+	}
+	else {
+		$cssFile = 'NewEditPage.css';
 	}
 
 	// add static CSS file
 	$wgOut->addLink(array(
 		'rel' => 'stylesheet',
-		'href' => "{$wgExtensionsPath}/wikia/NewEditPage/NewEditPage.css?{$wgStyleVersion}",
+		'href' => "{$wgExtensionsPath}/wikia/NewEditPage/{$cssFile}?{$wgStyleVersion}",
 		'type' => 'text/css'
 	));
 
