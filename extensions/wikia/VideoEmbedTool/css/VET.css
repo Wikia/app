@@ -16,6 +16,11 @@
 	width: 810px;
 }
 
+#VideoEmbedSuccess {
+	line-height: 2em;
+	margin-bottom: 10px;
+}
+
 #VideoEmbedUrl {
 	width: 450px;
 	padding: 2px;
