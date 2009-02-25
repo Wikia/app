@@ -26,7 +26,6 @@ class AutoCreateWikiPage extends SpecialPage {
 		$mMYSQLdump,
 		$mMYSQLbin,
 		$mPHPbin,
-		$mImagesDir,
 		$mCurrTime;
 
 	/**
@@ -36,6 +35,7 @@ class AutoCreateWikiPage extends SpecialPage {
 	const GAMING = 2;
 	const ENTERTAINMENT = 3;
 	const LOG = "autocreatewiki";
+	const IMGROOT = "/images/";
     const CREATEWIKI_LOGO = "/images/central/images/2/22/Wiki_Logo_Template.png";
     const CREATEWIKI_ICON = "/images/central/images/6/64/Favicon.ico";
 
@@ -50,7 +50,6 @@ class AutoCreateWikiPage extends SpecialPage {
 		 * initialize some data
 		 */
 		$this->mWikiData = array();
-		$this->mImagesDir = "/images/";
 
 		/**
 		 * set paths for external tools
@@ -94,7 +93,9 @@ class AutoCreateWikiPage extends SpecialPage {
 	 */
 	private function create() {
 
-		global $wgDebugLogGroups, $wgOut, $wgUser;
+		global $wgDebugLogGroups, $wgOut, $wgUser, $IP, $wgDBname, $wgSharedDB,
+			$wgDBserver, $wgDBuser,	$wgDBpassword, $wgWikiaLocalSettingsPath;
+
 		# $wgDebugLogGroups[ self::LOG ] = "/tmp/autocreatewiki.log";
 
 		wfProfileIn( __METHOD__ );
@@ -183,6 +184,156 @@ class AutoCreateWikiPage extends SpecialPage {
 		}
 		$this->log( "Coping favicon and logo" );
 
+		/**
+		 * wikifactory variables
+		 */
+		$WFSettingsVars = array(
+			'wgSitename'				=> $this->mWikiData[ 'title' ],
+			'wgScriptPath'				=> '',
+			'wgScript'					=> '/index.php',
+			'wgRedirectScript'			=> '/redirect.php',
+			'wgArticlePath'				=> '/wiki/$1',
+			'wgLogo'					=> '$wgUploadPath/b/bc/Wiki.png',
+			'wgUploadPath'				=> "http://images.wikia.com/{$this->mWikiData[ "dir_part" ]}/images",
+			'wgUploadDirectory'			=> "/images/{$this->mWikiData[ "dir_part" ]}/images",
+			'wgDBname'					=> $this->mWikiData[ "dbname" ],
+			'wgSharedDB'				=> 'wikicities',
+			'wgLocalInterwiki'			=> $this->mWikiData[ 'title' ],
+			'wgLanguageCode'			=> $this->mWikiData['language'],
+			'wgServer'					=> "http://{$this->mWikiData["subdomain"]}.wikia.com",
+			'wgFavicon'					=> '$wgUploadPath/6/64/Favicon.ico',
+			'wgDefaultSkin'				=> 'monaco',
+			'wgDefaultTheme'			=> 'sapphire',
+			'wgEnableNewParser'			=> true,
+			'wgEnableEditEnhancements'	=> true,
+			'wgEnableSectionEdit'	    => true,
+		);
+
+		if( $WFSettingsVars[ "wgLanguageCode" ] === "en" ) {
+			$WFSettingsVars[ "wgEnableWysiwygExt" ] = true;
+		}
+
+		foreach( $WFSettingsVars as $variable => $value ) {
+			/**
+			 * first, get id of variable
+			 */
+			$Row = $dbw->selectRow(
+				wfSharedTable("city_variables_pool"),
+				array( "cv_id" ),
+				array( "cv_name" => $variable ),
+				__METHOD__
+			);
+
+			/**
+			 * then, insert value for wikia
+			 */
+			if( isset( $Row->cv_id ) && $Row->cv_id ) {
+				$dbw->insert(
+					wfSharedTable( "city_variables" ),
+					array(
+						"cv_value"       => serialize( $value ),
+						"cv_city_id"     => $this->mWikiId,
+						"cv_variable_id" => $Row->cv_id
+					),
+					__METHOD__
+				);
+			}
+		}
+		$this->log( "Populating city_variables" );
+
+		/**
+		 * we got empty database created, now we have to create tables and
+		 * populate it with some default values
+		 */
+		$tmpSharedDB = $wgSharedDB;
+		$wgSharedDB = $this->mWikiData[ "dbname"];
+
+		$dbw->selectDb( $this->mWikiData[ "dbname"] );
+		$sqlfiles = array(
+			"{$IP}/maintenance/tables.sql",
+			"{$IP}/maintenance/interwiki.sql",
+			"{$IP}/maintenance/wikia/default_userrights.sql",
+			"{$IP}/maintenance/wikia/city_interwiki_links.sql",
+			"{$IP}/maintenance/wikia-additional-tables.sql",
+			"{$IP}/extensions/CheckUser/cu_changes.sql",
+			"{$IP}/extensions/CheckUser/cu_log.sql",
+		);
+
+		foreach ($sqlfiles as $file) {
+			$dbw->sourceFile( $file );
+		}
+		$wgSharedDB = $tmpSharedDB;
+		$this->log( "Creating tables in database" );
+
+		/**
+		 * import language starter
+		 */
+		if( in_array( $this->mWikiData[ "language" ], array("en", "ja", "de", "fr") ) ) {
+			$prefix = ( $this->mWikiData[ "language" ] !== "en") ? "" : $this->mWikiData[ "language" ];
+			$starterDB = $prefix. "starter";
+
+			/**
+			 * first check whether database starter exists
+			 */
+			$sql = sprintf( "SHOW DATABASES LIKE '%s';", $starterDB );
+			$Res = $dbw->query( $sql, __METHOD__ );
+			$numRows = $Res->numRows();
+			if ( !empty( $numRows ) ) {
+				$cmd = sprintf(
+					"%s -h%s -u%s -p%s %s categorylinks externallinks image imagelinks langlinks page pagelinks revision templatelinks text | %s -h%s -u%s -p%s %s",
+					$this->mMYSQLdump,
+					$wgDBserver,
+					$wgDBuser,
+					$wgDBpassword,
+					$starterDB,
+					$this->mMYSQLbin,
+					$wgDBserver,
+					$wgDBuser,
+					$wgDBpassword,
+					$this->mWikiData[ "dbname"]
+				);
+				wfShellExec( $cmd );
+
+				$dbw->sourceFile( "{$IP}/maintenance/cleanupStarter.sql" );
+
+				$startupImages = sprintf( "%s/starter/%s/images/", self::IMGROOT, $prefix );
+				if (file_exists( $startupImages ) && is_dir( $startupImages ) ) {
+					wfShellExec("/bin/cp -af $startupImages {$this->mWikiData[ "images" ]}/");
+				}
+				$cmd = sprintf(
+					"SERVER_ID=%d %s %s/maintenance/updateArticleCount.php --update --conf %s",
+					$this->mWikiId,
+					$this->mPHPbin,
+					$IP,
+					$wgWikiaLocalSettingsPath
+				);
+				wfShellExec( $cmd );
+
+				$this->log( "Copying starter database" );
+			}
+			else {
+				$this->log( "No starter database for this language" );
+			}
+		}
+
+		/**
+		 * making the wiki founder a sysop/bureaucrat
+		 */
+		if ( $wgUser->getID() ) {
+			$dbw->replace( "user_groups", array( ), array( "ug_user" => $wgUser->getID(), "ug_group" => "sysop" ) );
+			$dbw->replace( "user_groups", array( ), array( "ug_user" => $wgUser->getID(), "ug_group" => "bureaucrat" ) );
+		}
+		$this->log( "Create user sysop/bureaucrat" );
+		$dbw->commit();
+
+		/**
+		 * set hub/category
+		 */
+		$hub = WikiFactoryHub::getInstance();
+		$hub->setCategory( $this->mWikiId, $this->mWikiData[ "hub" ] );
+		$this->log( "Wiki added to the category hub " . $this->mWikiData[ "hub" ] );
+
+
 		wfProfileOut( __METHOD__ );
 	}
 
@@ -205,7 +356,7 @@ class AutoCreateWikiPage extends SpecialPage {
 		$this->mWikiData[ "dir_part"]   = $this->mWikiData[ "name"];
 		$this->mWikiData[ "dbname"]     = substr( str_replace( "-", "", $this->mWikiData[ "name"] ), 0, 64);
 		$this->mWikiData[ "path"]       = "/usr/wikia/docroot/wiki.factory";
-        $this->mWikiData[ "images"]     = $this->mImagesDir . $this->mWikiData[ "name"];
+        $this->mWikiData[ "images"]     = self::IMGROOT . $this->mWikiData[ "name"];
         $this->mWikiData[ "testWiki"]   = true;
 
         if( isset( $this->mWikiData[ "language" ] ) && $this->mWikiData[ "language" ] !== "en" ) {
@@ -220,17 +371,27 @@ class AutoCreateWikiPage extends SpecialPage {
 		 * drop test table
 		 */
 		$dbw = wfGetDB( DB_MASTER );
-		$dbw->query( sprintf( "DROP DATABASE IF EXISTS %s", self::TESTDB ) );
+		$dbw->query( sprintf( "DROP DATABASE IF EXISTS %s", $this->mWikiData[ "dbname"] ) );
 
 		/**
 		 * clear wikifactory tables: city_list, city_variables, city_domains
 		 */
-		$city_id = WikiFactory::DBtoID( self::TESTDB );
+		$city_id = WikiFactory::DBtoID( $this->mWikiData[ "dbname"] );
 		if( $city_id ) {
 			$dbw->begin();
 			$dbw->delete(
 				wfSharedTable( "city_domains" ),
 				array( "city_id" => $city_id ),
+				__METHOD__
+			);
+			$dbw->delete(
+				wfSharedTable( "city_domains" ),
+				array( "city_domain" => sprintf("%s.wikia.com", $this->mWikiData[ "subdomain" ] ) ),
+				__METHOD__
+			);
+			$dbw->delete(
+				wfSharedTable( "city_domains" ),
+				array( "city_domain" => sprintf("www.%s.wikia.com", $this->mWikiData[ "subdomain" ] ) ),
 				__METHOD__
 			);
 			$dbw->delete(
