@@ -7,7 +7,7 @@
  * + full capital/not mix
  *
  * @author Przemek Piotrowski <ppiotr@wikia-inc.com>
- * @see RT#4307
+ * @see RT#4307 RT#11497
  */
 
 if ( !defined( 'MEDIAWIKI' ) ) {
@@ -18,8 +18,8 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 /**
  * order is important, put heavy queries at the end
  */
-#$wgHooks['SearchGetNearMatch'][] = 'SearchNearMatch::allCapitalOneLower';
-#$wgHooks['SearchGetNearMatch'][] = 'SearchNearMatch::fullCapitalAndLowerMix';
+$wgHooks['SearchGetNearMatch'][] = 'SearchNearMatch::allCapitalOneLower';
+$wgHooks['SearchGetNearMatch'][] = 'SearchNearMatch::fullCapitalAndLowerMix';
 
 if ($wgWikiaEnableSharedHelpExt) {
 #	$wgHooks['SearchGetNearMatch'][] = 'SearchNearMatch::checkHelpWikia';
