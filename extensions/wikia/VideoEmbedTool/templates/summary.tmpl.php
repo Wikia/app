@@ -1,4 +1,5 @@
 <div id="VideoEmbedSuccess">
+<?= wfMsg( 'vet-success' ) ?>
 <?= $message ?>
 </div>
 <div style="text-align: center;">
