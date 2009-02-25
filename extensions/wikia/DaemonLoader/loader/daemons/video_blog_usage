@@ -386,7 +386,7 @@ foreach (@dates) {
 	my ($col, $row) = (0, 2);
 	foreach (@nspacesAll) {
 		$sheet->write($row, $col, "Wikia", $formatHdr); 
-		$sheet->write($row, ++$col, $nspaceNames{$_}, $formatHdr);
+		$sheet->write($row, $col+1, $nspaceNames{$_}, $formatHdr);
 		$col = $col + 2;
 	}
 	#----
@@ -399,7 +399,7 @@ foreach (@dates) {
 				foreach my $url (sort { $DATAMOST->{$date}->{$_}->{$b} <=> $DATAMOST->{$date}->{$_}->{$a} } keys %{$DATAMOST->{$date}->{$_}}) {
 					$row++;
 					$sheet->write($row, $col, $url, $formatHdr);
-					$sheet->write($row, ++$col, $DATAMOST->{$date}->{$_}->{$url}, $formatBody);
+					$sheet->write($row, $col+1, $DATAMOST->{$date}->{$_}->{$url}, $formatBody);
 					$loop++;
 					next if ($loop > 50);
 				}
