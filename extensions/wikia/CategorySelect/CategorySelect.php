@@ -49,7 +49,8 @@ function CategorySelectInit() {
 	$undo = $wgRequest->getVal('undo');
 	$diff = $wgRequest->getVal('diff');
 	$oldid = $wgRequest->getVal('oldid');
-	if (($undo > 0 && $undoafter > 0) || $diff || $oldid) {
+	$action = $wgRequest->getVal('action', 'view');
+	if (($undo > 0 && $undoafter > 0) || $diff || ($oldid && $action != 'edit' && $action != 'submit')) {
 		return true;
 	}
 
