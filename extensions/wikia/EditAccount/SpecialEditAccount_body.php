@@ -87,6 +87,9 @@ class EditAccount extends SpecialPage {
 				$template = $this->mStatus ? 'selectuser' : 'displayuser';
 				break;
 			case 'closeaccount':
+				$template = 'closeaccount';
+				break;
+			case 'closeaccountconfirm':
 				$this->mStatus = $this->closeAccount();
 				$template = $this->mStatus ? 'selectuser' : 'displayuser';
 				break;
