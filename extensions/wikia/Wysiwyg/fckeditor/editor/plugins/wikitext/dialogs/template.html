@@ -91,7 +91,7 @@ FCK.TemplateEditor.InsertTemplateFromSearch = function() {
 	var suggestData =  FCK.TemplateEditor.win.os_map.templateQuery;
 
 	// only allow template names from suggest results
-	if ( suggestData.results && FCK.ArrayIndexOf(suggestData.results, templateName) != -1 ) {
+	//if ( suggestData.results && FCK.ArrayIndexOf(suggestData.results, templateName) != -1 ) {
 		// send AJAX query to get template parameters and show progress bar
 		FCK.TemplateEditor.Dialog.Throbber.Show();
 
@@ -110,7 +110,7 @@ FCK.TemplateEditor.InsertTemplateFromSearch = function() {
 
 			FCK.TemplateEditor.SelectTemplate(templateName, params);
 		});
-	}
+	//}
 	return false;
 }
 
