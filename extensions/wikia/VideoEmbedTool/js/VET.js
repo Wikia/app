@@ -253,6 +253,14 @@ function VET_inGallery() {
 	return false;
 }
 
+function VET_getFirstFree( gallery, box ) {
+	var boxnum = box;
+	while( $( 'WikiaVideoGalleryPlaceholder' + gallery + 'x' + boxnum ) && boxnum >= 0 ) {
+		boxnum--;
+	}
+	return boxnum;
+}
+
 function VET_show(e, gallery, box) {
 	VET_refid = null;
 	VET_wysiwygStart = 1;
@@ -659,8 +667,10 @@ function VET_insertFinalVideo(e, type) {
 						                        + txtarea.value.substring(VET_inGalleryPosition + 1, txtarea.value.length);
 								}
 							} else {
-								if( $( 'WikiaVideoGalleryPlaceholder' + VET_gallery + 'x' + VET_box ) ) {
-									var to_update = $( 'WikiaVideoGalleryPlaceholder' + VET_gallery + 'x' + VET_box );
+								// insert into first free "add video" node
+								var box_num = VET_getFirstFree( VET_gallery, VET_box );
+								if( $( 'WikiaVideoGalleryPlaceholder' + VET_gallery + 'x' + box_num ) ) {
+									var to_update = $( 'WikiaVideoGalleryPlaceholder' + VET_gallery + 'x' + box_num );
 									to_update.parentNode.innerHTML = $('VideoEmbedCode').innerHTML;
 									YAHOO.util.Connect.asyncRequest('POST', wgServer + wgScript + '?title=' + wgPageName  +'&action=purge');
 								}
