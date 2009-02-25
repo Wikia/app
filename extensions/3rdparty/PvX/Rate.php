@@ -528,7 +528,7 @@ public static function rateLink(&$article, $name, $action, $id)	{
 
 #--- ratePrint ---#
 public static function ratePrint(array $rate_results, $link) {
-    global $wgUser, $wgParser, $wgTitle, $wgOut;
+    global $wgUser, $wgParser, $wgTitle, $wgOut, $wgExtensionsPath;
     $dbr = &wfGetDB(DB_SLAVE);
 
     $user_name = User::newFromId($rate_results['user_id'])->getName();
