@@ -209,7 +209,7 @@ function VET_showPreview(e) {
 }
 
 function VET_getCaret() {
-	if (FCK == 'undefined') {
+	if (typeof FCK == 'undefined') {
 		var control = document.getElementById('wpTextbox1');
 	} else {
 		var control = FCK.EditingArea.Textarea;
@@ -234,7 +234,7 @@ function VET_getCaret() {
 
 function VET_inGallery() {
 	var originalCaretPosition = VET_getCaret();
-	if (FCK == 'undefined') {
+	if (typeof FCK == 'undefined') {
 		var originalText = document.getElementById('wpTextbox1').value;
 	} else {
 		var originalText = FCK.EditingArea.Textarea.value;
