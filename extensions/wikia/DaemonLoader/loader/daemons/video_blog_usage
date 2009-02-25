@@ -109,11 +109,6 @@ if ($usedb) {
 	push @where_db, "city_id <= ".$db->handler()->quote($to_city);
 }
 
-=get list of wikis -> its ids and names
-=cut
-my $databases = $db->get_wikis(\@where_db);
-my $wikiUrls = $db->get_wgservers();
-
 =input parameters - set default values
 =cut
 $months = $DEF_MONTH unless $months;
@@ -134,6 +129,13 @@ if (!@dates) {
 	$oConf->log("No dates found to generate report (invalid parameters): " . $daysago);
 	exit();
 }
+push @where_db, "date_format(city_created, '%Y%m') <= ". $db->handler->quote($dates[scalar(@dates) - 1]);
+
+=get list of wikis -> its ids and names
+=cut
+my $databases = $db->get_wikis(\@where_db);
+my $wikiUrls = $db->get_wgservers();
+
 =get task info
 =cut
 $oConf->log("\n\nTask ID: $TASKID started");
@@ -387,7 +389,7 @@ foreach (@dates) {
 	foreach (@nspacesAll) {
 		$sheet->write($row, $col, "Wikia", $formatHdr); 
 		$sheet->write($row, $col+1, $nspaceNames{$_}, $formatHdr);
-		$col = $col + 2;
+		$col = $col + 3;
 	}
 	#----
 	$row++; $col = 0;
@@ -403,7 +405,7 @@ foreach (@dates) {
 					$loop++;
 					next if ($loop > 50);
 				}
-				$col = $col + 2;
+				$col = $col + 3;
 			}
 		}
 	}
