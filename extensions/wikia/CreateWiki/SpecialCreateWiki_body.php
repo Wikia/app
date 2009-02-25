@@ -122,14 +122,16 @@ class CreateWikiForm extends SpecialPage {
 
         $wgOut->setPageTitle( wfMsg("createwikipagetitle").wfMsg("createwikistep")."1" );
         switch( $this->mAction ) {
-												case "unlock":
-																$this->doUnlock();
-																break;
+			case "unlock":
+				$this->doUnlock();
+				break;
+
             case "load":
                 $this->selectRequestForm();
                 $wgOut->setPageTitle( wfMsg("createwikipagetitle").wfMsg("createwikistep")."2" );
                 $this->loadRequest();
                 break;
+
             case "process":
                 #--- first check errors, maybe we should back to form
                 $aErrors = $this->parseParams();
@@ -174,15 +176,15 @@ class CreateWikiForm extends SpecialPage {
            "wpCreateWikiName" => $sName
         );
 
-								if(!$this->mParams["wpWikiCategory"]) {
-												$aFormData["errors"]["wpWikiCategory"] = "You have to select HUB for this wiki.";
-								}
+		if(!$this->mParams["wpWikiCategory"]) {
+			$aFormData["errors"]["wpWikiCategory"] = "You have to select HUB for this wiki.";
+		}
 
         if (!preg_match("/^[\w\.\-]+$/", $sName)) {
             $aFormData["errors"]["wpCreateWikiName"] = "Name has invalid format. Only letters and digits are allowed.";
         }
 
-								return (count($aFormData["errors"])) ? $aFormData : true;
+		return (count($aFormData["errors"])) ? $aFormData : true;
     }
 
     /**
@@ -813,9 +815,9 @@ class CreateWikiForm extends SpecialPage {
 		else {
 			// title hasn't been changed
 			$oArticle = new Article( $oRequestTitle, 0 );
-  }
+		}
 
-  $oArticle->loadContent();
+		$oArticle->loadContent();
 
 		if( $oArticle->exists() ) {
 			$sPage = $oArticle->getContent();
@@ -885,7 +887,7 @@ class CreateWikiForm extends SpecialPage {
 
 		$fExecTime = wfTime() - $fExecTime; #--- for profilling
 		wfDebugLog( "createwiki", "===== Create wiki finished. Total {$fExecTime} =====" );
- }
+	}
 
 	/**
 	 * rejectRequest
