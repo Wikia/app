@@ -107,6 +107,7 @@ class AutoCreateWikiPage extends SpecialPage {
 		$wgOut->addHtml( print_pre( $this->mWikiData, 1 ) );
 
 		$this->mCurrTime = wfTime();
+		$startTime = $this->mCurrTime;
 
 		/**
 		 * create image folder
@@ -332,6 +333,14 @@ class AutoCreateWikiPage extends SpecialPage {
 		$hub = WikiFactoryHub::getInstance();
 		$hub->setCategory( $this->mWikiId, $this->mWikiData[ "hub" ] );
 		$this->log( "Wiki added to the category hub " . $this->mWikiData[ "hub" ] );
+
+		/**
+		 * show total time
+		 */
+		$info = sprintf( "Total: %F", wfTime() - $startTime );
+		wfDebugLog( self::LOG, $info );
+		Wikia::log( self::LOG, $info );
+		$wgOut->addHtml( $info ."<br />" );
 
 
 		wfProfileOut( __METHOD__ );
