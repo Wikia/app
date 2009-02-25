@@ -88,8 +88,8 @@ function WikiaVideo_renderVideoGallery($input, $args, $parser) {
 		$out .= 'var vet_imagebutton = \'' . wfMsg('vet-imagebutton') . '\';';
 		$out .= 'var vet_close = \'' . wfMsg('vet-close') . '\';';
 		$out .= 'var vet_warn1 = \'' . wfMsg('vet-warn1') . '\';';
-		$out .= 'var vet_warn2 = \'' . wfMsg('vetwarn2') . '\';';
-		$out .= 'var vet_warn3 = \'' . wfMsg('vetwarn3') . '\';';
+		$out .= 'var vet_warn2 = \'' . wfMsg('vet-warn2') . '\';';
+		$out .= 'var vet_warn3 = \'' . wfMsg('vet-warn3') . '\';';
 
 		$out .= 'var vet_bad_extension = \'' . wfMsg('vet-bad-extension') . '\';';
 		$out .= 'var vet_show_message = \'' . wfMsg('vet-show-message') . '\';';
