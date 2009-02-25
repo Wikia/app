@@ -1,5 +1,6 @@
 var Event = YAHOO.util.Event;
 var Dom = YAHOO.util.Dom;
+var oAutoComp;
 var categories;
 var fixCategoryRegexp = new RegExp('\\[\\[(?:' + csCategoryNamespaces + '):([^\\]]+)]]', 'i');
 var ajaxUrl = wgServer + wgScript + '?action=ajax';
@@ -346,7 +347,7 @@ function inputKeyPress(e) {
 		YAHOO.util.Event.preventDefault(e);
 		category = $('csCategoryInput').value;
 		YAHOO.log('enter pressed, value = ' + category);
-		if (category != '') {
+		if (category != '' && oAutoComp._oCurItem == null) {
 			addCategory(category);
 		}
 	}
@@ -378,7 +379,7 @@ function initAutoComplete() {
 	oDataSource.scriptQueryAppend = 'action=ajax&rs=CategorySelectAjaxGetCategories';
 
 	// Init AutoComplete object and assign datasource object to it
-	var oAutoComp = new YAHOO.widget.AutoComplete('csCategoryInput', 'csSuggestContainer', oDataSource);
+	oAutoComp = new YAHOO.widget.AutoComplete('csCategoryInput', 'csSuggestContainer', oDataSource);
 	oAutoComp.autoHighlight = false;
 	oAutoComp.queryDelay = 0.5;
 	oAutoComp.highlightClassName = 'CSsuggestHover';
