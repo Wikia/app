@@ -39,19 +39,6 @@ WikiaToolbar.prototype.Create = function(parentElement) {
 	var color = (new FCK.YAHOO.util.Element('page_bar')).getStyle('backgroundColor');
 	toolbar.style.backgroundColor = color;
 
-	// add preview notice if needed
-	if (typeof window.parent.wysiwygPreview != 'undefined') {
-		var parentDoc = window.parent.document;
-		parentElement = parentDoc.getElementById('bodyContent');
-
-		var previewNotice = parentDoc.createElement('DIV');
-		previewNotice.id = 'fck_preview_notice';
-
-		parentElement.insertBefore(previewNotice, parentElement.firstChild);
-
-		previewNotice.innerHTML = window.parent.wysiwygPreview;
-	}
-
 	var toolbarRow = toolbar.insertRow(-1);
 	var currentBucket = false;
 	var currentBucketItems = 0;
