@@ -8,7 +8,10 @@ $wgExtensionCredits['other'][] = array(
 $wgExtensionFunctions[] = 'wfNewEditPageInit';
 
 function wfNewEditPageInit() {
-	global $wgHooks;
+	global $wgHooks, $wgExtensionMessagesFiles;
+
+	// i18n
+	$wgExtensionMessagesFiles['NewEditPage'] = dirname(__FILE__).'/NewEditPage.i18n.php';
 
 	// edit page
 	$wgHooks['EditPage::showEditForm:initial2'][] = 'wfNewEditPageAddCSS';
@@ -57,8 +60,8 @@ function wfNewEditPageAddPreviewBar($editPage) {
 	global $wgOut;
 
 	if ($editPage->formtype == 'preview') {
-		$text = '<div id="new_edit_page_preview_notice">' . wfMsg( 'previewnote' ) . '</div>';
-		$wgOut->addHTML($text);
+		wfLoadExtensionMessages('NewEditPage');
+		$wgOut->addHTML('<div id="new_edit_page_preview_notice">' . wfMsg('new-edit-page-preview-notice') . '</div>');
 	}
 
 	return true;
