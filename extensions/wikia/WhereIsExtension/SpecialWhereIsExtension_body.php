@@ -36,6 +36,7 @@ class WhereIsExtension extends SpecialPage {
 	function execute() {
 		global $wgOut, $wgUser, $wgRequest;
 		$gVar = $wgRequest->getText('var');
+		$gVal = $wgRequest->getVal('val', 'true');
 		wfLoadExtensionMessages('WhereIsExtension');
 		$wgOut->SetPageTitle(wfMsg('whereisextension'));
 		$wgOut->setRobotpolicy('noindex,nofollow');
@@ -46,9 +47,10 @@ class WhereIsExtension extends SpecialPage {
 		}
 
 		$formData['vars'] = $this->getListOfVars();
+		$formData['selectedVal'] = $gVal;
 		if (!empty($gVar)) {
 			$formData['selectedVar'] = $gVar;
-			$formData['wikis'] = $this->getListOfWikisWithVar($gVar);
+			$formData['wikis'] = $this->getListOfWikisWithVar($gVar, $gVal);
 		}
 		$oTmpl = new EasyTemplate(dirname( __FILE__ ) . '/templates/');
 		$oTmpl->set_vars( array(
@@ -85,7 +87,7 @@ class WhereIsExtension extends SpecialPage {
 	}
 
 	//fetching wiki list with selected variable set to 'true'
-	private function getListOfWikisWithVar($varId) {
+	private function getListOfWikisWithVar($varId, $val) {
 		$aTables = array(
 			wfSharedTable('city_variables'),
 			wfSharedTable('city_list')
@@ -93,7 +95,7 @@ class WhereIsExtension extends SpecialPage {
 
 		$varId = mysql_real_escape_string($varId);
 		$aWhere = array('city_id = cv_city_id');
-		$aWhere[] = "cv_value = '" . serialize(true) . "'";
+		$aWhere[] = "cv_value = '" . serialize($val == 'true' ? true : false) . "'";
 		$aWhere[] = "cv_variable_id = '$varId'";
 
 		$dbr = wfGetDB(DB_SLAVE);
