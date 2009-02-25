@@ -15,9 +15,13 @@ function wfNewEditPageInit() {
 
 	// not existing articles
 	$wgHooks['ArticleFromTitle'][] = 'wfNewEditPageArticleView';
+
+	// add red preview notice
+	$wgHooks['EditPage::showEditForm:initial'][] = 'wfNewEditPageAddPreviewBar';
 	return true;
 }
 
+// add custom CSS to page of not existing articles
 function wfNewEditPageArticleView($title) {
 
 	if (!$title->exists()) {
@@ -27,6 +31,7 @@ function wfNewEditPageArticleView($title) {
 	return $title;
 }
 
+// add CSS to edit pages
 function wfNewEditPageAddCSS() {
 	global $wgWysiwygEdit, $wgOut, $wgExtensionsPath, $wgStyleVersion;
 
@@ -43,6 +48,18 @@ function wfNewEditPageAddCSS() {
 		'href' => "{$wgExtensionsPath}/wikia/NewEditPage/{$cssFile}?{$wgStyleVersion}",
 		'type' => 'text/css'
 	));
+
+	return true;
+}
+
+// add red preview notice in old editor
+function wfNewEditPageAddPreviewBar($editPage) {
+	global $wgOut;
+
+	if ($editPage->formtype == 'preview') {
+		$text = '<div id="new_edit_page_preview_notice">' . wfMsg( 'previewnote' ) . '</div>';
+		$wgOut->addHTML($text);
+	}
 
 	return true;
 }

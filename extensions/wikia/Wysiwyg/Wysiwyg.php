@@ -198,13 +198,10 @@ function Wysiwyg_Initial($form) {
 			$toolbarItems = array_merge($toolbarItems, $bucket['items']);
 		}
 
-		$preview = ($form->formtype == 'preview') ? ("\nvar wysiwygPreview = " . XML::encodeJsVar(wfMsg('wysiwyg-preview-notice')) . ";") : '';
-
 		$wgOut->addInlineScript(
 			"var wysiwygUseNewToolbar = true;\n" .
 			"var wysiwygToolbarBuckets = " . Wikia::json_encode($toolbarBuckets) . ";\n" . 
-			"var wysiwygToolbarItems = " . Wikia::json_encode($toolbarItems) . ";" .
-			$preview
+			"var wysiwygToolbarItems = " . Wikia::json_encode($toolbarItems) . ";"
 		);
 	}
 
