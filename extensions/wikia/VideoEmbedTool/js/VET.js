@@ -129,11 +129,11 @@ function VET_addHandler() {
 function VET_toggleSizing( enable ) {
 	if( enable ) {
 		$( 'VideoEmbedThumbOption' ).disabled = false;
-		$( 'ImageWidthRow' ).style.visibility = 'visible';				
+		$( 'ImageWidthRow' ).style.display = '';				
 		$( 'VideoEmbedSizeRow' ).style.display = '';						
 	} else {
 		$( 'VideoEmbedThumbOption' ).disabled = true;
-		$( 'ImageWidthRow' ).style.visibility = 'hidden';
+		$( 'ImageWidthRow' ).style.display = 'none';
 		$( 'VideoEmbedSizeRow' ).style.display = 'none';				
 	}
 }
@@ -148,7 +148,6 @@ function VET_manualWidthInput( elem ) {
 	$( 'VideoEmbedManualWidth' ).value = val;
 	VET_readjustSlider( val );
 }
-
 
 function VET_readjustSlider( value ) {
 		if ( 500 < value ) { // too big, hide slider
@@ -546,9 +545,8 @@ function VET_displayDetails(responseText) {
 	}
 
 	if ( ( '-1' != VET_gallery ) || VET_inGalleryPosition ) {
-		$( 'ImageWidthRow' ).style.visibility = 'hidden';
+		$( 'ImageWidthRow' ).style.display = 'none';
 		$( 'ImageLayoutRow' ).style.display = 'none';
-		$( 'VideoEmbedThumbOption' ).style.visibility = 'hidden';
 		$( 'VideoEmbedSizeRow' ).style.display = 'none';						
 	}
 
