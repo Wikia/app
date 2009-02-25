@@ -254,11 +254,12 @@ function VET_inGallery() {
 }
 
 function VET_getFirstFree( gallery, box ) {
-	var boxnum = box;
-	while( $( 'WikiaVideoGalleryPlaceholder' + gallery + 'x' + boxnum ) && boxnum >= 0 ) {
-		boxnum--;
+	for (i=box; i >= 0; i--) {
+		if ( ! $( 'WikiaVideoGalleryPlaceholder' + gallery + 'x' + i ) ) {
+			return i + 1;
+		}			
 	}
-	return boxnum;
+	return box;
 }
 
 function VET_show(e, gallery, box) {
