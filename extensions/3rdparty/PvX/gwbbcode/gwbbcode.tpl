@@ -1,13 +1,13 @@
 <!-- BEGIN build -->
 <table><tr><td>
 <div class="main">
-    <div class="type"><a href="http://wiki.guildwars.com/wiki/{primary}"><img src="http://img.pvxwiki.com/img_skin/{primary}.gif" border="0" /></a><a href="http://wiki.guildwars.com/wiki/{secondary}"><img src="http://img.pvxwiki.com/img_skin/{secondary}.gif" border="0" /></a><span><a href="http://wiki.guildwars.com/wiki/{primary}"><b>{primary}</b></a> / <a href="http://wiki.guildwars.com/wiki/{secondary}"><b>{secondary}</b></a></span></div>
+    <div class="type"><a href="http://wiki.guildwars.com/wiki/{primary}"><img src="http://images.wikia.com/pvx/img_skin/{primary}.gif" border="0" /></a><a href="http://wiki.guildwars.com/wiki/{secondary}"><img src="http://images.wikia.com/pvx/img_skin/{secondary}.gif" border="0" /></a><span><a href="http://wiki.guildwars.com/wiki/{primary}"><b>{primary}</b></a> / <a href="http://wiki.guildwars.com/wiki/{secondary}"><b>{secondary}</b></a></span></div>
     <div class="profession">
         {attributes}
     </div>
     {skills}
        <div class="template">
-        <div class="template_name">Template code</div><div class="template_input"><input id="gws_template_input" type="text" value="{template_code}" readonly="readonly" />&nbsp;<a href="/template.php?build={template_code}&name={build_name}"><img src="http://img.pvxwiki.com/img_skin/save.png" border="0" alt="save" /></a></div>
+        <div class="template_name">Template code</div><div class="template_input"><input id="gws_template_input" type="text" value="{template_code}" readonly="readonly" />&nbsp;<a href="/template.php?build={template_code}&name={build_name}"><img src="http://images.wikia.com/pvx/img_skin/save.png" border="0" alt="save" /></a></div>
     </div>
 </div>
 </td></tr></table>
@@ -18,11 +18,11 @@
 <!-- END prof_icon -->
 
 <!-- BEGIN icon -->
-<div class="skill_box"><div class="skill_icon" onmouseover="return overlib(div('load{load}').innerHTML);" onmouseout="return nd(200);"><div class="pvx_icon-{elite_or_normal}"><div class="pvx-type-{ty}"></div></div><a href="http://wiki.guildwars.com/wiki/{name_link}"><img src="http://img.pvxwiki.com/img_skills/{id}.jpg" border="0" /></a></div><a href="http://wiki.guildwars.com/wiki/{name_link}">{name}</a></div>
+<div class="skill_box"><div class="skill_icon" onmouseover="return overlib(div('load{load}').innerHTML);" onmouseout="return nd(200);"><div class="pvx_icon-{elite_or_normal}"><div class="pvx-type-{ty}"></div></div><a href="http://wiki.guildwars.com/wiki/{name_link}"><img src="http://images.wikia.com/pvx/img_skills/{id}.jpg" border="0" /></a></div><a href="http://wiki.guildwars.com/wiki/{name_link}">{name}</a></div>
 <!-- END icon -->
 
 <!-- BEGIN blank_icon -->
-<img src="http://img.pvxwiki.com/img_skills/{id}.jpg" style="vertical-align: middle;" />
+<img src="http://images.wikia.com/pvx/img_skills/{id}.jpg" style="vertical-align: middle;" />
 <!-- END blank_icon -->
 
 <!-- BEGIN noicon -->
@@ -38,14 +38,14 @@
     <div class="pvx_overlib" style="width:{desc_len}px;">
         <div class="pvx_campaign">{chapter}</div>
         <div class="pvx_mastery">{profession}. {attr_html}</div>
-        <div class="pvx_description" style="background-image:url('http://img.pvxwiki.com.com/img_skin/{profession}.jpg');">
+        <div class="pvx_description" style="background-image:url('http://images.wikia.com/pvx.com/img_skin/{profession}.jpg');">
             <div class="pvx_{elite_or_normal}">{name}</div>
             <div class="pvx_type">{type}</div>
             <div class="pvx_skill_info">{{tpl_desc}}{extra_desc}</div>
         </div> 
         <div class="pvx_attrib_list">
             <div class="pvx_attrib_bg">
-                <img src="http://img.pvxwiki.com/img_thmb/{id}.jpg" height="40" width="40" border="0"><div id="pvx_attributes">{required}</div>
+                <img src="http://images.wikia.com/pvx/img_thmb/{id}.jpg" height="40" width="40" border="0"><div id="pvx_attributes">{required}</div>
             </div>
         </div>
     </div> 
