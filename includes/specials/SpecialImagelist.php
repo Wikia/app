@@ -23,7 +23,7 @@ function wfSpecialImagelist() {
  */
 class ImageListPager extends TablePager {
 	var $mFieldNames = null;
-	var $mQueryConds = array();
+	var $mQueryConds = array("img_media_type != 'VIDEO'");
 
 	function __construct() {
 		global $wgRequest, $wgMiserMode;
@@ -40,7 +40,7 @@ class ImageListPager extends TablePager {
 				$m = $dbr->strencode( strtolower( $nt->getDBkey() ) );
 				$m = str_replace( "%", "\\%", $m );
 				$m = str_replace( "_", "\\_", $m );
-				$this->mQueryConds = array( "LOWER(img_name) LIKE '%{$m}%'" );
+				$this->mQueryConds[] = "LOWER(img_name) LIKE '%{$m}%'";
 			}
 		}
 
@@ -98,9 +98,9 @@ class ImageListPager extends TablePager {
 
 	function formatValue( $field, $value ) {
 		global $wgLang;
-		
+
 		// macbre: fixes #1999
-		
+
 		switch ( $field ) {
 			case 'img_timestamp':
 				return $wgLang->timeanddate( $value, true );
@@ -109,7 +109,7 @@ class ImageListPager extends TablePager {
 				if ( $imgfile === null ) $imgfile = wfMsg( 'imgfile' );
 
 				$name = $this->mCurrentRow->img_name;
-				$link = $this->getSkin()->makeKnownLinkObj( Title::makeTitle( NS_IMAGE, $name ), wordwrap($value, 30, '<br />', true) ); // #1999				
+				$link = $this->getSkin()->makeKnownLinkObj( Title::makeTitle( NS_IMAGE, $name ), wordwrap($value, 30, '<br />', true) ); // #1999
 				$image = wfLocalFile( $value );
 				$url = $image->getURL();
 				$download = Xml::element('a', array( 'href' => $url ), $imgfile );
