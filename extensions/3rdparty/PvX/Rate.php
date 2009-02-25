@@ -586,7 +586,7 @@ public static function ratePrint(array $rate_results, $link) {
     $out = '
 			<div class="rating"><table border="1" cellpadding="0" cellspacing="3">
 			<tr><td class="tdrating"><div style="width:' . $final_tbl .
-			'px; background-image:url(http://www.pvxwiki.com/w/img/r1.jpg);"><span>Overall</span></div></td>
+			'px; background-image:url(' . $wgExtensionsPath . '/3rdparty/PvX/Rate/r1.jpg);"><span>Overall</span></div></td>
 			    <td class="tdresult">' . sprintf('%3.1f',round($cur_score*10)/10) . '</td>
 			    <td class="tdcomment" rowspan="4">
 				<table border="0" style="border:0px;">
@@ -599,15 +599,15 @@ public static function ratePrint(array $rate_results, $link) {
                              </td>
 			 </tr><tr>
                              <td class="tdrating"><div style="width:' . $sze_table[1] . 
-			     'px; background-image:url(http://www.pvxwiki.com/w/img/r2.jpg);"><span>Effectiveness</span></div></td>
+			     'px; background-image:url(' . $wgExtensionsPath . '/3rdparty/PvX/Rate/r2.jpg);"><span>Effectiveness</span></div></td>
 			     <td class="tdresult">' . $rate[1] .'</td>
 			 </tr><tr>
 			     <td class="tdrating"><div style="width:' . $sze_table[2] .
-			     'px; background-image:url(http://www.pvxwiki.com/w/img/r3.jpg);"><span>Universality</span></div></td>
+			     'px; background-image:url(' . $wgExtensionsPath . '/3rdparty/PvX/Rate/r3.jpg);"><span>Universality</span></div></td>
 			     <td class="tdresult">' . $rate[2] .'</td>
 			 </tr><tr>
 			     <td class="tdrating"><div style="width:' . $sze_table[3] .
-			     'px; background-image:url(http://www.pvxwiki.com/w/img/r4.jpg);"><span>Innovation</span></div></td>
+			     'px; background-image:url(' . $wgExtensionsPath . '/3rdparty/PvX/Rate/r4.jpg);"><span>Innovation</span></div></td>
 			     <td class="tdresult">' . $inno_out .'</td>
 			 </tr>
 			 </table>
@@ -678,6 +678,8 @@ public static function ratePrintResults ($page_id) {
     }
     
     # overall rating output
+    global $wgExtensionsPath;
+
     if ($bm_count) {
 	$out =  ('<h2> Rating totals: '.$count.' votes, incl. '.$bm_count.
                  ' from Build Masters (weighted '.(($bm_weight+1)*100).'%)</h2>');
@@ -687,16 +689,16 @@ public static function ratePrintResults ($page_id) {
     $out .= '<table border="0" cellpadding="0" cellspacing="0"><tr>';
     $out .= '<td><div class="sum"><table border="0" cellpadding="0" cellspacing="3">
              <tr><td class="tdrating"><div style="width:' . round($final[0]*168/5) . 'px;
-                     background-image:url(http://www.pvxwiki.com/w/img/r1.jpg);"><span>Overall</span></div></td>
+                     background-image:url(' . $wgExtensionsPath . '/3rdparty/PvX/Rate/r1.jpg);"><span>Overall</span></div></td>
 	     <td class="tdresult">' . sprintf('%4.2f',round($final[0]*100)/100) . '</td></tr>
 	     <tr><td class="tdrating"><div style="width:' . round($final[1] * 168/5) . 'px;
-                     background-image:url(http://www.pvxwiki.com/w/img/r2.jpg);"><span>Effectiveness</span></div></td>
+                     background-image:url(' . $wgExtensionsPath . '/3rdparty/PvX/Rate/r2.jpg);"><span>Effectiveness</span></div></td>
 	     <td class="tdresult">' . sprintf('%4.2f',round($final[1]*100)/100) . '</td></tr>
              <tr><td class="tdrating"><div style="width:' . round($final[2] * 168/5) . 'px;
-                     background-image:url(http://www.pvxwiki.com/w/img/r3.jpg);"><span>Universality</span></div></td>
+                     background-image:url(' . $wgExtensionsPath . '/3rdparty/PvX/Rate/r3.jpg);"><span>Universality</span></div></td>
              <td class="tdresult">' . sprintf('%4.2f',round($final[2]*100)/100) . '</td></tr>
              <tr><td class="tdrating"><div style="width:' . round($final[3] * 168/5) . 'px;
-                     background-image:url(http://www.pvxwiki.com/w/img/r4.jpg);"><span>Innovation</span></div></td>
+                     background-image:url(' . $wgExtensionsPath . '/3rdparty/PvX/Rate/r4.jpg);"><span>Innovation</span></div></td>
 	     <td class="tdresult">' . sprintf('%4.0f',round($final[3]*20)) . '%</td></tr>
 	     </table></div></td>';
     
@@ -715,17 +717,17 @@ public static function ratePrintResults ($page_id) {
                      '\').innerHTML, WRAP, CENTER, WIDTH, 300, OFFSETY, -25, OFFSETX, -247, VAUTO);" onmouseout="return nd();">' .
                      $rate_names[$c] . '</span></td></tr>
                      <tr><td class="tdrating"><div style="height:' . ($histo[$c][0]) . 
-			  'px; width:13px; background-image:url(http://www.pvxwiki.com/w/img/v' . ($c + 1) . '.jpg);"></div></td>
+			  'px; width:13px; background-image:url(' . $wgExtensionsPath . '/3rdparty/PvX/Rate/v' . ($c + 1) . '.jpg);"></div></td>
               		 <td class="tdrating"><div style="height:' . ($histo[$c][1]) .
-			  'px; width:13px; background-image:url(http://www.pvxwiki.com/w/img/v' . ($c + 1) . '.jpg);"></div></td>
+			  'px; width:13px; background-image:url(' . $wgExtensionsPath . '/3rdparty/PvX/Rate/v' . ($c + 1) . '.jpg);"></div></td>
               		 <td class="tdrating"><div style="height:' . ($histo[$c][2]) .
-			  'px; width:13px; background-image:url(http://www.pvxwiki.com/w/img/v' . ($c + 1) . '.jpg);"></div></td>
+			  'px; width:13px; background-image:url(' . $wgExtensionsPath . '/3rdparty/PvX/Rate/v' . ($c + 1) . '.jpg);"></div></td>
               		 <td class="tdrating"><div style="height:' . ($histo[$c][3]) .
-			  'px; width:13px; background-image:url(http://www.pvxwiki.com/w/img/v' . ($c + 1) . '.jpg);"></div></td>
+			  'px; width:13px; background-image:url(' . $wgExtensionsPath . '/3rdparty/PvX/Rate/v' . ($c + 1) . '.jpg);"></div></td>
               		 <td class="tdrating"><div style="height:' . ($histo[$c][4]) .
-			  'px; width:13px; background-image:url(http://www.pvxwiki.com/w/img/v' . ($c + 1) . '.jpg);"></div></td>
+			  'px; width:13px; background-image:url(' . $wgExtensionsPath . '/3rdparty/PvX/Rate/v' . ($c + 1) . '.jpg);"></div></td>
                  	 <td class="tdrating"><div style="height:' . ($histo[$c][5]) .
-			  'px; width:13px; background-image:url(http://www.pvxwiki.com/w/img/v' . ($c + 1) . '.jpg);"></div></td>
+			  'px; width:13px; background-image:url(' . $wgExtensionsPath . '/3rdparty/PvX/Rate/v' . ($c + 1) . '.jpg);"></div></td>
 		     </tr><tr>
 			 <td class="tdresult">0</td>
 			 <td class="tdresult">1</td>
