@@ -58,7 +58,11 @@ function CategorySelectInit() {
 }
 
 function CategorySelectInitializeHooks($title, $article) {
-	global $wgHooks, $wgRequest;
+	global $wgHooks, $wgRequest, $wgUser;
+
+	if (get_class($wgUser->getSkin()) != 'SkinMonaco') {
+		return true;
+	}
 
 	//do not initialize for articles in namespaces different than main, image or user [the same condition like for WYSIWYG editor]
 	if(!in_array($title->mNamespace, array(NS_MAIN, NS_IMAGE, NS_USER))) {
