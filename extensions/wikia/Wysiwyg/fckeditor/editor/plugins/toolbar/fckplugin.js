@@ -141,6 +141,7 @@ var WikiaButtonUI = function( name, label, tooltip, iconPathOrStripInfoArray, st
 
 		'Undo':		'arrow_undo.png',
 		'Redo':		'arrow_redo.png',
+		'Widescreen':	'icon_full_screen.png',
 		'Source':	'application_xp_terminal.png'
 	};
 
@@ -404,15 +405,52 @@ StyleCommand.prototype = {
 	}
 } ;
 
+// widescreen switching
+var WideScreenToggle = function() {
+	var toggleWideScreenLink = window.parent.document.getElementById("toggleWideScreen");
+
+	// try to get listener function attached to "Enter Widescreen" link
+	if (toggleWideScreenLink) {
+		this.toggleWideScreenListener = FCK.YAHOO.util.Event.getListeners(toggleWideScreenLink).pop();
+	}
+	else {
+		this.toggleWideScreenListener = false;
+	}
+
+	// get current widescreen mode state
+	this.isActive = FCK.YAHOO.util.Dom.hasClass(window.parent.document.body, 'editingWide');
+ }
+
+WideScreenToggle.prototype = {
+	Execute : function() {
+		if (this.toggleWideScreenListener) {
+			this.toggleWideScreenListener.fn(true);
+			this.isActive = !this.isActive;
+
+			// hack: refresh toolbar items state
+			var items = FCK.ToolbarSet.Items;
+			for (i=0; i<items.length; i++) {
+				items[i].RefreshState();
+			}
+		}
+        },
+        GetState : function() {
+		return this.isActive ? FCK_TRISTATE_ON : FCK_TRISTATE_OFF ;
+	 }
+};
+
 // register new toolbar items
 FCKCommands.RegisterCommand('H2', new StyleCommand('h2', 'Heading 2'));
-FCKToolbarItems.RegisterItem('H2', new FCKToolbarButton('H2', 'Headline 2')  );
+FCKToolbarItems.RegisterItem('H2', new FCKToolbarButton('H2', 'Section Heading')  );
 
 FCKCommands.RegisterCommand('H3', new StyleCommand('h3', 'Heading 3'));
-FCKToolbarItems.RegisterItem('H3', new FCKToolbarButton('H3', 'Headline 3'));
+FCKToolbarItems.RegisterItem('H3', new FCKToolbarButton('H3', 'Sub Heading'));
 
 FCKCommands.RegisterCommand('Pre', new StyleCommand('pre', 'Preformatted'));
 FCKToolbarItems.RegisterItem('Pre', new FCKToolbarButton('Pre', 'Preformatted'));
 
 FCKCommands.RegisterCommand('Normal', new StyleCommand('p', 'Normal Text'));
 FCKToolbarItems.RegisterItem('Normal', new FCKToolbarButton('Normal', 'Normal Text'));
+
+FCKCommands.RegisterCommand('Widescreen', new WideScreenToggle());
+FCKToolbarItems.RegisterItem('Widescreen', new FCKToolbarButton('Widescreen', 'Toggle widescreen'));
