@@ -227,6 +227,9 @@ class CategorySelect {
 
 	//used in lookForCategory() as a callback function for preg_replace_callback()
 	static private function replaceCallback($match) {
+		if (strpos($match[2], '[') !== false || strpos($match[2], ']') !== false) {
+			return $match[0];
+		}
 		$pipePos = strpos($match[2], '|');
 		if ($pipePos) {
 			$catName = substr($match[2], 0, $pipePos);
