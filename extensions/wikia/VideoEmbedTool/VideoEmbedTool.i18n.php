@@ -63,4 +63,5 @@ $messages['en'] = array(
 	'vet-added-from-gallery' => 'video added from video gallery',
 	'vet-see-all' => 'see all',
 	'vet-bad-search' => 'Error loading search query.',
+	'vet-no-preview' => 'You cannot add video from article in preview mode',
 );

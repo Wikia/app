@@ -258,6 +258,12 @@ function VET_show(e, gallery, box) {
 	VET_wysiwygStart = 1;
 
 	if(typeof gallery != "undefined") {
+
+		// if in preview mode, go away
+		if ($ ( 'editform' ) ) {
+			alert( vet_no_preview );
+			return false;
+		}
 		VET_gallery = gallery;
 		VET_box = box;
 	}
