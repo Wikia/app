@@ -27,6 +27,7 @@ $messages['en'] = array(
 	'editaccount-submit-pass' => 'Save Password',
 	'editaccount-submit-close' => 'Close Account',
 	'editaccount-usage-close' => 'You can also disable a user account by scrambling its password and removing the e-mail address. Note that this data is lost and will not be recoverable.',
+	'editaccount-warning-close' => '<b>Caution!</b> You are about to permanently disable the account of user <b>$1</b>. This cannot be reverted. Are you sure that is what you want to do?',
 	'editaccount-status' => 'Status message',
 	'editaccount-success-email' => 'Successfully changed e-mail for account $1 to $2.',
 	'editaccount-success-pass' => 'Successfully changed password for account $1.',
