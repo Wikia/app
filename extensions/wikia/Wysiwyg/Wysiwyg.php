@@ -183,7 +183,7 @@ function Wysiwyg_Initial($form) {
 			),
 			array(
 				'name'  => 'Controls', 
-				'items' => array('Undo', 'Redo', 'Source')
+				'items' => array('Undo', 'Redo', 'Widescreen', 'Source')
 			),
 		);
 
