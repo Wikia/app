@@ -54,7 +54,6 @@ function CategorySelectInit() {
 	global $wgHooks, $wgAutoloadClasses;
 	$wgAutoloadClasses['CategorySelect'] = 'extensions/wikia/CategorySelect/CategorySelect_body.php';
 	$wgHooks['ArticleFromTitle'][] = 'CategorySelectInitializeHooks';
-	$wgHooks['EditPage::importFormData::finished'][] = 'CategorySelectImportFormData';
 	wfLoadExtensionMessages('CategorySelect');
 }
 
@@ -71,6 +70,7 @@ function CategorySelectInitializeHooks($title, $article) {
 		}
 	}
 
+	$wgHooks['EditPage::importFormData::finished'][] = 'CategorySelectImportFormData';
 	$wgHooks['EditPage::getContent::end'][] = 'CategorySelectReplaceContent';
 	$wgHooks['EditPage::CategoryBox'][] = 'CategorySelectCategoryBox';
 	$wgHooks['EditPage::showEditForm:fields'][] = 'CategorySelectAddFormFields';
