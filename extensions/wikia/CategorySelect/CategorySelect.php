@@ -47,7 +47,9 @@ function CategorySelectInit() {
 	//don't use CategorySelect for undo edits
 	$undoafter = $wgRequest->getVal('undoafter');
 	$undo = $wgRequest->getVal('undo');
-	if ($undo > 0 && $undoafter > 0) {
+	$diff = $wgRequest->getVal('diff');
+	$oldid = $wgRequest->getVal('oldid');
+	if (($undo > 0 && $undoafter > 0) || $diff || $oldid) {
 		return true;
 	}
 
