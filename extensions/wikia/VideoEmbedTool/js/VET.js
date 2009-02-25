@@ -229,7 +229,11 @@ function VET_getCaret() {
 
 function VET_inGallery() {
 	var originalCaretPosition = VET_getCaret();
-	var originalText = document.getElementById('wpTextbox1').value;
+	if (FCK == 'undefined') {
+		var originalText = document.getElementById('wpTextbox1').value;
+	} else {
+		var originalText = FCK.EditingArea.Textarea.value;
+	}
 	var lastIndexOfvideogallery = originalText.substring(0, originalCaretPosition).lastIndexOf('<videogallery>');
 
 	if(lastIndexOfvideogallery > 0) {
