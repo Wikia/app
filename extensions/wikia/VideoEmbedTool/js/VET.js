@@ -209,7 +209,12 @@ function VET_showPreview(e) {
 }
 
 function VET_getCaret() {
-  var control = document.getElementById('wpTextbox1');
+	if (FCK == 'undefined') {
+		var control = document.getElementById('wpTextbox1');
+	} else {
+		var control = FCK.EditingArea.Textarea;
+	}
+	
   var caretPos = 0;
 	if(YAHOO.env.ua.ie != 0) { // IE Support
     control.focus();
