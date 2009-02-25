@@ -649,7 +649,7 @@ function VET_insertFinalVideo(e, type) {
 								} else {
 									var txtarea = $( 'wpTextbox1' );	
 									txtarea.value = txtarea.value.substring(0, VET_inGalleryPosition)
-						                        + $( 'VideoEmbedTag' ).value + '\n'
+						                        + '\n' + $( 'VideoEmbedTag' ).value + '\n'
 						                        + txtarea.value.substring(VET_inGalleryPosition + 1, txtarea.value.length);
 								}
 							} else {
