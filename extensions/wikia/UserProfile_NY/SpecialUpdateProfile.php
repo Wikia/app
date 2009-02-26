@@ -101,9 +101,9 @@ class UpdateProfile extends SpecialPage {
 		global $wgUser, $wgOut, $wgRequest, $wgSiteView;
 		
 		$wgUser->setRealName( $wgRequest->getVal("real_name") );
-		$wgUser->setEmail( $wgRequest->getVal("email") );
 	
 		if($wgUser->getEmail()!=$wgRequest->getVal("email")){
+			$wgUser->setEmail( $wgRequest->getVal("email") );
 			$wgUser->mEmailAuthenticated = null; # but flag as "dirty" = unauthenticated
 		}
 		
