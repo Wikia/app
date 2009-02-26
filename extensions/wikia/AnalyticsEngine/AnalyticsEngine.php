@@ -30,7 +30,6 @@ class AnalyticsEngine {
 		$out = "<!-- Start for $provider, $event -->\n";
 		$out .= $AP->getSetupHtml();
 		$out .= $AP->trackEvent($event, $eventDetails) . "\n";
-		$out .= "<!-- End tracking code for $provider, $event -->\n";
 		return $out;
 	}
 
