@@ -91,10 +91,10 @@ if(skin == 'monaco') {
 function WMU_addHandler() {
 	var btn = $('mw-editbutton-wmu');
 	if(btn == null) {
- 		setTimeout('WMU_addHandler()', 250);
-  		return;
-  	}
-  	YAHOO.util.Event.addListener(['wmuLink', 'wmuHelpLink', btn], 'click',  WMU_show);
+		setTimeout('WMU_addHandler()', 250);
+		return;
+	}
+	YAHOO.util.Event.addListener(['wmuLink', 'wmuHelpLink', btn], 'click',  WMU_show);
 }
 
 function WMU_licenseSelectorCheck() {
@@ -135,24 +135,24 @@ function WMU_manualWidthInput( elem ) {
 		WMU_thumbSize = [image.width, image.height];
 		$( 'ImageUploadManualWidth' ).value = val;
 		WMU_readjustSlider( val );
-		WMU_shownMax = false;			
+		WMU_shownMax = false;
 	}
 }
 
 function WMU_readjustSlider( value ) {
-		if ( 400 < value ) { // too big, hide slider
-			if ( 'hidden' != $( 'ImageUploadSliderThumb' ).style.visibility ) {
-				$( 'ImageUploadSliderThumb' ).style.visibility = 'hidden';				
-				WMU_slider.setValue( 200, true, true, true );
-			}
-		} else {
-			if ( 'hidden' == $( 'ImageUploadSliderThumb' ).style.visibility ) {
-				$( 'ImageUploadSliderThumb' ).style.visibility = 'visible';				
-			}
-			var fixed_width = Math.min( 400, WMU_width );
-			value = Math.max(2, Math.round( ( value * 200 ) / fixed_width ) );	
-			WMU_slider.setValue( value, true, true, true );
-		}		
+	if ( 400 < value ) { // too big, hide slider
+		if ( 'hidden' != $( 'ImageUploadSliderThumb' ).style.visibility ) {
+			$( 'ImageUploadSliderThumb' ).style.visibility = 'hidden';
+			WMU_slider.setValue( 200, true, true, true );
+		}
+	} else {
+		if ( 'hidden' == $( 'ImageUploadSliderThumb' ).style.visibility ) {
+			$( 'ImageUploadSliderThumb' ).style.visibility = 'visible';
+		}
+		var fixed_width = Math.min( 400, WMU_width );
+		value = Math.max(2, Math.round( ( value * 200 ) / fixed_width ) );
+		WMU_slider.setValue( value, true, true, true );
+	}
 }
 
 function WMU_show(e) {
@@ -251,7 +251,7 @@ function WMU_loadMain() {
 			var cookieMsg = document.cookie.indexOf("wmumainmesg=");
 			if (cookieMsg > -1 && document.cookie.charAt(cookieMsg + 12) == 0) {
 				$('ImageUploadTextCont').style.display = 'none';
-		                $('ImageUploadMessageLink').innerHTML = '[' + wmu_show_message  + ']';
+				$('ImageUploadMessageLink').innerHTML = '[' + wmu_show_message  + ']';
 			}
 		}
 	}
@@ -264,13 +264,13 @@ function WMU_loadMain() {
 
 function WMU_loadLicense( license ) {
 	var callback = {
-		success: function(o) {			
+		success: function(o) {
 			$('ImageUploadLicenseText').innerHTML = o.responseText;
 			WMU_indicator(1, false);
 		}
 	}
 	WMU_indicator(1, false);
-	YAHOO.util.Connect.asyncRequest('GET', wgScriptPath + '/index.php?action=ajax&rs=WMU&method=loadLicense&license='+license, callback);
+	YAHOO.util.Connect.asyncRequest('GET', wgScriptPath + '/index.php?action=ajax&rs=WMU&method=loadLicense&license='+encodeURIComponent(license), callback);
 	WMU_curSourceId = 0;
 }
 
@@ -479,16 +479,16 @@ function WMU_displayDetails(responseText) {
 		}
 		WMU_slider.subscribe("change", function(offsetFromStart) {
 			if ( 'hidden' == $( 'ImageUploadSliderThumb' ).style.visibility ) {
-				$( 'ImageUploadSliderThumb' ).style.visibility = 'visible';				
-			}			
+				$( 'ImageUploadSliderThumb' ).style.visibility = 'visible';
+			}
 			if (WMU_slider.initialRound) {
 				$('ImageUploadManualWidth').value = '';
-				WMU_slider.initialRound = false;	
+				WMU_slider.initialRound = false;
 			} else {
 				$('ImageUploadManualWidth').value = WMU_slider.getRealValue();
 			}
 			image.width = WMU_slider.getRealValue();
-			$('ImageUploadManualWidth').value = image.width;			
+			$('ImageUploadManualWidth').value = image.width;
 			image.height = image.width / (thumbSize[0] / thumbSize[1]);
 			if(WMU_orgThumbSize == null) {
 				WMU_orgThumbSize = [image.width, image.height];
@@ -496,12 +496,12 @@ function WMU_displayDetails(responseText) {
 			}
 			WMU_thumbSize = [image.width, image.height];
 		});
-		
+
 		if(image.width < 250) {
 			WMU_slider.setValue(200, true);
 		} else {
 			WMU_slider.setValue(125, true);
-		}		
+		}
 	}
 	if ($( 'WMU_error_box' )) {
 		alert( $( 'WMU_error_box' ).innerHTML );
