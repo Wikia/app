@@ -159,7 +159,7 @@ function renderQuestions() {
 function questionsNavClick( dir ){
 	recent_questions_page = recent_questions_page + dir
 	
-	$("#recent_unanswered_questions").animate({opacity: 0},500);
+	jQuery("#recent_unanswered_questions").animate({opacity: 0},500);
 	renderQuestions()
 }
 
