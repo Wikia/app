@@ -18,6 +18,7 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 /**
  * order is important, put heavy queries at the end
  */
+$wgHooks['SearchGetNearMatch'][] = 'SearchNearMatch::allCapitalOneLowerFromDB';
 $wgHooks['SearchGetNearMatch'][] = 'SearchNearMatch::allCapitalOneLower';
 $wgHooks['SearchGetNearMatch'][] = 'SearchNearMatch::fullCapitalAndLowerMix';
 
@@ -56,7 +57,7 @@ class SearchNearMatch {
 	 */
 	public static function allCapitalOneLower($term, &$title) {
 		$guesses = array();
-
+		
 		$words = ucwords(strtolower($term));
 		$words = explode(' ', $words);
 		// first word is always upercase, no need to mutate
@@ -78,6 +79,51 @@ class SearchNearMatch {
 		}
 
 		return self::checkGuesses($guesses, $title);
+	}
+
+
+	/**
+	 * @input  'ala ma kota'
+	 * @output  array('Ala Ma kota', 'Ala ma Kota')
+	 *
+	 * @see Language::ucwordbreaks etc.
+	 */
+	public static function allCapitalOneLowerFromDB($term, &$title) {
+		global $wgMemc;
+		wfProfileIn(__METHOD__);
+		$word = strtolower(str_replace(" ", "_", $term));
+		$memkey = wfMemcKey( "searchnearmatch", $word );
+		$searchTitleId = $wgMemc->get( $memkey );
+		if (empty($searchTitleId)) {
+			// from DB
+			$dbr = wfGetDB( DB_SLAVE );
+			$res = $dbr->select(
+				array( 'page' ),
+				array( 'page_id' ),
+				array(
+					'lower(page_title)' => $word,
+					'page_is_redirect' => 0
+				),
+				__METHOD__,
+				array( "ORDER BY" => "page_latest", "LIMIT" => 1 )
+			);
+			if ( $row = $dbs->fetchObject( $res ) ) { 
+				$searchTitleId = $row->page_id;
+			}
+		} 
+		$wgMemc->set( $memkey, $searchTitleId, 60*60*24 );
+
+		$not_exists = true;
+		if (!empty($searchTitleId)) {
+			$t = Title::newFromId($searchTitleId);
+			if ($t && $t->exists()) {
+				$title = $t;
+				$not_exists = false;
+			}
+		}
+		
+		wfProfileOut(__METHOD__);
+		return $not_exists;
 	}
 
 	/**
