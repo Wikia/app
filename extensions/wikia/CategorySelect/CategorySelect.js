@@ -245,7 +245,7 @@ function addCategory(category, params, index) {
 
 function generateWikitextForCategories() {
 	var categoriesStr = '';
-	for(c in categories) {
+	for (c=0; c < categories.length; c++) {
 		catTmp = '[[' + categories[c].namespace + ':' + categories[c].category + (categories[c].sortkey == '' ? '' : ('|' + categories[c].sortkey)) + ']]';
 		if (categories[c].outerTag != '') {
 			catTmp = '<' + categories[c].outerTag + '>' + catTmp + '</' + categories[c].outerTag + '>';
@@ -270,7 +270,7 @@ function initializeCategories(cats) {
 	}
 
 	addAddCategoryButton();
-	for(c in categories) {
+	for (c=0; c < categories.length; c++) {
 		addCategory(categories[c].category, {'outerTag': categories[c].outerTag, 'sortkey': categories[c].sortkey}, c);
 	}
 }
@@ -331,7 +331,7 @@ function moveElement(movedId, prevSibbId) {
 	//reorder catId in HTML elements
 	var itemId = 0;
 	var items = $('csItemsContainer').getElementsByTagName('a');
-	for (catId in newCat) {
+	for (catId=0; catId < newCat.length; catId++) {
 		if (newCat[catId] == undefined) {
 			continue;
 		}
