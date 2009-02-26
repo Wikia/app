@@ -15,8 +15,8 @@ $link = $titleObj->getLocalUrl('type=signup');
 			<label for="wpPassword1"><?= wfMsg("yourpassword") ?></label><br/>
 			<input type="password" class="loginPassword" name="wpPassword" id="wpPassword1" tabindex="102" size="20" /><br/>
 			<div style="padding-bottom:3px">
-				<input type="checkbox" name="wpRemember" tabindex="104" value="1" id="wpRemember" <?php if( $wgUser->getOption( 'rememberpassword' ) ) { ?>checked="checked"<?php } ?> />
-				<label for="wpRemember"><?= wfMsg('remembermypassword') ?></label><br/>
+				<input type="checkbox" name="wpRemember" tabindex="104" value="1" id="wpRemember1" <?php if( $wgUser->getOption( 'rememberpassword' ) ) { ?>checked="checked"<?php } ?> />
+				<label for="wpRemember1"><?= wfMsg('remembermypassword') ?></label><br/>
 			</div>
 			<input style="margin:0;padding:0 .25em;width:auto;overflow:visible;" type="submit" name="wpLoginattempt" id="wpLoginattempt" tabindex="105" value="<?= wfMsg("login") ?>" />
 <?php if( $wgEnableEmail && $wgAuth->allowPasswordChange() ) { ?>
