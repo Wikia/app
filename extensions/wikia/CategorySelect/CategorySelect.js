@@ -284,7 +284,7 @@ function toggleCodeView() {
 		$('wpCategorySelectWikitext').value = '';	//remove JSON - this will inform PHP to use wikitext instead
 		$('wpCategorySelectSourceType').value = 'wiki';	//inform PHP what source should it use
 	} else {	//switch to visual code
-		var pars = 'rs=CategorySelectAjaxParseCategories&rsargs=' + encodeURIComponent($('csWikitext').value);
+		var pars = 'rs=CategorySelectAjaxParseCategories&rsargs=' + encodeURIComponent($('csWikitext').value + ' ');
 		var callback = {
 			success: function(originalRequest) {
 				var result = eval('(' + originalRequest.responseText + ')');
