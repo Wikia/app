@@ -22,11 +22,9 @@ class AnalyticsProviderQuantServe implements iAnalyticsProvider {
 				for (var i = 0; i < ProviderValues.list.length; i++){
 					_qoptions.labels += ',' + Athena.getPageVar('hub') + '.' + ProviderValues.list[i].value;
 				}
-				console.dir(_qoptions);
 			} catch (e){
 				// Fall back to old way.
 				_qacct=\"{$this->account}\";
-				alert(e);
 			}
 			</script>";
 	}
