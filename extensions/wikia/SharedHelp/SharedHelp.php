@@ -102,6 +102,12 @@ function SharedHelpHook(&$out, &$text) {
 		return true;
 	}
 
+	# Do not process if explicitly told not to
+	$mw = MagicWord::get('MAG_NOSHAREDHELP');
+	if ( $mw->match( $text ) ) { 
+		return true;
+	}
+
 	if($wgTitle->getNamespace() == 12) { # Process only for pages in namespace Help (12)
 		# Initialize shared and local variables
 		# Canonical namespace is added here in case we ever want to share other namespaces (e.g. Advice)
@@ -322,3 +328,22 @@ function SharedHelpWantedPagesSql( $page, $sql ) {
 	return true;
 }
 
+# __NOSHAREDHELP__ magic word prevents rendering of shared content
+$wgHooks['MagicWordwgVariableIDs'][] = 'efSharedHelpRegisterMagicWordID';
+$wgHooks['LanguageGetMagic'][] = 'efSharedHelpGetMagicWord';
+$wgHooks['InternalParseBeforeLinks'][] = 'efSharedHelpRemoveMagicWord';
+
+function efSharedHelpRegisterMagicWordID(&$magicWords) {
+        $magicWords[] = 'MAG_NOSHAREDHELP';
+        return true;
+}
+
+function efSharedHelpGetMagicWord(&$magicWords, $langCode) {
+        $magicWords['MAG_NOSHAREDHELP'] = array(0, '__NOSHAREDHELP__');
+        return true;
+}
+
+function efSharedHelpRemoveMagicWord(&$parser, &$text, &$strip_state) {
+        MagicWord::get('MAG_NOSHAREDHELP')->matchAndRemove($text);
+        return true;
+}
