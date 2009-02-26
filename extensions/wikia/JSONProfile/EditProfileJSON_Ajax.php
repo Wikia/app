@@ -1347,9 +1347,9 @@ function saveWikiaSettings_basicJSON(){
 			$real_name = trim( $wgRequest->getVal("first_name") ) . " " . trim( $wgRequest->getVal("last_name") );
 			$real_name = urldecode($real_name);
 			$wgUser->setRealName( $real_name);
-			$wgUser->setEmail( urldecode($wgRequest->getVal("email")) );
 		
-			if($wgUser->getEmail()!=$wgRequest->getVal("email")){
+			if($wgUser->getEmail()!=urldecode($wgRequest->getVal("email"))){
+				$wgUser->setEmail( urldecode($wgRequest->getVal("email")) );
 				$wgUser->mEmailAuthenticated = null; # but flag as "dirty" = unauthenticated
 			}
 			
