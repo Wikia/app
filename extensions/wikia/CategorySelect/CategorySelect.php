@@ -219,7 +219,7 @@ function CategorySelectCategoryBox($text) {
  */
 function CategorySelectChangeFormat($categories, $from, $to) {
 	if ($from == 'json') {
-		$categories = Wikia::json_decode($categories, true);
+		$categories = $categories == '' ? array() : Wikia::json_decode($categories, true);
 	}
 
 	if ($to == 'wiki') {
