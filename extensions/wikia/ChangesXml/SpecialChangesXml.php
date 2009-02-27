@@ -23,33 +23,37 @@ $wgExtensionCredits['specialpage'][] = array(
 function wfChangesXml( $rc ) {
 	global $wgEnableSpecialChangesXmlToFeedUrl, $wgContLang, $wgUser, $wgServer, $wgArticlePath;
 
+	/*
 	if( isset( $rc->mExtra['oldSize'] ) && isset( $rc->mExtra['newSize'] ) ) {
 		//we only look at certain size in main namespace
 		if( abs( $rc->mExtra['newSize'] - $rc->mExtra['oldSize'] ) < 100 ) {
 			return true;
 		}
 	}
+	*/
 
 	$titleObj = $rc->getTitle();
 
+	/*
 	if( $titleObj->getNamespace() != NS_MAIN ) {
 		//we only want content
 		return true;
-	}	
+	}
+	*/
 
 	$title = $titleObj->getText();
 	$title = str_replace( array( "\n", "\r", '_' ), array( "", "","" ), $title );
 	$url = $titleObj->getFullURL();
-	$wiki_atom = str_replace('$1', 'Special:Atom', $wgServer.$wgArticlePath);	
+	$wiki_atom = str_replace('$1', 'Special:Atom', $wgServer.$wgArticlePath);
 	$categories = $titleObj->getParentCategories();
 	$category_string = $wgContLang->getNSText( NS_CATEGORY ) . ':';
-	
+
 	//see if user anon or not by ip
 	$rc_user_text = '';
 	if(isset($rc->mAttribs['rc_user_text'])){
 	  $rc_user_text	= $rc->mAttribs['rc_user_text'];
 	}
-	
+
 	$ut = explode('.', $rc_user_text);
 
 	if ( count($ut) == 4 ) {		//ip;
@@ -58,7 +62,7 @@ function wfChangesXml( $rc ) {
 	} else {
 		//username;
 		$uurl = '<uri>' . str_replace('$1' , 'User:'. $rc_user_text, $wgServer.$wgArticlePath) . '</uri>';
-	} 
+	}
 
 	//PUT feed
 	if( !empty( $wgEnableSpecialChangesXmlToFeedUrl ) ) {
@@ -72,7 +76,7 @@ function wfChangesXml( $rc ) {
 		$a_data .= "    <published>" . date( DATE_ATOM ) . "</published>" . "\n";
 		$a_data .= "    <updated>" . date( DATE_ATOM ) . "</updated>" . "\n";
 		$a_data .= "  	<author><name>" . $rc_user_text . "</name>".$uurl."</author>" . "\n";
-			
+
 		foreach( $categories as $key=>$value ) {
 			$a_data .= '    <category term="' . str_replace( '_', ' ', str_replace( $category_string, '', $key) ) . '" />' . "\n";
 		}
