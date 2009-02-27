@@ -89,7 +89,7 @@ class VideoPage extends Article {
 
 		$code = $this->getEmbedCode($width);
 
-		if('false' == $thumb) { // TODO: $thumb should be boolean variable, not string
+		if(empty($thumb)) {
 			return "<div class=\"t{$align}\">".$code."</div>";
 		}
 
