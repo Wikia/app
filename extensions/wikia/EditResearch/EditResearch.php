@@ -38,7 +38,7 @@ function AddEditResearch($o) {
 	$wgOut->addHtml( $script );
 	
 	$wgOut->addHtml( "<div id='research-container'>");
-	$wgOut->addHtml( "<h3>" . wfMsg("reasearch_wikipedia_title") . "</h3>" );
+	$wgOut->addHtml( "<h3>" . wfMsg("research_wikipedia_title") . "</h3>" );
 	$wgOut->addHtml( "<div id='research-inner'>");
 	$wgOut->addHtml( "<div id='research-search'>");					
 	$wgOut->addHtml(wfMsg("search_wikipedia") . ' <input type="text" id="search_input"> <input id="search_button" type="button" value="' . wfMsg("go") . '" onclick="research()">');
