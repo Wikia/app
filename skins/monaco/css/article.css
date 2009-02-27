@@ -268,7 +268,7 @@
 	display: block;
 	height: 16px;
 	position: absolute;
-	width: 336px;
+	width: 352px;
 }
 #shareDelicious dd a {
 	clip: rect(0px 176px 16px 160px);
@@ -291,7 +291,7 @@
 #shareFacebook {
 	left: 60px;
 }
-#shareFaceboook dd a {
+#shareFacebook dd a {
 	clip: rect(0px 352px 16px 336px);
 	left: -336px;
 }
