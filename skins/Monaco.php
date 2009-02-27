@@ -1894,18 +1894,11 @@ if(count($wikiafooterlinks) > 0) {
 					<div id="searchSuggestContainer" class="yui-ac-container"></div>
 				</div>
 <?php
-
-	$time_start = microtime(true);
 	$monacoSidebar = new MonacoSidebar();
 	if(isset($this->data['content_actions']['edit'])) {
 		$monacoSidebar->editUrl = $this->data['content_actions']['edit']['href'];
 	}
 	echo $monacoSidebar->getCode();
-	$time_end = microtime(true);
-	$time = $time_end - $time_start;
-	if(rand(0,50) == 1) {
-		error_log("NewSidebar: wgCityId: $wgCityId took: $time");
-	}
 
 	$linksArrayL = $linksArrayR = array();
 	$linksArray = $this->data['data']['toolboxlinks'];
@@ -2044,7 +2037,7 @@ echo AdEngine::getInstance()->getDelayedLoadingCode();
 
 
 echo '</div>';
-// Quant serve moved *after* the ads because it depends on Athena/Provider values. 
+// Quant serve moved *after* the ads because it depends on Athena/Provider values.
 echo AnalyticsEngine::track('QuantServe', AnalyticsEngine::EVENT_PAGEVIEW);
 $this->html('bottomscripts'); /* JS call to runBodyOnloadHook */
 $this->html('reporttime');
