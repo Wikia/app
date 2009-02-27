@@ -96,6 +96,9 @@ function research_wikipedia_article( article ){
 		//<a href=\"\/wiki\/Eli_Manning\"
 		html = html.replace(/<a\shref=\"(\/wiki\/(.*?))\".*?>(.*?)<\/a>/g,"<a href=\"javascript:research_wikipedia_article('$2')\">$3</a>" )
 
+		//we should also remove red links and edit links
+		html = html.replace(/<a\shref=\"(\/w\/index\.php\?title=(.*?)&.*?)\".*?>(.*?)<\/a>/g,"$3" )
+
 		removeSpinner("wikipedia")
 		document.getElementById("research_box").style.overflow="scroll";
 		document.getElementById("research_box").innerHTML = html;
