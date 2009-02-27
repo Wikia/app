@@ -1,4 +1,4 @@
-// "add video" toolbar button
+// "add image" toolbar button
 var FCKAddVideoCommand = function() {
 	this.Name = 'AddVideo' ;
 
@@ -27,328 +27,30 @@ oTildesItem.IconPath = FCKConfig.PluginsPath + 'video/addVideo.png';
 // register toolbar item
 FCKToolbarItems.RegisterItem( 'AddVideo', oTildesItem );
 
-// video overlay with edit/delete link
-FCK.VideoOverlay = false;
-
-// protect video placeholder
-FCK.ProtectVideo = function(video) {
-	var refid = parseInt(video.getAttribute('refid'));
-	
-	// for browsers supporting contentEditable
-	if (FCK.UseContentEditable) {
-		video.setAttribute('contentEditable', false);
-
-		// apply contentEditable to all child nodes of video
-		FCK.YD.getElementsBy(
-			function(node) {
-				return true;
-			},
-			false,
-			video,
-			function(node) {
-				node.setAttribute('contentEditable', false);
-			}
-		);
-
-		// setup events (remove listener first to avoid multiple event firing)
-		FCKTools.RemoveEventListener(video, 'click', FCK.VideoOnClick);
-		FCKTools.AddEventListener(video, 'click', FCK.VideoOnClick);
-
-		FCKTools.RemoveEventListener(video, 'mousedown', FCK.VideoOnMousedown);
-		FCKTools.AddEventListener(video, 'mousedown', FCK.VideoOnMousedown);
-
-		FCKTools.RemoveEventListener(video, 'mouseup', FCK.VideoOnMouseup);
-		FCKTools.AddEventListener(video, 'mouseup', FCK.VideoOnMouseup);
-
-		FCK.BlockEvent(video, 'contextmenu');
-
-		// store node with refId
-		FCK.NodesWithRefId[ refid ] = video;
-
-		// video overlay menu (edit / delete)
-		FCK.VideoSetupOverlayMenu(refid, video);
-
-		return;
-	}
-}
-
-FCK.VideoOnClick = function(e) {
-	var e = FCK.YE.getEvent(e);
-	var target = FCK.YE.getTarget(e);
-
-	FCK.YE.stopEvent(e);
-
-	// ignore buttons different then left
-	if (e.button == 0) {
-
-		var video = FCK.GetParentImage(target);
-		var refid = parseInt(video.getAttribute('refid'));
-
-		FCK.log('video #' + refid  + ' clicked');
-		// choose action based on original target CSS class
-		switch (target.className) {
-			case 'videoOverlayRemove':
-				FCK.VideoRemove(refid);
-				break;
-
-			case 'videoOverlayEdit':
-				FCK.VideoEdit(refid);
-				break;
-		}
-	}
-};
-
-FCK.VideoOnMousedown = function(e) {
-	var e = FCK.YE.getEvent(e);
-	var target = FCK.YE.getTarget(e);
-
-	if (target.className == 'videoOverlayDrag') {
-
-		var video = FCK.GetParentImage(target);
-		var refid = parseInt(video.getAttribute('refid'));
-
-		FCK.log('video #' + refid  + ' drag&drop catched');
-
-		FCK.Track('/video/move');
-
-		// select whole video
-		FCK.Selection.SelectNode(video);
-		FCK.VideoDragDrop = video;
-	}
-	else {
-		FCK.YE.stopEvent(e);
-	}
-};
-
-FCK.VideoOnMouseup = function(e) {
-	FCK.YE.stopEvent( FCK.YE.getEvent(e) );
-
-	// unselect any selection
-	var selection = FCKSelection.GetSelection();
-	if (selection.removeAllRanges) {
-		selection.removeAllRanges();
-	}
-};
-
-
-// handle video edit
-FCK.VideoEdit = function(refid) {
-
-	FCK.log('click on video #' + refid);
-	FCK.log(FCK.wysiwygData[refid]);
-
-	// tracker
-	FCK.Track('/video/click');
-
-	// open VideoEmbedTool
-	window.parent.VET_show( parseInt(refid) );
-}
-
-// remove video from the article
-FCK.VideoRemove = function(refid, dontAsk) {
-	if (dontAsk || confirm('Are you sure you want to remove this video?')) {
-
-		FCKUndo.SaveUndoStep();
-
-		FCK.log('removed video #' + refid);
-
-		var node = FCK.GetElementByRefId(refid);
-
-		FCKDomTools.RemoveNode(node);
-
-		// clear meta data
-		delete FCK.wysiwygData[refid];
-		delete FCK.NodesWithRefId[refid];
-
-		// tracker
-		FCK.Track('/video/remove');
-	}
-}
-
-// to simplify things we actually replace old video with the new one
-FCK.VideoUpdate = function(refid, wikitext, extraData) {
-	FCK.log('updating #' + refid +' with >>' + wikitext + '<<');
-
-	FCK.Track('/video/update');
-
-	FCKUndo.SaveUndoStep();
-
-	// update metaData
-	FCK.wysiwygData[refid].original = wikitext;
-
-	// merge with extraData
-	FCK.wysiwygData[refid] = FCK.YAHOO.lang.merge(FCK.wysiwygData[refid], extraData);
-
-	FCK.log(FCK.wysiwygData[refid]);
-
-	// parse given wikitext
-	var callback = {
-		success: function(o) {
-			FCK = o.argument.FCK;
-			refid =  o.argument.refid;
-
-			var oldVideo = FCK.GetElementByRefId(refid);
-			FCK.log(oldVideo);
-
-			result = eval('(' + o.responseText + ')');
-			html = result.parse.text['*'];
-
-			// remove newPP comment and whitespaces
-			html = FCK.YAHOO.lang.trim(html.split('<!-- \nNewPP limit report')[0]);
-
-			// insert html into editing area (before old video)...
-			var wrapper = FCKTools.GetElementDocument(oldVideo).createElement('DIV');
-
-			// fix IE's "unknown runtine error" by always adding wrapper before block elements (FF will try to validate, IE will throw an error)
-			// @see http://piecesofrakesh.blogspot.com/2007/02/ies-unknown-runtime-error-when-using.html
-			if (oldVideo.nodeName.IEquals('a') && FCKBrowserInfo.IsIE) {
-				oldVideo.parentNode.parentNode.insertBefore(wrapper, oldVideo.parentNode);
-			}
-			else {
-				oldVideo.parentNode.insertBefore(wrapper, oldVideo);
-			}
-
-			// set HTML
-			wrapper.innerHTML = html;
-
-			// is "simple" video wrapped by <p></p> ?
-			if (html.substr(0,3) == '<p>') {
-				// remove wrapping <p></p>
-				wrapper.innerHTML = html.substr(3, html.length-7);
-			}
-
-			// ...and "protect" it
-			wrapper.firstChild.setAttribute('refid', refid);
-			FCK.ProtectVideo(wrapper.firstChild);
-
-			// remove wrapper and old video
-			FCKDomTools.RemoveNode(oldVideo, false); // including child nodes
-			FCKDomTools.RemoveNode(wrapper, true);
-		},
-		failure: function(o) {},
-		argument: {'FCK': FCK, 'refid': refid}
-	}
-
-	FCK.YAHOO.util.Connect.asyncRequest(
-		'POST',
-		window.parent.wgScriptPath + '/api.php',
-		callback,
-		"action=parse&format=json&wysiwyg=true&prop=text&title=" + encodeURIComponent(window.parent.wgPageName) + "&text=" +  encodeURIComponent(wikitext)
-	);
-}
-
-FCK.VideoAdd = function(wikitext, extraData) {
+// add new [[Video:foo]] link
+FCK.VideoAdd = function(wikitext, options) {
 	var refid = FCK.GetFreeRefId();
 
 	FCK.log('adding new video #' + refid + ' using >>' + wikitext + '<<');
 
 	FCK.Track('/video/add');
 
-	// fill metaData up
-	var params = wikitext.substring(2, wikitext.length-2).split('|');
+	// add meta data entry
 	FCK.wysiwygData[refid] = {
 		'type': 'video',
-		'original': wikitext,
-		'href': params[0]
+		'original': wikitext
 	};
 
-	// merge with extraData
-	FCK.wysiwygData[refid] = FCK.YAHOO.lang.merge(FCK.wysiwygData[refid], extraData);
+	// create new placeholder and add it to the article
+	placeholder = FCK.EditorDocument.createElement('INPUT');
+	placeholder.className = 'wysiwygDisabled';
+	placeholder.type = 'button';
+	placeholder.value = wikitext;
+	placeholder.setAttribute('refid', refid);
+	placeholder.setAttribute('_fck_type', 'video');
 
-	// parse given wikitext
-	var callback = {
-		success: function(o) {
-			FCK = o.argument.FCK;
-			refid =  o.argument.refid;
-
-			result = eval('(' + o.responseText + ')');
-			html = result.parse.text['*'];
-
-			// remove newPP comment and whitespaces
-			html = FCK.YAHOO.lang.trim(html.split('<!-- \nNewPP limit report')[0]);
-
-			// insert html into editing area...
-			var wrapper = FCK.EditorDocument.createElement('DIV');
-			FCK.InsertElement(wrapper);
-			wrapper.innerHTML = html;
-
-			// is "simple" video wrapped by <p></p> ?
-			if (html.substr(0,3) == '<p>') {
-				// remove wrapping <p></p>
-				wrapper.innerHTML = html.substr(3, html.length-7);
-			}
-
-			// ...and "protect" it
-			wrapper.firstChild.setAttribute('refid', refid);
-			FCK.ProtectVideo(wrapper.firstChild);
-
-			// remove wrapper
-			FCKDomTools.RemoveNode(wrapper, true);
-
-			FCK.log(FCK.wysiwygData[refid]);
-		},
-		failure: function(o) {},
-		argument: {'FCK': FCK, 'refid': refid}
-	}
-
-	FCK.YAHOO.util.Connect.asyncRequest(
-		'POST',
-		window.parent.wgScriptPath + '/api.php',
-		callback,
-		"action=parse&format=json&wysiwyg=true&prop=text&title=" + encodeURIComponent(window.parent.wgPageName) + "&text=" +  encodeURIComponent(wikitext)
-	);
+	FCK.InsertElement(placeholder);
 }
-
-
-
-// setup video overlaying menu
-FCK.VideoSetupOverlayMenu = function(refid, div) {
-
-	// remove old overlayMenu (if any)
-	if (div.lastChild && div.lastChild.nodeName.IEquals('span') && FCK.YD.hasClass(div.lastChild,'videoOverlay')) {
-		FCKDomTools.RemoveNode(div.lastChild);
-	}
-
-	div.setAttribute('refid', refid);
-
-	var docObj = FCKTools.GetElementDocument(div);
-
-	var overlay = docObj.createElement('SPAN');
-
-	// position menu based on alignment of an video
-	overlay.className = 'imageOverlay' + (FCK.YD.hasClass(div, 'thumb') ?  ' imageOverlayRight' : '');
-	overlay.style.visibility = 'hidden';
-
-	div.style.position = 'relative';
-
-	// move to the upper corner when video is wrapped using <a>
-	if (div.nodeName.IEquals('a') && !FCKBrowserInfo.IsIE) {
-		var height = parseInt(div.firstChild.offsetHeight / 2);
-		overlay.style.top = (-height + 8) + 'px';
-	}
-
-	div.appendChild(overlay);
-
-	overlay.innerHTML = '<span class="videoOverlayEdit" onclick="FCK.VideoEdit('+refid+')">edit</span><span class="videoOverlayRemove" onclick="FCK.VideoRemove('+refid+')">remove</span>';
-
-	// add "move" option for videos handled by contentEditable
-	if (FCK.UseContentEditable) {
-		overlay.innerHTML += '<span class="videoOverlayDrag">move</span>';
-	}
-
-	// show overlay menu
-	FCKTools.AddEventListener(div, 'mouseover', function(e) {
-		overlay.style.visibility = 'visible';
-	});
-
-	// hide overlay menu
-	FCKTools.AddEventListener(div, 'mouseout', function(e) {
-		overlay.style.visibility = 'hidden';
-	});
-}
-
-
-
 
 // add new <videogallery>
 FCK.VideoGalleryAdd = function(wikitext) {
@@ -362,7 +64,7 @@ FCK.VideoGalleryAdd = function(wikitext) {
 	FCK.wysiwygData[refid] = {
 		'type': 'hook',
 		'name': 'videogallery',
-		'original': wikitext
+		'description': wikitext
 	};
 
 	// create new placeholder and add it to the article
