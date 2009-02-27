@@ -604,8 +604,7 @@ function Wysiwyg_SetRefId($type, $params, $addMarker = true, $returnId = false) 
 			break;
 
 		case 'video':
-			$data['original'] = $params['original'];
-			$result = $params['original'];
+			$data['original'] = htmlspecialchars_decode(preg_replace($regexPreProcessor['search'], $regexPreProcessor['replace'], $params['original']));
 			break;
 	}
 

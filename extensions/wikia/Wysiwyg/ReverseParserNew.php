@@ -462,7 +462,7 @@ class ReverseParser {
 						}
 						else {
 							// thumbnail generation error - handle as an image
-							$out = $this->handleImage($node, $textContent);
+							$out = $this->handleMedia($node, $textContent);
 						}
 						break;
 
@@ -542,11 +542,11 @@ class ReverseParser {
 						$out = $this->handleListItem($node, $textContent);
 						break;
 
-					// images
+					// image / video
 					case 'div':
 					case 'iframe':
 						if (!empty($nodeData)) {
-							$out = $this->handleImage($node, $textContent);
+							$out = $this->handleMedia($node, $textContent);
 
 							// add newline if next node is paragraph
 							// and was in next line of wikitext
@@ -850,7 +850,7 @@ class ReverseParser {
 
 		switch($data['type']) {
 			case 'image';
-				return $this->handleImage($node, $content);
+				return $this->handleMedia($node, $content);
 			
 			case 'internal link':
 			case 'internal link: file':
@@ -945,15 +945,16 @@ class ReverseParser {
 	}
 
 	/**
-	 * Returns wikimarkup for image tags
+	 * Returns wikimarkup for image/video tags
 	 */
-	private function handleImage($node, $content) {
+	private function handleMedia($node, $content) {
 
 		// check is perfomed earlier
 		$data = $this->data[ $node->getAttribute('refid') ];
 
 		switch($data['type']) {
 			case 'image':
+			case 'video':
 				$out = $data['original'];
 				return $out;
 
