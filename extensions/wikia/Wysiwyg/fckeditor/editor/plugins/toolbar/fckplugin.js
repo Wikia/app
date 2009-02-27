@@ -32,6 +32,9 @@ WikiaToolbar.prototype.Create = function(parentElement) {
 
 	parentElement.appendChild(toolbar);
 
+	// store toolbar object
+	this.Toolbar = toolbar;
+
 	// add new toolbar CSS
 	FCKTools.AppendStyleSheet(toolbarDoc, window.parent.wgExtensionsPath + '/wikia/Wysiwyg/toolbar/toolbar.css?' + window.parent.wgStyleVersion);
 
@@ -81,6 +84,26 @@ WikiaToolbar.prototype.Create = function(parentElement) {
 	// set width of last bucket <UL>
 	if (currentBucket && currentBucketItems > 1) {
 		currentBucket.style.maxWidth = (currentBucketItems*28) + 'px';
+	}
+}
+
+FCK.WikiaUsingNewToolbar = true;
+
+WikiaToolbar.prototype.WikiaSwitchToolbar = function(switchToWikitext) {
+
+	var MWtoolbar = window.parent.document.getElementById('toolbar');
+
+	if (switchToWikitext) {
+		MWtoolbar.style.top = '16px';
+		MWtoolbar.style.left = '12px';
+		MWtoolbar.style.visibility = 'visible';
+
+		this.Toolbar.className = 'toolbarSource';
+	}
+	else {
+		MWtoolbar.style.visibility = 'hidden';
+
+		this.Toolbar.className = 'toolbarWysiwyg';
 	}
 }
 
@@ -160,6 +183,7 @@ WikiaButtonUI.prototype.Create = function( parentElement )
 	// create main wrapping element
 	var oMainElement = this.MainElement = oDoc.createElement( 'LI' ) ;
 	oMainElement.title = this.Tooltip ;
+	oMainElement.id = 'fck_toolbar_item_' + this.Name.toLowerCase();
 
 	// The following will prevent the button from catching the focus.
 	if ( FCKBrowserInfo.IsGecko )

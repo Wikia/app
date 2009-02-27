@@ -103,3 +103,15 @@
 	position: absolute;
 	left: -1px;
 }
+
+/* source mode */
+.toolbarSource td,
+.toolbarSource label,
+.toolbarSource li {
+	visibility: hidden;
+}
+
+.toolbarSource td.last, 
+#fck_toolbar_item_source {
+	visibility: visible;
+}
