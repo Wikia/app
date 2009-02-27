@@ -4,9 +4,6 @@ FCKCommands.RegisterCommand('Link', new FCKDialogCommand('Link', FCKLang.DlgLnkW
 // Register templates editor
 FCK.TemplateClickCommand = new FCKDialogCommand('Template', '&nbsp;', FCKConfig.PluginsPath + 'wikitext/dialogs/template.html', 780, 490);
 
-// Wikitext infobox
-FCK.InputClickCommand = new FCKDialogCommand('inputClickCommand', '&nbsp;', FCKConfig.PluginsPath + 'wikitext/dialogs/inputClick.html', 400, 100);
-
 // signature toolbar button
 var FCKTildesCommand = function() {
 	this.Name = 'Tildes' ;
@@ -378,7 +375,8 @@ FCK.Events.AttachEvent( 'OnAfterSetHTML', function() {
 					if (FCK.Track && FCK.wysiwygData) {
 						FCK.Track('/wikitextbox/' + (FCK.wysiwygData[refid] ? FCK.wysiwygData[refid].type : 'unknown'));
 					}
-					FCK.InputClickCommand.Execute();
+					// show simple YUI dialog
+					FCK.ShowInfoDialog('To edit this section please switch to WikiText view by clicking the "Source" button');
 				}
 			}
 			// probably IE - go up the DOM tree looking for refid element of the image
@@ -488,6 +486,29 @@ FCK.SetupElementsWithRefId = function() {
 	FCK.log('setup of nodes with refid finished');
 
 	return true;
+}
+
+// show YUI dialog
+FCK.ShowInfoDialog = function(text) {
+	var Dialog = new FCK.YAHOO.widget.SimpleDialog("wysiwygInfobox",
+	{
+		width: "450px",
+		zIndex: 999,
+		effect: {effect: FCK.YAHOO.widget.ContainerEffect.FADE, duration: 0.25},
+		fixedcenter: true,
+		modal: true,
+		draggable: true,
+		close: false
+	});
+
+	var buttons = [ { text: 'OK', handler: function() {this.hide()}, isDefault: true} ];
+
+	Dialog.setHeader('&nbsp;');
+	Dialog.setBody(text);
+	Dialog.cfg.queueProperty("buttons", buttons);
+
+	Dialog.render(window.parent.document.body);
+	Dialog.show();
 }
 
 // setup grey wikitext placeholder: block context menu, add dirty span(s) if needed
