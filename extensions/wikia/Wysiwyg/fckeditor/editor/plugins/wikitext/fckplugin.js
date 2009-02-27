@@ -517,7 +517,8 @@ FCK.FixWikitextPlaceholder = function(placeholder) {
 	placeholder.setAttribute('_fckContextMenuDisabled', true);
 
 	// placeholder is last child of p, div, li, dt or dd node - add dirty span
-	if (placeholder.parentNode.nodeName.IEquals(['p', 'div', 'li', 'dt', 'dd']) &&  placeholder == placeholder.parentNode.lastChild) {
+	if (placeholder.parentNode.nodeName.IEquals(['p', 'div', 'li', 'dt', 'dd']) && 
+		(placeholder == placeholder.parentNode.lastChild || placeholder == placeholder.parentNode.lastChild.previousSibling) ) {
 		if (FCKBrowserInfo.IsGecko10) {
 			// add &nbsp; for FF2.x
 			var frag = FCK.EditorDocument.createDocumentFragment();
@@ -525,8 +526,7 @@ FCK.FixWikitextPlaceholder = function(placeholder) {
 			placeholder.parentNode.appendChild(frag);
 		}
 		else {
-			// add 'dirty' <br/>
-			FCKTools.AppendBogusBr(placeholder.parentNode);
+			FCK.InsertDirtySpanAfter(placeholder);
 		}
 	}
 
