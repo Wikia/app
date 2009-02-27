@@ -69,6 +69,14 @@ FCKToolbarItems.RegisterItem( 'AddImage', oTildesItem );
 FCK.originalSwitchEditMode = FCK.SwitchEditMode;
 
 FCK.WysiwygSwitchToolbars = function(switchToWikitext) {
+
+	// using new toolbar?
+	if (typeof FCK.WikiaUsingNewToolbar != 'undefined') {
+		var toolbar = FCK.ToolbarSet.Toolbars[0];
+		toolbar.WikiaSwitchToolbar(switchToWikitext);
+		return;
+	}
+
 	var toolbar = document.getElementById('xToolbar').getElementsByTagName('tr');
 
 	// using new toolbar?
@@ -450,6 +458,10 @@ FCK.SetupElementsWithRefId = function() {
 				FCK.ProtectImage(node);
 				break;
 
+			case 'video':
+				FCK.ProtectVideo(node);
+				break;
+
 			// add tooltip to links
 			case 'internal link':
 				node.title = data.href;
@@ -777,7 +789,7 @@ FCK.ImageProtectSetupOverlayMenu = function(refid, div) {
 
 	// add "move" option for images handled by contentEditable
 	if (FCK.UseContentEditable) {
-		overlay.innerHTML += '<span class="imageOverlayDrag" onmousedown="FCK.ProtectImageDrag('+refid+')">move</span>';
+		overlay.innerHTML += '<span class="imageOverlayDrag">move</span>';
 	}
 
 	// show overlay menu

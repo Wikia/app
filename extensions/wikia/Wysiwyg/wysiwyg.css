@@ -6,6 +6,9 @@
 	top: 3px;
 	visibility: hidden;
 }
+#editform #toolbar img {
+	margin: 0 1px;
+}
 #wpTextbox1 {
 	visibility: hidden;
 }
