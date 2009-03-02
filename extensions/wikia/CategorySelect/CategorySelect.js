@@ -425,13 +425,14 @@ function showCSpanel() {
 			var el = document.createElement('div');
 			el.innerHTML = originalRequest.responseText;
 			$('catlinks').appendChild(el);
-			YAHOO.log('category html added');
 			csType = 'view';
 			initHandlers();
 			initAutoComplete();
 			initializeCategories();
-			setTimeout('replaceAddToInput()', 50);
-			YAHOO.util.Dom.removeClass('catlinks', 'csLoading');
+			YAHOO.util.Get.css(wgExtensionsPath+'/wikia/CategorySelect/CategorySelect.css?'+wgStyleVersion, {onSuccess:function() {
+				replaceAddToInput();
+				YAHOO.util.Dom.removeClass('catlinks', 'csLoading');
+			}});
 		},
 		timeout: 30000
 	};
