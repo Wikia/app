@@ -343,7 +343,7 @@ function CategorySelectGetCategoryLinksEnd($categoryLinks) {
 
 	$action = $wgRequest->getVal('action', 'view');
 	if ($action == 'view' || $action == 'purge') {
-		$categoryLinks .= ' <div id="csAddCategorySwitch" style="float:left;border: 1px solid #BBB;-moz-border-radius:3px;padding:0 4px 0 12px;background:#ddd url(\'http://images.wikia.com/extensions/wikia/CategorySelect/sprite.png\') left center no-repeat;line-height: 16px;"><a href="#" onclick="YAHOO.util.Get.script(wgExtensionsPath+\'/wikia/CategorySelect/CategorySelect.js?\'+wgStyleVersion,{onSuccess:function(){showCSpanel();}});$(\'catlinks\').className+=\' csLoading\';return false;" onfocus="this.blur();" style="color:#000;font-size:0.85em;text-decoration:none;background:#ddd;display:block;padding:0 3px">' . wfMsg('categoryselect-addcategory-button') . '</a></div>';
+		$categoryLinks .= ' <div id="csAddCategorySwitch" style="position:relative;float:left;border: 1px solid #BBB;-moz-border-radius:3px;padding:0 4px 0 12px;background:#ddd url(\'http://images.wikia.com/extensions/wikia/CategorySelect/sprite.png\') left center no-repeat;line-height: 16px;"><a href="#" onclick="YAHOO.util.Get.script(wgExtensionsPath+\'/wikia/CategorySelect/CategorySelect.js?\'+wgStyleVersion,{onSuccess:function(){showCSpanel();}});$(\'catlinks\').className+=\' csLoading\';return false;" onfocus="this.blur();" style="color:#000;font-size:0.85em;text-decoration:none;background:#ddd;display:block;padding:0 3px">' . wfMsg('categoryselect-addcategory-button') . '</a></div>';
 	}
 	return true;
 }
@@ -391,7 +391,6 @@ function CategorySelectGenerateHTMLforView() {
 	global $wgExtensionsPath, $wgStyleVersion;
 
 	$result = '
-	<link rel="stylesheet" type="text/css" href="' . $wgExtensionsPath . '/wikia/CategorySelect/CategorySelect.css?' . $wgStyleVersion . '" />
 	<div id="csMainContainer" class="csViewMode">
 		<div id="csSuggestContainer">
 			<div id="csHintContainer">' . wfMsg('categoryselect-suggest-hint') . '</div>
