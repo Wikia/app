@@ -1016,7 +1016,7 @@ class ReverseParser {
 			return false;
 		}
 
-		if($node->getAttribute('_wysiwyg_new_line')) {
+		if($node->getAttribute('_wysiwyg_new_line') && !in_array($node->nodeName, array('a')) )  {
 			return true;
 		}
 
@@ -1052,8 +1052,8 @@ class ReverseParser {
 			return true;
 		}
 
-		// HTML tags (e.g. image containers)
-		if ($node->getAttribute('_wysiwyg_line_start')) {
+		// HTML tags (e.g. image containers, ignore inline tags)
+		if ($node->getAttribute('_wysiwyg_line_start') && !in_array($node->nodeName, array('a')) ) {
 			return true;
 		}
 
