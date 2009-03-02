@@ -2,6 +2,7 @@
 
 $messages = array(
 	'en' => array(
+		'daemonloader' => 'Daemon loader',
 		'daemonloader_pagetitle' => 'Daemon loader',
 		'daemonloader_createtask' => 'Create task',
 		'daemonloader_listtask' => 'List of tasks',

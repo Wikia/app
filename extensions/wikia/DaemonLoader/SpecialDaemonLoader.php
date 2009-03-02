@@ -67,6 +67,6 @@ $wgDaemonLoaderAdmins = array("Eloy.wikia", "Moli.wikia");
 $dir =  dirname( __FILE__ );
 $wgAutoloadClasses['DaemonLoader'] = $dir . '/SpecialDaemonLoader_body.php';
 $wgSpecialPages['DaemonLoader'] = array( /*class*/ 'DaemonLoader', /*name*/ 'DaemonLoader', /* permission */'', /*listed*/ true, /*function*/ false, /*file*/ false );
-$wgSpecialPageGroups['DaemonLoader'] = 'users';
+$wgSpecialPageGroups['DaemonLoader'] = 'other';
 $wgExtensionMessagesFiles['DaemonLoader'] = $dir . '/SpecialDaemonLoader.i18n.php';
 
