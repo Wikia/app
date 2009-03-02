@@ -945,9 +945,18 @@ FCK.ProtectImageUpdate = function(refid, wikitext, extraData) {
 			wrapper.firstChild.setAttribute('refid', refid);
 			FCK.ProtectImage(wrapper.firstChild);
 
+			// remember current values of _wysiwyg_new_line and _wysiwyg_line_start attributes
+			if (oldImage.getAttribute('_wysiwyg_new_line')) {
+				wrapper.firstChild.setAttribute('_wysiwyg_new_line', true);
+			}
+
+			if (oldImage.getAttribute('_wysiwyg_line_start')) {
+				wrapper.firstChild.setAttribute('_wysiwyg_line_start', true);
+			}
+
 			// remove wrapper and old image
 			FCKDomTools.RemoveNode(oldImage, false); // including child nodes
-			FCKDomTools.RemoveNode(wrapper, true);
+			FCKDomTools.RemoveNode(wrapper, true); // excluding child nodes
 		},
 		failure: function(o) {},
 		argument: {'FCK': FCK, 'refid': refid}
