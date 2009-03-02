@@ -249,7 +249,7 @@ float:right;
 white-space:nowrap;
 }
 
-ul.star-rating {
+.wk_star_list ul.star-rating {
 float:none;
 display:inline;
 position:absolute;
