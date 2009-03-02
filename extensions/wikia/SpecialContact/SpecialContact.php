@@ -122,6 +122,14 @@ function wfSpecialContactSetup() {
 				}
 			}
 
+			if ( $this->mRealName == '' && $wgUser->getID() != 0 ) {
+				$this->mRealName = $wgUser->getRealName();
+			}
+
+			if ( $this->mEmail == '' && $wgUser->getID() != 0 ) {
+				$this->mEmail = $wgUser->getEmail();
+			}
+
 			$wgOut->setPageTitle( wfMsg( 'contactpagetitle' ) );
 			$wgOut->setRobotpolicy( 'noindex,nofollow' );
 			$wgOut->setArticleRelated( false );
