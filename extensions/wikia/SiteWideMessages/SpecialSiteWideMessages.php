@@ -154,7 +154,7 @@ function SiteWideMessagesUserNewTalks (&$user, &$talks) {
 	$key = 'wikia:talk_messages:' . $user->getID() . ':' . str_replace(' ', '_', $user->getName());
 	$messages = $wgMemc->get($key);
 
-	if(!is_array($messages)) {
+	if(!is_array($messages) && $messages != 'deleted') {
 		$messages = array();
 		$messagesID = SiteWideMessages::getAllUserMessagesId($user);
 		if(!empty($messagesID)) {

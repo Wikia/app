@@ -768,7 +768,7 @@ class SiteWideMessages extends SpecialPage {
 
 			//purge the cache
 			$key = 'wikia:talk_messages:' . $userID . ':' . str_replace(' ', '_', $user->getName());
-			$wgMemc->delete($key);
+			$wgMemc->set($key, 'deleted', 100);
 
 			wfDebug(basename(__FILE__) . ' || ' . __METHOD__ . " || userID=$userID, result=" . ($dbResult ? 'true':'false') . "\n");
 		}
@@ -817,7 +817,7 @@ class SiteWideMessages extends SpecialPage {
 
 			//purge the cache
 			$key = 'wikia:talk_messages:' . $userID . ':' . str_replace(' ', '_', $wgUser->getName());
-			$wgMemc->delete($key);
+			$wgMemc->set($key, 'deleted', 100);
 
 			wfDebug(basename(__FILE__) . ' || ' . __METHOD__ . " || WikiId=$mWikiId, messageID=$messageID, result=" . ($dbResult ? 'true':'false') . "\n");
 			return (bool)$dbResult;
