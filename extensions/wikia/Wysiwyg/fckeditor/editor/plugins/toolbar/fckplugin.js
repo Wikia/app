@@ -402,7 +402,7 @@ var StyleCommand = function(id, name) {
 StyleCommand.prototype = {
 	IsInsideList : function() {
 		var startContainer = FCKSelection.GetBoundaryParentElement(true);
-                var listNode = startContainer;
+		var listNode = startContainer;
 
 		if (listNode && listNode.nodeName.IEquals(['ul', 'ol', 'li'])) {
 			return true;
