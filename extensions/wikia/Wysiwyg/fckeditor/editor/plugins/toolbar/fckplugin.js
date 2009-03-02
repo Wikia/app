@@ -389,15 +389,36 @@ var StyleCommand = function(id, name) {
         this.Name = name;
 	this.Command = new FCKCoreStyleCommand(id);
 	this.IsActive = false;
+	this.IsDisabled = false;
+
+	// handle state of block style buttons when cursor is inside list
+	if (id == 'h2' || id == 'h3' || id == 'pre' || id == 'p') {
+		this.disableWhenInsideList = true;
+		FCK.log(id + ' will be disabled inside list');
+	}
 
 	FCKStyles.AttachStyleStateChange(this.Command.StyleName, this._OnStyleStateChange, this);
 }
 StyleCommand.prototype = {
+	IsInsideList : function() {
+		var startContainer = FCKSelection.GetBoundaryParentElement(true);
+                var listNode = startContainer;
+
+		if (listNode && listNode.nodeName.IEquals(['ul', 'ol', 'li'])) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	},
         Execute : function() {
 		this.Command.Execute();
         },
         GetState : function() {
 		if ( FCK.EditMode != FCK_EDITMODE_WYSIWYG ) {
+			return FCK_TRISTATE_DISABLED ;
+		}
+		else if (this.IsDisabled) {
 			return FCK_TRISTATE_DISABLED ;
 		}
 		else {
@@ -406,6 +427,7 @@ StyleCommand.prototype = {
 	 },
 	_OnStyleStateChange : function( styleName, isActive ) {
 		this.IsActive = isActive;
+		this.IsDisabled = (this.disableWhenInsideList && this.IsInsideList());
 
 		if (isActive) {
 			FCK.log('current style: ' + this.Name);
