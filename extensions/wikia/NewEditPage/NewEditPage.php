@@ -1,7 +1,8 @@
 <?
 $wgExtensionCredits['other'][] = array(
         'name' => 'New Edit Page',
-        'version' => 0.1,
+	'description' => 'Applies edit page changes',
+        'version' => 0.11,
         'author' => '[http://pl.wikia.com/wiki/User:Macbre Maciej Brencz]'
 );
 
