@@ -114,10 +114,12 @@ function SiteWideMessagesGetUserMessagesContent($dismissLink = true, $parse = tr
 function SiteWideMessagesEmptyTalkPageWithMessages(&$out, &$text) {
 	global $wgTitle, $wgOut, $wgUser;
 	if (wfIsTalkPageForCurrentUserDisplayed() && !$wgUser->isAllowed('bot')) {
-		$msgContent = SiteWideMessagesGetUserMessagesContent(false, false, false, false);
-		if(!$wgTitle->exists() && $msgContent != '') {
-			//replace message about empty UserTalk only if we have a messages to display
-			$text = '';
+		if(!$wgTitle->exists()) {
+			$msgContent = SiteWideMessagesGetUserMessagesContent(false, false, false, false);
+			if ($msgContent != '') {
+				//replace message about empty UserTalk only if we have a messages to display
+				$text = '';
+			}
 		}
 	}
 	return true;
