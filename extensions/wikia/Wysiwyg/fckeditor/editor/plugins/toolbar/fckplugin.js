@@ -427,9 +427,6 @@ var WideScreenToggle = function() {
 	if (toggleWideScreenLink) {
 		this.toggleWideScreenListener = FCK.YAHOO.util.Event.getListeners(toggleWideScreenLink).pop();
 	}
-	else {
-		this.toggleWideScreenListener = false;
-	}
 
 	// get current widescreen mode state
 	this.isActive = FCK.YAHOO.util.Dom.hasClass(window.parent.document.body, 'editingWide');
@@ -437,7 +434,7 @@ var WideScreenToggle = function() {
 
 WideScreenToggle.prototype = {
 	Execute : function() {
-		if (this.toggleWideScreenListener) {
+		if (typeof this.toggleWideScreenListener != 'undefined') {
 			this.toggleWideScreenListener.fn(true);
 			this.isActive = !this.isActive;
 
