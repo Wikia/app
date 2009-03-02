@@ -373,3 +373,9 @@ div.searchresult {
 span.searchmatch {
 	color: inherit;
 }
+
+/*** YUI popups ***/
+.yui-panel {
+	color: #000;
+	background-color: #fff;
+}
