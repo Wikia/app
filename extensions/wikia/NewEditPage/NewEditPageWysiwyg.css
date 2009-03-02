@@ -6,6 +6,7 @@
 .mw-newarticletext,
 .usermessage,
 .previewnote,
+#user_masthead,
 #editingTipsToggleDiv {
 	display: none !important;
 }
