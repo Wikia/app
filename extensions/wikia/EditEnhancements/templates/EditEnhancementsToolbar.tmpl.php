@@ -2,6 +2,7 @@
 	#edit_enhancements_toolbar {
 		margin: 5px 0;
 		padding: 5px;
+		clear: both;
 	}
 	.edit_enhancements_toolbar_fixed {
 		position: fixed;
