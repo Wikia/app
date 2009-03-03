@@ -38,3 +38,30 @@
 #wysiwygInfobox .bd input {
 	margin: 5px 5px 5px 25px;
 }
+
+/** Tooltip **/
+#wysiwygToolbarTooltip {
+	position: absolute;
+	width: 200px;
+	background-color: #ffc;
+	color: #000;
+}
+
+#wysiwygToolbarTooltip p {
+	font-size: 0.9em;
+	padding: 5px 15px 5px 5px;
+}
+
+#wysiwygToolbarTooltip a {
+	text-decoration: underline;
+}
+
+#wysiwygToolbarTooltipClose {
+	position: absolute;
+	top: 2px;
+	right: 2px;
+	width: 12px;
+	height: 12px;
+	background-image: url('http://images.wikia.com/skins/common/yui_2.5.2/container/assets/close12_1.gif');
+	cursor: pointer;
+}

@@ -1,5 +1,28 @@
 FCK.log('new toolbar enabled...');
 
+// show toolbar tooltip
+FCK.WikiaToolbarShowTooltip = function(content) {
+	FCK.log('showing toolbar tooltip');
+
+	// create tooltip node
+	var docObj = window.parent.document;
+	var tooltip = docObj.createElement('DIV');
+	tooltip.id = 'wysiwygToolbarTooltip';
+
+	docObj.body.appendChild(tooltip);
+
+	// set HTML & CSS
+	tooltip.innerHTML = content;
+	tooltip.style.top = '10px';
+	tooltip.style.left = '500px';
+
+	// add close handler
+	FCK.YAHOO.util.Event.addListener('wysiwygToolbarTooltipClose', 'click', function(e) {
+		FCK.YAHOO.util.Dom.get('wysiwygToolbarTooltip').style.display = 'none';
+		window.parent.sajax_do_call('WysiwygToolbarRemoveTooltip', [], function() {});
+	});
+}
+
 // WikiaSeparator class for separating buckets
 var WikiaSeparator = function( bucket  ) { this.Bucket = bucket; };
 WikiaSeparator.prototype.Create = function(node) { }
@@ -84,6 +107,14 @@ WikiaToolbar.prototype.Create = function(parentElement) {
 	// set width of last bucket <UL>
 	if (currentBucket && currentBucketItems > 1) {
 		currentBucket.style.maxWidth = (currentBucketItems*28) + 'px';
+	}
+
+	// show tooltip
+	if (typeof window.parent.wysiwygToolbarTooltip != 'undefined') {
+		FCK.WikiaToolbarShowTooltip(window.parent.wysiwygToolbarTooltip);
+	}
+	else {
+		FCK.log('not showing toolbar tooltip');
 	}
 }
 
