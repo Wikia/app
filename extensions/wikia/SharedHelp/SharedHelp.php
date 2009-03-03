@@ -181,7 +181,7 @@ function SharedHelpHook(&$out, &$text) {
 				}
 			} else {
 				$tmp = split("\r\n\r\n", $content, 2);
-				$content = $tmp[1];
+				$content = isset($tmp[1]) ? $tmp[1] : '';
 			}
 			if(strpos($content, '"noarticletext"') > 0) {
 				$sharedArticle = array('exists' => 0, 'timestamp' => wfTimestamp());
@@ -189,7 +189,7 @@ function SharedHelpHook(&$out, &$text) {
 				return true;
 			} else {
 				$contentA = explode("\n", $content);
-				$tmp = $contentA[count($contentA)-2];
+				$tmp = isset($contentA[count($contentA)-2]) ? $contentA[count($contentA)-2] : '';
 				$idx1 = strpos($tmp, 'key');
 				$idx2 = strpos($tmp, 'end');
 				$key = trim(substr($tmp, $idx1+4, $idx2-$idx1));
