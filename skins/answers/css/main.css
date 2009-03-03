@@ -531,7 +531,7 @@ body .header_menu_button * {
 /*** SOCIAL NETWORKS ***/
 #social_networks {
 	font-size: 11pt;
-	margin-top: 5px;
+	margin-top: 15px;
 }
 #social_networks label {
 	color: #252525;
@@ -807,6 +807,19 @@ body .header_menu_button * {
 .google_url {
 	color: #008000;
 }
+#ads-unaswered-bottom{
+	float:right;
+	margin-bottom:10px;
+}
+#ads-answered-left{
+	float:left;
+	margin-top:10px;
+	margin-bottom:10px;
+	padding-right:20px;
+}
+.question .visualClear{
+	clear:none;
+}
 #answers_sidebar .google_ad {
 	margin-top: 15px;
 }
@@ -847,6 +860,10 @@ body .header_menu_button * {
 }
 .quickanswer{
 	margin-bottom:5px;
+}
+
+#unanswered-links{
+	margin-top:10px;
 }
 
 /*** Category Page Ads ***/

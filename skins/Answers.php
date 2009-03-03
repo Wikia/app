@@ -119,7 +119,6 @@ class AnswersTemplate extends MonacoTemplate {
  class="mediawiki <?php $this->text('dir') ?> <?php $this->text('pageclass') ?> <?php $this->text('skinnameclass') ?>
  <?php if($answer_page->isQuestion(false,false) && $action=="edit") { ?>editquestion<?php } ?>
  <?php if($answer_page->isQuestion(false,false) && $action=="submit") { ?>editquestion<?php } ?>"> 
- 
 
 <!--GetHTMLAfterBody-->
 <?
@@ -204,6 +203,7 @@ wfRunHooks('GetHTMLAfterBody', array (&$this));
 				}
 			}
 		?>
+		
 		<div id="question">
 			<div class="top"><span></span></div>
 			<h1 id="firstHeading" class="firstHeading"><?php $this->data['displaytitle']!=""?$this->html('title'):$this->text('title') ?><?=$question_mark?> <a href="<?=$this->data['content_actions']['move']['href']?>"><?=wfMsg('rephrase')?></a></h1>
@@ -260,6 +260,7 @@ wfRunHooks('GetHTMLAfterBody', array (&$this));
 		<?php
 		} else {
 		?>	
+		
 		<h1 id="firstHeading" class="firstHeading"><?php $this->data['displaytitle']!=""?$this->html('title'):$this->text('title') ?></h1>
 		<?php
 		}
@@ -276,6 +277,20 @@ wfRunHooks('GetHTMLAfterBody', array (&$this));
 		if ( $is_question && $answer_page->isArticleAnswered() ) {
 			echo '<div class="sectionedit">[<a href="'. $this->data['content_actions']['edit']['href'] .'">'. wfMsg('editsection') .'</a>]</div>';
 			echo '<div id="answer_title">'. wfMsg("answer_title") .'</div>';
+			
+			$ads = '<div id="ads-answered-left">
+			<script type="text/javascript">
+				google_ad_client    = "pub-4086838842346968";
+				google_ad_width     = "120";
+				google_ad_height    = "240";
+				google_ad_format    = google_ad_width + "x" + google_ad_height + "_as";
+				google_ad_type      = "text";
+				google_color_link   = "002BB8";
+			</script>
+			<script language="JavaScript" src="http://pagead2.googlesyndication.com/pagead/show_ads.js"></script>
+			</div>';
+			echo $ads;
+			
 			$bodyContentClass = ' class="question"';
 		} else if ($wgTitle->getNamespace() == NS_CATEGORY) {
 			$bodyContentClass = ' class="category"';
@@ -283,7 +298,7 @@ wfRunHooks('GetHTMLAfterBody', array (&$this));
 			$bodyContentClass = '';
 		}
 		?>
-		
+			
 		<div id="bodyContent"<?=$bodyContentClass?>> 
 			<h3 id="siteSub"><?php $this->msg('tagline') ?></h3>
 			<div id="contentSub"><?php $this->html('subtitle') ?></div>
@@ -294,9 +309,28 @@ wfRunHooks('GetHTMLAfterBody', array (&$this));
 			<?php $this->html('bodytext') ?>
 			<!-- end content -->
 			<?php if($this->data['dataAfterContent']) { $this->html ('dataAfterContent'); } ?>
+			
 			<div class="visualClear"></div>
 		</div><?/*bodyContent*/?>
 
+		<?php
+		if( $is_question && !$answer_page->isArticleAnswered() ){
+		
+			$ads = '<div id="ads-unaswered-bottom">
+			<script type="text/javascript">
+				google_ad_client    = "pub-4086838842346968";
+				google_ad_width     = "200";
+				google_ad_height    = "200";
+				google_ad_format    = google_ad_width + "x" + google_ad_height + "_as";
+				google_ad_type      = "text";
+				google_color_link   = "002BB8";
+			</script>
+			<script language="JavaScript" src="http://pagead2.googlesyndication.com/pagead/show_ads.js"></script>
+			</div>';
+			echo $ads;
+		
+		}?>
+		
 		<?php
 		global $wgTitle, $wgAnswersShowInlineRegister;
 		if ($wgAnswersShowInlineRegister && $wgUser->isAnon() && !$answer_page->isArticleAnswered() && $_GET['state'] == 'asked') {
@@ -368,13 +402,14 @@ wfRunHooks('GetHTMLAfterBody', array (&$this));
 				$watchlist_url = "javascript:anonWatch();";
 			}
 		?>
+		<!--
 		<table id="bottom_ads"> 
 		<tr>
 			<td id="google_ad_1" class="google_ad"></td>
 			<td id="google_ad_2" class="google_ad"></td> 
 		</tr>
 		</table> 
-		
+		-->
 		<?
 		/*
 		<div id="huge_buttons" class="clearfix">
@@ -388,6 +423,31 @@ wfRunHooks('GetHTMLAfterBody', array (&$this));
 		</div>
 		*/
 		?>
+		<?php
+		$tiny_url = Http::get("http://tinyurl.com/api-create.php?url={$wgTitle->getFullURL()}");
+		$twitter_question = urlencode( substr( $wgTitle->getText(), 0, 99 ) );
+		$twitter_url = "http://twitter.com/home?status=" . $twitter_question . "? " . $tiny_url . " " . urlencode("#" . wfMsg("twitter_hashtag"));
+
+		?>
+		<?php
+		if( !$answer_page->isArticleAnswered() ){
+		?>
+			<div id="answer_title"><?= wfMsg("answer_title")?></div>
+			<div><?= wfMsg("question_not_answered")?></div>
+			
+			<div id="unanswered-links">
+			<div><?= wfMsg("you_can")?></div>
+			<ul>
+			<li><?= wfMsg("answer_this", $wgTitle->getEditURL())?></li>
+			<li><?= wfMsg("research_this_on_wikipedia", $wgTitle->getEditURL())?></li>
+			<li><?= wfMsg("ask_friends_on_twitter", $twitter_url)?></li>
+			<li><?= wfMsg("receive_email", $watchlist_url)?></li>
+			</ul>
+			</div>
+		<?php
+		}else{
+		?>
+		
 		<div id="social_networks">
 		<label><?= wfMsg("ask_friends")?></label>
 			<?
@@ -412,12 +472,7 @@ wfRunHooks('GetHTMLAfterBody', array (&$this));
 			
 			?>
 
-		<?php
-		$tiny_url = Http::get("http://tinyurl.com/api-create.php?url={$wgTitle->getFullURL()}");
-		$twitter_question = urlencode( substr( $wgTitle->getText(), 0, 99 ) );
-		$twitter_url = "http://twitter.com/home?status=" . $twitter_question . "? " . $tiny_url . " " . urlencode("#" . wfMsg("twitter_hashtag"));
-
-		?>
+		
 		<div id="twitter-post">
 			<a href="<?=$twitter_url?>" onclick="window.open('<?=$twitter_url?>', 'twitter'); return false;"><img src="/skins/answers/images/twitter_icon.png" /></a> <a href="<?=$twitter_url?>" onclick="window.open('<?=$twitter_url?>', 'twitter'); return false;"><?= wfMsg("twitter_ask")?></a>
 		</div>
@@ -446,6 +501,7 @@ wfRunHooks('GetHTMLAfterBody', array (&$this));
 				}
 		} 
 		} 
+		}
 		?>
 		
 		<?php if($this->data['catlinks']) { $this->html('catlinks'); } ?>
@@ -570,7 +626,7 @@ wfRunHooks('GetHTMLAfterBody', array (&$this));
 			</ul>
 			<? 
 			if ($is_question) {	
-			echo '<li><div id="google_ad_3" class="google_ad"></div></li>';
+			echo '<li><div id="google_ad_1" class="google_ad"></div></li>';
 			}
 			?>
 		</div>
@@ -592,7 +648,7 @@ wfRunHooks('GetHTMLAfterBody', array (&$this));
 					}
 				}
 				if ($is_question) {	
-				echo '<li><div id="google_ad_4" class="google_ad"></div></li>';
+				echo '<li><div id="google_ad_2" class="google_ad"></div></li>';
 				}
 				?>
 			</ul>
