@@ -85,7 +85,7 @@ class AutoCreateWikiPage extends SpecialPage {
 		$this->mAction = $wgRequest->getVal( "action", false );
 		$this->mSubpage = $subpage;
 
-		$this->create();
+		$this->createWikiForm();
 	}
 
 	/**
@@ -441,6 +441,38 @@ class AutoCreateWikiPage extends SpecialPage {
 		if( file_exists( $this->mWikiData[ "images" ] ) && is_dir( $this->mWikiData[ "images" ] ) ) {
 			exec( "rm -rf {$this->mWikiData[ "images" ]}" );
 		}
+	}
+
+	/**
+	 * create wiki form
+	 *
+	 * @access public
+	 *
+	 * @param $subpage Mixed: subpage of SpecialPage
+	 */
+	public function createWikiForm() {
+		global $wgOut, $wgUser, $wgExtensionsPath, $wgStyleVersion;
+
+		#-
+		$aLanguages = Language::getLanguageNames();
+		#-
+		$hubs = WikiFactoryHub::getInstance();
+		$aCategories = $hubs->getCategories();
+		#-
+		/* run template */
+		$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
+		$oTmpl->set_vars( array(
+			"wgUser" => $wgUser,
+			"wgExtensionsPath" => $wgExtensionsPath,
+			"wgStyleVersion" => $wgStyleVersion,
+			"aLanguages" => $aLanguages,
+			"aCategories" => $aCategories,
+		));
+		
+		#---
+		$wgOut->addHtml($oTmpl->execute("create-wiki-form"));
+		wfProfileOut( __METHOD__ );
+		return;
 	}
 
 	/**
