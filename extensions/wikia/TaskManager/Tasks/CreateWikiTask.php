@@ -152,7 +152,7 @@ class CreateWikiTask extends BatchTask {
 			$this->addLog( $retval );
 
 			#--- modify wiki's variables based on hub and $wgHubCreationVariables values
-	                $this->addCreationSettings( $this->mParams["params"]["wpCreateWikiCategory"], $wgHubCreationVariables, 'hub' );
+	        $this->addCreationSettings( $this->mParams["params"]["wpCreateWikiCategory"], $wgHubCreationVariables, 'hub' );
 		}
 
 		/**
