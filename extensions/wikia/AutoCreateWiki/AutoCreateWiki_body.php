@@ -28,19 +28,19 @@ class AutoCreateWikiPage extends SpecialPage {
 		$mMYSQLdump,
 		$mMYSQLbin,
 		$mPHPbin,
+		$mStarters,
 		$mCurrTime;
 
 	/**
 	 * test database, CAUTION! content will be destroyed during tests
 	 */
 	const TESTDB = "testdb";
-	const GAMING = 2;
-	const ENTERTAINMENT = 3;
+	const ST_GAMING = 2; #3711 3578
+	const ST_ENTERTAINMENT = 3;
 	const LOG = "autocreatewiki";
 	const IMGROOT = "/images/";
     const CREATEWIKI_LOGO = "/images/central/images/2/22/Wiki_Logo_Template.png";
     const CREATEWIKI_ICON = "/images/central/images/6/64/Favicon.ico";
-
 
 	/**
 	 * constructor
@@ -52,6 +52,14 @@ class AutoCreateWikiPage extends SpecialPage {
 		 * initialize some data
 		 */
 		$this->mWikiData = array();
+
+		/**
+		 * hub starters
+		 */
+		$this->mStarters = array(
+			ST_GAMING => 3578,
+			ST_ENTERTAINMENT => 3711
+		);
 
 		/**
 		 * set paths for external tools
@@ -85,7 +93,12 @@ class AutoCreateWikiPage extends SpecialPage {
 		$this->mAction = $wgRequest->getVal( "action", false );
 		$this->mSubpage = $subpage;
 
-		$this->createWikiForm();
+		if( $subpage === "test" ) {
+			$this->create();
+		}
+		else {
+			$this->createWikiForm();
+		}
 	}
 
 	/**
@@ -468,7 +481,7 @@ class AutoCreateWikiPage extends SpecialPage {
 			"aLanguages" => $aLanguages,
 			"aCategories" => $aCategories,
 		));
-		
+
 		#---
 		$wgOut->addHtml($oTmpl->execute("create-wiki-form"));
 		wfProfileOut( __METHOD__ );
