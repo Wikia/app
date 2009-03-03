@@ -60,12 +60,16 @@ WikiaToolbar.prototype.Create = function(parentElement) {
 
 	// add new toolbar CSS
 	FCKTools.AppendStyleSheet(toolbarDoc, window.parent.wgExtensionsPath + '/wikia/Wysiwyg/toolbar/toolbar.css?' + window.parent.wgStyleVersion);
+	FCKTools.AppendStyleSheet(toolbarDoc, window.parent.stylepath + '/monaco/css/reset_modified.css?' + window.parent.wgStyleVersion);
 
 	// set toolbar foreground / background color based on #page_bar (.color1 CSS class)
 	var pageBar = new FCK.YAHOO.util.Element('page_bar');
 	if (pageBar) {
 		toolbar.style.color= pageBar.getStyle('color');
-		toolbar.style.backgroundColor= pageBar.getStyle('backgroundColor');
+		var backgroundColor= pageBar.getStyle('backgroundColor');
+	}
+	else {
+		var backgroundColor = '#eee';
 	}
 
 	var toolbarRow = toolbar.insertRow(-1);
@@ -85,7 +89,7 @@ WikiaToolbar.prototype.Create = function(parentElement) {
 
 			// create new bucket
 			var toolbarCell = toolbarRow.insertCell(-1);
-			toolbarCell.innerHTML = '<div class="clearfix color1">' + 
+			toolbarCell.innerHTML = '<div class="clearfix color1" style="background-color: ' + backgroundColor  + '">' + 
 				'<label title="' + item.Bucket.name + '" class="color1">' + item.Bucket.name  + '</label><ul></ul></div>';
 
 			// set CSS class for last bucket
