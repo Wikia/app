@@ -122,7 +122,7 @@ AdEngine.getHEX = function (color) {
 		return color;
 	}
 
-	if(color.match("^\#")) {
+	if(color.match(/^\#/)) {
 		return color.substring(1);
 	}
 
