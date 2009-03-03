@@ -9,6 +9,7 @@ $wgExtensionCredits['other'][] = array(
 $dir = dirname(__FILE__).'/';
 $wgExtensionMessagesFiles['Wysiwyg'] = $dir.'Wysiwyg.i18n.php';
 $wgAjaxExportList[] = 'Wysywig_Ajax';
+$wgAjaxExportList[] = 'WysiwygToolbarRemoveTooltip';
 $wgEnableMWSuggest = true;
 
 $wgHooks['AlternateEdit'][] = 'Wysiwyg_AlternateEdit';
@@ -177,10 +178,14 @@ function Wysiwyg_Initial($form) {
 			$toolbarItems = array_merge($toolbarItems, $bucket['items']);
 		}
 
+		// tooltip
+		$toolbarTooltip = WysiwygToolbarAddTooltip();
+
 		$wgOut->addInlineScript(
 			"var wysiwygUseNewToolbar = true;\n" .
 			"var wysiwygToolbarBuckets = " . Wikia::json_encode($toolbarBuckets) . ";\n" . 
-			"var wysiwygToolbarItems = " . Wikia::json_encode($toolbarItems) . ";"
+			"var wysiwygToolbarItems = " . Wikia::json_encode($toolbarItems) . ";" .
+			( !empty($toolbarTooltip) ? "\nvar wysiwygToolbarTooltip = " . Xml::encodeJsVar($toolbarTooltip) . ";" : '')
 		);
 	}
 
@@ -888,4 +893,49 @@ function WysiwygFirstEditMessage() {
 	}
 
 	return;
+}
+
+/**
+ * Add tooltip on first usage of new toolbar
+ *
+ * @author Maciej Brencz <macbre at wikia-inc.com>
+ */
+function WysiwygToolbarAddTooltip() {
+
+	// logic to check whether we should show tooltip
+	global $wgUser;
+
+	if ($wgUser->isAnon()) {
+		// don't show for anon user
+		$closed = true;
+	}
+	else {
+		$closed = $wgUser->getOption('wysiwyg-toolbar-closed', 0) ? true : false;
+	}
+
+	return ($closed ? false : wfMsgExt('wysiwyg-tooltip' , 'parse').'<span id="wysiwygToolbarTooltipClose">&nbsp;</span>');
+}
+
+/**
+ * Permanently remove tooltip
+ *
+ * @author Maciej Brencz <macbre at wikia-inc.com>
+ */
+function WysiwygToolbarRemoveTooltip() {
+
+	// store in user settings
+	global $wgUser;
+
+	if ($wgUser->isAnon()) {
+		return;
+	}
+
+	$wgUser->setOption('wysiwyg-toolbar-closed', 1);
+	$wgUser->saveSettings();
+
+	// commit
+	$dbw = wfGetDB( DB_MASTER );
+	$dbw->commit();
+
+	return new AjaxResponse('ok');
 }
