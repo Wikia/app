@@ -260,6 +260,10 @@ class AdEngine {
 			// For debugging, allow ad providers to be forced
 			return $this->getProviderFromId($_GET['forceProviderid']);
 
+		// Special case for this type of ad. Not in Athena
+		} else if ($slotname == 'RIGHT_SKYSCRAPER_1'){
+			return $this->getProviderFromId($this->slots[$slotname]['provider_id']);
+			
 		// All of the errors and toggles are handled, now switch based on language
 		} else {
 
