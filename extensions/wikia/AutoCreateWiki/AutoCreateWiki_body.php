@@ -109,7 +109,8 @@ class AutoCreateWikiPage extends SpecialPage {
 	private function create() {
 
 		global $wgDebugLogGroups, $wgOut, $wgUser, $IP, $wgDBname, $wgSharedDB,
-			$wgDBserver, $wgDBuser,	$wgDBpassword, $wgWikiaLocalSettingsPath;
+			$wgDBserver, $wgDBuser,	$wgDBpassword, $wgWikiaLocalSettingsPath,
+			$wgHubCreationVariables, $wgLangCreationVariables, $wgUniversalCreationVariables;
 
 		# $wgDebugLogGroups[ self::LOG ] = "/tmp/autocreatewiki.log";
 
@@ -349,6 +350,40 @@ class AutoCreateWikiPage extends SpecialPage {
 		$this->log( "Wiki added to the category hub " . $this->mWikiData[ "hub" ] );
 
 		/**
+		 * modify variables
+		 */
+		$this->addCustomSettings( 0, $wgUniversalCreationVariables, "universal" );
+
+		/**
+		 * set variables per language
+		 */
+		$this->addCustomSettings( $this->mWikiData[ "language" ], $wgLangCreationVariables, "language" );
+
+		/**
+		 * use starter when wikia in proper hub
+		 */
+		if( isset( $this->mStarters[ $this->mWikiData[ "hub" ] ] )&&
+			$this->mStarters[ $this->mWikiData[ "hub" ] ] ) {
+			$wikiMover = WikiMover::newFromIDs(
+				$this->mStarters[ $this->mWikiData[ "hub" ] ], /** source **/
+				$this->mWikiId /** target **/
+			);
+			$wikiMover->setOverwrite( true );
+			$wikiMover->mMoveUserGroups = false;
+			$wikiMover->load();
+			$wikiMover->move();
+
+			/**
+			 * WikiMove has internal log engine
+			 */
+            foreach( $oWikiMover->getLog( true ) as $log ) {
+                $this->log( $log["info"] );
+            }
+
+			$this->addCustomSettings( $this->mWikiData[ "hub" ], $wgHubCreationVariables, 'hub' );
+		}
+
+		/**
 		 * set images timestamp to current date (see: #1687)
 		 */
 		$dbw->update(
@@ -486,6 +521,43 @@ class AutoCreateWikiPage extends SpecialPage {
 		$wgOut->addHtml($oTmpl->execute("create-wiki-form"));
 		wfProfileOut( __METHOD__ );
 		return;
+	}
+
+	/**
+	 * addCustomSettings
+	 *
+	 * @author tor@wikia-inc.com
+	 * @param  string $match
+	 * @param  array  $settings
+	 * @param  string $type
+	 */
+	public function addCustomSettings( $match, $settings, $type = 'unknown' ) {
+        global $wgUser;
+
+        if (!empty($match) && is_array($settings[$match])) {
+            $this->log("Found '$match' in $type settings array.");
+
+            /**
+			 * switching user for correct logging
+			 */
+            $oldUser = $wgUser;
+            $wgUser = User::newFromName( 'CreateWiki script' );
+
+            foreach( $settings[$match] as $key => $value ) {
+                $success = WikiFactory::setVarById($key, $this->mWikiID, $value);
+                if( $success ) {
+                    $this->log("Successfully added setting: $key = $value");
+                } else {
+                    $this->addLog("Failed to add setting: $key = $value");
+                }
+            }
+			$wgUser = $oldUser;
+
+			$this->log("Finished adding $type settings.");
+        } else {
+            $this->log("'$match' not found in $type settings array. Skipping this step.");
+		}
+
 	}
 
 	/**
