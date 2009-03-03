@@ -185,8 +185,17 @@ html>/**/body .CSitemOuter > .CScontrolRemove {
 	height: 1%;
 }
 
-/** TODO: when merged with trunk, change the path to http://images.wikia.com/common/extensions/wikia/CategorySelect/sprite.png **/
 * html .CScontrol {
 	background-image: none;
-	filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='sprite.png', sizingMethod='crop');
+	filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='http://images.wikia.com/common/extensions/wikia/CategorySelect/sprite.png', sizingMethod='crop');
+}
+
+/* fix for YUI AutoComplete in CategorySelect */
+* html #article,
+* html #csMainContainer {
+	z-index: 10 !important;
+}
+
+* html .csViewMode #csButtonsContainer {
+	margin: 0;
 }
