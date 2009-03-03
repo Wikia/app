@@ -53,10 +53,10 @@ class SharedHttp extends Http {
 				$timeout = $wgHTTPTimeout;
 			}
 			curl_setopt( $c, CURLOPT_TIMEOUT, $timeout );
-	
+
 			curl_setopt( $c, CURLOPT_HEADER, true );
 			curl_setopt( $c, CURLOPT_FOLLOWLOCATION, false );
-			
+
 			curl_setopt( $c, CURLOPT_USERAGENT, "MediaWiki/$wgVersion" );
 			if ( $method == 'POST' )
 				curl_setopt( $c, CURLOPT_POST, true );
@@ -104,14 +104,14 @@ function SharedHelpHook(&$out, &$text) {
 
 	# Do not process if explicitly told not to
 	$mw = MagicWord::get('MAG_NOSHAREDHELP');
-	if ( $mw->match( $text ) ) { 
+	if ( $mw->match( $text ) ) {
 		return true;
 	}
 
 	if($wgTitle->getNamespace() == 12) { # Process only for pages in namespace Help (12)
 		# Initialize shared and local variables
 		# Canonical namespace is added here in case we ever want to share other namespaces (e.g. Advice)
-		$sharedArticleKey = $wgSharedDB . ':sharedArticles:' . $wgHelpWikiId . ':' . 
+		$sharedArticleKey = $wgSharedDB . ':sharedArticles:' . $wgHelpWikiId . ':' .
 			MWNamespace::getCanonicalName( $wgTitle->getNamespace() ) .  ':' . $wgTitle->getDBkey();
 		$sharedArticle = $wgMemc->get($sharedArticleKey);
 		$sharedServer = unserialize(WikiFactory::getVarByName('wgServer', $wgHelpWikiId)->cv_value);
@@ -147,7 +147,7 @@ function SharedHelpHook(&$out, &$text) {
 			$articleUrl = sprintf($urlTemplate, urlencode($wgTitle->getDBkey()));
 			list($content, $c) = SharedHttp::get($articleUrl);
 
-			# if we had redirect, then store it somewhere 
+			# if we had redirect, then store it somewhere
 			if(curl_getinfo($c, CURLINFO_HTTP_CODE) == 301) {
 				if(preg_match("/^Location: ([^\n]+)/m", $content, $dest_url)) {
 					$destinationUrl = $dest_url[1];
@@ -158,7 +158,7 @@ function SharedHelpHook(&$out, &$text) {
 			$sk = $wgUser->getSkin();
 
 			if (!empty ($_SESSION ['SH_redirected'])) {
-				$from_link = Title::newfromText( $helpNs . ":" . $_SESSION ['SH_redirected'] );				
+				$from_link = Title::newfromText( $helpNs . ":" . $_SESSION ['SH_redirected'] );
 				$redir = $sk->makeKnownLinkObj( $from_link, '', 'redirect=no', '', '', 'rel="nofollow"' );
 				$s = wfMsg( 'redirectedfrom', $redir );
 				$out->setSubtitle( $s );
@@ -178,7 +178,7 @@ function SharedHelpHook(&$out, &$text) {
 					$wasRedirected = true;
 				} else {
 					$content = "\n\n" . wfMsg( 'shared_help_was_redirect', "<a href=" . $link . ">$destinationPage</a>" );
-				} 
+				}
 			} else {
 				$tmp = split("\r\n\r\n", $content, 2);
 				$content = $tmp[1];
@@ -262,7 +262,8 @@ function SharedHelpBrokenLink( $linker, $nt, $query, $u, $style, $prefix, $text,
 				$style = $linker->getInternalLinkAttributesObj( $nt, $text, '' );
 				$u = str_replace( "&amp;action=edit&amp;redlink=1", "", $u );
 				$u = str_replace( "?action=edit&amp;redlink=1&amp;", "?", $u );
-				$u = str_replace( "?action=edit&amp;redlink=1", "", $u );	
+				$u = str_replace( "?action=edit&amp;redlink=1", "", $u );
+				$u .= $nt->getFragmentForURL();	//fix rt#11382
 			}
 		}
 	}
@@ -282,7 +283,7 @@ function SharedHelpArticleExists($title) {
 
 	$exists = false;
 
-	$sharedArticleKey = $wgSharedDB . ':sharedArticles:' . $wgHelpWikiId . ':' . 
+	$sharedArticleKey = $wgSharedDB . ':sharedArticles:' . $wgHelpWikiId . ':' .
 		MWNamespace::getCanonicalName( $title->getNamespace() ) .  ':' . $title->getDBkey();
 	$sharedArticle = $wgMemc->get($sharedArticleKey);
 
@@ -334,16 +335,16 @@ $wgHooks['LanguageGetMagic'][] = 'efSharedHelpGetMagicWord';
 $wgHooks['InternalParseBeforeLinks'][] = 'efSharedHelpRemoveMagicWord';
 
 function efSharedHelpRegisterMagicWordID(&$magicWords) {
-        $magicWords[] = 'MAG_NOSHAREDHELP';
-        return true;
+	$magicWords[] = 'MAG_NOSHAREDHELP';
+	return true;
 }
 
 function efSharedHelpGetMagicWord(&$magicWords, $langCode) {
-        $magicWords['MAG_NOSHAREDHELP'] = array(0, '__NOSHAREDHELP__');
-        return true;
+	$magicWords['MAG_NOSHAREDHELP'] = array(0, '__NOSHAREDHELP__');
+	return true;
 }
 
 function efSharedHelpRemoveMagicWord(&$parser, &$text, &$strip_state) {
-        MagicWord::get('MAG_NOSHAREDHELP')->matchAndRemove($text);
-        return true;
+	MagicWord::get('MAG_NOSHAREDHELP')->matchAndRemove($text);
+	return true;
 }
