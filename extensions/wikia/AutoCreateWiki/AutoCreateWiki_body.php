@@ -35,8 +35,8 @@ class AutoCreateWikiPage extends SpecialPage {
 	 * test database, CAUTION! content will be destroyed during tests
 	 */
 	const TESTDB = "testdb";
-	const ST_GAMING = 2; #3711 3578
-	const ST_ENTERTAINMENT = 3;
+	const STARTER_GAME = 2; /** gaming **/
+	const STARTER_ENTE = 3; /** enter. **/
 	const LOG = "autocreatewiki";
 	const IMGROOT = "/images/";
     const CREATEWIKI_LOGO = "/images/central/images/2/22/Wiki_Logo_Template.png";
@@ -57,8 +57,8 @@ class AutoCreateWikiPage extends SpecialPage {
 		 * hub starters
 		 */
 		$this->mStarters = array(
-			ST_GAMING => 3578,
-			ST_ENTERTAINMENT => 3711
+			self::STARTER_GAME => 3578,
+			self::STARTER_ENTE => 3711
 		);
 
 		/**
