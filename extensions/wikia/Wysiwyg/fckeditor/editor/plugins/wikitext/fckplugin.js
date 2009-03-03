@@ -12,16 +12,18 @@ FCKTildesCommand.prototype = {
 	Execute : function() {
 		FCKUndo.SaveUndoStep() ;
 
-		var text = document.createTextNode('--');
+		var text = FCK.EditorDocument.createTextNode('--');
 		FCK.InsertElement(text) ;
 
-		FCK.wysiwygData.push({'type':'tilde','description':'~~~~'});
+		var refid = FCK.GetFreeRefId();
 
-		var input = document.createElement('input');
+		FCK.wysiwygData[refid] = {'type':'tilde','description':'~~~~'};
+
+		var input = FCK.EditorDocument.createElement('input');
 		input.value = "~~~~";
 		input.className = 'wysiwygDisabled';
 		input.type = 'button';
-		input.setAttribute('refid', FCK.wysiwygData.length-1);
+		input.setAttribute('refid', refid);
 
 		FCK.InsertElement(input) ;
 	},
