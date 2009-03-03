@@ -513,7 +513,7 @@ FCKCommands.RegisterCommand('Pre', new StyleCommand('pre', 'Preformatted'));
 FCKToolbarItems.RegisterItem('Pre', new FCKToolbarButton('Pre', 'Preformatted'));
 
 FCKCommands.RegisterCommand('Normal', new StyleCommand('p', 'Normal Text'));
-FCKToolbarItems.RegisterItem('Normal', new FCKToolbarButton('Normal', 'Plain Text'));
+FCKToolbarItems.RegisterItem('Normal', new FCKToolbarButton('Normal', 'Remove Heading'));
 
 FCKCommands.RegisterCommand('Widescreen', new WideScreenToggle());
 FCKToolbarItems.RegisterItem('Widescreen', new FCKToolbarButton('Widescreen', 'Toggle widescreen'));
