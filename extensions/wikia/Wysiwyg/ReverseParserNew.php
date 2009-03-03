@@ -1042,6 +1042,12 @@ class ReverseParser {
 			return false;
 		}
 
+		// <ul> / <ol> should always have _wysiwyg_line_start attribute
+		// lists added in FCK won't have it -> force return of TRUE
+		if ($this->isList($node) && !$node->getAttribute('washtml')) {
+			return true;
+		}
+
 		// they start new line, but we don't have to add new line before them
 		if ($node->nodeName == 'p') {
 			return false;
