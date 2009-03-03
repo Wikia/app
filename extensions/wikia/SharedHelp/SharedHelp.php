@@ -253,7 +253,7 @@ function SharedHelpEditPageHook(&$editpage) {
 
 function SharedHelpBrokenLink( $linker, $nt, $query, $u, $style, $prefix, $text, $inside, $trail  ) {
 	global $wgTitle;
-	if ($wgTitle instanceof Title) {
+	if (isset($wgTitle)) {
 		$specialpage = SpecialPage::resolveAlias( $wgTitle->getDBkey() );
 		if( ( $nt->getNamespace() == 12 ) && ( 'Wantedpages' != $specialpage ) ) {
 
