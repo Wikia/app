@@ -34,7 +34,7 @@ class SharedHttp extends Http {
 	}
 
 	static function request( $method, $url, $timeout = 'default' ) {
-		global $wgHTTPTimeout, $wgHTTPProxy, $wgVersion, $wgTitle;
+		global $wgHTTPTimeout, $wgHTTPProxy, $wgVersion, $wgTitle, $wgDevelEnvironment;
 
 		wfDebug( __METHOD__ . ": $method $url\n" );
 		# Use curl if available
@@ -47,7 +47,9 @@ class SharedHttp extends Http {
 				curl_setopt($c, CURLOPT_PROXY, $wgHTTPProxy);
 			}
 			*/
-			curl_setopt( $c, CURLOPT_PROXY, 'localhost:80' );
+			if (empty($wgDevelEnvironment)) {
+				curl_setopt( $c, CURLOPT_PROXY, 'localhost:80' );
+			}
 
 			if ( $timeout == 'default' ) {
 				$timeout = $wgHTTPTimeout;
