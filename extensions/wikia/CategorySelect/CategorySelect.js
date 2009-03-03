@@ -430,7 +430,7 @@ function showCSpanel() {
 			initAutoComplete();
 			initializeCategories();
 			YAHOO.util.Get.css(wgExtensionsPath+'/wikia/CategorySelect/CategorySelect.css?'+wgStyleVersion, {onSuccess:function() {
-				replaceAddToInput();
+				setTimeout('replaceAddToInput()', 60);
 				YAHOO.util.Dom.removeClass('catlinks', 'csLoading');
 			}});
 		},
