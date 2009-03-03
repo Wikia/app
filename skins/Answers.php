@@ -202,6 +202,15 @@ wfRunHooks('GetHTMLAfterBody', array (&$this));
 					$category_text[]=strip_tags($ctg);
 				}
 			}
+			if ($category_text) {
+				$google_hints = "";
+				foreach($category_text as $ctg){
+					if( strtoupper($ctg) != strtoupper(wfMsg("unanswered_category")) && strtoupper($ctg) != strtoupper(wfMsg("answered_category")) ){
+						$google_hints .= (( $google_hints ) ? ", " : "" ) . $ctg;
+					}
+				}
+				if( $google_hints == "" ) $google_hints = str_replace("'","\'",$wgTitle->getText() );
+			}
 		?>
 		
 		<div id="question">
@@ -281,11 +290,13 @@ wfRunHooks('GetHTMLAfterBody', array (&$this));
 			$ads = '<div id="ads-answered-left">
 			<script type="text/javascript">
 				google_ad_client    = "pub-4086838842346968";
+				google_ad_channel = (( wgIsAnswered )?"7000000004":"7000000003");
 				google_ad_width     = "120";
 				google_ad_height    = "240";
 				google_ad_format    = google_ad_width + "x" + google_ad_height + "_as";
 				google_ad_type      = "text";
 				google_color_link   = "002BB8";
+				google_hits	    = "' . $google_hints . '";
 			</script>
 			<script language="JavaScript" src="http://pagead2.googlesyndication.com/pagead/show_ads.js"></script>
 			</div>';
@@ -319,11 +330,13 @@ wfRunHooks('GetHTMLAfterBody', array (&$this));
 			$ads = '<div id="ads-unaswered-bottom">
 			<script type="text/javascript">
 				google_ad_client    = "pub-4086838842346968";
+				google_ad_channel = (( wgIsAnswered )?"7000000004":"7000000003");
 				google_ad_width     = "200";
 				google_ad_height    = "200";
 				google_ad_format    = google_ad_width + "x" + google_ad_height + "_as";
 				google_ad_type      = "text";
 				google_color_link   = "002BB8";
+				google_hits	    = "' . $google_hints . '";
 			</script>
 			<script language="JavaScript" src="http://pagead2.googlesyndication.com/pagead/show_ads.js"></script>
 			</div>';
@@ -675,17 +688,7 @@ google_max_num_ads = '10';
 google_ad_type = 'text';
 google_feedback = 'on';
 <?
-if ($category_text) {
-	$google_hints = "";
-	foreach($category_text as $ctg){
-		if( strtoupper($ctg) != strtoupper(wfMsg("unanswered_category")) && strtoupper($ctg) != strtoupper(wfMsg("answered_category")) ){
-			$google_hints .= (( $google_hints ) ? ", " : "" ) . $ctg;
-		}
-	}
-	if( $google_hints == "" ) $google_hints = str_replace("'","\'",$wgTitle->getText() );
-	
-	echo 'google_hints = \''. $google_hints .'\';';
-}
+echo 'google_hints = \''. $google_hints .'\';';
 ?>
 </script>
 <script language="JavaScript" src="http://pagead2.googlesyndication.com/pagead/show_ads.js"></script>
