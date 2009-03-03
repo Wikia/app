@@ -4,7 +4,9 @@
  *
  * @file
  * @ingroup Extensions
- * @author Krzysztof Krzyżaniak <eloy@wikia-inc.com> for Wikia.com
+ * @author Krzysztof Krzyżaniak <eloy@wikia-inc.com> for Wikia Inc.
+ * @author Adrian Wieczorek <adi@wikia-inc.com> for Wikia Inc.
+ * @author Piotr Molski <moli@wikia-inc.com> for Wikia Inc.
  * @copyright © 2009, Wikia Inc.
  * @license http://www.gnu.org/copyleft/gpl.html GNU General Public License 2.0 or later
  * @version 1.0
@@ -325,7 +327,6 @@ class AutoCreateWikiPage extends SpecialPage {
 			$dbw->replace( "user_groups", array( ), array( "ug_user" => $wgUser->getID(), "ug_group" => "bureaucrat" ) );
 		}
 		$this->log( "Create user sysop/bureaucrat" );
-		$dbw->commit();
 
 		/**
 		 * set hub/category
@@ -333,6 +334,24 @@ class AutoCreateWikiPage extends SpecialPage {
 		$hub = WikiFactoryHub::getInstance();
 		$hub->setCategory( $this->mWikiId, $this->mWikiData[ "hub" ] );
 		$this->log( "Wiki added to the category hub " . $this->mWikiData[ "hub" ] );
+
+		/**
+		 * set images timestamp to current date (see: #1687)
+		 */
+		$dbw->update(
+			"image",
+			array( "img_timestamp" => date('YmdHis') ),
+			"*",
+			__METHOD__
+		);
+		$this->log( "Set images timestamp to current date" );
+
+
+		/**
+		 * commit all in new database
+		 */
+		$dbw->commit();
+
 
 		/**
 		 * show total time
