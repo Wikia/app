@@ -107,7 +107,7 @@ class SearchNearMatch {
 				__METHOD__,
 				array( "ORDER BY" => "page_latest", "LIMIT" => 1 )
 			);
-			if ( $row = $dbs->fetchObject( $res ) ) { 
+			if ( $row = $dbr->fetchObject( $res ) ) { 
 				$searchTitleId = $row->page_id;
 			}
 		} 
