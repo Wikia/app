@@ -590,7 +590,16 @@ function Wysiwyg_SetRefId($type, $params, $addMarker = true, $returnId = false) 
 		case 'hook':
 			$data['description'] = $params['text'];
 			$data['name'] = $params['name'];
-			$result = $params['text'];
+
+			// return different placeholder content for different hook types
+			switch($params['name']) {
+				case 'inputbox':
+				case 'videogallery':
+					$result = "<{$params['name']}>";
+					break;
+				default:
+					$result = $params['text'];
+			}
 			break;
 
 		case 'double underscore: toc':
