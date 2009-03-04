@@ -21,7 +21,7 @@ function wfPvXcodeParser() {
 
 function PvXparser( $input, $argv, &$parser ) 
 {
-	global $wgExtensionsPath;
+	global $wgServer;
 
 	$doit = new ParseIt( $parser );
 	$input = $doit->parse( $input );	
@@ -29,7 +29,7 @@ function PvXparser( $input, $argv, &$parser )
 	$output = parse_gwbbcode($input, $art_title);
 
 	# Hack to point the download button to the right place witout touching core gwbccode files
-	$output = str_replace('/template.php', "$wgExtensionsPath/3rdparty/PvX/template.php", $output);
+	$output = str_replace('/template.php', "$wgServer/extension/3rdparty/PvX/template.php", $output);
 
 	return $output;
 }
