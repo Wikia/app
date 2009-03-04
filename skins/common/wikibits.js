@@ -120,11 +120,11 @@ function toggleVisibility(_levelId, _otherId, _linkId) {
 	}
 }
 
-function showTocToggle() {
+function showTocToggle(toctitleId, tocId, togglelinkId) {
 	if (document.createTextNode) {
 		// Uses DOM calls to avoid document.write + XHTML issues
 
-		var linkHolder = document.getElementById('toctitle');
+		var linkHolder = document.getElementById(toctitleId ? toctitleId : 'toctitle');
 		if (!linkHolder) {
 			return;
 		}
@@ -133,9 +133,9 @@ function showTocToggle() {
 		outerSpan.className = 'toctoggle';
 
 		var toggleLink = document.createElement('a');
-		toggleLink.id = 'togglelink';
+		toggleLink.id = togglelinkId ? togglelinkId : 'togglelink';
 		toggleLink.className = 'internal';
-		toggleLink.href = 'javascript:toggleToc()';
+		toggleLink.href = togglelinkId ? "javascript:toggleToc('" + tocId + "','" + togglelinkId + "')" : 'javascript:toggleToc()';
 		toggleLink.appendChild(document.createTextNode(tocHideText));
 
 		outerSpan.appendChild(document.createTextNode('['));
@@ -147,7 +147,7 @@ function showTocToggle() {
 
 		var cookiePos = document.cookie.indexOf("hidetoc=");
 		if (cookiePos > -1 && document.cookie.charAt(cookiePos + 8) == 1) {
-			toggleToc();
+			toggleToc(tocId, togglelinkId);
 		}
 	}
 }
@@ -161,9 +161,9 @@ function changeText(el, newText) {
 	}
 }
 
-function toggleToc() {
-	var toc = document.getElementById('toc').getElementsByTagName('ul')[0];
-	var toggleLink = document.getElementById('togglelink');
+function toggleToc(tocId, togglelinkId) {
+	var toc = document.getElementById(tocId ? tocId : 'toc').getElementsByTagName('ul')[0];
+	var toggleLink = document.getElementById(togglelinkId ? togglelinkId : 'togglelink');
 
 	if (toc && toggleLink && toc.style.display == 'none') {
 		changeText(toggleLink, tocHideText);
