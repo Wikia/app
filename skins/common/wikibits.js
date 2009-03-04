@@ -920,39 +920,3 @@ function getLabelFor (obj_id) {
 		}
 	return false;
 }
-
-function mwWikiaUploadButton(namespace, tooltip) {
-	var toolbar = document.getElementById('toolbar');
-	if (!toolbar) {
-		return false;
-	}
-
-	var upload_image = document.createElement("img");
-	upload_image.width = 23;
-	upload_image.height = 22;
-	upload_image.src = stylepath + "/common/images/button_upload.gif";
-	upload_image.border = 0;
-	upload_image.alt = tooltip;
-	upload_image.title = tooltip;
-	upload_image.style.cursor = "pointer";
-	upload_image.onclick = function() {
-		specialImageUpload('[['+ namespace +':', ']]');
-		return false
-	}
-
-	toolbar.appendChild(upload_image);
-	return true;
-}
-
-var imageUploadDialog = null;
-function specialImageUpload(tagOpen, tagClose, sampleText) {
-	// if user is not logged in
-	if ( !wgUserName ) {
-		alert(mu_login);
-	} else {
-		if (imageUploadDialog && imageUploadDialog.open && !imageUploadDialog.closed) {
-			imageUploadDialog.close();
-		}
-		imageUploadDialog = window.open(wgServer + wgArticlePath.replace(/\$1/, "Special:MiniUpload"), "upload_file", "height=520,width=500,toolbar=no,location=no,resizable=no,menubar=0,scrollbars=yes");
-	}
-}
