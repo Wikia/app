@@ -219,8 +219,9 @@ class ReverseParser {
 
 						// <br /> inside paragraphs (without ' <!--NEW_LINE_1-->' following it)
 						if($node->nextSibling && $node->nextSibling->nextSibling && 
+							$node->nextSibling->nodeType != XML_COMMENT_NODE &&
 							$node->nextSibling->nextSibling->nodeType != XML_COMMENT_NODE) {
-							$out = "<br />";
+							$out = '<br />';
 						}
 
 						// <br /> added in FCK by pressing Shift+ENTER
