@@ -146,23 +146,23 @@ function Wysiwyg_Initial($form) {
 		// TODO: i18n
 		$toolbarData = array(
 			array(
-				'name'  => 'Text Appearance', 
+				'name'  => 'Text Appearance',
 				'items' => array('H2', 'H3', 'Bold', 'Italic', 'Underline', 'StrikeThrough', 'Normal', 'Pre', 'Outdent', 'Indent')
 			),
 			array(
-				'name'  => 'Lists and Links', 
+				'name'  => 'Lists and Links',
 				'items' => array('UnorderedList', 'OrderedList', 'Link', 'Unlink')
 			),
 			array(
-				'name'  => 'Insert', 
+				'name'  => 'Insert',
 				'items' => array('AddImage', 'AddVideo', 'Table', 'Tildes')
 			),
 			array(
-				'name'  => 'Wiki Templates', 
+				'name'  => 'Wiki Templates',
 				'items' => array('InsertTemplate')
 			),
 			array(
-				'name'  => 'Controls', 
+				'name'  => 'Controls',
 				'items' => array('Undo', 'Redo', 'Widescreen', 'Source')
 			),
 		);
@@ -183,7 +183,7 @@ function Wysiwyg_Initial($form) {
 
 		$wgOut->addInlineScript(
 			"var wysiwygUseNewToolbar = true;\n" .
-			"var wysiwygToolbarBuckets = " . Wikia::json_encode($toolbarBuckets) . ";\n" . 
+			"var wysiwygToolbarBuckets = " . Wikia::json_encode($toolbarBuckets) . ";\n" .
 			"var wysiwygToolbarItems = " . Wikia::json_encode($toolbarItems) . ";" .
 			( !empty($toolbarTooltip) ? "\nvar wysiwygToolbarTooltip = " . Xml::encodeJsVar($toolbarTooltip) . ";" : '')
 		);
@@ -221,7 +221,7 @@ function Wysiwyg_AlternateEdit($form) {
 			if($wgRequest->data['wysiwygData'] != '') {
 				$wgRequest->data['wpTextbox1'] = Wysiwyg_HtmlToWikiText($wgRequest->data['wpTextbox1'], $wgRequest->data['wysiwygData'], true);
 				if(!empty($wgRequest->data['wpSave'])) {
-					//$wgHooks['ArticleSaveComplete'][] = 'Wysiwyg_NotifySaveComplete';
+					$wgHooks['ArticleSaveComplete'][] = 'Wysiwyg_NotifySaveComplete';
 				}
 			}
 		}
@@ -232,8 +232,22 @@ function Wysiwyg_AlternateEdit($form) {
 function Wysiwyg_NotifySaveComplete(&$article, &$user, &$text, &$summary, &$minoredit, &$watchthis, &$sectionanchor, &$flags, $revision) {
 	if(is_object($revision)) {
 		global $wgSitename;
-		$diffUrl = $article->getTitle()->getFullURL('diff='.$revision->getId());
-		UserMailer::send(array(new MailAddress('korczynski1.wysiwyg@blogger.com'), new MailAddress('inez@wikia-inc.com')), new MailAddress('inez@wikia-inc.com'), "Wysiwyg Edit @ $wgSitename", $diffUrl);
+
+		$url = $article->getTitle()->getFullURL();
+		$diffEngine = new DifferenceEngine($article->getTitle(), $revision->mParentId, $revision->mId);
+		$diffText = $diffEngine->getDiffBody();
+		$diffText = str_replace("\n", "", $diffText);
+		$out = "<a href=\"{$url}\">link</a><table class='diff'><col class='diff-marker' /><col class='diff-content' /><col class='diff-marker' /><col class='diff-content' /><tbody>{$diffText}</tbody></table>";
+
+		$data = array('title' => $wgSitename, 'description' => $out);
+		$ch = curl_init();
+		curl_setopt($ch, CURLOPT_URL, "http://fp026.sjc.wikia-inc.com/inez/test.php");
+		curl_setopt($ch, CURLOPT_HEADER, 0);
+		curl_setopt($ch, CURLOPT_POST, 1);
+		curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+		curl_exec($ch);
+		curl_close($ch);
 	}
 	return true;
 }
@@ -580,7 +594,7 @@ function Wysiwyg_SetRefId($type, $params, $addMarker = true, $returnId = false) 
 
 		case 'interwiki':
 			$data['originalCall'] = htmlspecialchars_decode(preg_replace($regexPreProcessor['search'], $regexPreProcessor['replace'], $params['original']));
-			$result = $data['originalCall']; 
+			$result = $data['originalCall'];
 			break;
 
 		case 'nowiki':
