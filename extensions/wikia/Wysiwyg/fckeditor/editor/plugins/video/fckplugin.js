@@ -82,11 +82,6 @@ FCK.VideoGalleryAdd = function(wikitext) {
 
 // setup <videogallery> hook placeholder
 FCK.VideoSetupGalleryPlaceholder = function(placeholder) {
-	// change HTML
-	placeholder.value = '<videogallery>';
-	placeholder.className = 'wysiwygDisabled wysiwygVideoGallery';
-	placeholder.setAttribute('_fck_type', 'videogallery');
-
 	// add onclick handler
 	FCKTools.AddEventListener(placeholder, 'click', FCK.VideoGalleryClick);
 }
