@@ -418,6 +418,7 @@ function initTooltip() {
 
 //`view article` mode
 function showCSpanel() {
+	csType = 'view';
 	var pars = 'rs=CategorySelectGenerateHTMLforView';
 	var callback = {
 		success: function(originalRequest) {
@@ -425,7 +426,6 @@ function showCSpanel() {
 			var el = document.createElement('div');
 			el.innerHTML = originalRequest.responseText;
 			$('catlinks').appendChild(el);
-			csType = 'view';
 			initHandlers();
 			initAutoComplete();
 			initializeCategories();
