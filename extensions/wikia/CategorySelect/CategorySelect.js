@@ -431,6 +431,7 @@ function showCSpanel() {
 			initializeCategories();
 			YAHOO.util.Get.css(wgExtensionsPath+'/wikia/CategorySelect/CategorySelect.css?'+wgStyleVersion, {onSuccess:function() {
 				setTimeout('replaceAddToInput()', 60);
+				setTimeout('positionSuggestBox()', 666);	//sometimes it can take more time to parse downloaded CSS - be sure to position hint in proper place
 				YAHOO.util.Dom.removeClass('catlinks', 'csLoading');
 			}});
 		},
