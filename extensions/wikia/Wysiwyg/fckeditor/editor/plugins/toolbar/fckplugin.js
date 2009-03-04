@@ -13,7 +13,7 @@ FCK.WikiaToolbarShowTooltip = function(content) {
 
 	// set HTML & CSS
 	tooltip.innerHTML = content;
-	tooltip.style.top = '10px';
+	tooltip.style.top = parseInt(FCK.YAHOO.util.Dom.getY('editform') - 30) + 'px';
 	tooltip.style.left = '500px';
 
 	// add close handler
