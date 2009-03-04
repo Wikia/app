@@ -54,7 +54,7 @@ function hookEvent(hookName, hookFunct) {
 function importScript(page) {
 	return importScriptURI(wgScript + '?action=raw&ctype=text/javascript&title=' + encodeURIComponent(page.replace(/ /g,'_')));
 }
- 
+
 var loadedScripts = {}; // included-scripts tracker
 function importScriptURI(url) {
 	if (loadedScripts[url]) {
@@ -67,15 +67,15 @@ function importScriptURI(url) {
 	document.getElementsByTagName('head')[0].appendChild(s);
 	return s;
 }
- 
+
 function importStylesheet(page) {
 	return importStylesheetURI(wgScript + '?action=raw&ctype=text/css&title=' + encodeURIComponent(page.replace(/ /g,'_')));
 }
- 
+
 function importStylesheetURI(url) {
 	return document.createStyleSheet ? document.createStyleSheet(url) : appendCSS('@import "' + url + '";');
 }
- 
+
 function appendCSS(text) {
 	var s = document.createElement('style');
 	s.type = 'text/css';
@@ -814,7 +814,7 @@ function jsMsg( message, className ) {
 	if( className ) {
 		messageDiv.setAttribute( 'class', 'mw-js-message-'+className );
 	}
-	
+
 	if (typeof message === 'object') {
 		while (messageDiv.hasChildNodes()) // Remove old content
 			messageDiv.removeChild(messageDiv.firstChild);
@@ -946,25 +946,13 @@ function mwWikiaUploadButton(namespace, tooltip) {
 
 var imageUploadDialog = null;
 function specialImageUpload(tagOpen, tagClose, sampleText) {
-	// Hack: We need to know whether or not a user is logged in
-	// before they can upload a file.  Therefore, to know whether or not
-	// they are logged in, we can look for the "watch this" checkbox on
-	// the edit page since this only appears when the user is logged in to
-	// the site.  If they are not logged in, we display a message and prompt
-	// to ask if they would like to log in now.  If they are logged in, we
-	// open up the image upload popup window, and allow them to upload.
-
 	// if user is not logged in
 	if ( !wgUserName ) {
-
 		alert(mu_login);
-
-    } else {
-
+	} else {
 		if (imageUploadDialog && imageUploadDialog.open && !imageUploadDialog.closed) {
 			imageUploadDialog.close();
 		}
-
 		imageUploadDialog = window.open(wgServer + wgArticlePath.replace(/\$1/, "Special:MiniUpload"), "upload_file", "height=520,width=500,toolbar=no,location=no,resizable=no,menubar=0,scrollbars=yes");
 	}
 }
