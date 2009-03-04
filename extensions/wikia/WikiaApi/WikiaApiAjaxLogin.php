@@ -40,7 +40,7 @@ class WikiaApiAjaxLogin extends ApiBase {
 				case LoginForm :: SUCCESS :
 					global $wgUser;
 
-					$wgUser->setOption('rememberpassword', 1);
+					$wgUser->setOption( 'rememberpassword', $Remember ? 1 : 0 );
 					$wgUser->setCookies();
 
 					$result['result'] = 'Success';
