@@ -21,10 +21,16 @@ function wfPvXcodeParser() {
 
 function PvXparser( $input, $argv, &$parser ) 
 {
+	global $wgExtensionsPath;
+
 	$doit = new ParseIt( $parser );
 	$input = $doit->parse( $input );	
 	$art_title = $parser->mTitle->getText();
 	$output = parse_gwbbcode($input, $art_title);
+
+	# Hack to point the download button to the right place witout touching core gwbccode files
+	$output = str_replace('/template.php', "$wgExtensionsPath/3rdparty/PvX/template.php", $output);
+
 	return $output;
 }
 
