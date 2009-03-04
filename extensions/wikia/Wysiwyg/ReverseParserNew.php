@@ -287,29 +287,32 @@ class ReverseParser {
 
 						} else {
 							// add new lines before paragraph
-							$newLinesBefore = $node->getAttribute('_new_lines_before');
-							if(is_numeric($newLinesBefore)) {
+							$newLinesBefore = intval($node->getAttribute('_new_lines_before'));
+							if($newLinesBefore > 0) {
 								$textContent = str_repeat("\n", $newLinesBefore).$textContent;
 							}
 
-							// add newline before paragraph if previous node is list
-							if(!$isDefinitionList && !empty($previousNode) && $this->isList($previousNode)) {
-								$textContent = "\n{$textContent}";
+							// add newline before paragraph if previous node ...
+							if(!empty($previousNode) && (!$isDefinitionList || $newLinesBefore == 0) ) {
+								// is list
+								if ($this->isList($previousNode)) {
+									$textContent = "\n{$textContent}";
+								}
+
+								// is <pre>
+								if ($previousNode->nodeName == 'pre') {
+									$textContent = "\n{$textContent}";
+								}
+
+								// has wasHTML attribute set
+								if ($previousNode->hasAttribute('washtml')) {
+									$textContent = "\n{$textContent}";
+								}
 							}
 
 							// <p> is second child of <td> and previous sibling is text node
 							// and first child of parent node
 							if ( ($node->parentNode->nodeName == 'td') && $node->previousSibling && $node->previousSibling->isSameNode($node->parentNode->firstChild) && ($node->previousSibling->nodeType == XML_TEXT_NODE) ) {
-								$textContent = "\n{$textContent}";
-							}
-
-							// add \n if previous node is <pre>
-							if ($previousNode && $previousNode->nodeName == 'pre') {
-								$textContent = "\n{$textContent}";
-							}
-
-							// add \n if previous node has wasHTML attribute set
-							if ($previousNode && $previousNode->hasAttribute('washtml')) {
 								$textContent = "\n{$textContent}";
 							}
 						}
