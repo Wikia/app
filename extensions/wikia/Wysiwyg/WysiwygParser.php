@@ -42,8 +42,9 @@ class WysiwygParser extends Parser {
 
 				if ($this->mListLevel > 1) {
 					if ($this->mLast != 'close' && !empty($result)) {
+						//
 					}
-					else if ($result == '') {
+					else if ( ($result == '') &&  !($this->mEmptyLineCounter%2 == 1) ) {
 						$result .= '<!--NEW_LINE_1-->';
 					}
 					$result .= "<p{$style}>";

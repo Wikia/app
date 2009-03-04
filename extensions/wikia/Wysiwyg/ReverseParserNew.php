@@ -255,7 +255,6 @@ class ReverseParser {
 						// handle indentations
 						if ($indentation > 0) {
 							$textContent = str_repeat(':', $indentation) . rtrim($textContent);
-							$prefix = $node->previousSibling ? "\n" : '';
 
 							$isDefinitionList = true;
 						}
@@ -293,8 +292,8 @@ class ReverseParser {
 								$textContent = str_repeat("\n", $newLinesBefore).$textContent;
 							}
 
-							// we're in definion list and previous node wasn't paragraph -> add extra line break
-							if($isDefinitionList && $node->previousSibling) {
+							// add newline before paragraph if previous node is list
+							if(!$isDefinitionList && !empty($previousNode) && $this->isList($previousNode)) {
 								$textContent = "\n{$textContent}";
 							}
 
@@ -527,13 +526,6 @@ class ReverseParser {
 					case 'ol':
 						// rtrim used to remove \n added by the last list item
 						$out = rtrim($textContent, "\n");
-
-						// add newline if next node is paragraph
-						$nextNode = $this->getNextElementNode($node);
-
-						if ( $nextNode && in_array($nextNode->nodeName, array('p')) ) {
-							$out = "$out\n";
-						}
 						break;
 
 					// lists elements
