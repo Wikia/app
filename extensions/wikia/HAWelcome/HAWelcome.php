@@ -93,7 +93,7 @@ class HAWelcomeJob extends Job {
 	 * @access public
 	 */
 	public function run() {
-		global $wgUser, $wgDevelEnvironment;
+		global $wgUser, $wgDevelEnvironment, $wgTitle;
 
 		wfProfileIn( __METHOD__ );
 
@@ -125,14 +125,6 @@ class HAWelcomeJob extends Job {
 							$sysopPage->getPrefixedText(),
 							$signature
 						));
-						$welcomeMsgAlt = wfMsgForContent( "welcome-message-anon", array(
-							$this->title->getPrefixedText(),
-							$sysopPage->getPrefixedText(),
-							$signature
-						));
-						if( $welcomeMsgAlt !== $welcomeMsg ){
-							Wikia::log( __METHOD__, "diff", "{$welcomeMsgAlt} vs. {$welcomeMsg}");
-						}
 					}
 					else {
 						/**
@@ -140,11 +132,14 @@ class HAWelcomeJob extends Job {
 						 */
 						$userPage = $this->mUser->getUserPage();
 						if( $userPage ) {
+							$tmpTitle = $wgTitle;
+							$wgTitle = $userPage;
 							$userArticle = new Article( $userPage, 0 );
 							if( ! $userArticle->exists() || $wgDevelEnvironment ) {
 								$welcomeMsg = wfMsg( "welcome-user-page" );
 								$userArticle->doEdit( $welcomeMsg, false, EDIT_FORCE_BOT );
 							}
+							$wgTitle = $tmpTitle;
 						}
 
 						$welcomeMsg = wfMsg( "welcome-message-user", array(
@@ -152,14 +147,6 @@ class HAWelcomeJob extends Job {
 							$sysopPage->getPrefixedText(),
 							$signature
 						));
-						$welcomeMsgAlt = wfMsgForContent( "welcome-message-user", array(
-							$this->title->getPrefixedText(),
-							$sysopPage->getPrefixedText(),
-							$signature
-						));
-						if( $welcomeMsgAlt !== $welcomeMsg ){
-							Wikia::log( __METHOD__, "diff", "{$welcomeMsgAlt} vs. {$welcomeMsg}");
-						}
 					}
 					$talkArticle->doEdit( $welcomeMsg, wfMsg( "welcome-message-log" ), EDIT_FORCE_BOT );
 					Wikia::log( __METHOD__, "edit", $welcomeMsg );
