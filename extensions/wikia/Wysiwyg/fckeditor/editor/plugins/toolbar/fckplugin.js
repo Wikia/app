@@ -50,8 +50,10 @@ WikiaToolbar.prototype.Create = function(parentElement) {
 	var toolbar = toolbarDoc.createElement('TABLE');
 	toolbar.id = 'fck_toolbar';
 	toolbar.className = 'reset';
-
+	
 	parentElement.appendChild(toolbar);
+
+	parentElement.style.display = 'none';
 
 	// store toolbar object
 	this.Toolbar = toolbar;
@@ -115,6 +117,9 @@ WikiaToolbar.prototype.Create = function(parentElement) {
 	else {
 		FCK.log('not showing toolbar tooltip');
 	}
+
+	// and finally show our super cool toolbar
+	parentElement.style.display = 'block';
 }
 
 FCK.WikiaUsingNewToolbar = true;
