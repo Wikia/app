@@ -14,5 +14,5 @@ $messages['en'] = array(
 	'wysiwyg-first-edit-message' => 'This wiki uses Wikia\'s new Rich Text Editor. If you want to use traditional wikitext click the "source" button on the toolbar. To learn more about this new editor please see [[Help:New editor]]',
 	'wysiwyg-first-edit-dont-show-me' => 'Don\'t show me this message again',
 	'wysiwyg-first-edit-dismiss' => 'Close',
-	'wysiwyg-tooltip' => "'''New!''' Edit toolbar. See [[Help:New Toolbar|help]] to learn more",
+	'wysiwyg-tooltip' => "'''New!''' Edit toolbar. See [[Help:New editor|help]] to learn more",
 );
