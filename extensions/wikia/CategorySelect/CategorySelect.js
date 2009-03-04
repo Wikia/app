@@ -206,7 +206,7 @@ function addCategory(category, params, index) {
 	//if user provides "abc|def" explode this into category "abc" and sortkey "def"
 	extractedParams = extractSortkey(category);
 	category = extractedParams['name'];
-	params['sortkey'] = extractedParams['sort'];
+	params['sortkey'] = extractedParams['sort'] + params['sortkey'];
 
 	if (category == '') {
 		alert(csEmptyName);
