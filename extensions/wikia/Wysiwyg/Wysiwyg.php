@@ -461,6 +461,9 @@ function Wysiwyg_SetRefId($type, $params, $addMarker = true, $returnId = false) 
 	$data = array('type' => $type);
 	$result = '';
 
+	// CSS class based on type of placeholder
+	$className = 'wysiwygDisabled wysiwyg' . strtr(ucwords($type), array(':' => '', ' ' => ''));
+
 	// macbre: whether to replace $params['text'] with placeholder
 	// used for links with templates (e.g. [[foo|{{bar}}]]
 	$returnPlaceholder = false;
@@ -600,6 +603,10 @@ function Wysiwyg_SetRefId($type, $params, $addMarker = true, $returnId = false) 
 				default:
 					$result = $params['text'];
 			}
+
+			// class name based on hook type
+			$className .= ' wysiwygHook' . ucfirst($params['name']);
+
 			break;
 
 		case 'double underscore: toc':
@@ -633,9 +640,7 @@ function Wysiwyg_SetRefId($type, $params, $addMarker = true, $returnId = false) 
 		}
 		$result = htmlspecialchars($result);
 
-		// CSS class based on type of placeholder
-		$className = 'wysiwyg' . strtr(ucwords($type), array(':' => '', ' ' => ''));
-		$result = "<input type=\"button\" refid=\"{$refId}\" _fck_type=\"{$type}\" value=\"{$result}\" title=\"{$result}\" class=\"wysiwygDisabled {$className}\" />";
+		$result = "<input type=\"button\" refid=\"{$refId}\" _fck_type=\"{$type}\" value=\"{$result}\" title=\"{$result}\" class=\"{$className}\" />";
 
 		// macbre: use placeholders
 		// they will be replaced with <input> grey boxes
