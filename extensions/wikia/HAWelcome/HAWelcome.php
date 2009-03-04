@@ -112,10 +112,12 @@ class HAWelcomeJob extends Job {
 			Wikia::log( __METHOD__, "talk", $talkPage->getLocalUrl() );
 
 			if( $talkPage ) {
+				$tmpTitle  = $wgTitle;
 				$sysop     = $this->getLastSysop();
 				$sysopPage = $sysop->getUserPage()->getTalkPage();
 				$signature = $this->expandSig();
 
+				$wgTitle = $talkPage;
 				$talkArticle = new Article( $talkPage, 0 );
 
 				if( ! $talkArticle->exists() || $wgDevelEnvironment ) {
@@ -132,14 +134,12 @@ class HAWelcomeJob extends Job {
 						 */
 						$userPage = $this->mUser->getUserPage();
 						if( $userPage ) {
-							$tmpTitle = $wgTitle;
 							$wgTitle = $userPage;
 							$userArticle = new Article( $userPage, 0 );
 							if( ! $userArticle->exists() || $wgDevelEnvironment ) {
 								$welcomeMsg = wfMsg( "welcome-user-page" );
 								$userArticle->doEdit( $welcomeMsg, false, EDIT_FORCE_BOT );
 							}
-							$wgTitle = $tmpTitle;
 						}
 
 						$welcomeMsg = wfMsg( "welcome-message-user", array(
@@ -148,9 +148,11 @@ class HAWelcomeJob extends Job {
 							$signature
 						));
 					}
+					$wgTitle = $talkPage; /** is it necessary there? **/
 					$talkArticle->doEdit( $welcomeMsg, wfMsg( "welcome-message-log" ), EDIT_FORCE_BOT );
 					Wikia::log( __METHOD__, "edit", $welcomeMsg );
 				}
+				$wgTitle = $tmpTitle;
 			}
 		}
 
