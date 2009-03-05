@@ -17,8 +17,8 @@ FCK.WikiaToolbarShowTooltip = function(content) {
 	tooltip.style.left = '500px';
 
 	// add close handler
-	FCK.YAHOO.util.Event.addListener('wysiwygToolbarTooltipClose', 'click', function(e) {
-		FCK.YAHOO.util.Dom.get('wysiwygToolbarTooltip').style.display = 'none';
+	FCK.YE.addListener('wysiwygToolbarTooltipClose', 'click', function(e) {
+		FCK.YD.get('wysiwygToolbarTooltip').style.display = 'none';
 		window.parent.sajax_do_call('WysiwygToolbarRemoveTooltip', [], function() {});
 	});
 }
@@ -533,12 +533,12 @@ var WideScreenToggle = function() {
 	var toggleWideScreenLink = window.parent.document.getElementById("toggleWideScreen");
 
 	// try to get listener function attached to "Enter Widescreen" link
-	if (toggleWideScreenLink) {
-		this.toggleWideScreenListener = FCK.YAHOO.util.Event.getListeners(toggleWideScreenLink).pop();
+	if (toggleWideScreenLink && FCK.YE.getListeners) {
+		this.toggleWideScreenListener = FCK.YE.getListeners(toggleWideScreenLink).pop();
 	}
 
 	// get current widescreen mode state
-	this.isActive = FCK.YAHOO.util.Dom.hasClass(window.parent.document.body, 'editingWide');
+	this.isActive = FCK.YD.hasClass(window.parent.document.body, 'editingWide');
  }
 
 WideScreenToggle.prototype = {
