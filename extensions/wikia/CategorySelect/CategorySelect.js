@@ -5,7 +5,6 @@ var categories;
 var fixCategoryRegexp = new RegExp('\\[\\[(?:' + csCategoryNamespaces + '):([^\\]]+)]]', 'i');
 var ajaxUrl = wgServer + wgScript + '?action=ajax';
 var csType = 'edit';
-var csDefaultNamespace = 'Category';	//TODO: default namespace
 
 function positionSuggestBox() {
 	$('csSuggestContainer').style.top = $('csCategoryInput').offsetTop + jQuery("#" + 'csCategoryInput').height() + 5 + 'px';
@@ -193,14 +192,15 @@ function inputBlur() {
 }
 
 function addCategory(category, params, index) {
-	YAHOO.log('addCategory: index = ' + index + ', category = ' + category);
 	if (params == undefined) {
-		params = {'outerTag': '', 'sortkey': ''};
+		params = {'namespace': csDefaultNamespace, 'outerTag': '', 'sortkey': ''};
 	}
 
 	if (index == undefined) {
 		index = categories.length;
 	}
+	YAHOO.log('addCategory: index = ' + index + ', namespace = ' + (params['namespace'] ? params['namespace'] : csDefaultNamespace) + ', category = ' + category);
+
 	//replace full wikitext that user may provide (eg. [[category:abc]]) to just a name (abc)
 	category = category.replace(fixCategoryRegexp, '$1');
 	//if user provides "abc|def" explode this into category "abc" and sortkey "def"
@@ -213,7 +213,7 @@ function addCategory(category, params, index) {
 		return;
 	}
 
-	categories[index] = {'namespace': csDefaultNamespace, 'category': category, 'outerTag': params['outerTag'], 'sortkey': params['sortkey']};
+	categories[index] = {'namespace': params['namespace'] ? params['namespace'] : csDefaultNamespace, 'category': category, 'outerTag': params['outerTag'], 'sortkey': params['sortkey']};
 
 	elementA = document.createElement('a');
 	elementA.className = 'CSitem';	//setAttribute doesn't work in IE
@@ -271,7 +271,7 @@ function initializeCategories(cats) {
 
 	addAddCategoryButton();
 	for (c=0; c < categories.length; c++) {
-		addCategory(categories[c].category, {'outerTag': categories[c].outerTag, 'sortkey': categories[c].sortkey}, c);
+		addCategory(categories[c].category, {'namespace': categories[c].namespace, 'outerTag': categories[c].outerTag, 'sortkey': categories[c].sortkey}, c);
 	}
 }
 

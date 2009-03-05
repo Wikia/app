@@ -106,6 +106,7 @@ function CategorySelectSetupVars($vars) {
 	$vars['csEmptyName'] = wfMsg('categoryselect-empty-name');
 	$vars['csDefaultSort'] = $wgParser->getDefaultSort();
 	$vars['csCategoryNamespaces'] = 'Category|' . $wgContLang->getNsText(NS_CATEGORY);
+	$vars['csDefaultNamespace'] = $wgContLang->getNsText(NS_CATEGORY);
 	$vars['csCodeView'] = wfMsg('categoryselect-code-view');
 	$vars['csVisualView'] = wfMsg('categoryselect-visual-view');
 
