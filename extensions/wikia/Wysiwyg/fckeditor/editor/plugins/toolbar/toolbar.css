@@ -46,7 +46,7 @@
 	padding: 0;
 }
 #fck_toolbar li {
-	background: #FFF url(fck_button_bg.png) bottom left repeat-x;
+	background: #FFF url(icons/fck_button_bg.png) bottom left repeat-x;
 	border: 1px solid #333;
 	cursor: pointer;
 	float: left !important;
