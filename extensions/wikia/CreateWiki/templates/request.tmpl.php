@@ -277,9 +277,10 @@ YAHOO.util.Event.addListener( "wc-language", "change", WC.domainWatch );
             <option value="0" <?=(($wgRequest->getCheck('wpCreateWikiCategoryStarter') && ($wgRequest->getVal('wpCreateWikiCategoryStarter') == 0)) ? "selected=\"selected\"" : "");?> >--- not selected ---</option>
             <option value="3711" <?=(($wgRequest->getCheck('wpCreateWikiCategoryStarter') && ($wgRequest->getVal('wpCreateWikiCategoryStarter') == 3711)) ? "selected=\"selected\"" : "");?> >entertainmentstarter.wikia.com</option>
             <option value="3578" <?=(($wgRequest->getCheck('wpCreateWikiCategoryStarter') && ($wgRequest->getVal('wpCreateWikiCategoryStarter') == 3578)) ? "selected=\"selected\"" : "");?> >gamingstarter.wikia.com</option>
+            <option value="12698" <?=(($wgRequest->getCheck('wpCreateWikiCategoryStarter') && ($wgRequest->getVal('wpCreateWikiCategoryStarter') == 12698)) ? "selected=\"selected\"" : "");?> >sportsstarter.wikia.com</option>
         </select>
         <div class="hint">
-            so far, only two
+            now we've got three! ;)
         </div>
     </div>
 
