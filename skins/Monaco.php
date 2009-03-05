@@ -1316,10 +1316,19 @@ class MonacoTemplate extends QuickTemplate {
 	} else {
 		$isMainpage = null;
 	}
+
+	$action = $wgRequest->getVal('action');
+	if (in_array($action, array('edit', 'history', 'diff', 'delete', 'protect', 'unprotect'))) {
+		$body_css_action = 'action_' . $action;
+	} else if (empty($action) || in_array($action, array('view', 'purge'))) {
+		$body_css_action = 'action_view';
+	} else {
+		$body_css_action = '';
+	}
 ?>
 
 	<body<?php if($this->data['body_onload'    ]) { ?> onload="<?php     $this->text('body_onload')     ?>"<?php } ?>
- class="mediawiki <?php $this->text('nsclass') ?> <?php $this->text('dir') ?> <?php $this->text('pageclass') ?><?php if(!empty($this->data['printable']) ) { ?> printable<?php } ?><?php if (!$wgUser->isLoggedIn()) { ?> loggedout<?php } ?> color2 wikiaSkinMonaco<?=$isMainpage?>" id="body">
+ class="mediawiki <?php $this->text('nsclass') ?> <?php $this->text('dir') ?> <?php $this->text('pageclass') ?><?php if(!empty($this->data['printable']) ) { ?> printable<?php } ?><?php if (!$wgUser->isLoggedIn()) { ?> loggedout<?php } ?> color2 wikiaSkinMonaco<?=$isMainpage?> <?= $body_css_action ?>" id="body">
 
  <?php
    if(!empty($skin->timemarker)) {
