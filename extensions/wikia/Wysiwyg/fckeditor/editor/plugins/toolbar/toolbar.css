@@ -109,10 +109,15 @@
 .toolbarSource td,
 .toolbarSource label,
 .toolbarSource li {
-	visibility: hidden;
+	display: none;
 }
 
 .toolbarSource td.last, 
 #fck_toolbar_item_source {
-	visibility: visible;
+	display: block;
+}
+
+#fck_toolbar.toolbarSource td.last ul {
+	padding-top: 12px;
+	margin-right: -80px;
 }
