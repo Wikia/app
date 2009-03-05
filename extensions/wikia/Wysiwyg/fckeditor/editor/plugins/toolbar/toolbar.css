@@ -121,6 +121,7 @@
 	width: 100px;
 	position: absolute;
 	right: 0;
+	height: 41px;
 }
 
 #fck_toolbar.toolbarSource td.last ul {

@@ -72,6 +72,7 @@ WikiaToolbar.prototype.Create = function(parentElement) {
 	var toolbarRow = toolbar.insertRow(-1);
 	var currentBucket = false;
 	var currentBucketItems = 0;
+	var bucketsCount = 0;
 
 	// add toolbar items
 	for ( var i = 0 ; i < this.Items.length ; i++ ) {
@@ -82,6 +83,7 @@ WikiaToolbar.prototype.Create = function(parentElement) {
 			// set width of previous bucket <UL>
 			if (currentBucket && currentBucketItems > 1) {
 				currentBucket.style.maxWidth = (currentBucketItems*28) + 'px';
+				this.addBucketIEFixes(currentBucket);
 			}
 
 			// create new bucket
@@ -97,6 +99,10 @@ WikiaToolbar.prototype.Create = function(parentElement) {
 			// get <ul> node - new items will be added there
 			currentBucket = toolbarCell.getElementsByTagName('ul')[0];
 			currentBucketItems = 0;
+
+			// set id
+			currentBucket.id = 'fck_toolbar_bucket_' + (++bucketsCount);
+
 		}
 		else {
 			// add item to current bucket
@@ -105,6 +111,9 @@ WikiaToolbar.prototype.Create = function(parentElement) {
 			currentBucketItems++;
 		}
 	}
+
+	this.addBucketIEFixes(currentBucket);
+
 	// set width of last bucket <UL>
 	if (currentBucket && currentBucketItems > 1) {
 		currentBucket.style.maxWidth = (currentBucketItems*28) + 'px';
@@ -121,6 +130,49 @@ WikiaToolbar.prototype.Create = function(parentElement) {
 	// and finally show our super cool toolbar
 	parentElement.style.display = 'block';
 }
+
+// setup onmouseover / onmouseout event handlers for IE
+WikiaToolbar.prototype.addBucketIEFixes = function(bucket) {
+
+	// apply only to IE
+	if (!FCKBrowserInfo.IsIE) {
+		return;
+	}
+
+	var timeout;
+
+	FCKTools.AddEventListener(bucket.parentNode, 'mouseover', function(e) {
+		if (FCK.EditMode != FCK_EDITMODE_WYSIWYG) {
+			return;
+		}
+
+		var id = bucket.id.split('_').pop();
+		bucket.parentNode.style.height = 'auto';
+		setTimeout("var node = document.getElementById('fck_toolbar_bucket_" + id  + "').parentNode;" +
+			"node.style.height = node.offsetHeight + 'px'", 50);
+
+		// emulate min-width
+		if (bucket.parentNode.offsetWidth < 125) {
+			bucket.parentNode.style.width = '120px';
+		}
+		else {
+			bucket.parentNode.style.width = 'auto';
+		}
+
+		clearTimeout(timeout);
+	});
+
+	FCKTools.AddEventListener(bucket.parentNode, 'mouseout', function(e) {
+		if (FCK.EditMode != FCK_EDITMODE_WYSIWYG) {
+			return;
+		}
+
+		var id = bucket.id.split('_').pop();
+		timeout = setTimeout("var node = document.getElementById('fck_toolbar_bucket_" + id  + "').parentNode;" +
+			"node.style.height = '41px'", 500);
+	});
+}
+
 
 FCK.WikiaUsingNewToolbar = true;
 
