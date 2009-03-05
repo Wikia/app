@@ -117,6 +117,12 @@
 	display: block;
 }
 
+#fck_toolbar.toolbarSource td.last div.clearfix {
+	width: 100px;
+	position: absolute;
+	right: 0;
+}
+
 #fck_toolbar.toolbarSource td.last ul {
 	padding-top: 12px;
 	margin-right: -80px;
