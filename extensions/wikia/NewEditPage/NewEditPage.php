@@ -37,7 +37,13 @@ function wfNewEditPageArticleView($title) {
 
 // add CSS to edit pages
 function wfNewEditPageAddCSS() {
-	global $wgWysiwygEdit, $wgOut, $wgExtensionsPath, $wgStyleVersion;
+	global $wgWysiwygEdit, $wgOut, $wgUser, $wgExtensionsPath, $wgStyleVersion;
+
+	// do not touch monobook
+	$skinName = get_class($wgUser->getSkin());
+	if ($skinName == 'SkinMonoBook') {
+		return true;
+	}
 
 	if (!empty($wgWysiwygEdit)) {
 		$cssFile = 'NewEditPageWysiwyg.css';
@@ -58,7 +64,13 @@ function wfNewEditPageAddCSS() {
 
 // add red preview notice in old editor
 function wfNewEditPageAddPreviewBar($editPage) {
-	global $wgOut;
+	global $wgOut, $wgUser;
+
+	// do not touch monobook
+	$skinName = get_class($wgUser->getSkin());
+	if ($skinName == 'SkinMonoBook') {
+		return true;
+	}
 
 	if ($editPage->formtype == 'preview') {
 		wfLoadExtensionMessages('NewEditPage');
