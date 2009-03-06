@@ -255,7 +255,7 @@ class ReverseParser {
 						// handle indentations
 						if ($indentation > 0) {
 							$textContent = str_repeat(':', $indentation) . rtrim($textContent);
-
+							$prefix = "\n";
 							$isDefinitionList = true;
 						}
 
@@ -585,11 +585,13 @@ class ReverseParser {
 			// if current processed node contains _wysiwyg_new_line attribute (added in Parser.php)
 			// then add new line before it
 			if($this->nodeHasNewLineBefore($node)) {
+				wfDebug("Wysiwyg ReverseParserNew - has new line before\n");
 				$out = "\n{$out}";
 			}
 			
 			// do the same with nodes containing _wysiwyg_line_start and washtml attributes (added in Parser.php)
 			if($this->nodeHasLineStart($node)) {
+				wfDebug("Wysiwyg ReverseParserNew - starts new line\n");
 				$out = "\n{$out}";
 			}
 
