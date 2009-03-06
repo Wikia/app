@@ -18,7 +18,9 @@ class EditEnhancements {
 	
 	public function summaryBox($summary) {
 		global $wgUser, $wgHooks;
-		if(get_class($wgUser->getSkin()) == 'SkinMonaco') {
+		
+		$valid_skins = array('SkinMonaco', 'SkinAnswers');
+		if(in_array(get_class($wgUser->getSkin()), $valid_skins)) {
 			$wgHooks['EditPage::showEditForm:checkboxes'][] = array(&$this, 'showCheckboxes');
                         if($this->action == 'edit') {
                                 $wgHooks['GetHTMLAfterBody'][] = array(&$this, 'editPageJS');

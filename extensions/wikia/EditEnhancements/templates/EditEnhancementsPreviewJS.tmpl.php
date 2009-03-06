@@ -28,7 +28,7 @@ EditEnhancementsPreview = {
 			jQuery('#editpage-copywarn').css('marginTop', editBarHeight + 10 + 'px');
 		}
 		else {
-			jQuery("#edit_enhancements_toolbar").removeClass('edit_enhancements_toolbar_fixed').addClass('edit_enhancements_toolbar_static');
+			jQuery("#edit_enhancements_toolbar").removeClass('edit_enhancements_toolbar_fixed').addClass('edit_enhancements_toolbar_static').css('width', 'auto');
 
 			// remove margin-top from #editpage-copywarn to keep the same scroll height
 			jQuery('#editpage-copywarn').css('marginTop', '0px');
