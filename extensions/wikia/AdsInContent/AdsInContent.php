@@ -20,8 +20,8 @@ $wgExtensionCredits['other'][] = array(
 );
 
 $wgAdsInContentExtensionConfig = array(
-	'topAdUnit' => true,
-	'bottomAdUnit' => true,
+	'topAdUnit' => false,
+	'bottomAdUnit' => false,
 	'insideAdUnit' => array( /* secttions range => array of section numbers */
 		'3-5' => array(3),
 		'6-*' => array(3,6)
@@ -39,7 +39,7 @@ $wgAdsInContentExtensionConfig = array(
  ),
  'limit' => array(
  	'google' => 3,
- 	'yieldbuild' => 4
+ 	'yieldbuild' => 0
  )
 );
 
