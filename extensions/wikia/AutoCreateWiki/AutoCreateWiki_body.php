@@ -102,8 +102,8 @@ class AutoCreateWikiPage extends SpecialPage {
 		}
 		else {
 			if ($this->mPosted) {
-				$this->makeRequestParams();
-				$this->addNewAccountMailPassword();
+				//$this->makeRequestParams();
+				//$this->addNewAccountMailPassword();
 				echo "<pre>".print_r($wgRequest, true)."</pre>";
 				exit;
 			} 
@@ -533,6 +533,15 @@ class AutoCreateWikiPage extends SpecialPage {
 		$wgOut->addHtml($oTmpl->execute("create-wiki-form"));
 		wfProfileOut( __METHOD__ );
 		return;
+	}
+
+	/**
+	 * make local version of request parameters
+	 */
+	private function makeRequestParams() {
+		wfProfileIn( __METHOD__ );
+		// todo 
+		wfProfileOut( __METHOD__ );
 	}
 
 	/**
