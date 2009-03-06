@@ -30,7 +30,8 @@ class AutoCreateWikiPage extends SpecialPage {
 		$mPHPbin,
 		$mStarters,
 		$mCurrTime,
-		$mPosted;
+		$mPosted,
+		$mPostedErrors;
 
 	/**
 	 * test database, CAUTION! content will be destroyed during tests
@@ -94,12 +95,15 @@ class AutoCreateWikiPage extends SpecialPage {
 		$this->mAction = $wgRequest->getVal( "action", false );
 		$this->mSubpage = $subpage;
 		$this->mPosted = $wgRequest->wasPosted();
+		$this->mPostedErrors = array();
 
 		if( $subpage === "test" ) {
 			$this->create();
 		}
 		else {
 			if ($this->mPosted) {
+				$this->makeRequestParams();
+				$this->addNewAccountMailPassword();
 				echo "<pre>".print_r($wgRequest, true)."</pre>";
 				exit;
 			} 
@@ -531,6 +535,43 @@ class AutoCreateWikiPage extends SpecialPage {
 		return;
 	}
 
+	/**
+	 * create account function (see SpecialUserLogin.php to compare)
+	 */
+	private function addNewAccountMailPassword() {
+		global $wgOut;
+		wfProfileIn( __METHOD__ );
+
+		if ('' == $this->mEmail) {
+			$this->mainLoginForm( wfMsg( 'noemail', htmlspecialchars( $this->mName ) ) );
+			return;
+		}
+
+		$u = $this->addNewAccountInternal();
+
+		if ($u == NULL) {
+			return;
+		}
+
+		// Wipe the initial password and mail a temporary one
+		$u->setPassword( null );
+		$u->saveSettings();
+		$result = $this->mailPasswordInternal( $u, false, 'createaccount-title', 'createaccount-text' );
+
+		wfRunHooks( 'AddNewAccount', array( $u, true ) );
+
+		$wgOut->setPageTitle( wfMsg( 'accmailtitle' ) );
+		$wgOut->setRobotpolicy( 'noindex,nofollow' );
+		$wgOut->setArticleRelated( false );
+
+		if( WikiError::isError( $result ) ) {
+			$this->mainLoginForm( wfMsg( 'mailerror', $result->getMessage() ) );
+		} else {
+			$wgOut->addWikiMsg( 'accmailtext', $u->getName(), $u->getEmail() );
+			$wgOut->returnToMain( false );
+		}
+		$u = 0;
+	}
 	/**
 	 * addCustomSettings
 	 *
