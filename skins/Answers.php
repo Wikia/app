@@ -76,6 +76,7 @@ class AnswersTemplate extends MonacoTemplate {
 		<script type="text/javascript" src="http://yui.yahooapis.com/2.6.0/build/datasource/datasource-min.js"></script>
 		<script type="text/javascript" src="http://yui.yahooapis.com/2.6.0/build/connection/connection-min.js"></script>
 		<script type="text/javascript" src="http://yui.yahooapis.com/2.6.0/build/autocomplete/autocomplete-min.js"></script>
+		<script type="text/javascript" src="http://yui.yahooapis.com/2.7.0/build/get/get-min.js" ></script> 
 		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.3/jquery.min.js"></script>
 		<script type="text/javascript" src="<?=$wgStylePath?>/answers/js/main.js?<?=$wgStyleVersion?>"></script>
 		<?php
@@ -296,7 +297,7 @@ wfRunHooks('GetHTMLAfterBody', array (&$this));
 				google_ad_format    = google_ad_width + "x" + google_ad_height + "_as";
 				google_ad_type      = "text";
 				google_color_link   = "002BB8";
-				google_hits	    = "' . $google_hints . '";
+				google_hints	    = "' . $google_hints . '";
 			</script>
 			<script language="JavaScript" src="http://pagead2.googlesyndication.com/pagead/show_ads.js"></script>
 			</div>';
@@ -336,7 +337,7 @@ wfRunHooks('GetHTMLAfterBody', array (&$this));
 				google_ad_format    = google_ad_width + "x" + google_ad_height + "_as";
 				google_ad_type      = "text";
 				google_color_link   = "002BB8";
-				google_hits	    = "' . $google_hints . '";
+				google_hints	    = "' . $google_hints . '";
 			</script>
 			<script language="JavaScript" src="http://pagead2.googlesyndication.com/pagead/show_ads.js"></script>
 			</div>';
@@ -588,12 +589,16 @@ wfRunHooks('GetHTMLAfterBody', array (&$this));
 
         <div id="answers_sidebar" class="reset">
 		<?php
+		/*
 		($wgUser->isLoggedIn()) ? $toolboxClass = '' : $toolboxClass = ' class="anon"';
+		*/
 		?>
-		<div id="toolbox"<?=$toolboxClass?>>
+		<div id="toolbox">
 			<div id="toolbox_stroke">
 			<?php
+			/* SAME TOOLBOX FOR USERS AND ANONS
 			if ($wgUser->isLoggedIn()) {
+			*/
 			?>
 				<div id="toolbox_inside">
 					<h6><?= wfMsg("answers_toolbox")?></h6>
@@ -621,6 +626,7 @@ wfRunHooks('GetHTMLAfterBody', array (&$this));
 					<?=$this->searchBox();?>
 				</div>
 			<?php
+			/*
 			} else {
 			?>
 				<div id="toolbox_inside">
@@ -629,6 +635,7 @@ wfRunHooks('GetHTMLAfterBody', array (&$this));
 				</div>
 			<?php
 			}
+			*/
 			?>
 			</div><?/*toolbox_stroke*/?>
 		</div><?/*toolbox*/?>
