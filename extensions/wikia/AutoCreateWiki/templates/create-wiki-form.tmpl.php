@@ -32,7 +32,7 @@ div.formhighlight {
 .formblock .label {
 	font-weight: bold;
 	float: left;
-	width: 200px;
+	width: 175px;
 }
 .label label {
 	display: block;
@@ -44,10 +44,10 @@ div.formhighlight {
 .formblock .data1 {
 	float: left;
 	padding-left: 10px;
-	width: 300px;	
+	width: 350px;	
 }
 .formblock .data1 input {
-	width: 150px;	
+	width: 200px;	
 }
 .formblock .data1 select {
 	width: 250px;	
@@ -61,6 +61,7 @@ div.formhighlight {
 .formblock .data2 {
 	margin-left: 520px;
 	padding-right: 15px;
+	padding-left: 5px;
 }
 .birthdate {
 	width: auto !important;
@@ -94,7 +95,9 @@ div.error {
 	padding: 10px;
 }
 form div.error {
-	margin: 10px 0 0 0;	
+	font-family: sans-serif;
+	font-size: x-small;
+	margin: 10px 10px 0 0;	
 }
 label.error {
 	color: #C00;	
@@ -102,33 +105,39 @@ label.error {
 input.error, select.error {
 	border: 1px solid #C00;
 }
-
+.error-status {
+	padding-left:5px;
+}
 </style>
-<form class="highlightform" id="highlightform">
+<script type="text/javascript">
+/*<![CDATA[*/
+var divErrors = new Array();
+/*]]>*/
+</script>
+<form class="highlightform" id="highlightform" method="post" action="<?=$mTitle->escapeLocalURL("")?>">
 <div id="monobook_font">
-<div class="legend"><img src="<?=$wgExtensionsPath?>/wikia/AutoCreateWiki/images/required.png?<?=$wgStyleVersion?>" /> = required</div>
+	<div class="legend"><?=wfMsg("autocreatewiki-required", "<img src='{$wgExtensionsPath}/wikia/AutoCreateWiki/images/required.png?{$wgStyleVersion}' />")?></div>
 	<div id="moving" class="formhighlight"></div>
 	<div class="formblock">
 		<ul>
-			<li class="label"><label class="required">Web Address:</label></li>
-			<li class="data1"><span id="prefixedAddress">http://</span><input type="text" maxlength="245" />.wikia.com
-				<div class="error" style="display: none;"></div>
+			<li class="label"><label class="required"><?=wfMsg('autocreatewiki-web-address')?></label></li>
+			<li class="data1">
+				<span id="prefixedAddress">http://</span><input type="text" maxlength="245" autocomplete="off" name="wiki-domain" id="wiki-domain" style="width:145px" />.wikia.com <span class="error-status" id="wiki-domain-error-status">&nbsp;</span>
+				<div class="error" style="display: none;" id="wiki-domain-error"></div>
 			</li>
-			<li class="data2"><span class="note">It's best to use a word likely to be a search keyword for your topic.</span></li>
+			<li class="data2"><span class="note"><?=wfMsg('autocreatewiki-info-domain')?></span></li>
 		</ul>
 	</div>
 	<div class="formblock">
 		<ul>
-			<li class="label"><label class="required">Topic:</label></li>
-			<li class="data1"><input type="text" />
-				<div class="error" style="display: none;"></div>
-			</li>
-			<li class="data2"><span class="note">Add a short description such as "Star Wars" or "TV Shows"</span></li>
+			<li class="label"><label class="required"><?=wfMsg('autocreatewiki-topic')?></label></li>
+			<li class="data1"><input type="text" autocomplete="off" name="wiki-topic" id="wiki-topic" /></li>
+			<li class="data2"><span class="note"><?=wfMsg('autocreatewiki-info-topic')?></span></li>
 		</ul>
 	</div>
 	<div class="formblock">
 		<ul>
-			<li class="label"><label class="required">Category:</label></li>
+			<li class="label"><label class="required"><?=wfMsg('autocreatewiki-category')?></label></li>
 			<li class="data1"><select name="wiki-category" id="wiki-category">
 <?php if (!empty($aCategories) && is_array($aCategories)) :  ?>
 <?php foreach ($aCategories as $iCat => $sCatName) : ?>
@@ -136,14 +145,13 @@ input.error, select.error {
 <?php endforeach ?>
 <?php endif ?>
 				</select>
-				<div class="error" style="display: none;"></div>
 			</li>
-			<li class="data2"><span class="note">This will help visitors find your wiki</span></li>
+			<li class="data2"><span class="note"><?=wfMsg('autocreatewiki-info-category')?></span></li>
 		</ul>
 	</div>
 	<div class="formblock">
 		<ul>
-			<li class="label"><label class="required">Language:</label></li>
+			<li class="label"><label class="required"><?=wfMsg('autocreatewiki-language')?></label></li>
 			<li class="data1">
 				<select name="wiki-language" id="wiki-language"><option value="0"><?=wfMsg('autocreatewiki-chooseone')?></option>
 <?php if (!empty($aLanguages) && is_array($aLanguages)) :  ?>
@@ -152,64 +160,76 @@ input.error, select.error {
 <?php endforeach ?>
 <?php endif ?>
 				</select>
-				<div class="error" style="display: none;"></div>
 			</li>
-			<li class="data2"><span class="note">This will be the default language for visitors to your wiki</span></li>
+			<li class="data2"><span class="note"><?=wfMsg('autocreatewiki-info-language')?></span></li>
 		</ul>
 	</div>
-</div>
 <?php if ($wgUser->isAnon()) : ?>
-<h1>Create an Account</h1>
-<div class="legend"><img src="<?=$wgExtensionsPath?>/wikia/AutoCreateWiki/images/required.png?<?=$wgStyleVersion?>" /> = required</div>
+	<br />
+	<h1>Create an Account</h1>
+	<div class="legend"><?=wfMsg("autocreatewiki-required", "<img src='{$wgExtensionsPath}/wikia/AutoCreateWiki/images/required.png?{$wgStyleVersion}' />")?></div>
 	<div class="formblock">
 		<ul>
-			<li class="label"><label class="required">Username:</label></li>
-			<li class="data1"><input type="text" /></li>
-		</ul>
-	</div>
-	<div class="formblock">
-		<ul>
-			<li class="label"><label>Email Address:</label></li>
-			<li class="data1"><input type="text" /></li>
-			<li class="data2"><span class="note">Your email address is never shown to anyone on Wikia.</span></li>
-		</ul>
-	</div>
-	<div class="formblock">
-		<ul>
-			<li class="label"><label class="required">Password:</label></li>
-			<li class="data1"><input type="password" /></li>
-		</ul>
-	</div>
-	<div class="formblock">
-		<ul>
-			<li class="label"><label class="required">Retype password:</label></li>
-			<li class="data1"><input type="password" /></li>
-		</ul>
-	</div>
-	<div class="formblock">
-		<ul>
-			<li class="label"><label>Real name:</label></li>
-			<li class="data1"><input type="text" /></li>
-			<li class="data2"><span class="note">If you choose to provide it this will be used for giving you attribution for your work.</span></li>
-		</ul>
-	</div>
-	<div class="formblock">
-		<ul>
-			<li class="label"><label class="required">Birth date:</label></li>
+			<li class="label"><label class="required"><?=wfMsg('autocreatewiki-username')?></label></li>
 			<li class="data1">
-				<select name="wiki-user-year" class="birthdate"><? for ($year = 1900; $year <= date("Y"); $year++) { ?><option><?=$year?></option><? } ?></select>
-				<select name="wiki-user-month" class="birthdate"><? for ($month = 1; $month <= 12; $month++) { ?><option><?=$month?></option><? } ?></select>
-				<select name="wiki-user-day" class="birthdate"><? for ($day = 1; $day <= 31; $day++) { ?><option><?=$day?></option><? } ?></select>
+				<input type="text" autocomplete="off" name="wiki-username" id="wiki-username" /> <span class="error-status" id="wiki-username-error-status">&nbsp;</span>
+				<div class="error" style="display: none;" id="wiki-username-error"></div>
 			</li>
-			<li class="data2"><span class="note">Wikia requires all users to provide their real date of birth as both a safety precaution and as a means of preserving the integrity of the site while complying with federal regulations.</span></li>
 		</ul>
 	</div>
 	<div class="formblock">
 		<ul>
-			<li class="label"><label class="required">Blurry word:</label></li>
+			<li class="label"><label><?=wfMsg('autocreatewiki-email-address')?></label></li>
 			<li class="data1">
-				To help protect against automated account creation, please type the blurry word that you see into this field.<br />
-				<input type="text" />
+				<input type="text" autocomplete="off" name="wiki-email" id="wiki-email" /> <span class="error-status" id="wiki-email-error-status">&nbsp;</span>
+				<div class="error" style="display: none;" id="wiki-email-error"></div>
+			</li>
+			<li class="data2"><span class="note"><?=wfMsg('autocreatewiki-info-email-address')?></span></li>
+		</ul>
+	</div>
+	<div class="formblock">
+		<ul>
+			<li class="label"><label class="required"><?=wfMsg('autocreatewiki-password')?></label></li>
+			<li class="data1">
+				<input type="password" name="wiki-password" id="wiki-password" /> <span class="error-status" id="wiki-password-error-status">&nbsp;</span>
+				<div class="error" style="display: none;" id="wiki-password-error"></div>				
+			</li>
+		</ul>
+	</div>
+	<div class="formblock">
+		<ul>
+			<li class="label"><label class="required"><?=wfMsg('autocreatewiki-retype-password')?></label></li>
+			<li class="data1">
+				<input type="password" id="wiki-retype-password" name="wiki-retype-password" /> <span class="error-status" id="wiki-retype-password-error-status">&nbsp;</span>
+				<div class="error" style="display: none;" id="wiki-retype-password-error"></div>				
+			</li>
+		</ul>
+	</div>
+	<div class="formblock">
+		<ul>
+			<li class="label"><label><?=wfMsg('autocreatewiki-realname')?></label></li>
+			<li class="data1"><input type="text" id="wiki-realname" name="wiki-realname" /></li>
+			<li class="data2"><span class="note"><?=wfMsg('autocreatewiki-info-realname')?></span></li>
+		</ul>
+	</div>
+	<div class="formblock">
+		<ul>
+			<li class="label"><label class="required"><?=wfMsg('autocreatewiki-birthdate')?></label></li>
+			<li class="data1">
+				<select name="wiki-user-year" id="wiki-user-year" class="birthdate"><option selected="true" value="-1">----</option><? for ($year = 1900; $year <= date("Y"); $year++) { ?><option><?=$year?></option><? } ?></select>
+				<select name="wiki-user-month" id="wiki-user-month" class="birthdate"><option selected="true" value="-1">--</option><? for ($month = 1; $month <= 12; $month++) { ?><option><?=$month?></option><? } ?></select>
+				<select name="wiki-user-day" id="wiki-user-day" class="birthdate"><option selected="true" value="-1">--</option><? for ($day = 1; $day <= 31; $day++) { ?><option><?=$day?></option><? } ?></select> <span class="error-status" id="wiki-birthday-error-status">&nbsp;</span>
+				<div class="error" style="display: none;" id="wiki-birthday-error"></div>				
+			</li>
+			<li class="data2"><span class="note"><?=wfMsg('autocreatewiki-info-birthdate')?></span></li>
+		</ul>
+	</div>
+	<div class="formblock">
+		<ul>
+			<li class="label"><label class="required"><?=wfMsg('autocreatewiki-blurry-word')?></label></li>
+			<li class="data1">
+				<?=wfMsg('autocreatewiki-info-blurry-word')?><br />
+				<input type="text" id="wiki-blurry-word" name="wiki-blurry-word" />
 			</li>
 			<li class="data2">CAPTCHA</li>
 		</ul>
@@ -218,104 +238,17 @@ input.error, select.error {
 		<ul class="col2">
 			<li class="label">&nbsp;</li>
 			<li class="data1">
-				By creating an account, you agree to the <a href="#">Wikia's Terms of Use</a><br />
-				<input type="checkbox" /> Remember me
+				<?=wfMsg('autocreatewiki-info-terms-agree')?><br />
+				<input type="checkbox" id="wiki-remember" name="wiki-remember" /> <?=wfMsg('autocreatewiki-remember')?>
 			</li>
 		</ul>
 	</div>
 	<div class="toolbar color1 clearfix">
-		<input type="submit" value="Create Wiki" />
-		<input type="button" value="Cancel" />
+		<input type="submit" value="Create Wiki" name="wiki-submit" id="wiki-submit" />
+		<input type="button" value="Cancel" name="wiki-cancel" id="wiki-cancel" />
 	</div>
-</div>
 <?php endif ?>
-<script language="javascript">
-
-YAHOO.util.Event.onAvailable("moving", function() {
-	var aBodyXY = YAHOO.util.Dom.getXY('highlightform');
-	var aDivSel = YAHOO.util.Dom.getElementsByClassName('formblock', 'div');
-	var height, width;
-	var curDiv = null;
-	if (aDivSel) {
-		height = YAHOO.util.Dom.getStyle(aDivSel[0], 'height').replace("px", "");
-		width = YAHOO.util.Dom.getStyle(aDivSel[0], 'width').replace("px", "");
-
-		function findDiv(target) {
-			var cDiv = null;			
-			while (cDiv == null) { 
-				if (target.nodeName.toUpperCase() == 'DIV') {
-					cDiv = target;
-				} else {
-					target = target.parentNode; 
-				}
-			}
-			return cDiv;
-		}
-		
-		function onblurFormElem(event) {
-			curDiv = null;
-		}
-		
-		function onfocusFormElem(event) {
-			if (!curDiv) {
-				var target = YAHOO.util.Event.getTarget(event, true);
-				curDiv = findDiv(target);
-			}
-			
-			var selectedDivs = YAHOO.util.Dom.getElementsByClassName('selected', 'div');
-			if (selectedDivs.length == 0) {
-				YAHOO.util.Dom.setStyle("moving", 'display', 'none');
-				if (curDiv) {
-					YAHOO.util.Dom.addClass(curDiv, 'selected'); 
-				}
-			} else {
-				if (selectedDivs.length > 0) {
-					var prevDiv = selectedDivs[0];
-					if (prevDiv != curDiv) {
-						height = curDiv.offsetHeight;
-						width = YAHOO.util.Dom.getStyle(curDiv, 'width').replace("px", "");
-						if (prevDiv) YAHOO.util.Dom.removeClass(prevDiv, 'selected'); 
-						var move = new YAHOO.util.Anim("moving", {
-							top: {
-								from: (prevDiv) ? (YAHOO.util.Dom.getXY(prevDiv)[1] - aBodyXY[1]) : 0, 
-								to: (prevDiv) ? (YAHOO.util.Dom.getXY(curDiv)[1] - aBodyXY[1]) : 0
-							},
-							height: { from: height, to: height },
-							width: { from: width, to: width }
-						}, 1);
-						move.duration = 0.5;
-						move.onComplete.subscribe(function() {
-							YAHOO.util.Dom.addClass(curDiv, 'selected'); 
-							YAHOO.util.Dom.setStyle("moving", 'display', 'none');
-						}); 
-						YAHOO.util.Dom.setStyle("moving", 'display', 'block');
-						move.animate();
-					}
-				}
-			}
-		}
-			
-		var oF = document.forms['highlightform'];
-		var oElm = oF.getElementsByTagName('INPUT');
-		var els = oElm.length;
-		for(i = 0; i < els; i++) {
-			if (oElm[i].type != 'hidden' && oElm[i].type != 'submit' && oElm[i].type != 'reset') {
-				YAHOO.util.Event.addListener(oElm[i], "focus", onfocusFormElem);
-				YAHOO.util.Event.addListener(oElm[i], "blur", onblurFormElem);
-			}
-		}
-		var oEls = oF.getElementsByTagName('SELECT');
-		var elss = oEls.length;
-		for(i = 0; i < elss; i++) {
-			YAHOO.util.Event.addListener(oEls[i], "focus", onfocusFormElem);
-			YAHOO.util.Event.addListener(oEls[i], "blur", onblurFormElem);
-		}
-
-		YAHOO.util.Dom.setStyle("moving", 'display', 'none');
-		YAHOO.util.Dom.addClass(aDivSel[0], 'selected'); 
-		//curDiv = aDivSel[0];
-	}
-});
-
-</script>
+</div>
+</form>
+<script type="text/javascript" src="<?=$wgExtensionsPath?>/wikia/AutoCreateWiki/js/autocreatewiki.js?<?=$wgStyleVersion?>"></script>
 <!-- e:<?= __FILE__ ?> -->

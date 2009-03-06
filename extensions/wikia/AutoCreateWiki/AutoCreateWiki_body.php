@@ -29,7 +29,8 @@ class AutoCreateWikiPage extends SpecialPage {
 		$mMYSQLbin,
 		$mPHPbin,
 		$mStarters,
-		$mCurrTime;
+		$mCurrTime,
+		$mPosted;
 
 	/**
 	 * test database, CAUTION! content will be destroyed during tests
@@ -92,11 +93,16 @@ class AutoCreateWikiPage extends SpecialPage {
 		$this->mTitle = Title::makeTitle( NS_SPECIAL, "AutoCreateWiki" );
 		$this->mAction = $wgRequest->getVal( "action", false );
 		$this->mSubpage = $subpage;
+		$this->mPosted = $wgRequest->wasPosted();
 
 		if( $subpage === "test" ) {
 			$this->create();
 		}
 		else {
+			if ($this->mPosted) {
+				echo "<pre>".print_r($wgRequest, true)."</pre>";
+				exit;
+			} 
 			$this->createWikiForm();
 		}
 	}
@@ -499,7 +505,7 @@ class AutoCreateWikiPage extends SpecialPage {
 	 * @param $subpage Mixed: subpage of SpecialPage
 	 */
 	public function createWikiForm() {
-		global $wgOut, $wgUser, $wgExtensionsPath, $wgStyleVersion;
+		global $wgOut, $wgUser, $wgExtensionsPath, $wgStyleVersion, $wgScriptPath;
 
 		#-
 		$aLanguages = Language::getLanguageNames();
@@ -515,6 +521,8 @@ class AutoCreateWikiPage extends SpecialPage {
 			"wgStyleVersion" => $wgStyleVersion,
 			"aLanguages" => $aLanguages,
 			"aCategories" => $aCategories,
+			"wgScriptPath" => $wgScriptPath,
+			"mTitle" => $this->mTitle,
 		));
 
 		#---

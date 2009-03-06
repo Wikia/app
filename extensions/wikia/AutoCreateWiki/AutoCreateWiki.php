@@ -32,3 +32,12 @@ $dir = dirname(__FILE__) . '/';
 $wgExtensionMessagesFiles[ "AutoCreateWiki" ] = $dir . "AutoCreateWiki.i18n.php";
 $wgAutoloadClasses[ "AutoCreateWikiPage" ] = $dir. "AutoCreateWiki_body.php";
 $wgSpecialPages[ "AutoCreateWiki" ] = "AutoCreateWikiPage";
+
+#--- AutoCreateWiki class
+require_once( dirname(__FILE__) . "/AutoCreateWiki_helper.php" );
+#--- ajax functions
+require_once( dirname(__FILE__) . "/AutoCreateWiki_ajax.php" );
+global $wgAjaxExportList;
+$wgAjaxExportList[] = 'axACWRequestCheckName';
+$wgAjaxExportList[] = 'axACWRequestCheckAccount';
+$wgAjaxExportList[] = 'axACWRequestCheckBirthday';
