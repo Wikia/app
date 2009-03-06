@@ -73,7 +73,7 @@ function wfNewEditPageAddCSS() {
 
 // add red preview notice in old editor
 function wfNewEditPageAddPreviewBar($editPage) {
-	global $wgOut, $wgUser, $wgTitle, $wgHooks;
+	global $wgOut, $wgUser, $wgHooks;
 
 	// do not touch monobook
 	$skinName = get_class($wgUser->getSkin());
