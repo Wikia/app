@@ -19,10 +19,6 @@
 	padding: 0 1px !important;
 }
 
-#wikiPreview > :first-child {
-	display: none;
-}
-
 #csMainContainer {
 	margin: -2px 1px 0 1px;
 }
@@ -43,4 +39,12 @@
 	text-align: center;
 	font-weight: bold;
 	font-size: 1.1em;
+}
+
+#new_edit_page_preview_title {
+	clear: both;
+}
+
+#wikiPreview {
+	padding: 10px;
 }
