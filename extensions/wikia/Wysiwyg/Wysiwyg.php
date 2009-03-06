@@ -401,10 +401,11 @@ function Wysiwyg_WikiTextToHtml($wikitext, $articleId = -1, $encode = false) {
 
 		$html = preg_replace('/\x7f-wtb-(\d+)-\x7f.*?\x7f-wte-\1-\x7f/sie', "'<input type=\"button\" refid=\"\\1\" _fck_type=\"template\" value=\"'.\$wgWysiwygMetaData[\\1]['name'].'\" class=\"wysiwygDisabled wysiwygTemplate\" /><input value=\"'.htmlspecialchars(stripslashes(\$templateCallsParsed[\\1])).'\" style=\"display:none\" />'", $html);
 	}
+	$html = str_replace("\n", "<!--EOL1-->\n", $html);
+
+	$html = preg_replace_callback("/<li>(\s*)/", create_function('$matches','return "<li space_after=\"".$matches[1]."\">";'), $html);
 
 	wfDebug("Wysiwyg_WikiTextToHtml html: {$html}\n");
-
-	$html = str_replace("\n", "<!--EOL1-->\n", $html);
 
 	return array($html, $encode ? Wikia::json_encode($wgWysiwygMetaData, true) : $wgWysiwygMetaData);
 }
@@ -413,6 +414,10 @@ function Wysiwyg_HtmlToWikiText($html, $wysiwygData, $decode = false) {
 	global $wgUseNewReverseParser;
 
 	$html = str_replace("<!--EOL1-->\n", "", $html);
+	$html = str_replace("<!--EOL1--> ", " ", $html);
+	$html = str_replace("<!--EOL1-->", " ", $html);
+
+	$html = preg_replace_callback("/<li space_after=\"(\s*)\">/", create_function('$matches','return "<li>".$matches[1];'), $html);
 
 	if (empty($wgUseNewReverseParser)) {
 		require_once(dirname(__FILE__).'/ReverseParser.php');
