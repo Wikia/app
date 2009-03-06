@@ -404,11 +404,15 @@ function Wysiwyg_WikiTextToHtml($wikitext, $articleId = -1, $encode = false) {
 
 	wfDebug("Wysiwyg_WikiTextToHtml html: {$html}\n");
 
+	$html = str_replace("\n", "<!--EOL1-->\n", $html);
+
 	return array($html, $encode ? Wikia::json_encode($wgWysiwygMetaData, true) : $wgWysiwygMetaData);
 }
 
 function Wysiwyg_HtmlToWikiText($html, $wysiwygData, $decode = false) {
 	global $wgUseNewReverseParser;
+
+	$html = str_replace("<!--EOL1-->\n", "", $html);
 
 	if (empty($wgUseNewReverseParser)) {
 		require_once(dirname(__FILE__).'/ReverseParser.php');
