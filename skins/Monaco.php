@@ -1637,6 +1637,19 @@ if ($wgOut->isArticle()){
 				     '</div>' . "\n";
 			}
 
+			// Display additional ads before the footer on long pages
+			if ($wgOut->isArticle() &&
+			ArticleAdLogic::isContentPage() &&
+			ArticleAdLogic::isLongArticle($this->data['bodytext'])) {
+				echo  '<table style="width: 100%"><tr>' . 
+					'<td style="text-align: center">' .
+					AdEngine::getInstance()->getPlaceHolderDiv('PREFOOTER_LEFT_BOXAD', false) .
+					"</td>\n" .
+					'<td style="text-align: center">' .
+					AdEngine::getInstance()->getPlaceHolderDiv('PREFOOTER_LEFT_BOXAD', false) .
+                                        "</td></tr>\n</table>";
+			}
+
 		wfProfileOut( __METHOD__ . '-article'); ?>
 
 			<!-- ARTICLE FOOTER -->
