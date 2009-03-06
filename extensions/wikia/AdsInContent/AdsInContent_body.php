@@ -13,7 +13,7 @@ class AdsInContent {
 	private $aConfig;
 	private $lastUsedAdUnit = null;
 	private $lastUsedAdUnitIndex = false;
-	private $mAdsCounter = 2; // we want top and bottom ads always displayed
+	private $mAdsCounter = 0; // we want top and bottom ads always displayed
 	private $mAdsProvider = 'google';
 	private $ads;
 

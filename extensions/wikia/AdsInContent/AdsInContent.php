@@ -36,9 +36,9 @@ $wgAdsInContentExtensionConfig = array(
 																			0 => array( 'width' => 468, 'height' => 200, 'align' => 'left', 'yieldbuildLocation' => 'left_first_section'),
 																			1 => array( 'width' => 468, 'height' => 200, 'align' => 'left', 'yieldbuildLocation' => 'right_first_section')
  	                ) */
- ), 
+ ),
  'limit' => array(
- 	'google' => 3,
+ 	'google' => 4,
 /* 	'yieldbuild' => 0 */
  )
 );
