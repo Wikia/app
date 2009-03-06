@@ -160,10 +160,8 @@ textarea {
 }
 
 input.historysubmit {
-	padding: 0 .3em .3em .3em !important;
-	font-size: 94%;
 	cursor: pointer;
-	height: 1.7em !important;
+	font-size: 88%;
 	margin-left: 1.6em;
 }
 select {
