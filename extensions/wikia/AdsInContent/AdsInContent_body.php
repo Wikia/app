@@ -69,12 +69,12 @@ class AdsInContent {
 	private function chooseAdsProvider() {
 		srand(time());
 		$iRandomValue = rand(0, 100);
-		if($iRandomValue < 66) {
-			$this->mAdsProvider = 'yieldbuild';
-		}
-		else {
+		//if($iRandomValue < 66) {
+		//	$this->mAdsProvider = 'yieldbuild';
+		//}
+		//else {
 			$this->mAdsProvider = 'google';
-		}
+		//}
 	}
 
 	private function addTopAd() {
