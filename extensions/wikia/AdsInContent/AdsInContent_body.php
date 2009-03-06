@@ -225,7 +225,7 @@ class AdsInContent {
 	google_ad_type = "text";
 END;
 
-if ( $wgUser->getSkin() === 'monaco' ) {
+if ( $wgUser->getSkin()->getSkinName() === 'monaco' ) {
 	$body .= 'google_color_border = top.AdEngine.getAdColor("text");
 	google_color_bg     = top.AdEngine.getAdColor("bg");
 	google_color_link   = top.AdEngine.getAdColor("link");
