@@ -66,11 +66,13 @@ while( $row = $dbw->fetchObject( $res ) ) {
 	 */
 	if( $user_id ) {
 		echo "fixing position: {$row->log_id} log_user = {$user_id}\n";
-	#	$dbw->update(
-	#		"logging",
-	#		array( "log_user" => $user_id ),
-	#		array( "log_id" => $row->log_id ),
-	#		__METHOD__
-	#	);
+		$dbw->begin();
+		$dbw->update(
+			"logging",
+			array( "log_user" => $user_id ),
+			array( "log_id" => $row->log_id ),
+			__METHOD__
+		);
+		$dbw->commit();
 	}
 }
