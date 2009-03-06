@@ -530,7 +530,7 @@ class CreateWikiTask extends BatchTask {
 				$sContent = $oCentralListArticle->getContent();
 				$sContent.= "{{subst:nw|" . $this->mTaskData['subdomain'] . "|" . $sCentralTitle . "|" . $this->mTaskData['language'] . "}}";
 
-				$oCentralListArticle->doEdit( $sContent, "modified by task manager");
+				$oCentralListArticle->doEdit( $sContent, "modified by task manager", EDIT_FORCE_BOT);
 				$this->addLog( sprintf("Article %s modified.", $oCentralListTitle->getFullUrl()) );
 			}
 			else {
@@ -548,7 +548,7 @@ class CreateWikiTask extends BatchTask {
 				$sReplace = "{{nwtw|" . $this->mTaskData['language'] . "|" . $aHubs[$this->mTaskParams['wpWikiCategory']] . "|" . $sCentralTitle . "|http://" . $this->mTaskData['subdomain'] . ".wikia.com}}\n|}";
 				$sContent = str_replace("|}", $sReplace, $oCentralListArticle->getContent());
 
-				$oCentralListArticle->doEdit( $sContent, "modified by task manager");
+				$oCentralListArticle->doEdit( $sContent, "modified by task manager", EDIT_FORCE_BOT);
 				$this->addLog( sprintf("Article %s modified.", $oCentralListTitle->getFullUrl()) );
 			}
 			else {
@@ -567,7 +567,7 @@ class CreateWikiTask extends BatchTask {
 				$oCentralRedirectArticle = new Article( $oCentralRedirectTitle, 0);
 				if( !$oCentralRedirectArticle->exists() ) {
 					$sContent = "#Redirect [[" . $sCentralTitle . "]]";
-					$oCentralRedirectArticle->doEdit( $sContent, "modified by task manager");
+					$oCentralRedirectArticle->doEdit( $sContent, "modified by task manager", EDIT_FORCE_BOT);
 					$this->addLog( sprintf("Article %s added (redirect to: " . $sCentralTitle . ").", $oCentralRedirectTitle->getFullUrl()) );
 				}
 				else {
@@ -580,7 +580,7 @@ class CreateWikiTask extends BatchTask {
 					$oCentralRedirectTitle = Title::newFromText( $sCentralRedirectTitle, NS_MAIN );
 					if( !$oCentralRedirectArticle->exists() ) {
 						$sContent = "#Redirect [[" . $sCentralTitle . "]]";
-						$oCentralRedirectArticle->doEdit( $sContent, "modified by task manager");
+						$oCentralRedirectArticle->doEdit( $sContent, "modified by task manager", EDIT_FORCE_BOT);
 						$this->addLog( sprintf("Article %s added (extra redirect to: " . $sCentralTitle . ").", $oCentralRedirectTitle->getFullUrl()) );
 					}
 					else {
