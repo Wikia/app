@@ -1,0 +1,9 @@
+#siteNotice,
+#siteSub,
+#contentSub,
+#mw-anon-edit-warning,
+.mw-newarticletext,
+#user_masthead,
+.usermessage {
+	display: none !important;
+}

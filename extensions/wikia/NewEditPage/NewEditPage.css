@@ -24,7 +24,6 @@
 	font-size: 1.1em;
 }
 
-#wikiPreview > :first-child {
-	display: none;
+#new_edit_page_preview_title {
+	clear: both;
 }
-
