@@ -23,8 +23,8 @@ $wgAdsInContentExtensionConfig = array(
 	'topAdUnit' => false,
 	'bottomAdUnit' => false,
 	'insideAdUnit' => array( /* secttions range => array of section numbers */
-		'3-5' => array(3),
-		'6-*' => array(3,6)
+		'3-7' => array(2,5),
+		'8-*' => array(8)
 //		'9-*' => array(3,6,8)
 	),
  'insideAdUnitConfig' => array(
