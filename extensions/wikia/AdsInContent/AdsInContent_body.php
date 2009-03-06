@@ -210,6 +210,8 @@ class AdsInContent {
 	}
 
 	public static function getGoogleAdUnit($width, $height, $adChannel = '') {
+		global $wgUser;
+
 		$googleAdClient = self::googleAdClient;
 
 		$body = <<<END
@@ -221,15 +223,23 @@ class AdsInContent {
 	google_ad_format = "{$width}x{$height}_as";
 	google_ad_channel = "$adChannel";
 	google_ad_type = "text";
-	google_color_border = "FFFFFF";
+END;
+
+if ( $wgUser->getSkin() === 'monaco' ) {
+	$body .= 'google_color_border = top.AdEngine.getAdColor("text");
+	google_color_bg     = top.AdEngine.getAdColor("bg");
+	google_color_link   = top.AdEngine.getAdColor("link");
+	google_color_text   = top.AdEngine.getAdColor("text");
+	google_color_url    = top.AdEngine.getAdColor("url");';
+} else {
+	$body .= 'google_color_border = "FFFFFF";
 	google_color_bg = "FFFFFF";
 	google_color_link = "002BB8";
 	google_color_text = "000000";
-	google_color_url = "002BB8";
-//-->
-</script>
-<script src="http://pagead2.googlesyndication.com/pagead/show_ads.js" type="text/javascript"></script>
-END;
+	google_color_url = "002BB8";';
+}
+
+$body .= '//--></script><script src="http://pagead2.googlesyndication.com/pagead/show_ads.js" type="text/javascript"></script>';
 
 		return $body;
 	}
