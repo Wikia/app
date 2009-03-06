@@ -243,11 +243,11 @@ var divErrors = new Array();
 			</li>
 		</ul>
 	</div>
+<?php endif ?>
 	<div class="toolbar color1 clearfix">
 		<input type="submit" value="Create Wiki" name="wiki-submit" id="wiki-submit" />
 		<input type="button" value="Cancel" name="wiki-cancel" id="wiki-cancel" />
 	</div>
-<?php endif ?>
 </div>
 </form>
 <script type="text/javascript" src="<?=$wgExtensionsPath?>/wikia/AutoCreateWiki/js/autocreatewiki.js?<?=$wgStyleVersion?>"></script>
