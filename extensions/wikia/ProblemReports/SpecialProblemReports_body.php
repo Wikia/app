@@ -61,7 +61,7 @@ class SpecialProblemReports extends SpecialPage
 				    $problem['reporter'] .= ' ('.$problem['ip'].')';
 				}
 				
-				$problemTitle = Title::makeTitle($problem['ns'],$problem['title'])->getFullText();
+				$problemTitle = Title::newFromText($problem['title'])->getFullText();
 				
 				// format date
 				$item = new FeedItem
