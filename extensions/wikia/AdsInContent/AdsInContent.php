@@ -14,7 +14,7 @@ if(!defined('MEDIAWIKI')) {
 
 $wgExtensionCredits['other'][] = array(
 	'name' => 'AdsInContent',
-	'author' => '[http://pl.inside.wikia.com/wiki/User:Macbre Maciej Brencz], [http://www.wikia.com/wiki/User:Adi3ek Adrian \'ADi\' Wieczorek]',
+	'author' => '[http://www.wikia.com/wiki/User:Macbre Maciej Brencz], [http://www.wikia.com/wiki/User:Adi3ek Adrian \'ADi\' Wieczorek]',
 	'description' => 'Displays ad boxes inside article content',
 	'version' => 1.1
 );
@@ -32,14 +32,14 @@ $wgAdsInContentExtensionConfig = array(
 																			0 => array( 'width' => 468, 'height' => 60, 'align' => 'left', 'googleAdChannel' => '9100000015'), // 011
 																			1 => array( 'width' => 200, 'height' => 200, 'align' => 'left', 'googleAdChannel' => '9100000016') // 012
  																	),
- 	'yieldbuild' => array(
+/* 	'yieldbuild' => array(
 																			0 => array( 'width' => 468, 'height' => 200, 'align' => 'left', 'yieldbuildLocation' => 'left_first_section'),
 																			1 => array( 'width' => 468, 'height' => 200, 'align' => 'left', 'yieldbuildLocation' => 'right_first_section')
- 	                )
- ),
+ 	                ) */
+ ), 
  'limit' => array(
  	'google' => 3,
- 	'yieldbuild' => 0
+/* 	'yieldbuild' => 0 */
  )
 );
 
