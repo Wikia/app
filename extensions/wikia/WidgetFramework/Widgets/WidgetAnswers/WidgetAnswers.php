@@ -26,11 +26,11 @@ function WidgetAnswers($id, $params) {
 
 	// HTML for the Ask a Question 
 	$h = '<form method="get" action="" onsubmit="return false" name="ask_form" id="ask_form">
-			<input type="text" id="answers_ask_field" value="Ask a question" class="alt" />
+			<input type="text" id="answers_ask_field" value="' . htmlspecialchars(wfMsg("ask_a_question")) . '" class="alt" />
 		</form>';
 	
 	$h .= '<div style="padding: 7px;">';
-	$h .= '<b>Recent Questions</b>';
+	$h .= '<b>' . wfMsg("recent_asked_questions") . '</b>';
 	$h .= '<ul id="recent_unanswered_questions"></ul>';
 	/* Note that varnish_answer_redirect is a proxy to work around cross domain limitations
 	/* In a Apache environment you can use ProxyPass
@@ -64,9 +64,13 @@ jQuery("#recent_unanswered_questions").ready(function() {
 		eval("j=" + oResponse);
 		if( j.query.wkpagesincat ){
 			html = "";
-			for( recent_q in j.query.wkpagesincat ){
-				page = j.query.wkpagesincat[recent_q];
-				html += "<li><a href=\"" + page.url + "\">" + page.title.replace(/_/g," ") + "?</a></li>";
+			for( var recent_q in j.query.wkpagesincat ){
+				var page = j.query.wkpagesincat[recent_q];
+				var text = page.title.replace(/_/g," ") + "?";
+				if (text.length > 100){
+					text = text.substring(0,100) + "...";
+				}
+				html += "<li><a href=\"" + page.url + "\">" + text + "</a></li>";
 			}
 			jQuery("#recent_unanswered_questions").prepend( html );
 		}
