@@ -20,9 +20,20 @@ $wgWidgets['WidgetAnswers'] = array(
     'listable' => true
 );
 
+
 function WidgetAnswers($id, $params) {
 
     wfProfileIn(__METHOD__);
+
+	static $languageLoaded;
+	if (empty($languageLoaded)){
+		include ( "/usr/wikia/source/answers/Answers.i18n.php" );
+		global $wgMessageCache;
+		foreach( $messages as $lang => $message_array ){
+			$wgMessageCache->addMessages( $message_array, $lang );
+		}
+		$languageLoaded = true;
+	}
 
 	// HTML for the Ask a Question 
 	$h = '<form method="get" action="" onsubmit="return false" name="ask_form" id="ask_form">
