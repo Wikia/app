@@ -250,19 +250,19 @@ class ReverseParser {
 						// handle <dt> elements being rendered as p.definitionTerm
 						if ($this->hasCSSClass($node, 'definitionTerm')) {
 							$textContent = ';' . rtrim($textContent);
-							$prefix = $node->previousSibling ? "\n" : '';
-
+							$prefix = $node->getAttribute('_new_lines_before') ? "\n\n" : "\n";
 							$isDefinitionList = true;
 						}
 
 						// handle indentations
 						if ($indentation > 0) {
 							$textContent = str_repeat(':', $indentation) . rtrim($textContent);
-							$prefix = "\n";
+							$prefix = $node->getAttribute('_new_lines_before') ? "\n\n" : "\n";
 							$isDefinitionList = true;
 						}
+
 						// "normal" paragraph following indented paragraph
-						else if ($previousNode && $this->getIndentationLevel($previousNode)) {
+						if ($previousNode && $this->getIndentationLevel($previousNode) !== false) {
 							$newLinesBefore = intval($node->getAttribute('_new_lines_before')) + 1;
 							$prefix = str_repeat("\n", $newLinesBefore);
 						}
@@ -293,26 +293,33 @@ class ReverseParser {
 
 						} else {
 							// add new lines before paragraph
-							$newLinesBefore = intval($node->getAttribute('_new_lines_before'));
-							if($newLinesBefore > 0) {
-								$textContent = str_repeat("\n", $newLinesBefore).$textContent;
+							if ($isDefinitionList) {
+								// for : and ; lists use prefix value
+								$textContent = $prefix . $textContent;
 							}
-
-							// add newline before paragraph if previous node ...
-							if(!empty($previousNode) && (!$isDefinitionList || $newLinesBefore == 0) ) {
-								// is list
-								if ($this->isList($previousNode)) {
-									$textContent = "\n{$textContent}";
+							else {
+								// for paragraphs use _new_lines_before attribute value
+								$newLinesBefore = intval($node->getAttribute('_new_lines_before'));
+								if($newLinesBefore > 0) {
+									$textContent = str_repeat("\n", $newLinesBefore).$textContent;
 								}
 
-								// is <pre> or <div>
-								if ( in_array($previousNode->nodeName, array('pre', 'div')) ) {
-									$textContent = "\n{$textContent}";
-								}
+								// add newline before paragraph if previous node ...
+								if(!empty($previousNode) && (!$isDefinitionList) ) {
+									// is list
+									if ($this->isList($previousNode)) {
+										$textContent = "\n{$textContent}";
+									}
 
-								// has wasHTML attribute set
-								if ($previousNode->hasAttribute('washtml')) {
-									$textContent = "\n{$textContent}";
+									// is <pre> or <div>
+									if ( $previousNode->nodeName == 'pre' ) {
+										$textContent = "\n{$textContent}";
+									}
+
+									// has wasHTML attribute set
+									if ($previousNode->hasAttribute('washtml')) {
+										$textContent = "\n{$textContent}";
+									}
 								}
 							}
 
@@ -451,12 +458,14 @@ class ReverseParser {
 								$out = "\n$out";
 							}
 
-							// we have non-table content after current table
-							if ( $node->nextSibling && ($node->nextSibling->nodeName != 'table') ) {
+							$nextNode = $this->getNextElementNode($node);
 
-								switch($node->nextSibling->nodeName) {
+							// we have non-table content after current table
+							if ( $nextNode && $nextNode->nodeName != 'table' ) {
+
+								switch($nextNode->nodeName) {
 									case 'p':
-										if ($node->nextSibling->hasAttribute('_new_lines_before')) {
+										if ($nextNode->hasAttribute('_new_lines_before')) {
 											$out = "$out\n";
 										}
 										break;
