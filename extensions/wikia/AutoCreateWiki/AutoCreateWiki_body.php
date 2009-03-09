@@ -31,8 +31,8 @@ class AutoCreateWikiPage extends SpecialPage {
 		$mStarters,
 		$mCurrTime,
 		$mPosted,
-		$mPostedErrors;
-
+		$mPostedErrors,
+		$mErrors;
 	/**
 	 * test database, CAUTION! content will be destroyed during tests
 	 */
@@ -87,7 +87,8 @@ class AutoCreateWikiPage extends SpecialPage {
 	 * @param $subpage Mixed: subpage of SpecialPage
 	 */
 	public function execute( $subpage ) {
-		global $wgRequest;
+		global $wgRequest, $wgAuth, $wgUser;
+		
 		wfLoadExtensionMessages( "AutoCreateWiki" );
 
 		$this->setHeaders();
@@ -96,17 +97,29 @@ class AutoCreateWikiPage extends SpecialPage {
 		$this->mSubpage = $subpage;
 		$this->mPosted = $wgRequest->wasPosted();
 		$this->mPostedErrors = array();
+		$this->mErrors = 0;
 
 		if( $subpage === "test" ) {
+			#---
 			$this->create();
-		}
-		else {
+		} else {
 			if ($this->mPosted) {
-				//$this->makeRequestParams();
-				//$this->addNewAccountMailPassword();
-				echo "<pre>".print_r($wgRequest, true)."</pre>";
-				exit;
+				if ( $wgUser->isAnon() ) {
+					$this->makeRequestParams();
+					$oUser = $this->addNewAccount();
+					if ( !is_null($oUser) ) {
+						$wgAuth->updateUser( $oUser );
+						$wgUser = $oUser;
+					} 
+				}
+				#-- user logged in or just create
+				if ( ( !$wgUser->isAnon() ) && ( $wgUser->getID() > 0 ) ) {
+					// to do - redirect to create wiki 
+				}
 			} 
+			/*echo "number of errors = " . $this->mErrors . "<br />";
+			echo "errors = <pre>" . print_r($this->mPostedErrors, true) . "</pre><br/>";
+			exit;*/
 			$this->createWikiForm();
 		}
 	}
@@ -123,7 +136,6 @@ class AutoCreateWikiPage extends SpecialPage {
 			$wgHubCreationVariables, $wgLangCreationVariables, $wgUniversalCreationVariables;
 
 		# $wgDebugLogGroups[ self::LOG ] = "/tmp/autocreatewiki.log";
-
 		wfProfileIn( __METHOD__ );
 
 		/**
@@ -510,13 +522,16 @@ class AutoCreateWikiPage extends SpecialPage {
 	 */
 	public function createWikiForm() {
 		global $wgOut, $wgUser, $wgExtensionsPath, $wgStyleVersion, $wgScriptPath;
-
+		global $wgCaptchaTriggers;
 		#-
 		$aLanguages = Language::getLanguageNames();
 		#-
 		$hubs = WikiFactoryHub::getInstance();
 		$aCategories = $hubs->getCategories();
 		#-
+
+		$f = new FancyCaptcha();
+		#--		
 		/* run template */
 		$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
 		$oTmpl->set_vars( array(
@@ -527,9 +542,13 @@ class AutoCreateWikiPage extends SpecialPage {
 			"aCategories" => $aCategories,
 			"wgScriptPath" => $wgScriptPath,
 			"mTitle" => $this->mTitle,
+			"mPostedErrors" => $this->mPostedErrors,
+			"captchaForm" => $f->getForm()
 		));
 
 		#---
+		$wgOut->setRobotpolicy( 'noindex,nofollow' );
+		$wgOut->setArticleRelated( false );
 		$wgOut->addHtml($oTmpl->execute("create-wiki-form"));
 		wfProfileOut( __METHOD__ );
 		return;
@@ -539,48 +558,233 @@ class AutoCreateWikiPage extends SpecialPage {
 	 * make local version of request parameters
 	 */
 	private function makeRequestParams() {
+		global $wgRequest;
 		wfProfileIn( __METHOD__ );
-		// todo 
+		$aValues = $wgRequest->getValues();
+		if ( !empty($aValues) && is_array($aValues) ) {
+			foreach ($aValues as $key => $value) {
+				$k = trim($key);	
+				if ( strpos($key, "wiki-") !== false ) {
+					$this->mPostedErrors[$k] = "";
+					$key = str_replace("wiki-", "", $key);
+					$key = str_replace("-", "_", "m".ucfirst($key));
+					$this->$key = $value;
+				}
+			}
+		}
+		#echo "<pre>".print_r($this, true)."</pre>";
 		wfProfileOut( __METHOD__ );
 	}
 
 	/**
 	 * create account function (see SpecialUserLogin.php to compare)
 	 */
-	private function addNewAccountMailPassword() {
-		global $wgOut;
+	private function addNewAccount() {
+		global $wgUser, $wgOut;
+		global $wgEnableSorbs, $wgProxyWhitelist;
+		global $wgMemc, $wgAccountCreationThrottle;
+		global $wgAuth, $wgMinimalPasswordLength;
+		global $wgEmailConfirmToEdit;
+		
 		wfProfileIn( __METHOD__ );
 
-		if ('' == $this->mEmail) {
-			$this->mainLoginForm( wfMsg( 'noemail', htmlspecialchars( $this->mName ) ) );
-			return;
+		if ( wfReadOnly() ) {
+			$wgOut->readOnlyPage();
+			return false;
+		}
+		
+		$ip = wfGetIP();
+	
+		#-- check username
+		$sResponse = AutoCreateWiki::checkUsernameIsCorrect($this->mUsername);
+		if ( !empty($sResponse) ) {
+			$this->makeError( "wiki-username", $sResponse );
+		}
+		
+		#-- check email 
+		$sResponse = AutoCreateWiki::checkEmailIsCorrect($this->mEmail);
+		if ( !empty($sResponse) ) {
+			$this->makeError( "wiki-email", $sResponse );
 		}
 
-		$u = $this->addNewAccountInternal();
-
-		if ($u == NULL) {
-			return;
+		#-- check if the date has been choosen
+		$sResponse = AutoCreateWiki::checkBirthdayIsCorrect($this->mUser_year, $this->mUser_month, $this->mUser_day);
+		if ( !empty($sResponse) ) {
+			$this->makeError( "wiki-birthday", $sResponse );
 		}
 
-		// Wipe the initial password and mail a temporary one
-		$u->setPassword( null );
-		$u->saveSettings();
-		$result = $this->mailPasswordInternal( $u, false, 'createaccount-title', 'createaccount-text' );
+		# Check permissions
+		if ( !$wgUser->isAllowed( 'createaccount' ) ) {
+			$this->makeError( "wiki-username", wfMsg('autocreatewiki-blocked-username') );
+		} elseif ( $wgUser->isBlockedFromCreateAccount() ) {
+			$blocker = User::whoIs( $wgUser->mBlock->mBy );
+			$block_reason = $wgUser->mBlock->mReason;
+			if ( strval( $block_reason ) === '' ) {
+				$block_reason = wfMsg( 'blockednoreason' );
+			}
+			$this->makeError( "wiki-username", wfMsg('autocreatewiki-blocked-username', $ip, $block_reason, $blocker) );
+		}
 
-		wfRunHooks( 'AddNewAccount', array( $u, true ) );
+		$ip = wfGetIP();
+		if ( $wgEnableSorbs && !in_array( $ip, $wgProxyWhitelist ) && $wgUser->inSorbsBlacklist( $ip ) ) {
+			$this->makeError( "wiki-username", wfMsg( 'sorbs_create_account_reason' ) . ' (' . htmlspecialchars( $ip ) . ')' );
+		}
 
-		$wgOut->setPageTitle( wfMsg( 'accmailtitle' ) );
-		$wgOut->setRobotpolicy( 'noindex,nofollow' );
-		$wgOut->setArticleRelated( false );
+		$sResponse = AutoCreateWiki::checkPasswordIsCorrect($this->mUsername, $this->mPassword);
+		if ( !empty($sResponse) ) {
+			$this->makeError( "wiki-password", $sResponse );
+		}
+		
+		$sResponse = AutoCreateWiki::checkRetypePasswordIsCorrect($this->mPassword, $this->mRetype_password);
+		if ( !empty($sResponse) ) {
+			$this->makeError( "wiki-retype-password", $sResponse );
+		}
 
-		if( WikiError::isError( $result ) ) {
-			$this->mainLoginForm( wfMsg( 'mailerror', $result->getMessage() ) );
+		# Now create a dummy user ($u) and check if it is valid
+		$name = trim( $this->mUsername );
+		$u = User::newFromName( $name, 'creatable' );
+		if ( is_null( $u ) ) {
+			$this->makeError( "wiki-username", wfMsg( 'noname' ) );
 		} else {
-			$wgOut->addWikiMsg( 'accmailtext', $u->getName(), $u->getEmail() );
-			$wgOut->returnToMain( false );
+			if ( 0 != $u->idForName() ) {
+				$this->makeError( "wiki-username", wfMsg( 'userexists' ) );
+			}
 		}
-		$u = 0;
+		
+		if ( $u instanceof User) {
+			# Set some additional data so the AbortNewAccount hook can be
+			# used for more than just username validation
+			$u->setEmail( $this->mEmail );
+			$u->setRealName( $this->mRealname );
+
+			$abortError = '';
+			if ( !wfRunHooks( 'AbortNewAccount', array( $u, &$abortError ) ) ) {
+				// Hook point to add extra creation throttles and blocks
+				wfDebug( "LoginForm::addNewAccountInternal: a hook blocked creation\n" );
+				$this->makeError( "wiki-username", $abortError . "(1)" );
+			}
+
+			if ( $wgAccountCreationThrottle && $wgUser->isPingLimitable() ) {
+				$key = wfMemcKey( 'acctcreate', 'ip', $ip );
+				$value = $wgMemc->incr( $key );
+				if ( !$value ) {
+					$wgMemc->set( $key, 1, 86400 );
+				}
+				if ( $value > $wgAccountCreationThrottle ) {
+					$this->makeError( "wiki-username", wfMsgExt('acct_creation_throttle_hit', $limit) );
+				}
+			}
+
+			if ( !$wgAuth->addUser( $u, $this->mPassword, $this->mEmail, $this->mRealname ) ) {
+				$this->makeError( "wiki-username", wfMsg('externaldberror') );
+			}
+		} else {
+			$this->makeError( "wiki-username", wfMsg('autocreatewiki-blocked-username') );
+		}
+
+		if ( $this->mErrors > 0 ) {
+			#-- some errors 
+			$u = null;
+		} else {
+			/*
+			 * test
+			 */
+			/*$userBirthDay = strtotime("{$this->mUser_year}-{$this->mUser_month}-{$this->mUser_day}");
+			$u = $this->initUser( $u, false );
+			$user_id = $u->getID();
+			if (!empty($user_id)) {
+				$dbw = wfGetDB(DB_MASTER);
+				$dbw->update(
+					'user',
+					array( 'user_birthdate' => date('Y-m-d', $userBirthDay) ),
+					array( 'user_id' => $user_id ),
+					__METHOD__
+				);
+			}*/
+			$u = null;
+		}
+
+		wfProfileOut( __METHOD__ );
+		return $u;		
 	}
+	
+	/**
+	 * @param object user
+	 * @param bool throttle
+	 * @param string message name of email title
+	 * @param string message name of email text
+	 * @return mixed true on success, WikiError on failure
+	 * @private
+	 */
+	private function mailPasswordInternal( $u, $throttle = true, $emailTitle = 'passwordremindertitle', $emailText = 'passwordremindertext' ) {
+		global $wgCookiePath, $wgCookieDomain, $wgCookiePrefix, $wgCookieSecure;
+		global $wgServer, $wgScript;
+
+		if ( $u->getEmail() == '' ) {
+			return new WikiError( wfMsg( 'noemail', $u->getName() ) );
+		}
+
+		$np = $u->randomPassword();
+		$u->setNewpassword( $np, $throttle );
+		$u->saveSettings();
+
+		$ip = wfGetIP();
+		if ( '' == $ip ) { $ip = '(Unknown)'; }
+
+		$m = wfMsg( $emailText, $ip, $u->getName(), $np, $wgServer . $wgScript );
+		$result = $u->sendMail( wfMsg( $emailTitle ), $m );
+
+		return $result;
+	}
+	
+	/**
+	 * Actually add a user to the database.
+	 * Give it a User object that has been initialised with a name.
+	 *
+	 * @param $u User object.
+	 * @param $autocreate boolean -- true if this is an autocreation via auth plugin
+	 * @return User object.
+	 * @private
+	 */
+	function initUser( $u, $autocreate ) {
+		global $wgAuth;
+
+		$u->addToDatabase();
+
+		if ( $wgAuth->allowPasswordChange() ) {
+			$u->setPassword( $this->mPassword );
+		}
+
+		$u->setEmail( $this->mEmail );
+		$u->setRealName( $this->mRealname );
+		$u->setToken();
+
+		$wgAuth->initUser( $u, $autocreate );
+
+		$u->setOption( 'rememberpassword', isset($this->mRemember) ? 1 : 0 );
+		$u->setOption('skinoverwrite', 1);
+
+		$u->saveSettings();
+
+		# Update user count
+		$ssUpdate = new SiteStatsUpdate( 0, 0, 0, 0, 1 );
+		$ssUpdate->doUpdate();
+
+		return $u;
+	}
+	
+	/**
+	 * create account function (see SpecialUserLogin.php to compare)
+	 */
+	private function makeError( $key, $msg ) {
+		if ( array_key_exists($key, $this->mPostedErrors) ) {
+			if ( empty( $this->mPostedErrors[$key] ) ) {
+				$this->mPostedErrors[$key]= $msg;
+			}
+			$this->mErrors++;
+		}
+	}	
+	
 	/**
 	 * addCustomSettings
 	 *
