@@ -1,0 +1,36 @@
+<?php
+/*
+ * Author: David Pean
+ */
+
+$wgExtensionCredits['other'][] = array(
+    'name' => 'ActionPanel',
+    'author' => 'David Pean',
+);
+
+$wgExtensionMessagesFiles['ActionPanel'] = dirname(__FILE__).'/'.'ActionPanel.i18n.php';
+$wgHooks['ExtendJSGlobalVars'][] = 'fnAddActionPanelJSGlobalVariables';
+function fnAddActionPanelJSGlobalVariables(&$vars){
+	global $wgTitle, $wgContLang;
+	wfLoadExtensionMessages('ActionPanel');
+	$vars['wgActionPanelTitleMsg'] = wfMsg("action_panel_title");
+	$vars['wgActionPanelEditMsg'] = wfMsg("action_panel_edit_title");
+	$vars['wgActionPanelRenameMsg'] = wfMsg("movepagebtn");
+	$vars['wgActionPanelDeleteMsg'] = wfMsg("delete");
+	$vars['wgActionPanelSaveMsg'] = wfMsg("save");
+	$vars['wgActionPanelCategorizeMsg'] = wfMsg("action_panel_categorize");
+	$vars['wgActionPanelCategorizeHelpMsg'] = wfMsg("action_panel_categorize_help");
+	$vars['wgCategoryName'] = $wgContLang->getNsText( NS_CATEGORY );
+	return true;
+}
+
+$wgHooks["GetHTMLAfterBody"][] = "wfAddActionPanel";
+function wfAddActionPanel(&$tpl){
+	global $wgStyleVersion, $wgExtensionsPath;
+	
+	echo ('<link rel="stylesheet" type="text/css" href="'.$wgExtensionsPath.'/wikia/ActionPanel/ActionPanel.css?'.$wgStyleVersion.'"/>');
+	echo('<script type="text/javascript" src="'.$wgExtensionsPath.'/wikia/ActionPanel/ActionPanel.js?'.$wgStyleVersion.'"></script>');
+	
+	return true;
+}
+

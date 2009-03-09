@@ -1,0 +1,71 @@
+/*** Action Menu Stuff ***/
+
+.questionhover{
+	position:absolute;
+	width:16px;
+	height:16px;
+	z-index:1001;
+}
+.hoverform{
+	padding:5px;
+}
+.questionhovermenu{
+	position:absolute;
+	background:#252525;
+	width:250px;
+	padding:5px;
+	text-align:center;
+	z-index:1000;
+	-moz-border-radius: 10px;
+	-webkit-border-radius: 10px;
+}
+.hoverbutton{
+	color:#ECCF45;
+	background:#252525;
+	border:0px;
+}
+
+.questionhovertitle{
+	color:#ECCF45;
+	text-align:center;
+	margin-bottom:3px;
+}
+.questionhovername{
+	color:#FFFFFF;
+	font-weight:bold;
+	background:#3366CC;
+	padding:3px;	
+	text-align:center;
+	margin-bottom:3px;
+}
+.questionhoverlinks{
+	text-align:center;
+	margin-top:5px;
+	margin-bottom:5px;
+}
+.questionhoverlinks a{
+	color:#A2A2A2;
+	padding:2px;
+}
+.questionhoverlinks-selected{
+	color:#ECCF45 !important; 
+	size:30px;
+}
+.quickanswer{
+	margin-bottom:5px;
+}
+.categorize_help{
+	color:#000000;
+	background:#ECCF45;
+	font-style:italic;
+	text-align:center;
+	width:175px;
+	margin:0 auto;
+	border:1px solid #252525;
+	padding:2px;
+}
+.categorize_help_container{
+	width:260px;
+	position:absolute;
+	z-index:1000;
+}
