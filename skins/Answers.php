@@ -285,23 +285,26 @@ wfRunHooks('GetHTMLAfterBody', array (&$this));
 		<?php
 		global $wgTitle;
 		if ( $is_question && $answer_page->isArticleAnswered() ) {
-			echo '<div class="sectionedit">[<a href="'. $this->data['content_actions']['edit']['href'] .'">'. wfMsg('editsection') .'</a>]</div>';
-			echo '<div id="answer_title">'. wfMsg("answer_title") .'</div>';
 			
-			$ads = '<div id="ads-answered-left">
-			<script type="text/javascript">
-				google_ad_client    = "pub-4086838842346968";
-				google_ad_channel = (( wgIsAnswered )?"7000000004":"7000000003");
-				google_ad_width     = "120";
-				google_ad_height    = "240";
-				google_ad_format    = google_ad_width + "x" + google_ad_height + "_as";
-				google_ad_type      = "text";
-				google_color_link   = "002BB8";
-				google_hints	    = "' . $google_hints . '";
-			</script>
-			<script language="JavaScript" src="http://pagead2.googlesyndication.com/pagead/show_ads.js"></script>
-			</div>';
-			echo $ads;
+			if( !( $wgRequest->getVal("diff") ) ){
+				echo '<div class="sectionedit">[<a href="'. $this->data['content_actions']['edit']['href'] .'">'. wfMsg('editsection') .'</a>]</div>';
+				echo '<div id="answer_title">'. wfMsg("answer_title") .'</div>';
+				
+				$ads = '<div id="ads-answered-left">
+				<script type="text/javascript">
+					google_ad_client    = "pub-4086838842346968";
+					google_ad_channel = (( wgIsAnswered )?"7000000004":"7000000003");
+					google_ad_width     = "120";
+					google_ad_height    = "240";
+					google_ad_format    = google_ad_width + "x" + google_ad_height + "_as";
+					google_ad_type      = "text";
+					google_color_link   = "002BB8";
+					google_hints	    = "' . $google_hints . '";
+				</script>
+				<script language="JavaScript" src="http://pagead2.googlesyndication.com/pagead/show_ads.js"></script>
+				</div>';
+				echo $ads;
+			}
 			
 			$bodyContentClass = ' class="question"';
 		} else if ($wgTitle->getNamespace() == NS_CATEGORY) {
@@ -328,20 +331,22 @@ wfRunHooks('GetHTMLAfterBody', array (&$this));
 		<?php
 		if( $is_question && !$answer_page->isArticleAnswered() ){
 		
-			$ads = '<div id="ads-unaswered-bottom">
-			<script type="text/javascript">
-				google_ad_client    = "pub-4086838842346968";
-				google_ad_channel = (( wgIsAnswered )?"7000000004":"7000000003");
-				google_ad_width     = "200";
-				google_ad_height    = "200";
-				google_ad_format    = google_ad_width + "x" + google_ad_height + "_as";
-				google_ad_type      = "text";
-				google_color_link   = "002BB8";
-				google_hints	    = "' . $google_hints . '";
-			</script>
-			<script language="JavaScript" src="http://pagead2.googlesyndication.com/pagead/show_ads.js"></script>
-			</div>';
-			echo $ads;
+			if( !( $wgRequest->getVal("diff") ) ){
+				$ads = '<div id="ads-unaswered-bottom">
+				<script type="text/javascript">
+					google_ad_client    = "pub-4086838842346968";
+					google_ad_channel = (( wgIsAnswered )?"7000000004":"7000000003");
+					google_ad_width     = "200";
+					google_ad_height    = "200";
+					google_ad_format    = google_ad_width + "x" + google_ad_height + "_as";
+					google_ad_type      = "text";
+					google_color_link   = "002BB8";
+					google_hints	    = "' . $google_hints . '";
+				</script>
+				<script language="JavaScript" src="http://pagead2.googlesyndication.com/pagead/show_ads.js"></script>
+				</div>';
+				echo $ads;
+			}
 		
 		}?>
 		
@@ -409,7 +414,7 @@ wfRunHooks('GetHTMLAfterBody', array (&$this));
 
 		<?
 		}	
-		if ($is_question) {
+		if ( !$wgRequest->getVal("diff") && $is_question) {
 			if( $wgUser->isLoggedIn() ){
 				$watchlist_url = $wgTitle->escapeFullURL("action=watch");
 			}else{
