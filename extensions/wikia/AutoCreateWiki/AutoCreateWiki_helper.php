@@ -225,7 +225,7 @@ class AutoCreateWiki {
 		$sResponse = "";
 		if ($sValue != "") {
 			if ( !User::isValidEmailAddr( $sValue ) ) {
-				$sResponse = wfMsg('autocreatewiki-invalid-email');
+				$sResponse = wfMsg( 'invalidemailaddress' );
 			}
 		}
 		wfProfileOut(__METHOD__);
@@ -240,12 +240,16 @@ class AutoCreateWiki {
 		if ($sUsername == "") {
 			$sResponse = wfMsg('autocreatewiki-set-username');
 		} else {
-			$u = User::newFromName( $sUsername );
-			if ( is_null( $u ) ) {
-				$u = new StubUser();
-			}
-			if ( !$u->isValidPassword( $sValue ) ) {
-				$sResponse = wfMsg('autocreatewiki-invalid-passwd');
+			if ($sValue == "") {
+				$sResponse = wfMsg('autocreatewiki-empty-password');
+			} else {
+				$u = User::newFromName( $sUsername );
+				if ( is_null( $u ) ) {
+					$u = new StubUser();
+				}
+				if ( !$u->isValidPassword( $sValue ) ) {
+					$sResponse = wfMsgExt( 'passwordtooshort', array( 'parsemag' ), $wgMinimalPasswordLength );
+				}
 			}
 		}
 		wfProfileOut(__METHOD__);
@@ -255,7 +259,9 @@ class AutoCreateWiki {
 	public static function checkRetypePasswordIsCorrect($sPass, $sValue) {	
 		wfProfileIn(__METHOD__);
 		$sResponse = "";
-		if ( strcmp( $sPass, $sValue ) != 0 ) {
+		if ( $sValue == "" ) {
+			$sResponse = wfMsg('autocreatewiki-empty-retype-password');
+		} elseif ( strcmp( $sPass, $sValue ) != 0 ) {
 			$sResponse = wfMsg('autocreatewiki-invalid-retype-passwd');
 		}
 		wfProfileOut(__METHOD__);

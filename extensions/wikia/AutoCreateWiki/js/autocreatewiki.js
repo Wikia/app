@@ -240,7 +240,8 @@ YAHOO.ACWikiRequest.checkAccount = function(e, fid) {
 YAHOO.ACWikiRequest.wikiAccountKeyUp = function(e) {
 	var id = this.id;
 	var func = function() { 
-		if (id && this.value) { 
+		var field = document.getElementById(id);
+		if (id && field.value) { 
 			if (e) {
 				YE.preventDefault(e);
 			}
