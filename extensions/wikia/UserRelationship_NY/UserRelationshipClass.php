@@ -81,6 +81,17 @@ class UserRelationship {
 		return $request_id;
 		
 	}
+
+	public function getUserLocalizedMsg($user, $sMsgKey, $args) {
+		$sBody = null;
+
+		$sLangCode = $user->getOption('language');
+		
+		$sBody = wfMsgExt($sMsgKey, array( 'parsemag', 'language' => $sLangCode )  );
+		
+		$sBody = wfMsgReplaceArgs($sBody, $args);
+		return $sBody;
+	}
 	
 	public function sendRelationshipRequestEmail($user_id_to,$user_from,$type){
 		$user = User::newFromId($user_id_to);
@@ -99,16 +110,14 @@ class UserRelationship {
 			$request_link = Title::makeTitle( NS_SPECIAL , "ViewRelationshipRequests"  );
 			$update_profile_link = Title::makeTitle( NS_SPECIAL , "UpdateProfile"  );
 			if($type==1){
-				$subject = wfMsgExt( 'friend_request_subject', 'parsemag',
-					$user_from,
-					$user_from_display
-				 );
-				$body = wfMsgExt( 'friend_request_body', 'parsemag',
-					(( trim($user->getRealName()) )?$user->getRealName():$user->getName()),
-					$user_from,
-					$request_link->getFullURL(),
-					$update_profile_link->getFullURL(),
-					$user_from_display
+				$subject = $this->getUserLocalizedMsg( $user, "friend_request_subject", array( 0 => $user_from , 1 => $user_from_display ) );
+				$body = $this->getUserLocalizedMsg( $user, "friend_request_body", 
+					array(
+					0 => (( trim($user->getRealName()) )?$user->getRealName():$user->getName()),
+					1 => $user_from,
+					2 => $request_link->getFullURL(),
+					3 => $update_profile_link->getFullURL(),
+					4 => $user_from_display)
 				);
 			}else{
 				$subject = wfMsgExt( 'foe_request_subject', 'parsemag',
@@ -142,16 +151,13 @@ class UserRelationship {
 			$user_link = Title::makeTitle( NS_USER ,  $user_from  );
 			$update_profile_link = Title::makeTitle( NS_SPECIAL , "UpdateProfile"  );
 			if($type==1){
-				$subject = wfMsgExt( 'friend_accept_subject', 'parsemag',
-					$user_from,
-					$user_from_display
-				 );
-				$body = wfMsgExt( 'friend_accept_body', 'parsemag',
-					(( trim($user->getRealName()) )?$user->getRealName():$user->getName()),
-					$user_from,
-					$user_link->getFullURL(),
-					$update_profile_link->getFullURL(),
-					$user_from_display
+				$subject = $this->getUserLocalizedMsg( $user, "friend_accept_subject", array( 0 => $user_from , 1 => $user_from_display ) );
+				$body = $this->getUserLocalizedMsg( $user, "friend_accept_body", 
+					array(
+					0 => (( trim($user->getRealName()) )?$user->getRealName():$user->getName()),
+					1 => $user_from,
+					2 => $user_link->getFullURL(),
+					3 => $update_profile_link->getFullURL())
 				);
 			}else{
 				$subject = wfMsgExt( 'foe_accept_subject', 'parsemag',
@@ -185,16 +191,14 @@ class UserRelationship {
 			$user_link = Title::makeTitle( NS_USER ,  $user_from  );
 			$update_profile_link = Title::makeTitle( NS_SPECIAL , "UpdateProfile"  );
 			if($type==1){
-				$subject = wfMsgExt( 'friend_removed_subject','parsemag',
-					$user_from,
-					$user_from_display
-				 );
-				$body = wfMsgExt( 'friend_removed_body','parsemag',
-					(( trim($user->getRealName()) )?$user->getRealName():$user->getName()),
-					$user_from,
-					$user_link->getFullURL(),
-					$update_profile_link->getFullURL(),
-					$user_from_display
+				$subject = $this->getUserLocalizedMsg( $user, "friend_removed_subject", array( 0 => $user_from , 1 => $user_from_display ) );
+				$body = $this->getUserLocalizedMsg( $user, "friend_removed_body", 
+					array(
+					0 => (( trim($user->getRealName()) )?$user->getRealName():$user->getName()),
+					1 => $user_from,
+					2 => $user_link->getFullURL(),
+					3 => $update_profile_link->getFullURL(),
+					4 => $user_from_display)
 				);
 			}else{
 				$subject = wfMsgExt( 'foe_removed_subject','parsemag',

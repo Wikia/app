@@ -78,6 +78,17 @@ class UserBoard {
 		return $ub_gift_id;
 	}
 	
+	public function getUserLocalizedMsg($user, $sMsgKey, $args) {
+		$sBody = null;
+
+		$sLangCode = $user->getOption('language');
+		
+		$sBody = wfMsgExt($sMsgKey, array( 'parsemag', 'language' => $sLangCode )  );
+		
+		$sBody = wfMsgReplaceArgs($sBody, $args);
+		return $sBody;
+	}
+	
 	public function sendBoardNotificationEmail($user_id_to,$user_from){
 	
 		$user = User::newFromId($user_id_to);
@@ -95,18 +106,16 @@ class UserBoard {
 		if($user->isEmailConfirmed() && $user->getIntOption("notifymessage",1) ){
 			$board_link = Title::makeTitle( NS_SPECIAL , "UserBoard"  );
 			$update_profile_link = Title::makeTitle( NS_SPECIAL , "UpdateProfile"  );
-			$subject = wfMsgExt( 'message_received_subject',"parsemag",
-				$user_from,
-				$user_from_display
-				 );
-			$body = wfMsgExt( 'message_received_body', "parsemag",
-				(( trim($user->getRealName()) )?$user->getRealName():$user->getName()),
-				$user_from,
-				$board_link->escapeFullURL(),
-				$update_profile_link->escapeFullURL(),
-				$user_from_display
+			$subject = $this->getUserLocalizedMsg( $user, "message_received_subject", array( 0 => $user_from , 1 => $user_from_display ) );
+			$body = $this->getUserLocalizedMsg( $user, "message_received_body", 
+				array(
+				0 => (( trim($user->getRealName()) )?$user->getRealName():$user->getName()),
+				1 => $user_from,
+				2 => $board_link->escapeFullURL(),
+				3 => $update_profile_link->escapeFullURL(),
+				4 => $user_from_display )
 			);
-				
+		
 			$user->sendMail($subject, $body );
 		}
 	}
