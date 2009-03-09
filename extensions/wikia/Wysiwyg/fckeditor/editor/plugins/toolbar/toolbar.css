@@ -30,7 +30,7 @@
 	min-height: 41px;
 	min-width: 108px;
 	overflow: hidden;
-	padding: 0 7px 7px 10px;
+	padding: 0 7px 5px 10px;
 	text-align: center;
 }
 #fck_toolbar td div:hover {
@@ -73,6 +73,8 @@
 }
 #fck_toolbar label {
 	white-space: nowrap;
+	display: block;
+	padding: 1px 0;
 }
 #fck_toolbar select {
 	margin-top: 2px;
