@@ -235,6 +235,9 @@ class ReverseParser {
 						// detect indented paragraph (margin-left CSS property)
 						$indentation = $this->getIndentationLevel($node);
 
+						// get previous node (ignoring whitespaces and comments)
+						$previousNode = $this->getPreviousElementNode($node);
+
 						// is current <p> node of definition list?
 						$isDefinitionList = false;
 
@@ -258,8 +261,11 @@ class ReverseParser {
 							$prefix = "\n";
 							$isDefinitionList = true;
 						}
-
-						$previousNode = $this->getPreviousElementNode($node);
+						// "nornal" paragraph following indented paragraph
+						else if ($previousNode && $this->getIndentationLevel($previousNode)) {
+							$newLinesBefore = intval($node->getAttribute('_new_lines_before')) + 1;
+							$prefix = str_repeat("\n", $newLinesBefore);
+						}
 
 						// <p><br /> </p>
 						if ( ($textContent == ' ') && ($node->firstChild->nodeType == XML_ELEMENT_NODE) && 
