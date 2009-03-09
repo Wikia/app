@@ -261,7 +261,7 @@ class ReverseParser {
 							$prefix = "\n";
 							$isDefinitionList = true;
 						}
-						// "nornal" paragraph following indented paragraph
+						// "normal" paragraph following indented paragraph
 						else if ($previousNode && $this->getIndentationLevel($previousNode)) {
 							$newLinesBefore = intval($node->getAttribute('_new_lines_before')) + 1;
 							$prefix = str_repeat("\n", $newLinesBefore);
