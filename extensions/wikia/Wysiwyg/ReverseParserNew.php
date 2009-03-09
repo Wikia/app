@@ -341,14 +341,13 @@ class ReverseParser {
 					case 'h6':
 						$head = str_repeat("=", $node->nodeName{1});
 						if(!empty($nodeData)) {
-							$prevNode = $this->getPreviousElementNode($node);
 							$nextNode = $this->getNextElementNode($node);
 
 							$linesBefore = 0;
 							$linesAfter = $nodeData['linesAfter']-1;
 
 							// do not remove one lineAfter if paragraph is following
-							if ( $nextNode && ($nextNode->nodeName == 'p') ) {
+							if ( $nextNode && ($nextNode->nodeName == 'p') && $this->getIndentationLevel($nextNode) === false ) {
 								$linesAfter++;
 							}
 						} else {
