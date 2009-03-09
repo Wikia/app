@@ -20,6 +20,7 @@ function fnAddActionPanelJSGlobalVariables(&$vars){
 	$vars['wgActionPanelSaveMsg'] = wfMsg("save");
 	$vars['wgActionPanelCategorizeMsg'] = wfMsg("action_panel_categorize");
 	$vars['wgActionPanelCategorizeHelpMsg'] = wfMsg("action_panel_categorize_help");
+	$vars['wgActionPanelAddCategoriesSummary'] = wfMsg("action_panel_categories_summary");
 	$vars['wgCategoryName'] = $wgContLang->getNsText( NS_CATEGORY );
 	return true;
 }
