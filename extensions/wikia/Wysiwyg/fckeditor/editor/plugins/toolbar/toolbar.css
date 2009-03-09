@@ -109,11 +109,12 @@
 
 /* source mode */
 .toolbarSource td,
-.toolbarSource label,
 .toolbarSource li {
 	display: none;
 }
-
+.toolbarSource label {
+	visibility: hidden;
+}
 .toolbarSource td.last, 
 #fck_toolbar_item_source {
 	display: block;
@@ -127,6 +128,5 @@
 }
 
 #fck_toolbar.toolbarSource td.last ul {
-	padding-top: 12px;
 	margin-right: -80px;
 }
