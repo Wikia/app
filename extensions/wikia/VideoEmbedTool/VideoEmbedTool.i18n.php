@@ -67,4 +67,7 @@ $messages['en'] = array(
 	'vet-single-success' => 'Video was successfully placed in this article',
 	'vet-gallery-create-success' => 'A video gallery was added to this article',
 	'vet-gallery-add-success' => 'Video has been added to the video gallery in this article',
+	'vet-left' => 'Left',
+	'vet-right' => 'Right',
+	'vet-gallery' => 'Gallery',
 );
