@@ -305,8 +305,8 @@ class ReverseParser {
 									$textContent = "\n{$textContent}";
 								}
 
-								// is <pre>
-								if ($previousNode->nodeName == 'pre') {
+								// is <pre> or <div>
+								if ( in_array($previousNode->nodeName, array('pre', 'div')) ) {
 									$textContent = "\n{$textContent}";
 								}
 
