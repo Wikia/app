@@ -62,7 +62,7 @@ div.formhighlight {
 .formblock .data2 {
 	margin-left: 520px;
 	padding-right: 15px;
-	padding-left: 5px;
+	padding-left: 15px;
 }
 .birthdate {
 	width: auto !important;
