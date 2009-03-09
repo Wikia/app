@@ -37,7 +37,7 @@ class WysiwygParser extends Parser {
 				$style = ' style="margin-left:'.($this->mListLevel*40).'px"';
 
 				if ($this->mEmptyLineCounter%2 == 1) {
-					$style .= ' _wysiwyg_new_line="true" _new_lines_before="1"';
+					$style .= ' _new_lines_before="1"';
 				}
 
 				if ($this->mListLevel > 1) {
