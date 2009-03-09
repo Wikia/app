@@ -61,36 +61,43 @@ function CategorySelectInit() {
 }
 
 function CategorySelectInitializeHooks($title, $article) {
-	global $wgHooks, $wgRequest, $wgUser;
+	global $wgHooks, $wgRequest, $wgUser, $wgTitle;
 
-	if (get_class($wgUser->getSkin()) != 'SkinMonaco') {
+	// Initialize only for Monaco skin
+	if(get_class($wgUser->getSkin()) != 'SkinMonaco') {
 		return true;
 	}
 
-	//do not initialize for articles in namespaces different than main, image or user [the same condition like for WYSIWYG editor]
+	// Initialize only for namespace: main, image, user (same as for Wysiwyg)
 	if(!in_array($title->mNamespace, array(NS_MAIN, NS_IMAGE, NS_USER))) {
 		return true;
-	} else {
-		$action = $wgRequest->getVal('action', 'view');
-		if (($action == 'view' || $action == 'purge') && !$title->exists()) {
-			return true;
-		}
 	}
 
-	//view mode
-	$wgHooks['Skin::getCategoryLinks::end'][] = 'CategorySelectGetCategoryLinksEnd';
+	$action = $wgRequest->getVal('action', 'view');
 
-	//edit mode
-	$wgHooks['EditPage::importFormData::finished'][] = 'CategorySelectImportFormData';
-	$wgHooks['EditPage::getContent::end'][] = 'CategorySelectReplaceContent';
-	$wgHooks['EditPage::CategoryBox'][] = 'CategorySelectCategoryBox';
-	$wgHooks['EditPage::showEditForm:fields'][] = 'CategorySelectAddFormFields';
-	$wgHooks['EditPage::showDiff::begin'][] = 'CategorySelectDiffArticle';
-	$wgHooks['EditForm::MultiEdit:Form'][] = 'CategorySelectDisplayCategoryBox';
+	if($action == 'view' || $action == 'purge') {
+		if(!$title->exists()) {
+			return true;
+		}
+		if($wgTitle->userCan('edit')) {
+			//view mode
+			$wgHooks['Skin::getCategoryLinks::end'][] = 'CategorySelectGetCategoryLinksEnd';
 
-	//both
-	$wgHooks['Skin::getCategoryLinks::begin'][] = 'CategorySelectGetCategoryLinksBegin';
-	$wgHooks['ExtendJSGlobalVars'][] = 'CategorySelectSetupVars';
+			$wgHooks['Skin::getCategoryLinks::begin'][] = 'CategorySelectGetCategoryLinksBegin';
+			$wgHooks['ExtendJSGlobalVars'][] = 'CategorySelectSetupVars';
+		}
+	} else if($action == 'edit' || $action == 'submit') {
+		//edit mode
+		$wgHooks['EditPage::importFormData::finished'][] = 'CategorySelectImportFormData';
+		$wgHooks['EditPage::getContent::end'][] = 'CategorySelectReplaceContent';
+		$wgHooks['EditPage::CategoryBox'][] = 'CategorySelectCategoryBox';
+		$wgHooks['EditPage::showEditForm:fields'][] = 'CategorySelectAddFormFields';
+		$wgHooks['EditPage::showDiff::begin'][] = 'CategorySelectDiffArticle';
+		$wgHooks['EditForm::MultiEdit:Form'][] = 'CategorySelectDisplayCategoryBox';
+
+		$wgHooks['Skin::getCategoryLinks::begin'][] = 'CategorySelectGetCategoryLinksBegin';
+		$wgHooks['ExtendJSGlobalVars'][] = 'CategorySelectSetupVars';
+	}
 
 	return true;
 }
@@ -177,21 +184,25 @@ function CategorySelectAjaxSaveCategories($articleId, $categories) {
 		if (is_null($title)) {
 			$result['error'] = "Article [id=$articleId] does not exist.";
 		} else {
-			global $wgUser, $wgOut;
-			$article = new Article($title);
-			$article_text = $article->fetchContent();
-			$article_text .= $categories;
-			$edit_summary = wfMsg('categoryselect-edit-summary');
-			$flags = EDIT_UPDATE;
-			$article->doEdit($article_text, $edit_summary, $flags);
+			if($title->userCan('edit')) {
+				global $wgUser, $wgOut;
+				$article = new Article($title);
+				$article_text = $article->fetchContent();
+				$article_text .= $categories;
+				$edit_summary = wfMsg('categoryselect-edit-summary');
+				$flags = EDIT_UPDATE;
+				$article->doEdit($article_text, $edit_summary, $flags);
 
-			//return HTML with new categories
-			$wgOut->tryParserCache($article, $wgUser);
-			$sk = $wgUser->getSkin();
-			$cats = $sk->getCategoryLinks();
+				//return HTML with new categories
+				$wgOut->tryParserCache($article, $wgUser);
+				$sk = $wgUser->getSkin();
+				$cats = $sk->getCategoryLinks();
 
-			$result['info'] = 'ok';
-			$result['html'] = $cats;
+				$result['info'] = 'ok';
+				$result['html'] = $cats;
+			} else {
+				$result['error'] = "User rights error.";
+			}
 		}
 	}
 	return Wikia::json_encode($result);
