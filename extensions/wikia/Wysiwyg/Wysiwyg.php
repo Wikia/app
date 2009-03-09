@@ -2,7 +2,7 @@
 $wgExtensionCredits['other'][] = array(
 	'name' => 'Wikia Rich Text Editor (Wysiwyg)',
 	'description' => 'FCKeditor integration for MediaWiki',
-	'version' => 0.11,
+	'version' => 0.12,
 	'author' => array('Inez Korczyński', '[http://pl.wikia.com/wiki/User:Macbre Maciej Brencz]', 'Maciej Błaszkowski (Marooned)', 'Łukasz \'TOR\' Garczewski')
 );
 
@@ -97,6 +97,11 @@ function Wysiwyg_Initial($form) {
 
 	// RT #10170: do not initialize for user JS/CSS subpages
 	if ($form->mTitle->isCssJsSubpage()) {
+		return true;
+	}
+
+	// macbre: enable only on monaco skin
+	if(get_class($wgUser->getSkin()) != 'SkinMonaco') {
 		return true;
 	}
 
