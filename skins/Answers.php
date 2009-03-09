@@ -290,6 +290,7 @@ wfRunHooks('GetHTMLAfterBody', array (&$this));
 				echo '<div class="sectionedit">[<a href="'. $this->data['content_actions']['edit']['href'] .'">'. wfMsg('editsection') .'</a>]</div>';
 				echo '<div id="answer_title">'. wfMsg("answer_title") .'</div>';
 				
+				if ( $wgUser->isAnon() ) {
 				$ads = '<div id="ads-answered-left">
 				<script type="text/javascript">
 					google_ad_client    = "pub-4086838842346968";
@@ -304,6 +305,7 @@ wfRunHooks('GetHTMLAfterBody', array (&$this));
 				<script language="JavaScript" src="http://pagead2.googlesyndication.com/pagead/show_ads.js"></script>
 				</div>';
 				echo $ads;
+				}
 			}
 			
 			$bodyContentClass = ' class="question"';
@@ -331,7 +333,7 @@ wfRunHooks('GetHTMLAfterBody', array (&$this));
 		<?php
 		if( $is_question && !$answer_page->isArticleAnswered() ){
 		
-			if( !( $wgRequest->getVal("diff") ) ){
+			if( !( $wgRequest->getVal("diff") ) && $wgUser->isAnon() ){
 				$ads = '<div id="ads-unaswered-bottom">
 				<script type="text/javascript">
 					google_ad_client    = "pub-4086838842346968";
