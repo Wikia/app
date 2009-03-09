@@ -261,7 +261,7 @@ class ReverseParser {
 							$isDefinitionList = true;
 						}
 
-						// "normal" paragraph following indented paragraph
+						// paragraph following indented paragraph
 						if ($previousNode && $this->getIndentationLevel($previousNode) !== false) {
 							$newLinesBefore = intval($node->getAttribute('_new_lines_before')) + 1;
 							$prefix = str_repeat("\n", $newLinesBefore);
@@ -461,11 +461,13 @@ class ReverseParser {
 							$nextNode = $this->getNextElementNode($node);
 
 							// we have non-table content after current table
-							if ( $nextNode && $nextNode->nodeName != 'table' ) {
-
+							if (!empty($nextNode)) {
 								switch($nextNode->nodeName) {
+									case 'table':
+										break;
+
 									case 'p':
-										if ($nextNode->hasAttribute('_new_lines_before')) {
+										if ($nextNode->hasAttribute('_new_lines_before') && $this->getIndentationLevel($nextNode) === false) {
 											$out = "$out\n";
 										}
 										break;
@@ -563,7 +565,7 @@ class ReverseParser {
 							// and was in next line of wikitext
 							$nextNode = $this->getNextElementNode($node);
 
-							if ( $nextNode && ($nextNode->nodeName == 'p') && $nextNode->hasAttribute('_new_lines_before') ) {
+							if ( $nextNode && ($nextNode->nodeName == 'p') && $nextNode->hasAttribute('_new_lines_before') && $this->getIndentationLevel($nextNode) === false ) {
 								$out = "$out\n";
 							}
 						}
