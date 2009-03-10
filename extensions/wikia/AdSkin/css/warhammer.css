@@ -1,5 +1,5 @@
 body.mainpage {
-	background: #000 url(../images/warhammer.jpg) 50% 80px no-repeat !important;
+	background: #000 url(../images/warhammer.jpg?asdf) 50% 80px no-repeat !important;
 }
 body.mainpage #background_strip {
 	background: transparent;
