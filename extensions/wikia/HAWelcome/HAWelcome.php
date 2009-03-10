@@ -56,7 +56,7 @@ class HAWelcomeJob extends Job {
 		$mAnon,
 		$mSysop;
 
-	const WELCOMEUSER = "Wikia-welcome";
+	const WELCOMEUSER = "Wikia";
 
 	/**
 	 * Construct a job
