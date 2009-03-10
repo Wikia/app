@@ -6,7 +6,7 @@
 	<th><?=wfMsg('daemonloader_period')?></th>
 	<th><?=wfMsg('daemonloader_frequency')?></th>
 	<th><?=wfMsg('daemonloader_daemonparams')?></th>
-	<th><?=wfMsg('daemonloader_files')?></th>
+	<th style="width:60px"><?=wfMsg('daemonloader_files')?></th>
 	<th><?=wfMsg('daemonloader_createdby')?></th>
 	<th><?=wfMsg('daemonloader_created')?></th>
 	<th><?=wfMsg('daemonloader_options')?></th>
