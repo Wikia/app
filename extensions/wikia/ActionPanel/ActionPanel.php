@@ -21,6 +21,10 @@ function fnAddActionPanelJSGlobalVariables(&$vars){
 	$vars['wgActionPanelCategorizeMsg'] = wfMsg("action_panel_categorize");
 	$vars['wgActionPanelCategorizeHelpMsg'] = wfMsg("action_panel_categorize_help");
 	$vars['wgActionPanelAddCategoriesSummary'] = wfMsg("action_panel_categories_summary");
+	
+	$vars['wgActionPanelEditSuccessMsg'] = wfMsg("action_panel_save_success");
+	$vars['wgActionPanelRenameSuccessMsg'] = wfMsg("action_panel_rename_success");
+	$vars['wgActionPanelCategorizeSuccessMsg'] = wfMsg("action_panel_categorize_success");
 	$vars['wgCategoryName'] = $wgContLang->getNsText( NS_CATEGORY );
 	return true;
 }
