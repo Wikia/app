@@ -412,8 +412,8 @@ FCK.Events.AttachEvent( 'OnAfterSetHTML', function() {
 				FCK.log('tab key pressed');
 				FCK.YE.stopEvent(e);
 
-				// focus on #wpSummary
-				var summary = window.parent.document.getElementById('wpSummary');
+				// focus on #wpSummary / #wpSummaryEnhanced
+				var summary = window.parent.document.getElementById('wpSummary') || window.parent.document.getElementById('wpSummaryEnhanced');
 				if (summary) {
 					summary.focus();
 				}
