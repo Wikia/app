@@ -22,11 +22,14 @@ dialog.SetCancelButton(false);
 window.wgMWSuggestTemplate = dialog.parent.wgMWSuggestTemplate;
 window.wgSearchNamespaces = dialog.parent.wgSearchNamespaces;
 window.wgDBname = dialog.parent.wgDBname;
-window.wgServer = dialog.parent.wgServer;
-window.wgScript = dialog.parent.wgScript;
-window.wgScriptPath = dialog.parent.wgScriptPath;
 window.stylepath = dialog.parent.stylepath;
 window.wgContentLanguage = dialog.parent.wgContentLanguage;
+window.sajax_init_object = window.parent.parent.sajax_init_object;
+window.wgScript = window.parent.wgScript;
+
+// used for templates preview and making link to Template:foo
+window.wgServer = dialog.parent.wgServer;
+window.wgScriptPath = dialog.parent.wgScriptPath;
 
 // search only in NS_TEMPLATE (#10)
 window.wgSearchNamespaces = [10];
@@ -77,46 +80,43 @@ FCK.TemplateEditor = {
 // turn on/off template name suggestion (step #1)
 FCK.TemplateEditor.EnableTemplateSuggestion = function(enable) {
 	if (enable) {
-		FCK.TemplateEditor.win.os_enableSuggestionsOn.call(FCK.TemplateEditor.win, 'templateQuery', 'templateSearch');
+		os_enableSuggestionsOn('templateQuery', 'templateSearch');
 		FCK.log('enabled template name suggestion');
 	}
 	else {
-		FCK.TemplateEditor.win.os_disableSuggestionsOn.call(FCK.TemplateEditor.win, 'templateQuery');
+		os_disableSuggestionsOn('templateQuery');
 		FCK.log('disabled template name suggestion');
 	}
 }
 
 FCK.TemplateEditor.InsertTemplateFromSearch = function() {
+
 	var templateName = FCK.TemplateEditor.GetE('templateQuery').value;
-	var suggestData =  FCK.TemplateEditor.win.os_map.templateQuery;
 
-	// only allow template names from suggest results
-	//if ( suggestData.results && FCK.ArrayIndexOf(suggestData.results, templateName) != -1 ) {
-		// send AJAX query to get template parameters and show progress bar
-		FCK.TemplateEditor.Dialog.Throbber.Show();
+	// send AJAX query to get template parameters and show progress bar
+	FCK.TemplateEditor.Dialog.Throbber.Show();
 
-		// clear search field
-		FCK.TemplateEditor.GetE('templateQuery').value = '';
+	// clear search field
+	FCK.TemplateEditor.GetE('templateQuery').value = '';
 
-		FCK.TemplateEditor.win.sajax_request_type = 'POST';
-		FCK.TemplateEditor.win.sajax_do_call('WysiwygGetTemplateParamsAjax', [templateName], function(res) {
-			var params = eval('(' + res.responseText + ')');
+	FCK.TemplateEditor.win.sajax_request_type = 'POST';
+	FCK.TemplateEditor.win.sajax_do_call('WysiwygGetTemplateParamsAjax', [templateName], function(res) {
+		var params = eval('(' + res.responseText + ')');
 
-			// go to step #2
-			FCK.log('suggested template: ' + templateName);
-			FCK.log(params);
+		// go to step #2
+		FCK.log('suggested template: ' + templateName);
+		FCK.log(params);
 
-			FCK.Track('/templateEditor/suggest');
+		FCK.Track('/templateEditor/suggest');
 
-			FCK.TemplateEditor.SelectTemplate(templateName, params);
-		});
-	//}
+		FCK.TemplateEditor.SelectTemplate(templateName, params);
+	});
+
 	return false;
 }
 
 // select template to be edited in step #2
 FCK.TemplateEditor.SelectTemplate = function(name, params) {
-	name = unescape(name);
 	FCK.log('editing template "'+name+'"');
 	FCK.log(params);
 
