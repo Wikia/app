@@ -16,17 +16,19 @@
 }
 
 #csHintContainer {
-	display: none;
-	position: absolute;
-	padding: 2px 4px;
 	background: #DDD;
 	border: 1px solid #777;
+	color: #000;
+	display: none;
 	font-size: 11px;
+	padding: 2px 4px;
+	position: absolute;
 }
 
 #csCategoryInput {
 	background: transparent;
 	border: 0;
+	color: inherit;
 	display: block;
 	float: left;
 	outline: none;
