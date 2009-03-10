@@ -26,13 +26,13 @@ class SpecialWidgetDashboard extends SpecialPage {
 			$wgOut->addWikiText(wfMsg('widgetdashboard-description'));
 
 			$wgOut->addHTML('<div class="sidebar widget_sidebar widget_dashboard reset">');
-			$wgOut->addHTML('<div id="sidebar_3" class="sidebar" style="display:inline; float: left; width: 15.45em; margin-right: 8px; padding-bottom: 75px">');
+			$wgOut->addHTML('<div id="sidebar_3" class="sidebar" style="display:inline; float: left; width: 206px; margin-right: 8px; padding-bottom: 75px">');
 			$wgOut->addHTML(WidgetFramework::getInstance()->Draw(3));
 			$wgOut->addHTML('</div>');
-			$wgOut->addHTML('<div id="sidebar_4" class="sidebar" style="display:inline; float: left; width: 15.45em; padding-bottom: 75px">');
+			$wgOut->addHTML('<div id="sidebar_4" class="sidebar" style="display:inline; float: left; width: 206px; padding-bottom: 75px">');
 			$wgOut->addHTML(WidgetFramework::getInstance()->Draw(4));
 			$wgOut->addHTML('</div>');
-			$wgOut->addHTML('<div id="sidebar_5" class="sidebar" style="display:inline; float: left; width: 15.45em; margin-left: 8px; padding-bottom: 75px">');
+			$wgOut->addHTML('<div id="sidebar_5" class="sidebar" style="display:inline; float: left; width: 206px; margin-left: 8px; padding-bottom: 75px">');
 			$wgOut->addHTML(WidgetFramework::getInstance()->Draw(5));
 			$wgOut->addHTML('</div>');
 			$wgOut->addHTML('</div>');
