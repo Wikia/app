@@ -65,7 +65,7 @@ function CategorySelectInitializeHooks($title, $article) {
 
 	// Initialize only for Monaco skin
 	if(get_class($wgUser->getSkin()) != 'SkinMonaco') {
-		return true;
+		//return true;
 	}
 
 	// Initialize only for namespace: main, image, user (same as for Wysiwyg)
@@ -360,7 +360,7 @@ function CategorySelectGetCategoryLinksEnd($categoryLinks) {
 
 	$action = $wgRequest->getVal('action', 'view');
 	if ($action == 'view' || $action == 'purge') {
-		$categoryLinks .= ' <div id="csAddCategorySwitch" style="position:relative;float:left;border: 1px solid #BBB;-moz-border-radius:3px;padding:0 4px 0 12px;background:#ddd url(\'http://images.wikia.com/extensions/wikia/CategorySelect/sprite.png\') left center no-repeat;line-height: 16px;"><a href="#" onclick="YAHOO.util.Get.script(wgExtensionsPath+\'/wikia/CategorySelect/CategorySelect.js?\'+wgStyleVersion,{onSuccess:function(){showCSpanel();}});$(\'catlinks\').className+=\' csLoading\';return false;" onfocus="this.blur();" style="color:#000;font-size:0.85em;text-decoration:none;background:#ddd;display:block;padding:0 3px">' . wfMsg('categoryselect-addcategory-button') . '</a></div>';
+		$categoryLinks .= ' <div id="csAddCategorySwitch" style="position:relative;float:left;border: 1px solid #BBB;-moz-border-radius:3px;-webkit-border-radius:3px;padding:0 4px 0 12px;background:#ddd url(\'http://images.wikia.com/extensions/wikia/CategorySelect/sprite.png\') left center no-repeat;line-height: 16px;"><a href="#" onclick="YAHOO.util.Get.script(wgExtensionsPath+\'/wikia/CategorySelect/CategorySelect.js?\'+wgStyleVersion,{onSuccess:function(){showCSpanel();}});$(\'catlinks\').className+=\' csLoading\';return false;" onfocus="this.blur();" style="color:#000;font-size:0.85em;text-decoration:none;background:#ddd;display:block;padding:0 3px">' . wfMsg('categoryselect-addcategory-button') . '</a></div>';
 	}
 	return true;
 }
@@ -388,7 +388,7 @@ function CategorySelectGenerateHTMLforEdit($formId = '') {
 			<div id="csHintContainer">' . wfMsg('categoryselect-suggest-hint') . '</div>
 		</div>
 		<div id="csItemsContainer">
-			<input id="csCategoryInput" type="text" style="display: none" />
+			<input id="csCategoryInput" type="text" style="display: none; outline: none;" />
 		</div>
 		<div id="csWikitextContainer"><textarea id="csWikitext" name="csWikitext">' . $categories . '</textarea></div>
 		<div id="csSwitchViewContainer"><a id="csSwitchView" href="#" onclick="toggleCodeView(); return false;" onfocus="this.blur()" tabindex="-1">' . wfMsg('categoryselect-code-view') . '</a></div>
@@ -412,10 +412,9 @@ function CategorySelectGenerateHTMLforView() {
 		<div id="csSuggestContainer">
 			<div id="csHintContainer">' . wfMsg('categoryselect-suggest-hint') . '</div>
 		</div>
-		<div id="csItemsContainer">
-			<input id="csCategoryInput" type="text" style="display: none" />
+		<div id="csItemsContainer" class="clearfix">
+			<input id="csCategoryInput" type="text" style="display: none; outline: none;" />
 		</div>
-		<div class="clearfix"></div>
 		<div id="csButtonsContainer" class="color1">
 			<input type="button" id="csSave" onclick="csSave()" value="' . wfMsg('categoryselect-button-save') . '" />
 			<input type="button" id="csCancel" onclick="csCancel()" value="' . wfMsg('categoryselect-button-cancel') . '" />
