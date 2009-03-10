@@ -401,7 +401,7 @@ EOD;
 				// entire site is in German? I need help here
 				$exists = true;
 				break;
-			case "southpark": // todo verify if exists
+			case "southparkstudios": // todo verify if exists
 				$exists = true;
 				break;
 			default:
