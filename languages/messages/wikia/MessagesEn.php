@@ -515,7 +515,7 @@ div.wikiaDialog h2,
 # Wikia tooltip
 'wt_click_to_close'  => 'Click to close tooltip...',
 
-# Recent changes widget 
+# Recent changes widget
 'hidebots' => 'Hide bots',
 
 # Community widget
@@ -572,8 +572,8 @@ Text should be placed on this page if you wish to explain usage, style and polic
 #Special:MultiUpload
 'multiplefileuploadsummary' => 'Summary:',
 
-# image upload (all methods) 
-'uploadtext-ext' => "A full list of allowed extensions is available on the [[{{ns:Special}}:Version|wiki version page]].", 
+# image upload (all methods)
+'uploadtext-ext' => "A full list of allowed extensions is available on the [[{{ns:Special}}:Version|wiki version page]].",
 
 # Wikiwyg related stuff
 'save' => 'Save' ,
@@ -719,4 +719,5 @@ Text should be placed on this page if you wish to explain usage, style and polic
 'feed-watom' => 'Wikia Atom',
 'nodiff' => 'No changes',
 'specialpages-group-wikia' => 'Wikia pages',
+'magicfooterlinks' => '<b>Featured pages</b>',
 ));
