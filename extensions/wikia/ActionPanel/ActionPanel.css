@@ -13,6 +13,8 @@
 	position:absolute;
 	background:#252525;
 	width:250px;
+	min-height:100px;
+	color:#FFFFFF;
 	padding:5px;
 	text-align:center;
 	z-index:1000;
