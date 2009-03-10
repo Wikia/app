@@ -295,6 +295,10 @@ class ReverseParser {
 							// add new lines before paragraph
 							if ($isDefinitionList) {
 								// for : and ; lists use prefix value
+								if (empty($node->previousSibling)) {
+									// current node begins the wikitext - remove one new line
+									$prefix = substr($prefix, 1);
+								}
 								$textContent = $prefix . $textContent;
 							}
 							else {
