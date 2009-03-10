@@ -112,7 +112,7 @@ EOD;
 				$this->results[$row] = array('dbname' => $val);
 			} else if($col == 2) {
 				if(!empty($this->results[$row])) {
-					$this->results[$row]['pagename'] = $val;
+					$this->results[$row]['page'] = $val;
 				} else {
 					$this->badRows[] = $row;
 				}
@@ -127,6 +127,23 @@ EOD;
 	}
 
 	private function deleteAndInsertData() {
-		return '';
+		$dbw = wfGetDB(DB_MASTER);
+		$dbw->delete('`wikicities`.magic_footer_links', '*', 'MagicFooterLinksLoader->deleteAndInsertData');
+
+		$deleted = $dbw->affectedRows();
+		$inserted = 0;
+
+		foreach($this->results as $row => $result) {
+			if(count($result) == 3) {
+				$dbw->insert('`wikicities`.magic_footer_links', array('dbname' => strtolower($result['dbname']), 'page' => str_replace(' ', ' ', $result['page']), 'links' => join("\x7f", $result['links'])), 'MagicFooterLinksLoader->deleteAndInsertData');
+				$inserted++;
+			} else {
+				$this->badRows[] = $row;
+			}
+		}
+
+		$this->badRows = array_unique($this->badRows);
+
+		return "{$deleted} old record(s) deleted <br /><br />{$inserted} new record(s) inserted".(count($this->badRows) >0 ? '<br /><br />row(s): '.implode(', ', $this->badRows).' not inserted due to missing or incorrect data' : '');
 	}
 }
