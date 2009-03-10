@@ -3,8 +3,6 @@ if(!defined('MEDIAWIKI')) {
 	exit(1);
 }
 
-$dir = dirname(__FILE__) . '/';
-$wgExtensionMessagesFiles['MagicFooterLinksLoader'] = $dir . 'MagicFooterLinksLoader.i18n.php';
 $wgSpecialPages['MagicFooterLinksLoader'] = 'MagicFooterLinksLoader';
 
 class MagicFooterLinksLoader extends SpecialPage {
@@ -134,7 +132,7 @@ EOD;
 		$inserted = 0;
 
 		foreach($this->results as $row => $result) {
-			if(count($result) == 3 && $dbw->insert('`wikicities`.magic_footer_links', array('dbname' => strtolower($result['dbname']), 'page' => str_replace(' ', ' ', $result['page']), 'links' => join("\x7f", $result['links'])), 'MagicFooterLinksLoader->deleteAndInsertData')) {
+			if(count($result) == 3 && $dbw->insert('`wikicities`.magic_footer_links', array('dbname' => strtolower($result['dbname']), 'page' => str_replace('_', ' ', $result['page']), 'links' => join(' | ', $result['links'])), 'MagicFooterLinksLoader->deleteAndInsertData')) {
 				$inserted++;
 			} else {
 				$this->badRows[] = $row;
