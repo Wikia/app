@@ -368,7 +368,7 @@ class SkinMonaco extends SkinTemplate {
 	 */
 	public function addVariables(&$obj, &$tpl) {
 		wfProfileIn(__METHOD__);
-		global $wgLang, $wgContLang, $wgMemc, $wgUser, $wgRequest, $wgTitle, $parserMemc;
+		global $wgDBname, $wgLang, $wgContLang, $wgMemc, $wgUser, $wgRequest, $wgTitle, $parserMemc;
 
 		// We want to cache populated data only if user language is same with wiki language
 		$cache = $wgLang->getCode() == $wgContLang->getCode();
@@ -493,6 +493,23 @@ EOS;
 		// This is for WidgetRelatedCommunities
 		$this->relatedcommunities = $data_array['relatedcommunities'];
 		unset($data_array['relatedcommunities']);
+
+		/*
+		// Get Magic Footer Links
+		$dbr =& wfGetDB(DB_SLAVE);
+		$row = $dbr->selectRow('`wikicities`.magic_footer_links', 'links, parsed_links', array('dbname' => $wgDBname, 'page' => $wgTitle->getPrefixedText()), 'SkinMonaco->addVariables');
+		if($row) {
+			if(empty($row->parsed_links)) {
+				$tempParser = new Parser();
+				$tempParser->setOutputType(OT_HTML);
+				$row->parsed_links = $tempParser->parse($row->links, $wgTitle, new ParserOptions(), false)->getText();
+				$dbw = wfGetDB(DB_MASTER);
+				$dbw->update('`wikicities`.magic_footer_links', array('parsed_links' => $row->parsed_links), array('dbname' => $wgDBname, 'page' => $wgTitle->getPrefixedText()), 'SkinMonaco->addVariables');
+				$dbw->commit();
+			}
+			$data_array['magicfooterlinks'] = $row->parsed_links;
+		}
+		*/
 
 		$tpl->set('data', $data_array);
 
@@ -1641,7 +1658,7 @@ if ($wgOut->isArticle()){
 			if ($wgOut->isArticle() &&
 			ArticleAdLogic::isContentPage() &&
 			ArticleAdLogic::isLongArticle($this->data['bodytext'])) {
-				echo  '<table style="width: 100%"><tr>' . 
+				echo  '<table style="width: 100%"><tr>' .
 					'<td style="text-align: center">' .
 					AdEngine::getInstance()->getPlaceHolderDiv('PREFOOTER_LEFT_BOXAD', false) .
 					"</td>\n" .
@@ -1865,8 +1882,17 @@ if (array_key_exists("TOP_RIGHT_BOXAD", AdEngine::getInstance()->getPlaceholders
                 }
             }
         }
+
+        if(!empty($this->data['data']['magicfooterlinks'])) {
 ?>
+                <tr>
+                    <th><?= wfMsg('magicfooterlinks') ?></th>
+                    <td><?= $this->data['data']['magicfooterlinks'] ?></td>
+                </tr>
 <?php
+        }
+
+
 $wikiafooterlinks = $this->data['data']['wikiafooterlinks'];
 if(count($wikiafooterlinks) > 0) {
 	$wikiafooterlinksA = array();
