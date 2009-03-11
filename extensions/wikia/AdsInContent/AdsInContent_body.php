@@ -115,7 +115,13 @@ class AdsInContent {
 			$iIndex++;
 			$this->lastUsedAdUnitIndex = ($iIndex <= $iMaxAdUnitIndex) ? $iIndex : 0;
 
-			$adBody = '<div class="contentAdInside noprint" ' . ($aSelectedAdUnit['align'] == 'right' ? 'style="clear: right; float: right; margin-left: 10px; width: ' . ($aSelectedAdUnit['width']+2) . 'px;' : '') . ' >' . self::getAdUnit( $aSelectedAdUnit ) . '</div>';
+			$adBody = '<div class="contentAdInside noprint" ';
+			if (!empty($aSelectedAdUnit['float'])) {
+				$adBody .= 'style="margin-bottom: 0.5em; margin-' .
+					( $aSelectedAdUnit['align'] == 'left' ? 'right' : 'left' ) .
+					': 1em; float: ' . $aSelectedAdUnit['align'] . '"'; 
+			}
+			$adBody .= '>' . self::getAdUnit( $aSelectedAdUnit ) . '</div>';
 		}
 		return $adBody;
 	}
