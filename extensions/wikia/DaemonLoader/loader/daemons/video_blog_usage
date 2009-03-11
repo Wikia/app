@@ -36,7 +36,7 @@ use constant NS_BLOG_LISTING => "502";
 use constant NS_BLOG_LISTING_TALK => "503";
 use constant NS_VIDEO => "400";
 use constant NS_VIDEO_TALK => "401";
-use constant NS_MAIN => "1";
+use constant NS_MAIN => "0";
 use constant NS_IMAGE => "6";
 
 =help function
