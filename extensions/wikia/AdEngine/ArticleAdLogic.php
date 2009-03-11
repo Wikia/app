@@ -91,7 +91,7 @@ class ArticleAdLogic {
 		}
 
 		// For tables, check to see if we have a table that has a lot of columns.
-		if ( $tableFound ){
+		if ( $tableFound && $score < 1 ){
 			$firstRow = substr($firstHtml, 0, stripos($firstHtml, '</tr>'));
 			if (preg_match_all('/<\/[tT][HhDd]>/', $firstRow, $columnMatches)){
 				$numColumns = count($columnMatches[0]);
