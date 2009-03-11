@@ -13,21 +13,22 @@ function applyActionsOnQuestions(){
 	jQuery("[href*='/wiki/']").hover(function(){
 		if( menu_is_open )return;
 		questions = this.href.match(/\/wiki\/(.*)/i );
-		
+		jQuery( hover ).unbind('mouseenter mouseleave'); 
+		//alert( hover.onmouseover )
 		if( questions[1] != wgPageName && questions[1].indexOf(":") == -1 ){
 			
 			var this_title = questions[1];
 			var this_link = this
 			var modes = new Array();
 			
+			//Hover Reposition
 			jQuery( hover).css( "top", ( jQuery(this).offset().top ) ).css( "left", ( jQuery(this).offset().left + jQuery(this).width() + 5)  )
 			jQuery( hover ).fadeIn("slow");
 			jQuery( hover ).hover( 
 				
 				
 			function(){
-					
-				alert( "hoveing " + this_title )
+	
 				jQuery( hover ).fadeIn("fast")
 				
 				//Hover Menu Create
@@ -100,7 +101,7 @@ function applyActionsOnQuestions(){
 				jQuery( add_answer ).css("width",235);
 				jQuery( quick_answer ).append(add_answer);
 				
-				/*
+				
 				//get page content first
 				url = wgServer + "/api.php?format=json&action=query&prop=revisions&rvprop=content&titles=" + this_title;
 				jQuery.getJSON( url, "", function( j ){	
@@ -150,7 +151,6 @@ function applyActionsOnQuestions(){
 						});			
 					});
 				});
-				*/
 	
 				
 				//Quick Rename Form and Callback
