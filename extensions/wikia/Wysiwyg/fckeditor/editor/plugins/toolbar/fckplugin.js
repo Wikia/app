@@ -53,6 +53,7 @@ WikiaToolbar.prototype.Create = function(parentElement) {
 	
 	parentElement.appendChild(toolbar);
 
+	// toolbar will be shown when its CSS is fully loaded
 	parentElement.style.display = 'none';
 
 	// store toolbar object
@@ -126,9 +127,6 @@ WikiaToolbar.prototype.Create = function(parentElement) {
 	else {
 		FCK.log('not showing toolbar tooltip');
 	}
-
-	// and finally show our super cool toolbar
-	parentElement.style.display = 'block';
 }
 
 // setup onmouseover / onmouseout event handlers for IE
