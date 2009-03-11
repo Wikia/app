@@ -6,6 +6,7 @@
 }
 
 #xToolbar {
+	display: block !important;
 	height: 49px;
 	width: 100%;
 }
