@@ -3,17 +3,18 @@
 var menu_is_open = false;
 var success_close_speed = 3000;
 
-//create one hidden hover image for use on mouseovers
-var hover = document.createElement('div');
-jQuery( hover ).addClass("questionhover").css("display","none")  
-hover.innerHTML = "<img src='" + stylepath + "/answers/images/lightning.png' width='16'>";
-jQuery("body").append(hover);
+jQuery(document).ready(function() {
+	//create one hidden hover image for use on mouseovers
+	jQuery(document.body).append('<div id="ActionPanelTrigger"></div>');
+	
+	applyActionsOnQuestions();
+});
 
 function applyActionsOnQuestions(){
 	jQuery("[href*='/wiki/']").hover(function(){
 		if( menu_is_open )return;
 		questions = this.href.match(/\/wiki\/(.*)/i );
-		jQuery( hover ).unbind('mouseenter mouseleave'); 
+		jQuery("#ActionPanelTrigger").unbind('mouseenter mouseleave'); 
 		//alert( hover.onmouseover )
 		if( questions[1] != wgPageName && questions[1].indexOf(":") == -1 ){
 			
@@ -21,15 +22,15 @@ function applyActionsOnQuestions(){
 			var this_link = this
 			var modes = new Array();
 			
-			//Hover Reposition
-			jQuery( hover).css( "top", ( jQuery(this).offset().top ) ).css( "left", ( jQuery(this).offset().left + jQuery(this).width() + 5)  )
-			jQuery( hover ).fadeIn("slow");
-			jQuery( hover ).hover( 
+			//Trigger Reposition
+			jQuery("#ActionPanelTrigger").css( "top", ( jQuery(this).offset().top ) ).css( "left", ( jQuery(this).offset().left + jQuery(this).width() + 5)  )
+			jQuery("#ActionPanelTrigger").fadeIn("slow");
+			jQuery("#ActionPanelTrigger").hover( 
 				
 				
 			function(){
 	
-				jQuery( hover ).fadeIn("fast")
+				jQuery("#ActionPanelTrigger").fadeIn("fast")
 				
 				//Hover Menu Create
 		
@@ -66,7 +67,7 @@ function applyActionsOnQuestions(){
 					if(!time)time="slow";
 					jQuery(".categorize_help_container").remove();
 					jQuery( hover_menu ).fadeOut(time);
-					jQuery( hover ).fadeOut();
+					jQuery("#ActionPanelTrigger").fadeOut();
 					menu_is_open = false;
 				}
 				var close_button = document.createElement('span');
@@ -328,7 +329,7 @@ function applyActionsOnQuestions(){
 	},function(){
 	
 		if( !menu_is_open ) {
-			jQuery( hover ).fadeOut("slow");
+			jQuery("#ActionPanelTrigger").fadeOut("slow");
 		}
 	});
 }
