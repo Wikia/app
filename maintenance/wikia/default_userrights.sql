@@ -35,6 +35,7 @@ insert into user_groups(ug_user, ug_group) values
 (/*Toughpigs*/10370,'staff'),
 (/*Uberfuzzy*/161697, 'staff'),
 (/*Untethered*/136195,'staff'),
+(/*VickyBC*/1066766, 'staff'),
 (/*WikiaBot*/269919,'staff'),
 (/*Zuirdj*/47,'staff')
 ;
