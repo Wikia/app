@@ -11,7 +11,7 @@ jQuery(document).ready(function() {
 });
 
 function applyActionsOnQuestions(){
-	jQuery("[href*='/wiki/']").hover(function(){
+	jQuery("[href*='/wiki/']").live("mouseover", function(){
 		if( menu_is_open )return;
 		questions = this.href.match(/\/wiki\/(.*)/i );
 		jQuery("#ActionPanelTrigger").unbind('mouseenter mouseleave'); 
@@ -24,7 +24,7 @@ function applyActionsOnQuestions(){
 			
 			//Trigger Reposition
 			jQuery("#ActionPanelTrigger").stop(true, true).css( "top", ( jQuery(this).offset().top ) ).css( "left", ( jQuery(this).offset().left + jQuery(this).width() + 5) ).show();
-			jQuery("#ActionPanelTrigger").mouseover(
+			jQuery("#ActionPanelTrigger").hover(
 				
 				
 			function(){
@@ -331,7 +331,7 @@ function applyActionsOnQuestions(){
 			});
 			
 		}
-	},function(){
+	}).live("mouseout", function(){
 	
 		if( !menu_is_open ) {
 			jQuery("#ActionPanelTrigger").fadeOut("slow");
