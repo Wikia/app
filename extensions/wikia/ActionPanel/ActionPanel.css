@@ -12,21 +12,22 @@
 	padding:5px;
 }
 .questionhovermenu{
-	position:absolute;
 	background:#252525;
-	width:250px;
+	color:#FFF;
 	min-height:100px;
-	color:#FFFFFF;
+	opacity: .95;
 	padding:5px;
+	position:absolute;
 	text-align:center;
+	width:250px;
 	z-index:1000;
 	-moz-border-radius: 10px;
 	-webkit-border-radius: 10px;
 }
 .hoverbutton{
-	color:#ECCF45;
 	background:#252525;
 	border:0px;
+	color:#ECCF45;
 }
 
 .questionhovertitle{
@@ -35,17 +36,16 @@
 	margin-bottom:3px;
 }
 .questionhovername{
+	background:#3366CC;
 	color:#FFFFFF;
 	font-weight:bold;
-	background:#3366CC;
 	padding:3px;	
 	text-align:center;
 	margin-bottom:3px;
 }
 .questionhoverlinks{
+	margin:5px 0;
 	text-align:center;
-	margin-top:5px;
-	margin-bottom:5px;
 }
 .questionhoverlinks a{
 	color:#A2A2A2;
@@ -59,17 +59,17 @@
 	margin-bottom:5px;
 }
 .categorize_help{
-	color:#000000;
 	background:#ECCF45;
+	border:1px solid #252525;
+	color:#000000;
 	font-style:italic;
+	margin:0 auto;
+	padding:2px;
 	text-align:center;
 	width:175px;
-	margin:0 auto;
-	border:1px solid #252525;
-	padding:2px;
 }
 .categorize_help_container{
-	width:260px;
 	position:absolute;
+	width:260px;
 	z-index:1000;
 }
