@@ -1631,8 +1631,28 @@ if ($wgOut->isArticle()){
 					}
 					?>
 					<!-- start content -->
-					<?php $this->html('bodytext') ?>
-					<?php if($this->data['catlinks']) { $this->html('catlinks'); } ?>
+					<?php
+					// Display content
+					$this->html('bodytext');
+					
+		                        // Display additional ads before categories and footer on long pages
+					if ( $wgUser->isAnon() &&
+					$wgOut->isArticle() &&
+					ArticleAdLogic::isContentPage() &&
+					ArticleAdLogic::isLongArticle($this->data['bodytext'])) {
+						echo  '<table style="margin-top: 1em; width: 100%"><tr>' .
+						'<td style="width: 50%; text-align: center"><div style="width: 300px; margin: 0 auto">' .
+						AdEngine::getInstance()->getPlaceHolderDiv('PREFOOTER_LEFT_BOXAD', false) .
+						"</div></td>\n" .
+						'<td style="width: 50%; text-align: center"><div style="width: 300px; margin: 0 auto">' .
+						AdEngine::getInstance()->getPlaceHolderDiv('PREFOOTER_RIGHT_BOXAD', false) .
+						"</div></td></tr>\n</table>";
+					}
+
+					// Display categories
+					if($this->data['catlinks'])
+						$this->html('catlinks');
+					?>
 					<!-- end content -->
 					<div class="visualClear"></div>
 				</div>
@@ -1652,19 +1672,6 @@ if ($wgOut->isArticle()){
 				echo '<div style="position: absolute; height: 600px; width: 160px; margin-top: -600px; left: -190px;">' .
 					AdEngine::getInstance()->getPlaceHolderDiv('LEFT_SKYSCRAPER_3', true) .
 				     '</div>' . "\n";
-			}
-
-			// Display additional ads before the footer on long pages
-			if ($wgOut->isArticle() &&
-			ArticleAdLogic::isContentPage() &&
-			ArticleAdLogic::isLongArticle($this->data['bodytext'])) {
-				echo  '<table style="width: 100%"><tr>' .
-					'<td style="text-align: center">' .
-					AdEngine::getInstance()->getPlaceHolderDiv('PREFOOTER_LEFT_BOXAD', false) .
-					"</td>\n" .
-					'<td style="text-align: center">' .
-					AdEngine::getInstance()->getPlaceHolderDiv('PREFOOTER_LEFT_BOXAD', false) .
-                                        "</td></tr>\n</table>";
 			}
 
 		wfProfileOut( __METHOD__ . '-article'); ?>
