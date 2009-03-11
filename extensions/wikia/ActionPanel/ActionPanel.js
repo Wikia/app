@@ -23,14 +23,13 @@ function applyActionsOnQuestions(){
 			var modes = new Array();
 			
 			//Trigger Reposition
-			jQuery("#ActionPanelTrigger").css( "top", ( jQuery(this).offset().top ) ).css( "left", ( jQuery(this).offset().left + jQuery(this).width() + 5)  )
-			jQuery("#ActionPanelTrigger").fadeIn("slow");
+			jQuery("#ActionPanelTrigger").stop(true, true).css( "top", ( jQuery(this).offset().top ) ).css( "left", ( jQuery(this).offset().left + jQuery(this).width() + 5) ).show();
 			jQuery("#ActionPanelTrigger").hover( 
 				
 				
 			function(){
 	
-				jQuery("#ActionPanelTrigger").fadeIn("fast")
+				jQuery("#ActionPanelTrigger").stop(true, true).show();
 				
 				//Hover Menu Create
 		
@@ -66,8 +65,13 @@ function applyActionsOnQuestions(){
 				function closeMenu( time ){
 					if(!time)time="slow";
 					jQuery(".categorize_help_container").remove();
-					jQuery( hover_menu ).fadeOut(time);
-					jQuery("#ActionPanelTrigger").fadeOut();
+					jQuery( hover_menu ).css("min-height", 0).animate({
+						"height": "0",
+						"width": "0"
+					}, 100, function() {
+						jQuery( hover_menu ).remove();
+					});
+					jQuery("#ActionPanelTrigger").hide();
 					menu_is_open = false;
 				}
 				var close_button = document.createElement('span');
