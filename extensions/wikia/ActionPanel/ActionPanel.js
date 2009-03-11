@@ -24,11 +24,12 @@ function applyActionsOnQuestions(){
 			
 			//Trigger Reposition
 			jQuery("#ActionPanelTrigger").stop(true, true).css( "top", ( jQuery(this).offset().top ) ).css( "left", ( jQuery(this).offset().left + jQuery(this).width() + 5) ).show();
-			jQuery("#ActionPanelTrigger").hover( 
+			jQuery("#ActionPanelTrigger").mouseover(
 				
 				
 			function(){
 	
+			if (menu_is_open == false){
 				jQuery("#ActionPanelTrigger").stop(true, true).show();
 				
 				//Hover Menu Create
@@ -326,8 +327,8 @@ function applyActionsOnQuestions(){
 				},"");
 				jQuery( ".hoveranswer" ).click( function(){ selectHoverLink( modes, "answer", this) });
 				jQuery(hover_menu).show();
+			}
 			});
-			
 			
 		}
 	},function(){
