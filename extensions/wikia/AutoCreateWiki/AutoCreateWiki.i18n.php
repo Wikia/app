@@ -30,6 +30,7 @@ $messages['en'] = array(
 	"autocreatewiki-create-account" => "Create an Account",
 	"autocreatewiki-done" => "done",
 	"autocreatewiki-error" => "error",
+	"autocreatewiki-language-top" => "de,en,es,fr,it,ja,pl,pt,pt-br,zh",
 // form messages	
 	"autocreatewiki-info-domain" => "It's best to use a word likely to be a search keyword for your topic.",
 	"autocreatewiki-info-topic" => "Add a short description such as \"Star Wars\" or \"TV Shows\".",

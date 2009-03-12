@@ -634,7 +634,7 @@ class AutoCreateWikiPage extends SpecialPage {
 		global $wgCaptchaTriggers, $wgRequest;
 		wfProfileIn( __METHOD__ );
 		#-
-		$aTopLanguages = explode(',', wfMsg('requestwiki-second-language-top'));
+		$aTopLanguages = explode(',', wfMsg('autocreatewiki-language-top'));
 		$aLanguages = Language::getLanguageNames();
 		#-
 		$hubs = WikiFactoryHub::getInstance();
