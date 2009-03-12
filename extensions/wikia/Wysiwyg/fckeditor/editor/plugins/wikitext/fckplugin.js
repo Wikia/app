@@ -60,6 +60,26 @@ var oTildesItem = new FCKToolbarButton( 'AddImage', 'Add image' ) ;
 oTildesItem.IconPath = FCKConfig.PluginsPath + 'wikitext/addImage.png' ;
 FCKToolbarItems.RegisterItem( 'AddImage', oTildesItem );
 
+//
+// FCK load time logging
+//
+FCK.LoadTime = false;
+FCK.onWysiwygLoad = function() {
+	// run just once
+	if (FCK.LoadTime == false) {
+		// check existance of wgNow global JS variable
+		if (typeof window.parent.wgNow == 'undefined') {
+			FCK.log('Wysiwyg loaded (no wgNow defined!)');
+			return;
+		}
+
+		// set wysiwyg load time [s]
+		FCK.LoadTime = ((new Date()).getTime() - window.parent.wgNow.getTime()) / 1000;
+
+		FCK.log('Wysiwyg loaded in ' + FCK.LoadTime + ' s');
+	}
+}
+
 
 //
 // modes switching
@@ -426,6 +446,9 @@ FCK.Events.AttachEvent( 'OnAfterSetHTML', function() {
 
 	// for QA team tests
 	FCK.GetParentForm().className = (FCK.EditMode == FCK_EDITMODE_WYSIWYG ? 'wysiwyg' : 'source') + '_mode';
+
+	// log wysiwyg load time
+	FCK.onWysiwygLoad();
 });
 
 // setup elements with refId (after switching to wysiwyg mode and after drag&drop is finished)
