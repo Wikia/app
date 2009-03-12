@@ -121,7 +121,7 @@ YE.onDOMReady(function () {
 					prevMsg = resMsg;
 				}
 				if (resMsg == 'Done.') {
-					addLogRow(loop, redirMsg, '');
+					addLogRow(loop, '<br />'.redirMsg, '');
 					window.location.href = 'http://'+redirServer+'.wikia.com';
 				} else if (resType != 'ERROR') {
 					setTimeout(checkProcess, 2000);
