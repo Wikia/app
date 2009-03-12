@@ -28,7 +28,8 @@ class AutoCreateWikiCentralJob extends Job {
 	private
 		$mStaff,
 		$mFounder,
-		$mWikiID;
+		$mWikiID,
+		$mParams;
 
 	/**
 	 * constructor
@@ -37,6 +38,7 @@ class AutoCreateWikiCentralJob extends Job {
 	 */
 	public function __construct( $title, $params, $id = 0 ) {
 		parent::__construct( "ACWCentral", $title, $params, $id );
+		$this->mParams = $params;
 	}
 
 	/**
@@ -47,6 +49,9 @@ class AutoCreateWikiCentralJob extends Job {
     public function run() {
 
 		wfProfileIn( __METHOD__ );
+
+		$this->setCentralPages();
+		$this->sendWelcomeMail();
 
 		wfProfileOut( __METHOD__ );
 
@@ -72,11 +77,11 @@ class AutoCreateWikiCentralJob extends Job {
 			$oReceiver = $wgUser;
 		}
 
-		$sWikiaName = WikiFactory::GetVarValueByName( "wgSitename", $this->mWikiID );
-		$sWikiaLang = WikiFactory::GetVarValueByName( "wgLanguageCode", $this->mWikiID );
+		$wikiName = WikiFactory::GetVarValueByName( "wgSitename", $this->mWikiID );
+		$wikiLang = WikiFactory::GetVarValueByName( "wgLanguageCode", $this->mWikiID );
 
 		// set apropriate staff member
-		$oStaffUser = self::getStaffUserByLang( $sWikiaLang );
+		$oStaffUser = self::getStaffUserByLang( $wikiLang );
 		$oStaffUser = ( $oStaffUser instanceof User ) ? $oStaffUser : $this->mStaff;
 
 		$from = new MailAddress( $wgPasswordSender, "The Wikia Community Team" );
@@ -95,13 +100,13 @@ class AutoCreateWikiCentralJob extends Job {
 
 		$sBody = null;
 		$sSubject = null;
-		if(!empty($sWikiaLang)) {
+		if(!empty($wikiLang)) {
 			// custom lang translation
-			$sBody = wfMsgExt("createwiki_welcomebody", array( 'language' => $sWikiaLang ), $aBodyParams);
-			$sSubject = wfMsgExt("createwiki_welcomesubject", array( 'language' => $sWikiaLang ), array($sWikiaName));
+			$sBody = wfMsgExt("createwiki_welcomebody", array( 'language' => $wikiLang ), $aBodyParams);
+			$sSubject = wfMsgExt("createwiki_welcomesubject", array( 'language' => $wikiLang ), array( $wikiName));
 		}
 
-		if($sBody == null) {
+		if( is_null( $sBody ) ) {
 			// default lang (english)
 			$sBody = wfMsg("createwiki_welcomebody", $aBodyParams);
 		}
@@ -113,14 +118,14 @@ class AutoCreateWikiCentralJob extends Job {
 		if( !empty($sTo) ) {
 			$bStatus = $oReceiver->sendMail($sSubject, $sBody, $from );
 			if( $bStatus === true ) {
-				$this->addLog( "Mail to founder {$sTo} sent.");
+				Wikia::log( __METHOD__, "mail", "Mail to founder {$sTo} sent.");
 			}
 			else {
-				$this->addLog( "Mail to founder {$sTo} probably not sent. sendMail returned false.");
+				Wikia::log( __METHOD__, "mail", "Mail to founder {$sTo} probably not sent. sendMail returned false." );
 			}
 		}
 		else {
-			$this->addLog( "Founder email is not set. Welcome email is not sent" );
+			Wikia::log( __METHOD__, "mail", "Founder email is not set. Welcome email is not sent" );
 		}
 	}
 
@@ -128,8 +133,12 @@ class AutoCreateWikiCentralJob extends Job {
 	 * get staff member signature for given lang code
 	 */
 	public static function getStaffUserByLang( $langCode ) {
-		$staffSigs = wfMsgForContent('staffsigs');
-		if( !empty($staffSigs) ) {
+
+		wfProfileIn( __METHOD__ );
+
+		$staffSigs = wfMsgForContent( "staffsigs" );
+		$User = false;
+		if( !empty( $staffSigs ) ) {
 			$lines = explode("\n", $staffSigs);
 
 			foreach( $lines as $line ) {
@@ -139,16 +148,15 @@ class AutoCreateWikiCentralJob extends Job {
 				}
 				if((strpos($line, '* ') == 1) && ($langCode == $sectLangCode)) {
 					$sUser = trim($line, '** ');
-				    $oUser = User::newFromName($sUser);
-					$oUser->load();
-					return $oUser;
+				    $User = User::newFromName( $sUser );
+					$User->load();
+					return $User;
 				}
 			}
 		}
-		else {
-			return false;
-		}
-		return false;
+
+		wfProfileOut( __METHOD__ );
+		return $User;
 	}
 
 	/**
@@ -166,7 +174,7 @@ class AutoCreateWikiCentralJob extends Job {
 		 * do it only when run on central wikia
 		*/
 		if( $wgDBname != "wikicities" ) {
-			$this->addLog( "Not run on central wikia. Cannot set wiki description page" );
+			Wikia::log( __METHOD__, "db", "Not run on central wikia. Cannot set wiki description page" );
 			return false;
 		}
 
@@ -175,23 +183,20 @@ class AutoCreateWikiCentralJob extends Job {
 		 */
 		$oldUser = $wgUser;
 		$wgUser = User::newFromName( 'CreateWiki script' );
-		$this->addLog( "Creating and modifing pages on Central Wikia (as user: " . $wgUser->getName() . ")..." );
+		Wikia::log( __METHOD__ , "user", "Creating and modifing pages on Central Wikia (as user: " . $wgUser->getName() . ")..." );
 
 		/**
 		 * title of page
 		 */
-		$sCentralTitle =
-			( $this->mTaskParams["wpCreateWikiDescPageTitle"] === $this->mTaskData["name"]
-			&& !empty( $this->mTaskParams["wpCreateWikiDescPageTitle"]) )
-			? $this->mTaskData["name"]
-			: $this->mTaskParams["wpCreateWikiDescPageTitle"];
+		$centralTitleName = $this->mParams[ "name" ];
 
 		#--- title for this page
-		$oCentralTitle = Title::newFromText( $sCentralTitle, NS_MAIN );
-		if($oCentralTitle instanceof Title) {
+		$centralTitle = Title::newFromText( $centralTitleName, NS_MAIN );
+
+		if( $centralTitle instanceof Title ) {
 			#--- and article for for this title
-			$this->addLog( sprintf("[debug] Got title object for page: %s", $oCentralTitle->getFullUrl()) );
-		    $oCentralArticle = new Article( $oCentralTitle, 0);
+			Wikia::log( __METHOD__, "title", sprintf("[debug] Got title object for page: %s", $centralTitle->getFullUrl( ) ) );
+		    $oCentralArticle = new Article( $centralTitle, 0);
 			$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/CreateWikiTask/" );
 			$oTmpl->set_vars( array(
 				"data"          => $this->mTaskData,
@@ -204,33 +209,34 @@ class AutoCreateWikiCentralJob extends Job {
 
 			if(!$oCentralArticle->exists()) {
 				#--- create article
-				$this->addLog( sprintf("[debug] Creating new article: %s", $oCentralTitle->getFullUrl()) );
+				Wikia::log( __METHOD__, "article", sprintf("[debug] Creating new article: %s", $centralTitle->getFullUrl( ) ) );
 
 				$sPage = $oTmpl->execute("central-maindescription");
 				$sPage.= $oTmpl->execute("central");
 
-				$this->addLog( "[debug] Page body formatted, launching doEdit() ..." );
+				Wikia::log( __METHOD__, "article", "[debug] Page body formatted, launching doEdit() ..." );
 				$oCentralArticle->doEdit( $sPage, "created by task manager", EDIT_FORCE_BOT );
-				$this->addLog( sprintf("Article %s added.", $oCentralTitle->getFullUrl()) );
+				Wikia::log( __METHOD__, "article", sprintf("Article %s added.", $centralTitle->getFullUrl()) );
 			}
 			else {
 				#--- update article
-				$this->addLog( sprintf("[debug] Updating existing article: %s", $oCentralTitle->getFullUrl()) );
+				Wikia::log( __METHOD__, "article", sprintf("[debug] Updating existing article: %s", $centralTitle->getFullUrl()) );
 
 				$sContent = $oCentralArticle->getContent();
 				$sContent.= $oTmpl->execute("central");
 
 				$oCentralArticle->doEdit( $sContent, "modified by task manager", EDIT_FORCE_BOT );
-				$this->addLog( sprintf("Article %s already exists... content added", $oCentralTitle->getFullUrl()) );
+				Wikia::log( __METHOD__, "article", sprintf("Article %s already exists... content added", $centralTitle->getFullUrl()) );
 			}
 		}
 		else {
-			$this->addLog( "ERROR: Unable to create title object for page on Central Wikia: " . $sCentralTitle );
+			Wikia::log( __METHOD__, "article", "ERROR: Unable to create title object for page on Central Wikia: " . $sCentralTitle );
 			return false;
 		}
 
-
-		#--- add to Template:List_of_Wikia_New
+		/**
+		 * add to Template:List_of_Wikia_New
+		 */
 		$sCentralListTitle = 'Template:List_of_Wikia_New';
 		$oCentralListTitle = Title::newFromText( $sCentralListTitle, NS_MAIN );
 		if($oCentralListTitle instanceof Title) {
