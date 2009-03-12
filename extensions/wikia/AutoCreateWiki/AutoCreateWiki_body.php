@@ -120,7 +120,7 @@ class AutoCreateWikiPage extends SpecialPage {
 				}
 			} else {
 				$this->clearSessionKeys();
-				$wgOut->redirect($this->mTitle->getLocalURL());
+				$wgOut->redirect( $this->mTitle->getLocalURL() );
 			}
 		} else {
 			if ($this->mPosted) {
@@ -306,7 +306,6 @@ class AutoCreateWikiPage extends SpecialPage {
 			'wgSitename'				=> $this->mWikiData[ 'title' ],
 			'wgScriptPath'				=> '',
 			'wgScript'					=> '/index.php',
-			'wgRedirectScript'			=> '/redirect.php',
 			'wgArticlePath'				=> '/wiki/$1',
 			'wgLogo'					=> '$wgUploadPath/b/bc/Wiki.png',
 			'wgUploadPath'				=> "http://images.wikia.com/{$this->mWikiData[ "dir_part" ]}/images",
