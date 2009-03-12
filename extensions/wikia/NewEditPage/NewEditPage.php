@@ -28,9 +28,10 @@ function wfNewEditPageInit() {
 // add custom CSS to page of not existing articles
 function wfNewEditPageArticleView($title) {
 
-	global $wgNewEditPageNewArticle;
+	global $wgNewEditPageNewArticle, $wgRequest;
 
-	if (!$title->exists()) {
+	// limit to not existing articles and view mode
+	if (!$title->exists() && $wgRequest->getVal('action', 'view') == 'view') {
 		$wgNewEditPageNewArticle = true;
 		wfNewEditPageAddCSS();
 	}
