@@ -163,6 +163,24 @@ class MultiWikiEditForm {
                                                 wfMsg ('multidelete_french_wikis') => 'lang:fr' ,
                                                 wfMsg ('multidelete_swedish_wikis') => 'lang:sv' ,
                                                 wfMsg ('multidelete_german_wikis') => 'lang:de' ,
+'all auto hub wiki'          => 'cat:18',
+'all creative hub wiki'      => 'cat:17',
+'all education hub wiki'     => 'cat:8',
+'all entertainment hub wiki' => 'cat:3',
+'all finance hub wiki'       => 'cat:10',
+'all gaming hub wiki'        => 'cat:2',
+'all green hub wiki'         => 'cat:19',
+'all humor hub wiki'         => 'cat:1',
+'all lifestyle hub wiki'     => 'cat:9',
+'all music hub wiki'         => 'cat:16',
+'all philosophy hub wiki'    => 'cat:14',
+'all politics hub wiki'      => 'cat:11',
+'all science hub wiki'       => 'cat:13',
+'all sports hub wiki'        => 'cat:15',
+'all technology hub wiki'    => 'cat:12',
+'all toys hub wiki'          => 'cat:5',
+'all travel hub wiki'        => 'cat:7',
+'all wikia hub wiki'         => 'cat:4',
                                         ),
                                         $this->mMode,
                                         1
@@ -279,7 +297,7 @@ class MultiWikiEditForm {
         }
 
 	/* wraps up multi edits */
-	function multiEdit ($mode = MULTIWIKIEDIT_THIS, $user = false, $line = '', $filename = null, $filename2 = null, $lang = '') {
+	function multiEdit ($mode = MULTIWIKIEDIT_THIS, $user = false, $line = '', $filename = null, $filename2 = null, $lang = '', $cat = 0) {
 		global $wgUser, $wgOut ;
 
 		/* todo all messages should really be as _messages_ , not plain texts */
@@ -334,7 +352,7 @@ class MultiWikiEditForm {
 
 		/* get wiki array */
 		if ($mode == MULTIWIKIEDIT_ALL) {
-	                $wikis = $this->fetchWikis ($lang) ;
+	                $wikis = $this->fetchWikis ($lang, $cat) ;
 		}  else if ($mode == MULTIWIKIEDIT_SELECTED) {
 			$pre_wikis = array () ;
 			if ($filename2) {
@@ -492,11 +510,12 @@ class MultiWikiEditForm {
 
 	/*	get the list of wikis from database
 	*/
-	function fetchWikis ($lang = '') {
+	function fetchWikis ($lang = '', $cat = 0) {
 		global $wgSharedDB ;
 		$dbr =& wfGetDB (DB_SLAVE);
 		'' != $lang ? $extra = " WHERE city_lang = '$lang'" : $extra = '' ;
-		$query = "SELECT city_dbname, city_id, city_url, city_title, city_path FROM `{$wgSharedDB}`.city_list" . $extra ;
+		'' != $cat ? $extra = " WHERE cat_id = '$cat'" : $extra = '' ; # FIXME this is sooo ugly (and does not allow for multi - lang+cat)
+		$query = "SELECT city_dbname, city_id, city_url, city_title, city_path FROM `{$wgSharedDB}`.city_list JOIN `{$wgSharedDB}`.city_cat_mapping USING (city_id)" . $extra ;
 		$res = $dbr->query ($query) ;
 		$wiki_array = array () ;
 		while ($row = $dbr->fetchObject($res)) {
@@ -752,6 +771,9 @@ class MultiWikiEditForm {
 		} else if (strpos ($this->mRange, 'lang:') !== false) { 
 	                $lang = substr ($this->mRange, 5) ; 
 	                $this->multiEdit (MULTIWIKIEDIT_ALL, $this->mUser, $this->mPage, $this->mFileTemp, '', $lang) ; 
+		} else if (strpos ($this->mRange, 'cat:') !== false) { 
+	                $cat = substr ($this->mRange, 4) ; 
+	                $this->multiEdit (MULTIWIKIEDIT_ALL, $this->mUser, $this->mPage, $this->mFileTemp, '', null, $cat) ; 
 		}
 	}
 
