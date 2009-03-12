@@ -78,7 +78,7 @@ function RenderAdLink() {
 		switch ($wgAdSkin) {
 		case "warhammer_link":
 			echo '<link rel="stylesheet" type="text/css" href="'. $wgExtensionsPath .'/wikia/AdSkin/css/warhammer_link.css?'. $wgStyleVersion .'" />';
-			echo '<a href="#" id="warhammer_link">Download the Free 10-Day Trial</a>';
+			echo '<a href="http://www.warhammeronline.com/trial?WHK33J-U7C8Q-HWPEJ-9QAIJ-4Y8JK" id="warhammer_link">Download the Free 10-Day Trial</a>';
 			break;
 		}
 	}
