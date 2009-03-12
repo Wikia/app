@@ -34,7 +34,7 @@ function WidgetAnswers($id, $params) {
 		}
 		$languageLoaded = true;
 	}
-
+	
 	// HTML for the Ask a Question 
 	$h = '<form method="get" action="" onsubmit="return false" name="ask_form" id="ask_form">
 			<input type="text" id="answers_ask_field" value="' . htmlspecialchars(wfMsg("ask_a_question")) . '" class="alt" />
@@ -61,7 +61,7 @@ function WidgetAnswers($id, $params) {
 		'maxage'=> 300,
 		'action'=> 'query',
 		'list'=>'wkpagesincat',
-		'wkcategory'=> 'un-answered questions' . '|' . $wgSitename,
+		'wkcategory'=> wfMsg("unanswered_category") . '|' . $wgSitename,
 		'format'=>'json',
 		'wklimit'=>'5'
 	);
