@@ -1032,7 +1032,7 @@ class AutoCreateWikiPage extends SpecialPage {
                 if( $success ) {
                     $this->log("Successfully added setting: $key = $value");
                 } else {
-                    $this->addLog("Failed to add setting: $key = $value");
+                    $this->log("Failed to add setting: $key = $value");
                 }
             }
 			$wgUser = $oldUser;
