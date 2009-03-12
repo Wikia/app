@@ -1382,7 +1382,12 @@ wfProfileIn( __METHOD__ . '-header'); ?>
 		<div id="wikia_header" class="reset color2">
 			<div class="monaco_shrinkwrap">
 			<div id="wikiaBranding">
-				<div id="wikia_logo"><a rel="nofollow" href="http://www.wikia.com/">Wikia</a></div>
+<?php
+global $wgLangToCentralMap, $wgContLang;
+$central_url = !empty($wgLangToCentralMap[$wgContLang->getCode()]) ? $wgLangToCentralMap[$wgContLang->getCode()] : 'http://www.wikia.com/';
+?>
+				<div id="wikia_logo"><a rel="nofollow" href="<?= $central_url ?>">Wikia</a></div>
+
 <?php
 $categorylist = $this->data['data']['categorylist'];
 if(isset($categorylist['nodes']) && count($categorylist['nodes']) > 0 ) {
