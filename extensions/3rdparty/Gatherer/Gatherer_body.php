@@ -11,6 +11,13 @@ if( !defined( 'MEDIAWIKI' ) ) {
 class Gatherer extends SpecialPage {
 	public $name, $gatherer;
 
+	var $rejectedNames = array(
+		'Plains',
+		'Mountain',
+		'Swamp',
+		'Forest',
+		'Island');
+
 	public function __construct() {
 		SpecialPage::SpecialPage( 'Gatherer', 'upload' );
 	}
@@ -36,23 +43,16 @@ class Gatherer extends SpecialPage {
 			return;
 		}
 		$this->setHeaders();
-		if( $wgRequest->wasPosted() && $wgRequest->getVal( 'wpName', '' ) !== '' ) {
-			$this->name = ucfirst( $wgRequest->getVal( 'wpName' ) );
-			if( strpos( $this->name, '//' ) !== false ) {
-				// split/flip card
+		$this->name = $wgRequest->getVal( 'wpName' );
+		if( $wgRequest->wasPosted() && !empty( $this->name ) ) {
+			$this->name = ucfirst( $this->name );
+
+			// check for split/flip card or rejected name
+			if( strpos( $this->name, '//' ) !== false || in_array( $this->name, $this->rejectedNames ) ) {
 				$wgOut->addWikiMsg( 'gatherer-notsup' );
 				return;
-			} else {
-				switch( $this->name ) {
-					case 'Plains':
-					case 'Mountain':
-					case 'Swamp':
-					case 'Forest':
-					case 'Island':
-						$wgOut->addWikiMsg( 'gatherer-notsup' );
-						return;
-				}
 			}
+
 			$err = $this->doQuery();
 			if( $err ) {
 				$wgOut->addWikiMsg( $err );
@@ -289,7 +289,7 @@ class GathererQuery {
 
 			curl_setopt( $c, CURLOPT_PROXY, $wgHTTPProxy );
 			curl_setopt( $c, CURLOPT_TIMEOUT, $wgHTTPTimeout );
-
+			curl_setopt( $c, CURLOPT_RETURNTRANSFER, true);
 			curl_setopt( $c, CURLOPT_HEADER, false );
 
 			# Don't follow -- catches 302 code, see below
@@ -311,7 +311,7 @@ class GathererQuery {
                         }
 
 			# If we get anything else besides 200, something went horribly wrong
-			if ( curl_errno( $c ) != CURLE_OK ) {
+			if ( curl_getinfo( $c, CURLINFO_HTTP_CODE ) !== 200 ) {
 				$this->err = 'gatherer-connerror';
                                 $text = false;
 			}
