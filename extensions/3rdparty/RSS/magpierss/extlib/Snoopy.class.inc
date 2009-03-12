@@ -111,7 +111,7 @@ class Snoopy
 	var $_framedepth	=	0;					// increments on frame depth
 	
 	var $_isproxy		=	false;				// set if using a proxy server
-	var $_fp_timeout	=	30;					// timeout for socket connection
+	var $_fp_timeout	=	5;					// timeout for socket connection
 
 /*======================================================================*\
 	Function:	fetch
