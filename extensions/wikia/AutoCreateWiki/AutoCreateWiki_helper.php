@@ -139,38 +139,28 @@ class AutoCreateWiki {
 		}
 		return $domains;
 	}
-	
-	/**
-	 * wfRequestDeleteCommonPostfix
-	 *
-	 * deletes common postfixes like 'pedia' or 'wiki'
-	 *
-	 * @access public
-	 * @author Maciej Błaszkowski <marooned at wikia-inc.com>
-	 *
-	 * @param string $name: name process
-	 *
-	 * @return string processed name
-	 */
+
 	function deleteCommonPostfix($name) {
 		$commonPostfixes = array('pedia', 'wikia', 'wiki');
 		$regexp = array('/(?:^|(?<!\s))(?:' . implode('|', $commonPostfixes) . ')(?:\s|$)/');
 		return preg_replace($regexp, '', $name);
 	}
 	
-	
-	/**
-	 * wfRequestDeleteCommonPostfix
-	 *
-	 * deletes common postfixes like 'pedia' or 'wiki'
-	 *
-	 * @access public
-	 * @author Maciej Błaszkowski <marooned at wikia-inc.com>
-	 *
-	 * @param string $name: name process
-	 *
-	 * @return string processed name
+	/*
+	 * check form fields
 	 */
+	public static function checkWikiNameIsCorrect($sValue) {
+		wfProfileIn(__METHOD__);
+		$sResponse = "";
+		if ($sValue == "") {
+			$sResponse = wfMsg('autocreatewiki-empty-wikiname');
+		} elseif (preg_match('/[^a-z0-9-]/i', $sValue)) {
+			$sResponse = wfMsg('autocreatewiki-invalid-wikiname');
+		}
+		wfProfileOut(__METHOD__);
+		return $sResponse;
+	}
+	
 	public static function checkDomainIsCorrect($sName, $sLang) {
 		wfProfileIn(__METHOD__);
 
@@ -192,10 +182,37 @@ class AutoCreateWiki {
 			$iExists = AutoCreateWiki::domainExists($sName, $sLang);
 			if (!empty($iExists)) {
 				#--- domain exists
-				$sResponse = wfMsg('autocreatewiki-name-taken');
+				$sResponse = wfMsg('autocreatewiki-name-taken', $sName);
 			} 
 		}
 		
+		wfProfileOut(__METHOD__);
+		return $sResponse;
+	}
+
+	public static function checkCategoryIsCorrect($sValue) {
+		wfProfileIn(__METHOD__);
+		$hubs = WikiFactoryHub::getInstance();
+		$aCategories = $hubs->getCategories();
+		$sResponse = "";
+		if ($sValue == "") {
+			$sResponse = wfMsg('autocreatewiki-empty-category');
+		} elseif ( !empty($aCategories) && ( !in_array( $sValue, array_keys( $aCategories ) ) ) ) {
+			$sResponse = wfMsg('autocreatewiki-invalid-category');
+		}
+		wfProfileOut(__METHOD__);
+		return $sResponse;
+	}
+
+	public static function checkLanguageIsCorrect($sValue) {
+		wfProfileIn(__METHOD__);
+		$aLanguages = Language::getLanguageNames();
+		$sResponse = "";
+		if ($sValue == "") {
+			$sResponse = wfMsg('autocreatewiki-empty-language');
+		} elseif ( !empty($aLanguages) && ( !in_array( $sValue, array_keys( $aLanguages ) ) ) ) {
+			$sResponse = wfMsg('autocreatewiki-invalid-language');
+		}
 		wfProfileOut(__METHOD__);
 		return $sResponse;
 	}
@@ -222,12 +239,12 @@ class AutoCreateWiki {
 		
 	public static function checkEmailIsCorrect($sValue) {
 		wfProfileIn(__METHOD__);
+
 		$sResponse = "";
-		if ($sValue != "") {
-			if ( !User::isValidEmailAddr( $sValue ) ) {
-				$sResponse = wfMsg( 'invalidemailaddress' );
-			}
+		if ( ( $sValue == "") || ( !User::isValidEmailAddr( $sValue ) ) )  {
+			$sResponse = wfMsg( 'invalidemailaddress' );
 		}
+		
 		wfProfileOut(__METHOD__);
 		return $sResponse;
 	}
@@ -284,11 +301,24 @@ class AutoCreateWiki {
 			} else {
 				$userBirthDay = strtotime($sYear . '-' . $sMonth . '-' . $sDay);
 				if ($userBirthDay > strtotime('-13 years')) {
-					$sResponse = wfMsg('autocreatewiki-invalid-birthday');
+					$sResponse = wfMsg('userlogin-unable-info');
 				} 
 			}
 		}
 		wfProfileOut(__METHOD__);
 		return $sResponse;
+	}
+	
+	public static function logMemcKey ($action, $aParams, $aInfo = array()) {
+		global $wgUser, $wgMemc;
+		wfProfileIn(__METHOD__);
+		$key = wfMemcKey( 'awcProcessLog', $wgUser->getId(), $aParams['awcName'], $aParams['awcDomain'], $aParams['awcCategory'], $aParams['awcLanguage']);
+		if ($action == 'set') {
+			$wgMemc->set( $key, $aInfo, 3*60);
+		} else {
+			$key = $wgMemc->get( $key );
+		}
+		wfProfileOut(__METHOD__);
+		return $key;
 	}
 }

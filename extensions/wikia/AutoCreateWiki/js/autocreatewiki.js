@@ -15,6 +15,37 @@ function canAcceptForm() {
 	}
 }
 
+function allowAction(e) {
+	return ( 
+		(e.keyCode||e.which) == 16 || //shift
+		(e.keyCode||e.which) == 9  || //tab
+		(e.keyCode||e.which) == 13 || // enter 
+		(e.keyCode||e.which) == 18 || // alt
+		(e.keyCode||e.which) == 17 || // ctrl  
+		(e.keyCode||e.which) == 20 // caps  
+	);
+}
+
+function isTextCorrect(field) {
+	var invalidChars = "!@#$%^&*()+=-[]\';,./{}|\":<>?";
+	//---
+	YD.setStyle(field + '-error', 'display', 'block'); 
+	YD.get(field + '-error').innerHTML = '<img src="http://images.wikia.com/common/progress_bar.gif" width="70" height="11" alt="Wait..." border="0" />';
+	//---
+	for (var i = 0; i < YD.get(field).value.length; i++) {
+		if ( invalidChars.indexOf( YD.get(field).value.charAt(i) ) != -1 ) {
+			YD.setStyle(field + '-error', 'display', 'block'); 
+			YD.get(field + '-error').innerHTML = msgError;
+			return false;  
+		}
+	}
+	//---
+	YD.get(field + "-error-status").innerHTML = "<img src='" + stylepath + "/wikia/img/ok.png' />";	
+	YD.setStyle(field + '-error', 'display', 'none'); 
+	YD.get(field + '-error').innerHTML = "";
+	return true;
+}
+
 YAHOO.util.Event.onAvailable("moving", function() {
 	var aBodyXY = YAHOO.util.Dom.getXY('highlightform');
 	var aDivSel = YAHOO.util.Dom.getElementsByClassName('formblock', 'div');
@@ -184,14 +215,19 @@ YAHOO.ACWikiRequest.wikiBirthdayCheck = function(e) {
 }
 
 YAHOO.ACWikiRequest.wikiDomainKeyUp = function(e) {
-	var value = this.value;
-		
+	var id = this.id;
 	var func = function() { 
-		if (value) { 
+		if (id) { 
 			if (e) {
 				YE.preventDefault(e);
 			}
-			YAHOO.ACWikiRequest.checkDomain(e);
+			if ( !allowAction(e) ) {
+				if (id == 'wiki-name') {
+					isTextCorrect(id);
+				} else {
+					YAHOO.ACWikiRequest.checkDomain(e);
+				}
+			}
 		};
 	};
 
@@ -241,11 +277,13 @@ YAHOO.ACWikiRequest.wikiAccountKeyUp = function(e) {
 	var id = this.id;
 	var func = function() { 
 		var field = document.getElementById(id);
-		if (id && field.value) { 
-			if (e) {
-				YE.preventDefault(e);
+		if (id) { 
+			if ( !allowAction(e) ) {
+				if (e) {
+					YE.preventDefault(e);
+				}
+				YAHOO.ACWikiRequest.checkAccount(e, id);
 			}
-			YAHOO.ACWikiRequest.checkAccount(e, id);
 		};
 	};
 	if ( this.zid ) {
@@ -254,6 +292,7 @@ YAHOO.ACWikiRequest.wikiAccountKeyUp = function(e) {
 	this.zid = setTimeout(func,1000);
 }
 
+YE.addListener("wiki-name", "keyup", YAHOO.ACWikiRequest.wikiDomainKeyUp );
 YE.addListener("wiki-domain", "keyup", YAHOO.ACWikiRequest.wikiDomainKeyUp );
 YE.addListener("wiki-username", "keyup", YAHOO.ACWikiRequest.wikiAccountKeyUp );
 YE.addListener("wiki-email", "keyup", YAHOO.ACWikiRequest.wikiAccountKeyUp );
