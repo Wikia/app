@@ -66,8 +66,8 @@ $messages['en'] = array(
 	"autocreatewiki-limit-birthday" => "Unable to create registration. ",
 // processing	
 	"autocreatewiki-log-title" => "Processing",
-	"autocreatewiki-step0" => "Initializing process, please wait ... ",
-	"autocreatewiki-stepdefault" => "New Wiki is creating ... please wait ... ",
+	"autocreatewiki-step0" => "Initializing process ... ",
+	"autocreatewiki-stepdefault" => "Process is running, please wait ... ",
 	"autocreatewiki-step1" => "Creating images folder ... ",
 	"autocreatewiki-step2" => "Creating database `$1` ... ",
 	"autocreatewiki-step3" => "Setting default information in database ...",
