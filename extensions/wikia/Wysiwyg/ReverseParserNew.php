@@ -854,7 +854,7 @@ class ReverseParser {
 
 			if( is_string($href) ) {
 				// generate new refid
-				$refid = max( array_keys($this->data) ) + 1;
+				$refid = !empty($this->data) ? (max( array_keys($this->data) ) + 1) : 0;
 
 				$this->data[$refid] = array(
 					'type' => ($content == $href) ? 'external link: raw' : 'external link',
