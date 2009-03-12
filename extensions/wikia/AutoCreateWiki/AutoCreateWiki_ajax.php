@@ -71,7 +71,6 @@ function axACWRequestCheckAccount() {
 	$sValue = $wgRequest->getVal('value');
 	$sPass = $wgRequest->getVal('pass');
 	
-	error_log ("n: $sName, l: $sLang, v: $sValue, p: $sPass\n", 3, "/tmp/moli.log");
 	$isError = false;
 	$sResponse = "";
 	$errDiv = 'wiki-username-error' ;
@@ -119,6 +118,40 @@ function axACWRequestCheckBirthday() {
 
 	$isError = (!empty($sResponse)) ? true : false;
 	$aResponse = array( 'div-body' => $sResponse, 'div-name' => $errDiv, 'div-error' => $isError );
+	if (!function_exists('json_encode'))  {
+		$oJson = new Services_JSON();
+		return $oJson->encode($aResponse);
+	} else {
+		return json_encode($aResponse);
+	}
+}
+
+function axACWRequestCheckLog() {
+	global $wgUser;
+	wfLoadExtensionMessages( "AutoCreateWiki" );
+	
+	$sInfo = "";
+	if ( !empty($_SESSION) && isset($_SESSION['awcName']) ) {
+		$sInfo = AutoCreateWiki::logMemcKey (
+			"get", 
+			array(
+				'awcName' => $_SESSION['awcName'], 
+				'awcDomain' => $_SESSION['awcDomain'], 
+				'awcCategory' => $_SESSION['awcCategory'], 
+				'awcLanguage' => $_SESSION['awcLanguage']
+			)
+		);
+	}
+	
+	if ( isset ($sInfo) ) {
+		$aResponse = $sInfo;
+	} else {
+		$aResponse = array(
+			'type' => 'OK',
+			'info' => wfMsg('autocreatewiki-stepdefault'),
+		);
+	}
+
 	if (!function_exists('json_encode'))  {
 		$oJson = new Services_JSON();
 		return $oJson->encode($aResponse);
