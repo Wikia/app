@@ -1,5 +1,4 @@
 #siteNotice,
-.firstHeading,
 #siteSub,
 #contentSub,
 #mw-anon-edit-warning,
@@ -8,6 +7,12 @@
 #user_masthead,
 .usermessage {
 	display: none !important;
+}
+
+.firstHeading {
+	border-bottom: none;
+	font-size: 14px;
+	font-weight: bold;
 }
 
 #editingTipsToggleDiv {

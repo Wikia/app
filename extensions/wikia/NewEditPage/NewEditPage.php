@@ -2,7 +2,7 @@
 $wgExtensionCredits['other'][] = array(
         'name' => 'New Edit Page',
 	'description' => 'Applies edit page changes',
-        'version' => 0.2,
+        'version' => 0.21,
         'author' => '[http://pl.wikia.com/wiki/User:Macbre Maciej Brencz]'
 );
 
@@ -88,6 +88,9 @@ function wfNewEditPageAddPreviewBar($editPage) {
 
 		// add page title before preview HTML
 		$wgHooks['OutputPageBeforeHTML'][] = 'wfNewEditPageAddPreviewTitle';
+
+		// hide page title in preview mode
+		$wgOut->addHTML('<style type="text/css">.firstHeading {display: none}</style>');
 	}
 
 	return true;
