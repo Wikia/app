@@ -448,6 +448,7 @@ class AutoCreateWikiPage extends SpecialPage {
 			$dbw->replace( "user_groups", array( ), array( "ug_user" => $wgUser->getID(), "ug_group" => "bureaucrat" ) );
 		}
 		$this->log( "Create user sysop/bureaucrat" );
+		$this->setInfoLog( 'OK', "step 1" );
 
 		/**
 		 * set hub/category
@@ -455,16 +456,19 @@ class AutoCreateWikiPage extends SpecialPage {
 		$hub = WikiFactoryHub::getInstance();
 		$hub->setCategory( $this->mWikiId, $this->mWikiData[ "hub" ] );
 		$this->log( "Wiki added to the category hub " . $this->mWikiData[ "hub" ] );
+		$this->setInfoLog( 'OK', "step 2" );
 
 		/**
 		 * modify variables
 		 */
 		$this->addCustomSettings( 0, $wgUniversalCreationVariables, "universal" );
+		$this->setInfoLog( 'OK', "step 3" );
 
 		/**
 		 * set variables per language
 		 */
 		$this->addCustomSettings( $this->mWikiData[ "language" ], $wgLangCreationVariables, "language" );
+		$this->setInfoLog( 'OK', "step 4" );
 
 		/**
 		 * use starter when wikia in proper hub
@@ -489,6 +493,7 @@ class AutoCreateWikiPage extends SpecialPage {
 
 			$this->addCustomSettings( $this->mWikiData[ "hub" ], $wgHubCreationVariables, 'hub' );
 		}
+		$this->setInfoLog( 'OK', "step 5" );
 
 		/**
 		 * set images timestamp to current date (see: #1687)
@@ -500,11 +505,13 @@ class AutoCreateWikiPage extends SpecialPage {
 			__METHOD__
 		);
 		$this->log( "Set images timestamp to current date" );
+		$this->setInfoLog( 'OK', "step 6" );
 
 		/**
 		 * commit all in new database
 		 */
 		$dbw->commit();
+		$this->setInfoLog( 'OK', "step 7" );
 
 		$this->setInfoLog( 'OK', 'Done.' );
 

@@ -107,7 +107,6 @@ YE.onDOMReady(function () {
 				var response = YAHOO.Tools.JSONParse(oResponse.responseText);
 				var resType = response["type"];
 				var resMsg = response["info"];
-				alert(resType + " => " + resMsg);
 				
 				if (loop == 0) {
 					ifr.src = titleUrl;
