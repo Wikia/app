@@ -76,7 +76,7 @@ class ReverseParser {
 		if(is_string($html) && $html != '') {
 
 			// save meta-data
-			$this->data = $data;
+			$this->data = is_array($data) ? $data : array();
 
 			// HTML cleanup
 			// trying to fix RT #9466
@@ -854,7 +854,7 @@ class ReverseParser {
 
 			if( is_string($href) ) {
 				// generate new refid
-				$refid = !empty($this->data) ? (max( array_keys($this->data) ) + 1) : 0;
+				$refid = max( array_keys($this->data) ) + 1;
 
 				$this->data[$refid] = array(
 					'type' => ($content == $href) ? 'external link: raw' : 'external link',
