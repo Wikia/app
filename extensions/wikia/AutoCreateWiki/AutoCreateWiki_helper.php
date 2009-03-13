@@ -314,7 +314,12 @@ class AutoCreateWiki {
 		wfProfileIn(__METHOD__);
 		$key = wfMemcKey( 'awcProcessLog', $wgUser->getId(), $aParams['awcName'], $aParams['awcDomain'], $aParams['awcCategory'], $aParams['awcLanguage']);
 		if ($action == 'set') {
-			$wgMemc->set( $key, $aInfo, 3*60);
+			$__info = $wgMemc->get( $key );
+			if ( empty($__info) ) {
+				$__info = array();
+			} 
+			$__info[] = $aInfo;
+			$wgMemc->set( $key, $__info, 4*60);
 		} else {
 			$key = $wgMemc->get( $key );
 		}

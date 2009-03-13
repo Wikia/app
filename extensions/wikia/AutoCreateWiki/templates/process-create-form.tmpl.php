@@ -40,12 +40,7 @@
 	<fieldset class="process-title">
 	<legend><?=wfMsg('autocreatewiki-log-title')?></legend>
 		<div id="awc-log" class="process-info">
-		<ul id="awc-steps">
-			<li id="awc-step0">
-				<div class="process-row-title" id="awc-title0"><?=wfMsg('autocreatewiki-step0')?></div>
-				<div class="process-row-loader" id="awc-logger0"></div>
-			</li>
-		</ul>
+		<?=wfMsg('autocreatewiki-step0')?><br />
 		</div>
 	</legend>
 </div>
@@ -63,9 +58,10 @@ YE.onDOMReady(function () {
 	var titleUrl = '<?=$mTitle->getLocalURL()."/Processing"?>';
 	var wgAjaxPath = wgScriptPath + wgScript;
 	var redirServer = '<?=$subdomain?>';
-	var redirMsg = '<?=wfMsg('autocreatewiki-redirect', $subdomain . ".wikia.com")?>';
+	var redirMsg = '<?=wfMsg('autocreatewiki-redirect', $subdomain . "." . $domain)?>';
+	var usedMsg = new Array();
 
-	var addLogRow = function(inx, title, prevInfo) {
+/*	var addLogRow = function(inx, title, prevInfo) {
 		var logSteps = document.getElementById('awc-steps');
 		if ( logSteps ) {
 			// <li>
@@ -99,44 +95,66 @@ YE.onDOMReady(function () {
 			logSteps.appendChild(stepRow);
 		}
 	}
+*/
+	var addLog = function (inx, text, resType)	{
+		var logSteps = YD.get('awc-log');
+		var styleColor = (resType == 'OK' || resType == 'END') ? "green" : "red";
+		var styleMsg = (resType == 'OK' || resType == 'END') ? '<?=wfMsg('autocreatewiki-done')?>' : '<?=wfMsg('autocreatewiki-error')?>';
+		var msgType = (resType != 'END') ? '&nbsp;&nbsp;<strong style="color:' + styleColor + '">' + styleMsg + '</strong>' : "";
+		if (inx != 0) {
+			var info = logSteps.innerHTML;
+			logSteps.innerHTML = info + "<br />" + text + msgType;
+		} else {
+			logSteps.innerHTML = text + msgType;
+		}
+	}
 
 	var prevMsg = "";
 	var checkProcess = function () {
 		var __callback = {
 			success: function( oResponse ) {
-				var response = YAHOO.Tools.JSONParse(oResponse.responseText);
-				var resType = response["type"];
-				var resMsg = response["info"];
-				
+				var data = YAHOO.Tools.JSONParse(oResponse.responseText);
+				var isError = 0;
+				var isEnd = 0;
 				if (loop == 0) {
 					ifr.src = titleUrl;
 				}
-				
-				if (prevMsg != resMsg) {
+				if ( data ) {
+					for (i in data) {
+						var rec = data[i];
+						if (rec.info != 'undefined' && rec.info != '') {
+							if ( !usedMsg["'" + rec.info + "'"] ) {
+								addLog(loop, rec.info, rec.type);
+							}
+						}
+						if (rec.type == 'ERROR') {
+							isError++;
+						}
+						if (rec.type == 'END') {
+							isEnd++;
+						}
+						usedMsg["'" + rec.info + "'"] = rec.type;
+					}
 					loop++;
-					var styleColor = (resType == 'OK') ? "green" : "red";
-					var styleMsg = (resType == 'OK') ? '<?=wfMsg('autocreatewiki-done')?>' : '<?=wfMsg('autocreatewiki-error')?>';
-					addLogRow(loop, resMsg, '<strong style="color:' + styleColor + '">' + styleMsg + '</strong>');
-					prevMsg = resMsg;
 				}
-				if (resMsg == 'Done.') {
-					addLogRow(loop, '<br />'.redirMsg, '');
-					window.location.href = 'http://'+redirServer+'.wikia.com';
-				} else if (resType != 'ERROR') {
-					setTimeout(checkProcess, 2000);
+				
+				if (isEnd > 0) {
+					addLog(loop, '<br />' + redirMsg, 'OK');
+					window.location.href = 'http://'+redirServer+'.<?=$domain?>';
+				} else if ( !(isError > 0) ) {
+					setTimeout(checkProcess, 500);
 				}
 			},
 			failure: function( oResponse ) {
 				var res = oResponse.responseText;
-				addLogRow(loop, res, '<strong style="color:red"><?=wfMsg('autocreatewiki-error')?></strong>');
+				addLog(loop, res + '&nbsp;&nbsp;<strong style="color:red"><?=wfMsg('autocreatewiki-error')?></strong>');
 			},
 			timeout: 50000
 		}
 				
-		YC.asyncRequest( "POST", wgAjaxPath + "?action=ajax&rs=axACWRequestCheckLog", __callback);
+		YC.asyncRequest( "GET", wgAjaxPath + "?action=ajax&rs=axACWRequestCheckLog", __callback);
 	}
 	
-	//alert(titleUrl);
 	checkProcess();
 });
 /*]]>*/

@@ -44,6 +44,7 @@ class AutoCreateWikiPage extends SpecialPage {
     const CREATEWIKI_LOGO = "/images/central/images/2/22/Wiki_Logo_Template.png";
     const CREATEWIKI_ICON = "/images/central/images/6/64/Favicon.ico";
     const SESSION_TIME = 60;
+    const USE_TEST = 1;
 
 	/**
 	 * constructor
@@ -78,6 +79,11 @@ class AutoCreateWikiPage extends SpecialPage {
 		$this->mMYSQLbin =
 			( file_exists("/usr/bin/mysql") && is_executable("/usr/bin/mysql") )
 			? "/usr/bin/mysql" : "/opt/wikia/bin/mysql";
+		
+		/**
+		 * set new wiki domain
+		 */
+		$this->mDefSubdomain = (self::USE_TEST == 1) ? "awc.wikia-inc.com" : "wikia.com";
 	}
 
 	/**
@@ -104,6 +110,10 @@ class AutoCreateWikiPage extends SpecialPage {
 		if( $subpage === "test" ) {
 			#---
 			$this->create();
+		} elseif ( $subpage === "Testing" ) {
+			if ( $this->setVarsFromSession() > 0 ) {
+				$this->test();
+			}
 		} elseif ( $subpage === "Processing" ) {
 			if ( isset( $_SESSION['mAllowToCreate'] ) && ( $_SESSION['mAllowToCreate'] >= wfTimestamp() ) ) {
 				if ( $this->setVarsFromSession() > 0 ) {
@@ -166,6 +176,14 @@ class AutoCreateWikiPage extends SpecialPage {
 		}
 	}
 
+	private function test() {
+		for ($i = 1; $i < 9; $i++) {
+			$this->setInfoLog('OK', wfMsg('autocreatewiki-step' . $i));
+			sleep(1);
+		}
+		$this->setInfoLog('END', 'Done.');
+	}
+
 	/**
 	 * main function for extension -- create wiki in wikifactory cluster
 	 * we are assumming that data is valid!
@@ -183,7 +201,6 @@ class AutoCreateWikiPage extends SpecialPage {
 		 * this will clean test database and fill mWikiData with test data
 		 */
 		$this->prepareValues();
-		$this->setInfoLog('OK', wfMsg('autocreatewiki-step1'));
 
 		$this->mCurrTime = wfTime();
 		$startTime = $this->mCurrTime;
@@ -193,11 +210,11 @@ class AutoCreateWikiPage extends SpecialPage {
 		 */
 		wfMkdirParents( $this->mWikiData[ "images"] );
 		$this->log( "Create {$this->mWikiData[ "images"]} folder" );
+		$this->setInfoLog('OK', wfMsg('autocreatewiki-step1'));
 
 		/**
 		 * check and create database
 		 */
-		$this->setInfoLog('OK', wfMsg('autocreatewiki-step2', $this->mWikiData[ "dbname" ]) );
 		$dbw = wfGetDB( DB_MASTER );
 		$Row = $dbw->selectRow(
 			wfSharedTable("city_list"),
@@ -217,10 +234,8 @@ class AutoCreateWikiPage extends SpecialPage {
 		}
 
 		$msgType = ($error == 1) ? 'ERROR' : 'OK';
-		$msg = ($error == 1) ? wfMsg('autocreatewiki-step2-error') : wfMsg('autocreatewiki-step3');
-		$this->setInfoLog( $msgType, $msg );
+		$this->setInfoLog( $msgType, wfMsg('autocreatewiki-step2') );
 		if ($error) {
-			$wgOut->addHTML($msg);
 			return;
 		}
 		/**
@@ -230,7 +245,7 @@ class AutoCreateWikiPage extends SpecialPage {
 		$insertFields = array(
 			'city_title'          => $this->mWikiData[ "title" ],
 			'city_dbname'         => $this->mWikiData[ "dbname"],
-			'city_url'            => sprintf( "http://%s.wikia.com/", $this->mWikiData[ "subdomain" ] ),
+			'city_url'            => sprintf( "http://%s.%s/", $this->mWikiData[ "subdomain" ], $this->mDefSubdomain ),
 			'city_founding_user'  => $wgUser->getID(),
 			'city_founding_email' => $wgUser->getEmail(),
 			'city_path'           => $this->mWikiData[ "path" ],
@@ -241,17 +256,17 @@ class AutoCreateWikiPage extends SpecialPage {
 
 		$bIns = $dbw->insert( wfSharedTable("city_list"),$insertFields, __METHOD__ );
 		if ( empty($bIns) ) {
-			$this->setInfoLog( 'ERROR', wfMsg('autocreatewiki-step3-error') );
+			$this->setInfoLog( 'ERROR', wfMsg('autocreatewiki-step3') );
 			$this->log( "Cannot set data in city_list table" );
 			$wgOut->addHTML(wfMsg('autocreatewiki-step3-error'));
 			return;
-		}
+		} 
 		/*
 		 * get Wiki ID
 		 */
 		$this->mWikiId = $dbw->insertId();
 		if ( empty($this->mWikiId) ) {
-			$this->setInfoLog( 'ERROR', wfMsg('autocreatewiki-step3-error') );
+			$this->setInfoLog( 'ERROR', wfMsg('autocreatewiki-step3') );
 			$this->log( "Empty city_id = {$this->mWikiId}" );
 			$wgOut->addHTML(wfMsg('autocreatewiki-step3-error'));
 			return;
@@ -264,24 +279,24 @@ class AutoCreateWikiPage extends SpecialPage {
 			array(
 				array(
 					'city_id'     =>  $this->mWikiId,
-					'city_domain' => sprintf("%s.wikia.com", $this->mWikiData[ "subdomain" ] )
+					'city_domain' => sprintf("%s.%s", $this->mWikiData[ "subdomain" ], $this->mDefSubdomain )
 				),
 				array(
 					'city_id'     =>  $this->mWikiId,
-					'city_domain' => sprintf("www.%s.wikia.com", $this->mWikiData[ "subdomain" ] )
+					'city_domain' => sprintf("www.%s.%s", $this->mWikiData[ "subdomain" ], $this->mDefSubdomain )
 				)
 			),
 			__METHOD__
 		);
 		if ( empty($bIns) ) {
-			$this->setInfoLog( 'ERROR', wfMsg('autocreatewiki-step3-error') );
+			$this->setInfoLog( 'ERROR', wfMsg('autocreatewiki-step3') );
 			$this->log( "Cannot set data in city_domains table" );
 			$wgOut->addHTML(wfMsg('autocreatewiki-step3-error'));
 			return;
 		}
+		$this->setInfoLog( 'OK', wfMsg('autocreatewiki-step3') );
 
 		$this->log( "Populating city_domains" );
-		$this->setInfoLog( 'OK', wfMsg('autocreatewiki-step4') );
 
 		/**
 		 * copy defaul logo & favicon
@@ -296,12 +311,11 @@ class AutoCreateWikiPage extends SpecialPage {
 			copy(self::CREATEWIKI_ICON, "{$this->mWikiData[ "images" ]}/images/6/64/Favicon.ico");
 		}
 		$this->log( "Coping favicon and logo" );
+		$this->setInfoLog( 'OK', wfMsg('autocreatewiki-step4') );
 
 		/**
 		 * wikifactory variables
 		 */
-		$this->setInfoLog( 'OK', wfMsg('autocreatewiki-step5') );
-
 		$WFSettingsVars = array(
 			'wgSitename'				=> $this->mWikiData[ 'title' ],
 			'wgScriptPath'				=> '',
@@ -314,7 +328,7 @@ class AutoCreateWikiPage extends SpecialPage {
 			'wgSharedDB'				=> 'wikicities',
 			'wgLocalInterwiki'			=> $this->mWikiData[ 'title' ],
 			'wgLanguageCode'			=> $this->mWikiData['language'],
-			'wgServer'					=> "http://{$this->mWikiData["subdomain"]}.wikia.com",
+			'wgServer'					=> "http://{$this->mWikiData["subdomain"]}." . $this->mDefSubdomain,
 			'wgFavicon'					=> '$wgUploadPath/6/64/Favicon.ico',
 			'wgDefaultSkin'				=> 'monaco',
 			'wgDefaultTheme'			=> 'sapphire',
@@ -354,8 +368,7 @@ class AutoCreateWikiPage extends SpecialPage {
 			}
 		}
 		$this->log( "Populating city_variables" );
-
-		$this->setInfoLog( 'OK', wfMsg('autocreatewiki-step6') );
+		$this->setInfoLog( 'OK', wfMsg('autocreatewiki-step5') );
 
 		/**
 		 * we got empty database created, now we have to create tables and
@@ -378,18 +391,18 @@ class AutoCreateWikiPage extends SpecialPage {
 		foreach ($sqlfiles as $file) {
 			$error = $dbw->sourceFile( $file );
 			if ($error !== true) {
-				$this->setInfoLog( 'ERROR', wfMsg('autocreatewiki-step6-error') );
+				$this->setInfoLog( 'ERROR', wfMsg('autocreatewiki-step6') );
 				$wgOut->addHTML(wfMsg('autocreatewiki-step6-error'));
 				return;
 			}
 		}
 		$wgSharedDB = $tmpSharedDB;
 		$this->log( "Creating tables in database" );
+		$this->setInfoLog( 'OK', wfMsg('autocreatewiki-step6') );
 
 		/**
 		 * import language starter
 		 */
-		$this->setInfoLog( 'OK', wfMsg('autocreatewiki-step7') );
 		if( in_array( $this->mWikiData[ "language" ], array("en", "ja", "de", "fr") ) ) {
 			$prefix = ( $this->mWikiData[ "language" ] !== "en") ? "" : $this->mWikiData[ "language" ];
 			$starterDB = $prefix. "starter";
@@ -416,7 +429,12 @@ class AutoCreateWikiPage extends SpecialPage {
 				);
 				wfShellExec( $cmd );
 
-				$dbw->sourceFile( "{$IP}/maintenance/cleanupStarter.sql" );
+				$error = $dbw->sourceFile( "{$IP}/maintenance/cleanupStarter.sql" );
+				if ($error !== true) {
+					$this->setInfoLog( 'ERROR', wfMsg('autocreatewiki-step7') );
+					$wgOut->addHTML(wfMsg('autocreatewiki-step7-error'));
+					return;
+				}
 
 				$startupImages = sprintf( "%s/starter/%s/images/", self::IMGROOT, $prefix );
 				if (file_exists( $startupImages ) && is_dir( $startupImages ) ) {
@@ -437,8 +455,8 @@ class AutoCreateWikiPage extends SpecialPage {
 				$this->log( "No starter database for this language" );
 			}
 		}
+		$this->setInfoLog( 'OK', wfMsg('autocreatewiki-step7') );
 
-		$this->setInfoLog( 'OK', wfMsg('autocreatewiki-step8') );
 		/**
 		 * making the wiki founder a sysop/bureaucrat
 		 */
@@ -447,7 +465,6 @@ class AutoCreateWikiPage extends SpecialPage {
 			$dbw->replace( "user_groups", array( ), array( "ug_user" => $wgUser->getID(), "ug_group" => "bureaucrat" ) );
 		}
 		$this->log( "Create user sysop/bureaucrat" );
-		$this->setInfoLog( 'OK', "step 1" );
 
 		/**
 		 * set hub/category
@@ -455,19 +472,18 @@ class AutoCreateWikiPage extends SpecialPage {
 		$hub = WikiFactoryHub::getInstance();
 		$hub->setCategory( $this->mWikiId, $this->mWikiData[ "hub" ] );
 		$this->log( "Wiki added to the category hub " . $this->mWikiData[ "hub" ] );
-		$this->setInfoLog( 'OK', "step 2" );
+
+		$this->setInfoLog( 'OK', wfMsg('autocreatewiki-step8') );
 
 		/**
 		 * modify variables
 		 */
 		$this->addCustomSettings( 0, $wgUniversalCreationVariables, "universal" );
-		$this->setInfoLog( 'OK', "step 3" );
 
 		/**
 		 * set variables per language
 		 */
 		$this->addCustomSettings( $this->mWikiData[ "language" ], $wgLangCreationVariables, "language" );
-		$this->setInfoLog( 'OK', "step 4" );
 
 		/**
 		 * use starter when wikia in proper hub
@@ -492,7 +508,6 @@ class AutoCreateWikiPage extends SpecialPage {
 
 			$this->addCustomSettings( $this->mWikiData[ "hub" ], $wgHubCreationVariables, 'hub' );
 		}
-		$this->setInfoLog( 'OK', "step 5" );
 
 		/**
 		 * set images timestamp to current date (see: #1687)
@@ -504,15 +519,15 @@ class AutoCreateWikiPage extends SpecialPage {
 			__METHOD__
 		);
 		$this->log( "Set images timestamp to current date" );
-		$this->setInfoLog( 'OK', "step 6" );
 
 		/**
 		 * commit all in new database
 		 */
+		$this->setInfoLog( 'OK', wfMsg('autocreatewiki-step9') );
+		
 		$dbw->commit();
-		$this->setInfoLog( 'OK', "step 7" );
 
-		$this->setInfoLog( 'OK', 'Done.' );
+		$this->setInfoLog( 'END', 'Done.' );
 
 		/**
 		 * show total time
@@ -573,12 +588,12 @@ class AutoCreateWikiPage extends SpecialPage {
 			);
 			$dbw->delete(
 				wfSharedTable( "city_domains" ),
-				array( "city_domain" => sprintf("%s.wikia.com", $this->mWikiData[ "subdomain" ] ) ),
+				array( "city_domain" => sprintf("%s.%s", $this->mWikiData[ "subdomain" ], $this->mDefSubdomain ) ),
 				__METHOD__
 			);
 			$dbw->delete(
 				wfSharedTable( "city_domains" ),
-				array( "city_domain" => sprintf("www.%s.wikia.com", $this->mWikiData[ "subdomain" ] ) ),
+				array( "city_domain" => sprintf("www.%s.%s", $this->mWikiData[ "subdomain" ], $this->mDefSubdomain ) ),
 				__METHOD__
 			);
 			$dbw->delete(
@@ -707,6 +722,7 @@ class AutoCreateWikiPage extends SpecialPage {
 			"awcCategory" => $this->awcCategory,
 			"awcLanguage" => $this->awcLanguage,
 			"subdomain" => ( $this->awcLanguage !== 'en' ) ? strtolower( trim( $this->awcDomain ) ) : $this->awcLanguage . "." . strtolower( trim( $this->awcDomain ) ),
+			"domain" => $this->mDefSubdomain
 		));
 
 		#---

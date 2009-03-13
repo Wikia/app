@@ -142,13 +142,15 @@ function axACWRequestCheckLog() {
 			)
 		);
 	}
-	
+
 	if ( isset ($sInfo) ) {
 		$aResponse = $sInfo;
 	} else {
-		$aResponse = array(
-			'type' => 'OK',
-			'info' => wfMsg('autocreatewiki-stepdefault'),
+		$aResponse = array( 
+			0 => array(
+				'type' => 'OK',
+				'info' => wfMsg('autocreatewiki-stepdefault')
+			)
 		);
 	}
 
