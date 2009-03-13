@@ -540,13 +540,13 @@ class AutoCreateWikiPage extends SpecialPage {
 		$this->setInfoLog( 'OK', wfMsg('autocreatewiki-step9') );
 
 		$dbw->commit();
+		$this->setInfoLog( 'OK', 'test step 12');
 
 		/**
 		 * add central job
 		 */
-		$centralJob = new AutoCreateWikiCentralJob( $wgTitle, $this->mWikiData );
+		$centralJob = new AutoCreateWikiCentralJob( $this->mTitle, $this->mWikiData );
 		$centralJob->insert();
-
 
 		$this->setInfoLog( 'END', 'Done.' );
 
