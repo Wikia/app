@@ -989,11 +989,11 @@ class AutoCreateWikiPage extends SpecialPage {
             $wgUser = User::newFromName( 'CreateWiki script' );
 
             foreach( $settings[$match] as $key => $value ) {
-                $success = WikiFactory::setVarById($key, $this->mWikiID, $value);
+                $success = WikiFactory::setVarById( $key, $this->mWikiId, $value );
                 if( $success ) {
-                    $this->log("Successfully added setting: $key = $value");
+                    $this->log("Successfully added setting for {$this->mWikiId}: {$key} = {$value}");
                 } else {
-                    $this->log("Failed to add setting: $key = $value");
+                    $this->log("Failed to add setting for {$this->mWikiId}: {$key} = {$value}");
                 }
             }
 			$wgUser = $oldUser;
