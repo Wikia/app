@@ -82,4 +82,74 @@ class AutoCreateWikiLocalJob extends Job {
 			}
 		}
 	}
+
+	/**
+	 * setWelcomeTalkPage
+	 *
+	 * @author eloy@wikia
+	 * @access private
+	 *
+	 * @return boolean status
+	 */
+	private function setWelcomeTalkPage() {
+		global $IP, $wgWikiaLocalSettingsPath, $wgWikiaAdminSettingsPath;
+
+		Wikia::log( __METHOD__, "talk", "Setting welcome talk page on new wiki..." );
+
+		$oTalkPage = $this->mFounder->getTalkPage();
+		$sWikiaName = WikiFactory::GetVarValueByName( "wgSitename", $this->mWikiID);
+		$sWikiaLang = WikiFactory::GetVarValueByName( "wgLanguageCode", $this->mWikiID);
+
+		// set apropriate staff member
+		$oStaffUser = CreateWikiTask::getStaffUserByLang($sWikiaLang);
+		$oStaffUser = is_object($oStaffUser) ? $oStaffUser : $this->mStaff;
+
+		$aPageParams = array(
+			0 => $this->mFounder->getName(),
+			1 => htmlspecialchars( $oStaffUser->getName() ),
+			2 => $oStaffUser->getRealName(),
+			3 => $sWikiaName
+		);
+
+		$sBody = null;
+		if(!empty($sWikiaLang)) {
+			// custom lang translation
+			$sBody = wfMsgExt("createwiki_welcometalk", array( 'language' => $sWikiaLang ), $aPageParams);
+		}
+
+		if(($sBody == null)) {
+			/**
+			 * wfMsgExt should always return message, but just in case...
+			 */
+			$sBody = wfMsg("createwiki_welcometalk", $aPageParams);
+		}
+
+		$sCommand = sprintf(
+			"SERVER_ID=%d php %s/maintenance/wikia/edit.php -u '%s' '%s' --conf %s --aconf %s",
+			$this->mWikiID,
+			$IP,
+			$oStaffUser->getName(),
+			$oTalkPage->getPrefixedText(),
+			$wgWikiaLocalSettingsPath,
+			$wgWikiaAdminSettingsPath
+		);
+
+		$this->addLog( $sCommand );
+		if(!empty($this->mWikiID)) {
+			$oHandler = popen( $sCommand, "w" );
+			fwrite( $oHandler, $sBody );
+			pclose( $oHandler );
+			$this->addLog( sprintf(
+				"Founder talk page %s%s set.",
+				rtrim($this->mWikiParams->city_url, "/"),
+				$this->mFounder->getTalkPage()->getLocalURL()
+			));
+		}
+		else {
+			$this->addLog( "Unknown wiki id. Founder talk page not set." );
+		}
+
+		return true;
+	}
+
 }
