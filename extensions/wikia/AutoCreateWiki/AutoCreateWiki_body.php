@@ -483,34 +483,24 @@ class AutoCreateWikiPage extends SpecialPage {
 		 */
 		$this->addCustomSettings( 0, $wgUniversalCreationVariables, "universal" );
 
-		$this->setInfoLog( 'OK', 'test step');
-
 		/**
 		 * set variables per language
 		 */
 		$this->addCustomSettings( $this->mWikiData[ "language" ], $wgLangCreationVariables, "language" );
-
-		$this->setInfoLog( 'OK', 'test step 2');
 
 		/**
 		 * use starter when wikia in proper hub
 		 */
 		if( isset( $this->mStarters[ $this->mWikiData[ "hub" ] ] )&&
 			$this->mStarters[ $this->mWikiData[ "hub" ] ] ) {
-			$this->setInfoLog( 'OK', 'test step 3');
 			$wikiMover = WikiMover::newFromIDs(
 				$this->mStarters[ $this->mWikiData[ "hub" ] ], /** source **/
 				$this->mWikiId /** target **/
 			);
-			$this->setInfoLog( 'OK', 'test step 4');
 			$wikiMover->setOverwrite( true );
-			$this->setInfoLog( 'OK', 'test step 5');
 			$wikiMover->mMoveUserGroups = false;
-			$this->setInfoLog( 'OK', 'test step 6');
 			$wikiMover->load();
-			$this->setInfoLog( 'OK', 'test step 7');
 			$wikiMover->move();
-			$this->setInfoLog( 'OK', 'test step 8');
 
 			/**
 			 * WikiMove has internal log engine
@@ -518,13 +508,9 @@ class AutoCreateWikiPage extends SpecialPage {
             foreach( $oWikiMover->getLog( true ) as $log ) {
                 $this->log( $log["info"] );
             }
-			$this->setInfoLog( 'OK', 'test step 9');
 
 			$this->addCustomSettings( $this->mWikiData[ "hub" ], $wgHubCreationVariables, 'hub' );
-			$this->setInfoLog( 'OK', 'test step 10');
 		}
-
-		$this->setInfoLog( 'OK', 'test step 11');
 
 		/**
 		 * set images timestamp to current date (see: #1687)
@@ -543,7 +529,6 @@ class AutoCreateWikiPage extends SpecialPage {
 		$this->setInfoLog( 'OK', wfMsg('autocreatewiki-step9') );
 
 		$dbw->commit();
-		$this->setInfoLog( 'OK', 'test step 12');
 
 		/**
 		 * add central job
