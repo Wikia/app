@@ -494,14 +494,20 @@ class AutoCreateWikiPage extends SpecialPage {
 		if( isset( $this->mStarters[ $this->mWikiData[ "hub" ] ] )
 			&& $this->mStarters[ $this->mWikiData[ "hub" ] ]
 			&& $this->mWikiData[ "language" ] === "en" ) {
+			$this->setInfoLog( 'OK', 'test 1' );
+				
 			$wikiMover = WikiMover::newFromIDs(
 				$this->mStarters[ $this->mWikiData[ "hub" ] ], /** source **/
 				$this->mWikiId /** target **/
 			);
+			$this->setInfoLog( 'OK', 'test 2' );
 			$wikiMover->setOverwrite( true );
+			$this->setInfoLog( 'OK', 'test 3' );
 			$wikiMover->mMoveUserGroups = false;
 			$wikiMover->load();
+			$this->setInfoLog( 'OK', 'test 4' );
 			$wikiMover->move();
+			$this->setInfoLog( 'OK', 'test 5' );
 
 			/**
 			 * WikiMove has internal log engine
@@ -509,8 +515,10 @@ class AutoCreateWikiPage extends SpecialPage {
             foreach( $oWikiMover->getLog( true ) as $log ) {
                 $this->log( $log["info"] );
             }
+			$this->setInfoLog( 'OK', 'test 6' );
 
 			$this->addCustomSettings( $this->mWikiData[ "hub" ], $wgHubCreationVariables, 'hub' );
+			$this->setInfoLog( 'OK', 'test 7' );
 		}
 
 		/**
@@ -523,6 +531,7 @@ class AutoCreateWikiPage extends SpecialPage {
 			__METHOD__
 		);
 		$this->log( "Set images timestamp to current date" );
+		$this->setInfoLog( 'OK', 'test 8' );
 
 		/**
 		 * commit all in new database
