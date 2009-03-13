@@ -104,25 +104,25 @@ class AutoCreateWikiLocalJob extends Job {
 
 		Wikia::log( __METHOD__, "talk", "Setting welcome talk page on new wiki..." );
 
-		$oTalkPage = $this->mFounder->getTalkPage();
-		$sWikiaName = WikiFactory::GetVarValueByName( "wgSitename", $this->mWikiID);
-		$sWikiaLang = WikiFactory::GetVarValueByName( "wgLanguageCode", $this->mWikiID);
+		$talkPage = $wgUser->getTalkPage();
+		$wikiaName = WikiFactory::GetVarValueByName( "wgSitename", $this->mWikiID);
+		$wikiaLang = WikiFactory::GetVarValueByName( "wgLanguageCode", $this->mWikiID);
 
 		// set apropriate staff member
-		$oStaffUser = CreateWikiTask::getStaffUserByLang($sWikiaLang);
-		$oStaffUser = is_object($oStaffUser) ? $oStaffUser : $this->mStaff;
+		$staffUser = self::getStaffUserByLang( $wikiaLang );
+		$staffUser = ( $staffUser instanceof User ) ? $staffUser : User::newFromId( "Angela" );
 
 		$aPageParams = array(
-			0 => $this->mFounder->getName(),
-			1 => htmlspecialchars( $oStaffUser->getName() ),
-			2 => $oStaffUser->getRealName(),
-			3 => $sWikiaName
+			$this->mFounder->getName(),
+			htmlspecialchars( $oStaffUser->getName() ),
+			$oStaffUser->getRealName(),
+			$sWikiaName
 		);
 
 		$sBody = null;
 		if(!empty($sWikiaLang)) {
 			// custom lang translation
-			$sBody = wfMsgExt("createwiki_welcometalk", array( 'language' => $sWikiaLang ), $aPageParams);
+			$sBody = wfMsgExt("autocreatewiki-welcometalk", array( 'language' => $sWikiaLang ), $aPageParams);
 		}
 
 		if(($sBody == null)) {

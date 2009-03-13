@@ -31,7 +31,7 @@ $messages['en'] = array(
 	"autocreatewiki-done" => "done",
 	"autocreatewiki-error" => "error",
 	"autocreatewiki-language-top-list" => "de,en,es,fr,it,ja,pl,pt,pt-br,zh",
-// form messages	
+// form messages
 	"autocreatewiki-info-domain" => "It's best to use a word likely to be a search keyword for your topic.",
 	"autocreatewiki-info-topic" => "Add a short description such as \"Star Wars\" or \"TV Shows\".",
 	"autocreatewiki-info-category" => "This will help visitors find your wiki.",
@@ -64,7 +64,7 @@ $messages['en'] = array(
 	"autocreatewiki-invalid-retype-passwd" => "Please, retype the same password as above",
 	"autocreatewiki-invalid-birthday" => "Invalid day of bithday",
 	"autocreatewiki-limit-birthday" => "Unable to create registration. ",
-// processing	
+// processing
 	"autocreatewiki-log-title" => "Processing",
 	"autocreatewiki-step0" => "Initializing process ... ",
 	"autocreatewiki-stepdefault" => "Process is running, please wait ... ",
@@ -79,9 +79,47 @@ $messages['en'] = array(
 	"autocreatewiki-step9" => "Setting variables for new Wiki ... ",
 	"autocreatewiki-redirect" => "Redirecting to new Wiki: $1 ... ",
 // processing errors
-	"autocreatewiki-step2-error" => "Database exists!",	
-	"autocreatewiki-step3-error" => "Cannot set default information in database!",	
+	"autocreatewiki-step2-error" => "Database exists!",
+	"autocreatewiki-step3-error" => "Cannot set default information in database!",
 	"autocreatewiki-step6-error" => "Cannot set default tables in database!",
 	"autocreatewiki-step7-error" => "Cannot copy starter database for language!",
-	
+
+    "autocreatewiki-welcomesubject" => "$1 has been created!",
+    "autocreatewiki-welcomebody" => "
+Hello, $2,
+
+The Wikia you requested is now available at <$1> We hope to see you editing there soon!
+
+We've added some Information and Tips on your User Talk Page (<$5> to help you get started.
+
+If you have any problems, you can ask for community help on the wiki at <http://www.wikia.com/wiki/Forum:Help_desk>, or via email to community@wikia.com. You can also visit our live #wikia IRC chat channel <http://irc.wikia.com>.
+
+I can be contacted directly by email or on my talk page, if you have any questions or concerns.
+
+Good luck with the project!
+
+$3
+
+Wikia Community Team
+
+<http://www.wikia.com/wiki/User:$4>
+    ",
+    "autocreatewiki-welcometalk" => "
+Hi '''$1''' -- we are excited to have '''$4''' as part of the Wikia community!
+
+Starting a new wiki can be overwhelming, but don't worry, the [[Wikia:Community Team|WIkia Community Team]] is here to help!  We have put together a few guides to getting started. They say imitation is the best form of flattery so absolutely check out other wikis on [[Wikia:Wikia| Wikia]] for ideas on layout, ways to organize your content, etc. We are all one big family at Wikia and the most important thing is to have fun!
+
+* Our guide to [[Help:Starting this wiki|Getting Started]] gives you 5 things you can do right now to set your wiki up for success
+* We also put together some [[Help:Advice on starting a wiki|Advice On Starting a Wiki]] which provides a more a in-depth look at some of the important things you should consider when building a wiki
+* If you are new to wikis in general than we recommend checking our [[help:FAQ|new user FAQ]]
+
+If you need help (which trust me we ALL do) you can access our full in-depth help at [[w:c:Help|Help Wikia]], Stop by the [[Wikia:Forum:Help desk|Wikia Help Desk Forum]], or email us through our [[Special:Contact|contact form]].  Also, you can visit our [http://irc.wikia.com live #wikia chat channel] any time. A lot of the veteran \"Wikians\" hang out here so its a good place if come if you want to get some advice or simply make friends.
+
+Now, go edit!  We look forward to seeing this project thrive!
+
+Best wishes,
+
+[[User:$2|$3]]
+    ",
+
 );

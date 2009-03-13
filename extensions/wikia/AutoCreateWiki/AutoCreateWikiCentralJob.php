@@ -97,17 +97,17 @@ class AutoCreateWikiCentralJob extends Job {
 		$sSubject = null;
 		if(!empty($wikiLang)) {
 			// custom lang translation
-			$sBody = wfMsgExt("createwiki_welcomebody", array( 'language' => $wikiLang ), $aBodyParams);
-			$sSubject = wfMsgExt("createwiki_welcomesubject", array( 'language' => $wikiLang ), array( $wikiName));
+			$sBody = wfMsgExt("autocreatewiki-welcomebody", array( 'language' => $wikiLang ), $aBodyParams);
+			$sSubject = wfMsgExt("autocreatewiki-welcomesubject", array( 'language' => $wikiLang ), array( $wikiName));
 		}
 
 		if( is_null( $sBody ) ) {
 			// default lang (english)
-			$sBody = wfMsg("createwiki_welcomebody", $aBodyParams);
+			$sBody = wfMsg("autocreatewiki-welcomebody", $aBodyParams);
 		}
 		if($sSubject == null) {
 			// default lang (english)
-			$sSubject = wfMsg("createwiki_welcomesubject", array($sWikiaName));
+			$sSubject = wfMsg("autocreatewiki-welcomesubject", array($sWikiaName));
 		}
 
 		if( !empty($sTo) ) {
