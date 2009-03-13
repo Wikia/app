@@ -675,7 +675,7 @@ class CreateWikiTask extends BatchTask {
 			foreach ($settings[$match] as $key => $value) {
 				$success = WikiFactory::setVarById($key, $this->mWikiID, $value);
 				if ($success) {
-	                                $this->addLog("Successfully added setting: $key = $value");
+	                $this->addLog("Successfully added setting: $key = $value");
 				} else {
 					$this->addLog("Failed to add setting: $key = $value");
 				}
