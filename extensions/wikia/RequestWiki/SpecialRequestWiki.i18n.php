@@ -123,6 +123,8 @@ $messages['en'] = array(
 	'requestwiki-request-talk-timestamp' => 'Talk page history',
 	'requestwiki-request-category' => 'Category',
 
+	'requestwiki-filter-language' => '',
+
 //errors
 	'requestwiki-error-bad-category' => 'Please choose a category for your wiki.',
 	'requestwiki-error-bad-name' => 'The name cannot contain special characters (like $ or @) and must be a single lower-case word without spaces.',
