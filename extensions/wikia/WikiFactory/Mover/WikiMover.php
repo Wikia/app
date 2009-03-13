@@ -892,6 +892,7 @@ class WikiMover {
 			"timestamp" => wfTimestampNow(),
 			"info" => $info
 		);
+		Wikia::log( __METHOD__, "", $info );
 	}
 
 	/**
