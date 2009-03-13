@@ -19,6 +19,7 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 }
 
 class AutoCreateWikiLocalJob extends Job {
+
 	/**
 	 * constructor
 	 *
@@ -36,9 +37,16 @@ class AutoCreateWikiLocalJob extends Job {
 	 */
     public function run() {
 
+		global $wgUser;
+
 		wfProfileIn( __METHOD__ );
 
-
+		/**
+		 * setup founder user
+		 */
+		if( $this->mParams[ "founder"] ) {
+			$wgUser = User::newFromId( $this->mParams[ "founder"] );
+		}
 		wfProfileOut( __METHOD__ );
 
 		return true;
@@ -92,7 +100,7 @@ class AutoCreateWikiLocalJob extends Job {
 	 * @return boolean status
 	 */
 	private function setWelcomeTalkPage() {
-		global $IP, $wgWikiaLocalSettingsPath, $wgWikiaAdminSettingsPath;
+		global $IP, $wgWikiaLocalSettingsPath, $wgWikiaAdminSettingsPath, $wgUser;
 
 		Wikia::log( __METHOD__, "talk", "Setting welcome talk page on new wiki..." );
 

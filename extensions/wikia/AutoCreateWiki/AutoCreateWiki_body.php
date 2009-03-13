@@ -540,18 +540,19 @@ class AutoCreateWikiPage extends SpecialPage {
 		$this->setInfoLog( 'OK', wfMsg('autocreatewiki-step9') );
 
 		$dbw->commit();
+		/**
+		 * add local job
+		 */
+		$localJob = new AutoCreateWikiLocalJob(	Title::newFromText( NS_MAIN, "Main" ), $this->mWikiData );
+		$localJob->WFinsert( $this->mWikiId );
 
+		$dbw->selectDB( $wgDBname );
 		/**
 		 * add central job
 		 */
 		$centralJob = new AutoCreateWikiCentralJob( $this->mTitle, $this->mWikiData );
 		$centralJob->insert();
 
-		/**
-		 * add local job
-		 */
-		$localJob = new AutoCreateWikiLocalJob(	Title::newFromText( NS_MAIN, "Main" ), $this->mWikiData );
-		$localJob->WFinsert( $this->mWikiId );
 
 		$this->setInfoLog( 'END', 'Done.' );
 
