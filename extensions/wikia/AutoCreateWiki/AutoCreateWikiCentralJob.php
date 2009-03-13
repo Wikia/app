@@ -18,11 +18,6 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 	exit( 1 );
 }
 
-/**
- * register job class
- */
-$wgJobClasses[ "ACWCentral" ] = "AutoCreateWikiCentralJob";
-
 class AutoCreateWikiCentralJob extends Job {
 
 	private
