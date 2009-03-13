@@ -122,5 +122,5 @@ Best wishes,
 
 [[User:$2|$3]]
     ",
-
+	"autocreatewiki-welcometalk-log" => "Welcoming new sysop"
 );

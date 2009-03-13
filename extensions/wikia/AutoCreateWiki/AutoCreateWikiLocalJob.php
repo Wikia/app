@@ -20,6 +20,9 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 
 class AutoCreateWikiLocalJob extends Job {
 
+	private
+		$mFounder;
+
 	/**
 	 * constructor
 	 *
@@ -45,7 +48,7 @@ class AutoCreateWikiLocalJob extends Job {
 		 * setup founder user
 		 */
 		if( $this->mParams[ "founder"] ) {
-			$wgUser = User::newFromId( $this->mParams[ "founder"] );
+			$this->mFounder = User::newFromId( $this->mParams[ "founder"] );
 		}
 		wfProfileOut( __METHOD__ );
 
@@ -100,61 +103,48 @@ class AutoCreateWikiLocalJob extends Job {
 	 * @return boolean status
 	 */
 	private function setWelcomeTalkPage() {
-		global $IP, $wgWikiaLocalSettingsPath, $wgWikiaAdminSettingsPath, $wgUser;
+		global $wgUser;
 
 		Wikia::log( __METHOD__, "talk", "Setting welcome talk page on new wiki..." );
 
-		$talkPage = $wgUser->getTalkPage();
-		$wikiaName = WikiFactory::GetVarValueByName( "wgSitename", $this->mWikiID);
-		$wikiaLang = WikiFactory::GetVarValueByName( "wgLanguageCode", $this->mWikiID);
+		$talkPage = $this->mFounder->getTalkPage();
+		$wikiaName = WikiFactory::getVarValueByName( "wgSitename", $this->mParams[ "city_id"] );
+		$wikiaLang = WikiFactory::getVarValueByName( "wgLanguageCode", $this->mParams[ "city_id"] );
 
-		// set apropriate staff member
-		$staffUser = self::getStaffUserByLang( $wikiaLang );
-		$staffUser = ( $staffUser instanceof User ) ? $staffUser : User::newFromId( "Angela" );
+		/**
+		 * set apropriate staff member
+		 */
+		$wgUser = self::getStaffUserByLang( $wikiaLang );
+		$wgUser = ( $wgUser instanceof User ) ? $wgUser : User::newFromId( "Angela" );
 
-		$aPageParams = array(
+		$talkParams = array(
 			$this->mFounder->getName(),
-			htmlspecialchars( $oStaffUser->getName() ),
-			$oStaffUser->getRealName(),
-			$sWikiaName
+			$wgUser->getName(),
+			$wgUser->getRealName(),
+			$wikiaName
 		);
 
-		$sBody = null;
-		if(!empty($sWikiaLang)) {
-			// custom lang translation
-			$sBody = wfMsgExt("autocreatewiki-welcometalk", array( 'language' => $sWikiaLang ), $aPageParams);
+		$talkBody = false;
+		if(! empty( $wikiaLang ) ) {
+			/**
+			 * custom lang translation
+			 */
+			$talkBody = wfMsgExt( "autocreatewiki-welcometalk", array( 'language' => $wikiaLang ), $talkParams );
 		}
 
-		if(($sBody == null)) {
+		if( ! $talkBody ) {
 			/**
 			 * wfMsgExt should always return message, but just in case...
 			 */
-			$sBody = wfMsg("createwiki_welcometalk", $aPageParams);
+			$talkBody = wfMsg( "autocreatewiki-welcometalk", $talkParams );
 		}
 
-		$sCommand = sprintf(
-			"SERVER_ID=%d php %s/maintenance/wikia/edit.php -u '%s' '%s' --conf %s --aconf %s",
-			$this->mWikiID,
-			$IP,
-			$oStaffUser->getName(),
-			$oTalkPage->getPrefixedText(),
-			$wgWikiaLocalSettingsPath,
-			$wgWikiaAdminSettingsPath
-		);
-
-		$this->addLog( $sCommand );
-		if(!empty($this->mWikiID)) {
-			$oHandler = popen( $sCommand, "w" );
-			fwrite( $oHandler, $sBody );
-			pclose( $oHandler );
-			$this->addLog( sprintf(
-				"Founder talk page %s%s set.",
-				rtrim($this->mWikiParams->city_url, "/"),
-				$this->mFounder->getTalkPage()->getLocalURL()
-			));
-		}
-		else {
-			$this->addLog( "Unknown wiki id. Founder talk page not set." );
+		/**
+		 * and now create talk article
+		 */
+		$talkArticle = new Article( $talkPage, 0 );
+		if( !$talkArticle->exists() ) {
+			$talkArticle->doEdit( $talkBody,  wfMsg( "autocreatewiki-welcometalk-log" ), EDIT_FORCE_BOT );
 		}
 
 		return true;
