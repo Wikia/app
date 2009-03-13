@@ -197,13 +197,13 @@ class AutoCreateWikiLocalJob extends Job {
 						$sourceTalkTitle = $sourceTitle->getTalkPage();
 						$targetTalkTitle = $targetTitle->getTalkPage();
 						if ( $sourceTalkTitle instanceof Title && $sourceTalkTitle->exists() && $targetTalkTitle instanceof Title ) {
-								print $sourceTalkTitle->getPrefixedText() . ' --> ' . $targetTalkTitle->getPrefixedText();
-								$err = $sourceTalkTitle->moveTo( $targetTitle->getTalkPage(), false, "SEO");
-								if ( $err === true ) {
-										Wikia::log( __METHOD__, "move", "Moved talk page" );
-								} else {
-										Wikia::log( __METHOD__, "move", "Found talk page but moving FAILED" );
-								}
+							print $sourceTalkTitle->getPrefixedText() . ' --> ' . $targetTalkTitle->getPrefixedText();
+							$err = $sourceTalkTitle->moveTo( $targetTitle->getTalkPage(), false, "SEO");
+							if ( $err === true ) {
+									Wikia::log( __METHOD__, "move", "Moved talk page" );
+							} else {
+									Wikia::log( __METHOD__, "move", "Found talk page but moving FAILED" );
+							}
 						}
 					}
 				}
