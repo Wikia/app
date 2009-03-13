@@ -45,6 +45,8 @@ class AutoCreateWikiPage extends SpecialPage {
     const CREATEWIKI_ICON = "/images/central/images/6/64/Favicon.ico";
     const SESSION_TIME = 60;
     const USE_TEST = 1;
+    const DAILY_LIMIT = 200;
+    const DAILY_USER_LIMIT = 10;
 
 	/**
 	 * constructor
@@ -107,6 +109,13 @@ class AutoCreateWikiPage extends SpecialPage {
 		$this->mPostedErrors = array();
 		$this->mErrors = 0;
 
+		$this->mNbrCreated = $this->countCreatedWikis();
+		
+		if ( $this->mNbrCreated >= self::DAILY_LIMIT ) {
+			$wgOut->addHTML(wgMsg('autocreatewiki-limit-creation'));
+			return;
+		}
+
 		if( $subpage === "test" ) {
 			#---
 			$this->create();
@@ -116,6 +125,11 @@ class AutoCreateWikiPage extends SpecialPage {
 			}
 		} elseif ( $subpage === "Processing" ) {
 			if ( isset( $_SESSION['mAllowToCreate'] ) && ( $_SESSION['mAllowToCreate'] >= wfTimestamp() ) ) {
+				$this->mNbrUserCreated = $this->countCreatedWikisByUser();
+				if ( $this->mNbrUserCreated >= self::DAILY_USER_LIMIT ) {
+					$wgOut->addHTML(wgMsg('autocreatewiki-limit-creation'));
+					return;
+				} 
 				if ( $this->setVarsFromSession() > 0 ) {
 					$this->createWiki();
 				}
@@ -125,6 +139,12 @@ class AutoCreateWikiPage extends SpecialPage {
 			}
 		} elseif ( $subpage === "Wiki_create" ) {
 			if ( isset( $_SESSION['mAllowToCreate'] ) && ( $_SESSION['mAllowToCreate'] >= wfTimestamp() ) ) {
+				#--- Limit of user creation
+				$this->mNbrUserCreated = $this->countCreatedWikisByUser();
+				if ( $this->mNbrUserCreated >= self::DAILY_USER_LIMIT ) {
+					$wgOut->addHTML(wgMsg('autocreatewiki-limit-creation'));
+					return;
+				}								
 				if ( $this->setVarsFromSession() > 0 ) {
 					$this->processCreatePage();
 				}
@@ -495,20 +515,15 @@ class AutoCreateWikiPage extends SpecialPage {
 		if( isset( $this->mStarters[ $this->mWikiData[ "hub" ] ] )
 			&& $this->mStarters[ $this->mWikiData[ "hub" ] ]
 			&& $this->mWikiData[ "language" ] === "en" ) {
-			$this->setInfoLog( 'OK', 'test 1' );
 
 			$wikiMover = WikiMover::newFromIDs(
 				$this->mStarters[ $this->mWikiData[ "hub" ] ], /** source **/
 				$this->mWikiId /** target **/
 			);
-			$this->setInfoLog( 'OK', 'test 2' );
 			$wikiMover->setOverwrite( true );
-			$this->setInfoLog( 'OK', 'test 3' );
 			$wikiMover->mMoveUserGroups = false;
 			$wikiMover->load();
-			$this->setInfoLog( 'OK', 'test 4' );
 			$wikiMover->move();
-			$this->setInfoLog( 'OK', 'test 5' );
 
 			/**
 			 * WikiMove has internal log engine
@@ -516,10 +531,7 @@ class AutoCreateWikiPage extends SpecialPage {
             foreach( $wikiMover->getLog( true ) as $log ) {
                 $this->log( $log["info"] );
             }
-			$this->setInfoLog( 'OK', 'test 6' );
-
 			$this->addCustomSettings( $this->mWikiData[ "hub" ], $wgHubCreationVariables, 'hub' );
-			$this->setInfoLog( 'OK', 'test 7' );
 		}
 
 		/**
@@ -919,6 +931,7 @@ class AutoCreateWikiPage extends SpecialPage {
 	 */
 	function initUser( $oUser, $autocreate ) {
 		global $wgAuth;
+		wfProfileIn( __METHOD__ );
 
 		$oUser->addToDatabase();
 
@@ -940,6 +953,7 @@ class AutoCreateWikiPage extends SpecialPage {
 		$ssUpdate = new SiteStatsUpdate( 0, 0, 0, 0, 1 );
 		$ssUpdate->doUpdate();
 
+		wfProfileOut( __METHOD__ );
 		return $oUser;
 	}
 
@@ -947,6 +961,7 @@ class AutoCreateWikiPage extends SpecialPage {
 	 * Login after create account
 	 */
 	private function loginAfterCreateAccount() {
+		wfProfileIn( __METHOD__ );
 		$apiParams = array(
 			"action" => "login",
 			"lgname" => $this->mUsername,
@@ -955,6 +970,7 @@ class AutoCreateWikiPage extends SpecialPage {
 		$oApi = new ApiMain( new FauxRequest( $apiParams ) );
 		$oApi->execute();
 		$aResult = &$oApi->GetResultData();
+		wfProfileOut( __METHOD__ );
 
 		return ( isset($aResult['login']['result']) && ( $aResult['login']['result'] == 'Success' ) );
 	}
@@ -981,6 +997,7 @@ class AutoCreateWikiPage extends SpecialPage {
 	 */
 	public function addCustomSettings( $match, $settings, $type = 'unknown' ) {
         global $wgUser;
+		wfProfileIn( __METHOD__ );
 
         if( !empty( $match ) && isset( $settings[ $match ] ) && is_array( $settings[ $match ] ) ) {
             $this->log("Found '$match' in $type settings array.");
@@ -1006,6 +1023,8 @@ class AutoCreateWikiPage extends SpecialPage {
             $this->log("'$match' not found in $type settings array. Skipping this step.");
 		}
 
+		wfProfileOut( __METHOD__ );
+		return 1;
 	}
 
 	/**
@@ -1116,4 +1135,41 @@ class AutoCreateWikiPage extends SpecialPage {
 			exec( "rm -rf {$this->mWikiData[ "images" ]}" );
 		}
 	}
+	
+	/**
+	 * get number of created Wikis for current day
+	 */
+	private function countCreatedWikis($iUser = 0) {
+		wfProfileIn( __METHOD__ );
+		
+		$dbr = wfGetDB( DB_SLAVE );
+		$where = array( "date_format(city_created, '%Y%m%d') = date_format(now(), '%Y%m%d')" );
+		if ( !empty($iUser) ) {
+			$where[] = "city_founding_user = '{$iUser}' ";
+		}
+		$oRow = $dbr->selectRow(
+			wfSharedTable("city_list"),
+			array( "count(*) as count" ),
+			$where,
+			__METHOD__
+		);
+		
+		wfProfileOut( __METHOD__ );
+		return $oRow->count;
+	}
+	
+	/**
+	 * get number of created Wikis by user today
+	 */
+	private function countCreatedWikisByUser() {
+		global $wgUser;
+		wfProfileIn( __METHOD__ );
+		
+		$iUser = $wgUser->getId();
+		$iCount = $this->countCreatedWikis($iUser);
+		
+		wfProfileOut( __METHOD__ );
+		return $iCount;
+	}
+	
 }
