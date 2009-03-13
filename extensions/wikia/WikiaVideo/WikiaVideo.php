@@ -145,16 +145,32 @@ function WikiaVideo_renderVideoGallery($input, $args, $parser) {
 }
 
 function WikiaVideo_makeVideo($title, $options, $sk) {
+	global $wgWysiwygParserEnabled, $wgRequest;
+
 	wfProfileIn('WikiaVideo_makeVideo');
 	if(!$title->exists()) {
 		$out = $sk->makeColouredLinkObj(Title::newFromText('WikiaVideoAdd', NS_SPECIAL), 'new', $title->getPrefixedText(), 'name=' . $title->getDBKey());
 	} else {
+		// get refId from Wysiwyg
+		if (!empty($wgWysiwygParserEnabled)) {
+			$refId = Wysiwyg_GetRefId($options, true);
+		}
+		else {
+			$refId = 0;
+		}
+
+		$params = array_map( 'trim', explode( '|', $options) );
+
+		//Wysiwyg: remove markers
+		if (!empty($wgWysiwygParserEnabled)) {
+			$params = array_map( create_function('$par', 'return preg_replace(\'%\x7f-wtb-(\d+)-\x7f(.*?)\x7f-wte-\1-\x7f%si\', \'\\2\', $par);'), $params);
+		}	
+
 		// defaults
 		$width = 400;
 		$thumb = false;
 		$caption = '';
 
-		$params = explode('|', $options);
 		foreach($params as $param) {
 			$width_check = strpos($param, 'px');
 			if($width_check > -1) {
@@ -178,7 +194,17 @@ function WikiaVideo_makeVideo($title, $options, $sk) {
 
 		$video = new VideoPage($title);
 		$video->load();
-		$out = $video->generateWindow($align, $width, $caption, $thumb);
+
+		// generate different HTML for MW editor and FCK editor
+		$isWysiwyg = !empty($wgWysiwygParserEnabled);
+		$isWysiwyg |= ($wgRequest->getVal('action') == 'parse') && ($wgRequest->getVal('wysiwyg') == 'true');
+
+		if ($isWysiwyg) {
+			$out = $video->generateWysiwygWindow($refId, $title, $align, $width, $caption, $thumb);
+		}
+		else {
+			$out = $video->generateWindow($align, $width, $caption, $thumb);
+		}
 	}
 	wfProfileOut('WikiaVideo_makeVideo');
 	return $out;
