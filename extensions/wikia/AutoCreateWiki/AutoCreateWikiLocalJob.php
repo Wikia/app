@@ -51,6 +51,7 @@ class AutoCreateWikiLocalJob extends Job {
 			$this->mFounder = User::newFromId( $this->mParams[ "founder"] );
 		}
 		$this->setWelcomeTalkPage();
+		$this->moveMainPage();
 
 		wfProfileOut( __METHOD__ );
 
@@ -117,7 +118,7 @@ class AutoCreateWikiLocalJob extends Job {
 		 * set apropriate staff member
 		 */
 		$wgUser = self::getStaffUserByLang( $wikiaLang );
-		$wgUser = ( $wgUser instanceof User ) ? $wgUser : User::newFromId( "Angela" );
+		$wgUser = ( $wgUser instanceof User ) ? $wgUser : User::newFromName( "Angela" );
 
 		$talkParams = array(
 			$this->mFounder->getName(),
@@ -158,26 +159,114 @@ class AutoCreateWikiLocalJob extends Job {
 	private function moveMainPage() {
 		global $wgSitename;
 
-		$mainPage = wfMsgForContent('Mainpage');
-		$targetPage = $wgSitename;
+		$source = wfMsgForContent('Mainpage');
+		$target = $wgSitename;
 
 		$sourceTitle = Title::newFromText( $source );
 		if( !$sourceTitle ) {
-		    print "Invalid page title: $source";
+		    print "Invalid page title: {$source}";
 		    return;
 		}
 
 		$mainArticle = new Article( $sourceTitle, 0 );
-		if( !$mainPageArticle->exists() ) {
-		    print "Article $source not exists.";
-			return;
+		if( $mainArticle->exists() ) {
+			/**
+			 * check target title
+			 */
+			$targetTitle = Title::newFromText( $target );
+			if( $targetTitle ) {
+				if( $sourceTitle->getPrefixedText() !== $targetTitle->getPrefixedText() ) {
+					Wikia::log( __METHOD__, "move", $sourceTitle->getPrefixedText() . ' --> ' . $targetTitle->getPrefixedText() );
+					$err = $sourceTitle->moveTo( $targetTitle, false, "SEO" );
+					if( $err !== true ) {
+						Wikia::log( __METHOD__, "move", "Moving FAILED" );
+					}
+					else {
+						/**
+						 * fill Mediawiki:Mainpage with new title
+						 */
+						$mwMainPageTitle = Title::newFromText( "Mainpage", NS_MEDIAWIKI );
+						$mwMainPageArticle = new Article( $mwMainPageTitle, 0 );
+
+						$mwMainPageArticle->doEdit( $targetTitle->getText(), "SEO", EDIT_MINOR | EDIT_FORCE_BOT );
+						Wikia::log( __METHOD__, "move", "Page moved" );
+
+						/**
+						 * also move associated talk page if it exists
+						 */
+						$sourceTalkTitle = $sourceTitle->getTalkPage();
+						$targetTalkTitle = $targetTitle->getTalkPage();
+						if ( $sourceTalkTitle instanceof Title && $sourceTalkTitle->exists() && $targetTalkTitle instanceof Title ) {
+								print $sourceTalkTitle->getPrefixedText() . ' --> ' . $targetTalkTitle->getPrefixedText();
+								$err = $sourceTalkTitle->moveTo( $targetTitle->getTalkPage(), false, "SEO");
+								if ( $err === true ) {
+										Wikia::log( __METHOD__, "move", "Moved talk page" );
+								} else {
+										Wikia::log( __METHOD__, "move", "Found talk page but moving FAILED" );
+								}
+						}
+					}
+				}
+				else {
+					Wikia::log( __METHOD__, "move", "source {$source} and target {$target} are the same" );
+				}
+			}
+
 		}
 	}
 
 	/**
-	 * move main page to SEO-friendly name
+	 * protect key pages
+	 *
+	 * @author Lucas 'TOR' Garczewski <tor@wikia-inc.com>
 	 */
 	private function protectKeyPages() {
+		global $wgUser, $wgWikiaKeyPages;
 
+		$wgUser = User::newFromName( "CreateWiki script" );
+		if ( $wgUser->isAnon() ) {
+			$wgUser->addToDatabase();
+		}
+		if(	empty($wgWikiaKeyPages ) ) {
+			$wgWikiaKeyPages = array ( 'Image:Wiki.png', 'Image:Wiki_wide.png', 'Image:Favicon.ico' );
+		}
+
+		/**
+		 * define restriction level and duration
+		 */
+		$restrictions['edit'] = 'sysop';
+		$restrictions['move'] = 'sysop';
+		$titleRestrictions = 'sysop';
+		$expiry = Block::infinity();
+
+		/**
+		 *  define reason msg and fetch it
+		 */
+		$wgMessageCache->addMessages( array ('createwiki-protect-reason' => 'Part of the official interface') );
+		$reason = wfMsgForContent('createwiki-protect-reason');
+
+		$wgUser->addGroup( 'staff' );
+		$wgUser->addGroup( 'bot' );
+
+		foreach( $wgWikiaKeyPages as $pageName ) {
+			$title = Title::newFromText( $pageName );
+			$article = new Article( $title );
+
+			if ( $article->exists() ) {
+				$ok = $article->updateRestrictions( $restrictions, $reason, 0, $expiry );
+			}
+			else {
+				$ok = $title->updateTitleProtection( $titleRestrictions, $reason, $expiry );
+			}
+
+			if ( $ok ) {
+				Wikia::log( __METHOD__, "ok", "Protected key page: $pageName" );
+			}
+			else {
+				Wikia::log( __METHOD__, "err", "Failed while trying to protect $pageName" );
+			}
+		}
+		$wgUser->removeGroup( "staff" );
+		$wgUser->removeGroup( "bot" );
 	}
 }
