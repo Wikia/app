@@ -42,14 +42,16 @@ class AutoCreateWikiCentralJob extends Job {
 	 * @access public
 	 */
     public function run() {
-
 		wfProfileIn( __METHOD__ );
+
+		if ( $this->mParams[ "founder"] ) {
+			$this->mFounder = User::newFromId( $this->mParams[ "founder"] );
+		}
 
 		$this->setCentralPages();
 		$this->sendWelcomeMail();
 
 		wfProfileOut( __METHOD__ );
-
 		return true;
 	}
 
@@ -68,58 +70,55 @@ class AutoCreateWikiCentralJob extends Job {
 		global $wgDevelEnvironment, $wgUser, $wgPasswordSender;
 
 		$oReceiver = $this->mFounder;
-		if( !empty( $wgDevelEnvironment ) ) {
+		if ( !empty( $wgDevelEnvironment ) ) {
 			$oReceiver = $wgUser;
 		}
 
-		$wikiName = WikiFactory::GetVarValueByName( "wgSitename", $this->mWikiID );
-		$wikiLang = WikiFactory::GetVarValueByName( "wgLanguageCode", $this->mWikiID );
+		$wikiaName = WikiFactory::getVarValueByName( "wgSitename", $this->mParams[ "city_id"] );
+		$wikiaLang = WikiFactory::getVarValueByName( "wgLanguageCode", $this->mParams[ "city_id"] );
+		$wikiaUrl = WikiFactory::getVarValueByName( "wgServer", $this->mParams[ "city_id"] );
 
 		// set apropriate staff member
 		$oStaffUser = self::getStaffUserByLang( $wikiLang );
-		$oStaffUser = ( $oStaffUser instanceof User ) ? $oStaffUser : $this->mStaff;
+		$oStaffUser = ( $oStaffUser instanceof User ) ? $oStaffUser : User::newFromName( "Angela" );
 
 		$from = new MailAddress( $wgPasswordSender, "The Wikia Community Team" );
 		$sTo = $oReceiver->getEmail();
 
 		$aBodyParams = array(
-			0 => $this->mWikiParams->city_url,
+			0 => $wikiaUrl,
 			1 => $oReceiver->getName(),
 			2 => $oStaffUser->getRealName(),
 			3 => htmlspecialchars( $oStaffUser->getName() ),
-			4 => sprintf( "%s%s",
-				rtrim($this->mWikiParams->city_url, "/"),
-				$oReceiver->getTalkPage()->getLocalURL()
-			),
+			4 => sprintf( "%s%s", rtrim($wikiaUrl, "/"), $oReceiver->getTalkPage()->getLocalURL() ),
 		);
 
-		$sBody = null;
-		$sSubject = null;
-		if(!empty($wikiLang)) {
+		$sBody = $sSubject = null;
+		if (!empty($wikiLang)) {
 			// custom lang translation
 			$sBody = wfMsgExt("autocreatewiki-welcomebody", array( 'language' => $wikiLang ), $aBodyParams);
 			$sSubject = wfMsgExt("autocreatewiki-welcomesubject", array( 'language' => $wikiLang ), array( $wikiName));
 		}
 
-		if( is_null( $sBody ) ) {
+		if ( is_null( $sBody ) ) {
 			// default lang (english)
 			$sBody = wfMsg("autocreatewiki-welcomebody", $aBodyParams);
 		}
-		if($sSubject == null) {
+		
+		if ( $sSubject == null ) {
 			// default lang (english)
-			$sSubject = wfMsg("autocreatewiki-welcomesubject", array($sWikiaName));
+			$sSubject = wfMsg( "autocreatewiki-welcomesubject", array($wikiaName) );
 		}
 
-		if( !empty($sTo) ) {
+		if ( !empty($sTo) ) {
 			$bStatus = $oReceiver->sendMail($sSubject, $sBody, $from );
-			if( $bStatus === true ) {
+			if ( $bStatus === true ) {
 				Wikia::log( __METHOD__, "mail", "Mail to founder {$sTo} sent.");
 			}
 			else {
 				Wikia::log( __METHOD__, "mail", "Mail to founder {$sTo} probably not sent. sendMail returned false." );
 			}
-		}
-		else {
+		} else {
 			Wikia::log( __METHOD__, "mail", "Founder email is not set. Welcome email is not sent" );
 		}
 	}
@@ -128,7 +127,6 @@ class AutoCreateWikiCentralJob extends Job {
 	 * get staff member signature for given lang code
 	 */
 	public static function getStaffUserByLang( $langCode ) {
-
 		wfProfileIn( __METHOD__ );
 
 		$staffSigs = wfMsgForContent( "staffsigs" );

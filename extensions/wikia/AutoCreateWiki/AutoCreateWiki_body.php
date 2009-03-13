@@ -44,7 +44,6 @@ class AutoCreateWikiPage extends SpecialPage {
     const CREATEWIKI_LOGO = "/images/central/images/2/22/Wiki_Logo_Template.png";
     const CREATEWIKI_ICON = "/images/central/images/6/64/Favicon.ico";
     const SESSION_TIME = 60;
-    const USE_TEST = 1;
     const DAILY_LIMIT = 200;
     const DAILY_USER_LIMIT = 10;
 
@@ -81,11 +80,6 @@ class AutoCreateWikiPage extends SpecialPage {
 		$this->mMYSQLbin =
 			( file_exists("/usr/bin/mysql") && is_executable("/usr/bin/mysql") )
 			? "/usr/bin/mysql" : "/opt/wikia/bin/mysql";
-
-		/**
-		 * set new wiki domain
-		 */
-		$this->mDefSubdomain = (self::USE_TEST == 1) ? "awc.wikia-inc.com" : "wikia.com";
 	}
 
 	/**
@@ -98,6 +92,7 @@ class AutoCreateWikiPage extends SpecialPage {
 	public function execute( $subpage ) {
 		global $wgRequest, $wgAuth, $wgUser;
 		global $wgOut;
+		global $wgDevelEnvironment;
 
 		wfLoadExtensionMessages( "AutoCreateWiki" );
 
@@ -108,6 +103,8 @@ class AutoCreateWikiPage extends SpecialPage {
 		$this->mPosted = $wgRequest->wasPosted();
 		$this->mPostedErrors = array();
 		$this->mErrors = 0;
+
+		$this->mDefSubdomain = (!empty($wgDevelEnvironment)) ? "awc.wikia-inc.com" : "wikia.com";
 
 		$this->mNbrCreated = $this->countCreatedWikis();
 		
