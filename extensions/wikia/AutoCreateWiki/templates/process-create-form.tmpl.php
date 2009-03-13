@@ -142,14 +142,16 @@ YE.onDOMReady(function () {
 					addLog(loop, '<br />' + redirMsg, 'OK');
 					window.location.href = 'http://'+redirServer+'.<?=$domain?>';
 				} else if ( !(isError > 0) ) {
-					setTimeout(checkProcess, 500);
-				}
+					if (loop < 50) {
+						setTimeout(checkProcess, 1000);
+					}
+				} 
 			},
 			failure: function( oResponse ) {
 				var res = oResponse.responseText;
 				addLog(loop, res + '&nbsp;&nbsp;<strong style="color:red"><?=wfMsg('autocreatewiki-error')?></strong>');
 			},
-			timeout: 50000
+			timeout: 5000
 		}
 				
 		YC.asyncRequest( "GET", wgAjaxPath + "?action=ajax&rs=axACWRequestCheckLog", __callback);
