@@ -233,7 +233,7 @@ class HAWelcomeJob extends Job {
 		 */
 		$Title = $revision->getTitle();
 		if( !$Title ) {
-			$Title = Title::newFromId( $revision->getPage() );
+			$Title = Title::newFromId( $revision->getPage(), GAID_FOR_UPDATE );
 			$revision->setTitle( $Title );
 		}
 
