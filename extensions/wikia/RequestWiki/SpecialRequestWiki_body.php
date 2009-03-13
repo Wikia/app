@@ -137,7 +137,7 @@ class RequestWikiPage extends SpecialPage {
 		}
 		$params['wiki_tos_agree'] = $requestSubmit ? $requestSubmit : $wgRequest->getVal('wiki_tos_agree');
 
-		$languages = Language::getLanguageNames();
+		$languages = wfRequestLanguageNames();
 		$request = null;
 		$editing = 0;
 		$request = array();
@@ -282,7 +282,7 @@ class RequestWikiPage extends SpecialPage {
 		$iRequestID = $wgRequest->getIntOrNull( 'id' );
 		$iRequestUserID = $wgRequest->getIntOrNull( 'rw-userid' );
 		$sRequestUserName = $wgRequest->getVal('rw-username');
-		$languages = Language::getLanguageNames();
+		$languages = wfRequestLanguageNames();
 
 		/**
 		 * staff can change username, we would know about it by comparing
@@ -315,7 +315,7 @@ class RequestWikiPage extends SpecialPage {
 			$errors['rw-name'] = Wikia::errormsg(wfMsg('requestwiki-error-empty-field'));
 		} elseif (preg_match('/[^a-z0-9-]/i', $params['request_name'])) {
 			$errors['rw-name'] = Wikia::errormsg(wfMsg('requestwiki-error-bad-name'));
-		} elseif (in_array($params['request_name'], array_keys(Language::getLanguageNames()))) {
+		} elseif (in_array($params['request_name'], array_keys(wfRequestLanguageNames()))) {
 			$errors['rw-name'] = Wikia::errormsg(wfMsg('requestwiki-error-name-is-lang'));
 		}
 

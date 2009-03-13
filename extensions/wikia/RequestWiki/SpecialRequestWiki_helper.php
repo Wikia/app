@@ -207,6 +207,28 @@ function wfRequestLikeOrExact( $name, $language = null ) {
 	return $domains;
 }
 
+/**
+ * wfRequestLanguageNames
+ *
+ * get a list of language names available for wiki request
+ * (possibly filter some)
+ *
+ * @return array
+ *
+ * @see Language::getLanguageNames()
+ * @see RT#11870
+ */
+function wfRequestLanguageNames() {
+	$languages = Language::getLanguageNames();
+
+   $filter_languages = explode(',', wfMsg('requestwiki-filter-language'));
+	foreach ($filter_languages as $key) {
+		unset($languages[$key]);
+	}
+
+	return $languages;
+}
+
 
 #----------------------------------------------------------------------------
 # Ajax requests handlers
@@ -233,7 +255,7 @@ function axWRequestCheckName() {
     } elseif (preg_match('/[^a-z0-9-]/i', $sName)) {
         $sResponse = Wikia::errormsg(wfMsg('requestwiki-error-bad-name'));
         $iError++;
-    } elseif (in_array($sName, array_keys(Language::getLanguageNames()))) {
+    } elseif (in_array($sName, array_keys(wfRequestLanguageNames()))) {
 	$sResponse = Wikia::errormsg(wfMsg('requestwiki-error-name-is-lang'));
 	$iError++;
     } else {
