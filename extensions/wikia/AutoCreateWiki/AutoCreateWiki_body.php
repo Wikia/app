@@ -491,8 +491,9 @@ class AutoCreateWikiPage extends SpecialPage {
 		/**
 		 * use starter when wikia in proper hub
 		 */
-		if( isset( $this->mStarters[ $this->mWikiData[ "hub" ] ] )&&
-			$this->mStarters[ $this->mWikiData[ "hub" ] ] ) {
+		if( isset( $this->mStarters[ $this->mWikiData[ "hub" ] ] )
+			&& $this->mStarters[ $this->mWikiData[ "hub" ] ]
+			&& $this->mWikiData[ "language" ] === "en" ) {
 			$wikiMover = WikiMover::newFromIDs(
 				$this->mStarters[ $this->mWikiData[ "hub" ] ], /** source **/
 				$this->mWikiId /** target **/
