@@ -427,6 +427,7 @@ class AutoCreateWikiPage extends SpecialPage {
 					$wgDBpassword,
 					$this->mWikiData[ "dbname"]
 				);
+				$this->log($cmd);
 				wfShellExec( $cmd );
 
 				$error = $dbw->sourceFile( "{$IP}/maintenance/cleanupStarter.sql" );
@@ -439,6 +440,7 @@ class AutoCreateWikiPage extends SpecialPage {
 				$startupImages = sprintf( "%s/starter/%s/images/", self::IMGROOT, $prefix );
 				if (file_exists( $startupImages ) && is_dir( $startupImages ) ) {
 					wfShellExec("/bin/cp -af $startupImages {$this->mWikiData[ "images" ]}/");
+					$this->log("/bin/cp -af $startupImages {$this->mWikiData[ "images" ]}/");
 				}
 				$cmd = sprintf(
 					"SERVER_ID=%d %s %s/maintenance/updateArticleCount.php --update --conf %s",
@@ -447,6 +449,7 @@ class AutoCreateWikiPage extends SpecialPage {
 					$IP,
 					$wgWikiaLocalSettingsPath
 				);
+				$this->log($cmd);
 				wfShellExec( $cmd );
 
 				$this->log( "Copying starter database" );
@@ -564,7 +567,7 @@ class AutoCreateWikiPage extends SpecialPage {
 		global $wgContLang;
 		wfProfileIn( __METHOD__ );
 
-		$this->mWikiData[ "hub" ]		= $this->mCategory;
+		$this->mWikiData[ "hub" ]		= $this->awcCategory;
         $this->mWikiData[ "name"]       = strtolower( trim( $this->awcDomain ) );
         $this->mWikiData[ "title" ]     = trim( $wgContLang->ucfirst( $this->awcName ) . " Wiki" );
         $this->mWikiData[ "language" ]  = $this->awcLanguage;
@@ -664,7 +667,7 @@ class AutoCreateWikiPage extends SpecialPage {
 			"awcDomain" => $this->awcDomain,
 			"awcCategory" => $this->awcCategory,
 			"awcLanguage" => $this->awcLanguage,
-			"subdomain" => ( $this->awcLanguage !== 'en' ) ? strtolower( trim( $this->awcDomain ) ) : $this->awcLanguage . "." . strtolower( trim( $this->awcDomain ) ),
+			"subdomain" => ( $this->awcLanguage === 'en' ) ? strtolower( trim( $this->awcDomain ) ) : $this->awcLanguage . "." . strtolower( trim( $this->awcDomain ) ),
 			"domain" => $this->mDefSubdomain
 		));
 
