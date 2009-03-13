@@ -1405,6 +1405,8 @@ if(isset($categorylist['nodes']) && count($categorylist['nodes']) > 0 ) {
 
 <?php
 }
+			wfRunHooks('MonacoAdLink');	
+			
 			if ($wgUser->isLoggedIn()) {
 				echo '<a rel="nofollow" href="http://requests.wikia.com" id="request_wiki" class="loggedin">'. wfMsg('createwikipagetitle') .'</a>';
 			}
