@@ -404,7 +404,7 @@ class AutoCreateWikiPage extends SpecialPage {
 		 * import language starter
 		 */
 		if( in_array( $this->mWikiData[ "language" ], array("en", "ja", "de", "fr") ) ) {
-			$prefix = ( $this->mWikiData[ "language" ] !== "en") ? "" : $this->mWikiData[ "language" ];
+			$prefix = ( $this->mWikiData[ "language" ] === "en") ? "" : $this->mWikiData[ "language" ];
 			$starterDB = $prefix. "starter";
 
 			/**
@@ -455,7 +455,7 @@ class AutoCreateWikiPage extends SpecialPage {
 				$this->log( "Copying starter database" );
 			}
 			else {
-				$this->log( "No starter database for this language" );
+				$this->log( "No starter database for this language, {$starterDB}" );
 			}
 		}
 		$this->setInfoLog( 'OK', wfMsg('autocreatewiki-step7') );
@@ -568,16 +568,16 @@ class AutoCreateWikiPage extends SpecialPage {
 		wfProfileIn( __METHOD__ );
 
 		$this->mWikiData[ "hub" ]		= $this->awcCategory;
-        $this->mWikiData[ "name"]       = strtolower( trim( $this->awcDomain ) );
+        $this->mWikiData[ "name" ]      = strtolower( trim( $this->awcDomain ) );
         $this->mWikiData[ "title" ]     = trim( $wgContLang->ucfirst( $this->awcName ) . " Wiki" );
         $this->mWikiData[ "language" ]  = $this->awcLanguage;
         $this->mWikiData[ "subdomain" ] = $this->mWikiData[ "name"];
-        $this->mWikiData[ "redirect"]   = $this->mWikiData[ "name"];
-		$this->mWikiData[ "dir_part"]   = $this->mWikiData[ "name"];
-		$this->mWikiData[ "dbname"]     = substr( str_replace( "-", "", $this->mWikiData[ "name"] ), 0, 64);
-		$this->mWikiData[ "path"]       = "/usr/wikia/docroot/wiki.factory";
-        $this->mWikiData[ "images"]     = self::IMGROOT . $this->mWikiData[ "name"];
-        $this->mWikiData[ "testWiki"]   = false;
+        $this->mWikiData[ "redirect" ]  = $this->mWikiData[ "name"];
+		$this->mWikiData[ "dir_part" ]  = $this->mWikiData[ "name"];
+		$this->mWikiData[ "dbname" ]    = substr( str_replace( "-", "", $this->mWikiData[ "name"] ), 0, 64);
+		$this->mWikiData[ "path" ]      = "/usr/wikia/docroot/wiki.factory";
+        $this->mWikiData[ "images" ]    = self::IMGROOT . $this->mWikiData[ "name"];
+        $this->mWikiData[ "testWiki" ]  = false;
 
         if ( isset( $this->mWikiData[ "language" ] ) && $this->mWikiData[ "language" ] !== "en" ) {
 			$this->mWikiData[ "subdomain" ] = strtolower( $this->mWikiData[ "language"] ) . "." . $this->mWikiData[ "name"];
@@ -1113,5 +1113,4 @@ class AutoCreateWikiPage extends SpecialPage {
 			exec( "rm -rf {$this->mWikiData[ "images" ]}" );
 		}
 	}
-
 }
