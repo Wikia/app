@@ -344,7 +344,7 @@ function CategorySelectGetCategoryLinksBegin($categoryLinks) {
 		$categoryLinks = '';
 		return false;
 	} elseif (($action == 'view' || $action == 'purge') && count($wgOut->mCategoryLinks) == 0) {
-		CategorySelectGetCategoryLinksEnd(&$categoryLinks);
+		CategorySelectGetCategoryLinksEnd($categoryLinks);
 		return false;
 	}
 	return true;
