@@ -110,7 +110,7 @@ YE.onDOMReady(function () {
 					addLog(loop, '<br />' + redirMsg, 'END');
 					window.location.href = 'http://'+redirServer+'.<?=$domain?>';
 				} else if ( !(isError > 0) ) {
-					if (loop < 100) {
+					if (loop < 66) {
 						setTimeout(checkProcess, 1000);
 					}
 				} 
