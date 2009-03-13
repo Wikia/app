@@ -272,6 +272,7 @@ class AutoCreateWikiPage extends SpecialPage {
 			return;
 		}
 		$this->mWikiData[ "city_id" ] = $this->mWikiId;
+		$this->mWikiData[ "founder" ] = $wgUser->getId();
 		$this->log( "Creating row in city_list table, city_id = {$this->mWikiId}" );
 
 		$bIns = $dbw->insert(
@@ -550,7 +551,7 @@ class AutoCreateWikiPage extends SpecialPage {
 		 * add local job
 		 */
 		$localJob = new AutoCreateWikiLocalJob(	Title::newFromText( NS_MAIN, "Main" ), $this->mWikiData );
-		$localJob->insert();
+		$localJob->WFinsert( $this->mWikiId );
 
 		$this->setInfoLog( 'END', 'Done.' );
 
