@@ -69,17 +69,19 @@ $messages['en'] = array(
 	"autocreatewiki-step0" => "Initializing process ... ",
 	"autocreatewiki-stepdefault" => "Process is running, please wait ... ",
 	"autocreatewiki-step1" => "Creating images folder ... ",
-	"autocreatewiki-step2" => "Creating database `$1` ... ",
+	"autocreatewiki-step2" => "Creating database ... ",
 	"autocreatewiki-step3" => "Setting default information in database ...",
 	"autocreatewiki-step4" => "Copying default favicon and logo ...",
 	"autocreatewiki-step5" => "Setting default variables in database ...",
 	"autocreatewiki-step6" => "Setting default tables in database ...",
 	"autocreatewiki-step7" => "Setting language starter ... ",
 	"autocreatewiki-step8" => "Setting user groups and categories ... ",
+	"autocreatewiki-step9" => "Setting variables for new Wiki ... ",
 	"autocreatewiki-redirect" => "Redirecting to new Wiki: $1 ... ",
 // processing errors
 	"autocreatewiki-step2-error" => "Database exists!",	
 	"autocreatewiki-step3-error" => "Cannot set default information in database!",	
 	"autocreatewiki-step6-error" => "Cannot set default tables in database!",
+	"autocreatewiki-step7-error" => "Cannot copy starter database for language!",
 	
 );
