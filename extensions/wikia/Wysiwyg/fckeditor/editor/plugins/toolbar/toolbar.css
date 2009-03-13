@@ -9,16 +9,16 @@
 	display: block !important;
 	height: 49px;
 	width: 100%;
+	border: none;
 }
 
 #fck_toolbar {
 	border-collapse: collapse;
 	font-family: "Verdana", "Arial", sans-serif;
 	font-size: 10px;
-	width: 100%;
+	width: 99%;
 	position: absolute;
-	top: 2px;
-	left: 0px;
+	top: 1px;
 	height: 48px;
 }
 #fck_toolbar td {
