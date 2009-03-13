@@ -8,7 +8,17 @@ jQuery(document).ready(function() {
 	jQuery(document.body).append('<div id="ActionPanelTrigger"></div>');
 	
 	applyActionsOnQuestions();
-});
+}).click(ActionPanelClose);
+
+function ActionPanelClose() {
+	if (menu_is_open) {
+		jQuery(".categorize_help_container").remove();
+		jQuery('.questionhovermenu').remove();
+		jQuery("#ActionPanelTrigger").hide();
+		menu_is_open = false;
+	}
+}
+
 
 function applyActionsOnQuestions(){
 	jQuery("[href*='/wiki/']").live("mouseover", function(){
@@ -44,7 +54,13 @@ function applyActionsOnQuestions(){
 					close_float = "left";
 				}
 				
-				jQuery( hover_menu ).addClass("questionhovermenu").css("display","none").css( "top", ( jQuery(this).offset().top + 5 ) ).css( "left", menu_left )
+				jQuery( hover_menu ).addClass("questionhovermenu").css({
+						display: "none",
+						top: jQuery(this).offset().top + 5,
+						left: menu_left 
+					}).click(function(e) {
+						e.stopPropagation();
+					});
 				edit_link = wgServer + wgScript + "?title=" + this_title + "&action=edit";
 				delete_link = wgServer + wgScript + "?title=" + this_title + "&action=delete";
 				
@@ -77,7 +93,7 @@ function applyActionsOnQuestions(){
 				}
 				var close_button = document.createElement('span');
 				close_button.innerHTML = "x";
-				jQuery( close_button ).css("float",close_float).css("cursor","pointer").css("color","#FFFFFF").click( closeMenu );
+				jQuery( close_button ).css("float",close_float).css("cursor","pointer").css("color","#FFFFFF").click( ActionPanelClose );
 				jQuery( hover_menu ).prepend(close_button);
 				
 				//Quick Answer Box is Default
@@ -149,7 +165,7 @@ function applyActionsOnQuestions(){
 										return false;
 									}else{
 										jQuery( hover_menu ).html( wgActionPanelEditSuccessMsg );
-										closeMenu(success_close_speed);
+										ActionPanelClose();
 										
 									}
 								});
@@ -188,7 +204,7 @@ function applyActionsOnQuestions(){
 								}else{
 									jQuery(this_link).html( document.getElementById("quickmove").value );
 									jQuery( hover_menu ).html( wgActionPanelRenameSuccessMsg );
-									closeMenu(success_close_speed);
+									ActionPanelClose();
 								}
 							});
 						}
@@ -285,7 +301,7 @@ function applyActionsOnQuestions(){
 									}else{
 										jQuery(".categorize_help_container").remove();
 										jQuery( hover_menu ).html( wgActionPanelCategorizeSuccessMsg );
-										closeMenu(success_close_speed);
+										ActionPanelClose();	
 											
 									}
 								});
