@@ -38,11 +38,19 @@ $wgSpecialPages[ "AutoCreateWiki" ] = "AutoCreateWikiPage";
  */
 $wgJobClasses[ "ACWCentral" ] = "AutoCreateWikiCentralJob";
 $wgAutoloadClasses[ "AutoCreateWikiCentralJob" ] = $dir. "AutoCreateWikiCentralJob.php";
+$wgJobClasses[ "ACWLocal" ] = "AutoCreateWikiLocalJob";
+$wgAutoloadClasses[ "AutoCreateWikiLocalJob" ] = $dir. "AutoCreateWikiLocalJob.php";
 
-#--- AutoCreateWiki class
-require_once( dirname(__FILE__) . "/AutoCreateWiki_helper.php" );
-#--- ajax functions
-require_once( dirname(__FILE__) . "/AutoCreateWiki_ajax.php" );
+/**
+ * AutoCreateWiki class
+ */
+require_once( $dir . "AutoCreateWiki_helper.php" );
+
+/**
+ * ajax functions
+ */
+require_once( $dir . "AutoCreateWiki_ajax.php" );
+
 global $wgAjaxExportList;
 $wgAjaxExportList[] = 'axACWRequestCheckName';
 $wgAjaxExportList[] = 'axACWRequestCheckAccount';
