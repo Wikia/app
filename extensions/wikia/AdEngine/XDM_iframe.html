@@ -1,8 +1,9 @@
 <html>
 <body>
+<script src="http://athena.dev.wikia-inc.com/athena/XDM.js"></script>
 <script>
 // Methods that are ok to call.
-var allowedMethods = [
+var XDM.allowedMethods = [
 	"Athena.hop",
 	"Athena.debug",
 	"Athena.getSlotnameFromDom",
@@ -12,51 +13,7 @@ var allowedMethods = [
 	"alert",
 	"console.log"
 ];
-
-
-// Function for parsing the query string into a nv pair. Unminified source in Athena if you need it
-parseQueryString = function (qstring){
-  var ret = [], intIndex; if (qstring.charAt(0) === '?') { qstring = qstring.substr(1); }
-  if (qstring.length === 0) {  return ret; } qstring=qstring.replace(/\;/g, '&', qstring);
-  var nvpairs=qstring.split('&'); for (var i = 0; i < nvpairs.length; i++){
-    if (nvpairs[i].length === 0){ continue; } var varName ='', varValue=''; if ((intIndex = nvpairs[i].indexOf('=')) != -1) { varName = decodeURIComponent(nvpairs[i].substr(0, intIndex));
-      varValue = decodeURIComponent(nvpairs[i].substr(intIndex + 1)); } else { varName = decodeURIComponent(nvpairs[i].substr(0, intIndex)); varValue = ''; } if (varName === '' || varValue === ''){ continue; } ret[varName]=varValue; } return ret;
-};
-
-
-// Get the name value pairs from qstring
-var nvpairs = parseQueryString(document.location.search);
-
-
-// Check to see if it's an allowed method.
-found = false;
-for (var i = 0; i < allowedMethods.length; i++){
-	if (nvpairs["method"] === allowedMethods[i]){
-		found = true;
-		break;
-	}
-}
-
-if ( found ){
-	// Execute the code. Note we prepend top to make sure it's executing in the right place.
-	var code = "top." + nvpairs["method"]; 
-	var functionArgs = [];
-	// Build up the argument list
-	for (var prop in nvpairs){
-		if (prop.substring(0, 3) == "arg"){
-			functionArgs.push(nvpairs[prop].replace(/"/g, "&quot;"));
-		}
-	}
-	if (functionArgs.length > 0){
-		code += '("' + functionArgs.join('","') + '");';
-	} else {
-		code += "();";
-	}
-	// console.log("Evaluating " + code + " from iframe");
-	eval(code);
-} else {
-	// console.log("Invalid method: " + nvpairs["method"]);
-}
+XDM.executeMessage(window.location.search);
 </script>
 </body>
 </html>
