@@ -50,6 +50,8 @@ class AutoCreateWikiLocalJob extends Job {
 		if( $this->mParams[ "founder"] ) {
 			$this->mFounder = User::newFromId( $this->mParams[ "founder"] );
 		}
+		$this->setWelcomeTalkPage();
+
 		wfProfileOut( __METHOD__ );
 
 		return true;
@@ -150,4 +152,31 @@ class AutoCreateWikiLocalJob extends Job {
 		return true;
 	}
 
+	/**
+	 * move main page to SEO-friendly name
+	 */
+	private function moveMainPage() {
+		global $wgSitename;
+
+		$mainPage = wfMsgForContent('Mainpage');
+		$targetPage = $wgSitename;
+
+		$sourceTitle = Title::newFromText( $source );
+		if( !$sourceTitle ) {
+		    print "Invalid page title: $source";
+		    return;
+		}
+
+		$mainArticle = new Article( $sourceTitle, 0 );
+		if( !$mainPageArticle->exists() ) {
+		    print "Article $source not exists.";
+			return;
+		}
+
+	/**
+	 * move main page to SEO-friendly name
+	 */
+	private function protectKeyPages() {
+
+	}
 }
