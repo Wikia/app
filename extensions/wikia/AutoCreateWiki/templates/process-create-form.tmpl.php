@@ -61,41 +61,6 @@ YE.onDOMReady(function () {
 	var redirMsg = '<?=wfMsg('autocreatewiki-redirect', $subdomain . "." . $domain)?>';
 	var usedMsg = new Array();
 
-/*	var addLogRow = function(inx, title, prevInfo) {
-		var logSteps = document.getElementById('awc-steps');
-		if ( logSteps ) {
-			// <li>
-			var stepRow = document.createElement('li');
-			stepRow.id = "awc-step" + inx;
-			// first div awc-titleX
-			var awcTitle = document.createElement('div');
-			YD.addClass(awcTitle, 'process-row-title');
-			awcTitle.id = "awc-title" + inx;
-			awcTitle.innerHTML = title;
-			
-			// second div awc-logger0
-			var awcLogger = document.createElement('div');
-			YD.addClass(awcLogger, 'process-row-loader');
-			awcLogger.id = "awc-logger" + inx;
-			awcLogger.innerHTML = '';
-			
-			// disable previews logger
-			var prevId = inx - 1;
-			var prevRow = document.getElementById('awc-step' + prevId);
-			if (prevId >= 0 && prevRow) {
-				var prevLogger = document.getElementById('awc-logger' + prevId);
-				prevLogger.innerHTML = prevInfo;
-			}
-			
-			// append div to li
-			stepRow.appendChild(awcTitle);
-			stepRow.appendChild(awcLogger);
-			
-			// append li to ul
-			logSteps.appendChild(stepRow);
-		}
-	}
-*/
 	var addLog = function (inx, text, resType)	{
 		var logSteps = YD.get('awc-log');
 		var styleColor = (resType == 'OK' || resType == 'END') ? "green" : "red";
@@ -107,6 +72,9 @@ YE.onDOMReady(function () {
 		} else {
 			logSteps.innerHTML = text + msgType;
 		}
+		if (typeof TieDivLibrary != "undefined" ) {
+			TieDivLibrary.calculate();
+		};
 	}
 
 	var prevMsg = "";
