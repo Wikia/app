@@ -104,10 +104,17 @@ class AutoCreateWikiPage extends SpecialPage {
 		$this->mPostedErrors = array();
 		$this->mErrors = 0;
 
-		$this->mDefSubdomain = (!empty($wgDevelEnvironment)) ? "awc.wikia-inc.com" : "wikia.com";
+
+		if( $wgDevelEnvironment ) {
+			global $wgDevelDomains;
+			$this->mDefSubdomain = array_shift( $wgDevelDomains );
+		}
+		else {
+			$this->mDefSubdomain = "wikia.com";
+		}
 
 		$this->mNbrCreated = $this->countCreatedWikis();
-		
+
 		if ( $this->mNbrCreated >= self::DAILY_LIMIT ) {
 			$wgOut->addHTML(wgMsg('autocreatewiki-limit-creation'));
 			return;
@@ -126,7 +133,7 @@ class AutoCreateWikiPage extends SpecialPage {
 				if ( $this->mNbrUserCreated >= self::DAILY_USER_LIMIT ) {
 					$wgOut->addHTML(wgMsg('autocreatewiki-limit-creation'));
 					return;
-				} 
+				}
 				if ( $this->setVarsFromSession() > 0 ) {
 					$this->createWiki();
 				}
@@ -141,7 +148,7 @@ class AutoCreateWikiPage extends SpecialPage {
 				if ( $this->mNbrUserCreated >= self::DAILY_USER_LIMIT ) {
 					$wgOut->addHTML(wgMsg('autocreatewiki-limit-creation'));
 					return;
-				}								
+				}
 				if ( $this->setVarsFromSession() > 0 ) {
 					$this->processCreatePage();
 				}
@@ -1132,13 +1139,13 @@ class AutoCreateWikiPage extends SpecialPage {
 			exec( "rm -rf {$this->mWikiData[ "images" ]}" );
 		}
 	}
-	
+
 	/**
 	 * get number of created Wikis for current day
 	 */
 	private function countCreatedWikis($iUser = 0) {
 		wfProfileIn( __METHOD__ );
-		
+
 		$dbr = wfGetDB( DB_SLAVE );
 		$where = array( "date_format(city_created, '%Y%m%d') = date_format(now(), '%Y%m%d')" );
 		if ( !empty($iUser) ) {
@@ -1150,23 +1157,23 @@ class AutoCreateWikiPage extends SpecialPage {
 			$where,
 			__METHOD__
 		);
-		
+
 		wfProfileOut( __METHOD__ );
 		return $oRow->count;
 	}
-	
+
 	/**
 	 * get number of created Wikis by user today
 	 */
 	private function countCreatedWikisByUser() {
 		global $wgUser;
 		wfProfileIn( __METHOD__ );
-		
+
 		$iUser = $wgUser->getId();
 		$iCount = $this->countCreatedWikis($iUser);
-		
+
 		wfProfileOut( __METHOD__ );
 		return $iCount;
 	}
-	
+
 }
