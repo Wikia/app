@@ -107,7 +107,7 @@ YE.onDOMReady(function () {
 				}
 				
 				if (isEnd > 0) {
-					addLog(loop, '<br />' + redirMsg, 'OK');
+					addLog(loop, '<br />' + redirMsg, 'END');
 					window.location.href = 'http://'+redirServer+'.<?=$domain?>';
 				} else if ( !(isError > 0) ) {
 					if (loop < 100) {
