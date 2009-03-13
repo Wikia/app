@@ -126,6 +126,29 @@ class VideoEmbedTool {
 		return $this->detailsPage($props);
 	}
 
+	function editVideo() {
+		global $wgRequest;
+		$itemTitle = $wgRequest->getVal('itemTitle');
+
+		$title = Title::newFromText( $itemTitle, NS_VIDEO );
+		$video = new VideoPage( $title );
+
+		$video->load();
+		$props['oname'] = '';
+		$props['provider'] = $video->getProvider();
+		$props['id'] = $video->getVideoId();
+		$props['vname'] = $title->getText();
+
+		$props['metadata'] = implode( ",", $video->getData() );
+		$props['code'] = $video->getEmbedCode( VIDEO_PREVIEW );
+		$props['href'] = $title->getPrefixedText();
+
+		$tmpl = new EasyTemplate(dirname(__FILE__).'/templates/');
+
+		$tmpl->set_vars(array('props' => $props));
+		return $tmpl->execute('edit');
+	}
+
 	function insertVideo() {
 		global $IP, $wgRequest, $wgUser, $wgTitle;
 		require_once( "$IP/extensions/wikia/WikiaVideo/VideoPage.php" );

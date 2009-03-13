@@ -480,6 +480,10 @@ FCK.SetupElementsWithRefId = function() {
 			case 'image':
 				FCK.ProtectImage(node);
 				break;
+			
+			case 'video':
+				FCK.ProtectVideo(node);
+				break;
 
 			case 'video':
 				//FCK.ProtectVideo(node);
@@ -831,7 +835,7 @@ FCK.ImageProtectSetupOverlayMenu = function(refid, div) {
 
 	div.appendChild(overlay);
 
-	overlay.innerHTML = '<span class="imageOverlayEdit" onclick="FCK.ProtectImageEdit('+refid+')">edit</span><span class="imageOverlayRemove" onclick="FCK.ProtectImageRemove('+refid+')">remove</span>';
+	overlay.innerHTML = '<span class="imageOverlayEdit" onclick="FCK.ProtectImageEdit('+refid+')">' + FCKLang.DlgSelectBtnModify + '</span><span class="imageOverlayRemove" onclick="FCK.ProtectImageRemove('+refid+')">' + FCKLang.DlgSelectBtnDelete + '</span>';
 
 	// add "move" option for images handled by contentEditable
 	if (FCK.UseContentEditable) {

@@ -12,7 +12,7 @@ if(!defined('MEDIAWIKI')) {
 $wgExtensionCredits['other'][] = array(
         'name' => 'Video Embed Tool',
         'author' => 'Bartek Łapiński, Inez Korczyński',
-	'version' => '0.91',
+	'version' => '0.95',
 );
 
 $dir = dirname(__FILE__).'/';
@@ -47,16 +47,16 @@ if ( !function_exists( 'extAddSpecialPage' ) ) {
 $wgExtensionMessagesFiles['WikiaVideoAdd'] = dirname(__FILE__) . '/WikiaVideoAdd.i18n.php';
 extAddSpecialPage( dirname(__FILE__) . '/WikiaVideoAdd_body.php', 'WikiaVideoAdd', 'WikiaVideoAddForm' );
 
-$wgExtensionFunctions[] = "VETSetupHook";
 $wgExtensionMessagesFiles['VideoEmbedTool'] = $dir.'/VideoEmbedTool.i18n.php';
 $wgHooks['EditPage::showEditForm:initial2'][] = 'VETSetup';
 $wgHooks['WikiaVideo::View:RedLink'][] = 'VETWIkiaVideoRedLink';
 $wgHooks['WikiaVideo::View:BlueLink'][] = 'VETWIkiaVideoBlueLink';
 
+
+// display the link for replacing the video on the video page
 function VETWikiaVideoBlueLink() {
         global $wgOut, $wgStylePath, $wgExtensionsPath, $wgStyleVersion, $wgHooks, $wgUser, $wgArticlePath, $wgContLang, $wgTitle;
 
-	//display the link for "replacing the video"
 	$special = $wgContLang->getFormattedNsText( NS_SPECIAL );
 	$url = $wgArticlePath;
 	$name = $wgTitle->getDBKey();
@@ -79,10 +79,10 @@ function VETWikiaVideoBlueLink() {
 	return true;
 }
 
+// display the link for adding the video on the video page
 function VETWikiaVideoRedLink() {
         global $wgOut, $wgStylePath, $wgExtensionsPath, $wgStyleVersion, $wgHooks, $wgUser, $wgContLang, $wgTitle, $wgArticlePath;
 
-	//display the link for "adding the video"
 	$special = $wgContLang->getFormattedNsText( NS_SPECIAL );
 	$url = $wgArticlePath;
 	$name = $wgTitle->getDBKey();
@@ -105,60 +105,11 @@ function VETWikiaVideoRedLink() {
 	return true;
 }
 
-function VETSetupHook() {
-	global $wgParser;		
-	$wgParser->setHook( "video", "VETParserHook" );
-	return true;
-}
-
 function VETArticleSave( $article, $user, $text, $summary) {
 	if (NS_VIDEO == $article->mTitle->getNamespace()) {
 		$text = $article->dataline . $text;
 	}
 	return true;
-}
-
-function VETParserHook( $input, $argv, $parser ) {
-	// todo get video name, get embed code, display that code
-	$name = '';
-	$width = 300;
-	$width_max = 600;
-	$height_max = 600;
-	$align = 'left';
-	$caption = '';
-	$thumb = 'false';
-
-	if (!empty($argv['name'])) {
-                $name = $argv['name'];
-        }
-	if (!empty($argv['align'])) {
-                $align = $argv['align'];
-        }
-	if (!empty($argv['caption'])) {
-                $caption = $argv['caption'];
-        }
-	if (!empty($argv['thumb'])) {
-                $thumb = $argv['thumb'];
-        }
-
-	$title = Title::makeTitle( NS_VIDEO, $name );
-
-	$video = new VideoPage( $title );
-	$video->load();
-
-	if (!empty($argv['width']) && settype($argv['width'], 'integer') && ($width_max >= $argv['width'])) {
-		$width = $argv['width'];
-	}
-
-	global $wgVideoLinks;
-	$dbk = ":" . $title->getDBkey();
-        if ( !isset( $wgVideoLinks[$dbk] ) ) {
-                $id = $title->getArticleID();
-                $wgVideoLinks[$dbk] = 1;
-        }
-
-	$output = $video->generateWindow( $align, $width, $caption, $thumb );
-	return $output;
 }
 
 function VETSetup($editform) {
@@ -169,14 +120,6 @@ function VETSetup($editform) {
 		$wgOut->addScript('<script type="text/javascript" src="'.$wgStylePath.'/common/yui_2.5.2/slider/slider-min.js?'.$wgStyleVersion.'"></script>');
 		$wgOut->addScript('<script type="text/javascript" src="'.$wgExtensionsPath.'/wikia/VideoEmbedTool/js/VET.js?'.$wgStyleVersion.'"></script>');
 		$wgOut->addScript('<link rel="stylesheet" type="text/css" href="'.$wgExtensionsPath.'/wikia/VideoEmbedTool/css/VET.css?'.$wgStyleVersion.'" />');
-		if (isset ($editform->ImageSeparator)) {
-			$sep = $editform->ImageSeparator ;
-			$marg = 'margin-left:5px;' ;
-		} else {
-			$sep = '' ;
-			$marg =  'clear: both;' ;
-			$editform->ImageSeparator = ' - ' ;
-		}
 	}
 	return true;
 }
@@ -214,12 +157,8 @@ $wgAjaxExportList[] = 'VET';
 function VET() {
 	global $wgRequest, $wgGroupPermissions, $wgAllowCopyUploads;
 
-	// todo change
 	wfLoadExtensionMessages('VideoEmbedTool');
 
-	// Overwrite configuration settings needed by image import functionality
-	$wgAllowCopyUploads = true;
-	$wgGroupPermissions['user']['upload_by_url']   = true;
 	$dir = dirname(__FILE__).'/';
 	require_once($dir.'VideoEmbedTool_body.php');
 

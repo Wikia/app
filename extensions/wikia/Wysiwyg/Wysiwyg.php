@@ -853,7 +853,6 @@ function WysiwygParserHookCallback($input, $args, $parser) {
 	return $input;
 }
 
-
 /**
  * Decide whether we should show first time edit popup
  */

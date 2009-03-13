@@ -11,6 +11,7 @@ $messages['en'] = array(
 	'wikiavideo-links' => 'Links',
 	'wikiavideo-gallery-template' => 'This video gallery is within a template, and is not editable from the view mode. Please edit the appriopriate template.',
 	'wikiavideo-not-supported' => 'This skin does not support inserting videos from the view mode into galleries.',
+	'wikiavideo-pixel' => ' pixel',
 );
 
 $messages['pl'] = array(
@@ -23,4 +24,5 @@ $messages['pl'] = array(
 	'wikiavideo-links' => 'Linki',
 	'wikiavideo-gallery-template' => 'Ta galeria wideo znajduje się w szablonie, i nie jest edytowalna w trybie podglądu. Proszę edytować odpowiedni szablon.',
 	'wikiavideo-not-supported' => 'Ta skórka nie obsługuje wstawiania wideo do galerii z trybu widoku.',
+	'wikiavideo-pixel' => ' pikseli',
 );

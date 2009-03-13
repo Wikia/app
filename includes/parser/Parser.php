@@ -1763,16 +1763,13 @@ class Parser
 
 						// Wysiwyg: mark videos
 						if (!empty($wgWysiwygParserEnabled)) {
-							$placeholder = Wysiwyg_SetRefId('video', array('text' => &$text, 'link' => $link, 'wasblank' => $wasblank, 'noforce' => $noforce, 'original' => $originalWikitext));
-
-							$text = $placeholder;
+							Wysiwyg_SetRefId('video', array('text' => &$text, 'link' => $link, 'wasblank' => $wasblank, 'noforce' => $noforce, 'original' => $originalWikitext));
 
 							$wgWysiwygParserEnabled = false;
 							$text = $this->replaceExternalLinks(preg_replace('/\x7e-start-\d+-stop/', '', $text));
 							$text = $this->replaceInternalLinks(preg_replace('/\x7d-\d{4}/', '', $text));
 							$wgWysiwygParserEnabled = true;
-							//$s .= $prefix . $this->armorLinks(WikiaVideo_makeVideo($nt, $text, $sk)).$trail;
-							$s .= $prefix . $text . $trail;
+							$s .= $prefix . $this->armorLinks(WikiaVideo_makeVideo($nt, $text, $sk)).$trail;
 						}
 						else {
 							$text = $this->replaceExternalLinks($text);

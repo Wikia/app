@@ -96,6 +96,7 @@ span._moz_dirty
 	opacity: 0.8;
 	color: #fff;
 	text-decoration: none;
+	text-transform: lowercase;
 	font-size: 10px;
 }
 

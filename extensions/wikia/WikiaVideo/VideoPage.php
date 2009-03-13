@@ -40,6 +40,7 @@ class VideoPage extends Article {
 		parent::view();
 	}
 
+	// 
 	function view() {
 		global $wgOut, $wgUser, $wgRequest;
 
@@ -90,7 +91,7 @@ class VideoPage extends Article {
 		$code = $this->getEmbedCode($width);
 
 		if(empty($thumb)) {
-			return "<div class=\"t{$align}\">".$code."</div>";
+			return "<div class=\"t{$align}\">{$code}</div>";
 		}
 
 		$url = $this->mTitle->getLocalURL('');
@@ -109,14 +110,46 @@ EOD;
 		return str_replace("\n", ' ', $s); // TODO: Figure out what for this string replace is
 	}
 
+	public function generateWysiwygWindow($refid, $title, $align, $width, $caption, $thumb) {
+		global $wgStylePath, $wgWysiwygMetaData;
+
+		$code = $this->getThumbnailCode($width);
+
+		// fill  meta data
+		$wgWysiwygMetaData[$refid]['href'] = !empty($title) ? $title->getPrefixedText() : '';
+		$wgWysiwygMetaData[$refid]['align'] = $align;
+		if (!empty($width)) $wgWysiwygMetaData[$refid]['width'] = intval($width);
+		if ($caption != '') $wgWysiwygMetaData[$refid]['caption'] = $caption;
+
+		if(empty($thumb)) {
+			return "<div class=\"t{$align}\" refid=\"{$refid}\" style=\"position:relative\">{$code}</div>";
+		}
+
+		$wgWysiwygMetaData[$refid]['thumb'] = 1;
+
+		$url = $this->mTitle->getLocalURL('');
+
+		$s = <<<EOD
+<div class="thumb t{$align}" refid="{$refid}" style="position:relative">
+	<div class="thumbinner" style="width:{$width}px;">
+		{$code}
+		<div class="thumbcaption">
+			<div class="magnify"><a href="{$url}" class="internal"><img src="{$wgStylePath}/common/images/magnify-clip.png" width="15" height="11" alt="" /></a></div>
+			$caption
+		</div>
+	</div>
+</div>
+EOD;
+		return str_replace("\n", ' ', $s); // TODO: Figure out what for this string replace is
+
+	}
+
 	public function parseUrl($url, $load = true) { // TODO: Consider renaming to loadFromURL
 		$provider = '';
 		$id = '';
 
 		$url = trim($url);
 
-
-		// todo make sure to check just http://something.else/ part, omit whatever follows
 		$fixed_url = strtoupper( $url );
 		$test = strpos( $fixed_url, "HTTP://" );
 		if( !false === $test ) {
@@ -339,7 +372,7 @@ EOD;
 	}
 
 	// run a check from provided api or elsewhere
-// to see if we can go to details page or not
+	// to see if we can go to details page or not
 	public function checkIfVideoExists() {
 		global $wgWikiaVideoProviders;
 		$exists = false;
@@ -421,6 +454,7 @@ EOD;
 		$this->mName = $name;
 	}
 
+	// return provider url
 	public function getProviderUrl() {
 		global $wgWikiaVideoProviders;
 		switch( $wgWikiaVideoProviders[$this->mProvider] ) {
@@ -444,13 +478,15 @@ EOD;
 				return '';
 		}
 	}
-
+	
+	// return video name
 	public function getVideoName() {
 		$vname = '';
 		isset( $this->mVideoName ) ? $vname = $this->mVideoName : $vname = '';
 		return $vname;
 	}
 
+	// return url for the video file
 	public static function getUrl( $metadata ) {
 		global $wgWikiaVideoProviders;
 		$meta = split( ",", $metadata );
@@ -509,6 +545,7 @@ EOD;
 		return $this->mData;
 	}
 
+	// return normalized name for db purposes
 	public static function getNameFromTitle( $title ) {
 		global $wgCapitalLinks;
 		if ( !$wgCapitalLinks ) {
@@ -519,10 +556,10 @@ EOD;
 		return ":" . $name;
 	}
 
+	// save the video info in db, handles overwrite too
 	public function save() {
 		global $wgUser, $wgWikiaVideoProviders, $wgContLang;
 
-		//$this->mTitle = Title::newFromText($this->mName, NS_VIDEO );
 		$desc = wfMsg( 'wikiavideo-added', $this->mTitle->getText() );
 
                 $dbw = wfGetDB( DB_MASTER );
@@ -563,6 +600,9 @@ EOD;
                         'IGNORE'
                 );
 
+		$cat = $wgContLang->getFormattedNsText( NS_CATEGORY );
+		$saved_text = '[[' . $cat . ':' . wfMsg( 'wikiavideo-category' ) . ']]';		
+
                 if( $dbw->affectedRows() == 0 ) {
 			// we are updating
                         $desc = "updated video [[" . self::getNameFromTitle( $this->mTitle ) . "]]";
@@ -601,12 +641,11 @@ EOD;
 			// may also need modifying watchlist...
 			$log = new LogPage( 'upload' );
 			$log->addEntry( 'overwrite', $this->mTitle, 'updated video' );
+			$saved_text = $this->getContent();
 		}
-		$cat = $wgContLang->getFormattedNsText( NS_CATEGORY );
-		$this->doEdit( '[[' . $cat . ':' . wfMsg( 'wikiavideo-category' ) . ']]', $desc );
 
+		$this->doEdit( $saved_text, $desc );
 		$dbw->immediateCommit();
-
 	}
 
 	public function load() {
@@ -633,6 +672,7 @@ EOD;
 		}
 	}
 
+	// handle video page revert
 	function revert() {
 		global $wgOut, $wgRequest, $wgUser;
 		$timestamp = $wgRequest->getVal( 'oldvideo' );
@@ -721,6 +761,7 @@ EOD;
                         $wgOut->addWikiMsg( 'morelinkstoimage', $this->mTitle->getPrefixedDBkey() );
         }
 
+	// return embed code for the particular video per provider
         public function getEmbedCode( $width = 300, $autoplay = false ) {
 		global $wgWikiaVideoProviders;
                 $embed = "";
@@ -765,9 +806,57 @@ EOD;
 			if( 'custom' != $code ) {
                                 $embed = "<embed src=\"{$url}\" width=\"{$width}\" height=\"{$height}\" wmode=\"transparent\" pluginspage=\"http://www.macromedia.com/go/getflashplayer\" type=\"application/x-shockwave-flash\"> </embed>";
 			}
-
                 return $embed;
         }
+
+	private function getThumbnailCode($width) {
+		global $wgExtensionsPath, $wgWikiaVideoProviders;
+
+		$thumb = $wgExtensionsPath . '/wikia/VideoEmbedTool/images/vid_thumb.jpg';
+		switch( $wgWikiaVideoProviders[$this->mProvider] ) {
+			case "metacafe":
+				$thumb = 'http://www.metacafe.com/thumb/' . $this->mId . '.jpg';	
+				break;
+			case "youtube":
+				$thumb = 'http://img.youtube.com/vi/' . $this->mId . '/0.jpg';
+				break;
+			case "vimeo":
+				$file = @file_get_contents( "http://vimeo.com/api/clip/" . $this->mId . '.php', FALSE );
+				if ($file) {
+					$data = unserialize( $file );
+					$thumb = trim( $data[0]["thumbnail_large"] );
+				}
+				break;
+			case "5min":
+				break;
+				/* todo test
+				$file = @file_get_contents( "http://api.5min.com/video/" . $this->mId . '/info.xml', FALSE );
+					if ($file) {
+						$doc = new DOMDocument;
+						@$doc->loadHTML( $file );
+						if( $item = $doc->getElementsByTagName('item')->item( 0 ) ) {
+							$thumb = trim( $item->getElementsByTagNameNS('media', 'thumbnail')->item(0)->getAttribute('url') );
+						}
+					}				
+				break;
+				*/
+			case "sevenload":					
+			case "myvideo":
+			case "gamevideos":
+			case 'southparkstudios': // no API
+			default:
+				break;
+		}
+
+		$height = round( $width / $this->getRatio() );	
+		if ( '' != $thumb) {
+			$image = "<img src=\"$thumb\" height=\"$height\" width=\"$width\" alt=\"\" />";
+		} else {
+			$image = '';
+		}
+						
+ 		return "$image<div style=\"width: {$width}px; height: {$height}px; background: transparent url({$wgExtensionsPath}/wikia/Wysiwyg/fckeditor/editor/plugins/video/video.png) no-repeat 50% 50%; position: absolute; top: 0\"><br /></div>";
+	}
 
 	function openShowVideo() {
 		global $wgOut;
@@ -793,8 +882,7 @@ EOD;
 		$provider = $wgWikiaVideoProviders[$this->mProvider];
 		$purl = $this->getProviderUrl();
 		$ratio = $this->getTextRatio();
-		// todo messagize
-		$s = '<div id="VideoPageInfo"><a href="' . $url . '">' . $this->mTitle->getText() . ' </a> (' . $ratio . ' pixel';
+		$s = '<div id="VideoPageInfo"><a href="' . $url . '">' . $this->mTitle->getText() . ' </a> (' . $ratio . wfMsg( 'wikiavideo-pixel' );
 		$s .= ', provider: <a href="' . $purl . '" class="external" target="_blank">' . $provider . '</a>)</div>' ;
 		$wgOut->addHTML( $s );
 	}

@@ -59,7 +59,7 @@ class QuickVideoAddForm extends SpecialPage {
 		( '' != $wgRequest->getVal( 'wpQuickVideoAddUrl' ) ) ? $this->mUrl = $wgRequest->getVal( 'wpQuickVideoAddUrl' ) : $this->mUrl = '';	
 
 		if ( ( '' != $this->mName ) && ( '' != $this->mUrl ) ) {
-			$title = Title::makeTitle( NS_SPECIAL, $this->mName );
+			$title = Title::makeTitle( NS_VIDEO, $this->mName );
 			if ( $title instanceof Title ) {
 				$video = new VideoPage( $title );	
 				$video->parseUrl( $this->mUrl );
