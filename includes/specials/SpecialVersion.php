@@ -39,7 +39,6 @@ class SpecialVersion {
 		if  ( $wgSpecialVersionShowHooks ) {
 			$text .= $this->wgHooks();
 		}
-		Wikia::log( __METHOD__, "execute", $text );
 		$wgOut->addWikiText( $text );
 		$wgOut->addHTML( $this->IPInfo() );
 		$wgOut->addHTML( '</div>' );
