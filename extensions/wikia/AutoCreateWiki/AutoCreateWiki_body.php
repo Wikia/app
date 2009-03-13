@@ -79,7 +79,7 @@ class AutoCreateWikiPage extends SpecialPage {
 		$this->mMYSQLbin =
 			( file_exists("/usr/bin/mysql") && is_executable("/usr/bin/mysql") )
 			? "/usr/bin/mysql" : "/opt/wikia/bin/mysql";
-		
+
 		/**
 		 * set new wiki domain
 		 */
@@ -260,7 +260,7 @@ class AutoCreateWikiPage extends SpecialPage {
 			$this->log( "Cannot set data in city_list table" );
 			$wgOut->addHTML(wfMsg('autocreatewiki-step3-error'));
 			return;
-		} 
+		}
 		/*
 		 * get Wiki ID
 		 */
@@ -524,8 +524,15 @@ class AutoCreateWikiPage extends SpecialPage {
 		 * commit all in new database
 		 */
 		$this->setInfoLog( 'OK', wfMsg('autocreatewiki-step9') );
-		
+
 		$dbw->commit();
+
+		/**
+		 * add central job
+		 */
+		$centralJob = new AutoCreateWikiCentralJob( $wgTitle, $this->mWikiData );
+		$centralJob->insert();
+
 
 		$this->setInfoLog( 'END', 'Done.' );
 

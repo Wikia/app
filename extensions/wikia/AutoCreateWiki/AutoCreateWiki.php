@@ -33,6 +33,12 @@ $wgExtensionMessagesFiles[ "AutoCreateWiki" ] = $dir . "AutoCreateWiki.i18n.php"
 $wgAutoloadClasses[ "AutoCreateWikiPage" ] = $dir. "AutoCreateWiki_body.php";
 $wgSpecialPages[ "AutoCreateWiki" ] = "AutoCreateWikiPage";
 
+/**
+ * register job class
+ */
+$wgJobClasses[ "ACWCentral" ] = "AutoCreateWikiCentralJob";
+$wgAutoloadClasses[ "AutoCreateWikiCentralJob" ] = $dir. "AutoCreateWikiCentralJob.php";
+
 #--- AutoCreateWiki class
 require_once( dirname(__FILE__) . "/AutoCreateWiki_helper.php" );
 #--- ajax functions
