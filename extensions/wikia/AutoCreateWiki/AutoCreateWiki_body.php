@@ -546,6 +546,12 @@ class AutoCreateWikiPage extends SpecialPage {
 		$centralJob = new AutoCreateWikiCentralJob( $this->mTitle, $this->mWikiData );
 		$centralJob->insert();
 
+		/**
+		 * add local job
+		 */
+		$localJob = new AutoCreateWikiLocalJob(	Title::newFromText( NS_MAIN, "Main" ), $this->mWikiData );
+		$localJob->insert();
+
 		$this->setInfoLog( 'END', 'Done.' );
 
 		/**
