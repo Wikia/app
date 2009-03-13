@@ -512,7 +512,7 @@ class AutoCreateWikiPage extends SpecialPage {
 			/**
 			 * WikiMove has internal log engine
 			 */
-            foreach( $WikiMover->getLog( true ) as $log ) {
+            foreach( $wikiMover->getLog( true ) as $log ) {
                 $this->log( $log["info"] );
             }
 			$this->setInfoLog( 'OK', 'test 6' );
