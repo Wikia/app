@@ -328,7 +328,7 @@ class AutoCreateWikiPage extends SpecialPage {
 			'wgSharedDB'				=> 'wikicities',
 			'wgLocalInterwiki'			=> $this->mWikiData[ 'title' ],
 			'wgLanguageCode'			=> $this->mWikiData['language'],
-			'wgServer'					=> "http://{$this->mWikiData["subdomain"]}." . ".wikia.com",
+			'wgServer'					=> "http://{$this->mWikiData["subdomain"]}." . "wikia.com",
 			'wgFavicon'					=> '$wgUploadPath/6/64/Favicon.ico',
 			'wgDefaultSkin'				=> 'monaco',
 			'wgDefaultTheme'			=> 'sapphire',
@@ -560,89 +560,11 @@ class AutoCreateWikiPage extends SpecialPage {
 		wfProfileOut( __METHOD__ );
 	}
 
-	/**
-	 * prepareTest, clear test database
-	 */
-	private function prepareTest() {
-
-		global $wgContLang;
-
-		$languages = array( "de", "en", "pl", "fr", "es" );
-		shuffle( $languages );
-
-		$this->mWikiData[ "hub" ]		= rand( 1, 19 );
-        $this->mWikiData[ "name"]       = strtolower( trim( self::TESTDB ) );
-        $this->mWikiData[ "title" ]     = trim( $wgContLang->ucfirst( self::TESTDB ) . " Wiki" );
-        $this->mWikiData[ "language" ]  = array_shift( $languages );
-        $this->mWikiData[ "subdomain" ] = $this->mWikiData[ "name"];
-        $this->mWikiData[ "redirect"]   = $this->mWikiData[ "name"];
-		$this->mWikiData[ "dir_part"]   = $this->mWikiData[ "name"];
-		$this->mWikiData[ "dbname"]     = substr( str_replace( "-", "", $this->mWikiData[ "name"] ), 0, 64);
-		$this->mWikiData[ "path"]       = "/usr/wikia/docroot/wiki.factory";
-        $this->mWikiData[ "images"]     = self::IMGROOT . $this->mWikiData[ "name"];
-        $this->mWikiData[ "testWiki"]   = true;
-
-        if ( isset( $this->mWikiData[ "language" ] ) && $this->mWikiData[ "language" ] !== "en" ) {
-			$this->mWikiData[ "subdomain" ] = strtolower( $this->mWikiData[ "language"] ) . "." . $this->mWikiData[ "name"];
-			$this->mWikiData[ "redirect" ]  = strtolower( $this->mWikiData[ "language" ] ) . "." . ucfirst( $this->mWikiData[ "name"] );
-			$this->mWikiData[ "dbname" ]    = strtolower( str_replace( "-", "", $this->mWikiData[ "language" ] ). $this->mWikiData[ "dbname"] );
-			$this->mWikiData[ "images" ]   .= "/" . strtolower( $this->mWikiData[ "language" ] );
-			$this->mWikiData[ "dir_part" ] .= "/" . strtolower( $this->mWikiData[ "language" ] );
-		}
-
-		/**
-		 * drop test table
-		 */
-		$dbw = wfGetDB( DB_MASTER );
-		$dbw->query( sprintf( "DROP DATABASE IF EXISTS %s", $this->mWikiData[ "dbname"] ) );
-
-		/**
-		 * clear wikifactory tables: city_list, city_variables, city_domains
-		 */
-		$city_id = WikiFactory::DBtoID( $this->mWikiData[ "dbname"] );
-		if( $city_id ) {
-			$dbw->begin();
-			$dbw->delete(
-				wfSharedTable( "city_domains" ),
-				array( "city_id" => $city_id ),
-				__METHOD__
-			);
-			$dbw->delete(
-				wfSharedTable( "city_domains" ),
-				array( "city_domain" => sprintf("%s.%s", $this->mWikiData[ "subdomain" ], "wikia.com" ) ),
-				__METHOD__
-			);
-			$dbw->delete(
-				wfSharedTable( "city_domains" ),
-				array( "city_domain" => sprintf("www.%s.%s", $this->mWikiData[ "subdomain" ], "wikia.com" ) ),
-				__METHOD__
-			);
-			$dbw->delete(
-				wfSharedTable( "city_variables" ),
-				array( "cv_city_id" => $city_id ),
-				__METHOD__
-			);
-			$dbw->delete(
-				wfSharedTable( "city_cat_mapping" ),
-				array( "city_id" => $city_id ),
-				__METHOD__
-			);
-			$dbw->commit();
-		}
-
-		/**
-		 * remove image directory
-		 */
-		if ( file_exists( $this->mWikiData[ "images" ] ) && is_dir( $this->mWikiData[ "images" ] ) ) {
-			exec( "rm -rf {$this->mWikiData[ "images" ]}" );
-		}
-	}
-
 	private function prepareValues() {
 		global $wgContLang;
 		wfProfileIn( __METHOD__ );
 
-		$this->mWikiData[ "hub" ]		= rand( 1, 19 );
+		$this->mWikiData[ "hub" ]		= $this->mCategory;
         $this->mWikiData[ "name"]       = strtolower( trim( $this->awcDomain ) );
         $this->mWikiData[ "title" ]     = trim( $wgContLang->ucfirst( $this->awcName ) . " Wiki" );
         $this->mWikiData[ "language" ]  = $this->awcLanguage;
@@ -1110,4 +1032,83 @@ class AutoCreateWikiPage extends SpecialPage {
 		wfProfileOut( __METHOD__ );
 		return $key;
 	}
+
+	/**
+	 * prepareTest, clear test database
+	 */
+	private function prepareTest() {
+
+		global $wgContLang;
+
+		$languages = array( "de", "en", "pl", "fr", "es" );
+		shuffle( $languages );
+
+		$this->mWikiData[ "hub" ]		= rand( 1, 19 );
+        $this->mWikiData[ "name"]       = strtolower( trim( self::TESTDB ) );
+        $this->mWikiData[ "title" ]     = trim( $wgContLang->ucfirst( self::TESTDB ) . " Wiki" );
+        $this->mWikiData[ "language" ]  = array_shift( $languages );
+        $this->mWikiData[ "subdomain" ] = $this->mWikiData[ "name"];
+        $this->mWikiData[ "redirect"]   = $this->mWikiData[ "name"];
+		$this->mWikiData[ "dir_part"]   = $this->mWikiData[ "name"];
+		$this->mWikiData[ "dbname"]     = substr( str_replace( "-", "", $this->mWikiData[ "name"] ), 0, 64);
+		$this->mWikiData[ "path"]       = "/usr/wikia/docroot/wiki.factory";
+        $this->mWikiData[ "images"]     = self::IMGROOT . $this->mWikiData[ "name"];
+        $this->mWikiData[ "testWiki"]   = true;
+
+        if ( isset( $this->mWikiData[ "language" ] ) && $this->mWikiData[ "language" ] !== "en" ) {
+			$this->mWikiData[ "subdomain" ] = strtolower( $this->mWikiData[ "language"] ) . "." . $this->mWikiData[ "name"];
+			$this->mWikiData[ "redirect" ]  = strtolower( $this->mWikiData[ "language" ] ) . "." . ucfirst( $this->mWikiData[ "name"] );
+			$this->mWikiData[ "dbname" ]    = strtolower( str_replace( "-", "", $this->mWikiData[ "language" ] ). $this->mWikiData[ "dbname"] );
+			$this->mWikiData[ "images" ]   .= "/" . strtolower( $this->mWikiData[ "language" ] );
+			$this->mWikiData[ "dir_part" ] .= "/" . strtolower( $this->mWikiData[ "language" ] );
+		}
+
+		/**
+		 * drop test table
+		 */
+		$dbw = wfGetDB( DB_MASTER );
+		$dbw->query( sprintf( "DROP DATABASE IF EXISTS %s", $this->mWikiData[ "dbname"] ) );
+
+		/**
+		 * clear wikifactory tables: city_list, city_variables, city_domains
+		 */
+		$city_id = WikiFactory::DBtoID( $this->mWikiData[ "dbname"] );
+		if( $city_id ) {
+			$dbw->begin();
+			$dbw->delete(
+				wfSharedTable( "city_domains" ),
+				array( "city_id" => $city_id ),
+				__METHOD__
+			);
+			$dbw->delete(
+				wfSharedTable( "city_domains" ),
+				array( "city_domain" => sprintf("%s.%s", $this->mWikiData[ "subdomain" ], "wikia.com" ) ),
+				__METHOD__
+			);
+			$dbw->delete(
+				wfSharedTable( "city_domains" ),
+				array( "city_domain" => sprintf("www.%s.%s", $this->mWikiData[ "subdomain" ], "wikia.com" ) ),
+				__METHOD__
+			);
+			$dbw->delete(
+				wfSharedTable( "city_variables" ),
+				array( "cv_city_id" => $city_id ),
+				__METHOD__
+			);
+			$dbw->delete(
+				wfSharedTable( "city_cat_mapping" ),
+				array( "city_id" => $city_id ),
+				__METHOD__
+			);
+			$dbw->commit();
+		}
+
+		/**
+		 * remove image directory
+		 */
+		if ( file_exists( $this->mWikiData[ "images" ] ) && is_dir( $this->mWikiData[ "images" ] ) ) {
+			exec( "rm -rf {$this->mWikiData[ "images" ]}" );
+		}
+	}
+
 }
