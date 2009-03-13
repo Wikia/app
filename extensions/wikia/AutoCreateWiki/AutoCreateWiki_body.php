@@ -495,7 +495,7 @@ class AutoCreateWikiPage extends SpecialPage {
 			&& $this->mStarters[ $this->mWikiData[ "hub" ] ]
 			&& $this->mWikiData[ "language" ] === "en" ) {
 			$this->setInfoLog( 'OK', 'test 1' );
-				
+
 			$wikiMover = WikiMover::newFromIDs(
 				$this->mStarters[ $this->mWikiData[ "hub" ] ], /** source **/
 				$this->mWikiId /** target **/
@@ -512,7 +512,7 @@ class AutoCreateWikiPage extends SpecialPage {
 			/**
 			 * WikiMove has internal log engine
 			 */
-            foreach( $oWikiMover->getLog( true ) as $log ) {
+            foreach( $WikiMover->getLog( true ) as $log ) {
                 $this->log( $log["info"] );
             }
 			$this->setInfoLog( 'OK', 'test 6' );
