@@ -245,7 +245,7 @@ class AutoCreateWikiPage extends SpecialPage {
 		$insertFields = array(
 			'city_title'          => $this->mWikiData[ "title" ],
 			'city_dbname'         => $this->mWikiData[ "dbname"],
-			'city_url'            => sprintf( "http://%s.%s/", $this->mWikiData[ "subdomain" ], $this->mDefSubdomain ),
+			'city_url'            => sprintf( "http://%s.%s/", $this->mWikiData[ "subdomain" ], ".wikia.com" ),
 			'city_founding_user'  => $wgUser->getID(),
 			'city_founding_email' => $wgUser->getEmail(),
 			'city_path'           => $this->mWikiData[ "path" ],
@@ -279,11 +279,11 @@ class AutoCreateWikiPage extends SpecialPage {
 			array(
 				array(
 					'city_id'     =>  $this->mWikiId,
-					'city_domain' => sprintf("%s.%s", $this->mWikiData[ "subdomain" ], $this->mDefSubdomain )
+					'city_domain' => sprintf("%s.%s", $this->mWikiData[ "subdomain" ], "wikia.com" )
 				),
 				array(
 					'city_id'     =>  $this->mWikiId,
-					'city_domain' => sprintf("www.%s.%s", $this->mWikiData[ "subdomain" ], $this->mDefSubdomain )
+					'city_domain' => sprintf("www.%s.%s", $this->mWikiData[ "subdomain" ], "wikia.com" )
 				)
 			),
 			__METHOD__
@@ -328,7 +328,7 @@ class AutoCreateWikiPage extends SpecialPage {
 			'wgSharedDB'				=> 'wikicities',
 			'wgLocalInterwiki'			=> $this->mWikiData[ 'title' ],
 			'wgLanguageCode'			=> $this->mWikiData['language'],
-			'wgServer'					=> "http://{$this->mWikiData["subdomain"]}." . $this->mDefSubdomain,
+			'wgServer'					=> "http://{$this->mWikiData["subdomain"]}." . ".wikia.com",
 			'wgFavicon'					=> '$wgUploadPath/6/64/Favicon.ico',
 			'wgDefaultSkin'				=> 'monaco',
 			'wgDefaultTheme'			=> 'sapphire',
@@ -609,12 +609,12 @@ class AutoCreateWikiPage extends SpecialPage {
 			);
 			$dbw->delete(
 				wfSharedTable( "city_domains" ),
-				array( "city_domain" => sprintf("%s.%s", $this->mWikiData[ "subdomain" ], $this->mDefSubdomain ) ),
+				array( "city_domain" => sprintf("%s.%s", $this->mWikiData[ "subdomain" ], "wikia.com" ) ),
 				__METHOD__
 			);
 			$dbw->delete(
 				wfSharedTable( "city_domains" ),
-				array( "city_domain" => sprintf("www.%s.%s", $this->mWikiData[ "subdomain" ], $this->mDefSubdomain ) ),
+				array( "city_domain" => sprintf("www.%s.%s", $this->mWikiData[ "subdomain" ], "wikia.com" ) ),
 				__METHOD__
 			);
 			$dbw->delete(
