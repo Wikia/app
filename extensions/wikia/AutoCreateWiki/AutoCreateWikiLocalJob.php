@@ -172,6 +172,7 @@ class AutoCreateWikiLocalJob extends Job {
 		    print "Article $source not exists.";
 			return;
 		}
+	}
 
 	/**
 	 * move main page to SEO-friendly name
