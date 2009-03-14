@@ -191,8 +191,9 @@ class InviteSpecialPage extends SpecialPage {
 		$to = '';
 		$lim = 0;
 		foreach ( $addresses as $address ) {
-			if ( strpos( $address, '@' ) && $lim++ < $wgNotificationEmails ) {
-				$to .= ( $to == '' ? '' : ', ' ) . trim( $address );
+			$address = trim( $address );
+			if ( User::isValidEmailAddr( $address ) && $lim++ < $wgNotificationEmails ) {
+				$to .= ( $to == '' ? '' : ', ' ) . $address;
 			}
 		}
 
