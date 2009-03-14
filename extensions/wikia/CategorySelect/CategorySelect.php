@@ -42,7 +42,7 @@ $wgAjaxExportList[] = 'CategorySelectGenerateHTMLforView';
  * @author Maciej Błaszkowski <marooned at wikia-inc.com>
  */
 function CategorySelectInit() {
-	global $wgRequest;
+	global $wgRequest, $wgTitle;
 
 	//don't use CategorySelect for undo edits
 	$undoafter = $wgRequest->getVal('undoafter');
@@ -51,6 +51,11 @@ function CategorySelectInit() {
 	$oldid = $wgRequest->getVal('oldid');
 	$action = $wgRequest->getVal('action', 'view');
 	if (($undo > 0 && $undoafter > 0) || $diff || ($oldid && $action != 'edit' && $action != 'submit')) {
+		return true;
+	}
+
+	//don't initialize on CSS and JS user subpages
+	if ( $wgTitle->isCssJsSubpage() ) {
 		return true;
 	}
 
