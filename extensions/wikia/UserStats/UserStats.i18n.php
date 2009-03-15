@@ -32,10 +32,10 @@ function efWikiaUserStats() {
 	'top_fans_stats_comment_score_negative_given' => '{{PLURAL:$1|Thumb Down Given|Thumbs Down Given}}',
 	'top_fans_stats_gifts_rec_count' => '{{PLURAL:$1|Gift Received|Gifts Received}}',
 	'top_fans_stats_gifts_sent_count' => '{{PLURAL:$1|Gift Sent|Gifts Sent}}',
-	'level_advance_subject' => 'You are now a "$1" on {{SITENAME}}!',
+	'level_advance_subject' => 'You have reached the level of "$1" on {{SITENAME}}!',
 	'level_advance_body' => 'Hi $1:
 
-You are now a "$2" on {{SITENAME}}!
+You have reached the level of "$2" on {{SITENAME}}!
 
 Congratulations,
 
