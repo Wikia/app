@@ -843,25 +843,6 @@ body .header_menu_button * {
 	height: 30px;
 }
 
-.questionhover{
-	position:absolute;
-	width:13px;
-	height:13px;
-}
-.questionhovermenu{
-	position:absolute;
-	background:#eeeeee;
-	border:1px solid #c9c9c9;
-	width:250px;
-	padding:5px;
-}
-.questionhoverlinks{
-	margin-bottom:5px;
-}
-.quickanswer{
-	margin-bottom:5px;
-}
-
 #unanswered-links{
 	margin-top:10px;
 }

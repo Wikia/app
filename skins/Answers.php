@@ -290,22 +290,6 @@ wfRunHooks('GetHTMLAfterBody', array (&$this));
 				echo '<div class="sectionedit">[<a href="'. $this->data['content_actions']['edit']['href'] .'">'. wfMsg('editsection') .'</a>]</div>';
 				echo '<div id="answer_title">'. wfMsg("answer_title") .'</div>';
 				
-				if ( $wgUser->isAnon() ) {
-				$ads = '<div id="ads-answered-left">
-				<script type="text/javascript">
-					google_ad_client    = "pub-4086838842346968";
-					google_ad_channel = (( wgIsAnswered )?"7000000004":"7000000003");
-					google_ad_width     = "120";
-					google_ad_height    = "240";
-					google_ad_format    = google_ad_width + "x" + google_ad_height + "_as";
-					google_ad_type      = "text";
-					google_color_link   = "002BB8";
-					google_hints	    = "' . $google_hints . '";
-				</script>
-				<script language="JavaScript" src="http://pagead2.googlesyndication.com/pagead/show_ads.js"></script>
-				</div>';
-				echo $ads;
-				}
 			}
 			
 			$bodyContentClass = ' class="question"';
@@ -338,11 +322,12 @@ wfRunHooks('GetHTMLAfterBody', array (&$this));
 				<script type="text/javascript">
 					google_ad_client    = "pub-4086838842346968";
 					google_ad_channel = (( wgIsAnswered )?"7000000004":"7000000003");
-					google_ad_width     = "200";
-					google_ad_height    = "200";
+					google_ad_width     = "300";
+					google_ad_height    = "250";
 					google_ad_format    = google_ad_width + "x" + google_ad_height + "_as";
 					google_ad_type      = "text";
 					google_color_link   = "002BB8";
+					google_color_border = "FFFFFF";
 					google_hints	    = "' . $google_hints . '";
 				</script>
 				<script language="JavaScript" src="http://pagead2.googlesyndication.com/pagead/show_ads.js"></script>
@@ -350,6 +335,22 @@ wfRunHooks('GetHTMLAfterBody', array (&$this));
 				echo $ads;
 			}
 		
+		} else if ( $is_question && $answer_page->isArticleAnswered() ) {
+			if ( $wgUser->isAnon() ) {
+				$ads = '<script type="text/javascript">
+					google_ad_client    = "pub-4086838842346968";
+					google_ad_channel = (( wgIsAnswered )?"7000000004":"7000000003");
+					google_ad_width     = "468";
+					google_ad_height    = "60";
+					google_ad_format    = google_ad_width + "x" + google_ad_height + "_as";
+					google_ad_type      = "text";
+					google_color_link   = "002BB8";
+					google_color_border = "FFFFFF";
+					google_hints	    = "' . $google_hints . '";
+				</script>
+				<script language="JavaScript" src="http://pagead2.googlesyndication.com/pagead/show_ads.js"></script>';
+				echo $ads;
+			}
 		}?>
 		
 		<?php
