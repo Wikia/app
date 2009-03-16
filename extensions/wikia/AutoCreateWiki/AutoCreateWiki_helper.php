@@ -157,7 +157,7 @@ class AutoCreateWiki {
 		$sResponse = "";
 		if ($sValue == "") {
 			$sResponse = wfMsg('autocreatewiki-empty-wikiname');
-		} elseif (preg_match('/[^a-z0-9-]/i', $sValue)) {
+		} elseif (preg_match('/[^a-z0-9-\s]/i', $sValue)) {
 			$sResponse = wfMsg('autocreatewiki-invalid-wikiname');
 		}
 		wfProfileOut(__METHOD__);
