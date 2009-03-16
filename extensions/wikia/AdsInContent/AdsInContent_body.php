@@ -218,7 +218,7 @@ class AdsInContent {
 	public static function getGoogleAdUnit($width, $height, $adChannel = '') {
 		global $wgUser;
 
-		$googleAdClient = self::googleAdClient;
+/*	$googleAdClient = self::googleAdClient;
 
 		$body = <<<END
 <script type="text/javascript">
@@ -246,6 +246,8 @@ if ( $wgUser->getSkin() instanceof SkinMonaco ) {
 }
 
 $body .= '//--></script><script src="http://pagead2.googlesyndication.com/pagead/show_ads.js" type="text/javascript"></script>';
+*/
+		$body = '<script type="text/javascript">GA_googleFillSlot("' . $adChannel . '");</script>';
 
 		return $body;
 	}
