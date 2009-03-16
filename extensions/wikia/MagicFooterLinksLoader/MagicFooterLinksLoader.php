@@ -146,114 +146,105 @@ EOD;
 	}
 }
 
-class MagicFooterLinksCache {
+function MagicFooterLinks_getLinks() {
+	wfProfileIn(__METHOD__);
+	global $wgMemc;
 
-	function load() {
-		wfProfileIn(__METHOD__);
-		global $wgMemc;
+	$links = false;
 
-		$result = false;
-
-		wfProfileIn(__METHOD__.'-fromlocal');
-		$hash = $wgMemc->get('MagicFooterLinksHash');
-		if($hash) {
-			$result = $this->loadFromLocal($hash);
-			if($result) {
-				wfDebug(__METHOD__." got from local cache\n");
-			}
-		}
-		wfProfileOut(__METHOD__.'-fromlocal');
-
-		if(!$result) {
-			wfProfileIn(__METHOD__.'-fromDB');
-			$result = $this->loadFromDB();
-			$this->saveToLocal($hash, $result);
-			wfProfileOut(__METHOD__.'-fromDB');
-		}
-
-		wfProfileOut(__METHOD__);
-		return $result;
+	wfProfileIn(__METHOD__.'-fromlocal');
+	$hash = $wgMemc->get('MagicFooterLinksHash');
+	if(!$hash) {
+		return false;
 	}
-
-	function loadFromLocal($hash) {
-		wfProfileIn(__METHOD__);
-		global $wgLocalMessageCache;
-
-		$dirname = $wgLocalMessageCache . '/' . substr( wfWikiID(), 0, 1 ) . '/' . wfWikiID();
-		$filename = "$dirname/magic_footer_links";
-		$file = fopen( $filename, 'r' );
-
-		$localHash = fread($file, 32);
-		if($hash === $localHash) {
-			$serialized = '';
-			while(!feof($file)) {
-				$serialized .= fread($file, 100000);
-			}
-			fclose($file);
-			$result = unserialize($serialized);
-			wfProfileOut(__METHOD__);
-			return $result;
-		} else {
-			fclose($file);
-			wfProfileOut(__METHOD__);
-			return false;
-		}
+	if($links) {
+		$links = MagicFooterLinks_loadFromLocal($hash);
 	}
+	wfProfileOut(__METHOD__.'-fromlocal');
 
-	function loadFromDB() {
-		wfProfileIn(__METHOD__);
-		global $wgMemc, $wgDBname, $wgTitle;
-
-		$result = array();
-
-		$tmpParser = null;
-		$tmpParserOptions = null;
-		$dbw = null;
-
-		$dbr =& wfGetDB(DB_SLAVE);
-		$res = $dbr->select(wfSharedTable('magic_footer_links'), 'page, links, parsed_links', array('dbname' => $wgDBname), __METHOD__);
-		while($row = $dbr->fetchObject($res)) {
-			if(empty($row->parsed_links)) {
-				if(empty($tmpParser) && empty($tmpParserOptions) && empty($dbw)) {
-					$tmpParser = new Parser();
-					$tmpParser->setOutputType(OT_HTML);
-					$tmpParserOptions = new ParserOptions();
-					$dbw = wfGetDB(DB_MASTER);
-				}
-				$row->parsed_links = $tmpParser->parse($row->links, $wgTitle, $tmpParserOptions, false)->getText();
-				$dbw->update(wfSharedTable('magic_footer_links'), array('parsed_links' => $row->parsed_links), array('dbname' => $wgDBname, 'page' => $row->page), __METHOD__);
-			}
-			$result[$row->page] = $row->parsed_links;
-		}
-		$dbr->freeResult($res);
-		if(!empty($dbw)) {
-			$dbw->commit();
-		}
-		wfProfileOut(__METHOD__);
-		return $result;
+	if(!$links) {
+		wfProfileIn(__METHOD__.'-fromDB');
+		$links = MagicFooterLinks_loadFromDB();
+		MagicFooterLinks_saveToLocal($hash, $links);
+		wfProfileOut(__METHOD__.'-fromDB');
 	}
-
-	function saveToLocal($hash, $result) {
-		wfProfileIn(__METHOD__);
-		global $wgLocalMessageCache;
-
-		$dirname = $wgLocalMessageCache . '/' . substr( wfWikiID(), 0, 1 ) . '/' . wfWikiID();
-		$filename = "$dirname/magic_footer_links";
-		wfMkdirParents($dirname, 0777);
-
-		wfSuppressWarnings();
-		$file = fopen($filename, 'w');
-		wfRestoreWarnings();
-
-		if(!$file) {
-			return;
-		}
-
-		fwrite($file, $hash . serialize($result));
-		fclose($file);
-		@chmod($filename, 0666);
-		wfProfileOut(__METHOD__);
-	}
-
+	wfProfileOut(__METHOD__);
+	return $links;
 }
 
+function MagicFooterLinks_loadFromLocal($hash) {
+	wfProfileIn(__METHOD__);
+	global $wgLocalMessageCache;
+
+	$dirname = $wgLocalMessageCache . '/' . substr( wfWikiID(), 0, 1 ) . '/' . wfWikiID();
+	$filename = "$dirname/magic_footer_links";
+	$file = fopen($filename, 'r');
+
+	$localHash = fread($file, 32);
+	if($hash === $localHash) {
+		$serialized = '';
+		while(!feof($file)) {
+			$serialized .= fread($file, 100000);
+		}
+		fclose($file);
+		$result = unserialize($serialized);
+		wfProfileOut(__METHOD__);
+		return $result;
+	} else {
+		fclose($file);
+		wfProfileOut(__METHOD__);
+		return false;
+	}
+}
+
+function MagicFooterLinks_loadFromDB() {
+	wfProfileIn(__METHOD__);
+	global $wgMemc, $wgDBname, $wgTitle;
+	$result = array();
+	$tmpParser = null;
+	$tmpParserOptions = null;
+	$dbw = null;
+	$dbr =& wfGetDB(DB_SLAVE);
+	$res = $dbr->select(wfSharedTable('magic_footer_links'), 'page, links, parsed_links', array('dbname' => $wgDBname), __METHOD__);
+	while($row = $dbr->fetchObject($res)) {
+		if(empty($row->parsed_links)) {
+			if(empty($tmpParser) && empty($tmpParserOptions) && empty($dbw)) {
+				$tmpParser = new Parser();
+				$tmpParser->setOutputType(OT_HTML);
+				$tmpParserOptions = new ParserOptions();
+				$dbw = wfGetDB(DB_MASTER);
+			}
+			$row->parsed_links = $tmpParser->parse($row->links, $wgTitle, $tmpParserOptions, false)->getText();
+			$dbw->update(wfSharedTable('magic_footer_links'), array('parsed_links' => $row->parsed_links), array('dbname' => $wgDBname, 'page' => $row->page), __METHOD__);
+		}
+		$result[$row->page] = $row->parsed_links;
+	}
+	$dbr->freeResult($res);
+	if(!empty($dbw)) {
+		$dbw->commit();
+	}
+	wfProfileOut(__METHOD__);
+	return $result;
+}
+
+function MagicFooterLinks_saveToLocal($hash, $result) {
+	wfProfileIn(__METHOD__);
+	global $wgLocalMessageCache;
+
+	$dirname = $wgLocalMessageCache . '/' . substr( wfWikiID(), 0, 1 ) . '/' . wfWikiID();
+	$filename = "$dirname/magic_footer_links";
+	wfMkdirParents($dirname, 0777);
+
+	wfSuppressWarnings();
+	$file = fopen($filename, 'w');
+	wfRestoreWarnings();
+
+	if(!$file) {
+		return;
+	}
+
+	fwrite($file, $hash . serialize($result));
+	fclose($file);
+	@chmod($filename, 0666);
+	wfProfileOut(__METHOD__);
+}
