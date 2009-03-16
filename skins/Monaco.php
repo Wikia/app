@@ -451,6 +451,13 @@ EOS;
 					unset($data_array['toolboxlinks'][$key]);
 				}
 			}
+			if(isset($val['org']) && $val['org'] == 'permalink') {
+				if(isset($tpl->data['nav_urls']['permalink'])) {
+					$data_array['toolboxlinks'][$key]['href'] = $tpl->data['nav_urls']['permalink']['href'];
+				} else {
+					unset($data_array['toolboxlinks'][$key]);
+				}
+			}
 		}
 
 		/*
