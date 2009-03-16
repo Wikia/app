@@ -422,7 +422,6 @@ function showCSpanel() {
 	var pars = 'rs=CategorySelectGenerateHTMLforView';
 	var callback = {
 		success: function(originalRequest) {
-			$('csAddCategorySwitch').style.display = 'none';
 			var el = document.createElement('div');
 			el.innerHTML = originalRequest.responseText;
 			$('catlinks').appendChild(el);
@@ -438,6 +437,7 @@ function showCSpanel() {
 		timeout: 30000
 	};
 	YAHOO.util.Connect.asyncRequest('POST', ajaxUrl, callback, pars);
+	$('csAddCategorySwitch').style.display = 'none';
 }
 
 function csSave() {
