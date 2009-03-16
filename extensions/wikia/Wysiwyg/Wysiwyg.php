@@ -377,7 +377,7 @@ function Wysiwyg_WikiTextToHtml($wikitext, $articleId = -1, $encode = false) {
 		foreach($templateCallsParsed as $refid => $parsed) {
 			$parsed = trim($parsed);
 
-			if ($parsed{0} != '<') {
+			if (strlen($parsed) > 0 && $parsed{0} != '<') {
 				$wrapper = false;
 			}
 			else {
