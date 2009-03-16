@@ -1085,7 +1085,7 @@ class AutoCreateWikiPage extends SpecialPage {
 			$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
 			$oTmpl->set_vars( array(
 				"data"          => $this->mWikiData,
-				"wikid"         => $this->mWikiID,
+				"wikid"         => $this->mWikiId,
 				"founder"       => $this->mFounder,
 				"timestamp"     => $sTimeStamp = gmdate("j F, Y"),
 				"category"		=> $sCategory
@@ -1112,7 +1112,7 @@ class AutoCreateWikiPage extends SpecialPage {
 			}
 		}
 		else {
-			$this->log( "ERROR: Unable to create title object for page on Central Wikia: " . $sCentralTitle );
+			$this->log( "ERROR: Unable to create title object for page on Central Wikia: " . $centralTitleName );
 			return false;
 		}
 
@@ -1125,7 +1125,7 @@ class AutoCreateWikiPage extends SpecialPage {
 			if ( $oCentralListArticle->exists() ) {
 				$sContent =  $oCentralListArticle->getContent();
 				$sContent .= "{{subst:nw|" . $this->mWikiData['subdomain'] . "|";
-				$sContent .= $sCentralTitle . "|" . $this->mWikiData['language'] . "}}";
+				$sContent .= $centralTitleName . "|" . $this->mWikiData['language'] . "}}";
 
 				$oCentralListArticle->doEdit( $sContent, "modified by autocreate Wiki process", EDIT_FORCE_BOT);
 				$this->log( sprintf("Article %s modified.", $oCentralListTitle->getFullUrl()) );
@@ -1141,7 +1141,7 @@ class AutoCreateWikiPage extends SpecialPage {
 			if ( $oCentralListArticle->exists() ) {
 				$sReplace =  "{{nwtw|" . $this->mWikiData['language']  . "|" ;
 				$sReplace .= $aCategories[ $this->mWikiData[ "hub" ] ] . "|" ;
-				$sReplace .= $sCentralTitle . "|http://" . $this->mWikiData['subdomain'] . ".wikia.com}}\n|}";
+				$sReplace .= $centralTitleName . "|http://" . $this->mWikiData['subdomain'] . ".wikia.com}}\n|}";
 				
 				$sContent = str_replace("|}", $sReplace, $oCentralListArticle->getContent());
 
@@ -1157,15 +1157,15 @@ class AutoCreateWikiPage extends SpecialPage {
 			return false;
 		}
 
-		if ( strcmp( strtolower( $this->mWikiData['redirect'] ), strtolower( $sCentralTitle ) ) != 0 ) {
+		if ( strcmp( strtolower( $this->mWikiData['redirect'] ), strtolower( $centralTitleName ) ) != 0 ) {
 			#--- add redirect(s) on central
 			$oCentralRedirectTitle = Title::newFromText( $this->mWikiData['redirect'], NS_MAIN );
 			if ( $oCentralRedirectTitle instanceof Title ) {
 				$oCentralRedirectArticle = new Article( $oCentralRedirectTitle, 0);
 				if ( !$oCentralRedirectArticle->exists() ) {
-					$sContent = "#Redirect [[" . $sCentralTitle . "]]";
+					$sContent = "#Redirect [[" . $centralTitleName . "]]";
 					$oCentralRedirectArticle->doEdit( $sContent, "modified by autocreate Wiki process", EDIT_FORCE_BOT);
-					$this->log( sprintf("Article %s added (redirect to: " . $sCentralTitle . ").", $oCentralRedirectTitle->getFullUrl()) );
+					$this->log( sprintf("Article %s added (redirect to: " . $centralTitleName . ").", $oCentralRedirectTitle->getFullUrl()) );
 				} else {
 					$this->log( sprintf("Article %s already exists.", $oCentralRedirectTitle->getFullUrl()) );
 				}
@@ -1175,9 +1175,9 @@ class AutoCreateWikiPage extends SpecialPage {
 					$sCentralRedirectTitle = 'en.' . $this->mWikiData['subdomain'];
 					$oCentralRedirectTitle = Title::newFromText( $sCentralRedirectTitle, NS_MAIN );
 					if ( !$oCentralRedirectArticle->exists() ) {
-						$sContent = "#Redirect [[" . $sCentralTitle . "]]";
+						$sContent = "#Redirect [[" . $centralTitleName . "]]";
 						$oCentralRedirectArticle->doEdit( $sContent, "modified by autocreate Wiki process", EDIT_FORCE_BOT);
-						$this->log( sprintf("Article %s added (extra redirect to: " . $sCentralTitle . ").", $oCentralRedirectTitle->getFullUrl()) );
+						$this->log( sprintf("Article %s added (extra redirect to: " . $centralTitleName . ").", $oCentralRedirectTitle->getFullUrl()) );
 					} else {
 						$this->log( sprintf("Article %s already exists.", $oCentralRedirectTitle->getFullUrl()) );
 					}
