@@ -78,6 +78,8 @@ $messages['en'] = array(
 	"autocreatewiki-step7" => "Setting language starter ... ",
 	"autocreatewiki-step8" => "Setting user groups and categories ... ",
 	"autocreatewiki-step9" => "Setting variables for new Wiki ... ",
+	"autocreatewiki-step10" => "Setting pages on central Wiki ... ",
+	"autocreatewiki-step11" => "Sending email to user ... ",
 	"autocreatewiki-redirect" => "Redirecting to new Wiki: $1 ... ",
 // processing errors
 	"autocreatewiki-step2-error" => "Database exists!",

@@ -572,9 +572,10 @@ class AutoCreateWikiPage extends SpecialPage {
 		 * add central job
 		 */
 		$this->setCentralPages();
-		$centralJob = new AutoCreateWikiCentralJob( $this->mTitle, $this->mWikiData );
-		$centralJob->insert();
+		$this->setInfoLog( 'OK', wfMsg('autocreatewiki-step10') );
 
+		$this->sendWelcomeMail();
+		$this->setInfoLog( 'OK', wfMsg('autocreatewiki-step11') );
 
 		$this->setInfoLog( 'END', 'Done.' );
 
