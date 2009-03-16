@@ -36,6 +36,7 @@ $messages = array(
 		'categoryselect-edit-summary' => 'Adding categories',
 		'categoryselect-empty-name' => 'Provide category name (part before |)',
 		'categoryselect-button-save' => 'Save',
-		'categoryselect-button-cancel' => 'Cancel'
+		'categoryselect-button-cancel' => 'Cancel',
+		'tog-disablecategoryselect' => 'Disable Category Tagging'
 	)
 );
