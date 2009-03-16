@@ -21,7 +21,7 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 /**
  * maintenance script from CheckUser
  */
-include( $IP . "/extensions/CheckUser/install.inc" );
+include( $GLOBALS['IP'] . "/extensions/CheckUser/install.inc" );
 
 class AutoCreateWikiLocalJob extends Job {
 
