@@ -59,6 +59,7 @@ YE.onDOMReady(function () {
 	var wgAjaxPath = wgScriptPath + wgScript;
 	var redirServer = '<?=$subdomain?>';
 	var redirMsg = '<?=wfMsg('autocreatewiki-redirect', $subdomain . "." . $domain)?>';
+	var errorMsg = '<?=wfMsg('autocreatewiki-errordefault')?>';
 	var usedMsg = new Array();
 
 	var addLog = function (inx, text, resType)	{
@@ -68,9 +69,9 @@ YE.onDOMReady(function () {
 		var msgType = (resType != 'END') ? '&nbsp;&nbsp;<strong style="color:' + styleColor + '">' + styleMsg + '</strong>' : "";
 		if (inx != 0) {
 			var info = logSteps.innerHTML;
-			logSteps.innerHTML = info + "<br />" + text + msgType;
+			logSteps.innerHTML = info + "<br />" + text + ((resType != '') ? msgType : "" );
 		} else {
-			logSteps.innerHTML = text + msgType;
+			logSteps.innerHTML = text + ((resType != '') ? msgType : "");
 		}
 		if (typeof TieDivLibrary != "undefined" ) {
 			TieDivLibrary.calculate();
@@ -110,8 +111,10 @@ YE.onDOMReady(function () {
 					addLog(loop, '<br />' + redirMsg, 'END');
 					window.location.href = 'http://'+redirServer+'.<?=$domain?>';
 				} else if ( !(isError > 0) ) {
-					if (loop < 25) {
+					if (loop < 20) {
 						setTimeout(checkProcess, 2000);
+					} else {
+						addLog(loop, '<br />' + errorMsg, 'ERROR');
 					}
 				} 
 			},

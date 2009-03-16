@@ -148,7 +148,7 @@ function axACWRequestCheckLog() {
 	} else {
 		$aResponse = array( 
 			0 => array(
-				'type' => 'OK',
+				'type' => '',
 				'info' => wfMsg('autocreatewiki-stepdefault')
 			)
 		);

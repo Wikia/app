@@ -69,6 +69,7 @@ $messages['en'] = array(
 	"autocreatewiki-log-title" => "Processing",
 	"autocreatewiki-step0" => "Initializing process ... ",
 	"autocreatewiki-stepdefault" => "Process is running, please wait ... ",
+	"autocreatewiki-errordefault" => "Process was not finished ... ",
 	"autocreatewiki-step1" => "Creating images folder ... ",
 	"autocreatewiki-step2" => "Creating database ... ",
 	"autocreatewiki-step3" => "Setting default information in database ...",
