@@ -1,0 +1,15 @@
+body.mainpage {
+	background: #000 url(../images/superpages.gif) 50% 50px no-repeat !important;
+}
+body.mainpage .monaco_shrinkwrap {
+	left: 50%;
+	margin-left: -486px;
+	width: 972px;
+}
+body.mainpage #background_strip {
+	background: transparent;
+	border: 0;
+}
+body.mainpage #wikia_footer, body.mainpage #wikia_footer a {
+	color: #fff
+}
