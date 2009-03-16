@@ -132,6 +132,7 @@ class AutoCreateWikiPage extends SpecialPage {
 				$this->test();
 			}
 		} elseif ( $subpage === "Processing" ) {
+			$this->log (" session: " . print_r($_SESSION, true). "\n");
 			if ( isset( $_SESSION['mAllowToCreate'] ) && ( $_SESSION['mAllowToCreate'] >= wfTimestamp() ) ) {
 				$this->mNbrUserCreated = $this->countCreatedWikisByUser();
 				if ( $this->mNbrUserCreated >= self::DAILY_USER_LIMIT ) {
@@ -142,6 +143,7 @@ class AutoCreateWikiPage extends SpecialPage {
 					$this->createWiki();
 				}
 			} else {
+				$this->log ("restriction error\n");
 				$this->displayRestrictionError();
 				return;
 			}
