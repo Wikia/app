@@ -55,7 +55,7 @@ function WidgetAnswers($id, $params) {
 	    ProxyPass       /varnish_answer_redirect.php  http://answers.wikia.com/api.php
 	*/
 
-	global $wgSitename;
+	global $wgSitename, $wgUser;
 	$apiparams = array(
 		'smaxage'=>300,
 		'maxage'=> 300,
@@ -65,14 +65,19 @@ function WidgetAnswers($id, $params) {
 		'format'=>'json',
 		'wklimit'=>'5'
 	);
-	$url = '/varnish_answer_redirect.php?' . http_build_query($apiparams);
+	$domain = "";
+	if( $wgUser->getOption("language") != "en" ){
+		$domain = $wgUser->getOption("language") . ".";
+	}
+	
+	$url = 'http://' . $domain . 'answers.wikia.com/api.php?' . http_build_query($apiparams);
 
 	$h .= '<script>
 jQuery("#recent_unanswered_questions").ready(function() {
 	
 	url = "'. $url .'";
-	jQuery.get( url, "", function( oResponse ){
-		eval("j=" + oResponse);
+	jQuery.get( url, "", function( j ){
+		//eval("j=" + oResponse);
 		if( j.query.wkpagesincat ){
 			html = "";
 			for( var recent_q in j.query.wkpagesincat ){
@@ -86,7 +91,7 @@ jQuery("#recent_unanswered_questions").ready(function() {
 			jQuery("#recent_unanswered_questions").prepend( html );
 		}
 		
-	});
+	},"jsonp");
 });
 	</script>
 	<noscript><A href="http://answers.wikia.com">Get your questions answered on answers.wikia.com</a></noscript>';
