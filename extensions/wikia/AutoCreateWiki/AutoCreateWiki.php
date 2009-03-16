@@ -36,8 +36,6 @@ $wgSpecialPages[ "AutoCreateWiki" ] = "AutoCreateWikiPage";
 /**
  * register job class
  */
-$wgJobClasses[ "ACWCentral" ] = "AutoCreateWikiCentralJob";
-$wgAutoloadClasses[ "AutoCreateWikiCentralJob" ] = $dir. "AutoCreateWikiCentralJob.php";
 $wgJobClasses[ "ACWLocal" ] = "AutoCreateWikiLocalJob";
 $wgAutoloadClasses[ "AutoCreateWikiLocalJob" ] = $dir. "AutoCreateWikiLocalJob.php";
 
