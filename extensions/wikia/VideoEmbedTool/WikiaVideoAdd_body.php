@@ -38,18 +38,26 @@ class WikiaVideoAddForm extends SpecialPage {
 	}
 
 	public function showForm() {
-		global $wgOut, $wgRequest;
+		global $wgOut, $wgRequest, $wgUser;
 		$titleObj = Title::makeTitle( NS_SPECIAL, 'WikiaVideoAdd' );
 		$action = $titleObj->escapeLocalURL( "action=submit" );
 		( '' != $wgRequest->getVal( 'name' ) ) ? $name = $wgRequest->getVal( 'name' ) : $name = '';
 
-		$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
-		$oTmpl->set_vars( array(
-					"out"		=> 	$wgOut,
-					"action"	=>	$action,
-					"name"		=> 	$name,
-				       ) );
-		$wgOut->addHTML( $oTmpl->execute("quickform") );
+		if( !$wgUser->isAllowed( 'upload' ) ) {
+			if( !$wgUser->isLoggedIn() ) {
+				$wgOut->addHTML( wfMsg( 'wva-notlogged' ) );
+			} else {
+				$wgOut->addHTML( wfMsg( 'wva-notallowed' ) );
+			}
+		} else {
+			$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
+			$oTmpl->set_vars( array(
+						"out"		=> 	$wgOut,
+						"action"	=>	$action,
+						"name"		=> 	$name,
+					       ) );
+			$wgOut->addHTML( $oTmpl->execute("quickform") );
+		}
 	}
 
 	public function doSubmit() {
