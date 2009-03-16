@@ -340,7 +340,7 @@ function CategorySelectDisplayCategoryBox($rows, $cols, $ew, $textbox) {
  *
  * @author Maciej Błaszkowski <marooned at wikia-inc.com>
  */
-function CategorySelectGetCategoryLinksBegin($categoryLinks) {
+function CategorySelectGetCategoryLinksBegin(&$categoryLinks) {
 	global $wgRequest, $wgOut;
 
 	$action = $wgRequest->getVal('action', 'view');
@@ -360,7 +360,7 @@ function CategorySelectGetCategoryLinksBegin($categoryLinks) {
  *
  * @author Maciej Błaszkowski <marooned at wikia-inc.com>
  */
-function CategorySelectGetCategoryLinksEnd($categoryLinks) {
+function CategorySelectGetCategoryLinksEnd(&$categoryLinks) {
 	global $wgRequest;
 
 	$action = $wgRequest->getVal('action', 'view');
