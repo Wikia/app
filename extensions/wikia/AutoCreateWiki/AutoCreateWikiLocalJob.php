@@ -18,6 +18,11 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 	exit( 1 );
 }
 
+/**
+ * maintenance script from CheckUser
+ */
+include( $IP . "/extensions/CheckUser/install.inc" );
+
 class AutoCreateWikiLocalJob extends Job {
 
 	private
@@ -52,6 +57,7 @@ class AutoCreateWikiLocalJob extends Job {
 		}
 		$this->setWelcomeTalkPage();
 		$this->moveMainPage();
+		$this->populateCheckUserTables();
 
 		wfProfileOut( __METHOD__ );
 
@@ -299,4 +305,13 @@ class AutoCreateWikiLocalJob extends Job {
 		return $User;
 	}
 
+	/**
+	 * tables are created in first step. there we only fill them
+	 */
+	private function populateCheckUserTables() {
+
+		$dbw = wfGetDB( DB_MASTER );
+		create_cu_changes( $dbw, true );
+		create_cu_log( $dbw );
+	}
 }
