@@ -552,7 +552,6 @@ class AutoCreateWikiPage extends SpecialPage {
 			__METHOD__
 		);
 		$this->log( "Set images timestamp to current date" );
-		$this->setInfoLog( 'OK', 'test 8' );
 
 		/**
 		 * commit all in new database
@@ -1216,7 +1215,7 @@ class AutoCreateWikiPage extends SpecialPage {
 
 		$sServer = "http://{$this->mWikiData["subdomain"]}." . "wikia.com";
 		// set apropriate staff member
-		$oStaffUser = self::getStaffUserByLang( $this->mWikiData['language'] );
+		$oStaffUser = AutoCreateWiki::getStaffUserByLang( $this->mWikiData['language'] );
 		$oStaffUser = ( $oStaffUser instanceof User ) ? $oStaffUser : User::newFromName( self::DEFAULT_STAFF );
 
 		$sFrom = new MailAddress( $wgPasswordSender, "The Wikia Community Team" );
