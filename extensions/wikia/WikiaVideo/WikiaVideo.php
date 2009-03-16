@@ -144,12 +144,18 @@ function WikiaVideo_renderVideoGallery($input, $args, $parser) {
 	return $out;
 }
 
-function WikiaVideo_makeVideo($title, $options, $sk) {
+function WikiaVideo_makeVideo($title, $options, $sk, $wikitext = '') {
 	global $wgWysiwygParserEnabled, $wgRequest;
 
 	wfProfileIn('WikiaVideo_makeVideo');
 	if(!$title->exists()) {
-		$out = $sk->makeColouredLinkObj(Title::newFromText('WikiaVideoAdd', NS_SPECIAL), 'new', $title->getPrefixedText(), 'name=' . $title->getDBKey());
+		//Wysiwyg: generate wikitext placeholder
+		if (!empty($wgWysiwygParserEnabled)) {
+			$out = Wysiwyg_SetRefId('placeholder', array('text' => $wikitext));
+		}
+		else {
+			$out = $sk->makeColouredLinkObj(Title::newFromText('WikiaVideoAdd', NS_SPECIAL), 'new', $title->getPrefixedText(), 'name=' . $title->getDBKey());
+		}
 	} else {
 		// get refId from Wysiwyg
 		if (!empty($wgWysiwygParserEnabled)) {
