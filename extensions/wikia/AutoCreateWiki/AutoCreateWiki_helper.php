@@ -16,6 +16,9 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 }
 
 class AutoCreateWiki {
+	
+	const STAFF_LIST = "staffsigs";
+	
 	/**
 	 * isDomainExists
 	 *
@@ -309,6 +312,38 @@ class AutoCreateWiki {
 		return $sResponse;
 	}
 	
+	/**
+	 * get staff member signature for given lang code
+	 */
+	public static function getStaffUserByLang( $langCode ) {
+		wfProfileIn( __METHOD__ );
+
+		$staffSigs = wfMsgForContent( self::STAFF_LIST );
+		$oUser = false;
+		if ( !empty( $staffSigs ) ) {
+			$lines = explode("\n", $staffSigs);
+
+			foreach ( $lines as $line ) {
+				if ( strpos($line, '* ') === 0 ) {
+					$sectLangCode = trim($line, '* ');
+					continue;
+				}
+				if ( (strpos($line, '* ') == 1) && ($langCode == $sectLangCode) ) {
+					$sUser = trim($line, '** ');
+				    $oUser = User::newFromName( $sUser );
+					$oUser->load();
+					break;
+				}
+			}
+		}
+
+		wfProfileOut( __METHOD__ );
+		return $oUser;
+	}
+	
+	/**
+	 * get or set value from memcache 
+	 */
 	public static function logMemcKey ($action, $aParams, $aInfo = array()) {
 		global $wgUser, $wgMemc;
 		wfProfileIn(__METHOD__);

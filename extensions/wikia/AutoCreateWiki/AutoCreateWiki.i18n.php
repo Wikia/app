@@ -84,7 +84,7 @@ $messages['en'] = array(
 	"autocreatewiki-step3-error" => "Cannot set default information in database!",
 	"autocreatewiki-step6-error" => "Cannot set default tables in database!",
 	"autocreatewiki-step7-error" => "Cannot copy starter database for language!",
-
+// welcome messages
     "autocreatewiki-welcomesubject" => "$1 has been created!",
     "autocreatewiki-welcomebody" => "
 Hello, $2,
