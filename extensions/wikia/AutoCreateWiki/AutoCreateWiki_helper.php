@@ -347,7 +347,9 @@ class AutoCreateWiki {
 	public static function logMemcKey ($action, $aParams, $aInfo = array()) {
 		global $wgUser, $wgMemc;
 		wfProfileIn(__METHOD__);
-		$key = wfMemcKey( 'awcProcessLog', $wgUser->getId(), $aParams['awcName'], $aParams['awcDomain'], $aParams['awcCategory'], $aParams['awcLanguage']);
+		$sName = str_replace(" ", "_", $aParams['awcName']);
+		$sDomain = str_replace(" ", "_", $aParams['awcDomain']);
+		$key = wfMemcKey( 'awcProcessLog', $wgUser->getId(), $sName, $sDomain, $aParams['awcCategory'], $aParams['awcLanguage']);
 		if ($action == 'set') {
 			$__info = $wgMemc->get( $key );
 			if ( empty($__info) ) {
