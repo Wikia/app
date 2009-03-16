@@ -485,12 +485,12 @@ class AutoCreateWikiPage extends SpecialPage {
 				wfShellExec( $cmd );
 
 				$this->log( "Copying starter database" );
+				$this->setInfoLog( 'OK', wfMsg('autocreatewiki-step7') );
 			}
 			else {
 				$this->log( "No starter database for this language, {$starterDB}" );
 			}
 		}
-		$this->setInfoLog( 'OK', wfMsg('autocreatewiki-step7') );
 
 		/**
 		 * making the wiki founder a sysop/bureaucrat
