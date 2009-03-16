@@ -49,6 +49,7 @@ class AutoCreateWikiPage extends SpecialPage {
     const TEMPLATE_LIST_WIKIA = "Template:List_of_Wikia_New";
     const ARTICLE_NEW_WIKIS = "New_wikis_this_week/Draft";
     const DEFAULT_STAFF = "Angela";
+    const SEND_WELCOME_MAIL = 0;
 
 	/**
 	 * constructor
@@ -573,8 +574,10 @@ class AutoCreateWikiPage extends SpecialPage {
 		$this->setCentralPages();
 		$this->setInfoLog( 'OK', wfMsg('autocreatewiki-step10') );
 
-		$this->sendWelcomeMail();
-		$this->setInfoLog( 'OK', wfMsg('autocreatewiki-step11') );
+		if ( self::SEND_WELCOME_MAIL == 1 ) {
+			$this->sendWelcomeMail();
+			$this->setInfoLog( 'OK', wfMsg('autocreatewiki-step11') );
+		}
 
 		$this->setInfoLog( 'END', 'Done.' );
 
@@ -582,7 +585,7 @@ class AutoCreateWikiPage extends SpecialPage {
 		 * show total time
 		 */
 		$info = sprintf( "Total: %F", wfTime() - $startTime );
-		$this->log( self::LOG, $info );
+		$this->log( $info );
 
 		wfProfileOut( __METHOD__ );
 	}
