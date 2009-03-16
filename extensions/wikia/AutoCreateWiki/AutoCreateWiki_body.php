@@ -582,8 +582,7 @@ class AutoCreateWikiPage extends SpecialPage {
 		 * show total time
 		 */
 		$info = sprintf( "Total: %F", wfTime() - $startTime );
-		wfDebugLog( self::LOG, $info );
-		Wikia::log( self::LOG, $info );
+		$this->log( self::LOG, $info );
 
 		wfProfileOut( __METHOD__ );
 	}
