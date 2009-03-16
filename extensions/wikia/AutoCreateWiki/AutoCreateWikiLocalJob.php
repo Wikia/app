@@ -106,7 +106,6 @@ class AutoCreateWikiLocalJob extends Job {
 	/**
 	 * setWelcomeTalkPage
 	 *
-	 * @author eloy@wikia
 	 * @access private
 	 *
 	 * @return boolean status
@@ -170,7 +169,7 @@ class AutoCreateWikiLocalJob extends Job {
 
 		$sourceTitle = Title::newFromText( $source );
 		if( !$sourceTitle ) {
-		    print "Invalid page title: {$source}";
+		    Wikia::log( __METHOD__, "err", "Invalid page title: {$source}" );
 		    return;
 		}
 
@@ -193,8 +192,8 @@ class AutoCreateWikiLocalJob extends Job {
 						 */
 						$mwMainPageTitle = Title::newFromText( "Mainpage", NS_MEDIAWIKI );
 						$mwMainPageArticle = new Article( $mwMainPageTitle, 0 );
-
 						$mwMainPageArticle->doEdit( $targetTitle->getText(), "SEO", EDIT_MINOR | EDIT_FORCE_BOT );
+
 						Wikia::log( __METHOD__, "move", "Page moved" );
 
 						/**
@@ -203,7 +202,7 @@ class AutoCreateWikiLocalJob extends Job {
 						$sourceTalkTitle = $sourceTitle->getTalkPage();
 						$targetTalkTitle = $targetTitle->getTalkPage();
 						if ( $sourceTalkTitle instanceof Title && $sourceTalkTitle->exists() && $targetTalkTitle instanceof Title ) {
-							print $sourceTalkTitle->getPrefixedText() . ' --> ' . $targetTalkTitle->getPrefixedText();
+							Wikia::log( __METHOD__, "move", $sourceTalkTitle->getPrefixedText() . ' --> ' . $targetTalkTitle->getPrefixedText() );
 							$err = $sourceTalkTitle->moveTo( $targetTitle->getTalkPage(), false, "SEO");
 							if ( $err === true ) {
 									Wikia::log( __METHOD__, "move", "Moved talk page" );
