@@ -57,11 +57,18 @@ function CategorySelectInit() {
 	global $wgHooks, $wgAutoloadClasses;
 	$wgAutoloadClasses['CategorySelect'] = 'extensions/wikia/CategorySelect/CategorySelect_body.php';
 	$wgHooks['ArticleFromTitle'][] = 'CategorySelectInitializeHooks';
+	$wgHooks['UserToggles'][] = 'CategorySelectToggleUserPreference';
+	$wgHooks['getEditingPreferencesTab'][] = 'CategorySelectToggleUserPreference';
 	wfLoadExtensionMessages('CategorySelect');
 }
 
 function CategorySelectInitializeHooks($title, $article) {
 	global $wgHooks, $wgRequest, $wgUser, $wgTitle;
+
+	// check user preferences option
+	if($wgUser->getOption('disablecategoryselect') == true) {
+		return true;
+	}
 
 	// Initialize only for Monaco skin
 	if(get_class($wgUser->getSkin()) != 'SkinMonaco') {
@@ -479,4 +486,18 @@ function CategorySelectRemoveTooltip() {
 	$dbw->commit();
 
 	return new AjaxResponse('ok');
+}
+
+/**
+ * Toggle CS in user preferences
+ *
+ * @author Maciej Błaszkowski <marooned at wikia-inc.com>
+ */
+function CategorySelectToggleUserPreference($toggles, $default_array = false) {
+	if(is_array($default_array)) {
+		$default_array[] = 'disablecategoryselect';
+	} else {
+		$toggles[] = 'disablecategoryselect';
+	}
+	return true;
 }
