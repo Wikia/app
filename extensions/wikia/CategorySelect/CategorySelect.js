@@ -103,7 +103,7 @@ function modifyCategory(e) {
 		'caption': csInfoboxCaption,
 		'content': '<label for="csInfoboxCategory">' + csInfoboxCategoryText + '</label>' +
 			'<br/><input type="text" id="csInfoboxCategory" />' +
-			'<br/><label for="csInfoboxSortKey">' + csInfoboxSortkeyText.replace('$1', categories[catId].category) + '</label>' +
+			'<br/><label for="csInfoboxSortKey">' + csInfoboxSortkeyText.replace('$1', categories[catId].category).replace('<', '&lt;').replace('>', '&gt;') + '</label>' +
 			'<br/><input type="text" id="csInfoboxSortKey" />',
 		'data': {'category': categories[catId].category, 'sortkey': defaultSortkey},
 		'save': csInfoboxSave
@@ -445,7 +445,7 @@ function csSave() {
 	var callback = {
 		success: function(originalRequest) {
 			var result = eval('(' + originalRequest.responseText + ')');
-			if (result['info'] == 'ok') {
+			if (result['info'] == 'ok' && result['html'] != '') {
 				tmpDiv = document.createElement('div');
 				tmpDiv.innerHTML = result['html'];
 				var innerCatlinks = $('mw-normal-catlinks');
