@@ -1275,7 +1275,6 @@ class AutoCreateWikiPage extends SpecialPage {
 		$info = sprintf( "%s: %F", $info, wfTime() - $this->mCurrTime );
 		wfDebugLog( self::LOG, $info );
 		Wikia::log( self::LOG, $info );
-		error_log ($info ."\n", 3, "/tmp/acw.log");
 		#----
 		$this->mCurrTime = wfTime();
 	}

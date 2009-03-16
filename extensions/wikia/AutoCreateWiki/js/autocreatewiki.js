@@ -29,8 +29,7 @@ function allowAction(e) {
 function isTextCorrect(field) {
 	var invalidChars = "!@#$%^&*()+=-[]\';,./{}|\":<>?";
 	//---
-	YD.setStyle(field + '-error', 'display', 'block'); 
-	YD.get(field + '-error').innerHTML = '<img src="http://images.wikia.com/common/progress_bar.gif" width="70" height="11" alt="Wait..." border="0" />';
+	YD.get(field + '-error-status').innerHTML = '<img src="' + stylepath + '/common/progress-wheel.gif" width="16" height="16" alt="Wait..." border="0" />';
 	//---
 	for (var i = 0; i < YD.get(field).value.length; i++) {
 		if ( invalidChars.indexOf( YD.get(field).value.charAt(i) ) != -1 ) {
@@ -167,18 +166,17 @@ YAHOO.ACWikiRequest.NameCallback = {
     },
     failure: function( oResponse ) {
         YAHOO.log( "simple replace failure " + oResponse.responseText );
-        YAHOO.util.Dom.setStyle(div, 'display', 'none'); 
+		YAHOO.util.Dom.setStyle(err, 'display', 'block');
     },
     timeout: 50000
 };
 
 YAHOO.ACWikiRequest.checkDomain = function(e) {
-	var err = YD.get("wiki-domain-error");
+	var err = YD.get("wiki-domain-error-status");
 	var name = YD.get("wiki-domain").value;
     var lang = YD.get("wiki-language").value;
 	
-	YAHOO.util.Dom.setStyle(err, 'display', 'block');
-	err.innerHTML = '<img src="http://images.wikia.com/common/progress_bar.gif" width="70" height="11" alt="Wait..." border="0" />';
+	err.innerHTML = '<img src="' + stylepath + '/common/progress-wheel.gif" width="16" height="16" alt="Wait..." border="0" />';
 	
     // to lowercase
     name = name.toLowerCase();
@@ -204,11 +202,11 @@ YAHOO.ACWikiRequest.wikiBirthdayCheck = function(e) {
 	var year = YD.get("wiki-user-year");
 	var month = YD.get("wiki-user-month");
     var day = YD.get("wiki-user-day");
-	var err = YD.get("wiki-birthday-error");
+	var err = YD.get("wiki-birthday-error-status");
 
 	if ( (year.value > 0) && (month.value > 0) && (day.value > 0) ) {
 		YAHOO.util.Dom.setStyle(err, 'display', 'block');
-		err.innerHTML = '<img src="http://images.wikia.com/common/progress_bar.gif" width="70" height="11" alt="Wait..." border="0" />';
+		err.innerHTML = '<img src="http://images.wikia.com/common/progress-wheel.gif" width="16" height="16" alt="Wait..." border="0" />';
 		params = "&year=" + escape(year.value) + "&month=" + escape(month.value) + "&day=" + escape(day.value);
 		YC.asyncRequest( "GET", wgAjaxPath + "?action=ajax&rs=axACWRequestCheckBirthday" + params, YAHOO.ACWikiRequest.NameCallback);
 	}
