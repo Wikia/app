@@ -806,6 +806,11 @@ class ReverseParser {
 				case 'hook':
 					return $refData['description'];
 
+				// wikitext placeholders
+				// used for non-existing video
+				case 'placeholder':
+					return $refData['description'];
+
 				// {{template}}
 				//case 'curly brackets':
 				case 'template':

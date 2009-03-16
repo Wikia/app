@@ -1769,7 +1769,7 @@ class Parser
 							$text = $this->replaceExternalLinks(preg_replace('/\x7e-start-\d+-stop/', '', $text));
 							$text = $this->replaceInternalLinks(preg_replace('/\x7d-\d{4}/', '', $text));
 							$wgWysiwygParserEnabled = true;
-							$s .= $prefix . $this->armorLinks(WikiaVideo_makeVideo($nt, $text, $sk)).$trail;
+							$s .= $prefix . $this->armorLinks(WikiaVideo_makeVideo($nt, $text, $sk, $originalWikitext)).$trail;
 						}
 						else {
 							$text = $this->replaceExternalLinks($text);
