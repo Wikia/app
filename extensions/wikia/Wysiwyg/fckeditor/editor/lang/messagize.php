@@ -1,6 +1,8 @@
 <?php
 /*
  * Create MW message array for languages supported by FCK
+ *
+ * @author Maciej Brencz <macbre@wikia-inc.com>
  */
 
 // get message JS files
@@ -24,15 +26,25 @@ foreach($files as $file) {
 		}
 	}
 
+	// remove unwanted entry
+	array_shift($messages[$lang]);
+
+	// remove FCKdir message
 	array_shift($messages[$lang]);
 }
 
+$now = date('Y-m-d H:i:s');
+$count = count($messages);
+
+echo "<?php\n\n/* Auto-generated on {$now} - {$count} languages */\n\n";
+echo "\$messages = array();";
+
 foreach($messages as $lang => $data) {
-	echo "\$messages['{$lang}'] = array\n(\n";
+	echo "\n\$messages['{$lang}'] = array(\n";
 
 	foreach($data as $key => $msg) {
 		echo "\t'{$key}' => \"{$msg}\",\n";
 	}
 
-	echo ");\n\n";
+	echo ");";
 }
