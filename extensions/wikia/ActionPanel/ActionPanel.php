@@ -39,3 +39,21 @@ function wfAddActionPanel(&$tpl){
 	return true;
 }
 
+$wgAjaxExportList [] = 'wfGetCategorySuggest';
+function wfGetCategorySuggest( $query, $limit = 5 ){
+	$dbr = wfGetDB( DB_SLAVE );
+
+	$res = $dbr->select( "categorylinks", 
+		array( 'cl_to', 'count(*) as cnt' ),
+		array( "UPPER(cl_to) LIKE " . $dbr->addQuotes(strtoupper($query) . "%") ),	
+		__METHOD__,
+		array("ORDER BY" => "cl_to", "GROUP BY" => "cl_to"  )
+		);
+	while ($row = $dbr->fetchObject( $res ) ) {
+		$title = Title::makeTitle(NS_CATEGORY, $row->cl_to);
+		$out["ResultSet"]["Result"][] = array("category" => $title->getText(), "count" => $row->cnt );
+	}
+	return json_encode( $out );
+	
+	return true;
+}
