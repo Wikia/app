@@ -293,12 +293,15 @@ function CategorySelectImportFormData($editPage, $request) {
 		} else {	//json
 			$categories = $editPage->safeUnicodeInput($request, 'wpCategorySelectWikitext');
 			$categories = CategorySelectChangeFormat($categories, 'json', 'wiki');
+			if (trim($categories) == '') {
+				$categories = '';
+			}
 		}
 
 		if ($editPage->preview || $editPage->diff) {
 			CategorySelect::SelectCategoryAPIgetData($categories);
 		} else {	//saving article
-			$editPage->textbox1 .= "\n" . $categories;
+			$editPage->textbox1 .= $categories;
 		}
 		$wgCategorySelectCategoriesInWikitext = $categories;
 	}
