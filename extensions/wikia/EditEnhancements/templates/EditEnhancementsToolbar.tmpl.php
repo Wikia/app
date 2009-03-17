@@ -47,7 +47,7 @@
 </style>
 
 <script type="text/javascript">
-	addOnloadHook(function() {
+	YAHOO.util.Event.onDOMReady(function() {
 		YAHOO.util.Dom.setStyle('wpDiff', 'color', YAHOO.util.Dom.getStyle('wpEdithelp', 'color'));
 		$('wpCancel').parentNode.insertBefore(document.createTextNode(' | '), $('wpCancel'));
 	});
