@@ -568,8 +568,22 @@ class AutoCreateWikiPage extends SpecialPage {
 		$localJob = new AutoCreateWikiLocalJob(	Title::newFromText( NS_MAIN, "Main" ), $this->mWikiData );
 		$localJob->WFinsert( $this->mWikiId );
 
+		/**
+		 * inform task manager
+		 */
+		$Task = new LocalMaintenanceTask();
+		$Task->createTask(
+			array(
+				"city_id" => $this->mWikiId,
+				"command" => "maintenance/runJobs.php",
+				"arguments" => "--type ACWLocal"
+			),
+			TASK_QUEUED
+		);
+
+
 		$dbw->selectDB( $wgDBname );
-		
+
 		/**
 		 * add central job
 		 */
@@ -1088,7 +1102,7 @@ class AutoCreateWikiPage extends SpecialPage {
 			if (!empty( $aCategories ) && isset( $aCategories[ $this->mWikiData[ "hub" ] ] ) ) {
 		    	$sCategory = $aCategories[ $this->mWikiData[ "hub" ] ];
 			}
-		    
+
 			$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
 			$oTmpl->set_vars( array(
 				"data"          => $this->mWikiData,
@@ -1149,7 +1163,7 @@ class AutoCreateWikiPage extends SpecialPage {
 				$sReplace =  "{{nwtw|" . $this->mWikiData['language']  . "|" ;
 				$sReplace .= $aCategories[ $this->mWikiData[ "hub" ] ] . "|" ;
 				$sReplace .= $centralTitleName . "|http://" . $this->mWikiData['subdomain'] . ".wikia.com}}\n|}";
-				
+
 				$sContent = str_replace("|}", $sReplace, $oCentralListArticle->getContent());
 
 				$oCentralListArticle->doEdit( $sContent, "modified by autocreate Wiki process", EDIT_FORCE_BOT);
@@ -1203,7 +1217,7 @@ class AutoCreateWikiPage extends SpecialPage {
 		$this->log( "Creating and modifing pages on Central Wikia finished." );
 		return true;
 	}
-	
+
 	/**
 	 * sendWelcomeMail
 	 *
@@ -1243,12 +1257,12 @@ class AutoCreateWikiPage extends SpecialPage {
 		$sBody = $sSubject = null;
 		if ( !empty( $this->mWikiData['language'] ) ) {
 			// custom lang translation
-			$sBody = wfMsgExt("autocreatewiki-welcomebody", 
-				array( 'language' => $this->mWikiData['language'] ), 
+			$sBody = wfMsgExt("autocreatewiki-welcomebody",
+				array( 'language' => $this->mWikiData['language'] ),
 				$aBodyParams
 			);
-			$sSubject = wfMsgExt("autocreatewiki-welcomesubject", 
-				array( 'language' => $this->mWikiData['language'] ), 
+			$sSubject = wfMsgExt("autocreatewiki-welcomesubject",
+				array( 'language' => $this->mWikiData['language'] ),
 				array( $wikiName )
 			);
 		}
@@ -1257,7 +1271,7 @@ class AutoCreateWikiPage extends SpecialPage {
 			// default lang (english)
 			$sBody = wfMsg("autocreatewiki-welcomebody", $aBodyParams);
 		}
-		
+
 		if ( $sSubject == null ) {
 			// default lang (english)
 			$sSubject = wfMsg( "autocreatewiki-welcomesubject", array( $this->mWikiData[ 'title' ] ) );
