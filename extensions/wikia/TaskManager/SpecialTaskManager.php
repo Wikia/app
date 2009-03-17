@@ -4,7 +4,7 @@
  * @package MediaWiki
  * @subpackage SpecialPage
  * @author Krzysztof Krzyżaniak <eloy@wikia.com> for Wikia.com
- * @copyright (C) 2007, Wikia Inc.
+ * @copyright (C) 2007-2009, Wikia Inc.
  * @licence GNU General Public Licence 2.0 or later
  * @version: $Id: SpecialTaskManager.php 5982 2007-10-02 14:07:24Z eloy $
  */
@@ -36,6 +36,7 @@ extAddBatchTask( dirname(__FILE__)."/Tasks/PageGrabberDumpTask.php", "pagegrabbe
 extAddBatchTask( dirname(__FILE__)."/Tasks/PageImporterTask.php", "pageimporter", "PageImporterTask" );
 extAddBatchTask( dirname(__FILE__)."/Tasks/CreateWikiTask.php", "createwiki", "CreateWikiTask" );
 extAddBatchTask( dirname(__FILE__)."/Tasks/SWMSendToGroupTask.php", "SWMSendToGroup", "SWMSendToGroupTask" );
+extAddBatchTask( dirname(__FILE__)."/Tasks/LocalMaintenanceTask.php", "local-maintenance", "LocalMaintenanceTask" );
 
 
 #--- permissions
