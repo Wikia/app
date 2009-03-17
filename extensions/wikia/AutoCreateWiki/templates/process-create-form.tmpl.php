@@ -1,40 +1,10 @@
 <!-- s:<?= __FILE__ ?> -->
 <style type="text/css">
-#awc-process {
-	visibility: hidden;
-	height: 1px;
-}
-.process-title {
-	font-weight: normal;
-	display: block;
-	font-size: 13pt;
-}
-.process-info {
-	font-size: 11pt;
-	font-style: italic;
-}
-.process-info ul {
-	overflow: hidden;	
-	padding: 2px 0;
-}
-.process-info ul li {
-	padding: 2px;
-	list-style-image:none;
-	list-style-position:outside;
-	list-style-type:none;
-	color: #666;
-	white-space:nowrap
-}
-.process-row-title {
-	width:300px;
-	padding:2px 10px 2px 0px;
-	float:left;
-}
-.process-row-loader {
-	width:80px;
-	padding:6px;
-}
-
+#awc-process { visibility: hidden; height: 1px; }
+.process-title { font-weight: normal; display: block; font-size: 13pt; }
+.process-info { font-size: 11pt; font-style: italic; }
+.process-info ul { overflow: hidden; padding: 2px 0; }
+.process-info ul li { padding: 2px; list-style-image:none; list-style-position:outside; list-style-type:none; color: #666; white-space:nowrap }
 </style>
 <div id="awc-info">
 	<fieldset class="process-title">
