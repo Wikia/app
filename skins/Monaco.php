@@ -389,6 +389,7 @@ class SkinMonaco extends SkinTemplate {
 			$data_array['toolboxlinks'] = $this->getToolboxLinks();
 			//$data_array['sidebarmenu'] = $this->getSidebarLinks();
 			$data_array['relatedcommunities'] = $this->getRelatedCommunitiesLinks();
+			$data_array['magicfooterlinks'] = $this->getMagicFooterLinks();
 			wfProfileOut(__METHOD__ . ' - DATA ARRAY');
 			if($cache) {
 				$parserMemc->set($key, $data_array, 4 * 60 * 60 /* 4 hours */);
@@ -500,23 +501,6 @@ EOS;
 		// This is for WidgetRelatedCommunities
 		$this->relatedcommunities = $data_array['relatedcommunities'];
 		unset($data_array['relatedcommunities']);
-
-		/*
-		// Get Magic Footer Links
-		$dbr =& wfGetDB(DB_SLAVE);
-		$row = $dbr->selectRow('`wikicities`.magic_footer_links', 'links, parsed_links', array('dbname' => $wgDBname, 'page' => $wgTitle->getPrefixedText()), 'SkinMonaco->addVariables');
-		if($row) {
-			if(empty($row->parsed_links)) {
-				$tempParser = new Parser();
-				$tempParser->setOutputType(OT_HTML);
-				$row->parsed_links = $tempParser->parse($row->links, $wgTitle, new ParserOptions(), false)->getText();
-				$dbw = wfGetDB(DB_MASTER);
-				$dbw->update('`wikicities`.magic_footer_links', array('parsed_links' => $row->parsed_links), array('dbname' => $wgDBname, 'page' => $wgTitle->getPrefixedText()), 'SkinMonaco->addVariables');
-				$dbw->commit();
-			}
-			$data_array['magicfooterlinks'] = $row->parsed_links;
-		}
-		*/
 
 		$tpl->set('data', $data_array);
 
@@ -704,6 +688,27 @@ EOS;
 			}
 		}
 		return $nodes;
+	}
+
+	/**
+	 * @author Inez Korczynski <inez@wikia.com>
+	 */
+	private function getMagicFooterLinks() {
+		global $wgDBname, $wgTitle;
+		$results = array();
+
+		$tmpParser = new Parser();
+		$tmpParser->setOutputType(OT_HTML);
+		$tmpParserOptions = new ParserOptions();
+
+		$dbr =& wfGetDB(DB_SLAVE);
+		$res = $dbr->select(wfSharedTable('magic_footer_links'), 'page, links', array('dbname' => $wgDBname));
+		while($row = $dbr->fetchObject($res)) {
+			$results[$row->page] = $tmpParser->parse($row->links, $wgTitle, $tmpParserOptions, false)->getText();
+		}
+		$dbr->freeResult($res);
+
+		return $results;
 	}
 
 	var $lastExtraIndex = 1000;
@@ -1412,8 +1417,8 @@ if(isset($categorylist['nodes']) && count($categorylist['nodes']) > 0 ) {
 
 <?php
 }
-			wfRunHooks('MonacoAdLink');	
-			
+			wfRunHooks('MonacoAdLink');
+
 			if ($wgUser->isLoggedIn()) {
 				echo '<a rel="nofollow" href="http://requests.wikia.com" id="request_wiki" class="loggedin">'. wfMsg('createwikipagetitle') .'</a>';
 			}
@@ -1648,7 +1653,7 @@ if ($wgOut->isArticle()){
 					<?php
 					// Display content
 					$this->html('bodytext');
-					
+
 		                        // Display additional ads before categories and footer on long pages
 					if ( $wgUser->isAnon() &&
 					$wgOut->isArticle() &&
@@ -1903,12 +1908,11 @@ if (array_key_exists("TOP_RIGHT_BOXAD", AdEngine::getInstance()->getPlaceholders
                 }
             }
         }
-
-        if(!empty($this->data['data']['magicfooterlinks'])) {
+        if(!empty($this->data['data']['magicfooterlinks']) && isset($this->data['data']['magicfooterlinks'][$wgTitle->getPrefixedText()])) {
 ?>
                 <tr>
                     <th><?= wfMsg('magicfooterlinks') ?></th>
-                    <td><?= $this->data['data']['magicfooterlinks'] ?></td>
+                    <td><?= $this->data['data']['magicfooterlinks'][$wgTitle->getPrefixedText()] ?></td>
                 </tr>
 <?php
         }
