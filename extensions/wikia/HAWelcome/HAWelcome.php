@@ -138,7 +138,7 @@ class HAWelcomeJob extends Job {
 							$userArticle = new Article( $userPage, 0 );
 							if( ! $userArticle->exists() || $wgDevelEnvironment ) {
 								$welcomeMsg = wfMsg( "welcome-user-page" );
-								$userArticle->doEdit( $welcomeMsg, false, EDIT_FORCE_BOT );
+								$userArticle->doEdit( $welcomeMsg, false ); // EDIT_FORCE_BOT
 							}
 						}
 
@@ -149,7 +149,7 @@ class HAWelcomeJob extends Job {
 						));
 					}
 					$wgTitle = $talkPage; /** is it necessary there? **/
-					$talkArticle->doEdit( $welcomeMsg, wfMsg( "welcome-message-log" ), EDIT_FORCE_BOT );
+					$talkArticle->doEdit( $welcomeMsg, wfMsg( "welcome-message-log" ) ); // EDIT_FORCE_BOT
 					Wikia::log( __METHOD__, "edit", $welcomeMsg );
 				}
 				$wgTitle = $tmpTitle;
