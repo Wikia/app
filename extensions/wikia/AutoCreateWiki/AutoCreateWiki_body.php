@@ -581,7 +581,10 @@ class AutoCreateWikiPage extends SpecialPage {
 			$this->setInfoLog( 'OK', wfMsg('autocreatewiki-step11') );
 		}
 
-		$this->setInfoLog( 'END', 'Done.' );
+		/**
+		 * show congratulation message
+		 */
+		$this->setInfoLog( 'OK', wfMsg('autocreatewiki-congratulation')  );
 
 		/**
 		 * show total time
@@ -589,6 +592,7 @@ class AutoCreateWikiPage extends SpecialPage {
 		$info = sprintf( "Total: %F", wfTime() - $startTime );
 		$this->log( $info );
 
+		$this->setInfoLog( 'END', 'Done.' );
 		wfProfileOut( __METHOD__ );
 	}
 
@@ -627,12 +631,12 @@ class AutoCreateWikiPage extends SpecialPage {
 	 * @param $subpage Mixed: subpage of SpecialPage
 	 */
 	public function createWikiForm() {
-		global $wgOut, $wgUser, $wgExtensionsPath, $wgStyleVersion, $wgScriptPath;
+		global $wgOut, $wgUser, $wgExtensionsPath, $wgStyleVersion, $wgScriptPath, $wgStylePath;
 		global $wgCaptchaTriggers, $wgRequest;
 		wfProfileIn( __METHOD__ );
 		#-
 		$aTopLanguages = explode(',', wfMsg('autocreatewiki-language-top-list'));
-		$aLanguages = Language::getLanguageNames();
+		$aLanguages = Language::getLanguageNames(true);
 		#-
 		$hubs = WikiFactoryHub::getInstance();
 		$aCategories = $hubs->getCategories();
@@ -641,6 +645,7 @@ class AutoCreateWikiPage extends SpecialPage {
 		#--
 		$f = new FancyCaptcha();
 		#--
+		$wgOut->addScript( "<link rel=\"stylesheet\" type=\"text/css\" href=\"{$wgStylePath}/common/form.css?{$wgStyleVersion}\" />" );
 		/* run template */
 		$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
 		$oTmpl->set_vars( array(
@@ -653,6 +658,7 @@ class AutoCreateWikiPage extends SpecialPage {
 			"wgScriptPath" => $wgScriptPath,
 			"mTitle" => $this->mTitle,
 			"mPostedErrors" => $this->mPostedErrors,
+			"wgStylePath" => $wgStylePath,
 			"captchaForm" => $f->getForm(),
 			"params" => $params
 		));
@@ -673,16 +679,17 @@ class AutoCreateWikiPage extends SpecialPage {
 	 * @param $subpage Mixed: subpage of SpecialPage
 	 */
 	public function processCreatePage() {
-		global $wgOut, $wgUser, $wgExtensionsPath, $wgStyleVersion, $wgScriptPath;
+		global $wgOut, $wgUser, $wgExtensionsPath, $wgStyleVersion, $wgScriptPath, $wgStylePath;
 		global $wgCaptchaTriggers, $wgRequest;
 		wfProfileIn( __METHOD__ );
 		#-
-		$aLanguages = Language::getLanguageNames();
+		$aLanguages = Language::getLanguageNames(true);
 		#-
 		$hubs = WikiFactoryHub::getInstance();
 		$aCategories = $hubs->getCategories();
 		#--
 		/* run template */
+		$wgOut->addScript( "<link rel=\"stylesheet\" type=\"text/css\" href=\"{$wgStylePath}/common/form.css?{$wgStyleVersion}\" />" );
 		$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
 		$oTmpl->set_vars( array(
 			"wgUser" => $wgUser,

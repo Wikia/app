@@ -1,116 +1,4 @@
 <!-- s:<?= __FILE__ ?> -->
-<style type="text/css">
-li {
-	list-style-image:none;
-	list-style-position:outside;
-	list-style-type:none;
-}
-/*** FORM STYLES ***/
-form.highlightform {
-	min-width: 700px;
-	position: relative;
-}
-div.formhighlight {
-	background: #dbe7ff;	
-	position: absolute;
-	-moz-border-radius: 10px;
-	-webkit-border-radius: 10px;	
-}
-.formblock {
-	overflow: hidden;	
-	padding: 10px 0;
-	position: relative;
-	width: 100%;
-	z-index: 1;
-	-moz-border-radius: 10px;
-	-webkit-border-radius: 10px;
-}
-.formblock ul {
-	overflow: hidden;	
-	padding: 10px 0;
-}
-.formblock .label {
-	font-weight: bold;
-	float: left;
-	width: 175px;
-}
-.label label {
-	display: block;
-	padding-left: 15px;	
-	font-size: 9pt;
-}
-.label label.required {
-	background: url(<?=$wgExtensionsPath?>/wikia/AutoCreateWiki/images/required.png?<?=$wgStyleVersion?>) 5px .3em no-repeat;	
-}
-.formblock .data1 {
-	float: left;
-	padding-left: 10px;
-	width: 350px;	
-}
-.formblock .data1 input {
-	width: 200px;	
-}
-.formblock .data1 select {
-	width: 250px;	
-}
-.formblock ul.col2 .data1 {
-	float: none;
-	margin-left: 175px;
-	padding-right: 15px;
-	width: auto;	
-}
-.formblock .data2 {
-	margin-left: 520px;
-	padding-right: 15px;
-	padding-left: 15px;
-}
-.birthdate {
-	width: auto !important;
-}
-.selected {
-	background: #dbe7ff;	
-}
-.note {
-	color: #666;
-	font-size: 9pt;
-	font-style: italic;
-}
-.selected .note {
-	color: #333;
-}
-.toolbar {
-	margin: 5px 0;
-	padding: 10px 15px;
-}
-
-.legend {
-	margin-bottom: 5px;
-	text-align: right;	
-}
-
-/*** ERROR HANDLING***/
-div.error {
-	background: #FFE;
-	border: 1px solid #98988E;
-	margin: 0 0 10px 0;
-	padding: 10px;
-}
-form div.error {
-	font-family: sans-serif;
-	font-size: x-small;
-	margin: 10px 10px 0 0;	
-}
-label.error {
-	color: #C00;	
-}
-input.error, select.error {
-	border: 1px solid #C00;
-	font-size:10pt;
-}
-.error-status {
-	padding-left:5px;
-}
-</style>
 <script type="text/javascript">
 /*<![CDATA[*/
 var divErrors = new Array();
@@ -119,11 +7,11 @@ var msgError = "<?=addslashes(wfMsg('autocreatewiki-invalid-wikiname'))?>";
 </script>
 <form class="highlightform" id="highlightform" method="post" action="<?=$mTitle->escapeLocalURL("")?>">
 <div id="monobook_font">
-	<div class="legend"><?=wfMsg("autocreatewiki-required", "<img src='{$wgExtensionsPath}/wikia/AutoCreateWiki/images/required.png?{$wgStyleVersion}' />")?></div>
+	<div class="legend"><?=wfMsg("autocreatewiki-required", "<img src='{$wgStylePath}/common/required.png?{$wgStyleVersion}' />")?></div>
 	<div id="moving" class="formhighlight"></div>
 	<div class="formblock">
 		<ul>
-			<li class="label"><label class="required" id="wiki-name-label"><?=wfMsg('autocreatewiki-wikiname')?></label></li>
+			<li class="label"><label class="required" id="wiki-name-label"><?=wfMsg('allmessagesname')?>:</label></li>
 			<li class="data1">
 				<input type="text" autocomplete="off" name="wiki-name" id="wiki-name" value="<?=@$params['wiki-name']?>"/> Wiki <span class="error-status" id="wiki-name-error-status">&nbsp;</span>
 				<div class="error" style="display: none;" id="wiki-name-error">
@@ -143,11 +31,12 @@ var msgError = "<?=addslashes(wfMsg('autocreatewiki-invalid-wikiname'))?>";
 	</div>
 	<div class="formblock">
 		<ul>
-			<li class="label"><label class="required" id="wiki-category-label"><?=wfMsg('autocreatewiki-category')?></label></li>
+			<li class="label"><label class="required" id="wiki-category-label"><?=wfMsg('nstab-category')?>:</label></li>
 			<li class="data1"><select name="wiki-category" id="wiki-category"><option value=""><?=wfMsg('autocreatewiki-category-select')?></option>
 <?php if (!empty($aCategories) && is_array($aCategories)) :  ?>
 <?php 
 	foreach ($aCategories as $iCat => $sCatName) : 
+	if ($sCatName == 'Wikia') continue;
 	$selected = "";
 	if ( isset($params['wiki-category']) && ($params['wiki-category'] == $iCat) ) {
 		$selected = " selected='selected'";
@@ -167,7 +56,7 @@ var msgError = "<?=addslashes(wfMsg('autocreatewiki-invalid-wikiname'))?>";
 	</div>
 	<div class="formblock">
 		<ul>
-			<li class="label"><label class="required" id="wiki-language-label"><?=wfMsg('autocreatewiki-language')?></label></li>
+			<li class="label"><label class="required" id="wiki-language-label"><?=wfMsg('yourlanguage')?></label></li>
 			<li class="data1">
 				<select name="wiki-language" id="wiki-language">
 <?php 
@@ -207,11 +96,11 @@ var msgError = "<?=addslashes(wfMsg('autocreatewiki-invalid-wikiname'))?>";
 	</div>
 <?php if ($wgUser->isAnon()) : ?>
 	<br />
-	<h1><?=wfMsg('autocreatewiki-create-account')?></h1>
+	<h1><?=wfMsg('nologinlink')?></h1>
 	<div class="legend"><?=wfMsg("autocreatewiki-required", "<img src='{$wgExtensionsPath}/wikia/AutoCreateWiki/images/required.png?{$wgStyleVersion}' />")?></div>
 	<div class="formblock">
 		<ul>
-			<li class="label"><label class="required" id="wiki-username-label"><?=wfMsg('autocreatewiki-username')?></label></li>
+			<li class="label"><label class="required" id="wiki-username-label"><?=wfMsg('yourname')?></label></li>
 			<li class="data1">
 				<input type="text" autocomplete="off" name="wiki-username" value="<?=@$params['wiki-username']?>" id="wiki-username" /> <span class="error-status" id="wiki-username-error-status">&nbsp;</span>
 				<div class="error" style="display: none;" id="wiki-username-error"></div>
@@ -220,7 +109,7 @@ var msgError = "<?=addslashes(wfMsg('autocreatewiki-invalid-wikiname'))?>";
 	</div>
 	<div class="formblock">
 		<ul>
-			<li class="label"><label class="required" id="wiki-email-label"><?=wfMsg('autocreatewiki-email-address')?></label></li>
+			<li class="label"><label class="required" id="wiki-email-label"><?=wfMsg('youremail')?></label></li>
 			<li class="data1">
 				<input type="text" autocomplete="off" value="<?=@$params['wiki-email']?>" name="wiki-email" id="wiki-email" /> <span class="error-status" id="wiki-email-error-status">&nbsp;</span>
 				<div class="error" style="display: none;" id="wiki-email-error"></div>
@@ -230,7 +119,7 @@ var msgError = "<?=addslashes(wfMsg('autocreatewiki-invalid-wikiname'))?>";
 	</div>
 	<div class="formblock">
 		<ul>
-			<li class="label"><label class="required" id="wiki-password-label"><?=wfMsg('autocreatewiki-password')?></label></li>
+			<li class="label"><label class="required" id="wiki-password-label"><?=wfMsg('yourpassword')?></label></li>
 			<li class="data1">
 				<input type="password" name="wiki-password" id="wiki-password" /> <span class="error-status" id="wiki-password-error-status">&nbsp;</span>
 				<div class="error" style="display: none;" id="wiki-password-error"></div>				
@@ -239,7 +128,7 @@ var msgError = "<?=addslashes(wfMsg('autocreatewiki-invalid-wikiname'))?>";
 	</div>
 	<div class="formblock">
 		<ul>
-			<li class="label"><label class="required" id="wiki-retype-password-label"><?=wfMsg('autocreatewiki-retype-password')?></label></li>
+			<li class="label"><label class="required" id="wiki-retype-password-label"><?=wfMsg('yourpasswordagain')?></label></li>
 			<li class="data1">
 				<input type="password" id="wiki-retype-password" name="wiki-retype-password" /> <span class="error-status" id="wiki-retype-password-error-status">&nbsp;</span>
 				<div class="error" style="display: none;" id="wiki-retype-password-error"></div>				
@@ -299,7 +188,7 @@ var msgError = "<?=addslashes(wfMsg('autocreatewiki-invalid-wikiname'))?>";
 <?php endif ?>
 	<div class="toolbar color1 clearfix">
 		<input type="submit" value="Create Wiki" name="wiki-submit" id="wiki-submit" />
-		<input type="button" value="Cancel" name="wiki-cancel" id="wiki-cancel" />
+		<input type="reset" value="Cancel" name="wiki-cancel" id="wiki-cancel" />
 	</div>
 </div>
 </form>

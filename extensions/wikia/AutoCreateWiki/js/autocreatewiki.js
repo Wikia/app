@@ -206,7 +206,7 @@ YAHOO.ACWikiRequest.wikiBirthdayCheck = function(e) {
 
 	if ( (year.value > 0) && (month.value > 0) && (day.value > 0) ) {
 		YAHOO.util.Dom.setStyle(err, 'display', 'block');
-		err.innerHTML = '<img src="http://images.wikia.com/common/progress-wheel.gif" width="16" height="16" alt="Wait..." border="0" />';
+		err.innerHTML = '<img src="' + stylepath + '/common/progress-wheel.gif" width="16" height="16" alt="Wait..." border="0" />';
 		params = "&year=" + escape(year.value) + "&month=" + escape(month.value) + "&day=" + escape(day.value);
 		YC.asyncRequest( "GET", wgAjaxPath + "?action=ajax&rs=axACWRequestCheckBirthday" + params, YAHOO.ACWikiRequest.NameCallback);
 	}
@@ -238,11 +238,11 @@ YAHOO.ACWikiRequest.wikiDomainKeyUp = function(e) {
 YAHOO.ACWikiRequest.checkAccount = function(e, fid) {
 	if ( fid ) {
 		var err = YD.get(fid + "-error");
+		var status = YD.get(fid + '-error-status');
 		var name = YD.get(fid);
 		var lang = YD.get("wiki-language").value;
 		//---
-		YAHOO.util.Dom.setStyle(err, 'display', 'block');
-		err.innerHTML = '<img src="http://images.wikia.com/common/progress_bar.gif" width="70" height="11" alt="Wait..." border="0" />';
+		status.innerHTML = '<img src="' + stylepath + '/common/progress-wheel.gif" width="16" height="16" alt="Wait..." border="0" />';
 		//---
 		fid = fid.replace("wiki-", "");
 		var params = "";
@@ -290,6 +290,31 @@ YAHOO.ACWikiRequest.wikiAccountKeyUp = function(e) {
 	this.zid = setTimeout(func,1000);
 }
 
+YAHOO.ACWikiRequest.resetForm = function(e) {
+	var cnt = 0;
+	for (i in divErrors) { 
+		var div = i.replace(/\'/g, "");
+		YD.setStyle(div, 'display', 'none'); 
+		YD.get(div + "-status").innerHTML = "";
+	}	
+	divErrors = new Array();
+	
+	var oF = document.forms['highlightform'];
+	var oElm = oF.getElementsByTagName('SPAN');
+	var els = oElm.length;
+	for(i = 0; i < els; i++) {
+		if (oElm[i].id) {
+			var pos = oElm[i].id.indexOf( 'error-status', 0 );
+			if (pos !== -1) {
+				YD.get(oElm[i].id).innerHTML = "";
+			}
+		}
+	}
+	
+	YD.get( "wiki-submit" ).disabled = false;
+	return true;
+}
+
 YE.addListener("wiki-name", "keyup", YAHOO.ACWikiRequest.wikiDomainKeyUp );
 YE.addListener("wiki-domain", "keyup", YAHOO.ACWikiRequest.wikiDomainKeyUp );
 YE.addListener("wiki-username", "keyup", YAHOO.ACWikiRequest.wikiAccountKeyUp );
@@ -301,3 +326,5 @@ YE.addListener("wiki-language", "change", YAHOO.ACWikiRequest.wikiLanguageChange
 YE.addListener("wiki-user-year", "change", YAHOO.ACWikiRequest.wikiBirthdayCheck );
 YE.addListener("wiki-user-month", "change", YAHOO.ACWikiRequest.wikiBirthdayCheck );
 YE.addListener("wiki-user-day", "change", YAHOO.ACWikiRequest.wikiBirthdayCheck );
+
+YE.addListener("wiki-cancel", "click", YAHOO.ACWikiRequest.resetForm );
