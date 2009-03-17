@@ -48,9 +48,11 @@ class WikiaApiQueryTopEditUsers extends WikiaApiQuery {
 		}
 	}
 
+	protected function getDB() { return wfGetDBExt(DB_SLAVE); }
+
 	#---
 	private function getTopEditUsers() {
-		global $wgDBname;
+		global $wgDBname, $wgCityId;
 
         #--- blank variables
         $nspace = $user = null;
@@ -65,15 +67,19 @@ class WikiaApiQueryTopEditUsers extends WikiaApiQuery {
 		try {
 			#--- database instance
 			$db =& $this->getDB();
-			$db->selectDB( $wgDBname );
 
 			if ( is_null($db) ) {
 				throw new WikiaApiQueryError(0);
 			}
 
-			$this->addTables( array( "`user_rev_cnt` JOIN `wikicities`.`user` on user_id = rev_user" ) );
-			$this->addFields( array('rev_user','rev_cnt as edit_cnt','user_name'));
-			$this->addWhere ( "rev_user > 0" );
+			$cid = (empty($wgCityId)) ? WikiFactory::DBtoID($wgDBname) : $wgCityId;
+
+			$this->addTables( array( "`city_local_users`" ) );
+			$this->addFields( array('lu_user_id', 'lu_user_name', 'lu_rev_cnt'));
+			$this->addWhere ( "lu_user_id > 0 and lu_blocked = 0 and lu_closed = 0" );
+			if ( !empty($cid) ) {
+				$this->addWhere ( "lu_wikia_id = {$cid}" );
+			}
 
 			#--- user
 			if ( !is_null($user) ) {
@@ -81,7 +87,7 @@ class WikiaApiQueryTopEditUsers extends WikiaApiQuery {
 					throw new WikiaApiQueryError(1);
 				}
 				$this->setCacheKey ($lcache_key, 'U', $user);
-				$this->addWhere ( "rev_user = '" . intval($user) . "'" );
+				$this->addWhere ( "lu_user_id = '" . intval($user) . "'" );
 			}
 
 			#---
@@ -110,7 +116,7 @@ class WikiaApiQueryTopEditUsers extends WikiaApiQuery {
 			}
 
 			#--- order by
-			$this->addOption( "ORDER BY", "edit_cnt DESC" );
+			$this->addOption( "ORDER BY", "lu_rev_cnt DESC" );
 
 			$data = array();
 			// check data from cache ...
@@ -118,12 +124,12 @@ class WikiaApiQueryTopEditUsers extends WikiaApiQuery {
 			if (!is_array($cached)) {
 				$res = $this->select(__METHOD__);
 				while ($row = $db->fetchObject($res)) {
-					$data[$row->rev_user] = array(
-						"user_id"		=> $row->rev_user,
-						"cnt"			=> $row->edit_cnt,
-						"user_name"		=> $row->user_name
+					$data[$row->lu_user_id] = array(
+						"user_id"		=> $row->lu_user_id,
+						"cnt"			=> $row->lu_rev_cnt,
+						"user_name"		=> $row->lu_user_name
 					);
-					ApiResult :: setContent( $data[$row->rev_user], $row->user_name);
+					ApiResult :: setContent( $data[$row->lu_user_id], $row->lu_user_name);
 				}
 				$db->freeResult($res);
 				$this->saveCacheData($lcache_key, $data, $ctime);
