@@ -82,7 +82,7 @@ function CategorySelectInitializeHooks($title, $article) {
 
 	// Initialize only for Monaco skin
 	if(get_class($wgUser->getSkin()) != 'SkinMonaco') {
-		//return true;
+		return true;
 	}
 
 	// Initialize only for namespace: main, image, user (same as for Wysiwyg)
