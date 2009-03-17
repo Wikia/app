@@ -12,6 +12,8 @@ function canAcceptForm() {
 	for (i in divErrors) { cnt++; }	
 	if (cnt == 0) {
 		YD.get( "wiki-submit" ).disabled = false;
+	} else {
+		YD.get( "wiki-submit" ).disabled = true;
 	}
 }
 
@@ -31,18 +33,32 @@ function isTextCorrect(field) {
 	//---
 	YD.get(field + '-error-status').innerHTML = '<img src="' + stylepath + '/common/progress-wheel.gif" width="16" height="16" alt="Wait..." border="0" />';
 	//---
-	for (var i = 0; i < YD.get(field).value.length; i++) {
-		if ( invalidChars.indexOf( YD.get(field).value.charAt(i) ) != -1 ) {
-			YD.setStyle(field + '-error', 'display', 'block'); 
-			YD.get(field + '-error').innerHTML = msgError;
-			return false;  
+	var errors = 0;
+	if (YD.get(field).value.length == 0) {
+		errors++;
+	} else {
+		for (var i = 0; i < YD.get(field).value.length; i++) {
+			if ( invalidChars.indexOf( YD.get(field).value.charAt(i) ) != -1 ) {
+				errors++;
+			}
 		}
 	}
-	//---
-	YD.get(field + "-error-status").innerHTML = "<img src='" + stylepath + "/wikia/img/ok.png' />";	
-	YD.setStyle(field + '-error', 'display', 'none'); 
-	YD.get(field + '-error').innerHTML = "";
-	return true;
+	if (errors > 0) {
+		YD.setStyle(field + '-error', 'display', 'block'); 
+		YD.get(field + '-error').innerHTML = msgError;
+		YD.get(field + "-error-status").innerHTML = "";	
+		divErrors["'" + field + "-error'"] = field;
+	} else {
+		//---
+		YD.get(field + "-error-status").innerHTML = "<img src='" + stylepath + "/wikia/img/ok.png' />";	
+		YD.setStyle(field + '-error', 'display', 'none'); 
+		YD.get(field + '-error').innerHTML = "";
+		if ( divErrors["'" + field + "-error'"] ) {
+			delete divErrors["'" + field + "-error'"];
+		};
+	}
+	canAcceptForm();
+	return (errors > 0) ? false : true;
 }
 
 YAHOO.util.Event.onAvailable("moving", function() {
@@ -145,15 +161,14 @@ YAHOO.ACWikiRequest.NameCallback = {
 			var status = YD.get(divData["div-name"] + "-status");
 			var msg = divData["div-body"];
 			if (error) {
-				YD.get( "wiki-submit" ).disabled = true;
 				status.innerHTML = "";
 				divErrors["'" + divData["div-name"] + "'"] = divData["div-name"];
 			}
 			else {
 				status.innerHTML = "<img src='" + stylepath + "/wikia/img/ok.png' />";
 				delete divErrors["'" + divData["div-name"] + "'"];
-				canAcceptForm();
 			}
+			canAcceptForm();
 			if ( msg ) {
 				div.innerHTML = msg;
 				YAHOO.util.Dom.setStyle(div, 'display', 'block'); 
