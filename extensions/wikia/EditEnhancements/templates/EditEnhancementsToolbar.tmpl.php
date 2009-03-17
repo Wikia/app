@@ -36,7 +36,22 @@
 	#wpSave {
 		min-width: 100px;
 	}
+	#wpDiff {
+		background: none;
+		border: none;
+		color: inherit;
+		cursor: pointer;
+		margin: 0 0 0 0.5em !important;
+		padding: 0;
+	}
 </style>
+
+<script type="text/javascript">
+	addOnloadHook(function() {
+		YAHOO.util.Dom.setStyle('wpDiff', 'color', YAHOO.util.Dom.getStyle('wpEdithelp', 'color'));
+		$('wpCancel').parentNode.insertBefore(document.createTextNode(' | '), $('wpCancel'));
+	});
+</script>
 
 <div class="color1 clearfix" id="edit_enhancements_toolbar">
 	<ul>
