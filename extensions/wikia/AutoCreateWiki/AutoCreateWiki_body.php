@@ -49,7 +49,7 @@ class AutoCreateWikiPage extends SpecialPage {
     const TEMPLATE_LIST_WIKIA = "Template:List_of_Wikia_New";
     const ARTICLE_NEW_WIKIS = "New_wikis_this_week/Draft";
     const DEFAULT_STAFF = "Angela";
-    const SEND_WELCOME_MAIL = 0;
+    const SEND_WELCOME_MAIL = 1;
 
 	/**
 	 * constructor
