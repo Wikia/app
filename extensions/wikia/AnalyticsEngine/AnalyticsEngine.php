@@ -19,6 +19,12 @@ class AnalyticsEngine {
 	private $providers = array('GAT', 'GA_Urchin', 'QuantServe', 'MessageQueue');
 
 	static public function track($provider, $event, $eventDetails=array()){
+		global $wgDevelEnvironment; 
+		
+		if ( !empty($wgDevelEnvironment) ) {
+			return '<!-- DevelEnvironment -->';
+		}
+		
 		switch ($provider){
 	//	  case 'GAT': $AP = new AnalyticsProviderGAT(); break;
 		  case 'GA_Urchin': $AP = new AnalyticsProviderGA_Urchin(); break;
