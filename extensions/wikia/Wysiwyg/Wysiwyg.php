@@ -53,12 +53,8 @@ function Wysiwyg_RemoveMagicWord(&$parser, &$text, &$strip_state) {
 }
 
 // add "Disable Wysiwyg" as the first option in editing tab of user preferences
-function Wysiwyg_UserPreferences($toggles, $default_array = false) {
-	if(is_array($default_array)) {
-		array_unshift($default_array, 'disablewysiwyg');
-	} else {
-		array_unshift($toggles, 'disablewysiwyg');
-	}
+function Wysiwyg_UserPreferences($preferencesForm, $toggles) {
+	array_unshift($toggles, 'disablewysiwyg');
 
 	// add JS to hide certain switches when wysiwyg is enabled
 	global $wgOut, $wgJsMimeType, $wgExtensionsPath, $wgStyleVersion;
@@ -67,12 +63,9 @@ function Wysiwyg_UserPreferences($toggles, $default_array = false) {
 	return true;
 }
 
-function Wysiwyg_Toggle($toggles, $default_array = false) {
-	if(is_array($default_array)) {
-		$default_array[] = 'disablewysiwyg';
-	} else {
-		$toggles[] = 'disablewysiwyg';
-	}
+// add user toggles
+function Wysiwyg_Toggle($toggles) {
+	$toggles[] = 'disablewysiwyg';
 	return true;
 }
 
