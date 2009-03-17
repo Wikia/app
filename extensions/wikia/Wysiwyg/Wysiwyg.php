@@ -15,6 +15,7 @@ $wgEnableMWSuggest = true;
 $wgHooks['AlternateEdit'][] = 'Wysiwyg_AlternateEdit';
 $wgHooks['EditPage::showEditForm:initial'][] = 'Wysiwyg_Initial';
 $wgHooks['UserToggles'][] = 'Wysiwyg_Toggle';
+$wgHooks['UserGetOption'][] = 'Wysiwyg_UserGetOption';
 $wgHooks['getEditingPreferencesTab'][] = 'Wysiwyg_UserPreferences';
 $wgHooks['MagicWordwgVariableIDs'][] = 'Wysiwyg_RegisterMagicWordID';
 $wgHooks['LanguageGetMagic'][] = 'Wysiwyg_GetMagicWord';
@@ -66,6 +67,40 @@ function Wysiwyg_UserPreferences($preferencesForm, $toggles) {
 // add user toggles
 function Wysiwyg_Toggle($toggles) {
 	$toggles[] = 'disablewysiwyg';
+	return true;
+}
+
+// modify values returned by User::getOption() when wysiwyg is enabled
+function Wysiwyg_UserGetOption($options, $name, $value) {
+
+	// don't continue when on Special:Preferences
+	global $wgTitle;
+	if ( !empty($wgTitle) && SpecialPage::resolveAlias( $wgTitle->getDBkey() ) == 'Preferences') {
+		return true;
+	}
+
+	// don't continue if user turns off wysiwyg (disablewysiwyg = true)
+	if (!empty($options['disablewysiwyg'])) {
+		return true;
+	}
+
+	// options to be modified
+	$values = array(
+		'editwidth' => false,
+		'showtoolbar' => true,
+		'previewonfirst' => false,
+		'previewontop' => true,
+		'disableeditingtips' => true,
+		'disablelinksuggest' => false,
+		'externaleditor' => false,
+		'externaldiff' => false,
+		'disablecategoryselect' => false,
+	);
+
+	if ( array_key_exists($name, $values) ) {
+		$value = $values[$name];
+	}
+
 	return true;
 }
 

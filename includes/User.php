@@ -1710,7 +1710,14 @@ class User {
 					$this->setOption('theme', trim($this->mOptions[$oname]));
 				}
 			}
-			return trim( $this->mOptions[$oname] );
+			
+			# Wikia hook - allow extensions to modify value returned by User::getOption()
+			# make local copy of option value, so hook won't modify value read from DB and store in object
+			$value = $this->mOptions[$oname];
+
+			wfRunHooks( 'UserGetOption', array( $this->mOptions, $oname, &$value ) );
+
+			return trim( $value );
 		} else {
 			return $defaultOverride;
 		}
