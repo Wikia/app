@@ -52,7 +52,8 @@ class LocalMaintenanceTask extends BatchTask {
 
 		$city_id = $this->mParams[ "city_id" ];
 		$command = $this->mParams[ "command" ];
-		$arguments = $this->mParams[ "arguments" ];
+		$arguments = isset( $this->mParams[ "arguments" ] )
+			? $this->mParams[ "arguments" ] : "";
 
 		if( $city_id && $command ) {
 			/**
