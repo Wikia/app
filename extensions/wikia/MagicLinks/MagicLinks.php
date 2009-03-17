@@ -38,16 +38,16 @@ function MagicLinksInit() {
 
 function MagicLinksReplaceLinks(&$out, &$text) {
 	$aSearch = array(
-		'/(\s)(t:r(\d+))(\s)/i',	//new svn
-		'/(\s)(r(\d+))(\s)/i',		//old svn
-		'/(\s)(rt#(\d+))(\s)/i',	//new tickets (RT)
-		'/(\s)(#(\d+))(\s)/i',		//old tickets (trac)
+		'/(?<=^|[[(<>\s])(t:r(\d+))/mi',	//new svn
+		'/(?<=^|[[(<>\s])(r(\d+))/mi',	//old svn
+		'/(?<=^|[[(<>\s])(rt#(\d+))/mi',	//new tickets (RT)
+		'/(?<=^|[[(<>\s])(#(\d+))/mi',	//old tickets (trac)
 	);
 	$aReplace = array(
-		'\1<a class="magicLink svnNew" href="http://trac.wikia-code.com/changeset/\3">\2</a>\4',
-		'\1<a class="magicLink svnOld" href="https://trac.wikia-inc.com/trac/wikia/changeset/\3">\2</a>\4',
-		'\1<a class="magicLink ticketRT" href="https://rt.wikia-inc.com/Ticket/Display.html?id=\3">\2</a>\4',
-		'\1<a class="magicLink ticketTrac" href="https://trac.wikia-inc.com/trac/wikia/ticket/\3">\2</a>\4',
+		'<a class="magicLink svnNew" href="http://trac.wikia-code.com/changeset/\2">\1</a>',
+		'<a class="magicLink svnOld" href="https://trac.wikia-inc.com/trac/wikia/changeset/\2">\1</a>',
+		'<a class="magicLink ticketRT" href="https://rt.wikia-inc.com/Ticket/Display.html?id=\2">\1</a>',
+		'<a class="magicLink ticketTrac" href="https://trac.wikia-inc.com/trac/wikia/ticket/\2">\1</a>',
 	);
 	$text = preg_replace($aSearch, $aReplace, $text);
 	return true;
