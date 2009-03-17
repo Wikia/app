@@ -35,9 +35,45 @@ class MagicFooterLinksLoader extends SpecialPage {
 
 		if($wgRequest->wasPosted()) {
 			try {
+
+				// Populate $this->results and $this->badRows with data from Google Spreadsheet
 				$this->downloadData();
-				$out = $this->deleteAndInsertData();
-				$wgMemc->set('MagicFooterLinksHash', md5(serialize($this->results)));
+
+				// Collect database names for all wikis which had some magic footer links before loading new configuration.
+				$dbnames = array();
+				$dbr =& wfGetDB(DB_SLAVE);
+				$res = $dbr->select(wfSharedTable('magic_footer_links'), 'DISTINCT dbname');
+				while($row = $dbr->fetchObject($res)) {
+					$dbnames[] = $row->dbname;
+				}
+				$dbr->freeResult($res);
+
+				// Delete current data from database
+				$dbw = wfGetDB(DB_MASTER);
+				$dbw->delete(wfSharedTable('magic_footer_links'), '*');
+				$deleted = $dbw->affectedRows();
+
+				// Insert data from Google Spreadsheet into database and into cache
+				$inserted = 0;
+				foreach($this->results as $row => $result) {
+					if(count($result) == 3 && $dbw->insert(wfSharedTable('magic_footer_links'), array('dbname' => $result['dbname'], 'page' => str_replace('_', ' ', $result['page']), 'links' => join(' | ', $result['links'])))) {
+						$dbnames[] = $result['dbname'];
+						$inserted++;
+					} else {
+						$this->badRows[] = $row;
+					}
+				}
+
+				// Invalidate cache data: <dbname>:MonacoDataOld
+				$dbnames = array_unique($dbnames);
+				foreach($dbnames as $dbname) {
+					$wgMemc->delete($dbname.':MonacoDataOld');
+				}
+
+				$this->badRows = array_unique($this->badRows);
+				sort($this->badRows);
+
+				$out = "{$deleted} old record(s) deleted <br /><br />{$inserted} new record(s) inserted".(count($this->badRows) >0 ? '<br /><br />row(s): '.implode(', ', $this->badRows).' not inserted due to missing or incorrect data' : '');
 			} catch (Exception $e) {
 				$out = 'Error: '.$e->getMessage();
 			}
@@ -124,127 +160,4 @@ EOD;
 			}
 		}
 	}
-
-	private function deleteAndInsertData() {
-		$dbw = wfGetDB(DB_MASTER);
-		$dbw->delete(wfSharedTable('magic_footer_links'), '*', 'MagicFooterLinksLoader->deleteAndInsertData');
-
-		$deleted = $dbw->affectedRows();
-		$inserted = 0;
-
-		foreach($this->results as $row => $result) {
-			if(count($result) == 3 && $dbw->insert(wfSharedTable('magic_footer_links'), array('dbname' => strtolower($result['dbname']), 'page' => str_replace('_', ' ', $result['page']), 'links' => join(' | ', $result['links'])), 'MagicFooterLinksLoader->deleteAndInsertData')) {
-				$inserted++;
-			} else {
-				$this->badRows[] = $row;
-			}
-		}
-
-		$this->badRows = array_unique($this->badRows);
-
-		return "{$deleted} old record(s) deleted <br /><br />{$inserted} new record(s) inserted".(count($this->badRows) >0 ? '<br /><br />row(s): '.implode(', ', $this->badRows).' not inserted due to missing or incorrect data' : '');
-	}
-}
-
-function MagicFooterLinks_getLinks() {
-	wfProfileIn(__METHOD__);
-	global $wgMemc;
-
-	$links = false;
-
-	wfProfileIn(__METHOD__.'-fromlocal');
-	$hash = $wgMemc->get('MagicFooterLinksHash');
-	if(!$hash) {
-		return false;
-	}
-	if($links) {
-		$links = MagicFooterLinks_loadFromLocal($hash);
-	}
-	wfProfileOut(__METHOD__.'-fromlocal');
-
-	if(!$links) {
-		wfProfileIn(__METHOD__.'-fromDB');
-		$links = MagicFooterLinks_loadFromDB();
-		MagicFooterLinks_saveToLocal($hash, $links);
-		wfProfileOut(__METHOD__.'-fromDB');
-	}
-	wfProfileOut(__METHOD__);
-	return $links;
-}
-
-function MagicFooterLinks_loadFromLocal($hash) {
-	wfProfileIn(__METHOD__);
-	global $wgLocalMessageCache;
-
-	$dirname = $wgLocalMessageCache . '/' . substr( wfWikiID(), 0, 1 ) . '/' . wfWikiID();
-	$filename = "$dirname/magic_footer_links";
-	$file = fopen($filename, 'r');
-
-	$localHash = fread($file, 32);
-	if($hash === $localHash) {
-		$serialized = '';
-		while(!feof($file)) {
-			$serialized .= fread($file, 100000);
-		}
-		fclose($file);
-		$result = unserialize($serialized);
-		wfProfileOut(__METHOD__);
-		return $result;
-	} else {
-		fclose($file);
-		wfProfileOut(__METHOD__);
-		return false;
-	}
-}
-
-function MagicFooterLinks_loadFromDB() {
-	wfProfileIn(__METHOD__);
-	global $wgMemc, $wgDBname, $wgTitle;
-	$result = array();
-	$tmpParser = null;
-	$tmpParserOptions = null;
-	$dbw = null;
-	$dbr =& wfGetDB(DB_SLAVE);
-	$res = $dbr->select(wfSharedTable('magic_footer_links'), 'page, links, parsed_links', array('dbname' => $wgDBname), __METHOD__);
-	while($row = $dbr->fetchObject($res)) {
-		if(empty($row->parsed_links)) {
-			if(empty($tmpParser) && empty($tmpParserOptions) && empty($dbw)) {
-				$tmpParser = new Parser();
-				$tmpParser->setOutputType(OT_HTML);
-				$tmpParserOptions = new ParserOptions();
-				$dbw = wfGetDB(DB_MASTER);
-			}
-			$row->parsed_links = $tmpParser->parse($row->links, $wgTitle, $tmpParserOptions, false)->getText();
-			$dbw->update(wfSharedTable('magic_footer_links'), array('parsed_links' => $row->parsed_links), array('dbname' => $wgDBname, 'page' => $row->page), __METHOD__);
-		}
-		$result[$row->page] = $row->parsed_links;
-	}
-	$dbr->freeResult($res);
-	if(!empty($dbw)) {
-		$dbw->commit();
-	}
-	wfProfileOut(__METHOD__);
-	return $result;
-}
-
-function MagicFooterLinks_saveToLocal($hash, $result) {
-	wfProfileIn(__METHOD__);
-	global $wgLocalMessageCache;
-
-	$dirname = $wgLocalMessageCache . '/' . substr( wfWikiID(), 0, 1 ) . '/' . wfWikiID();
-	$filename = "$dirname/magic_footer_links";
-	wfMkdirParents($dirname, 0777);
-
-	wfSuppressWarnings();
-	$file = fopen($filename, 'w');
-	wfRestoreWarnings();
-
-	if(!$file) {
-		return;
-	}
-
-	fwrite($file, $hash . serialize($result));
-	fclose($file);
-	@chmod($filename, 0666);
-	wfProfileOut(__METHOD__);
 }
