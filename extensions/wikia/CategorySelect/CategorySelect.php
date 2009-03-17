@@ -37,7 +37,7 @@ $wgAjaxExportList[] = 'CategorySelectRemoveTooltip';
 $wgAjaxExportList[] = 'CategorySelectGenerateHTMLforView';
 
 /**
- * Initialize hooks
+ * Initialize hooks - step 1/2
  *
  * @author Maciej Błaszkowski <marooned at wikia-inc.com>
  */
@@ -62,11 +62,21 @@ function CategorySelectInit() {
 	wfLoadExtensionMessages('CategorySelect');
 }
 
+/**
+ * Initialize hooks - step 2/2
+ *
+ * @author Maciej Błaszkowski <marooned at wikia-inc.com>
+ */
 function CategorySelectInitializeHooks($title, $article) {
 	global $wgHooks, $wgRequest, $wgUser, $wgTitle;
 
-	// check user preferences option
+	// Check user preferences option
 	if($wgUser->getOption('disablecategoryselect') == true) {
+		return true;
+	}
+
+	// Don't initialize for blocked users
+	if($wgUser->isBlocked()) {
 		return true;
 	}
 
@@ -80,7 +90,7 @@ function CategorySelectInitializeHooks($title, $article) {
 		return true;
 	}
 
-	//don't initialize on CSS and JS user subpages
+	// Don't initialize on CSS and JS user subpages
 	if ( $wgTitle->isCssJsSubpage() ) {
 		return true;
 	}
