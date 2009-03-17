@@ -39,12 +39,31 @@ require_once( dirname(__FILE__) . '/AjaxPoll_body.php' );
  * @global
  */
 function wfAjaxPollTag() {
-     global $wgParser, $wgOut, $wgJsMimeType, $wgExtensionsPath, $wgMergeStyleVersionJS;
-	$rand = $wgMergeStyleVersionJS;
+	global $wgParser, $wgOut, $wgJsMimeType, $wgExtensionsPath, $wgStyleVersion, $wgHooks;
 
 	$wgParser->setHook( "poll", array( "AjaxPollClass", "renderFromTag" ) );
-	$wgOut->addScript( "<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/AjaxPoll/AjaxPoll.js?{$rand}\" ></script>\n" );
-	$wgOut->addScript( "<style type=\"text/css\">/*<![CDATA[*/@import \"{$wgExtensionsPath}/wikia/AjaxPoll/AjaxPoll.css?{$rand}\";/*]]>*/</style>\n" );
+
+	// add JS
+	$wgOut->addScript("<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/AjaxPoll/AjaxPoll.js?{$wgStyleVersion}\" ></script>\n");
+
+	// add CSS
+	$wgHooks['SkinTemplateOutputPageBeforeExec'][] = 'wfAjaxPollAddCSS';
+}
+
+/**
+ * wfAjaxPollAddCSS
+ *
+ * Adds extension CSS to <head> section
+ *
+ * @access public
+ * @author macbre
+ * @global
+ */
+
+function wfAjaxPollAddCSS(&$skin, &$tpl) {
+	global $wgExtensionsPath, $wgStyleVersion;
+	$tpl->data['headlinks'] .= "\t\t<link rel=\"stylesheet\" type=\"text/css\" href=\"{$wgExtensionsPath}/wikia/AjaxPoll/AjaxPoll.css?{$wgStyleVersion}\" />\n";
+	return true;
 }
 
 /**
