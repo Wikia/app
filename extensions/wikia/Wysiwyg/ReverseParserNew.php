@@ -275,7 +275,7 @@ class ReverseParser {
 
 						// if the first previous XML_ELEMENT_NODE (so no text and no comment) of the current
 						// node is <p> then add new line before the current one
-						if ($previousNode && $previousNode->nodeName == 'p') {
+						if ($previousNode && $previousNode->nodeName == 'p' && $node->parentNode->nodeName != 'li') {
 							$textContent = $prefix . $textContent;
 						} else if($textContent == ""){
 							// empty paragraph
@@ -292,8 +292,21 @@ class ReverseParser {
 							}
 
 						} else {
+							if ( !empty($node->parentNode) && $node->parentNode->nodeName == 'li' ) {
+								// indented paragraph inside list item
+								// *: foo
+								
+								// remove one :
+								$textContent = substr($textContent, 1);
+
+								// if previous node was paragraph or text node
+								// then we should add bullets as it's next list item
+								if ( ($previousNode && $previousNode->nodeName == 'p') || $this->getPreviousTextNode($node) ) {
+									$textContent = "\n" . $this->listIndent . $this->listBullets . $textContent;
+								}
+							}
 							// add new lines before paragraph
-							if ($isDefinitionList) {
+							else if ($isDefinitionList) {
 								// for : and ; lists use prefix value
 								if (empty($node->previousSibling)) {
 									// current node begins the wikitext - remove one new line
@@ -640,7 +653,9 @@ class ReverseParser {
 			// if the next sibling node of the current one comment node is text or node (so any sibling)
 			// then add new line
 			// e.g. "<!--NEW_LINE_1-->abc" => "\nabc"
-			if($node->data == "NEW_LINE_1" && $node->nextSibling) { 
+
+			// ignore <!--NEW_LINE_1--> comment inside list item
+			if($node->data == "NEW_LINE_1" && $node->nextSibling && $node->parentNode->nodeName != 'li') { 
 				$out = "\n";
 			}
 
@@ -1025,6 +1040,16 @@ class ReverseParser {
 		while($node->nextSibling) {
 			$node = $node->nextSibling;
 			if($node->nodeType == XML_ELEMENT_NODE) {
+				return $node;
+			}
+		}
+		return false;
+	}
+
+	private function getPreviousTextNode($node) {
+		while($node->previousSibling) {
+			$node = $node->previousSibling;
+			if($node->nodeType == XML_TEXT_NODE) {
 				return $node;
 			}
 		}
