@@ -95,6 +95,11 @@ function CategorySelectInitializeHooks($title, $article) {
 		return true;
 	}
 
+	// Don't initialize when DB is locked
+	if ( wfReadOnly() ) {
+		return true;
+	}
+
 	$action = $wgRequest->getVal('action', 'view');
 
 	if($action == 'view' || $action == 'purge') {
