@@ -15,7 +15,7 @@ $wgEnableMWSuggest = true;
 $wgHooks['AlternateEdit'][] = 'Wysiwyg_AlternateEdit';
 $wgHooks['EditPage::showEditForm:initial'][] = 'Wysiwyg_Initial';
 $wgHooks['UserToggles'][] = 'Wysiwyg_Toggle';
-$wgHooks['getEditingPreferencesTab'][] = 'Wysiwyg_Toggle';
+$wgHooks['getEditingPreferencesTab'][] = 'Wysiwyg_UserPreferences';
 $wgHooks['MagicWordwgVariableIDs'][] = 'Wysiwyg_RegisterMagicWordID';
 $wgHooks['LanguageGetMagic'][] = 'Wysiwyg_GetMagicWord';
 $wgHooks['InternalParseBeforeLinks'][] = 'Wysiwyg_RemoveMagicWord';
@@ -49,6 +49,21 @@ function Wysiwyg_GetMagicWord(&$magicWords, $langCode) {
 
 function Wysiwyg_RemoveMagicWord(&$parser, &$text, &$strip_state) {
 	MagicWord::get('MAG_NOWYSIWYG')->matchAndRemove($text);
+	return true;
+}
+
+// add "Disable Wysiwyg" as the first option in editing tab of user preferences
+function Wysiwyg_UserPreferences($toggles, $default_array = false) {
+	if(is_array($default_array)) {
+		array_unshift($default_array, 'disablewysiwyg');
+	} else {
+		array_unshift($toggles, 'disablewysiwyg');
+	}
+
+	// add JS to hide certain switches when wysiwyg is enabled
+	global $wgOut, $wgJsMimeType, $wgExtensionsPath, $wgStyleVersion;
+	$wgOut->addScript( "<script type=\"{$wgJsMimeType}\" src=\"$wgExtensionsPath/wikia/Wysiwyg/wysiwyg_preferences.js?$wgStyleVersion\"></script>" );
+
 	return true;
 }
 
