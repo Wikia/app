@@ -41,7 +41,7 @@ function MagicLinksReplaceLinks(&$out, &$text) {
 		'/(?<=^|[[(<>\s])(t:r(\d+))/mi',	//new svn
 		'/(?<=^|[[(<>\s])(r(\d+))/mi',	//old svn
 		'/(?<=^|[[(<>\s])(rt#(\d+))/mi',	//new tickets (RT)
-		'/(?<=^|[[(<>\s])(#(\d+))/mi',	//old tickets (trac)
+		'/(?<=^|[[(<>\s])(trac#(\d+))/mi',	//old tickets (trac)
 	);
 	$aReplace = array(
 		'<a class="magicLink svnNew" href="http://trac.wikia-code.com/changeset/\2">\1</a>',
