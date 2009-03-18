@@ -48,6 +48,13 @@ function RenderAdSkin() {
 			echo '</style>';
 			break;
 		case "superpages":
+			echo '<div style="position: absolute;">';
+			echo '<script language="JavaScript" type="text/javascript">
+			document.write(\'<script language="JavaScript" src="http://ad.doubleclick.net/adj/npm.wikia/superpages;tile=1;sz=1x1;click=;ord=?" type="text/javascript"></scr\' + \'ipt>\');
+			</script>
+			<noscript>
+			<a href="http://ad.doubleclick.net/jump/npm.wikia/superpages;tile=1;sz=1x1;click=;ord=?" target="_blank"><img src="http://ad.doubleclick.net/ad/npm.wikia/superpages;tile=1;sz=1x1;ord=?" width="1" height=1" border="0" alt=""></a></noscript>';
+			echo '</div>';
 			echo '<link rel="stylesheet" type="text/css" href="'. $wgExtensionsPath .'/wikia/AdSkin/css/superpages.css?'. $wgAdSkinVersion .'" />';
 			break;
 		}	
