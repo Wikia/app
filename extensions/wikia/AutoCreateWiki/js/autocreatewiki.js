@@ -1,13 +1,7 @@
 YAHOO.namespace("ACWikiRequest");
-var YC = YAHOO.util.Connect;
-var YD = YAHOO.util.Dom;
-var YE = YAHOO.util.Event;
-var WR = YAHOO.WRequest;
 var wgAjaxPath = wgScriptPath + wgScript;
-
 YE.preventDefault('highlightform');
-
-function canAcceptForm() {
+function canAcceptForm() { 
 	var cnt = 0;
 	for (i in divErrors) { cnt++; }	
 	if (cnt == 0) {
@@ -330,16 +324,14 @@ YAHOO.ACWikiRequest.resetForm = function(e) {
 	return true;
 }
 
-YE.addListener("wiki-name", "keyup", YAHOO.ACWikiRequest.wikiDomainKeyUp );
-YE.addListener("wiki-domain", "keyup", YAHOO.ACWikiRequest.wikiDomainKeyUp );
-YE.addListener("wiki-username", "keyup", YAHOO.ACWikiRequest.wikiAccountKeyUp );
-YE.addListener("wiki-email", "keyup", YAHOO.ACWikiRequest.wikiAccountKeyUp );
-YE.addListener("wiki-password", "keyup", YAHOO.ACWikiRequest.wikiAccountKeyUp );
-YE.addListener("wiki-retype-password", "keyup", YAHOO.ACWikiRequest.wikiAccountKeyUp );
-
+YE.addListener(["wiki-name", "wiki-domain"], "keyup", YAHOO.ACWikiRequest.wikiDomainKeyUp );
+YE.addListener(["wiki-username", "wiki-email", "wiki-password", "wiki-retype-password"], "keyup", YAHOO.ACWikiRequest.wikiAccountKeyUp );
 YE.addListener("wiki-language", "change", YAHOO.ACWikiRequest.wikiLanguageChange );
-YE.addListener("wiki-user-year", "change", YAHOO.ACWikiRequest.wikiBirthdayCheck );
-YE.addListener("wiki-user-month", "change", YAHOO.ACWikiRequest.wikiBirthdayCheck );
-YE.addListener("wiki-user-day", "change", YAHOO.ACWikiRequest.wikiBirthdayCheck );
-
+YE.addListener(["wiki-user-year","wiki-user-month","wiki-user-day"] , "change", YAHOO.ACWikiRequest.wikiBirthdayCheck );
 YE.addListener("wiki-cancel", "click", YAHOO.ACWikiRequest.resetForm );
+
+YE.onDOMReady(function () {
+	if (YD.get('userloginRound')) {
+		YE.addListener('AWClogin', 'click', YAHOO.wikia.AjaxLogin.showLoginPanel);
+	}
+});

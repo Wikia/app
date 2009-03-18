@@ -1,4 +1,7 @@
 <!-- s:<?= __FILE__ ?> -->
+<style type="text/css">
+.infoline {float:left; width:auto;font-size:105%;}
+</style>
 <script type="text/javascript">
 /*<![CDATA[*/
 var divErrors = new Array();
@@ -96,8 +99,17 @@ var msgError = "<?=addslashes(wfMsg('autocreatewiki-invalid-wikiname'))?>";
 	</div>
 <?php if ($wgUser->isAnon()) : ?>
 	<br />
+<!-- Create an account -->	
 	<h1><?=wfMsg('nologinlink')?></h1>
-	<div class="legend"><?=wfMsg("autocreatewiki-required", "<img src='{$wgExtensionsPath}/wikia/AutoCreateWiki/images/required.png?{$wgStyleVersion}' />")?></div>
+	<div class="formblock" style="padding:2px;">
+		<ul>
+		<li class="infoline"><?=wfMsg('autocreatewiki-haveaccount-question')?></li>
+		<li class="data1">
+			<a id="AWClogin" class="bigButton" href="/index.php?title=Special:UserLogin&returnto=Special:AutoCreateWiki" rel="nofollow"><big><?=wfMsg('login')?></big><small> </small></a>
+		</li>
+		<li class="legend"><?=wfMsg("autocreatewiki-required", "<img src='{$wgExtensionsPath}/wikia/AutoCreateWiki/images/required.png?{$wgStyleVersion}' />")?></li>
+		</ul>
+	</div>
 	<div class="formblock">
 		<ul>
 			<li class="label"><label class="required" id="wiki-username-label"><?=wfMsg('yourname')?></label></li>
@@ -179,8 +191,8 @@ var msgError = "<?=addslashes(wfMsg('autocreatewiki-invalid-wikiname'))?>";
 		<ul class="col2">
 			<li class="label">&nbsp;</li>
 			<li class="data1">
-				<?=wfMsg('autocreatewiki-info-terms-agree')?><br />
-				<input type="checkbox" id="wiki-remember" name="wiki-remember" style="width:auto" <?= (isset($params['wiki-remember'])) ? "checked='checked'" : "" ?> /> <?=wfMsg('autocreatewiki-remember')?>
+				<?=wfMsg('autocreatewiki-info-terms-agree')?>
+				<br /><input type="checkbox" id="wiki-remember" name="wiki-remember" style="width:auto" <?= (isset($params['wiki-remember'])) ? "checked='checked'" : "" ?> /><?=wfMsg('autocreatewiki-remember')?>
 			</li>
 			<li class="data2"></li>
 		</ul>
@@ -194,14 +206,17 @@ var msgError = "<?=addslashes(wfMsg('autocreatewiki-invalid-wikiname'))?>";
 </form>
 <script type="text/javascript">
 /*<![CDATA[*/
+var YC = YAHOO.util.Connect;
+var YD = YAHOO.util.Dom;
+var YE = YAHOO.util.Event;
 <?php if ( !empty($mPostedErrors) && is_array($mPostedErrors) ) : ?>
 <?php 	foreach ( $mPostedErrors as $field => $value ) : ?>
 <?php 		if ( !empty($value) ) : ?>
-if ( document.getElementById('<?=$field?>') ) {
-	YAHOO.util.Dom.setStyle('<?=$field?>-error', 'display', 'block');
-	YAHOO.util.Dom.addClass('<?=$field?>', 'error');
-	YAHOO.util.Dom.addClass('<?=$field?>-label', 'error');
-	YAHOO.util.Dom.get('<?=$field?>-error').innerHTML = "<?=str_replace("\n", "<br />", $value)?>";
+if ( YD.get('<?=$field?>') ) { 
+	YD.setStyle('<?=$field?>-error', 'display', 'block');
+	YD.addClass('<?=$field?>', 'error');
+	YD.addClass('<?=$field?>-label', 'error');
+	YD.get('<?=$field?>-error').innerHTML = "<?=str_replace("\n", "<br />", $value)?>";
 }
 <?php		endif ?>
 <?php 	endforeach ?>
