@@ -722,12 +722,8 @@ class AutoCreateWikiPage extends SpecialPage {
 		$wgOut->addScript( "<link rel=\"stylesheet\" type=\"text/css\" href=\"{$wgStylePath}/common/form.css?{$wgStyleVersion}\" />" );
 		$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
 		$oTmpl->set_vars( array(
-			"wgUser" => $wgUser,
 			"wgExtensionsPath" => $wgExtensionsPath,
 			"wgStyleVersion" => $wgStyleVersion,
-			"aLanguages" => $aLanguages,
-			"aCategories" => $aCategories,
-			"wgScriptPath" => $wgScriptPath,
 			"mTitle" => $this->mTitle,
 			"awcName" => $this->awcName,
 			"awcDomain" => $this->awcDomain,
@@ -759,16 +755,15 @@ class AutoCreateWikiPage extends SpecialPage {
 					$key = str_replace("wiki-", "", $key);
 					if ( $toSession === true ) {
 						$key = str_replace("-", "_", "awc".ucfirst($key));
-						$_SESSION[$key] = addslashes($value);
+						$_SESSION[$key] = strip_tags($value);
 					} else {
 						$key = str_replace("-", "_", "m".ucfirst($key));
 						$this->mPostedErrors[$k] = "";
-						$this->$key = addslashes($value);
+						$this->$key = strip_tags($value);
 					}
 				}
 			}
 		}
-		#echo "<pre>".print_r($this, true)."</pre>";
 		wfProfileOut( __METHOD__ );
 	}
 
