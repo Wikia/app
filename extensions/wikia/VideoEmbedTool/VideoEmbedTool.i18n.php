@@ -27,6 +27,7 @@ $messages['en'] = array(
 	'vet-optional' => ' (Optional)',
 	'vet-insert2' => 'Insert Video',
 	'vet-update' => 'Update Video',
+	'vet-video-replace-link' => 'To replace this video, please go to [[:$1]]',
 	'vet-prev' => 'Previous 8',
 	'vet-next' => 'Next 8',
 	'vet-metacafe' => 'Metacafe Videos ($1 results)',

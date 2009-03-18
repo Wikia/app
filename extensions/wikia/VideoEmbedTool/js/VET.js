@@ -64,6 +64,9 @@ function VET_editVideo() {
 
 			// show alignment row
 			$( 'ImageLayoutRow' ).style.display = '';
+
+			// make replace video link to open in new window / tab
+			$('VideoReplaceLink').getElementsByTagName('a')[0].setAttribute('target', '_blank');
 		}
 	};
 

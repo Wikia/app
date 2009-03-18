@@ -61,5 +61,8 @@ if('' == $props['oname']) {
 		</td>
 	</tr>
 </table>
+
+<div id="VideoReplaceLink"><?= wfMsgExt('vet-video-replace-link', 'parse', $props['href']); ?></div>
+
 <input id="VideoEmbedHref" type="hidden" value="<?= htmlspecialchars($props['href']) ?>" />
 </div>

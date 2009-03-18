@@ -351,3 +351,8 @@ VideoEmbedOptionsTable img {
 #VideoEmbedToolProvidersTable td {
 	background: #fff;
 }
+
+#VideoReplaceLink {
+	font-size: 0.9em;
+	margin-top: 30px;
+}
