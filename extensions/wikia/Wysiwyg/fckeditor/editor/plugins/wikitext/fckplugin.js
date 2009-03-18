@@ -1458,7 +1458,7 @@ FCKToolbarInsertTemplateCombo.prototype.CreateItems = function( targetSpecialCom
 	for(key in FCK.templateList) {
 		targetSpecialCombo.AddItem(key, (FCK.templateList[key].desc) ? FCK.templateList[key].desc : FCK.templateList[key].name);
 	}
-	targetSpecialCombo.AddItem(":other:", "Other template / magic word");
+	targetSpecialCombo.AddItem(":other:", "Other template / magic word", '', true);
 }
 
 var oInsertTemplateItem = new FCKToolbarInsertTemplateCombo();
