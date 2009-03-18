@@ -671,7 +671,7 @@ class AutoCreateWikiPage extends SpecialPage {
 		$hubs = WikiFactoryHub::getInstance();
 		$aCategories = $hubs->getCategories();
 		#--
-		$params = $wgRequest->getValues();
+		$params = $this->fixSessionKeys();
 		#--
 		$f = new FancyCaptcha();
 		#--
@@ -765,6 +765,24 @@ class AutoCreateWikiPage extends SpecialPage {
 			}
 		}
 		wfProfileOut( __METHOD__ );
+	}
+
+	/*
+	 * 
+	 */ 
+	private function fixSessionKeys() {
+		global $wgRequest;
+		$__params = $wgRequest->getValues();
+		$params = array();
+		if ( !empty($__params) && is_array($__params) ) {
+			foreach ($__params as $key => $value) {
+				$k = trim($key);
+				if ( strpos($key, "wiki-") !== false ) {
+					$params[$key] = htmlspecialchars($value);
+				}
+			}
+		}
+		return $params;
 	}
 
 	/**
