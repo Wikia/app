@@ -392,12 +392,11 @@ class TaskManagerPager extends TablePager {
                 $sRetval = BatchTask::getStatusName( $value );
 
                 if( in_array ( $value, array(
-                        TASK_FINISHED_SUCCESS,
-                        TASK_FINISHED_ERROR,
-                        TASK_FINISHED_SUCCESS,
-			TASK_FINISHED_UNDO
-                    ))
-                ) {
+                    TASK_FINISHED_SUCCESS,
+                    TASK_FINISHED_ERROR,
+                    TASK_FINISHED_SUCCESS,
+					TASK_FINISHED_UNDO ) ) )
+				{
                     $sRetval .= sprintf(
                         "<br /><a href=\"%s\">log</a>",
                         $this->mTitle->getLocalUrl( "action=log&id={$iTaskID}")
@@ -489,9 +488,14 @@ class TaskManagerPager extends TablePager {
 
 
             case "task_user_id":
-                $oUser = User::newFromId( $value );
-                $oUser->load();
-                return sprintf("<a href=\"%s\">%s</a>", $oUser->getUserPage()->getLocalUrl(), $oUser->getName());
+				if( $value ) {
+	                $oUser = User::newFromId( $value );
+					$label = sprintf("<a href=\"%s\">%s</a>", $oUser->getUserPage()->getLocalUrl(), $oUser->getName());
+				}
+				else {
+					$label = "<b>Anonymous</b>";
+				}
+                return $label;
                 break;
 
             default:
