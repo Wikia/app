@@ -26,7 +26,14 @@ class InviteSpecialPage extends SpecialPage {
 
 		wfProfileIn( __METHOD__ );
 
+
 		$this->setHeaders();
+
+		if( $wgUser->isBlocked() ) {
+			$wgOut->blockedPage();			
+			wfProfileOut( __METHOD__ );			
+			return false;
+		}
 
 		if ( !isset( $wgNotificationEmails ) || !is_numeric( $wgNotificationEmails ) ) {
 			$wgNotificationEmails = 20;
