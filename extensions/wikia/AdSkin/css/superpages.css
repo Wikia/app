@@ -13,3 +13,6 @@ body.mainpage #background_strip {
 body.mainpage #wikia_footer, body.mainpage #wikia_footer a {
 	color: #fff
 }
+body.mainpage #background_accent1, body.mainpage #background_accent2 {
+	display: none;
+}
