@@ -207,11 +207,19 @@ class AutoCreateWikiPage extends SpecialPage {
 	}
 
 	private function test() {
+		global $wgOut;
 		for ($i = 1; $i < 9; $i++) {
 			$this->setInfoLog('OK', wfMsg('autocreatewiki-step' . $i));
 			sleep(1);
 		}
-		$this->setInfoLog('END', 'Done.');
+		
+		$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
+		$oTmpl->set_vars( array(
+			"domain" => "testtestest.wikia.com",
+		));
+		#---
+		$sFinishText = $oTmpl->execute("finish");
+		$this->setInfoLog('END', $sFinishText);
 	}
 
 	/**
@@ -606,7 +614,15 @@ class AutoCreateWikiPage extends SpecialPage {
 		$info = sprintf( "Total: %F", wfTime() - $startTime );
 		$this->log( $info );
 
-		$this->setInfoLog( 'END', 'Done.' );
+		$sSubdomain = ( $this->awcLanguage === 'en' ) ? strtolower( trim( $this->awcDomain ) ) : $this->awcLanguage . "." . strtolower( trim( $this->awcDomain ) );
+		$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
+		$oTmpl->set_vars( array(
+			"domain" => sprintf("%s.%s", $sSubdomain, $this->mDefSubdomain), 
+		));
+		#---
+		$sFinishText = $oTmpl->execute("finish");
+		$this->setInfoLog('END', $sFinishText);
+
 		wfProfileOut( __METHOD__ );
 	}
 
@@ -718,7 +734,7 @@ class AutoCreateWikiPage extends SpecialPage {
 			"awcCategory" => $this->awcCategory,
 			"awcLanguage" => $this->awcLanguage,
 			"subdomain" => ( $this->awcLanguage === 'en' ) ? strtolower( trim( $this->awcDomain ) ) : $this->awcLanguage . "." . strtolower( trim( $this->awcDomain ) ),
-			"domain" => $this->mDefSubdomain
+			"domain" => $this->mDefSubdomain,
 		));
 
 		#---

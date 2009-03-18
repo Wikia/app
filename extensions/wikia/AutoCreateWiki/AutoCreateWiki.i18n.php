@@ -23,6 +23,9 @@ $messages['en'] = array(
 	"autocreatewiki-done" => "done",
 	"autocreatewiki-error" => "error",
 	"autocreatewiki-language-top-list" => "de,en,es,fr,it,ja,pl,pt,pt-br,zh",
+	"autocreatewiki-haveaccount-question" => "Do you already have a Wikia account?",
+	"autocreatewiki-success-title" => "Your wiki has been created!",
+	"autocreatewiki-success-subtitle" => "You can now begin working on your wiki by visiting:",
 // form messages
 	"autocreatewiki-info-domain" => "It's best to use a word likely to be a search keyword for your topic.",
 	"autocreatewiki-info-topic" => "Add a short description such as \"Star Wars\" or \"TV Shows\".",
@@ -55,7 +58,7 @@ $messages['en'] = array(
 	"autocreatewiki-invalid-category" => "Invalid value of category. Please select proper from dropdown list.",
 	"autocreatewiki-invalid-language" => "Invalid value of language. Please select proper from dropdown list.",
 	"autocreatewiki-invalid-retype-passwd" => "Please, retype the same password as above",
-	"autocreatewiki-invalid-birthday" => "Invalid day of bithday",
+	"autocreatewiki-invalid-birthday" => "Invalid birth date",
 	"autocreatewiki-limit-birthday" => "Unable to create registration. ",
 // processing
 	"autocreatewiki-log-title" => "Your wiki is being created",

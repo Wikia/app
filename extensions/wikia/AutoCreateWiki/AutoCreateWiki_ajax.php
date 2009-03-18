@@ -146,12 +146,7 @@ function axACWRequestCheckLog() {
 	if ( isset ($sInfo) ) {
 		$aResponse = $sInfo;
 	} else {
-		$aResponse = array( 
-			0 => array(
-				'type' => '',
-				'info' => wfMsg('autocreatewiki-stepdefault')
-			)
-		);
+		$aResponse = array( 'type' => '', 'info' => wfMsg('autocreatewiki-stepdefault') );
 	}
 
 	if (!function_exists('json_encode'))  {

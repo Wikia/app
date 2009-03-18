@@ -351,12 +351,7 @@ class AutoCreateWiki {
 		$sDomain = str_replace(" ", "_", $aParams['awcDomain']);
 		$key = wfMemcKey( 'awcProcessLog', $wgUser->getId(), $sName, $sDomain, $aParams['awcCategory'], $aParams['awcLanguage']);
 		if ($action == 'set') {
-			$__info = $wgMemc->get( $key );
-			if ( empty($__info) ) {
-				$__info = array();
-			} 
-			$__info[] = $aInfo;
-			$wgMemc->set( $key, $__info, 4*60);
+			$wgMemc->set( $key, $aInfo, 4*60);
 		} else {
 			$key = $wgMemc->get( $key );
 		}
