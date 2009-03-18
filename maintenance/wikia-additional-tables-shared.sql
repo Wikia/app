@@ -309,10 +309,10 @@ CREATE TABLE IF NOT EXISTS system_events_types (
   `et_active` tinyint(3) NOT NULL default 1,
   PRIMARY KEY (`et_id`)
 ) ENGINE=InnoDB;
- 
+
 insert into system_events_types values (1, 'MessageBox', '115748', now(), 'Show text of event on the site', 1);
 insert into system_events_types values (2, 'Email', '115748', now(), 'Send text of event by email', 1);
- 
+
 CREATE TABLE IF NOT EXISTS system_events_text (
   `te_id` int(7) unsigned not null auto_increment,
   `te_ev_id` int(7) unsigned not null,
@@ -417,7 +417,7 @@ CREATE TABLE IF NOT EXISTS `city_list_requests_lock` (
   PRIMARY KEY  (`id`)
 ) ENGINE=InnoDB;
 
--- regex block 
+-- regex block
 CREATE TABLE IF NOT EXISTS `blockedby_stats` (
   `stats_id` int(8) NOT NULL auto_increment,
   `stats_blckby_id` int(8) NOT NULL,
@@ -488,3 +488,9 @@ CREATE TABLE IF NOT EXISTS `city_list_log` (
 -- user wikicities aint got enough rights to do views! ops need to be asked to run this query
 --CREATE OR REPLACE VIEW city_cats_view AS SELECT city_id AS cc_city_id, cat_name AS cc_name FROM city_cats, city_cat_mapping WHERE city_cats.cat_id = city_cat_mapping.cat_id;
 
+CREATE TABLE `magic_footer_links` (
+  `dbname` varchar(31) NOT NULL,
+  `page` varchar(255) NOT NULL,
+  `links` mediumblob NOT NULL,
+  KEY `dbname` (`dbname`,`page`)
+) ENGINE=InnoDB;
