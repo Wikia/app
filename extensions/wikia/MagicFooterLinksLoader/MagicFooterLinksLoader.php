@@ -1,4 +1,15 @@
 <?php
+/*
+CREATE TABLE `magic_footer_links` (
+  `dbname` varchar(31) NOT NULL,
+  `page` varchar(255) NOT NULL,
+  `links` mediumblob NOT NULL,
+  KEY `dbname` (`dbname`,`page`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+@author: Inez Korczyński
+*/
+
 if(!defined('MEDIAWIKI')) {
 	exit(1);
 }
