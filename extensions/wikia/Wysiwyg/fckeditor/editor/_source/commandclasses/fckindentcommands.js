@@ -94,9 +94,6 @@ FCKIndentCommand.prototype =
 			if ( this.Name.IEquals( 'outdent' ) )
 				return FCK_TRISTATE_OFF ;
 			var firstItem = FCKTools.GetElementAscensor( startContainer, 'li' ) ;
-			// Wikia: allow indenting of lists and disallow indenting of headers
-			if ( listNode.parentNode.nodeName.IEquals(['dd','body']) && startContainer == listNode.firstChild && endContainer == listNode.lastChild )
-				return FCK_TRISTATE_OFF ;
 			if ( !firstItem || !firstItem.previousSibling )
 				return FCK_TRISTATE_DISABLED ;
 			return FCK_TRISTATE_OFF ;
@@ -249,38 +246,6 @@ FCKIndentCommand.prototype =
 		if ( itemsToMove.length < 1 )
 			return ;
 
-		// Wikia: MW uses <dl><dd> 'tree' for indentation (do outdent by removing one <dl> from node's parents list)
-		if ( this.Name.IEquals('outdent') && listNode.parentNode.nodeName.IEquals('dd') ) {
-			// check whether we really should do tags manipulation
-			// maybe changing marginLeft CSS property is enough
-			if ( !parseInt(listNode.style[this.IndentCSSProperty], 10) ) {
-				// replace <dl> with list tag
-				listNode.parentNode.parentNode.parentNode.replaceChild(listNode, listNode.parentNode.parentNode);
-				return;
-			}
-		}
-
-		// Wikia: handle whole list indentation (do not touch nested lists!)
-		//
-		if ( (startContainer == listNode.firstChild) && (endContainer == listNode.lastChild) && !listNode.parentNode.nodeName.IEquals('li') ) {
-			var CSSmargin = parseInt( listNode.style[this.IndentCSSProperty], 10 ) ;
-			if ( isNaN( CSSmargin ) )
-				CSSmargin = 0 ;
-
-			currentOffset = CSSmargin + this.Offset ;
-			currentOffset = Math.max( currentOffset, 0 ) ;
-			currentOffset = Math.ceil( currentOffset / this.Offset ) * this.Offset ;
-			listNode.style[this.IndentCSSProperty] = currentOffset ? currentOffset + FCKConfig.IndentUnit : '' ;
-			if ( listNode.getAttribute( 'style' ) == '' )
-				listNode.removeAttribute( 'style' ) ;
-		
-			// keep indentation or ...
-			if ( (this.Offset > 0) || (CSSmargin > 0) ) {
-				return ;
-			}
-			// ... remove the list ...
-		}
-
 		// Do indent or outdent operations on the array model of the list, not the list's DOM tree itself.
 		// The array model demands that it knows as much as possible about the surrounding lists, we need
 		// to feed it the further ancestor node that is still a list.
@@ -339,12 +304,6 @@ FCKIndentCommand.prototype =
 		// And replace the old list with the new forest.
 		var newList = FCKDomTools.ArrayToList( listArray ) ;
 		if ( newList ) {
-			// Wikia: reset CSS of indented nested list
-			indentedList = newList.listNode.firstChild.getElementsByTagName(newList.listNode.firstChild.nodeName)[0];
-			if (indentedList) {
-				indentedList.style[this.IndentCSSProperty] = '';
-			}
-
 			listNode.parentNode.replaceChild( newList.listNode, listNode ) ;
 		}
 
