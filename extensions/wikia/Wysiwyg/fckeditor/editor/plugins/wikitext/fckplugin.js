@@ -76,6 +76,10 @@ FCK.onWysiwygLoad = function() {
 		// set wysiwyg load time [s]
 		FCK.LoadTime = ((new Date()).getTime() - window.parent.wgNow.getTime()) / 1000;
 
+		// add FCK version info
+		FCK.log('FCKeditor v' + window.parent.FCKeditorAPI.Version + ' (build ' + window.parent.FCKeditorAPI.VersionBuild + ')');
+
+		// report load time
 		FCK.log('Wysiwyg loaded in ' + FCK.LoadTime + ' s');
 	}
 }
