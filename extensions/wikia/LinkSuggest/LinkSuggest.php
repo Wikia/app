@@ -1,10 +1,19 @@
 <?php
-/*
+/**
  * LinkSuggest
+ *
+ * This extension provides the users with article title suggestions as he types
+ * a link in wikitext.
+ *
+ * @file
+ * @ingroup Extensions
  * @author Inez Korczyński <inez@wikia-inc.com>
  * @author Bartek Łapiński <bartek@wikia-inc.com>
  * @author Lucas Garczewski (TOR) <tor@wikia-inc.com>
+ * @copyright Copyright © 2008-2009, Wikia Inc.
+ * @license http://www.gnu.org/copyleft/gpl.html GNU General Public License 2.0 or later
  */
+
 if(!defined('MEDIAWIKI')) {
 	die(1);
 }
