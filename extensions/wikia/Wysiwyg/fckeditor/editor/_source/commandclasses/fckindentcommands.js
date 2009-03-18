@@ -154,29 +154,6 @@ FCKIndentCommand.prototype =
 			if ( ! ( block == nearestParent || block.parentNode == nearestParent ) )
 				continue ;
 
-			// Wikia: MW uses <dl><dd> 'tree' for indentation (do outdent by removing one <dl> from node's parents list
-			if ( this.Name.IEquals('outdent') && block.nodeName.IEquals('dl') ) {
-
-				// check whether we really should do tags manipulation
-				// maybe changing marginLeft CSS property is enough
-				if ( !parseInt(block.style[this.IndentCSSProperty], 10) ) {
-					// HTML content of outdented text node
-					content = block.getElementsByTagName('dd')[0].innerHTML;
-
-					if (block.parentNode.nodeName.IEquals('dd')) {
-						// remove <dl> which is our parent
-						block.parentNode.innerHTML = content;
-					}
-					else {
-						// block is not nested in another <dl> tags - replace <dl> with <p> tag
-						newBlock = block.ownerDocument.createElement('P');
-						block.parentNode.replaceChild(newBlock, block);
-						newBlock.innerHTML = content;
-					}
-					return;
-				}
-			}
-
 			if ( FCKIndentCommand._UseIndentClasses )
 			{
 				// Transform current class name to indent step index.
@@ -303,9 +280,8 @@ FCKIndentCommand.prototype =
 		// Convert the array back to a DOM forest (yes we might have a few subtrees now).
 		// And replace the old list with the new forest.
 		var newList = FCKDomTools.ArrayToList( listArray ) ;
-		if ( newList ) {
+		if ( newList )
 			listNode.parentNode.replaceChild( newList.listNode, listNode ) ;
-		}
 
 		// Clean up the markers.
 		FCKDomTools.ClearAllMarkers( markerObj ) ;
