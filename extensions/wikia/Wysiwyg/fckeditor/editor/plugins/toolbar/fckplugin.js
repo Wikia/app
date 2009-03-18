@@ -410,9 +410,9 @@ var WikiaCombo = function()
 
 WikiaCombo.prototype = FCKSpecialCombo.prototype;
 
-WikiaCombo.prototype.AddItem = function( id, html, label, bgColor )
+WikiaCombo.prototype.AddItem = function( id, html, label, bold )
 {
-	this.Items[ id.toString() ] = {'html': html, 'label': label};
+	this.Items[ id.toString() ] = {'html': html, 'label': label, 'bold': bold ? true : false};
 }
 
 WikiaCombo.prototype.Create = function( targetElement )
@@ -433,6 +433,10 @@ WikiaCombo.prototype.Create = function( targetElement )
 
 		option.value = Item;
 		option.innerHTML = this.Items[Item].html;
+
+		if (this.Items[Item].bold) {
+			option.style.fontWeight = 'bold';
+		}
 
 		this.Select.appendChild(option);
 	}
