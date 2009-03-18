@@ -22,10 +22,15 @@ function allowAction(e) {
 	);
 }
 
+function setProgressImg(field) {
+	field.innerHTML = '<img src="' + stylepath + '/common/progress-wheel.gif" width="16" height="16" alt="Wait..." border="0" />';
+}
+
 function isTextCorrect(field) {
 	var invalidChars = "!@#$%^&*()+=-[]\';,./{}|\":<>?";
+	var status = YD.get(field + '-error-status');
 	//---
-	YD.get(field + '-error-status').innerHTML = '<img src="' + stylepath + '/common/progress-wheel.gif" width="16" height="16" alt="Wait..." border="0" />';
+	setProgressImg(status);
 	//---
 	var errors = 0;
 	if (YD.get(field).value.length == 0) {
@@ -184,9 +189,7 @@ YAHOO.ACWikiRequest.checkDomain = function(e) {
 	var err = YD.get("wiki-domain-error-status");
 	var name = YD.get("wiki-domain").value;
     var lang = YD.get("wiki-language").value;
-	
-	err.innerHTML = '<img src="' + stylepath + '/common/progress-wheel.gif" width="16" height="16" alt="Wait..." border="0" />';
-	
+	setProgressImg(err);
     // to lowercase
     name = name.toLowerCase();
     YD.get("wiki-domain").value = name;
@@ -215,7 +218,7 @@ YAHOO.ACWikiRequest.wikiBirthdayCheck = function(e) {
 
 	if ( (year.value > 0) && (month.value > 0) && (day.value > 0) ) {
 		YAHOO.util.Dom.setStyle(err, 'display', 'block');
-		err.innerHTML = '<img src="' + stylepath + '/common/progress-wheel.gif" width="16" height="16" alt="Wait..." border="0" />';
+		setProgressImg(err);
 		params = "&year=" + escape(year.value) + "&month=" + escape(month.value) + "&day=" + escape(day.value);
 		YC.asyncRequest( "GET", wgAjaxPath + "?action=ajax&rs=axACWRequestCheckBirthday" + params, YAHOO.ACWikiRequest.NameCallback);
 	}
@@ -225,9 +228,7 @@ YAHOO.ACWikiRequest.wikiDomainKeyUp = function(e) {
 	var id = this.id;
 	var func = function() { 
 		if (id) { 
-			if (e) {
-				YE.preventDefault(e);
-			}
+			if (e) YE.preventDefault(e);
 			if ( !allowAction(e) ) {
 				if (id == 'wiki-name') {
 					isTextCorrect(id);
@@ -251,7 +252,7 @@ YAHOO.ACWikiRequest.checkAccount = function(e, fid) {
 		var name = YD.get(fid);
 		var lang = YD.get("wiki-language").value;
 		//---
-		status.innerHTML = '<img src="' + stylepath + '/common/progress-wheel.gif" width="16" height="16" alt="Wait..." border="0" />';
+		setProgressImg(status);
 		//---
 		fid = fid.replace("wiki-", "");
 		var params = "";
@@ -286,9 +287,7 @@ YAHOO.ACWikiRequest.wikiAccountKeyUp = function(e) {
 		var field = document.getElementById(id);
 		if (id) { 
 			if ( !allowAction(e) ) {
-				if (e) {
-					YE.preventDefault(e);
-				}
+				if (e) YE.preventDefault(e);
 				YAHOO.ACWikiRequest.checkAccount(e, id);
 			}
 		};
