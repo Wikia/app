@@ -400,6 +400,9 @@ class WikiMover {
 		#--- and last cleaning
 		wfShellExec( "SERVER_ID={$this->mTargetID} php $IP/maintenance/runJobs.php --conf {$wgWikiaLocalSettingsPath}" );
 
+		#--- refresh links - related to rt#6189
+		wfShellExec( "SERVER_ID={$this->mTargetID} php $IP/maintenance/refreshLinks.php --conf {$wgWikiaLocalSettingsPath}" );
+
 		wfProfileOut( __METHOD__ );
 	}
 
