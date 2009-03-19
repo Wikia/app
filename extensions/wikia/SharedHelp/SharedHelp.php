@@ -323,11 +323,11 @@ function SharedHelpWantedPagesSql( $page, $sql ) {
 			LEFT JOIN $page AS pg2
 			ON pl_from = pg2.page_id
 			LEFT JOIN $helppage AS pg3
-			ON pg2.page_id = pg3.page_id
+			ON pl_namespace = pg3.page_namespace AND pl_title = pg3.page_title
 			WHERE pg1.page_namespace IS NULL
-			AND (pl_namespace NOT IN ( 2, 3, 12 )
-			OR (pl_namespace = 12 AND pl_title!= pg3.page_title))
+			AND pl_namespace NOT IN ( 2, 3 )
 			AND pg2.page_namespace != 8
+			AND (pg3.page_namespace != 12 OR pg3.page_id IS NULL)
 			$page->excludetitles
 			GROUP BY pl_namespace, pl_title
 			HAVING COUNT(*) > $count";
