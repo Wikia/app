@@ -537,6 +537,11 @@ var WideScreenToggle = function() {
 	// try to get listener function attached to "Enter Widescreen" link
 	if (toggleWideScreenLink && FCK.YE.getListeners) {
 		this.toggleWideScreenListener = FCK.YE.getListeners(toggleWideScreenLink).pop();
+		FCK.log('widescreen toggle listener');
+		FCK.log(this.toggleWideScreenListener);
+	}
+	else {
+		FCK.log('widescreen toggle link not found!');
 	}
 
 	// get current widescreen mode state
