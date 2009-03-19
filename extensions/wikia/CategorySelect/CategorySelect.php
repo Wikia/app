@@ -122,7 +122,6 @@ function CategorySelectInitializeHooks($title, $article) {
 		$wgHooks['EditPage::showDiff::begin'][] = 'CategorySelectDiffArticle';
 		$wgHooks['EditForm::MultiEdit:Form'][] = 'CategorySelectDisplayCategoryBox';
 
-		$wgHooks['Skin::getCategoryLinks::begin'][] = 'CategorySelectGetCategoryLinksBegin';
 		$wgHooks['ExtendJSGlobalVars'][] = 'CategorySelectSetupVars';
 	}
 
@@ -369,11 +368,7 @@ function CategorySelectGetCategoryLinksBegin(&$categoryLinks) {
 	global $wgRequest, $wgOut;
 
 	$action = $wgRequest->getVal('action', 'view');
-	//remove it for edit page
-	if ($action == 'edit' || $action == 'submit') {
-		$categoryLinks = '';
-		return false;
-	} elseif (($action == 'view' || $action == 'purge') && count($wgOut->mCategoryLinks) == 0) {
+	if (($action == 'view' || $action == 'purge') && count($wgOut->mCategoryLinks) == 0) {
 		CategorySelectGetCategoryLinksEnd($categoryLinks);
 		return false;
 	}
