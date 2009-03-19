@@ -417,7 +417,23 @@ CREATE TABLE IF NOT EXISTS `city_list_requests_lock` (
   PRIMARY KEY  (`id`)
 ) ENGINE=InnoDB;
 
--- regex block
+-- RegexBlock [coppied from extensions/wikia/RegexBlock/blockedby.sql]
+CREATE TABLE IF NOT EXISTS `blockedby` (
+  `blckby_id` int(5) NOT NULL auto_increment,
+  `blckby_name` varchar(255) character set latin1 collate latin1_general_cs NOT NULL,
+  `blckby_blocker` varchar(255) character set latin1 collate latin1_general_cs NOT NULL,
+  `blckby_timestamp` char(14) NOT NULL,
+  `blckby_expire` char(14) NOT NULL,
+  `blckby_create` tinyint(1) NOT NULL default '1',
+  `blckby_exact` tinyint(1) NOT NULL default '0',
+  `blckby_reason` tinyblob NOT NULL,
+  PRIMARY KEY  (`blckby_id`),
+  UNIQUE KEY `blckby_name` (`blckby_name`),
+  KEY `blckby_timestamp` (`blckby_timestamp`),
+  KEY `blckby_expire` (`blckby_expire`),
+  KEY `blockeridx` (`blckby_blocker`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
 CREATE TABLE IF NOT EXISTS `blockedby_stats` (
   `stats_id` int(8) NOT NULL auto_increment,
   `stats_blckby_id` int(8) NOT NULL,
@@ -488,9 +504,18 @@ CREATE TABLE IF NOT EXISTS `city_list_log` (
 -- user wikicities aint got enough rights to do views! ops need to be asked to run this query
 --CREATE OR REPLACE VIEW city_cats_view AS SELECT city_id AS cc_city_id, cat_name AS cc_name FROM city_cats, city_cat_mapping WHERE city_cats.cat_id = city_cat_mapping.cat_id;
 
-CREATE TABLE `magic_footer_links` (
+CREATE TABLE IF NOT EXISTS `magic_footer_links` (
   `dbname` varchar(31) NOT NULL,
   `page` varchar(255) NOT NULL,
   `links` mediumblob NOT NULL,
   KEY `dbname` (`dbname`,`page`)
 ) ENGINE=InnoDB;
+
+-- SharedNewTalk [coppied from extensions/wikia/WikiaNewtalk/shared_newtalks.sql]
+CREATE TABLE IF NOT EXISTS `shared_newtalks` (
+  `sn_user_id` int(5) unsigned default NULL,
+  `sn_user_ip` varchar(255) default '',
+  `sn_wiki` varchar(31) default NULL,
+  `sn_date` timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
+  KEY `sn_user_id_sn_user_ip_sn_wiki_idx` (`sn_user_id`,`sn_user_ip`,`sn_wiki`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
