@@ -391,33 +391,9 @@ class BlogComment {
 		}
 
 		list( $status, $article ) = self::doPost( $wgRequest, $wgUser, $Title );
-		$error  = false;
+		$res = self::doAfterPost($status, $article);
 
-		switch( $status ) {
-			case EditPage::AS_SUCCESS_UPDATE:
-			case EditPage::AS_SUCCESS_NEW_ARTICLE:
-				$comment = BlogComment::newFromArticle( $article );
-				$text = $comment->render();
-				$message = false;
-				break;
-			default:
-				$wgDevelEnvironment = true;
-				$userId = $wgUser->getId();
-				Wikia::log( __METHOD__, "error", "No article created. Status: {$status}; DB: {$wgDBname}; User: {$userId}" );
-				$text  = false;
-				$error = true;
-				$message = wfMsg("blog-comment-error");
-				$wgDevelEnvironment = false;
-		}
-
-		return Wikia::json_encode(
-			array(
-				"msg"    => $message,
-				"error"  => $error,
-				"text"   => $text,
-				"status" => $status
-			)
-		);
+		return Wikia::json_encode( $res );
 	}
 
 	/**
@@ -481,6 +457,36 @@ class BlogComment {
 		wfProfileOut( __METHOD__ );
 
 		return array( $retval, $article );
+	}
+	
+	static public function doAfterPost($status, $article) {
+		global $wgUser, $wgDBname;
+		global $wgDevelEnvironment;
+		
+		$error = false;
+		switch( $status ) {
+			case EditPage::AS_SUCCESS_UPDATE:
+			case EditPage::AS_SUCCESS_NEW_ARTICLE:
+				$comment = BlogComment::newFromArticle( $article );
+				$text = $comment->render();
+				$message = false;
+				break;
+			default:
+				$wgDevelEnvironment = true;
+				$userId = $wgUser->getId();
+				Wikia::log( __METHOD__, "error", "No article created. Status: {$status}; DB: {$wgDBname}; User: {$userId}" );
+				$text  = false;
+				$error = true;
+				$message = wfMsg("blog-comment-error");
+				$wgDevelEnvironment = false;
+		}
+
+		return array(
+			"msg"    => $message,
+			"error"  => $error,
+			"text"   => $text,
+			"status" => $status
+		);
 	}
 }
 
@@ -635,6 +641,21 @@ class BlogCommentList {
 	public function render() {
 		global $wgUser, $wgTitle, $wgRequest;
 		global $wgOut;
+
+		if ($wgRequest->wasPosted()) {
+			// for non-JS version !!! 
+			$sComment = $wgRequest->getVal( "wpBlogComment", false );
+			$iArticleId = $wgRequest->getVal( "wpArticleId", false ); 
+			$sSubmit = $wgRequest->getVal( "wpBlogSubmit", false ); 
+			if ( $sSubmit && $sComment && $iArticleId ) {
+				$oTitle = Title::newFromID( $iArticleId );
+				if ( $oTitle instanceof Title ) {
+					list( $status, $article ) = BlogComment::doPost( $wgRequest, $wgUser, $oTitle );
+					$res = BlogComment::doAfterPost($status, $article);
+					$wgOut->redirect( $oTitle->getLocalURL() );
+				}
+			}
+		}
 
 		/**
 		 * $pages is array of comment articles
