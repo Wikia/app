@@ -17,6 +17,11 @@ function RenderAdSkin() {
 		return true;
 	}
 
+	// Disable if not the main page
+	if (!ArticleAdLogic::isMainPage()) {
+		return true;
+	}
+
 	if (isset($wgAdSkin)) {
 		switch ($wgAdSkin) {
 		case "wow_lich_king":
