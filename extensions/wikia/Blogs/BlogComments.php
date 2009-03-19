@@ -102,9 +102,9 @@ class BlogComment {
 			 * if we lucky we got only one revision, we check slave first
 			 * then if no answer we check master
 			 */
-			$firstRev = $this->getFirstRevID();
+			$this->mFirstRevId = $this->getFirstRevID(DB_SLAVE);
 			if( !$this->mFirstRevId ) {
-				 $this->mFirstRevId = $this->getFirstRevID( GAID_FOR_UPDATE );
+				 $this->mFirstRevId = $this->getFirstRevID( DB_MASTER );
 			}
 			if( !$this->mLastRevId ) {
 				$this->mLastRevId = $this->mTitle->getLatestRevID();
@@ -168,17 +168,17 @@ class BlogComment {
 	 *
 	 * @return Integer
 	 */
-	private function getFirstRevID( $flags = 0 ) {
+	private function getFirstRevID( $db_conn ) {
 		wfProfileIn( __METHOD__ );
 
 		$id = false;
 
 		if( $this->mTitle ) {
-			$db = ($flags & GAID_FOR_UPDATE) ? wfGetDB(DB_MASTER) : wfGetDB(DB_SLAVE);
+			$db = wfGetDB($db_conn);
 			$id = $db->selectField(
 				"revision",
 				"min(rev_id)",
-				array( "rev_page" => $this->mTitle->getArticleID( $flags ) ),
+				array( "rev_page" => $this->mTitle->getArticleID() ),
 				__METHOD__
 			);
 		}
