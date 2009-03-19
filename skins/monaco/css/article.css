@@ -192,35 +192,43 @@
 	position: absolute;
 	width: 336px;
 }
-#fe_edit_icon {
+#fe_edit_icon,
+#fe_edit_img {
 	clip: rect(0px 16px 16px 0px);
 	left: 0;
 }
-#fe_talk_icon {
+#fe_talk_icon,
+#fe_talk_img {
 	clip: rect(0px 32px 16px 16px);
 	left: -16px;
 }
-#fe_user_icon {
+#fe_user_icon,
+#fe_user_img {
 	clip: rect(0px 112px 16px 96px);
 	left: -96px;
 }
-#fe_random_icon {
+#fe_random_icon,
+#fe_random_img {
 	clip: rect(0px 128px 16px 112px);
 	left: -112px;
 }
-#fe_create_icon {
+#fe_create_icon,
+#fe_create_img {
 	clip: rect(0px 144px 16px 128px);
 	left: -128px;
 }
-#fe_email_icon {
+#fe_email_icon,
+#fe_email_img {
 	clip: rect(0px 160px 16px 144px);
 	left: -144px;
 }
-#fe_report_icon {
+#fe_report_icon,
+#fe_report_img {
 	clip: rect(0px 224px 16px 208px);
 	left: -208px;
 }
-#fe_permalink_icon {
+#fe_permalink_icon,
+#fe_permalink_img {
         clip: rect(0px 64px 16px 48px);
         left: -48px;
 }
