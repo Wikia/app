@@ -240,7 +240,7 @@ class HAWelcomeJob extends Job {
 				$revision->setTitle( $Title );
 			}
 
-			if( $Title && ! $wgCommandLineMode && ! $wgUser->isAllowed( "bot" ) ) {
+			if( $Title && ! $wgCommandLineMode && ! $wgUser->isAllowed( "bot" ) && ! $wgUser->isAllowed( 'staff' ) && ! $wgUser->isAllowed( 'helper' ) && ! $wgUser->isAllowed( 'sysop' ) && ! $wgUser->isAllowed( 'bureaucrat' ) ) {
 
 				Wikia::log( __METHOD__, "title", $Title->getFullURL() );
 
