@@ -994,7 +994,9 @@ EOS;
 
 		// JS - begin
 		if($tpl->data['jsvarurl']) {
-			$js[] = array('url' => $tpl->data['jsvarurl'], 'mime' => 'text/javascript');
+			if(!isMsgEmpty('Common.js') ||  !isMsgEmpty('Monaco.js')) {
+				$js[] = array('url' => $tpl->data['jsvarurl'], 'mime' => 'text/javascript');
+			}
 		}
 		if($tpl->data['userjs']) {
 			$js[] = array('url' => $tpl->data['userjs'], 'mime' => 'text/javascript');
