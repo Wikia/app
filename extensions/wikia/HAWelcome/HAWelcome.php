@@ -200,12 +200,13 @@ class HAWelcomeJob extends Job {
 				unset($idsInGroups['bot']);
 				//combine $idsInGroups['sysop'], $idsInGroups['staff'], .... etc. into one unique array
 				$idsUser = array_unique(call_user_func_array('array_merge', $idsInGroups));
+				//remove users that has 'bot' flag
+				$idsInGroups = array_diff($idsUser, $idsBot);
 
 				$res = $dbr->query("
 					SELECT rev_user
 					FROM revision
-					WHERE revision.rev_user IN ('" . implode("','", $idsUser) . "')
-					AND revision.rev_user NOT IN ('" . implode("','", $idsBot) . "')
+					WHERE revision.rev_user IN ('" . implode("','", $idsInGroups) . "')
 					ORDER BY rev_timestamp DESC
 					LIMIT 1",
 					__METHOD__
