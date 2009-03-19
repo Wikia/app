@@ -6,7 +6,7 @@
  */
 
 // get message JS files
-$dir = dirname(__FILE__) . '/../fckeditor/editor/lang/';;
+$dir = dirname(__FILE__) . '/../fckeditor/editor/lang/';
 $files = glob($dir . '*.js');
 $messages = array();
 
