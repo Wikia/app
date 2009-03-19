@@ -143,15 +143,19 @@ body {
 }
 #shareDelicious {
 	left: auto;
-	right: 50px;
+	right: 60px;
 }
 #shareStumble {
 	left: auto;
-	right: 30px;
+	right: 40px;
 }
 #shareDigg {
 	left: auto;
-	right: 10px;
+	right: 20px;
+}
+#shareFacebook {
+	left: auto;
+	right: 00px;
 }
 #fe_edit_icon {
 	left: auto;
