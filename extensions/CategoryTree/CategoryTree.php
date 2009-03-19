@@ -65,7 +65,7 @@ $wgCategoryTreeForceHeaders = false;
 $wgCategoryTreeSidebarRoot = NULL;
 $wgCategoryTreeHijackPageCategories = false; # EXPERIMENTAL! NOT YET FOR PRODUCTION USE! Main problem is general HTML/CSS layout cruftiness.
 
-$wgCategoryTreeExtPath = '/extensions/CategoryTree';
+$wgCategoryTreeExtPath = $wgExtensionsPath . '/CategoryTree'; # Wikia change - RT #11231
 $wgCategoryTreeVersion = '3';  #NOTE: bump this when you change the CSS or JS files!
 $wgCategoryTreeUseCategoryTable = version_compare( $wgVersion, "1.13", '>=' );
 
