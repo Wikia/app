@@ -169,7 +169,7 @@ class ListUsers extends SpecialPage {
 	private static function __getUsersFromDB($groups, $text = "", $contrib = 0, $limit = 30, $offset = 0, $order = 'username', $desc = -1) {
 		global $wgMemc, $wgSharedDB, $wgDBStats;
 		global $wgCityId, $wgLang;
-		global $wgUser;
+		global $wgUser, $wgDBname;
         wfProfileIn( __METHOD__ );
 		
 		$descOrder = ($desc == -1) ? "" : "desc";
@@ -276,14 +276,13 @@ class ListUsers extends SpecialPage {
 				$aWhere = array();
 				if ( !empty($aUsers['data']) && is_array($aUsers['data']) && ($wgUser->isLoggedIn()) ) {
 					# last edited 
-					$city_dbname = WikiFactory::IDtoDB( $wgCityId );
 					$dbr = wfGetDB( DB_SLAVE );
 					$aWhere = array( 
 						"page_id = rev_page",
 						" rev_user in (". $dbr->makeList( array_keys($aUsers['data']) ).") ",
 					);
  					$res = $dbr->select(
-						array( "`$city_dbname`.`revision`, `$city_dbname`.`page` " ),
+						array( "`$wgDBname`.`revision`, `$wgDBname`.`page` " ),
 						array( "rev_user as user_id", "page_id", "page_title", "page_namespace", "max(rev_timestamp) as ts " ),
 						$aWhere,
 						__METHOD__,
