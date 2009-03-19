@@ -14,8 +14,9 @@ function positionSuggestBox() {
 function extractSortkey(text) {
 	var result = {'name': text, 'sort' : ''};
 	var len = text.length;
-	var curly = square = pipePos = 0;
-	for (i = 0; i < len && !pipePos; i++) {
+	var curly = square = 0;
+	var pipePos = -1;
+	for (i = 0; i < len && pipePos == -1; i++) {
 		switch (text.charAt(i)) {
 			case '{':
 				curly++;
@@ -35,7 +36,7 @@ function extractSortkey(text) {
 			}
 		}
 	}
-	if (pipePos) {
+	if (pipePos != -1) {
 		result['name'] = text.slice(0, pipePos);
 		result['sort'] = text.slice(pipePos + 1);
 	}
@@ -183,8 +184,8 @@ function addAddCategoryButton() {
 	}
 }
 
-function inputBlur() {
-	if ($('csCategoryInput').value == '') {
+function inputBlur(force) {
+	if ($('csCategoryInput').value == '' || force) {
 		$('csCategoryInput').style.display = 'none';
 		$('csHintContainer').style.display = 'none';
 		addAddCategoryButton();
@@ -350,6 +351,7 @@ function inputKeyPress(e) {
 		if (category != '' && oAutoComp._oCurItem == null) {
 			addCategory(category);
 		}
+		inputBlur(true);
 	}
 	positionSuggestBox();
 }
