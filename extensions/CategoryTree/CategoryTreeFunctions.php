@@ -167,14 +167,14 @@ class CategoryTree {
 			array(
 				'rel' => 'stylesheet',
 				'type' => 'text/css',
-				'href' => "$wgScriptPath$wgCategoryTreeExtPath/CategoryTree.css?$wgCategoryTreeVersion",
+				'href' => "{$wgCategoryTreeExtPath}/CategoryTree.css?{$wgCategoryTreeVersion}",
 			)
 		);
 
 		if ( $wgCategoryTreeHijackPageCategories ) {
 			# Register MSIE quirks
 			$outputPage->addScript(
-				"<!--[if IE]><link rel=\"stylesheet\" type=\"text/css\" src=\"{$wgScriptPath}{$wgCategoryTreeExtPath}/CategoryTreeIE.css?{$wgCategoryTreeVersion}\"/><![endif]-->
+				"<!--[if IE]><link rel=\"stylesheet\" type=\"text/css\" src=\"{$wgCategoryTreeExtPath}/CategoryTreeIE.css?{$wgCategoryTreeVersion}\"/><![endif]-->
 	\n"
 			);
 		}
@@ -185,14 +185,14 @@ class CategoryTree {
 				array(
 					'rel' => 'stylesheet',
 					'type' => 'text/css',
-					'href' => "$wgScriptPath$wgCategoryTreeExtPath/CategoryTree.rtl.css?$wgCategoryTreeVersion"
+					'href' => "{$wgCategoryTreeExtPath}/CategoryTree.rtl.css?{$wgCategoryTreeVersion}"
 				)
 			);
 		}
 
 		# Register main js file for CategoryTree
 		$outputPage->addScript(
-			"<script type=\"{$wgJsMimeType}\" src=\"{$wgScriptPath}{$wgCategoryTreeExtPath}/CategoryTree.js?{$wgCategoryTreeVersion}\">" .
+			"<script type=\"{$wgJsMimeType}\" src=\"{$wgCategoryTreeExtPath}/CategoryTree.js?{$wgCategoryTreeVersion}\">" .
 			"</script>\n"
 		);
 
