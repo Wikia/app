@@ -8,6 +8,7 @@
  *
  * @copyright Copyright © Krzysztof Krzyżaniak for Wikia Inc.
  * @author Krzysztof Krzyżaniak (eloy) <eloy@wikia-inc.com>
+ * @author Maciej Błaszkowski (Marooned) <marooned at wikia-inc.com>
  * @date 2009-02-02
  * @version 0.2
  * @license http://www.gnu.org/copyleft/gpl.html GNU General Public License 2.0 or later
@@ -21,7 +22,7 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 $wgExtensionCredits['other'][] = array(
 	'name' => 'HAWelcome',
 	'version' => '0.4',
-	'author' => 'Krzysztof Krzyżaniak',
+	'author' => array('Krzysztof Krzyżaniak', '[http://www.wikia.com/wiki/User:Marooned Maciej Błaszkowski (Marooned)]'),
 	'description' => 'Highly Automated Welcome Tool',
 );
 
@@ -323,11 +324,13 @@ class HAWelcomeJob extends Job {
 		$tmpUser = $wgUser;
 		$wgUser = $Sysop;
 		$signature = sprintf(
-			"-- [[User:%s|%s]] ([[User_talk:%s|%s]]) %s",
+			"-- [[%s:%s|%s]] ([[%s:%s|%s]]) %s",
+			$wgContLang->getNsText(NS_USER),
 			wfEscapeWikiText( $Sysop->getName() ),
 			wfEscapeWikiText( $Sysop->getName() ),
+			$wgContLang->getNsText(NS_USER_TALK),
 			wfEscapeWikiText( $Sysop->getName() ),
-			$wgContLang->lc( wfMsg( "talkpagelinktext" ) ),
+			wfMsg( "talkpagelinktext" ),
 			$wgContLang->timeanddate( wfTimestampNow( TS_MW ) )
 		);
 		$wgUser = $tmpUser;
