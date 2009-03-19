@@ -184,14 +184,28 @@ class HAWelcomeJob extends Job {
 			else {
 				$dbr = wfGetDB( DB_SLAVE );
 				$aWhere = ($sysop !== "@sysop") ? array('staff', 'sysop', 'helper') : array('sysop');
+				$res = $dbr->query(
+					"SELECT ug_group, GROUP_CONCAT(DISTINCT ug_user SEPARATOR ',') AS user_id" .
+					" FROM user_groups" .
+					" WHERE ug_group IN ('" . implode("','", $aWhere) . "', 'bot')" .
+					" GROUP BY ug_group;",
+					__METHOD__
+				);
+
+				$idsInGroups = array();
+				while( $row = $dbr->fetchObject( $res ) ) {
+					$idsInGroups[$row->ug_group] = explode(',', $row->user_id);
+				}
+				$idsBot = isset($idsInGroups['bot']) ? $idsInGroups['bot'] : array();
+				unset($idsInGroups['bot']);
+				//combine $idsInGroups['sysop'], $idsInGroups['staff'], .... etc. into one unique array
+				$idsUser = array_unique(call_user_func_array('array_merge', $idsInGroups));
+
 				$res = $dbr->query("
-					SELECT rev_user, rev_timestamp
+					SELECT rev_user
 					FROM revision
-					WHERE revision.rev_user IN (
-						SELECT ug_user
-						FROM user_groups
-						WHERE ug_group IN ('".implode("','", $aWhere)."')
-					)
+					WHERE revision.rev_user IN ('" . implode("','", $idsUser) . "')
+					AND revision.rev_user NOT IN ('" . implode("','", $idsBot) . "')
 					ORDER BY rev_timestamp DESC
 					LIMIT 1",
 					__METHOD__
