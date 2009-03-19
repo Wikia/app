@@ -6,13 +6,14 @@
  */
 
 // get message JS files
-$files = glob('*.js');
+$dir = dirname(__FILE__) . '/../fckeditor/editor/lang/';;
+$files = glob($dir . '*.js');
 $messages = array();
 
 foreach($files as $file) {
 	$content = explode("\n", file_get_contents($file));
 
-	$lang = substr($file, 0, -3);
+	$lang = substr(basename($file), 0, -3);
 
 	foreach($content as $line) {
 		if (strpos($line, ': "')) {
