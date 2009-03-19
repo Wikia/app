@@ -256,8 +256,7 @@ h4.mw-specialpagesgroup {
  * macbre: fix empty list items render bug in FF (do not apply to any version of IE, refs RT 9666)
  *
  * http://www.webdevout.net/css-hacks#in_css-selectors
- */
-
-html>/**/body #bodyContent li {
+html>/body #bodyContent li {
 	min-height: 1.5em;
 }
+*/
