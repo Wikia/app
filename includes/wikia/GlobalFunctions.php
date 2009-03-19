@@ -667,3 +667,11 @@ function getMenuHelper($name, $limit = 7) {
 	$wgMemc->set($key, $data, 60 * 60 * 6);
 	return $result;
 }
+
+
+/**
+ * @author Inez Korczynski <inez@wikia.com>
+ */
+function isMsgEmpty($key) {
+	return wfEmptyMsg($key, trim(wfMsg($key)));
+}
