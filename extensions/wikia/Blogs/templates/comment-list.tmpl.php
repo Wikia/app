@@ -21,7 +21,8 @@ if( count( $comments ) > 10 && isset( $props[ "commenting" ] ) && $props[ "comme
 	if( $canEdit ):
 ?>
 	<div class="blog-comm-input reset clearfix">
-	<form action="<?php $title->getFullURL() ?>" method="post" id="blog-comm-form-top">
+	<form action="<?php echo $title->getFullURL() ?>" method="post" id="blog-comm-form-top">
+	<input type="hidden" name="wpArticleId" value="<?= $title->getArticleId() ?>" />
 		<!-- avatar -->
 		<div class="blog-comm-input-avatar">
 			<?php echo $avatar->getImageTag( 50, 50 ); ?>
@@ -30,10 +31,12 @@ if( count( $comments ) > 10 && isset( $props[ "commenting" ] ) && $props[ "comme
 		<div class="blog-comm-input-text">
 		<textarea name="wpBlogComment" id="blog-comm-top"></textarea><br />
 		<!-- submit -->
-		<a href="<?php $title->getFullURL() ?>" name="wpBlogSubmit" id="blog-comm-submit-top" class="bigButton">
-			<big><? echo wfMsg("blog-comment-post") ?></big>
-			<small></small>
-		</a>
+		<script type="text/javascript">
+		document.write("<a href=\"<?php echo $title->getFullURL() ?>\" name=\"wpBlogSubmit\" id=\"blog-comm-submit-top\" class=\"bigButton\"><big><? echo wfMsg("blog-comment-post") ?></big><small></small></a>");
+		</script>
+		<noscript>
+		<input type="submit" name="wpBlogSubmit" id="blog-comm-submit-top" value="<? echo wfMsg("blog-comment-post") ?>" />
+		</noscript>
 		<div class="right" style="font-style: italic;"><?php echo wfMsg("blog-comments-info") ?></div>
 		</div>
 	</form>
@@ -63,7 +66,8 @@ endif;
 ?>
 <div class="blog-comm-input reset clearfix">
 	<div id="blog-comm-bottom-info">&nbsp;</div>
-	<form action="<?php $title->getFullURL() ?>" method="post" id="blog-comm-form-bottom">
+	<form action="<?php echo $title->getFullURL() ?>" method="post" id="blog-comm-form-bottom">
+	<input type="hidden" name="wpArticleId" value="<?= $title->getArticleId() ?>" />
 		<!-- avatar -->
 		<div class="blog-comm-input-avatar">
 		<?php
@@ -74,10 +78,12 @@ endif;
 		<div class="blog-comm-input-text">
 		<textarea name="wpBlogComment" id="blog-comm-bottom"></textarea><br />
 		<!-- submit -->
-		<a href="<?php $title->getFullURL() ?>" name="wpBlogSubmit" id="blog-comm-submit-bottom" class="bigButton">
-			<big><? echo wfMsg("blog-comment-post") ?></big>
-			<small></small>
-		</a>
+		<script type="text/javascript">
+		document.write("<a href=\"<?php echo $title->getFullURL() ?>\" name=\"wpBlogSubmit\" id=\"blog-comm-submit-bottom\" class=\"bigButton\"><big><? echo wfMsg("blog-comment-post") ?></big><small></small></a>");
+		</script>
+		<noscript>
+		<input type="submit" name="wpBlogSubmit" id="blog-comm-submit-bottom" value="<? echo wfMsg("blog-comment-post") ?>" />
+		</noscript>
 		<div class="right" style="font-style: italic;"><?php echo wfMsg("blog-comments-info") ?></div>
 		</div>
 	</form>
