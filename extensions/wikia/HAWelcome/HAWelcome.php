@@ -178,18 +178,19 @@ class HAWelcomeJob extends Job {
 		if( ! $this->mSysop instanceof User ) {
 
 			$sysop = trim( wfMsg( "welcome-user" ) );
-			if( $sysop !== "-" && $sysop !== "@latest" && $sysop !== "@disabled" ) {
+			if( $sysop !== "-" && $sysop !== "@latest" && $sysop !== "@disabled" && $sysop !== "@sysop" ) {
 				$this->mSysop = User::newFromName( $sysop );
 			}
 			else {
 				$dbr = wfGetDB( DB_SLAVE );
+				$aWhere = ($sysop !== "@sysop") ? array('staff', 'sysop', 'helper') : array('sysop');
 				$res = $dbr->query("
 					SELECT rev_user, rev_timestamp
 					FROM revision
 					WHERE revision.rev_user IN (
 						SELECT ug_user
 						FROM user_groups
-						WHERE ug_group IN ( 'staff', 'sysop', 'helper')
+						WHERE ug_group IN ('".implode("','", $aWhere)."')
 					)
 					ORDER BY rev_timestamp DESC
 					LIMIT 1",
