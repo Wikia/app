@@ -3,7 +3,7 @@
  * Author: Christian Williams 
  */
 
-$wgAdSkinVersion = 2;
+$wgAdSkinVersion = 3;
 
 $wgHooks['GetHTMLAfterBody'][] = 'RenderAdSkin';
 $wgHooks['SpecialFooterAfterWikia'][] = 'RenderAdSkinJS';
