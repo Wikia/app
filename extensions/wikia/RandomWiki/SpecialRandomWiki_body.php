@@ -26,18 +26,21 @@ class RandomWiki extends SpecialPage {
 	}
 
 	/**
-	 * Show the special page
+	 * Redirect to a random wiki
 	 *
-	 * @param $par Mixed: parameter passed to the page or null
+	 * @param $par String: page name on target wiki
 	 */
 	public function execute( $par ) {
 		global $wgOut, $wgSharedDB;
 
+		// Quit early if we don't have access to the central wiki DB
+		if ( empty( $wgSharedDB ) )
+			return;
+
 		$dbr = wfGetDB( DB_SLAVE );
-		// Make sure that we're in the shared database so that the query will work
 		$dbr->selectDB( $wgSharedDB );
 
-		$res = $dbr->select( 'city_list', array( 'city_url' ), array( 'city_public' => 1 ) );
+		$res = $dbr->select( 'city_list', array( 'city_url', 'city_id' ), array( 'city_public' => 1 ) );
 
 		$totalWikis = $dbr->numRows( $res );
 
@@ -47,8 +50,18 @@ class RandomWiki extends SpecialPage {
 
 		$targetWiki = $dbr->fetchObject( $res );
 
+		$dbr->freeResult( $res );
+
+		$url = $targetWiki->city_url;
+
+		// When a param is given, add it to the URL as a wiki page
+		if ( !empty( $par ) ) {
+			$articlePath = WikiFactory::getVarByName( 'wgArticlePath', $targetWiki->city_id );
+			$url .= str_replace( '$1', urlencode( $par ), unserialize( $articlePath->cv_value ) );
+		}
+
 		// Redirect the user to a randomly-chosen wiki
-		$wgOut->redirect( $targetWiki->city_url );
+		$wgOut->redirect( $url );
 	}
 
 }
