@@ -91,11 +91,17 @@ class SMWSpecialBrowse extends SpecialPage {
 	 * @return string  A HTML string with the factbox
 	 */
 	private function displayBrowse() {
-		global $wgContLang, $wgOut;
+		global $wgContLang, $wgOut, $smwgScriptPath, $smwgScriptVersion;
 		$html = "\n";
 		$leftside = !($wgContLang->isRTL()); // For right to left languages, all is mirrored
 		if ($this->subject->isValid()) {
-			$wgOut->addStyle( '../extensions/SemanticMediaWiki/skins/SMW_custom.css' );
+			$wgOut->addLink(
+				array(
+					'rel' => 'stylesheet',
+					'href' => $smwgScriptPath . '/skins/SMW_custom.css?' . $smwgScriptVersion,
+					'type' => 'text/css'
+				)
+			);
 
 			$html .= $this->displayHead();
 			if ($this->showoutgoing) {

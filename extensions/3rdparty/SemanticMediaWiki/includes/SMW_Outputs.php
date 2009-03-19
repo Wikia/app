@@ -56,21 +56,21 @@ class SMWOutputs {
 	 */
 	static public function requireHeadItem($id, $item = '') {
 		if (is_numeric($id)) {
-			global $smwgScriptPath;
+			global $smwgScriptPath, $smwgScriptVersion;
 			switch ($id) {
 				case SMW_HEADER_TOOLTIP:
 					SMWOutputs::requireHeadItem(SMW_HEADER_STYLE);
-					SMWOutputs::$mHeadItems['smw_tt'] = '<script type="text/javascript" src="' . $smwgScriptPath .  '/skins/SMW_tooltip.js"></script>';
+					SMWOutputs::$mHeadItems['smw_tt'] = '<script type="text/javascript" src="' . $smwgScriptPath .  '/skins/SMW_tooltip.js?' . $smwgScriptVersion . '"></script>';
 				return;
 				case SMW_HEADER_SORTTABLE:
 					SMWOutputs::requireHeadItem(SMW_HEADER_STYLE);
-					SMWOutputs::$mHeadItems['smw_st'] = '<script type="text/javascript" src="' . $smwgScriptPath .  '/skins/SMW_sorttable.js"></script>';
+					SMWOutputs::$mHeadItems['smw_st'] = '<script type="text/javascript" src="' . $smwgScriptPath .  '/skins/SMW_sorttable.js?' . $smwgScriptVersion . '"></script>';
 				return;
 				case SMW_HEADER_STYLE:
 					global $wgContLang;
-					SMWOutputs::$mHeadItems['smw_css'] = '<link rel="stylesheet" type="text/css" href="' . $smwgScriptPath . '/skins/SMW_custom.css" />';
+					SMWOutputs::$mHeadItems['smw_css'] = '<link rel="stylesheet" type="text/css" href="' . $smwgScriptPath . '/skins/SMW_custom.css?' . $smwgScriptVersion . '" />';
 					if ($wgContLang->isRTL()) { // right-to-left support
-						SMWOutputs::$mHeadItems['smw_cssrtl'] = '<link rel="stylesheet" type="text/css" href="' . $smwgScriptPath . '/skins/SMW_custom_rtl.css" />';
+						SMWOutputs::$mHeadItems['smw_cssrtl'] = '<link rel="stylesheet" type="text/css" href="' . $smwgScriptPath . '/skins/SMW_custom_rtl.css?' . $smwgScriptVersion . '" />';
 					}
 				return;
 			}
