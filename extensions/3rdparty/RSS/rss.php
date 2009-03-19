@@ -28,6 +28,8 @@ $wgExtensionCredits['parserhook'][] = array(
 	'description' => 'Displays an RSS feed on a wiki page'
 );
 
+$wgExtensionMessagesFiles['rss'] = dirname(__FILE__) . '/rss.i18n.php';
+
 #change this according to your magpie installation!
 require_once(dirname(__FILE__) . '/magpierss/rss_fetch.inc');
 
@@ -106,11 +108,13 @@ function renderRss( $input ) {
 
 	#Check for errors.
 	if ( $rss->ERROR ) {
-		return "<div>Failed to load RSS feed from $url: ".$rss->ERROR."</div>"; #localize…
+		wfLoadExtensionMessages( 'rss' );
+		return wfMsg( 'rss-error', $url, $rss->ERROR);
 	}
 
 	if ( !is_array( $rss->items ) ) {
-		return "<div>Failed to load RSS feed from $url!</div>"; #localize…
+		wfLoadExtensionMessages( 'rss' );
+		return wfMsg('rss-empty', $url);
 	}
 
 	#Build title line
