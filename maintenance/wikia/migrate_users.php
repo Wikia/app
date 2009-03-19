@@ -189,18 +189,27 @@ while($row = $dbr->fetchObject( $res )){
   print "new ID is $newid\n";
 
   #do table alterations
-  alterTable($dbr->tableName( 'archive' ),"ar_user",$row->user_id,$newid);
-  alterTable($dbr->tableName( 'filearchive' ),"fa_user",$row->user_id,$newid);
-  alterTable($dbr->tableName( 'image' ),"img_user",$row->user_id,$newid);
+  alterTable($dbr->tableName( 'archive' ),"ar_user",$row->user_id,$newid, 'ar_user_text' );
+  alterTable($dbr->tableName( 'filearchive' ),"fa_user",$row->user_id,$newid, 'fa_user_text' );
+  alterTable($dbr->tableName( 'image' ),"img_user",$row->user_id,$newid, 'img_user_text' );
   alterTable($dbr->tableName( 'ipblocks' ),"ipb_user",$row->user_id,$newid);
   alterTable($dbr->tableName( 'logging' ),"log_user",$row->user_id,$newid);
   alterTable($dbr->tableName( 'oldimage' ),"oi_user",$row->user_id,$newid);
-  alterTable($dbr->tableName( 'recentchanges' ),"rc_user",$row->user_id,$newid);
+  alterTable($dbr->tableName( 'recentchanges' ),"rc_user",$row->user_id,$newid, 'rc_user_text' );
   alterTable($dbr->tableName( 'revision' ),"rev_user",$row->user_id,$newid);
   alterTable($dbr->tableName( 'user_groups' ),"ug_user",$row->user_id,$newid);
   alterTable($dbr->tableName( 'user_newtalk' ),"user_id",$row->user_id,$newid);
-#  alterTable($dbr->tableName( 'user_rights' ),"ur_user",$row->user_id,$newid);
   alterTable($dbr->tableName( 'watchlist' ),"wl_user",$row->user_id,$newid);
+
+  if ($new_local_username != $row->user_name) {
+	alterTable($dbr->tableName( 'revision' ),"rev_user_text",$row->user_name,$new_local_username);
+	alterTable($dbr->tableName( 'image' ),"img_user_text",$row->user_name,$new_local_username);
+	alterTable($dbr->tableName( 'recentchanges' ),"rc_user_text",$row->user_name,$new_local_username);
+	alterTable($dbr->tableName( 'archive' ),"ar_user_text",$row->user_name,$new_local_username);
+	alterTable($dbr->tableName( 'filearchive' ),"fa_user_text",$row->user_name,$new_local_username);
+	alterTable($dbr->tableName( 'oldimage' ),"oi_user_text",$row->user_name,$new_local_username);
+  }
+
  }
 
 #We only announce collisions if we aren't handling them, or if we're in verbose mode
@@ -213,15 +222,20 @@ if(count($collisions) >=1 && ($options["collision-action"] == "different")){# ||
 
 print "\nUsers migrated (unless collisions were reported).  Now, you should set the \$wgSharedDB variable to $shared_db\n\n";
 $wgSharedDB='wikicities';
-function alterTable($table,$column,$from_val,$to_val){
-  global $options;
-  if($options['verbose']){
-    print "UPDATE low_priority $table SET $column=$to_val where $column=$from_val;\n";
-  }
-  global $dbr;
-  if( !$options[dryrun] ){
-    $dbr->query("UPDATE low_priority $table SET $column=$to_val where $column=$from_val");
-  }
-}
 
-?>
+function alterTable( $table, $column, $from_val, $to_val, $where_column = false ) {
+	global $options, $dbr;
+	
+	# Use the indexed field, if specified
+	if ( $where_column === false ) {
+		$where_column = $column;
+	}
+
+	if ( $options['verbose'] ) {
+		print "UPDATE low_priority $table SET $column=$to_val where $where_column=$from_val;\n";
+	}
+
+	if( !$options['dryrun'] ) {
+		$dbr->query("UPDATE low_priority $table SET $column=$to_val where $where_column=$from_val");
+	}
+}

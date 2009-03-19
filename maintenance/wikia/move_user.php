@@ -85,6 +85,9 @@ $dbw->selectDB($wgDBname);
 alterTable('revision',"rev_user_text", $from_text, $to_text);
 alterTable('image',"img_user_text", $from_text, $to_text);
 alterTable('recentchanges',"rc_user_text", $from_text, $to_text);
+alterTable('archive',"ar_user_text", $from_text, $to_text);
+alterTable('filearchive',"fa_user_text", $from_text, $to_text);
+alterTable('oldimage',"oi_user_text", $from_text, $to_text);
 
 # Move user pages if there is no exisitng page at the new location
 $query = 'UPDATE LOW_PRIORITY IGNORE page set page_title='. $to_text.
@@ -100,5 +103,3 @@ $query = 'UPDATE LOW_PRIORITY IGNORE page set page_title=concat('. $to_text. ','
 
 if ( isset($options['verbose']) ) print($query. "\n");
 if (!isset($options['dryrun'])) $dbw->query($query);
-
-?>
