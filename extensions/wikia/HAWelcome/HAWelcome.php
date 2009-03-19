@@ -227,62 +227,65 @@ class HAWelcomeJob extends Job {
 
 		wfProfileIn( __METHOD__ );
 
-		wfLoadExtensionMessages( "HAWelcome" );
+		// Do not create task when DB is locked (rt#12229)
+		if ( !wfReadOnly() ) {
+			wfLoadExtensionMessages( "HAWelcome" );
 
-		/**
-		 * Revision has valid Title field but sometimes not filled
-		 */
-		$Title = $revision->getTitle();
-		if( !$Title ) {
-			$Title = Title::newFromId( $revision->getPage(), GAID_FOR_UPDATE );
-			$revision->setTitle( $Title );
-		}
+			/**
+			 * Revision has valid Title field but sometimes not filled
+			 */
+			$Title = $revision->getTitle();
+			if( !$Title ) {
+				$Title = Title::newFromId( $revision->getPage(), GAID_FOR_UPDATE );
+				$revision->setTitle( $Title );
+			}
 
-		if( $Title && ! $wgCommandLineMode && ! $wgUser->isAllowed( "bot" ) ) {
+			if( $Title && ! $wgCommandLineMode && ! $wgUser->isAllowed( "bot" ) ) {
 
-			Wikia::log( __METHOD__, "title", $Title->getFullURL() );
+				Wikia::log( __METHOD__, "title", $Title->getFullURL() );
 
-			$welcomer = trim( wfMsgForContent( "welcome-user" ) );
-			Wikia::log( __METHOD__, "welcomer", $welcomer );
+				$welcomer = trim( wfMsgForContent( "welcome-user" ) );
+				Wikia::log( __METHOD__, "welcomer", $welcomer );
 
-			if( $welcomer !== "@disabled" && $welcomer !== "-" ) {
+				if( $welcomer !== "@disabled" && $welcomer !== "-" ) {
 
-				/**
-				 * check if talk page for wgUser exists
-				 *
-				 * @todo check editcount for user
-				 */
-				Wikia::log( __METHOD__, "user", $wgUser->getName() );
-				$talkPage = $wgUser->getUserPage()->getTalkPage();
-				if( $talkPage ) {
-					$talkArticle = new Article( $talkPage, 0 );
-					if( !$talkArticle->exists( ) || $wgDevelEnvironment ) {
-						$welcomeJob = new HAWelcomeJob(
-							$Title,
-							array(
-								"is_anon"   => $wgUser->isAnon(),
-								"user_id"   => $wgUser->getId(),
-								"user_ip"   => wfGetIP(),
-								"user_name" => $wgUser->getName(),
-							)
-						);
-						$welcomeJob->insert();
-						Wikia::log( __METHOD__, "job" );
+					/**
+					 * check if talk page for wgUser exists
+					 *
+					 * @todo check editcount for user
+					 */
+					Wikia::log( __METHOD__, "user", $wgUser->getName() );
+					$talkPage = $wgUser->getUserPage()->getTalkPage();
+					if( $talkPage ) {
+						$talkArticle = new Article( $talkPage, 0 );
+						if( !$talkArticle->exists( ) || $wgDevelEnvironment ) {
+							$welcomeJob = new HAWelcomeJob(
+								$Title,
+								array(
+									"is_anon"   => $wgUser->isAnon(),
+									"user_id"   => $wgUser->getId(),
+									"user_ip"   => wfGetIP(),
+									"user_name" => $wgUser->getName(),
+								)
+							);
+							$welcomeJob->insert();
+							Wikia::log( __METHOD__, "job" );
 
-						/**
-						 * inform task manager
-						 */
-						$Task = new HAWelcomeTask();
-						$Task->createTask( array( "city_id" => $wgCityId ), TASK_QUEUED  );
-						Wikia::log( __METHOD__, "task" );
-					}
-					else {
-						Wikia::log( __METHOD__, "exists", sprintf( "Talk page for user %s alredy exits", $wgUser->getName() ) );
+							/**
+							 * inform task manager
+							 */
+							$Task = new HAWelcomeTask();
+							$Task->createTask( array( "city_id" => $wgCityId ), TASK_QUEUED  );
+							Wikia::log( __METHOD__, "task" );
+						}
+						else {
+							Wikia::log( __METHOD__, "exists", sprintf( "Talk page for user %s alredy exits", $wgUser->getName() ) );
+						}
 					}
 				}
-			}
-			else {
-				Wikia::log( __METHOD__, "disabled" );
+				else {
+					Wikia::log( __METHOD__, "disabled" );
+				}
 			}
 		}
 		wfProfileOut( __METHOD__ );
