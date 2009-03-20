@@ -43,7 +43,7 @@ YE.onDOMReady(function () {
 				var data = YT.JSONParse(oResponse.responseText);
 				alert(oResponse.responseText);
 				for(i in data) {
-					alert( i + " => " + data.i );
+					alert( i + " => " + data[i] );
 				}
 				var isError = isEnd = 0;
 				if (loop == 0) {
