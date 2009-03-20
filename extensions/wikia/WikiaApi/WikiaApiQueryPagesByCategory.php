@@ -85,10 +85,12 @@ class WikiaApiQueryPagesyByCategory extends WikiaApiQuery {
 
 			$cats = explode('|', $category);
 			$encodedCats = array();
-			foreach ($cats as $cat){
+			$memcKeyCats = "";
+			foreach ($cats as $cat) {
 				$categoryTitle = Title::newFromText( $cat );
 				if (is_object($categoryTitle)){
 					$encodedCats[] = $db->strencode($categoryTitle->getDbKey());
+					$memcKeyCats .= str_replace(" ", "_", $categoryTitle->getDbKey());
 				}
 			}
 			if (empty($encodedCats)){
@@ -97,7 +99,7 @@ class WikiaApiQueryPagesyByCategory extends WikiaApiQuery {
 			$this->addWhere ( "cl_to IN ('". implode("','", $encodedCats) . "')");
 			$this->addWhere ( "page_is_redirect=0" );
 			
-			$this->setCacheKey ($lcache_key, 'CCX', serialize($encodedCats));
+			$this->setCacheKey ($lcache_key, 'CCX', $memcKeyCats);
 			
 			#--- limit
 			if ( !empty($limit)  ) { //WikiaApiQuery::DEF_LIMIT
