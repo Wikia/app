@@ -17,11 +17,17 @@ $optionsWithArgs = array( 'from','to' );
 
 require_once( "../commandLine.inc" );
 
-function alterTable($table,$column,$from_val,$to_val){
-  global $options, $wgDBname, $dbw;
-  $query = "UPDATE LOW_PRIORITY IGNORE $table SET $column=$to_val WHERE $column=$from_val;";
-  if ( isset($options['verbose']) ) print ($query. "\n");
-  if ( !isset($options['dryrun']) ) $dbw->query($query);
+function alterTable($table,$column,$from_val,$to_val, $where_column = false){
+	global $options, $wgDBname, $dbw;
+
+	if ( $where_column === false ) {
+		$where_column = $column;
+	}
+
+	$query = "UPDATE LOW_PRIORITY IGNORE $table SET $column=$to_val WHERE $where_column=$from_val;";
+
+	if ( isset($options['verbose']) ) print ($query. "\n");
+	if ( !isset($options['dryrun']) ) $dbw->query($query);
 }
 
 if (!isset($options['from']) || !isset($options['to']) || $options['from'] == $options['to'])
@@ -63,16 +69,16 @@ $dbw->selectDB($wgDBname);
 if (isset($options['merge'])) {
 	# Change user IDs if merging two accounts
 	alterTable($dbw->tableName( 'archive' ),"ar_user", $dbw->addQuotes($row->user_name),$newid,"ar_user_text");
-	alterTable($dbw->tableName( 'filearchive' ),"fa_user",$row->user_id,$newid);
+	alterTable($dbw->tableName( 'filearchive' ),"fa_user",$from_id,$newid);
 	alterTable($dbw->tableName( 'image' ),"img_user", $dbw->addQuotes($row->user_name),$newid,"img_user_text");
-	alterTable($dbw->tableName( 'ipblocks' ),"ipb_user",$row->user_id,$newid);
-	alterTable($dbw->tableName( 'logging' ),"log_user",$row->user_id,$newid);
+	alterTable($dbw->tableName( 'ipblocks' ),"ipb_user",$from_id,$newid);
+	alterTable($dbw->tableName( 'logging' ),"log_user",$from_id,$newid);
 	alterTable($dbw->tableName( 'oldimage' ),"oi_user",$dbw->addQuotes($row->user_name),$newid,"oi_user_text");
 	alterTable($dbw->tableName( 'recentchanges' ),"rc_user",$dbw->addQuotes($row->user_name),$newid,"rc_user_text");
-	alterTable($dbw->tableName( 'revision' ),"rev_user",$row->user_id,$newid);
-	alterTable($dbw->tableName( 'user_groups' ),"ug_user",$row->user_id,$newid);
-	alterTable($dbw->tableName( 'user_newtalk' ),"user_id",$row->user_id,$newid);
-	alterTable($dbw->tableName( 'watchlist' ),"wl_user",$row->user_id,$newid);
+	alterTable($dbw->tableName( 'revision' ),"rev_user",$from_id,$newid);
+	alterTable($dbw->tableName( 'user_groups' ),"ug_user",$from_id,$newid);
+	alterTable($dbw->tableName( 'user_newtalk' ),"user_id",$from_id,$newid);
+	alterTable($dbw->tableName( 'watchlist' ),"wl_user",$from_id,$newid);
 } else {
 	# Change user name in local and shared DB if not merging
 	alterTable('user',"user_name",$from_text,$to_text);
