@@ -183,6 +183,7 @@ class HAWelcomeJob extends Job {
 		if( ! $this->mSysop instanceof User ) {
 
 			$sysop = trim( wfMsg( "welcome-user" ) );
+
 			if( $sysop !== "-" && $sysop !== "@latest" && $sysop !== "@disabled" && $sysop !== "@sysop" ) {
 				$this->mSysop = User::newFromName( $sysop );
 			}
@@ -243,7 +244,7 @@ class HAWelcomeJob extends Job {
 	 * @return true means process other hooks
 	 */
 	public static function revisionInsertComplete( &$revision, &$url, &$flags ) {
-		global $wgUser, $wgCityId, $wgCommandLineMode;
+		global $wgUser, $wgCityId, $wgCommandLineMode, $wgSharedDB;
 
 		wfProfileIn( __METHOD__ );
 
@@ -262,13 +263,13 @@ class HAWelcomeJob extends Job {
 				$revision->setTitle( $Title );
 			}
 			$skip = (bool)(
-				! $wgUser->isAllowed( "bot" ) &&
-				! $wgUser->isAllowed( "staff" ) &&
-				! $wgUser->isAllowed( "helper" ) &&
-				! $wgUser->isAllowed( "sysop" ) &&
-				! $wgUser->isAllowed( "bureaucrat" ) );
+				$wgUser->isAllowed( "bot" )    ||
+				$wgUser->isAllowed( "staff" )  ||
+				$wgUser->isAllowed( "helper" ) ||
+				$wgUser->isAllowed( "sysop" )  ||
+				$wgUser->isAllowed( "bureaucrat" ) );
 
-			if( $Title && ! $wgCommandLineMode && $skip ) {
+			if( $Title && !$wgCommandLineMode && !$skip && !empty( $wgSharedDB ) ) {
 
 				Wikia::log( __METHOD__, "title", $Title->getFullURL() );
 
@@ -359,6 +360,32 @@ class HAWelcomeJob extends Job {
 	 */
 	public function getTitle() {
 		return $this->title;
+	}
+
+	/**
+	 * check if some (or all) functionality is disabled
+	 *
+	 * @param String $message
+	 * @param String $what default false
+	 *
+	 * possible vaules for $what: page-user, message-anon, message-user
+	 *
+	 * @access public
+	 * @static
+	 *
+	 * @return Bool disabled or not
+	 */
+	public static function isDisabled( $message, $what = false ) {
+		if( !$what ) {
+			$return = substr( $message, 0, 9) === "@disabled";
+		}
+		else {
+			if( in_array( $what, array( "page-user", "message-anon", "message-user" ) ) ) {
+				$return = false;
+			}
+		}
+
+		return $return;
 	}
 }
 
