@@ -12,7 +12,7 @@
 }
 a.bigButton big, a.bigButton small {
 	background-image: none;
-	filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='http://images.wikia.com/common/skins/monaco/images/big_button.png', sizingMethod='crop');
+	filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='http://images.wikia.com/common/skins/monaco/images/big_button.png?1', sizingMethod='crop');
 }
 #page_controls div {
 	background: none;
