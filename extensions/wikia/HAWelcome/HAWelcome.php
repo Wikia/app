@@ -122,7 +122,8 @@ class HAWelcomeJob extends Job {
 				$sysopPage = $sysop->getUserPage()->getTalkPage();
 				$signature = $this->expandSig();
 
-				$wgTitle = $talkPage;
+				$wgTitle     = $talkPage;
+				$welcomeMsg  = false;
 				$talkArticle = new Article( $talkPage, 0 );
 
 				if( ! $talkArticle->exists() ) {
@@ -142,8 +143,8 @@ class HAWelcomeJob extends Job {
 							$wgTitle = $userPage;
 							$userArticle = new Article( $userPage, 0 );
 							if( ! $userArticle->exists() ) {
-								$welcomeMsg = wfMsg( "welcome-user-page" );
-								$userArticle->doEdit( $welcomeMsg, false, $flags );
+								$pageMsg = wfMsg( "welcome-user-page" );
+								$userArticle->doEdit( $pageMsg, false, $flags );
 							}
 						}
 
@@ -153,8 +154,10 @@ class HAWelcomeJob extends Job {
 							$signature
 						));
 					}
-					$wgTitle = $talkPage; /** is it necessary there? **/
-					$talkArticle->doEdit( $welcomeMsg, wfMsg( "welcome-message-log" ), $flags );
+					if( $welcomeMsg ) {
+						$wgTitle = $talkPage; /** is it necessary there? **/
+						$talkArticle->doEdit( $welcomeMsg, wfMsg( "welcome-message-log" ), $flags );
+					}
 					Wikia::log( __METHOD__, "edit", $welcomeMsg );
 				}
 				$wgTitle = $tmpTitle;
@@ -363,7 +366,7 @@ class HAWelcomeJob extends Job {
 	}
 
 	/**
-	 * check if some (or all) functionality is disabled
+	 * check if some (or all) functionality is disabled/enabled
 	 *
 	 * @param String $message
 	 * @param String $what default false
@@ -371,28 +374,20 @@ class HAWelcomeJob extends Job {
 	 * possible vaules for $what: page-user, message-anon, message-user
 	 *
 	 * @access public
-	 * @static
 	 *
 	 * @return Bool disabled or not
 	 */
-	public static function isDisabled( $message, $what = false ) {
-		if( !$what ) {
-			$return = (bool )( $message === "@disabled" || $message === "-" );
-		}
-		else {
-			$return = false;
-			if( in_array( $what, array( "page-user", "message-anon", "message-user" ) ) ) {
-				/**
-				 * message has format: @disabled <param1> <param2> ...
-				 */
-				$parts = preg_split( "/\s+/", $message );
+	public function isEnabled( $what ) {
 
-				/**
-				 * zero/first part doesn't matter
-				 */
-				$return = (bool )array_search( $what, array_shift( $parts ) );
-			}
+		wfProfileIn( __METHOD__ );
+
+		$message = wfMsgForContent( "welcome-enabled" );
+		if( in_array( $what, array( "page-user", "talk-anon", "talk-user" ) ) ) {
+			$parts = preg_split( "/\s+/", $message );
+			$return = (bool )array_search( $what, $parts );
 		}
+		
+		wfProfileOut( __METHOD__ );
 
 		return $return;
 	}
