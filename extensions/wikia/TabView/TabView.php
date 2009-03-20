@@ -57,7 +57,7 @@ function tabviewRender($input, $params, &$parser ) {
 	}
 
 	$outJS = "var tabView_{$id} = new YAHOO.widget.TabView();";
-	$tempJS = "tabView_%s.addTab( new YAHOO.widget.Tab({label: '%s', dataSrc: '%s'.replace('amp;',''), cacheData: %s, active: %s}));";
+	$tempJS = "tabView_%s.addTab( (function() {var tab = new YAHOO.widget.Tab({label: '%s', dataSrc: '%s'.replace('amp;',''), cacheData: %s, active: %s});tab.loadHandler = {'success': function(o) {YAHOO.log('tab load'); this.set('content', o.responseText); if (typeof window.TieDivLibrary!='undefined') window.TieDivLibrary.calculate();}}; return tab;})() );";
 
 	foreach($tabs as $tab) {
 		$onetab = split('\|', $tab);
