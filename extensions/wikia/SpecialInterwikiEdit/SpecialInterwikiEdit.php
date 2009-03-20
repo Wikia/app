@@ -184,7 +184,7 @@ function wfSIWEEditInterwiki(){
 	}
 
 	global $wgLanguageNames, $IP;
-	$lang_names = array_keys($wgLanguageNames);
+#	$lang_names = array_keys($wgLanguageNames);
 
 	$fields['iw_prefix'] = htmlspecialchars($wgRequest->getVal('iw_prefix', null));
 	$fields['iw_url'] = htmlspecialchars($wgRequest->getVal('iw_url', null));
@@ -218,10 +218,11 @@ function wfSIWEEditInterwiki(){
 
 		switch ($action) {
 			case 'edit_interwiki' :
-				if (!in_array($fields['iw_prefix'], $lang_names)) {
-		        	$ret .= "<b>Error:</b> incorrect language interwiki prefix: $iw_prefix<br />\n";
-					break;
-				}
+#				Allow for non-language interwikis (rt#12266)
+#				if (!in_array($fields['iw_prefix'], $lang_names)) {
+#		        	$ret .= "<b>Error:</b> incorrect language interwiki prefix: $iw_prefix<br />\n";
+#					break;
+#				}
 				if ( $fields['iw_prefix'] != $old_prefix ){
 					$res = $db->select('interwiki', '*', array('iw_prefix' => $fields['iw_prefix']));
 
@@ -358,13 +359,13 @@ function wfSIWEEditInterwiki(){
 	<input type='hidden' name='action' value='Edit interwiki' />
 	</form> </p>";
 
-	$languages = "'".$lang_names[0]."'";
+#	$languages = "'".$lang_names[0]."'";
 	//$lang_names = array_slice($lang_names, 1);
-	foreach ( $lang_names as $lang_name){
-	  $languages .= ", '$lang_name'";
-	}
-	if ($from) $from = "iw_prefix like '". $db->escapeLike($from). "%' AND";
-	$result = $db->query("SELECT * FROM `$wikiaDB`.`interwiki` WHERE $from iw_prefix in ($languages);");
+#	foreach ( $lang_names as $lang_name){
+#	  $languages .= ", '$lang_name'";
+#	}
+	if ($from) $from = "iw_prefix like '". $db->escapeLike($from). "%'";
+	$result = $db->query("SELECT * FROM `$wikiaDB`.`interwiki` WHERE $from;");
 
 	$ret .= "<p><select multiple='multiple' onchange='updateForm( this.value );'>\n";
 	while( $dbObject = $db->fetchObject($result)){
