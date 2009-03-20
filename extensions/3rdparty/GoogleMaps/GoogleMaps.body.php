@@ -148,13 +148,15 @@ class GoogleMaps {
 
 		// get the current map settings
 		$o = self::getMapSettings( $this->mTitle, $this->mMapDefaults );
+		
+		$extensionVersion = GOOGLE_MAPS_EXTENSION_VERSION;
 
 		$output = '';
 
 		// output the necessary styles, script includes, and global variables
 		$output .= '
 <style type="text/css">
-	@import "' . $this->mUrlPath . '/css/color_select.css";
+	@import "' . $this->mUrlPath . '/css/color_select.css?v=' . $extensionVersion . '";
 	textarea.balloon_textarea {
 		width: 220px;
 		height: 52px;
@@ -162,11 +164,11 @@ class GoogleMaps {
 </style>
 <!--[if IE]>
 <style type="text/css">
-	@import "' . $this->mUrlPath . '/css/color_select_ie.css";
+	@import "' . $this->mUrlPath . '/css/color_select_ie.css?v=' . $extensionVersion . '";
 </style><![endif]-->
 <!--[if lt IE 7]>
 <style type="text/css">
-	@import "' . $this->mUrlPath . '/css/color_select_ie6.css";
+	@import "' . $this->mUrlPath . '/css/color_select_ie6.css?v=' . $extensionVersion . '";
 </style><![endif]-->
 <script type="' . $this->mJsMimeType . '">
 //<![CDATA[
@@ -227,7 +229,7 @@ JAVASCRIPT;
                         addScript('http://maps.google.com/maps?file=api&v={$o['api']}&key={$this->mApiKey}&hl={$this->mLanguageCode}&async=2&callback=initEditorsMap');
         }
 	function loadEditorsMapJavascript() {
-			addScript('{$this->mUrlPath}/color_select.js');
+			addScript('{$this->mUrlPath}/color_select.js?v={$extensionVersion}');
 			addScript('{$this->mUrlPath}/EditorsMap.js?v={$extensionVersion}');
 
 			window.setTimeout(tryLoadingEditorsMap, 100);
@@ -257,7 +259,7 @@ JAVASCRIPT;
 		var image = document.createElement("img");
 		image.width = 23;
 		image.height = 22;
-		image.src = '{$this->mUrlPath}/images/button_map_open.gif';
+		image.src = '{$this->mUrlPath}/images/button_map_open.gif?v={$extensionVersion}';
 		image.border = 0;
 		image.alt = _['gm-make-map'];
 		image.title = _['gm-make-map'];
