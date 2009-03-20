@@ -128,7 +128,7 @@ class HAWelcomeJob extends Job {
 
 				if( ! $talkArticle->exists() ) {
 					if( $this->mAnon ) {
-						if( $this->isEnabled( "talk-anon" ) ) {
+						if( $this->isEnabled( "message-anon" ) ) {
 							$welcomeMsg = wfMsg( "welcome-message-anon", array(
 								$this->title->getPrefixedText(),
 								$sysopPage->getPrefixedText(),
@@ -136,7 +136,7 @@ class HAWelcomeJob extends Job {
 							));
 						}
 						else {
-							Wikia::log( __METHOD__, "talk", "talk-anon disabled" );
+							Wikia::log( __METHOD__, "talk", "message-anon disabled" );
 						}
 					}
 					else {
@@ -158,7 +158,7 @@ class HAWelcomeJob extends Job {
 							Wikia::log( __METHOD__, "page", "page-user disabled" );
 						}
 
-						if( $this->isEnabled( "talk-user" ) ) {
+						if( $this->isEnabled( "message-user" ) ) {
 							$welcomeMsg = wfMsg( "welcome-message-user", array(
 								$this->title->getPrefixedText(),
 								$sysopPage->getPrefixedText(),
@@ -166,7 +166,7 @@ class HAWelcomeJob extends Job {
 							));
 						}
 						else {
-							Wikia::log( __METHOD__, "talk", "talk-user disabled" );
+							Wikia::log( __METHOD__, "talk", "message-user disabled" );
 						}
 					}
 					if( $welcomeMsg ) {
@@ -397,7 +397,7 @@ class HAWelcomeJob extends Job {
 		wfProfileIn( __METHOD__ );
 
 		$message = wfMsgForContent( "welcome-enabled" );
-		if( in_array( $what, array( "page-user", "talk-anon", "talk-user" ) ) ) {
+		if( in_array( $what, array( "page-user", "message-anon", "message-user" ) ) ) {
 			$parts = preg_split( "/\s+/", $message );
 			$return = (bool )array_search( $what, $parts );
 		}
