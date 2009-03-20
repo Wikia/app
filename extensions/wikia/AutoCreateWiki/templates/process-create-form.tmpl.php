@@ -19,7 +19,7 @@ var YT = YAHOO.Tools;
 YE.onDOMReady(function () {
 	var loop = 0;
 	var ifr = YD.get('awc-process');
-	var titleUrl = '<?=$mTitle->getLocalURL()."/Processing"?>'; 
+	var titleUrl = '<?=$mTitle->getLocalURL()."/Testing"?>'; //Processing
 	var wgAjaxPath = wgScriptPath + wgScript;
 	var redirServer = '<?=$subdomain?>';
 	var errorMsg = '<?=wfMsg('autocreatewiki-errordefault')?>';
@@ -27,10 +27,13 @@ YE.onDOMReady(function () {
 
 	var setLog = function (inx, text, resType)	{
 		var logSteps = YD.get('awc-log');
+		alert("logSteps => " + logSteps);
 		var styleColor = (resType == 'OK' || resType == 'END') ? "green" : "red";
 		var styleMsg = (resType == 'OK' || resType == 'END') ? '<?=wfMsg('autocreatewiki-done')?>' : '<?=wfMsg('autocreatewiki-error')?>';
 		var msgType = (resType != 'END') ? '&nbsp;&nbsp;<strong style="color:' + styleColor + '">' + styleMsg + '</strong>' : "";
-		logSteps.innerHTML = text + ((resType != '') ? msgType : "");
+		var msg = text + ((resType != '') ? msgType : "");
+		alert(msg);
+		logSteps.innerHTML = msg;
 		if (typeof TieDivLibrary != "undefined" ) {
 			TieDivLibrary.calculate();
 		};
@@ -43,8 +46,10 @@ YE.onDOMReady(function () {
 				var data = YT.JSONParse(oResponse.responseText);
 				var isError = isEnd = 0;
 				if (loop == 0) ifr.src = titleUrl;
+				alert(loop);
 				if ( data ) {
 					if (typeof data['info'] != 'undefined' && data['info'] != '') {
+						alert (data['info'] + "=>" + data['type']);
 						if ( !usedMsg["'" + data['info'] + "'"] ) {
 							setLog(loop, data['info'], data['type']);
 						}
