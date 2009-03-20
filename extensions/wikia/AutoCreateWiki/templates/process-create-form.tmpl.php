@@ -19,7 +19,7 @@ var YT = YAHOO.Tools;
 YE.onDOMReady(function () {
 	var loop = 0;
 	var ifr = YD.get('awc-process');
-	var titleUrl = '<?=$mTitle->getLocalURL()."/Testing"?>'; //Processing
+	var titleUrl = '<?=$mTitle->getLocalURL()."/Processing"?>'; 
 	var wgAjaxPath = wgScriptPath + wgScript;
 	var redirServer = '<?=$subdomain?>';
 	var errorMsg = '<?=wfMsg('autocreatewiki-errordefault')?>';
@@ -41,27 +41,17 @@ YE.onDOMReady(function () {
 		var __callback = {
 			success: function( oResponse ) {
 				var data = YT.JSONParse(oResponse.responseText);
-				alert(oResponse.responseText);
-				for(i in data) {
-					alert( i + " => " + data[i] );
-				}
 				var isError = isEnd = 0;
-				if (loop == 0) {
-					alert(titleUrl);
-					alert(ifr);
-					ifr.src = titleUrl;
-				}
+				if (loop == 0) ifr.src = titleUrl;
 				if ( data ) {
-					alert("info => " . data.info);
-					alert("info => " . data.type);
-					if (data.info != 'undefined' && data.info != '') {
-						if ( !usedMsg["'" + data.info + "'"] ) {
-							setLog(loop, data.info, data.type);
+					if (typeof data['info'] != 'undefined' && data['info'] != '') {
+						if ( !usedMsg["'" + data['info'] + "'"] ) {
+							setLog(loop, data['info'], data['type']);
 						}
 					}
-					if (data.type == 'ERROR') isError++;
-					if (data.type == 'END') isEnd++;
-					usedMsg["'" + data.info + "'"] = data.type;
+					if (data['type'] == 'ERROR') isError++;
+					if (data['type'] == 'END') isEnd++;
+					usedMsg["'" + data['info'] + "'"] = data['type'];
 					loop++;
 				}
 				
@@ -83,7 +73,6 @@ YE.onDOMReady(function () {
 		}
 				
 		var url = wgAjaxPath + "?action=ajax&rs=axACWRequestCheckLog";
-		alert(url);
 		YC.asyncRequest( "GET", url, __callback);
 	}
 	
