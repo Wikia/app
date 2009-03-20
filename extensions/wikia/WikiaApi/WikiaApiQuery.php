@@ -515,14 +515,14 @@ class WikiaApiQuery extends ApiQueryBase {
 	#---
 	public function saveCacheData($key, $data, $time = WIKIA_API_QUERY_CTIME) {
 		global $wgMemc;
-		$wgMemc->set($key, $data, $time);
+		$wgMemc->set(md5($key), $data, $time);
 		return true;
 	}
 
 	#---
 	public function deleteCacheData($key) {
 		global $wgMemc;
-		$wgMemc->delete($key);
+		$wgMemc->delete(md5($key));
 		return true;
 	}
 
@@ -558,13 +558,10 @@ class WikiaApiQuery extends ApiQueryBase {
 	private function getUniqueBrowserId()
 	{
 		global $wgCookiePath, $wgCookieDomain, $wgCookieSecure;
-		if (empty($_COOKIE['wgWikiaUniqueBrowserId']))
-		{
+		if (empty($_COOKIE['wgWikiaUniqueBrowserId'])) {
 			$unique_id = md5(uniqid(rand(), true));
 			//setcookie('wgWikiaUniqueBrowserId', $unique_id, time() + COOKIE_EXPR, $wgCookiePath, $wgCookieDomain, $wgCookieSecure);
-		}
-		else
-		{
+		} else {
 			$unique_id = $_COOKIE['wgWikiaUniqueBrowserId'];
 		}
 
