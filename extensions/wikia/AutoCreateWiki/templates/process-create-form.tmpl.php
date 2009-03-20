@@ -19,7 +19,7 @@ var YT = YAHOO.Tools;
 YE.onDOMReady(function () {
 	var loop = 0;
 	var ifr = YD.get('awc-process');
-	var titleUrl = '<?=$mTitle->getLocalURL()."/Testing"?>'; //Processing
+	var titleUrl = '<?=$mTitle->getLocalURL()."/Processing"?>'; 
 	var wgAjaxPath = wgScriptPath + wgScript;
 	var redirServer = '<?=$subdomain?>';
 	var errorMsg = '<?=wfMsg('autocreatewiki-errordefault')?>';
@@ -27,17 +27,13 @@ YE.onDOMReady(function () {
 
 	var setLog = function (inx, text, resType)	{
 		var logSteps = YD.get('awc-log');
-		alert("logSteps => " + logSteps);
 		var styleColor = (resType == 'OK' || resType == 'END') ? "green" : "red";
 		var styleMsg = (resType == 'OK' || resType == 'END') ? '<?=wfMsg('autocreatewiki-done')?>' : '<?=wfMsg('autocreatewiki-error')?>';
 		var msgType = (resType != 'END') ? '&nbsp;&nbsp;<strong style="color:' + styleColor + '">' + styleMsg + '</strong>' : "";
 		var msg = text + ((resType != '') ? msgType : "");
-		alert(msg);
 		logSteps.innerHTML = msg;
 		if (typeof TieDivLibrary != "undefined" ) {
-			alert("calculate");
 			TieDivLibrary.calculate();
-			alert("after calculate");
 		};
 	}
 
@@ -48,30 +44,19 @@ YE.onDOMReady(function () {
 				var data = YT.JSONParse(oResponse.responseText);
 				var isError = isEnd = 0;
 				if (loop == 0) ifr.src = titleUrl;
-				alert(loop);
 				if ( data ) {
 					if (typeof data['info'] != 'undefined' && data['info'] != '') {
-						alert (data['info'] + "=>" + data['type']);
-						//if ( !usedMsg["'" + data['info'] + "'"] ) {
 						setLog(loop, data['info'], data['type']);
-						//}
 					}
-					alert("set error");
 					if (data['type'] == 'ERROR') isError++;
-					alert("set end");
 					if (data['type'] == 'END') isEnd++;
-					//usedMsg["'" + data['info'] + "'"] = data['type'];
-					alert("loop++");
 					loop++;
 				}
 				
-				alert("isEnd = " + isEnd);
-				alert("isError = " + isError);
 				if (isEnd > 0) {
 					//window.location.href = 'http://'+redirServer+'.<?=$domain?>';
 				} else if ( !(isError > 0) ) {
 					if (loop < 20) {
-						alert('timeout');
 						setTimeout(checkProcess, 666);
 					} else {
 						setLog(loop, errorMsg, 'ERROR');
