@@ -153,6 +153,9 @@ class HAWelcomeJob extends Job {
 									$userArticle->doEdit( $pageMsg, false, $flags );
 								}
 							}
+							else {
+								Wikia::log( __METHOD__, "page", "user page already exists." );
+							}
 						}
 						else {
 							Wikia::log( __METHOD__, "page", "page-user disabled" );
@@ -173,7 +176,6 @@ class HAWelcomeJob extends Job {
 						$wgTitle = $talkPage; /** is it necessary there? **/
 						$talkArticle->doEdit( $welcomeMsg, wfMsg( "welcome-message-log" ), $flags );
 					}
-					Wikia::log( __METHOD__, "edit", $welcomeMsg );
 				}
 				$wgTitle = $tmpTitle;
 			}
@@ -324,8 +326,7 @@ class HAWelcomeJob extends Job {
 							$Task = new HAWelcomeTask();
 							$Task->createTask( array( "city_id" => $wgCityId ), TASK_QUEUED  );
 							Wikia::log( __METHOD__, "task" );
-						}
-						else {
+						}						else {
 							Wikia::log( __METHOD__, "exists", sprintf( "Talk page for user %s alredy exits", $wgUser->getName() ) );
 						}
 					}
@@ -395,10 +396,11 @@ class HAWelcomeJob extends Job {
 
 		wfProfileIn( __METHOD__ );
 
+		$return = false;
 		$message = wfMsgForContent( "welcome-enabled" );
-		if( in_array( $what, array( "page-user", "message-anon", "message-user" ) ) ) {
-			$parts = preg_split( "/\s+/", $message );
-			$return = (bool )array_search( $what, $parts );
+		if( in_array( $what, array( "page-user", "message-anon", "message-user" ) )
+			&& strpos( $message, $what  ) !== false ) {
+			$return	= true;
 		}
 
 		wfProfileOut( __METHOD__ );
