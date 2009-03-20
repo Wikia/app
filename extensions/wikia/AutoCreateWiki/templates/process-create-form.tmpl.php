@@ -23,7 +23,7 @@ YE.onDOMReady(function () {
 	var wgAjaxPath = wgScriptPath + wgScript;
 	var redirServer = '<?=$subdomain?>';
 	var errorMsg = '<?=wfMsg('autocreatewiki-errordefault')?>';
-	var usedMsg = new Array();
+	//var usedMsg = new Array();
 
 	var setLog = function (inx, text, resType)	{
 		var logSteps = YD.get('awc-log');
@@ -35,7 +35,9 @@ YE.onDOMReady(function () {
 		alert(msg);
 		logSteps.innerHTML = msg;
 		if (typeof TieDivLibrary != "undefined" ) {
+			alert("calculate");
 			TieDivLibrary.calculate();
+			alert("after calculate");
 		};
 	}
 
@@ -50,13 +52,16 @@ YE.onDOMReady(function () {
 				if ( data ) {
 					if (typeof data['info'] != 'undefined' && data['info'] != '') {
 						alert (data['info'] + "=>" + data['type']);
-						if ( !usedMsg["'" + data['info'] + "'"] ) {
-							setLog(loop, data['info'], data['type']);
-						}
+						//if ( !usedMsg["'" + data['info'] + "'"] ) {
+						setLog(loop, data['info'], data['type']);
+						//}
 					}
+					alert("set error");
 					if (data['type'] == 'ERROR') isError++;
+					alert("set end");
 					if (data['type'] == 'END') isEnd++;
-					usedMsg["'" + data['info'] + "'"] = data['type'];
+					//usedMsg["'" + data['info'] + "'"] = data['type'];
+					alert("loop++");
 					loop++;
 				}
 				
