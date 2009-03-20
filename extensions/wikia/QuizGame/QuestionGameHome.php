@@ -730,7 +730,7 @@ function wfSpecialQuizGameHome(){
 			if($wgUser->getName() != $question["user_name"]){
 				//check to see if the user already had viewed this question
 				global $wgMemc;
-				$key = wfMemcKey( 'quizgame_user_view', $wgUser->getName(), $question["id"] );
+				$key = wfMemcKey( 'quizgame_user_view', $wgUser->getID(), $question["id"] );
 				$data = $wgMemc->get( $key );
 				if( $data > 0 ){
 					$timestamped_viewed = $data;
