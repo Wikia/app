@@ -132,7 +132,8 @@ class HAWelcomeJob extends Job {
 							$welcomeMsg = wfMsg( "welcome-message-anon", array(
 								$this->title->getPrefixedText(),
 								$sysopPage->getPrefixedText(),
-								$signature
+								$signature,
+								wfEscapeWikiText( $this->mUser->getName() ),
 							));
 						}
 						else {
@@ -165,7 +166,8 @@ class HAWelcomeJob extends Job {
 							$welcomeMsg = wfMsg( "welcome-message-user", array(
 								$this->title->getPrefixedText(),
 								$sysopPage->getPrefixedText(),
-								$signature
+								$signature,
+								wfEscapeWikiText( $this->mUser->getName() ),
 							));
 						}
 						else {
