@@ -6,7 +6,7 @@
 $messages = array();
 $messages['en'] = array(
 	"welcome-user" => "@latest",
-	"welcome-enabled" => "page-user talk-anon talk-user",
+	"welcome-enabled" => "page-user message-anon message-user",
 	"welcome-user-page" => "==About me==
 
 ''This is your user page. Please edit this page to tell the community about yourself!''
