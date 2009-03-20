@@ -243,7 +243,7 @@ YAHOO.ACWikiRequest.wikiDomainKeyUp = function(e) {
 	if ( this.zid ) {
 		clearTimeout(this.zid);
 	}
-	this.zid = setTimeout(func,1000);
+	this.zid = setTimeout(func,666*2);
 }
 
 YAHOO.ACWikiRequest.checkAccount = function(e, fid) {
@@ -296,7 +296,7 @@ YAHOO.ACWikiRequest.wikiAccountKeyUp = function(e) {
 	if ( this.zid ) {
 		clearTimeout(this.zid);
 	}
-	this.zid = setTimeout(func,1000);
+	this.zid = setTimeout(func,666*2);
 }
 
 YAHOO.ACWikiRequest.resetForm = function(e) {
