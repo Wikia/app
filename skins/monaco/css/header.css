@@ -74,7 +74,7 @@ a.bigButton * {
 	line-height: 21px;
 }
 a.bigButton big, a.bigButton small {
-	background: url(http://images.wikia.com/common/skins/monaco/images/big_button.png) no-repeat;
+	background: url(http://images.wikia.com/common/skins/monaco/images/big_button.png?1) no-repeat;
 }
 a.bigButton big {
 	color: #EEE;
