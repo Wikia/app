@@ -60,10 +60,13 @@ YE.onDOMReady(function () {
 					loop++;
 				}
 				
+				alert("isEnd = " + isEnd);
+				alert("isError = " + isError);
 				if (isEnd > 0) {
 					//window.location.href = 'http://'+redirServer+'.<?=$domain?>';
 				} else if ( !(isError > 0) ) {
 					if (loop < 20) {
+						alert('timeout');
 						setTimeout(checkProcess, 666);
 					} else {
 						setLog(loop, errorMsg, 'ERROR');
