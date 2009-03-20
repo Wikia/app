@@ -377,11 +377,20 @@ class HAWelcomeJob extends Job {
 	 */
 	public static function isDisabled( $message, $what = false ) {
 		if( !$what ) {
-			$return = substr( $message, 0, 9) === "@disabled";
+			$return = (bool )( $message === "@disabled" || $message === "-" );
 		}
 		else {
+			$return = false;
 			if( in_array( $what, array( "page-user", "message-anon", "message-user" ) ) ) {
-				$return = false;
+				/**
+				 * message has format: @disabled <param1> <param2> ...
+				 */
+				$parts = preg_split( "/\s+/", $message );
+
+				/**
+				 * zero/first part doesn't matter
+				 */
+				$return = (bool )array_search( $what, array_shift( $parts ) );
 			}
 		}
 
