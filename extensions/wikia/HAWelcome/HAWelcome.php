@@ -109,7 +109,7 @@ class HAWelcomeJob extends Job {
 		}
 		Wikia::log( __METHOD__, "user", $this->mUser->getName() );
 
-		if( $this->mUser && $this->mUser->getName() !== self::WELCOMEUSER ) {
+		if( $this->mUser && $this->mUser->getName() !== self::WELCOMEUSER && !$wgUser->isBlocked() ) {
 			/**
 			 * check again if talk page exists
 			 */
