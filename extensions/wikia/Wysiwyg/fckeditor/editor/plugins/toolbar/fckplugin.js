@@ -239,7 +239,7 @@ var WikiaButtonUI = function( name, label, tooltip, iconPathOrStripInfoArray, st
 
 		'Undo':		'arrow_undo.png',
 		'Redo':		'arrow_redo.png',
-		'Widescreen':	'icon_full_screen.png',
+		'Widescreen':	'icon_widescreen.png',
 		'Source':	'application_xp_terminal.png'
 	};
 
