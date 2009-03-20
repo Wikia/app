@@ -532,38 +532,36 @@ StyleCommand.prototype = {
 
 // widescreen switching
 var WideScreenToggle = function() {
-	var toggleWideScreenLink = window.parent.document.getElementById("toggleWideScreen");
-
-	// try to get listener function attached to "Enter Widescreen" link
-	if (toggleWideScreenLink && FCK.YE.getListeners) {
-		this.toggleWideScreenListener = FCK.YE.getListeners(toggleWideScreenLink).pop();
-		FCK.log('widescreen toggle listener');
-		FCK.log(this.toggleWideScreenListener);
-	}
-	else {
-		FCK.log('widescreen toggle link not found!');
-	}
+	this.toggleWideScreenLink = window.parent.document.getElementById("toggleWideScreen");
 
 	// get current widescreen mode state
 	this.isActive = FCK.YD.hasClass(window.parent.document.body, 'editingWide');
  }
 
 WideScreenToggle.prototype = {
-	Execute : function() {
-		if (typeof this.toggleWideScreenListener != 'undefined') {
-			this.toggleWideScreenListener.fn(true);
-			this.isActive = !this.isActive;
 
-			// hack: refresh toolbar items state
-			var items = FCK.ToolbarSet.Items;
-			for (i=0; i<items.length; i++) {
-				items[i].RefreshState();
-			}
+	Toggle: function() {
+		if (this.toggleWideScreenLink && FCK.YE.getListeners) {
+			FCK.log('widescreen toggle');
+			FCK.YE.getListeners(this.toggleWideScreenLink).pop().fn(true);
+		}
+		else {
+			return false;
+		}
+	},
+	Execute : function() {
+		this.Toggle();
+		this.isActive = !this.isActive;
+
+		// hack: refresh toolbar items state
+		var items = FCK.ToolbarSet.Items;
+		for (i=0; i<items.length; i++) {
+			items[i].RefreshState();
 		}
         },
         GetState : function() {
 		return this.isActive ? FCK_TRISTATE_ON : FCK_TRISTATE_OFF ;
-	 }
+	}
 };
 
 // register new toolbar items
