@@ -96,12 +96,14 @@ alterTable('filearchive',"fa_user_text", $from_text, $to_text);
 alterTable('oldimage',"oi_user_text", $from_text, $to_text);
 
 # Move user pages if there is no exisitng page at the new location
-$query = 'UPDATE LOW_PRIORITY IGNORE page set page_title='. $to_text.
-	' where (page_namespace = 2 or page_namespace = 3) and page_title = '. $from_text. ';';
+$query = 'UPDATE LOW_PRIORITY IGNORE page set page_title='. str_replace(' ', '_', $to_text) .
+	' where page_namespace in (2, 3) and page_title = '. str_replace(' ', '_', $from_text) . ';';
 
 if ( isset($options['verbose']) ) print($query. "\n");
 if (!isset($options['dryrun'])) $dbw->query($query);
 
+# Fixme -- this should be done via internal MediaWiki page move
+/*
 $query = 'UPDATE LOW_PRIORITY IGNORE page set page_title=concat('. $to_text. ',' .
 	'substring(page_title, '. (strlen($options['from']) + 1) .')) ' .
 	'WHERE (page_namespace = 2 OR page_namespace = 3) and page_title like "'.
@@ -109,3 +111,4 @@ $query = 'UPDATE LOW_PRIORITY IGNORE page set page_title=concat('. $to_text. ','
 
 if ( isset($options['verbose']) ) print($query. "\n");
 if (!isset($options['dryrun'])) $dbw->query($query);
+*/
