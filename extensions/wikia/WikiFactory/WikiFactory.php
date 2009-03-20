@@ -803,6 +803,11 @@ class WikiFactory {
 	 */
 	static public function getDomainKey( $domain ) {
 		$key = self::getDomainHash( $domain );
+		if (strpos($domain, ' ') !== false)  {
+			$backtrace = debug_backtrace();
+			error_log ( "getDomainKey backtrace: " . print_r($backtrace, true) );
+			exit;
+		}
 		return "wikifactory:domains:{$key}";
 	}
 
