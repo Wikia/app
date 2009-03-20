@@ -151,19 +151,19 @@ var msgError = "<?=addslashes(wfMsg('autocreatewiki-invalid-wikiname'))?>";
 		<ul>
 			<li class="label"><label class="required" id="wiki-birthday-label"><?=wfMsg('autocreatewiki-birthdate')?></label></li>
 			<li class="data1">
-				<select name="wiki-user-year" id="wiki-user-year" class="birthdate">
+				<select name="wiki-user-year" id="wiki-user-year" class="birthdate" size="1">
 					<option selected="true" value="-1">----</option>
 					<? for ($year = date("Y"); $year >= 1900; $year--) { ?>
 						<option value="<?=$year?>" <?= (@$params['wiki-user-year'] == $year) ? "selected='selected'" : ""; ?> ><?=$year?></option>
 					<? } ?>
 				</select>
-				<select name="wiki-user-month" id="wiki-user-month" class="birthdate">
+				<select name="wiki-user-month" id="wiki-user-month" class="birthdate" size="1">
 					<option selected="true" value="-1">--</option>
 					<? for ($month = 1; $month <= 12; $month++) { ?>
 						<option value="<?=$month?>" <?= (@$params['wiki-user-month'] == $month) ? "selected='selected'" : ""; ?> ><?=$month?></option>
 					<? } ?>
 				</select>
-				<select name="wiki-user-day" id="wiki-user-day" class="birthdate">
+				<select name="wiki-user-day" id="wiki-user-day" class="birthdate" size="1">
 					<option selected="true" value="-1">--</option>
 					<? for ($day = 1; $day <= 31; $day++) { ?>
 						<option value="<?=$day?>" <?= (@$params['wiki-user-day'] == $day) ? "selected='selected'" : ""; ?>><?=$day?></option>

@@ -12,13 +12,14 @@ function canAcceptForm() {
 }
 
 function allowAction(e) {
+	var keycode = e.keycode||e.which||0;
 	return ( 
-		(e.keyCode||e.which) == 16 || //shift
-		(e.keyCode||e.which) == 9  || //tab
-		(e.keyCode||e.which) == 13 || // enter 
-		(e.keyCode||e.which) == 18 || // alt
-		(e.keyCode||e.which) == 17 || // ctrl  
-		(e.keyCode||e.which) == 20 // caps  
+		(keycode) == 16 || //shift
+		(keycode) == 9  || //tab
+		(keycode) == 13 || // enter 
+		(keycode) == 18 || // alt
+		(keycode) == 17 || // ctrl  
+		(keycode) == 20 // caps  
 	);
 }
 
@@ -228,8 +229,8 @@ YAHOO.ACWikiRequest.wikiDomainKeyUp = function(e) {
 	var id = this.id;
 	var func = function() { 
 		if (id) { 
-			if (e) YE.preventDefault(e);
 			if ( !allowAction(e) ) {
+				YE.preventDefault(id);
 				if (id == 'wiki-name') {
 					isTextCorrect(id);
 				} else {
@@ -287,7 +288,7 @@ YAHOO.ACWikiRequest.wikiAccountKeyUp = function(e) {
 		var field = document.getElementById(id);
 		if (id) { 
 			if ( !allowAction(e) ) {
-				if (e) YE.preventDefault(e);
+				YE.preventDefault(id);
 				YAHOO.ACWikiRequest.checkAccount(e, id);
 			}
 		};
