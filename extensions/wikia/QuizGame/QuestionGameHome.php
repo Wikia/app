@@ -80,21 +80,22 @@ function wfSpecialQuizGameHome(){
 	class QuizGameHome extends SpecialPage {
 	
 		private $SALT;
-		private $INCLUDEPATH = "/extensions/wikia/QuizGame/";
+		private $INCLUDEPATH;
 		
 		/* Construct the MediaWiki special page */
-		function QuizGameHome(){
+		function QuizGameHome() {
+			global $wgExtensionsPath;
 			UnlistedSpecialPage::UnlistedSpecialPage("QuizGameHome");
+			$this->INCLUDEPATH = "{$wgExtensionsPath}/wikia/QuizGame/";
 		}
 		
 		public function returnIncludePath() {
-			return "/extensions/wikia/QuizGame/";
-			//return $this->INCLUDEPATH;
+			return $this->INCLUDEPATH;
 		}
 		
 		// main execute function
 		function execute( $permalink ){
-			global $wgRequest, $wgUser, $wgOut, $wgRequest, $wgSiteView, $IP, $wgStyleVersion, $wgSupressPageTitle;
+			global $wgRequest, $wgUser, $wgOut, $wgRequest, $wgSiteView, $IP, $wgExtensionsPath, $wgStyleVersion, $wgSupressPageTitle;
 			
 			if( $permalink ){
 				$wgOut->redirect( Title::makeTitle( NS_SPECIAL, "QuizGameHome" )->getFullURL("questionGameAction=renderPermalink&permalinkID={$permalink}") );
@@ -105,7 +106,7 @@ function wfSpecialQuizGameHome(){
 			
 			$wgSupressPageTitle=true;
 
-			$wgOut->addScript("<link rel='stylesheet' type='text/css' href=\"/extensions/wikia/QuizGame/questiongame.css?{$wgStyleVersion}\"/>\n");
+			$wgOut->addScript("<link rel='stylesheet' type='text/css' href=\"{$wgExtensionsPath}/wikia/QuizGame/questiongame.css?{$wgStyleVersion}\"/>\n");
 			
 			// salt at will
 			$this->SALT = "SALT";
@@ -864,7 +865,7 @@ function wfSpecialQuizGameHome(){
 			
 			
 			$output = "
-			<script type=\"text/javascript\" src=\"{$this->INCLUDEPATH}lightbox_light.js\"></script>
+			<script type=\"text/javascript\" src=\"{$this->INCLUDEPATH}lightbox_light.js?" . $wgStyleVersion . "\"></script>
 			
 			<script type=\"text/javascript\">
 				var __quiz_js_reloading__ = \"" . wfMsgForContent( 'quiz_js_reloading' ) . "\";
