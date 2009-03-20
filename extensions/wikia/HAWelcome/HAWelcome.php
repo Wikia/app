@@ -383,7 +383,6 @@ class HAWelcomeJob extends Job {
 	/**
 	 * check if some (or all) functionality is disabled/enabled
 	 *
-	 * @param String $message
 	 * @param String $what default false
 	 *
 	 * possible vaules for $what: page-user, message-anon, message-user
