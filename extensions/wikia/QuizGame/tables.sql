@@ -29,3 +29,14 @@ CREATE TABLE `quizgame_answers` (
   KEY `a_user_id` (`a_user_id`),
   KEY `a_user_name` (`a_user_name`)
 ) ENGINE=InnoDB;
+
+CREATE TABLE `quizgame_choice` (
+  `choice_id` int(11) NOT NULL auto_increment,
+  `choice_q_id` int(11) NOT NULL default '0',
+  `choice_order` int(5) default '0',
+  `choice_text` text NOT NULL,
+  `choice_answer_count` int(11) NOT NULL,
+  `choice_is_correct` tinyint(4) NOT NULL default '0',
+  PRIMARY KEY  (`choice_id`),
+  KEY `choice_q_id` (`choice_q_id`)
+) ENGINE=InnoDB;
