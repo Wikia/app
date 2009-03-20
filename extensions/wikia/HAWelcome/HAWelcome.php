@@ -128,31 +128,46 @@ class HAWelcomeJob extends Job {
 
 				if( ! $talkArticle->exists() ) {
 					if( $this->mAnon ) {
-						$welcomeMsg = wfMsg( "welcome-message-anon", array(
-							$this->title->getPrefixedText(),
-							$sysopPage->getPrefixedText(),
-							$signature
-						));
+						if( $this->isEnabled( "talk-anon" ) ) {
+							$welcomeMsg = wfMsg( "welcome-message-anon", array(
+								$this->title->getPrefixedText(),
+								$sysopPage->getPrefixedText(),
+								$signature
+							));
+						}
+						else {
+							Wikia::log( __METHOD__, "talk", "talk-anon disabled" );
+						}
 					}
 					else {
 						/**
 						 * now create user page (if not exists of course)
 						 */
-						$userPage = $this->mUser->getUserPage();
-						if( $userPage ) {
-							$wgTitle = $userPage;
-							$userArticle = new Article( $userPage, 0 );
-							if( ! $userArticle->exists() ) {
-								$pageMsg = wfMsg( "welcome-user-page" );
-								$userArticle->doEdit( $pageMsg, false, $flags );
+						if( $this->isEnabled( "page-user" ) ) {
+							$userPage = $this->mUser->getUserPage();
+							if( $userPage ) {
+								$wgTitle = $userPage;
+								$userArticle = new Article( $userPage, 0 );
+								if( ! $userArticle->exists() ) {
+									$pageMsg = wfMsg( "welcome-user-page" );
+									$userArticle->doEdit( $pageMsg, false, $flags );
+								}
 							}
 						}
+						else {
+							Wikia::log( __METHOD__, "page", "page-user disabled" );
+						}
 
-						$welcomeMsg = wfMsg( "welcome-message-user", array(
-							$this->title->getPrefixedText(),
-							$sysopPage->getPrefixedText(),
-							$signature
-						));
+						if( $this->isEnabled( "talk-user" ) ) {
+							$welcomeMsg = wfMsg( "welcome-message-user", array(
+								$this->title->getPrefixedText(),
+								$sysopPage->getPrefixedText(),
+								$signature
+							));
+						}
+						else {
+							Wikia::log( __METHOD__, "talk", "talk-user disabled" );
+						}
 					}
 					if( $welcomeMsg ) {
 						$wgTitle = $talkPage; /** is it necessary there? **/
@@ -386,7 +401,7 @@ class HAWelcomeJob extends Job {
 			$parts = preg_split( "/\s+/", $message );
 			$return = (bool )array_search( $what, $parts );
 		}
-		
+
 		wfProfileOut( __METHOD__ );
 
 		return $return;
