@@ -601,7 +601,7 @@ EOD;
                 );
 
 		$cat = $wgContLang->getFormattedNsText( NS_CATEGORY );
-		$saved_text = '[[' . $cat . ':' . wfMsg( 'wikiavideo-category' ) . ']]';		
+		$saved_text = '[[' . $cat . ':' . wfMsgForContent( 'wikiavideo-category' ) . ']]';		
 
                 if( $dbw->affectedRows() == 0 ) {
 			// we are updating
