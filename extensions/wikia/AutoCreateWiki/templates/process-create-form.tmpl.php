@@ -19,7 +19,7 @@ var YT = YAHOO.Tools;
 YE.onDOMReady(function () {
 	var loop = 0;
 	var ifr = YD.get('awc-process');
-	var titleUrl = '<?=$mTitle->getLocalURL()."/Processing"?>'; 
+	var titleUrl = '<?=$mTitle->getLocalURL()."/Testing"?>'; //Processing
 	var wgAjaxPath = wgScriptPath + wgScript;
 	var redirServer = '<?=$subdomain?>';
 	var errorMsg = '<?=wfMsg('autocreatewiki-errordefault')?>';
@@ -41,9 +41,12 @@ YE.onDOMReady(function () {
 		var __callback = {
 			success: function( oResponse ) {
 				var data = YT.JSONParse(oResponse.responseText);
+				alert(oResponse.responseText);
 				var isError = isEnd = 0;
 				if (loop == 0) ifr.src = titleUrl;
 				if ( data ) {
+					alert("info => " . data.info);
+					alert("info => " . data.type);
 					if (data.info != 'undefined' && data.info != '') {
 						if ( !usedMsg["'" + data.info + "'"] ) {
 							setLog(loop, data.info, data.type);
@@ -69,10 +72,12 @@ YE.onDOMReady(function () {
 				var res = oResponse.responseText;
 				setLog(loop, res, 'ERROR');
 			},
-			timeout: 5000
+			timeout: 20000
 		}
 				
-		YC.asyncRequest( "GET", wgAjaxPath + "?action=ajax&rs=axACWRequestCheckLog", __callback);
+		var url = wgAjaxPath + "?action=ajax&rs=axACWRequestCheckLog";
+		alert(url);
+		YC.asyncRequest( "GET", url, __callback);
 	}
 	
 	checkProcess();
