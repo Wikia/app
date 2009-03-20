@@ -218,7 +218,7 @@ YAHOO.ACWikiRequest.wikiBirthdayCheck = function(e) {
 	var err = YD.get("wiki-birthday-error-status");
 
 	if ( (year.value > 0) && (month.value > 0) && (day.value > 0) ) {
-		YAHOO.util.Dom.setStyle(err, 'display', 'block');
+		YAHOO.util.Dom.setStyle(err, 'display', 'inline');
 		setProgressImg(err);
 		params = "&year=" + escape(year.value) + "&month=" + escape(month.value) + "&day=" + escape(day.value);
 		YC.asyncRequest( "GET", wgAjaxPath + "?action=ajax&rs=axACWRequestCheckBirthday" + params, YAHOO.ACWikiRequest.NameCallback);
