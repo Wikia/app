@@ -10,7 +10,7 @@
  * @author Krzysztof Krzyżaniak (eloy) <eloy@wikia-inc.com>
  * @author Maciej Błaszkowski (Marooned) <marooned at wikia-inc.com>
  * @date 2009-02-02
- * @version 0.2
+ * @version 0.5
  * @license http://www.gnu.org/copyleft/gpl.html GNU General Public License 2.0 or later
  */
 
@@ -21,7 +21,7 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 
 $wgExtensionCredits['other'][] = array(
 	'name' => 'HAWelcome',
-	'version' => '0.4',
+	'version' => '0.5',
 	'author' => array('Krzysztof Krzyżaniak', '[http://www.wikia.com/wiki/User:Marooned Maciej Błaszkowski (Marooned)]'),
 	'description' => 'Highly Automated Welcome Tool',
 );
@@ -103,6 +103,10 @@ class HAWelcomeJob extends Job {
 		 */
 		$tmpUser = $wgUser;
 		$wgUser  = User::newFromName( self::WELCOMEUSER );
+		$flags = 0;
+		if( $wgUser->isAllowed( 'bot' ) ) {
+			$flags = EDIT_FORCE_BOT;
+		}
 		Wikia::log( __METHOD__, "user", $this->mUser->getName() );
 
 		if( $this->mUser && $this->mUser->getName() !== self::WELCOMEUSER ) {
@@ -139,7 +143,7 @@ class HAWelcomeJob extends Job {
 							$userArticle = new Article( $userPage, 0 );
 							if( ! $userArticle->exists() || $wgDevelEnvironment ) {
 								$welcomeMsg = wfMsg( "welcome-user-page" );
-								$userArticle->doEdit( $welcomeMsg, false ); // EDIT_FORCE_BOT
+								$userArticle->doEdit( $welcomeMsg, false, $flags );
 							}
 						}
 
@@ -150,7 +154,7 @@ class HAWelcomeJob extends Job {
 						));
 					}
 					$wgTitle = $talkPage; /** is it necessary there? **/
-					$talkArticle->doEdit( $welcomeMsg, wfMsg( "welcome-message-log" ) ); // EDIT_FORCE_BOT
+					$talkArticle->doEdit( $welcomeMsg, wfMsg( "welcome-message-log" ), $flags );
 					Wikia::log( __METHOD__, "edit", $welcomeMsg );
 				}
 				$wgTitle = $tmpTitle;
