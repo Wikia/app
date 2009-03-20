@@ -326,7 +326,8 @@ class HAWelcomeJob extends Job {
 							$Task = new HAWelcomeTask();
 							$Task->createTask( array( "city_id" => $wgCityId ), TASK_QUEUED  );
 							Wikia::log( __METHOD__, "task" );
-						}						else {
+						}
+						else {
 							Wikia::log( __METHOD__, "exists", sprintf( "Talk page for user %s alredy exits", $wgUser->getName() ) );
 						}
 					}
