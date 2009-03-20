@@ -398,8 +398,8 @@ class OggHandler extends MediaHandler {
 	}
 
 	static function getMyScriptPath() {
-		global $wgScriptPath;
-		return "$wgScriptPath/extensions/3rdparty/OggHandler";
+		global $wgExtensionsPath;
+		return "{$wgExtensionsPath}/3rdparty/OggHandler";
 	}
 
 	function setHeaders( $out ) {
