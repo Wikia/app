@@ -301,16 +301,18 @@ function axWFactorySaveVariable() {
 				ob_end_clean(); #--- puts parse error to /dev/null
 		}
 
-		if( ! WikiFactory::setVarByID( $cv_id, $city_id, $cv_value ) ) {
-			$error++;
-			$return = Wikia::errormsg( "Variable not saved because of problems with database. Try again." );
-		}
-		else {
-			$tied = WikiFactory::getTiedVariables( $cv_name );
-			if( $tied ) {
-				$return .= Wikia::successmsg(
-					" This variable is tied with others. Check: ". implode(", ", $tied )
-				);
+		# Save to DB, but only if no errors occurred
+		if ( empty( $error ) ) {
+			if( ! WikiFactory::setVarByID( $cv_id, $city_id, $cv_value ) ) {
+				$error++;
+				$return = Wikia::errormsg( "Variable not saved because of problems with database. Try again." );
+			} else {
+				$tied = WikiFactory::getTiedVariables( $cv_name );
+				if( $tied ) {
+					$return .= Wikia::successmsg(
+						" This variable is tied with others. Check: ". implode(", ", $tied )
+					);
+				}
 			}
 		}
 	}
