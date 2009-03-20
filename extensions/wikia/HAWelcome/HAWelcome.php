@@ -94,7 +94,7 @@ class HAWelcomeJob extends Job {
 	 * @access public
 	 */
 	public function run() {
-		global $wgUser, $wgDevelEnvironment, $wgTitle;
+		global $wgUser, $wgTitle;
 
 		wfProfileIn( __METHOD__ );
 
@@ -125,7 +125,7 @@ class HAWelcomeJob extends Job {
 				$wgTitle = $talkPage;
 				$talkArticle = new Article( $talkPage, 0 );
 
-				if( ! $talkArticle->exists() || $wgDevelEnvironment ) {
+				if( ! $talkArticle->exists() ) {
 					if( $this->mAnon ) {
 						$welcomeMsg = wfMsg( "welcome-message-anon", array(
 							$this->title->getPrefixedText(),
@@ -141,7 +141,7 @@ class HAWelcomeJob extends Job {
 						if( $userPage ) {
 							$wgTitle = $userPage;
 							$userArticle = new Article( $userPage, 0 );
-							if( ! $userArticle->exists() || $wgDevelEnvironment ) {
+							if( ! $userArticle->exists() ) {
 								$welcomeMsg = wfMsg( "welcome-user-page" );
 								$userArticle->doEdit( $welcomeMsg, false, $flags );
 							}
@@ -243,11 +243,13 @@ class HAWelcomeJob extends Job {
 	 * @return true means process other hooks
 	 */
 	public static function revisionInsertComplete( &$revision, &$url, &$flags ) {
-		global $wgUser, $wgDevelEnvironment, $wgCityId, $wgCommandLineMode;
+		global $wgUser, $wgCityId, $wgCommandLineMode;
 
 		wfProfileIn( __METHOD__ );
 
-		// Do not create task when DB is locked (rt#12229)
+		/**
+		 * Do not create task when DB is locked (rt#12229)
+		 */
 		if ( !wfReadOnly() ) {
 			wfLoadExtensionMessages( "HAWelcome" );
 
@@ -259,8 +261,14 @@ class HAWelcomeJob extends Job {
 				$Title = Title::newFromId( $revision->getPage(), GAID_FOR_UPDATE );
 				$revision->setTitle( $Title );
 			}
+			$skip = (bool)(
+				! $wgUser->isAllowed( "bot" ) &&
+				! $wgUser->isAllowed( "staff" ) &&
+				! $wgUser->isAllowed( "helper" ) &&
+				! $wgUser->isAllowed( "sysop" ) &&
+				! $wgUser->isAllowed( "bureaucrat" ) );
 
-			if( $Title && ! $wgCommandLineMode && ! $wgUser->isAllowed( "bot" ) && ! $wgUser->isAllowed( 'staff' ) && ! $wgUser->isAllowed( 'helper' ) && ! $wgUser->isAllowed( 'sysop' ) && ! $wgUser->isAllowed( 'bureaucrat' ) ) {
+			if( $Title && ! $wgCommandLineMode && $skip ) {
 
 				Wikia::log( __METHOD__, "title", $Title->getFullURL() );
 
@@ -278,7 +286,7 @@ class HAWelcomeJob extends Job {
 					$talkPage = $wgUser->getUserPage()->getTalkPage();
 					if( $talkPage ) {
 						$talkArticle = new Article( $talkPage, 0 );
-						if( !$talkArticle->exists( ) || $wgDevelEnvironment ) {
+						if( !$talkArticle->exists( ) ) {
 							$welcomeJob = new HAWelcomeJob(
 								$Title,
 								array(
