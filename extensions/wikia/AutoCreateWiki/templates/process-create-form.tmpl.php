@@ -32,9 +32,6 @@ YE.onDOMReady(function () {
 		var msgType = (resType != 'END') ? '&nbsp;&nbsp;<strong style="color:' + styleColor + '">' + styleMsg + '</strong>' : "";
 		var msg = text + ((resType != '') ? msgType : "");
 		logSteps.innerHTML = msg;
-		if (typeof TieDivLibrary != "undefined" ) {
-			TieDivLibrary.calculate();
-		};
 	}
 
 	var prevMsg = "";
@@ -54,6 +51,9 @@ YE.onDOMReady(function () {
 				}
 				
 				if (isEnd > 0) {
+					if (typeof TieDivLibrary != "undefined" ) {
+						TieDivLibrary.calculate();
+					};
 					//window.location.href = 'http://'+redirServer+'.<?=$domain?>';
 				} else if ( !(isError > 0) ) {
 					if (loop < 20) {
