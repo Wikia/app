@@ -4,8 +4,10 @@ $wgExtensionFunctions[] = 'wfCommonReadLang';
 $wgHooks['BeforePageDisplay'][] = 'wfSocialToolsLoadJs';
 
 function wfSocialToolsLoadJs() {
-	global $wgOut, $wgStyleVersion, $wgExtensionsPath;
-	$wgOut->addScript('<script type="text/javascript" src="'.$wgExtensionsPath.'/wikia/onejstorule.js?' . $wgStyleVersion . '"></script>');
+	global $wgOut, $wgStyleVersion, $wgExtensionsPath, $wgUseOneJsToRule;
+	if (!empty($wgUseOneJsToRule)) {
+		$wgOut->addScript('<script type="text/javascript" src="'.$wgExtensionsPath.'/wikia/onejstorule.js?' . $wgStyleVersion . '"></script>');
+	}
 	return true;
 }
 
