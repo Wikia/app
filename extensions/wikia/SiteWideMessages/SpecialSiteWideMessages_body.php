@@ -745,7 +745,7 @@ class SiteWideMessages extends SpecialPage {
 				. ' FROM ' . MSG_STATUS_DB
 				. ' WHERE msg_id IN (' . implode(',', array_keys($tmpMsg)) . ')'
 				. ' AND msg_recipient_id = ' . $DB->AddQuotes($userID)
-				. ';'
+				. ' LOCK IN SHARE MODE;'
 				, __METHOD__
 			);
 
