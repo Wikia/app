@@ -83,9 +83,21 @@ class UserRelationship {
 	}
 
 	public function getUserLocalizedMsg($user, $sMsgKey, $args) {
+		global $wgContLanguageCode, $wgUser, $wgContLang;
 		$sBody = null;
 
 		$sLangCode = $user->getOption('language');
+
+		if( $wgContLang->hasVariants() && in_array($sLangCode, $wgContLang->getVariants()) ){
+			$variant = $wgContLang->getPreferredVariant();
+			if( $variant != $wgContLanguageCode )
+				$sLangCode = $variant;
+		}
+
+		if( empty( $sLangCode ) || !preg_match( '/^[a-z-]+$/', $sLangCode ) ) {
+			wfDebug( "Invalid user language code\n" );
+			$sLangCode = $wgContLanguageCode;
+		}
 		
 		$sBody = wfMsgExt($sMsgKey, array( 'parsemag', 'language' => $sLangCode )  );
 		
