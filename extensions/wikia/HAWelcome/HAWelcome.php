@@ -130,7 +130,7 @@ class HAWelcomeJob extends Job {
 					if( $this->mAnon ) {
 						if( $this->isEnabled( "message-anon" ) ) {
 							$welcomeMsg = wfMsg( "welcome-message-anon", array(
-								$this->title->getPrefixedText(),
+								$this->getPrefixedText(),
 								$sysopPage->getPrefixedText(),
 								$signature,
 								wfEscapeWikiText( $this->mUser->getName() ),
@@ -164,7 +164,7 @@ class HAWelcomeJob extends Job {
 
 						if( $this->isEnabled( "message-user" ) ) {
 							$welcomeMsg = wfMsg( "welcome-message-user", array(
-								$this->title->getPrefixedText(),
+								$this->getPrefixedText(),
 								$sysopPage->getPrefixedText(),
 								$signature,
 								wfEscapeWikiText( $this->mUser->getName() ),
@@ -383,6 +383,22 @@ class HAWelcomeJob extends Job {
 	public function getTitle() {
 		return $this->title;
 	}
+
+	/**
+	 * @access private
+	 *
+	 * @return Title instance of Title object
+	 */
+	public function getPrefixedText() {
+		$ns = $this->title->getNamespace();
+		$oT = ($ns == NS_BLOG_ARTICLE_TALK) ? BlogArticle::commentToUserBlog($this->title) : $this->title;
+		$pText = "";
+		if ($oT instanceof Title) {
+			$pText = ($ns == NS_BLOG_ARTICLE_TALK) ? $oT->getFullText() : $oT->getPrefixedText();
+		}
+		return $pText;
+	}
+
 
 	/**
 	 * check if some (or all) functionality is disabled/enabled
