@@ -459,20 +459,13 @@ function Wysiwyg_WikiTextToHtml($wikitext, $articleId = -1, $encode = false) {
 }
 
 function Wysiwyg_HtmlToWikiText($html, $wysiwygData, $decode = false) {
-	global $wgUseNewReverseParser;
-
 	$html = str_replace("<!--EOL1-->\n", "", $html);
 	$html = str_replace("<!--EOL1--> ", " ", $html);
 	$html = str_replace("<!--EOL1-->", " ", $html);
 
 	$html = preg_replace_callback("/<li space_after=\"(\s*)\">/", create_function('$matches','return "<li>".$matches[1];'), $html);
 
-	if (empty($wgUseNewReverseParser)) {
-		require_once(dirname(__FILE__).'/ReverseParser.php');
-	}
-	else {
-		require_once(dirname(__FILE__).'/ReverseParserNew.php');
-	}
+	require_once(dirname(__FILE__).'/ReverseParser.php');
 
 	$reverseParser = new ReverseParser();
 	return $reverseParser->parse($html, $decode ? Wikia::json_decode($wysiwygData, true) : $wysiwygData);

@@ -1,7 +1,6 @@
 <?php
 /**
- * PHP Reverse Parser - Processes given HTML into DOM tree and
- * transform it into wikimarkup
+ * PHP Reverse Parser - Processes given HTML into wikimarkup
  *
  * @author Maciej 'macbre' Brencz <macbre(at)wikia-inc.com>
  * @author Inez Korczynski <inez(at)wikia-inc.com>
@@ -10,93 +9,140 @@
  */
 class ReverseParser {
 
+	// DOMDocument for processes HTML
 	private $dom;
 
-	// FCK meta data
-	private $fckData = array();
+	// Wysiwyg/FCK meta data
+	private $data = array();
 
-	// used by nested lists parser
-	private $listLevel = 0;
-
-	// bullets stack for nested lists
-	private $listBullets = '';
+	// lists handling
+	private $listLevel;
+	private $listBullets;
+	private $listIndent;
 
 	// cache results of wfUrlProtocols()
-	private $protocols;
+	private $urlProtocols;
+
+	private function getUrlProtocols() {
+		if(empty($this->urlProtocols)) {
+			$this->urlProtocols = wfUrlProtocols();
+		}
+		return $this->urlProtocols;
+	}
 
 	function __construct() {
 		$this->dom = new DOMdocument();
-		$this->protocols = wfUrlProtocols();
 	}
 
-	public function parse($html, $wysiwygData = array()) {
+	/**
+	 * Parses given HTML into DOM tree (using XML/HTML parser)
+	 */
+	private function parseToDOM($html, $parseAsXML = true) {
+			wfProfileIn(__METHOD__);
+
+			$ret = false;
+
+			wfSuppressWarnings();
+
+			if ($parseAsXML) {
+				// form proper XML string
+				$xml = "<?xml version=\"1.0\" encoding=\"UTF-8\"?><body>{$html}</body>";
+
+				// try to parse as XML
+				if($this->dom->loadXML($xml)) {
+					$ret = $this->dom->getElementsByTagName('body')->item(0);
+				}
+			}
+			else {
+				// form proper HTML string
+				$html = "<html><head><meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\"/></head><body>{$html}</body></html>";
+
+				// try to parse as HTML
+				if($this->dom->loadHTML($html)) {
+					$ret = $this->dom->getElementsByTagName('body')->item(0);
+				}
+			}
+
+			wfRestoreWarnings();
+
+			wfProfileOut(__METHOD__);
+
+			// return <body> node or false if XML parsing failed
+			return $ret;
+	}
+
+	/**
+	 * Converts given HTML into wikitext using extra information stored in meta data
+	 */
+	public function parse($html, $data = array()) {
 		wfProfileIn(__METHOD__);
 
 		$out = '';
 
 		if(is_string($html) && $html != '') {
+
+			// save meta-data
+			$this->data = is_array($data) ? $data : array();
+
+			// HTML cleanup
+			// trying to fix RT #9466
+			// </b><a ...><b>     => <a ...>
+			// </b></a><b>        => </a>
+			// </b></a><a ...><b> => </a><a>
+			// formatting tags: one of b, i, u, strike
+			$formatTags = '(b|i|u|strike)';
 			$replacements = array(
-				// remove whitespace and decode &nbsp;
-				' <p>' => '<p>',
-				'<br /> ' => '<br />',
-				'&nbsp;' => ' ',
-				' <ol' => '<ol',
-				' <ul' => '<ul',
-				' <li' => '<li',
-				' <dl' => '<dl',
-				' </dd>' => '</dd>',
-				' </dt>' => '</dt>',
-				' <pre>' => '<pre>',
-				' <h'    => '<h',
+				"#<\/{$formatTags}>(<a[^>]+>)<\\1>#i"		=> '$2',
+				"#<\/{$formatTags}>(<\/a>)<\\1>#i"		=> '$2',
+				"#<\/{$formatTags}>(<\/a><a[^>]+>)<\\1>#i"	=> '$2'
 			);
 
-			$html = strtr($html, $replacements);
+			$htmlFixed = preg_replace(array_keys($replacements), array_values($replacements), $html, -1, $count);
+			wfDebug("Wysiwyg ReverseParserNew: made {$count} replacements for RT #9466\n");
 
-			// fix for proper encoding of UTF characters
-			$html = '<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/></head><body>'.$html.'</body></html>';
+			// try to parse fixed HTML as XML
+			$bodyNode = $this->parseToDOM($htmlFixed);
 
-			$this->listLevel = 0;
-			$this->listBullets = '';
-			$this->fckData = $wysiwygData;
-
-			wfDebug("metaData: ".print_r($this->fckData, true)."\n");
-
-			wfDebug("ReverseParser HTML: {$html}\n");
-
-			wfSuppressWarnings();
-			if($this->dom->loadHTML($html)) {
-				$body = $this->dom->getElementsByTagName('body')->item(0);
-				wfDebug("ReverseParser HTML from DOM: ".$this->dom->saveHTML()."\n");
-				$out = $this->parseNode($body);
-			}
-			wfRestoreWarnings();
-
-			// final cleanup
-			$out = rtrim($out);
-
-			if (strlen($out) > 1 && $out{0} == "\n" && $out{1} != "\n") {
-				// remove ONE empty line from the beginning of wikitext
-				$out = substr($out, 1);
+			// in some edge-cases it may fail - then try to parse original HTML as HTML
+			if (empty($bodyNode)) {
+				wfDebug("Wysiwyg ReverseParserNew: parsing as XML failed! Trying HTML parser\n");
+				$bodyNode = $this->parseToDOM($html, false);
 			}
 
-			wfDebug("ReverseParser wikitext: {$out}\n");
+			// now we should have properly parsed HTML
+			if (!empty($bodyNode)) {
+				wfDebug("Wysiwyg ReverseParserNew XML (as seen by DOM): ".$this->dom->saveXML()."\n");
 
+				// do recursive reverse parsing
+				$out = $this->parseNode($bodyNode);
+
+				wfDebug("Wysiwyg ReverseParserNew wikitext: {$out}\n");
+			}
+			else {
+				wfDebug("Wysiwyg ReverseParserNew: HTML parsing failed!\n");
+				$out = '';
+			}
 		}
 
 		wfProfileOut(__METHOD__);
 		return $out;
 	}
 
+	/**
+	 * Recursively parses given DOM node
+	 */
 	private function parseNode($node, $level = 0) {
 		wfProfileIn(__METHOD__);
 
+		wfDebug("Wysiwyg ReverseParserNew level: ".str_repeat('.', $level).$node->nodeName."\n");
+
 		$childOut = '';
 
+		// parse child nodes
 		if($node->hasChildNodes()) {
-
 			$nodes = $node->childNodes;
 
-			// handle lists
+			// handle lists (open)
 			$isListNode = in_array($node->nodeName, array('ul', 'ol', 'dl'));
 
 			if($isListNode) {
@@ -117,7 +163,10 @@ class ReverseParser {
 					if (in_array($node->nodeName, array('ol','ul'))) {
 						$indentation = $this->getIndentationLevel($node);
 						if ($indentation !== false) {
-							$this->listBullets = str_repeat(':', $indentation);
+							$this->listIndent = str_repeat(':', $indentation);
+						}
+						else {
+							$this->listIndent = '';
 						}
 					}
 					$this->listLevel++;
@@ -125,17 +174,17 @@ class ReverseParser {
 				}
 			}
 
-			for($i = 0; $i < $nodes->length; $i++) {
-				$childOut .= $this->parseNode($nodes->item($i), $level+1);
+			for($n = 0; $n < $nodes->length; $n++) {
+				$childOut .= $this->parseNode($nodes->item($n), $level+1);
 			}
 
-			// handle lists
+			// handle lists (close)
 			if($isListNode) {
 				// fix for different list types on the same level of nesting
 				if($node->previousSibling && in_array($node->previousSibling->nodeName, array('ol', 'ul', 'dl')) && $this->listLevel > 1) {
-					$childOutput = "\n" . trim($childOutput);
+					$childOut = "\n" . $childOut;
 				} else {
-					$childOutput = trim($childOutput);
+					$childOut = $childOut;
 				}
 
 				if (!$node->getAttribute('washtml')) {
@@ -145,21 +194,25 @@ class ReverseParser {
 			}
 		}
 
+		// parse current node
+		$out = '';
+
+		$textContent = ($childOut != '') ? $childOut : $this->cleanupTextContent($node);
+
 		if($node->nodeType == XML_ELEMENT_NODE) {
 
-			wfDebug("ReverseParser XML_ELEMENT_NODE " . str_repeat('-', $level) . " {$node->nodeName}\n");
-
 			$washtml = $node->getAttribute('washtml');
-
-			$textContent = ($childOut != '') ? $childOut : $this->cleanupTextContent($node);
+			$newNode = $node->getAttribute('_wysiwyg_new');
 
 			if(empty($washtml)) {
-				
-				$refid = $node->getAttribute('refid');
-				$hasRefId = (is_numeric($refid) || isset($this->fckData[ $refid ]));
 
-				if ($hasRefId) {
-					wfDebug("ReverseParser refId #{$refid} / {$this->fckData[ $refid ]['type']}\n");
+				$refid = $node->getAttribute('refid');
+
+				if(is_numeric($refid)) {
+					$nodeData = $this->data[$refid];
+				}
+				else {
+					$nodeData = false;
 				}
 
 				switch($node->nodeName) {
@@ -169,120 +222,178 @@ class ReverseParser {
 
 					case 'br':
 						// ignore <br type="_moz"> (fix for IE)
-						if ($node->getAttribute('type') == '_moz') {
+						if($node->getAttribute('type') == '_moz') {
 							$out = '';
 						}
-						// <br /> as first child of <p> will be parsed as line break
-						else if($node->parentNode->nodeName == 'p' && $node->parentNode->hasChildNodes() && $node->parentNode->childNodes->item(0)->isSameNode($node)) {
-							$out = "\n";
-						}
-						// remove <br /> when it's the last child of parent being inline element
-						else if ($this->isFormattingElement($node->parentNode) && $node->isSameNode($node->parentNode->lastChild) ) {
-							$out = '';
-						}
-						// render <br /> only when it's inside block element
-						else if ($node->parentNode->nodeName != 'body') {
+
+						// <br /> inside paragraphs (without ' <!--NEW_LINE_1-->' following it)
+						if($node->nextSibling && $node->nextSibling->nextSibling && 
+							$node->nextSibling->nodeType != XML_COMMENT_NODE &&
+							$node->nextSibling->nextSibling->nodeType != XML_COMMENT_NODE) {
 							$out = '<br />';
 						}
 
+						// <br /> added in FCK by pressing Shift+ENTER
+						else if ($newNode) {
+							$out = "\n";
+						}
+						
 						break;
 
 					case 'p':
 						// detect indented paragraph (margin-left CSS property)
 						$indentation = $this->getIndentationLevel($node);
 
+						// get previous node (ignoring whitespaces and comments)
+						$previousNode = $this->getPreviousElementNode($node);
+
+						// is current <p> node of definition list?
+						$isDefinitionList = false;
+
+						// default prefix -> empty line after previous paragraph
+						// doesn't apply to definition lists parsed as <p> tags
+						// ;foo
+						// :bar
+						$prefix = "\n\n";
+	
 						// handle <dt> elements being rendered as p.definitionTerm
 						if ($this->hasCSSClass($node, 'definitionTerm')) {
-							$out = ';' . $textContent;
-						}
-						// replace initial space with &nbsp;
-						else if($textContent{0} == ' ' && $indentation === false) {
-							$out = '&nbsp;' . substr($textContent, 1);
-						}
-						else {
-							$out = $textContent;
+							$textContent = ';' . rtrim($textContent);
+							$prefix = $node->getAttribute('_new_lines_before') ? "\n\n" : "\n";
+							$isDefinitionList = true;
 						}
 
 						// handle indentations
-						if ($indentation !== false) {
-							$out = str_repeat(':', $indentation) . $out;
+						if ($indentation > 0) {
+							$textContent = str_repeat(':', $indentation) . rtrim($textContent);
+							$prefix = $node->getAttribute('_new_lines_before') ? "\n\n" : "\n";
+							$isDefinitionList = true;
 						}
 
-						// new line logic
-						if($node->previousSibling && $node->previousSibling->nodeName == 'p' && !$indentation) {
-							// paragraph after paragraph
-							$out = "\n\n{$out}";
+						// paragraph following indented paragraph
+						if ($previousNode && $this->getIndentationLevel($previousNode) !== false) {
+							$newLinesBefore = intval($node->getAttribute('_new_lines_before')) + 1;
+							$prefix = str_repeat("\n", $newLinesBefore);
+						}
+
+						// <p><br /> </p>
+						if ( ($textContent == ' ') && ($node->firstChild->nodeType == XML_ELEMENT_NODE) && 
+							($node->firstChild->nodeName == 'br') ) {
+							$textContent = '';
+						}
+
+						// if the first previous XML_ELEMENT_NODE (so no text and no comment) of the current
+						// node is <p> then add new line before the current one
+						if ($previousNode && $previousNode->nodeName == 'p' && $node->parentNode->nodeName != 'li') {
+							$textContent = $prefix . $textContent;
+						} else if($textContent == ""){
+							// empty paragraph
+							$textContent = "\n";
+
+							// add \n if previous node is <pre>
+							if ($previousNode && $previousNode->nodeName == 'pre') {
+								$textContent = "\n{$textContent}";
+							}
+
+							// add \n if previous node has wasHTML attribute set
+							if ($previousNode && $previousNode->hasAttribute('washtml')) {
+								$textContent = "\n{$textContent}";
+							}
+
 						} else {
-							$out = "\n{$out}";
+							if ( !empty($node->parentNode) && $node->parentNode->nodeName == 'li' ) {
+								// indented paragraph inside list item
+								// *: foo
+								
+								// remove one :
+								$textContent = substr($textContent, 1);
+
+								// if previous node was paragraph or text node
+								// then we should add bullets as it's next list item
+								if ( ($previousNode && $previousNode->nodeName == 'p') || $this->getPreviousTextNode($node) ) {
+									$textContent = "\n" . $this->listIndent . $this->listBullets . $textContent;
+								}
+							}
+							// add new lines before paragraph
+							else if ($isDefinitionList) {
+								// for : and ; lists use prefix value
+								if (empty($node->previousSibling)) {
+									// current node begins the wikitext - remove one new line
+									$prefix = substr($prefix, 1);
+								}
+								$textContent = $prefix . $textContent;
+							}
+							else {
+								// for paragraphs use _new_lines_before attribute value
+								$newLinesBefore = intval($node->getAttribute('_new_lines_before'));
+								if($newLinesBefore > 0) {
+									$textContent = str_repeat("\n", $newLinesBefore).$textContent;
+								}
+
+								// add newline before paragraph if previous node ...
+								if(!empty($previousNode) && (!$isDefinitionList) ) {
+									// is list
+									if ($this->isList($previousNode)) {
+										$textContent = "\n{$textContent}";
+									}
+
+									// is <pre> or <div>
+									if ( $previousNode->nodeName == 'pre' ) {
+										$textContent = "\n{$textContent}";
+									}
+
+									// has wasHTML attribute set
+									if ($previousNode->hasAttribute('washtml')) {
+										$textContent = "\n{$textContent}";
+									}
+								}
+							}
+
+							// <p> is second child of <td> and previous sibling is text node
+							// and first child of parent node
+							if ( ($node->parentNode->nodeName == 'td') && $node->previousSibling && $node->previousSibling->isSameNode($node->parentNode->firstChild) && ($node->previousSibling->nodeType == XML_TEXT_NODE) ) {
+								$textContent = "\n{$textContent}";
+							}
 						}
+
+						$out = $textContent;
 						break;
 
-					// horizontal line
-					case 'hr':
-						if ($node->previousSibling || ($node->parentNode && $this->isTableCell($node->parentNode))) {
-							$out = "\n----";
-						}
-						else {
-							$out = "----";
-						}
-						break;
-
-					// headings
 					case 'h1':
 					case 'h2':
 					case 'h3':
 					case 'h4':
 					case 'h5':
 					case 'h6':
-						$out = '';
-
-						// ignore 'empty' headers
-						if ( trim($textContent) == '' ) {
-							$out = "\n";
-							break;
-						}
-
-						// ignore headers inside lists
-						if (in_array($node->parentNode->nodeName, array('li', 'dt', 'dd'))) {
-							$out = $textContent;
-							break;
-						}
-
-						// remove <br /> when it's the first child of header tag
-						// and add empty line before paragraph
-						if ($node->firstChild->nodeType == XML_ELEMENT_NODE && $node->firstChild->nodeName == 'br') {
-							$textContent = substr($textContent, strpos($textContent, '/>')+2); // remove <br /> tag
-							$out = "\n\n";
-						}
-
 						$head = str_repeat("=", $node->nodeName{1});
-						$out .= "{$head}{$textContent}{$head}";
+						if(!empty($nodeData)) {
+							$nextNode = $this->getNextElementNode($node);
 
-						// new line logic
-						if ($node->previousSibling || ($node->parentNode && $this->isTableCell($node->parentNode))) {
-							$out = "\n{$out}";
+							$linesBefore = 0;
+							$linesAfter = $nodeData['linesAfter']-1;
+
+							// do not remove one lineAfter if paragraph is following
+							if ( $nextNode && ($nextNode->nodeName == 'p') && $this->getIndentationLevel($nextNode) === false ) {
+								$linesAfter++;
+							}
+						} else {
+							$linesBefore = $node->previousSibling ? 2 : 0;
+							$linesAfter = 1;
+							$textContent = " ".trim($textContent)." ";
 						}
 
-						// fix for "external HTML" pasted into FCK
-						if ($node->nextSibling && $node->nextSibling->nodeName != 'p' && !$this->isHeader($node->nextSibling)) {
-							$out = "{$out}\n";
+						// heading at the beginning of table cell
+						if ( $this->isTableCell($node->parentNode) && $node->isSameNode($node->parentNode->firstChild) ) {
+							$linesBefore++;
 						}
+
+						$out = str_repeat("\n", $linesBefore) . $head . $textContent . $head . str_repeat("\n", $linesAfter);
 						break;
 
 					// preformatted text
 					case 'pre':
 						$textContent = trim(str_replace("\n", "\n ", $textContent)); // add white space before each line
 						$out = " {$textContent}";
-
-						// new line logic
-						if ($node->previousSibling) {
-							// separate <pre> tags
-							$out = ($node->previousSibling->nodeName == 'pre') ? "\n\n{$out}" : "\n{$out}";
-						}
-						else if ($node->parentNode && $this->isTableCell($node->parentNode)) {
-							$out = "\n{$out}";
-						}
-
 						break;
 
 					// text formatting
@@ -303,66 +414,100 @@ class ReverseParser {
 
 						// A) opening tags
 						// 1, 2
-						if ($node->parentNode && $node->parentNode->previousSibling &&
+						if($node->parentNode && $node->parentNode->previousSibling &&
 							$node->isSameNode($node->parentNode->firstChild) &&
 							in_array($node->parentNode->nodeName, array('i','b')) &&
 							$node->parentNode->nodeName != $node->nodeName &&
 							$node->parentNode->previousSibling->nodeName == $node->nodeName) {
 							// don't open bold (1) / italic (2)
-							wfDebug("ReverseParser: </b><i><b> open\n");
 							$open = '';
 						}
 
 						// 3, 4
-						if ($node->previousSibling && $node->previousSibling->hasChildNodes() &&
+						if($node->previousSibling && $node->previousSibling->hasChildNodes() &&
 							in_array($node->previousSibling->nodeName, array('i','b')) &&
-							$node->previousSibling->nodeName != $nodeName &&
+							$node->previousSibling->nodeName != $node->nodeName &&
 							$node->previousSibling->lastChild->nodeName == $node->nodeName) {
 							// don't open bold (3) / italic (4)
-							wfDebug("ReverseParser: </b></i><b> open\n");
 							$open = '';
 						}
 
 						// B) closing tags
 						// 1, 2
-						if ($node->nextSibling && $node->nextSibling->hasChildNodes() &&
+						if($node->nextSibling && $node->nextSibling->hasChildNodes() &&
 							in_array($node->nextSibling->nodeName, array('i','b')) &&
 							$node->nextSibling->nodeName != $node->nodeName &&
 							$node->nextSibling->firstChild->nodeName == $node->nodeName) {
 							// don't close bold (1) / italic (2)
-							wfDebug("ReverseParser: </b><i><b> close\n");
 							$close = '';
 						}
 
 						// 3, 4
-						if ($node->parentNode && $node->parentNode->nextSibling &&
+						if($node->parentNode && $node->parentNode->nextSibling &&
 							$node->isSameNode($node->parentNode->lastChild) &&
 							in_array($node->parentNode->nodeName, array('i','b')) &&
 							$node->parentNode->nodeName != $node->nodeName &&
 							$node->parentNode->nextSibling->nodeName == $node->nodeName) {
 							// don't close bold (3) / italic (4)
-							wfDebug("ReverseParser: </i></b><i> close\n");
 							$close = '';
 						}
+
 						$out = "{$open}{$textContent}{$close}";
-
-						wfDebug("ReverseParser: $out\n");
 						break;
-					// tables
-					case 'table':
-						if (!$hasRefId) {
-							// @see http://en.wikipedia.org/wiki/Help:Table
-							$attStr = ltrim($this->getAttributesStr($node));
-							$out = "{|{$attStr}\n{$textContent}|}\n";
 
-							// there's something before the table or this is nested table - add line break
-							if ($node->previousSibling || ($node->parentNode && $this->isBlockElement($node->parentNode))) {
-								$out = "\n{$out}";
+					// <strike>foo</strike>
+					case 'strike':
+						$out ="<strike>{$textContent}</strike>";
+						break;
+
+					// <u>foo</u>
+					case 'u':
+						$out = "<u>{$textContent}</u>";
+						break;
+
+					// ----
+					case 'hr':
+						$out = "----\n";
+						break;
+
+					// tables
+					// @see http://en.wikipedia.org/wiki/Help:Table
+					case 'table':
+						if (empty($nodeData)) {
+							$attStr = ltrim($this->getAttributesStr($node));
+							$textContent = rtrim($textContent);
+							$out = "{|{$attStr}\n{$textContent}\n|}";
+
+							// handle nested tables
+							if ($node->parentNode->nodeName != 'body') {
+								$out = "\n$out";
+							}
+
+							$nextNode = $this->getNextElementNode($node);
+
+							// we have non-table content after current table
+							if (!empty($nextNode)) {
+								switch($nextNode->nodeName) {
+									case 'table':
+										break;
+
+									case 'p':
+										if ($nextNode->hasAttribute('_new_lines_before') && $this->getIndentationLevel($nextNode) === false) {
+											$out = "$out\n";
+										}
+										break;
+
+									case 'pre':
+										break;
+
+									default:
+										$out = "$out\n";
+								}
 							}
 						}
 						else {
 							// thumbnail generation error - handle as an image
-							$out = $this->handleImage($node, $textContent);
+							$out = $this->handleMedia($node, $textContent);
 						}
 						break;
 
@@ -380,10 +525,10 @@ class ReverseParser {
 
 						// don't convert first table row into |-
 						if ($isFirstRow && $attStr == '') {
-							$out = $textContent;
+							$out = rtrim($textContent) . "\n";
 						}
 						else {
-							$out = "|-{$attStr}\n{$textContent}";
+							$out = "|-{$attStr}\n".rtrim($textContent)."\n";
 						}
 						break;
 
@@ -407,6 +552,12 @@ class ReverseParser {
 							$textContent = " {$textContent}";
 						}
 
+						// if first child of table cell is paragraph,
+						// then add linebreak after pipe beginning the table cell
+						if ( !empty($node->firstChild) && ($node->firstChild->nodeName == 'p') ) {
+							$textContent = "\n{$textContent}";
+						}
+
 						$out = "|{$attStr}{$textContent}\n";
 						break;
 
@@ -415,38 +566,11 @@ class ReverseParser {
 						$out = $textContent;
 						break;
 
-
 					// lists
 					case 'ul':
 					case 'ol':
-					case 'dl':
-						$prefix = $suffix = '';
-						// handle indentations created using definition lists
-						if($node->nodeName == 'dl') {
-							$indentation = $this->getIndentationLevel($node);
-							if($indentation !== false) {
-								$prefix = str_repeat(':', $indentation);
-							}
-							// paragraph is following this <dl> list
-							if($node->nextSibling && $node->nextSibling->nodeName == 'p') {
-								$suffix = ($node->nextSibling->textContent != '') ? "\n" : "\n\n";
-							}
-						}
-						if($node->previousSibling) {
-							// first item of nested list
-							$prefix = "\n{$prefix}";
-
-							// add space after previous list, so we won't break numbers
-							if ($this->listLevel == 0 && $this->isList($node->previousSibling)) {
-								$prefix = "\n{$prefix}";
-							}
-						}
-						// lists inside table cell
-						else if ($node->parentNode && $this->isTableCell($node->parentNode)) {
-							$prefix = "\n{$prefix}";
-						}
 						// rtrim used to remove \n added by the last list item
-						$out = $prefix . rtrim($textContent, " \n") . $suffix;
+						$out = rtrim($textContent, "\n");
 						break;
 
 					// lists elements
@@ -456,141 +580,146 @@ class ReverseParser {
 						$out = $this->handleListItem($node, $textContent);
 						break;
 
-					// images
+					// image / video
 					case 'div':
 					case 'iframe':
-						if ($hasRefId) {
-							$out = $this->handleImage($node, $textContent);
+						if (!empty($nodeData)) {
+							$out = $this->handleMedia($node, $textContent);
+
+							// add newline if next node is paragraph
+							// and was in next line of wikitext
+							$nextNode = $this->getNextElementNode($node);
+
+							if ( $nextNode && ($nextNode->nodeName == 'p') && $nextNode->hasAttribute('_new_lines_before') && $this->getIndentationLevel($nextNode) === false ) {
+								$out = "$out\n";
+							}
+
 						}
 						break;
 
-					// handle more complicated tags
+					// links
 					case 'a':
 						$out = $this->handleLink($node, $textContent);
 						break;
+
+					// templates, magic words, parser hooks placeholders
 					case 'input':
 						$out = $this->handlePlaceholder($node, $textContent);
 						break;
-
-					// ignore tbody tag
-					case 'tbody':
-						$out = $textContent;
-						break;
-
-					// HTML tags
-					default:
-						$washtml = true;
-						break;
 				}
-			}
 
-			if(!empty($washtml)) {
+			} else {
 
 				$attStr = $this->getAttributesStr($node);
 
-				switch ($node->nodeName) {
-					case 'br':
-					case 'hr':
-						$out = "<{$node->nodeName}{$attStr} />";
+				if($node->nodeName == 'br' || $node->nodeName == 'hr') {
+					$out = "<{$node->nodeName}{$attStr} />";
+				} else {
+					// remove prohibited HTML tags (may occur after pasting content from external site)
+					if(in_array($node->nodeName, array('script', 'embed'))) {
+						$out = '';
 						break;
-
-					default:
-						// remove prohibited HTML tags
-						if ( in_array($node->nodeName, array('script', 'embed')) ) {
-							$out = '';
-							break;
-						}
-
-						// nice formatting of nested HTML in wikimarkup
-						if($node->hasChildNodes() && $node->childNodes->item(0)->nodeType != XML_TEXT_NODE) {
-							// node with child nodes
-							// add \n only when node is HTML block element
-							if ($this->isInlineElement($node)) {
-								$textContent = $textContent;
-								$trial = '';
-								$prefix = '';
-							}
-							else {
-								$textContent = "\n".trim($textContent)."\n";
-								$trial = '';
-								$prefix = "\n";
-							}
-						} else {
-							$trial = $this->isInlineElement($node) ? '' : "\n";
-							$prefix = '';
-						}
-						$out = "{$prefix}<{$node->nodeName}{$attStr}>{$textContent}</{$node->nodeName}>{$trial}";
+					}
+					$out = "<{$node->nodeName}{$attStr}>{$textContent}</{$node->nodeName}>";
 				}
+
+			}
+
+			// if current processed node contains _wysiwyg_new_line attribute (added in Parser.php)
+			// then add new line before it
+			if($this->nodeHasNewLineBefore($node)) {
+				wfDebug("Wysiwyg ReverseParserNew - has new line before\n");
+				$out = "\n{$out}";
+			}
+			
+			// do the same with nodes containing _wysiwyg_line_start and washtml attributes (added in Parser.php)
+			if($this->nodeHasLineStart($node)) {
+				wfDebug("Wysiwyg ReverseParserNew - starts new line\n");
+				$out = "\n{$out}";
+			}
+
+			// add newlines before/after wikimarkup if current node has been added in FCK wysiwyg mode
+			// FCK formats HTML a bit different then MW parser
+			if ($newNode) {
+				$prevNode = $this->getPreviousElementNode($node);
+
+				if (!empty($prevNode)) {
+					switch($node->nodeName) {
+						case 'ol':
+						case 'ul':
+							$out = "\n\n{$out}\n";
+							break;
+
+						case 'table':
+							$out = "\n\n{$out}\n";
+							break;
+					}
+				}
+			}
+			
+		} else if($node->nodeType == XML_COMMENT_NODE) {
+
+			// if the next sibling node of the current one comment node is text or node (so any sibling)
+			// then add new line
+			// e.g. "<!--NEW_LINE_1-->abc" => "\nabc"
+
+			// ignore <!--NEW_LINE_1--> comment inside list item
+			if($node->data == "NEW_LINE_1" && $node->nextSibling && $node->parentNode->nodeName != 'li') { 
+				$out = "\n";
 			}
 
 		} else if($node->nodeType == XML_TEXT_NODE) {
 
-			wfDebug("ReverseParser XML_TEXT_NODE    " . str_repeat('-', $level) . " #text\n");
-
-			if ( trim($node->textContent) == '' && $node->parentNode && !$this->isInlineElement($node->parentNode) ) {
-				// get rid of whitespaces between tags we don't need
-				$out = '';
-			}
-			else {
-				$out = $this->cleanupTextContent($node);
+			// if the next sibling node of the current one text node is comment (NEW_LINE_1)
+			// then cut the last character of current text node (it must be space added by FCK after convertion of \n)
+			// e.g. "abc <!--NEW_LINE_1-->" => "abc<!--NEW_LINE_1-->"
+			if($node->nextSibling && $node->nextSibling->nodeType == XML_COMMENT_NODE && $node->nextSibling->data == "NEW_LINE_1") {
+				$textContent = substr($textContent, 0, -1);
 			}
 
+			// remove last space from last child of paragraph
+			// this way we keep whitespaces at the end of paragraphs and remove
+			// extra space added by FCK (after convertion of \n)
+			else if ( substr($textContent, -1) == ' ' && $node->parentNode->nodeName == 'p' && $node->isSameNode($node->parentNode->lastChild)) {
+				$textContent = substr($textContent, 0, -1);
+			}
+
+			// check whether we should allow whitespaces inclusion into wikitext
+			// e.g. we don't want to add whitespaces inside tables HTML markup
+			else if ( strspn($textContent, ' ') == strlen($textContent) ) {
+				switch($node->parentNode->nodeName) {
+					case 'table':
+					case 'tbody':
+					case 'tr':
+					case 'body':
+						$textContent = '';
+						break;
+
+					case 'li':
+						// we may have single space before <ul> nested inside another <li>
+						// e.g.
+						// * <strike>foo</strike>
+						// ** test
+						if ( $node->nextSibling && $this->isList($node->nextSibling) ) {
+							$textContent = substr($textContent, 0, -1);
+						}
+						break;
+					default:
+				}
+			}
+
+			// remove last space (added by FCK after convertion of \n) from text node
+			// before HTML tag with _wysiwyg_line_start attribute
+			// e.g. ' <div _wysiwyg_new_line="true">...' => '\n<div>...'
+			else if ( substr($textContent, -1) == ' ' && $this->nextSiblingIsInNextLine($node)) {
+				$textContent = substr($textContent, 0, -1);
+			}
+
+			$out = $textContent;
 		}
 
 		wfProfileOut(__METHOD__);
 		return $out;
-	}
-
-	/**
-	 * Returns wikimarkup for ordered, unordered and definition lists
-	 */
-	private function handleListItem($node, $content) {
-		switch($node->nodeName) {
-			case 'li':
-				if( $node->hasChildNodes() && in_array($node->childNodes->item(0)->nodeName, array('ul', 'ol')) ) {
-					// nested lists like
-					// *** foo
-					// *** bar
-					return $content . "\n";
-				} else {
-					return $this->listBullets . ' ' . ltrim($content) . "\n";
-				}
-
-			case 'dt':
-				return substr($this->listBullets, 0, -1) . ";{$node->textContent}\n";
-
-			case 'dd':
-				// hack for :::::foo markup used for indentation
-				// <dl><dl>...</dl></dl> (produced by MW markup) would generate wikimarkup like the one below:
-				// :
-				// ::
-				// ::: ...
-				if($node->hasChildNodes() && $node->childNodes->item(0)->nodeName == 'dl') {
-					return rtrim($content, ' ') . "\n";
-				} else if ($this->hasListInside($node)) {
-					return $content . "\n";
-				} else {
-					return $this->listBullets . $content . "\n";
-				}
-		}
-	}
-
-	/**
-	 * Returns level of indentation from value of margin-left CSS property
-	 */
-	private function getIndentationLevel($node) {
-		if(!$node->hasAttributes()) {
-			return false;
-		}
-
-		$cssStyle = $node->getAttribute('style');
-
-		if(!empty($cssStyle)) {
-			$margin = (substr($cssStyle, 0, 11) == 'margin-left') ? intval(substr($cssStyle, 12)) : 0;
-			return intval($margin/40);
-		}
-
-		return false;
 	}
 
 	/**
@@ -611,7 +740,7 @@ class ReverseParser {
 		// is text node the first child of parent node?
 		$isFirstChild = $node->isSameNode($node->parentNode->firstChild);
 
-		wfDebug("WYSIWYG ReverseParser cleanupTextContent for: >>{$text}<<\n");
+		wfDebug("ReverseParserNew cleanupTextContent for: >>{$text}<<\n");
 
 		// 1. wrap repeating apostrophes using <nowiki>
 		$text = preg_replace("/('{2,})/", '<nowiki>$1</nowiki>', $text);
@@ -641,13 +770,15 @@ class ReverseParser {
 
 		// 7. wrap [<url protocol>...] using <nowiki> (don't apply to link descriptions)
 		if ($node->parentNode->nodeName != 'a') {
-			$text = preg_replace("/\[(?={$this->protocols})([^\]]+)\]/", '<nowiki>[$1]</nowiki>', $text);
+			$text = preg_replace("/\[(?=".$this->getUrlProtocols().")([^\]]+)\]/", '<nowiki>[$1]</nowiki>', $text);
 		}
+
+		// 8. wrap repeating ~ using <nowiki>
+		$text = preg_replace("/(~{3,5})/", '<nowiki>$1</nowiki>', $text);
 
 		wfProfileOut(__METHOD__);
 		return $text;
 	}
-
 
 	/**
 	 * Returns wikimarkup for <span> tag
@@ -657,10 +788,10 @@ class ReverseParser {
 	private function handlePlaceholder($node, $content) {
 
 		// handle spans with refId attribute: images, templates etc.
-		$refId = $node->getAttribute('refid');
+		$refid = $node->getAttribute('refid');
 
-		if ( is_numeric($refId) && isset($this->fckData[$refId]) ) {
-			$refData = (array) $this->fckData[$refId];
+		if ( is_numeric($refid) && isset($this->data[$refid]) ) {
+			$refData = (array) $this->data[$refid];
 
 			switch($refData['type']) {
 				// [[Image:Jimbo.jpg|thumb]]
@@ -692,21 +823,21 @@ class ReverseParser {
 
 				// [[Category:foo]]
 				case 'category':
-					$pipe = ($refData['description'] != '') ? '|'.$refData['description'] : '';
-					return "\n[[{$refData['href']}{$pipe}]]{$refData['trial']}";
+					$prefix = !empty($refData['whiteSpacePrefix']) ? $refData['whiteSpacePrefix'] : '';
+					return "{$prefix}{$refData['original']}";
 
 				// parser hooks
 				case 'hook':
 					return $refData['description'];
 
+				// wikitext placeholders
+				// used for non-existing video
+				case 'placeholder':
+					return $refData['description'];
+
 				// {{template}}
 				//case 'curly brackets':
 				case 'template':
-					if(!empty($refData['lineStart'])) {
-						if(!$node->isSameNode($node->parentNode->firstChild)) {
-							return "\n".$refData['originalCall'];
-						}
-					}
 					return $refData['originalCall'];
 
 				// __NOTOC__ ...
@@ -747,62 +878,71 @@ class ReverseParser {
 
 		$refid = $node->getAttribute('refid');
 
-		if (!is_numeric($refid) || !isset($this->fckData[$refid])) {
+		// handle links pasted from external sites -> assign new refid
+		if (!is_numeric($refid) || !isset($this->data[$refid])) {
 			$href = $node->getAttribute('href');
 
 			if( is_string($href) ) {
-				array_push($this->fckData, array(
+				// generate new refid
+				$refid = !empty($this->data) ? (max( array_keys($this->data) ) + 1) : 0;
+
+				$this->data[$refid] = array(
 					'type' => ($content == $href) ? 'external link: raw' : 'external link',
 					'text' => $content,
 					'href' => $href
-				));
-				// generate new refid
-				$refid = count($this->fckData);
+				);
 			}
 		}
 
-
-		$data = $this->fckData[$refid];
+		$data = $this->data[$refid];
 
 		switch($data['type']) {
 			case 'image';
-				return $this->handleImage($node, $content);
+				return $this->handleMedia($node, $content);
 			
 			case 'internal link':
 			case 'internal link: file':
 			case 'internal link: special page':
-				// take link description from parsed HTML
-				$data['description'] = $content;
-				$data['trial'] = '';
 
-				// * [[foo|foo]] -> [[foo]]
-				if ($data['href'] == $data['description']) {
-					$data['description'] = '';
-				}
-				// * [[:foo]]
-				else if ( ($data['href']{0} == ':') && (substr($data['href'],1) == $data['description']) ) {
-					$data['description'] = '';
-				}
-				// * [[foo|foots]] -> [[foo]]ts (trial can't contain numbers)
-				else if ($data['description'] != '' && substr($data['description'], 0, strlen($data['href'])) == $data['href']) {
-					$trial = substr($data['description'], strlen($data['href']));
+				// leave already existing link which hasn't been edited
+				// as for feedback from Tor
+				// don't try to make everyone happy :)
+				if ( isset($data['description']) && ($data['description'] != $content) ) {
+					$data['description'] = $content;
+					$data['trial'] = '';
 
-					// validate $trial (might only contain chars)
-					if ( ctype_alpha($trial) ) {
-						$data['trial'] = $trial;
+					// * [[foo|foo]] -> [[foo]]
+					if ($data['href'] == $data['description']) {
 						$data['description'] = '';
 					}
+					// * [[:foo]]
+					else if ( ($data['href']{0} == ':') && (substr($data['href'],1) == $data['description']) ) {
+						$data['description'] = '';
+					}
+					// * [[foo|foots]] -> [[foo]]ts (trial can't contain numbers)
+					else if ($data['description'] != '' && substr($data['description'], 0, strlen($data['href'])) == $data['href']) {
+						$trial = substr($data['description'], strlen($data['href']));
+
+						// validate $trial (might only contain chars)
+						if ( ctype_alpha($trial) ) {
+							$data['trial'] = $trial;
+							$data['description'] = '';
+						}
+					}
+				}
+				else if (!isset($data['description'])) {
+					$data['description'] = $content;
 				}
 
 				// generate wikisyntax
 				$tag =  "[[{$data['href']}";
 
-				if($data['description'] != '') {
+				if ($data['description'] != '') {
 					$tag .=  "|{$data['description']}]]";
 				} else {
 					$tag .=  "]]";
 				}
-				if($data['trial'] != '') {
+				if ( isset($data['trial']) && ($data['trial'] != '') ) {
 					$tag .= $data['trial'];
 				}
 				return $tag;
@@ -830,7 +970,7 @@ class ReverseParser {
 				$data['href'] = $protocol . ':' . $path;
 
 				// fill FCK data
-				if (preg_match('%^(?:' . $this->protocols . ')%im', $data['href'])) {
+				if (preg_match('%^(?:' . $this->urlProtocols . ')%im', $data['href'])) {
 					// external links
 					if ($data['type'] == 'external link: raw' && !$textBefore && !$textAfter) {
 						// use http://foo.com
@@ -853,69 +993,187 @@ class ReverseParser {
 	}
 
 	/**
-	 * Returns wikimarkup for image tags
+	 * Returns wikimarkup for image/video tags
 	 */
-	private function handleImage($node, $content) {
+	private function handleMedia($node, $content) {
 
 		// check is perfomed earlier
-		$data = $this->fckData[$node->getAttribute('refid')];
+		$data = $this->data[ $node->getAttribute('refid') ];
 
 		switch($data['type']) {
 			case 'image':
-				$prefix = ( in_array($node->nodeName, array('div', 'table')) ) ? "\n\n" : '';
-
-				// RT #10030 (quick fix) - image is at the beginning of wikitext
-				if ( ($node->parentNode->nodeName == 'body') && empty($node->previousSibling) ) {
-					$prefix = '';
-				}
-
-				$out = $prefix . $data['original'];
+			case 'video':
+				$out = $data['original'];
 				return $out;
 
 			default:
 				return '';
 		}
-	}	
+	}
 
 	/**
-	 * Returns HTML string containing node arguments
+	 * Returns wikimarkup for ordered, unordered and definition lists
 	 */
-	 private function getAttributesStr($node) {
-		if(!$node->hasAttributes()) {
-			return '';
+	private function handleListItem($node, $content) {
+		switch($node->nodeName) {
+			case 'li':
+				if( $node->hasChildNodes() && in_array($node->firstChild->nodeName, array('ul', 'ol')) ) {
+					// nested lists like
+					// *** foo
+					// *** bar
+					return $content . "\n";
+				} else {
+					// remove last char only (if space) from list items containing only text
+					// so without nested lists
+					if (substr($content, -1) == ' ') {
+						$content = substr($content, 0, -1);
+					}
+
+					return $this->listIndent . $this->listBullets . $content . "\n";
+				}
+			break;
 		}
+	}
 
-		$attStr = '';
-
-		foreach ($node->attributes as $attrName => $attrNode) {
-			if( in_array($attrName, array('washtml', '_wysiwyg_new_line', '_wysiwyg_line_start', '_wysiwyg_style', '_wysiwyg_new')) ) {
-				continue;
+	/**
+	 * Returns previous node element ignoring any text/comment elements
+	 */
+	private function getPreviousElementNode($node) {
+		while($node->previousSibling) {
+			$node = $node->previousSibling;
+			if($node->nodeType == XML_ELEMENT_NODE) {
+				return $node;
 			}
-			$attStr .= ' ' . $attrName . '="' . $attrNode->nodeValue  . '"';
 		}
-		return $attStr;
-	 }
-
-	/**
-	 * Return true if given node is inline formatting element (used for removal of unneeded <br/> tags)
-	 */
-
-	private function isFormattingElement($node) {
-		return in_array($node->nodeName, array('u', 'b', 'strong', 'i', 'em', 'strike', 's', 'code', 'tt', 'cite', 'var', 'span', 'font', 'big', 'small'));
+		return false;
 	}
 
 	/**
-	 * Return true if given node is inline HTNL element or can contain inline elements (p / div) - used for nice HTML formatting
+	 * Returns next node element ignoring any text/comment elements
 	 */
-	private function isInlineElement($node) {
-		return in_array($node->nodeName, array('u', 'b', 'strong', 'i', 'em', 'strike', 's', 'code', 'tt', 'cite', 'var', 'span', 'font', 'big', 'small', 'a', 'p', 'div'));
+	private function getNextElementNode($node) {
+		while($node->nextSibling) {
+			$node = $node->nextSibling;
+			if($node->nodeType == XML_ELEMENT_NODE) {
+				return $node;
+			}
+		}
+		return false;
 	}
 
 	/**
-	 * Return true if given node is block HTML element (used for handling nested tables)
+	 * Returns previous text element ignoring any node/comment elements
 	 */
-	private function isBlockElement($node) {
-		return in_array($node->nodeName, array('p', 'div', 'tr', 'td' ,'th', 'table'));
+	private function getPreviousTextNode($node) {
+		while($node->previousSibling) {
+			$node = $node->previousSibling;
+			if($node->nodeType == XML_TEXT_NODE) {
+				return $node;
+			}
+		}
+		return false;
+	}
+
+	/*
+	 * Detect _wysiwyg_new_line attribute (empty line of wikitext before given node) and perform extra check
+	 */
+	private function nodeHasNewLineBefore($node) {
+
+		// no node before <p>
+		if(empty($node->previousSibling) && $node->nodeName == 'p') {
+			return false;
+		}
+
+		if($node->getAttribute('_wysiwyg_new_line') && !in_array($node->nodeName, array('a')) )  {
+			return true;
+		}
+
+		return false;
+	}
+
+	/*
+	 * Detect whether given node starts line of wikitext and perfrom extra check
+	 */
+	private function nodeHasLineStart($node) {
+
+		if (empty($node->previousSibling) && ($node->parentNode->nodeName == 'body')) {
+			return false;
+		}
+
+		// support for HTML tags in wikitext
+		if ($node->getAttribute('washtml') && $node->getAttribute('_wysiwyg_line_start')) {
+			return true;
+		}
+
+		// we have proper handling of tables wikisyntax so don't add any new \n for table nodes
+		if (in_array($node->nodeName, array('tr', 'th', 'td')) && !$node->getAttribute('washtml')) {
+			return false;
+		}
+
+		// <ul> / <ol> should always have _wysiwyg_line_start attribute
+		// lists added in FCK won't have it -> force return of TRUE
+		if ($this->isList($node) && !$node->getAttribute('washtml')) {
+			return true;
+		}
+
+		// they start new line, but we don't have to add new line before them
+		if ($node->nodeName == 'p') {
+			return false;
+		}
+
+		// add \n before <pre>
+		if ($node->nodeName == 'pre') {
+			return true;
+		}
+
+		// HTML tags (e.g. image containers, ignore inline tags)
+		if ($node->getAttribute('_wysiwyg_line_start') && !in_array($node->nodeName, array('a')) ) {
+			return true;
+		}
+
+		return false;
+	}
+
+	/*
+	 * Check if next sibling of given node starts next line of wikitext (based on _wysiwyg_line_start attribute and node name)
+	 *
+	 * Used to remove last char (space) of text node
+	 */
+	private function nextSiblingIsInNextLine($node) {
+
+		$node = $node->nextSibling;
+
+		if (empty($node)) {
+			return false;
+		}
+
+		if ($node->nodeType != XML_ELEMENT_NODE) {
+			return false;
+		}
+
+		// we have proper handling of tables wikisyntax so don't add any new \n for table nodes
+		if (in_array($node->nodeName, array('tr', 'th', 'td')) && !$node->getAttribute('washtml')) {
+			return false;
+		}
+
+		// "by definition" <p> and <pre> nodes starts line of wikitext
+		if (in_array($node->nodeName, array('p', 'pre'))) {
+			return true;
+		}
+
+		// HTML tags in wikitext
+		if ($node->getAttribute('_wysiwyg_line_start')) {
+			return true;
+		}
+
+		return false;
+	}
+
+	/**
+	 * Return true if given node is header
+	 */
+	private function isHeaderNode($node) {
+		return ($node->nodeName{0} == 'h') && is_numeric($node->nodeName{1});
 	}
 
 	/**
@@ -926,13 +1184,6 @@ class ReverseParser {
 	}
 
 	/**
-	 * Return true if given node is heading node
-	*/
-	private function isHeader($node) {
-		return (strlen($node->nodeName) == 2) && ($node->nodeName{0} == 'h') && is_numeric($node->nodeName{1});
-	}
-
-	/**
 	 * Return true if given node is list container
 	 */
 	private function isList($node) {
@@ -940,21 +1191,51 @@ class ReverseParser {
 	}
 
 	/**
-	 * Return true if given node has list element as one of his nested child
+	 * input: '<div id="123" washtml="true" _wysiwyg_new_line="false" style="border: solid 1px">'
+	 * output: ' id="123" style="border: solid 1px"'
 	 */
-	private function hasListInside($node, $lists) {
-		while($node->hasChildNodes()) {
-			$node = $node->firstChild;
-			if ( in_array($node->nodeName, array('ol', 'ul')) ) {
-				return true;
+	private function getAttributesStr($node) {
+		if(!$node->hasAttributes()) {
+			return '';
+		}
+
+		// replace style attribute with _wysiwyg_style
+		if ($node->hasAttribute('_wysiwyg_style')) {
+			$node->setAttribute('style', $node->getAttribute('_wysiwyg_style'));
+			$node->removeAttribute('_wysiwyg_style');
+		}
+
+		$attStr = '';
+		foreach ($node->attributes as $attrName => $attrNode) {
+			// ignore attributes used internally by Wysiwyg
+			if( in_array($attrName, array('washtml', '_wysiwyg_new_line', '_wysiwyg_line_start', '_wysiwyg_new')) ) {
+				continue;
 			}
+			$attStr .= ' ' . $attrName . '="' . $attrNode->nodeValue  . '"';
+		}
+		return $attStr;
+	}
+
+	/**
+	 * Returns level of indentation from value of margin-left CSS property
+	 */
+	private function getIndentationLevel($node) {
+		while (!empty($node->parentNode)) {
+			$cssStyle = $node->getAttribute('style');
+			
+			if(!empty($cssStyle)) {
+				$margin = (substr($cssStyle, 0, 11) == 'margin-left') ? intval(substr($cssStyle, 12)) : 0;
+				return intval($margin/40);
+			}
+
+			$node = $node->parentNode;
 		}
 		return false;
- 	}
+	}
 
 	/**
 	 * Returns true if given node has CSS class set
-	*/
+	 */
 	private function hasCSSClass($node, $class) {
 		$classes = $node->getAttribute('class');
 
@@ -965,4 +1246,5 @@ class ReverseParser {
 			return false;
 		}
 	}
+
 }
