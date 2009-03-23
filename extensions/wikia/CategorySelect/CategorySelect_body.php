@@ -93,7 +93,7 @@ class CategorySelect {
 										if ($inner->textContent == '') {
 											$nodesToDelete[] = $node;
 											//try to remove newline right after <tag>[[category:abc]]</tag>\n - it will be in next sibbling
-											if (!is_null($node->nextSibling)) {
+											if (!is_null($node->nextSibling) && $node->nextSibling->nodeType == XML_TEXT_NODE) {
 												$node->nextSibling->nodeValue = preg_replace('/^\n/', '', $node->nextSibling->nodeValue);
 											}
 										}
