@@ -179,7 +179,6 @@ class FanBoxAjaxUploadForm extends UploadForm{
 			$prefix = "";
 
 		$wgOut->addHTML( "
-			<script language=\"javascript\" src=\"/extensions/wikia/onejstorule.js?{$wgStyleVersion}\"></script>
 			<script language=\"javascript\">
 			
 			function submitForm(){
