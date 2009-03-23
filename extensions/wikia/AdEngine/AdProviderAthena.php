@@ -35,8 +35,6 @@ class AdProviderAthena implements iAdProvider {
 			$version = mt_rand();
 		}
 		$out =  '<script type="text/javascript" src="http://'. $host .'/athena/Athena.js?' . $version . '"></script>' . "\n";
-		// Not thrilled about having this here, but had to because of an IE bug.
-		$out .= '<script type="text/javascript" src="http://'. $host .'/athena/AdNetworks/AthenaDART.js?' . $version . '"></script>' . "\n";
 
 		// Page vars are variables that you want available in javascript for serving ads
 		$pageVars = array();
