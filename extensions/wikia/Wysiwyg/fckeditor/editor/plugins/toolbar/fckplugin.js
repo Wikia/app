@@ -536,14 +536,25 @@ var WideScreenToggle = function() {
 
 	// get current widescreen mode state
 	this.isActive = FCK.YD.hasClass(window.parent.document.body, 'editingWide');
+
+	// store listener function
+	this.listener = false;
  }
 
 WideScreenToggle.prototype = {
 
 	Toggle: function() {
+		// use previously stored listener function
+		if (this.listener) {
+			this.listener(true);
+			return true;
+		}
+
 		if (this.toggleWideScreenLink && FCK.YE.getListeners) {
-			FCK.log('widescreen toggle');
-			FCK.YE.getListeners(this.toggleWideScreenLink).pop().fn(true);
+			// store listener function
+			this.listener = FCK.YE.getListeners(this.toggleWideScreenLink).pop().fn;
+			this.listener(true);
+			return true;
 		}
 		else {
 			return false;
