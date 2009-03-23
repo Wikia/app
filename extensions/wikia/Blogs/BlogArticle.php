@@ -750,4 +750,23 @@ class BlogArticle extends Article {
 		}
 		return true;
 	}
+	
+	/**
+	 * Get User_blog article from USer_blog_comment
+	 * 
+	 * @access public
+	 * @static
+	 */ 
+	static public function commentToUserBlog( $oTitle ) {
+		$oUBlogTitle = null;
+		if ($oTitle instanceof Title) {
+			list( $author, $title, $comment_title )  = explode('/', $oTitle->getPrefixedText(), 3);
+			if ( !empty($author) ) {
+				list ( $ns, $user ) = explode ( ':', $author );
+				$oUBlogTitle = Title::newFromText( "{$user}/{$title}#{$comment_title}", NS_BLOG_ARTICLE);
+			}
+		}
+		return $oUBlogTitle;
+	}
+	 
 }
