@@ -30,8 +30,8 @@ class UpdateProfile extends SpecialPage {
 		$wgOut->setPageTitle(  wfMsg('edit-profile-title'));
 		if( !$wgUser->isLoggedIn() ) {
 			$wgOut->setPagetitle( wfMsgForContent( 'user-profile-update-notloggedin-title' ) );
-			$wgOut->addHTML(  wfMsgForContent(  'user-profile-update-notloggedin-text',  Title::makeTitle(NS_SPECIAL, "Login" . $which)->escapeFullUrl(), Title::makeTitle(NS_SPECIAL, "UserRegister" . $which)->escapeFullUrl() ) );
-			return;
+			$wgOut->addHTML(  wfMsgForContent(  'user-profile-update-notloggedin-text',  Title::makeTitle(NS_SPECIAL, "UserLogin" . $which)->escapeFullUrl(), Title::makeTitle(NS_SPECIAL, "UserLogin" . $which)->escapeFullUrl("type=signup") ) );
+			return; 
 		}
 		
 		if( $wgUser->isBlocked() ){
