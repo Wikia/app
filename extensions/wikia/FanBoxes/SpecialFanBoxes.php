@@ -20,7 +20,7 @@ class FanBoxes extends SpecialPage {
 	
 	
 	function execute(){
-		global $IP, $wgOut, $wgUser, $wgTitle, $wgRequest, $wgContLang, $wgMessageCache, $wgStyleVersion, $wgFanBoxScripts;
+		global $IP, $wgOut, $wgUser, $wgTitle, $wgRequest, $wgContLang, $wgMessageCache, $wgStylePath, $wgStyleVersion, $wgFanBoxScripts;
 
 		require_once ( "FanBox.i18n.php" );
 		
@@ -30,12 +30,12 @@ class FanBoxes extends SpecialPage {
 			
 		$wgOut->addScript("<script type=\"text/javascript\" src=\"{$wgFanBoxScripts}/FanBoxes.js\"></script>\n");
 		$wgOut->addScript("<link rel='stylesheet' type='text/css' href=\"{$wgFanBoxScripts}/FanBoxes.css\"/>\n");
+
 		//colorpicker
-		$wgOut->addScript("<script type=\"text/javascript\" src=\"http://yui.yahooapis.com/2.4.1/build/utilities/utilities.js\" ></script>\n");
-		$wgOut->addScript("<script type=\"text/javascript\" src=\"http://yui.yahooapis.com/2.4.1/build/slider/slider-min.js\" ></script>\n");
-		$wgOut->addScript("<link rel=\"stylesheet\" type=\"text/css\" href=\"http://yui.yahooapis.com/2.4.1/build/colorpicker/assets/skins/sam/colorpicker.css\"/>\n");
-		$wgOut->addScript("<script type=\"text/javascript\" src=\"http://yui.yahooapis.com/2.4.1/build/colorpicker/colorpicker-beta-min.js\" ></script>\n");
-		
+		$wgOut->addScript( "<script type=\"text/javascript\" src=\"{$wgStylePath}/common/yui_2.5.2/slider/slider-min.js?{$wgStyleVersion}\"></script>\n" );
+		$wgOut->addScript( "<script type=\"text/javascript\" src=\"{$wgStylePath}/common/yui_2.5.2/colorpicker/colorpicker-min.js?{$wgStyleVersion}\"></script>\n");
+		$wgOut->addScript( "<link rel=\"stylesheet\" type=\"text/css\" href=\"{$wgStylePath}/common/yui_2.5.2/colorpicker/assets/skins/sam/colorpicker.css?{$wgStyleVersion}\" />\n" );
+
 		//set it up so that you must be logged in to create a game
 	
 		if($wgUser->getID() == 0 ){
