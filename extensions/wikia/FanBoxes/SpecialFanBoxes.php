@@ -28,8 +28,8 @@ class FanBoxes extends SpecialPage {
 			$wgMessageCache->addMessages( $messages, $lang );
 		}
 			
-		$wgOut->addScript("<script type=\"text/javascript\" src=\"{$wgFanBoxScripts}/FanBoxes.js\"></script>\n");
-		$wgOut->addScript("<link rel='stylesheet' type='text/css' href=\"{$wgFanBoxScripts}/FanBoxes.css\"/>\n");
+		$wgOut->addScript("<script type=\"text/javascript\" src=\"{$wgFanBoxScripts}/FanBoxes.js?{$wgStyleVersion}\"></script>\n");
+		$wgOut->addScript("<link rel='stylesheet' type='text/css' href=\"{$wgFanBoxScripts}/FanBoxes.css?{$wgStyleVersion}\"/>\n");
 
 		//colorpicker
 		$wgOut->addScript( "<script type=\"text/javascript\" src=\"{$wgStylePath}/common/yui_2.5.2/slider/slider-min.js?{$wgStyleVersion}\"></script>\n" );
