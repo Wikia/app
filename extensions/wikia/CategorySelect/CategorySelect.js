@@ -184,8 +184,8 @@ function addAddCategoryButton() {
 	}
 }
 
-function inputBlur(force) {
-	if ($('csCategoryInput').value == '' || force) {
+function inputBlur() {
+	if ($('csCategoryInput').value == '') {
 		$('csCategoryInput').style.display = 'none';
 		$('csHintContainer').style.display = 'none';
 		addAddCategoryButton();
@@ -351,7 +351,7 @@ function inputKeyPress(e) {
 		if (category != '' && oAutoComp._oCurItem == null) {
 			addCategory(category);
 		}
-		inputBlur(true);
+		inputBlur();
 	}
 	positionSuggestBox();
 }
