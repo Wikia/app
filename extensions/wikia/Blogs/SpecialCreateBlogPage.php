@@ -129,9 +129,14 @@ class CreateBlogPage extends SpecialBlogPage {
 					$this->mFormErrors[] = wfMsg('create-blog-invalid-title-error');
 				}
 				else {
-					$this->mPostArticle = new BlogArticle($oPostTitle, 0);
-					if($this->mPostArticle->exists() && !$this->mFormData['isExistingArticleEditAllowed']) {
-						$this->mFormErrors[] = wfMsg('create-blog-article-already-exists');
+					$sFragment = $oPostTitle->getFragment();
+					if ( strlen($sFragment) > 0 ) {
+						$this->mFormErrors[] = wfMsg('create-blog-invalid-title-error');
+					} else {
+						$this->mPostArticle = new BlogArticle($oPostTitle, 0);
+						if($this->mPostArticle->exists() && !$this->mFormData['isExistingArticleEditAllowed']) {
+							$this->mFormErrors[] = wfMsg('create-blog-article-already-exists');
+						}
 					}
 				}
 			}
