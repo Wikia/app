@@ -284,14 +284,8 @@ class HAWelcomeJob extends Job {
 				$Title = Title::newFromId( $revision->getPage(), GAID_FOR_UPDATE );
 				$revision->setTitle( $Title );
 			}
-			$skip = (bool)(
-				$wgUser->isAllowed( "bot" )    ||
-				$wgUser->isAllowed( "staff" )  ||
-				$wgUser->isAllowed( "helper" ) ||
-				$wgUser->isAllowed( "sysop" )  ||
-				$wgUser->isAllowed( "bureaucrat" ) );
 
-			if( $Title && !$wgCommandLineMode && !$skip && !empty( $wgSharedDB ) ) {
+			if( $Title && !$wgCommandLineMode && $wgUser->isAllowed( 'welcometool' ) && !empty( $wgSharedDB ) ) {
 
 				Wikia::log( __METHOD__, "title", $Title->getFullURL() );
 
