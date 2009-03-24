@@ -98,6 +98,7 @@ function wfAdsInContentHook(&$out, &$text) {
 <script type="text/javascript">
   GA_googleAddSlot("ca-pub-4086838842346968", "INCONTENT_BOXAD");
   GA_googleAddSlot("ca-pub-4086838842346968", "INCONTENT_LEADERBOARD");
+  GA_googleAddAdSensePageAttr("google_ad_channel", "4974569436");
 </script>
 <script type="text/javascript">
   GA_googleFetchAds();
