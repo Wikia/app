@@ -231,18 +231,27 @@ class HAWelcomeJob extends Job {
 				//remove users that has 'bot' flag
 				$idsInGroups = array_diff($idsUser, $idsBot);
 
-				$res = $dbr->query("
-					SELECT rev_user
-					FROM revision
-					WHERE revision.rev_user IN ('" . implode("','", $idsInGroups) . "')
-					ORDER BY rev_timestamp DESC
-					LIMIT 1",
+				$res = $dbr->select( 'revision',
+					array( 'max(rev_id) as rev' ),
+					array( "rev_user IN ('" . implode("','", $idsInGroups) . "')" ),
 					__METHOD__
 				);
 				$row = $dbr->fetchObject( $res );
 				$dbr->freeResult( $res );
 
-				$this->mSysop = User::newFromId( $row->rev_user );
+				$rev_user = 0;
+				if ( !empty($row) && !empty($row->rev) ) {
+					$res = $dbr->select( 'revision',
+						array( 'rev_user' ),
+						array( "rev_id" => $row->rev ),
+						__METHOD__
+					);
+					$row = $dbr->fetchObject( $res );
+					$dbr->freeResult( $res );
+					$rev_user = $row->rev_user;
+				}
+
+				$this->mSysop = User::newFromId( $rev_user );
 			}
 		}
 
