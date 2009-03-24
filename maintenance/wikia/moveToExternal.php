@@ -105,7 +105,7 @@ function moveToExternal( $cluster, $limit ) {
 		}
 
 		$numMoved++;
-		usleep( 500 );
+		usleep( 5000 );
 	}
 	$dbr->freeResult( $res );
 }
