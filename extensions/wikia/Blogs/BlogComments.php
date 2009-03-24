@@ -13,6 +13,8 @@ $wgAjaxExportList[] = "BlogComment::axPost";
 $wgAjaxExportList[] = "BlogComment::axToggle";
 
 $wgHooks[ "ArticleDeleteComplete" ][] = "BlogCommentList::articleDeleteComplete";
+$wgHooks[ "ArticleRevisionUndeleted" ][] = "BlogCommentList::undeleteComments";
+$wgHooks[ "UndeleteComplete" ][] = "BlogCommentList::undeleteComplete";
 
 /**
  * BlogComment is article, this class is used for manipulation on it
@@ -618,6 +620,39 @@ class BlogCommentList {
 	}
 
 	/**
+	 * getCommentPages -- take pages connected to comments list
+	 */
+	private function getRemovedCommentPages( $oTitle ) {
+		wfProfileIn( __METHOD__ );
+
+		$pages = array();
+		
+		if ($oTitle instanceof Title) {
+			$dbr = wfGetDB( DB_SLAVE );
+			$res = $dbr->select(
+				array( "archive" ),
+				array( "ar_page_id", "ar_title" ),
+				array(
+					"ar_namespace" => NS_BLOG_ARTICLE_TALK,
+					"ar_title LIKE '" . $dbr->escapeLike( $oTitle->getDBkey( ) ) . "/%'"
+				),
+				__METHOD__,
+				array( "ORDER BY" => "ar_page_id" )
+			);
+			while( $row = $dbr->fetchObject( $res ) ) {
+				$pages[ $row->ar_page_id ] = array( 
+					'title' => $row->ar_title,
+					'nspace' => NS_BLOG_ARTICLE_TALK
+				);
+			}
+			$dbr->freeResult( $res );
+		}
+
+		wfProfileOut( __METHOD__ );
+		return $pages;
+	}
+
+	/**
 	 * count -- just return number of comments
 	 *
 	 * @return integer
@@ -765,10 +800,103 @@ class BlogCommentList {
 	 * @return true -- because it's hook
 	 */
 	static public function articleDeleteComplete( &$Article, &$User, $reason, $id ) {
+		wfProfileIn( __METHOD__ );
 
 		$listing = BlogCommentList::newFromTitle( $Article->getTitle() );
+		$aComments = $listing->getCommentPages();
+		if ( !empty($aComments) ) {
+			foreach ($aComments as $page_id => $oComment) {
+				$oCommentTitle = $oComment->getTitle();
+				if ( $oCommentTitle instanceof Title ) {
+					$oArticle = new Article($oCommentTitle);
+					$oArticle->doDeleteArticle($reason);
+				}
+			}
+		}
 		$listing->purge();
 
+		wfProfileOut( __METHOD__ );
+		return true;
+	}
+	
+	/**
+	 * Hook
+	 *
+	 * @param Title $oTitle -- instance of Title class
+	 * @param Revision $revision    -- new revision
+	 * @param Integer  $old_page_id  -- old page ID
+	 *
+	 * @static
+	 * @access public
+	 *
+	 * @return true -- because it's hook
+	 */
+	static public function undeleteComments( &$oTitle, $revision, $old_page_id ) {
+		// to do
+		wfProfileIn( __METHOD__ );
+		
+		if ( $oTitle instanceof Title ) {
+			#---
+			$new_page_id = $oTitle->getArticleId();
+			#---
+			$aProps = BlogArticle::getProps($old_page_id);
+			$oTitle->aProps = $aProps;
+			if (!empty($aProps)) {
+				BlogArticle::setProps($new_page_id, $aProps);
+				$newProps = BlogArticle::getProps($new_page_id);
+			}
+			#---			
+			$listing = BlogCommentList::newFromTitle( $oTitle );
+			#---			
+			$pagesToRecover = $listing->getRemovedCommentPages($oTitle);
+			#---			
+			if ( !empty($pagesToRecover) && is_array($pagesToRecover) ) {
+				#---
+				foreach ($pagesToRecover as $page_id => $page_value) {
+					#---
+					$oCommentTitle = Title::makeTitleSafe( $page_value['nspace'], $page_value['title'] );
+					if ($oCommentTitle instanceof Title) {
+						$archive = new PageArchive( $oCommentTitle );
+						$ok = $archive->undelete( "", wfMsg("blogs-undeleted-comment", $new_page_id) );
+					
+						if ( !is_array($ok) ) {
+							Wikia::log( __METHOD__, "error", "cannot restore comment {$page_value['title']} (id: {$page_id})" );
+						}
+					}
+				}
+			}
+		}
+		
+		wfProfileOut( __METHOD__ );
+		return true;
+	}
+	
+	/**
+	 * Hook
+	 *
+	 * @param Title $oTitle -- instance of Title class
+	 * @param User    $User    -- current user
+	 * @param string  $reason  -- undeleting reason
+	 *
+	 * @static
+	 * @access public
+	 *
+	 * @return true -- because it's hook
+	 */
+	static public function undeleteComplete($oTitle, $oUser, $reason) {
+		wfProfileIn( __METHOD__ );
+		if ($oTitle instanceof Title) {
+			if ( in_array($oTitle->getNamespace(), array(NS_BLOG_ARTICLE, NS_BLOG_ARTICLE_TALK)) ) {
+				$aProps = $oTitle->aProps;
+				$pageId = $oTitle->getArticleId();
+				if (!empty($aProps)) {
+					BlogArticle::setProps($pageId, $aProps);
+					$newProps = BlogArticle::getProps($pageId);
+				}
+			}
+		}
+
+		wfProfileOut( __METHOD__ );
 		return true;
 	}
 }
