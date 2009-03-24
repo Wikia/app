@@ -30,6 +30,8 @@ function moveToExternal( $cluster, $limit ) {
 	$dbw = wfGetDB( DB_MASTER );
 	$dbr = wfGetDB( DB_SLAVE );
 
+	echo "Moving revisions from {$wgDBName}\n";
+
 	$ext = new ExternalStoreDB;
 	$numMoved = 0;
 	$numStubs = 0;
@@ -44,7 +46,6 @@ function moveToExternal( $cluster, $limit ) {
 
 	$res = $dbr->query( $sql, __METHOD__ );
 	$ext = new ExternalStoreDB;
-	echo "Moving revisions from {$wgDBName}\n";
 	echo "Get external storage object.\n";
 	while ( $row = $dbr->fetchObject( $res ) ) {
 		$text = $row->old_text;
