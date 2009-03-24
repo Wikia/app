@@ -139,7 +139,7 @@ WikiaToolbar.prototype.addBucketIEFixes = function(bucket) {
 
 	var timeout;
 
-	FCKTools.AddEventListener(bucket.parentNode, 'mouseover', function(e) {
+	FCKTools.AddEventListener(bucket.parentNode.parentNode, 'mouseover', function(e) {
 		if (FCK.EditMode != FCK_EDITMODE_WYSIWYG) {
 			return;
 		}
@@ -160,14 +160,11 @@ WikiaToolbar.prototype.addBucketIEFixes = function(bucket) {
 		clearTimeout(timeout);
 	});
 
-	FCKTools.AddEventListener(bucket.parentNode, 'mouseout', function(e) {
+	FCKTools.AddEventListener(bucket.parentNode.parentNode, 'mouseout', function(e) {
 		if (FCK.EditMode != FCK_EDITMODE_WYSIWYG) {
 			return;
 		}
-
-		var id = bucket.id.split('_').pop();
-		timeout = setTimeout("var node = document.getElementById('fck_toolbar_bucket_" + id  + "').parentNode;" +
-			"node.style.height = '41px'", 500);
+		bucket.parentNode.style.height = '41px';
 	});
 }
 
