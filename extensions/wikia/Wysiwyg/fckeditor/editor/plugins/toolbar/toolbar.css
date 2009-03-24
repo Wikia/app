@@ -72,6 +72,9 @@
 #fck_toolbar li img {
 	vertical-align: middle;	
 }
+#fck_toolbar li div {
+	border: none;
+}
 #fck_toolbar label {
 	white-space: nowrap;
 	display: block;
