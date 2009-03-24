@@ -17,8 +17,9 @@ class TopUsersPoints extends UnlistedSpecialPage {
   function execute(){
     global $wgUser, $wgOut; 
     $wgOut->setPagetitle( "Top Users" );
+    $realcount = 50;
     $dbr =& wfGetDB( DB_MASTER );
-    $sql = "SELECT stats_user_id,stats_user_name, stats_total_points from user_stats where stats_year_id = 1 and stats_user_id <> 0 ORDER BY stats_total_points DESC LIMIT 0,50";
+    $sql = "SELECT stats_user_id,stats_user_name, stats_total_points from user_stats where stats_year_id = 1 and stats_user_id <> 0 ORDER BY stats_total_points DESC LIMIT 0,100";
     $res = $dbr->query($sql);
     $header = wfMsg("topusersheader");
     if($header != "&lt;topusersheader&gt;"){
@@ -31,17 +32,21 @@ class TopUsersPoints extends UnlistedSpecialPage {
     while ($row = $dbr->fetchObject( $res ) ) {
 	    $user_name = $row->stats_user_name;
 	    $user_title = Title::makeTitle( NS_USER  , $row->stats_user_name  );
-	    $avatar = new wAvatar($row->stats_user_id,"s");
-	    $CommentIcon = $avatar->getAvatarImage();
-	    $out .= "<div class=\"top-user-row\">
-	    		<span class=\"top-user-num\">{$x}</span><span class=\"top-user\"><img src='images/avatars/" . $CommentIcon . "' alt='' border=''> <a href='" . $user_title->getFullURL() . "' class=\"top-user-link\">" . $row->stats_user_name . "</a><a href='" . $user_title->getTalkPage()->getFullURL() .   "' class=\"top-user-talk\"><img src=\"images/commentIcon.gif\" border=\"0\" hspace=\"3\" align=\"middle\" alt=\"\" /></a>
-			</span>";
-			
-	    $out .=  "<span class=\"top-user-points\">" . $row->stats_total_points . "</span>
-	    	</div>";
-	    $x++;
+	    $oUser = User::newFromId($row->stats_user_id);
+	    if (! $oUser->isBlocked() ) {
+			$avatar = new wAvatar($row->stats_user_id,"s");
+			$CommentIcon = $avatar->getAvatarImage();
+			$out .= "<div class=\"top-user-row\">
+					<span class=\"top-user-num\">{$x}</span><span class=\"top-user\"><img src='images/avatars/" . $CommentIcon . "' alt='' border=''> <a href='" . $user_title->getFullURL() . "' class=\"top-user-link\">" . $row->stats_user_name . "</a><a href='" . $user_title->getTalkPage()->getFullURL() .   "' class=\"top-user-talk\"><img src=\"images/commentIcon.gif\" border=\"0\" hspace=\"3\" align=\"middle\" alt=\"\" /></a>
+				</span>";
+				
+			$out .=  "<span class=\"top-user-points\">" . $row->stats_total_points . "</span>
+				</div>";
+			$x++;
+		}
+		if ($x > $realcount) break;
     }
-     $out .= "</div>";
+    $out .= "</div>";
     $wgOut->addHTML($out);
   }
 
