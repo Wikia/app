@@ -102,6 +102,12 @@ var Sizer = function()
 				height -= $( 'PopupButtons' ).offsetHeight ;
 
 				frmMain.style.height = Math.max( height, 0 ) + 'px' ;
+
+				// Wikia: resize dialog border
+				if (FCKBrowserInfo.IsIE6) {
+					$('border').style.height = ($( 'contents' ).offsetHeight + 34) + 'px';
+					$('border').style.width = (document.body.offsetWidth - 12) + 'px';
+				}
 			}
 		},
 

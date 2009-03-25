@@ -1532,4 +1532,5 @@ if (FCK.UseContentEditable) {
 }
 
 // for us, developers ;)
+FCK.BrowserInfo = FCKBrowserInfo;
 window.parent.FCK = FCK;
