@@ -180,8 +180,8 @@ class AutoCreateWikiPage extends SpecialPage {
 						if ( !is_null($oUser) ) {
 							# user ok - so log in
 							$wgAuth->updateUser( $oUser );
-							$wgUser->setCookies();
 							$wgUser = $oUser;
+							$wgUser->setCookies();
 						}
 					} 
 					# log in
