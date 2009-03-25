@@ -204,7 +204,7 @@ var msgError = "<?=addslashes(wfMsg('autocreatewiki-invalid-wikiname'))?>";
 	</div>
 </div>
 </form>
-<iframe id="awc-process-login" height="1" width="1"></iframe>
+<iframe id="awc-process-login" height="1" width="1" style="visibility: hidden;"></iframe>
 <script type="text/javascript">
 /*<![CDATA[*/
 var YC = YAHOO.util.Connect;
