@@ -19,6 +19,11 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 }
 
 /**
+ * job is self-hosted, without other part of autocreate
+ */
+$wgExtensionMessagesFiles[ "AutoCreateWiki" ] = dirname(__FILE__) . "/AutoCreateWiki.i18n.php";
+
+/**
  * maintenance script from CheckUser
  */
 include( $GLOBALS['IP'] . "/extensions/CheckUser/install.inc" );
@@ -48,6 +53,8 @@ class AutoCreateWikiLocalJob extends Job {
 		global $wgUser;
 
 		wfProfileIn( __METHOD__ );
+
+		wfLoadExtensionMessages( "AutoCreateWiki" );
 
 		/**
 		 * setup founder user
@@ -84,7 +91,7 @@ class AutoCreateWikiLocalJob extends Job {
 		if( !$database ) {
 			$database = Wikifactory::IdtoDB( $city_id );
 		}
-		
+
 		Wikia::log( __METHOD__ , "db", $database );
 		if( $database ) {
 			$fields = $this->insertFields();
