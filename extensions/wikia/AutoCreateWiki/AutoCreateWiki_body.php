@@ -183,7 +183,7 @@ class AutoCreateWikiPage extends SpecialPage {
 						}
 					}
 					# log in
-					if ( !empty($oUser) && ($oUser instanceof User) ) {
+					if ( !empty($oUser) && ($oUser instanceof User) && ($this->mErrors == 0) ) {
 						$isLoggedIn = $this->loginAfterCreateAccount( );
 						if ( empty($isLoggedIn) ) {
 							wfDebug( "Login (api) failed - so use " . $oUser->getName() . "\n" );
@@ -688,6 +688,7 @@ class AutoCreateWikiPage extends SpecialPage {
 		#-
 		$aTopLanguages = explode(',', wfMsg('autocreatewiki-language-top-list'));
 		$aLanguages = $this->getFixedLanguageNames();
+		asort($aLanguages);
 		#-
 		$hubs = WikiFactoryHub::getInstance();
 		$aCategories = $hubs->getCategories();
