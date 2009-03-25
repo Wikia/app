@@ -62,6 +62,11 @@ WikiaToolbar.prototype.Create = function(parentElement) {
 	// add new toolbar CSS
 	FCKTools.AppendStyleSheet(toolbarDoc, window.parent.wgExtensionsPath + '/wikia/Wysiwyg/fckeditor/editor/plugins/toolbar/toolbar.css');
 
+	// fix IE6/7
+	if (FCKBrowserInfo.IsIE) {
+		FCKTools.AppendStyleSheet(toolbarDoc, window.parent.wgExtensionsPath + '/wikia/Wysiwyg/fckeditor/editor/plugins/toolbar/toolbar_ie.css');
+	}
+
 	// set toolbar foreground / background color based on #page_bar (.color1 CSS class)
 	var pageBar = new FCK.YAHOO.util.Element('page_bar');
 

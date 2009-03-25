@@ -96,20 +96,6 @@
 	display: none;
 }
 
-/* section for lovely IE6 fixes */
-* html #fck_toolbar li {
-	overflow: hidden;
-}
-
-* html #fck_toolbar .TB_Button_Image {
-	position: relative;
-}
-
-* html #fck_toolbar li img {
-	position: absolute;
-	left: -1px;
-}
-
 /* source mode */
 .toolbarSource td,
 .toolbarSource li {
