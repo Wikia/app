@@ -191,7 +191,7 @@ class AutoCreateWikiPage extends SpecialPage {
 							$wgUser = $oUser;
 							$wgUser->setCookies();
 						}
-						# check after logged in 
+						# check after logged in
 						if ( $wgUser->isAnon() ) {
 							$this->makeError( "wiki-username", wfMsg('autocreatewiki-user-notloggedin') );
 						} else {
@@ -199,9 +199,9 @@ class AutoCreateWikiPage extends SpecialPage {
 								$wgUser->setOption( 'rememberpassword', 1 );
 								$wgUser->saveSettings();
 							}
-						}						
+						}
 					} else {
-						$this->makeError( "wiki-username", wfMsg('autocreatewiki-busy-username') );					
+						$this->makeError( "wiki-username", wfMsg('autocreatewiki-busy-username') );
 					}
 				}
 
@@ -559,6 +559,7 @@ class AutoCreateWikiPage extends SpecialPage {
 			$wikiMover->setOverwrite( true );
 			$wikiMover->mMoveUserGroups = false;
 			$wikiMover->load();
+			$wikiMover->setTargetUploadDirectory( $this->mWikiData[ "images" ] );
 			$wikiMover->move();
 
 			/**

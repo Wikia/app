@@ -175,6 +175,24 @@ class WikiMover {
 	}
 
 	/**
+	 * setSourceUploadDirectory
+	 *
+	 * @param String	$path	source image directory
+	 */
+	public function setSourceUploadDirectory( $path ) {
+		$this->mSourceUploadDirectory = $path;
+	}
+
+	/**
+	 * mTargetUploadDirectory
+	 *
+	 * @param String	$path	target image directory
+	 */
+	public function setTargetUploadDirectory( $path ) {
+		$this->mTargetUploadDirectory = $path;
+	}
+
+	/**
 	 *  @method move
 	 *
 	 *  move articles from source to target with some additional conditions
