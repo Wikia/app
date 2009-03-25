@@ -212,7 +212,7 @@ class WikiFactory {
 
 	/**
 	 * removeDomain
-	 * 
+	 *
 	 * removes domain from city_domains table
 	 *
 	 * @author tor@wikia-inc.com
@@ -239,7 +239,7 @@ class WikiFactory {
 
 			return false;
 		}
-			
+
 		self::log( self::LOG_DOMAIN, "{$domain} removed.", $wiki );
 		$dbw->commit();
 
@@ -592,14 +592,19 @@ class WikiFactory {
 	 *
 	 * @return string	database name from city_list
 	 */
-	static public function IDtoDB( $city_id ) {
+	static public function IDtoDB( $city_id, $master = false ) {
 
 		if( ! self::isUsed() ) {
 			wfDebug( __METHOD__ . ": WikiFactory is not used.");
 			return null;
 		}
 
-		$dbr = wfGetDB( DB_SLAVE );
+		if( $master )  {
+			$dbr = wfGetDB( DB_MASTER );
+		}
+		else {
+			$dbr = wfGetDB( DB_SLAVE );
+		}
 		$oRow = $dbr->selectRow(
 			array( wfSharedTable("city_list") ),
 			array( "city_id", "city_dbname" ),
@@ -1295,7 +1300,7 @@ class WikiFactory {
 			__METHOD__
 		);
 	}
-	
+
 	/**
 	 * VarValueToID
 	 *
@@ -1338,5 +1343,5 @@ class WikiFactory {
 		wfProfileOut( __METHOD__ );
 		return isset( $oRow->city_id ) ? $oRow->city_id : null;
 	}
-	
+
 };
