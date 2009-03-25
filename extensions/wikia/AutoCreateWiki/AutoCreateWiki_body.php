@@ -1301,7 +1301,7 @@ class AutoCreateWikiPage extends SpecialPage {
 			);
 			$sSubject = wfMsgExt("autocreatewiki-welcomesubject",
 				array( 'language' => $this->mWikiData['language'] ),
-				array( $wikiName )
+				array( $this->mWikiData[ "title" ] )
 			);
 		}
 
