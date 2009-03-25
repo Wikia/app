@@ -232,7 +232,7 @@ class WikiaMiniUpload {
 	function insertImage() {
 		global $wgRequest, $wgUser, $wgContLang, $IP;
 		$type = $wgRequest->getVal('type');
-		$name = $wgRequest->getVal('name');
+		$name = urldecode( $wgRequest->getVal('name') );
 		$mwname = $wgRequest->getVal('mwname');
 		$extraId = $wgRequest->getVal('extraId');
 		$newFile =  true;

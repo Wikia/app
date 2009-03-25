@@ -530,12 +530,12 @@ function WMU_insertImage(e, type) {
 	params.push('mwname='+$('ImageUploadMWname').value);
 
 	if(type == 'overwrite') {
-		params.push('name='+$('ImageUploadExistingName').value);
+		params.push('name='+ encodeURIComponent( $('ImageUploadExistingName').value ) );
 	} else if(type == 'rename') {
-		params.push('name='+$('ImageUploadRenameName').value);
+		params.push('name='+ encodeURIComponent( $('ImageUploadRenameName').value ) );
 	} else {
 		if($('ImageUploadName')) {
-			params.push('name='+$('ImageUploadName').value + '.' + $('ImageUploadExtension').value);
+			params.push('name='+ encodeURIComponent( $('ImageUploadName').value ) + '.' + $('ImageUploadExtension').value);
 		}
 	}
 
@@ -575,9 +575,9 @@ function WMU_insertImage(e, type) {
 					$('ImageUploadBack').style.display = 'none';
 					$('ImageUpload' + WMU_curScreen).innerHTML = o.responseText;
 					if(WMU_refid == null) {
-						insertTags($('ImageUploadTag').innerHTML, '', '');
+						insertTags($('ImageUploadTag').value, '', '');
 					} else {
-						var wikitag = YAHOO.util.Dom.get('ImageUploadTag').innerHTML;
+						var wikitag = YAHOO.util.Dom.get('ImageUploadTag').value;
 						var options = {};
 
 						if($('ImageUploadThumbOption').checked) {
