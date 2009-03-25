@@ -200,9 +200,7 @@ class AutoCreateWikiPage extends SpecialPage {
 								$wgUser->saveSettings();
 							}
 						}
-					} else {
-						$this->makeError( "wiki-username", wfMsg('autocreatewiki-busy-username') );
-					}
+					} 
 				}
 
 				#-- user logged in or just create
