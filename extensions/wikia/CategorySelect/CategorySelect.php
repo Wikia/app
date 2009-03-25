@@ -202,6 +202,7 @@ function CategorySelectAjaxParseCategories($wikitext) {
  * @author Maciej Błaszkowski <marooned at wikia-inc.com>
  */
 function CategorySelectAjaxSaveCategories($articleId, $categories) {
+	global $wgUser;
 	$categories = CategorySelectChangeFormat($categories, 'json', 'wiki');
 	if ($categories == '') {
 		$result['info'] = 'Nothing to add.';
