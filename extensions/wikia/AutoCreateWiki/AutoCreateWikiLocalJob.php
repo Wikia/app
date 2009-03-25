@@ -72,13 +72,17 @@ class AutoCreateWikiLocalJob extends Job {
 	 */
 	public function WFinsert( $city_id ) {
 
-		global $wgDBname;
+		global $wgDBname, $wgErrorLog;
 
 		/**
 		 * we can take local database from city_id in params array
 		 */
+		$oldValue = $wgErrorLog;
+		$wgErrorLog = true;
+		Wikia::log( __METHOD__ , "id", $city_id );
 		if( $city_id ) {
 			$database = Wikifactory::IdtoDB( $city_id );
+			Wikia::log( __METHOD__ , "db", $database );
 			if( $database ) {
 				$fields = $this->insertFields();
 
@@ -101,6 +105,7 @@ class AutoCreateWikiLocalJob extends Job {
 				$dbw->selectDB( $wgDBname );
 			}
 		}
+		$wgErrorLog = $oldValue;
 	}
 
 	/**
