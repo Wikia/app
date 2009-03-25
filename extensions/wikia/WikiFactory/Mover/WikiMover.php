@@ -103,8 +103,7 @@ class WikiMover {
 	 *
 	 *  @return nothing
 	 */
-	public function load()
-	{
+	public function load() {
 		global $wgContLang;
 
 		if ( $this->mDataLoaded ) {
@@ -115,8 +114,8 @@ class WikiMover {
 		$this->mDataLoaded = true;
 		switch ( $this->mFrom ) {
 			case "id":
-				$this->mSourceName = WikiFactory::IDtoDB( $this->mSourceID );
-				$this->mTargetName = WikiFactory::IDtoDB( $this->mTargetID );
+				$this->mSourceName = WikiFactory::IDtoDB( $this->mSourceID, true );
+				$this->mTargetName = WikiFactory::IDtoDB( $this->mTargetID, true );
 			break;
 
 			case "name":
@@ -132,12 +131,13 @@ class WikiMover {
 				$this->mTargetID = WikiFactory::DBtoID( $this->mTargetName );
 				break;
 		}
-		#---
-		# get some configurations data from source and target database
-		# NOTE: this should be handled in another way in WikiMover External
-		# because it use temporary database and doesn't have configuration
-		# stored in wikicities database. So you have to provide proper values
-		# in constructor params
+		/**
+		 * get some configurations data from source and target database
+		 * NOTE: this should be handled in another way in WikiMover External
+		 * because it use temporary database and doesn't have configuration
+		 * stored in wikicities database. So you have to provide proper values
+		 * in constructor params
+		 */
 
 
 		if ( $this->mType === "external" ) {
