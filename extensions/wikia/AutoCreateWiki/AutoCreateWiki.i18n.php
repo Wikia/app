@@ -121,5 +121,6 @@ Best wishes,
 
 [[User:$2|$3]]
     ",
-	"autocreatewiki-welcometalk-log" => "Welcoming new sysop"
+	"autocreatewiki-welcometalk-log" => "Welcoming new sysop",
+	"requestwiki-filter-language" => "kh,kp,mu,als,an,ast,de-form,de-weig,dk,en-gb,ia,ie,ksh,mwl,pdc,pfl,simple,tokipona,tp,zh-cn,zh-hans,zh-hant,zh-hk,zh-mo,zh-my,zh-sg,zh-tw",
 );
