@@ -125,7 +125,9 @@ function SharedHelpHook(&$out, &$text) {
 		# Try to get content from memcache
 		if ( !empty($sharedArticle['timestamp']) ) {
 			if( (wfTimestamp() - (int) ($sharedArticle['timestamp'])) < 600) {
-				if (!empty($sharedArticle['cachekey'])) {
+				if( isset($sharedArticle['exists']) && $sharedArticle['exists'] == 0 ) {
+					return true;
+				} else if (!empty($sharedArticle['cachekey'])) {
 					wfDebug("SharedHelp: trying parser cache {$sharedArticle['cachekey']}\n");
 					$key1 = str_replace('-1!', '-0!', $sharedArticle['cachekey']);
 					$key2 = str_replace('-0!', '-1!', $sharedArticle['cachekey']);
@@ -138,8 +140,6 @@ function SharedHelpHook(&$out, &$text) {
 							$content = $parser->mText;
 						}
 					}
-				} else if($sharedArticle['exists'] == 0) {
-					return true;
 				}
 			}
 		}
