@@ -210,7 +210,7 @@ function CategorySelectAjaxSaveCategories($articleId, $categories) {
 		if (is_null($title)) {
 			$result['error'] = "Article [id=$articleId] does not exist.";
 		} else {
-			if($title->userCan('edit')) {
+			if($title->userCan('edit') && !$wgUser->isBlocked()) {
 				global $wgUser, $wgOut;
 				$article = new Article($title);
 				$article_text = $article->fetchContent();
