@@ -1337,8 +1337,7 @@ class AutoCreateWikiPage extends SpecialPage {
 		$oldValue = $wgErrorLog;
 		$wgErrorLog = true;
 		$info = sprintf( "%s: %F", $info, wfTime() - $this->mCurrTime );
-		wfDebugLog( self::LOG, $info );
-		Wikia::log( self::LOG, $info );
+		Wikia::log( __METHOD__, "-", $info );
 		$wgErrorLog = $oldValue;
 		$this->mCurrTime = wfTime();
 	}
