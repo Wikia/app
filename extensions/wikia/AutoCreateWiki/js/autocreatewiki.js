@@ -325,7 +325,7 @@ YAHOO.ACWikiRequest.resetForm = function(e) {
 }
 
 YE.addListener(["wiki-name", "wiki-domain"], "keyup", YAHOO.ACWikiRequest.wikiDomainKeyUp );
-YE.addListener(["wiki-username", "wiki-email", "wiki-password", "wiki-retype-password"], "keyup", YAHOO.ACWikiRequest.wikiAccountKeyUp );
+YE.addListener(["wiki-username", "wiki-email", "wiki-retype-password"], "keyup", YAHOO.ACWikiRequest.wikiAccountKeyUp );
 YE.addListener("wiki-language", "change", YAHOO.ACWikiRequest.wikiLanguageChange );
 YE.addListener(["wiki-user-year","wiki-user-month","wiki-user-day"] , "change", YAHOO.ACWikiRequest.wikiBirthdayCheck );
 YE.addListener("wiki-cancel", "click", YAHOO.ACWikiRequest.resetForm );
