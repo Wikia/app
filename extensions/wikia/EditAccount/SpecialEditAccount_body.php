@@ -86,6 +86,11 @@ class EditAccount extends SpecialPage {
 				$this->mStatus = $this->setPassword( $newPass );
 				$template = $this->mStatus ? 'selectuser' : 'displayuser';
 				break;
+			case 'setrealname':
+				$newRealName = $wgRequest->getVal( 'wpNewRealName' );
+				$this->mStatus = $this->setRealName( $newRealName );
+				$template = $this->mStatus ? 'selectuser' : 'displayuser';				
+				break;
 			case 'closeaccount':
 				$template = 'closeaccount';
 				break;
@@ -107,7 +112,8 @@ class EditAccount extends SpecialPage {
 				'status'	=> $this->mStatus,
 				'statusMsg' => $this->mStatusMsg,
 				'user'	  => $userName,
-				'userEmail' => is_object($this->mUser) ? $this->mUser->getEmail() : null
+				'userEmail' => is_object($this->mUser) ? $this->mUser->getEmail() : null,
+				'userRealName' => is_object($this->mUser) ? $this->mUser->getRealName() : null,
 			));
 		// HTML output
 		$wgOut->addHTML( $oTmpl->execute( $template ) );
@@ -165,6 +171,33 @@ class EditAccount extends SpecialPage {
 		} else {
 			// We have errors, let's inform the user about those
 			$this->mStatusMsg = wfMsg( 'editaccount-error-pass', $this->mUser->mName );
+			return false;
+		}
+	}
+
+	/**
+	 * Set a user's real name
+	 * @param $pass Mixed: real name to set to the user
+	 * @return Boolean: true on success, false on failure
+	 */
+	function setRealName( $realname ) {
+		$this->mUser->setRealName( $realname );
+		$this->mUser->saveSettings();
+		
+		if( $this->mUser->getRealName() == $realname ) { // was saved ok? the setRealName function doesn't return bool...
+			global $wgUser, $wgTitle;
+
+			// Log what was done
+			$log = new LogPage( 'editaccnt' );
+
+			$log->addEntry( 'realnamechange', $wgTitle, '', array( $this->mUser->getUserPage() ) );
+
+			// And finally, inform the user that everything went as planned
+			$this->mStatusMsg = wfMsg( 'editaccount-success-realname', $this->mUser->mName );
+			return true;
+		} else {
+			// We have errors, let's inform the user about those
+			$this->mStatusMsg = wfMsg( 'editaccount-error-realname', $this->mUser->mName );
 			return false;
 		}
 	}
