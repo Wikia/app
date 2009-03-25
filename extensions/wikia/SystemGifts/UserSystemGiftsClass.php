@@ -48,7 +48,7 @@ class UserSystemGifts {
 		//add to new gift count cache for receiving user
 		$this->incNewSystemGiftCount($this->user_id);
 		
-		if($email)$this->sendGiftNotificationEmail($this->user_id,$gift_id );
+		if ( $email && !empty($sg_gift_id) ) $this->sendGiftNotificationEmail($this->user_id,$gift_id );
 		$wgMemc->delete( wfMemcKey( 'user', 'profile', 'system_gifts' , $this->user_id) );
 		return $sg_gift_id;
 	}
