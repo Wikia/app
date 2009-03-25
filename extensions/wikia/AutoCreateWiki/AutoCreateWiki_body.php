@@ -173,25 +173,35 @@ class AutoCreateWikiPage extends SpecialPage {
 				$this->makeRequestParams();
 				$this->checkWikiCreationParams();
 				if ( $wgUser->isAnon() ) {
+					$oUser = $wgUser;
 					if ( empty($this->mLoggedin) ) {
 						// create account form
 						$oUser = $this->addNewAccount();
 						if ( !is_null($oUser) ) {
 							# user ok - so log in
 							$wgAuth->updateUser( $oUser );
-							$oUser->loadFromDatabase();
-							error_log("created user: " . print_r($oUser, true));
+							$wgUser->setCookies();
+							$wgUser = $oUser;
 						}
-					}
+					} 
 					# log in
-					$isLoggedIn = $this->loginAfterCreateAccount( );
+					
+/*					$isLoggedIn = $this->loginAfterCreateAccount( );
 					if ( !empty($isLoggedIn) ) {
 						if ( !empty($this->mRemember) ) {
 							$wgUser->setOption( 'rememberpassword', 1 );
 							$wgUser->saveSettings();
 						}
-					} else {
+					} else {*
 						$this->makeError( "wiki-username", wfMsg('autocreatewiki-busy-username') );
+					}*/
+					if ( $wgUser->isAnon() ) {
+						$this->makeError( "wiki-username", wfMsg('autocreatewiki-user-notloggedin') );
+					} else {
+						if ( !empty($this->mRemember) ) {
+							$wgUser->setOption( 'rememberpassword', 1 );
+							$wgUser->saveSettings();
+						}
 					}
 				}
 
