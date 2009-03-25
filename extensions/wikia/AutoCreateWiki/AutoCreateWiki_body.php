@@ -578,7 +578,7 @@ class AutoCreateWikiPage extends SpecialPage {
 		 * add local job
 		 */
 		$localJob = new AutoCreateWikiLocalJob(	Title::newFromText( NS_MAIN, "Main" ), $this->mWikiData );
-		$localJob->WFinsert( $this->mWikiId );
+		$localJob->WFinsert( $this->mWikiId, $this->mWikiData[ "dbname" ] );
 
 		/**
 		 * inform task manager
