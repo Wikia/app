@@ -492,7 +492,7 @@ class WikiaApiQuery extends ApiQueryBase {
 	#---
 	public function getDataFromCache( $key ) {
 		global $wgMemc;
-		$cached = $wgMemc->get($key);
+		$cached = $wgMemc->get(md5($key));
 		return $cached;
 	}
 
