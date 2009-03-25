@@ -179,6 +179,8 @@ class AutoCreateWikiPage extends SpecialPage {
 						if ( !is_null($oUser) ) {
 							# user ok - so log in
 							$wgAuth->updateUser( $oUser );
+							$oUser->loadFromDatabase();
+							error_log("created user: " . print_r($oUser, true));
 						}
 					}
 					# log in
