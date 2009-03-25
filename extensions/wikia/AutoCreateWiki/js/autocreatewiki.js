@@ -329,9 +329,3 @@ YE.addListener(["wiki-username", "wiki-email", "wiki-password", "wiki-retype-pas
 YE.addListener("wiki-language", "change", YAHOO.ACWikiRequest.wikiLanguageChange );
 YE.addListener(["wiki-user-year","wiki-user-month","wiki-user-day"] , "change", YAHOO.ACWikiRequest.wikiBirthdayCheck );
 YE.addListener("wiki-cancel", "click", YAHOO.ACWikiRequest.resetForm );
-
-YE.onDOMReady(function () {
-	if (YD.get('userloginRound')) {
-		YE.addListener('AWClogin', 'click', YAHOO.wikia.AjaxLogin.showLoginPanel);
-	}
-});

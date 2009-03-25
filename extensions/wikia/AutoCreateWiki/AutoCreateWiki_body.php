@@ -50,6 +50,7 @@ class AutoCreateWikiPage extends SpecialPage {
     const ARTICLE_NEW_WIKIS = "New_wikis_this_week/Draft";
     const DEFAULT_STAFF = "Angela";
     const SEND_WELCOME_MAIL = 1;
+    const CACHE_LOGIN_KEY = 'awc_beforelog';
 
 	/**
 	 * constructor
@@ -127,6 +128,9 @@ class AutoCreateWikiPage extends SpecialPage {
 		if( $subpage === "test" ) {
 			#---
 			$this->create();
+		} elseif ( $subpage === "Caching" ) {
+			$this->setValuesToSession();
+			exit;
 		} elseif ( $subpage === "Testing" ) {
 			if ( $this->setVarsFromSession() > 0 ) {
 				$this->test();
@@ -662,7 +666,7 @@ class AutoCreateWikiPage extends SpecialPage {
 	 */
 	public function createWikiForm() {
 		global $wgOut, $wgUser, $wgExtensionsPath, $wgStyleVersion, $wgScriptPath, $wgStylePath;
-		global $wgCaptchaTriggers, $wgRequest;
+		global $wgCaptchaTriggers, $wgRequest, $wgDBname, $wgMemc;
 		wfProfileIn( __METHOD__ );
 		#-
 		$aTopLanguages = explode(',', wfMsg('autocreatewiki-language-top-list'));
@@ -672,6 +676,11 @@ class AutoCreateWikiPage extends SpecialPage {
 		$aCategories = $hubs->getCategories();
 		#--
 		$params = $this->fixSessionKeys();
+		if ( empty($params) && empty($this->mPosted) ) {
+			$ip = wfGetIP();
+			$key = wfMemcKey( self::CACHE_LOGIN_KEY, $wgDBname, $ip );
+			$params = $wgMemc->get($key);
+		}
 		#--
 		$f = new FancyCaptcha();
 		#--
@@ -1347,6 +1356,21 @@ class AutoCreateWikiPage extends SpecialPage {
 		$key = AutoCreateWiki::logMemcKey ("set", $aParams, $aInfo);
 		wfProfileOut( __METHOD__ );
 		return $key;
+	}
+	
+	/**
+	 * set form fields values to memc
+	 */
+	private function setValuesToSession() {
+		global $wgDBname, $wgRequest,$wgMemc;
+		$params = $this->fixSessionKeys();
+		if (!empty($params)) {
+			$ip = wfGetIP();
+			$key = wfMemcKey( self::CACHE_LOGIN_KEY, $wgDBname, $ip );
+			if ( !$value ) {
+				$wgMemc->set( $key, $params, 30);
+			}
+		}
 	}
 
 	/**
