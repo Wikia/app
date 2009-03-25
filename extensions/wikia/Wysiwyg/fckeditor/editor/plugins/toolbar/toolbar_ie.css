@@ -1,0 +1,27 @@
+#fck_toolbar {
+	top: 1px;
+}
+
+#fck_toolbar td div {
+	height: 41px;
+	min-height: 41px;
+}
+
+#fck_toolbar.toolbarSource td.last div.clearfix {
+	width: 120px !important;
+	height: 41px !important;
+}
+
+/* section for lovely IE6 fixes */
+* html #fck_toolbar li {
+	overflow: hidden;
+}
+
+* html #fck_toolbar .TB_Button_Image {
+	position: relative;
+}
+
+* html #fck_toolbar li img {
+	position: absolute;
+	left: -1px;
+}
