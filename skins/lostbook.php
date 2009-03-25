@@ -274,24 +274,6 @@ class lostbookTemplate extends QuickTemplate {
 <?php	} ?>
 
 
-
-<div id="p-languages" class="portlet">
-		<h5>In other languages</h5>
-		<div class="pBody">
-			<ul>
-				<li id="interwiki-de"><a href="http://de.lostpedia.com/">Deutsch</a></li>
-				<li id="interwiki-en"><a href="http://en.lostpedia.com/">English</a></li>
-				<li id="interwiki-es"><a href="http://es.lostpedia.com/">Espa&ntilde;ol</a></li>
-				<li id="interwiki-fr"><a href="http://fr.lostpedia.com/">Fran&ccedil;ais</a></li>
-				<li id="interwiki-it"><a href="http://it.lostpedia.com/">Italiano</a></li>
-				<li id="interwiki-nl"><a href="http://nl.lostpedia.com/">Nederlands</a></li>
-				<li id="interwiki-pl"><a href="http://pl.lostpedia.com/">Polski</a></li>
-				<li id="interwiki-pt"><a href="http://pt.lostpedia.com/">Portugu&ecirc;s</a></li>
-			</ul>
-
-		</div>
-</div>
-
 <!-- Google AdSense Side -->
 <?php
 if (strstr($_SERVER['REQUEST_URI'],"Special:")) {include ("nogoogleads.inc");}
