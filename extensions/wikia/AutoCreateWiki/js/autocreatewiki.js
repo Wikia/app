@@ -83,6 +83,10 @@ YAHOO.util.Event.onAvailable("moving", function() {
 		}
 		
 		function onblurFormElem(event) {
+			if (curDiv) {
+				YAHOO.util.Dom.setStyle("moving", 'display', 'none');
+				YAHOO.util.Dom.addClass(curDiv, 'selected'); 
+			}
 			curDiv = null;
 		}
 		
@@ -114,7 +118,7 @@ YAHOO.util.Event.onAvailable("moving", function() {
 							height: { from: prevHeight, to: height },
 							width: { from: width, to: width }
 						}, 1);
-						move.duration = 0.5;
+						move.duration = 0.4;
 						move.onComplete.subscribe(function() {
 							YAHOO.util.Dom.addClass(curDiv, 'selected'); 
 							YAHOO.util.Dom.setStyle("moving", 'display', 'none');
