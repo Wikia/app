@@ -216,7 +216,7 @@ class AutoCreateWikiPage extends SpecialPage {
 			$this->setInfoLog('OK', wfMsg('autocreatewiki-step' . $i));
 			sleep(1);
 		}
-		
+
 		$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
 		$oTmpl->set_vars( array(
 			"domain" => "testtestest.wikia.com",
@@ -621,7 +621,7 @@ class AutoCreateWikiPage extends SpecialPage {
 		$sSubdomain = ( $this->awcLanguage === 'en' ) ? strtolower( trim( $this->awcDomain ) ) : $this->awcLanguage . "." . strtolower( trim( $this->awcDomain ) );
 		$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
 		$oTmpl->set_vars( array(
-			"domain" => sprintf("%s.%s", $sSubdomain, $this->mDefSubdomain), 
+			"domain" => sprintf("%s.%s", $sSubdomain, $this->mDefSubdomain),
 		));
 		#---
 		$sFinishText = $oTmpl->execute("finish");
@@ -777,8 +777,8 @@ class AutoCreateWikiPage extends SpecialPage {
 	}
 
 	/*
-	 * 
-	 */ 
+	 *
+	 */
 	private function fixSessionKeys() {
 		global $wgRequest;
 		$__params = $wgRequest->getValues();
@@ -1332,12 +1332,14 @@ class AutoCreateWikiPage extends SpecialPage {
 	 * common log function
 	 */
 	private function log( $info ) {
-		global $wgOut, $wgUser;
+		global $wgOut, $wgUser, $wgErrorLog;
 
+		$oldValue = $wgErrorLog;
+		$wgErrorLog = true;
 		$info = sprintf( "%s: %F", $info, wfTime() - $this->mCurrTime );
 		wfDebugLog( self::LOG, $info );
 		Wikia::log( self::LOG, $info );
-		#----
+		$wgErrorLog = $oldValue;
 		$this->mCurrTime = wfTime();
 	}
 
@@ -1490,21 +1492,21 @@ class AutoCreateWikiPage extends SpecialPage {
 	/*
 	 * get a list of language names available for wiki request
 	 * (possibly filter some)
-	 * 
+	 *
 	 * @author nef@wikia-inc.com
 	 * @return array
-	 * 
+	 *
 	 * @see Language::getLanguageNames()
 	 * @see RT#11870
 	 */
-	private function getFixedLanguageNames() { 
+	private function getFixedLanguageNames() {
 		$languages = Language::getLanguageNames();
-		
+
 		$filter_languages = explode(',', wfMsg('requestwiki-filter-language'));
 		foreach ($filter_languages as $key) {
 			unset($languages[$key]);
 		}
 		return $languages;
 	}
-	
+
 }
