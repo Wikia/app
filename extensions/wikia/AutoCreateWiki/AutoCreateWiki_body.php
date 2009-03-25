@@ -183,9 +183,9 @@ class AutoCreateWikiPage extends SpecialPage {
 							$wgUser = $oUser;
 							$wgUser->setCookies();
 						}
-					} 
+					}
 					# log in
-					
+
 /*					$isLoggedIn = $this->loginAfterCreateAccount( );
 					if ( !empty($isLoggedIn) ) {
 						if ( !empty($this->mRemember) ) {
