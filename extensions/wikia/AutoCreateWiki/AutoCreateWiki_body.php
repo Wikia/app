@@ -156,7 +156,7 @@ class AutoCreateWikiPage extends SpecialPage {
 				#--- Limit of user creation
 				$this->mNbrUserCreated = $this->countCreatedWikisByUser();
 				if ( $this->mNbrUserCreated >= self::DAILY_USER_LIMIT ) {
-					$wgOut->addHTML(wgMsg('autocreatewiki-limit-creation'));
+					$wgOut->addHTML(wfMsg('autocreatewiki-limit-creation'));
 					return;
 				}
 				if ( $this->setVarsFromSession() > 0 ) {
@@ -1043,6 +1043,7 @@ class AutoCreateWikiPage extends SpecialPage {
 		$oApi = new ApiMain( new FauxRequest( $apiParams ) );
 		$oApi->execute();
 		$aResult = &$oApi->GetResultData();
+		error_log("awc-autologin: " . print_r($aResult, true));
 		wfProfileOut( __METHOD__ );
 
 		return ( isset($aResult['login']['result']) && ( $aResult['login']['result'] == 'Success' ) );
