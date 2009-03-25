@@ -48,6 +48,7 @@ $messages['en'] = array(
 	"autocreatewiki-invalid-username" => "This username is invalid.",
 	"autocreatewiki-busy-username" => "This username is already taken.",
 	"autocreatewiki-blocked-username" => "You cannot create account.",
+	"autocreatewiki-user-notloggedin" => "Your account was created but not logged in!",
 	"autocreatewiki-empty-language" => "Please, select language of Wiki.",
 	"autocreatewiki-empty-category" => "Please, select one of category.",
 	"autocreatewiki-empty-wikiname" => "The name of Wiki cannot be empty.",
