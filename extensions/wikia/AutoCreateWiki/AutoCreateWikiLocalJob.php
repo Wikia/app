@@ -89,25 +89,25 @@ class AutoCreateWikiLocalJob extends Job {
 		}
 		Wikia::log( __METHOD__ , "db", $database );
 		if( $database ) {
-				$fields = $this->insertFields();
+			$fields = $this->insertFields();
 
-				$dbw = wfGetDB( DB_MASTER );
-				$dbw->selectDB( $database );
+			$dbw = wfGetDB( DB_MASTER );
+			$dbw->selectDB( $database );
 
-				if ( $this->removeDuplicates ) {
-					$res = $dbw->select( 'job', array( '1' ), $fields, __METHOD__ );
-					if ( $dbw->numRows( $res ) ) {
-						return;
-					}
+			if ( $this->removeDuplicates ) {
+				$res = $dbw->select( 'job', array( '1' ), $fields, __METHOD__ );
+				if ( $dbw->numRows( $res ) ) {
+					return;
 				}
-				$fields['job_id'] = $dbw->nextSequenceValue( 'job_job_id_seq' );
-				$dbw->insert( 'job', $fields, __METHOD__ );
+			}
+			$fields['job_id'] = $dbw->nextSequenceValue( 'job_job_id_seq' );
+			$dbw->insert( 'job', $fields, __METHOD__ );
 
-				/**
-				 * we need to commit before switching databases
-				 */
-				$dbw->commit();
-				$dbw->selectDB( $wgDBname );
+			/**
+			 * we need to commit before switching databases
+			 */
+			$dbw->commit();
+			$dbw->selectDB( $wgDBname );
 		}
 		$wgErrorLog = $oldValue;
 	}
