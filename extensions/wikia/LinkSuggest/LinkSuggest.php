@@ -21,6 +21,7 @@ if(!defined('MEDIAWIKI')) {
 $wgExtensionCredits['other'][] = array(
     'name' => 'LinkSuggest',
     'author' => 'Inez Korczyński',
+    'version' => '1.50',
 );
 
 $wgExtensionMessagesFiles['LinkSuggest'] = dirname(__FILE__).'/'.'LinkSuggest.i18n.php';
