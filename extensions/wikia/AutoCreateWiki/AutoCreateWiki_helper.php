@@ -231,6 +231,7 @@ class AutoCreateWiki {
 				$sResponse = wfMsg('autocreatewiki-invalid-username');
 			} else {
 				$iId = User::idFromName( $sValue );
+				error_log ('checkUsernameIsCorrect = ' . $iId);
 				if ( !empty($iId) ) {
 					$sResponse = wfMsg('autocreatewiki-busy-username');
 				}
