@@ -802,10 +802,12 @@ class AutoCreateWikiPage extends SpecialPage {
 	private function clearSessionKeys() {
 		wfProfileIn( __METHOD__ );
 		$res = 0;
-		foreach ($_SESSION as $key => $value) {
-			if ( preg_match('/^awc/', $key) !== false ) {
-				unset($_SESSION[$key]);
-				$res++;
+		if ( !empty($_SESSION) && is_array($_SESSION) ) {
+			foreach ($_SESSION as $key => $value) {
+				if ( preg_match('/^awc/', $key) !== false ) {
+					unset($_SESSION[$key]);
+					$res++;
+				}
 			}
 		}
 		wfProfileOut( __METHOD__ );
