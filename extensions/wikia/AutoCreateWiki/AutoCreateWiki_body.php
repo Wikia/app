@@ -288,7 +288,7 @@ class AutoCreateWikiPage extends SpecialPage {
 		$insertFields = array(
 			'city_title'          => $this->mWikiData[ "title" ],
 			'city_dbname'         => $this->mWikiData[ "dbname"],
-			'city_url'            => sprintf( "http://%s.%s/", $this->mWikiData[ "subdomain" ], ".wikia.com" ),
+			'city_url'            => sprintf( "http://%s.%s/", $this->mWikiData[ "subdomain" ], "wikia.com" ),
 			'city_founding_user'  => $wgUser->getID(),
 			'city_founding_email' => $wgUser->getEmail(),
 			'city_path'           => $this->mWikiData[ "path" ],
@@ -1359,7 +1359,7 @@ class AutoCreateWikiPage extends SpecialPage {
 		wfProfileOut( __METHOD__ );
 		return $key;
 	}
-	
+
 	/**
 	 * set form fields values to memc
 	 */
