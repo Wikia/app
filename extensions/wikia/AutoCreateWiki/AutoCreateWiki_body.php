@@ -547,6 +547,7 @@ class AutoCreateWikiPage extends SpecialPage {
 		/**
 		 * use starter when wikia in proper hub
 		 */
+		$this->log( "Defined starters: " . print_r( $this->mStarters, true ) );
 		if( isset( $this->mStarters[ $this->mWikiData[ "hub" ] ] )
 			&& $this->mStarters[ $this->mWikiData[ "hub" ] ]
 			&& $this->mWikiData[ "language" ] === "en" ) {
@@ -567,6 +568,10 @@ class AutoCreateWikiPage extends SpecialPage {
                 $this->log( $log["info"] );
             }
 			$this->addCustomSettings( $this->mWikiData[ "hub" ], $wgHubCreationVariables, 'hub' );
+		}
+		else {
+			$this->log( sprintf( "There's not starters for category %d and language %s",
+				$this->mWikiData[ 'hub' ], $this->mWikiData[ "language" ] ) );
 		}
 
 		/**
