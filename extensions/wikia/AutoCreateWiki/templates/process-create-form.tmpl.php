@@ -8,7 +8,7 @@
 	<div id="awc-log" class="note"></div>
 </div>
 <br />
-<iframe id="awc-process" height="10" width="50"></iframe>
+<iframe id="awc-process" height="1" width="1"></iframe>
 <script type="text/javascript">
 /*<![CDATA[*/
 var YD = YAHOO.util.Dom;
