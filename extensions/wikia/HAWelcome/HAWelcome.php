@@ -217,7 +217,7 @@ class HAWelcomeJob extends Job {
 	 * @return User class instance
 	 */
 	public function getLastSysop() {
-		global $wgCityId;
+		global $wgCityId, $wgMemc;
 
 		wfProfileIn( __METHOD__ );
 
