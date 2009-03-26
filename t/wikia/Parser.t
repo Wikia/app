@@ -110,6 +110,57 @@ $testCases = array(
 			),
 	),
 
+	// interwiki
+	// use Special:InterwikiEdit if needed
+	array(
+		'name'     => 'Interwiki',
+		'wikitext' => "[[bug:123]]",
+		'html'     => "<p _new_lines_before=\"0\"><input type=\"button\" refid=\"0\" _fck_type=\"interwiki\" value=\"[[bug:123]]\" title=\"[[bug:123]]\" class=\"wysiwygDisabled wysiwygInterwiki\" /><!--EOL1-->\n</p>",
+		'data'     => array(
+				array('type' => 'interwiki', 'originalCall' => '[[bug:123]]'),
+			),
+	),
+
+	// <html>
+	array(
+		'name'     => '<html> hook',
+		'wikitext' => "<html><div>foo</div></html>",
+		'html'     => "<p _new_lines_before=\"0\"><input type=\"button\" refid=\"0\" _fck_type=\"html\" value=\"&lt;div&gt;foo&lt;/div&gt;\" title=\"&lt;div&gt;foo&lt;/div&gt;\" class=\"wysiwygDisabled wysiwygHtml\" /><!--EOL1-->\n</p>",
+		'data'     => array(
+				array('type' => 'html', 'description' => '<div>foo</div>'),
+			),
+	),
+
+	// <nowiki>
+	array(
+		'name'     => '<nowiki> hook',
+		'wikitext' => "<nowiki>''a''</nowiki>",
+		'html'     => "<p _new_lines_before=\"0\"><input type=\"button\" refid=\"0\" _fck_type=\"nowiki\" value=\"''a''\" title=\"''a''\" class=\"wysiwygDisabled wysiwygNowiki\" /><!--EOL1-->\n</p>",
+		'data'     => array(
+				array('type' => 'nowiki', 'description' => "''a''"),
+			),
+	),
+
+	// <gallery>
+	array(
+		'name'     => '<gallery> hook',
+		'wikitext' => "<gallery>\nImage:Test.jpg\nImage:Foobar.png\n</gallery>",
+		'html'     => "<p _new_lines_before=\"0\"><input type=\"button\" refid=\"0\" _fck_type=\"gallery\" value=\"&lt;gallery&gt;<!--EOL1-->\nImage:Test.jpg<!--EOL1-->\nImage:Foobar.png<!--EOL1-->\n&lt;/gallery&gt;\" title=\"&lt;gallery&gt;<!--EOL1-->\nImage:Test.jpg<!--EOL1-->\nImage:Foobar.png<!--EOL1-->\n&lt;/gallery&gt;\" class=\"wysiwygDisabled wysiwygGallery\" /><!--EOL1-->\n</p>",
+		'data'     => array(
+				array('type' => 'gallery', 'description' => "<gallery>\nImage:Test.jpg\nImage:Foobar.png\n</gallery>"),
+			),
+	),
+
+	// <staff />
+	array(
+		'name'     => '<staff /> hook',
+		'wikitext' => "<staff />",
+		'html'     => "<p _new_lines_before=\"0\"><input type=\"button\" refid=\"0\" _fck_type=\"hook\" value=\"&lt;staff /&gt;\" title=\"&lt;staff /&gt;\" class=\"wysiwygDisabled wysiwygHook wysiwygHookStaff\" /><!--EOL1-->\n</p>",
+		'data'     => array(
+				array('type' => 'hook', 'description' => "<staff />", 'name' => 'staff'),
+			),
+	),
+
 );
 
 // how many tests to run
