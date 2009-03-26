@@ -24,6 +24,8 @@ You can enter an optional '''Destination filename''' and provide a '''Summary'''
 Inappropriate files will be deleted immediately, see the [[{{MediaWiki:Multipleupload-page}}|file deletion policy]].",
 	'multiupload-fileuploaded'         => "File uploaded.",
 	'multiupload-toolbox'              => "Upload multiple files",
+	'multiupload-no-files'		   => "Please select at least one file to upload",
+	'multiupload-blank'		   => "No file selected",
 );
 
 /** Karelian (Karjala)
