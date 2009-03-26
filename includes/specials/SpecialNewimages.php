@@ -51,6 +51,7 @@ function wfSpecialNewimages( $par, $specialPage ) {
 	if ($hidebotsql) {
 		$sql .= "$hidebotsql WHERE ug_group IS NULL";
 	}
+
 	$sql.=' ORDER BY img_timestamp DESC LIMIT 1';
 	$res = $dbr->query($sql, 'wfSpecialNewImages');
 	$row = $dbr->fetchRow($res);
@@ -102,6 +103,10 @@ function wfSpecialNewimages( $par, $specialPage ) {
 		$sql .= $hidebotsql;
 		$where[]='ug_group IS NULL';
 	}
+
+	// hook by Wikia, Bartek Lapinski 26.03.2009, for videos and stuff
+	wfRunHooks( 'SpecialNewImages::beforeQuery', array( &$where ) );
+
 	if(count($where)) {
 		$sql.=' WHERE '.$dbr->makeList($where, LIST_AND);
 	}
