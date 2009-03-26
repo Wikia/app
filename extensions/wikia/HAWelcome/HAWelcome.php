@@ -287,13 +287,15 @@ class HAWelcomeJob extends Job {
 	 * @return true means process other hooks
 	 */
 	public static function revisionInsertComplete( &$revision, &$url, &$flags ) {
-		global $wgUser, $wgCityId, $wgCommandLineMode, $wgSharedDB;
+		global $wgUser, $wgCityId, $wgCommandLineMode, $wgSharedDB, $wgErrorLog;
 
 		wfProfileIn( __METHOD__ );
 
 		/**
 		 * Do not create task when DB is locked (rt#12229)
 		 */
+		$oldValue = $wgErrorLog;
+		$wgErrorLog = true;
 		if ( !wfReadOnly() ) {
 			wfLoadExtensionMessages( "HAWelcome" );
 
@@ -357,6 +359,7 @@ class HAWelcomeJob extends Job {
 				Wikia::log( __METHOD__, "right-welcometool", "user " . $wgUser->isAllowed( 'welcometool' ) );
 			}
 		}
+		$wgErrorLog = $oldValue;
 		wfProfileOut( __METHOD__ );
 
 		return true;
