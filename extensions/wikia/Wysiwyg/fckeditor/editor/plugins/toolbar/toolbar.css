@@ -16,9 +16,10 @@
 	border-collapse: collapse;
 	font-family: "Verdana", "Arial", sans-serif;
 	font-size: 10px;
-	width: 99%;
+	height: 49px;
 	position: absolute;
-	height: 48px;
+	top: 0;
+	width: 100%;
 }
 #fck_toolbar td {
 	padding: 0;
@@ -26,11 +27,11 @@
 }
 #fck_toolbar td div {
 	border-right: 1px solid #999;
-	height: 44px;
-	min-height: 44px;
+	height: 49px;
+	min-height: 49px;
 	min-width: 108px;
 	overflow: hidden;
-	padding: 0 7px 5px 10px;
+	padding: 0 7px 0 10px;
 	text-align: center;
 }
 #fck_toolbar td div:hover {
@@ -41,9 +42,10 @@
 	border: 0;	
 }
 #fck_toolbar ul {
+	height: 1%;
 	list-style: none;
 	margin: 0 auto;
-	padding: 0;
+	padding: 0 0 5px 0;
 }
 #fck_toolbar li {
 	background: #FFF url(icons/fck_button_bg.png) repeat-x 0 12px;
@@ -75,9 +77,8 @@
 	border: none;
 }
 #fck_toolbar label {
-	white-space: nowrap;
-	display: block;
 	padding: 1px 0;
+	white-space: nowrap;
 }
 #fck_toolbar select {
 	margin-top: 2px;
