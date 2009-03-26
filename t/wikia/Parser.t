@@ -13,10 +13,14 @@ require('maintenance/parserTests.inc');
 
 // run wysiwyg parser and compare its output with given HTML and meta-data array
 function parseOk($wikitext, $html, $data) {
+	// clean meta-data before test case run
+	global $wgWysiwygMetaData;
+	$wgWysiwygMetaData = NULL;
+
+	// parse wikitext
 	list($outputHtml, $outputData) = Wysiwyg_WikiTextToHtml($wikitext, 1);
 
-	//var_dump($outputHtml);var_dump($outputData);
-
+	// test it
 	is($outputHtml,$html,  'comparing HTML');
 	is_deeply($outputData, $data, 'comparing meta-data');
 }
@@ -44,6 +48,17 @@ $testCases = array(
 		'wikitext' => "== h==",
 		'html'     => "<h2 _wysiwyg_line_start=\"true\" refid=0> h</h2><!--EOL1-->\n",
 		'data'     => array(array('level' => 2, 'linesBefore' => 0, 'linesAfter' => 1)),
+	),
+
+	// external links
+	array(
+		'name'     => 'External links',
+		'wikitext' => "[http://wp.pl] abc [http://foo.com foo]",
+		'html'     => "<p _new_lines_before=\"0\"><a href=\"http://wp.pl\" class=\"external autonumber\" rel=\"nofollow\" refid=\"0\">[1]</a> abc <a href=\"http://foo.com\" class=\"external text\" rel=\"nofollow\" refid=\"1\">foo</a><!--EOL1-->\n</p>",
+		'data'     => array(
+				array('type' => 'external link', 'href' => 'http://wp.pl'),
+				array('type' => 'external link', 'href' => 'http://foo.com'),
+			),
 	),
 
 );
