@@ -108,13 +108,15 @@ class HAWelcomeJob extends Job {
 	 * @access public
 	 */
 	public function run() {
-		global $wgUser, $wgTitle;
+		global $wgUser, $wgTitle, $wgErrorLog;
 
 		wfProfileIn( __METHOD__ );
 
 		/**
 		 * overwrite $wgUser for ~~~~ expanding
 		 */
+		$oldValue = $wgErrorLog;
+		$wgErrorLog = true;
 		$tmpUser = $wgUser;
 		$wgUser  = User::newFromName( self::WELCOMEUSER );
 		$flags = 0;
@@ -200,6 +202,7 @@ class HAWelcomeJob extends Job {
 		}
 
 		$wgUser = $tmpUser;
+		$wgErrorLog = $oldValue;
 
 		wfProfileOut( __METHOD__ );
 
