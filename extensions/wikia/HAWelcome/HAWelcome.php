@@ -48,6 +48,18 @@ $wgExtensionMessagesFiles[ "HAWelcome" ] = dirname(__FILE__) . '/HAWelcome.i18n.
  */
 $wgWikiaBatchTasks[ "welcome" ] = "HAWelcomeTask";
 
+/**
+ *  permissions / rt#12215
+ */
+$wgAvailableRights[] = "welcometool";
+$wgGroupPermissions['*'          ]['welcometool'] = true;
+$wgGroupPermissions['user'       ]['welcometool'] = true;
+$wgGroupPermissions['bot'        ]['welcometool'] = false;
+$wgGroupPermissions['staff'      ]['welcometool'] = false;
+$wgGroupPermissions['helper'     ]['welcometool'] = false;
+$wgGroupPermissions['sysop'      ]['welcometool'] = false;
+$wgGroupPermissions['bureaucrat' ]['welcometool'] = false;
+
 class HAWelcomeJob extends Job {
 
 	private
