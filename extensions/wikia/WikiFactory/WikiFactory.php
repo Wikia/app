@@ -2,7 +2,7 @@
 
 /**
  * @package MediaWiki
- * @subpackage WikiFactory
+ * @ingroup WikiFactory
  *
  * @author Krzysztof Krzyżaniak (eloy) <eloy@wikia.com> for Wikia Inc.
  */
@@ -18,7 +18,7 @@ if( ! function_exists( "wfUnserializeHandler" ) ) {
 	/**
 	 * wfUnserializeErrorHandler
 	 *
-	 * @author Emil Podlaszewski <emil@wikia.com>
+	 * @author Emil Podlaszewski <emil@wikia-inc.com>
 	 */
 	function wfUnserializeHandler( $errno, $errstr ) {
 		global $_variable_key, $_variable_value;
@@ -94,8 +94,8 @@ class WikiFactory {
 	static public function getDomains( $city_id = null, $extended = false ) {
 
 		if( ! self::isUsed() ) {
-			wfDebug( __METHOD__ . ": WikiFactory is not used.");
-			return null;
+			Wikia::log( __METHOD__, "", "WikiFactory is not used." );
+			return false;
 		}
 
 		global $wgMemc;
@@ -154,8 +154,8 @@ class WikiFactory {
 	static public function addDomain( $wiki, $domain ) {
 
 		if( ! self::isUsed() ) {
-			wfDebug( __METHOD__ . ": WikiFactory is not used.");
-			return null;
+			Wikia::log( __METHOD__, "", "WikiFactory is not used." );
+			return false;
 		}
 
 		/**
@@ -224,8 +224,8 @@ class WikiFactory {
 	 */
 	static public function removeDomain ( $wiki, $domain ) {
 		if( ! self::isUsed() ) {
-			wfDebug( __METHOD__ . ": WikiFactory is not used.");
-			return null;
+			Wikia::log( __METHOD__, "", "WikiFactory is not used." );
+			return false;
 		}
 
 		wfProfileIn( __METHOD__ );
@@ -234,9 +234,7 @@ class WikiFactory {
 
 		if ( ! $dbw->delete(wfSharedTable("city_domains"), array( "city_id" => $wiki, "city_domain" => $domain ), __METHOD__) ) {
 			$dbw->rollback();
-
 			wfProfileOut( __METHOD__ );
-
 			return false;
 		}
 
@@ -261,8 +259,8 @@ class WikiFactory {
 	static public function DomainToID( $domain ) {
 
 		if( ! self::isUsed() ) {
-			wfDebug( __METHOD__ . ": WikiFactory is not used.");
-			return null;
+			Wikia::log( __METHOD__, "", "WikiFactory is not used." );
+			return false;
 		}
 
 		wfProfileIn( __METHOD__ );
@@ -310,8 +308,8 @@ class WikiFactory {
 	static public function setVarById( $cv_variable_id, $city_id, $value ) {
 
 		if( ! self::isUsed() ) {
-			wfDebug( __METHOD__ . ": WikiFactory is not used.");
-			return null;
+			Wikia::log( __METHOD__, "", "WikiFactory is not used." );
+			return false;
 		}
 
 		global $wgUser;
@@ -327,7 +325,10 @@ class WikiFactory {
 		$dbw->begin();
 		try {
 
-			$variable = self::loadVariableFromDB( $cv_variable_id, null, $city_id );
+			/**
+			 * use master connection for changing variables
+			 */
+			$variable = self::loadVariableFromDB( $cv_variable_id, false, $city_id, true );
 
 			/**
 			 * delete old value
@@ -498,16 +499,17 @@ class WikiFactory {
 	 * get variable data using cv_id field
 	 *
 	 * @access public
-	 * @author eloy@wikia
+	 * @author Krzysztof Krzyżaniak (eloy) <eloy@wikia-inc.com>
 	 * @static
 	 *
 	 * @param integer	$cv_id	variable id in city_variables_pool
 	 * @param integer	$wiki	wiki id in city_list
+	 * @param boolean	$master	choose between master and slave connection
 	 *
 	 * @return mixed	variable data from from city_variables & city_variables_pool
 	 */
-	static public function getVarById( $cv_id, $wiki ) {
-		return self::loadVariableFromDB( $cv_id, null, $wiki );
+	static public function getVarById( $cv_id, $city_id, $master = false ) {
+		return self::loadVariableFromDB( $cv_id, false, $city_id, $master );
 	}
 
 	/**
@@ -521,11 +523,12 @@ class WikiFactory {
 	 *
 	 * @param string	$cv_name	variable name in city_variables_pool
 	 * @param integer	$wiki		wiki id in city_list
+	 * @param boolean	$master		choose between master & slave connection
 	 *
 	 * @return mixed 	variable data from from city_variables & city_variables_pool
 	 */
-	static public function getVarByName( $cv_name, $wiki ) {
-		return self::loadVariableFromDB( null, $cv_name, $wiki );
+	static public function getVarByName( $cv_name, $wiki, $master = false ) {
+		return self::loadVariableFromDB( false, $cv_name, $wiki, $master );
 	}
 
 	/**
@@ -539,12 +542,13 @@ class WikiFactory {
 	 *
 	 * @param string	$cv_name	variable name in city_variables_pool
 	 * @param integer	$city_id	wiki id in city_list
+	 * @param boolean	$master		choose between master & slave connection
 	 *
 	 * @return mixed value for variable or null otherwise
 	 */
-	static public function getVarValueByName( $cv_name, $city_id ) {
-		$variable = self::loadVariableFromDB( null, $cv_name, $city_id );
-		return isset( $variable->cv_value ) ? unserialize( $variable->cv_value ) : null;
+	static public function getVarValueByName( $cv_name, $city_id, $master = false ) {
+		$variable = self::loadVariableFromDB( false, $cv_name, $city_id, $master );
+		return isset( $variable->cv_value ) ? unserialize( $variable->cv_value ) : false;
 	}
 
 	/**
@@ -557,17 +561,23 @@ class WikiFactory {
 	 * @static
 	 *
 	 * @param string $city_dbname	name of database
+	 * @param boolean $master	use master or slave connection
 	 *
 	 * @return id in city_list
 	 */
-	static public function DBtoID( $city_dbname ) {
+	static public function DBtoID( $city_dbname, $master = false ) {
 
 		if( ! self::isUsed() ) {
-			wfDebug( __METHOD__ . ": WikiFactory is not used.");
-			return null;
+			Wikia::log( __METHOD__, "", "WikiFactory is not used." );
+			return false;
 		}
 
-		$dbr = wfGetDB( DB_SLAVE );
+		if( $master )  {
+			$dbr = wfGetDB( DB_MASTER );
+		}
+		else {
+			$dbr = wfGetDB( DB_SLAVE );
+		}
 
 		$oRow = $dbr->selectRow(
 			array( wfSharedTable("city_list") ),
@@ -576,7 +586,7 @@ class WikiFactory {
 			__METHOD__
 		);
 
-		return isset( $oRow->city_id ) ? $oRow->city_id : null;
+		return isset( $oRow->city_id ) ? $oRow->city_id : false;
 	}
 
 	/**
@@ -589,14 +599,15 @@ class WikiFactory {
 	 * @static
 	 *
 	 * @param string	$city_id	wiki id in city_list
+	 * @param boolean $master	use master or slave connection
 	 *
 	 * @return string	database name from city_list
 	 */
 	static public function IDtoDB( $city_id, $master = false ) {
 
 		if( ! self::isUsed() ) {
-			wfDebug( __METHOD__ . ": WikiFactory is not used.");
-			return null;
+			Wikia::log( __METHOD__, "", "WikiFactory is not used." );
+			return false;
 		}
 
 		if( $master )  {
@@ -612,7 +623,7 @@ class WikiFactory {
 			__METHOD__
 		);
 
-		return isset( $oRow->city_dbname ) ? $oRow->city_dbname : null;
+		return isset( $oRow->city_dbname ) ? $oRow->city_dbname : false;
 	}
 
 	/**
@@ -630,8 +641,8 @@ class WikiFactory {
 	static public function getWikiByID( $id ) {
 
 		if( ! self::isUsed() ) {
-			wfDebug( __METHOD__ . ": WikiFactory is not used.");
-			return null;
+			Wikia::log( __METHOD__, "", "WikiFactory is not used." );
+			return false;
 		}
 
 		/**
@@ -1101,13 +1112,14 @@ class WikiFactory {
 	 * @param integer	$cv_id		variable id in city_variables_pool
 	 * @param string	$cv_name	variable name in city_variables_pool
 	 * @param integer	$city_id	wiki id in city_list
+	 * @param boolean	$master		use master or slave connection
 	 *
 	 *
 	 * @param integer $wiki: identifier from city_list
 	 *
 	 * @return string: path to file or null if id is not a number
 	 */
-	static private function loadVariableFromDB( $cv_id, $cv_name, $city_id ) {
+	static private function loadVariableFromDB( $cv_id, $cv_name, $city_id, $master = false ) {
 
 		if( ! self::isUsed() ) {
 			wfDebug( __METHOD__ . ": WikiFactory is not used.");
@@ -1117,8 +1129,8 @@ class WikiFactory {
 		/**
 		 * $wiki could be empty, but we have to know which variable read
 		 */
-		if( is_null( $cv_id ) && is_null( $cv_name ) ) {
-			return null;
+		if( ! $cv_id && ! $cv_name ) {
+			return false;
 		}
 
 		wfProfileIn( __METHOD__ );
@@ -1126,14 +1138,19 @@ class WikiFactory {
 		/**
 		 * if both are defined cv_id has precedence
 		 */
-		if( !is_null( $cv_id ) ) {
+		if( $cv_id ) {
 			$condition = array( "cv_id" => $cv_id );
 		}
 		else {
 			$condition = array( "cv_name" => $cv_name );
 		}
 
-		$dbr = wfGetDB( DB_SLAVE );
+		if( $master )  {
+			$dbr = wfGetDB( DB_MASTER );
+		}
+		else {
+			$dbr = wfGetDB( DB_SLAVE );
+		}
 
 		$oRow = $dbr->selectRow(
 			wfSharedTable( "city_variables_pool" ),
