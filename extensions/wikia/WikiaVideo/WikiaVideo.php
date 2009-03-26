@@ -5,8 +5,16 @@ if(!defined('MEDIAWIKI')) {
 
 $wgExtensionFunctions[] = 'WikiaVideo_init';
 $wgHooks['ParserBeforeStrip'][] = 'WikiaVideoParserBeforeStrip';
+$wgHooks['SpecialNewImages::beforeQuery'][] = 'WikiaVideoNewImagesBeforeQuery';
 $wgWikiaVideoGalleryId = 0;
 $wgWikiaVETLoaded = false;
+
+function WikiaVideoNewImagesBeforeQuery( $where ) {
+        $where[] = 'img_media_type != \'VIDEO\'';
+        $where[] = 'img_major_mime != \'video\'';
+        $where[] = 'img_media_type != \'swf\'';
+        return true;
+}
 
 function WikiaVideoParserBeforeStrip($parser, $text, $strip_state) {
 	global $wgExtraNamespaces, $wgWysiwygParserEnabled, $wgWikiaVideoGalleryId;
@@ -46,8 +54,6 @@ function WikiaVideo_renderVideoGallery($input, $args, $parser) {
 	wfLoadExtensionMessages('VideoEmbedTool');
 	$wgHooks['ExtendJSGlobalVars'][] = 'VETSetupVars';
 	
-
-
 	$lines = explode("\n", $input);
 	foreach($lines as $line) {
 		$matches = array();
@@ -148,6 +154,7 @@ function WikiaVideo_makeVideo($title, $options, $sk, $wikitext = '') {
 	global $wgWysiwygParserEnabled, $wgRequest;
 
 	wfProfileIn('WikiaVideo_makeVideo');
+
 	if(!$title->exists()) {
 		//Wysiwyg: generate wikitext placeholder
 		if (!empty($wgWysiwygParserEnabled)) {
@@ -178,6 +185,7 @@ function WikiaVideo_makeVideo($title, $options, $sk, $wikitext = '') {
 		$caption = '';
 
 		foreach($params as $param) {
+
 			$width_check = strpos($param, 'px');
 			if($width_check > -1) {
 				$width = str_replace('px', '', $param);
