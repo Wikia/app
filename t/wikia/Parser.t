@@ -195,6 +195,20 @@ $testCases = array(
 			),
 	),
 
+	// indented paragraph
+	array(
+		'name'     => 'Indented paragraph',
+		'wikitext' => "foo\n:: bar\ntest",
+		'html'     => "<p _new_lines_before=\"0\">foo<!--EOL1-->\n</p><!--EOL1-->\n<p style=\"margin-left:80px\"> bar<!--EOL1-->\n</p><!--EOL1-->\n<p _new_lines_before=\"0\">test<!--EOL1-->\n</p>",
+	),
+
+	// lists
+	array(
+		'name'     => 'Lists',
+		'wikitext' => "#a\n#*a1\n#*a2\n#b",
+		'html'     => "<ol _wysiwyg_line_start=\"true\"><li space_after=\"\">a<!--EOL1-->\n<ul _wysiwyg_line_start=\"true\"><li space_after=\"\">a1<!--EOL1-->\n</li><li space_after=\"\">a2<!--EOL1-->\n</li></ul><!--EOL1-->\n</li><li space_after=\"\">b<!--EOL1-->\n</li></ol><!--EOL1-->\n",
+	),
+
 	// TODO:
 	// image
 	// video
