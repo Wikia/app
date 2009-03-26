@@ -100,6 +100,15 @@ $testCases = array(
 			),
 	),
 
+	// category
+	array(
+		'name'     => 'Category',
+		'wikitext' => "[[Category:Test]]",
+		'html'     => "<p _new_lines_before=\"0\"><input type=\"button\" refid=\"0\" _fck_type=\"category\" value=\"[[Category:Test]]\" title=\"[[Category:Test]]\" class=\"wysiwygDisabled wysiwygCategory\" /><!--EOL1-->\n</p>",
+		'data'     => array(
+				array('type' => 'category', 'href' => 'Category:Test', 'original' => '[[Category:Test]]'),
+			),
+	),
 
 );
 
