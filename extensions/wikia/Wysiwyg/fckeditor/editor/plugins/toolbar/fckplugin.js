@@ -73,7 +73,7 @@ WikiaToolbar.prototype.Create = function(parentElement) {
 	var backgroundColor= pageBar.getStyle('backgroundColor') || '#efefde';
 
 	toolbar.style.color= pageBar.getStyle('color') || '#000';
-	parentElement.style.backgroundColor= backgroundColor;
+	//parentElement.style.backgroundColor= backgroundColor;
 
 	var toolbarRow = toolbar.insertRow(-1);
 	var currentBucket = false;
@@ -88,14 +88,14 @@ WikiaToolbar.prototype.Create = function(parentElement) {
 		if (item.Bucket) {
 			// set width of previous bucket <UL>
 			if (currentBucket && currentBucketItems > 1) {
-				currentBucket.style.maxWidth = (currentBucketItems*28) + 'px';
+				currentBucket.style.maxWidth = (currentBucketItems*27) + 'px';
 				this.addBucketIEFixes(currentBucket);
 			}
 
 			// create new bucket
 			var toolbarCell = toolbarRow.insertCell(-1);
 			toolbarCell.innerHTML = '<div class="clearfix" style="background-color: ' + backgroundColor  + '">' + 
-				'<label title="' + item.Bucket.name + '">' + item.Bucket.name  + '</label><ul></ul></div>';
+				'<label title="' + item.Bucket.name + '">' + item.Bucket.name  + '</label><ul class="clearfix"></ul></div>';
 
 			// set CSS class for last bucket
 			if (item.Bucket.last) {
@@ -122,7 +122,7 @@ WikiaToolbar.prototype.Create = function(parentElement) {
 
 	// set width of last bucket <UL>
 	if (currentBucket && currentBucketItems > 1) {
-		currentBucket.style.maxWidth = (currentBucketItems*28) + 'px';
+		currentBucket.style.maxWidth = (currentBucketItems*27) + 'px';
 	}
 
 	// show tooltip
@@ -150,18 +150,21 @@ WikiaToolbar.prototype.addBucketIEFixes = function(bucket) {
 		}
 
 		var id = bucket.id.split('_').pop();
-		bucket.parentNode.style.height = 'auto';
+		if (bucket.getElementsByTagName('li').length * 27 > bucket.offsetWidth) {
+			bucket.parentNode.style.height = 'auto';
+		}
 		setTimeout("var node = document.getElementById('fck_toolbar_bucket_" + id  + "').parentNode;" +
 			"node.style.height = node.offsetHeight + 'px'", 50);
 
 		// emulate min-width
+		/*
 		if (bucket.parentNode.offsetWidth < 125) {
 			bucket.parentNode.style.width = '120px';
 		}
 		else {
 			bucket.parentNode.style.width = 'auto';
 		}
-
+		*/
 		clearTimeout(timeout);
 	});
 
@@ -169,7 +172,7 @@ WikiaToolbar.prototype.addBucketIEFixes = function(bucket) {
 		if (FCK.EditMode != FCK_EDITMODE_WYSIWYG) {
 			return;
 		}
-		bucket.parentNode.style.height = '41px';
+		bucket.parentNode.style.height = '49px';
 	});
 }
 

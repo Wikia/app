@@ -1,15 +1,9 @@
-#fck_toolbar {
-	top: 1px;
+#fck_toolbar ul {
+	margin: 0 !important;
 }
-
-#fck_toolbar td div {
-	height: 41px;
-	min-height: 41px;
-}
-
 #fck_toolbar.toolbarSource td.last div.clearfix {
 	width: 120px !important;
-	height: 41px !important;
+	height: 49px !important;
 }
 
 /* section for lovely IE6 fixes */
