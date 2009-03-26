@@ -10,7 +10,6 @@
 
 require('t/Test.php');
 require('maintenance/parserTests.inc');
-//require('extensions/wikia/Wysiwyg/Wysiwyg.php');
 
 // run wysiwyg parser and compare its output and given HTML and meta-data array
 function parseOk($wikitext, $html, $data = NULL) {
@@ -18,7 +17,6 @@ function parseOk($wikitext, $html, $data = NULL) {
 
 	//var_dump($outputHtml);var_dump($outputData);
 
-	//diag('wikitext: ' . $wikitext);
 	is($outputHtml,$html,  'comparing HTML');
 	is_deeply($outputData, $data, 'comparing meta-data');
 }
