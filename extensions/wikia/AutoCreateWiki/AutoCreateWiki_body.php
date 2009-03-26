@@ -654,15 +654,15 @@ class AutoCreateWikiPage extends SpecialPage {
 		$this->mWikiData[ "dir_part" ]  = $this->mWikiData[ "name"];
 		$this->mWikiData[ "dbname" ]    = substr( str_replace( "-", "", $this->mWikiData[ "name"] ), 0, 64);
 		$this->mWikiData[ "path" ]      = "/usr/wikia/docroot/wiki.factory";
-        $this->mWikiData[ "images" ]    = self::IMGROOT . $this->mWikiData[ "name"];
+        $this->mWikiData[ "images" ]    = self::IMGROOT . $this->mWikiData[ "name"] . "/images";
         $this->mWikiData[ "testWiki" ]  = false;
 
         if ( isset( $this->mWikiData[ "language" ] ) && $this->mWikiData[ "language" ] !== "en" ) {
 			$this->mWikiData[ "subdomain" ] = strtolower( $this->mWikiData[ "language"] ) . "." . $this->mWikiData[ "name"];
 			$this->mWikiData[ "redirect" ]  = strtolower( $this->mWikiData[ "language" ] ) . "." . ucfirst( $this->mWikiData[ "name"] );
 			$this->mWikiData[ "dbname" ]    = strtolower( str_replace( "-", "", $this->mWikiData[ "language" ] ). $this->mWikiData[ "dbname"] );
-			$this->mWikiData[ "images" ]   .= "/" . strtolower( $this->mWikiData[ "language" ] );
 			$this->mWikiData[ "dir_part" ] .= "/" . strtolower( $this->mWikiData[ "language" ] );
+			$this->mWikiData[ "images" ]    = self::IMGROOT . $this->mWikiData[ "dir_part"] . "/images";
 		}
 
 		wfProfileOut( __METHOD__ );
