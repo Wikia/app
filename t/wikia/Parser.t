@@ -53,10 +53,11 @@ $testCases = array(
 	// external links
 	array(
 		'name'     => 'External links',
-		'wikitext' => "[http://wp.pl] abc [http://foo.com foo]",
-		'html'     => "<p _new_lines_before=\"0\"><a href=\"http://wp.pl\" class=\"external autonumber\" rel=\"nofollow\" refid=\"0\">[1]</a> abc <a href=\"http://foo.com\" class=\"external text\" rel=\"nofollow\" refid=\"1\">foo</a><!--EOL1-->\n</p>",
+		'wikitext' => "[http://wp.pl] abc [http://foo.com foo] raw http://bar.net",
+		'html'     => "<p _new_lines_before=\"0\"><a href=\"http://wp.pl\" class=\"external autonumber\" rel=\"nofollow\" refid=\"0\">[1]</a> abc <a href=\"http://foo.com\" class=\"external text\" rel=\"nofollow\" refid=\"2\">foo</a> raw <a href=\"http://bar.net\" class=\"external free\" rel=\"nofollow\" refid=\"1\">http://bar.net</a><!--EOL1-->\n</p>",
 		'data'     => array(
 				array('type' => 'external link', 'href' => 'http://wp.pl'),
+				array('type' => 'external link: raw', 'href' => 'http://bar.net'),
 				array('type' => 'external link', 'href' => 'http://foo.com'),
 			),
 	),
