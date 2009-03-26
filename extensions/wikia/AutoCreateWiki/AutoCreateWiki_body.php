@@ -1385,9 +1385,7 @@ class AutoCreateWikiPage extends SpecialPage {
 		if (!empty($params)) {
 			$ip = wfGetIP();
 			$key = wfMemcKey( self::CACHE_LOGIN_KEY, $wgDBname, $ip );
-			if ( !$value ) {
-				$wgMemc->set( $key, $params, 30);
-			}
+			$wgMemc->set( $key, $params, 30);
 		}
 	}
 
