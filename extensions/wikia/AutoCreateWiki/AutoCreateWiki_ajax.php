@@ -15,6 +15,24 @@ if ( !defined( 'MEDIAWIKI' ) ) {
     exit( 1 ) ;
 }
 
+function axACWRequestCheckWikiName() {
+	global $wgRequest, $wgDBname, $wgContLang, $wgOut;
+	wfLoadExtensionMessages( "AutoCreateWiki" );
+	
+	$sName = $wgRequest->getVal('name');
+	$sResponse = AutoCreateWiki::checkWikiNameIsCorrect($sName);
+
+	$isError = ( !empty($sResponse) ) ? true : false;
+	$aResponse = array( 'div-body' => $sResponse, 'div-name' => 'wiki-name-error', 'div-error' => $isError );
+	
+	if (!function_exists('json_encode'))  {
+		$oJson = new Services_JSON();
+		return $oJson->encode($aResponse);
+	} else {
+		return json_encode($aResponse);
+	}
+}
+
 function axACWRequestCheckName() {
 	global $wgRequest, $wgDBname, $wgContLang, $wgOut;
 	wfLoadExtensionMessages( "AutoCreateWiki" );

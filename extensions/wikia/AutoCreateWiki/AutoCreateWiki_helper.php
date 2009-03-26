@@ -18,6 +18,7 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 class AutoCreateWiki {
 	
 	const STAFF_LIST = "staffsigs";
+    const BAD_WORDS_MSG = 'creation_blacklist';
 	
 	/**
 	 * isDomainExists
@@ -159,6 +160,8 @@ class AutoCreateWiki {
 			$sResponse = wfMsg('autocreatewiki-empty-wikiname');
 		} elseif (preg_match('/[^a-z0-9-\s]/i', $sValue)) {
 			$sResponse = wfMsg('autocreatewiki-invalid-wikiname');
+		} elseif (self::checkBadWords($sValue, true) === false) {
+			$sResponse = wfMsg('autocreatewiki-violate-policy');
 		}
 		wfProfileOut(__METHOD__);
 		return $sResponse;
@@ -180,6 +183,9 @@ class AutoCreateWiki {
 			$sResponse = wfMsg('autocreatewiki-bad-name');
 		} elseif ( in_array( $sName, array_keys( Language::getLanguageNames() )) ) {
 			#-- invalid name
+			$sResponse = wfMsg('autocreatewiki-violate-policy');
+		} elseif (self::checkBadWords($sName) === false) {
+			#-- invalid name (bad words)
 			$sResponse = wfMsg('autocreatewiki-violate-policy');
 		} else {
 			$iExists = AutoCreateWiki::domainExists($sName, $sLang);
@@ -358,4 +364,42 @@ class AutoCreateWiki {
 		wfProfileOut(__METHOD__);
 		return $key;
 	}
+	
+	/**
+	 * check "bad" words
+	 */
+	public static function checkBadWords($sText, $split = false) {
+		wfProfileIn(__METHOD__);
+		$allowed = true;
+		$sBadWords = wfMsg(self::BAD_WORDS_MSG);
+		
+		if ( !empty($sBadWords) && !empty($sText) ) {
+			#-- check only a-z and 0-9 
+			$newText = preg_replace("/[^a-z0-9]/i", "", $sText);
+			#-- 
+			if ($split == true) {
+				$aWordsInText = preg_split("/[\s,]+/", $newText);
+			} else {
+				$aWordsInText = array($newText);
+			}
+			$sBadWords = str_replace("\n", " ", $sBadWords);
+			$aBadWords = explode(" ", $sBadWords);
+			if ( !empty($aBadWords) && !empty($aWordsInText) ) {
+				foreach ($aWordsInText as $sWord) {
+					$sWord = trim($sWord);
+					foreach ($aBadWords as $badWord) {
+						$badWord = trim($badWord);
+						if ( empty($badWord) ) continue;
+						if ( @preg_match("/$badWord/i", $sWord, $m) ) {
+							$allowed = false;
+							break;
+						}
+					}
+				}
+			}
+		}
+		#---
+		wfProfileOut(__METHOD__);
+		return $allowed;
+	}	
 }
