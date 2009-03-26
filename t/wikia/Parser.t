@@ -11,8 +11,8 @@
 require('t/Test.php');
 require('maintenance/parserTests.inc');
 
-// run wysiwyg parser and compare its output and given HTML and meta-data array
-function parseOk($wikitext, $html, $data = NULL) {
+// run wysiwyg parser and compare its output with given HTML and meta-data array
+function parseOk($wikitext, $html, $data) {
 	list($outputHtml, $outputData) = Wysiwyg_WikiTextToHtml($wikitext, 1);
 
 	//var_dump($outputHtml);var_dump($outputData);
@@ -29,7 +29,6 @@ $testCases = array(
 		'name'     => 'Simple formatting',
 		'wikitext' => "''foo'' '''bar'''",
 		'html'     => "<p _new_lines_before=\"0\"><i>foo</i> <b>bar</b><!--EOL1-->\n</p>",
-		'data'     => NULL,
 	),
 
 	// paragraphs
@@ -37,7 +36,6 @@ $testCases = array(
 		'name'     => 'Paragraphs',
 		'wikitext' => "1\n2\n\n3\n\n\n4\n\n\n\n5\n\n\n\n\n6",
 		'html'     => "<p _new_lines_before=\"0\">1<!--EOL1-->\n<!--NEW_LINE_1-->2<!--EOL1-->\n</p><p>3<!--EOL1-->\n</p><p><br /><!--EOL1-->\n<!--NEW_LINE_1-->4<!--EOL1-->\n</p><p><br /><!--EOL1-->\n</p><p>5<!--EOL1-->\n</p><p><br /><!--EOL1-->\n</p><p><br /><!--EOL1-->\n<!--NEW_LINE_1-->6<!--EOL1-->\n</p>",
-		'data'     => NULL,
 	),
 
 	// headers
@@ -59,7 +57,7 @@ diag('');
 
 foreach($testCases as $testCase) {
 	diag($testCase['name']);
-	parseOk($testCase['wikitext'], $testCase['html'], $testCase['data']);
+	parseOk($testCase['wikitext'], $testCase['html'], isset($testCase['data']) ? $testCase['data'] : NULL);
 }
 
 // finish the test
