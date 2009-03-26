@@ -120,7 +120,7 @@ class HAWelcomeJob extends Job {
 		$tmpUser = $wgUser;
 		$wgUser  = User::newFromName( self::WELCOMEUSER );
 		$flags = 0;
-		if( $wgUser->isAllowed( 'bot' ) ) {
+		if( $wgUser && $wgUser->isAllowed( 'bot' ) ) {
 			$flags = EDIT_FORCE_BOT;
 		}
 		Wikia::log( __METHOD__, "user", $this->mUser->getName() );
