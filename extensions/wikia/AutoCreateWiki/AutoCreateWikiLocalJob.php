@@ -136,8 +136,12 @@ class AutoCreateWikiLocalJob extends Job {
 		Wikia::log( __METHOD__, "talk", "Setting welcome talk page on new wiki..." );
 
 		$talkPage = $this->mFounder->getTalkPage();
-		$wikiaName = WikiFactory::getVarValueByName( "wgSitename", $this->mParams[ "city_id"] );
-		$wikiaLang = WikiFactory::getVarValueByName( "wgLanguageCode", $this->mParams[ "city_id"] );
+		$wikiaName = isset( $this->mParams[ "title" ] )
+			? $this->mParams[ "title" ]
+			: WikiFactory::getVarValueByName( "wgSitename", $this->mParams[ "city_id"], true );
+		$wikiaLang = isset( $this->mParams[ "language" ] )
+			? $this->mParams[ "language" ]
+			: WikiFactory::getVarValueByName( "wgLanguageCode", $this->mParams[ "city_id"] );
 
 		/**
 		 * set apropriate staff member

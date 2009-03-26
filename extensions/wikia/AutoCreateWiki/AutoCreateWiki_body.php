@@ -200,7 +200,7 @@ class AutoCreateWikiPage extends SpecialPage {
 								$wgUser->saveSettings();
 							}
 						}
-					} 
+					}
 				}
 
 				#-- user logged in or just create
@@ -371,7 +371,7 @@ class AutoCreateWikiPage extends SpecialPage {
 		 * wikifactory variables
 		 */
 		$WFSettingsVars = array(
-			'wgSitename'				=> $this->mWikiData[ 'title' ],
+			'wgSitename'				=> $this->mWikiData[ "title" ],
 			'wgScriptPath'				=> '',
 			'wgScript'					=> '/index.php',
 			'wgArticlePath'				=> '/wiki/$1',
@@ -390,6 +390,7 @@ class AutoCreateWikiPage extends SpecialPage {
 			'wgEnableEditEnhancements'	=> true,
 			'wgEnableSectionEdit'	    => true,
 		);
+		$this->mWikiData[ "founder" ] = $wgUser->getId();
 
 		if( $WFSettingsVars[ "wgLanguageCode" ] === "en" ) {
 			$WFSettingsVars[ "wgEnableWysiwygExt" ] = true;
@@ -545,7 +546,6 @@ class AutoCreateWikiPage extends SpecialPage {
 		/**
 		 * use starter when wikia in proper hub
 		 */
-		$this->log( "Defined starters: " . print_r( $this->mStarters, true ) );
 		if( isset( $this->mStarters[ $this->mWikiData[ "hub" ] ] )
 			&& $this->mStarters[ $this->mWikiData[ "hub" ] ]
 			&& $this->mWikiData[ "language" ] === "en" ) {
@@ -609,12 +609,8 @@ class AutoCreateWikiPage extends SpecialPage {
 			TASK_QUEUED
 		);
 
-
 		$dbw->selectDB( $wgDBname );
 
-		/**
-		 * add central job
-		 */
 		$this->setCentralPages();
 		$this->setInfoLog( 'OK', wfMsg('autocreatewiki-step10') );
 
@@ -631,15 +627,14 @@ class AutoCreateWikiPage extends SpecialPage {
 		/**
 		 * show total time
 		 */
-		$info = sprintf( "Total: %F", wfTime() - $startTime );
-		$this->log( $info );
+		$this->log( sprintf( "Total: %F", wfTime() - $startTime ) );
 
 		$sSubdomain = ( $this->awcLanguage === 'en' ) ? strtolower( trim( $this->awcDomain ) ) : $this->awcLanguage . "." . strtolower( trim( $this->awcDomain ) );
 		$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
 		$oTmpl->set_vars( array(
 			"domain" => sprintf("%s.%s", $sSubdomain, $this->mDefSubdomain),
 		));
-		#---
+
 		$sFinishText = $oTmpl->execute("finish");
 		$this->setInfoLog('END', $sFinishText);
 
