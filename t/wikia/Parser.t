@@ -121,6 +121,20 @@ $testCases = array(
 			),
 	),
 
+	// line breaks
+	array(
+		'name'     => 'Line breaks',
+		'wikitext' => "abc\ndef",
+		'html'     => "<p _new_lines_before=\"0\">abc<!--EOL1-->\n<!--NEW_LINE_1-->def<!--EOL1-->\n</p>",
+	),
+
+	// <pre>
+	array(
+		'name'     => '<pre>',
+		'wikitext' => " 1\n 2\n 3",
+		'html'     => "<pre>1<!--EOLPRE--><!--EOL1-->\n2<!--EOLPRE--><!--EOL1-->\n3<!--EOLPRE--><!--EOL1-->\n</pre>",
+	),
+
 	// <html>
 	array(
 		'name'     => '<html> hook',
@@ -160,6 +174,32 @@ $testCases = array(
 				array('type' => 'hook', 'description' => "<staff />", 'name' => 'staff'),
 			),
 	),
+
+	// __TOC__
+	array(
+		'name'     => '__TOC__',
+		'wikitext' => "__TOC__",
+		'html'     => "<p _new_lines_before=\"0\"><input type=\"button\" refid=\"0\" _fck_type=\"double underscore: toc\" value=\"__TOC__\" title=\"__TOC__\" class=\"wysiwygDisabled wysiwygDoubleUnderscoreToc\" /><!--EOL1-->\n</p>",
+		'data'     => array(
+				array('type' => 'double underscore: toc', 'description' => '__TOC__'),
+			),
+	),
+
+	// ~~~~
+	array(
+		'name'     => 'Signature ~~~~',
+		'wikitext' => "~~~~",
+		'html'     => "<p _new_lines_before=\"0\"><input type=\"button\" refid=\"0\" _fck_type=\"tilde\" value=\"~~~~\" title=\"~~~~\" class=\"wysiwygDisabled wysiwygTilde\" /><!--EOL1-->\n</p>",
+		'data'     => array(
+				array('type' => 'tilde', 'description' => '~~~~'),
+			),
+	),
+
+	// TODO:
+	// image
+	// video
+	// NS_MEDIA links
+	// template
 
 );
 
