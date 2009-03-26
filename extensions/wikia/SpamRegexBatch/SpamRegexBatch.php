@@ -362,7 +362,10 @@ class SpamRegexBatch {
 		global $IP;
 		include_once( "$IP/includes/HttpFunctions.php" );
 		wfSuppressWarnings();
-		if ( function_exists( 'wfGetHTTP' ) ) {
+		if ( class_exists( 'HTTP' ) ) {
+			$text = HTTP::Get( $url );
+		}
+		else if ( function_exists( 'wfGetHTTP' ) ) {
 			$text = wfGetHTTP( $url );
 		} else {
 			$url_fopen = ini_set( 'allow_url_fopen', 1 );
