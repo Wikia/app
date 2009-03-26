@@ -449,6 +449,11 @@ function Wysiwyg_WikiTextToHtml($wikitext, $articleId = -1, $encode = false) {
 
 		$html = preg_replace('/\x7f-wtb-(\d+)-\x7f.*?\x7f-wte-\1-\x7f/sie', "'<input type=\"button\" refid=\"\\1\" _fck_type=\"template\" value=\"'.\$wgWysiwygMetaData[\\1]['name'].'\" class=\"wysiwygDisabled wysiwygTemplate\" /><input value=\"'.htmlspecialchars(stripslashes(\$templateCallsParsed[\\1])).'\" style=\"display:none\" />'", $html);
 	}
+
+	// fix for multiline pre
+	$html = preg_replace('#<pre>.*?</pre>#sie', 'str_replace("\\n", "<!--EOLPRE-->\\n", "\0")', $html);
+
+	// fix for IE
 	$html = str_replace("\n", "<!--EOL1-->\n", $html);
 
 	$html = preg_replace_callback("/<li>(\s*)/", create_function('$matches','return "<li space_after=\"".$matches[1]."\">";'), $html);
@@ -459,9 +464,14 @@ function Wysiwyg_WikiTextToHtml($wikitext, $articleId = -1, $encode = false) {
 }
 
 function Wysiwyg_HtmlToWikiText($html, $wysiwygData, $decode = false) {
+
+	// fix for IE
 	$html = str_replace("<!--EOL1-->\n", "", $html);
 	$html = str_replace("<!--EOL1--> ", " ", $html);
 	$html = str_replace("<!--EOL1-->", " ", $html);
+
+	// fix for multiline pre
+	$html = str_replace("<!--EOLPRE-->", "\n", $html);
 
 	$html = preg_replace_callback("/<li space_after=\"(\s*)\">/", create_function('$matches','return "<li>".$matches[1];'), $html);
 
