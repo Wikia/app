@@ -54,3 +54,4 @@ $wgAjaxExportList[] = 'axACWRequestCheckName';
 $wgAjaxExportList[] = 'axACWRequestCheckAccount';
 $wgAjaxExportList[] = 'axACWRequestCheckBirthday';
 $wgAjaxExportList[] = 'axACWRequestCheckLog';
+$wgAjaxExportList[] = 'axACWRequestCheckWikiName';

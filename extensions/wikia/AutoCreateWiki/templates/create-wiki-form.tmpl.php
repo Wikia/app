@@ -214,10 +214,12 @@ var YE = YAHOO.util.Event;
 <?php 	foreach ( $mPostedErrors as $field => $value ) : ?>
 <?php 		if ( !empty($value) ) : ?>
 if ( YD.get('<?=$field?>') ) { 
-	YD.setStyle('<?=$field?>-error', 'display', 'block');
 	YD.addClass('<?=$field?>', 'error');
-	YD.addClass('<?=$field?>-label', 'error');
-	YD.get('<?=$field?>-error').innerHTML = "<?=str_replace("\n", "<br />", $value)?>";
+	if ( YD.get('<?=$field?>-error') ) {
+		YD.setStyle('<?=$field?>-error', 'display', 'block');
+		YD.get('<?=$field?>-error').innerHTML = "<?=str_replace("\n", "<br />", $value)?>";
+	}
+	if ( YD.get('<?=$field?>-label') ) YD.addClass('<?=$field?>-label', 'error');
 }
 <?php		endif ?>
 <?php 	endforeach ?>

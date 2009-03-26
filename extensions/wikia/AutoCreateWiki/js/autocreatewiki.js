@@ -202,6 +202,15 @@ YAHOO.ACWikiRequest.checkDomain = function(e) {
     YC.asyncRequest( "GET", wgAjaxPath + "?action=ajax&rs=axACWRequestCheckName&name=" + escape(name) + "&lang=" + escape(lang), YAHOO.ACWikiRequest.NameCallback);
 }
 
+YAHOO.ACWikiRequest.checkWikiName = function(e) {
+	var err = YD.get("wiki-name-error-status");
+	var name = YD.get("wiki-name").value;
+	setProgressImg(err);
+    // to lowercase
+
+    YC.asyncRequest( "GET", wgAjaxPath + "?action=ajax&rs=axACWRequestCheckWikiName&name=" + escape(name), YAHOO.ACWikiRequest.NameCallback);
+}
+
 YAHOO.ACWikiRequest.wikiLanguageChange = function(e) {
 	var prefixDiv = YD.get("prefixedAddress");
 	var value = prefixDiv.innerHTML;
@@ -236,7 +245,8 @@ YAHOO.ACWikiRequest.wikiDomainKeyUp = function(e) {
 			if ( !allowAction(e) ) {
 				YE.preventDefault(id);
 				if (id == 'wiki-name') {
-					isTextCorrect(id);
+					//isTextCorrect(id);
+					YAHOO.ACWikiRequest.checkWikiName(e);
 				} else {
 					YAHOO.ACWikiRequest.checkDomain(e);
 				}
