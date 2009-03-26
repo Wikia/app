@@ -125,17 +125,16 @@ class AutoCreateWikiPage extends SpecialPage {
 			return;
 		}
 
-		if( $subpage === "test" ) {
-			#---
-			$this->create();
-		} elseif ( $subpage === "Caching" ) {
+		if ( $subpage === "Caching" ) {
 			$this->setValuesToSession();
 			exit;
-		} elseif ( $subpage === "Testing" ) {
+		}
+		elseif ( $subpage === "Testing" ) {
 			if ( $this->setVarsFromSession() > 0 ) {
 				$this->test();
 			}
-		} elseif ( $subpage === "Processing" ) {
+		}
+		elseif ( $subpage === "Processing" ) {
 			$this->log (" session: " . print_r($_SESSION, true). "\n");
 			if ( isset( $_SESSION['mAllowToCreate'] ) && ( $_SESSION['mAllowToCreate'] >= wfTimestamp() ) ) {
 				$this->mNbrUserCreated = $this->countCreatedWikisByUser();
@@ -151,7 +150,8 @@ class AutoCreateWikiPage extends SpecialPage {
 				$this->displayRestrictionError();
 				return;
 			}
-		} elseif ( $subpage === "Wiki_create" ) {
+		}
+		elseif ( $subpage === "Wiki_create" ) {
 			if ( isset( $_SESSION['mAllowToCreate'] ) && ( $_SESSION['mAllowToCreate'] >= wfTimestamp() ) ) {
 				#--- Limit of user creation
 				$this->mNbrUserCreated = $this->countCreatedWikisByUser();
@@ -166,7 +166,8 @@ class AutoCreateWikiPage extends SpecialPage {
 				$this->clearSessionKeys();
 				$wgOut->redirect( $this->mTitle->getLocalURL() );
 			}
-		} else {
+		}
+		else {
 			if ($this->mPosted) {
 				#---
 				$this->clearSessionKeys();
@@ -355,14 +356,14 @@ class AutoCreateWikiPage extends SpecialPage {
 		/**
 		 * copy defaul logo & favicon
 		 */
-		wfMkdirParents("{$this->mWikiData[ "images" ]}/images/b/bc");
-		wfMkdirParents("{$this->mWikiData[ "images" ]}/images/6/64");
+		wfMkdirParents("{$this->mWikiData[ "images" ]}/b/bc");
+		wfMkdirParents("{$this->mWikiData[ "images" ]}/6/64");
 
 		if (file_exists(self::CREATEWIKI_LOGO)) {
-			copy(self::CREATEWIKI_LOGO, "{$this->mWikiData[ "images" ]}/images/b/bc/Wiki.png");
+			copy(self::CREATEWIKI_LOGO, "{$this->mWikiData[ "images" ]}/b/bc/Wiki.png");
 		}
 		if (file_exists(self::CREATEWIKI_ICON)) {
-			copy(self::CREATEWIKI_ICON, "{$this->mWikiData[ "images" ]}/images/6/64/Favicon.ico");
+			copy(self::CREATEWIKI_ICON, "{$this->mWikiData[ "images" ]}/6/64/Favicon.ico");
 		}
 		$this->log( "Coping favicon and logo" );
 		$this->setInfoLog( 'OK', wfMsg('autocreatewiki-step4') );
@@ -1385,84 +1386,6 @@ class AutoCreateWikiPage extends SpecialPage {
 			if ( !$value ) {
 				$wgMemc->set( $key, $params, 30);
 			}
-		}
-	}
-
-	/**
-	 * prepareTest, clear test database
-	 */
-	private function prepareTest() {
-
-		global $wgContLang;
-
-		$languages = array( "de", "en", "pl", "fr", "es" );
-		shuffle( $languages );
-
-		$this->mWikiData[ "hub" ]		= rand( 1, 19 );
-        $this->mWikiData[ "name"]       = strtolower( trim( self::TESTDB ) );
-        $this->mWikiData[ "title" ]     = trim( $wgContLang->ucfirst( self::TESTDB ) . " Wiki" );
-        $this->mWikiData[ "language" ]  = array_shift( $languages );
-        $this->mWikiData[ "subdomain" ] = $this->mWikiData[ "name"];
-        $this->mWikiData[ "redirect"]   = $this->mWikiData[ "name"];
-		$this->mWikiData[ "dir_part"]   = $this->mWikiData[ "name"];
-		$this->mWikiData[ "dbname"]     = substr( str_replace( "-", "", $this->mWikiData[ "name"] ), 0, 64);
-		$this->mWikiData[ "path"]       = "/usr/wikia/docroot/wiki.factory";
-        $this->mWikiData[ "images"]     = self::IMGROOT . $this->mWikiData[ "name"];
-        $this->mWikiData[ "testWiki"]   = true;
-
-        if ( isset( $this->mWikiData[ "language" ] ) && $this->mWikiData[ "language" ] !== "en" ) {
-			$this->mWikiData[ "subdomain" ] = strtolower( $this->mWikiData[ "language"] ) . "." . $this->mWikiData[ "name"];
-			$this->mWikiData[ "redirect" ]  = strtolower( $this->mWikiData[ "language" ] ) . "." . ucfirst( $this->mWikiData[ "name"] );
-			$this->mWikiData[ "dbname" ]    = strtolower( str_replace( "-", "", $this->mWikiData[ "language" ] ). $this->mWikiData[ "dbname"] );
-			$this->mWikiData[ "images" ]   .= "/" . strtolower( $this->mWikiData[ "language" ] );
-			$this->mWikiData[ "dir_part" ] .= "/" . strtolower( $this->mWikiData[ "language" ] );
-		}
-
-		/**
-		 * drop test table
-		 */
-		$dbw = wfGetDB( DB_MASTER );
-		$dbw->query( sprintf( "DROP DATABASE IF EXISTS %s", $this->mWikiData[ "dbname"] ) );
-
-		/**
-		 * clear wikifactory tables: city_list, city_variables, city_domains
-		 */
-		$city_id = WikiFactory::DBtoID( $this->mWikiData[ "dbname"] );
-		if( $city_id ) {
-			$dbw->begin();
-			$dbw->delete(
-				wfSharedTable( "city_domains" ),
-				array( "city_id" => $city_id ),
-				__METHOD__
-			);
-			$dbw->delete(
-				wfSharedTable( "city_domains" ),
-				array( "city_domain" => sprintf("%s.%s", $this->mWikiData[ "subdomain" ], "wikia.com" ) ),
-				__METHOD__
-			);
-			$dbw->delete(
-				wfSharedTable( "city_domains" ),
-				array( "city_domain" => sprintf("www.%s.%s", $this->mWikiData[ "subdomain" ], "wikia.com" ) ),
-				__METHOD__
-			);
-			$dbw->delete(
-				wfSharedTable( "city_variables" ),
-				array( "cv_city_id" => $city_id ),
-				__METHOD__
-			);
-			$dbw->delete(
-				wfSharedTable( "city_cat_mapping" ),
-				array( "city_id" => $city_id ),
-				__METHOD__
-			);
-			$dbw->commit();
-		}
-
-		/**
-		 * remove image directory
-		 */
-		if ( file_exists( $this->mWikiData[ "images" ] ) && is_dir( $this->mWikiData[ "images" ] ) ) {
-			exec( "rm -rf {$this->mWikiData[ "images" ]}" );
 		}
 	}
 
