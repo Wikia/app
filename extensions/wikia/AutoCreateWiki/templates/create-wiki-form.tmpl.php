@@ -210,6 +210,7 @@ var msgError = "<?=addslashes(wfMsg('autocreatewiki-invalid-wikiname'))?>";
 var YC = YAHOO.util.Connect;
 var YD = YAHOO.util.Dom;
 var YE = YAHOO.util.Event;
+<?php error_log (print_r($mPostedErrors, true)); ?>
 <?php if ( !empty($mPostedErrors) && is_array($mPostedErrors) ) : ?>
 <?php 	foreach ( $mPostedErrors as $field => $value ) : ?>
 <?php 		if ( !empty($value) ) : ?>
@@ -220,6 +221,13 @@ if ( YD.get('<?=$field?>') ) {
 		YD.get('<?=$field?>-error').innerHTML = "<?=str_replace("\n", "<br />", $value)?>";
 	}
 	if ( YD.get('<?=$field?>-label') ) YD.addClass('<?=$field?>-label', 'error');
+<?
+	if ($field == 'wiki-blurry-word') {
+?>		
+		if ( YD.get('wpCaptchaWord') ) YD.addClass('wpCaptchaWord', 'error');
+<?		
+	}
+?>	
 }
 <?php		endif ?>
 <?php 	endforeach ?>
