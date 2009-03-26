@@ -21,12 +21,18 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 /**
  * job is self-hosted, without other part of autocreate
  */
-$wgExtensionMessagesFiles[ "AutoCreateWiki" ] = dirname(__FILE__) . "/AutoCreateWiki.i18n.php";
+$dir = dirname(__FILE__);
+$wgExtensionMessagesFiles[ "AutoCreateWiki" ] = $dir . "/AutoCreateWiki.i18n.php";
 
 /**
  * maintenance script from CheckUser
  */
-include( $GLOBALS['IP'] . "/extensions/CheckUser/install.inc" );
+include_once( $GLOBALS['IP'] . "/extensions/CheckUser/install.inc" );
+
+/**
+ * include helper file for additional methods
+ */
+include_once( $dir . "/AutoCreateWiki_helper.php" );
 
 class AutoCreateWikiLocalJob extends Job {
 
@@ -136,7 +142,7 @@ class AutoCreateWikiLocalJob extends Job {
 		/**
 		 * set apropriate staff member
 		 */
-		$wgUser = self::getStaffUserByLang( $wikiaLang );
+		$wgUser = AutoCreateWiki::getStaffUserByLang( $wikiaLang );
 		$wgUser = ( $wgUser instanceof User ) ? $wgUser : User::newFromName( "Angela" );
 
 		$talkParams = array(
@@ -289,34 +295,6 @@ class AutoCreateWikiLocalJob extends Job {
 		$wgUser->removeGroup( "bot" );
 	}
 
-	/**
-	 * get staff member signature for given lang code
-	 */
-	public static function getStaffUserByLang( $langCode ) {
-		wfProfileIn( __METHOD__ );
-
-		$staffSigs = wfMsgForContent( "staffsigs" );
-		$User = false;
-		if( !empty( $staffSigs ) ) {
-			$lines = explode("\n", $staffSigs);
-
-			foreach( $lines as $line ) {
-				if( strpos($line, '* ') === 0 ) {
-					$sectLangCode = trim($line, '* ');
-					continue;
-				}
-				if((strpos($line, '* ') == 1) && ($langCode == $sectLangCode)) {
-					$sUser = trim($line, '** ');
-				    $User = User::newFromName( $sUser );
-					$User->load();
-					return $User;
-				}
-			}
-		}
-
-		wfProfileOut( __METHOD__ );
-		return $User;
-	}
 
 	/**
 	 * tables are created in first step. there we only fill them
