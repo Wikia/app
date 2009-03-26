@@ -131,7 +131,7 @@ class HAWelcomeJob extends Job {
 				if( ! $talkArticle->exists() ) {
 					if( $this->mAnon ) {
 						if( $this->isEnabled( "message-anon" ) ) {
-							$welcomeMsg = wfMsgExt( "welcome-message-anon", "parsemag", 
+							$welcomeMsg = wfMsgExt( "welcome-message-anon", "parsemag",
 							array(
 								$this->getPrefixedText(),
 								$sysopPage->getPrefixedText(),
@@ -166,7 +166,7 @@ class HAWelcomeJob extends Job {
 						}
 
 						if( $this->isEnabled( "message-user" ) ) {
-							$welcomeMsg = wfMsgExt( "welcome-message-user", "parsemag", 
+							$welcomeMsg = wfMsgExt( "welcome-message-user", "parsemag",
 							array(
 								$this->getPrefixedText(),
 								$sysopPage->getPrefixedText(),
@@ -219,7 +219,7 @@ class HAWelcomeJob extends Job {
 				if ( !empty($mSysop) ) {
 					$this->mSysop = User::newFromName( $sysop );
 				}
-				
+
 				if ( ! $this->mSysop instanceof User ) {
 					$dbr = wfGetDB( DB_SLAVE );
 					$aWhere = ($sysop !== "@sysop") ? array('staff', 'sysop', 'helper') : array('sysop');
@@ -353,6 +353,9 @@ class HAWelcomeJob extends Job {
 					Wikia::log( __METHOD__, "disabled" );
 				}
 			}
+			else {
+				Wikia::log( __METHOD__, "right-welcometool", "user " . $wgUser->isAllowed( 'welcometool' ) );
+			}
 		}
 		wfProfileOut( __METHOD__ );
 
@@ -364,30 +367,30 @@ class HAWelcomeJob extends Job {
 
 		wfProfileIn( __METHOD__ );
 		$mSysop = "";
-		wfLoadExtensionMessages( "HAWelcome" );		
+		wfLoadExtensionMessages( "HAWelcome" );
 
 		$sysop = trim( wfMsg( "welcome-user" ) );
-		$aGroup = ($sysop !== "@sysop") ? array('staff', 'sysop', 'helper') : array('sysop');			
+		$aGroup = ($sysop !== "@sysop") ? array('staff', 'sysop', 'helper') : array('sysop');
 		$user_groups = $wgUser->getGroups();
 		$inGroup = false;
 		if ( !empty($user_groups) && is_array($user_groups) ) {
 			foreach ($user_groups as $i => $group) {
 				if (in_array($group, $aGroup)) {
 					$inGroup = true;
-					break;						
+					break;
 				}
 			}
 		}
-		
+
 		if ( !empty($inGroup) ) {
 			$mSysop = $wgUser->getName();
 		}
-		
+
 		if ( !empty($mSysop) ) {
 			$memKey = sprintf(self::MEMC_SYSOP_USER, $wgCityId);
-			$wgMemc->set( $memKey, $mSysop );			
+			$wgMemc->set( $memKey, $mSysop );
 		}
-		
+
 		wfProfileOut( __METHOD__ );
 		return true;
 	}
