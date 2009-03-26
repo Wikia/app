@@ -39,7 +39,7 @@ class AutoCreateWikiPage extends SpecialPage {
 	const TESTDB = "testdb";
 	const STARTER_GAME = 2; /** gaming **/
 	const STARTER_ENTE = 3; /** enter. **/
-	const STARTER_SPRT = 15; /** sport **/
+#	const STARTER_SPRT = 15; /** sport **/
 	const LOG = "autocreatewiki";
 	const IMGROOT = "/images/";
     const CREATEWIKI_LOGO = "/images/central/images/2/22/Wiki_Logo_Template.png";
@@ -70,7 +70,7 @@ class AutoCreateWikiPage extends SpecialPage {
 		$this->mStarters = array(
 			self::STARTER_GAME => 3578,
 			self::STARTER_ENTE => 3711,
-			self::STARTER_SPRT => 12698
+#			self::STARTER_SPRT => 12698
 		);
 
 		/**
