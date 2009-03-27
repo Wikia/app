@@ -459,13 +459,15 @@ class HAWelcomeJob extends Job {
 	 * @return Title instance of Title object
 	 */
 	public function getPrefixedText() {
-		$ns = $this->title->getNamespace();
-		$oT = ($ns == NS_BLOG_ARTICLE_TALK) ? BlogArticle::commentToUserBlog($this->title) : $this->title;
-		$pText = "";
-		if ($oT instanceof Title) {
-			$pText = ($ns == NS_BLOG_ARTICLE_TALK) ? $oT->getFullText() : $oT->getPrefixedText();
-		}
-		return $pText;
+		return $this->title->getPrefixedText();
+
+		# bad code! it relay that central wikia has blogs activated
+		#$oT = ($ns == NS_BLOG_ARTICLE_TALK) ? BlogArticle::commentToUserBlog($this->title) : $this->title;
+		#$pText = "";
+		#if ($oT instanceof Title) {
+		#	$pText = ($ns == NS_BLOG_ARTICLE_TALK) ? $oT->getFullText() : $oT->getPrefixedText();
+		#}
+		#return $pText;
 	}
 
 
