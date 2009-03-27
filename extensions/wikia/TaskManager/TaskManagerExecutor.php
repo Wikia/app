@@ -52,13 +52,23 @@ class TaskManagerExecutor {
 		foreach( range(1, self::LIMIT ) as $taskNumber ) {
 	        $taskClass = $this->getTask();
 			if( $taskClass instanceof BatchTask ) {
+				/**
+				 * lock task
+				 */
 				$taskId = $taskClass->getId();
-				$taskClass->addlog("task started:".wfTimestampNow());
 				$this->lockTask( $taskId );
 
+				/**
+				 * execute task
+				 */
+				$taskClass->addlog(sprintf( "task started: %s", wfTimestamp( TS_DB, time() ) ) );
 				$status = $taskClass->execute( $this->mTaskData );
+				$taskClass->addlog(sprintf( "task finished: %s", wfTimestamp( TS_DB, time() ) ) );
+
+				/**
+				 * unlock task
+				 */
 				$this->unlockTask( $taskId, $status );
-				$taskClass->addlog( "task finished:".wfTimestampNow());
 				$this->log( sprintf( "batch(%d) finished task id=%d; type=%s", $taskNumber, $taskId, $taskClass->getType() ) );
 			}
 			else {
