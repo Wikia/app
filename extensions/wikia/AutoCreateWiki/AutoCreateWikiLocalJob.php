@@ -136,49 +136,58 @@ class AutoCreateWikiLocalJob extends Job {
 		Wikia::log( __METHOD__, "talk", "Setting welcome talk page on new wiki..." );
 
 		$talkPage = $this->mFounder->getTalkPage();
-		$wikiaName = isset( $this->mParams[ "title" ] )
-			? $this->mParams[ "title" ]
-			: WikiFactory::getVarValueByName( "wgSitename", $this->mParams[ "city_id"], true );
-		$wikiaLang = isset( $this->mParams[ "language" ] )
-			? $this->mParams[ "language" ]
-			: WikiFactory::getVarValueByName( "wgLanguageCode", $this->mParams[ "city_id"] );
+		if( $talkPage ) {
+			$wikiaName = isset( $this->mParams[ "title" ] )
+				? $this->mParams[ "title" ]
+				: WikiFactory::getVarValueByName( "wgSitename", $this->mParams[ "city_id"], true );
+			$wikiaLang = isset( $this->mParams[ "language" ] )
+				? $this->mParams[ "language" ]
+				: WikiFactory::getVarValueByName( "wgLanguageCode", $this->mParams[ "city_id"] );
 
-		/**
-		 * set apropriate staff member
-		 */
-		$wgUser = AutoCreateWiki::getStaffUserByLang( $wikiaLang );
-		$wgUser = ( $wgUser instanceof User ) ? $wgUser : User::newFromName( "Angela" );
+			Wikia::log( __METHOD__, "vars", "sitename: {$wikiaName}; language: {$wikiaLang}" );
 
-		$talkParams = array(
-			$this->mFounder->getName(),
-			$wgUser->getName(),
-			$wgUser->getRealName(),
-			$wikiaName
-		);
-
-		$talkBody = false;
-		if(! empty( $wikiaLang ) ) {
 			/**
-			 * custom lang translation
+			 * set apropriate staff member
 			 */
-			$talkBody = wfMsgExt( "autocreatewiki-welcometalk", array( 'language' => $wikiaLang ), $talkParams );
-		}
+			$wgUser = AutoCreateWiki::getStaffUserByLang( $wikiaLang );
+			$wgUser = ( $wgUser instanceof User ) ? $wgUser : User::newFromName( "Angela" );
 
-		if( ! $talkBody ) {
+			$talkParams = array(
+				$this->mFounder->getName(),
+				$wgUser->getName(),
+				$wgUser->getRealName(),
+				$wikiaName
+			);
+
+			$talkBody = false;
+			if(! empty( $wikiaLang ) ) {
+				/**
+				 * custom lang translation
+				 */
+				$talkBody = wfMsgExt( "autocreatewiki-welcometalk", array( 'language' => $wikiaLang ), $talkParams );
+			}
+
+			if( ! $talkBody ) {
+				/**
+				 * wfMsgExt should always return message, but just in case...
+				 */
+				$talkBody = wfMsg( "autocreatewiki-welcometalk", $talkParams );
+			}
+
 			/**
-			 * wfMsgExt should always return message, but just in case...
+			 * and now create talk article
 			 */
-			$talkBody = wfMsg( "autocreatewiki-welcometalk", $talkParams );
+			$talkArticle = new Article( $talkPage, 0 );
+			if( !$talkArticle->exists() ) {
+				$talkArticle->doEdit( $talkBody,  wfMsg( "autocreatewiki-welcometalk-log" ), EDIT_FORCE_BOT );
+			}
+			else {
+				Wikia::log( __METHOD__, "talkpage", sprintf("%s already exists", $talkPage->getFullURL()) );
+			}
 		}
-
-		/**
-		 * and now create talk article
-		 */
-		$talkArticle = new Article( $talkPage, 0 );
-		if( !$talkArticle->exists() ) {
-			$talkArticle->doEdit( $talkBody,  wfMsg( "autocreatewiki-welcometalk-log" ), EDIT_FORCE_BOT );
+		else {
+			Wikia::log( __METHOD__, "error", "Can't take talk page for user " . $this->mFounder->getId() );
 		}
-
 		return true;
 	}
 
