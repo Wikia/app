@@ -2417,6 +2417,9 @@ class Title {
 			}
 		}
 
+		// purge Special:RecentChanges too
+		$urls[] = SpecialPage::getTitleFor('RecentChanges')->getInternalURL();
+
 		return $urls;
 	}
 
