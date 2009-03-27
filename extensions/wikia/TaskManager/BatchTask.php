@@ -55,6 +55,15 @@ abstract class BatchTask {
 		$mVisible,
 		$mType;
 
+     /**
+      * constructor
+      */
+    public function __construct() {
+		/**
+		 * nothing
+		 */
+    }
+
     /**
      * get HTML form for Task, $title is Title object used in action
      * and errors array returned from submitForm

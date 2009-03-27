@@ -48,9 +48,9 @@ class TaskManagerExecutor {
      */
     public function execute() {
 
-        $this->log( "Task Manager started" );
+		$this->log( "Task Manager started" );
 		foreach( range(1, self::LIMIT ) as $taskNumber ) {
-	        $taskClass = $this->getTask();
+			$taskClass = $this->getTask();
 			if( $taskClass instanceof BatchTask ) {
 				/**
 				 * lock task
