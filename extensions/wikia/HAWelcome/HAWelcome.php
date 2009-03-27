@@ -130,7 +130,7 @@ class HAWelcomeJob extends Job {
 			 * check again if talk page exists
 			 */
 			$talkPage  = $this->mUser->getUserPage()->getTalkPage();
-			Wikia::log( __METHOD__, "talk", $talkPage->getLocalUrl() );
+			Wikia::log( __METHOD__, "talk", $talkPage->getFullUrl() );
 
 			if( $talkPage ) {
 				$tmpTitle  = $wgTitle;
@@ -166,6 +166,7 @@ class HAWelcomeJob extends Job {
 							if( $userPage ) {
 								$wgTitle = $userPage;
 								$userArticle = new Article( $userPage, 0 );
+								Wikia::log( __METHOD__, "userpage", $userPage->getFullUrl() );
 								if( ! $userArticle->exists() ) {
 									$pageMsg = wfMsg( "welcome-user-page" );
 									$userArticle->doEdit( $pageMsg, false, $flags );
@@ -371,7 +372,8 @@ class HAWelcomeJob extends Job {
 				}
 			}
 			else {
-				Wikia::log( __METHOD__, "right-welcometool", "user " . $wgUser->isAllowed( 'welcometool' ) );
+				Wikia::log( __METHOD__, "right", "user " . $wgUser->isAllowed( 'welcometool' ) );
+				Wikia::log( __METHOD__, "exists", "user " . $wgUser->isAllowed( 'welcometool' ) );
 			}
 		}
 		$wgErrorLog = $oldValue;
