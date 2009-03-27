@@ -372,8 +372,7 @@ class HAWelcomeJob extends Job {
 				}
 			}
 			else {
-				Wikia::log( __METHOD__, "right", "user " . $wgUser->isAllowed( 'welcometool' ) );
-				Wikia::log( __METHOD__, "exists", "user " . $wgUser->isAllowed( 'welcometool' ) );
+				Wikia::log( __METHOD__, "rights", "user isAllowed = " . $wgUser->isAllowed( 'welcometool' ) );
 			}
 		}
 		$wgErrorLog = $oldValue;
