@@ -20,8 +20,9 @@ require_once( dirname(__FILE__) . "/BatchTask.php" );
 
 class TaskManagerExecutor {
 
-	const LOGFILE = "/tmp/taskmanager.log";
 	const DEBUG = true;
+	const LIMIT = 50; /* how many tasks at once */
+
 	public $mTasksClasses, $mTaskData;
 	private $mAlarmMails = array( "eloy@wikia-inc.com", "ops@wikia-inc.com" );
 
@@ -31,20 +32,12 @@ class TaskManagerExecutor {
      * @return TaskManagerExecutor object
      */
     public function  __construct() {
-        global $wgWikiaBatchTasks, $wgDebugLogGroups;
-        if( self::DEBUG === true ) {
-            $wgDebugLogGroups["taskmanager"] = self::LOGFILE;
-        }
-        else {
-            if( isset($wgDebugLogGroups["taskmanager"]) ) {
-                unset($wgDebugLogGroups["taskmanager"]);
-            }
-        }
+        global $wgWikiaBatchTasks;
         $this->mTasksClasses = $wgWikiaBatchTasks;
     }
 
     /**
-     * execute
+     * get task from queue and execute
      *
      * main entry point, task executor run this method
      *
@@ -53,24 +46,26 @@ class TaskManagerExecutor {
      *
      * @return nothin
      */
-    public function execute()
-    {
-        #--- get task from queue
-        echo "started ".wfTimestampNow()."\n";
+    public function execute() {
 
-        $oTask = $this->getTask();
-        if ( !empty( $this->mTaskData->task_id )) {
-            $oTask->addlog("task started:".wfTimestampNow());
-            $this->lockTask( $this->mTaskData->task_id );
+        $this->log( "Task Manager started" );
+		foreach( range(1, self::LIMIT ) as $taskNumber ) {
+	        $taskClass = $this->getTask();
+			if( $taskClass instanceof BatchTask ) {
+				$taskId = $taskClass->getId();
+				$taskClass->addlog("task started:".wfTimestampNow());
+				$this->lockTask( $taskId );
 
-            #--- execute should return true when success or false when error
-            $bStatus = $oTask->execute( $this->mTaskData );
-            $this->unlockTask( $this->mTaskData->task_id, $bStatus );
-            $oTask->addlog("task finished:".wfTimestampNow());
-        }
-        else {
-            echo "Queue is empty! Great success!\n";
-        }
+				$status = $taskClass->execute( $this->mTaskData );
+				$this->unlockTask( $taskId, $status );
+				$taskClass->addlog( "task finished:".wfTimestampNow());
+				$this->log( sprintf( "batch(%d) finished task id=%d; type=%s", $taskNumber, $taskId, $taskClass->getType() ) );
+			}
+			else {
+				$this->log( sprintf( "batch(%d) queue is empty", $taskNumber ) );
+			}
+		}
+		$this->log( "Task Manager finished" );
     }
 
 	/**
@@ -150,8 +145,6 @@ class TaskManagerExecutor {
 	 * @return boolean: status of operation
 	 */
 	private function getTask() {
-		global $wgDebugLogGroups;
-
 		$aStarted = array();
 		$aRunning = array();
 		$dbr = wfGetDB( DB_MASTER );
@@ -169,7 +162,7 @@ class TaskManagerExecutor {
 			while( $oRow = $dbr->fetchObject( $oRes ) ) {
 				$aStarted[] = $dbr->addQuotes( $oRow->task_type );
 				$aRunning[] = $oRow->task_id;
-				echo "Task in progress: id={$oRow->task_id} type={$oRow->task_type}\n";
+				$this->log( "Task in progress: id={$oRow->task_id} type={$oRow->task_type}" );
 			}
 			$dbr->freeResult( $oRes );
 
@@ -192,12 +185,14 @@ class TaskManagerExecutor {
 			);
 			$dbr->commit();
 		}
-		catch (DBConnectionError $e) {
-			wfDebugLog( "taskmanager", "Connection error: " . $e->getMessage(), true );
-		} catch (DBQueryError $e) {
-			wfDebugLog( "taskmanager", "Query error: " . $e->getMessage(), true );
-		} catch (DBError $e) {
-			wfDebugLog( "taskmanager", "Database error: " . $e->getMessage(), true );
+		catch( DBConnectionError $e ) {
+			$this->log( "Connection error: " . $e->getMessage() );
+		}
+		catch( DBQueryError $e ) {
+			$this->log( "Connection error: " . $e->getMessage() );
+		}
+		catch( DBError $e ) {
+			$this->log( "Connection error: " . $e->getMessage() );
 		}
 
 		/**
@@ -237,7 +232,6 @@ class TaskManagerExecutor {
 		if( is_array( $ids ) ) {
 			foreach( $ids as $taskid ) {
 				$oTask = BatchTask::newFromID( $taskid );
-				print_r( $oTask );
 				if( ! empty( $oTask->getData()->task_started ) ) {
 					$ttl = $oTask->getTTL();
 					$run =  wfTimestamp(TS_UNIX, $oTask->getData()->task_started);
@@ -293,6 +287,13 @@ class TaskManagerExecutor {
 		foreach( $this->mAlarmMails as $email ) {
 			$to[] = new MailAddress( $email );
 		}
-		return UserMailer::send( $to, new MailAddress("nobody@wikia.com"), "[TASKMANAGER] Task Manager stucked.", $alarm );
+		// return UserMailer::send( $to, new MailAddress("ops@wikia-inc.com"), "[TASKMANAGER] Task Manager stucked.", $alarm );
+	}
+
+	/**
+	 * log
+	 */
+	public function log( $message ) {
+		printf( "%s %s\n", wfTimestamp( TS_DB, time() ), $message );
 	}
 };
