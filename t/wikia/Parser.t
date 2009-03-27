@@ -8,7 +8,7 @@
  * Please note that test cases related to external links whitelist
  * may fail if connection to white list server will timeout
  *
- * You should also have [[Test]] page on your wiki
+ * You should also have [[Test]] page, [[Image:Test.png]] and [[Video:Test]] on your wiki
  *
  * @auhtor Maciej Brencz <macbre@wikia-inc.com>
  */
@@ -26,7 +26,20 @@ function parseOk($wikitext, $html, $data) {
 	list($outputHtml, $outputData) = Wysiwyg_WikiTextToHtml($wikitext, 1);
 
 	// test it
-	is($outputHtml,$html,  'comparing HTML');
+	is($outputHtml, $html, 'comparing HTML');
+	is_deeply($outputData, $data, 'comparing meta-data');
+}
+
+function parseMatch($wikitext, $regex, $data) {
+	// clean meta-data before test case run
+	global $wgWysiwygMetaData;
+	$wgWysiwygMetaData = NULL;
+
+	// parse wikitext
+	list($outputHtml, $outputData) = Wysiwyg_WikiTextToHtml($wikitext, 1);
+
+	// test it
+	like($outputHtml, $regex, 'comparing HTML (reg-exp)');
 	is_deeply($outputData, $data, 'comparing meta-data');
 }
 
@@ -209,9 +222,28 @@ $testCases = array(
 		'html'     => "<ol _wysiwyg_line_start=\"true\"><li space_after=\"\">a<!--EOL1-->\n<ul _wysiwyg_line_start=\"true\"><li space_after=\"\">a1<!--EOL1-->\n</li><li space_after=\"\">a2<!--EOL1-->\n</li></ul><!--EOL1-->\n</li><li space_after=\"\">b<!--EOL1-->\n</li></ol><!--EOL1-->\n",
 	),
 
-	// TODO:
 	// image
+	array(
+		'name'     => 'image',
+		'wikitext' => "[[Image:Test.png]]",
+		'match'    => '/class="image" title="Test.png" refid="0"\>\<img alt="" src="(.*)Test.png" width="(\d+)" height="(\d+)" border="0" \/\>\<\/a\>/',
+		'data'     => array(
+				array('type' => 'image', 'href' => 'Image:Test.png', 'original' => '[[Image:Test.png]]', 'url' => 'http://ws1.poz.wikia-inc.com/images/simpsons/images/d/d9/Test.png'),
+			),
+	),
+
 	// video
+	array(
+		'name'     => 'video',
+		'wikitext' => "[[Video:Test]]",
+		'match'    => '/\<div _wysiwyg_line_start="true" class="tleft" refid="0" style="position:relative"\>\<img src="http:\/\/img.youtube.com\/vi\/(.*)" height="(\d+)" width="(\d+)" alt="" \/\>\<div style="width: (\d+)px; height: (\d+)px; background: transparent url\((.*)video.png\) no-repeat 50% 50%; position: absolute; top: 0; left: 0"\>\<br \/\>\<\/div\>\<\/div\>/',
+		'data'     => array(
+				array('type' => 'video', 'original' => '[[Video:Test]]', 'href' => 'Video:Test', 'align' => 'left', 'width' => 400, 'caption' => 'Video:Test'),
+			),
+	),
+
+
+	// TODO:
 	// NS_MEDIA links
 	// template
 
@@ -226,7 +258,16 @@ diag('');
 
 foreach($testCases as $testCase) {
 	diag($testCase['name']);
-	parseOk($testCase['wikitext'], $testCase['html'], isset($testCase['data']) ? $testCase['data'] : NULL);
+
+	// string comparison
+	if (isset($testCase['html'])) {
+		parseOk($testCase['wikitext'], $testCase['html'], isset($testCase['data']) ? $testCase['data'] : NULL);
+	}
+	// regexp match
+	else if (isset($testCase['match'])) {
+		parseMatch($testCase['wikitext'], $testCase['match'], isset($testCase['data']) ? $testCase['data'] : NULL);
+	}
+
 }
 
 // finish the test
