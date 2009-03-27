@@ -1,4 +1,5 @@
 YAHOO.util.Event.onAvailable("moving", function() {
+	YAHOO.util.Event.preventDefault('highlightform');
 	var aBodyXY = YAHOO.util.Dom.getXY('highlightform');
 	var aDivSel = YAHOO.util.Dom.getElementsByClassName('formblock', 'div');
 	var height, width;
