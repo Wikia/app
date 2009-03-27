@@ -227,6 +227,7 @@ class HAWelcomeJob extends Job {
 			$sysop = trim( wfMsg( "welcome-user" ) );
 
 			if( $sysop !== "-" && $sysop !== "@latest" && $sysop !== "@disabled" && $sysop !== "@sysop" ) {
+				Wikia::log( __METHOD__, "welcome-user", $sysop );
 				$this->mSysop = User::newFromName( $sysop );
 			}
 			else {
