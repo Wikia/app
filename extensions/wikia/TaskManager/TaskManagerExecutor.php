@@ -55,8 +55,9 @@ class TaskManagerExecutor {
 				/**
 				 * lock task
 				 */
-				$taskId = $taskClass->getId();
+				$taskId = $this->mTaskData->task_id;
 				$this->lockTask( $taskId );
+				$taskClass->setId( $taskId );
 
 				/**
 				 * execute task
