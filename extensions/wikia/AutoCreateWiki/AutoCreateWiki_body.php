@@ -103,6 +103,7 @@ class AutoCreateWikiPage extends SpecialPage {
 
 		wfLoadExtensionMessages( "AutoCreateWiki" );
 
+		error_log ("wfTimestamp = " . wfTimestamp() . "\n");
 		$this->setHeaders();
 		$this->mTitle = Title::makeTitle( NS_SPECIAL, "AutoCreateWiki" );
 		$this->mAction = $wgRequest->getVal( "action", false );
@@ -819,7 +820,7 @@ class AutoCreateWikiPage extends SpecialPage {
 		$res = 0;
 		if ( !empty($_SESSION) && is_array($_SESSION) ) {
 			foreach ($_SESSION as $key => $value) {
-				if ( preg_match('/^awc/', $key) !== false ) {
+				if ( preg_match('/^awc/', $key, $m) ) {
 					unset($_SESSION[$key]);
 					$res++;
 				}
