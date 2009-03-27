@@ -141,7 +141,7 @@ class WikiaWhitelist
 		    $settings['previousFilter'] = false;
         }
 		if (empty($settings['files'])) {
-		    $settings['files'] = array("http://www.wikia.com/index.php?title=MediaWiki:External_links_whitelist&action=raw&stime=".time());
+		    $settings['files'] = array("DB: wikicities MediaWiki:External_links_whitelist");
         } else {
             $use_prefix = 1;
         }
