@@ -429,13 +429,14 @@ class HAWelcomeJob extends Job {
 		$Sysop = $this->getLastSysop();
 		$tmpUser = $wgUser;
 		$wgUser = $Sysop;
+		$SysopName = wfEscapeWikiText( $Sysop->getName() );
 		$signature = sprintf(
 			"-- [[%s:%s|%s]] ([[%s:%s|%s]]) %s",
 			$wgContLang->getNsText(NS_USER),
-			wfEscapeWikiText( $Sysop->getName() ),
-			wfEscapeWikiText( $Sysop->getName() ),
+			$SysopName,
+			$SysopName,
 			$wgContLang->getNsText(NS_USER_TALK),
-			wfEscapeWikiText( $Sysop->getName() ),
+			$SysopName,
 			wfMsg( "talkpagelinktext" ),
 			$wgContLang->timeanddate( wfTimestampNow( TS_MW ) )
 		);
