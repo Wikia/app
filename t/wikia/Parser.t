@@ -8,7 +8,8 @@
  * Please note that test cases related to external links whitelist
  * may fail if connection to white list server will timeout
  *
- * You should also have [[Test]] page, [[Image:Test.png]] and [[Video:Test]] on your wiki
+ * You should also need to have [[Test]] page, [[Image:Test.png]],
+ * [[Video:Test]] and {{Test}} on your wiki
  *
  * @auhtor Maciej Brencz <macbre@wikia-inc.com>
  */
@@ -232,6 +233,16 @@ $testCases = array(
 			),
 	),
 
+	// NS_MEDIA links
+	array(
+		'name'     => 'NS_MEDIA link',
+		'wikitext' => "[[Media:Test.png]]",
+		'html'     => "<p _new_lines_before=\"0\"><input type=\"button\" refid=\"0\" _fck_type=\"internal link: media\" value=\"[[Media:Test.png]]\" title=\"[[Media:Test.png]]\" class=\"wysiwygDisabled wysiwygInternalLinkMedia\" /><!--EOL1-->\n</p>",
+		'data'     => array(
+				array('type' => 'internal link: media', 'href' => 'Media:Test.png', 'description' => ''),
+			),
+	),
+
 	// video
 	array(
 		'name'     => 'video',
@@ -242,11 +253,15 @@ $testCases = array(
 			),
 	),
 
-
-	// TODO:
-	// NS_MEDIA links
 	// template
-
+	array(
+		'name'     => 'Template',
+		'wikitext' => "{{Test|foo=bar}}",
+		'html'     => "<p _new_lines_before=\"0\"><input type=\"button\" refid=\"0\" _fck_type=\"template\" value=\"Test\" class=\"wysiwygDisabled wysiwygTemplate\" /><input value=\"bar\" style=\"display:none\" /><!--EOL1-->\n</p>",
+		'data'     => array(
+				array('type' => 'template', 'originalCall' => '{{Test|foo=bar}}', 'name' => 'Test', 'templateParams' => array('foo' => 'bar'), 'wrapper' => false),
+			),
+	),
 );
 
 // how many tests to run
