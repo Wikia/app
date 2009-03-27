@@ -26,6 +26,7 @@ var s = navigator.userAgent.toLowerCase() ;
 var FCKBrowserInfo =
 {
 	IsIE		: /*@cc_on!@*/false,
+	IsIE8		: /*@cc_on!@*/false && ( parseInt( s.match( /msie (\d+)/ )[1], 10 ) >= 8 ),
 	IsIE7		: /*@cc_on!@*/false && ( parseInt( s.match( /msie (\d+)/ )[1], 10 ) >= 7 ),
 	IsIE6		: /*@cc_on!@*/false && ( parseInt( s.match( /msie (\d+)/ )[1], 10 ) >= 6 ),
 	IsSafari	: s.Contains(' applewebkit/'),		// Read "IsWebKit"
