@@ -51,6 +51,10 @@ function wfMultiEditFormExt( $rows, $cols, $ew, $textbox1 )
 {
 	global $wgOut, $wgRequest, $wgLanguageNames, $wgMessageCache, $wgMultiEditMessages, $wgMultiEditEnable, $wgTitle, $wgMultiEditTag;
 	global $IP, $wgStyleVersion;
+
+	// added logging
+	global $wgCityId;
+	error_log( "MultiEdit:Form WikiId: {$wgCityId} Title: {$wgTitle->getText()}" );
 	
 	#---
 	$is_used_metag = false;
@@ -421,6 +425,11 @@ END
 function wfMultiEditSection($text) 
 {
 	global $wgMultiEditEnable, $wgMultiEditTag;
+
+	// added logging
+	global $wgCityId, $wgTitle;
+	error_log( "MultiEdit:Section WikiId: {$wgCityId} Title: {$wgTitle->getText()}" );
+
 	$multiedit_tag = '<!---'.$wgMultiEditTag.'--->';
 
 	if( $wgMultiEditEnable && strpos($text, $multiedit_tag) !== false ) {
