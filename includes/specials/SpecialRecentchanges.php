@@ -95,7 +95,9 @@ class SpecialRecentChanges extends SpecialPage {
 		$feedFormat = $wgRequest->getVal( 'feed' );
 
 		# 10 seconds server-side caching max
-		$wgOut->setSquidMaxage( 10 );
+		# modified by Emil, 10 secs is not enough for us
+		global $wgSquidMaxage;
+		$wgOut->setSquidMaxage( $wgSquidMaxage );
 
 		$lastmod = $this->checkLastModified( $feedFormat );
 		if( $lastmod === false ){
