@@ -52,6 +52,10 @@ $title = htmlspecialchars( $oTitle->getText() );
 						<dt>Digg</dt>
 						<dd><a rel="nofollow" href="http://digg.com/submit?phase=2&amp;url=<?=$url?>&amp;title=<?=$title?>" id="shareDigg_a"></a></dd>
 					</dl>
+					<dl id="shareFacebook" class="share">
+						<dt>Facebook</dt>
+						<dd><a rel="nofollow" href="http://www.facebook.com/share.php?u=<?=$url?>" id="shareFacebook_a"></a></dd>
+					</dl>
 					</div>
 				</ul>
 			</td>	
