@@ -348,11 +348,17 @@ class Wikia {
 	 *
 	 */
 	static public function log( $method, $sub = false, $message = false ) {
-	  global $wgDevelEnvironment, $wgErrorLog, $wgDBname, $wgCityId;
+	  global $wgDevelEnvironment, $wgErrorLog, $wgDBname, $wgCityId, $wgCommandLineMode;
 
 		$method = $sub ? $method . "-" . $sub : $method;
 		if( $wgDevelEnvironment || $wgErrorLog ) {
 			error_log( $method . ":{$wgDBname}/{$wgCityId}:" . $message );
+		}
+		/**
+		 * commandline = echo
+		 */
+		if( $wgCommandLineMode ) {
+			printf( "%s %s:%s/%d: %s\n", wfTimestamp( TS_DB, time() ), $method, $wgDBname, $wgCityId, $message );
 		}
 		/**
 		 * and use wfDebug as well
