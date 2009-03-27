@@ -97,9 +97,9 @@ class SpecialRecentChanges extends SpecialPage {
 		# 10 seconds server-side caching max
 		// modified by Emil, 10 secs is not enough for us
 		// so the most popular URLs are cached longer and purged on every edit
-		if( $this->getFullRequestURL() == SpecialPage::getTitleFor('RecentChanges')->getInternalURL()
-		 || $this->getFullRequestURL() == SpecialPage::getTitleFor('RecentChanges')->getInternalURL('feed=rss')
-		 || $this->getFullRequestURL() == SpecialPage::getTitleFor('RecentChanges')->getInternalURL('feed=atom') ) {
+		if( $wgRequest->getFullRequestURL() == SpecialPage::getTitleFor('RecentChanges')->getInternalURL()
+		 || $wgRequest->getFullRequestURL() == SpecialPage::getTitleFor('RecentChanges')->getInternalURL('feed=rss')
+		 || $wgRequest->getFullRequestURL() == SpecialPage::getTitleFor('RecentChanges')->getInternalURL('feed=atom') ) {
 			global $wgSquidMaxage;
 			$wgOut->setSquidMaxage( $wgSquidMaxage );
 		} else {
