@@ -241,6 +241,8 @@ class HAWelcomeJob extends Job {
 					/**
 					 * get all users which are sysops/sysops or staff or helpers
 					 * but not bots
+					 *
+					 * @todo check $db->makeList( $array )
 					 */
 					$groups = ($sysop !== "@sysop")
 						? array( "'staff'", "'sysop'", "'helper'", "'bot'" )
