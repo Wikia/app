@@ -242,7 +242,10 @@ class HAWelcomeJob extends Job {
 					 * get all users which are sysops/sysops or staff or helpers
 					 * but not bots
 					 */
-					$groups = ($sysop !== "@sysop") ? array('staff', 'sysop', 'helper', 'bot' ) : array('sysop', 'bot' );
+					$groups = ($sysop !== "@sysop")
+						? array( "'staff'", "'sysop'", "'helper'", "'bot'" )
+						: array( "'sysop'", "'bot'" );
+
 					$bots   = array();
 					$admins = array();
 					$res = $dbr->select(
@@ -264,7 +267,8 @@ class HAWelcomeJob extends Job {
 					/**
 					 * remove bots from admins
 					 */
-					$admins = array_diff( $admins, $bots );
+					$admins = array_unique( array_diff( $admins, $bots ) );
+
 					$row = $dbr->selectRow(
 						array( "revision" ),
 						array( "rev_user", "rev_user_text"),
