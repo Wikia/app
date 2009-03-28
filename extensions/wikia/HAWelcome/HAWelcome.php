@@ -31,7 +31,6 @@ $wgExtensionCredits['other'][] = array(
  * used hooks
  */
 $wgHooks[ "RevisionInsertComplete" ][]	= "HAWelcomeJob::revisionInsertComplete";
-$wgHooks[ "EditPage::attemptSave" ][] = "HAWelcomeJob::checkSysopAfterSave";
 
 /**
  * register job class
@@ -71,7 +70,6 @@ class HAWelcomeJob extends Job {
 		$mSysop;
 
 	const WELCOMEUSER = "Wikia";
-	const MEMC_SYSOP_USER = "HAWelcomeSysop_%s";
 
 	/**
 	 * Construct a job
@@ -222,68 +220,79 @@ class HAWelcomeJob extends Job {
 
 		wfProfileIn( __METHOD__ );
 
-		if( ! $this->mSysop instanceof User ) {
+		$sysop = trim( wfMsg( "welcome-user" ) );
 
-			$sysop = trim( wfMsg( "welcome-user" ) );
+		if( !in_array( $sysop, array( "@disabled", "-" ) ) ) {
 
-			if( $sysop !== "-" && $sysop !== "@latest" && $sysop !== "@disabled" && $sysop !== "@sysop" ) {
+			if( in_array( $sysop, array( "@latest", "@sysop" ) ) ) {
+				/**
+				 * first: check memcache, maybe we have already stored id of sysop
+				 */
+				$sysopId = $wgMemc->get( wfMemcKey( "lastsysopid" ) );
+				if( $sysopId ) {
+					$this->mSysop = User::newFromId( $sysopId );
+				}
+				else {
+					/**
+					 * second: check database, could be expensive for database
+					 */
+					$dbr = wfGetDB( DB_SLAVE );
+
+					/**
+					 * get all users which are sysops/sysops or staff or helpers
+					 * but not bots
+					 */
+					$groups = ($sysop !== "@sysop") ? array('staff', 'sysop', 'helper', 'bot' ) : array('sysop', 'bot' );
+					$bots   = array();
+					$admins = array();
+					$res = $dbr->select(
+						array( "ug_group" ),
+						array( "ug_user, ug_group" ),
+						array( "ug_group IN (" . implode(", ", $groups ) .") " ),
+						__METHOD__
+					);
+					while( $row = $dbr->fetchObject( $res ) ) {
+						if( $row->ug_group == "bot" ) {
+							$bots[] = $row->ug_user;
+						}
+						else {
+							$admins[] = $row->ug_user;
+						}
+					}
+					$res->freeResult();
+
+					/**
+					 * remove bots from admins
+					 */
+					$admins = array_diff( $admins, $bots );
+					$row = $dbr->selectRow(
+						array( "revision" ),
+						array( "rev_user", "rev_user_text"),
+						array( "rev_user IN (" . implode( ", ", $admins ) . ")" ),
+						__METHOD__,
+						array( "order by" => "rev_timestamp desc")
+					);
+					if( $row->rev_user ) {
+						$this->mSysop = User::newFromId( $row->rev_user );
+						$wgMemc->set( wfMemcKey( "lastsysopid" ), $row->rev_user, 86400 );
+					}
+				}
+			}
+			else {
 				Wikia::log( __METHOD__, "welcome-user", $sysop );
 				$this->mSysop = User::newFromName( $sysop );
 			}
-			else {
-				$memKey = sprintf(self::MEMC_SYSOP_USER, $wgCityId);
-				$mSysop = $wgMemc->get( $memKey );
-				if ( !empty($mSysop) ) {
-					$this->mSysop = User::newFromName( $sysop );
-				}
-
-				if ( ! $this->mSysop instanceof User ) {
-					$dbr = wfGetDB( DB_SLAVE );
-					$aWhere = ($sysop !== "@sysop") ? array('staff', 'sysop', 'helper') : array('sysop');
-					$res = $dbr->query(
-						"SELECT ug_group, GROUP_CONCAT(DISTINCT ug_user SEPARATOR ',') AS user_id" .
-						" FROM user_groups" .
-						" WHERE ug_group IN ('" . implode("','", $aWhere) . "', 'bot')" .
-						" GROUP BY ug_group;",
-						__METHOD__
-					);
-
-					$idsInGroups = array();
-					while( $row = $dbr->fetchObject( $res ) ) {
-						$idsInGroups[$row->ug_group] = explode(',', $row->user_id);
-					}
-					$idsBot = isset($idsInGroups['bot']) ? $idsInGroups['bot'] : array();
-					unset($idsInGroups['bot']);
-					//combine $idsInGroups['sysop'], $idsInGroups['staff'], .... etc. into one unique array
-					$idsUser = array_unique(call_user_func_array('array_merge', $idsInGroups));
-					//remove users that has 'bot' flag
-					$idsInGroups = array_diff($idsUser, $idsBot);
-
-					$res = $dbr->select( 'revision',
-						array( 'max(rev_id) as rev' ),
-						array( "rev_user IN ('" . implode("','", $idsInGroups) . "')" ),
-						__METHOD__
-					);
-					$row = $dbr->fetchObject( $res );
-					$dbr->freeResult( $res );
-
-					$rev_user = 0;
-					if ( !empty($row) && !empty($row->rev) ) {
-						$res = $dbr->select( 'revision',
-							array( 'rev_user' ),
-							array( "rev_id" => $row->rev ),
-							__METHOD__
-						);
-						$row = $dbr->fetchObject( $res );
-						$dbr->freeResult( $res );
-						$rev_user = $row->rev_user;
-					}
-
-					$this->mSysop = User::newFromId( $rev_user );
-				}
-			}
 		}
-
+		/**
+		 * fallback, if still user is uknown we use Wikia user
+		 */
+		if( $this->mSysop instanceof User && $this->mSysop->getId() ) {
+			Wikia::log( __METHOD__, "sysop", "Found sysop: " . $this->mSysop->getName( ) );
+		}
+		else {
+			Wikia::log( __METHOD__, "sysop", "Fallback to " . self::WELCOMEUSER );
+			$this->mSysop = User::newFromName( self::WELCOMEUSER );
+		}
 		wfProfileOut( __METHOD__ );
 
 		return $this->mSysop;
@@ -382,38 +391,6 @@ class HAWelcomeJob extends Job {
 		return true;
 	}
 
-	public static function checkSysopAfterSave(&$editPage) {
-		global $wgUser, $wgCityId, $wgMemc;
-
-		wfProfileIn( __METHOD__ );
-		$mSysop = "";
-		wfLoadExtensionMessages( "HAWelcome" );
-
-		$sysop = trim( wfMsg( "welcome-user" ) );
-		$aGroup = ($sysop !== "@sysop") ? array('staff', 'sysop', 'helper') : array('sysop');
-		$user_groups = $wgUser->getGroups();
-		$inGroup = false;
-		if ( !empty($user_groups) && is_array($user_groups) ) {
-			foreach ($user_groups as $i => $group) {
-				if (in_array($group, $aGroup)) {
-					$inGroup = true;
-					break;
-				}
-			}
-		}
-
-		if ( !empty($inGroup) ) {
-			$mSysop = $wgUser->getName();
-		}
-
-		if ( !empty($mSysop) ) {
-			$memKey = sprintf(self::MEMC_SYSOP_USER, $wgCityId);
-			$wgMemc->set( $memKey, $mSysop );
-		}
-
-		wfProfileOut( __METHOD__ );
-		return true;
-	}
 
 	/**
 	 * expandSig -- hack, expand signature from message for sysop
