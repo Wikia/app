@@ -372,6 +372,7 @@ class Sanitizer {
 			);
 			$tabletags = array( # Can only appear inside table, we will close them
 				'td', 'th', 'tr',
+				'thead', 'tbody', 'tfoot',
 			);
 			$htmllist = array( # Tags used by list
 				'ul', 'ol', 'dl'
