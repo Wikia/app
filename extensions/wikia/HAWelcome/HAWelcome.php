@@ -73,6 +73,7 @@ class HAWelcomeJob extends Job {
 
 	/**
 	 * Construct a job
+	 *
 	 * @param Title $title The title linked to
 	 * @param array $params Job parameters (table, start and end page_ids)
 	 * @param integer $id job_id
@@ -80,11 +81,13 @@ class HAWelcomeJob extends Job {
 	public function __construct( $title, $params, $id = 0 ) {
 		wfLoadExtensionMessages( "HAWelcome" );
 		parent::__construct( "HAWelcome", $title, $params, $id );
-		$this->mUserId = $params[ "user_id" ];
-		$this->mUserIP = $params[ "user_ip" ];
-		$this->mUserName = $params[ "user_name" ];
 
-		$this->mAnon = (bool )$params[ "is_anon" ];
+		$this->mUserId   = $params[ "user_id" ];
+		$this->mUserIP   = $params[ "user_ip" ];
+		$this->mUserName = $params[ "user_name" ];
+		$this->mAnon     = (bool )$params[ "is_anon" ];
+		$this->mSysop    = false;
+
 		if( $this->mAnon ) {
 			$this->mUser = User::newFromName( $this->mUserIP, false );
 		}
@@ -134,10 +137,10 @@ class HAWelcomeJob extends Job {
 				Wikia::log( __METHOD__, "talk", $talkPage->getFullUrl() );
 
 				if( $talkPage ) {
-					$tmpTitle  = $wgTitle;
-					$sysop     = $this->getLastSysop();
-					$sysopPage = $sysop->getUserPage()->getTalkPage();
-					$signature = $this->expandSig();
+					$this->mSysop = $this->getLastSysop();
+					$tmpTitle     = $wgTitle;
+					$sysopPage    = $this->mSysop->getUserPage()->getTalkPage();
+					$signature    = $this->expandSig();
 
 					$wgTitle     = $talkPage;
 					$welcomeMsg  = false;
@@ -227,86 +230,91 @@ class HAWelcomeJob extends Job {
 
 		wfProfileIn( __METHOD__ );
 
-		$sysop = trim( wfMsg( "welcome-user" ) );
+		/**
+		 * maybe already loaded?
+		 */
+		if( ! $this->mSysop ) {
 
-		if( !in_array( $sysop, array( "@disabled", "-" ) ) ) {
+			$sysop = trim( wfMsg( "welcome-user" ) );
+			if( !in_array( $sysop, array( "@disabled", "-" ) ) ) {
 
-			if( in_array( $sysop, array( "@latest", "@sysop" ) ) ) {
-				/**
-				 * first: check memcache, maybe we have already stored id of sysop
-				 */
-				$sysopId = $wgMemc->get( wfMemcKey( "lastsysopid" ) );
-				if( $sysopId ) {
-					Wikia::log( __METHOD__, "sysop", "Have sysop id from memcached: {$sysopId}" );
-					$this->mSysop = User::newFromId( $sysopId );
+				if( in_array( $sysop, array( "@latest", "@sysop" ) ) ) {
+					/**
+					 * first: check memcache, maybe we have already stored id of sysop
+					 */
+					$sysopId = $wgMemc->get( wfMemcKey( "lastsysopid" ) );
+					if( $sysopId ) {
+						Wikia::log( __METHOD__, "sysop", "Have sysop id from memcached: {$sysopId}" );
+						$this->mSysop = User::newFromId( $sysopId );
+					}
+					else {
+						/**
+						 * second: check database, could be expensive for database
+						 */
+						$dbr = wfGetDB( DB_SLAVE );
+
+						/**
+						 * get all users which are sysops/sysops or staff or helpers
+						 * but not bots
+						 *
+						 * @todo check $db->makeList( $array )
+						 */
+						$groups = ($sysop !== "@sysop")
+							? array( "ug_group" => array( "staff", "sysop", "helper", "bot" ) )
+							: array( "ug_group" => array( "sysop", "bot" ) );
+
+						$bots   = array();
+						$admins = array();
+						$res = $dbr->select(
+							array( "user_groups" ),
+							array( "ug_user, ug_group" ),
+							$dbr->makeList( $groups, LIST_OR ),
+							__METHOD__
+						);
+						while( $row = $dbr->fetchObject( $res ) ) {
+							if( $row->ug_group == "bot" ) {
+								$bots[] = $row->ug_user;
+							}
+							else {
+								$admins[] = $row->ug_user;
+							}
+						}
+						$dbr->freeResult( $res );
+
+						/**
+						 * remove bots from admins
+						 */
+						$admins = array( "rev_user" => array_unique( array_diff( $admins, $bots ) ) );
+
+						$row = $dbr->selectRow(
+							array( "revision" ),
+							array( "rev_user", "rev_user_text"),
+							$dbr->makeList( $admins, LIST_OR ),
+							__METHOD__,
+							array( "order by" => "rev_timestamp desc")
+						);
+						if( $row->rev_user ) {
+							$this->mSysop = User::newFromId( $row->rev_user );
+							$wgMemc->set( wfMemcKey( "lastsysopid" ), $row->rev_user, 86400 );
+						}
+					}
 				}
 				else {
-					/**
-					 * second: check database, could be expensive for database
-					 */
-					$dbr = wfGetDB( DB_SLAVE );
-
-					/**
-					 * get all users which are sysops/sysops or staff or helpers
-					 * but not bots
-					 *
-					 * @todo check $db->makeList( $array )
-					 */
-					$groups = ($sysop !== "@sysop")
-						? array( "ug_group" => array( "staff", "sysop", "helper", "bot" ) )
-						: array( "ug_group" => array( "sysop", "bot" ) );
-
-					$bots   = array();
-					$admins = array();
-					$res = $dbr->select(
-						array( "user_groups" ),
-						array( "ug_user, ug_group" ),
-						$dbr->makeList( $groups, LIST_OR ),
-						__METHOD__
-					);
-					while( $row = $dbr->fetchObject( $res ) ) {
-						if( $row->ug_group == "bot" ) {
-							$bots[] = $row->ug_user;
-						}
-						else {
-							$admins[] = $row->ug_user;
-						}
-					}
-					$dbr->freeResult( $res );
-
-					/**
-					 * remove bots from admins
-					 */
-					$admins = array( "rev_user" => array_unique( array_diff( $admins, $bots ) ) );
-
-					$row = $dbr->selectRow(
-						array( "revision" ),
-						array( "rev_user", "rev_user_text"),
-						$dbr->makeList( $admins, LIST_OR ),
-						__METHOD__,
-						array( "order by" => "rev_timestamp desc")
-					);
-					if( $row->rev_user ) {
-						$this->mSysop = User::newFromId( $row->rev_user );
-						$wgMemc->set( wfMemcKey( "lastsysopid" ), $row->rev_user, 86400 );
-					}
+					Wikia::log( __METHOD__, "sysop", "Hardcoded sysop: {$sysop}" );
+					$this->mSysop = User::newFromName( $sysop );
 				}
 			}
-			else {
-				Wikia::log( __METHOD__, "sysop", "Hardcoded sysop: {$sysop}" );
-				$this->mSysop = User::newFromName( $sysop );
-			}
-		}
 
-		/**
-		 * fallback, if still user is uknown we use Wikia user
-		 */
-		if( $this->mSysop instanceof User && $this->mSysop->getId() ) {
-			Wikia::log( __METHOD__, "sysop", "Found sysop: " . $this->mSysop->getName( ) );
-		}
-		else {
-			Wikia::log( __METHOD__, "sysop", "Fallback to " . self::WELCOMEUSER );
-			$this->mSysop = User::newFromName( self::WELCOMEUSER );
+			/**
+			 * fallback, if still user is uknown we use Wikia user
+			 */
+			if( $this->mSysop instanceof User && $this->mSysop->getId() ) {
+				Wikia::log( __METHOD__, "sysop", "Found sysop: " . $this->mSysop->getName( ) );
+			}
+			else {
+				Wikia::log( __METHOD__, "sysop", "Fallback to " . self::WELCOMEUSER );
+				$this->mSysop = User::newFromName( self::WELCOMEUSER );
+			}
 		}
 		wfProfileOut( __METHOD__ );
 
@@ -418,10 +426,10 @@ class HAWelcomeJob extends Job {
 
 		wfProfileIn( __METHOD__ );
 
-		$Sysop = $this->getLastSysop();
+		$this->mSysop = $this->getLastSysop();
 		$tmpUser = $wgUser;
-		$wgUser = $Sysop;
-		$SysopName = wfEscapeWikiText( $Sysop->getName() );
+		$wgUser = $this->mSysop;
+		$SysopName = wfEscapeWikiText( $this->mSysop->getName() );
 		$signature = sprintf(
 			"-- [[%s:%s|%s]] ([[%s:%s|%s]]) %s",
 			$wgContLang->getNsText(NS_USER),
