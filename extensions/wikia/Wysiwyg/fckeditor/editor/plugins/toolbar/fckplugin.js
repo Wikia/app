@@ -73,7 +73,7 @@ WikiaToolbar.prototype.Create = function(parentElement) {
 	var backgroundColor= pageBar.getStyle('backgroundColor') || '#efefde';
 
 	toolbar.style.color= pageBar.getStyle('color') || '#000';
-	//parentElement.style.backgroundColor= backgroundColor;
+	parentElement.style.backgroundColor= backgroundColor;
 
 	var toolbarRow = toolbar.insertRow(-1);
 	var currentBucket = false;
