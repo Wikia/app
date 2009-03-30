@@ -110,98 +110,105 @@ class HAWelcomeJob extends Job {
 
 		wfProfileIn( __METHOD__ );
 
+		$oldValue = $wgErrorLog;
+		$wgErrorLog = true;
+
 		/**
 		 * overwrite $wgUser for ~~~~ expanding
 		 */
-		$oldValue = $wgErrorLog;
-		$wgErrorLog = true;
-		$tmpUser = $wgUser;
-		$wgUser  = User::newFromName( self::WELCOMEUSER );
-		$flags = 0;
-		if( $wgUser && $wgUser->isAllowed( 'bot' ) ) {
-			$flags = EDIT_FORCE_BOT;
-		}
-		Wikia::log( __METHOD__, "user", $this->mUser->getName() );
+		$sysop = trim( wfMsg( "welcome-user" ) );
+		if( !in_array( $sysop, array( "@disabled", "-" ) ) ) {
+			$tmpUser = $wgUser;
+			$wgUser  = User::newFromName( self::WELCOMEUSER );
+			$flags = 0;
+			if( $wgUser && $wgUser->isAllowed( 'bot' ) ) {
+				$flags = EDIT_FORCE_BOT;
+			}
+			Wikia::log( __METHOD__, "user", $this->mUser->getName() );
 
-		if( $this->mUser && $this->mUser->getName() !== self::WELCOMEUSER && !$wgUser->isBlocked() ) {
-			/**
-			 * check again if talk page exists
-			 */
-			$talkPage  = $this->mUser->getUserPage()->getTalkPage();
-			Wikia::log( __METHOD__, "talk", $talkPage->getFullUrl() );
+			if( $this->mUser && $this->mUser->getName() !== self::WELCOMEUSER && !$wgUser->isBlocked() ) {
+				/**
+				 * check again if talk page exists
+				 */
+				$talkPage  = $this->mUser->getUserPage()->getTalkPage();
+				Wikia::log( __METHOD__, "talk", $talkPage->getFullUrl() );
 
-			if( $talkPage ) {
-				$tmpTitle  = $wgTitle;
-				$sysop     = $this->getLastSysop();
-				$sysopPage = $sysop->getUserPage()->getTalkPage();
-				$signature = $this->expandSig();
+				if( $talkPage ) {
+					$tmpTitle  = $wgTitle;
+					$sysop     = $this->getLastSysop();
+					$sysopPage = $sysop->getUserPage()->getTalkPage();
+					$signature = $this->expandSig();
 
-				$wgTitle     = $talkPage;
-				$welcomeMsg  = false;
-				$talkArticle = new Article( $talkPage, 0 );
+					$wgTitle     = $talkPage;
+					$welcomeMsg  = false;
+					$talkArticle = new Article( $talkPage, 0 );
 
-				if( ! $talkArticle->exists() ) {
-					if( $this->mAnon ) {
-						if( $this->isEnabled( "message-anon" ) ) {
-							$welcomeMsg = wfMsgExt( "welcome-message-anon", "parsemag",
-							array(
-								$this->getPrefixedText(),
-								$sysopPage->getPrefixedText(),
-								$signature,
-								wfEscapeWikiText( $this->mUser->getName() ),
-							));
+					if( ! $talkArticle->exists() ) {
+						if( $this->mAnon ) {
+							if( $this->isEnabled( "message-anon" ) ) {
+								$welcomeMsg = wfMsgExt( "welcome-message-anon", "parsemag",
+								array(
+									$this->getPrefixedText(),
+									$sysopPage->getPrefixedText(),
+									$signature,
+									wfEscapeWikiText( $this->mUser->getName() ),
+								));
+							}
+							else {
+								Wikia::log( __METHOD__, "talk", "message-anon disabled" );
+							}
 						}
 						else {
-							Wikia::log( __METHOD__, "talk", "message-anon disabled" );
-						}
-					}
-					else {
-						/**
-						 * now create user page (if not exists of course)
-						 */
-						if( $this->isEnabled( "page-user" ) ) {
-							$userPage = $this->mUser->getUserPage();
-							if( $userPage ) {
-								$wgTitle = $userPage;
-								$userArticle = new Article( $userPage, 0 );
-								Wikia::log( __METHOD__, "userpage", $userPage->getFullUrl() );
-								if( ! $userArticle->exists() ) {
-									$pageMsg = wfMsg( "welcome-user-page" );
-									$userArticle->doEdit( $pageMsg, false, $flags );
+							/**
+							 * now create user page (if not exists of course)
+							 */
+							if( $this->isEnabled( "page-user" ) ) {
+								$userPage = $this->mUser->getUserPage();
+								if( $userPage ) {
+									$wgTitle = $userPage;
+									$userArticle = new Article( $userPage, 0 );
+									Wikia::log( __METHOD__, "userpage", $userPage->getFullUrl() );
+									if( ! $userArticle->exists() ) {
+										$pageMsg = wfMsg( "welcome-user-page" );
+										$userArticle->doEdit( $pageMsg, false, $flags );
+									}
+								}
+								else {
+									Wikia::log( __METHOD__, "page", "user page already exists." );
 								}
 							}
 							else {
-								Wikia::log( __METHOD__, "page", "user page already exists." );
+								Wikia::log( __METHOD__, "page", "page-user disabled" );
+							}
+
+							if( $this->isEnabled( "message-user" ) ) {
+								$welcomeMsg = wfMsgExt( "welcome-message-user", "parsemag",
+								array(
+									$this->getPrefixedText(),
+									$sysopPage->getPrefixedText(),
+									$signature,
+									wfEscapeWikiText( $this->mUser->getName() ),
+								));
+							}
+							else {
+								Wikia::log( __METHOD__, "talk", "message-user disabled" );
 							}
 						}
-						else {
-							Wikia::log( __METHOD__, "page", "page-user disabled" );
-						}
-
-						if( $this->isEnabled( "message-user" ) ) {
-							$welcomeMsg = wfMsgExt( "welcome-message-user", "parsemag",
-							array(
-								$this->getPrefixedText(),
-								$sysopPage->getPrefixedText(),
-								$signature,
-								wfEscapeWikiText( $this->mUser->getName() ),
-							));
-						}
-						else {
-							Wikia::log( __METHOD__, "talk", "message-user disabled" );
+						if( $welcomeMsg ) {
+							$wgTitle = $talkPage; /** is it necessary there? **/
+							$talkArticle->doEdit( $welcomeMsg, wfMsg( "welcome-message-log" ), $flags );
 						}
 					}
-					if( $welcomeMsg ) {
-						$wgTitle = $talkPage; /** is it necessary there? **/
-						$talkArticle->doEdit( $welcomeMsg, wfMsg( "welcome-message-log" ), $flags );
-					}
+					$wgTitle = $tmpTitle;
 				}
-				$wgTitle = $tmpTitle;
 			}
-		}
 
-		$wgUser = $tmpUser;
-		$wgErrorLog = $oldValue;
+			$wgUser = $tmpUser;
+			$wgErrorLog = $oldValue;
+		}
+		else {
+			Wikia::log( __METHOD__, "disabled", $sysop );
+		}
 
 		wfProfileOut( __METHOD__ );
 
@@ -230,6 +237,7 @@ class HAWelcomeJob extends Job {
 				 */
 				$sysopId = $wgMemc->get( wfMemcKey( "lastsysopid" ) );
 				if( $sysopId ) {
+					Wikia::log( __METHOD__, "sysop", "Have sysop id from memcached: {$sysopId}" );
 					$this->mSysop = User::newFromId( $sysopId );
 				}
 				else {
@@ -245,15 +253,15 @@ class HAWelcomeJob extends Job {
 					 * @todo check $db->makeList( $array )
 					 */
 					$groups = ($sysop !== "@sysop")
-						? array( "'staff'", "'sysop'", "'helper'", "'bot'" )
-						: array( "'sysop'", "'bot'" );
+						? array( "ug_group" => array( "staff", "sysop", "helper", "bot" ) )
+						: array( "ug_group" => array( "sysop", "bot" ) );
 
 					$bots   = array();
 					$admins = array();
 					$res = $dbr->select(
-						array( "ug_group" ),
+						array( "user_groups" ),
 						array( "ug_user, ug_group" ),
-						array( "ug_group IN (" . implode(", ", $groups ) .") " ),
+						$dbr->makeList( $groups, LIST_OR ),
 						__METHOD__
 					);
 					while( $row = $dbr->fetchObject( $res ) ) {
@@ -264,17 +272,17 @@ class HAWelcomeJob extends Job {
 							$admins[] = $row->ug_user;
 						}
 					}
-					$res->freeResult();
+					$dbr->freeResult( $res );
 
 					/**
 					 * remove bots from admins
 					 */
-					$admins = array_unique( array_diff( $admins, $bots ) );
+					$admins = array( "rev_user" => array_unique( array_diff( $admins, $bots ) ) );
 
 					$row = $dbr->selectRow(
 						array( "revision" ),
 						array( "rev_user", "rev_user_text"),
-						array( "rev_user IN (" . implode( ", ", $admins ) . ")" ),
+						$dbr->makeList( $admins, LIST_OR ),
 						__METHOD__,
 						array( "order by" => "rev_timestamp desc")
 					);
@@ -285,10 +293,11 @@ class HAWelcomeJob extends Job {
 				}
 			}
 			else {
-				Wikia::log( __METHOD__, "welcome-user", $sysop );
+				Wikia::log( __METHOD__, "sysop", "Hardcoded sysop: {$sysop}" );
 				$this->mSysop = User::newFromName( $sysop );
 			}
 		}
+
 		/**
 		 * fallback, if still user is uknown we use Wikia user
 		 */
@@ -375,8 +384,8 @@ class HAWelcomeJob extends Job {
 							 * inform task manager
 							 */
 							$Task = new HAWelcomeTask();
-							$Task->createTask( array( "city_id" => $wgCityId ), TASK_QUEUED  );
-							Wikia::log( __METHOD__, "task" );
+							$taskId = $Task->createTask( array( "city_id" => $wgCityId ), TASK_QUEUED  );
+							Wikia::log( __METHOD__, "task", $taskId );
 						}
 						else {
 							Wikia::log( __METHOD__, "exists", sprintf( "Talk page for user %s alredy exits", $wgUser->getName() ) );
