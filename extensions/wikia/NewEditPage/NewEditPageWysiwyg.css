@@ -18,15 +18,15 @@
 }
 
 #article, #content {
-	padding: 1px !important;
+	padding: 2px !important;
 }
 
 #csMainContainer {
-	margin: -2px 1px 0 1px;
+	border-top: 0 !important;
 }
 
 #edit_enhancements_toolbar {
-	margin: 0 1px !important;
+	margin: 0 !important;
 }
 
 #page_bar, .articleBar {
