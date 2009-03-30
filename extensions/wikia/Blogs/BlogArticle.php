@@ -429,7 +429,7 @@ class BlogArticle extends Article {
 		global $wgLang;
 		# See CategoryPage->getCountMessage() function
 		$totalrescnt = count( $catView->blogs ) + count( $catView->children ) + ($catView->showGallery ? $catView->gallery->count() : 0);
-		if ($dbcnt == $rescnt || (($totalrescnt == $this->limit || $this->from || $this->until) && $dbcnt > $rescnt)) {
+		if ($dbcnt == $rescnt || (($totalrescnt == $catView->limit || $catView->from || $catView->until) && $dbcnt > $rescnt)) {
 			# Case 1: seems sane.
 			$totalcnt = $dbcnt;
 		} elseif ( $totalrescnt < $catView->limit && !$catView->from && !$catView->until ) {
