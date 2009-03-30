@@ -361,3 +361,9 @@ VideoEmbedOptionsTable img {
 #VideoReplaceLink p {
 	line-height: 1.5em;
 }
+
+.vetnone {
+        float: none;
+        clear: none;
+}
+
