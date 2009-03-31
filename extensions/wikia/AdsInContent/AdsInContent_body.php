@@ -119,7 +119,7 @@ class AdsInContent {
 			if (!empty($aSelectedAdUnit['float'])) {
 				$adBody .= 'style="margin-bottom: 0.5em; margin-' .
 					( $aSelectedAdUnit['align'] == 'left' ? 'right' : 'left' ) .
-					': 1em; float: ' . $aSelectedAdUnit['align'] . '"'; 
+					': 2em; float: ' . $aSelectedAdUnit['align'] . '"'; 
 			}
 			$adBody .= '>' . self::getAdUnit( $aSelectedAdUnit ) . '</div>';
 		}
