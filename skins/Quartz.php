@@ -503,7 +503,7 @@ if($this->themename != 'custom') {
 ?>
 </head>
 
-<body <?php if($this->data['body_onload']) { ?>onload="<?php $this->text('body_onload') ?>"<?php } ?> class="mediawiki <?php $this->text('nsclass') ?> <?php $this->text('dir') ?> <?php $this->text('pageclass') ?><?php if (!$wgUser->isLoggedIn()) { ?> loggedout<?php } ?> wikiaSkinQuartz">
+<body <?php if($this->data['body_onload']) { ?>onload="<?php $this->text('body_onload') ?>"<?php } ?> class="mediawiki <?php $this->text('dir') ?> <?php $this->text('pageclass') ?><?php if (!$wgUser->isLoggedIn()) { ?> loggedout<?php } ?> wikiaSkinQuartz">
 <?php wfRunHooks('GetHTMLAfterBody', array ($this)); ?>
 	<div id="header" class="clearfix abmode<?= $this->abmode ?> abmode<?= $this->abmode ?>-<?= !$this->data['loggedin'] ? 'anon' : 'loggedin' ?>">
 	<?= $this->getLeftTopBar() ?>
