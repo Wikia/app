@@ -979,8 +979,13 @@ EOS;
 		$css[] = array('url' => $wgStylePath.'/monaco/css/monaco_ie7.css?'.$wgStyleVersion, 'cond' => 'if IE 7');
 		$css[] = array('url' => $wgStylePath.'/monaco/css/monaco_ie8.css?'.$wgStyleVersion, 'cond' => 'if IE 8');
 
-		$css[] = array('url' => $wgStylePath.'/common/commonPrint.css?'.$wgStyleVersion, 'param' => empty($tpl->data['printable']) ? 'media="print" ' : '');
 		$css[] = array('url' => $wgStylePath.'/monaco/css/print.css?'.$wgStyleVersion, 'param' => empty($tpl->data['printable']) ? 'media="print" ' : '');
+
+		// RTL support
+		if ($wgContLang->isRTL()) {
+			$css[] = array('url' => $wgStylePath.'/monaco/rtl.css?'.$wgStyleVersion);
+		}
+
 		// CSS - end
 
 		// CSS style - begin
@@ -1319,6 +1324,8 @@ class MonacoTemplate extends QuickTemplate {
 		<style type="text/css"><?= $cssstyle['content'] ?></style>
 <?php
 	}
+	$this->html('csslinks');
+
 	if($wgRequest->getVal('action') != '' || $wgTitle->getNamespace() == NS_SPECIAL) {
 		echo $wgUser->isLoggedIn() ? GetReferences("monaco_loggedin_js") : GetReferences("monaco_non_loggedin_js");
 		foreach($this->data['references']['js'] as $script) {
