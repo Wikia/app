@@ -2203,8 +2203,12 @@ class User {
 				$userSkin = $this->getOption( 'skin' );
 				$userSkin = $wgRequest->getVal('useskin', $userSkin);
 			}
-			
-			$this->mSkin =& Skin::newFromKey( $userSkin );
+
+			// Wikia: skin may be be already initialized inside AlternateGetSkin hook handler
+			if ( ! isset( $this->mSkin ) ) {
+				$this->mSkin =& Skin::newFromKey( $userSkin );
+			}
+
 			wfProfileOut( __METHOD__ );
 		}
 		return $this->mSkin;

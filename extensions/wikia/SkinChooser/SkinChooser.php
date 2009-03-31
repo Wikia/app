@@ -353,6 +353,8 @@ function WikiaGetSkin ($user) {
 
 	$normalizedSkinName = substr(strtolower(get_class($user->mSkin)),4);
 
+	wfDebug("\nSkinChooser: using skin '{$userSkin}'\n");
+
 	# Normalize theme name and set it as a variable for skin object.
 	if(isset($wgSkinTheme[$normalizedSkinName])){
 		if(!in_array($userTheme, $wgSkinTheme[$normalizedSkinName])){
@@ -364,6 +366,8 @@ function WikiaGetSkin ($user) {
 		}
 
 		$user->mSkin->themename = $userTheme;
+
+		wfDebug("SkinChooser: using theme '{$userTheme}'\n");
 	}
 	return false;
 }
