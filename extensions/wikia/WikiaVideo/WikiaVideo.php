@@ -3,7 +3,13 @@ if(!defined('MEDIAWIKI')) {
 	exit(1);
 }
 
-$wgExtensionFunctions[] = 'WikiaVideo_init';
+//Avoid unstubbing $wgParser on setHook() too early on modern (1.12+) MW versions, as per r35980 
+if ( defined( 'MW_SUPPORTS_PARSERFIRSTCALLINIT' ) ) {
+	$wgHooks['ParserFirstCallInit'][] = 'WikiaVideo_init';
+} else {
+	$wgExtensionFunctions[] = 'WikiaVideo_init';
+}
+
 $wgHooks['ParserBeforeStrip'][] = 'WikiaVideoParserBeforeStrip';
 $wgHooks['SpecialNewImages::beforeQuery'][] = 'WikiaVideoNewImagesBeforeQuery';
 $wgWikiaVideoGalleryId = 0;
