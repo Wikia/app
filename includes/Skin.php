@@ -608,7 +608,11 @@ END;
 			if( $wgHandheldStyle ) {
 				$out->addStyle( self::makeNSUrl( 'Handheld.css', $query, NS_MEDIAWIKI ), 'handheld' );
 			}
-			$out->addStyle( self::makeNSUrl( $this->getSkinName() . '.css', $query, NS_MEDIAWIKI ) );
+
+			// Wikia
+			if( empty($this->themename) || $this->themename == 'custom' ) {
+				$out->addStyle( self::makeNSUrl( $this->getSkinName() . '.css', $query, NS_MEDIAWIKI ) );
+			}
 		}
 
 		if( $wgUser->isLoggedIn() ) {
