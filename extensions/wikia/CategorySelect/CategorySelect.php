@@ -59,7 +59,6 @@ function CategorySelectInit() {
 	$wgHooks['ArticleFromTitle'][] = 'CategorySelectInitializeHooks';
 	$wgHooks['UserToggles'][] = 'CategorySelectToggleUserPreference';
 	$wgHooks['getEditingPreferencesTab'][] = 'CategorySelectToggleUserPreference';
-	wfLoadExtensionMessages('CategorySelect');
 }
 
 /**
@@ -106,6 +105,9 @@ function CategorySelectInitializeHooks($title, $article) {
 		if(!$title->exists()) {
 			return true;
 		}
+		if ($action == 'purge' && $wgUser->isAnon() && !$wgRequest->wasPosted()) {
+			return true;
+		}
 		if($wgTitle->userCan('edit')) {
 			//view mode
 			$wgHooks['Skin::getCategoryLinks::end'][] = 'CategorySelectGetCategoryLinksEnd';
@@ -124,6 +126,7 @@ function CategorySelectInitializeHooks($title, $article) {
 
 		$wgHooks['MakeGlobalVariablesScript'][] = 'CategorySelectSetupVars';
 	}
+	wfLoadExtensionMessages('CategorySelect');
 
 	return true;
 }
