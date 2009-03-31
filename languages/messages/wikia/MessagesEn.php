@@ -720,4 +720,29 @@ Text should be placed on this page if you wish to explain usage, style and polic
 'nodiff' => 'No changes',
 'specialpages-group-wikia' => 'Wikia pages',
 'magicfooterlinks' => '<b>Featured pages</b>',
+'staffsigs' => "* ca
+** Zuirdj
+
+* de
+** Avatar
+
+* en
+** CatherineMunro
+
+* es
+** Zuirdj
+
+* fr
+** Zuirdj
+
+* it
+** Zuirdj
+
+* pt
+** Zuirdj
+
+* pt-br
+** Zuirdj
+"
+
 ));
