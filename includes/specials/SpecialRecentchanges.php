@@ -64,7 +64,8 @@ class SpecialRecentChanges extends SpecialPage {
 			$this->parseParameters( $parameters, $opts );
 		}
 
-		$opts->validateIntBounds( 'limit', 0, 5000 );
+		// backported http://svn.wikimedia.org/viewvc/mediawiki?view=rev&revision=48735
+		$opts->validateIntBounds( 'limit', 0, 500 );
 		return $opts;
 	}
 
