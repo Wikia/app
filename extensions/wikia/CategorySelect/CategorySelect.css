@@ -11,10 +11,6 @@
 	position: relative;
 }
 
-* html #csMainContainer {
-	top: 0;
-}
-
 #csItemsContainer {
 	position: relative;
 }
