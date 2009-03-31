@@ -11,21 +11,21 @@ $aliases = array();
  * @author Jon Harald Søby
  */
 $aliases['en'] = array(
-    'LinkSearch' => array( 'LinkSearch' ),
+	'LinkSearch' => array( 'LinkSearch' ),
 );
 
 /** Arabic (العربية)
  * @author Meno25
  */
 $aliases['ar'] = array(
-	'LinkSearch' => array( 'بحث الوصلات' ),
+	'LinkSearch' => array( 'بحث_الوصلات' ),
 );
 
 /** Egyptian Spoken Arabic (مصرى)
  * @author Meno25
  */
 $aliases['arz'] = array(
-	'LinkSearch' => array( 'بحث الوصلات' ),
+	'LinkSearch' => array( 'بحث_الوصلات' ),
 );
 
 /** German (Deutsch)
@@ -38,6 +38,11 @@ $aliases['de'] = array(
 /** Finnish (Suomi) */
 $aliases['fi'] = array(
 	'LinkSearch' => array( 'Linkkihaku' ),
+);
+
+/** French (Français) */
+$aliases['fr'] = array(
+	'LinkSearch' => array( 'Recherche de liens' ),
 );
 
 /** Hebrew (עברית)
@@ -57,9 +62,19 @@ $aliases['ht'] = array(
 	'LinkSearch' => array( 'BouskeLyen' ),
 );
 
+/** Indonesian (Bahasa Indonesia) */
+$aliases['id'] = array(
+	'LinkSearch' => array( 'Pencarian pranala' ),
+);
+
 /** Khmer (ភាសាខ្មែរ) */
 $aliases['km'] = array(
 	'LinkSearch' => array( 'ស្វែងរកតំនភ្ជាប់' ),
+);
+
+/** Korean (한국어) */
+$aliases['ko'] = array(
+	'LinkSearch' => array( '외부링크찾기', '외부링크검색' ),
 );
 
 /** Latin (Latina) */
@@ -77,9 +92,14 @@ $aliases['ms'] = array(
 	'LinkSearch' => array( 'Cari_pautan' ),
 );
 
+/** Nedersaksisch (Nedersaksisch) */
+$aliases['nds-nl'] = array(
+	'LinkSearch' => array( 'Verwiezingen_zeuken' ),
+);
+
 /** Dutch (Nederlands) */
 $aliases['nl'] = array(
-	'LinkSearch' => array( 'VerwijzingenZoeken' ),
+	'LinkSearch' => array( 'VerwijzingenZoeken', 'LinksZoeken' ),
 );
 
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)

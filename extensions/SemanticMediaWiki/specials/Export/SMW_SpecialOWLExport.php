@@ -5,6 +5,9 @@
  * This special page for MediaWiki implements an OWL-export of
  * semantic data, gathered both from the annotations in articles,
  * and from metadata already present in the database.
+ * @file
+ * @ingroup SMWSpecialPage
+ * @ingroup SpecialPage
  */
 
 if (!defined('MEDIAWIKI')) die();
@@ -89,6 +92,8 @@ function smwfDoSpecialOWLExport($page = '') {
 		}
 	}
 
+	wfLoadExtensionMessages('SemanticMediaWiki');
+
 	// nothing exported yet; show user interface:
 	$html = '<form name="tripleSearch" action="" method="POST">' . "\n" .
 	        wfMsg('smw_exportrdf_docu') . "\n" .
@@ -111,6 +116,7 @@ function smwfDoSpecialOWLExport($page = '') {
 /**
  * Small data object holding the bare essentials of one title.
  * Used to store processed and open pages for export.
+ * @ingroup SMW
  */
 class SMWSmallTitle {
 	public $dbkey;
@@ -125,6 +131,7 @@ class SMWSmallTitle {
 
 /**
  * Class for encapsulating the methods for RDF export.
+ * @ingroup SMW
  */
 class OWLExport {
 	/**#@+
@@ -502,7 +509,7 @@ class OWLExport {
 		$ed = new SMWExpData(new SMWExpLiteral(SiteStats::admins(), NULL, 'http://www.w3.org/2001/XMLSchema#int'));
 		$data->addPropertyObjectValue(SMWExporter::getSpecialElement('swivt','adminCount'), $ed);
 
-		$mainpage = Title::newFromText(wfMsgForContent('Mainpage'));
+		$mainpage = Title::newMainPage();
 		if ($mainpage !== NULL) {
 			$ed = new SMWExpData(new SMWExpResource($mainpage->getFullURL()));
 			$data->addPropertyObjectValue(SMWExporter::getSpecialElement('swivt','mainPage'), $ed);
@@ -642,29 +649,23 @@ class OWLExport {
 	 * Print the triples associated to a specific page, and references those needed.
 	 * They get printed in the printFooter-function.
 	 *
-	 * @param SMWExportTitle $et The Exporttitle wrapping the page to be exported
-	 * @param boolean $fullexport If all the triples of the page should be exported, or just
-	 *                            a definition of the given title.
-	 * $return nothing
+	 * @param $st The SMWSmallTitle wrapping the page to be exported
+	 * @param $fullexport Boolean to define whether all the data for the page should 
+	 * be exported, or whether just a definition of the given title.
+	 * @param $backlinks Boolean specifying if properties linking to the exported title
+	 * should be included.
 	 */
 	protected function printObject(/*SMWSmallTitle*/ $st, $fullexport=true, $backlinks = false) {
+		global $smwgMW_1_14;
 		if (array_key_exists($st->getHash(), $this->element_done)) return; // do not export twice
 
-		$value = SMWDataValueFactory::newTypeIDValue('_wpg');
-		$value->setValues($st->dbkey, $st->namespace);
-		$title = $value->getTitle();
+		$value = SMWWikiPageValue::makePage($st->dbkey, $st->namespace);
 		if ( $this->date !== '' ) { // check date restriction if given
-			$rev = Revision::getTimeStampFromID($title->getLatestRevID());
+			$rev = $smwgMW_1_14?Revision::getTimeStampFromID($value->getTitle(),$value->getTitle()->getLatestRevID()):Revision::getTimeStampFromID($value->getTitle()->getLatestRevID());
 			if ($rev < $this->date) return;
 		}
 
-		if ($fullexport) {
-			$filter = false;
-		} else { // retrieve only some core special properties
-			$filter = array(SMW_SP_HAS_URI, SMW_SP_HAS_TYPE, SMW_SP_EXT_BASEURI);
-		}
-		$data = SMWExporter::makeExportData(smwfGetStore()->getSemanticData($title, $filter), $st->modifier);
-
+		$data = SMWExporter::makeExportData(smwfGetStore()->getSemanticData($value, $fullexport?false:array('__spu', '__typ', '__imp')), $st->modifier);
 		$this->printExpData($data); // serialise
 		$this->markAsDone($st);
 
@@ -679,44 +680,46 @@ class OWLExport {
 					$stb->dbkey = $inSub->getDBKey();
 					$stb->namespace = $inSub->getNamespace();
 					if (!array_key_exists($stb->getHash(), $this->element_done)) {
-						$semdata = smwfGetStore()->getSemanticData($inSub, array(SMW_SP_HAS_URI, SMW_SP_HAS_TYPE, SMW_SP_EXT_BASEURI));
+						$semdata = smwfGetStore()->getSemanticData($inSub, array('__spu', '__typ', '__imp'));
 						$semdata->addPropertyObjectValue($inRel, $value);
 						$data = SMWExporter::makeExportData($semdata);
 						$this->printExpData($data);
 					}
 				}
 			}
-			if ( NS_CATEGORY === $title->getNamespace() ) { // also print elements of categories
+			if ( NS_CATEGORY === $value->getNamespace() ) { // also print elements of categories
 				$options = new SMWRequestOptions();
 				$options->limit = 100; /// Categories can be large, use limit
-				$instances = smwfGetStore()->getSpecialSubjects( SMW_SP_INSTANCE_OF, $value, $options );
+				$instances = smwfGetStore()->getPropertySubjects( SMWPropertyValue::makeProperty('_INST'), $value, $options );
+				$pinst = SMWPropertyValue::makeProperty('_INST');
 				foreach($instances as $instance) {
 					$stb = new SMWSmallTitle();
 					$stb->dbkey = $instance->getDBKey();
 					$stb->namespace = $instance->getNamespace();
 					if (!array_key_exists($stb->getHash(), $this->element_done)) {
-						$semdata = smwfGetStore()->getSemanticData($instance, array(SMW_SP_HAS_URI, SMW_SP_HAS_TYPE, SMW_SP_EXT_BASEURI));
-						$semdata->addSpecialValue(SMW_SP_INSTANCE_OF, $value);
+						$semdata = smwfGetStore()->getSemanticData($instance, array('__spu', '__typ', '__imp'));
+						$semdata->addPropertyObjectValue($pinst, $value);
 						$data = SMWExporter::makeExportData($semdata);
 						$this->printExpData($data);
 					}
 				}
-			} elseif  ( SMW_NS_CONCEPT === $title->getNamespace() ) { // print concept members (slightly different code)
-				$desc = new SMWConceptDescription($title);
+			} elseif  ( SMW_NS_CONCEPT === $value->getNamespace() ) { // print concept members (slightly different code)
+				$desc = new SMWConceptDescription($value->getTitle());
 				$desc->addPrintRequest(new SMWPrintRequest(SMWPrintRequest::PRINT_THIS, ''));
 				$query = new SMWQuery($desc);
 				$query->setLimit(100);
 
 				$res = smwfGetStore()->getQueryResult($query);
 				$resarray = $res->getNext();
+				$pinst = SMWPropertyValue::makeProperty('_INST');
 				while ($resarray !== false) {
 					$instance = end($resarray)->getNextObject();
 					$stb = new SMWSmallTitle();
 					$stb->dbkey = $instance->getDBKey();
 					$stb->namespace = $instance->getNamespace();
 					if (!array_key_exists($stb->getHash(), $this->element_done)) {
-						$semdata = smwfGetStore()->getSemanticData($instance, array(SMW_SP_HAS_URI, SMW_SP_HAS_TYPE, SMW_SP_EXT_BASEURI));
-						$semdata->addSpecialValue(SMW_SP_INSTANCE_OF, $value);
+						$semdata = smwfGetStore()->getSemanticData($instance,  array('__spu', '__typ', '__imp'));
+						$semdata->addPropertyObjectValue($pinst, $value);
 						$data = SMWExporter::makeExportData($semdata);
 						$this->printExpData($data);
 					}
@@ -772,11 +775,11 @@ class OWLExport {
 	 * Adds a reference to the SWIVT schema. This will make sure that at the end of the page,
 	 * all required schema references will be defined and point to the appropriate ontology.
 	 *
-	 * @param string $name The fragmend identifier of the entity to be referenced.
-	 *                     The SWIVT namespace is added. 
-	 * @param string $type The type of the referenced identifier, i.e. is it an annotation
-	 *                     property, an object property, a class, etc. Should be given as a QName
-	 *                     (i.e. in the form "owl:Class", etc.)
+	 * @param $name The fragmend identifier of the entity to be referenced. The SWIVT namespace 
+	 * is added.
+	 * @param $type The type of the referenced identifier, i.e. is it an annotation property, an
+	 * object property, a class, etc. Should be given as a QName (i.e. in the form "owl:Class", 
+	 * etc.)
 	 */
 	public function addSchemaRef( $name,  $type ) {
 		if (!array_key_exists($name, $this->schema_refs))

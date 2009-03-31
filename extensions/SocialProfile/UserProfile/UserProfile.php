@@ -1,28 +1,30 @@
 <?php
-//Global profile namespace reference
+// Global profile namespace reference
 define( 'NS_USER_PROFILE', 202 );
 define( 'NS_USER_WIKI', 200 );
 
-//default setup for displaying sections
+// Default setup for displaying sections
 $wgUserPageChoice = true;
 $wgUserProfileDisplay['friends'] = false;
 $wgUserProfileDisplay['foes'] = false;
+$wgUserProfileDisplay['gifts'] = true;
+$wgUserProfileDisplay['awards'] = true;
 $wgUserProfileDisplay['profile'] = true;
 $wgUserProfileDisplay['board'] = false;
-$wgUserProfileDisplay['stats'] = false; //Display statistics on user profile pages?
+$wgUserProfileDisplay['stats'] = false; // Display statistics on user profile pages?
 $wgUserProfileDisplay['interests'] = true;
 $wgUserProfileDisplay['custom'] = true;
 $wgUserProfileDisplay['personal'] = true;
+$wgUserProfileDisplay['userboxes'] = false; // If FanBoxes extension is installed, setting this to true will display the user's fanboxes on their profile page
 
 $wgUpdateProfileInRecentChanges = false; // Show a log entry in recent changes whenever a user updates their profile?
-$wgUploadAvatarInRecentChanges = false; //Same as above, but for avatar uploading
+$wgUploadAvatarInRecentChanges = false; // Same as above, but for avatar uploading
 
 $wgAvailableRights[] = 'avatarremove';
 $wgGroupPermissions['staff']['avatarremove'] = true;
 $wgGroupPermissions['sysop']['avatarremove'] = true;
-$wgGroupPermissions['janitor']['avatarremove'] = true;
 
-# Add a new log type
+# Add new log types for profile edits and avatar uploads
 global $wgLogTypes, $wgLogNames, $wgLogHeaders, $wgLogActions;
 $wgLogTypes[]                      = 'profile';
 $wgLogNames['profile']            = 'profilelogpage';
@@ -36,30 +38,28 @@ $wgLogActions['avatar/avatar'] = 'avatarlogentry';
 
 $wgHooks['ArticleFromTitle'][] = 'wfUserProfileFromTitle';
 
-//ArticleFromTitle
-//Calls UserProfilePage instead of standard article
+// ArticleFromTitle
+// Calls UserProfilePage instead of standard article
 function wfUserProfileFromTitle( &$title, &$article ){
 	global $wgUser, $wgRequest, $IP, $wgOut, $wgTitle, $wgSupressPageTitle, $wgSupressSubTitle, $wgMemc,
 	$wgUserPageChoice, $wgParser, $wgUserProfileDirectory, $wgUserProfileScripts, $wgStyleVersion;
 
 	if ( strpos( $title->getText(), "/" ) === false && ( NS_USER == $title->getNamespace() || NS_USER_PROFILE == $title->getNamespace() ) ) {
 
-		require_once( "{$wgUserProfileDirectory}/UserProfilePage.php" );
-
 		$show_user_page = false;
 		if( $wgUserPageChoice ){
 			$profile = new UserProfile( $title->getText() );
 			$profile_data = $profile->getProfile();
 
-			//If they want regular page, ignore this hook
-			if( isset( $profile_data["user_id"] ) && $profile_data["user_id"] && $profile_data["user_page_type"] == 0 ){
+			// If they want regular page, ignore this hook
+			if( isset( $profile_data['user_id'] ) && $profile_data['user_id'] && $profile_data['user_page_type'] == 0 ){
 				$show_user_page = true;
 			}
 		}
 
-		if(  ! $show_user_page ){
-			//prevents editing of userpage
-			if( $wgRequest->getVal("action") == "edit" ){
+		if( !$show_user_page ){
+			// Prevents editing of userpage
+			if( $wgRequest->getVal('action') == 'edit' ){
 				$wgOut->redirect( $title->getFullURL() );
 			}
 		} else {
@@ -105,10 +105,3 @@ function wfUserProfileBeginTest4($user_profile) {
 	return true;
 }
 */
-
-$wgExtensionFunctions[] = 'wfUserProfileReadLang';
-
-//read in localisation messages
-function wfUserProfileReadLang(){
-	wfLoadExtensionMessages( 'SocialProfileUserProfile' );
-}

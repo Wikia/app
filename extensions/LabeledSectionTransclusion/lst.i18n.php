@@ -11,6 +11,14 @@ $messages['en'] = array(
 	'lst-desc' => 'Adds <tt>#lst</tt> and <tt>#lstx</tt> functions and <tt>&lt;section&gt;</tt> tag, enables marked sections of text to be transcluded',
 );
 
+/** Message documentation (Message documentation)
+ * @author Raimond Spekking
+ * @author Raymond
+ */
+$messages['qqq'] = array(
+	'lst-desc' => 'Extension description displayed on [[Special:Version]]',
+);
+
 /** Aragonese (Aragonés)
  * @author Juanpabl
  */
@@ -25,11 +33,47 @@ $messages['ar'] = array(
 	'lst-desc' => 'يضيف الدالتين <tt>#lst</tt> و <tt>#lstx</tt> والوسم <tt>&lt;section&gt;</tt>، يفعل تضمين الأقسام المعلمة من النص',
 );
 
+/** Egyptian Spoken Arabic (مصرى)
+ * @author Meno25
+ * @author Ramsis II
+ */
+$messages['arz'] = array(
+	'lst-desc' => 'يضيف الدالتين <tt>#lst</tt> و <tt>#lstx</tt> والوسم <tt>&lt;section&gt;</tt>، يفعل تضمين الأقسام المعلمة من النص',
+);
+
+/** Asturian (Asturianu)
+ * @author Esbardu
+ */
+$messages['ast'] = array(
+	'lst-desc' => 'Añade les funciones <tt>#lst</tt> y <tt>#lstx</tt> y la etiqueta <tt>&lt;section&gt;</tt>, habilita les seiciones de testu marcaes pa ser trescluyíes',
+);
+
 /** Southern Balochi (بلوچی مکرانی)
  * @author Mostafadaneshvar
  */
 $messages['bcc'] = array(
 	'lst-desc' => 'هورکنت <tt>#lst</tt> و<tt>#lstx</tt> عملگران و <tt>&lt;بخش&gt;</tt> برچسپ، هلیت که بخشان انتخابی متن نیمه شفاف بیت',
+);
+
+/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
+ * @author Jim-by
+ */
+$messages['be-tarask'] = array(
+	'lst-desc' => 'Дадае функцыі <tt>#lst</tt> і <tt>#lstx</tt> і тэг <tt>&lt;section&gt;</tt>, дазваляе пераносіць вызначаныя ўчасткі тэксту на іншыя старонкі',
+);
+
+/** Bosnian (Bosanski)
+ * @author CERminator
+ */
+$messages['bs'] = array(
+	'lst-desc' => 'Dodaje <tt>#lst</tt> i <tt>#lstx</tt> funkcije i oznaku <tt>&lt;section&gt;</tt>, omogućava označenim sekcijama teksta da budu uključeni',
+);
+
+/** Catalan (Català)
+ * @author Aleator
+ */
+$messages['ca'] = array(
+	'lst-desc' => "Afegeix les funcions <tt>#lst</tt> i <tt>#lstx</tt> i l'etiqueta <tt>&lt;section&gt;</tt>, permet transcloure seccions de text amb marques",
 );
 
 /** Czech (Česky)
@@ -46,6 +90,13 @@ $messages['de'] = array(
 	'lst-desc' => 'Fügt die <tt>#lst</tt> und <tt>#lstx</tt> Funktionen sowie das <tt>&lt;section&gt;</tt>-Tag hinzu, um so markierte Abschnitte einbinden zu können',
 );
 
+/** Lower Sorbian (Dolnoserbski)
+ * @author Michawiki
+ */
+$messages['dsb'] = array(
+	'lst-desc' => 'Pśidawa funkciji <tt>#lst</tt> a <tt>#lstx</tt> a toflicku <tt>&lt;section&gt;</tt>, zmóžnja zapśěgnjenje  markěrowanych tekstowych wótrězkow',
+);
+
 /** Esperanto (Esperanto)
  * @author Yekrats
  */
@@ -53,11 +104,25 @@ $messages['eo'] = array(
 	'lst-desc' => 'Aldonas funkciojn <tt>#lst</tt> kaj <tt>#lstx</tt> kaj etikedon <tt>&lt;section&gt;</tt>, ebligas markitajn sekciojn da tekston por esti transinkluzivitaj',
 );
 
+/** Spanish (Español)
+ * @author Sanbec
+ */
+$messages['es'] = array(
+	'lst-desc' => 'Añade las funciones <tt>#lst</tt> y <tt>#lstx</tt> y la etiqueta <tt>&lt;section&gt;</tt>, que permite transcluir secciones de texto marcadas',
+);
+
 /** Persian (فارسی)
  * @author Huji
  */
 $messages['fa'] = array(
 	'lst-desc' => 'عملگرهای <tt>#lst</tt> و <tt>#lstx</tt> و برچسب <tt>&lt;section&gt;</tt> را می‌افزاید، تا بتوان قسمت‌هایی از متن را در صفحه‌های دیگر گنجاند',
+);
+
+/** Finnish (Suomi)
+ * @author Crt
+ */
+$messages['fi'] = array(
+	'lst-desc' => 'Lisää funktiot <tt>#lst</tt>, <tt>#lstx</tt> ja tagin <tt>&lt;section&gt;</tt> sekä mahdollistaa merkattujen tekstinosien sisällytyksen.',
 );
 
 /** French (Français)
@@ -93,6 +158,13 @@ $messages['he'] = array(
  */
 $messages['hi'] = array(
 	'lst-desc' => '<tt>#lst</tt> और <tt>#lstx</tt> कार्य तथा <tt>&lt;section&gt;</tt> टॅग बढायें, पाठमेंसे चिन्हांकीत विभाग एकत्रित करें।',
+);
+
+/** Croatian (Hrvatski)
+ * @author Dalibor Bosits
+ */
+$messages['hr'] = array(
+	'lst-desc' => 'Dodaje <tt>#lst</tt> i <tt>#lstx</tt> funkcije i <tt>&lt;section&gt;</tt> oznake, omogućava transkluziju označenog odlomka u tekstu',
 );
 
 /** Upper Sorbian (Hornjoserbsce)
@@ -155,7 +227,7 @@ $messages['jv'] = array(
  * @author Purodha
  */
 $messages['ksh'] = array(
-	'lst-desc' => 'Dëijt de Fungkzjone <tt>#lst</tt>, un <tt>#lstx</tt>, un der Befääl <tt>&lt;section&gt;</tt> en et Wiki bei, un määd_et mööschlesch, esu makeete TëxShtöcker wohannders wi_j_en Schabloon ėnnzofööje',
+	'lst-desc' => 'Dëijt de Fungkzjone <tt>#lst</tt>, un <tt>#lstx</tt>, un der Befääl <tt>&lt;section&gt;</tt> en et Wiki bei, un määd_et müjjelesch, de su makeete TëxShtöcker wohannders wi_j_en Schabloon ėnnzofööje.',
 );
 
 /** Luxembourgish (Lëtzebuergesch)
@@ -190,7 +262,7 @@ $messages['mr'] = array(
  * @author Aviator
  */
 $messages['ms'] = array(
-	'lst-desc' => 'Menambah fungsi <tt>#lst</tt> dan <tt>#lstx</tt> serta tag <tt>&lt;section&gt;</tt>, justeru membolehkan kemasukan bahagian-bahagian teks yang telah ditanda',
+	'lst-desc' => 'Menambah fungsi <tt>#lst</tt> dan <tt>#lstx</tt> serta tag <tt>&lt;section&gt;</tt>, justeru membolehkan penyertaan bahagian-bahagian teks yang telah ditanda',
 );
 
 /** Dutch (Nederlands)
@@ -198,6 +270,13 @@ $messages['ms'] = array(
  */
 $messages['nl'] = array(
 	'lst-desc' => 'Voegt de functies <tt>#lst</tt> en <tt>#lstx</tt> en de tag <tt>&lt;section&gt;</tt> toe  voor het markeren van tekstdelen die getranscludeerd moeten worden',
+);
+
+/** Norwegian Nynorsk (‪Norsk (nynorsk)‬)
+ * @author Harald Khan
+ */
+$messages['nn'] = array(
+	'lst-desc' => 'Legg til funksjonane <tt>#lst</tt> og <tt>#lstx</tt> for å inkludera avsnitt av ein tekst, i tillegg til merket <tt>&lt;section&gt;</tt> for å markera dei avsnitta som kan bli inkluderte',
 );
 
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
@@ -211,7 +290,7 @@ $messages['no'] = array(
  * @author Cedric31
  */
 $messages['oc'] = array(
-	'lst-desc' => 'Apondís las foncions <tt>#lst</tt> e <tt>#lstx</tt> e mai la balisa <tt>&lt;section&gt;</tt>, activa las seccions marcadas del tèxt que devon èsser transclusas',
+	'lst-desc' => 'Apond las foncions <tt>#lst</tt> e <tt>#lstx</tt> e mai la balisa <tt>&lt;section&gt;</tt>, activa las seccions marcadas del tèxt que devon èsser transclusas',
 );
 
 /** Polish (Polski)
@@ -228,6 +307,13 @@ $messages['pt'] = array(
 	'lst-desc' => 'Adiciona as funções <tt>#lst</tt> e <tt>#lstx</tt>, e a marca &lt;section&gt;, activa secções marcadas de texto para serem transcluídas',
 );
 
+/** Tarandíne (Tarandíne)
+ * @author Joetaras
+ */
+$messages['roa-tara'] = array(
+	'lst-desc' => "Aggiunge le funzione <tt>#lst</tt> e <tt>#lstx</tt> e 'u tag <tt>&lt;section&gt;</tt>, ca abilitesce le sezione marchete de teste pe essere escluse",
+);
+
 /** Russian (Русский)
  * @author Александр Сигачёв
  */
@@ -240,6 +326,13 @@ $messages['ru'] = array(
  */
 $messages['sah'] = array(
 	'lst-desc' => '<tt>#lst</tt> уонна <tt>#lstx</tt> функциялары уонна <tt>&lt;section&gt;</tt> тиэги эбэр, бу бэлиэтэммит тиэкиһи атын сирэйдэргэ киллэрэри ситиһэр.',
+);
+
+/** Sinhala (සිංහල)
+ * @author නන්දිමිතුරු
+ */
+$messages['si'] = array(
+	'lst-desc' => '<tt>#lst</tt> සහ <tt>#lstx</tt> ශ්‍රිතයන් හා <tt>&lt;section&gt;</tt> ටැගය එක්කරමින්, පෙළෙහි සළකුණු කල කොටස්  අන්තඃකරණය කෙරුම සක්‍රීය කෙරේ',
 );
 
 /** Slovak (Slovenčina)
@@ -263,11 +356,18 @@ $messages['sv'] = array(
 	'lst-desc' => 'Lägger till funktionerna <tt>#lst</tt> och <tt>#lstx</tt> för att inkludera avsnitt av en text, samt taggen <tt>&lt;section&gt;</tt> för att markera de avsnitt som kan inkluderas',
 );
 
-/** Tajik (Cyrillic) (Тоҷикӣ/tojikī (Cyrillic))
+/** Tajik (Cyrillic) (Тоҷикӣ (Cyrillic))
  * @author Ibrahim
  */
 $messages['tg-cyrl'] = array(
 	'lst-desc' => 'Амалгарҳои <tt>#lst</tt> ва <tt>#lstx</tt>  ва барчасби <tt>&lt;section&gt;</tt>-ро  илова мекунад, то битавон қисматҳои аз матнро дар саҳифаҳои дигар ғунҷонид',
+);
+
+/** Tagalog (Tagalog)
+ * @author AnakngAraw
+ */
+$messages['tl'] = array(
+	'lst-desc' => 'Nagdaragdag ng mga tungkuling <tt>#lst</tt> at <tt>#lstx</tt> at tatak na <tt>&lt;seksyon&gt;</tt>, nagbibigay ng kakayahang mailipat-sama (transklusyon) ang tinandaang mga seksyon ng teksto',
 );
 
 /** Ukrainian (Українська)

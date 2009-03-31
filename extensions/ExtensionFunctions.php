@@ -66,6 +66,7 @@ if ( !defined( 'MW_SPECIALPAGE_VERSION' ) ) {
 	 * @param string $file Filename containing the derived class
 	 * @param string $name Name of the special page
 	 * @param mixed $params Name of the class, or array containing class name and constructor params
+	 * @deprecated Use $wgSpecialPages and $wgAutoloadClasses
 	 */
 	function extAddSpecialPage( $file, $name, $params ) {
 		global $wgSpecialPages, $wgAutoloadClasses;
@@ -78,5 +79,4 @@ if ( !defined( 'MW_SPECIALPAGE_VERSION' ) ) {
 		$wgAutoloadClasses[$className] = $file;
 	}
 }
-
 

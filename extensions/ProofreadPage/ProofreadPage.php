@@ -14,8 +14,8 @@ $wgHooks['ArticleSave'][] = 'wfPRSave';
 $wgExtensionCredits['other'][] = array(
 	'name'           => 'ProofreadPage',
 	'author'         => 'ThomasV',
-	'svn-date' => '$LastChangedDate: 2008-07-13 16:56:03 +0000 (Sun, 13 Jul 2008) $',
-	'svn-revision' => '$LastChangedRevision: 37621 $',
+	'svn-date' => '$LastChangedDate: 2008-12-25 13:59:01 +0000 (Thu, 25 Dec 2008) $',
+	'svn-revision' => '$LastChangedRevision: 45025 $',
 	'url'            => 'http://www.mediawiki.org/wiki/Extension:Proofread_Page',
 	'description'    => 'Allow easy comparison of text to the original scan',
 	'descriptionmsg' => 'proofreadpage_desc',
@@ -402,7 +402,7 @@ function wfPRRenderPageList( $input, $args ) {
 		$pagetable = $dbr->tableName( 'page' );
 
 		$page_namespace = preg_quote( wfMsgForContent( 'proofreadpage_namespace' ), '/' );
-		$page_ns_index = Namespace::getCanonicalIndex( strtolower( $page_namespace ) );
+		$page_ns_index = MWNamespace::getCanonicalIndex( strtolower( $page_namespace ) );
 		if( $page_ns_index == NULL ) {
 			$page_ns_index = NS_MAIN;
 		}

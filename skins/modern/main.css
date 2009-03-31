@@ -140,7 +140,7 @@ div.mw_clear {
 }
 
 .portlet div.pBody {
-	padding: 0em 0 1em 0;
+	padding: 0em 0 0.5em 0;
 }
 
 textarea {
@@ -647,7 +647,7 @@ div.patrollink {
 	font-size: 75%;
 	text-align: right;
 }
-span.newpage, span.minor, span.searchmatch, span.bot {
+span.newpage, span.minor, span.bot {
 	font-weight: bold;
 }
 span.unpatrolled {
@@ -655,9 +655,6 @@ span.unpatrolled {
 	color: red;
 }
 
-span.searchmatch {
-	color: red;
-}
 .sharedUploadNotice {
 	font-style: italic;
 }
@@ -1002,17 +999,6 @@ div.mw-lag-warn-high {
 	background-color: #FFCCCC;
 }
 
-/* Recreating-deleted-page/reupload file warning and log entries */
-div#mw-upload-deleted-warn,
-div#mw-recreate-deleted-warn {
-	padding: 3px;
-	margin-bottom: 3px;
-	border: 2px solid #2F6FAB;
-}
-div#mw-upload-deleted-warn ul li,
-div#mw-recreate-deleted-warn ul li {
-	font-size: 90%;
-}
 .MediaTransformError {
 	background-color: #ccc;
 	padding: 0.1em;

@@ -46,19 +46,19 @@ class WatchlistEditor {
 						$this->unwatchTitles( $toUnwatch, $user );
 						$user->invalidateCache();
 						if( count( $toWatch ) > 0 || count( $toUnwatch ) > 0 )
-							$output->addHtml( wfMsgExt( 'watchlistedit-raw-done', 'parse' ) );
+							$output->addHTML( wfMsgExt( 'watchlistedit-raw-done', 'parse' ) );
 						if( ( $count = count( $toWatch ) ) > 0 ) {
-							$output->addHtml( wfMsgExt( 'watchlistedit-raw-added', 'parse', $count ) );
+							$output->addHTML( wfMsgExt( 'watchlistedit-raw-added', 'parse', $count ) );
 							$this->showTitles( $toWatch, $output, $wgUser->getSkin() );
 						}
 						if( ( $count = count( $toUnwatch ) ) > 0 ) {
-							$output->addHtml( wfMsgExt( 'watchlistedit-raw-removed', 'parse', $count ) );
+							$output->addHTML( wfMsgExt( 'watchlistedit-raw-removed', 'parse', $count ) );
 							$this->showTitles( $toUnwatch, $output, $wgUser->getSkin() );
 						}
 					} else {
 						$this->clearWatchlist( $user );
 						$user->invalidateCache();
-						$output->addHtml( wfMsgExt( 'watchlistedit-raw-removed', 'parse', count( $current ) ) );
+						$output->addHTML( wfMsgExt( 'watchlistedit-raw-removed', 'parse', count( $current ) ) );
 						$this->showTitles( $current, $output, $wgUser->getSkin() );
 					}
 				}
@@ -70,7 +70,7 @@ class WatchlistEditor {
 					$titles = $this->extractTitles( $request->getArray( 'titles' ) );
 					$this->unwatchTitles( $titles, $user );
 					$user->invalidateCache();
-					$output->addHtml( wfMsgExt( 'watchlistedit-normal-done', 'parse',
+					$output->addHTML( wfMsgExt( 'watchlistedit-normal-done', 'parse',
 						$GLOBALS['wgLang']->formatNum( count( $titles ) ) ) );
 					$this->showTitles( $titles, $output, $wgUser->getSkin() );
 				}
@@ -138,16 +138,16 @@ class WatchlistEditor {
 		}
 		$batch->execute();
 		// Print out the list
-		$output->addHtml( "<ul>\n" );
+		$output->addHTML( "<ul>\n" );
 		foreach( $titles as $title ) {
 			if( !$title instanceof Title )
 				$title = Title::newFromText( $title );
 			if( $title instanceof Title ) {
-				$output->addHtml( "<li>" . $skin->makeLinkObj( $title )
+				$output->addHTML( "<li>" . $skin->makeLinkObj( $title )
 				. ' (' . $skin->makeLinkObj( $title->getTalkPage(), $talk ) . ")</li>\n" );
 			}
 		}
-		$output->addHtml( "</ul>\n" );
+		$output->addHTML( "</ul>\n" );
 	}
 
 	/**
@@ -239,10 +239,10 @@ class WatchlistEditor {
 	 */
 	private function showItemCount( $output, $user ) {
 		if( ( $count = $this->countWatchlist( $user ) ) > 0 ) {
-			$output->addHtml( wfMsgExt( 'watchlistedit-numitems', 'parse',
+			$output->addHTML( wfMsgExt( 'watchlistedit-numitems', 'parse',
 				$GLOBALS['wgLang']->formatNum( $count ) ) );
 		} else {
-			$output->addHtml( wfMsgExt( 'watchlistedit-noitems', 'parse' ) );
+			$output->addHTML( wfMsgExt( 'watchlistedit-noitems', 'parse' ) );
 		}
 		return $count;
 	}
@@ -323,6 +323,8 @@ class WatchlistEditor {
 					),
 					__METHOD__
 				);
+				$article = new Article($title);
+				wfRunHooks('UnwatchArticleComplete',array(&$user,&$article));
 			}
 		}
 	}
@@ -340,21 +342,47 @@ class WatchlistEditor {
 			$form  = Xml::openElement( 'form', array( 'method' => 'post',
 				'action' => $self->getLocalUrl( 'action=edit' ) ) );
 			$form .= Xml::hidden( 'token', $wgUser->editToken( 'watchlistedit' ) );
-			$form .= '<fieldset><legend>' . wfMsgHtml( 'watchlistedit-normal-legend' ) . '</legend>';
+			$form .= "<fieldset>\n<legend>" . wfMsgHtml( 'watchlistedit-normal-legend' ) . "</legend>";
 			$form .= wfMsgExt( 'watchlistedit-normal-explain', 'parse' );
-			foreach( $this->getWatchlistInfo( $user ) as $namespace => $pages ) {
-				$form .= '<h2>' . $this->getNamespaceHeading( $namespace ) . '</h2>';
-				$form .= '<ul>';
-				foreach( $pages as $dbkey => $redirect ) {
-					$title = Title::makeTitleSafe( $namespace, $dbkey );
-					$form .= $this->buildRemoveLine( $title, $redirect, $wgUser->getSkin() );
-				}
-				$form .= '</ul>';
-			}
+			$form .= $this->buildRemoveList( $user, $wgUser->getSkin() );
 			$form .= '<p>' . Xml::submitButton( wfMsg( 'watchlistedit-normal-submit' ) ) . '</p>';
 			$form .= '</fieldset></form>';
-			$output->addHtml( $form );
+			$output->addHTML( $form );
 		}
+	}
+
+	/**
+	 * Build the part of the standard watchlist editing form with the actual
+	 * title selection checkboxes and stuff.  Also generates a table of
+	 * contents if there's more than one heading.
+	 *
+	 * @param $user User
+	 * @param $skin Skin (really, Linker)
+	 */
+	private function buildRemoveList( $user, $skin ) {
+		$list = "";
+		$toc = $skin->tocIndent();
+		$tocLength = 0;
+		foreach( $this->getWatchlistInfo( $user ) as $namespace => $pages ) {
+			$tocLength++;
+			$heading = htmlspecialchars( $this->getNamespaceHeading( $namespace ) );
+			$anchor = "editwatchlist-ns" . $namespace;
+
+			$list .= $skin->makeHeadLine( 2, ">", $anchor, $heading, "" );
+			$toc .= $skin->tocLine( $anchor, $heading, $tocLength, 1 ) . $skin->tocLineEnd();
+
+			$list .= "<ul>\n";
+			foreach( $pages as $dbkey => $redirect ) {
+				$title = Title::makeTitleSafe( $namespace, $dbkey );
+				$list .= $this->buildRemoveLine( $title, $redirect, $skin );
+			}
+			$list .= "</ul>\n";
+		}
+		// ISSUE: omit the TOC if the total number of titles is low?
+		if( $tocLength > 1 ) {
+			$list = $skin->tocList( $toc ) . $list;
+		}
+		return $list;
 	}
 
 	/**
@@ -389,9 +417,9 @@ class WatchlistEditor {
 		if( $title->getNamespace() == NS_USER && !$title->isSubpage() ) {
 			$tools[] = $skin->makeKnownLinkObj( SpecialPage::getTitleFor( 'Contributions', $title->getText() ), wfMsgHtml( 'contributions' ) );
 		}
-		return '<li>'
+		return "<li>"
 			. Xml::check( 'titles[]', false, array( 'value' => $title->getPrefixedText() ) )
-			. $link . ' (' . implode( ' | ', $tools ) . ')' . '</li>';
+			. $link . " (" . implode( ' | ', $tools ) . ")" . "</li>\n";
 		}
 
 	/**
@@ -419,7 +447,7 @@ class WatchlistEditor {
 		$form .= '</textarea>';
 		$form .= '<p>' . Xml::submitButton( wfMsg( 'watchlistedit-raw-submit' ) ) . '</p>';
 		$form .= '</fieldset></form>';
-		$output->addHtml( $form );
+		$output->addHTML( $form );
 	}
 
 	/**

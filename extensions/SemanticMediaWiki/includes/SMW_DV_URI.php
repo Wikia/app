@@ -1,12 +1,7 @@
 <?php
-
 /**
- * This datavalue implements URL/URI/ANNURI/EMAIL-Datavalues suitable for defining
- * the respective types of properties.
- *
- * @author Nikolas Iwan
- * @author Markus Krötzsch
- * @note AUTOLOADED
+ * @file
+ * @ingroup SMWDataValues
  */
 
 define('SMW_URI_MODE_EMAIL',1);
@@ -14,7 +9,13 @@ define('SMW_URI_MODE_URI',3);
 define('SMW_URI_MODE_ANNOURI',4);
 
 /**
- * FIXME: correctly create safe HTML and Wiki text.
+ * This datavalue implements URL/URI/ANNURI/EMAIL-Datavalues suitable for defining
+ * the respective types of properties.
+ *
+ * @author Nikolas Iwan
+ * @author Markus Krötzsch
+ * @ingroup SMWDataValues
+ * @bug Correctly create safe HTML and Wiki text.
  */
 class SMWURIValue extends SMWDataValue {
 
@@ -32,13 +33,14 @@ class SMWURIValue extends SMWDataValue {
 			case '_anu':
 				$this->m_mode = SMW_URI_MODE_ANNOURI;
 				break;
-			case '_uri': case '_url': default:
+			case '_uri': case '_url': case '__spu': default:
 				$this->m_mode = SMW_URI_MODE_URI;
 				break;
-		}	
+		}
 	}
 
 	protected function parseUserValue($value) {
+		wfLoadExtensionMessages('SemanticMediaWiki');
 		$value = trim($value);
 		if ($value!='') { //do not accept empty strings
 			$this->m_value = $value;

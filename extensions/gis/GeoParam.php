@@ -8,7 +8,7 @@
  *
  *      include( "extensions/gis/geo.php" );
  *
- *  If $wgMapsourcesURL is not defined, there will not be links to the 
+ *  If $wgMapsourcesURL is not defined, there will not be links to the
  *  "Map sources" page, but the geo tag will still be rendered.
  *
  *  To add the points to a database, see the gis/geodb extension
@@ -123,7 +123,7 @@ class GeoParam {
 		$this->londeg_min = $this->londeg_max = $this->londeg;
 		$this->updateInternal();
 
-		
+
 	}
 
 	/**
@@ -132,7 +132,7 @@ class GeoParam {
 	 */
 	function get_coor() {
 		if ($i = strpos($this->pieces[0],';')) {
-			/* two values seperated by a semicolon */
+			/* two values separated by a semicolon */
 			$this->coor = array(
 				'latdeg' => substr($this->pieces[0],0,$i),
 				'londeg' => substr($this->pieces[0],$i+1),
@@ -201,7 +201,7 @@ class GeoParam {
 	}
 
 	/**
-	 *   Given decimal degrees, convert to 
+	 *   Given decimal degrees, convert to
 	 *   minutes, seconds and direction
 	 */
 	function make_minsec( $deg ) {
@@ -215,7 +215,7 @@ class GeoParam {
 		# Round to a suitable number of digits
 		# FIXME: should reflect precision
 		$deg = round($deg, 6);
-		$min = 60.0 * (abs($deg) - intval(abs($deg))); 
+		$min = 60.0 * (abs($deg) - intval(abs($deg)));
 		$min = round($min, 4);
 		$sec = 60.0 * ($min - intval($min));
 		$sec = round($sec, 2);
@@ -317,13 +317,13 @@ class GeoParam {
 	 *  Produce markup suitable for use in page
 	 *  Use original content as much as possible
 	 */
-	function get_markup() 
+	function get_markup()
 	{
 		$n = count($this->coor);
 
 		if ($n == 0) {
 			# Range is special case
-			return $this->make_position( $this->latdeg_min, 
+			return $this->make_position( $this->latdeg_min,
 						     $this->londeg_min )
 			     . " to "
 			     . $this->make_position( $this->latdeg_max,
@@ -335,7 +335,7 @@ class GeoParam {
 				$this->coor['latdeg'].'&deg;&nbsp;'. $this->coor['latns'],
 			       $this->coor['londeg'].'&deg;&nbsp;'. $this->coor['lonew'] );
 		} elseif ($n == 6) {
-			return $this->getMicroformat( 
+			return $this->getMicroformat(
 				$this->coor['latdeg'].'&deg;'. $this->coor['latmin'].'&prime;&nbsp;'.
 			       $this->coor['latns'],
 			       $this->coor['londeg'].'&deg;'. $this->coor['lonmin'].'&prime;&nbsp;'.
@@ -358,5 +358,3 @@ class GeoParam {
 			'">' . $lon . '</abbr></span>';
 	}
 }
-
-

@@ -1,4 +1,14 @@
 <?php
+/**
+ * @file
+ * @ingroup SMW
+ */
+
+/*
+ * Protect against register_globals vulnerabilities.
+ * This line must be present before any global variable is referenced.
+ */
+if (!defined('MEDIAWIKI')) die();
 global $wgHooks;
 $wgHooks[ 'SkinTemplateTabs' ][] = 'smwfAddRefreshTab';
 
@@ -9,6 +19,7 @@ $wgHooks[ 'SkinTemplateTabs' ][] = 'smwfAddRefreshTab';
 function smwfAddRefreshTab($obj, $content_actions) {
 	global $wgUser, $wgTitle;
 	if($wgUser->isAllowed('delete')){
+		wfLoadExtensionMessages('SemanticMediaWiki');
 		$content_actions['purge'] = array(
 			'class' => false,
 			'text' => wfMsg('smw_purge'),

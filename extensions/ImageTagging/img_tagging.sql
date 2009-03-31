@@ -1,6 +1,6 @@
 /* required table */
 
-CREATE TABLE IF NOT EXISTS `imagetags` (
+CREATE TABLE IF NOT EXISTS /*$wgDBprefix*/`imagetags` (
   `unique_id` int(10) unsigned NOT NULL auto_increment,
   `img_page_id` int(10) unsigned NOT NULL,
   `img_name` varchar(255) character set utf8 collate utf8_unicode_ci NOT NULL,

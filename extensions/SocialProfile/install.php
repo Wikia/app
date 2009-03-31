@@ -3,7 +3,7 @@
 /**
  * Installation script for the extension SocialProfile. MySQL only.
  *
- * @addtogroup Extensions
+ * @ingroup Extensions
  * @author Rob Church <robchur@gmail.com>
  * @author Siebrand Mazeland
  * @copyright © 2006 Rob Church
@@ -13,7 +13,13 @@
 
 # We're going to have to assume we are running from
 # extensions/SocialProfile/install.php (the dir name doesn't even matter)
-$maint = dirname( dirname( __FILE__ ) ) . '/maintenance';
+
+$maint = getenv( 'MW_INSTALL_PATH' );
+if( $maint === false )
+	$maint = dirname( dirname( __FILE__ ) ) . '/maintenance';
+else
+	$maint .= '/maintenance';
+
 if( is_file( $maint . '/commandLine.inc' ) ) {
 	require_once( $maint . '/commandLine.inc' );
 } else {
@@ -62,17 +68,17 @@ if( $dba->tableExists( 'user_board' ) ) {
 
 # Do nothing if the table exists
 if( $dba->tableExists( 'user_profile' ) ) {
-	echo( "The table already exists. No action was taken.\n" );
+	echo( "The table 'user_profile' already exists. No action was taken.\n" );
 } else {
 	$sql = $dir . '/UserProfile/user_profile.sql';
 	if( $dba->sourceFile( $sql ) ) {
-		echo( "The table 'user_profileard' has been set up correctly.\n" );
+		echo( "The table 'user_profile' has been set up correctly.\n" );
 	}
 }
 
 # Do nothing if the table exists
 if( $dba->tableExists( 'user_stats' ) ) {
-	echo( "The table already exists. No action was taken.\n" );
+	echo( "The table 'user_stats' already exists. No action was taken.\n" );
 } else {
 	$sql = $dir . '/UserStats/user_stats.sql';
 	if( $dba->sourceFile( $sql ) ) {
@@ -86,7 +92,27 @@ if( $dba->tableExists( 'user_relationship' ) || $dba->tableExists( 'user_relatio
 } else {
 	$sql = $dir . '/UserRelationship/user_relationship.sql';
 	if( $dba->sourceFile( $sql ) ) {
-		echo( "The tables 'user_relationship', and 'user_relationship_request' have been set up correctly.\n" );
+		echo( "The tables 'user_relationship' and 'user_relationship_request' have been set up correctly.\n" );
+	}
+}
+
+# Do nothing if the table exists
+if( $dba->tableExists( 'user_system_gift' ) || $dba->tableExists( 'system_gift' ) ) {
+	echo( "'user_system_gift', and/or 'system_gift' already exist. No action was taken.\n" );
+} else {
+	$sql = $dir . '/SystemGifts/systemgifts.sql';
+	if( $dba->sourceFile( $sql ) ) {
+		echo( "The tables 'user_system_gift' and 'system_gift' have been set up correctly.\n" );
+	}
+}
+
+# Do nothing if the table exists
+if( $dba->tableExists( 'user_gift' ) || $dba->tableExists( 'gift' ) ) {
+	echo( "'user_gift', and/or 'gift' already exist. No action was taken.\n" );
+} else {
+	$sql = $dir . '/UserGifts/usergifts.sql';
+	if( $dba->sourceFile( $sql ) ) {
+		echo( "The tables 'user_gift' and 'gift' have been set up correctly.\n" );
 	}
 }
 

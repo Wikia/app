@@ -7,6 +7,7 @@ class FlaggedRevsXML {
 	 */
 	public static function getNamespaceMenu( $selected=null ) {
 		global $wgContLang, $wgFlaggedRevsNamespaces;
+		wfLoadExtensionMessages( 'FlaggedRevs' );
 		$s = "<label for='namespace'>" . wfMsgHtml('namespace') . "</label>";
 		if( $selected !== '' ) {
 			if( is_null( $selected ) ) {
@@ -40,6 +41,7 @@ class FlaggedRevsXML {
 	 * @param int $selected, selected level
 	 */
 	public static function getLevelMenu( $selected=null ) {
+		wfLoadExtensionMessages( 'FlaggedRevs' );
 		$s = Xml::openElement( 'select', array('name' => 'level') );
 		$s .= Xml::option( wfMsg( "revreview-filter-level-0" ), 0, $selected===0 );
 		if( FlaggedRevs::qualityVersions() )
@@ -53,6 +55,7 @@ class FlaggedRevsXML {
 	 * @param int $selected, selected level
 	 */
 	public static function getStatusFilterMenu( $selected=null ) {
+		wfLoadExtensionMessages( 'FlaggedRevs' );
 		$s  = "<label for='status'>" . wfMsgHtml('revreview-statusfilter') . "</label>&nbsp;";
 		$s .= Xml::openElement( 'select', array('name' => 'status') );
 		$s .= Xml::option( wfMsg( "revreview-filter-all" ), -1, $selected===-1 );
@@ -68,6 +71,7 @@ class FlaggedRevsXML {
 	 * @param int $selected, selected level
 	 */
 	public static function getAutoFilterMenu( $selected=null ) {
+		wfLoadExtensionMessages( 'FlaggedRevs' );
 		$s  = "<label for='approved'>" . wfMsgHtml('revreview-typefilter') . "</label>&nbsp;";
 		$s .= Xml::openElement( 'select', array('name' => 'automatic') );
 		$s .= Xml::option( wfMsg( "revreview-filter-all" ), -1, $selected===-1 );
@@ -82,13 +86,12 @@ class FlaggedRevsXML {
 	 * @param int $selected, selected level
 	 */
 	public static function getTagMenu( $selected = '' ) {
+		wfLoadExtensionMessages( 'FlaggedRevs' );
 		$s  = "<label for='ratingtag'>" . wfMsgHtml('revreview-tagfilter') . "</label>&nbsp;";
 		$s .= Xml::openElement( 'select', array('name' => 'ratingtag', 'id' => 'ratingtag') );
 		foreach( FlaggedRevs::getFeedbackTags() as $tag => $weight ) {
 			$s .= Xml::option( wfMsg( "readerfeedback-$tag" ), $tag, $selected===$tag );
 		}
-		# Aggregate for all tags
-		$s .= Xml::option( wfMsg( "readerfeedback-overall" ), 'overall', $selected==='overall' );
 		$s .= Xml::closeElement('select')."\n";
 		return $s;
 	}
@@ -123,7 +126,7 @@ class FlaggedRevsXML {
 	 */
     public static function addTagRatings( $flags, $prettyBox = false, $css='' ) {
         global $wgFlaggedRevTags;
-
+		wfLoadExtensionMessages( 'FlaggedRevs' );
         $tag = '';
         if( $prettyBox ) {
         	$tag .= "<table id='mw-revisionratings-box' align='center' class='$css' cellpadding='0'>";
@@ -170,6 +173,7 @@ class FlaggedRevsXML {
 	 */
 	public static function prettyRatingBox( $frev, $shtml, $revsSince, $stable=true, $synced=false, $old=false ) {
 		global $wgLang;
+		wfLoadExtensionMessages( 'FlaggedRevs' );
 		# Get quality level
 		$flags = $frev->getTags();
 		$quality = FlaggedRevs::isQuality( $flags );
@@ -218,6 +222,7 @@ class FlaggedRevsXML {
 	}
 
 	public static function ratingToggle() {
+		wfLoadExtensionMessages( 'FlaggedRevs' );
 		return "<a id='mw-revisiontoggle' class='flaggedrevs_toggle' style='display:none;'" .
 			" onclick='toggleRevRatings()' title='" . wfMsgHtml('revreview-toggle-title') . "' >" .
 			wfMsg( 'revreview-toggle' ) . "</a>";
@@ -228,14 +233,14 @@ class FlaggedRevsXML {
 	 */
 	public static function stabilityPreferences( $form ) {
 		global $wgUser;
-
+		wfLoadExtensionMessages( 'FlaggedRevs' );
 		$html = Xml::openElement( 'fieldset' ) .
 			Xml::element( 'legend', null, wfMsgHtml('flaggedrevs-prefs') ) .
 			Xml::openElement( 'table' ) .
 			Xml::openElement( 'tr' ) .
-				'<td>' . wfCheck( 'wpFlaggedRevsStable', $form->mFlaggedRevsStable,
+				'<td>' . Xml::check( 'wpFlaggedRevsStable', $form->mFlaggedRevsStable,
 					array('id' => 'wpFlaggedRevsStable') ) . '</td><td> ' .
-					wfLabel( wfMsg( 'flaggedrevs-prefs-stable' ), 'wpFlaggedRevsStable' ) . '</td>' .
+					Xml::label( wfMsg( 'flaggedrevs-prefs-stable' ), 'wpFlaggedRevsStable' ) . '</td>' .
 			Xml::closeElement( 'tr' ) .
 			Xml::openElement( 'tr' ) .
 				'<td>' .
@@ -254,8 +259,8 @@ class FlaggedRevsXML {
 			$html .= Xml::closeElement( 'tr' ) .
 				Xml::openElement( 'tr' ) . '<td><br/></td>' . Xml::closeElement( 'tr' ) .
 				Xml::openElement( 'tr' ) .
-					'<td>' . wfCheck( 'wpFlaggedRevsWatch', $form->mFlaggedRevsWatch, array('id' => 'wpFlaggedRevsWatch') ) .
-					'</td><td> ' . wfLabel( wfMsg( 'flaggedrevs-prefs-watch' ), 'wpFlaggedRevsWatch' ) . '</td>';
+					'<td>' . Xml::check( 'wpFlaggedRevsWatch', $form->mFlaggedRevsWatch, array('id' => 'wpFlaggedRevsWatch') ) .
+					'</td><td> ' . Xml::label( wfMsg( 'flaggedrevs-prefs-watch' ), 'wpFlaggedRevsWatch' ) . '</td>';
 		}
 		$html .= Xml::closeElement( 'tr' ) .
 			Xml::closeElement( 'table' ) .

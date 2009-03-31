@@ -11,8 +11,8 @@ if (!defined('MEDIAWIKI')) {
 $wgExtensionCredits['other'][] = array(
 	'name'           => 'BoardVote',
 	'url'            => 'http://www.mediawiki.org/wiki/Extension:BoardVote',
-	'svn-date'       => '$LastChangedDate: 2008-07-10 06:27:11 +0000 (Thu, 10 Jul 2008) $',
-	'svn-revision'   => '$LastChangedRevision: 37462 $',
+	'svn-date'       => '$LastChangedDate: 2008-08-15 18:48:01 +0000 (Fri, 15 Aug 2008) $',
+	'svn-revision'   => '$LastChangedRevision: 39423 $',
 	'description'    => '[[meta:Board elections|Wikimedia Board of Trustees election]]',
 	'descriptionmsg' => 'boardvote-desc',
 );
@@ -42,16 +42,13 @@ $dir = dirname(__FILE__) . '/';
 $wgExtensionMessagesFiles['BoardVote'] = $dir . 'BoardVote.i18n.php';
 $wgExtensionAliasesFiles['BoardVote'] = $dir . 'BoardVote.alias.php';
 
-# Register special page
-if ( !function_exists( 'extAddSpecialPage' ) ) {
-	require( dirname(__FILE__) . '/../ExtensionFunctions.php' );
-}
-
 if ( !defined( 'BOARDVOTE_REDIRECT_ONLY' ) ) {
-	extAddSpecialPage( dirname(__FILE__) . '/BoardVote_body.php', 'Boardvote', 'BoardVotePage' );
+	$wgAutoloadClasses['BoardVotePage'] = $dir . 'BoardVote_body.php';
+	$wgSpecialPages['Boardvote'] = 'BoardVotePage';
 	$wgExtensionFunctions[] = 'wfSetupBoardVote';
 } else {
-	extAddSpecialPage( dirname(__FILE__) . '/GoToBoardVote_body.php', 'Boardvote', 'GoToBoardVotePage' );
+	$wgAutoloadClasses['GoToBoardVotePage'] = $dir . 'GoToBoardVote_body.php';
+	$wgSpecialPages['Boardvote'] = 'GoToBoardVotePage';
 }
 
 function wfSetupBoardVote() {
@@ -62,14 +59,4 @@ function wfSetupBoardVote() {
 		global $wgLang;
 		$wgLang = Language::factory( $_SESSION['bvLang'] );
 	}
-}
-
-function wfBoardVoteInitMessages() {
-	static $done = false;
-	if ( $done ) return true;
-
-	$done = true;
-	wfLoadExtensionMessages( 'BoardVote' );
-
-	return true;
 }

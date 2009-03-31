@@ -2,14 +2,15 @@
 /**
  * This file contains a static class for accessing functions to generate and execute
  * semantic queries and to serialise their results.
- *
+ * @file
+ * @ingroup SMWQuery
  * @author Markus Krötzsch
  */
 
 /**
  * Static class for accessing functions to generate and execute semantic queries 
  * and to serialise their results.
- * @note AUTOLOADED
+ * @ingroup SMWQuery
  */
 class SMWQueryProcessor {
 
@@ -19,26 +20,6 @@ class SMWQueryProcessor {
 	const SPECIAL_PAGE = 0; // query for special page
 	const INLINE_QUERY = 1; // query for inline use
 	const CONCEPT_DESC = 2; // query for concept definition
-
-	/**
-	 * Array of enabled formats for formatting queries. Can be redefined in the settings to disallow certain
-	 * formats. The formats 'table' and 'list' are defaults that cannot be disabled. The format 'broadtable'
-	 * should not be disabled either in order not to break Special:ask.
-	 */
-	static $formats = array('table'      => 'SMWTableResultPrinter',
-							'list'       => 'SMWListResultPrinter',
-							'ol'         => 'SMWListResultPrinter',
-							'ul'         => 'SMWListResultPrinter',
-							'broadtable' => 'SMWTableResultPrinter',
-							'embedded'   => 'SMWEmbeddedResultPrinter',
-							'timeline'   => 'SMWTimelineResultPrinter',
-							'eventline'  => 'SMWTimelineResultPrinter',
-							'template'   => 'SMWTemplateResultPrinter',
-							'count'      => 'SMWListResultPrinter',
-							'debug'      => 'SMWListResultPrinter',
-							'rss'        => 'SMWRSSResultPrinter',
-							'icalendar'  => 'SMWiCalendarResultPrinter',
-							'vcard'      => 'SMWvCardResultPrinter');
 
 	/**
 	 * Parse a query string given in SMW's query language to create
@@ -51,7 +32,7 @@ class SMWQueryProcessor {
 	 * known. Otherwise it will be determined from the parameters when 
 	 * needed. This parameter is just for optimisation in a common case.
 	 *
-	 * @TODO: this method contains too many special cases for certain 
+	 * @todo This method contains too many special cases for certain 
 	 * printouts. Especially the case of rss, icalendar, etc. (no query) 
 	 * should be specified differently.
 	 */
@@ -75,7 +56,7 @@ class SMWQueryProcessor {
 			$querymode = SMWQuery::MODE_COUNT;
 		} elseif ($format == 'debug') {
 			$querymode = SMWQuery::MODE_DEBUG;
-		} elseif (in_array($format, array('rss','icalendar','vcard'))) {
+		} elseif (in_array($format, array('rss','icalendar','vcard','csv'))) {
 			$querymode = SMWQuery::MODE_NONE;
 		} else {
 			$querymode = SMWQuery::MODE_INSTANCES;
@@ -95,7 +76,7 @@ class SMWQueryProcessor {
 			$desc->prependPrintRequest(new SMWPrintRequest(SMWPrintRequest::PRINT_THIS, $mainlabel));
 		}
 
-		$query = new SMWQuery($desc, ($context != SMWQueryProcessor::SPECIAL_PAGE));
+		$query = new SMWQuery($desc, ($context != SMWQueryProcessor::SPECIAL_PAGE), ($context == SMWQueryProcessor::CONCEPT_DESC));
 		$query->setQueryString($querystring);
 		$query->setExtraPrintouts($extraprintouts);
 		$query->addErrors($qp->getErrors()); // keep parsing errors for later output
@@ -125,10 +106,12 @@ class SMWQueryProcessor {
 			$orders = explode( ',', $params['order'] );
 			foreach ($orders as $key => $order) { // normalise
 				$order = strtolower(trim($order));
-				if ( ('descending' != $order) && ('reverse' != $order) && ('desc' != $order) ) {
-					$orders[$key] = 'ASC';
-				} else {
+				if ( ('descending' == $order) || ('reverse' == $order) || ('desc' == $order) ) {
 					$orders[$key] = 'DESC';
+				} elseif ( ('random' == $order) || ('rand' == $order) ) {
+					$orders[$key] = 'RAND()';
+				} else {
+					$orders[$key] = 'ASC';
 				}
 			}
 		} else {
@@ -154,6 +137,10 @@ class SMWQueryProcessor {
 			if (current($orders) !== false) { // sort key remaining, apply to page name
 				$query->sortkeys[''] = current($orders);
 			}
+		} elseif ($format == 'rss') { // unsorted RSS: use *descending* default order
+			///TODO: the default sort field should be "modification date" (now it is the title, but 
+			///likely to be overwritten by printouts with label "date").
+			$query->sortkeys[''] = (current($orders) != false)?current($orders):'DESC';
 		} else { // sort by page title (main column) by default
 			$query->sortkeys[''] = (current($orders) != false)?current($orders):'ASC';
 		} // TODO: check and report if there are further order statements?
@@ -162,7 +149,7 @@ class SMWQueryProcessor {
 	}
 
 	/**
-	 * Preprocess a query as given by an array of parameters as is  typically
+	 * Preprocess a query as given by an array of parameters as is typically
 	 * produced by the #ask parser function. The parsing results in a querystring,
 	 * an array of additional parameters, and an array of additional SMWPrintRequest
 	 * objects, which are filled into call-by-ref parameters.
@@ -184,34 +171,37 @@ class SMWQueryProcessor {
 				$propparts = explode('#',$parts[0],2);
 				if (trim($propparts[0]) == '') { // print "this"
 					$printmode = SMWPrintRequest::PRINT_THIS;
-					if (count($parts) == 1) { // no label found, use empty label
-						$parts[] = '';
-					}
+					$label = ''; // default
 					$title = NULL;
-				} elseif ($wgContLang->getNsText(NS_CATEGORY) == ucfirst(trim($propparts[0]))) { // print category
+					$data = NULL;
+				} elseif ($wgContLang->getNsText(NS_CATEGORY) == ucfirst(trim($propparts[0]))) { // print categories
 					$title = NULL;
+					$data = NULL;
 					$printmode = SMWPrintRequest::PRINT_CATS;
-					if (count($parts) == 1) { // no label found, use category label
-						$parts[] = $showmode?'':$wgContLang->getNSText(NS_CATEGORY);
-					}
+					$label = $showmode?'':$wgContLang->getNSText(NS_CATEGORY); // default
 				} else { // print property or check category
 					$title = Title::newFromText(trim($propparts[0]), SMW_NS_PROPERTY); // trim needed for \n
-					if ($title === NULL) { // too bad, this is no legal property name, ignore
+					if ($title === NULL) { // too bad, this is no legal property/category name, ignore
 						continue;
 					}
 					if ($title->getNamespace() == SMW_NS_PROPERTY) {
 						$printmode = SMWPrintRequest::PRINT_PROP;
+						$property = SMWPropertyValue::makeProperty($title->getDBKey());
+						$data = $property;
+						$label = $showmode?'':$property->getWikiValue();  // default
 					} elseif ($title->getNamespace() == NS_CATEGORY) {
 						$printmode = SMWPrintRequest::PRINT_CCAT;
+						$data = $title;
+						$label = $showmode?'':$title->getText();  // default
 					} //else?
-					if (count($parts) == 1) { // no label found, use property/category name
-						$parts[] = $showmode?'':$title->getText();
-					}
 				}
 				if (count($propparts) == 1) { // no outputformat found, leave empty
 					$propparts[] = '';
 				}
-				$printouts[] = new SMWPrintRequest($printmode, trim($parts[1]), $title, trim($propparts[1]));
+				if (count($parts) > 1) { // label found, use this instead of default
+					$label = trim($parts[1]);
+				}
+				$printouts[] = new SMWPrintRequest($printmode, $label, $data, trim($propparts[1]));
 			} else { // parameter or query
 				$parts = explode('=',$param,2);
 				if (count($parts) >= 2) {
@@ -244,14 +234,19 @@ class SMWQueryProcessor {
 	 * Process and answer a query as given by a string and an array of parameters 
 	 * as is typically produced by the <ask> parser hook. The result is formatted
 	 * according to the specified $outputformat. The parameter $context defines in 
-	 * what context the query is used, which affects ceretain general settings.
+	 * what context the query is used, which affects certain general settings.
 	 */
 	static public function getResultFromHookParams($querystring, $params, $outputmode, $context = SMWQueryProcessor::INLINE_QUERY) {
-		global $wgTitle;
+		global $wgParser;
+		$title = $wgParser->getTitle();
+		if ($title === NULL) { // try that in emergency, needed in 1.11 in Special:Ask
+			global $wgTitle;
+			$title = $wgTitle;
+		}
 		// Take care at least of some templates -- for better template support use #ask
 		$parser = new Parser();
 		$parserOptions = new ParserOptions();
-		$parser->startExternalParse( $wgTitle, $parserOptions, OT_HTML );
+		$parser->startExternalParse( $title, $parserOptions, OT_HTML );
 		$querystring = $parser->transformMsg( $querystring, $parserOptions );
 		return SMWQueryProcessor::getResultFromQueryString($querystring, $params, array(), $outputmode, $context);
 	}
@@ -262,7 +257,7 @@ class SMWQueryProcessor {
 	 * the query and determines the serialisation mode for results. The parameter
 	 * $context defines in what context the query is used, which affects ceretain
 	 * general settings.
-	 * @DEPRECATED use getResult
+	 * @deprecated use SMWQueryProcessor::getResult()
 	 */
 	static public function getResultHTML($querystring, $params, $context = SMWQueryProcessor::INLINE_QUERY) {
 		return SMWQueryProcessor::getResultFromQueryString($querystring, $params, array(), SMW_OUTPUT_HTML, $context);
@@ -300,7 +295,7 @@ class SMWQueryProcessor {
 			return $result;
 		} else { // result for counting or debugging is just a string
 			wfProfileOut('SMWQueryProcessor::getResultFromQuery (SMW)');
-			return $res;
+			return $res . smwfEncodeMessages($query->getErrors());
 		}
 	}
 
@@ -311,7 +306,8 @@ class SMWQueryProcessor {
 		$format = 'auto';
 		if (array_key_exists('format', $params)) {
 			$format = strtolower(trim($params['format']));
-			if ( !array_key_exists($format, SMWQueryProcessor::$formats) ) {
+			global $smwgResultFormats;
+			if ( !array_key_exists($format, $smwgResultFormats) ) {
 				$format = 'auto'; // If it is an unknown format, defaults to list/table again
 			}
 		}
@@ -327,8 +323,9 @@ class SMWQueryProcessor {
 				$format = 'table';
 			else $format = 'list';
 		}
-		if (array_key_exists($format, SMWQueryProcessor::$formats))
-			$formatclass = SMWQueryProcessor::$formats[$format];
+		global $smwgResultFormats;
+		if (array_key_exists($format, $smwgResultFormats))
+			$formatclass = $smwgResultFormats[$format];
 		else
 			$formatclass = "SMWListResultPrinter";
 		return new $formatclass($format, ($context != SMWQueryProcessor::SPECIAL_PAGE));
@@ -341,6 +338,7 @@ class SMWQueryProcessor {
  * Objects of this class are in charge of parsing a query string in order
  * to create an SMWDescription. The class and methods are not static in order 
  * to more cleanly store the intermediate state and progress of the parser.
+ * @ingroup SMWQuery
  */
 class SMWQueryParser {
 
@@ -424,7 +422,7 @@ class SMWQueryParser {
 	/**
 	 * Compute an SMWDescription for current part of a query, which should
 	 * be a standalone query (the main query or a subquery enclosed within
-	 * "<q>...</q>". Recursively calls similar methods and returns NULL upon error.
+	 * "\<q\>...\</q\>". Recursively calls similar methods and returns NULL upon error.
 	 * 
 	 * The call-by-ref parameter $setNS is a boolean. Its input specifies whether
 	 * the query should set the current default namespace if no namespace restrictions
@@ -446,6 +444,7 @@ class SMWQueryParser {
 	 */
 	protected function getSubqueryDescription(&$setNS, &$label) {
 		global $smwgQPrintoutLimit;
+		wfLoadExtensionMessages('SemanticMediaWiki');
 		$conjunction = NULL;      // used for the current inner conjunction
 		$disjuncts = array();     // (disjunctive) array of subquery conjunctions
 		$printrequests = array(); // the printrequests found for this query level
@@ -634,6 +633,7 @@ class SMWQueryParser {
 	 */
 	protected function getPropertyDescription($propertyname, &$setNS, &$label) {
 		global $smwgSMWBetaCompatible; // support for old * printouts of beta
+		wfLoadExtensionMessages('SemanticMediaWiki');
 		$this->readChunk(); // consume separator ":=" or "::"
 		// first process property chain syntax (e.g. "property1.property2::value"):
 		if ($propertyname{0} == ' ') { // escape
@@ -645,15 +645,16 @@ class SMWQueryParser {
 		$typeid = '_wpg';
 		foreach ($propertynames as $name) {
 			if ($typeid != '_wpg') { // non-final property in chain was no wikipage: not allowed
-				$this->m_errors[] .= wfMsgForContent('smw_valuesubquery', end($name));
+				$this->m_errors[] = wfMsgForContent('smw_valuesubquery', $prevname);
 				return NULL; ///TODO: read some more chunks and try to finish [[ ]]
 			}
-			$property = Title::newFromText($name, SMW_NS_PROPERTY);
-			if ($property === NULL) { // illegal title
-				$this->m_errors[] .= wfMsgForContent('smw_badtitle', htmlspecialchars($name));
+			$property = SMWPropertyValue::makeUserProperty($name);
+			if (!$property->isValid()) { // illegal property identifier
+				$this->m_errors = array_merge($this->m_errors, $property->getErrors());
 				return NULL; ///TODO: read some more chunks and try to finish [[ ]]
 			}
-			$typeid = SMWDataValueFactory::getPropertyObjectTypeID($property);
+			$typeid = $property->getTypeID();
+			$prevname = $name;
 			$properties[] = $property;
 		} ///NOTE: after iteration, $property and $typeid correspond to last value
 
@@ -729,7 +730,7 @@ class SMWQueryParser {
 									$chunk = ']]';
 								}
 							} else {
-								$printlabel = $property->getText();
+								$printlabel = $property->getWikiValue();
 							}
 							if ($chunk == ']]') {
 								return new SMWPrintRequest(SMWPrintRequest::PRINT_PROP, $printlabel, $property, $pm);
@@ -752,7 +753,7 @@ class SMWQueryParser {
 									$chunk = ']]';
 								}
 							} else {
-								$printlabel = $property->getText();
+								$printlabel = $property->getWikiValue();
 							}
 							if ($chunk == ']]') {
 								return new SMWPrintRequest(SMWPrintRequest::PRINT_PROP, $printlabel, $property, $printmodifier);
@@ -781,7 +782,7 @@ class SMWQueryParser {
 			} else {
 				$innerdesc = $this->addDescription($innerdesc, new SMWThingDescription(), false);
 			}
-			$this->m_errors[] = wfMsgForContent('smw_propvalueproblem', $property->getText());
+			$this->m_errors[] = wfMsgForContent('smw_propvalueproblem', $property->getWikiValue());
 		}
 		$properties = array_reverse($properties);
 		foreach ($properties as $property) {
@@ -845,6 +846,7 @@ class SMWQueryParser {
 	 * passed as a parameter.
 	 */
 	protected function getArticleDescription($firstchunk, &$setNS, &$label) {
+		wfLoadExtensionMessages('SemanticMediaWiki');
 		$chunk = $firstchunk;
 		$result = NULL;
 		$continue = true;
@@ -884,6 +886,7 @@ class SMWQueryParser {
 	}
 	
 	protected function finishLinkDescription($chunk, $hasNamespaces, $result, &$setNS, &$label) {
+		wfLoadExtensionMessages('SemanticMediaWiki');
 		if ($result === NULL) { // no useful information or concrete error found
 			$this->m_errors[] = wfMsgForContent('smw_badqueryatom');
 		} elseif (!$hasNamespaces && $setNS && ($this->m_defaultns !== NULL) ) {
@@ -995,6 +998,7 @@ class SMWQueryParser {
 	 * also be changed (if it was non-NULL).
 	 */
 	protected function addDescription($curdesc, $newdesc, $conjunction = true) {
+		wfLoadExtensionMessages('SemanticMediaWiki');
 		$notallowedmessage = 'smw_noqueryfeature';
 		if ($newdesc instanceof SMWSomeProperty) {
 			$allowed = $this->m_queryfeatures & SMW_PROPERTY_QUERY;

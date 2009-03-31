@@ -27,26 +27,33 @@ class SFCreateProperty extends SpecialPage {
 function createPropertyText($property_type, $allowed_values_str) {
 	global $smwgContLang;
 
-	$namespace_labels = $smwgContLang->getNamespaces();
-	if ($property_type == $namespace_labels[SMW_NS_RELATION]) {
-		$text = wfMsgForContent('sf_property_isrelation');
+	wfLoadExtensionMessages('SemanticForms');
+
+	// handling of special property labels changed in SMW 1.4
+	if (method_exists($smwgContLang, 'getPropertyLabels')) {
+		$prop_labels = $smwgContLang->getPropertyLabels();
+		$type_tag = "[[{$prop_labels['_TYPE']}::$property_type]]";
 	} else {
-		global $smwgContLang;
-		$specprops = $smwgContLang->getSpecialPropertiesArray();
-		$type_tag = "[[" . $specprops[SMW_SP_HAS_TYPE] .
-			"::$property_type|$property_type]]";
-		$text = wfMsgForContent('sf_property_isproperty', $type_tag);
-		if ($allowed_values_str != '') {
-			$text .= "\n\n" . wfMsgForContent('sf_property_allowedvals');
-			// replace the comma substitution character that has no chance of
-			// being included in the values list - namely, the ASCII beep
-			global $sfgListSeparator;
-			$allowed_values_str = str_replace("\\$sfgListSeparator", "\a", $allowed_values_str);
-			$allowed_values_array = explode($sfgListSeparator, $allowed_values_str);
-			foreach ($allowed_values_array as $i => $value) {
-				// replace beep with comma, trim
-				$value = str_replace("\a", $sfgListSeparator, trim($value));
-				$text .= "\n* [[" . $specprops[SMW_SP_POSSIBLE_VALUE] . "::$value]]";
+		$spec_props = $smwgContLang->getSpecialPropertiesArray();
+		$type_tag = "[[{$spec_props[SMW_SP_HAS_TYPE]}::$property_type]]";
+	}
+	$text = wfMsgForContent('sf_property_isproperty', $type_tag);
+	if ($allowed_values_str != '') {
+		$text .= "\n\n" . wfMsgForContent('sf_property_allowedvals');
+		// replace the comma substitution character that has no chance of
+		// being included in the values list - namely, the ASCII beep
+		global $sfgListSeparator;
+		$allowed_values_str = str_replace("\\$sfgListSeparator", "\a", $allowed_values_str);
+		$allowed_values_array = explode($sfgListSeparator, $allowed_values_str);
+		foreach ($allowed_values_array as $i => $value) {
+			// replace beep back with comma, trim
+			$value = str_replace("\a", $sfgListSeparator, trim($value));
+			if (method_exists($smwgContLang, 'getPropertyLabels')) {
+				$prop_labels = $smwgContLang->getPropertyLabels();
+				$text .= "\n* [[" . $prop_labels['_PVAL'] . "::$value]]";
+			} else {
+				$spec_props = $smwgContLang->getSpecialPropertiesArray();
+				$text .= "\n* [[" . $spec_props[SMW_SP_POSSIBLE_VALUE] . "::$value]]";
 			}
 		}
 	}
@@ -56,6 +63,8 @@ function createPropertyText($property_type, $allowed_values_str) {
 function doSpecialCreateProperty() {
 	global $wgOut, $wgRequest, $sfgScriptPath;
 	global $smwgContLang;
+
+	wfLoadExtensionMessages('SemanticForms');
 
 	# cycle through the query values, setting the appropriate local variables
 	$property_name = $wgRequest->getVal('property_name');
@@ -74,18 +83,18 @@ function doSpecialCreateProperty() {
 			$property_name_error_str = wfMsg('sf_blank_error');
 		} else {
 			# redirect to wiki interface
+			$wgOut->setArticleBodyOnly(true);
 			$namespace = SMW_NS_PROPERTY;
 			$title = Title::newFromText($property_name, $namespace);
 			$full_text = createPropertyText($property_type, $allowed_values);
 			// HTML-encode
 			$full_text = str_replace('"', '&quot;', $full_text);
-			$text = sffPrintRedirectForm($title, $full_text, "", $save_page, $preview_page, false, false, false, null, null);
+			$text = SFUtils::printRedirectForm($title, $full_text, "", $save_page, $preview_page, false, false, false, null, null);
 			$wgOut->addHTML($text);
 			return;
 		}
 	}
 
-	$all_properties = sffGetAllProperties();
 	$datatype_labels = $smwgContLang->getDatatypeLabels();
 
 	$javascript_text =<<<END
@@ -118,7 +127,7 @@ END;
 	</select>
 	<div id="allowed_values" style="margin-bottom: 15px;">
 	<p>$values_input</p>
-	<p><input size="35" name="values" value=""></p>
+	<p><input size="80" name="values" value=""></p>
 	</div>
 	<div class="editButtons">
 	<input id="wpSave" type="submit" name="wpSave" value="$save_button_text">

@@ -5,7 +5,8 @@
  * These classes might once be replaced by interfaces that are implemented
  * by storage-specific classes if this is useful (e.g. for performance gains by
  * lazy retrieval).
- *
+ * @file
+ * @ingroup SMWQuery
  * @author Markus Krötzsch
  */
 
@@ -14,9 +15,9 @@
  * provide access to the query result and printed data, and to some
  * relevant query parameters that were used.
  *
- * While the API does not require this, it is ensured that every result row 
+ * While the API does not require this, it is ensured that every result row
  * returned by this object has the same number of elements (columns).
- * @note: AUTOLOADED
+ * @ingroup SMWQuery
  */
 class SMWQueryResult {
 	protected $m_content; // array (table) of arrays (rows) of arrays (fields, SMWResultArray)
@@ -44,7 +45,7 @@ class SMWQueryResult {
 	/**
 	 * Checks whether it conforms to the given schema of print requests, adds the
 	 * row to the result, and returns true. Otherwise returns false.
-	 * TODO: should we just skip the checks and trust our callers?
+	 * @todo Should we just skip the checks and trust our callers?
 	 */
 	public function addRow($row) {
 		reset($row);
@@ -90,7 +91,7 @@ class SMWQueryResult {
 	}
 
 	/**
-	 * Return the number of columns of result values that each row 
+	 * Return the number of columns of result values that each row
 	 * in this result set contains.
 	 */
 	public function getColumnCount() {
@@ -98,7 +99,7 @@ class SMWQueryResult {
 	}
 
 	/**
-	 * Return array of print requests (needed for printout since they contain 
+	 * Return array of print requests (needed for printout since they contain
 	 * property labels).
 	 */
 	public function getPrintRequests() {
@@ -114,7 +115,7 @@ class SMWQueryResult {
 	}
 
 	/**
-	 * Would there be more query results that were 
+	 * Would there be more query results that were
 	 * not shown due to a limit?
 	 */
 	public function hasFurtherResults() {
@@ -159,10 +160,13 @@ class SMWQueryResult {
 				$psort .= $sortkey;
 				$porder .= $order;
 			}
-			$params['sort'] = $psort;
-			$params['order'] = $porder;
+			if (($psort != '')||($porder != 'ASC')) { // do not mention default sort (main column, ascending)
+				$params['sort'] = $psort;
+				$params['order'] = $porder;
+			}
 		}
 		if ($caption == false) {
+			wfLoadExtensionMessages('SemanticMediaWiki');
 			$caption = ' ' . wfMsgForContent('smw_iq_moreresults'); // the space is right here, not in the QPs!
 		}
 		$result = SMWInfolink::newInternalLink($caption,':Special:Ask', false, $params);
@@ -170,79 +174,12 @@ class SMWQueryResult {
 		return $result;
 	}
 
-
-	/**
-	 * Return URL of a page that displays those search results
-	 * (and enables browsing results, and is accessible even without
-	 * JavaScript enabled browsers).
-	 * @DEPRECATED (since >1.1) use getQueryLink
-	 */
-	public function getQueryURL() {
-		$title = Title::makeTitle(NS_SPECIAL, 'ask');
-		$params['query'] = $this->m_querystring;
-		if ( count($this->m_query->sortkeys)>0 ) {
-			$psort  = '';
-			$porder = '';
-			$first = true;
-			foreach ( $this->m_query->sortkeys as $sortkey => $order ) {
-				if ( $first ) {
-					$first = false;
-				} else {
-					$psort  .= ',';
-					$porder .= ',';
-				}
-				$psort .= $sortkey;
-				$porder .= $order;
-			}
-			$params['sort'] = $psort;
-			$params['order'] = $porder;
-		}
-		return $title->getFullURL(SMWInfolink::encodeParameters($params,false));
-	}
-	
-	/**
-	 * Return titlestring of a page that displays those search results
-	 * (and enables browsing results, and is accessible even without
-	 * JavaScript enabled browsers).
-	 * @DEPRECATED (since >1.1) use getQueryLink
-	 */
-	public function getQueryTitle($prefixed = true) {
-		if ($prefixed) {
-			$title = Title::makeTitle(NS_SPECIAL, 'ask');
-			$titlestring = ':' . $title->getPrefixedText() . '/';
-		} else { // useful for further processing
-			$titlestring = '';
-		}
-		$params = array($this->m_querystring);
-		foreach ($this->m_extraprintouts as $printout) {
-			$params[] = $printout->getSerialisation();
-		}
-		if ( count($this->m_query->sortkeys)>0 ) {
-			$psort  = '';
-			$porder = '';
-			$first = true;
-			foreach ( $this->m_query->sortkeys as $sortkey => $order ) {
-				if ( $first ) {
-					$first = false;
-				} else {
-					$psort  .= ',';
-					$porder .= ',';
-				}
-				$psort .= $sortkey;
-				$porder .= $order;
-			}
-			$params['sort'] = $psort;
-			$params['order'] = $porder;
-		}
-		$titlestring .= SMWInfolink::encodeParameters($params);
-		return $titlestring;
-	}
 }
 
 /**
  * Container for the contents of a single result field of a query result,
- * i.e. basically an array of Titles or SMWDataValues with some additional
- * parameters.
+ * i.e. basically an array of SMWDataValues with some additional parameters.
+ * @ingroup SMWQuery
  */
 class SMWResultArray {
 	protected $printrequest;
@@ -257,7 +194,7 @@ class SMWResultArray {
 	}
 
 	/**
-	 * Returns an array of objects. Depending on the type of 
+	 * Returns an array of objects. Depending on the type of
 	 * results, they are either Titles or SMWDataValues.
 	 */
 	public function getContent() {
@@ -274,54 +211,11 @@ class SMWResultArray {
 	}
 
 	/**
-	 * Return the main text representation of the next result object 
-	 * (Title or SMWDataValue) as HTML.
-	 *
-	 * The parameter $linker controls linking of title values and should
-	 * be some Linker object (or NULL for no linking).
-	 * @DEPRECATED Use getNextText()
-	 */
-	public function getNextHTMLText($linker = NULL) {
-		$object = current($this->content);
-		next($this->content);
-		if ($object instanceof SMWDataValue) { //print data values
-			if ($object->getTypeID() == '_wpg') { // prefer "long" text for page-values
-				return $object->getLongHTMLText($linker);
-			} else {
-				return $object->getShortHTMLText($linker);
-			}
-		} else {
-			return false;
-		}
-	}
-
-	/**
-	 * Return the main text representation of the next result object 
-	 * (Title or SMWDataValue) as Wikitext. The parameter $linked controls 
-	 * linking of title values and should be non-NULL and non-false if this 
-	 * is desired.
-	 * @DEPRECATED Use getNextText()
-	 */
-	public function getNextWikiText($linked = NULL) {
-		$object = current($this->content);
-		next($this->content);
-		if ($object instanceof SMWDataValue) { //print data values
-			if ($object->getTypeID() == '_wpg') { // prefer "long" text for page-values
-				return $object->getLongWikiText($linked);
-			} else {
-				return $object->getShortWikiText($linked);
-			}
-		} else {
-			return false;
-		}
-	}
-
-	/**
-	 * Return the main text representation of the next result object 
+	 * Return the main text representation of the next result object
 	 * (Title or SMWDataValue) in the specified format.
 	 *
 	 * The parameter $linker controls linking of title values and should
-	 * be some Linker object (or NULL for no linking). At some stage its 
+	 * be some Linker object (or NULL for no linking). At some stage its
 	 * interpretation should be part of the generalised SMWDataValue.
 	 */
 	public function getNextText($outputmode, $linker = NULL) {
@@ -340,7 +234,7 @@ class SMWResultArray {
 
 
 	/**
-	 * Would there be more query results that were 
+	 * Would there be more query results that were
 	 * not shown due to a limit?
 	 */
 	public function hasFurtherResults() {
@@ -354,5 +248,6 @@ class SMWResultArray {
 	public function getPrintRequest() {
 		return $this->printrequest;
 	}
+
 }
 

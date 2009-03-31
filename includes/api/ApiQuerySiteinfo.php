@@ -57,6 +57,9 @@ class ApiQuerySiteinfo extends ApiQueryBase {
 				case 'specialpagealiases':
 					$this->appendSpecialPageAliases( $p );
 					break;
+				case 'magicwords':
+					$this->appendMagicWords( $p );
+					break;
 				case 'interwikimap':
 					$filteriw = isset( $params['filteriw'] ) ? $params['filteriw'] : false;
 					$this->appendInterwikiMap( $p, $filteriw );
@@ -69,6 +72,9 @@ class ApiQuerySiteinfo extends ApiQueryBase {
 					break;
 				case 'usergroups':
 					$this->appendUserGroups( $p );
+					break;
+				case 'extensions':
+					$this->appendExtensions( $p );
 					break;
 				default :
 					ApiBase :: dieDebug( __METHOD__, "Unknown prop=$p" );
@@ -129,8 +135,13 @@ class ApiQuerySiteinfo extends ApiQueryBase {
 				'id' => $ns
 			);
 			ApiResult :: setContent( $data[$ns], $title );
-			if( MWNamespace::hasSubpages($ns) )
+			$canonical = MWNamespace::getCanonicalName( $ns );
+			
+			if( MWNamespace::hasSubpages( $ns ) )
 				$data[$ns]['subpages'] = '';
+			
+			if( $canonical ) 
+				$data[$ns]['canonical'] = strtr($canonical, '_', ' ');
 		}
 
 		$this->getResult()->setIndexedTagName( $data, 'ns' );
@@ -138,9 +149,11 @@ class ApiQuerySiteinfo extends ApiQueryBase {
 	}
 
 	protected function appendNamespaceAliases( $property ) {
-		global $wgNamespaceAliases;
+		global $wgNamespaceAliases, $wgContLang;
+		$wgContLang->load();
+		$aliases = array_merge($wgNamespaceAliases, $wgContLang->namespaceAliases);
 		$data = array();
-		foreach( $wgNamespaceAliases as $title => $ns ) {
+		foreach( $aliases as $title => $ns ) {
 			$item = array(
 				'id' => $ns
 			);
@@ -164,6 +177,22 @@ class ApiQuerySiteinfo extends ApiQueryBase {
 		$this->getResult()->setIndexedTagName( $data, 'specialpage' );
 		$this->getResult()->addValue( 'query', $property, $data );
 	}
+	
+	protected function appendMagicWords( $property ) {
+		global $wgContLang;
+		$data = array();
+		foreach($wgContLang->getMagicWords() as $magicword => $aliases)
+		{
+			$caseSensitive = array_shift($aliases);
+			$arr = array('name' => $magicword, 'aliases' => $aliases);
+			if($caseSensitive)
+				$arr['case-sensitive'] = '';
+			$this->getResult()->setIndexedTagName($arr['aliases'], 'alias');
+			$data[] = $arr;
+		}
+		$this->getResult()->setIndexedTagName($data, 'magicword');
+		$this->getResult()->addValue('query', $property, $data);
+	}
 
 	protected function appendInterwikiMap( $property, $filter ) {
 		$this->resetQueryParams();
@@ -174,7 +203,7 @@ class ApiQuerySiteinfo extends ApiQueryBase {
 			$this->addWhere( 'iw_local = 1' );
 		elseif( $filter === '!local' )
 			$this->addWhere( 'iw_local = 0' );
-		elseif( $filter !== false )
+		elseif( $filter )
 			ApiBase :: dieDebug( __METHOD__, "Unknown filter=$filter" );
 
 		$this->addOption( 'ORDER BY', 'iw_prefix' );
@@ -239,7 +268,8 @@ class ApiQuerySiteinfo extends ApiQueryBase {
 		$data['edits'] = intval( SiteStats::edits() );
 		$data['images'] = intval( SiteStats::images() );
 		$data['users'] = intval( SiteStats::users() );
-		$data['admins'] = intval( SiteStats::admins() );
+		$data['activeusers'] = intval( SiteStats::activeUsers() );
+		$data['admins'] = intval( SiteStats::numberingroup('sysop') );
 		$data['jobs'] = intval( SiteStats::jobs() );
 		$this->getResult()->addValue( 'query', $property, $data );
 	}
@@ -257,6 +287,40 @@ class ApiQuerySiteinfo extends ApiQueryBase {
 		$this->getResult()->addValue( 'query', $property, $data );
 	}
 
+	protected function appendExtensions( $property ) {
+		global $wgExtensionCredits;
+		$data = array();
+		foreach ( $wgExtensionCredits as $type => $extensions ) {
+			foreach ( $extensions as $ext ) {
+				$ret = array();
+				$ret['type'] = $type;
+				if ( isset( $ext['name'] ) ) 
+					$ret['name'] = $ext['name'];
+				if ( isset( $ext['description'] ) ) 
+					$ret['description'] = $ext['description'];
+				if ( isset( $ext['descriptionmsg'] ) ) 
+					$ret['descriptionmsg'] = $ext['descriptionmsg'];
+				if ( isset( $ext['author'] ) ) {
+					$ret['author'] = is_array( $ext['author'] ) ? 
+						implode( ', ', $ext['author' ] ) : $ext['author'];
+				}
+				if ( isset( $ext['version'] ) ) {
+						$ret['version'] = $ext['version'];
+				} elseif ( isset( $ext['svn-revision'] ) && 
+					preg_match( '/\$(?:Rev|LastChangedRevision|Revision): *(\d+)/', 
+						$ext['svn-revision'], $m ) )  
+				{
+						$ret['version'] = 'r' . $m[1];
+				}
+				$data[] = $ret;
+			}
+		}
+
+		$this->getResult()->setIndexedTagName( $data, 'ext' );
+		$this->getResult()->addValue( 'query', $property, $data );
+	}
+
+
 	public function getAllowedParams() {
 		return array(
 			'prop' => array(
@@ -267,10 +331,12 @@ class ApiQuerySiteinfo extends ApiQueryBase {
 					'namespaces',
 					'namespacealiases',
 					'specialpagealiases',
+					'magicwords',
 					'interwikimap',
 					'dbrepllag',
 					'statistics',
 					'usergroups',
+					'extensions',
 				)
 			),
 			'filteriw' => array(
@@ -288,13 +354,15 @@ class ApiQuerySiteinfo extends ApiQueryBase {
 			'prop' => array(
 				'Which sysinfo properties to get:',
 				' "general"      - Overall system information',
-				' "namespaces"   - List of registered namespaces (localized)',
+				' "namespaces"   - List of registered namespaces and their canonical names',
 				' "namespacealiases" - List of registered namespace aliases',
 				' "specialpagealiases" - List of special page aliases',
+				' "magicwords"   - List of magic words and their aliases',
 				' "statistics"   - Returns site statistics',
 				' "interwikimap" - Returns interwiki map (optionally filtered)',
 				' "dbrepllag"    - Returns database server with the highest replication lag',
 				' "usergroups"   - Returns user groups and the associated permissions',
+				' "extensions"   - Returns extensions installed on the wiki',
 			),
 			'filteriw' =>  'Return only local or only nonlocal entries of the interwiki map',
 			'showalldb' => 'List all database servers, not just the one lagging the most',
@@ -314,6 +382,6 @@ class ApiQuerySiteinfo extends ApiQueryBase {
 	}
 
 	public function getVersion() {
-		return __CLASS__ . ': $Id: ApiQuerySiteinfo.php 37034 2008-07-04 09:21:11Z vasilievvv $';
+		return __CLASS__ . ': $Id: ApiQuerySiteinfo.php 44862 2008-12-20 23:49:16Z catrope $';
 	}
 }

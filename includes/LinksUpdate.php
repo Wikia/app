@@ -20,7 +20,8 @@ class LinksUpdate {
 		$mProperties,    //!< Map of arbitrary name to value
 		$mDb,            //!< Database connection reference
 		$mOptions,       //!< SELECT options to be used (array)
-		$mRecursive;     //!< Whether to queue jobs for recursive updates
+		$mRecursive,     //!< Whether to queue jobs for recursive updates
+		$mTouchTmplLinks; //!< Whether to queue HTMLCacheUpdate jobs IF recursive
 	/**@}}*/
 
 	/**
@@ -67,14 +68,24 @@ class LinksUpdate {
 		}
 
 		$this->mRecursive = $recursive;
+		$this->mTouchTmplLinks = false;
 
 		wfRunHooks( 'LinksUpdateConstructed', array( &$this ) );
+	}
+	
+	/**
+	 * Invalidate HTML cache of pages that include this page?
+	 */
+	public function setRecursiveTouch( $val ) {
+		$this->mTouchTmplLinks = (bool)$val;
+		if( $val ) // Cannot invalidate without queueRecursiveJobs()
+			$this->mRecursive = true;
 	}
 
 	/**
 	 * Update link tables with outgoing links from an updated article
 	 */
-	function doUpdate() {
+	public function doUpdate() {
 		global $wgUseDumbLinkUpdate;
 
 		wfRunHooks( 'LinksUpdate', array( &$this ) );
@@ -87,7 +98,7 @@ class LinksUpdate {
 
 	}
 
-	function doIncrementalUpdate() {
+	protected function doIncrementalUpdate() {
 		wfProfileIn( __METHOD__ );
 
 		# Page links
@@ -158,7 +169,7 @@ class LinksUpdate {
 	 * May be slower or faster depending on level of lock contention and write speed of DB
 	 * Also useful where link table corruption needs to be repaired, e.g. in refreshLinks.php
 	 */
-	function doDumbUpdate() {
+	protected function doDumbUpdate() {
 		wfProfileIn( __METHOD__ );
 
 		# Refresh category pages and image description pages
@@ -193,34 +204,54 @@ class LinksUpdate {
 	}
 
 	function queueRecursiveJobs() {
+		global $wgUpdateRowsPerJob;
 		wfProfileIn( __METHOD__ );
 
-		$batchSize = 100;
 		$dbr = wfGetDB( DB_SLAVE );
-		$res = $dbr->select( array( 'templatelinks', 'page' ),
-			array( 'page_namespace', 'page_title' ),
-			array(
-				'page_id=tl_from',
+		$res = $dbr->select( 'templatelinks',
+			array( 'tl_from' ),
+			array( 
 				'tl_namespace' => $this->mTitle->getNamespace(),
 				'tl_title' => $this->mTitle->getDBkey()
 			), __METHOD__
 		);
 
-		$done = false;
-		while ( !$done ) {
-			$jobs = array();
-			for ( $i = 0; $i < $batchSize; $i++ ) {
-				$row = $dbr->fetchObject( $res );
-				if ( !$row ) {
-					$done = true;
+		$numRows = $res->numRows();
+		if( !$numRows ) {
+			wfProfileOut( __METHOD__ );
+			return; // nothing to do
+		}
+		$numBatches = ceil( $numRows / $wgUpdateRowsPerJob );
+		$realBatchSize = $numRows / $numBatches;
+		$start = false;
+		$jobs = array();
+		do {
+			for( $i = 0; $i <= $realBatchSize - 1; $i++ ) {
+				$row = $res->fetchRow();
+				if( $row ) {
+					$id = $row[0];
+				} else {
+					$id = false;
 					break;
 				}
-				$title = Title::makeTitle( $row->page_namespace, $row->page_title );
-				$jobs[] = new RefreshLinksJob( $title, '' );
 			}
-			Job::batchInsert( $jobs );
-		}
+			$params = array(
+				'start' => $start,
+				'end' => ( $id !== false ? $id - 1 : false ),
+			);
+			$jobs[] = new RefreshLinksJob2( $this->mTitle, $params );
+			# Hit page caches while we're at it if set to do so...
+			if( $this->mTouchTmplLinks ) {
+				$params['table'] = 'templatelinks';
+				$jobs[] = new HTMLCacheUpdateJob( $this->mTitle, $params );
+			}
+			$start = $id;
+		} while ( $start );
+
 		$dbr->freeResult( $res );
+
+		Job::batchInsert( $jobs );
+
 		wfProfileOut( __METHOD__ );
 	}
 
@@ -286,7 +317,7 @@ class LinksUpdate {
 	}
 
 	function invalidateImageDescriptions( $images ) {
-		$this->invalidatePages( NS_IMAGE, array_keys( $images ) );
+		$this->invalidatePages( NS_FILE, array_keys( $images ) );
 	}
 
 	function dumbTableUpdate( $table, $insertions, $fromField ) {

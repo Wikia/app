@@ -10,7 +10,6 @@ if(!defined('MEDIAWIKI')) {
 
 $wgAbsenteeLandlordMaxDays = 90; //how many days do the sysops have to be inactive for?
 
-
 $wgExtensionCredits['other'][] = array(
 	'name' => 'Absentee Landlord',
 	'author' => array( 'Ryan Schmidt', 'Tim Laqua' ),
@@ -23,16 +22,13 @@ $wgExtensionCredits['other'][] = array(
 $wgExtensionFunctions[] = 'efAbsenteeLandlord_Setup';
 $wgHooks['BeforePageDisplay'][] = 'efAbsenteeLandlord_MaybeDoTouch';
 
-$dir = dirname(__FILE__) . '/';
-$wgExtensionMessagesFiles['AbsenteeLandlord'] = $dir . 'AbsenteeLandlord.i18n.php';
-
-$wgAbsenteeLandlordTouchFile = $dir . 'lasttouched.txt';
+$wgExtensionMessagesFiles['AbsenteeLandlord'] =  dirname(__FILE__) . '/AbsenteeLandlord.i18n.php';
 
 function efAbsenteeLandlord_Setup() {
-	global $wgAbsenteeLandlordMaxDays, $wgAbsenteeLandlordTouchFile;
+	global $wgAbsenteeLandlordMaxDays;
 
 	$timeout = $wgAbsenteeLandlordMaxDays * 24 * 60 * 60; // # days * 24 hours * 60 minutes * 60 seconds
-	$lasttouched = filemtime($wgAbsenteeLandlordTouchFile);
+	$lasttouched = filemtime(dirname(__FILE__) . '/lasttouched.txt');
 	$check = time() - $lasttouched;
 
 	if( $check >= $timeout ) {
@@ -40,7 +36,7 @@ function efAbsenteeLandlord_Setup() {
 		$groups = $wgUser->getGroups();
 
 		if( !in_array( 'sysop', $groups ) ) {
-			global $wgReadOnly, $wgMessageCache;
+			global $wgReadOnly;
 
 			#Add Messages (don't need them unless we get here)
 			wfLoadExtensionMessages( 'AbsenteeLandlord' );
@@ -51,11 +47,11 @@ function efAbsenteeLandlord_Setup() {
 	return true;
 }
 
-function efAbsenteeLandlord_MaybeDoTouch(&$out, &$sk = null) {
-	global $wgUser, $wgAbsenteeLandlordTouchFile;
+function efAbsenteeLandlord_MaybeDoTouch(&$out, $sk = null) {
+	global $wgUser;
 	$groups = $wgUser->getGroups();
 	if( in_array( 'sysop', $groups ) ) {
-		touch($wgAbsenteeLandlordTouchFile);
+		touch(dirname(__FILE__) . '/lasttouched.txt');
 	}
 	return true;
 }

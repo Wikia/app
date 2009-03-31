@@ -100,7 +100,7 @@ class ApiResult extends ApiBase {
 		}
 		elseif (is_array($arr[$name]) && is_array($value)) {
 			$merged = array_intersect_key($arr[$name], $value);
-			if (empty ($merged))
+			if (!count($merged))
 				$arr[$name] += $value;
 			else
 				ApiBase :: dieDebug(__METHOD__, "Attempting to merge element $name");
@@ -180,10 +180,19 @@ class ApiResult extends ApiBase {
 			}
 		}
 
-		if (empty($name))
+		if (!$name)
 			$data[] = $value;	// Add list element
 		else
 			ApiResult :: setElement($data, $name, $value);	// Add named element
+	}
+
+	/**
+	 * Ensure all values in this result are valid UTF-8.
+	 */
+	public function cleanUpUTF8()
+	{
+		$data = & $this->getData();
+		array_walk_recursive($data, array('UtfNormal', 'cleanUp'));
 	}
 
 	public function execute() {
@@ -191,7 +200,7 @@ class ApiResult extends ApiBase {
 	}
 
 	public function getVersion() {
-		return __CLASS__ . ': $Id: ApiResult.php 35098 2008-05-20 17:13:28Z ialex $';
+		return __CLASS__ . ': $Id: ApiResult.php 45752 2009-01-14 21:36:57Z catrope $';
 	}
 }
 
@@ -201,7 +210,7 @@ if (!function_exists('array_intersect_key')) {
 		$argc = func_num_args();
 
 		if ($argc > 2) {
-			for ($i = 1; !empty($isec) && $i < $argc; $i++) {
+			for ($i = 1; $isec && $i < $argc; $i++) {
 				$arr = func_get_arg($i);
 
 				foreach (array_keys($isec) as $key) {

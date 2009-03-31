@@ -2,8 +2,11 @@
 
 class UpdateEditCounts extends UnlistedSpecialPage {
 
-	function UpdateEditCounts(){
-		UnlistedSpecialPage::UnlistedSpecialPage('UpdateEditCounts');
+	/**
+	 * Constructor
+	 */
+	function __construct(){
+		parent::__construct( 'UpdateEditCounts' );
 	}
 
 	function updateMainEditsCount(){
@@ -11,15 +14,15 @@ class UpdateEditCounts extends UnlistedSpecialPage {
 
 		$wgOut->setPageTitle('Update Edit Counts');
 
-		if( !in_array('staff', ($wgUser->getGroups()) ) ){
+		if( !in_array( 'staff', ( $wgUser->getGroups() ) ) ){
 			$wgOut->errorpage( 'error', 'badaccess' );
 			return false;
 		}
 
-		$dbr = wfGetDB( DB_MASTER );
+		$dbw = wfGetDB( DB_MASTER );
 		$sql = "SELECT rev_user_text, rev_user,	count(*) AS the_count FROM ".$wgDBprefix."revision INNER JOIN ".$wgDBprefix."page ON page_id = rev_page WHERE page_namespace = 0 AND rev_user <> 0 GROUP BY rev_user_text	";
-		$res = $dbr->query($sql);
-		while ($row = $dbr->fetchObject( $res ) ) {
+		$res = $dbw->query($sql);
+		while( $row = $dbw->fetchObject( $res ) ) {
 
 		$user = User::newFromId($row->rev_user);
 		$user->loadFromId();
@@ -30,45 +33,50 @@ class UpdateEditCounts extends UnlistedSpecialPage {
 			$edit_count = 0;
 		}
 
-		$s = $dbr->selectRow( 'user_stats', array( 'stats_user_id' ), array('stats_user_id' => $row->rev_user), __METHOD__ );
-		if ( ! $s->stats_user_id ) {
+		$s = $dbw->selectRow( 'user_stats', array( 'stats_user_id' ), array( 'stats_user_id' => $row->rev_user ), __METHOD__ );
+		if ( !$s->stats_user_id ) {
 
-			$dbr->insert( 'user_stats',
+			$dbw->insert( 'user_stats',
 			array(
 				'stats_year_id' => 0,
 				'stats_user_id' => $row->rev_user,
 				'stats_user_name' => $row->rev_user_text,
 				'stats_total_points' => 1000
-				), $fname
+				), __METHOD__
 			);
 		}
 		$wgOut->addHTML("<p>Updating {$row->rev_user_text} with {$edit_count} edits</p>");
 
-		$dbr->update( 'user_stats',
+		$dbw->update( 'user_stats',
 				array( "stats_edit_count=".$edit_count ),
 				array( 'stats_user_id' => $row->rev_user ),
 				__METHOD__ );
 
 			global $wgMemc;
-			//clear stats cache for current user
+			// clear stats cache for current user
 			$key = wfMemcKey( 'user', 'stats', $row->rev_user );
 			$wgMemc->delete( $key );
 
 		}
 	}
 
-	function execute(){
+	/**
+	 * Show the special page
+	 *
+	 * @param $par Mixed: parameter passed to the page or null
+	 */
+	public function execute( $par ){
 		global $wgUser, $wgOut, $wgDBprefix;
 		$dbr = wfGetDB( DB_MASTER );
 		$this->updateMainEditsCount();
 
 		global $wgUserLevels;
-		$wgUserLevels = "";
+		$wgUserLevels = '';
 
 		$sql = "SELECT stats_user_id,stats_user_name, stats_total_points FROM ".$wgDBprefix."user_stats ORDER BY stats_user_name";
 		$res = $dbr->query($sql);
-		$out = "";
-		while ($row = $dbr->fetchObject( $res ) ) {
+		$out = '';
+		while ( $row = $dbr->fetchObject( $res ) ) {
 			$x++;
 			$stats = new UserStatsTrack($row->stats_user_id, $row->stats_user_name);
 			$stats->updateTotalPoints();

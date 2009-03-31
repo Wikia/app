@@ -2,24 +2,29 @@
 /**
  * This file contains basic classes for representing (query) descriptions in
  * the SMW API.
- *
+ * @file
+ * @ingroup SMWQuery
  * @author Markus Krötzsch
  */
 
 /**
  * Container class for request for printout, as used in queries to
  * obtain additional information for the retrieved results.
- * @note: AUTOLOADED
+ * @ingroup SMWQuery
  */
 class SMWPrintRequest {
-	const PRINT_CATS = 0; // print all direct cateories of the current element
-	const PRINT_PROP = 1; // print all property values of a certain attribute of the current element
-	const PRINT_THIS = 2;  // print the current element
-	const PRINT_CCAT = 3;  // check whether current element is in given category	
+	/// Query mode to print all direct categories of the current element.
+	const PRINT_CATS = 0;
+	/// Query mode to print all property values of a certain attribute of the current element.
+	const PRINT_PROP = 1;
+	/// Query mode to print the current element (page in result set).
+	const PRINT_THIS = 2;
+	/// Query mode to print whether current element is in given category (Boolean printout).
+	const PRINT_CCAT = 3;
 
 	protected $m_mode; // type of print request
 	protected $m_label; // string for labelling results, contains no markup
-	protected $m_title; // title object to which print request refers (if any)
+	protected $m_data; // data entries specifyin gwhat was requested (mixed type)
 	protected $m_typeid = false; // id of the datatype of the printed objects, if applicable
 	protected $m_outputformat; // output format string for formatting results, if applicable
 
@@ -27,19 +32,22 @@ class SMWPrintRequest {
 	 * Create a print request.
 	 * @param $mode a constant defining what to printout
 	 * @param $label the string label to describe this printout
-	 * @param $title optional Title object that specifies the request (usually some property)
-	 * @param $datavalue optional SMWDataValue container that sets parameters for printing data values (e.g. the unit)
+	 * @param $data optional data for specifying some request, might be a property object, title, or something else; interpretation depends on $mode
+	 * @param $outputformat optional string for specifying an output format, e.g. an output unit
 	 */
-	public function SMWPrintRequest($mode, $label, $title = NULL, $outputformat = '') {
+	public function __construct($mode, $label, $data = NULL, $outputformat = '') {
 		$this->m_mode = $mode;
 		$this->m_label = $label;
-		$this->m_title = $title;
+		$this->m_data = $data;
 		$this->m_outputformat = $outputformat;
 		if ( ($mode == SMWPrintRequest::PRINT_CCAT) && ($outputformat === '') ) {
 			$this->m_outputformat = 'x'; // changed default for Boolean case
 		}
+		if ($this->m_data instanceof SMWDataValue) {
+			$this->m_data->setCaption($label);
+		}
 	}
-	
+
 	public function getMode() {
 		return $this->m_mode;
 	}
@@ -58,12 +66,14 @@ class SMWPrintRequest {
 			return htmlspecialchars($this->m_label);
 		}
 		switch ($this->m_mode) {
-			case SMWPrintRequest::PRINT_CATS: return htmlspecialchars($this->m_label); // TODO: link to Special:Categories
-			case SMWPrintRequest::PRINT_PROP: case SMWPrintRequest::PRINT_CCAT:
-				return $linker->makeLinkObj($this->m_title, htmlspecialchars($this->m_label));
+			case SMWPrintRequest::PRINT_CATS:
+				return htmlspecialchars($this->m_label); // TODO: link to Special:Categories
+			case SMWPrintRequest::PRINT_CCAT:
+				return $linker->makeLinkObj($this->m_data, htmlspecialchars($this->m_label));
+			case SMWPrintRequest::PRINT_PROP:
+				return $this->m_data->getShortHTMLText($linker);
 			case SMWPrintRequest::PRINT_THIS: default: return htmlspecialchars($this->m_label);
 		}
-		
 	}
 
 	/**
@@ -74,14 +84,20 @@ class SMWPrintRequest {
 			return $this->m_label;
 		} else {
 			switch ($this->m_mode) {
-				case SMWPrintRequest::PRINT_CATS: return $this->m_label; // TODO: link to Special:Categories
-				case SMWPrintRequest::PRINT_PROP: case SMWPrintRequest::PRINT_CCAT:
-					return '[[:' . $this->m_title->getPrefixedText() . '|' . $this->m_label . ']]';
+				case SMWPrintRequest::PRINT_CATS:
+					return $this->m_label; // TODO: link to Special:Categories
+				case SMWPrintRequest::PRINT_PROP:
+					return $this->m_data->getShortWikiText($linked);
+				case SMWPrintRequest::PRINT_CCAT:
+				return '[[:' . $this->m_data->getPrefixedText() . '|' . $this->m_label . ']]';
 				case SMWPrintRequest::PRINT_THIS: default: return $this->m_label;
 			}
 		}
 	}
 
+	/**
+	 * Convenience method for accessing the text in either HTML or Wiki format.
+	 */
 	public function getText($outputmode, $linker = NULL) {
 		switch ($outputmode) {
 			case SMW_OUTPUT_WIKI: return $this->getWikiText($linker);
@@ -89,18 +105,27 @@ class SMWPrintRequest {
 		}
 	}
 
-	public function getTitle() {
-		return $this->m_title;
+	/**
+	 * Return additional data related to the print request. The result might be
+	 * an object of class SMWPropertyValue or Title, or simply NULL if no data
+	 * is required for the given type of printout.
+	 */
+	public function getData() {
+		return $this->m_data;
 	}
 
 	public function getOutputFormat() {
 		return $this->m_outputformat;
 	}
 
+	/**
+	 * If this print request refers to some property, return the type id of this property.
+	 * Otherwise return FALSE.
+	 */
 	public function getTypeID() {
 		if ($this->m_typeid === false) {
 			if ($this->m_mode == SMWPrintRequest::PRINT_PROP) {
-				$this->m_typeid = SMWDataValueFactory::getPropertyObjectTypeID($this->m_title);
+				$this->m_typeid = $this->m_data->getTypeID();
 			} else {
 				$this->m_typeid = '_wpg'; // return objects might be titles, but anyway
 			}
@@ -110,22 +135,25 @@ class SMWPrintRequest {
 
 	/**
 	 * Return a hash string that is used to eliminate duplicate
-	 * print requests.
+	 * print requests. The hash also includes the chosen label,
+	 * so it is possible to print the same date with different
+	 * labels.
 	 */
 	public function getHash() {
-		$hash = $this->m_mode . ':';
-		if ($this->m_title !== NULL) {
-			$hash .= $this->m_title->getPrefixedText() . ':';
+		$hash = $this->m_mode . ':' . $this->m_label . ':';
+		if ($this->m_data instanceof Title) {
+			$hash .= $this->m_data->getPrefixedText() . ':';
+		} elseif ($this->m_data instanceof SMWDataValue) {
+			$hash .= $this->m_data->getHash() . ':';
 		}
 		$hash .= $this->m_outputformat . ':';
 		return $hash;
 	}
 
 	/**
-	 * Serialise this object like print requests given in #ask.
+	 * Serialise this object like print requests given in \#ask.
 	 */
 	public function getSerialisation() {
-		/// TODO: do not use "= label" if label is the default anyway
 		switch ($this->m_mode) {
 			case SMWPrintRequest::PRINT_CATS:
 				global $wgContLang;
@@ -137,27 +165,37 @@ class SMWPrintRequest {
 				return $result;
 			case SMWPrintRequest::PRINT_PROP: case SMWPrintRequest::PRINT_CCAT:
 				if ($this->m_mode == SMWPrintRequest::PRINT_CCAT) {
-					$result = '?' . $this->m_title->getPrefixedText();
+					$printname = $this->m_data->getPrefixedText();
+					$result = '?' . $printname;
 					if ( $this->m_outputformat != 'x' ) {
 						$result .= '#' . $this->m_outputformat;
 					}
 				} else {
-					$result = '?' . $this->m_title->getText();
+					$printname = $this->m_data->getWikiValue();
+					$result = '?' . $printname;
 					if ( $this->m_outputformat != '' ) {
 						$result .= '#' . $this->m_outputformat;
 					}
 				}
-				if ( $this->m_title->getText() != $this->m_label ) {
+				if ( $printname != $this->m_label ) {
 					$result .= '=' . $this->m_label;
 				}
 				return $result;
 			case SMWPrintRequest::PRINT_THIS: default: return ''; // no current serialisation
 		}
 	}
+
+	/**
+	 * @deprecated Use SMWPrintRequest::getData(). This method will vanish in SMW 1.5.
+	 */
+	public function getTitle() {
+		return ($this->m_data instanceof Title)?$this->m_data:NULL;
+	}
 }
 
 /**
  * Abstract base class for all descriptions.
+ * @ingroup SMWQuery
  */
 abstract class SMWDescription {
 
@@ -198,7 +236,7 @@ abstract class SMWDescription {
 	 * account.
 	 * Example: The SMWValueDescription [[Paris]] returns the single result "Paris"
 	 * but can also be used as value in [[has location::Paris]] which is preferred
-	 * over the canonical [[has location::<q>[[Paris]]</q>]].
+	 * over the canonical [[has location::\<q\>[[Paris]]\</q\>]].
 	 */
 	abstract public function getQueryString($asvalue = false);
 
@@ -223,15 +261,23 @@ abstract class SMWDescription {
 	}
 
 	/**
+	 * Report on query features used in description. Return values are (sums of)
+	 * query feature constants such as SMW_PROPERTY_QUERY.
+	 */
+	public function getQueryFeatures() {
+		return 0;
+	}
+
+	/**
 	 * Recursively restrict query to a maximal size and depth as given.
 	 * Returns a possibly changed description that should be used as a replacement.
 	 * Reduce values of parameters to account for the returned descriptions size.
 	 * Default implementation for non-nested descriptions of size 1.
 	 * The parameter $log contains a list of all pruned conditions, updated when some
 	 * description was reduced.
-	 * NOTE: objects must not do changes on $this during pruning, since $this can be
+	 * @note Objects must not do changes on $this during pruning, since $this can be
 	 * reused in multiple places of one or many queries. Make new objects to reflect
-	 * changes.
+	 * changes!
 	 */
 	public function prune(&$maxsize, &$maxdepth, &$log) {
 		if ( ($maxsize < $this->getSize()) || ($maxdepth < $this->getDepth()) ) {
@@ -254,6 +300,7 @@ abstract class SMWDescription {
  * not used for datavalues of attributes in order to support type 
  * hinting in the API: descriptions of data are always 
  * SMWValueDescription objects.
+ * @ingroup SMWQuery
  */
 class SMWThingDescription extends SMWDescription {
 	public function getQueryString($asvalue = false) {
@@ -277,6 +324,7 @@ class SMWThingDescription extends SMWDescription {
  * Description of a single class as given by a wiki category, or of a disjunction
  * of such classes. Corresponds to (disjunctions of) atomic classes in OWL and 
  * to (unions of) classes in RDF.
+ * @ingroup SMWQuery
  */
 class SMWClassDescription extends SMWDescription {
 	protected $m_titles;
@@ -328,6 +376,14 @@ class SMWClassDescription extends SMWDescription {
 		}
 	}
 
+	public function getQueryFeatures() {
+		if (count($this->m_titles) > 1) {
+			return SMW_CATEGORY_QUERY | SMW_DISJUNCTION_QUERY;
+		} else {
+			return SMW_CATEGORY_QUERY;
+		}
+	}
+
 	public function prune(&$maxsize, &$maxdepth, &$log) {
 		if ($maxsize >= $this->getSize()) {
 			$maxsize = $maxsize - $this->getSize();
@@ -351,20 +407,21 @@ class SMWClassDescription extends SMWDescription {
 /**
  * Description of a single class as described by a concept page in the wiki. Corresponds to 
  * classes in (the EL fragment of) OWL DL, and to some extent to tree-shaped queries in SPARQL.
+ * @ingroup SMWQuery
  */
 class SMWConceptDescription extends SMWDescription {
-	protected $m_title;
+	protected $m_concept;
 
-	public function __construct($concept) {
-		$this->m_title = $concept;
+	public function __construct(Title $concept) {
+		$this->m_concept = $concept;
 	}
 
 	public function getConcept() {
-		return $this->m_title;
+		return $this->m_concept;
 	}
 
 	public function getQueryString($asvalue = false) {
-		$result = '[[' . $this->m_title->getPrefixedText() . ']]';
+		$result = '[[' . $this->m_concept->getPrefixedText() . ']]';
 		if ($asvalue) {
 			return ' &lt;q&gt;' . $result . '&lt;/q&gt; ';
 		} else {
@@ -374,6 +431,10 @@ class SMWConceptDescription extends SMWDescription {
 
 	public function isSingleton() {
 		return false;
+	}
+
+	public function getQueryFeatures() {
+		return SMW_CONCEPT_QUERY;
 	}
 
 	///NOTE: getSize and getDepth /could/ query the store to find the real size
@@ -390,6 +451,7 @@ class SMWConceptDescription extends SMWDescription {
  * Corresponds to a class restriction with a special class
  * that characterises the given namespace (or at least that
  * is how one could map this to OWL etc.).
+ * @ingroup SMWQuery
  */
 class SMWNamespaceDescription extends SMWDescription {
 	protected $m_namespace;
@@ -415,6 +477,10 @@ class SMWNamespaceDescription extends SMWDescription {
 		return false;
 	}
 
+	public function getQueryFeatures() {
+		return SMW_NAMESPACE_QUERY;
+	}
+
 }
 
 /**
@@ -425,6 +491,7 @@ class SMWNamespaceDescription extends SMWDescription {
  * from the concrete domain.
  * In RDF, concrete domain predicates that define ranges (like "greater or 
  * equal to") are not directly available.
+ * @ingroup SMWQuery
  */
 class SMWValueDescription extends SMWDescription {
 	protected $m_datavalue;
@@ -471,7 +538,7 @@ class SMWValueDescription extends SMWDescription {
 			return false;
 		}
 	}
-	
+
 	public function getSize() {
 		return 1;
 	}
@@ -484,6 +551,7 @@ class SMWValueDescription extends SMWDescription {
  * values for some n-ary property. NULL values are to be used for 
  * unspecifed values. Corresponds to the built-in support for n-ary 
  * properties, i.e. can be viewed as a macro in OWL and RDF.
+ * @ingroup SMWQuery
  */
 class SMWValueList extends SMWDescription {
 	protected $m_descriptions;
@@ -596,6 +664,7 @@ class SMWValueList extends SMWDescription {
  * must be satisfied (AND, conjunction).
  *
  * Corresponds to conjunction in OWL and SPARQL. Not available in RDFS.
+ * @ingroup SMWQuery
  */
 class SMWConjunction extends SMWDescription {
 	protected $m_descriptions;
@@ -663,6 +732,14 @@ class SMWConjunction extends SMWDescription {
 		return $depth;
 	}
 
+	public function getQueryFeatures() {
+		$result = SMW_CONJUNCTION_QUERY;
+		foreach ($this->m_descriptions as $desc) {
+			$result = $result | $desc->getQueryFeatures();
+		}
+		return $result;
+	}
+
 	public function prune(&$maxsize, &$maxdepth, &$log) {
 		if ($maxsize <= 0) {
 			$log[] = $this->getQueryString();
@@ -698,6 +775,7 @@ class SMWConjunction extends SMWDescription {
  * must be satisfied (OR, disjunction).
  *
  * Corresponds to disjunction in OWL and SPARQL. Not available in RDFS.
+ * @ingroup SMWQuery
  */
 class SMWDisjunction extends SMWDescription {
 	protected $m_descriptions;
@@ -795,6 +873,14 @@ class SMWDisjunction extends SMWDescription {
 		return $depth;
 	}
 
+	public function getQueryFeatures() {
+		$result = SMW_DISJUNCTION_QUERY;
+		foreach ($this->m_descriptions as $desc) {
+			$result = $result | $desc->getQueryFeatures();
+		}
+		return $result;
+	}
+
 	public function prune(&$maxsize, &$maxdepth, &$log) {
 		if ($maxsize <= 0) {
 			$log[] = $this->getQueryString();
@@ -832,12 +918,13 @@ class SMWDisjunction extends SMWDescription {
  * Corresponds to existential quatification ("some" restriction) on concrete properties
  * in OWL. In conjunctive queries (OWL) and SPARQL (RDF), it is represented by using 
  * variables in the object part of such properties.
+ * @ingroup SMWQuery
  */
 class SMWSomeProperty extends SMWDescription {
 	protected $m_description;
 	protected $m_property;
 
-	public function SMWSomeProperty(Title $property, SMWDescription $description) {
+	public function SMWSomeProperty(SMWPropertyValue $property, SMWDescription $description) {
 		$this->m_property = $property;
 		$this->m_description = $description;
 	}
@@ -854,9 +941,9 @@ class SMWSomeProperty extends SMWDescription {
 		$subdesc = $this->m_description->getQueryString(true);
 		$sep = ($this->m_description instanceof SMWSomeProperty)?'.':'::'; // use property chain syntax
 		if ($asvalue) {
-			return $this->m_property->getText() . $sep . $subdesc;
+			return $this->m_property->getWikiValue() . $sep . $subdesc;
 		} else {
-			return '[[' . $this->m_property->getText() . $sep . $subdesc . ']]';
+			return '[[' . $this->m_property->getWikiValue() . $sep . $subdesc . ']]';
 		}
 	}
 
@@ -872,6 +959,10 @@ class SMWSomeProperty extends SMWDescription {
 		return 1+$this->getDescription()->getDepth();
 	}
 
+	public function getQueryFeatures() {
+		return SMW_PROPERTY_QUERY | $this->m_description->getQueryFeatures();
+	}
+
 	public function prune(&$maxsize, &$maxdepth, &$log) {
 		if (($maxsize <= 0)||($maxdepth <= 0)) {
 			$log[] = $this->getQueryString();
@@ -884,4 +975,3 @@ class SMWSomeProperty extends SMWDescription {
 		return $result;
 	}
 }
-

@@ -9,6 +9,9 @@ if ( !defined('MEDIAWIKI') ) {
  
 class InterwikiList extends SpecialPage {
 	
+	// Privates
+	private $mTitle; // The title for this specialpage
+
 	/**
 	* Constructor
 	*/
@@ -21,34 +24,46 @@ class InterwikiList extends SpecialPage {
 	 * Execute
 	 */
 	public function execute( $par ) {
-		global $wgOut;
+		global $wgOut, $wgRequest;
 		$wgOut->setPagetitle( wfMsg( 'interwikilist' ) );
-		$selfTitle = Title::makeTitle( NS_SPECIAL, 'InterwikiList' );
-		$wgOut->addHTML( $this->getInterwikis() );
+		$this->mTitle = SpecialPage::getTitleFor( 'InterwikiList' );
+		$prefix = $wgRequest->getText( 'iwsearch', $par );
+		$wgOut->addHTML( $this->getInterwikis( $prefix ) );
 	}
 	
 	/** 
 	* Get all Interwiki Links - the heart of the function
+	* @param $prefix string Prefix to search for in list
+	* @return string HTML
 	*/
-	private function getInterwikis() {
+	private function getInterwikis( $prefix = null ) {
+		global $wgScript;
 		$dbr = wfGetDB( DB_SLAVE );
-		
-		$results = $dbr->select( 'interwiki', array( 'iw_prefix', 'iw_url' ) );
-		
-		$text = Xml::openElement( 'table', array( 'id' => 'sv-software' ) ) . "<tr>
-							<th>" . wfMsg( 'interwikilist-linkname' ) . "</th>
-							<th>" . wfMsg( 'interwikilist-target' ) . "</th>
-						</tr>\n";
-		
-		while ( $row = $dbr->fetchObject( $results ) ) {                      
-				$text .= "						<tr>
-							<td>" . htmlspecialchars( $row->iw_prefix ) . "</td>
-							<td>" . htmlspecialchars( $row->iw_url ) . "</td>
-						</tr>\n";
+
+		$conds = array();
+		if ( !is_null( $prefix ) ) {
+			$conds[] = "iw_prefix LIKE " . $dbr->addQuotes( $dbr->escapeLike( $prefix ) . "%" );
 		}
-		$text .= "</table>\n";
+
+		$results = $dbr->select( 'interwiki', array( 'iw_prefix', 'iw_url' ), $conds );
+
+		$form = Xml::openElement( 'form', array( 'action' => $wgScript, 'method' => 'get', 'id' => 'interwikilist-search' ) ) .
+				Xml::hidden( 'title', $this->mTitle->getPrefixedText() ) .
+				Xml::inputLabel( wfMsg('interwikilist-prefix'), 'iwsearch', 'interwikilist-prefix', false, $prefix  ) .
+				Xml::submitButton( wfMsg('search') ) .
+				Xml::closeElement( 'form' );
+		$text = Xml::fieldSet( wfMsg('interwikilist-filter'), $form );
+
+		$interwikiList = array();
+		while( $row = $dbr->fetchObject( $results ) ) {
+			$interwikiList[ "mw-iwlist-" . $row->iw_prefix ] = array( $row->iw_prefix, $row->iw_url );
+		}
 		$dbr->freeResult( $results );
-		
+
+		$text .= Xml::buildTable( $interwikiList, 
+								 array( 'id' => 'sv-software' ),
+								 array( wfMsg( 'interwikilist-linkname'), 
+										wfMsg( 'interwikilist-target' ) ) );
 		return $text;
 	}
 }

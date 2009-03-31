@@ -5,5 +5,5 @@ CREATE TABLE /*$wgDBprefix*/flaggedrevs_promote (
   frp_user_params mediumblob NOT NULL default '',
   
   PRIMARY KEY (frp_user_id)
-) TYPE=InnoDB;
+) /*$wgDBTableOptions*/;
 

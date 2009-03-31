@@ -41,6 +41,17 @@
 # Support is available at http://www.mediawiki.org/wiki/Extension_talk:LDAP_Authentication 
 #
 
+/**
+ * Add extension information to Special:Version
+ */
+$wgExtensionCredits['other'][] = array(
+	'name' => 'LDAP Authentication Plugin',
+	'version' => '1.2b (alpha)',
+	'author' => 'Ryan Lane',
+	'description' => 'LDAP Authentication plugin with support for multiple LDAP authentication methods',
+	'url' => 'http://www.mediawiki.org/wiki/Extension:LDAP_Authentication',
+	);
+
 //constants for search base
 define("GROUPDN", 0);
 define("USERDN", 1);
@@ -53,18 +64,30 @@ define("HIGHLYSENSITIVE", 3);
 
 class LdapAuthenticationPlugin extends AuthPlugin {
 
+	//ldap connection resource
+	var $ldapconn;
+
 	//preferences
 	var $email, $lang, $realname, $nickname, $externalid;
 
 	//username pulled from ldap
 	var $LDAPUsername;
 
+	//userdn pulled from ldap
+	var $userdn;
+
 	//groups pulled from ldap
-	var $userLDAPGroups, $foundUserLDAPGroups;
+	var $userLDAPGroups;
 	var $allLDAPGroups;
 
 	//boolean to test for failed auth
 	var $authFailed;
+
+	//boolean to test for fetched user info
+	var $fetchedUserInfo;
+
+	//the user's entry and all attributes
+	var $userInfo;
 
 	function LdapAuthenticationPlugin() {
 	}
@@ -87,20 +110,20 @@ class LdapAuthenticationPlugin extends AuthPlugin {
 		//If we can't add LDAP users, we don't really need to check
 		//if the user exists, the authenticate method will do this for
 		//us. This will decrease hits to the LDAP server.
-		//We do however, need to use this if we are using smartcard authentication.
-		if ( ( !isset( $wgLDAPAddLDAPUsers[$_SESSION['wsDomain']] ) || !$wgLDAPAddLDAPUsers[$_SESSION['wsDomain']]) && !$this->useSmartcardAuth() ) {
+		//We do however, need to use this if we are using auto authentication.
+		if ( ( !isset( $wgLDAPAddLDAPUsers[$_SESSION['wsDomain']] ) || !$wgLDAPAddLDAPUsers[$_SESSION['wsDomain']]) && !$this->useAutoAuth() ) {
 			return true;
 		}
 
-		$ldapconn = $this->connect();
-		if ( $ldapconn ) {
+		$this->ldapconn = $this->connect();
+		if ( $this->ldapconn ) {
 			$this->printDebug( "Successfully connected", NONSENSITIVE );
 
-			$searchstring = $this->getSearchString( $ldapconn, $username );
+			$searchstring = $this->getSearchString( $this->ldapconn, $username );
 
-			//If we are using smartcard authentication, and we got
+			//If we are using auto authentication, and we got
 			//anything back, then the user exists.
-			if ( $this->useSmartcardAuth() && $searchstring != '' ) {
+			if ( $this->useAutoAuth() && $searchstring != '' ) {
 				//getSearchString is going to bind, but will not unbind
 				//Let's clean up
 				@ldap_unbind();
@@ -108,7 +131,7 @@ class LdapAuthenticationPlugin extends AuthPlugin {
 			}
 
 			//Search for the entry.
-			$entry = @ldap_read( $ldapconn, $searchstring, "objectclass=*" );
+			$entry = @ldap_read( $this->ldapconn, $searchstring, "objectclass=*" );
 
 			//getSearchString is going to bind, but will not unbind
 			//Let's clean up
@@ -130,7 +153,6 @@ class LdapAuthenticationPlugin extends AuthPlugin {
 	/**
 	 * Connect to LDAP
 	 *
-	 * @return resource
 	 * @access private
 	 */
 	function connect() {
@@ -140,8 +162,9 @@ class LdapAuthenticationPlugin extends AuthPlugin {
 
 		$this->printDebug( "Entering Connect", NONSENSITIVE );
 
-                if ( !extension_loaded( 'ldap' ) ) {
+                if ( !function_exists( 'ldap_connect' ) ) {
 			$this->printDebug( "It looks like you are issing LDAP support; please ensure you have either compiled LDAP support in, or have enabled the module. If the authentication is working for you, the plugin isn't properly detecting the LDAP module, and you can safely ignore this message.", NONSENSITIVE );
+			return false;
                 }
 
 		//If the admin didn't set an encryption type, we default to tls
@@ -153,6 +176,12 @@ class LdapAuthenticationPlugin extends AuthPlugin {
 
 		//Set the server string depending on whether we use ssl or not
 		switch( $encryptionType ) {
+			case "ldapi":
+				# this is a really dirty place to put this,
+				# but it is easy and avoids another config option.
+				$this->printDebug( "Using ldapi", SENSITIVE );
+				$serverpre = "ldapi://";
+				break;
 			case "ssl":
 				$this->printDebug( "Using SSL", SENSITIVE );
 				$serverpre = "ldaps://";
@@ -162,7 +191,7 @@ class LdapAuthenticationPlugin extends AuthPlugin {
 				$serverpre = "ldap://";
 		}
 
-		//Make a space seperated list of server strings with the ldap:// or ldaps://
+		//Make a space separated list of server strings with the ldap:// or ldaps://
 		//string added.
 		$servers = "";
 		$tmpservers = $wgLDAPServerNames[$_SESSION['wsDomain']];
@@ -176,14 +205,14 @@ class LdapAuthenticationPlugin extends AuthPlugin {
 		$this->printDebug( "Using servers: $servers", SENSITIVE );
 
 		//Connect and set options
-		$ldapconn = @ldap_connect( $servers );
-		ldap_set_option( $ldapconn, LDAP_OPT_PROTOCOL_VERSION, 3);
-		ldap_set_option( $ldapconn, LDAP_OPT_REFERRALS, 0);
+		$this->ldapconn = @ldap_connect( $servers );
+		ldap_set_option( $this->ldapconn, LDAP_OPT_PROTOCOL_VERSION, 3);
+		ldap_set_option( $this->ldapconn, LDAP_OPT_REFERRALS, 0);
 
 		if ( isset( $wgLDAPOptions[$_SESSION['wsDomain']] ) ) {
 			$options = $wgLDAPOptions[$_SESSION['wsDomain']];
 			foreach ( $options as $key => $value ) {
-				if ( !ldap_set_option( $ldapconn, constant( $key ), $value ) ) {
+				if ( !ldap_set_option( $this->ldapconn, constant( $key ), $value ) ) {
 					$this->printDebug( "Can't set option to LDAP! Option code and value: " . $key . "=" . $value, 1 );
 				}
 			}
@@ -192,13 +221,11 @@ class LdapAuthenticationPlugin extends AuthPlugin {
 		//TLS needs to be started after the connection is made
 		if ( $encryptionType == "tls" ) {
 			$this->printDebug( "Using TLS", SENSITIVE );
-			if ( !ldap_start_tls( $ldapconn ) ) {
+			if ( !ldap_start_tls( $this->ldapconn ) ) {
 				$this->printDebug( "Failed to start TLS.", SENSITIVE );
 				return;
 			}
 		}
-
-		return $ldapconn;
 	}
 
 	/**
@@ -214,32 +241,24 @@ class LdapAuthenticationPlugin extends AuthPlugin {
 	 * @access public
 	 */
 	function authenticate( $username, $password='' ) {
-		global $wgLDAPRetrievePrefs;
-		global $wgLDAPGroupDN, $wgLDAPRequiredGroups;
-		global $wgLDAPGroupUseFullDN, $wgLDAPGroupUseRetrievedUsername;
-		global $wgLDAPUseLDAPGroups;
-		global $wgLDAPRequireAuthAttribute, $wgLDAPAuthAttribute;
-		global $wgLDAPSSLUsername;
+		global $wgLDAPAuthAttribute;
+		global $wgLDAPAutoAuthUsername;
 		global $wgLDAPLowerCaseUsername;
 		global $wgLDAPSearchStrings;
-		global $wgLDAPUniqueAttribute, $wgLDAPUniqueBlockLogin, $wgLDAPUniqueRenameUser;
-		global $wgLDAPGroupsPrevail;
 
 		$this->printDebug( "Entering authenticate", NONSENSITIVE );
 
 		//We don't handle local authentication
 		if ( 'local' == $_SESSION['wsDomain'] ) {
 			$this->printDebug( "User is using a local domain", SENSITIVE );
-			$this->cleanupFailedAuth();
 			return false;
 		}
 
-		//If the user is using smartcard authentication, we need to ensure
+		//If the user is using auto authentication, we need to ensure
 		//that he/she isn't trying to fool us by sending a username other
-		//than the one the web server got from the smartcard.
-		if ( $this->useSmartcardAuth() && $wgLDAPSSLUsername != $username ) {
-			$this->printDebug( "The username provided doesn't match the username on the smartcard. The user is probably trying to log in to the smartcard domain with password authentication. Denying access.", SENSITIVE );
-			$this->cleanupFailedAuth();
+		//than the one the web server got from the auto-authentication method.
+		if ( $this->useAutoAuth() && $wgLDAPAutoAuthUsername != $username ) {
+			$this->printDebug( "The username provided ($username) doesn't match the username provided by the webserver ($wgLDAPAutoAuthUsername). The user is probably trying to log in to the auto-authentication domain with password authentication via the wiki. Denying access.", SENSITIVE );
 			return false;
 		}
 
@@ -248,14 +267,13 @@ class LdapAuthenticationPlugin extends AuthPlugin {
 		//tricked if someone is supplying one when using password auth.
 		//Smartcard authentication uses a pin, and does not require
 		//a password to be given; a blank password here is wanted.
-		if ( '' == $password && !$this->useSmartcardAuth() ) {
+		if ( '' == $password && !$this->useAutoAuth() ) {
 			$this->printDebug( "User used a blank password", NONSENSITIVE );
-			$this->cleanupFailedAuth();
 			return false;
 		}
 
-		$ldapconn = $this->connect();
-		if ( $ldapconn ) {
+		$this->connect();
+		if ( $this->ldapconn ) {
 			$this->printDebug( "Connected successfully", NONSENSITIVE );
 
 			//Mediawiki munges the username before authenticate is called,
@@ -267,32 +285,30 @@ class LdapAuthenticationPlugin extends AuthPlugin {
 				$username = strtolower( $username );
 			}
 
-			$userdn = $this->getSearchString( $ldapconn, $username );
+			$this->userdn = $this->getSearchString( $username );
 
 			//It is possible that getSearchString will return an
 			//empty string; if this happens, the bind will ALWAYS
 			//return true, and will let anyone in!
-			if ( '' == $userdn ) {
+			if ( '' == $this->userdn ) {
 				$this->printDebug( "User DN is blank", NONSENSITIVE );
-				// Lets clean up.
 				@ldap_unbind();
-				$this->cleanupFailedAuth();
+				$this->markAuthFailed();
 				return false;
 			}
 
 			//If we are using password authentication, we need to bind as the
 			//user to make sure the password is correct.
-			if ( !$this->useSmartcardAuth() ) {
+			if ( !$this->useAutoAuth() ) {
 				$this->printDebug( "Binding as the user", NONSENSITIVE );
 
 				//Let's see if the user can authenticate.
-				$bind = $this->bindAs( $ldapconn, $userdn, $password );
+				$bind = $this->bindAs( $this->userdn, $password );
 				if ( !$bind ) {
-					// Lets clean up.
-					@ldap_unbind();
-					$this->cleanupFailedAuth();
+					$this->markAuthFailed();
 					return false;
 				}
+
 				$this->printDebug( "Bound successfully", NONSENSITIVE );
 
 				if ( isset( $wgLDAPSearchStrings[$_SESSION['wsDomain']] ) ) { 
@@ -301,192 +317,50 @@ class LdapAuthenticationPlugin extends AuthPlugin {
 						//We are most likely configured using USER-NAME@DOMAIN, or
 						//DOMAIN\\USER-NAME.
 						//Get the user's full DN so we can search for groups and such.
-						$userdn = $this->getUserDN( $ldapconn, $username );
-						$this->printDebug( "Pulled the user's DN: $userdn", NONSENSITIVE );
+						$this->userdn = $this->getUserDN( $username );
+						$this->printDebug( "Pulled the user's DN: $this->userdn", NONSENSITIVE );
 					}
 				}
 
-				if ( ( isset( $wgLDAPRequireAuthAttribute[$_SESSION['wsDomain']] )
-					&& $wgLDAPRequireAuthAttribute[$_SESSION['wsDomain']] ) ) {
+				if ( isset( $wgLDAPAuthAttribute[$_SESSION['wsDomain']] ) ) {
 
 					$this->printDebug( "Checking for auth attributes", NONSENSITIVE );
 
 					$filter = "(" . $wgLDAPAuthAttribute[$_SESSION['wsDomain']] . ")";
 					$attributes = array( "dn" );
 
-					$entry = ldap_read( $ldapconn, $userdn, $filter, $attributes );
-					$info = ldap_get_entries( $ldapconn, $entry );
+					$entry = ldap_read( $this->ldapconn, $this->userdn, $filter, $attributes );
+					$info = ldap_get_entries( $this->ldapconn, $entry );
 
 					if ( $info["count"] < 1 ) {
 						$this->printDebug( "Failed auth attribute check", NONSENSITIVE );
-						// Lets clean up.
 						@ldap_unbind();
-						$this->cleanupFailedAuth();
+						$this->markAuthFailed();
 						return false;
 					}
 				}
 			}
 
-			//Old style groups, non-nestable and fairly limited on group type (full DN
-			//versus username). DEPRECATED
-			if ( $wgLDAPGroupDN ) {
-				$this->printDebug( "Checking for (old style) group membership", NONSENSITIVE );
-				if ( !$this->isMemberOfLdapGroup( $ldapconn, $userdn, $wgLDAPGroupDN ) ) {
-					$this->printDebug( "Failed (old style) group membership check", NONSENSITIVE );
+			$this->getGroups( $username );
 
-					//No point in going on if the user isn't in the required group
-					// Lets clean up.
-					@ldap_unbind();
-					$this->cleanupFailedAuth();
-					return false;
-				}
+			if ( !$this->checkGroups( $username ) ) {
+				@ldap_unbind();
+				$this->markAuthFailed();
+				return false;
 			}
 
-			//New style group checking
-			if ( isset( $wgLDAPRequiredGroups[$_SESSION['wsDomain']] ) ) {
-				$this->printDebug( "Checking for (new style) group membership", NONSENSITIVE );
+			$this->getPreferences();
 
-				if ( isset( $wgLDAPGroupUseFullDN[$_SESSION['wsDomain']] ) && $wgLDAPGroupUseFullDN[$_SESSION['wsDomain']] ) {
-					$inGroup = $this->isMemberOfRequiredLdapGroup( $ldapconn, $userdn );
-				} else {
-					if ( ( isset( $wgLDAPGroupUseRetrievedUsername[$_SESSION['wsDomain']] ) 
-						&& $wgLDAPGroupUseRetrievedUsername[$_SESSION['wsDomain']] )
-						&& $this->LDAPUsername != '' ) {
-
-						$this->printDebug( "Using the username retrieved from the user's entry.", NONSENSITIVE );
-						$inGroup = $this->isMemberOfRequiredLdapGroup( $ldapconn, $this->LDAPUsername );
-					} else {
-						$inGroup = $this->isMemberOfRequiredLdapGroup( $ldapconn, $username );
-					}
-				}
-
-				if ( !$inGroup ) {
-					// Lets clean up.
-					@ldap_unbind();
-					$this->cleanupFailedAuth();
-					return false;
-				}
-
+			if ( !$this->synchUsername( $username ) ) {
+				@ldap_unbind();
+				$this->markAuthFailed();
+				return false;
 			}
 
-			//Synch LDAP groups with MediaWiki groups
-			if ( isset( $wgLDAPUseLDAPGroups[$_SESSION['wsDomain']] ) && $wgLDAPUseLDAPGroups[$_SESSION['wsDomain']] ) {
-				$this->printDebug( "Retrieving LDAP group membership", NONSENSITIVE );
-
-				//Let's get the user's LDAP groups
-				if ( isset( $wgLDAPGroupUseFullDN[$_SESSION['wsDomain']] ) && $wgLDAPGroupUseFullDN[$_SESSION['wsDomain']] ) {
-					$this->userLDAPGroups = $this->getUserGroups( $ldapconn, $userdn, true );
-				} else {
-					if ( ( isset( $wgLDAPGroupUseRetrievedUsername[$_SESSION['wsDomain']] ) && $wgLDAPGroupUseRetrievedUsername[$_SESSION['wsDomain']] )
-						&& $this->LDAPUsername != '' ) {
-
-						$this->userLDAPGroups = $this->getUserGroups( $ldapconn, $this->LDAPUsername, true );
-					} else {
-						$this->userLDAPGroups = $this->getUserGroups( $ldapconn, $username, true );
-					}
-				}
-
-				//Only find all groups if the user has any groups; otherwise, we are
-				//just wasting a search.
-				if ( $this->foundUserLDAPGroups && ( isset( $wgLDAPGroupsPrevail[$_SESSION['wsDomain']] ) && $wgLDAPGroupsPrevail[$_SESSION['wsDomain']] ) ) {
-					$this->allLDAPGroups = $this->getAllGroups( $ldapconn, true );
-				}
-			}
-
-			//Retrieve preferences
-			if ( isset( $wgLDAPRetrievePrefs[$_SESSION['wsDomain']] ) && $wgLDAPRetrievePrefs[$_SESSION['wsDomain']] ) {
-				$this->printDebug( "Retrieving preferences", NONSENSITIVE );
-
-				$entry = @ldap_read( $ldapconn, $userdn, "objectclass=*" );
-				$info = @ldap_get_entries( $ldapconn, $entry );
-                                if (isset($info[0]["mail"])) {
-        				$this->email = $info[0]["mail"][0];
-                                }
-                                if (isset($info[0]["preferredlanguage"])) {
-				        $this->lang = $info[0]["preferredlanguage"][0];
-                                }
-                                if (isset($info[0]["displayname"])) {
-				        $this->nickname = $info[0]["displayname"][0];
-                                }
-                                if (isset($info[0]["cn"])) {
-				        $this->realname = $info[0]["cn"][0];
-                                }
-
-				$this->printDebug( "Retrieved: $this->email, $this->lang, $this->nickname, $this->realname", SENSITIVE );
-			}
-
-			// Are we blocking login/renaming users on unique external ID mismatches?
-			//     *** WARNING ***
-			//     This needs to be fixed before use! This probably does not work correctly
-			//     with all options. It is probably a good idea to refactor the username stuff
-			//     in general (as it is currently somewhat of a kludge). Also, MediaWiki does
-			//     not currently have support for this.
-			//     *** WARNING ***
-			if ( ( isset( $wgLDAPUniqueBlockLogin[$_SESSION['wsDomain']] ) && $wgLDAPUniqueBlockLogin[$_SESSION['wsDomain']] )
-				|| ( isset( $wgLDAPUniqueRenameUser[$_SESSION['wsDomain']] ) && $wgLDAPUniqueRenameUser[$_SESSION['wsDomain']] ) ) {
-
-				$this->printDebug( "Checking for username change in LDAP.", SENSITIVE );
-
-				//Get the user's unique attribute from LDAP
-				if ( isset( $wgLDAPUniqueAttribute[$_SESSION['wsDomain']] ) ) {
-					$ldapuniqueattr = $wgLDAPUniqueAttribute[$_SESSION['wsDomain']];
-					$this->externalid = $info[0][$ldapuniqueattr][0];
-				}
-
-				$this->printDebug( "Retrieved external id: $this->externalid", SENSITIVE );
-
-				$retrievedusername = User::whoIsExternalID( "$this->externalid" );
-
-				$this->printDebug( "Username (in MediaWiki database) of fetched external id: $retrievedusername", SENSITIVE );
-
-				// See if the username returned from the database matches the username given
-				if ( $retrievedusername != '' && ( $username != $retrievedusername ) ) {
-					if ( isset( $wgLDAPUniqueBlockLogin[$_SESSION['wsDomain']] )
-						&& $wgLDAPUniqueBlockLogin[$_SESSION['wsDomain']] ) {
-
-						$this->printDebug( "Usernames do not match, blocking login.", SENSITIVE );
-						return false;
-					} else if ( isset( $wgLDAPUniqueRenameUser[$_SESSION['wsDomain']] )
-						&& $wgLDAPUniqueRenameUser[$_SESSION['wsDomain']] ) {
-
-						$this->printDebug( "Usernames do not match, renaming user in database.", SENSITIVE );
-
-						global $wgVersion;
-						if ( version_compare( $wgVersion, '1.7.0', '<' ) ) {
-							$this->printDebug( "Renaming users is only supported in MediaWiki 1.7+, please upgrade.", SENSITIVE );
-							$this->cleanupFailedAuth();
-							return false;
-						}
-
-						$olduser = User::newFromName( $retrievedusername );
-						$uid = $olduser->idForName();
-
-						// Ensure we don't require the same class twice
-						if ( !class_exists( 'RenameuserSQL' ) ) {
-							require( 'Renameuser/SpecialRenameuser_body.php' );
-						}
-
-						// Make a new rename user object with: from, to, uid of from	
-						$rename = new RenameuserSQL( $retrievedusername, $username, $uid );
-						$rename->rename();
-
-						// For the time being we can't just allow the user to log in
-						// as MediaWiki will try to create the user account after we
-						// do a rename. If we don't return false, the user will get
-						// a database error
-						$this->cleanupFailedAuth();
-						return false;
-					}
-				}
-
-				$this->printDebug( "Usernames matched or the user doesn't exist in the database yet.", SENSITIVE );
-			}
-
-			// Lets clean up.
 			@ldap_unbind();
 		} else {
 			$this->printDebug( "Failed to connect", NONSENSITIVE );
-			$this->cleanupFailedAuth();
+			$this->markAuthFailed();
 			return false;
 		}
 		$this->printDebug( "Authentication passed", NONSENSITIVE );
@@ -495,7 +369,7 @@ class LdapAuthenticationPlugin extends AuthPlugin {
 		return true;
 	}
 
-	function cleanupFailedAuth() {
+	function markAuthFailed() {
 		$this->authFailed = true;
 	}
 
@@ -508,7 +382,7 @@ class LdapAuthenticationPlugin extends AuthPlugin {
 	function modifyUITemplate( &$template ) {
 		global $wgLDAPDomainNames, $wgLDAPUseLocal;
 		global $wgLDAPAddLDAPUsers;
-		global $wgLDAPUseSmartcardAuth, $wgLDAPSmartcardDomain;
+		global $wgLDAPAutoAuthDomain;
 
 		$this->printDebug( "Entering modifyUITemplate", NONSENSITIVE );
 
@@ -525,12 +399,12 @@ class LdapAuthenticationPlugin extends AuthPlugin {
 			array_push( $tempDomArr, 'local' );
 		}
 
-		if ( $wgLDAPUseSmartcardAuth ) {
-			$this->printDebug( "Allowing smartcard login, removing the domain from the list.", NONSENSITIVE );
+		if ( isset( $wgLDAPAutoAuthDomain ) ) {
+			$this->printDebug( "Allowing auto-authentication login, removing the domain from the list.", NONSENSITIVE );
 
-			//There is no reason for people to log in directly to the wiki if the are using a
-			//smartcard. If they try to, they are probably up to something fishy.
-			unset( $tempDomArr[array_search( $wgLDAPSmartcardDomain, $tempDomArr )] );
+			//There is no reason for people to log in directly to the wiki if the are using an
+			//auto-authentication domain. If they try to, they are probably up to something fishy.
+			unset( $tempDomArr[array_search( $wgLDAPAutoAuthDomain, $tempDomArr )] );
 		}
 
 		$template->set( 'domainnames', $tempDomArr );
@@ -593,13 +467,13 @@ class LdapAuthenticationPlugin extends AuthPlugin {
 
 		$pass = $this->getPasswordHash( $password );
 
-		$ldapconn = $this->connect();
-		if ( $ldapconn ) {
+		$this->connect();
+		if ( $this->ldapconn ) {
 			$this->printDebug( "Connected successfully", NONSENSITIVE );
-			$userdn = $this->getSearchString( $ldapconn, $user->getName() );
+			$this->userdn = $this->getSearchString( $user->getName() );
 
 			$this->printDebug( "Binding as the writerDN", NONSENSITIVE );
-			$bind = $this->bindAs( $ldapconn, $wgLDAPWriterDN[$_SESSION['wsDomain']], $wgLDAPWriterPassword[$_SESSION['wsDomain']] );
+			$bind = $this->bindAs( $wgLDAPWriterDN[$_SESSION['wsDomain']], $wgLDAPWriterPassword[$_SESSION['wsDomain']] );
 			if ( !$bind ) {
 				return false;
 			}
@@ -610,7 +484,7 @@ class LdapAuthenticationPlugin extends AuthPlugin {
 			//domain credentials for security reasons.
 			$password = '';
 
-			$success = ldap_modify( $ldapconn, $userdn, $values );
+			$success = @ldap_modify( $this->ldapconn, $this->userdn, $values );
 
 			//Let's clean up
 			@ldap_unbind();
@@ -663,13 +537,13 @@ class LdapAuthenticationPlugin extends AuthPlugin {
 		$this->nickname = $user->getOption( 'nickname' );
 		$this->language = $user->getOption( 'language' );
 
-		$ldapconn = $this->connect();
-		if ( $ldapconn ) {
+		$this->connect();
+		if ( $this->ldapconn ) {
 			$this->printDebug( "Connected successfully", NONSENSITIVE );
-			$userdn = $this->getSearchString( $ldapconn, $user->getName() );
+			$this->userdn = $this->getSearchString( $user->getName() );
 
 			$this->printDebug( "Binding as the writerDN", NONSENSITIVE );
-			$bind = $this->bindAs( $ldapconn, $wgLDAPWriterDN[$_SESSION['wsDomain']], $wgLDAPWriterPassword[$_SESSION['wsDomain']] );
+			$bind = $this->bindAs( $wgLDAPWriterDN[$_SESSION['wsDomain']], $wgLDAPWriterPassword[$_SESSION['wsDomain']] );
 			if ( !$bind ) {
 				return false;
 			}
@@ -679,7 +553,7 @@ class LdapAuthenticationPlugin extends AuthPlugin {
 			if ( '' != $this->realname ) { $values["cn"] = $this->realname; }
 			if ( '' != $this->language ) { $values["preferredlanguage"] = $this->language; }
 
-			if ( 0 != sizeof( $values ) && ldap_modify( $ldapconn, $userdn, $values ) ) {
+			if ( 0 != sizeof( $values ) && @ldap_modify( $this->ldapconn, $this->userdn, $values ) ) {
 				$this->printDebug( "Successfully modified the user's attributes", NONSENSITIVE );
 				@ldap_unbind();
 				return true;
@@ -723,6 +597,8 @@ class LdapAuthenticationPlugin extends AuthPlugin {
 		global $wgLDAPUpdateLDAP, $wgLDAPMailPassword;
 		global $wgLDAPUseLocal;
 
+		$this->printDebug( "Entering allowPasswordChange", NONSENSITIVE );
+
 		$retval = false;
 
 		// Local domains need to be able to change passwords
@@ -755,7 +631,7 @@ class LdapAuthenticationPlugin extends AuthPlugin {
 		global $wgLDAPSearchAttributes;
 		global $wgLDAPWriteLocation;
 		global $wgLDAPRequiredGroups, $wgLDAPGroupDN;
-		global $wgLDAPRequireAuthAttribute, $wgLDAPAuthAttribute;
+		global $wgLDAPAuthAttribute;
 
 		$this->printDebug( "Entering addUser", NONSENSITIVE );
 
@@ -788,17 +664,17 @@ class LdapAuthenticationPlugin extends AuthPlugin {
 
 		$pass = $this->getPasswordHash( $password );
 
-		$ldapconn = $this->connect();
-		if ( $ldapconn ) {
+		$this->connect();
+		if ( $this->ldapconn ) {
 			$this->printDebug( "Successfully connected", NONSENSITIVE );
 
-			$userdn = $this->getSearchString( $ldapconn, $username );
-			if ( '' == $userdn ) {
-				$this->printDebug( "userdn is blank, attempting to use wgLDAPWriteLocation", NONSENSITIVE );
+			$this->userdn = $this->getSearchString( $username );
+			if ( '' == $this->userdn ) {
+				$this->printDebug( "$this->userdn is blank, attempting to use wgLDAPWriteLocation", NONSENSITIVE );
 				if ( isset( $wgLDAPWriteLocation[$_SESSION['wsDomain']] ) ) {
 					$this->printDebug( "wgLDAPWriteLocation is set, using that", NONSENSITIVE );
-					$userdn = $wgLDAPSearchAttributes[$_SESSION['wsDomain']] . "=" .
-						$username . $wgLDAPWriteLocation[$_SESSION['wsDomain']];
+					$this->userdn = $wgLDAPSearchAttributes[$_SESSION['wsDomain']] . "=" .
+						$username . "," . $wgLDAPWriteLocation[$_SESSION['wsDomain']];
 				} else {
 					$this->printDebug( "wgLDAPWriteLocation is not set, failing", NONSENSITIVE );
 					//getSearchString will bind, but will not unbind
@@ -809,7 +685,7 @@ class LdapAuthenticationPlugin extends AuthPlugin {
 
 			$this->printDebug( "Binding as the writerDN", NONSENSITIVE );
 
-			$bind = $this->bindAs( $ldapconn, $wgLDAPWriterDN[$_SESSION['wsDomain']], $wgLDAPWriterPassword[$_SESSION['wsDomain']] );
+			$bind = $this->bindAs( $wgLDAPWriterDN[$_SESSION['wsDomain']], $wgLDAPWriterPassword[$_SESSION['wsDomain']] );
 			if ( !$bind ) {
 				$this->printDebug( "Failed to bind as the writerDN; add failed", NONSENSITIVE );
 				return false;
@@ -825,12 +701,12 @@ class LdapAuthenticationPlugin extends AuthPlugin {
 			$values["userpassword"] = $pass;
 			$values["objectclass"] = "inetorgperson";
 
-			if ( $wgLDAPRequireAuthAttribute ) {
+			if ( isset ( $wgLDAPAuthAttribute[$_SESSION['wsDomain']] ) ) {
 				$values[$wgLDAPAuthAttribute[$_SESSION['wsDomain']]] = "true";
 			}
 
 			$this->printDebug( "Adding user", NONSENSITIVE );
-			if ( @ldap_add( $ldapconn, $userdn, $values ) ) {
+			if ( @ldap_add( $this->ldapconn, $this->userdn, $values ) ) {
 				$this->printDebug( "Successfully added user", NONSENSITIVE );
 				@ldap_unbind();
 				return true;
@@ -886,7 +762,7 @@ class LdapAuthenticationPlugin extends AuthPlugin {
 	 * TODO: fix the setExternalID stuff
 	 */
 	function updateUser( &$user ) {
-		global $wgLDAPRetrievePrefs;
+		global $wgLDAPRetrievePrefs, $wgLDAPPreferences;
 		global $wgLDAPUseLDAPGroups;
 		global $wgLDAPUniqueBlockLogin, $wgLDAPUniqueRenameUser;
 
@@ -901,20 +777,26 @@ class LdapAuthenticationPlugin extends AuthPlugin {
 
 		//If we aren't pulling preferences, we don't want to accidentally
 		//overwrite anything.
-		if ( isset( $wgLDAPRetrievePrefs[$_SESSION['wsDomain']] ) && $wgLDAPRetrievePrefs[$_SESSION['wsDomain']] ) {
+		if ( ( isset( $wgLDAPRetrievePrefs[$_SESSION['wsDomain']] ) && $wgLDAPRetrievePrefs[$_SESSION['wsDomain']] )
+			|| isset( $wgLDAPPreferences[$_SESSION['wsDomain']] ) ) {
 			$this->printDebug( "Setting user preferences.", NONSENSITIVE );
 
 			if ( '' != $this->lang ) {
+				$this->printDebug( "Setting language.", NONSENSITIVE );
 				$user->setOption( 'language', $this->lang );
 			}
 			if ( '' != $this->nickname ) {
+				$this->printDebug( "Setting nickname.", NONSENSITIVE );
 				$user->setOption( 'nickname', $this->nickname );
 			}
 			if ( '' != $this->realname ) {
+				$this->printDebug( "Setting realname.", NONSENSITIVE );
 				$user->setRealName( $this->realname );
 			}
 			if ( '' != $this->email ) {
+				$this->printDebug( "Setting email.", NONSENSITIVE );
 				$user->setEmail( $this->email );
+				$user->confirmEmail();
 			}
 			if ( ( isset( $wgLDAPUniqueBlockLogin[$_SESSION['wsDomain']] ) && $wgLDAPUniqueBlockLogin[$_SESSION['wsDomain']] )
 				|| ( isset( $wgLDAPUniqueRenameUser[$_SESSION['wsDomain']] ) && $wgLDAPUniqueRenameUser[$_SESSION['wsDomain']] ) ) {
@@ -1043,23 +925,20 @@ class LdapAuthenticationPlugin extends AuthPlugin {
 	 * @access public
 	 */
 	function autoAuthSetup() {
-		global $wgLDAPUseSmartcardAuth;
-		global $wgLDAPSmartcardDomain;
+		global $wgLDAPAutoAuthDomain;
 
-		$wgLDAPUseSmartcardAuth = true;
-		$this->setDomain( $wgLDAPSmartcardDomain );
+		$this->setDomain( $wgLDAPAutoAuthDomain );
 	}
 
 	/**
 	 * Gets the searchstring for a user based upon settings for the domain.
 	 * Returns a full DN for a user.
 	 *
-	 * @param resource $ldapconn
 	 * @param string $username
 	 * @return string
 	 * @access private
 	 */
-	function getSearchString( $ldapconn, $username ) {
+	function getSearchString( $username ) {
 		global $wgLDAPSearchStrings;
 		global $wgLDAPProxyAgent, $wgLDAPProxyAgentPassword;
 
@@ -1076,11 +955,11 @@ class LdapAuthenticationPlugin extends AuthPlugin {
 			if ( isset( $wgLDAPProxyAgent[$_SESSION['wsDomain']] ) ) {
 				//This is a proxy bind
 				$this->printDebug( "Doing a proxy bind", NONSENSITIVE );
-				$bind = $this->bindAs( $ldapconn, $wgLDAPProxyAgent[$_SESSION['wsDomain']], $wgLDAPProxyAgentPassword[$_SESSION['wsDomain']] );
+				$bind = $this->bindAs( $wgLDAPProxyAgent[$_SESSION['wsDomain']], $wgLDAPProxyAgentPassword[$_SESSION['wsDomain']] );
 			} else {
 				//This is an anonymous bind
 				$this->printDebug( "Doing an anonymous bind", NONSENSITIVE );
-				$bind = $this->bindAs( $ldapconn );
+				$bind = $this->bindAs();
 			}
 	
 			if ( !$bind ) {
@@ -1088,7 +967,7 @@ class LdapAuthenticationPlugin extends AuthPlugin {
 				return '';
 			}
 
-			$userdn = $this->getUserDN( $ldapconn, $username );
+			$userdn = $this->getUserDN( $username );
 		}
 		$this->printDebug( "userdn is: $userdn", SENSITIVE );
 		return $userdn;
@@ -1099,22 +978,21 @@ class LdapAuthenticationPlugin extends AuthPlugin {
 	 * This function will set $this->LDAPUsername
 	 * You must bind to the server before calling this.
 	 *
-	 * @param resource $ldapconn
 	 * @param string $username
 	 * @return string
 	 * @access private
 	 */
-	function getUserDN( $ldapconn, $username ) {
+	function getUserDN( $username ) {
 		global $wgLDAPSearchAttributes;
-		global $wgLDAPRequireAuthAttribute, $wgLDAPAuthAttribute;
+		global $wgLDAPAuthAttribute;
 
 		$this->printDebug("Entering getUserDN", NONSENSITIVE);
 
 		//we need to do a subbase search for the entry
 
-		//Smartcard auth needs to check LDAP for required attributes.
-		if ( ( isset( $wgLDAPRequireAuthAttribute[$_SESSION['wsDomain']] ) && $wgLDAPRequireAuthAttribute[$_SESSION['wsDomain']] )
-			&& $this->useSmartcardAuth() ) {
+		//Auto auth needs to check LDAP for required attributes.
+		if ( ( isset( $wgLDAPAuthAttribute[$_SESSION['wsDomain']] ) )
+			&& $this->useAutoAuth() ) {
 			$auth_filter = "(" . $wgLDAPAuthAttribute[$_SESSION['wsDomain']] . ")";
 			$srch_filter = "(" . $wgLDAPSearchAttributes[$_SESSION['wsDomain']] . "=" . $this->getLdapEscapedString( $username ) . ")";
 			$filter = "(&" . $srch_filter . $auth_filter . ")";
@@ -1129,269 +1007,397 @@ class LdapAuthenticationPlugin extends AuthPlugin {
 
 		$this->printDebug( "Using base: $base", SENSITIVE );
 
-		$entry = @ldap_search( $ldapconn, $base, $filter, $attributes );
+		$entry = @ldap_search( $this->ldapconn, $base, $filter, $attributes );
 		if ( !$entry ) {
 			$this->printDebug( "Couldn't find an entry", NONSENSITIVE );
+			$this->fetchedUserInfo = false;
 			return '';
 		}
 
-		$info = @ldap_get_entries( $ldapconn, $entry );
+		$this->userInfo = @ldap_get_entries( $this->ldapconn, $entry );
+		$this->fetchedUserInfo = true;
 
-		//This is a pretty useful thing to have for smartcard authentication,
+		//This is a pretty useful thing to have for auto authentication,
 		//group checking, and pulling preferences.
-		wfRunHooks( 'SetUsernameAttributeFromLDAP', array( &$this->LDAPUsername, $info ) );
+		wfRunHooks( 'SetUsernameAttributeFromLDAP', array( &$this->LDAPUsername, $this->userInfo ) );
 		if ( !is_string( $this->LDAPUsername ) ) {
 			$this->printDebug( "Fetched username is not a string (check your hook code...). This message can be safely ignored if you do not have the SetUsernameAttributeFromLDAP hook defined.", NONSENSITIVE );
 			$this->LDAPUsername = '';
 		}
 
-		$userdn = $info[0]["dn"];
+		$userdn = $this->userInfo[0]["dn"];
 		return $userdn;
 	}
 
-	//DEPRECATED
-	function isMemberOfLdapGroup( $ldapconn, $userDN, $groupDN ) {
-		$this->printDebug( "Entering isMemberOfLdapGroup (DEPRECATED)", NONSENSITIVE );
+	function getUserInfo() {
+		//Don't fetch the same data more than once
+		if ( $this->fetchedUserInfo ) {
+			return $this->userInfo;
+		}
 
-		//we need to do a subbase search for the entry
-		$filter = "(member=" . $this->getLdapEscapedString( $userDN ) . ")";
-		$info = ldap_get_entries( $ldapconn, @ldap_search( $ldapconn, $groupDN, $filter ) );
-
-		return ( $info["count"] >= 1 );
+		$entry = @ldap_read( $this->ldapconn, $this->userdn, "objectclass=*" );
+		$userInfo = @ldap_get_entries( $this->ldapconn, $entry );
+		if ( $userInfo["count"] < 1 ) {
+			$this->fetchedUserInfo = false;
+			return;
+		} else {
+			$this->fetchedUserInfo = true;
+			return $userInfo;
+		}
 	}
 
 	/**
-	 * Determines whether a user is a member of a group, or a nested group.
+	 * Retrieve user preferences from LDAP
 	 *
-	 * @param resource $ldapconn
 	 * @param string $userDN
+	 * @access private
+	 */
+	function getPreferences() {
+		global $wgLDAPPreferences;
+		global $wgLDAPRetrievePrefs;
+
+		$this->printDebug("Entering getPreferences", NONSENSITIVE);
+
+		$this->userInfo = $this->getUserInfo();
+		if ( is_null( $this->userInfo ) ) {
+			$this->printDebug("Failed to get preferences", NONSENSITIVE);
+		}
+
+		//Retrieve preferences
+		if ( isset( $wgLDAPPreferences[$_SESSION['wsDomain']] ) ) {
+			$this->printDebug( "Retrieving preferences", NONSENSITIVE );
+			$prefs = $wgLDAPPreferences[$_SESSION['wsDomain']];
+			foreach ( array_keys( $prefs ) as $key ) {
+				switch ( $key ) {
+					case "email":
+						if ( isset( $this->userInfo[0]["$prefs[$key]"] ) ) {
+							$this->email = $this->userInfo[0]["$prefs[$key]"][0];
+							$this->printDebug( "Retrieved email ($this->email) using attribute ($prefs[$key])", NONSENSITIVE );
+						}
+						break;
+					case "language":
+						if ( isset( $this->userInfo[0]["$prefs[$key]"] ) ) {
+							$this->lang = $this->userInfo[0][$prefs[$key]][0];
+							$this->printDebug( "Retrieved language ($this->lang) using attribute ($prefs[$key])", NONSENSITIVE );
+						}
+						break;
+					case "nickname":
+						if ( isset( $this->userInfo[0]["$prefs[$key]"] ) ) {
+							$this->nickname = $this->userInfo[0]["$prefs[$key]"][0];
+							$this->printDebug( "Retrieved nickname ($this->nickname) using attribute ($prefs[$key])", NONSENSITIVE );
+						}
+						break;
+					case "realname":
+						if ( isset( $this->userInfo[0]["$prefs[$key]"] ) ) {
+							$this->realname = $this->userInfo[0]["$prefs[$key]"][0];
+							$this->printDebug( "Retrieved realname ($this->realname) using attribute ($prefs[$key])", NONSENSITIVE );
+						}
+						break;
+				}
+			}
+		} else if ( isset( $wgLDAPRetrievePrefs[$_SESSION['wsDomain']] ) && $wgLDAPRetrievePrefs[$_SESSION['wsDomain']] ) {
+			//DEPRECATED. Kept for backwards compatibility.
+			$this->printDebug( "Retrieving preferences", NONSENSITIVE );
+			$this->printDebug( '$wgLDAPRetrievePrefs is a DEPRECATED option, please use $wgLDAPPreferences.', NONSENSITIVE );
+
+			if (isset($this->userInfo[0]["mail"])) {
+				$this->email = $this->userInfo[0]["mail"][0];
+			}
+			if (isset($this->userInfo[0]["preferredlanguage"])) {
+				$this->lang = $this->userInfo[0]["preferredlanguage"][0];
+			}
+			if (isset($this->userInfo[0]["displayname"])) {
+				$this->nickname = $this->userInfo[0]["displayname"][0];
+			}
+			if (isset($this->userInfo[0]["cn"])) {
+				$this->realname = $this->userInfo[0]["cn"][0];
+			}
+
+			$this->printDebug( "Retrieved: $this->email, $this->lang, $this->nickname, $this->realname", SENSITIVE );
+		}
+	}
+
+	function synchUsername( $username ) {
+		global $wgLDAPUniqueBlockLogin, $wgLDAPUniqueRenameUser;
+		global $wgLDAPUniqueAttribute;
+
+		$this->printDebug("Entering synchUsername", NONSENSITIVE);
+
+		$this->userInfo = $this->getUserInfo();
+		if ( is_null( $this->userInfo ) ) {
+			$this->printDebug("Failed to get preferences", NONSENSITIVE);
+		}
+
+		// Are we blocking login/renaming users on unique external ID mismatches?
+		//     *** WARNING ***
+		//     This needs to be fixed before use! This probably does not work correctly
+		//     with all options. It is probably a good idea to refactor the username stuff
+		//     in general (as it is currently somewhat of a kludge). Also, MediaWiki does
+		//     not currently have support for this.
+		//     *** WARNING ***
+		if ( ( isset( $wgLDAPUniqueBlockLogin[$_SESSION['wsDomain']] ) && $wgLDAPUniqueBlockLogin[$_SESSION['wsDomain']] )
+			|| ( isset( $wgLDAPUniqueRenameUser[$_SESSION['wsDomain']] ) && $wgLDAPUniqueRenameUser[$_SESSION['wsDomain']] ) ) {
+
+			$this->printDebug( "Checking for username change in LDAP.", SENSITIVE );
+
+			//Get the user's unique attribute from LDAP
+			if ( isset( $wgLDAPUniqueAttribute[$_SESSION['wsDomain']] ) ) {
+				$ldapuniqueattr = $wgLDAPUniqueAttribute[$_SESSION['wsDomain']];
+				$this->externalid = $this->info[0][$ldapuniqueattr][0];
+			} else {
+				return false;
+			}
+
+			$this->printDebug( "Retrieved external id: $this->externalid", SENSITIVE );
+
+			$retrievedusername = User::whoIsExternalID( "$this->externalid" );
+
+			$this->printDebug( "Username (in MediaWiki database) of fetched external id: $retrievedusername", SENSITIVE );
+
+			// See if the username returned from the database matches the username given
+			if ( $retrievedusername != '' && ( $username != $retrievedusername ) ) {
+				if ( isset( $wgLDAPUniqueBlockLogin[$_SESSION['wsDomain']] )
+					&& $wgLDAPUniqueBlockLogin[$_SESSION['wsDomain']] ) {
+
+					$this->printDebug( "Usernames do not match, blocking login.", SENSITIVE );
+					return false;
+				} else if ( isset( $wgLDAPUniqueRenameUser[$_SESSION['wsDomain']] )
+					&& $wgLDAPUniqueRenameUser[$_SESSION['wsDomain']] ) {
+
+					$this->printDebug( "Usernames do not match, renaming user in database.", SENSITIVE );
+
+					global $wgVersion;
+					if ( version_compare( $wgVersion, '1.7.0', '<' ) ) {
+						$this->printDebug( "Renaming users is only supported in MediaWiki 1.7+, please upgrade.", SENSITIVE );
+						$this->markAuthFailed();
+						return false;
+					}
+
+					$olduser = User::newFromName( $retrievedusername );
+					$uid = $olduser->idForName();
+
+					// Ensure we don't require the same class twice
+					if ( !class_exists( 'RenameuserSQL' ) ) {
+						require( 'Renameuser/SpecialRenameuser_body.php' );
+					}
+
+					// Make a new rename user object with: from, to, uid of from	
+					$rename = new RenameuserSQL( $retrievedusername, $username, $uid );
+					$rename->rename();
+
+					// For the time being we can't just allow the user to log in
+					// as MediaWiki will try to create the user account after we
+					// do a rename. If we don't return false, the user will get
+					// a database error
+					return false;
+				}
+			}
+
+			$this->printDebug( "Usernames matched or the user doesn't exist in the database yet.", SENSITIVE );
+		}
+
+		return true;
+	}
+
+	/**
+	 * Checks to see whether a user is in a required group.
+	 *
+	 * @param string $username
 	 * @return bool
 	 * @access private
 	 */
-	function isMemberOfRequiredLdapGroup( $ldapconn, $userDN ) {
-		global $wgLDAPRequiredGroups;
-		global $wgLDAPGroupSearchNestedGroups;
+	function checkGroups( $username ) {
+		global $wgLDAPGroupDN;
+		global $wgLDAPRequiredGroups, $wgLDAPExcludedGroups;
 
-		$this->printDebug( "Entering isMemberOfRequiredLdapGroup", NONSENSITIVE );
+		$this->printDebug("Entering checkGroups", NONSENSITIVE);
 
-		$reqgroups = $wgLDAPRequiredGroups[$_SESSION['wsDomain']];
-		for ( $i = 0; $i < count( $reqgroups ); $i++ ) {
-			$reqgroups[$i] = strtolower( $reqgroups[$i] );
+		//Old style groups, non-nestable and fairly limited on group type (full DN
+		//versus username). DEPRECATED
+		if ( $wgLDAPGroupDN ) {
+			$this->printDebug( "Checking for (old style) group membership", NONSENSITIVE );
+			//we need to do a subbase search for the entry
+			$filter = "(member=" . $this->getLdapEscapedString( $this->userdn ) . ")";
+			$info = @ldap_get_entries( $this->ldapconn, @ldap_search( $this->ldapconn, $wgLDAPGroupDN, $filter ) );
+
+			return ( $info["count"] >= 1 );
 		}
 
-		$searchnested = $wgLDAPGroupSearchNestedGroups[$_SESSION['wsDomain']];
+		if ( isset( $wgLDAPExcludedGroups[$_SESSION['wsDomain']] ) ) {
+			$this->printDebug( "Checking for excluded group membership", NONSENSITIVE );
+			$excgroups = $wgLDAPExcludedGroups[$_SESSION['wsDomain']];
+			for ( $i = 0; $i < count( $excgroups ); $i++ ) {
+				$excgroups[$i] = strtolower( $excgroups[$i] );
+			}
 
-		$this->printDebug( "Required groups:" . implode( ",",$reqgroups ) . "", NONSENSITIVE );
+			$this->printDebug( "Excluded groups:", NONSENSITIVE, $excgroups );
 
-		$groups = $this->getUserGroups( $ldapconn, $userDN );
+			foreach ( $this->userLDAPGroups["dn"] as $group ) {
+				$this->printDebug( "Checking against: $group", NONSENSITIVE );
+				if ( in_array( $group, $excgroups ) ) {
+					$this->printDebug( "Found user in an excluded group.", NONSENSITIVE );
+					return false;
+				}
+			}
+		}
 
-		//TODO: using variables for this kind of thing is dirty, let's think of a new way
-		//      to handle this need.
-		if ( !$this->foundUserLDAPGroups ) {
-			$this->printDebug( "Couldn't find the user in any groups (1).", NONSENSITIVE );
+		//New style group checking
+		if ( isset( $wgLDAPRequiredGroups[$_SESSION['wsDomain']] ) ) {
+			$this->printDebug( "Checking for (new style) group membership", NONSENSITIVE );
+			$reqgroups = $wgLDAPRequiredGroups[$_SESSION['wsDomain']];
+			for ( $i = 0; $i < count( $reqgroups ); $i++ ) {
+				$reqgroups[$i] = strtolower( $reqgroups[$i] );
+			}
 
-			//User isn't in any groups, so he/she obviously can't be in
-			//a required one
-			return false;
-		} else {
-			//User is in groups, let's see if a required group is one of them
-			foreach ( $groups as $group ) {
+			$this->printDebug( "Required groups:", NONSENSITIVE, $reqgroups );
+
+			foreach ( $this->userLDAPGroups["dn"] as $group ) {
+				$this->printDebug( "Checking against: $group", NONSENSITIVE );
 				if ( in_array( $group, $reqgroups ) ) {
 					$this->printDebug( "Found user in a group.", NONSENSITIVE );
 					return true;
 				}
 			}
 
-			//We didn't find the user in the group, lets check nested groups
-			if ( $searchnested ) {
-				if ( $this->searchNestedGroups( $ldapconn, $groups ) ) {
-					return true;
+			$this->printDebug("Couldn't find the user in any groups.", NONSENSITIVE );
+			return false;
+		}
+
+		// Ensure we return true if we aren't checking groups.
+		return true;
+	}
+
+	/**
+	 * Function to get the user's groups.
+	 *
+	 * @access private
+	 */
+	function getGroups( $username ) {
+		global $wgLDAPRequiredGroups, $wgLDAPUseLDAPGroups;
+		global $wgLDAPGroupUseFullDN, $wgLDAPGroupUseRetrievedUsername;
+		global $wgLDAPGroupSearchNestedGroups;
+		global $wgLDAPGroupsPrevail;
+		global $wgLDAPGroupsUseMemberOf;
+
+		$this->printDebug("Entering getGroups", NONSENSITIVE);
+
+		//Find groups
+		if ( isset( $wgLDAPRequiredGroups[$_SESSION['wsDomain']] ) || ( isset( $wgLDAPUseLDAPGroups[$_SESSION['wsDomain']] ) && $wgLDAPUseLDAPGroups[$_SESSION['wsDomain']] ) ) {
+			$this->printDebug( "Retrieving LDAP group membership", NONSENSITIVE );
+
+			//Let's figure out what we should be searching for
+			if ( isset( $wgLDAPGroupUseFullDN[$_SESSION['wsDomain']] ) && $wgLDAPGroupUseFullDN[$_SESSION['wsDomain']] ) {
+				$usertopass = $this->userdn;
+			} else {
+				if ( ( isset( $wgLDAPGroupUseRetrievedUsername[$_SESSION['wsDomain']] ) && $wgLDAPGroupUseRetrievedUsername[$_SESSION['wsDomain']] )
+					&& $this->LDAPUsername != '' ) {
+
+					$usertopass = $this->LDAPUsername;
+				} else {
+					$usertopass = $username;
 				}
 			}
 
-			$this->printDebug("Couldn't find the user in any groups (2).", NONSENSITIVE );
+			if ( isset( $wgLDAPGroupsUseMemberOf[$_SESSION['wsDomain']] ) && $wgLDAPGroupsUseMemberOf[$_SESSION['wsDomain']] ) {
+				$this->printDebug( "Using memberOf", NONSENSITIVE );
+				$this->userInfo = $this->getUserInfo();
+				if ( is_null( $this->userInfo ) ) {
+					$this->printDebug("Failed to get memberOf attribute", NONSENSITIVE);
+				}
+				if ( isset( $this->userInfo[0]["memberof"] ) ) {
+					# The first entry is always a count
+					$memberOfMembers = $this->userInfo[0]["memberof"];
+					array_shift( $memberOfMembers );
+					$groups = array( "dn"=> array(), "short"=>array() );
+					foreach( $memberOfMembers as $mem ) {
+						array_push( $groups["dn"], strtolower( $mem ) );
+					}
+					$this->userLDAPGroups = $groups;
+				}
+			} else {
+				$this->printDebug( "Searching for the groups", NONSENSITIVE );
+				$this->userLDAPGroups = $this->searchGroups( $usertopass );
 
-			return false;
+				if ( isset( $wgLDAPGroupSearchNestedGroups[$_SESSION['wsDomain']] ) && $wgLDAPGroupSearchNestedGroups[$_SESSION['wsDomain']] ) {
+					$this->userLDAPGroups = $this->searchNestedGroups( $this->userLDAPGroups );
+					$this->printDebug( "Got the following nested groups:", SENSITIVE, $this->userLDAPGroups["dn"] );
+				}
+			}
+
+			//Only find all groups if the user has any groups; otherwise, we are
+			//just wasting a search.
+			if ( ( isset( $wgLDAPGroupsPrevail[$_SESSION['wsDomain']] ) && $wgLDAPGroupsPrevail[$_SESSION['wsDomain']] ) && count( $this->userLDAPGroups ) != 0 ) {
+				$this->allLDAPGroups = $this->searchGroups( '*' );
+			}
 		}
 	}
 
 	/**
-	 * Helper function for isMemberOfRequiredLdapGroup.
-	 * $checkedgroups is used for tail recursion and shouldn't be provided
+	 * Function to return an array of nested groups when given a group or list of groups.
+	 * $searchedgroups is used for tail recursion and shouldn't be provided
 	 * when called externally.
 	 *
-	 * @param resource $ldapconn
 	 * @param string $userDN
-	 * @param array $checkedgroups
+	 * @param array $searchedgroups
 	 * @return bool
 	 * @access private
 	 */
-	function searchNestedGroups( $ldapconn, $groups, $checkedgroups = array() ) {
-		global $wgLDAPRequiredGroups;
-
+	function searchNestedGroups( $groups, $searchedgroups = array( "dn" => Array(), "short" => Array() ) ) {
 		$this->printDebug( "Entering searchNestedGroups", NONSENSITIVE );
 
 		//base case, no more groups left to check
-		if ( !$groups ) {
-			$this->printDebug( "Couldn't find user in any nested groups.", NONSENSITIVE );
-			return false;
+		if ( count( $groups["dn"] ) == 0 ) {
+			$this->printDebug( "No more groups to search.", NONSENSITIVE );
+			return $searchedgroups;
 		}
 
-		$this->printDebug( "Checking groups:" . implode( ",", $groups ) . "", SENSITIVE );
+		$this->printDebug( "Searching groups:", SENSITIVE, $groups["dn"] );
 
-		$reqgroups = $wgLDAPRequiredGroups[$_SESSION['wsDomain']];
-		for ( $i = 0; $i < count( $reqgroups ); $i++ ) {
-			$reqgroups[$i] = strtolower( $reqgroups[$i] );
-		}
-
-		$groupstocheck = array();
-		foreach ( $groups as $group ) {
-			$returnedgroups = $this->getUserGroups( $ldapconn, $group, false, false );
-			$this->printDebug( "Group $group is in the following groups:" . implode( ",", $returnedgroups ) . "", SENSITIVE );
-			foreach ( $returnedgroups as $checkme ) {
-				if ( in_array( $checkme, $checkedgroups ) ) {
-					//We already checked this, move on
+		$groupstosearch = array( "short"=>array(), "dn"=>array() );
+		foreach ( $groups["dn"] as $group ) {
+			$returnedgroups = $this->searchGroups( $group );
+			$this->printDebug( "Group $group is in the following groups:", SENSITIVE, $returnedgroups["dn"] );
+			foreach ( $returnedgroups["dn"] as $searchme ) {
+				if ( in_array( $searchme, $searchedgroups["dn"] ) ) {
+					//We already searched this, move on
 					continue;
-				}
-				$this->printDebug( "Checking membership for: $checkme", SENSITIVE );
-                                if ( in_array( $checkme, $reqgroups ) ) {
-					$this->printDebug( "Found user in a nested group.", NONSENSITIVE );
-					//Woohoo
-					return true;
 				} else {
-					//We'll need to check this group's members now
-					array_push( $groupstocheck, $checkme );
+					//We'll need to search this group's members now
+					$this->printDebug( "Adding $searchme to the list of groups (1)", SENSITIVE );
+					$groupstosearch["dn"][] = $searchme;
+				}
+			}
+			foreach ( $returnedgroups["short"] as $searchme ) {
+				if ( in_array( $searchme, $searchedgroups["short"] ) ) {
+					//We already searched this, move on
+					continue;
+				} else {
+					$this->printDebug( "Adding $searchme to the list of groups (2)", SENSITIVE );
+					//We'll need to search this group's members now
+					$groupstosearch["short"][] = $searchme;
 				}
 			}
 		}
 
-		$checkedgroups = array_unique( array_merge( $groups, $checkedgroups ) );
+		$searchedgroups = array_merge_recursive( $groups, $searchedgroups );
 
 		//Mmmmmm. Tail recursion. Tasty.
-		return $this->searchNestedGroups( $ldapconn, $groupstocheck, $checkedgroups ); 
+		return $this->searchNestedGroups( $groupstosearch, $searchedgroups ); 
 	}
 
 	/**
-	 * Helper function for isMemberOfRequiredLdapGroup and searchNestedGroups. Returns
-	 * a list of groups the user is in, all munged to lowercase.
-	 * Sets $this->foundUserLDAPGroups
+	 * Search groups for the supplied DN
 	 *
-	 * @param resource $ldapconn
 	 * @param string $dn
 	 * @return array
 	 * @access private
 	 */
-	function getUserGroups( $ldapconn, $dn, $getShortnames = false, $returncache = true ) {
-		$this->printDebug( "Entering getUserGroups", NONSENSITIVE );
-
-		//Let's return the saved groups if they are available
-		if ( $getShortnames ) {
-			if ( $returncache && isset( $this->userLDAPShortnameGroupCache ) ) {
-				$this->printDebug( "Returning short name group cache.", NONSENSITIVE );
-				return $this->userLDAPShortnameGroupCache;
-			}
-		} else {
-			if ( $returncache && isset( $this->userLDAPGroupCache ) ) {
-				$this->printDebug( "Returning long name group cache.", NONSENSITIVE );
-				return $this->userLDAPGroupCache;
-			}
-		}
-
-		//We haven't done a search yet, lets do it now
-		list( $groups, $shortnamegroups ) = $this->getGroups( $ldapconn, $dn );
-
-		//Save the groups for next time we are called
-		//Merge groups if a set of groups already exist for
-		//nested group searching (half assed) support
-		if ( isset( $this->userLDAPGroupCache ) ) {
-			array_unique( array_merge( $groups, $this->userLDAPGroupCache ) );
-		} else {
-			$this->userLDAPGroupCache = $groups;
-		}
-		if ( isset( $this->userLDAPShortnameGroupCache ) ) {
-			array_unique( array_merge( $shortnamegroups, $this->userLDAPShortnameGroupCache ) );
-		} else {
-			$this->userLDAPShortnameGroupCache = $shortnamegroups;
-		}
-
-		//We only need to check one of the two arrays, as they should be
-		//identical from a member standpoint.
-		if ( count( $groups ) == 0 ) {
-			$this->foundUserLDAPGroups = false;
-		} else {
-			$this->foundUserLDAPGroups = true;
-		}
-
-		if ( $getShortnames ) {
-			return $shortnamegroups;
-		} else {
-			return $groups;
-		}
-	}
-
-	/**
-	 * Helper function for retrieving all LDAP groups. Returns
-	 * a list of all groups in the LDAP server, that match available groups
-	 * the user is already joined to in MediaWiki, under the appropriate
-	 * basedn, all munged to lowercase.
-	 * Sets $this->foundAllLDAPGroups
-	 *
-	 * @param resource $ldapconn
-	 * @param string $dn
-	 * @return array
-	 * @access private
-	 */
-	function getAllGroups( $ldapconn, $getShortnames = false ) {
-		$this->printDebug( "Entering getAllGroups", NONSENSITIVE );
-
-		//Let's return the saved groups if they are available
-		if ( $getShortnames ) {
-			if ( isset( $this->allLDAPShortnameGroupCache ) ) {
-				return $this->allLDAPShortnameGroupCache;
-			}
-		} else {
-			if ( isset( $this->allLDAPGroupCache ) ) {
-				return $this->allLDAPGroupCache;
-			}
-		}
-
-		//We haven't done a search yet, lets do it now
-		list( $groups, $shortnamegroups ) = $this->getGroups( $ldapconn, '*' );
-
-		//Save the groups for next time we are called
-		$this->allLDAPGroupCache = $groups;
-		$this->allLDAPShortnameGroupCache = $shortnamegroups;
-
-		//We only need to check one of the two arrays, as they should be
-		//identical from a member standpoint.
-		if ( count( $groups ) == 0 ) {
-			$this->foundAllLDAPGroups = false;
-		} else {
-			$this->foundAllLDAPGroups = true;
-		}
-
-		if ( $getShortnames ) {
-			return $shortnamegroups;
-		} else {
-			return $groups;
-		}
-	}
-
-	/**
-	 * Helper function for getUserGroups and getAllGroups. You shouldn't
-	 * call this directly.
-	 *
-	 * @param resource $ldapconn
-	 * @param string $dn
-	 * @return array
-	 * @access private
-	 */
-	function getGroups( $ldapconn, $dn ) {
+	function searchGroups( $dn ) {
 		global $wgLDAPGroupObjectclass, $wgLDAPGroupAttribute, $wgLDAPGroupNameAttribute;
 		global $wgLDAPProxyAgent, $wgLDAPProxyAgentPassword;
 		global $wgUser;
 
-		$this->printDebug( "Entering getGroups", NONSENSITIVE );
+		$this->printDebug( "Entering searchGroups", NONSENSITIVE );
 
 		$base = $this->getBaseDN( GROUPDN );
 
@@ -1412,43 +1418,37 @@ class LdapAuthenticationPlugin extends AuthPlugin {
 			//We'll try to bind as the proxyagent as the proxyagent should normally have more
 			//rights than the user. If the proxyagent fails to bind, we will still be able
 			//to search as the normal user (which is why we don't return on fail).
-			$this->printDebug( "Binding as the proxyagentDN", NONSENSITIVE );
-			$bind = $this->bindAs( $ldapconn, $wgLDAPProxyAgent[$_SESSION['wsDomain']], $wgLDAPProxyAgentPassword[$_SESSION['wsDomain']] );
+			$this->printDebug( "Binding as the proxyagent", NONSENSITIVE );
+			$bind = $this->bindAs( $wgLDAPProxyAgent[$_SESSION['wsDomain']], $wgLDAPProxyAgentPassword[$_SESSION['wsDomain']] );
 		}
 
-		$info = @ldap_search( $ldapconn, $base, $filter );
+		$info = @ldap_search( $this->ldapconn, $base, $filter );
+		#if ( $info["count"] < 1 ) {
 		if ( !$info ) {
 			$this->printDebug( "No entries returned from search.", SENSITIVE );
 
-			//Return an array with two empty arrays so that other functions
+			//Return an array so that other functions
 			//don't error out.
-			return array( array(), array() );
+			return array( "short"=>array(), "dn"=>array() );
 		}
 
-		$entries = @ldap_get_entries( $ldapconn,$info );
+		$entries = @ldap_get_entries( $this->ldapconn, $info );
 
 		//We need to shift because the first entry will be a count
 		array_shift( $entries );
 
 		//Let's get a list of both full dn groups and shortname groups
-		$groups = array();
-		$shortnamegroups = array();
+		$groups = array( "short"=>array(), "dn"=>array() );
 		foreach ( $entries as $entry ) {
-			$mem = strtolower( $entry['dn'] );
-			$shortnamemem = strtolower( $entry[$nameattribute][0] );
-
-			array_push( $groups, $mem );
-			array_push( $shortnamegroups, $shortnamemem );
+			$shortMember = strtolower( $entry[$nameattribute][0] );
+			$dnMember = strtolower( $entry['dn'] );
+			$groups["short"][] = $shortMember;
+			$groups["dn"][] = $dnMember;
 		}
 
-		$both_groups = array();
-		array_push( $both_groups, $groups );
-		array_push( $both_groups, $shortnamegroups );
+		$this->printDebug( "Returned groups:", SENSITIVE, $groups["dn"] );
 
-		$this->printDebug( "Returned groups:" . implode( ",", $groups ) . "", SENSITIVE );
-		$this->printDebug( "Returned groups:" . implode( ",", $shortnamegroups ) . "", SENSITIVE );
-
-		return $both_groups;
+		return $groups;
 	}
 
 	/**
@@ -1462,7 +1462,7 @@ class LdapAuthenticationPlugin extends AuthPlugin {
 	function hasLDAPGroup( $group ) {
 		$this->printDebug( "Entering hasLDAPGroup", NONSENSITIVE );
 
-		return in_array( strtolower( $group ), $this->userLDAPGroups );
+		return in_array( strtolower( $group ), $this->userLDAPGroups["short"] );
 	}
 
 	/**
@@ -1475,7 +1475,7 @@ class LdapAuthenticationPlugin extends AuthPlugin {
 	function isLDAPGroup( $group ) {
 		$this->printDebug( "Entering isLDAPGroup", NONSENSITIVE );
 
-		return in_array( strtolower( $group ), $this->allLDAPGroups );
+		return in_array( strtolower( $group ), $this->allLDAPGroups["short"] );
 	}
 
 	/**
@@ -1489,6 +1489,8 @@ class LdapAuthenticationPlugin extends AuthPlugin {
                 global $wgLDAPGroupsPrevail, $wgGroupPermissions;
 		global $wgLDAPLocallyManagedGroups;
 
+		//TODO: this is *really* ugly code. clean it up!
+
 		$this->printDebug( "Entering setGroups.", NONSENSITIVE );
 
 		# add groups permissions
@@ -1500,23 +1502,23 @@ class LdapAuthenticationPlugin extends AuthPlugin {
 		if ( isset( $wgLDAPLocallyManagedGroups[$_SESSION['wsDomain']] ) ) {
 			$locallyManagedGrps = $wgLDAPLocallyManagedGroups[$_SESSION['wsDomain']];
 			$locallyManagedGrps = array_unique( array_merge( $defaultLocallyManagedGrps, $locallyManagedGrps ) );		
-			$this->printDebug( "Locally managed groups: " . implode( ",", $locallyManagedGrps ) . "", SENSITIVE );
+			$this->printDebug( "Locally managed groups: ", SENSITIVE, $locallyManagedGrps );
 		} else {
 			$locallyManagedGrps = $defaultLocallyManagedGrps;
-			$this->printDebug( "Locally managed groups is unset, using defaults: " . implode( ",", $locallyManagedGrps ) . "", SENSITIVE );
+			$this->printDebug( "Locally managed groups is unset, using defaults: ", SENSITIVE, $locallyManagedGrps );
 		}
 			
 
                 # Add ldap groups as local groups
                 if ( isset( $wgLDAPGroupsPrevail[$_SESSION['wsDomain']] ) && $wgLDAPGroupsPrevail[$_SESSION['wsDomain']] ) {
-			$this->printDebug( "Adding all groups to wgGroupPermissions: " . implode( ",", $this->allLDAPGroups ) . "", SENSITIVE );
-                        foreach ( $this->allLDAPGroups as $ldapgroup )
+			$this->printDebug( "Adding all groups to wgGroupPermissions: ", SENSITIVE, $this->allLDAPGroups );
+                        foreach ( $this->allLDAPGroups["short"] as $ldapgroup )
                                 if ( !array_key_exists( $ldapgroup, $wgGroupPermissions ) )
                                         $wgGroupPermissions[$ldapgroup] = array();
 		}
 
-		$this->printDebug( "Available groups are: " . implode( ",", $localAvailGrps ) . "", NONSENSITIVE );
-		$this->printDebug( "Effective groups are: " . implode( ",", $localUserGrps ) . "", NONSENSITIVE );
+		$this->printDebug( "Available groups are: ", NONSENSITIVE, $localAvailGrps );
+		$this->printDebug( "Effective groups are: ", NONSENSITIVE, $localUserGrps );
 
 		# note: $localUserGrps does not need to be updated with $cGroup added,
 		#       as $localAvailGrps contains $cGroup only once.
@@ -1534,9 +1536,7 @@ class LdapAuthenticationPlugin extends AuthPlugin {
 				$this->printDebug( "Checking to see if user is in: $cGroup", NONSENSITIVE );
 				if ( $this->hasLDAPGroup( $cGroup ) ) {
 					$this->printDebug( "Adding user to: $cGroup", NONSENSITIVE );
-					# so use the addGroup function
 					$user->addGroup( $cGroup );
-					# completed for $cGroup.
 				}
 			}
 		}
@@ -1586,11 +1586,18 @@ class LdapAuthenticationPlugin extends AuthPlugin {
 	 * @param string $debugVal
 	 * @access private
 	 */
-	function printDebug( $debugText, $debugVal ) {
+	function printDebug( $debugText, $debugVal, $debugArr = null ) {
 		global $wgLDAPDebug;
 
-		if ( $wgLDAPDebug > $debugVal ) {
-			echo $debugText . "<br />";
+		if ( isset( $debugArr ) ) {
+			if ( $wgLDAPDebug > $debugVal ) {
+				$text = $debugText . " " . implode( "::", $debugArr );
+				wfDebugLog( 'ldap', $text, false );
+			}
+		} else {
+			if ( $wgLDAPDebug > $debugVal ) {
+				wfDebugLog( 'ldap', $debugText, false );
+			}
 		}
 	}
 
@@ -1598,18 +1605,17 @@ class LdapAuthenticationPlugin extends AuthPlugin {
 	 * Binds as $userdn with $password. This can be called with only the ldap
 	 * connection resource for an anonymous bind.
 	 *
-	 * @param resourse $ldapconn
 	 * @param string $userdn
 	 * @param string $password
 	 * @return bool
 	 * @access private
 	 */
-	function bindAs( $ldapconn, $userdn=null, $password=null ) {
+	function bindAs( $userdn=null, $password=null ) {
 		//Let's see if the user can authenticate.
 		if ( $userdn == null || $password == null ) {
-			$bind = @ldap_bind( $ldapconn );
+			$bind = @ldap_bind( $this->ldapconn );
 		} else {
-			$bind = @ldap_bind( $ldapconn, $userdn, $password );
+			$bind = @ldap_bind( $this->ldapconn, $userdn, $password );
 		}
 		if ( !$bind ) {
 			$this->printDebug( "Failed to bind as $userdn", NONSENSITIVE );
@@ -1620,16 +1626,17 @@ class LdapAuthenticationPlugin extends AuthPlugin {
 	}
 
 	/**
-	 * Returns true if smartcard authentication is allowed, and the user is
-	 * authenticating using the smartcard domain.
+	 * Returns true if auto-authentication is allowed, and the user is
+	 * authenticating using the auto-authentication domain.
 	 *
 	 * @return bool
 	 * @access private
 	 */
-	function useSmartcardAuth() {
-		global $wgLDAPUseSmartcardAuth, $wgLDAPSmartcardDomain;
+	function useAutoAuth() {
+		global $wgLDAPAutoAuthDomain;
 
-		return $wgLDAPUseSmartcardAuth && $_SESSION['wsDomain'] == $wgLDAPSmartcardDomain;
+		$this->printDebug( "", NONSENSITIVE );
+		return isset( $wgLDAPAutoAuthDomain ) && $_SESSION['wsDomain'] == $wgLDAPAutoAuthDomain;
 	}
 
 	/**
@@ -1699,17 +1706,6 @@ class LdapAuthenticationPlugin extends AuthPlugin {
 
 }
 
-/**
- * Add extension information to Special:Version
- */
-$wgExtensionCredits['other'][] = array(
-	'name' => 'LDAP Authentication Plugin',
-	'version' => '1.1g',
-	'author' => 'Ryan Lane',
-	'description' => 'LDAP Authentication plugin with support for multiple LDAP authentication methods',
-	'url' => 'http://www.mediawiki.org/wiki/Extension:LDAP_Authentication',
-	);
-
 // The following was derived from the SSL Authentication plugin
 // http://www.mediawiki.org/wiki/SSL_authentication
 
@@ -1719,126 +1715,34 @@ $wgExtensionCredits['other'][] = array(
  * @access public
  */
 function AutoAuthSetup() {
+	global $wgLDAPAutoAuthUsername;
 	global $wgLDAPSSLUsername;
+	global $wgLDAPAutoAuthDomain;
+	global $wgLDAPSmartcardDomain;
 	global $wgHooks;
 	global $wgAuth;
-	global $wgLDAPAutoAuthMethod;
 
 	$wgAuth = new LdapAuthenticationPlugin();
 
 	$wgAuth->printDebug( "Entering AutoAuthSetup.", NONSENSITIVE );
 
-	//We may add quite a few different auto authenticate methods in the
-	//future, let's make it easy to support.
-	switch( $wgLDAPAutoAuthMethod ) {
-		case "smartcard":
-			$wgAuth->printDebug( "Allowing smartcard authentication.", NONSENSITIVE );
-			$wgAuth->printDebug( "wgLDAPSSLUsername = $wgLDAPSSLUsername", SENSITIVE );
+	//Set configuration options for backwards compatibility
+	if ( isset( $wgLDAPSSLUsername ) ) {
+		$wgAuth->printDebug( 'Setting $wgLDAPAutoAuthUsername to $wgLDAPSSLUsername; please change your configuration to fix this deprecated configuration variable.', NONSENSITIVE );
+		$wgLDAPAutoAuthUsername = $wgLDAPSSLUsername;
+	}
+	if ( isset( $wgLDAPSmartcardDomain ) ) {
+		$wgAuth->printDebug( 'Setting $wgLDAPAutoAuthDomain to $wgLDAPSmartcardDomain; please change your configuration to fix this deprecated configuration variable.', NONSENSITIVE );
+		$wgLDAPAutoAuthDomain = $wgLDAPSmartcardDomain;
+	}
 
-			if( $wgLDAPSSLUsername != null ) {
-				$wgAuth->printDebug( "wgLDAPSSLUsername is not null, adding hooks.", NONSENSITIVE );
-				$wgHooks['AutoAuthenticate'][] = 'SSLAuth'; /* Hook for magical authN */
-				$wgHooks['PersonalUrls'][] = 'NoLogout'; /* Disallow logout link */
-			}
-			break;
-		default:
-			$wgAuth->printDebug( "Not using any AutoAuthentication methods.", NONSENSITIVE );
+	if( $wgLDAPAutoAuthUsername != null ) {
+		$wgAuth->printDebug( "wgLDAPAutoAuthUsername is not null, adding hooks.", NONSENSITIVE );
+		if ( version_compare( $wgVersion, '1.14.0', '<' ) ) {
+			$wgHooks['UserLoadFromSession'][] = 'LdapAutoAuthentication::Authenticate';
+		} else {
+			$wgHooks['UserLoadAfterLoadFromSession'][] = 'LdapAutoAuthentication::Authenticate';
+		}
+		$wgHooks['PersonalUrls'][] = 'LdapAutoAuthentication::NoLogout'; /* Disallow logout link */
 	}
 }
-
-/* No logout link in MW */
-function NoLogout( &$personal_urls, $title ) {
-	$personal_urls['logout'] = null;
-}
-
-/**
- * Does the SSL authentication piece of the LDAP plugin.
- *
- * @access public
- */
-function SSLAuth( &$user ) {
-	global $wgLDAPSSLUsername;
-	global $wgUser;
-	global $wgAuth;
-
-	$wgAuth->printDebug( "Entering SSLAuth.", NONSENSITIVE );
-
-	//Give us a user, see if we're around
-	$tmpuser = User::LoadFromSession();
-
-	//They already with us?  If so, quit this function.
-	if( $tmpuser->isLoggedIn() ) {
-		$wgAuth->printDebug( "User is already logged in.", NONSENSITIVE );
-		return true;
-	}
-
-	//Let regular authentication plugins configure themselves for auto
-	//authentication chaining
-	$wgAuth->autoAuthSetup();
-
-	//The user hasn't already been authenticated, let's check them
-	$wgAuth->printDebug( "User is not logged in, we need to authenticate", NONSENSITIVE );
-	$authenticated = $wgAuth->authenticate( $wgLDAPSSLUsername );
-	if ( !$authenticated ) {
-		//If the user doesn't exist in LDAP, there isn't much reason to
-		//go any further.
-		$wgAuth->printDebug("User wasn't found in LDAP, exiting.", NONSENSITIVE );
-		return false;
-	}
-
-	//We need the username that MediaWiki will always use, *not* the one we
-	//get from LDAP.
-	$mungedUsername = $wgAuth->getCanonicalName( $wgLDAPSSLUsername );
-
-	$wgAuth->printDebug( "User exists in LDAP; finding the user by name in MediaWiki.", NONSENSITIVE );
-
-	//Is the user already in the database?
-	$tmpuser = User::newFromName( $mungedUsername );
-
-	if ( $tmpuser == null ) {
-		$wgAuth->printDebug( "Username is not a valid MediaWiki username.", NONSENSITIVE );
-		return false;
-	}
-
-	//If exists, log them in
-	if( $tmpuser->getID() != 0 ) {
-		$wgAuth->printDebug( "User exists in local database, logging in.", NONSENSITIVE );
-		$wgUser = &$tmpuser;
-		$wgAuth->updateUser( $wgUser );
-		$wgUser->setCookies();
-		$wgUser->setupSession();
-		return true;
-	}
-	$wgAuth->printDebug( "User does not exist in local database; creating.", NONSENSITIVE );
-
-	//This section contains a silly hack for MW
-	global $wgLang;
-	global $wgContLang;
-	global $wgRequest;
-	if( !isset( $wgLang ) )
-	{
-		$wgLang = $wgContLang;
-		$wgLangUnset = true;
-	}
-
-	$wgAuth->printDebug( "Creating LoginForm.", NONSENSITIVE );
-
-	//This creates our form that'll let us create a new user in the database
-	$lf = new LoginForm( $wgRequest );
-
-	//The user we'll be creating...
-	$wgUser = &$tmpuser;
-	$wgUser->setName( $wgContLang->ucfirst( $mungedUsername ) );
-
-	$wgAuth->printDebug( "Creating User.", NONSENSITIVE );
-
-	//Create the user
-	$lf->initUser( $wgUser );
-
-	//Initialize the user
-	$wgUser->setupSession();
-	$wgUser->setCookies();
-
-	return true;
-}
-

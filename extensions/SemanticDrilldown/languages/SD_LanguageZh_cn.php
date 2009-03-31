@@ -1,5 +1,7 @@
 <?php
 /**
+ * @ingroup Language
+ * @ingroup SDLanguage
  *@author Yaron Koren 翻译:张致信 本档系以电子字典译自繁体版，请自行修订(Translation: Roc Michael Email:roc.no1@gmail.com. This file is translated from Tradition Chinese by useing electronic dictionary. Please correct the file by yourself.) 
  */
 

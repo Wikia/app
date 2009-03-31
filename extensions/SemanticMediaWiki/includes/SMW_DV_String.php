@@ -1,4 +1,8 @@
 <?php
+/**
+ * @file
+ * @ingroup SMWDataValues
+ */
 
 /**
  * This datavalue implements String-Datavalues suitable for defining
@@ -6,7 +10,7 @@
  *
  * @author Nikolas Iwan
  * @author Markus Krötzsch
- * @note AUTOLOADED
+ * @ingroup SMWDataValues
  */
 class SMWStringValue extends SMWDataValue {
 
@@ -14,9 +18,10 @@ class SMWStringValue extends SMWDataValue {
 	                         // however, this string might contain HTML entities such as &amp;
 
 	protected function parseUserValue($value) {
+		wfLoadExtensionMessages('SemanticMediaWiki');
 		if ($value!='') {
 			$this->m_value = smwfXMLContentEncode($value);
-			if ( (strlen($this->m_value) > 255) && ($this->m_typeid == '_str') ) { // limit size (for DB indexing)
+			if ( (strlen($this->m_value) > 255) && ($this->m_typeid != '_txt') && ($this->m_typeid != '_cod') ) { // limit size (for DB indexing)
 				$this->addError(wfMsgForContent('smw_maxstring', mb_substr($value, 0, 42) . ' <span class="smwwarning">[&hellip;]</span> ' . mb_substr($value, mb_strlen($this->m_value) - 42)));
 			}
 		} else {
@@ -63,7 +68,7 @@ class SMWStringValue extends SMWDataValue {
 	}
 
 	public function getInfolinks() {
-		if ($this->m_typeid == '_str') {
+		if ( ($this->m_typeid != '_txt') && ($this->m_typeid != '_cod') ) {
 			return SMWDataValue::getInfolinks();
 		}
 		return $this->m_infolinks;
@@ -73,10 +78,10 @@ class SMWStringValue extends SMWDataValue {
 		// Create links to mapping services based on a wiki-editable message. The parameters 
 		// available to the message are:
 		// $1: urlencoded string
-		if ($this->m_typeid != '_str') {
-			return false; // no services for Type:Text and Type:Code
-		} else {
+		if ( ($this->m_typeid != '_txt') && ($this->m_typeid != '_cod') ){
 			return array(rawurlencode($this->m_value));
+		} else {
+			return false; // no services for Type:Text and Type:Code
 		}
 	}
 
@@ -94,16 +99,14 @@ class SMWStringValue extends SMWDataValue {
 	 */
 	protected function getAbbValue($linked) {
 		$len = mb_strlen($this->m_value);
-		$starttag = ($this->m_typeid=='_cod')?'<pre>':'';
-		$endtag = ($this->m_typeid=='_cod')?'</pre>':'';
 		if ( ($len > 255) && ($this->m_typeid != '_cod') ) {
 			if ( ($linked === NULL)||($linked === false) ) {
 				return mb_substr($this->m_value, 0, 42) . ' <span class="smwwarning">&hellip;</span> ' . mb_substr($this->m_value, $len - 42);
 			} else {
-				smwfRequireHeadItem(SMW_HEADER_TOOLTIP);
+				SMWOutputs::requireHeadItem(SMW_HEADER_TOOLTIP);
 				return mb_substr($this->m_value, 0, 42) . ' <span class="smwttpersist"> &hellip; <span class="smwttcontent">' . $this->m_value . '</span></span> ' . mb_substr($this->m_value, $len - 42);
 			}
-		} elseif ($len > 255) {
+		} elseif ($this->m_typeid == '_cod') {
 			return $this->getCodeDisplay($this->m_value,true);
 		} else {
 			return $this->m_value;

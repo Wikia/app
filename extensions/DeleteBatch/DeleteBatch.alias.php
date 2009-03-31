@@ -11,21 +11,26 @@ $aliases = array();
  * @author Jon Harald Søby
  */
 $aliases['en'] = array(
-    'DeleteBatch' => array( 'DeleteBatch' ),
+	'DeleteBatch' => array( 'DeleteBatch' ),
 );
 
 /** Arabic (العربية)
  * @author Meno25
  */
 $aliases['ar'] = array(
-	'DeleteBatch' => array( 'حذف الباتش' ),
+	'DeleteBatch' => array( 'حذف_الباتش' ),
 );
 
 /** Egyptian Spoken Arabic (مصرى)
  * @author Meno25
  */
 $aliases['arz'] = array(
-	'DeleteBatch' => array( 'حذف الباتش' ),
+	'DeleteBatch' => array( 'حذف_الباتش' ),
+);
+
+/** Bosnian (Bosanski) */
+$aliases['bs'] = array(
+	'DeleteBatch' => array( 'BrisanjeBatch' ),
 );
 
 /** French (Français) */
@@ -45,14 +50,29 @@ $aliases['he'] = array(
 	'DeleteBatch' => array( 'מחיקת_קבוצה' ),
 );
 
+/** Croatian (Hrvatski) */
+$aliases['hr'] = array(
+	'DeleteBatch' => array( 'Skupno_brisanje' ),
+);
+
 /** Haitian (Kreyòl ayisyen) */
 $aliases['ht'] = array(
 	'DeleteBatch' => array( 'SiprimeLo' ),
 );
 
+/** Hungarian (Magyar) */
+$aliases['hu'] = array(
+	'DeleteBatch' => array( 'Tömeges törlés' ),
+);
+
 /** Luxembourgish (Lëtzebuergesch) */
 $aliases['lb'] = array(
 	'DeleteBatch' => array( 'Läsch-Batch' ),
+);
+
+/** Nedersaksisch (Nedersaksisch) */
+$aliases['nds-nl'] = array(
+	'DeleteBatch' => array( 'Paginareeks_vortdoon' ),
 );
 
 /** Dutch (Nederlands) */
@@ -64,7 +84,12 @@ $aliases['nl'] = array(
  * @author Jon Harald Søby
  */
 $aliases['no'] = array(
-	'DeleteBatch' => array( 'Slett_en_serie_sider' ),
+	'DeleteBatch' => array( 'Slett en serie sider' ),
+);
+
+/** Occitan (Occitan) */
+$aliases['oc'] = array(
+	'DeleteBatch' => array( 'Supression en seria', 'SupressionEnSeria' ),
 );
 
 /** Portuguese (Português) */
@@ -75,5 +100,10 @@ $aliases['pt'] = array(
 /** Brazilian Portuguese (Português do Brasil) */
 $aliases['pt-br'] = array(
 	'DeleteBatch' => array( 'Apagar em massa' ),
+);
+
+/** Swahili (Kiswahili) */
+$aliases['sw'] = array(
+	'DeleteBatch' => array( 'FutaFungu' ),
 );
 

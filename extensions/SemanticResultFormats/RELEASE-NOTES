@@ -1,0 +1,31 @@
+For a documentation of all features, see
+http://semantic-mediawiki.org/wiki/Semantic_Result_Formats
+
+== SRF 1.4.0 ==
+
+Released on November 26 2008.
+
+This is the initial release of Semantic Result Formats. The version number
+was chosen in order to be aligned to the Semantic MediaWiki core distribution.
+SRF 1.4.0 is compatible to SMW 1.4.0 and thus equally versioned.
+
+The initial sets of Semantic Result Formats are:
+* calendar (written by Yaron Koren)
+* eventline (written by Markus Krötzsch and based on code by MIT's Simile group)
+* googlebar (written by Denny Vrandecic)
+* googlepie (written by Denny Vrandecic)
+* graph (written by Frank Dengler)
+* timeline (written by Markus Krötzsch and based on code by MIT's Simile group)
+
+== SRF 1.4.1 ==
+
+Released on December 9 2008.
+
+The initialization of formats was changed to use the global $srfgFormats
+variable, instead of the srfInit() function.
+
+New formats in this version are:
+* average (written by Yaron Koren)
+* min (written by Yaron Koren)
+* max (written by Yaron Koren)
+* sum (written by Nathan Yergler)

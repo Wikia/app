@@ -14,8 +14,8 @@ CREATE TABLE /*$wgDBprefix*/reader_feedback_history (
   -- Foreign key to page.page_id
   rfh_page_id integer NOT NULL,
   rfh_tag char(20) NOT NULL default '',
-  rfh_total integer NOT NULL default 0,
-  rfh_count integer NOT NULL default 0,
+  rfh_total integer unsigned NOT NULL default 0,
+  rfh_count integer unsigned NOT NULL default 0,
   -- MW date of the day this average corresponds to
   rfh_date char(14) NOT NULL default '',
   PRIMARY KEY (rfh_page_id,rfh_tag,rfh_date)

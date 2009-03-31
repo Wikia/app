@@ -5,11 +5,11 @@ SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 
 -- --------------------------------------------------------
 
--- 
+--
 -- Table structure for table sdoc_form
 -- This table contains the configuration of which documents
 -- may be signed and how they should be signed.
--- 
+--
 
 CREATE TABLE IF NOT EXISTS /*$wgDBprefix*/sdoc_form (
   form_id int(11) NOT NULL auto_increment,
@@ -18,7 +18,7 @@ CREATE TABLE IF NOT EXISTS /*$wgDBprefix*/sdoc_form (
   form_pageid int(11) NOT NULL default '0',
   form_pagename varchar(255) character set latin1 collate latin1_bin NOT NULL default '',
 
--- Users signing the document will only see this old 
+-- Users signing the document will only see this old
 -- revision of the page.
   form_oldid int(11) NOT NULL default '0',
 
@@ -43,10 +43,10 @@ CREATE TABLE IF NOT EXISTS /*$wgDBprefix*/sdoc_form (
 
 -- --------------------------------------------------------
 
--- 
+--
 -- Table structure for table sdoc_signature
 -- This table contains the actual signatures.
--- 
+--
 
 CREATE TABLE IF NOT EXISTS /*$wgDBprefix*/sdoc_signature (
   sig_id int(11) NOT NULL auto_increment,

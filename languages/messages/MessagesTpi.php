@@ -9,6 +9,22 @@
  * @author לערי ריינהארט
  */
 
+$specialPageAliases = array(
+	'Userlogin'                 => array( 'Yusa login' ),
+	'Userlogout'                => array( 'Yusa logaut' ),
+	'CreateAccount'             => array( 'Mekim nupela login' ),
+	'Preferences'               => array( 'Ol laik bilong mi' ),
+	'Watchlist'                 => array( 'Lukautbuk' ),
+	'Recentchanges'             => array( 'Nupela senis' ),
+	'Upload'                    => array( 'Salim media fail' ),
+	'Randompage'                => array( 'Soim wanpela pes' ),
+	'Specialpages'              => array( 'Sipesol pes' ),
+	'Contributions'             => array( 'Ol senis bilong yusa' ),
+	'Emailuser'                 => array( 'Imel yusa' ),
+	'Confirmemail'              => array( 'Orait long imel' ),
+	'Whatlinkshere'             => array( 'Ol link ikam long hia' ),
+);
+
 $messages = array(
 # User preference toggles
 'tog-underline'               => 'Putim lain ananit long ol link:',
@@ -38,8 +54,6 @@ $messages = array(
 'tog-watchlisthideown'        => 'Haitim ol senis mi wokim long lukautbuk bilong mi',
 'tog-watchlisthidebots'       => 'Haitim ol senis ol bot i wokim long lukautbuk bilong mi',
 'tog-watchlisthideminor'      => 'Haitim ol liklik senis long lukautbuk bilong mi',
-
-'skinpreview' => '(pes mi senisim, pastaim long raitim)',
 
 # Dates
 'sunday'    => 'Sande',
@@ -109,8 +123,8 @@ $messages = array(
 'userlogout' => 'Logaut',
 
 # Edit pages
-'summary'           => 'Liklik toksave bilong senis',
-'subject'           => 'Nem bilong pes (o hap bilong pes)',
+'summary'           => 'Liklik toksave bilong senis:',
+'subject'           => 'Nem bilong pes (o hap bilong pes):',
 'minoredit'         => 'Dispela emi liklik senis',
 'watchthis'         => 'Putim dispela pes long lukautbuk bilong mi',
 'savearticle'       => 'Raitim pes',
@@ -118,19 +132,20 @@ $messages = array(
 'showpreview'       => 'Soim pes wantaim senis (pastaim long raitim)',
 'showlivepreview'   => 'Soim senis kwiktaim taim mi wokim (pastaim long raitim)',
 'showdiff'          => 'Soim ol senis',
-'summary-preview'   => 'Toksave bilong senis bai luk olsem',
-'subject-preview'   => 'Nem bilong pes (o hap bilong pes) bai olsem',
-'copyrightwarning'  => 'Toksave: olgeta senis yu wokim long long {{SITENAME}} bai stap ananit long tokorait $2 (lukim $1 long painimaut moa long dispela). Sapos yu no laikim narapela manmeri long senisim olgeta, o salim dispela i go long ol kainkain hap, noken raitim long hia.<br />
+'summary-preview'   => 'Toksave bilong senis bai luk olsem:',
+'subject-preview'   => 'Nem bilong pes (o hap bilong pes) bai olsem:',
+'copyrightwarning'  => "Toksave: olgeta senis yu wokim long long {{SITENAME}} bai stap ananit long tokorait $2 (lukim $1 long painimaut moa long dispela). Sapos yu no laikim narapela manmeri long senisim olgeta, o salim dispela i go long ol kainkain hap, noken raitim long hia.<br />
 Na tu yu tok tru nau olsem yu raitim dispela yu yet, o yu kisim long wanpela hap we lo i tok olsem i orait long kisim (Tok Inglis: <i>public domain</i>).
-<strong>YU NOKEN RAITIM WANPELA SAMTING SAPOS YU NO WOKIM YU YET, O YU KISIM TOKORAIT LONG PUTIM LONG HIA!</strong>',
-'copyrightwarning2' => 'Toksave: olgeta senis yu wokim long long {{SITENAME}} bai inap senis o raus long han bilong ol narapela manmeri. Sapos yu no laikim narapela manmeri long senisim olgeta samting yu raitim, o salim dispela i go long ol kainkain hap, noken raitim long hia.<br />
+'''YU NOKEN RAITIM WANPELA SAMTING SAPOS YU NO WOKIM YU YET, O YU KISIM TOKORAIT LONG PUTIM LONG HIA!'''",
+'copyrightwarning2' => "Toksave: olgeta senis yu wokim long long {{SITENAME}} bai inap senis o raus long han bilong ol narapela manmeri. Sapos yu no laikim narapela manmeri long senisim olgeta samting yu raitim, o salim dispela i go long ol kainkain hap, noken raitim long hia.<br />
 Na tu yu tok tru nau olsem yu raitim dispela yu yet, o yu kisim long wanpela hap we lo i tok olsem i orait long kisim (Tok Inglis: <i>public domain</i>). Lukim $1 long painimaut moa long dispela.<br />
-<strong>YU NOKEN RAITIM WANPELA SAMTING IGAT COPYRIGHT LONG EN (NARAPELA MANMERI I RAITIM)!</strong>',
+'''YU NOKEN RAITIM WANPELA SAMTING IGAT COPYRIGHT LONG EN (NARAPELA MANMERI I RAITIM)!'''",
 'templatesused'     => 'Dispela pes i yusim ol templet:',
 
 # Preferences page
 'mypreferences'   => 'Ol laik bilong mi',
 'prefs-edits'     => 'Hamas senis:',
+'skin-preview'    => 'pes mi senisim, pastaim long raitim',
 'prefs-rc'        => 'Nupela senis',
 'prefs-watchlist' => 'Lukautbuk',
 
@@ -199,6 +214,9 @@ Sapos yu laik rausim dispela pes long lukautbuk bilong yu bihain, paitim \"Pinis
 'wlheader-showupdated' => "* Ol pes i senis pinis bihain long taim yu lukim ol igat nem i '''strongpela'''",
 
 'enotif_reset' => 'Makim olgeta pes olsem mi lukim pinis',
+
+# Protect
+'prot_1movedto2' => '[[$1]] i surik i go long [[$2]] pinis',
 
 # Contributions
 'contributions' => 'Ol senis yusa i wokim',

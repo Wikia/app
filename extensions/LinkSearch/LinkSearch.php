@@ -12,14 +12,14 @@ $wgExtensionCredits['specialpage'][] = array(
 	'description'    => 'Find pages with external links matching specific patterns',
 	'descriptionmsg' => 'linksearch-desc',
 	'url'            => 'http://www.mediawiki.org/wiki/Extension:LinkSearch',
-	'version'        => '1.3',
+	'version'        => '1.4',
 );
 
-$wgExtensionMessagesFiles['LinkSearch'] = dirname(__FILE__) . '/LinkSearch.i18n.php';
-$wgExtensionAliasesFiles['LinkSearch'] = dirname(__FILE__) . '/LinkSearch.alias.php';
+$dir = dirname(__FILE__) . '/';
+$wgExtensionMessagesFiles['LinkSearch'] = $dir . 'LinkSearch.i18n.php';
+$wgExtensionAliasesFiles['LinkSearch'] = $dir . 'LinkSearch.alias.php';
 
-$wgSpecialPages['Linksearch'] = array( /*class*/ 'LinkSearchSpecialPage',
-	/*name*/ 'Linksearch', /* permission */'', /*listed*/ true,
-	/*function*/ false, /*file*/ false );
-$wgAutoloadClasses['LinkSearchPage'] = dirname(__FILE__) . '/LinkSearch_body.php';
-$wgAutoloadClasses['LinkSearchSpecialPage'] = dirname(__FILE__) . '/LinkSearch_body.php';
+$wgSpecialPages['LinkSearch'] = 'LinkSearchSpecialPage';
+$wgSpecialPageGroups['LinkSearch'] = 'redirects';
+$wgAutoloadClasses['LinkSearchPage'] = $dir . 'LinkSearchPage.php';
+$wgAutoloadClasses['LinkSearchSpecialPage'] = $dir . 'LinkSearch_body.php';

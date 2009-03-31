@@ -16,11 +16,12 @@ EOT;
 $dir = dirname(__FILE__) .'/';
 $wgAutoloadClasses['Call'] = $dir . 'Call_body.php';
 $wgExtensionMessagesFiles['Call'] = $dir . 'Call.i18n.php';
+$wgExtensionAliasesFiles['Call'] = $dir . 'Call.alias.php';
 $wgSpecialPages['Call'] = 'Call';
 
 $wgExtensionCredits['specialpage'][] = array(
 	'name' => 'Call',
-	'version' => '1.0',
+	'version' => '1.1',
 	'author' => 'Algorithmix',
 	'description' => 'Create a hyperlink to a template (or to a normal wiki article) with parameter passing. Can be used at the browser’s command line or within wiki text.',
 	'descriptionmsg' => 'call-desc',

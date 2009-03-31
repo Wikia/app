@@ -44,7 +44,9 @@ function doSpecialEditData($query = '') {
 }
 
 function printEditForm($form_name, $target_name) {
-	global $wgOut, $wgRequest, $sfgScriptPath, $sfgFormPrinter, $sfgYUIBase;
+	global $wgOut, $wgRequest, $wgScriptPath, $sfgScriptPath, $sfgFormPrinter, $sfgYUIBase;
+
+	wfLoadExtensionMessages('SemanticForms');
 
 	$javascript_text = "";
 	// get contents of form definition file
@@ -56,12 +58,12 @@ function printEditForm($form_name, $target_name) {
 		if ($form_name == '')
 			$text = '<p class="error">' . wfMsg('sf_editdata_badurl') . "</p>\n";
 		else
-			$text = '<p class="error">Error: No form page was found at ' . sffLinkText(SF_NS_FORM, $form_name) . ".</p>\n";
+			$text = '<p class="error">Error: No form page was found at ' . SFUtils::linkText(SF_NS_FORM, $form_name) . ".</p>\n";
 	} elseif (! $target_title || ! $target_title->exists() ) {
 		if ($target_name == '')
 			$text = '<p class="error">' . wfMsg('sf_editdata_badurl') . "</p>\n";
 		else
-			$text = '<p class="error">Error: No page was found at ' . sffLinkText(null, $target_name) . ".</p>\n";
+			$text = '<p class="error">Error: No page was found at ' . SFUtils::linkText(null, $target_name) . ".</p>\n";
 	} else {
 		$s = wfMsg('sf_editdata_title', $form_title->getText(), $target_title->getPrefixedText());
 		$wgOut->setPageTitle($s);
@@ -87,7 +89,8 @@ function printEditForm($form_name, $target_name) {
 		list ($form_text, $javascript_text, $data_text, $form_page_title) =
 			$sfgFormPrinter->formHTML($form_definition, $form_submitted, $is_text_source, $edit_content, $page_title);
 		if ($form_submitted) {
-			$text = sffPrintRedirectForm($target_title, $data_text, $wgRequest->getVal('wpSummary'), $save_page, $preview_page, $diff_page, $wgRequest->getCheck('wpMinoredit'), $wgRequest->getCheck('wpWatchthis'), $wgRequest->getVal('wpStarttime'), $wgRequest->getVal('wpEdittime'));
+			$wgOut->setArticleBodyOnly( true );
+			$text = SFUtils::printRedirectForm($target_title, $data_text, $wgRequest->getVal('wpSummary'), $save_page, $preview_page, $diff_page, $wgRequest->getCheck('wpMinoredit'), $wgRequest->getCheck('wpWatchthis'), $wgRequest->getVal('wpStarttime'), $wgRequest->getVal('wpEdittime'));
 		} else {
 			// override the default title for this page if
 			// a title was specified in the form
@@ -133,10 +136,14 @@ END;
 	$wgOut->addScript('<script type="text/javascript" src="' .  $sfgYUIBase . 'get/get-min.js"></script>' . "\n");
 	$wgOut->addScript('<script type="text/javascript" src="' .  $sfgYUIBase . 'connection/connection-min.js"></script>' . "\n");
 	$wgOut->addScript('<script type="text/javascript" src="' .  $sfgYUIBase . 'json/json-min.js"></script>' . "\n");
+	$wgOut->addScript('<script type="text/javascript" src="' .  $sfgYUIBase . 'datasource/datasource-min.js"></script>' . "\n");
 	$wgOut->addScript('<script type="text/javascript" src="' .  $sfgYUIBase . 'autocomplete/autocomplete-min.js"></script>' . "\n");
 	$wgOut->addScript('<script type="text/javascript" src="' . $sfgScriptPath . '/libs/SF_yui_autocompletion.js"></script>' . "\n");
 	$wgOut->addScript('<script type="text/javascript" src="' . $sfgScriptPath . '/libs/floatbox.js"></script>' . "\n");
+	global $wgFCKEditorDir;
+	if ($wgFCKEditorDir)
+		$wgOut->addScript('<script type="text/javascript" src="' . "$wgScriptPath/$wgFCKEditorDir" . '/fckeditor.js"></script>' . "\n");
 	$wgOut->addScript('		<script type="text/javascript">' . "\n" . $javascript_text . '</script>' . "\n");
-	$wgOut->addMeta('robots','noindex,nofollow');
+	$wgOut->setRobotPolicy( 'noindex,nofollow' );
 	$wgOut->addHTML($text);
 }

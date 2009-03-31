@@ -200,7 +200,7 @@ class ExtensionDistributorPage extends SpecialPage {
 			$dir = "$wgExtDistWorkingCopy/$version/extensions/$extension";
 			$retval = -1;
 			$files = call_user_func_array( 'wfEscapeShellArg', glob( "$dir/*.php" ) );
-			wfShellExec( "grep -q ExtensionFunctions " . $files, $retval );
+			wfShellExec( "grep -q '\bExtensionFunctions' " . $files, $retval );
 			$needEF = !$retval;
 
 			// Create the archive

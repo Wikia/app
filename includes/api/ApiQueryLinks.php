@@ -76,9 +76,9 @@ class ApiQueryLinks extends ApiQueryGeneratorBase {
 		$params = $this->extractRequestParams();
 
 		$this->addFields(array (
-			$this->prefix . '_from pl_from',
-			$this->prefix . '_namespace pl_namespace',
-			$this->prefix . '_title pl_title'
+			$this->prefix . '_from AS pl_from',
+			$this->prefix . '_namespace AS pl_namespace',
+			$this->prefix . '_title AS pl_title'
 		));
 
 		$this->addTables($this->table);
@@ -92,7 +92,7 @@ class ApiQueryLinks extends ApiQueryGeneratorBase {
 					"original value returned by the previous query", "_badcontinue");
 			$plfrom = intval($cont[0]);
 			$plns = intval($cont[1]);
-			$pltitle = $this->getDb()->strencode($this->titleToKey($cont[2]));
+			$pltitle = $this->getDB()->strencode($this->titleToKey($cont[2]));
 			$this->addWhere("{$this->prefix}_from > $plfrom OR ".
 					"({$this->prefix}_from = $plfrom AND ".
 					"({$this->prefix}_namespace > $plns OR ".
@@ -213,6 +213,6 @@ class ApiQueryLinks extends ApiQueryGeneratorBase {
 	}
 
 	public function getVersion() {
-		return __CLASS__ . ': $Id: ApiQueryLinks.php 37909 2008-07-22 13:26:15Z catrope $';
+		return __CLASS__ . ': $Id: ApiQueryLinks.php 43271 2008-11-06 22:38:42Z siebrand $';
 	}
 }

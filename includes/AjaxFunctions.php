@@ -14,7 +14,8 @@ if( !defined( 'MEDIAWIKI' ) ) {
  * Modified function from http://pure-essence.net/stuff/code/utf8RawUrlDecode.phps
  *
  * @param $source String escaped with Javascript's escape() function
- * @param $iconv_to String destination character set will be used as second paramether in the iconv function. Default is UTF-8.
+ * @param $iconv_to String destination character set will be used as second parameter 
+ * in the iconv function. Default is UTF-8.
  * @return string
  */
 function js_unescape($source, $iconv_to = 'UTF-8') {
@@ -72,91 +73,6 @@ function code2utf($num){
    return '';
 }
 
-define( 'AJAX_SEARCH_VERSION', 2 );	//AJAX search cache version
-
-function wfSajaxSearch( $term ) {
-	global $wgContLang, $wgUser, $wgCapitalLinks, $wgMemc;
-	$limit = 16;
-	$sk = $wgUser->getSkin();
-	$output = '';
-
-	$term = trim( $term );
-	$term = $wgContLang->checkTitleEncoding( $wgContLang->recodeInput( js_unescape( $term ) ) );
-	if ( $wgCapitalLinks )
-		$term = $wgContLang->ucfirst( $term );
-	$term_title = Title::newFromText( $term );
-
-	$memckey = $term_title ? wfMemcKey( 'ajaxsearch', md5( $term_title->getFullText() ) ) : wfMemcKey( 'ajaxsearch', md5( $term ) );
-	$cached = $wgMemc->get($memckey);
-	if( is_array( $cached ) && $cached['version'] == AJAX_SEARCH_VERSION ) {
-		$response = new AjaxResponse( $cached['html'] );
-		$response->setCacheDuration( 30*60 );
-		return $response;
-	}
-
-	$r = $more = '';
-	$canSearch = true;
-
-	$results = PrefixSearch::titleSearch( $term, $limit + 1 );
-	foreach( array_slice( $results, 0, $limit ) as $titleText ) {
-		$r .= '<li>' . $sk->makeKnownLink( $titleText ) . "</li>\n";
-	}
-
-	// Hack to check for specials
-	if( $results ) {
-		$t = Title::newFromText( $results[0] );
-		if( $t && $t->getNamespace() == NS_SPECIAL ) {
-			$canSearch = false;
-			if( count( $results ) > $limit ) {
-				$more = '<i>' .
-					$sk->makeKnownLinkObj(
-						SpecialPage::getTitleFor( 'Specialpages' ),
-						wfMsgHtml( 'moredotdotdot' ) ) .
-					'</i>';
-			}
-		} else {
-			if( count( $results ) > $limit ) {
-				$more = '<i>' .
-					$sk->makeKnownLinkObj(
-						SpecialPage::getTitleFor( "Allpages", $term ),
-						wfMsgHtml( 'moredotdotdot' ) ) .
-					'</i>';
-			}
-		}
-	}
-
-	$valid = (bool) $term_title;
-	$term_url = urlencode( $term );
-	$term_normalized = $valid ? $term_title->getFullText() : $term;
-	$term_display = htmlspecialchars( $term );
-	$subtitlemsg = ( $valid ? 'searchsubtitle' : 'searchsubtitleinvalid' );
-	$subtitle = wfMsgExt( $subtitlemsg, array( 'parse' ), wfEscapeWikiText( $term_normalized ) );
-	$html = '<div id="searchTargetHide"><a onclick="Searching_Hide_Results();">'
-		. wfMsgHtml( 'hideresults' ) . '</a></div>'
-		. '<h1 class="firstHeading">'.wfMsgHtml('search')
-		. '</h1><div id="contentSub">'. $subtitle . '</div>';
-	if( $canSearch ) {
-		$html .= '<ul><li>'
-			. $sk->makeKnownLink( $wgContLang->specialPage( 'Search' ),
-						wfMsgHtml( 'searchcontaining', $term_display ),
-						"search={$term_url}&fulltext=Search" )
-			. '</li><li>' . $sk->makeKnownLink( $wgContLang->specialPage( 'Search' ),
-						wfMsgHtml( 'searchnamed', $term_display ) ,
-						"search={$term_url}&go=Go" )
-			. "</li></ul>";
-	}
-	if( $r ) {
-		$html .= "<h2>" . wfMsgHtml( 'articletitles', $term_display ) . "</h2>"
-			. '<ul>' .$r .'</ul>' . $more;
-	}
-
-	$wgMemc->set( $memckey, array( 'version' => AJAX_SEARCH_VERSION, 'html' => $html ), 30 * 60 );
-
-	$response = new AjaxResponse( $html );
-	$response->setCacheDuration( 30*60 );
-	return $response;
-}
-
 /**
  * Called for AJAX watch/unwatch requests.
  * @param $pagename Prefixed title string for page to watch/unwatch
@@ -189,20 +105,54 @@ function wfAjaxWatch($pagename = "", $watch = "") {
 		if(!$watching) {
 			$dbw = wfGetDB(DB_MASTER);
 			$dbw->begin();
-			$article->doWatch();
+			$ok = $article->doWatch();
 			$dbw->commit();
 		}
 	} else {
 		if($watching) {
 			$dbw = wfGetDB(DB_MASTER);
 			$dbw->begin();
-			$article->doUnwatch();
+			$ok = $article->doUnwatch();
 			$dbw->commit();
 		}
+	}
+	// Something stopped the change
+	if( isset($ok) && !$ok ) {
+		return '<err#>';
 	}
 	if( $watch ) {
 		return '<w#>'.wfMsgExt( 'addedwatchtext', array( 'parse' ), $title->getPrefixedText() );
 	} else {
 		return '<u#>'.wfMsgExt( 'removedwatchtext', array( 'parse' ), $title->getPrefixedText() );
 	}
+}
+
+/**
+ * Called in some places (currently just extensions)
+ * to get the thumbnail URL for a given file at a given resolution.
+ */
+function wfAjaxGetThumbnailUrl( $file, $width, $height ) {
+	$file = wfFindFile( $file );
+	
+	if ( !$file || !$file->exists() )
+		return null;
+		
+	$url = $file->getThumbnail( $width, $height )->url;
+	
+	return $url;
+}
+
+/**
+ * Called in some places (currently just extensions)
+ * to get the URL for a given file.
+ */
+function wfAjaxGetFileUrl( $file ) {
+	$file = wfFindFile( $file );
+	
+	if ( !$file || !$file->exists() )
+		return null;
+		
+	$url = $file->getUrl();
+	
+	return $url;
 }

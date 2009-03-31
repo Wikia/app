@@ -1,0 +1,106 @@
+= Semantic Result Formats =
+
+Semantic Result Formats is an extension to MediaWiki that bundles a number of
+result formats for Semantic MediaWiki's inline queries. The individual formats
+can be added to the installation independently. This file contains an
+overview on how to install and configure the formats, as well as an overview
+of all included formats.
+
+Semantic Result Formats requires Semantic MediaWiki to run, at least at the
+same second level version number as Semantic Result Formats, i.e. SRF 1.4.0
+requires SMW 1.4.0.
+
+== Included formats ==
+
+=== calendar ===
+
+Displays query results in a monthly calendar interface.
+
+=== timeline ===
+
+Displays query results in interactive timelines, displaying one or two dates
+per query result.
+
+=== eventline ===
+
+Displays query results in interactive timelines, displaying an arbitrary number
+of individual dates per query result.
+
+=== googlepie ===
+
+Creates a pie chart out of the numeric value of a specific property using
+the Google Charts API.
+
+=== googlebar ===
+
+Creates a bar chart out of the numeric value of a specific property using
+the Google Charts API.
+
+=== graph ===
+
+Creates a graph based on the relations in the wiki. Requires the GraphViz
+extension.
+
+=== sum ===
+
+Displays the sum of the numeric values of the queried property.
+
+=== average ===
+
+Displays the average of the numeric values of the queried property.
+
+=== min ===
+
+Displays the smallest of the numeric values of the queried property.
+
+=== max ===
+
+Displays the largest of the numeric values of the queried property.
+
+== Contact ==
+
+If you have remarks, questions, or suggestions, please send them to
+semediawiki-users@lists.sourceforge.net. You can subscribe to this 
+list at
+http://sourceforge.net/mailarchive/forum.php?forum_name=semediawiki-user.
+
+Bugs should be filed at MediaZilla, http://bugzilla.wikimedia.org/.
+Please use Semantic Result Formats as the module.
+
+People who want to contribute work to the project should subscribe to
+the developers list semediawiki-devel@lists.sourceforge.net.
+
+Currently Denny Vrandecic is maintaining Semantic Result Formats. It would
+be highly appreciated if someone else would like to take over that job.
+Contact Denny at denny@semantic-mediawiki.org if you are interested.
+
+== Developers ==
+
+Development is coordinated by Denny Vrandecic, Yaron Koren and Markus Krötzsch.
+If you are interested in taking over coordination, please contact Denny.
+
+Semantic Result Formats development is funded by Institut AIFB of
+Universität Karlsruhe, Germany; see http://www.aifb.uni-karlsruhe.de
+Specific development tasks have been supported by the European Union under
+the project Active.
+
+== Contributors ==
+
+* S Page has contributed code, and currently coordinates user support.
+
+* The Graph format was contributed by Frank Dengler.
+
+* The Eventline and Timeline code is based on the Timeline code by the
+  MIT Simile project.
+
+* Many people have contributed to the project by providing helpful comments and
+  suggestions. Among them are the members of the Semantic Wiki Interest Group
+  (swikig@aifb.uni-karlsruhe.de; see semanticweb.org), the people at the project
+  mailing lists, and, of course, a number of anonymous reviewers. Thanks a lot!
+
+== Translations ==
+
+Translations to various languages are provided and maintained by many people.
+In general, main contributors can be found in the message file. Special thanks
+are due to Siebrand Mazeland and the Betawiki project for their excellent 
+support in that matter.

@@ -28,8 +28,8 @@ if (!defined('MEDIAWIKI')) {
 
 $wgExtensionCredits['other'][] = array(
 	'name' => 'PDF Handler',
-	'svn-date' => '$LastChangedDate: 2008-05-06 11:59:58 +0000 (Tue, 06 May 2008) $',
-	'svn-revision' => '$LastChangedRevision: 34306 $',
+	'svn-date' => '$LastChangedDate: 2008-12-25 00:29:44 +0000 (Thu, 25 Dec 2008) $',
+	'svn-revision' => '$LastChangedRevision: 45011 $',
 	'author' =>' Xarax',
 	'description' => 'Handler for viewing PDF files in image mode',
 	'descriptionmsg' => 'pdf-desc',
@@ -37,12 +37,15 @@ $wgExtensionCredits['other'][] = array(
 );
 
 // External program requirements...
-$wgPdfProcessor     = null; // gs
-$wgPdfPostProcessor = null; // convert
-$wgPdfInfo          = null; // pdfinfo
+$wgPdfProcessor     = 'gs';
+$wgPdfPostProcessor = 'convert';
+$wgPdfInfo          = 'pdfinfo';
 
 $wgPdfOutputExtension = "jpg";
 $wgPdfHandlerDpi = 150;
+
+// To upload new PDF files you'll need to do this too:
+// $wgFileExtensions[] = 'pdf';
 
 $dir = dirname(__FILE__) . '/';
 $wgExtensionMessagesFiles['PdfHandler'] = $dir . 'PdfHandler.i18n.php';

@@ -66,11 +66,11 @@ class GoogleCoopFilter extends AbstractFilter {
 		$this->title = Title::makeTitle( $page->page_namespace, $page->page_title );
 
 		$xml = "  <ResultSpec id=\"mw${n}\">\n";
-		$xml .= '    ' . wfElement( 'Query', null, $this->title->getPrefixedText() ) . "\n";
+		$xml .= '    ' . Xml::element( 'Query', null, $this->title->getPrefixedText() ) . "\n";
 		$xml .= "    <Response>\n";
-		$xml .= '      ' . wfElement( 'Output', array( 'name' => 'title' ),
+		$xml .= '      ' . Xml::element( 'Output', array( 'name' => 'title' ),
 				$wgSitename . ':' . $this->title->getPrefixedText() ) . "\n";
-		$xml .= '      ' . wfElement( 'Output', array( 'name' => 'more_url' ),
+		$xml .= '      ' . Xml::element( 'Output', array( 'name' => 'more_url' ),
 				$this->title->getFullUrl() ) . "\n";
 				
 		// add abstract and links when we have revision data...
@@ -89,7 +89,7 @@ class GoogleCoopFilter extends AbstractFilter {
 			$lines = $this->_threeLines( $text );
 			for( $i=1; $i<4; $i++ ) {
 				if ( $lines[$i] != '' ) {
-					$xml .= '      ' . wfElement( 'Output', array( 'name' => 'text'.$i ), $lines[$i] ) . "\n";
+					$xml .= '      ' . Xml::element( 'Output', array( 'name' => 'text'.$i ), $lines[$i] ) . "\n";
 				}
 			}
 		}

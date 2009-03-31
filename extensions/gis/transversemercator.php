@@ -252,16 +252,16 @@ class transversemercator
 		}
 
 		$northing = $this->Northing_Offset + $this->Scale *
-			    ( ($M - $M0) + $v*tan($lat_rad) * 
-			      ( $A*$A/2 
+			    ( ($M - $M0) + $v*tan($lat_rad) *
+			      ( $A*$A/2
 				+ (5 - $T + 9*$C + 4*$C*$C) * pow($A,4)/24
-				+ (61 - 58*$T + $T*$T 
+				+ (61 - 58*$T + $T*$T
 				+ 600*$C - 330*$e_prime_sq) * pow($A,6)/720 ));
 
 		$easting = $this->Easting_Offset + $this->Scale * $v *
-			   ( $A 
+			   ( $A
 			     + (1-$T+$C)*pow($A,3)/6
-			     + (5 - 18*$T + pow($T,2) + 72*$C 
+			     + (5 - 18*$T + pow($T,2) + 72*$C
 				- 58 * $e_prime_sq)*pow($A,5)/120 );
 
 		# FIXME: Use zone_letter

@@ -8,6 +8,13 @@ $messages['en'] = array (
 	'cldr-desc' => 'Extension which provides localised language names',
 );
 
+/** Message documentation (Message documentation)
+ * @author Purodha
+ */
+$messages['qqq'] = array(
+	'cldr-desc' => 'Short description of the Cldr extension, shown in [[Special:Version]]. Do not translate or change links.',
+);
+
 /** Afrikaans (Afrikaans)
  * @author Naudefj
  */
@@ -19,6 +26,13 @@ $messages['af'] = array(
  * @author Meno25
  */
 $messages['ar'] = array(
+	'cldr-desc' => 'امتداد يوفر أسماء لغات مترجمة',
+);
+
+/** Egyptian Spoken Arabic (مصرى)
+ * @author Meno25
+ */
+$messages['arz'] = array(
 	'cldr-desc' => 'امتداد يوفر أسماء لغات مترجمة',
 );
 
@@ -41,6 +55,13 @@ $messages['bg'] = array(
  */
 $messages['bn'] = array(
 	'cldr-desc' => 'এই এক্সটেনশনটি ভাষাগুলির স্থানীয়কৃত নাম প্রদান করে',
+);
+
+/** Bosnian (Bosanski)
+ * @author CERminator
+ */
+$messages['bs'] = array(
+	'cldr-desc' => 'Ekstenzija koja pruža lokalizirane nazive jezika',
 );
 
 /** Czech (Česky)
@@ -71,6 +92,28 @@ $messages['eo'] = array(
 	'cldr-desc' => 'Etendilo kiu provizas asimilitajn lingvo-nomojn',
 );
 
+/** Spanish (Español)
+ * @author Sanbec
+ */
+$messages['es'] = array(
+	'cldr-desc' => 'Extensión que provee nombres de idioma traducidos',
+);
+
+/** Basque (Euskara)
+ * @author Theklan
+ */
+$messages['eu'] = array(
+	'cldr-desc' => 'Lokalizatutako hizkuntza izenak eskaintzen dituen estentsioa',
+);
+
+/** Finnish (Suomi)
+ * @author Crt
+ * @author Mobe
+ */
+$messages['fi'] = array(
+	'cldr-desc' => 'Laajennus, joka tarjoaa kotoistetut kielten nimet.',
+);
+
 /** French (Français) */
 $messages['fr'] = array(
 	'cldr-desc' => 'Extension qui fournit le nom des langues disponibles',
@@ -81,6 +124,13 @@ $messages['fr'] = array(
  */
 $messages['gl'] = array(
 	'cldr-desc' => 'Extensión que proporciona os nomes localizados das linguas',
+);
+
+/** Hebrew (עברית)
+ * @author Rotemliss
+ */
+$messages['he'] = array(
+	'cldr-desc' => 'הרחבה המספקת שמות מתורגמים לשפות',
 );
 
 /** Hindi (हिन्दी)
@@ -95,6 +145,20 @@ $messages['hi'] = array(
  */
 $messages['hsb'] = array(
 	'cldr-desc' => 'Rožšěrjenje, kotrež lokalizowane mjena rěčow k dispoziciji staja.',
+);
+
+/** Hungarian (Magyar)
+ * @author Dani
+ */
+$messages['hu'] = array(
+	'cldr-desc' => 'Kiterjesztés, ami lefordított nyelvneveket szolgáltat',
+);
+
+/** Interlingua (Interlingua)
+ * @author McDutchie
+ */
+$messages['ia'] = array(
+	'cldr-desc' => 'Extension que forni nomines localisate del linguas',
 );
 
 /** Indonesian (Bahasa Indonesia)
@@ -112,10 +176,11 @@ $messages['it'] = array(
 );
 
 /** Japanese (日本語)
+ * @author Aotake
  * @author JtFuruhata
  */
 $messages['ja'] = array(
-	'cldr-desc' => 'MediaWiki が対応している言語名のリスト',
+	'cldr-desc' => 'ローカライズされている言語名リストを提供する',
 );
 
 /** Javanese (Basa Jawa)
@@ -160,6 +225,13 @@ $messages['nl'] = array(
 	'cldr-desc' => 'Uitbreiding die vertaalde namen van talen biedt',
 );
 
+/** Norwegian Nynorsk (‪Norsk (nynorsk)‬)
+ * @author Harald Khan
+ */
+$messages['nn'] = array(
+	'cldr-desc' => 'Utviding som gjev omsette språknamn',
+);
+
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
  * @author Jon Harald Søby
  */
@@ -195,6 +267,13 @@ $messages['ro'] = array(
 	'cldr-desc' => 'Extensie care oferă nume de limbi localizate',
 );
 
+/** Tarandíne (Tarandíne)
+ * @author Joetaras
+ */
+$messages['roa-tara'] = array(
+	'cldr-desc' => 'Estenzione ca provvede a lacalizzà le nome de le lenghe',
+);
+
 /** Russian (Русский)
  * @author Александр Сигачёв
  */
@@ -224,18 +303,25 @@ $messages['su'] = array(
 );
 
 /** Swedish (Svenska)
- * @author M.M.S.
  * @author Lejonel
+ * @author M.M.S.
  */
 $messages['sv'] = array(
 	'cldr-desc' => 'Tillägg som ger översättningar av språknamn',
 );
 
-/** Tajik (Cyrillic) (Тоҷикӣ/tojikī (Cyrillic))
+/** Tajik (Cyrillic) (Тоҷикӣ (Cyrillic))
  * @author Ibrahim
  */
 $messages['tg-cyrl'] = array(
 	'cldr-desc' => 'Афзунае, ки номҳои маҳалликунонидашудаи забонҳоро пешкаш мекунад',
+);
+
+/** Turkish (Türkçe)
+ * @author Joseph
+ */
+$messages['tr'] = array(
+	'cldr-desc' => 'Yerelleştirilmiş dil isimlerini sağlayan eklenti',
 );
 
 /** Ukrainian (Українська)

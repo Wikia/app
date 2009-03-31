@@ -15,8 +15,8 @@ if (!defined('MEDIAWIKI')) die();
 
 $wgExtensionCredits['specialpage'][] = array(
 	'name' => 'Cite',
-	'svn-date' => '$LastChangedDate: 2008-07-09 15:09:55 +0000 (Wed, 09 Jul 2008) $',
-	'svn-revision' => '$LastChangedRevision: 37394 $',
+	'svn-date' => '$LastChangedDate: 2008-10-30 16:12:17 +0000 (Thu, 30 Oct 2008) $',
+	'svn-revision' => '$LastChangedRevision: 42818 $',
 	'author' => 'Ævar Arnfjörð Bjarmason',
 	'description' => 'adds a [[Special:Cite|citation]] special page & toolbox link', // kept for b/c
 	'descriptionmsg' => 'cite_article_desc',
@@ -29,7 +29,7 @@ $wgExtensionMessagesFiles['SpecialCite'] = $dir . 'SpecialCite.i18n.php';
 $wgExtensionAliasesFiles['SpecialCite'] = $dir . 'SpecialCite.i18n.alias.php';
 
 $wgHooks['SkinTemplateBuildNavUrlsNav_urlsAfterPermalink'][] = 'wfSpecialCiteNav';
-$wgHooks['MonoBookTemplateToolboxEnd'][] = 'wfSpecialCiteToolbox';
+$wgHooks['SkinTemplateToolboxEnd'][] = 'wfSpecialCiteToolbox';
 
 $wgSpecialPages['Cite'] = 'SpecialCite';
 $wgAutoloadClasses['SpecialCite'] = $dir . 'SpecialCite_body.php';
@@ -45,15 +45,15 @@ function wfSpecialCiteNav( &$skintemplate, &$nav_urls, &$oldid, &$revid ) {
 	return true;
 }
 
-function wfSpecialCiteToolbox( &$monobook ) {
+function wfSpecialCiteToolbox( &$skin ) {
 	wfLoadExtensionMessages( 'SpecialCite' );
-	if ( isset( $monobook->data['nav_urls']['cite'] ) )
-		if ( $monobook->data['nav_urls']['cite']['href'] == '' ) {
-			?><li id="t-iscite"><?php echo $monobook->msg( 'cite_article_link' ); ?></li><?php
+	if ( isset( $skin->data['nav_urls']['cite'] ) )
+		if ( $skin->data['nav_urls']['cite']['href'] == '' ) {
+			?><li id="t-iscite"><?php echo $skin->msg( 'cite_article_link' ); ?></li><?php
 		} else {
 			?><li id="t-cite"><?php
-				?><a href="<?php echo htmlspecialchars( $monobook->data['nav_urls']['cite']['href'] ) ?>"><?php
-					echo $monobook->msg( 'cite_article_link' );
+				?><a href="<?php echo htmlspecialchars( $skin->data['nav_urls']['cite']['href'] ) ?>"><?php
+					echo $skin->msg( 'cite_article_link' );
 				?></a><?php
 			?></li><?php
 		}

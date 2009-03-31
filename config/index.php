@@ -67,11 +67,13 @@ $ourdb['postgres']['compile']    = 'pgsql';
 $ourdb['postgres']['bgcolor']    = '#aaccff';
 $ourdb['postgres']['rootuser']   = 'postgres';
 
-$ourdb['sqlite']['fullname']      = 'SQLite';
-$ourdb['sqlite']['havedriver']    = 0;
-$ourdb['sqlite']['compile']       = 'pdo_sqlite';
-$ourdb['sqlite']['bgcolor']       = '#b1ebb1';
-$ourdb['sqlite']['rootuser']      = '';
+/*** SQLITE DISABLED -- USE MEDIAWIKI 1.15 */
+#$ourdb['sqlite']['fullname']      = 'SQLite';
+#$ourdb['sqlite']['havedriver']    = 0;
+#$ourdb['sqlite']['compile']       = 'pdo_sqlite';
+#$ourdb['sqlite']['bgcolor']       = '#b1ebb1';
+#$ourdb['sqlite']['rootuser']      = '';
+/************************************/
 
 $ourdb['mssql']['fullname']      = 'MSSQL';
 $ourdb['mssql']['havedriver']    = 0;
@@ -688,13 +690,23 @@ if( $conf->SysopName ) {
 }
 
 $conf->License = importRequest( "License", "none" );
-if( $conf->License == "gfdl" ) {
-	$conf->RightsUrl = "http://www.gnu.org/copyleft/fdl.html";
+if( $conf->License == "gfdl1_2" ) {
+	$conf->RightsUrl = "http://www.gnu.org/licenses/old-licenses/fdl-1.2.txt";
 	$conf->RightsText = "GNU Free Documentation License 1.2";
-	$conf->RightsCode = "gfdl";
+	$conf->RightsCode = "gfdl1_2";
+	$conf->RightsIcon = '${wgScriptPath}/skins/common/images/gnu-fdl.png';
+} elseif( $conf->License == "gfdl1_3" ) {
+	$conf->RightsUrl = "http://www.gnu.org/copyleft/fdl.html";
+	$conf->RightsText = "GNU Free Documentation License 1.3";
+	$conf->RightsCode = "gfdl1_3";
 	$conf->RightsIcon = '${wgScriptPath}/skins/common/images/gnu-fdl.png';
 } elseif( $conf->License == "none" ) {
 	$conf->RightsUrl = $conf->RightsText = $conf->RightsCode = $conf->RightsIcon = "";
+} elseif( $conf->License == "pd" ) {
+	$conf->RightsUrl = "http://creativecommons.org/licenses/publicdomain/";
+	$conf->RightsText = "Public Domain";
+	$conf->RightsCode = "pd";
+	$conf->RightsIcon = '${wgScriptPath}/skins/common/images/public-domain.png';
 } else {
 	$conf->RightsUrl = importRequest( "RightsUrl", "" );
 	$conf->RightsText = importRequest( "RightsText", "" );
@@ -890,7 +902,7 @@ if( $conf->posted && ( 0 == count( $errs ) ) ) {
 			continue;
 		}
 
-		print "<li>Connected to " . htmlspecialchars( $myver );
+		print "<li>Connected to " . htmlspecialchars( "{$conf->DBtype} $myver" );
 		if ($conf->DBtype == 'mysql') {
 			if( version_compare( $myver, "4.0.14" ) < 0 ) {
 				print "</li>\n";
@@ -941,7 +953,7 @@ if( $conf->posted && ( 0 == count( $errs ) ) ) {
 			$wgDatabase->selectDB( $wgDBname );
 		}
 		else if ($conf->DBtype == 'postgres') {
-			if( version_compare( $myver, "PostgreSQL 8.0" ) < 0 ) {
+			if( version_compare( $myver, "8.0" ) < 0 ) {
 				dieout( "<b>Postgres 8.0 or later is required</b>. Aborting." );
 			}
 		}
@@ -1193,7 +1205,9 @@ if( count( $errs ) ) {
 
 		<ul class="plain">
 		<li><?php aField( $conf, "License", "No license metadata", "radio", "none" ); ?></li>
-		<li><?php aField( $conf, "License", "GNU Free Documentation License 1.2 (Wikipedia-compatible)", "radio", "gfdl" ); ?></li>
+		<li><?php aField( $conf, "License", "Public Domain", "radio", "pd" ); ?></li>
+		<li><?php aField( $conf, "License", "GNU Free Documentation License 1.2 (Wikipedia-compatible)", "radio", "gfdl1_2" ); ?></li>
+		<li><?php aField( $conf, "License", "GNU Free Documentation License 1.3", "radio", "gfdl1_3" ); ?></li>
 		<li><?php
 			aField( $conf, "License", "A Creative Commons license - ", "radio", "cc" );
 			$partner = "MediaWiki";
@@ -1436,6 +1450,10 @@ if( count( $errs ) ) {
 	</div>
 	</fieldset>
 
+	<?php 
+		# SQLITE DISABLED -- USE MEDIAWIKI 1.15
+		if (false):
+	?>
 	<?php database_switcher('sqlite'); ?>
 	<div class="config-desc">
 		<b>NOTE:</b> SQLite only uses the <i>Database name</i> setting above, the user, password and root settings are ignored.
@@ -1451,6 +1469,11 @@ if( count( $errs ) ) {
 		<p>This directory must exist and be writable by the web server.</p>
 	</div>
 	</fieldset>
+
+	<?php 
+		# SQLITE DISABLED -- USE MEDIAWIKI 1.15
+		endif
+	?>
 
 	<?php database_switcher('mssql'); ?>
 	<div class="config-input"><?php
@@ -1472,7 +1495,7 @@ if( count( $errs ) ) {
 </div>
 </form>
 <script type="text/javascript">
-window.onload = toggleDBarea('<?php echo Xml::encodeJsVar( $conf->DBtype ); ?>',
+window.onload = toggleDBarea(<?php echo Xml::encodeJsVar( $conf->DBtype ); ?>,
 <?php
 	## If they passed in a root user name, don't populate it on page load
 	echo strlen(importPost('RootUser', '')) ? 0 : 1;
@@ -1605,7 +1628,7 @@ function writeLocalSettings( $conf ) {
 
 	# Add slashes to strings for double quoting
 	$slconf = array_map( "escapePhpString", get_object_vars( $conf ) );
-	if( $conf->License == 'gfdl' ) {
+	if( $conf->License == 'gfdl1_2' || $conf->License == 'pd' || $conf->License == 'gfdl1_3' ) {
 		# Needs literal string interpolation for the current style path
 		$slconf['RightsIcon'] = $conf->RightsIcon;
 	}
@@ -1731,11 +1754,11 @@ if ( \$wgCommandLineMode ) {
 ## you can enable inline LaTeX equations:
 \$wgUseTeX           = false;
 
-\$wgLocalInterwiki   = \$wgSitename;
+\$wgLocalInterwiki   = strtolower( \$wgSitename );
 
 \$wgLanguageCode = \"{$slconf['LanguageCode']}\";
 
-\$wgProxyKey = \"$secretKey\";
+\$wgSecretKey = \"$secretKey\";
 
 ## Default skin: you can change the default skin. Use the internal symbolic
 ## names, ie 'standard', 'nostalgia', 'cologneblue', 'monobook':
@@ -1964,7 +1987,7 @@ function printListItem( $item ) {
 }
 
 # Determine a suitable value for $wgShellLocale
-function getShellLocale( $wikiLanguage ) {
+function getShellLocale( $wikiLang ) {
 	# Give up now if we're in safe mode or open_basedir
 	# It's theoretically possible but tricky to work with
 	if ( wfIniGetBool( "safe_mode" ) || ini_get( 'open_basedir' ) ) {

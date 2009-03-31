@@ -30,7 +30,7 @@ CREATE TABLE /*$wgDBprefix*/thread (
   INDEX thread_modified (thread_modified),
   INDEX thread_created (thread_created),
   INDEX thread_summary_page (thread_summary_page)
-) TYPE=InnoDB;
+) /*$wgDBTableOptions*/;
 
 CREATE TABLE /*$wgDBprefix*/historical_thread (
   -- Note that many hthreads can share an id, which is the same as the id
@@ -41,12 +41,12 @@ CREATE TABLE /*$wgDBprefix*/historical_thread (
   hthread_change_type int(4) unsigned NOT NULL,
   hthread_change_object int(8) unsigned NULL,
   PRIMARY KEY hthread_id_revision (hthread_id, hthread_revision)
-) TYPE=InnoDB;
+) /*$wgDBTableOptions*/;
 
 CREATE TABLE /*$wgDBprefix*/user_message_state (
   ums_user int unsigned NOT NULL,
   ums_thread int(8) unsigned NOT NULL,
   ums_read_timestamp varbinary(14),
-  
+
   PRIMARY KEY (ums_user, ums_thread)
-) TYPE=InnoDB;
+) /*$wgDBTableOptions*/;

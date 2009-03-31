@@ -69,10 +69,11 @@ $wgAutoloadClasses['WebStorePostFile'] = $dir . 'WebStorePostFile.php';
 
 $wgExtensionCredits['other'][] = array(
 	'name' => 'WebStore',
-	'svn-date' => '$LastChangedDate: 2008-05-06 11:59:58 +0000 (Tue, 06 May 2008) $',
-	'svn-revision' => '$LastChangedRevision: 34306 $',
+	'svn-date' => '$LastChangedDate: 2008-12-18 05:56:43 +0000 (Thu, 18 Dec 2008) $',
+	'svn-revision' => '$LastChangedRevision: 44752 $',
 	'author' => 'Tim Starling',
 	'description' => 'Web-only (non-NFS) file storage middleware',
+	'descriptionmsg' => 'webstore-desc',
 	'url' => 'http://www.mediawiki.org/wiki/Extension:WebStore',
 );
 

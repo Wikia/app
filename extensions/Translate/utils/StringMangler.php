@@ -1,5 +1,5 @@
 <?php
-if (!defined('MEDIAWIKI')) die();
+if ( !defined( 'MEDIAWIKI' ) ) die();
 
 class StringMangler {
 	protected $manglers;
@@ -19,7 +19,7 @@ class StringMangler {
 
 	public function match( $string ) {
 		foreach ( $this->manglers as $mangler ) {
-			if ( $mangler->match($string) ) {
+			if ( $mangler->match( $string ) ) {
 				return true;
 			}
 		}
@@ -41,7 +41,7 @@ class StringMangler {
 
 	public function unMangle( $data ) {
 		if ( is_array( $data ) ) {
-			return $this->mangleArray( $data, true);
+			return $this->mangleArray( $data, true );
 		} elseif ( is_string( $data ) ) {
 			return $this->mangleString( $data, true );
 		} elseif ( $data === null ) {
@@ -55,14 +55,14 @@ class StringMangler {
 	protected function mangleString( $string, $reverse = false ) {
 		if ( $reverse ) {
 			foreach ( $this->manglers as $mangler ) {
-				if ( $mangler->unmatch($string) ) {
-					return $mangler->unmangle($string);
+				if ( $mangler->unmatch( $string ) ) {
+					return $mangler->unmangle( $string );
 				}
 			}
 		} else {
 			foreach ( $this->manglers as $mangler ) {
-				if ( $mangler->match($string) ) {
-					return $mangler->mangle($string);
+				if ( $mangler->match( $string ) ) {
+					return $mangler->mangle( $string );
 				}
 			}
 		}
@@ -74,7 +74,7 @@ class StringMangler {
 
 		# There doesn't seem to be a good way to check wether array is indexed
 		# with keys or numerically
-		if ( isset($array[0]) ) {
+		if ( isset( $array[0] ) ) {
 			foreach ( $array as $key => &$value ) {
 				$value = $this->mangleString( $value, $reverse );
 				$temp[$key] = $value; // Assign a reference
@@ -132,24 +132,24 @@ class SmAffixRewriter implements SmItem {
 	protected $fromLength, $toLength;
 
 	public function __construct( array $from, array $to ) {
-		if ( !$this->checkInput($from) || $this->checkInput($to) ) {
+		if ( !$this->checkInput( $from ) || $this->checkInput( $to ) ) {
 			throw new MWException( "Invalid input, should be array( affixtype, string )" );
 		}
 
 		list( $this->fromType, $this->fromAffix ) = $from;
-		$this->fromLength = strlen($this->fromAffix);
+		$this->fromLength = strlen( $this->fromAffix );
 
 		list( $this->toType, $this->toAffix ) = $to;
-		$this->toLength = strlen($this->toAffix);
+		$this->toLength = strlen( $this->toAffix );
 	}
 
 	public function checkInput( array $input ) {
 		$ok = true;
-		if ( count($input) !== 2 ) {
+		if ( count( $input ) !== 2 ) {
 			$ok = false;
 		} elseif ( $input[0] !== self::PREFIX || $input[0] !== self::SUFFIX ) {
 			$ok = false;
-		} elseif ( !is_string($input[1]) ) {
+		} elseif ( !is_string( $input[1] ) ) {
 			$ok = false;
 		}
 		return $ok;
@@ -174,17 +174,17 @@ class SmAffixRewriter implements SmItem {
 			$affix = $this->toAffix;
 		}
 
-		if ( $this-type === self::SUFFIX ) {
-			if ( strlen($string) < $len ) {
+		if ( $this - type === self::SUFFIX ) {
+			if ( strlen( $string ) < $len ) {
 				return false;
 			}
-			$string = substr( $string, -$len );
+			$string = substr( $string, - $len );
 		}
 		return strncmp( $string, $affix, $len ) === 0;
 	}
 
 	public function mangle( $string ) {
-		if ( $this->match($string) ) {
+		if ( $this->match( $string ) ) {
 			if ( $this->toType === self::PREFIX ) {
 				return $this->toAffix . $string;
 			} elseif ( $this->toType === self::SUFFIX ) {
@@ -197,11 +197,11 @@ class SmAffixRewriter implements SmItem {
 	}
 
 	public function unmangle( $string ) {
-		if ( $this->matchBackwards($string) ) {
+		if ( $this->matchBackwards( $string ) ) {
 			if ( $this->fromType === self::PREFIX ) {
-				return substr($string, $this->fromLength);
+				return substr( $string, $this->fromLength );
 			} elseif ( $this->toType === self::SUFFIX ) {
-				return substr($string, 0, -$this->fromLength);
+				return substr( $string, 0, - $this->fromLength );
 			} else {
 				throw new MWException( "Error" );
 			}

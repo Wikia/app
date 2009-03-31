@@ -1,12 +1,15 @@
 <?php
 /**
- * Internationalisation file for extension Who's Online.
+ * Internationalisation file for Who's Online extension.
  *
- * @addtogroup Extensions
+ * @ingroup Extensions
  */
 
 $messages = array();
 
+/** English
+ * @author Maciej Brencz
+ */
 $messages['en'] = array(
 	'whosonline'      => 'Who\'s online',
 	'whosonline-desc' => 'Displays [[Special:WhosOnline|a list]] of logged-in and anonymous users currently online',
@@ -74,6 +77,13 @@ $messages['de'] = array(
 $messages['eo'] = array(
 	'whosonline'      => 'Kiu estas konektita',
 	'whosonline-desc' => 'Montras [[Special:WhosOnline|listo]] de ensalutitaj kaj anonimaj uzantoj nune konektitaj',
+);
+
+/** Finnish (Suomi)
+ * @author Jack Phoenix
+ */
+$messages['fi'] = array(
+	'whosonline' => 'Paikalla olevat käyttäjät',
 );
 
 /** French (Français)
@@ -252,4 +262,3 @@ $messages['vi'] = array(
 	'whosonline'      => 'Thành viên trực tuyến',
 	'whosonline-desc' => 'Hiển thị [[Special:WhosOnline|danh sách]] các thành viên đã đăng nhập lẫn vô danh hiện đang trực tuyến',
 );
-

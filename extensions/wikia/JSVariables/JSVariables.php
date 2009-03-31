@@ -3,9 +3,9 @@
  * Author: Inez Korczyński (inez@wikia.com)
  */
 
-$wgHooks['ExtendJSGlobalVars'][] = 'wfExtendJSGlobalVars';
+$wgHooks['MakeGlobalVariablesScript'][] = 'wfMakeGlobalVariablesScript';
 
-function wfExtendJSGlobalVars($vars) {
+function wfMakeGlobalVariablesScript($vars) {
 	global $wgCurse, $wgCityId, $wgEnableAjaxLogin, $wgUser, $wgDBname, $wgPrivateTracker, $wgWikiaAdvertiserCategory, $wgExtensionsPath, $wgTitle, $wgArticle, $wgStyleVersion, $wgSitename;
 
 	$cats = wfGetBreadCrumb();

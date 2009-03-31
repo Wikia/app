@@ -1,7 +1,6 @@
 <?php
-/*
- * @package MediaWiki
- * @subpackage Extensions
+/**
+ * @ingroup Extensions
  *
  * @author Maciej Brencz <macbre(at)-spam-wikia.com>
  */
@@ -10,8 +9,7 @@ if (!defined('MEDIAWIKI')) {
 	exit( 1 );
 }
 
-class PagerWhosOnline extends IndexPager
-{
+class PagerWhosOnline extends IndexPager {
 	function __construct() {
 		parent::__construct();
 
@@ -19,8 +17,7 @@ class PagerWhosOnline extends IndexPager
 	}
 
 	function getQueryInfo() {
-		return array
-		(
+		return array (
 			'tables'  => array('online'),
 			'fields'  => array('username'),
 			'options' => array('ORDER BY' => 'timestamp DESC'),
@@ -79,21 +76,19 @@ class PagerWhosOnline extends IndexPager
 	}
 }
 
-class SpecialWhosOnline extends SpecialPage
-{
+class SpecialWhosOnline extends SpecialPage {
 	public function SpecialWhosOnline() {
 		parent::__construct('WhosOnline' );
 	}
 
 
 	// get list of logged-in users being online
-	protected function getAnonsOnline()
-	{
+	protected function getAnonsOnline() {
 		wfProfileIn(__METHOD__);
 
-		$dbr = & wfGetDB(DB_SLAVE);
+		$dbr = wfGetDB(DB_SLAVE);
 
-		$row    = $dbr->selectRow('online', 'count(*) as cnt', 'userid = 0', __METHOD__);
+		$row = $dbr->selectRow('online', 'count(*) as cnt', 'userid = 0', __METHOD__);
 		$guests = (int) $row->cnt;
 
 		wfProfileOut(__METHOD__);
@@ -106,7 +101,7 @@ class SpecialWhosOnline extends SpecialPage
 
 		wfLoadExtensionMessages( 'WhosOnline' );
 
-		$db = wfGetDB( DB_WRITE );
+		$db = wfGetDB( DB_MASTER );
 		$db->selectDB( $wgDBname );
 		$old = gmdate("YmdHis", time() - 3600);
 		$db->delete('online', array('timestamp < "'.$old.'"'), __METHOD__);

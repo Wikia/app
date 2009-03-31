@@ -60,7 +60,7 @@ function fnBreadCrumbsShowHook( &$m_pageObj ) {
 }
 
 ## Entry point for the hook for printing the CSS:
-function fnBreadCrumbsOutputHook( &$m_pageObj, &$m_parserOutput ) {
+function fnBreadCrumbsOutputHook( &$m_pageObj, $m_parserOutput ) {
   global $wgScriptPath;
 
   # Register CSS file for our select box:

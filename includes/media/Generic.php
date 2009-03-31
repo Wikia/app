@@ -239,6 +239,21 @@ abstract class MediaHandler {
 			$sk->formatSize( $file->getSize() ),
 			$file->getMimeType() );
 	}
+	
+	static function getGeneralShortDesc( $file ) {
+		global $wgLang;
+		$nbytes = '(' . wfMsgExt( 'nbytes', array( 'parsemag', 'escape' ),
+			$wgLang->formatNum( $file->getSize() ) ) . ')';
+		return "$nbytes";
+	}
+
+	static function getGeneralLongDesc( $file ) {
+		global $wgUser;
+		$sk = $wgUser->getSkin();
+		return wfMsgExt( 'file-info', 'parseinline',
+			$sk->formatSize( $file->getSize() ),
+			$file->getMimeType() );
+	}
 
 	function getDimensionsString( $file ) {
 		return '';

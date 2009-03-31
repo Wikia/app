@@ -1,0 +1,83 @@
+You can collect articles, generate and download a document in one of several formats from article collections or from single articles, order books from a print-on-demand partner and save article collections for later use or to share them.
+
+== Add and remove articles ==
+
+When you are on an article page, you see a small box titled "collection" on the left. Here you can add the current article (in the currently shown revision) to your collection. If the article has previously been added to the collection you can remove it instead.
+
+== Manage the collection ==
+
+Click "Show collection" to go to the [[Special:Collection]]. Here you can manage your collection:
+* enter a title and a subtitle for the collection
+* create chapters
+* rearrange the articles and chapters in the collection
+* remove articles and chapters from your collection
+* sort the collection (chapter-wise)
+
+== Download documents ==
+
+To download a document in PDF, ODF or DocBook format of a single article, just go to the article page and click on the "Download as ..." inside the toolbox.
+
+To download an entire collection as a document, go to the [[Special:Collection]] page, choose the desired format and click the "Download" button.
+
+== Improving the output ==
+
+Some articles use wikitext that is not ideal for producing PDFs. One important special case is the use of templates that should look different or be omitted in PDF output. 
+
+For example all navigational templates should be excluded from PDFs by adding them to the [[:Category:Exclude in print|Exclude in print]] category (see below).
+As a rule of thumb, all templates containing content which is not useful in an offline version of the document should be marked for exclusion in PDF exports.
+
+There are two ways to utilize templates for a better PDF output:
+
+=== Substituting templates ===
+
+One can override a template with another by creating a alternative template with name "PrintSOMETEMPLATE" where SOMETEMPLATE is the name of the original template.
+
+=== Excluding templates ===
+;Adding it to the special [[:Category:Exclude in print]]
+:Templates in the category [[:Category:Exclude in print|Exclude in print]] are omitted from the output.
+;Using the template blacklist
+:Templates listed on the [[PDF Template Blacklist|template blacklist]] page are also omitted. The format for this [[PDF Template Blacklist|page]] is in the following form:
+<pre>
+ * [[Template:Templatename]]
+ * [[Template:SomeOtherTemplatename]]
+</pre>
+
+== Order books ==
+
+You can easily order a book made from your collection. Just click on the links of a print-on-demand partner at the right of the [[Special:Collection]] page.
+
+== Save and load collections ==
+
+You have to be [[Special:Userlogin|logged-in]] to save a collection. Go to the [[Special:Collection]] page, choose whether you want to save the collection as a subpage of your userpage or as a subpage of Wikipedia:Collections, enter a title and click the save button. Collections are automatically added to the [[:Category:Collections|Collections category]].
+
+If you are on a collection page, the "collection" portlet on the left contains a "Load collection" link to load the shown collection.
+
+== Format of saved collection pages ==
+
+A collection with title "My Collection" and subtitle "Just an Example" consisting of two chapters "Foo" and "Bar" each containing three articles will be saved as a page with the following [[wikitext]]:
+
+<pre>
+== My Collection ==
+=== Just an Example ===
+;Foo
+:[[First_article]]
+:[[Second_article]]
+:[[Third_article]]
+;Bar
+:[[Fourth_article]]
+:[[Fifth_article]]
+:[[Sixth_article]]
+[[Category:Collections]]
+</pre>
+
+== Related Pages ==
+
+* [[Special:Collection]] - the main collection page
+* [[:Category:Collections]] - persisted collections
+* [[:Category:Exclude in print]] - category for templates that should be excluded in exports
+* [[PDF Template Blacklist]] - page for templates that should be excluded in exports
+
+
+{{Languages|Help:Collections}}
+
+[[Category:Help|{{PAGENAME}}]]

@@ -1,31 +1,20 @@
 <?php
 /**
  * Global functions and constants for Semantic MediaWiki.
+ * @file
+ * @ingroup SMW
  */
 
-define('SMW_VERSION','1.2.1a-SVN');
+/**
+ * This documenation group collects source code files belonging to Semantic MediaWiki.
+ *
+ * For documenting extensions of SMW, please do not use groups starting with "SMW"
+ * but make your own groups instead. Browsing at http://semantic-mediawiki.org/doc/
+ * is assumed to be easier this way.
+ * @defgroup SMW Semantic MediaWiki
+ */
 
-// constants for special properties, used for datatype assignment and storage
-define('SMW_SP_HAS_TYPE',1);
-define('SMW_SP_HAS_URI',2);
-define('SMW_SP_INSTANCE_OF',4);
-define('SMW_SP_MAIN_DISPLAY_UNIT', 6);
-define('SMW_SP_DISPLAY_UNITS', 7);
-define('SMW_SP_IMPORTED_FROM',8);
-define('SMW_SP_EXT_BASEURI',9);
-define('SMW_SP_EXT_NSID',10);
-define('SMW_SP_EXT_SECTION',11);
-define('SMW_SP_CONVERSION_FACTOR', 12);
-define('SMW_SP_SERVICE_LINK', 13);
-define('SMW_SP_POSSIBLE_VALUE', 14);
-define('SMW_SP_REDIRECTS_TO', 15);
-define('SMW_SP_SUBPROPERTY_OF',17);
-define('SMW_SP_SUBCLASS_OF',18);
-define('SMW_SP_CONCEPT_DESC',19);
-
-// old names, will be removed *two* releases after given version
-// SMW 1.1.2
-define('SMW_SP_HAS_CATEGORY',4); // name specific for categories, use "instance of" to distinguish from future explicit "subclass of"
+define('SMW_VERSION','1.5b-SVN');
 
 // constants for displaying the factbox
 define('SMW_FACTBOX_HIDDEN', 1);
@@ -47,8 +36,12 @@ define('SMW_CONJUNCTION_QUERY', 16); // any conjunctions
 define('SMW_DISJUNCTION_QUERY', 32); // any disjunctions (OR, ||)
 define('SMW_ANY_QUERY', 0xFFFFFFFF);  // subsumes all other options
 
-// constants for identifying javascripts as used in smwfRequireHeadItem
-define('SMW_HEADER_TIMELINE', 1);
+// constants for defining which concepts to show only if cached
+define('CONCEPT_CACHE_ALL', 4); //show concept elements anywhere only if cached
+define('CONCEPT_CACHE_HARD',1); //show without cache if concept is not harder than permitted inline queries
+define('CONCEPT_CACHE_NONE',0); //show all concepts even without any cache
+
+// constants for identifying javascripts as used in SMWOutputs
 define('SMW_HEADER_TOOLTIP', 2);
 define('SMW_HEADER_SORTTABLE', 3);
 define('SMW_HEADER_STYLE', 4);
@@ -68,8 +61,19 @@ define('SMW_CMP_GEQ',3); // matches only datavalues that are greater or equal to
 define('SMW_CMP_NEQ',4); // matches only datavalues that are unequal to the given value
 define('SMW_CMP_LIKE',5); // matches only datavalues that are LIKE the given value
 
-// HTML items to load in current page, use smwfRequireHeadItem to extend
-$smwgHeadItems = array();
+//constants for date formats (using binary encoding of nine bits: 3 positions x 3 interpretations)
+define('SMW_MDY',785);  //Month-Day-Year
+define('SMW_DMY',673);  //Day-Month-Year
+define('SMW_YMD',610);  //Year-Month-Day
+define('SMW_YDM',596);  //Year-Day-Month
+define('SMW_MY',97);    //Month-Year
+define('SMW_YM',76);    //Year-Month
+define('SMW_Y',9);      //Year
+define('SMW_YEAR',1);   //an entered digit can be a year
+define('SMW_DAY',2);   //an entered digit can be a year
+define('SMW_MONTH',4);  //an entered digit can be a month
+define('SMW_DAY_MONTH_YEAR',7); //an entered digit can be a day, month or year
+define('SMW_DAY_YEAR',3); //an entered digit can be either a month or a year
 
 /**
  * Switch on Semantic MediaWiki. This function must be called in LocalSettings.php
@@ -77,9 +81,12 @@ $smwgHeadItems = array();
  * are really provided, without requiring the existence of a dedicated file
  * SMW_LocalSettings.php. For readability, this is the only global function that
  * does not adhere to the naming conventions.
+ *
+ * This function also sets up all autoloading, such that all SMW classes are available
+ * as early as possible. Moreover, jobs and special pages are registered.
  */
 function enableSemantics($namespace = '', $complete = false) {
-	global $smwgIP, $smwgNamespace, $wgExtensionFunctions, $wgAutoloadClasses, $wgSpecialPages, $wgSpecialPageGroups, $wgHooks, $wgExtensionMessagesFiles, $wgJobClasses;
+	global $smwgIP, $smwgNamespace, $wgExtensionFunctions, $wgAutoloadClasses, $wgSpecialPages, $wgSpecialPageGroups, $wgHooks, $wgExtensionMessagesFiles, $wgJobClasses, $wgExtensionAliasesFiles;
 	// The dot tells that the domain is not complete. It will be completed
 	// in the Export since we do not want to create a title object here when
 	// it is not needed in many cases.
@@ -92,33 +99,51 @@ function enableSemantics($namespace = '', $complete = false) {
 	$wgHooks['LanguageGetMagic'][] = 'smwfAddMagicWords'; // setup names for parser functions (needed here)
 	$wgExtensionMessagesFiles['SemanticMediaWiki'] = $smwgIP . '/languages/SMW_Messages.php'; // register messages (requires MW=>1.11)
 
-	///// Set up autoloading
-	///// All classes registered for autoloading here should be tagged with this information:
-	///// Add "@note AUTOLOADED" to their class documentation. This avoids useless includes.
+	$wgHooks['ParserTestTables'][] = 'smwfOnParserTestTables';
+
+	// Register special pages aliases file
+	$wgExtensionAliasesFiles['SemanticMediaWiki'] = $smwgIP . '/languages/SMW_Aliases.php';
+
+	///// Set up autoloading; essentially all classes should be autoloaded!
+	$wgAutoloadClasses['SMWParserExtensions']       = $smwgIP . '/includes/SMW_ParserExtensions.php';
 	$wgAutoloadClasses['SMWInfolink']               = $smwgIP . '/includes/SMW_Infolink.php';
 	$wgAutoloadClasses['SMWFactbox']                = $smwgIP . '/includes/SMW_Factbox.php';
+	$wgAutoloadClasses['SMWParseData']              = $smwgIP . '/includes/SMW_ParseData.php';
+	$wgAutoloadClasses['SMWOutputs']                = $smwgIP . '/includes/SMW_Outputs.php';
 	$wgAutoloadClasses['SMWSemanticData']           = $smwgIP . '/includes/SMW_SemanticData.php';
 	$wgAutoloadClasses['SMWOrderedListPage']        = $smwgIP . '/includes/articlepages/SMW_OrderedListPage.php';
 	$wgAutoloadClasses['SMWTypePage']               = $smwgIP . '/includes/articlepages/SMW_TypePage.php';
 	$wgAutoloadClasses['SMWPropertyPage']           = $smwgIP . '/includes/articlepages/SMW_PropertyPage.php';
+	$wgAutoloadClasses['SMWConceptPage']            = $smwgIP . '/includes/articlepages/SMW_ConceptPage.php';
 	//// printers
 	$wgAutoloadClasses['SMWResultPrinter']          = $smwgIP . '/includes/SMW_QueryPrinter.php';
 	$wgAutoloadClasses['SMWTableResultPrinter']     = $smwgIP . '/includes/SMW_QP_Table.php';
 	$wgAutoloadClasses['SMWListResultPrinter']      = $smwgIP . '/includes/SMW_QP_List.php';
-	$wgAutoloadClasses['SMWTimelineResultPrinter']  = $smwgIP . '/includes/SMW_QP_Timeline.php';
 	$wgAutoloadClasses['SMWEmbeddedResultPrinter']  = $smwgIP . '/includes/SMW_QP_Embedded.php';
 	$wgAutoloadClasses['SMWTemplateResultPrinter']  = $smwgIP . '/includes/SMW_QP_Template.php';
 	$wgAutoloadClasses['SMWRSSResultPrinter']       = $smwgIP . '/includes/SMW_QP_RSSlink.php';
 	$wgAutoloadClasses['SMWiCalendarResultPrinter'] = $smwgIP . '/includes/SMW_QP_iCalendar.php';
 	$wgAutoloadClasses['SMWvCardResultPrinter']     = $smwgIP . '/includes/SMW_QP_vCard.php';
+	$wgAutoloadClasses['SMWCsvResultPrinter']       = $smwgIP . '/includes/SMW_QP_CSV.php';
 	//// datavalues
+	$wgAutoloadClasses['SMWDataValueFactory']       = $smwgIP . '/includes/SMW_DataValueFactory.php';
 	$wgAutoloadClasses['SMWDataValue']              = $smwgIP . '/includes/SMW_DataValue.php';
 	$wgAutoloadClasses['SMWErrorvalue']             = $smwgIP . '/includes/SMW_DV_Error.php';
-	///NOTE: other DataValues are registered for autoloading later on by the factory, use the hook
-	/// smwInitDatatypes to modify paths for datatype implementations and for registering new types.
-	$wgAutoloadClasses['SMWDataValueFactory']       = $smwgIP . '/includes/SMW_DataValueFactory.php';
-	// the builtin types are registered by SMWDataValueFactory if needed, will be reliably available
-	// to other DV-implementations that register to the factory.
+	$wgAutoloadClasses['SMWStringValue']      =  $smwgIP . '/includes/SMW_DV_String.php';
+	$wgAutoloadClasses['SMWWikiPageValue']    =  $smwgIP . '/includes/SMW_DV_WikiPage.php';
+	$wgAutoloadClasses['SMWPropertyValue']    =  $smwgIP . '/includes/SMW_DV_Property.php';
+	$wgAutoloadClasses['SMWURIValue']         =  $smwgIP . '/includes/SMW_DV_URI.php';
+	$wgAutoloadClasses['SMWTypesValue']       =  $smwgIP . '/includes/SMW_DV_Types.php';
+	$wgAutoloadClasses['SMWNAryValue']        =  $smwgIP . '/includes/SMW_DV_NAry.php';
+	$wgAutoloadClasses['SMWErrorValue']       =  $smwgIP . '/includes/SMW_DV_Error.php';
+	$wgAutoloadClasses['SMWNumberValue']      =  $smwgIP . '/includes/SMW_DV_Number.php';
+	$wgAutoloadClasses['SMWTemperatureValue'] =  $smwgIP . '/includes/SMW_DV_Temperature.php';
+	$wgAutoloadClasses['SMWLinearValue']      =  $smwgIP . '/includes/SMW_DV_Linear.php';
+	$wgAutoloadClasses['SMWTimeValue']        =  $smwgIP . '/includes/SMW_DV_Time.php';
+	$wgAutoloadClasses['SMWGeoCoordsValue']   =  $smwgIP . '/includes/SMW_DV_GeoCoords.php';
+	$wgAutoloadClasses['SMWBoolValue']        =  $smwgIP . '/includes/SMW_DV_Bool.php';
+	$wgAutoloadClasses['SMWConceptValue']     =  $smwgIP . '/includes/SMW_DV_Concept.php';
+	$wgAutoloadClasses['SMWImportValue']      =  $smwgIP . '/includes/SMW_DV_Import.php';
 	//// export
 	$wgAutoloadClasses['SMWExporter']               = $smwgIP . '/includes/export/SMW_Exporter.php';
 	$wgAutoloadClasses['SMWExpData']                = $smwgIP . '/includes/export/SMW_Exp_Data.php';
@@ -143,7 +168,6 @@ function enableSemantics($namespace = '', $complete = false) {
 	$wgAutoloadClasses['SMWConjunction']            = $smwgIP . '/includes/storage/SMW_Description.php';
 	$wgAutoloadClasses['SMWDisjunction']            = $smwgIP . '/includes/storage/SMW_Description.php';
 	$wgAutoloadClasses['SMWSomeProperty']           = $smwgIP . '/includes/storage/SMW_Description.php';
-	$wgAutoloadClasses['SMWSQLStore']               = $smwgIP . '/includes/storage/SMW_SQLStore.php';
 	$wgAutoloadClasses['SMWSQLStore2']              = $smwgIP . '/includes/storage/SMW_SQLStore2.php';
 	// Do not autoload RAPStore, since some special pages load all autoloaded classes, which causes
 	// troubles with RAP store if RAP is not installed (require_once fails).
@@ -154,22 +178,26 @@ function enableSemantics($namespace = '', $complete = false) {
 	$wgAutoloadClasses['SMWQueryPage']              = $smwgIP . '/specials/QueryPages/SMW_QueryPage.php';
 	$wgAutoloadClasses['SMWAskPage']                = $smwgIP . '/specials/AskSpecial/SMW_SpecialAsk.php';
 	$wgSpecialPages['Ask']                          = array('SMWAskPage');
+	$wgSpecialPageGroups['Ask']                     = 'smw_group';
 	$wgAutoloadClasses['SMWSpecialBrowse']          = $smwgIP . '/specials/SearchTriple/SMW_SpecialBrowse.php';
 	$wgSpecialPages['Browse']                       = array('SMWSpecialBrowse');
+	$wgSpecialPageGroups['Browse']                  = 'smw_group';
 	$wgAutoloadClasses['SMWPageProperty']           = $smwgIP . '/specials/SearchTriple/SMW_SpecialPageProperty.php';
 	$wgSpecialPages['PageProperty']                 = array('SMWPageProperty');
+	$wgSpecialPageGroups['PageProperty']            = 'smw_group';
 	$wgAutoloadClasses['SMWSearchByProperty']       = $smwgIP . '/specials/SearchTriple/SMW_SpecialSearchByProperty.php';
 	$wgSpecialPages['SearchByProperty']             = array('SMWSearchByProperty');
+	$wgSpecialPageGroups['SearchByProperty']        = 'smw_group';
 	$wgAutoloadClasses['SMWURIResolver']            = $smwgIP . '/specials/URIResolver/SMW_SpecialURIResolver.php';
 	$wgSpecialPages['URIResolver']                  = array('SMWURIResolver');
 	$wgAutoloadClasses['SMWAdmin']                  = $smwgIP . '/specials/SMWAdmin/SMW_SpecialSMWAdmin.php';
 	$wgSpecialPages['SMWAdmin']                     = array('SMWAdmin');
 	$wgSpecialPageGroups['SMWAdmin']                = 'smw_group';
-	
+
 	// suboptimal special pages using the SMWSpecialPage wrapper class:
 	$wgAutoloadClasses['SMWSpecialPage']            = $smwgIP . '/includes/SMW_SpecialPage.php';
 	$wgSpecialPages['Properties']                   = array('SMWSpecialPage','Properties', 'smwfDoSpecialProperties', $smwgIP . '/specials/QueryPages/SMW_SpecialProperties.php');
-	$wgSpecialPageGroups['Properties']                   = 'pages';
+	$wgSpecialPageGroups['Properties']              = 'pages';
 	$wgSpecialPages['UnusedProperties']             = array('SMWSpecialPage','UnusedProperties', 'smwfDoSpecialUnusedProperties', $smwgIP . '/specials/QueryPages/SMW_SpecialUnusedProperties.php', true, '');
 	$wgSpecialPageGroups['UnusedProperties']        = 'maintenance';
 	$wgSpecialPages['WantedProperties']             = array('SMWSpecialPage','WantedProperties', 'smwfDoSpecialWantedProperties', $smwgIP . '/specials/QueryPages/SMW_SpecialWantedProperties.php', true, '');
@@ -182,57 +210,62 @@ function enableSemantics($namespace = '', $complete = false) {
 	$wgSpecialPageGroups['Types']                   = 'pages';
 
 	///// Register Jobs
-	$wgAutoloadClasses['SMWUpdateJob']              = $smwgIP . '/includes/jobs/SMW_UpdateJob.php';
 	$wgJobClasses['SMWUpdateJob']                   = 'SMWUpdateJob';
-
+	$wgAutoloadClasses['SMWUpdateJob']              = $smwgIP . '/includes/jobs/SMW_UpdateJob.php';
+	$wgJobClasses['SMWRefreshJob']                  = 'SMWRefreshJob';
+	$wgAutoloadClasses['SMWRefreshJob']             = $smwgIP . '/includes/jobs/SMW_RefreshJob.php';
 	return true;
 }
 
 /**
- *  Do the actual intialisation of the extension. This is just a delayed init that makes sure
- *  MediaWiki is set up properly before we add our stuff.
+ * Do the actual intialisation of the extension. This is just a delayed init that makes sure
+ * MediaWiki is set up properly before we add our stuff.
+ *
+ * The main things this function does are: register all hooks, set up extension credits, and
+ * init some globals that are not for configuration settings.
  */
 function smwfSetupExtension() {
 	wfProfileIn('smwfSetupExtension (SMW)');
-	global $smwgIP, $smwgStoreActive, $wgHooks, $wgExtensionCredits, $smwgEnableTemplateSupport, $smwgMasterStore, $smwgIQRunningNumber, $wgLanguageCode;
-
-	/**
-	* Setting this to false prevents any new data from being stored in
-	* the static SMWSemanticData store, and disables printing of the
-	* factbox, and clearing of the existing data.
-	* This is a hack to enable parsing of included articles in a save
-	* way without importing their annotations. Unfortunately, there
-	* appears to be no way for finding out whether the current parse
-	* is the "main" parse, or whether some intro, docu, or whatever
-	* text is parsed. Using the hook mechanism, we have to rely on
-	* globals/static fields -- so we cannot somehow differentiate this
-	* store between parsers.
-	*/
-	$smwgStoreActive = true;
+	global $smwgIP, $wgHooks, $wgParser, $wgExtensionCredits, $smwgEnableTemplateSupport, $smwgMasterStore, $smwgIQRunningNumber, $wgLanguageCode, $wgVersion, $smwgToolboxBrowseLink, $smwgMW_1_14;
 
 	$smwgMasterStore = NULL;
-	smwfInitContentLanguage($wgLanguageCode); // this really could not be done in enableSemantics()
-	wfLoadExtensionMessages('SemanticMediaWiki'); /// FIXME: this is extremely slow; up to 10% of page display time (on a page with queries!) are consumed by loading unnecessary messages from a large file ...
-	/// Past SMW releases had an average of about 1% extension loading time per call, while we are now up at 10%!
-	/// Should we return to our earlier message management for releases?
 	$smwgIQRunningNumber = 0;
 
 	///// register hooks /////
-	require_once($smwgIP . '/includes/SMW_Hooks.php');
 	require_once($smwgIP . '/includes/SMW_RefreshTab.php');
 
-	$wgHooks['InternalParseBeforeLinks'][] = 'smwfParserHook'; // parse annotations
-	$wgHooks['ParserBeforeStrip'][] = 'smwfRegisterInlineQueries'; // register the <ask> parser hook
-	$wgHooks['ArticleSave'][] = 'smwfPreSaveHook'; // check some settings here
-	$wgHooks['ArticleUndelete'][] = 'smwfUndeleteHook'; // restore annotations
-	$wgHooks['ArticleDelete'][] = 'smwfDeleteHook'; // delete annotations
-	$wgHooks['TitleMoveComplete'][]='smwfMoveHook'; // move annotations
-	$wgHooks['ParserAfterTidy'][] = 'smwfParserAfterTidy'; // add items to HTML header during parsing
-	$wgHooks['BeforePageDisplay'][]='smwfAddHTMLHeadersOutput'; // add items to HTML header during output
-    $wgHooks['LinksUpdateConstructed'][] = 'smwfLinkUpdateHook'; // update data after template change and at safe
-	$wgHooks['BeforeParserrenderImageGallery'][] = 'smwfBlockFactboxFromImageGallery';
+	$wgHooks['InternalParseBeforeLinks'][] = 'SMWParserExtensions::onInternalParseBeforeLinks'; // parse annotations in [[link syntax]]
+	$wgHooks['ArticleDelete'][] = 'SMWParseData::onArticleDelete'; // delete annotations
+	$wgHooks['TitleMoveComplete'][] = 'SMWParseData::onTitleMoveComplete'; // move annotations
+	$wgHooks['LinksUpdateConstructed'][] = 'SMWParseData::onLinksUpdateConstructed'; // update data after template change and at safe
+	$wgHooks['ParserAfterTidy'][] = 'SMWParseData::onParserAfterTidy'; // fetch some MediaWiki data for replication in SMW's store
+	$wgHooks['NewRevisionFromEditComplete'][] = 'SMWParseData::onNewRevisionFromEditComplete'; // fetch some MediaWiki data for replication in SMW's store
+	$wgHooks['OutputPageParserOutput'][] = 'SMWFactbox::onOutputPageParserOutput'; // copy some data for later Factbox display
 
-	$wgHooks['ArticleFromTitle'][] = 'smwfShowListPage'; // special implementations for property/type articles
+	$wgHooks['ArticleFromTitle'][] = 'smwfOnArticleFromTitle'; // special implementations for property/type articles
+
+	if( defined( 'MW_SUPPORTS_PARSERFIRSTCALLINIT' ) ) {
+		$wgHooks['ParserFirstCallInit'][] = 'SMWParserExtensions::registerParserFunctions';
+	} else {
+		if ( class_exists( 'StubObject' ) && !StubObject::isRealObject( $wgParser ) ) {
+			$wgParser->_unstub();
+		}
+		SMWParserExtensions::registerParserFunctions( $wgParser );
+	}
+	if ($smwgToolboxBrowseLink) {
+		if (version_compare($wgVersion,'1.13','>')) {
+			$wgHooks['SkinTemplateToolboxEnd'][] = 'smwfShowBrowseLink'; // introduced only in 1.13
+		} else {
+			$wgHooks['MonoBookTemplateToolboxEnd'][] = 'smwfShowBrowseLink';
+		}
+	}
+	if (version_compare($wgVersion,'1.14alpha','>=')) {
+		$wgHooks['SkinAfterContent'][] = 'SMWFactbox::onSkinAfterContent'; // draw Factbox below categories
+		$smwgMW_1_14 = true; // assume latest 1.14 API
+	} else {
+		$wgHooks['OutputPageBeforeHTML'][] = 'SMWFactbox::onOutputPageBeforeHTML'; // draw Factbox right below page content
+		$smwgMW_1_14 = false; // assume <= 1.13 API
+	}
 
 	///// credits (see "Special:Version") /////
 	$wgExtensionCredits['parserhook'][]= array('name'=>'Semantic&nbsp;MediaWiki', 'version'=>SMW_VERSION, 'author'=>"Klaus&nbsp;Lassleben, [http://korrekt.org Markus&nbsp;Kr&ouml;tzsch], [http://simia.net Denny&nbsp;Vrandecic], S&nbsp;Page, and others. Maintained by [http://www.aifb.uni-karlsruhe.de/Forschungsgruppen/WBS/english AIFB Karlsruhe].", 'url'=>'http://semantic-mediawiki.org', 'description' => 'Making your wiki more accessible&nbsp;&ndash; for machines \'\'and\'\' humans. [http://semantic-mediawiki.org/wiki/Help:User_manual View online documentation.]');
@@ -241,209 +274,45 @@ function smwfSetupExtension() {
 	return true;
 }
 
-/**
- * This hook registers a parser-hook to the current parser.
- * Note that parser hooks are something different than MW hooks
- * in general, which explains the two-level registration.
- */
-function smwfRegisterInlineQueries( &$parser, &$text, &$stripstate ) {
-	SMWFactbox::initStorage($parser->getTitle());
-
-	$oldhook = $parser->setFunctionHook( 'ask', 'smwfProcessInlineQueryParserFunction' );
-	if ($oldhook != 'smwfProcessInlineQueryParserFunction') {
-		$parser->setHook( 'ask', 'smwfProcessInlineQuery' );
-		$parser->setFunctionHook( 'ask', 'smwfProcessInlineQueryParserFunction' );
-		$parser->setFunctionHook( 'show', 'smwfProcessShowParserFunction' );
-		$parser->setFunctionHook( 'info', 'smwfProcessInfoParserFunction' );
-		$parser->setFunctionHook( 'concept', 'smwfProcessConceptParserFunction' );
-	}
-	return true; // always return true, in order not to stop MW's hook processing!
-}
 
 /**
- * The <ask> parser hook processing part.
+ * Register special classes for displaying semantic content on Property/Type pages
  */
-function smwfProcessInlineQuery($querytext, $params, &$parser) {
-	global $smwgQEnabled, $smwgIQRunningNumber;
-	if ($smwgQEnabled) {
-		$smwgIQRunningNumber++;
-		return SMWQueryProcessor::getResultFromHookParams($querytext,$params,SMW_OUTPUT_HTML);
-	} else {
-		return smwfEncodeMessages(array(wfMsgForContent('smw_iq_disabled')));
+function smwfOnArticleFromTitle(&$title, &$article){
+	global $smwgIP;
+	if ($title->getNamespace() == SMW_NS_TYPE){
+		$article = new SMWTypePage($title);
+	} elseif ( $title->getNamespace() == SMW_NS_PROPERTY ) {
+		$article = new SMWPropertyPage($title);
+	} elseif ( $title->getNamespace() == SMW_NS_CONCEPT ) {
+		$article = new SMWConceptPage($title);
 	}
-}
-
-/**
- * The {{#ask }} parser function processing part.
- */
-function smwfProcessInlineQueryParserFunction(&$parser) {
-	global $smwgQEnabled, $smwgIQRunningNumber;
-	if ($smwgQEnabled) {
-		$smwgIQRunningNumber++;
-		$params = func_get_args();
-		array_shift( $params ); // we already know the $parser ...
-		return SMWQueryProcessor::getResultFromFunctionParams($params,SMW_OUTPUT_WIKI);
-	} else {
-		return smwfEncodeMessages(array(wfMsgForContent('smw_iq_disabled')));
-	}
-}
-
-/**
- * The {{#show }} parser function processing part.
- */
-function smwfProcessShowParserFunction(&$parser) {
-	global $smwgQEnabled, $smwgIQRunningNumber;
-	if ($smwgQEnabled) {
-		$smwgIQRunningNumber++;
-		$params = func_get_args();
-		array_shift( $params ); // we already know the $parser ...
-		return SMWQueryProcessor::getResultFromFunctionParams($params,SMW_OUTPUT_WIKI,SMWQueryProcessor::INLINE_QUERY,true);
-	} else {
-		return smwfEncodeMessages(array(wfMsgForContent('smw_iq_disabled')));
-	}
-}
-
-/**
- * The {{#concept }} parser function processing part.
- */
-function smwfProcessConceptParserFunction(&$parser) {
-	global $smwgQDefaultNamespaces, $smwgQMaxSize, $smwgQMaxDepth, $smwgPreviousConcept, $wgContLang;
-	// The global $smwgConceptText is used to pass information to the MW hooks for storing it,
-	// $smwgPreviousConcept is used to detect if we already have a concept defined for this page.
-	$title = $parser->getTitle();
-	if ($title->getNamespace() != SMW_NS_CONCEPT) {
-		return smwfEncodeMessages(array(wfMsgForContent('smw_no_concept_namespace')));
-	} elseif (isset($smwgPreviousConcept) && ($smwgPreviousConcept == $title->getText())) {
-		return smwfEncodeMessages(array(wfMsgForContent('smw_multiple_concepts')));
-	}
-	$smwgPreviousConcept = $title->getText();
-
-	// process input:
-	$params = func_get_args();
-	array_shift( $params ); // we already know the $parser ...
-	$concept_input = array_shift( $params ); // use first parameter as concept (query) string
-	$query = SMWQueryProcessor::createQuery($concept_input, array('limit' => 20, 'format' => 'list'), SMWQueryProcessor::CONCEPT_DESC);
-	$concept_text = $query->getDescription()->getQueryString();
-	$concept_docu = array_shift( $params ); // second parameter, if any, might be a description
-
-	$dv = SMWDataValueFactory::newSpecialValue(SMW_SP_CONCEPT_DESC);
-	$dv->setValues($concept_text, $concept_docu);
-	SMWFactbox::$semdata->addSpecialValue(SMW_SP_CONCEPT_DESC,$dv);
-
-	// display concept box:
-	$rdflink = SMWInfolink::newInternalLink(wfMsgForContent('smw_viewasrdf'), $wgContLang->getNsText(NS_SPECIAL) . ':ExportRDF/' . $title->getPrefixedText(), 'rdflink');
-	$qresult = smwfGetStore()->getQueryResult($query);
-	$printer = SMWQueryProcessor::getResultPrinter('list', SMWQueryProcessor::CONCEPT_DESC, $qresult);
-	$printer->setShowErrors(false);
-	$resultlink = $printer->getResult($qresult, array('sep' => ',_'), SMW_OUTPUT_WIKI);
-	smwfRequireHeadItem(SMW_HEADER_STYLE);
-	$result = '<div class="smwfact"><span class="smwfactboxhead">' . wfMsgForContent('smw_concept_description',$title->getText()) .
-	          (count($query->getErrors())>0?' ' . smwfEncodeMessages($query->getErrors()):'') .
-	          '</span>' . '<span class="smwrdflink">' . $rdflink->getWikiText() . '</span>' . '<br />' .
-	          ($concept_docu?"<p>$concept_docu</p>":'') .
-	          '<pre>' . str_replace('[', '&#x005B;', $concept_text) . "</pre>\n" .
-	          $resultlink . '</div>';
-	return $result;
-}
-
-/**
- * The {{#info }} parser function processing part.
- */
-function smwfProcessInfoParserFunction(&$parser) {
-	$params = func_get_args();
-	array_shift( $params ); // we already know the $parser ...
-	$content = array_shift( $params ); // use only first parameter, ignore rest (may get meaning later)
-	return smwfEncodeMessages(array($content), 'info');
-}
-
-/**********************************************/
-/***** Header modifications               *****/
-/**********************************************/
-
-/**
- * Add some head items (e.g. JavaScripts) to the current list of things 
- * that SMW will add to the returned HTML page. The ID can be one of SMW's
- * SMW_HEADER_... constants, or a string id followed by the actual item
- * that should be added to the output html header. In the first case, the
- * $item parameter should be left empty.
- */
-function smwfRequireHeadItem($id, $item = '') {
-	global $smwgHeadItems;
-	if (is_numeric($id)) {
-		global $smwgScriptPath;
-		switch ($id) {
-			case SMW_HEADER_TIMELINE:
-				smwfRequireHeadItem(SMW_HEADER_STYLE);
-				$smwgHeadItems['smw_tl'] = '<script type="text/javascript" src="' . $smwgScriptPath .  '/skins/SimileTimeline/timeline-api.js"></script>';
-				$smwgHeadItems['smw_tlhelper'] = '<script type="text/javascript" src="' . $smwgScriptPath .  '/skins/SMW_timeline.js"></script>';
-			return;
-			case SMW_HEADER_TOOLTIP:
-				smwfRequireHeadItem(SMW_HEADER_STYLE);
-				$smwgHeadItems['smw_tt'] = '<script type="text/javascript" src="' . $smwgScriptPath .  '/skins/SMW_tooltip.js"></script>';
-			return;
-			case SMW_HEADER_SORTTABLE:
-				smwfRequireHeadItem(SMW_HEADER_STYLE);
-				$smwgHeadItems['smw_st'] = '<script type="text/javascript" src="' . $smwgScriptPath .  '/skins/SMW_sorttable.js"></script>';
-			return;
-			case SMW_HEADER_STYLE:
-				global $wgContLang;
-				$smwgHeadItems['smw_css'] = '<link rel="stylesheet" type="text/css" media="screen, projection" href="' . $smwgScriptPath . '/skins/SMW_custom.css" />';
-				if ($wgContLang->isRTL()) { // right-to-left support
-					$smwgHeadItems['smw_cssrtl'] = '<link rel="stylesheet" type="text/css" media="screen, projection" href="' . $smwgScriptPath . '/skins/SMW_custom_rtl.css" />';
-				}
-			return;
-		}
-	} else { // custom head item
-		$smwgHeadItems[$id] = $item;
-	}
-}
-
-/**
- * Hook function for three tasks:
- * (1) insert HTML headers (CSS, JavaScript, and meta tags) into parser 
- * output. This is our preferred method of working off the required scripts, since it 
- * exploits parser caching.
- * (2) Fetch category information and other final settings from parser output.
- */
-function smwfParserAfterTidy(&$parser, &$text) {
-	global $smwgHeadItems, $smwgStoreActive;
-	// make HTML header
-	if (!$smwgStoreActive) return true; // avoid doing this in SMW-generated sub-parsers
-	foreach ($smwgHeadItems as $key => $item) {
-		$parser->mOutput->addHeadItem("\t\t" . $item . "\n", $key);
-	}
-	$smwgHeadItems = array(); // flush array so that smwfAddHTMLHeader does not take needless actions
-	// fetch category data
-	$categories = $parser->mOutput->getCategoryLinks();
-	foreach ($categories as $name) {
-		$dv = SMWDataValueFactory::newSpecialValue(SMW_SP_INSTANCE_OF);
-		$dv->setValues($name,NS_CATEGORY);
-		SMWFactbox::$semdata->addSpecialValue(SMW_SP_INSTANCE_OF,$dv);
-		if (SMWFactbox::$semdata->getSubject()->getNamespace() == NS_CATEGORY) {
-			SMWFactbox::$semdata->addSpecialValue(SMW_SP_SUBCLASS_OF,$dv);
-		}
-	}
-	$sortkey = ($parser->mDefaultSort?$parser->mDefaultSort:SMWFactbox::$semdata->getSubject()->getText());
-	SMWFactbox::$semdata->getSubject()->setSortkey($sortkey);
 	return true;
 }
 
 /**
- * This method is in charge of inserting additional CSS, JavaScript, and meta tags
- * into the HTML header of each page. This method is needed for pages that are not 
- * parsed, especially for special pages. All others get their headers with the parser
- * output (exploiting parser caching).
+ * Register tables to be added to temporary tables for parser tests
  */
-function smwfAddHTMLHeadersOutput(&$out) {
-	global $smwgHeadItems, $smwgStoreActive;
-	if (!$smwgStoreActive) return true; // avoid doing this in SMW-generated sub-parsers
-	// Add scripts to output if not done already (should happen only if we are
-	// not using a parser, e.g on special pages).
-	foreach ($smwgHeadItems as $key => $item) {
-		$out->addHeadItem($key, "\t\t" . $item . "\n");
-	}
-	$smwgHeadItems = array(); // flush array
-	return true; // always return true, in order not to stop MW's hook processing!
+function smwfOnParserTestTables( &$tables ){
+	$tables[] = 'smw_ids';
+	$tables[] = 'smw_redi2';
+	$tables[] = 'smw_atts2';
+	return true;
+}
+
+/**
+ * Add a link to the toobox to view the properties of the current page in Special:Browse.
+ * The links has the CSS id "t-smwbrowselink" so that it can be skinned or hidden with all
+ * standard mechanisms (also by individual users with custom CSS).
+ */
+function smwfShowBrowseLink($skintemplate) {
+	if($skintemplate->data['isarticle']) {
+		wfLoadExtensionMessages('SemanticMediaWiki');
+		$browselink = SMWInfolink::newBrowsingLink(wfMsg('smw_browselink'),
+		               $skintemplate->data['titleprefixeddbkey'],false);
+    	echo "<li id=\"t-smwbrowselink\">" . $browselink->getHTML() . "</li>";
+    }
+    return true;
 }
 
 /**********************************************/
@@ -466,7 +335,9 @@ function smwfAddHTMLHeadersOutput(&$out) {
 		define('SMW_NS_PROPERTY_TALK',  $smwgNamespaceIndex+3);
 		define('SMW_NS_TYPE',           $smwgNamespaceIndex+4);
 		define('SMW_NS_TYPE_TALK',      $smwgNamespaceIndex+5);
-		// 106 and 107 are occupied by the Semantic Forms
+		// 106 and 107 are occupied by the Semantic Forms, we define them here to offer some (easy but useful) support to SF
+		define('SF_NS_FORM',            $smwgNamespaceIndex+6);
+		define('SF_NS_FORM_TALK',       $smwgNamespaceIndex+7);
 		define('SMW_NS_CONCEPT',        $smwgNamespaceIndex+8);
 		define('SMW_NS_CONCEPT_TALK',   $smwgNamespaceIndex+9);
 
@@ -515,10 +386,12 @@ function smwfAddHTMLHeadersOutput(&$out) {
 	 * Set up (possibly localised) names for SMW's parser functions.
 	 */
 	function smwfAddMagicWords(&$magicWords, $langCode) {
-		$magicWords['ask']  = array( 0, 'ask' );
-		$magicWords['show'] = array( 0, 'show' );
-		$magicWords['info'] = array( 0, 'info' );
+		$magicWords['ask']     = array( 0, 'ask' );
+		$magicWords['show']    = array( 0, 'show' );
+		$magicWords['info']    = array( 0, 'info' );
 		$magicWords['concept'] = array( 0, 'concept' );
+		$magicWords['set']     = array( 0, 'set' );
+		$magicWords['declare'] = array( 0, 'declare' );
 		$magicWords['SMW_NOFACTBOX'] = array( 0, '__NOFACTBOX__' );
 		$magicWords['SMW_SHOWFACTBOX'] = array( 0, '__SHOWFACTBOX__' );
 		return true;
@@ -535,16 +408,16 @@ function smwfAddHTMLHeadersOutput(&$out) {
 		if (!empty($smwgContLang)) { return; }
 		wfProfileIn('smwfInitContentLanguage (SMW)');
 
-		$smwContLangClass = 'SMW_Language' . str_replace( '-', '_', ucfirst( $langcode ) );
-
-		if (file_exists($smwgIP . '/languages/'. $smwContLangClass . '.php')) {
-			include_once( $smwgIP . '/languages/'. $smwContLangClass . '.php' );
+		$smwContLangFile = 'SMW_Language' . str_replace( '-', '_', ucfirst( $langcode ) );
+		$smwContLangClass = 'SMWLanguage' . str_replace( '-', '_', ucfirst( $langcode ) );
+		if (file_exists($smwgIP . '/languages/'. $smwContLangFile . '.php')) {
+			include_once( $smwgIP . '/languages/'. $smwContLangFile . '.php' );
 		}
 
 		// fallback if language not supported
 		if ( !class_exists($smwContLangClass)) {
 			include_once($smwgIP . '/languages/SMW_LanguageEn.php');
-			$smwContLangClass = 'SMW_LanguageEn';
+			$smwContLangClass = 'SMWLanguageEn';
 		}
 		$smwgContLang = new $smwContLangClass();
 
@@ -632,15 +505,16 @@ function smwfAddHTMLHeadersOutput(&$out) {
 	*                   scientific notation)
 	*/
 	function smwfNumberFormat($value, $decplaces=3) {
+		wfLoadExtensionMessages('SemanticMediaWiki');
 		$decseparator = wfMsgForContent('smw_decseparator');
-	
+
 		// If number is a trillion or more, then switch to scientific
 		// notation. If number is less than 0.0000001 (i.e. twice decplaces),
 		// then switch to scientific notation. Otherwise print number
 		// using number_format. This may lead to 1.200, so then use trim to
 		// remove trailing zeroes.
 		$doScientific = false;
-		//@TODO: Don't do all this magic for integers, since the formatting does not fit there
+		//@todo: Don't do all this magic for integers, since the formatting does not fit there
 		//       correctly. E.g. one would have integers formatted as 1234e6, not as 1.234e9, right?
 		//The "$value!=0" is relevant: we want to scientify numbers that are close to 0, but never 0!
 		if ( ($decplaces > 0) && ($value != 0) ) {
@@ -697,7 +571,7 @@ function smwfAddHTMLHeadersOutput(&$out) {
 	 */
 	function smwfEncodeMessages($msgarray, $icon = 'warning', $sep = " <!--br-->") {
 		if (count($msgarray) > 0) {
-			smwfRequireHeadItem(SMW_HEADER_TOOLTIP);
+			SMWOutputs::requireHeadItem(SMW_HEADER_TOOLTIP);
 			$msgs = implode($sep, $msgarray);
 			return '<span class="smwttpersist"><span class="smwtticon">' . $icon . '.png</span><span class="smwttcontent">' . $msgs . '</span> </span>';
 			// Note: the space is essential to make FF (and maybe other) align icons properly in tables
@@ -714,9 +588,6 @@ function smwfAddHTMLHeadersOutput(&$out) {
 	 */
 	function &smwfGetStore() {
 		global $smwgMasterStore, $smwgDefaultStore, $smwgIP;
-		if ($smwgDefaultStore == 'SMWRAPStore') { // no autoloading for RAP store, since autoloaded classes are in rare cases loaded by MW even if not used in code -- this is not possible for RAPstore, which depends on RAP being installed
-			include_once($smwgIP . '/includes/storage/SMW_RAPStore.php');
-		}
 		if ($smwgDefaultStore == 'SMWRAPStore2') { // no autoloading for RAP store, since autoloaded classes are in rare cases loaded by MW even if not used in code -- this is not possible for RAPstore, which depends on RAP being installed
 			include_once($smwgIP . '/includes/storage/SMW_RAPStore2.php');
 		}

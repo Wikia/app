@@ -102,7 +102,7 @@ O ipuletse akhaonte. O seka wa lebala go fetola tse o di dikgatlhegelo tsa gago 
 'username'           => 'Leina la modirisi:',
 
 # Edit pages
-'summary'            => 'Tshoboko',
+'summary'            => 'Tshoboko:',
 'minoredit'          => 'Se ke paakanyo e potlana',
 'watchthis'          => 'Lebelela tsebe e',
 'savearticle'        => 'Boloka tsebe',
@@ -141,6 +141,9 @@ O ipuletse akhaonte. O seka wa lebala go fetola tse o di dikgatlhegelo tsa gago 
 'watch'         => 'Lebelela',
 'watchthispage' => 'Lebelela tsebe e',
 
+# Protect
+'prot_1movedto2' => '[[$1]] o sutisediwa kwa go [[$2]]',
+
 # Undelete
 'undelete-search-submit' => 'Senka',
 
@@ -153,6 +156,7 @@ O ipuletse akhaonte. O seka wa lebala go fetola tse o di dikgatlhegelo tsa gago 
 # Move page
 'move-page-legend' => 'Sutisa tsebe',
 'movearticle'      => 'Sutisa tsebe:',
+'movenologin'      => 'Ga o a ikwadisa',
 'movepagebtn'      => 'Sutisa tsebe',
 'movedto'          => 'sutela kwa',
 '1movedto2'        => '[[$1]] o sutisediwa kwa go [[$2]]',

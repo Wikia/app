@@ -66,7 +66,7 @@ $wgCategoryTreeSidebarRoot = NULL;
 $wgCategoryTreeHijackPageCategories = false; # EXPERIMENTAL! NOT YET FOR PRODUCTION USE! Main problem is general HTML/CSS layout cruftiness.
 
 $wgCategoryTreeExtPath = $wgExtensionsPath . '/CategoryTree'; # Wikia change - RT #11231
-$wgCategoryTreeVersion = '3';  #NOTE: bump this when you change the CSS or JS files!
+$wgCategoryTreeVersion = '4';  #NOTE: bump this when you change the CSS or JS files!
 $wgCategoryTreeUseCategoryTable = version_compare( $wgVersion, "1.13", '>=' );
 
 $wgCategoryTreeOmitNamespace = CT_HIDEPREFIX_CATEGORIES;
@@ -110,8 +110,8 @@ $wgExtensionAliasesFiles['CategoryTree'] = dirname(__FILE__) . '/CategoryTreePag
 $wgExtensionFunctions[] = 'efCategoryTree';
 $wgExtensionCredits['specialpage'][] = array(
 	'name' => 'CategoryTree',
-	'svn-date' => '$LastChangedDate: 2008-07-11 23:18:41 +0000 (Fri, 11 Jul 2008) $',
-	'svn-revision' => '$LastChangedRevision: 37574 $',
+	'svn-date' => '$LastChangedDate: 2008-11-30 03:15:22 +0000 (Sun, 30 Nov 2008) $',
+	'svn-revision' => '$LastChangedRevision: 44056 $',
 	'author' => 'Daniel Kinzler',
 	'url' => 'http://www.mediawiki.org/wiki/Extension:CategoryTree',
 	'description' => 'Dynamically navigate the category structure',
@@ -119,8 +119,8 @@ $wgExtensionCredits['specialpage'][] = array(
 );
 $wgExtensionCredits['parserhook'][] = array(
 	'name' => 'CategoryTree',
-	'svn-date' => '$LastChangedDate: 2008-07-11 23:18:41 +0000 (Fri, 11 Jul 2008) $',
-	'svn-revision' => '$LastChangedRevision: 37574 $',
+	'svn-date' => '$LastChangedDate: 2008-11-30 03:15:22 +0000 (Sun, 30 Nov 2008) $',
+	'svn-revision' => '$LastChangedRevision: 44056 $',
 	'author' => 'Daniel Kinzler',
 	'url' => 'http://www.mediawiki.org/wiki/Extension:CategoryTree',
 	'description' => 'Dynamically navigate the category structure',
@@ -290,7 +290,7 @@ function efCategoryTreeParserFunction( &$parser ) {
 	foreach ( $params as $p ) {
 		if ( preg_match('/^\s*(\S.*?)\s*=\s*(.*?)\s*$/', $p, $m) ) {
 			$k = $m[1];
-			$v = $m[2];
+			$v = preg_replace('/^"\s*(.*?)\s*"$/', '$1', $m[2]); //strip any quotes enclusing the value
 		}
 		else {
 			$k = trim($p);
@@ -351,7 +351,7 @@ function efCategoryTreeParserHook( $cat, $argv, $parser = NULL, $allowMissing = 
 * Hook callback that injects messages and things into the <head> tag
 * Does nothing if $parserOutput->mCategoryTreeTag is not set
 */
-function efCategoryTreeParserOutput( &$outputPage, &$parserOutput )  {
+function efCategoryTreeParserOutput( &$outputPage, $parserOutput )  {
 	if ( !empty( $parserOutput->mCategoryTreeTag ) ) {
 		CategoryTree::setHeaders( $outputPage );
 	}

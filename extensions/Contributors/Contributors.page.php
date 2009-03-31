@@ -28,7 +28,7 @@ class SpecialContributors extends IncludableSpecialPage {
 		} elseif( $wgRequest->getText( 'action' ) == 'raw' ) {
 			$this->showRaw();
 		} else {
-			$wgOut->addHtml( $this->makeForm() );
+			$wgOut->addHTML( $this->makeForm() );
 			if( is_object( $this->target ) )
 				$this->showNormal();
 		}
@@ -48,12 +48,12 @@ class SpecialContributors extends IncludableSpecialPage {
 				$output = implode( ', ', $names );
 				if( $others > 0 )
 					$output .= ' ' . wfMsgForContent( 'contributors-others', $others );
-				$wgOut->addHtml( htmlspecialchars( $output ) );
+				$wgOut->addHTML( htmlspecialchars( $output ) );
 			} else {
-				$wgOut->addHtml( '<p>' . htmlspecialchars( wfMsgForContent( 'contributors-nosuchpage', $this->target->getPrefixedText() ) ) . '</p>' );
+				$wgOut->addHTML( '<p>' . htmlspecialchars( wfMsgForContent( 'contributors-nosuchpage', $this->target->getPrefixedText() ) ) . '</p>' );
 			}
 		} else {
-			$wgOut->addHtml( '<p>' . htmlspecialchars( wfMsgForContent( 'contributors-badtitle' ) ) . '</p>' );
+			$wgOut->addHTML( '<p>' . htmlspecialchars( wfMsgForContent( 'contributors-badtitle' ) ) . '</p>' );
 		}
 		wfProfileOut( __METHOD__ );	
 	}
@@ -68,7 +68,7 @@ class SpecialContributors extends IncludableSpecialPage {
 		if( is_object( $this->target ) && $this->target->exists() ) {
 			foreach( $this->getContributors() as $username => $info ) {
 				list( $userid, $count ) = $info;
-				header( 'Content-type: text/plain; charset=utf-8', true );
+				header( 'Content-type: text/plain; charset=utf-8' );
 				echo( htmlspecialchars( "{$username} = {$count}\n" ) );
 			}
 		} else {
@@ -85,22 +85,22 @@ class SpecialContributors extends IncludableSpecialPage {
 			$total = 0;
 			$skin =& $wgUser->getSkin();
 			$link = $skin->makeKnownLinkObj( $this->target );
-			$wgOut->addHtml( '<h2>' . wfMsgHtml( 'contributors-subtitle', $link ) . '</h2>' );
+			$wgOut->addHTML( '<h2>' . wfMsgHtml( 'contributors-subtitle', $link ) . '</h2>' );
 			list( $contributors, $others ) = $this->getMainContributors();
-			$wgOut->addHtml( '<ul>' );
+			$wgOut->addHTML( '<ul>' );
 			foreach( $contributors as $username => $info ) {
 				list( $id, $count ) = $info;
 				$line = $skin->userLink( $id, $username ) . $skin->userToolLinks( $id, $username );
 				$line .= ' [' . $wgLang->formatNum( $count ) . ']';
-				$wgOut->addHtml( '<li>' . $line . '</li>' );
+				$wgOut->addHTML( '<li>' . $line . '</li>' );
 			}
-			$wgOut->addHtml( '</ul>' );
+			$wgOut->addHTML( '</ul>' );
 			if( $others > 0 ) {
 				$others = $wgLang->formatNum( $others );
 				$wgOut->addWikiText( wfMsgNoTrans( 'contributors-others-long', $others ) );
 			}
 		} else {
-			$wgOut->addHtml( '<p>' . htmlspecialchars( wfMsg( 'contributors-nosuchpage', $this->target->getPrefixedText() ) ) . '</p>' );
+			$wgOut->addHTML( '<p>' . htmlspecialchars( wfMsg( 'contributors-nosuchpage', $this->target->getPrefixedText() ) ) . '</p>' );
 		}
 		wfProfileOut( __METHOD__ );	
 	}

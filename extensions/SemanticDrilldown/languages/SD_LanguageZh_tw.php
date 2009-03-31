@@ -1,6 +1,8 @@
 <?php
 /**
- *@author Yaron Koren 翻譯:張致信(Translation: Roc Michael Email:roc.no1@gmail.com) 
+ * @ingroup Language
+ * @ingroup SDLanguage
+ * @author Yaron Koren 翻譯:張致信(Translation: Roc Michael Email:roc.no1@gmail.com) 
  */
 
 class SD_LanguageZh_tw extends SD_Language {

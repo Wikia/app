@@ -1,0 +1,3 @@
+Debugging command line:
+
+ocamldebug -I `ocamlfind query unix` -I `ocamlfind query str` -I `ocamlfind query vec` -I `ocamlfind query mapmin` -I `ocamlfind query hashtbl_bounded` -I `ocamlfind query fileinfo` -I `ocamlfind query intvmap` -I `ocamlfind query extlib` -I `ocamlfind query mysql` -I `ocamlfind query sexplib` ./text

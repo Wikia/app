@@ -1,4 +1,4 @@
-[[Semantic Forms 1.2.6]]
+[[Semantic Forms 1.4.1]]
 
 Contents:
 * Disclaimer
@@ -8,10 +8,10 @@ Contents:
 
 == Disclaimer ==
 
-Semantic Forms is a relatively new extension, and there is no
-guarantee that any of it will work on your system. On the other hand,
-the code does not make any modifications to the database directly,
-so it should be a low-risk installation.
+There is no guarantee that any of Semantic Forms' functionality will
+work on your system. On the other hand, the code does not make any
+modifications to the database directly, so it should be a low-risk
+installation.
 
 For a proper legal disclaimer, see the file "COPYING".
 

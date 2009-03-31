@@ -5,12 +5,12 @@ define( 'MEDIAWIKI', true );
 require 't/Test.php';
 
 require 'includes/Defines.php';
+require 'StartProfiler.php';
+require 'includes/AutoLoader.php';
 require 'LocalSettings.php';
+require 'includes/Setup.php';
 
-plan( 48 );
-
-require_ok( 'includes/ProfilerStub.php' );
-require_ok( 'includes/GlobalFunctions.php' );
+plan( 46 );
 
 $wgReadOnly = null;
 $wgReadOnlyFile = tempnam(wfTempDir(), "mwtest_readonly");
@@ -48,7 +48,7 @@ is( wfQuotedPrintable( "\xc4\x88u legebla?", "UTF-8" ),
 $start = wfTime();
 is( gettype( $start ), 'float', 'Time (type)' );
 $end = wfTime();
-cmp_ok( $end, '>', $start, 'Time' );
+cmp_ok( $end, '>', $start, 'Time (compare)' );
 
 $arr = wfArrayToCGI(
 	array( 'baz' => 'AT&T', 'ignore' => '' ),

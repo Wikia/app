@@ -17,11 +17,6 @@
 ul#SelectCategoryList {
   list-style-image: none;
   list-style-type: none;
-  float: left;
 }
 
-ul#SelectCategoryList li {
-  float: left;
-  width: 150px;
-}
 

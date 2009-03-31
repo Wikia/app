@@ -2,6 +2,8 @@
 /**
  * Print query results by embeddings them into pages.
  * @author Markus Krötzsch
+ * @file
+ * @ingroup SMWQuery
  */
 
 /**
@@ -12,7 +14,7 @@
  * If "titlestyle" is not specified, a <h1> tag is used.
  * @author Fernando Correia
  * @author Markus Krötzsch
- * @note AUTOLOADED
+ * @ingroup SMWQuery
  */
 class SMWEmbeddedResultPrinter extends SMWResultPrinter {
 
@@ -35,19 +37,18 @@ class SMWEmbeddedResultPrinter extends SMWResultPrinter {
 	}
 
 	protected function getResultText($res,$outputmode) {
-		// handle factbox
-		global $smwgStoreActive, $wgTitle, $smwgEmbeddingList, $wgParser;
-		$old_smwgStoreActive = $smwgStoreActive;
-		$smwgStoreActive = false; // no annotations stored, no factbox printed
-		if (!isset($smwgEmbeddingList)) { // used to catch recursions, sometimes more restrictive than needed, but no major use cases should be affected by that!
-			$smwgEmbeddingList = array($wgTitle);
-			$oldEmbeddingList = array($wgTitle);
-		} else {
-			$oldEmbeddingList = array_values($smwgEmbeddingList);
+		global $wgParser;
+		// No page should embed itself, find out who we are:
+		if ($wgParser->getTitle() instanceof Title) {
+			$title = $wgParser->getTitle()->getPrefixedText();
+		} else { // this is likely to be in vain -- this case is typical if we run on special pages
+			global $wgTitle;
+			$title = $wgTitle->getPrefixedText();
 		}
 
 		// print header
-		$result = $this->mIntro;
+		$result = '';
+		$this->hasTemplates = true;
 
 		switch ($this->m_embedformat) {
 			case 'h1': case 'h2': case 'h3': case 'h4': case 'h5': case 'h6':
@@ -67,35 +68,24 @@ class SMWEmbeddedResultPrinter extends SMWResultPrinter {
 			break;
 		}
 
-		// print all result rows
-		$parser_options = new ParserOptions();
-		$parser_options->setEditSection(false);  // embedded sections should not have edit links
-		$parser = clone $wgParser;
-
+		// Print all result rows:
 		while (  $row = $res->getNext() ) {
 			$first_col = true;
 			foreach ($row as $field) {
 				if ( $field->getPrintRequest()->getTypeID() == '_wpg' ) { // ensure that we deal with title-likes
 					while ( ($object = $field->getNextObject()) !== false ) {
 						$result .= $embstart;
-						$text= $object->getLongText($outputmode,$this->getLinker(true));
+						$text= $object->getLongText(SMW_OUTPUT_WIKI,$this->getLinker(true));
 						if ($this->m_showhead) {
 							$result .= $headstart . $text . $headend;
 						}
-						if (!in_array($object->getLongWikiText(), $smwgEmbeddingList)) { // prevent recursion!
-							$smwgEmbeddingList[] = $object->getLongWikiText();
+						if ($object->getLongWikiText() != $title) {
 							if ($object->getNamespace() == NS_MAIN) {
 								$articlename = ':' . $object->getDBkey();
 							} else {
 								$articlename = $object->getLongWikiText();
 							}
-							if ($outputmode == SMW_OUTPUT_WIKI) {
-// 								$result .= '{{' . $articlename . '}}'; // fails in MW1.12 and later
-								$result .= '[[SMW::off]]' . $parser->preprocess('{{' . $articlename . '}}', $wgTitle, $parser_options) . '[[SMW::on]]';
-							} else { // SMW_OUTPUT_HTML, SMW_OUTPUT_FILE
-								$parserOutput = $parser->parse('[[SMW::off]]{{' . $articlename . '}}[[SMW::on]]', $wgTitle, $parser_options);
-								$result .= $parserOutput->getText();
-							}
+							$result .= '{{' . $articlename . '}}';
 						} else {
 							$result .= '<b>' . $object->getLongWikiText() . '</b>';
 						}
@@ -107,10 +97,10 @@ class SMWEmbeddedResultPrinter extends SMWResultPrinter {
 		}
 
 		// show link to more results
-		if ( $this->mInline && $res->hasFurtherResults() && ($this->mSearchlabel !== '') ) {
+		if ( $this->linkFurtherResults($res) ) {
 			$link = $res->getQueryLink();
-			if ($this->mSearchlabel) {
-				$link->setCaption($this->mSearchlabel);
+			if ($this->getSearchLabel(SMW_OUTPUT_WIKI)) {
+				$link->setCaption($this->getSearchLabel(SMW_OUTPUT_WIKI));
 			}
 			$link->setParameter('embedded','format');
 			$format = $this->m_embedformat;
@@ -119,12 +109,10 @@ class SMWEmbeddedResultPrinter extends SMWResultPrinter {
 			if (!$this->m_showhead) {
 				$link->setParameter('1','embedonly');
 			}
-			$result .= $embstart . $link->getText($outputmode,$this->mLinker) . $embend;
+			$result .= $embstart . $link->getText(SMW_OUTPUT_WIKI,$this->mLinker) . $embend;
 		}
 		$result .= $footer;
 
-		$smwgStoreActive = $old_smwgStoreActive;
-		$smwgEmbeddingList = array_values($oldEmbeddingList);
 		return $result;
 	}
 }

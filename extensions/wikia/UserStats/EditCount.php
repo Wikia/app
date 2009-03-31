@@ -1,12 +1,12 @@
 <?php
 $wgHooks['NewRevisionFromEditComplete'][] = 'incEditCount';
 
-function incEditCount(&$article, $revision, $baseRevId) {
-    global $wgUser, $wgTitle, $wgNamespacesForEditPoints;
+function incEditCount(&$article, $revision, $baseRevId, $user) {
+    global $wgTitle, $wgNamespacesForEditPoints;
 
     //only keep tally for allowable namespaces
     if( !is_array($wgNamespacesForEditPoints) || in_array( $wgTitle->getNamespace(), $wgNamespacesForEditPoints ) ){
-	    $stats = new UserStatsTrack($wgUser->getID(), $wgUser->getName());
+	    $stats = new UserStatsTrack($user->getID(), $user->getName());
 	    $stats->incStatField("edit");
     }
     return true;

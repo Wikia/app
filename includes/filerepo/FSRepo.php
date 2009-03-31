@@ -6,7 +6,7 @@
  * @ingroup FileRepo
  */
 class FSRepo extends FileRepo {
-	var $directory, $deletedDir, $url, $hashLevels, $deletedHashLevels;
+	var $directory, $deletedDir, $url, $deletedHashLevels;
 	var $fileFactory = array( 'UnregisteredLocalFile', 'newFromTitle' );
 	var $oldFileFactory = false;
 	var $pathDisclosureProtection = 'simple';
@@ -449,14 +449,6 @@ class FSRepo extends FileRepo {
 			}
 		}
 		return $status;
-	}
-
-	/**
-	 * Get a relative path including trailing slash, e.g. f/fa/
-	 * If the repo is not hashed, returns an empty string
-	 */
-	function getHashPath( $name ) {
-		return FileRepo::getHashPathForLevel( $name, $this->hashLevels );
 	}
 
 	/**

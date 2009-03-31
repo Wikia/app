@@ -25,7 +25,7 @@ $messages = array(
 'mypage'         => 'Say bolong ko',
 'mytalk'         => 'Say tongtongan ko',
 'anontalk'       => 'Tongtongan para ed sayan IP',
-'and'            => 'san',
+'and'            => '&#32;san',
 
 'returnto'          => 'Impawel ed $1.',
 'help'              => 'Tolong',
@@ -106,6 +106,9 @@ $messages = array(
 'accountcreated'             => 'Agawa so account',
 'accountcreatedtext'         => 'Agawa la so user account para $1.',
 
+# Password reset dialog
+'newpassword' => 'Balon password:',
+
 # Edit page toolbar
 'link_tip' => 'Gawing ed loob',
 
@@ -145,6 +148,7 @@ $messages = array(
 # Search results
 'searchsubtitle'        => "'''[[:$1]]''' so inanap mo.",
 'searchsubtitleinvalid' => "'''$1''' so inanap mo.",
+'searchhelp-url'        => 'Help:Saray Laman',
 'powersearch'           => 'Anapen',
 
 # Preferences page
@@ -156,7 +160,6 @@ $messages = array(
 'math_unknown_error' => 'aga-antan error',
 'prefs-rc'           => 'Sampot ran binalo',
 'prefs-watchlist'    => 'Listaan na babantayan',
-'newpassword'        => 'Balon password:',
 'textboxsize'        => 'Babaloen',
 'searchresultshead'  => 'Anapen',
 
@@ -180,10 +183,10 @@ $messages = array(
 'sourcefilename'  => 'Filename na pinanlapuan:',
 'watchthisupload' => 'Bantayan yan bolong',
 
-# Special:ImageList
-'imagelist_name' => 'Ngaran',
+# Special:ListFiles
+'listfiles_name' => 'Ngaran',
 
-# Image description page
+# File description page
 'imagelinks'       => 'Saray Gawing',
 'noimage-linktext' => 'I-segep ya',
 
@@ -215,8 +218,7 @@ $messages = array(
 'booksources-go'            => 'Ula',
 
 # Special:Log
-'all-logs-page'     => 'Amin ran log',
-'log-search-submit' => 'Ula',
+'all-logs-page' => 'Amin ran log',
 
 # Special:AllPages
 'allpages'          => 'Amin ya bolobolong',
@@ -230,6 +232,14 @@ $messages = array(
 'allpagesnext'      => 'Ontombok',
 'allpagessubmit'    => 'Ula',
 'allpagesprefix'    => 'Ipanengneng so saray bolobolong ya walay prefix:',
+
+# Special:LinkSearch
+'linksearch'     => 'Anapen ramay gawing ed web',
+'linksearch-pat' => 'Anapen so pattern:',
+'linksearch-ok'  => 'Anapen',
+
+# Special:Log/newusers
+'newuserlog-create-entry' => 'Balon user',
 
 # E-mail user
 'emailuser'     => 'E-mail so ayan user',
@@ -257,15 +267,18 @@ No labay mon ekalen may bolong diad listaan na babantayan, tapik mo labat so \"e
 'changed'            => 'asalatan',
 'created'            => 'agawa',
 
-# Delete/protect/revert
-'deletepage'          => 'Buralen so bolong',
-'confirm'             => 'Paletan',
-'exblank'             => 'Anggapoy laman na bolong',
-'actioncomplete'      => 'Asumpal lan agawa',
-'deletedtext'         => 'Abural lay "<nowiki>$1</nowiki>".
+# Delete
+'deletepage'     => 'Buralen so bolong',
+'confirm'        => 'Paletan',
+'exblank'        => 'Anggapoy laman na bolong',
+'actioncomplete' => 'Asumpal lan agawa',
+'deletedtext'    => 'Abural lay "<nowiki>$1</nowiki>".
 Pinengneng so $2 para ed listaan na saray abural ran balo.',
-'deletedarticle'      => 'binural so "[[$1]]"',
-'deletecomment'       => 'Aken buralen',
+'deletedarticle' => 'binural so "[[$1]]"',
+'deletecomment'  => 'Aken buralen',
+
+# Protect
+'prot_1movedto2'      => 'say [[$1]] enyales paula ed [[$2]]',
 'protect-legend'      => 'Palitaen so pangiyagel',
 'protect-level-sysop' => 'Sysops labat',
 
@@ -343,7 +356,7 @@ Pinengneng so $2 para ed listaan na saray abural ran balo.',
 # Attribution
 'lastmodifiedatby' => 'Sampot ya binalo yan bolong nen agew ya $2, $1 nen $3.', # $1 date, $2 time, $3 user
 
-# Special:NewImages
+# Special:NewFiles
 'ilsubmit' => 'Anapen',
 
 # EXIF tags
@@ -366,13 +379,7 @@ Pinengneng so $2 para ed listaan na saray abural ran balo.',
 'deletedwhileediting' => 'Pasakbay: Abural yan bolong nen ginapuan mon baloen!',
 
 # action=purge
-'confirm_purge' => 'Ekalen so cache na sayan bolong?
-
-$1',
-
-# AJAX search
-'articletitles' => "Saray article na manggagapo ed ''$1''",
-'hideresults'   => 'Iyamot so saray result',
+'confirm-purge-top' => 'Ekalen so cache na sayan bolong?',
 
 # Multipage image navigation
 'imgmultipagenext' => 'ontombok ya bolong →',

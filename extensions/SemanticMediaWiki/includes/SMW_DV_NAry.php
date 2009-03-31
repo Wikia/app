@@ -1,13 +1,17 @@
 <?php
+/**
+ * @file
+ * @ingroup SMWDataValues
+ */
 
 /**
  * SMWDataValue implements the handling of n-ary relations.
- * TODO: support outputformat
- * TODO: support "allows value" and "display units"
+ * @todo: support outputformat
+ * @todo: support "allows value" and "display units"
  *
  * @author Jörg Heizmann
  * @author Markus Krötzsch
- * @note AUTOLOADED
+ * @ingroup SMWDataValues
  */
 class SMWNAryValue extends SMWDataValue {
 
@@ -161,8 +165,8 @@ class SMWNAryValue extends SMWDataValue {
 		switch ($type) {
 			case 0: return $this->m_values[$index]->getShortWikiText($linker);
 			case 1: return $this->m_values[$index]->getShortHTMLText($linker);
-			case 2: return $this->m_values[$index]->getLongWikiText($linker);
-			case 3: return $this->m_values[$index]->getLongHTMLText($linker);
+			case 2: return $this->m_values[$index]->getShortWikiText($linker);
+			case 3: return $this->m_values[$index]->getShortHTMLText($linker);
 		}
 	}
 
@@ -321,39 +325,6 @@ class SMWNAryValue extends SMWDataValue {
 		}
 		return implode(';', $this->m_outputmodifiers);
 	}
-
-	/**
-	 * Exports this n-ary relation to an appropriate RDF-structure.
-	 * The lines within the subject element.
-	 *
-	 * @param string $QName The element name of this datavalue
-	 * @param ExportRDF $exporter the exporter calling this function
-	 * @return string the lines to be exported
-	 */
-// 	public function exportToRDF( $QName, ExportRDF $exporter ) {
-// 		$rdf = "\t\t<$QName>\n";
-// 		$rdf.= "\t\t\t<swivt:Container>\n";
-// 		$count = 0;
-// 		foreach ($this->m_values as $value) {
-// 			$count++;
-// 			if ($value === NULL) {
-// 				continue;
-// 			}
-// 			if (($value->getTypeID() == '_wpg') || ($value->getTypeID() == '_uri') || ($value->getTypeID() == '_ema')) {
-// 				$element = "object" . $count; 
-// 				$rdf .= "\t\t" . $value->exportToRDF( "swivt:$element", $exporter );
-// 				$exporter->addSchemaRef( $element, "owl:ObjectProperty" );
-// 			} else {
-// 				$element = "value" . $count; 
-// 				$rdf .= "\t\t" . $value->exportToRDF( "swivt:$element", $exporter );
-// 				$exporter->addSchemaRef( $element, "owl:DatatypeProperty" );
-// 			}
-// 		}
-// 		$rdf .= "\t\t\t</swivt:Container>\n";
-// 		$exporter->addSchemaRef( "Container", "owl:Class" );
-// 		$rdf .= "\t\t</$QName>\n";
-// 		return $rdf;
-// 	}
 
 	public function getExportData() {
 		if (!$this->isValid()) return NULL;

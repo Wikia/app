@@ -1,0 +1,463 @@
+<mediawiki xmlns="http://www.mediawiki.org/xml/export-0.3/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mediawiki.org/xml/export-0.3/ http://www.mediawiki.org/xml/export-0.3.xsd" version="0.3" xml:lang="en">
+  <siteinfo>
+    <sitename>Wikipedia</sitename>
+    <base>http://en.wikipedia.org/wiki/Main_Page</base>
+    <generator>MediaWiki 1.10alpha</generator>
+    <case>first-letter</case>
+      <namespaces>
+      <namespace key="-2">Media</namespace>
+      <namespace key="-1">Special</namespace>
+      <namespace key="0" />
+      <namespace key="1">Talk</namespace>
+      <namespace key="2">User</namespace>
+      <namespace key="3">User talk</namespace>
+      <namespace key="4">Wikipedia</namespace>
+      <namespace key="5">Wikipedia talk</namespace>
+      <namespace key="6">Image</namespace>
+      <namespace key="7">Image talk</namespace>
+      <namespace key="8">MediaWiki</namespace>
+      <namespace key="9">MediaWiki talk</namespace>
+      <namespace key="10">Template</namespace>
+      <namespace key="11">Template talk</namespace>
+      <namespace key="12">Help</namespace>
+      <namespace key="13">Help talk</namespace>
+      <namespace key="14">Category</namespace>
+      <namespace key="15">Category talk</namespace>
+      <namespace key="100">Portal</namespace>
+      <namespace key="101">Portal talk</namespace>
+    </namespaces>
+  </siteinfo>
+<page>
+<title>Computer cluster</title>
+<id>5977</id>
+<revision>
+<id>89371512</id>
+<timestamp>2006-11-22T03:25:19Z</timestamp>
+<contributor>
+        <username>Luca</username>
+        <id>8</id>
+</contributor>
+<comment>/* External links */  oops</comment>
+<text xml:space="preserve">
+===Load-balancing clusters===
+[[Load balancing (computing)|Load-balancing]] clusters operate.
+
+===High-performance (HPC) clusters===
+High-performance clusters are implemented primarily.
+</text>
+</revision>
+<revision>
+<id>89416034</id>
+<timestamp>2006-11-22T09:10:41Z</timestamp>
+<contributor>
+        <ip>203.91.193.50</ip>
+</contributor>
+<comment>/* Load-balancing clusters */</comment>
+<text xml:space="preserve">
+===Load-balancing clusters===
+[[Load balancing (computing)|Load-balancing]] clusters operate. 
+
+pendem srinu
+
+===High-performance (HPC) clusters===
+High-performance clusters are implemented primarily.
+</text>
+</revision>
+<revision>
+<id>89428960</id>
+<timestamp>2006-11-22T11:23:29Z</timestamp>
+<contributor>
+        <ip>194.151.55.34</ip>
+</contributor>
+<comment>/* High-performance cluster implementations */ remove outdated details about TOP500.</comment>
+<text xml:space="preserve">
+===Load-balancing clusters===
+[[Load balancing (computing)|Load-balancing]] clusters operate.
+
+pendem srinu
+
+===High-performance (HPC) clusters===
+High-performance clusters are implemented primarily.
+</text>
+</revision>
+<revision>
+<id>9128857</id>
+<timestamp>2006-11-22T14:25:19Z</timestamp>
+<contributor>
+        <username>Luca</username>
+        <id>8</id>
+</contributor>
+<comment>fixed</comment>
+<text xml:space="preserve">
+===Load-balancing clusters===
+[[Load balancing (computing)|Load-balancing]] clusters operate.
+
+===High-performance (HPC) clusters===
+High-performance clusters are implemented primarily for performance.
+</text>
+</revision>
+</page>
+<page>
+<title>Banana Computer cluster</title>
+<id>5977</id>
+<revision>
+<id>89371512</id>
+<timestamp>2006-11-22T03:25:19Z</timestamp>
+<contributor>
+        <username>Luca</username>
+        <id>8</id>
+</contributor>
+<comment>/* External links */  oops</comment>
+<text xml:space="preserve">
+===Load-balancing clusters===
+[[Load balancing (computing)|Load-balancing]] clusters operate.
+
+===High-performance (HPC) clusters===
+High-performance clusters are implemented primarily.
+</text>
+</revision>
+<revision>
+<id>89416034</id>
+<timestamp>2006-11-22T09:10:41Z</timestamp>
+<contributor>
+        <ip>203.91.193.50</ip>
+</contributor>
+<comment>/* Load-balancing clusters */</comment>
+<text xml:space="preserve">
+===Load-balancing clusters===
+[[Load balancing (computing)|Load-balancing]] clusters operate. 
+
+pendem srinu
+
+===High-performance (HPC) clusters===
+High-performance clusters are implemented primarily.
+</text>
+</revision>
+<revision>
+<id>89428960</id>
+<timestamp>2006-11-22T11:23:29Z</timestamp>
+<contributor>
+        <ip>194.151.55.34</ip>
+</contributor>
+<comment>/* High-performance cluster implementations */ remove outdated details about TOP500.</comment>
+<text xml:space="preserve">
+===Load-balancing clusters===
+[[Load balancing (computing)|Load-balancing]] clusters operate.
+
+pendem srinu
+
+===High-performance (HPC) clusters===
+High-performance clusters are implemented primarily.
+</text>
+</revision>
+<revision>
+<id>9128857</id>
+<timestamp>2006-11-22T14:25:19Z</timestamp>
+<contributor>
+        <username>Luca</username>
+        <id>8</id>
+</contributor>
+<comment>fixed</comment>
+<text xml:space="preserve">
+{{otheruses}}
+
+{| border="1" cellspacing="0" cellpadding="5" align="right" style="margin: 0 0 0.5em 1em;"
+|+'''Kelvin temperature conversion formulas'''
+|- bgcolor="#f0f0f0"
+! To find
+! From
+! Formula
+|-
+| [[Celsius]] ||kelvin||°C = K − 273.15
+|-
+|kelvin|| Celsius ||K = °C  + 273.15
+|-
+| [[Rankine]] ||kelvin||°R = K &times; 1.8
+|-
+|kelvin|| Rankine ||K = °R &divide; 1.8
+|-
+| [[Fahrenheit]] ||kelvin||°F = (K &times; 1.8) − 459.67
+|-
+|kelvin|| Fahrenheit ||K = (°F + 459.67) &divide; 1.8
+|-
+| [[electronvolt]]s ||kelvin||eV &asymp; K &divide; 11,604.5
+|-
+|kelvin|| electronvolts ||K &asymp; eV &times; 11,604.5
+|-
+| colspan="3" align="center" | For temperature ''intervals'' rather than specific temperatures,<br /> 1 kelvin = 1 °C<br>and<br>1 kelvin = 1.8 °R<br><small>[[temperature conversion formulas|Comparisons among various temperature scales]]<br>[http://www.chemie.fu-berlin.de/chemistry/general/units_en.html#temp Conversion calculator for units of temperature]</small>
+|}
+
+The '''kelvin''' (symbol:&nbsp;K) is the [[SI]] unit of temperature and is one of the seven [[SI base unit]]s. It is used to specify temperature on a [[Thermodynamic temperature|thermodynamic (absolute) temperature]] scale where [[absolute zero]]—the lowest possible temperature where nothing could be colder and the least possible [[heat]] energy remains in a substance—is defined as being equivalent to zero kelvins (0&nbsp;K).
+
+The unit is named after the [[Ireland|Irish]] physicist and engineer [[William Thomson, 1st Baron Kelvin]] (1824&nbsp;–&nbsp;1907), who wrote of the need for an "absolute thermometric scale."
+
+== Definition of the kelvin ==
+
+The kelvin is defined, by international agreement <ref>[http://www1.bipm.org/en/si/si_brochure/chapter2/2-1/2-1-1/kelvin.html]</ref>, in terms of the [[triple point]] of specially prepared ([[Vienna Standard Mean Ocean Water|VSMOW]]) water. This definition also precisely relates the kelvin and absolute zero to the [[Celsius]] scale. Absolute zero—the temperature at which nothing could be colder and the least possible [[heat]] energy remains in a substance—is defined as being precisely 0&nbsp;K ''and'' −273.15&nbsp;°C. The triple point of water is defined as being precisely 273.16&nbsp;K ''and'' 0.01&nbsp;°C. This definition does three things: 1) it fixes the magnitude of the kelvin as being precisely 1 part in 273.16 parts of the difference between absolute zero and the triple point of water; 2) it establishes that one kelvin has precisely the same magnitude as a one-degree increment on the Celsius scale; and 3) it establishes the difference between the two scales' null points as being precisely 273.15 kelvins (0&nbsp;K&nbsp;= −273.15&nbsp;°C and 273.16&nbsp;K&nbsp;= 0.01&nbsp;°C). Temperatures in kelvins can be converted to other units according to the table at top right.
+
+Some key temperatures relating temperatures in kelvins to the Celsius scale are shown in the table below.
+
+{| border="1" cellpadding="4" cellspacing="0" style="margin: 1em 1em 1em 0; background: #f5f5f0; border: 2px #52524d solid; border-collapse: collapse; font-size: 95%;"
+|-
+|style="background:#d4d4d4" align="center"|''' '''
+|style="background:#d4d4d4" align="center"|'''kelvin'''
+|style="background:#d4d4d4" align="center"|'''Celsius'''
+|style="background:#d4d4d4" align="center"|'''Fahrenheit'''
+|-
+|style="background:#d9d9d3" align="right"|Absolute zero<br>
+(precisely, by definition)
+|align="center"|0 K
+|align="center"|−273.15 °C
+|align="center"|−459.67 °F
+|-
+|style="background:#d9d9d3" align="right"|Melting point of ice
+|align="center"|273.15 K
+|align="center"|0 °C
+|align="center"|32 °F
+|-
+|style="background:#d9d9d3" align="right"|Water’s triple point<br>
+(precisely, by definition)
+|align="center"|273.16 K
+|align="center"|0.01 °C
+|align="center"|32.018 °F
+|-
+|style="background:#d9d9d3" align="right"|Water's boiling point <sup>A</sup>
+|align="center"|373.1339 K
+|align="center"|[[Celsius#The melting and boiling points of water|99.9839 °C]]
+|align="center"|211.9710 °F
+|}
+<small><sup>A</sup> For [[VSMOW|Vienna Standard Mean Ocean Water]] at one [[Atmosphere (unit)|standard atmosphere]] (101.325 kPa) when calibrated solely per the two-point definition of thermodynamic temperature. Older definitions of the Celsius scale once defined the boiling point of water under one standard atmosphere as being precisely 100&nbsp;°C. However, the current definition results in a boiling point that is actually 16.1&nbsp;mK less. For more about the actual boiling point of water, see [[VSMOW#VSMOW in temperature measurement|VSMOW water in temperature measurement]].</small>
+
+== SI prefixed forms of kelvin ==
+[[SI prefix]]es are often employed to denote decimal multiples and submultiples of the kelvin. The most commonly used factors of kelvin are listed below.<ref>The term "most commonly used" is based on those with more than 500 Google hits on the name.</ref>
+
+{| border="1" cellpadding="4" cellspacing="0" style="margin: 1em 1em 1em 0; background: #f5f5f5; border: 2px #525252 solid; border-collapse: collapse; font-size: 95%;"
+|-
+|colspan="3" style="background:#3E3E3E" align="center"|<font color=WHITE>Submultiples</font>||colspan="1" style="background:#3E3E3E" align="center"|<font color=WHITE></font>||colspan="3" style="background:#3E3E3E" align="center"|<font color=WHITE>Multiples</font>
+|-
+|style="background:#d4d4d4" align="center"|'''Factor'''
+|style="background:#d4d4d4" align="center"|'''Name'''
+|style="background:#d4d4d4" align="center"|'''Symbol'''
+|style="background:#d4d4d4" align="center"|
+|style="background:#d4d4d4" align="center"|'''Factor'''
+|style="background:#d4d4d4" align="center"|'''Name'''
+|style="background:#d4d4d4" align="center"|'''Symbol'''
+|-
+|align="center"|10<sup>&minus;1</sup>
+|decikelvin
+|align="center"|dK
+|
+|align="center"|10<sup>1</sup>
+|decakelvin
+|align="center"|daK
+|-
+|align="center"|10<sup>&minus;2</sup>
+|centikelvin
+|align="center"|cK
+|
+|align="center"|10<sup>2</sup>
+|hectokelvin
+|align="center"|hK
+|-
+|align="center"|10<sup>&minus;3</sup>
+|'''millikelvin'''
+|align="center"|mK
+|
+|align="center"|10<sup>3</sup>
+|'''kilokelvin'''
+|align="center"|kK
+|-
+|align="center"|10<sup>&minus;6</sup>
+|'''microkelvin'''
+|align="center"|µK
+|
+|align="center"|10<sup>6</sup>
+|'''megakelvin'''
+|align="center"|MK
+|-
+|align="center"|10<sup>&minus;9</sup>
+|'''nanokelvin'''
+|align="center"|nK
+|
+|align="center"|10<sup>9</sup>
+|'''gigakelvin'''
+|align="center"|GK
+|-
+|align="center"|10<sup>&minus;12</sup>
+|'''picokelvin'''
+|align="center"|pK
+|
+|align="center"|10<sup>12</sup>
+|'''terakelvin'''
+|align="center"|TK
+|-
+|align="center"|10<sup>&minus;15</sup>
+|femtokelvin
+|align="center"|fK
+|
+|align="center"|10<sup>15</sup>
+|petakelvin
+|align="center"|PK
+|-
+|align="center"|10<sup>&minus;18</sup>
+|attokelvin
+|align="center"|aK
+|
+|align="center"|10<sup>18</sup>
+|exakelvin
+|align="center"|EK
+|-
+|align="center"|10<sup>&minus;21</sup>
+|zeptokelvin
+|align="center"|zK
+|
+|align="center"|10<sup>21</sup>
+|zettakelvin
+|align="center"|ZK
+|-
+|align="center"|10<sup>&minus;24</sup>
+|yoctokelvin
+|align="center"|yK
+|
+|align="center"|10<sup>24</sup>
+|yottakelvin
+|align="center"| YK
+|}
+
+== Typographical and usage conventions ==
+=====Uppercase/lowercase and plural form usage=====
+The kelvin is always spelled with a lowercase k unless it is the first word in a sentence or title.  
+
+Until the 13th General Conference on Weights and Measures ([[CGPM]]) in 1967–1968, the kelvin was called a "degree", the same as with the other temperature scales at the time. It was distinguished from the others with either the adjectival suffix "Kelvin" ("degree Kelvin") or informally with "absolute" ("degree absolute"). The latter was ambiguous since it could also refer to the [[Rankine|Rankine scale]]. At this time, the plural form of "degree Kelvin" was "degrees Kelvin". After the name change to simply "kelvin", the plural became "kelvins". <ref>Webster's 11th Collegiate; NIST SP 811</ref> 
+
+=====Temperatures and intervals=====
+
+Because the kelvin is an individual unit of measure, it is particularly well-suited for expressing ''temperature intervals:'' differences between temperatures or their uncertainties (e.g. "Agar exhibited a melting point hysteresis of 25 kelvins," and "The uncertainty was 10 millikelvins"). Of course, the kelvin is also used to express specific temperatures along the thermodynamic scale (e.g. "[[Gallium]] melts at 302.9146 kelvins").
+
+=====Formatting and typestyle for the K symbol=====
+
+The kelvin symbol is always a roman (non-italic) capital K since the lowercase version is the [[SI prefix]] for 1 &times; 10<sup>3</sup>. The admonition against italicizing the symbol K applies to all SI unit symbols; only symbols for variables and constants (e.g. ''P'' = pressure, and ''c'' = 299,792,458&nbsp;m/s) are italicized in scientific and engineering papers. As with most other SI unit symbols (angle symbols, e.g. 45° 3&prime; 4&Prime;, are the exception,) there is a space between the numeric value and the kelvin symbol (e.g. "99.987&nbsp;K").<ref>For more information on conventions used in technical writing, see the informative ''[http://physics.nist.gov/cuu/Units/checklist.html SI Unit rules and style conventions]'' by the [[National Institute of Standards and Technology|NIST]] as well as the [[International Bureau of Weights and Measures|BIPM’s]] SI brochure: Subsection 5.3.3, ''[http://www.bipm.org/en/si/si_brochure/chapter5/5-3-2.html#5-3-3 Formatting the value of a quantity.]''</ref>
+
+=====The special Unicode kelvin sign=====
+
+[[Unicode]], which is an industry standard designed to allow text and symbols from all of the writing systems of the world to be consistently represented and manipulated by computers, includes a special "kelvin sign" at U+212A. One types&nbsp;<font color="#721F01"><code>&amp;#x212A;</code>&nbsp;</font>when encoding this special kelvin character in a [[World Wide Web|Web]] page. Its appearance is similar to an ordinary uppercase K. To better see the difference between the two, below in maroon text is the kelvin character followed immediately by a simple uppercase K:
+
+<font color=maroon>&#x212A;K</font>
+
+When viewed on computers that properly support Unicode, the above line appears as follows (size may vary):
+
+[[Image:Kelvin symbol plus K.jpg|23px|this link]]
+
+Depending on the operating system, Web browser, and the default font, the "K" in the Unicode character may be narrower and slightly taller than a plain uppercase K; precisely the opposite may be true on other platforms.  However, there will usually be a discernible difference between the two.  If the computer being used to view a particular Web page doesn't support the Unicode kelvin sign character (<code>&amp;#x212A;</code>), it may be [[canonical decomposition|canonically decomposed]] by the [[web browser|browser]] into U+004B (uppercase K) and the two would appear identical. In still other computers, the kelvin symbol is mapped incorrectly and produces an odd character.
+
+Accordingly, for Web use, it is better to use the simple uppercase K to represent the kelvin symbol so it can be properly viewed by the widest possible audience.
+
+=====Why technical articles use a mix of kelvin units and the Celsius scale =====
+In science (especially) and in engineering, the Celsius scale and the kelvin are often used simultaneously in the same article (e.g. "...its measured value was 0.01023&nbsp;°C with an uncertainty of 70&nbsp;µK"). This practice is permissible because the degree Celsius is a special name for the kelvin for use in expressing Celsius temperatures<ref>Note (e) of [http://www.bipm.org/en/si/si_brochure/chapter2/2-2/table3.html SI Brochure, Section, 2.2.2, Table 3]</ref> and the magnitude of the degree Celsius is precisely equal to that of the kelvin. Notwithstanding the official endorsement provided by decision #3 of [http://www.bipm.fr/en/CGPM/db/13/3/ Resolution 3 of the 13th CGPM], which stated "a temperature interval may also be expressed in degrees Celsius," the practice of simultaneously using both "°C" and "K" remains widespread throughout the scientific world as the use of [[Si prefix#List of SI prefixes|SI prefixed]] forms of the degree Celsius (such as "µ°C" or "millidegrees Celsius") to express a temperature interval has not been well-adopted.
+
+This practice should be avoided for literature directed to lower-level technical fields and in non-technical articles intended for the general public where both the kelvin and its symbol, K, are not well recognized and could be confusing.
+
+== Color temperature ==
+The kelvin is often used in the measure of the [[color temperature]] of light sources.  Color temperature is based upon the principle that a [[black body|black body radiator]] emits light whose color depends on the temperature of the radiator. Black bodies with temperatures below about 4000&nbsp;K appear reddish whereas those above about 7500&nbsp;K appear bluish. Color temperature is important in the fields of image projection and [[photography]] where a color temperature of approximately 5500 K is required to match "daylight" film emulsions. In [[astronomy]], the [[stellar classification]] of stars and their place on the [[Hertzsprung-Russell diagram]] are based, in part, upon their surface temperature. The Sun for instance, has an effective photosphere temperature of 5778&nbsp;K.
+
+== History of the Kelvin scale ==
+
+Below are some historic milestones in the development of the Kelvin scale and its unit increment, the kelvin. For more on the history of thermodynamic temperature, see ''Thermodynamic temperature: [[Thermodynamic temperature#History of thermodynamic temperature|History of thermodynamic temperature]].''
+
+* '''1848:''' [[William Thomson, 1st Baron Kelvin|William Thomson]],  (1824&nbsp;–&nbsp;1907) also known as Lord Kelvin, wrote in his paper, ''[http://zapatopi.net/kelvin/papers/on_an_absolute_thermometric_scale.html On an Absolute Thermometric Scale],'' of the need for a scale whereby "infinite cold" (absolute zero) was the scale's null point, and which used the degree Celsius for its unit increment. Thomson calculated that absolute zero was equivalent to −273&nbsp;°C on the air thermometers of the time. This absolute scale is known today as the Kelvin thermodynamic temperature scale.  Thomson's value of "−273" was actually derived from 0.00366, which was the accepted expansion coefficient of gas per degree Celsius relative to the ice point. The inverse of −0.00366 expressed to four significant digits is −273.2&nbsp;°C which is remarkably close to the true value of −273.15&nbsp;°C.
+
+* '''1954:''' [http://www.bipm.fr/en/CGPM/db/10/3/ Resolution 3] of the 10th CGPM (Conférence Générale des Poids et Mesures, also known as the [[General Conference on Weights and Measures]]) gave the Kelvin scale its modern definition by choosing the triple point of water as its second defining point and assigned it a temperature of precisely 273.16 kelvin (what was actually written 273.16 "degrees Kelvin" at the time).
+
+* '''1967/1968:''' [http://www.bipm.fr/en/CGPM/db/13/3/ Resolution 3] of the 13th CGPM created the ''unit increment'' of thermodynamic temperature (as distinct from the ''scale'') and gave it the name "kelvin", symbol K, instead of "degree Kelvin", symbol °K. In so doing, feeling it useful to explicitly define the magnitude of this new unit increment, 13th CGPM also decided in [http://www.bipm.fr/en/CGPM/db/13/4/ Resolution 4] that "The kelvin, unit of thermodynamic temperature, is the fraction 1/273.16 of the thermodynamic temperature of the triple point of water."
+
+* '''2005:''' The CIPM (Comité International des Poids et Mesures, also known as the [[International Committee for Weights and Measures]]) [http://www.bipm.fr/en/si/si_brochure/chapter2/2-1/kelvin.html affirmed] that for the purposes of delineating the temperature of the triple point of water, the definition of the Kelvin thermodynamic temperature scale would refer to water having an isotopic composition defined as being precisely equal to the nominal specification of [[VSMOW]] water.
+
+== See also ==
+
+{{col-begin}}
+{{col-break}}
+* [[Absolute zero]]
+* [[Celsius]]
+* [[Fahrenheit]]
+* [[Heat]]
+{{col-break}}
+* [[International Temperature Scale of 1990|ITS-90]]
+* [[Rankine]]
+* [[Thermodynamic temperature]]
+* [[Triple point]]
+{{col-end}}
+
+== References ==
+
+<references/>
+
+== External links ==
+
+* [http://www1.bipm.org/en/si/si_brochure/chapter2/2-1/2-1-1/kelvin.html BIPM brochure on the kelvin]
+* Barry N. Taylor, ''Guide for the Use of the International System of Units (SI)'', Washington, D.C.:Government Printing Office, 1995 ([http://physics.nist.gov/Pubs/SP811/contents.html html version], [http://physics.nist.gov/cuu/Units/bibliography.html pdf version])
+
+{{TemperatureScales}}
+
+[[Category:SI base units]]
+[[Category:Units of temperature]]
+
+[[af:Kelvin]]
+[[als:Kelvin]]
+[[ar:كلفن]]
+[[ast:Kelvin]]
+[[br:Kelvin]]
+[[bg:Келвин]]
+[[ca:Kelvin]]
+[[cs:Kelvin]]
+[[da:Kelvin]]
+[[de:Kelvin]]
+[[et:Kelvin]]
+[[el:Κλίμακα Kelvin]]
+[[es:Kelvin]]
+[[eo:Kelvino]]
+[[eu:Kelvin (unitatea)]]
+[[fr:Kelvin]]
+[[gl:Kelvin]]
+[[ko:켈빈]]
+[[hi:केल्विन]]
+[[hr:Kelvin]]
+[[id:Kelvin]]
+[[is:Kelvin]]
+[[it:Kelvin]]
+[[he:יחידות מידה לטמפרטורה]]
+[[ka:კელვინი]]
+[[sw:Kelvini]]
+[[la:Kelvin]]
+[[lv:Kelvins (mērvienība)]]
+[[lt:Kelvinas]]
+[[ln:Kelvin]]
+[[jbo:kelvo]]
+[[hu:Kelvin]]
+[[mk:Келвин]]
+[[ms:Kelvin]]
+[[nl:Kelvin (eenheid)]]
+[[ne:केल्भिन]]
+[[ja:ケルビン]]
+[[no:Kelvin]]
+[[nn:Kelvin]]
+[[oc:Kelvin]]
+[[nds:Kelvin]]
+[[pl:Kelwin]]
+[[pt:Kelvin]]
+[[ru:Кельвин]]
+[[simple:Kelvin]]
+[[sk:Kelvin]]
+[[sl:Kelvin]]
+[[sr:Келвин (јединица)]]
+[[sh:Kelvin]]
+[[fi:Kelvin]]
+[[sv:Kelvin]]
+[[th:เคลวิน]]
+[[vi:Kelvin]]
+[[tr:Kelvin (birim)]]
+[[uk:Кельвін]]
+[[zh:热力学温标]]
+</text>
+</revision>
+</page>
+</mediawiki>

@@ -49,7 +49,7 @@ class FileDuplicateSearchPage extends QueryPage {
 	function formatResult( $skin, $result ) {
 		global $wgContLang, $wgLang;
 
-		$nt = Title::makeTitle( NS_IMAGE, $result->title );
+		$nt = Title::makeTitle( NS_FILE, $result->title );
 		$text = $wgContLang->convert( $nt->getText() );
 		$plink = $skin->makeLink( $nt->getPrefixedText(), $text );
 
@@ -73,7 +73,7 @@ function wfSpecialFileDuplicateSearch( $par = null ) {
 	if( $title && $title->getText() != '' ) {
 		$dbr = wfGetDB( DB_SLAVE );
 		$image = $dbr->tableName( 'image' );
-		$encFilename = $dbr->addQuotes( htmlspecialchars( $title->getDbKey() ) );
+		$encFilename = $dbr->addQuotes( htmlspecialchars( $title->getDBKey() ) );
 		$sql = "SELECT img_sha1 from $image where img_name = $encFilename";
 		$res = $dbr->query( $sql );
 		$row = $dbr->fetchRow( $res );
@@ -100,7 +100,7 @@ function wfSpecialFileDuplicateSearch( $par = null ) {
 		# Show a thumbnail of the file
 		$img = wfFindFile( $title );
 		if ( $img ) {
-			$thumb = $img->getThumbnail( 120, 120 );
+			$thumb = $img->transform( array( 'width' => 120, 'height' => 120 ) );
 			if( $thumb ) {
 				$wgOut->addHTML( '<div style="float:' . $align . '" id="mw-fileduplicatesearch-icon">' .
 					$thumb->toHtml( array( 'desc-link' => false ) ) . '<br />' .

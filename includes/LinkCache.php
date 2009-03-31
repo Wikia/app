@@ -9,7 +9,6 @@ class LinkCache {
 	// becomes incompatible with the new version.
 	/* private */ var $mClassVer = 4;
 
-	/* private */ var $mPageLinks;
 	/* private */ var $mGoodLinks, $mBadLinks;
 	/* private */ var $mForUpdate;
 
@@ -26,7 +25,6 @@ class LinkCache {
 
 	function __construct() {
 		$this->mForUpdate = false;
-		$this->mPageLinks = array();
 		$this->mGoodLinks = array();
 		$this->mGoodLinkFields = array();
 		$this->mBadLinks = array();
@@ -78,14 +76,12 @@ class LinkCache {
 		$dbkey = $title->getPrefixedDbKey();
 		$this->mGoodLinks[$dbkey] = $id;
 		$this->mGoodLinkFields[$dbkey] = array( 'length' => $len, 'redirect' => $redir );
-		$this->mPageLinks[$dbkey] = $title;
 	}
 
 	public function addBadLinkObj( $title ) {
 		$dbkey = $title->getPrefixedDbKey();
-		if ( ! $this->isBadLink( $dbkey ) ) {
+		if ( !$this->isBadLink( $dbkey ) ) {
 			$this->mBadLinks[$dbkey] = 1;
-			$this->mPageLinks[$dbkey] = $title;
 		}
 	}
 
@@ -93,10 +89,19 @@ class LinkCache {
 		unset( $this->mBadLinks[$title] );
 	}
 
-	/* obsolete, for old $wgLinkCacheMemcached stuff */
-	public function clearLink( $title ) {}
+	public function clearLink( $title ) {
+		$dbkey = $title->getPrefixedDbKey();
+		if( isset($this->mBadLinks[$dbkey]) ) {
+			unset($this->mBadLinks[$dbkey]);
+		}
+		if( isset($this->mGoodLinks[$dbkey]) ) {
+			unset($this->mGoodLinks[$dbkey]);
+		}
+		if( isset($this->mGoodLinkFields[$dbkey]) ) {
+			unset($this->mGoodLinkFields[$dbkey]);
+		}
+	}
 
-	public function getPageLinks() { return $this->mPageLinks; }
 	public function getGoodLinks() { return $this->mGoodLinks; }
 	public function getBadLinks() { return array_keys( $this->mBadLinks ); }
 
@@ -125,27 +130,24 @@ class LinkCache {
 	 */
 	public function addLinkObj( &$nt, $len = -1, $redirect = NULL ) {
 		global $wgAntiLockFlags, $wgProfiler;
+		wfProfileIn( __METHOD__ );
 
-		$title = $nt->getPrefixedDBkey();
-		if ( $this->isBadLink( $title ) ) { return 0; }
-		$id = $this->getGoodLinkID( $title );
-		if ( 0 != $id ) { return $id; }
-
-		$fname = 'LinkCache::addLinkObj';
-		if ( isset( $wgProfiler ) ) {
-			$fname .= ' (' . $wgProfiler->getCurrentSection() . ')';
-		}
-
-		wfProfileIn( $fname );
-
-		$ns = $nt->getNamespace();
-		$t = $nt->getDBkey();
-
-		if ( '' == $title ) {
-			wfProfileOut( $fname );
+		$key = $nt->getPrefixedDBkey();
+		if ( $this->isBadLink( $key ) ) {
+			wfProfileOut( __METHOD__ );
 			return 0;
 		}
+		$id = $this->getGoodLinkID( $key );
+		if ( $id != 0 ) {
+			wfProfileOut( __METHOD__ );
+			return $id;
+		}
 
+		if ( $key === '' ) {
+			wfProfileOut( __METHOD__ );
+			return 0;
+		}
+		
 		# Some fields heavily used for linking...
 		if ( $this->mForUpdate ) {
 			$db = wfGetDB( DB_MASTER );
@@ -161,19 +163,24 @@ class LinkCache {
 
 		$s = $db->selectRow( 'page', 
 			array( 'page_id', 'page_len', 'page_is_redirect' ),
-			array( 'page_namespace' => $ns, 'page_title' => $t ),
-			$fname, $options );
+			array( 'page_namespace' => $nt->getNamespace(), 'page_title' => $nt->getDBkey() ),
+			__METHOD__, $options );
 		# Set fields...
-		$id = $s ? $s->page_id : 0;
-		$len = $s ? $s->page_len : -1;
-		$redirect = $s ? $s->page_is_redirect : 0;
+		if ( $s !== false ) {
+			$id = $s->page_id;
+			$len = $s->page_len;
+			$redirect = $s->page_is_redirect;
+		} else {
+			$len = -1;
+			$redirect = 0;
+		}
 
-		if( 0 == $id ) {
+		if ( $id == 0 ) {
 			$this->addBadLinkObj( $nt );
 		} else {
 			$this->addGoodLinkObj( $id, $nt, $len, $redirect );
 		}
-		wfProfileOut( $fname );
+		wfProfileOut( __METHOD__ );
 		return $id;
 	}
 
@@ -181,7 +188,6 @@ class LinkCache {
 	 * Clears cache
 	 */
 	public function clear() {
-		$this->mPageLinks = array();
 		$this->mGoodLinks = array();
 		$this->mGoodLinkFields = array();
 		$this->mBadLinks = array();

@@ -1,13 +1,14 @@
 <?php
 
-class ShowProcesslistPage extends UnlistedSpecialPage {
-	function ShowProcesslistPage() {
+class SpecialShowProcesslist extends UnlistedSpecialPage {
+	function __construct() {
 		SpecialPage::SpecialPage('ShowProcesslist', 'siteadmin');
-		wfLoadExtensionMessages( 'showprocesslist' );
 	}
 
 	function execute( $par ) {
 		global $wgOut, $wgUser;
+
+		wfLoadExtensionMessages( 'ShowProcesslist' );
 
 		$this->setHeaders();
 		if ( !$wgUser->isAllowed( 'siteadmin' ) ) {

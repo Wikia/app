@@ -175,17 +175,18 @@ class SpecialOpenIDFinish extends SpecialOpenID {
 		$wgUser->SetCookies();
 
 		# Run any hooks; ignore results
-
-		wfRunHooks('UserLoginComplete', array(&$wgUser));
+		$inject_html = '';
+		wfRunHooks( 'UserLoginComplete', array( &$wgUser, &$inject_html ) );
 
 		# Set a cookie for later check-immediate use
 
 		$this->loginSetCookie($openid);
 
 		$wgOut->setPageTitle( wfMsg( 'openidsuccess' ) );
-		$wgOut->setRobotpolicy( 'noindex,nofollow' );
+		$wgOut->setRobotPolicy( 'noindex,nofollow' );
 		$wgOut->setArticleRelated( false );
 		$wgOut->addWikiText( wfMsg( 'openidsuccess', $wgUser->getName(), $openid ) );
+		$wgOut->addHtml( $inject_html );
 		$wgOut->returnToMain(false, $this->returnTo());
 	}
 
@@ -354,32 +355,32 @@ class SpecialOpenIDFinish extends SpecialOpenID {
 
 		# FIXME: only update if there's been a change
 
-		if (array_key_exists('nickname', $sreg)) {
-			$user->setOption('nickname', $sreg['nickname']);
+		if ( array_key_exists( 'nickname', $sreg ) ) {
+			$user->setOption( 'nickname', $sreg['nickname'] );
 		} else {
 			$user->setOption('nickname', '');
 		}
 
-		if (array_key_exists('email', $sreg)) {
+		if ( array_key_exists( 'email', $sreg ) ) {
 			$user->setEmail( $sreg['email'] );
 		} else {
-			$user->setEmail(NULL);
+			$user->setEmail( '' );
 		}
 
-		if (array_key_exists('fullname', $sreg) && $wgAllowRealName) {
+		if ( array_key_exists( 'fullname', $sreg ) && $wgAllowRealName) {
 			$user->setRealName($sreg['fullname']);
 		} else {
-			$user->setRealName(NULL);
+			$user->setRealName( '' );
 		}
 
-		if (array_key_exists('language', $sreg)) {
+		if ( array_key_exists( 'language', $sreg ) ) {
 			# FIXME: check and make sure the language exists
-			$user->setOption('language', $sreg['language']);
+			$user->setOption( 'language', $sreg['language'] );
 		} else {
-			$user->setOption('language', NULL);
+			$user->setOption( 'language', NULL );
 		}
 
-		if (array_key_exists('timezone', $sreg)) {
+		if (array_key_exists( 'timezone', $sreg ) ) {
 			# FIXME: do something with it.
 			# $offset = OpenIDTimezoneToTzoffset($sreg['timezone']);
 			# $user->setOption('timecorrection', $offset);
@@ -537,7 +538,7 @@ class SpecialOpenIDFinish extends SpecialOpenID {
 		global $wgUser, $wgOut;
 
 		$wgOut->setPageTitle( wfMsg( 'openiderror' ) );
-		$wgOut->setRobotpolicy( 'noindex,nofollow' );
+		$wgOut->setRobotPolicy( 'noindex,nofollow' );
 		$wgOut->setArticleRelated( false );
 		$wgOut->addWikiText( wfMsg( 'openidalreadyloggedin', $wgUser->getName() ) );
 		$wgOut->returnToMain(false, $this->returnTo() );

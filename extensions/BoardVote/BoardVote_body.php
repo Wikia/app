@@ -1,17 +1,14 @@
 <?php
-
 if (!defined('MEDIAWIKI')) {
 	die( "Not a valid entry point\n" );
 }
-
-wfBoardVoteInitMessages();
 
 class BoardVotePage extends UnlistedSpecialPage {
 	var $mPosted, $mVotedFor, $mUserDays, $mUserEdits;
 	var $mHasVoted, $mAction, $mUserKey, $mId, $mFinished;
 	var $mDb;
 
-	function BoardVotePage() {
+	function __construct() {
 		parent::__construct( "Boardvote" );
 	}
 
@@ -38,8 +35,8 @@ class BoardVotePage extends UnlistedSpecialPage {
 		// Necessary on some versions of cURL, others do this by default
 		curl_setopt( $c, CURLOPT_CAINFO, '/etc/ssl/certs/ca-certificates.crt' );
 		curl_setopt( $c, CURLOPT_RETURNTRANSFER, true );
-		curl_setopt( $c, CURLOPT_COOKIE, 
-			"{$db}_session=" . urlencode( $sid ) . ';' . 
+		curl_setopt( $c, CURLOPT_COOKIE,
+			"{$db}_session=" . urlencode( $sid ) . ';' .
 			"centralauth_Session=" . urlencode( $casid )
 		);
 		curl_setopt( $c, CURLOPT_FOLLOWLOCATION, true );
@@ -136,6 +133,8 @@ class BoardVotePage extends UnlistedSpecialPage {
 	function execute( $par ) {
 		global $wgOut, $wgBoardVoteStartDate, $wgBoardVoteEndDate;
 
+		wfLoadExtensionMessages( 'BoardVote' );
+
 		$this->init( $par );
 		$this->setHeaders();
 
@@ -157,7 +156,7 @@ class BoardVotePage extends UnlistedSpecialPage {
 			$wgOut->addWikiText( wfMsg( 'boardvote_blocked' ) );
 			return;
 		}
-		
+
 		if ( $this->mBot ) {
 			$wgOut->addWikiText( wfMsg( 'boardvote_bot' ) );
 			return;
@@ -165,7 +164,7 @@ class BoardVotePage extends UnlistedSpecialPage {
 
 		if ( wfTimestampNow() > $wgBoardVoteEndDate ) {
 			$this->mFinished = true;
-			
+
 			$wgOut->addWikiText( wfMsg( 'boardvote_closed' ) );
 		} else {
 			$this->mFinished = false;
@@ -324,24 +323,24 @@ class BoardVotePage extends UnlistedSpecialPage {
 		global $wgOut, $wgLang;
 		global $wgBoardVoteEditCount, $wgBoardVoteRecentEditCount, $wgBoardVoteCountDate;
 		global $wgBoardVoteRecentFirstCountDate, $wgBoardVoteRecentCountDate;
-		$wgOut->addWikiText( wfMsg( "boardvote_nosession", $wgBoardVoteEditCount,
+		$wgOut->addWikiText( wfMsgExt( 'boardvote_nosession', array( 'parsemag' ), $wgBoardVoteEditCount,
 			$wgLang->timeanddate( $wgBoardVoteCountDate ), $wgBoardVoteRecentEditCount,
 			$wgLang->timeanddate( $wgBoardVoteRecentFirstCountDate ),
 			$wgLang->timeanddate( $wgBoardVoteRecentCountDate )
-	   	) );
+		) );
 	}
 
 	function notQualified() {
 		global $wgOut, $wgLang;
 		global $wgBoardVoteEditCount, $wgBoardVoteRecentEditCount, $wgBoardVoteCountDate;
 		global $wgBoardVoteRecentFirstCountDate, $wgBoardVoteRecentCountDate;
-		$wgOut->addWikiText( wfMsg( "boardvote_notqualified", $wgBoardVoteEditCount,
+		$wgOut->addWikiText( wfMsgExt( 'boardvote_notqualified', array( 'parsemag' ), $wgBoardVoteEditCount,
 			$wgLang->timeanddate( $wgBoardVoteCountDate ), $wgBoardVoteRecentEditCount,
 			$wgLang->timeanddate( $wgBoardVoteRecentFirstCountDate ),
 			$wgLang->timeanddate( $wgBoardVoteRecentCountDate )
 		) );
 	}
-	
+
 	function displayInvalidVoteError() {
 		global $wgOut;
 		$wgOut->addWikiText( wfMsg( "boardvote_invalidentered" ) );
@@ -355,7 +354,7 @@ class BoardVotePage extends UnlistedSpecialPage {
 		$cnt = 0;
 		foreach ( $this->mVotedFor as $i => $rank ) {
 			$cnt++;
-			
+
 			$record .= $wgBoardCandidates[ $i ] . "[";
 			$record .= ( $rank == '' ) ? 100 : $rank;
 			$record .= "]";
@@ -546,7 +545,7 @@ class BoardVotePage extends UnlistedSpecialPage {
 		$title = Title::makeTitle( NS_SPECIAL, "Boardvote" );
 		$wgOut->redirect( $title->getFullURL( "action=list" ) );
 	}
-	
+
 	function validVote() {
 		foreach ( $this->mVotedFor as $rank ) {
 			if ( $rank != '' ) {
@@ -555,7 +554,7 @@ class BoardVotePage extends UnlistedSpecialPage {
 				}
 			}
 		}
-		
+
 		return true;
 	}
 }

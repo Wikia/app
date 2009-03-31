@@ -70,7 +70,7 @@ class FCKeditor_MediaWiki
 		return true;
 	}
 
-	public function onExtendJSGlobalVars( $vars ) {
+	public function onMakeGlobalVariablesScript( $vars ) {
     		global $wgFCKEditorVisibleTemplates, $wgFCKEditorHeight, $wgFCKEditorDomain, $wgFCKEditorDir, $wgFCKEditorExtDir ;
 		global $wgStyleVersion, $wgFCKEditorToolbarSet ;
 		empty ($wgFCKEditorVisibleTemplates) ? $showFCKTemplates = 'false' : $showFCKTemplates = 'true' ;
@@ -303,7 +303,7 @@ class FCKeditor_MediaWiki
 		global $wgStylePath, $wgStyleVersion, $wgDefaultSkin, $wgExtensionFunctions;
 		global $wgFCKWikiTextBeforeParse, $wgFCKEditorDomain, $wgHooks ;
 
-		$wgHooks['ExtendJSGlobalVars'][] = array($this, 'onExtendJSGlobalVars') ;
+		$wgHooks['MakeGlobalVariablesScript'][] = array($this, 'onMakeGlobalVariablesScript') ;
 
 		if (!$wgUser->getOption( 'showtoolbar' ) || $wgUser->getOption( 'riched_disable' ) || !$wgFCKEditorIsCompatible) {
 			return true;

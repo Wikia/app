@@ -4,16 +4,16 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 	exit( 1 );
 }
 
-wfLoadExtensionMessages( 'UnicodeConverter' );
-
-class UnicodeConverter extends SpecialPage
+class SpecialUnicodeConverter extends SpecialPage
 {
-	function UnicodeConverter() {
+	function __construct() {
 		SpecialPage::SpecialPage("UnicodeConverter");
 	}
 
 	function execute( $par ) {
 		global $wgRequest, $wgOut, $wgTitle;
+
+		wfLoadExtensionMessages( 'UnicodeConverter' );
 
 		$this->setHeaders();
 

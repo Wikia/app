@@ -178,17 +178,17 @@ class SpecialMergeAccount extends SpecialPage {
 			}
 
 			if( count( $unattached ) > 0 ) {
-				$wgOut->addHtml( $this->step2PasswordForm( $unattached ) );
+				$wgOut->addHTML( $this->step2PasswordForm( $unattached ) );
 				$wgOut->addWikiText( wfMsg( 'centralauth-merge-dryrun-or' ) );
 			}
 
 			$subAttached = array_diff( $attached, array( $home ) );
-			$wgOut->addHtml( $this->step3ActionForm( $home, $subAttached, $methods ) );
+			$wgOut->addHTML( $this->step3ActionForm( $home, $subAttached, $methods ) );
 		} else {
 			// Show error message from status
-			$wgOut->addHtml( '<div class="errorbox" style="float:none;">' );
+			$wgOut->addHTML( '<div class="errorbox" style="float:none;">' );
 			$wgOut->addWikiText( $status->getWikiText() );
-			$wgOut->addHtml( '</div>' );
+			$wgOut->addHTML( '</div>' );
 
 			// Show wiki list if required
 			if ( $status->hasMessage( 'centralauth-blocked-text' ) 
@@ -197,7 +197,7 @@ class SpecialMergeAccount extends SpecialPage {
 				$out = '<h2>' . wfMsgHtml( 'centralauth-list-home-title' ) . '</h2>';
 				$out .= wfMsgExt( 'centralauth-list-home-dryrun', 'parse' );
 				$out .= $this->listAttached( array( $home ), array( $home => 'primary' ) );
-				$wgOut->addHtml( $out );
+				$wgOut->addHTML( $out );
 			}
 
 			// Show password box
@@ -285,7 +285,7 @@ class SpecialMergeAccount extends SpecialPage {
 			$wgOut->addWikiText( wfMsg( 'centralauth-attach-success' ) );
 			$this->showCleanupForm();
 		} else {
-			$wgOut->addHtml(
+			$wgOut->addHTML(
 				'<div class="errorbox">' .
 					wfMsg( 'wrongpassword' ) .
 				'</div>' .
@@ -306,7 +306,7 @@ class SpecialMergeAccount extends SpecialPage {
 			wfMsg( 'centralauth-readmore-text' ) );
 
 		$this->initSession();
-		$wgOut->addHtml(
+		$wgOut->addHTML(
 			$this->passwordForm(
 				'dryrun',
 				wfMsg( 'centralauth-merge-step1-title' ),
@@ -329,8 +329,8 @@ class SpecialMergeAccount extends SpecialPage {
 		$globalUser = new CentralAuthUser( $wgUser->getName() );
 		$merged = $globalUser->listAttached();
 		$wgOut->addWikiText( wfMsg( 'centralauth-attach-list-attached', $this->mUserName ) );
-		$wgOut->addHtml( $this->listAttached( $merged ) );
-		$wgOut->addHtml( $this->attachActionForm() );
+		$wgOut->addHTML( $this->listAttached( $merged ) );
+		$wgOut->addHTML( $this->attachActionForm() );
 	}
 
 	function showStatus( $merged, $remainder ) {
@@ -346,20 +346,20 @@ class SpecialMergeAccount extends SpecialPage {
 		$wgOut->addWikiText( wfMsg( 'centralauth-readmore-text' ) );
 
 		if( $merged ) {
-			$wgOut->addHtml( '<hr />' );
+			$wgOut->addHTML( '<hr />' );
 			$wgOut->addWikiText( wfMsg( 'centralauth-list-attached',
 				$this->mUserName ) );
-			$wgOut->addHtml( $this->listAttached( $merged ) );
+			$wgOut->addHTML( $this->listAttached( $merged ) );
 		}
 
 		if( $remainder ) {
-			$wgOut->addHtml( '<hr />' );
+			$wgOut->addHTML( '<hr />' );
 			$wgOut->addWikiText( wfMsg( 'centralauth-list-unattached',
 				$this->mUserName ) );
-			$wgOut->addHtml( $this->listUnattached( $remainder ) );
+			$wgOut->addHTML( $this->listUnattached( $remainder ) );
 
 			// Try the password form!
-			$wgOut->addHtml( $this->passwordForm(
+			$wgOut->addHTML( $this->passwordForm(
 				'cleanup',
 				wfMsg( 'centralauth-finish-title' ),
 				wfMsgExt( 'centralauth-finish-text', array( 'parse' ) ),
@@ -409,7 +409,7 @@ class SpecialMergeAccount extends SpecialPage {
 		$hostname = $wiki->getDisplayName();
 		$userPageName = 'User:' . $this->mUserName;
 		$url = $wiki->getUrl( $userPageName );
-		return wfElement( 'a',
+		return Xml::element( 'a',
 			array(
 				'href' => $url,
 				'title' => wfMsg( 'centralauth-foreign-link',

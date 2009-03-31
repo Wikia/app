@@ -11,7 +11,7 @@
 		eval('f = function() { var a = arguments; return this.each(function() { if(jQuery(this).is(".ui-draggable")) jQuery.data(this, "ui-draggable")["'+cur+'"](a); }); }');
 		$.fn["draggable"+cur.substr(0,1).toUpperCase()+cur.substr(1)] = f;
 	};
-	
+
 	//get instance method
 	$.fn.draggableInstance = function() {
 		if($(this[0]).is(".ui-draggable")) return $.data(this[0], "ui-draggable");
@@ -23,7 +23,7 @@
 			new $.ui.draggable(this, o);
 		});
 	}
-	
+
 	$.ui.ddmanager = {
 		current: null,
 		droppables: [],
@@ -39,10 +39,10 @@
 			}
 		},
 		fire: function(oDrag, e) {
-			
+
 			var oDrops = $.ui.ddmanager.droppables;
 			var oOvers = $.grep(oDrops, function(oDrop) {
-				
+
 				if (!oDrop.item.disabled && $.ui.intersect(oDrag, oDrop, oDrop.item.options.tolerance))
 					oDrop.item.drop.call(oDrop.item, e);
 			});
@@ -54,12 +54,12 @@
 			});
 		},
 		update: function(oDrag, e) {
-			
+
 			if(oDrag.options.refreshPositions) $.ui.ddmanager.prepareOffsets();
-			
+
 			var oDrops = $.ui.ddmanager.droppables;
 			var oOvers = $.grep(oDrops, function(oDrop) {
-				if(oDrop.item.disabled) return false; 
+				if(oDrop.item.disabled) return false;
 				var isOver = $.ui.intersect(oDrag, oDrop, oDrop.item.options.tolerance)
 				if (!isOver && oDrop.over == 1) {
 					oDrop.out = 1; oDrop.over = 0;
@@ -75,15 +75,15 @@
 			});
 		}
 	};
-	
+
 	$.ui.draggable = function(el, o) {
-		
+
 		var options = {};
 		$.extend(options, o);
 		var self = this;
 		$.extend(options, {
 			_start: function(h, p, c, t, e) {
-				self.start.apply(t, [self, e]); // Trigger the start callback				
+				self.start.apply(t, [self, e]); // Trigger the start callback
 			},
 			_beforeStop: function(h, p, c, t, e) {
 				self.stop.apply(t, [self, e]); // Trigger the start callback
@@ -92,18 +92,18 @@
 				self.drag.apply(t, [self, e]); // Trigger the start callback
 			},
 			startCondition: function(e) {
-				return !(e.target.className.indexOf("ui-resizable-handle") != -1 || self.disabled);	
-			}			
+				return !(e.target.className.indexOf("ui-resizable-handle") != -1 || self.disabled);
+			}
 		});
-		
+
 		$.data(el, "ui-draggable", this);
-		
+
 		if (options.ghosting == true) options.helper = 'clone'; //legacy option check
 		$(el).addClass("ui-draggable");
 		this.interaction = new $.ui.mouseInteraction(el, options);
-		
+
 	}
-	
+
 	$.extend($.ui.draggable.prototype, {
 		plugins: {},
 		currentTarget: null,
@@ -126,27 +126,27 @@
 				position: { left: self.pos[0], top: self.pos[1] },
 				offset: self.options.cursorAt,
 				draggable: self,
-				options: self.options	
-			}			
+				options: self.options
+			}
 		},
 		start: function(that, e) {
-			
+
 			var o = this.options;
 			$.ui.ddmanager.current = this;
-			
+
 			$.ui.plugin.call(that, 'start', [e, that.prepareCallbackObj(this)]);
 			$(this.element).triggerHandler("dragstart", [e, that.prepareCallbackObj(this)], o.start);
-			
+
 			if (this.slowMode && $.ui.droppable && !o.dropBehaviour)
 				$.ui.ddmanager.prepareOffsets(this, e);
-			
+
 			return false;
-						
+
 		},
-		stop: function(that, e) {			
-			
+		stop: function(that, e) {
+
 			var o = this.options;
-			
+
 			$.ui.plugin.call(that, 'stop', [e, that.prepareCallbackObj(this)]);
 			$(this.element).triggerHandler("dragstop", [e, that.prepareCallbackObj(this)], o.stop);
 
@@ -157,7 +157,7 @@
 			$.ui.ddmanager.last = this;
 
 			return false;
-			
+
 		},
 		drag: function(that, e) {
 
@@ -172,10 +172,10 @@
 
 			var nl = (nv && nv.left) ? nv.left : this.pos[0];
 			var nt = (nv && nv.top) ? nv.top : this.pos[1];
-			
+
 			$(this.helper).css('left', nl+'px').css('top', nt+'px'); // Stick the helper to the cursor
 			return false;
-			
+
 		}
 	});
 

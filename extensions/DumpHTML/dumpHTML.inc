@@ -64,6 +64,9 @@ class DumpHTML {
 	# Skin to use
 	var $skin = 'offline';
 
+	# User group to use
+	var $group = false;
+
 	# Checkpoint stuff
 	var $checkpointFile = false, $checkpoints = false;
 
@@ -716,6 +719,19 @@ class DumpHTML {
 		$wgUser = User::newFromName( '__dumpHTML', false );
 		$wgUser->setOption( 'skin', $this->skin );
 		$wgUser->setOption( 'editsection', 0 );
+		if ( $this->group ) {
+			$groups = explode( ',', $this->group );
+			foreach ( $groups as $group ) {
+				$wgUser->addGroup( $group );
+			}
+			if ( !$wgUser->isAllowed( 'read' ) ) {
+				print "The specified user group is not allowed to read\n";
+				exit( 1 );
+			}
+		} elseif ( !$wgUser->isAllowed( 'read' ) ) {
+			print "Default users are not allowed to read, please specify a --group option, e.g. --group=sysop\n";
+			exit( 1 );
+		}
 
 		if ( $this->makeSnapshot ) {
 			$this->destUploadDirectory = "{$this->dest}/{$this->imageRel}";

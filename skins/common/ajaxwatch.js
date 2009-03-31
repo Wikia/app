@@ -101,6 +101,11 @@ wgAjaxWatch.processResult = function(request) {
 	if(wgAjaxWatch.timeoutID) {
 		window.clearTimeout(wgAjaxWatch.timeoutID);
 	}
+	// Bug 12395 - avoid some watch link confusion on edit
+	var watchthis = document.getElementById("wpWatchthis");
+	if( watchthis && response.match(/^<[uw]#>/) ) {
+		watchthis.checked = response.match(/^<w#>/) ? "checked" : "";
+	}
 	return;
 };
 
@@ -148,13 +153,3 @@ wgAjaxWatch.onLoad = function() {
 if (typeof hookEvent != 'undefined')
     hookEvent("load", wgAjaxWatch.onLoad);
 	
-
-/**
- * @return boolean whether the browser supports XMLHttpRequest
- */
-function wfSupportsAjax() {
-	var request = sajax_init_object();
-	var supportsAjax = request ? true : false;
-	delete request;
-	return supportsAjax;
-}

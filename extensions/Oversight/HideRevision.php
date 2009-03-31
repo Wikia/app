@@ -43,103 +43,27 @@ $wgGroupPermissions['oversight']['oversight'] = true;
 $wgExtensionCredits['specialpage'][] = array(
 	'name'           => 'Oversight',
 	'author'         => 'Brion Vibber',
-	'svn-date' => '$LastChangedDate: 2008-07-10 06:36:57 +0000 (Thu, 10 Jul 2008) $',
-	'svn-revision' => '$LastChangedRevision: 37463 $',
+	'svn-date'       => '$LastChangedDate: 2008-11-29 11:00:43 +0000 (Sat, 29 Nov 2008) $',
+	'svn-revision'   => '$LastChangedRevision: 44035 $',
 	'url'            => 'http://www.mediawiki.org/wiki/Extension:Oversight',
 	'description'    => 'Hide individual revisions from all users for legal reasons, etc.',
 	'descriptionmsg' => 'hiderevision-desc',
 );
 
-$dir = dirname(__FILE__) . '/';
+$dir = dirname( __FILE__ ) . '/';
 $wgExtensionMessagesFiles['HideRevision'] = $dir . 'HideRevision.i18n.php';
 $wgExtensionAliasesFiles['HideRevision'] = $dir . 'HideRevision.alias.php';
 
 $wgAutoloadClasses['HideRevisionForm'] = $dir . 'HideRevision_body.php';
 $wgAutoloadClasses['SpecialOversight'] = $dir . 'HideRevision_body.php';
+$wgAutoloadClasses['HideRevisionHooks'] = $dir . 'HideRevision.hooks.php';
 
 $wgSpecialPages['HideRevision'] = 'HideRevisionForm';
 $wgSpecialPages['Oversight'] = 'SpecialOversight';
 $wgSpecialPageGroups['HideRevision'] = 'pagetools';
 $wgSpecialPageGroups['Oversight'] = 'pagetools';
 
-$wgHooks['ArticleViewHeader'][] = 'hrArticleViewHeaderHook';
-$wgHooks['DiffViewHeader'][] = 'hrDiffViewHeaderHook';
-$wgHooks['UndeleteShowRevision'][] = 'hrUndeleteShowRevisionHook';
-
-/**
- * Hook for article view, giving us a chance to insert a removal
- * tab on old version views.
- */
-function hrArticleViewHeaderHook( $article ) {
-	$oldid = intval( $article->mOldId );
-	if( $oldid ) {
-		hrInstallTab( $oldid );
-	}
-	return true;
-}
-
-/**
- * Hook for diff view, giving us a chance to insert a removal
- * tab on old version views.
- */
-function hrDiffViewHeaderHook( $diff, $oldRev, $newRev ) {
-	if( !empty( $newRev ) && $newRev->getId() ) {
-		hrInstallTab( $newRev->getId() );
-	}
-	return true;
-}
-
-/**
- * Hook for deletion archive revision view, giving us a chance to
- * insert a removal tab for a deleted revision.
- */
-function hrUndeleteShowRevisionHook( $title, $rev ) {
-	hrInstallArchiveTab( $title, $rev->getTimestamp() );
-	return true;
-}
-
-class HideRevisionTabInstaller {
-	function __construct( $linkParam ) {
-		$this->mLinkParam = $linkParam;
-	}
-
-	function insertTab( $skin, &$content_actions ) {
-		wfLoadExtensionMessages ('HideRevision');
-		$special = Title::makeTitle( NS_SPECIAL, 'HideRevision' );
-		$content_actions['hiderevision'] = array(
-			'class' => false,
-			'text' => wfMsgHTML( 'hiderevision-tab' ),
-			'href' => $special->getLocalUrl( $this->mLinkParam ) );
-		return true;
-	}
-}
-
-/**
- * If the user is allowed, installs a tab hook on the skin
- * which links to a handy permanent removal thingy.
- */
-function hrInstallTab( $id ) {
-	global $wgUser;
-	if( $wgUser->isAllowed( 'hiderevision' ) ) {
-		global $wgHooks;
-		$tab = new HideRevisionTabInstaller( 'revision[]=' . $id );
-		$wgHooks['SkinTemplateTabs'][] = array( $tab, 'insertTab' );
-	}
-}
-
-/**
- * If the user is allowed, installs a tab hook on the skin
- * which links to a handy permanent removal thingy for
- * archived (deleted) pages.
- */
-function hrInstallArchiveTab( $target, $timestamp ) {
-	global $wgUser;
-	if( $wgUser->isAllowed( 'hiderevision' ) ) {
-		global $wgHooks;
-		$tab = new HideRevisionTabInstaller(
-			'target=' . $target->getPrefixedUrl() .
-			'&timestamp[]=' . $timestamp );
-		$wgHooks['SkinTemplateBuildContentActionUrlsAfterSpecialPage'][] =
-			array( $tab, 'insertTab' );
-	}
-}
+$wgHooks['ArticleViewHeader'][] = 'HideRevisionHooks::onArticleViewHeader';
+$wgHooks['DiffViewHeader'][] = 'HideRevisionHooks::onDiffViewHeader';
+$wgHooks['UndeleteShowRevision'][] = 'HideRevisionHooks::onUndeleteShowRevision';
+$wgHooks['ContributionsToolLinks'][] = 'HideRevisionHooks::onContributionsToolLinks';

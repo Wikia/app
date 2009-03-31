@@ -189,8 +189,8 @@ require_once ( dirname( __FILE__ ) ."/WikiaEvents_ajax.php" );
 global $wgAutoloadClasses; 
 $wgAutoloadClasses["WikiaEventsApi"] = "extensions/wikia/WikiaEvents/WikiaEventsApi.php";
 #--
-global $wgApiQueryListModules;
-$wgApiQueryListModules["wkevents"] = "WikiaEventsApi";
+global $wgAPIListModules;
+$wgAPIListModules["wkevents"] = "WikiaEventsApi";
 
 #---
 $wgExtensionFunctions[] = 'wfGenerateSystemEvents';

@@ -3,16 +3,16 @@ http://www.mediawiki.org/wiki/Extension:FlaggedRevs
 
 == Setup ==
 * Download the extension from SVN
-* (MySQL) Run the 'FlaggedRevs.sql' query, substituting in your wiki's table prefix. 
-* (PostgreSQL) Use 'FlaggedRevs.pg.sql' instead.
-* Upgrade to MediaWiki 1.13+
-* Run 'maintenance/update.php'
+* Upgrade to MediaWiki 1.14+
+* Run 'maintenance/update.php' if you needed to upgrade
 * Run 'maintenance/archives/populateSha1.php'.
 * Make sure '../extensions/FlaggedRevs' is readable (for CSS/JS)
-* To enable reader feedback, make sure PHP has the GD libraries installed. In windows, this is done by un-commenting them out in php.ini. 
-In linux, php should be compiled with it enabled ('--with-gd'). See a nice guide here (http://www.onlamp.com/pub/a/php/2003/03/27/php_gd.html).
+* To enable PNG images for reader feedback (instead of SVG), make sure PHP has the GD libraries installed. In windows, 
+this is done by un-commenting them out in php.ini. In linux, php should be compiled with it enabled ('--with-gd'). 
+(See a nice guide here: http://www.onlamp.com/pub/a/php/2003/03/27/php_gd.html). $wgSvgGraphDir must be set to false.
 * Add the following line to 'LocalSettings.php': 
 	include_once('extensions/FlaggedRevs/FlaggedRevs.php');
+* Run 'maintenance/update.php'
 
 It is important that the sha1 column is populated. This allows for image injection via key 
 rather than the (name,timestamp) pair. In the future, image moves may be supported by MediaWiki, 

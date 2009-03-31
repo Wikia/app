@@ -14,7 +14,7 @@
 
 if (!defined('MEDIAWIKI')) die('Not an entry point.');
 
-define('TREEANDMENU_VERSION','1.0.6, 2008-06-25');
+define('TREEANDMENU_VERSION','1.0.8, 2008-12-08');
 
 # Set any unset images to default titles
 if (!isset($wgTreeViewImages) || !is_array($wgTreeViewImages)) $wgTreeViewImages = array();
@@ -63,6 +63,7 @@ class TreeAndMenu {
 		# Update general tree paths and properties
 		$this->baseDir  = dirname(__FILE__);
 		$this->baseUrl  = preg_replace('|^.+(?=[/\\\\]extensions)|', $wgScriptPath, $this->baseDir);
+		$this->baseUrl  = str_replace('\\', '/', $this->baseDir);
 		$this->useLines = $wgTreeViewShowLines ? 'true' : 'false';
 		$this->uniq     = uniqid($this->uniqname);
 
@@ -178,6 +179,7 @@ class TreeAndMenu {
 			$node      = 0;
 			$last      = -1;
 			$nodes     = '';
+			$opennodes = array();
 			foreach ($rows as $i => $info) {
 				$node++;
 				list($id, $depth, $icon, $item, $start) = $info;
@@ -186,12 +188,16 @@ class TreeAndMenu {
 				$type  = $args['type'];
 				$end   = $i == count($rows)-1 || $rows[$i+1][4];
 				if (!isset($args['root'])) $args['root'] = ''; # tmp - need to handle rootless trees
+				$openlevels = isset($args['openlevels']) ? $args['openlevels']+1 : 0;
 				if ($start) $node = 1;
 		
 				# Append node script for this row
 				if ($depth > $last) $parents[$depth] = $node-1;
 				$parent = $parents[$depth];
-				if ($type == 'tree') $nodes .= "$objid.add($node, $parent, '$item');\n";
+				if ($type == 'tree') {
+					$nodes .= "$objid.add($node, $parent, '$item');\n";
+					if ($depth > 0 && $openlevels > $depth) $opennodes[$parent] = true;
+				}
 				else {
 					if (!$start) {
 						if ($depth < $last) $nodes .= str_repeat('</ul></li>', $last-$depth);
@@ -211,7 +217,8 @@ class TreeAndMenu {
 
 						# Finalise a tree
 						$add = isset($args['root']) ? "tree.add(0,-1,'".$args['root']."');" : '';
-						$top = $bottom = $root = '';
+						$top = $bottom = $root = $opennodesjs = '';
+						foreach (array_keys($opennodes) as $i) $opennodesjs .= "$objid.o($i);";
 						foreach ($args as $arg => $pos)
 							if (($pos == 'top' || $pos == 'bottom' || $pos == 'root') && ($arg == 'open' || $arg == 'close'))
 								$$pos .= "<a href=\"javascript: $objid.{$arg}All();\">&nbsp;{$arg} all</a>&nbsp;";
@@ -227,6 +234,7 @@ class TreeAndMenu {
 									$objid = tree;
 									$nodes
 									document.getElementById('$id').innerHTML = $objid.toString();
+									$opennodesjs
 								/*]]>*/</script>
 							</div>$bottom";
 					}

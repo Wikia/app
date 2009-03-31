@@ -1,5 +1,4 @@
 <?php
-
 if( !defined( 'MEDIAWIKI' ) ) {
 	die();
 }
@@ -7,9 +6,6 @@ if( !defined( 'MEDIAWIKI' ) ) {
 global $IP;
 require_once( "$IP/extensions/OAI/OAIFunctions.php" );
 require_once( "$IP/includes/Export.php" );
-
-global $wgMessageCache;
-$wgMessageCache->addMessage( "oairepository", "OAI Repository" );
 
 if( !function_exists( 'wfTimestamp2ISO8601' ) ) {
 	// Back compat; gone in 1.6
@@ -19,22 +15,24 @@ if( !function_exists( 'wfTimestamp2ISO8601' ) ) {
 	}
 }
 
-class OAIRepository extends UnlistedSpecialPage {
-	function OAIRepository() {
+class SpecialOAIRepository extends UnlistedSpecialPage {
+	function __construct() {
 		UnlistedSpecialPage::UnlistedSpecialPage( 'OAIRepository' );
 	}
-	
+
 	function setHeaders() {
 		// NOP
 	}
-	
+
 	function execute( $par ) {
 		global $wgRequest, $wgOut;
 		$wgOut->disable();
-		
+
+		wfLoadExtensionMessages( 'OAIRepository' );
+
 		# FIXME: Replace the DB error handler
 		header( 'Content-type: text/xml; charset=utf-8' );
-		
+
 		$repo = new OAIRepo( $wgRequest );
 		$repo->respond();
 	}
@@ -77,15 +75,15 @@ class OAIRepo {
 		$this->_clientId = 0;
 		$this->_request = $this->initRequest( $request );
 	}
-	
+
 	function addError( $code, $message ) {
 		$this->_errors[] = array( $code, $message );
 	}
-	
+
 	function errorCondition() {
 		return !empty( $this->_errors );
 	}
-	
+
 	function initRequest( &$request ) {
 		/* Legal verbs and their parameters */
 		$verbs = array(
@@ -104,13 +102,13 @@ class OAIRepo {
 				'optional'  => array( 'from', 'until', 'set' ) ),
 			'ListSets' => array(
 				'exclusive' => 'resumptionToken' ) );
-			
+
 		$req = array();
 		$verb = $request->getVal( 'verb' );
 		if( isset( $verbs[$verb] ) ) {
 			$req['verb'] = $verb;
 			$params = $verbs[$verb];
-			
+
 			/* If an exclusive parameter is set, it's the only one we'll see */
 			if( isset( $params['exclusive'] ) ) {
 				$exclusive = $request->getVal( $params['exclusive'] );
@@ -120,7 +118,7 @@ class OAIRepo {
 					return $req;
 				}
 			}
-			
+
 			/* Required parameters must all be present if no exclusive was found */
 			if( isset( $params['required'] ) ) {
 				foreach( $params['required'] as $name ) {
@@ -132,7 +130,7 @@ class OAIRepo {
 					}
 				}
 			}
-			
+
 			/* Optionals are, well, optional. */
 			if( isset( $params['optional'] ) ) {
 				foreach( $params['optional'] as $name ) {
@@ -147,7 +145,7 @@ class OAIRepo {
 		}
 		return $req;
 	}
-	
+
 	function validateMetadata( $var ) {
 		if( isset( $this->_request[$var] ) ) {
 			$prefix = $this->_request[$var];
@@ -162,7 +160,7 @@ class OAIRepo {
 			return null;
 		}
 	}
-	
+
 	function validateDatestamp( $var ) {
 		if( isset( $this->_request[$var] ) ) {
 			$time = $this->_request[$var];
@@ -181,7 +179,7 @@ class OAIRepo {
 			return null;
 		}
 	}
-	
+
 	/**
 	 * Ensure the client is authorized to access the OAI feed.
 	 * Restrictions are optional; a default install is unrestricted.
@@ -196,19 +194,19 @@ class OAIRepo {
 	 */
 	private function authorize() {
 		global $oaiAgentRegex, $oaiAuth;
-		
+
 		if( $oaiAgentRegex == '' && !$oaiAuth ) {
 			// No authorization required.
 			return true;
 		}
-		
-		if( $oaiAgentRegex != '' 
+
+		if( $oaiAgentRegex != ''
 			&& isset( $_SERVER['HTTP_USER_AGENT'] )
 			&& preg_match( $oaiAgentRegex, $_SERVER['HTTP_USER_AGENT'] ) ) {
 			// Agent whitelist bypasses users for compatibility
 			return true;
 		}
-		
+
 		if( $oaiAuth ) {
 			if( isset( $_SERVER['PHP_AUTH_USER'] )
 				&& isset( $_SERVER['PHP_AUTH_PW'] )
@@ -216,7 +214,7 @@ class OAIRepo {
 					$_SERVER['PHP_AUTH_PW'] ) ) {
 				return true;
 			}
-			
+
 			header( 'WWW-Authenticate: Basic realm="OAIRepository"' );
 			header( 'HTTP/1.x 401 Unauthorized' );
 		} else {
@@ -226,7 +224,7 @@ class OAIRepo {
 		echo "<p>Sorry, this resource is presently restricted-access.</p>";
 		return false;
 	}
-	
+
 	/**
 	 * Attempt to authenticate the username and password against
 	 * the repo user table (oaiuser)
@@ -252,7 +250,7 @@ class OAIRepo {
 			return false;
 		}
 	}
-	
+
 	private function logRequest( $responseSize ) {
 		global $oaiAudit, $wgDBname;
 		if( $oaiAudit ) {
@@ -271,7 +269,7 @@ class OAIRepo {
 				__METHOD__ );
 		}
 	}
-	
+
 	/**
 	 * Return a database connection to the repo authentication and
 	 * audit logging database.
@@ -285,7 +283,7 @@ class OAIRepo {
 		}
 		return $this->mAuditDb;
 	}
-	
+
 	/**
 	 * Would be nice to offload this to the Database class
 	 * in a safe, consistent manner.
@@ -302,16 +300,16 @@ class OAIRepo {
 			return $table;
 		}
 	}
-	
+
 	function respond() {
 		if( !$this->authorize() ) {
 			return;
 		}
-		
+
 		// We want to record the size of requests for auditing's sake.
 		// We'd like compressed size, but that doesn't seem happy. :(
 		ob_start();
-		
+
 		header( 'Content-type: text/xml; charset=utf-8' );
 		echo '<' . '?xml version="1.0" encoding="UTF-8" ?' . ">\n";
 		echo oaiTag( 'OAI-PMH', array(
@@ -327,33 +325,33 @@ class OAIRepo {
 		}
 		$this->showErrors();
 		echo "</OAI-PMH>\n";
-		
+
 		$size = intval( ob_get_length() );
 		$this->logRequest( $size );
 	}
-	
+
 	function responseDate() {
 		$date = oaiDatestamp( time(), $this->timeGranularity() );
 		return "<responseDate>$date</responseDate>\n";
 	}
-	
+
 	function regurgitateRequest() {
     	return oaiTag( 'request', $this->_request, '' ) . "\n";
 	}
-	
+
 	function showErrors() {
 		foreach( $this->_errors as $err ) {
 			echo $this->errorMessage( $err[0], $err[1] );
 			echo "\n";
 		}
 	}
-	
+
 	function errorMessage( $code, $message ) {
 		return oaiTag( 'error',
 			array( 'code' => $code ),
 			$message );
 	}
-	
+
 	function doResponse( $verb ) {
 		switch( $verb ) {
 		case 'Identify':
@@ -377,7 +375,7 @@ class OAIRepo {
 			wfDebugDieBacktrace( 'Verb not implemented' );
 		}
 	}
-	
+
 	function Identify() {
 		echo "<Identify>\n";
 		foreach( $this->identifyInfo() as $field => $val ) {
@@ -385,7 +383,7 @@ class OAIRepo {
 		}
 		echo "</Identify>\n";
 	}
-	
+
 	function listMetadataFormats() {
 		if( isset( $this->_request['identifier'] ) ) {
 			# We have the same formats for all records...
@@ -395,7 +393,7 @@ class OAIRepo {
 				return;
 			}
 		}
-		
+
 		$formats = $this->metadataFormats();
 		echo "<ListMetadataFormats>\n";
 		foreach( $formats as $prefix => $format ) {
@@ -407,7 +405,7 @@ class OAIRepo {
 		}
 		echo "</ListMetadataFormats>\n";
 	}
-	
+
 	function validateToken( $var ) {
 		if( !isset( $this->_request[$var] ) ) {
 			return null;
@@ -425,10 +423,10 @@ class OAIRepo {
 		}
 		$this->addError( 'badResumptionToken', 'Invalid resumption token.' );
 	}
-	
+
 	function listRecords( $verb ) {
 		$withData = ($verb == 'ListRecords');
-		
+
 		$startToken = $this->validateToken( 'resumptionToken' );
 		if( $this->errorCondition() ) {
 			return;
@@ -450,7 +448,7 @@ class OAIRepo {
 				return;
 			}
 		}
-		
+
 		# Fetch one extra row to check if we need a resumptionToken
 		$resultSet = $this->fetchRows( $from, $until, $this->chunkSize() + 1, $resume );
 		$count = min( $resultSet->numRows(), $this->chunkSize() );
@@ -491,7 +489,7 @@ class OAIRepo {
 			$this->addError( 'noRecordsMatch', 'No records available match the request.' );
 		}
 	}
-	
+
 	function getRecord() {
 		$metadataPrefix =  $this->validateMetadata( 'metadataPrefix' );
 		if( !$this->errorCondition() ) {
@@ -505,7 +503,7 @@ class OAIRepo {
 			}
 		}
 	}
-	
+
 	function getRecordItem( $identifier) {
 		$pageid = $this->stripIdentifier( $identifier );
 		if( $pageid ) {
@@ -519,7 +517,7 @@ class OAIRepo {
 		$this->addError( 'idDoesNotExist', 'Requested identifier is invalid or does not exist.' );
 		return null;
 	}
-	
+
 	function stripIdentifier( $identifier ) {
 		global $wgServerName, $wgDBname;
 		$prefix = "oai:$wgServerName:$wgDBname:";
@@ -531,20 +529,20 @@ class OAIRepo {
 		}
 		return false;
 	}
-	
+
 	function timeGranularity() {
 		return 'YYYY-MM-DDThh:mm:ssZ';
 	}
-	
+
 	function chunkSize() {
 		return 50;
 	}
-	
+
 	function baseUrl() {
 		$title =& Title::makeTitle( NS_SPECIAL, 'OAIRepository' );
 		return $title->getFullUrl();
 	}
-	
+
 	function earliestDatestamp() {
 		$updates = $this->_db->tableName( 'updates' );
 		$result = $this->_db->query( "SELECT MIN(up_timestamp) AS min FROM $updates" );
@@ -566,12 +564,12 @@ class OAIRepo {
 		} else
 			return new OAIDumpWriter;
 	}
-	
+
 	function newSchema() {
 		global $wgVersion;
 		return version_compare( $wgVersion, '1.5alpha', 'ge' );
 	}
-	
+
 	function fetchRecord( $pageid ) {
 		extract( $this->_db->tableNames( 'updates', 'page', 'revision', 'text' ) );
 		$sql = "SELECT up_page,page_id,up_timestamp,up_action,up_sequence,
@@ -593,14 +591,14 @@ class OAIRepo {
 			AND page_latest=rev_id
 			AND rev_text_id=old_id
 			LIMIT 1';
-		
+
 		return $this->_db->resultObject( $this->_db->query( $sql ) );
 	}
-	
+
 	function fetchRows( $from, $until, $chunk, $token = null ) {
 		extract( $this->_db->tableNames( 'updates', 'page', 'revision', 'text' ) );
 		$chunk = IntVal( $chunk );
-		
+
 		$sql = "SELECT up_page,page_id,up_timestamp,up_action,up_sequence,
 			page_namespace,
 			page_title,
@@ -636,7 +634,7 @@ class OAIRepo {
 			$sql .= ' WHERE ' . implode( ' AND ', $where );
 		}
 		$sql .= " ORDER BY $order LIMIT $chunk";
-		
+
 		return $this->_db->resultObject( $this->_db->query( $sql ) );
 	}
 
@@ -656,14 +654,14 @@ class OAIRepo {
     rp.page_namespace AS page_namespace,
     rp.page_title AS page_title
     FROM $updates AS u, $page AS p, $redirect AS r, $page AS rp
-    WHERE u.up_page=p.page_id AND p.page_namespace=r.rd_namespace 
+    WHERE u.up_page=p.page_id AND p.page_namespace=r.rd_namespace
     AND p.page_title=r.rd_title AND r.rd_from=rp.page_id
     $pages_where";
 
 		return $this->_db->resultObject( $this->_db->query( $sql ) );
 	}
 
-	
+
 	function identifyInfo() {
 		global $wgSitename;
 		return array(
@@ -675,7 +673,7 @@ class OAIRepo {
 				$this->earliestDatestamp(), $this->timeGranularity() ),
 			'deletedRecord' => 'persistent',
 			'granularity' => $this->timeGranularity(),
-			
+
 			# Optional
 			'compression' => 'gzip',
 			#'description'
@@ -694,7 +692,7 @@ class OAIRepo {
 				'namespace'	=> 'http://www.mediawiki.org/xml/lsearch-0.1/',
 				'schema'    => 'http://www.mediawiki.org/xml/lsearch-0.1.xsd' ) );
 	}
-	
+
 }
 
 class OAIRecord {
@@ -708,7 +706,7 @@ class OAIRecord {
 			: $this->renderAbout();
 		return "<record>\n$header$metadata$about</record>\n";
 	}
-	
+
 	function renderHeader( $datestyle ) {
 		$tag = $this->isDeleted()
 			? 'header status="deleted"'
@@ -720,16 +718,16 @@ class OAIRecord {
 		       "  <datestamp>$date</datestamp>\n" .
 		       "</header>\n";
 	}
-	
+
 	function renderMetadata( $format ) {
 		wfDebugDieBacktrace( 'Abstract' );
 	}
-	
+
 	function renderAbout() {
 		# Not supported yet
 		return '';
 	}
-	
+
 	/**
 	 * Return the date and time when this record was last modified,
 	 * created or deleted. This is needed for the header output.
@@ -741,7 +739,7 @@ class OAIRecord {
 	function getDatestamp() {
 		wfDebugDieBacktrace( 'Abstract OAIRecord::getDatestamp() called.' );
 	}
-	
+
 	/**
 	 * Return the record's unique OAI identifier.
 	 * This is needed for the header output.
@@ -753,7 +751,7 @@ class OAIRecord {
 	function getIdentifier() {
 		wfDebugDieBacktrace( 'Abstract OAIRecord::getIdentifier() called.' );
 	}
-	
+
 	/**
 	 * True if this is a deleted record, false otherwise.
 	 * Override if your repository supports marking deleted records.
@@ -776,20 +774,20 @@ class WikiOAIRecord extends OAIRecord {
 		$this->_row       = $row;
 		$this->_writer    = $writer;
 	}
-	
+
 	function isDeleted() {
 		return $this->_deleted;
 	}
-	
+
 	function getIdentifier() {
 		global $wgDBname, $wgServerName;
 		return "oai:$wgServerName:$wgDBname:{$this->_id}";
 	}
-	
+
 	function getDatestamp() {
 		return $this->_timestamp;
 	}
-	
+
 	function renderMetadata( $format ) {
 		switch( $format ) {
 		case 'oai_dc':
@@ -806,7 +804,7 @@ class WikiOAIRecord extends OAIRecord {
 		}
 		return "<metadata>\n$data</metadata>\n";
 	}
-	
+
 	/**
 	 * Note: old versions that worked on MW 1.4 included the page text as
 	 * the dc:description field. Then it was broken for a long time. :)
@@ -820,7 +818,7 @@ class WikiOAIRecord extends OAIRecord {
 	function renderDublinCore() {
 		$title = Title::makeTitle( $this->_row->page_namespace, $this->_row->page_title );
 		global $wgMimeType, $wgContLanguageCode;
-		
+
 		$out = oaiTag( 'oai_dc:dc', array(
 			'xmlns:oai_dc'       => 'http://www.openarchives.org/OAI/2.0/oai_dc/',
 			'xmlns:dc'           => 'http://purl.org/dc/elements/1.1/',
@@ -837,7 +835,7 @@ class WikiOAIRecord extends OAIRecord {
 			"</oai_dc:dc>\n";
 		return $out;
 	}
-	
+
 	function renderMediaWiki() {
 		$title = Title::makeTitle( $this->_row->page_namespace, $this->_row->page_title );
 
@@ -867,7 +865,7 @@ class WikiOAIRecord extends OAIRecord {
 		$out .= $this->_writer->closePage().$this->_writer->closeStream();
 
 		return $out;
-	}		
+	}
 
 	function renderUpload() {
 		$fname = 'WikiOAIRecord::renderUpload';
@@ -939,7 +937,7 @@ class OAIDumpWriter extends XmlDumpWriter {
 	}
 }
 
-/** 
+/**
  * Extends the MW import/export format with the lsearch syntax,
  * i.e. schema lsearch-0.1
  */
@@ -950,14 +948,14 @@ class OAILSearchWriter extends OAIDumpWriter {
 		$this->_redirects = array();
 		for($i = 0 ; $i < $resultSet->numRows(); $i++){
 			$row = $resultSet->fetchObject();
-			$this->_redirects[$row->up_page][] = $row;			
+			$this->_redirects[$row->up_page][] = $row;
 		}
 	}
 
 	function openStream() {
 		global $wgContLanguageCode;
 		$ver = "0.1";
-		return wfElement( 'mediawiki', array(
+		return Xml::element( 'mediawiki', array(
 			'xmlns'              => "http://www.mediawiki.org/xml/lsearch-$ver/",
 			'xmlns:xsi'          => "http://www.w3.org/2001/XMLSchema-instance",
 			'xsi:schemaLocation' => "http://www.mediawiki.org/xml/lsearch-$ver/ " .
@@ -972,7 +970,7 @@ class OAILSearchWriter extends OAIDumpWriter {
 	function openPage( $row ) {
 		$out = parent::openPage( $row );
 		if(isset($row->num_page_ref))
-			$out .= '    ' . wfElement( 'references', array(), strval( $row->num_page_ref ) ) . "\n";
+			$out .= '    ' . Xml::element( 'references', array(), strval( $row->num_page_ref ) ) . "\n";
 		return $out;
 	}
 
@@ -982,16 +980,12 @@ class OAILSearchWriter extends OAIDumpWriter {
 			foreach($this->_redirects[$row->up_page] as $row){
 				$title = Title::makeTitle( $row->page_namespace, $row->page_title );
 				$out .= "    <redirect>\n";
-				$out .= '    ' . wfElementClean( 'title', array(), $title->getPrefixedText() ) . "\n";
+				$out .= '    ' . Xml::elementClean( 'title', array(), $title->getPrefixedText() ) . "\n";
 				if(isset($row->num_page_ref))
-					$out .= '    ' . wfElement( 'references', array(), strval( $row->num_page_ref ) ) . "\n";
+					$out .= '    ' . Xml::element( 'references', array(), strval( $row->num_page_ref ) ) . "\n";
 				$out .= "    </redirect>\n";
 			}
 		}
 		return $out;
 	}
-
 }
-
-
-

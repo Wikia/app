@@ -1,23 +1,25 @@
-<?PHP 
+<?PHP
 if (!defined('MEDIAWIKI')) die();
 
 require_once( 'SignDocumentHelpers.php' );
 
 //TODO: Doc
-class CreateSignDocument extends SpecialPage {
+class SpecialCreateSignDocument extends SpecialPage {
 	/**
-     * Constructor
-     */
-    function CreateSignDocument() {
+	 * Constructor
+	 */
+	function __construct() {
 		SpecialPage::SpecialPage( 'CreateSignDocument', 'createsigndocument' );
-		wfLoadExtensionMessages('CreateSignDocument');
 	}
 
 	function execute($par) {
 		global $wgOut, $wgRequest, $wgUser;
+
+		wfLoadExtensionMessages('CreateSignDocument');
+
 		$this->setHeaders();
 		if ($wgUser->isAllowed( 'createsigndocument' )) {
-		
+
 		if ( $wgRequest->wasPosted() )
 			$this->dealWithPost();
 		else
@@ -44,12 +46,12 @@ class CreateSignDocument extends SpecialPage {
 			</td></tr><tr><td>
 			<strong>' . wfMsg( 'createsigndoc-allowedgroup' ) . '&nbsp;</strong>
 			</td><td>
-			<select id="allowedgroup" name="group" style="width: 400px;">' 
+			<select id="allowedgroup" name="group" style="width: 400px;">'
 			. $this->makeComboItems( array_keys($wgGroupPermissions) ) . ' </select>
-			' . $this->checkMarks( 'email' ) . 
-			$this->checkMarks( 'address' ) . 
-			$this->checkMarks( 'extaddress' ) . 
-			$this->checkMarks( 'phone' ) . 
+			' . $this->checkMarks( 'email' ) .
+			$this->checkMarks( 'address' ) .
+			$this->checkMarks( 'extaddress' ) .
+			$this->checkMarks( 'phone' ) .
 			$this->checkMarks( 'bday' ) . '
 			</td></tr><tr><td>
 			<strong>' . wfMsg( 'createsigndoc-minage' ) . '&nbsp;</strong>
@@ -59,7 +61,7 @@ class CreateSignDocument extends SpecialPage {
 			</td><td><textarea id="introtext" name="introtext" wrap="soft" style="height: 300px; width: 400px;">' .
 			'</textarea>
 			</td></tr><tr><td></td><td>
-			<input type="submit" id="create" name="create" value="' . 
+			<input type="submit" id="create" name="create" value="' .
 			wfMsg( 'createsigndoc-create' ) . '" />
 			</td></tr>
 			</table>
@@ -77,7 +79,7 @@ class CreateSignDocument extends SpecialPage {
 					"mwCreateSignDocHidden-$id",
 					"mwCreateSignDocHidden-$id",
 					false);
-															
+
 		$out .=  Xml::checkLabel(
 		            wfMsg( 'createsigndoc-optional' ),
 					"mwCreateSignDocOptional-$id",
@@ -90,7 +92,7 @@ class CreateSignDocument extends SpecialPage {
 		$ret = '';
 		$selectedAttr = array( 'selected' => 'selected' );
 		foreach ( $arr as $a ) {
-			$ret .= wfElement( 'option', array(
+			$ret .= Xml::element( 'option', array(
 				'value' => $a) + $selectedAttr, $a );
 			$selectedAttr = array();
 		}
@@ -109,7 +111,7 @@ class CreateSignDocument extends SpecialPage {
 
 		if (!$bob->loadArticleData())
 			return $this->showError( 'pagenoexist', $bob->mPagename );
-			
+
 		if (!$bob->addToDb())
 			return $this->showError( 'alreadycreated', $bob->mPagename );
 

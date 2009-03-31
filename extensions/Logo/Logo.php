@@ -12,9 +12,6 @@ if( defined( 'MEDIAWIKI' ) ) {
 	$wgExtensionFunctions[] = 'efLogo';
 	$wgExtensionCredits['other'][] = array( 'name' => 'Logo', 'author' => 'Rob Church' );
 	
-	/** Whether or not to auto-scale the image to the required size */
-	$wgLogoAutoScale = $wgUseImageResize;
-	
 	function efLogo() {
 		global $wgLogo, $wgLogoAutoScale;
 		$msg = wfMsgForContent( 'logo' );
@@ -25,7 +22,7 @@ if( defined( 'MEDIAWIKI' ) ) {
 					$title = Title::makeTitle( NS_IMAGE, $title->getText() );
 				$logo = Image::newFromTitle( $title );
 				if( $logo->exists() )
-					$wgLogo = $wgLogoAutoScale ? $logo->createThumb( 135 ) : $logo->getUrl();
+					$wgLogo = $logo->createThumb( 135 );
 			}
 		}
 	}

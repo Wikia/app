@@ -56,7 +56,7 @@ class GisDatabase {
 	/**
 	 *  Add a position to the database
 	 */
-	function add_position( $id, $latmin, $lonmin, 
+	function add_position( $id, $latmin, $lonmin,
 			       $latmax, $lonmax, $globe, $type, $type_arg )
 	{
 		$fname = 'GisDatabase::add_position';
@@ -115,9 +115,9 @@ class GisDatabase {
 	 *  Select entities belonging to or overlapping an area
 	 *  Also select by globe and type if specified
 	 */
-	 function select_area( $latmin, $lonmin, $latmax, $lonmax, 
+	 function select_area( $latmin, $lonmin, $latmax, $lonmax,
 			       $globe, $type, $type_arg )
-	 { 
+	 {
 		if (!$globe) $globe = "";
 
 		$condition = "gis_globe = '" . $globe . "'";
@@ -160,7 +160,7 @@ class GisDatabase {
 				'gis_longitude_min',
 				'gis_longitude_max',
 				'gis_globe',
-				'gis_type', 
+				'gis_type',
 				'gis_type_arg',
 				'page_title',
 				'page_namespace' ),
@@ -176,4 +176,3 @@ class GisDatabase {
 		return $this->db->fetchObject ( $this->result );
 	}
 }
-

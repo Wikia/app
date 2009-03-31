@@ -4,9 +4,11 @@
  * @ingroup Language
  * @file
  *
+ * @author An13sa
  * @author Bengoa
  * @author Helix84
  * @author Kaustubh
+ * @author Kobazulo
  * @author Malafaya
  * @author Theklan
  * @author Unai Fdz. de Betoño
@@ -14,32 +16,45 @@
  * @author לערי ריינהארט
  */
 
-$skinNames = array(
-	'standard'    => 'Lehenetsia',
-	'nostalgia'   => 'Nostalgia',
-	'cologneblue' => 'Cologne Blue',
+$namespaceNames = array(
+	NS_MEDIA            => 'Media',
+	NS_SPECIAL          => 'Berezi',
+	NS_TALK             => 'Eztabaida',
+	NS_USER             => 'Lankide',
+	NS_USER_TALK        => 'Lankide_eztabaida',
+	NS_PROJECT_TALK     => '$1_eztabaida',
+	NS_FILE             => 'Fitxategi',
+	NS_FILE_TALK        => 'Fitxategi_eztabaida',
+	NS_MEDIAWIKI        => 'MediaWiki',
+	NS_MEDIAWIKI_TALK   => 'MediaWiki_eztabaida',
+	NS_TEMPLATE         => 'Txantiloi',
+	NS_TEMPLATE_TALK    => 'Txantiloi_eztabaida',
+	NS_HELP             => 'Laguntza',
+	NS_HELP_TALK        => 'Laguntza_eztabaida',
+	NS_CATEGORY         => 'Kategoria',
+	NS_CATEGORY_TALK    => 'Kategoria_eztabaida',
 );
 
-$namespaceNames = array(
-	NS_MEDIA          => 'Media',
-	NS_SPECIAL        => 'Aparteko',
-	NS_MAIN           => '',
-	NS_TALK           => 'Eztabaida',
-	NS_USER           => 'Lankide',
-	NS_USER_TALK      => 'Lankide_eztabaida',
-	# NS_PROJECT set by \$wgMetaNamespace
-	NS_PROJECT_TALK   => '$1_eztabaida',
-	NS_IMAGE          => 'Irudi',
-	NS_IMAGE_TALK     => 'Irudi_eztabaida',
-	NS_MEDIAWIKI      => 'MediaWiki',
-	NS_MEDIAWIKI_TALK => 'MediaWiki_eztabaida',
-	NS_TEMPLATE       => 'Txantiloi',
-	NS_TEMPLATE_TALK  => 'Txantiloi_eztabaida',
-	NS_HELP           => 'Laguntza',
-	NS_HELP_TALK      => 'Laguntza_eztabaida',
-	NS_CATEGORY       => 'Kategoria',
-	NS_CATEGORY_TALK  => 'Kategoria_eztabaida',
+$namespaceAliases = array(
+	'Aparteko' => NS_SPECIAL,
+	'Irudi' => NS_FILE,
+	'Irudi_eztabaida' => NS_FILE_TALK,
 );
+
+$specialPageAliases = array(
+	'DoubleRedirects'           => array( 'BirzuzenketaBikoitzak' ),
+	'BrokenRedirects'           => array( 'HautsitakoBirzuzenketak' ),
+	'Disambiguations'           => array( 'Argipenak' ),
+	'Preferences'               => array( 'Hobespenak' ),
+	'Watchlist'                 => array( 'JarraipenZerrenda' ),
+	'Recentchanges'             => array( 'AzkenAldaketak' ),
+	'Upload'                    => array( 'Igo' ),
+	'Statistics'                => array( 'Estatistikak' ),
+	'Allpages'                  => array( 'OrrialdeGuztiak' ),
+	'Movepage'                  => array( 'OrrialdeaMugitu' ),
+);
+
+$separatorTransformTable = array( ',' => '.', '.' => ',' ); /* Bug 15717 */
 
 $messages = array(
 # User preference toggles
@@ -72,23 +87,24 @@ $messages = array(
 'tog-shownumberswatching'     => 'Jarraitzen duen erabiltzaile kopurua erakutsi',
 'tog-fancysig'                => 'Lotura automatikorik gabeko sinadura',
 'tog-externaleditor'          => 'Lehenetsi bezala kanpoko editore bat erabili',
-'tog-externaldiff'            => 'Lehenetsi bezala kanpoko diff erreminta erabili',
+'tog-externaldiff'            => 'Lehenetsi bezala kanpoko diff erreminta erabili (adituentzako bakarrik, zure ordenagailuak konfigurazio berezia izan behar du)',
 'tog-showjumplinks'           => '"Hona jo" irisgarritasun loturak gaitu',
 'tog-uselivepreview'          => 'Zuzeneko aurrebista erakutsi (JavaScript) (Proba fasean)',
 'tog-forceeditsummary'        => 'Aldaketaren laburpena zuri uzterakoan ohartarazi',
 'tog-watchlisthideown'        => 'Segimendu zerrendan nire aldaketak ezkutatu',
 'tog-watchlisthidebots'       => 'Segimendu zerrendan bot-en aldaketak ezkutatu',
 'tog-watchlisthideminor'      => 'Segimendu zerrendan, aldaketa txikiak ezkutatu',
+'tog-watchlisthideliu'        => 'Jarraitze-zerrendan izena emana duten lankideen aldaketak izkutatu',
+'tog-watchlisthideanons'      => 'Jarraitze-zerrendan lankideen anonimoen aldaketak izkutatu',
 'tog-nolangconversion'        => 'Aldaeren arteko konbertsioa ezgaitu',
 'tog-ccmeonemails'            => 'Beste erabiltzaileei bidaltzen dizkiedan mezuen kopiak niri ere bidali',
 'tog-diffonly'                => "''Diff''-ak agertzen direnean, orrialdearen edukiera ezkutatu",
 'tog-showhiddencats'          => 'Ikusi kategoria ezkutuak',
+'tog-norollbackdiff'          => 'Rollback bat egin ondoren ezberdintasunak ez hartu aintzat',
 
 'underline-always'  => 'Beti',
 'underline-never'   => 'Inoiz ez',
 'underline-default' => 'Nabigatzailearen lehenetsitako balioa',
-
-'skinpreview' => '(Aurrebista)',
 
 # Dates
 'sunday'        => 'Igandea',
@@ -183,7 +199,7 @@ $messages = array(
 'mytalk'         => 'Nire eztabaida',
 'anontalk'       => 'IP honen eztabaida',
 'navigation'     => 'Nabigazioa',
-'and'            => 'eta',
+'and'            => '&#32;eta',
 
 # Metadata in edit box
 'metadata_help' => 'Metadatuak:',
@@ -220,14 +236,14 @@ $messages = array(
 'talkpagelinktext'  => 'Eztabaida',
 'specialpage'       => 'Aparteko orrialdea',
 'personaltools'     => 'Tresna pertsonalak',
-'postcomment'       => 'Azalpen bat bidali',
+'postcomment'       => 'Atal berria',
 'articlepage'       => 'Artikulua ikusi',
 'talk'              => 'Eztabaida',
 'views'             => 'Bistaratzeak',
 'toolbox'           => 'Tresnak',
 'userpage'          => 'Lankide orrialdea ikusi',
 'projectpage'       => 'Proiektuaren orrialdea ikusi',
-'imagepage'         => 'Irudiaren orrialdea ikusi',
+'imagepage'         => 'Ikusi fitxategiaren orria',
 'mediawikipage'     => 'Mezu orrialdea ikusi',
 'templatepage'      => 'Txantiloi orrialdea ikusi',
 'viewhelppage'      => 'Laguntza orrialdea ikusi',
@@ -246,8 +262,6 @@ $messages = array(
 # All link text and link target definitions of links into project namespace that get used by other message strings, with the exception of user group pages (see grouppage) and the disambiguation template definition (see disambiguations).
 'aboutsite'            => '{{SITENAME}}(e)ri buruz',
 'aboutpage'            => 'Project:Honi_buruz',
-'bugreports'           => 'Programazio-erroreen jakinarazpenak',
-'bugreportspage'       => 'Project:Programazio-erroreen jakinarazpenak',
 'copyright'            => 'Eduki guztia $1(r)en babespean dago.',
 'copyrightpagename'    => '{{SITENAME}}ren egile eskubideak',
 'copyrightpage'        => '{{ns:project}}:Eskubideak',
@@ -270,9 +284,7 @@ $messages = array(
 
 'badaccess'        => 'Baimen errorea',
 'badaccess-group0' => 'Ez daukazu ekintza hori burutzeko baimenik.',
-'badaccess-group1' => 'Ekintza hori $1 taldeko erabiltzaileei mugatuta dago.',
-'badaccess-group2' => 'Ekintza hori $1 taldeetako bateko erabiltzaileei mugatuta dago.',
-'badaccess-groups' => 'Ekintza hori $1 taldeetako batetako erabiltzaileei mugatuta dago.',
+'badaccess-groups' => 'Eskatu duzun ekintza honako {{PLURAL:$2|taldeko|taldeetako}} lankideei mugatuta dago: $1.',
 
 'versionrequired'     => 'MediaWikiren $1 bertsioa beharrezkoa da',
 'versionrequiredtext' => 'MediaWikiren $1 bertsioa beharrezkoa da orrialde hau erabiltzeko. Ikus [[Special:Version]]',
@@ -286,6 +298,8 @@ $messages = array(
 'editsection'             => 'aldatu',
 'editold'                 => 'aldatu',
 'viewsourceold'           => 'kodea ikusi',
+'editlink'                => 'aldatu',
+'viewsourcelink'          => 'jatorria ikusi',
 'editsectionhint'         => 'Atala aldatu: $1',
 'toc'                     => 'Edukiak',
 'showtoc'                 => 'erakutsi',
@@ -300,23 +314,25 @@ $messages = array(
 'site-atom-feed'          => '$1 Atom Jarioa',
 'page-rss-feed'           => '"$1" RSS Jarioa',
 'page-atom-feed'          => '"$1" Atom Jarioa',
-'red-link-title'          => '$1 (sortu gabe dago)',
+'red-link-title'          => '$1 (orria ez da existitzen)',
 
 # Short words for each namespace, by default used in the namespace tab in monobook
 'nstab-main'      => 'Artikulua',
 'nstab-user'      => 'Erabiltzaile orrialdea',
 'nstab-media'     => 'Media orrialdea',
-'nstab-special'   => 'Apartekoa',
+'nstab-special'   => 'Orri berezia',
 'nstab-project'   => 'Proiektu orrialdea',
 'nstab-image'     => 'Fitxategia',
 'nstab-mediawiki' => 'Mezua',
-'nstab-template'  => 'Txantiloia',
+'nstab-template'  => 'Txantiloi',
 'nstab-help'      => 'Laguntza orrialdea',
 'nstab-category'  => 'Kategoria',
 
 # Main script and global functions
 'nosuchaction'      => 'Ekintza hori ez da existitizen',
-'nosuchactiontext'  => 'URL bidez zehaztutako ekintza ez du wikiak ezagutzen',
+'nosuchactiontext'  => 'URL bidez zehaztutako ekintza okerra da.
+URLa gaizki idatzi duzu, edo hautsitako lotura jarraitu duzu.
+Honek akatsa indikatzen du {{SITENAME}}-(e)n.',
 'nosuchspecialpage' => 'Ez da aparteko orrialde hori existitzen',
 'nospecialpagetext' => "<big>'''Baliogabeko aparteko orrialde bat eskatu duzu.'''</big>
 
@@ -366,7 +382,6 @@ Mesedez, bidali gertakar hau administradore bati, URLaren izena jarriz.',
 'cannotdelete'         => 'Ezin izan da zehaztutako orrialde edo fitxategia ezabatu. (Baliteke beste norbaitek ezabatu izana.)',
 'badtitle'             => 'Izenburu ezegokia',
 'badtitletext'         => 'Eskatutako orrialde izenburua ez da baliozkoa, hutsik dago, edo gaizki lotutako hizkuntzen arteko lotura da. Baliteke izenburuetan erabili ezin den karaktereren bat izatea.',
-'perfdisabled'         => 'Sentitzen dugu! Ezaugarri hau denbora batez ezgaituta dago, wikian arazoak sortzen baititu, datu-basea motelduz.',
 'perfcached'           => 'Hurrengo datuak katxean gordeta daude eta litekeena da guztiz eguneratuta ez egotea:',
 'perfcachedts'         => 'Hurrengo datuak katxean daude, $1 eguneratu zen azkenekoz.',
 'querypage-no-updates' => 'Orrialde honen berritzeak ez dira baimentzen. Hemen dagoen data ez da zuzenean berrituko.',
@@ -381,7 +396,9 @@ Saia zaitez berriro minutu batzuen buruan, mesedez.',
 'protectedpagetext'    => 'Orrialde hau aldaketak saihesteko blokeatu egin da.',
 'viewsourcetext'       => 'Orrialde honen testua ikusi eta kopiatu dezakezu:',
 'protectedinterface'   => 'Orrialde honek softwarearentzako interfaze testua gordetzen du eta blokeatuta dago bandalismoak saihesteko.',
-'editinginterface'     => "'''Oharra:''' Softwarearentzako interfaze testua duen orrialde bat aldatzen ari zara. Orrialde honetako aldaketek erabiltzaile guztiei eragingo die.",
+'editinginterface'     => "'''Oharra:''' Softwarearentzako interfaze testua duen orrialde bat aldatzen ari zara.
+Orrialde honetako aldaketek erabiltzaile guztiei eragingo die.
+Itzulpenetarako, [http://translatewiki.net/wiki/Main_Page?setlang=en translatewiki.net] erabili ezazu, MediaWiki proiektuan.",
 'sqlhidden'            => '(ezkutuko SQL kontsulta)',
 'cascadeprotected'     => "Orrialde hau aldaketen aurka babestua dago, ''kaskada'' aukerarekin babestu {{PLURAL:$1|duten orrialde honetan|dituzten orrialde hauetan}} txertaturik dagoelako:
 $2",
@@ -392,14 +409,14 @@ $2",
 Emandako arrazoia ''$2'' izan zen.",
 
 # Virus scanner
-'virus-badscanner'     => 'Ezarpen txarrak: antibirus ezezaguna: <i>$1</i>',
+'virus-badscanner'     => "Ezarpen txarrak: antibirus ezezaguna: ''$1''",
 'virus-scanfailed'     => 'eskaneatze txarra ($1 kodea)',
 'virus-unknownscanner' => 'antibirus ezezaguna:',
 
 # Login and logout pages
 'logouttitle'                => 'Saioa ixtea',
-'logouttext'                 => '<strong>Saioa itxi egin duzu.</strong><br />
-Erabiltzaile anonimo bezala jarraitu dezakezu {{SITENAME}} erabiltzen, edo saioa has dezakezu berriz erabiltzaile berdinarekin edo ezberdin batekin. Kontuan izan orrialde batzuk saioa hasita bazenu bezala ikus ditzakezula nabigatzailearen katxea garbitu arte.',
+'logouttext'                 => "'''Saioa itxi egin duzu.'''<br />
+Erabiltzaile anonimo bezala jarraitu dezakezu {{SITENAME}} erabiltzen, edo saioa has dezakezu berriz erabiltzaile berdinarekin edo ezberdin batekin. Kontuan izan orrialde batzuk saioa hasita bazenu bezala ikus ditzakezula nabigatzailearen katxea garbitu arte.",
 'welcomecreation'            => '== Ongi etorri, $1! ==
 
 Zure kontua sortu egin da. Ez ahaztu [[Special:Preferences|{{SITENAME}}(e)ko hobespenak]] aldatzea.',
@@ -410,7 +427,6 @@ Zure kontua sortu egin da. Ez ahaztu [[Special:Preferences|{{SITENAME}}(e)ko hob
 'remembermypassword'         => 'Nire saioa ordenagailu honetan gogoratu (gomendaturikoa)',
 'yourdomainname'             => 'Zure domeinua',
 'externaldberror'            => 'Kanpoko datu-base autentifikazio errorea gertatu da edo ez duzu zure kanpo kontua eguneratzeko baimenik.',
-'loginproblem'               => '<b>Arazoa gertatu da saioa hasterakoan.</b><br />Saiatu berriz!',
 'login'                      => 'Saioa hasi',
 'nav-login-createaccount'    => 'Saioa hasi / kontua sortu',
 'loginprompt'                => 'Cookieak gaituta izatea beharrezkoa da {{SITENAME}}(e)n saioa hasteko.',
@@ -429,15 +445,15 @@ Zure kontua sortu egin da. Ez ahaztu [[Special:Preferences|{{SITENAME}}(e)ko hob
 Mesedez, beste bat aukeratu.',
 'youremail'                  => 'E-posta:',
 'username'                   => 'Erabiltzaile izena:',
-'uid'                        => 'Lankide zenbakia:',
+'uid'                        => 'Erabiltzaile zenbakia:',
 'prefs-memberingroups'       => '{{PLURAL:$1|Taldeko|taldeetako}} kidea:',
 'yourrealname'               => 'Benetako izena:',
 'yourlanguage'               => 'Hizkuntza:',
 'yourvariant'                => 'Aldaera',
 'yournick'                   => 'Erabiltzaile izena:',
 'badsig'                     => 'Baliogabeko sinadura; egiaztatu HTML etiketak.',
-'badsiglength'               => 'Ezizen luzeegia hautatu duzu;
-$1 karakteretik behera izan behar du.',
+'badsiglength'               => 'Zure sinadura luzeegia da.
+$1 {{PLURAL:$1|karakteretik|karakteretik}} behera izan behar ditu.',
 'email'                      => 'E-posta',
 'prefs-help-realname'        => '* Benetako izena (aukerakoa): zehaztea erabakiz gero, zure lanarentzako atribuzio bezala balioko du.',
 'loginerror'                 => 'Errorea saioa hastean',
@@ -450,13 +466,14 @@ Gainera beste lankideek zurekin kontakta dezakete zure lankide edo lankide_eztab
 'loginsuccesstitle'          => 'Saio hasiera egina',
 'loginsuccess'               => "'''Saioa hasi duzu {{SITENAME}}(e)n \"\$1\" izenarekin.'''",
 'nosuchuser'                 => 'Ez dago "$1" izena duen lankiderik.
-Mesedez, egiaztatu ondo idatzi duzun edo [[Special:UserLogin/signup|kontu berria sor ezazu]].',
+Lankide izenak zehatza izan behar du.
+Egiaztatu ondo idatzi duzun, edo [[Special:UserLogin/signup|kontu berria sor ezazu]].',
 'nosuchusershort'            => 'Ez dago "<nowiki>$1</nowiki>" izena duen erabiltzailerik. Egiaztatu ongi idatzi duzula.',
 'nouserspecified'            => 'Erabiltzaile izena zehaztu beharra daukazu.',
 'wrongpassword'              => 'Pasahitza ez da zuzena. Saiatu berriz.',
 'wrongpasswordempty'         => 'Pasahitza hutsik dago. Saiatu berriz.',
 'passwordtooshort'           => 'Zure pasahitza laburregia da.
-$1 karaktere izan behar ditu gutxienez.',
+{{PLURAL:$1|karaktere 1|$1 karaktere}} izan behar ditu eta zure lankide izenetik ezberdina izan.',
 'mailmypassword'             => 'Pasahitza berria e-postaz bidali',
 'passwordremindertitle'      => 'Pasahitzaren gogorarazpena {{SITENAME}}(e)tik',
 'passwordremindertext'       => 'Norbaitek (zuk, ziurrenik, $1 IP helbidetik) pasahitz berri bat
@@ -473,11 +490,12 @@ Mesedez, saioa hasi jasotakoan.',
 'blocked-mailpassword'       => 'Zure IP helbidea aldaketak egiteko blokeatuta dago, eta beraz ezin da pasahitza berreskuratzeko aukera erabili.',
 'eauthentsent'               => 'Egiaztapen mezu bat bidali da zehaztutako e-posta helbidera.
 Helbide horretara beste edozein mezu bidali aurretik, bertan azaltzen diren argibideak jarraitu behar dituzu, e-posta hori zurea dela egiaztatzeko.',
-'throttled-mailpassword'     => 'Pasahitz gogorarazle bat bidali da jada azken $1 orduetan.
-Bandalismoa saihesteko pasahitz eskaera bat baino ezin da egin $1 orduz behin.',
+'throttled-mailpassword'     => 'Pasahitz gogorarazle bat bidali da jada azken {{PLURAL:$1|orduan|$1 orduetan}}.
+Bandalismoa saihesteko pasahitz eskaera bat baino ezin da egin {{PLURAL:$1|orduan|$1 orduan}} behin.',
 'mailerror'                  => 'Errorea mezua bidaltzerakoan: $1',
-'acct_creation_throttle_hit' => 'Sentitzen dugu, $1 erabiltzaile kontu sortu dituzu dagoeneko. Ezin duzu gehiago sortu.',
-'emailauthenticated'         => 'Zure e-posta helbidea egiaztatu zeneko data: $1.',
+'acct_creation_throttle_hit' => 'Sentitzen dugu, {{PLURAL:$1|erabiltzaile kontu bat sortu duzu|$1 erabiltzaile kontu sortu dituzu}} dagoeneko.
+Ondorioz, ezin duzu kontu gehiago sortu.',
+'emailauthenticated'         => 'Zure e-posta helbidea autentifikatu da $2an $3(e)tan.',
 'emailnotauthenticated'      => 'Zure posta helbidea egiaztatu gabe dago. Ez da mezurik bidaliko hurrengo ezaugarrientzako.',
 'noemailprefs'               => 'Zehaztu e-posta helbide bat ezaugarri hauek erabili ahal izateko.',
 'emailconfirmlink'           => 'Egiaztatu zure e-posta helbidea',
@@ -487,17 +505,31 @@ Mesedez, formatu egokia duen helbide bat zehaztu, edo hutsik utzi.',
 'accountcreated'             => 'Kontua sortuta',
 'accountcreatedtext'         => '$1 erabiltzaile kontua sortu egin da.',
 'createaccount-title'        => '{{SITENAME}}-rako kontua sortu',
+'createaccount-text'         => 'Norbaitek zure e-postarekin kontu bat sortu du {{SITENAME}}(e)n ($4) "$2" izenarekin eta "$3" pasahitzarekin.
+Orain bertan sar zaitezke eta zure pasahitza aldatu.
+
+Kontu honen sorrera akats bat dela uste baduzu mezu honi ez diozu zertan jaramonik egin.',
+'login-throttled'            => 'Kontu honetako pasahitzaren gainean saiakera gehiegi egin dituzu azken aldian.
+Berriro saiatu aurretik itxoin ezazu, mesedez.',
 'loginlanguagelabel'         => 'Hizkuntza: $1',
 
 # Password reset dialog
-'resetpass'               => 'Kontuaren pasahitza hasieratu',
-'resetpass_announce'      => 'E-postaz jasotako kode tenporal baten bidez saioa hasi duzu. Saioa hasierarekin jarraitzeko, pasahitz berri bat definitu beharra daukazu:',
-'resetpass_header'        => 'Pasahitza aldatu',
-'resetpass_submit'        => 'Pasahitza definitu eta saioa hasi',
-'resetpass_success'       => 'Zure pasahitza aldatu egin da! Saioa hasten...',
-'resetpass_bad_temporary' => 'Baliogabeko pasahitz tenporala. Baliteke pasahitza jada aldatu edo pasahitz tenporal berri bat eskatu izana.',
-'resetpass_forbidden'     => 'Ezin dira pasahitzak aldatu',
-'resetpass_missing'       => 'Formularioko daturik ez.',
+'resetpass'                 => 'Pasahitza aldatu',
+'resetpass_announce'        => 'E-postaz jasotako kode tenporal baten bidez saioa hasi duzu. Saioa hasierarekin jarraitzeko, pasahitz berri bat definitu beharra daukazu:',
+'resetpass_text'            => '<!-- Testua hemen idatzi -->',
+'resetpass_header'          => 'Pasahitza aldatu',
+'oldpassword'               => 'Pasahitz zaharra:',
+'newpassword'               => 'Pasahitz berria:',
+'retypenew'                 => 'Pasahitz berria berriz idatzi:',
+'resetpass_submit'          => 'Pasahitza definitu eta saioa hasi',
+'resetpass_success'         => 'Zure pasahitza aldatu egin da! Saioa hasten...',
+'resetpass_bad_temporary'   => 'Baliogabeko pasahitz tenporala. Baliteke pasahitza jada aldatu edo pasahitz tenporal berri bat eskatu izana.',
+'resetpass_forbidden'       => 'Ezin dira pasahitzak aldatu',
+'resetpass-no-info'         => 'Orrialde honetara zuzenean sartzeko izena eman behar duzu.',
+'resetpass-submit-loggedin' => 'Pasahitza aldatu',
+'resetpass-wrong-oldpass'   => 'Behin-behineko edo oraintxuko pasahitza ez da baliagarria. 
+Agian dagoeneko ondo aldatu duzu zure pasahitza edo behin-behineko pasahitza bat eskatu duzu.',
+'resetpass-temp-password'   => 'Behin-behineko pasahitza:',
 
 # Edit page toolbar
 'bold_sample'     => 'Testu beltza',
@@ -522,8 +554,8 @@ Mesedez, formatu egokia duen helbide bat zehaztu, edo hutsik utzi.',
 'hr_tip'          => 'Lerro horizontala (gutxitan erabili)',
 
 # Edit pages
-'summary'                          => 'Laburpena',
-'subject'                          => 'Izenburua',
+'summary'                          => 'Laburpena:',
+'subject'                          => 'Izenburua:',
 'minoredit'                        => 'Hau aldaketa txikia da',
 'watchthis'                        => 'Orrialde hau jarraitu',
 'savearticle'                      => 'Orrialdea gorde',
@@ -535,8 +567,8 @@ Mesedez, formatu egokia duen helbide bat zehaztu, edo hutsik utzi.',
 'missingsummary'                   => "'''Gogorarazpena:''' Ez duzu aldaketa laburpen bat zehaztu. Berriz ere gordetzeko aukeratzen baduzu, laburpen mezurik gordeko da.",
 'missingcommenttext'               => 'Mesedez, iruzkin bat idatzi jarraian.',
 'missingcommentheader'             => "'''Oharra:''' Ez duzu iruzkin honentzako gai/goiburuko bat ezarri. Berriz gordetzeko aukeratzen baduzu, hutsune horrekin gorde egingo da.",
-'summary-preview'                  => 'Laburpenaren aurreikuspena',
-'subject-preview'                  => 'Gaia/Izenburuaren aurreikuspena',
+'summary-preview'                  => 'Laburpenaren aurreikuspena:',
+'subject-preview'                  => 'Gaia/Izenburuaren aurreikuspena:',
 'blockedtitle'                     => 'Erabiltzailea blokeatuta dago',
 'blockedtext'                      => "<big>'''Zure lankide izena edo IP helbidea blokeaturik dago'''</big>
 Blokeoa $1(e)k egin zuen.
@@ -582,46 +614,55 @@ Mesedez, detaile hauek eman itzazu egin nahi duzun edozein kontsulta egiteko gar
 'newarticle'                       => '(Berria)',
 'newarticletext'                   => "Orrialde hau ez da existitzen oraindik. Orrialde sortu nahi baduzu, beheko koadroan idazten hasi zaitezke (ikus [[{{MediaWiki:Helppage}}|laguntza orrialdea]] informazio gehiagorako). Hona nahi gabe etorri bazara, nabigatzaileko '''atzera''' botoian klik egin.",
 'anontalkpagetext'                 => "----''Honako hau konturik sortu ez edo erabiltzen ez duen erabiltzaile anonimo baten eztabaida orria da. Bere IP helbidea erabili beharko da beraz identifikatzeko. Erabiltzaile batek baino gehiagok IP bera erabil dezakete ordea. Erabiltzaile anonimoa bazara eta zurekin zerikusirik ez duten mezuak jasotzen badituzu, mesedez [[Special:UserLogin|Izena eman edo saioa hasi]] etorkizunean horrelakoak gerta ez daitezen.''",
-'noarticletext'                    => 'Oraindik ez dago testurik orrialde honetan; beste orrialde batzuetan [[Special:Search/{{PAGENAME}}|bilatu dezakezu izenburu hau]] edo [{{fullurl:{{FULLPAGENAME}}|action=edit}} berau aldatu ere egin dezakezu].',
+'noarticletext'                    => 'Oraindik ez dago testurik orrialde honetan.
+Beste orrialde batzuetan [[Special:Search/{{PAGENAME}}|bilatu dezakezu izenburu hau]],
+<span class="plainlinks">[{{fullurl:Special:Log|page={{urlencode:{{FULLPAGENAME}}}}}} bilatu lotutako logak],
+edo [{{fullurl:{{FULLPAGENAME}}|action=edit}} berau aldatu ere egin dezakezu]</span>.',
 'userpage-userdoesnotexist'        => '"$1" lankidea ez dago erregistatuta. Mesedez, konprobatu orri hau editatu/sortu nahi duzun.',
 'clearyourcache'                   => "'''Oharra - Gorde ondoren zure nabigatzailearen katxea ekidin beharko duzu aldaketak ikusteko.''' '''Mozilla / Firefox / Safari:''' ''Shift'' tekla sakatu birkargatzeko momentuan, edo ''Ctrl-Shift-R'' sakatu (''Cmd-Shift-R'' Apple Mac baten); '''Internet Explorer:''' ''Ctrl'' tekla sakatu birkargatzeko momentuan, edo ''Ctrl-F5'' sakatu; '''Konqueror:''': Birkargatzeko klik egin, edo F5 sakatu, besterik ez; '''Opera''' erabiltzaileek ''Tresnak-Hobespenak'' atalera jo eta katxea garbitzeko aukera hautatu.",
-'usercssjsyoucanpreview'           => "<strong>Laguntza:</strong> Zure CSS/JS berria gorde aurretik probatzeko 'Aurrebista erakutsi' botoia erabili.",
+'usercssjsyoucanpreview'           => "'''Laguntza:''' Zure CSS/JS berria gorde aurretik probatzeko 'Aurrebista erakutsi' botoia erabili.",
 'usercsspreview'                   => "'''Ez ahaztu zure CSS kodea aurreikusten zabiltzala.'''
 '''Oraindik gorde gabe dago!'''",
 'userjspreview'                    => "'''Gogoratu zure JavaScript kodea probatu/aurreikusten zabiltzala, oraindik ez da gorde!'''",
 'userinvalidcssjstitle'            => "'''Oharra:''' Ez da \"\$1\" itxura existitzen. Kontuan izan .css eta .js fitxategi pertsonalizatuen izenak letra xehez idatzi behar direla; adibidez, {{ns:user}}:Adibide/monobook.css, eta ez {{ns:user}}:Adibide/Monobook.css.",
 'updated'                          => '(Eguneratua)',
-'note'                             => '<strong>Oharra:</strong>',
-'previewnote'                      => '<strong>Gogoratu hau aurreikusketa bat dela, beraz gorde egin beharko duzu!</strong>',
+'note'                             => "'''Oharra:'''",
+'previewnote'                      => "'''Gogoratu hau aurreikusketa bat dela, beraz gorde egin beharko duzu!'''",
 'previewconflict'                  => 'Aurreikuspenak aldaketen koadroan idatzitako testua erakusten du, gorde ondoren agertuko den bezala.',
-'session_fail_preview'             => '<strong>Sentitzen dugu! Ezin izan da zure aldaketa prozesatu, saioko datu batzuen galera dela-eta. Mesedez, saiatu berriz. Arazoak jarraitzen badu, saiatu saioa amaitu eta berriz hasten.</strong>',
-'session_fail_preview_html'        => "<strong>Sentitzen dugu! Ezin izan dugu zure aldaketa burutu, saio datu galera bat medio.</strong>
+'session_fail_preview'             => "'''Sentitzen dugu! Ezin izan da zure aldaketa prozesatu, saioko datu batzuen galera dela-eta. Mesedez, saiatu berriz. Arazoak jarraitzen badu, saiatu saioa amaitu eta berriz hasten.'''",
+'session_fail_preview_html'        => "'''Sentitzen dugu! Ezin izan dugu zure aldaketa burutu, saio datu galera bat medio.'''
 
 ''Wiki honek HTML kodea onartzen duenez, aurreikuspena ezgaituta dago JavaScript erasoak saihestu asmoz.''
 
-<strong>Aldaketa saiakera hau zuzena baldin bada, saiatu berriro mesedez. Arazoak jarraitzen badu, saiatu saioa itxi eta berriz hasten.</strong>",
+'''Aldaketa saiakera hau zuzena baldin bada, saiatu berriro mesedez. Arazoak jarraitzen badu, saiatu saioa itxi eta berriz hasten.'''",
+'token_suffix_mismatch'            => "'''Zure aldaketa ezeztatua izan da zure bezeroak puntuazio-karaktereak itxuragabetu dituelako.
+Aldaketa ezeztatua izan da testuaren galtzea galarazteko.
+Hau batzuetan gertatzen da buggyan oinarritutako web proxy zerbitzua erabiltzean.'''",
 'editing'                          => '$1 aldatzen',
 'editingsection'                   => '$1 aldatzen (atala)',
-'editingcomment'                   => '$1 aldatzen (iruzkina)',
+'editingcomment'                   => '$1 aldatzen (atal berria)',
 'editconflict'                     => 'Aldaketa gatazka: $1',
 'explainconflict'                  => 'Zu orrialdea aldatzen hasi ondoren beste norbaitek ere aldaketak egin ditu. Goiko testu koadroan ikus daiteke orrialdeak uneotan duen edukia. Zure aldaketak beheko testu koadroan ikus daitezke. Zure testua dagoenarekin elkartu beharko duzu. Orrialdea gordetzeko erabakitzen duzun unean goiko koadroko edukia <b>bakarrik</b> gordeko da.<br />',
 'yourtext'                         => 'Zure testua',
 'storedversion'                    => 'Gordetako bertsioa',
-'nonunicodebrowser'                => '<strong>OHARRA: Zure nabigatzailea ez dator Unicode arauarekin bat. Artikuluak modu seguruan aldatu ahal izateko beste sistema bat gaitu da: ASCII ez diren karaktereak kode hamaseitar bezala agertuko dira aldaketa koadroan.</strong>',
-'editingold'                       => '<strong>KONTUZ: Artikulu honen bertsio zahar bat aldatzen ari zara. Gorde egiten baduzu, azkenengo aldaketa baino lehenagoko aldakuntzak, ezabatuak izango dira.</strong>',
+'nonunicodebrowser'                => "'''OHARRA: Zure nabigatzailea ez dator Unicode arauarekin bat. Artikuluak modu seguruan aldatu ahal izateko beste sistema bat gaitu da: ASCII ez diren karaktereak kode hamaseitar bezala agertuko dira aldaketa koadroan.'''",
+'editingold'                       => "'''KONTUZ: Artikulu honen bertsio zahar bat aldatzen ari zara. Gorde egiten baduzu, azkenengo aldaketa baino lehenagoko aldakuntzak, ezabatuak izango dira.'''",
 'yourdiff'                         => 'Ezberdintasunak',
-'copyrightwarning'                 => 'Kontuan izan {{SITENAME}}(e)n egindako ekarpen guztiak $2 baldintzapean argitaratzen direla (ikus $1 informazio gehiagorako). Zure testua banatzeko baldintza hauekin ados ez bazaude, ez ezazu bidali.<br />
+'copyrightwarning'                 => "Kontuan izan {{SITENAME}}(e)n egindako ekarpen guztiak $2 baldintzapean argitaratzen direla (ikus $1 informazio gehiagorako). Zure testua banatzeko baldintza hauekin ados ez bazaude, ez ezazu bidali.<br />
 Era berean, bidaltzen ari zaren edukia zuk zeuk idatzitakoa dela edo jabetza publikoko edo baliabide aske batetik kopiatu duzula zin egin ari zara.
-<strong>EZ BIDALI BAIMENIK GABEKO COPYRIGHTDUN EDUKIRIK!</strong>',
-'copyrightwarning2'                => 'Mesedez, kontuan izan {{SITENAME}}(e)n egindako ekarpen guztiak besteek aldatu edo ezabatu ditzaketela. Ez baduzu besteek aldaketak egitea nahi, ez ezazu bidali.<br />
+'''EZ BIDALI BAIMENIK GABEKO COPYRIGHTDUN EDUKIRIK!'''",
+'copyrightwarning2'                => "Mesedez, kontuan izan {{SITENAME}}(e)n egindako ekarpen guztiak besteek aldatu edo ezabatu ditzaketela. Ez baduzu besteek aldaketak egitea nahi, ez ezazu bidali.<br />
 Era berean, bidaltzen ari zaren edukia zuk zeuk idatzitakoa dela edo jabetza publikoko edo baliabide aske batetik kopiatu duzula zin egin ari zara (ikus $1 informazio gehiagorako).
-<strong>EZ BIDALI BAIMENIK GABEKO COPYRIGHTDUN EDUKIRIK!</strong>',
-'longpagewarning'                  => '<strong>OHARRA: Orrialde honek $1 kilobyteko tamaina du; nabigatzaile batzuek arazoak izan litzakete 32 kb-tik gorako testuekin. Mesedez, saiatu orrialdea atal txikiagoetan banatzen.</strong>',
-'longpageerror'                    => '<strong>ERROREA: Bidali duzun testuak $1 kilobyteko luzera du, eta $2 kilobyteko maximoa baino luzeagoa da. Ezin da gorde.</strong>',
-'readonlywarning'                  => '<strong>OHARRA: Datu-basea blokeatu egin da mantenu lanak burutzeko, beraz ezingo dituzu orain zure aldaketak gorde. Testua fitxategi baten kopiatu dezakezu, eta beranduago erabiltzeko gorde.</strong>',
-'protectedpagewarning'             => '<strong>OHARRA:  Orri hau blokeaturik dago, administratzaileek soilik eraldatu dezakete.</strong>',
+'''EZ BIDALI BAIMENIK GABEKO COPYRIGHTDUN EDUKIRIK!'''",
+'longpagewarning'                  => "'''OHARRA: Orrialde honek $1 kilobyteko tamaina du; nabigatzaile batzuek arazoak izan litzakete 32 kb-tik gorako testuekin. Mesedez, saiatu orrialdea atal txikiagoetan banatzen.'''",
+'longpageerror'                    => "'''ERROREA: Bidali duzun testuak $1 kilobyteko luzera du, eta $2 kilobyteko maximoa baino luzeagoa da. Ezin da gorde.'''",
+'readonlywarning'                  => "'''OHARRA: Datu-basea blokeatu egin da mantenu lanak burutzeko, beraz ezingo dituzu orain zure aldaketak gorde. Testua fitxategi baten kopiatu dezakezu, eta beranduago erabiltzeko gorde.
+
+Blokeatu zuen administratzaileak honako azalpena eman zuen: $1'''",
+'protectedpagewarning'             => "'''OHARRA:  Orri hau blokeaturik dago, administratzaileek soilik eraldatu dezakete.'''",
 'semiprotectedpagewarning'         => '<big><strong>Oharra: Orrialde hau erregistratutako erabiltzaileek bakarrik aldatzeko babestuta dago.</strong></big>',
-'titleprotectedwarning'            => '<strong>OHARRA:  Orrialde hau blokeatuta dago eta bakkarrik lankide batzuk aldatu edo sortu dezakete.</strong>',
+'cascadeprotectedwarning'          => "'''Oharra:''' Orrialde hau blokeatua izan da eta administratzaileek baino ez dute berau aldatzeko ahalmena, honako {{PLURAL:$1|orrialdeko|orrialdeetako}} kaskada-babesean txertatuta dagoelako:",
+'titleprotectedwarning'            => "'''OHARRA:  Orrialde hau blokeatuta dago eta bakarrik [[Special:ListGroupRights|erabiltzaile batzuek]] sortu dezakete.'''",
 'templatesused'                    => 'Orrialde honetan erabiltzen diren txantiloiak:',
 'templatesusedpreview'             => 'Aurreikuspen honetan erabiltzen diren txantiloiak:',
 'templatesusedsection'             => 'Atal honetan erabiltzen diren txantiloiak:',
@@ -639,16 +680,30 @@ Era berean, bidaltzen ari zaren edukia zuk zeuk idatzitakoa dela edo jabetza pub
 
 Pentsatu ea orrialde hau editatzen jarraitzeak zentzurik baduen.
 Hemen duzu orrialde honen ezabaketa erregistroa badaezpada ere:",
+'deleted-notice'                   => 'Orrialde hau ezabatu da.
+Orrialdearen ezabatze loga behean agertzen da erreferentzia gisa.',
+'deletelog-fulllog'                => 'Log osoa ikusi',
+'edit-hook-aborted'                => 'Gehigarriak aldaketa ezeztatu du.
+Ez du azalpenik eman.',
+'edit-gone-missing'                => 'Ezin da orria eguneratu. Ezabatu omen dute.',
+'edit-conflict'                    => 'Aldaketa gatazka.',
+'edit-no-change'                   => 'Zure edizioa baztertu da testua aldatu ez duzulako.',
+'edit-already-exists'              => 'Ezin izan da orri berria sortu.
+Jada existitzen da.',
 
 # Parser/template warnings
-'expensive-parserfunction-warning'        => 'Adi: Orrialde honek parser funtzio oso garesti gehegi ditu.
+'expensive-parserfunction-warning'        => 'Adi: Orrialde honek parser funtzio deialdi oso garesti gehiegi ditu.
 
-$2 baino gutxiago eduki beharko lituzke, eta orain $1 daude.',
+$2 {{PLURAL:$2|deialdi|deialdi}} baino gutxiago eduki beharko lituzke, eta orain $1 {{PLURAL:$1|dago|daude}}.',
 'expensive-parserfunction-category'       => 'Parser funtzio deialdi oso garesti gehiegi dituzten orrialdeak',
 'post-expand-template-inclusion-warning'  => 'Kontuz: Txantiloiak sartzen duena oso handia da.
 Txantiloi batzuk ez dira erabiliko.',
 'post-expand-template-inclusion-category' => 'Txantiloiaren inklusio tamaina gainditu den orrialdeak',
+'post-expand-template-argument-warning'   => 'Oharra: Orri honek gutxienez txantiloi eztabaida bat du, zein luzeegia den.
+Eztabaidak aipatu gabe utzi dira.',
 'post-expand-template-argument-category'  => 'Kontuan hartu ez diren txantiloiak dituzten orrialdeak',
+'parser-template-loop-warning'            => 'Txantiloiaren itzul-biraketa aurkitu da: [[$1]]',
+'parser-template-recursion-depth-warning' => 'Txantiloaren rekurtsio sakoneraren muga gainditu da ($1)',
 
 # "Undo" feature
 'undo-success' => 'Aldaketa desegin daiteke.
@@ -664,29 +719,29 @@ Mesedez beheko alderaketa egiaztatu, egin nahi duzuna hori dela frogatzeko, eta 
 $3(e)k emandako arrazoia: ''$2''",
 
 # History pages
-'viewpagelogs'        => 'Orrialde honen erregistroak ikusi',
-'nohistory'           => 'Orrialde honek ez dauka aldaketa historiarik.',
-'revnotfound'         => 'Ezin izan da berrikuspena aurkitu',
-'revnotfoundtext'     => 'Ezin izan da eskatzen ari zaren orrialdearen berrikuspen zaharra aurkitu. Mesedez, egiaztatu orrialde honetara iristeko erabili duzun URLa.',
-'currentrev'          => 'Oraingo berrikuspena',
-'revisionasof'        => '$1(e)ko berrikuspena',
-'revision-info'       => '$2(r)en berrikusketa, ordua: $1',
-'previousrevision'    => '←Berrikuspen zaharragoa',
-'nextrevision'        => 'Berrikuspen berriagoa→',
-'currentrevisionlink' => 'Oraingo berrikuspena ikusi',
-'cur'                 => 'orain',
-'next'                => 'hurrengoa',
-'last'                => 'azkena',
-'page_first'          => 'lehena',
-'page_last'           => 'azkena',
-'histlegend'          => 'Diff hautapena: hautatu alderatu nahi dituzun bi bertsioak eta beheko botoian klik egin.<br />
+'viewpagelogs'           => 'Orrialde honen erregistroak ikusi',
+'nohistory'              => 'Orrialde honek ez dauka aldaketa historiarik.',
+'currentrev'             => 'Oraingo berrikuspena',
+'currentrev-asof'        => '$1(e)an momentuko aldaketa',
+'revisionasof'           => '$1(e)ko berrikuspena',
+'revision-info'          => '$2(r)en berrikusketa, ordua: $1', # Additionally available: $3: revision id
+'previousrevision'       => '←Berrikuspen zaharragoa',
+'nextrevision'           => 'Berrikuspen berriagoa→',
+'currentrevisionlink'    => 'Oraingo berrikuspena ikusi',
+'cur'                    => 'orain',
+'next'                   => 'hurrengoa',
+'last'                   => 'azkena',
+'page_first'             => 'lehena',
+'page_last'              => 'azkena',
+'histlegend'             => 'Diff hautapena: hautatu alderatu nahi dituzun bi bertsioak eta beheko botoian klik egin.<br />
 Legenda: (orain) = oraingo bertsioarekiko ezberdintasuna,
 (azkena) = aurreko bertsioarekiko ezberdintasuna, t = aldaketa txikia.',
-'deletedrev'          => '[ezabatuta]',
-'histfirst'           => 'Lehena',
-'histlast'            => 'Azkena',
-'historysize'         => '({{PLURAL:$1|byte 1|$1 byte}})',
-'historyempty'        => '(hutsik)',
+'history-fieldset-title' => 'Historia erakutsi',
+'deletedrev'             => '[ezabatuta]',
+'histfirst'              => 'Lehena',
+'histlast'               => 'Azkena',
+'historysize'            => '({{PLURAL:$1|byte 1|$1 byte}})',
+'historyempty'           => '(hutsik)',
 
 # Revision feed
 'history-feed-title'          => 'Berrikuspenen historia',
@@ -726,6 +781,8 @@ Wiki honetako beste administratzaileek ezkutuko eduki hau ikusteko aukera izango
 'revdelete-submit'            => 'Hautatutako berrikuspenari aplikatu',
 'revdelete-logentry'          => '[[$1]](r)entzako berriskupen ikusgaitasuna aldatu da',
 'logdelete-logentry'          => '[[$1]]en gertakarien ikusgarritasuna aldatu da',
+'revdelete-success'           => "'''Berrikuspenen ikusgarritasuna ondo ezarri da.'''",
+'logdelete-success'           => "'''Log ikusgarritasuna ondo ezarri da.'''",
 'revdel-restore'              => 'Ikusgarritasuna aldatu',
 'pagehist'                    => 'Orriaren historia',
 'deletedhist'                 => 'Ezabatutako historia',
@@ -740,18 +797,25 @@ Wiki honetako beste administratzaileek ezkutuko eduki hau ikusteko aukera izango
 'logdelete-log-message'       => '$1(e)tik {{PLURAL:$2|gertakari $2|$2 gertakari}}',
 
 # Suppression log
-'suppressionlog' => 'Ezabatze loga',
+'suppressionlog'     => 'Ezabatze loga',
+'suppressionlogtext' => 'Azpian administratzaileek ezkutatutako edukia duten ezabaketa eta blokeoen zerrenda dago.
+Ikusi [[Special:IPBlockList|IP blokeoen zerrenda]] orain dauden blokeoak ikusi ahal izateko.',
 
 # History merging
 'mergehistory'                     => 'Orrialdeen historiak bateratu',
+'mergehistory-header'              => 'Orri honek iturri baten historiaren berrikuspenak bateratzea ahalbidetzen du, orri berri batean.
+Ziurtatu aldaketa honek ez duela orri historikoaren jarraipena etengo.',
 'mergehistory-box'                 => 'Bi orrialderen berrikuspenak bateratu:',
 'mergehistory-from'                => 'Jatorrizko orrialdea:',
 'mergehistory-into'                => 'Helburu orrialdea:',
 'mergehistory-list'                => 'Batu daitekeen aldaketen historia',
+'mergehistory-merge'               => '[[:$1]]-(e)n ondorengo berrikuspena [[:$2]]-(r)ekin bateratu daiteke.
+Zutabe botoia erabili zehaztutako orduan sortutako berrikuspenak bakarrik bateratzeko.
+Kontura zaitez nabigazio loturek, zutabea ezabatu dezakela.',
 'mergehistory-go'                  => 'Aldaketa bateragarriak erakutsi',
 'mergehistory-submit'              => 'Berrikuspenak bateratu',
 'mergehistory-empty'               => 'Ezin da berrikuspenik bateratu',
-'mergehistory-success'             => '[[:$1]](e)ko $3 berrikuspen bateratu egin dira [[:$2]](e)n.',
+'mergehistory-success'             => '[[:$1]](e)ko {{PLURAL:$3|berrikuspen|berrikuspen}} bateratu egin dira [[:$2]](e)n.',
 'mergehistory-fail'                => 'Ezin izan da historia bateratu; egiaztatu orrialde eta denbora parametroak.',
 'mergehistory-no-source'           => 'Ez da $1 jatorrizko orrialdea existitzen.',
 'mergehistory-no-destination'      => 'Ez da $1 helburu orrialdea existitzen.',
@@ -759,6 +823,7 @@ Wiki honetako beste administratzaileek ezkutuko eduki hau ikusteko aukera izango
 'mergehistory-invalid-destination' => 'Helburu orrialdea baliozko izenburua izan behar da.',
 'mergehistory-autocomment'         => '[[:$1]] [[:$2]]rekin batu da',
 'mergehistory-comment'             => '[[:$1]] [[:$2]]rekin batu da: $3',
+'mergehistory-same-destination'    => 'Jatorri eta helmugako orriak ezin dira berdinak izan',
 
 # Merge log
 'mergelog'           => 'Bateratze erregistroa',
@@ -771,123 +836,214 @@ Wiki honetako beste administratzaileek ezkutuko eduki hau ikusteko aukera izango
 'difference'              => '(Bertsioen arteko ezberdintasunak)',
 'lineno'                  => '$1. lerroa:',
 'compareselectedversions' => 'Hautatutako bertsioak alderatu',
+'visualcomparison'        => 'Alderaketa bisuala',
+'wikicodecomparison'      => 'Wikitext alderaketa',
 'editundo'                => 'desegin',
 'diff-multi'              => '({{PLURAL:$1|Ez da tarteko berrikuspen 1|Ez dira tarteko $1 berrikuspen}} erakusten.)',
+'diff-movedto'            => '$1(e)ra mugituta',
+'diff-styleadded'         => '$1 estiloa gehitu da',
+'diff-added'              => '$1 gehitu da',
+'diff-changedto'          => '$1(e)ra aldatuta',
+'diff-movedoutof'         => '$1(e)tik mugituta',
+'diff-styleremoved'       => '$1 estiloa ezabatuta',
+'diff-removed'            => '$1 ezabatua',
+'diff-changedfrom'        => '$1(e)tik aldatuta',
+'diff-src'                => 'jatorria',
+'diff-withdestination'    => '$1 helburuarekin',
+'diff-with'               => '&#32; $1 $2(r)ekin',
+'diff-with-additional'    => '$1 $2',
+'diff-with-final'         => '&#32;eta $1 $2',
+'diff-width'              => 'zabalera',
+'diff-height'             => 'garaiera',
+'diff-p'                  => "'''paragrafo''' bat",
+'diff-blockquote'         => "'''esaera''' bat",
+'diff-h1'                 => "'''1. mailako izenburu''' bat",
+'diff-h2'                 => "'''2. mailako izenburu''' bat",
+'diff-h3'                 => "'''3. mailako izenburu''' bat",
+'diff-h4'                 => "'''4. mailako izenburu''' bat",
+'diff-h5'                 => "'''5. mailako izenburu''' bat",
+'diff-pre'                => "'''aureformatudun bloke''' bat",
+'diff-div'                => "'''zatiketa''' bat",
+'diff-ul'                 => "'''ordenarik gabeko zerrenda''' bat",
+'diff-ol'                 => "'''zerrenda ordenatu''' bat",
+'diff-li'                 => "'''zerrendako elementu''' bat",
+'diff-table'              => "'''taula''' bat",
+'diff-tbody'              => "'''taularen edukia'''",
+'diff-tr'                 => "'''zerrenda''' bat",
+'diff-td'                 => "'''zelda''' bat",
+'diff-th'                 => "'''izenburu''' bat",
+'diff-br'                 => "'''eten''' bat",
+'diff-hr'                 => "'''lerro horizontal''' bat",
+'diff-code'               => "'''ordenagailu kode bloke''' bat",
+'diff-dl'                 => "'''definizio zerrenda''' bat",
+'diff-dt'                 => "'''definizio termino''' bat",
+'diff-dd'                 => "'''definizio''' bat",
+'diff-input'              => "'''input''' bat",
+'diff-form'               => "'''formulario''' bat",
+'diff-img'                => "'''irudi''' bat",
+'diff-span'               => "'''span''' bat",
+'diff-a'                  => "'''lotura''' bat",
+'diff-i'                  => "'''letra etzana'''",
+'diff-b'                  => "'''letra beltza'''",
+'diff-strong'             => "'''indartsua'''",
+'diff-em'                 => "'''enfasia'''",
+'diff-font'               => "'''letra-tipoa'''",
+'diff-big'                => "'''handia'''",
+'diff-del'                => "'''ezabatua'''",
+'diff-tt'                 => "'''zabalera mugatua'''",
+'diff-sub'                => "'''azpimarratua'''",
+'diff-sup'                => "'''goi-marratua'''",
+'diff-strike'             => "'''tatxatua'''",
 
 # Search results
-'searchresults'             => 'Bilaketaren emaitzak',
-'searchresulttext'          => '{{SITENAME}}(e)n bilaketak egiteko informazio gehiagorako, ikus [[{{MediaWiki:Helppage}}|{{int:help}}]].',
-'searchsubtitle'            => "'''[[:$1]]''' bilatu duzu",
-'searchsubtitleinvalid'     => "'''$1''' bilatu duzu",
-'noexactmatch'              => "'''Ez dago \"\$1\" izenburua duen orrialderik.''' [[:\$1|Orrialde hau]] sortu dezakezu.",
-'noexactmatch-nocreate'     => "'''Ez dago \"\$1\" izenburua duen orrialderik.'''",
-'titlematches'              => 'Emaitzak artikuluen izenburuetan',
-'notitlematches'            => 'Ez dago bat datorren orrialde izenbururik',
-'textmatches'               => 'Emaitza orrialde testuetan',
-'notextmatches'             => 'Ez dago bat datorren orrialde testurik',
-'prevn'                     => 'aurreko $1ak',
-'nextn'                     => 'hurrengo $1ak',
-'viewprevnext'              => 'Ikusi ($1) ($2) ($3).',
-'search-result-size'        => '$1 ({{PLURAL:$2|hitz bat|$2 hitz}})',
-'search-result-score'       => 'Garrantzia: %$1',
-'search-redirect'           => '($1 birzuzenketa)',
-'search-section'            => '($1 atala)',
-'search-suggest'            => '$1 esan nahi zenuen',
-'search-interwiki-caption'  => 'Beste proiektuak',
-'search-interwiki-default'  => '$1(r)en emaitzak:',
-'search-interwiki-more'     => '(gehiago)',
-'search-mwsuggest-enabled'  => 'iradokizunekin',
-'search-mwsuggest-disabled' => 'ez dago gomendiorik',
-'search-relatedarticle'     => 'Harremanetan',
-'mwsuggest-disable'         => 'AJAX gomendioak ezgaitu',
-'searchrelated'             => 'harremana',
-'searchall'                 => 'guztia',
-'showingresults'            => "Jarraian {{PLURAL:$1|emaitza '''1''' ikus daiteke|'''$1''' emaitza ikus daitezke}}, #'''$2'''.etik hasita.",
-'showingresultsnum'         => "Hasieran #'''$2''' duten '''$3''' emaitza erakusten dira jarraian.",
-'nonefound'                 => "'''Oharra''': Arrakastarik gabeko bilaketen arrazoi nagusietako bat \"dute\" eta \"da\" bezalako hitz arruntak bilatzea izan ohi da, edo baita bilaketan hitz gehiegi zehazteagatik ere (emaitzetan hitz guztiak dituzten emaitzak baino ez dira azalduko).",
-'powersearch'               => 'Bilatu',
-'powersearch-legend'        => 'Bilaketa aurreratua',
-'powersearch-ns'            => 'Bilatu honako izen-tartetan:',
-'powersearch-redir'         => 'Birzuzenketen zerrenda',
-'powersearch-field'         => 'Bilatu',
-'search-external'           => 'Kanpo bilaketa',
-'searchdisabled'            => '{{SITENAME}}(e)n ezgaituta dago bilaketa. Dena dela, Google erabiliz ere egin dezakezu bilaketa. Kontuan izan bertan dituzten {{SITENAME}}(e)ko emaitzak zaharkituta egon daitezkeela.',
+'searchresults'                    => 'Bilaketaren emaitzak',
+'searchresults-title'              => '"$1(e)rako" emaitzak bilatu',
+'searchresulttext'                 => '{{SITENAME}}(e)n bilaketak egiteko informazio gehiagorako, ikus [[{{MediaWiki:Helppage}}|{{int:help}}]].',
+'searchsubtitle'                   => '\'\'\'[[:$1]]\'\'\' bilatu duzu ([[Special:Prefixindex/$1|hasten diren "$1"]]{{int:pipe-separator}}[[Special:WhatLinksHere/$1|"$1"-ra lotzen diren orriak]])',
+'searchsubtitleinvalid'            => "'''$1''' bilatu duzu",
+'noexactmatch'                     => "'''Ez dago \"\$1\" izenburua duen orrialderik.''' [[:\$1|Orrialde hau]] sortu dezakezu.",
+'noexactmatch-nocreate'            => "'''Ez dago \"\$1\" izenburua duen orrialderik.'''",
+'toomanymatches'                   => 'Aukera gehiegi aurkitu dira, saia zaitez beste eskaera ezberdin batekin',
+'titlematches'                     => 'Emaitzak artikuluen izenburuetan',
+'notitlematches'                   => 'Ez dago bat datorren orrialde izenbururik',
+'textmatches'                      => 'Emaitza orrialde testuetan',
+'notextmatches'                    => 'Ez dago bat datorren orrialde testurik',
+'prevn'                            => 'aurreko $1ak',
+'nextn'                            => 'hurrengo $1ak',
+'viewprevnext'                     => 'Ikusi ($1) ($2) ($3).',
+'searchmenu-legend'                => 'Bilaketa aukerak',
+'searchmenu-exists'                => "'''\"[[:\$1]]\" izena duen orrialde bat badago wiki honetan'''",
+'searchmenu-new'                   => "'''\"[[:\$1]]\" orrialde sortu wiki honetan!'''",
+'searchhelp-url'                   => 'Help:Laguntza',
+'searchmenu-prefix'                => '[[Special:PrefixIndex/$1|Aurrizki hau duten orrialdeetatik nabigatu]]',
+'searchprofile-articles'           => 'Eduki orrialdeak',
+'searchprofile-articles-and-proj'  => 'Edukia eta proiektu orrialdeak',
+'searchprofile-project'            => 'Proiektu orrialdeak',
+'searchprofile-images'             => 'Fitxategiak',
+'searchprofile-everything'         => 'Guztia',
+'searchprofile-advanced'           => 'Aurreratua',
+'searchprofile-articles-tooltip'   => '$1(e)n bilatu',
+'searchprofile-project-tooltip'    => '$1(e)n bilatu',
+'searchprofile-images-tooltip'     => 'Fitxategiak bilatu',
+'searchprofile-everything-tooltip' => 'Bilatu eduki guztian (lankide orrialdeak barne)',
+'searchprofile-advanced-tooltip'   => 'Lankideen izen zehatzetan bilatu',
+'prefs-search-nsdefault'           => 'Bilaketa berezko balioak erabiliz:',
+'prefs-search-nscustom'            => 'Bilatu lankide izen zehatzetan:',
+'search-result-size'               => '$1 ({{PLURAL:$2|hitz bat|$2 hitz}})',
+'search-result-score'              => 'Garrantzia: %$1',
+'search-redirect'                  => '($1 birzuzenketa)',
+'search-section'                   => '($1 atala)',
+'search-suggest'                   => '$1 esan nahi zenuen',
+'search-interwiki-caption'         => 'Beste proiektuak',
+'search-interwiki-default'         => '$1(r)en emaitzak:',
+'search-interwiki-more'            => '(gehiago)',
+'search-mwsuggest-enabled'         => 'iradokizunekin',
+'search-mwsuggest-disabled'        => 'ez dago gomendiorik',
+'search-relatedarticle'            => 'Harremanetan',
+'mwsuggest-disable'                => 'AJAX gomendioak ezgaitu',
+'searchrelated'                    => 'harremana',
+'searchall'                        => 'guztia',
+'showingresults'                   => "Jarraian {{PLURAL:$1|emaitza '''1''' ikus daiteke|'''$1''' emaitza ikus daitezke}}, #'''$2'''.etik hasita.",
+'showingresultsnum'                => "Hasieran #'''$2''' duten {{PLURAL:$3|emaitza '''1'''|'''$3''' emaitza}} erakusten dira jarraian.",
+'showingresultstotal'              => "{{PLURAL:$4|'''$1'''(e)tik '''$3''' emaitza|'''$1 - $2'''(e)tik '''$3''' emaitzak}} erakusten",
+'nonefound'                        => "'''Oharra''': Bakarrik izen-tarte batzuetan egiten da berez bilaketa.
+Saia zaitez zure eskeraren aurretik ''all:'' jartzen eduki guztien artean bilatzeko (eztabaida orrialdea, txantiloiak, etab. sartuz) edo bestela erabil ezazu nahi duzun izen-tartea aurrizki gisa.",
+'search-nonefound'                 => 'Ez dago eskaerarekin bat egiten duten emaitzarik.',
+'powersearch'                      => 'Bilatu',
+'powersearch-legend'               => 'Bilaketa aurreratua',
+'powersearch-ns'                   => 'Bilatu honako izen-tartetan:',
+'powersearch-redir'                => 'Birzuzenketen zerrenda',
+'powersearch-field'                => 'Bilatu',
+'search-external'                  => 'Kanpo bilaketa',
+'searchdisabled'                   => '{{SITENAME}}(e)n ezgaituta dago bilaketa. Dena dela, Google erabiliz ere egin dezakezu bilaketa. Kontuan izan bertan dituzten {{SITENAME}}(e)ko emaitzak zaharkituta egon daitezkeela.',
 
 # Preferences page
-'preferences'              => 'Hobespenak',
-'mypreferences'            => 'Nire hobespenak',
-'prefs-edits'              => 'Aldaketa kopurua:',
-'prefsnologin'             => 'Saioa hasi gabe',
-'prefsnologintext'         => '<span class="plainlinks">[{{fullurl:Special:UserLogin|returnto=$1}} Izena eman] behar duzu zure hobespenak ezartzeko.',
-'prefsreset'               => 'Hobespenak hasieratu egin dira.',
-'qbsettings'               => 'Laster-barra',
-'qbsettings-none'          => 'Ezein ere',
-'qbsettings-fixedleft'     => 'Eskuinean',
-'qbsettings-fixedright'    => 'Ezkerrean',
-'qbsettings-floatingleft'  => 'Ezkerrean mugikor',
-'qbsettings-floatingright' => 'Eskubian flotatzen',
-'changepassword'           => 'Pasahitza aldatu',
-'skin'                     => 'Itxura',
-'math'                     => 'Formulak',
-'dateformat'               => 'Data formatua',
-'datedefault'              => 'Hobespenik ez',
-'datetime'                 => 'Data eta ordua',
-'math_failure'             => 'Interpretazio errorea',
-'math_unknown_error'       => 'errore ezezaguna',
-'math_unknown_function'    => 'funtzio ezezaguna',
-'math_lexing_error'        => 'errore lexikoa',
-'math_syntax_error'        => 'sintaxi errorea',
-'math_image_error'         => 'PNG bilakatze errorea; egiaztatu latex, dvips, gs eta convert ongi instalatuta daudela',
-'math_bad_tmpdir'          => 'Ezin da math direktorio tenporala sortu edo bertan idatzi',
-'math_bad_output'          => 'Ezin da math direktorioa sortu edo bertan idatzi',
-'math_notexvc'             => 'texvc exekutagarria falta da; mesedez, ikus math/README konfiguratzeko.',
-'prefs-personal'           => 'Erabiltzaile profila',
-'prefs-rc'                 => 'Azken aldaketak',
-'prefs-watchlist'          => 'Jarraipen zerrenda',
-'prefs-watchlist-days'     => 'Jarraipen zerrendan erakutsi beharreko egun kopurua:',
-'prefs-watchlist-edits'    => 'Jarraipen zerrendan erakutsi beharreko aldaketa kopurua:',
-'prefs-misc'               => 'Denetarik',
-'saveprefs'                => 'Gorde',
-'resetprefs'               => 'Hasieratu',
-'oldpassword'              => 'Pasahitz zaharra:',
-'newpassword'              => 'Pasahitz berria:',
-'retypenew'                => 'Pasahitz berria berriz idatzi:',
-'textboxsize'              => 'Aldatzen',
-'rows'                     => 'Lerroak:',
-'columns'                  => 'Zutabeak:',
-'searchresultshead'        => 'Bilaketa',
-'resultsperpage'           => 'Emaitza orrialdeko:',
-'contextlines'             => 'Lerro emaitzako:',
-'contextchars'             => 'Lerro bakoitzeko karaktere kopurua:',
-'recentchangesdays'        => 'Aldaketa berrietan erakutsi beharreko egun kopurua:',
-'recentchangescount'       => 'Aldaketa berrietan izenburu kopurua:',
-'savedprefs'               => 'Zure hobespenak gorde egin dira.',
-'timezonelegend'           => 'Ordu zona',
-'timezonetext'             => 'Zure ordu lokala eta zerbitzariaren orduaren (UTC) arteko ezberdintasuna.',
-'localtime'                => 'Ordu lokala',
-'timezoneoffset'           => 'Ezberdintasuna¹',
-'servertime'               => 'Zerbitzariko ordua',
-'guesstimezone'            => 'Nabigatzailetik jaso',
-'allowemail'               => 'Beste erabiltzaileengandik e-posta mezuak jasotzea gaitu',
-'prefs-searchoptions'      => 'Bilaketa aukerak',
-'prefs-namespaces'         => 'Izen-tarteak',
-'defaultns'                => 'Izen-tarte hauetan bilatu lehenetsitzat:',
-'default'                  => 'lehenetsia',
-'files'                    => 'Fitxategiak',
+'preferences'               => 'Hobespenak',
+'mypreferences'             => 'Nire hobespenak',
+'prefs-edits'               => 'Aldaketa kopurua:',
+'prefsnologin'              => 'Saioa hasi gabe',
+'prefsnologintext'          => '<span class="plainlinks">[{{fullurl:Special:UserLogin|returnto=$1}} Izena eman] behar duzu zure hobespenak ezartzeko.',
+'prefsreset'                => 'Hobespenak hasieratu egin dira.',
+'qbsettings'                => 'Laster-barra',
+'qbsettings-none'           => 'Ezein ere',
+'qbsettings-fixedleft'      => 'Eskuinean',
+'qbsettings-fixedright'     => 'Ezkerrean',
+'qbsettings-floatingleft'   => 'Ezkerrean mugikor',
+'qbsettings-floatingright'  => 'Eskubian flotatzen',
+'changepassword'            => 'Pasahitza aldatu',
+'skin'                      => 'Itxura',
+'skin-preview'              => 'Aurrebista',
+'math'                      => 'Formulak',
+'dateformat'                => 'Data formatua',
+'datedefault'               => 'Hobespenik ez',
+'datetime'                  => 'Data eta ordua',
+'math_failure'              => 'Interpretazio errorea',
+'math_unknown_error'        => 'errore ezezaguna',
+'math_unknown_function'     => 'funtzio ezezaguna',
+'math_lexing_error'         => 'errore lexikoa',
+'math_syntax_error'         => 'sintaxi errorea',
+'math_image_error'          => 'PNG bilakatze errorea; egiaztatu latex, dvips, gs eta convert ongi instalatuta daudela',
+'math_bad_tmpdir'           => 'Ezin da math direktorio tenporala sortu edo bertan idatzi',
+'math_bad_output'           => 'Ezin da math direktorioa sortu edo bertan idatzi',
+'math_notexvc'              => 'texvc exekutagarria falta da; mesedez, ikus math/README konfiguratzeko.',
+'prefs-personal'            => 'Erabiltzaile profila',
+'prefs-rc'                  => 'Azken aldaketak',
+'prefs-watchlist'           => 'Jarraipen zerrenda',
+'prefs-watchlist-days'      => 'Jarraipen zerrendan erakutsi beharreko egun kopurua:',
+'prefs-watchlist-days-max'  => '(gehienez 7 egun)',
+'prefs-watchlist-edits'     => 'Jarraipen zerrendan erakutsi beharreko aldaketa kopurua:',
+'prefs-watchlist-edits-max' => '(Gehenezko zenbakia: 1000)',
+'prefs-misc'                => 'Denetarik',
+'prefs-resetpass'           => 'Pasahitza aldatu',
+'saveprefs'                 => 'Gorde',
+'resetprefs'                => 'Hasieratu',
+'textboxsize'               => 'Aldatzen',
+'prefs-edit-boxsize'        => 'Edizio lehioaren tamaina.',
+'rows'                      => 'Lerroak:',
+'columns'                   => 'Zutabeak:',
+'searchresultshead'         => 'Bilaketa',
+'resultsperpage'            => 'Emaitza orrialdeko:',
+'contextlines'              => 'Lerro emaitzako:',
+'contextchars'              => 'Lerro bakoitzeko karaktere kopurua:',
+'stub-threshold'            => '<a href="#" class="stub">stub link</a> formaturako atalasea (byteak):',
+'recentchangesdays'         => 'Aldaketa berrietan erakutsi beharreko egun kopurua:',
+'recentchangesdays-max'     => '(gehienez {{PLURAL:$1|egun $1|$1 egun}})',
+'recentchangescount'        => 'Aldaketa berrietan, historian eta erregistroetan erakusteko aldaketa kopurua, lehenetsita:',
+'savedprefs'                => 'Zure hobespenak gorde egin dira.',
+'timezonelegend'            => 'Ordu zona',
+'timezonetext'              => 'Zure ordu lokala eta zerbitzariaren orduaren (UTC) arteko ezberdintasuna.',
+'localtime'                 => 'Ordu lokala:',
+'timezoneselect'            => 'Ordutegi-eremua:',
+'timezoneuseserverdefault'  => 'Erabiltzailearen zerbitzariaren berezkoa',
+'timezoneuseoffset'         => 'Beste bat (diferentzia ezarri)',
+'timezoneoffset'            => 'Ezberdintasuna¹:',
+'servertime'                => 'Zerbitzariko ordua:',
+'guesstimezone'             => 'Nabigatzailetik jaso',
+'allowemail'                => 'Beste erabiltzaileengandik e-posta mezuak jasotzea gaitu',
+'prefs-searchoptions'       => 'Bilaketa aukerak',
+'prefs-namespaces'          => 'Izen-tarteak',
+'defaultns'                 => 'Izen-tarte hauetan bilatu lehenetsitzat:',
+'default'                   => 'lehenetsia',
+'files'                     => 'Fitxategiak',
 
 # User rights
 'userrights'                  => 'Erabiltzaile baimenen kudeaketa', # Not used as normal message but as header for the special page itself
 'userrights-lookup-user'      => 'Erabiltzaile taldeak kudeatu',
 'userrights-user-editname'    => 'Erabiltzaile izena idatzi:',
 'editusergroup'               => 'Erabiltzaile taldeak editatu',
-'editinguser'                 => "'''[[User:$1|$1]]''' ([[User talk:$1|{{int:talkpagelinktext}}]] | [[Special:Contributions/$1|{{int:contribslink}}]]) erabiltzailea aldatzen",
+'editinguser'                 => "'''[[User:$1|$1]]''' ([[User talk:$1|{{int:talkpagelinktext}}]]{{int:pipe-separator}}[[Special:Contributions/$1|{{int:contribslink}}]]) lankidearen erabiltzaile-eskubideak aldatzen",
 'userrights-editusergroup'    => 'Erabiltzaile taldeak editatu',
 'saveusergroups'              => 'Erabiltzaile taldeak gorde',
 'userrights-groupsmember'     => 'Partaide da hemen:',
+'userrights-groups-help'      => 'Lankide hau dagoen taldeak aldatu dituzu:
+* Aukeratutako taulak esan nahi du lankidea talde horretan dagoela.
+* Aukeratu gabeko taulak esan nahi du lankidea ez dagoela talde horretan.
+* *-k erakusten du ezin duzula taldea ezabatu, behin gehitu ondoren, edo alderantziz.',
 'userrights-reason'           => 'Aldatzeko arrazoia:',
-'userrights-no-interwiki'     => 'Ez duzu beste wikietan lankide eskumenak aldatzeko baimenik.',
+'userrights-no-interwiki'     => 'Ez duzu beste wikietan erabiltzaile eskumenak aldatzeko baimenik.',
 'userrights-nodatabase'       => '$1 datubasea ez da existitzen edo ez dago lokalki.',
-'userrights-notallowed'       => 'Zure kontuak ez du baimenik lankide eskumenak emateko.',
+'userrights-nologin'          => 'Administratzaile kontu batekin [[Special:UserLogin|hasi behar duzu saioa]] erabiltzaile eskubideak esleitzeko.',
+'userrights-notallowed'       => 'Zure kontuak ez du baimenik erabiltzaile eskumenak emateko.',
 'userrights-changeable-col'   => 'Alda ditzakezun taldeak',
 'userrights-unchangeable-col' => 'Aldatu ezin ditzakezun taldeak',
 
@@ -909,7 +1065,7 @@ Wiki honetako beste administratzaileek ezkutuko eduki hau ikusteko aukera izango
 'group-suppress-member'      => 'Gainikuspena',
 
 'grouppage-user'          => '{{ns:project}}:Lankideak',
-'grouppage-autoconfirmed' => '{{ns:project}}:Lankide autokonfirmatuak',
+'grouppage-autoconfirmed' => '{{ns:project}}:Erabiltzaile autokonfirmatuak',
 'grouppage-bot'           => '{{ns:project}}:Bot-ak',
 'grouppage-sysop'         => '{{ns:project}}:Administratzaileak',
 'grouppage-bureaucrat'    => '{{ns:project}}:Burokratak',
@@ -922,16 +1078,20 @@ Wiki honetako beste administratzaileek ezkutuko eduki hau ikusteko aukera izango
 'right-createtalk'           => 'Eztabaida orriak sortu',
 'right-createaccount'        => 'Erabiltzaile kontu berria sortu',
 'right-minoredit'            => 'Aldaketa txiki gisa markatu',
-'right-move'                 => 'Oriak mugitu',
+'right-move'                 => 'Orrialdeak mugitu',
 'right-move-subpages'        => 'Mugitu orrialdeak bere azpiorrialdeekin',
+'right-move-rootuserpages'   => 'Erro-lankidearen orriak mugitu',
+'right-movefile'             => 'Fitxategiak mugitu',
 'right-suppressredirect'     => 'Ez sortu birzuzenketa bat antzinako izenetik orrialdea mugitzerakoan',
 'right-upload'               => 'Fitxategia igo',
 'right-reupload'             => 'Jada existitzen den artxibo bat gainidatzi',
 'right-reupload-own'         => 'Norberak igotako fitxategi baten gainean idatzi',
 'right-reupload-shared'      => 'Media biltegi komun batean dauden fitxategiak lokalki gainpasa',
 'right-upload_by_url'        => 'URL helbide batetik fitxategi bat igo',
-'right-autoconfirmed'        => 'Semi-babestuak dauden orriak aldatu',
+'right-purge'                => 'Leku honen katxea garbitu konfirmaziorik gabeko orrialde batentzat',
+'right-autoconfirmed'        => 'Erdi-babestuak dauden orriak aldatu',
 'right-bot'                  => 'Prozesu automatikoki gisa jokatu',
+'right-nominornewtalk'       => 'Estabaida orrietan aldaketa txikirik ez edukitzea mezu berrietan',
 'right-apihighlimits'        => 'API eskaeretan goreneko mugak erabili',
 'right-writeapi'             => 'API idaztekoa erabili',
 'right-delete'               => 'Orrialdeak ezabatu',
@@ -940,13 +1100,19 @@ Wiki honetako beste administratzaileek ezkutuko eduki hau ikusteko aukera izango
 'right-deletedhistory'       => 'Ezabatutako sarreren historia ikusi, euren atxikitutako testurik gabe',
 'right-browsearchive'        => 'Ezabatutako orrialdeak bilatu',
 'right-undelete'             => 'Ezabatutako orrialde bat itzularazi',
+'right-suppressrevision'     => 'Administratzaileentzat izkutatutako berrikuspenak berrikusi edo berrezarri',
 'right-suppressionlog'       => 'Log pribatuak ikusi',
 'right-block'                => 'Beste lankideek edita ez dezaten blokeatu',
-'right-blockemail'           => 'Lankide batek emailak bidal ez ditzan blokeatu',
-'right-hideuser'             => 'Lankide izen bat blokeatu, publikotik izkutatuz',
+'right-blockemail'           => 'Erabiltzaile batek emailak bidal ez ditzan blokeatu',
+'right-hideuser'             => 'Erabiltzaile izen bat blokeatu, publikotik izkutatuz',
+'right-ipblock-exempt'       => 'IP blokeoen, auto-blokeoen eta maila blokeoen gainetik pasa.',
+'right-proxyunbannable'      => 'Proxyen blokeo automatikoen gainetik pasa',
+'right-protect'              => 'Orrialde babestuak aldatu eta babes maila aldatu',
 'right-editprotected'        => 'Babestutako orrialdeak aldatu (babes jauzirik gabe)',
 'right-editinterface'        => 'Erabiltzailearen interfazea aldatu',
 'right-editusercssjs'        => 'Beste lankideen CSS eta JS fitxategiak aldatu',
+'right-rollback'             => 'Orrialde zehatz bat aldatu zuen azken lankidearen aldaketak modu azkar batean leheneratu',
+'right-markbotedits'         => 'Atzera bueltan eginiko aldaketak bot baten aldaketak balira markatu',
 'right-noratelimit'          => 'Ez dio eragiten erlazio mugak',
 'right-import'               => 'Orrialdeak beste wiki batetik inportatu',
 'right-importupload'         => 'Igotako fitxategi batetik orrialdeak inportatu',
@@ -966,21 +1132,58 @@ Wiki honetako beste administratzaileek ezkutuko eduki hau ikusteko aukera izango
 'rightslogentry' => '$1(r)en partaidetza aldatu da $2(e)tik $3(e)ra',
 'rightsnone'     => '(bat ere ez)',
 
+# Associated actions - in the sentence "You do not have permission to X"
+'action-read'                 => 'orrialde hau irakurri',
+'action-edit'                 => 'orrialde hau aldatu',
+'action-createpage'           => 'orrialdeak sortu',
+'action-createtalk'           => 'eztabaida orrialdeak sortu',
+'action-createaccount'        => 'lankide hau sortu',
+'action-minoredit'            => 'aldaketa hau txiki gisa markatu',
+'action-move'                 => 'orrialde hau mugitu',
+'action-move-subpages'        => 'orrialde hau eta bere azpiorrialdeak mugitu',
+'action-move-rootuserpages'   => 'mugitu lankidearen oinarri orrialdeak',
+'action-movefile'             => 'fitxategi hau mugitu',
+'action-upload'               => 'fitxategi hau igo',
+'action-reupload'             => 'dagoeneko baden fitxategi honen gainean idatzi',
+'action-reupload-shared'      => 'biltegi komun batean dagoen fitxategi hau gainpasa',
+'action-upload_by_url'        => 'URL helbide batetik fitxategi hau igo',
+'action-writeapi'             => 'idazteko APIa erabili',
+'action-delete'               => 'orrialde hau ezabatu',
+'action-deleterevision'       => 'berrikuspen hau ezabatu',
+'action-deletedhistory'       => 'orrialde honetako ezabatutako historia ikusi',
+'action-browsearchive'        => 'ezabatutako orrialdeak bilatu',
+'action-undelete'             => 'ezabatutako orrialde hau bergaitu',
+'action-suppressrevision'     => 'izkutuko berrikuspen hau berrikusi eta gaitu',
+'action-suppressionlog'       => 'log pribatu hau ikusi',
+'action-block'                => 'lankide honi aldaketak egitea ekidin',
+'action-protect'              => 'orrialde honetako babes mailak aldatu',
+'action-import'               => 'orrialde hau beste wiki batetik inportatu',
+'action-importupload'         => 'igotako fitxategi batetik orrialde hau inportatu',
+'action-patrol'               => 'besteen aldaketak patruilatu moduan markatu',
+'action-autopatrol'           => 'zure aldaketak patruilatu bezala markatu',
+'action-unwatchedpages'       => 'ikusi gabeko orrialdeen zerrenda ikusi',
+'action-trackback'            => 'aipu bat bidali',
+'action-mergehistory'         => 'orrialde honen historia batu',
+'action-userrights'           => 'lankide guztien eskumenak aldatu',
+'action-userrights-interwiki' => 'beste wikietako lankideen lankide-eskumenak aldatu',
+'action-siteadmin'            => 'datubasea babestu edo babesa kendu',
+
 # Recent changes
 'nchanges'                          => '{{PLURAL:$1|aldaketa 1|$1 aldaketa}}',
 'recentchanges'                     => 'Aldaketa berriak',
+'recentchanges-legend'              => 'Azken aldaketen aukerak',
 'recentchangestext'                 => 'Orrialde honetan wiki honetan egindako azken aldaketak erakusten dira.',
 'recentchanges-feed-description'    => 'Sindikazio honetan wikian eginiko azkeneko aldaketak jarrai daitezke.',
-'rcnote'                            => 'Jarraian azken <strong>$2</strong> egunetako azken <strong>$1</strong> aldaketak erakusten dira, $3 eguneratuta.',
+'rcnote'                            => "Beheko azken {{PLURAL:$2|eguneko|'''$2''' egunetako}} azken {{PLURAL:$1|aldaketa|'''$1''' aldaketak}} hurrengo datan egin ziren: $5, $4.",
 'rcnotefrom'                        => 'Jarraian azaltzen diren aldaketak data honetatik aurrerakoak dira: <b>$2</b> (gehienez <b>$1</b> erakusten dira).',
 'rclistfrom'                        => 'Erakutsi $1 ondorengo aldaketa berriak',
 'rcshowhideminor'                   => '$1 aldaketa txikiak',
 'rcshowhidebots'                    => '$1 bot-ak',
 'rcshowhideliu'                     => '$1 erabiltzaile erregistratuak',
-'rcshowhideanons'                   => '$1 lankide anonimoak',
+'rcshowhideanons'                   => '$1 erabiltzaile anonimoak',
 'rcshowhidepatr'                    => '$1 patruilatutako aldaketak',
 'rcshowhidemine'                    => '$1 nire ekarpenak',
-'rclinks'                           => 'Erakutsi azken $1 aldaketak $2 egunetan.<br />$3',
+'rclinks'                           => 'Erakutsi azken $2 egunetako $1 aldaketak<br />$3',
 'diff'                              => 'ezb',
 'hist'                              => 'hist',
 'hide'                              => 'Ezkutatu',
@@ -988,10 +1191,12 @@ Wiki honetako beste administratzaileek ezkutuko eduki hau ikusteko aukera izango
 'minoreditletter'                   => 't',
 'newpageletter'                     => 'B',
 'boteditletter'                     => 'b',
-'number_of_watching_users_pageview' => '[$1 jarraitzaile]',
+'number_of_watching_users_pageview' => '[$1 {{PLURAL:$1|lankide|lankide}} jarraitzen]',
 'rc_categories'                     => 'Kategorietara mugatu ("|" karaktereaz banandu)',
 'rc_categories_any'                 => 'Edozein',
 'newsectionsummary'                 => '/* $1 */ atal berria',
+'rc-enhanced-expand'                => 'Erakutsi xehetasunak (JavaScript beharrezkoa da)',
+'rc-enhanced-hide'                  => 'Xehetasunak ezkutatu',
 
 # Recent changes linked
 'recentchangeslinked'          => 'Lotutako orrialdeen aldaketak',
@@ -1000,6 +1205,7 @@ Wiki honetako beste administratzaileek ezkutuko eduki hau ikusteko aukera izango
 'recentchangeslinked-summary'  => "Zerrenda honetan zehazturiko orrialde bati (edo kategoria berezi bateko azkeneko kideei) lotura duten orrietan eginiko azken aldaketak agertzen dira.
 [[Special:Watchlist|Zurre jarraitze zerrenda]]n agertzen diren orrialdeak '''beltze'''z agertzen dira.",
 'recentchangeslinked-page'     => 'Orriaren izena:',
+'recentchangeslinked-to'       => 'Lotutako orrietarako aldaketak erakutsi emandako orriaren ordez',
 
 # Upload
 'upload'                      => 'Fitxategia igo',
@@ -1008,13 +1214,14 @@ Wiki honetako beste administratzaileek ezkutuko eduki hau ikusteko aukera izango
 'reuploaddesc'                => 'Igotzeko formulariora itzuli.',
 'uploadnologin'               => 'Saioa hasi gabe',
 'uploadnologintext'           => 'Fitxategiak igotzeko [[Special:UserLogin|saioa hasi]] behar duzu.',
+'upload_directory_missing'    => 'Igoeren direktorioa ($1) ezin da aurkitu eta web zerbitzariak ezin du sortu.',
 'upload_directory_read_only'  => 'Web zerbitzariak ez dauka igoera direktorioan ($1) idazteko baimenik.',
 'uploaderror'                 => 'Errorea igotzerakoan',
-'uploadtext'                  => "Fitxategiak igotzeko beheko formularioa erabil dezakezu. Aurretik igotako irudiak ikusi edo bilatzeko [[Special:ImageList|igotako fitxategien zerrendara]] jo. Igoerak eta ezabatutakoak [[Special:Log/upload|igoera erregistroan]] zerrendatzen dira.
+'uploadtext'                  => "Fitxategiak igotzeko beheko formularioa erabil dezakezu. Aurretik igotako irudiak ikusi edo bilatzeko [[Special:FileList|igotako fitxategien zerrendara]] jo. Igoerak eta ezabatutakoak [[Special:Log/upload|igoera erregistroan]] zerrendatzen dira.
 
 Orrialde baten irudi bat txertatzeko, erabili kode hauetako bat:
-'''<nowiki>[[</nowiki>{{ns:image}}<nowiki>:Fitxategia.jpg]]</nowiki>''',
-'''<nowiki>[[</nowiki>{{ns:image}}<nowiki>:Fitxategia.png|testu alternatiboa]]</nowiki>''' edo
+'''<nowiki>[[</nowiki>{{ns:file}}<nowiki>:Fitxategia.jpg]]</nowiki>''',
+'''<nowiki>[[</nowiki>{{ns:file}}<nowiki>:Fitxategia.png|testu alternatiboa]]</nowiki>''' edo
 '''<nowiki>[[</nowiki>{{ns:media}}<nowiki>:Fitxategia.ogg]]</nowiki>''' irudia zuzenean erabiltzeko.",
 'upload-permitted'            => 'Baimendutako fitxategi motak: $1.',
 'upload-preferred'            => 'Fitxategi mota hobetsiak: $1.',
@@ -1034,23 +1241,33 @@ Orrialde baten irudi bat txertatzeko, erabili kode hauetako bat:
 'illegalfilename'             => '"$1" fitxategiaren izenak orrialdeen izenburuetan erabili ezin diren karaktereak ditu. Mesedez, fitxategiari izena aldatu eta saiatu berriz igotzen.',
 'badfilename'                 => 'Irudiaren izena aldatu da: "$1".',
 'filetype-badmime'            => 'Ezin dira "$1" MIME motako fitxategiak igo.',
-'filetype-unwanted-type'      => "'''\".\$1\"''' fitxategi mota ez da gustokoa.  Hobesten diren fitxategi motak \$2 dira.",
+'filetype-bad-ie-mime'        => 'Ezin da fitxategia igo, Internet Explorerek "$1" bezala detektatuko lukeelako, zein fitxategi mota ez onartua eta arriskutsua den.',
+'filetype-unwanted-type'      => '\'\'\'".$1"\'\'\' fitxategi mota ez da gustokoa. Hobesten {{PLURAL:$3|den fitxategi mota|diren fitxategi motak}} {{PLURAL:$2|$2 da|$2 dira}}.',
 'filetype-banned-type'        => '\'\'\'".$1"\'\'\' ez dago baimendutako fitxategi moten artean.
 Baimendutako fitxategi {{PLURAL:$3|mota $2 da|motak $2 dira}}.',
 'filetype-missing'            => 'Fitxategi honek ez du luzapenik (adibidez, ".jpg").',
 'large-file'                  => 'Ez da gomendagarria fitxategiak $1 baino handiagoak izatea; fitxategi honen tamaina: $2.',
 'largefileserver'             => 'Fitxategi hau zerbitzariak baimentzen duena baino handiagoa da.',
 'emptyfile'                   => 'Badirudi igotzen ari zaren fitxategia hutsik dagoela. Mesedez, egiaztatu fitxategi hori dela igo nahi duzuna.',
-'fileexists'                  => 'Badago izen hori daukan fitxategi bat; mesedez, ikusi existitzen den <strong><tt>$1</tt></strong> fitxategia aldatu nahi duzun egiaztatzeko.',
-'fileexists-extension'        => 'Badago antzeko izena duen fitxategi bat:<br />
-Igotako fitxategiaren izena: <strong><tt>$1</tt></strong><br />
-Aurretik dagoen fitxategiaren izena: <strong><tt>$2</tt></strong><br />
-Hautatu beste izen bat.',
+'fileexists'                  => "Badago izen hori daukan fitxategi bat; mesedez, ikusi existitzen den '''<tt>$1</tt>''' fitxategia aldatu nahi duzun egiaztatzeko.",
+'filepageexists'              => "Fitxategi honen deskribapen orria dagoeneko sortuta dago '''<tt>$1</tt>'''-en, baina, ez da existitzen izen hori duen fitxategirik.
+Idazten duzun laburpena ez da deskribapen orrian agertuko.
+Zure laburpena agertzeko, eskuz aldatu beharko duzu",
+'fileexists-extension'        => "Badago antzeko izena duen fitxategi bat:<br />
+Igotako fitxategiaren izena: '''<tt>$1</tt>'''<br />
+Aurretik dagoen fitxategiaren izena: '''<tt>$2</tt>'''<br />
+Hautatu beste izen bat.",
 'fileexists-thumb'            => "<center>'''Irudia badago'''</center>",
-'fileexists-thumbnail-yes'    => 'Badirudi neurri txikiko irudia dela <i>(irudi txikia)</i>. Egiaztatu <strong><tt>$1</tt></strong> fitxategia.<br /> Egiaztatutako fitxategia eta jatorrizkoa berdinak badira ez dago irudi txikia igo beharrik.',
-'fileexists-forbidden'        => 'Badago izen hori daukan fitxategi bat; mesedez, atzera itzuli eta igo fitxategia izen ezberdin batekin. [[Image:$1|thumb|center|$1]]',
-'fileexists-shared-forbidden' => 'Badago izen hori daukan fitxategi bat elkarbanatutako fitxategi-biltegian; mesedez, atzera itzuli eta igo fitxategia izen ezberdin batekin. [[Image:$1|thumb|center|$1]]',
+'fileexists-thumbnail-yes'    => "Badirudi neurri txikiko irudia dela ''(irudi txikia)''. Egiaztatu '''<tt>$1</tt>''' fitxategia.<br /> Egiaztatutako fitxategia eta jatorrizkoa berdinak badira ez dago irudi txikia igo beharrik.",
+'file-thumbnail-no'           => "Fitxategiaren izena '''<tt>$1</tt>'''-(r)ekin hasten da.
+Badirudi tamaina txikiko irudia ''(thumbnail)'' dela.
+Irudi hau bereizmen handiagoan izango bazenu igo ezazu, bestela, fitxategiaren izena aldatu mesedez.",
+'fileexists-forbidden'        => 'Badago izen hori daukan fitxategia, eta ezin da gainidatzi.
+Oraindik fitxategia igo nahi baduzu, mesedez atzera itzuli eta igo fitxategia izen ezberdin batekin. [[File:$1|thumb|center|$1]]',
+'fileexists-shared-forbidden' => 'Badago izen hori daukan fitxategi bat elkarbanatutako fitxategi-biltegian.
+Oraindik ere fitxategia igo nahi baduzu atzera itzuli eta izen berri bat erabili, mesedez. [[File:$1|thumb|center|$1]]',
 'file-exists-duplicate'       => 'Fitxategi hau beste fitxategi {{PLURAL:$1|honen|hauen}} kopia bat da:',
+'file-deleted-duplicate'      => 'Fitxategi honen ([[$1]]) fitxategi berbera aldez aurretik ezabatua izan da. Fitxategi horren ezabaketa-erregistroa begiratu beharko zenuke berriz igo baino lehen.',
 'successfulupload'            => 'Igoera arrakastatsua',
 'uploadwarning'               => 'Igotzeko oharra',
 'savefile'                    => 'Fitxategia gorde',
@@ -1070,15 +1287,15 @@ Hautatu beste izen bat.',
 
 Kontuan izan fitxategia igotzea egokia ote den.
 Fitxategi honen ezabaketa erregistroa jarraian ikus dezakezu:",
-'filename-bad-prefix'         => 'Igotzen ari zaren fitxategiaren izena <strong>"$1"</strong>ekin hasten da, normalki kamera digitalek automatikoki ezartzen duten izen ez deskriptibo bat.
-Aukera ezazu, mesedez, fitxategi izen deskriptiboago bat.',
+'filename-bad-prefix'         => "Igotzen ari zaren fitxategiaren izena '''\"\$1\"'''ekin hasten da, normalki kamera digitalek automatikoki ezartzen duten izen ez deskriptibo bat.
+Aukera ezazu, mesedez, fitxategi izen deskriptiboago bat.",
 
 'upload-proto-error'      => 'Protokolo ezegokia',
 'upload-proto-error-text' => 'Kanpo igoerak <code>http://</code> edo <code>ftp://</code> hasiera duen URLa izan behar du.',
 'upload-file-error'       => 'Barne errorea',
 'upload-file-error-text'  => 'Barne errore bat gertatu da zerbitzarian fitxategi tenporal bat sortzen saiatzean. Mesedez, jar zaitez [[Special:ListUsers/sysop|administratzaile]] batekin harremanetan.',
 'upload-misc-error'       => 'Errore ezezaguna igotzerakoan',
-'upload-misc-error-text'  => 'Errore ezezagun bat gertatu da fitxategia igotzen ari zenean. Mesedez, egiaztatu URLa baliozkoa eta eskuragarria dela eta saiatu berriz. Arazoak jarraitzen badu, jar zaitez administratzailearekin harremanetan.',
+'upload-misc-error-text'  => 'Errore ezezagun bat gertatu da fitxategia igotzen ari zenean. Mesedez, egiaztatu URLa baliozkoa eta eskuragarria dela eta berriz saiatu. Arazoak jarraitzen badu, jar zaitez [[Special:ListUsers/sysop|administratzailearekin]] harremanetan.',
 
 # Some likely curl errors. More could be added from <http://curl.haxx.se/libcurl/c/libcurl-errors.html>
 'upload-curl-error6'       => 'Ezin izan da URLa eskuratu',
@@ -1092,17 +1309,21 @@ Aukera ezazu, mesedez, fitxategi izen deskriptiboago bat.',
 'upload_source_url'  => ' (baliozko URL publikoa)',
 'upload_source_file' => ' (zure ordenagailuko fitxategi bat)',
 
-# Special:ImageList
-'imagelist_search_for'  => 'Irudiaren izenagatik bilatu:',
+# Special:ListFiles
+'listfiles-summary'     => 'Orri berezi honek igotako fitxategi guztiak erakusten ditu.
+Berez, azken igotako fitxategiak zerrendaren goiko aldean azaltzen dira.
+Zutabe baten goi-buruaren egin klik sailkatzeko era aldatzeko.',
+'listfiles_search_for'  => 'Irudiaren izenagatik bilatu:',
 'imgfile'               => 'fitxategia',
-'imagelist'             => 'Fitxategien zerrenda',
-'imagelist_date'        => 'Data',
-'imagelist_name'        => 'Izena',
-'imagelist_user'        => 'Erabiltzailea',
-'imagelist_size'        => 'Tamaina (byte)',
-'imagelist_description' => 'Deskribapena',
+'listfiles'             => 'Fitxategien zerrenda',
+'listfiles_date'        => 'Data',
+'listfiles_name'        => 'Izena',
+'listfiles_user'        => 'Erabiltzailea',
+'listfiles_size'        => 'Tamaina (byte)',
+'listfiles_description' => 'Deskribapena',
+'listfiles_count'       => 'Bertsioak',
 
-# Image description page
+# File description page
 'filehist'                       => 'Fitxategiaren historia',
 'filehist-help'                  => 'Data/orduan klik egin fitxategiak orduan zuen itxura ikusteko.',
 'filehist-deleteall'             => 'guztiak ezabatu',
@@ -1110,19 +1331,25 @@ Aukera ezazu, mesedez, fitxategi izen deskriptiboago bat.',
 'filehist-revert'                => 'desegin',
 'filehist-current'               => 'oraingoa',
 'filehist-datetime'              => 'Data/Ordua',
+'filehist-thumb'                 => 'Iruditxoa',
+'filehist-thumbtext'             => '$1 bertsioaren iruditxoa',
+'filehist-nothumb'               => 'Ez dago iruditxorik',
 'filehist-user'                  => 'Erabiltzailea',
 'filehist-dimensions'            => 'Neurriak',
 'filehist-filesize'              => 'Tamaina',
 'filehist-comment'               => 'Iruzkina',
-'imagelinks'                     => 'Loturak',
-'linkstoimage'                   => 'Hurrengo orrialdeek dute fitxategi honetarako lotura:',
+'imagelinks'                     => 'Fitxategi loturak',
+'linkstoimage'                   => 'Hurrengo {{PLURAL:$1|orrialdeak du|$1 orrialdeek dute}} fitxategi honetarako lotura:',
+'linkstoimage-more'              => '$1 {{PLURAL:$1|orri lotura|orri lotura}} baino gehiago daude fitxategira.
+Ondorengo zerrendak fitxategira dauden {{PLURAL:$1|lehen lotura|lehen $1 loturak}} erakusten ditu bakarrik.
+[[Special:WhatLinksHere/$2|Zerrenda osoa]] ere eskuragarri dago.',
 'nolinkstoimage'                 => 'Ez dago fitxategi honetara lotura egiten duen orrialderik.',
 'morelinkstoimage'               => 'Ikusi fitxategi honen [[Special:WhatLinksHere/$1|lotura gehiago]].',
 'redirectstofile'                => 'Honako {{PLURAL:$1|artxiboak fitxategi honetara birzuzentzen du:|$1 artxiboek fitxategi honetara birzuzentzen dute:}}',
-'duplicatesoffile'               => 'Hondoren fitxategi {{PLURAL:$1|hau beste honen berdina da|$1 hauek beste honen berdinak dira}}:',
+'duplicatesoffile'               => 'Ondorengo fitxategi {{PLURAL:$1|hau beste honen berdina da|$1 hauek beste honen berdinak dira}} ([[Special:FileDuplicateSearch/$2|zehaztasun gehiago]]):',
 'sharedupload'                   => 'Fitxategi hau elkarbanatutako igoera bat da eta beste proiektuek ere erabil dezakete.',
 'shareduploadwiki'               => 'Informazio gehiagorako $1 ikusi mesedez.',
-'shareduploadwiki-desc'          => 'Biltegi komun batean $1(e)n deskribapena erakusten da.',
+'shareduploadwiki-desc'          => 'Deskribapena $1-(e)an erakusten da azpian.',
 'shareduploadwiki-linktext'      => 'fitxategiaren deskribapen orrialdea',
 'shareduploadduplicate'          => 'Fitxategi hau biltegi komuneko $1 fitxategiaren duplikatua da.',
 'shareduploadduplicate-linktext' => 'beste fitxategi bat',
@@ -1146,11 +1373,12 @@ Aukera ezazu, mesedez, fitxategi izen deskriptiboago bat.',
 # File deletion
 'filedelete'                  => '$1 ezabatu',
 'filedelete-legend'           => 'Fitxategia ezabatu',
-'filedelete-intro'            => "'''[[Media:$1|$1]]''' ezabatzen ari zara.",
+'filedelete-intro'            => "'''[[Media:$1|$1]]''' fitxategiaezabatzen ari zara eta honen historiarekin batera.",
 'filedelete-intro-old'        => "'''[[Media:$1|$1]]'''ren bertsioa ezabatzen ari zara, [$4 $3, $2].",
 'filedelete-comment'          => 'Iruzkina:',
 'filedelete-submit'           => 'Ezabatu',
 'filedelete-success'          => "'''$1''' ezabatu da.",
+'filedelete-success-old'      => "'''[[Media:$1|$1]]'''en $3, $2 bertsioa ezabatu da.",
 'filedelete-nofile'           => "Ez dago '''$1''' izeneko fitxategirik.",
 'filedelete-nofile-old'       => "Ez dago '''$1'''en bertsio artxibaturik zuk jarritako izaera horrekin.",
 'filedelete-otherreason'      => 'Beste arrazoiak/gehigarriak:',
@@ -1179,29 +1407,31 @@ Aukera ezazu, mesedez, fitxategi izen deskriptiboago bat.',
 
 # Random page
 'randompage'         => 'Ausazko orria',
-'randompage-nopages' => 'Ez dago orrialderik izen-tarte honetan.',
+'randompage-nopages' => 'Ez dago orrialderik "$1" izen-tartean.',
 
 # Random redirect
 'randomredirect'         => 'Ausazko birzuzenketa',
-'randomredirect-nopages' => 'Ez dago birzuzenketarik izen-tarte honetan.',
+'randomredirect-nopages' => 'Ez dago birzuzenketarik "$1" izen-tartean.',
 
 # Statistics
-'statistics'             => 'Estatistikak',
-'sitestats'              => '{{SITENAME}}(e)ko estatistikak',
-'userstats'              => 'Erabiltzaile estatistikak',
-'sitestatstext'          => "Datu-basean guztira <b>$1</b> orri daude; eztabaidatzeko, wikipedari buruzko orriak, birzuzenketak eta artikulu laburrak barne hartzen.
-
-Horiek baztertzen, <b>$2</b> artikulu dauzakagu datu-basean.
-
-'''$8''' irudi igo dira.
-
-Guztira '''$3''' bisitaturiko orri, eta <b>$4</b> artikulu aldaketa egon dira software-a berritu zenetik (2002.eko uztailaren 20a).
-
-Emaitza hauekin hurrengo arrazoiak atera daitezke: '''$5''' aldaketa egon dira orrialde bakoitzeko, eta '''$6''' bisita aldaketa bakoitzeko.
-
-Gure [http://www.mediawiki.org/wiki/Manual:Job_queue Job queue] '''$7'''-koa da.",
-'userstatstext'          => "'''$1''' erabiltzaile daude izen emanda, horietatik '''$2''' (edo '''$4%''') $5ek eskumenak {{PLURAL:$2|dituelarik|dituztelarik}}.",
-'statistics-mostpopular' => 'Orrialde bisitatuenak',
+'statistics'                   => 'Estatistikak',
+'statistics-header-pages'      => 'Orrialdeen estatistikak',
+'statistics-header-edits'      => 'Aldaketen estatistikak',
+'statistics-header-views'      => 'Ikustaldien estatistikak',
+'statistics-header-users'      => 'Erabiltzaile estatistikak',
+'statistics-articles'          => 'Edukiak dituzten orrialdeak',
+'statistics-pages'             => 'Orrialdeak',
+'statistics-pages-desc'        => 'Wikian dauden orrialde guztiak, eztabaida orrialdeak, birzuzenketa, etab. barne.',
+'statistics-files'             => 'Igotako fitxategiak',
+'statistics-edits'             => '{{SITENAME}} sortu zenetik eginiko aldaketa kopurua',
+'statistics-edits-average'     => 'Bataz-besteko aldaketak orrialdeko',
+'statistics-views-total'       => 'Ikusitako orrialdeak guztira',
+'statistics-views-peredit'     => 'Ikusitako orrialdeak aldaketa bakoitzeko',
+'statistics-jobqueue'          => '[http://www.mediawiki.org/wiki/Manual:Job_queue Lan zerrendaren] luzera',
+'statistics-users'             => 'Izen-emandako [[Special:ListUsers|lankideak]]',
+'statistics-users-active'      => 'Lankide aktiboak',
+'statistics-users-active-desc' => 'Aurreko {{PLURAL:$1|egunean|egunetan}} jardueraren bat gauzatu duten erabiltzaileak',
+'statistics-mostpopular'       => 'Orrialde bisitatuenak',
 
 'disambiguations'      => 'Argipen orrialdeak',
 'disambiguationspage'  => 'Template:argipen',
@@ -1213,7 +1443,7 @@ Gure [http://www.mediawiki.org/wiki/Manual:Job_queue Job queue] '''$7'''-koa da.
 'double-redirect-fixer'      => 'Birzuzenketa zuzentzailea',
 
 'brokenredirects'        => 'Hautsitako birzuzenketak',
-'brokenredirectstext'    => 'Jarraian zerrendatutako birzuzenketak existitzen ez diren orrialdeetara zuzenduta daude:',
+'brokenredirectstext'    => 'Jarraian zerrendatutako birzuzenketa loturak existitzen ez diren orrietara zuzenduta daude:',
 'brokenredirects-edit'   => '(aldatu)',
 'brokenredirects-delete' => '(ezabatu)',
 
@@ -1243,25 +1473,30 @@ Gure [http://www.mediawiki.org/wiki/Manual:Job_queue Job queue] '''$7'''-koa da.
 'popularpages'            => 'Orrialde bisitatuenak',
 'wantedcategories'        => 'Eskatutako kategoriak',
 'wantedpages'             => 'Eskatutako orrialdeak',
-'missingfiles'            => 'Falta diren fitxategiak',
+'wantedfiles'             => 'Eskatutako fitxategiak',
+'wantedtemplates'         => 'Eskatutako txantiloiak',
 'mostlinked'              => 'Gehien lotutako orrialdeak',
 'mostlinkedcategories'    => 'Gehien lotutako kategoriak',
 'mostlinkedtemplates'     => 'Txantiloi erabilienak',
 'mostcategories'          => 'Sailkapenean kategoria gehien dituzten orrialdeak',
 'mostimages'              => 'Gehien lotutako irudiak',
 'mostrevisions'           => 'Berrikuspen gehien dituzten orrialdeak',
-'prefixindex'             => 'Aurrizkien aurkibidea',
+'prefixindex'             => 'Orri guztiak aurrizkiekin',
 'shortpages'              => 'Orrialde laburrak',
 'longpages'               => 'Orrialde luzeak',
 'deadendpages'            => 'Orrialde itsuak',
 'deadendpagestext'        => 'Jarraian zerrendatutako orrialdeek ez daukate wikiko beste edozein orrialdetarako loturarik.',
 'protectedpages'          => 'Babestutako orrialdeak',
 'protectedpages-indef'    => 'Babes mugagabeak bakarrik',
+'protectedpages-cascade'  => 'Kaskada moduko babesak bakarrik',
 'protectedpagestext'      => 'Jarraian azaltzen diren orrialdeak mugitu edo aldatzeko babestuta daude',
 'protectedpagesempty'     => 'Ez dago parametro hauetarako babesturiko orrialderik momentu honetan.',
 'protectedtitles'         => 'Babestutako tituluak',
 'protectedtitlestext'     => 'Hurrengo tituluen sorrera babestua dago',
+'protectedtitlesempty'    => 'Ez dago parametro horiekin babesturiko izenbururik momentu honetan.',
 'listusers'               => 'Erabiltzaileen zerrenda',
+'listusers-editsonly'     => 'Aldaketak egin dituzten erabiltzaileak soilik erakutsi',
+'usereditcount'           => '{{PLURAL:$1|aldaketa $1|$1 aldaketa}}',
 'newpages'                => 'Orrialde berriak',
 'newpages-username'       => 'Erabiltzaile-izena:',
 'ancientpages'            => 'Orrialde zaharrenak',
@@ -1282,15 +1517,15 @@ Gure [http://www.mediawiki.org/wiki/Manual:Job_queue Job queue] '''$7'''-koa da.
 'booksources-search-legend' => 'Liburuen bilaketa',
 'booksources-go'            => 'Joan',
 'booksources-text'          => 'Jarraian liburu berri eta erabiliak saltzen dituzten guneetarako loturen zerrenda bat ikus dezakezu, bilatzen ari zaren liburu horientzako informazio gehigarria aurkitzeko lagungarria izan daitekeena:',
+'booksources-invalid-isbn'  => 'Emandako ISBNa ez dirudi baliagarria denik; ikusi ea akatsik egin duzun jatorrizko iturritik kopiatzerakoan.',
 
 # Special:Log
 'specialloguserlabel'  => 'Lankidea:',
 'speciallogtitlelabel' => 'Izenburua:',
 'log'                  => 'Erregistroak',
 'all-logs-page'        => 'Erregistro guztiak',
-'log-search-legend'    => 'Logak bilatu',
-'log-search-submit'    => 'Joan',
-'alllogstext'          => 'Igoera, ezabaketa, babes, blokeaketa eta administratzaile erregistroen erakusketa. Zerrenda mugatu dezakezu erregistro mota, erabiltzaile izena edo eragindako orrialdea aukeratuz.',
+'alllogstext'          => '{{SITENAME}} orrialdearen erregistro guztien erakusketa konbinatua.
+Erregistro mota, erabiltzailearen izena edota orrialdearen izena iragaziz bistaratu daiteke. Letra larriak eta xeheak bereizten dira.',
 'logempty'             => 'Ez dago emaitzarik erregistroan.',
 'log-title-wildcard'   => 'Testu honekin hasten diren izenburuak bilatu',
 
@@ -1300,6 +1535,7 @@ Gure [http://www.mediawiki.org/wiki/Manual:Job_queue Job queue] '''$7'''-koa da.
 'nextpage'          => 'Hurrengo orrialdea ($1)',
 'prevpage'          => 'Aurreko orrialdea ($1)',
 'allpagesfrom'      => 'Honela hasten diren orrialdeak erakutsi:',
+'allpagesto'        => 'Orrialde honetara zuzentzen diren guztiak erakutsi:',
 'allarticles'       => 'Artikulu guztiak',
 'allinnamespace'    => 'Orrialde guztiak ($1 izen-tartea)',
 'allnotinnamespace' => 'Orrialde guztiak ($1 izen-tartean ez daudenak)',
@@ -1319,37 +1555,69 @@ Ikus, gainera [[Special:WantedCategories|kategoriarik eskatuenak]].',
 'special-categories-sort-count' => 'kontatetzearen arabera ordenatu',
 'special-categories-sort-abc'   => 'alfabetikoki aldatu',
 
+# Special:DeletedContributions
+'deletedcontributions' => 'Ezabatutako ekarpenak',
+
+# Special:LinkSearch
+'linksearch'       => 'Kanpo loturak',
+'linksearch-pat'   => 'Bilaketa katea:',
+'linksearch-ns'    => 'Izen-tartea:',
+'linksearch-ok'    => 'Bilatu',
+'linksearch-text'  => '"*.wikipedia.org" bezalako izartxoak erabil daitezke.<br />
+Baimendutako protokoloak: <tt>$1</tt>',
+'linksearch-line'  => '$1, $2(e)tik lotuta',
+'linksearch-error' => 'Komodinak izenaren hasieran bakarrik agertu beharko lirateke.',
+
 # Special:ListUsers
 'listusersfrom'      => 'Hemendik aurrerako erabiltzaileak bistaratu:',
 'listusers-submit'   => 'Erakutsi',
 'listusers-noresult' => 'Ez da erabiltzailerik aurkitu.',
 
+# Special:Log/newusers
+'newuserlogpage'              => 'Erabiltzaile erregistroa',
+'newuserlogpagetext'          => 'Hau azken erabiltzaileen sorreren erregistroa da.',
+'newuserlog-byemail'          => 'pasahitza e-postaz bidali da',
+'newuserlog-create-entry'     => 'Erabiltzaile berria',
+'newuserlog-create2-entry'    => '$1 kontu berria sortu da',
+'newuserlog-autocreate-entry' => 'Automatikoki sorturiko kontua',
+
 # Special:ListGroupRights
-'listgrouprights'          => 'Erabiltzaile talde eskumenak',
-'listgrouprights-group'    => 'Taldea',
-'listgrouprights-rights'   => 'Eskumenak',
-'listgrouprights-helppage' => 'Help:Talde eskumenak',
-'listgrouprights-members'  => '(kideen zerrenda)',
+'listgrouprights'                 => 'Erabiltzaile talde eskumenak',
+'listgrouprights-summary'         => 'Ondorengo zerrendak wikian dauden lankide taldeak agertzen dira, beraien eskubideekin.
+Badago [[{{MediaWiki:Listgrouprights-helppage}}|informazio osagarria]] banakako eskubideei buruz.',
+'listgrouprights-group'           => 'Taldea',
+'listgrouprights-rights'          => 'Eskumenak',
+'listgrouprights-helppage'        => 'Help:Talde eskumenak',
+'listgrouprights-members'         => '(kideen zerrenda)',
+'listgrouprights-addgroup'        => '{{PLURAL:$2|Taldea gehitu ahal duzu|Taldeak gehitu ahal dituzu}}: $1',
+'listgrouprights-removegroup'     => '{{PLURAL:$2|Taldea kendu ahal duzu|Taldeak kendu ahal dituzu}}: $1',
+'listgrouprights-addgroup-all'    => 'Talde guztiak gehitu daitezke',
+'listgrouprights-removegroup-all' => 'Talde guztiak kendu daitezke',
 
 # E-mail user
-'mailnologin'     => 'Bidalketa helbiderik ez',
-'mailnologintext' => 'Beste erabiltzaileei e-posta mezuak bidaltzeko [[Special:UserLogin|saioa hasi]] eta baliozko e-posta helbidea behar duzu izan zure [[Special:Preferences|hobespenetan]].',
-'emailuser'       => 'Erabiltzaile honi e-posta bidali',
-'emailpage'       => 'Erabiltzaileari e-posta bidali',
-'emailpagetext'   => 'Erabiltzaile honek baliozko e-posta helbide bat ezarri badu bere hobespenetan, beheko formularioa erabiliz mezu bat bidal dakioke. Hobespenetan daukazun e-posta helbidea azalduko da mezuaren bidaltzaile bezala eta beraz erantzun ahal izango dizu.',
-'usermailererror' => 'Mail objektuak errore hau itzuli du:',
-'defemailsubject' => 'E-posta {{SITENAME}}(e)tik',
-'noemailtitle'    => 'Posta helbiderik ez',
-'noemailtext'     => 'Erabiltzaile honek ez du baliozko posta helbiderik zehaztu edo beste erabiltzaileengandik mezurik ez jasotzea aukeratu du.',
-'emailfrom'       => 'Nork:',
-'emailto'         => 'Nori:',
-'emailsubject'    => 'Gaia:',
-'emailmessage'    => 'Mezua:',
-'emailsend'       => 'Mezua',
-'emailccme'       => 'Mezu honen kopia bat niri bidali.',
-'emailccsubject'  => 'Zure mezuaren kopia $1(r)i: $2',
-'emailsent'       => 'Mezua bidali egin da',
-'emailsenttext'   => 'Zure e-posta mezua bidali egin da.',
+'mailnologin'      => 'Bidalketa helbiderik ez',
+'mailnologintext'  => 'Beste erabiltzaileei e-posta mezuak bidaltzeko [[Special:UserLogin|saioa hasi]] eta baliozko e-posta helbidea behar duzu izan zure [[Special:Preferences|hobespenetan]].',
+'emailuser'        => 'Erabiltzaile honi e-posta bidali',
+'emailpage'        => 'Erabiltzaileari e-posta bidali',
+'emailpagetext'    => 'Erabiltzaile honek baliozko e-posta helbide bat ezarri badu bere hobespenetan, beheko formularioa erabiliz mezu bat bidal dakioke. 
+[[Special:Preferences|Hobespenetan]] daukazun e-posta helbidea azalduko da mezuaren bidaltzaile bezala eta beraz erantzun ahal izango dizu.',
+'usermailererror'  => 'Mail objektuak errore hau itzuli du:',
+'defemailsubject'  => 'E-posta {{SITENAME}}(e)tik',
+'noemailtitle'     => 'Posta helbiderik ez',
+'noemailtext'      => 'Erabiltzaile honek ez du baliozko e-posta helbiderik zehaztu.',
+'nowikiemailtitle' => 'Ezin da e-postarik bidali',
+'nowikiemailtext'  => 'Erabiltzaile honek beste erabiltzaileengandik e-postak ez jasotzea hautatu du.',
+'email-legend'     => 'Bidali e-posta bat {{SITENAME}}(e)ko beste lankide bati',
+'emailfrom'        => 'Nork:',
+'emailto'          => 'Nori:',
+'emailsubject'     => 'Gaia:',
+'emailmessage'     => 'Mezua:',
+'emailsend'        => 'Mezua',
+'emailccme'        => 'Mezu honen kopia bat niri bidali.',
+'emailccsubject'   => 'Zure mezuaren kopia $1(r)i: $2',
+'emailsent'        => 'Mezua bidali egin da',
+'emailsenttext'    => 'Zure e-posta mezua bidali egin da.',
+'emailuserfooter'  => 'E-posta hau $1(e)k bidali dio $2(r)i {{SITENAME}}ko "E-posta bidali" funtzioa erabiliz.',
 
 # Watchlist
 'watchlist'            => 'Nire jarraipen zerrenda',
@@ -1377,16 +1645,11 @@ Jarraipen zerrendatik artikulua kentzeko, artikuluan ''ez jarraitu''ri eman.",
 'wlheader-showupdated' => "* Bisitatu zenituen azken alditik aldaketak izan dituzten orrialdeak '''beltzez''' nabarmenduta daude",
 'watchmethod-recent'   => 'Aldaketa berriak aztertzen jarraipen zerrendako orrialdeen bila',
 'watchmethod-list'     => 'jarraipen zerrendako orrialdeak aldaketa berrien bila aztertzen',
-'watchlistcontains'    => 'Zure jarraipen zerrendak $1 orrialde ditu.',
+'watchlistcontains'    => 'Zure jarraipen zerrendak {{PLURAL:$1|orrialde $1 du|$1 orrialde ditu}}.',
 'iteminvalidname'      => "Arazoa '$1' elementuarekin, baliogabeko izena...",
-'wlnote'               => "Jarraian ikus daitezke azken '''$2''' egunetako azken $1 aldaketak.",
+'wlnote'               => "Jarraian {{PLURAL:$2|ikus daiteke azken orduko|ikus daitezke azken '''$2''' orduetako}} azken {{PLURAL:$1|aldaketa|'''$1''' aldaketak}}.",
 'wlshowlast'           => 'Erakutsi azken $1 orduak $2 egunak $3',
-'watchlist-show-bots'  => 'Bot-en aldaketak erakutsi',
-'watchlist-hide-bots'  => 'Bot-en aldaketak ezkutatu',
-'watchlist-show-own'   => 'Nire aldaketak erakutsi',
-'watchlist-hide-own'   => 'Nire aldaketak ezkutatu',
-'watchlist-show-minor' => 'Aldaketa txikiak erakutsi',
-'watchlist-hide-minor' => 'Aldaketa txikiak ezkutatu',
+'watchlist-options'    => 'Jarraitze-zerrendaren aukerak',
 
 # Displayed when you click the "watch" button and it is in the process of watching
 'watching'   => 'Zerrendan gehitzen...',
@@ -1425,70 +1688,99 @@ Zure jarraipen zerrendako konfigurazioa aldatzeko, ikus
 Laguntza:
 {{fullurl:{{MediaWiki:Helppage}}}}',
 
-# Delete/protect/revert
-'deletepage'                  => 'Orrialdea ezabatu',
-'confirm'                     => 'Baieztatu',
-'excontent'                   => "edukia honakoa zen: '$1'",
-'excontentauthor'             => "edukia honakoa zen: '$1' (parte hartu duen lankide bakarra: '$2')",
-'exbeforeblank'               => "hustu aurreko edukiera: '$1'",
-'exblank'                     => 'orrialdea hutsik zegoen',
-'delete-confirm'              => '"$1" ezabatu',
-'delete-legend'               => 'Ezabatu',
-'historywarning'              => 'Kontuz! Ezabatuko duzun orrialdeak honako historia du:',
-'confirmdeletetext'           => 'Orrialde edo irudi bat eta beste historia guztia datu-basetik ezabatzear zaude. Mesedez, egiaztatu hori egin nahi duzula, ondorioak zeintzuk diren badakizula, eta [[{{MediaWiki:Policy-url}}|politikak]] errespetatuz egingo duzula.',
-'actioncomplete'              => 'Ekintza burutu da',
-'deletedtext'                 => '"<nowiki>$1</nowiki>" ezabatu egin da. Ikus $2 azken ezabaketen erregistroa ikusteko.',
-'deletedarticle'              => '"[[$1]]" ezabatu da',
-'suppressedarticle'           => '"[[$1]]" kendua',
-'dellogpage'                  => 'Ezabaketa erregistroa',
-'dellogpagetext'              => 'Behean ikus daiteke azken ezabaketen zerrenda.',
-'deletionlog'                 => 'ezabaketa erregistroa',
-'reverted'                    => 'Lehenagoko berrikuspen batera itzuli da',
-'deletecomment'               => 'Ezabatzeko arrazoia',
-'deleteotherreason'           => 'Arrazoi gehigarria:',
-'deletereasonotherlist'       => 'Beste arrazoi bat',
-'deletereason-dropdown'       => '*Ezabatzeko ohiko arrazoiak
+# Delete
+'deletepage'             => 'Orrialdea ezabatu',
+'confirm'                => 'Baieztatu',
+'excontent'              => "edukia honakoa zen: '$1'",
+'excontentauthor'        => "edukia honakoa zen: '$1' (parte hartu duen lankide bakarra: '$2')",
+'exbeforeblank'          => "hustu aurreko edukiera: '$1'",
+'exblank'                => 'orrialdea hutsik zegoen',
+'delete-confirm'         => '"$1" ezabatu',
+'delete-legend'          => 'Ezabatu',
+'historywarning'         => 'Kontuz! Ezabatuko duzun orrialdeak honako historia du:',
+'confirmdeletetext'      => 'Orrialde edo irudi bat eta beste historia guztia datu-basetik ezabatzear zaude. Mesedez, egiaztatu hori egin nahi duzula, ondorioak zeintzuk diren badakizula, eta [[{{MediaWiki:Policy-url}}|politikak]] errespetatuz egingo duzula.',
+'actioncomplete'         => 'Ekintza burutu da',
+'deletedtext'            => '"<nowiki>$1</nowiki>" ezabatu egin da. Ikus $2 azken ezabaketen erregistroa ikusteko.',
+'deletedarticle'         => '"[[$1]]" ezabatu da',
+'suppressedarticle'      => '"[[$1]]" kendua',
+'dellogpage'             => 'Ezabaketa erregistroa',
+'dellogpagetext'         => 'Behean ikus daiteke azken ezabaketen zerrenda.',
+'deletionlog'            => 'ezabaketa erregistroa',
+'reverted'               => 'Lehenagoko berrikuspen batera itzuli da',
+'deletecomment'          => 'Ezabatzeko arrazoia',
+'deleteotherreason'      => 'Arrazoi gehigarria:',
+'deletereasonotherlist'  => 'Beste arrazoi bat',
+'deletereason-dropdown'  => '*Ezabatzeko ohiko arrazoiak
 ** Egileak eskatuta
 ** Egile eskubideak urratzea
 ** Bandalismoa',
-'delete-edit-reasonlist'      => 'Ezabaketa arrazoiak aldatu',
-'delete-toobig'               => 'Orrialde honek aldaketa historia luzea du, $1 berrikuspenetik gorakoa. Orrialde horien ezabaketa mugatua dago {{SITENAME}}n ezbeharrak saihesteko.',
-'delete-warning-toobig'       => 'Orrialde honek aldaketa historia luzea du, $1 berrikuspenetik gorakoa. Ezabatzeak ezbeharrak eragin ditzake {{SITENAME}}ren datu-basean; kontu izan.',
-'rollback'                    => 'Aldaketak desegin',
-'rollback_short'              => 'Desegin',
-'rollbacklink'                => 'desegin',
-'rollbackfailed'              => 'Desegiteak huts egin dud',
-'cantrollback'                => 'Ezin da aldaketa desegin; erabiltzaile bakarrak hartu du parte.',
-'alreadyrolled'               => 'Ezin da [[User:$2|$2]](e)k ([[User talk:$2|Eztabaida]]) [[$1]](e)n egindako azken aldaketa desegin; beste norbaitek editatu du edo jada desegin du. Azken aldaketa [[User:$3|$3]](e)k ([[User talk:$3|Eztabaida]]) egin du.',
-'editcomment'                 => 'Aldaketaren iruzkina: "<i>$1</i>".', # only shown if there is an edit comment
-'revertpage'                  => '$2ren aldaketak ezabatu dira, $1ren azken bertsiora itzuliz.', # Additional available: $3: revid of the revision reverted to, $4: timestamp of the revision reverted to, $5: revid of the revision reverted from, $6: timestamp of the revision reverted from
-'rollback-success'            => '$1(r)en aldaketak desegin dira, $2(r)en azken bertsiora itzuliz.',
-'sessionfailure'              => 'Badirudi saioarekin arazoren bat dagoela; bandalismoak saihesteko ekintza hau ezeztatu egin da. Mesedez, nabigatzaileko "atzera" botoian klik egin, hona ekarri zaituen orrialde hori berriz kargatu, eta saiatu berriz.',
+'delete-edit-reasonlist' => 'Ezabaketa arrazoiak aldatu',
+'delete-toobig'          => 'Orrialde honek aldaketa historia luzea du, {{PLURAL:$1|berrikuspen batetik|$1 berrikuspenetik}} gorakoa. 
+Orrialde horien ezabaketa mugatua dago {{SITENAME}}n ezbeharrak saihesteko.',
+'delete-warning-toobig'  => 'Orrialde honek aldaketa historia luzea du, {{PLURAL:$1|berrikuspen batetik|$1 berrikuspenetik}} gorakoa.
+Ezabatzeak ezbeharrak eragin ditzake {{SITENAME}}ren datu-basean;
+kontu izan.',
+
+# Rollback
+'rollback'         => 'Aldaketak desegin',
+'rollback_short'   => 'Desegin',
+'rollbacklink'     => 'desegin',
+'rollbackfailed'   => 'Desegiteak huts egin dud',
+'cantrollback'     => 'Ezin da aldaketa desegin; erabiltzaile bakarrak hartu du parte.',
+'alreadyrolled'    => 'Ezin da [[User:$2|$2]](e)k ([[User talk:$2|Eztabaida]]{{int:pipe-separator}}[[Special:Contributions/$2|{{int:contribslink}}]]) [[$1]](e)n egindako azken aldaketa desegin;
+beste norbaitek editatu du edo jada desegin du.
+
+ Azken aldaketa [[User:$3|$3]](e)k ([[User talk:$3|Eztabaida]]{{int:pipe-separator}}[[Special:Contributions/$3|{{int:contribslink}}]]) egin du.',
+'editcomment'      => "Aldaketaren laburpena: \"''\$1''\".", # only shown if there is an edit comment
+'revertpage'       => '$2ren aldaketak ezabatu dira, $1ren azken bertsiora itzuliz.', # Additionally available: $3: revid of the revision reverted to, $4: timestamp of the revision reverted to, $5: revid of the revision reverted from, $6: timestamp of the revision reverted from
+'rollback-success' => '$1(r)en aldaketak desegin dira, $2(r)en azken bertsiora itzuliz.',
+'sessionfailure'   => 'Badirudi saioarekin arazoren bat dagoela; bandalismoak saihesteko ekintza hau ezeztatu egin da. Mesedez, nabigatzaileko "atzera" botoian klik egin, hona ekarri zaituen orrialde hori berriz kargatu, eta saiatu berriz.',
+
+# Protect
 'protectlogpage'              => 'Babes erregistroa',
 'protectlogtext'              => 'Orrialdeen blokeo eta desblokeo zerrenda azaltzen da jarraian.',
 'protectedarticle'            => '"[[$1]]" babestu da"',
 'modifiedarticleprotection'   => '"[[$1]]"(r)en babes maila aldatu da',
 'unprotectedarticle'          => '"[[$1]]"(r)i babesa kendu zaio',
+'movedarticleprotection'      => 'babes hobespenak "[[$2]]"tik "[[$1]]"(e)ra mugitu dira',
 'protect-title'               => '"$1" babesten',
+'prot_1movedto2'              => '$1 izenburua $2(r)engatik aldatu da',
 'protect-legend'              => 'Babesa baieztatu',
 'protectcomment'              => 'Babesteko arrazoia',
 'protectexpiry'               => 'Iraungipena:',
 'protect_expiry_invalid'      => 'Baliogabeko iraungipen-data.',
 'protect_expiry_old'          => 'Iraungipen-data iragan da.',
 'protect-unchain'             => 'Mugitzeko blokeoa kendu',
-'protect-text'                => '<strong><nowiki>$1</nowiki></strong> orrialdearen babes maila ikusi eta aldatu egin beharko zenuke.',
-'protect-locked-access'       => 'Zure kontuak ez du baimenik babes mailak aldatzeko.
-Hemen daude <strong>$1</strong> orrialderako oraingo ezarpenak:',
+'protect-text'                => "'''<nowiki>$1</nowiki>''' orrialdearen babes maila ikusi eta aldatu egin beharko zenuke.",
+'protect-locked-blocked'      => "Babes-mailak ezin dira aldatu blokeatuta dagoen bitartean.
+Hemen daude '''$1''' orrialdearen egungo ezarpenak:",
+'protect-locked-dblock'       => "Babes-mailak ezin dira aldatu, datu-basea blokeatuta baitago.
+Hemen daude '''$1''' orriaren oraingo ezarpenak:",
+'protect-locked-access'       => "Zure kontuak ez du baimenik babes mailak aldatzeko.
+Hemen daude '''$1''' orrialderako oraingo ezarpenak:",
 'protect-cascadeon'           => 'Orrialde hau momentu honetan babespean dago honako orrialde {{PLURAL:$1|honek kaskada bidezko babesa duelako|hauek kaskada bidezko babesa dutelako}}.
 Orrialde honen babes maila alda dezakezu, baina ez du eraginik izango kaskada bidezko babesean.',
-'protect-default'             => '(lehenetsia)',
+'protect-default'             => 'Lankide guztiak baimendu',
 'protect-fallback'            => '"$1" baimena eskatu',
-'protect-level-autoconfirmed' => 'Erregistratu gabeko erabiltzaileak blokeatu',
+'protect-level-autoconfirmed' => 'Lankide berri eta erregistratu gabekoak blokeatu',
 'protect-level-sysop'         => 'Administratzaileak bakarrik',
 'protect-summary-cascade'     => 'jauzian',
 'protect-expiring'            => 'iraungipen-data: $1 (UTC)',
+'protect-expiry-indefinite'   => 'mugagabea',
 'protect-cascade'             => 'Babes masiboa - orrialde honen barneko orrialde guztiak blokeatu.',
 'protect-cantedit'            => 'Ezin duzu orrialde honetako babes-maila aldatu, ez duzulako berau aldatzeko eskumenik.',
+'protect-othertime'           => 'Beste denbora:',
+'protect-othertime-op'        => 'beste denbora',
+'protect-existing-expiry'     => 'Iraungitze ordua: $2, $3',
+'protect-otherreason'         => 'Bestelako arrazoiak (edo gehigarriak):',
+'protect-otherreason-op'      => 'bestelako arrazoiak (edo gehigarriak)',
+'protect-dropdown'            => '*Babesteko arrazoi ohikoenak
+** Gehiegizko bandalismoa
+** Gehiegizko spama
+** Produkzioaren aurkakoa den edizio gerra
+** Trafiko handiko orrialdea',
+'protect-edit-reasonlist'     => 'Babesteko arrazoiak aldatu',
+'protect-expiry-options'      => 'ordu 1:1 hour,egun 1:1 day,aste 1:1 week,2 aste:2 weeks,hilabete 1:1 month,3 hilabete:3 months,6 hilabete:6 months,urte 1:1 year,betirako:infinite', # display1:time1,display2:time2,...
 'restriction-type'            => 'Baimena:',
 'restriction-level'           => 'Murrizketa maila:',
 'minimum-size'                => 'Tamaina minimoa',
@@ -1507,49 +1799,57 @@ Orrialde honen babes maila alda dezakezu, baina ez du eraginik izango kaskada bi
 'restriction-level-all'           => 'edozein maila',
 
 # Undelete
-'undelete'                  => 'Ezabatutako orrialdeak ikusi',
-'undeletepage'              => 'Ezabatutako orrialdeak ikusi eta leheneratu',
-'undeletepagetitle'         => "'''Hurrengoa [[:$1|$1]](r)en ezabatutako aldaketak dira'''.",
-'viewdeletedpage'           => 'Ezabatutako orrialdeak ikusi',
-'undeletepagetext'          => 'Jarraian zerrendatzen diren orrialdeak ezabatu egin dira baina oraindik artxiboa gordeta daude eta leheneratu egin daitezke. Artxiboa noizean behin hustu egin liteke.',
-'undelete-fieldset-title'   => 'Berrikuspenak berrezarri',
-'undeleteextrahelp'         => "Orrialde osoa leheneratzeko, koadrotxo guztiak hautatu gabe utzi eta '''''Leheneratu'''''n klik egin. 
+'undelete'                     => 'Ezabatutako orrialdeak ikusi',
+'undeletepage'                 => 'Ezabatutako orrialdeak ikusi eta leheneratu',
+'undeletepagetitle'            => "'''Hurrengoa [[:$1|$1]](r)en ezabatutako aldaketak dira'''.",
+'viewdeletedpage'              => 'Ezabatutako orrialdeak ikusi',
+'undeletepagetext'             => 'Jarraian zerrendatzen {{PLURAL:$1|den orrialdea ezabatu da baina oraindik artxiboan gordeta dago eta leheneratu egin daiteke.|diren orrialdeak ezabatu dira baina oraindik artxiboan gordeta daude eta leheneratu egin daitezke.}}
+Artxiboa noizean behin hustu egin liteke.',
+'undelete-fieldset-title'      => 'Berrikuspenak berrezarri',
+'undeleteextrahelp'            => "Orrialde osoa leheneratzeko, koadrotxo guztiak hautatu gabe utzi eta '''''Leheneratu'''''n klik egin. 
 Aukeratutako leheneratze bat burutzeko, leheneratu nahi dituzun berrikuspenen koadrotxoak markatu eta '''''Leheneratu''''' klik egin. 
 '''''Hasiera'''''n klik eginez gero koadrotxo guztiak eta iruzkin koadroa hustu egingo dira.",
-'undeleterevisions'         => '$1 berrikuspen gordeta',
-'undeletehistory'           => 'Orrialdea leheneratzen baduzu, berrikuspena guztiak leheneratuko dira historian. 
+'undeleterevisions'            => '$1 {{PLURAL:$1|berrikuspen|berrikuspen}} artxibatuta',
+'undeletehistory'              => 'Orrialdea leheneratzen baduzu, berrikuspena guztiak leheneratuko dira historian. 
 Ezabatu ondoren izen berdina duen orrialde berri bat sortzen bada leheneratutako berrikuspenak azalduko dira historian.',
-'undeleterevdel'            => 'Berrezarpena ez da egingo goreneko orrialde edo fitxategia partzialki ezabatua suertatzen bada.
+'undeleterevdel'               => 'Berrezarpena ez da egingo goreneko orrialde edo fitxategia partzialki ezabatua suertatzen bada.
 Kasu horietan ezabatutako azken aldaketen aukeraketa kendu edo agertarazi beharko dituzu.
 
 Undeletion will not be performed if it will result in the top page or file revision being partially deleted.
 In such cases, you must uncheck or unhide the newest deleted revision.',
-'undeletehistorynoadmin'    => 'Artikulua ezabatu egin da. Ezabatzeko azalpena beheko laburpenean erakusten da, ezabatu aurretik parte hartu zuten erabiltzaileen xehetasunekin batera. Ezabatutako berrikuspenen oraingo testua administratzaileek bakarrik ikus dezakete.',
-'undeleterevision-missing'  => 'Baliogabeko berrikuspena. Baliteke lotura ezegokia izatea, edo berriskupena leheneratu edo kendu izana.',
-'undelete-nodiff'           => 'Ez da aurkitu aurreko berrikuspenik.',
-'undeletebtn'               => 'Leheneratu',
-'undeletelink'              => 'leheneratu',
-'undeletereset'             => 'Hasieratu',
-'undeletecomment'           => 'Iruzkina:',
-'undeletedarticle'          => '"[[$1]]" leheneratu da',
-'undeletedrevisions'        => '$1 berrikuspen leheneratu dira',
-'undeletedrevisions-files'  => '$1 berrikuspen eta $2 fitxategi leheneratu dira',
-'undeletedfiles'            => '$1 fitxategi leheneratu dira',
-'cannotundelete'            => 'Errorea birsortzerakoan; baliteke beste norbaitek lehenago birsortu izana.',
-'undeletedpage'             => "<big>'''$1 leheneratu egin da'''</big>
+'undeletehistorynoadmin'       => 'Artikulua ezabatu egin da. Ezabatzeko azalpena beheko laburpenean erakusten da, ezabatu aurretik parte hartu zuten erabiltzaileen xehetasunekin batera. Ezabatutako berrikuspenen oraingo testua administratzaileek bakarrik ikus dezakete.',
+'undelete-revision'            => '$1(e)n berrikuspen $3(e)k ezabatu du ($4(e)ko $5(e)tan):',
+'undeleterevision-missing'     => 'Baliogabeko berrikuspena. Baliteke lotura ezegokia izatea, edo berriskupena leheneratu edo kendu izana.',
+'undelete-nodiff'              => 'Ez da aurkitu aurreko berrikuspenik.',
+'undeletebtn'                  => 'Leheneratu',
+'undeletelink'                 => 'leheneratu',
+'undeletereset'                => 'Hasieratu',
+'undeleteinvert'               => 'Aukeraketa alderanztu',
+'undeletecomment'              => 'Iruzkina:',
+'undeletedarticle'             => '"[[$1]]" leheneratu da',
+'undeletedrevisions'           => '{{PLURAL:$1|Berrikuspen 1 leheneratu da|$1 berrikuspen leheneratu dira}}',
+'undeletedrevisions-files'     => '{{PLURAL:$1|berrikuspen|berrikuspen}} eta {{PLURAL:$2|fitxategi|fitxategi}} leheneratu dira',
+'undeletedfiles'               => '{{PLURAL:$1|fitxategi|fitxategi}} leheneratu dira',
+'cannotundelete'               => 'Errorea birsortzerakoan; baliteke beste norbaitek lehenago birsortu izana.',
+'undeletedpage'                => "<big>'''$1 leheneratu egin da'''</big>
 
 [[Special:Log/delete|Ezabaketa erregistrora]] jo azken ezabaketa eta leheneraketak ikusteko.",
-'undelete-header'           => 'Berriki ezabatutako orrialdeak ikusteko [[Special:Log/delete|ezabaketa erregistrora]] jo.',
-'undelete-search-box'       => 'Ezabatutako orrialdeak bilatu',
-'undelete-search-prefix'    => 'Honela hasten diren orrialdeak erakutsi:',
-'undelete-search-submit'    => 'Bilatu',
-'undelete-no-results'       => 'Ez da bat datorren orrialderik aurkitu ezabaketen artxiboan.',
-'undelete-cleanup-error'    => 'Erabiltzen ez den "$1" fitxategia ezabatzen arazoa egon da.',
-'undelete-error-short'      => 'Errorea fitxategia berreskuratzerakoan: $1',
-'undelete-error-long'       => 'Errorea gertatu da hurrengo orrialdea berreskuratzerakoan:
+'undelete-header'              => 'Berriki ezabatutako orrialdeak ikusteko [[Special:Log/delete|ezabaketa erregistrora]] jo.',
+'undelete-search-box'          => 'Ezabatutako orrialdeak bilatu',
+'undelete-search-prefix'       => 'Honela hasten diren orrialdeak erakutsi:',
+'undelete-search-submit'       => 'Bilatu',
+'undelete-no-results'          => 'Ez da bat datorren orrialderik aurkitu ezabaketen artxiboan.',
+'undelete-filename-mismatch'   => 'Ezin da $1 denbora-marka duten fitxategi aldaketa ezabatua berrezarri: fitxategi-izena ez dator bat',
+'undelete-bad-store-key'       => 'Ezin da $1 denbora-marka duten fitxategi aldaketa ezabatua berrezarri: fitxategi ezabatu aurretik ez zegoen.',
+'undelete-cleanup-error'       => 'Erabiltzen ez den "$1" fitxategia ezabatzen arazoa egon da.',
+'undelete-missing-filearchive' => 'Fitxategiaren $1 IDa ezin da leheneratu, ez baitago datu-basean.
+Aurretik ez luke ezabatua izan behar.',
+'undelete-error-short'         => 'Errorea fitxategia berreskuratzerakoan: $1',
+'undelete-error-long'          => 'Errorea gertatu da hurrengo orrialdea berreskuratzerakoan:
 
 $1',
-'undelete-show-file-submit' => 'Bai',
+'undelete-show-file-confirm'   => 'Ziur zaude $3, $2-ko "<nowiki>$1</nowiki>" fitxategiaren ezabatutako berrikuspena ikusi nahi duzula?',
+'undelete-show-file-submit'    => 'Bai',
 
 # Namespace form on various pages
 'namespace'      => 'Izen-tartea:',
@@ -1557,26 +1857,27 @@ $1',
 'blanknamespace' => '(Nagusia)',
 
 # Contributions
-'contributions' => 'Lankidearen ekarpenak',
-'mycontris'     => 'Nire ekarpenak',
-'contribsub2'   => '$1 ($2)',
-'nocontribs'    => 'Ez da ezaugarri horiekin bat datorren aldaketarik aurkitu.',
-'uctop'         => ' (Azken aldaketa)',
-'month'         => 'Hilabetea (eta lehenagokoak):',
-'year'          => 'Urtea (eta lehenagokoak):',
+'contributions'       => 'Lankidearen ekarpenak',
+'contributions-title' => '$1(r)entzat lankidearen ekarpenak',
+'mycontris'           => 'Nire ekarpenak',
+'contribsub2'         => '$1 ($2)',
+'nocontribs'          => 'Ez da ezaugarri horiekin bat datorren aldaketarik aurkitu.',
+'uctop'               => ' (Azken aldaketa)',
+'month'               => 'Hilabetea (eta lehenagokoak):',
+'year'                => 'Urtea (eta lehenagokoak):',
 
-'sp-contributions-newbies'     => 'Soilik kontu berrien ekarpenak erakutsi',
-'sp-contributions-newbies-sub' => 'Hasiberrientzako',
-'sp-contributions-blocklog'    => 'Blokeaketa erregistroa',
-'sp-contributions-search'      => 'Ekarpenentzako bilaketa',
-'sp-contributions-username'    => 'IP helbide edo lankide-izena:',
-'sp-contributions-submit'      => 'Bilatu',
+'sp-contributions-newbies'       => 'Soilik kontu berrien ekarpenak erakutsi',
+'sp-contributions-newbies-sub'   => 'Hasiberrientzako',
+'sp-contributions-newbies-title' => 'Lankideen ekarpenak lankide berrietn',
+'sp-contributions-blocklog'      => 'Blokeaketa erregistroa',
+'sp-contributions-search'        => 'Ekarpenentzako bilaketa',
+'sp-contributions-username'      => 'IP helbidea edo erabiltzaile izena:',
+'sp-contributions-submit'        => 'Bilatu',
 
 # What links here
 'whatlinkshere'            => 'Honekin lotzen diren orriak',
 'whatlinkshere-title'      => '$1(e)kin lotzen diren orrialdeak',
 'whatlinkshere-page'       => 'Orrialdea:',
-'linklistsub'              => '(Loturen zerrenda)',
 'linkshere'                => "Hurrengoek dute '''[[:$1]]''' orrialderako lotura:",
 'nolinkshere'              => "Ez dago '''[[:$1]]''' lotura duen orrialderik.",
 'nolinkshere-ns'           => "Hautatutako izen-tartean ez dago '''[[:$1]]''' orrialderako lotura duenik.",
@@ -1606,36 +1907,43 @@ $1',
 ** Orrialdetatik edukia ezabatzea
 ** Spam-a edota kanpoko loturak ezarri
 ** Bandalismoa egitea
-** Beste lankideei mehatxatzea
+** Beste erabiltzaileei mehatxatzea
 ** Kontu ugari erabiltzea
-** Lankide izen desegokia',
+** Erabiltzaile izen desegokia',
 'ipbanononly'                     => 'Erabiltzaile anonimoak bakarrik blokeatu',
 'ipbcreateaccount'                => 'Kontua sortzea debekatu',
 'ipbemailban'                     => 'Erabiltzaileak e-mailak bidal ditzan ekidin',
 'ipbenableautoblock'              => 'Erabiltzaile honek erabilitako azken IP helbidea automatikoki blokeatu, eta baita erabili dezakeen beste edozein IP ere',
 'ipbsubmit'                       => 'Erabiltzaile hau blokeatu',
 'ipbother'                        => 'Beste denbora-tarte bat',
-'ipboptions'                      => '15 minutu:15 minutes,30 minutu:30 minutes,ordu 1:1 hour,2 ordu:2 hours,egun bat:1 day,3 egun:3 days,aste 1:1 week,2 aste:2 weeks,hilabete 1:1 month,betirako:infinite', # display1:time1,display2:time2,...
+'ipboptions'                      => '2 ordu:2 hours,egun 1:1 day,3 egun:3 days,aste 1:1 week,2 aste:2 weeks,hilabete 1:1 month,3 hilabete:3 months,6 hilabete:6 months,urte 1:1 year,betirako:infinite', # display1:time1,display2:time2,...
 'ipbotheroption'                  => 'beste bat',
 'ipbotherreason'                  => 'Arrazoi gehigarria:',
+'ipbhidename'                     => 'Lankide izena blokeo logetik, oraingo blokeo zerrendatik eta lankide zerrendatik izkutatu.',
 'ipbwatchuser'                    => 'Erabiltzaile honen erabiltzaile eta eztabaida orrialdeak jarraitu',
+'ipballowusertalk'                => 'Blokeatuta izanagatik ere, lankide honek bere eztabaida-orria aldatzea baimendu',
+'ipb-change-block'                => 'Lankidea honako balioekin bir-blokeatu',
 'badipaddress'                    => 'Baliogabeko IP helbidea',
 'blockipsuccesssub'               => 'Blokeoa burutu da',
 'blockipsuccesstext'              => '[[Special:Contributions/$1|$1]] erabiltzaileari blokeoa ezarri zaio.<br />
 Ikus [[Special:IPBlockList|IP blokeoen zerrenda]] blokeoak aztertzeko.',
-'ipb-edit-dropdown'               => 'Lankide bat blokeatzeko arrazoiak',
+'ipb-edit-dropdown'               => 'Blokeatzeko arrazoiak aldatu',
 'ipb-unblock-addr'                => '$1 lankide edo IP helbideari blokeoa baliogabetu',
 'ipb-unblock'                     => 'Erabiltzaile izen edo IP helbide bati blokeoa kendu',
 'ipb-blocklist-addr'              => '$1(r)en blokeoak ikusi',
 'ipb-blocklist'                   => 'Blokeaketak ikusi',
+'ipb-blocklist-contribs'          => '$1(r)en ekarpenak',
 'unblockip'                       => 'Erabiltzailea desblokeatu',
 'unblockiptext'                   => 'Erabili beheko formularioa lehenago blokeatutako IP helbide edo erabiltzaile baten idazketa baimenak leheneratzeko.',
-'ipusubmit'                       => 'Helbide hau desblokeatu',
+'ipusubmit'                       => 'Blokeoa ezabatu',
 'unblocked'                       => '[[User:$1|$1]] desblokeatu egin da',
 'unblocked-id'                    => '$1 blokeaketa ezabatu da',
 'ipblocklist'                     => 'Blokeatutako IP helbide eta erabiltzaileak',
 'ipblocklist-legend'              => 'Blokeatutako erabiltzaile bat bilatu',
-'ipblocklist-username'            => 'Lankide izena edo IP helbidea:',
+'ipblocklist-username'            => 'Erabiltzaile izena edo IP helbidea:',
+'ipblocklist-sh-userblocks'       => 'Kontuaren blokeoak $1',
+'ipblocklist-sh-tempblocks'       => 'Denbora baterako blokeoak $1',
+'ipblocklist-sh-addressblocks'    => 'IP bakarreko blokeoak $1',
 'ipblocklist-submit'              => 'Bilatu',
 'blocklistline'                   => '$1, $2(e)k $3 blokeatu du (iraungipena: $4)',
 'infiniteblock'                   => 'infinitu',
@@ -1644,26 +1952,35 @@ Ikus [[Special:IPBlockList|IP blokeoen zerrenda]] blokeoak aztertzeko.',
 'noautoblockblock'                => 'autoblokeoa ezgaituta',
 'createaccountblock'              => 'kontua sortzea blokeatuta',
 'emailblock'                      => 'e-posta blokeatuta',
+'blocklist-nousertalk'            => 'zure buruaren eztabaida orrialdea ezin duzu aldatu',
 'ipblocklist-empty'               => 'Blokeaketa zerrenda hutsik dago.',
 'ipblocklist-no-results'          => 'Zehaztutako IP helbide edo erabiltzaile izena ez dago blokeatuta.',
 'blocklink'                       => 'blokeatu',
 'unblocklink'                     => 'blokeoa kendu',
+'change-blocklink'                => 'blokeoa aldatu',
 'contribslink'                    => 'ekarpenak',
 'autoblocker'                     => '"[[User:$1|$1]]"(e)k berriki erabili duen IP helbidea duzulako autoblokeatu zaizu. $1(e)k emandako arrazoia zera da: "\'\'\'$2\'\'\'"',
 'blocklogpage'                    => 'Blokeo erregistroa',
+'blocklog-fulllog'                => 'Blokeoen log osoa',
 'blocklogentry'                   => '"[[$1]]" $2(e)ko iraungipenarekin blokeatu da. $3',
+'reblock-logentry'                => '[[$1]]-entzako blokeo zehaztapenak aldatu dira $2 $3-ko iraungipenarekin',
 'blocklogtext'                    => 'Erabiltzaileen blokeoen ezarpen eta ezabaketen erregistroa da hau. Ez dira automatikoki blokeatutako IP helbideak zerrendatzen. Ikus [[Special:IPBlockList|IP blokeoen zerrenda]] aktibo dauden blokeoak aztertzeko.',
 'unblocklogentry'                 => '$1 desblokeatu da',
 'block-log-flags-anononly'        => 'erabiltzaile anonimoak bakarrik',
 'block-log-flags-nocreate'        => 'kontuak sortzea ezgaituta',
 'block-log-flags-noautoblock'     => 'auto-blokeaketa ezgaitu da',
 'block-log-flags-noemail'         => 'e-posta blokeatuta',
+'block-log-flags-nousertalk'      => 'ezin da aldatu norbere eztabaida-orria',
 'block-log-flags-angry-autoblock' => 'hobetutako autoblokeoa gaituta',
 'range_block_disabled'            => 'Administratzaileak IP eremuak blokeatzeko gaitasuna ezgaituta dago.',
 'ipb_expiry_invalid'              => 'Baliogabeko iraungipen denbora',
 'ipb_expiry_temp'                 => 'Izkutuan dauden lankide izenen blokeoa betierekikoa izan behar du.',
 'ipb_already_blocked'             => '"$1" badago blokeatuta',
+'ipb-needreblock'                 => '== Dagoeneko blokeaturik ==
+$1 dagoeneko blokeaturik dago. Ezarpenak aldatu nahi al dituzu?',
 'ipb_cant_unblock'                => 'Errorea: Ez da $1 IDa duen blokeoa aurkitu. Baliteke blokeoa jada kenduta egotea.',
+'ipb_blocked_as_range'            => 'Akatsa: $1 IPa ez dago zuzenean blokeatuta eta ezin da blokeoa kendu.
+Hala ere, $2-(r)en parte denez, blokeoa kendu daiteke.',
 'ip_range_invalid'                => 'Baliogabeko IP eremua.',
 'blockme'                         => 'Blokea nazazu',
 'proxyblocker'                    => 'Proxy blokeatzailea',
@@ -1672,6 +1989,7 @@ Ikus [[Special:IPBlockList|IP blokeoen zerrenda]] blokeoak aztertzeko.',
 'proxyblocksuccess'               => 'Egina.',
 'sorbsreason'                     => 'Zure IP helbidea proxy ireki bezala zerrendatuta dago DNSBLan.',
 'sorbs_create_account_reason'     => 'Zure IP helbidea proxy ireki bezala zerrendatuta dago DNSBLan. Ezin duzu kontua sortu.',
+'cant-block-while-blocked'        => 'Blokeatuta zauden bitartean ezin dituzu beste lankideak blokeatu.',
 
 # Developer tools
 'lockdb'              => 'Datu-basea blokeatu',
@@ -1691,53 +2009,67 @@ Ikus [[Special:IPBlockList|IP blokeoen zerrenda]] blokeoak aztertzeko.',
 'databasenotlocked'   => 'Datu-basea ez dago blokeatuta.',
 
 # Move page
-'move-page'               => '$1 mugitu',
-'move-page-legend'        => 'Orrialdea mugitu',
-'movepagetext'            => 'Hurrengo pausoak jarraituz, artikulu edo orrialde baten izena aldatu daiteke. Izenburu zaharra, automatikoki izenburu berriari birzuzenduko zaio.
+'move-page'                    => '$1 mugitu',
+'move-page-legend'             => 'Orrialdea mugitu',
+'movepagetext'                 => 'Hurrengo pausoak jarraituz, artikulu edo orrialde baten izena aldatu daiteke. Izenburu zaharra, automatikoki izenburu berriari birzuzenduko zaio.
 Gogora ezazu, orrialdearen izena ez dela aldatuko, nahi duzun izena dagoeneko sortuta badago Wikipedian; birzuzenketa bat edo historiarik gabeko orrialde bat ez bada.
 
 <b>KONTUZ!</b>
 Artikulu oso erabilia edo asko aldatzen denaren izenburua aldatzera bazoaz, mesedez, lehenbizi artikuluaren eztabaidan adierazi ezazu beste lankideen iritziak jasotzeko.',
-'movepagetalktext'        => "Dagokion eztabaida orrialdea berarekin batera mugitu da, honako kasu hauetan '''ezik:'''
+'movepagetalktext'             => "Dagokion eztabaida orrialdea berarekin batera mugitu da, honako kasu hauetan '''ezik:'''
 * Hutsik ez dagoen eztabaida orrialde bat existitzen bada izen berrian.
 * Beheko koadroa hautatzen ez baduzu.
 
 Kasu horietan orrialdea eskuz mugitu edo bestearekin bateratu beharko duzu.",
-'movearticle'             => 'Orrialdea mugitu',
-'movenotallowed'          => 'Ez daukazu orrialdeak mugitzeko baimenik.',
-'newtitle'                => 'Izenburu berria',
-'move-watch'              => 'Orrialde hau jarraitu',
-'movepagebtn'             => 'Orrialde mugitu',
-'pagemovedsub'            => 'Mugimendua eginda',
-'movepage-moved'          => '<big>\'\'\'"$1" orrialdea "$2"n dago orain\'\'\'</big>', # The two titles are passed in plain text as $3 and $4 to allow additional goodies in the message.
-'articleexists'           => 'Izen hori duen artikulu bat badago edo hautatutako izena ez da baliozkoa. Mesedez, beste izen bat aukeratu.',
-'talkexists'              => "'''Orrialde hau arazorik gabe mugitu da, baina eztabaida orrialde ezin izan da mugitu izenburu berriarekin jada bat existitzen delako. Mesedez, eskuz batu itzazu biak.'''",
-'movedto'                 => 'hona mugitu da:',
-'movetalk'                => 'Eztabaida orrialdea ere mugitu, ahal bada.',
-'move-subpages'           => 'Ahal izanez gero azpiorrialde guztiak ere mugitu',
-'move-talk-subpages'      => 'Ahal izanez gero eztabaida orrialdearen azpiorrialde guztiak ere mugitu',
-'movepage-page-exists'    => '$1 orrialdea jada badago eta ezin da automatikoki gainetik idatzi.',
-'movepage-page-moved'     => '$1 orrialdea $2(e)ra mugitu da.',
-'movepage-page-unmoved'   => '$1 orrialdea ezin da $2(e)ra mugitu.',
-'movepage-max-pages'      => '$1 {{PLURAL:$1|orrialderen|orrialdeen}} maximoa mugitu da eta jada ez dira gehiago mugituko modu automatikoan.',
-'1movedto2'               => '$1 izenburua $2(r)engatik aldatu da',
-'1movedto2_redir'         => '$1 izenburua $2(r)engatik aldatu da birzuzenketaren gainetik',
-'movelogpage'             => 'Mugimendu erregistroa',
-'movelogpagetext'         => 'Mugitutako orrialdeen zerrenda bat azaltzen da jarraian.',
-'movereason'              => 'Arrazoia',
-'revertmove'              => 'desegin',
-'delete_and_move'         => 'Ezabatu eta mugitu',
-'delete_and_move_text'    => '== Ezabatzeko beharra ==
+'movearticle'                  => 'Orrialdea mugitu',
+'movenologin'                  => 'Saioa hasi gabe',
+'movenologintext'              => 'Orrialde bat mugitzeko erregistratutako erabiltzailea izan behar duzu eta [[Special:UserLogin|saioa hasi]].',
+'movenotallowed'               => 'Ez daukazu orrialdeak mugitzeko baimenik.',
+'movenotallowedfile'           => 'Ez duzu fitxategiak mugitzeko eskumenik.',
+'cant-move-user-page'          => 'Ez duzu lankide orrialdeak mugitzeko eskumenik (azpiorrialdeetatik at).',
+'cant-move-to-user-page'       => 'Ez duzu orrialde bat lankide orrialde batera mugitzeko eskumenik (lankide azpiorrialde batera izan ezik).',
+'newtitle'                     => 'Izenburu berria',
+'move-watch'                   => 'Orrialde hau jarraitu',
+'movepagebtn'                  => 'Orrialde mugitu',
+'pagemovedsub'                 => 'Mugimendua eginda',
+'movepage-moved'               => '<big>\'\'\'"$1" "$2"(e)ra mugitu da\'\'\'</big>', # The two titles are passed in plain text as $3 and $4 to allow additional goodies in the message.
+'movepage-moved-redirect'      => 'Birzuzenketa orrialde bat sortu da.',
+'movepage-moved-noredirect'    => 'Birzuzenketa baten sorrera kendu da.',
+'articleexists'                => 'Izen hori duen artikulu bat badago edo hautatutako izena ez da baliozkoa. Mesedez, beste izen bat aukeratu.',
+'cantmove-titleprotected'      => 'Ezin duzu orrialde bat leku honetara mugitu izenburu berri hori sor ez dadin babesa duelako',
+'talkexists'                   => "'''Orrialde hau arazorik gabe mugitu da, baina eztabaida orrialde ezin izan da mugitu izenburu berriarekin jada bat existitzen delako. Mesedez, eskuz batu itzazu biak.'''",
+'movedto'                      => 'hona mugitu da:',
+'movetalk'                     => 'Eztabaida orrialdea ere mugitu, ahal bada.',
+'move-subpages'                => 'Ahal izanez gero azpiorrialde guztiak ere mugitu',
+'move-talk-subpages'           => 'Ahal izanez gero eztabaida orrialdearen azpiorrialde guztiak ere mugitu',
+'movepage-page-exists'         => '$1 orrialdea jada badago eta ezin da automatikoki gainetik idatzi.',
+'movepage-page-moved'          => '$1 orrialdea $2(e)ra mugitu da.',
+'movepage-page-unmoved'        => '$1 orrialdea ezin da $2(e)ra mugitu.',
+'movepage-max-pages'           => '$1 {{PLURAL:$1|orrialderen|orrialdeen}} maximoa mugitu da eta jada ez dira gehiago mugituko modu automatikoan.',
+'1movedto2'                    => '$1 izenburua $2(r)engatik aldatu da',
+'1movedto2_redir'              => '$1 izenburua $2(r)engatik aldatu da birzuzenketaren gainetik',
+'move-redirect-suppressed'     => 'birzuzenketa ezabatua',
+'movelogpage'                  => 'Mugimendu erregistroa',
+'movelogpagetext'              => 'Mugitutako orrialdeen zerrenda bat azaltzen da jarraian.',
+'movereason'                   => 'Arrazoia',
+'revertmove'                   => 'desegin',
+'delete_and_move'              => 'Ezabatu eta mugitu',
+'delete_and_move_text'         => '== Ezabatzeko beharra ==
 
 "[[:$1]]" helburua existitzen da. Lekua egiteko ezabatu nahi al duzu?',
-'delete_and_move_confirm' => 'Bai, orrialdea ezabatu',
-'delete_and_move_reason'  => 'Lekua egiteko ezabatu da',
-'selfmove'                => 'Helburu izenburua berdina da; ezin da orrialde bat bere gainera mugitu.',
-'immobile_namespace'      => 'Hasierako edo amaierako izenburua Aparteko motakoa da; ezin da izen-tarte horretatik eta horretara ezer mugitu.',
-'imagenocrossnamespace'   => 'Ezin da mugitu fitxategia fitxategiena ez den izen batera',
-'imagetypemismatch'       => 'Fitxategiaren luzapen berriak ez du bere motako fitxategiekin bat egiten',
-'imageinvalidfilename'    => 'Xede-artxiboaren izenak ez du balio',
-'fix-double-redirects'    => 'Hasierako izenburura zuzentzen duten birzuzenketa guztiak aldatu',
+'delete_and_move_confirm'      => 'Bai, orrialdea ezabatu',
+'delete_and_move_reason'       => 'Lekua egiteko ezabatu da',
+'selfmove'                     => 'Helburu izenburua berdina da; ezin da orrialde bat bere gainera mugitu.',
+'immobile-source-namespace'    => '"$1" motako orrialdeak ezin dira mugitu',
+'immobile-target-namespace'    => 'Orrialdeak ezin dira "$1" motara mugitu',
+'immobile-target-namespace-iw' => 'Interwiki lotura ez da baliagarria orrialdea mugitu ahal izateko.',
+'immobile-source-page'         => 'Orrialde hau mugiezina da.',
+'immobile-target-page'         => 'Helburuko orrialdera ezin da mugitu.',
+'imagenocrossnamespace'        => 'Ezin da mugitu fitxategia fitxategiena ez den izen batera',
+'imagetypemismatch'            => 'Fitxategiaren luzapen berriak ez du bere motako fitxategiekin bat egiten',
+'imageinvalidfilename'         => 'Xede-artxiboaren izenak ez du balio',
+'fix-double-redirects'         => 'Hasierako izenburura zuzentzen duten birzuzenketa guztiak aldatu',
+'move-leave-redirect'          => 'Atzean birzuzenketa bat utzi',
 
 # Export
 'export'            => 'Orrialdeak esportatu',
@@ -1745,7 +2077,7 @@ Kasu horietan orrialdea eskuz mugitu edo bestearekin bateratu beharko duzu.",
 
 Orrialdeak esportatzeko zehaztu hauen izenburuak beheko koadroan, izenburu bat lerroko, eta aukeratu zein bertsio esportatu nahi dituzun.
 
-Horrez gain, lotura zuzena ere erabil dezakezu; adibidez, [[{{ns:special}}:Export/{{MediaWiki:Mainpage}}]] "[[{{MediaWiki:Mainpage}}]]" orrialdearentzako.',
+Horrez gain, lotura zuzena ere erabil dezakezu; adibidez, [[{{#Special:Export}}/{{MediaWiki:Mainpage}}]] "[[{{MediaWiki:Mainpage}}]]" orrialdearentzako.',
 'exportcuronly'     => 'Oraingo berrikuspena bakarrik hartu, ez historia guztia',
 'exportnohistory'   => "----
 '''Oharra:''' Formulario honen bitartez orrialdeen historia osoak esportatzeko aukera ezgaitu egin da, errendimendua dela-eta.",
@@ -1760,7 +2092,8 @@ Horrez gain, lotura zuzena ere erabil dezakezu; adibidez, [[{{ns:special}}:Expor
 'allmessagesname'           => 'Izena',
 'allmessagesdefault'        => 'Testu lehenetsia',
 'allmessagescurrent'        => 'Oraingo testua',
-'allmessagestext'           => 'MediaWikin erabiltzen diren mezu guztien zerrenda:',
+'allmessagestext'           => 'MediaWikin erabiltzen diren mezu guztien zerrenda.
+Mesedez bisitatu [http://www.mediawiki.org/wiki/Localisation MediaWiki] eta [[http://translatewiki.net translatewiki.net] orrialdeak MediaWikira ekarpenak egin badituzu.',
 'allmessagesnotsupportedDB' => "Ezin da '''{{ns:special}}:Allmessages''' erabili '''\$wgUseDatabaseMessages''' ezgaituta dagoelako.",
 'allmessagesfilter'         => 'Mezu izenaren iragazkia:',
 'allmessagesmodified'       => 'Aldatutakoak bakarrik erakutsi',
@@ -1778,9 +2111,12 @@ Horrez gain, lotura zuzena ere erabil dezakezu; adibidez, [[{{ns:special}}:Expor
 'import'                     => 'Orrialdeak inportatu',
 'importinterwiki'            => 'Wikien arteko inportazioa',
 'import-interwiki-text'      => 'Aukeratu inportatzeko wiki eta orrialde izenburu bat. Berrikuspenen datak eta egileak gorde egingo dira. Inportazio ekintza guzti hauek [[Special:Log/import|inportazio erregistroan]] gordetzen dira.',
+'import-interwiki-source'    => 'Jatorrizko wiki/orrialdea:',
 'import-interwiki-history'   => 'Orrialde honen historiako bertsio guztiak kopiatu',
 'import-interwiki-submit'    => 'Inportatu',
 'import-interwiki-namespace' => 'Helburuko izen-tartea:',
+'import-upload-filename'     => 'Fitxategiaren izena:',
+'import-comment'             => 'Iruzkina:',
 'importtext'                 => 'Mesedez, jatorrizko wikitik orrialdea esportatzeko Special:Export tresna erabil ezazu, zure diskoan gorde eta jarraian hona igo.',
 'importstart'                => 'Orrialdeak inportatzen...',
 'import-revision-count'      => '{{PLURAL:$1|berrikuspen 1|$1 berrikuspen}}',
@@ -1811,24 +2147,24 @@ Fitxategiaren atal bat baino ez zen igo.',
 'importlogpage'                    => 'Inportazio erregistroa',
 'importlogpagetext'                => 'Beste wiki batzutatik historial eta guzti egindako orrialdeen inportazio administratiboak.',
 'import-logentry-upload'           => '[[$1]] igoera bitartez inportatu da',
-'import-logentry-upload-detail'    => '$1 berrikuspen',
+'import-logentry-upload-detail'    => '$1 {{PLURAL:$1|berrikuspen|berrikuspen}}',
 'import-logentry-interwiki'        => '$1 wiki artean mugitu da',
-'import-logentry-interwiki-detail' => '$1 berrikuspen $2(e)tik',
+'import-logentry-interwiki-detail' => '$1 {{PLURAL:$1|berrikuspen|berrikuspen}} $2-(e)tik',
 
 # Tooltip help for the actions
-'tooltip-pt-userpage'             => 'Nire lankide orrialdea',
+'tooltip-pt-userpage'             => 'Nire lankide orria',
 'tooltip-pt-anonuserpage'         => 'Zure IParen lankide orrialdea',
-'tooltip-pt-mytalk'               => 'Nire eztabaida orrialdea',
+'tooltip-pt-mytalk'               => 'Nire eztabaida orria',
 'tooltip-pt-anontalk'             => 'Zure IParen eztabaida',
 'tooltip-pt-preferences'          => 'Nire hobespenak',
 'tooltip-pt-watchlist'            => 'Jarraitzen dituzun orrialdeen zerrenda.',
-'tooltip-pt-mycontris'            => 'Nire ekarpenak',
+'tooltip-pt-mycontris'            => 'Nire ekarpenen zerrenda',
 'tooltip-pt-login'                => 'Izen ematera gonbidatzen zaitugu.',
 'tooltip-pt-anonlogin'            => 'Izen ematera gonbidatzen zaitugu.',
 'tooltip-pt-logout'               => 'Saioa itxi',
 'tooltip-ca-talk'                 => 'Artikuluari buruzko eztabaida',
 'tooltip-ca-edit'                 => 'Artikulu hau aldatu dezakezu. Mesedez, aurrebista botoia erabil ezazu gorde baino lehen.',
-'tooltip-ca-addsection'           => 'Eztabaida honetan iruzkin bat erantsi ezazu.',
+'tooltip-ca-addsection'           => 'Iruzkin berria erantsi',
 'tooltip-ca-viewsource'           => 'Artikulu hau babesturik dago. Bere kodea soilik ikus dezakezu.',
 'tooltip-ca-history'              => 'Artikulu honen aurreko bertsioak.',
 'tooltip-ca-protect'              => 'Artikulu hau babestu',
@@ -1875,6 +2211,9 @@ Fitxategiaren atal bat baino ez zen igo.',
 'tooltip-watch'                   => 'Orrialde hau zure segimendu zerrendan gehitu',
 'tooltip-recreate'                => 'Orrialdea birsortu ezabatu egin den arren',
 'tooltip-upload'                  => 'Igoera hasi',
+'tooltip-rollback'                => '"Desegin" ekintzak orriaren azken egilearen ekarpena ezabatzen du klik batean',
+'tooltip-undo'                    => '"Desegin" botoiak egindako aldaketa ezeztatzen du eta aurreikuspen bista erakusten du.
+Laburpenean arrazoi bat gehitzea baimentzen du',
 
 # Stylesheets
 'common.css'   => '/** Hemen idatzitako CSS kodeak itxura guztietan izango du eragina */',
@@ -1889,12 +2228,12 @@ Fitxategiaren atal bat baino ez zen igo.',
 'notacceptable'     => 'Wiki zerbitzariak ezin ditu datuak zure bezeroak irakur ditzakeen formatu batean eskaini.',
 
 # Attribution
-'anonymous'        => '{{SITENAME}}(e)ko lankide anonimoak',
+'anonymous'        => '{{SITENAME}}(e)ko lankide {{PLURAL:$1|anonimoa|anonimoak}}',
 'siteuser'         => '{{SITENAME}}(e)ko $1 erabiltzailea',
 'lastmodifiedatby' => 'Orrialdearen azken aldaketa: $2, $1. Nork: $3.', # $1 date, $2 time, $3 user
 'othercontribs'    => '$1(r)en lanean oinarrituta.',
 'others'           => 'besteak',
-'siteusers'        => '{{SITENAME}}(e)ko $1 erabiltzailea(k)',
+'siteusers'        => '{{SITENAME}}(e)ko $1 {{PLURAL:$2|erabiltzailea|erabiltzaileak}}',
 'creditspage'      => 'Orrialdearen kredituak',
 'nocredits'        => 'Ez dago krediturik eskuragarri orrialde honentzako.',
 
@@ -1914,6 +2253,13 @@ Baliteke zerrenda beltzean dagoen kanpo lotura batek sortzea arazo hori.',
 'numwatchers'    => 'Jarraitzaile kopurua: $1',
 'numauthors'     => 'Egile ezberdinen kopurua (artikulua): $1',
 'numtalkauthors' => 'Egile ezberdinen kopurua (eztabaida orrialdea): $1',
+
+# Skin names
+'skinname-standard'    => 'Lehenetsia',
+'skinname-nostalgia'   => 'Nostalgia',
+'skinname-cologneblue' => 'Cologne Blue',
+'skinname-simple'      => 'Arrunta',
+'skinname-modern'      => 'Modernoa',
 
 # Math options
 'mw_math_png'    => 'Beti PNG irudiak sortu',
@@ -1935,10 +2281,12 @@ Baliteke zerrenda beltzean dagoen kanpo lotura batek sortzea arazo hori.',
 'markedaspatrollederror-noautopatrol' => 'Ez daukazu zure aldaketak patruilatu bezala markatzeko baimenik.',
 
 # Patrol log
-'patrol-log-page'   => 'Patrullatze loga',
-'patrol-log-header' => 'Hau patruliatutako aldaketen log bat da.',
-'patrol-log-line'   => '$1etik $2 markatu da patrullatu moduan $3',
-'patrol-log-auto'   => '(automatikoa)',
+'patrol-log-page'      => 'Patrullatze loga',
+'patrol-log-header'    => 'Hau patruliatutako aldaketen log bat da.',
+'patrol-log-line'      => '$1etik $2 markatu da patrullatu moduan $3',
+'patrol-log-auto'      => '(automatikoa)',
+'patrol-log-diff'      => '$1 berrikuspena',
+'log-show-hide-patrol' => '$1 patruilatze loga',
 
 # Image deletion
 'deletedrevision'                 => '$1 berrikuspen zaharra ezabatu da',
@@ -1955,6 +2303,9 @@ $1',
 'previousdiff' => '← Aldaketa zaharragoa',
 'nextdiff'     => 'Aldaketa berriagoa →',
 
+# Visual comparison
+'visual-comparison' => 'Alderaketa bisuala',
+
 # Media information
 'mediawarning'         => "'''Oharra''': Fitxategi honek kode mingarria izan lezake; zure sisteman exekutatzea arriskutsua izan liteke.<hr />",
 'imagemaxsize'         => 'Irudiak deskribapen-orrialdetan hurrengo tamainara txikitu:',
@@ -1967,10 +2318,12 @@ $1',
 'show-big-image'       => 'Bereizmen handikoa',
 'show-big-image-thumb' => '<small>Aurreikuspen honen neurria: $1 × $2 pixel</small>',
 
-# Special:NewImages
+# Special:NewFiles
 'newimages'             => 'Fitxategi berrien galeria',
 'imagelisttext'         => "Jarraian duzu $2(e)z ordenatutako {{PLURAL:$1|fitxategi baten|'''$1''' fitxategiren}} zerrenda.",
 'newimages-summary'     => 'Orrialde berezi honek igotako azkeneko fitxategiak erakusten ditu.',
+'newimages-legend'      => 'Iragazkia',
+'newimages-label'       => 'Fitxategia (edo bere zati bat):',
 'showhidebots'          => '($1 bot-ak)',
 'noimages'              => 'Ez dago ezer ikusteko.',
 'ilsubmit'              => 'Bilatu',
@@ -2201,6 +2554,18 @@ Zerrenda elementuak (hasieran * duten lerroak) baino ez dira kontuan hartzen. Le
 'exif-lightsource-24'  => 'ISO estudio wolframioa',
 'exif-lightsource-255' => 'Beste argi iturburu bat',
 
+# Flash modes
+'exif-flash-fired-0'    => 'Flashik gabe',
+'exif-flash-fired-1'    => 'Flasharekin',
+'exif-flash-return-0'   => 'ez dauka estrobo itzulera detekzio funtziorik',
+'exif-flash-return-2'   => 'estrobo itzulera argirik ez da detektatu',
+'exif-flash-return-3'   => 'estrobo itzulera argia detektatu da',
+'exif-flash-mode-1'     => 'flashak derrigorrez bota du argia',
+'exif-flash-mode-2'     => 'flasha derrigorrez kendu da',
+'exif-flash-mode-3'     => 'auto modua',
+'exif-flash-function-1' => 'Ez dauka flash funtziorik',
+'exif-flash-redeye-1'   => 'begi-gorriak kentzeko modua',
+
 'exif-focalplaneresolutionunit-2' => 'hazbete',
 
 'exif-sensingmethod-1' => 'Definitu gabea',
@@ -2335,21 +2700,10 @@ Egiaztapen kode hau $4 iraungiko da.',
 'confirmrecreate'     => "[[User:$1|$1]] erabiltzaileak ([[User talk:$1|eztabaida]]) orrialde hau ezabatu zu aldatzen hasi eta gero. Hona arrazoia: : ''$2'' Mesedez, baieztatu orrialde hau berriz sortu nahi duzula.",
 'recreate'            => 'Birsortu',
 
-# HTML dump
-'redirectingto' => '[[:$1]] orrialdera berbideratzen...',
-
 # action=purge
-'confirm_purge'        => 'Orrialde honen katxea ezabatu?
-
-$1',
 'confirm_purge_button' => 'Ados',
-
-# AJAX search
-'searchcontaining' => "''$1'' barne duten orrialdeen bilaketa.",
-'searchnamed'      => "''$1'' izenburua duten artikuluen bilaketa.",
-'articletitles'    => "''$1''(r)ekin hasten diren artikuluak",
-'hideresults'      => 'Emaitzak ezkutatu',
-'useajaxsearch'    => 'AJAX bilaketa erabili',
+'confirm-purge-top'    => 'Orrialde honen katxea ezabatu?',
+'confirm-purge-bottom' => 'Orrialdea purgatzean katxea ezabatzen du eta orrialdearen bertsiorik eguneratuena erakustera behartzen du.',
 
 # Multipage image navigation
 'imgmultipageprev' => '&larr; aurreko orrialdea',
@@ -2369,10 +2723,10 @@ $1',
 'table_pager_empty'        => 'Emaitzik ez',
 
 # Auto-summaries
-'autosumm-blank'   => 'Orrialdetik eduki guztia ezabatzen',
+'autosumm-blank'   => 'Orritik eduki guztia ezabatuta',
 'autosumm-replace' => "Orrialdea '$1'(r)engatik ordezten",
 'autoredircomment' => '[[$1]] orrialdera birzuzentzentzen',
-'autosumm-new'     => 'Orrialde berria: $1',
+'autosumm-new'     => 'Orrialde berria $1-(e)kin sortua',
 
 # Live preview
 'livepreview-loading' => 'Kargatzen…',
@@ -2380,18 +2734,26 @@ $1',
 'livepreview-failed'  => 'Huts egin du berehalako aurreikuspenak! Saiatu aurreikuspen normala erabiltzen.',
 'livepreview-error'   => 'Ezin izan da konektatu: $1 "$2". Saiatu aurreikuspen normala erabiltzen.',
 
+# Friendlier slave lag warnings
+'lag-warn-normal' => '{{PLURAL:$1|segundu $1|$1 segundu}} baino berriagoak diren aldaketak ez dira zerrenda honetan agertuko.',
+'lag-warn-high'   => 'Zerbitzariaren atzerapen handia dela eta, {{PLURAL:$1|segundu $1|$1 segundu}} baino berriagoak diren aldaketak baliteke zerrenda honetan ez azaltzea.',
+
 # Watchlist editor
 'watchlistedit-numitems'       => 'Zure jarraipen zerrendak {{PLURAL:$1|titulu bat du|$1 titulu ditu}}, eztabaida orrialdeak kenduta.',
 'watchlistedit-noitems'        => 'Zure jarraitze-zerrendak ez du izenbururik.',
 'watchlistedit-normal-title'   => 'Jarraitze zerrenda aldatu',
 'watchlistedit-normal-legend'  => 'Jarraipen-zerrendatik izenburuak kendu',
 'watchlistedit-normal-explain' => 'Zure jarraipen-zerrendako izenburuak azpian daude.
-Titulu bat kentzeko ondoan dagoen kutxa marka ezazu eta Kendu Izenburuaken gainean klik egin.
-Gainera [[special:Watchlist/raw|raw zerrenda editatu]] dezakezu.',
+Titulu bat kentzeko ondoan dagoen kutxa marka ezazu eta Kendu Izenburua gainean klik egin.
+Gainera [[Special:Watchlist/raw|raw zerrenda aldatu]] dezakezu.',
 'watchlistedit-normal-submit'  => 'Izenburuak kendu',
 'watchlistedit-normal-done'    => 'Zure jarraipen-zerrendatik {{PLURAL:$1|izenburu bat kendu da|$1 izenburu kendu dira}}.',
 'watchlistedit-raw-title'      => 'Jarraitze zerrenda gordina aldatu',
 'watchlistedit-raw-legend'     => 'Jarraitze zerrenda gordina aldatu',
+'watchlistedit-raw-explain'    => 'Azpian zure jarraipen zerrendako izenburuak daude, eta aldatuak izan daitezke zerrendatik gehitu edo ezabatzean;
+lerroko izenburu bat.
+Bukatzean, klikatu Jarraitze-zerrenda Eguneratu botoian.
+Halaber [[Special:Watchlist/edit|aldatzaile estandarra]] erabil dezakezu.',
 'watchlistedit-raw-titles'     => 'Izenburuak:',
 'watchlistedit-raw-submit'     => 'Jarraitze-zerrenda eguneratu',
 'watchlistedit-raw-done'       => 'Zure jarraipen zerrenda berritu da.',
@@ -2405,6 +2767,7 @@ Gainera [[special:Watchlist/raw|raw zerrenda editatu]] dezakezu.',
 
 # Core parser functions
 'unknown_extension_tag' => '"$1" luzapen etiketa ezezaguna',
+'duplicate-defaultsort' => 'Adi: Berezko "$2" antolatzeak aurreko berezko "$1" antolatzea gainditzen du.',
 
 # Special:Version
 'version'                          => 'Bertsioa', # Not used as normal message but as header for the special page itself
@@ -2428,12 +2791,19 @@ Gainera [[special:Watchlist/raw|raw zerrenda editatu]] dezakezu.',
 'version-software-version'         => 'Bertsioa',
 
 # Special:FilePath
-'filepath'        => 'Fitxategi bidea',
-'filepath-page'   => 'Fitxategia:',
-'filepath-submit' => 'Ibilbidea',
+'filepath'         => 'Fitxategi bidea',
+'filepath-page'    => 'Fitxategia:',
+'filepath-submit'  => 'Ibilbidea',
+'filepath-summary' => 'Orri berezi honek fitxategiaren ibilbidea itzultzen du.
+Irudiak bereizmen handienean daude, bestelako fitxategi motak beraiei esleitutako programarekin hasiko dira zuzenean.
+
+Sartu fitxategiaren izena "{{ns:file}}:" aurrizkia gabe.',
 
 # Special:FileDuplicateSearch
 'fileduplicatesearch'          => 'Artxibo bikoiztuen bilaketa',
+'fileduplicatesearch-summary'  => 'Bikoiztutako fitxategiak bilatu bere hash balioaren arabera.
+
+Fitxategiaren izena sartu "{{ns:file}}:" aurrizkia gabe.',
 'fileduplicatesearch-legend'   => 'Duplikatu bat bilatu',
 'fileduplicatesearch-filename' => 'Fitxategi izena:',
 'fileduplicatesearch-submit'   => 'Bilaketa',
@@ -2462,5 +2832,14 @@ Gainera [[special:Watchlist/raw|raw zerrenda editatu]] dezakezu.',
 # Special:BlankPage
 'blankpage'              => 'Orrialde txuria',
 'intentionallyblankpage' => 'Orri hau nahita utzi da hutsik',
+
+# External image whitelist
+'external_image_whitelist' => ' #Lerro hau utzi dagoen bezala<pre>
+#Jarri espresio zati erregularrak (bakarrik // artean doan zatia) azpian
+#Hauek kanpo irudien URLekin lotuko dira
+#Lotutako horiek irudi bezala agertuko dira, bestela lotura besterik ez da agertuko
+# #-arekin hasten diren lerroak iruzkin bezala hartuko dira
+
+#Jarri regex zatiak lerro honen gainetik. Lerro hau utzi dagoen bezala</pre>',
 
 );

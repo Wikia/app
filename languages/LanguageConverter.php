@@ -180,7 +180,8 @@ class LanguageConverter {
 				$header = str_replace( '_', '-', strtolower($_SERVER["HTTP_ACCEPT_LANGUAGE"]));
 				$zh = strstr($header, $pv.'-');
 				if($zh) {
-					$pv = substr($zh,0,5);
+					$ary = split("[,;]",$zh);
+					$pv = $ary[0];
 				}
 			}
 			// don't try to return bad variant
@@ -374,8 +375,10 @@ class LanguageConverter {
 	 * @private
 	 */
 	function convertTitle($text){
-		// check for __NOTC__ tag
-		if( !$this->mDoTitleConvert ) {
+		global $wgDisableTitleConversion, $wgUser;
+
+		// check for global param and __NOTC__ tag
+		if( $wgDisableTitleConversion || !$this->mDoTitleConvert || $wgUser->getOption('noconvertlink') == 1 ) {
 			$this->mTitleDisplay = $text;
 			return $text;
 		}
@@ -389,7 +392,8 @@ class LanguageConverter {
 		global $wgRequest;
 		$isredir = $wgRequest->getText( 'redirect', 'yes' );
 		$action = $wgRequest->getText( 'action' );
-		if ( $isredir == 'no' || $action == 'edit' ) {
+		$linkconvert = $wgRequest->getText( 'linkconvert', 'yes' );
+		if ( $isredir == 'no' || $action == 'edit' || $action == 'submit' || $linkconvert == 'no' ) {
 			return $text;
 		} else {
 			$this->mTitleDisplay = $this->convert($text);
@@ -432,8 +436,9 @@ class LanguageConverter {
 		if ($isTitle) return $this->convertTitle($text);
 
 		$plang = $this->getPreferredVariant();
-		$tarray = explode($this->mMarkup['end'], $text);
+		$tarray = StringUtils::explode($this->mMarkup['end'], $text);
 		$text = '';
+		$lastDelim = false;
 		foreach($tarray as $txt) {
 			$marked = explode($this->mMarkup['begin'], $txt, 2);
 
@@ -449,7 +454,16 @@ class LanguageConverter {
 
 				$text .= $crule->getDisplay();
 				$this->applyManualConv($crule);
+				$lastDelim = false;
+			} else {
+				// Reinsert the }- which wasn't part of anything
+				$text .= $this->mMarkup['end'];
+				$lastDelim = true;
 			}
+		}
+		if ( $lastDelim ) {
+			// Remove the last delimiter (wasn't real)
+			$text = substr( $text, 0, -strlen( $this->mMarkup['end'] ) );
 		}
 
 		return $text;
@@ -466,11 +480,20 @@ class LanguageConverter {
 	 * @return null the input parameters may be modified upon return
 	 * @public
 	 */
-	function findVariantLink( &$link, &$nt ) {
-		global $wgDisableLangConversion;
+	function findVariantLink( &$link, &$nt, $forTemplate = false ) {
+		global $wgDisableLangConversion, $wgDisableTitleConversion, $wgRequest, $wgUser;
+		$isredir = $wgRequest->getText( 'redirect', 'yes' );
+		$action = $wgRequest->getText( 'action' );
+		$linkconvert = $wgRequest->getText( 'linkconvert', 'yes' );
+		$disableLinkConversion = $wgDisableLangConversion || $wgDisableTitleConversion;
 		$linkBatch = new LinkBatch();
 
 		$ns=NS_MAIN;
+
+		if ( $disableLinkConversion || ( !$forTemplate && ( $isredir == 'no' || $action == 'edit'
+			|| $action == 'submit' || $linkconvert == 'no' || $wgUser->getOption('noconvertlink') == 1 ) ) ) {
+			return;
+		}
 
 		if(is_object($nt))
 			$ns = $nt->getNamespace();
@@ -497,8 +520,7 @@ class LanguageConverter {
 		foreach( $titles as $varnt ) {
 			if( $varnt->getArticleID() > 0 ) {
 				$nt = $varnt;
-				if( !$wgDisableLangConversion )
-					$link = $v;
+				$link = $v;
 				break;
 			}
 		}

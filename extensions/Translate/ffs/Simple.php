@@ -45,8 +45,8 @@ class SimpleFormatReader {
 			$handle = fopen( $this->filename, "rt" );
 			$state = 0;
 
-			while ( !feof($handle) ) {
-				$line = fgets($handle);
+			while ( !feof( $handle ) ) {
+				$line = fgets( $handle );
 
 				if ( $state === 0 ) {
 					if ( $line === "\n" ) {
@@ -54,7 +54,7 @@ class SimpleFormatReader {
 						continue;
 					}
 
-					$prefixLength = strlen(self::AUTHORPREFIX);
+					$prefixLength = strlen( self::AUTHORPREFIX );
 					$prefix = substr( $line, 0, $prefixLength );
 					if ( strcasecmp( $prefix, self::AUTHORPREFIX ) === 0 ) {
 						$authors[] = substr( $line, $prefixLength );
@@ -113,14 +113,14 @@ class SimpleFormatWriter {
 			$this->authors = array();
 		}
 
-		if ( !isset($this->authors[$code]) ) {
+		if ( !isset( $this->authors[$code] ) ) {
 			$this->authors[$code] = array();
 		}
 
 		/* Assuming there is only numerical keys, array_merge does the right thing
 		 * here, and wfMergeArray() not, because it overwrites instead of appends */
-		$this->authors[$code] = array_merge($this->authors[$code], $authors);
-		$this->authors[$code] = array_unique($this->authors[$code]);
+		$this->authors[$code] = array_merge( $this->authors[$code], $authors );
+		$this->authors[$code] = array_unique( $this->authors[$code] );
 	}
 
 	public function load( $code ) {
@@ -135,6 +135,8 @@ class SimpleFormatWriter {
 	public function fileExport( array $languages, $targetDirectory ) {
 		foreach ( $languages as $code ) {
 			$messages = $this->getMessagesForExport( $this->group, $code );
+			if ( !count( $messages ) ) continue;
+
 			$filename = $this->group->getMessageFile( $code );
 			$target = $targetDirectory . '/' . $filename;
 
@@ -170,22 +172,22 @@ class SimpleFormatWriter {
 	protected function getMessagesForExport( MessageGroup $group, $code ) {
 		$collection = $this->group->initCollection( $code );
 		$this->group->fillCollection( $collection );
+		$collection->filter( 'translation', null );
 		$this->addAuthors( $collection->getAuthors(), $code );
 		return $collection;
 	}
 
 	protected function exportLanguage( $target, MessageCollection $collection ) {
-		$messages = $this->makeExportArray( $collection );
 		$this->load( $collection->code );
 		$this->makeHeader( $target, $collection->code );
 		$this->exportStaticHeader( $target );
-		$this->exportMessages( $target, $messages );
+		$this->exportMessages( $target, $collection );
 	}
 
 	// Writing three
 	protected function makeHeader( $handle, $code ) {
 		fwrite( $handle, $this->formatAuthors( self::AUTHORPREFIX, $code ) );
-		fwrite( $handle, self::SEPARATOR . "\n");
+		fwrite( $handle, self::SEPARATOR . "\n" );
 	}
 
 
@@ -197,7 +199,7 @@ class SimpleFormatWriter {
 			$blacklisted = false;
 			foreach ( $wgTranslateAuthorBlacklist as $rule ) {
 				list( $type, $regex ) = $rule;
-				if ( preg_match($regex, $hash) ) {
+				if ( preg_match( $regex, $hash ) ) {
 					if ( $type === 'white' ) {
 						$blacklisted = false;
 						break;
@@ -208,7 +210,7 @@ class SimpleFormatWriter {
 			}
 
 			if ( $blacklisted ) {
-				unset($authors[$i]);
+				unset( $authors[$i] );
 			}
 
 		}
@@ -219,11 +221,14 @@ class SimpleFormatWriter {
 
 	protected function formatAuthors( $prefix, $code ) {
 		// Check if there is any authors at all
-		if ( empty($this->authors[$code]) ) return '';
+		if ( empty( $this->authors[$code] ) ) return '';
 
 		$groupId = $this->group->getId();
 		$authors = $this->authors[$code];
 		$authors = $this->filterAuthors( $authors, $code, $groupId );
+		if ( empty( $authors ) ) return '';
+
+		sort( $authors );
 
 		$s = array();
 		foreach ( $authors as $a ) {
@@ -233,13 +238,16 @@ class SimpleFormatWriter {
 	}
 
 	protected function exportStaticHeader( $target ) {
-		if( $this->staticHeader ) {
+		if ( $this->staticHeader ) {
 			fwrite( $target, $this->staticHeader . "\n" );
 		}
 	}
 
-	protected function exportMessages( $handle, array $messages ) {
-		foreach ( $messages as $key => $value ) {
+	protected function exportMessages( $handle, MessageCollection $collection ) {
+		$mangler = $this->group->getMangler();
+		foreach ( $collection->keys() as $item ) {
+			$key = $mangler->unMangle( $item );
+			$value = str_replace( TRANSLATE_FUZZY, '', $collection[$item]->translation );
 			fwrite( $handle, "$key\000$value\000\n" );
 		}
 	}
@@ -248,38 +256,5 @@ class SimpleFormatWriter {
 		$name = TranslateUtils::getLanguageName( $code );
 		$native = TranslateUtils::getLanguageName( $code, true );
 		return array( $name, $native );
-	}
-
-	/**
-	 * Preprocesses MessageArray to suitable format and filters things that should
-	 * not be exported.
-	 *
-	 * @param $array Reference of MessageArray.
-	 */
-	public function makeExportArray( MessageCollection $messages ) {
-		// We copy only relevant translations to this new array
-		$new = array();
-		$mangler = $this->group->getMangler();
-		foreach( $messages as $key => $m ) {
-			$key = $mangler->unMangle( $key );
-
-			$translation = $m->translation;
-			# CASE2: no translation
-			if ( $translation === null ) continue;
-
-			# Remove fuzzy markings before export
-			$translation = str_replace( TRANSLATE_FUZZY, '', $translation );
-
-			# CASE3: optional messages; accept only if different
-			if ( $m->optional && $translation === $m->definition ) continue;
-
-			# CASE4: don't export non-translations unless translated in wiki
-			if ( !$m->pageExists && $translation === $m->definition ) continue;
-
-			# Otherwise it's good
-			$new[$key] = $translation;
-		}
-
-		return $new;
 	}
 }

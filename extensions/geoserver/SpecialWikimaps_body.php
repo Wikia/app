@@ -1,8 +1,8 @@
 <?php
 
-class Wikimaps extends SpecialPage {
+class SpecialWikimaps extends SpecialPage {
 
-	function Wikimaps() {
+	function __construct() {
 		SpecialPage::SpecialPage( 'Wikimaps', 'wikimaps' );
 	}
 
@@ -26,7 +26,7 @@ class Wikimaps extends SpecialPage {
 	    border: 1px solid blue;
 	    position: fixed;
 	    background: papayawhip;
-	    
+
 	}
 	small.popup {
 		margin-top: 0em;
@@ -34,8 +34,8 @@ class Wikimaps extends SpecialPage {
 	ul.popup {
 		margin-top: 0em;
 	}
-	div.displaytitle { 
-		border-bottom: solid 1px silver; 
+	div.displaytitle {
+		border-bottom: solid 1px silver;
 		margin-bottom:6px;
 	}
     </style>
@@ -63,4 +63,3 @@ class Wikimaps extends SpecialPage {
 
 	}
 }
-

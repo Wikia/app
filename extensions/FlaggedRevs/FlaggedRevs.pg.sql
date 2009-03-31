@@ -4,14 +4,16 @@
 BEGIN;
 
 CREATE TABLE flaggedpages (
-  fp_page_id  INTEGER NOT NULL DEFAULT 0,
-  fp_reviewed INTEGER NOT NULL DEFAULT 0,
-  fp_stable   INTEGER NOT NULL DEFAULT 0,
-  fp_quality  INTEGER NULL default NULL,
+  fp_page_id        INTEGER NOT NULL DEFAULT 0,
+  fp_reviewed       INTEGER NOT NULL DEFAULT 0,
+  fp_pending_since  TIMESTAMPTZ NULL,
+  fp_stable         INTEGER NOT NULL DEFAULT 0,
+  fp_quality        INTEGER NULL default NULL,
   PRIMARY KEY (fp_page_id)
 );
 CREATE INDEX fp_reviewed_page ON flaggedpages (fp_reviewed,fp_page_id);
 CREATE INDEX fp_quality_page ON flaggedpages (fp_quality,fp_page_id);
+CREATE INDEX fp_pending_since ON flaggedpages (fp_pending_since);
 
 CREATE TABLE flaggedrevs (
   fr_page_id       INTEGER    NOT NULL DEFAULT 0,
@@ -56,6 +58,14 @@ CREATE TABLE flaggedimages (
   PRIMARY KEY (fi_rev_id,fi_name)
 );
 
+CREATE TABLE flaggedrevs_tracking (
+  ftr_from       INTEGER   NOT NULL DEFAULT 0,
+  ftr_namespace  SMALLINT  NOT NULL DEFAULT 0,
+  ftr_title      TEXT       NOT NULL DEFAULT '',
+  PRIMARY KEY (ftr_from,ftr_namespace,ftr_title)
+);
+CREATE INDEX namespace_title_from ON flaggedrevs_tracking (ftr_namespace,ftr_title,ftr_from);
+
 CREATE TABLE flaggedrevs_promote (
   frp_user_id INTEGER NOT NULL PRIMARY KEY default 0,
   frp_user_params TEXT NOT NULL default ''
@@ -86,6 +96,6 @@ CREATE TABLE reader_feedback_pages (
   rfp_touched  TIMESTAMPTZ  NULL,
   PRIMARY KEY (rfp_page_id,rfp_tag)
 );
-CREATE INDEX rfp_tag_val_page ON reader_feedback_pages (rfp_tag,rfp_ave_val,rfp_page_id)
+CREATE INDEX rfp_tag_val_page ON reader_feedback_pages (rfp_tag,rfp_ave_val,rfp_page_id);
 
 COMMIT;

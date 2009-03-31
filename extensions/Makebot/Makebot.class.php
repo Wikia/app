@@ -31,10 +31,10 @@ class MakeBot extends SpecialPage {
 						: $wgRequest->getText( 'username', '' );
 
 		$wgOut->addWikiText( wfMsgNoTrans( 'makebot-header' ) );
-		$wgOut->addHtml( $this->makeSearchForm() );
+		$wgOut->addHTML( $this->makeSearchForm() );
 
 		if( $this->target != '' ) {
-			//$wgOut->addHtml( wfElement( 'p', NULL, NULL ) );
+			//$wgOut->addHTML( Xml::element( 'p', NULL, NULL ) );
 			$user = User::newFromName( $this->target );
 			if( is_object( $user ) && !is_null( $user ) ) {
 				global $wgVersion;
@@ -52,11 +52,11 @@ class MakeBot extends SpecialPage {
 						if( in_array( 'bot', $user->getGroups() ) ) {
 							# Has a bot flag
 							$wgOut->addWikiText( wfMsg( 'makebot-isbot', $user->getName() ) );
-							$wgOut->addHtml( $this->makeGrantForm( MW_MAKEBOT_REVOKE ) );
+							$wgOut->addHTML( $this->makeGrantForm( MW_MAKEBOT_REVOKE ) );
 						} elseif ( $canBecomeBot ) {
 							# Not a bot; show the grant form
 							$wgOut->addWikiText( wfMsg( 'makebot-notbot', $user->getName() ) );
-							$wgOut->addHtml( $this->makeGrantForm( MW_MAKEBOT_GRANT ) );
+							$wgOut->addHTML( $this->makeGrantForm( MW_MAKEBOT_GRANT ) );
 						} else {
 							# User account is privileged and can't be given a bot flag
 							$wgOut->addWikiText( wfMsg( 'makebot-privileged', $user->getName() ) );
@@ -92,11 +92,11 @@ class MakeBot extends SpecialPage {
 	 */
 	function makeSearchForm() {
 		$thisTitle = Title::makeTitle( NS_SPECIAL, $this->getName() );
-		$form  = wfOpenElement( 'form', array( 'method' => 'post', 'action' => $thisTitle->getLocalUrl() ) );
-		$form .= wfElement( 'label', array( 'for' => 'username' ), wfMsg( 'makebot-username' ) ) . ' ';
-		$form .= wfElement( 'input', array( 'type' => 'text', 'name' => 'username', 'id' => 'username', 'value' => $this->target ) ) . ' ';
-		$form .= wfElement( 'input', array( 'type' => 'submit', 'name' => 'dosearch', 'value' => wfMsg( 'makebot-search' ) ) );
-		$form .= wfCloseElement( 'form' );
+		$form  = Xml::openElement( 'form', array( 'method' => 'post', 'action' => $thisTitle->getLocalUrl() ) );
+		$form .= Xml::element( 'label', array( 'for' => 'username' ), wfMsg( 'makebot-username' ) ) . ' ';
+		$form .= Xml::element( 'input', array( 'type' => 'text', 'name' => 'username', 'id' => 'username', 'value' => $this->target ) ) . ' ';
+		$form .= Xml::element( 'input', array( 'type' => 'submit', 'name' => 'dosearch', 'value' => wfMsg( 'makebot-search' ) ) );
+		$form .= Xml::closeElement( 'form' );
 		return $form;
 	}
 
@@ -118,33 +118,33 @@ class MakeBot extends SpecialPage {
 		}
 
 		# Start the table
-		$form  = wfOpenElement( 'form', array( 'method' => 'post', 'action' => $thisTitle->getLocalUrl() ) );
-		$form .= wfOpenElement( 'table' ) . wfOpenElement( 'tr' );
+		$form  = Xml::openElement( 'form', array( 'method' => 'post', 'action' => $thisTitle->getLocalUrl() ) );
+		$form .= Xml::openElement( 'table' ) . Xml::openElement( 'tr' );
 		# Grant/revoke buttons
-		$form .= wfElement( 'td', array( 'align' => 'right' ), wfMsg( 'makebot-change' ) );
-		$form .= wfOpenElement( 'td' );
+		$form .= Xml::element( 'td', array( 'align' => 'right' ), wfMsg( 'makebot-change' ) );
+		$form .= Xml::openElement( 'td' );
 		foreach( array( 'grant', 'revoke' ) as $button ) {
 			$attribs = array( 'type' => 'submit', 'name' => $button, 'value' => wfMsg( 'makebot-' . $button ) );
 			if( !$$button )
 				$attribs['disabled'] = 'disabled';
-			$form .= wfElement( 'input', $attribs );
+			$form .= Xml::element( 'input', $attribs );
 		}
-		$form .= wfCloseElement( 'td' ) . wfCloseElement( 'tr' );
+		$form .= Xml::closeElement( 'td' ) . Xml::closeElement( 'tr' );
 		# Comment field
-		$form .= wfOpenElement( 'tr' );
-		$form .= wfOpenElement( 'td', array( 'align' => 'right' ) );
-		$form .= wfElement( 'label', array( 'for' => 'comment' ), wfMsg( 'makebot-comment' ) );
-		$form .= wfCloseElement( 'td' );
-		$form .= wfOpenElement( 'td' );
-		$form .= wfElement( 'input', array( 'type' => 'text', 'name' => 'comment', 'id' => 'comment', 'size' => 45, 'maxlength' => 255 ) );
-		$form .= wfCloseElement( 'td' ) . wfCloseElement( 'tr' );
+		$form .= Xml::openElement( 'tr' );
+		$form .= Xml::openElement( 'td', array( 'align' => 'right' ) );
+		$form .= Xml::element( 'label', array( 'for' => 'comment' ), wfMsg( 'makebot-comment' ) );
+		$form .= Xml::closeElement( 'td' );
+		$form .= Xml::openElement( 'td' );
+		$form .= Xml::element( 'input', array( 'type' => 'text', 'name' => 'comment', 'id' => 'comment', 'size' => 45, 'maxlength' => 255 ) );
+		$form .= Xml::closeElement( 'td' ) . Xml::closeElement( 'tr' );
 		# End table
-		$form .= wfCloseElement( 'table' );
+		$form .= Xml::closeElement( 'table' );
 		# Username
-		$form .= wfElement( 'input', array( 'type' => 'hidden', 'name' => 'username', 'value' => $this->target ) );
+		$form .= Xml::element( 'input', array( 'type' => 'hidden', 'name' => 'username', 'value' => $this->target ) );
 		# Edit token
-		$form .= wfElement( 'input', array( 'type' => 'hidden', 'name' => 'token', 'value' => $wgUser->editToken( 'makebot' ) ) );
-		$form .= wfCloseElement( 'form' );
+		$form .= Xml::element( 'input', array( 'type' => 'hidden', 'name' => 'token', 'value' => $wgUser->editToken( 'makebot' ) ) );
+		$form .= Xml::closeElement( 'form' );
 		return $form;
 	}
 
@@ -167,7 +167,7 @@ class MakeBot extends SpecialPage {
 	function showLogEntries( &$user, $logtype = 'makebot' ) {
 		global $wgOut;
 		$title = $user->getUserPage();
-		$wgOut->addHtml( wfElement( 'h2', NULL, htmlspecialchars( LogPage::logName( $logtype ) ) ) );
+		$wgOut->addHTML( Xml::element( 'h2', NULL, htmlspecialchars( LogPage::logName( $logtype ) ) ) );
 		$logViewer = new LogViewer( new LogReader( new FauxRequest( array( 'page' => $title->getPrefixedText(), 'type' => $logtype ) ) ) );
 		$logViewer->showList( $wgOut );
 	}

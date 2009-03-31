@@ -34,8 +34,8 @@
  * If you forget, or give an unsupported value, the extension spits out
  * some help text and a list of all supported languages.
  *
- * The extension has been tested with GeSHi 1.0.7 and MediaWiki 1.5 CVS
- * as of 2005-06-22.
+ * The extension has been tested with GeSHi 1.0.8 and MediaWiki 1.14a
+ * as of 2008-09-28.
  */
 
 if( !defined( 'MEDIAWIKI' ) )
@@ -43,8 +43,8 @@ if( !defined( 'MEDIAWIKI' ) )
 
 $wgExtensionCredits['parserhook']['SyntaxHighlight_GeSHi'] = array(
 	'name'           => 'SyntaxHighlight',
-	'svn-date' => '$LastChangedDate: 2008-07-10 12:45:20 +0000 (Thu, 10 Jul 2008) $',
-	'svn-revision' => '$LastChangedRevision: 37495 $',
+	'svn-date' => '$LastChangedDate: 2008-09-28 15:30:45 +0000 (Sun, 28 Sep 2008) $',
+	'svn-revision' => '$LastChangedRevision: 41349 $',
 	'author'         => array( 'Brion Vibber', 'Tim Starling', 'Rob Church', 'Niklas Laxström' ),
 	'description'    => 'Provides syntax highlighting using [http://qbnz.com/highlighter/ GeSHi Highlighter]',
 	'descriptionmsg' => 'syntaxhighlight-desc',

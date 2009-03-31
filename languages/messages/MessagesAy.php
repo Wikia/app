@@ -15,7 +15,7 @@ $messages = array(
 'tog-underline'               => 'Sipita siqiraña',
 'tog-highlightbroken'         => 'P\'akita sipita utt\'ayaña <a href="" class="new">ukhama</a> (maykipa: ukhama<a href="" class="internal">?</a>).',
 'tog-justify'                 => "Tanta amuyanak purapt'ayaña",
-'tog-hideminor'               => 'Jichha kutikiptatanakana «Janiw taqpachäkiti» imantaña',
+'tog-hideminor'               => 'Jichha jaqukipawina sullka askiptawix imantaña',
 'tog-extendwatchlist'         => "Sarayawi jaqukipaw uñachayasuñatakiw unch'ukit waruch aqatatayaña",
 'tog-usenewrc'                => "Jichhnaki jaqukipawi waliptäta (''JavaScript'')",
 'tog-numberheadings'          => 'Titulun chinu achuraña',
@@ -25,6 +25,35 @@ $messages = array(
 'tog-editsectiononrightclick' => "(''JavaScript'') titulxat tuqina kupi suxuqiñampi tuqitaki turkawi luräña",
 'tog-showtoc'                 => 'Waruchataw uñachayaña (kimsa tituljampi uñstawitaki)',
 'tog-rememberpassword'        => "Akax jasanchirin imt'awija amtaña",
+'tog-editwidth'               => 'Akiptawit llataxa taqi anchuniwa',
+'tog-watchcreations'          => "Unch'ukit waruchatajana nayaxa uñstawix uñstayawajata yapxataña",
+'tog-watchdefault'            => "Unch'ukit waruchatajana nayaxa uñstawix turkajata yapxataña",
+'tog-watchmoves'              => "Unch'ukit waruchatajana nayaxa uñstawix sutiyarajata yapxataña",
+'tog-watchdeletion'           => "Unch'ukit waruchatajana nayaxa uñstawix phiskhurajata yapxataña",
+'tog-minordefault'            => 'Sullka askiptawpacha chimpuriña',
+'tog-previewontop'            => 'Askiptawit llataxa nayraxa uñtawikar uñachayaña',
+'tog-previewonfirst'          => 'Mayïri askiptawina uñtawikar uñachayaña',
+'tog-nocache'                 => "Uñstawita kachiñar jark'aña",
+'tog-enotifwatchlistpages'    => "Nayaru chaski jalayiriña ukja unch'ukit waruchatana mäuñstawi turkañäna",
+'tog-enotifusertalkpages'     => 'Nayaru chaski jalayiriña ukja tuqisiwit uñstawija turkañäna',
+'tog-enotifminoredits'        => 'Nayaru chaski jalayiriña uñstawina sullka askiptawimpiraki',
+'tog-enotifrevealaddr'        => 'Yatiyawita chaski jalayirinakana chaski jalayirit untjäwija uñachayaña',
+'tog-shownumberswatching'     => "Qawqha apnaqirinaka uñch'ukiskar uñacht'ayaña",
+'tog-fancysig'                => "Mayaxta rixt'a (sipitarachayatawisa)",
+'tog-externaleditor'          => "Anqa askiptiri mirq'iriña (yatxiritakiwa, jasanchirina ajalla jamuqawi wakiskiriwa)",
+'tog-externaldiff'            => "Anqa ''diff''iri mirq'iriña (yatxiritakiwa, jasanchirina ajalla jamuqawi wakiskiriwa)",
+'tog-showjumplinks'           => 'Usutataki sipitata "khänaru thuqtaña" uñachayaña',
+'tog-uselivepreview'          => "Uñtawikach'ukix mirq'iña (''JavaScript'' munawiwa) (yant'awiwaki)",
+'tog-forceeditsummary'        => "Nayaru yatiyaña ukja ch'usa askiptawit juk'aptayawi apantaskaña",
+'tog-watchlisthideown'        => "Unch'ukit waruchatana askiptawijax imantaña",
+'tog-watchlisthidebots'       => "Unch'ukit waruchatana ''bot''ta askiptawipax imantaña",
+'tog-watchlisthideminor'      => "Unch'ukit waruchatana sullka askiptawix imantaña",
+'tog-watchlisthideliu'        => "Unch'ukit waruchatana qillqt'ayasita apnaqirina askiptawipax imantaña",
+'tog-watchlisthideanons'      => "Unch'ukit waruchatana sutiwisa apnaqirina askiptawipax imantaña",
+'tog-nolangconversion'        => "Yaqha aruptaxa jark'aña",
+'tog-ccmeonemails'            => 'Chaski jalayirija nayax yaqhar apayayäta qillqaqawix nayaru apayaña',
+'tog-diffonly'                => "Manqha ''diff''nakax uñstawit yati utjawi janiw uñachayaña",
+'tog-showhiddencats'          => 'Imantata patawix uñachayaña',
 
 'underline-always' => 'Wiñaya',
 'underline-never'  => 'Janipini',
@@ -92,7 +121,7 @@ $messages = array(
 'moredotdotdot' => 'Yapa...',
 'mypage'        => 'Uñstawija',
 'navigation'    => 'Wampuña',
-'and'           => '-mpi',
+'and'           => '&#32;-mpi',
 
 'errorpagetitle'    => 'Pantja',
 'help'              => 'Yanapaña',
@@ -135,6 +164,7 @@ $messages = array(
 
 'editsection'    => 'turkaña',
 'editold'        => 'turkaña',
+'editlink'       => 'trukaña',
 'showtoc'        => 'uñachayaña',
 'site-rss-feed'  => "$1 ''RSS'' jalsuri",
 'site-atom-feed' => "$1 ''Atom'' jalsuri",
@@ -158,12 +188,12 @@ $messages = array(
 'logout'             => 'Mistuña',
 'userlogout'         => 'Mistuña',
 'yourlanguage'       => 'Aru:',
-'email'              => "Aru jalayiri (''E-mail'')",
+'email'              => 'Chaski jalayiri',
 'loginlanguagelabel' => 'Aru: $1',
 
 # Edit pages
-'summary'  => 'Juk’aptayawi',
-'subject'  => 'Yatsuwi/titulu',
+'summary'  => 'Juk’aptayawi:',
+'subject'  => 'Yatsuwi/titulu:',
 'yourdiff' => 'Jalaqtatanaka',
 
 # Preferences page
@@ -179,12 +209,12 @@ $messages = array(
 
 'license' => 'Iyawsawi:',
 
-# Special:ImageList
-'imagelist_date'        => 'Uru jakhu',
-'imagelist_user'        => 'Apnaqiri',
-'imagelist_description' => 'Uñt’ayawi',
+# Special:ListFiles
+'listfiles_date'        => 'Uru jakhu',
+'listfiles_user'        => 'Apnaqiri',
+'listfiles_description' => 'Uñt’ayawi',
 
-# Image description page
+# File description page
 'filehist-user' => 'Apnaqiri',
 
 # Miscellaneous special pages
@@ -193,7 +223,6 @@ $messages = array(
 # Special:Log
 'specialloguserlabel'  => 'Apnaqiri:',
 'speciallogtitlelabel' => 'Titulu:',
-'log-search-submit'    => 'Saraña',
 
 # Special:ListUsers
 'listusers-submit' => 'Uñachayaña',

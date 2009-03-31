@@ -74,9 +74,7 @@ class WhatLinksHerePage {
 		$this->selfTitle = SpecialPage::getTitleFor( 'Whatlinkshere', $this->target->getPrefixedDBkey() );
 
 		$wgOut->setPageTitle( wfMsg( 'whatlinkshere-title', $this->target->getPrefixedText() ) );
-		$wgOut->setSubtitle( wfMsgHtml( 'linklistsub' ) );
-
-		$wgOut->addHTML( wfMsgExt( 'whatlinkshere-barrow', array( 'escapenoentities') ) . ' '  .$this->skin->makeLinkObj($this->target, '', 'redirect=no' )."<br />\n");
+		$wgOut->setSubtitle( wfMsg( 'whatlinkshere-backlink', $this->skin->link( $this->target, $this->target->getPrefixedText(), array(), array( 'redirect' => 'no'  ) ) ) );
 
 		$this->showIndirectLinks( 0, $this->target, $opts->getValue( 'limit' ),
 			$opts->getValue( 'from' ), $opts->getValue( 'back' ) );
@@ -98,7 +96,7 @@ class WhatLinksHerePage {
 		$hidelinks = $this->opts->getValue( 'hidelinks' );
 		$hideredirs = $this->opts->getValue( 'hideredirs' );
 		$hidetrans = $this->opts->getValue( 'hidetrans' );
-		$hideimages = $target->getNamespace() != NS_IMAGE || $this->opts->getValue( 'hideimages' );
+		$hideimages = $target->getNamespace() != NS_FILE || $this->opts->getValue( 'hideimages' );
 
 		$fetchlinks = (!$hidelinks || !$hideredirs);
 
@@ -169,11 +167,13 @@ class WhatLinksHerePage {
 		if( ( !$fetchlinks || !$dbr->numRows($plRes) ) && ( $hidetrans || !$dbr->numRows($tlRes) ) && ( $hideimages || !$dbr->numRows($ilRes) ) ) {
 			if ( 0 == $level ) {
 				$wgOut->addHTML( $this->whatlinkshereForm() );
-				$errMsg = is_int($namespace) ? 'nolinkshere-ns' : 'nolinkshere';
-				$wgOut->addWikiMsg( $errMsg, $this->target->getPrefixedText() );
+
 				// Show filters only if there are links
 				if( $hidelinks || $hidetrans || $hideredirs || $hideimages )
 					$wgOut->addHTML( $this->getFilterPanel() );
+
+				$errMsg = is_int($namespace) ? 'nolinkshere-ns' : 'nolinkshere';
+				$wgOut->addWikiMsg( $errMsg, $this->target->getPrefixedText() );
 			}
 			return;
 		}
@@ -256,7 +256,7 @@ class WhatLinksHerePage {
 	}
 
 	protected function listStart() {
-		return Xml::openElement( 'ul' );
+		return Xml::openElement( 'ul', array ( 'id' => 'mw-whatlinkshere-list' ) );
 	}
 
 	protected function listItem( $row, $nt, $notClose = false ) {
@@ -267,7 +267,7 @@ class WhatLinksHerePage {
 				'whatlinkshere-links', 'isimage' );
 			$msgcache = array();
 			foreach ( $msgs as $msg ) {
-				$msgcache[$msg] = wfMsgHtml( $msg );
+				$msgcache[$msg] = wfMsgExt( $msg, array( 'escapenoentities' ) );
 			}
 		}
 
@@ -377,6 +377,8 @@ class WhatLinksHerePage {
 		$f .= Xml::label( wfMsg( 'namespace' ), 'namespace' ) . '&nbsp;' .
 			Xml::namespaceSelector( $namespace, '' );
 
+		$f .= ' ';
+
 		# Submit
 		$f .= Xml::submitButton( wfMsg( 'allpagessubmit' ) );
 
@@ -395,7 +397,7 @@ class WhatLinksHerePage {
 
 		$links = array();
 		$types = array( 'hidetrans', 'hidelinks', 'hideredirs' );
-		if( $this->target->getNamespace() == NS_IMAGE )
+		if( $this->target->getNamespace() == NS_FILE )
 			$types[] = 'hideimages';
 		foreach( $types as $type ) {
 			$chosen = $this->opts->getValue( $type );

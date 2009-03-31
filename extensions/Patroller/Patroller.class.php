@@ -74,7 +74,7 @@ class Patroller extends SpecialPage {
 			$skin =& $wgUser->getSkin();
 			$self = Title::makeTitle( NS_SPECIAL, 'Patrol' );
 			$link = $skin->makeKnownLinkObj( $self, wfMsgHtml( 'patrol-resume' ) );
-			$wgOut->addHtml( wfMsgWikiHtml( 'patrol-stopped', $link ) );
+			$wgOut->addHTML( wfMsgWikiHtml( 'patrol-stopped', $link ) );
 			return;
 		}
 
@@ -87,9 +87,9 @@ class Patroller extends SpecialPage {
 				if( $this->assignChange( $edit ) ) {
 					$haveEdit = true;
 					$this->showDiffDetails( $edit );
-					$wgOut->addHtml( '<br /><hr />' );
+					$wgOut->addHTML( '<br /><hr />' );
 					$this->showDiff( $edit );
-					$wgOut->addHtml( '<br /><hr />' );
+					$wgOut->addHTML( '<br /><hr />' );
 					$this->showControls( $edit );
 				}
 			} else {
@@ -110,7 +110,7 @@ class Patroller extends SpecialPage {
 		$edit->counter = 1;
 		$edit->mAttribs['rc_patrolled'] = 1;
 		$list = ChangesList::newFromUser( $wgUser );
-		$wgOut->addHtml( $list->beginRecentChangesList() .
+		$wgOut->addHTML( $list->beginRecentChangesList() .
 						 $list->recentChangesLine( $edit ) .
 						 $list->endRecentChangesList() );
 	}
@@ -133,18 +133,18 @@ class Patroller extends SpecialPage {
 	private function showControls( &$edit ) {
 		global $wgUser, $wgOut;
 		$self = Title::makeTitle( NS_SPECIAL, 'Patrol' );
-		$form = wfOpenElement( 'form', array( 'method' => 'post', 'action' => $self->getLocalUrl() ) );
+		$form = Xml::openElement( 'form', array( 'method' => 'post', 'action' => $self->getLocalUrl() ) );
 		$form .= '<table>';
-		$form .= '<tr><td align="right">' . wfSubmitButton( wfMsg( 'patrol-endorse' ), array( 'name' => 'wpPatrolEndorse' ) ) . '</td><td></td></tr>';
-		$form .= '<tr><td align="right">' . wfSubmitButton( wfMsg( 'patrol-revert' ), array( 'name' => 'wpPatrolRevert' ) ) . '</td>';
-		$form .= '<td>' . wfLabel( wfMsg( 'patrol-revert-reason' ), 'reason' ) . '&nbsp;';
-		$form .= $this->revertReasonsDropdown() . ' / ' . wfInput( 'wpPatrolRevertReason' ) . '</td></tr>';
-		$form .= '<tr><td align="right">' . wfSubmitButton( wfMsg( 'patrol-skip' ), array( 'name' => 'wpPatrolSkip' ) ) . '</td></tr></table>';
-		$form .= '<tr><td>' . wfCheck( 'wpAnother', true ) . '</td><td>' . wfMsgHtml( 'patrol-another' ) . '</td></tr>';
-		$form .= wfHidden( 'wpRcId', $edit->mAttribs['rc_id'] );
-		$form .= wfHidden( 'wpToken', $wgUser->editToken() );
+		$form .= '<tr><td align="right">' . Xml::submitButton( wfMsg( 'patrol-endorse' ), array( 'name' => 'wpPatrolEndorse' ) ) . '</td><td></td></tr>';
+		$form .= '<tr><td align="right">' . Xml::submitButton( wfMsg( 'patrol-revert' ), array( 'name' => 'wpPatrolRevert' ) ) . '</td>';
+		$form .= '<td>' . Xml::label( wfMsg( 'patrol-revert-reason' ), 'reason' ) . '&nbsp;';
+		$form .= $this->revertReasonsDropdown() . ' / ' . Xml::input( 'wpPatrolRevertReason' ) . '</td></tr>';
+		$form .= '<tr><td align="right">' . Xml::submitButton( wfMsg( 'patrol-skip' ), array( 'name' => 'wpPatrolSkip' ) ) . '</td></tr></table>';
+		$form .= '<tr><td>' . Xml::check( 'wpAnother', true ) . '</td><td>' . wfMsgHtml( 'patrol-another' ) . '</td></tr>';
+		$form .= Xml::hidden( 'wpRcId', $edit->mAttribs['rc_id'] );
+		$form .= Xml::hidden( 'wpToken', $wgUser->editToken() );
 		$form .= '</form>';
-		$wgOut->addHtml( $form );
+		$wgOut->addHTML( $form );
 	}
 
 	/**
@@ -280,10 +280,10 @@ class Patroller extends SpecialPage {
 					$reasons[] = trim( $line, '* ' );
 			}
 			if( count( $reasons ) > 0 ) {
-				$box = wfOpenElement( 'select', array( 'name' => 'wpPatrolRevertReasonCommon' ) );
+				$box = Xml::openElement( 'select', array( 'name' => 'wpPatrolRevertReasonCommon' ) );
 				foreach( $reasons as $reason )
-					$box .= wfElement( 'option', array( 'value' => $reason ), $reason );
-				$box .= wfCloseElement( 'select' );
+					$box .= Xml::element( 'option', array( 'value' => $reason ), $reason );
+				$box .= Xml::closeElement( 'select' );
 				return $box;
 			} else {
 				return '';

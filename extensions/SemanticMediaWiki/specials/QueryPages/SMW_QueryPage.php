@@ -4,13 +4,15 @@
  *
  * An abstract query page base class that supports array-based
  * data retrieval instead of the SQL-based access used by MW.
+ * @file
+ * @ingroup SMW
  */
 
 /**
  * Abstract base class for SMW's variant of the MW QueryPage.
  * Subclasses must implement getResults() and formatResult(), as
  * well as some other standard functions of QueryPage.
- * @note AUTOLOADED
+ * @ingroup SMW
  */
 abstract class SMWQueryPage extends QueryPage {
 
@@ -21,6 +23,7 @@ abstract class SMWQueryPage extends QueryPage {
 
 	/**
 	 * Clear the cache and save new results
+	 * @todo Implement caching for SMW query pages
 	 */
 	function recache( $limit, $ignoreErrors = true ) {
 		///TODO
@@ -54,6 +57,7 @@ abstract class SMWQueryPage extends QueryPage {
 
 			// if list is empty, show it
 			if( $num == 0 ) {
+				wfLoadExtensionMessages('SemanticMediaWiki');
 				$wgOut->addHTML( '<p>' . wfMsgHTML('specialpage-empty') . '</p>' );
 				return;
 			}

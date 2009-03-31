@@ -36,6 +36,7 @@ CREATE TABLE /*$wgDBprefix*/hidden (
   KEY page_title_timestamp (hidden_page,hidden_timestamp),
   KEY name_title_timestamp (hidden_namespace,hidden_title,hidden_timestamp),
   KEY (hidden_on_timestamp),
-  KEY (hidden_by_user,hidden_on_timestamp)
+  KEY (hidden_by_user,hidden_on_timestamp),
+  KEY (hidden_user_text,hidden_timestamp)
 
-) TYPE=InnoDB;
+) /*$wgDBTableOptions*/;

@@ -2,18 +2,18 @@
 // available under the following license. These derived classes are available
 // under the same license
 /* Copyright (c) 2006 MetaCarta, Inc., published under the BSD license.
- * See http://svn.openlayers.org/trunk/openlayers/release-license.txt 
+ * See http://svn.openlayers.org/trunk/openlayers/release-license.txt
  * for the full text of the license. */
 
 /**
- * @class 
- * 
+ * @class
+ *
  * @requires OpenLayers/Control/PanZoom.js
  */
 OpenLayers.Control.Zoom = OpenLayers.Class.create();
 OpenLayers.Control.Zoom.X = 4;
 OpenLayers.Control.Zoom.Y = 4;
-OpenLayers.Control.Zoom.prototype = 
+OpenLayers.Control.Zoom.prototype =
   OpenLayers.Class.inherit( OpenLayers.Control.PanZoom, {
 
     /** @type Array(...) */
@@ -40,15 +40,15 @@ OpenLayers.Control.Zoom.prototype =
     },
 
     /** clear the div and start over.
-     * 
+     *
      */
     redraw: function() {
         if (this.div != null) {
             this.div.innerHTML = "";
-        }  
+        }
         this.draw();
     },
-    
+
     /**
     * @param {OpenLayers.Pixel} px
     */
@@ -68,29 +68,29 @@ OpenLayers.Control.Zoom.prototype =
         return this.div;
     },
 
-    
+
     CLASS_NAME: "OpenLayers.Control.Zoom"
 });
 /* Copyright (c) 2006 MetaCarta, Inc., published under the BSD license.
- * See http://svn.openlayers.org/trunk/openlayers/release-license.txt 
+ * See http://svn.openlayers.org/trunk/openlayers/release-license.txt
  * for the full text of the license. */
 
- 
+
 /**
  * @class
- * 
+ *
  * @requires OpenLayers/Layer/HTTPRequest.js
  * @requires OpenLayers/Layer/WMS.js
  * @requires OpenLayers/Layer/WMS/Untiled.js
  */
 OpenLayers.Layer.WMS.MultiUntiled = OpenLayers.Class.create();
-OpenLayers.Layer.WMS.MultiUntiled.prototype = 
+OpenLayers.Layer.WMS.MultiUntiled.prototype =
   OpenLayers.Class.inherit( OpenLayers.Layer.WMS.Untiled, {
 
     /** which layers to use for which zoomlevel
      * @type Array */
     layerForLevel: null,
-    
+
 
     /**
     * @constructor
@@ -104,41 +104,41 @@ OpenLayers.Layer.WMS.MultiUntiled.prototype =
         //uppercase params
         params = OpenLayers.Util.upperCaseObject(params);
         newArguments.push(name, url, params, options);
-        OpenLayers.Layer.HTTPRequest.prototype.initialize.apply(this, 
+        OpenLayers.Layer.HTTPRequest.prototype.initialize.apply(this,
                                                                 newArguments);
         OpenLayers.Util.applyDefaults(
-                       this.params, 
+                       this.params,
                        OpenLayers.Util.upperCaseObject(this.DEFAULT_PARAMS)
                        );
 
-        // unless explicitly set in options, if the layer is transparent, 
-        // it will be an overlay        
+        // unless explicitly set in options, if the layer is transparent,
+        // it will be an overlay
         if ((options == null) || (options.isBaseLayer == null)) {
-            this.isBaseLayer = ((this.params.TRANSPARENT != "true") && 
+            this.isBaseLayer = ((this.params.TRANSPARENT != "true") &&
                                 (this.params.TRANSPARENT != true));
         }
         this.layerForLevel = new Array();
         for ( i=0; i<=35; i++ ) {
             this.layerForLevel[i] = this.params.LAYERS;
         }
-    },    
+    },
 
     /**
-     * 
+     *
      */
     destroy: function() {
         this.layerForLevel = null;
         OpenLayers.Layer.WMS.Untiled.prototype.destroy.apply(this, arguments);
     },
-    
+
     /**
      * @param {Object} obj
-     * 
+     *
      * @returns An exact clone of this OpenLayers.Layer.WMS.Untiled
      * @type OpenLayers.Layer.WMS.Untiled
      */
     clone: function (obj) {
-        
+
         if (obj == null) {
             obj = new OpenLayers.Layer.WMS.MultiUntiled(this.name,
                                                    this.url,
@@ -152,11 +152,11 @@ OpenLayers.Layer.WMS.MultiUntiled.prototype =
         // copy/set any non-init, non-simple values here
 
         return obj;
-    },    
-    
-    
+    },
+
+
     /** Once HTTPRequest has set the map, we can load the image div
-     * 
+     *
      * @param {OpenLayers.Map} map
      */
     setMap: function(map) {
@@ -165,13 +165,13 @@ OpenLayers.Layer.WMS.MultiUntiled.prototype =
 
     /** When it is not a dragging move (ie when done dragging)
      *   reload and recenter the div.
-     * 
+     *
      * @param {OpenLayers.Bounds} bounds
      * @param {Boolean} zoomChanged
      * @param {Boolean} dragging
      */
     moveTo:function(bounds, zoomChanged, dragging) {
-        
+
         if (bounds == null) {
             bounds = this.map.getExtent();
         }
@@ -187,7 +187,7 @@ OpenLayers.Layer.WMS.MultiUntiled.prototype =
     setLayerForLevel:function(layer,zoomlevel) {
         this.layerForLevel[zoomlevel] = layer;
     },
-    
+
     /** @final @type String */
     CLASS_NAME: "OpenLayers.Layer.WMS.MultiUntiled"
 });
@@ -258,7 +258,7 @@ function WikiMapsSetHTML(response) {
         popup = new OpenLayers.Popup( "popup", clickCoord, new OpenLayers.Size(250,100),HTML,true);
         popup.setOpacity(0.8);
         map.addPopup(popup);
-    } else { 
+    } else {
     	$('selectbox').style.display='block';
     	$('selectboxbody').innerHTML = HTML;
     }
@@ -315,7 +315,7 @@ function WikiMapsInit(){
         function WikiMapsFullscreen() {
 	    center = map.getCenter();
 	    zoom   = map.getZoom();
-	    document.location = wgServer + wgArticlePath.replace( /\$1/, "Special:Wikimaps" ) 
+	    document.location = wgServer + wgArticlePath.replace( /\$1/, "Special:Wikimaps" )
 				+ '?lon='+center.lon+'&lat='+center.lat+'&zoom='+zoom ;
         }
         $('wikimapsfullscreen').innerHTML='<a id="wikimapsfullscreenlink">Fullscreen</a>';

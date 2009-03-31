@@ -22,7 +22,7 @@ class ProfileMonitor extends SpecialPage {
 
 		$process = $wgRequest->getText( 'process' );
 		$wild = $wgRequest->getCheck( 'wildcard' );
-		$wgOut->addHtml( $this->makeSearchForm( $process, $wild ) );
+		$wgOut->addHTML( $this->makeSearchForm( $process, $wild ) );
 
 		if( $wgRequest->getCheck( 'submit' ) ) {
 			$dbr =& wfGetDB( DB_SLAVE );
@@ -31,8 +31,8 @@ class ProfileMonitor extends SpecialPage {
 				while( $row = $dbr->fetchObject( $res ) )
 					$data[] = $row;
 				$dbr->freeResult( $res );
-				$wgOut->addHtml( '<h2>' . wfMsgHtml( 'profiling-data', htmlspecialchars( $process ) ) . '</h2>' );
-				$wgOut->addHtml( $this->makeTable( $data ) );
+				$wgOut->addHTML( '<h2>' . wfMsgHtml( 'profiling-data', htmlspecialchars( $process ) ) . '</h2>' );
+				$wgOut->addHTML( $this->makeTable( $data ) );
 			} else {
 				$wgOut->addWikiText( wfMsg( 'profiling-no-data' ) );
 			}
@@ -41,11 +41,11 @@ class ProfileMonitor extends SpecialPage {
 
 	private function makeSearchForm( $process, $wild = false ) {
 		$self = Title::makeTitle( NS_SPECIAL, 'Profiling' );
-		$html  = wfOpenElement( 'form', array( 'method' => 'post', 'action' => $self->getLocalUrl() ) );
+		$html  = Xml::openElement( 'form', array( 'method' => 'post', 'action' => $self->getLocalUrl() ) );
 		$html .= '<table><tr><td>' . wfMsgHtml( 'profiling-process' ) . '</td><td>';
-		$html .= wfInput( 'process', 50, $process ) . '</td></tr><td align="right">' . wfCheck( 'wildcard', $wild ) . '</td>';
+		$html .= Xml::input( 'process', 50, $process ) . '</td></tr><td align="right">' . Xml::check( 'wildcard', $wild ) . '</td>';
 		$html .= '<td>' . wfMsgHtml( 'profiling-wildcard' ) . '</td></tr>';
-		$html .= '<tr><td>&nbsp;</td><td>' . wfSubmitButton( wfMsg( 'profiling-ok' ), array( 'name' => 'submit' ) ) . '</td></table></form>';
+		$html .= '<tr><td>&nbsp;</td><td>' . Xml::submitButton( wfMsg( 'profiling-ok' ), array( 'name' => 'submit' ) ) . '</td></table></form>';
 		return $html;
 	}
 

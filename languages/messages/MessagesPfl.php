@@ -126,7 +126,7 @@ $messages = array(
 
 'enotif_reset' => 'Alle Seide als bsuchd margiere',
 
-# Delete/protect/revert
+# Delete
 'deletepage' => 'Seid lesche',
 'confirm'    => 'Bestädiche',
 
@@ -165,7 +165,7 @@ $messages = array(
 # Special:Import
 'import-interwiki-submit' => 'Impordiere',
 
-# Special:NewImages
+# Special:NewFiles
 'ilsubmit' => 'Such',
 
 # 'all' in various places, this might be different for inflected languages

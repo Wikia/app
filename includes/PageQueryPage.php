@@ -17,11 +17,9 @@ class PageQueryPage extends QueryPage {
 	public function formatResult( $skin, $row ) {
 		global $wgContLang;
 		$title = Title::makeTitleSafe( $row->namespace, $row->title );
-		if (is_object($title)) {
-			return $skin->makeKnownLinkObj( $title,
-					htmlspecialchars( $wgContLang->convert( $title->getPrefixedText() ) ) );
-		} else {
-			return '' ;
-		}
+		$text = $row->title;
+		if ($title instanceof Title)
+			$text = $wgContLang->convert( $title->getPrefixedText() ); 
+		return $skin->link( $title, htmlspecialchars($text), array(), array(), array('known', 'noclasses') );
 	}
 }

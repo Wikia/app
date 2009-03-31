@@ -1,9 +1,10 @@
 <?php
 /**
- * @author Javier Calzada Prado, Carmen Jorge García-Reyes, Universidad Carlos III de Madrid, Jesús Espino García
+ * @file
+ * @ingroup SMWLanguage
  */
 
-/**
+/*
  * Protect against register_globals vulnerabilities.
  * This line must be present before any global variable is referenced.
  */
@@ -12,7 +13,14 @@ if (!defined('MEDIAWIKI')) die();
 global $smwgIP;
 include_once($smwgIP . '/languages/SMW_Language.php');
 
-class SMW_LanguageEs extends SMW_Language {
+/**
+ * Spanish language labels for important SMW labels (namespaces, datatypes,...).
+ *
+ * @author Javier Calzada Prado, Carmen Jorge García-Reyes, Universidad Carlos III de Madrid, Jesús Espino García
+ * @ingroup SMWLanguage
+ * @ingroup Language
+ */
+class SMWLanguageEs extends SMWLanguage {
 
 protected $m_DatatypeLabels = array(
 	'_wpg' => 'Page', // name of page datatype  //TODO translate
@@ -49,27 +57,27 @@ protected $m_DatatypeAliases = array(
 
 protected $m_SpecialProperties = array(
 	//always start upper-case
-	SMW_SP_HAS_TYPE  => 'Tiene tipo de datos',
-	SMW_SP_HAS_URI   => 'URI equivalente',
-	SMW_SP_SUBPROPERTY_OF => 'Subproperty of', // TODO: translate
-	SMW_SP_DISPLAY_UNITS => 'Unidad de medida', // TODO: should be plural now ("units"), singluar stays alias
-	SMW_SP_IMPORTED_FROM => 'Importado de',
-	SMW_SP_CONVERSION_FACTOR => 'Corresponde a',
-	SMW_SP_SERVICE_LINK => 'Provee servicio',
-	SMW_SP_POSSIBLE_VALUE => 'Permite el valor'
+	'_TYPE' => 'Tiene tipo de datos',
+	'_URI'  => 'URI equivalente',
+	'_SUBP' => 'Subproperty of', // TODO: translate
+	'_UNIT' => 'Unidad de medida', // TODO: should be plural now ("units"), singluar stays alias
+	'_IMPO' => 'Importado de',
+	'_CONV' => 'Corresponde a',
+	'_SERV' => 'Provee servicio',
+	'_PVAL' => 'Permite el valor'
 );
 
 protected $m_SpecialPropertyAliases = array(
-	'Unidad de medida'  => SMW_SP_DISPLAY_UNITS,
+	'Unidad de medida'  => '_UNIT',
 	// support English aliases for special properties
-	'Has type'          => SMW_SP_HAS_TYPE,
-	'Equivalent URI'    => SMW_SP_HAS_URI,
-	'Subproperty of'    => SMW_SP_SUBPROPERTY_OF,
-	'Display units'     => SMW_SP_DISPLAY_UNITS,
-	'Imported from'     => SMW_SP_IMPORTED_FROM,
-	'Corresponds to'    => SMW_SP_CONVERSION_FACTOR,
-	'Provides service'  => SMW_SP_SERVICE_LINK,
-	'Allows value'      => SMW_SP_POSSIBLE_VALUE
+	'Has type'          => '_TYPE',
+	'Equivalent URI'    => '_URI',
+	'Subproperty of'    => '_SUBP',
+	'Display units'     => '_UNIT',
+	'Imported from'     => '_IMPO',
+	'Corresponds to'    => '_CONV',
+	'Provides service'  => '_SERV',
+	'Allows value'      => '_PVAL'
 );
 
 protected $m_Namespaces = array(

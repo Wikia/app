@@ -12,7 +12,8 @@ class ChangesFeed {
 	public function getFeedObject( $title, $description ) {
 		global $wgSitename, $wgContLanguageCode, $wgFeedClasses, $wgTitle;
 		$feedTitle = "$wgSitename  - {$title} [$wgContLanguageCode]";
-
+		if( !isset($wgFeedClasses[$this->format] ) )
+			return false;
 		if(!array_key_exists($this->format, $wgFeedClasses)) {
 			// falling back to atom
 			$this->format = 'atom';
@@ -24,7 +25,7 @@ class ChangesFeed {
 
 	public function execute( $feed, $rows, $limit = 0 , $hideminor = false, $lastmod = false ) {
 		global $messageMemc, $wgFeedCacheTimeout;
-		global $wgFeedClasses, $wgTitle, $wgSitename, $wgContLanguageCode;
+		global $wgFeedClasses, $wgSitename, $wgContLanguageCode;
 
 		if ( !FeedUtils::checkFeedOutput( $this->format ) ) {
 			return;
@@ -90,7 +91,7 @@ class ChangesFeed {
 	}
 
 	/**
-	* @todo document
+	* Generate the feed items given a row from the database.
 	* @param $rows Database resource with recentchanges rows
 	* @param $feed Feed object
 	*/

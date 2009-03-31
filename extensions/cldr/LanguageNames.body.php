@@ -11,20 +11,20 @@ class LanguageNames {
 
 	private static $cache = array();
 
-	const FALLBACK_NATIVE   = 0;
-	const FALLBACK_NORMAL   = 1;
-	const LIST_MW_SUPPORTED = 0;
-	const LIST_MW           = 1;
-	const LIST_MW_AND_CLDR  = 2;
+	const FALLBACK_NATIVE   = 0; // Missing entries fallback to native name
+	const FALLBACK_NORMAL   = 1; // Missing entries fallback trough fallback chain
+	const LIST_MW_SUPPORTED = 0; // Only names that has localisation in MediaWiki
+	const LIST_MW           = 1; // All names that are in Names.php
+	const LIST_MW_AND_CLDR  = 2; // Combination of Names.php and what is in cldr
 
 
-	public static function getNames( $code, $fallback = self::FALLBACK_NATIVE, $list = self::LIST_MW ) {
+	public static function getNames( $code, $fbMethod = self::FALLBACK_NATIVE, $list = self::LIST_MW ) {
 		$xx = self::loadLanguage( $code );
 		$native = Language::getLanguageNames( $list === self::LIST_MW_SUPPORTED );
 
-		if ( $fallback === self::FALLBACK_NATIVE ) {
+		if ( $fbMethod === self::FALLBACK_NATIVE ) {
 			$names = array_merge( $native, $xx );
-		} elseif ( $fallback === self::FALLBACK_NORMAL ) {
+		} elseif ( $fbMethod === self::FALLBACK_NORMAL ) {
 			$fallback = $code;
 			$fb = $xx;
 			while ( $fallback = Language::getFallbackFor( $fallback ) ) {
@@ -35,10 +35,8 @@ class LanguageNames {
 			/* Add native names for codes that are not in cldr */
 			$names = array_merge( $native, $fb );
 
-			/* Special case for native name for $code language, which is already
-			 * provided by MediaWiki.
-			 */
-			if ( isset( $native[$code] ) ) {
+			/* As a last resort, try the native name in Names.php */
+			if ( !isset( $names[$code] ) && isset( $native[$code] ) ) {
 				$names[$code] = $native[$code];
 			}
 		} else {

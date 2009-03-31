@@ -1,9 +1,11 @@
 <?php
 
-$dir = dirname( __FILE__ );
-require( "$dir/../../maintenance/commandLine.inc" );
+require_once ( getenv('MW_INSTALL_PATH') !== false
+        ? getenv('MW_INSTALL_PATH')."/maintenance/commandLine.inc"
+        : dirname( __FILE__ ) . '/../../maintenance/commandLine.inc' );
 
 $dir = dirname( __FILE__ );
+
 $endl = '
 ';
 

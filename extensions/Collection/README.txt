@@ -36,9 +36,13 @@ from the MediaWiki installation and can be shared by different MediaWikis.
 See the ``mw-serve`` command or the ``mwlib.cgi`` script in the mwlib_
 distribution.
 
+If you use a a render server the `MediaWiki API`_ must be enabled
+(i.e. just don't override the default value of ``true`` for ``$wgEnableApi``
+in your ``LocalSettings.php``).
+
 If you have a low-traffic MediaWiki you can use the public render server running
 at http://tools.pediapress.com/mw-serve/. In this case, just keep
-the configuration variable $wgCollectionMWServe (see below) at its default
+the configuration variable $wgCollectionMWServeURL (see below) at its default
 value.
 
 
@@ -66,8 +70,14 @@ Installation and Configuration of the Collection Extension
    Note that the MediaWiki must be accessible from the render server, i.e. if
    your MediaWiki is behind a firewall you cannot use the public render server.
   
+  *$wgCollectionMWServeCert (string)*
+   Filename of a SSL certificate in PEM format for the mw-serve render server.
+   This needs to be used for self-signed certificates, otherwise CURL will
+   throw an error. The default is null, i.e. no certificate.
+  
   *$wgCollectionMWServeCredentials (string)*
-   Set this to a string of the form "USERNAME:PASSWORD", if the MediaWiki
+   Set this to a string of the form "USERNAME:PASSWORD" (or
+   "USERNAME:PASSWORD:DOMAIN" if you're using LDAP), if the MediaWiki
    requires to be logged in to view articles.
    The render server will then login with these credentials using MediaWiki API
    before doing other requests.
@@ -77,14 +87,53 @@ Installation and Configuration of the Collection Extension
    DO NOT USE THIS SETTING, as the credentials will be exposed to eavesdropping!
   
   *$wgCollectionFormats*
-   An array mapping names of mwlib_ writers to the name of the produces format.
-   The default value is:
+   An array mapping names of mwlib_ writers to the name of the produced format.
+   The default value is::
    
        array(
            'rl' => 'PDF',
        )
     
-   i.e. only PDF enabled. See mwlib_ for possible other writers.
+   i.e. only PDF enabled. If you want to add OpenDocument Text in addition to
+   PDF you can set $wgCollectionFormats to something like this::
+   
+       $wgCollectionFormats = array(
+           'rl' => 'PDF',
+           'odf' => 'ODT',
+       );
+   
+   On the public render server tools.pediapress.com, currently the following
+   writers are available:
+   
+   * docbook: DocBook XML
+   * odf: OpenDocument Text
+   * rl: PDF
+   * xhtml: XHTML 1.0 Transitional
+   
+   If you're using your own render server, the list of available writers can be
+   listed with the following mwlib_ command::
+   
+     $ mw-render --list-writers
+   
+  *$wgCollectionArticleNamespaces (array)*
+   List of namespace numbers for pages which can be added to a collection.
+   Category pages (NS_CATEGORY) are always an exception (all articles in a
+   category are added, not the category page itself). Default is::
+   
+     array(
+     	NS_MAIN,
+     	NS_TALK,
+     	NS_USER,
+     	NS_USER_TALK,
+     	NS_PROJECT,
+     	NS_PROJECT_TALK,
+     	NS_MEDIAWIKI,
+     	NS_MEDIAWIKI_TALK,
+     	100,
+     	101,
+     	102,
+     	103,
+     )
    
   *$wgCommunityCollectionNamespace (integer)*
    Namespace for "community collections", i.e. the namespace where non-personal
@@ -119,23 +168,12 @@ Installation and Configuration of the Collection Extension
    
    If your MediaWiki contains articles with different licenses, make sure
    that each article contains the name of the license and set $wgLicenseURL
-   to an article that contains all needed licenses.
+   to an article that contains all needed licenses.   
    
-  *$wgPDFTemplateBlackList (string)*
-   Title of an article containing blacklisted templates, i.e. templates that
-   should be excluded for PDF generation.
-
-   Default value is ``"MediaWiki:PDF Template Blacklist"``
-
-   The template blacklist page should contain a list of links to the
-   blacklisted templates in the following form::
-   
-	 * [[Template:Templatename]]
-	 * [[Template:SomeOtherTemplatename]]
-	 
-   
-   
-* Add a portlet to the skin of your *MediaWiki* installation: Just before the line::
+* This step is needed for MediaWiki version < 1.14 (at the time of writing
+  version 1.14 has not been released):
+  
+  Add a portlet to the skin of your *MediaWiki* installation: Just before the line::
 
     <div class="portlet" id="p-tb">
 
@@ -153,12 +191,13 @@ Installation and Configuration of the Collection Extension
   one day). Adjust session.cookie_lifetime and session.gc_maxlifetime in your
   ``php.ini`` accordingly.
 
-* Add a page ``Help:Collections`` with the wikitext from the supplied file
-  ``Help_Collections.txt``. Adjust the name of the template blacklist according
-  to your setting of $wgPDFTemplateBlackList (see above).
+* Add a help page (e.g. ``Help:Collections`` for wikis in English language)
+  with the wikitext from on of the supplied files in the ``helppages/`` and
+  adjust it according to your wiki-specific setup.
 
 .. _mwlib: http://code.pediapress.com/wiki/wiki/mwlib
 .. _MediaWiki: http://www.mediawiki.org/
 .. _`PediaPress GmbH`: http://pediapress.com/
 .. _`Wikimedia Foundation`: http://wikimediafoundation.org/
 .. _`Commonwealth of Learning`: http://www.col.org/
+.. _`MediaWiki API`: http://www.mediawiki.org/wiki/API

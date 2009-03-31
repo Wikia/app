@@ -17,6 +17,7 @@ $wgExtensionCredits['parserhook'][] = array(
 	'descriptionmsg' => 'i18ntags-desc',
 	'version' => '2.2',
 	'author' => 'Niklas Laxström',
+	'url' => 'http://www.mediawiki.org/wiki/Extension:I18nTags',
 );
 
 $dir = dirname(__FILE__) . '/';

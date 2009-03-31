@@ -225,7 +225,7 @@ class KkConverter extends LanguageConverter {
 	 *    names as they were
 	 *  - do not try to find variants for usernames
 	 */
-	function findVariantLink( &$link, &$nt ) {
+	function findVariantLink( &$link, &$nt, $forTemplate = false ) {
 		// check for user namespace
 		if(is_object($nt)){
 			$ns = $nt->getNamespace();
@@ -234,8 +234,8 @@ class KkConverter extends LanguageConverter {
 		}
 
 		$oldlink=$link;
-		parent::findVariantLink($link,$nt);
-		if($this->getPreferredVariant()==$this->mMainLanguageCode)
+		parent::findVariantLink( $link, $nt, $forTemplate );
+		if( $this->getPreferredVariant()==$this->mMainLanguageCode )
 			$link=$oldlink;
 	}
 
@@ -245,7 +245,7 @@ class KkConverter extends LanguageConverter {
 	 */
 	function autoConvert($text, $toVariant=false) {
 		global $wgTitle;
-		if(is_object($wgTitle) && $wgTitle->getNameSpace()==NS_IMAGE){
+		if(is_object($wgTitle) && $wgTitle->getNameSpace()==NS_FILE){
 			$imagename = $wgTitle->getNsText();
 			if(preg_match("/^$imagename:/",$text)) return $text;
 		}

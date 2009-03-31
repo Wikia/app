@@ -22,8 +22,8 @@ class MathCaptcha extends SimpleCaptcha {
 		$index = $this->storeCaptcha( array( 'answer' => $answer ) );
 		
 		$form = '<table><tr><td>' . $this->fetchMath( $sum ) . '</td>';
-		$form .= '<td>' . wfInput( 'wpCaptchaAnswer', false, false ) . '</td></tr></table>';
-		$form .= wfHidden( 'wpCaptchaId', $index );
+		$form .= '<td>' . Xml::input( 'wpCaptchaWord', false, false ) . '</td></tr></table>';
+		$form .= Xml::hidden( 'wpCaptchaId', $index );
 		return $form;
 	}
 	
@@ -42,7 +42,7 @@ class MathCaptcha extends SimpleCaptcha {
 		$math = new MathRenderer( $sum );
 		$math->setOutputMode( MW_MATH_PNG );
 		$html = $math->render();
-		return preg_replace( '/alt=".*"/', '', $html );
+		return preg_replace( '/alt=".*?"/', '', $html );
 	}
 
 }

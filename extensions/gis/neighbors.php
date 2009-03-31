@@ -38,7 +38,7 @@ class neighbors {
 	var $title;
 	var $attr;
 
-	function neighbors( $dist ) 
+	function neighbors( $dist )
 	{
 		$this->p = new GeoParam();
 		$this->d = $dist;
@@ -47,12 +47,12 @@ class neighbors {
 		$this->attr = $this->p->get_attr();
 	}
 
-	function show() 
+	function show()
 	{
 		global $wgOut, $wgUser, $wgContLang;
 
 		/* No reason for robots to follow these links */
-		$wgOut->setRobotpolicy( 'noindex,nofollow' );
+		$wgOut->setRobotPolicy( 'noindex,nofollow' );
 
 		$wgOut->setPagetitle( "Neighbors" );
 
@@ -74,7 +74,10 @@ class neighbors {
 
 		$g = new GisDatabase();
 		$g->select_radius_m( $lat0, $lon0, $this->d * 1000,
+				     // FIXME: Notice: Undefined index:  globe in extensions\gis\neighbors.php on line 79
+				     // FIXME: Notice: Undefined index:  type in extensions\gis\neighbors.php on line 79
 				     $this->attr['globe'], $this->attr['type'],
+				     // FIXME: Notice: Undefined index:  arg:type in extensions\gis\neighbors.php on line 81
 				     $this->attr['arg:type'] );
 		$all = array();
 		$all_pos = array(); /* temporary store reqd due to sort */
@@ -120,7 +123,7 @@ class neighbors {
 		}
 		return "$out\n<table class=\"gisneighbourtable\">$table</table>\n";
 	}
-	
+
 	function show_location( $id, $d, $pos )
 	{
 		$id = $pos->gis_page;
@@ -128,7 +131,7 @@ class neighbors {
 		$out = "<tr><th>[[{$pos['name']}]]</th>";
 
 		$type = $pos['type'];
-		
+
 		$out .= "<td>$type</td>";
 		if ($d < 1000) {
 			$out .= '<td>'.round($d).' m</td>';
@@ -150,4 +153,3 @@ class neighbors {
 		       . "</td></tr>\r\n";
 	}
 }
-

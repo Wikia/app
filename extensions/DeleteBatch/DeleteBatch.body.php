@@ -174,9 +174,9 @@ class DeleteBatchForm {
 			}
 		}
 		/* switch user if necessary */
+		$OldUser = $wgUser;
 		if ('script' == $this->mMode) {
 			$username = 'delete page script';
-			$OldUser = $wgUser;
 			$wgUser = User::newFromName($username);
 			/* Create the user if necessary */
 			if ( !$wgUser->getID() ) {
@@ -200,7 +200,6 @@ class DeleteBatchForm {
 				is_null($arr[1]) ? $reason = '' : $reason = $arr[1];
 				$this->deletePage($arr[0], $reason, $dbw, true, $linenum);
 			}
-//			$this->showForm('');
 		} else {
 			/* run through text and do all like it should be */
 			$lines = explode( "\n", $line );
@@ -214,14 +213,14 @@ class DeleteBatchForm {
 		}
 
 		/* restore user back */
-		if ('script' == $this->wpMode) {
+		if ('script' == $this->mMode) {
 			$wgUser = $OldUser;
 		}
 
 		$sk = $wgUser->getSkin();
 		$titleObj = Title::makeTitle( NS_SPECIAL, 'DeleteBatch' );
-		$link_back = $sk->makeKnownLinkObj($titleObj, wfMsg('deletebatch-here') );
-		$wgOut->addHTML("<br />".wfMsg('deletebatch-link-back')." ".$link_back.".");
+		$link_back = $sk->makeKnownLinkObj($titleObj, wfMsg('deletebatch-link-back') );
+		$wgOut->addHTML( "<br /><b>" . $link_back . "</b>" );
 	}
 
 	/**
@@ -283,9 +282,9 @@ class DeleteBatchForm {
 			return;
 		}
 		if ($this->mPage) {
-			$wgOut->setSubTitle ( wfMsg('deletebatch-processing') . wfMsg ('deletebatch-from-form') );
+			$wgOut->setSubTitle ( wfMsg('deletebatch-processing', wfMsg('deletebatch-from-form') ) );
 		} else {
-			$wgOut->setSubTitle ( wfMsg('deletebatch-processing') . wfMsg ('deletebatch-from-file') );
+			$wgOut->setSubTitle ( wfMsg('deletebatch-processing', wfMsg('deletebatch-from-file') ) );
 		}
 			$this->deleteBatch ($this->mUser, $this->mPage, $this->mFileTemp);
 	}

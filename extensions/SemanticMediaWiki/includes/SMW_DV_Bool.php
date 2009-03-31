@@ -1,10 +1,14 @@
 <?php
+/**
+ * @file
+ * @ingroup SMWDataValues
+ */
 
 /**
  * This datavalue implements Boolean datavalues.
  *
  * @author Markus Krötzsch
- * @note AUTOLOADED
+ * @ingroup SMWDataValues
  */
 class SMWBoolValue extends SMWDataValue {
 
@@ -14,6 +18,7 @@ class SMWBoolValue extends SMWDataValue {
 	protected $m_falsecaption = NULL; // a desired label for "false" if given
 
 	protected function parseUserValue($value) {
+		wfLoadExtensionMessages('SemanticMediaWiki');
 		$value = trim($value);
 		$lcv = strtolower($value);
 		$this->m_value = NULL;

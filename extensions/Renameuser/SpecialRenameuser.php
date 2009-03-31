@@ -16,12 +16,12 @@ $wgGroupPermissions['bureaucrat']['renameuser'] = true;
 
 $wgExtensionCredits['specialpage'][] = array(
 	'name' => 'Renameuser',
-	'author' => 'Ævar Arnfjörð Bjarmason, Aaron Schulz',
-	'url' => 'http://www.mediawiki.org/wiki/Extension:Renameuser',
-	'description' => 'Rename a user (need \'\'renameuser\'\' right)',
+	'author'         => array( 'Ævar Arnfjörð Bjarmason', 'Aaron Schulz' ),
+	'url'            => 'http://www.mediawiki.org/wiki/Extension:Renameuser',
+	'description'    => 'Rename a user (need \'\'renameuser\'\' right)',
 	'descriptionmsg' => 'renameuser-desc',
-	'svn-date' => '$LastChangedDate: 2008-07-09 16:42:18 +0000 (Wed, 09 Jul 2008) $',
-	'svn-revision' => '$Rev: 37407 $',
+	'svn-date'       => '$LastChangedDate: 2008-11-30 03:15:22 +0000 (Sun, 30 Nov 2008) $',
+	'svn-revision'   => '$Rev: 44056 $',
 );
 
 # Internationalisation file
@@ -41,7 +41,21 @@ global $wgLogTypes, $wgLogNames, $wgLogHeaders, $wgLogActions;
 $wgLogTypes[]                          = 'renameuser';
 $wgLogNames['renameuser']              = 'renameuserlogpage';
 $wgLogHeaders['renameuser']            = 'renameuserlogpagetext';
-$wgLogActions['renameuser/renameuser'] = 'renameuserlogentry';
+#$wgLogActions['renameuser/renameuser'] = 'renameuserlogentry';
+$wgLogActionsHandlers['renameuser/renameuser'] = 'wfRenameUserLogActionText'; // deal with old breakage
+
+function wfRenameUserLogActionText( $type, $action, $title = NULL, $skin = NULL, $params = array(), $filterWikilinks=false ) {
+	if( !$title || $title->getNamespace() !== NS_USER ) {
+		$rv = ''; // handled in comment, the old way
+	} else {
+		$titleLink = $skin ? 
+			$skin->makeLinkObj( $title, htmlspecialchars( $title->getPrefixedText() ) ) : $title->getText();
+		# Add title to params
+		array_unshift( $params, $titleLink );
+		$rv = wfMsgReal( 'renameuserlogentry', $params );
+	}
+	return $rv;
+}
 
 $wgAutoloadClasses['SpecialRenameuser'] = dirname( __FILE__ ) . '/SpecialRenameuser_body.php';
 $wgAutoloadClasses['RenameUserJob'] = dirname(__FILE__) . '/RenameUserJob.php';

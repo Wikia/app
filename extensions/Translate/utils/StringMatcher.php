@@ -1,5 +1,5 @@
 <?php
-if (!defined('MEDIAWIKI')) die();
+if ( !defined( 'MEDIAWIKI' ) ) die();
 
 class StringMatcher extends StringMangler {
 	protected $sPrefix = '';
@@ -21,9 +21,9 @@ class StringMatcher extends StringMangler {
 			$pos = strpos( $string, '*' );
 			if ( $pos === false ) {
 				$this->aExact[] = $string;
-			} elseif ( $pos +1 === strlen($string) ) {
-				$prefix = substr( $string, 0, -1 );
-				$this->aPrefix[$prefix] = strlen($prefix);
+			} elseif ( $pos + 1 === strlen( $string ) ) {
+				$prefix = substr( $string, 0, - 1 );
+				$this->aPrefix[$prefix] = strlen( $prefix );
 			} else {
 				$string = str_replace( '\\*', '.+', preg_quote( $string ) );
 				$this->aRegex[] = "/^$string$/";
@@ -32,7 +32,7 @@ class StringMatcher extends StringMangler {
 	}
 
 	public function match( $string ) {
-		if ( in_array($string, $this->aExact) ) return true;
+		if ( in_array( $string, $this->aExact ) ) return true;
 
 		foreach ( $this->aPrefix as $prefix => $len ) {
 			if ( strncmp( $string, $prefix, $len ) === 0 ) return true;
@@ -61,7 +61,7 @@ class StringMatcher extends StringMangler {
 	public function unMangle( $data ) {
 		if ( !$this->sPrefix ) { return $data; }
 		if ( is_array( $data ) ) {
-			return $this->mangleArray( $data, true);
+			return $this->mangleArray( $data, true );
 		} elseif ( is_string( $data ) ) {
 			return $this->mangleString( $data, true );
 		} elseif ( $data === null ) {
@@ -83,7 +83,7 @@ class StringMatcher extends StringMangler {
 	}
 
 	protected function unMangleString( $string ) {
-		if ( strncmp( $string, $this->sPrefix, strlen($this->sPrefix) ) === 0 ) {
+		if ( strncmp( $string, $this->sPrefix, strlen( $this->sPrefix ) ) === 0 ) {
 			return substr( $string, strlen( $this->sPrefix ) );
 		} else {
 			return $string;
@@ -93,7 +93,7 @@ class StringMatcher extends StringMangler {
 	protected function mangleArray( Array $array, $reverse = false ) {
 		$temp = array();
 
-		if ( isset($array[0]) ) {
+		if ( isset( $array[0] ) ) {
 			foreach ( $array as $key => &$value ) {
 				$value = $this->mangleString( $value, $reverse );
 				$temp[$key] = $value; // Assign a reference

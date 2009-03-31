@@ -21,8 +21,6 @@ $digitTransformTable = array(
 );
 
 $messages = array(
-'skinpreview' => '(पूर्वालोकन)',
-
 # Dates
 'sunday'        => 'आईतबार',
 'monday'        => 'सोमबार',
@@ -77,7 +75,7 @@ $messages = array(
 'mytalk'        => 'मेरो कुरा',
 'anontalk'      => 'यस् IP को वारेमा वार्तालाप गर्नुहोस्',
 'navigation'    => 'अन्वेषण',
-'and'           => 'र',
+'and'           => '&#32;र',
 
 'help'             => 'सहयोग',
 'search'           => 'खोज',
@@ -110,7 +108,6 @@ $messages = array(
 
 # All link text and link target definitions of links into project namespace that get used by other message strings, with the exception of user group pages (see grouppage) and the disambiguation template definition (see disambiguations).
 'aboutpage'            => 'Project:बारेमा',
-'bugreports'           => 'त्रुटी बिवरण',
 'copyright'            => 'लेखका सामाग्री $1 अनुसार उपलब्ध छ।',
 'currentevents'        => 'हालैका घटनाहरु',
 'currentevents-url'    => 'Project:हालैका घटनाहरु',
@@ -123,7 +120,6 @@ $messages = array(
 
 'badaccess'        => 'आज्ञा त्रुटी',
 'badaccess-group0' => 'तपाईले अनुरोध गर्नुभएको कार्य गर्न तपाईलाई अनुमति दिइएको छैन।',
-'badaccess-group1' => 'तपाईले अनुरोध गर्नुभएको कार्य गर्ने अनुमति $1 समूहमा पर्ने प्रयोगकर्ताहरुमा सिमीत छ।',
 
 'ok'                      => 'हुन्छ',
 'youhavenewmessages'      => 'तपाइको लागि ($2) मा  $1 छ ।',
@@ -156,7 +152,6 @@ $messages = array(
 # General errors
 'badarticleerror' => 'यो कार्य यस पृष्ठमा गर्न मिल्दैन।',
 'badtitle'        => 'गलत शिर्षक',
-'perfdisabled'    => 'माफ गर्नुहोला! यो सुविधा हाल केही समयको लागी हटाइएको छ, किनभने यसले डेटाबेसलाई यस्तरी सुस्त गराउछ कि कसैले पनि विकिपीडिया प्रयोग नै गर्न पाउदैनन्।',
 'perfcached'      => 'तलको डाटाहरु क्याचमा रहेका कुराहरु हुन्। अपटुडेट नहुनपनि सक्छन्।',
 'perfcachedts'    => 'तलको डाटाहरु क्याचमा रहेका कुराहरु हुन् र यो पछिल्लो पल्ट $1 मा अपडेट गरीएको थियो ।',
 
@@ -194,6 +189,10 @@ $messages = array(
 'accountcreatedtext'         => '$1 को लागी प्रयोगकर्ता खाता खोलियो ।',
 'loginlanguagelabel'         => 'भाषा: $1',
 
+# Password reset dialog
+'oldpassword' => 'पुरानो पासवर्ड:',
+'newpassword' => 'नयाँ पासवर्ड:',
+
 # Edit page toolbar
 'bold_sample'     => 'गाढा अक्षर',
 'bold_tip'        => 'गाढा अक्षर',
@@ -206,8 +205,8 @@ $messages = array(
 'media_sample'    => 'उदाहरण.ogg',
 
 # Edit pages
-'summary'                => 'सारांश',
-'subject'                => 'विषय/शिर्षक',
+'summary'                => 'सारांश:',
+'subject'                => 'विषय/शिर्षक:',
 'minoredit'              => 'यो सानो सम्पादन हो',
 'watchthis'              => 'यो पृष्ठ अवलोकन गर्नुहोस्',
 'savearticle'            => 'संग्रह गर्नुहोस्',
@@ -215,7 +214,7 @@ $messages = array(
 'showpreview'            => 'पूर्वालोकन देखाउनुहोस्',
 'showlivepreview'        => 'प्रत्यक्ष पूर्वालोकन',
 'showdiff'               => 'परिवर्तन देखाउनुहोस्',
-'summary-preview'        => 'सारांश पूर्वालोकन',
+'summary-preview'        => 'सारांश पूर्वालोकन:',
 'blockedoriginalsource'  => "'''$1''' को स्रोत तल देखाइएको छ:",
 'whitelistedittitle'     => 'सम्पादन गर्नको लागि प्रवेश (लग इन) आवश्यक छ',
 'whitelistedittext'      => 'पाना सम्पादन गर्न तपाँईले $1 गर्नु पर्दछ।',
@@ -224,8 +223,8 @@ $messages = array(
 'accmailtitle'           => 'पासवर्ड पठाइयो',
 'accmailtext'            => '"$1" को पासवर्ड $2मा पठाइएको छ ।',
 'newarticle'             => '(नयाँ)',
-'note'                   => '<strong>सुझाव:</strong>',
-'previewnote'            => '<strong>यो केवल पूर्वालोकन मात्र हो; परिवर्तनहरू संग्रह गरिसकिएको छैन!</strong>',
+'note'                   => "'''सुझाव:'''",
+'previewnote'            => "'''यो केवल पूर्वालोकन मात्र हो; परिवर्तनहरू संग्रह गरिसकिएको छैन!'''",
 'editing'                => '$1 सम्पादन गरिँदै',
 'editingsection'         => '$1 (खण्ड) सम्पादन गरिँदै',
 'editconflict'           => 'सम्पादन बाँझियो: $1',
@@ -259,6 +258,7 @@ $messages = array(
 'mypreferences'         => 'मेरा अभिरुचिहरू',
 'prefsnologin'          => 'प्रवेश (लग ईन) नगरिएको',
 'changepassword'        => 'पासवर्ड परिवर्तन गर्नुहोस्',
+'skin-preview'          => 'पूर्वालोकन',
 'math'                  => 'गणित',
 'datetime'              => 'मिति र समय',
 'math_unknown_error'    => 'अज्ञात समस्या',
@@ -266,8 +266,6 @@ $messages = array(
 'prefs-personal'        => 'प्रयोगकर्ताको विवरण',
 'prefs-rc'              => 'नयाँ परिवर्तनहरु',
 'prefs-watchlist'       => 'अवलोकन पृष्ठ',
-'oldpassword'           => 'पुरानो पासवर्ड:',
-'newpassword'           => 'नयाँ पासवर्ड:',
 'recentchangescount'    => 'नयाँ परिवर्तित शिर्षकहरु',
 'savedprefs'            => 'तपाँईका अभिरुचिहरू सङ्ग्रहित भयो।',
 'localtime'             => 'स्थानीय समय',
@@ -304,13 +302,13 @@ $messages = array(
 
 'nolicense' => 'केहिपनि छानिएन',
 
-# Special:ImageList
-'imagelist_date'        => 'मिति',
-'imagelist_name'        => 'नाम',
-'imagelist_user'        => 'प्रयोगकर्ता',
-'imagelist_description' => 'वर्णन',
+# Special:ListFiles
+'listfiles_date'        => 'मिति',
+'listfiles_name'        => 'नाम',
+'listfiles_user'        => 'प्रयोगकर्ता',
+'listfiles_description' => 'वर्णन',
 
-# Image description page
+# File description page
 'nolinkstoimage'   => 'यो फाईलसंग लिंकभएको कुनै पृष्ठ छैन.',
 'noimage-linktext' => 'अपलोड गर्नुहोस्',
 
@@ -369,8 +367,16 @@ $messages = array(
 # Special:Categories
 'categories' => 'श्रेणीहरू',
 
+# Special:LinkSearch
+'linksearch-ns' => 'नेमस्पेस:',
+'linksearch-ok' => 'खोज्नुहोस्',
+
 # Special:ListUsers
 'listusers-submit' => 'देखाउनुहोस्',
+
+# Special:Log/newusers
+'newuserlog-create-entry'  => 'नयाँ प्रयोगकर्ता',
+'newuserlog-create2-entry' => '$1 का लागी खाता खोलियो',
 
 # E-mail user
 'mailnologin'     => 'ईमेल पठाउने ठेगाना नै भएन ।',
@@ -396,23 +402,20 @@ $messages = array(
 'wlheader-enotif'      => '* ईमेलद्वारा जानकारी गराउने तरिका enable गरियो ।',
 'wlheader-showupdated' => "* तपाइले पछिल्लो पल्ट भ्रमण गरेपछि परिवर्तन भएका पृष्ठहरूलाई '''गाढा''' गरेर देखाइएको छ ।",
 'wlshowlast'           => 'पछिल्ला $2 दिनहरूका $3 $1 घण्टाहरूका देखाउनुहोस्',
-'watchlist-show-bots'  => 'बोट सम्पादन देखाउनुहोस्',
-'watchlist-hide-bots'  => 'बोट सम्पादन लुकाउनुहोस्',
-'watchlist-show-own'   => 'मेरा सम्पादनहरु देखाउनुहोस्',
-'watchlist-hide-own'   => 'मेरा सम्पादनहरु लुकाउनुहोस्',
-'watchlist-show-minor' => 'सानो सम्पादन देखाउनुहोस्',
-'watchlist-hide-minor' => 'सानो सम्पादन लुकाउनुहोस्',
 
 'enotif_newpagetext' => 'यो नयाँ पृष्ठ हो।',
 'changed'            => 'परिवर्तन भइसकेको',
 
-# Delete/protect/revert
-'excontent'                   => "लेख थियो: '$1'",
-'historywarning'              => 'खबरदारी: तपाईंले मेटाउन लाग्नुभएको पृष्ठको इतिहास छ:',
-'actioncomplete'              => 'काम सकियो',
-'reverted'                    => 'अघिल्लो संशोधनको स्थितिमा फर्काइयो',
+# Delete
+'excontent'      => "लेख थियो: '$1'",
+'historywarning' => 'खबरदारी: तपाईंले मेटाउन लाग्नुभएको पृष्ठको इतिहास छ:',
+'actioncomplete' => 'काम सकियो',
+'reverted'       => 'अघिल्लो संशोधनको स्थितिमा फर्काइयो',
+
+# Protect
 'protectlogpage'              => 'सुरक्षण लग',
 'protectedarticle'            => '"[[$1]]" लाई सुरक्षित गरियो',
+'prot_1movedto2'              => '[[$1]] लाई [[$2]]मा सारियो',
 'protectcomment'              => 'बचाउको कारण',
 'protect-default'             => '(स्वतह)',
 'protect-level-autoconfirmed' => 'दर्ता नभएका प्रयोगकर्ताहरूलाई रोक',
@@ -456,6 +459,7 @@ $messages = array(
 # Move page
 'move-page-legend'        => 'पृष्ठ सार्नुहोस्',
 'movearticle'             => 'पृष्ठ सार्नुहोस्',
+'movenologin'             => 'प्रवेश (लग ईन) नगरिएको',
 'movepagebtn'             => 'पृष्ठ सार्नुहोस्',
 'pagemovedsub'            => 'सार्ने काम सफल भयो',
 'movedto'                 => 'मा सारियो',
@@ -516,7 +520,7 @@ $messages = array(
 'previousdiff' => '← अधिल्लो भिन्नता',
 'nextdiff'     => 'पछिल्लो भिन्नता →',
 
-# Special:NewImages
+# Special:NewFiles
 'noimages' => 'हेर्नको लागि केही छैन.',
 'ilsubmit' => 'खोज्नुहोस्',
 'bydate'   => 'मिति अनुसार',
@@ -588,9 +592,6 @@ $messages = array(
 
 # action=purge
 'confirm_purge_button' => 'हुन्छ',
-
-# AJAX search
-'hideresults' => 'नतिजा लुकाउनुहोस्',
 
 # Multipage image navigation
 'imgmultipageprev' => '← अघिल्लो पृष्ठ',

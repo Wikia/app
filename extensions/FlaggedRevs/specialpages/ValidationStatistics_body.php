@@ -3,83 +3,118 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 	echo "FlaggedRevs extension\n";
 	exit( 1 );
 }
-wfLoadExtensionMessages( 'ValidationStatistics' );
-wfLoadExtensionMessages( 'FlaggedRevs' );
 
-class ValidationStatistics extends UnlistedSpecialPage
+class ValidationStatistics extends IncludableSpecialPage
 {
-    function __construct() {
-        SpecialPage::SpecialPage( 'ValidationStatistics' );
-    }
+	function __construct() {
+		IncludableSpecialPage::IncludableSpecialPage( 'ValidationStatistics' );
+		wfLoadExtensionMessages( 'ValidationStatistics' );
+		wfLoadExtensionMessages( 'FlaggedRevs' );
+	}
 
-    function execute( $par ) {
-        global $wgRequest, $wgUser, $wgOut, $wgContLang, $wgFlaggedRevsNamespaces;
+	function execute( $par ) {
+		global $wgRequest, $wgUser, $wgOut, $wgLang, $wgContLang, $wgFlaggedRevsNamespaces;
 		$this->setHeaders();
 		$this->skin = $wgUser->getSkin();
 		$this->db = wfGetDB( DB_SLAVE );
-		
+
 		$this->maybeUpdate();
-		
+
 		$ec = $this->getEditorCount();
 		$rc = $this->getReviewerCount();
-		
-		$wgOut->addWikiText( wfMsgExt('validationstatistics-users',array('parsemag'),$ec,$rc) );
-		
+
+		$wgOut->addWikiText( wfMsgExt( 'validationstatistics-users', array( 'parsemag' ), 
+			$wgLang->formatnum( $ec ), $wgLang->formatnum( $rc ) ) );
+
 		if( !$this->readyForQuery() ) {
 			return false;
 		}
-		
+
 		$wgOut->addWikiText( wfMsg('validationstatistics-table') );
-		$wgOut->addHTML( "<table class='wikitable flaggedrevs_stats_table'>\n" );
+		$wgOut->addHTML( Xml::openElement( 'table', array( 'class' => 'wikitable flaggedrevs_stats_table' ) ) );
 		$wgOut->addHTML( "<tr>\n" );
-		$msgs = array("ns","total","stable","latest","synced","old"); // our headings
+		// Headings (for a positive grep result):
+		// validationstatistics-ns, validationstatistics-total, validationstatistics-stable,
+		// validationstatistics-latest, validationstatistics-synced, validationstatistics-old
+		$msgs = array( 'ns', 'total', 'stable', 'latest', 'synced', 'old' ); // our headings
 		foreach( $msgs as $msg ) {
-			$wgOut->addHTML( "<th>".wfMsg("validationstatistics-$msg")."</th>" );
+			$wgOut->addHTML( '<th>' . wfMsgExt("validationstatistics-$msg",array('parseinline')) . '</th>' );
 		}
 		$wgOut->addHTML( "</tr>\n" );
-		
+
 		foreach( $wgFlaggedRevsNamespaces as $namespace ) {
 			$row = $this->db->selectRow( 'flaggedrevs_stats', '*', array('namespace' => $namespace) );
 			$NsText = $wgContLang->getFormattedNsText( $row->namespace );
 			$NsText = $NsText ? $NsText : wfMsgHTML('blanknamespace');
-			
-			$percRev = @sprintf( '%4.2f', 100*intval($row->reviewed)/intval($row->total) );
-			$percLatest = @sprintf( '%4.2f', 100*intval($row->synced)/intval($row->total) );
-			$percSynced = @sprintf( '%4.2f', 100*intval($row->synced)/intval($row->reviewed) );
-			$outdated = intval($row->reviewed) - intval($row->synced);
-			$outdated = max( 0, $outdated ); // lag between queries
-			
-			$wgOut->addHTML( "<tr align='center'>" );
-			$wgOut->addHTML( "<td>$NsText</td>" );
-			$wgOut->addHTML( "<td>{$row->total}</td>" );
-			$wgOut->addHTML( "<td>{$row->reviewed} <i>($percRev%)</i></td>" );
-			$wgOut->addHTML( "<td>{$row->synced} <i>($percLatest%)</i></td>" );
-			$wgOut->addHTML( "<td>$percSynced%</td>" );
-			$wgOut->addHTML( "<td>".$outdated."</td>" );
-			$wgOut->addHTML( "</tr>" );
+
+			$percRev = intval( $row->total ) == 0
+				? '-' // devision by zero
+				: $wgLang->formatnum( wfMsgExt( 'validationstatistics-nbr', array( 'escapenoentities' ),
+					sprintf( '%4.2f', 100 * intval( $row->reviewed ) / intval( $row->total ) ) ) );
+			$percLatest = intval( $row->total ) == 0
+				? '-' // devision by zero
+				: $wgLang->formatnum( wfMsgExt( 'validationstatistics-nbr', array( 'escapenoentities' ),
+					sprintf( '%4.2f', 100 * intval( $row->synced ) / intval( $row->total ) ) ) );
+			$percSynced = intval( $row->reviewed ) == 0
+				? '-' // devision by zero
+				: $wgLang->formatnum( wfMsgExt( 'validationstatistics-nbr', array( 'escapenoentities' ),
+					sprintf( '%4.2f', 100 * intval( $row->synced ) / intval( $row->reviewed ) ) ) );
+			$outdated = intval( $row->reviewed ) - intval( $row->synced );
+			$outdated = $wgLang->formatnum( max( 0, $outdated ) ); // lag between queries
+
+			$wgOut->addHTML( 
+				"<tr align='center'>
+					<td>" .
+						htmlspecialchars( $NsText ) .
+					"</td>
+					<td>" .
+						htmlspecialchars( $wgLang->formatnum( $row->total ) ) .
+					"</td>
+					<td>" .
+						htmlspecialchars( $wgLang->formatnum( $row->reviewed ) . $wgContLang->getDirMark() ) . " <i>($percRev)</i>
+					</td>
+					<td>" .
+						htmlspecialchars( $wgLang->formatnum( $row->synced ) . $wgContLang->getDirMark() ) . " <i>($percLatest)</i>
+					</td>
+					<td>" .
+						$percSynced .
+					"</td>
+					<td>" .
+					
+						htmlspecialchars( $outdated ) .
+					"</td>
+				</tr>"
+			);
 		}
-		$wgOut->addHTML( "</table>" );
+		$wgOut->addHTML( Xml::closeElement( 'table' ) );
 	}
-	
+
 	protected function maybeUpdate() {
+		global $wgFlaggedRevsStatsAge;
+		if( !$wgFlaggedRevsStatsAge ) {
+			return false;
+		}
 		$dbCache = wfGetCache( CACHE_DB );
 		$key = wfMemcKey( 'flaggedrevs', 'statsUpdated' );
 		$keySQL = wfMemcKey( 'flaggedrevs', 'statsUpdating' );
 		// If a cache update is needed, do so asynchronously.
 		// Don't trigger query while another is running.
 		if( $dbCache->get( $key ) ) {
-			wfDebugLog( 'ValidationStatistic', __METHOD__ . " skipping, got data" );
+			wfDebugLog( 'ValidationStatistics', __METHOD__ . " skipping, got data" );
 		} elseif( $dbCache->get( $keySQL ) ) {
-			wfDebugLog( 'ValidationStatistic', __METHOD__ . " skipping, in progress" );
+			wfDebugLog( 'ValidationStatistics', __METHOD__ . " skipping, in progress" );
 		} else {
-			$ext = strpos( $_SERVER['SCRIPT_NAME'], 'index.php5' ) === false ? 'php' : 'php5';
+			global $wgPhpCli;
+			$ext = !empty($wgPhpCli) ? $wgPhpCli : 'php';
 			$path = wfEscapeShellArg( dirname(__FILE__).'/../maintenance/updateStats.php' );
 			$wiki = wfEscapeShellArg( wfWikiId() );
-			$devNull = wfIsWindows() ? "NUL" : "/dev/null";
+			$devNull = wfIsWindows() ? "NUL:" : "/dev/null";
 			$commandLine = "$ext $path --wiki=$wiki > $devNull &";
-			wfDebugLog( 'ValidationStatistic', __METHOD__ . " executing: $commandLine" );
-			exec( $commandLine );
+			wfDebugLog( 'ValidationStatistics', __METHOD__ . " executing: $commandLine" );
+			wfShellExec( $commandLine );
+			return true;
 		}
+		return false;
 	}
 	
 	protected function readyForQuery() {

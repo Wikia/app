@@ -3,11 +3,13 @@
 -- Replace /*$wgDBprefix*/ with the proper prefix
 
 -- Add page metadata for flaggedrevs
-CREATE TABLE /*$wgDBprefix*/flaggedpages (
+CREATE TABLE IF NOT EXISTS /*$wgDBprefix*/flaggedpages (
   -- Foreign key to page.page_id
   fp_page_id integer NOT NULL,
   -- Is the page reviewed up to date?
   fp_reviewed bool NOT NULL default '0',
+  -- When (or NULL) the next unreviewed edit was made
+  fp_pending_since char(14) NULL,
   -- Foreign key to flaggedrevs.fr_rev_id
   fp_stable integer NOT NULL,
   -- The highest quality of the page's reviewed revisions.
@@ -16,11 +18,12 @@ CREATE TABLE /*$wgDBprefix*/flaggedpages (
   
   PRIMARY KEY (fp_page_id),
   INDEX fp_reviewed_page (fp_reviewed,fp_page_id),
-  INDEX fp_quality_page (fp_quality,fp_page_id)
+  INDEX fp_quality_page (fp_quality,fp_page_id),
+  INDEX fp_pending_since (fp_pending_since)
 ) /*$wgDBTableOptions*/;
 
 -- This stores all of our rev reviews
-CREATE TABLE /*$wgDBprefix*/flaggedrevs (
+CREATE TABLE IF NOT EXISTS /*$wgDBprefix*/flaggedrevs (
   -- Foreign key to page.page_id
   fr_page_id integer NOT NULL,
   -- Foreign key to revision.rev_id
@@ -56,7 +59,7 @@ CREATE TABLE /*$wgDBprefix*/flaggedrevs (
 ) /*$wgDBTableOptions*/;
 
 -- This stores settings on how to select the default revision
-CREATE TABLE /*$wgDBprefix*/flaggedpage_config (
+CREATE TABLE IF NOT EXISTS /*$wgDBprefix*/flaggedpage_config (
   -- Foreign key to page.page_id
   fpc_page_id integer NOT NULL,
   -- Integers to represent what to show by default:
@@ -73,7 +76,7 @@ CREATE TABLE /*$wgDBprefix*/flaggedpage_config (
 ) /*$wgDBTableOptions*/;
 
 -- This stores all of our transclusion revision pointers
-CREATE TABLE /*$wgDBprefix*/flaggedtemplates (
+CREATE TABLE IF NOT EXISTS /*$wgDBprefix*/flaggedtemplates (
   ft_rev_id integer NOT NULL,
   -- Namespace and title of included page
   ft_namespace int NOT NULL default '0',
@@ -85,7 +88,7 @@ CREATE TABLE /*$wgDBprefix*/flaggedtemplates (
 ) /*$wgDBTableOptions*/;
 
 -- This stores all of our image revision pointers
-CREATE TABLE /*$wgDBprefix*/flaggedimages (
+CREATE TABLE IF NOT EXISTS /*$wgDBprefix*/flaggedimages (
   fi_rev_id integer NOT NULL,
   -- Name of included image
   fi_name varchar(255) binary NOT NULL default '',
@@ -97,8 +100,17 @@ CREATE TABLE /*$wgDBprefix*/flaggedimages (
   PRIMARY KEY (fi_rev_id,fi_name)
 ) /*$wgDBTableOptions*/;
 
+-- Track includes/links only in stable versions
+CREATE TABLE IF NOT EXISTS /*$wgDBprefix*/flaggedrevs_tracking (
+  ftr_from integer NOT NULL default '0',
+  ftr_namespace int NOT NULL default '0',
+  ftr_title varchar(255) binary NOT NULL default '',
+  PRIMARY KEY (ftr_from,ftr_namespace,ftr_title),
+  INDEX namespace_title_from (ftr_namespace,ftr_title,ftr_from)
+) /*$wgDBTableOptions*/;
+
 -- This stores user demotions and stats
-CREATE TABLE /*$wgDBprefix*/flaggedrevs_promote (
+CREATE TABLE IF NOT EXISTS /*$wgDBprefix*/flaggedrevs_promote (
   -- Foreign key to user.user_id
   frp_user_id integer NOT NULL,
   frp_user_params mediumblob NOT NULL,
@@ -107,30 +119,33 @@ CREATE TABLE /*$wgDBprefix*/flaggedrevs_promote (
 ) /*$wgDBTableOptions*/;
 
 -- This stores reader feedback data to curb double-voting
-CREATE TABLE /*$wgDBprefix*/reader_feedback (
+CREATE TABLE IF NOT EXISTS /*$wgDBprefix*/reader_feedback (
   -- Foreign key to revision.rev_id
   rfb_rev_id integer NOT NULL,
   -- Foreign key to user.user_id
   rfb_user integer NOT NULL,
   rfb_ip varchar(255) NOT NULL default '',
+  rfb_timestamp char(14) NOT NULL default '',
+  --Vote info
+  rfb_ratings mediumblob NOT NULL,
   -- No double voting!
   PRIMARY KEY (rfb_rev_id,rfb_user,rfb_ip)
 ) /*$wgDBTableOptions*/;
 
 -- This stores reader feedback data for a page over time
-CREATE TABLE /*$wgDBprefix*/reader_feedback_history (
+CREATE TABLE IF NOT EXISTS /*$wgDBprefix*/reader_feedback_history (
   -- Foreign key to page.page_id
   rfh_page_id integer NOT NULL,
   rfh_tag char(20) NOT NULL default '',
-  rfh_total integer NOT NULL default 0,
-  rfh_count integer NOT NULL default 0,
+  rfh_total integer unsigned NOT NULL default 0,
+  rfh_count integer unsigned NOT NULL default 0,
   -- MW date of the day this average corresponds to
   rfh_date char(14) NOT NULL default '',
   PRIMARY KEY (rfh_page_id,rfh_tag,rfh_date)
 ) /*$wgDBTableOptions*/;
 
 -- This stores reader feedback data
-CREATE TABLE /*$wgDBprefix*/reader_feedback_pages (
+CREATE TABLE IF NOT EXISTS /*$wgDBprefix*/reader_feedback_pages (
   -- Foreign key to page.page_id
   rfp_page_id integer NOT NULL,
   rfp_tag char(20) NOT NULL default '',

@@ -7,15 +7,19 @@
  * @ingroup FileRepo
  */
 class ForeignAPIFile extends File {
-	function __construct( $title, $repo, $info ) {
+	
+	private $mExists;
+	
+	function __construct( $title, $repo, $info, $exists = false ) {
 		parent::__construct( $title, $repo );
 		$this->mInfo = $info;
+		$this->mExists = $exists;
 	}
 	
 	static function newFromTitle( $title, $repo ) {
 		$info = $repo->getImageInfo( $title );
 		if( $info ) {
-			return new ForeignAPIFile( $title, $repo, $info );
+			return new ForeignAPIFile( $title, $repo, $info, true );
 		} else {
 			return null;
 		}
@@ -23,7 +27,7 @@ class ForeignAPIFile extends File {
 	
 	// Dummy functions...
 	public function exists() {
-		return true;
+		return $this->mExists;
 	}
 	
 	public function getPath() {
@@ -31,12 +35,15 @@ class ForeignAPIFile extends File {
 	}
 
 	function transform( $params, $flags = 0 ) {
-		$thumbUrl = $this->repo->getThumbUrl(
-			$this->getName(),
-			isset( $params['width'] ) ? $params['width'] : -1,
-			isset( $params['height'] ) ? $params['height'] : -1 );
+		if( !$this->canRender() ) {
+			// show icon
+			return parent::transform( $params, $flags );
+		}
+		$thumbUrl = $this->repo->getThumbUrlFromCache(
+				$this->getName(),
+				isset( $params['width'] ) ? $params['width'] : -1,
+				isset( $params['height'] ) ? $params['height'] : -1 );
 		if( $thumbUrl ) {
-			wfDebug( __METHOD__ . " got remote thumb $thumbUrl\n" );
 			return $this->handler->getTransform( $this, 'bogus', $thumbUrl, $params );;
 		}
 		return false;
@@ -97,5 +104,65 @@ class ForeignAPIFile extends File {
 		return isset( $this->mInfo['descriptionurl'] )
 			? $this->mInfo['descriptionurl']
 			: false;
+	}
+	
+	/**
+	 * Only useful if we're locally caching thumbs anyway...
+	 */
+	function getThumbPath( $suffix = '' ) {
+		if ( $this->repo->canCacheThumbs() ) {
+			global $wgUploadDirectory;
+			$path = $wgUploadDirectory . '/thumb/' . $this->getHashPath( $this->getName() );
+			if ( $suffix ) {
+				$path = $path . $suffix . '/';
+			}
+			return $path;
+		}
+		else {
+			return null;	
+		}
+	}
+	
+	function getThumbnails() {
+		$files = array();
+		$dir = $this->getThumbPath( $this->getName() );
+		if ( is_dir( $dir ) ) {
+			$handle = opendir( $dir );
+			if ( $handle ) {
+				while ( false !== ( $file = readdir($handle) ) ) {
+					if ( $file{0} != '.'  ) {
+						$files[] = $file;
+					}
+				}
+				closedir( $handle );
+			}
+		}
+		return $files;
+	}
+	
+	function purgeCache() {
+		$this->purgeThumbnails();
+		$this->purgeDescriptionPage();
+	}
+	
+	function purgeDescriptionPage() {
+		global $wgMemc;
+		$url = $this->repo->getDescriptionRenderUrl( $this->getName() );
+		$key = wfMemcKey( 'RemoteFileDescription', 'url', md5($url) );
+		$wgMemc->delete( $key );
+	}
+	
+	function purgeThumbnails() {
+		global $wgMemc;
+		$key = wfMemcKey( 'ForeignAPIRepo', 'ThumbUrl', $this->getName() );
+		$wgMemc->delete( $key );
+		$files = $this->getThumbnails();
+		$dir = $this->getThumbPath( $this->getName() );
+		foreach ( $files as $file ) {
+			unlink( $dir . $file );
+		}
+		if ( is_dir( $dir ) ) {
+			rmdir( $dir ); // Might have already gone away, spews errors if we don't.
+		}
 	}
 }

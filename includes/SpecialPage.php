@@ -89,14 +89,17 @@ class SpecialPage
 		'CreateAccount'             => array( 'SpecialRedirectToSpecial', 'CreateAccount', 'Userlogin', 'signup', array( 'uselang' ) ),
 		'Preferences'               => array( 'SpecialPage', 'Preferences' ),
 		'Watchlist'                 => array( 'SpecialPage', 'Watchlist' ),
+		'Resetpass'                 => 'SpecialResetpass',
+
 
 		'Recentchanges'             => 'SpecialRecentchanges',
 		'Upload'                    => array( 'SpecialPage', 'Upload' ),
-		'Imagelist'                 => array( 'SpecialPage', 'Imagelist' ),
+		'Listfiles'                 => array( 'SpecialPage', 'Listfiles' ),
 		'Newimages'                 => array( 'IncludableSpecialPage', 'Newimages' ),
 		'Listusers'                 => array( 'SpecialPage', 'Listusers' ),
 		'Listgrouprights'           => 'SpecialListGroupRights',
-		'Statistics'                => array( 'SpecialPage', 'Statistics' ),
+		'DeletedContributions'      => 'DeletedContributionsPage',
+		'Statistics'				=> 'SpecialStatistics',
 		'Randompage'                => 'Randompage',
 		'Lonelypages'               => array( 'SpecialPage', 'Lonelypages' ),
 		'Uncategorizedpages'        => array( 'SpecialPage', 'Uncategorizedpages' ),
@@ -107,6 +110,8 @@ class SpecialPage
 		'Unusedimages'              => array( 'SpecialPage', 'Unusedimages' ),
 		'Wantedpages'               => array( 'IncludableSpecialPage', 'Wantedpages' ),
 		'Wantedcategories'          => array( 'SpecialPage', 'Wantedcategories' ),
+		'Wantedfiles'               => array( 'SpecialPage', 'Wantedfiles' ),
+		'Wantedtemplates'           => array( 'SpecialPage', 'Wantedtemplates' ),
 		'Mostlinked'                => array( 'SpecialPage', 'Mostlinked' ),
 		'Mostlinkedcategories'      => array( 'SpecialPage', 'Mostlinkedcategories' ),
 		'Mostlinkedtemplates'       => array( 'SpecialPage', 'Mostlinkedtemplates' ),
@@ -121,27 +126,27 @@ class SpecialPage
 		'Deadendpages'              => array( 'SpecialPage', 'Deadendpages' ),
 		'Protectedpages'            => array( 'SpecialPage', 'Protectedpages' ),
 		'Protectedtitles'           => array( 'SpecialPage', 'Protectedtitles' ),
-		'Allpages'                  => array( 'IncludableSpecialPage', 'Allpages' ),
-		'Prefixindex'               => array( 'IncludableSpecialPage', 'Prefixindex' ) ,
+		'Allpages'                  => 'SpecialAllpages',
+		'Prefixindex'               => 'SpecialPrefixindex',
 		'Ipblocklist'               => array( 'SpecialPage', 'Ipblocklist' ),
 		'Specialpages'              => array( 'UnlistedSpecialPage', 'Specialpages' ),
-		'Contributions'             => array( 'SpecialPage', 'Contributions' ),
+		'Contributions'             => 'SpecialContributions',
 		'Emailuser'                 => array( 'UnlistedSpecialPage', 'Emailuser' ),
 		'Whatlinkshere'             => array( 'SpecialPage', 'Whatlinkshere' ),
+		'LinkSearch'                => array( 'SpecialPage', 'LinkSearch' ),
 		'Recentchangeslinked'       => 'SpecialRecentchangeslinked',
 		'Movepage'                  => array( 'UnlistedSpecialPage', 'Movepage' ),
 		'Blockme'                   => array( 'UnlistedSpecialPage', 'Blockme' ),
-		'Resetpass'                 => array( 'UnlistedSpecialPage', 'Resetpass' ),
 		'Booksources'               => 'SpecialBookSources',
 		'Categories'                => array( 'SpecialPage', 'Categories' ),
 		'Export'                    => array( 'SpecialPage', 'Export' ),
-		'Version'                   => array( 'SpecialPage', 'Version' ),
+		'Version'                   => 'SpecialVersion',
 		'Blankpage'                 => array( 'UnlistedSpecialPage', 'Blankpage' ),
 		'Allmessages'               => array( 'SpecialPage', 'Allmessages' ),
 		'Log'                       => array( 'SpecialPage', 'Log' ),
 		'Blockip'                   => array( 'SpecialPage', 'Blockip', 'block' ),
 		'Undelete'                  => array( 'SpecialPage', 'Undelete', 'deletedhistory' ),
-		'Import'                    => array( 'SpecialPage', 'Import', 'import' ),
+		'Import'                    => 'SpecialImport',
 		'Lockdb'                    => array( 'SpecialPage', 'Lockdb', 'siteadmin' ),
 		'Unlockdb'                  => array( 'SpecialPage', 'Unlockdb', 'siteadmin' ),
 		'Userrights'                => 'UserrightsPage',
@@ -484,7 +489,7 @@ class SpecialPage
 		if ( !$page ) {
 			if ( !$including ) {
 				$wgOut->setArticleRelated( false );
-				$wgOut->setRobotpolicy( 'noindex,nofollow' );
+				$wgOut->setRobotPolicy( 'noindex,nofollow' );
 				$wgOut->setStatusCode( 404 );
 				$wgOut->showErrorPage( 'nosuchspecialpage', 'nospecialpagetext' );
 			}
@@ -576,7 +581,7 @@ class SpecialPage
 		if ( $subpage !== false && !is_null( $subpage ) ) {
 			$name = "$name/$subpage";
 		}
-		return $name;
+		return ucfirst( $name );
 	}
 
 	/**
@@ -740,14 +745,8 @@ class SpecialPage
 			if(!is_callable($func) and $this->mFile) {
 				require_once( $this->mFile );
 			}
-			# FIXME: these hooks are broken for extensions and anything else that subclasses SpecialPage.
-			if ( wfRunHooks( 'SpecialPageExecuteBeforeHeader', array( &$this, &$par, &$func ) ) )
-				$this->outputHeader();
-			if ( ! wfRunHooks( 'SpecialPageExecuteBeforePage', array( &$this, &$par, &$func ) ) )
-				return;
+			$this->outputHeader();
 			call_user_func( $func, $par, $this );
-			if ( ! wfRunHooks( 'SpecialPageExecuteAfterPage', array( &$this, &$par, &$func ) ) )
-				return;
 		} else {
 			$this->displayRestrictionError();
 		}

@@ -22,7 +22,6 @@ if ( !defined( 'MEDIAWIKI' ) ) {
         exit( 1 ) ;
 }
 
-
 class WFS {
 
 	function WFS( $url ) {
@@ -65,8 +64,8 @@ class WFS {
 		$this->delete( $name );
 		$this->save( $name, $displaytitle, $major, $minor, $lat, $lon, $population );
 	}
-	
-	
+
+
 	private function transaction( $body ) {
 		global $wgWFSHost, $wgWFSPort, $wgWFSPath;
 		$result="";
@@ -91,5 +90,3 @@ class WFS {
 		return $result;
 	}
 }
-
-?>

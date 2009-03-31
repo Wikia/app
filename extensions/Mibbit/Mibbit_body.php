@@ -72,7 +72,7 @@ class Mibbit extends SpecialPage {
 				array(
 					'type' => 'text/javascript',
 				),
-'<!--
+'/* <![CDATA[ */
 function mibbitExpand(elem)
 {
 	height=elem.height;
@@ -80,7 +80,7 @@ function mibbitExpand(elem)
 	width=elem.width;
 	elem.width=screen.width-250;
 }
-//-->'
+/* ]]> */'
 			)
 		);
 	}

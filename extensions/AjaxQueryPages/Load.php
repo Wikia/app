@@ -5,7 +5,7 @@ $aqpCredits = array(
 		'author' => 'Ashar Voultoiz',
 );
 
-// We require 1.11alpha or later:
+// We require 1.12alpha or later:
 if( version_compare( $wgVersion, '1.12alpha', '<' ) ) {
 	$wgExtensionCredits['other'][] = $aqpCredits + array(
 		'description' => "Add some AJAX to QueryPages such as [[Special:Shortpages]].<br />'''Disabled''', requires MediaWiki 1.12alpha or later.",

@@ -31,28 +31,33 @@ class SpecialRenameuser extends SpecialPage {
 		global $wgVersion, $wgMaxNameChars, $wgCapitalLinks;
 
 		$this->setHeaders();
+		$wgOut->addWikiMsg( 'renameuser-summary' );
 
-		if ( !$wgUser->isAllowed( 'renameuser' ) ) {
+		if( !$wgUser->isAllowed( 'renameuser' ) ) {
 			$wgOut->permissionRequired( 'renameuser' );
 			return;
 		}
-
-		if ( wfReadOnly() ) {
+		if( wfReadOnly() ) {
 			$wgOut->readOnlyPage();
 			return;
 		}
 
 		$showBlockLog = $wgRequest->getBool( 'submit-showBlockLog' );
-		$oldusername = Title::newFromText( $wgRequest->getText( 'oldusername' ), NS_USER );
-		// Force uppercase of newusername otherweise wikis with wgCapitalLinks=false can create lc usernames
-		$newusername = Title::newFromText( $wgContLang->ucfirst( $wgRequest->getText( 'newusername' ) ), NS_USER );
+		$oldnamePar = trim( str_replace( '_', ' ', $wgRequest->getText( 'oldusername' ) ) );
+		$oldusername = Title::makeTitle( NS_USER, $oldnamePar );
+		// Force uppercase of newusername, otherwise wikis with wgCapitalLinks=false can create lc usernames
+		$newusername = Title::makeTitleSafe( NS_USER, $wgContLang->ucfirst( $wgRequest->getText( 'newusername' ) ) );
 		$oun = is_object( $oldusername ) ? $oldusername->getText() : '';
 		$nun = is_object( $newusername ) ? $newusername->getText() : '';
 		$token = $wgUser->editToken();
 		$reason = $wgRequest->getText( 'reason' );
-		$is_checked = true;
-		if ( $wgRequest->wasPosted() && ! $wgRequest->getCheck( 'movepages' ) ) {
-			$is_checked = false;
+		// If nothing given for these flags, assume they are checked
+		// unless this is a POST submission.
+		$move_checked = true;
+		if( $wgRequest->wasPosted() ) {
+			if( !$wgRequest->getCheck( 'movepages' ) ) {
+				$move_checked = false;
+			}
 		}
 		$warnings = array();
 		if( $oun && $nun && !$wgRequest->getCheck( 'confirmaction' )  ) {
@@ -90,13 +95,14 @@ class SpecialRenameuser extends SpecialPage {
 				"</td>
 			</tr>"
 		);
-		if ( $wgUser->isAllowed( 'move' ) && version_compare( $wgVersion, '1.9alpha', '>=' ) ) {
+		if( $wgUser->isAllowed( 'move' ) ) {
 			$wgOut->addHTML( "
 				<tr>
 					<td>&nbsp;
 					</td>
 					<td class='mw-input'>" .
-						Xml::checkLabel( wfMsg( 'renameusermove' ), 'movepages', 'movepages', $is_checked, array( 'tabindex' => '4' ) ) .
+						Xml::checkLabel( wfMsg( 'renameusermove' ), 'movepages', 'movepages', 
+							$move_checked, array( 'tabindex' => '4' ) ) .
 					"</td>
 				</tr>"
 			);
@@ -109,10 +115,11 @@ class SpecialRenameuser extends SpecialPage {
 					wfMsgHtml( $warning );
 			$wgOut->addHTML( "
 				<tr>
-					<td>".wfMsgWikiHtml( 'renameuserwarnings' ) ."
+					<td class='mw-label'>" . wfMsgWikiHtml( 'renameuserwarnings' ) . "
 					</td>
 					<td class='mw-input'>" .
-						'<ul style="color: red; font-weight: bold"><li>'.implode( '</li><li>', $warningsHtml ).'</li></ul>'.
+						'<ul style="color: red; font-weight: bold"><li>'.
+							implode( '</li><li>', $warningsHtml ).'</li></ul>'.
 					"</td>
 				</tr>"
 			);
@@ -121,21 +128,22 @@ class SpecialRenameuser extends SpecialPage {
 					<td>&nbsp;
 					</td>
 					<td class='mw-input'>" .
-						Xml::checkLabel( wfMsg( 'renameuserconfirm' ), 'confirmaction', 'confirmaction', false, array( 'tabindex' => '5' ) ) .
+						Xml::checkLabel( wfMsg( 'renameuserconfirm' ), 'confirmaction', 'confirmaction', 
+							false, array( 'tabindex' => '6' ) ) .
 					"</td>
 				</tr>"
 			);
 		}
-
 		$wgOut->addHTML( "
 			<tr>
 				<td>&nbsp;
 				</td>
 				<td class='mw-submit'>" .
-					Xml::submitButton( wfMsg( 'renameusersubmit' ), array( 'name' => 'submit', 'tabindex' => '6', 'id' => 'submit' ) ) .
+					Xml::submitButton( wfMsg( 'renameusersubmit' ), array( 'name' => 'submit', 
+						'tabindex' => '7', 'id' => 'submit' ) ) .
 					' ' .
 					Xml::submitButton( wfMsg( 'blocklogpage' ), array ( 'name' => 'submit-showBlockLog', 
-						'id' => 'submit-showBlockLog', 'tabindex' => '7' ) ) .
+						'id' => 'submit-showBlockLog', 'tabindex' => '8' ) ) .
 				"</td>
 			</tr>" .
 			Xml::closeElement( 'table' ) .
@@ -145,8 +153,8 @@ class SpecialRenameuser extends SpecialPage {
 		);
 
 		// Show block log if requested
-		if ( $showBlockLog && is_object( $oldusername ) ) {
-			$this->showLogExtract ( $oldusername, 'block', $wgOut ) ;
+		if( $showBlockLog && is_object( $oldusername ) ) {
+			$this->showLogExtract( $oldusername, 'block', $wgOut ) ;
 			return;
 		}
 
@@ -160,7 +168,6 @@ class SpecialRenameuser extends SpecialPage {
 			$wgOut->addWikiText( "<div class=\"errorbox\">" . wfMsg( 'renameuser-error-request' ) . "</div>" );
 			return;
 		} elseif( !is_object( $oldusername ) ) {
-			// FIXME: This is bogus.  Invalid titles need to be rename-able! (bug 12654)
 			$wgOut->addWikiText(
 				"<div class=\"errorbox\">"
 				. wfMsg( 'renameusererrorinvalid', $wgRequest->getText( 'oldusername' ) )
@@ -184,49 +191,48 @@ class SpecialRenameuser extends SpecialPage {
 		$newuser = User::newFromName( $newusername->getText() );
 
 		// It won't be an object if for instance "|" is supplied as a value
-		if ( !is_object( $olduser ) ) {
-			$wgOut->addWikiText( "<div class=\"errorbox\">" . wfMsg( 'renameusererrorinvalid', $oldusername->getText() ) . "</div>" );
+		if( !is_object( $olduser ) ) {
+			$wgOut->addWikiText( "<div class=\"errorbox\">" . wfMsg( 'renameusererrorinvalid', 
+				$oldusername->getText() ) . "</div>" );
 			return;
 		}
-
-		if ( !is_object( $newuser ) || !User::isCreatableName( $newuser->getName() ) ) {
-			$wgOut->addWikiText( "<div class=\"errorbox\">" . wfMsg( 'renameusererrorinvalid', $newusername->getText() ) . "</div>" );
+		if( !is_object( $newuser ) || !User::isCreatableName( $newuser->getName() ) ) {
+			$wgOut->addWikiText( "<div class=\"errorbox\">" . wfMsg( 'renameusererrorinvalid', 
+				$newusername->getText() ) . "</div>" );
 			return;
 		}
 
 		// Check for the existence of lowercase oldusername in database.
 		// Until r19631 it was possible to rename a user to a name with first character as lowercase
-		if ( $wgRequest->getText( 'oldusername' ) !== $wgContLang->ucfirst( $wgRequest->getText( 'oldusername' ) ) ) {
+		if( $oldusername->getText() !== $wgContLang->ucfirst( $oldusername->getText() ) ) {
 			// oldusername was entered as lowercase -> check for existence in table 'user'
-			$dbr_lc = wfGetDB( DB_SLAVE );
-			$s = trim( $wgRequest->getText( 'oldusername' ) );
-			$uid = $dbr_lc->selectField( 'user', 'user_id', array( 'user_name' => $s ), __METHOD__ );
-			if ( $uid === false ) {
-				if ( !$wgCapitalLinks ) {
+			$dbr = wfGetDB( DB_SLAVE );
+			$uid = $dbr->selectField( 'user', 'user_id', 
+				array( 'user_name' => $oldusername->getText() ), 
+				__METHOD__ );
+			if( $uid === false ) {
+				if( !$wgCapitalLinks ) {
 					$uid = 0; // We are on a lowercase wiki but lowercase username does not exists
 				} else {
-					$uid = $olduser->idForName(); // We are on a standard uppercase wiki, use normal 
+					// We are on a standard uppercase wiki, use normal
+					$uid = $olduser->idForName();
+					$oldusername = Title::makeTitleSafe( NS_USER, $olduser->getName() );
 				}
-			} else {
-				// username with lowercase exists
-				// Title::newFromText was nice, but forces uppercase
-				// for older rename accidents on lowercase wikis we need the lowercase username as entered in the form
-				$oldusername->mTextform = $wgRequest->getText( 'oldusername' );
-				$oldusername->mUrlform = $wgRequest->getText( 'oldusername' );
-				$oldusername->mDbkeyform = $wgRequest->getText( 'oldusername' );
 			}
 		} else {
 			// oldusername was entered as upperase -> standard procedure
 			$uid = $olduser->idForName();
 		}
 
-		if ($uid == 0) {
-			$wgOut->addWikiText( "<div class=\"errorbox\">" . wfMsg( 'renameusererrordoesnotexist' , $oldusername->getText() ) . "</div>" );
+		if( $uid == 0 ) {
+			$wgOut->addWikiText( "<div class=\"errorbox\">" . wfMsg( 'renameusererrordoesnotexist' , 
+				$oldusername->getText() ) . "</div>" );
 			return;
 		}
 
-		if ($newuser->idForName() != 0) {
-			$wgOut->addWikiText( "<div class=\"errorbox\">" . wfMsg( 'renameusererrorexists', $newusername->getText() ) . "</div>" );
+		if( $newuser->idForName() != 0 ) {
+			$wgOut->addWikiText( "<div class=\"errorbox\">" . wfMsg( 'renameusererrorexists', 
+				$newusername->getText() ) . "</div>" );
 			return;
 		}
 
@@ -234,7 +240,7 @@ class SpecialRenameuser extends SpecialPage {
 		$contribs = User::edits( $uid );
 
 		// Check edit count
-		if ( !$wgUser->isAllowed( 'siteadmin' ) ) {
+		if( !$wgUser->isAllowed( 'siteadmin' ) ) {
 			if ( RENAMEUSER_CONTRIBLIMIT != 0 && $contribs > RENAMEUSER_CONTRIBLIMIT ) {
 				$wgOut->addWikiText( "<div class=\"errorbox\">" . 
 					wfMsg( 'renameusererrortoomany',
@@ -252,24 +258,25 @@ class SpecialRenameuser extends SpecialPage {
 			return;
 		}
 
+		// Do the heavy lifting...
 		$rename = new RenameuserSQL( $oldusername->getText(), $newusername->getText(), $uid );
-		$rename->rename();
+		if( !$rename->rename() ) {
+			return;
+		}
 		
 		// If this user is renaming his/herself, make sure that Title::moveTo()
 		// doesn't make a bunch of null move edits under the old name!
-		global $wgUser;
 		if( $wgUser->getId() == $uid ) {
 			$wgUser->setName( $newusername->getText() );
 		}
 
+		// Log this rename
 		$log = new LogPage( 'renameuser' );
 		$log->addEntry( 'renameuser', $oldusername, wfMsgExt( 'renameuser-log', array( 'parsemag', 'content' ), 
 			$wgContLang->formatNum( $contribs ), $reason ), $newusername->getText() );
 
-		$wgOut->addWikiText( "<div class=\"successbox\">" . wfMsg( 'renameusersuccess', $oldusername->getText(), 
-			$newusername->getText() ) . "</div><br style=\"clear:both\" />" );
-
-		if ( $wgRequest->getCheck( 'movepages' ) && $wgUser->isAllowed( 'move' ) && version_compare( $wgVersion, '1.9alpha', '>=' ) ) {
+		// Move any user pages
+		if( $wgRequest->getCheck( 'movepages' ) && $wgUser->isAllowed( 'move' ) ) {
 			$dbr = wfGetDB( DB_SLAVE );
 			$oldkey = $oldusername->getDBkey();
 			$pages = $dbr->select(
@@ -309,24 +316,18 @@ class SpecialRenameuser extends SpecialPage {
 				}
 			}
 			if( $output )
-				$wgOut->addHtml( '<ul>' . $output . '</ul>' );
+				$wgOut->addHTML( '<ul>' . $output . '</ul>' );
 		}
+		
+		// Output success message stuff :)
+		$wgOut->addWikiText( "<div class=\"successbox\">" . wfMsg( 'renameusersuccess', $oldusername->getText(), 
+		$newusername->getText() ) . "</div><br style=\"clear:both\" />" );
 	}
 
-	// FIXME: this code is total crap. Should this just use LogEventsList or
-	// since extensions are branched, or are we keeping the half-ass b/c thing?
 	function showLogExtract( $username, $type, &$out ) {
-		global $wgOut;
 		# Show relevant lines from the logs:
-		$wgOut->addHtml( Xml::element( 'h2', null, LogPage::logName( $type ) ) . "\n" );
-
-		$logViewer = new LogViewer(
-			new LogReader(
-				new FauxRequest(
-					array( 'page' => $username->getPrefixedText(),
-					       'type' => $type ) ) ) );
-		$logViewer->showList( $out );
-
+		$out->addHTML( Xml::element( 'h2', null, LogPage::logName( $type ) ) . "\n" );
+		LogEventsList::showLogExtract( $out, $type, $username->getPrefixedText() );
 	}
 }
 
@@ -376,23 +377,23 @@ class RenameuserSQL {
 		$this->uid = $uid;
 		
 		$this->tables = array(); // Immediate updates
-		$this->tables['image'] = 'img_user_text';
-		$this->tables['oldimage'] = 'oi_user_text';
-		# FIXME: $this->tables['filearchive'] = 'fa_user_text'; (not indexed yet)
+		$this->tables['image'] = array('img_user_text','img_user');
+		$this->tables['oldimage'] = array('oi_user_text','oi_user');
+		# FIXME: $this->tables['filearchive'] = array('fa_user_text','fa_user'); (not indexed yet)
 		$this->tablesJob = array(); // Slow updates
 		// If this user has a large number of edits, use the jobqueue
 		if( User::edits($this->uid) > RENAMEUSER_CONTRIBJOB ) {
 			$this->tablesJob['revision'] = array('rev_user_text','rev_user','rev_timestamp');
 			$this->tablesJob['archive'] = array('ar_user_text','ar_user','ar_timestamp');
 		} else {
-			$this->tables['revision'] = 'rev_user_text';
-			$this->tables['archive'] = 'ar_user_text';
+			$this->tables['revision'] = array('rev_user_text','rev_user');
+			$this->tables['archive'] = array('ar_user_text','ar_user');
 		}
 		// Recent changes is pretty hot, deadlocks occur if done all at once
 		if( wfQueriesMustScale() ) {
 			$this->tablesJob['recentchanges'] = array('rc_user_text','rc_user','rc_timestamp');
 		} else {
-			$this->tables['recentchanges'] = 'rc_user_text';
+			$this->tables['recentchanges'] = array('rc_user_text','rc_user');
 		}
 	}
 
@@ -415,6 +416,19 @@ class RenameuserSQL {
 			array( 'user_name' => $this->old ),
 			__METHOD__
 		);
+		if( !$dbw->affectedRows() ) {
+			return false;
+		}
+		// Reset token to break login with central auth systems.
+		// Again, avoids user being logged in with old name.
+		$user = User::newFromId( $this->uid );
+		$authUser = $wgAuth->getUserInstance( $user );
+		$authUser->resetAuthToken();
+
+		// Delete from memcached.
+		global $wgMemc;
+		$wgMemc->delete( wfMemcKey( 'user', 'id', $this->uid ) );
+
 		// Update ipblock list if this user has a block in there.
 		$dbw->update( 'ipblocks',
 			array( 'ipb_address' => $this->new ),
@@ -432,10 +446,11 @@ class RenameuserSQL {
 				'log_title' => $oldTitle->getDBKey() ),
 			__METHOD__ );
 		// Do immediate updates!
-		foreach( $this->tables as $table => $field ) {
+		foreach( $this->tables as $table => $fieldSet ) {
+			list($nameCol,$userCol) = $fieldSet;
 			$dbw->update( $table,
-				array( $field => $this->new ),
-				array( $field => $this->old ),
+				array( $nameCol => $this->new ),
+				array( $nameCol => $this->old, $userCol => $this->uid ),
 				__METHOD__
 			);
 		}
@@ -516,10 +531,10 @@ class RenameuserSQL {
 
 		// Clear caches and inform authentication plugins
 		$user = User::newFromId( $this->uid );
-		$user->invalidateCache();
 		$wgAuth->updateExternalDB( $user );
 		wfRunHooks( 'RenameUserComplete', array( $this->uid, $this->old, $this->new ) );
 
 		wfProfileOut( __METHOD__ );
+		return true;
 	}
 }

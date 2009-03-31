@@ -16,7 +16,7 @@ class SpecialAbuseLog extends SpecialPage {
 		$this->loadParameters();
 
 		$wgOut->setPageTitle( wfMsg( 'abusefilter-log' ) );
-		$wgOut->setRobotpolicy( "noindex,nofollow" );
+		$wgOut->setRobotPolicy( "noindex,nofollow" );
 		$wgOut->setArticleRelated( false );
 		$wgOut->enableClientCache( false );
 		
@@ -56,10 +56,10 @@ class SpecialAbuseLog extends SpecialPage {
 		$fields = array();
 		
 		// Search conditions
-		$fields['abusefilter-log-search-user'] = wfInput( 'wpSearchUser', 45, $this->mSearchUser );
+		$fields['abusefilter-log-search-user'] = Xml::input( 'wpSearchUser', 45, $this->mSearchUser );
 		if ($this->canSeeDetails())
-			$fields['abusefilter-log-search-filter'] = wfInput( 'wpSearchFilter', 45, $this->mSearchFilter );
-		$fields['abusefilter-log-search-title'] = wfInput( 'wpSearchTitle', 45, $this->mSearchTitle );
+			$fields['abusefilter-log-search-filter'] = Xml::input( 'wpSearchFilter', 45, $this->mSearchFilter );
+		$fields['abusefilter-log-search-title'] = Xml::input( 'wpSearchTitle', 45, $this->mSearchTitle );
 		
 		$form = Xml::hidden( 'title', $this->getTitle()->getPrefixedText() );
 		
@@ -67,7 +67,7 @@ class SpecialAbuseLog extends SpecialPage {
 		$output .= Xml::tags( 'form', array( 'method' => 'GET', 'action' => $this->getTitle()->getLocalURL() ), $form );
 		$output = Xml::tags( 'fieldset', null, $output );
 		
-		$wgOut->addHtml( $output );
+		$wgOut->addHTML( $output );
 	}
 	
 	function showList() {
@@ -76,20 +76,20 @@ class SpecialAbuseLog extends SpecialPage {
 		// Generate conditions list.
 		$conds = array();
 		
-		if ($this->mSearchUser)
+		if (!empty($this->mSearchUser))
 			$conds['afl_user_text'] = $this->mSearchUser;
-		if ($this->mSearchFilter)
+		if (!empty($this->mSearchFilter))
 			$conds['afl_filter'] = $this->mSearchFilter;
 			
 		$searchTitle = Title::newFromText( $this->mSearchTitle );
 		if ($this->mSearchTitle && $searchTitle) {
 			$conds['afl_namespace'] = $searchTitle->getNamespace();
-			$conds['afl_title'] = $searchTitle->getDbKey();
+			$conds['afl_title'] = $searchTitle->getDBKey();
 		}
 		
 		$pager = new AbuseLogPager( $this, $conds );
 		
-		$wgOut->addHtml( $pager->getNavigationBar() .
+		$wgOut->addHTML( $pager->getNavigationBar() .
 				Xml::tags( 'ul', null, $pager->getBody() ) .
 				$pager->getNavigationBar() );
 	}
@@ -109,9 +109,7 @@ class SpecialAbuseLog extends SpecialPage {
 		$output = '';
 		
 		$output .= Xml::element( 'legend', null, wfMsg( 'abusefilter-log-details-legend', $id ) );
-		
-		$output .= Xml::tags( 'p', null, $this->formatRow( $row ) );
-		
+		$output .= Xml::tags( 'p', null, $this->formatRow( $row, false ) );
 		$output .= Xml::element( 'h3', null, wfMsg( 'abusefilter-log-details-vars' ) );
 		
 		// Build a table.
@@ -158,7 +156,7 @@ class SpecialAbuseLog extends SpecialPage {
 		return !count($this->getTitle()->getUserPermissionsErrors( 'abusefilter-private', $wgUser, true, array( 'ns-specialprotected' ) ));
 	}
 	
-	function formatRow( $row ) {
+	function formatRow( $row, $li = true ) {
 		global $wgLang,$wgUser;
 		
 		## One-time setup
@@ -185,12 +183,12 @@ class SpecialAbuseLog extends SpecialPage {
 		if ($this->canSeeDetails()) {
 			$detailsLink = $sk->makeKnownLinkObj( $this->getTitle(  ), wfMsg( 'abusefilter-log-detailslink' ), 'details='.$row->afl_id );
 			
-			$description = wfMsg( 'abusefilter-log-detailedentry', $timestamp, $user, $row->afl_filter, $row->afl_action, $sk->makeKnownLinkObj( $title ), $actions_taken, $row->af_public_comments, $detailsLink );
+			$description = wfMsgExt( 'abusefilter-log-detailedentry', array( 'parseinline', 'replaceafter' ), array( $timestamp, $user, $row->afl_filter, $row->afl_action, $sk->makeKnownLinkObj( $title ), $actions_taken, $row->af_public_comments, $detailsLink ) );
 		} else {
-			$description = wfMsg( 'abusefilter-log-entry', $timestamp, $user, $row->afl_action, $sk->makeKnownLinkObj( $title ), $actions_taken, $row->af_public_comments );
+			$description = wfMsgExt( 'abusefilter-log-entry', array( 'parseinline', 'replaceafter' ), array( $timestamp, $user, $row->afl_action, $sk->makeKnownLinkObj( $title ), $actions_taken, $row->af_public_comments ) );
 		}
 		
-		return Xml::tags( 'li', null, $description );
+		return $li ? Xml::tags( 'li', null, $description ) : $description;
 	}
 	
 }

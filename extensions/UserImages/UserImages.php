@@ -16,9 +16,12 @@ if (!defined('MEDIAWIKI')) {
 
 $wgExtensionCredits['parserhook'][] = array(
 	'name' => 'User Image Gallery',
+	'svn-date' => '$LastChangedDate: 2008-12-18 05:56:43 +0000 (Thu, 18 Dec 2008) $',
+	'svn-revision' => '$LastChangedRevision: 44752 $',
 	'version' => '1.1',
 	'author' => 'Rob Church',
 	'description' => 'Generate galleries of user-uploaded images with <code><nowiki><userimage /></nowiki></code>',
+	'descriptionmsg' => 'userimages-desc',
 	'url' => 'http://www.mediawiki.org/wiki/Extension:User_Image_Gallery',
 );
 

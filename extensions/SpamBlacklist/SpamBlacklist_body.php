@@ -25,7 +25,7 @@ class SpamBlacklist {
 	 */
 	function isLocalSource( $title ) {
 		global $wgDBname;
-		
+
 		if( $title->getNamespace() == NS_MEDIAWIKI ) {
 			$sources = array(
 				"Spam-blacklist",
@@ -34,10 +34,10 @@ class SpamBlacklist {
 				return true;
 			}
 		}
-		
+
 		$thisHttp = $title->getFullUrl( 'action=raw' );
 		$thisHttpRegex = '/^' . preg_quote( $thisHttp, '/' ) . '(?:&.*)?$/';
-		
+
 		foreach( $this->files as $fileName ) {
 			if ( preg_match( '/^DB: (\w*) (.*)$/', $fileName, $matches ) ) {
 				if ( $wgDBname == $matches[1] ) {
@@ -52,17 +52,17 @@ class SpamBlacklist {
 				return true;
 			}
 		}
-		
+
 		return false;
 	}
-	
+
 	/**
 	 * @deprecated back-compat
 	 */
 	function getRegexes() {
 		return $this->getBlacklists();
 	}
-	
+
 	/**
 	 * Fetch local and (possibly cached) remote blacklists.
 	 * Will be cached locally across multiple invocations.
@@ -76,7 +76,7 @@ class SpamBlacklist {
 		}
 		return $this->regexes;
 	}
-	
+
 	/**
 	 * Fetch (possibly cached) remote blacklists.
 	 * @return array
@@ -103,19 +103,19 @@ class SpamBlacklist {
 			wfProfileOut( $fname );
 			return $cachedRegexes;
 		}
-		
+
 		$regexes = $this->buildSharedBlacklists();
 		$wgMemc->set( "$wgDBname:spam_blacklist_regexes", $regexes, $this->expiryTime );
-		
+
 		return $regexes;
 	}
-	
+
 	function clearCache() {
 		global $wgMemc, $wgDBname;
 		$wgMemc->delete( "$wgDBname:spam_blacklist_regexes" );
 		wfDebugLog( 'SpamBlacklist', "Spam blacklist local cache cleared.\n" );
 	}
-	
+
 	function buildSharedBlacklists() {
 		$regexes = array();
 		# Load lists
@@ -129,7 +129,7 @@ class SpamBlacklist {
 				$text = file_get_contents( $fileName );
 				wfDebugLog( 'SpamBlacklist', "got from file $fileName\n" );
 			}
-			
+
 			// Build a separate batch of regexes from each source.
 			// While in theory we could squeeze a little efficiency
 			// out of combining multiple sources in one regex, if
@@ -138,20 +138,20 @@ class SpamBlacklist {
 			$regexes = array_merge( $regexes,
 				SpamRegexBatch::regexesFromText( $text, $fileName ) );
 		}
-		
+
 		return $regexes;
 	}
-	
+
 	function getHttpText( $fileName ) {
 		global $wgDBname, $messageMemc;
-		
+
 		# HTTP request
 		# To keep requests to a minimum, we save results into $messageMemc, which is
 		# similar to $wgMemc except almost certain to exist. By default, it is stored
 		# in the database
 		#
 		# There are two keys, when the warning key expires, a random thread will refresh
-		# the real key. This reduces the chance of multiple requests under high traffic 
+		# the real key. This reduces the chance of multiple requests under high traffic
 		# conditions.
 		$key = "spam_blacklist_file:$fileName";
 		$warningKey = "$wgDBname:spamfilewarning:$fileName";
@@ -171,11 +171,11 @@ class SpamBlacklist {
 		}
 		return $httpText;
 	}
-	
+
 	static function getLocalBlacklists() {
 		return SpamRegexBatch::regexesFromMessage( 'spam-blacklist' );
 	}
-	
+
 	static function getWhitelists() {
 		return SpamRegexBatch::regexesFromMessage( 'spam-whitelist' );
 	}
@@ -184,12 +184,11 @@ class SpamBlacklist {
 	 * @param Title $title
 	 * @param string $text Text of section, or entire text if $editPage!=false
 	 * @param string $section Section number or name
-	 * @param EditPage $editPage EditPage if EditFilterMerged was called, false otherwise
 	 * @param EditSummary $editSummary Edit summary if one exists, some people use urls there too
-	 * @return True if the edit should not be allowed, false otherwise
-	 * If the return value is true, an error will have been sent to $wgOut
+	 * @param EditPage $editPage EditPage if EditFilterMerged was called, null otherwise
+	 * @return Matched text if the edit should not be allowed, false otherwise
 	 */
-	function filter( &$title, $text, $section, $editPage = false, $editsummary = '' ) {
+	function filter( &$title, $text, $section, $editsummary = '', EditPage &$editPage = null ) {
 		global $wgArticle, $wgVersion, $wgOut, $wgParser, $wgUser;
 
 		$fname = 'wfSpamBlacklistFilter';
@@ -226,14 +225,14 @@ class SpamBlacklist {
 			$newLinks = array_keys( $out->getExternalLinks() );
 			$oldLinks = $this->getCurrentLinks( $title );
 			$addedLinks = array_diff( $newLinks, $oldLinks );
-			
+
 			// We add the edit summary if one exists
 			if ( !empty( $editsummary ) ) $addedLinks[] = $editsummary;
-			
+
 			wfDebugLog( 'SpamBlacklist', "Old URLs: " . implode( ', ', $oldLinks ) );
 			wfDebugLog( 'SpamBlacklist', "New URLs: " . implode( ', ', $newLinks ) );
 			wfDebugLog( 'SpamBlacklist', "Added URLs: " . implode( ', ', $addedLinks ) );
-			
+
 			$links = implode( "\n", $addedLinks );
 
 			# Strip whitelisted URLs from the match
@@ -263,12 +262,7 @@ class SpamBlacklist {
 					wfDebugLog( 'SpamBlacklist', "Match!\n" );
 					$ip = wfGetIP();
 					wfDebugLog( 'SpamBlacklistHit', "$ip caught submitting spam: {$matches[0]}\n" );
-					if ( $editPage ) {
-						$editPage->spamPage( $matches[0] );
-					} else {
-						EditPage::spamPage( $matches[0] );
-					}
-					$retVal = true;
+					$retVal = $matches[0];
 					break;
 				}
 			}
@@ -279,7 +273,7 @@ class SpamBlacklist {
 		wfProfileOut( $fname );
 		return $retVal;
 	}
-	
+
 	/**
 	 * Look up the links currently in the article, so we can
 	 * ignore them on a second run.
@@ -289,7 +283,7 @@ class SpamBlacklist {
 	function getCurrentLinks( $title ) {
 		$dbr =& wfGetDB( DB_SLAVE );
 		$id = $title->getArticleId(); // should be zero queries
-		$res = $dbr->select( 'externallinks', array( 'el_to' ), 
+		$res = $dbr->select( 'externallinks', array( 'el_to' ),
 			array( 'el_from' => $id ), __METHOD__ );
 		$links = array();
 		while ( $row = $dbr->fetchObject( $res ) ) {
@@ -413,6 +407,13 @@ class SpamRegexBatch {
 		$regexEnd = ($batchSize > 0 ) ? ')/Si' : ')/i';
 		$build = false;
 		foreach( $lines as $line ) {
+			if( substr( $line, -1, 1 ) == "\\" ) {
+				// Final \ will break silently on the batched regexes.
+				// Skip it here to avoid breaking the next line;
+				// warnings from getBadLines() will still trigger on
+				// edit to keep new ones from floating in.
+				continue;
+			}
 			// FIXME: not very robust size check, but should work. :)
 			if( $build === false ) {
 				$build = $line;
@@ -433,7 +434,7 @@ class SpamRegexBatch {
 		}
 		return $regexes;
 	}
-	
+
 	/**
 	 * Confirm that a set of regexes is either empty or valid.
 	 * @param array $lines set of regexes
@@ -446,14 +447,14 @@ class SpamRegexBatch {
 			wfSuppressWarnings();
 			$ok = preg_match( $regex, '' );
 			wfRestoreWarnings();
-			
+
 			if( $ok === false ) {
 				return false;
 			}
 		}
 		return true;
 	}
-	
+
 	/**
 	 * Strip comments and whitespace, then remove blanks
 	 * @private
@@ -465,7 +466,7 @@ class SpamRegexBatch {
 					preg_replace( '/#.*$/', '',
 						$lines ) ) );
 	}
-	
+
 	/**
 	 * Do a sanity check on the batch regex.
 	 * @param lines unsanitized input lines
@@ -489,7 +490,7 @@ class SpamRegexBatch {
 			return SpamRegexBatch::buildRegexes( $lines, 0 );
 		}
 	}
-	
+
 	/**
 	 * @param array $lines
 	 * @return array of input lines which produce invalid input, or empty array if no problems
@@ -497,13 +498,22 @@ class SpamRegexBatch {
 	 */
 	static function getBadLines( $lines ) {
 		$lines = SpamRegexBatch::stripLines( $lines );
+
+		$badLines = array();
+		foreach( $lines as $line ) {
+			if( substr( $line, -1, 1 ) == "\\" ) {
+				// Final \ will break silently on the batched regexes.
+				$badLines[] = $line;
+			}
+		}
+
 		$regexes = SpamRegexBatch::buildRegexes( $lines );
 		if( SpamRegexBatch::validateRegexes( $regexes ) ) {
-			// No problems!
-			return array();
+			// No other problems!
+			return $badLines;
 		}
-		
-		$badLines = array();
+
+		// Something failed in the batch, so check them one by one.
 		foreach( $lines as $line ) {
 			$regexes = SpamRegexBatch::buildRegexes( array( $line ) );
 			if( !SpamRegexBatch::validateRegexes( $regexes ) ) {
@@ -512,7 +522,7 @@ class SpamRegexBatch {
 		}
 		return $badLines;
 	}
-	
+
 	/**
 	 * Build a set of regular expressions from the given multiline input text,
 	 * with empty lines and comments stripped.
@@ -526,7 +536,7 @@ class SpamRegexBatch {
 		$lines = explode( "\n", $source );
 		return SpamRegexBatch::buildSafeRegexes( $lines, $fileName );
 	}
-	
+
 	/**
 	 * Build a set of regular expressions from a MediaWiki message.
 	 * Will be correctly empty if the message isn't present.

@@ -4,9 +4,10 @@
  * http://www.w3.org/TR/SVG11/coords.html#UnitIdentifiers
  *
  * @param $length String: CSS/SVG length.
- * @return Integer: length in pixels
+ * @param $viewportSize: Float optional scale for percentage units...
+ * @return float: length in pixels
  */
-function wfScaleSVGUnit( $length ) {
+function wfScaleSVGUnit( $length, $viewportSize=512 ) {
 	static $unitLength = array(
 		'px' => 1.0,
 		'pt' => 1.25,
@@ -14,17 +15,74 @@ function wfScaleSVGUnit( $length ) {
 		'mm' => 3.543307,
 		'cm' => 35.43307,
 		'in' => 90.0,
+		'em' => 16.0, // fake it?
+		'ex' => 12.0, // fake it?
 		''   => 1.0, // "User units" pixels by default
-		'%'  => 2.0, // Fake it!
 		);
 	$matches = array();
-	if( preg_match( '/^(\d+(?:\.\d+)?)(em|ex|px|pt|pc|cm|mm|in|%|)$/', $length, $matches ) ) {
+	if( preg_match( '/^\s*(\d+(?:\.\d+)?)(em|ex|px|pt|pc|cm|mm|in|%|)\s*$/', $length, $matches ) ) {
 		$length = floatval( $matches[1] );
 		$unit = $matches[2];
-		return round( $length * $unitLength[$unit] );
+		if( $unit == '%' ) {
+			return $length * 0.01 * $viewportSize;
+		} else {
+			return $length * $unitLength[$unit];
+		}
 	} else {
 		// Assume pixels
-		return round( floatval( $length ) );
+		return floatval( $length );
+	}
+}
+
+class XmlSizeFilter {
+	const DEFAULT_WIDTH = 512;
+	const DEFAULT_HEIGHT = 512;
+	var $first = true;
+	var $width = self::DEFAULT_WIDTH;
+	var $height = self::DEFAULT_HEIGHT;
+	function filter( $name, $attribs ) {
+		if( $this->first ) {
+			$defaultWidth = self::DEFAULT_WIDTH;
+			$defaultHeight = self::DEFAULT_HEIGHT;
+			$aspect = 1.0;
+			$width = null;
+			$height = null;
+			
+			if( isset( $attribs['viewBox'] ) ) {
+				// min-x min-y width height
+				$viewBox = preg_split( '/\s+/', trim( $attribs['viewBox'] ) );
+				if( count( $viewBox ) == 4 ) {
+					$viewWidth = wfScaleSVGUnit( $viewBox[2] );
+					$viewHeight = wfScaleSVGUnit( $viewBox[3] );
+					if( $viewWidth > 0 && $viewHeight > 0 ) {
+						$aspect = $viewWidth / $viewHeight;
+						$defaultHeight = $defaultWidth / $aspect;
+					}
+				}
+			}
+			if( isset( $attribs['width'] ) ) {
+				$width = wfScaleSVGUnit( $attribs['width'], $defaultWidth );
+			}
+			if( isset( $attribs['height'] ) ) {
+				$height = wfScaleSVGUnit( $attribs['height'], $defaultHeight );
+			}
+			
+			if( !isset( $width ) && !isset( $height ) ) {
+				$width = $defaultWidth;
+				$height = $width / $aspect;
+			} elseif( isset( $width ) && !isset( $height ) ) {
+				$height = $width / $aspect;
+			} elseif( isset( $height ) && !isset( $width ) ) {
+				$width = $height * $aspect;
+			}
+			
+			if( $width > 0 && $height > 0 ) {
+				$this->width = intval( round( $width ) );
+				$this->height = intval( round( $height ) );
+			}
+			
+			$this->first = false;
+		}
 	}
 }
 
@@ -38,30 +96,14 @@ function wfScaleSVGUnit( $length ) {
  * @return array
  */
 function wfGetSVGsize( $filename ) {
-	$width = 256;
-	$height = 256;
-
-	// Read a chunk of the file
-	$f = fopen( $filename, "rt" );
-	if( !$f ) return false;
-	$chunk = fread( $f, 4096 );
-	fclose( $f );
-
-	// Uber-crappy hack! Run through a real XML parser.
-	$matches = array();
-	if( !preg_match( '/<svg\s*([^>]*)\s*>/s', $chunk, $matches ) ) {
-		return false;
+	$filter = new XmlSizeFilter();
+	$xml = new XmlTypeCheck( $filename, array( $filter, 'filter' ) );
+	if( $xml->wellFormed ) {
+		return array( $filter->width, $filter->height, 'SVG',
+			"width=\"$filter->width\" height=\"$filter->height\"" );
 	}
-	$tag = $matches[1];
-	if( preg_match( '/(?:^|\s)width\s*=\s*("[^"]+"|\'[^\']+\')/s', $tag, $matches ) ) {
-		$width = wfScaleSVGUnit( trim( substr( $matches[1], 1, -1 ) ) );
-	}
-	if( preg_match( '/(?:^|\s)height\s*=\s*("[^"]+"|\'[^\']+\')/s', $tag, $matches ) ) {
-		$height = wfScaleSVGUnit( trim( substr( $matches[1], 1, -1 ) ) );
-	}
-
-	return array( $width, $height, 'SVG',
-		"width=\"$width\" height=\"$height\"" );
+	
+	return false;
 }
 
 /**

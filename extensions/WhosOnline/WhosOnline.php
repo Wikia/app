@@ -1,65 +1,49 @@
 <?php
-
-/*
- * @package MediaWiki
- * @subpackage Extensions
+/**
+ * WhosOnline extension - creates a list of logged-in users & anons currently online
+ * The list can be viewed at Special:WhosOnline
+ * @ingroup Extensions
  *
  * @author Maciej Brencz <macbre(at)-spam-wikia.com> - minor fixes and improvements
  * @author ChekMate Security Group - original code
  * @see http://www.chekmate.org/wiki/index.php/MW:_Whos_Online_Extension
  * @license http://www.gnu.org/copyleft/gpl.html GNU General Public License 2.0 or later
+ */
 
-CREATE TABLE `online` (
-	`userid` int(5) NOT NULL default '0',
-	`username` varchar(255) NOT NULL default '',
-	`timestamp` char(14) NOT NULL default '',
-	PRIMARY KEY USING HASH (`userid`, `username`),
-	INDEX USING BTREE (`timestamp`)
-) TYPE=MEMORY;
-
-*/
-
-$wgExtensionMessagesFiles['WhosOnline'] = dirname(__FILE__) . '/WhosOnline.i18n.php';
 $wgHooks['BeforePageDisplay'][] = 'wfWhosOnline_update_data';
 
 $wgExtensionCredits['other'][] = array(
 	'name' => 'WhosOnline',
-	'version' => '2008-02-07',
+	'version' => '1.3',
+	'author' => 'Maciej Brencz',
 	'description' => 'Creates list of logged-in & anons currently online',
 	'descriptionmsg' => 'whosonline-desc',
-	'author' => 'Maciej Brencz (based on [http://www.chekmate.org/wiki/index.php/MW:_Whos_Online_Extension code from ChekMate Security Group])',
 	'url' => 'http://www.mediawiki.org/wiki/Extension:WhosOnline',
 );
 
-$wgExtensionFunctions[] = 'wfWhosOnline';
+$dir = dirname(__FILE__) . '/';
+$wgAutoloadClasses['SpecialWhosOnline'] = $dir . 'WhosOnlineSpecialPage.php';
+$wgExtensionMessagesFiles['WhosOnline'] = $dir . 'WhosOnline.i18n.php';
+$wgExtensionAliasesFiles['WhosOnline'] = $dir . 'WhosOnline.alias.php';
 $wgSpecialPages['WhosOnline'] = 'SpecialWhosOnline';
 
-// setup special page
-function wfWhosOnline() {
-	global $IP, $wgSpecialPages;
-
-	require_once($IP.'/extensions/WhosOnline/WhosOnlineSpecialPage.php');
-}
-
 // update online data
-function wfWhosOnline_update_data()
-{
+function wfWhosOnline_update_data() {
 	global $wgUser, $wgDBname;
 
 	wfProfileIn(__METHOD__);
 
 	// write to DB (use master)
-	$db = & wfGetDB(DB_WRITE);
+	$db = wfGetDB(DB_MASTER);
 	$db->selectDB( $wgDBname );
 
 	$now = gmdate("YmdHis", time());
 
 	// row to insert to table
-	$row = array
-	(
-	'userid'    => $wgUser->getID(),
-	'username'  => $wgUser->getName(),
-	'timestamp' => $now
+	$row = array (
+		'userid' => $wgUser->getID(),
+		'username' => $wgUser->getName(),
+		'timestamp' => $now
 	);
 
 	$ignore = $db->ignoreErrors( true );

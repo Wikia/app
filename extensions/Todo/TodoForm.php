@@ -10,7 +10,7 @@ class TodoTemplate extends QuickTemplate {
 	$tododetail=wfMsg('todo-form-details');
 	$todoemail=wfMsg('todo-form-email');
 	$todosubmit=wfMsg('todo-form-submit');
-	$wgOut->addHtml("
+	$wgOut->addHTML("
 <style type=\"text/css\">
 .mwTodoNewForm {
 	border: solid 1px #ccc;
@@ -30,7 +30,7 @@ class TodoTemplate extends QuickTemplate {
 	<input type="hidden" name="wpNewItem" value="1" />
 		<p>
 <?php
-$wgOut->addHtml("
+$wgOut->addHTML("
 		<div class=\"mwTodoNewForm\">
 			<label for=\"wpSummary\">{$todosummary}</label>
 			<br />

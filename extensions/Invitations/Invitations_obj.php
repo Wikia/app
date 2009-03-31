@@ -41,7 +41,7 @@ class Invitations {
 		if (!is_array($wgInvitationTypes[$feature]))
 			return false;
 
-		$dbr = wfGetDb( DB_SLAVE );
+		$dbr = wfGetDB( DB_SLAVE );
 
 		$epoch = $wgDBtype == 'mysql' ? 'UNIX_TIMESTAMP(inv_timestamp)' :
 			'EXTRACT(epoch FROM inv_timestamp)';
@@ -69,7 +69,7 @@ class Invitations {
 		if ($user === null)
 			$user = $wgUser;
 
-		$dbr = wfGetDb( DB_SLAVE );
+		$dbr = wfGetDB( DB_SLAVE );
 
 		$res = $dbr->select( 'invitation', array( 'inv_type' ), array( 'inv_invitee' => $user->getId() ) );
 
@@ -149,7 +149,7 @@ class Invitations {
 		if (!Invitations::checkDelay( $feature, $user, $accountAge ))
 			return false;
 
-		$dbr = wfGetDb( DB_SLAVE );
+		$dbr = wfGetDB( DB_SLAVE );
 
 		$res = $dbr->select( 'invite_count',
 			array( 'ic_count' ),
@@ -210,7 +210,7 @@ class Invitations {
 			$count = Invitations::getRemainingInvites( $feature, $user );
 
 		if ($count) {
-			$dbw = wfGetDb( DB_MASTER );
+			$dbw = wfGetDB( DB_MASTER );
 
 			$dbw->replace( 'invite_count', array ('ic_user', 'ic_type'),
 				array( 'ic_user' => $user->getId(), 'ic_type' => $feature, 'ic_count' => $count ),

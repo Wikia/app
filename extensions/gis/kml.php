@@ -3,7 +3,7 @@
  *  Support the "Map sources" list mechanism, see also:
  *  http://en.wikipedia.org/wiki/Wikipedia:WikiProject_Geographical_coordinates
  *
- *  This extension was designed to work together with the geo tag 
+ *  This extension was designed to work together with the geo tag
  *  extension (geo.php). It can be useful in its own right also, but
  *  class GeoParam from geo.php needs to be avalibale
  *
@@ -46,7 +46,7 @@ if ( isset ( $wikibasedir ) )
 	require_once( "{$wikibasedir}/includes/Setup.php" );
 	require_once( "geo.php" );
 	}
-	
+
 require_once( "mapsources.php");
 require_once( "neighbors.php");
 require_once( "maparea.php");
@@ -119,5 +119,3 @@ if ( $wgRequest->getVal('BBOX', '') ==  '' ) {
 }
 
 exit ( 0 ) ;
-
-?>

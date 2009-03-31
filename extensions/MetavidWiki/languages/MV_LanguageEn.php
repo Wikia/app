@@ -1,19 +1,19 @@
 <?php
 /**
  * MV_LanguageEn.php
- * 
+ *
  * All Metavid Wiki code is Released Under the GPL2
- * for more info visit http:/metavid.ucsc.edu/code
- * 
+ * for more info visit http://metavid.org/wiki/Code
+ *
  * @author Michael Dale
  * @email dale@ucsc.edu
- * @url http://metavid.ucsc.edu
- * 
+ * @url http://metavid.org
+ *
  */
 if ( !defined( 'MEDIAWIKI' ) )  die( 1 );
 
 
-class MV_LanguageEn extends MV_Language {	
+class MV_LanguageEn extends MV_Language {
 
 	var $m_Namespaces = array(
 		MV_NS_STREAM			=> 'Stream',
@@ -24,4 +24,3 @@ class MV_LanguageEn extends MV_Language {
 	    MV_NS_MVD_TALK 			=> 'MVD_talk'
 	);
 }
-?>

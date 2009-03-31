@@ -165,7 +165,7 @@ class geo_params
 				$filename = $gisbaseurl."?maparea=" . $arg. "&action=raw" ;
 				$handle = fopen($filename, "r");
 				$contents = '';
-				# *EK* Î couldn't get this to work...
+				# *EK* -- couldn't get this to work...
 				while (!feof($handle))
 					$contents .= fread($handle, 256*1024);
 				fclose($handle);

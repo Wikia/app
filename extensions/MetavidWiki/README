@@ -7,7 +7,58 @@ For more details visit metavid.ucsc.edu
 MetaVidWiki is still under development. For more info come by #metavid or visit 
 http://metavid.ucsc.edu/wiki/index.php/MetaVidWiki_Software
 
+
+==Install==
+
+patches to the core:
+Index: /includes/Article.php
+	//set up transaction for LinksUpdate
+	$dbw = wfGetDB( DB_MASTER );
+	$dbw->begin();		
+			
+	# Update the links tables
+	$u = new LinksUpdate( $this->mTitle, $editInfo->output );
+	$u->doUpdate();
+	
+	$dbw->commit();
+
+.patch: 
+Index: /includes/Article.php
+===================================================================
+--- /includes/Article.php    (revision 40341)
++++ /includes/Article.php    (working copy)
+@@ -2723,7 +2723,7 @@
+     function editUpdates( $text, $summary, $minoredit, $timestamp_of_pagechange, $newid, $changed = true ) {
+         global $wgDeferredUpdateList, $wgMessageCache, $wgUser, $wgParser, $wgEnableParserCache;
+ 
+-        wfProfileIn( __METHOD__ );
++        wfProfileIn( __METHOD__ );       
+ 
+         # Parse the text
+         # Be careful not to double-PST: $text is usually already PST-ed once
+@@ -2740,11 +2740,15 @@
+             $parserCache = ParserCache::singleton();
+             $parserCache->save( $editInfo->output, $this, $wgUser );
+         }
+-
++        //set up transaction for LinksUpdate
++        $dbw = wfGetDB( DB_MASTER );
++        $dbw->begin();       
++               
+         # Update the links tables
+         $u = new LinksUpdate( $this->mTitle, $editInfo->output );
+         $u->doUpdate();
+-
++       
++        $dbw->commit();
+         if( wfRunHooks( 'ArticleEditUpdatesDeleteFromRecentchanges', array( &$this ) ) ) {
+             if ( 0 == mt_rand( 0, 99 ) ) {
+                 // Flush old entries from the `recentchanges` table; we do this on
+
+
+
 ==Short technical Description==
+For more uptodate info see metavid.org/wiki/MetavidWiki
 Metavid builds off of semantic mediaWiki but is should not be too difficult
 to set up without semantic wiki... Its just a matter of how structured you 
 want your temporal metadata.

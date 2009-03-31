@@ -1,5 +1,5 @@
 <?php
-if (!defined('MEDIAWIKI')) die();
+if ( !defined( 'MEDIAWIKI' ) ) die();
 /**
  * Helper functions to locate when memory is consumed
  *
@@ -43,7 +43,7 @@ function wfMemOut( $a ) {
 	$memDF = $wgLang->formatNum( $memD );
 	$memRDF = $wgLang->formatNum( $memRD );
 
-	$pad = str_repeat( ".", $wgMemStack-1 );
+	$pad = str_repeat( ".", $wgMemStack - 1 );
 	wfDebug( "$pad$a-OUT:\t$memF ($memDF)\t$memRF ($memRDF)\n" );
 	$wgMemStack--;
 }

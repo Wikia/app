@@ -4,19 +4,36 @@ var wgOggPlayer = {
 	'msie': false,
 	'safari' : false,
 	'opera' : false,
+	'mozilla': false,
 
 	// List of players in order of preference
 	// Downpreffed VLC because it crashes my browser all the damn time -- TS
-	'players': ['cortado', 'quicktime-mozilla', 'quicktime-activex', 'vlc-mozilla', 'vlc-activex', 'oggPlugin', 'videoElement'],
+	'players': ['cortado', 'quicktime-mozilla', 'quicktime-activex', 'vlc-mozilla', 'vlc-activex', 'totem', 'kmplayer', 'kaffeine', 'mplayerplug-in', 'oggPlugin', 'videoElement'],
 
+	// Client support table
 	'clientSupports': { 'thumbnail' : true },
+
+	// MIME type to be used to invoke a given plugin with <object>
+	// May be changed by detect()
+	'mimeTypes' : {
+		'quicktime-mozilla': 'video/quicktime',
+		'quicktime-activex': 'video/quicktime',
+		'vlc-mozilla': 'application/x-vlc-plugin',
+		'oggPlugin': 'application/ogg',
+		'totem': 'application/ogg',
+		'kmplayer': 'application/ogg',
+		'kaffeine': 'application/ogg',
+		'mplayerplug-in': 'application/ogg'
+	},
+
 	'savedThumbs': {},
 	'qtTimers' : {},
 	// Text for new messages, to support cached HTML invocation
-	'defaultMsg' : { 
-		'ogg-no-xiphqt': 'You do not appear to have the XiphQT component for QuickTime. QuickTime cannot play ' + 
-			'Ogg files without this component. Please ' + 
-			'<a href="http://www.mediawiki.org/wiki/Extension:OggHandler/Client_download">download XiphQT</a> or choose another player.'
+	'defaultMsg' : {
+		'ogg-player-totem': 'Totem',
+		'ogg-player-kmplayer': 'KMPlayer',
+		'ogg-player-kaffeine': 'Kaffeine',
+		'ogg-player-mplayerplug-in': 'mplayerplug-in'
 	},
 
 	// Configuration from MW
@@ -44,7 +61,7 @@ var wgOggPlayer = {
 			this.savedThumbs[params.id] = thumb;
 		}
 
-		this.detect( elt );
+		this.detect();
 
 		if ( !player ) {
 			// See if there is a cookie specifying a preferred player
@@ -73,7 +90,11 @@ var wgOggPlayer = {
 				this.embedVideoElement( elt, params );
 				break;
 			case 'oggPlugin':
-				this.embedOggPlugin( elt, params );
+			case 'kaffeine':
+			case 'totem':
+			case 'kmplayer':
+			case 'mplayerplug-in':
+				this.embedOggPlugin( elt, params, player );
 				break;
 			case 'vlc-mozilla':
 				this.embedVlcPlugin( elt, params );
@@ -114,8 +135,12 @@ var wgOggPlayer = {
 		}
 	},
 
+	'debug': function( s ) {
+		//alert(s);
+	},
+
 	// Detect client capabilities
-	'detect': function( elt ) {
+	'detect': function() {
 		if (this.detectionDone) {
 			return;
 		}
@@ -123,21 +148,27 @@ var wgOggPlayer = {
 
 		// First some browser detection
 		this.msie = ( navigator.appName == "Microsoft Internet Explorer" );
+		this.mozilla = ( navigator.appName == "Netscape" );
 		this.opera = ( navigator.appName == 'Opera' );
 		this.safari = ( navigator.vendor && navigator.vendor.substr( 0, 5 ) == 'Apple' );
+		this.konqueror = ( navigator.appName == 'Konqueror' );
 		
 		// In Mozilla, navigator.javaEnabled() only tells us about preferences, we need to
 		// search navigator.mimeTypes to see if it's installed
 		var javaEnabled = navigator.javaEnabled();
 		// In Opera, navigator.javaEnabled() is all there is
 		var invisibleJava = this.opera;
-		// Some browsers filter out duplicate mime types, hiding some plugins
-		var uniqueMimesOnly = this.opera || this.safari;
 
 		// Opera will switch off javaEnabled in preferences if java can't be found.
 		// And it doesn't register an application/x-java-applet mime type like Mozilla does.
 		if ( invisibleJava && javaEnabled ) {
 			this.clientSupports['cortado'] = true;
+		}
+
+		if ( this.konqueror ) {
+			// Bugged as of 3.5.9
+			// Applet freezes shortly after starting
+			javaEnabled = false;
 		}
 
 		// ActiveX plugins
@@ -155,64 +186,126 @@ var wgOggPlayer = {
 		}
 
 		// <video> element
-		elt.innerHTML = '<video id="testvideo"></video>\n';
-		var testvideo = document.getElementById('testvideo');
-		if (testvideo && testvideo.play) {
+		if ( typeof HTMLVideoElement == 'object' // Firefox, Safari
+				|| typeof HTMLVideoElement == 'function' ) // Opera
+		{
 			this.clientSupports['videoElement'] = true;
 		}
 
-		// Mozilla plugins
-		
-		if(navigator.mimeTypes && navigator.mimeTypes.length > 0) {
-			for ( var i = 0; i < navigator.mimeTypes.length; i++) {
-				var entry = navigator.mimeTypes[i];
-				var type = entry.type;
-				var semicolonPos = type.indexOf( ';' );
-				if ( semicolonPos > -1 ) {
-					type = type.substr( 0, semicolonPos );
-				}
+		if (!navigator.mimeTypes || navigator.mimeTypes.length == 0) {
+			// No Mozilla plugins, all done
+			return;
+		}
 
-				var plugin = entry.enabledPlugin;
-				// In case it is null or undefined
-				var pluginName = plugin && plugin.name ? plugin.name : '';
-				var pluginFilename = plugin && plugin.filename ? plugin.filename : '';
-				
-				if ( javaEnabled && type == 'application/x-java-applet' ) {
-					this.clientSupports['cortado'] = true;
-					continue;
-				}
-				if ( type == 'application/ogg' ) {
-					if ( pluginName.toLowerCase() == 'vlc multimedia plugin' ) {
-						this.clientSupports['vlc-mozilla'] = true;
-					} else if ( pluginName.indexOf( 'QuickTime' ) > -1 ) {
-						this.clientSupports['quicktime-mozilla'] = true;
-					} else {
-						this.clientSupports['oggPlugin'] = true;
-					}
-					continue;
-				} else if ( uniqueMimesOnly ) {
-					// Could cause false positives if codecs are missing...
-					if ( type == 'application/x-vlc-player' ) {
-						this.clientSupports['vlc-mozilla'] = true;
-						continue;
-					} else if ( type == 'video/quicktime' ) {
-						this.clientSupports['quicktime-mozilla'] = true;
-						continue;
-					}
-				}
-			
-				if ( type == 'video/quicktime' ) {
-					if ( pluginFilename.indexOf( 'libtotem' ) > -1 ) {
-						// Totem plugin on *nix...
-						// Will in fact play oggs, but we'll have a native
-						// plugin alongside it. Skip the entry.
-					} else {
-						this.clientSupports['quicktime-mozilla'] = true;
-						continue;
-					}
-				}
+		// Mozilla plugins
+		var typesByPlayer = {};
+		var playersByType = {};
+		var numPlayersByType = {};
+		var player;
+		var i;
+		for ( i = 0; i < navigator.mimeTypes.length; i++) {
+			var entry = navigator.mimeTypes[i];
+			var type = entry.type;
+			var semicolonPos = type.indexOf( ';' );
+			if ( semicolonPos > -1 ) {
+				type = type.substr( 0, semicolonPos );
 			}
 
+			var plugin = entry.enabledPlugin;
+			// In case it is null or undefined
+			var pluginName = plugin && plugin.name ? plugin.name : '';
+			var pluginFilename = plugin && plugin.filename ? plugin.filename : '';
+			player = '';
+
+			if ( javaEnabled && type == 'application/x-java-applet' ) {
+				// We use <applet> so we don't have to worry about unique types
+				this.clientSupports['cortado'] = true;
+				// But it could conflict with another plugin
+				// Set player='' to avoid double registration of cortado
+				player = '';
+			} else if ( pluginFilename.indexOf( 'libtotem' ) > -1 ) {
+				// Totem
+				player = 'totem';
+			} else if ( pluginFilename.indexOf( 'libkmplayerpart' ) > -1 ) {
+				// KMPlayer is fussy about what type you give it
+				if ( pluginName == 'Windows Media Player Plugin' 
+						|| pluginName == 'QuickTime Plug-in' )
+				{
+					player = 'kmplayer';
+				}
+			} else if ( pluginFilename.indexOf( 'kaffeineplugin' ) > -1 ) {
+				// Kaffeine
+				player = 'kaffeine';
+			} else if ( pluginName.indexOf( 'mplayerplug-in' ) > -1 ) {
+				player = 'mplayerplug-in';
+			} else if ( pluginFilename.indexOf( 'mplayerplug-in-qt' ) > -1 ) {
+				// MPlayer fake QuickTime
+				player = '';
+			} else if ( pluginName.indexOf( 'QuickTime Plug-in' ) > -1 ) {
+				// Note: Totem and KMPlayer also use this pluginName, which is 
+				// why we check for them first
+				player = 'quicktime-mozilla';
+			} else if ( pluginName.toLowerCase() == 'vlc multimedia plugin' ) {
+				player = 'vlc-mozilla';
+			} else if ( type == 'application/ogg' ) {
+				player = 'oggPlugin';
+			}
+
+			if ( this.konqueror && player == 'vlc-mozilla' ) {
+				// In Konqueror 3.5.9, VLC is not scriptable, has no controls, and crashes the browser
+				player = '';
+			}
+
+			// Update some hashtables to track unique type assignment
+			// Slightly complicated because players can and do conflict with themselves
+			if ( !( player in typesByPlayer ) ) {
+				typesByPlayer[player] = {};
+			}
+			typesByPlayer[player][type] = true;
+			if ( !( type in playersByType ) ) {
+				playersByType[type] = {};
+				numPlayersByType[type] = 0;
+			}
+			if ( !( player in playersByType[type] ) ) {
+				playersByType[type][player] = true;
+				numPlayersByType[type]++;
+			}
+		}
+
+		// Determine a unique MIME type for each player found
+		for ( i = 0; i < this.players.length; i++ ) {
+			player = this.players[i];
+			if ( !( player in typesByPlayer ) ) {
+				continue;
+			}
+			// Is the default OK?
+			var defaultType = this.mimeTypes[player];
+			if ( defaultType in numPlayersByType
+					&& numPlayersByType[defaultType] == 1
+					&& defaultType in typesByPlayer[player] )
+			{
+				// Yes, use it
+				this.debug( player + " -> " + defaultType );
+				this.clientSupports[player] = true;
+				continue;
+			}
+			// Search for a unique type
+			for ( var type in typesByPlayer[player] ) {
+				if ( numPlayersByType[type] == 1 ) {
+					// Found a unique type
+					this.mimeTypes[player] = type;
+					this.clientSupports[player] = true;
+					this.debug( player + " => " + type );
+					break;
+				}
+			}
+			if ( !(player in this.clientSupports ) ) {
+				if ( typesByPlayer[player].length > 0 ) {
+					this.debug( "No unique MIME type for " + player );
+				} else {
+					this.debug( "No types for player " + player );
+				}
+			}
 		}
 	},
 
@@ -321,13 +414,13 @@ var wgOggPlayer = {
 			if ( player == selectedPlayer ) {
 				var strong = document.createElement( 'strong' );
 				strong.appendChild( document.createTextNode( 
-					this.msg[playerMsg] + ' ' + this.msg['ogg-player-selected'] ) );
+					this.getMsg(playerMsg) + ' ' + this.msg['ogg-player-selected'] ) );
 				li.appendChild( strong );
 			} else {
 				a = document.createElement( 'a' );
 				a.href = 'javascript:void("' + player + '")';
 				a.onclick = this.makePlayerFunction( player, params );
-				a.appendChild( document.createTextNode( this.msg[playerMsg] ) );
+				a.appendChild( document.createTextNode( this.getMsg(playerMsg) ) );
 				li.appendChild( a );
 			}
 			ul.appendChild( li );
@@ -421,33 +514,23 @@ var wgOggPlayer = {
 	},
 
 	'embedVideoElement': function ( elt, params ) {
-		var videoElt = document.createElement('video');
-		videoElt.setAttribute( 'width', params.width );
-		videoElt.setAttribute( 'height', params.height + this.controlsHeightGuess );
-		videoElt.setAttribute( 'src', params.videoUrl );
-		videoElt.setAttribute( 'autoplay', '1' );
-		videoElt.setAttribute( 'controls', '1' );
-		var div = document.createElement( 'div' );
-		div.appendChild( videoElt );
-		elt.appendChild( div );
-
-		// Try to detect implementations that don't support controls
-		// This works for the Opera test build
-		if ( !videoElt.controls ) {
-			div = document.createElement( 'div' );
-			div.appendChild( this.newPlayButton( videoElt ) );
-			div.appendChild( this.newPauseButton( videoElt ) );
-			div.appendChild( this.newStopButton( videoElt ) );
-			elt.appendChild( div );
-			//videoElt.play();
-		}
+		var id = elt.id + "_obj";
+		elt.innerHTML =
+			'<div><video' + 
+				' id=' + this.hq( id ) + 
+				' width=' + this.hq( params.width ) + 
+				' height=' + this.hq( params.height ) + 
+				' src=' + this.hq( params.videoUrl ) +
+				' autoplay="1"' +
+				' controls="1"' +
+				' /></div>';
 	},
 
-	'embedOggPlugin': function ( elt, params ) {
+	'embedOggPlugin': function ( elt, params, player ) {
 		var id = elt.id + "_obj";
 		elt.innerHTML += 
 			"<div><object id=" + this.hq( id ) + 
-			" type='application/ogg'" +
+			" type='" + this.mimeTypes[player] + "'" +
 			" width=" + this.hq( params.width ) + 
 			" height=" + this.hq( params.height + this.controlsHeightGuess ) + 
 			" data=" + this.hq( params.videoUrl ) + "></object></div>";
@@ -457,7 +540,7 @@ var wgOggPlayer = {
 		var id = elt.id + "_obj";
 		elt.innerHTML += 	
 			"<div><object id=" + this.hq( id ) + 
-			" type='application/x-vlc-plugin'" +
+			" type='" + this.mimeTypes['vlc-mozilla'] + "'" +
 			" width=" + this.hq( params.width ) + 
 			" height=" + this.hq( params.height ) + 
 			" data=" + this.hq( params.videoUrl ) + "></object></div>";
@@ -526,8 +609,8 @@ var wgOggPlayer = {
 		    '</applet>';
 
 		// Wrap it in an iframe to avoid hanging the rendering thread in FF 2.0 and similar
-		// Doesn't work in Safari/Mac
-		if ( !this.msie && !this.safari ) {
+		// Doesn't work in MSIE or Safari/Mac or Opera 9.5
+		if ( this.mozilla ) {
 			var iframeHtml = '<html><body>' + html + '</body></html>';
 			var iframeJs = 'parent.wgOggPlayer.writeApplet(self, "' + iframeHtml.replace( /"/g, '\\"' ) + '");';
 			var iframeUrl = 'javascript:' + encodeURIComponent( iframeJs );
@@ -542,7 +625,7 @@ var wgOggPlayer = {
 
 	'writeApplet' : function ( win, html ) {
 		win.document.write( html );
-		win.stop();
+		if ( win.stop ) win.stop();
 		// Disable autoplay on back button
 		this_ = this;
 		win.setTimeout( 
@@ -563,7 +646,7 @@ var wgOggPlayer = {
 
 		elt.innerHTML += 
 			"<div><object id=" + this.hq( id ) + 
-			" type='video/quicktime'" +
+			" type='" + this.mimeTypes[player] + "'" +
 			" width=" + this.hq( params.width ) + 
 			" height=" + this.hq( params.height + controllerHeight ) + 
 			

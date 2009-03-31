@@ -8,7 +8,7 @@ $wgAjaxExportList[] = "wfAjaxQueryPages";
 /**
  * Ajax responder entry point
  */
-function wfAjaxQueryPages( $specialpagename, $offset, $limit ) {
+function wfAjaxQueryPages( $specialpagename, $offset, $limit, $dir = false ) {
 
 	// Make sure we requested an existing special page
 	if( !$spObj = SpecialPage::getPageByAlias( $specialpagename ) ) {
@@ -16,9 +16,14 @@ function wfAjaxQueryPages( $specialpagename, $offset, $limit ) {
 	}
 
 	// Alter the GET request.
-	$_GET['offset'] = (int) $offset;
+	$_GET['offset'] = $offset;
 	$_GET['limit'] = (int) $limit;
 
+	if( $dir=='prev' || $dir=='next' ) { 
+		$_GET['dir'] = $dir ;
+	} else {
+		unset( $_GET['dir'] );
+	}
 	// HACK : rebuild the webrequest object so it knows about offset & limit
 	global $wgRequest ;
 	$wgRequest->__construct();

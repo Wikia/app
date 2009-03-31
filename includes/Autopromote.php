@@ -19,7 +19,7 @@ class Autopromote {
 				$promote[] = $group;
 		}
 		
-		wfRunHooks( 'GetAutoPromoteGroups', array($user, &$promote) );
+		wfRunHooks( 'GetAutoPromoteGroups', array( $user, &$promote ) );
 		
 		return $promote;
 	}
@@ -106,9 +106,16 @@ class Autopromote {
 			case APCOND_AGE:
 				$age = time() - wfTimestampOrNull( TS_UNIX, $user->getRegistration() );
 				return $age >= $cond[1];
+			case APCOND_AGE_FROM_EDIT:
+				$age = time() - wfTimestampOrNull( TS_UNIX, $user->getFirstEditTimestamp() );
+				return $age >= $cond[1];
 			case APCOND_INGROUPS:
 				$groups = array_slice( $cond, 1 );
 				return count( array_intersect( $groups, $user->getGroups() ) ) == count( $groups );
+			case APCOND_ISIP:
+				return $cond[1] == wfGetIP();
+			case APCOND_IPINRANGE:
+				return IP::isInRange( wfGetIP(), $cond[1] );
 			default:
 				$result = null;
 				wfRunHooks( 'AutopromoteCondition', array( $cond[0], array_slice( $cond, 1 ), $user, &$result ) );

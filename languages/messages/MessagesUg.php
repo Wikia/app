@@ -4,6 +4,7 @@
  * @ingroup Language
  * @file
  *
+ * @author Jose77
  * @author לערי ריינהארט
  */
 
@@ -16,6 +17,18 @@ $messages = array(
 'wednesday' => 'Qarshenbe',
 'thursday'  => 'Payshanbe',
 'saturday'  => 'Shanba',
+'january'   => 'Yanwar',
+'february'  => 'Féwral',
+'march'     => 'Mart',
+'april'     => 'Aprél',
+'june'      => 'Iyun',
+'july'      => 'Iyul',
+'august'    => 'Awghust',
+'september' => 'Séntebr',
+'october'   => 'Öktebir',
+'november'  => 'Noyabr',
+'december'  => 'Dékabr',
+'may'       => 'May',
 
 'qbedit'     => 'Uzgartish',
 'navigation' => 'كۆرۈش',
@@ -57,7 +70,7 @@ $messages = array(
 'username'          => 'Ishletkuqi ismi:',
 
 # Edit pages
-'summary'     => 'Hulasa',
+'summary'     => 'Hulasa:',
 'minoredit'   => 'Bu Kichik Uzgartish',
 'watchthis'   => 'Bu Batka Kharang',
 'showpreview' => 'Aldinala kurux',
@@ -97,9 +110,6 @@ $messages = array(
 # Book sources
 'booksources-go' => 'Kuchush',
 
-# Special:Log
-'log-search-submit' => 'Kuchush',
-
 # Special:AllPages
 'allpagessubmit' => 'Kuchush',
 
@@ -134,7 +144,7 @@ $messages = array(
 'tooltip-search'  => 'Izdash {{SITENAME}}',
 'tooltip-p-logo'  => 'Bash Bet',
 
-# Special:NewImages
+# Special:NewFiles
 'ilsubmit' => 'Izdash',
 
 # Trackbacks

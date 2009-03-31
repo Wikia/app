@@ -42,10 +42,6 @@ class ApiQueryBlocks extends ApiQueryBase {
 	}
 
 	public function execute() {
-		$this->run();
-	}
-
-	private function run() {
 		global $wgUser;
 
 		$params = $this->extractRequestParams();
@@ -87,17 +83,17 @@ class ApiQueryBlocks extends ApiQueryBase {
 		if($fld_range)
 			$this->addFields(array('ipb_range_start', 'ipb_range_end'));
 		if($fld_flags)
-			$this->addFields(array('ipb_auto', 'ipb_anon_only', 'ipb_create_account', 'ipb_enable_autoblock', 'ipb_block_email', 'ipb_deleted'));
+			$this->addFields(array('ipb_auto', 'ipb_anon_only', 'ipb_create_account', 'ipb_enable_autoblock', 'ipb_block_email', 'ipb_deleted', 'ipb_allow_usertalk'));
 
 		$this->addOption('LIMIT', $params['limit'] + 1);
 		$this->addWhereRange('ipb_timestamp', $params['dir'], $params['start'], $params['end']);
 		if(isset($params['ids']))
-			$this->addWhere(array('ipb_id' => $params['ids']));
+			$this->addWhereFld('ipb_id', $params['ids']);
 		if(isset($params['users']))
 		{
 			foreach((array)$params['users'] as $u)
 				$this->prepareUsername($u);
-			$this->addWhere(array('ipb_address' => $this->usernames));
+			$this->addWhereFld('ipb_address', $this->usernames);
 		}
 		if(isset($params['ip']))
 		{
@@ -120,19 +116,18 @@ class ApiQueryBlocks extends ApiQueryBase {
 			));
 		}
 		if(!$wgUser->isAllowed('suppress'))
-			$this->addWhere(array('ipb_deleted' => 0));
+			$this->addWhereFld('ipb_deleted', 0);
 
 		// Purge expired entries on one in every 10 queries
 		if(!mt_rand(0, 10))
 			Block::purgeExpired();
 
 		$res = $this->select(__METHOD__);
-		$db = wfGetDB();
 
 		$count = 0;
-		while($row = $db->fetchObject($res))
+		while($row = $res->fetchObject())
 		{
-			if($count++ == $params['limit'])
+			if(++$count > $params['limit'])
 			{
 				// We've had enough
 				$this->setContinueEnumParameter('start', wfTimestamp(TS_ISO_8601, $row->ipb_timestamp));
@@ -142,13 +137,9 @@ class ApiQueryBlocks extends ApiQueryBase {
 			if($fld_id)
 				$block['id'] = $row->ipb_id;
 			if($fld_user && !$row->ipb_auto)
-			{
 				$block['user'] = $row->ipb_address;
-			}
 			if($fld_by)
-			{
 				$block['by'] = $row->user_name;
-			}
 			if($fld_timestamp)
 				$block['timestamp'] = wfTimestamp(TS_ISO_8601, $row->ipb_timestamp);
 			if($fld_expiry)
@@ -157,8 +148,8 @@ class ApiQueryBlocks extends ApiQueryBase {
 				$block['reason'] = $row->ipb_reason;
 			if($fld_range)
 			{
-				$block['rangestart'] = $this->convertHexIP($row->ipb_range_start);
-				$block['rangeend'] = $this->convertHexIP($row->ipb_range_end);
+				$block['rangestart'] = IP::hexToQuad($row->ipb_range_start);
+				$block['rangeend'] = IP::hexToQuad($row->ipb_range_end);
 			}
 			if($fld_flags)
 			{
@@ -175,6 +166,8 @@ class ApiQueryBlocks extends ApiQueryBase {
 					$block['noemail'] = '';
 				if($row->ipb_deleted)
 					$block['hidden'] = '';
+				if($row->ipb_allow_usertalk)
+					$block['allowusertalk'] = '';
 			}
 			$data[] = $block;
 		}
@@ -192,19 +185,6 @@ class ApiQueryBlocks extends ApiQueryBase {
 		if($name === false)
 			$this->dieUsage("User name {$user} is not valid", 'param_user');
 		$this->usernames[] = $name;
-	}
-
-	protected function convertHexIP($ip)
-	{
-		// Converts a hexadecimal IP to nnn.nnn.nnn.nnn format
-		$dec = wfBaseConvert($ip, 16, 10);
-		$parts[0] = (int)($dec / (256*256*256));
-		$dec %= 256*256*256;
-		$parts[1] = (int)($dec / (256*256));
-		$dec %= 256*256;
-		$parts[2] = (int)($dec / 256);
-		$parts[3] = $dec % 256;
-		return implode('.', $parts);
 	}
 
 	public function getAllowedParams() {
@@ -279,6 +259,6 @@ class ApiQueryBlocks extends ApiQueryBase {
 	}
 
 	public function getVersion() {
-		return __CLASS__ . ': $Id: ApiQueryBlocks.php 37892 2008-07-21 21:37:11Z catrope $';
+		return __CLASS__ . ': $Id: ApiQueryBlocks.php 43676 2008-11-18 15:11:11Z catrope $';
 	}
 }

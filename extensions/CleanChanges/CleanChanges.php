@@ -23,7 +23,7 @@ $wgHooks['FetchChangesList'][] = 'NCL::hook' ;
 /* Extension information */
 $wgExtensionCredits['other'][] = array(
 	'name' => 'Clean Changes',
-	'version' => '2008-06-27',
+	'version' => '2008-10-16',
 	'author' => 'Niklas Laxström',
 	'descriptionmsg' => 'cleanchanges-desc',
 	'url' => 'http://www.mediawiki.org/wiki/Extension:CleanChanges',

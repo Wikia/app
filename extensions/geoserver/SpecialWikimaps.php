@@ -21,10 +21,9 @@ $wgExtensionCredits['specialpage'][] = array(
 global $wgWikimapsMessages;
 $wgWikimapsMessages = array();
 
-if ( !function_exists( 'extAddSpecialPage' ) ) {
-        require( dirname(__FILE__) . '/../ExtensionFunctions.php' );
-}
-extAddSpecialPage( dirname(__FILE__) . '/SpecialWikimaps_body.php', 'Wikimaps', 'Wikimaps' );
+$dir = dirname(__FILE__) . '/';
+$wgAutoloadClasses['SpecialWikimaps'] = $dir . 'SpecialWikimaps_body.php';
+$wgSpecialPages['Wikimaps'] = 'SpecialWikimaps';
 
 function wfSpecialWikimaps() {
         # Add messages
@@ -34,5 +33,3 @@ function wfSpecialWikimaps() {
         }
 #	print "<pre>"; print_r( $wgSpecialPages ); print "</pre>";
 }
-?>
-

@@ -1,5 +1,5 @@
 <?php
-if (!defined('MEDIAWIKI')) die();
+if ( !defined( 'MEDIAWIKI' ) ) die();
 /**
  * Multiple language wiki file format handler.
  *
@@ -12,14 +12,14 @@ if (!defined('MEDIAWIKI')) die();
 class WikiExtensionFormatReader extends WikiFormatReader {
 	public function parseSections( $var ) {
 		if ( $this->filename === false ) {
-			return array( '', array());
+			return array( '', array() );
 		}
 
 		$data = file_get_contents( $this->filename ) . "\n";
 
 		$headerP = "
 		.*? # Ungreedily eat header
-		\\$$var \s* = \s* array\(\);";
+		\\$$var \s* = \s* array \s* \( \s* \) \s*;";
 		/*
 		* x to have nice syntax
 		* u for utf-8
@@ -32,7 +32,7 @@ class WikiExtensionFormatReader extends WikiFormatReader {
 			throw new MWException( "Unable to parse file structure" );
 		}
 
-		list( , $header, $data) = $matches;
+		list( , $header, $data ) = $matches;
 
 		$sectionP = '(?: /\*\* .*? \*/ )? (?: .*?  \n\);\n\n )';
 		$codeP = "\\$$var\[' (.*?) '\]";
@@ -64,9 +64,9 @@ class WikiExtensionFormatReader extends WikiFormatReader {
 		if ( $this->filename === false ) {
 			return array();
 		}
-		${$this->variableName} = array();
+		$ { $this->variableName } = array();
 		require( $this->filename );
-		$messages = ${$this->variableName};
+		$messages = $ { $this->variableName } ;
 		foreach ( $messages as $code => $value ) {
 			$messages[$code] = $mangler->mangle( $value );
 		}
@@ -110,7 +110,7 @@ class WikiExtensionFormatWriter extends WikiFormatWriter {
 		$handle = fopen( 'php://temp', 'wt' );
 
 		$this->addAuthors( $collection->getAuthors(), $code );
-		$this->doExport( $handle, array($collection->code) );
+		$this->doExport( $handle, array( $collection->code ) );
 
 		// Fetch data
 		rewind( $handle );
@@ -133,11 +133,12 @@ class WikiExtensionFormatWriter extends WikiFormatWriter {
 		}
 	}
 
-	protected function exportSection( $handle, $code, array $languages) {
-		if ( in_array( $code, $languages ) ) {
+	protected function exportSection( $handle, $code, array $languages ) {
+		// Never export en, just copy it verbatim
+		if ( in_array( $code, $languages ) && $code !== 'en' ) {
 
 			// Parse authors only if we regenerate section
-			if ( isset($this->sections[$code]) ) {
+			if ( isset( $this->sections[$code] ) ) {
 				$authors = $this->parseAuthorsFromString( $this->sections[$code] );
 				$this->addAuthors( $authors, $code );
 			}
@@ -152,10 +153,10 @@ class WikiExtensionFormatWriter extends WikiFormatWriter {
 	protected function writeSection( $handle, $code ) {
 		$messages = $this->getMessagesForExport( $this->group, $code );
 		$messages = $this->makeExportArray( $messages );
-		if ( count($messages) ) {
-			list( $name, $native) = $this->getLanguageNames($code);
+		if ( count( $messages ) ) {
+			list( $name, $native ) = $this->getLanguageNames( $code );
 			$authors = $this->formatAuthors( ' * @author ', $code );
-			if ( !empty($authors) )
+			if ( !empty( $authors ) )
 				$authors = "\n$authors";
 
 			fwrite( $handle, "/** $name ($native)$authors */\n" );
@@ -173,19 +174,16 @@ class WikiExtensionFormatWriter extends WikiFormatWriter {
 	public function _load() {
 		$reader = $this->group->getReader( 'mul' );
 		if ( $reader instanceof WikiExtensionFormatReader ) {
-			list( $this->header, $this->sections ) = $reader->parseSections($this->group->getVariableName());
+			list( $this->header, $this->sections ) = $reader->parseSections( $this->group->getVariableName() );
 		}
 	}
 
 	public function _makeHeader( $handle ) {
 		if ( $this->header ) {
 			fwrite( $handle, $this->header );
-		} else {
-			// TODO: something nice
-			fwrite( $handle, 'BAA' );
 		}
 	}
 
 	// Inherit
-	#protected function writeMessagesBlock( $handle, $messages );
+	# protected function writeMessagesBlock( $handle, $messages );
 }

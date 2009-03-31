@@ -1,13 +1,25 @@
 <?php
 /**
- * @author Łukasz Bolikowski
- * @version 0.2
+ * @file
+ * @ingroup SMWLanguage
  */
 
 /*
+ * Protect against register_globals vulnerabilities.
+ * This line must be present before any global variable is referenced.
+ */
+if (!defined('MEDIAWIKI')) die();
+
+global $smwgIP;
+include_once($smwgIP . '/languages/SMW_Language.php');
+
+/**
+ * Polish language labels for important SMW labels (namespaces, datatypes,...).
+ *
  * To further translators: some key terms appear * in multiple strings.
  * If you wish to change them, please be consistent.  The following
  * translations are currently used:
+ *
  *   relation = relacja
  *   attribute = atrybut
  *   property = własność
@@ -17,22 +29,17 @@
  *   conversion = konwersja
  *   search (n) = szukanie
  *   sorry, oops ~ niestety, ojej
+ *
  * These ones may need to be refined:
  *   to support = wspierać
  *   on this site = w tym miejscu
+ *
+ * @author Łukasz Bolikowski
+ * @version 0.2
+ * @ingroup SMWLanguage
+ * @ingroup Language
  */
-
-/**
- * Protect against register_globals vulnerabilities.
- * This line must be present before any global variable is referenced.
- */
-if (!defined('MEDIAWIKI')) die();
-
-
-global $smwgIP;
-include_once($smwgIP . '/languages/SMW_Language.php');
-
-class SMW_LanguagePl extends SMW_Language {
+class SMWLanguagePl extends SMWLanguage {
 
 protected $m_DatatypeLabels = array(
 	'_wpg' => 'Page', // name of page datatype  //TODO translate
@@ -69,27 +76,27 @@ protected $m_DatatypeAliases = array(
 
 protected $m_SpecialProperties = array(
 	//always start upper-case
-	SMW_SP_HAS_TYPE  => 'Ma typ',
-	SMW_SP_HAS_URI   => 'Równoważne URI',
-	SMW_SP_SUBPROPERTY_OF => 'Subproperty of', // TODO: translate
-	SMW_SP_DISPLAY_UNITS => 'Wyświetlana jednostka', // TODO: should be plural now ("units"), singluar stays alias
-	SMW_SP_IMPORTED_FROM => 'Zaimportowane z',
-	SMW_SP_CONVERSION_FACTOR => 'Odpowiada',
-	SMW_SP_SERVICE_LINK => 'Zapewnia usługę',
-	SMW_SP_POSSIBLE_VALUE => 'Dopuszcza wartość'
+	'_TYPE' => 'Ma typ',
+	'_URI'  => 'Równoważne URI',
+	'_SUBP' => 'Subproperty of', // TODO: translate
+	'_UNIT' => 'Wyświetlana jednostka', // TODO: should be plural now ("units"), singluar stays alias
+	'_IMPO' => 'Zaimportowane z',
+	'_CONV' => 'Odpowiada',
+	'_SERV' => 'Zapewnia usługę',
+	'_PVAL' => 'Dopuszcza wartość'
 );
 
 protected $m_SpecialPropertyAliases = array(
-	'Wyświetlana jednostka' => SMW_SP_DISPLAY_UNITS,
+	'Wyświetlana jednostka' => '_UNIT',
 	// support English aliases for special properties
-	'Has type'          => SMW_SP_HAS_TYPE,
-	'Equivalent URI'    => SMW_SP_HAS_URI,
-	'Subproperty of'    => SMW_SP_SUBPROPERTY_OF,
-	'Display units'     => SMW_SP_DISPLAY_UNITS,
-	'Imported from'     => SMW_SP_IMPORTED_FROM,
-	'Corresponds to'    => SMW_SP_CONVERSION_FACTOR,
-	'Provides service'  => SMW_SP_SERVICE_LINK,
-	'Allows value'      => SMW_SP_POSSIBLE_VALUE
+	'Has type'          => '_TYPE',
+	'Equivalent URI'    => '_URI',
+	'Subproperty of'    => '_SUBP',
+	'Display units'     => '_UNIT',
+	'Imported from'     => '_IMPO',
+	'Corresponds to'    => '_CONV',
+	'Provides service'  => '_SERV',
+	'Allows value'      => '_PVAL'
 );
 
 

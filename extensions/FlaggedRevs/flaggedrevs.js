@@ -75,12 +75,6 @@ function updateRatingForm() {
 			somezero = true;
 		}
 	}
-	showComment = (quality || allzero) ? true : false;
-	// Show comment box only for quality revs or depreciated ones
-	var commentbox = document.getElementById('mw-commentbox');
-	if( commentbox ) {
-		commentbox.style.display = showComment ? 'inline' : 'none';
-	}
 	// Show note box only for quality revs
 	var notebox = document.getElementById('mw-notebox');
 	if( notebox ) {
@@ -89,13 +83,6 @@ function updateRatingForm() {
 	// If only a few levels are zero, don't show submit link
 	var submit = document.getElementById('submitreview');
 	submit.disabled = ( somezero && !allzero ) ? 'disabled' : '';
-	var comment = document.getElementById('wpReason');
-	comment.disabled = ( somezero && !allzero ) ? 'disabled' : '';
-	// Clear comment box data if not shown
-	var comment = document.getElementById('wpReason');
-	if( comment ) {
-		comment.value = showComment ? comment.value : '';
-	}
 	// Clear note box data if not shown
 	var notes = document.getElementById('wpNotes');
 	if( notes ) {
@@ -107,22 +94,27 @@ function updateRatingForm() {
 * Update colors when select changes (Opera already does this).
 */
 function updateFeedbackForm() {
+	var allzero = true;
 	var ratingform = document.getElementById('mw-feedbackselects');
 	if( !ratingform ) return;
 	for( tag in wgFlaggedRevsParams2.tags ) {
 		var controlName = "wp" + tag;
 		var levels = document.getElementsByName(controlName);
 		var selectedlevel = 2; // default
-
 		if( levels[0].nodeName == 'SELECT' ) {
 			selectedlevel = levels[0].selectedIndex;
 			// Update color. Opera does this already, and doing so
 			// seems to kill custom pretty opera skin form styling.
 			if( navigator.appName != 'Opera') {
-				levels[0].className = 'fr-rating-option-' + selectedlevel;
+				levels[0].className = 'fr-rating-option-' + (4 - selectedlevel);
+			}
+			if( selectedlevel <= 4 ) {
+				allzero = false;
 			}
 		}
 	}
+	var submit = document.getElementById('submitfeedback');
+	submit.disabled = allzero ? 'disabled' : '';
 }
 
 addOnloadHook(enable_showhide);
@@ -190,7 +182,7 @@ wgAjaxFeedback.ajaxCall = function() {
 	sajax_do_call( "ReaderFeedback::AjaxReview", args, wgAjaxFeedback.processResult );
 	// If the request isn't done in 10 seconds, allow user to try again
 	wgAjaxFeedback.timeoutID = window.setTimeout(
-		function() { wgAjaxFeedback.inprogress = false; wgAjaxFeedback.unlockForm() },
+		function() { wgAjaxFeedback.inprogress = false; wgAjaxFeedback.unlockForm(); },
 		10000
 	);
 	return false;
@@ -216,6 +208,7 @@ wgAjaxFeedback.processResult = function(request) {
 	var response = request.responseText;
 	if( msg = response.substr(6) ) {
 		jsMsg( msg, 'feedback' );
+		window.scroll(0,0);
 	}
 	wgAjaxFeedback.inprogress = false;
 	if( wgAjaxFeedback.timeoutID ) {
@@ -225,7 +218,6 @@ wgAjaxFeedback.processResult = function(request) {
 	if( submit ) {
 		submit.value = wgAjaxFeedback.sentMsg;
 	}
-	window.scroll(0,0);
 };
 
 wgAjaxFeedback.onLoad = function() {
@@ -306,7 +298,7 @@ wgAjaxReview.ajaxCall = function() {
 	sajax_request_type = old;
 	// If the request isn't done in 30 seconds, allow user to try again
 	wgAjaxReview.timeoutID = window.setTimeout(
-		function() { wgAjaxReview.inprogress = false; wgAjaxReview.unlockForm() },
+		function() { wgAjaxReview.inprogress = false; wgAjaxReview.unlockForm(); },
 		30000
 	);
 	return false;
@@ -340,6 +332,7 @@ wgAjaxReview.processResult = function(request) {
 	var response = request.responseText;
 	if( msg = response.substr(6) ) {
 		jsMsg( msg, 'review' );
+		window.scroll(0,0);
 	}
 	wgAjaxReview.inprogress = false;
 	if( wgAjaxReview.timeoutID ) {
@@ -349,7 +342,7 @@ wgAjaxReview.processResult = function(request) {
 	if( submit ) {
 		submit.value = wgAjaxReview.sentMsg;
 	}
-	window.scroll(0,0);
+	wgAjaxReview.unlockForm();
 	document.title = wgAjaxReview.actioncomplete;
 };
 

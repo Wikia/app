@@ -61,7 +61,7 @@ function wfAggregatorHook( $text, $options=array(), $parser=null ) {
 class AggregatorStyleHandler {
 	function apply( $outputPage ) {
 		global $wgScriptPath;
-		$outputPage->addScript( wfElement( 'link', array(
+		$outputPage->addScript( Xml::element( 'link', array(
 			'rel' => 'stylesheet',
 			'type' => 'text/css',
 			'href' => "$wgScriptPath/extensions/Aggregator/inline-feed.css" ) ) );
@@ -86,7 +86,7 @@ class AggregatorOutput {
 	
 	function _feedLink( $type, $mime ) {
 		$special = wfAggregatorFeedPage( $this->mName, $type );
-		$link = wfElement( 'link', array(
+		$link = Xml::element( 'link', array(
 			'rel' => 'alternate',
 			'type' => $mime,
 			'href' => $special->getLocalUrl() ) );

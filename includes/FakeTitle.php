@@ -3,15 +3,13 @@
 /**
  * Fake title class that triggers an error if any members are called
  */
-class FakeTitle {
+class FakeTitle extends Title {
 	function error() { throw new MWException( "Attempt to call member function of FakeTitle\n" ); }
 
 	// PHP 5.1 method overload
 	function __call( $name, $args ) { $this->error(); }
 
 	// PHP <5.1 compatibility
-	function getInterwikiLink()  { $this->error(); }
-	function getInterwikiCached() { $this->error(); }
 	function isLocal() { $this->error(); }
 	function isTrans() { $this->error(); }
 	function getText() { $this->error(); }
@@ -28,20 +26,20 @@ class FakeTitle {
 	function getPrefixedText() { $this->error(); }
 	function getFullText() { $this->error(); }
 	function getPrefixedURL() { $this->error(); }
-	function getFullURL() {$this->error(); }
-	function getLocalURL() { $this->error(); }
-	function escapeLocalURL() { $this->error(); }
-	function escapeFullURL() { $this->error(); }
-	function getInternalURL() { $this->error(); }
+	function getFullURL( $query = '', $variant = false ) {$this->error(); }
+	function getLocalURL( $query = '', $variant = false ) { $this->error(); }
+	function escapeLocalURL( $query = '' ) { $this->error(); }
+	function escapeFullURL( $query = '' ) { $this->error(); }
+	function getInternalURL( $query = '', $variant = false ) { $this->error(); }
 	function getEditURL() { $this->error(); }
 	function getEscapedText() { $this->error(); }
 	function isExternal() { $this->error(); }
-	function isSemiProtected() { $this->error(); }
-	function isProtected() { $this->error(); }
+	function isSemiProtected( $action = 'edit' ) { $this->error(); }
+	function isProtected( $action = '' ) { $this->error(); }
 	function userIsWatching() { $this->error(); }
-	function userCan() { $this->error(); }
+	function userCan( $action, $doExpensiveQueries = true ) { $this->error(); }
 	function userCanCreate() { $this->error(); }
-	function userCanEdit() { $this->error(); }
+	function userCanEdit( $doExpensiveQueries = true ) { $this->error(); }
 	function userCanMove() { $this->error(); }
 	function isMovable() { $this->error(); }
 	function userCanRead() { $this->error(); }
@@ -79,6 +77,7 @@ class FakeTitle {
 	function equals() { $this->error(); }
 	function exists() { $this->error(); }
 	function isAlwaysKnown() { $this->error(); }
+	function isKnown() { $this->error(); }
 	function touchLinks() { $this->error(); }
 	function trackbackURL() { $this->error(); }
 	function trackbackRDF() { $this->error(); }

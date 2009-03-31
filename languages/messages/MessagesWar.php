@@ -8,6 +8,26 @@
  * @author לערי ריינהארט
  */
 
+$specialPageAliases = array(
+	'Watchlist'                 => array( 'Angay Timan-an' ),
+	'Upload'                    => array( 'Pagkarga' ),
+	'Statistics'                => array( 'Mga Estadistika' ),
+	'Randompage'                => array( 'Bisan Ano', 'BisanAnongaPakli' ),
+	'Mostlinked'                => array( 'Gidamo-iHinSumpay' ),
+	'Shortpages'                => array( 'HaglipotngamgaPakli' ),
+	'Longpages'                 => array( 'HaglabangamgaPakli' ),
+	'Newpages'                  => array( 'Bag-ongamgaPakli' ),
+	'Allpages'                  => array( 'NgatananngaPakli' ),
+	'Specialpages'              => array( 'MgaIspisyalngaPakli' ),
+	'Contributions'             => array( 'Mga Ámot' ),
+	'Movepage'                  => array( 'BalhinaAnPakli' ),
+	'Categories'                => array( 'Mga Kategorya' ),
+	'Version'                   => array( 'Bersyon' ),
+	'Mypage'                    => array( 'AkonPakli' ),
+	'Mytalk'                    => array( 'AkonHiruhimangraw' ),
+	'Search'                    => array( 'Bilnga' ),
+);
+
 $messages = array(
 # User preference toggles
 'tog-underline'           => 'Bagisa ha ilarom an mga sumpay:',
@@ -95,7 +115,7 @@ $messages = array(
 'mytalk'         => 'Akon paghingay',
 'anontalk'       => 'Paghingay para hini nga IP',
 'navigation'     => 'Paglayag',
-'and'            => 'ngan',
+'and'            => '&#32;ngan',
 
 'errorpagetitle'   => 'Sayop',
 'returnto'         => 'Balik ngadto ha $1.',
@@ -173,10 +193,11 @@ $messages = array(
 'page_last'    => 'kataposan',
 
 # Search results
-'prevn'        => 'naha-una nga $1',
-'nextn'        => 'sunod nga $1',
-'viewprevnext' => 'Kitaa an ($1) ($2) ($3)',
-'powersearch'  => 'Bilnga',
+'prevn'          => 'naha-una nga $1',
+'nextn'          => 'sunod nga $1',
+'viewprevnext'   => 'Kitaa an ($1) ($2) ($3)',
+'searchhelp-url' => 'Help:Sulod',
+'powersearch'    => 'Bilnga',
 
 # Preferences page
 'preferences'       => 'Mga karuyag',
@@ -199,11 +220,11 @@ $messages = array(
 'upload'    => 'Pagkarga hin file',
 'uploadbtn' => 'Igkarga an file',
 
-# Special:ImageList
-'imagelist_date' => 'Pitsa',
-'imagelist_name' => 'Ngaran',
+# Special:ListFiles
+'listfiles_date' => 'Pitsa',
+'listfiles_name' => 'Ngaran',
 
-# Image description page
+# File description page
 'filehist-datetime' => 'Pitsa/Oras',
 'imagelinks'        => 'Mga sumpay',
 'linkstoimage'      => 'Nasumpay hini nga fayl an mga nasunod nga mga pakli:',
@@ -219,7 +240,6 @@ $messages = array(
 
 # Statistics
 'statistics' => 'Mga estadistika',
-'sitestats'  => '{{SITENAME}} nga mga estadistika',
 
 # Miscellaneous special pages
 'longpages' => 'Haglaba nga mga pakli',
@@ -227,9 +247,6 @@ $messages = array(
 
 # Book sources
 'booksources-go' => 'Kadto-a',
-
-# Special:Log
-'log-search-submit' => 'Kadto-a',
 
 # Special:AllPages
 'allpages'       => 'Ngatanan nga mga pakli',
@@ -247,7 +264,7 @@ $messages = array(
 'watch'         => 'Bantayi',
 'watchthispage' => 'Bantayi ini nga pakli',
 
-# Delete/protect/revert
+# Delete
 'deletedtext' => 'Ginpara an "<nowiki>$1</nowiki>".
 Kitaa an $2 para hin talaan han mga gibag-ohi nga mga ginpamara.',
 
@@ -260,7 +277,7 @@ Kitaa an $2 para hin talaan han mga gibag-ohi nga mga ginpamara.',
 # Block/unblock
 'ipblocklist-submit' => 'Bilnga',
 
-# Special:NewImages
+# Special:NewFiles
 'ilsubmit' => 'Bilnga',
 
 # Multipage image navigation

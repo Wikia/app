@@ -53,7 +53,7 @@ class ApiPageSet extends ApiQueryBase {
 	private $mRequestedPageFields;
 
 	public function __construct($query, $resolveRedirects = false) {
-		parent :: __construct($query, __CLASS__);
+		parent :: __construct($query, 'query');
 
 		$this->mAllPages = array ();
 		$this->mTitles = array();
@@ -92,10 +92,11 @@ class ApiPageSet extends ApiQueryBase {
 	 */
 	public function getPageTableFields() {
 		// Ensure we get minimum required fields
+		// DON'T change this order
 		$pageFlds = array (
-			'page_id' => null,
 			'page_namespace' => null,
-			'page_title' => null
+			'page_title' => null,
+			'page_id' => null,
 		);
 
 		// only store non-default fields
@@ -227,19 +228,18 @@ class ApiPageSet extends ApiQueryBase {
 	 */
 	public function execute() {
 		$this->profileIn();
-		$titles = $pageids = $revids = null;
-		extract($this->extractRequestParams());
+		$params = $this->extractRequestParams();
 
 		// Only one of the titles/pageids/revids is allowed at the same time
 		$dataSource = null;
-		if (isset ($titles))
+		if (isset ($params['titles']))
 			$dataSource = 'titles';
-		if (isset ($pageids)) {
+		if (isset ($params['pageids'])) {
 			if (isset ($dataSource))
 				$this->dieUsage("Cannot use 'pageids' at the same time as '$dataSource'", 'multisource');
 			$dataSource = 'pageids';
 		}
-		if (isset ($revids)) {
+		if (isset ($params['revids'])) {
 			if (isset ($dataSource))
 				$this->dieUsage("Cannot use 'revids' at the same time as '$dataSource'", 'multisource');
 			$dataSource = 'revids';
@@ -247,15 +247,17 @@ class ApiPageSet extends ApiQueryBase {
 
 		switch ($dataSource) {
 			case 'titles' :
-				$this->initFromTitles($titles);
+				$this->initFromTitles($params['titles']);
 				break;
 			case 'pageids' :
-				$this->initFromPageIds($pageids);
+				$this->initFromPageIds($params['pageids']);
 				break;
 			case 'revids' :
 				if($this->mResolveRedirects)
-					$this->dieUsage('revids may not be used with redirect resolution', 'params');
-				$this->initFromRevIDs($revids);
+					$this->setWarning('Redirect resolution cannot be used together with the revids= parameter. '.
+					'Any redirects the revids= point to have not been resolved.');
+				$this->mResolveRedirects = false;
+				$this->initFromRevIDs($params['revids']);
 				break;
 			default :
 				// Do nothing - some queries do not need any of the data sources.
@@ -366,7 +368,7 @@ class ApiPageSet extends ApiQueryBase {
 	}
 
 	private function initFromPageIds($pageids) {
-		if(empty($pageids))
+		if(!count($pageids))
 			return;
 
 		$pageids = array_map('intval', $pageids); // paranoia
@@ -424,7 +426,7 @@ class ApiPageSet extends ApiQueryBase {
 		if(isset($remaining)) {
 			// Any items left in the $remaining list are added as missing
 			if($processTitles) {
-				// The remaining titles in $remaining are non-existant pages
+				// The remaining titles in $remaining are non-existent pages
 				foreach ($remaining as $ns => $dbkeys) {
 					foreach ( $dbkeys as $dbkey => $unused ) {
 						$title = Title :: makeTitle($ns, $dbkey);
@@ -438,7 +440,7 @@ class ApiPageSet extends ApiQueryBase {
 			else
 			{
 				// The remaining pageids do not exist
-				if(empty($this->mMissingPageIDs))
+				if(!$this->mMissingPageIDs)
 					$this->mMissingPageIDs = array_keys($remaining);
 				else
 					$this->mMissingPageIDs = array_merge($this->mMissingPageIDs, array_keys($remaining));
@@ -448,16 +450,16 @@ class ApiPageSet extends ApiQueryBase {
 
 	private function initFromRevIDs($revids) {
 
-		if(empty($revids))
+		if(!count($revids))
 			return;
 
 		$db = $this->getDB();
 		$pageids = array();
 		$remaining = array_flip($revids);
 
-		$tables = array('revision');
+		$tables = array('revision','page');
 		$fields = array('rev_id','rev_page');
-		$where = array('rev_deleted' => 0, 'rev_id' => $revids);
+		$where = array('rev_deleted' => 0, 'rev_id' => $revids,'rev_page = page_id');
 
 		// Get pageIDs data from the `page` table
 		$this->profileDBIn();
@@ -475,8 +477,6 @@ class ApiPageSet extends ApiQueryBase {
 		$this->mMissingRevIDs = array_keys($remaining);
 
 		// Populate all the page information
-		if($this->mResolveRedirects)
-			ApiBase :: dieDebug(__METHOD__, 'revids may not be used with redirect resolution');
 		$this->initFromPageIds(array_keys($pageids));
 	}
 
@@ -488,7 +488,7 @@ class ApiPageSet extends ApiQueryBase {
 
 			// Repeat until all redirects have been resolved
 			// The infinite loop is prevented by keeping all known pages in $this->mAllPages
-			while (!empty ($this->mPendingRedirectIDs)) {
+			while ($this->mPendingRedirectIDs) {
 
 				// Resolve redirects by querying the pagelinks table, and repeat the process
 				// Create a new linkBatch object for the next pass
@@ -537,7 +537,7 @@ class ApiPageSet extends ApiQueryBase {
 			$this->mRedirectTitles[$from] = $to;
 		}
 		$db->freeResult($res);
-		if(!empty($this->mPendingRedirectIDs))
+		if($this->mPendingRedirectIDs)
 		{
 			# We found pages that aren't in the redirect table
 			# Add them
@@ -580,16 +580,16 @@ class ApiPageSet extends ApiQueryBase {
 				continue; // There's nothing else we can do
 			}
 			$iw = $titleObj->getInterwiki();
-			if (!empty($iw)) {
+			if (strval($iw) !== '') {
 				// This title is an interwiki link.
 				$this->mInterwikiTitles[$titleObj->getPrefixedText()] = $iw;
 			} else {
 
 				// Validation
 				if ($titleObj->getNamespace() < 0)
-					$this->dieUsage("No support for special pages has been implemented", 'unsupportednamespace');
-
-				$linkBatch->addObj($titleObj);
+					$this->setWarning("No support for special pages has been implemented");
+				else
+					$linkBatch->addObj($titleObj);
 			}
 
 			// Make sure we remember the original title that was given to us
@@ -628,6 +628,6 @@ class ApiPageSet extends ApiQueryBase {
 	}
 
 	public function getVersion() {
-		return __CLASS__ . ': $Id: ApiPageSet.php 35098 2008-05-20 17:13:28Z ialex $';
+		return __CLASS__ . ': $Id: ApiPageSet.php 45275 2009-01-01 02:02:03Z simetrical $';
 	}
 }

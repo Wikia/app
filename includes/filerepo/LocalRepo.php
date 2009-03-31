@@ -94,7 +94,7 @@ class LocalRepo extends FSRepo {
 			'page_id',	//Field
 			array(	//Conditions
 				'page_namespace' => $title->getNamespace(),
-				'page_title' => $title->getDbKey(),
+				'page_title' => $title->getDBKey(),
 			),
 			__METHOD__	//Function name
 		);
@@ -108,7 +108,7 @@ class LocalRepo extends FSRepo {
 			$title = Title::newFromTitle( $title );
 		}
 		if( $title instanceof Title && $title->getNamespace() == NS_MEDIA ) {
-			$title = Title::makeTitle( NS_IMAGE, $title->getText() );
+			$title = Title::makeTitle( NS_FILE, $title->getText() );
 		}
 
 		$memcKey = $this->getMemcKey( "image_redirect:" . md5( $title->getPrefixedDBkey() ) );
@@ -164,8 +164,7 @@ class LocalRepo extends FSRepo {
 	/*
 	 * Find many files using one query
 	 */
-	function findFiles( $titles, $flags ) {
-		// FIXME: Comply with $flags
+	function findFiles( $titles ) {
 	 	// FIXME: Only accepts a $titles array where the keys are the sanitized
 	 	// file names.
 	 	 

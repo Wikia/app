@@ -99,7 +99,7 @@ $messages = array(
 'mytalk'         => 'Nguāi gì tō̤-lâung',
 'anontalk'       => 'Cī ciáh IP gì tō̤-lâung-hiĕk',
 'navigation'     => 'Īng-dô̤',
-'and'            => 'gâe̤ng',
+'and'            => '&#32;gâe̤ng',
 
 'returnto'         => 'Duōng kó̤ $1.',
 'tagline'          => 'Lài-nguòng: {{SITENAME}}',
@@ -211,7 +211,7 @@ Sō̤ kī só-gé̤ṳ-kó gì guāng-lī-uòng cūng-kuāng gāi-sék: $1',
 
 # Login and logout pages
 'logouttitle'                => 'Ê̤ṳng-hô láuk-chók',
-'logouttext'                 => "<strong>Nṳ̄ hiêng-câi láuk-chók lāu.</strong><br />
+'logouttext'                 => "'''Nṳ̄ hiêng-câi láuk-chók lāu.'''<br />
 Nṳ̄ â̤-sāi sāi mò̤-miàng huŏng-sék gié-sṳ̆k găk {{SITENAME}} gè̤-dēng láuk, nṳ̄ iâ â̤-sāi sāi dè̤ng-iông gì dióng-hô̤ hĕ̤k-ciā bĕk-nó̤h bĭk dióng-hô̤ gái láuk-diē. Diŏh gé lā̤, nṳ̄ báuk-lāng-ké ká̤-chṳ̄ (''browser cache'') nâ mò̤ tĕ̤ng táh gó̤ uâ, ô gì hiĕk giăng â̤ hiēng-sê nṳ̄ gó muôi láuk-chók.",
 'welcomecreation'            => '== Huăng-ngìng guŏng-lìng, $1! ==
 
@@ -221,7 +221,6 @@ Nṳ̄ gì dióng-hô̤ ī-gĭng kŭi hō̤ lāu. Dāng nṳ̄ â̤-sāi siŭ-g�
 'yourpassword'               => 'Mĭk-mā',
 'yourpasswordagain'          => 'Dṳ̀ng-sĭng páh diē mĭk-mā',
 'remembermypassword'         => 'Giéu cī gá diêng-nō̤ gé diâng nguāi gì dióng-hô̤ gâe̤ng mĭk-mā.',
-'loginproblem'               => '<b>Nṳ̄ láuk-diē chók ông-dà̤ lāu.</b><br />Gái ché siŏh â!',
 'login'                      => 'Láuk-diē',
 'loginprompt'                => 'Páh kŭi cookies ciáh â̤ diē {{SITENAME}}.',
 'userlogin'                  => 'Láuk-diē / kŭi dióng-hô̤',
@@ -259,6 +258,11 @@ Siŭ gáu hâiu, chiāng gái láuk diē siŏh làu.',
 'accountcreatedtext'         => '$1 gì ê̤ṳng-hô dióng-hô̤ ī-gĭng châung-gióng lāu.',
 'loginlanguagelabel'         => 'Ngṳ̄-ngiòng: $1',
 
+# Password reset dialog
+'oldpassword' => 'Gô mĭk-mā:',
+'newpassword' => 'Sĭng mĭk-mā:',
+'retypenew'   => 'Káuk-nêng sĭng mĭk-mā:',
+
 # Edit page toolbar
 'bold_sample'     => 'Chŭ-tā̤ ùng-cê',
 'bold_tip'        => 'Chŭ-tā̤ ùng-cê',
@@ -271,8 +275,8 @@ Siŭ gáu hâiu, chiāng gái láuk diē siŏh làu.',
 'media_tip'       => 'Mùi-tā̤ ùng-giông lièng-giék',
 
 # Edit pages
-'summary'                  => 'Cūng-giék',
-'subject'                  => 'Dà̤-mĕ̤k/biĕu-dà̤',
+'summary'                  => 'Cūng-giék:',
+'subject'                  => 'Dà̤-mĕ̤k/biĕu-dà̤:',
 'minoredit'                => 'Guó-éu siŭ-gāi',
 'watchthis'                => 'Gáng-sê ciā hiĕk',
 'savearticle'              => 'Bō̤-còng ciā hiĕk',
@@ -281,7 +285,7 @@ Siŭ gáu hâiu, chiāng gái láuk diē siŏh làu.',
 'showdiff'                 => 'Káng gāi-biéng gì buô-hông',
 'anoneditwarning'          => "'''GĪNG-GÓ̤:''' Nṳ̄ muôi láuk-diē.
 Nṳ̄ gì IP dê-cī â̤ ké̤ṳk gé diŏh ciā hiĕk-miêng siŭ-gāi lĭk-sṳ̄ diē-sié.",
-'summary-preview'          => 'Cūng-giék ché-káng',
+'summary-preview'          => 'Cūng-giék ché-káng:',
 'blockedtitle'             => 'Ê̤ṳng-hô ké̤ṳk hŭng-sō̤ lāu',
 'loginreqtitle'            => 'Chiāng sĕng láuk-diē',
 'loginreqlink'             => 'Láuk-diē',
@@ -293,18 +297,18 @@ Nṳ̄ gì IP dê-cī â̤ ké̤ṳk gé diŏh ciā hiĕk-miêng siŭ-gāi lĭk-
 'anontalkpagetext'         => "----''Cī tiŏng tō̤-lâung-hiĕk mò̤ gó-dêng gì dióng-hô̤, nâ ô 1 ciáh IP dê-cī. Chiāng cé̤ṳ-é: Kō̤-nèng ng-nié 1 ciáh nè̤ng sāi-ê̤ṳng cī ciáh IP dê-cī. Iŏk-sṳ̄ nṳ̄ gó muôi kŭi 1 ciáh dióng-hô̤ bêng-chiā giéng-gáe̤k ciā làu-uâ sê làu ké̤ṳk nṳ̄ gì, chiāng nṳ̄ [[Special:UserLogin|kŭi 1 ciáh dióng-hô̤ hĕ̤k-ciā láuk-diē]], cêu â̤ piáh-miēng ī-hâiu gái huák-sĕng cūng-kuāng ông-dà̤.''",
 'noarticletext'            => 'Ciā hiĕk-miêng gà̤-dēng mò̤ ùng-cê. Nṳ̄ â̤-sāi găk gì-tă hiĕk-miêng [[Special:Search̤/{{PAGENAME}}|sìng-tō̤ ĭ gì biĕu-dà̤]] hĕ̤k-ciā [{{fullurl:{{FULLPAGENAME}}|action=edit}} cê-gă siā].',
 'clearyourcache'           => "'''Cé̤ṳ-é:''' Bō̤-còng cĭ hâiu, kō̤-nèng diŏh tĕ̤ng táh báuk-lāng-ké gì ká̤-chṳ̄ ciáh â̤ káng-giéng diŏh gāi-biéng. '''Mozilla / Firefox / Safari:''' áik ''Reload'' sèng-âu áik diâng ''Shift'', hĕ̤k-ciā áik ''Ctrl-Shift-R'' (Apple Mac sê ''Cmd-Shift-R''); '''IE:''' áik ''Refresh'' sèng-âu áik diâng ''Ctrl'', hĕ̤k-ciā áik ''Ctrl-F5''; '''Konqueror:''' nâ sāi áik ''Reload'', hĕ̤k-ciā áik ''F5''; '''Opera''' ê̤ṳng-hô buóh tĕ̤ng táh ká̤-chṳ̄, chiāng sāi gă-sĭ ''Tools→Preferences''.",
-'previewnote'              => '<strong>Cé̤ṳ-é: Cuòi nâ sê ché káng ùng-cê gì iông-sék; nṳ̄ sū có̤ gì siŭ-gāi gó muôi bō̤-còng!</strong>',
+'previewnote'              => "'''Cé̤ṳ-é: Cuòi nâ sê ché káng ùng-cê gì iông-sék; nṳ̄ sū có̤ gì siŭ-gāi gó muôi bō̤-còng!'''",
 'editing'                  => 'Siŭ-gāi $1',
 'editingsection'           => 'Siŭ-gāi $1 (dâung)',
 'editingcomment'           => 'Siŭ-gāi $1 (pàng-lâung)',
 'editconflict'             => 'Siŭ-gāi dó̤i-chṳ̆ng: $1',
 'explainconflict'          => 'Bĕk-nè̤ng diŏh nṳ̄ tā-sĕng siŭ-gāi cī miêng hiĕk gì sèng-âu ô có̤ gì-tă siŭ-gāi. Gà̤-dēng gì bēng-bēng hiēng-sê gì sê hiêng-câi có̤i sĭng gì bēng-buōng. Nṳ̄ sū có̤ gì gāi-biéng găk â-dā̤ gì bēng-bēng diē-sié. Nṳ̄ sṳ̆-iéu găk gà̤-dēng gì bēng-bēng diē-sié cīng-hăk nṳ̄ lâng ciáh nè̤ng sū có̤ gì gāi-biéng. Iŏk-guō nṳ̄ dĭk-ciék áik "Bō̤-còng ciā hiĕk", <b>nâ ô</b> gà̤-dēng bēng-bēng diē-sié gì ùng-cê â̤ ké̤ṳk bō̤-còng.',
 'yourtext'                 => 'Nṳ̄ gì ùng-cê',
-'editingold'               => '<strong>GĪNG-GÓ̤: Nṳ̄ hiêng-câi lā̤ siŭ-gāi ciā hiĕk-miêng ī-gĭng guó-gĭ gì bēng-buōng. Nṳ̄ nâ bō̤-còng ĭ, cī ciáh gô bēng-buōng cĭ-hâiu gì siŭ-gāi cêu mò̤ lāu.</strong>',
+'editingold'               => "'''GĪNG-GÓ̤: Nṳ̄ hiêng-câi lā̤ siŭ-gāi ciā hiĕk-miêng ī-gĭng guó-gĭ gì bēng-buōng. Nṳ̄ nâ bō̤-còng ĭ, cī ciáh gô bēng-buōng cĭ-hâiu gì siŭ-gāi cêu mò̤ lāu.'''",
 'yourdiff'                 => 'Chă-biék',
-'longpagewarning'          => "<strong>Gīng-gó̤: Buōng hiĕk ô $1 chiĕng-cê-ciék (''kilobyte'') dòng; ô siŏh piĕ báuk-lāng-ké (''browser'') mò̤ nièng-ngài piĕng-cĭk 32 chiĕng-cê-ciék cō̤-êu hĕ̤k-ciā gă dòng gì hiĕk. Chiāng sṳ̆-liòng ciŏng ciā hiĕk tiáh có̤ gă dōi gì dâung.</strong>",
-'readonlywarning'          => '<strong>Gīng-gó̤: Ôi lāu mì-hô buōng câng, só-gé̤ṳ-kó ké̤ṳk sō̤ kī lāu, gó-chṳ̄ cī-lùng nṳ̄ mò̤ nièng-ngài bō̤-còng nṳ̄ gì siŭ-gāi. Chiāng sĕng bō̤-còng diŏh nṳ̄ diêng-nō̤ buōng-dê, dīng nék-gū mâing gái ché.</strong>',
-'protectedpagewarning'     => '<strong>GĪNG-GÓ̤: Ciā hiĕk ī-gĭng ké̤ṳk sō̤ kī go̤ lāu, nâ ô guāng-lī-uòng â̤ siŭ-gāi ĭ.</strong>',
+'longpagewarning'          => "'''Gīng-gó̤: Buōng hiĕk ô $1 chiĕng-cê-ciék (''kilobyte'') dòng; ô siŏh piĕ báuk-lāng-ké (''browser'') mò̤ nièng-ngài piĕng-cĭk 32 chiĕng-cê-ciék cō̤-êu hĕ̤k-ciā gă dòng gì hiĕk. Chiāng sṳ̆-liòng ciŏng ciā hiĕk tiáh có̤ gă dōi gì dâung.'''",
+'readonlywarning'          => "'''Gīng-gó̤: Ôi lāu mì-hô buōng câng, só-gé̤ṳ-kó ké̤ṳk sō̤ kī lāu, gó-chṳ̄ cī-lùng nṳ̄ mò̤ nièng-ngài bō̤-còng nṳ̄ gì siŭ-gāi. Chiāng sĕng bō̤-còng diŏh nṳ̄ diêng-nō̤ buōng-dê, dīng nék-gū mâing gái ché.'''",
+'protectedpagewarning'     => "'''GĪNG-GÓ̤: Ciā hiĕk ī-gĭng ké̤ṳk sō̤ kī go̤ lāu, nâ ô guāng-lī-uòng â̤ siŭ-gāi ĭ.'''",
 'semiprotectedpagewarning' => "'''Cé̤ṳ-é:''' Ciā hiĕk-miêng ī-gĭng ké̤ṳk bō̤-hô, gó-chṳ̄ nâ ô láuk-diē gì ê̤ṳng-hô â̤-sāi siŭ-gāi ĭ.",
 'templatesused'            => 'Ciā hiĕk gà̤-dēng gì muò-bēng:',
 'templatesusedpreview'     => 'Ciā ché-káng-hiĕk gà̤-dēng gì muò-bēng:',
@@ -364,6 +368,7 @@ Siók-mìng: (dāng) = gâe̤ng dék sĭng bēng-buōng bī-piâng, (sèng) = g�
 'prevn'                 => 'sèng $1 hâung',
 'nextn'                 => 'â $1 hâung',
 'viewprevnext'          => 'Káng ($1) ($2) ($3).',
+'searchhelp-url'        => 'Help:Mŭk-liŏh',
 'showingresults'        => "Hiēng-sê téng #<b>$2</b> kăi-sṳ̄ gì {{PLURAL:$1|'''1'''|'''$1'''}} bĭk giék-guō.",
 'showingresultsnum'     => "Hiēng-sê téng #<b>$2</b> kăi-sṳ̄ gì {{PLURAL:$3|'''1'''|'''$3'''}} bĭk giék-guō.",
 
@@ -385,9 +390,6 @@ Siók-mìng: (dāng) = gâe̤ng dék sĭng bēng-buōng bī-piâng, (sèng) = g�
 'prefs-misc'            => 'Gì-tă',
 'saveprefs'             => 'Bō̤-còng',
 'resetprefs'            => 'Dṳ̀ng-sĭng siék-diâng',
-'oldpassword'           => 'Gô mĭk-mā:',
-'newpassword'           => 'Sĭng mĭk-mā:',
-'retypenew'             => 'Káuk-nêng sĭng mĭk-mā:',
 'searchresultshead'     => 'Sìng-tō̤',
 'resultsperpage'        => 'Mūi hiĕk huōng-ông-liông:',
 'recentchangescount'    => 'Cī-bŏng gāi-biéng gì dà̤-mĕ̤k:',
@@ -453,7 +455,7 @@ Siók-mìng: (dāng) = gâe̤ng dék sĭng bēng-buōng bī-piâng, (sèng) = g�
 'uploadedfiles'     => 'Siông-duòng ùng-giông',
 'ignorewarning'     => 'Mò̤ sê̤ṳ gīng-gó̤ bō̤-còng ùng-giông.',
 'ignorewarnings'    => 'Mò̤ sê̤ṳ gīng-gó̤',
-'fileexists'        => 'Ī-gĭng ô siŏh bĭk dè̤ng miàng ùng-giông, nṳ̄ nâ mâ̤ káuk-dêng nṳ̄ sê-ng-sê dŏng-cĭng páh-sáung gāi-biéng ĭ, chiāng giēng-chă <strong><tt>$1</tt></strong>.',
+'fileexists'        => "Ī-gĭng ô siŏh bĭk dè̤ng miàng ùng-giông, nṳ̄ nâ mâ̤ káuk-dêng nṳ̄ sê-ng-sê dŏng-cĭng páh-sáung gāi-biéng ĭ, chiāng giēng-chă '''<tt>$1</tt>'''.",
 'successfulupload'  => 'Siông-diòng sìng-gŭng',
 'uploadwarning'     => 'Siông-duòng gīng-gó̤',
 'savefile'          => 'Bō̤-còng ùng-giông',
@@ -463,15 +465,15 @@ Siók-mìng: (dāng) = gâe̤ng dék sĭng bēng-buōng bī-piâng, (sèng) = g�
 'destfilename'      => 'Mŭk-biĕu ùng-giông-miàng:',
 'watchthisupload'   => 'Gáng-sê ciā hiĕk',
 
-# Special:ImageList
+# Special:ListFiles
 'imgfile'        => 'ùng-giông',
-'imagelist'      => 'Ùng-giông dăng-dăng',
-'imagelist_date' => 'Nĭk-gĭ',
-'imagelist_name' => 'Miàng',
-'imagelist_user' => 'Ê̤ṳng-hô',
-'imagelist_size' => 'Chióh-cháung',
+'listfiles'      => 'Ùng-giông dăng-dăng',
+'listfiles_date' => 'Nĭk-gĭ',
+'listfiles_name' => 'Miàng',
+'listfiles_user' => 'Ê̤ṳng-hô',
+'listfiles_size' => 'Chióh-cháung',
 
-# Image description page
+# File description page
 'imagelinks'                => 'Lièng-giék',
 'linkstoimage'              => 'Â-dā̤ gì hiĕk-miêng lièng gáu ciā ùng-giông:',
 'nolinkstoimage'            => 'Mò̤ hiĕk-miêng lièng gáu ciā ùng-giông.',
@@ -497,15 +499,8 @@ Siók-mìng: (dāng) = gâe̤ng dék sĭng bēng-buōng bī-piâng, (sèng) = g�
 'randomredirect' => 'Muōng káng dṳ̀ng-sĭng dêng-hióng',
 
 # Statistics
-'statistics'    => 'Só-gé̤ṳ',
-'sitestats'     => '{{SITENAME}} só-gé̤ṳ',
-'userstats'     => 'Ê̤ṳng-hô só-gé̤ṳ',
-'sitestatstext' => "Só-gé̤ṳ-kó diē-lié gê̤ṳng-cūng ô '''$1''' piĕng ùng-ciŏng. Bău-guăk tō̤-lâung-hiĕk, gâe̤ng {{SITENAME}} siŏng-guăng gì, muôi siā hō̤ gì, gâe̤ng gì-tă cék-liông mâ̤ gèng gì ùng-ciŏng. Nâ mò̤ sáung hī piĕ ùng-ciŏng, tūng-biáng ô '''$2''' piĕng hù-hăk biĕu-cūng gì ùng-ciŏng.
-
-'''$8''' bĭk ùng-giông ké̤ṳk siông-diòng.
-
-Téng buōng câng kiū siék gáu gĭng-dáng, ĭ ī-gĭng ké̤ṳk nè̤ng siŭ-gāi '''$4''' làu, bìng-gĭng siŏh piĕng ùng-ciŏng ké̤ṳk nè̤ng siŭ-gāi '''$5''' làu.",
-'userstatstext' => "Gê̤ṳng-cūng ô '''{{PLURAL:$1|1|$1}}''' ciáh cé̤ṳ-cháh ê̤ṳng-hô, gì-dṳ̆ng '''{{PLURAL:$1|1|$2}}$2''' ciáh ('''$4%''') sê $5.",
+'statistics'              => 'Só-gé̤ṳ',
+'statistics-header-users' => 'Ê̤ṳng-hô só-gé̤ṳ',
 
 'brokenredirects-edit'   => '(gāi)',
 'brokenredirects-delete' => '(chēng)',
@@ -567,6 +562,16 @@ Téng buōng câng kiū siék gáu gĭng-dáng, ĭ ī-gĭng ké̤ṳk nè̤ng si
 # Special:Categories
 'categories' => 'Lôi-biék',
 
+# Special:DeletedContributions
+'deletedcontributions' => 'Ké̤ṳk chēng lâi gì ê̤ṳng-hô góng-hióng',
+
+# Special:LinkSearch
+'linksearch-ok' => 'Sìng-tō̤',
+
+# Special:Log/newusers
+'newuserlogpage'          => 'Kŭi dióng-hô̤ nĭk-cé',
+'newuserlog-create-entry' => 'Sĭng ê̤ṳng-hô',
+
 # E-mail user
 'emailuser'       => 'Gié diêng-piĕ ké̤ṳk ĭ',
 'emailpage'       => 'Gié diêng-piĕ ké̤ṳk ĭ',
@@ -581,65 +586,66 @@ Téng buōng câng kiū siék gáu gĭng-dáng, ĭ ī-gĭng ké̤ṳk nè̤ng si
 'emailsenttext'   => 'Nṳ̄ gì diêng-piĕ siĕu-sék ī-gĭng gié chók lāu.',
 
 # Watchlist
-'watchlist'            => 'Nguāi gì gáng-sê-dăng',
-'mywatchlist'          => 'Nguāi gì gáng-sê-dăng',
-'watchlistfor'         => "('''$1''' gì)",
-'nowatchlist'          => 'Nṳ̄ gì gáng-sê-dăng gà̤-dēng mò̤ dèu-mĕ̤k.',
-'watchnologin'         => 'Mò̤ láuk diē',
-'addedwatch'           => 'Gă-tiĕng gáu gáng-sê-dăng',
-'addedwatchtext'       => "\"[[:\$1]]\" ī-gĭng gă-tiĕng gáu nṳ̄ gì [[Special:Watchlist|gáng-sê-dăng]] lāu. Â-nĭk, ciā hiĕk gâe̤ng ĭ tō̤-lâung hiĕk gì gāi-biéng cêu â̤ hiēng-sê diŏh hē̤-nē̤; bêng-chiā, nṳ̄ gáng-sê gì hiĕk găk \"[[Special:RecentChanges|Có̤i-gê̤ṳng gì gāi-biéng]]\" dăng-dăng gà̤-dēng gì cê-tā̤ â̤ có̤ '''chŭ-chŭ-nuóh'''.
+'watchlist'         => 'Nguāi gì gáng-sê-dăng',
+'mywatchlist'       => 'Nguāi gì gáng-sê-dăng',
+'watchlistfor'      => "('''$1''' gì)",
+'nowatchlist'       => 'Nṳ̄ gì gáng-sê-dăng gà̤-dēng mò̤ dèu-mĕ̤k.',
+'watchnologin'      => 'Mò̤ láuk diē',
+'addedwatch'        => 'Gă-tiĕng gáu gáng-sê-dăng',
+'addedwatchtext'    => "\"[[:\$1]]\" ī-gĭng gă-tiĕng gáu nṳ̄ gì [[Special:Watchlist|gáng-sê-dăng]] lāu. Â-nĭk, ciā hiĕk gâe̤ng ĭ tō̤-lâung hiĕk gì gāi-biéng cêu â̤ hiēng-sê diŏh hē̤-nē̤; bêng-chiā, nṳ̄ gáng-sê gì hiĕk găk \"[[Special:RecentChanges|Có̤i-gê̤ṳng gì gāi-biéng]]\" dăng-dăng gà̤-dēng gì cê-tā̤ â̤ có̤ '''chŭ-chŭ-nuóh'''.
 
 Iŏk-sṳ̄ nṳ̄ buóh-siōng téng nṳ̄ gáng-sê-dăng gà̤-dēng dṳ̀ lâi ciā hiĕk, áik kóng-cié-dèu (''sidebar'') siông gì \"ng-sāi gáng-sê\", cêu â̤-sāi lāu.",
-'removedwatch'         => 'Téng gáng-sê-dăng dṳ̀ lâi lāu',
-'removedwatchtext'     => '"[[:$1]]" hiĕk ī-gĭng téng nṳ̄ gì gáng-sê-dăng gà̤-dēng chēng lâi gó̤.',
-'watch'                => 'Gáng-sê',
-'watchthispage'        => 'Gáng-sê ciā hiĕk',
-'unwatch'              => 'Ng-sāi gáng-sê',
-'watchnochange'        => 'Nṳ̄ gì gáng-sê hiĕk-miêng cī-bŏng dŭ mò̤ nè̤ng dŭng.',
-'watchlist-details'    => '{{PLURAL:$1|$1|$1}} tiŏng hiĕk ké̤ṳk gáng-sê, mò̤ bău-guăk tō̤-lâung-hiĕk.',
-'wlshowlast'           => 'Hiēng-sê có̤i hâiu $1 dēng-cṳ̆ng $2 gĕ̤ng $3',
-'watchlist-show-bots'  => 'Hiēng-sê gĭ-ké-nè̤ng siŭ-gāi',
-'watchlist-hide-bots'  => 'Káung kī gĭ-ké-nè̤ng siŭ-gāi',
-'watchlist-show-own'   => 'Hiēng-sê nguāi gì siŭ-gāi',
-'watchlist-hide-own'   => 'Káung kī nguāi gì siŭ-gāi',
-'watchlist-hide-minor' => 'Káung kī guó-éu siŭ-gāi',
+'removedwatch'      => 'Téng gáng-sê-dăng dṳ̀ lâi lāu',
+'removedwatchtext'  => '"[[:$1]]" hiĕk ī-gĭng téng nṳ̄ gì gáng-sê-dăng gà̤-dēng chēng lâi gó̤.',
+'watch'             => 'Gáng-sê',
+'watchthispage'     => 'Gáng-sê ciā hiĕk',
+'unwatch'           => 'Ng-sāi gáng-sê',
+'watchnochange'     => 'Nṳ̄ gì gáng-sê hiĕk-miêng cī-bŏng dŭ mò̤ nè̤ng dŭng.',
+'watchlist-details' => '{{PLURAL:$1|$1|$1}} tiŏng hiĕk ké̤ṳk gáng-sê, mò̤ bău-guăk tō̤-lâung-hiĕk.',
+'wlshowlast'        => 'Hiēng-sê có̤i hâiu $1 dēng-cṳ̆ng $2 gĕ̤ng $3',
 
 # Displayed when you click the "watch" button and it is in the process of watching
 'watching' => 'Gáng-sê...',
 
 'enotif_newpagetext' => 'Cuòi sê sĭng hiĕk.',
 
-# Delete/protect/revert
-'deletepage'                  => 'Chēng hiĕk',
-'confirm'                     => 'Káuk-nêng',
-'excontent'                   => "nô̤i-ṳ̀ng sê: '$1'",
-'excontentauthor'             => "nô̤i-ṳ̀ng sê: '$1' (bêng-chiā cáuk-ciā nâ ô '[[Special:Contributions/$2|$2]]')",
-'exbeforeblank'               => "dù táh cĭ-sèng gì nô̤i-ṳ̀ng sê: '$1'",
-'historywarning'              => 'Gīng-gó̤: Nṳ̄ buóh-ái chēng lâi gì hiĕk-miêng ô lĭk-sṳ̄:',
-'confirmdeletetext'           => 'Nṳ̄ cūng-bê ciŏng ciā hiĕk-miêng hĕ̤k ùng-giông lièng ĭ găk só-gé̤ṳ-kó gì lĭk-sṳ̄ ciòng-buô chēng lâi. Chiāng nṳ̄ káuk-nêng: nṳ̄ dŏng-cĭng buóh siōng cūng-kuāng có̤, nṳ̄ liēu-gāi cūng-kuāng có̤ gì hâiu-guō, bêng-chiā nṳ̄ cūng-kuāng có̤ sê hù-hăk [[{{MediaWiki:Policy-url}}]].',
-'actioncomplete'              => 'Cék-hèng sìng-gŭng',
-'deletedtext'                 => '"<nowiki>$1</nowiki>" ī-gĭng ké̤ṳk chēng lâi go̤ lāu. Cī-bŏng chēng hiĕk gì gé-liŏh dŭ gé diŏh $2.',
-'deletedarticle'              => 'chēng lâi "[[$1]]"',
-'dellogpage'                  => 'Chēng hiĕk nĭk-cé',
-'dellogpagetext'              => 'Â-dā̤ sê gé-liŏh cī-bŏng chēng hiĕk gì dăng-dăng.',
-'deletionlog'                 => 'chēng hiĕk nĭk-cé',
-'deletecomment'               => 'Buóh chēng gì nguòng-ĭng',
-'rollback'                    => 'Gâe̤ng siŭ-gāi duōng kó̤',
-'rollback_short'              => 'Duōng',
-'rollbacklink'                => 'duōng',
-'rollbackfailed'              => 'Duōng mâ̤ kó̤',
-'cantrollback'                => 'Mò̤ bâing-huák huòi-tó̤i siŭ-gāi; sèng 1 ciáh góng-hióng-ciā sê ciā hiĕk mì-ék gì cáuk-ciā.',
-'alreadyrolled'               => 'Mò̤ nièng-ngài huòi-tó̤i [[User:$2|$2]] ([[User talk:$2|Tō̤-lâung]]) có̤i âu sū có̤ gì [[$1]] siŭ-gāi; bĕk-nè̤ng ī-gĭng siū-gái hĕ̤k-ciā huòi-tó̤i ciā hiĕk-miêng go̤ lāu.
+# Delete
+'deletepage'        => 'Chēng hiĕk',
+'confirm'           => 'Káuk-nêng',
+'excontent'         => "nô̤i-ṳ̀ng sê: '$1'",
+'excontentauthor'   => "nô̤i-ṳ̀ng sê: '$1' (bêng-chiā cáuk-ciā nâ ô '[[Special:Contributions/$2|$2]]')",
+'exbeforeblank'     => "dù táh cĭ-sèng gì nô̤i-ṳ̀ng sê: '$1'",
+'historywarning'    => 'Gīng-gó̤: Nṳ̄ buóh-ái chēng lâi gì hiĕk-miêng ô lĭk-sṳ̄:',
+'confirmdeletetext' => 'Nṳ̄ cūng-bê ciŏng ciā hiĕk-miêng hĕ̤k ùng-giông lièng ĭ găk só-gé̤ṳ-kó gì lĭk-sṳ̄ ciòng-buô chēng lâi. Chiāng nṳ̄ káuk-nêng: nṳ̄ dŏng-cĭng buóh siōng cūng-kuāng có̤, nṳ̄ liēu-gāi cūng-kuāng có̤ gì hâiu-guō, bêng-chiā nṳ̄ cūng-kuāng có̤ sê hù-hăk [[{{MediaWiki:Policy-url}}]].',
+'actioncomplete'    => 'Cék-hèng sìng-gŭng',
+'deletedtext'       => '"<nowiki>$1</nowiki>" ī-gĭng ké̤ṳk chēng lâi go̤ lāu. Cī-bŏng chēng hiĕk gì gé-liŏh dŭ gé diŏh $2.',
+'deletedarticle'    => 'chēng lâi "[[$1]]"',
+'dellogpage'        => 'Chēng hiĕk nĭk-cé',
+'dellogpagetext'    => 'Â-dā̤ sê gé-liŏh cī-bŏng chēng hiĕk gì dăng-dăng.',
+'deletionlog'       => 'chēng hiĕk nĭk-cé',
+'deletecomment'     => 'Buóh chēng gì nguòng-ĭng',
+
+# Rollback
+'rollback'       => 'Gâe̤ng siŭ-gāi duōng kó̤',
+'rollback_short' => 'Duōng',
+'rollbacklink'   => 'duōng',
+'rollbackfailed' => 'Duōng mâ̤ kó̤',
+'cantrollback'   => 'Mò̤ bâing-huák huòi-tó̤i siŭ-gāi; sèng 1 ciáh góng-hióng-ciā sê ciā hiĕk mì-ék gì cáuk-ciā.',
+'alreadyrolled'  => 'Mò̤ nièng-ngài huòi-tó̤i [[User:$2|$2]] ([[User talk:$2|Tō̤-lâung]]) có̤i âu sū có̤ gì [[$1]] siŭ-gāi; bĕk-nè̤ng ī-gĭng siū-gái hĕ̤k-ciā huòi-tó̤i ciā hiĕk-miêng go̤ lāu.
 
 Có̤i âu gì siŭ-gāi sê [[User:$3|$3]] ([[User talk:$3|Tō̤-lâung]]) sū có̤ gì.',
-'editcomment'                 => 'Siŭ-gāi pàng-lâung sê: "<i>$1</i>".', # only shown if there is an edit comment
-'revertpage'                  => '[[Special:Contributions/$2|$2]] ([[User talk:$2|Talk]]) sū có̤ gì siŭ-gāi duōng kó̤ [[User:$1|$1]] gì sèng 1 bĭk bēng-buōng', # Additional available: $3: revid of the revision reverted to, $4: timestamp of the revision reverted to, $5: revid of the revision reverted from, $6: timestamp of the revision reverted from
+'editcomment'    => "Siŭ-gāi pàng-lâung sê: \"''\$1''\".", # only shown if there is an edit comment
+'revertpage'     => '[[Special:Contributions/$2|$2]] ([[User talk:$2|Talk]]) sū có̤ gì siŭ-gāi duōng kó̤ [[User:$1|$1]] gì sèng 1 bĭk bēng-buōng', # Additionally available: $3: revid of the revision reverted to, $4: timestamp of the revision reverted to, $5: revid of the revision reverted from, $6: timestamp of the revision reverted from
+
+# Protect
 'protectlogpage'              => 'Bō̤-hô nĭk-cé',
 'protect-title'               => 'Bō̤-hô "$1"',
+'prot_1movedto2'              => '[[$1]] iè gáu [[$2]]',
 'protect-legend'              => 'Káuk-nêng bō̤-hô',
 'protectcomment'              => 'Bō̤-hô gì nguòng-ĭng',
 'protect-level-autoconfirmed' => 'Hŭng-sō̤ mò̤ cé̤ṳ-cháh ê̤ṳng-hô̤',
 'protect-level-sysop'         => 'Nâ guāng-lī-uòng',
+'protect-expiry-options'      => '2 dēng-cṳ̆ng:2 hours,1 gĕ̤ng:1 day,3 gĕ̤ng:3 days,1 lā̤-buái:1 week,2 lā̤-buái:2 weeks,1 month:1 nguŏk-nĭk,3 nguŏk-nĭk:3 months,6 nguŏk-nĭk:6 months,1 nièng:1 year,īng-uōng:infinite', # display1:time1,display2:time2,...
 'restriction-type'            => 'Guòng-âing:',
 'restriction-level'           => 'Âing-cié dēng-gék:',
 'minimum-size'                => 'Có̤i nâung chióh-cháung',
@@ -687,7 +693,6 @@ Có̤i âu gì siŭ-gāi sê [[User:$3|$3]] ([[User talk:$3|Tō̤-lâung]]) sū 
 # What links here
 'whatlinkshere'       => 'Diē-nē̤ lièng gáu cē̤-nē̤',
 'whatlinkshere-title' => 'Lièng gáu $1 gì hiĕk-miêng',
-'linklistsub'         => '(Lièng-giék dăng-dăng)',
 'linkshere'           => "Â-dā̤ gì hiĕk-miêng lièng gáu '''[[:$1]]''':",
 'nolinkshere'         => "Mò̤ hiĕk-miêng lièng gáu '''[[:$1]]'''.",
 'isredirect'          => 'dṳ̀ng-sĭng dêng-hióng hiĕk',
@@ -769,6 +774,8 @@ Cé̤ṳ-é, nâ ô găk sĭng dà̤-mĕ̤k gô-dā̤ mò̤ ùng-ciŏng (mò̤ b
 
 Nâ cūng-kuāng, nṳ̄ â̤-sāi cê-gă iè-dông hĕ̤k-ciā sê hăk-biáng hiĕk-miêng.",
 'movearticle'             => 'Iè-dông ùng-ciŏng',
+'movenologin'             => 'Muôi láuk-diē',
+'movenologintext'         => 'Sĕng [[Special:UserLogin|láuk-diē]] ciáh â̤-sāi iè-dông hiĕk-miêng.',
 'newtitle'                => 'Gáu sĭng dà̤-mĕ̤k',
 'move-watch'              => 'Gáng-sê ciā hiĕk',
 'movepagebtn'             => 'Iè-dông hiĕk-miêng',
@@ -813,7 +820,7 @@ Nâ cūng-kuāng, nṳ̄ â̤-sāi cê-gă iè-dông hĕ̤k-ciā sê hăk-biáng
 # Media information
 'file-nohires' => '<small>Cuòi sê có̤i duâi chióh-cháung.</small>',
 
-# Special:NewImages
+# Special:NewFiles
 'showhidebots' => '($1 gĭ-ké-nè̤ng)',
 'ilsubmit'     => 'Sìng-tō̤',
 'bydate'       => 'áng nĭk-gĭ',
@@ -858,14 +865,8 @@ Nâ-sāi ĭ *ng-sê* nṳ̄, chiāng mŏ̤h chák ĭ. Gáu $4, káuk-nêng-mā �
 'deletedwhileediting' => 'Gīng-gó̤: Cī miêng hiĕk găk nṳ̄ kī-chiū siŭ-gāi cĭ hâiu ké̤ṳk chēng lâi go̤ lāu!',
 'recreate'            => 'Dṳ̀ng-sĭng kŭi',
 
-# HTML dump
-'redirectingto' => 'Dṳ̀ng-sĭng dêng-hióng gáu [[:$1]]...',
-
 # action=purge
 'confirm_purge_button' => 'Hō̤',
-
-# AJAX search
-'hideresults' => 'Káung kī giék-guō',
 
 # Multipage image navigation
 'imgmultipageprev' => '← sèng 1 hiĕk',

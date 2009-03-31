@@ -4,6 +4,7 @@
  * @ingroup Language
  * @file
  *
+ * @author Jcwf
  * @author Jose77
  */
 
@@ -14,15 +15,15 @@ $messages = array(
 'tuesday'       => 'ULwesibini',
 'wednesday'     => 'ULwesithathu',
 'thursday'      => 'ULwesine',
-'friday'        => 'u Lwesihlanu',
+'friday'        => 'ULwesihlanu',
 'saturday'      => 'UMgqibelo',
 'january'       => 'EyoMqungu',
-'february'      => 'Eyo Mdumba',
-'march'         => 'Eyo Kwindla',
-'april'         => 'Ekatshazimpuzi',
-'june'          => 'Eyesilimela',
-'july'          => 'Eye Khala',
-'august'        => 'Eye Thupha',
+'february'      => 'EyoMdumba',
+'march'         => 'EyoKwindla',
+'april'         => 'EkaTshazimpuzi',
+'june'          => 'EyeSilimela',
+'july'          => 'EyeKhala',
+'august'        => 'EyeThupha',
 'september'     => 'Eyo Msintsi',
 'october'       => 'Eye Dwarha',
 'november'      => 'Eye Nkanga',
@@ -42,20 +43,21 @@ $messages = array(
 'may'           => 'EkaCanzibe',
 
 'article'        => 'Inqaku',
-'qbspecialpages' => 'Amaphepha',
+'qbspecialpages' => 'Amaphepha Abalulekileyo',
 'mypage'         => 'Inqaku yam',
 'mytalk'         => 'Inthetho yam',
 
-'help'           => 'Uncedo',
-'search'         => 'Khangela',
-'searchbutton'   => 'Khangela',
-'go'             => 'Hamba',
-'searcharticle'  => 'Hamba',
-'edit'           => 'Tshintsha',
-'delete'         => 'Cima',
-'protect'        => 'Khusela',
-'talk'           => 'Ingxoxo',
-'otherlanguages' => 'Kwezinye Ilwimi',
+'help'             => 'Uncedo',
+'search'           => 'Khangela',
+'searchbutton'     => 'Khangela',
+'go'               => 'Hamba',
+'searcharticle'    => 'Hamba',
+'edit'             => 'Tshintsha',
+'delete'           => 'Cima',
+'protect'          => 'Khusela',
+'talkpagelinktext' => 'Inthetho',
+'talk'             => 'Ingxoxo',
+'otherlanguages'   => 'Kwezinye Ilwimi',
 
 # All link text and link target definitions of links into project namespace that get used by other message strings, with the exception of user group pages (see grouppage) and the disambiguation template definition (see disambiguations).
 'currentevents'        => 'Imisebenzi Eyenzekayo',
@@ -87,7 +89,7 @@ I Account yakhgo ivuliwe, ungalibali ukutshitsha izinto ozithandayo ngo {{SITENA
 'loginlanguagelabel' => 'Ulwimi: $1',
 
 # Edit pages
-'summary'     => 'Isishwankathelo',
+'summary'     => 'Isishwankathelo:',
 'minoredit'   => 'Lutshitsho oluncinci olu',
 'watchthis'   => 'Bukela le Page',
 'savearticle' => 'Gcina eliphepha',
@@ -102,7 +104,8 @@ I Account yakhgo ivuliwe, ungalibali ukutshitsha izinto ozithandayo ngo {{SITENA
 'searchresultshead' => 'Khangela',
 
 # Recent changes
-'recentchanges' => 'Utshitsho olusandokwenziwa',
+'recentchanges'   => 'Utshitsho olusandokwenziwa',
+'minoreditletter' => 'nc',
 
 # Recent changes linked
 'recentchangeslinked' => 'Utsitsho olufana nolu',
@@ -118,12 +121,16 @@ I Account yakhgo ivuliwe, ungalibali ukutshitsha izinto ozithandayo ngo {{SITENA
 
 # Special:AllPages
 'allinnamespace' => 'Amanqaku onke ($1 namespace)',
+'allpagessubmit' => 'Hamba',
 
 # Watchlist
 'watchlist'     => 'Endizibukeleyo',
 'mywatchlist'   => 'Endizibukeleyo',
 'watch'         => 'Bukela',
 'watchthispage' => 'Bukela le Page',
+
+# Protect
+'prot_1movedto2' => '[[$1]] lidluliselwe [[$2]]',
 
 # Contributions
 'contributions' => 'Imisebenzi ye lungu',
@@ -141,7 +148,7 @@ I Account yakhgo ivuliwe, ungalibali ukutshitsha izinto ozithandayo ngo {{SITENA
 '1movedto2'        => '[[$1]] lidluliselwe [[$2]]',
 'movereason'       => 'Isizathu',
 
-# Special:NewImages
+# Special:NewFiles
 'ilsubmit' => 'Khangela',
 
 # Special:SpecialPages

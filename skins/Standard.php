@@ -33,40 +33,33 @@ class SkinStandard extends Skin {
 	/**
 	 *
 	 */
-	function getUserStyles() {
-		global $wgStylePath, $wgStyleVersion;
-		$s = '';
+	function setupSkinUserCss( OutputPage $out ){
 		if ( 3 == $this->qbSetting() ) { # Floating left
-			$s .= "<style type='text/css'>\n" .
-			  "@import '{$wgStylePath}/common/quickbar.css?$wgStyleVersion';\n</style>\n";
+			$out->addStyle( 'common/quickbar.css' );
 		} else if ( 4 == $this->qbSetting() ) { # Floating right
-			$s .= "<style type='text/css'>\n" .
-			  "@import '{$wgStylePath}/common/quickbar-right.css?$wgStyleVersion';\n</style>\n";
+			$out->addStyle( 'common/quickbar-right.css' );
 		}
-		$s .= parent::getUserStyles();
-		return $s;
+		parent::setupSkinUserCss( $out );
 	}
 
 	/**
 	 *
 	 */
-	function doGetUserStyles() {
-		global $wgStylePath;
-
-		$s = parent::doGetUserStyles();
+	function reallyGenerateUserStylesheet() {
+		$s = parent::reallyGenerateUserStylesheet();
 		$qb = $this->qbSetting();
 
 		if ( 2 == $qb ) { # Right
 			$s .= "#quickbar { position: absolute; top: 4px; right: 4px; " .
 			  "border-left: 2px solid #000000; }\n" .
-			  "#article { margin-left: 4px; margin-right: 152px; }\n";
+			  "#article, #mw-data-after-content { margin-left: 4px; margin-right: 152px; }\n";
 		} else if ( 1 == $qb || 3 == $qb ) {
 			$s .= "#quickbar { position: absolute; top: 4px; left: 4px; " .
 			  "border-right: 1px solid gray; }\n" .
-			  "#article { margin-left: 152px; margin-right: 4px; }\n";
+			  "#article, #mw-data-after-content { margin-left: 152px; margin-right: 4px; }\n";
 		} else if ( 4 == $qb) {
 			$s .= "#quickbar { border-right: 1px solid gray; }\n" .
-			  "#article { margin-right: 152px; margin-left: 4px; }\n";
+			  "#article, #mw-data-after-content { margin-right: 152px; margin-left: 4px; }\n";
 		}
 		return $s;
 	}
@@ -182,7 +175,7 @@ class SkinStandard extends Skin {
 						case NS_TALK:
 						case NS_USER_TALK:
 						case NS_PROJECT_TALK:
-						case NS_IMAGE_TALK:
+						case NS_FILE_TALK:
 						case NS_MEDIAWIKI_TALK:
 						case NS_TEMPLATE_TALK:
 						case NS_HELP_TALK:
@@ -198,7 +191,7 @@ class SkinStandard extends Skin {
 						case NS_PROJECT:
 							$text = wfMsg( 'projectpage' );
 							break;
-						case NS_IMAGE:
+						case NS_FILE:
 							$text = wfMsg( 'imagepage' );
 							break;
 						case NS_MEDIAWIKI:
@@ -273,7 +266,7 @@ class SkinStandard extends Skin {
 				$id=User::idFromName($wgTitle->getText());
 				$ip=User::isIP($wgTitle->getText());
 
-				if($id||$ip) {
+				if( $id || $ip ){
 					$s .= $sep . $this->userContribsLink();
 				}
 				if( $this->showEmailUser( $id ) ) {
@@ -286,8 +279,7 @@ class SkinStandard extends Skin {
 		if ( $wgUser->isLoggedIn() && ( $wgEnableUploads || $wgRemoteUploads ) ) {
 			$s .= $this->specialLink( 'upload' ) . $sep;
 		}
-		$s .= $this->specialLink( 'specialpages' )
-		  . $sep . $this->bugReportsLink();
+		$s .= $this->specialLink( 'specialpages' );
 
 		global $wgSiteSupportPage;
 		if( $wgSiteSupportPage ) {
@@ -302,5 +294,3 @@ class SkinStandard extends Skin {
 
 
 }
-
-

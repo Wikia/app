@@ -51,12 +51,12 @@ class map_sources {
 		global $wgOut;
 
 		/* No reason for robots to follow map links */
-		$wgOut->setRobotpolicy( 'noindex,nofollow' );
+		$wgOut->setRobotPolicy( 'noindex,nofollow' );
 
 		$wgOut->setPagetitle( $this->mapsources );
 		$wgOut->addWikiText( $this->build_output() );
 	}
-	
+
 	function build_output() {
 		global $wgOut, $wgUser, $wgContLang, $wgRequest;
 
@@ -89,7 +89,7 @@ class map_sources {
 				'landmark'  =>     10000  # 10 thousand
 				);
 
-				$attr['default'] = 
+				$attr['default'] =
 						$default_scale[$attr['type']];
 				# FIXME: Scale according to city size, if available
 			}
@@ -139,7 +139,7 @@ class map_sources {
 
 		/*
 		 *  MSN uses an altitude equivalent
-		 *  instead of a scale: 
+		 *  instead of a scale:
 		 *  143 == 1:1000000 scale
 		 */
 		$altitude = intval( $attr['scale'] * 143/1000000 );
@@ -226,7 +226,7 @@ class map_sources {
 		/*
 		 * Replace in page
 		 */
-		$search = array( 
+		$search = array(
 			"{latdegdec}", "{londegdec}",
 			"{londegneg}", "{latdegint}",
 			"{londegint}", "{latdegabs}",
@@ -289,5 +289,3 @@ class map_sources {
 		return str_replace( $search, $replace, $bstext );
 	}
 }
-
-

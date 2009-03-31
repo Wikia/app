@@ -15,7 +15,7 @@
  * @version 0.5
  *		changed algorithm to recoignize parameters
  * @version 0.6
- *		added a mechanism to save the called template´s raw text to a new article
+ *		added a mechanism to save the called template's raw text to a new article
  *				when doing this we replace symbols in the raw text which parameter names from our call by the values of these parameters
  *				Call/abc,saveAsPage=xyz,foo=bar
  *				will tale the raw text of "Template:Abc", replace all occurencies of 'foo' by 'bar' and save the result as a normal
@@ -55,12 +55,12 @@ class Call extends SpecialPage
 
        		$debug= !(strpos($wgRequest->getText('title'),'DebuG')===false);
        		if ($debug) {
-		        $wgOut->addHtml("<pre>\n");
+		        $wgOut->addHTML("<pre>\n");
 	       		foreach ($argkeys as $argKeyNr => $argKey) {
-			        $wgOut->addHtml("$argKeyNr:$argKey:");
-			        $wgOut->addHtml($wgRequest->getText($argKey)."\n",1);
+			        $wgOut->addHTML("$argKeyNr:$argKey:");
+			        $wgOut->addHTML($wgRequest->getText($argKey)."\n",1);
 	       		}
-		        $wgOut->addHtml("\npar=$par\nargTitle=$argTitle\nargCount=$argCount</pre>");
+		        $wgOut->addHTML("\npar=$par\nargTitle=$argTitle\nargCount=$argCount</pre>");
        		}
 
        		$wikitext=''; $n=0; $i=-1;
@@ -124,12 +124,12 @@ class Call extends SpecialPage
 
        		if ($wikitext=='' || $wikitext=='Special:Call' ) {
 				// Called without parameters: dump explanation
-	       		$wgOut->addHtml(wfMsg('call-text'));
+	       		$wgOut->addHTML(wfMsg('call-text'));
        		}
        		else if ($debug) {
 				// Called with DebuG target: dump parameter list
-		        $wgOut->addHtml("<pre>\n{{".$wikitext."}}\n</pre>");
-		        if ($saveAsPage!='') $wgOut->addHtml(wfMsg('call-save',$saveAsPageLink) );
+		        $wgOut->addHTML("<pre>\n{{".$wikitext."}}\n</pre>");
+		        if ($saveAsPage!='') $wgOut->addHTML(wfMsg('call-save',$saveAsPageLink) );
        		}
        		else {
 	       		$parm=array();
@@ -150,17 +150,17 @@ class Call extends SpecialPage
 			        if (!($saveAsTitle->exists())) {
 						$article = new Article($saveAsTitle);
 						$article->doEdit( $rawText, $saveAsPage, EDIT_NEW | EDIT_FORCE_BOT );
-				        $wgOut->addHtml($wgOut->parse(wfMsg('call-save-success' ,$saveAsPageLink) ) );
+				        $wgOut->addHTML($wgOut->parse(wfMsg('call-save-success' ,$saveAsPageLink) ) );
 					}
 					else {
-				        $wgOut->addHtml($wgOut->parse(wfMsg('call-save-failed',$saveAsPageLink) ) );
+				        $wgOut->addHTML($wgOut->parse(wfMsg('call-save-failed',$saveAsPageLink) ) );
 			        }
 			        // output the text we produced as a note to the user
-					$wgOut->addHtml("<pre>\n$rawText\n</pre>");
+					$wgOut->addHTML("<pre>\n$rawText\n</pre>");
 	       		}
 	       		else {
 		       		// call the template and produce output
-			        $wgOut->addHtml($wgOut->parse("{{".$wikitext."}}"));
+			        $wgOut->addHTML($wgOut->parse("{{".$wikitext."}}"));
 		        }
 	        }
 

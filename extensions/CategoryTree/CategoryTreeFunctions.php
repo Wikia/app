@@ -374,7 +374,7 @@ class CategoryTree {
 
 		if ( !$allowMissing && !$title->getArticleID() ) {
 			$html .= Xml::openElement( 'span', array( 'class' => 'CategoryTreeNotice' ) );
-			$html .= wfMsgExt( 'categorytree-not-found', 'parserinline', htmlspecialchars( $category ) );
+			$html .= wfMsgExt( 'categorytree-not-found', 'parseinline', htmlspecialchars( $category ) );
 			$html .= Xml::closeElement( 'span' );
 			}
 		else {
@@ -654,7 +654,7 @@ class CategoryTree {
 				else $count = $cat->getPageCount();
 			}
 	
-			$linkattr= array( 'href' => $wikiLink );
+			$linkattr= array( );
 			if ( $load ) $linkattr[ 'id' ] = $load;
 
 			$linkattr[ 'class' ] = "CategoryTreeToggle";
@@ -665,21 +665,22 @@ class CategoryTree {
 			}
 			else*/ 
 			if ( $children == 0 || $loadchildren ) {
-				$tag = 'a';
+				$tag = 'span';
 				if ( $count === 0 ) $txt = wfMsgNoTrans( 'categorytree-empty-bullet' );
 				else $txt = wfMsgNoTrans( 'categorytree-expand-bullet' );
-				$linkattr[ 'onclick' ] = "this.href='javascript:void(0)'; categoryTreeExpandNode('".Xml::escapeJsString($key)."',".$this->getOptionsAsJsStructure().",this);";
+				$linkattr[ 'onclick' ] = "if (this.href) this.href='javascript:void(0)'; categoryTreeExpandNode('".Xml::escapeJsString($key)."',".$this->getOptionsAsJsStructure().",this);";
 				# Don't load this message for ajax requests, so that we don't have to initialise $wgLang
 				$linkattr[ 'title' ] = $this->mIsAjaxRequest ? '##LOAD##' : wfMsgNoTrans('categorytree-expand');
 			}
 			else {
-				$tag = 'a';
+				$tag = 'span';
 				$txt = wfMsgNoTrans( 'categorytree-collapse-bullet' );
-				$linkattr[ 'onclick' ] = "this.href='javascript:void(0)'; categoryTreeCollapseNode('".Xml::escapeJsString($key)."',".$this->getOptionsAsJsStructure().",this);";
+				$linkattr[ 'onclick' ] = "if (this.href) this.href='javascript:void(0)'; categoryTreeCollapseNode('".Xml::escapeJsString($key)."',".$this->getOptionsAsJsStructure().",this);";
 				$linkattr[ 'title' ] = wfMsgNoTrans('categorytree-collapse');
 				$linkattr[ 'class' ] .= ' CategoryTreeLoaded';
 			}
 
+			if ( $tag == 'a' ) $linkattr[ 'href' ] = $wikiLink;
 			$s .= Xml::openElement( $tag, $linkattr ) . $txt . Xml::closeElement( $tag ) . ' ';
 		} else {
 			$s .= wfMsgNoTrans( 'categorytree-page-bullet' );
@@ -698,7 +699,15 @@ class CategoryTree {
 
 			if ($count) {
 				$s .= ' ';
-				$s .= Xml::element( 'span', $attr, wfMsgExt( 'categorytree-member-num', 'parsemag', $cat->getSubcatCount(), $pages , $cat->getFileCount(), $cat->getPageCount(), $count ) );
+				global $wgLang;
+				$s .= Xml::tags( 'span', $attr,
+					wfMsgExt( 'categorytree-member-num',
+						array( 'parsemag', 'escapenoentities' ),
+						$cat->getSubcatCount(),
+						$pages,
+						$cat->getFileCount(),
+						$cat->getPageCount(),
+						$wgLang->formatNum( $count ) ) );
 			}
 		}
 

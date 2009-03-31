@@ -4,6 +4,7 @@
  * @ingroup Language
  * @file
  *
+ * @author MF-Warburg
  * @author Malafaya
  * @author nov.wikipedia.org sysops
  */
@@ -63,7 +64,7 @@ $messages = array(
 'mytalk'         => 'Men parla-pagine',
 'anontalk'       => 'Parlo por disi IP',
 'navigation'     => 'Navigatione',
-'and'            => 'e',
+'and'            => '&#32;e',
 
 'returnto'         => 'Rivada a $1.',
 'tagline'          => 'Fro {{SITENAME}}',
@@ -82,6 +83,7 @@ $messages = array(
 'deletethispage'   => 'Ekarta disi pagine',
 'protect'          => 'Protekte',
 'protectthispage'  => 'Protekte disi pagine',
+'newpage'          => 'Novi pagine',
 'talkpage'         => 'Diskuse disi pagine',
 'talkpagelinktext' => 'Diskusione',
 'specialpage'      => 'Spesial Pagine',
@@ -123,7 +125,7 @@ $messages = array(
 # Short words for each namespace, by default used in the namespace tab in monobook
 'nstab-main'      => 'Artikle',
 'nstab-user'      => 'Useren pagine',
-'nstab-special'   => 'Spesial',
+'nstab-special'   => 'Spesial pagine',
 'nstab-project'   => 'Projetal pagine',
 'nstab-mediawiki' => 'Mesaje',
 'nstab-template'  => 'Shablone',
@@ -137,9 +139,9 @@ $messages = array(
 
 # Login and logout pages
 'logouttitle'                => 'Useren eksignato',
-'logouttext'                 => '<strong>Vu es nun eksignatat.</strong><br />
+'logouttext'                 => "'''Vu es nun eksignatat.'''<br />
 Vu pove kontinua usa {{SITENAME}} anonimim, o vu pove riensignata
-kom li sami o altri usere.',
+kom li sami o altri usere.",
 'loginpagetitle'             => 'Useren ensignato',
 'yourname'                   => 'Usere-nome:',
 'yourpassword'               => 'Pasa-vorde:',
@@ -166,7 +168,7 @@ kom li sami o altri usere.',
 'image_sample' => 'Exemple.jpg',
 
 # Edit pages
-'summary'               => 'Resume',
+'summary'               => 'Resume:',
 'minoredit'             => 'Dise es mikri modifiko',
 'watchthis'             => 'Observa disi pagine',
 'savearticle'           => 'Spara pagine',
@@ -193,6 +195,7 @@ Forsan lu ha bli ekarta fro li wiki, o rinomat.
 Proba [[Special:Search|sercho sur li wiki]] por relatet pagines.',
 
 # Diffs
+'lineno'                  => 'Linie $1:',
 'compareselectedversions' => 'Kompara selektet versiones',
 
 # Search results
@@ -203,6 +206,8 @@ Proba [[Special:Search|sercho sur li wiki]] por relatet pagines.',
 'prevn'                 => 'lasti $1',
 'nextn'                 => 'sekuenti $1',
 'viewprevnext'          => 'Vida ($1) ($2) ($3).',
+'searchhelp-url'        => 'Help:Kontenaje',
+'search-result-size'    => '$1 ({{PLURAL:$2|1 vorde|$2 vordes}})',
 'showingresults'        => "Montrant subu {{PLURAL:$1|'''1''' resulte|'''$1''' resultes}} amaxim komensant fro #'''$2'''.",
 'showingresultsnum'     => "Montrant subu {{PLURAL:$3|'''1''' result|'''$3''' results}} komensant fro #'''$2'''.",
 'powersearch'           => 'Sercha',
@@ -216,6 +221,7 @@ Proba [[Special:Search|sercho sur li wiki]] por relatet pagines.',
 'searchresultshead' => 'Sercha',
 
 # Recent changes
+'nchanges'        => '$1 {{PLURAL:$1|chanjo|chanjos}}',
 'recentchanges'   => 'Resenti chanjos',
 'rcnote'          => "Subu es {{PLURAL:$1| '''1''' chanje|li lasti '''$1''' chanjes}} in li lasti {{PLURAL:$2|die|'''$2''' dies}}, fro $3.",
 'rcshowhideminor' => '$1 minori modifikos',
@@ -225,6 +231,8 @@ Proba [[Special:Search|sercho sur li wiki]] por relatet pagines.',
 'hist'            => 'hist',
 'hide'            => 'Kasha',
 'show'            => 'Montra',
+'minoreditletter' => 'm',
+'newpageletter'   => 'N',
 
 # Recent changes linked
 'recentchangeslinked' => 'Afini chanjos',
@@ -236,14 +244,14 @@ Proba [[Special:Search|sercho sur li wiki]] por relatet pagines.',
 'fileuploadsummary' => 'Resume:',
 'watchthisupload'   => 'Observa disi pagine',
 
-# Special:ImageList
-'imagelist_search_for'  => 'Sercha imaje nome:',
-'imagelist_name'        => 'Nome',
-'imagelist_user'        => 'Usere',
-'imagelist_size'        => 'Grandeso (bites)',
-'imagelist_description' => 'Deskriptione',
+# Special:ListFiles
+'listfiles_search_for'  => 'Sercha imaje nome:',
+'listfiles_name'        => 'Nome',
+'listfiles_user'        => 'Usere',
+'listfiles_size'        => 'Grandeso (bites)',
+'listfiles_description' => 'Deskriptione',
 
-# Image description page
+# File description page
 'filehist-user' => 'Usere',
 'imagelinks'    => 'Linkes',
 
@@ -296,6 +304,9 @@ Proba [[Special:Search|sercho sur li wiki]] por relatet pagines.',
 'categories'         => 'Kategories',
 'categoriespagetext' => 'Li sekuenti kategories exista in li wiki.',
 
+# Special:LinkSearch
+'linksearch-ok' => 'Sercha',
+
 # Watchlist
 'watchlist'       => 'Men liste de observos',
 'mywatchlist'     => 'Men liste de observos',
@@ -314,18 +325,23 @@ Si vu voli plu tardim ekarta li pagine fro vun observa-liste, klikta \"Desobserv
 'changed'            => 'chanjati',
 'enotif_lastvisited' => 'Regarda $1 por vida omni chanjes depos vun lasti visite.',
 
-# Delete/protect/revert
-'confirm'             => 'Konfirma',
-'excontent'           => "kontenaje esed: '$1'",
-'excontentauthor'     => "kontenaje esed: '$1' (e li soli kontribuere esed '[[Special:Contributions/$2|$2]]')",
-'exblank'             => 'pagine esed vakui',
-'actioncomplete'      => 'Akto kompleti',
-'deletedarticle'      => 'ekartad "[[$1]]"',
-'dellogpage'          => 'Loge de ekartos',
-'dellogpagetext'      => 'Subu es liste del maxim resenti ekartos.',
-'deletionlog'         => 'registre de ekartos',
-'deletecomment'       => 'Resone de ekarto',
-'revertpage'          => 'Riverted modifikos da [[Special:Contributions/$2|$2]] ([[User talk:$2|Talk]]); restaurad lasti versione da [[User:$1|$1]]', # Additional available: $3: revid of the revision reverted to, $4: timestamp of the revision reverted to, $5: revid of the revision reverted from, $6: timestamp of the revision reverted from
+# Delete
+'confirm'         => 'Konfirma',
+'excontent'       => "kontenaje esed: '$1'",
+'excontentauthor' => "kontenaje esed: '$1' (e li soli kontribuere esed '[[Special:Contributions/$2|$2]]')",
+'exblank'         => 'pagine esed vakui',
+'actioncomplete'  => 'Akto kompleti',
+'deletedarticle'  => 'ekartad "[[$1]]"',
+'dellogpage'      => 'Loge de ekartos',
+'dellogpagetext'  => 'Subu es liste del maxim resenti ekartos.',
+'deletionlog'     => 'registre de ekartos',
+'deletecomment'   => 'Resone de ekarto',
+
+# Rollback
+'revertpage' => 'Riverted modifikos da [[Special:Contributions/$2|$2]] ([[User talk:$2|Talk]]); restaurad lasti versione da [[User:$1|$1]]', # Additionally available: $3: revid of the revision reverted to, $4: timestamp of the revision reverted to, $5: revid of the revision reverted from, $6: timestamp of the revision reverted from
+
+# Protect
+'prot_1movedto2'      => '[[$1]] movat a [[$2]]',
 'protect-legend'      => 'Konfirma protektione',
 'protect-level-sysop' => 'Sisopes nur',
 
@@ -341,19 +357,23 @@ Si vu voli plu tardim ekarta li pagine fro vun observa-liste, klikta \"Desobserv
 'sp-contributions-submit'  => 'Sercha',
 
 # What links here
-'whatlinkshere'      => 'Tum kel kupla hir',
-'whatlinkshere-page' => 'Pagine:',
+'whatlinkshere'       => 'Tum kel kupla hir',
+'whatlinkshere-page'  => 'Pagine:',
+'whatlinkshere-links' => '← linkes',
 
 # Block/unblock
+'ipbreason'    => 'Resone:',
 'badipaddress' => 'Non-valid IP adrese',
 'contribslink' => 'Kontributiones',
 
 # Move page
 'movearticle'             => 'Mova pagine',
+'movenologin'             => 'Non ensignatat',
 'move-watch'              => 'Observa disi pagine',
 'movedto'                 => 'movat a',
 '1movedto2'               => '[[$1]] movat a [[$2]]',
 '1movedto2_redir'         => '[[$1]] movat a [[$2]] via ri-adreso',
+'movereason'              => 'Resone:',
 'delete_and_move'         => 'Ekarta e mova',
 'delete_and_move_confirm' => 'Yes, ekarta li pagine',
 'delete_and_move_reason'  => 'Ekartat por fa spatie por movo',
@@ -367,7 +387,7 @@ Si vu voli plu tardim ekarta li pagine fro vun observa-liste, klikta \"Desobserv
 'allmessagesmodified' => 'Montra nur modifikates',
 
 # Tooltip help for the actions
-'tooltip-pt-mytalk'      => 'Men parla-pagine',
+'tooltip-pt-mytalk'      => 'Vun parla-pagine',
 'tooltip-pt-preferences' => 'Men preferos',
 'tooltip-pt-logout'      => 'Eksignata',
 'tooltip-p-logo'         => 'Chefi pagine',
@@ -375,7 +395,7 @@ Si vu voli plu tardim ekarta li pagine fro vun observa-liste, klikta \"Desobserv
 # Info page
 'infosubtitle' => 'Informatione pri pagine',
 
-# Special:NewImages
+# Special:NewFiles
 'ilsubmit' => 'Sercha',
 'bydate'   => 'segun date',
 
@@ -387,11 +407,6 @@ Si vu voli plu tardim ekarta li pagine fro vun observa-liste, klikta \"Desobserv
 
 # 'all' in various places, this might be different for inflected languages
 'imagelistall' => 'omnes',
-
-# AJAX search
-'searchcontaining' => "Sercha artikles kel kontena ''$1''.",
-'searchnamed'      => "Sercha artikles nomat ''$1''.",
-'articletitles'    => "Artikles kel starta kun ''$1''",
 
 # Auto-summaries
 'autosumm-replace' => "Remplasant pagine kun '$1'",

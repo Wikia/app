@@ -1,10 +1,9 @@
 <?php
 /**
- * @author Mahmoud Zouari  <mahmoudzouari@yahoo.fr> <http://www.cri.ensmp.fr>
- * @author Meno25
+ * @file
+ * @ingroup SMWLanguage
  */
-
-/**
+/*
  * Protect against register_globals vulnerabilities.
  * This line must be present before any global variable is referenced.
  */
@@ -13,7 +12,15 @@ if (!defined('MEDIAWIKI')) die();
 global $smwgIP;
 include_once($smwgIP . '/languages/SMW_Language.php');
 
-class SMW_LanguageAr extends SMW_Language {
+/**
+ * Arabic language labels for important SMW labels (namespaces, datatypes,...).
+ * 
+ * @author Mahmoud Zouari  mahmoudzouari@yahoo.fr http://www.cri.ensmp.fr
+ * @author Meno25
+ * @ingroup SMWLanguage
+ * @ingroup Language
+ */
+class SMWLanguageAr extends SMWLanguage {
 
 protected $m_DatatypeLabels = array(
 	'_wpg' => 'الصفحة', // name of page datatype
@@ -39,18 +46,18 @@ protected $m_DatatypeAliases = array(
 
 protected $m_SpecialProperties = array(
 	//always start upper-case
-	SMW_SP_HAS_TYPE  => 'لديه نوع',
-	SMW_SP_HAS_URI   => 'معرف الموارد الموحد معادلة',
-	SMW_SP_SUBPROPERTY_OF => 'الخاصية الفرعية ل',
-	SMW_SP_DISPLAY_UNITS => 'عرض الوحدات',
-	SMW_SP_IMPORTED_FROM => 'المستوردة من',
-	SMW_SP_CONVERSION_FACTOR => 'يقابل',
-	SMW_SP_SERVICE_LINK => 'يوفر الخدمة',
-	SMW_SP_POSSIBLE_VALUE => 'يسمح بالقيمة'
+	'_TYPE'  => 'لديه نوع',
+	'_URI'   => 'معرف الموارد الموحد معادلة',
+	'_SUBP' => 'الخاصية الفرعية ل',
+	'_UNIT' => 'عرض الوحدات',
+	'_IMPO' => 'المستوردة من',
+	'_CONV' => 'يقابل',
+	'_SERV' => 'يوفر الخدمة',
+	'_PVAL' => 'يسمح بالقيمة'
 );
 
 protected $m_SpecialPropertyAliases = array(
-	'عرض الوحدة' => SMW_SP_DISPLAY_UNITS
+	'عرض الوحدة' => '_UNIT'
 );
 
 protected $m_Namespaces = array(
@@ -63,6 +70,12 @@ protected $m_Namespaces = array(
 	SMW_NS_CONCEPT        => 'مبدأ',
 	SMW_NS_CONCEPT_TALK   => 'نقاش_المبدأ'
 );
+
+protected $m_dateformats = array(array(SMW_Y), array(SMW_MY,SMW_YM), array(SMW_MDY,SMW_DMY,SMW_YMD,SMW_YDM));
+
+protected $m_months = array("يناير", "فبراير", "مارس", "أبريل", "مايو", "يونيو", "يوليو", "أغسطس", "سبتمبر", "أكتوبر", "نوفمبر", "ديسمبر");
+
+protected $m_monthsshort = array("يناير", "فبراير", "مارس", "أبريل", "مايو", "يونيو", "يوليو", "أغسطس", "سبتمبر", "أكتوبر", "نوفمبر", "ديسمبر");
 
 }
 

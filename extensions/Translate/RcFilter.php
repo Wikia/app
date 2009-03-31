@@ -14,29 +14,29 @@ class TranslateRcFilter {
 		$namespaces = array();
 		foreach ( $wgTranslateMessageNamespaces as $index ) {
 			$namespaces[] = $index;
-			$namespaces[] = $index+1; // Talk too
+			$namespaces[] = $index + 1; // Talk too
 		}
 
 		if ( $translations === 'only' ) {
-			$conds[] = 'rc_namespace IN (' . $dbr->makeList($namespaces) . ')';
+			$conds[] = 'rc_namespace IN (' . $dbr->makeList( $namespaces ) . ')';
 			$conds[] = 'rc_title like \'%%/%%\'';
 		} elseif ( $translations === 'filter' ) {
-			$conds[] = 'rc_namespace NOT IN (' . $dbr->makeList($namespaces) . ')';
+			$conds[] = 'rc_namespace NOT IN (' . $dbr->makeList( $namespaces ) . ')';
 		} elseif ( $translations === 'site' ) {
-			$conds[] = 'rc_namespace IN (' . $dbr->makeList($namespaces) . ')';
+			$conds[] = 'rc_namespace IN (' . $dbr->makeList( $namespaces ) . ')';
 			$conds[] = 'rc_title not like \'%%/%%\'';
 		}
 		return true;
 	}
 
-	public static function translationFilterForm( &$items, &$opts ) {
+	public static function translationFilterForm( &$items, $opts ) {
 		global $wgRequest;
 		wfLoadExtensionMessages( 'Translate' );
 		$opts->consumeValue( 'translations' );
 		$default = $wgRequest->getVal( 'translations', '' );
 
 
-		$label = Xml::label( wfMsg( 'translate-rc-translation-filter'), 'mw-translation-filter' );
+		$label = Xml::label( wfMsg( 'translate-rc-translation-filter' ), 'mw-translation-filter' );
 		$select = new XmlSelect( 'translations', 'mw-translation-filter', $default );
 		$select->addOption( wfMsg( 'translate-rc-translation-filter-no' ), '' );
 		$select->addOption( wfMsg( 'translate-rc-translation-filter-only' ), 'only' );

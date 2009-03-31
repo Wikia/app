@@ -26,10 +26,21 @@
  * constructor
  */
 function wfSpecialLog( $par = '' ) {
-	global $wgRequest, $wgOut, $wgUser;
+	global $wgRequest, $wgOut, $wgUser, $wgLogTypes;
+
 	# Get parameters
-	$type = $wgRequest->getVal( 'type', $par );
-	$user = $wgRequest->getText( 'user' );
+	$parms = explode( '/', ($par = ( $par !== null ) ? $par : '' ) );
+	$symsForAll = array( '*', 'all' );
+	if ( $parms[0] != '' && ( in_array( $par, $wgLogTypes ) || in_array( $par, $symsForAll ) ) ) {
+		$type = $par;
+		$user = $wgRequest->getText( 'user' );
+	} else if ( count( $parms ) == 2 ) {
+		$type = $parms[0];
+		$user = $parms[1];
+	} else {
+		$type = $wgRequest->getVal( 'type' );
+		$user = ( $par != '' ) ? $par : $wgRequest->getText( 'user' );
+	}
 	$title = $wgRequest->getText( 'page' );
 	$pattern = $wgRequest->getBool( 'pattern' );
 	$y = $wgRequest->getIntOrNull( 'year' );
@@ -40,15 +51,14 @@ function wfSpecialLog( $par = '' ) {
 		$y = '';
 		$m = '';
 	}
-	# Create a LogPager item to get the results and a LogEventsList
-	# item to format them...
+	# Create a LogPager item to get the results and a LogEventsList item to format them...
 	$loglist = new LogEventsList( $wgUser->getSkin(), $wgOut, 0 );
 	$pager = new LogPager( $loglist, $type, $user, $title, $pattern, array(), $y, $m );
 	# Set title and add header
 	$loglist->showHeader( $pager->getType() );
 	# Show form options
 	$loglist->showOptions( $pager->getType(), $pager->getUser(), $pager->getPage(), $pager->getPattern(),
-		$pager->getYear(), $pager->getMonth() );
+		$pager->getYear(), $pager->getMonth(), $pager->getFilterParams() );
 	# Insert list
 	$logBody = $pager->getBody();
 	if( $logBody ) {

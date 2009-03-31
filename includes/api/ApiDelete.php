@@ -52,29 +52,36 @@ class ApiDelete extends ApiBase {
 		$this->getMain()->requestWriteMode();
 		$params = $this->extractRequestParams();
 
-		$titleObj = NULL;
-		if(!isset($params['title']))
-			$this->dieUsageMsg(array('missingparam', 'title'));
+		$this->requireOnlyOneParameter($params, 'title', 'pageid');
 		if(!isset($params['token']))
 			$this->dieUsageMsg(array('missingparam', 'token'));
 
-		$titleObj = Title::newFromText($params['title']);
-		if(!$titleObj)
-			$this->dieUsageMsg(array('invalidtitle', $params['title']));
+		if(isset($params['title']))
+		{
+			$titleObj = Title::newFromText($params['title']);
+			if(!$titleObj)
+				$this->dieUsageMsg(array('invalidtitle', $params['title']));
+		}
+		else if(isset($params['pageid']))
+		{
+			$titleObj = Title::newFromID($params['pageid']);
+			if(!$titleObj)
+				$this->dieUsageMsg(array('nosuchpageid', $params['pageid']));
+		}
 		if(!$titleObj->exists())
 			$this->dieUsageMsg(array('notanarticle'));
 
 		$reason = (isset($params['reason']) ? $params['reason'] : NULL);
-		if ($titleObj->getNamespace() == NS_IMAGE) {
-			$retval = self::deletefile($params['token'], $titleObj, $params['oldimage'], $reason, false);
-			if(!empty($retval))
+		if ($titleObj->getNamespace() == NS_FILE) {
+			$retval = self::deleteFile($params['token'], $titleObj, $params['oldimage'], $reason, false);
+			if(count($retval))
 				// We don't care about multiple errors, just report one of them
 				$this->dieUsageMsg(current($retval));
 		} else {
 			$articleObj = new Article($titleObj);
 			$retval = self::delete($articleObj, $params['token'], $reason);
 			
-			if(!empty($retval))
+			if(count($retval))
 				// We don't care about multiple errors, just report one of them
 				$this->dieUsageMsg(current($retval));
 			
@@ -90,8 +97,6 @@ class ApiDelete extends ApiBase {
 
 	private static function getPermissionsError(&$title, $token) {
 		global $wgUser;
-		// Check wiki readonly
-		if (wfReadOnly()) return array(array('readonlytext'));
 		
 		// Check permissions
 		$errors = $title->getUserPermissionsErrors('delete', $wgUser);
@@ -114,8 +119,8 @@ class ApiDelete extends ApiBase {
 	public static function delete(&$article, $token, &$reason = NULL)
 	{
 		global $wgUser;
-		
-		$errors = self::getPermissionsError($article->getTitle(), $token);
+		$title = $article->getTitle();
+		$errors = self::getPermissionsError($title, $token);
 		if (count($errors)) return $errors;
 
 		// Auto-generate a summary, if necessary
@@ -156,7 +161,8 @@ class ApiDelete extends ApiBase {
 			
 		if( !FileDeleteForm::haveDeletableFile($file, $oldfile, $oldimage) )
 			return array(array('nofile'));
-
+		if (is_null($reason)) # Log and RC don't like null reasons
+			$reason = '';
 		$status = FileDeleteForm::doDelete( $title, $file, $oldimage, $reason, $suppress );
 				
 		if( !$status->isGood() )
@@ -170,6 +176,9 @@ class ApiDelete extends ApiBase {
 	public function getAllowedParams() {
 		return array (
 			'title' => null,
+			'pageid' => array(
+				ApiBase::PARAM_TYPE => 'integer'
+			),
 			'token' => null,
 			'reason' => null,
 			'watch' => false,
@@ -180,7 +189,8 @@ class ApiDelete extends ApiBase {
 
 	public function getParamDescription() {
 		return array (
-			'title' => 'Title of the page you want to delete.',
+			'title' => 'Title of the page you want to delete. Cannot be used together with pageid',
+			'pageid' => 'Page ID of the page you want to delete. Cannot be used together with title',
 			'token' => 'A delete token previously retrieved through prop=info',
 			'reason' => 'Reason for the deletion. If not set, an automatically generated reason will be used.',
 			'watch' => 'Add the page to your watchlist',
@@ -191,7 +201,7 @@ class ApiDelete extends ApiBase {
 
 	public function getDescription() {
 		return array(
-			'Deletes a page. You need to be logged in as a sysop to use this function, see also action=login.'
+			'Delete a page.'
 		);
 	}
 
@@ -203,6 +213,6 @@ class ApiDelete extends ApiBase {
 	}
 
 	public function getVersion() {
-		return __CLASS__ . ': $Id: ApiDelete.php 35350 2008-05-26 12:15:21Z simetrical $';
+		return __CLASS__ . ': $Id: ApiDelete.php 44541 2008-12-13 21:07:18Z mrzman $';
 	}
 }

@@ -61,10 +61,11 @@ class ApiQueryAllimages extends ApiQueryGeneratorBase {
 		$params = $this->extractRequestParams();
 
 		// Image filters
-		if (!is_null($params['from']))
-			$this->addWhere('img_name>=' . $db->addQuotes($this->titleToKey($params['from'])));
+		$dir = ($params['dir'] == 'descending' ? 'older' : 'newer');
+		$from = (is_null($params['from']) ? null : $this->titlePartToKey($params['from']));
+		$this->addWhereRange('img_name', $dir, $from, null);
 		if (isset ($params['prefix']))
-			$this->addWhere("img_name LIKE '" . $db->escapeLike($this->titleToKey($params['prefix'])) . "%'");
+			$this->addWhere("img_name LIKE '" . $db->escapeLike($this->titlePartToKey($params['prefix'])) . "%'");
 
 		if (isset ($params['minsize'])) {
 			$this->addWhere('img_size>=' . intval($params['minsize']));
@@ -109,10 +110,10 @@ class ApiQueryAllimages extends ApiQueryGeneratorBase {
 
 			if (is_null($resultPageSet)) {
 				$file = $repo->newFileFromRow( $row );
-
-				$data[] = ApiQueryImageInfo::getInfo( $file, $prop, $result );
+				$data[] = array_merge(array('name' => $row->img_name),
+					ApiQueryImageInfo::getInfo($file, $prop, $result));
 			} else {
-				$data[] = Title::makeTitle( NS_IMAGE, $row->img_name );
+				$data[] = Title::makeTitle(NS_FILE, $row->img_name);
 			}
 		}
 		$db->freeResult($res);
@@ -162,7 +163,8 @@ class ApiQueryAllimages extends ApiQueryGeneratorBase {
 					'dimensions', // Obsolete
 					'mime',
 					'sha1',
-					'metadata'
+					'metadata',
+					'bitdepth',
 				),
 				ApiBase :: PARAM_DFLT => 'timestamp|url',
 				ApiBase :: PARAM_ISMULTI => true
@@ -200,6 +202,6 @@ class ApiQueryAllimages extends ApiQueryGeneratorBase {
 	}
 
 	public function getVersion() {
-		return __CLASS__ . ': $Id: ApiQueryAllimages.php 37909 2008-07-22 13:26:15Z catrope $';
+		return __CLASS__ . ': $Id: ApiQueryAllimages.php 44121 2008-12-01 17:14:30Z vyznev $';
 	}
 }

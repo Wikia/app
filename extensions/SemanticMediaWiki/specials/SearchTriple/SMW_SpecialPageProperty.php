@@ -1,16 +1,23 @@
 <?php
 /**
- * @author Denny Vrandecic
+ * @file
+ * @ingroup SMWSpecialPage
+ * @ingroup SpecialPage
  *
+ * Special page to show object relation pairs.
+ *
+ * @author Denny Vrandecic
+ */
+
+/**
  * This special page for Semantic MediaWiki implements a
  * view on a object-relation pair, i.e. a page that shows
  * all the fillers of a property for a certain page.
  * This is typically used for overflow results from other 
  * dynamic output pages.
- */
-
-/**
- * @note AUTOLOAD
+ *
+ * @ingroup SMWSpecialPage
+ * @ingroup SpecialPage
  */
 class SMWPageProperty extends SpecialPage {
 
@@ -19,16 +26,14 @@ class SMWPageProperty extends SpecialPage {
 	 */
 	public function __construct() {
 		parent::__construct('PageProperty', '', false);
-		//the key defining the group name in the language files is specialpages-group-smw_group
-		if (method_exists('SpecialPage', 'setGroup')) { 
-			parent::setGroup('PageProperty', 'smw_group');	
-		}
+		wfLoadExtensionMessages('SemanticMediaWiki');
 	}
 
-	public function execute($query = '') {
+	public function execute( $query ) {
 		global $wgRequest, $wgOut, $wgUser;
 
 		$skin = $wgUser->getSkin();
+		$this->setHeaders();
 
 		// get the GET parameters
 		$from = $wgRequest->getVal( 'from' );
@@ -44,9 +49,9 @@ class SMWPageProperty extends SpecialPage {
 		}
 		$subject = Title::newFromText( $from );
 		if (NULL != $subject) { $from = $subject->getText(); } else { $from = ''; }
-		$relation = Title::newFromText( $type, SMW_NS_PROPERTY );
-		if (NULL != $relation) {
-			$type = $relation->getText();
+		$property = SMWPropertyValue::makeUserProperty($type);
+		if ($property->isvalid()) {
+			$type = $property->getWikiValue();
 		} else {
 			$type = '';
 		}
@@ -58,16 +63,18 @@ class SMWPageProperty extends SpecialPage {
 		$html = '';
 		$spectitle = Title::makeTitle( NS_SPECIAL, 'PageProperty' );
 
+		wfLoadExtensionMessages('SemanticMediaWiki');
+
 		if (('' == $type) || ('' == $from)) { // No relation or subject given.
 			$html .= wfMsg('smw_pp_docu') . "\n";
 		} else { // everything is given
-			$wgOut->setPagetitle($subject->getFullText() . ' ' . $relation->getText());
+			$wgOut->setPagetitle($subject->getFullText() . ' ' . $property->getWikiValue());
 			$options = new SMWRequestOptions();
 			$options->limit = $limit+1;
 			$options->offset = $offset;
 			$options->sort = true;
 			// get results (get one more, to see if we have to add a link to more)
-			$results = &smwfGetStore()->getPropertyValues($subject, $relation, $options);
+			$results = &smwfGetStore()->getPropertyValues($subject, $property, $options);
 
 			// prepare navigation bar
 			if ($offset > 0)
@@ -113,6 +120,7 @@ class SMWPageProperty extends SpecialPage {
 		$html .= '<input type="submit" value="' . wfMsg('smw_pp_submit') . "\"/>\n</form>\n";
 
 		$wgOut->addHTML($html);
+		SMWOutputs::commitToOutputPage($wgOut); // make sure locally collected output data is pushed to the output!
 	}
 
 }

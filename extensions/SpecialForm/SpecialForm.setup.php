@@ -25,16 +25,13 @@ if (!defined('MEDIAWIKI')) {
 	exit( 1 );
 }
 
-define('SPECIALFORM_VERSION', '0.2');
+define('SPECIALFORM_VERSION', '0.4');
 
 $dir = dirname(__FILE__) . '/';
 $wgAutoloadClasses['SpecialForm'] = $dir . '/SpecialForm.body.php'; # Tell MediaWiki to load the extension body.
 $wgExtensionMessagesFiles['SpecialForm'] = $dir . 'SpecialForm.i18n.php'; #Load internationalization file
+$wgExtensionAliasesFiles['Form'] = $dir . 'SpecialForm.alias.php';
 $wgSpecialPages['Form'] = 'SpecialForm'; # Let MediaWiki know about your new special page.
-$wgHooks['LoadAllMessages'][] = 'SpecialForm::loadMessages'; # Load the internationalization messages for your special page.
-$wgHooks['LanguageGetSpecialPageAliases'][] = 'formLocalizedPageName'; # Add any aliases for the special page.
-# Typo in versions of MW earlier than 1.11.x (?)
-$wgHooks['LangugeGetSpecialPageAliases'][] = 'formLocalizedPageName'; # Add any aliases for the special page.
 
 $wgExtensionCredits['specialpage'][] = array(
 	'name' => 'Form',
@@ -45,14 +42,5 @@ $wgExtensionCredits['specialpage'][] = array(
 	'descriptionmsg' => 'form-desc',
 );
 
-function formLocalizedPageName(&$specialPageArray, $code) {
-	# The localized title of the special page is among the messages of the extension:
-	SpecialForm::loadMessages();
-	$text = wfMsgForContent('form');
-
-	# Convert from title in text form to DBKey and put it into the alias array:
-	$title = Title::newFromText($text);
-	$specialPageArray['Form'][] = $title->getDBkey();
-
-	return true;
-}
+# Use recaptcha; default to false
+$wgSpecialFormRecaptcha = false;

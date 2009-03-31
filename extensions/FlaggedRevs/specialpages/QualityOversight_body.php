@@ -3,13 +3,13 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 	echo "FlaggedRevs extension\n";
 	exit( 1 );
 }
-wfLoadExtensionMessages( 'FlaggedRevs' );
-wfLoadExtensionMessages( 'QualityOversight' );
 
 class QualityOversight extends SpecialPage
 {
     function __construct() {
         SpecialPage::SpecialPage( 'QualityOversight' );
+		wfLoadExtensionMessages( 'FlaggedRevs' );
+		wfLoadExtensionMessages( 'QualityOversight' );
     }
 
     function execute( $par ) {

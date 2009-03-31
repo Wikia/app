@@ -12,10 +12,18 @@ $messages = array();
  */
 $messages['en'] = array(
 	// user messages
-        'sc_previousmonth' => 'Previous month',
-        'sc_nextmonth'     => 'Next month',
+	'sc_desc'          => 'A calendar that displays semantic date information',
+	'sc_previousmonth' => 'Previous month',
+	'sc_nextmonth'     => 'Next month',
 	'sc_today'         => 'Today',
 	'sc_gotomonth'     => 'Go to month',
+);
+
+/** Message documentation (Message documentation)
+ * @author Purodha
+ */
+$messages['qqq'] = array(
+	'sc_desc' => 'Short description of this extension, shown in [[Special:Version]]. Do not translate or change links.',
 );
 
 /** Afrikaans (Afrikaans)
@@ -29,10 +37,22 @@ $messages['af'] = array(
  * @author Meno25
  */
 $messages['ar'] = array(
+	'sc_desc' => 'نتيجة تعرض معلومات تاريخ سيمانتيك',
 	'sc_previousmonth' => 'الشهر السابق',
-	'sc_nextmonth'     => 'الشهر التالي',
-	'sc_today'         => 'اليوم',
-	'sc_gotomonth'     => 'اذهب إلى شهر',
+	'sc_nextmonth' => 'الشهر التالي',
+	'sc_today' => 'اليوم',
+	'sc_gotomonth' => 'اذهب إلى شهر',
+);
+
+/** Egyptian Spoken Arabic (مصرى)
+ * @author Meno25
+ */
+$messages['arz'] = array(
+	'sc_desc' => 'نتيجة تعرض معلومات تاريخ سيمانتيك',
+	'sc_previousmonth' => 'الشهر السابق',
+	'sc_nextmonth' => 'الشهر التالي',
+	'sc_today' => 'اليوم',
+	'sc_gotomonth' => 'اذهب إلى شهر',
 );
 
 /** Bulgarian (Български)
@@ -40,8 +60,8 @@ $messages['ar'] = array(
  */
 $messages['bg'] = array(
 	'sc_previousmonth' => 'Предходен месец',
-	'sc_nextmonth'     => 'Следващ месец',
-	'sc_today'         => 'Днес',
+	'sc_nextmonth' => 'Следващ месец',
+	'sc_today' => 'Днес',
 );
 
 /** Breton (Brezhoneg)
@@ -49,9 +69,9 @@ $messages['bg'] = array(
  */
 $messages['br'] = array(
 	'sc_previousmonth' => 'Miz a-raok',
-	'sc_nextmonth'     => 'Miz a zeu',
-	'sc_today'         => 'Hiziv',
-	'sc_gotomonth'     => "Mont d'ar miz",
+	'sc_nextmonth' => 'Miz a zeu',
+	'sc_today' => 'Hiziv',
+	'sc_gotomonth' => "Mont d'ar miz",
 );
 
 /** German (Deutsch)
@@ -59,9 +79,9 @@ $messages['br'] = array(
  */
 $messages['de'] = array(
 	'sc_previousmonth' => 'Voriger Monat',
-	'sc_nextmonth'     => 'Nächster Monat',
-	'sc_today'         => 'Heute',
-	'sc_gotomonth'     => 'Gehe zu Monat',
+	'sc_nextmonth' => 'Nächster Monat',
+	'sc_today' => 'Heute',
+	'sc_gotomonth' => 'Gehe zu Monat',
 );
 
 /** Greek (Ελληνικά)
@@ -69,8 +89,8 @@ $messages['de'] = array(
  */
 $messages['el'] = array(
 	'sc_previousmonth' => 'Προηγούμενος μήνας',
-	'sc_nextmonth'     => 'Επόμενος μήνας',
-	'sc_today'         => 'Σήμερα',
+	'sc_nextmonth' => 'Επόμενος μήνας',
+	'sc_today' => 'Σήμερα',
 );
 
 /** Esperanto (Esperanto)
@@ -78,9 +98,9 @@ $messages['el'] = array(
  */
 $messages['eo'] = array(
 	'sc_previousmonth' => 'Antaŭa monato',
-	'sc_nextmonth'     => 'Posta monato',
-	'sc_today'         => 'Hodiaŭ',
-	'sc_gotomonth'     => 'Iru al monato',
+	'sc_nextmonth' => 'Posta monato',
+	'sc_today' => 'Hodiaŭ',
+	'sc_gotomonth' => 'Iru al monato',
 );
 
 /** Persian (فارسی)
@@ -88,9 +108,9 @@ $messages['eo'] = array(
  */
 $messages['fa'] = array(
 	'sc_previousmonth' => 'ماه گذشته',
-	'sc_nextmonth'     => 'ماه آینده',
-	'sc_today'         => 'امروز',
-	'sc_gotomonth'     => 'برو به ماه',
+	'sc_nextmonth' => 'ماه آینده',
+	'sc_today' => 'امروز',
+	'sc_gotomonth' => 'برو به ماه',
 );
 
 /** French (Français)
@@ -98,20 +118,30 @@ $messages['fa'] = array(
  * @author Urhixidur
  */
 $messages['fr'] = array(
+	'sc_desc' => 'Un calendrier qui affiche les informations de date sémantique',
 	'sc_previousmonth' => 'Mois précédent',
-	'sc_nextmonth'     => 'Mois suivant',
-	'sc_today'         => "Aujourd'hui",
-	'sc_gotomonth'     => 'Aller vers le mois',
+	'sc_nextmonth' => 'Mois suivant',
+	'sc_today' => "Aujourd'hui",
+	'sc_gotomonth' => 'Aller vers le mois',
 );
 
 /** Galician (Galego)
  * @author Alma
+ * @author Toliño
  */
 $messages['gl'] = array(
+	'sc_desc' => 'Un calendario que amosa datos da información semántica',
 	'sc_previousmonth' => 'Mes anterior',
-	'sc_nextmonth'     => 'Mes seguinte',
-	'sc_today'         => 'Hoxe',
-	'sc_gotomonth'     => 'Ir ao mes',
+	'sc_nextmonth' => 'Mes seguinte',
+	'sc_today' => 'Hoxe',
+	'sc_gotomonth' => 'Ir ao mes',
+);
+
+/** Ancient Greek (Ἀρχαία ἑλληνικὴ)
+ * @author Omnipaedista
+ */
+$messages['grc'] = array(
+	'sc_today' => 'Σήμερον',
 );
 
 /** Manx (Gaelg)
@@ -119,18 +149,20 @@ $messages['gl'] = array(
  */
 $messages['gv'] = array(
 	'sc_previousmonth' => 'Yn mee roish shen',
-	'sc_nextmonth'     => 'Yn chied mee elley',
-	'sc_today'         => 'Jiu',
+	'sc_nextmonth' => 'Yn chied mee elley',
+	'sc_today' => 'Jiu',
 );
 
 /** Hebrew (עברית)
  * @author StuB
+ * @author YaronSh
  */
 $messages['he'] = array(
+	'sc_desc' => 'לוח שנה המציג נתונים סמנטיים אודות התאריך',
 	'sc_previousmonth' => 'החודש הקודם',
-	'sc_nextmonth'     => 'החודש הבא',
-	'sc_today'         => 'היום',
-	'sc_gotomonth'     => 'מעבר לחודש',
+	'sc_nextmonth' => 'החודש הבא',
+	'sc_today' => 'היום',
+	'sc_gotomonth' => 'מעבר לחודש',
 );
 
 /** Hindi (हिन्दी)
@@ -138,9 +170,9 @@ $messages['he'] = array(
  */
 $messages['hi'] = array(
 	'sc_previousmonth' => 'पिछला महिना',
-	'sc_nextmonth'     => 'अगला महिना',
-	'sc_today'         => 'आज़',
-	'sc_gotomonth'     => 'महिनेपर चलें',
+	'sc_nextmonth' => 'अगला महिना',
+	'sc_today' => 'आज़',
+	'sc_gotomonth' => 'महिनेपर चलें',
 );
 
 /** Upper Sorbian (Hornjoserbsce)
@@ -148,9 +180,9 @@ $messages['hi'] = array(
  */
 $messages['hsb'] = array(
 	'sc_previousmonth' => 'Předchadny měsac',
-	'sc_nextmonth'     => 'Přichodny měsac',
-	'sc_today'         => 'Dźensa',
-	'sc_gotomonth'     => 'Dźi k měsacej',
+	'sc_nextmonth' => 'Přichodny měsac',
+	'sc_today' => 'Dźensa',
+	'sc_gotomonth' => 'Dźi k měsacej',
 );
 
 /** Hungarian (Magyar)
@@ -158,7 +190,28 @@ $messages['hsb'] = array(
  */
 $messages['hu'] = array(
 	'sc_previousmonth' => 'Előző hónap',
-	'sc_nextmonth'     => 'Következő hónap',
+	'sc_nextmonth' => 'Következő hónap',
+);
+
+/** Interlingua (Interlingua)
+ * @author McDutchie
+ */
+$messages['ia'] = array(
+	'sc_desc' => 'Un calendario que monstra informationes de data semantic',
+	'sc_previousmonth' => 'Mense precedente',
+	'sc_nextmonth' => 'Mense sequente',
+	'sc_today' => 'Hodie',
+	'sc_gotomonth' => 'Ir al mense',
+);
+
+/** Italian (Italiano)
+ * @author Darth Kule
+ */
+$messages['it'] = array(
+	'sc_previousmonth' => 'Mese precedente',
+	'sc_nextmonth' => 'Mese successivo',
+	'sc_today' => 'Oggi',
+	'sc_gotomonth' => 'Vai al mese',
 );
 
 /** Japanese (日本語)
@@ -166,9 +219,9 @@ $messages['hu'] = array(
  */
 $messages['ja'] = array(
 	'sc_previousmonth' => '前の月',
-	'sc_nextmonth'     => '次の月',
-	'sc_today'         => '今日',
-	'sc_gotomonth'     => 'この月を表示',
+	'sc_nextmonth' => '次の月',
+	'sc_today' => '今日',
+	'sc_gotomonth' => 'この月を表示',
 );
 
 /** Javanese (Basa Jawa)
@@ -176,9 +229,9 @@ $messages['ja'] = array(
  */
 $messages['jv'] = array(
 	'sc_previousmonth' => 'Sasi sadurungé',
-	'sc_nextmonth'     => 'Sasi sabanjuré',
-	'sc_today'         => 'Dina iki',
-	'sc_gotomonth'     => 'Tumuju menyang sasi',
+	'sc_nextmonth' => 'Sasi sabanjuré',
+	'sc_today' => 'Dina iki',
+	'sc_gotomonth' => 'Tumuju menyang sasi',
 );
 
 /** Khmer (ភាសាខ្មែរ)
@@ -187,9 +240,17 @@ $messages['jv'] = array(
  */
 $messages['km'] = array(
 	'sc_previousmonth' => 'ខែមុន',
-	'sc_nextmonth'     => 'ខែបន្ទាប់',
-	'sc_today'         => 'ថ្ងៃនេះ',
-	'sc_gotomonth'     => 'ទៅកាន់ខែ',
+	'sc_nextmonth' => 'ខែបន្ទាប់',
+	'sc_today' => 'ថ្ងៃនេះ',
+	'sc_gotomonth' => 'ទៅកាន់ខែ',
+);
+
+/** Ripoarisch (Ripoarisch)
+ * @author Purodha
+ */
+$messages['ksh'] = array(
+	'sc_desc' => 'Ene Kalländer, dä semantesche Dattums-Enfommazjuhne aanzeisch.',
+	'sc_today' => 'Hück',
 );
 
 /** Luxembourgish (Lëtzebuergesch)
@@ -197,9 +258,9 @@ $messages['km'] = array(
  */
 $messages['lb'] = array(
 	'sc_previousmonth' => 'Mount virdrun',
-	'sc_nextmonth'     => 'Nächste Mount',
-	'sc_today'         => 'Haut',
-	'sc_gotomonth'     => 'Géi op de Mount',
+	'sc_nextmonth' => 'Nächste Mount',
+	'sc_today' => 'Haut',
+	'sc_gotomonth' => 'Géi op de Mount',
 );
 
 /** Lithuanian (Lietuvių)
@@ -207,9 +268,9 @@ $messages['lb'] = array(
  */
 $messages['lt'] = array(
 	'sc_previousmonth' => 'Praeitas mėnuo',
-	'sc_nextmonth'     => 'Ateinantis mėnuo',
-	'sc_today'         => 'Šiandien',
-	'sc_gotomonth'     => 'Eiti į mėnesį',
+	'sc_nextmonth' => 'Ateinantis mėnuo',
+	'sc_today' => 'Šiandien',
+	'sc_gotomonth' => 'Eiti į mėnesį',
 );
 
 /** Malayalam (മലയാളം)
@@ -217,9 +278,9 @@ $messages['lt'] = array(
  */
 $messages['ml'] = array(
 	'sc_previousmonth' => 'കഴിഞ്ഞ മാസം',
-	'sc_nextmonth'     => 'അടുത്ത മാസം',
-	'sc_today'         => 'ഇന്ന്',
-	'sc_gotomonth'     => 'മാസത്തിലേക്ക് പോവുക',
+	'sc_nextmonth' => 'അടുത്ത മാസം',
+	'sc_today' => 'ഇന്ന്',
+	'sc_gotomonth' => 'മാസത്തിലേക്ക് പോവുക',
 );
 
 /** Marathi (मराठी)
@@ -227,20 +288,30 @@ $messages['ml'] = array(
  */
 $messages['mr'] = array(
 	'sc_previousmonth' => 'मागचा महीना',
-	'sc_nextmonth'     => 'पुढचा महीना',
-	'sc_today'         => 'आज',
-	'sc_gotomonth'     => 'महीन्याकडे चला',
+	'sc_nextmonth' => 'पुढचा महीना',
+	'sc_today' => 'आज',
+	'sc_gotomonth' => 'महीन्याकडे चला',
+);
+
+/** Erzya (Эрзянь)
+ * @author Botuzhaleny-sodamo
+ */
+$messages['myv'] = array(
+	'sc_previousmonth' => 'Йутазь ковсто',
+	'sc_nextmonth' => 'Сы ковсто',
+	'sc_today' => 'Течи',
 );
 
 /** Dutch (Nederlands)
- * @author Siebrand
  * @author GerardM
+ * @author Siebrand
  */
 $messages['nl'] = array(
+	'sc_desc' => 'Een kalender die semantische datuminformatie weergeeft',
 	'sc_previousmonth' => 'Vorige maand',
-	'sc_nextmonth'     => 'Volgende maand',
-	'sc_today'         => 'Vandaag',
-	'sc_gotomonth'     => 'Ga naar maand',
+	'sc_nextmonth' => 'Volgende maand',
+	'sc_today' => 'Vandaag',
+	'sc_gotomonth' => 'Ga naar maand',
 );
 
 /** Norwegian Nynorsk (‪Norsk (nynorsk)‬)
@@ -248,29 +319,31 @@ $messages['nl'] = array(
  */
 $messages['nn'] = array(
 	'sc_previousmonth' => 'Førre månad',
-	'sc_nextmonth'     => 'Neste månad',
-	'sc_today'         => 'I dag',
-	'sc_gotomonth'     => 'Gå til månad',
+	'sc_nextmonth' => 'Neste månad',
+	'sc_today' => 'I dag',
+	'sc_gotomonth' => 'Gå til månad',
 );
 
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
  * @author Jon Harald Søby
  */
 $messages['no'] = array(
+	'sc_desc' => 'En kalender som viser semantisk datoinformasjon',
 	'sc_previousmonth' => 'Forrige måned',
-	'sc_nextmonth'     => 'Neste måned',
-	'sc_today'         => 'I dag',
-	'sc_gotomonth'     => 'Gå til måned',
+	'sc_nextmonth' => 'Neste måned',
+	'sc_today' => 'I dag',
+	'sc_gotomonth' => 'Gå til måned',
 );
 
 /** Occitan (Occitan)
  * @author Cedric31
  */
 $messages['oc'] = array(
+	'sc_desc' => "Un calendièr qu'aficha las entresenhas de data semantica",
 	'sc_previousmonth' => 'Mes precedent',
-	'sc_nextmonth'     => 'Mes seguent',
-	'sc_today'         => 'Uèi',
-	'sc_gotomonth'     => 'Anar vèrs lo mes',
+	'sc_nextmonth' => 'Mes seguent',
+	'sc_today' => 'Uèi',
+	'sc_gotomonth' => 'Anar cap al mes',
 );
 
 /** Polish (Polski)
@@ -278,9 +351,9 @@ $messages['oc'] = array(
  */
 $messages['pl'] = array(
 	'sc_previousmonth' => 'Poprzedni miesiąc',
-	'sc_nextmonth'     => 'Następny miesiąc',
-	'sc_today'         => 'Dzisiaj',
-	'sc_gotomonth'     => 'Idź do miesiąca',
+	'sc_nextmonth' => 'Następny miesiąc',
+	'sc_today' => 'Dzisiaj',
+	'sc_gotomonth' => 'Idź do miesiąca',
 );
 
 /** Pashto (پښتو)
@@ -288,9 +361,9 @@ $messages['pl'] = array(
  */
 $messages['ps'] = array(
 	'sc_previousmonth' => 'پخوانۍ مياشت',
-	'sc_nextmonth'     => 'راتلونکې مياشت',
-	'sc_today'         => 'نن',
-	'sc_gotomonth'     => 'مياشت ته ورځه',
+	'sc_nextmonth' => 'راتلونکې مياشت',
+	'sc_today' => 'نن',
+	'sc_gotomonth' => 'مياشت ته ورځه',
 );
 
 /** Portuguese (Português)
@@ -298,9 +371,9 @@ $messages['ps'] = array(
  */
 $messages['pt'] = array(
 	'sc_previousmonth' => 'Mês anterior',
-	'sc_nextmonth'     => 'Mês seguinte',
-	'sc_today'         => 'Hoje',
-	'sc_gotomonth'     => 'Ir para mês',
+	'sc_nextmonth' => 'Mês seguinte',
+	'sc_today' => 'Hoje',
+	'sc_gotomonth' => 'Ir para mês',
 );
 
 /** Russian (Русский)
@@ -308,29 +381,32 @@ $messages['pt'] = array(
  */
 $messages['ru'] = array(
 	'sc_previousmonth' => 'Предыдущий месяц',
-	'sc_nextmonth'     => 'Следующий месяц',
-	'sc_today'         => 'Сегодня',
-	'sc_gotomonth'     => 'Перейти к месяцу',
+	'sc_nextmonth' => 'Следующий месяц',
+	'sc_today' => 'Сегодня',
+	'sc_gotomonth' => 'Перейти к месяцу',
 );
 
 /** Slovak (Slovenčina)
  * @author Helix84
  */
 $messages['sk'] = array(
+	'sc_desc' => 'Kalendár zobrazujúci sémantické dátumové informácie',
 	'sc_previousmonth' => 'Predošlý mesiac',
-	'sc_nextmonth'     => 'Ďalší mesiac',
-	'sc_today'         => 'Dnes',
-	'sc_gotomonth'     => 'Prejsť na mesiac',
+	'sc_nextmonth' => 'Ďalší mesiac',
+	'sc_today' => 'Dnes',
+	'sc_gotomonth' => 'Prejsť na mesiac',
 );
 
 /** Swedish (Svenska)
  * @author M.M.S.
+ * @author Najami
  */
 $messages['sv'] = array(
+	'sc_desc' => 'En kalender som visar semantisk datumsinformation',
 	'sc_previousmonth' => 'Föregående månad',
-	'sc_nextmonth'     => 'Nästa månad',
-	'sc_today'         => 'Idag',
-	'sc_gotomonth'     => 'Gå till månad',
+	'sc_nextmonth' => 'Nästa månad',
+	'sc_today' => 'Idag',
+	'sc_gotomonth' => 'Gå till månad',
 );
 
 /** Telugu (తెలుగు)
@@ -338,19 +414,19 @@ $messages['sv'] = array(
  */
 $messages['te'] = array(
 	'sc_previousmonth' => 'క్రితం నెల',
-	'sc_nextmonth'     => 'తర్వాతి నెల',
-	'sc_today'         => 'ఈరోజు',
-	'sc_gotomonth'     => 'నెలకి వెళ్ళండి',
+	'sc_nextmonth' => 'తర్వాతి నెల',
+	'sc_today' => 'ఈరోజు',
+	'sc_gotomonth' => 'నెలకి వెళ్ళండి',
 );
 
-/** Tajik (Cyrillic) (Тоҷикӣ/tojikī (Cyrillic))
+/** Tajik (Cyrillic) (Тоҷикӣ (Cyrillic))
  * @author Ibrahim
  */
 $messages['tg-cyrl'] = array(
 	'sc_previousmonth' => 'Моҳи қаблӣ',
-	'sc_nextmonth'     => 'Моҳи баъдӣ',
-	'sc_today'         => 'Имрӯз',
-	'sc_gotomonth'     => 'Рафтан ба моҳ',
+	'sc_nextmonth' => 'Моҳи баъдӣ',
+	'sc_today' => 'Имрӯз',
+	'sc_gotomonth' => 'Рафтан ба моҳ',
 );
 
 /** Vèneto (Vèneto)
@@ -358,20 +434,20 @@ $messages['tg-cyrl'] = array(
  */
 $messages['vec'] = array(
 	'sc_previousmonth' => 'Mese preçedente',
-	'sc_nextmonth'     => 'Mese sucessivo',
-	'sc_today'         => 'Ancuó',
-	'sc_gotomonth'     => 'Và al mese',
+	'sc_nextmonth' => 'Mese sucessivo',
+	'sc_today' => 'Ancuó',
+	'sc_gotomonth' => 'Và al mese',
 );
 
 /** Vietnamese (Tiếng Việt)
- * @author Vinhtantran
  * @author Minh Nguyen
+ * @author Vinhtantran
  */
 $messages['vi'] = array(
 	'sc_previousmonth' => 'Tháng trước',
-	'sc_nextmonth'     => 'Tháng sau',
-	'sc_today'         => 'Hôm nay',
-	'sc_gotomonth'     => 'Đến tháng',
+	'sc_nextmonth' => 'Tháng sau',
+	'sc_today' => 'Hôm nay',
+	'sc_gotomonth' => 'Đến tháng',
 );
 
 /** Volapük (Volapük)
@@ -379,17 +455,17 @@ $messages['vi'] = array(
  */
 $messages['vo'] = array(
 	'sc_previousmonth' => 'Mul büik',
-	'sc_nextmonth'     => 'Mul sököl',
-	'sc_today'         => 'Adelo',
+	'sc_nextmonth' => 'Mul sököl',
+	'sc_today' => 'Adelo',
 );
 
-/** Taiwan Chinese (‪中文(台灣)‬)
+/** Chinese (Taiwan) (‪中文(台灣)‬)
  * @author Roc michael
  */
 $messages['zh-tw'] = array(
 	'sc_previousmonth' => '前一月',
-	'sc_nextmonth'     => '次一月',
-	'sc_today'         => '今日',
-	'sc_gotomonth'     => '前往',
+	'sc_nextmonth' => '次一月',
+	'sc_today' => '今日',
+	'sc_gotomonth' => '前往',
 );
 

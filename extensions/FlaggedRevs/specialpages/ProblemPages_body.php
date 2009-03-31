@@ -3,16 +3,13 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 	echo "FlaggedRevs extension\n";
 	exit( 1 );
 }
-wfLoadExtensionMessages( 'ProblemPages' );
-wfLoadExtensionMessages( 'FlaggedRevs' );
-
-if( !defined('READER_FEEDBACK_SIZE') )
-	define('READER_FEEDBACK_SIZE',15);
 
 class ProblemPages extends SpecialPage
 {
     function __construct() {
         SpecialPage::SpecialPage( 'ProblemPages' );
+		wfLoadExtensionMessages( 'ProblemPages' );
+		wfLoadExtensionMessages( 'FlaggedRevs' );
     }
 
     function execute( $par ) {
@@ -43,7 +40,7 @@ class ProblemPages extends SpecialPage
 		global $wgOut, $wgTitle, $wgScript, $wgFlaggedRevsNamespaces;
 		$form = Xml::openElement( 'form',
 			array( 'name' => 'reviewedpages', 'action' => $wgScript, 'method' => 'get' ) );
-		$form .= "<fieldset><legend>".wfMsg('problempages-leg')."</legend>\n";
+		$form .= "<fieldset><legend>".wfMsgHtml('problempages-leg')."</legend>\n";
 		$form .= Xml::hidden( 'title', $wgTitle->getPrefixedDBKey() );
 		if( count($wgFlaggedRevsNamespaces) > 1 ) {
 			$form .= FlaggedRevsXML::getNamespaceMenu( $this->namespace ) . '&nbsp;';
@@ -58,8 +55,9 @@ class ProblemPages extends SpecialPage
 
 	protected function showPageList() {
 		global $wgOut;
+		$tags = FlaggedRevs::getFeedbackTags();
 		$pager = new ProblemPagesPager( $this, array(), $this->namespace, $this->tag );
-		if( $pager->getNumRows() ) {
+		if( isset($tags[$this->tag]) && $pager->getNumRows() ) {
 			$wgOut->addHTML( wfMsgExt('problempages-list', array('parse') ) );
 			$wgOut->addHTML( $pager->getNavigationBar() );
 			$wgOut->addHTML( $pager->getBody() );
@@ -120,12 +118,7 @@ class ProblemPagesPager extends AlphabeticPager {
 		$conds['rfp_tag'] = $this->tag;
 		$conds['page_namespace'] = $this->namespace;
 		// Has to be bad enough
-		$x = 3;
-		if( $this->tag == 'overall' ) {
-			global $wgFlaggedRevsFeedbackTags;
-			$s = 3*array_sum($wgFlaggedRevsFeedbackTags);
-			$x = intval( floor($s/count($wgFlaggedRevsFeedbackTags)) );
-		}
+		$x = 2;
 		$conds[] = "rfp_ave_val < $x";
 		// Reasonable sample
 		$conds[] = 'rfp_count >= '.READER_FEEDBACK_SIZE;

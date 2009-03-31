@@ -1,5 +1,5 @@
 <?php
-if (!defined('MEDIAWIKI')) die();
+if ( !defined( 'MEDIAWIKI' ) ) die();
 
 /**
  * Tools for edit page view to aid translators.
@@ -12,23 +12,24 @@ class TranslateEditAddons {
 	const MSG = 'translate-edit-';
 
 	static function addNavigation( &$outputpage, &$text ) {
-		global $wgTranslateMessageNamespaces, $wgUser, $wgTitle;
+		global $wgUser, $wgTitle;
 		$ns = $wgTitle->getNamespace();
-		if( !in_array($ns, $wgTranslateMessageNamespaces) ) return true;
-
-		list( $key, $code ) = self::figureMessage( $wgTitle);
+		list( $key, $code ) = self::figureMessage( $wgTitle );
 
 		$group = self::getMessageGroup( $ns, $key );
 		if ( $group === null ) return true;
 
 		$defs = $group->getDefinitions();
 		$next = $prev = $def = null;
-		foreach ( array_keys($defs) as $tkey ) {
-			if ( $tkey === $key ) {
+		foreach ( array_keys( $defs ) as $tkey ) {
+			// Keys can have mixed case, but they have to be unique in a case
+			// insensitive manner. It is therefore safe and a must to use case
+			// insensitive comparison method
+			if ( strcasecmp( $tkey, $key ) === 0 ) {
 				$next = true;
 				$def = $defs[$tkey];
 				continue;
-			} elseif( $next === true ) {
+			} elseif ( $next === true ) {
 				$next = $tkey;
 				break;
 			}
@@ -58,27 +59,27 @@ class TranslateEditAddons {
 		}
 
 		$title = SpecialPage::getTitleFor( 'translate' );
+		$title->mFragment = "msg_$next";
 		$list = $skin->makeKnownLinkObj( $title,
 			wfMsgHtml( 'translate-edit-goto-list' ),
-			"group=$id&language=$code#msg_$next" );
+			"group=$id&language=$code" );
 
-		$text .=
-"<hr />
+		$def = TranslateUtils::convertWhiteSpaceToHTML( $def );
+
+		$text .= <<<EOEO
+<hr />
 <ul>
 <li>$prevLink</li>
 <li>$nextLink</li>
 <li>$list</li>
 </ul><hr />
-<pre>$def</pre>";
-
+<div class="mw-translate-definition-preview">$def</div>
+EOEO;
 		return true;
 	}
 
 	static function addTools( $object ) {
-		global $wgTranslateMessageNamespaces;
-		if( in_array($object->mTitle->getNamespace(), $wgTranslateMessageNamespaces) ) {
-			$object->editFormTextTop .= self::editBoxes( $object );
-		}
+		$object->editFormTextTop .= self::editBoxes( $object );
 		return true;
 	}
 
@@ -86,9 +87,9 @@ class TranslateEditAddons {
 		global $wgTranslateLanguageFallbacks, $wgTranslateDocumentationLanguageCode;
 
 		$fallbacks = array();
-		if ( isset($wgTranslateLanguageFallbacks[$code]) ) {
+		if ( isset( $wgTranslateLanguageFallbacks[$code] ) ) {
 				$temp = $wgTranslateLanguageFallbacks[$code];
-			if (!is_array($temp) ) {
+			if ( !is_array( $temp ) ) {
 				$fallbacks = array( $temp );
 			} else {
 				$fallbacks = $temp;
@@ -97,13 +98,13 @@ class TranslateEditAddons {
 
 		$realFallback = Language::getFallbackFor( $code );
 		if ( $realFallback && $realFallback !== 'en' ) {
-			$fallbacks = array_merge( array($realFallback), $fallbacks );
+			$fallbacks = array_merge( array( $realFallback ), $fallbacks );
 		}
 
 		return $fallbacks;
 	}
 
-	private static function doBox( $msg, $code, $title = false ) {
+	private static function doBox( $msg, $code, $title = false, $makelink = false ) {
 		global $wgUser, $wgLang;
 		if ( $msg === null ) { return ''; }
 
@@ -127,6 +128,11 @@ class TranslateEditAddons {
 		if ( !$title ) $title = "$name ($code)";
 		$title = htmlspecialchars( $title );
 
+		if( $makelink ) {
+			$skin = $wgUser->getSkin();
+			$linkTitle = Title::newFromText( $makelink);
+			$title = $skin->makeKnownLinkObj( $linkTitle, $title, 'action=edit' );
+		}
 		return TranslateUtils::fieldset( $title, Xml::tags( 'code', null, $msg ), $attributes );
 	}
 
@@ -134,14 +140,11 @@ class TranslateEditAddons {
 	* @return Array of the message and the language
 	*/
 	private static function figureMessage( $title ) {
-		global $wgContLanguageCode, $wgContLang;
-		$pieces = explode('/', $wgContLang->lcfirst($title->getDBkey()), 3);
-
-		$key = $pieces[0];
-
-		# Language the user is translating to
-		$langCode = isset($pieces[1]) ? $pieces[1] : $wgContLanguageCode;
-		return array( $key, $langCode );
+		$text = $title->getDBkey();
+		$pos = strrpos( $text, '/' );
+		$code = substr( $text, $pos + 1 );
+		$key = substr( $text, 0, $pos );
+		return array( $key, $code );
 	}
 
 	/**
@@ -153,7 +156,7 @@ class TranslateEditAddons {
 	 */
 	private static function getMessageGroup( $namespace, $key ) {
 		global $wgRequest;
-		$group = $wgRequest->getText('loadgroup', '' );
+		$group = $wgRequest->getText( 'loadgroup', '' );
 		$mg = MessageGroups::getGroup( $group );
 
 		# If we were not given group, or the group given was meta...
@@ -170,22 +173,22 @@ class TranslateEditAddons {
 
 	private static function editBoxes( $object ) {
 		wfLoadExtensionMessages( 'Translate' );
-		global $wgTranslateDocumentationLanguageCode, $wgOut;
+		global $wgTranslateDocumentationLanguageCode, $wgOut, $wgTranslateMessageNamespaces;
 
 		list( $key, $code ) = self::figureMessage( $object->mTitle );
 
 		$group = self::getMessageGroup( $object->mTitle->getNamespace(), $key );
 		if ( $group === null ) return;
 
-		list( $nsMain, /* $nsTalk */) = $group->namespaces;
+		list( $nsMain, /* $nsTalk */ ) = $group->namespaces;
 
 		$en = $group->getMessage( $key, 'en' );
 		$xx = $group->getMessage( $key, $code );
 
 		$boxes = array();
-
 		// In other languages (if any)
 		$inOtherLanguages = array();
+		$namespace = $object->mTitle->getNsText();
 		foreach ( self::getFallbacks( $code ) as $fbcode ) {
 			$fb = $group->getMessage( $key, $fbcode );
 			/* For fallback, even uncommitted translation may be useful */
@@ -193,10 +196,11 @@ class TranslateEditAddons {
 				$fb = TranslateUtils::getMessageContent( $key, $fbcode );
 			}
 			if ( $fb !== null ) {
-				$inOtherLanguages[] = self::dobox( $fb, $fbcode );
+				/* add a link for editing the fallback messages */
+				$inOtherLanguages[] = self::dobox( $fb, $fbcode, false, $namespace . ':' . $key . '/' . $fbcode );
 			}
 		}
-		if ( count($inOtherLanguages) ) {
+		if ( count( $inOtherLanguages ) ) {
 			$boxes[] = TranslateUtils::fieldset( wfMsgHtml( self::MSG . 'in-other-languages' ),
 				implode( "\n", $inOtherLanguages ), array( 'class' => 'mw-sp-translate-edit-inother' ) );
 		}
@@ -211,7 +215,7 @@ class TranslateEditAddons {
 				$info = $group->getMessage( $key, $wgTranslateDocumentationLanguageCode );
 			}
 			$class = 'mw-sp-translate-edit-info';
-			if ( $info === null ) {
+			if ( $info === null && in_array( $nsMain, $wgTranslateMessageNamespaces ) ) {
 				$info = wfMsg( self::MSG . 'no-information' );
 				$class = 'mw-sp-translate-edit-noinfo';
 			}
@@ -227,9 +231,14 @@ class TranslateEditAddons {
 
 			$class .= ' mw-sp-translate-message-documentation';
 
-			$boxes[] = TranslateUtils::fieldset(
-				wfMsgHtml( self::MSG . 'information', $edit ), $wgOut->parse( $info ), array( 'class' => $class )
-			);
+			if ( $info ) {
+				$contents = $wgOut->parse( $info );
+				// Remove whatever block element wrapup the parser likes to add
+				$contents = preg_replace( '~^<([a-z]+)>(.*)</\1>$~us', '\2', $contents );
+				$boxes[] = TranslateUtils::fieldset(
+					wfMsgHtml( self::MSG . 'information', $edit ), $contents, array( 'class' => $class )
+				);
+			}
 		}
 
 		// Can be either NULL or '', ARGH!
@@ -241,7 +250,7 @@ class TranslateEditAddons {
 
 		if ( $xx !== null && $code !== 'en' ) {
 			// Append translation from the file to edit area, if it's empty.
-			if ($object->firsttime && $editField === null ) {
+			if ( $object->firsttime && $editField === null ) {
 				$object->textbox1 = $xx;
 			}
 		}
@@ -254,7 +263,7 @@ class TranslateEditAddons {
 
 
 		// Some syntactic checks
-		$translation = ($editField !== null ) ? $editField : $xx;
+		$translation = ( $editField !== null ) ? $editField : $xx;
 		if ( $translation !== null ) {
 			$message = new TMessage( $key, $en );
 			// Take the contents from edit field as a translation
@@ -262,7 +271,7 @@ class TranslateEditAddons {
 			$checker = MessageChecks::getInstance();
 			if ( $checker->hasChecks( $group->getType() ) ) {
 				$checks = $checker->doChecks( $message, $group->getType(), $code );
-				if ( count($checks) ) {
+				if ( count( $checks ) ) {
 					$checkMessages = array();
 					foreach ( $checks as $checkParams ) {
 						array_splice( $checkParams, 1, 0, 'parseinline' );
@@ -270,14 +279,14 @@ class TranslateEditAddons {
 					}
 
 					$boxes[] = TranslateUtils::fieldset(
-						wfMsgHtml( self::MSG . 'warnings' ), implode( '<hr />', $checkMessages),
+						wfMsgHtml( self::MSG . 'warnings' ), implode( '<hr />', $checkMessages ),
 						array( 'class' => 'mw-sp-translate-edit-warnings' ) );
 				}
 			}
 		}
 
 		TranslateUtils::injectCSS();
-		return Xml::tags( 'div', array( 'class' => 'mw-sp-translate-edit-fields' ), implode("\n\n", $boxes) );
+		return Xml::tags( 'div', array( 'class' => 'mw-sp-translate-edit-fields' ), implode( "\n\n", $boxes ) );
 	}
 
 

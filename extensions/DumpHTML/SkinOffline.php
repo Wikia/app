@@ -141,7 +141,7 @@ class SkinOfflineTemplate extends QuickTemplate {
     <?php if($this->data['userjsprev']) { ?><script type="<?php $this->text('jsmimetype') ?>"><?php      $this->html('userjsprev') ?></script><?php   } ?>
   </head>
   <body
-    <?php if($this->data['nsclass'        ]) { ?>class="<?php      $this->text('nsclass')         ?>"<?php } ?>>
+    <?php if($this->data['pageclass']) { ?>class="<?php $this->text('pageclass') ?>"<?php } ?>>
     <div id="globalWrapper">
       <div id="column-content">
 	<div id="content">

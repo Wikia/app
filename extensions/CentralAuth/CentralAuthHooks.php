@@ -20,7 +20,7 @@ class CentralAuthHooks {
 	 * Add a little pretty to the preferences user info section
 	 */
 	static function onPreferencesUserInformationPanel( $prefsForm, &$html ) {
-		global $wgUser;
+		global $wgUser, $wgLang;
 
 		if ( !$wgUser->isAllowed( 'centralauth-merge' ) ) {
 			// Not allowed to merge, don't display merge information
@@ -48,14 +48,14 @@ class CentralAuthHooks {
 					// Migration incomplete
 					$message = '<strong>' . wfMsgHtml( 'centralauth-prefs-migration' ) . '</strong>' .
 						'<br />' .
-						htmlspecialchars( wfMsgExt( 'centralauth-prefs-count-attached', array( 'parsemag' ), $attached ) ) .
+						htmlspecialchars( wfMsgExt( 'centralauth-prefs-count-attached', array( 'parsemag' ), $wgLang->formatNum( $attached ) ) ) .
 						'<br />' .
-						htmlspecialchars( wfMsgExt( 'centralauth-prefs-count-unattached', array( 'parsemag' ), $unattached ) );
+						htmlspecialchars( wfMsgExt( 'centralauth-prefs-count-unattached', array( 'parsemag' ), $wgLang->formatNum( $unattached ) ) );
 				} else {
 					// Migration complete
 					$message = '<strong>' . wfMsgHtml( 'centralauth-prefs-complete' ) . '</strong>' .
 						'<br />' .
-						htmlspecialchars( wfMsgExt( 'centralauth-prefs-count-attached', array( 'parsemag' ), $attached ) );
+						htmlspecialchars( wfMsgExt( 'centralauth-prefs-count-attached', array( 'parsemag' ), $wgLang->formatNum( $attached ) ) );
 				}
 			} else {
 				// Account is in migration, but the local account is not attached
@@ -393,6 +393,7 @@ class CentralAuthHooks {
 
 		# Notify hooks (e.g. Newuserlog)
 		wfRunHooks( 'AuthPluginAutoCreate', array( $user ) );
+		$user->addNewUserLogEntryAutoCreate();
 		return true;
 	}
 

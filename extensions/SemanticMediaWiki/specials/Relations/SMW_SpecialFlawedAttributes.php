@@ -9,6 +9,9 @@
  * However, every attribute regardless its correctness is stored in the table pagelinks with namespace = 102.
  * Thus, the query below returns all pages, which have a pagelink with namespace 102 but no corresponding entry in the smw_attributes table.
  *
+ * @file
+ * @ingroup SMWSpecialPage
+ * @ingroup SpecialPage
  */
 
 function doSpecialFlawedAttributes($par = null) {
@@ -33,6 +36,7 @@ class FlawedAttributes extends QueryPage {
 	function isSyndicated() { return false; }
 
 	function getPageHeader() {
+		wfLoadExtensionMessages('SemanticMediaWiki');
 		return '<p>' . wfMsg('smw_fattributes') . "</p><br />\n";
 	}
 

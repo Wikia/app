@@ -5,17 +5,22 @@
  */
 
 /**
- * @todo document
+ * 	Constructor for Special:Emailuser.
  */
 function wfSpecialEmailuser( $par ) {
 	global $wgRequest, $wgUser, $wgOut;
+
+	if ( !EmailUserForm::userEmailEnabled() ) {
+		$wgOut->showErrorPage( 'nosuchspecialpage', 'nospecialpagetext' );
+		return;
+	}
 
 	$action = $wgRequest->getVal( 'action' );
 	$target = isset($par) ? $par : $wgRequest->getVal( 'target' );
 	$targetUser = EmailUserForm::validateEmailTarget( $target );
 	
 	if ( !( $targetUser instanceof User ) ) {
-		$wgOut->showErrorPage( $targetUser[0], $targetUser[1] );
+		$wgOut->showErrorPage( $targetUser.'title', $targetUser.'text' );
 		return;
 	}
 	
@@ -30,7 +35,7 @@ function wfSpecialEmailuser( $par ) {
 					
 	$error = EmailUserForm::getPermissionsError( $wgUser, $wgRequest->getVal( 'wpEditToken' ) );
 	if ( $error ) {
-		switch ( $error[0] ) {
+		switch ( $error ) {
 			case 'blockedemailuser':
 				$wgOut->blockedPage();
 				return;
@@ -40,12 +45,11 @@ function wfSpecialEmailuser( $par ) {
 			case 'sessionfailure':
 				$form->showForm();
 				return;
-			default:
-				$wgOut->showErrorPage( $error[0], $error[1] );
+			case 'mailnologin':
+				$wgOut->showErrorPage( 'mailnologin', 'mailnologintext' );
 				return;
 		}
 	}	
-		
 	
 	if ( "submit" == $action && $wgRequest->wasPosted() ) {
 		$result = $form->doSubmit();
@@ -94,46 +98,64 @@ class EmailUserForm {
 			$this->subject = wfMsgExt( 'defemailsubject', array( 'content', 'parsemag' ) );
 		}
 
-		$emf = wfMsg( "emailfrom" );
-		$senderLink = $skin->makeLinkObj(
-			$wgUser->getUserPage(), htmlspecialchars( $wgUser->getName() ) );
-		$emt = wfMsg( "emailto" );
-		$recipientLink = $skin->makeLinkObj(
-			$this->target->getUserPage(), htmlspecialchars( $this->target->getName() ) );
-		$emr = wfMsg( "emailsubject" );
-		$emm = wfMsg( "emailmessage" );
-		$ems = wfMsg( "emailsend" );
-		$emc = wfMsg( "emailccme" );
-		$encSubject = htmlspecialchars( $this->subject );
-
 		$titleObj = SpecialPage::getTitleFor( "Emailuser" );
-		$action = $titleObj->escapeLocalURL( "target=" .
+		$action = $titleObj->getLocalURL( "target=" .
 			urlencode( $this->target->getName() ) . "&action=submit" );
-		$token = htmlspecialchars( $wgUser->editToken() );
 
-		$wgOut->addHTML( "
-<form id=\"emailuser\" method=\"post\" action=\"{$action}\">
-<table border='0' id='mailheader'><tr>
-<td align='right'>{$emf}:</td>
-<td align='left'><strong>{$senderLink}</strong></td>
-</tr><tr>
-<td align='right'>{$emt}:</td>
-<td align='left'><strong>{$recipientLink}</strong></td>
-</tr><tr>
-<td align='right'>{$emr}:</td>
-<td align='left'>
-<input type='text' size='60' maxlength='200' name=\"wpSubject\" value=\"{$encSubject}\" />
-</td>
-</tr>
-</table>
-<span id='wpTextLabel'><label for=\"wpText\">{$emm}:</label><br /></span>
-<textarea id=\"wpText\" name=\"wpText\" rows='20' cols='80' style=\"width: 100%;\">" . htmlspecialchars( $this->text ) .
-"</textarea>
-" . wfCheckLabel( $emc, 'wpCCMe', 'wpCCMe', $wgUser->getBoolOption( 'ccmeonemails' ) ) . "<br />
-<input type='submit' name=\"wpSend\" value=\"{$ems}\" />
-<input type='hidden' name='wpEditToken' value=\"$token\" />
-</form>\n" );
-
+		$wgOut->addHTML(  
+			Xml::openElement( 'form', array( 'method' => 'post', 'action' => $action, 'id' => 'emailuser' ) ) .
+			Xml::openElement( 'fieldset' ) .
+			Xml::element( 'legend', null, wfMsgExt( 'email-legend', 'parsemag' ) ) .
+			Xml::openElement( 'table', array( 'class' => 'mw-emailuser-table' ) ) .
+			"<tr>
+				<td class='mw-label'>" .
+					Xml::label( wfMsg( 'emailfrom' ), 'emailfrom' ) .
+				"</td>
+				<td class='mw-input' id='mw-emailuser-sender'>" .
+					$skin->link( $wgUser->getUserPage(), htmlspecialchars( $wgUser->getName() ) ) .
+				"</td>
+			</tr>
+			<tr>
+				<td class='mw-label'>" .
+					Xml::label( wfMsg( 'emailto' ), 'emailto' ) .
+				"</td>
+				<td class='mw-input' id='mw-emailuser-recipient'>" .
+					$skin->link( $this->target->getUserPage(), htmlspecialchars( $this->target->getName() ) ) .
+				"</td>
+			</tr>
+			<tr>
+				<td class='mw-label'>" .
+					Xml::label( wfMsg( 'emailsubject' ), 'wpSubject' ) .
+				"</td>
+				<td class='mw-input'>" .
+					Xml::input( 'wpSubject', 60, $this->subject, array( 'type' => 'text', 'maxlength' => 200 ) ) .
+				"</td>
+			</tr>
+			<tr>
+				<td class='mw-label'>" .
+					Xml::label( wfMsg( 'emailmessage' ), 'wpText' ) .
+				"</td>
+				<td class='mw-input'>" .
+					Xml::textarea( 'wpText', $this->text, 80, 20, array( 'id' => 'wpText' ) ) .
+				"</td>
+			</tr>
+			<tr>
+				<td></td>
+				<td class='mw-input'>" .
+					Xml::checkLabel( wfMsg( 'emailccme' ), 'wpCCMe', 'wpCCMe', $wgUser->getBoolOption( 'ccmeonemails' ) ) .
+				"</td>
+			</tr>
+			<tr>
+				<td></td>
+				<td class='mw-submit'>" .
+					Xml::submitButton( wfMsg( 'emailsend' ), array( 'name' => 'wpSend', 'accesskey' => 's' ) ) .
+				"</td>
+			</tr>" .
+			Xml::hidden( 'wpEditToken', $wgUser->editToken() ) .
+			Xml::closeElement( 'table' ) .
+			Xml::closeElement( 'fieldset' ) .
+			Xml::closeElement( 'form' )
+		);
 	}
 
 	/*
@@ -149,7 +171,7 @@ class EmailUserForm {
 		$subject = $this->subject;
 
 		// Add a standard footer and trim up trailing newlines
-		$this->text = rtrim($this->text) . "\n\n---\n" . wfMsgExt( 'emailuserfooter',
+		$this->text = rtrim($this->text) . "\n\n-- \n" . wfMsgExt( 'emailuserfooter',
 			array( 'content', 'parsemag' ), array( $from->name, $to->name ) );
 		
 		if( wfRunHooks( 'EmailUser', array( &$to, &$from, &$subject, &$this->text ) ) ) {
@@ -228,27 +250,33 @@ class EmailUserForm {
 		return $this->target;
 	}
 	
-	static function validateEmailTarget ( $target ) {
+	static function userEmailEnabled() {
 		global $wgEnableEmail, $wgEnableUserEmail;
-
-		if( !( $wgEnableEmail && $wgEnableUserEmail ) ) 
-			return array( "nosuchspecialpage", "nospecialpagetext" );
+		return $wgEnableEmail && $wgEnableUserEmail;
 		
+	}
+	static function validateEmailTarget ( $target ) {
 		if ( "" == $target ) {
 			wfDebug( "Target is empty.\n" );
-			return array( "notargettitle", "notargettext" );
+			return "notarget";
 		}
 	
 		$nt = Title::newFromURL( $target );
 		if ( is_null( $nt ) ) {
 			wfDebug( "Target is invalid title.\n" );
-			return array( "notargettitle", "notargettext" );
+			return "notarget";
 		}
 	
 		$nu = User::newFromName( $nt->getText() );
-		if( is_null( $nu ) || !$nu->canReceiveEmail() ) {
-			wfDebug( "Target is invalid user or can't receive.\n" );
-			return array( "noemailtitle", "noemailtext" );
+		if( is_null( $nu ) || !$nu->getId() ) {
+			wfDebug( "Target is invalid user.\n" );
+			return "notarget";
+		} else if ( !$nu->isEmailConfirmed() ) {
+			wfDebug( "User has no valid email.\n" );
+			return "noemail";
+		} else if ( !$nu->canReceiveEmail() ) {
+			wfDebug( "User does not allow user emails.\n" );
+			return "nowikiemail";
 		}
 		
 		return $nu;
@@ -256,22 +284,22 @@ class EmailUserForm {
 	static function getPermissionsError ( $user, $editToken ) {
 		if( !$user->canSendEmail() ) {
 			wfDebug( "User can't send.\n" );
-			return array( "mailnologin", "mailnologintext" );
+			return "mailnologin";
 		}
 		
 		if( $user->isBlockedFromEmailuser() ) {
 			wfDebug( "User is blocked from sending e-mail.\n" );
-			return array( "blockedemailuser", "" );
+			return "blockedemailuser";
 		}
 		
 		if( $user->pingLimiter( 'emailuser' ) ) {
 			wfDebug( "Ping limiter triggered.\n" );	
-			return array( 'actionthrottledtext', '' );
+			return 'actionthrottledtext';
 		}
 		
 		if( !$user->matchEditToken( $editToken ) ) {
 			wfDebug( "Matching edit token failed.\n" );
-			return array( 'sessionfailure', '' );
+			return 'sessionfailure';
 		}
 		
 		return;

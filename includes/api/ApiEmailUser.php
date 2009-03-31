@@ -39,6 +39,11 @@ class ApiEmailUser extends ApiBase {
 
 	public function execute() {
 		global $wgUser;
+		
+		// Check whether email is enabled
+		if ( !EmailUserForm::userEmailEnabled() )
+			$this->dieUsageMsg( array( 'usermaildisabled' ) );
+		
 		$this->getMain()->requestWriteMode();
 		$params = $this->extractRequestParams();
 		
@@ -53,12 +58,12 @@ class ApiEmailUser extends ApiBase {
 		// Validate target 
 		$targetUser = EmailUserForm::validateEmailTarget( $params['target'] );
 		if ( !( $targetUser instanceof User ) )
-			$this->dieUsageMsg( array( $targetUser[0] ) );
+			$this->dieUsageMsg( array( $targetUser ) );
 		
 		// Check permissions
 		$error = EmailUserForm::getPermissionsError( $wgUser, $params['token'] );
 		if ( $error )
-			$this->dieUsageMsg( array( $error[0] ) );
+			$this->dieUsageMsg( array( $error ) );
 		
 			
 		$form = new EmailUserForm( $targetUser, $params['text'], $params['subject'], $params['ccme'] );
@@ -89,7 +94,6 @@ class ApiEmailUser extends ApiBase {
 			'target' => 'User to send email to',
 			'subject' => 'Subject header',
 			'text' => 'Mail body',
-			// FIXME: How to properly get a token?
 			'token' => 'A token previously acquired via prop=info',
 			'ccme' => 'Send a copy of this mail to me',
 		);
@@ -97,7 +101,7 @@ class ApiEmailUser extends ApiBase {
 
 	public function getDescription() {
 		return array(
-			'Emails a user.'
+			'Email a user.'
 		);
 	}
 
@@ -108,7 +112,7 @@ class ApiEmailUser extends ApiBase {
 	}
 
 	public function getVersion() {
-		return __CLASS__ . ': $Id: $';
+		return __CLASS__ . ': $Id: ApiEmailUser.php 41269 2008-09-25 21:39:36Z catrope $';
 	}
 }	
 	

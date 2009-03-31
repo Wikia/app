@@ -1,5 +1,7 @@
 <?php
 /**
+ * @ingroup Language
+ * @ingroup SDLanguage
  * @author Yaron Koren (Translation: Bernhard Krabina:krabina@cornerstone.at)
  */
 

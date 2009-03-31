@@ -19,6 +19,7 @@
  */
 class ForeignAPIRepo extends FileRepo {
 	var $fileFactory = array( 'ForeignAPIFile', 'newFromTitle' );
+	var $apiThumbCacheExpiry = 0;
 	protected $mQueryCache = array();
 	
 	function __construct( $info ) {
@@ -30,10 +31,12 @@ class ForeignAPIRepo extends FileRepo {
 		}
 	}
 
+/**
+ * No-ops
+ */
 	function storeBatch( $triplets, $flags = 0 ) {
 		return false;
 	}
-
 	function storeTemp( $originalName, $srcPath ) {
 		return false;
 	}
@@ -69,14 +72,16 @@ class ForeignAPIRepo extends FileRepo {
 				array_merge( $query,
 					array(
 						'format' => 'json',
-						'action' => 'query',
-						'prop' => 'imageinfo' ) ) );
+						'action' => 'query' ) ) );
 		
 		if( !isset( $this->mQueryCache[$url] ) ) {
-			$key = wfMemcKey( 'ForeignAPIRepo', $url );
+			$key = wfMemcKey( 'ForeignAPIRepo', 'Metadata', md5( $url ) );
 			$data = $wgMemc->get( $key );
 			if( !$data ) {
 				$data = Http::get( $url );
+				if ( !$data ) {
+					return null;
+				}
 				$wgMemc->set( $key, $data, 3600 );
 			}
 
@@ -92,7 +97,22 @@ class ForeignAPIRepo extends FileRepo {
 	function getImageInfo( $title, $time = false ) {
 		return $this->queryImage( array(
 			'titles' => 'Image:' . $title->getText(),
-			'iiprop' => 'timestamp|user|comment|url|size|sha1|metadata|mime' ) );
+			'iiprop' => 'timestamp|user|comment|url|size|sha1|metadata|mime',
+			'prop' => 'imageinfo' ) );
+	}
+	
+	function findBySha1( $hash ) {
+		$results = $this->fetchImageQuery( array(
+										'aisha1base36' => $hash,
+										'aiprop'       => 'timestamp|user|comment|url|size|sha1|metadata|mime',
+										'list'         => 'allimages', ) );
+		$ret = array();
+		if ( isset( $results['query']['allimages'] ) ) {
+			foreach ( $results['query']['allimages'] as $img ) {
+				$ret[] = new ForeignAPIFile( Title::makeTitle( NS_IMAGE, $img['name'] ), $this, $img );
+			}
+		}
+		return $ret;
 	}
 	
 	function getThumbUrl( $name, $width=-1, $height=-1 ) {
@@ -100,11 +120,56 @@ class ForeignAPIRepo extends FileRepo {
 			'titles' => 'Image:' . $name,
 			'iiprop' => 'url',
 			'iiurlwidth' => $width,
-			'iiurlheight' => $height ) );
+			'iiurlheight' => $height,
+			'prop' => 'imageinfo' ) );
 		if( $info ) {
+			wfDebug( __METHOD__ . " got remote thumb " . $info['thumburl'] . "\n" );
 			return $info['thumburl'];
 		} else {
 			return false;
 		}
+	}
+	
+	function getThumbUrlFromCache( $name, $width, $height ) {
+		global $wgMemc, $wgUploadPath, $wgServer, $wgUploadDirectory;
+		
+		if ( !$this->canCacheThumbs() ) {
+			return $this->getThumbUrl( $name, $width, $height );
+		}
+		
+		$key = wfMemcKey( 'ForeignAPIRepo', 'ThumbUrl', $name );
+		if ( $thumbUrl = $wgMemc->get($key) ) {
+			wfDebug("Got thumb from local cache. $thumbUrl \n");
+			return $thumbUrl;
+		}
+		else {
+			$foreignUrl = $this->getThumbUrl( $name, $width, $height );
+			
+			// We need the same filename as the remote one :)
+			$fileName = ltrim( substr( $foreignUrl, strrpos( $foreignUrl, '/' ) ), '/' );
+			$path = 'thumb/' . $this->getHashPath( $name ) . $name . "/";
+			if ( !is_dir($wgUploadDirectory . '/' . $path) ) {
+				wfMkdirParents($wgUploadDirectory . '/' . $path);
+			}
+			if ( !is_writable( $wgUploadDirectory . '/' . $path . $fileName ) ) {
+				wfDebug( __METHOD__ . " could not write to thumb path\n" );
+				return $foreignUrl;
+			}
+			$localUrl =  $wgServer . $wgUploadPath . '/' . $path . $fileName;
+			$thumb = Http::get( $foreignUrl );
+			# FIXME: Delete old thumbs that aren't being used. Maintenance script?
+			file_put_contents($wgUploadDirectory . '/' . $path . $fileName, $thumb );
+			$wgMemc->set( $key, $localUrl, $this->apiThumbCacheExpiry );
+			wfDebug( __METHOD__ . " got local thumb $localUrl, saving to cache \n" );
+			return $localUrl;
+		}
+	}
+	
+	/**
+	 * Are we locally caching the thumbnails?
+	 * @return bool
+	 */
+	public function canCacheThumbs() {
+		return ( $this->apiThumbCacheExpiry > 0 );
 	}
 }

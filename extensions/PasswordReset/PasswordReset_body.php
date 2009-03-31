@@ -13,6 +13,7 @@
  */
 class PasswordReset extends SpecialPage {
 	function PasswordReset() {
+		wfLoadExtensionMessages('PasswordReset');
 		SpecialPage::SpecialPage( "PasswordReset", "passwordreset" );
 	}
 
@@ -21,6 +22,7 @@ class PasswordReset extends SpecialPage {
 
 		$this->setHeaders();
 
+		
 		if ( !$wgUser->isAllowed( 'passwordreset' ) ) {
 			$wgOut->permissionRequired( 'passwordreset' );
 			return;
@@ -165,7 +167,7 @@ class PasswordReset extends SpecialPage {
 	static function GetBlockedStatus(&$user) {
 		global $wgTitle;
 
-		if ( $wgTitle->isSpecial( 'Userlogin' ) ) {
+		if ( $wgTitle && $wgTitle->isSpecial( 'Userlogin' ) ) {
 			global $wgRequest;
 			if ( $wgRequest->wasPosted() ) {
 				$name = $wgRequest->getText( 'wpName' );

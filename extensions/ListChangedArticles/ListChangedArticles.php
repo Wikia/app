@@ -6,9 +6,6 @@ if (!defined('MEDIAWIKI')) {
 	exit(1);
 }
 
-if ( !function_exists( 'extAddSpecialPage' ) ) {
-	require( dirname(__FILE__) . '/../ExtensionFunctions.php' );
-}
-extAddSpecialPage( dirname(__FILE__) . '/ListChangedArticles_body.php', 'ListChangedArticles', 'ListChangedArticles' );
-
-
+$dir = dirname(__FILE__) . '/';
+$wgAutoloadClasses['ListChangedArticles'] = $dir . 'ListChangedArticles_body.php';
+$wgSpecialPages['ListChangedArticles'] = 'ListChangedArticles';

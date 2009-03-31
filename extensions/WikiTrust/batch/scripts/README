@@ -1,0 +1,20 @@
+
+load_all_files:
+
+Loads files files in the given directry into the given database.
+
+A wrapper arround the mwdumper.jar file.
+
+Example: ./load_all_files foo bar pass
+
+Will load all files in the foo directory into the bar database of mysql, using
+a password of pass
+
+Note that this expects ALL files in the foo dir to be valid MediaWiki xml. 
+
+reset_wiki.sh:
+
+Clears out the page, text and revision tables of mysql. Use when you load some
+files into the db, and then want them out.
+
+Usage: reset_wiki.sh "database to reset"

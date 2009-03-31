@@ -1,4 +1,4 @@
-[[Semantic Calendar 0.2.7]]
+[[Semantic Calendar 0.2.9]]
 
 Contents:
 * Disclaimer
@@ -8,7 +8,7 @@ Contents:
 
 == Disclaimer ==
 
-Semantic Drilldown is a new extension, and there is no
+Semantic Calendar is a new extension, and there is no
 guarantee that any of it will work on your system. However, it does
 not make any modifications to the database, so it should be a
 low-risk installation.

@@ -67,7 +67,10 @@ function addRow() {
 		td[i].appendChild(lbl);
 		tr.appendChild(td[i]);
 	}
-	table.appendChild(tr);
+	//IE fix
+	var tbody = document.createElement('tbody');
+	tbody.appendChild(tr);
+	table.appendChild(tbody);
 }
 
 //removes a row (permission) from the table

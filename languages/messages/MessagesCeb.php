@@ -10,6 +10,55 @@
  * @author לערי ריינהארט
  */
 
+$namespaceNames = array(
+	NS_MEDIA            => 'Medya',
+	NS_SPECIAL          => 'Espesyal',
+	NS_TALK             => 'Hisgot',
+	NS_USER             => 'Gumagamit',
+	NS_USER_TALK        => 'Hisgot_sa_Gumagamit',
+	NS_PROJECT_TALK     => 'Hisgot_sa_$1',
+	NS_FILE             => 'Payl',
+	NS_FILE_TALK        => 'Hisgot_sa_Payl',
+	NS_MEDIAWIKI        => 'MediaWiki',
+	NS_MEDIAWIKI_TALK   => 'Hisgot_sa_MediaWiki',
+	NS_TEMPLATE         => 'Plantilya',
+	NS_TEMPLATE_TALK    => 'Hisgot_sa_Plantilya',
+	NS_HELP             => 'Tabang',
+	NS_HELP_TALK        => 'Hisgot_sa_Tabang',
+	NS_CATEGORY         => 'Kategoriya',
+	NS_CATEGORY_TALK    => 'Hisgot_sa_Kategoriya',
+);
+
+$namespaceAliases = array(
+	'Hisgot_sa$1' => NS_PROJECT_TALK,
+	'Imahen' => NS_FILE,
+	'Hisgot_sa_Imahen' => NS_FILE_TALK,
+);
+
+$specialPageAliases = array(
+	'DoubleRedirects'           => array( 'DoblengRedirekta' ),
+	'BrokenRedirects'           => array( 'BuakngaRedirekta' ),
+	'Disambiguations'           => array( 'Mga Pagklaro' ),
+	'CreateAccount'             => array( 'Paghimo\'gAkawnt' ),
+	'Preferences'               => array( 'Mga Preperensya' ),
+	'Watchlist'                 => array( 'Gibantayan' ),
+	'Recentchanges'             => array( 'Bag-ongGiusab' ),
+	'Upload'                    => array( 'Pagsumiter' ),
+	'Listfiles'                 => array( 'Listahan sa Imahen' ),
+	'Newimages'                 => array( 'Bag-ongImahen' ),
+	'Statistics'                => array( 'Estadistika' ),
+	'Randompage'                => array( 'Bisan-unsa', 'Bisan-unsangPanid' ),
+	'Lonelypages'               => array( 'Nag-inusarangPanid', 'Sinagop nga Panid' ),
+	'Allpages'                  => array( 'TanangPanid' ),
+	'Contributions'             => array( 'Mga Tampo' ),
+	'Categories'                => array( 'Mga Kategoriya' ),
+	'Version'                   => array( 'Bersiyon' ),
+	'Mypage'                    => array( 'AkongPanid' ),
+	'Mytalk'                    => array( 'AkongHisgot' ),
+	'Mycontributions'           => array( 'AkongTampo' ),
+	'Search'                    => array( 'Pangita' ),
+);
+
 $messages = array(
 # User preference toggles
 'tog-underline'            => 'Binadlisan nga mga sumpay:',
@@ -38,8 +87,6 @@ $messages = array(
 
 'underline-always' => 'Kanunay',
 'underline-never'  => 'Ayaw',
-
-'skinpreview' => '(Paunang tan-aw)',
 
 # Dates
 'sunday'        => 'Dominggo',
@@ -125,7 +172,7 @@ $messages = array(
 'mytalk'         => 'Akong hisgot',
 'anontalk'       => 'Panghisgot-hisgot alang niining IP',
 'navigation'     => 'Tabok-tabok',
-'and'            => 'ug',
+'and'            => '&#32;ug',
 
 'returnto'          => 'Balik sa $1.',
 'tagline'           => 'Gikan sa {{SITENAME}}',
@@ -197,8 +244,6 @@ $messages = array(
 'privacypage'          => 'Project:Palisiya sa pribasidad',
 
 'badaccess-group0' => 'Wala ikaw tugoti sa pagpadayon sa aksyon nga imong gipangayo.',
-'badaccess-group1' => 'Ang aksyon nga imong gipangayo mahimo lamang ihatag sa mga miyembro sa grupong $1.',
-'badaccess-group2' => 'Ang aksyon nga imong gipangayo mahimo lamang ihatag sa mga miyembro sa mga grupong $1.',
 'badaccess-groups' => 'Ang aksyon nga imong gipangayo mahimo lamang ihatag sa mga miyembro sa mga grupong $1.',
 
 'versionrequired'     => 'Gikinahanglan ang Bersyong $1 sa MediaWiki',
@@ -256,7 +301,6 @@ $1",
 'badtitle'            => 'Bati nga titulo',
 'badtitletext'        => 'Ang gihangyong titulo sa panid mahimong inbalido, walay sulod, o nasayop og sumpay nga inter-pinulongan o inter-wiki nga titulo.
 Basin aduna kini usa o daghan pang mga karakter nga dili magamit isip titulo.',
-'perfdisabled'        => "Pasayloa, ang kini nga  ''feature'' temporaryong gihunong tungod kay gipahinay niini ang ''database'' sa punto nga dili na magamit ang wiki.",
 'viewsource'          => 'Tan-awa ang ginikanan',
 'ns-specialprotected' => 'Ang mga espesyal nga panid dili mausban.',
 
@@ -268,7 +312,6 @@ Ayaw kalimot sa pag-usab sa imong [[Special:Preferences|{{SITENAME}} mga prepere
 'loginpagetitle'          => 'Pagdayon sa tiggamit',
 'yourname'                => 'Ngalan sa tiggamit:',
 'remembermypassword'      => 'Hinumdomi ako niini nga kompyuter',
-'loginproblem'            => "<b>Naay kakulian sa imong pagpaila.</b><br />Sulayi'g usab!",
 'login'                   => 'Sulod',
 'nav-login-createaccount' => 'Rehistro / Dayon',
 'userlogin'               => 'Rehistro / Dayon',
@@ -292,7 +335,7 @@ Palihug pagpili og lain nga ngalan.',
 'hr_tip'        => 'Pahigda nga linya (palihog usahay ra gamita)',
 
 # Edit pages
-'summary'                   => 'Mubong sugid',
+'summary'                   => 'Mubong sugid:',
 'minoredit'                 => 'Ginagmay lang nga kausaban',
 'watchthis'                 => 'Bantayi kining maong panid',
 'savearticle'               => 'Tipigi ang panid',
@@ -307,13 +350,13 @@ Aron mahimo ang maong panid, pagtayp sa kahon sa ubos (tan-awa ang [[{{MediaWiki
 Kon miabot ka dinhi pinaagi sa usa ka sayop, palihog tuploka ang back nga tuplokanan sa imong brawser.',
 'noarticletext'             => 'Sa kasamtangan walay sulod nga teksto ang kining panid, pwede nimong  [[Special:Search/{{PAGENAME}}|pangitaon kining titulo sa panid]] sa ubang mga panid o [{{fullurl:{{FULLPAGENAME}}|action=edit}} usba kining panid].',
 'userpage-userdoesnotexist' => 'Ang akawnt sa tiggamit nga "$1" wala marehistro. Palihug tan-awa kon buot nimong himoon/usbon ang kining panid.',
-'previewnote'               => '<strong>Hinumdomi nga kini usa lang ka paunang tan-aw; wala pa matipigi ang imong giusab!</strong>',
+'previewnote'               => "'''Hinumdomi nga kini usa lang ka paunang tan-aw; wala pa matipigi ang imong giusab!'''",
 'editing'                   => 'Nagausab sa $1',
 'yourtext'                  => 'Imong gisulat',
 'yourdiff'                  => 'Mga kalainan',
-'copyrightwarning'          => 'Palihog hinumdomi nga ang tanang kontribusyon sa {{SITENAME}} giisip nga ubos sa $2 (basaha ang $1 alang sa dugang detalye). Kon dili nimo buot nga ang imong mga sinulat mausab ni bisan kinsa ug maapud-apod bisan dili ka pangayoan og pagtugot, ayaw sila ibutang dinhi.<br />
+'copyrightwarning'          => "Palihog hinumdomi nga ang tanang kontribusyon sa {{SITENAME}} giisip nga ubos sa $2 (basaha ang $1 alang sa dugang detalye). Kon dili nimo buot nga ang imong mga sinulat mausab ni bisan kinsa ug maapud-apod bisan dili ka pangayoan og pagtugot, ayaw sila ibutang dinhi.<br />
 Nagatimaan ka usab nga ikaw mismo ang nagsulat niini, o gikopya nimo kini gikan sa usa ka publikong rekursos o susamang libreng rekursos.
-<strong>AYAW PAGBUTANG DINHI OG MGA BINUHAT NGA MAY NANAG-IYA SA KATUNGOD SA PAGPATIK NGA WA KAY PERMISO!</strong>',
+'''AYAW PAGBUTANG DINHI OG MGA BINUHAT NGA MAY NANAG-IYA SA KATUNGOD SA PAGPATIK NGA WA KAY PERMISO!'''",
 'templatesused'             => 'Ang mga plantilyang gigamit niini nga panid:',
 'template-protected'        => '(giprotektahan)',
 
@@ -328,16 +371,18 @@ Nagatimaan ka usab nga ikaw mismo ang nagsulat niini, o gikopya nimo kini gikan 
 'editundo'                => 'i-way bili',
 
 # Search results
-'noexactmatch' => "'''Walay panid nga ginganla'g \"\$1\".'''
+'noexactmatch'   => "'''Walay panid nga ginganla'g \"\$1\".'''
 Mahimo mong [[:\$1|isulat kini nga panid]].",
-'prevn'        => 'miaging $1',
-'nextn'        => 'sunod $1',
-'viewprevnext' => 'Tan-awa sa ($1) ($2) ($3)',
-'powersearch'  => 'Abansadong pagpangita',
+'prevn'          => 'miaging $1',
+'nextn'          => 'sunod $1',
+'viewprevnext'   => 'Tan-awa sa ($1) ($2) ($3)',
+'searchhelp-url' => 'Help:Mga sulod',
+'powersearch'    => 'Abansadong pagpangita',
 
 # Preferences page
 'mypreferences' => 'Akong preperensiya',
 'prefs-edits'   => 'Gidaghanon sa nausab:',
+'skin-preview'  => 'Paunang tan-aw',
 'saveprefs'     => 'Tipigi',
 
 # Recent changes
@@ -359,7 +404,7 @@ Ang mga panid sa [[Special:Watchlist|imong gibantayan]] '''nakalugom'''.",
 # Upload
 'upload' => 'Pagsumiter og payl',
 
-# Image description page
+# File description page
 'filehist'          => 'Kaagi sa payl',
 'filehist-help'     => 'I-klik ang petsa/oras aron makit-an ang hulagway sa payl niadtong panahona.',
 'filehist-current'  => 'kasamtangan',
@@ -386,6 +431,12 @@ Ang mga panid sa [[Special:Watchlist|imong gibantayan]] '''nakalugom'''.",
 'categoriespagetext'          => 'Ang mosunod nga mga kategoriya adunay sulod nga panid o medya.',
 'special-categories-sort-abc' => 'han-aya nga paalpabetikal',
 
+# Special:Log/newusers
+'newuserlogpagetext'       => "Kini mao ang ''log'' sa bag-ong namugnang mga gumagamit.",
+'newuserlog-byemail'       => "ang pasword gipadala na pinaagi sa ''e-mail''",
+'newuserlog-create-entry'  => 'Bag-ong gumagamit',
+'newuserlog-create2-entry' => "naghimo'g akawnt alang kang $1",
+
 # Watchlist
 'mywatchlist' => 'Akong gibantayan',
 'watch'       => 'Bantayi',
@@ -395,7 +446,7 @@ Ang mga panid sa [[Special:Watchlist|imong gibantayan]] '''nakalugom'''.",
 'watching'   => 'Gibantayan...',
 'unwatching' => 'Gipasagdan...',
 
-# Delete/protect/revert
+# Delete
 'deletedarticle' => 'gitangtang "[[$1]]"',
 
 # Contributions

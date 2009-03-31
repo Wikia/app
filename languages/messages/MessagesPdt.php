@@ -100,6 +100,7 @@ $messages = array(
 'mytalk'         => 'Miene Beredsied',
 'anontalk'       => 'Beredsied fe dise IP',
 'navigation'     => 'Navigatioon',
+'and'            => '&#32;onn',
 
 'errorpagetitle'   => 'Fäla',
 'returnto'         => 'Trigj no $1.',
@@ -152,8 +153,6 @@ $messages = array(
 # All link text and link target definitions of links into project namespace that get used by other message strings, with the exception of user group pages (see grouppage) and the disambiguation template definition (see disambiguations).
 'aboutsite'            => 'Äwa {{SITENAME}}',
 'aboutpage'            => 'Project:Äwa',
-'bugreports'           => 'Fehla-Berecht',
-'bugreportspage'       => 'Project:Fehla-Berecht',
 'copyright'            => 'Enhault es to habe unja $1.',
 'currentevents'        => 'Aktuelle Sache',
 'currentevents-url'    => 'Project:Aktuelle Sache',
@@ -265,11 +264,24 @@ Bitte nemm eenen aundren.',
 'media_tip' => 'Datei-Link',
 
 # Edit pages
-'minoredit'          => 'Dit es en kjleene Endaniss',
-'watchthis'          => 'Paus op dise Sied op',
-'showdiff'           => 'Endanisse wiese',
-'newarticle'         => '(Nie)',
-'template-protected' => "(be'schutst)",
+'summary'              => 'Toofotinj:',
+'subject'              => 'Teema:',
+'minoredit'            => 'Dit es eene tjliene Endanis.',
+'watchthis'            => 'Paus op dise Sied op',
+'savearticle'          => 'Sied bewoare',
+'preview'              => 'Preview',
+'showpreview'          => 'Wies Preview',
+'showlivepreview'      => 'Live-Preview',
+'showdiff'             => 'Endanisse wiese',
+'anoneditwarning'      => "'''Paus opp:''' Du best nich aunjemaldt. Diene IP-Adras woat enne Versioonsjeschicht oppbewoat en es emma to seene.",
+'missingsummary'       => "'''Dentj draun:''' Du hast tjeene Toopfotinj jemoakt. Wan du wada opp Bewoare klickst, woat diene Endanis ohne Toopfotinj ewanohme.",
+'missingcommenttext'   => 'Bitte schriew eene korte Toopfotinj.',
+'missingcommentheader' => "'''Dentj draun:''' Du hast tjeen Teema em Plautz \"Teema\" jeschrewe. Wan du wada opp Sied Bewoare klickst, woat diene Oabeit ohne Teema bewoat.",
+'summary-preview'      => 'Toopfotinj-Preview:',
+'subject-preview'      => 'Teema-Preview:',
+'blockedtitle'         => 'Dis Brucka es jeblockt.',
+'newarticle'           => '(Nie)',
+'template-protected'   => "(be'schutst)",
 
 # History pages
 'cur'        => 'dise',
@@ -285,9 +297,10 @@ Bitte nemm eenen aundren.',
 'editundo' => 'trigjsate',
 
 # Search results
-'prevn'       => '$1 ferhäa',
-'nextn'       => 'näakjste $1',
-'powersearch' => 'Bätre Sääk',
+'prevn'          => '$1 ferhäa',
+'nextn'          => 'näakjste $1',
+'searchhelp-url' => 'Help:Enhault',
+'powersearch'    => 'Bätre Sääk',
 
 # Preferences page
 'preferences'   => 'Ennstalinje',
@@ -311,6 +324,7 @@ Bitte nemm eenen aundren.',
 # Recent changes linked
 'recentchangeslinked'          => 'Endarunge aun velinkte Siede',
 'recentchangeslinked-title'    => 'Endarunge aun Siede, woone von "$1" velinkt send',
+'recentchangeslinked-backlink' => '← $1',
 'recentchangeslinked-noresult' => 'Em utjesochten Tietrum es aun dee velinkte Siede nuscht aundasch jemoakt worde.',
 'recentchangeslinked-summary'  => "Dit es eene List mette latzte Endarunge aune velinkte Siede (ooda bie Kategorien von Mettjlieda von dise Kategorie). Dee Siede opp diene [[Special:Watchlist|your watchlist]] woare '''fat''' jewese.",
 'recentchangeslinked-page'     => 'Siednome:',
@@ -326,10 +340,10 @@ Bitte nemm eenen aundren.',
 'upload_directory_read_only' => 'Dee Webserver haft tjeene Schriewrajchte fe daut Nopplode-Vetetjnis ($1).',
 'uploaderror'                => 'Fehla biem Nopplode',
 
-# Special:ImageList
-'imagelist_user' => 'Brucker',
+# Special:ListFiles
+'listfiles_user' => 'Brucker',
 
-# Image description page
+# File description page
 'filehist-datetime'   => 'Tiet',
 'filehist-user'       => 'Brucker',
 'filehist-dimensions' => 'Moten',
@@ -374,24 +388,28 @@ Bitte nemm eenen aundren.',
 'allarticles'    => 'Aule Siede',
 
 # Watchlist
-'mywatchlist'          => 'Miene Oppaussied',
-'watchlistfor'         => "(fer '''$1''')",
-'addedwatch'           => "No Oppausssied bieje'done",
-'watch'                => 'Oppausse',
-'watchthispage'        => 'Op dise Sied oppausse',
-'unwatch'              => 'Nijch mea oppausse',
-'watchlist-hide-minor' => 'Kjleene Endanisse nijch wiese',
+'mywatchlist'   => 'Miene Oppaussied',
+'watchlistfor'  => "(fer '''$1''')",
+'addedwatch'    => "No Oppausssied bieje'done",
+'watch'         => 'Oppausse',
+'watchthispage' => 'Op dise Sied oppausse',
+'unwatch'       => 'Nijch mea oppausse',
 
 # Displayed when you click the "watch" button and it is in the process of watching
 'watching'   => 'Oppausse...',
 'unwatching' => 'Nijch mea oppausse......',
 
-# Delete/protect/revert
+# Delete
 'deleteotherreason'     => 'Aundra Grunt:',
 'deletereasonotherlist' => 'Aundre Grunt',
-'rollbacklink'          => 'trigj rolle',
-'protectexpiry'         => 'Ütgontiet:',
-'restriction-type'      => "Er'laubniss:",
+
+# Rollback
+'rollbacklink' => 'trigj rolle',
+
+# Protect
+'protectexpiry'          => 'Ütgontiet:',
+'protect-expiry-options' => '2 Stunde:2 hours,1 Dach:1 day,3 Doag:3 days,1 Wäakj:1 week,2 Wäakje:2 weeks,1 Moonat:1 month,3 Moonate:3 months,6 Moonate:6 months,1 Joa:1 year,one Enj:infinite', # display1:time1,display2:time2,...
+'restriction-type'       => "Er'laubniss:",
 
 # Namespace form on various pages
 'namespace'      => 'Nomerüm:',
@@ -404,20 +422,30 @@ Bitte nemm eenen aundren.',
 'year'      => 'Fonn Joa (onn ferdäm):',
 
 # What links here
-'whatlinkshere'       => 'Links opp dise Sied',
-'whatlinkshere-title' => 'Siede, woone opp "$1" eenen Link habe',
-'whatlinkshere-page'  => 'Sied:',
-'linkshere'           => "Dee neachste Siede habe eenen Link opp '''[[:$1]]''':",
-'nolinkshere'         => "Tjeene Sied haft eenen Link opp '''[[:$1]]'''.",
-'nolinkshere-ns'      => "Tjeene Siede habe eenen Link opp '''[[:$1]]''' em utjesochten Nomesrum.",
-'isredirect'          => 'Wiedaleid-Sied',
-'istemplate'          => 'Vealoag-Enbinje (Inklusioon)',
-'isimage'             => 'Dotei-Link',
-'whatlinkshere-links' => '← Links',
+'whatlinkshere'          => 'Links opp dise Sied',
+'whatlinkshere-title'    => 'Siede, woone opp "$1" eenen Link habe',
+'whatlinkshere-page'     => 'Sied:',
+'whatlinkshere-backlink' => '← $1',
+'linkshere'              => "Dee neachste Siede habe eenen Link opp '''[[:$1]]''':",
+'nolinkshere'            => "Tjeene Sied haft eenen Link opp '''[[:$1]]'''.",
+'nolinkshere-ns'         => "Tjeene Siede habe eenen Link opp '''[[:$1]]''' em utjesochten Nomesrum.",
+'isredirect'             => 'Wiedaleid-Sied',
+'istemplate'             => 'Vealoag-Enbinje (Inklusioon)',
+'isimage'                => 'Dotei-Link',
+'whatlinkshere-links'    => '← Links',
 
 # Block/unblock
-'ipboptions'   => '2 Stunde:2 hours,1 Dach:1 day,3 Doag:3 days,1 Wäakj:1 week,2 Wäakje:2 weeks,1 Moonat:1 month,3 Moonate:3 months,6 Moonate:6 months,1 Joa:1 year,one Enj:infinite', # display1:time1,display2:time2,...
-'contribslink' => 'Biedrachs',
+'ipboptions'       => '2 Stunde:2 hours,1 Dach:1 day,3 Doag:3 days,1 Wäakj:1 week,2 Wäakje:2 weeks,1 Moonat:1 month,3 Moonate:3 months,6 Moonate:6 months,1 Joa:1 year,one Enj:infinite', # display1:time1,display2:time2,...
+'blocklink'        => 'blocke',
+'unblocklink'      => 'frie jewe',
+'change-blocklink' => 'Daut Blocke endre',
+'contribslink'     => 'Biedrachs',
+'autoblocker'      => 'Automatisch jeblockt, wiels diene IP-Adras soo es aus bie "[[User:$1|$1]]".
+Dee Grunt es: "$2"',
+'blocklogpage'     => 'Block-Logbok',
+'blocklog-fulllog' => 'Vollstendjet Block-Logbok',
+'blocklogentry'    => 'haft [[$1]] jeblockt fe dee Tiet $2 $3',
+'reblock-logentry' => "haft dee Block-Enstalinj fe [[$1]] je'endat fe dee Tiet $2 $3",
 
 # Move page
 'newtitle'   => 'No nie Tietel:',
@@ -432,11 +460,11 @@ Bitte nemm eenen aundren.',
 'thumbnail-more' => "Fe'jreetre",
 
 # Tooltip help for the actions
-'tooltip-pt-userpage'             => 'Miene Bruckersied',
-'tooltip-pt-mytalk'               => 'Miene Beredsied',
+'tooltip-pt-userpage'             => 'Diene Bruckersied',
+'tooltip-pt-mytalk'               => 'Diene Beredsied',
 'tooltip-pt-preferences'          => 'Miene Ennstalinje',
 'tooltip-pt-watchlist'            => 'List fonn Siede, op de du oppausst, waut sikj endat',
-'tooltip-pt-mycontris'            => 'List fonn miene Biedroage',
+'tooltip-pt-mycontris'            => 'List fonn diene Biedroage',
 'tooltip-pt-login'                => 'Aunmalde wudd scheen senne, es oba nich onbedinjt needich.',
 'tooltip-pt-anonlogin'            => 'Aunmalde wudd scheen senne, es oba nich onbedinjt needich.',
 'tooltip-pt-logout'               => 'Rut hia',
@@ -488,6 +516,8 @@ Bitte nemm eenen aundren.',
 'tooltip-watch'                   => 'Doo dise Sied bie diene Oobacht-List doatoo',
 'tooltip-recreate'                => 'Moak dee Sied wada fresh, uck wan se wea jelascht haft.',
 'tooltip-upload'                  => 'Nopplode aunfange',
+'tooltip-rollback'                => '"Rollback" dreit dee Endarung(e) von dise Sied mett eenem Klick wada tridj bettem latsten Biedrach.',
+'tooltip-undo'                    => 'Moakt bloos dise eene Endarung tridj en wiest daut Resultaut en eenem Eschtmolseene-Fensta, doamett enne Toopfotinj een Grunt jenant woare kaun.',
 
 # Stylesheets
 'common.css'      => '/* CSS opp dise Sted woat opp aula Skins wirtje */',
@@ -499,6 +529,7 @@ Bitte nemm eenen aundren.',
 'chick.css'       => '/* CSS opp dise Sted wirtjt opp daut Chick-Skin */',
 'simple.css'      => '/* CSS opp dise Sted wirtjt opp daut Simple-Skin */',
 'modern.css'      => '/* CSS opp dise Sted wirtjt opp daut Modern-Skin */',
+'print.css'       => '/* CSS opp dise Sted woat daut Utkome vom Dretje aundasch moake */',
 
 # Scripts
 'common.js'      => '/* Daut neachste JavaScript woat fe aula Brucka jelode. */',
@@ -517,10 +548,12 @@ Bitte nemm eenen aundren.',
 'notacceptable'     => 'Dee Wiki-Server kaun dee Dote nich soo reedmoake, daut dien Jereetschauft dee lese kaun.',
 
 # Attribution
+'anonymous'        => 'Onbekaunda Brucka {{PLURAL:$1|user|users}} von {{SITENAME}}',
 'siteuser'         => '{{SITENAME}}-Brucka $1',
 'lastmodifiedatby' => "Dise Sied word daut latste Mol aum $1, Klock $2 von $3 je'endat.", # $1 date, $2 time, $3 user
 'othercontribs'    => 'Oppe Gruntloag vonne Oabeit von $1.',
 'others'           => 'aundre',
+'siteusers'        => '{{SITENAME}}-{{PLURAL:$2|user|users}} $1',
 'creditspage'      => 'Siede-Informatioone',
 'nocredits'        => 'Fe dise Sied send tjeene Informatioone to habe.',
 

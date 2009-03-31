@@ -23,7 +23,7 @@ class SpecialCountEdits extends SpecialPage {
 		$skin = $wgUser->getSkin();
 		$this->setHeaders();
 		$this->loadRequest( $params );
-		$wgOut->addHtml( $this->makeForm() );
+		$wgOut->addHTML( $this->makeForm() );
 		if( $this->target ) {
 			if( User::isIP( $this->target ) ) {
 				$this->showResults( $this->countEditsReal( 0, $this->target ) );
@@ -32,7 +32,7 @@ class SpecialCountEdits extends SpecialPage {
 				if( $id ) {
 					$this->showResults( $this->countEditsReal( $id, false ), $id );
 				} else {
-					$wgOut->addHtml( '<p>' . wfMsgHtml( 'countedits-nosuchuser', htmlspecialchars( $this->target ) ) . '</p>' );
+					$wgOut->addHTML( '<p>' . wfMsgHtml( 'countedits-nosuchuser', htmlspecialchars( $this->target ) ) . '</p>' );
 				}
 			}
 		}
@@ -79,16 +79,16 @@ class SpecialCountEdits extends SpecialPage {
 	function showResults( $count, $id = 0 ) {
 		global $wgOut, $wgUser, $wgLang;
 		$skin =& $wgUser->getSkin();
-		$wgOut->addHtml( '<h2>' . wfMsgHtml( 'countedits-resultheader', htmlspecialchars( $this->target ) ) . '</h2>' );
+		$wgOut->addHTML( '<h2>' . wfMsgHtml( 'countedits-resultheader', htmlspecialchars( $this->target ) ) . '</h2>' );
 		$links = $skin->userLink( $id, $this->target ) . $skin->userToolLinks( $id, $this->target );
-		$wgOut->addHtml( '<p>' . wfMsgHtml( 'countedits-resulttext', $links, $count ) . '</p>' );
+		$wgOut->addHTML( '<p>' . wfMsgExt( 'countedits-resulttext', array( 'escape', 'parsemag' ), $links, $count ) . '</p>' );
 		$wgOut->addWikiText( wfMsg( 'countedits-warning' ) );
 	}
 
 	function showTopTen( &$out ) {
 		global $wgCountEditsMostActive;
 		if( $wgCountEditsMostActive )
-			$out->addHtml( $this->getMostActive() );
+			$out->addHTML( $this->getMostActive() );
 	}
 
 	function getMostActive() {

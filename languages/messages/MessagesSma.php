@@ -6,6 +6,7 @@
  *
  * @author Bïerne
  * @author M.M.S.
+ * @author Urhixidur
  */
 
 $messages = array(
@@ -15,8 +16,6 @@ $messages = array(
 
 'underline-always' => 'Iktesth',
 'underline-never'  => 'Aaltere',
-
-'skinpreview' => '(Åvte-vuesiehtidh)',
 
 # Dates
 'sunday'        => 'Aejlege',
@@ -92,7 +91,7 @@ $messages = array(
 'mytalk'         => 'Mov dïjveldidh',
 'anontalk'       => 'Dïjveldidh ihke dïhte IP',
 'navigation'     => 'Navigasjovne',
-'and'            => 'jih',
+'and'            => '&#32;jih',
 
 'errorpagetitle'   => 'Båajhtode',
 'returnto'         => 'Bååstide gåajkoe $1.',
@@ -140,8 +139,6 @@ $messages = array(
 # All link text and link target definitions of links into project namespace that get used by other message strings, with the exception of user group pages (see grouppage) and the disambiguation template definition (see disambiguations).
 'aboutsite'            => '{{SITENAME}}en bïjre',
 'aboutpage'            => 'Project:Bïjre',
-'bugreports'           => 'Bug reektehtse',
-'bugreportspage'       => 'Project:Bug reektehtse',
 'copyrightpage'        => '{{ns:project}}:Bäjjesereaktah',
 'currentevents'        => 'Daaletje deahpadimmieh',
 'currentevents-url'    => 'Project:Daaletje deahpadimmieh',
@@ -242,6 +239,11 @@ Gïemhpes logge sïjse vihth männgan datne åtna låhka dïhte.',
 'accountcreated'          => 'Nuhtjien skaepede',
 'loginlanguagelabel'      => 'Gïele: $1',
 
+# Password reset dialog
+'oldpassword' => 'Båeries loevesbaakoe:',
+'newpassword' => 'Orre loevesbaakoe:',
+'retypenew'   => 'Odhasit orre loevesbaakoe:',
+
 # Edit page toolbar
 'bold_sample'     => 'Buajtehks tjaalege',
 'bold_tip'        => 'Buajtehks tjaalege',
@@ -263,8 +265,8 @@ Gïemhpes logge sïjse vihth männgan datne åtna låhka dïhte.',
 'hr_tip'          => 'Horisontele sïeve (nuhtjie bïhteles-laakan)',
 
 # Edit pages
-'summary'                => 'Tjohkehtehteme',
-'subject'                => 'Ïebne/rubriike',
+'summary'                => 'Tjohkehtehteme:',
+'subject'                => 'Ïebne/rubriike:',
 'minoredit'              => 'Dïhte lea ohtje värrhtoedimmie',
 'watchthis'              => 'Sïektjedh dïhte bielie',
 'savearticle'            => 'Spååredh bielie',
@@ -272,26 +274,26 @@ Gïemhpes logge sïjse vihth männgan datne åtna låhka dïhte.',
 'showpreview'            => 'Vuesehte åvte-vuesiehtidh',
 'showdiff'               => 'Vuesehte värrhtoedimmie',
 'anoneditwarning'        => "'''Vaaroehtidh:''' Dov lea ijje logge sïjse. Dov IP tjaalesijjie båetedh spååredh sïjse dïhte bielie värrhtoedimmie histovrije.",
-'summary-preview'        => 'Tjohkehtehteme åvte-vuesiehtidh',
+'summary-preview'        => 'Tjohkehtehteme åvte-vuesiehtidh:',
 'loginreqlink'           => 'logge sïjse',
 'loginreqpagetext'       => 'Dov galkedh $1 ihke vuesehte jeatjebh bielieh.',
 'accmailtitle'           => 'Loevesbaakoe seedtie.',
 'accmailtext'            => 'Loevesbaakoe ihke ”$1” utnedh seedtedh gåajkoe $2.',
 'newarticle'             => '(Orre)',
 'noarticletext'          => 'Dïhte lea daelie ijje tjaalege sïjse dïhte bielie, dov dorje [[Special:Search/{{PAGENAME}}|ohtsedh ihke dïhte bielie nomme]] sïjse jeatjebh bielieh jallh [{{fullurl:{{FULLPAGENAME}}|action=edit}} värrhtoedimmie dïhte bielie].',
-'usercssjsyoucanpreview' => "<strong>Tiipse:</strong> Nuhtjie 'Vuesehte åvte-vuesiehtidh' båaloe ihke pryövoe dov orre CSS/JS åvte spååredh.",
+'usercssjsyoucanpreview' => "'''Tiipse:''' Nuhtjie 'Vuesehte åvte-vuesiehtidh' båaloe ihke pryövoe dov orre CSS/JS åvte spååredh.",
 'updated'                => '(Orrestahteme)',
-'note'                   => '<strong>Galtege:</strong>',
-'previewnote'            => '<strong>Dïhte lea aktegh åvte-vuesiehtidh; värrhtoedimmieh ånta ijje sjïdtedh spååredh!</strong>',
+'note'                   => "'''Galtege:'''",
+'previewnote'            => "'''Dïhte lea aktegh åvte-vuesiehtidh; värrhtoedimmieh ånta ijje sjïdtedh spååredh!'''",
 'editing'                => 'Sjiehtedimmie $1',
 'editingsection'         => 'Värrhtoedimmie $1 (sektiovne)',
 'yourtext'               => 'Dov tjaalege',
-'copyrightwarning'       => 'Tjaeleste gaajhke värrhtoedimmieh gåajkoe {{SITENAME}} lea ahte gïehtjele goh maam buektedh nuelesne $2 (vuajna $1 ihke detaaljeh). Bïjre datne ijje sïjhtedh dov tjaalege galka värrhtoedimmieh jallh kåpieeres minngesne jeatjebh daerpies voete, galka datne ijje tjaala daesnie.<br />
+'copyrightwarning'       => "Tjaeleste gaajhke värrhtoedimmieh gåajkoe {{SITENAME}} lea ahte gïehtjele goh maam buektedh nuelesne $2 (vuajna $1 ihke detaaljeh). Bïjre datne ijje sïjhtedh dov tjaalege galka värrhtoedimmieh jallh kåpieeres minngesne jeatjebh daerpies voete, galka datne ijje tjaala daesnie.<br />
 Datne luhpede mijjieh aaj datne tjaala tjaalege jïjtje, jallh kåpieeret raejeste gaaltjie goh ijje vaarjele dejstie bäjjesereaktah, jallh plïerehke.<br />
-<strong>LISSEHTE IJJE OLKESE BÄJJESEREAKTAHVAARJELE ÏEBNE NAMHTAH LUHPIE!</strong>',
-'longpagewarning'        => '<strong>VAAROEHTIDH: Dïhte bielie lea $1 kilobyteh guhkie; såemies
+'''LISSEHTE IJJE OLKESE BÄJJESEREAKTAHVAARJELE ÏEBNE NAMHTAH LUHPIE!'''",
+'longpagewarning'        => "'''VAAROEHTIDH: Dïhte bielie lea $1 kilobyteh guhkie; såemies
 gaskeviermie-låhkoeh åtna tsagkeseh värrhtoedimmie bielih stoerre jallh guhkies enn 32 kb.
-Joekedidh värrhtoedimmie sïjse unnebe sektiovneh.</strong>',
+Joekedidh värrhtoedimmie sïjse unnebe sektiovneh.'''",
 'templatesused'          => 'Maaleh nuhtjie nille dïhte bielie:',
 'templatesusedpreview'   => 'Maaleh nuhtjie sïjse dïhte åvte-vuesiehtidh:',
 'template-protected'     => '(vaarjeleme)',
@@ -303,7 +305,7 @@ Dov dorje värrhtoedimmie gååvnese bielieh, jallh [[Special:UserLogin|logge s�
 'viewpagelogs'        => 'Vuesehte loggeh ihke dïhte bielie',
 'currentrev'          => 'Daaletje gïehtjedamme',
 'revisionasof'        => 'Gïehtjedamme ihke $1',
-'revision-info'       => 'Gïehtjedamme raejeste dïhte $1; $2',
+'revision-info'       => 'Gïehtjedamme raejeste dïhte $1; $2', # Additionally available: $3: revision id
 'previousrevision'    => '←Båarasåabpoe gïehtjedamme',
 'nextrevision'        => 'Minngebe gïehtjedamme→',
 'currentrevisionlink' => 'Daaletje gïehtjedamme',
@@ -339,17 +341,16 @@ Dov dorje värrhtoedimmie gååvnese bielieh, jallh [[Special:UserLogin|logge s�
 'prevn'            => 'övtebe $1',
 'nextn'            => 'minngeben $1',
 'viewprevnext'     => 'Vuesehth ($1) ($2) ($3)',
+'searchhelp-url'   => 'Help:Sisvege',
 'powersearch'      => 'Ohtsedh',
 
 # Preferences page
 'preferences'        => 'Sïjsestäälningeh',
 'mypreferences'      => 'Mov sïjsesäälningeh',
 'changepassword'     => 'Värrhtoedimmie loevesbaakoe',
+'skin-preview'       => 'Åvte-vuesiehtidh',
 'math_unknown_error' => 'ammes båajhtede',
 'saveprefs'          => 'Spååredh',
-'oldpassword'        => 'Båeries loevesbaakoe:',
-'newpassword'        => 'Orre loevesbaakoe:',
-'retypenew'          => 'Odhasit orre loevesbaakoe:',
 'searchresultshead'  => 'Ohtsedh',
 'timezonelegend'     => 'Tïjjedajve',
 'localtime'          => 'Byjrehks tïjje',
@@ -414,15 +415,15 @@ Dov dorje värrhtoedimmie gååvnese bielieh, jallh [[Special:UserLogin|logge s�
 
 'license' => 'Liseense',
 
-# Special:ImageList
-'imagelist_search_for' => 'Ohtsedh ihke guvvie nomme:',
+# Special:ListFiles
+'listfiles_search_for' => 'Ohtsedh ihke guvvie nomme:',
 'imgfile'              => 'guvvie',
-'imagelist'            => 'Guvvie lästoe',
-'imagelist_name'       => 'Nomme',
-'imagelist_user'       => 'Nuhtjien',
-'imagelist_size'       => 'Stoerre',
+'listfiles'            => 'Guvvie lästoe',
+'listfiles_name'       => 'Nomme',
+'listfiles_user'       => 'Nuhtjien',
+'listfiles_size'       => 'Stoerre',
 
-# Image description page
+# File description page
 'filehist'                  => 'Baalka histovrije',
 'filehist-help'             => 'Diedtedh nille biejjie ihke vuajna man baalkan lij bealese dïhte tïjje.',
 'filehist-current'          => 'daaletje',
@@ -457,11 +458,8 @@ Dov dorje värrhtoedimmie gååvnese bielieh, jallh [[Special:UserLogin|logge s�
 'randomredirect' => 'Summal odhasitstivren',
 
 # Statistics
-'statistics'    => 'Statistiike',
-'sitestats'     => '{{SITENAME}} statistiike',
-'userstats'     => 'Nuhtjien statistiike',
-'userstatstext' => "Dïhte {{PLURAL:$1|lea '''1''' registreered [[Special:ListUsers|nuhtjien]]|lea '''$1''' registreered [[Special:ListUsers|nuhtjienh]]}},  jih
-'''$2''' (jallh '''$4%''') {{PLURAL:$2|åtna|åtnah}} $5 reahkta.",
+'statistics'              => 'Statistiike',
+'statistics-header-users' => 'Nuhtjien statistiike',
 
 'disambiguations' => 'Disambirgusjovne bielieh',
 
@@ -518,7 +516,6 @@ Dov dorje värrhtoedimmie gååvnese bielieh, jallh [[Special:UserLogin|logge s�
 'speciallogtitlelabel' => 'Tiitele:',
 'log'                  => 'Loggeh',
 'all-logs-page'        => 'Gaajhke loggeh',
-'log-search-submit'    => 'Vaadtsa',
 
 # Special:AllPages
 'allpages'       => 'Gaajhke bielieh',
@@ -550,21 +547,17 @@ Dov dorje värrhtoedimmie gååvnese bielieh, jallh [[Special:UserLogin|logge s�
 'emailsent'       => 'E-påaste seedtedh',
 
 # Watchlist
-'watchlist'            => 'Mov sïektjedhlästoe',
-'mywatchlist'          => 'Mov sïektjedhlästoe',
-'watchlistfor'         => "(ihke '''$1''')",
-'addedwatch'           => 'Lissiehtidh gåajkoe sïektjedhlästoe',
-'removedwatch'         => 'Sihkojuvvon raejeste sïektjedhlästoe',
-'removedwatchtext'     => 'Bielie "[[:$1]]" lea sihkojuvvon raejeste dov sïektjedhlästoe.',
-'watch'                => 'Sïektjedh',
-'watchthispage'        => 'Sïektjedh dïhte bielie',
-'unwatch'              => 'Ov-sïektjedh',
-'watchlist-details'    => '{{PLURAL:$1|$1 bielie|$1 bielieh}} sïektjedh (doekoe dïerhkestidhbielieh).',
-'wlshowlast'           => 'Vuesehte minngemes $1 täjmoeh $2 biejjieh $3',
-'watchlist-hide-bots'  => 'Gaptjedh jïjtjesvïhtjije värrhtoedimmie',
-'watchlist-show-own'   => 'Vuesehte mov värrhtoedimmieh',
-'watchlist-hide-own'   => 'Gaptjedh mov värrhtoedimmieh',
-'watchlist-hide-minor' => 'Gaptjedh smaave värrhtoedimmieh',
+'watchlist'         => 'Mov sïektjedhlästoe',
+'mywatchlist'       => 'Mov sïektjedhlästoe',
+'watchlistfor'      => "(ihke '''$1''')",
+'addedwatch'        => 'Lissiehtidh gåajkoe sïektjedhlästoe',
+'removedwatch'      => 'Sihkojuvvon raejeste sïektjedhlästoe',
+'removedwatchtext'  => 'Bielie "[[:$1]]" lea sihkojuvvon raejeste dov sïektjedhlästoe.',
+'watch'             => 'Sïektjedh',
+'watchthispage'     => 'Sïektjedh dïhte bielie',
+'unwatch'           => 'Ov-sïektjedh',
+'watchlist-details' => '{{PLURAL:$1|$1 bielie|$1 bielieh}} sïektjedh (doekoe dïerhkestidhbielieh).',
+'wlshowlast'        => 'Vuesehte minngemes $1 täjmoeh $2 biejjieh $3',
 
 # Displayed when you click the "watch" button and it is in the process of watching
 'watching'   => 'Sïektjeminie...',
@@ -574,28 +567,33 @@ Dov dorje värrhtoedimmie gååvnese bielieh, jallh [[Special:UserLogin|logge s�
 'enotif_impersonal_salutation' => '{{SITENAME}} nuhtjien',
 'created'                      => 'skaepede',
 
-# Delete/protect/revert
-'deletepage'                  => 'Tjåegkedh bielie',
-'historywarning'              => 'Vaaroehtidh: Bielie datne gïehtele ahte sihkut åtna histovrije:',
-'actioncomplete'              => 'Deahpadimmie voerkes',
-'deletedtext'                 => '"<nowiki>$1</nowiki>" lea sihkojuvvon.
+# Delete
+'deletepage'            => 'Tjåegkedh bielie',
+'historywarning'        => 'Vaaroehtidh: Bielie datne gïehtele ahte sihkut åtna histovrije:',
+'actioncomplete'        => 'Deahpadimmie voerkes',
+'deletedtext'           => '"<nowiki>$1</nowiki>" lea sihkojuvvon.
 Vuajna $2 ihke galtege bïjre männgan sihkojuvvonh.',
-'deletedarticle'              => 'sihkoj "[[$1]]"',
-'dellogpage'                  => 'Sihkkun logge',
-'deletecomment'               => 'Gaavhtan ihke sihkkuma',
-'deleteotherreason'           => 'Jeatjebh/ehkstre gaavhtan:',
-'deletereasonotherlist'       => 'Jeatjebh gaavhtan',
-'rollbacklink'                => 'jurrelde bååstede',
+'deletedarticle'        => 'sihkoj "[[$1]]"',
+'dellogpage'            => 'Sihkkun logge',
+'deletecomment'         => 'Gaavhtan ihke sihkkuma',
+'deleteotherreason'     => 'Jeatjebh/ehkstre gaavhtan:',
+'deletereasonotherlist' => 'Jeatjebh gaavhtan',
+
+# Rollback
+'rollbacklink' => 'jurrelde bååstede',
+
+# Protect
 'protectlogpage'              => 'Vaarjelidh logge',
+'prot_1movedto2'              => '[[$1]] jåhta gåajkoe [[$2]]',
 'protect-legend'              => 'Skylledh vaarjelidh',
 'protectcomment'              => 'Lahtestimmie:',
 'protectexpiry'               => 'Boarasnuvve:',
 'protect_expiry_invalid'      => 'Ov-jiltiige buaorasjnuvvenaigi.',
 'protect_expiry_old'          => 'Boarasnuvvenaigi lea vaesedh.',
 'protect-unchain'             => 'Tjuevtedh jåhtaluhpie',
-'protect-text'                => 'Daesnie dorje datne vuajna jih värrhtoedimmie vaarjelidhdaltese dejstie bielie <strong><nowiki>$1</nowiki></strong>.',
-'protect-locked-access'       => 'Dov nuhtjien åtna ijje luhpie gåajkoe värrhtoedimmie tjaeleste-vaarjelidh.
-Daaletje tjaeleste-vaarjelidh sïjsestäälninge ihke bielie <strong>$1</strong> lea:',
+'protect-text'                => "Daesnie dorje datne vuajna jih värrhtoedimmie vaarjelidhdaltese dejstie bielie '''<nowiki>$1</nowiki>'''.",
+'protect-locked-access'       => "Dov nuhtjien åtna ijje luhpie gåajkoe värrhtoedimmie tjaeleste-vaarjelidh.
+Daaletje tjaeleste-vaarjelidh sïjsestäälninge ihke bielie '''$1''' lea:",
 'protect-default'             => '(åvte-veeljeme)',
 'protect-fallback'            => 'Luhpie "$1"',
 'protect-level-autoconfirmed' => 'Tjöödtjehtidh ov-registreered nuhtjienh',
@@ -604,6 +602,7 @@ Daaletje tjaeleste-vaarjelidh sïjsestäälninge ihke bielie <strong>$1</strong>
 'protect-expiring'            => 'boarasnuvve $1 (UTC)',
 'protect-cascade'             => 'Vaarjelidh bielieh guosket sïjse dïhte bielie (viidit suodjaluse)',
 'protect-cantedit'            => 'Datne dorje ijje värrhtoedimmie vaarjelidhdaltese ihke dïhte bielie, ihke datne ijja åtna luhpie ahte värrhtoedimmie dïhte.',
+'protect-expiry-options'      => '2 täjmoe:2 hours,1 biejjie:1 day,3 biejjie:3 days,1 våhkoe:1 week,2 våhkoe:2 weeks,1 aske:1 month,3 aske:3 months,6 aske:6 months,1 jaepie:1 year,gietjieloeves:infinite', # display1:time1,display2:time2,...
 'restriction-type'            => 'Permisjovne:',
 'restriction-level'           => 'Restriksjovne daltese:',
 
@@ -642,7 +641,6 @@ Daaletje tjaeleste-vaarjelidh sïjsestäälninge ihke bielie <strong>$1</strong>
 'whatlinkshere'       => 'Bilieh goh lïenghkeh diekie',
 'whatlinkshere-title' => 'Bielieh goh lïenghke gåajkoe $1',
 'whatlinkshere-page'  => 'Bielie:',
-'linklistsub'         => '(Lästoe bijjelen lïenghke)',
 'linkshere'           => "Tjuovvovasj bielie lïenghke gåajkoe '''[[:$1]]''':",
 'nolinkshere'         => "Ijje bielieh lïenghke gåajkoe '''[[:$1]]'''.",
 'isredirect'          => 'bïjre-dirisjovne bielie',
@@ -785,7 +783,7 @@ Gïemhpes veeljeme jeatjebh nomme.',
 'show-big-image'       => 'Dïeves stoerre',
 'show-big-image-thumb' => '<small>Stoerre ihke dïhte vuesiehtidh: $1 × $2 pixel</small>',
 
-# Special:NewImages
+# Special:NewFiles
 'newimages' => 'Gallerije dejstie orre baalkah',
 'ilsubmit'  => 'Ohtsedh',
 
@@ -852,12 +850,7 @@ Jeatjebh dajveh lea gaptjedh goh sïejhme, bine vuesehte gåessie taabelle stoer
 'scarytranscludetoolong' => '[URL lea ihke guhkie; gaatelassjedh]',
 
 # action=purge
-'confirm_purge' => 'Döömedh cache ihke dïhte bielie?
-
-$1',
-
-# AJAX search
-'useajaxsearch' => 'Nuhtjie AJAX ohtsedh',
+'confirm-purge-top' => 'Döömedh cache ihke dïhte bielie?',
 
 # Multipage image navigation
 'imgmultipageprev' => '← övtebe bielie',

@@ -6,7 +6,7 @@
  * @addtogroup Extensions
  * @author Daniel Kinzler <duesentrieb@brightbyte.de>
  * @copyright © 2006 Daniel Kinzler
- * @licence GNU General Public Licence 2.0 or later
+ * @license GNU General Public Licence 2.0 or later
  */
  
 if( !defined( 'MEDIAWIKI' ) ) {
@@ -26,6 +26,13 @@ if ( !$wgUseAjax ) {
 /**
  * Register extension setup hook and credits
  */
+$wgExtensionCredits['specialpage'][] = array(
+	'name' => 'AjaxTest',
+	'svn-date' => '$LastChangedDate: 2008-12-18 08:27:00 +0000 (Thu, 18 Dec 2008) $',
+	'svn-revision' => '$LastChangedRevision: 44755 $',
+	'author' => 'Daniel Kinzler',
+	'description' => 'AjaxTest extension',
+);
 $wgExtensionFunctions[] = 'efAjaxTestSetup';
 $wgSpecialPages['AjaxTest'] = 'AjaxTestPage';
 $wgAutoloadClasses['AjaxTestPage'] = dirname( __FILE__ ) . '/AjaxTestPage.php';
@@ -64,5 +71,3 @@ function efAjaxTest( $text, $usestring, $httpcache, $lastmod, $error ) {
 		return $response;
 	}
 }
-
-

@@ -89,6 +89,9 @@ class LogPage {
 		return true;
 	}
 
+	/**
+	 * Get the RC comment from the last addEntry() call
+	 */
 	public function getRcComment() {
 		$rcComment = $this->actionText;
 		if( '' != $this->comment ) {
@@ -98,6 +101,13 @@ class LogPage {
 				$rcComment .= ': ' . $this->comment;
 		}
 		return $rcComment;
+	}
+
+	/**
+	 * Get the comment from the last addEntry() call
+	 */
+	public function getComment() {
+		return $this->comment;
 	}
 
 	/**
@@ -136,7 +146,8 @@ class LogPage {
 	 * @return string Headertext of this logtype
 	 */
 	static function logHeader( $type ) {
-		global $wgLogHeaders;
+		global $wgLogHeaders, $wgMessageCache;
+		$wgMessageCache->loadAllMessages();
 		return wfMsgExt($wgLogHeaders[$type],array('parseinline'));
 	}
 
@@ -144,58 +155,29 @@ class LogPage {
 	 * @static
 	 * @return HTML string
 	 */
-	static function actionText( $type, $action, $title = NULL, $skin = NULL, $params = array(), $filterWikilinks=false ) {
-		global $wgLang, $wgContLang, $wgLogActions;
+	static function actionText( $type, $action, $title = NULL, $skin = NULL, 
+		$params = array(), $filterWikilinks = false ) 
+	{
+		global $wgLang, $wgContLang, $wgLogActions, $wgMessageCache;
 
+		$wgMessageCache->loadAllMessages();
 		$key = "$type/$action";
 
 		// macbre: ProblemReports (dirty code hack :[)
 		if ( $type == 'pr_rep_log' && class_exists('WikiaApiQueryProblemReports') )
 			return WikiaApiQueryProblemReports::makeActionText($key, $title, $params, $skin);
 		
-		if( $key == 'patrol/patrol' )
+		# Defer patrol log to PatrolLog class
+		if( $key == 'patrol/patrol' ) {
 			return PatrolLog::makeActionText( $title, $params, $skin );
-
+		}
 		if( isset( $wgLogActions[$key] ) ) {
 			if( is_null( $title ) ) {
-				$rv=wfMsg( $wgLogActions[$key] );
+				$rv = wfMsg( $wgLogActions[$key] );
 			} else {
-				if( $skin ) {
-
-					switch( $type ) {
-						case 'move':
-							$titleLink = $skin->makeLinkObj( $title, htmlspecialchars( $title->getPrefixedText() ), 'redirect=no' );
-							$params[0] = $skin->makeLinkObj( Title::newFromText( $params[0] ), htmlspecialchars( $params[0] ) );
-							break;
-						case 'block':
-							if( substr( $title->getText(), 0, 1 ) == '#' ) {
-								$titleLink = $title->getText();
-							} else {
-								// TODO: Store the user identifier in the parameters
-								// to make this faster for future log entries
-								$id = User::idFromName( $title->getText() );
-								$titleLink = $skin->userLink( $id, $title->getText() )
-									. $skin->userToolLinks( $id, $title->getText(), false, Linker::TOOL_LINKS_NOBLOCK );
-							}
-							break;
-						case 'rights':
-							$text = $wgContLang->ucfirst( $title->getText() );
-							$titleLink = $skin->makeLinkObj( Title::makeTitle( NS_USER, $text ) );
-							break;
-						case 'merge':
-							$titleLink = $skin->makeLinkObj( $title, $title->getPrefixedText(), 'redirect=no' );
-							$params[0] = $skin->makeLinkObj( Title::newFromText( $params[0] ), htmlspecialchars( $params[0] ) );
-							$params[1] = $wgLang->timeanddate( $params[1] );
-							break;
-						default:
-							$titleLink = $skin->makeLinkObj( $title );
-					}
-
-				} else {
-					$titleLink = $title->getPrefixedText();
-				}
+				$titleLink = self::getTitleLink( $type, $skin, $title, $params );
 				if( $key == 'rights/rights' ) {
-					if ($skin) {
+					if( $skin ) {
 						$rightsnone = wfMsg( 'rightsnone' );
 						foreach ( $params as &$param ) {
 							$groupArray = array_map( 'trim', explode( ',', $param ) );
@@ -217,18 +199,28 @@ class LogPage {
 						$rv = wfMsgForContent( $wgLogActions[$key], $titleLink );
 					}
 				} else {
+					$details = '';
 					array_unshift( $params, $titleLink );
-					if ( $key == 'block/block' || $key == 'suppress/block' ) {
+					if ( $key == 'block/block' || $key == 'suppress/block' || $key == 'block/reblock' ) {
 						if ( $skin ) {
-							$params[1] = '<span title="' . htmlspecialchars( $params[1] ). '">' . $wgLang->translateBlockExpiry( $params[1] ) . '</span>';
+							$params[1] = '<span title="' . htmlspecialchars( $params[1] ). '">' . 
+								$wgLang->translateBlockExpiry( $params[1] ) . '</span>';
 						} else {
 							$params[1] = $wgContLang->translateBlockExpiry( $params[1] );
 						}
-						$params[2] = isset( $params[2] )
-										? self::formatBlockFlags( $params[2], is_null( $skin ) )
-										: '';
+						$params[2] = isset( $params[2] ) ? 
+							self::formatBlockFlags( $params[2], is_null( $skin ) ) : '';
+					} else if ( $type == 'protect' && count($params) == 3 ) {
+						$details .= " {$params[1]}"; // restrictions and expiries
+						if( $params[2] ) {
+							$details .= ' ['.wfMsg('protect-summary-cascade').']';
+						}
+					} else if ( $type == 'move' && count( $params ) == 3 ) {
+						if( $params[2] ) {
+							$details .= ' [' . wfMsg( 'move-redirect-suppressed' ) . ']';
+						}
 					}
-					$rv = wfMsgReal( $wgLogActions[$key], $params, true, !$skin );
+					$rv = wfMsgReal( $wgLogActions[$key], $params, true, !$skin ) . $details;
 				}
 			}
 		} else {
@@ -248,6 +240,59 @@ class LogPage {
 			$rv = str_replace( "]]", "", $rv );
 		}
 		return $rv;
+	}
+	
+	protected static function getTitleLink( $type, $skin, $title, &$params ) {
+		global $wgLang, $wgContLang;
+		if( !$skin ) {
+			return $title->getPrefixedText();
+		}
+		switch( $type ) {
+			case 'move':
+				$titleLink = $skin->makeLinkObj( $title, 
+					htmlspecialchars( $title->getPrefixedText() ), 'redirect=no' );
+				$targetTitle = Title::newFromText( $params[0] );
+				if ( !$targetTitle ) {
+					# Workaround for broken database
+					$params[0] = htmlspecialchars( $params[0] );
+				} else {
+					$params[0] = $skin->makeLinkObj( $targetTitle, htmlspecialchars( $params[0] ) );
+				}
+				break;
+			case 'block':
+				if( substr( $title->getText(), 0, 1 ) == '#' ) {
+					$titleLink = $title->getText();
+				} else {
+					// TODO: Store the user identifier in the parameters
+					// to make this faster for future log entries
+					$id = User::idFromName( $title->getText() );
+					$titleLink = $skin->userLink( $id, $title->getText() )
+						. $skin->userToolLinks( $id, $title->getText(), false, Linker::TOOL_LINKS_NOBLOCK );
+				}
+				break;
+			case 'rights':
+				$text = $wgContLang->ucfirst( $title->getText() );
+				$titleLink = $skin->makeLinkObj( Title::makeTitle( NS_USER, $text ) );
+				break;
+			case 'merge':
+				$titleLink = $skin->makeLinkObj( $title, $title->getPrefixedText(), 'redirect=no' );
+				$params[0] = $skin->makeLinkObj( Title::newFromText( $params[0] ), htmlspecialchars( $params[0] ) );
+				$params[1] = $wgLang->timeanddate( $params[1] );
+				break;
+			default:
+				if( $title->getNamespace() == NS_SPECIAL ) {
+					list( $name, $par ) = SpecialPage::resolveAliasWithSubpage( $title->getDBKey() );
+					# Use the language name for log titles, rather than Log/X
+					if( $name == 'Log' ) {
+						$titleLink = '('.$skin->makeLinkObj( $title, LogPage::logName( $par ) ).')';
+					} else {
+						$titleLink = $skin->makeLinkObj( $title );
+					}
+				} else {
+					$titleLink = $skin->makeLinkObj( $title );
+				}
+		}
+		return $titleLink;
 	}
 
 	/**

@@ -104,13 +104,12 @@
 
 /* Short User Interface */
 .flaggedrevs_short {
-	border: 1px solid #aaa;
+	border: 0px;
 	background-color: #f9f9f9;
-	padding: 3px;
+	padding: 1px;
 	font-size: 95%;
 	font-weight: normal;
-	margin: 0em 0em 1em 1em;
-	position: relative;
+	margin: 0em 0em 0em 1em;
 	float: right;
 	text-align: left;
 	max-width: 450px;
@@ -179,6 +178,7 @@
 	background-color: #fffff0;
 }
 
+/* Both User Interfaces */
 .flaggedrevs-color-0 {
 	background-color: #f9f9f9;
 }
@@ -192,7 +192,14 @@
 	background-color: #fffff0;
 }
 
-/* Both User Interfaces */
+.flaggedrevs-unreviewed {
+	background-color: #fffff0;
+}
+
+.flaggedrevs-unreviewed2 {
+	background-color: #faebd7;
+}
+
 .flaggedrevs_toggle {
 	color: blue;
 	white-space: nowrap;
@@ -206,8 +213,8 @@
 .fr-icon-unlocked {
 	padding: 0px;
 	margin: 0px;
-	width: 18px;
-	height: 18px;
+	width: 16px;
+	height: 16px;
 	float: left;
 	background-repeat: no-repeat;
 	background-position: center center;
@@ -236,6 +243,14 @@
 
 .fr-diff-to-stable {
 	line-height: 1em;
+}
+
+.fr-hist-stable-user {
+	font-weight: bold;
+}
+
+.fr-hist-quality-user {
+	font-weight: bold;
 }
 
 /* Site notices */
@@ -268,7 +283,8 @@
 	clear: both;
 }
 
-.flaggedrevs_reviewform * {
+.fr-rating-controls,
+.fr-rating-controls-disabled {
 	vertical-align: middle;
 	line-height: 1em;
 }
@@ -297,6 +313,10 @@
 	background-color: #fffff0;
 }
 
+.fr-diff-patrollink {
+	text-align: center;
+}
+
 .fr-notes-box {
 	width: 95%;
 	margin: 0em 1em 0em .5em;
@@ -304,4 +324,33 @@
 
 .fr-comment-box {
 	margin-top: .25em;
+}
+
+.fr-rating-dave {
+	background-color: lightblue;
+}
+
+.fr-rating-rave {
+	background-color: lightgreen;
+}
+
+.fr-hiddenform {
+	display: none;
+}
+
+.fr_reader_feedback_graph {
+	width: 100%; 
+	overflow: auto;
+}
+
+.fr_reader_feedback_plot {
+	background-color: #F8F8F8;
+}
+
+.fr_reader_feedback_users {
+	background-color: #F0F0F0;
+	width: 100%; 
+	max-height:410px;
+	overflow: auto;
+	font-size: 90%;
 }

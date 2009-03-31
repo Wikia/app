@@ -29,7 +29,7 @@ $wgExtensionCredits['specialpage'][] = array(
 
 $wgExtensionCredits['parserhook'][] = array(
 	'name' => 'TemplateLink',
-	'version' => '1.1',
+	'version' => '1.2',
 	'author' =>'Magnus Manske',
 	'url' => 'http://www.mediawiki.org/wiki/Extension:TemplateLink',
 	'description' => 'This extension can show a template as a new page'
@@ -37,6 +37,7 @@ $wgExtensionCredits['parserhook'][] = array(
 
 $dir = dirname(__FILE__) . '/';
 $wgExtensionMessagesFiles['TemplateLink'] = $dir . 'TemplateLink.i18n.php';
+$wgExtensionAliasesFiles['TemplateLink'] = $dir . 'TemplateLink.alias.php';
 $wgAutoloadClasses['TemplateLink'] = $dir . 'TemplateLink.body.php'; # Tell MediaWiki to load the extension body.
 $wgSpecialPages['TemplateLink'] = 'TemplateLink'; # Let MediaWiki know about your new special page.
 

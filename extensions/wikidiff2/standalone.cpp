@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <sys/stat.h>
+#include <cstring>
 #include "wikidiff2.h"
 
 /**

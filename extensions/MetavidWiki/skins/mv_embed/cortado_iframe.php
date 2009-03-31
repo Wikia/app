@@ -9,7 +9,7 @@ cortado_iframe();
 
 function cortado_iframe() {
 	if(!function_exists('filter_input')){
-		error_out('your version of php lacks <b>filter_input()</b> function</br>');
+		die('your version of php lacks <b>filter_input()</b> function</br>');
 	}
 	//load the http GETS:
 	// set the parent domain if provided
@@ -68,7 +68,7 @@ function cortado_iframe() {
 /**
  * JS escape function copied from MediaWiki's Xml::escapeJsString()
  */
-function wfEscapeJsString( $string ) {
+function escapeJsString( $string ) {
 	// See ECMA 262 section 7.8.4 for string literal format
 	$pairs = array(
 		"\\" => "\\\\",
@@ -106,11 +106,11 @@ function output_page($params){
 	<head>
 	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
 	<title>cortado_embed</title>
-	<?if( !empty( $parent_domain ) ){?>
+	<?php if( !empty( $parent_domain ) ){?>
 	<script type="text/javascript">
-		window.DOMAIN = '<?= wfEscapeJsString( $parent_domain ); ?>';
+		window.DOMAIN = '<?php echo escapeJsString( $parent_domain ); ?>';
 	</script>
-	<?}?>
+	<?php }?>
 	<style type="text/css">
 	<!--
 	body {
@@ -122,28 +122,28 @@ function output_page($params){
 	-->
 	</style></head>
 	<body>
-	<?if (empty($error)){ ?>
-		<applet id="<?= htmlspecialchars( $id ) ?>" 
+	<?php if (empty($error)){ ?>
+		<applet id="<?php echo  htmlspecialchars( $id ) ?>" 
 		  code="com.fluendo.player.Cortado.class" 
 		  archive="cortado-ovt-stripped_r34336.jar" 
-		  width="<?= htmlspecialchars( $width )?>" 
-		  height="<?=htmlspecialchars( $height )?>"
+		  width="<?php echo  htmlspecialchars( $width )?>" 
+		  height="<?php echo htmlspecialchars( $height )?>"
 		  >
-			<param name="url" value="<?= htmlspecialchars( $media_url )?>" />
+			<param name="url" value="<?php echo  htmlspecialchars( $media_url )?>" />
 			<param name="local" value="false"/>
 			<param name="keepaspect" value="true" />
-			<param name="video" value="<?= htmlspecialchars( $video )?>" />
-			<param name="audio" value="<?= htmlspecialchars( $audio )?>" />
+			<param name="video" value="<?php echo  htmlspecialchars( $video )?>" />
+			<param name="audio" value="<?php echo  htmlspecialchars( $audio )?>" />
 			<param name="seekable" value="true" />
 			<? if($duration!=0){
 				?>
-				<param name="duration" value="<?= htmlspecialchars( $duration )?>" />
+				<param name="duration" value="<?php echo  htmlspecialchars( $duration )?>" />
 				<?
 			 } ?>
 			<param name="bufferSize" value="200" />
 		</applet>
 	<? }else{ ?>
-		<b>Error:</b> <?= htmlspecialchars( $error )?>	
+		<b>Error:</b> <?php echo  htmlspecialchars( $error )?>	
 	<?
 	}
 	?>

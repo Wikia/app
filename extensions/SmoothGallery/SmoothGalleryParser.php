@@ -87,7 +87,7 @@ class SmoothGalleryParser {
 			#$this->galleriesArray["gallery_set_name"] = "MediaWikiSGallerySet" . mt_rand();
 			$this->galleriesArray["gallery_set_name"] = "MediaWikiSGallerySet";
 	
-			//parse set into seperate galleries
+			//parse set into separate galleries
 			preg_match_all( "/<sgallery([\w]+)?[^>]*>(.*)<\/sgallery>/smU", $input, $galleries, PREG_SET_ORDER );
 	
 			//iterate through galleries, call renderGallery on each, and

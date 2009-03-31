@@ -15,7 +15,7 @@ $wgExtensionCredits['other'][] = array(
 	'name'           => 'Extended Permissions',
 	'author'         => 'Ryan Schmidt',
 	'url'            => 'http://www.mediawiki.org/wiki/Extension:GroupPermissionsManager',
-	'version'        => '1.0',
+	'version'        => '1.5',
 	'description'    => 'Extended permissions system',
 	'descriptionmsg' => 'grouppermissions-desc2',
 );
@@ -51,9 +51,9 @@ function efGPManagerRevokeRights(&$user, &$rights) {
 //Extend the permissions system for finer-grained control without requiring hacks
 //For allowing actions that the normal permissions system would prevent
 function efGPManagerExtendedPermissionsGrant($title, $user, $action, &$result) {
-	global $wgRequest;
+	global $wgRequest, $wgGroupPermissions;
 	$result = false;
-	if( $action == 'edit' && ($wgRequest->getVal('action') == 'edit' || $wgRequest->getVal('action') == 'submit') ) {
+	if( $action == 'edit' || $action == 'create' ) {
 		if( !$title->exists() ) {
 			$protection = getTitleProtection($title);
 			if($protection) {
@@ -63,11 +63,15 @@ function efGPManagerExtendedPermissionsGrant($title, $user, $action, &$result) {
 					return true;
 				}
 			}
-			//otherwise don't pass it on to the normal permission system, because the edit right would then be checked
+			//need to explicitly set this right just for this instance because of a hard-coded check when saving a page
 			if( $title->isTalkPage() && $user->isAllowed('createtalk') ) {
+				$wgGroupPermissions['*']['edit'] = true;
+				$user->mRights = null; //force a reload of rights
 				$result = true;
 				return false;
 			} elseif( !$title->isTalkPage() && $user->isAllowed('createpage') ) {
+				$wgGroupPermissions['*']['edit'] = true;
+				$user->mRights = null; //force a reload of rights
 				$result = true;
 				return false;
 			}
@@ -82,13 +86,29 @@ function efGPManagerExtendedPermissionsGrant($title, $user, $action, &$result) {
 					}
 				}
 			}
+			if( $title->isNamespaceProtected() ) {
+				//user can't edit due to namespace protection
+				$result = null;
+				return false;
+			}
+			//ditto here w/ the GroupPermissions
 			if( $title->isTalkPage() && $user->isAllowed('edittalk') ) {
+				$wgGroupPermissions['*']['edit'] = true;
+				$user->mRights = null; //force a reload of rights
 				$result = true;
 				return false;
 			} elseif( !$title->isTalkPage() && $user->isAllowed('edit') ) {
+				$wgGroupPermissions['*']['edit'] = true;
+				$user->mRights = null; //force a reload of rights
 				$result = true;
 				return false;
 			}
+		}
+	} elseif( $action == 'read' && ($wgRequest->getVal('action') == 'edit' || $wgRequest->getVal('action') == 'submit') ) {
+		# hack so anons can still view page source if they can't edit
+		if($user->isAllowed('viewsource')) {
+			$result = true;
+			return false;
 		}
 	}
 	//hack for the UserCanRead method
@@ -162,11 +182,23 @@ function efGPManagerExtendedPermissionsRevoke($title, $user, $action, &$result) 
 			}
 		}
 	}
+	if( ($wgRequest->getVal('diff') || $wgRequest->getVal('oldid')) && !$user->isAllowed('readold') ) {
+		//if they can't read it, they shouldn't be able to do other stuff with it anyway
+		$result = $err;
+		return false;
+	}
 	return true; //otherwise we don't care
 }
 
 //replace right-edit messages with right-edit-new wherever applicable
-function efGPManagerReplaceEditMessage(&$key, &$useDB, &$langCode) {
+function efGPManagerReplaceEditMessage(&$key, &$useDB, &$langCode, $transform) {
+	# Dirty hack, prevents that issue on viewsource pages
+	global $wgRequest;
+	if($wgRequest->getVal('action') == 'edit' || $wgRequest->getVal('action') == 'sumbit') {
+		global $wgTitle;
+		if(!$wgTitle instanceOf Title || !$wgTitle->userCan('edit')) return true;
+	}
+	loadGPMessages();
 	if($key == 'right-edit') {
 		$key = 'right-edit-new';
 		return false; //so it doesn't change load times TOO much

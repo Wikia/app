@@ -112,13 +112,13 @@ function fixRedirect( $id ){
 
 function fixLinksFromArticle( $id ) {
 	global $wgTitle, $wgParser;
-	
+
 	$wgTitle = Title::newFromID( $id );
 	$dbw = wfGetDB( DB_MASTER );
 
 	$linkCache =& LinkCache::singleton();
 	$linkCache->clear();
-	
+
 	if ( is_null( $wgTitle ) ) {
 		return;
 	}

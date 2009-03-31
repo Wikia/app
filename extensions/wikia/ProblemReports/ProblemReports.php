@@ -70,7 +70,7 @@ function wfProblemReports()
 	
 		// add "Report a problem" link and return html of "Report a problem" dialog
 		$wgHooks['SkinTemplateContentActions'][] = 'wfProblemReportsAddLink';
-		$wgHooks['ExtendJSGlobalVars'][] = 'wfProblemReportsSetupVars';
+		$wgHooks['MakeGlobalVariablesScript'][] = 'wfProblemReportsSetupVars';
 	}
 
 	// setup for Special:Log
@@ -96,10 +96,10 @@ function wfProblemReports()
 	$wgProblemReportsSecret = md5($wgServer . 'saltyWikiaSalt');
 	
 	// setup API module
-	global $wgAutoloadClasses, $wgApiQueryListModules;
+	global $wgAutoloadClasses, $wgAPIListModules;
 	
 	$wgAutoloadClasses["WikiaApiQueryProblemReports"]  = "extensions/wikia/ProblemReports/WikiaApiQueryProblemReports.php";
-	$wgApiQueryListModules["problemreports"] = "WikiaApiQueryProblemReports";
+	$wgAPIListModules["problemreports"] = "WikiaApiQueryProblemReports";
 
 	// setup ajax interface wrapper
 	global $wgAjaxExportList;

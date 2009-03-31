@@ -1,0 +1,43 @@
+# Force the test runner to ensure the extension is loaded
+# fixme... this doesn't seem to work :D
+#!! functionhooks
+#time
+#!! endfunctionhooks
+
+# fixme: #time seems to be accepting input as local time, which strikes me as wrong
+
+!! test
+Input times should probably be UTC, not local time
+!! input
+{{#time:c|15 January 2001}}
+!!result
+<p>2001-01-15T00:00:00+00:00
+</p>
+!! end
+
+!! test
+Time test in traditional range...
+!! input
+{{#time:Y|15 January 2001}}
+!! result
+<p>2001
+</p>
+!! end
+
+!! test
+Time test prior to 1970 Unix creation myth
+!! input
+{{#time:Y|5 April 1967}}
+!! result
+<p>1967
+</p>
+!! end
+
+!! test
+Time test after the 2038 32-bit Apocalype
+!! input
+{{#time:Y|28 July 2061}}
+!! result
+<p>2061
+</p>
+!! end

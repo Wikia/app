@@ -24,7 +24,7 @@ function wfPurge() {
 	
 	class PurgeAction {
 		public function __construct() {
-			global $wgMessageCache, $wgHooks;
+			global $wgHooks;
 		wfLoadExtensionMessages( 'Purge' );		
 			$wgHooks['SkinTemplateContentActions'][] = array( &$this, 'contentHook' );
 			#$wgHooks['ArticlePurge'][] = array( &$this, 'purgeHook' );

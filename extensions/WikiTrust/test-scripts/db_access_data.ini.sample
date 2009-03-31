@@ -1,0 +1,5 @@
+[db]
+host = host
+user = user
+pass = password
+db   = db

@@ -1,0 +1,18 @@
+= Timeline =
+
+This code provides the result formats "timeline" and "eventline" that enable
+query outputs in interactive timelines. Queries should contain one or more 
+outputs of type Type:Date for this to work.
+
+For usage and configuration, see 
+http://semantic-mediawiki.org/wiki/Help:Timeline_format
+
+
+== Credits ==
+
+Timeline PHP code has been written by Markus Krötzsch.
+
+The JavaScript upon which the Timeline format of inline queries is based is
+provided by Simile (http://simile.mit.edu). Note that it is distributed with 
+a BSD-style license, and not under the GPL that applies to most parts of
+Semantic MediaWiki.

@@ -1,5 +1,7 @@
 <?php
 /**
+ * @ingroup Language
+ * @ingroup SDLanguage
  * @author Yaron Koren
  */
 
@@ -23,8 +25,9 @@ abstract class SD_Language {
 		'Has value' => SD_SP_HAS_VALUE,
 		'Gets values from category' => SD_SP_GETS_VALUES_FROM_CATEGORY,
 		'Uses time period' => SD_SP_USES_TIME_PERIOD,
+		'Has input type' => SD_SP_HAS_INPUT_TYPE,
 		'Requires filter' => SD_SP_REQUIRES_FILTER,
-		'Has label' => SD_SP_HAS_LABEL  
+		'Has label' => SD_SP_HAS_LABEL
 	);
 
 	protected $m_NamespaceAliases = array(
@@ -49,14 +52,14 @@ abstract class SD_Language {
 	/**
 	 * Function that returns the labels for the special properties.
 	 */
-	function getSpecialPropertiesArray() {
+	function getPropertyLabels() {
 		return $this->m_SpecialProperties;
 	}
 
 	/**
 	 * Aliases for special properties, if any.
 	 */
-	function getSpecialPropertyAliases() {
+	function getPropertyAliases() {
 		return $this->m_SpecialPropertyAliases;
 	}
 

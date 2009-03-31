@@ -49,10 +49,13 @@ class ApiParse extends ApiBase {
 		$prop = array_flip($params['prop']);
 		$revid = false;
 
-		global $wgParser, $wgUser;
+		// The parser needs $wgTitle to be set, apparently the
+		// $title parameter in Parser::parse isn't enough *sigh*
+		global $wgParser, $wgUser, $wgTitle;
 		$popts = new ParserOptions();
 		$popts->setTidy(true);
 		$popts->enableLimitReport();
+		$redirValues = null;
 		if(!is_null($oldid) || !is_null($page))
 		{
 			if(!is_null($oldid))
@@ -63,23 +66,42 @@ class ApiParse extends ApiBase {
 					$this->dieUsage("There is no revision ID $oldid", 'missingrev');
 				if(!$rev->userCan(Revision::DELETED_TEXT))
 					$this->dieUsage("You don't have permission to view deleted revisions", 'permissiondenied');
-				$text = $rev->getRawText();
+				$text = $rev->getText( Revision::FOR_THIS_USER );
 				$titleObj = $rev->getTitle();
+				$wgTitle = $titleObj;
 				$p_result = $wgParser->parse($text, $titleObj, $popts);
 			}
 			else
 			{
-				$titleObj = Title::newFromText($page);
+				if($params['redirects'])
+				{
+					$req = new FauxRequest(array(
+						'action' => 'query',
+						'redirects' => '',
+						'titles' => $page
+					));
+					$main = new ApiMain($req);
+					$main->execute();
+					$data = $main->getResultData();
+					$redirValues = @$data['query']['redirects'];
+					$to = $page;
+					foreach((array)$redirValues as $r)
+						$to = $r['to'];
+				}
+				else
+					$to = $page; 
+				$titleObj = Title::newFromText($to);
 				if(!$titleObj)
 					$this->dieUsage("The page you specified doesn't exist", 'missingtitle');
 
-				// Try the parser cache first
 				$articleObj = new Article($titleObj);
 				if(isset($prop['revid']))
 					$oldid = $articleObj->getRevIdFetched();
+				// Try the parser cache first
 				$pcache = ParserCache::singleton();
 				$p_result = $pcache->get($articleObj, $wgUser);
-				if(!$p_result) {
+				if(!$p_result)
+				{
 					$p_result = $wgParser->parse($articleObj->getContent(), $titleObj, $popts);
 					global $wgUseParserCache;
 					if($wgUseParserCache)
@@ -92,12 +114,25 @@ class ApiParse extends ApiBase {
 			$titleObj = Title::newFromText($title);
 			if(!$titleObj)
 				$titleObj = Title::newFromText("API");
+			$wgTitle = $titleObj;
+			if($params['pst'] || $params['onlypst'])
+				$text = $wgParser->preSaveTransform($text, $titleObj, $wgUser, $popts);
+			if($params['onlypst'])
+			{
+				// Build a result and bail out
+				$result_array['text'] = array();
+				$this->getResult()->setContent($result_array['text'], $text);
+				$this->getResult()->addValue(null, $this->getModuleName(), $result_array);
+				return;
+			}
 			$p_result = $wgParser->parse($text, $titleObj, $popts);
 		}
 
 		// Return result
 		$result = $this->getResult();
 		$result_array = array();
+		if($params['redirects'] && !is_null($redirValues))
+			$result_array['redirects'] = $redirValues;
 		if(isset($prop['text'])) {
 			$result_array['text'] = array();
 			$result->setContent($result_array['text'], $p_result->getText());
@@ -120,6 +155,7 @@ class ApiParse extends ApiBase {
 			$result_array['revid'] = $oldid;
 
 		$result_mapping = array(
+			'redirects' => 'r',
 			'langlinks' => 'll',
 			'categories' => 'cl',
 			'links' => 'pl',
@@ -184,6 +220,7 @@ class ApiParse extends ApiBase {
 			),
 			'text' => null,
 			'page' => null,
+			'redirects' => false,
 			'oldid' => null,
 			'prop' => array(
 				ApiBase :: PARAM_DFLT => 'text|langlinks|categories|links|templates|images|externallinks|sections|revid',
@@ -199,18 +236,27 @@ class ApiParse extends ApiBase {
 					'sections',
 					'revid'
 				)
-			)
+			),
+			'pst' => false,
+			'onlypst' => false,
 		);
 	}
 
 	public function getParamDescription() {
 		return array (
 			'text' => 'Wikitext to parse',
+			'redirects' => 'If the page parameter is set to a redirect, resolve it',
 			'title' => 'Title of page the text belongs to',
 			'page' => 'Parse the content of this page. Cannot be used together with text and title',
 			'oldid' => 'Parse the content of this revision. Overrides page',
 			'prop' => array('Which pieces of information to get.',
 					'NOTE: Section tree is only generated if there are more than 4 sections, or if the __TOC__ keyword is present'
+			),
+			'pst' => array(	'Do a pre-save transform on the input before parsing it.',
+					'Ignored if page or oldid is used.'
+			),
+			'onlypst' => array('Do a PST on the input, but don\'t parse it.',
+					'Returns PSTed wikitext. Ignored if page or oldid is used.'
 			),
 		);
 	}
@@ -226,6 +272,6 @@ class ApiParse extends ApiBase {
 	}
 
 	public function getVersion() {
-		return __CLASS__ . ': $Id: ApiParse.php 36983 2008-07-03 15:01:50Z catrope $';
+		return __CLASS__ . ': $Id: ApiParse.php 44858 2008-12-20 20:00:07Z catrope $';
 	}
 }

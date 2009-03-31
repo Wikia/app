@@ -17,8 +17,8 @@ if( !defined( 'MEDIAWIKI' ) ) {
 
 $wgExtensionCredits['specialpage'][] = array(
 	'name' => 'Player',
-	'svn-date' => '$LastChangedDate: 2008-05-06 11:59:58 +0000 (Tue, 06 May 2008) $',
-	'svn-revision' => '$LastChangedRevision: 34306 $',
+	'svn-date' => '$LastChangedDate: 2008-11-30 03:15:22 +0000 (Sun, 30 Nov 2008) $',
+	'svn-revision' => '$LastChangedRevision: 44056 $',
 	'author' => 'Daniel Kinzler, brightbyte.de',
 	'url' => 'http://mediawiki.org/wiki/Extension:Player',
 	'description' => 'embedded multimedia playback using common browser plugins',
@@ -30,6 +30,7 @@ $wgHooks['OutputPageParserOutput'][] = 'playerParserOutput';
 
 $dir = dirname(__FILE__) . '/';
 $wgExtensionMessagesFiles['Player'] = $dir . 'Player.i18n.php';
+$wgExtensionAliasesFiles['Player'] = $dir . 'Player.alias.php';
 $wgAutoloadClasses['Player'] = $dir . 'PlayerClass.php';
 $wgAutoloadClasses['SpecialPlayer'] = $dir . 'SpecialPlayer.php';
 $wgSpecialPages['Player'] = 'SpecialPlayer';

@@ -30,12 +30,13 @@ php dumpHTML.php [options...]
 	--udp-profile <N>    profile 1/N rendering operations using ProfilerSimpleUDP
 	--oom-adj <N>        set /proc/<pid>/oom_adj
 	--show-titles        write each article title to stdout
+    --group <group>      use the specified user group to read articles
 
 ENDS;
 
 define( 'MW_HTML_FOR_DUMP', 1 );
 
-$optionsWithArgs = array( 's', 'd', 'e', 'k', 'checkpoint', 'slice', 'udp-profile', 'oom-adj' );
+$optionsWithArgs = array( 's', 'd', 'e', 'k', 'checkpoint', 'slice', 'udp-profile', 'oom-adj', 'group' );
 $options = array( 'help' );
 $profiling = false;
 
@@ -53,7 +54,11 @@ if ( in_array( '--udp-profile', $argv ) ) {
 	define( 'MW_FORCE_PROFILE', 1 );
 }
 
-require_once( dirname(__FILE__)."/../../maintenance/commandLine.inc" );
+$IP = getenv( 'MW_INSTALL_PATH' );
+if ( $IP === false ) {
+	$IP = dirname(__FILE__).'/../..';
+}
+require_once( $IP."/maintenance/commandLine.inc" );
 require_once( dirname(__FILE__)."/dumpHTML.inc" );
 require_once( dirname(__FILE__)."/SkinOffline.php" );
 
@@ -126,6 +131,7 @@ $wgHTMLDump = new DumpHTML( array(
 	'noSharedDesc' => $options['no-shared-desc'],
 	'udpProfile' => $options['udp-profile'],
 	'showTitles' => $options['show-titles'],
+	'group' => $options['group'],
 ));
 
 $wgHTMLDump->setupDestDir();

@@ -37,13 +37,15 @@ if( defined( 'MW_SUPPORTS_PARSERFIRSTCALLINIT' ) ) {
 
 // Register required hooks.
 $wgHooks[ 'LanguageGetMagic' ][] = 'BabelStatic::Magic';
+$wgHooks[ 'AbortNewAccount'  ][] = 'BabelAutoCreate::RegisterAbort';
 
 // Register internationalisation file.
 $wgExtensionMessagesFiles[ 'Babel' ] = dirname( __FILE__ ) . '/Babel.i18n.php';
 
 // Register autoload classes.
-$wgAutoloadClasses[ 'Babel'       ] = dirname( __FILE__ ) . '/Babel.class.php';
-$wgAutoloadClasses[ 'BabelStatic' ] = dirname( __FILE__ ) . '/BabelStatic.class.php';
+$wgAutoloadClasses[ 'Babel'           ] = dirname( __FILE__ ) . '/Babel.class.php';
+$wgAutoloadClasses[ 'BabelStatic'     ] = dirname( __FILE__ ) . '/BabelStatic.class.php';
+$wgAutoloadClasses[ 'BabelAutoCreate' ] = dirname( __FILE__ ) . '/BabelAutoCreate.class.php';
 
 // Configuration setttings.
 $wgBabelUseLevelZeroCategory         = false;

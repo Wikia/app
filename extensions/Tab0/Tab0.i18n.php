@@ -11,6 +11,27 @@ $messages['en'] = array(
 	'tab0-desc' => 'Adds "0" tab, linking to the edit page of the first section of the page',
 );
 
+/** Message documentation (Message documentation)
+ * @author Purodha
+ */
+$messages['qqq'] = array(
+	'tab0-desc' => 'Short description of the Tab0 extension, shown in [[Special:Version]]. Do not translate or change links.',
+);
+
+/** Arabic (العربية)
+ * @author Meno25
+ */
+$messages['ar'] = array(
+	'tab0-desc' => 'يضيف اللسان "0"، موصولا إلى صفحة التعديل لأول قسم من الصفحة',
+);
+
+/** Egyptian Spoken Arabic (مصرى)
+ * @author Meno25
+ */
+$messages['arz'] = array(
+	'tab0-desc' => 'يضيف اللسان "0"، موصولا إلى صفحة التعديل لأول قسم من الصفحة',
+);
+
 /** Bulgarian (Български)
  * @author DCLXVI
  */
@@ -26,11 +47,40 @@ $messages['cs'] = array(
 	'tab0-desc' => 'Přidává záložku „0“ pro editaci první části stránky',
 );
 
+/** German (Deutsch)
+ * @author Raimond Spekking
+ */
+$messages['de'] = array(
+	'tab0-desc' => 'Fügt ein „0“-Tab hinzu, mit dem man den ersten Abschnitt einer Seite bearbeiten kann',
+);
+
 /** Lower Sorbian (Dolnoserbski)
  * @author Michawiki
  */
 $messages['dsb'] = array(
 	'tab0-desc' => 'Pśidawa rejtark "0", kótaryž wótkazujo na wobźěłański bok prědnego wótrězka boka',
+);
+
+/** Esperanto (Esperanto)
+ * @author Yekrats
+ */
+$messages['eo'] = array(
+	'tab0-desc' => 'Aldonas langeton "0" ligantan al la redaktpaĝo de la unua sekcio de la paĝo',
+);
+
+/** Spanish (Español)
+ * @author Sanbec
+ */
+$messages['es'] = array(
+	'tab0-desc' => 'Añade la pestaña «0», un enlace para editar la sección inicial de la página.',
+);
+
+/** Finnish (Suomi)
+ * @author Nike
+ * @author Vililikku
+ */
+$messages['fi'] = array(
+	'tab0-desc' => 'Lisää 0-välilehden, joka toimii linkkinä sivun ensimmäisen osan muokkaukseen.',
 );
 
 /** French (Français)
@@ -53,6 +103,13 @@ $messages['he'] = array(
 	'tab0-desc' => 'הוספת לשונית "0" המקשרת לעריכת הפסקה הראשונה בדף',
 );
 
+/** Croatian (Hrvatski)
+ * @author Dalibor Bosits
+ */
+$messages['hr'] = array(
+	'tab0-desc' => 'Dodaje "0" tab, vodi na uređivanje prvog odlomka na stranici',
+);
+
 /** Upper Sorbian (Hornjoserbsce)
  * @author Michawiki
  */
@@ -60,11 +117,53 @@ $messages['hsb'] = array(
 	'tab0-desc' => 'Přidawa rajtark "0", kotryž na wobdźěłansku stronu prěnjeho wotrězka strony wotkazuje',
 );
 
+/** Hungarian (Magyar)
+ * @author Dani
+ */
+$messages['hu'] = array(
+	'tab0-desc' => '„0” fül a lap első fejezetének szerkesztéséhez',
+);
+
+/** Interlingua (Interlingua)
+ * @author McDutchie
+ */
+$messages['ia'] = array(
+	'tab0-desc' => 'Adde le scheda "0" que da accesso al pagina de modification del prime section del pagina',
+);
+
 /** Indonesian (Bahasa Indonesia)
  * @author Rex
  */
 $messages['id'] = array(
 	'tab0-desc' => 'Menambahkan tab "0" sebagai tombol cepat untuk menyunting bagian atas halaman',
+);
+
+/** Italian (Italiano)
+ * @author Darth Kule
+ */
+$messages['it'] = array(
+	'tab0-desc' => 'Aggiunge il tab "0" che linka alla modifica della prima sezione della pagina',
+);
+
+/** Japanese (日本語)
+ * @author Mizusumashi
+ */
+$messages['ja'] = array(
+	'tab0-desc' => 'ページの最初の節の編集ページにリンクされた「0」タブを追加する',
+);
+
+/** Khmer (ភាសាខ្មែរ)
+ * @author Lovekhmer
+ */
+$messages['km'] = array(
+	'tab0-desc' => 'ដាក់បន្ថែមថេប "0" តភ្ជាប់ទៅទំព័រដើម្បីកែប្រែផ្នែកដំបូងគេនៃទំព័រ',
+);
+
+/** Korean (한국어)
+ * @author ITurtle
+ */
+$messages['ko'] = array(
+	'tab0-desc' => '문서의 첫 부분만을 편집할 수 있도록 "0" 탭을 추가합니다.',
 );
 
 /** Ripoarisch (Ripoarisch)
@@ -83,9 +182,17 @@ $messages['lb'] = array(
 
 /** Dutch (Nederlands)
  * @author Siebrand
+ * @author Tvdm
  */
 $messages['nl'] = array(
-	'tab0-desc' => 'Voegt het tabblad "0" toe, dat verwijst naar de bewerkingspagina voor het bovenste deel van die pagina',
+	'tab0-desc' => 'Voegt het tabblad "0" toe dat verwijst naar de bewerkingspagina voor het bovenste deel van die pagina',
+);
+
+/** Norwegian Nynorsk (‪Norsk (nynorsk)‬)
+ * @author Frokor
+ */
+$messages['nn'] = array(
+	'tab0-desc' => 'Legg til ei «0»-arkfane som lenkjer til redigeringssida for den første seksjonen av sida',
 );
 
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
@@ -99,7 +206,7 @@ $messages['no'] = array(
  * @author Cedric31
  */
 $messages['oc'] = array(
-	'tab0-desc' => 'Ajusta la tabulacion « 0 », ligason vèrs la pagina d’edicion de la primièra seccion.',
+	'tab0-desc' => 'Apond la tabulacion « 0 », ligason cap a la pagina d’edicion de la primièra seccion.',
 );
 
 /** Polish (Polski)
@@ -107,6 +214,13 @@ $messages['oc'] = array(
  */
 $messages['pl'] = array(
 	'tab0-desc' => 'Dodaje zakładkę „0”, linkującą do edycji pierwszej sekcji na stronie',
+);
+
+/** Portuguese (Português)
+ * @author Malafaya
+ */
+$messages['pt'] = array(
+	'tab0-desc' => 'Adiciona uma pestana "0", que liga à página de edição da primeira secção da página',
 );
 
 /** Slovak (Slovenčina)

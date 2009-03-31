@@ -1,0 +1,51 @@
+(* Configuration file for the "netplex" program. *)
+
+netplex {
+  controller {
+    max_level = "debug";    (* Log level *)
+    logging {
+      type = "stderr";    (* Log to stderr *)
+    }
+  };
+  service {
+    name = "nethttpd";
+    protocol {
+      (* This section creates the socket *)
+      name = "http";
+      address {
+	type = "internet";
+	bind = "0.0.0.0:4444";
+      };
+(*
+      address {
+	type = "internet";
+	bind = "[::1]:4445";   (* IPv6 example *)
+      }
+ *)
+    };
+    processor {
+      (* This section specifies how to process data of the socket *)
+      type = "nethttpd";
+      host {
+	(* Think of Apache's "virtual hosts" *)
+	pref_name = "localhost";
+	pref_port = 4444;
+	names = "*:0";   (* Which requests are matched here: all *)
+	uri {
+	  path = "/";  (* This path is bound to the trust_store *)
+	  service {
+	    type = "dynamic";
+	    handler = "trust";
+	  }
+	}
+      };
+    };
+    workload_manager {
+      type = "dynamic";
+      max_jobs_per_thread = 1;  (* Everything else is senseless *)
+      min_free_jobs_capacity = 1;
+      max_free_jobs_capacity = 1;
+      max_threads = 20;
+    };
+  }
+}

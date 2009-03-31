@@ -113,7 +113,7 @@
         fill:#000000;
         fill-opacity:0.075;
     }
-    
+
     #donate-button-background {
         fill:#aa1700;
         stroke:none;
@@ -124,12 +124,12 @@
         stroke:none;
         filter:url(#shadowBlur);
     }
-    
+
     /* Text properties... */
     text, span {
         direction: {{{dir|ltr}}};
     }
-    
+
     /* Fonts: may be customized... */
     text {
         font-family:Gill Sans
@@ -157,7 +157,7 @@
         fill:#339966;
         font-size:36px;
     }
-    
+
     #donate-button-text {
         fill:#ffffff;
         font-size:18px;

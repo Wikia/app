@@ -148,7 +148,7 @@ class KuConverter extends LanguageConverter {
 	 *     names as they were
 	 *   - do not try to find variants for usernames
 	 */
-	function findVariantLink( &$link, &$nt ) {
+	function findVariantLink( &$link, &$nt, $forTemplate = false ) {
 		// check for user namespace
 		if(is_object($nt)){
 			$ns = $nt->getNamespace();
@@ -157,8 +157,8 @@ class KuConverter extends LanguageConverter {
 		}
 
 		$oldlink=$link;
-		parent::findVariantLink($link,$nt);
-		if($this->getPreferredVariant()==$this->mMainLanguageCode)
+		parent::findVariantLink( $link, $nt, $forTemplate );
+		if( $this->getPreferredVariant() == $this->mMainLanguageCode )
 			$link=$oldlink;
 	}
 
@@ -178,7 +178,7 @@ class KuConverter extends LanguageConverter {
 	 */
 	function autoConvert($text, $toVariant=false) {
 		global $wgTitle;
-		if(is_object($wgTitle) && $wgTitle->getNameSpace()==NS_IMAGE){
+		if(is_object($wgTitle) && $wgTitle->getNameSpace()==NS_FILE){
 			$imagename = $wgTitle->getNsText();
 			if(preg_match("/^$imagename:/",$text)) return $text;
 		}
@@ -244,24 +244,4 @@ class LanguageKu extends LanguageKu_ku {
 		$this->mConverter = new KuConverter( $this, 'ku', $variants, $variantfallbacks );
 		$wgHooks['ArticleSaveComplete'][] = $this->mConverter;
 	}
-
-/*   From Kazakh interface, not needed for the moment
-
-	function convertGrammar( $word, $case ) {
-		$fname="LanguageKu::convertGrammar";
-		wfProfileIn( $fname );
-
-		//always convert to ku-latn before convertGrammar
-		$w1 = $word;
-		$word = $this->mConverter->autoConvert( $word, 'ku-latn' );
-		$w2 = $word;
-		$word = parent::convertGrammar( $word, $case );
-		//restore encoding
-		if( $w1 != $w2 ) {
-			$word = $this->mConverter->translate( $word, 'ku-latn' );
-		}
-		wfProfileOut( $fname );
-		return $word;
-	}
-*/
 }

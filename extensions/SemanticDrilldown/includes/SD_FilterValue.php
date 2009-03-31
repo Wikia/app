@@ -28,7 +28,7 @@ class SDFilterValue {
 		if ($filter_time_period != null) {
 			if ($filter_time_period == wfMsg('sd_filter_month')) {
 				list($month_str, $year) = explode(' ', $fv->text);
-				$fv->month = sdfStringToMonth($month_str);
+				$fv->month = SDUtils::stringToMonth($month_str);
 				$fv->year = $year;
 			} else {
 				$fv->year = $fv->text;
@@ -38,7 +38,9 @@ class SDFilterValue {
 			$originals = array('&lt;', '&gt;');
 			$replacements = array('<', '>');
 			$fv->text = str_replace($originals, $replacements, $fv->text);
-			if ($fv->text{0} == '<') {
+			if ($fv->text == '') {
+				// do nothing
+			} elseif ($fv->text{0} == '<') {
 				$possible_number = str_replace(',', '', trim(substr($fv->text, 1)));
 				if (is_numeric($possible_number)) {
 					$fv->upper_limit = $possible_number;

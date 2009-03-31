@@ -30,7 +30,7 @@ class SpecialGadgets extends SpecialPage {
 	 * @param $par Parameters passed to the page
 	 */
 	function execute( $par ) {
-		global $wgOut, $wgUser;
+		global $wgOut, $wgUser, $wgLang, $wgContLang;
 
 		wfLoadExtensionMessages( 'Gadgets' );
 		$skin = $wgUser->getSkin();
@@ -42,13 +42,18 @@ class SpecialGadgets extends SpecialPage {
 		$gadgets = wfLoadGadgetsStructured();
 		if ( !$gadgets ) return;
 
+		$lang = "";
+		if ( $wgLang->getCode() != $wgContLang->getCode() ) {
+			$lang = "/" . $wgLang->getCode();
+		}
+
 		$listOpen = false;
 
 		$msgOpt = array( 'parseinline', 'parsemag' );
 
 		foreach ( $gadgets as $section => $entries ) {
 			if ( $section !== false && $section !== '' ) {
-				$t = Title::makeTitleSafe( NS_MEDIAWIKI, "Gadget-section-$section" );
+				$t = Title::makeTitleSafe( NS_MEDIAWIKI, "Gadget-section-$section$lang" );
 				$lnk = $t ? $skin->makeLinkObj( $t, wfMsgHTML("edit"), 'action=edit' ) : htmlspecialchars($section);
 				$ttext = wfMsgExt( "gadget-section-$section", $msgOpt );
 
@@ -60,7 +65,7 @@ class SpecialGadgets extends SpecialPage {
 			}
 
 			foreach ( $entries as $gname => $code ) {
-				$t = Title::makeTitleSafe( NS_MEDIAWIKI, "Gadget-$gname" );
+				$t = Title::makeTitleSafe( NS_MEDIAWIKI, "Gadget-$gname$lang" );
 				if ( !$t ) continue;
 
 				$lnk = $skin->makeLinkObj( $t, wfMsgHTML("edit"), 'action=edit' );
@@ -87,7 +92,7 @@ class SpecialGadgets extends SpecialPage {
 					$wgOut->addHTML($lnk);
 				}
 
-				$wgOut->addHtml( "</li>" );
+				$wgOut->addHTML( "</li>" );
 			}
 		}
 

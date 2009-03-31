@@ -203,15 +203,17 @@ class SpecialChemicalsources extends SpecialPage {
 	#If no parameters supplied, get them!
 	function getParams() {
 		global $wgTitle, $wgOut;
-		$action = $wgTitle->escapeLocalUrl();
-		$go = htmlspecialchars( wfMsg( "go" ) );
+		if( !empty($wgTitle) ) {
+			$action = $wgTitle->escapeLocalUrl();
+			$go = htmlspecialchars( wfMsg( "go" ) );
 
-		$wgOut->addWikitext ( wfMsg($this->Prefix . '_SearchExplanation'));
-		$wgOut->addHTML("<table><tr><td>");
-		foreach ($this->Parameters as $key) {
-		   $this->GetParam_Row($this->Prefix . "_" . $key, $key, $action, $go);
+			$wgOut->addWikitext ( wfMsg($this->Prefix . '_SearchExplanation'));
+			$wgOut->addHTML("<table><tr><td>");
+			foreach ($this->Parameters as $key) {
+				$this->GetParam_Row($this->Prefix . "_" . $key, $key, $action, $go);
+			}
+			$wgOut->addHTML("</table>");
 		}
-		$wgOut->addHTML("</table>");
 	}
 
 	#Creates a table row

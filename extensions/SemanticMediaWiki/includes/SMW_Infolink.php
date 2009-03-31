@@ -3,6 +3,8 @@
  * This file contains the SMWInfolink class.
  *
  * @author Markus Krötzsch
+ * @file
+ * @ingroup SMW
  */
 
 /**
@@ -10,7 +12,7 @@
  * clean way. The class provides methods for creating source code for
  * realising them in wiki or html contexts.
  *
- * @note AUTOLOAD
+ * @ingroup SMW
  */
 class SMWInfolink {
 	private $m_target;      // the actual link target
@@ -120,7 +122,7 @@ class SMWInfolink {
 	 */
 	public function getText($outputformat, $linker = NULL) {
 		if ($this->m_style !== false) {
-			smwfRequireHeadItem(SMW_HEADER_STYLE); // make SMW styles available
+			SMWOutputs::requireHeadItem(SMW_HEADER_STYLE); // make SMW styles available
 			$start = "<span class=\"$this->m_style\">";
 			$end = '</span>';
 		} else {
@@ -140,7 +142,7 @@ class SMWInfolink {
 				} else { // SMW_OUTPUT_HTML, SMW_OUTPUT_FILE
 					$link = $this->getLinker($linker)->makeKnownLinkObj($title, $this->m_caption);
 				}
-			} else { // Title creation failed, maybe illegal symbols or too long; make a direct URL link 
+			} else { // Title creation failed, maybe illegal symbols or too long; make a direct URL link
 			         // (only possible if offending target parts belong to some parameter
 			         //  that can be separated from title text,
 			         //  e.g. as in Special:Bla/il<leg>al -> Special:Bla&p=il&lt;leg&gt;al)
@@ -170,7 +172,7 @@ class SMWInfolink {
 	/**
 	 * Return hyperlink for this infolink in HTML format.
 	 */
-	public function getHTML($linker) {
+	public function getHTML($linker = NULL) {
 		return $this->getText(SMW_OUTPUT_HTML, $linker);
 	}
 
@@ -211,7 +213,7 @@ class SMWInfolink {
 
 	/**
 	 * Return a Linker object, using the parameter $linker if not NULL, and creatng a new one
-	 * otherwise. $linker is usually a user skin object, while the fallback linker object is 
+	 * otherwise. $linker is usually a user skin object, while the fallback linker object is
 	 * not customised to user settings.
 	 */
 	protected function getLinker(&$linker = NULL) {
@@ -240,21 +242,21 @@ class SMWInfolink {
 		if ($forTitle) {
 			foreach ($params as $name => $value) {
 				if ( is_string($name) && ($name != '') ) $value = $name . '=' . $value;
-				// Escape certain problematic values. Use SMW-escape 
+				// Escape certain problematic values. Use SMW-escape
 				// (like URLencode but - instead of % to prevent double encoding by later MW actions)
 				//
 				// / : SMW's parameter separator, must not occur within params
 				// - : used in SMW-encoding strings, needs escaping too
 				// [ ] < > &lt; &gt; '' |: problematic in MW titles
 				// & : sometimes problematic in MW titles ([[&amp;]] is OK, [[&test]] is OK, [[&test;]] is not OK)
-				//     (Note: '&' in strings obtained during parsing already has &entities; replaced by 
+				//     (Note: '&' in strings obtained during parsing already has &entities; replaced by
 				//      UTF8 anyway)
 				// ' ': are equivalent with '_' in MW titles, but are not equivalent in certain parameter values
 				// "\n": real breaks not possible in [[...]]
 				// "#": has special meaning in URLs, triggers additional MW escapes (using . for %)
-				// '%': must be escaped to prevent any impact of double decoding when replacing - 
+				// '%': must be escaped to prevent any impact of double decoding when replacing -
 				//      by % before urldecode
-				// '?': if not escaped, strange effects were observed on some sites (printout and other 
+				// '?': if not escaped, strange effects were observed on some sites (printout and other
 				//      parameters ignored without obvious cause); SMW-escaping is always save to do -- it just
 				//      make URLs less readable
 				//
@@ -289,18 +291,18 @@ class SMWInfolink {
 	 * to recover the proper paramter strings after encoding for use in wiki title names
 	 * as done by SMWInfolink::encodeParameters().
 	 *
-	 * If $allparams is set to true, it is assumed that further data should be obtained 
+	 * If $allparams is set to true, it is assumed that further data should be obtained
 	 * from the global $wgRequest, and all given parameters are read.
 	 *
-	 * $titleparam is the string extracted by MediaWiki from special page calls of the 
+	 * $titleparam is the string extracted by MediaWiki from special page calls of the
 	 * form Special:Something/titleparam
 	 * Note: it is assumed that the given $titleparam is already urldecoded, as is normal
-	 * when getting such parameters from MediaWiki. SMW-escaped parameters largely prevent 
+	 * when getting such parameters from MediaWiki. SMW-escaped parameters largely prevent
 	 * double decoding effects (i.e. there are no new "%" after one pass of urldecoding)
 	 *
-	 * The function SMWInfolink::encodeParameters() can be used to create a suitable 
-	 * encoding. It is strongly recommended to not create any code that depends on the 
-	 * concrete way of how parameters are encoded within this function, and to always use 
+	 * The function SMWInfolink::encodeParameters() can be used to create a suitable
+	 * encoding. It is strongly recommended to not create any code that depends on the
+	 * concrete way of how parameters are encoded within this function, and to always use
 	 * the respective encoding/decoding methods instead.
 	 */
 	static public function decodeParameters($titleparam = '', $allparams = false) {

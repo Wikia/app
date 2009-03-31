@@ -46,12 +46,13 @@ if (isset($_SERVER) && array_key_exists( 'REQUEST_METHOD', $_SERVER ) ) {
 		'description' => 'Special page to view global file usage',
 		'descriptionmsg' => 'globalusage-desc',
 		'url' => 'http://www.mediawiki.org/wiki/Extension:GlobalUsage',
-		'version' => '1.0',
+		'version' => '1.1',
 	);
 
 	$wgExtensionMessagesFiles['GlobalUsage'] = $dir . 'GlobalUsage.i18n.php';
 	$wgAutoloadClasses['GlobalUsage'] = $dir . 'GlobalUsage_body.php';
 	$wgExtensionMessageFiles['GlobalUsage'] = $dir . 'GlobalUsage.i18n.php';
+	$wgExtensionAliasesFiles['GlobalUsage'] = $dir . 'GlobalUsage.alias.php';
 	$wgSpecialPages['GlobalUsage'] = 'GlobalUsage';
 
 	$wgHooks['LinksUpdate'][] = array( 'GlobalUsage', 'updateLinks' );

@@ -96,8 +96,10 @@ class MergehistoryForm {
 				wfEscapeWikiText( $this->mDestObj->getPrefixedText() )
 			);
 		}
-
-		// TODO: warn about target = dest?
+		
+		if ( $this->mTargetObj->equals( $this->mDestObj ) ) {
+			$errors[] = wfMsgExt( 'mergehistory-same-destination', array( 'parse' ) );
+		}
 
 		if ( count( $errors ) ) {
 			$this->showMergeForm();
@@ -113,7 +115,7 @@ class MergehistoryForm {
 
 		$wgOut->addWikiMsg( 'mergehistory-header' );
 
-		$wgOut->addHtml(
+		$wgOut->addHTML(
 			Xml::openElement( 'form', array(
 				'method' => 'get',
 				'action' => $wgScript ) ) .
@@ -156,7 +158,7 @@ class MergehistoryForm {
 		$action = $titleObj->getLocalURL( "action=submit" );
 		# Start the form here
 		$top = Xml::openElement( 'form', array( 'method' => 'post', 'action' => $action, 'id' => 'merge' ) );
-		$wgOut->addHtml( $top );
+		$wgOut->addHTML( $top );
 
 		if( $haveRevisions ) {
 			# Format the user-visible controls (comment field, submission button)
@@ -188,7 +190,7 @@ class MergehistoryForm {
 				Xml::closeElement( 'table' ) .
 				Xml::closeElement( 'fieldset' );
 
-			$wgOut->addHtml( $table );
+			$wgOut->addHTML( $table );
 		}
 
 		$wgOut->addHTML( "<h2 id=\"mw-mergehistory\">" . wfMsgHtml( "mergehistory-list" ) . "</h2>\n" );
@@ -215,7 +217,7 @@ class MergehistoryForm {
 		$misc .= Xml::hidden( 'dest', $this->mDest );
 		$misc .= Xml::hidden( 'wpEditToken', $wgUser->editToken() );
 		$misc .= Xml::closeElement( 'form' );
-		$wgOut->addHtml( $misc );
+		$wgOut->addHTML( $misc );
 
 		return true;
 	}
@@ -229,7 +231,7 @@ class MergehistoryForm {
 		$last = $this->message['last'];
 
 		$ts = wfTimestamp( TS_MW, $row->rev_timestamp );
-		$checkBox = wfRadio( "mergepoint", $ts, false );
+		$checkBox = Xml::radio( "mergepoint", $ts, false );
 
 		$pageLink = $this->sk->makeKnownLinkObj( $rev->getTitle(),
 			htmlspecialchars( $wgLang->timeanddate( $ts ) ), 'oldid=' . $rev->getId() );
@@ -370,7 +372,7 @@ class MergehistoryForm {
 		$log->addEntry( 'merge', $targetTitle, $this->mComment,
 			array($destTitle->getPrefixedText(),$TimestampLimit) );
 
-		$wgOut->addHtml( wfMsgExt( 'mergehistory-success', array('parseinline'),
+		$wgOut->addHTML( wfMsgExt( 'mergehistory-success', array('parseinline'),
 			$targetTitle->getPrefixedText(), $destTitle->getPrefixedText(), $count ) );
 
 		wfRunHooks( 'ArticleMergeComplete', array( $targetTitle, $destTitle ) );
@@ -432,10 +434,10 @@ class MergeHistoryPager extends ReverseChronologicalPager {
 	function getQueryInfo() {
 		$conds = $this->mConds;
 		$conds['rev_page'] = $this->articleID;
+		$conds[] = 'page_id = rev_page';
 		$conds[] = "rev_timestamp < {$this->maxTimestamp}";
-
 		return array(
-			'tables' => array('revision'),
+			'tables' => array('revision','page'),
 			'fields' => array( 'rev_minor_edit', 'rev_timestamp', 'rev_user', 'rev_user_text', 'rev_comment',
 				 'rev_id', 'rev_page', 'rev_text_id', 'rev_len', 'rev_deleted' ),
 			'conds' => $conds

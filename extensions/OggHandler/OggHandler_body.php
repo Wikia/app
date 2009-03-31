@@ -238,23 +238,36 @@ class OggHandler extends MediaHandler {
 			# No audio, one frame
 			' -f mjpeg -an -vframes 1 ' .
 			wfEscapeShellArg( $dstPath ) . ' 2>&1';
-
+				
 		$retval = 0;
 		$returnText = wfShellExec( $cmd, $retval );
 
 		if ( $this->removeBadFile( $dstPath, $retval ) || $retval ) {
-			// Filter nonsense
-			$lines = explode( "\n", str_replace( "\r\n", "\n", $returnText ) );
-			if ( substr( $lines[0], 0, 6 ) == 'FFmpeg' ) {
-				for ( $i = 1; $i < count( $lines ); $i++ ) {
-					if ( substr( $lines[$i], 0, 2 ) != '  ' ) {
-						break;
+			#re-attempt encode command on frame time 1 and with mapping (special case for chopped oggs)			
+			$cmd = wfEscapeShellArg( $wgFFmpegLocation ) . 
+			' -map 0:1 '.
+			' -ss 1 ' .
+			' -i ' . wfEscapeShellArg( $file->getPath() ) . 
+			' -f mjpeg -an -vframes 1 ' .
+			wfEscapeShellArg( $dstPath ) . ' 2>&1';
+				
+			$retval = 0;
+			$returnText = wfShellExec( $cmd, $retval );
+			//if still bad return error: 
+			if ( $this->removeBadFile( $dstPath, $retval ) || $retval ) {						
+				// Filter nonsense
+				$lines = explode( "\n", str_replace( "\r\n", "\n", $returnText ) );
+				if ( substr( $lines[0], 0, 6 ) == 'FFmpeg' ) {
+					for ( $i = 1; $i < count( $lines ); $i++ ) {
+						if ( substr( $lines[$i], 0, 2 ) != '  ' ) {
+							break;
+						}
 					}
+					$lines = array_slice( $lines, $i );
 				}
-				$lines = array_slice( $lines, $i );
+				// Return error box
+				return new MediaTransformError( 'thumbnail_error', $width, $height, implode( "\n", $lines ) );
 			}
-			// Return error box
-			return new MediaTransformError( 'thumbnail_error', $width, $height, implode( "\n", $lines ) );
 		}
 		return new OggVideoDisplay( $file, $file->getURL(), $dstUrl, $width, $height, $length, $dstPath );
 	}
@@ -390,7 +403,9 @@ class OggHandler extends MediaHandler {
 	}
 
 	function setHeaders( $out ) {
-		global $wgOggScriptVersion, $wgCortadoJarFile;
+		global $wgOggScriptVersion, $wgCortadoJarFile, $wgServer, $wgUser, $wgScriptPath,
+				$wgPlayerStatsCollection;
+
 		if ( $out->hasHeadItem( 'OggHandler' ) ) {
 			return;
 		}
@@ -400,6 +415,7 @@ class OggHandler extends MediaHandler {
 		$msgNames = array( 'ogg-play', 'ogg-pause', 'ogg-stop', 'ogg-no-player',
 			'ogg-player-videoElement', 'ogg-player-oggPlugin', 'ogg-player-cortado', 'ogg-player-vlc-mozilla', 
 			'ogg-player-vlc-activex', 'ogg-player-quicktime-mozilla', 'ogg-player-quicktime-activex',
+			'ogg-player-totem', 'ogg-player-kaffeine', 'ogg-player-kmplayer', 'ogg-player-mplayerplug-in',
 			'ogg-player-thumbnail', 'ogg-player-selected', 'ogg-use-player', 'ogg-more', 'ogg-download',
 	   		'ogg-desc-link', 'ogg-dismiss', 'ogg-player-soundthumb', 'ogg-no-xiphqt' );
 		$msgValues = array_map( 'wfMsg', $msgNames );
@@ -408,7 +424,7 @@ class OggHandler extends MediaHandler {
 		$scriptPath = self::getMyScriptPath();
 		if( substr( $cortadoUrl, 0, 1 ) != '/'
 			&& substr( $cortadoUrl, 0, 4 ) != 'http' ) {
-			$cortadoUrl = "$scriptPath/$cortadoUrl";
+			$cortadoUrl = "$wgServer$scriptPath/$cortadoUrl";
 		}
 		$encCortadoUrl = Xml::encodeJsVar( $cortadoUrl );
 		$encExtPathUrl = Xml::encodeJsVar( $scriptPath );
@@ -429,7 +445,24 @@ wgOggPlayer.extPathUrl = $encExtPathUrl;
 }
 </style>
 EOT
-		);
+);
+
+		//if collecting stats add relevant code: 
+		if( $wgPlayerStatsCollection ){			
+			//the player stats js file  MUST be on the same server as OggHandler
+			$playerStats_js = htmlspecialchars ( $wgScriptPath ). '/extensions/PlayerStatsGrabber/playerStats.js';
+
+			$jsUserHash = sha1( $wgUser->getName() . $wgProxyKey );
+			$enUserHash = Xml::encodeJsVar( $jsUserHash );			
+
+			$out->addHeadItem( 'playerStatsCollection',  <<<EOT
+<script type="text/javascript">
+wgOggPlayer.userHash = $enUserHash;
+</script>	
+<script type="text/javascript" src="$playerStats_js"></script>
+EOT
+);
+		}
 		
 	}
 
@@ -569,7 +602,7 @@ class OggTransformOutput extends MediaTransformOutput {
 			Xml::tags( 'div', array(), 
 				Xml::tags( 'button', 
 					array(
-						'onclick' => "wgOggPlayer.init(false, $playerParams);",
+						'onclick' => "if (typeof(wgOggPlayer) != 'undefined') wgOggPlayer.init(false, $playerParams);",
 						'style' => "width: {$width}px; text-align: center",
 						'title' => $msgStartPlayer,
 					), 

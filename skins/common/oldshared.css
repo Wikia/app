@@ -201,10 +201,6 @@ table.small { font-size: 100% }
 	font-size:150%;
 	margin:5px;
 }
-.searchmatch {
-	color: red;
-	font-weight: bold;
-}
 .sharedUploadNotice {
 	font-style: italic;
 }
@@ -406,13 +402,6 @@ table.multipageimage td {
 
 .templatesUsed { margin-top: 1em; }
 
-/* Recreating-deleted-page/reupload file warning and log entries */
-div#mw-upload-deleted-warn ul li,
-div#mw-recreate-deleted-warn ul li {
-	font-size: 95%;
-}
-
-
 .MediaTransformError {
 	border: thin solid #777;
 	background-color: #ccc;
@@ -422,4 +411,8 @@ div#mw-recreate-deleted-warn ul li {
 	text-align: center;
 	vertical-align: middle;
 	font-size: 90%;
+}
+
+form#specialpages {
+	display: inline;
 }

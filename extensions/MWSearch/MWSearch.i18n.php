@@ -11,6 +11,14 @@ $messages['en'] = array(
 	'mwsearch-desc' => 'MWSearch plugin',
 );
 
+/** Message documentation (Message documentation)
+ * @author Raimond Spekking
+ * @author Raymond
+ */
+$messages['qqq'] = array(
+	'mwsearch-desc' => 'Extension description displayed on [[Special:Version]].',
+);
+
 /** Afrikaans (Afrikaans)
  * @author Naudefj
  */
@@ -32,11 +40,32 @@ $messages['ar'] = array(
 	'mwsearch-desc' => 'إضافة MWSearch',
 );
 
+/** Egyptian Spoken Arabic (مصرى)
+ * @author Ramsis II
+ */
+$messages['arz'] = array(
+	'mwsearch-desc' => 'اضافة MWSearch',
+);
+
+/** Asturian (Asturianu)
+ * @author Esbardu
+ */
+$messages['ast'] = array(
+	'mwsearch-desc' => 'Plugin MWSearch',
+);
+
 /** Southern Balochi (بلوچی مکرانی)
  * @author Mostafadaneshvar
  */
 $messages['bcc'] = array(
 	'mwsearch-desc' => 'پلاگین گردگ م.و',
+);
+
+/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
+ * @author Jim-by
+ */
+$messages['be-tarask'] = array(
+	'mwsearch-desc' => 'Плягін MWSearch',
 );
 
 /** Bulgarian (Български)
@@ -51,6 +80,13 @@ $messages['bg'] = array(
  */
 $messages['bn'] = array(
 	'mwsearch-desc' => 'MWSearch প্লাগইন',
+);
+
+/** Bosnian (Bosanski)
+ * @author CERminator
+ */
+$messages['bs'] = array(
+	'mwsearch-desc' => 'Modul pretrage za MediaWiki',
 );
 
 /** Catalan (Català)
@@ -74,11 +110,32 @@ $messages['de'] = array(
 	'mwsearch-desc' => 'Hintergrundprozess für die Lucene-Suchmaschine',
 );
 
+/** Lower Sorbian (Dolnoserbski)
+ * @author Michawiki
+ */
+$messages['dsb'] = array(
+	'mwsearch-desc' => 'Tykac MWSearch',
+);
+
 /** Esperanto (Esperanto)
  * @author Yekrats
  */
 $messages['eo'] = array(
 	'mwsearch-desc' => "Etendilo ''MWSearch''",
+);
+
+/** Spanish (Español)
+ * @author Remember the dot
+ */
+$messages['es'] = array(
+	'mwsearch-desc' => 'Complemento MWSearch',
+);
+
+/** Basque (Euskara)
+ * @author An13sa
+ */
+$messages['eu'] = array(
+	'mwsearch-desc' => 'MMWSearch plugina',
 );
 
 /** Persian (فارسی)
@@ -165,11 +222,39 @@ $messages['id'] = array(
 	'mwsearch-desc' => 'Plugin MWSearch',
 );
 
+/** Italian (Italiano)
+ * @author Darth Kule
+ */
+$messages['it'] = array(
+	'mwsearch-desc' => 'Plugin MWSearch',
+);
+
+/** Japanese (日本語)
+ * @author Muttley
+ */
+$messages['ja'] = array(
+	'mwsearch-desc' => 'MediaWiki検索プラグイン',
+);
+
 /** Javanese (Basa Jawa)
  * @author Meursault2004
  */
 $messages['jv'] = array(
 	'mwsearch-desc' => 'plugin MWSearch',
+);
+
+/** Korean (한국어)
+ * @author Kwj2772
+ */
+$messages['ko'] = array(
+	'mwsearch-desc' => 'MWSearch 플러그인',
+);
+
+/** Ripoarisch (Ripoarisch)
+ * @author Purodha
+ */
+$messages['ksh'] = array(
+	'mwsearch-desc' => 'De Hengerjrondprozeß för de <i lang="en">Lucene</i> Söke.',
 );
 
 /** Luxembourgish (Lëtzebuergesch)
@@ -207,6 +292,13 @@ $messages['ms'] = array(
 	'mwsearch-desc' => 'Pemalam MWSearch',
 );
 
+/** Nahuatl (Nāhuatl)
+ * @author Fluence
+ */
+$messages['nah'] = array(
+	'mwsearch-desc' => 'HMTlatēmoaliztli',
+);
+
 /** Low German (Plattdüütsch)
  * @author Slomox
  */
@@ -215,11 +307,18 @@ $messages['nds'] = array(
 );
 
 /** Dutch (Nederlands)
- * @author Siebrand
  * @author SPQRobin
+ * @author Siebrand
  */
 $messages['nl'] = array(
 	'mwsearch-desc' => 'MWSearch-plugin',
+);
+
+/** Norwegian Nynorsk (‪Norsk (nynorsk)‬)
+ * @author Harald Khan
+ */
+$messages['nn'] = array(
+	'mwsearch-desc' => 'MWSearch-programtillegg',
 );
 
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
@@ -247,6 +346,20 @@ $messages['pl'] = array(
  * @author Malafaya
  */
 $messages['pt'] = array(
+	'mwsearch-desc' => 'Plugin MWSearch',
+);
+
+/** Brazilian Portuguese (Português do Brasil)
+ * @author Carla404
+ */
+$messages['pt-br'] = array(
+	'mwsearch-desc' => 'Plugin MWSearch',
+);
+
+/** Tarandíne (Tarandíne)
+ * @author Joetaras
+ */
+$messages['roa-tara'] = array(
 	'mwsearch-desc' => 'Plugin MWSearch',
 );
 
@@ -292,11 +405,18 @@ $messages['te'] = array(
 	'mwsearch-desc' => 'మీ.వి.శోధనా పొడిగింపు',
 );
 
-/** Tajik (Cyrillic) (Тоҷикӣ/tojikī (Cyrillic))
+/** Tajik (Cyrillic) (Тоҷикӣ (Cyrillic))
  * @author Ibrahim
  */
 $messages['tg-cyrl'] = array(
 	'mwsearch-desc' => 'Афзунаи MWSearch',
+);
+
+/** Tagalog (Tagalog)
+ * @author AnakngAraw
+ */
+$messages['tl'] = array(
+	'mwsearch-desc' => "Pampasak na MWHanapin (''MWSearch'')",
 );
 
 /** Ukrainian (Українська)

@@ -1,0 +1,6 @@
+This extension is obsolete.
+
+MediaWiki's built-in API has replaced the old BotQuery interface, which is
+being retired due to lack of maintenance.
+
+In the future this extension may be removed from trunk.

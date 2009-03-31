@@ -1,0 +1,170 @@
+<mediawiki xmlns="http://www.mediawiki.org/xml/export-0.3/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mediawiki.org/xml/export-0.3/ http://www.mediawiki.org/xml/export-0.3.xsd" version="0.3" xml:lang="en">
+  <siteinfo>
+    <sitename>Wikipedia</sitename>
+    <base>http://en.wikipedia.org/wiki/Main_Page</base>
+    <generator>MediaWiki 1.10alpha</generator>
+    <case>first-letter</case>
+      <namespaces>
+      <namespace key="-2">Media</namespace>
+      <namespace key="-1">Special</namespace>
+      <namespace key="0" />
+      <namespace key="1">Talk</namespace>
+      <namespace key="2">User</namespace>
+      <namespace key="3">User talk</namespace>
+      <namespace key="4">Wikipedia</namespace>
+      <namespace key="5">Wikipedia talk</namespace>
+      <namespace key="6">Image</namespace>
+      <namespace key="7">Image talk</namespace>
+      <namespace key="8">MediaWiki</namespace>
+      <namespace key="9">MediaWiki talk</namespace>
+      <namespace key="10">Template</namespace>
+      <namespace key="11">Template talk</namespace>
+      <namespace key="12">Help</namespace>
+      <namespace key="13">Help talk</namespace>
+      <namespace key="14">Category</namespace>
+      <namespace key="15">Category talk</namespace>
+      <namespace key="100">Portal</namespace>
+      <namespace key="101">Portal talk</namespace>
+    </namespaces>
+  </siteinfo>
+<page>
+<title>Computer cluster</title>
+<id>5977</id>
+<revision>
+<id>89371512</id>
+<timestamp>2006-11-22T03:25:19Z</timestamp>
+<contributor>
+        <username>Luca</username>
+        <id>8</id>
+</contributor>
+<comment>/* External links */  oops</comment>
+<text xml:space="preserve">
+===Load-balancing clusters===
+[[Load balancing (computing)|Load-balancing]] clusters operate.
+
+===High-performance (HPC) clusters===
+High-performance clusters are implemented primarily.
+</text>
+</revision>
+<revision>
+<id>89416034</id>
+<timestamp>2006-11-22T09:10:41Z</timestamp>
+<contributor>
+        <ip>203.91.193.50</ip>
+</contributor>
+<comment>/* Load-balancing clusters */</comment>
+<text xml:space="preserve">
+===Load-balancing clusters===
+[[Load balancing (computing)|Load-balancing]] clusters operate. 
+
+pendem srinu
+
+===High-performance (HPC) clusters===
+High-performance clusters are implemented primarily.
+</text>
+</revision>
+<revision>
+<id>89428960</id>
+<timestamp>2006-11-22T11:23:29Z</timestamp>
+<contributor>
+        <ip>194.151.55.34</ip>
+</contributor>
+<comment>/* High-performance cluster implementations */ remove outdated details about TOP500.</comment>
+<text xml:space="preserve">
+===Load-balancing clusters===
+[[Load balancing (computing)|Load-balancing]] clusters operate.
+
+pendem srinu
+
+===High-performance (HPC) clusters===
+High-performance clusters are implemented primarily.
+</text>
+</revision>
+<revision>
+<id>9128857</id>
+<timestamp>2006-11-22T14:25:19Z</timestamp>
+<contributor>
+        <username>Luca</username>
+        <id>8</id>
+</contributor>
+<comment>fixed</comment>
+<text xml:space="preserve">
+===Load-balancing clusters===
+[[Load balancing (computing)|Load-balancing]] clusters operate.
+
+===High-performance (HPC) clusters===
+High-performance clusters are implemented primarily for performance.
+</text>
+</revision>
+</page>
+<page>
+<title>Bogus:Computer cluster</title>
+<id>5977</id>
+<revision>
+<id>89371512</id>
+<timestamp>2006-11-22T03:25:19Z</timestamp>
+<contributor>
+        <username>Luca</username>
+        <id>8</id>
+</contributor>
+<comment>/* External links */  oops</comment>
+<text xml:space="preserve">
+===Load-balancing clusters===
+[[Load balancing (computing)|Load-balancing]] clusters operate.
+
+===High-performance (HPC) clusters===
+High-performance clusters are implemented primarily.
+</text>
+</revision>
+<revision>
+<id>89416034</id>
+<timestamp>2006-11-22T09:10:41Z</timestamp>
+<contributor>
+        <ip>203.91.193.50</ip>
+</contributor>
+<comment>/* Load-balancing clusters */</comment>
+<text xml:space="preserve">
+===Load-balancing clusters===
+[[Load balancing (computing)|Load-balancing]] clusters operate. 
+
+pendem srinu
+
+===High-performance (HPC) clusters===
+High-performance clusters are implemented primarily.
+</text>
+</revision>
+<revision>
+<id>89428960</id>
+<timestamp>2006-11-22T11:23:29Z</timestamp>
+<contributor>
+        <ip>194.151.55.34</ip>
+</contributor>
+<comment>/* High-performance cluster implementations */ remove outdated details about TOP500.</comment>
+<text xml:space="preserve">
+===Load-balancing clusters===
+[[Load balancing (computing)|Load-balancing]] clusters operate.
+
+pendem srinu
+
+===High-performance (HPC) clusters===
+High-performance clusters are implemented primarily.
+</text>
+</revision>
+<revision>
+<id>9128857</id>
+<timestamp>2006-11-22T14:25:19Z</timestamp>
+<contributor>
+        <username>Luca</username>
+        <id>8</id>
+</contributor>
+<comment>fixed</comment>
+<text xml:space="preserve">
+===Load-balancing clusters===
+[[Load balancing (computing)|Load-balancing]] clusters operate.
+
+===High-performance (HPC) clusters===
+High-performance clusters are implemented primarily for performance.
+</text>
+</revision>
+</page>
+</mediawiki>

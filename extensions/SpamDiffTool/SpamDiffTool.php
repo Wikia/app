@@ -147,7 +147,6 @@ function wfSpecialSpamDiffTool() {
 			return;
 		}
         if ( !is_null( $diff ) ) {
-            require_once( 'DifferenceEngine.php' );
 			
 	        # Get the last edit not by this guy
 			$current = Revision::newFromTitle( $title );

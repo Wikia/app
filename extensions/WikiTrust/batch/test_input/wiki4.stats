@@ -1,0 +1,14 @@
+
+Page: 5977 Title: "Computer cluster"
+TextInc 1164215441 PageId: 5977 rev0: 89371512 uid0: 8 rev1: 89416034 uid1: 0 text: 16 left: 16 n01: 1 t01: 20722
+TextInc 1164223409 PageId: 5977 rev0: 89416034 uid0: 0 rev1: 89428960 uid1: 0 text: 2 left: 2 n01: 1 t01: 7968
+TextInc 1164223409 PageId: 5977 rev0: 89371512 uid0: 8 rev1: 89428960 uid1: 0 text: 16 left: 16 n01: 2 t01: 28690
+TextInc 1164234319 PageId: 5977 rev0: 89428960 uid0: 0 rev1: 9128857 uid1: 8 text: 0 left: 0 n01: 1 t01: 10910
+TextInc 1164234319 PageId: 5977 rev0: 89416034 uid0: 0 rev1: 9128857 uid1: 8 text: 2 left: 0 n01: 2 t01: 18878
+TextLife 1164194719 PageId: 5977 rev0: 89371512 uid0: 8 NJudges: 2 NewText: 16 Life: 32
+EditInc 1164223409 PageId: 5977 rev0: 89371512 uid0: 8 rev1: 89416034 uid1: 0 rev2: 89428960 uid2: 0 d01:    2.00 d02:    2.00 d12:    0.00 n01: 1 n12: 1 t01: 20722 t12: 7968
+EditInc 1164234319 PageId: 5977 rev0: 89371512 uid0: 8 rev1: 89416034 uid1: 0 rev2: 9128857 uid2: 8 d01:    2.00 d02:    2.00 d12:    1.00 n01: 1 n12: 2 t01: 20722 t12: 18878
+EditLife 1164215441 PageId: 5977 rev0: 89416034 uid0: 0 NJudges: 2 Delta:    2.00 AvgSpecQ: 0.75000
+EditInc 1164234319 PageId: 5977 rev0: 89371512 uid0: 8 rev1: 89428960 uid1: 0 rev2: 9128857 uid2: 8 d01:    2.00 d02:    2.00 d12:    1.00 n01: 2 n12: 1 t01: 28690 t12: 10910
+TextLife 1164215441 PageId: 5977 rev0: 89416034 uid0: 0 NJudges: 2 NewText: 2 Life: 2
+TextLife 1164223409 PageId: 5977 rev0: 89428960 uid0: 0 NJudges: 1 NewText: 0 Life: 0

@@ -28,12 +28,12 @@ if( isset( $options['from'] ) ) {
 	$lastUpdate = wfTimestamp( TS_MW, $options['from'] );
 } else {
 	$dbr = wfGetDB( DB_MASTER );
-	
+
 	$checkpoint = $dbr->selectField( 'oaiharvest', 'oh_last_timestamp',
 	 	array( 'oh_repository' => $oaiSourceRepository ) );
-	
+
 	$highest = $dbr->selectField( 'revision', 'MAX(rev_timestamp)' );
-	
+
 	if( $checkpoint ) {
 		$lastUpdate = wfTimestamp( TS_MW, $checkpoint );
 		echo "Starting at last checkpoint: " .
@@ -70,4 +70,3 @@ if( isset( $options['debug'] ) ) {
 
 
 $result = $harvester->listUpdates( $lastUpdate, $callback );
-

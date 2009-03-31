@@ -1,5 +1,5 @@
 <?php
-if (!defined('MEDIAWIKI')) die();
+if ( !defined( 'MEDIAWIKI' ) ) die();
 
 /**
  * Implementation of Special:TranslationChanges special page.
@@ -64,21 +64,24 @@ class SpecialTranslationChanges extends SpecialPage {
 		$index = TranslateUtils::messageIndex();
 		$batch = new LinkBatch;
 		foreach ( $rows as $row ) {
-			list( $pieces, ) = explode('/', $wgContLang->lcfirst($row->rc_title), 2);
+			list( $pieces, ) = explode( '/', $wgContLang->lcfirst( $row->rc_title ), 2 );
 
-			$key = strtolower($row->rc_namespace. ':' . $pieces);
+			$key = strtolower( $row->rc_namespace . ':' . $pieces );
 			$group = 'Unknown';
 			$mg = @$index[$key];
-			if ( !is_null($mg) ) $group = $mg;
+			if ( !is_null( $mg ) ) $group = $mg;
 
 			$lang = 'site';
 			if ( strpos( $row->rc_title, '/' ) !== false ) {
 				$lang = $row->lang;
 			}
 
-			switch ($group) {
-				case 'core': $class = 'core'; break;
+			switch ( $group ) {
+				case 'core': $class = 'mediawiki'; break;
 				case 'out-freecol': $class = 'freecol'; break;
+				case 'out-mantis': $class = 'mantis'; break;
+				case 'out-voctrain': $class = 'voctrain'; break;
+				case 'out-zabbix': $class = 'zabbix'; break;
 				default: $class = 'extension'; break;
 			}
 
@@ -97,9 +100,9 @@ class SpecialTranslationChanges extends SpecialPage {
 
 
 		}
-		ksort($sorted);
-		if ( isset($sorted['extension']) ) {
-			ksort($sorted['extension']);
+		ksort( $sorted );
+		if ( isset( $sorted['extension'] ) ) {
+			ksort( $sorted['extension'] );
 		}
 
 		$batch->execute();
@@ -109,7 +112,7 @@ class SpecialTranslationChanges extends SpecialPage {
 	protected function output( Array $rows ) {
 		$groupObjects = MessageGroups::singleton()->getGroups();
 		global $wgLang, $wgUser;
-		$index = -1;
+		$index = - 1;
 		$output = '';
 		$skin = $wgUser->getSkin();
 
@@ -132,12 +135,12 @@ class SpecialTranslationChanges extends SpecialPage {
 
 					$rowTl =
 					Xml::tags( 'span', array( 'id' => $rcm ),
-						Xml::tags('a', array( 'href' => $toggleLink ), $this->sideArrow() ) ) .
+						Xml::tags( 'a', array( 'href' => $toggleLink ), $this->sideArrow() ) ) .
 					Xml::tags( 'span', array( 'id' => $rcl, 'style' => 'display: none;' ),
-						Xml::tags('a', array( 'href' => $toggleLink ), $this->downArrow() ) );
+						Xml::tags( 'a', array( 'href' => $toggleLink ), $this->downArrow() ) );
 
-					$nchanges = wfMsgExt( 'nchanges', array( 'parsemag', 'escape'),
-						$wgLang->formatNum( count($rows) ));
+					$nchanges = wfMsgExt( 'nchanges', array( 'parsemag', 'escape' ),
+						$wgLang->formatNum( count( $rows ) ) );
 
 					$exportLabel = wfMsg( self::MSG . 'export' );
 
@@ -155,7 +158,7 @@ class SpecialTranslationChanges extends SpecialPage {
 					foreach ( $rows as $row ) {
 						$date = $wgLang->timeAndDate( $row->rc_timestamp, /* adj */ true, /* format */ true );
 						$msg = wfMsgExt( self::MSG . 'change', array( 'parsemag' ),
-							$date, wfEscapeWikiText($row->rc_title), wfEscapeWikiText($row->rc_user_text)
+							$date, wfEscapeWikiText( $row->rc_title ), wfEscapeWikiText( $row->rc_user_text )
 						);
 						$output .= Xml::tags( 'li', null, $msg );
 					}
@@ -174,7 +177,7 @@ class SpecialTranslationChanges extends SpecialPage {
 	 */
 	private static function makeBlock( $tl, $lang, $rowCache, $rowId ) {
 		global $wgLang;
-		$changes = count($rowCache);
+		$changes = count( $rowCache );
 		$output = Xml::tags( 'h3', null, "$tl $lang ($nchanges)" );
 		$output .= Xml::tags( 'ul',
 			array( 'id' => $rowId, 'style' => 'display: none' ),
@@ -195,7 +198,7 @@ class SpecialTranslationChanges extends SpecialPage {
 	 * @return string HTML <img> tag
 	 * @access private
 	 */
-	function arrow( $dir, $alt='' ) {
+	function arrow( $dir, $alt = '' ) {
 		global $wgStylePath;
 		$encUrl = htmlspecialchars( $wgStylePath . '/common/images/Arr_' . $dir . '.png' );
 		$encAlt = htmlspecialchars( $alt );

@@ -26,8 +26,8 @@ if ( defined( 'MW_SUPPORTS_PARSERFIRSTCALLINIT' ) ) {
 
 $wgExtensionCredits['parserhook'][] = array(
 	'name' => 'Cite',
-	'svn-date' => '$LastChangedDate: 2008-07-12 01:15:55 +0000 (Sat, 12 Jul 2008) $',
-	'svn-revision' => '$LastChangedRevision: 37577 $',
+	'svn-date' => '$LastChangedDate: 2008-11-30 03:15:22 +0000 (Sun, 30 Nov 2008) $',
+	'svn-revision' => '$LastChangedRevision: 44056 $',
 	'author' => 'Ævar Arnfjörð Bjarmason',
 	'description' => 'Adds <nowiki><ref[ name=id]></nowiki> and <nowiki><references/></nowiki> tags, for citations', // kept for b/c
 	'descriptionmsg' => 'cite_desc',

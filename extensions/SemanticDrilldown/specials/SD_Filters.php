@@ -17,7 +17,7 @@ class SDFilters extends SpecialPage {
 		wfLoadExtensionMessages('SemanticDrilldown');
 	}
 
-	function execute() {
+	function execute( $par ) {
 		$this->setHeaders();
 		list( $limit, $offset ) = wfCheckLimits();
 		$rep = new FiltersPage();

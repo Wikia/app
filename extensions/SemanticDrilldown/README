@@ -20,3 +20,10 @@ file /languages/SD_Messages.php for the full listing.
 
 Most comments, questions, suggestions and bug reports should be
 sent to Yaron at yaron57@gmail.com.
+
+== Credits to other projects ==
+
+* The Semantic Drilldown extension includes CSS and Javascript files
+from the Ext Javascript library (http://extjs.com). Ext is distributed
+via the GPL v3 license, which is compatible with the GPL license under
+which Semantic Drilldown is distributed.

@@ -61,6 +61,23 @@ if ( empty( $wgFileStore['deleted']['directory'] ) ) {
 if( $wgExtensionsPath === false ) $wgExtensionsPath = "$wgScriptPath/extensions";
 
 /**
+ * Unconditional protection for NS_MEDIAWIKI since otherwise it's too easy for a 
+ * sysadmin to set $wgNamespaceProtection incorrectly and leave the wiki insecure. 
+ *
+ * Note that this is the definition of editinterface and it can be granted to 
+ * all users if desired.
+ */
+$wgNamespaceProtection[NS_MEDIAWIKI] = 'editinterface';
+
+/**
+ * The canonical names of namespaces 6 and 7 are, as of v1.14, "File"
+ * and "File_talk".  The old names "Image" and "Image_talk" are
+ * retained as aliases for backwards compatibility.
+ */
+$wgNamespaceAliases['Image'] = NS_FILE;
+$wgNamespaceAliases['Image_talk'] = NS_FILE_TALK;
+
+/**
  * Initialise $wgLocalFileRepo from backwards-compatible settings
  */
 if ( !$wgLocalFileRepo ) {
@@ -139,12 +156,6 @@ wfProfileIn( $fname.'-misc1' );
 $wgIP = false; # Load on demand
 # Can't stub this one, it sets up $_GET and $_REQUEST in its constructor
 $wgRequest = new WebRequest;
-if ( function_exists( 'posix_uname' ) ) {
-	$wguname = posix_uname();
-	$wgNodeName = $wguname['nodename'];
-} else {
-	$wgNodeName = '';
-}
 
 # Useful debug output
 if ( $wgCommandLineMode ) {
@@ -200,15 +211,19 @@ wfDebug( 'Main cache: ' . get_class( $wgMemc ) .
 	"\nParser cache: " . get_class( $parserMemc ) . "\n" );
 
 wfProfileOut( $fname.'-memcached' );
+
+## Most of the config is out, some might want to run hooks here.
+wfRunHooks( 'SetupAfterCache' );
+
 wfProfileIn( $fname.'-SetupSession' );
 
 # Set default shared prefix
 if( $wgSharedPrefix === false ) $wgSharedPrefix = $wgDBprefix;
 
 if( !$wgCookiePrefix ) {
-	if ( in_array('user', $wgSharedTables) && $wgSharedDB && $wgSharedPrefix ) {
+	if ( $wgSharedDB && $wgSharedPrefix && in_array('user',$wgSharedTables) ) {
 		$wgCookiePrefix = $wgSharedDB . '_' . $wgSharedPrefix;
-	} elseif ( in_array('user', $wgSharedTables) && $wgSharedDB ) {
+	} elseif ( $wgSharedDB && in_array('user',$wgSharedTables) ) {
 		$wgCookiePrefix = $wgSharedDB;
 	} elseif ( $wgDBprefix ) {
 		$wgCookiePrefix = $wgDBname . '_' . $wgDBprefix;
@@ -271,7 +286,6 @@ wfProfileIn( $fname.'-misc2' );
 $wgDeferredUpdateList = array();
 $wgPostCommitUpdateList = array();
 
-if ( $wgAjaxSearch ) $wgAjaxExportList[] = 'wfSajaxSearch';
 if ( $wgAjaxWatch ) $wgAjaxExportList[] = 'wfAjaxWatch';
 if ( $wgAjaxUploadDestCheck ) $wgAjaxExportList[] = 'UploadForm::ajaxGetExistsWarning';
 if( $wgAjaxLicensePreview )
@@ -301,6 +315,16 @@ wfRunHooks( 'LogPageLogName', array( &$wgLogNames ) );
 wfRunHooks( 'LogPageLogHeader', array( &$wgLogHeaders ) );
 wfRunHooks( 'LogPageActionText', array( &$wgLogActions ) );
 
+if( !empty($wgNewUserLog) ) {
+	# Add a new log type
+	$wgLogTypes[]                        = 'newusers';
+	$wgLogNames['newusers']              = 'newuserlogpage';
+	$wgLogHeaders['newusers']            = 'newuserlogpagetext';
+	$wgLogActions['newusers/newusers']   = 'newuserlogentry'; // For compatibility with older log entries
+	$wgLogActions['newusers/create']     = 'newuserlog-create-entry';
+	$wgLogActions['newusers/create2']    = 'newuserlog-create2-entry';
+	$wgLogActions['newusers/autocreate'] = 'newuserlog-autocreate-entry';
+}
 
 wfDebug( "Fully initialised\n" );
 $wgFullyInitialised = true;

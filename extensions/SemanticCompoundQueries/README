@@ -1,0 +1,48 @@
+Semantic Compound Queries Extension
+
+        Version 0.2.1
+        Yaron Koren
+
+This is free software licensed under the GNU General Public License. Please
+see http://www.gnu.org/copyleft/gpl.html for further details, including the
+full text and terms of the license.
+
+== Overview ==
+
+Semantic Compound Queries is an extension to MediaWiki that defines a
+parser function, '#compound_query', that displays the results of the
+equivalent of multiple Semantic MediaWiki #ask queries at the same time.
+The syntax of #compound_query resembles that of #ask, but with more than
+one query, and with the elements of each sub-query delimited by semicolons
+instead of pipes. Elements that are common across all sub-queries, like
+'format=' and 'width=' (for maps) should be placed after all sub-queries.
+
+A sample call to #compound query, which retrieves both biographies, along
+with their subject; and fiction books, along with their author; is: 
+
+{{#compound_query:[[Category:Books]][[Has gentre::Biography]];?Covers subject=Subject
+	|[[Category:Books]][[Has genre::Fiction]];?Has author=Author
+	|format=list}}
+
+
+For more information, see the extension homepage at:
+http://www.mediawiki.org/wiki/Extension:Semantic_Compound_Queries
+
+== Requirements ==
+
+This version of the Semantic Compound Queries extension requires MediaWiki 1.8
+or higher and Semantic MediaWiki 1.2 or higher.
+
+== Installation ==
+
+To install the extension, place the entire 'SemanticCompoundQueries' directory
+within your MediaWiki 'extensions' directory, then add the following
+line to your 'LocalSettings.php' file:
+
+     require_once( "$IP/extensions/SemanticCompoundQueries/SCQ_Settings.php" );
+
+== Contact ==
+
+Comments, questions, suggestions and bug reports are welcome, and can
+be placed on the Talk page for the extension, or sent to Yaron at
+yaron57@gmail.com.

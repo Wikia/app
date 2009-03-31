@@ -10,8 +10,14 @@ FFmpeg
 ------
 
 We use FFmpeg for creating still images of videos, you will need a copy on your 
-server. Unfortunately the current version of FFmpeg has a bug which makes it
-extremely slow when used in this way. Our ffmpeg-bugfix.diff will fix this. 
+server. 
+
+Some old versions of FFmpeg had a bug which made it extremely slow to seek in 
+large theora videos in order to generate a thumbnail. This is fixed in the
+current version. If you are using an old version of FFmpeg and find that
+performance is extremely poor (tens of seconds) to generate thumbnails of 
+theora videos that are several minutes or more in length, try applying our
+ffmpeg-bugfix.diff.
 
 Download source: http://ffmpeg.mplayerhq.hu/download.html
 About the bug: https://roundup.mplayerhq.hu/roundup/ffmpeg/issue159
@@ -32,8 +38,15 @@ after the require line in LocalSettings.php.
 Cortado
 -------
 
-The cortado directory contains a fork of the Cortado Java applet by Fluendo. For
-information about the original project see:
+Wikimedia maintains a fork of the Cortado Java applet by Fluendo. SVN access to
+the source code is at:
+
+    http://svn.wikimedia.org/svnroot/mediawiki/trunk/cortado/
+
+A .jar file compiled from this tree is provided in the OggHandler directory for
+your convenience.
+
+For information about the original project see:
 
     http://www.flumotion.net/cortado/
 

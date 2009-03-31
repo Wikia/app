@@ -14,7 +14,7 @@
  */
 if (!defined('MEDIAWIKI')) die();
 
-class SFUploadWindow extends SpecialPage {
+class SFUploadWindow extends UnlistedSpecialPage {
 
 	/**
 	 * Constructor
@@ -36,6 +36,8 @@ class SFUploadWindow extends SpecialPage {
 function doSpecialUploadWindow() {
 	global $wgRequest, $wgOut, $wgUser, $wgServer;
 	global $wgScript, $wgJsMimeType, $wgStylePath, $wgStyleVersion;
+	global $wgContLang, $wgLanguageCode, $wgXhtmlDefaultNamespace, $wgXhtmlNamespaces;
+	global $wgUseAjax, $wgAjaxUploadDestCheck, $wgAjaxLicensePreview;
 
 	// disable $wgOut - we'll print out the page manually, taking the
 	// body created by the form, plus the necessary Javascript files,
@@ -43,14 +45,51 @@ function doSpecialUploadWindow() {
 	$wgOut->disable();
 	$form = new UploadWindowForm( $wgRequest );
 	$form->execute();
-	$user_js = "<script type=\"{$wgJsMimeType}\">" . $wgUser->getSkin()->getUserJs() . "; wgServer=\"{$wgServer}\"; wgScript=\"{$wgScript}\"</script>";
+	$sk = $wgUser->getSkin();
+	$sk->initPage($wgOut); // need to call this to set skin name correctly
+	// call to get user JS was changed in MW 1.14
+	if (method_exists($sk, 'generateUserJs')) {
+		$skin_user_js = $sk->generateUserJs();
+	} else {
+		$skin_user_js = $sk->getUserJs();
+	}
+	$useAjaxDestCheck = $wgUseAjax && $wgAjaxUploadDestCheck;
+	$useAjaxLicensePreview = $wgUseAjax && $wgAjaxLicensePreview;
+	$adc = wfBoolToStr( $useAjaxDestCheck );
+	$alp = wfBoolToStr( $useAjaxLicensePreview );
+	$autofill = wfBoolToStr( true );
+
+	$user_js =<<<END
+<script type="{$wgJsMimeType}">
+$skin_user_js;
+wgServer="{$wgServer}";
+wgScript="{$wgScript}"
+wgAjaxUploadDestCheck = {$adc};
+wgAjaxLicensePreview = {$alp};
+wgUploadAutoFill = {$autofill};
+</script>
+
+END;
+	$vars_js = Skin::makeGlobalVariablesScript(array('skinname' => $sk->getSkinName()));
 	$wikibits_include = "<script type=\"{$wgJsMimeType}\" src=\"{$wgStylePath}/common/wikibits.js?$wgStyleVersion\"></script>";
 	$ajax_include = "<script type=\"{$wgJsMimeType}\" src=\"{$wgStylePath}/common/ajax.js?$wgStyleVersion\"></script>";
 	$ajaxwatch_include = "<script type=\"{$wgJsMimeType}\" src=\"{$wgStylePath}/common/ajaxwatch.js?$wgStyleVersion\"></script>";
 	$text = <<<END
-<html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="{$wgXhtmlDefaultNamespace}"
+END;
+	foreach($wgXhtmlNamespaces as $tag => $ns) {
+		$text .= "xmlns:{$tag}=\"{$ns}\" ";
+	}
+	$dir = $wgContLang->isRTL() ? "rtl" : "ltr";
+	$text .= "xml:lang=\"{$wgLanguageCode}\" lang=\"{$wgLanguageCode}\" dir=\"{$dir}\">";
+
+	$text .= <<<END
+
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <head>
 $user_js
+$vars_js
 $wikibits_include
 $ajax_include
 $ajaxwatch_include
@@ -66,7 +105,7 @@ END;
 }
 
 /**
- * implements Special:Upload
+ * implements Special:UploadWindow
  * @addtogroup SpecialPage
  */
 class UploadWindowForm {
@@ -880,7 +919,7 @@ wgAjaxLicensePreview = {$alp};
 						wfMsgHtml( 'restorelink', $count )
 					)
 				);
-				$wgOut->addHtml( "<div id=\"contentSub2\">{$link}</div>" );
+				$wgOut->addHTML( "<div id=\"contentSub2\">{$link}</div>" );
 			}				
 		}
 
@@ -983,7 +1022,7 @@ wgAjaxLicensePreview = {$alp};
 			<td align='$align2'>
 				<textarea tabindex='3' name='wpUploadDescription' id='wpUploadDescription' rows='4' 
 					cols='{$cols}'{$ew}>$encComment</textarea>
-	   {$this->uploadFormTextAfterSummary}
+		{$this->uploadFormTextAfterSummary}
 			</td>
 		</tr>
 		<tr>
@@ -1004,7 +1043,7 @@ EOT
 			</tr>
 			<tr>" );
 			if( $useAjaxLicensePreview ) {
-				$wgOut->addHtml( "
+				$wgOut->addHTML( "
 					<td></td>
 					<td id=\"mw-license-preview\"></td>
 				</tr>
@@ -1019,12 +1058,12 @@ EOT
 			$uploadsource = htmlspecialchars( $this->mCopyrightSource );
 
 			$wgOut->addHTML( "
-			        <td align='$align1' nowrap='nowrap'><label for='wpUploadCopyStatus'>$filestatus:</label></td>
+					<td align='$align1' nowrap='nowrap'><label for='wpUploadCopyStatus'>$filestatus:</label></td>
 					<td><input tabindex='5' type='text' name='wpUploadCopyStatus' id='wpUploadCopyStatus' 
 					  value=\"$copystatus\" size='40' /></td>
-		        </tr>
+			</tr>
 			<tr>
-		        	<td align='$align1'><label for='wpUploadCopyStatus'>$filesource:</label></td>
+					<td align='$align1'><label for='wpUploadCopyStatus'>$filesource:</label></td>
 					<td><input tabindex='6' type='text' name='wpUploadSource' id='wpUploadCopyStatus' 
 					  value=\"$uploadsource\" size='40' /></td>
 			</tr>
@@ -1032,7 +1071,7 @@ EOT
 		");
 		}
 
-		$wgOut->addHtml( "
+		$wgOut->addHTML( "
 		<td></td>
 		<td>
 			<input tabindex='7' type='checkbox' name='wpWatchthis' id='wpWatchthis' $watchChecked value='true' />
@@ -1123,7 +1162,7 @@ EOT
 		global $wgVerifyMimeType;
 		if ($wgVerifyMimeType) {
 
-		  wfDebug ( "\n\nmime: <$mime> extension: <$extension>\n\n");
+		wfDebug ( "\n\nmime: <$mime> extension: <$extension>\n\n");
 			#check mime type against file extension
 			if( !$this->verifyExtension( $mime, $extension ) ) {
 				return new WikiErrorMsg( 'uploadcorrupt' );
@@ -1493,7 +1532,7 @@ EOT
 	function showError( $description ) {
 		global $wgOut;
 		$wgOut->setPageTitle( wfMsg( "internalerror" ) );
-		$wgOut->setRobotpolicy( "noindex,nofollow" );
+		$wgOut->setRobotPolicy( "noindex,nofollow" );
 		$wgOut->setArticleRelated( false );
 		$wgOut->enableClientCache( false );
 		$wgOut->addWikiText( $description );

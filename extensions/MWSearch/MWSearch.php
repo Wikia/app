@@ -20,7 +20,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  * 
- * $Id: MWSearch.php 584 2008-07-29 13:59:13Z emil $
+ * $Id: MWSearch.php 45173 2008-12-30 04:10:29Z brion $
  */
 
 # To use this, add something like the following to LocalSettings:
@@ -40,7 +40,7 @@
 ##########
 
 
-# Back-end version (override before including MWSearch.php)
+# Back-end version; set to 2.1 to add support for some advanced features.
 $wgLuceneSearchVersion = 2;
 	
 # If to show related links (if available) below search results
@@ -54,10 +54,13 @@ $wgEnableLucenePrefixSearch = false;
 # hit rates way below 1% even for very long expiry times
 $wgLuceneSearchCacheExpiry = 0;
 
+# timeout for search backend to respond
+$wgLuceneSearchTimeout = 6;
+
 $wgExtensionCredits['other'][] = array(
 	'name'           => 'MWSearch',
-	'svn-date' => '$LastChangedDate: 2008-07-29 13:59:13 +0000 (Tue, 29 Jul 2008) $',
-	'svn-revision' => '$LastChangedRevision: 584 $',
+	'svn-date' => '$LastChangedDate: 2008-12-30 04:10:29 +0000 (Tue, 30 Dec 2008) $',
+	'svn-revision' => '$LastChangedRevision: 45173 $',
 	'author'         => array( 'Kate Turner', 'Brion Vibber' ),
 	'descriptionmsg' => 'mwsearch-desc',
 	'url'            => 'http://www.mediawiki.org/wiki/Extension:MWSearch',

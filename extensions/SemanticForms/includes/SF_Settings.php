@@ -37,9 +37,9 @@ require_once('SF_GlobalFunctions.php');
 # than 150.
 ##
 if (!isset($sfgNamespaceIndex)) {
-        sffInitNamespaces(150);
+	sffInitNamespaces(150);
 } else {
-        sffInitNamespaces();
+	sffInitNamespaces();
 }
 
 ###
@@ -63,15 +63,32 @@ $wgGroupPermissions['*'    ]['viewedittab']   = true;
 $wgAvailableRights[] = 'viewedittab';
 
 ###
+# Permission to edit form fields defined as 'restricted'
+###
+$wgGroupPermissions['sysop']['editrestrictedfields'] = true;
+
+###
 # List separator character
 ###
 $sfgListSeparator = ",";
 
 ###
 # The base URL for all YUI Javascript files - to store the YUI library
-# locally, download it and change this to the URL of the local
-# installation's 'build' directory.
+# locally, download it (from http://developer.yahoo.com/yui/) and change this
+# value to the URL of the local installation's 'build' directory.
 ###
-$sfgYUIBase = "http://yui.yahooapis.com/2.5.1/build/";
+$sfgYUIBase = "http://yui.yahooapis.com/2.6.0/build/";
 
-?>
+###
+# Extend the edit form from the internal EditPage class rather than using a
+# special page and hacking things up.
+# 
+# @note This is experimental and requires updates to EditPage which I have only
+#       added into MediaWiki 1.14a
+###
+$sfgUseFormEditPage = false;//version_compare( $wgVersion, '1.14alpha', '>=' );
+
+###
+# Use 24-hour time format in forms, e.g. 15:30 instead of 3:30 PM
+###
+$sfg24HourTime = false;

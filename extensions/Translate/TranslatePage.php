@@ -1,5 +1,5 @@
 <?php
-if (!defined('MEDIAWIKI')) die();
+if ( !defined( 'MEDIAWIKI' ) ) die();
 
 /**
  * Implements the core of Translate extension - a special page which shows
@@ -35,7 +35,7 @@ class SpecialTranslate extends SpecialPage {
 		TranslateUtils::injectCSS();
 		global $wgOut, $wgTranslateBlacklist;
 
-		$this->setup();
+		$this->setup( $parameters );
 		$this->setHeaders();
 
 		$errors = array();
@@ -63,7 +63,7 @@ class SpecialTranslate extends SpecialPage {
 		// Show errors nicely
 		$wgOut->addHTML( $this->settingsForm( $errors ) );
 
-		if ( count($errors) ) {
+		if ( count( $errors ) ) {
 			wfMemOut( __METHOD__ );
 			return;
 		} else {
@@ -113,7 +113,7 @@ class SpecialTranslate extends SpecialPage {
 		wfMemOut( __METHOD__ );
 	}
 
-	protected function setup() {
+	protected function setup( $parameters ) {
 		wfMemIn( __METHOD__ );
 		global $wgUser, $wgRequest;
 
@@ -129,13 +129,30 @@ class SpecialTranslate extends SpecialPage {
 		// Dump everything here
 		$nondefaults = array();
 
+		$parameters = array_map( 'trim', explode( ';', $parameters ) );
+		$pars = array();
+		foreach ( $parameters as $_ ) {
+			if ( $_ === '' ) continue;
+
+			if ( strpos( $_, '=' ) !== false ) {
+				list( $key, $value ) = array_map( 'trim', explode( '=', $_, 2 ) );
+			} else {
+				$key = 'group';
+				$value = $_;
+			}
+			$pars[$key] = $value;
+		}
+
 		foreach ( $defaults as $v => $t ) {
-			if ( is_bool($t) ) {
-				$r = $wgRequest->getBool( $v, $defaults[$v] );
-			} elseif( is_int($t) ) {
-				$r = $wgRequest->getInt( $v, $defaults[$v] );
-			} elseif( is_string($t) ) {
-				$r = $wgRequest->getText( $v, $defaults[$v] );
+			if ( is_bool( $t ) ) {
+				$r = isset( $pars[$v] ) ? (bool) $pars[$v] : $defaults[$v];
+				$r = $wgRequest->getBool( $v, $r );
+			} elseif ( is_int( $t ) ) {
+				$r = isset( $pars[$v] ) ? (int) $pars[$v] : $defaults[$v];
+				$r = $wgRequest->getInt( $v, $r );
+			} elseif ( is_string( $t ) ) {
+				$r = isset( $pars[$v] ) ? (string) $pars[$v] : $defaults[$v];
+				$r = $wgRequest->getText( $v, $r );
 			}
 			wfAppendToArrayIfNotDefault( $v, $r, $defaults, $nondefaults );
 		}
@@ -152,7 +169,7 @@ class SpecialTranslate extends SpecialPage {
 	/**
 	 * GLOBALS: $wgTitle, $wgScript
 	 */
-	protected function settingsForm($errors) {
+	protected function settingsForm( $errors ) {
 		wfMemIn( __METHOD__ );
 		global $wgTitle, $wgScript;
 
@@ -203,7 +220,7 @@ class SpecialTranslate extends SpecialPage {
 		wfMemIn( __METHOD__ );
 		$groups = MessageGroups::singleton()->getGroups();
 		$selector = new HTMLSelector( 'group', 'group', $this->options['group'] );
-		foreach( $groups as $id => $class ) {
+		foreach ( $groups as $id => $class ) {
 			$selector->addOption( $class->getLabel(), $id );
 		}
 		wfMemOut( __METHOD__ );
@@ -256,8 +273,8 @@ class SpecialTranslate extends SpecialPage {
 			return '';
 		}
 
-		$start = $this->paging['start'] +1 ;
-		$stop  = $start + $this->paging['count']-1;
+		$start = $this->paging['start'] + 1 ;
+		$stop  = $start + $this->paging['count'] - 1;
 		$total = $this->paging['total'];
 
 		$allInThisPage = $start === 1 && $total <= $this->options['limit'];
@@ -270,18 +287,18 @@ class SpecialTranslate extends SpecialPage {
 		} else {
 			$previous = wfMsg( TranslateUtils::MSG . 'prev' );
 			if ( $this->options['offset'] > 0 ) {
-				$offset = max( 0, $this->options['offset']-$this->options['limit'] );
+				$offset = max( 0, $this->options['offset'] - $this->options['limit'] );
 				$previous = $this->makeOffsetLink( $previous, $offset );
 			}
 
 			$nextious = wfMsg( TranslateUtils::MSG . 'next' );
 			if ( $this->paging['total'] != $this->paging['start'] + $this->paging['count'] ) {
-				$offset = $this->options['offset']+$this->options['limit'];
+				$offset = $this->options['offset'] + $this->options['limit'];
 				$nextious = $this->makeOffsetLink( $nextious, $offset );
 			}
 
-			$start = $this->paging['start'] +1 ;
-			$stop  = $start + $this->paging['count']-1;
+			$start = $this->paging['start'] + 1 ;
+			$stop  = $start + $this->paging['count'] - 1;
 			$total = $this->paging['total'];
 
 			$showing = wfMsgExt( self::MSG . 'showing',
@@ -306,7 +323,7 @@ class SpecialTranslate extends SpecialPage {
 		$skin = $wgUser->getSkin();
 		$link = $skin->makeLinkObj( $wgTitle, $label,
 			wfArrayToCGI(
-				array( 'offset' => $offset),
+				array( 'offset' => $offset ),
 				$this->nondefaults
 			)
 		);
@@ -356,7 +373,7 @@ class SpecialTranslate extends SpecialPage {
 	 */
 	public static function deepArraySet( &$array, array $indexes, $key, $value ) {
 		foreach ( $indexes as $index ) {
-			if ( !isset($array[$index]) ) $array[$index] = array();
+			if ( !isset( $array[$index] ) ) $array[$index] = array();
 			$array = &$array[$index];
 		}
 
@@ -368,7 +385,7 @@ class SpecialTranslate extends SpecialPage {
 		$out = '';
 		$structure = $this->getGroupStructure();
 
-		foreach( $structure as $blocks ) {
+		foreach ( $structure as $blocks ) {
 			$out .= $this->formatGroupInformation( $blocks );
 		}
 
@@ -379,7 +396,7 @@ class SpecialTranslate extends SpecialPage {
 		global $wgUser;
 
 
-		if ( is_array($blocks) ) {
+		if ( is_array( $blocks ) ) {
 			$block = array_shift( $blocks );
 		} else {
 			$block = $blocks;
@@ -389,9 +406,9 @@ class SpecialTranslate extends SpecialPage {
 
 		$title = $this->getTitle();
 		$edit = $wgUser->getSkin()->makeKnownLinkObj( $title, wfMsgHtml( self::MSG . 'edit' ), "group=$id" );
-		$label =  htmlspecialchars($block->getLabel()) . " ($edit)";
+		$label =  htmlspecialchars( $block->getLabel() ) . " ($edit)";
 		$desc = $this->getGroupDescription( $block );
-		$hasSubblocks = is_array($blocks) && count($blocks);
+		$hasSubblocks = is_array( $blocks ) && count( $blocks );
 
 		if ( $hasSubblocks || $level === 2 ) {
 			$class = 'mw-sp-translate-group';
@@ -408,7 +425,7 @@ class SpecialTranslate extends SpecialPage {
 
 		if ( $hasSubblocks ) {
 			foreach ( $blocks as $subBlock ) {
-				$out .= $this->formatGroupInformation( $subBlock, $level+1 );
+				$out .= $this->formatGroupInformation( $subBlock, $level + 1 );
 			}
 		}
 

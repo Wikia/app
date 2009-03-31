@@ -126,13 +126,19 @@ abstract class ApiQueryBase extends ApiBase {
 	 * Clauses can be formatted as 'foo=bar' or array('foo' => 'bar'),
 	 * the latter only works if the value is a constant (i.e. not another field)
 	 *
+	 * If $value is an empty array, this function does nothing.
+	 *
 	 * For example, array('foo=bar', 'baz' => 3, 'bla' => 'foo') translates
 	 * to "foo=bar AND baz='3' AND bla='foo'"
 	 * @param mixed $value String or array
 	 */
 	protected function addWhere($value) {
-		if (is_array($value))
-			$this->where = array_merge($this->where, $value);
+		if (is_array($value)) {
+			// Sanity check: don't insert empty arrays,
+			// Database::makeList() chokes on them
+			if ( count( $value ) )
+				$this->where = array_merge($this->where, $value);
+		}
 		else
 			$this->where[] = $value;
 	}
@@ -154,10 +160,12 @@ abstract class ApiQueryBase extends ApiBase {
 	/**
 	 * Equivalent to addWhere(array($field => $value))
 	 * @param string $field Field name
-	 * @param string $value Value; ignored if nul;
+	 * @param string $value Value; ignored if null or empty array;
 	 */
 	protected function addWhereFld($field, $value) {
-		if (!is_null($value))
+		// Use count() to its full documented capabilities to simultaneously 
+		// test for null, empty array or empty countable object
+		if ( count( $value ) )
 			$this->where[$field] = $value;
 	}
 
@@ -236,7 +244,7 @@ abstract class ApiQueryBase extends ApiBase {
 
 	/**
 	 * Add information (title and namespace) about a Title object to a result array
-	 * @param array $arr Result array à la ApiResult
+	 * @param array $arr Result array Ã  la ApiResult
 	 * @param Title $title Title object
 	 * @param string $prefix Module prefix
 	 */
@@ -264,7 +272,7 @@ abstract class ApiQueryBase extends ApiBase {
 	/**
 	 * Add a sub-element under the page element with the given page ID
 	 * @param int $pageId Page ID
-	 * @param array $data Data array à la ApiResult 
+	 * @param array $data Data array Ã  la ApiResult 
 	 */
 	protected function addPageSubItems($pageId, $data) {
 		$result = $this->getResult();
@@ -324,10 +332,13 @@ abstract class ApiQueryBase extends ApiBase {
 	 * @return string Page title with underscores
 	 */
 	public function titleToKey($title) {
+		# Don't throw an error if we got an empty string
+		if(trim($title) == '')
+			return '';
 		$t = Title::newFromText($title);
 		if(!$t)
 			$this->dieUsageMsg(array('invalidtitle', $title));
-		return $t->getDbKey();
+		return $t->getPrefixedDbKey();
 	}
 
 	/**
@@ -336,11 +347,32 @@ abstract class ApiQueryBase extends ApiBase {
 	 * @return string Page title with spaces
 	 */
 	public function keyToTitle($key) {
+		# Don't throw an error if we got an empty string
+		if(trim($key) == '')
+			return '';
 		$t = Title::newFromDbKey($key);
 		# This really shouldn't happen but we gotta check anyway
 		if(!$t)
 			$this->dieUsageMsg(array('invalidtitle', $key));
 		return $t->getPrefixedText();
+	}
+	
+	/**
+	 * An alternative to titleToKey() that doesn't trim trailing spaces
+	 * @param string $titlePart Title part with spaces
+	 * @return string Title part with underscores
+	 */
+	public function titlePartToKey($titlePart) {
+		return substr($this->titleToKey($titlePart . 'x'), 0, -1);
+	}
+	
+	/**
+	 * An alternative to keyToTitle() that doesn't trim trailing spaces
+	 * @param string $keyPart Key part with spaces
+	 * @return string Key part with underscores
+	 */
+	public function keyPartToTitle($keyPart) {
+		return substr($this->keyToTitle($keyPart . 'x'), 0, -1);
 	}
 
 	/**
@@ -348,7 +380,7 @@ abstract class ApiQueryBase extends ApiBase {
 	 * @return string
 	 */
 	public static function getBaseVersion() {
-		return __CLASS__ . ': $Id: ApiQueryBase.php 37083 2008-07-05 11:18:50Z catrope $';
+		return __CLASS__ . ': $Id: ApiQueryBase.php 44461 2008-12-11 19:11:11Z ialex $';
 	}
 }
 

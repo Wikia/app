@@ -3,13 +3,13 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 	echo "FlaggedRevs extension\n";
 	exit( 1 );
 }
-wfLoadExtensionMessages( 'StablePages' );
-wfLoadExtensionMessages( 'FlaggedRevs' );
 
 class StablePages extends SpecialPage
 {
     function __construct() {
         SpecialPage::SpecialPage( 'StablePages' );
+		wfLoadExtensionMessages( 'StablePages' );
+		wfLoadExtensionMessages( 'FlaggedRevs' );
     }
 
     function execute( $par ) {

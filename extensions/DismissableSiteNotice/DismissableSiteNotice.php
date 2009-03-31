@@ -2,8 +2,8 @@
 
 $wgExtensionCredits['other'][] = array(
 	'name' => 'DismissableSiteNotice',
-	'svn-date' => '$LastChangedDate: 2008-07-29 13:59:13 +0000 (Tue, 29 Jul 2008) $',
-	'svn-revision' => '$LastChangedRevision: 584 $',
+	'svn-date' => '$LastChangedDate: 2008-11-03 02:01:13 +0000 (Mon, 03 Nov 2008) $',
+	'svn-revision' => '$LastChangedRevision: 43109 $',
 	'author' => 'Brion Vibber',
 	'description' => 'Allows users to close the sitenotice.',
 	'descriptionmsg' => 'sitenotice-desc',
@@ -28,9 +28,9 @@ function wfDismissableSiteNotice( &$notice ) {
 	if ( $wgUser->isAnon() ) {
 		$notice = <<<EOT
 <script type="text/javascript" language="JavaScript">
-<!--
+/* <![CDATA[ */
 document.writeln("$encNotice");
--->
+/* ]]> */
 </script>
 EOT;
 		return true;
@@ -38,7 +38,7 @@ EOT;
 
 	$notice = <<<EOT
 <script type="text/javascript" language="JavaScript">
-<!--
+/* <![CDATA[ */
 var cookieName = "dismissSiteNotice=";
 var cookiePos = document.cookie.indexOf(cookieName);
 var siteNoticeID = "$id";
@@ -60,13 +60,13 @@ if (cookieValue != siteNoticeID) {
 		var date = new Date();
 		date.setTime(date.getTime() + 30*86400*1000);
 		document.cookie = cookieName + siteNoticeID + "; expires="+date.toGMTString() + "; path=/";
-		var element = document.getElementById('siteNotice');
+		var element = document.getElementById('mw-dismissable-notice');
 		element.parentNode.removeChild(element);
 	}
 	document.writeln('<table width="100%" id="mw-dismissable-notice"><tr><td width="80%">'+siteNoticeValue+'</td>');
 	document.writeln('<td width="20%" align="right">[<a href="javascript:dismissNotice();">'+msgClose+'</a>]</td></tr></table>');
 }
--->
+/* ]]> */
 </script>
 EOT;
 	// Compact the string a bit

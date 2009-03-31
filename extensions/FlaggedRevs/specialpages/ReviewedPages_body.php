@@ -4,13 +4,12 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 	exit( 1 );
 }
 
-wfLoadExtensionMessages( 'ReviewedPages' );
-wfLoadExtensionMessages( 'FlaggedRevs' );
-
 class ReviewedPages extends SpecialPage
 {
     function __construct() {
         SpecialPage::SpecialPage( 'ReviewedPages' );
+		wfLoadExtensionMessages( 'ReviewedPages' );
+		wfLoadExtensionMessages( 'FlaggedRevs' );
     }
 
     function execute( $par ) {

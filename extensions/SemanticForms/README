@@ -12,12 +12,14 @@ Notes on installing Semantic Forms can be found in the file INSTALL.
 == Credits ==
 
 Semantic Forms was created, and mostly written by, Yaron Koren.
-Important code contributions were also made by Jeffrey Stuckman,
-Harold Solbrig, Louis Gerbarg, Matt Williamson, Nils Opperman,
-Sergey Chernyshev and wheresmytab.
+Important code contributions were also made by Daniel Friesen,
+Eugene Mednikov, Harold Solbrig, Jayson Harshbarger, Jeffrey Stuckman,
+Louis Gerbarg, Matt Williamson, Nils Opperman, Sergey Chernyshev and
+wheresmytab.
 
 Language translations were provided by many people; see the
-file /languages/SF_Messages.php for the full listing.
+files /languages/SF_Messages.php and /languages/SF_Aliases.php for
+the full listings.
 
 == Contact ==
 

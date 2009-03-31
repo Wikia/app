@@ -79,7 +79,11 @@ function getGroupings() {
     } else {
       $groupings = array();
       $store = smwfGetStore();
-      $grouping_prop = Title::makeTitle(SMW_NS_PROPERTY, $xml_grouping_prop);
+      // handling changed in SMW 1.4
+      if (class_exists('SMWPropertyValue'))
+        $grouping_prop = SMWPropertyValue::makeProperty($xml_grouping_prop);
+      else
+        $grouping_prop = Title::newFromText($xml_grouping_prop, SMW_NS_PROPERTY);
       $grouped_props = $store->getAllPropertySubjects($grouping_prop);
       foreach ($grouped_props as $grouped_prop) {
         // the type of $grouped_prop depends on the version of SMW

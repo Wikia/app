@@ -1,8 +1,9 @@
 <?php
 /**
  * Test implementation of SMW's storage abstraction layer.
- * FIXME: Currently not really functional.
- *
+ * @bug Currently not really functional.
+ * @file
+ * @ingroup SMWStore
  * @author Markus Krötzsch
  */
 
@@ -10,7 +11,8 @@
  * Storage access class for testing purposes. No persitent storage is implemented, but
  * all methods return non-empty result sets that can be used for testing purposes.
  * 
- * FIXME: this implementation requires updates for testing new storage capabilities.
+ * @bug This implementation requires updates for testing new storage capabilities.
+ * @ingroup SMWStore
  */
 class SMWTestStore extends SMWStore {
 
@@ -20,7 +22,7 @@ class SMWTestStore extends SMWStore {
 		return NULL;
 	}
 
-	function getSpecialValues(Title $subject, $specialprop, $requestoptions = NULL) {
+	function getSpecialValues($subject, $specialprop, $requestoptions = NULL) {
 		// TODO
 		if ($specialprop === SMW_SP_INSTANCE_OF) { // category membership
 			if ( ($requestoptions->limit == -1) || $requestoptions->limit > 8) {
@@ -67,7 +69,7 @@ class SMWTestStore extends SMWStore {
 		}
 	}
 
-	function getPropertyValues($subject, $property, $requestoptions = NULL, $outputformat = '') {
+	function getPropertyValues($subject, SMWPropertyValue $property, $requestoptions = NULL, $outputformat = '') {
 		$type = $this->getSpecialValues($property,SMW_SP_HAS_TYPE);
 		$type = $type[0];
 		$valarray = array();
@@ -101,18 +103,18 @@ class SMWTestStore extends SMWStore {
 		return $result;
 	}
 
-	function getPropertySubjects(Title $property, $value, $requestoptions = NULL) {
+	function getPropertySubjects(SMWPropertyValue $property, $value, $requestoptions = NULL) {
 		if ( !$value->isValid() ) {
 			return array();
 		}
 		return $this->getTestTitles($requestoptions);
 	}
 
-	function getAllPropertySubjects(Title $property, $requestoptions = NULL) {
+	function getAllPropertySubjects(SMWPropertyValue $property, $requestoptions = NULL) {
 		return $this->getTestTitles($requestoptions);
 	}
 
-	function getProperties(Title $subject, $requestoptions = NULL) {
+	function getProperties($subject, $requestoptions = NULL) {
 		if ( ($requestoptions->limit == -1) || $requestoptions->limit > 8) {
 			$requestoptions->limit = 8;
 		}
@@ -128,7 +130,7 @@ class SMWTestStore extends SMWStore {
 	function deleteSubject(Title $subject) {
 	}
 
-	function updateData(SMWSemanticData $data, $newpage) {
+	function updateData(SMWSemanticData $data) {
 	}
 
 	function changeTitle(Title $oldtitle, Title $newtitle, $pageid, $redirid=0) {
@@ -195,6 +197,11 @@ class SMWTestStore extends SMWStore {
 
 	function drop($verbose = true) {
 		return true;
+	}
+
+	function refreshData(&$index, $count, $namespaces = false, $usejobs = true) {
+		$index = -1;
+		return 1;
 	}
 
 

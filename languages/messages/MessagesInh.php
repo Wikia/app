@@ -54,8 +54,6 @@ $messages = array(
 'underline-never'   => 'ЦIаккха',
 'underline-default' => 'Браузер настройкаш хьаэца',
 
-'skinpreview' => '(Хьажа)',
-
 # Dates
 'sunday'        => 'КIиранди',
 'monday'        => 'Оршот',
@@ -188,8 +186,6 @@ $messages = array(
 # All link text and link target definitions of links into project namespace that get used by other message strings, with the exception of user group pages (see grouppage) and the disambiguation template definition (see disambiguations).
 'aboutsite'            => 'Описани {{SITENAME}}',
 'aboutpage'            => 'Project:Описани',
-'bugreports'           => 'Гiалата хоам',
-'bugreportspage'       => 'Project:Гiалата хоам',
 'currentevents'        => 'Хьанзар доалара хамаж',
 'currentevents-url'    => 'Project:Хьанзар доалара хама',
 'edithelp'             => 'Хувцамаш йие гIо',
@@ -207,14 +203,18 @@ $messages = array(
 
 'badaccess'        => 'Чу валар гIалата',
 'badaccess-group0' => 'Хьо де воалара хьюна де пурам дац',
-'badaccess-group1' => 'Хьо де воалара $1 группе бол чар ма де йиша яц',
-'badaccess-group2' => 'Хьо де воалара $1 группаш юкъе бол чар ма де йиша яц',
 'badaccess-groups' => 'Хьо де воалара $1 группаш юкъе бол чар ма де йиша яц',
 
 'versionrequired'     => '$1 MediaWiki верси йиза',
 'versionrequiredtext' => '$1 MediaWiki верси йиза ер оагIув хьажа. [[Special:Version|version page]] хьажа.',
 
 'ok' => 'ОК',
+
+# Search results
+'searchhelp-url' => 'Help:Хьехар',
+
+# Preferences page
+'skin-preview' => 'Хьажа',
 
 # Special:Categories
 'categories' => 'Категореш',

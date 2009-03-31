@@ -260,7 +260,7 @@ span.subpages {
 #bodyContent h3, #bodyContent h4, #bodyContent h5 {
 	margin-bottom: .3em;
 }
-.firstHeading {
+#firstHeading {
 	margin-bottom: .1em;
 	/* These two rules hack around bug 2013 (fix for more limited bug 11325).
 	   When bug 2013 is fixed properly, they should be removed. */
@@ -892,10 +892,6 @@ li#ca-watch, li#ca-unwatch, li#ca-varlang-0, li#ca-print {
 	text-transform: lowercase;
 }
 
-/*
-** the remaining portlets
-*/
-#p-tbx,
 #p-lang {
 	position: relative;
 	z-index: 3;
@@ -1427,6 +1423,10 @@ div#searchTargetHide {
 	padding:2px;
 }
 
+#powersearch p {
+	margin-top:0px;
+}
+
 div.multipageimagenavbox {
    border: solid 1px silver;
    padding: 4px;
@@ -1479,6 +1479,7 @@ tr.sv-space td { display: none; }
   - remove line wrapping for all td and th, set background color
   - restore line wrapping for the last two table cells (description and size)
 */
+.TablePager { min-width: 80%; }
 .TablePager_nav a { text-decoration: none; }
 .TablePager { border-collapse: collapse; }
 .TablePager, .TablePager td, .TablePager th {
@@ -1517,17 +1518,6 @@ div.mw-lag-warn-high {
 	background-color: #FFCCCC;
 }
 
-/* Recreating-deleted-page/reupload file warning and log entries */
-div#mw-upload-deleted-warn,
-div#mw-recreate-deleted-warn {
-	padding: 3px;
-	margin-bottom: 3px;
-	border: 2px solid #2F6FAB;
-}
-div#mw-upload-deleted-warn ul li,
-div#mw-recreate-deleted-warn ul li {
-	font-size: 90%;
-}
 .MediaTransformError {
 	background-color: #ccc;
 	padding: 0.1em;
@@ -1553,11 +1543,6 @@ div#mw-search-interwiki-caption {
 	padding-bottom: 0.2em;
 	padding-top: 0.15em;
 	background: #cae8ff;
-}
-
-span.searchmatch {
-	font-weight: bold;
-	color: red;
 }
 
 /* God-damned hack for the crappy layout */

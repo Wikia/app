@@ -152,8 +152,8 @@ $messages = array(
 'hr_tip'          => 'अक्षांशीय पंक्ति (अल्प उपयोग)',
 
 # Edit pages
-'summary'              => 'सारांश',
-'subject'              => 'विषय/मुख्यपंक्ति',
+'summary'              => 'सारांश:',
+'subject'              => 'विषय/मुख्यपंक्ति:',
 'minoredit'            => 'अल्प संपादन',
 'watchthis'            => 'एहि पृष्ठकेँ देखू',
 'showpreview'          => 'पूर्वप्रदर्शन',
@@ -203,7 +203,7 @@ $messages = array(
 'uploadbtn'     => 'फाइल अपलोड',
 'uploadedimage' => 'अपलोड भेल "[[$1]]"',
 
-# Image description page
+# File description page
 'filehist'   => 'फाइल इतिहास',
 'imagelinks' => 'लिंक्स',
 
@@ -221,17 +221,17 @@ $messages = array(
 'alphaindexline' => '$1 to $2',
 
 # Watchlist
-'mywatchlist'         => 'हमर साकांक्ष-सूची',
-'watch'               => 'ताकिमे',
-'unwatch'             => 'छोड़ू',
-'watchlist-hide-bots' => 'नुकाऊ संपादित बॉट-नमगर',
+'mywatchlist' => 'हमर साकांक्ष-सूची',
+'watch'       => 'ताकिमे',
+'unwatch'     => 'छोड़ू',
 
 # Displayed when you click the "watch" button and it is in the process of watching
 'watching'   => 'ताकिमे...',
 'unwatching' => 'छोड़ल ...',
 
-# Delete/protect/revert
+# Protect
 'protectlogpage' => 'सुरक्षा लॉग',
+'prot_1movedto2' => '[[$1]] गेल एतय [[$2]]',
 
 # Namespace form on various pages
 'blanknamespace' => '(मुख्य)',

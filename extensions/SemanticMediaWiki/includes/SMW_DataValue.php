@@ -1,15 +1,26 @@
 <?php
+/**
+ * @file
+ * @ingroup SMWDataValues
+ */
+
+/**
+ * This group contains all parts of SMW that relate to the processing of datavalues
+ * of various types.
+ * @defgroup SMWDataValues SMWDataValues
+ * @ingroup SMW
+ */
 
 /**
  * Objects of this type represent all that is known about
  * a certain user-provided data value, especially its various
  * representations as strings, tooltips, numbers, etc.
  *
- * @note AUTOLOADED
+ * @ingroup SMWDataValues
  */
 abstract class SMWDataValue {
 
-	protected $m_property = false;    /// The text label of the respective property or false if none given
+	protected $m_property = NULL;    /// The text label of the respective property or false if none given
 	protected $m_caption;             /// The text label to be used for output or false if none given
 	protected $m_errors = array();    /// Array of error text messages
 	protected $m_isset = false;       /// True if a value was set.
@@ -21,9 +32,9 @@ abstract class SMWDataValue {
 
 	private $m_hasssearchlink;        /// used to control the addition of the standard search link
 	private $m_hasservicelinks;       /// used to control service link creation
-	
 
-	public function SMWDataValue($typeid) {
+
+	public function __construct($typeid) {
 		$this->m_typeid = $typeid;
 	}
 
@@ -50,10 +61,12 @@ abstract class SMWDataValue {
 		// e.g. math. In general, we are not prepared to handle such content properly, and we
 		// also have no means of obtaining the user input at this point. Hence the assignement
 		// just fails.
-		if (strpos($value,"\x7f") === false) {
+		// Note: \x07 was used in MediaWiki 1.11.0, \x7f is used now
+		if ((strpos($value,"\x7f") === false) && (strpos($value,"\x07") === false)) {
 			$this->parseUserValue($value); // may set caption if not set yet, depending on datavalue
 			$this->m_isset = true;
 		} else {
+			wfLoadExtensionMessages('SemanticMediaWiki');
 			$this->addError(wfMsgForContent('smw_parseerror'));
 		}
 		if ($this->isValid()) {
@@ -80,12 +93,19 @@ abstract class SMWDataValue {
 	}
 
 	/**
-	 * Set the property to which this value refers. Used to generate search links and
+	 * Specify the property to which this value refers. Used to generate search links and
 	 * to find custom settings that relate to the property.
-	 * The property is given as a simple wiki text title, without namespace prefix.
 	 */
-	public function setProperty($propertyname) {
-		$this->m_property = $propertyname;
+	public function setProperty(SMWPropertyValue $property) {
+		$this->m_property = $property;
+	}
+
+	/**
+	 * Change the caption (the text used for displaying this datavalue). The given
+	 * value must be a string.
+	 */
+	public function setCaption($caption) {
+		$this->m_caption = $caption;
 	}
 
 	public function addInfolink(SMWInfolink $link) {
@@ -101,16 +121,14 @@ abstract class SMWDataValue {
 	 */
 	function addServiceLinks() {
 		if ($this->m_hasservicelinks) return;
+		if ( ($this->m_property === NULL) || ($this->m_property->getWikiPageValue() === NULL) ) return; // no property known
 		$args = $this->getServiceLinkParams();
 		if ($args === false) return; // no services supported
 		array_unshift($args, ''); // add a 0 element as placeholder
-		$ptitle = Title::newFromText($this->m_property, SMW_NS_PROPERTY);
-		$servicelinks = array();
-		if ( $ptitle !== NULL ) {
-			$servicelinks = smwfGetStore()->getSpecialValues($ptitle, SMW_SP_SERVICE_LINK);
-		}
+		$servicelinks = smwfGetStore()->getPropertyValues($this->m_property->getWikiPageValue(), SMWPropertyValue::makeProperty('_SERV'));
 
 		foreach ($servicelinks as $dv) {
+			wfLoadExtensionMessages('SemanticMediaWiki');
 			$args[0] = 'smw_service_' . str_replace(' ', '_', $dv->getXSDValue()); // messages distinguish ' ' from '_'
 			$text = call_user_func_array('wfMsgForContent', $args);
 			$links = preg_split("/[\n][\s]?/u", $text);
@@ -136,11 +154,16 @@ abstract class SMWDataValue {
 	}
 
 	/**
-	 * Add a new error string to the error list. All error string must be wiki and
-	 * html-safe! No further escaping will happen!
+	 * Add a new error string or array of such strings to the error list.
+	 * @note All error string must be wiki and html-safe! No further escaping
+	 * will happen!
 	 */
-	public function addError($errorstring) {
-		$this->m_errors[] = $errorstring;
+	public function addError($error) {
+		if (is_array($error)) {
+			$this->m_errors = array_merge($this->m_errors, $error);
+		} else {
+			$this->m_errors[] = $error;
+		}
 	}
 
 ///// Abstract processing methods /////
@@ -338,10 +361,10 @@ abstract class SMWDataValue {
 	 * text, but no more. Result might have no entries but is always an array.
 	 */
 	public function getInfolinks() {
-		if ($this->isValid() && $this->m_property) {
+		if ($this->isValid() && ($this->m_property !== NULL) && ($this->m_property->getWikiPageValue() !== NULL) ) {
 			if (!$this->m_hasssearchlink) { // add default search link
 				$this->m_hasssearchlink = true;
-				$this->m_infolinks[] = SMWInfolink::newPropertySearchLink('+', $this->m_property, $this->getWikiValue());
+				$this->m_infolinks[] = SMWInfolink::newPropertySearchLink('+', $this->m_property->getWikiValue(), $this->getWikiValue());
 			}
 			if (!$this->m_hasservicelinks) { // add further service links
 				$this->addServiceLinks();
@@ -430,10 +453,8 @@ abstract class SMWDataValue {
 	 * Creates an error if the value is illegal.
 	 */
 	protected function checkAllowedValues() {
-		if ($this->m_property === false) return; // allowed values apply only to concrete properties
-		$ptitle = Title::newFromText($this->m_property, SMW_NS_PROPERTY);
-		if ($ptitle === NULL) return;
-		$allowedvalues = smwfGetStore()->getSpecialValues($ptitle, SMW_SP_POSSIBLE_VALUE);
+		if ( ($this->m_property === NULL) || ($this->m_property->getWikiPageValue() === NULL) ) return; // no property known
+		$allowedvalues = smwfGetStore()->getPropertyValues($this->m_property->getWikiPageValue(), SMWPropertyValue::makeProperty('_PVAL'));
 		if (count($allowedvalues) == 0) return;
 		$hash = $this->getHash();
 		$value = SMWDataValueFactory::newTypeIDValue($this->getTypeID());
@@ -452,6 +473,7 @@ abstract class SMWDataValue {
 			}
 		}
 		if (!$accept) {
+			wfLoadExtensionMessages('SemanticMediaWiki');
 			$this->addError(wfMsgForContent('smw_notinenum', $this->getWikiValue(), $valuestring));
 		}
 	}

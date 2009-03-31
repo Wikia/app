@@ -2,8 +2,8 @@
 
 $wgExtensionCredits['other'][] = array(
 	'name' => 'AntiSpoof',
-	'svn-date' => '$LastChangedDate: 2008-07-23 08:15:47 +0000 (Wed, 23 Jul 2008) $',
-	'svn-revision' => '$LastChangedRevision: 37938 $',
+	'svn-date' => '$LastChangedDate: 2008-10-20 00:28:19 +0000 (Mon, 20 Oct 2008) $',
+	'svn-revision' => '$LastChangedRevision: 42240 $',
 	'url' => 'http://www.mediawiki.org/wiki/Extension:AntiSpoof',
 	'author' => 'Brion Vibber',
 	'description' => 'Blocks the creation of accounts with mixed-script, confusing and similar usernames',
@@ -81,13 +81,19 @@ function asAbortNewAccountHook( $user, &$message ) {
 	$spoof = new SpoofUser( $name );
 	if( $spoof->isLegal() ) {
 		$normalized = $spoof->getNormalized();
-		$conflict = $spoof->getConflict();
-		if( $conflict === false ) {
+		$conflicts = $spoof->getConflicts();
+		if( empty($conflicts) ) {
 			wfDebugLog( 'antispoof', "{$mode}PASS new account '$name' [$normalized]" );
 		} else {
-			wfDebugLog( 'antispoof', "{$mode}CONFLICT new account '$name' [$normalized] spoofs '$conflict'" );
+			wfDebugLog( 'antispoof', "{$mode}CONFLICT new account '$name' [$normalized] spoofs " . implode( ',', $conflicts ) );
 			if( $active ) {
-				$message = wfMsg( 'antispoof-name-conflict', $name, $conflict );
+				$numConflicts = count( $conflicts );
+				$message = wfMsgExt( 'antispoof-conflict-top', array('parsemag'), $name, $numConflicts );
+				$message .= '<ul>';
+				foreach( $conflicts as $simUser ) {
+					$message .= '<li>' . wfMsg( 'antispoof-conflict-item', $simUser ) . '</li>';
+				}
+				$message .= '</ul>' . wfMsg( 'antispoof-conflict-bottom' );
 				return false;
 			}
 		}

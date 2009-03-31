@@ -62,13 +62,9 @@ class RandomImage {
 		$title = $this->pickImage();
 		if( $title instanceof Title && $this->imageExists( $title ) ) {
 			return $this->removeMagnifier( 
-				$this->parser->parse(
-					$this->buildMarkup( $title ),
-					$this->parser->getTitle(),
-					$this->parser->getOptions(),
-					false,
-					false
-				)->getText()
+				$this->parser->recursiveTagParse(
+					$this->buildMarkup( $title )
+				)
 			);
 		}
 		return '';

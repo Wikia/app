@@ -110,9 +110,7 @@ $wgExtensionAliasesFiles['ConfirmAccount'] = $dir . 'ConfirmAccount.alias.php';
 
 function efAddRequestLoginText( &$template ) {
 	global $wgUser;
-
 	wfLoadExtensionMessages( 'ConfirmAccount' );
-	
 	if( !$wgUser->isAllowed('createaccount') ) {
 		$template->set( 'header', wfMsgExt('requestaccount-loginnotice', array('parse') ) );
 	}
@@ -135,17 +133,14 @@ function efCheckIfAccountNameIsPending( &$user, &$abortError ) {
 }
 
 function efConfirmAccountInjectStyle() {
-	global $wgOut, $wgUser;
-	# Don't load unless needed
-	if( !$wgUser->isAllowed('confirmaccount') )
-		return true;
+	global $wgOut, $wgUser, $wgScriptPath;
 	# FIXME: find better load place
 	# UI CSS
 	$wgOut->addLink( array(
 		'rel'	=> 'stylesheet',
 		'type'	=> 'text/css',
 		'media'	=> 'screen, projection',
-		'href'	=> CONFIRMACCOUNT_CSS,
+		'href'	=> $wgScriptPath.'/extensions/ConfirmAccount/confirmaccount.css',
 	) );
 	return true;
 }
@@ -207,10 +202,11 @@ $wgHooks['LoadExtensionSchemaUpdates'][] = 'efConfirmAccountSchemaUpdates';
 $wgHooks['SiteNoticeAfter'][] = 'wfConfirmAccountsNotice';
 
 function efLoadConfirmAccount() {
-	global $wgScriptPath;
-	if( !defined( 'CONFIRMACCOUNT_CSS' ) )
-		define('CONFIRMACCOUNT_CSS', $wgScriptPath.'/extensions/ConfirmAccount/confirmaccount.css' );
-	efConfirmAccountInjectStyle();
+	global $wgUser;
+	# Don't load unless needed
+	if( $wgUser->getId() && $wgUser->isAllowed('confirmaccount') ) {
+		efConfirmAccountInjectStyle();
+	}
 }
 
 function efConfirmAccountSchemaUpdates() {

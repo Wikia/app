@@ -1,6 +1,29 @@
 <?php
 
 /**
+ * Extension credits
+ */
+$wgExtensionCredits['specialpage'][] = array(
+	'name' => 'Central Auth',
+	'url' => 'http://www.mediawiki.org/wiki/Extension:CentralAuth',
+	'svn-date' => '$LastChangedDate: 2008-12-31 22:42:11 +0000 (Wed, 31 Dec 2008) $',
+	'svn-revision' => '$LastChangedRevision: 45262 $',
+	'author' => 'Brion Vibber',
+	'description'    => 'Merge accounts across a wiki farm',
+	'descriptionmsg' => 'centralauth-desc',
+);
+
+$wgExtensionCredits['specialpage'][] = array(
+	'name'           => 'MergeAccount',
+	'author'         => 'Brion Vibber',
+	'url'            => 'http://meta.wikimedia.org/wiki/Help:Unified_login',
+	'svn-date' => '$LastChangedDate: 2008-12-31 22:42:11 +0000 (Wed, 31 Dec 2008) $',
+	'svn-revision' => '$LastChangedRevision: 45262 $',
+	'description'    => '[[Special:MergeAccount|Merge multiple accounts]] for Single User Login',
+	'descriptionmsg' => 'centralauth-mergeaccount-desc',
+);
+
+/**
  * Database name you keep central auth data in.
  *
  * If this is not on the primary database connection, don't forget
@@ -101,28 +124,9 @@ $wgCentralAuthLoginIcon = false;
  */
 $wgCentralAuthCreateOnView = false;
 
-/**
- * Extension credits
- */
-$wgExtensionCredits['specialpage'][] = array(
-	'name' => 'Central Auth',
-	'url' => 'http://www.mediawiki.org/wiki/Extension:CentralAuth',
-	'svn-date' => '$LastChangedDate: 2008-07-17 11:35:51 +0000 (Thu, 17 Jul 2008) $',
-	'svn-revision' => '$LastChangedRevision: 37781 $',
-	'author' => 'Brion Vibber',
-	'description' => 'Merge Account across Wikimedia Foundation wikis',
-	'descriptionmsg' => 'centralauth-desc',
-);
-
-$wgExtensionCredits['specialpage'][] = array(
-	'name'           => 'MergeAccount',
-	'author'         => 'Brion Vibber',
-	'url'            => 'http://meta.wikimedia.org/wiki/Help:Unified_login',
-	'svn-date' => '$LastChangedDate: 2008-07-17 11:35:51 +0000 (Thu, 17 Jul 2008) $',
-	'svn-revision' => '$LastChangedRevision: 37781 $',
-	'description'    => '[[Special:MergeAccount|Merges multiple accounts]] for Single User Login',
-	'descriptionmsg' => 'centralauth-mergeaccount-desc',
-);
+// UDP logging stuff
+$wgCentralAuthUDPAddress = false;
+$wgCentralAuthNew2UDPPrefix = '';
 
 /**
  * Initialization of the autoloaders, and special extension pages.
@@ -136,14 +140,17 @@ $wgAutoloadClasses['CentralAuthPlugin'] = "$caBase/CentralAuthPlugin.php";
 $wgAutoloadClasses['CentralAuthHooks'] = "$caBase/CentralAuthHooks.php";
 $wgAutoloadClasses['WikiMap'] = "$caBase/WikiMap.php";
 $wgAutoloadClasses['WikiReference'] = "$caBase/WikiMap.php";
+$wgAutoloadClasses['WikiSet'] = "$caBase/WikiSet.php";
 $wgAutoloadClasses['SpecialAutoLogin'] = "$caBase/SpecialAutoLogin.php";
 $wgAutoloadClasses['CentralAuthUserArray'] = "$caBase/CentralAuthUserArray.php";
 $wgAutoloadClasses['CentralAuthUserArrayFromResult'] = "$caBase/CentralAuthUserArray.php";
 $wgAutoloadClasses['SpecialGlobalGroupMembership'] = "$caBase/SpecialGlobalGroupMembership.php";
 $wgAutoloadClasses['CentralAuthGroupMembershipProxy'] = "$caBase/CentralAuthGroupMembershipProxy.php";
 $wgAutoloadClasses['SpecialGlobalGroupPermissions'] = "$caBase/SpecialGlobalGroupPermissions.php";
+$wgAutoloadClasses['SpecialEditWikiSets'] = "$caBase/SpecialEditWikiSets.php";
 
 $wgExtensionMessagesFiles['SpecialCentralAuth'] = "$caBase/CentralAuth.i18n.php";
+$wgExtensionAliasesFiles['SpecialCentralAuth'] = "$caBase/CentralAuth.alias.php";
 
 $wgHooks['AuthPluginSetup'][] = 'CentralAuthHooks::onAuthPluginSetup';
 $wgHooks['AddNewAccount'][] = 'CentralAuthHooks::onAddNewAccount';
@@ -182,7 +189,13 @@ $wgSpecialPages['AutoLogin'] = 'SpecialAutoLogin';
 $wgSpecialPages['MergeAccount'] = 'SpecialMergeAccount';
 $wgSpecialPages['GlobalGroupMembership'] = 'SpecialGlobalGroupMembership';
 $wgSpecialPages['GlobalGroupPermissions'] = 'SpecialGlobalGroupPermissions';
+$wgSpecialPages['EditWikiSets'] = 'SpecialEditWikiSets';
 $wgSpecialPages['GlobalUsers'] = 'SpecialGlobalUsers';
+$wgSpecialPageGroups['CentralAuth'] = 'users';
+$wgSpecialPageGroups['MergeAccount'] = 'login';
+$wgSpecialPageGroups['GlobalGroupMembership'] = 'users';
+$wgSpecialPageGroups['GlobalGroupPermissions'] = 'users';
+$wgSpecialPageGroups['EditWikiSets'] = 'wiki';
 $wgSpecialPageGroups['GlobalUsers'] = 'users';
 
 $wgLogTypes[]                      = 'globalauth';
@@ -195,9 +208,26 @@ $wgLogActions['globalauth/hide']   = 'centralauth-log-entry-hide';
 $wgLogActions['globalauth/unhide'] = 'centralauth-log-entry-unhide';
 $wgLogActions['globalauth/lockandhid'] = 'centralauth-log-entry-lockandhide';
 
-$wgLogTypes[]                      = 'gblrights';
-$wgLogNames['gblrights']          = 'centralauth-rightslog-name';
-$wgLogHeaders['gblrights']	   = 'centralauth-rightslog-header';
-$wgLogActions['gblrights/usergroups'] = 'centralauth-rightslog-entry-usergroups';
-$wgLogActions['gblrights/groupperms']   = 'centralauth-rightslog-entry-groupperms';
-$wgLogActions['gblrights/groupperms2']   = 'centralauth-rightslog-entry-groupperms2';
+$wgLogTypes[]                          = 'gblrights';
+$wgLogNames['gblrights']               = 'centralauth-rightslog-name';
+$wgLogHeaders['gblrights']	           = 'centralauth-rightslog-header';
+$wgLogActions['gblrights/usergroups']  = 'centralauth-rightslog-entry-usergroups';
+$wgLogActions['gblrights/groupperms']  = 'centralauth-rightslog-entry-groupperms';
+$wgLogActions['gblrights/groupprms2']  = 'centralauth-rightslog-entry-groupperms2';
+$wgLogActions['gblrights/groupprms3']  = 'centralauth-rightslog-entry-groupperms3';
+foreach( array( 'newset', 'setrename', 'setnewtype', 'setchange' ) as $type )
+	$wgLogActionsHandlers["gblrights/{$type}"] = 'efHandleWikiSetLogEntry';
+
+function efHandleWikiSetLogEntry( $type, $action, $title, $skin, $params, $filterWikilinks = false ) {
+	wfLoadExtensionMessages('SpecialCentralAuth');
+	$link = $skin ? $skin->makeLinkObj( $title, $params[0] ) : $params[0];
+	if( $action == 'newset' )
+		$args = array( WikiSet::formatType( $params[1] ), $params[2] );
+	if( $action == 'setrename' )
+		$args = array( $params[1] );
+	if( $action == 'setnewtype' )
+		$args = array( WikiSet::formatType( $params[1] ), WikiSet::formatType( $params[2] ) );
+	if( $action == 'setchange' )
+		$args = array( $params[1] ? $params[1] : wfMsg( 'rightsnone' ), $params[2] ? $params[2] : wfMsg( 'rightsnone' ) );
+	return wfMsgReal( "centralauth-rightslog-entry-{$action}", array_merge( array( $link ), $args ), true, !$skin );
+}

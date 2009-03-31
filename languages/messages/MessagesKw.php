@@ -80,6 +80,9 @@ $messages = array(
 'userlogin'  => 'Entra / kreatya akont',
 'userlogout' => 'Omdenna',
 
+# Search results
+'searchhelp-url' => 'Help:Gweres',
+
 # Preferences page
 'preferences'   => 'Teythi ow akont',
 'mypreferences' => 'Teythi ow akont',
@@ -114,7 +117,7 @@ $messages = array(
 # Tooltip help for the actions
 'tooltip-pt-preferences' => 'Teythi ow akont',
 
-# Special:NewImages
+# Special:NewFiles
 'ilsubmit' => 'Hwilas',
 
 # Special:SpecialPages

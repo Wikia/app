@@ -379,6 +379,7 @@ tl_namespace     int SMALLINT
 wl_namespace     int SMALLINT
 
 ## Easy enough to change if a wiki ever does grow this big:
+ss_active_users  bigint INTEGER
 ss_good_articles bigint INTEGER
 ss_total_edits   bigint INTEGER
 ss_total_pages   bigint INTEGER
@@ -479,7 +480,7 @@ sub scan_dir {
 	my $dir = shift;
 
 	opendir my $dh, $dir or die qq{Could not opendir $dir: $!\n};
-	print "Scanning $dir...\n";
+	#print "Scanning $dir...\n";
 	for my $file (grep { -f "$dir/$_" and /\.php$/ } readdir $dh) {
 		find_problems("$dir/$file");
 	}

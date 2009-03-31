@@ -10,7 +10,7 @@ Johann Burkard
 <mailto:jb@eaio.com>
 */
 $(function() {
- jQuery.highlight = document.body.createTextRange ? 
+ jQuery.highlight = document.body.createTextRange ?
 
 /*
 Version for IE using TextRanges.

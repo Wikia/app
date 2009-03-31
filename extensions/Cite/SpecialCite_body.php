@@ -56,7 +56,7 @@ class CiteForm {
 		global $wgOut, $wgTitle;
 
 		$wgOut->addHTML(
-			wfElement( 'form',
+			Xml::element( 'form',
 				array(
 					'id' => 'specialcite',
 					'method' => 'get',
@@ -64,9 +64,9 @@ class CiteForm {
 				),
 				null
 			) .
-				wfOpenElement( 'label' ) .
+				Xml::openElement( 'label' ) .
 					wfMsgHtml( 'cite_page' ) . ' ' .
-					wfElement( 'input',
+					Xml::element( 'input',
 						array(
 							'type' => 'text',
 							'size' => 30,
@@ -76,15 +76,15 @@ class CiteForm {
 						''
 					) .
 					' ' .
-					wfElement( 'input',
+					Xml::element( 'input',
 						array(
 							'type' => 'submit',
 							'value' => wfMsgHtml( 'cite_submit' )
 						),
 						''
 					) .
-				wfCloseElement( 'label' ) .
-			wfCloseElement( 'form' )
+				Xml::closeElement( 'label' ) .
+			Xml::closeElement( 'form' )
 		);
 	}
 
@@ -120,7 +120,7 @@ class CiteOutput {
 		}
 		$this->mArticle->fetchContent( $this->mId, false );
 		$ret = $wgParser->parse( $msg, $this->mTitle, $this->mParserOptions, false, true, $this->mArticle->getRevIdFetched() );
-		$wgOut->addHtml( $ret->getText() );
+		$wgOut->addHTML( $ret->getText() );
 	}
 
 	function genParserOptions() {
