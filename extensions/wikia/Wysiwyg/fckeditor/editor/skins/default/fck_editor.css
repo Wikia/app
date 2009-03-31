@@ -475,7 +475,7 @@ td.childrenHidden textarea, td.childrenHidden iframe
 
 #wysiwygTemplatePreviewCloud {
 	position: absolute;
-	visibility: hidden;
+	display: none;
 	z-index: 10;
 	background-repeat: no-repeat;
 	font-family: sans-serif;
