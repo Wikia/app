@@ -825,7 +825,7 @@ class LoadBalancer {
 				continue;
 			}
 			foreach ( $conns2[$masterIndex] as $conn ) {
-				if ( $conn->lastQuery() != '' ) {
+				if ( $conn->doneWrites() ) {
 					$conn->commit();
 				}
 			}
