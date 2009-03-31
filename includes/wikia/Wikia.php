@@ -365,4 +365,50 @@ class Wikia {
 		 */
 		wfDebug( $method . ": " . $message . "\n" );
 	}
+
+
+	/**
+	 * get staff person responsible for language
+	 *
+	 * @author Krzysztof Krzyżaniak <eloy@wikia-inc.com>
+	 * @access public
+	 * @static
+	 *
+	 * @param String $lang  -- language code
+	 *
+	 * @return User -- instance of user object
+	 */
+	static public function staffForLang( $langCode ) {
+		wfProfileIn( __METHOD__ );
+
+		$staffSigs = wfMsgForContent( "staffsigs" );
+		$staffUser = false;
+		if( !empty( $staffSigs ) ) {
+			$lines = explode("\n", $staffSigs);
+
+			foreach ( $lines as $line ) {
+				if( strpos( $line, '* ' ) === 0 ) {
+					$sectLangCode = trim( $line, '* ' );
+					continue;
+				}
+				if( ( strpos( $line, '* ' ) == 1 ) && ( $langCode === $sectLangCode ) ) {
+					$user = trim( $line, '** ' );
+					$staffUser = User::newFromName( $user );
+					$staffUser->load();
+					break;
+				}
+			}
+		}
+
+		/**
+		 * fallback to Angela
+		 */
+		if( ! $staffUser ) {
+			$staffUser = User::newFromName( "Angela" );
+			$staffUser->load();
+		}
+
+		wfProfileOut( __METHOD__ );
+		return $staffUser;
+	}
 }
