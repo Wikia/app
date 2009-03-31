@@ -1,45 +1,53 @@
 <?php
-/**#@+
+/**
  * A special page for updating a user's userpage preference (If they want a wiki user page or social profile user page
  * when someone browses to User:xxx
  *
- * @package MediaWiki
- * @subpackage SpecialPage
- *
+ * @file
+ * @ingroup Extensions
  * @author David Pean <david.pean@gmail.com>
  * @copyright Copyright © 2007, Wikia Inc.
  * @license http://www.gnu.org/copyleft/gpl.html GNU General Public License 2.0 or later
  */
 
 class SpecialToggleUserPage extends UnlistedSpecialPage {
-	function __construct() {
+
+	/**
+	 * Constructor
+	 */
+	public function __construct() {
 		parent::__construct( 'ToggleUserPage' );
 	}
 
-	function execute( $params ) {
-		global $wgRequest, $IP, $wgOut, $wgUser, $wgMemc, $wgDBprefix;
+	/**
+	 * Show the special page
+	 *
+	 * @param $params Mixed: parameter(s) passed to the page or null
+	 */
+	public function execute( $params ) {
+		global $wgRequest, $wgOut, $wgUser, $wgMemc;
 
+		// This feature is only available to logged-in users.
 		if( !$wgUser->isLoggedIn() ){
 			$wgOut->errorpage('error', 'badaccess');
-			return "";
+			return '';
 		}
 
 		$dbr = wfGetDB( DB_MASTER );
-		$s = $dbr->selectRow( 'user_profile', array( 'up_user_id' ), array( 'up_user_id' => $wgUser->getID() ), $fname );
+		$s = $dbr->selectRow( 'user_profile', array( 'up_user_id' ), array( 'up_user_id' => $wgUser->getID() ), __METHOD__ );
 		if ( $s === false ) {
-			$fname = $wgDBprefix.'user_profile::addToDatabase';
 			$dbw = wfGetDB( DB_MASTER );
 			$dbw->insert( 'user_profile',
 				array(
 					'up_user_id' => $wgUser->getID()
-				), $fname
+				), __METHOD__
 			);
 		}
 
 		$profile = new UserProfile( $wgUser->getName() );
 		$profile_data = $profile->getProfile();
 
-		$user_page_type = (( $profile_data["user_page_type"] == 1 )?0:1);
+		$user_page_type = ( ( $profile_data['user_page_type'] == 1 ) ? 0 : 1 );
 
 		$dbw = wfGetDB( DB_MASTER );
 		$dbw->update( 'user_profile',
@@ -47,7 +55,7 @@ class SpecialToggleUserPage extends UnlistedSpecialPage {
 			'up_type' => $user_page_type
 			), array( /* WHERE */
 			'up_user_id' => $wgUser->getID()
-			), ""
+			), __METHOD__
 		);
 
 		$key = wfMemcKey( 'user', 'profile', 'info', $wgUser->getID() );
@@ -61,7 +69,7 @@ class SpecialToggleUserPage extends UnlistedSpecialPage {
 			$user_wiki_title = Title::makeTitle( NS_USER_WIKI, $wgUser->getName() );
 			$user_wiki = new Article( $user_wiki_title );
 			if( !$user_wiki->exists() ){
-				$user_wiki->doEdit($user_page_content, "import user wiki" );
+				$user_wiki->doEdit( $user_page_content, "import user wiki" );
 			}
 		}
 		$title = Title::makeTitle( NS_USER, $wgUser->getName() );

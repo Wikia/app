@@ -11,14 +11,14 @@ likely construction types...
 
 */
 
-class CentralAuthUser {
+class CentralAuthUser extends AuthPluginUser {
 
 	/**
 	 * The username of the current user.
 	 */
 	/*private*/ var $mName;
 	/*private*/ var $mStateDirty = false;
-	/*private*/ var $mVersion = 1;
+	/*private*/ var $mVersion = 2;
 	/*private*/ var $mDelayInvalidation = 0;
 	
 	static $mCacheVars = array(
@@ -153,26 +153,40 @@ class CentralAuthUser {
 			return;
 		}
 		// We need the user id from the database, but this should be checked by the getId accessor.
-		
+
 		wfDebugLog( 'CentralAuth', "Loading groups for global user {$this->mName}" );
-		
+
 		$dbr = self::getCentralDB(); // We need the master.
-		
+
 		$res = $dbr->select( 
 			array( 'global_group_permissions', 'global_user_groups' ),
 			array( 'ggp_permission', 'ggp_group' ), 
 			array( 'ggp_group=gug_group', 'gug_user' => $this->getId() ), 
-			__METHOD__ );
-		
+			__METHOD__
+		);
+
+		$resSets = $dbr->select(
+			array( 'global_user_groups', 'global_group_restrictions', 'wikiset' ),
+			array( 'ggr_group', 'ws_id', 'ws_name', 'ws_type', 'ws_wikis' ),
+			array( 'ggr_group=gug_group', 'ggr_set=ws_id', 'gug_user' => $this->getId() ),
+			__METHOD__
+		);
+
+		$sets = array();
+		while( $row = $dbr->fetchObject( $resSets ) ) {
+			$sets[$row->ggr_group] = WikiSet::newFromRow( $row );
+		}
+
 		// Grab the user's rights/groups.
 		$rights = array();
 		$groups = array();
-		
-		while ($row = $dbr->fetchObject( $res ) ) {
-			$rights[] = $row->ggp_permission;
+
+		while( $row = $dbr->fetchObject( $res ) ) {
+			$set = @$sets[$row->ggp_group];
+			$rights[] = array( 'right' => $row->ggp_permission, 'set' => $set ? $set->getID() : false );
 			$groups[$row->ggp_group] = 1;
 		}
-		
+
 		$this->mRights = $rights;
 		$this->mGroups = array_keys($groups);
 	}
@@ -198,6 +212,8 @@ class CentralAuthUser {
 			$this->mGlobalId = 0;
 			$this->mIsAttached = false;
 			$this->mFromMaster = $fromMaster;
+			$this->mLocked = false;
+			$this->mHidden = false;
 		}
 	}
 	
@@ -979,8 +995,8 @@ class CentralAuthUser {
 		$dbw = self::getCentralDB();
 		$dbw->insert( 'localuser',
 			array(
-				'lu_wiki'             => $wikiID,
-				'lu_name'               => $this->mName ,
+				'lu_wiki'               => $wikiID,
+				'lu_name'               => $this->mName,
 				'lu_attached_timestamp' => $dbw->timestamp(),
 				'lu_attached_method'    => $method ),
 			__METHOD__,
@@ -997,8 +1013,33 @@ class CentralAuthUser {
 		if( $wikiID == wfWikiID() ) {
 			$this->resetState();
 		}
-		
+
 		$this->invalidateCache();
+		global $wgCentralAuthUDPAddress, $wgCentralAuthNew2UDPPrefix;
+		if( $wgCentralAuthUDPAddress ) {
+			$userpage = Title::makeTitleSafe( NS_USER, $this->mName );
+			RecentChange::sendToUDP( self::getIRCLine( $userpage, $wikiID ), 
+				$wgCentralAuthUDPAddress, $wgCentralAuthNew2UDPPrefix );
+		}
+	}
+	
+	/**
+	 * Generate an IRC line corresponding to user unification/creation
+	 * @param Title $userpage
+	 * @param string $wikiID
+	 * @return string
+	 */
+	protected static function getIRCLine( $userpage, $wikiID ) {
+		$title = RecentChange::cleanupForIRC( $userpage->getPrefixedText() );
+		$wikiID = RecentChange::cleanupForIRC( $wikiID );
+		// FIXME: *HACK* should be getFullURL(), hacked for SSL madness
+		$url = $userpage->getInternalURL();
+		$user = RecentChange::cleanupForIRC( $userpage->getText() );
+		# see http://www.irssi.org/documentation/formats for some colour codes. prefix is \003,
+		# no colour (\003) switches back to the term default
+		$fullString = "\00314[[\00307$title\00314]]\0034@$wikiID\00310 " .
+			"\00302$url\003 \0035*\003 \00303$user\003 \0035*\003\n";
+		return $fullString;
 	}
 	
 	/**
@@ -1136,7 +1177,6 @@ class CentralAuthUser {
 
 	function addLocalName( $wikiID ) {
 		$dbw = self::getCentralDB();
-		$dbw->begin();
 		$this->lazyImportLocalNames();
 		$dbw->insert( 'localnames',
 			array(
@@ -1144,19 +1184,16 @@ class CentralAuthUser {
 				'ln_name' => $this->mName ),
 			__METHOD__,
 			array( 'IGNORE' ) );
-		$dbw->commit();
 	}
 
 	function removeLocalName( $wikiID ) {
 		$dbw = self::getCentralDB();
-		$dbw->begin();
 		$this->lazyImportLocalNames();
 		$dbw->delete( 'localnames',
 			array(
 				'ln_wiki' => $wikiID,
 				'ln_name' => $this->mName ),
 			__METHOD__ );
-		$dbw->commit();
 	}
 
 	function lazyImportLocalNames() {
@@ -1620,7 +1657,18 @@ class CentralAuthUser {
 	function getGlobalRights() {
 		$this->loadGroups();
 		
-		return $this->mRights;
+		$rights = array();
+		$sets = array();
+		foreach( $this->mRights as $right ) {
+			if( $right['set'] ) {
+				$set = isset( $sets[$right['set']] ) ?  $sets[$right['set']] : WikiSet::newFromID( $right['set'] );
+				if( $set->inSet() )
+					$rights[] = $right['right'];
+			} else {
+				$rights[] = $right['right'];
+			}
+		}
+		return $rights;
 	}
 	
 	function removeFromGlobalGroups( $groups ) {

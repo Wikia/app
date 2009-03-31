@@ -60,8 +60,8 @@ class WikiReference {
 	function getDisplayName() {
 		$url = $this->getUrl( '' );
 		$url = preg_replace( '!^https?://!', '', $url );
-		$url = preg_replace( '!index\.php(\?title=|/)$!', '', $url );
-		$url = preg_replace( '!wiki/$!', '', $url );
+		$url = preg_replace( '!/index\.php(\?title=|/)$!', '/', $url );
+		$url = preg_replace( '!/wiki/$!', '/', $url );
 		$url = preg_replace( '!/$!', '', $url );
 		return $url;
 	}

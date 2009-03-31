@@ -25,19 +25,19 @@ class BookInformation {
 					if( $result->isCacheable() )
 						BookInformationCache::set( $isbn, $result );
 				} else {
-					$output->addHtml( self::makeError( 'nodriver' ) );
+					$output->addHTML( self::makeError( 'nodriver' ) );
 					return;
 				}
 			}
 			if( $result->getResponseCode() == BookInformationResult::RESPONSE_OK ) {
-				$output->addHtml( self::makeResult( $result ) );
+				$output->addHTML( self::makeResult( $result ) );
 			} elseif( $result->getResponseCode() == BookInformationResult::RESPONSE_NOSUCHITEM ) {
-				$output->addHtml( self::makeError( 'nosuchitem' ) );
+				$output->addHTML( self::makeError( 'nosuchitem' ) );
 			} else {
-				$output->addHtml( self::makeError( 'noresponse' ) );
+				$output->addHTML( self::makeError( 'noresponse' ) );
 			}
 		} else {
-			$output->addHtml( self::makeError( 'invalidisbn' ) );
+			$output->addHTML( self::makeError( 'invalidisbn' ) );
 		}
 	}
 	

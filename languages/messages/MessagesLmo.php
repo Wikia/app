@@ -170,7 +170,7 @@ süi titul dai sezziún (JavaScript)',
 'editinginterface'  => "'''Attenzion''': el testo de quella pagina chì el fà part de l'interfacia utent del sitt. Tutt i modifigh che te fet se vedaran subit su i messagg visualizzaa per tutt i utent.",
 
 # Login and logout pages
-'logouttext'              => "<strong>Adess a seis descunetacc.</strong><br />
+'logouttext'              => "'''Adess a seis descunetacc.'''<br />
 A podé tirar innanz a dovrar la {{SITENAME}} in manera anònima, a podé
 sa cunèta amò cont l'istess o un olt nomm. Tegné cunt che di
 pagini i podressa vess fadi vider compagn che a saressov amò conetacc, fin coura che
@@ -216,8 +216,13 @@ Per piasè, ve drent anmò dop che te l'ricevüü.",
 'emailnotauthenticated'   => 'Ul tò adrèss da pòsta letronica l è mia staa gnamò verificaa. Nissün mesacc al saraa mandaa par i servizzi che segütan.',
 'accountcreated'          => 'Cunt bell-e-cread',
 
+# Password reset dialog
+'oldpassword' => "Paròla d'urdin végja:",
+'newpassword' => "Paròla d'urdin növa:",
+'retypenew'   => "Scriif ancamò la paròla d'urdin növa:",
+
 # Edit pages
-'summary'              => 'Argument de la mudifica',
+'summary'              => 'Argument de la mudifica:',
 'minoredit'            => "Chesta chi l'è una mudifica da impurtanza minuur",
 'watchthis'            => "Tegn d'öcc quela pagina chì",
 'savearticle'          => 'Salva',
@@ -229,12 +234,12 @@ Per piasè, ve drent anmò dop che te l'ricevüü.",
 'anontalkpagetext'     => "----''Questa chì l'è la pagina de discüssiun de un ütent che l'ha minga ammò registraa un cünt, upür che el vör minga duperàll; dunca, el pò vess identificaa dumà cunt el sò IP, ch'el pò vess spartii tra tanti ütent diferent. Se ti te set un ütent anonim e t'hee vist un quai messacc ch'el te par ch'el gh'entra nagott cun tì, pröva a [[Special:UserLogin|creà el tò cünt]] per fà pü casott.''",
 'noarticletext'        => "Gh'è minga del test in quella pagina chì. Te pòdet [[Special:Search/{{PAGENAME}}|cercà in d'on'altra pagina]] oppur [{{fullurl:{{FULLPAGENAME}}|action=edit}} creàla tì].",
 'clearyourcache'       => "'''Nòta:''' dòpu che avii salvaa, pudaría véss neçessari de scancelá la memòria \"cache\" dal vòst prugráma də navigazziún in reet par vidé i mudifich faa. '''Mozilla / Firefox / Safari:''' tegní schiscjaa al butún ''Shift'' intaant che sə clica ''Reload'', upüür schiscjá ''Ctrl-Shift-R'' (''Cmd-Shift-R'' sül Apple Mac); '''IE:''' schiscjá ''Ctrl'' intaant che sə clica ''Refresh'', upüür schiscjá ''Ctrl-F5''; '''Konqueror:''': semplicemeent clicá al butún ''Reload'', upüür schiscjá ''F5''; '''Opera''' i üteent pudarían vech büsögn da scancelá cumpletameent la memòria \"cache\" in ''Tools&rarr;Preferences''.",
-'previewnote'          => "<strong>'''Atenziun'''! Questa pagina la serviss dumà de vardà. I cambiament hinn minga staa salvaa.</strong>",
+'previewnote'          => "''''''Atenziun'''! Questa pagina la serviss dumà de vardà. I cambiament hinn minga staa salvaa.'''",
 'editing'              => 'Mudifica de $1',
 'editingcomment'       => 'Redataant $1 (cumentari)',
 'yourtext'             => 'El tò test',
 'yourdiff'             => 'Diferenzi',
-'protectedpagewarning' => '<strong>ATENZIÚN: chésta pagina l è staja blucava in manéra che dumá i üteent cunt i privilegi də sysop a pòdan mudificala.</strong>',
+'protectedpagewarning' => "'''ATENZIÚN: chésta pagina l è staja blucava in manéra che dumá i üteent cunt i privilegi də sysop a pòdan mudificala.'''",
 'templatesused'        => 'Buete duvrade in chesta pàgina - Buett duvraat in chesta pàgina:',
 
 # History pages
@@ -255,6 +260,7 @@ Spiegazziún di símbui: (cur) = difərenza cun la versiún curénta, (ültima) 
 'prevn'                 => 'preçedeent $1',
 'nextn'                 => 'pròssim $1',
 'viewprevnext'          => 'Vidé ($1) ($2) ($3).',
+'searchhelp-url'        => 'Help:Contegnüü',
 'powersearch'           => 'Truvá',
 
 # Preferences page
@@ -271,9 +277,6 @@ Spiegazziún di símbui: (cur) = difərenza cun la versiún curénta, (ültima) 
 'prefs-misc'         => 'Vari',
 'saveprefs'          => 'Tegn i mudifech',
 'resetprefs'         => 'Trá via i mudifech',
-'oldpassword'        => "Paròla d'urdin végja:",
-'newpassword'        => "Paròla d'urdin növa:",
-'retypenew'          => "Scriif ancamò la paròla d'urdin növa:",
 'textboxsize'        => 'Mudifich',
 'rows'               => 'Riich:',
 'columns'            => 'Culònn:',
@@ -345,14 +348,14 @@ Spiegazziún di símbui: (cur) = difərenza cun la versiún curénta, (ültima) 
 'sourcefilename'    => "Nomm da l'archivi surgeent:",
 'destfilename'      => "Nomm da l'archivi da destinazziun:",
 
-# Special:ImageList
+# Special:ListFiles
 'imgfile'        => 'archivi',
-'imagelist'      => 'Listá i imàgin',
-'imagelist_date' => 'Dada',
-'imagelist_name' => 'Nomm',
-'imagelist_user' => 'Dovratt',
+'listfiles'      => 'Listá i imàgin',
+'listfiles_date' => 'Dada',
+'listfiles_name' => 'Nomm',
+'listfiles_user' => 'Dovratt',
 
-# Image description page
+# File description page
 'filehist-revert' => "Butar torna 'me ch'al era",
 'imagelinks'      => 'Ligámm',
 
@@ -372,8 +375,8 @@ Spiegazziún di símbui: (cur) = difərenza cun la versiún curénta, (ültima) 
 'randompage' => 'Página a caas',
 
 # Statistics
-'statistics' => 'Statistich',
-'userstats'  => 'Statistich di utent',
+'statistics'              => 'Statistich',
+'statistics-header-users' => 'Statistich di utent',
 
 'disambiguations' => 'Pagin da disambiguazziún',
 
@@ -421,6 +424,9 @@ Spiegazziún di símbui: (cur) = difərenza cun la versiún curénta, (ültima) 
 # Special:Categories
 'categories' => 'Categurii',
 
+# Special:DeletedContributions
+'deletedcontributions' => 'Cuntribüziun scancelaa',
+
 # E-mail user
 'emailuser' => 'Manda un email al duvrátt',
 
@@ -448,7 +454,7 @@ al butún \"tegn piü d'öcc\".",
 'enotif_newpagetext' => "Chesta-chí l'è una pàgina növa.",
 'changed'            => 'cambiaa',
 
-# Delete/protect/revert
+# Delete
 'deletepage'            => 'Scancela la pagina',
 'historywarning'        => "Atenziún: La pagina che a sii dré a scancelá la gh'a una stòria:",
 'actioncomplete'        => 'Aziun cumpletada',
@@ -460,15 +466,20 @@ al butún \"tegn piü d'öcc\".",
 ** Richiesta de l'aütur
 ** Viulaziun del copyright
 ** Vandalism",
-'rollback'              => 'Rollback',
-'rollbacklink'          => 'Rollback',
-'rollbackfailed'        => 'L è mia staa pussibil purtá indré',
-'alreadyrolled'         => "L è mia pussibil turná indré al'ültima versiún da [[:$1]] dal [[User:$2|$2]] ([[User talk:$2|Discüssiún]]); un quaivün l á gjamò redataa o giraa indré la pagina.
+
+# Rollback
+'rollback'       => 'Rollback',
+'rollbacklink'   => 'Rollback',
+'rollbackfailed' => 'L è mia staa pussibil purtá indré',
+'alreadyrolled'  => "L è mia pussibil turná indré al'ültima versiún da [[:$1]] dal [[User:$2|$2]] ([[User talk:$2|Discüssiún]]); un quaivün l á gjamò redataa o giraa indré la pagina.
 L'ültima redatazziún l eva da [[User:$3|$3]] ([[User talk:$3|Discüssiún]]).",
-'unprotectedarticle'    => 'l\'ha sblucaa "[[$1]]"',
-'protect-title'         => 'Prutezziún da "$1"',
-'protect-legend'        => 'Cunferma de blocch',
-'protectcomment'        => 'Spiega parchè ti vörat blucá la pagina',
+
+# Protect
+'unprotectedarticle' => 'l\'ha sblucaa "[[$1]]"',
+'protect-title'      => 'Prutezziún da "$1"',
+'prot_1movedto2'     => '[[$1]] spustaa in [[$2]]',
+'protect-legend'     => 'Cunferma de blocch',
+'protectcomment'     => 'Spiega parchè ti vörat blucá la pagina',
 
 # Undelete
 'undelete'           => 'Varda i pagin scancelaa',
@@ -564,7 +575,7 @@ Cheest-chí al pöö vess un canbi dràstegh e inaspetaa par una pàgina pupüla
 'imagemaxsize' => 'Limitá i imagin süi pagin da descrizziún dii imagin a:',
 'thumbsize'    => 'Dimensiún diapusitiif:',
 
-# Special:NewImages
+# Special:NewFiles
 'newimages' => 'Espusizziun di imàgin nööf',
 'ilsubmit'  => 'Truvá',
 

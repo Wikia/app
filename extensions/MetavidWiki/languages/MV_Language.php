@@ -3,11 +3,11 @@
  * MV_Language.php Created on Jan 8, 2008
  *
  * All Metavid Wiki code is Released under the GPL2
- * for more info visit http:/metavid.ucsc.edu/code
- * 
+ * for more info visit http://metavid.org/wiki/Code
+ *
  * @author Michael Dale
  * @email dale@ucsc.edu
- * @url http://metavid.ucsc.edu
+ * @url http://metavid.org
  */
  /**
  * Base class for all language classes - a truncated version of Semantic
@@ -63,6 +63,4 @@ abstract class MV_Language {
 	function getSpecialPropertyAliases() {
 		return $this->m_SpecialPropertyAliases;
 	}
-
 }
-?>

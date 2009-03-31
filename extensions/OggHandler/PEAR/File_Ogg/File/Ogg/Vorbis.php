@@ -168,10 +168,23 @@ class File_Ogg_Vorbis extends File_Ogg_Media
         File_Ogg_Bitstream::File_Ogg_Bitstream($streamSerial, $streamData, $filePointer);
         $this->_decodeIdentificationHeader();
         $this->_decodeCommentsHeader(OGG_VORBIS_COMMENTS_HEADER, OGG_VORBIS_COMMENTS_PAGE_OFFSET);
-        $this->_streamLength    = 
-            (( '0x' . substr( $this->_lastGranulePos, 0, 8 ) ) * pow(2, 32) 
+        $endSec = (( '0x' . substr( $this->_lastGranulePos, 0, 8 ) ) * pow(2, 32) 
             + ( '0x' . substr( $this->_lastGranulePos, 8, 8 ) ))
             / $this->_idHeader['audio_sample_rate'];
+            
+			
+	    $startSec =  (( '0x' . substr( $this->_firstGranulePos, 0, 8 ) ) * pow(2, 32) 
+            + ( '0x' . substr( $this->_firstGranulePos, 8, 8 ) ))
+            / $this->_idHeader['audio_sample_rate'];  
+            
+        $this->_streamLength  = $stream_endLength - $stream_startLength;	   
+             
+		//make sure the offset is worth taking into account oggz_chop related hack
+	    if( $startSec > 1)
+            $this->_streamLength = $endSec - $startSec;
+        else
+            $this->_streamLength = $endSec;
+            
         $this->_avgBitrate      = $this->_streamLength ? ($this->_streamSize * 8) / $this->_streamLength : 0;
     }
 

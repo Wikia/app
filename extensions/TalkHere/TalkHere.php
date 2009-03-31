@@ -74,9 +74,9 @@ function wfTalkHereArticleFromTitle( &$title, &$article ) {
 
 	$ns = $title->getNamespace();
 
-	if ( !Namespace::isTalk($ns) && Namespace::canTalk($ns) && $title->exists()
+	if ( !MWNamespace::isTalk($ns) && MWNamespace::canTalk($ns) && $title->exists()
 		&& ( !$wgTalkHereNamespaces || in_array($ns, $wgTalkHereNamespaces) ) ) {
-		$tns = Namespace::getTalk($ns);
+		$tns = MWNamespace::getTalk($ns);
 		$talk = Title::makeTitle($tns, $title->getDBkey());
 
 		if ($talk && $talk->userCan('read')) {

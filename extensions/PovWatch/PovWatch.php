@@ -1,5 +1,4 @@
 <?php
-
 if ( !defined( 'MEDIAWIKI' ) ):
 ?>
 <html>
@@ -40,9 +39,8 @@ $wgGroupPermissions['povwatch'] = array(
 #	'povwatch_subscriber_list' => true,
 );
 
-if ( !function_exists( 'extAddSpecialPage' ) ) {
-	require( dirname(__FILE__) . '/../ExtensionFunctions.php' );
-}
-extAddSpecialPage( dirname(__FILE__) . '/PovWatch_body.php', 'PovWatch', 'PovWatchPage' );
 $dir = dirname(__FILE__) . '/';
-$wgExtensionMessagesFiles['povwatch'] = $dir . 'PovWatch.i18n.php';
+$wgExtensionMessagesFiles['PovWatch'] = $dir . 'PovWatch.i18n.php';
+$wgExtensionAliasesFiles['PovWatch'] = $dir . 'PovWatch.alias.php';
+$wgAutoloadClasses['SpecialPovWatch'] = $dir . 'PovWatch_body.php';
+$wgSpecialPages['PovWatch'] = 'SpecialPovWatch';

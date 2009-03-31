@@ -1,22 +1,21 @@
-/*search code could theoretically run without mv_embed */
-
-//_global = this;
-//if(typeof $j =='undefined'){
-//	_global['$j'] = jQuery.noConflict();
-//}
-mv_addLoadEvent(mv_pre_setup_search); 	
-
+mv_addLoadEvent(mv_pre_setup_search);
+var mvSearchSetupFlag =false;
 var maxFilters = 8;
 var mv_search_action='';
 function mv_pre_setup_search(req_mode){
-	//make sure we have jQuery and any base requried libs: 
+	//make sure we have jQuery and any base required libs:
 	mvJsLoader.doLoad(mvEmbed.lib_jquery, function(){
  		_global['$j'] = jQuery.noConflict();
 		mv_setup_search(req_mode);
 	});
 }
-function mv_setup_search(req_mode){	
-	js_log('mv_setup_search: '+  req_mode);
+function mv_setup_search(req_mode){
+	if(!mvSearchSetupFlag)
+		mv_do_setup_search(req_mode);
+	mvSearchSetupFlag=true;
+}
+function mv_do_setup_search(req_mode){	
+	js_log('f:mv_setup_search: ');
 	add_highlight_function();
 	//look for existing auto completes:
 	for(i=0;i<maxFilters;i++){
@@ -31,7 +30,7 @@ function mv_setup_search(req_mode){
 		//change form action
 		$j('#mv_media_search').attr('action','javascript:mv_do_ajax_search()');
 	}
-	
+
 	//look for search results (enable button actions)
 	$j('.mv_stream_play_button').click(function(){
 		window.location.href = wgScript+ '/'+
@@ -43,7 +42,7 @@ function mv_setup_search(req_mode){
 			//get mv_sel_# number
 			id_parts = $j(this).attr('id').split('_');
 			var type = id_parts[1];
-			var inx = id_parts[2]; 		
+			var inx = id_parts[2];
 			//js_log('looking at: '+ $j("#"+this.id+" option:selected").val())
 			if($j("#"+this.id+" option:selected").val()=='date_range'){
 				add_date_binddings(inx, mvDateInitObj);
@@ -51,34 +50,38 @@ function mv_setup_search(req_mode){
 		});
 	}else{
 		js_log('mvDateInitObj is undefined');
-	}	
-	//remove all old search_text binddings: 
+	}
+	//remove all old search_text bindings:
 	$j('.mv_search_select').unbind();
-	//set up actions: 
+	//set up actions:
+	$j('.mv_search_select').each(function(){
+		js_log("SHOULD ADD change for: " + this.id);
+	});
 	$j('.mv_search_select').change(function(){
+		js_log('mv_search_select:' + $j("#"+this.id+" option:selected").val());
 		//get mv_sel_# number
 		id_parts = $j(this).attr('id').split('_');
 		var type = id_parts[1];
-		var inx = id_parts[2]; 
+		var inx = id_parts[2];
 		js_log("id: "+$j(this).attr('id')+" got t:" + type+ ' Index:' + inx + ' val:' + $j("#"+this.id + " option:selected").val() );
 		switch($j("#"+this.id+" option:selected").val()){
 			case 'category':
 				$j('#mvs_'+inx+'_tc').html('<input class="mv_search_text"' +
-					'size="9" type="text" name="f['+inx+'][v]" value="" >'); 
+					'size="9" type="text" name="f['+inx+'][v]" value="" >');
 				//@@todo add autocomplete for category names
 			break;
 			case 'stream_name':
 				$j('#mvs_'+inx+'_tc').html('<input class="mv_search_text" ' +
-					'size="9"  type="text" name="f['+inx+'][v]" value="" >'); 
+					'size="9"  type="text" name="f['+inx+'][v]" value="" >');
 				////@@todo add autocomplete for stream name
 			break;
 			case 'match':
 				//match text is special cuz it gets highlighted in resutls with class: mv_hl_text
 				$j('#mvs_'+inx+'_tc').html('<input class="mv_search_text mv_hl_text" ' +
-					'size="9"  type="text" name="f['+inx+'][v]" value="" >'); 
-			break;
+					'size="9"  type="text" name="f['+inx+'][v]" value="" >');
+			break;	
 			case 'date_range':
-				$j('#mvs_'+inx+'_tc').html(global_loading_txt);
+				$j('#mvs_'+inx+'_tc').html( getMsg('loading_txt') );
 				var load_js_set = { 'Date.fromString':'jquery/plugins/date.js',
 									'$j.fn.datePicker':'jquery/plugins/jquery.datePicker.js'};
 				if(embedTypes.msie6){
@@ -86,34 +89,42 @@ function mv_setup_search(req_mode){
 					load_js_set['$j.fn.bgIframe'] = 'jquery/plugins/jquery.bgiframe.js';
 				}
 				uri = wgServer +
-					((wgServer == null) ? (wgScriptPath + "/index.php") : wgScript);	
+					((wgServer == null) ? (wgScriptPath + "/index.php") : wgScript);
 				mvJsLoader.doLoad(load_js_set,function(){
-					searchDateObj = $j.get(uri, 
+					searchDateObj = $j.get(uri,
 						{action:'ajax',rs:'mv_date_obj'},
 						function(data){
 							eval(data);
 							if(mv_result){
-								//we ave to load the jQuery date plugin & the date_range data set (and mesg) 
+								//we ave to load the jQuery date plugin & the date_range data set (and mesg)
 								$j('#mvs_'+inx+'_tc').html('<input class="date-pick_'+inx+' mv_search_text"  '+
 									'size="9" type="text" id="vs_'+inx+'" name="f['+inx+'][vs]" value="" > to ' +
 									'<input class="date-pick_'+inx+' mv_search_text"  '+
 									'size="9" type="text" id="ve_'+inx+'" name="f['+inx+'][ve]" value="" >');
 								add_date_binddings(inx, mv_result);
-							}														
-					});					
+							}
+					});
 			  	});
 			break;
-			case 'spoken_by':				
+			case 'bill':
+				$j('#mvs_'+inx+'_tc').html('<input onclick="this.value=\'\';" size="35" id="mv_bill_input_' + inx + 
+					'" class="mv_search_text" ' +
+					'size="9"  type="text" name="f['+inx+'][v]" value="" >' + 
+					'<div class="autocomplete" id="mv_bill_choices_'+inx+'" style="display: none;"/>');
+				//add a bill autocomplete:
+				mv_add_bill_ac(inx);
+			break;
+			case 'spoken_by':
 				$j('#mvs_'+inx+'_tc').html( $j('#mv_person')
 					.clone().css('display','inline').attr('id', 'mv_person_'+inx).children().each(function(){
-						//append the inx to each: 
+						//append the inx to each:
 						$j(this).attr('id', $j(this).attr('id')+'_'+inx);
 						js_log('' + this.id);
 					}));
-				//update the input name: 
-				$j('#mv_person_input_'+inx).attr('name', 'f['+inx+'][v]');
-				//for more logical default behavior: 
-				//default to OR if any other "spoken by" are present in list else AND				
+				//update the input name:
+				$j('#mv_person_input_'+inx).attr({'name':'f['+inx+'][v]', 'onclick':'this.value=\'\';'});
+				//for more logical default behavior:
+				//default to OR if any other "spoken by" are present in list else AND
 				var default_sel_inx=0;
 				$j('.mv_search_select').each(function(){
 					if(this.id!='mvsel_t_'+inx){
@@ -124,18 +135,18 @@ function mv_setup_search(req_mode){
 				})
 				$j('#mvsel_a_'+inx).get(0).selectedIndex=default_sel_inx;
 				mv_add_person_ac(inx);
-			break;			
+			break;
 			case 'smw_property':
 			break;
 			default:
 				js_log('no select action for:'+ $j("#"+this.id+" option:selected").val());
 			break;
-		};	
+		};
 	});
 }
 function mv_do_ajax_search(){
-	js_log('mv_do_ajax_search '); 	
-	//build req url: 
+	js_log('mv_do_ajax_search ');
+	//build req url:
 	var req_query=(mv_search_action.indexOf('?')!==-1)?'&':'?';
  	req_query+= 'seq_inline=true';
 	$j('#mv_media_search :input').each(function(){
@@ -144,19 +155,19 @@ function mv_do_ajax_search(){
 		}
 	});
 	mv_do_ajax_search_request( mv_search_action+ req_query);
-	
+
 }
 function mv_do_ajax_search_request(url){
-	//(don't) annimate the transition: 
-	//$j('#mv_search_results_container').fadeOut(function(){	
+	//(don't) annimate the transition:
+	//$j('#mv_search_results_container').fadeOut(function(){
 	//});
-	$j('#mv_search_results_container').html(getMsg('loading_txt'));		
+	$j('#mv_search_results_container').html(getMsg('loading_txt'));
 	$j.get(url, function(data){
 		//populate results
 		$j('#mv_search_results_container').html(data);
-		//run callback: 
+		//run callback:
 		if(typeof mv_ajax_search_callback == 'function'){
-			mv_ajax_search_callback();		
+			mv_ajax_search_callback();
 		}else{
 			js_log('ajax_search_callback type was: '+ typeof mv_ajax_search_callback);
 		}
@@ -165,28 +176,28 @@ function mv_do_ajax_search_request(url){
 function add_date_binddings(inx, mvDateInitObj){
 	//@@todo load the date format from the server
 	Date.format = 'mm/dd/yyyy';
-	//populate with default start and end times (if empty): 
+	//populate with default start and end times (if empty):
 	$j('.date-pick_'+inx).each(function(){
 		if($j(this).attr('name')=='f[1][vs]'){
-			if($j(this).val()=='')$j(this).val(mvDateInitObj['sd']);			
+			if($j(this).val()=='')$j(this).val(mvDateInitObj['sd']);
 		}else{
-			if($j(this).val()=='')$j(this).val(mvDateInitObj['ed']);			
+			if($j(this).val()=='')$j(this).val(mvDateInitObj['ed']);
 		}
-		//update start end times: 
+		//update start end times:
 		d = new Date($j(this).val());
-		if($j(this).id=='vs_'+inx){			
+		if($j(this).id=='vs_'+inx){
 			$j('#ve_'+inx).dpSetStartDate(d.addDays(1).asString());
 		}else if($j(this).id=='ve_'+inx){
 			$j('#vs_'+inx).dpSetStartDate(d.addDays(-1).asString());
 		}
-	}).trigger('change');//apply the current val as selected date	
-	//set up date range: 
+	}).trigger('change');//apply the current val as selected date
+	//set up date range:
 	$j('.date-pick_'+inx).datePicker({
 		clickInput:true,
 		startDate:mvDateInitObj['sd'],
 		endDate:mvDateInitObj['ed'],
-		renderCallback:function($td, thisDate, month, year){		
-			//@@todo fix upstream...month seems to be off by 1 ? or it starts at 0? 
+		renderCallback:function($td, thisDate, month, year){
+			//@@todo fix upstream...month seems to be off by 1 ? or it starts at 0?
 			month= thisDate.getMonth()+1;
 			//js_log('renderCallback: '+ thisDate.getDate() +' '+ month +' '+ year );
 			//js_log(mvDateInitObj['sdays']);
@@ -205,10 +216,10 @@ function add_date_binddings(inx, mvDateInitObj){
 	//eliminate the "chose date text (don't ask why we need 4 &nbsp;'s)
 	$j('.dp-choose-date').html('&nbsp;&nbsp;&nbsp;&nbsp;');
 
-	//add cell render function cb (to show which days have videos) 
-	
-	
-	//bind start date end date ranges (so you can select invalid date range): 
+	//add cell render function cb (to show which days have videos)
+
+
+	//bind start date end date ranges (so you can select invalid date range):
 	$j('#vs_'+inx).bind(
 		'dpClosed',
 		function(e, selectedDates)
@@ -232,33 +243,45 @@ function add_date_binddings(inx, mvDateInitObj){
 		}
 	);
 }
+function mv_pl(mvd_id){
+	uri = wgServer +((wgServer == null) ? (wgScriptPath + "/index.php") : wgScript);
+	$j.get(uri,
+		{action:'ajax',rs:'mv_pl_wt', "rsargs[0]":mvd_id, 'size':'small'},
+		function(data){
+			//run highlighter on data:
+			//js_log('set to: '+ data);
+			$j('#mvimg_'+mvd_id).html(data);
+			//rewrite video tag:
+			rewrite_by_id('vid_'+mvd_id);
+		});
+}
 function mv_ex(mvd_id){
-	uri = wgServer +((wgServer == null) ? (wgScriptPath + "/index.php") : wgScript);	
-	js_log('expand ' + mvd_id);	
-	//swap the image: 
+	uri = wgServer +((wgServer == null) ? (wgScriptPath + "/index.php") : wgScript);
+	js_log('expand ' + mvd_id);
+	//swap the image:
 	img_parts = $j('#mv_img_ex_'+mvd_id).attr('src').split('/');
 	if(img_parts.pop()=='closed.png'){
 		//$j('#mvr_desc_'+mvd_id).fadeOut('fast');
-		
+
 		$j('#mv_img_ex_'+mvd_id).attr('src', img_parts.join('/') + '/opened.png');
 		$j('#mv_watch_clip_'+mvd_id).fadeOut('fast', function(){
 			$j('#mv_close_clip_'+mvd_id).fadeIn('fast');
 		});
-		
+
 		$j('#mvr_'+mvd_id).css('display', 'block').html(global_loading_txt);
 		//grab search terms:
 		var terms='';
 		$j('.mv_hl_text').each(function(){
-			terms+='|'+$j(this).val().replace(/|/, '');		
+			terms+='|'+$j(this).val().replace(/|/, '');
 		});
-		$j.get(uri, 
+		$j.get(uri,
 		{action:'ajax',rs:'mv_expand_wt', "rsargs[0]":mvd_id, "st":terms},
-		function(data){				
-			//run highlighter on data: 
+		function(data){
+			//run highlighter on data:
 			//js_log('set to: '+ data);
 			$j('#mvr_'+mvd_id).html(data);
 			hl_search_terms('#mvr_'+mvd_id);
-			//rewrite video tag: 
+			//rewrite video tag:
 			rewrite_by_id('vid_'+mvd_id);
 		});
 	}else{
@@ -266,23 +289,23 @@ function mv_ex(mvd_id){
 			$j('#mv_watch_clip_'+mvd_id).fadeIn('fast');
 		});
 		//$j('#mvr_desc_'+mvd_id).fadeIn('fast');
-		//$j('#vrdesc_'+mvd_id).fadeIn('fast');		
+		//$j('#vrdesc_'+mvd_id).fadeIn('fast');
 		$j('#mv_img_ex_'+mvd_id).attr('src', img_parts.join('/') + '/closed.png');
 		$j('#mvr_'+mvd_id).css('display', 'none');
-	}		
+	}
 }
 function hl_search_terms(result_selector){
-	//get all the terms	
+	//get all the terms
 	var terms = new Array();
 
 	$j('.mv_hl_text').each(function(){
-		js_log('on val: '+ $j(this).val());			
-		//do_node_replace($j(result_selector).get(0), $j(this).val());		
+		js_log('on val: '+ $j(this).val());
+		//do_node_replace($j(result_selector).get(0), $j(this).val());
 		result = $j(this).val().replace(/\'|"/g, '');
         result = result.split(/[\s,\+\.]+/);
         for(i=0;i<result.length;i++){
         	terms.push( result[i].toUpperCase() );
-        }        
+        }
 	});
 	$j(result_selector).each(function(){
 		for(i in terms){
@@ -291,11 +314,11 @@ function hl_search_terms(result_selector){
 			$j.highlight(this, term);
 		}
 	});
-	
+
 	//if(terms.length!=0){
 		//var regex = new RegExp().compile('('+terms.join('|')+')', "ig");
 		//console.log(terms + ' reex: ' + regex);
-		//$j(result_selector).each(function(){					
+		//$j(result_selector).each(function(){
 		// 	$j(this).html($j(this).html().replace(regex, '<span class="hl_term">$1</span>'));
 		//});
 	//}
@@ -325,59 +348,99 @@ function hl_search_terms(result_selector){
    return skip;
 }*/
 function mv_add_ac(id){
-	
+
+}
+//@@todo should group autocompletes.. 
+// and abstract auto_complete functions from mv_stream.js to mv_common.js
+function mv_add_bill_ac(inx){
+	uri = wgServer + ((wgServer == null) ? (wgScriptPath + "/index.php") : wgScript);
+	js_log('looking for: '+ '#mv_bill_choices_'+inx);
+	$j('#mv_bill_choices_'+inx).prependTo("body");
+	$j('#mv_bill_input_'+inx).autocomplete(
+		uri,
+		{
+			autoFill:true,
+			onItemSelect:function(v){
+				js_log('selected:' + v.innerHTML );
+				//update the image:
+				$j('#mv_person_img_'+inx).attr('src', $j(v).children('img').attr('src'));
+			},
+			matchSubset:0,
+			extraParams:{action:'ajax',rs:'mv_helpers_auto_complete',prop_name:'smw_bill'},
+			paramName:'rsargs[]',
+			resultElem:'#mv_bill_choices_'+inx
+		});
+	$j('#mv_bill_choices_'+inx).css({
+		'left':$j('#mv_bill_input_'+inx).get(0).offsetLeft,
+		'top':$j('#mv_bill_input_'+inx).get(0).offsetTop + $j('#mv_bill_input_'+inx).height()+6 });	
 }
 function mv_add_person_ac(inx){
 	//now add the auto complete to mv_person_input_{inx}
 	uri = wgServer +
 	((wgServer == null) ? (wgScriptPath + "/index.php") : wgScript);
+
+	//pop mv_person_choices_ out to body (to put it on top)
+	$j('#mv_person_choices_'+inx).prependTo("body");
+
 	$j('#mv_person_input_'+inx).autocomplete(
 		uri,
 		{
 			autoFill:true,
-			onItemSelect:function(v){		
+			onItemSelect:function(v){
 				js_log('selected:' + v.innerHTML );
-				//update the image: 
+				//update the image:
 				$j('#mv_person_img_'+inx).attr('src', $j(v).children('img').attr('src'));
 			},
 			formatItem:function(row){
-				return '<img width="44" src="'+ row[2] + '">'+row[1];
+				//return '<img width="44" src="'+ row[2] + '">'+row[1];
+				return '<img width="44" src="'+ row[2] + '"><span class="ac_img_txt">'+row[1]+'</span>';
+
 			},
 			matchSubset:0,
 			extraParams:{action:'ajax',rs:'mv_auto_complete_person'},
 			paramName:'rsargs[]',
 			resultElem:'#mv_person_choices_'+inx
-		});			
+		});
 	$j('#mv_person_choices_'+inx).css({
 		'left':$j('#mv_person_input_'+inx).get(0).offsetLeft,
 		'top':$j('#mv_person_input_'+inx).get(0).offsetTop + $j('#mv_person_input_'+inx).height()+6 });
 }
 function mv_add_filter(){
+	//give us another 50px if on frontPage: 	
+	if($j('#frontPageTop').height())
+		$j('#frontPageTop').css('height', ($j('#frontPageTop').height()+55)+'px');
+	
+		
 	//close the first filter select rename inx to inx+1
 	var new_t_id = 'mvsel_t_'+ ($j(".mv_search_select").length-1);
 	var new_a_id = 'mvsel_a_'+ ($j(".mv_search_select").length-1);
 	var inx = ($j(".mv_search_select").length-1);
-	//this could be cleaned up a bit: 
-	$j("#mv_active_filters").append('<span id="mvs_'+inx+'" >&nbsp;&nbsp;</span>');	
-		$j('#mvs_'+inx).append( 
-			$j("#mvsel_a_0").clone().attr({id:new_a_id,name:'f['+inx+'][a]'}), 
-			$j("#mvsel_t_0").clone().attr({id:new_t_id,name:'f['+inx+'][t]'}) 
-		);	
-		//reset the selector for both selectors: : 
+	//this could be cleaned up a bit:
+	$j("#mv_active_filters").append('<br><span id="mvs_'+inx+'" >&nbsp;&nbsp;</span>');
+		$j('#mvs_'+inx).append(
+			$j("#mvsel_a_0").clone().attr({id:new_a_id,name:'f['+inx+'][a]'}),
+			$j("#mvsel_t_0").clone().attr({id:new_t_id,name:'f['+inx+'][t]'})
+		);
+		//reset the selector for both selectors: :
 		$j('#'+new_t_id+',#'+new_a_id).get(0).selectedIndex=null;
 		$j('#'+new_a_id).css('display', 'inline');
 		$j('#mvs_'+inx).append('<span id="mvs_'+inx+'_tc"></span>');
 		$j('#mvs_'+inx).append( $j("#mv_ref_remove")
 			.clone().css('display', 'inline')
 			.attr({id:'', href:'javascript:mv_remove_filter('+inx+')'}));
-	
+	mvSearchSetupFlag=false;
 	mv_setup_search();
-	//console.log("new id: " + new_id);	
+	//console.log("new id: " + new_id);
 	//$j('mv_sel_')
 }
 //remove filter of given inx
 function mv_remove_filter(inx){
+	//remove 50 px if on front page: 
+	if($j('#frontPageTop').height())
+		$j('#frontPageTop').css('height', ($j('#frontPageTop').height()-50)+'px');
 	$j('#mvs_'+inx).remove();
+	//also remove the person input (since we moved it out of mvs)
+	$j('#mv_person_choices_'+inx).remove();
 }
 
 /*
@@ -390,8 +453,8 @@ Johann Burkard
 <mailto:jb@eaio.com>
 */
 function add_highlight_function(){
-$j(function() {	
- jQuery.highlight = document.body.createTextRange ? 
+$j(function() {
+ jQuery.highlight = document.body.createTextRange ?
 /*
 Version for IE using TextRanges.
 */

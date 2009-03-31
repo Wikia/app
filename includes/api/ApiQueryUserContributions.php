@@ -62,6 +62,7 @@ class ApiQueryContributions extends ApiQueryBase {
 		if(isset($this->params['userprefix']))
 		{
 			$this->prefixMode = true;
+			$this->multiUserMode = true;
 			$this->userprefix = $this->params['userprefix'];
 		}
 		else
@@ -72,6 +73,7 @@ class ApiQueryContributions extends ApiQueryBase {
 			foreach($this->params['user'] as $u)
 				$this->prepareUsername($u);
 			$this->prefixMode = false;
+			$this->multiUserMode = (count($this->params['user']) > 1);
 		}
 		$this->prepareQuery();
 
@@ -87,7 +89,10 @@ class ApiQueryContributions extends ApiQueryBase {
 		while ( $row = $db->fetchObject( $res ) ) {
 			if (++ $count > $limit) {
 				// We've reached the one extra which shows that there are additional pages to be had. Stop here...
-				$this->setContinueEnumParameter('start', wfTimestamp(TS_ISO_8601, $row->rev_timestamp));
+				if($this->multiUserMode)
+					$this->setContinueEnumParameter('continue', $this->continueStr($row));
+				else
+					$this->setContinueEnumParameter('start', wfTimestamp(TS_ISO_8601, $row->rev_timestamp));
 				break;
 			}
 
@@ -132,13 +137,28 @@ class ApiQueryContributions extends ApiQueryBase {
 		//anything we retrieve.
 		$this->addTables(array('revision', 'page'));
 		$this->addWhere('page_id=rev_page');
+		
+		// Handle continue parameter
+		if($this->multiUserMode && !is_null($this->params['continue']))
+		{
+			$continue = explode('|', $this->params['continue']);
+			if(count($continue) != 2)
+				$this->dieUsage("Invalid continue param. You should pass the original " .
+					"value returned by the previous query", "_badcontinue");
+			$encUser = $this->getDB()->strencode($continue[0]);
+			$encTS = wfTimestamp(TS_MW, $continue[1]);
+			$op = ($this->params['dir'] == 'older' ? '<' : '>');
+			$this->addWhere("rev_user_text $op '$encUser' OR " .
+					"(rev_user_text = '$encUser' AND " .
+					"rev_timestamp $op= '$encTS')");
+		}
 
 		$this->addWhereFld('rev_deleted', 0);
 		// We only want pages by the specified users.
 		if($this->prefixMode)
-			$this->addWhere("rev_user_text LIKE '" . $this->getDb()->escapeLike($this->userprefix) . "%'");
+			$this->addWhere("rev_user_text LIKE '" . $this->getDB()->escapeLike($this->userprefix) . "%'");
 		else
-			$this->addWhereFld( 'rev_user_text', $this->usernames );
+			$this->addWhereFld('rev_user_text', $this->usernames);
 		// ... and in the specified timeframe.
 		// Ensure the same sort order for rev_user_text and rev_timestamp
 		// so our query is indexed
@@ -157,6 +177,7 @@ class ApiQueryContributions extends ApiQueryBase {
 			$this->addWhereIf('rev_minor_edit != 0', isset ($show['minor']));
 		}
 		$this->addOption('LIMIT', $this->params['limit'] + 1);
+		$this->addOption( 'USE INDEX', array( 'revision' => 'usertext_timestamp' ) );
 
 		// Mandatory fields: timestamp allows request continuation
 		// ns+title checks if the user has access rights for this page
@@ -207,10 +228,16 @@ class ApiQueryContributions extends ApiQueryBase {
 				$vals['top'] = '';
 		}
 
-		if ($this->fld_comment && !empty ($row->rev_comment))
+		if ($this->fld_comment && isset( $row->rev_comment ) )
 			$vals['comment'] = $row->rev_comment;
 
 		return $vals;
+	}
+	
+	private function continueStr($row)
+	{
+		return $row->rev_user_text . '|' .
+			wfTimestamp(TS_ISO_8601, $row->rev_timestamp);
 	}
 
 	public function getAllowedParams() {
@@ -228,6 +255,7 @@ class ApiQueryContributions extends ApiQueryBase {
 			'end' => array (
 				ApiBase :: PARAM_TYPE => 'timestamp'
 			),
+			'continue' => null,
 			'user' => array (
 				ApiBase :: PARAM_ISMULTI => true
 			),
@@ -269,6 +297,7 @@ class ApiQueryContributions extends ApiQueryBase {
 			'limit' => 'The maximum number of contributions to return.',
 			'start' => 'The start timestamp to return from.',
 			'end' => 'The end timestamp to return to.',
+			'continue' => 'When more results are available, use this to continue.',
 			'user' => 'The user to retrieve contributions for.',
 			'userprefix' => 'Retrieve contibutions for all users whose names begin with this value. Overrides ucuser.',
 			'dir' => 'The direction to search (older or newer).',
@@ -290,6 +319,6 @@ class ApiQueryContributions extends ApiQueryBase {
 	}
 
 	public function getVersion() {
-		return __CLASS__ . ': $Id: ApiQueryUserContributions.php 37383 2008-07-09 11:44:49Z btongminh $';
+		return __CLASS__ . ': $Id: ApiQueryUserContributions.php 43271 2008-11-06 22:38:42Z siebrand $';
 	}
 }

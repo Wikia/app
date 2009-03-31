@@ -16,6 +16,12 @@
 	margin-left: 1.5ex;
 }
 
+
+.CategoryTreeBullet {
+	cursor: pointer;
+	cursor: hand; /* hack for MSIE 5.0 and 5.5 */
+}
+
 .CategoryTreeBullet a,
 .CategoryTreeBullet a:link,
 .CategoryTreeBullet a:active,

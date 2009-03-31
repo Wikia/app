@@ -49,13 +49,13 @@ class ExpandTemplates extends SpecialPage {
 		}
 
 		$wgOut->addWikiText( wfMsg( 'expand_templates_intro' ) );
-		$wgOut->addHtml( $this->makeForm( $titleStr, $input ) );
+		$wgOut->addHTML( $this->makeForm( $titleStr, $input ) );
 
 		if( $output !== false ) {
 			if ( $this->generateXML ) {
-				$wgOut->addHtml( $this->makeOutput( $xml, 'expand_templates_xml_output' ) );
+				$wgOut->addHTML( $this->makeOutput( $xml, 'expand_templates_xml_output' ) );
 			}
-			$wgOut->addHtml( $this->makeOutput( $output ) );
+			$wgOut->addHTML( $this->makeOutput( $output ) );
 			$this->showHtmlPreview( $title, $output, $wgOut );
 		}
 
@@ -81,7 +81,7 @@ class ExpandTemplates extends SpecialPage {
 		if ( $this->isNewParser ) {
 			$form .= '<p>' . Xml::checkLabel( wfMsg( 'expand_templates_generate_xml' ), 'generate_xml', 'generate_xml', $this->generateXML ) . '</p>';
 		}
-		$form .= '<p>' . Xml::submitButton( wfMsg( 'expand_templates_ok' ) ) . '</p>';
+		$form .= '<p>' . Xml::submitButton( wfMsg( 'expand_templates_ok' ), array( 'accesskey' => 's' ) ) . '</p>';
 		$form .= "</fieldset>\n";
 		$form .= Xml::closeElement( 'form' );
 		return $form;
@@ -111,8 +111,8 @@ class ExpandTemplates extends SpecialPage {
 	private function showHtmlPreview( $title, $text, $out ) {
 		global $wgParser;
 		$pout = $wgParser->parse( $text, $title, new ParserOptions() );
-		$out->addHtml( "<h2>" . wfMsgHtml( 'expand_templates_preview' ) . "</h2>\n" );
-		$out->addHtml( $pout->getText() );
+		$out->addHTML( "<h2>" . wfMsgHtml( 'expand_templates_preview' ) . "</h2>\n" );
+		$out->addHTML( $pout->getText() );
 	}
 
 }

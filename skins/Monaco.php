@@ -1359,7 +1359,7 @@ class MonacoTemplate extends QuickTemplate {
 ?>
 
 	<body<?php if($this->data['body_onload'    ]) { ?> onload="<?php     $this->text('body_onload')     ?>"<?php } ?>
- class="mediawiki <?php $this->text('nsclass') ?> <?php $this->text('dir') ?> <?php $this->text('pageclass') ?><?php if(!empty($this->data['printable']) ) { ?> printable<?php } ?><?php if (!$wgUser->isLoggedIn()) { ?> loggedout<?php } ?> color2 wikiaSkinMonaco<?=$isMainpage?> <?= $body_css_action ?>" id="body">
+ class="mediawiki <?php $this->text('dir') ?> <?php $this->text('pageclass') ?><?php if(!empty($this->data['printable']) ) { ?> printable<?php } ?><?php if (!$wgUser->isLoggedIn()) { ?> loggedout<?php } ?> color2 wikiaSkinMonaco<?=$isMainpage?> <?= $body_css_action ?>" id="body">
 
  <?php
    if(!empty($skin->timemarker)) {
@@ -1742,7 +1742,7 @@ if(!$custom_article_footer && $displayArticleFooter) {
 	try { $oApi->execute(); } catch (Exception $e) {};
 	$aResult =& $oApi->GetResultData();
 
-	if(count($aResult['query']['wkvoteart']) > 0) {
+	if( !empty( $aResult['query']['wkvoteart'] ) ) {
 		if(!empty($aResult['query']['wkvoteart'][$this->data['articleid']]['uservote'])) {
 			$voted = true;
 		} else {

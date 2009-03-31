@@ -19,8 +19,10 @@ if( defined( 'MEDIAWIKI' ) ) {
 		'url' => 'http://www.mediawiki.org/wiki/Extension:Contributors',
 	);
 
-	$wgExtensionMessagesFiles['Contributors'] = dirname(__FILE__) . '/Contributors.i18n.php';
-	$wgAutoloadClasses['SpecialContributors'] = dirname( __FILE__ ) . '/Contributors.page.php';
+	$dir = dirname(__FILE__) . '/';
+	$wgExtensionMessagesFiles['Contributors'] = $dir . 'Contributors.i18n.php';
+	$wgExtensionAliasesFiles['Contributors'] = $dir . 'Contributors.alias.php';
+	$wgAutoloadClasses['SpecialContributors'] = $dir . 'Contributors.page.php';
 	$wgSpecialPages['Contributors'] = 'SpecialContributors';
 	$wgSpecialPageGroups['Contributors'] = 'pages';
 

@@ -1,0 +1,15 @@
+Checked out intl/uconv/src/nsUTF8ToUnicode.cpp 1.7
+from cvs-mirror.mozilla.org on 2003-05-29
+
+Checked out intl/uconv/src/nsUnicodeToUTF8.cpp 1.11
+from cvs-mirror.mozilla.org on 2003-05-30
+
+Changes made (by Henri Sivonen, hsivonen@iki.fi)
+
+Adapted pointer usage to PHP array / string usage.
+Inlined Reset in UTF-8 to Unicode conversion.
+Switched from UTF-16 to code points in array (sort of UCS-4).
+Removed output buffer bound checks.
+Added Unicode range checks to Unicode to UTF-8 converter.
+Removed C++isms around the functions of interest.
+Moved the functions to one PHP file (utf8.inc).

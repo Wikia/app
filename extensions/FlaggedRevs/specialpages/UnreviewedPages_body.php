@@ -3,13 +3,13 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 	echo "FlaggedRevs extension\n";
 	exit( 1 );
 }
-wfLoadExtensionMessages( 'UnreviewedPages' );
-wfLoadExtensionMessages( 'FlaggedRevs' );
 
 class UnreviewedPages extends SpecialPage
 {
     function __construct() {
         SpecialPage::SpecialPage( 'UnreviewedPages', 'unreviewedpages' );
+		wfLoadExtensionMessages( 'UnreviewedPages' );
+		wfLoadExtensionMessages( 'FlaggedRevs' );
     }
 
     function execute( $par ) {
@@ -29,6 +29,15 @@ class UnreviewedPages extends SpecialPage
 		$defaultNS = empty($wgFlaggedRevsNamespaces) ? 0 : $wgFlaggedRevsNamespaces[0];
 		$namespace = $wgRequest->getIntOrNull( 'namespace', $defaultNS );
 		$category = trim( $wgRequest->getVal( 'category' ) );
+		$hideRedirs = $wgRequest->getBool( 'hideredirs', true );
+		
+		// show/hide links
+		$showhide = array( wfMsgHtml( 'show' ), wfMsgHtml( 'hide' ) );
+		$onoff = 1 - $hideRedirs;
+		$link = $this->skin->link( $this->getTitle(), $showhide[$onoff], array(),
+			 array( 'hideredirs' => $onoff, 'category' => $category, 'namespace' => $namespace )
+		);
+		$showhideredirs = wfMsgHtml( 'whatlinkshere-hideredirs', $link );
 
 		$action = htmlspecialchars( $wgScript );
 		$wgOut->addHTML( "<form action=\"$action\" method=\"get\">\n" .
@@ -37,48 +46,59 @@ class UnreviewedPages extends SpecialPage
 		if( count($wgFlaggedRevsNamespaces) > 1 ) {
 			$wgOut->addHTML( FlaggedRevsXML::getNamespaceMenu( $namespace ) . '&nbsp;' );
 		}
-		$wgOut->addHTML( Xml::label( wfMsg("unreviewed-category"), 'category' ) .
-			' ' . Xml::input( 'category', 35, $category, array('id' => 'category') ) .
-			'&nbsp;&nbsp;' . Xml::submitButton( wfMsg( 'allpagessubmit' ) ) . "</p>\n" .
+		$wgOut->addHTML( 
+			Xml::label( wfMsg("unreviewed-category"), 'category' ) . '&nbsp;' .
+			Xml::input( 'category', 30, $category, array('id' => 'category') ) . '<br/>' .
+			$showhideredirs . '&nbsp;&nbsp;' . 
+			Xml::submitButton( wfMsg( 'allpagessubmit' ) ) . "</p>\n" .
 			"</fieldset></form>"
 		);
-		# This will start to get slower...
-		if( $category || self::generalQueryOK() ) {
-			$pager = new UnreviewedPagesPager( $this, $namespace, $category );
-			if( $pager->getNumRows() ) {
-				$wgOut->addHTML( wfMsgExt('unreviewed-list', array('parse') ) );
-				$wgOut->addHTML( $pager->getNavigationBar() );
-				$wgOut->addHTML( $pager->getBody() );
-				$wgOut->addHTML( $pager->getNavigationBar() );
+		# This will start to get slower if live...
+		if( !$live = self::generalQueryOK() ) {
+			$dbr = wfGetDB( DB_SLAVE );
+			$ts = $dbr->selectField( 'querycache_info', 'qci_timestamp', 
+				array( 'qci_type' => 'fr_unreviewedpages'), __METHOD__ );
+			if( $ts ) {
+				global $wgLang;
+				$ts = wfTimestamp(TS_MW,$ts);
+				$wgOut->addHTML( wfMsg( 'perfcachedts', $wgLang->timeanddate($ts) ) );
 			} else {
-				$wgOut->addHTML( wfMsgExt('unreviewed-none', array('parse') ) );
+				$wgOut->addHTML( wfMsg( 'perfcached' ) );
 			}
+		}
+		$pager = new UnreviewedPagesPager( $this, $live, $namespace, !$hideRedirs, $category );
+		if( $pager->getNumRows() ) {
+			$wgOut->addHTML( wfMsgExt('unreviewed-list', array('parse') ) );
+			$wgOut->addHTML( $pager->getNavigationBar() );
+			$wgOut->addHTML( $pager->getBody() );
+			$wgOut->addHTML( $pager->getNavigationBar() );
+		} else {
+			$wgOut->addHTML( wfMsgExt('unreviewed-none', array('parse') ) );
 		}
 	}
 	
 	function formatRow( $result ) {
 		global $wgLang, $wgUser;
-
 		$title = Title::makeTitle( $result->page_namespace, $result->page_title );
-		$link = $this->skin->makeKnownLinkObj( $title );
+		$link = $this->skin->makeKnownLinkObj( $title, null, 'redirect=no' );
 		$hist = $this->skin->makeKnownLinkObj( $title, wfMsgHtml('hist'), 'action=history' );
 		$css = $stxt = $review = '';
 		if( !is_null($size = $result->page_len) ) {
-			global $wgLang;
-			$stxt = ($size == 0) ? 
-				wfMsgHtml('historyempty') : wfMsgExt('historysize', array('parsemag'), $wgLang->formatNum( $size ) );
+			$stxt = ($size == 0)
+				? wfMsgHtml('historyempty')
+				: wfMsgExt('historysize', array('parsemag'), $wgLang->formatNum( $size ) );
 			$stxt = " <small>$stxt</small>";
 		}
 		if( $wgUser->isAllowed('unwatchedpages') ) {
 			$uw = self::usersWatching( $title );
-			$watching = $uw ? wfMsgExt("unreviewed-watched",array('parsemag'),$uw,$uw) : wfMsgHtml("unreviewed-unwatched");
+			$watching = $uw ?
+				wfMsgExt( 'unreviewed-watched', array('parsemag'), $uw ) : wfMsgHtml( 'unreviewed-unwatched' );
 			$watching = " $watching";
 			// Oh-noes!
 			$css = $uw ? "" : " class='fr-unreviewed-unwatched'";
 		} else {
 			$watching = "";
 		}
-
 		return( "<li{$css}>{$link} {$stxt} ({$hist}) {$review}{$watching}</li>" );
 	}
 	
@@ -113,15 +133,18 @@ class UnreviewedPages extends SpecialPage
 	*/
 	public static function generalQueryOK() {
 		global $wgFlaggedRevsNamespaces;
-		if( !wfQueriesMustScale() )
+		if( !wfQueriesMustScale() ) {
 			return true;
+		}
 		# Get est. of fraction of pages that are reviewed
 		$dbr = wfGetDB( DB_SLAVE );
 		$reviewedpages = $dbr->estimateRowCount( 'flaggedpages', '*', array(), __METHOD__ );
-		$pages = $dbr->estimateRowCount( 'page', '*', array('page_namespace' => $wgFlaggedRevsNamespaces), __METHOD__ );
+		$pages = $dbr->estimateRowCount( 'page', '*', 
+			array('page_namespace' => $wgFlaggedRevsNamespaces), 
+			__METHOD__ );
 		$ratio = $pages/($pages - $reviewedpages);
 		# If dist. is normalized, # of rows scanned = $ratio * LIMIT (or until list runs out)
-		return ($ratio <= 200);
+		return ($ratio <= 1000);
 	}
 }
 
@@ -130,23 +153,26 @@ class UnreviewedPages extends SpecialPage
  */
 class UnreviewedPagesPager extends AlphabeticPager {
 	public $mForm, $mConds;
-	private $namespace, $category;
+	private $live, $namespace, $category, $showredirs;
 
-	function __construct( $form, $namespace, $category=NULL, $conds = array() ) {
+	function __construct( $form, $live, $namespace, $redirs=false, $category=NULL ) {
 		$this->mForm = $form;
-		$this->mConds = $conds;
+		$this->live = (bool)$live;
 		# Must be a content page...
 		global $wgFlaggedRevsNamespaces;
 		if( !is_null($namespace) ) {
 			$namespace = intval($namespace);
 		}
 		if( is_null($namespace) || !in_array($namespace,$wgFlaggedRevsNamespaces) ) {
-			$namespace = empty($wgFlaggedRevsNamespaces) ? -1 : $wgFlaggedRevsNamespaces[0]; 	 
+			$namespace = empty($wgFlaggedRevsNamespaces) ? -1 : $wgFlaggedRevsNamespaces[0];
 		}
 		$this->namespace = $namespace;
 		$this->category = $category ? str_replace(' ','_',$category) : NULL;
-		
+		$this->showredirs = (bool)$redirs;
 		parent::__construct();
+		// Don't get to expensive
+		$this->mLimitsShown = array( 20, 50 );
+		$this->mLimit = min( $this->mLimit, 50 );
 	}
 
 	function formatRow( $row ) {
@@ -154,13 +180,18 @@ class UnreviewedPagesPager extends AlphabeticPager {
 	}
 
 	function getQueryInfo() {
+		if( !$this->live ) {
+			return $this->getQueryCacheInfo();
+		}
 		$conds = $this->mConds;
-		$fields = array('page_namespace','page_title','page_len','fp_stable');
-		$conds[] = 'fp_reviewed IS NULL';
+		$fields = array('page_namespace','page_title','page_len');
+		$conds[] = 'fp_page_id IS NULL';
 		# Reviewable pages only
 		$conds['page_namespace'] = $this->namespace;
 		# No redirects
-		$conds['page_is_redirect'] = 0;
+		if( !$this->showredirs ) {
+			$conds['page_is_redirect'] = 0;
+		}
 		# Filter by category
 		if( $this->category ) {
 			$tables = array( 'categorylinks', 'page', 'flaggedpages' );
@@ -181,6 +212,37 @@ class UnreviewedPagesPager extends AlphabeticPager {
 			'conds'   => $conds,
 			'options' => array( 'USE INDEX' => $useIndex ),
 			'join_conds' => array( 'flaggedpages' => array('LEFT JOIN','fp_page_id=page_id') )
+		);
+	}
+	
+	function getQueryCacheInfo() {
+		$conds = $this->mConds;
+		$fields = array('page_namespace','page_title','page_len','qc_value');
+		$conds['qc_type'] = 'fr_unreviewedpages';
+		$conds[] = 'qc_value = page_id';
+		# Re-join on flaggedpages to double-check
+		$conds[] = 'fp_page_id IS NULL';
+		# Reviewable pages only
+		$conds['qc_namespace'] = $this->namespace;
+		# No redirects
+		if( !$this->showredirs ) {
+			$conds['page_is_redirect'] = 0;
+		}
+		$this->mIndexField = 'qc_value'; // page_id
+		# Filter by category
+		if( $this->category ) {
+			$tables = array( 'page', 'categorylinks', 'querycache', 'flaggedpages' );
+			$conds['cl_to'] = $this->category;
+			$conds[] = 'cl_from = qc_value'; // page_id
+		} else {
+			$tables = array( 'page', 'querycache', 'flaggedpages' );
+		}
+		return array(
+			'tables'  => $tables,
+			'fields'  => $fields,
+			'conds'   => $conds,
+			'options' => array( 'USE INDEX' => array('querycache' => 'qc_type','page' => 'PRIMARY') ),
+			'join_conds' => array( 'flaggedpages' => array('LEFT JOIN','fp_page_id = qc_value') )
 		);
 	}
 

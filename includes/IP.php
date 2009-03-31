@@ -141,7 +141,7 @@ class IP {
 	public static function toOctet( $ip_int ) {
    		// Convert to padded uppercase hex
    		$ip_hex = wfBaseConvert($ip_int, 10, 16, 32, false);
-   		// Seperate into 8 octets
+   		// Separate into 8 octets
    		$ip_oct = substr( $ip_hex, 0, 4 );
    		for ($n=1; $n < 8; $n++) {
    			$ip_oct .= ':' . substr($ip_hex, 4*$n, 4);
@@ -149,6 +149,41 @@ class IP {
    		// NO leading zeroes
    		$ip_oct = preg_replace( '/(^|:)0+' . RE_IPV6_WORD . '/', '$1$2', $ip_oct );
        	return $ip_oct;
+	}
+	
+	/**
+	 * Given a hexadecimal number, returns to an IPv6 address in octet notation
+	 * @param $ip string hex IP
+	 * @return string
+	 */
+	public static function HextoOctet( $ip_hex ) {
+   		// Convert to padded uppercase hex
+   		$ip_hex = str_pad( strtoupper($ip_hex), 32, '0');
+   		// Separate into 8 octets
+   		$ip_oct = substr( $ip_hex, 0, 4 );
+   		for ($n=1; $n < 8; $n++) {
+   			$ip_oct .= ':' . substr($ip_hex, 4*$n, 4);
+   		}
+   		// NO leading zeroes
+   		$ip_oct = preg_replace( '/(^|:)0+' . RE_IPV6_WORD . '/', '$1$2', $ip_oct );
+       	return $ip_oct;
+	}
+	
+	/**
+	 * Converts a hexadecimal number to an IPv4 address in octet notation
+	 * @param $ip string Hex IP
+	 * @return string
+	 */ 
+	public static function hexToQuad( $ip ) {
+		// Converts a hexadecimal IP to nnn.nnn.nnn.nnn format
+		$dec = wfBaseConvert( $ip, 16, 10 );
+		$parts[3] = $dec % 256;
+		$dec /= 256;
+		$parts[2] = $dec % 256;
+		$dec /= 256;
+		$parts[1] = $dec % 256;
+		$parts[0] = $dec / 256;
+		return implode( '.', array_reverse( $parts ) );
 	}
 
 	/**
@@ -320,7 +355,7 @@ class IP {
 	public static function toHex( $ip ) {
 		$n = self::toUnsigned( $ip );
 		if ( $n !== false ) {
-			$n = ( self::isIPv6($ip) ) ? "v6-" . wfBaseConvert( $n, 10, 16, 32, false ) : wfBaseConvert( $n, 10, 16, 8, false );
+			$n = self::isIPv6($ip) ? "v6-" . wfBaseConvert( $n, 10, 16, 32, false ) : wfBaseConvert( $n, 10, 16, 8, false );
 		}
 		return $n;
 	}
@@ -426,12 +461,16 @@ class IP {
 		} elseif ( strpos( $range, '-' ) !== false ) {
 			# Explicit range
 			list( $start, $end ) = array_map( 'trim', explode( '-', $range, 2 ) );
-			$start = self::toUnsigned( $start ); $end = self::toUnsigned( $end );
-			if ( $start > $end ) {
-				$start = $end = false;
+			if( self::isIPAddress( $start ) && self::isIPAddress( $end ) ) {
+				$start = self::toUnsigned( $start ); $end = self::toUnsigned( $end );
+				if ( $start > $end ) {
+					$start = $end = false;
+				} else {
+					$start = sprintf( '%08X', $start );
+					$end = sprintf( '%08X', $end );
+				}
 			} else {
-				$start = sprintf( '%08X', $start );
-				$end = sprintf( '%08X', $end );
+				$start = $end = false;
 			}
 		} else {
 			# Single IP

@@ -68,7 +68,7 @@ $messages = array(
 'mytalk'         => 'Bicarana iyya',
 'anontalk'       => 'Bicarana IP édé',
 'navigation'     => 'Navigasi',
-'and'            => 'na',
+'and'            => '&#32;na',
 
 # Metadata in edit box
 'metadata_help' => 'Metadata:',
@@ -134,6 +134,8 @@ $messages = array(
 'editsection'     => 'padécéŋ',
 'editold'         => 'padécéŋ',
 'viewsourceold'   => 'ita sumber',
+'editlink'        => 'padécéŋ',
+'viewsourcelink'  => 'ita sumber',
 
 # Short words for each namespace, by default used in the namespace tab in monobook
 'nstab-main'      => 'Leppa',
@@ -187,6 +189,9 @@ $messages = array(
 'loginerror'              => 'Éro log attama',
 'mailmypassword'          => 'E-mail pasewodo baru',
 
+# Password reset dialog
+'oldpassword' => 'Pasewodo matoa:',
+
 # Edit page toolbar
 'bold_tip'    => 'Teks maumpek',
 'italic_tip'  => 'Teks Italik',
@@ -198,7 +203,7 @@ $messages = array(
 'showpreview'      => 'Ita pribiu',
 'showlivepreview'  => 'Pribiu live',
 'showdiff'         => 'Mita perubahan',
-'summary-preview'  => 'Pribiu summary',
+'summary-preview'  => 'Pribiu summary:',
 'blockedtitle'     => 'Papaké riblok',
 'accmailtitle'     => 'Ada sandi ni riantarak.',
 'accmailtext'      => 'Ada sandi "$1" riantarak ri $2.',
@@ -234,12 +239,30 @@ $messages = array(
 'revdelete-hid'          => 'tapo $1',
 
 # Diffs
-'editundo' => 'undo',
+'editundo'             => 'undo',
+'diff-movedto'         => 'naésu ri $1',
+'diff-changedto'       => 'naséllé ri $1',
+'diff-movedoutof'      => 'naéssu polé $1',
+'diff-removed'         => '$1 ripeddéni',
+'diff-changedfrom'     => 'naséllé polé $1',
+'diff-src'             => 'sumber',
+'diff-with'            => '&#32;sibawa $1 $2',
+'diff-with-additional' => '$1 $2',
+'diff-with-final'      => '&#32;na $1 $2',
+'diff-height'          => 'lampé',
+'diff-input'           => "séuwa '''input'''",
+'diff-a'               => "séuwa '''linke'''",
+'diff-i'               => "'''italik'''",
+'diff-b'               => "'''umpek'''",
+'diff-strong'          => "'''terek'''",
+'diff-big'             => "'''loppo'''",
+'diff-del'             => "'''ripeddé'''",
 
 # Search results
 'searchsubtitle'        => "Masappa iko '''[[:$1]]'''",
 'searchsubtitleinvalid' => "Massappa iko '''$1'''",
 'viewprevnext'          => 'Ita ($1) ($2) ($3)',
+'searchhelp-url'        => 'Help:Lise',
 'search-redirect'       => '(redirect $1)',
 
 # Preferences page
@@ -249,7 +272,6 @@ $messages = array(
 'prefs-watchlist'   => 'Watchlist',
 'prefs-misc'        => 'Misc',
 'saveprefs'         => 'Taro',
-'oldpassword'       => 'Pasewodo matoa:',
 'textboxsize'       => 'Mapadécéŋ',
 'searchresultshead' => 'Masappa',
 
@@ -285,10 +307,10 @@ $messages = array(
 'upload'    => 'Lureng berkas',
 'uploadbtn' => 'Lureng berkas',
 
-# Special:ImageList
-'imagelist_name' => 'Aseŋ',
+# Special:ListFiles
+'listfiles_name' => 'Aseŋ',
 
-# Image description page
+# File description page
 'filehist-user'       => 'Papaké',
 'filehist-dimensions' => 'Dimensi',
 'imagelinks'          => 'Liŋke',
@@ -314,6 +336,11 @@ $messages = array(
 # Random page
 'randompage'         => 'Leppa random',
 'randompage-nopages' => 'Degaga leppa rilaleŋ iyyé namespaceë.',
+
+# Statistics
+'statistics-articles' => 'Leppa liseë',
+'statistics-pages'    => 'Leppaë',
+'statistics-files'    => 'File-file nalise menré',
 
 # Miscellaneous special pages
 'ancientpages' => 'Leppa talloa',
@@ -347,17 +374,21 @@ Halamang bicara éréngé gabungan halamang bicara pada wettu depan didaftarkan 
 
 Apak ida ronnak mappedde halamang édé ri daftar jagaan, klik \"Mangedda jaga\" pada kolom ri sedde.",
 
-# Delete/protect/revert
+# Delete
 'actioncomplete' => 'Proses makkapo',
 'dellogpage'     => 'Log peddé-peddé',
+
+# Protect
+'prot_1movedto2' => '[[$1]] ésuk ri [[$2]]',
 
 # Namespace form on various pages
 'blanknamespace' => '(Utama)',
 
 # What links here
-'whatlinkshere'       => 'Pranala ri halamang édé',
-'whatlinkshere-page'  => 'Leppa:',
-'whatlinkshere-links' => '← liŋke',
+'whatlinkshere'          => 'Pranala ri halamang édé',
+'whatlinkshere-page'     => 'Leppa:',
+'whatlinkshere-backlink' => '← $1',
+'whatlinkshere-links'    => '← liŋke',
 
 # Block/unblock
 'ipblocklist-submit' => 'Sappa',
@@ -365,18 +396,20 @@ Apak ida ronnak mappedde halamang édé ri daftar jagaan, klik \"Mangedda jaga\"
 'contribslink'       => 'kontrib',
 
 # Move page
-'articleexists'           => 'Halamang béla ida pile ni ujuk, a dek essa.
+'articleexists'             => 'Halamang béla ida pile ni ujuk, a dek essa.
 Silakan pile aseng laing.',
-'1movedto2'               => '[[$1]] ésuk ri [[$2]]',
-'1movedto2_redir'         => '[[$1]] rileccé lao ri[[$2]] paké redirect',
-'movelogpage'             => 'Log leccé',
-'movereason'              => 'Saba:',
-'delete_and_move'         => 'Peddé nappa paleccé',
-'delete_and_move_text'    => '==Mapeddé riperelu==
+'1movedto2'                 => '[[$1]] ésuk ri [[$2]]',
+'1movedto2_redir'           => '[[$1]] rileccé lao ri[[$2]] paké redirect',
+'movelogpage'               => 'Log leccé',
+'movereason'                => 'Saba:',
+'delete_and_move'           => 'Peddé nappa paleccé',
+'delete_and_move_text'      => '==Mapeddé riperelu==
 Leppa destinasi "[[:$1]]" purani eŋka.
 Eloko peddéï supaya weddiŋi mapalecé?',
-'delete_and_move_confirm' => "Iyé', peddé iyaro leppa",
-'delete_and_move_reason'  => 'Ripeddé supaya weddiŋi mapalecé',
+'delete_and_move_confirm'   => "Iyé', peddé iyaro leppa",
+'delete_and_move_reason'    => 'Ripeddé supaya weddiŋi mapalecé',
+'immobile-source-namespace' => 'Leppa-leppa rilaleŋna namespace "$1"ë de\'na ullé ripaleccé',
+'immobile-source-page'      => "Iyyedé leppaë de'na ullé ripaleccé.",
 
 # Namespace 8 related
 'allmessages'        => 'Maneng pappaseng',
@@ -401,7 +434,7 @@ Eloko peddéï supaya weddiŋi mapalecé?',
 # Media information
 'imagemaxsize' => 'Gangkai rapang pada keterangan rapang ri halamang hingga:',
 
-# Special:NewImages
+# Special:NewFiles
 'ilsubmit' => 'Sappa',
 
 # 'all' in various places, this might be different for inflected languages

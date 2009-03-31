@@ -36,8 +36,9 @@ class EmailConfirmation extends UnlistedSpecialPage {
 				$title = SpecialPage::getTitleFor( 'Userlogin' );
 				$self = SpecialPage::getTitleFor( 'Confirmemail' );
 				$skin = $wgUser->getSkin();
-				$llink = $skin->makeKnownLinkObj( $title, wfMsgHtml( 'loginreqlink' ), 'returnto=' . $self->getPrefixedUrl() );
-				$wgOut->addHtml( wfMsgWikiHtml( 'confirmemail_needlogin', $llink ) );
+				$llink = $skin->makeKnownLinkObj( $title, wfMsgHtml( 'loginreqlink' ), 
+					'returnto=' . $self->getPrefixedUrl() );
+				$wgOut->addHTML( wfMsgWikiHtml( 'confirmemail_needlogin', $llink ) );
 			}
 		} else {
 			$this->attemptConfirm( $code );
@@ -58,19 +59,24 @@ class EmailConfirmation extends UnlistedSpecialPage {
 			}
 		} else {
 			if( $wgUser->isEmailConfirmed() ) {
+				// date and time are separate parameters to facilitate localisation.
+				// $time is kept for backward compat reasons.
+				// 'emailauthenticated' is also used in SpecialPreferences.php
 				$time = $wgLang->timeAndDate( $wgUser->mEmailAuthenticated, true );
-				$wgOut->addWikiMsg( 'emailauthenticated', $time );
+				$d = $wgLang->date( $wgUser->mEmailAuthenticated, true );
+				$t = $wgLang->time( $wgUser->mEmailAuthenticated, true );
+				$wgOut->addWikiMsg( 'emailauthenticated', $time, $d, $t );
 			}
 			if( $wgUser->isEmailConfirmationPending() ) {
 				$wgOut->addWikiMsg( 'confirmemail_pending' );
 			}
 			$wgOut->addWikiMsg( 'confirmemail_text' );
 			$self = SpecialPage::getTitleFor( 'Confirmemail' );
-			$form  = wfOpenElement( 'form', array( 'method' => 'post', 'action' => $self->getLocalUrl() ) );
-			$form .= wfHidden( 'token', $wgUser->editToken() );
-			$form .= wfSubmitButton( wfMsgHtml( 'confirmemail_send' ) );
-			$form .= wfCloseElement( 'form' );
-			$wgOut->addHtml( $form );
+			$form  = Xml::openElement( 'form', array( 'method' => 'post', 'action' => $self->getLocalUrl() ) );
+			$form .= Xml::hidden( 'token', $wgUser->editToken() );
+			$form .= Xml::submitButton( wfMsgHtml( 'confirmemail_send' ) );
+			$form .= Xml::closeElement( 'form' );
+			$wgOut->addHTML( $form );
 		}
 	}
 

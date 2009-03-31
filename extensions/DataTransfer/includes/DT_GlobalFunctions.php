@@ -7,7 +7,7 @@
 
 if (!defined('MEDIAWIKI')) die();
 
-define('DT_VERSION','0.1.8');
+define('DT_VERSION','0.1.10');
 
 // constants for special properties
 define('DT_SP_HAS_XML_GROUPING', 1);
@@ -30,6 +30,7 @@ $wgAutoloadClasses['DTViewXML'] = $dtgIP . '/specials/DT_ViewXML.php';
 
 require_once($dtgIP . '/languages/DT_Language.php');
 $wgExtensionMessagesFiles['DataTransfer'] = $dtgIP . '/languages/DT_Messages.php';
+$wgExtensionAliasesFiles['DataTransfer'] = $dtgIP . '/languages/DT_Aliases.php';
 
 /**********************************************/
 /***** language settings                  *****/

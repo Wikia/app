@@ -3,15 +3,25 @@
  * Protect against register_globals vulnerabilities.
  * This line must be present before any global variable is referenced.
  */
-if (!defined('MEDIAWIKI')) die();
+if( !defined( 'MEDIAWIKI' ) )
+	die();
 
+/**
+ * This is the *main* (but certainly not the only) loader file for SocialProfile extension.
+ *
+ * For more info about SocialProfile, please see the README file that was included with SocialProfile.
+ */
 $dir = dirname(__FILE__) . '/';
 
+// Internationalization files
 $wgExtensionMessagesFiles['SocialProfileUserBoard'] = $dir . 'UserBoard/UserBoard.i18n.php';
 $wgExtensionMessagesFiles['SocialProfileUserProfile'] = $dir . 'UserProfile/UserProfile.i18n.php';
 $wgExtensionMessagesFiles['SocialProfileUserRelationship'] = $dir . 'UserRelationship/UserRelationship.i18n.php';
 $wgExtensionMessagesFiles['SocialProfileUserStats'] = $dir. 'UserStats/UserStats.i18n.php';
 
+$wgExtensionAliasesFiles['SocialProfile'] = $dir . 'SocialProfile.alias.php';
+
+// Classes to be autoloaded
 $wgAutoloadClasses['SpecialAddRelationship'] = $dir . 'UserRelationship/SpecialAddRelationship.php';
 $wgAutoloadClasses['SpecialBoardBlast'] = $dir . 'UserBoard/SpecialSendBoardBlast.php';
 $wgAutoloadClasses['SpecialPopulateUserProfiles'] = $dir . 'UserProfile/SpecialPopulateExistingUsersProfiles.php';
@@ -27,6 +37,7 @@ $wgAutoloadClasses['RemoveAvatar'] = $dir . 'UserProfile/SpecialRemoveAvatar.php
 $wgAutoloadClasses['UpdateEditCounts'] = $dir . 'UserStats/SpecialUpdateEditCounts.php';
 $wgAutoloadClasses['UserBoard'] = $dir . 'UserBoard/UserBoardClass.php';
 $wgAutoloadClasses['UserProfile'] = $dir . 'UserProfile/UserProfileClass.php';
+$wgAutoloadClasses['UserProfilePage'] = $dir . 'UserProfile/UserProfilePage.php';
 $wgAutoloadClasses['UserRelationship'] = $dir . 'UserRelationship/UserRelationshipClass.php';
 $wgAutoloadClasses['UserLevel'] = $dir . 'UserStats/UserStatsClass.php';
 $wgAutoloadClasses['UserStats'] = $dir . 'UserStats/UserStatsClass.php';
@@ -36,6 +47,7 @@ $wgAutoloadClasses['TopFansRecent'] = $dir . 'UserStats/TopFansRecent.php';
 $wgAutoloadClasses['TopUsersPoints'] = $dir. 'UserStats/TopUsers.php';
 $wgAutoloadClasses['wAvatar'] = $dir . 'UserProfile/AvatarClass.php';
 
+// New special pages
 $wgSpecialPages['AddRelationship'] = 'SpecialAddRelationship';
 $wgSpecialPages['PopulateUserProfiles'] = 'SpecialPopulateUserProfiles';
 $wgSpecialPages['RemoveAvatar'] = 'RemoveAvatar';
@@ -52,14 +64,34 @@ $wgSpecialPages['UserBoard'] = 'SpecialViewUserBoard';
 $wgSpecialPages['ViewRelationshipRequests'] = 'SpecialViewRelationshipRequests';
 $wgSpecialPages['ViewRelationships'] = 'SpecialViewRelationships';
 
+// Special page groups for MW 1.13+
+$wgSpecialPageGroups['AddRelationship'] = 'users';
+$wgSpecialPageGroups['RemoveAvatar'] = 'users';
+$wgSpecialPageGroups['RemoveRelationship'] = 'users';
+$wgSpecialPageGroups['UserBoard'] = 'users';
+$wgSpecialPageGroups['ViewRelationshipRequests'] = 'users';
+$wgSpecialPageGroups['ViewRelationships'] = 'users';
+
+// Necessary AJAX functions
+require_once("$IP/extensions/SocialProfile/UserBoard/UserBoard_AjaxFunctions.php");
+require_once("$IP/extensions/SocialProfile/UserRelationship/Relationship_AjaxFunctions.php");
+
+// What to display on social profile pages by default?
 $wgUserProfileDisplay['board'] = true;
 $wgUserProfileDisplay['foes'] = true;
 $wgUserProfileDisplay['friends'] = true;
 
+// Should we display UserBoard-related things on social profile pages?
+$wgUserBoard = true;
+
+// Whether to enable friending or not -- this doesn't do very much actually, so don't rely on it
+$wgFriendingEnabled = true;
+
+// Extension credits that show up on Special:Version
 $wgExtensionCredits['other'][] = array(
 	'name' => 'SocialProfile',
 	'author' => 'Wikia, Inc. (Aaron Wright, David Pean)',
-	'version' => '1.1',
+	'version' => '1.3',
 	'url' => 'http://www.mediawiki.org/wiki/Extension:SocialProfile',
 	'description' => 'A set of Social Tools for MediaWiki',
 );
@@ -136,11 +168,15 @@ $wgExtensionCredits['specialpage'][] = array(
 	'description' => 'A special page for viewing all relationships by type',
 );
 
+// Some paths used by the extensions
 $wgUserProfileDirectory = "$IP/extensions/SocialProfile/UserProfile";
 
 $wgUserBoardScripts = "$wgScriptPath/extensions/SocialProfile/UserBoard";
 $wgUserProfileScripts = "$wgScriptPath/extensions/SocialProfile/UserProfile";
 $wgUserRelationshipScripts = "$wgScriptPath/extensions/SocialProfile/UserRelationship";
 
-require_once("$IP/extensions/SocialProfile/YUI/YUI.php");
-require_once("{$wgUserProfileDirectory}/UserProfile.php");
+// Loader files
+require_once("$IP/extensions/SocialProfile/YUI/YUI.php"); // YUI stand-alone library
+require_once("{$wgUserProfileDirectory}/UserProfile.php"); // Profile page configuration loader file
+require_once("$IP/extensions/SocialProfile/UserGifts/Gifts.php"); // UserGifts (user-to-user gifting functionality) loader file
+require_once("$IP/extensions/SocialProfile/SystemGifts/SystemGifts.php"); // SystemGifts (awards functionality) loader file

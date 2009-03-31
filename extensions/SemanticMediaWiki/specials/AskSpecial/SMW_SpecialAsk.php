@@ -1,4 +1,9 @@
 <?php
+/**
+ * @file
+ * @ingroup SMWSpecialPage
+ * @ingroup SpecialPage
+ */
 
 /**
  * @author Markus Krötzsch
@@ -6,7 +11,8 @@
  * This special page for MediaWiki implements a customisable form for
  * executing queries outside of articles.
  *
- * @note AUTOLOAD
+ * @ingroup SMWSpecialPage
+ * @ingroup SpecialPage
  */
 class SMWAskPage extends SpecialPage {
 
@@ -20,17 +26,15 @@ class SMWAskPage extends SpecialPage {
 	 */
 	public function __construct() {
 		parent::__construct('Ask');
-		//the key defining the group name in the language files is specialpages-group-smw_group
-		if (method_exists('SpecialPage', 'setGroup')) { 
-			parent::setGroup('Ask', 'smw_group');	
-		}
+		wfLoadExtensionMessages('SemanticMediaWiki');
 	}
 
-	function execute($p = '') {
+	function execute( $p ) {
 		global $wgOut, $wgRequest, $smwgQEnabled, $smwgRSSEnabled;
 		wfProfileIn('doSpecialAsk (SMW)');
 		if ( ($wgRequest->getVal( 'query' ) != '') ) { // old processing
 			$this->executeSimpleAsk();
+			SMWOutputs::commitToOutputPage($wgOut); // make sure locally collected output data is pushed to the output!
 			wfProfileOut('doSpecialAsk (SMW)');
 			return;
 		}
@@ -40,6 +44,7 @@ class SMWAskPage extends SpecialPage {
 			$this->extractQueryParameters($p);
 			$this->makeHTMLResult();
 		}
+		SMWOutputs::commitToOutputPage($wgOut); // make sure locally collected output data is pushed to the output!
 		wfProfileOut('doSpecialAsk (SMW)');
 	}
 
@@ -173,7 +178,7 @@ class SMWAskPage extends SpecialPage {
 					$this->m_params[$titlekey] = $concept->getText();
 				}
 				if ( !isset($this->m_params[$desckey]) ) {
-					$dv = end(smwfGetStore()->getSpecialValues($concept, SMW_SP_CONCEPT_DESC));
+					$dv = end(smwfGetStore()->getPropertyValues(SMWWikiPageValue::makePageFromTitle($concept), SMWPropertyValue::makeProperty('_CONC')));
 					if ($dv instanceof SMWConceptValue) {
 						$this->m_params[$desckey] = $dv->getDocu();
 					}
@@ -253,7 +258,7 @@ class SMWAskPage extends SpecialPage {
 				$result .= '<a href="' . htmlspecialchars($skin->makeSpecialUrl('Ask',$urltail . '&eq=yes&sc=1')) . '">' . wfMsg('smw_add_sortcondition') . '</a>'; // note that $urltail uses a , separated list for sorting, so setting sc to 1 always adds one new condition
 			}
 			$result .= '<br /><input type="submit" value="' . wfMsg('smw_ask_submit') . '"/>' .
-			           '<input type="hidden" name="eq" value="yes"/>' . 
+			           '<input type="hidden" name="eq" value="yes"/>' .
 			           ' <a href="' . htmlspecialchars($skin->makeSpecialUrl('Ask',$urltail)) . '">' . wfMsg('smw_ask_hidequery') . '</a> | <a href="' . htmlspecialchars(wfMsg('smw_ask_doculink')) . '">' . wfMsg('smw_ask_help') . '</a>' .
 			           "\n</form><br />";
 		} else {
@@ -279,7 +284,7 @@ class SMWAskPage extends SpecialPage {
 
 		$navigation .= '&nbsp;&nbsp;&nbsp;&nbsp; <b>' . wfMsg('smw_result_results') . ' ' . ($offset+1) . '&ndash; ' . ($offset + $res->getCount()) . '</b>&nbsp;&nbsp;&nbsp;&nbsp;';
 
-		if ($res->hasFurtherResults()) 
+		if ($res->hasFurtherResults())
 			$navigation .= ' <a href="' . htmlspecialchars($skin->makeSpecialUrl('Ask','offset=' . ($offset+$limit) . '&limit=' . $limit . $urltail)) . '">' . wfMsg('smw_result_next') . '</a>';
 		else $navigation .= wfMsg('smw_result_next');
 
@@ -327,7 +332,7 @@ class SMWAskPage extends SpecialPage {
 		$html = '<form name="ask" action="' . $spectitle->escapeLocalURL() . '" method="get">' . "\n" .
 		         '<input type="hidden" name="title" value="' . $spectitle->getPrefixedText() . '"/>' ;
 		$html .= '<textarea name="query" cols="40" rows="6">' . htmlspecialchars($query) . '</textarea><br />' . "\n";
-		
+
 		if ($smwgQSortingSupport) {
 			$html .=  wfMsg('smw_ask_sortby') . ' <input type="text" name="sort" value="' .
 			          htmlspecialchars($sort) . '"/> <select name="order"><option ';
@@ -337,23 +342,23 @@ class SMWAskPage extends SpecialPage {
 			$html .=  'value="DESC">' . wfMsg('smw_ask_descorder') . '</option></select> <br />';
 		}
 		$html .= '<br /><input type="submit" value="' . wfMsg('smw_ask_submit') . '"/> <a href="' . $docutitle->getFullURL() . '">' . wfMsg('smw_ask_help') . "</a>\n</form>";
-		
+
 		// print results if any
 		if ($smwgQEnabled && ('' != $query) ) {
 			$params = array('offset' => $offset, 'limit' => $limit, 'format' => 'broadtable', 'mainlabel' => ' ', 'link' => 'all', 'default' => wfMsg('smw_result_noresults'), 'sort' => $sort, 'order' => $order);
 			$queryobj = SMWQueryProcessor::createQuery($query, $params, false);
 			$res = smwfGetStore()->getQueryResult($queryobj);
 			$printer = new SMWTableResultPrinter('broadtable',false);
-			$result = $printer->getResultHTML($res, $params);
+			$result = $printer->getResult($res, $params, SMW_OUTPUT_HTML);
 
 			// prepare navigation bar
-			if ($offset > 0) 
+			if ($offset > 0)
 				$navigation = '<a href="' . htmlspecialchars($skin->makeSpecialUrl('Ask','offset=' . max(0,$offset-$limit) . '&limit=' . $limit . '&query=' . urlencode($query) . '&sort=' . urlencode($sort) .'&order=' . urlencode($order))) . '">' . wfMsg('smw_result_prev') . '</a>';
 			else $navigation = wfMsg('smw_result_prev');
 
 			$navigation .= '&nbsp;&nbsp;&nbsp;&nbsp; <b>' . wfMsg('smw_result_results') . ' ' . ($offset+1) . '&ndash; ' . ($offset + $res->getCount()) . '</b>&nbsp;&nbsp;&nbsp;&nbsp;';
 
-			if ($res->hasFurtherResults()) 
+			if ($res->hasFurtherResults())
 				$navigation .= ' <a href="' . htmlspecialchars($skin->makeSpecialUrl('Ask','offset=' . ($offset+$limit) . '&limit=' . $limit . '&query=' . urlencode($query) . '&sort=' . urlencode($sort) .'&order=' . urlencode($order))) . '">' . wfMsg('smw_result_next') . '</a>';
 			else $navigation .= wfMsg('smw_result_next');
 

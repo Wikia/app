@@ -13,8 +13,8 @@
 
 // Add credit :)
 $wgExtensionCredits['other'][] = array(
-	'svn-date' => '$LastChangedDate: 2008-05-06 11:59:58 +0000 (Tue, 06 May 2008) $',
-	'svn-revision' => '$LastChangedRevision: 34306 $',
+	'svn-date'       => '$LastChangedDate: 2008-09-19 18:33:16 +0000 (Fri, 19 Sep 2008) $',
+	'svn-revision'   => '$LastChangedRevision: 41039 $',
 	'name'           => 'OnlineStatus',
 	'author'         => 'Alexandre Emsenhuber',
 	'url'            => 'http://www.mediawiki.org/wiki/Extension:OnlineStatus',
@@ -32,18 +32,17 @@ $wgAllowAnyUserOnlineStatusFunction = true;
 class OnlineStatus {
 
 	static function init(){
-		global $wgExtensionMessagesFiles, $wgExtensionFunctions, $wgHooks, $wgAllowAnyUserOnlineStatusFunction;
+		global $wgExtensionMessagesFiles, $wgExtensionFunctions, $wgHooks, $wgAjaxExportList;
+
 		// Add messages file
 		$wgExtensionMessagesFiles['OnlineStatus'] = dirname( __FILE__ ) . '/OnlineStatus.i18n.php';
 
-		if( $wgAllowAnyUserOnlineStatusFunction ){
-			// Hooks for the Parser
-			// Use ParserFirstCallInit if aviable
-			if( defined( 'MW_SUPPORTS_PARSERFIRSTCALLINIT' ) )
-				$wgHooks['ParserFirstCallInit'][] = 'OnlineStatus::ParserFirstCallInit';
-			else 
-				$wgExtensionFunctions[] = 'OnlineStatus::Setup';
-		}
+		// Hooks for the Parser
+		// Use ParserFirstCallInit if aviable
+		if( defined( 'MW_SUPPORTS_PARSERFIRSTCALLINIT' ) )
+			$wgHooks['ParserFirstCallInit'][] = 'OnlineStatus::ParserFirstCallInit';
+		else
+			$wgExtensionFunctions[] = 'OnlineStatus::Setup';
 
 		// Magic words hooks
 		$wgHooks['MagicWordwgVariableIDs'][] = 'OnlineStatus::MagicWordVariable';
@@ -54,12 +53,19 @@ class OnlineStatus {
 		$wgHooks['InitPreferencesForm'][] = 'OnlineStatus::InitPreferencesForm';
 		$wgHooks['PreferencesUserInformationPanel'][] = 'OnlineStatus::PreferencesUserInformationPanel';
 		$wgHooks['ResetPreferences'][] = 'OnlineStatus::ResetPreferences';
+		$wgHooks['SavePreferences'][] = 'OnlineStatus::SavePreferences';
 
 		// User hook
-		$wgHooks['SavePreferences'][] = 'OnlineStatus::SavePreferences';
+		$wgHooks['UserToggles'][] = 'OnlineStatus::UserToggles';
+		$wgHooks['UserLoginComplete'][] = 'OnlineStatus::UserLoginComplete';
+		$wgHooks['UserLogoutComplete'][] = 'OnlineStatus::UserLogoutComplete';
 
 		// User page
 		$wgHooks['BeforePageDisplay'][] = 'OnlineStatus::BeforePageDisplay';
+		$wgHooks['PersonalUrls'][] = 'OnlineStatus::PersonalUrls';
+
+		// Ajax stuff
+		$wgAjaxExportList[] = 'OnlineStatus::Ajax';
 	}
 
 	/**
@@ -89,21 +95,67 @@ class OnlineStatus {
 	}
 
 	/**
+	 * Used for ajax requests
+	 */
+	static function Ajax( $action, $stat = false ){
+		global $wgUser;
+		wfLoadExtensionMessages( 'OnlineStatus' );
+
+		if( $wgUser->isAnon() )
+			return wfMsgHtml( 'onlinestatus-js-anon' );
+
+		switch( $action ){
+		case 'get':
+			$def = $wgUser->getOption( 'online' );
+			$msg = wfMsgForContentNoTrans( 'onlinestatus-levels' );
+			$lines = explode( "\n", $msg );
+			$radios = array();
+			foreach( $lines as $line ){
+				if( substr( $line, 0, 1 ) != '*' )
+					continue;
+				$lev = trim( $line, '* ' );
+				$radios[] = array(
+					$lev,
+					wfMsg( 'onlinestatus-toggle-' . $lev ),
+					$lev == $def
+				);
+			}
+			return json_encode( $radios );
+		case 'set':
+			if( $stat ){
+				$dbw = wfGetDB( DB_MASTER );
+				$dbw->begin();
+				$actual = $wgUser->getOption( 'online' );
+				$wgUser->setOption( 'online', $stat );
+				if( $actual != $stat ){
+					$wgUser->getUserPage()->invalidateCache();
+					$wgUser->getTalkPage()->invalidateCache();
+				}
+				$wgUser->saveSettings();
+				$wgUser->invalidateCache();
+				$dbw->commit();
+				return wfMsgHtml( 'onlinestatus-js-changed', wfMsgHtml( 'onlinestatus-toggle-'.$stat ) );
+			} else {
+				return wfMsgHtml( 'onlinestatus-js-error', $stat );
+			}
+		}
+	}
+
+	/**
 	 * Extension function
-	 * Only called if $wgAllowAnyUserOnlineStatusFunction is true
 	 */
 	static function Setup() {
 		global $wgParser;
-		$wgParser->setFunctionHook( 'anyuseronlinestatus', array( __CLASS__, 'ParserHookCallback' ) );
-		return true;
+		self::ParserFirstCallInit( $wgParser );
 	}
 
 	/**
 	 * Hook for ParserFirstCallInit
-	 * Only called if $wgAllowAnyUserOnlineStatusFunction is true
 	 */
-	static function ParserFirstCallInit( &$parser ){
-		$parser->setFunctionHook( 'anyuseronlinestatus', array( __CLASS__, 'ParserHookCallback' ) );
+	static function ParserFirstCallInit( $parser ){
+		global $wgAllowAnyUserOnlineStatusFunction;
+		if( $wgAllowAnyUserOnlineStatusFunction )
+			$parser->setFunctionHook( 'anyuseronlinestatus', array( __CLASS__, 'ParserHookCallback' ) );
 		return true;
 	}
 
@@ -166,7 +218,7 @@ class OnlineStatus {
 	/**
 	 * Hook function for SavePreferences
 	 */
-	static function SavePreferences( &$prefs, &$user, &$msg, $old = array() ){
+	static function SavePreferences( $prefs, $user, &$msg, $old = array() ){
 		# We need to invalidate caches for these pages, maybe it would be good
 		# to be done for subpages, but it would too expensive
 		if( !is_array( $old ) || empty( $old ) ){
@@ -190,7 +242,7 @@ class OnlineStatus {
 	/**
 	 * Hook function for InitPreferencesForm
 	 */
-	static function InitPreferencesForm( &$prefs, &$request ) {
+	static function InitPreferencesForm( $prefs, $request ) {
 		$prefs->mToggles['online'] = $request->getVal( 'wpOnline' );
 		$prefs->mToggles['showonline'] = $request->getCheck( 'wpOpShowOnline' ) ? 1 : 0;
 		return true;
@@ -199,7 +251,7 @@ class OnlineStatus {
 	/**
 	 * Hook function for ResetPreferences
 	 */
-	static function ResetPreferences( &$prefs, &$user ) {
+	static function ResetPreferences( $prefs, $user ) {
 		$prefs->mToggles['online'] = $user->getOption( 'online' );
 		$prefs->mToggles['showonline'] = $user->getOption( 'showonline' );
 		return true;
@@ -238,10 +290,58 @@ class OnlineStatus {
 	}
 
 	/**
+	 * Hook for UserToggles
+	 */
+	static function UserToggles( &$toggles ){
+		$toggles[] = 'onlineOnLogin';
+		$toggles[] = 'offlineOnLogout';
+		return true;	
+	}
+
+	/**
+	 * Hook for UserLoginComplete
+	 */
+	static function UserLoginComplete( $user ){
+		if( $user->getOption( 'offlineOnLogout' ) ){
+			$user->setOption( 'online', 'online' );
+			$user->saveSettings();
+		}
+		return true;	
+	}
+
+	/**
+	 * Hook for UserLoginComplete
+	 */
+	static function UserLogoutComplete( &$newUser, &$injected_html, $oldName = null ){
+		if( $oldName === null )
+			return true;
+		$oldUser = User::newFromName( $oldName );
+		if( !$oldUser instanceof User )
+			return true;
+		if( $oldUser->getOption( 'offlineOnLogout' ) ){
+			$oldUser->setOption( 'online', 'offline' );
+			$oldUser->saveSettings();
+		}
+		return true;	
+	}
+
+	/**
 	 * Hook function for BeforePageDisplay
 	 */
 	static function BeforePageDisplay( &$out ){
-		global $wgTitle, $wgRequest;
+		global $wgTitle, $wgRequest, $wgUser;
+		global $wgUseAjax;
+
+		if( $wgUser->isLoggedIn() && $wgUseAjax ){
+			global $wgScriptPath, $wgJsMimeType;
+			$out->addScript( "<script type=\"{$wgJsMimeType}\" src=\"{$wgScriptPath}/extensions/OnlineStatus/OnlineStatus.js\"></script>" );
+			$out->addLink( array(
+				'rel' => 'stylesheet',
+				'type' => 'text/css',
+				'href' => "{$wgScriptPath}/extensions/OnlineStatus/OnlineStatus.css"
+			) );
+		}
+
 		if( !in_array( $wgRequest->getVal( 'action', 'view' ), array( 'view', 'purge' ) ) )
 			return true;
 		$status = self::GetUserStatus( $wgTitle, true );
@@ -249,6 +349,31 @@ class OnlineStatus {
 			return true;
 		wfLoadExtensionMessages( 'OnlineStatus' );
 		$out->setSubtitle( wfMsgExt( 'onlinestatus-subtitle-' . $status, array( 'parse' ) ) );
+
+		return true;
+	}
+
+	/**
+	 * Hook for PersonalUrls
+	 */
+	static function PersonalUrls( &$urls, &$title ){
+		global $wgUser, $wgUseAjax;
+		# Require ajax
+		if( !$wgUser->isLoggedIn() || !$wgUseAjax || $title->isSpecial( 'Preferences' ) )
+			return true;
+		$arr = array();
+		foreach( $urls as $key => $val ){
+			if( $key == 'logout' ){
+				wfLoadExtensionMessages( 'OnlineStatus' );
+				$arr['status'] = array(
+					'text' => wfMsgHtml( 'onlinestatus-tab' ),
+					'href' => 'javascript:;',
+					'active' => false,
+				);
+			}
+			$arr[$key] = $val;
+		}
+		$urls = $arr;
 		return true;
 	}
 }

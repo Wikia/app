@@ -52,7 +52,7 @@ function WikiaVideo_renderVideoGallery($input, $args, $parser) {
 
 	global $wgHooks;
 	wfLoadExtensionMessages('VideoEmbedTool');
-	$wgHooks['ExtendJSGlobalVars'][] = 'VETSetupVars';
+	$wgHooks['MakeGlobalVariablesScript'][] = 'VETSetupVars';
 	
 	$lines = explode("\n", $input);
 	foreach($lines as $line) {
@@ -119,7 +119,7 @@ function WikiaVideo_renderVideoGallery($input, $args, $parser) {
 			if( ( !$wgWikiaVETLoaded ) && get_class( $wgUser->getSkin() ) == 'SkinMonaco' ) {
 				global $wgStylePath, $wgOut, $wgExtensionsPath, $wgStyleVersion, $wgUser, $wgHooks;			
 				wfLoadExtensionMessages('VideoEmbedTool');
-				$wgHooks['ExtendJSGlobalVars'][] = 'VETSetupVars';
+				$wgHooks['MakeGlobalVariablesScript'][] = 'VETSetupVars';
 				$wgWikiaVETLoaded = true;
 			}
 		}

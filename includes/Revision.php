@@ -13,6 +13,11 @@ class Revision {
 	const DELETED_USER = 4;
 	const DELETED_RESTRICTED = 8;
 
+	// Audience options for Revision::getText()
+	const FOR_PUBLIC = 1;
+	const FOR_THIS_USER = 2;
+	const RAW = 3;
+
 	/**
 	 * Load a page revision from a given revision ID number.
 	 * Returns null if no such revision can be found.
@@ -37,16 +42,24 @@ class Revision {
 	 * @return Revision
 	 */
 	public static function newFromTitle( $title, $id = 0 ) {
-		if( $id ) {
-			$matchId = intval( $id );
+		$conds = array( 
+			'page_namespace' => $title->getNamespace(), 
+			'page_title' => $title->getDBkey()
+		);
+		if ( $id ) {
+			// Use the specified ID
+			$conds['rev_id'] = $id;
+		} elseif ( wfGetLB()->getServerCount() > 1 ) {
+			// Get the latest revision ID from the master
+			$dbw = wfGetDB( DB_MASTER );
+			$latest = $dbw->selectField( 'page', 'page_latest', $conds, __METHOD__ );
+			$conds['rev_id'] = $latest;
 		} else {
-			$matchId = 'page_latest';
+			// Use a join to get the latest revision
+			$conds[] = 'rev_id=page_latest';
 		}
-		return Revision::newFromConds(
-			array( "rev_id=$matchId",
-			       'page_id=rev_page',
-			       'page_namespace' => $title->getNamespace(),
-			       'page_title'     => $title->getDBkey() ) );
+		$conds[] = 'page_id=rev_page';
+		return Revision::newFromConds( $conds );
 	}
 
 	/**
@@ -144,7 +157,7 @@ class Revision {
 	private static function newFromConds( $conditions ) {
 		$db = wfGetDB( DB_SLAVE );
 		$row = Revision::loadFromConds( $db, $conditions );
-		if( is_null( $row ) ) {
+		if( is_null( $row ) && wfGetLB()->getServerCount() > 1 ) {
 			$dbw = wfGetDB( DB_MASTER );
 			$row = Revision::loadFromConds( $dbw, $conditions );
 		}
@@ -232,7 +245,7 @@ class Revision {
 			array( 'page', 'revision' ),
 			$fields,
 			$conditions,
-			'Revision::fetchRow',
+			__METHOD__,
 			array( 'LIMIT' => 1 ) );
 		$ret = $db->resultObject( $res );
 		return $ret;
@@ -306,9 +319,9 @@ class Revision {
 				$this->mSize = intval( $row->rev_len );
 
 			if( isset( $row->page_latest ) ) {
-				$this->mCurrent   = ( $row->rev_id == $row->page_latest );
-				$this->mTitle     = Title::makeTitle( $row->page_namespace,
-				                                      $row->page_title );
+				$this->mCurrent = ( $row->rev_id == $row->page_latest );
+				$this->mTitle = Title::makeTitle( $row->page_namespace, $row->page_title );
+				$this->mTitle->resetArticleID( $this->mPage );
 			} else {
 				$this->mCurrent = false;
 				$this->mTitle = null;
@@ -427,11 +440,22 @@ class Revision {
 	}
 
 	/**
-	 * Fetch revision's user id if it's available to all users
+	 * Fetch revision's user id if it's available to the specified audience.
+	 * If the specified audience does not have access to it, zero will be 
+	 * returned.
+	 *
+	 * @param integer $audience One of:
+	 *      Revision::FOR_PUBLIC       to be displayed to all users
+	 *      Revision::FOR_THIS_USER    to be displayed to $wgUser
+	 *      Revision::RAW              get the ID regardless of permissions
+	 *
+	 *
 	 * @return int
 	 */
-	public function getUser() {
-		if( $this->isDeleted( self::DELETED_USER ) ) {
+	public function getUser( $audience = self::FOR_PUBLIC ) {
+		if( $audience == self::FOR_PUBLIC && $this->isDeleted( self::DELETED_USER ) ) {
+			return 0;
+		} elseif( $audience == self::FOR_THIS_USER && !$this->userCan( self::DELETED_USER ) ) {
 			return 0;
 		} else {
 			return $this->mUser;
@@ -447,11 +471,21 @@ class Revision {
 	}
 
 	/**
-	 * Fetch revision's username if it's available to all users
+	 * Fetch revision's username if it's available to the specified audience.
+	 * If the specified audience does not have access to the username, an 
+	 * empty string will be returned.
+	 *
+	 * @param integer $audience One of:
+	 *      Revision::FOR_PUBLIC       to be displayed to all users
+	 *      Revision::FOR_THIS_USER    to be displayed to $wgUser
+	 *      Revision::RAW              get the text regardless of permissions
+	 *
 	 * @return string
 	 */
-	public function getUserText() {
-		if( $this->isDeleted( self::DELETED_USER ) ) {
+	public function getUserText( $audience = self::FOR_PUBLIC ) {
+		if( $audience == self::FOR_PUBLIC && $this->isDeleted( self::DELETED_USER ) ) {
+			return "";
+		} elseif( $audience == self::FOR_THIS_USER && !$this->userCan( self::DELETED_USER ) ) {
 			return "";
 		} else {
 			return $this->mUserText;
@@ -467,11 +501,21 @@ class Revision {
 	}
 
 	/**
-	 * Fetch revision comment if it's available to all users
+	 * Fetch revision comment if it's available to the specified audience.
+	 * If the specified audience does not have access to the comment, an 
+	 * empty string will be returned.
+	 *
+	 * @param integer $audience One of:
+	 *      Revision::FOR_PUBLIC       to be displayed to all users
+	 *      Revision::FOR_THIS_USER    to be displayed to $wgUser
+	 *      Revision::RAW              get the text regardless of permissions
+	 *
 	 * @return string
 	 */
-	function getComment() {
-		if( $this->isDeleted( self::DELETED_COMMENT ) ) {
+	function getComment( $audience = self::FOR_PUBLIC ) {
+		if( $audience == self::FOR_PUBLIC && $this->isDeleted( self::DELETED_COMMENT ) ) {
+			return "";
+		} elseif( $audience == self::FOR_THIS_USER && !$this->userCan( self::DELETED_COMMENT ) ) {
 			return "";
 		} else {
 			return $this->mComment;
@@ -500,17 +544,42 @@ class Revision {
 	public function isDeleted( $field ) {
 		return ($this->mDeleted & $field) == $field;
 	}
+	
+	/**
+	 * Get the deletion bitfield of the revision
+	 */	
+	public function getVisibility() {
+		return (int)$this->mDeleted;
+	}
 
 	/**
-	 * Fetch revision text if it's available to all users
+	 * Fetch revision text if it's available to the specified audience.
+	 * If the specified audience does not have the ability to view this 
+	 * revision, an empty string will be returned.
+	 *
+	 * @param integer $audience One of:
+	 *      Revision::FOR_PUBLIC       to be displayed to all users
+	 *      Revision::FOR_THIS_USER    to be displayed to $wgUser
+	 *      Revision::RAW              get the text regardless of permissions
+	 *
+	 *
 	 * @return string
 	 */
-	public function getText() {
-		if( $this->isDeleted( self::DELETED_TEXT ) ) {
+	public function getText( $audience = self::FOR_PUBLIC ) {
+		if( $audience == self::FOR_PUBLIC && $this->isDeleted( self::DELETED_TEXT ) ) {
+			return "";
+		} elseif( $audience == self::FOR_THIS_USER && !$this->userCan( self::DELETED_TEXT ) ) {
 			return "";
 		} else {
 			return $this->getRawText();
 		}
+	}
+
+	/**
+	 * Alias for getText(Revision::FOR_THIS_USER)
+	 */
+	public function revText() {
+		return $this->getText( self::FOR_THIS_USER );
 	}
 
 	/**
@@ -523,18 +592,6 @@ class Revision {
 			$this->mText = $this->loadText();
 		}
 		return $this->mText;
-	}
-
-	/**
-	 * Fetch revision text if it's available to THIS user
-	 * @return string
-	 */
-	public function revText() {
-		if( !$this->userCan( self::DELETED_TEXT ) ) {
-			return "";
-		} else {
-			return $this->getRawText();
-		}
 	}
 
 	/**
@@ -607,7 +664,7 @@ class Revision {
 	  * $row is usually an object from wfFetchRow(), both the flags and the text
 	  * field must be included
 	  *
-	  * @param integer $row Id of a row
+	  * @param object $row The text data
 	  * @param string $prefix table prefix (default 'old_')
 	  * @return string $text|false the text requested
 	  */
@@ -663,9 +720,11 @@ class Revision {
 			}
 
 			global $wgLegacyEncoding;
-			if( $wgLegacyEncoding && !in_array( 'utf-8', $flags ) ) {
+			if( $wgLegacyEncoding && !in_array( 'utf-8', $flags ) && !in_array( 'utf8', $flags ) ) {
 				# Old revisions kept around in a legacy encoding?
 				# Upconvert on demand.
+				# ("utf8" checked for compatibility with some broken
+				#  conversion scripts 2008-12-30)
 				global $wgInputEncoding, $wgContLang;
 				$text = $wgContLang->iconv( $wgLegacyEncoding, $wgInputEncoding, $text );
 			}
@@ -719,20 +778,13 @@ class Revision {
 		$flags = Revision::compressRevisionText( $data );
 
 		# Write to external storage if required
-		if ( $wgDefaultExternalStore ) {
-			if ( is_array( $wgDefaultExternalStore ) ) {
-				// Distribute storage across multiple clusters
-				$store = $wgDefaultExternalStore[mt_rand(0, count( $wgDefaultExternalStore ) - 1)];
-			} else {
-				$store = $wgDefaultExternalStore;
-			}
+		if( $wgDefaultExternalStore ) {
 			// Store and get the URL
-			$data = ExternalStore::insert( $store, $data );
-			if ( !$data ) {
-				# This should only happen in the case of a configuration error, where the external store is not valid
-				throw new MWException( "Unable to store text to external storage $store" );
+			$data = ExternalStore::insertToDefault( $data );
+			if( !$data ) {
+				throw new MWException( "Unable to store text to external storage" );
 			}
-			if ( $flags ) {
+			if( $flags ) {
 				$flags .= ',';
 			}
 			$flags .= 'external';
@@ -817,7 +869,7 @@ class Revision {
 				__METHOD__ );
 		}
 
-		if( !$row ) {
+		if( !$row && wfGetLB()->getServerCount() > 1 ) {
 			// Possible slave lag!
 			$dbw = wfGetDB( DB_MASTER );
 			$row = $dbw->selectRow( 'text',
@@ -828,7 +880,8 @@ class Revision {
 
 		$text = self::getRevisionText( $row );
 
-		if( $wgRevisionCacheExpiry ) {
+		# No negative caching -- negative hits on text rows may be due to corrupted slave servers
+		if( $wgRevisionCacheExpiry && $text !== false ) {
 			$wgMemc->set( $key, $text, $wgRevisionCacheExpiry );
 		}
 
@@ -856,7 +909,7 @@ class Revision {
 
 		$current = $dbw->selectRow(
 			array( 'page', 'revision' ),
-			array( 'page_latest', 'rev_text_id' ),
+			array( 'page_latest', 'rev_text_id', 'rev_len' ),
 			array(
 				'page_id' => $pageId,
 				'page_latest=rev_id',
@@ -869,7 +922,8 @@ class Revision {
 				'comment'    => $summary,
 				'minor_edit' => $minor,
 				'text_id'    => $current->rev_text_id,
-				'parent_id'  => $current->page_latest
+				'parent_id'  => $current->page_latest,
+				'len'        => $current->rev_len
 				) );
 		} else {
 			$revision = null;
@@ -903,17 +957,15 @@ class Revision {
 
 	/**
 	 * Get rev_timestamp from rev_id, without loading the rest of the row
+	 * @param Title $title
 	 * @param integer $id
-	 * @param integer $pageid, optional
 	 */
-	static function getTimestampFromId( $id, $pageId = 0 ) {
+	static function getTimestampFromId( $title, $id ) {
 		$dbr = wfGetDB( DB_SLAVE );
 		$conds = array( 'rev_id' => $id );
-		if( $pageId ) {
-			$conds['rev_page'] = $pageId;
-		}
+		$conds['rev_page'] = $title->getArticleId();
 		$timestamp = $dbr->selectField( 'revision', 'rev_timestamp', $conds, __METHOD__ );
-		if ( $timestamp === false ) {
+		if ( $timestamp === false && wfGetLB()->getServerCount() > 1 ) {
 			# Not in slave, try master
 			$dbw = wfGetDB( DB_MASTER );
 			$timestamp = $dbw->selectField( 'revision', 'rev_timestamp', $conds, __METHOD__ );

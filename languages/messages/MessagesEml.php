@@ -60,7 +60,7 @@ $messages = array(
 'nstab-template' => 'Modèl',
 
 # Login and logout pages
-'logouttext'           => "<strong>Adèsa s'et discunnês.</strong><br />
+'logouttext'           => "'''Adèsa s'et discunnês.'''<br />
 Putiv cuntinuèr ad usèr {{SITENAME}} anonimamèint, o putiv cunnètterv dòp cun al stèss nàmm o cun un èter. Nutêv ca alcuni pàgini i putrèbber cuntinuèr a cràdder ca vueter a-sîv discunnès, finchè non purghê la cache dal vòster browser.",
 'userlogin'            => 'Entrèr / Argistrères',
 'logout'               => 'va fôra',
@@ -74,7 +74,7 @@ Putiv cuntinuèr ad usèr {{SITENAME}} anonimamèint, o putiv cunnètterv dòp c
 'accountcreated'       => 'Et criê un nôv account',
 
 # Edit pages
-'summary'          => "Mutîv d'al cambiamèint",
+'summary'          => "Mutîv d'al cambiamèint:",
 'minoredit'        => "Còst cambiamèint ché l'é un gnînt in tót",
 'watchthis'        => "Tîn a drê a c'la pàgina chè",
 'savearticle'      => 'Salva',
@@ -85,6 +85,9 @@ Putiv cuntinuèr ad usèr {{SITENAME}} anonimamèint, o putiv cunnètterv dòp c
 'editing'          => 'Cambiamèint ed $1',
 'yourdiff'         => 'Differèinzi',
 'templatesused'    => 'Modêl usèdi in sta pàgina:',
+
+# Search results
+'searchhelp-url' => 'Help:Introduzione',
 
 # Preferences page
 'mypreferences' => 'AL mê preferèinzi',
@@ -102,8 +105,8 @@ Putiv cuntinuèr ad usèr {{SITENAME}} anonimamèint, o putiv cunnètterv dòp c
 'filedesc'          => "Ugêt d'al cambiamèint",
 'fileuploadsummary' => "Ugêt d'al cambiamèint:",
 
-# Special:ImageList
-'imagelist_size' => 'Dimensiòun (bytes)',
+# Special:ListFiles
+'listfiles_size' => 'Dimensiòun (bytes)',
 
 # Random page
 'randompage' => 'Una pàgina a chès',
@@ -117,12 +120,16 @@ Putiv cuntinuèr ad usèr {{SITENAME}} anonimamèint, o putiv cunnètterv dòp c
 # Special:AllPages
 'allpages' => 'Tôt al pàgin',
 
+# Special:Log/newusers
+'newuserlogpage'          => 'Regestér di nōv utèint',
+'newuserlog-create-entry' => 'Un utèint nōv',
+
 # Watchlist
 'watchlist'     => 'Al còsi ca guèrd',
 'watch'         => 'Tîn a drê',
 'watchthispage' => "Tîn a drê a c'la pàgina chè",
 
-# Delete/protect/revert
+# Delete
 'excontent'         => "al cointgnû l'éra: '$1'",
 'excontentauthor'   => "al cointgnû l'éra: '$1' (e l'ónic cuntribudôr l'éra '[[Special:Contributions/$2|$2]]')",
 'confirmdeletetext' => "Stèt per scanzlèr 'na pàgina o n'imàgin, insìmma a tòt la sô crunolugî dal database.
@@ -147,7 +154,7 @@ Guèrda $2 par vèdder la lésta d\'al pàgin ch\'i sun stèdi scanzlèdi di rec
 '1movedto2'   => "[[$1]] l'è stê mòs a [[$2]]",
 'movelogpage' => 'Regestér di muvimèint',
 
-# Special:NewImages
+# Special:NewFiles
 'ilsubmit' => 'Zerca',
 
 # Special:SpecialPages

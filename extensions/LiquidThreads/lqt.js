@@ -1,20 +1,20 @@
 // http://onlinetools.org/articles/unobtrusivejavascript/chapter4.html
-function lqt_add_event(obj, evType, fn){ 
-	if (obj.addEventListener){ 
-		obj.addEventListener(evType, fn, false); 
-		return true; 
-	} else if (obj.attachEvent){ 
-		var r = obj.attachEvent("on"+evType, fn); 
-		return r; 
-	} else { 
-		return false; 
-	} 
+function lqt_add_event(obj, evType, fn){
+	if (obj.addEventListener){
+		obj.addEventListener(evType, fn, false);
+		return true;
+	} else if (obj.attachEvent){
+		var r = obj.attachEvent("on"+evType, fn);
+		return r;
+	} else {
+		return false;
+	}
 }
 
 var LqtDateRangeRectifier = function( startsel, endsel ) {
 	this.startsel = startsel;
 	this.endsel = endsel;
-	
+
 	this.oldstart = this.startsel.selectedIndex;
 	this.oldend = this.endsel.selectedIndex;
 
@@ -60,7 +60,7 @@ function lqt_on_load() {
 		if ( !filter.checked ) {
 			start.selectedIndex = end.selectedIndex = 0;
 		}
-		
+
 	}
 }
 

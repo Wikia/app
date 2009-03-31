@@ -21,15 +21,23 @@ class SkinModern extends SkinTemplate {
 	 * skin L&F.
 	 */
 	function getPoweredBy() {
-	global	$wgVersion;
+		global	$wgVersion;
 		return "<div class='mw_poweredby'>Powered by MediaWiki $wgVersion</div>";
 	}
 
-	function initPage( &$out ) {
-		SkinTemplate::initPage( $out );
+	function initPage( OutputPage $out ) {
+		parent::initPage( $out );
 		$this->skinname  = 'modern';
 		$this->stylename = 'modern';
 		$this->template  = 'ModernTemplate';
+	}
+	
+	function setupSkinUserCss( OutputPage $out ){
+		// Do not call parent::setupSkinUserCss(), we have our own print style
+		$out->addStyle( 'common/shared.css', 'screen' );
+		$out->addStyle( 'modern/main.css', 'screen' );
+		$out->addStyle( 'modern/print.css', 'print' );
+		$out->addStyle( 'modern/rtl.css', 'screen', '', 'rtl' );
 	}
 }
 
@@ -64,13 +72,7 @@ class ModernTemplate extends QuickTemplate {
 		<meta http-equiv="Content-Type" content="<?php $this->text('mimetype') ?>; charset=<?php $this->text('charset') ?>" />
 		<?php $this->html('headlinks') ?>
 		<title><?php $this->text('pagetitle') ?></title>
-<?php 	if(empty($this->data['printable']) ) { ?>
-		<style type="text/css" media="screen, projection">/*<![CDATA[*/
-			@import "<?php $this->text('stylepath') ?>/common/shared.css?<?php echo $GLOBALS['wgStyleVersion'] ?>";
-			@import "<?php $this->text('stylepath') ?>/<?php $this->text('stylename') ?>/main.css?<?php echo $GLOBALS['wgStyleVersion'] ?>";
-		/*]]>*/</style>
-		<?php } ?>
-		<link rel="stylesheet" type="text/css" <?php if(empty($this->data['printable']) ) { ?>media="print"<?php } ?> href="<?php $this->text('stylepath') ?>/<?php $this->text('stylename') ?>/print.css?<?php echo $GLOBALS['wgStyleVersion'] ?>" />
+		<?php $this->html('csslinks') ?>
 		<!--[if lt IE 7]><meta http-equiv="imagetoolbar" content="no" /><![endif]-->
 		
 		<?php print Skin::makeGlobalVariablesScript( $this->data ); ?>
@@ -97,12 +99,10 @@ class ModernTemplate extends QuickTemplate {
 	</head>
 <body<?php if($this->data['body_ondblclick']) { ?> ondblclick="<?php $this->text('body_ondblclick') ?>"<?php } ?>
 <?php if($this->data['body_onload'    ]) { ?> onload="<?php     $this->text('body_onload')     ?>"<?php } ?>
- class="mediawiki <?php $this->text('nsclass') ?> <?php $this->text('dir') ?> <?php $this->text('pageclass') ?>">
+ class="mediawiki <?php $this->text('dir') ?> <?php $this->text('pageclass') ?> <?php $this->text('skinnameclass') ?>">
 
 	<!-- heading -->
-	<div id="mw_header">
-		<h1 id="firstHeading"><?php $this->data['displaytitle']!=""?$this->html('title'):$this->text('title') ?></h1>
-	</div>
+	<div id="mw_header"><h1 id="firstHeading"><?php $this->data['displaytitle']!=""?$this->html('title'):$this->text('title') ?></h1></div>
 
 	<div id="mw_main">
 	<div id="mw_contentwrapper">
@@ -113,7 +113,7 @@ class ModernTemplate extends QuickTemplate {
 			<ul>
 	<?php		foreach($this->data['content_actions'] as $key => $tab) {
 					echo '
-				 <li id="ca-' . Sanitizer::escapeId($key).'"';
+				 <li id="' . Sanitizer::escapeId( "ca-$key" ) . '"';
 					if( $tab['class'] ) {
 						echo ' class="'.htmlspecialchars($tab['class']).'"';
 					}
@@ -143,6 +143,7 @@ class ModernTemplate extends QuickTemplate {
 	     for the margins -->
 	<div id="mw_contentholder">
 		<div class='mw-topboxes'>
+			<div id="mw-js-message" style="display:none;"></div>
 			<div class="mw-topbox" id="siteSub"><?php $this->msg('tagline') ?></div>
 			<?php if($this->data['newtalk'] ) {
 				?><div class="usermessage mw-topbox"><?php $this->html('newtalk')  ?></div>
@@ -160,6 +161,7 @@ class ModernTemplate extends QuickTemplate {
 		<?php $this->html('bodytext') ?>
 		<div class='mw_clear'></div>
 		<?php if($this->data['catlinks']) { $this->html('catlinks'); } ?>
+		<?php $this->html ('dataAfterContent') ?>
 	</div><!-- mw_contentholder -->
 	</div><!-- mw_content -->
 	</div><!-- mw_contentwrapper -->
@@ -199,7 +201,7 @@ class ModernTemplate extends QuickTemplate {
 		<div class="pBody">
 			<ul>
 <?php 			foreach($this->data['personal_urls'] as $key => $item) { ?>
-				<li id="pt-<?php echo Sanitizer::escapeId($key) ?>"<?php
+				<li id="<?php echo Sanitizer::escapeId( "pt-$key" ) ?>"<?php
 					if ($item['active']) { ?> class="active"<?php } ?>><a href="<?php
 				echo htmlspecialchars($item['href']) ?>"<?php echo $skin->tooltipAndAccesskey('pt-'.$key) ?><?php
 				if(!empty($item['class'])) { ?> class="<?php
@@ -287,7 +289,7 @@ class ModernTemplate extends QuickTemplate {
 <?php 	}
 		if($this->data['feeds']) { ?>
 			<li id="feedlinks"><?php foreach($this->data['feeds'] as $key => $feed) {
-					?><span id="feed-<?php echo Sanitizer::escapeId($key) ?>"><a href="<?php
+					?><span id="<?php echo Sanitizer::escapeId( "feed-$key" ) ?>"><a href="<?php
 					echo htmlspecialchars($feed['href']) ?>"<?php echo $this->skin->tooltipAndAccesskey('feed-'.$key) ?>><?php echo htmlspecialchars($feed['text'])?></a>&nbsp;</span>
 					<?php } ?></li><?php
 		}
@@ -343,7 +345,7 @@ class ModernTemplate extends QuickTemplate {
 	/*************************************************************************************************/
 	function customBox( $bar, $cont ) {
 ?>
-		<div class='generated-sidebar portlet' id='p-<?php echo Sanitizer::escapeId($bar) ?>'<?php echo $this->skin->tooltip('p-'.$bar) ?>>
+		<div class='generated-sidebar portlet' id='<?php echo Sanitizer::escapeId( "p-$bar" ) ?>'<?php echo $this->skin->tooltip('p-'.$bar) ?>>
 		<h5><?php $out = wfMsg( $bar ); if (wfEmptyMsg($bar, $out)) echo $bar; else echo $out; ?></h5>
 		<div class='pBody'>
 <?php   if ( is_array( $cont ) ) { ?>

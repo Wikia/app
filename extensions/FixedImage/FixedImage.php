@@ -37,8 +37,8 @@ $wgExtensionCredits['parserhook'][] = array(
 	'name'           => 'FixedImage',
 	'author'         => 'Brion Vibber',
 	'url'            => 'http://www.mediawiki.org/wiki/Extension:FixedImage',
-	'svn-date'       => '$LastChangedDate: 2008-06-06 20:38:04 +0000 (Fri, 06 Jun 2008) $',
-	'svn-revision'   => '$LastChangedRevision: 35980 $',
+	'svn-date'       => '$LastChangedDate: 2008-12-20 09:32:47 +0000 (Sat, 20 Dec 2008) $',
+	'svn-revision'   => '$LastChangedRevision: 44839 $',
 	'description'    => 'Just include an image',
 	'descriptionmsg' => 'fixedimage-desc',
 );
@@ -71,5 +71,5 @@ function fixedImageSetup() {
  */
 function fixedImageHandler( $key, $text, $params=null ) {
 	global $wgFixedImageHooks;
-	return wfElement( 'img', $wgFixedImageHooks[$key] );
+	return Xml::element( 'img', $wgFixedImageHooks[$key] );
 }

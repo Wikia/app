@@ -54,7 +54,7 @@ $messages = array(
 'mypage'         => 'ami mappitaq',
 'mytalk'         => 'atlarqutikka',
 'navigation'     => 'mianirivaa',
-'and'            => 'amma',
+'and'            => '&#32;amma',
 
 'help'              => 'qajalippaa',
 'search'            => 'ivaaqpuq',
@@ -143,14 +143,14 @@ pigivuq qatannguti uikipitia kiinaujaqutiqarvik isuillingaitjapaa. iqtuu suqusiq
 'bold_tip'    => 'ijjujug taqsaliqpaa',
 
 # Edit pages
-'summary'         => 'suvit',
+'summary'         => 'suvit:',
 'minoredit'       => 'ukiukiluaq asianngutuq',
 'watchthis'       => 'uvva',
 'savearticle'     => 'uqausillaringgita titiraqtauninggil',
 'preview'         => 'uvva qangasaanguliqtuq',
 'showpreview'     => 'surkuqpaa alakkautivuq sivuliqpaa uqaasillarigita titiraqtauningigit',
 'showdiff'        => 'alakkatippaa asianngutuq',
-'summary-preview' => 'suvit preview',
+'summary-preview' => 'suvit preview:',
 'blockedtitle'    => 'aaqqiksuiji uminngasisijuq',
 'loginreqlink'    => 'akunnapuq',
 'newarticle'      => '(pigivuk)',
@@ -214,8 +214,8 @@ pigivuq qatannguti uikipitia kiinaujaqutiqarvik isuillingaitjapaa. iqtuu suqusiq
 'randomredirect' => 'nakituinnaq qaujisarniq qaningani kamagijaq aasit nakit',
 
 # Statistics
-'statistics' => 'kisitsisillgurlugitpasissitissat',
-'userstats'  => 'qatannguti kisitsisillgurlugitpasissitissat',
+'statistics'              => 'kisitsisillgurlugitpasissitissat',
+'statistics-header-users' => 'qatannguti kisitsisillgurlugitpasissitissat',
 
 'doubleredirects' => 'tapirqilik qaningani kamagijaq aasit nakit',
 
@@ -231,9 +231,6 @@ pigivuq qatannguti uikipitia kiinaujaqutiqarvik isuillingaitjapaa. iqtuu suqusiq
 
 # Book sources
 'booksources-go' => 'aivuq',
-
-# Special:Log
-'log-search-submit' => 'aivuk',
 
 # Special:AllPages
 'allpages'       => 'sunamittuq mappitaq',
@@ -260,9 +257,12 @@ pigivuq qatannguti uikipitia kiinaujaqutiqarvik isuillingaitjapaa. iqtuu suqusiq
 'enotif_impersonal_salutation' => '{{SITENAME}} qatannguti',
 'created'                      => 'mappitaq anivuq',
 
-# Delete/protect/revert
-'dellogpage'          => 'nipaq nipi',
-'deletionlog'         => 'nipaq nipi',
+# Delete
+'dellogpage'  => 'nipaq nipi',
+'deletionlog' => 'nipaq nipi',
+
+# Protect
+'prot_1movedto2'      => '[[$1]] surramajuq [[$2]]',
 'protect-legend'      => 'patimmivaa sapummivaa',
 'protect-level-sysop' => 'sirlak titiraqsimajunik tuqquqtiriji',
 
@@ -331,7 +331,7 @@ pigivuq qatannguti uikipitia kiinaujaqutiqarvik isuillingaitjapaa. iqtuu suqusiq
 'previousdiff' => '← tunullipaaq asiaNngutuq',
 'nextdiff'     => 'tagga asiaNngutuq mappitaq →',
 
-# Special:NewImages
+# Special:NewFiles
 'ilsubmit' => 'ivaaqpuq',
 'bydate'   => 'pitaaruttuq inuulirvik',
 
@@ -346,9 +346,6 @@ pigivuq qatannguti uikipitia kiinaujaqutiqarvik isuillingaitjapaa. iqtuu suqusiq
 
 # 'all' in various places, this might be different for inflected languages
 'monthsall' => 'sunamittuq',
-
-# HTML dump
-'redirectingto' => 'qaningani kamagijaq aasit nakit [[:$1]]...',
 
 # action=purge
 'confirm_purge_button' => 'akaujuq',

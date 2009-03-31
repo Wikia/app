@@ -21,7 +21,7 @@ $messages = array(
 
 'qbedit'        => 'Kiwiwid',
 'moredotdotdot' => 'Iyuw...',
-'and'           => 'me',
+'and'           => '&#32;me',
 
 'errorpagetitle' => 'Dairinaiya',
 'help'           => 'Ipuok',
@@ -70,7 +70,8 @@ $messages = array(
 'editingsection' => 'Oomo/edar $1 (itubwang)',
 
 # Search results
-'powersearch' => 'Anani ko',
+'searchhelp-url' => 'Help:Oangan',
+'powersearch'    => 'Anani ko',
 
 # Preferences page
 'skin'              => 'Witsin',
@@ -101,14 +102,14 @@ $messages = array(
 'watch'   => 'Aea',
 'unwatch' => 'Eab krak',
 
-# Delete/protect/revert
+# Delete
 'confirm'        => 'Oebwigaga',
 'deletedarticle' => 'iyababa "[[$1]]"',
 
 # Contributions
 'contributions' => 'Mana engame totow inne',
 
-# Special:NewImages
+# Special:NewFiles
 'ilsubmit' => 'Anani ko',
 
 );

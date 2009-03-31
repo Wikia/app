@@ -4,17 +4,20 @@
  * Some code based on CategoryPage.php
  *
  * @author: Markus Krötzsch
+ * @file
+ * @ingroup SMW
  */
 
 /**
  * Implementation of MediaWiki's Article that shows additional information on
  * property pages. Very simliar to CategoryPage, but with different printout 
  * that also displays values for each subject with the given property.
- * @note AUTOLOADED
+ * @ingroup SMW
  */
 class SMWPropertyPage extends SMWOrderedListPage {
 
-	protected $special_prop; // code number of special property, false if not.
+	private $subproperties;  // list of sub-properties of this property
+	private $mProperty; // property object
 
 	/**
 	 * Use small $limit (property pages might become large)
@@ -22,8 +25,13 @@ class SMWPropertyPage extends SMWOrderedListPage {
 	protected function initParameters() {
 		global $smwgContLang, $smwgPropertyPagingLimit;
 		$this->limit = $smwgPropertyPagingLimit;
-		$this->special_prop = $smwgContLang->findSpecialPropertyID($this->mTitle->getText(), false);
+		$this->mProperty = SMWPropertyValue::makeProperty($this->mTitle->getDBKey());
 		return true;
+	}
+
+	protected function clearPageState() {
+		parent::clearPageState();
+		$this->subproperties = array();
 	}
 
 	/**
@@ -31,8 +39,6 @@ class SMWPropertyPage extends SMWOrderedListPage {
 	 * article that indicates further results).
 	 */
 	protected function doQuery() {
-		global $wgContLang;
-
 		$store = smwfGetStore();
 		$options = new SMWRequestOptions();
 		$options->limit = $this->limit + 1;
@@ -48,21 +54,16 @@ class SMWPropertyPage extends SMWOrderedListPage {
 			$options->include_boundary = false;
 			$reverse = true;
 		}
-		if ($this->special_prop === false) {
-			$this->articles = $store->getAllPropertySubjects($this->mTitle, $options);
-		} else {
-			// For now, do not attempt listings for special properties:
-			// they behave differently, have dedicated search UIs, and
-			// might even be unsearchable by design
-			return;
-		}
+		$this->articles = $store->getAllPropertySubjects($this->mProperty, $options);
 		if ($reverse) {
 			$this->articles = array_reverse($this->articles);
 		}
 
-		foreach ($this->articles as $dv) {
-			$this->articles_start_char[] = $wgContLang->convert( $wgContLang->firstChar( $dv->getSortkey() ) );
-		}
+		// retrieve all subproperties of this property
+		$s_options = new SMWRequestOptions();
+		$s_options->sort = true;
+		$s_options->ascending = true;
+		$this->subproperties = $store->getPropertySubjects(SMWPropertyValue::makeProperty('_SUBP'), $this->getDataValue(), $s_options);
 	}
 
 	/**
@@ -71,17 +72,32 @@ class SMWPropertyPage extends SMWOrderedListPage {
 	 */
 	protected function getPages() {
 		wfProfileIn( __METHOD__ . ' (SMW)');
+		wfLoadExtensionMessages('SemanticMediaWiki');
 		$r = '';
 		$ti = htmlspecialchars( $this->mTitle->getText() );
-		if ($this->special_prop !== false) {
-			$r .= '<p>' .wfMsg('smw_isspecprop') . "</p>\n";
-		} else {		
-			$nav = $this->getNavigationLinks();
-			$r .= '<a name="SMWResults"></a>' . $nav . "<div id=\"mw-pages\">\n";
-			$r .= '<h2>' . wfMsg('smw_attribute_header',$ti) . "</h2>\n";
-			$r .= wfMsg('smw_attributearticlecount', min($this->limit, count($this->articles))) . "\n";
-			$r .= $this->shortList( $this->articles, $this->articles_start_char ) . "\n</div>" . $nav;
+		$nav = $this->getNavigationLinks();
+		if (count($this->subproperties) > 0) {
+			$r .= "<div id=\"mw-subcategories\">\n<h2>" . wfMsg('smw_subproperty_header',$ti) . "</h2>\n";
+			$r .= '<p>';
+			if (!$this->mProperty->isUserDefined()) {
+				$r .= wfMsg('smw_isspecprop') . ' ';
+			}
+			$r .= wfMsgExt('smw_subpropertyarticlecount', array( 'parsemag' ), min($this->limit, count($this->subproperties))) . "</p>\n";
+			if (count($this->subproperties) < 6) {
+				$r .= $this->shortList(0,count($this->subproperties), $this->subproperties);
+			} else {
+				$r .= $this->columnList(0,count($this->subproperties), $this->subproperties);
+			}
+			$r .= "\n</div>";
 		}
+		$r .= '<a name="SMWResults"></a>' . $nav . "<div id=\"mw-pages\">\n";
+		$r .= '<h2>' . wfMsg('smw_attribute_header',$ti) . "</h2>\n";
+		$r .= '<p>';
+		if (!$this->mProperty->isUserDefined()) {
+			$r .= wfMsg('smw_isspecprop') . ' ';
+		}
+		$r .= wfMsgExt('smw_attributearticlecount', array( 'parsemag' ), min($this->limit, count($this->articles))) . "</p>\n";
+		$r .= $this->subjectObjectList() . "\n</div>" . $nav;
 		wfProfileOut( __METHOD__ . ' (SMW)');
 		return $r;
 	}
@@ -90,7 +106,7 @@ class SMWPropertyPage extends SMWOrderedListPage {
 	 * Format a list of articles chunked by letter in a table that shows subject articles in
 	 * one column and object articles/values in the other one.
 	 */
-	private function shortList() {
+	private function subjectObjectList() {
 		global $wgContLang;
 		$store = smwfGetStore();
 
@@ -107,24 +123,22 @@ class SMWPropertyPage extends SMWOrderedListPage {
 		}
 
 		$r = '<table style="width: 100%; ">';
-		$prevchar = 'None';
+		$prev_start_char = 'None';
 		for ($index = $start; $index < $ac; $index++ ) {
+			$start_char = $wgContLang->convert( $wgContLang->firstChar( $this->articles[$index]->getSortkey() ) );
 			// Header for index letters
-			if ($this->articles_start_char[$index] != $prevchar) {
-				$r .= '<tr><th class="smwpropname"><h3>' . htmlspecialchars( $this->articles_start_char[$index] ) . "</h3></th><th></th></tr>\n";
-				$prevchar = $this->articles_start_char[$index];
+			if ($start_char != $prev_start_char) {
+				$r .= '<tr><th class="smwpropname"><h3>' . htmlspecialchars( $start_char ) . "</h3></th><th></th></tr>\n";
+				$prev_start_char = $start_char;
 			}
 			// Property name
 			$searchlink = SMWInfolink::newBrowsingLink('+',$this->articles[$index]->getShortHTMLText());
 			$r .= '<tr><td class="smwpropname">' . $this->articles[$index]->getLongHTMLText($this->getSkin()) .
-			/*$this->getSkin()->makeKnownLinkObj( $this->articles[$index]->getTitle, 
-			  $wgContLang->convert( $this->articles[$index]->getLongHTMLText() ) ) .*/ 
-			  '&nbsp;' . $searchlink->getHTML($this->getSkin()) .
-			  '</td><td class="smwprops">';
+			      '&nbsp;' . $searchlink->getHTML($this->getSkin()) . '</td><td class="smwprops">';
 			// Property values
 			$ropts = new SMWRequestOptions();
 			$ropts->limit = 4;
-			$values = $store->getPropertyValues($this->articles[$index], $this->mTitle, $ropts);
+			$values = $store->getPropertyValues($this->articles[$index], $this->mProperty, $ropts);
 			$i=0;
 			foreach ($values as $value) {
 				if ($i != 0) {

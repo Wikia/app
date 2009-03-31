@@ -49,13 +49,29 @@ class File_Ogg_Theora extends File_Ogg_Media
         File_Ogg_Media::File_Ogg_Media($streamSerial, $streamData, $filePointer);
         $this->_decodeIdentificationHeader();
         $this->_decodeCommentsHeader();
+      	$endSec = $this->getSecondsFromGranulePos( $this->_lastGranulePos );
+      	   
+        $startSec =  $this->getSecondsFromGranulePos( $this->_firstGranulePos );
+        
+        //make sure the offset is worth taking into account oggz_chop related hack
+	    if( $startSec > 1)
+            $this->_streamLength = $endSec - $startSec;
+        else
+            $this->_streamLength = $endSec;
+        				
+        /*print "last gran: $this->_lastGranulePos  =  $endSec \n
+first gran: $this->_firstGranulePos  = $startSec \n
+stream len: $this->_streamLength;";*/
 
-        // Calculate length
+        $this->_avgBitrate = $this->_streamLength ? ($this->_streamSize * 8) / $this->_streamLength : 0;
+    }
+	function getSecondsFromGranulePos($granulePos){
+		// Calculate GranulePos seconds
         // First make some "numeric strings"
         // These might not fit into PHP's integer type, but they will fit into 
         // the 53-bit mantissa of a double-precision number
-        $topWord = floatval( base_convert( substr( $this->_lastGranulePos, 0, 8 ), 16, 10 ) );
-        $bottomWord = floatval( base_convert( substr( $this->_lastGranulePos, 8, 8 ), 16, 10 ) );
+        $topWord = floatval( base_convert( substr( $granulePos, 0, 8 ), 16, 10 ) );
+        $bottomWord = floatval( base_convert( substr( $granulePos, 8, 8 ), 16, 10 ) );
         // Calculate the keyframe position by shifting right by KFGSHIFT
         // We don't use PHP's shift operators because they're terribly broken
         // This is made slightly simpler by the fact that KFGSHIFT < 32
@@ -65,11 +81,9 @@ class File_Ogg_Theora extends File_Ogg_Media
         // This requires a bit of floating point trickery
         $offset = fmod( $bottomWord, pow(2, $this->_kfgShift) );
         // They didn't teach you that one at school did they?
-        // Now put it together with the frame rate to calculate length in seconds
-        $this->_streamLength = ( $keyFramePos + $offset ) / $this->_frameRate;
-        $this->_avgBitrate = $this->_streamLength ? ($this->_streamSize * 8) / $this->_streamLength : 0;
-    }
-
+        // Now put it together with the frame rate to calculate time in seconds
+       	return  ( $keyFramePos + $offset ) / $this->_frameRate;        
+	}
     /**
      * Get the 6-byte identification string expected in the common header
      */

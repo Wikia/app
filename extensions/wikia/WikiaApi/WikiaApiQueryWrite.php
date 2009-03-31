@@ -80,7 +80,7 @@ class WikiaApiQueryWrite extends ApiQuery {
 	}
 	
 	public function makeHelpMsg() {
-		global $wgApiQueryListModules;
+		global $wgAPIListModules;
 
 		// Use parent to make default message for the query module
 		static $lnPrfx = "\n  ";
@@ -115,7 +115,7 @@ class WikiaApiQueryWrite extends ApiQuery {
 		$this->mPageSet = null;
 
 		$msg .= "\n$astriks ".ucfirst($this->mAction).": List  $astriks\n\n";
-		$msg .= $this->makeHelpMsgHelper($wgApiQueryListModules, 'list');
+		$msg .= $this->makeHelpMsgHelper($wgAPIListModules, 'list');
 		$msg .= "\n$astriks end of List  $astriks\n\n";
 
 		return $msg;

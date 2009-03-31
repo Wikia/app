@@ -56,12 +56,12 @@ class ApiFormatXml extends ApiFormatBase {
 		$params = $this->extractRequestParams();
 		$this->mDoubleQuote = $params['xmldoublequote'];
 
-		$this->printText('<?xml version="1.0" encoding="utf-8"?>');
+		$this->printText('<?xml version="1.0"?>');
 		$this->recXmlPrint($this->mRootElemName, $this->getResultData(), $this->getIsHtml() ? -2 : null);
 	}
 
 	/**
-	* This method takes an array and converts it into an xml.
+	* This method takes an array and converts it to XML.
 	* There are several noteworthy cases:
 	*
 	*  If array contains a key '_element', then the code assumes that ALL other keys are not important and replaces them with the value['_element'].
@@ -80,6 +80,7 @@ class ApiFormatXml extends ApiFormatBase {
 		} else {
 			$indstr = '';
 		}
+		$elemName = str_replace(' ', '_', $elemName);
 
 		switch (gettype($elemValue)) {
 			case 'array' :
@@ -104,6 +105,14 @@ class ApiFormatXml extends ApiFormatBase {
 				foreach ($elemValue as $subElemId => & $subElemValue) {
 					if (is_string($subElemValue) && $this->mDoubleQuote)
 						$subElemValue = $this->doubleQuote($subElemValue);
+					
+					// Replace spaces with underscores
+					$newSubElemId = str_replace(' ', '_', $subElemId);
+					if($newSubElemId != $subElemId) {
+						$elemValue[$newSubElemId] = $subElemValue;
+						unset($elemValue[$subElemId]);
+						$subElemId = $newSubElemId;
+					}
 
 					if (gettype($subElemId) === 'integer') {
 						$indElements[] = $subElemValue;
@@ -114,18 +123,18 @@ class ApiFormatXml extends ApiFormatBase {
 					}
 				}
 
-				if (is_null($subElemIndName) && !empty ($indElements))
+				if (is_null($subElemIndName) && count($indElements))
 					ApiBase :: dieDebug(__METHOD__, "($elemName, ...) has integer keys without _element value. Use ApiResult::setIndexedTagName().");
 
-				if (!empty ($subElements) && !empty ($indElements) && !is_null($subElemContent))
+				if (count($subElements) && count($indElements) && !is_null($subElemContent))
 					ApiBase :: dieDebug(__METHOD__, "($elemName, ...) has content and subelements");
 
 				if (!is_null($subElemContent)) {
-					$this->printText($indstr . wfElement($elemName, $elemValue, $subElemContent));
-				} elseif (empty ($indElements) && empty ($subElements)) {
-						$this->printText($indstr . wfElement($elemName, $elemValue));
+					$this->printText($indstr . Xml::element($elemName, $elemValue, $subElemContent));
+				} elseif (!count($indElements) && !count($subElements)) {
+						$this->printText($indstr . Xml::element($elemName, $elemValue));
 				} else {
-					$this->printText($indstr . wfElement($elemName, $elemValue, null));
+					$this->printText($indstr . Xml::element($elemName, $elemValue, null));
 
 					foreach ($subElements as $subElemId => & $subElemValue)
 						$this->recXmlPrint($subElemId, $subElemValue, $indent);
@@ -133,14 +142,14 @@ class ApiFormatXml extends ApiFormatBase {
 					foreach ($indElements as $subElemId => & $subElemValue)
 						$this->recXmlPrint($subElemIndName, $subElemValue, $indent);
 
-					$this->printText($indstr . wfCloseElement($elemName));
+					$this->printText($indstr . Xml::closeElement($elemName));
 				}
 				break;
 			case 'object' :
 				// ignore
 				break;
 			default :
-				$this->printText($indstr . wfElement($elemName, null, $elemValue));
+				$this->printText($indstr . Xml::element($elemName, null, $elemValue));
 				break;
 		}
 	}
@@ -166,6 +175,6 @@ class ApiFormatXml extends ApiFormatBase {
 	}
 
 	public function getVersion() {
-		return __CLASS__ . ': $Id: ApiFormatXml.php 37075 2008-07-04 22:44:57Z brion $';
+		return __CLASS__ . ': $Id: ApiFormatXml.php 44588 2008-12-14 19:14:21Z demon $';
 	}
 }

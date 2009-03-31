@@ -58,7 +58,8 @@ class SpecialGlobalGroupMembership extends UserrightsPage {
 		
 		## Permission MUST be gained from global rights.
 		if ( $this->mGlobalUser->hasGlobalPermission( 'globalgroupmembership' ) ) {
-			return array( 'add' => $allGroups, 'remove' =>  $allGroups);
+			#specify addself and removeself as empty arrays -- bug 16098
+			return array( 'add' => $allGroups, 'remove' =>  $allGroups, 'add-self' => array(), 'remove-self' => array() );
 		} else {
 			return array();
 		}
@@ -88,7 +89,7 @@ class SpecialGlobalGroupMembership extends UserrightsPage {
 	
 	protected function showLogFragment( $user, $output ) {
 		$pageTitle = Title::makeTitleSafe( NS_USER, $user->getName());
-		$output->addHtml( Xml::element( 'h2', null, LogPage::logName( 'gblrights' ) . "\n" ) );
+		$output->addHTML( Xml::element( 'h2', null, LogPage::logName( 'gblrights' ) . "\n" ) );
 		LogEventsList::showLogExtract( $output, 'gblrights', $pageTitle->getPrefixedText() );
 	}
 	

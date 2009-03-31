@@ -50,14 +50,11 @@ $messages = array(
 'changed' => 'cambiao',
 'created' => 'creao',
 
-# Delete/protect/revert
+# Delete
 'actioncomplete' => 'Accion completo',
 
 # Block/unblock
 'blockip'           => 'Prohibi con el usario',
 'blockipsuccesssub' => 'El prohibicion es confirmado',
-
-# AJAX search
-'articletitles' => "Maga articulo que ta prinsipa con ''$1''",
 
 );

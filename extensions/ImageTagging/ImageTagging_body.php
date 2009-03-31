@@ -1,8 +1,9 @@
 <?php
-
 /**
- * @package MediaWiki
- * @subpackage SpecialPage
+ * TaggedImages class 
+ *
+ * @file
+ * @ingroup Extensions
  */
 
 define('TAGGEDIMGS_PER_PAGE', 12);
@@ -14,7 +15,7 @@ define('TAGGEDIMGS_PER_PAGE', 12);
  */
 class TaggedImages extends SpecialPage {
 
-	var $mQuery, $mImages;
+	var $mQuery, $mImages, $mShowFilename;
 
 	/**
 	 * Create a new tagged images object.
@@ -38,12 +39,12 @@ class TaggedImages extends SpecialPage {
 	 * Start doing stuff
 	 * @access public
 	*/
-	function execute() {
+	function execute( $par ) {
 		global $wgDBname, $wgOut;
 
 		wfProfileIn( __METHOD__ );
 
-		$db =& wfGetDB(DB_SLAVE);
+		$db = wfGetDB(DB_SLAVE);
 
 			$WHERECLAUSE = '';
 			if ($this->mQuery) {
@@ -73,7 +74,7 @@ class TaggedImages extends SpecialPage {
 		$db->freeResult($res);
 
 		$wgOut->setPageTitle( wfMsg('imagetagging-taggedimages-title', $this->mQuery ? $this->mQuery : "all" ) );
-		$wgOut->setRobotpolicy('noindex,nofollow');
+		$wgOut->setRobotPolicy('noindex,nofollow');
 		$wgOut->addHTML($this->toHTML());
 
 		wfProfileOut( __METHOD__ );

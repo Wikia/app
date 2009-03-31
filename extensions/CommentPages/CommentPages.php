@@ -7,8 +7,8 @@
 
 $wgExtensionCredits['other'][] = array(
 	'name'           => 'CommentPages',
-	'svn-date' => '$LastChangedDate: 2008-05-06 11:59:58 +0000 (Tue, 06 May 2008) $',
-	'svn-revision' => '$LastChangedRevision: 34306 $',
+	'svn-date' => '$LastChangedDate: 2008-09-21 15:01:30 +0000 (Sun, 21 Sep 2008) $',
+	'svn-revision' => '$LastChangedRevision: 41115 $',
 	'author'         => '[http://en.wikinews.org/wiki/User:Zachary Zachary Hauri]',
 	'description'    => 'Comment pages for the main namespace',
 	'descriptionmsg' => 'commentpages-desc',
@@ -17,6 +17,11 @@ $wgExtensionCredits['other'][] = array(
 
 $wgExtensionMessagesFiles['CommentPages'] = dirname(__FILE__) . '/CommentPages.i18n.php';
 $wgHooks['SkinTemplateTabs'][]  = 'wfCommentPagesSkinTemplateTabs';
+
+/**
+ * Namespace to use for comments
+ */
+$wgCommentPagesNS = 100;
 
 function wfCommentPagesSkinTemplateTabs ( &$skin, &$content_actions )
 {

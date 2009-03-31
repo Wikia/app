@@ -41,9 +41,10 @@ class ApiQueryCategoryInfo extends ApiQueryBase {
 
 	public function execute() {			
 		$alltitles = $this->getPageSet()->getAllTitlesByNamespace();
-		$categories = $alltitles[NS_CATEGORY];
-		if(empty($categories))
+		if ( empty( $alltitles[NS_CATEGORY] ) ) {
 			return;
+		}
+		$categories = $alltitles[NS_CATEGORY];
 
 		$titles = $this->getPageSet()->getGoodTitles() +
 					$this->getPageSet()->getMissingTitles();
@@ -51,11 +52,19 @@ class ApiQueryCategoryInfo extends ApiQueryBase {
 		foreach($categories as $c)
 		{
 			$t = $titles[$c];
-			$cattitles[$c] = $t->getDbKey();
+			$cattitles[$c] = $t->getDBKey();
 		}
 
-		$this->addTables('category');
-		$this->addFields(array('cat_title', 'cat_pages', 'cat_subcats', 'cat_files', 'cat_hidden'));
+		$this->addTables(array('category', 'page', 'page_props'));
+		$this->addJoinConds(array(
+			'page' => array('LEFT JOIN', array(
+				'page_namespace' => NS_CATEGORY,
+				'page_title=cat_title')),
+			'page_props' => array('LEFT JOIN', array(
+				'pp_page=page_id',
+				'pp_propname' => 'hiddencat')),
+		));
+		$this->addFields(array('cat_title', 'cat_pages', 'cat_subcats', 'cat_files', 'pp_propname AS cat_hidden'));
 		$this->addWhere(array('cat_title' => $cattitles));			
 
 		$db = $this->getDB();
@@ -86,6 +95,6 @@ class ApiQueryCategoryInfo extends ApiQueryBase {
 	}
 
 	public function getVersion() {
-		return __CLASS__ . ': $Id: ApiQueryCategoryInfo.php 37504 2008-07-10 14:28:09Z catrope $';
+		return __CLASS__ . ': $Id: ApiQueryCategoryInfo.php 44590 2008-12-14 20:24:23Z catrope $';
 	}
 }

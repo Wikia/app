@@ -29,32 +29,33 @@ class NewestPages extends IncludableSpecialPage {
 		$this->decipherParams( $par );
 		$this->setOptions( $wgRequest );
 
-		# Don't show the navigation if we're including the page
-		if( !$this->mIncluding ) {
-			$this->setHeaders();
-			if( $this->namespace > 0 ) {
-				$wgOut->addWikiText( wfMsg( 'newestpages-ns-header', $this->limit, $wgContLang->getFormattedNsText( $this->namespace ) ) );
-			} else {
-				$wgOut->addWikiText( wfMsg( 'newestpages-header', $this->limit ) );
-			}
-			$wgOut->addHtml( $this->makeNamespaceForm() );
-			$wgOut->addHtml( '<p>' . $this->makeLimitLinks() );
-			$wgOut->addHtml( '<br />' . $this->makeRedirectToggle() . '</p>' );
-		}
-
 		$dbr =& wfGetDB( DB_SLAVE );
 		$page = $dbr->tableName( 'page' );
 		$nsf = $this->getNsFragment();
 		$redir = $this->redirects ? '' : ' AND page_is_redirect = 0';
 		$res = $dbr->query( "SELECT page_namespace, page_title, page_is_redirect FROM $page WHERE {$nsf}{$redir} ORDER BY page_id DESC LIMIT 0,{$this->limit}" );
 		$count = $dbr->numRows( $res );
+
+		# Don't show the navigation if we're including the page
+		if( !$this->mIncluding ) {
+			$this->setHeaders();
+			if( $this->namespace > 0 ) {
+				$wgOut->addWikiText( wfMsgExt( 'newestpages-ns-header', array( 'parsemag' ), $this->limit, $wgContLang->getFormattedNsText( $this->namespace ) ) );
+			} else {
+				$wgOut->addWikiText( wfMsgExt( 'newestpages-header', array( 'parsemag' ), $this->limit ) );
+			}
+			$wgOut->addHTML( $this->makeNamespaceForm() );
+			$wgOut->addHTML( '<p>' . $this->makeLimitLinks() );
+			$wgOut->addHTML( '<br />' . $this->makeRedirectToggle() . '</p>' );
+		}
+
 		if( $count > 0 ) {
 			# Make list
 			if( !$this->mIncluding )
-				$wgOut->addWikiText( wfMsg( 'newestpages-showing', $count ) );
-			$wgOut->addHtml( "<ol>" );
+				$wgOut->addWikiText( wfMsgExt( 'newestpages-showing', array( 'parsemag' ), $count ) );
+			$wgOut->addHTML( "<ol>" );
 			while( $row = $dbr->fetchObject( $res ) )
-				$wgOut->addHtml( $this->makeListItem( $row ) );
+				$wgOut->addHTML( $this->makeListItem( $row ) );
 			$wgOut->addHTML( "</ol>" );
 		} else {
 			$wgOut->addWikiText( wfMsg( 'newestpages-none' ) );
@@ -155,12 +156,12 @@ class NewestPages extends IncludableSpecialPage {
 
 	function makeNamespaceForm() {
 		$self = Title::makeTitle( NS_SPECIAL, $this->getName() );
-		$form  = wfOpenElement( 'form', array( 'method' => 'post', 'action' => $self->getLocalUrl() ) );
-		$form .= wfLabel( wfMsg( 'newestpages-namespace' ), 'namespace' ) . '&nbsp;';
-		$form .= htmlNamespaceSelector( $this->namespace, 'all' );
-		$form .= wfHidden( 'limit', $this->limit );
-		$form .= wfHidden( 'redirects', $this->redirects );
-		$form .= wfSubmitButton( wfMsg( 'newestpages-submit' ) ) . '</form>';
+		$form  = Xml::openElement( 'form', array( 'method' => 'post', 'action' => $self->getLocalUrl() ) );
+		$form .= Xml::label( wfMsg( 'newestpages-namespace' ), 'namespace' ) . '&nbsp;';
+		$form .= Xml::namespaceSelector( $this->namespace, 'all' );
+		$form .= Xml::hidden( 'limit', $this->limit );
+		$form .= Xml::hidden( 'redirects', $this->redirects );
+		$form .= Xml::submitButton( wfMsg( 'newestpages-submit' ) ) . '</form>';
 		return $form;
 	}
 }

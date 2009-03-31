@@ -66,7 +66,7 @@ class SpecialOpenIDLogin extends SpecialOpenID {
 		$ok = wfMsg('login');
 		$wgOut->addHTML('<form action="' . $sk->makeSpecialUrl('OpenIDLogin') . '" method="POST">' .
 						'<label for="openid_url">' . $label . '</label> ' .
-						'<input type="text" name="openid_url" id="openid_url" size=30 ' .
+						'<input type="text" name="openid_url" id="openid_url" size="30" ' .
 						' style="background: url(' . $wgOpenIDLoginLogoUrl . ') ' .
 						'        no-repeat; background-color: #fff; background-position: 0 50%; ' .
 						'        color: #000; padding-left: 18px;" value="" />' .
@@ -91,7 +91,7 @@ class SpecialOpenIDLogin extends SpecialOpenID {
 		global $wgUser, $wgOut;
 
 		$wgOut->setPageTitle( wfMsg( 'openiderror' ) );
-		$wgOut->setRobotpolicy( 'noindex,nofollow' );
+		$wgOut->setRobotPolicy( 'noindex,nofollow' );
 		$wgOut->setArticleRelated( false );
 		$wgOut->addWikiText( wfMsg( 'openidalreadyloggedin', $wgUser->getName() ) );
 		$wgOut->returnToMain(false, $this->returnTo() );

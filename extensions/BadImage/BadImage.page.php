@@ -51,7 +51,7 @@ class BadImageManipulator extends SpecialPage {
 		$form .= '<tr><td align="right">' . wfMsgHtml( 'badimages-reason' ) . '</td>';
 		$form .= '<td>' . Xml::input( 'wpReason', 40 ) . '</td><tr></tr><td></td><td>';
 		$form .= Xml::submitButton( wfMsg( 'badimages-add-btn' ) ) . '</td></tr></table></form>';
-		$output->addHtml( $form );
+		$output->addHTML( $form );
 	}
 	
 	function attemptAdd( &$request, &$output, &$user ) {
@@ -79,7 +79,7 @@ class BadImageManipulator extends SpecialPage {
 		$skin =& $user->getSkin();
 		$title = Title::makeTitleSafe( NS_IMAGE, $name );
 		$link = $skin->makeKnownLinkObj( $title, htmlspecialchars( $title->getText() ) );
-		$output->addHtml( '<p>' . wfMsgHtml( 'badimages-remove-confirm', $link ) . '</p>' );
+		$output->addHTML( '<p>' . wfMsgHtml( 'badimages-remove-confirm', $link ) . '</p>' );
 		$form  = Xml::openElement( 'form', array( 'method' => 'post', 'action' => $self->getLocalUrl() ) );
 		$form .= Xml::hidden( 'action', 'remove' ) . Xml::hidden( 'wpToken', $user->editToken() ) . Xml::hidden( 'wpImage', $name );
 		$form .= '<table><tr><td align="right">' . wfMsgHtml( 'badimages-name' ) . '</td>';
@@ -87,7 +87,7 @@ class BadImageManipulator extends SpecialPage {
 		$form .= '<tr><td align="right">' . wfMsgHtml( 'badimages-reason' ) . '</td>';
 		$form .= '<td>' . Xml::input( 'wpReason', 40 ) . '</td><tr></tr><td></td><td>';
 		$form .= Xml::submitButton( wfMsg( 'badimages-remove-btn' ) ) . '</td></tr></table></form>';
-		$output->addHtml( $form );
+		$output->addHTML( $form );
 	}
 
 	function attemptRemove( &$request, &$output, &$user ) {
@@ -138,15 +138,15 @@ class BadImageManipulator extends SpecialPage {
 		extract( $dbr->tableNames( 'bad_images', 'user' ) );
 		$sql = "SELECT * FROM {$bad_images} LEFT JOIN {$user} ON bil_user = user_id";
 		$res = $dbr->query( $sql, __METHOD__ );
-		$wgOut->addHtml( Xml::element( 'h2', null, wfMsg( 'badimages-subheading' ) ) );
+		$wgOut->addHTML( Xml::element( 'h2', null, wfMsg( 'badimages-subheading' ) ) );
 		if( $res ) {
 			$count = $wgLang->formatNum( $dbr->numRows( $res ) );
 			$wgOut->addWikiMsg( 'badimages-count', $count );
 			$skin =& $wgUser->getSkin();
-			$wgOut->addHtml( '<ul>' );
+			$wgOut->addHTML( '<ul>' );
 			while( $row = $dbr->fetchObject( $res ) )
-				$wgOut->addHtml( $this->makeListRow( $row, $skin, $wgLang, $wgUser->isAllowed( 'badimages' ) ) );
-			$wgOut->addHtml( '</ul>' );
+				$wgOut->addHTML( $this->makeListRow( $row, $skin, $wgLang, $wgUser->isAllowed( 'badimages' ) ) );
+			$wgOut->addHTML( '</ul>' );
 		}
 		wfProfileOut( __METHOD__ );
 	}

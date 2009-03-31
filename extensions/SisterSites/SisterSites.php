@@ -24,7 +24,7 @@ function wfSisterDisplay( $out ) {
 		$matches = $sister->siblings( $title );
 		
 		if( $matches ) {
-			$out->addHtml( wfSisterList( $matches ) );
+			$out->addHTML( wfSisterList( $matches ) );
 		}
 	}
 	return true;
@@ -32,7 +32,7 @@ function wfSisterDisplay( $out ) {
 
 function wfSisterList( $sites ) {
 	foreach( $sites as $site ) {
-		$bits[] = wfElement( 'a',
+		$bits[] = Xml::element( 'a',
 			array(
 				'href'  => $site->getUrl(),
 				'class' => 'extiw',

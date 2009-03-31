@@ -1,5 +1,5 @@
 <?php
-# Copyright (C) 2003 Brion Vibber <brion@pobox.com>
+# Copyright (C) 2003-2008 Brion Vibber <brion@pobox.com>
 # http://www.mediawiki.org/
 #
 # This program is free software; you can redistribute it and/or modify
@@ -71,7 +71,7 @@ function wfExportGetTemplates( $inputPages, $pageSet ) {
 function wfExportGetImages( $inputPages, $pageSet ) {
 	return wfExportGetLinks( $inputPages, $pageSet,
 		'imagelinks',
-		array( NS_IMAGE . ' AS namespace', 'il_to AS title' ),
+		array( NS_FILE . ' AS namespace', 'il_to AS title' ),
 		array( 'page_id=il_from' ) );
 }
 
@@ -93,7 +93,7 @@ function wfExportGetLinks( $inputPages, $pageSet, $table, $fields, $join ) {
 				array_merge( $join,
 					array(
 						'page_namespace' => $title->getNamespace(),
-						'page_title' => $title->getDbKey() ) ),
+						'page_title' => $title->getDBKey() ) ),
 				__METHOD__ );
 			foreach( $result as $row ) {
 				$template = Title::makeTitle( $row->namespace, $row->title );
@@ -126,7 +126,7 @@ function wfSpecialExport( $page = '' ) {
 		$catname = $wgRequest->getText( 'catname' );
 
 		if ( $catname !== '' && $catname !== NULL && $catname !== false ) {
-			$t = Title::makeTitleSafe( NS_CATEGORY, $catname );
+			$t = Title::makeTitleSafe( NS_MAIN, $catname );
 			if ( $t ) {
 				/**
 				 * @fixme This can lead to hitting memory limit for very large
@@ -223,8 +223,23 @@ function wfSpecialExport( $page = '' ) {
 
 		/* Ok, let's get to it... */
 
-		$db = wfGetDB( DB_SLAVE );
-		$exporter = new WikiExporter( $db, $history );
+		if( $history == WikiExporter::CURRENT ) {
+			$lb = false;
+			$db = wfGetDB( DB_SLAVE );
+			$buffer = WikiExporter::BUFFER;
+		} else {
+			// Use an unbuffered query; histories may be very long!
+			$lb = wfGetLBFactory()->newMainLB();
+			$db = $lb->getConnection( DB_SLAVE );
+			$buffer = WikiExporter::STREAM;
+			
+			// This might take a while... :D
+			wfSuppressWarnings();
+			set_time_limit(0);
+			wfRestoreWarnings();
+		}
+
+		$exporter = new WikiExporter( $db, $history, $buffer );
 		$exporter->list_authors = $list_authors ;
 		$exporter->openStream();
 
@@ -251,11 +266,14 @@ function wfSpecialExport( $page = '' ) {
 		}
 
 		$exporter->closeStream();
+		if( $lb ) {
+			$lb->closeAll();
+		}
 		return;
 	}
 
 	$self = SpecialPage::getTitleFor( 'Export' );
-	$wgOut->addHtml( wfMsgExt( 'exporttext', 'parse' ) );
+	$wgOut->addHTML( wfMsgExt( 'exporttext', 'parse' ) );
 
 	$form = Xml::openElement( 'form', array( 'method' => 'post',
 		'action' => $self->getLocalUrl( 'action=submit' ) ) );
@@ -271,14 +289,14 @@ function wfSpecialExport( $page = '' ) {
 	if( $wgExportAllowHistory ) {
 		$form .= Xml::checkLabel( wfMsg( 'exportcuronly' ), 'curonly', 'curonly', true ) . '<br />';
 	} else {
-		$wgOut->addHtml( wfMsgExt( 'exportnohistory', 'parse' ) );
+		$wgOut->addHTML( wfMsgExt( 'exportnohistory', 'parse' ) );
 	}
 	$form .= Xml::checkLabel( wfMsg( 'export-templates' ), 'templates', 'wpExportTemplates', false ) . '<br />';
 	// Enable this when we can do something useful exporting/importing image information. :)
 	//$form .= Xml::checkLabel( wfMsg( 'export-images' ), 'images', 'wpExportImages', false ) . '<br />';
 	$form .= Xml::checkLabel( wfMsg( 'export-download' ), 'wpDownload', 'wpDownload', true ) . '<br />';
 
-	$form .= Xml::submitButton( wfMsg( 'export-submit' ) );
+	$form .= Xml::submitButton( wfMsg( 'export-submit' ), array( 'accesskey' => 's' ) );
 	$form .= Xml::closeElement( 'form' );
-	$wgOut->addHtml( $form );
+	$wgOut->addHTML( $form );
 }

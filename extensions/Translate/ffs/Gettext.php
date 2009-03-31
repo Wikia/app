@@ -1,5 +1,5 @@
 <?php
-if (!defined('MEDIAWIKI')) die();
+if ( !defined( 'MEDIAWIKI' ) ) die();
 
 class GettextFormatReader extends SimpleFormatReader {
 	protected $pot = false;
@@ -11,6 +11,7 @@ class GettextFormatReader extends SimpleFormatReader {
 	public function setPrefix( $value ) {
 		$this->prefix = $value;
 	}
+	
 
 	public function parseAuthors() {
 		return array(); // Not implemented
@@ -38,14 +39,13 @@ class GettextFormatReader extends SimpleFormatReader {
 
 		if ( preg_match( '/X-Message-Group:\s+([a-zA-Z0-9-_]+)/', $data, $matches ) ) {
 			$groupId = $matches[1];
-			$useCtxtAsKey = true;
-		} else {
-			$useCtxtAsKey = false;
 		}
 
 		if ( preg_match( '/Plural-Forms:\s+nplurals=([0-9]+)/', $data, $matches ) ) {
 			$pluralForms = $matches[1];
 		}
+
+		$useCtxtAsKey = false;
 
 		$poformat = '".*"\n?(^".*"$\n?)*';
 		$quotePattern = '/(^"|"$\n?)/m';
@@ -53,8 +53,9 @@ class GettextFormatReader extends SimpleFormatReader {
 		$sections = preg_split( '/\n{2,}/', $data );
 		array_shift( $sections ); // First isn't an actual message
 		$changes = array();
+
 		foreach ( $sections as $section ) {
-			if ( trim($section) === '' ) continue;
+			if ( trim( $section ) === '' ) continue;
 
 			$item = array(
 				'ctxt'  => '',
@@ -77,7 +78,7 @@ class GettextFormatReader extends SimpleFormatReader {
 			if ( preg_match( "/^msgid\s($poformat)/mx", $section, $matches ) ) {
 				$item['id'] = self::formatForWiki( $matches[1] );
 			} else {
-				#echo "Definition not found!\n$section";
+				# echo "Definition not found!\n$section";
 				continue;
 			}
 
@@ -108,14 +109,14 @@ class GettextFormatReader extends SimpleFormatReader {
 				if ( preg_match( "/^msgstr\s($poformat)/mx", $section, $matches ) ) {
 					$item['str'] = self::formatForWiki( $matches[1] );
 				} else {
-					#echo "Translation not found!\n";
+					# echo "Translation not found!\n";
 					continue;
 				}
 			}
 
 			// Parse flags
 			$matches = array();
-			if ( preg_match( '/^#,(.*)$/m', $section, $matches ) ) {
+			if ( preg_match( '/^#,(.*)$/mu', $section, $matches ) ) {
 				$flags = array_map( 'trim', explode( ',', $matches[1] ) );
 				foreach ( $flags as $key => $flag ) {
 					if ( $flag === 'fuzzy' ) {
@@ -128,7 +129,7 @@ class GettextFormatReader extends SimpleFormatReader {
 
 			$matches = array();
 			if ( preg_match_all( '/^#(.?) (.*)$/m', $section, $matches, PREG_SET_ORDER ) ) {
-				foreach( $matches as $match ) {
+				foreach ( $matches as $match ) {
 					if ( $match[1] !== ',' ) {
 						$item['comments'][$match[1]][] = $match[2];
 					}
@@ -146,14 +147,13 @@ class GettextFormatReader extends SimpleFormatReader {
 				$snippet = preg_replace( "/[:&%\/_]/", ' ', $snippet );
 				$snippet = preg_replace( "/ {2,}/", ' ', $snippet );
 				$snippet = $lang->truncate( $snippet, 30 );
-				$snippet = str_replace( ' ', '_', trim($snippet) );
+				$snippet = str_replace( ' ', '_', trim( $snippet ) );
 				$key = $this->prefix . $hash . '-' . $snippet;
 			}
 
 			$changes[$key] = $item;
 
 		}
-
 		return $changes;
 
 	}
@@ -214,22 +214,22 @@ class GettextFormatWriter extends SimpleFormatWriter {
 		$headers = array();
 		$headers['Project-Id-Version'] = $label;
 		// TODO: make this customisable or something
-		//$headers['Report-Msgid-Bugs-To'] = $wgServer;
+		// $headers['Report-Msgid-Bugs-To'] = $wgServer;
 		// TODO: sprintfDate doesn't support any time zone flags
-		//$headers['POT-Creation-Date']
+		// $headers['POT-Creation-Date']
 		$headers['PO-Revision-Date'] = $lang->sprintfDate( 'xnY-xnm-xnd xnH:xni:xns+0000', $now );
 		$headers['Language-Team'] = $languageName;
 		$headers['Content-Type'] = 'text/plain; charset=UTF-8';
 		$headers['Content-Transfer-Encoding'] = '8bit';
 
 		$headers['X-Generator'] = 'MediaWiki ' . SpecialVersion::getVersion() .
-			"; Translate extension (" .TRANSLATE_VERSION . ")";
+			"; Translate extension (" . TRANSLATE_VERSION . ")";
 
 		$headers['X-Translation-Project'] = "$wgSitename at $wgServer";
 		$headers['X-Language-Code'] = $code;
 		$headers['X-Message-Group'] = $this->group->getId();
 
-		$headerlines = array('');
+		$headerlines = array( '' );
 		foreach ( $headers as $key => $value ) {
 			$headerlines[] = "$key: $value\n";
 		}
@@ -243,7 +243,7 @@ class GettextFormatWriter extends SimpleFormatWriter {
 		fwrite( $handle, $header );
 		fwrite( $handle, $this->formatmsg( '', $headerlines  ) );
 
-		foreach ( $messages as $key => $m) {
+		foreach ( $messages as $key => $m ) {
 			$flags = array();
 
 			$translation = $m->translation;
@@ -256,7 +256,7 @@ class GettextFormatWriter extends SimpleFormatWriter {
 			# Remove fuzzy markings before export
 			$flags = array();
 			$comments = array();
-			if ( isset($this->data[$key]['flags']) ) {
+			if ( isset( $this->data[$key]['flags'] ) ) {
 				$flags = $this->data[$key]['flags'];
 			}
 			if ( strpos( $translation, TRANSLATE_FUZZY ) !== false ) {
@@ -270,14 +270,14 @@ class GettextFormatWriter extends SimpleFormatWriter {
 			}
 
 			$comments = array();
-			if ( isset($this->data[$key]['comments']) ) {
+			if ( isset( $this->data[$key]['comments'] ) ) {
 				$comments = $this->data[$key]['comments'];
 			}
 
 			fwrite( $handle, self::formatcomments( $comments, $documentation, $flags ) );
 
 			$ckey = '';
-			if ( isset($this->data[$key]['ctxt']) ) {
+			if ( isset( $this->data[$key]['ctxt'] ) ) {
 				$ckey = $this->data[$key]['ctxt'];
 			}
 			fwrite( $handle, $this->formatmsg( $m->definition, $translation, $ckey ) );
@@ -308,12 +308,12 @@ class GettextFormatWriter extends SimpleFormatWriter {
 		}
 
 		// Ensure there is always something
-		if ( !count($comments) ) $comments[':'][] = '';
+		if ( !count( $comments ) ) $comments[':'][] = '';
 
 		$order = array( '', '.', ':', ',', '|' );
 		$output = array();
 		foreach ( $order as $type ) {
-			if ( !isset($comments[$type]) ) continue;
+			if ( !isset( $comments[$type] ) ) continue;
 			foreach ( $comments[$type] as $value ) {
 				$output[] = "#$type $value";
 			}

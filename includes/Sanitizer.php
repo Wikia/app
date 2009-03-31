@@ -331,9 +331,6 @@ $wgHtmlEntityAliases = array(
  * @ingroup Parser
  */
 class Sanitizer {
-	const NONE = 0;
-	const INITIAL_NONLETTER = 1;
-
 	/**
 	 * Cleans up HTML, removes dangerous tags and attributes, and
 	 * removes HTML comments
@@ -631,8 +628,11 @@ class Sanitizer {
 				}
 			}
 
-			if ( $attribute === 'id' )
-				$value = Sanitizer::escapeId( $value );
+			if ( $attribute === 'id' ) {
+				global $wgEnforceHtmlIds;
+				$value = Sanitizer::escapeId( $value,
+					$wgEnforceHtmlIds ? 'noninitial' : 'xml' );
+			}
 
 			// If this attribute was previously set, override it.
 			// Output should only have one attribute of each name.
@@ -642,10 +642,9 @@ class Sanitizer {
 	}
 
 	/**
-	 * Merge two sets of HTML attributes.
-	 * Conflicting items in the second set will override those
-	 * in the first, except for 'class' attributes which will be
-	 * combined.
+	 * Merge two sets of HTML attributes.  Conflicting items in the second set
+	 * will override those in the first, except for 'class' attributes which
+	 * will be combined (if they're both strings).
 	 *
 	 * @todo implement merging for other attributes such as style
 	 * @param array $a
@@ -654,16 +653,12 @@ class Sanitizer {
 	 */
 	static function mergeAttributes( $a, $b ) {
 		$out = array_merge( $a, $b );
-		if( isset( $a['class'] )
-			&& isset( $b['class'] )
-			&& $a['class'] !== $b['class'] ) {
-
-			$out['class'] = implode( ' ',
-				array_unique(
-					preg_split( '/\s+/',
-						$a['class'] . ' ' . $b['class'],
-						-1,
-						PREG_SPLIT_NO_EMPTY ) ) );
+		if( isset( $a['class'] ) && isset( $b['class'] )
+		&& is_string( $a['class'] ) && is_string( $b['class'] )
+		&& $a['class'] !== $b['class'] ) {
+			$classes = preg_split( '/\s+/', "{$a['class']} {$b['class']}",
+				-1, PREG_SPLIT_NO_EMPTY );
+			$out['class'] = implode( ' ', array_unique( $classes ) );
 		}
 		return $out;
 	}
@@ -804,28 +799,55 @@ class Sanitizer {
 	 *                                                          name attributes
 	 * @see http://www.w3.org/TR/html401/struct/links.html#h-12.2.3 Anchors with the id attribute
 	 *
-	 * @param string $id    Id to validate
-	 * @param int    $flags Currently only two values: Sanitizer::INITIAL_NONLETTER
-	 *                      (default) permits initial non-letter characters,
-	 *                      such as if you're adding a prefix to them.
-	 *                      Sanitizer::NONE will prepend an 'x' if the id
-	 *                      would otherwise start with a nonletter.
+	 * @param string $id      Id to validate
+	 * @param mixed  $options String or array of strings (default is array()):
+	 *   'noninitial': This is a non-initial fragment of an id, not a full id,
+	 *       so don't pay attention if the first character isn't valid at the
+	 *       beginning of an id.
+	 *   'xml': Don't restrict the id to be HTML4-compatible.  This option
+	 *       allows any alphabetic character to be used, per the XML standard.
+	 *       Therefore, it also completely changes the type of escaping: instead
+	 *       of weird dot-encoding, runs of invalid characters (mostly
+	 *       whitespace) are just compressed into a single underscore.
 	 * @return string
 	 */
-	static function escapeId( $id, $flags = Sanitizer::INITIAL_NONLETTER ) {
-		static $replace = array(
-			'%3A' => ':',
-			'%' => '.'
-		);
+	static function escapeId( $id, $options = array() ) {
+		$options = (array)$options;
 
-		$id = urlencode( Sanitizer::decodeCharReferences( strtr( $id, ' ', '_' ) ) );
-		$id = str_replace( array_keys( $replace ), array_values( $replace ), $id );
+		if ( !in_array( 'xml', $options ) ) {
+			# HTML4-style escaping
+			static $replace = array(
+				'%3A' => ':',
+				'%' => '.'
+			);
 
-		if( ~$flags & Sanitizer::INITIAL_NONLETTER
-		&& !preg_match( '/[a-zA-Z]/', $id[0] ) ) {
-			// Initial character must be a letter!
-			$id = "x$id";
+			$id = urlencode( Sanitizer::decodeCharReferences( strtr( $id, ' ', '_' ) ) );
+			$id = str_replace( array_keys( $replace ), array_values( $replace ), $id );
+
+			if ( !preg_match( '/^[a-zA-Z]/', $id )
+			&& !in_array( 'noninitial', $options ) )  {
+				// Initial character must be a letter!
+				$id = "x$id";
+			}
+			return $id;
 		}
+
+		# XML-style escaping.  For the patterns used, see the XML 1.0 standard,
+		# 5th edition, NameStartChar and NameChar: <http://www.w3.org/TR/REC-xml/>
+		$nameStartChar = ':a-zA-Z_\xC0-\xD6\xD8-\xF6\xF8-\x{2FF}\x{370}-\x{37D}'
+			. '\x{37F}-\x{1FFF}\x{200C}-\x{200D}\x{2070}-\x{218F}\x{2C00}-\x{2FEF}'
+			. '\x{3001}-\x{D7FF}\x{F900}-\x{FDCF}\x{FDF0}-\x{FFFD}\x{10000}-\x{EFFFF}';
+		$nameChar = $nameStartChar . '.\-0-9\xB7\x{0300}-\x{036F}'
+			. '\x{203F}-\x{2040}';
+		# Replace _ as well so we don't get multiple consecutive underscores
+		$id = preg_replace( "/([^$nameChar]|_)+/u", '_', $id );
+		$id = trim( $id, '_' );
+
+		if ( !preg_match( "/^[$nameStartChar]/u", $id )
+		&& !in_array( 'noninitial', $options ) ) {
+			$id = "_$id";
+		}
+
 		return $id;
 	}
 
@@ -849,6 +871,22 @@ class Sanitizer {
 	}
 
 	/**
+	 * Given HTML input, escape with htmlspecialchars but un-escape entites.
+	 * This allows (generally harmless) entities like &nbsp; to survive.
+	 *
+	 * @param  string $html String to escape
+	 * @return string Escaped input
+	 */
+	static function escapeHtmlAllowEntities( $html ) {
+		# It seems wise to escape ' as well as ", as a matter of course.  Can't
+		# hurt.
+		$html = htmlspecialchars( $html, ENT_QUOTES );
+		$html = str_replace( '&amp;', '&', $html );
+		$html = Sanitizer::normalizeCharReferences( $html );
+		return $html;
+	}
+
+	/**
 	 * Regex replace callback for armoring links against further processing.
 	 * @param array $matches
 	 * @return string
@@ -866,7 +904,7 @@ class Sanitizer {
 	 * @param string
 	 * @return array
 	 */
-	static function decodeTagAttributes( $text ) {
+	public static function decodeTagAttributes( $text ) {
 		$attribs = array();
 
 		if( trim( $text ) == '' ) {
@@ -1133,7 +1171,8 @@ class Sanitizer {
 	}
 
 	/**
-	 * @todo Document it a bit
+	 * Foreach array key (an allowed HTML element), return an array
+	 * of allowed attributes
 	 * @return array
 	 */
 	static function setupAttributeWhitelist() {
@@ -1325,7 +1364,7 @@ class Sanitizer {
 		return $out;
 	}
 
-	static function cleanUrl( $url, $hostname=true ) {
+	static function cleanUrl( $url ) {
 		# Normalize any HTML entities in input. They will be
 		# re-escaped by makeExternalLink().
 		$url = Sanitizer::decodeCharReferences( $url );

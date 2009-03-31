@@ -123,7 +123,7 @@ class UserCredentialsPage extends SpecialPage
 					} else {
 						$pg = '';
 					}
-					$form .= "<td>".wfCheckLabel( $set[0], $formName, $formName, in_array($formName,$areaSet), $att )." {$pg}</td>\n";
+					$form .= "<td>".Xml::checkLabel( $set[0], $formName, $formName, in_array($formName,$areaSet), $att )." {$pg}</td>\n";
 				}
 			}
 			$form .= "</tr></table></div>";

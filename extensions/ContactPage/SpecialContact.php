@@ -6,7 +6,7 @@
  * @addtogroup SpecialPage
  * @author Daniel Kinzler, brightbyte.de
  * @copyright © 2007 Daniel Kinzler
- * @licence GNU General Public Licence 2.0 or later
+ * @license GNU General Public Licence 2.0 or later
  */
 
 if( !defined( 'MEDIAWIKI' ) ) {
@@ -165,22 +165,9 @@ class EmailContactForm {
 
 		$msgSuffix = $wgContactRequireAll ? '-required' : '';
 
-		$emt = wfMsg( "emailto" );
-		$rcpt = $this->target->getName();
-		$emr = wfMsg( "emailsubject" );
-		$emm = wfMsg( "emailmessage" );
-		$ems = wfMsg( "emailsend" );
-		$emc = wfMsg( "emailccme" );
-		$emfn = wfMsg( "contactpage-fromname$msgSuffix" );
-		$emfa = wfMsg( "contactpage-fromaddress$msgSuffix" );
-		$encSubject = htmlspecialchars( $this->subject );
-		$encFromName = htmlspecialchars( $this->fromname );
-		$encFromAddress = htmlspecialchars( $this->fromaddress );
-
-		$titleObj = SpecialPage::getTitleFor( "Contact" );
-		$action = $titleObj->escapeLocalURL( "action=submit" );
+		$titleObj = SpecialPage::getTitleFor( 'Contact' );
+		$action = $titleObj->getLocalURL( 'action=submit' );
 		$token = $wgUser->isAnon() ? EDIT_TOKEN_SUFFIX : $wgUser->editToken(); //this kind of sucks, really...
-		$token = htmlspecialchars( $token );
 
 		$wgOut->addHTML( "
 <script type=\"text/javascript\">
@@ -191,40 +178,68 @@ function checkForm() {
 	return result ? true : false;
 }
 </script>
-<form id=\"emailuser\" method=\"post\" action=\"{$action}\" onsubmit=\"return checkForm();\">
-<table border='0' id='mailheader'>
-<tr>
-<td align='right'>{$emr}:</td>
-<td align='left'>
-<input type='text' size='60' maxlength='200' name=\"wpSubject\" value=\"{$encSubject}\" />
-</td>
-</tr><tr>
-<td align='right'>{$emfn}:</td>
-<td align='left'>
-<input type='text' size='60' maxlength='200' name=\"wpFromName\" value=\"{$encFromName}\" />
-</td>
-<tr>
-<td align='right'>{$emfa}:</td>
-<td align='left'>
-<input type='text' size='60' maxlength='200' id=\"wpFromAddress\" name=\"wpFromAddress\" value=\"{$encFromAddress}\" />
-</td>
-</tr>
-<tr>
-<td></td>
-<td align='left'>
-<small>".wfMsg( "contactpage-formfootnotes$msgSuffix" )."</small>
-</td>
-</tr>
-</table>
-<span id='wpTextLabel'><label for=\"wpText\">{$emm}:</label><br /></span>
-<textarea name=\"wpText\" rows='20' cols='80' wrap='virtual' style=\"width: 100%;\">" . htmlspecialchars( $this->text ) .
-"</textarea>
-" . wfCheckLabel( $emc, 'wpCCMe', 'wpCCMe', $wgUser->getBoolOption( 'ccmeonemails' ) ) . "<br />
-" . $this->getCaptcha() . "
-<input type='submit' name=\"wpSend\" value=\"{$ems}\" />
-<input type='hidden' name='wpEditToken' value=\"$token\" />
-</form>\n" );
-
+");
+		$wgOut->addHTML(
+			Xml::openElement( 'form', array( 'method' => 'post', 'action' => $action, 'id' => 'emailuser' ) ) .
+			Xml::openElement( 'fieldset' ) .
+			Xml::element( 'legend', null, wfMsg( 'contactpage-legend' ) ) .
+			Xml::openElement( 'table', array( 'id' => 'mailheader' ) ) .
+			"<tr>
+				<td class='mw-label'>" .
+					Xml::label( wfMsg( 'emailsubject' ), 'wpSubject' ) .
+				"</td>
+				<td class='mw-input' id='mw-contactpage-subject'>" .
+					Xml::input( 'wpSubject', 60, $this->subject, array( 'type' => 'text', 'maxlength' => 200 ) ) .
+				"</td>
+			</tr>
+			<tr>
+				<td class='mw-label'>" .
+					Xml::label( wfMsg( "contactpage-fromname$msgSuffix" ), 'wpFromName' ) .
+				"</td>
+				<td class='mw-input' id='mw-contactpage-from'>" .
+					Xml::input( 'wpFromName', 60, $this->fromname, array( 'type' => 'text', 'maxlength' => 200 ) ) .
+				"</td>
+			</tr>
+			<tr>
+				<td class='mw-label'>" .
+					Xml::label( wfMsg( "contactpage-fromaddress$msgSuffix" ), 'wpFromAddress' ) .
+				"</td>
+				<td class='mw-input' id='mw-contactpage-address'>" .
+					Xml::input( 'wpFromAddress', 60, $this->fromaddress, array( 'type' => 'text', 'maxlength' => 200 ) ) .
+				"</td>
+			</tr>
+			<tr>
+				<td></td>
+				<td class='mw-input' id='mw-contactpage-formfootnote'>
+					<small>" . wfMsg( "contactpage-formfootnotes$msgSuffix" ) . "</small>
+				</td>
+			</tr>
+			<tr>
+				<td class='mw-label'>" .
+					Xml::label( wfMsg( 'emailmessage' ), 'wpText' ) .
+				"</td>
+				<td class='mw-input'>" .
+					Xml::textarea( 'wpText', $this->text, 80, 20, array( 'id' => 'wpText' ) ) .
+				"</td>
+			</tr>
+			<tr>
+				<td></td>
+				<td class='mw-input'>" .
+					Xml::checkLabel( wfMsg( 'emailccme' ), 'wpCCMe', 'wpCCMe', $wgUser->getBoolOption( 'ccmeonemails' ) ) .
+					"<br />" . $this->getCaptcha() .
+				"</td>
+			</tr>
+			<tr>
+				<td></td>
+				<td class='mw-submit'>" .
+					Xml::submitButton( wfMsg( 'emailsend' ), array( 'name' => 'wpSend', 'accesskey' => 's' ) ) .
+				"</td>
+			</tr>" .
+			Xml::hidden( 'wpEditToken', $token ) .
+			Xml::closeElement( 'table' ) .
+			Xml::closeElement( 'fieldset' ) .
+			Xml::closeElement( 'form' )
+		);
 	}
 
 	function useCaptcha() {

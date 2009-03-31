@@ -23,14 +23,14 @@ function update_autopromote() {
 		# Go through and clean up missing items, as well as correct fr_quality...
 		foreach( $res as $row ) {
 			$user = User::newFromRow( $row );
-			$p = FlaggedRevs::getUserParams( $user );
+			$p = FlaggedRevs::getUserParams( $user->getId() );
 			$oldp = $p;
 			# Get edit comments used
 			$sres = $db->select( 'revision', '1',
 				array( 'rev_user' => $user->getID(),
 					'rev_comment != ""' ),
 				__METHOD__,
-				array( 'LIMIT' => $wgFlaggedRevsAutopromote['editComments'] )
+				array( 'LIMIT' => max($wgFlaggedRevsAutopromote['editComments'],500) )
 			);
 			$p['editComments'] = $db->numRows( $sres );
 			# Get content page edits
@@ -39,21 +39,30 @@ function update_autopromote() {
 					'page_id = rev_page',
 					'page_namespace' => $wgContentNamespaces ),
 				__METHOD__,
-				array( 'LIMIT' => $wgFlaggedRevsAutopromote['totalContentEdits'] )
+				array( 'LIMIT' => max($wgFlaggedRevsAutopromote['totalContentEdits'],500) )
 			);
 			$p['totalContentEdits'] = $db->numRows( $sres );
 			# Get unique content pages edited
-			$sres = $db->select( array('revision','page'), 'DISTINCT (rev_page)',
+			$sres = $db->select( array('revision','page'), 'DISTINCT(rev_page)',
 				array( 'rev_user' => $user->getID(),
 					'page_id = rev_page', 
 					'page_namespace' => $wgContentNamespaces ),
 				__METHOD__,
-				array( 'LIMIT' => $wgFlaggedRevsAutopromote['uniqueContentPages'] )
+				array( 'LIMIT' => max($wgFlaggedRevsAutopromote['uniqueContentPages'],50) )
 			);
 			$p['uniqueContentPages'] = $db->numRows( $sres );
+			# Get reviewed edits
+			$sres = $db->select( array('revision','flaggedrevs'), '1',
+				array( 'rev_user' => $user->getID(),
+					'fr_page_id = rev_page',
+					'fr_rev_id = rev_id' ),
+				__METHOD__,
+				array( 'LIMIT' => max($wgFlaggedRevsAutopromote['totalReviewedEdits'],500) )
+			);
+			$p['reviewedEdits'] = $db->numRows( $sres );
 		
 			if( $oldp != $p ) {
-				FlaggedRevs::saveUserParams( $user, $p );
+				FlaggedRevs::saveUserParams( $user->getId(), $p );
 				$changed++;
 			}
 		

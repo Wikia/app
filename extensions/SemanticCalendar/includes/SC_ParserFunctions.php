@@ -49,8 +49,20 @@
 
 
 function scgParserFunctions () {
-    global $wgParser;
-    $wgParser->setFunctionHook('semantic_calendar', 'scRenderSemanticCalendar');
+	global $wgHooks, $wgParser;
+	if( defined( 'MW_SUPPORTS_PARSERFIRSTCALLINIT' ) ) {
+		$wgHooks['ParserFirstCallInit'][] = 'scgRegisterParser';
+	} else {
+		if ( class_exists( 'StubObject' ) && !StubObject::isRealObject( $wgParser ) ) {
+			$wgParser->_unstub();
+		}
+		scgRegisterParser( $wgParser );
+	}
+}
+
+function scgRegisterParser( &$parser ) {
+	$parser->setFunctionHook('semantic_calendar', 'scRenderSemanticCalendar');
+	return true;
 }
 
 function scgLanguageGetMagic( &$magicWords, $langCode = "en" ) {
@@ -236,15 +248,15 @@ END;
 		if ($day > $days_in_cur_month || $day < 1) {
 			if ($day < 1) {
 				$display_day = $day + $days_in_prev_month;
-				$date_str = "$prev_year-" . str_pad($prev_month_num, 2, "0", STR_PAD_LEFT) . "-" . str_pad($display_day, 2, "0", STR_PAD_LEFT);
+				$date_str = "$prev_year-" . $prev_month_num . "-" . $display_day;
 			}
 			if ($day > $days_in_cur_month) {
 				$display_day = $day - $days_in_cur_month;
-				$date_str = "$next_year-" . str_pad($next_month_num, 2, "0", STR_PAD_LEFT) . "-" . str_pad($display_day, 2, "0", STR_PAD_LEFT);
+				$date_str = "$next_year-" . $next_month_num . "-" . $display_day;
 			}
 			$text .= "<div class=\"day day_other_month\">$display_day</div>\n";
 		} else {
-			$date_str = "$cur_year-" . str_pad($cur_month_num, 2, "0", STR_PAD_LEFT) . "-" . str_pad($day, 2, "0", STR_PAD_LEFT);
+			$date_str = "$cur_year-" . $cur_month_num . "-" . $day;
 			$text .= "<div class=\"day\">$day</div>\n";
 		}
 		// finally, the most important step - get the events that

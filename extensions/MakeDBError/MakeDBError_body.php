@@ -1,6 +1,9 @@
 <?php
+if ( !defined( 'MEDIAWIKI' ) ) {
+	die( "Not a valid entry point\n" );
+}
 
-class MakeDBErrorPage extends UnlistedSpecialPage
+class SpecialMakeDBError extends UnlistedSpecialPage
 {
 	function MakeDBErrorPage() {
 		UnlistedSpecialPage::UnlistedSpecialPage("MakeDBError");

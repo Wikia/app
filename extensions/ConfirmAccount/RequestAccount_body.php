@@ -32,10 +32,8 @@ class RequestAccountPage extends SpecialPage {
 
 		$this->mRealName = trim( $wgRequest->getText( 'wpRealName' ) );
 		# We may only want real names being used
-		if( $wgUseRealNamesOnly )
-			$this->mUsername = $this->mRealName;
-		else
-			$this->mUsername = trim( $wgRequest->getText( 'wpUsername' ) );
+		$this->mUsername = $wgUseRealNamesOnly ? $this->mRealName : $wgRequest->getText( 'wpUsername' );
+		$this->mUsername = trim( $this->mUsername );
 		# Attachments...
 		$this->initializeUpload( $wgRequest );
 		$this->mPrevAttachment = $wgRequest->getText( 'attachment' );
@@ -101,7 +99,7 @@ class RequestAccountPage extends SpecialPage {
 
 		$titleObj = Title::makeTitle( NS_SPECIAL, 'RequestAccount' );
 		
-		$form  = wfOpenElement( 'form', array( 'method' => 'post', 'name' => 'accountrequest',
+		$form  = Xml::openElement( 'form', array( 'method' => 'post', 'name' => 'accountrequest',
 			'action' => $titleObj->getLocalUrl(), 'enctype' => 'multipart/form-data' ) );
 		$form .= '<fieldset><legend>' . wfMsgHtml('requestaccount-leg-user') . '</legend>';
 		$form .= wfMsgExt( 'requestaccount-acc-text', array('parse') )."\n";
@@ -150,7 +148,7 @@ class RequestAccountPage extends SpecialPage {
 						$pg = '';
 					}
 					
-					$form .= "<td>".wfCheckLabel( $set[0], $formName, $formName, $this->mAreas[$formName] > 0 )." {$pg}</td>\n";
+					$form .= "<td>".Xml::checkLabel( $set[0], $formName, $formName, $this->mAreas[$formName] > 0 )." {$pg}</td>\n";
 				}
 			}
 			$form .= "</tr></table></div>";
@@ -189,7 +187,6 @@ class RequestAccountPage extends SpecialPage {
 				"</textarea></p>\n";
 			$form .= '</fieldset>';
 		}
-		# Pseudo template for extensions
 		# FIXME: do this better...
 		global $wgConfirmAccountCaptchas, $wgCaptchaClass, $wgCaptchaTriggers;
 		if( $wgConfirmAccountCaptchas && isset($wgCaptchaClass) && $wgCaptchaTriggers['createaccount'] ) {
@@ -207,15 +204,18 @@ class RequestAccountPage extends SpecialPage {
 			$form .= '</fieldset>';
 		}
 		if( $wgAccountRequestToS ) {
+			$form .= '<fieldset>';
+			$form .= '<legend>' . wfMsgHtml('requestaccount-leg-tos') . '</legend>';
 			$form .= "<p>".Xml::check( 'wpToS', $this->mToS, array('id' => 'wpToS') ).
 				' <label for="wpToS">'.wfMsgExt( 'requestaccount-tos', array('parseinline') )."</label></p>\n";
+			$form .= '</fieldset>';
 		}
 		$form .= Xml::hidden( 'title', $titleObj->getPrefixedUrl() )."\n";
 		$form .= Xml::hidden( 'wpEditToken', $wgUser->editToken() )."\n";
 		$form .= Xml::hidden( 'attachment', $this->mPrevAttachment )."\n";
 		$form .= Xml::hidden( 'forgotAttachment', $this->mForgotAttachment )."\n";
 		$form .= "<p>".Xml::submitButton( wfMsgHtml( 'requestaccount-submit') )."</p>";
-		$form .= wfCloseElement( 'form' );
+		$form .= Xml::closeElement( 'form' );
 
 		$wgOut->addHTML( $form );
 		
@@ -390,10 +390,6 @@ class RequestAccountPage extends SpecialPage {
 			),
 			__METHOD__ 
 		);
-		# Clear cache for notice of how many account requests there are
-		global $wgMemc;
-		$key = wfMemcKey( 'confirmaccount', 'noticecount' );
-		$wgMemc->delete( $key );
 		# Send confirmation, required!
 		$result = $this->sendConfirmationMail( $u, $token, $expires );
 		if( WikiError::isError( $result ) ) {
@@ -408,13 +404,15 @@ class RequestAccountPage extends SpecialPage {
 			$transaction->commit();
 			FileStore::unlock();
 		}
+		# Clear cache for notice of how many account requests there are
+		global $wgMemc;
+		$key = wfMemcKey( 'confirmaccount', 'noticecount' );
+		$wgMemc->delete( $key );
 		# No request spamming...
 		# BC: check if isPingLimitable() exists
 		if( $wgAccountRequestThrottle && ( !method_exists($wgUser,'isPingLimitable') || $wgUser->isPingLimitable() ) ) {
-			global $wgMemc;
 			$key = wfMemcKey( 'acctrequest', 'ip', wfGetIP() );
-			$value = $wgMemc->incr( $key );
-			if( !$value ) {
+			if( !$value = $wgMemc->incr( $key ) ) {
 				$wgMemc->set( $key, 1, 86400 );
 			}
 		}
@@ -483,7 +481,7 @@ class RequestAccountPage extends SpecialPage {
 
 		  wfDebug ( "\n\nmime: <$mime> extension: <$extension>\n\n");
 			#check mime type against file extension
-			if( !UploadForm::verifyExtension( $mime, $extension ) ) {
+			if( !UploadBase::verifyExtension( $mime, $extension ) ) {
 				return new WikiErrorMsg( 'uploadcorrupt' );
 			}
 
@@ -510,16 +508,17 @@ class RequestAccountPage extends SpecialPage {
 	function checkFileExtension( $ext, $list ) {
 		return in_array( strtolower( $ext ), $list );
 	}
-	
+
 	/**
 	 * @private
+	 * @param int $limit number of accounts allowed to be requested from the same IP
 	 */
 	function throttleHit( $limit ) {
 		global $wgOut;
 
-		$wgOut->addWikiText( wfMsgHtml( 'acct_request_throttle_hit', $limit ) );
+		$wgOut->addHTML( wfMsgExt( 'acct_request_throttle_hit', array( 'parsemag' ), $limit ) );
 	}
-	
+
 	function confirmEmailToken( $code ) {
 		global $wgUser, $wgOut;
 		# Confirm if this token is in the pending requests

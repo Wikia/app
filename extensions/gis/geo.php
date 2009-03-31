@@ -8,7 +8,7 @@
  *
  *      include( "extensions/gis/geo.php" );
  *
- *  If $wgMapsourcesURL is not defined, there will not be links to the 
+ *  If $wgMapsourcesURL is not defined, there will not be links to the
  *  "Map sources" page, but the geo tag will still be rendered.
  *
  *  To add the points to a database, see the gis/geodb extension
@@ -37,10 +37,9 @@
  */
 
 if ( !defined( 'MEDIAWIKI' ) ) {
-        echo "Geo extension\n";
-        exit( 1 ) ;
+	echo "Geo extension\n";
+	exit( 1 ) ;
 }
-
 
 $wgExtensionFunctions[] = "wfGeoExtension";
 
@@ -54,20 +53,19 @@ function wfGeoExtension () {
 	$wgHooks['ArticleDelete'][] = 'articleDeleteGeo';
 }
 
-if ( !function_exists( 'extAddSpecialPage' ) ) {
-        require( dirname(__FILE__) . '/../ExtensionFunctions.php' );
-}
-extAddSpecialPage( dirname(__FILE__) . '/Specialgeo_body.php', 'Geo', 'GeoPage' );
-
 $wgExtensionCredits['specialpage'][] = array(
         'name' => 'Geo',
         'description' => 'Enables rich geotagging functionality',
-        'author' => 'Egil Kvaleberg, Jens Frank'
+        'author' => array( 'Egil Kvaleberg', 'Jens Frank' ),
 );
 
-global $wgAutoloadClasses;
-$wgAutoloadClasses['GeoParam'] = dirname(__FILE__) . '/GeoParam.php';
-$wgAutoloadClasses['GisDatabase'] = dirname(__FILE__) . '/GisDatabase.php';
+$dir = dirname(__FILE__) . '/';
+$wgExtensionAliasesFiles['Geo'] = $dir . 'Geo.alias.php';
+$wgAutoloadClasses['SpecialGeo'] = $dir . 'Specialgeo_body.php';
+$wgSpecialPages['Geo'] = 'SpecialGeo';
+
+$wgAutoloadClasses['GeoParam'] = $dir . 'GeoParam.php';
+$wgAutoloadClasses['GisDatabase'] = $dir . 'GisDatabase.php';
 
 
 /**
@@ -75,7 +73,7 @@ $wgAutoloadClasses['GisDatabase'] = dirname(__FILE__) . '/GisDatabase.php';
  *  Use the ArticleSaveComplete instead of ArticleSave since the ID is
  *  not available upon ArticleSave for new articles
  */
-function articleSaveGeo ( $article, $user, $text ) 
+function articleSaveGeo ( $article, $user, $text )
 {
 	$id = $article->getID();
 
@@ -92,7 +90,7 @@ function articleSaveGeo ( $article, $user, $text )
 		$content = $tagresult[1];
 		$params = $tagresult[2];
 		$full = $tagresult[3];
-		
+
 		if ( $tagname != 'geo' ) {
 			continue;
 		}
@@ -112,7 +110,7 @@ function articleSaveGeo ( $article, $user, $text )
 /**
  *  Hook function called every time a page is deleted
  */
-function articleDeleteGeo ( $article ) 
+function articleDeleteGeo ( $article )
 {
 	$id = $article->getID();
 
@@ -160,5 +158,3 @@ function parseGeo ( $text, $params, &$parser ) {
 	return $skin->makeKnownLink( 'Special:Geo', $geo->get_markup(), $geo->get_param_string() );
 
 }
-
-

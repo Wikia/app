@@ -3,13 +3,13 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 	echo "FlaggedRevs extension\n";
 	exit( 1 );
 }
-wfLoadExtensionMessages( 'StableVersions' );
-wfLoadExtensionMessages( 'FlaggedRevs' );
 
 class StableVersions extends UnlistedSpecialPage
 {
     function __construct() {
         UnlistedSpecialPage::UnlistedSpecialPage( 'StableVersions' );
+		wfLoadExtensionMessages( 'StableVersions' );
+		wfLoadExtensionMessages( 'FlaggedRevs' );
     }
 
     function execute( $par ) {
@@ -58,11 +58,11 @@ class StableVersions extends UnlistedSpecialPage
 
 		$time = $wgLang->timeanddate( wfTimestamp(TS_MW, $row->rev_timestamp), true );
 		$ftime = $wgLang->timeanddate( wfTimestamp(TS_MW, $row->fr_timestamp), true );
-		$review = wfMsg( 'stableversions-review', $ftime,
+		$review = wfMsgExt( 'stableversions-review', array( 'parseinline', 'replaceafter' ), $ftime,
 			$this->skin->userLink( $row->fr_user, $row->user_name ) .
 			' ' . $this->skin->userToolLinks( $row->fr_user, $row->user_name ) );
 
-		$lev = ( $row->fr_quality >=1 ) ? wfMsg('hist-quality') : wfMsg('hist-stable');
+		$lev = ( $row->fr_quality >=1 ) ? wfMsgHtml('hist-quality') : wfMsgHtml('hist-stable');
 		$link = $this->skin->makeKnownLinkObj( $this->page, $time,
 			'stableid='.$row->fr_rev_id );
 

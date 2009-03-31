@@ -10,7 +10,7 @@
  * @file
  */
 
-require( dirname(__FILE__) . '/cli.inc' );
+require( dirname( __FILE__ ) . '/cli.inc' );
 
 if ( $args === 1 || isset( $options['help'] ) ) {
 	STDERR( <<<EOT
@@ -29,7 +29,7 @@ EOT
 }
 
 $_skipLanguages = array();
-if ( isset($options['skiplanguages']) ) {
+if ( isset( $options['skiplanguages'] ) ) {
 	$_skipLanguages = array_map( 'trim', explode( ',', $options['skiplanguages'] ) );
 }
 $_comment = @$options['comment'];
@@ -64,7 +64,7 @@ class FuzzyBot {
 
 		$wgUser = User::newFromName( $wgTranslateFuzzyBotName );
 
-		if ( $wgUser->isAnon() ) {
+		if ( !$wgUser->isLoggedIn() ) {
 			STDOUT( "Creating user $wgTranslateFuzzyBotName" );
 			$wgUser->addToDatabase();
 		}
@@ -79,7 +79,7 @@ class FuzzyBot {
 		}
 
 		$msgs = $this->getPages();
-		$count = count($msgs);
+		$count = count( $msgs );
 		STDOUT( "Found $count pages to update." );
 
 		foreach ( $msgs as  $phpIsStupid ) {
@@ -107,11 +107,11 @@ class FuzzyBot {
 			$dbr->makeList( $search_titles, LIST_OR ),
 		);
 
-		if ( count($this->skipLanguages) ) {
+		if ( count( $this->skipLanguages ) ) {
 			$condArray[] = 'substring_index(page_title, \'/\', -1) NOT IN (' . $dbr->makeList( $this->skipLanguages ) . ')';
 		}
 
-		$conds = $dbr->makeList( $condArray, LIST_AND);
+		$conds = $dbr->makeList( $condArray, LIST_AND );
 
 		$rows = $dbr->select(
 			array( 'page', 'revision', 'text' ),
@@ -156,9 +156,9 @@ class FuzzyBot {
 
 		$comment = $this->comment ? $this->comment : 'Marking as fuzzy';
 
-		$success = $wgArticle->doEdit( TRANSLATE_FUZZY . $text, $comment, EDIT_FORCE_BOT );
+		$status = $wgArticle->doEdit( TRANSLATE_FUZZY . $text, $comment, EDIT_FORCE_BOT );
 
-		if ( $success ) {
+		if ( $status === true || ( is_object( $status ) && $status->isOK() ) ) {
 			STDOUT( "OK!", false );
 		} else {
 			STDOUT( "Failed!", false );

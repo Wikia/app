@@ -5,15 +5,17 @@ if (!defined('MEDIAWIKI')) {
 	exit(1);
 }
 
-class InspectCache extends SpecialPage
+class SpecialInspectCache extends SpecialPage
 {
-	function InspectCache() {
-		wfLoadExtensionMessages( 'InspectCache' );
-		SpecialPage::SpecialPage("InspectCache");
+	function __construct() {
+		SpecialPage::SpecialPage( 'InspectCache' );
 	}
 
 	function execute( $par ) {
 		global $wgRequest, $wgOut, $wgTitle, $inspectcacheget, $inspectcachedelete;
+
+		wfLoadExtensionMessages( 'InspectCache' );
+
 		$inspectcacheget = wfMsgHtml('inspectcache-get');
 		$inspectcachedelete = wfMsgHtml('inspectcache-delete');
 		$inspectcachelist = wfMsgHtml('inspectcache-list');

@@ -8,13 +8,18 @@
  * some global variables managed by SMWTypeHandlerFactory,
  * and in Type: Wiki pages.
  * This only reports on the Type: Wiki pages.
+ * @file
+ * @ingroup SMWSpecialPage
+ * @ingroup SpecialPage
  */
 
 function smwfDoSpecialTypes() {
+	global $wgOut;
 	wfProfileIn('smwfDoSpecialTypes (SMW)');
 	list( $limit, $offset ) = wfCheckLimits();
 	$rep = new TypesPage();
 	$result = $rep->doQuery( $offset, $limit );
+	SMWOutputs::commitToOutputPage($wgOut); // make sure locally collected output data is pushed to the output!
 	wfProfileOut('smwfDoSpecialTypes (SMW)');
 	return $result;
 }
@@ -34,6 +39,7 @@ class TypesPage extends QueryPage {
 	}
 
 	function getPageHeader() {
+		wfLoadExtensionMessages('SemanticMediaWiki');
 		return '<p>' . wfMsg('smw_types_docu') . "</p><br />\n";
 	}
 
@@ -70,6 +76,7 @@ class TypesPage extends QueryPage {
 		$tv = SMWDataValueFactory::newTypeIDValue('__typ', $titletext);
 		$info = array();
 		$error = array();
+		wfLoadExtensionMessages('SemanticMediaWiki');
 		if ($tv->isAlias()) { // print the type title as found, long text would (again) print the alias
 			$ttitle = Title::makeTitle(SMW_NS_TYPE, $titletext);
 			$link = $skin->makeKnownLinkObj($ttitle, $ttitle->getText()); // aliases are only found if the page exists

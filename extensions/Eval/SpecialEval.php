@@ -158,9 +158,9 @@ function wfSpecialEval() {
 				$wgOut->addHTML( Xml::element( 'h2', null, wfMsg( 'eval_out' ) ) );
 				if ( $this->mEscape )
 					$this->mErr =
-						wfOpenElement( 'pre' ) .
+						Xml::openElement( 'pre' ) .
 						htmlspecialchars( $this->mErr ) .
-						wfCloseElement( 'pre ' );
+						Xml::closeElement( 'pre ' );
 				$wgOut->addHTML( $this->mErr );
 			}
 		}

@@ -205,12 +205,17 @@ class Database {
 		return false;
 	}
 
-	/**#@+
-	 * Get function
+	/**
+	 * Return the last query that went through Database::query()
+	 * @return String
 	 */
 	function lastQuery() { return $this->mLastQuery; }
+	
+	/**
+	 * Is a connection to the database open?
+	 * @return Boolean
+	 */
 	function isOpen() { return $this->mOpened; }
-	/**#@-*/
 
 	function setFlag( $flag ) {
 		$this->mFlags |= $flag;
@@ -243,13 +248,13 @@ class Database {
 # Other functions
 #------------------------------------------------------------------------------
 
-	/**@{{
+	/**
 	 * Constructor.
-	 * @param string $server database server host
-	 * @param string $user database user name
-	 * @param string $password database user password
-	 * @param string $dbname database name
-	 * @param failFunction
+	 * @param $server String: database server host
+	 * @param $user String: database user name
+	 * @param $password String: database user password
+	 * @param $dbName String: database name
+	 * @param $failFunction
 	 * @param $flags
 	 * @param $tablePrefix String: database table prefixes. By default use the prefix gave in LocalSettings.php
 	 */
@@ -293,7 +298,11 @@ class Database {
 	}
 
 	/**
-	 * @static
+	 * Same as new Database( ... ), kept for backward compatibility
+	 * @param $server String: database server host
+	 * @param $user String: database user name
+	 * @param $password String: database user password
+	 * @param $dbName String: database name
 	 * @param failFunction
 	 * @param $flags
 	 */
@@ -305,9 +314,13 @@ class Database {
 	/**
 	 * Usually aborts on failure
 	 * If the failFunction is set to a non-zero integer, returns success
+	 * @param $server String: database server host
+	 * @param $user String: database user name
+	 * @param $password String: database user password
+	 * @param $dbName String: database name
 	 */
 	function open( $server, $user, $password, $dbName ) {
-		global $wguname, $wgAllDBsAreLocalhost;
+		global $wgAllDBsAreLocalhost;
 		wfProfileIn( __METHOD__ );
 
 		# Test for missing mysql.so
@@ -338,13 +351,17 @@ class Database {
 
 		wfProfileIn("dbconnect-$server");
 
-		# Try to connect up to three times
 		# The kernel's default SYN retransmission period is far too slow for us,
-		# so we use a short timeout plus a manual retry.
+		# so we use a short timeout plus a manual retry. Retrying means that a small
+		# but finite rate of SYN packet loss won't cause user-visible errors.
 		$this->mConn = false;
-		$max = 3;
+		if ( ini_get( 'mysql.connect_timeout' ) <= 3 ) {
+			$numAttempts = 2;
+		} else {
+			$numAttempts = 1;
+		}
 		$this->installErrorHandler();
-		for ( $i = 0; $i < $max && !$this->mConn; $i++ ) {
+		for ( $i = 0; $i < $numAttempts && !$this->mConn; $i++ ) {
 			if ( $i > 1 ) {
 				usleep( 1000 );
 			}
@@ -360,23 +377,28 @@ class Database {
 			}
 		}
 		$phpError = $this->restoreErrorHandler();
+		# Always log connection errors
+		if ( !$this->mConn ) {
+			$error = $this->lastError();
+			if ( !$error ) {
+				$error = $phpError;
+			}
+			wfLogDBError( "Error connecting to {$this->mServer}: $error\n" );
+			wfDebug( "DB connection error\n" );
+			wfDebug( "Server: $server, User: $user, Password: " .
+				substr( $password, 0, 3 ) . "..., error: " . mysql_error() . "\n" );
+			$success = false;
+		}
 		
 		wfProfileOut("dbconnect-$server");
 
-		if ( $dbName != '' ) {
-			if ( $this->mConn !== false ) {
-				$success = @/**/mysql_select_db( $dbName, $this->mConn );
-				if ( !$success ) {
-					$error = "Error selecting database $dbName on server {$this->mServer} " .
-						"from client host {$wguname['nodename']}\n";
-					wfLogDBError(" Error selecting database $dbName on server {$this->mServer} \n");
-					wfDebug( $error );
-				}
-			} else {
-				wfDebug( "DB connection error\n" );
-				wfDebug( "Server: $server, User: $user, Password: " .
-					substr( $password, 0, 3 ) . "..., error: " . mysql_error() . "\n" );
-				$success = false;
+		if ( $dbName != '' && $this->mConn !== false ) {
+			$success = @/**/mysql_select_db( $dbName, $this->mConn );
+			if ( !$success ) {
+				$error = "Error selecting database $dbName on server {$this->mServer} " .
+					"from client host " . wfHostname() . "\n";
+				wfLogDBError(" Error selecting database $dbName on server {$this->mServer} \n");
+				wfDebug( $error );
 			}
 		} else {
 			# Delay USE query
@@ -408,16 +430,25 @@ class Database {
 		wfProfileOut( __METHOD__ );
 		return $success;
 	}
-	/**@}}*/
 
 	protected function installErrorHandler() {
 		$this->mPHPError = false;
+		$this->htmlErrors = ini_set( 'html_errors', '0' );
 		set_error_handler( array( $this, 'connectionErrorHandler' ) );
 	}
 
 	protected function restoreErrorHandler() {
 		restore_error_handler();
-		return $this->mPHPError;
+		if ( $this->htmlErrors !== false ) {
+			ini_set( 'html_errors', $this->htmlErrors );
+		}
+		if ( $this->mPHPError ) {
+			$error = preg_replace( '!\[<a.*</a>\]!', '', $this->mPHPError );
+			$error = preg_replace( '!^.*?:(.*)$!', '$1', $error );
+			return $error;
+		} else {
+			return false;
+		}
 	}
 
 	protected function connectionErrorHandler( $errno,  $errstr ) {
@@ -428,7 +459,7 @@ class Database {
 	 * Closes a database connection.
 	 * if it is open : commits any open transactions
 	 *
-	 * @return bool operation success. true if already closed.
+	 * @return Bool operation success. true if already closed.
 	 */
 	function close()
 	{
@@ -444,7 +475,7 @@ class Database {
 	}
 
 	/**
-	 * @param string $error fallback error message, used if none is given by MySQL
+	 * @param $error String: fallback error message, used if none is given by MySQL
 	 */
 	function reportConnectionError( $error = 'Unknown error' ) {
 		$myError = $this->lastError();
@@ -460,7 +491,6 @@ class Database {
 			}
 		} else {
 			# New method
-			wfLogDBError( "Connection error: $error\n" );
 			throw new DBConnectionError( $this, $error );
 		}
 	}
@@ -471,7 +501,7 @@ class Database {
 	 * @param  $sql        String: SQL query
 	 * @param  $fname      String: Name of the calling function, for profiling/SHOW PROCESSLIST 
 	 *     comment (you can use __METHOD__ or add some extra info)
-	 * @param  $tempIgnore Bool:   Whether to avoid throwing an exception on errors... 
+	 * @param  $tempIgnore Boolean:   Whether to avoid throwing an exception on errors... 
 	 *     maybe best to catch the exception instead?
 	 * @return true for a successful write query, ResultWrapper object for a successful read query, 
 	 *     or false on failure if $tempIgnore set
@@ -575,7 +605,7 @@ class Database {
 	 * The DBMS-dependent part of query()
 	 * @param  $sql String: SQL query.
 	 * @return Result object to feed to fetchObject, fetchRow, ...; or false on failure
-	 * @access private
+	 * @private
 	 */
 	/*private*/ function doQuery( $sql ) {
 		if( $this->bufferResults() ) {
@@ -587,11 +617,11 @@ class Database {
 	}
 
 	/**
-	 * @param $error
-	 * @param $errno
-	 * @param $sql
-	 * @param string $fname
-	 * @param bool $tempIgnore
+	 * @param $error String
+	 * @param $errno Integer
+	 * @param $sql String
+	 * @param $fname String
+	 * @param $tempIgnore Boolean
 	 */
 	function reportQueryError( $error, $errno, $sql, $fname, $tempIgnore = false ) {
 		global $wgCommandLineMode;
@@ -633,8 +663,8 @@ class Database {
 
 	/**
 	 * Execute a prepared query with the various arguments
-	 * @param string $prepared the prepared sql
-	 * @param mixed $args Either an array here, or put scalars as varargs
+	 * @param $prepared String: the prepared sql
+	 * @param $args Mixed: Either an array here, or put scalars as varargs
 	 */
 	function execute( $prepared, $args = null ) {
 		if( !is_array( $args ) ) {
@@ -649,8 +679,8 @@ class Database {
 	/**
 	 * Prepare & execute an SQL statement, quoting and inserting arguments
 	 * in the appropriate places.
-	 * @param string $query
-	 * @param string $args ...
+	 * @param $query String
+	 * @param $args ...
 	 */
 	function safeQuery( $query, $args = null ) {
 		$prepared = $this->prepare( $query, 'Database::safeQuery' );
@@ -667,8 +697,8 @@ class Database {
 	/**
 	 * For faking prepared SQL statements on DBs that don't support
 	 * it directly.
-	 * @param string $preparedSql - a 'preparable' SQL statement
-	 * @param array $args - array of arguments to fill it with
+	 * @param $preparedQuery String: a 'preparable' SQL statement
+	 * @param $args Array of arguments to fill it with
 	 * @return string executable SQL
 	 */
 	function fillPrepared( $preparedQuery, $args ) {
@@ -683,8 +713,8 @@ class Database {
 	 * The arguments should be in $this->preparedArgs and must not be touched
 	 * while we're doing this.
 	 *
-	 * @param array $matches
-	 * @return string
+	 * @param $matches Array
+	 * @return String
 	 * @private
 	 */
 	function fillPreparedArg( $matches ) {
@@ -705,11 +735,9 @@ class Database {
 		}
 	}
 
-	/**#@+
-	 * @param mixed $res A SQL result
-	 */
 	/**
 	 * Free a result object
+	 * @param $res Mixed: A SQL result
 	 */
 	function freeResult( $res ) {
 		if ( $res instanceof ResultWrapper ) {
@@ -761,6 +789,7 @@ class Database {
 
 	/**
 	 * Get the number of rows in a result object
+	 * @param $res Mixed: A SQL result
 	 */
 	function numRows( $res ) {
 		if ( $res instanceof ResultWrapper ) {
@@ -776,6 +805,7 @@ class Database {
 	/**
 	 * Get the number of fields in a result object
 	 * See documentation for mysql_num_fields()
+	 * @param $res Mixed: A SQL result
 	 */
 	function numFields( $res ) {
 		if ( $res instanceof ResultWrapper ) {
@@ -788,6 +818,8 @@ class Database {
 	 * Get a field name in a result object
 	 * See documentation for mysql_field_name():
 	 * http://www.php.net/mysql_field_name
+	 * @param $res Mixed: A SQL result
+	 * @param $n Integer
 	 */
 	function fieldName( $res, $n ) {
 		if ( $res instanceof ResultWrapper ) {
@@ -811,6 +843,8 @@ class Database {
 	/**
 	 * Change the position of the cursor in a result object
 	 * See mysql_data_seek()
+	 * @param $res Mixed: A SQL result
+	 * @param $row Mixed: Either MySQL row or ResultWrapper
 	 */
 	function dataSeek( $res, $row ) {
 		if ( $res instanceof ResultWrapper ) {
@@ -857,7 +891,6 @@ class Database {
 	 * See mysql_affected_rows() for more details
 	 */
 	function affectedRows() { return mysql_affected_rows( $this->mConn ); }
-	/**#@-*/ // end of template : @param $result
 
 	/**
 	 * Simple UPDATE wrapper
@@ -867,8 +900,7 @@ class Database {
 	 * This function exists for historical reasons, Database::update() has a more standard
 	 * calling convention and feature set
 	 */
-	function set( $table, $var, $value, $cond, $fname = 'Database::set' )
-	{
+	function set( $table, $var, $value, $cond, $fname = 'Database::set' ) {
 		$table = $this->tableName( $table );
 		$sql = "UPDATE $table SET $var = '" .
 		  $this->strencode( $value ) . "' WHERE ($cond)";
@@ -893,7 +925,7 @@ class Database {
 		$row = $this->fetchRow( $res );
 		if ( $row !== false ) {
 			$this->freeResult( $res );
-			return $row[0];
+			return reset( $row );
 		} else {
 			return false;
 		}
@@ -905,9 +937,9 @@ class Database {
 	 *
 	 * @private
 	 *
-	 * @param array $options an associative array of options to be turned into
+	 * @param $options Array: associative array of options to be turned into
 	 *              an SQL query, valid keys are listed in the function.
-	 * @return array
+	 * @return Array
 	 */
 	function makeSelectOptions( $options ) {
 		$preLimitTail = $postLimitTail = '';
@@ -956,14 +988,14 @@ class Database {
 	/**
 	 * SELECT wrapper
 	 *
-	 * @param mixed  $table   Array or string, table name(s) (prefix auto-added)
-	 * @param mixed  $vars    Array or string, field name(s) to be retrieved
-	 * @param mixed  $conds   Array or string, condition(s) for WHERE
-	 * @param string $fname   Calling function name (use __METHOD__) for logs/profiling
-	 * @param array  $options Associative array of options (e.g. array('GROUP BY' => 'page_title')),
-	 *                        see Database::makeSelectOptions code for list of supported stuff
-	 * @param array $join_conds Associative array of table join conditions (optional)
-	 *                        (e.g. array( 'page' => array('LEFT JOIN','page_latest=rev_id') )
+	 * @param $table   Mixed:  Array or string, table name(s) (prefix auto-added)
+	 * @param $vars    Mixed:  Array or string, field name(s) to be retrieved
+	 * @param $conds   Mixed:  Array or string, condition(s) for WHERE
+	 * @param $fname   String: Calling function name (use __METHOD__) for logs/profiling
+	 * @param $options Array:  Associative array of options (e.g. array('GROUP BY' => 'page_title')),
+	 *                         see Database::makeSelectOptions code for list of supported stuff
+	 * @param $join_conds Array: Associative array of table join conditions (optional)
+	 *                           (e.g. array( 'page' => array('LEFT JOIN','page_latest=rev_id') )
 	 * @return mixed Database result resource (feed to Database::fetchObject or whatever), or false on failure
 	 */
 	function select( $table, $vars, $conds='', $fname = 'Database::select', $options = array(), $join_conds = array() )
@@ -975,14 +1007,14 @@ class Database {
 	/**
 	 * SELECT wrapper
 	 *
-	 * @param mixed  $table   Array or string, table name(s) (prefix auto-added)
-	 * @param mixed  $vars    Array or string, field name(s) to be retrieved
-	 * @param mixed  $conds   Array or string, condition(s) for WHERE
-	 * @param string $fname   Calling function name (use __METHOD__) for logs/profiling
-	 * @param array  $options Associative array of options (e.g. array('GROUP BY' => 'page_title')),
-	 *                        see Database::makeSelectOptions code for list of supported stuff
-	 * @param array $join_conds Associative array of table join conditions (optional)
-	 *                        (e.g. array( 'page' => array('LEFT JOIN','page_latest=rev_id') )
+	 * @param $table   Mixed:  Array or string, table name(s) (prefix auto-added)
+	 * @param $vars    Mixed:  Array or string, field name(s) to be retrieved
+	 * @param $conds   Mixed:  Array or string, condition(s) for WHERE
+	 * @param $fname   String: Calling function name (use __METHOD__) for logs/profiling
+	 * @param $options Array:  Associative array of options (e.g. array('GROUP BY' => 'page_title')),
+	 *                         see Database::makeSelectOptions code for list of supported stuff
+	 * @param $join_conds Array: Associative array of table join conditions (optional)
+	 *                           (e.g. array( 'page' => array('LEFT JOIN','page_latest=rev_id') )
 	 * @return string, the SQL text
 	 */
 	function selectSQLText( $table, $vars, $conds='', $fname = 'Database::select', $options = array(), $join_conds = array() ) {
@@ -1033,13 +1065,17 @@ class Database {
 	 * Single row SELECT wrapper
 	 * Aborts or returns FALSE on error
 	 *
-	 * $vars: the selected variables
-	 * $conds: a condition map, terms are ANDed together.
+	 * @param $table String: table name
+	 * @param $vars String: the selected variables
+	 * @param $conds Array: a condition map, terms are ANDed together.
 	 *   Items with numeric keys are taken to be literal conditions
 	 * Takes an array of selected variables, and a condition map, which is ANDed
 	 * e.g: selectRow( "page", array( "page_id" ), array( "page_namespace" =>
 	 * NS_MAIN, "page_title" => "Astronomy" ) )   would return an object where
 	 * $obj- >page_id is the ID of the Astronomy article
+	 * @param $fname String: Calling functio name
+	 * @param $options Array
+	 * @param $join_conds Array
 	 *
 	 * @todo migrate documentation to phpdocumentor format
 	 */
@@ -1089,8 +1125,7 @@ class Database {
 	 * Removes most variables from an SQL query and replaces them with X or N for numbers.
 	 * It's only slightly flawed. Don't use for anything important.
 	 *
-	 * @param string $sql A SQL Query
-	 * @static
+	 * @param $sql String: A SQL Query
 	 */
 	static function generalizeSQL( $sql ) {
 		# This does the same as the regexp below would do, but in such a way
@@ -1283,7 +1318,7 @@ class Database {
 	 * Make UPDATE options for the Database::update function
 	 *
 	 * @private
-	 * @param array $options The options passed to Database::update
+	 * @param $options Array: The options passed to Database::update
 	 * @return string
 	 */
 	function makeUpdateOptions( $options ) {
@@ -1301,14 +1336,14 @@ class Database {
 	/**
 	 * UPDATE wrapper, takes a condition array and a SET array
 	 *
-	 * @param string $table  The table to UPDATE
-	 * @param array  $values An array of values to SET
-	 * @param array  $conds  An array of conditions (WHERE). Use '*' to update all rows.
-	 * @param string $fname  The Class::Function calling this function
-	 *                       (for the log)
-	 * @param array  $options An array of UPDATE options, can be one or
+	 * @param $table  String: The table to UPDATE
+	 * @param $values Array:  An array of values to SET
+	 * @param $conds  Array:  An array of conditions (WHERE). Use '*' to update all rows.
+	 * @param $fname  String: The Class::Function calling this function
+	 *                        (for the log)
+	 * @param $options Array: An array of UPDATE options, can be one or
 	 *                        more of IGNORE, LOW_PRIORITY
-	 * @return bool
+	 * @return Boolean
 	 */
 	function update( $table, $values, $conds, $fname = 'Database::update', $options = array() ) {
 		$table = $this->tableName( $table );
@@ -1413,8 +1448,8 @@ class Database {
 	 * themselves. Pass the canonical name to such functions. This is only needed
 	 * when calling query() directly.
 	 *
-	 * @param string $name database table name
-	 * @return string full database name
+	 * @param $name String: database table name
+	 * @return String: full database name
 	 */
 	function tableName( $name ) {
 		global $wgSharedDB, $wgSharedPrefix, $wgSharedTables;
@@ -1543,8 +1578,8 @@ class Database {
 
 	/**
 	 * Wrapper for addslashes()
-	 * @param string $s String to be slashed.
-	 * @return string slashed string.
+	 * @param $s String: to be slashed.
+	 * @return String: slashed string.
 	 */
 	function strencode( $s ) {
 		return mysql_real_escape_string( $s, $this->mConn );
@@ -1635,11 +1670,12 @@ class Database {
 	 *
 	 * DO NOT put the join condition in $conds
 	 *
-	 * @param string $delTable The table to delete from.
-	 * @param string $joinTable The other table.
-	 * @param string $delVar The variable to join on, in the first table.
-	 * @param string $joinVar The variable to join on, in the second table.
-	 * @param array $conds Condition array of field names mapped to variables, ANDed together in the WHERE clause
+	 * @param $delTable String: The table to delete from.
+	 * @param $joinTable String: The other table.
+	 * @param $delVar String: The variable to join on, in the first table.
+	 * @param $joinVar String: The variable to join on, in the second table.
+	 * @param $conds Array: Condition array of field names mapped to variables, ANDed together in the WHERE clause
+	 * @param $fname String: Calling function name (use __METHOD__) for logs/profiling
 	 */
 	function deleteJoin( $delTable, $joinTable, $delVar, $joinVar, $conds, $fname = 'Database::deleteJoin' ) {
 		if ( !$conds ) {
@@ -1735,9 +1771,9 @@ class Database {
 	/**
 	 * Construct a LIMIT query with optional offset
 	 * This is used for query pages
-	 * $sql string SQL query we will append the limit too
-	 * $limit integer the SQL limit
-	 * $offset integer the SQL offset (default false)
+	 * @param $sql String: SQL query we will append the limit too
+	 * @param $limit Integer: the SQL limit
+	 * @param $offset Integer the SQL offset (default false)
 	 */
 	function limitResult($sql, $limit, $offset=false) {
 		if( !is_numeric($limit) ) {
@@ -1755,10 +1791,10 @@ class Database {
 	 * Returns an SQL expression for a simple conditional.
 	 * Uses IF on MySQL.
 	 *
-	 * @param string $cond SQL expression which will result in a boolean value
-	 * @param string $trueVal SQL expression to return if true
-	 * @param string $falseVal SQL expression to return if false
-	 * @return string SQL fragment
+	 * @param $cond String: SQL expression which will result in a boolean value
+	 * @param $trueVal String: SQL expression to return if true
+	 * @param $falseVal String: SQL expression to return if false
+	 * @return String: SQL fragment
 	 */
 	function conditional( $cond, $trueVal, $falseVal ) {
 		return " IF($cond, $trueVal, $falseVal) ";
@@ -1768,9 +1804,9 @@ class Database {
 	 * Returns a comand for str_replace function in SQL query.
 	 * Uses REPLACE() in MySQL
 	 *
-	 * @param string $orig String or column to modify
-	 * @param string $old String or column to seek
-	 * @param string $new String or column to replace with
+	 * @param $orig String: column to modify
+	 * @param $old String: column to seek
+	 * @param $new String: column to replace with
 	 */
 	function strreplace( $orig, $old, $new ) {
 		return "REPLACE({$orig}, {$old}, {$new})";
@@ -1841,9 +1877,8 @@ class Database {
 	/**
 	 * Do a SELECT MASTER_POS_WAIT()
 	 *
-	 * @param string $file the binlog file
-	 * @param string $pos the binlog position
-	 * @param integer $timeout the maximum number of seconds to wait for synchronisation
+	 * @param $pos MySQLMasterPos object
+	 * @param $timeout Integer: the maximum number of seconds to wait for synchronisation
 	 */
 	function masterPosWait( MySQLMasterPos $pos, $timeout ) {
 		$fname = 'Database::masterPosWait';
@@ -1899,7 +1934,8 @@ class Database {
 		$res = $this->query( 'SHOW SLAVE STATUS', 'Database::getSlavePos' );
 		$row = $this->fetchObject( $res );
 		if ( $row ) {
-			return new MySQLMasterPos( $row->Master_Log_File, $row->Read_Master_Log_Pos );
+			$pos = isset($row->Exec_master_log_pos) ? $row->Exec_master_log_pos : $row->Exec_Master_Log_Pos;
+			return new MySQLMasterPos( $row->Relay_Master_Log_File, $pos );
 		} else {
 			return false;
 		}
@@ -2004,14 +2040,14 @@ class Database {
 	}
 
 	/**
-	 * @return string wikitext of a link to the server software's web site
+	 * @return String: wikitext of a link to the server software's web site
 	 */
 	function getSoftwareLink() {
 		return "[http://www.mysql.com/ MySQL]";
 	}
 
 	/**
-	 * @return string Version information from the database
+	 * @return String: Version information from the database
 	 */
 	function getServerVersion() {
 		return mysql_get_server_info( $this->mConn );
@@ -2123,7 +2159,7 @@ class Database {
 	 * May be useful for very long batch queries such as
 	 * full-wiki dumps, where a single query reads out
 	 * over hours or days.
-	 * @param int $timeout in seconds
+	 * @param $timeout Integer in seconds
 	 */
 	public function setTimeout( $timeout ) {
 		$this->query( "SET net_read_timeout=$timeout" );
@@ -2133,9 +2169,9 @@ class Database {
 	/**
 	 * Read and execute SQL commands from a file.
 	 * Returns true on success, error string or exception on failure (depending on object's error ignore settings)
-	 * @param string $filename File name to open
-	 * @param callback $lineCallback Optional function called before reading each line
-	 * @param callback $resultCallback Optional function called for each MySQL result
+	 * @param $filename String: File name to open
+	 * @param $lineCallback Callback: Optional function called before reading each line
+	 * @param $resultCallback Callback: Optional function called for each MySQL result
 	 */
 	function sourceFile( $filename, $lineCallback = false, $resultCallback = false ) {
 		$fp = fopen( $filename, 'r' );
@@ -2150,9 +2186,9 @@ class Database {
 	/**
 	 * Read and execute commands from an open file handle
 	 * Returns true on success, error string or exception on failure (depending on object's error ignore settings)
-	 * @param string $fp File handle
-	 * @param callback $lineCallback Optional function called before reading each line
-	 * @param callback $resultCallback Optional function called for each MySQL result
+	 * @param $fp String: File handle
+	 * @param $lineCallback Callback: Optional function called before reading each line
+	 * @param $resultCallback Callback: Optional function called for each MySQL result
 	 */
 	function sourceStream( $fp, $lineCallback = false, $resultCallback = false ) {
 		$cmd = "";
@@ -2194,7 +2230,7 @@ class Database {
 				$cmd = $this->replaceVars( $cmd );
 				$res = $this->query( $cmd, __METHOD__ );
 				if ( $resultCallback ) {
-					call_user_func( $resultCallback, $res );
+					call_user_func( $resultCallback, $res, $this );
 				}
 
 				if ( false === $res ) {
@@ -2257,8 +2293,8 @@ class Database {
 	 * Abstracted from Filestore::lock() so child classes can implement for
 	 * their own needs.
 	 * 
-	 * @param string $lockName Name of lock to aquire
-	 * @param string $method Name of method calling us
+	 * @param $lockName String: Name of lock to aquire
+	 * @param $method String: Name of method calling us
 	 * @return bool
 	 */
 	public function lock( $lockName, $method ) {
@@ -2280,13 +2316,23 @@ class Database {
 	 * @todo fixme - Figure out a way to return a bool
 	 * based on successful lock release.
 	 * 
-	 * @param string $lockName Name of lock to release
-	 * @param string $method Name of method calling us
+	 * @param $lockName String: Name of lock to release
+	 * @param $method String: Name of method calling us
 	 */
 	public function unlock( $lockName, $method ) {
 		$lockName = $this->addQuotes( $lockName );
 		$result = $this->query( "SELECT RELEASE_LOCK($lockName)", $method );
 		$this->freeResult( $result );
+	}
+	
+	/**
+	 * Get search engine class. All subclasses of this
+	 * need to implement this if they wish to use searching.
+	 * 
+	 * @return String
+	 */
+	public function getSearchEngine() {
+		return "SearchMySQL";
 	}
 }
 
@@ -2407,8 +2453,8 @@ class DBError extends MWException {
 
 	/**
 	 * Construct a database error
-	 * @param Database $db The database object which threw the error
-	 * @param string $error A simple error message to be used for debugging
+	 * @param $db Database object which threw the error
+	 * @param $error A simple error message to be used for debugging
 	 */
 	function __construct( Database &$db, $error ) {
 		$this->db =& $db;
@@ -2500,7 +2546,13 @@ border=\"0\" ALT=\"Google\"></A>
 		}
 
 		$text = str_replace( '$1', $this->error, $noconnect );
-		$text .= wfGetSiteNotice();
+
+		/*
+		if ( $GLOBALS['wgShowExceptionDetails'] ) {
+			$text .= '</p><p>Backtrace:</p><p>' . 
+				nl2br( htmlspecialchars( $this->getTraceAsString() ) ) . 
+				"</p>\n";
+		}*/
 
 		if($wgUseFileCache) {
 			if($wgTitle) {
@@ -2521,13 +2573,13 @@ border=\"0\" ALT=\"Google\"></A>
 			$cache = new HTMLFileCache( $t );
 			if( $cache->isFileCached() ) {
 				// @todo, FIXME: $msg is not defined on the next line.
-				$msg = '<p style="color: red"><b>'.$msg."<br />\n" .
+				$msg = '<p style="color: red"><b>'.$text."<br />\n" .
 					$cachederror . "</b></p>\n";
 
 				$tag = '<div id="article">';
 				$text = str_replace(
 					$tag,
-					$tag . $msg,
+					$tag . $text,
 					$cache->fetchPageText() );
 			}
 		}

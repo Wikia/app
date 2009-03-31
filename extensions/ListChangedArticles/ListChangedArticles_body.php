@@ -21,27 +21,28 @@ class ListChangedArticles extends UnlistedSpecialPage
 		global $wgLang ;
 		$fname = "getListOfChangedArticlesSince" ;
 		wfProfileIn( $fname );
-		
+
 		$rowlimit = 30000 ; # The maximum number of results
-	
+
 		$ret = "" ;
 		$dbr =& wfGetDB( DB_SLAVE );
 		$since = $dbr->timestamp ( $since ) ;
 		$sql = "SELECT page_namespace,page_title FROM page WHERE page_touched >= \"{$since}\" LIMIT {$rowlimit}" ;
 		$res = $dbr->query ( $sql , $fname ) ;
-		
+
+		// FIXME: Warning:  mysql_num_rows(): supplied argument is not a valid MySQL result resource in extensions\ListChangedArticles\ListChangedArticles_body.php on line 34
 		if ( mysql_num_rows ( $res ) == $rowlimit ) { # Assuming there are more. Would be better with SQL_CALC_FOUND_ROWS (MySQL 4 and above)
 			mysql_free_result ( $res ) ;
 			wfProfileOut( $fname );
 			return "TOO MANY ROWS!" ;
 		}
-		
+
 		header( "Content-type: application/xml; charset=utf-8" );
 		$ret .= "<mediawiki>" ;
 		$ret .= "<articlelist>" ;
-		
+
 		while( $obj = $dbr->fetchObject( $res ) ) {
-			$t = Title::newFromText ( $obj->page_title , $obj->page_namespace ) ;			
+			$t = Title::newFromText ( $obj->page_title , $obj->page_namespace ) ;
 			$attribs = array () ;
 			$attribs["prefixed_title"] = $t->getPrefixedDBkey() ;
 			$attribs["title"] = $t->getDBkey() ;
@@ -49,10 +50,10 @@ class ListChangedArticles extends UnlistedSpecialPage
 			$attribs["namespace_name"] = $wgLang->getNsText ( $obj->page_namespace ) ;
 			$ret .= wfElement ( "article" , $attribs ) ;
 		}
-		
+
 		$ret .= "</articlelist>" ;
 		$ret .= "</mediawiki>" ;
-	
+
 		wfProfileOut( $fname );
 		return $ret ;
 	}

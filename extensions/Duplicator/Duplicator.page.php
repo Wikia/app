@@ -56,65 +56,70 @@ class SpecialDuplicator extends SpecialPage {
 		}
 
 		$this->setOptions( $wgRequest, $title );
-		$wgOut->addWikiText( wfMsgNoTrans( 'duplicator-header' ) );
-		$wgOut->addHtml( $this->buildForm() );
+		$wgOut->addWikiMsg( 'duplicator-header' );
+		$wgOut->addHTML( $this->buildForm() );
 
 		# If the token doesn't match or the form wasn't POSTed, stop
 		if( !$wgRequest->wasPosted() || !$wgUser->matchEditToken( $wgRequest->getVal( 'token' ), 'duplicator' ) )
 			return;
 
 		# Check we've got a valid source title
-		if( is_object( $this->sourceTitle ) ) {
-			# Check the source exists
-			if( $this->sourceTitle->exists() ) {
-				# Check we've got a valid destination title
-				if( is_object( $this->destTitle ) ) {
-					# Check the destination *does not* exist
-					if( !$this->destTitle->exists() ) {
-						# Check there aren't a hideous number of revisions
-						$dbr =& wfGetDB( DB_SLAVE );
-						$num = $dbr->selectField( 'revision', 'COUNT(*)', array( 'rev_page' => $this->sourceTitle->getArticleId() ), __METHOD__ );
-						if( $num <= $wgDuplicatorRevisionLimit ) {
-							# Attempt to perform the main duplicate op. first
-							if( $this->duplicate( $this->sourceTitle, $this->destTitle ) ) {
-								$success  = wfMsgNoTrans( 'duplicator-success', $this->sourceTitle->getPrefixedText(), $this->destTitle->getPrefixedText() ) . "\n\n";
-								$success .= '* ' . wfMsgNoTrans( 'duplicator-success-revisions', $wgLang->formatNum( $num ) ) . "\n";
-								# If there is a talk page and we've been asked to duplicate it, do so
-								if( $this->dealWithTalk() && $this->talk ) {
-									if( $this->duplicate( $this->sourceTitle->getTalkPage(), $this->destTitle->getTalkPage() ) ) {
-										$success .= '* ' . wfMsgNoTrans( 'duplicator-success-talkcopied' ) . "\n";
-									} else {
-										$success .= '* ' . wfMsgNoTrans( 'duplicator-success-talknotcopied' ) . "\n";
-									}
-								}
-								# Report success to the user
-								$wgOut->addWikiText( $success );
-							} else {
-								# Something went wrong, abort the entire operation
-								$wgOut->addWikiText( wfMsgNoTrans( 'duplicator-failed' ) );
-							}
-						} else {
-							# Revision count exceeds limit
-							$limit = $wgLang->formatNum( $wgDuplicatorRevisionLimit );
-							$actual = $wgLang->formatNum( $num );
-							$message = wfMsgNoTrans( 'duplicator-toomanyrevisions', $this->sourceTitle->getPrefixedText(), $actual, $limit );
-							$wgOut->addWikiText( $message );
-						}
+		if( !is_object( $this->sourceTitle ) ) {
+			# Invalid source title
+			$wgOut->addWikiMsg( 'duplicator-source-invalid' );
+			return;
+		}
+
+		# Check the source exists
+		if( !$this->sourceTitle->exists() ) {
+			# Source doesn't exist
+			$wgOut->addWikiMsg( 'duplicator-source-notexist', $this->source );
+			return;
+		}
+
+		# Check we've got a valid destination title
+		if( !is_object( $this->destTitle ) ) {
+			# Invalid destination title
+			$wgOut->addWikiMsg( 'duplicator-dest-invalid' );
+			return;
+		}
+
+		# Check the destination *does not* exist
+		if( $this->destTitle->exists() ) {
+			# Destination exists
+			$wgOut->addWikiMsg( 'duplicator-dest-exists', $this->destTitle->getPrefixedText() );
+			return;
+		}
+
+		# Check there aren't a hideous number of revisions
+		$dbr = wfGetDB( DB_SLAVE );
+		$num = $dbr->selectField( 'revision', 'COUNT(*)',array( 'rev_page' => $this->sourceTitle->getArticleId() ), __METHOD__ );
+		if( $num <= $wgDuplicatorRevisionLimit ) {
+			# Attempt to perform the main duplicate op. first
+			if( $this->duplicate( $this->sourceTitle, $this->destTitle ) ) {
+				$success  = wfMsgNoTrans( 'duplicator-success', $this->sourceTitle->getPrefixedText(), $this->destTitle->getPrefixedText() ) . "\n\n";
+				$success .= '* ' . wfMsgNoTrans( 'duplicator-success-revisions', $wgLang->formatNum( $num ) ) . "\n";
+				# If there is a talk page and we've been asked to duplicate it, do so
+				if( $this->dealWithTalk() && $this->talk ) {
+					if( $this->duplicate( $this->sourceTitle->getTalkPage(), $this->destTitle->getTalkPage() ) ) {
+						$success .= '* ' . wfMsgNoTrans( 'duplicator-success-talkcopied' ) . "\n";
 					} else {
-						# Destination exists
-						$wgOut->addWikiText( wfMsgNoTrans( 'duplicator-dest-exists', $this->destTitle->getPrefixedText() ) );
+						$success .= '* ' . wfMsgNoTrans( 'duplicator-success-talknotcopied' ) . "\n";
 					}
-				} else {
-					# Invalid destination title
-					$wgOut->addWikiText( wfMsgNoTrans( 'duplicator-dest-invalid' ) );
 				}
+				# Report success to the user
+				$parsed = $wgOut->parse( $success, /*linestart*/true, /*uilang*/true );
+				$wgOut->addHTML( $parsed );
 			} else {
-				# Source doesn't exist
-				$wgOut->addWikiText( wfMsgNoTrans( 'duplicator-source-notexist', $this->source ) );
+				# Something went wrong, abort the entire operation
+				$wgOut->addWikiMsg( 'duplicator-failed' );
 			}
 		} else {
-			# Invalid source title
-			$wgOut->addWikiText( wfMsgNoTrans( 'duplicator-source-invalid' ) );
+			# Revision count exceeds limit
+			$limit = $wgLang->formatNum( $wgDuplicatorRevisionLimit );
+			$actual = $wgLang->formatNum( $num );
+			$stitle = $this->sourceTitle->getPrefixedText();
+			$wgOut->addWikiMsg( 'duplicator-toomanyrevisions', $stitle, $actual, $limit );
 		}
 
 	}
@@ -197,7 +202,7 @@ class SpecialDuplicator extends SpecialPage {
 		global $wgUser, $wgBot;
 		if( !$source->exists() || $dest->exists() )
 			return false; # Source doesn't exist, or destination does
-		$dbw =& wfGetDB( DB_MASTER );
+		$dbw = wfGetDB( DB_MASTER );
 		$dbw->begin();
 		$sid = $source->getArticleId();
 		# Create an article representing the destination page and save it

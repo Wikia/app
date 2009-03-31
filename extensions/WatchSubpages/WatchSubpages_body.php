@@ -8,6 +8,16 @@ class WatchSubpages extends SpecialPage {
 	function execute( $par ) {
 		global $wgRequest, $wgOut, $wgUser;
 
+		if( !$wgUser->isAllowed('watchsubpages') ) {
+			$wgOut->permissionRequired('watchsubpages');
+			return;
+		}
+		
+		if ( wfReadOnly() ) {
+			$wgOut->readOnlyPage();
+			return;
+		}
+		
 		wfLoadExtensionMessages( 'WatchSubpages' );
 
 		$namespace = $wgRequest->getInt( 'namespace' );
@@ -16,16 +26,12 @@ class WatchSubpages extends SpecialPage {
 			$guidename = $guide;
 		} elseif ( isset( $par ) ) {
 			$guidename = $par;
+		} else {
+			$guidename = '';
 		}
 
 		$this->setHeaders();
 
-#		$guidename = Title::newFromText( $guidename , NS_MAIN );
-
-		if ( wfReadOnly() ) {
-			$wgOut->readOnlyPage();
-			return;
-		}
 		if( $wgRequest->wasPosted() && $wgUser->matchEditToken( $wgRequest->getVal( 'token' ), 'watchsubpages' ) ) {
 			$titles = $this->extractTitles( $wgRequest->getArray( 'titles' ) );
 			$current = $this->getWatchlist( $wgUser );
@@ -173,7 +179,7 @@ class WatchSubpages extends SpecialPage {
 
 		$self = SpecialPage::getTitleFor( 'Watchsubpages' );
 		# Input boxes at the top
-		$form .= Xml::openElement( 'div', array( 'class' => 'namespaceoptions' ) );
+		$form = Xml::openElement( 'div', array( 'class' => 'namespaceoptions' ) );
 		$form .= Xml::openElement( 'form', array( 'method' => 'get', 'action' => $wgScript ) );
 		$form .= Xml::hidden( 'title', $self->getPrefixedText() );
 		$form .= Xml::openElement( 'table', array( 'id' => 'nsselect', 'class' => 'allpages' ) );
@@ -198,22 +204,24 @@ class WatchSubpages extends SpecialPage {
 		$form .= Xml::closeElement( 'form' );
 		$form .= Xml::closeElement( 'div' );
 
-		$form .= Xml::openElement( 'form', array( 'method' => 'post',
-			'action' => $self->getLocalUrl( 'guide=' . $guide ) ) );
-		$form .= Xml::hidden( 'token', $user->editToken( 'watchsubpages' ) );
-		$form .= '<fieldset><legend>'.wfMsg('watchsubpages-addtitles').'</legend>';
-		$form .= wfMsg('watchsubpages-form');
-		foreach( $this->getPrefixlistInfo( $namespace, $guide . '/' ) as $namespace => $pages ) {
-			$form .= '<h2>' . $this->getNamespaceHeading( $namespace ) . '</h2>';
-			$form .= '<ul>';
-			foreach( $pages as $dbkey => $redirect ) {
-				$title = Title::makeTitleSafe( $namespace, $dbkey );
-				$form .= $this->buildLine( $title, $redirect, $user->getSkin() );
+		if($guide !== '') {
+			$form .= Xml::openElement( 'form', array( 'method' => 'post',
+				'action' => $self->getLocalUrl( 'guide=' . $guide ) ) );
+			$form .= Xml::hidden( 'token', $user->editToken( 'watchsubpages' ) );
+			$form .= '<fieldset><legend>'.wfMsg('watchsubpages-addtitles').'</legend>';
+			$form .= wfMsg('watchsubpages-form');
+			foreach( $this->getPrefixlistInfo( $namespace, $guide . '/' ) as $namespace => $pages ) {
+				$form .= '<h2>' . $this->getNamespaceHeading( $namespace ) . '</h2>';
+				$form .= '<ul>';
+				foreach( $pages as $dbkey => $redirect ) {
+					$title = Title::makeTitleSafe( $namespace, $dbkey );
+					$form .= $this->buildLine( $title, $redirect, $user->getSkin() );
+				}
+				$form .= '</ul>';
 			}
-			$form .= '</ul>';
+			$form .= '<p>' . Xml::submitButton( wfMsg('watchsubpages-addtitles') ) . '</p>';
+			$form .= '</fieldset></form>';
 		}
-		$form .= '<p>' . Xml::submitButton( wfMsg('watchsubpages-addtitles') ) . '</p>';
-		$form .= '</fieldset></form>';
 		$output->addHTML( $form );
 	}
 

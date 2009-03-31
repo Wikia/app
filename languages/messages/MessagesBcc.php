@@ -9,101 +9,128 @@
 
 $fallback = 'fa';
 
-$skinNames = array(
-	'standard'    => 'کلاسیک',
-	'nostalgia'   => 'نوستالجیک',
-	'cologneblue' => 'نیلی کولاجن',
-	'monobook'    => 'منوبوک',
-	'myskin'      => 'منی جلد',
-	'chick'       => 'شیک',
-	'simple'      => 'ساده',
-	'modern'      => 'مدرن',
+
+$namespaceNames = array(
+	NS_MEDIA            => 'مدیا',
+	NS_SPECIAL          => 'حاص',
+	NS_TALK             => 'گپ',
+	NS_USER             => 'کاربر',
+	NS_USER_TALK        => 'گپ_کاربر',
+	NS_PROJECT_TALK     => 'گپ_$1',
+	NS_FILE             => 'عکس',
+	NS_FILE_TALK        => 'گپ_عکس',
+	NS_MEDIAWIKI        => 'مدیاویکی',
+	NS_MEDIAWIKI_TALK   => 'گپ_مدیاویکی',
+	NS_TEMPLATE         => 'تمپلت',
+	NS_TEMPLATE_TALK    => 'گپ_تمپلت',
+	NS_HELP             => 'کمک',
+	NS_HELP_TALK        => 'گپ_راهنما',
+	NS_CATEGORY         => 'دسته',
+	NS_CATEGORY_TALK    => 'گپ_دسته',
+);
+
+$namespaceAliases = array(
+	'مدیا' => NS_MEDIA,
+	'ویژه' => NS_SPECIAL,
+	'بحث' => NS_TALK,
+	'کاربر' => NS_USER,
+	'بحث_کاربر' => NS_USER_TALK,
+	'بحث_$1' => NS_PROJECT_TALK,
+	'تصویر' => NS_FILE,
+	'بحث_تصویر' => NS_FILE_TALK,
+	'مدیاویکی' => NS_MEDIAWIKI,
+	'بحث_مدیاویکی' => NS_MEDIAWIKI_TALK,
+	'الگو' => NS_TEMPLATE,
+	'بحث_الگو' => NS_TEMPLATE_TALK,
+	'راهنما' => NS_HELP,
+	'بحث_راهنما' => NS_HELP_TALK,
+	'رده' => NS_CATEGORY,
+	'بحث_رده' => NS_CATEGORY_TALK,
 );
 
 $specialPageAliases = array(
-	'DoubleRedirects'         => array( 'دوبل غیر مستقیم' ),
-	'BrokenRedirects'         => array( 'پرشتگین غیرمستقیم' ),
-	'Disambiguations'         => array( 'رفع ابهام' ),
-	'Userlogin'               => array( 'ورودکاربر' ),
-	'Userlogout'              => array( 'دربیگ کاربر' ),
-	'CreateAccount'           => array( 'شرکتن حساب' ),
-	'Preferences'             => array( 'ترجیحات' ),
-	'Watchlist'               => array( 'لیست چارگ' ),
-	'Recentchanges'           => array( 'نوکین تغییرات' ),
-	'Upload'                  => array( 'آپلود' ),
-	'Imagelist'               => array( 'لیست عکس' ),
-	'Newimages'               => array( 'نوکین عکسان' ),
-	'Listusers'               => array( 'لیست کاربر' ),
-	'Listgrouprights'         => array( 'لیست حقوق گروه' ),
-	'Statistics'              => array( 'آمار' ),
-	'Randompage'              => array( 'صفحه تصادفی' ),
-	'Lonelypages'             => array( 'صفحات یتیم' ),
-	'Uncategorizedpages'      => array( 'صفحات بی دسته' ),
-	'Uncategorizedcategories' => array( 'دستجات بی دسته' ),
-	'Uncategorizedimages'     => array( 'عکسان بی دسته' ),
-	'Uncategorizedtemplates'  => array( 'تمپلتان بی دسته' ),
-	'Unusedcategories'        => array( 'بی استفاده این دسته' ),
-	'Unusedimages'            => array( 'بی استفاده این عکس' ),
-	'Wantedpages'             => array( 'لوٹتگین صفحات' ),
-	'Wantedcategories'        => array( 'لوٹتگین دسته' ),
-	'Missingfiles'            => array( 'گارین فایل' ),
-	'Mostlinked'              => array( 'گیشتر لینک بوتت' ),
-	'Mostlinkedcategories'    => array( 'دستجات گیشتر لینک بوتگین' ),
-	'Mostlinkedtemplates'     => array( 'تمپلتان گیشتر لینک بوتگین' ),
-	'Mostcategories'          => array( 'گیشترین دستجات' ),
-	'Mostimages'              => array( 'گیشترین عکس' ),
-	'Mostrevisions'           => array( 'گیشترین بازبینی' ),
-	'Fewestrevisions'         => array( 'کمترین بازبینی' ),
-	'Shortpages'              => array( 'هوردین صفحات' ),
-	'Longpages'               => array( 'مزنین صفحات' ),
-	'Newpages'                => array( 'نوکین صفحات' ),
-	'Ancientpages'            => array( 'صفحات قدیمی' ),
-	'Deadendpages'            => array( 'مرتگین صفحات' ),
-	'Protectedpages'          => array( 'صفحات محافظتی' ),
-	'Protectedtitles'         => array( 'عناوین محافظتی' ),
-	'Allpages'                => array( 'کل صفحات' ),
-	'Prefixindex'             => array( 'ایندکس پیشوند' ),
-	'Ipblocklist'             => array( 'لیست محدوددیت آی پی' ),
-	'Specialpages'            => array( 'حاصین صفحات' ),
-	'Contributions'           => array( 'مشارکتان' ),
-	'Emailuser'               => array( 'ایمیل کاربر' ),
-	'Confirmemail'            => array( 'تایید ایمیل' ),
-	'Whatlinkshere'           => array( 'ای لینکی ادان هست' ),
-	'Recentchangeslinked'     => array( 'نوکین تغییرات لینک' ),
-	'Movepage'                => array( 'جاه په جاهی صفحه' ),
-	'Blockme'                 => array( 'محدودیت من' ),
-	'Booksources'             => array( 'منابع کتاب' ),
-	'Categories'              => array( 'دستجات' ),
-	'Export'                  => array( 'درگیزگ' ),
-	'Version'                 => array( 'نسخه' ),
-	'Allmessages'             => array( 'کل کوله یان' ),
-	'Log'                     => array( 'ورودان' ),
-	'Blockip'                 => array( 'محدود آی پی' ),
-	'Undelete'                => array( 'حذف نکتن' ),
-	'Import'                  => array( 'وارد' ),
-	'Lockdb'                  => array( 'کبلدب' ),
-	'Unlockdb'                => array( 'کلب نه کتن دب' ),
-	'Userrights'              => array( 'حقوق کاربر' ),
-	'MIMEsearch'              => array( 'گردگ میام' ),
-	'FileDuplicateSearch'     => array( 'گردگ کپی فایل' ),
-	'Unwatchedpages'          => array( 'نه چارتگین صفحه' ),
-	'Listredirects'           => array( 'لیست غیر مستقیمان' ),
-	'Revisiondelete'          => array( 'حذف بازبینی' ),
-	'Unusedtemplates'         => array( 'تمپلتان بی استفاده' ),
-	'Randomredirect'          => array( 'غیرمستقیم تصادفی' ),
-	'Mypage'                  => array( 'منی صفحه' ),
-	'Mytalk'                  => array( 'منی گپ' ),
-	'Mycontributions'         => array( 'منی مشارکت' ),
-	'Listadmins'              => array( 'لیست مدیران' ),
-	'Listbots'                => array( 'لیست روباتان' ),
-	'Popularpages'            => array( 'مردمی صفحات' ),
-	'Search'                  => array( 'گردگ' ),
-	'Resetpass'               => array( 'تریتگ رمز' ),
-	'Withoutinterwiki'        => array( 'بی بین ویکی' ),
-	'MergeHistory'            => array( 'چندوبند تاریح' ),
-	'Filepath'                => array( 'مسیر فایل' ),
-	'Invalidateemail'         => array( 'نامعتبرین ایمیل' ),
-	'Blankpage'               => array( 'صفحه هالیک' ),
+	'DoubleRedirects'           => array( 'دوبل غیر مستقیم' ),
+	'BrokenRedirects'           => array( 'پرشتگین غیرمستقیم' ),
+	'Disambiguations'           => array( 'رفع ابهام' ),
+	'Userlogin'                 => array( 'ورودکاربر' ),
+	'Userlogout'                => array( 'دربیگ کاربر' ),
+	'CreateAccount'             => array( 'شرکتن حساب' ),
+	'Preferences'               => array( 'ترجیحات' ),
+	'Watchlist'                 => array( 'لیست چارگ' ),
+	'Recentchanges'             => array( 'نوکین تغییرات' ),
+	'Upload'                    => array( 'آپلود' ),
+	'Listfiles'                 => array( 'لیست عکس' ),
+	'Newimages'                 => array( 'نوکین عکسان' ),
+	'Listusers'                 => array( 'لیست کاربر' ),
+	'Listgrouprights'           => array( 'لیست حقوق گروه' ),
+	'Statistics'                => array( 'آمار' ),
+	'Randompage'                => array( 'صفحه تصادفی' ),
+	'Lonelypages'               => array( 'صفحات یتیم' ),
+	'Uncategorizedpages'        => array( 'صفحات بی دسته' ),
+	'Uncategorizedcategories'   => array( 'دستجات بی دسته' ),
+	'Uncategorizedimages'       => array( 'عکسان بی دسته' ),
+	'Uncategorizedtemplates'    => array( 'تمپلتان بی دسته' ),
+	'Unusedcategories'          => array( 'بی استفاده این دسته' ),
+	'Unusedimages'              => array( 'بی استفاده این عکس' ),
+	'Wantedpages'               => array( 'لوٹتگین صفحات' ),
+	'Wantedcategories'          => array( 'لوٹتگین دسته' ),
+	'Mostlinked'                => array( 'گیشتر لینک بوتت' ),
+	'Mostlinkedcategories'      => array( 'دستجات گیشتر لینک بوتگین' ),
+	'Mostlinkedtemplates'       => array( 'تمپلتان گیشتر لینک بوتگین' ),
+	'Mostcategories'            => array( 'گیشترین دستجات' ),
+	'Mostimages'                => array( 'گیشترین عکس' ),
+	'Mostrevisions'             => array( 'گیشترین بازبینی' ),
+	'Fewestrevisions'           => array( 'کمترین بازبینی' ),
+	'Shortpages'                => array( 'هوردین صفحات' ),
+	'Longpages'                 => array( 'مزنین صفحات' ),
+	'Newpages'                  => array( 'نوکین صفحات' ),
+	'Ancientpages'              => array( 'صفحات قدیمی' ),
+	'Deadendpages'              => array( 'مرتگین صفحات' ),
+	'Protectedpages'            => array( 'صفحات محافظتی' ),
+	'Protectedtitles'           => array( 'عناوین محافظتی' ),
+	'Allpages'                  => array( 'کل صفحات' ),
+	'Prefixindex'               => array( 'ایندکس پیشوند' ),
+	'Ipblocklist'               => array( 'لیست محدوددیت آی پی' ),
+	'Specialpages'              => array( 'حاصین صفحات' ),
+	'Contributions'             => array( 'مشارکتان' ),
+	'Emailuser'                 => array( 'ایمیل کاربر' ),
+	'Confirmemail'              => array( 'تایید ایمیل' ),
+	'Whatlinkshere'             => array( 'ای لینکی ادان هست' ),
+	'Recentchangeslinked'       => array( 'نوکین تغییرات لینک' ),
+	'Movepage'                  => array( 'جاه په جاهی صفحه' ),
+	'Blockme'                   => array( 'محدودیت من' ),
+	'Booksources'               => array( 'منابع کتاب' ),
+	'Categories'                => array( 'دستجات' ),
+	'Export'                    => array( 'درگیزگ' ),
+	'Version'                   => array( 'نسخه' ),
+	'Allmessages'               => array( 'کل کوله یان' ),
+	'Log'                       => array( 'ورودان' ),
+	'Blockip'                   => array( 'محدود آی پی' ),
+	'Undelete'                  => array( 'حذف نکتن' ),
+	'Import'                    => array( 'وارد' ),
+	'Lockdb'                    => array( 'کبلدب' ),
+	'Unlockdb'                  => array( 'کلب نه کتن دب' ),
+	'Userrights'                => array( 'حقوق کاربر' ),
+	'MIMEsearch'                => array( 'گردگ میام' ),
+	'FileDuplicateSearch'       => array( 'گردگ کپی فایل' ),
+	'Unwatchedpages'            => array( 'نه چارتگین صفحه' ),
+	'Listredirects'             => array( 'لیست غیر مستقیمان' ),
+	'Revisiondelete'            => array( 'حذف بازبینی' ),
+	'Unusedtemplates'           => array( 'تمپلتان بی استفاده' ),
+	'Randomredirect'            => array( 'غیرمستقیم تصادفی' ),
+	'Mypage'                    => array( 'منی صفحه' ),
+	'Mytalk'                    => array( 'منی گپ' ),
+	'Mycontributions'           => array( 'منی مشارکت' ),
+	'Listadmins'                => array( 'لیست مدیران' ),
+	'Listbots'                  => array( 'لیست روباتان' ),
+	'Popularpages'              => array( 'مردمی صفحات' ),
+	'Search'                    => array( 'گردگ' ),
+	'Resetpass'                 => array( 'تریتگ رمز' ),
+	'Withoutinterwiki'          => array( 'بی بین ویکی' ),
+	'MergeHistory'              => array( 'چندوبند تاریح' ),
+	'Filepath'                  => array( 'مسیر فایل' ),
+	'Invalidateemail'           => array( 'نامعتبرین ایمیل' ),
+	'Blankpage'                 => array( 'صفحه هالیک' ),
 );
 
 $messages = array(
@@ -144,16 +171,17 @@ $messages = array(
 'tog-watchlisthideown'        => 'منی اصلاحات آ چه لیست چارگ پناه کن',
 'tog-watchlisthidebots'       => 'اصلاحات بوت چه لیست چارگ پناه کن',
 'tog-watchlisthideminor'      => 'هوردین اصلاحات چه لیست چارگ پناه کن',
+'tog-watchlisthideliu'        => 'اصلاحات چه وارد بوتگین کاربران چه لیست چارگان پناه کن',
+'tog-watchlisthideanons'      => 'اصلاحات ناشناسین کاربرانء چه لیست چارگ پناه کن',
 'tog-nolangconversion'        => 'غیر فعال کتن بدل کتن مغایرت آن',
 'tog-ccmeonemails'            => 'په من یک کپی چه ایمیل آنی که من په دگه کاربران راه داته دیم دی',
 'tog-diffonly'                => 'چیر تفاوت محتوای صفحه ی پیش مدار',
 'tog-showhiddencats'          => 'پناه ین دسته یان پیش دار',
+'tog-norollbackdiff'          => 'تفاوتء حذف کن بعد چه اجرای یک ترینگ',
 
 'underline-always'  => 'یکسره',
 'underline-never'   => 'هچ وهد',
 'underline-default' => 'پیشفرضین بروزر',
-
-'skinpreview' => '(بازبینی)',
 
 # Dates
 'sunday'        => 'یک شنبه',
@@ -247,7 +275,7 @@ $messages = array(
 'mytalk'         => 'منی گپ',
 'anontalk'       => 'گپ کن گون ای آی پی',
 'navigation'     => 'گردگ',
-'and'            => 'و',
+'and'            => '&#32;و',
 
 # Metadata in edit box
 'metadata_help' => 'متادیتا',
@@ -284,14 +312,14 @@ $messages = array(
 'talkpagelinktext'  => 'گپ کن',
 'specialpage'       => 'حاصین صفحه',
 'personaltools'     => 'شخصی وسایل',
-'postcomment'       => 'یک نظر دیم دی',
+'postcomment'       => 'نوکین بخش',
 'articlepage'       => 'محتوا صفحه به گند',
 'talk'              => 'بحث',
 'views'             => 'چارگان',
 'toolbox'           => 'جعبه ابزار',
 'userpage'          => 'به گند صفحه کاربر',
 'projectpage'       => 'به گند صفحه',
-'imagepage'         => 'به گند صفحه',
+'imagepage'         => 'به چار فایل صفحه ءَ',
 'mediawikipage'     => 'به گند صفحه کوله',
 'templatepage'      => 'به گند صفحه تمپلت آ',
 'viewhelppage'      => 'به گند صفحه کمک آ',
@@ -310,8 +338,6 @@ $messages = array(
 # All link text and link target definitions of links into project namespace that get used by other message strings, with the exception of user group pages (see grouppage) and the disambiguation template definition (see disambiguations).
 'aboutsite'            => 'باره {{SITENAME}}',
 'aboutpage'            => 'Project:باره',
-'bugreports'           => 'گزارشات باگ',
-'bugreportspage'       => 'Project:گزارشات باگ',
 'copyright'            => 'محتوا موجودانت تحت $1.',
 'copyrightpagename'    => 'حق کپی{{SITENAME}}',
 'copyrightpage'        => '{{ns:project}}:حق کپی',
@@ -334,9 +360,7 @@ $messages = array(
 
 'badaccess'        => 'حطا اجازت',
 'badaccess-group0' => 'شما مجاز نهیت عملی که درخواست کت اجرا کنیت',
-'badaccess-group1' => 'عملی که ما درخواست کتت مربوط به گروه کابران $1.',
-'badaccess-group2' => 'کاری که شما درخواست کت محدود په کاربران ته یکی چه گروهان $1.',
-'badaccess-groups' => 'کاری که شما درخواست کت محدود په کابران ته یکی چه گروهان $1.',
+'badaccess-groups' => 'کاری که شما درخواست کت محدود په کابران ته یکی چه گروهان {{PLURAL:$2|گروه|یکی چه گروهان}}: $1.',
 
 'versionrequired'     => 'نسخه $1. مدیا وی کی نیازنت',
 'versionrequiredtext' => 'نسخه $1 چه مدیا وی کی نیازنت په استفاده ای صفحه. بچار [[Special:Version|version page]].',
@@ -350,6 +374,8 @@ $messages = array(
 'editsection'             => 'اصلاح',
 'editold'                 => 'اصلاح',
 'viewsourceold'           => 'به گند منبع ا',
+'editlink'                => 'اصلاح',
+'viewsourcelink'          => 'چارگ منبع',
 'editsectionhint'         => ': $1اصلاح انتخاب',
 'toc'                     => 'محتوا',
 'showtoc'                 => 'پیش دار',
@@ -366,13 +392,13 @@ $messages = array(
 'page-atom-feed'          => 'منبع "$1" Atom',
 'feed-atom'               => 'اتم',
 'feed-rss'                => 'ار اس اس',
-'red-link-title'          => '$1(هنگت نویسگ نه بیته)',
+'red-link-title'          => '$1 (هنگت  نیستن)',
 
 # Short words for each namespace, by default used in the namespace tab in monobook
 'nstab-main'      => 'صفحه',
 'nstab-user'      => 'صفحه کاربر',
 'nstab-media'     => 'صفحه مدیا',
-'nstab-special'   => 'حاصین',
+'nstab-special'   => 'حاصین صفحات',
 'nstab-project'   => 'صفحه پروژه',
 'nstab-image'     => 'فایل',
 'nstab-mediawiki' => 'کوله',
@@ -382,7 +408,9 @@ $messages = array(
 
 # Main script and global functions
 'nosuchaction'      => 'نی چشین عمل',
-'nosuchactiontext'  => 'کاری که گون URL مشخص بیته گون وی کی پچاه آرگ نبیت',
+'nosuchactiontext'  => 'ای کاری که گون اای یو ار ال مشخص بیتت نامشخص انت.
+شما بلکین یو‌ارال شر ننوشتت یا رند چه هرابیت لینکی اتکگیت
+شی بلکین یک خطایی ته برنامه سایت {{SITENAME}} پیش داریت.',
 'nosuchspecialpage' => 'نی چشین حاصین صفحه',
 'nospecialpagetext' => "<big>'''شما یک نامعتبرین صفحه حاصین درخواست کت.'''</big>
 
@@ -436,7 +464,6 @@ $1',
 'badtitle'             => 'عنوان بد',
 'badtitletext'         => 'لوٹتگین عنوان صفحه نامعتبر ،هالیک یا یک عنوان هرابین لینک بین زبانی یا بین وی کی انت.
 آی شاید شامل یک یا گیشترین کاراکترانت که ته عناوین استفاده نه بنت.',
-'perfdisabled'         => 'شرمنده! ای ویژگی الان غیر فعالنت شاید شی پیش داریت که دیتابیس هاموشنت که هچ کس نه تونیت وی کی استفاده کنت.',
 'perfcached'           => 'جهلیگین دیتا ذخیره بیتگنت و شاید نوک می بنت.',
 'perfcachedts'         => 'جهلیگین دیتا ذخیره بیتگنت و اهرین په روچ بیگ $1.',
 'querypage-no-updates' => 'په روچ بیگان په ای صفحه الان غیر فعالنت. دیتا ادان الان نوکین نهنت.',
@@ -453,7 +480,7 @@ Query: $2',
 'protectedinterface'   => 'ای صفحه فراهم آریت مداخله ی متنی په برنامه و کبل بیتت په جلوگیری چه سو استفاده.',
 'editinginterface'     => "'''هوژاری:''' شما یک صفحه ای اصلاح کنیت که به عنوان مداخله گر متنی برنامه استفاده بیت.
 تغییرات ای صفحه کاربرد مداخله گر په دگه کابران تاثیر هلیت.
-  [http://translatewiki.net/wiki/Main_Page?setlang=en Betawiki],  په ترجمه یان لطفا توجه کنیت په استفاده پروژه ملکی کتن مدیا وی کی",
+  [http://translatewiki.net/wiki/Main_Page?setlang=en translatewiki.net],  په ترجمه یان لطفا توجه کنیت په استفاده پروژه ملکی کتن مدیا وی کی",
 'sqlhidden'            => '(SQL درخواست پناهین)',
 'cascadeprotected'     => 'ای صفحه محافظت بیت چه اصلاح چرا که آیی شامل جهلیگین {{PLURAL:$1|صفحه, که|صفحات, که}} محافظتی گون the "cascading" option turned on:
 $2',
@@ -464,16 +491,16 @@ $2',
 ای دلیل دییگ بیتت ''$2''.",
 
 # Virus scanner
-'virus-badscanner'     => 'تنظیم بد: ناشناسین اسکنر ویروس: <i>$1</i>',
+'virus-badscanner'     => "تنظیم بد: ناشناسین اسکنر ویروس: ''$1''",
 'virus-scanfailed'     => 'اسکن پروش وارت(کد $1)',
 'virus-unknownscanner' => 'ناشناسین آنتی ویروس:',
 
 # Login and logout pages
 'logouttitle'                => 'دربیگ کاربر',
-'logouttext'                 => '<strong> شما الان در بوتت.</strong>
+'logouttext'                 => "''' شما الان در بوتت.'''
 
 شما تونیت چه {{SITENAME}} ناشناس استفاده کنیت یا شما تونیت دگه وراد بیت گون دگه یا هما کاربر.
-توجه بیت که لهتی صفحات شاید په داب هما وهدی که شما وراد بوتتیت پیش درگ بند تا وهدی که ذخیره بروزر وتی پاک کنیت.',
+توجه بیت که لهتی صفحات شاید په داب هما وهدی که شما وراد بوتتیت پیش درگ بند تا وهدی که ذخیره بروزر وتی پاک کنیت.",
 'welcomecreation'            => '== وش آتکی،$1! ==
 شمی حساب شر بیت.
  مه شموشیت وتی [[Special:Preferences|{{SITENAME}} ترجیحات]] ترجیحات عوض کنیت',
@@ -484,7 +511,6 @@ $2',
 'remembermypassword'         => 'می ورود ته ای کامپیوتر په حاطر بدار',
 'yourdomainname'             => 'شمی دامین',
 'externaldberror'            => 'یک حطا دیتابیس تصدیق هویت دراییگی هست یا شما را اجازت نیست وتی حساب درایی په روچ کنیت.',
-'loginproblem'               => '<b>یک مشکلی گون شمی ورود هستت.</b><br /> دگه جهد کن!',
 'login'                      => 'ورود',
 'nav-login-createaccount'    => 'ورود/شرکتن حساب',
 'loginprompt'                => 'شما بایدن په وارد بیگ ته {{SITENAME}} کوکی فعال کنیت',
@@ -510,8 +536,8 @@ $2',
 'yourvariant'                => 'مغایر:',
 'yournick'                   => 'امضا:',
 'badsig'                     => 'نامعتبرین حامین امضا تگان HTML چک کن',
-'badsiglength'               => 'امضا باز مزنتت.
-آی بایدن چوشین  $1 {{PLURAL:$1|character|کاراکتران}}.',
+'badsiglength'               => 'شمل امضا باز مزنتت.
+آی بایدن   $1 {{PLURAL:$1|کارکاتر|کاراکتران}} مزن تر مبیت',
 'email'                      => 'ایمیل',
 'prefs-help-realname'        => 'راستین  نام اهتیاریتن. اگه شما یکی انتخاب کنیت شی په شمی کارء نشان هلگ په روت.',
 'loginerror'                 => 'حطا ورود',
@@ -528,8 +554,9 @@ $2',
 'noname'                     => 'شما یک معتبرین نام کاربر مشخص نه کتت.',
 'loginsuccesstitle'          => 'ورود موفقیت آمیز',
 'loginsuccess'               => "''''شما الان وارد {{SITENAME}} په عنوان \"\$1\".'''",
-'nosuchuser'                 => 'هچ کاربری گون نام "$1".
-وتی املايا چک کنیت یا [[Special:UserLogin/signup|نوکین حسابی شرکنیت]]',
+'nosuchuser'                 => 'هچ کاربری گون نام "$1" نیستن.
+کاربری نام حرفش په هور و مزنی حساس انت.
+وتی املايا چک کنیت یا [[Special:UserLogin/signup|نوکین حسابی شرکنیت]].',
 'nosuchusershort'            => 'هچ کاربری گون نام  "<nowiki>$1</nowiki>"نیستن.
 وتی املايا کنترل کنیت',
 'nouserspecified'            => 'شما باید یک نام کاربری مشخص کنیت.',
@@ -554,9 +581,9 @@ $2',
 'throttled-mailpassword'     => 'یک کلمه رمز یاد آوری پیش تر دیم دهگ بوتت ته  {{PLURAL:$1|ساعت|$1 ساعت}}  ساعت پیش.
 په جلوگرگ چه سو استفاده فقط یک کلمه رمز یاد آوری هر$1  ساعت دیم دهگ بیت.',
 'mailerror'                  => 'حطا دیم دهگ ایمیل:$1',
-'acct_creation_throttle_hit' => 'شرمنده! شما پیشتر $1  حسابی شر کتت.
-شما نه تونیت گیشتر شرکنیت.',
-'emailauthenticated'         => 'شمی آدرس ایمیل ته $1  تصدیق بوت.',
+'acct_creation_throttle_hit' => 'شرمنده، لهتی پیسرگین چارون گون شمی آی زیگ لهتی {{PLURAL:$1|1 حساب|$1 حساب}}   شر کتت , که گیشترین حد مجاز ته ای زمان انت.
+هنچوش چاروکان گون ای آی پی ن توننت گیشتر الان حساب شرکننت.',
+'emailauthenticated'         => ' $3 شمی آدرس ایمیل ته $2  تصدیق بوت.',
 'emailnotauthenticated'      => 'په آدرس ایمیل هنگت تصدیق نه بوتت.
 هچ ایمیلی په جهلیگین ویژگی دیم دهگ نه بیت.',
 'noemailprefs'               => 'یک آدرس ایمیل په کار کتن ای ویژگیان مشخص کنیت.',
@@ -570,20 +597,28 @@ $2',
 شما بایدن وارد بیت و وتی کلمه رمز الان عوض کنیت.
 
 شما شاید ای پیام شموشیت اگه ای ای حساب گون حطا شر بوتت.',
+'login-throttled'            => 'شما په کلمه رمز ای حساب باز جهد کتت نوکی. لطفا صبر کنیت و. رندا جهد کنیت.',
 'loginlanguagelabel'         => 'زبان: $1',
 
 # Password reset dialog
-'resetpass'               => 'عوض کتن کلمه رمز حساب',
-'resetpass_announce'      => 'شما گون یک هنوکین کد ایمیل بوتگین وارد بوتءیت.
+'resetpass'                 => 'کلمه رمزءَ‌عوض کن',
+'resetpass_announce'        => 'شما گون یک هنوکین کد ایمیل بوتگین وارد بوتءیت.
 په تمام کتن ورود، شما باید یک نوکین کلمه رمز اداں شرکنیت',
-'resetpass_text'          => '<!-- متن دان هورکن -->',
-'resetpass_header'        => 'حساب کلمه رمزءَ عوض کن',
-'resetpass_submit'        => 'تنظیم کلمه رمز و ورود',
-'resetpass_success'       => 'شمی کلمه رمز گون موفقیت عوض بون! هنو شما وارد بیگیت...',
-'resetpass_bad_temporary' => 'نامعتبر هنوکین کلمه رمز.
+'resetpass_text'            => '<!-- متن دان هورکن -->',
+'resetpass_header'          => 'حساب کلمه رمزءَ عوض کن',
+'oldpassword'               => 'کلمه رمز کهنگین:',
+'newpassword'               => 'نوکین کلمه رمز:',
+'retypenew'                 => 'کلمه رمز دگه بنویس',
+'resetpass_submit'          => 'تنظیم کلمه رمز و ورود',
+'resetpass_success'         => 'شمی کلمه رمز گون موفقیت عوض بون! هنو شما وارد بیگیت...',
+'resetpass_bad_temporary'   => 'نامعتبر هنوکین کلمه رمز.
 شما شاید پیشتر وتی کلمه رمز آ عوض کتت یا یک نوکین هنوکین کلمه رمز لوٹتگیت.',
-'resetpass_forbidden'     => 'کلمات رمز نه توننت عوض بنت.',
-'resetpass_missing'       => 'هچ فرم دیتا',
+'resetpass_forbidden'       => 'کلمات رمز نه توننت عوض بنت.',
+'resetpass-no-info'         => 'په مستقیمین دسترسی په ای صفحه شما بایدن وارد سایت بیت',
+'resetpass-submit-loggedin' => 'عوض کتن کلمه رمز',
+'resetpass-wrong-oldpass'   => 'کلمه رمز موقت یا هنوکین رمز شر نهنت.
+بلیکن شما الان وتی کلمه رمز عوض کتت یا یک نوکین موقتین رمزی لوٹت.',
+'resetpass-temp-password'   => 'موقتین کلمه رمز:',
 
 # Edit page toolbar
 'bold_sample'     => 'پررنگین متن',
@@ -606,8 +641,8 @@ $2',
 'hr_tip'          => 'خط افقی',
 
 # Edit pages
-'summary'                          => 'خلاصه',
-'subject'                          => 'موضوع/سرخط',
+'summary'                          => 'خلاصه:',
+'subject'                          => 'موضوع/سرخط:',
 'minoredit'                        => 'ای شی یک هوردین اصلاحیت',
 'watchthis'                        => 'ای صفحه بچار',
 'savearticle'                      => 'صفحه ذخیره کن',
@@ -622,8 +657,8 @@ $2',
 'missingcommenttext'               => 'لطفا یک نظری وارد کنیت جهل آ',
 'missingcommentheader'             => "'''یاداوری:'' شما یک موضوع/سرخط په ای نظر وارد نکتت.
 اگر شما دگه ذخیره کلیک کنیت، شمی اصلاح بی آی ذخیره بنت.",
-'summary-preview'                  => 'خلاصه بازبینی',
-'subject-preview'                  => 'بازبین موضوع/سرخط',
+'summary-preview'                  => 'خلاصه بازبینی:',
+'subject-preview'                  => 'بازبین موضوع/سرخط:',
 'blockedtitle'                     => 'کاربر محدود بوتت',
 'blockedtext'                      => "<big>'''شمی نام کاربری یا آی پی محدود بیتت.''''</big>
 
@@ -677,29 +712,29 @@ $2',
 'noarticletext'                    => 'هنو هچ متنی ته ای صفحه نیست، شما تونیت  [[Special:Search/{{PAGENAME}}|گردگ په عنوان صفحه]]  ته دگه صفحات یا [{{fullurl:{{FULLPAGENAME}}|action=edit}} ای صفحه اصلاح کن].',
 'userpage-userdoesnotexist'        => 'حساب کاربر "$1" ثبت نهنت. لطفا کنترل کنیت اگه شما لوٹیت ای صفحه یا شر/اصلاح کنیت.',
 'clearyourcache'                   => "'''توجه:''' بعد چه ذخیره کتن، شما شاید مجبور بیت چه وتی ذخیره ی بروزر رد بیت تا تغییرات بگندیت. '''Mozilla / Firefox / Safari:'' ''Shift'' جهل داریت همی وهدی که کلیک کنیت ''Reload'' یا بداریت ''Ctrl-Shift-R'' (''Cmd-Shift-R'' on Apple Mac);'''IE:''' ''Ctrl''  بداری وهدی که کلیک ''Refresh' یا 'Ctrl-F5''; '''Konqueror:''':  راحت کلیک کن دکمه ''Reload'' یا بدار ''F5''; '''Opera''' کاربر بایدن ته ''Tools→Preferences'' ذخیره پاک کنت.",
-'usercssjsyoucanpreview'           => "<strong>نکته:</strong> چه دکمه 'Show preview' په آزمایش کتن  CSS/JS پیش چه ذخیره کتن استفاده کن",
+'usercssjsyoucanpreview'           => "'''نکته:''' چه دکمه 'Show preview' په آزمایش کتن  CSS/JS پیش چه ذخیره کتن استفاده کن",
 'usercsspreview'                   => "''''بزان که شما فقط وتی CSS کاربری بازبینی کنین. هنگنت آیی ذخیره نه بوتت!''''",
 'userjspreview'                    => "''''په یاد دار که شما فقط وتی کاربری  JavaScript بازبینی/آزمایش کنگیت، هنگت ذخیره نه بوتت!''''",
 'userinvalidcssjstitle'            => "'''هوژاری:''هچ جلدی نیست\"\$1\".
 بزان که صفحات .css و .js چه عناوین گون هوردین حرف استفاده کننت، مثلا {{ns:user}}:Foo/monobook.css بدل به په {{ns:user}}:Foo/Monobook.css.",
 'updated'                          => '(په روچ بیتگین)',
-'note'                             => '<strong>یادداشت:</strong>',
-'previewnote'                      => '<strong>شی فقط یک بازبینی انت;
-تغییرات هنگت ذخیره نهنت. </strong>',
+'note'                             => "'''یادداشت:'''",
+'previewnote'                      => "'''شی فقط یک بازبینی انت;
+تغییرات هنگت ذخیره نهنت. '''",
 'previewconflict'                  => 'ای بازبین متنء پیش داریت ته منطفه بالدی اصلاحی هنچوش که پیش دارگ بیت اگه شما انتخاب کنیت ذخیره',
-'session_fail_preview'             => '<strong>شرمنده! ما نه تونست شمی اصلاحء په خاطر گار کتن دیتا دیوان پردازش کنین.
-طلف دگه سعی کنیت. اگر هنگت کار نکنت یک بری [[Special:UserLogout|دربیت]] و پیدا وارد بیت.</strong>',
-'session_fail_preview_html'        => "<strong>شرمنده! ما نه تونست شمی اصلاحء په خاطر گار کتن دیتا دیوان پردازش کنین.</strong>
+'session_fail_preview'             => "'''شرمنده! ما نه تونست شمی اصلاحء په خاطر گار کتن دیتا دیوان پردازش کنین.
+طلف دگه سعی کنیت. اگر هنگت کار نکنت یک بری [[Special:UserLogout|دربیت]] و پیدا وارد بیت.'''",
+'session_fail_preview_html'        => "'''شرمنده! ما نه تونست شمی اصلاحء په خاطر گار کتن دیتا دیوان پردازش کنین.'''
 
 ''په چی که {{SITENAME}} HTML هام فعالنت، بازبین په خاطر حملات JavaScript پناهنت.''
 
-<strong> اگر شی یک قانونی تلاش اصلاحنت، دگه کوشش کنیت. اگر هنگت کار نکنت یک بری [[Special:UserLogout|دربیت]] و دگه وارد بیت.</strong>",
-'token_suffix_mismatch'            => '<strong> شمی اصلاح رد بوت په چی که شمی کلاینت نویسگ کاراکترانی په هم جتت.
+''' اگر شی یک قانونی تلاش اصلاحنت، دگه کوشش کنیت. اگر هنگت کار نکنت یک بری [[Special:UserLogout|دربیت]] و دگه وارد بیت.'''",
+'token_suffix_mismatch'            => "''' شمی اصلاح رد بوت په چی که شمی کلاینت نویسگ کاراکترانی په هم جتت.
 اصلاح رد بوت داں چه هراب بیگ متن صفحه جلوگیری بیت.
-شی لهتی وهد پیش کت که شما چه یک هرابین سرویس پروکسی وبی استفاده کنیت.</strong>',
+شی لهتی وهد پیش کت که شما چه یک هرابین سرویس پروکسی وبی استفاده کنیت.'''",
 'editing'                          => 'اصلاح $1',
 'editingsection'                   => 'اصلاح $1(بخش)',
-'editingcomment'                   => 'اصلاح $1 (نظر)',
+'editingcomment'                   => 'اصلاح $1 (نوکین بخش)',
 'editconflict'                     => 'جنگ ورگ اصلاح: $1',
 'explainconflict'                  => "کسی دگه ای صفحه یا عوض کتت چه وهدی که شما اصلاح آیء شروع کتء.
 بالادی ناحیه متن شامل متن صفحه همی داب که هنگت هست.
@@ -708,29 +743,30 @@ $2',
 '''فقط''' ناحیه بالادی متن وهدی که شما دکمه  \"Save page\" ذخیره بنت.",
 'yourtext'                         => 'شمی متن',
 'storedversion'                    => 'نسخه ی ذخیره ای',
-'nonunicodebrowser'                => '<strong>هوژاری: شمی بروزر گون یونی کد تنظیم کار نکنت. یک اطراف-کار جاهینن که شما را اجازه دنت صفحات راحت اصلاح کنیت: non-ASCII کاراتران ته جعبه اصلاح په داب کدان hexadecimal جاه کاینت.',
-'editingold'                       => '<strong>هوژاری: شما په اصلاح کتن یک قدیمی بازبینی چه ای صفحه ایت.
-اگر شما ایء ذخیره کتت، هر تغییری که دهگ بیتء چه ای بازبینی گار بنت.</strong>',
+'nonunicodebrowser'                => "'''هوژاری: شمی بروزر گون یونی کد تنظیم کار نکنت. یک اطراف-کار جاهینن که شما را اجازه دنت صفحات راحت اصلاح کنیت: non-ASCII کاراتران ته جعبه اصلاح په داب کدان hexadecimal جاه کاینت.",
+'editingold'                       => "'''هوژاری: شما په اصلاح کتن یک قدیمی بازبینی چه ای صفحه ایت.
+اگر شما ایء ذخیره کتت، هر تغییری که دهگ بیتء چه ای بازبینی گار بنت.'''",
 'yourdiff'                         => 'تفاوتان',
-'copyrightwarning'                 => 'لطفا توجه بیت که کل نوشته یات ته {{SITENAME}}  تحت $2 نشر بنت.(بچار په جزیات$1).
+'copyrightwarning'                 => "لطفا توجه بیت که کل نوشته یات ته {{SITENAME}}  تحت $2 نشر بنت.(بچار په جزیات$1).
 اگه شما لوٹیت شمی نوشتانک اصلاح و دگه چهاپ مبنت، اچه آیانا ادان مهلیت.<b/>
 شما ما را قول دهیت که وتی چیزا بنویسیت یا چه یک دامین عمومی کپی کتگیت.
-<strong> نوشتانکی که کپی رایت دارند بی اجازه ادا هور مکنیت</strong>',
-'copyrightwarning2'                => 'لطفا توجه کنیت که کل مشارکاتن ته {{SITENAME}} شاید اصلاح, عوض و یا توسط دگه شرکت کننده آن حذف بنت.
+''' نوشتانکی که کپی رایت دارند بی اجازه ادا هور مکنیت'''",
+'copyrightwarning2'                => "لطفا توجه کنیت که کل مشارکاتن ته {{SITENAME}} شاید اصلاح, عوض و یا توسط دگه شرکت کننده آن حذف بنت.
 اگر شما نه لوٹیت شمی نوشتاک گون بی رحمی اصلاح مه بنت، اچه شما آیء ادان دیم مه دهیت.<br />
 شما هنچوش ما را قول دهیت که شما شی وت نوشتت یا ایء چه یک دامین عمومی یا هنچوشین آزاتین منبع کپی کتیت.(بچار $1 په جزییات).
-<strong> نوشتاکی که حق کپی دارنت بی اجازت دیم مه دهیت!</strong>',
-'longpagewarning'                  => '<strong>هوژاری. ای صفحه $1 کیلوبایت نت;
+''' نوشتاکی که حق کپی دارنت بی اجازت دیم مه دهیت!'''",
+'longpagewarning'                  => "'''هوژاری. ای صفحه $1 کیلوبایت نت;
 لهتی چه بروزران شاید مشکلاتی چه دست رسی و اصلاح صفحات گیش چه 32ک.ب داشته بنت.
-لطفا توجه کنیت په هورد کتن صفحه په هوردترین چنٹ. </strong>',
-'longpageerror'                    => '<strong>حطا: متنی که شما دیم داتت $1 کیلو بایتت، که چه گیشترین حد $2 کیلوبایت مزن
-آی نه تونیت ذخیره بوت.</strong>',
-'readonlywarning'                  => '<strong>هوژاری: دیتابیس به تعمیرات کبلنت، اچه شما نه تونیت وتی اصلاحات هنو ذخیره کنیت.
-شما شاید بلوٹیت متنء تع یم فایل متنی کپی و پیست کنیت و آیء ذخیره کنیت.</strong>',
-'protectedpagewarning'             => '<strong>هوژاری: ای صفحه په کبلنت چی که فقط کابران گون اجازت مدیر سیستم توننت آیء اصلاح کننت.</strong>',
+لطفا توجه کنیت په هورد کتن صفحه په هوردترین چنٹ. '''",
+'longpageerror'                    => "'''حطا: متنی که شما دیم داتت $1 کیلو بایتت، که چه گیشترین حد $2 کیلوبایت مزن
+آی نه تونیت ذخیره بوت.'''",
+'readonlywarning'                  => "'''هوژاری: دیتابیس به تعمیرات کبلنت، اچه شما نه تونیت وتی اصلاحات هنو ذخیره کنیت.
+شما شاید بلوٹیت متنء تع یم فایل متنی کپی و پیست کنیت و آیء ذخیره کنیت.'''
+مدیری که آیء کبل کتت ای توضیحی داتت: $1",
+'protectedpagewarning'             => "'''هوژاری: ای صفحه په کبلنت چی که فقط کابران گون اجازت مدیر سیستم توننت آیء اصلاح کننت.'''",
 'semiprotectedpagewarning'         => "''''توجه:'''' ای صفحه کبلنت چوش که فقط ثبت نامی کابران توننت آیء اصلاح کننت.",
 'cascadeprotectedwarning'          => "''هوژاری''ای صفحه کبلنت چوش که فقط کابران گون دسترسی مدیر سیستم توننت آییء اصلاح کننت،په چی که آیی ته چهلین حمایت آبشاری {{PLURAL:$1|صفحات|صفحه}}:",
-'titleprotectedwarning'            => '<strong>هوژاری: ای صفحه کبلنت چوش که فقز لهتی کاربر تواننت آیء شر کننت.</strong>',
+'titleprotectedwarning'            => "'''هوژاری: ای صفحه کبلنت چوش که فقط لهتی کاربر گون [[Special:ListGroupRights|خاصین حق]] تواننت آیء شر کننت.'''",
 'templatesused'                    => 'تمپلتانی که ته ای صفحه استفاده بیت:',
 'templatesusedpreview'             => 'تلمپلت آنی که ته ای بازبینی استفاده بیت',
 'templatesusedsection'             => 'تمپلتانی که ته ای بخش به کار رونت',
@@ -749,10 +785,20 @@ $2',
 
 شما بایدن توجه کنیت که ادامه اصلاح ای صفحه درستنت.
 آمار حذف ای صفحه په شمی حاطرء ادان هستن:",
+'deleted-notice'                   => 'ای صفحه حذف بوتت. په مراجعه جهل گور آمار حذف پی ای صفحه اتکگت.',
+'deletelog-fulllog'                => 'چارگ آمار کامل',
+'edit-hook-aborted'                => 'اصلاح گون قلاب بند بوت.
+توضیحی ای باره ی دهگ نه بوتت.',
+'edit-gone-missing'                => 'نه تونیت صفحهء په روچی کنت.
+چوش که جاه کیت آیی حذف بوتگت.',
+'edit-conflict'                    => 'جنگ اصلاحی',
+'edit-no-change'                   => 'شمی اصلاح نادید گرگ بوت، په چی که هچ تغییری په متن دهگ نه بوت.',
+'edit-already-exists'              => 'نه تونیت یک نوکین صفحه ای شر کنت.
+هنو شی هستن.',
 
 # Parser/template warnings
 'expensive-parserfunction-warning'        => 'هوژاری: ای صفحه شامل بازگین توار عملگر تجریه کنوک سنگیننت.
-آیی بایدن کمتر چه  $2, داشته بیت ادان هنو  $1 هست.',
+آیی بایدن کمتر چه  $2{{PLURAL:$2|توار|توار}}, داشته بیت ادان هنو  $1 هست.',
 'expensive-parserfunction-category'       => ' صفحات گونبازگین توار عملگر تجریه کنوک',
 'post-expand-template-inclusion-warning'  => 'هوژاری: اندازه شامل تمپلت باز مزننت.
 لهتی تمپلتان هور نه بینت.',
@@ -760,6 +806,8 @@ $2',
 'post-expand-template-argument-warning'   => 'هوژاری: ای صفحه شامل یک آرگومان تمپلت انت که اندازه ی بازنت.
 ای آرگومان آن بایدن حذف بوتنت',
 'post-expand-template-argument-category'  => 'صفحات شامل حذفی آرگومان آن تمپلت انت',
+'parser-template-loop-warning'            => 'تمپلت حقه ای درگبزگ بوت: [[$1]]',
+'parser-template-recursion-depth-warning' => 'محدودیت عمق تررگ رد بوت ($1)',
 
 # "Undo" feature
 'undo-success' => 'اصلاح برگشت نه بیت. لطفا مقایسه جهلگینء کنترل کنیت په تایید شی که شی هما انت که شما لوٹیت، و بعدا تغغیرات جهلی په تمام کتن بر نگردگ اصلاح ذخیره کنیت.',
@@ -774,29 +822,29 @@ $2',
 دلیلی داتگین توسط $3  شی انت ''$2''",
 
 # History pages
-'viewpagelogs'        => 'آمار ای صفحه بچار',
-'nohistory'           => 'په ای صفحه تاریح اصلاح نیست.',
-'revnotfound'         => 'بازبینی در گیزگ نه بوت',
-'revnotfoundtext'     => 'کدیمی بازبینی چه ای صفحه که شما لوٹیت ودیگ نه بوت. لطفا URL که شما په رستن په ای صفحه استفاده کنیت کنترلی کنیت.',
-'currentrev'          => 'هنوکین بازبینی',
-'revisionasof'        => 'بازبینی په عنوان $1',
-'revision-info'       => 'بازبینی په داب $1 توسط $2',
-'previousrevision'    => '←پیش ترین نسخه',
-'nextrevision'        => 'نوکین بازبینی→',
-'currentrevisionlink' => 'هنوکین بازبینی',
-'cur'                 => 'هنو',
-'next'                => 'بعدی',
-'last'                => 'اهری',
-'page_first'          => 'اولین',
-'page_last'           => 'اهرین',
-'histlegend'          => 'بخش تفاوت: په مقایسه کتن نسخه یان گزینه انتخاب کنیت اینتر یا دکمه بجن.<br />
+'viewpagelogs'           => 'آمار ای صفحه بچار',
+'nohistory'              => 'په ای صفحه تاریح اصلاح نیست.',
+'currentrev'             => 'هنوکین بازبینی',
+'currentrev-asof'        => 'هنوکین بازبینی چه $1',
+'revisionasof'           => 'بازبینی په عنوان $1',
+'revision-info'          => 'بازبینی په داب $1 توسط $2', # Additionally available: $3: revision id
+'previousrevision'       => '←پیش ترین نسخه',
+'nextrevision'           => 'نوکین بازبینی→',
+'currentrevisionlink'    => 'هنوکین بازبینی',
+'cur'                    => 'هنو',
+'next'                   => 'بعدی',
+'last'                   => 'اهری',
+'page_first'             => 'اولین',
+'page_last'              => 'اهرین',
+'histlegend'             => 'بخش تفاوت: په مقایسه کتن نسخه یان گزینه انتخاب کنیت اینتر یا دکمه بجن.<br />
 Legend: (cur) = تفاوتان گون هنوکین نسخه,
 (last) = تفاوت گون بعدی نسخه, M = هوردین  اصلاح.',
-'deletedrev'          => '[حذف]',
-'histfirst'           => 'اولین',
-'histlast'            => 'اهرین',
-'historysize'         => '({{PLURAL:$1|1 بایت|$1 بایت}})',
-'historyempty'        => '(هالیک)',
+'history-fieldset-title' => 'گردگ تاریح',
+'deletedrev'             => '[حذف]',
+'histfirst'              => 'اولین',
+'histlast'               => 'اهرین',
+'historysize'            => '({{PLURAL:$1|1 بایت|$1 بایت}})',
+'historyempty'           => '(هالیک)',
 
 # Revision feed
 'history-feed-title'          => 'تاریح بازبینی',
@@ -882,6 +930,7 @@ Legend: (cur) = تفاوتان گون هنوکین نسخه,
 'mergehistory-invalid-destination' => 'صفحه مقصد باید یک معتبرین عنوانی بیت.',
 'mergehistory-autocomment'         => 'چن و بند بوت  [[:$1]] په [[:$2]]',
 'mergehistory-comment'             => 'چن و بند بوت [[:$1]] په[[:$2]]: $3',
+'mergehistory-same-destination'    => 'صفحه مبدا و مقصد یکی نه بنت',
 
 # Merge log
 'mergelog'           => 'آمار چن وبند',
@@ -894,124 +943,205 @@ Legend: (cur) = تفاوتان گون هنوکین نسخه,
 'difference'              => '(تفاوتان بین نسخه یان)',
 'lineno'                  => 'خط$1:',
 'compareselectedversions' => 'مقایسه انتخاب بوتگین نسخه یان',
+'visualcomparison'        => 'مقایسه تصویری',
+'wikicodecomparison'      => 'مقایسه متن ویکی',
 'editundo'                => 'خنثی کتن',
 'diff-multi'              => '({{PLURAL:$1|یک متوسطین بازبینیان میانی}} پیش دارگ نه بیت .)',
+'diff-movedto'            => 'جاه په جاه په $1',
+'diff-styleadded'         => 'استایل $1 هور بوت',
+'diff-added'              => 'هوربوت $1',
+'diff-changedto'          => '$1 عوض بوت په',
+'diff-movedoutof'         => 'جاه په جاه بوت چه $1',
+'diff-styleremoved'       => 'استایل $1 زورگ بوت',
+'diff-removed'            => 'زورگ بوت $1',
+'diff-changedfrom'        => '$1 عوض بوتت چه طرف',
+'diff-src'                => 'منبع',
+'diff-withdestination'    => '$1 گون مقصدء',
+'diff-with'               => '&#32;گون $1 $2',
+'diff-with-final'         => '&#32;و $1 $2',
+'diff-width'              => 'پهنات',
+'diff-height'             => 'بلندی',
+'diff-p'                  => "یک '''پاراگراف'''",
+'diff-blockquote'         => "یک '''نقل'''",
+'diff-h1'                 => "یک '''عنوانی (سطح ۱)'''",
+'diff-h2'                 => "یک '''عنوانی (سطح ۲)'''",
+'diff-h3'                 => "یک '''عنوانی (سطح ۳)'''",
+'diff-h4'                 => "یک '''عنوانی (سطح ۴)'''",
+'diff-h5'                 => "یک '''عنوانی (سطح ۵)'''",
+'diff-pre'                => "یک '''پیش فرمتی بلوک'''",
+'diff-div'                => "یک '''بخشی'''",
+'diff-ul'                 => "یک '''لیست بی ترتییبن'''",
+'diff-ol'                 => "یک '''مرتبین لیست'''",
+'diff-li'                 => "یک '''ایتم لیست'''",
+'diff-table'              => "یک '''جدول'''",
+'diff-tbody'              => "یک '''جدول محتواء'''",
+'diff-tr'                 => "یک '''ردیف'''",
+'diff-td'                 => "یک '''سلول'''",
+'diff-th'                 => "یک '''عنوان'''",
+'diff-br'                 => "یک '''پروش'''",
+'diff-hr'                 => "یک ''' خظ افقی'''",
+'diff-code'               => "یک '''  بلوک کد کامپیوتری'''",
+'diff-dl'                 => "یک ''' لیست تعریفی'''",
+'diff-dt'                 => "یک ''' تعریف موضوعء'''",
+'diff-dd'                 => "یک '''تعریف'''",
+'diff-input'              => "یک '''ورودی'''",
+'diff-form'               => "یک '''فرم'''",
+'diff-img'                => "یک '''عکس'''",
+'diff-span'               => "یک '''فاصلهء'''",
+'diff-a'                  => "یک '''لینکی'''",
+'diff-i'                  => "'''ایتالیکی'''",
+'diff-b'                  => "'''پررنگ'''",
+'diff-strong'             => "'''پرزور'''",
+'diff-em'                 => "'''تاکید'''",
+'diff-font'               => "'''فونت'''",
+'diff-big'                => "'''مزن'''",
+'diff-del'                => "'''حذفی'''",
+'diff-tt'                 => "'''پهنات ثابت'''",
+'diff-sub'                => "'''چیر‌اسکریپت'''",
+'diff-sup'                => "'''سوپر‌اسکریپت'''",
+'diff-strike'             => "'''حمله چه'''",
 
 # Search results
-'searchresults'             => 'نتایج گردگ',
-'searchresulttext'          => 'په گیشترین اطلاعات گردگ باره {{SITENAME}}، بچار [[{{MediaWiki:Helppage}}|{{int:help}}]].',
-'searchsubtitle'            => 'شما گردگیت په \'\'\'[[:$1]]\'\'\' ([[Special:Prefixindex/$1|کل صفحات شروع بنت گون "$1"]] | [[Special:WhatLinksHere/$1|کل صفحات که لینک انت په "$1"]])',
-'searchsubtitleinvalid'     => "شما گردگیت په '''$1'''",
-'noexactmatch'              => "'''صفحه ی گون عنوان نیست\"\$1\".'''
+'searchresults'                    => 'نتایج گردگ',
+'searchresults-title'              => 'نتایج گردگ په "$1"',
+'searchresulttext'                 => 'په گیشترین اطلاعات گردگ باره {{SITENAME}}، بچار [[{{MediaWiki:Helppage}}|{{int:help}}]].',
+'searchsubtitle'                   => 'شما گردگیت په \'\'\'[[:$1]]\'\'\' ([[Special:Prefixindex/$1|کل صفحات شروع بنت گون "$1"]]{{int:pipe-separator}}[[Special:WhatLinksHere/$1|کل صفحات که لینک انت په "$1"]])',
+'searchsubtitleinvalid'            => "شما گردگیت په '''$1'''",
+'noexactmatch'                     => "'''صفحه ی گون عنوان نیست\"\$1\".'''
 شما تونیت [[:\$1|ای صفحه ی شرکنیت]].",
-'noexactmatch-nocreate'     => "'''.هچ صفحه ای تحت عنوان \"\$1\" نیست'''",
-'toomanymatches'            => 'بازگین هم دپ درگیزگ بوت، لطفا یک متفاوتین درخواست آزمایش کنیت',
-'titlematches'              => 'عنوان صفحه هم دپ نت',
-'notitlematches'            => 'هچ عنوان صفحه هم دپ نهنت',
-'textmatches'               => 'متن صفحه هم دپ بنت',
-'notextmatches'             => 'هچ متن صفحه هم دپ نهنت',
-'prevn'                     => 'پیشگین $1',
-'nextn'                     => 'بعدی $1',
-'viewprevnext'              => '($1) ($2) ($3) دیدگ',
-'search-result-size'        => '$1 ({{PLURAL:$2|1کلمه|$2 کلمات}})',
-'search-result-score'       => 'ربط: $1%',
-'search-redirect'           => '(غیر مستقیم $1 )',
-'search-section'            => '(بخش $1 )',
-'search-suggest'            => 'شما را منظور ات: $1',
-'search-interwiki-caption'  => 'پروژه آن گوهار',
-'search-interwiki-default'  => '$1 نتایج:',
-'search-interwiki-more'     => '(گیشتر)',
-'search-mwsuggest-enabled'  => 'گون پیشنهاد',
-'search-mwsuggest-disabled' => 'هچ پیشنهاد',
-'search-relatedarticle'     => 'مربوطین',
-'mwsuggest-disable'         => 'پیشنهادات آژاکسیء غیر فعال کن',
-'searchrelated'             => 'مربوط',
-'searchall'                 => 'کل',
-'showingresults'            => "جهل پیش دارگنت تا  {{PLURAL:$1|'''1'''نتیجه|'''$1''' نتایج}} شروع بنت گون #'''$2'''.",
-'showingresultsnum'         => "جهل پیش داریت  {{PLURAL:$3|'''1''' نتیجه|'''$3''' نتایج}} شروع بیت گون #'''$2'''.",
-'showingresultstotal'       => "جهل پیش داریت  {{PLURAL:$3|نتیجه '''$1''' of '''$3'''|نتایج '''$1 - $2''' چه '''$3'''}}",
-'nonefound'                 => "'''توجه''':  فقط لهتی نام فضا په طور پیش فرض گردگ بیتت. سعی کنیت وتی جوستء هور کنیت گون ''کل:'' په گردگ په کل محتوا (شامل صفحات گپ، تمپلتان ودگر)، یا استفاده کنیت لوٹیگن نام فضا په داب پیش وند.",
-'powersearch'               => 'پیشرپتگی گردگ',
-'powersearch-legend'        => 'گردگ پیشرفته',
-'powersearch-ns'            => 'گردگ ته نام فضا آن',
-'powersearch-redir'         => 'لیست عیرمستقیم آن',
-'powersearch-field'         => 'گردگ په',
-'search-external'           => 'حارجی گردگ',
-'searchdisabled'            => '{{SITENAME}} گردگ غیر فعالنت.
+'noexactmatch-nocreate'            => "'''.هچ صفحه ای تحت عنوان \"\$1\" نیست'''",
+'toomanymatches'                   => 'بازگین هم دپ درگیزگ بوت، لطفا یک متفاوتین درخواست آزمایش کنیت',
+'titlematches'                     => 'عنوان صفحه هم دپ نت',
+'notitlematches'                   => 'هچ عنوان صفحه هم دپ نهنت',
+'textmatches'                      => 'متن صفحه هم دپ بنت',
+'notextmatches'                    => 'هچ متن صفحه هم دپ نهنت',
+'prevn'                            => 'پیشگین $1',
+'nextn'                            => 'بعدی $1',
+'viewprevnext'                     => '($1) ($2) ($3) دیدگ',
+'searchmenu-legend'                => 'گزینه یان گردگ',
+'searchmenu-exists'                => "'''صفحه گون نام \"[[\$1]]\" ته ای ویکی نیستن'''",
+'searchmenu-new'                   => "'''شر کن صفحه ای \"[[:\$1]]\" ته ای ویکی!'''",
+'searchhelp-url'                   => 'Help:محتوا',
+'searchmenu-prefix'                => '[[Special:PrefixIndex/$1|بروز صفحات گون پیش وند]]',
+'searchprofile-articles'           => 'محتوای صفحات',
+'searchprofile-articles-and-proj'  => 'محتوایی و پروژه ای صفحات',
+'searchprofile-project'            => 'صفحات پروژه',
+'searchprofile-images'             => 'فایلان',
+'searchprofile-everything'         => 'هر چیز',
+'searchprofile-advanced'           => 'پیشرفتگین',
+'searchprofile-articles-tooltip'   => 'گردگ ته $1',
+'searchprofile-project-tooltip'    => 'گردگ ته $1',
+'searchprofile-images-tooltip'     => 'گردگ په فایلان ته',
+'searchprofile-everything-tooltip' => 'گردگ په کل محتوا (هور گون صفحات گپ)',
+'searchprofile-advanced-tooltip'   => 'گردگ ته نام فضایان دل واه',
+'prefs-search-nsdefault'           => 'گردگ گون پیش فرضان:',
+'prefs-search-nscustom'            => 'گردگ نام فضایان دل واه:',
+'search-result-size'               => '$1 ({{PLURAL:$2|1کلمه|$2 کلمات}})',
+'search-result-score'              => 'ربط: $1%',
+'search-redirect'                  => '(غیر مستقیم $1 )',
+'search-section'                   => '(بخش $1 )',
+'search-suggest'                   => 'شما را منظور ات: $1',
+'search-interwiki-caption'         => 'پروژه آن گوهار',
+'search-interwiki-default'         => '$1 نتایج:',
+'search-interwiki-more'            => '(گیشتر)',
+'search-mwsuggest-enabled'         => 'گون پیشنهاد',
+'search-mwsuggest-disabled'        => 'هچ پیشنهاد',
+'search-relatedarticle'            => 'مربوطین',
+'mwsuggest-disable'                => 'پیشنهادات آژاکسیء غیر فعال کن',
+'searchrelated'                    => 'مربوط',
+'searchall'                        => 'کل',
+'showingresults'                   => "جهل پیش دارگنت تا  {{PLURAL:$1|'''1'''نتیجه|'''$1''' نتایج}} شروع بنت گون #'''$2'''.",
+'showingresultsnum'                => "جهل پیش داریت  {{PLURAL:$3|'''1''' نتیجه|'''$3''' نتایج}} شروع بیت گون #'''$2'''.",
+'showingresultstotal'              => "جهل پیش داریت  {{PLURAL:$4|نتیجه '''$1''' چه '''$3'''|نتایج '''$1 - $2''' چه '''$3'''}}",
+'nonefound'                        => "'''توجه''':  فقط لهتی نام فضا په طور پیش فرض گردگ بیتت. سعی کنیت وتی جوستء هور کنیت گون ''all:'' په گردگ په کل محتوا (شامل صفحات گپ، تمپلتان ودگر)، یا استفاده کنیت لوٹیگن نام فضا په داب پیش وند.",
+'search-nonefound'                 => 'نتیجه هم دپ په درخواست نیست',
+'powersearch'                      => 'پیشرپتگی گردگ',
+'powersearch-legend'               => 'گردگ پیشرفته',
+'powersearch-ns'                   => 'گردگ ته نام فضا آن',
+'powersearch-redir'                => 'لیست عیرمستقیم آن',
+'powersearch-field'                => 'گردگ په',
+'search-external'                  => 'حارجی گردگ',
+'searchdisabled'                   => '{{SITENAME}} گردگ غیر فعالنت.
 شما نونیت بگردیت چه طرق گوگل هم زمان.
 توجه که اندیکس آن {{SITENAME}} محتوا شاید تاریح گوستگین بنت.',
 
 # Preferences page
-'preferences'              => 'ترجیحات',
-'mypreferences'            => 'منی ترجیحات',
-'prefs-edits'              => 'تعداد اصلاحات:',
-'prefsnologin'             => 'وارد نهیت',
-'prefsnologintext'         => 'شما بایدن  <span class="plainlinks">[{{fullurl:Special:UserLogin|returnto=$1}} وارد بیت]</span> په تنظیم کتن ترجیحات.',
-'prefsreset'               => 'ترجیحات چه ذخیره ترینگ بوتنت.',
-'qbsettings'               => 'میله سریع',
-'qbsettings-none'          => 'هچ یک',
-'qbsettings-fixedleft'     => 'چپ ثابت',
-'qbsettings-fixedright'    => 'راست ثابت',
-'qbsettings-floatingleft'  => 'چپ شناور',
-'qbsettings-floatingright' => 'راست شناور',
-'changepassword'           => 'کلمه رمز عوض کن',
-'skin'                     => 'پوست',
-'math'                     => 'ریاضی',
-'dateformat'               => 'فرم تاریح',
-'datedefault'              => 'هچ ترجیح',
-'datetime'                 => 'تاریح و وهد',
-'math_failure'             => 'تجزیه پروش وارت',
-'math_unknown_error'       => 'ناشناسین حطا',
-'math_unknown_function'    => 'ناشناس عملگر',
-'math_lexing_error'        => 'حطا نوشتاری',
-'math_syntax_error'        => 'حطا ساختار',
-'math_image_error'         => 'بدل کتن PNGپروش وارت;
+'preferences'               => 'ترجیحات',
+'mypreferences'             => 'منی ترجیحات',
+'prefs-edits'               => 'تعداد اصلاحات:',
+'prefsnologin'              => 'وارد نهیت',
+'prefsnologintext'          => 'شما بایدن  <span class="plainlinks">[{{fullurl:Special:UserLogin|returnto=$1}} وارد بیت]</span> په تنظیم کتن ترجیحات.',
+'prefsreset'                => 'ترجیحات چه ذخیره ترینگ بوتنت.',
+'qbsettings'                => 'میله سریع',
+'qbsettings-none'           => 'هچ یک',
+'qbsettings-fixedleft'      => 'چپ ثابت',
+'qbsettings-fixedright'     => 'راست ثابت',
+'qbsettings-floatingleft'   => 'چپ شناور',
+'qbsettings-floatingright'  => 'راست شناور',
+'changepassword'            => 'کلمه رمز عوض کن',
+'skin'                      => 'پوست',
+'skin-preview'              => 'بازین',
+'math'                      => 'ریاضی',
+'dateformat'                => 'فرم تاریح',
+'datedefault'               => 'هچ ترجیح',
+'datetime'                  => 'تاریح و وهد',
+'math_failure'              => 'تجزیه پروش وارت',
+'math_unknown_error'        => 'ناشناسین حطا',
+'math_unknown_function'     => 'ناشناس عملگر',
+'math_lexing_error'         => 'حطا نوشتاری',
+'math_syntax_error'         => 'حطا ساختار',
+'math_image_error'          => 'بدل کتن PNGپروش وارت;
 کنترل کنیت په نصب latex, dvips, gs, و convert',
-'math_bad_tmpdir'          => 'نه نونیت بنویسیت یا مسیر غیر دایمی ریاضی شرکنت',
-'math_bad_output'          => 'نه تونیت بنویسیت یا مشیر خروجی ریاضی شرکنت.',
-'math_notexvc'             => 'ترکیب کتن texvc  قابل اجرا;
+'math_bad_tmpdir'           => 'نه نونیت بنویسیت یا مسیر غیر دایمی ریاضی شرکنت',
+'math_bad_output'           => 'نه تونیت بنویسیت یا مشیر خروجی ریاضی شرکنت.',
+'math_notexvc'              => 'ترکیب کتن texvc  قابل اجرا;
 لطفا بچار math/README په تنظیم کتن.',
-'prefs-personal'           => 'نمایه کاربر',
-'prefs-rc'                 => 'نوکین تغییرات',
-'prefs-watchlist'          => 'لیست چارگ',
-'prefs-watchlist-days'     => 'روچان په پیش دارگ ته لیست چارگ',
-'prefs-watchlist-edits'    => 'گشیترین تعداد تغییرات په پیشدارگ ته پچین لیست چارگ:',
-'prefs-misc'               => 'هردابین',
-'saveprefs'                => 'ذخیره',
-'resetprefs'               => 'پاکن تغییرات ذخیره نه بوتگین',
-'oldpassword'              => 'کلمه رمز کهنگین:',
-'newpassword'              => 'نوکین کلمه رمز:',
-'retypenew'                => 'کلمه رمز دگه بنویس',
-'textboxsize'              => 'اصلاح',
-'rows'                     => 'ردیفآن«',
-'columns'                  => 'ستون‌ان:',
-'searchresultshead'        => 'گردگ',
-'resultsperpage'           => 'کلیک ته هر صفحه:',
-'contextlines'             => 'خطوط در کلیک:',
-'contextchars'             => 'متن در خط:',
-'stub-threshold'           => 'سرحد په  <a href="#" class="stub">چنڈ لینک</a> فرمت (بایت):',
-'recentchangesdays'        => 'روچ ان به پیش دارگ ته نوکیت تغییرات:',
-'recentchangescount'       => 'تعداد اصلاحات به پیش دارگ ته نوکین تغییرات',
-'savedprefs'               => 'شمی ترجیحات ذخیره بوتن',
-'timezonelegend'           => 'وهد ملک',
-'timezonetext'             => '¹تعداد ساعاتی که شمی ملکی وهد چه زمان سرور فرق کنت (UTC).',
-'localtime'                => 'ملکی وهد',
-'timezoneoffset'           => 'اختلاف¹',
-'servertime'               => 'وهد سرور',
-'guesstimezone'            => 'پرکن چه بروزر',
-'allowemail'               => 'فعال کن ایمیل چه دگه کابران',
-'prefs-searchoptions'      => 'گردگ انتخابان',
-'prefs-namespaces'         => 'نام فصا',
-'defaultns'                => 'گردگ ته ای نام فضا آن په طور پیش فرض:',
-'default'                  => 'پیش فرض',
-'files'                    => 'فایلان',
+'prefs-personal'            => 'نمایه کاربر',
+'prefs-rc'                  => 'نوکین تغییرات',
+'prefs-watchlist'           => 'لیست چارگ',
+'prefs-watchlist-days'      => 'روچان په پیش دارگ ته لیست چارگ',
+'prefs-watchlist-days-max'  => '(حداکثر ۷ روچ)',
+'prefs-watchlist-edits'     => 'گشیترین تعداد تغییرات په پیشدارگ ته پچین لیست چارگ:',
+'prefs-watchlist-edits-max' => '(گیشترین تعداد: ۱۰۰۰)',
+'prefs-misc'                => 'هردابین',
+'prefs-resetpass'           => 'عوض کتن کلمه رمز',
+'saveprefs'                 => 'ذخیره',
+'resetprefs'                => 'پاکن تغییرات ذخیره نه بوتگین',
+'textboxsize'               => 'اصلاح',
+'prefs-edit-boxsize'        => 'حد پنجره اصلاح.',
+'rows'                      => 'ردیفآن«',
+'columns'                   => 'ستون‌ان:',
+'searchresultshead'         => 'گردگ',
+'resultsperpage'            => 'کلیک ته هر صفحه:',
+'contextlines'              => 'خطوط در کلیک:',
+'contextchars'              => 'متن در خط:',
+'stub-threshold'            => 'سرحد په  <a href="#" class="stub">چنڈ لینک</a> فرمت (بایت):',
+'recentchangesdays'         => 'روچ ان به پیش دارگ ته نوکیت تغییرات:',
+'recentchangesdays-max'     => '(حداکثر $1 {{PLURAL:$1|روچ|روچ}})',
+'recentchangescount'        => 'تعداد اصلاحات به پیش دارگ ته نوکین تغییرات , تاریح صفحات و ته سیاهگ به طور پیش فرض :',
+'savedprefs'                => 'شمی ترجیحات ذخیره بوتن',
+'timezonelegend'            => 'وهد ملک',
+'timezonetext'              => '¹تعداد ساعاتی که شمی ملکی وهد چه زمان سرور فرق کنت (UTC).',
+'localtime'                 => 'ملکی وهد:',
+'timezoneselect'            => 'منطقه وهد:',
+'timezoneuseserverdefault'  => 'چه پیش فرضین سرور استفاده کن',
+'timezoneuseoffset'         => 'دگر (اختلاف ءَ مشخص کنیت)',
+'timezoneoffset'            => 'اختلاف¹:',
+'servertime'                => 'وهد سرور:',
+'guesstimezone'             => 'پرکن چه بروزر',
+'allowemail'                => 'فعال کن ایمیل چه دگه کابران',
+'prefs-searchoptions'       => 'گردگ انتخابان',
+'prefs-namespaces'          => 'نام فصا',
+'defaultns'                 => 'گردگ ته ای نام فضا آن په طور پیش فرض:',
+'default'                   => 'پیش فرض',
+'files'                     => 'فایلان',
 
 # User rights
 'userrights'                  => 'مدیریت حقوق کاربر', # Not used as normal message but as header for the special page itself
 'userrights-lookup-user'      => 'مدیریت گروه کاربر',
 'userrights-user-editname'    => 'یک نام کاربری وارد کن',
 'editusergroup'               => 'اصلاح گروه کاربر',
-'editinguser'                 => "عوض کنت حقوق کاربر  '''[[User:$1|$1]]''' ([[User talk:$1|{{int:talkpagelinktext}}]] | [[Special:Contributions/$1|{{int:contribslink}}]])",
+'editinguser'                 => "عوض کنت حقوق کاربر  '''[[User:$1|$1]]''' ([[User talk:$1|{{int:talkpagelinktext}}]]{{int:pipe-separator}}[[Special:Contributions/$1|{{int:contribslink}}]])",
 'userrights-editusergroup'    => 'اصلاح گروه کاربر',
 'saveusergroups'              => 'ذخیره گروه کاربر',
 'userrights-groupsmember'     => 'عضو انت:',
@@ -1060,6 +1190,8 @@ Legend: (cur) = تفاوتان گون هنوکین نسخه,
 'right-minoredit'            => 'نشان کن اصلاحات په داب هوردین',
 'right-move'                 => 'جاه په جاه کن صفحات',
 'right-move-subpages'        => 'جاه په جاه کن صفحات گون زیرصفحاتش',
+'right-move-rootuserpages'   => 'جاه په جاه کتن صفحات کاربری اصلی',
+'right-movefile'             => 'جاه په جاه کتن فایلان',
 'right-suppressredirect'     => 'شر نه کتن یک غیر مستقیم چه کهنگین نام وهدی که یک صفحه ای جاه په جاه بیت',
 'right-upload'               => 'آپلود فایلان',
 'right-reupload'             => 'هستین فایلی اوری بنویس',
@@ -1110,9 +1242,46 @@ Legend: (cur) = تفاوتان گون هنوکین نسخه,
 'rightslogentry' => 'عوض بوت عضویت گروهی په $1  چه $2 په $3',
 'rightsnone'     => '(هچ یک)',
 
+# Associated actions - in the sentence "You do not have permission to X"
+'action-read'                 => 'وانگ این صفحه',
+'action-edit'                 => 'اصلاح ای صفحه',
+'action-createpage'           => 'شرکتن ای صفحه',
+'action-createtalk'           => 'شرکتن صفحات بحث',
+'action-createaccount'        => 'شرکتن ای حساب کاربری',
+'action-minoredit'            => 'نشان کتن ای اصلاح په داب هوردین',
+'action-move'                 => 'جاه په جاهی ای صفحه',
+'action-move-subpages'        => 'جاه په جاه کتن ای صفحه و زیر صفحاتی',
+'action-move-rootuserpages'   => 'جاه په جاه کتن صفحات کاربری اصلی',
+'action-movefile'             => 'ای فایلءَ جاه په جاه کن',
+'action-upload'               => 'آپلود کتن ای قایل',
+'action-reupload'             => 'نویسگ سر ای موجودن فایل',
+'action-reupload-shared'      => 'باطل کتن ای فایل ته مخزن شریکی',
+'action-upload_by_url'        => 'آیلود کتن ای فایل چه یک آدرس اینترنتیء',
+'action-writeapi'             => 'چه API نویسک استفاده کن',
+'action-delete'               => 'زورگ ای صفحه',
+'action-deleterevision'       => 'حذف ای نسخه',
+'action-deletedhistory'       => 'چارگ تاریح حذف بوتگین ای صفحه',
+'action-browsearchive'        => 'گردگ په زورتگین صفحات',
+'action-undelete'             => 'حذف نه کتن ای صفحه',
+'action-suppressrevision'     => 'چارگ و ترینگ پناهین بازبینی',
+'action-suppressionlog'       => 'چارگ  ای خصوصین آمار',
+'action-block'                => 'ای کاربرء چه اصلاح کتن بند کن',
+'action-protect'              => 'عوص کتن سطح محافظت په ای صفحه',
+'action-import'               => 'وارد کتن ای صفحه چه دگه ویکیء',
+'action-importupload'         => 'وارد کتن ای صفحه چه یک آپلود فایلء',
+'action-patrol'               => 'نشان کتن اصلاح دگران په داب چارگ بیتگین',
+'action-autopatrol'           => 'نشان کتن وتی اصلاح په داب چارگ بوتگین',
+'action-unwatchedpages'       => 'چارگ لیست نچارتگین صفحات',
+'action-trackback'            => 'ثبت یک بازتر',
+'action-mergehistory'         => 'هورکتن تاریح ای صفحه',
+'action-userrights'           => 'اصلاح کل حقوق کاربر',
+'action-userrights-interwiki' => 'اصلاح حقوق کاربری کاربران ته دگه ویکیء',
+'action-siteadmin'            => 'کبل یا پچ کتن دینابیس',
+
 # Recent changes
 'nchanges'                          => '$1 {{PLURAL:$1|تغییر|تغییرات}}',
 'recentchanges'                     => 'نوکین تغییرات',
+'recentchanges-legend'              => 'گزینه ی نوکین تغییرات',
 'recentchangestext'                 => 'رندگر نوکترین تغییرات ته ویکی تی ای صفحه.',
 'recentchanges-feed-description'    => 'آهرین تغییرات ته وی کی چه ای فید رند گر',
 'rcnote'                            => "جهلء{{PLURAL:$1|هست '''1''' تغییری|هستن آهری '''$1''' تغییرات}} ته آهرین {{PLURAL:$2|روچ|'''$2''' روچان}}, چه$5, $4.",
@@ -1136,6 +1305,8 @@ Legend: (cur) = تفاوتان گون هنوکین نسخه,
 'rc_categories'                     => 'محدودیت په دسته جات(دورش گون"|")',
 'rc_categories_any'                 => 'هرچی',
 'newsectionsummary'                 => '/* $1 */ نوکین بخش',
+'rc-enhanced-expand'                => 'جزییات پیش دار(جاوا اسکریپت لازمنت)',
+'rc-enhanced-hide'                  => 'پناه کتن جزییات',
 
 # Recent changes linked
 'recentchangeslinked'          => 'مربوطین تغییرات',
@@ -1157,11 +1328,11 @@ Legend: (cur) = تفاوتان گون هنوکین نسخه,
 'upload_directory_read_only'  => 'مسیر آپلود ($1)  قابل نوشتن گون وب سرور نهنت.',
 'uploaderror'                 => 'حطا آپلود',
 'uploadtext'                  => "چه جهلگین فرم په آپلود فایلان استفاده کنت.
-په دیستن یا گشتن پیشگین آپلودی فایلان برو  [[Special:ImageList|لیست فایلان آپلودی]], آپلودان و حذفیات هنچو هستن ته [[Special:Log/upload|آمار آپلود]].
+په دیستن یا گشتن پیشگین آپلودی فایلان برو  [[Special:FileList|لیست فایلان آپلودی]], آپلودان و حذفیات هنچو هستن ته [[Special:Log/upload|آمار آپلود]].
 
 په وارد کتن فایل ته یک صفحه ای، چه لینک ته فرم استفاده کن
-* '''<tt><nowiki>[[</nowiki>{{ns:image}}<nowiki>:File.png|200px|thumb|left|alt text]]</nowiki></tt>''' په استفاده چه نسخه کامل فایل
-* '''<tt><nowiki>[[</nowiki>{{ns:image}}<nowiki>:File.png|200px|thumb|left|alt text]]</nowiki></tt>''' په استفاده چه ۲۰۰ پیکسل پهنات ته یک جعبه ته چپ
+* '''<tt><nowiki>[[</nowiki>{{ns:file}}<nowiki>:File.png|200px|thumb|left|alt text]]</nowiki></tt>''' په استفاده چه نسخه کامل فایل
+* '''<tt><nowiki>[[</nowiki>{{ns:file}}<nowiki>:File.png|200px|thumb|left|alt text]]</nowiki></tt>''' په استفاده چه ۲۰۰ پیکسل پهنات ته یک جعبه ته چپ
 * '''<tt><nowiki>[[</nowiki>{{ns:media}}<nowiki>:File.ogg]]</nowiki></tt>'''  په مسیری لینک دهگ په فایل بی پیش دارگ فایل",
 'upload-permitted'            => 'مجازین نوع فایل:  $1.',
 'upload-preferred'            => 'ترجیحی نوع فایل:  $1.',
@@ -1169,7 +1340,7 @@ Legend: (cur) = تفاوتان گون هنوکین نسخه,
 'uploadlog'                   => 'آپلود آمار',
 'uploadlogpage'               => 'آپلود ورودان',
 'uploadlogpagetext'           => 'جهلء یک لیست چه نوکترین آپلودان قایل هست.
-[[Special:NewImages|گالری نوکین فایلان]]',
+[[Special:NewFiles|گالری نوکین فایلان]]',
 'filename'                    => 'نام فایل',
 'filedesc'                    => 'خلاصه',
 'fileuploadsummary'           => 'خلاصه:',
@@ -1193,26 +1364,27 @@ Legend: (cur) = تفاوتان گون هنوکین نسخه,
 'largefileserver'             => 'ای فایل مزنتر چه حدی انت که سرور تنظیم بوتت په اجازه دهگ.',
 'emptyfile'                   => 'فایلی که شما آپلود کتت هالیک انت. شاید شی په خاطر اشتباه نه نام فایل بیت.
 لطفا کتنرل کنیت که آیا واقعا شما لوٹیت ای فایلء آپلود کنیت.',
-'fileexists'                  => 'یک فایل گون ای نام هستنت،لطفا کنترل کن <strong><tt>$1</tt></strong> اگه شما مطمین نهیت اگه لوٹیت نامی آیء عوض کنیت.',
-'filepageexists'              => 'صفحه توضیح په ای فایل پیشتر شر بوتت ته <strong><tt>$1</tt></strong>, بله هچ فایلی گون ای نام هنو نیست.
+'fileexists'                  => "یک فایل گون ای نام هستنت،لطفا کنترل کن '''<tt>$1</tt>''' اگه شما مطمین نهیت اگه لوٹیت نامی آیء عوض کنیت.",
+'filepageexists'              => "صفحه توضیح په ای فایل پیشتر شر بوتت ته '''<tt>$1</tt>''', بله هچ فایلی گون ای نام هنو نیست.
 خلاصه ای که شما وارد کت ته صفحه توضیح ظاهر نه بیت.
-په ظاهر کتن خلاصه ادان شما لازمنت آیء دستی اصلاح کنیت.',
-'fileexists-extension'        => 'یک فایلی گون یک دابی نام هستن:<br />
-نام فایلی که آپلود بیت: <strong><tt>$1</tt></strong><br />
-نام هستین فایل:<strong><tt>$2</tt></strong><br />
-لطفا دگه نامی بزوریت.',
+په ظاهر کتن خلاصه ادان شما لازمنت آیء دستی اصلاح کنیت.",
+'fileexists-extension'        => "یک فایلی گون یک دابی نام هستن:<br />
+نام فایلی که آپلود بیت: '''<tt>$1</tt>'''<br />
+نام هستین فایل:'''<tt>$2</tt>'''<br />
+لطفا دگه نامی بزوریت.",
 'fileexists-thumb'            => "<center>'''هستین فایل'''</center>",
-'fileexists-thumbnail-yes'    => 'فایل به نظر رسیت که یک عکس هورد بوتگین اندازه انت. <i>(پنچی انگشت)</i>.
-لطفا فایل کنترل کن  <strong><tt>$1</tt></strong>.<br />
-اگر فایل کنترلی هما عکسنت گون اصلی اندازه لازم نهنت یک پنچ انگشتی گیشین آپلود کنیت.',
-'file-thumbnail-no'           => 'نام فایل شروع بیت گون <strong><tt>$1</tt></strong>.
-جاه کیت که یک هور بوتگین اندازه عکس ایت.<i>(پینچ انگشت)</i>.
-اگر شما را ای عکس ته وضوح کامل هست ایء آپلود کنیت یا که نام فایل عوض کنیت لطفا',
-'fileexists-forbidden'        => 'فایل گو ای نام الان هستنت؛
-لطفا برگردیت و ای فایل گون یک نوکین نامی آپلود کنیت.[[Image:$1|انگشتی|مرکز|$1]]',
+'fileexists-thumbnail-yes'    => "فایل به نظر رسیت که یک عکس هورد بوتگین اندازه انت. ''(پنچی انگشت)''.
+لطفا فایل کنترل کن  '''<tt>$1</tt>'''.<br />
+اگر فایل کنترلی هما عکسنت گون اصلی اندازه لازم نهنت یک پنچ انگشتی گیشین آپلود کنیت.",
+'file-thumbnail-no'           => "نام فایل شروع بیت گون '''<tt>$1</tt>'''.
+جاه کیت که یک هور بوتگین اندازه عکس ایت.''(پینچ انگشت)''.
+اگر شما را ای عکس ته وضوح کامل هست ایء آپلود کنیت یا که نام فایل عوض کنیت لطفا",
+'fileexists-forbidden'        => 'فایل گو ای نام الان هستنت؛و نه توینت سری نویسگ بیتن.
+اگر که لوتیت ویت فایل ءَ آپلود کنیت ,لطفا برگردیت و ای فایل گون یک نوکین نامی آپلود کنیت.[[File:$1|انگشتی|مرکز|$1]]',
 'fileexists-shared-forbidden' => 'یک فایلی گون ای نام الان ته منبع مشترک فایل هستن.
-لطفا برگردیت و ای فایل گون نوکین نامی آپلود کنیت.[[Image:$1|انگشتی|مرکز|$1]]',
+لطفا برگردیت و ای فایل گون نوکین نامی آپلود کنیت.[[File:$1|انگشتی|مرکز|$1]]',
 'file-exists-duplicate'       => 'ای فایل کپیء چه جهلیگین  {{PLURAL:$1|فایل|فایلان}}:',
+'file-deleted-duplicate'      => 'یک فایلی په داب ای فایل ([[$1]]) پیسرتر حذف بوتگت. شما بایدن تاریح حذف آ فایلء دگه بچاریت',
 'successfulupload'            => 'آپلود موفق',
 'uploadwarning'               => 'هوژاری آپلود',
 'savefile'                    => 'ذخیره فایل',
@@ -1234,8 +1406,8 @@ Legend: (cur) = تفاوتان گون هنوکین نسخه,
 
 شما بایدن توجه کنیت که آیا ادامه دهگ آپلود کتن فایل مناسبنت.
 آمار حذف فایل په ای فایل ادان په شمی حاطرء هست:",
-'filename-bad-prefix'         => 'نام  فایلی که آپلود بیت شروع بیت گون <strong>"$1"</strong>, که یک نام بی توضیحی هنچکا اتوماتیکی گون دوربین دیجیتال دهگ بوتت.
-لطفا یک تشریحی ترین نامی په وتی فایل بزرویت.',
+'filename-bad-prefix'         => "نام  فایلی که آپلود بیت شروع بیت گون '''\"\$1\"''', که یک نام بی توضیحی هنچکا اتوماتیکی گون دوربین دیجیتال دهگ بوتت.
+لطفا یک تشریحی ترین نامی په وتی فایل بزرویت.",
 'filename-prefix-blacklist'   => '#<!-- leave this line exactly as it is --> <pre>
 # Syntax is as follows:
 #   * Everything from a "#" character to the end of the line is a comment
@@ -1276,20 +1448,21 @@ PICT # misc.
 'upload_source_url'  => '(یک متعبرین، عمومی دسترسی انت URL)',
 'upload_source_file' => '(یک فایل ته شمی کامپیوتر)',
 
-# Special:ImageList
-'imagelist-summary'     => 'ای حاصین صفحه کل آپلودی فایلانء پیش داریت.
+# Special:ListFiles
+'listfiles-summary'     => 'ای حاصین صفحه کل آپلودی فایلانء پیش داریت.
 به طور پیش فرض اهری فایل آپلودی ته بالاد لیست پیش دارگ بیت.
 یک کلیکی بالاد ستون ترتیب عوض کنت.',
-'imagelist_search_for'  => 'گردگ په  مدیا:',
+'listfiles_search_for'  => 'گردگ په  مدیا:',
 'imgfile'               => 'فایل',
-'imagelist'             => 'لیست فایل',
-'imagelist_date'        => 'تاریح',
-'imagelist_name'        => 'نام',
-'imagelist_user'        => 'کاربر',
-'imagelist_size'        => 'اندازه',
-'imagelist_description' => 'توضیح',
+'listfiles'             => 'لیست فایل',
+'listfiles_date'        => 'تاریح',
+'listfiles_name'        => 'نام',
+'listfiles_user'        => 'کاربر',
+'listfiles_size'        => 'اندازه',
+'listfiles_description' => 'توضیح',
+'listfiles_count'       => 'نسخ',
 
-# Image description page
+# File description page
 'filehist'                       => 'تاریح فایل',
 'filehist-help'                  => 'اور تاریح/زمان کلیک کنیت دان فایلا په داب هما تاریح بگندیت',
 'filehist-deleteall'             => 'کل حذف',
@@ -1297,12 +1470,18 @@ PICT # misc.
 'filehist-revert'                => 'واتر',
 'filehist-current'               => 'هنو',
 'filehist-datetime'              => 'تاریح/زمان',
+'filehist-thumb'                 => 'بند انگشت',
+'filehist-thumbtext'             => 'بند انگشتی عکس چه $1',
+'filehist-nothumb'               => 'بی بند انگشتی',
 'filehist-user'                  => 'کاربر',
 'filehist-dimensions'            => 'جنبه یان',
 'filehist-filesize'              => 'اندازه فایل',
 'filehist-comment'               => 'نظر',
-'imagelinks'                     => 'لینکان',
+'imagelinks'                     => 'لینک فایل',
 'linkstoimage'                   => 'جهلیگین {{PLURAL:$1|صفحه |$1 صفحات لینک}} پی ای فایل',
+'linkstoimage-more'              => 'گیشتر چه  $1 {{PLURAL:$1|صفحه لینکان|صفحات لینک}} پی ای فایل.
+جهلگین لیست {{PLURAL:$1|اولین لینک صفحه|اولین $1 لینکان صفحه ی}} پی ای فایل فقط پیش داریت.
+یک [[Special:WhatLinksHere/$2|لیست کامل]] موجودنت.',
 'nolinkstoimage'                 => 'هچ صفحه ای نیست که به ای فایل لینک بوت.',
 'morelinkstoimage'               => 'View [[Special:WhatLinksHere/$1|گیشتر لینکان]]به ای فایل',
 'redirectstofile'                => 'جهلیگین {{PLURAL:$1|فایل غیر مستقیم بنت|$1 فایلان غیر مستقیم بنت.}} به ای فایل',
@@ -1333,7 +1512,7 @@ PICT # misc.
 # File deletion
 'filedelete'                  => 'حذف $1',
 'filedelete-legend'           => 'حذف فایل',
-'filedelete-intro'            => "شما حذف کنگت ''[[Media:$1|$1]]'''.",
+'filedelete-intro'            => "شما حذف کنگت ''[[Media:$1|$1]]''' گون تمام آی تاریح ءَ",
 'filedelete-intro-old'        => " شما په حذف کتن نسخه ای چه '''[[Media:$1|$1]]''' په داب چه [$4 $3, $2].",
 'filedelete-comment'          => 'دلیل په حذف:',
 'filedelete-submit'           => 'حذف',
@@ -1341,8 +1520,6 @@ PICT # misc.
 'filedelete-success-old'      => '<span class="plainlinks">نسخه چه \'\'\'[[Media:$1|$1]]\'\'\'  په داب چه $3, $2 حذف بوتت.</span>',
 'filedelete-nofile'           => "'''$1'''  موجود نهنت.",
 'filedelete-nofile-old'       => "هچ نسخه آرشیوی چه'''$1'''  گون مشخصین نشان نیست.",
-'filedelete-iscurrent'        => 'شما لوٹیت نوکترین نسخه ای فایلء حذف کنیت.
-لطفا اول په یک پیشرتین نسخه بدل کنیت.',
 'filedelete-otherreason'      => 'دگر/گیشترین دلیل:',
 'filedelete-reason-otherlist' => 'دگ دلیل',
 'filedelete-reason-dropdown'  => '*متداول این دلایل حذف
@@ -1371,27 +1548,31 @@ PICT # misc.
 
 # Random page
 'randompage'         => 'تصادفی صفحه',
-'randompage-nopages' => 'هچ صفحه ای ته ای نام فضا نیست.',
+'randompage-nopages' => '"$1" هچ صفحه ای ته ای نام فضا نیست.',
 
 # Random redirect
 'randomredirect'         => 'تصادفی غیر مستقیم',
-'randomredirect-nopages' => 'هچ غیر مستقیمی ته ای نام فضا نیست.',
+'randomredirect-nopages' => '"$1"هچ غیر مستقیمی ته ای نام فضا نیست.',
 
 # Statistics
-'statistics'             => 'آمار',
-'sitestats'              => '{{SITENAME}} آمار',
-'userstats'              => 'آمار کاربر',
-'sitestatstext'          => "ادان {{PLURAL:\$1|هست '''1'''صفحه|هستن '''\$1''' کل صفحات}}تی ای دیتابیس.
-شی شامل صفحات  \"talk\"، صفحاتی درباره {{SITENAME}}، هوردین صفحات\"stub\"، غیر مستقیمان و دگه چیز که بلکین لایق صفحات محتوا نهنت.
-غیر چه آیآن، ادان {{PLURAL:\$2|هست '''1''' صفحه که هست یک|هستن '''\$2'''صفحاتی  که هستن}}شاید محتوای قانونی {{PLURAL:\$2|صفحه|صفحات}}.
-
-'''\$8''' {{PLURAL:\$8فایل |فایلان}} آپلود بوتنت.
-ادان کلا '''\$3''' {{PLURAL:\$3|چارگ صفحه|چارگ صفحه}}, و '''\$4''' {{PLURAL:\$4|اصلاح صفحه|اصلاحات صفحه}} چه {{SITENAME}} بنگیج بوتت.
-شامل '''\$5''' اصلاح میانگین ته هر صفحه و  '''\$6''' دیستن ته هر اصلاح بیت.
-
-[http://www.mediawiki.org/wiki/Manual:Job_queue job queue] طولی انت '''\$7'''.",
-'userstatstext'          => "ادان {{PLURAL:$1هست '''1''' ثبت بوتگین[[Special:ListUsers|کاربر]]|هستن '''$1''' ثبت نامی [[Special:ListUsers|کابران]]}}, که چه آیء '''$2''' (یا'''$4%''') {{PLURAL:$2|داریت|دارنت}} $5 حقوقی.",
-'statistics-mostpopular' => 'باز چار تگین صفحات',
+'statistics'                   => 'آمار',
+'statistics-header-pages'      => 'صفحه ی آمار',
+'statistics-header-edits'      => 'اصلاح آمار',
+'statistics-header-views'      => 'چارگ آمار',
+'statistics-header-users'      => 'آمار کاربر',
+'statistics-articles'          => 'صفحات محتوا',
+'statistics-pages'             => 'صفحات',
+'statistics-pages-desc'        => 'کل صفحات ته ویکی په داب صفحات بحث ،غیر مستقیمان و دگه چیز.',
+'statistics-files'             => 'آپلود بیتگین فایلان',
+'statistics-edits'             => 'اصلاح صفحات چه وهدی که {{SITENAME}} شر بوتت',
+'statistics-edits-average'     => 'میانگین اصلاحات ته هر صفحه ای',
+'statistics-views-total'       => 'چارگان کل',
+'statistics-views-peredit'     => 'چارگ ته هر اصلاح',
+'statistics-jobqueue'          => '[http://www.mediawiki.org/wiki/Manual:Job_queue طول کار] ای',
+'statistics-users'             => 'ثبت نامی [[Special:ListUsers|users]]',
+'statistics-users-active'      => 'فعالین کاربر',
+'statistics-users-active-desc' => 'کاربرانی که ته پیشگین {{PLURAL:$1|روچ|$1 روچان}} کاری اش کتت',
+'statistics-mostpopular'       => 'باز چار تگین صفحات',
 
 'disambiguations'      => 'صفحات رفع ابهام',
 'disambiguationspage'  => 'Template:رفع ابهام',
@@ -1435,26 +1616,30 @@ PICT # misc.
 'popularpages'            => 'مردمی صفحات',
 'wantedcategories'        => 'لوٹتگین دسته جات',
 'wantedpages'             => 'لوٹتگین صفحات',
-'missingfiles'            => 'گارین فایلان',
+'wantedfiles'             => 'لوٹتگین فایلان',
+'wantedtemplates'         => 'لوٹتگین تمپلت',
 'mostlinked'              => 'صفحاتی که گیشنر لینک دیگ بیتگنت',
 'mostlinkedcategories'    => 'دسته جاتی که گیشتر لینک دیگ بیتگنت',
 'mostlinkedtemplates'     => 'تمپلتانی که گیشتر لینک بیتگنت',
 'mostcategories'          => 'صفحات گون گیشترین دسته جات',
 'mostimages'              => 'فایلان گیشنر لینک بوتیگن',
 'mostrevisions'           => 'صفحاتی گون گیشترین بازبینی',
-'prefixindex'             => 'اندیکس پیش وند',
+'prefixindex'             => 'کل صفحات گون پیش وند',
 'shortpages'              => 'هوردین صفحه',
 'longpages'               => 'صفحات مزنین',
 'deadendpages'            => 'مرتگین صفحات',
 'deadendpagestext'        => 'جهلیگین صفحات په صفحات دگر لینک نهنت ته {{SITENAME}}.',
 'protectedpages'          => 'صفحات حفاظت بیتگین',
 'protectedpages-indef'    => 'فقط محافظت نامحدود',
+'protectedpages-cascade'  => 'محافظتان آبشاری فقط',
 'protectedpagestext'      => 'جهلیگین صفحات محافظت بوتگین چه اصلاح و جاه په جاه بیگ',
 'protectedpagesempty'     => 'هچ صفحه ای گون ای پارامترآن',
 'protectedtitles'         => 'عناوین محافظتی',
 'protectedtitlestext'     => 'جهلیگین عناوین چه شر بیگ محافظتن',
 'protectedtitlesempty'    => 'هچ عنوانی هنو گو ای پارامتران محافظت نهنت.',
 'listusers'               => 'لیست کاربر',
+'listusers-editsonly'     => 'فقط کاربرانی که اصلاحاتش هست پیش بدار',
+'usereditcount'           => '$1 {{PLURAL:$1|اصلاح|اصلاحات}}',
 'newpages'                => 'نوکین صفحات',
 'newpages-username'       => 'نام کاربری:',
 'ancientpages'            => 'صفحات قدیمی',
@@ -1476,14 +1661,13 @@ PICT # misc.
 'booksources-isbn'          => 'شابک:',
 'booksources-go'            => 'برو',
 'booksources-text'          => 'چهلا یک لیستی چه لینکان په دگه سایتان هست که نوکین  یا مستعمل این کتاب بها کنند و شما شاید گیشترین اطلاعات آی کتابانی باره که پرش گردیت در گیزیت:',
+'booksources-invalid-isbn'  => 'داتگین شماره کتاب چوش که جاه کیت درست نهنت, خطایانءِ بچار چه اصلی جاگاه کپی کن',
 
 # Special:Log
 'specialloguserlabel'  => 'کاربر:',
 'speciallogtitlelabel' => 'عنوان:',
 'log'                  => 'ورودان',
 'all-logs-page'        => 'کل ورودان',
-'log-search-legend'    => 'گردگ په آمار',
-'log-search-submit'    => 'برو',
 'alllogstext'          => 'هور کت پیش دارگ کل موجودین آمار {{SITENAME}}.
 شما تونیت گون انتخاب یک نوع آمار،نام کاربر (حساس په هورد-مزنی)، یا متاثرین صفحه (هنچوش حساس په هورد-مزنی) کمتری کنیت.',
 'logempty'             => 'هچ آیتم هم دپ ته آمار',
@@ -1495,6 +1679,7 @@ PICT # misc.
 'nextpage'          => 'صفحه ی بعدی ($1)',
 'prevpage'          => ' ($1)پیشگین صفحه',
 'allpagesfrom'      => 'پیش در صفحات شروع بنت ته:',
+'allpagesto'        => 'پیش بدار صفحاتی که هلنت گون:',
 'allarticles'       => 'کل صفحات',
 'allinnamespace'    => 'کل صفحات($1 نام فضا)',
 'allnotinnamespace' => 'صفحات کل (ته نام فضا $1 نه)',
@@ -1515,41 +1700,69 @@ PICT # misc.
 'special-categories-sort-count' => 'ترتیب په اساس شمار',
 'special-categories-sort-abc'   => 'ترتیب الفبی',
 
+# Special:DeletedContributions
+'deletedcontributions' => 'مشارکتان کابر حذف بوتء',
+
+# Special:LinkSearch
+'linksearch'       => 'دراین لینک ان',
+'linksearch-pat'   => 'گردگ الگو:',
+'linksearch-ns'    => 'نام فضا:',
+'linksearch-ok'    => 'گردگ',
+'linksearch-text'  => 'تقریبانی په داب "*.wikipedia.org" شاید استفاده بیت.<br />
+داشتگین پروتوکل: <tt>$1</tt>',
+'linksearch-line'  => '$1 لینک بوتت چه $2',
+'linksearch-error' => 'تقریبیان شاید فقط ته اول نام هاست جاه کاینت.',
+
 # Special:ListUsers
 'listusersfrom'      => 'پیشدار کابرانی که شروع بنت گون:',
 'listusers-submit'   => 'پیش دار',
 'listusers-noresult' => 'هچ کابری در گیزگ نه بوت.',
 
+# Special:Log/newusers
+'newuserlogpage'              => 'ورود شرکتن کاربر',
+'newuserlogpagetext'          => '.شی یک ورودی چه شرکتن کاربر',
+'newuserlog-byemail'          => 'کلمه رمز گون ایمیل دیم دهگ بوت',
+'newuserlog-create-entry'     => 'نوکین کاربر',
+'newuserlog-create2-entry'    => 'نوکین حساب شربوت  $1',
+'newuserlog-autocreate-entry' => 'حساب اتوماتیکی شربوت',
+
 # Special:ListGroupRights
-'listgrouprights'          => 'حقوق گروه کاربر',
-'listgrouprights-summary'  => 'جهلیگین یک لیستی چه گروهان کاربری تعریف بوتگین ته ای ویکی انت گون آیانی حق دسترسی آن همراهنت.
+'listgrouprights'                 => 'حقوق گروه کاربر',
+'listgrouprights-summary'         => 'جهلیگین یک لیستی چه گروهان کاربری تعریف بوتگین ته ای ویکی انت گون آیانی حق دسترسی آن همراهنت.
  درباره هر حقی ته صفحه [[{{MediaWiki:Listgrouprights-helppage}}|گیشترین اطلاعات]] هستن.',
-'listgrouprights-group'    => 'گروه',
-'listgrouprights-rights'   => 'حقوق',
-'listgrouprights-helppage' => 'Help: حقوق گروه',
-'listgrouprights-members'  => '(لیست اعضا)',
+'listgrouprights-group'           => 'گروه',
+'listgrouprights-rights'          => 'حقوق',
+'listgrouprights-helppage'        => 'Help: حقوق گروه',
+'listgrouprights-members'         => '(لیست اعضا)',
+'listgrouprights-addgroup'        => 'تونیت اضافه کنت {{PLURAL:$2|گروه|گروهان}}: $1',
+'listgrouprights-removegroup'     => 'تونیت بزوریت {{PLURAL:$2|گروهء|گروهانء}}: $1',
+'listgrouprights-addgroup-all'    => 'تونیت کل گروهان اضافه کنت',
+'listgrouprights-removegroup-all' => 'تونیت کل گروهانء بزوریت',
 
 # E-mail user
-'mailnologin'     => 'هچ آدرس دیم دهگ',
-'mailnologintext' => 'شما بایدن [[Special:UserLogin|وارد بیت]] و یک معتبرین آدرس ایمیلی داشته بیت ته وتی [[Special:Preferences|ترجیحات]] په دیم داتن ایمیل په دگه کاربران',
-'emailuser'       => 'په ای کابر ایمیل دیم دی',
-'emailpage'       => 'ایمیل کاربر',
-'emailpagetext'   => 'گر ای کاربر یک معتبرین آدرس ایمیلی ته وتی ترجیحات کاربری وارد کتت،جهلگین فرم په آیء یک کوله ای دیم دنت.
+'mailnologin'      => 'هچ آدرس دیم دهگ',
+'mailnologintext'  => 'شما بایدن [[Special:UserLogin|وارد بیت]] و یک معتبرین آدرس ایمیلی داشته بیت ته وتی [[Special:Preferences|ترجیحات]] په دیم داتن ایمیل په دگه کاربران',
+'emailuser'        => 'په ای کابر ایمیل دیم دی',
+'emailpage'        => 'ایمیل کاربر',
+'emailpagetext'    => 'گر ای کاربر یک معتبرین آدرس ایمیلی ته وتی ترجیحات کاربری وارد کتت،جهلگین فرم په آیء یک کوله ای دیم دنت.
 آدرس ایمیلی که شما وارد کتت ته [[Special:Preferences|وتی ترجیحات]] په داب آدرس  "From" پیش دارگ بیت، اچه گروک ایمیل تونیت پسوء دنت.',
-'usermailererror' => 'شی ایمیل حطا پیش داشت',
-'defemailsubject' => '{{SITENAME}} ایمیل',
-'noemailtitle'    => 'هچ آدرس ایمیل',
-'noemailtext'     => 'ای کاربر یک آدرس ایمیل معتبری مشخص نه کتت یا انتخابی کت ای که چه دگه کابران ایمیل مه گریت.',
-'emailfrom'       => ':چه',
-'emailto'         => 'به:',
-'emailsubject'    => 'موضوع:',
-'emailmessage'    => 'کوله:',
-'emailsend'       => 'دیم دی',
-'emailccme'       => 'یک کپی چه منی کوله په من وت ایمیل کن.',
-'emailccsubject'  => 'کپی چه شمی کوله په $1: $2',
-'emailsent'       => 'ایمیل دیم دهگ بوت',
-'emailsenttext'   => 'شمی کوله ایمیل دیم دهگ بوت.',
-'emailuserfooter' => 'این نامه الکترونیکی گون استفاده چه ویژگی «پست الکترونیکی به کاربر» {{SITENAME}} گون $1 په $2 دیم دهگ بوتت.',
+'usermailererror'  => 'شی ایمیل حطا پیش داشت',
+'defemailsubject'  => '{{SITENAME}} ایمیل',
+'noemailtitle'     => 'هچ آدرس ایمیل',
+'noemailtext'      => 'ای کاربر یک آدرس ایمیل معتبری مشخص نه کتت.',
+'nowikiemailtitle' => 'هیچ ایمیل مجاز نهنت',
+'nowikiemailtext'  => 'ای کاربر نه لوٹیت چه دگه کاربران ایمیل بگیرت.',
+'email-legend'     => 'یک ایمیلی په دگه کاربر {{SITENAME}} دیم دی',
+'emailfrom'        => ':چه',
+'emailto'          => 'به:',
+'emailsubject'     => 'موضوع:',
+'emailmessage'     => 'کوله:',
+'emailsend'        => 'دیم دی',
+'emailccme'        => 'یک کپی چه منی کوله په من وت ایمیل کن.',
+'emailccsubject'   => 'کپی چه شمی کوله په $1: $2',
+'emailsent'        => 'ایمیل دیم دهگ بوت',
+'emailsenttext'    => 'شمی کوله ایمیل دیم دهگ بوت.',
+'emailuserfooter'  => 'این نامه الکترونیکی گون استفاده چه ویژگی «پست الکترونیکی به کاربر» {{SITENAME}} گون $1 په $2 دیم دهگ بوتت.',
 
 # Watchlist
 'watchlist'            => 'منی لیست چارگ',
@@ -1580,12 +1793,7 @@ PICT # misc.
 'iteminvalidname'      => "مشکل گون آیتم  '$1', نامعتبر  این نام",
 'wlnote'               => "جهلء {{PLURAL:$1|آهرین تغییر هست|آهرین هست'''$1''' تغییرات}} ته آهرین {{PLURAL:$2|ساعت|'''$2''' ساعات}}.",
 'wlshowlast'           => 'پیش دار آهرین $1  ساعات $2 روچان $3',
-'watchlist-show-bots'  => 'پیش دار اصلاحات روباتء',
-'watchlist-hide-bots'  => 'اصلاحات بت پناه کن',
-'watchlist-show-own'   => 'پیش دار منی اصلاحاتء',
-'watchlist-hide-own'   => 'منی اصلاحات آ پناه کن',
-'watchlist-show-minor' => 'پیش دار هوردین اصلاحاتء',
-'watchlist-hide-minor' => 'هوردین تغییرات پناه کن',
+'watchlist-options'    => 'گزینه یان لیست چارگ',
 
 # Displayed when you click the "watch" button and it is in the process of watching
 'watching'   => 'چارگ بین',
@@ -1625,77 +1833,83 @@ $NEWPAGE
 نظرات و گیشترین کمک:
 {{fullurl:{{MediaWiki:Helppage}}}}',
 
-# Delete/protect/revert
-'deletepage'                  => 'حذف صفحه',
-'confirm'                     => 'تایید',
-'excontent'                   => "محتوا هستنت:  '$1'",
-'excontentauthor'             => "محتوا ات: '$1' (و  فقط شرکت کنندگان انت '[[Special:Contributions/$2|$2]]')",
-'exbeforeblank'               => "محتوا پیش چه صاف بیگ بوتت : '$1'",
-'exblank'                     => 'صفحه هالیک انت',
-'delete-confirm'              => 'حذف "$1"',
-'delete-legend'               => 'حذف',
-'historywarning'              => 'هوژاری: صفحه ای که شما لوٹتیت آیآ حذف کنیت یک تاریحی داریت:',
-'confirmdeletetext'           => 'شما لوٹیت یک صفحه ای گون کل تاریحانی حذف کنیت.
+# Delete
+'deletepage'             => 'حذف صفحه',
+'confirm'                => 'تایید',
+'excontent'              => "محتوا هستنت:  '$1'",
+'excontentauthor'        => "محتوا ات: '$1' (و  فقط شرکت کنندگان انت '[[Special:Contributions/$2|$2]]')",
+'exbeforeblank'          => "محتوا پیش چه صاف بیگ بوتت : '$1'",
+'exblank'                => 'صفحه هالیک انت',
+'delete-confirm'         => 'حذف "$1"',
+'delete-legend'          => 'حذف',
+'historywarning'         => 'هوژاری: صفحه ای که شما لوٹتیت آیآ حذف کنیت یک تاریحی داریت:',
+'confirmdeletetext'      => 'شما لوٹیت یک صفحه ای گون کل تاریحانی حذف کنیت.
 لطفا تایید کنیت که شما چوش کنیت که شما زانیت آی ء عاقبتانآ و شی که شما ای کارآ گون [[{{MediaWiki:Policy-url}}|سیاست]] انجام دهیت',
-'actioncomplete'              => 'کار انجام بیت',
-'deletedtext'                 => '"<nowiki>$1</nowiki>" حذف بیت.
+'actioncomplete'         => 'کار انجام بیت',
+'deletedtext'            => '"<nowiki>$1</nowiki>" حذف بیت.
 بگندیت $2 په ثبتی که نوکین حذفیات',
-'deletedarticle'              => 'حذف بوت "[[$1]]"',
-'suppressedarticle'           => 'متوقف بوت "[[$1]]"',
-'dellogpage'                  => 'حذف ورودان',
-'dellogpagetext'              => 'جهلء یک لیستی چه نوکترین حذفیات هست.',
-'deletionlog'                 => 'آمار حذف',
-'reverted'                    => 'ترینگ بوت په پیشترین بازبینی',
-'deletecomment'               => 'دلیل حذف:',
-'deleteotherreason'           => 'دگه/گیشترین دلیل:',
-'deletereasonotherlist'       => 'دگه دلیل',
-'deletereason-dropdown'       => '*متداولین دلایل حذف
+'deletedarticle'         => 'حذف بوت "[[$1]]"',
+'suppressedarticle'      => 'متوقف بوت "[[$1]]"',
+'dellogpage'             => 'حذف ورودان',
+'dellogpagetext'         => 'جهلء یک لیستی چه نوکترین حذفیات هست.',
+'deletionlog'            => 'آمار حذف',
+'reverted'               => 'ترینگ بوت په پیشترین بازبینی',
+'deletecomment'          => 'دلیل حذف:',
+'deleteotherreason'      => 'دگه/گیشترین دلیل:',
+'deletereasonotherlist'  => 'دگه دلیل',
+'deletereason-dropdown'  => '*متداولین دلایل حذف
 ** درخواست نویسوک
 ** نقض حق کپی
 ** حرابکاری',
-'delete-edit-reasonlist'      => 'اصلاح کن دلایل حذفء',
-'delete-toobig'               => 'صفحهء یک مزنین تاریح اصلاحی هست گیشتر چه $1 {{PLURAL:$1|بازبینی|بازبینی}}.
+'delete-edit-reasonlist' => 'اصلاح کن دلایل حذفء',
+'delete-toobig'          => 'صفحهء یک مزنین تاریح اصلاحی هست گیشتر چه $1 {{PLURAL:$1|بازبینی|بازبینی}}.
 حذف چوشین صفحات په خاظر جلو گر چه ناگهانی اتفاق ته سایت {{SITENAME}} ممنوع بوتت.',
-'delete-warning-toobig'       => 'ای صفحه  مزنین تاریح اصلاح هست، گیش چه  $1 {{PLURAL:$1|بازبینی|بازبینی}}.
+'delete-warning-toobig'  => 'ای صفحه  مزنین تاریح اصلاح هست، گیش چه  $1 {{PLURAL:$1|بازبینی|بازبینی}}.
 حذف آی شاید کار دیتابیس  {{SITENAME}} قطع کنت؛
 گون اخطار پیش روت.',
-'rollback'                    => 'پشت ترگ اصلاحات',
-'rollback_short'              => 'پشتررگ',
-'rollbacklink'                => 'عقب ترگ',
-'rollbackfailed'              => 'پشتررگ پروشت',
-'cantrollback'                => 'نه تونیت اصلاح برگردینیت؛
+
+# Rollback
+'rollback'         => 'پشت ترگ اصلاحات',
+'rollback_short'   => 'پشتررگ',
+'rollbacklink'     => 'عقب ترگ',
+'rollbackfailed'   => 'پشتررگ پروشت',
+'cantrollback'     => 'نه تونیت اصلاح برگردینیت؛
 آهری شرکت کننده فقط نویسوک ای صفحه انت.',
-'alreadyrolled'               => 'نه تونیت ترینیت اهری اصلاح چه  [[:$1]] گون  [[User:$2|$2]] ([[User talk:$2|گپ]] | [[Special:Contributions/$2|{{int:contribslink}}]]);
+'alreadyrolled'    => 'نه تونیت ترینیت اهری اصلاح چه  [[:$1]] گون  [[User:$2|$2]] ([[User talk:$2|گپ]] | [[Special:Contributions/$2|{{int:contribslink}}]]);
 یکی دگه پیش تر صفحهء اصلاح کتت یا بری گردینت.
 
 آهری اصلاح توسط [[User:$3|$3]] ([[User talk:$3|گپ کن]]).',
-'editcomment'                 => 'نظر اصلاح ات:"<i>$1</i>".', # only shown if there is an edit comment
-'revertpage'                  => 'ترینت اصلاحات توسط  [[Special:Contributions/$2|$2]] ([[User talk:$2|گپ کن]])په آهری بازبینی گون [[User:$1|$1]]', # Additional available: $3: revid of the revision reverted to, $4: timestamp of the revision reverted to, $5: revid of the revision reverted from, $6: timestamp of the revision reverted from
-'rollback-success'            => 'اصلاحات ترینگ بوتت گون $1;
+'editcomment'      => "نظر اصلاح ات:\"''\$1''\".", # only shown if there is an edit comment
+'revertpage'       => 'ترینت اصلاحات توسط  [[Special:Contributions/$2|$2]] ([[User talk:$2|گپ کن]])په آهری بازبینی گون [[User:$1|$1]]', # Additionally available: $3: revid of the revision reverted to, $4: timestamp of the revision reverted to, $5: revid of the revision reverted from, $6: timestamp of the revision reverted from
+'rollback-success' => 'اصلاحات ترینگ بوتت گون $1;
 په آهری نسخه ترینگ بوتنت گون $2.',
-'sessionfailure'              => 'چوش جاه کیت که گون شمی نند  وارد بییگ مشکلی هست;
+'sessionfailure'   => 'چوش جاه کیت که گون شمی نند  وارد بییگ مشکلی هست;
 ای کار په خاطر سوء استفاده چه نندگ کنسل بوت.
 لطفا بجنیت "back" و صفحه ای که چه آیء اتکگیت دگه بار کنیت او راندء دگه تلاش کنیت.',
+
+# Protect
 'protectlogpage'              => 'ورودان حفاظت',
 'protectlogtext'              => 'جهلء یک لیستی چه هست چه صفحه پچ و بند کبلان.
 بچار [[Special:ProtectedPages|لیست صفحات محافظتی]]  په لیستی محافظتات اجرای هنوکین صفحه',
 'protectedarticle'            => 'محافظتی "[[$1]]"',
 'modifiedarticleprotection'   => 'عوض بوت سطح حفاظت په "[[$1]]"',
 'unprotectedarticle'          => 'بی حمایت  "[[$1]]"',
+'movedarticleprotection'      => 'تنظیمات محافظت جاه په جاه بوت چه "[[$2]]" په "[[$1]]"',
 'protect-title'               => 'عوض کن سطح حفاظت په  "$1"',
+'prot_1movedto2'              => '[[$1]] چاه په چاه بوت په [[$2]]',
 'protect-legend'              => 'حفاظت تایید کن',
 'protectcomment'              => 'نظر:',
 'protectexpiry'               => 'منقضی بیت:',
 'protect_expiry_invalid'      => 'تاریح انقضای معتبر نهنت.',
 'protect_expiry_old'          => 'تاریخ انقصا ته گذشته انت.',
 'protect-unchain'             => 'اجازه یان جاه په جاهی پچ کن',
-'protect-text'                => 'شما شاید ادان سطح حفاظت بگندیت و تغییر دیهت په صفحه <strong><nowiki>$1</nowiki></strong>.',
-'protect-locked-blocked'      => 'شما نه تونیت سطوح حفاظت وهدی مه محدود انت عوض کنیت.
-ادان تنظیمات هنوی په صفحه است<strong>$1</strong>:',
-'protect-locked-dblock'       => 'سطوح حفاظتی په خاطر یم فعالین کبل دیتابیس عوض نه  بنت.
-ادان تنظیمات هنوی په صفحه است <strong>$1</strong>:',
-'protect-locked-access'       => 'شمی حساب اجازه نداریت سطوح حفاظت صفحه ی عوض کنت.
-ادان هنوکین تنظیمات هست په صفحه <strong>$1</strong>:',
+'protect-text'                => "شما شاید ادان سطح حفاظت بگندیت و تغییر دیهت په صفحه '''<nowiki>$1</nowiki>'''.",
+'protect-locked-blocked'      => "شما نه تونیت سطوح حفاظت وهدی مه محدود انت عوض کنیت.
+ادان تنظیمات هنوی په صفحه است'''$1''':",
+'protect-locked-dblock'       => "سطوح حفاظتی په خاطر یم فعالین کبل دیتابیس عوض نه  بنت.
+ادان تنظیمات هنوی په صفحه است '''$1''':",
+'protect-locked-access'       => "شمی حساب اجازه نداریت سطوح حفاظت صفحه ی عوض کنت.
+ادان هنوکین تنظیمات هست په صفحه '''$1''':",
 'protect-cascadeon'           => 'ای صفحه الان محافظت بیت چوش که آی شامل جهلی {{PLURAL:$1|صفحات| درانت  که }} حفاظت آبشار روشن.
 شما تونیت ای صفحه ی سطح حفاظت آ عوص کنیت، بله آی ء حفاظت آبشاریء تاثیر نهلیت.',
 'protect-default'             => '(پیش فرض)',
@@ -1704,8 +1918,21 @@ $NEWPAGE
 'protect-level-sysop'         => 'فقط کاربران سیستمی',
 'protect-summary-cascade'     => 'آبشاری',
 'protect-expiring'            => 'منقضی بوت $1 (UTC)',
+'protect-expiry-indefinite'   => 'نا معین',
 'protect-cascade'             => 'حفاظت کن صفحاتی په داب ای صفحه (محافظت آبشاری)',
 'protect-cantedit'            => 'شما نه تونیت سطح حمایت ای صفحه یا عوض کنیت، چون شما اجازه اصلاح کتن نیست',
+'protect-othertime'           => 'دگه وهدی:',
+'protect-othertime-op'        => 'دگه وهدی',
+'protect-existing-expiry'     => 'موجودین هلگی وهد:$2،$3',
+'protect-otherreason'         => 'دگه/اضافه این دلیل:',
+'protect-otherreason-op'      => 'دگه/اضافه این دلیل',
+'protect-dropdown'            => '*متداولین دلایل حفاظت
+** بازگین هرابکاری
+** بازگین اسپم
+** اخطار هرابین اصلاح
+** مزنین ترافیکی صفحه',
+'protect-edit-reasonlist'     => 'اصلاح دلایل حفاظت',
+'protect-expiry-options'      => '2 ساعت: 2 ساعت، 1 روچ: 1 روچ، 3 روچ: 3 روچ، 1 هفته: 1 هفته، 2 هفته: 2هفته، 1 ماه: 1 ماه: 2ماه، 3 ماه: 3 ماه، 6 ماه: 6 ماه، 1 سال: 1 سال، بی حد: بی حد', # display1:time1,display2:time2,...
 'restriction-type'            => 'اجازت',
 'restriction-level'           => 'سطح محدود',
 'minimum-size'                => 'هوردی اندازه',
@@ -1728,7 +1955,7 @@ $NEWPAGE
 'undeletepage'                 => 'به گند و برگردین صفحات حذفیء',
 'undeletepagetitle'            => "'''جهلیگین شامل حذف بوتگین بازبینی آننت چه  [[:$1|$1]]'''.",
 'viewdeletedpage'              => 'به گند صفحات حذفیء',
-'undeletepagetext'             => 'جهلیگین صفحات حذف بوتگنت بله هنگیت ته آرشیو هستن و توننت برگردینگ بنت.
+'undeletepagetext'             => 'جهلیگین {{PLURAL:$1|صفحه}} حذف بوتگنت بله هنگیت ته آرشیو هستن و توننت برگردینگ بنت.
 آرشیو شاید هر چند وهد پهک کنگ بیت.',
 'undelete-fieldset-title'      => 'ترینگ بازبینی  ان',
 'undeleteextrahelp'            => "په ترینگ کل صفحه، کل جعبه انتخاب مه کن و کلیک کن  '''''تررین'''''.
@@ -1741,13 +1968,14 @@ $NEWPAGE
 'undeletehistorynoadmin'       => 'ای صفحه حذف بوتت.
 دلیل حذف ته جهلگی خلاصه پیش دارگ بیت، گون جزییات کابرانی که ایء اصلاحش کتت پیش چه حذف بیگ.
 متن واقعی ای بازبینی آن حذف فقط په مدیران موجود انت.',
-'undelete-revision'            => 'حذفی بازبینی $1 (چه  $2) گون $3:',
+'undelete-revision'            => 'حذفی بازبینی $1 (چه  $4 ته $5) گون $3:',
 'undeleterevision-missing'     => 'نامعتبرین یا گارین بازبینی.
 شما شاید بدین لینکی داشته ایت یا بازبینی حذف یا ترینگ بوتت چه آرشیو.',
 'undelete-nodiff'              => 'هچ پیشگین بازبینی درگیزگ نه بوت.',
 'undeletebtn'                  => 'باز گردینگ',
 'undeletelink'                 => 'واتر',
 'undeletereset'                => 'برگردینگ',
+'undeleteinvert'               => 'چپکایگ کتن انتخاب',
 'undeletecomment'              => 'نظر:',
 'undeletedarticle'             => 'واترینت "[[$1]]"',
 'undeletedrevisions'           => '{{PLURAL:$1|1 بازبینی|$1 بازبینی آن}} واترینگ بیت',
@@ -1781,27 +2009,27 @@ $1',
 'blanknamespace' => '(اصلی)',
 
 # Contributions
-'contributions' => 'مشارکتان کاربر',
-'mycontris'     => 'می مشارکتان',
-'contribsub2'   => 'په $1 ($2)',
-'nocontribs'    => 'هچ تغییر هم دپ گون ای معیار در نه بوت.',
-'uctop'         => '(بالا)',
-'month'         => 'چه ماه(و پیش تر):',
-'year'          => 'چه سال(و پیشتر)',
+'contributions'       => 'مشارکتان کاربر',
+'contributions-title' => 'مشارکتان کاربر په $1',
+'mycontris'           => 'می مشارکتان',
+'contribsub2'         => 'په $1 ($2)',
+'nocontribs'          => 'هچ تغییر هم دپ گون ای معیار در نه بوت.',
+'uctop'               => '(بالا)',
+'month'               => 'چه ماه(و پیش تر):',
+'year'                => 'چه سال(و پیشتر)',
 
-'sp-contributions-newbies'     => 'پیش دار فقط مشارکتان نوکین حسایانء',
-'sp-contributions-newbies-sub' => 'په نوکین حسابان',
-'sp-contributions-blocklog'    => 'محدود کتن ورود',
-'sp-contributions-search'      => 'گردگ په مشارکتان',
-'sp-contributions-username'    => 'آدرس آی پی یا نام کاربری',
-'sp-contributions-submit'      => 'گردگ',
+'sp-contributions-newbies'       => 'پیش دار فقط مشارکتان نوکین حسایانء',
+'sp-contributions-newbies-sub'   => 'په نوکین حسابان',
+'sp-contributions-newbies-title' => 'مشارکتان کاربر په نوکین حسابان',
+'sp-contributions-blocklog'      => 'محدود کتن ورود',
+'sp-contributions-search'        => 'گردگ په مشارکتان',
+'sp-contributions-username'      => 'آدرس آی پی یا نام کاربری',
+'sp-contributions-submit'        => 'گردگ',
 
 # What links here
 'whatlinkshere'            => 'ای لینکی که ادا هست',
 'whatlinkshere-title'      => 'صفحاتی که لینگ بوتگنت په "$1"',
 'whatlinkshere-page'       => 'صفحه:',
-'whatlinkshere-barrow'     => '>',
-'linklistsub'              => '(لیست کل لینکان)',
 'linkshere'                => "جهلیگی صفحات لینک بوت '''[[:$1]]''':",
 'nolinkshere'              => "هچ لینک صفحه ای په '''[[:$1]]'''.",
 'nolinkshere-ns'           => "هج صفحه ای لینک نهنت په '''[[:$1]]''' ته ای انتخابی نام فضا",
@@ -1842,11 +2070,13 @@ $1',
 'ipbenableautoblock'              => 'اتوماتیکی اهری آدرس آی پی که گون ای کاربر استفاده بوتت محدود کن، و هر چی زیر آی پی هست که سعی کننت اصلاح کننت',
 'ipbsubmit'                       => 'ای کاربرء محدود کن',
 'ipbother'                        => 'دگر وهد:',
-'ipboptions'                      => '2 ساعت: 2 ساعت، 1 روچ: 1 روچ، 3 روچ: 3 روچ، 1 هفته: 1 هفته، 2 هفته: 2هفته، 1 ماه: 1 ماه: 2ماه، 3 ماه: 3 ماه، 6 ماه: 6 ماه، 1 سال: 1 سال، بی حد: بی حد', # display1:time1,display2:time2,...
+'ipboptions'                      => '۲ ساعت:2 hours,۱ روچ:1 day,۳ روچ:3 days,۱ هفته:1 week,۲ هفته:2 weeks,۱ ماه:1 month,۳ ماه:3 months,۶ ماه:6 months,۱ سال:1 year,بی‌‌حد:infinite', # display1:time1,display2:time2,...
 'ipbotheroption'                  => 'دگر',
 'ipbotherreason'                  => 'دگر/اضافی ان دلیل:',
 'ipbhidename'                     => 'پناه کن نام کاربری چه آمار محدودیت، فعال کن لیست محدودیت و لیست کاربر',
 'ipbwatchuser'                    => 'بچار ای کاربرء صفحات گپ و کاربری آ',
+'ipballowusertalk'                => 'په ای کاربر اجازت بدی  تا وتی صفحه گپء اصلاح بکنت وهدی که محدود بیتت.',
+'ipb-change-block'                => 'بند کتن ای کاربر گون ای تنظیمات',
 'badipaddress'                    => 'نامعتبر آدرس آی پی',
 'blockipsuccesssub'               => 'محدودیت موفق بوت',
 'blockipsuccesstext'              => '[[Special:Contributions/$1|$1]] محدود بوتت..<br />
@@ -1856,14 +2086,18 @@ $1',
 'ipb-unblock'                     => 'نام کاربری یا آدرس آی پی رفع محدودیت کن',
 'ipb-blocklist-addr'              => 'به گند هستین محدودیت په $1',
 'ipb-blocklist'                   => 'به گند هنوکین محدودیتان',
+'ipb-blocklist-contribs'          => 'مشارکت په $1',
 'unblockip'                       => 'کاربر رفع محدودیت کن',
 'unblockiptext'                   => 'چه ای جهلی فرم استفاده کن په ترینگ دسترسی نوشتن په یک پیشگین آدرس آی پی محدود یا نام کاربری.',
-'ipusubmit'                       => 'ای آدرسء رفع محدودیت کن',
+'ipusubmit'                       => 'ای محدودیتءَ بزور',
 'unblocked'                       => '[[User:$1|$1]] رفع محدودیت بیت.',
 'unblocked-id'                    => 'محدودیت $1  زورگ بیتت',
 'ipblocklist'                     => 'لیست محدود بیتگین آی پی و نام کاربران',
 'ipblocklist-legend'              => 'درگیزگ یم محدودین کاربری',
 'ipblocklist-username'            => 'نام کاربری یا آدرس آی پی:',
+'ipblocklist-sh-userblocks'       => '$1 بند کتن دسترسی کاربر',
+'ipblocklist-sh-tempblocks'       => '$1 بند کتن  دسترسی موقت',
+'ipblocklist-sh-addressblocks'    => '$1 بند کتن  دسترسی نشانی اینترنتی',
 'ipblocklist-submit'              => 'گردگ',
 'blocklistline'                   => '$1, $2محدود انت $3 ($4)',
 'infiniteblock'                   => 'بی حد',
@@ -1872,15 +2106,19 @@ $1',
 'noautoblockblock'                => 'اتوماتیکی محدودی غیر فعال',
 'createaccountblock'              => 'شرکتن حساب محدود انت',
 'emailblock'                      => 'ایمیل محدودانت',
+'blocklist-nousertalk'            => 'نه تونیت وتی صفحه گپءاصلاح کنت',
 'ipblocklist-empty'               => 'لیست محدودی هالیک انت.',
 'ipblocklist-no-results'          => 'لوٹتگین نام کاربری یا آدرس آی پی محدود نهنت.',
 'blocklink'                       => 'محدود',
 'unblocklink'                     => 'رفع محدودیت',
+'change-blocklink'                => 'عوض کتن کبل',
 'contribslink'                    => 'مشارکتان',
 'autoblocker'                     => 'اتوماتیک کبلت په چی که شمی آدرس آی پی نوکی استفاده بوتت گون  "[[User:$1|$1]]".
 داتگین دلیل په محدود کتن $1 شی انت: "$2"',
 'blocklogpage'                    => 'بلاک ورود',
+'blocklog-fulllog'                => 'کاملین آمار محدودیت',
 'blocklogentry'                   => 'محدود بوته [[$1]] گون یک زمان انقاضای $2 $3',
+'reblock-logentry'                => 'تنظیم‌های بندکتن دسترسی [[$1]] را تغییر داتگت به هلگ بند کتن دسترسی ته $2 ساعت $3',
 'blocklogtext'                    => 'شی یک آماری چه کاران محدود و رفع محدودیت چه ای کاربر انت.
 اتوماتیکی محدود بوتگین آدرس آی پی ادان لیست نهنت.
 بچار [[Special:IPBlockList|لیست محدودیت آی پی]] په لیست هنوکین عملی محدودیتان و بند کتان.',
@@ -1889,11 +2127,14 @@ $1',
 'block-log-flags-nocreate'        => 'شرکتن حساب غیر فعال',
 'block-log-flags-noautoblock'     => 'اتوماتیکی محدوددیت غیر فعال',
 'block-log-flags-noemail'         => 'ایمیل محدودانت',
+'block-log-flags-nousertalk'      => 'نه تونیت صفحه بحثء وتیء اصلاح کنیت',
 'block-log-flags-angry-autoblock' => 'بند کتن دسترسی خودکار پیشرفته فعال انت',
 'range_block_disabled'            => 'توانایی مدیران سیستم په شرکتن محدوده محدودیت غیر فعالنت.',
 'ipb_expiry_invalid'              => 'وهد هلگ نامعتبر انت.',
 'ipb_expiry_temp'                 => 'پناهین نام کاربری محدودیاتن بایدن دایمی بنت.',
 'ipb_already_blocked'             => '"$1" الان محدودنت.',
+'ipb-needreblock'                 => '== بند بوتن دسترسی چه قبل ==
+دسترسی $1 چه قبل بند ات. آیا لوٹیت تنظیم‌های آن را تغییر دهیت؟',
 'ipb_cant_unblock'                => 'حطا: شناسگ محدودیت  $1 در گیزگ نه بوت. شاید هنگیت رفع محدودیت نهنت.',
 'ipb_blocked_as_range'            => 'حطا: ای پی  $1 مستقیما محدود نهنت و نه تونیت رفع محدودیت بیت.
 بله آی جزی چه محدوده  $2 محدود بوتت که تونیت رفع محدودیت بیت.',
@@ -1908,6 +2149,7 @@ $1',
 'sorbsreason'                     => 'شمی آدرس آی پی لیست بوتت په داب پچین پروکسی ته  DNSBL که استفاده بیت گون {{SITENAME}}.',
 'sorbs_create_account_reason'     => 'شمی آدرس آی پی لیست بوتت په داب پچین پروکسی ته  دی ان ای بی ال که استفاده بیت گون {{SITENAME}}.
 شما نه تونیت حسابی شرکنیت',
+'cant-block-while-blocked'        => 'شما نه تونیت دگه کاربرانء بند کنیت وهدی که شما وت بند هستیت',
 
 # Developer tools
 'lockdb'              => 'دیتابیس کبل کن',
@@ -1931,9 +2173,9 @@ $1',
 'databasenotlocked'   => 'دیتابیس کبل نهنت.',
 
 # Move page
-'move-page'               => 'جاه په جاه کن $1',
-'move-page-legend'        => 'صفحه جاه په جاه کن',
-'movepagetext'            => "استفاده چه جهلگی فرم یک صفحه ای نامی آ بدل کنت، کل تاریح آیآ په نوکین نام جاه په جاه کنت.
+'move-page'                    => 'جاه په جاه کن $1',
+'move-page-legend'             => 'صفحه جاه په جاه کن',
+'movepagetext'                 => "استفاده چه جهلگی فرم یک صفحه ای نامی آ بدل کنت، کل تاریح آیآ په نوکین نام جاه په جاه کنت.
 گهنگین عنوان یک صفحه غیر مستقیمی په نوکین عنوان بیت.
 لینکان په کهنگین عوض نبنت;
 مطمین بیت په خاطر [[Special:DoubleRedirects|دوتایی]] یا [[Special:BrokenRedirects|پرشتگین غیر مستقیم]].
@@ -1944,50 +2186,62 @@ $1',
 ''''هوژاری!''''  
 شی ممکننت یک تغییر آنی و نه لوٹتگین په یک معروفین صفحه ای بیت;
 لصفا مطمین بیت شما عواقب شی زانیت پیش چه دیم روگآ",
-'movepagetalktext'        => "همراهی گپان صفحه اتوماتیک گون آی جاه په چاه بنت ''''مگر:''''
+'movepagetalktext'             => "همراهی گپان صفحه اتوماتیک گون آی جاه په چاه بنت ''''مگر:''''
 یک ناهالیکین صفحه گپی چیر آی ء نوکین نام بیت، یا
 شما جهلیگین باکس آ تیک مجنیت.
 ته ای موراد شما بایدن صفحه یا دسته جاه په جاه کنی و یا آیآ چن و بند کینت.",
-'movearticle'             => 'جاه په چاهی صفحه:',
-'movenotallowed'          => 'شما را اجازت به جاه په جاه کتن صفحات نیست.',
-'newtitle'                => 'په نوکین عنوان:',
-'move-watch'              => 'این صفحه یا بچار',
-'movepagebtn'             => 'جاه په جاه کن صفحه',
-'pagemovedsub'            => 'جاه په جاهی موفقیت بود',
-'movepage-moved'          => '<big>\'\'\'"$1" جاه په اجه بوت په"$2"\'\'\'</big>', # The two titles are passed in plain text as $3 and $4 to allow additional goodies in the message.
-'articleexists'           => 'صفحه گون آن نام پیش تر هستت، یا نامی که شما زورتت نامعتبرنت.
+'movearticle'                  => 'جاه په چاهی صفحه:',
+'movenologin'                  => 'وارد نهیت',
+'movenologintext'              => 'شما بایدن یک ثبت نامی کاربری بیت و [[Special:UserLogin|وارد بیت]]په جاه په جاه کتن یک صفحه.',
+'movenotallowed'               => 'شما را اجازت به جاه په جاه کتن صفحات نیست.',
+'movenotallowedfile'           => 'شما را اجارت په جاه په جاه کتن فایلان نیستن.',
+'cant-move-user-page'          => 'شما را اجازت نیستن که صفحات کاربر اصلیء جاه په جاه کنیت.',
+'cant-move-to-user-page'       => 'شمارء اجازت نیستن که یک صفحه ی په صفحه کاربری جاه په جاه کنیت( غیر چه زیر صفحه کاربر).',
+'newtitle'                     => 'په نوکین عنوان:',
+'move-watch'                   => 'این صفحه یا بچار',
+'movepagebtn'                  => 'جاه په جاه کن صفحه',
+'pagemovedsub'                 => 'جاه په جاهی موفقیت بود',
+'movepage-moved'               => '<big>\'\'\'"$1" جاه په اجه بوت په"$2"\'\'\'</big>', # The two titles are passed in plain text as $3 and $4 to allow additional goodies in the message.
+'movepage-moved-redirect'      => 'یک غیر مستقیمی شر بوت',
+'movepage-moved-noredirect'    => 'شرکتن غیر مستقیم بند بوتگ.',
+'articleexists'                => 'صفحه گون آن نام پیش تر هستت، یا نامی که شما زورتت نامعتبرنت.
 یک دگه نامی بزوریت.',
-'cantmove-titleprotected' => 'شما نه تونیت یک صفحه ای به ای جاگاه جاه په جاه کنیت، په چی که نوکین عنوان محافظت بیت چه شربیگ',
-'talkexists'              => "''''صفحه وتی گون موفقیت جاه په جاه بوت، بله صفحه گپ نه نویت جاه  په جاه بیت چون که یکی ته نوکین عنوان هست.
+'cantmove-titleprotected'      => 'شما نه تونیت یک صفحه ای به ای جاگاه جاه په جاه کنیت، په چی که نوکین عنوان محافظت بیت چه شربیگ',
+'talkexists'                   => "''''صفحه وتی گون موفقیت جاه په جاه بوت، بله صفحه گپ نه نویت جاه  په جاه بیت چون که یکی ته نوکین عنوان هست.
 لطفا آیآ دستی چند و بند کنیت.''''",
-'movedto'                 => 'جاه په جاه بیت په',
-'movetalk'                => 'جاه په جاه کتن صفحه کپ همراه',
-'move-subpages'           => 'جاه په جاه کن کل زیرصفحاتء، اگر بیت',
-'move-talk-subpages'      => 'جاه په جاه کن کل زیرصفحات صفحه گپء، اگه بیت',
-'movepage-page-exists'    => 'صفحه  $1 هنو هستن و نه تونیت اتوماتیکی سر بنویسیت.',
-'movepage-page-moved'     => 'صفحه  $1 جاه په جاه بیت په  $2',
-'movepage-page-unmoved'   => 'صفحه $1نه تونیت جاه په جاه بیت په $2',
-'movepage-max-pages'      => 'گیشترین $1 {{PLURAL:$1|صفحه|صفحات}}جاه په جاه بوتگن  ودگه هچی اتوماتیکی جاه په جاه نه بیت.',
-'1movedto2'               => '[[$1]] چاه په چاه بوت په [[$2]]',
-'1movedto2_redir'         => '[[$1]] جاه په جاه بوت په [[$2]] غیر مستقیم',
-'movelogpage'             => 'جاه په جاهی ورود',
-'movelogpagetext'         => 'جهلء یک لیستی چه صفحات جاه په جاه بوتگین هست',
-'movereason'              => 'دلیل:',
-'revertmove'              => 'برگردینگ',
-'delete_and_move'         => 'حذف وجاه په جاه کن',
-'delete_and_move_text'    => '== حذف نیاز داریت په ==
+'movedto'                      => 'جاه په جاه بیت په',
+'movetalk'                     => 'جاه په جاه کتن صفحه کپ همراه',
+'move-subpages'                => 'جاه په جاه کن کل زیرصفحاتء، اگر بیت',
+'move-talk-subpages'           => 'جاه په جاه کن کل زیرصفحات صفحه گپء، اگه بیت',
+'movepage-page-exists'         => 'صفحه  $1 هنو هستن و نه تونیت اتوماتیکی سر بنویسیت.',
+'movepage-page-moved'          => 'صفحه  $1 جاه په جاه بیت په  $2',
+'movepage-page-unmoved'        => 'صفحه $1نه تونیت جاه په جاه بیت په $2',
+'movepage-max-pages'           => 'گیشترین $1 {{PLURAL:$1|صفحه|صفحات}}جاه په جاه بوتگن  ودگه هچی اتوماتیکی جاه په جاه نه بیت.',
+'1movedto2'                    => '[[$1]] چاه په چاه بوت په [[$2]]',
+'1movedto2_redir'              => '[[$1]] جاه په جاه بوت په [[$2]] غیر مستقیم',
+'move-redirect-suppressed'     => 'تغییر مسیر بند بوت',
+'movelogpage'                  => 'جاه په جاهی ورود',
+'movelogpagetext'              => 'جهلء یک لیستی چه صفحات جاه په جاه بوتگین هست',
+'movereason'                   => 'دلیل:',
+'revertmove'                   => 'برگردینگ',
+'delete_and_move'              => 'حذف وجاه په جاه کن',
+'delete_and_move_text'         => '== حذف نیاز داریت په ==
 صفحه مبدا "[[:$1]]"  که هنگت هستن.
 آیا شما لوٹیت آیء حذف کنیت دان په حذف‌ آیء راهی شر بیت؟',
-'delete_and_move_confirm' => 'بله، صفحه حذف کن',
-'delete_and_move_reason'  => 'حذف بوت په شرکتن راه په جاه په جاه کتن',
-'selfmove'                => 'منبع و مقصد عناوین یک انت؛
+'delete_and_move_confirm'      => 'بله، صفحه حذف کن',
+'delete_and_move_reason'       => 'حذف بوت په شرکتن راه په جاه په جاه کتن',
+'selfmove'                     => 'منبع و مقصد عناوین یک انت؛
 نه تونیت صفحه ای په وتی جاگاهء جاه په جاه کنت',
-'immobile_namespace'      => 'منبع یا مقصد عنوان چه نوح حاصین انت؛
-نه تونین صفحاتء چه یا په آی نام فضا جاه په جاه کنت.',
-'imagenocrossnamespace'   => 'نه تونیت جاه په جاه کنت فایل په یا نام فضای غیر فایلی',
-'imagetypemismatch'       => 'نوکین فایل بند گون نوع آی هم دپ نهنت.',
-'imageinvalidfilename'    => 'فایل عکس هدف نام معتبر انت',
-'fix-double-redirects'    => 'په روچ کتن هر غیر مستقیمی که په مقاله اصلی اشاره کنت',
+'immobile-source-namespace'    => 'نه تونیت صفحات ته نام فضا جاه په جاه کنیت"$1"',
+'immobile-target-namespace'    => 'نه تونیت صفحات ته نام فضا جاه په جاه کنیت "$1"',
+'immobile-target-namespace-iw' => 'لینک بین ویکی یک معتربین مقصد په صفحه جاه په جاهی نهنت',
+'immobile-source-page'         => 'ای صفحه جاه په جاه نه بیت',
+'immobile-target-page'         => 'ته تونیت په مقصدین عنوان جاه په جاه بیتن.',
+'imagenocrossnamespace'        => 'نه تونیت جاه په جاه کنت فایل په یا نام فضای غیر فایلی',
+'imagetypemismatch'            => 'نوکین فایل بند گون نوع آی هم دپ نهنت.',
+'imageinvalidfilename'         => 'فایل عکس هدف نام معتبر انت',
+'fix-double-redirects'         => 'په روچ کتن هر غیر مستقیمی که په مقاله اصلی اشاره کنت',
+'move-leave-redirect'          => 'یک تغییر مسیر بل',
 
 # Export
 'export'            => 'خروج صفحات',
@@ -1996,7 +2250,7 @@ $1',
 
 په خروج صفحات، عناوین آیء ته جهلگی باکس وارد کن, هر عنوان ته یک حطی، و انتخاب کن که آیا شمل لوٹیت هنوکین نسخه و کل کدیمی نسخ،گون خطوط تاریح صفحه, یا فقط هنوکین نسخه گون اطلاعاتی درباره آهری اصلاح.
 
-په اهری مورد شما تونیت هنچوش چه یک لینکی استفاده کنیت،مثلا [[{{ns:special}}:Export/{{MediaWiki:Mainpage}}]] په صفحه ی "[[{{MediaWiki:Mainpage}}]]".',
+په اهری مورد شما تونیت هنچوش چه یک لینکی استفاده کنیت،مثلا [[{{#Special:Export}}/{{MediaWiki:Mainpage}}]] په صفحه ی "[[{{MediaWiki:Mainpage}}]]".',
 'exportcuronly'     => 'فقط شامل هنوکین بازبینی، نه تاریح کامل',
 'exportnohistory'   => "----
 '''توجه:''' گردگ تاریح کامل صفحات چه طریق ای فرم په خاطر دلایل اجرایی غیر فعال بوتت.",
@@ -2012,7 +2266,7 @@ $1',
 'allmessagesdefault'        => 'پیش فرضین متن',
 'allmessagescurrent'        => 'هنوکین متن',
 'allmessagestext'           => 'شی یک لیستی چه کوله یان موجود ته نام فضای مدیا وی کی انت.
-لطفا بچاریت  [http://www.mediawiki.org/wiki/Localisation MediaWiki Localisation] و [http://translatewiki.net Betawiki] اگر شما لوٹیت ته ملکی کتن مدیا وی کی کمک کنیت.',
+لطفا بچاریت  [http://www.mediawiki.org/wiki/Localisation MediaWiki Localisation] و [http://translatewiki.net translatewiki.net] اگر شما لوٹیت ته ملکی کتن مدیا وی کی کمک کنیت.',
 'allmessagesnotsupportedDB' => "ای صفحه نه تونیت استفاده بیت په چی که'''\$wgUseDatabaseMessages''' غیر فعالنت.",
 'allmessagesfilter'         => 'فیلتر نام کوله:',
 'allmessagesmodified'       => 'فقط پیش دار تغییر دهگ بیتیگن',
@@ -2032,9 +2286,12 @@ $1',
 'import-interwiki-text'      => 'یک ویکی و  عنوان صفحه انتخاب کن په ورود.
 تاریح بازبینی و نامان اصلاح کنوکان دارگ بیت.
 کل کاران ورود بین ویکی وارد بیت نه [[Special:Log/import|ورود آمار]].',
+'import-interwiki-source'    => 'ویکی بن در/صفحه:',
 'import-interwiki-history'   => 'کپی کن کل بازبینی آن تاریح په ای صفحه',
 'import-interwiki-submit'    => 'ورود',
 'import-interwiki-namespace' => 'مقصدء نام فضا',
+'import-upload-filename'     => 'فایلءَ نام:',
+'import-comment'             => 'نظر:',
 'importtext'                 => 'لطفا فایل چه منبع ویکی درگیز گون حاصین:[[Special:Export|وسیله درگیزگ]], ایء ته وتی دیسک ذخیره کن و ادان آپلود کن.',
 'importstart'                => 'وارد کنت صفحات...',
 'import-revision-count'      => '$1 {{PLURAL:$1|بازبینی|بازبینی ان}}',
@@ -2068,19 +2325,19 @@ $1',
 'import-logentry-interwiki-detail' => '$1 {{PLURAL:$1|بازبینی|بازبینی ان}} چه $2',
 
 # Tooltip help for the actions
-'tooltip-pt-userpage'             => 'صفحه کاربری من',
+'tooltip-pt-userpage'             => 'شمی صفحات',
 'tooltip-pt-anonuserpage'         => 'صفحه کاربر په آی پی که شما هنو اصلاح کنیت په داب',
-'tooltip-pt-mytalk'               => 'صفحه گپ من',
+'tooltip-pt-mytalk'               => 'شمی صفحه گپ',
 'tooltip-pt-anontalk'             => 'بحث باره ی اصلاحات چه ای آدرس آی پی',
 'tooltip-pt-preferences'          => 'منی ترجیحات',
 'tooltip-pt-watchlist'            => 'لیست صفحیانی که شما تغییرات آیانا رند گرگیت',
-'tooltip-pt-mycontris'            => 'لیست منی مشارکتان',
+'tooltip-pt-mycontris'            => 'لیست شمی مشارکتان',
 'tooltip-pt-login'                => 'شر ترنت که وارد بیت، بله شی اجبار نهنت',
 'tooltip-pt-anonlogin'            => 'چه شما دست بندی بیت وارد بیت، بله شی هنگت ضرورت نهنت.',
 'tooltip-pt-logout'               => 'در بیگ',
 'tooltip-ca-talk'                 => 'بحث دباره محتوای صفحه',
 'tooltip-ca-edit'                 => 'شما تونیت ای صفحه یا اصلاح کنیت. لطفا چه بازبین دکمه پیش چه ذخیره کتن استفاده کنیت.',
-'tooltip-ca-addsection'           => 'په ای بحث یک نظر هور کن',
+'tooltip-ca-addsection'           => 'یک نوکین بخشی شر کن',
 'tooltip-ca-viewsource'           => 'ای صفحه محافظت بوتت. شما تونیت آیی منبع آ بچاریت',
 'tooltip-ca-history'              => 'پیشگین نسخ چه ای صفحه',
 'tooltip-ca-protect'              => 'ای صفحه یا حفاظت کن',
@@ -2127,6 +2384,8 @@ $1',
 'tooltip-watch'                   => 'ای صفحه یانا ته وتی لیست چارگ هور کن',
 'tooltip-recreate'                => 'دگه شرکتن صفحه علاوه بر شی که ای حذف بوتت',
 'tooltip-upload'                  => 'آپلود بنگیج بوت',
+'tooltip-rollback'                => '"ترین" اصلا(ان) ته ای صفحه چه اهزس مشارکت کنوک ته گون یک کلیک.',
+'tooltip-undo'                    => '"ترینگ" ای  اصلاح و پچ کن فرم اصلاحء ته حالت بازبینی. اجازت دن اضافه کتن یک دلیلی ته خلاصه',
 
 # Stylesheets
 'common.css'   => '/* CSS که اداننت په کل پوستان په کار رونت. */',
@@ -2142,12 +2401,12 @@ $1',
 'notacceptable'     => 'سروری ویکی نه تونیت دیتای ته فرمتی که شمی کلاینت بتوننت آی بوانند فراهم کنت.',
 
 # Attribution
-'anonymous'        => 'ناشناس کاربر(ان)  {{SITENAME}}',
+'anonymous'        => 'ناشناسین {{PLURAL:$1|کاربر|کاربران}} چه {{SITENAME}}',
 'siteuser'         => '{{SITENAME}} کاربر $1',
 'lastmodifiedatby' => 'ای صفحه اهری رندی که تغییر دهگ بیته $2, $1گون $3.', # $1 date, $2 time, $3 user
 'othercontribs'    => 'براساس کار توسط $1.',
 'others'           => 'دگران',
-'siteusers'        => '{{SITENAME}} کاربر(آن) $1',
+'siteusers'        => '{{SITENAME}} {{PLURAL:$2|کاربر|کاربران}} $1',
 'creditspage'      => 'اعتبارات صفحه',
 'nocredits'        => 'په ای صفحه اطلاعات اعتبارات موجود نهنت.',
 
@@ -2167,6 +2426,16 @@ $1',
 'numwatchers'    => 'تعداد چاروکان: $1',
 'numauthors'     => 'تعداد دوراین نویسوکان (صفحه): $1',
 'numtalkauthors' => 'تعداد مجزاین نویسوکان(صفحه بحث): $1',
+
+# Skin names
+'skinname-standard'    => 'کلاسیک',
+'skinname-nostalgia'   => 'نوستالجیک',
+'skinname-cologneblue' => 'نیلی کولاجن',
+'skinname-monobook'    => 'منوبوک',
+'skinname-myskin'      => 'منی جلد',
+'skinname-chick'       => 'شیک',
+'skinname-simple'      => 'ساده',
+'skinname-modern'      => 'مدرن',
 
 # Math options
 'mw_math_png'    => 'یکسره PNG تحویل دی',
@@ -2188,11 +2457,12 @@ $1',
 'markedaspatrollederror-noautopatrol' => 'شما را اجازت نیست وتی تغییراتء په عنوان نظارت بیتگین نشان کنیت.',
 
 # Patrol log
-'patrol-log-page'   => 'آمار نظارت',
-'patrol-log-header' => 'شی آماری چه بازبینی آن گشتی انت.',
-'patrol-log-line'   => 'نشان هلگ بیتن $1 چه $2 نظارت $3',
-'patrol-log-auto'   => '(اتوماتیک)',
-'patrol-log-diff'   => 'ر$1',
+'patrol-log-page'      => 'آمار نظارت',
+'patrol-log-header'    => 'شی آماری چه بازبینی آن گشتی انت.',
+'patrol-log-line'      => 'نشان هلگ بیتن $1 چه $2 نظارت $3',
+'patrol-log-auto'      => '(اتوماتیک)',
+'patrol-log-diff'      => 'ر$1',
+'log-show-hide-patrol' => '$1  آمار گشت',
 
 # Image deletion
 'deletedrevision'                 => 'قدیمی بازبینی $1 حذف بوت',
@@ -2209,6 +2479,9 @@ $1',
 'previousdiff' => '← پیشگین اصلاح',
 'nextdiff'     => 'نوکترین اصلاح→',
 
+# Visual comparison
+'visual-comparison' => 'مقایسه تصویری',
+
 # Media information
 'mediawarning'         => "''''هوژاری:'''' ای فایل شاید شامل بد واهین کد بوت،اجرای آیی ته وتی سیستم شاید توافقی بیت.<hr />",
 'imagemaxsize'         => 'محدودیت تصاویر ته فایل صفحات توضیح ته:',
@@ -2221,10 +2494,12 @@ $1',
 'show-big-image'       => 'کل صفحه',
 'show-big-image-thumb' => '<small>اندازه ای بازبین:$1× $2 pixels</small>',
 
-# Special:NewImages
+# Special:NewFiles
 'newimages'             => 'گالری نوکین فایلان',
 'imagelisttext'         => "جهل یک لیستی چه  '''$1''' {{PLURAL:$1|فایل|فایلان}} هست که ترتیبنت $2.",
 'newimages-summary'     => 'ای حاصین صفحه اهرین آپلود بوتگین فایلان پیشداریت',
+'newimages-legend'      => 'فیلتر',
+'newimages-label'       => 'نام فایل ( یا چنڈی چه آيی):',
 'showhidebots'          => '(روباتان $1 )',
 'noimages'              => 'هیچی په دیستن',
 'ilsubmit'              => 'گردگ',
@@ -2495,6 +2770,18 @@ Variants for Chinese language
 'exif-lightsource-24'  => 'ایزو استدیو تنگستن',
 'exif-lightsource-255' => 'دگ منبع نور',
 
+# Flash modes
+'exif-flash-fired-0'    => 'بی فلاش جنگ',
+'exif-flash-fired-1'    => 'فلاش جنت',
+'exif-flash-return-0'   => 'بی عملگر درگیزگ نور انعکاسی',
+'exif-flash-return-2'   => 'نور انعکاسی درگیزگ نه بوت',
+'exif-flash-return-3'   => 'نور انعکاسی درگیزگ بوت',
+'exif-flash-mode-1'     => 'فلاش جنگ جبرانی',
+'exif-flash-mode-2'     => 'فلاش نه جنگ جبرانی',
+'exif-flash-mode-3'     => 'اتوماتیکی حالت',
+'exif-flash-function-1' => 'بی عملگر فلاش',
+'exif-flash-redeye-1'   => 'حالت کم کتن سهری چمء',
+
 'exif-focalplaneresolutionunit-2' => 'اینچ',
 
 'exif-sensingmethod-1' => 'تعریف نه بوتگین',
@@ -2645,25 +2932,15 @@ $1
 
 'unit-pixel' => 'پیکس',
 
-# HTML dump
-'redirectingto' => 'دگه شرگنگنت په [[:$1]]...',
-
 # action=purge
-'confirm_purge'        => 'ذخیره ای صفحه پهک کنت؟
-
-$1',
 'confirm_purge_button' => 'هوبنت',
-
-# AJAX search
-'searchcontaining' => "گردگ په صفحات شامل ''$1''.",
-'searchnamed'      => "گردگ په صفحات په نام ''$1''.",
-'articletitles'    => "صفحات شروع بیت گون ''$1''",
-'hideresults'      => 'پناه کن نتایجء',
-'useajaxsearch'    => 'چه گردگ آژاکسی استفاده کن',
+'confirm-purge-top'    => 'ذخیره ای صفحه پهک کنت؟',
+'confirm-purge-bottom' => 'خالک کتن میانگیر یک صفحه باعث بیتن که آخرین نسخهٔ آی پیش دارگ بیت.',
 
 # Separators for various lists, etc.
-'colon-separator'    => ':&#32;',
-'autocomment-prefix' => '-',
+'semicolon-separator' => ';',
+'colon-separator'     => ':&#32;',
+'autocomment-prefix'  => '-',
 
 # Multipage image navigation
 'imgmultipageprev' => '← پیشگین صفحه',
@@ -2683,10 +2960,10 @@ $1',
 'table_pager_empty'        => 'بی نتیجه',
 
 # Auto-summaries
-'autosumm-blank'   => 'محتوا چه کل صفحه دور کنگنت',
+'autosumm-blank'   => 'هالیکین صفحه',
 'autosumm-replace' => "جاه په جاه کتن صفحه گون '$1'",
 'autoredircomment' => 'غیر مستقیم روگنت په [[$1]]',
-'autosumm-new'     => 'نوکین صفحه: $1',
+'autosumm-new'     => "شر بیتگیت صفحه گون: '$1'",
 
 # Size units
 'size-bytes'     => '$1 ب',
@@ -2777,6 +3054,7 @@ $1',
 
 # Core parser functions
 'unknown_extension_tag' => 'ناشناس برجسب الحاق  "$1"',
+'duplicate-defaultsort' => 'هژاری: ترتیب پیش فرض «$2» ترتیب پیش فرض پیشگین «$1» را باطل کنت.',
 
 # Special:Version
 'version'                          => 'نسخه', # Not used as normal message but as header for the special page itself
@@ -2806,13 +3084,13 @@ $1',
 'filepath-summary' => 'ای حاصین صفحه مسیر کامل په یک فایل پیش داریت.
 تصاویر گون وضوح کامل پیش دارگ بنت و دگه نوع فایلان گون وتی برنامه یانش مستقیما پچ بنت.
 
-نام فایل بی پسوند "{{ns:image}}:" وارد کن',
+نام فایل بی پسوند "{{ns:file}}:" وارد کن',
 
 # Special:FileDuplicateSearch
 'fileduplicatesearch'          => 'گردگ په کپی  فایلان',
 'fileduplicatesearch-summary'  => 'گردگ په کپی فایلان په اساس درهمین ارزش.
 
-نا فایل بی پیش وند "{{ns:image}}:" وارد کنیت',
+نا فایل بی پیش وند "{{ns:file}}:" وارد کنیت',
 'fileduplicatesearch-legend'   => 'گردگ په  کپی',
 'fileduplicatesearch-filename' => ':نام فایل',
 'fileduplicatesearch-submit'   => 'گردگ',
@@ -2841,5 +3119,14 @@ $1',
 # Special:BlankPage
 'blankpage'              => 'هالیکین صفحه',
 'intentionallyblankpage' => 'ای صفحه عمدا هالیک هلگ بوتت و په محک زتن ویا دگه چیز.',
+
+# External image whitelist
+'external_image_whitelist' => ' #ای خطء هنچوش که هستن بلیت<pre>
+#اصطلاحات منظمء جهل بلیت (قسمتان باید بین شی بیاینت //) جهلء
+#شی گون یو ار ال درای لینک عکسان هم دپ بیت
+#ایانی که هم دپ بنت په داب عکس پیش دارگ بنت وگرنه فقط یک لینکی په عکس پیشداریت
+#خطوطی که گون # شروع بنت په داب نظر جاه کاینت
+
+#کل بخشان رجکسء بالادء ای خظ بل. ای خط هنچوش که هست بلی</pre>',
 
 );

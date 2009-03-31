@@ -1,6 +1,8 @@
 <?php
 /**
- * Category objects are immutable, strictly speaking.  If you call methods that change the database, like to refresh link counts, the objects will be appropriately reinitialized.  Member variables are lazy-initialized.
+ * Category objects are immutable, strictly speaking. If you call methods that change the database, 
+ * like to refresh link counts, the objects will be appropriately reinitialized.
+ * Member variables are lazy-initialized.
  *
  * TODO: Move some stuff from CategoryPage.php to here, and use that.
  *
@@ -79,7 +81,7 @@ class Category {
 	/**
 	 * Factory function.
 	 *
-	 * @param array $name A category name (no "Category:" prefix).  It need
+	 * @param $name Array: A category name (no "Category:" prefix).  It need
 	 *   not be normalized, with spaces replaced by underscores.
 	 * @return mixed Category, or false on a totally invalid name
 	 */
@@ -99,8 +101,8 @@ class Category {
 	/**
 	 * Factory function.
 	 *
-	 * @param array $title Title for the category page
-	 * @return mixed Category, or false on a totally invalid name
+	 * @param $title Title for the category page
+	 * @return Mixed: category, or false on a totally invalid name
 	 */
 	public static function newFromTitle( $title ) {
 		$cat = new self();
@@ -114,7 +116,7 @@ class Category {
 	/**
 	 * Factory function.
 	 *
-	 * @param array $id A category id
+	 * @param $id Integer: a category id
 	 * @return Category
 	 */
 	public static function newFromID( $id ) {
@@ -192,6 +194,33 @@ class Category {
 		return $this->mTitle;
 	}
 
+	/**
+	 * Fetch a TitleArray of up to $limit category members, beginning after the
+	 * category sort key $offset.
+	 * @param $limit integer
+	 * @param $offset string
+	 * @return TitleArray object for category members.
+	 */
+	public function getMembers( $limit = false, $offset = '' ) {
+		$dbr = wfGetDB( DB_SLAVE );
+
+		$conds = array( 'cl_to' => $this->getName(), 'cl_from = page_id' );
+		$options = array( 'ORDER BY' => 'cl_sortkey' );
+		if( $limit ) $options[ 'LIMIT' ] = $limit;
+		if( $offset !== '' ) $conds[] = 'cl_sortkey > ' . $dbr->addQuotes( $offset );
+
+		return TitleArray::newFromResult(
+			$dbr->select(
+				array( 'page', 'categorylinks' ),
+				array( 'page_id', 'page_namespace','page_title', 'page_len',
+					'page_is_redirect', 'page_latest' ),
+				$conds,
+				__METHOD__,
+				$options
+			)
+		);
+	}
+
 	/** Generic accessor */
 	private function getX( $key ) {
 		if( !$this->initialize() ) {
@@ -228,7 +257,7 @@ class Category {
 		}
 
 		$cond1 = $dbw->conditional( 'page_namespace='.NS_CATEGORY, 1, 'NULL' );
-		$cond2 = $dbw->conditional( 'page_namespace='.NS_IMAGE, 1, 'NULL' );
+		$cond2 = $dbw->conditional( 'page_namespace='.NS_FILE, 1, 'NULL' );
 		$result = $dbw->selectRow(
 			array( 'categorylinks', 'page' ),
 			array( 'COUNT(*) AS pages',

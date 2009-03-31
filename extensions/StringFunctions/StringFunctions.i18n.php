@@ -86,13 +86,6 @@ $messages['es'] = array(
 	'stringfunctions-desc' => 'Amplía el analizador sintáctico con funciones de cadena',
 );
 
-/** Basque (Euskara)
- * @author Kobazulo
- */
-$messages['eu'] = array(
-	'stringfunctions-desc' => 'Sintaxi-analizatzailea hobetzen du kate-funtzioekin',
-);
-
 /** Persian (فارسی)
  * @author Huji
  */
@@ -246,13 +239,6 @@ $messages['scn'] = array(
  */
 $messages['sk'] = array(
 	'stringfunctions-desc' => 'Rozširuje syntaktický analyzátor o funkcie na prácu s reťazcami',
-);
-
-/** Seeltersk (Seeltersk)
- * @author Pyt
- */
-$messages['stq'] = array(
-	'stringfunctions-desc' => 'Fegrattert dän Parser mäd Teekenkättenfunktione (String Functions)',
 );
 
 /** Sundanese (Basa Sunda)

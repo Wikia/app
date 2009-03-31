@@ -13,7 +13,7 @@ if (!defined('MEDIAWIKI')) die();
 
 $wgExtensionCredits['other'][] = array(
 	'name' => 'Language Names',
-	'version' => '1.4 (CLDR 1.6.0)',
+	'version' => '1.5 (CLDR 1.6.0)',
 	'author' => 'Niklas Laxström',
 	'url' => 'http://unicode.org/cldr/repository_access.html',
 	'description' => 'Extension which provides localised language names',

@@ -29,12 +29,12 @@ class SmoothGallery {
 				$error = wfMsg( "smoothgallery-error" );
 		
 				if ( isset( $galleryArray["missing_images"] )  && isset( $galleryArray["invalid_images"] ) ) {
-					$error .= wfMsg( "smoothgallery-no-images", implode( ", " , $galleryArray["missing_images"] ) );
-					$error .= wfMsg( "smoothgallery-invalid-images", implode( ", " , $galleryArray["invalid_images"] ) );
+					$error .= wfMsg( "smoothgallery-no-images", implode( ", " , $galleryArray["missing_images"] , count($galleryArray["missing_images"]) , count($galleryArray["missing_images"]) + count($galleryArray["invalid_images"]) ) );	// FIXME: 3rd (last) parameter should have the number of good images added.
+					$error .= wfMsg( "smoothgallery-invalid-images", implode( ", " , $galleryArray["invalid_images"] , count($galleryArray["invalid_images"]) ) );
 				} else if ( isset( $galleryArray["invalid_images"] ) ) {
-					$error .= wfMsg( "smoothgallery-invalid-images", implode( ", " , $galleryArray["invalid_images"] ) );
+					$error .= wfMsg( "smoothgallery-invalid-images", implode( ", " , $galleryArray["invalid_images"] , count($galleryArray["invalid_images"]) ) );
 				} else if ( isset( $galleryArray["missing_images"] ) ) {
-					$error .= wfMsg( "smoothgallery-no-images", implode( ", " , $galleryArray["missing_images"] ) );
+					$error .= wfMsg( "smoothgallery-no-images", implode( ", " , $galleryArray["missing_images"] , count($galleryArray["missing_images"]) , count($galleryArray["missing_images"]) ) );	// FIXME: 3rd (last) parameter should have the number of good images added.
 				} else {
 					$error .= wfMsg( "smoothgallery-not-found" );
 				}

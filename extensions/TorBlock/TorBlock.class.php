@@ -23,6 +23,11 @@ class TorBlock {
 					return true;
 				}
 			}
+			
+			if (Block::isWhitelistedFromAutoblocks( wfGetIp() )) {
+				wfDebug( "-IP is in autoblock whitelist. Exempting from Tor blocks.\n" );
+				return true;
+			}
 
 			$ip = wfGetIp();
 			wfDebug( "-User detected as editing from Tor node. Adding Tor block to permissions errors\n" );

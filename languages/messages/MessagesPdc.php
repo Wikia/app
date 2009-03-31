@@ -4,7 +4,6 @@
  * @ingroup Language
  * @file
  *
- * @author G - ג
  * @author לערי ריינהארט
  */
 
@@ -96,7 +95,7 @@ $messages = array(
 # Tooltip help for the actions
 'tooltip-p-logo' => 'Haaptblatt',
 
-# Special:NewImages
+# Special:NewFiles
 'ilsubmit' => 'Guuck uff',
 
 );

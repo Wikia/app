@@ -5,15 +5,15 @@
 $base = dirname( dirname( dirname( __FILE__ ) ) );
 require $base . '/maintenance/commandLine.inc';
 
-// fixme
-$dbr = new Database( $wgDBserver, $wgDBuser, $wgDBpassword, $wgDBname );
-$dbr->bufferResults( false );
+$dbw = wfGetDB( DB_MASTER );
+
+$dbw->bufferResults( false );
 
 $batchSize = 1000;
 
-$result = $dbr->select( 'user', 'user_name', '1', 'batchAntiSpoof.php' );
+$result = $dbw->select( 'user', 'user_name', null, 'batchAntiSpoof.php' );
 $n = 0;
-while( $row = $dbr->fetchObject( $result ) ) {
+while( $row = $dbw->fetchObject( $result ) ) {
 	if( $n++ % $batchSize == 0 ) {
 		echo "$wgDBname $n\n";
 	}
@@ -25,6 +25,8 @@ while( $row = $dbr->fetchObject( $result ) ) {
 		$items = array();
 	}
 }
+
 SpoofUser::batchRecord( $items );
 echo "$wgDBname $n done.\n";
-$dbr->freeResult( $result );
+$dbw->freeResult( $result );
+

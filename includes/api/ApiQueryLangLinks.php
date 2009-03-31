@@ -58,7 +58,7 @@ class ApiQueryLangLinks extends ApiQueryBase {
 				$this->dieUsage("Invalid continue param. You should pass the " .
 					"original value returned by the previous query", "_badcontinue");
 			$llfrom = intval($cont[0]);
-			$lllang = $this->getDb()->strencode($cont[1]);
+			$lllang = $this->getDB()->strencode($cont[1]);
 			$this->addWhere("ll_from > $llfrom OR ".
 					"(ll_from = $llfrom AND ".
 					"ll_lang >= '$lllang')");
@@ -134,6 +134,6 @@ class ApiQueryLangLinks extends ApiQueryBase {
 	}
 
 	public function getVersion() {
-		return __CLASS__ . ': $Id: ApiQueryLangLinks.php 37534 2008-07-10 21:08:37Z brion $';
+		return __CLASS__ . ': $Id: ApiQueryLangLinks.php 43271 2008-11-06 22:38:42Z siebrand $';
 	}
 }

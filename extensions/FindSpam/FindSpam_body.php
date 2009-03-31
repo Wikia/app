@@ -28,11 +28,11 @@ class FindSpamPage extends SpecialPage {
 
 		# Show form
 		$self = Title::makeTitle( NS_SPECIAL, 'FindSpam' );
-		$form  = wfOpenElement( 'form', array( 'method' => 'post', 'action' => $self->getLocalUrl() ) );
+		$form  = Xml::openElement( 'form', array( 'method' => 'post', 'action' => $self->getLocalUrl() ) );
 		$form .= '<table><tr><td align="right">' . wfMsgHtml( 'findspam-ip' ) . '</td>';
-		$form .= '<td>' . wfInput( 'ip', 50, $ip ) . '</td></tr>';
-		$form .= '<tr><td></td><td>' . wfSubmitButton( wfMsg( 'findspam-ok' ) ) . '</td></tr></table></form>';
-		$wgOut->addHtml( $form );
+		$form .= '<td>' . Xml::input( 'ip', 50, $ip ) . '</td></tr>';
+		$form .= '<tr><td></td><td>' . Xml::submitButton( wfMsg( 'findspam-ok' ) ) . '</td></tr></table></form>';
+		$wgOut->addHTML( $form );
 
 		if ( $ip ) {
 			$dbr =& wfGetDB( DB_READ );

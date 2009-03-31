@@ -45,7 +45,7 @@ __NOTOC__
     note = "[Online; accessed <citation>{{CURRENTDAY}}-{{CURRENTMONTHNAME}}-{{CURRENTYEAR}}</citation>]"
   }
 
-When using the [[LaTeX]] package url (<code>\usepackage{url}</code> somewhere in the preamble) which tends to give much more nicely formatted web addresses, the following may preferred:
+When using the [[LaTeX]] package url (<code>\usepackage{url}</code> somewhere in the preamble) which tends to give much more nicely formatted web addresses, the following may be preferred:
 
   @misc{ wiki:xxx,
     author = "{{SITENAME}}",

@@ -6,7 +6,7 @@
  */
 
 #include <stdio.h>
-
+#include <string.h>
 #include "wikidiff2.h"
 
 void print_diff(std::vector<std::string> &text1, std::vector<std::string> &text2, int num_lines_context, std::string &ret)

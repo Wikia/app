@@ -372,7 +372,7 @@ if (defined('MEDIAWIKI')) {
 	}
 
 	function getTalkPartner($title) {
-		if (Namespace::isTalk($title->getNamespace())) {
+		if ( MWNamespace::isTalk( $title->getNamespace() ) ) {
 			return $title->getSubjectPage();
 		} else {
 			return $title->getTalkPage();
@@ -563,7 +563,7 @@ if (defined('MEDIAWIKI')) {
 			$admins = '';
 			$dbr =& wfGetDB( DB_SLAVE );
 			$user_rights = $dbr->tableName( 'user_rights' );
-			$userspace = Namespace::getUser();
+			$userspace = MWNamespace::getUser();
 			$sql = "SELECT ur_user " .
 				   "FROM {$user_rights} " .
 				   "WHERE ur_rights LIKE '%sysop%' ";
@@ -633,7 +633,7 @@ else if (typeof window.attachEvent != \"undefined\") {
 		global $wgUsePathInfo, $wgFilterCallback, $wgRequest, $wgUser, $wgOut, $_SERVER;
 		global $wgAllowUserJs, $wgAllowUserCss, $wgUseSiteCss, $wgUseSiteJs, $wgCachePages;
 		global $wgCache404SavedCallback;
-		global $wgLang, $wgLanguageCode, $wgContLang, $wgContLanguageCode, $wgMessageCache, 
+		global $wgLang, $wgLanguageCode, $wgContLang, $wgContLanguageCode, 
 		       $messageMemc, $wgUseDatabaseMessages, $wgMsgCacheExpiry, $wgDBname;
 
 		# Prevent user options, user new talk

@@ -1,0 +1,2 @@
+# UNIWIKI settings
+require_once(\"\$IP/extensions/uniwiki/UniwikiSettings.php\");

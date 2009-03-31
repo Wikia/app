@@ -71,7 +71,7 @@ function VETWikiaVideoBlueLink() {
 
         if(get_class($wgUser->getSkin()) == 'SkinMonaco') {
                 wfLoadExtensionMessages('VideoEmbedTool');
-                $wgHooks['ExtendJSGlobalVars'][] = 'VETSetupVars';
+                $wgHooks['MakeGlobalVariablesScript'][] = 'VETSetupVars';
                 $wgOut->addScript('<script type="text/javascript" src="'.$wgStylePath.'/common/yui_2.5.2/slider/slider-min.js?'.$wgStyleVersion.'"></script>');
                 $wgOut->addScript('<script type="text/javascript" src="'.$wgExtensionsPath.'/wikia/VideoEmbedTool/js/VET.js?'.$wgStyleVersion.'"></script>');
                 $wgOut->addScript('<link rel="stylesheet" type="text/css" href="'.$wgExtensionsPath.'/wikia/VideoEmbedTool/css/VET.css?'.$wgStyleVersion.'" />');
@@ -97,7 +97,7 @@ function VETWikiaVideoRedLink() {
 
         if(get_class($wgUser->getSkin()) == 'SkinMonaco') {
                 wfLoadExtensionMessages('VideoEmbedTool');
-                $wgHooks['ExtendJSGlobalVars'][] = 'VETSetupVars';
+                $wgHooks['MakeGlobalVariablesScript'][] = 'VETSetupVars';
                 $wgOut->addScript('<script type="text/javascript" src="'.$wgStylePath.'/common/yui_2.5.2/slider/slider-min.js?'.$wgStyleVersion.'"></script>');
                 $wgOut->addScript('<script type="text/javascript" src="'.$wgExtensionsPath.'/wikia/VideoEmbedTool/js/VET.js?'.$wgStyleVersion.'"></script>');
                 $wgOut->addScript('<link rel="stylesheet" type="text/css" href="'.$wgExtensionsPath.'/wikia/VideoEmbedTool/css/VET.css?'.$wgStyleVersion.'" />');
@@ -116,7 +116,7 @@ function VETSetup($editform) {
 	global $wgOut, $wgStylePath, $wgExtensionsPath, $wgStyleVersion, $wgHooks, $wgUser;
 	if(get_class($wgUser->getSkin()) == 'SkinMonaco') {
 		wfLoadExtensionMessages('VideoEmbedTool');
-		$wgHooks['ExtendJSGlobalVars'][] = 'VETSetupVars';
+		$wgHooks['MakeGlobalVariablesScript'][] = 'VETSetupVars';
 		$wgOut->addScript('<script type="text/javascript" src="'.$wgStylePath.'/common/yui_2.5.2/slider/slider-min.js?'.$wgStyleVersion.'"></script>');
 		$wgOut->addScript('<script type="text/javascript" src="'.$wgExtensionsPath.'/wikia/VideoEmbedTool/js/VET.js?'.$wgStyleVersion.'"></script>');
 		$wgOut->addScript('<link rel="stylesheet" type="text/css" href="'.$wgExtensionsPath.'/wikia/VideoEmbedTool/css/VET.css?'.$wgStyleVersion.'" />');

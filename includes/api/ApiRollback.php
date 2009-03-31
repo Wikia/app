@@ -70,16 +70,13 @@ class ApiRollback extends ApiBase {
 			// We don't care about multiple errors, just report one of them
 			$this->dieUsageMsg(current($retval));
 
-		$current = $target = $summary = NULL;
-		extract($details);
-
 		$info = array(
 			'title' => $titleObj->getPrefixedText(),
-			'pageid' => $current->getPage(),
-			'summary' => $summary,
+			'pageid' => $details['current']->getPage(),
+			'summary' => $details['summary'],
 			'revid' => $titleObj->getLatestRevID(),
-			'old_revid' => $current->getID(),
-			'last_revid' => $target->getID()
+			'old_revid' => $details['current']->getID(),
+			'last_revid' => $details['target']->getID()
 		);
 
 		$this->getResult()->addValue(null, $this->getModuleName(), $info);
@@ -101,7 +98,7 @@ class ApiRollback extends ApiBase {
 		return array (
 			'title' => 'Title of the page you want to rollback.',
 			'user' => 'Name of the user whose edits are to be rolled back. If set incorrectly, you\'ll get a badtoken error.',
-			'token' => 'A rollback token previously retrieved through prop=info',
+			'token' => 'A rollback token previously retrieved through prop=revisions',
 			'summary' => 'Custom edit summary. If not set, default summary will be used.',
 			'markbot' => 'Mark the reverted edits and the revert as bot edits'
 		);
@@ -122,6 +119,6 @@ class ApiRollback extends ApiBase {
 	}
 
 	public function getVersion() {
-		return __CLASS__ . ': $Id: ApiRollback.php 42548 2008-10-25 14:04:43Z tstarling $';
+		return __CLASS__ . ': $Id: ApiRollback.php 45043 2008-12-26 04:13:47Z mrzman $';
 	}
 }

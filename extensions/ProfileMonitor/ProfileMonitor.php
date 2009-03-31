@@ -11,8 +11,8 @@ if (!defined('MEDIAWIKI')) die();
 $wgExtensionFunctions[] = 'efProfileMonitor';
 $wgExtensionCredits['specialpage'][] = array(
 	'name' => 'ProfileMonitor',
-	'svn-date' => '$LastChangedDate: 2008-07-04 15:36:45 +0000 (Fri, 04 Jul 2008) $',
-	'svn-revision' => '$LastChangedRevision: 37061 $',
+	'svn-date' => '$LastChangedDate: 2008-09-05 14:09:21 +0000 (Fri, 05 Sep 2008) $',
+	'svn-revision' => '$LastChangedRevision: 40488 $',
 	'author' => 'Rob Church',
 	'description' => 'Special page to search and inspect profiling data',
 	'descriptionmsg' => 'profiling-desc',
@@ -21,6 +21,7 @@ $wgExtensionCredits['specialpage'][] = array(
 
 $dir = dirname(__FILE__) . '/';
 $wgExtensionMessagesFiles['ProfileMonitor'] = $dir . 'ProfileMonitor.i18n.php';
+$wgExtensionAliasesFiles['ProfileMonitor'] = $dir . 'ProfileMonitor.alias.php';
 $wgAutoloadClasses['ProfileMonitor'] = $dir . 'ProfileMonitor.class.php';
 $wgSpecialPages['Profiling'] = 'ProfileMonitor';
 

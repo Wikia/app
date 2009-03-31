@@ -5,7 +5,6 @@
  * @file
  *
  * @author Desiphral
- * @author Niklas Laxström
  * @author לערי ריינהארט
  */
 
@@ -20,8 +19,8 @@ $namespaceNames = array(
 	NS_USER_TALK      => 'Jeno_vakyarimata',
 	# NS_PROJECT set by $wgMetaNamespace
 	NS_PROJECT_TALK   => '{{grammar:genitive-pl|$1}}_vakyarimata',
-	NS_IMAGE          => 'Chitro',
-	NS_IMAGE_TALK     => 'Chitro_vakyarimata',
+	NS_FILE           => 'Chitro',
+	NS_FILE_TALK      => 'Chitro_vakyarimata',
 	NS_MEDIAWIKI      => 'MediyaViki',
 	NS_MEDIAWIKI_TALK => 'MediyaViki_vakyarimata',
 	NS_TEMPLATE       => 'Sikavno',
@@ -83,7 +82,7 @@ $messages = array(
 'mypage'         => 'Miri patrin',
 'mytalk'         => 'Mire vakyarimata',
 'navigation'     => 'Phiripen',
-'and'            => 'thai',
+'and'            => '&#32;thai',
 
 'errorpagetitle'   => 'Dosh',
 'returnto'         => 'Ja palpale kai $1.',
@@ -174,7 +173,6 @@ Akana si tuke ekh akont. Te na bistares te paruves, kana trebul tuke, tire kamim
 'yourpassword'               => 'O nakhavipnasko lav',
 'yourpasswordagain'          => 'O nakhavipnasko lav de nevo',
 'externaldberror'            => 'Sas ekh dosh kai datengi baza le avrutne prinjaripnyange vai nai tuke drom te akanutnisares o avrutno akonto.',
-'loginproblem'               => '<b>Sas ek problem kai tiro prinjaripen</b><br />Ker les de nevo!',
 'login'                      => 'Prinjaripen',
 'loginprompt'                => "Trebul te das drom le phandimatenge ''cookie'' te das andre kai {{SITENAME}}.",
 'userlogin'                  => 'Prinjaripen / Ker ek akount',
@@ -215,11 +213,15 @@ Mishto si te jas kai {{SITENAME}} thai te paruves tiro lav sigo.',
 'accountcreated'             => 'Akount kerdo',
 'accountcreatedtext'         => 'Kerdo o akonto le jenesko ko $1.',
 
+# Password reset dialog
+'oldpassword' => 'Purano nakahvipnasko lav',
+'newpassword' => 'Nevo nakhavipnasko lav:',
+
 # Edit page toolbar
 'image_sample' => 'Misal.jpg',
 
 # Edit pages
-'summary'            => 'Xarno xalyaripen',
+'summary'            => 'Xarno xalyaripen:',
 'minoredit'          => 'Kadava si ek tikno editisarimos',
 'watchthis'          => 'Dikh kadaya patrin',
 'savearticle'        => 'Uxtav i patrin',
@@ -242,7 +244,6 @@ Kana avilyan kathe doshatar, ja palpale.',
 'yourdiff'           => 'Ververimata',
 
 # History pages
-'revnotfoundtext'  => 'I puraneder versiya la patrinyaki so tu manglyan na arakhel pes. Mangas tuke te palemdikhes o phandipen so labyardyan kana avilyan kathe.',
 'previousrevision' => '← Purano paruvipen',
 'nextrevision'     => 'Nevi paruvipen →',
 'cur'              => 'akanutni',
@@ -263,6 +264,7 @@ Kana avilyan kathe doshatar, ja palpale.',
 'prevn'             => 'mai neve $1',
 'nextn'             => 'mai purane $1',
 'viewprevnext'      => 'Dikh ($1) ($2) ($3).',
+'searchhelp-url'    => 'Help:Zhutipen',
 'showingresults'    => 'Tele si <b>$1</b> rezultaturya shirdindoi le ginestar <b>$2</b>.',
 'showingresultsnum' => 'Tele si <b>$3</b> rezultaturya shirdindoi le ginestar <b>$2</b>.',
 'powersearch'       => 'Rod',
@@ -283,8 +285,6 @@ Kana avilyan kathe doshatar, ja palpale.',
 'prefs-rc'              => 'Neve paruvimata',
 'saveprefs'             => 'Uxtav le kamimata',
 'resetprefs'            => 'Thov le kamimata sar ko shirdipen',
-'oldpassword'           => 'Purano nakahvipnasko lav',
-'newpassword'           => 'Nevo nakhavipnasko lav:',
 'columns'               => 'Uche vortorina:',
 'contextlines'          => 'Vortorinyango gin pe avimos:',
 'contextchars'          => 'Grafemengo gin pe ekh vortorin:',
@@ -346,10 +346,10 @@ Kana avilyan kathe doshatar, ja palpale.',
 'badfilename' => 'O chitrosko anav sas paruvdo; o nevo anav si "$1".',
 'savefile'    => 'Uxtav file',
 
-# Special:ImageList
-'imagelist' => 'Patrinipen le chitrengo',
+# Special:ListFiles
+'listfiles' => 'Patrinipen le chitrengo',
 
-# Image description page
+# File description page
 'imagelinks' => 'Chitroske phandimata',
 
 # Unused templates
@@ -360,10 +360,7 @@ Kana avilyan kathe doshatar, ja palpale.',
 'randompage' => 'Ekh patrin savigodi',
 
 # Statistics
-'statistics'    => 'Beshimata',
-'sitestats'     => 'Site-ske beshimata',
-'userstatstext' => 'Si <b>$1</b> jene rejistrime (lekhavde).
-Mashkar lende <b>$2</b> si administratorurya (dikh $3).',
+'statistics' => 'Beshimata',
 
 # Miscellaneous special pages
 'wantedpages'  => 'Kamle pajine',
@@ -403,7 +400,7 @@ Kana kamesa te khoses kadaya patrin andar tiri lista le patryange so arakhes len
 'enotif_reset'       => 'Thov semno kai patrya so dikhlem',
 'enotif_newpagetext' => 'Kadaya si ek nevi patrin.',
 
-# Delete/protect/revert
+# Delete
 'deletepage'      => 'Khos i patrin',
 'confirm'         => 'Ja',
 'excontent'       => "o ander sas: '$1'",
@@ -414,9 +411,14 @@ Kana kamesa te khoses kadaya patrin andar tiri lista le patryange so arakhes len
 'deletedtext'     => '"<nowiki>$1</nowiki>" sas khosli.
 Dikh ando $2 ek patrinipen le palutne butyange khosle.',
 'deletedarticle'  => '"$1" sas khosli.',
-'rollback_short'  => 'Palemavilipen',
-'rollbacklink'    => 'palemavilipen',
-'rollbackfailed'  => 'O palemavilipen nashtisardyas te kerel pes.',
+
+# Rollback
+'rollback_short' => 'Palemavilipen',
+'rollbacklink'   => 'palemavilipen',
+'rollbackfailed' => 'O palemavilipen nashtisardyas te kerel pes.',
+
+# Protect
+'prot_1movedto2' => '[[$1]] bichhaldo kai [[$2]]',
 
 # Undelete
 'undelete'      => 'Dikh le khosle patrya',
@@ -528,7 +530,7 @@ Dikh ando $2 ek patrinipen le palutne butyange khosle.',
 'previousdiff' => '← Purano ververipen',
 'nextdiff'     => 'Anglutno paruvipen →',
 
-# Special:NewImages
+# Special:NewFiles
 'showhidebots' => '($1 boturya)',
 'ilsubmit'     => 'Rod',
 

@@ -104,7 +104,7 @@ class SpecialOpenIDConvert extends SpecialOpenID {
 		$instructions = wfMsg('openidconvertinstructions');
 		$wgOut->addHTML("<p>{$instructions}</p>" .
 						'<form action="' . $sk->makeSpecialUrl('OpenIDConvert') . '" method="POST">' .
-						'<input type="text" name="openid_url" size=30 ' .
+						'<input type="text" name="openid_url" size="30" ' .
 						' style="background: url(http://www.openid.net/login-bg.gif) ' .
 						'        no-repeat; background-color: #fff; background-position: 0 50%; ' .
 						'        color: #000; padding-left: 18px;" value="' . $url . '" />' .
@@ -162,7 +162,7 @@ class SpecialOpenIDConvert extends SpecialOpenID {
 			$this->setUserUrl($wgUser, $openid_url);
 
 			$wgOut->setPageTitle( wfMsg( 'openidconvertsuccess' ) );
-			$wgOut->setRobotpolicy( 'noindex,nofollow' );
+			$wgOut->setRobotPolicy( 'noindex,nofollow' );
 			$wgOut->setArticleRelated( false );
 			$wgOut->addWikiText( wfMsg( 'openidconvertsuccesstext', $openid_url ) );
 			$wgOut->returnToMain( );

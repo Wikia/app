@@ -11,9 +11,9 @@ if (!defined('MEDIAWIKI')) {
 }
 
 $wgExtensionCredits['specialpage'][] = array(
-	'version'        => '0.2',
+	'version'        => '0.3',
 	'name'           => 'InspectCache',
-	'author'         => 'Tim Starling, Brion Vibber',
+	'author'         => array( 'Tim Starling', 'Brion Vibber' ),
 	'url'            => 'http://www.mediawiki.org/wiki/Extension:InspectCache',
 	'description'    => 'A simple debugging tool to inspect the contents of the shared cache',
 	'descriptionmsg' => 'inspectcache-desc',
@@ -21,5 +21,6 @@ $wgExtensionCredits['specialpage'][] = array(
 
 $dir = dirname(__FILE__) . '/';
 $wgExtensionMessagesFiles['InspectCache'] = $dir . 'InspectCache.i18n.php';
-require_once( $dir . '../ExtensionFunctions.php' );
-extAddSpecialPage( $dir . 'InspectCache_body.php', 'InspectCache', 'InspectCache' );
+$wgExtensionAliasesFiles['InspectCache'] = $dir . 'InspectCache.alias.php';
+$wgAutoloadClasses['SpecialInspectCache'] = $dir . 'InspectCache_body.php';
+$wgSpecialPages['InspectCache'] = 'SpecialInspectCache';

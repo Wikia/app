@@ -197,7 +197,13 @@ $messages = array(
 'noemail'                 => '"$1" пайдаланыше электрон адресым палемден огыл.',
 'passwordsent'            => 'У шолыпмутым "$1" пайдаланышын электрон адресышкыже колтымо. Шолыпмутым налмеке системыш угыч пуро.',
 'eauthentsent'            => 'Пеҥгыдемдымаш дене серышым темлыме электрон адресыш колтымо. Электрон почто адресын тыйын улмым пеҥгыдемдаш, серышыште улшо инструкцийым шукто.',
+'emailauthenticated'      => 'Тыйын почто адресетым пеҥгыдемдыме $1.',
 'loginlanguagelabel'      => 'Йылме: $1',
+
+# Password reset dialog
+'oldpassword' => 'Тошто шолыпмут:',
+'newpassword' => 'У шолыпмут:',
+'retypenew'   => 'Пеҥгыдемдыза у шолыпмутым:',
 
 # Edit page toolbar
 'bold_sample'     => 'Кӱжгӧ текст',
@@ -220,6 +226,7 @@ $messages = array(
 'hr_tip'          => 'Тореш (шуэн кучылт)',
 
 # Edit pages
+'summary'            => 'Тӧрлатымаш нерген:',
 'minoredit'          => 'Тиде изирак тӧрлатыме',
 'watchthis'          => 'Тиде лаштыкым эскераш',
 'savearticle'        => 'Лаштыкым аралаш',
@@ -227,8 +234,8 @@ $messages = array(
 'showpreview'        => 'Ончылгоч ончымаш',
 'showdiff'           => 'Тӧрлатымашым ончыкташ',
 'clearyourcache'     => "'''Ешартыш''': Аралыме деч вара вашталтышым ужаш браузеретын кешыжым эрыкташ логалын кертеш. '''Mozilla / Firefox / Safari:''' ''Shift''-ым темдал кучен ''Reload''-ым темдал але ''Ctrl-F5'' але ''Ctrl-R'' темдал (Macintosh-влак ''Command-R''); '''Konqueror:''' темдал ''Reload'' кнопкым але ''F5'' темдал; '''Opera:''' ''Tools→Preferences''-ыште кешым эрыкте; '''Internet Explorer:''' ''Ctrl''-ым темдал кучен ''Refresh''-ым темдал але ''Ctrl-F5'' темдал.",
-'previewnote'        => '<strong>Тиде ончылгоч ончымаш гына;
-вашталтыш-влакым эше аралыме огыл!</strong>',
+'previewnote'        => "'''Тиде ончылгоч ончымаш гына;
+вашталтыш-влакым эше аралыме огыл!'''",
 'editing'            => 'Тӧрлаталтеш $1',
 'template-protected' => '(тӧрлаташ чарыме)',
 
@@ -268,6 +275,7 @@ $messages = array(
 'prefs-edits'           => 'Мыняр тӧрлатымашым ыштен?:',
 'changepassword'        => 'Шолыпмутым вашталташ',
 'skin'                  => 'Сӧрастарыме йӧн',
+'skin-preview'          => 'Ончылгоч ончымаш',
 'math'                  => 'Формуло-влак',
 'prefs-personal'        => 'Пайдаланышын профильже',
 'prefs-rc'              => 'Шукертсе огыл тӧрлымаш-влак',
@@ -277,9 +285,6 @@ $messages = array(
 'prefs-misc'            => 'Тӱрлӧ',
 'saveprefs'             => 'Аралаш',
 'resetprefs'            => 'Тӧрлатымым шотыш налаш огыл',
-'oldpassword'           => 'Тошто шолыпмут:',
-'newpassword'           => 'У шолыпмут:',
-'retypenew'             => 'Пеҥгыдемдыза у шолыпмутым:',
 'searchresultshead'     => 'Кычалме',
 'savedprefs'            => 'Тыйын настройке-влакетым аралыме.',
 'allowemail'            => 'Вес ушнышо-влак деч электрон почтым налаш кӧнаш',
@@ -323,11 +328,11 @@ $messages = array(
 'fileuploadsummary' => 'Тидын нерген кӱчыкын:',
 'watchthisupload'   => 'Тиде лаштыкым эскераш',
 
-# Special:ImageList
+# Special:ListFiles
 'imgfile'        => 'файл',
-'imagelist_user' => 'Пайдаланыше',
+'listfiles_user' => 'Пайдаланыше',
 
-# Image description page
+# File description page
 'filehist-deleteone' => 'шӧраш',
 'filehist-current'   => 'кызыт',
 'filehist-user'      => 'Пайдаланыше',
@@ -367,6 +372,9 @@ $messages = array(
 'allarticles'    => 'Чыла лаштык-влак',
 'allpagessubmit' => 'Кайе',
 
+# Special:LinkSearch
+'linksearch-ok' => 'Кучал',
+
 # Special:ListUsers
 'listusers-submit' => 'ончыкташ',
 
@@ -374,39 +382,38 @@ $messages = array(
 'emailuser' => 'Пайдаланыше дек серыш',
 
 # Watchlist
-'watchlist'            => 'Мыйын эскерымаш списке',
-'mywatchlist'          => 'Мыйын эскерымаш списке',
-'watchlistfor'         => "('''$1''' лан)",
-'addedwatch'           => 'Эскерымаш спискыш ешарыме',
-'removedwatch'         => 'Эскерымаш списке гыч шӧрымӧ',
-'removedwatchtext'     => '«[[:$1]]» лаштыкым [[Special:Watchlist|тыйын эскерыме лӱмер]] гыч кораҥдыме.',
-'watch'                => 'Эскераш',
-'watchthispage'        => 'Тиде лаштыкым эскераш',
-'unwatch'              => 'Эскерыман огыл',
-'unwatchthispage'      => 'Эскерымым чарнаш',
-'watchlistcontains'    => 'Тыйын спискыште $1 {{PLURAL:$1|лаштык|лаштык}}.',
-'wlshowlast'           => 'Пытартыш $1 шагат $2 кечылан $3 ончыкташ',
-'watchlist-hide-bots'  => 'Ботын тӧрлымым шылташ',
-'watchlist-hide-own'   => 'Мыйын тӧрлымым шылташ',
-'watchlist-hide-minor' => 'Изирак тӧрлымым шылташ',
+'watchlist'         => 'Мыйын эскерымаш списке',
+'mywatchlist'       => 'Мыйын эскерымаш списке',
+'watchlistfor'      => "('''$1''' лан)",
+'addedwatch'        => 'Эскерымаш спискыш ешарыме',
+'removedwatch'      => 'Эскерымаш списке гыч шӧрымӧ',
+'removedwatchtext'  => '«[[:$1]]» лаштыкым [[Special:Watchlist|тыйын эскерыме лӱмер]] гыч кораҥдыме.',
+'watch'             => 'Эскераш',
+'watchthispage'     => 'Тиде лаштыкым эскераш',
+'unwatch'           => 'Эскерыман огыл',
+'unwatchthispage'   => 'Эскерымым чарнаш',
+'watchlistcontains' => 'Тыйын спискыште $1 {{PLURAL:$1|лаштык|лаштык}}.',
+'wlshowlast'        => 'Пытартыш $1 шагат $2 кечылан $3 ончыкташ',
 
 # Displayed when you click the "watch" button and it is in the process of watching
 'watching'   => 'Эскерымаш спискыш ешарымаш...',
 'unwatching' => 'Эскерымаш списке гыч шӧрымаш...',
 
-# Delete/protect/revert
-'deletepage'                  => 'Лаштыкым шӧраш',
-'delete-confirm'              => 'Шӧраш "$1"',
-'delete-legend'               => 'Шӧраш',
-'historywarning'              => 'Тӱтко лий: шӧраш шонымо лаштыкет вашталтыш-влак нерген историйым нумалеш:',
-'actioncomplete'              => 'Действийым ыштыме',
-'deletedtext'                 => '«<nowiki>$1</nowiki>» шӧрымӧ.
+# Delete
+'deletepage'            => 'Лаштыкым шӧраш',
+'delete-confirm'        => 'Шӧраш "$1"',
+'delete-legend'         => 'Шӧраш',
+'historywarning'        => 'Тӱтко лий: шӧраш шонымо лаштыкет вашталтыш-влак нерген историйым нумалеш:',
+'actioncomplete'        => 'Действийым ыштыме',
+'deletedtext'           => '«<nowiki>$1</nowiki>» шӧрымӧ.
 Ончо $2 пытартыш шӧрымӧ-влак лӱмер гыч.',
-'dellogpage'                  => 'Шӧрымӧ нерген журнал',
-'deletionlog'                 => 'шӧрымӧ нерген журнал',
-'deletecomment'               => 'Шӧрымын амалже:',
-'deleteotherreason'           => 'Вес/ешартыш амал:',
-'deletereasonotherlist'       => 'Вес амал',
+'dellogpage'            => 'Шӧрымӧ нерген журнал',
+'deletionlog'           => 'шӧрымӧ нерген журнал',
+'deletecomment'         => 'Шӧрымын амалже:',
+'deleteotherreason'     => 'Вес/ешартыш амал:',
+'deletereasonotherlist' => 'Вес амал',
+
+# Protect
 'protectcomment'              => 'Аралыме нерген:',
 'protectexpiry'               => 'Мучашлалтеш:',
 'protect_expiry_invalid'      => 'Йоҥылыш мучашлалтше жап.',
@@ -414,6 +421,8 @@ $messages = array(
 'protect-default'             => '(ойлыде)',
 'protect-level-autoconfirmed' => 'Регистрацийым эртыдыме да у пайдаланыше-влак деч петырыме',
 'protect-level-sysop'         => 'Сайтвиктарыше-влак гына',
+'protect-otherreason'         => 'Вес/ешартыш амал:',
+'protect-otherreason-op'      => 'вес/ешартыш амал',
 
 # Undelete
 'undelete-search-submit' => 'Кычал',
@@ -516,7 +525,7 @@ $messages = array(
 # Media information
 'widthheightpage' => '$1×$2, $3 {{PLURAL:$3|лаштык|лаштык}}',
 
-# Special:NewImages
+# Special:NewFiles
 'showhidebots' => '(Бот-влакым $1 )',
 'ilsubmit'     => 'Кычал',
 

@@ -31,7 +31,7 @@ class SpecialVote extends SpecialPage {
 				$self = SpecialPage::getTitleFor( 'Vote' );
 				$login = SpecialPage::getTitleFor( 'Userlogin' );
 				$link = $skin->makeKnownLinkObj( $login, wfMsgHtml( 'vote-login-link' ), 'returnto=' . $self->getPrefixedUrl() );
-				$wgOut->addHtml( wfMsgWikiHtml( 'vote-login', $link ) );
+				$wgOut->addHTML( wfMsgWikiHtml( 'vote-login', $link ) );
 				return;
 			} elseif( !$wgUser->isAllowed( 'vote' ) ) {
 				$wgOut->permissionRequired( 'vote' );
@@ -50,7 +50,7 @@ class SpecialVote extends SpecialPage {
 			$skin = $wgUser->getSkin();
 			$rtitle = Title::makeTitle( NS_SPECIAL, $self->getText() . '/results' );
 			$rlink = $skin->makeKnownLinkObj( $rtitle, wfMsgHtml( 'vote-view-results' ) );
-			$wgOut->addHtml( '<p class="mw-voteresultslink">' . $rlink . '</p>' );
+			$wgOut->addHTML( '<p class="mw-voteresultslink">' . $rlink . '</p>' );
 		}
 		$wgOut->addWikiText( wfMsgNoTrans( 'vote-header' ) );
 		$current = self::getExistingVote( $wgUser );
@@ -58,16 +58,16 @@ class SpecialVote extends SpecialPage {
 			$vote = strtolower( $wgRequest->getText( 'vote' ) );
 			if( in_array( $vote, array_keys( $this->getChoices() ) ) ) {
 				self::updateVote( $wgUser, $vote );
-				$wgOut->addHtml( '<p class="mw-votesuccess">' . wfMsgHtml( 'vote-registered' ) . '</p>' );
+				$wgOut->addHTML( '<p class="mw-votesuccess">' . wfMsgHtml( 'vote-registered' ) . '</p>' );
 			} else {
-				$wgOut->addHtml( '<p class="mw-voteerror">' . wfMsgHtml( 'vote-invalid-choice' ) . '</p>' );
-				$wgOut->addHtml( $this->makeForm( $current ) );
+				$wgOut->addHTML( '<p class="mw-voteerror">' . wfMsgHtml( 'vote-invalid-choice' ) . '</p>' );
+				$wgOut->addHTML( $this->makeForm( $current ) );
 			}
 		} else {
 			if( $current !== false ) {
 				$wgOut->addWikiText( wfMsgNoTrans( 'vote-current', $this->getChoiceDesc( $current ) ) );
 			}
-			$wgOut->addHtml( $this->makeForm( $current ) );
+			$wgOut->addHTML( $this->makeForm( $current ) );
 		}
 	}
 
@@ -92,14 +92,14 @@ class SpecialVote extends SpecialPage {
 		$vote = $dbr->tableName( 'vote' );
 		$res = $dbr->query( "SELECT vote_choice, COUNT(*) as count FROM {$vote} GROUP BY vote_choice ORDER BY count DESC", __METHOD__ );
 		if( $res && $dbr->numRows( $res ) > 0 ) {
-			$wgOut->addHtml( '<table class="mw-votedata"><tr>' );
-			$wgOut->addHtml( '<th>' . wfMsgHtml( 'vote-results-choice' ) . '</th>' );
-			$wgOut->addHtml( '<th>' . wfMsgHtml( 'vote-results-count' ) . '</th></tr>' );
+			$wgOut->addHTML( '<table class="mw-votedata"><tr>' );
+			$wgOut->addHTML( '<th>' . wfMsgHtml( 'vote-results-choice' ) . '</th>' );
+			$wgOut->addHTML( '<th>' . wfMsgHtml( 'vote-results-count' ) . '</th></tr>' );
 			while( $row = $dbr->fetchObject( $res ) ) {
-				$wgOut->addHtml( '<tr><td>' . htmlspecialchars( $this->getChoiceDesc( $row->vote_choice ) ) . '</td>' );
-				$wgOut->addHtml( '<td>' . $wgLang->formatNum( $row->count ) . '</td></tr>' );
+				$wgOut->addHTML( '<tr><td>' . htmlspecialchars( $this->getChoiceDesc( $row->vote_choice ) ) . '</td>' );
+				$wgOut->addHTML( '<td>' . $wgLang->formatNum( $row->count ) . '</td></tr>' );
 			}
-			$wgOut->addHtml( '</table>' );
+			$wgOut->addHTML( '</table>' );
 		} else {
 			$wgOut->addWikiText( wfMsgNoTrans( 'vote-results-none' ) );
 		}

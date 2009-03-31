@@ -289,7 +289,7 @@ $messages['ar'] = array(
 );
 
 /** Egyptian Spoken Arabic (مصرى)
- * @author Ramsis1978
+ * @author Ramsis II
  */
 $messages['arz'] = array(
 	'wikiSearchTitle'     => 'تدوير',

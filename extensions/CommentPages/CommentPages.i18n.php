@@ -14,12 +14,27 @@ $messages['en'] = array(
 	'nstab-comments'       => 'Commentary',
 );
 
+/** Message documentation (Message documentation)
+ * @author Purodha
+ */
+$messages['qqq'] = array(
+	'commentpages-desc' => 'Short description of the Commentpages extension, shown in [[Special:Version]]. Do not translate or change links.',
+);
+
 /** Arabic (العربية)
  * @author Meno25
  */
 $messages['ar'] = array(
 	'commentpages-desc' => 'صفحات تعليق للنطاق الرئيسي',
-	'nstab-comments'    => 'تعليق',
+	'nstab-comments' => 'تعليق',
+);
+
+/** Egyptian Spoken Arabic (مصرى)
+ * @author Meno25
+ */
+$messages['arz'] = array(
+	'commentpages-desc' => 'صفحات تعليق للنطاق الرئيسي',
+	'nstab-comments' => 'تعليق',
 );
 
 /** Kotava (Kotava)
@@ -27,7 +42,7 @@ $messages['ar'] = array(
  */
 $messages['avk'] = array(
 	'commentpages-desc' => 'Sebuksbu ke nelkafo yoltxo',
-	'nstab-comments'    => 'Sebuks',
+	'nstab-comments' => 'Sebuks',
 );
 
 /** Bulgarian (Български)
@@ -35,7 +50,15 @@ $messages['avk'] = array(
  */
 $messages['bg'] = array(
 	'commentpages-desc' => 'Страници за коментари към основното именно пространство',
-	'nstab-comments'    => 'Коментари',
+	'nstab-comments' => 'Коментари',
+);
+
+/** Bosnian (Bosanski)
+ * @author CERminator
+ */
+$messages['bs'] = array(
+	'commentpages-desc' => 'Stranice komentara za glavni imenski prostor',
+	'nstab-comments' => 'Komentari',
 );
 
 /** Czech (Česky)
@@ -43,7 +66,7 @@ $messages['bg'] = array(
  */
 $messages['cs'] = array(
 	'commentpages-desc' => 'Diskusní stránky hlavního jmenného prostoru',
-	'nstab-comments'    => 'Komentář',
+	'nstab-comments' => 'Komentář',
 );
 
 /** German (Deutsch)
@@ -51,7 +74,7 @@ $messages['cs'] = array(
  */
 $messages['de'] = array(
 	'commentpages-desc' => 'Kommentieren von Seiten im Haupt-Namensraum',
-	'nstab-comments'    => 'Kommentar',
+	'nstab-comments' => 'Kommentar',
 );
 
 /** Lower Sorbian (Dolnoserbski)
@@ -59,7 +82,7 @@ $messages['de'] = array(
  */
 $messages['dsb'] = array(
 	'commentpages-desc' => 'Komentarowe boki za głowny mjenjowy rum',
-	'nstab-comments'    => 'Komentary',
+	'nstab-comments' => 'Komentary',
 );
 
 /** Esperanto (Esperanto)
@@ -67,7 +90,16 @@ $messages['dsb'] = array(
  */
 $messages['eo'] = array(
 	'commentpages-desc' => 'Diskuto-paĝoj por la ĉefa nomspaco',
-	'nstab-comments'    => 'Komentaro',
+	'nstab-comments' => 'Komentaro',
+);
+
+/** Spanish (Español)
+ * @author Academo
+ * @author Sanbec
+ */
+$messages['es'] = array(
+	'commentpages-desc' => 'Comentar páginas en el espacio de nombres principal',
+	'nstab-comments' => 'Comentario',
 );
 
 /** French (Français)
@@ -75,7 +107,7 @@ $messages['eo'] = array(
  */
 $messages['fr'] = array(
 	'commentpages-desc' => "Pages de commentaires pour l'espace principal",
-	'nstab-comments'    => 'Commentaire',
+	'nstab-comments' => 'Commentaire',
 );
 
 /** Galician (Galego)
@@ -83,15 +115,31 @@ $messages['fr'] = array(
  */
 $messages['gl'] = array(
 	'commentpages-desc' => 'Páxinas de comentario para o espazo de nomes principal',
-	'nstab-comments'    => 'Comentario',
+	'nstab-comments' => 'Comentario',
+);
+
+/** Ancient Greek (Ἀρχαία ἑλληνικὴ)
+ * @author Omnipaedista
+ */
+$messages['grc'] = array(
+	'commentpages-desc' => 'Δέλτοι σχολίων διὰ τὸ κύριον ὀνοματεῖον',
+	'nstab-comments' => 'Σχολιασμός',
 );
 
 /** Manx (Gaelg)
  * @author MacTire02
  */
 $messages['gv'] = array(
-	'commentpages-desc' => "Duillagyn coontey da'n ard-boayl ennym",
-	'nstab-comments'    => 'Coontey',
+	'commentpages-desc' => "Duillagyn cohaggloo da'n ard-voayl ennym",
+	'nstab-comments' => 'Coontey',
+);
+
+/** Hebrew (עברית)
+ * @author Rotemliss
+ */
+$messages['he'] = array(
+	'commentpages-desc' => 'הוספת דפי תגובות לדפים במרחב השם הראשי',
+	'nstab-comments' => 'תגובות',
 );
 
 /** Hindi (हिन्दी)
@@ -99,7 +147,7 @@ $messages['gv'] = array(
  */
 $messages['hi'] = array(
 	'commentpages-desc' => 'मुख्य नामस्थानके लिये टिप्पणी पन्ने',
-	'nstab-comments'    => 'समीक्षा',
+	'nstab-comments' => 'समीक्षा',
 );
 
 /** Upper Sorbian (Hornjoserbsce)
@@ -107,7 +155,23 @@ $messages['hi'] = array(
  */
 $messages['hsb'] = array(
 	'commentpages-desc' => 'Komentarne strony za hłowny mjenowy rum',
-	'nstab-comments'    => 'Komentar',
+	'nstab-comments' => 'Komentar',
+);
+
+/** Hungarian (Magyar)
+ * @author Dani
+ */
+$messages['hu'] = array(
+	'commentpages-desc' => 'Megjegyzéslapok a főnévtérhez',
+	'nstab-comments' => 'Megjegyzések',
+);
+
+/** Interlingua (Interlingua)
+ * @author McDutchie
+ */
+$messages['ia'] = array(
+	'commentpages-desc' => 'Paginas de commentos pro le spatio de nomines principal',
+	'nstab-comments' => 'Commentario',
 );
 
 /** Icelandic (Íslenska)
@@ -122,7 +186,7 @@ $messages['is'] = array(
  */
 $messages['ja'] = array(
 	'commentpages-desc' => 'メイン名前空間のコメントページ',
-	'nstab-comments'    => 'コメント',
+	'nstab-comments' => 'コメント',
 );
 
 /** Javanese (Basa Jawa)
@@ -132,12 +196,28 @@ $messages['jv'] = array(
 	'nstab-comments' => 'Komentar',
 );
 
+/** Khmer (ភាសាខ្មែរ)
+ * @author Thearith
+ */
+$messages['km'] = array(
+	'commentpages-desc' => 'ទំព័រ​អធិប្បាយ​សម្រាប់​លំហឈ្មោះ​មេ',
+	'nstab-comments' => 'វចនាធិប្បាយ',
+);
+
+/** Ripoarisch (Ripoarisch)
+ * @author Purodha
+ */
+$messages['ksh'] = array(
+	'commentpages-desc' => 'Kommentare för Sigge em Houp-Appachtemang.',
+	'nstab-comments' => 'Kommenta',
+);
+
 /** Luxembourgish (Lëtzebuergesch)
  * @author Robby
  */
 $messages['lb'] = array(
 	'commentpages-desc' => 'Säite kommentéieren aus dem Haaptnummraum',
-	'nstab-comments'    => 'Kommentar',
+	'nstab-comments' => 'Kommentar',
 );
 
 /** Malayalam (മലയാളം)
@@ -152,7 +232,22 @@ $messages['ml'] = array(
  */
 $messages['mr'] = array(
 	'commentpages-desc' => 'मुख्य नामविश्वाकरिता प्रतिक्रीया पाने',
-	'nstab-comments'    => 'समीक्षा',
+	'nstab-comments' => 'समीक्षा',
+);
+
+/** Malay (Bahasa Melayu)
+ * @author Kurniasan
+ */
+$messages['ms'] = array(
+	'commentpages-desc' => 'Laman-laman komen bagi ruang nama utama',
+	'nstab-comments' => 'Ulasan',
+);
+
+/** Erzya (Эрзянь)
+ * @author Botuzhaleny-sodamo
+ */
+$messages['myv'] = array(
+	'nstab-comments' => 'Мельть-арьсемат',
 );
 
 /** Low German (Plattdüütsch)
@@ -167,7 +262,15 @@ $messages['nds'] = array(
  */
 $messages['nl'] = array(
 	'commentpages-desc' => "Opmerkingenpagina's voor de hoofdnaamruimte",
-	'nstab-comments'    => 'Opmerkingen',
+	'nstab-comments' => 'Opmerkingen',
+);
+
+/** Norwegian Nynorsk (‪Norsk (nynorsk)‬)
+ * @author Harald Khan
+ */
+$messages['nn'] = array(
+	'commentpages-desc' => 'Legg til kommentarsider for sider i hovudnamnerommet',
+	'nstab-comments' => 'Kommentarar',
 );
 
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
@@ -175,7 +278,7 @@ $messages['nl'] = array(
  */
 $messages['no'] = array(
 	'commentpages-desc' => 'Legger til kommentarsider for sider i hovednavnerommet',
-	'nstab-comments'    => 'Kommentarer',
+	'nstab-comments' => 'Kommentarer',
 );
 
 /** Occitan (Occitan)
@@ -183,7 +286,7 @@ $messages['no'] = array(
  */
 $messages['oc'] = array(
 	'commentpages-desc' => "Paginas de comentaris per l'espaci principal",
-	'nstab-comments'    => 'Comentari',
+	'nstab-comments' => 'Comentari',
 );
 
 /** Polish (Polski)
@@ -192,7 +295,7 @@ $messages['oc'] = array(
  */
 $messages['pl'] = array(
 	'commentpages-desc' => 'Strony komentarzy w głównej przestrzeni nazw',
-	'nstab-comments'    => 'Komentarz',
+	'nstab-comments' => 'Komentarz',
 );
 
 /** Portuguese (Português)
@@ -200,7 +303,7 @@ $messages['pl'] = array(
  */
 $messages['pt'] = array(
 	'commentpages-desc' => 'Páginas de comentários para o espaço nominal principal',
-	'nstab-comments'    => 'Comentário',
+	'nstab-comments' => 'Comentário',
 );
 
 /** Quechua (Runa Simi)
@@ -208,7 +311,7 @@ $messages['pt'] = array(
  */
 $messages['qu'] = array(
 	'commentpages-desc' => "Uma suti k'itipaq rimapuna p'anqakuna",
-	'nstab-comments'    => 'Rimapuna',
+	'nstab-comments' => 'Rimapuna',
 );
 
 /** Romanian (Română)
@@ -216,7 +319,15 @@ $messages['qu'] = array(
  */
 $messages['ro'] = array(
 	'commentpages-desc' => 'Pagini de comentarii pentru spaţiul de nume principal',
-	'nstab-comments'    => 'Comentariu',
+	'nstab-comments' => 'Comentariu',
+);
+
+/** Tarandíne (Tarandíne)
+ * @author Joetaras
+ */
+$messages['roa-tara'] = array(
+	'commentpages-desc' => "Pàggene de commende p'u namespace prengepàle",
+	'nstab-comments' => 'Commentatore',
 );
 
 /** Russian (Русский)
@@ -224,7 +335,7 @@ $messages['ro'] = array(
  */
 $messages['ru'] = array(
 	'commentpages-desc' => 'Страницы комментариев для основного пространства имён',
-	'nstab-comments'    => 'Примечание',
+	'nstab-comments' => 'Примечание',
 );
 
 /** Slovak (Slovenčina)
@@ -232,7 +343,15 @@ $messages['ru'] = array(
  */
 $messages['sk'] = array(
 	'commentpages-desc' => 'Diskusné stránky hlavného menného priestoru',
-	'nstab-comments'    => 'Komentár',
+	'nstab-comments' => 'Komentár',
+);
+
+/** Sundanese (Basa Sunda)
+ * @author Irwangatot
+ */
+$messages['su'] = array(
+	'commentpages-desc' => 'Koméntar kaca pikeun ngaranspasi utama',
+	'nstab-comments' => 'Koméntar',
 );
 
 /** Swedish (Svenska)
@@ -240,7 +359,7 @@ $messages['sk'] = array(
  */
 $messages['sv'] = array(
 	'commentpages-desc' => 'Lägger till kommentarsidor för sidor i huvudnamnrymden',
-	'nstab-comments'    => 'Kommentarer',
+	'nstab-comments' => 'Kommentarer',
 );
 
 /** Telugu (తెలుగు)
@@ -248,10 +367,10 @@ $messages['sv'] = array(
  */
 $messages['te'] = array(
 	'commentpages-desc' => 'ప్రధాన నేంస్పేసులోని పేజీలకు చర్చా పేజీలు',
-	'nstab-comments'    => 'వ్యాఖ్యానము',
+	'nstab-comments' => 'వ్యాఖ్యానము',
 );
 
-/** Tajik (Cyrillic) (Тоҷикӣ/tojikī (Cyrillic))
+/** Tajik (Cyrillic) (Тоҷикӣ (Cyrillic))
  * @author Ibrahim
  */
 $messages['tg-cyrl'] = array(
@@ -263,7 +382,7 @@ $messages['tg-cyrl'] = array(
  */
 $messages['uk'] = array(
 	'commentpages-desc' => 'Сторінки коментарів для основного простору назв',
-	'nstab-comments'    => 'Коментар',
+	'nstab-comments' => 'Коментар',
 );
 
 /** Vietnamese (Tiếng Việt)
@@ -271,6 +390,14 @@ $messages['uk'] = array(
  */
 $messages['vi'] = array(
 	'commentpages-desc' => 'Các trang bình luận cho không gian tên chính',
-	'nstab-comments'    => 'Bình luận',
+	'nstab-comments' => 'Bình luận',
+);
+
+/** Volapük (Volapük)
+ * @author Smeira
+ */
+$messages['vo'] = array(
+	'commentpages-desc' => 'Küpetapads pro nemaspad cifik',
+	'nstab-comments' => 'Küpets',
 );
 

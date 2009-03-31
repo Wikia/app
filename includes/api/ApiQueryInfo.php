@@ -68,7 +68,8 @@ class ApiQueryInfo extends ApiQueryBase {
 			'protect' => array( 'ApiQueryInfo', 'getProtectToken' ),
 			'move' => array( 'ApiQueryInfo', 'getMoveToken' ),
 			'block' => array( 'ApiQueryInfo', 'getBlockToken' ),
-			'unblock' => array( 'ApiQueryInfo', 'getUnblockToken' )
+			'unblock' => array( 'ApiQueryInfo', 'getUnblockToken' ),
+			'email' => array( 'ApiQueryInfo', 'getEmailToken' ),
 		);
 		wfRunHooks('APIQueryInfoTokens', array(&$this->tokenFunctions));
 		return $this->tokenFunctions;
@@ -153,17 +154,33 @@ class ApiQueryInfo extends ApiQueryBase {
 		return self::getBlockToken($pageid, $title);
 	}
 
+	public static function getEmailToken($pageid, $title)
+	{
+		global $wgUser;
+		if(!$wgUser->canSendEmail() || $wgUser->isBlockedFromEmailUser())
+			return false;
+
+		static $cachedEmailToken = null;
+		if(!is_null($cachedEmailToken))
+			return $cachedEmailToken;
+
+		$cachedEmailToken = $wgUser->editToken();
+		return $cachedEmailToken;
+	}
+
 	public function execute() {
 
 		global $wgUser;
 
 		$params = $this->extractRequestParams();
-		$fld_protection = $fld_talkid = $fld_subjectid = false;
+		$fld_protection = $fld_talkid = $fld_subjectid = $fld_url = $fld_readable = false;
 		if(!is_null($params['prop'])) {
 			$prop = array_flip($params['prop']);
 			$fld_protection = isset($prop['protection']);
 			$fld_talkid = isset($prop['talkid']);
 			$fld_subjectid = isset($prop['subjectid']);
+			$fld_url = isset($prop['url']);
+			$fld_readable = isset($prop['readable']);
 		}
 
 		$pageSet = $this->getPageSet();
@@ -180,7 +197,7 @@ class ApiQueryInfo extends ApiQueryBase {
 		$pageLength = $pageSet->getCustomField('page_len');
 
 		$db = $this->getDB();
-		if ($fld_protection && !empty($titles)) {
+		if ($fld_protection && count($titles)) {
 			$this->addTables('page_restrictions');
 			$this->addFields(array('pr_page', 'pr_type', 'pr_level', 'pr_expiry', 'pr_cascade'));
 			$this->addWhereFld('pr_page', array_keys($titles));
@@ -195,12 +212,44 @@ class ApiQueryInfo extends ApiQueryBase {
 				if($row->pr_cascade)
 					$a['cascade'] = '';
 				$protections[$row->pr_page][] = $a;
+				
+				# Also check old restrictions
+				if($pageRestrictions[$row->pr_page]) {
+					foreach(explode(':', trim($pageRestrictions[$pageid])) as $restrict) {
+						$temp = explode('=', trim($restrict));
+						if(count($temp) == 1) {
+							// old old format should be treated as edit/move restriction
+							$restriction = trim( $temp[0] );
+							if($restriction == '')
+								continue;
+							$protections[$row->pr_page][] = array(
+								'type' => 'edit',
+								'level' => $restriction,
+								'expiry' => 'infinity',
+							);
+							$protections[$row->pr_page][] = array(
+								'type' => 'move',
+								'level' => $restriction,
+								'expiry' => 'infinity',
+							);
+						} else {
+							$restriction = trim( $temp[1] );
+							if($restriction == '')
+								continue;
+							$protections[$row->pr_page][] = array(
+								'type' => $temp[0],
+								'level' => $restriction,
+								'expiry' => 'infinity',
+							);
+						}
+					}
+				}
 			}
 			$db->freeResult($res);
 			
 			$imageIds = array();
 			foreach ($titles as $id => $title)
-				if ($title->getNamespace() == NS_IMAGE)
+				if ($title->getNamespace() == NS_FILE)
 					$imageIds[] = $id;
 			// To avoid code duplication
 			$cascadeTypes = array(
@@ -214,7 +263,7 @@ class ApiQueryInfo extends ApiQueryBase {
 				array(
 				 	'prefix' => 'il',
 				 	'table' => 'imagelinks',
-				 	'ns' => NS_IMAGE,
+				 	'ns' => NS_FILE,
 				 	'title' => 'il_to',
 				 	'ids' => $imageIds
 				)
@@ -256,7 +305,7 @@ class ApiQueryInfo extends ApiQueryBase {
 		}
 
 		// We don't need to check for pt stuff if there are no nonexistent titles
-		if($fld_protection && !empty($missing))
+		if($fld_protection && count($missing))
 		{
 			$this->resetQueryParams();
 			// Construct a custom WHERE clause that matches all titles in $missing
@@ -278,8 +327,8 @@ class ApiQueryInfo extends ApiQueryBase {
 			$images = array();
 			$others = array();
 			foreach ($missing as $title)
-				if ($title->getNamespace() == NS_IMAGE)
-					$images[] = $title->getDbKey();
+				if ($title->getNamespace() == NS_FILE)
+					$images[] = $title->getDBKey();
 				else
 					$others[] = $title;					
 			
@@ -328,7 +377,7 @@ class ApiQueryInfo extends ApiQueryBase {
 						'expiry' => Block::decodeExpiry( $row->pr_expiry, TS_ISO_8601 ),
 						'source' => $source->getPrefixedText()
 					);
-					$prottitles[NS_IMAGE][$row->il_to][] = $a;
+					$prottitles[NS_FILE][$row->il_to][] = $a;
 				}
 				$db->freeResult($res);
 			}
@@ -350,7 +399,7 @@ class ApiQueryInfo extends ApiQueryBase {
 				else if($fld_talkid)
 					$talktitles[] = $t->getTalkPage();
 			}
-			if(!empty($talktitles) || !empty($subjecttitles))
+			if(count($talktitles) || count($subjecttitles))
 			{
 				// Construct a custom WHERE clause that matches
 				// all titles in $talktitles and $subjecttitles
@@ -386,6 +435,7 @@ class ApiQueryInfo extends ApiQueryBase {
 
 			if (!is_null($params['token'])) {
 				$tokenFunctions = $this->getTokenFunctions();
+				$pageInfo['starttimestamp'] = wfTimestamp(TS_ISO_8601, time());
 				foreach($params['token'] as $t)
 				{
 					$val = call_user_func($tokenFunctions[$t], $pageid, $title);
@@ -397,46 +447,23 @@ class ApiQueryInfo extends ApiQueryBase {
 			}
 
 			if($fld_protection) {
+				$pageInfo['protection'] = array();
 				if (isset($protections[$pageid])) {
 					$pageInfo['protection'] = $protections[$pageid];
 					$result->setIndexedTagName($pageInfo['protection'], 'pr');
-				} else {
-					# Also check old restrictions
-					if( $pageRestrictions[$pageid] ) {
-						foreach( explode( ':', trim( $pageRestrictions[$pageid] ) ) as $restrict ) {
-							$temp = explode( '=', trim( $restrict ) );
-							if(count($temp) == 1) {
-								// old old format should be treated as edit/move restriction
-								$restriction = trim( $temp[0] );
-								$pageInfo['protection'][] = array(
-									'type' => 'edit',
-									'level' => $restriction,
-									'expiry' => 'infinity',
-								);
-								$pageInfo['protection'][] = array(
-									'type' => 'move',
-									'level' => $restriction,
-									'expiry' => 'infinity',
-								);
-							} else {
-								$restriction = trim( $temp[1] );
-								$pageInfo['protection'][] = array(
-									'type' => $temp[0],
-									'level' => $restriction,
-									'expiry' => 'infinity',
-								);
-							}
-						}
-						$result->setIndexedTagName($pageInfo['protection'], 'pr');
-					} else {
-						$pageInfo['protection'] = array();
-					}
 				}
 			}
-			if($fld_talkid && isset($talkids[$title->getNamespace()][$title->getDbKey()]))
-				$pageInfo['talkid'] = $talkids[$title->getNamespace()][$title->getDbKey()];
-			if($fld_subjectid && isset($subjectids[$title->getNamespace()][$title->getDbKey()]))
-				$pageInfo['subjectid'] = $subjectids[$title->getNamespace()][$title->getDbKey()];
+			if($fld_talkid && isset($talkids[$title->getNamespace()][$title->getDBKey()]))
+				$pageInfo['talkid'] = $talkids[$title->getNamespace()][$title->getDBKey()];
+			if($fld_subjectid && isset($subjectids[$title->getNamespace()][$title->getDBKey()]))
+				$pageInfo['subjectid'] = $subjectids[$title->getNamespace()][$title->getDBKey()];
+			if($fld_url) {
+				$pageInfo['fullurl'] = $title->getFullURL();
+				$pageInfo['editurl'] = $title->getFullURL('action=edit');
+			}
+			if($fld_readable)
+				if($title->userCanRead())
+					$pageInfo['readable'] = '';
 
 			$result->addValue(array (
 				'query',
@@ -444,19 +471,22 @@ class ApiQueryInfo extends ApiQueryBase {
 			), $pageid, $pageInfo);
 		}
 
-		// Get edit/protect tokens and protection data for missing titles if requested
-		// Delete and move tokens are N/A for missing titles anyway
-		if(!is_null($params['token']) || $fld_protection || $fld_talkid || $fld_subjectid)
+		// Get properties for missing titles if requested
+		if(!is_null($params['token']) || $fld_protection || $fld_talkid || $fld_subjectid ||
+		  					$fld_url || $fld_readable)
 		{
 			$res = &$result->getData();
 			foreach($missing as $pageid => $title) {
 				if(!is_null($params['token'])) 
 				{
 					$tokenFunctions = $this->getTokenFunctions();
+					$res['query']['pages'][$pageid]['starttimestamp'] = wfTimestamp(TS_ISO_8601, time());
 					foreach($params['token'] as $t)
 					{
 						$val = call_user_func($tokenFunctions[$t], $pageid, $title);
-						if($val !== false)
+						if($val === false)
+							$this->setWarning("Action '$t' is not allowed for the current user");
+						else
 							$res['query']['pages'][$pageid][$t . 'token'] = $val;
 					}
 				}
@@ -470,10 +500,17 @@ class ApiQueryInfo extends ApiQueryBase {
 						$res['query']['pages'][$pageid]['protection'] = array();
 					$result->setIndexedTagName($res['query']['pages'][$pageid]['protection'], 'pr');
 				}
-				if($fld_talkid && isset($talkids[$title->getNamespace()][$title->getDbKey()]))
-					$res['query']['pages'][$pageid]['talkid'] = $talkids[$title->getNamespace()][$title->getDbKey()];
-				if($fld_subjectid && isset($subjectids[$title->getNamespace()][$title->getDbKey()]))
-					$res['query']['pages'][$pageid]['subjectid'] = $subjectids[$title->getNamespace()][$title->getDbKey()];
+				if($fld_talkid && isset($talkids[$title->getNamespace()][$title->getDBKey()]))
+					$res['query']['pages'][$pageid]['talkid'] = $talkids[$title->getNamespace()][$title->getDBKey()];
+				if($fld_subjectid && isset($subjectids[$title->getNamespace()][$title->getDBKey()]))
+					$res['query']['pages'][$pageid]['subjectid'] = $subjectids[$title->getNamespace()][$title->getDBKey()];
+				if($fld_url) {
+					$res['query']['pages'][$pageid]['fullurl'] = $title->getFullURL();
+					$res['query']['pages'][$pageid]['editurl'] = $title->getFullURL('action=edit');
+				}
+				if($fld_readable)
+					if($title->userCanRead())
+						$res['query']['pages'][$pageid]['readable'] = '';
 			}
 		}
 	}
@@ -486,7 +523,9 @@ class ApiQueryInfo extends ApiQueryBase {
 				ApiBase :: PARAM_TYPE => array (
 					'protection',
 					'talkid',
-					'subjectid'
+					'subjectid',
+					'url',
+					'readable',
 				)),
 			'token' => array (
 				ApiBase :: PARAM_DFLT => NULL,
@@ -521,6 +560,6 @@ class ApiQueryInfo extends ApiQueryBase {
 	}
 
 	public function getVersion() {
-		return __CLASS__ . ': $Id: ApiQueryInfo.php 37191 2008-07-06 18:43:06Z brion $';
+		return __CLASS__ . ': $Id: ApiQueryInfo.php 45683 2009-01-12 19:10:42Z raymond $';
 	}
 }

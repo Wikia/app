@@ -1,30 +1,30 @@
 <?php
 
 class SpecialNoticeLocal extends NoticePage {
-	
+
 	function __construct() {
 		parent::__construct( "NoticeLocal" );
 	}
-	
+
 	/**
 	 * A couple hours? Squids can cache them longer...
 	 */
 	protected function maxAge() {
 		return 7200;
 	}
-	
+
 	function getJsOutput( $par ) {
 		$text = '';
-		if( $par == 'anon' ) {
+		if ( $par == 'anonnotice.js' ) {
 			$text = wfGetCachedNotice( 'anonnotice' );
 		}
-		if( !$text ) {
+		if ( !$text ) {
 			$text = wfGetCachedNotice( 'sitenotice' );
 		}
-		if( !$text ) {
+		if ( !$text ) {
 			$text = wfGetCachedNotice( 'default' );
 		}
-		if( $text ) {
+		if ( $text ) {
 			// blah
 			return
 				'wgNoticeLocal="' .

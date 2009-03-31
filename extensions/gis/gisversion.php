@@ -39,20 +39,20 @@ class gis_version {
 
 		$wgOut->setPagetitle( "Version" );
 		$wgOut->addHTML( '
- <p><b><a href="http://www.mediawiki.org/">MediaWiki</a></b> 
+ <p><b><a href="http://www.mediawiki.org/">MediaWiki</a></b>
  <a href="http://meta.wikimedia.org/wiki/Gis">GIS extension</a>,
  copyright (C) 2005 by Egil Kvaleberg.</p>
- 
+
  <p>The GIS extension is free software; you can redistribute it and/or modify
  it under the terms of the GNU General Public License as published by
  the Free Software Foundation; either version 2 of the License, or
  (at your option) any later version.</p>
- 
+
  <p>The GIS extension is distributed in the hope that it will be useful,
  but WITHOUT ANY WARRANTY; without even the implied warranty of
  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  GNU General Public License for more details.</p>
- 
+
  <p>You should have received <a href="../COPYING">a copy of the GNU General Public License</a>
  along with this program; if not, write to the Free Software
  Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
@@ -64,5 +64,3 @@ class gis_version {
 		$wgOut->addWikiText( $out );
 	}
 }
-
-

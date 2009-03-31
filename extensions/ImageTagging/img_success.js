@@ -105,7 +105,6 @@ function getPos(n,evt) {
 	}
 }
 
-
 function bubbleCancel(evt) {
 	if (!evt) return;
 	if (evt.stopPropagation) {
@@ -187,8 +186,7 @@ function setAlignment(align) {
     imgElem.style.styleFloat = align;
 }
 
-function dimensionsForMaximumSize(image, maxValue)
-{
+function dimensionsForMaximumSize(image, maxValue) {
     var scaleFactor;
     var nativeWidth = image.getAttribute("wpWidth");
     var nativeHeight = image.getAttribute("wpHeight");
@@ -196,12 +194,9 @@ function dimensionsForMaximumSize(image, maxValue)
     if ( nativeWidth < maxValue && nativeHeight < maxValue )
         return {width: nativeWidth, height: nativeHeight};
         
-    if ( nativeWidth > nativeHeight )
-    {
+    if ( nativeWidth > nativeHeight ) {
         scaleFactor = maxValue / nativeWidth;
-    }
-    else
-    {
+    } else {
         scaleFactor = maxValue / nativeHeight;
     }
 
@@ -213,8 +208,7 @@ function valueForSliderPos(position) {
     return (position / (kMaxXPos - kMinXPos)) * (kMaxSliderValue - kMinSliderValue) + kMinSliderValue;
 }
 
-function updateImageDim(imgElem, dim)
-{
+function updateImageDim(imgElem, dim) {
     var thumbSize = document.getElementById('thumbSizeValue');
     var imgName = document.getElementById('imgName').value;
     
@@ -234,21 +228,18 @@ function updateImageDim(imgElem, dim)
 	thumbSize.innerHTML = dim.width + "px";
 }
 
-function insertRadioSelect(control,event)
-{
+function insertRadioSelect(control,event) {
     //alert("insertRadioSelect: " + control.value);
     if ( control.value == "Original" ) {
         document.getElementById('wrapper').style.display = "none";
         document.getElementById('userControls').style.display = "none";
-    }
-    else {
+    } else {
         document.getElementById('wrapper').style.display = "block";
         document.getElementById('userControls').style.display = "block";
     }
 }
 
-function doInsertImage(localizedImageTag)
-{
+function doInsertImage(localizedImageTag) {
     var imgElem = document.getElementById('file');
     var insertFullSize = document.getElementById('insertFullSize');
     var insertThumbnail = document.getElementById('insertThumbnail');
@@ -263,9 +254,7 @@ function doInsertImage(localizedImageTag)
     
     if ( insertFullSize.checked && !insertThumbnail.checked ) {
         insertText = caption + ']]';
-    }
-    else if ( !insertFullSize.checked && insertThumbnail.checked )
-    {     
+    } else if ( !insertFullSize.checked && insertThumbnail.checked ) {
         if ( imgElem.style.cssFloat )
             align = "|" + imgElem.style.cssFloat;
         else if ( imgElem.style.styleFloat )

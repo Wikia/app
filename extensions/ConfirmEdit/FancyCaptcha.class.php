@@ -57,19 +57,19 @@ class FancyCaptcha extends SimpleCaptcha {
 		$title = Title::makeTitle( NS_SPECIAL, 'Captcha/image' );
 
 		return "<p>" .
-			wfElement( 'img', array(
+			Xml::element( 'img', array(
 				'src'    => $title->getLocalUrl( 'wpCaptchaId=' . urlencode( $index ) ),
 				'width'  => $info['width'],
 				'height' => $info['height'],
 				'alt'    => '' ) ) .
 			"</p>\n" .
-			wfElement( 'input', array(
+			Xml::element( 'input', array(
 				'type'  => 'hidden',
 				'name'  => 'wpCaptchaId',
 				'id'    => 'wpCaptchaId',
 				'value' => $index ) ) .
 			"<p>" .
-			wfElement( 'input', array(
+			Xml::element( 'input', array(
 				'name' => 'wpCaptchaWord',
 				'id'   => 'wpCaptchaWord' ) ) .
 			"</p>\n";

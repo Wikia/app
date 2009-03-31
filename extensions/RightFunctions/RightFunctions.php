@@ -15,14 +15,14 @@ if( !defined( 'MEDIAWIKI' ) ) {
 $wgExtensionFunctions[] = 'wfRightFunctions';
 $wgExtensionCredits['parserhook'][] = array(
 	'name' => 'RightFunctions',
-	'version' => '2.0',
+	'version' => '1.10',
 	'url' => 'http://www.mediawiki.org/wiki/Extension:RightFunctions',
 	'author' => 'Ryan Schmidt',
 	'description' => 'Permission-based parser functions',
 	'descriptionmsg' => 'rightfunctions-desc',
 );
 
-$wgExtensionMessageFiles['RightFunctions'] = dirname(__FILE__) . '/RightFunctions.i18n.php';
+$wgExtensionMessagesFiles['RightFunctions'] = dirname(__FILE__) . '/RightFunctions.i18n.php';
 $wgHooks['LanguageGetMagic'][] = 'wfRightFunctionsLanguageGetMagic';
 
 //Default globals. Wrapping in isset() so that it doesn't override any previously-defined stuff
@@ -172,8 +172,6 @@ Class ExtRightFunctions {
 		foreach($wgRightFunctionsUserGroups as $value) {
 			if(in_array($value, $usergroups)) {
 				$right = $value;
-			} else {
-				return $right;
 			}
 		}
 		return $right;
@@ -257,7 +255,7 @@ Class ExtRightFunctions {
 
 	function ifpageallowed(&$parser, $name = '', $right = '', $then = '', $else = '', $page = '') {
 		global $wgRightFunctionsAllowExpensiveQueries, $wgRightFunctionsDisableFunctions, $wgRightFunctionsAllowCaching;
-		if(in_array('ifpageallowed', $wgRightFunctionsDisableFuntions) || $name == '') {
+		if(in_array('ifpageallowed', $wgRightFunctionsDisableFunctions) || $name == '') {
 			return;
 		}
 		if(!$wgRightFunctionsAllowCaching) {
@@ -303,14 +301,18 @@ Class ExtRightFunctions {
 		if($title->isCascadeProtected() && strpos($type, 'c')) {
 			return $then;
 		}
-		if($title->isNamespaceProtected() && strpos($type, 'n')) {
-			return $then;
+		if(strpos($type, 'n')) {
+			global $wgNamespaceProtection;
+			$ns = $title->getNamespace();
+			if(isset($wgNamespaceProtection[$ns])) {
+				return $then;
+			}
 		}
 		return $else;
 	}
 
 	function getrestrictions(&$parser, $right = 'edit', $page = '', $returnall = false) {
-		global $wgRightFunctionsAllowCaching, $wgRightFunctionsDisableFunctions, $wgRestrictionLevels;
+		global $wgRightFunctionsAllowCaching, $wgRightFunctionsDisableFunctions, $wgRestrictionLevels, $wgNamespaceProtection;
 		wfLoadExtensionMessages( 'RightFunctions' );
 		if(in_array('getrestrictions', $wgRightFunctionsDisableFunctions)) {
 			return;
@@ -318,6 +320,11 @@ Class ExtRightFunctions {
 		if(!$wgRightFunctionsAllowCaching) {
 			$parser->disableCache();
 		}
+		$sep = wfMsg('rightfunctions-sep');
+		$localmsg = wfMsg('rightfunctions-local');
+		$cascmsg = wfMsg('rightfunctions-casc');
+		$nsmsg = wfMsg('rightfunctions-ns');
+		
 		if($page) {
 			$title = Title::newFromText($page);
 			if(!$title->exists()) {
@@ -330,51 +337,68 @@ Class ExtRightFunctions {
 			$right = array('edit');
 		}
 		$iscascade = false;
+		$cascrest = '';
 		if($title->isCascadeProtected()) {
 			$cascaderestrictions = $title->getCascadeProtectionSources();
 			foreach(array_slice($cascaderestrictions, 1) as $groups) {
 				foreach($groups as $action => $restrictions) {
 					if($action == $right) {
 						foreach($restrictions as $value) {
-							$cascrest = $cascrest . ', ' . $value;
+							$cascrest .= $sep . ' ' . $value;
 							$iscascade = true;
 						}
 					}
 				}
 			}
 		}
-		$cascrest = trim(trim($cascrest, ","));
+		$cascrest = trim(trim($cascrest, $sep));
 		$localrest = $title->getRestrictions($right);
 		if(is_array($localrest)){
 			$localrest = array_pop($localrest);
 		}
+		$isns = false;
+		$nsrest = '';
+		if(isset($wgNamespaceProtection[$title->getNamespace()])) {
+			$isns = true;
+			$nsresta = (array) $wgNamespaceProtection[$title->getNamespace()];
+			foreach($nsresta as $right) {
+				if($right != '') {
+					$nsrest .= $sep . ' ' . $right;
+				}
+			}
+		}
+		$nsrest = trim(trim($nsrest, $sep));
 		if($returnall) {
-			if($iscascade && $localrest) {
-				return wfMsg('rightfunctions-restboth', array( $localrest, $cascrest ) );
-			} elseif($iscascade && !$localrest) {
-				return wfMsg('rightfunctions-restcasc', array( $cascrest ) );
-			}
-			return $localrest;
-		}
-		if($localrest && $iscascade) {
-			$restrictions = explode(",", "{$localrest}, {$cascrest}");
-		} elseif($iscascade && !$localrest) {
-			if(strpos($cascrest, ",")) {
-				$restrictions = explode(",", $cascrest);
+			if($iscascade && $isns && $localrest) {
+				return wfMsg('rightfunctions-rest3', array( $localrest, $localmsg, $cascrest, $cascmsg, $nsrest, $nsmsg, $sep ) );
+			} elseif($iscascade && $localrest) {
+				return wfMsg('rightfunctions-rest2', array( $localrest, $localmsg, $cascrest, $cascmsg, $sep ) );
+			} elseif($isns && $localrest) {
+				return wfMsg('rightfunctions-rest2', array( $localrest, $localmsg, $nsrest, $nsmsg, $sep ) );
+			} elseif($iscascade && $isns) {
+				return wfMsg('rightfunctions-rest2', array( $cascrest, $cascmsg, $nsrest, $nsmsg, $sep ) );
+			} elseif($iscascade) {
+				return wfMsg('rightfunctions-rest1', array( $cascrest, $cascmsg ) );
+			} elseif($isns) {
+				return wfMsg('rightfunctions-rest1', array( $nsrest, $nsmsg ) );
+			} elseif($localrest != '') {
+				return wfMsg('rightfunctions-rest1', array( $localrest, $localmsg ) );
 			} else {
-				return $cascrest;
+				return '';
 			}
-		} else {
-			return $localrest;
 		}
+		$restrictions = explode($sep, $localrest . $sep . $cascrest);
 		$return = "";
 		foreach($wgRestrictionLevels as $level) {
-			foreach($restrictions as $group) {
-				if(trim($group) == $level) {
+			foreach($restrictions as $right) {
+				if(trim($right) == $level) {
 					$return = $level;
 					break(1);
 				}
 			}
+		}
+		if($isns) {
+			$return = trim(trim($return . $sep. ' ' . $nsrest, $sep));
 		}
 		return $return;
 	}

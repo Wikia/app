@@ -56,6 +56,7 @@ class ApiQuery extends ApiBase {
 		'categories' => 'ApiQueryCategories',
 		'extlinks' => 'ApiQueryExternalLinks',
 		'categoryinfo' => 'ApiQueryCategoryInfo',
+		'duplicatefiles' => 'ApiQueryDuplicateFiles',
 	);
 
 	private $mQueryListModules = array (
@@ -75,6 +76,7 @@ class ApiQuery extends ApiBase {
 		'search' => 'ApiQuerySearch',
 		'usercontribs' => 'ApiQueryContributions',
 		'watchlist' => 'ApiQueryWatchlist',
+		'watchlistraw' => 'ApiQueryWatchlistRaw',
 		'exturlusage' => 'ApiQueryExtLinksUsage',
 		'users' => 'ApiQueryUsers',
 		'random' => 'ApiQueryRandom',
@@ -93,10 +95,10 @@ class ApiQuery extends ApiBase {
 		parent :: __construct($main, $action);
 
 		// Allow custom modules to be added in LocalSettings.php
-		global $wgApiQueryPropModules, $wgApiQueryListModules, $wgApiQueryMetaModules;
-		self :: appendUserModules($this->mQueryPropModules, $wgApiQueryPropModules);
-		self :: appendUserModules($this->mQueryListModules, $wgApiQueryListModules);
-		self :: appendUserModules($this->mQueryMetaModules, $wgApiQueryMetaModules);
+		global $wgAPIPropModules, $wgAPIListModules, $wgAPIMetaModules;
+		self :: appendUserModules($this->mQueryPropModules, $wgAPIPropModules);
+		self :: appendUserModules($this->mQueryListModules, $wgAPIListModules);
+		self :: appendUserModules($this->mQueryMetaModules, $wgAPIMetaModules);
 
 		$this->mPropModuleNames = array_keys($this->mQueryPropModules);
 		$this->mListModuleNames = array_keys($this->mQueryListModules);
@@ -209,6 +211,7 @@ class ApiQuery extends ApiBase {
 		foreach ($modules as $module) {
 			$module->profileIn();
 			$module->execute();
+			wfRunHooks('APIQueryAfterExecute', array(&$module));
 			$module->profileOut();
 		}
 	}
@@ -229,12 +232,10 @@ class ApiQuery extends ApiBase {
 	 * Create instances of all modules requested by the client
 	 */
 	private function InstantiateModules(&$modules, $param, $moduleList) {
-		if ( array_key_exists($param,$this->params) ) {
-			$list = $this->params[$param];
-			if (isset ($list))
-				foreach ($list as $moduleName)
-					$modules[] = new $moduleList[$moduleName] ($this, $moduleName);
-		}
+		$list = @$this->params[$param];
+		if (!is_null ($list))
+			foreach ($list as $moduleName)
+				$modules[] = new $moduleList[$moduleName] ($this, $moduleName);
 	}
 
 	/**
@@ -255,7 +256,7 @@ class ApiQuery extends ApiBase {
 			);
 		}
 
-		if (!empty ($normValues)) {
+		if (count($normValues)) {
 			$result->setIndexedTagName($normValues, 'n');
 			$result->addValue('query', 'normalized', $normValues);
 		}
@@ -269,7 +270,7 @@ class ApiQuery extends ApiBase {
 			);
 		}
 
-		if (!empty ($intrwValues)) {
+		if (count($intrwValues)) {
 			$result->setIndexedTagName($intrwValues, 'i');
 			$result->addValue('query', 'interwiki', $intrwValues);
 		}
@@ -283,7 +284,7 @@ class ApiQuery extends ApiBase {
 			);
 		}
 
-		if (!empty ($redirValues)) {
+		if (count($redirValues)) {
 			$result->setIndexedTagName($redirValues, 'r');
 			$result->addValue('query', 'redirects', $redirValues);
 		}
@@ -292,7 +293,7 @@ class ApiQuery extends ApiBase {
 		// Missing revision elements
 		//
 		$missingRevIDs = $pageSet->getMissingRevisionIDs();
-		if (!empty ($missingRevIDs)) {
+		if (count($missingRevIDs)) {
 			$revids = array ();
 			foreach ($missingRevIDs as $revid) {
 				$revids[$revid] = array (
@@ -334,7 +335,7 @@ class ApiQuery extends ApiBase {
 			$pages[$pageid] = $vals;
 		}
 
-		if (!empty ($pages)) {
+		if (count($pages)) {
 
 			if ($this->params['indexpageids']) {
 				$pageIDs = array_keys($pages);
@@ -383,6 +384,7 @@ class ApiQuery extends ApiBase {
 		// populate resultPageSet with the generator output
 		$generator->profileIn();
 		$generator->executeGenerator($resultPageSet);
+		wfRunHooks('APIQueryGeneratorAfterExecute', array(&$generator, &$resultPageSet));
 		$resultPageSet->finishPageSetGeneration();
 		$generator->profileOut();
 
@@ -478,7 +480,6 @@ class ApiQuery extends ApiBase {
 		return $psModule->makeHelpMsgParameters() . parent :: makeHelpMsgParameters();
 	}
 
-	// @todo should work correctly
 	public function shouldCheckMaxlag() {
 		return true;
 	}
@@ -511,7 +512,7 @@ class ApiQuery extends ApiBase {
 	public function getVersion() {
 		$psModule = new ApiPageSet($this);
 		$vers = array ();
-		$vers[] = __CLASS__ . ': $Id: ApiQuery.php 35098 2008-05-20 17:13:28Z ialex $';
+		$vers[] = __CLASS__ . ': $Id: ApiQuery.php 42548 2008-10-25 14:04:43Z tstarling $';
 		$vers[] = $psModule->getVersion();
 		return $vers;
 	}

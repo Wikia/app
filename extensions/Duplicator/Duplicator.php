@@ -10,7 +10,7 @@ if (!defined('MEDIAWIKI')) die();
 
 $wgExtensionCredits['specialpage'][] = array(
 	'name' => 'Duplicator',
-	'version' => '1.1',
+	'version' => '1.2',
 	'author' => 'Rob Church',
 	'url' => 'http://www.mediawiki.org/wiki/Extension:Duplicator',
 	'description' => 'Create independent copies of articles with full edit histories',
@@ -19,9 +19,9 @@ $wgExtensionCredits['specialpage'][] = array(
 
 $dir = dirname(__FILE__) . '/';
 $wgExtensionMessagesFiles['Duplicator'] = $dir . 'Duplicator.i18n.php';
+$wgExtensionAliasesFiles['Duplicator'] = $dir . 'Duplicator.alias.php';
 $wgAutoloadClasses['SpecialDuplicator'] = $dir . 'Duplicator.page.php';
 $wgSpecialPages['Duplicator'] = 'SpecialDuplicator';
-$wgHooks['LanguageGetSpecialPageAliases'][] = 'efDuplicatorSetupAliases';
 $wgExtensionFunctions[] = 'efDuplicator';
 
 /**
@@ -40,23 +40,8 @@ $wgDuplicatorRevisionLimit = 250;
  */
 function efDuplicator() {
 	global $wgHooks;
-	require_once( dirname( __FILE__ ) . '/Duplicator.i18n.specialpagealiases.php' );
 	$wgHooks['SkinTemplateBuildNavUrlsNav_urlsAfterPermalink'][] = 'efDuplicatorNavigation';
 	$wgHooks['MonoBookTemplateToolboxEnd'][] = 'efDuplicatorToolbox';
-}
-
-/**
- * Set up special page aliases
- *
- * @param array $aliases Special page aliases
- * @param string $lang Language code
- * @return bool
- */
-function efDuplicatorSetupAliases( &$aliases, $lang ) {
-	$ours = efDuplicatorAliases( $lang );
-	if( count( $ours ) > 0 )
-		$aliases['Duplicator'] = $ours;
-	return true;
 }
 
 /**

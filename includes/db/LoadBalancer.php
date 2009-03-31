@@ -13,7 +13,7 @@
 class LoadBalancer {
 	/* private */ var $mServers, $mConns, $mLoads, $mGroupLoads;
 	/* private */ var $mFailFunction, $mErrorConnection;
-	/* private */ var $mReadIndex, $mLastIndex, $mAllowLagged;
+	/* private */ var $mReadIndex, $mAllowLagged;
 	/* private */ var $mWaitForPos, $mWaitTimeout;
 	/* private */ var $mLaggedSlaveMode, $mLastError = 'Unknown error';
 	/* private */ var $mParentInfo, $mLagTimes;
@@ -50,7 +50,6 @@ class LoadBalancer {
 			'local' => array(),
 			'foreignUsed' => array(),
 			'foreignFree' => array() );
-		$this->mLastIndex = -1;
 		$this->mLoads = array();
 		$this->mWaitForPos = false;
 		$this->mLaggedSlaveMode = false;
@@ -400,10 +399,19 @@ class LoadBalancer {
 	/**
 	 * Get a connection by index
 	 * This is the main entry point for this class.
+	 * @param int $i Database
+	 * @param array $groups Query groups
+	 * @param string $wiki Wiki ID
 	 */
 	public function &getConnection( $i, $groups = array(), $wiki = false ) {
 		global $wgDBtype;
 		wfProfileIn( __METHOD__ );
+
+		if ( $i == DB_LAST ) {
+			throw new MWException( 'Attempt to call ' . __METHOD__ . ' with deprecated server index DB_LAST' );
+		} elseif ( $i === null || $i === false ) {
+			throw new MWException( 'Attempt to call ' . __METHOD__ . ' with invalid server index' );
+		}
 
 		if ( $wiki === wfWikiID() ) {
 			$wiki = false;
@@ -434,18 +442,12 @@ class LoadBalancer {
 		# Operation-based index
 		if ( $i == DB_SLAVE ) {
 			$i = $this->getReaderIndex( false, $wiki );
-		} elseif ( $i == DB_LAST ) {
-			# Just use $this->mLastIndex, which should already be set
-			$i = $this->mLastIndex;
-			if ( $i === -1 ) {
-				# Oh dear, not set, best to use the writer for safety
-				wfDebug( "Warning: DB_LAST used when there was no previous index\n" );
-				$i = $this->getWriterIndex();
+			# Couldn't find a working server in getReaderIndex()?
+			if ( $i === false ) {
+				$this->mLastError = 'No working slave server: ' . $this->mLastError;
+				$this->reportConnectionError( $this->mErrorConnection );
+				return false;
 			}
-		}
-		# Couldn't find a working server in getReaderIndex()?
-		if ( $i === false ) {
-			$this->reportConnectionError( $this->mErrorConnection );
 		}
 
 		# Now we have an explicit index into the servers array
@@ -526,7 +528,7 @@ class LoadBalancer {
 		} else {
 			$server = $this->mServers[$i];
 			$server['serverIndex'] = $i;
-			$conn = $this->reallyOpenConnection( $server );
+			$conn = $this->reallyOpenConnection( $server, false );
 			if ( $conn->isOpen() ) {
 				$this->mConns['local'][$i][0] = $conn;
 			} else {
@@ -535,7 +537,6 @@ class LoadBalancer {
 				$conn = false;
 			}
 		}
-		$this->mLastIndex = $i;
 		wfProfileOut( __METHOD__ );
 		return $conn;
 	}
@@ -577,9 +578,8 @@ class LoadBalancer {
 			$oldWiki = key( $this->mConns['foreignFree'][$i] );
 
 			if ( !$conn->selectDB( $dbName ) ) {
-				global $wguname;
 				$this->mLastError = "Error selecting database $dbName on server " .
-					$conn->getServer() . " from client host {$wguname['nodename']}\n";
+					$conn->getServer() . " from client host " . wfHostname() . "\n";
 				$this->mErrorConnection = $conn;
 				$conn = false;
 			} else {
@@ -599,6 +599,7 @@ class LoadBalancer {
 				$this->mErrorConnection = $conn;
 				$conn = false;
 			} else {
+				$conn->tablePrefix( $prefix );
 				$this->mConns['foreignUsed'][$i][$wiki] = $conn;
 				wfDebug( __METHOD__.": opened new connection for $i/$wiki\n" );
 			}
@@ -662,31 +663,27 @@ class LoadBalancer {
 
 	function reportConnectionError( &$conn ) {
 		wfProfileIn( __METHOD__ );
-		# Prevent infinite recursion
 
-		static $reporting = false;
-		if ( !$reporting ) {
-			$reporting = true;
-			if ( !is_object( $conn ) ) {
-				// No last connection, probably due to all servers being too busy
-				$conn = new Database;
-				if ( $this->mFailFunction ) {
-					$conn->failFunction( $this->mFailFunction );
-					$conn->reportConnectionError( $this->mLastError );
-				} else {
-					// If all servers were busy, mLastError will contain something sensible
-					throw new DBConnectionError( $conn, $this->mLastError );
-				}
+		if ( !is_object( $conn ) ) {
+			// No last connection, probably due to all servers being too busy
+			wfLogDBError( "LB failure with no last connection\n" );
+			$conn = new Database;
+			if ( $this->mFailFunction ) {
+				$conn->failFunction( $this->mFailFunction );
+				$conn->reportConnectionError( $this->mLastError );
 			} else {
-				if ( $this->mFailFunction ) {
-					$conn->failFunction( $this->mFailFunction );
-				} else {
-					$conn->failFunction( false );
-				}
-				$server = $conn->getProperty( 'mServer' );
-				$conn->reportConnectionError( "{$this->mLastError} ({$server})" );
+				// If all servers were busy, mLastError will contain something sensible
+				throw new DBConnectionError( $conn, $this->mLastError );
 			}
-			$reporting = false;
+		} else {
+			if ( $this->mFailFunction ) {
+				$conn->failFunction( $this->mFailFunction );
+			} else {
+				$conn->failFunction( false );
+			}
+			$server = $conn->getProperty( 'mServer' );
+			wfLogDBError( "Connection error: {$this->mLastError} ({$server})\n" );
+			$conn->reportConnectionError( "{$this->mLastError} ({$server})" );
 		}
 		wfProfileOut( __METHOD__ );
 	}

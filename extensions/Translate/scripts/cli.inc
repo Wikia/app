@@ -14,15 +14,19 @@ $dir = dirname( __FILE__ ); $IP = "$dir/../../..";
 @include("$dir/../../CorePath.php"); // Allow override
 require_once( "$IP/maintenance/commandLine.inc" );
 
-function STDOUT( $str, $channel = null ) {
+function STDOUT( $str, $channel = null, $force = false ) {
 	global $options;
-	if ( isset($options['quiet']) ) return;
+	if ( isset($options['quiet']) &&!$force ) return;
 
 	static $lastChannel = null;
 	static $lineStart = true;
 
 	if ( $channel !== null && ($lineStart || $channel === $lastChannel) ) {
 		fwrite( STDOUT, $str );
+	} elseif ( $str === false ) {
+		// Cleanup
+		if ( !$lineStart ) fwrite( STDOUT, "\n" );
+		return;
 	} else {
 		if ( !$lineStart ) fwrite( STDOUT, "\n" );
 		fwrite( STDOUT, $str );
@@ -36,6 +40,22 @@ function STDOUT( $str, $channel = null ) {
 	$lastChannel = $channel;
 }
 
-function STDERR( $message ) {
-	fwrite( STDERR, $message . "\n" );
+function STDERR( $message, $channel = null ) {
+	STDOUT( $message, $channel, true );
+}
+
+register_shutdown_function('STDOUT', false);
+
+
+class Cli {
+
+	public static function parseLanguageCodes( /* string */ $codes ) {
+		$langs = array_map( 'trim', explode( ',', $codes ) );
+		if ( $langs[0] === '*' ) {
+			$languages = Language::getLanguageNames();
+			ksort($languages);
+			$langs = array_keys($languages);
+		}
+		return $langs;
+	}
 }

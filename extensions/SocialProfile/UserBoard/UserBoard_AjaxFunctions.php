@@ -1,8 +1,10 @@
 <?php
+/**
+ * AJAX functions used by UserBoard.
+ */
 $wgAjaxExportList [] = 'wfSendBoardMessage';
-function wfSendBoardMessage($user_name, $message, $message_type, $count){
+function wfSendBoardMessage( $user_name, $message, $message_type, $count ){
 	global $IP, $wgMemc, $wgUser;
-	//require_once("$IP/extensions/SocialProfile/UserBoard/UserBoardClass.php");
 	$user_name = stripslashes($user_name);
 	$user_name = urldecode($user_name);
 	$user_id_to = User::idFromName($user_name);
@@ -14,7 +16,7 @@ function wfSendBoardMessage($user_name, $message, $message_type, $count){
 }
 
 $wgAjaxExportList [] = 'wfDeleteBoardMessage';
-function wfDeleteBoardMessage($ub_id){
+function wfDeleteBoardMessage( $ub_id ){
 	global $IP, $wgMemc, $wgUser;
 
 	$b = new UserBoard();

@@ -157,7 +157,7 @@ class GlobalUsage extends SpecialPage {
 		$form .= Xml::closeElement( 'fieldset' );
 		$form .= Xml::closeElement( 'form' );
 		
-		$wgOut->addHtml( $form );
+		$wgOut->addHTML( $form );
 		
 		if ( !$target->getDBkey() ) return;
 		

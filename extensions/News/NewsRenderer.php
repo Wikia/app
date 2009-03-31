@@ -150,7 +150,7 @@ class NewsRenderer {
 				if ( $ns === '-' || $ns === '0' || $ns === 'main' || $ns === 'article' ) {
 					$this->namespaces[$i] = 0;
 				} else {
-					$this->namespaces[$i] = Namespace::getCanonicalIndex( $ns );
+					$this->namespaces[$i] = MWNamespace::getCanonicalIndex( $ns );
 					if ( $this->namespaces[$i] === false || $this->namespaces[$i] === NULL )
 						$this->namespaces[$i] = $wgContLang->getNsIndex( $ns );
 				}
@@ -774,9 +774,9 @@ class NewsFeedPage extends Article {
 		if ( $ims && $usecache ) {
 			$lastchange = wfTimestamp(TS_UNIX, NewsRenderer::getLastChangeTime());
 
-			wfDebug( wfMsg( 'newsextension-checkok1', $fname, $ims, $lastchange ) );
+			wfDebug( "$fname: checking cache-ok:  IMS $ims vs. changed $lastchange \n" );
 			if ( $wgOut->checkLastModified( $lastchange ) ) {
-				wfDebug( wfMsg( 'newsextension-checkok' , $fname) );
+				wfDebug( "$fname: HTTP cache ok, 304 header sent \n" );
 				return; // done, 304 header sent.
 			}
 		}
@@ -788,15 +788,16 @@ class NewsFeedPage extends Article {
 			$ocache = wfGetParserCacheStorage();
 			$e = $ocache ? $ocache->get( $cachekey ) : NULL;
 			$note .= ' anon;';
-			wfDebug( wfMsg( 'newsextension-gotcached', $fname, $e) );
+			$debug = $e ? "got cached" : "no cached";
+			wfDebug( "$fname: ($debug) \n" );
 		}
 		else {
 			if (!$usecache) {
-				wfDebug( wfMsg( 'newsextension-purge', $fname ) );
+				wfDebug( "$fname: purge, ignoring cache \n" );
 				$note .= ' purged;';
 			}
 			else {
-				wfDebug( wfMsg( 'newsextension-loggin', $fname ) );
+				wfDebug( "$fname: logged in, ignoring cache \n" );
 				$note .= ' user;';
 			}
 			
@@ -813,7 +814,7 @@ class NewsFeedPage extends Article {
 			$last = wfTimestamp(TS_UNIX, $lastchange);
 
 			if ($last < $e['timestamp']) {
-				wfDebug( wfMsg( 'newsextension-outputting', $fname, $cachekey, $last, $e['timestamp'] ) );
+				wfDebug( "$fname: outputting cached copy ($cacheKey): $last < " . $e['timestamp'] . " \n" );
 				header('Content-Type: application/' . $this->mFeedFormat . '+xml; charset=UTF-8');
 
 				print $e['xml'];
@@ -822,7 +823,7 @@ class NewsFeedPage extends Article {
 				return; //done
 			}
 			else {
-				wfDebug( wfMsg('newsextension-stale', $fname, $cachekey, $last, $e['timestamp'] ) );
+				wfDebug( "$fname: found stale cached copy ($cacheKey): $last <= " . $e['timestamp'] . " \n" );
 				$note .= " stale: $last >= {$e['timestamp']};";
 			}
 		}
@@ -845,7 +846,7 @@ class NewsFeedPage extends Article {
 		
 		$renderer = NewsRenderer::newFromArticle( $this, $wgParser );
 		if (!$renderer) {
-			wfDebug( wfMsg( 'newsextension-nofoundonpage', $fname, $this->mTitle->getPrefixedText() ) );
+			wfDebug( "$fname: no feed found on page: " . $this->mTitle->getPrefixedText() . "\n" );
 			wfHttpError(404, "Not Found", "no feed found on page: " . $this->mTitle->getPrefixedText() ); //TODO: better code & text
 			return;
 		}
@@ -855,16 +856,16 @@ class NewsFeedPage extends Article {
 		
 		//this also sends the right headers
 		$xml = $renderer->renderFeed( $this->mFeedFormat, $description );
-		wfDebug( wfMsg( 'newsextension-renderedfeed', $fname ) );
+		wfDebug( "$fname: rendered feed \n" );
 	
 		$e = array( 'xml' => $xml, 'timestamp' => $ts );
 		if ($ocache) {
-			wfDebug( wfMsg( 'newsextension-cachingfeed', $fname, $cachekey ) );
+			wfDebug( "$fname: caching feed ($cachekey) \n" );
 			$ocache->set( $cachekey, $e, $ts + 24 * 60 * 60 ); //cache for max 24 hours; cached record is discarded when anything turns up in RC anyway.
 			$note .= ' updated;';
 		}
 
-		wfDebug( wfMsg( 'newsextension-freshfeed', $fname ) );
+		wfDebug( "$fname: outputting fresh feed \n" );
 		header('Content-Type: application/' . $this->mFeedFormat . '+xml; charset=UTF-8');
 		print $xml;
 		print "\n<!-- fresh: $note -->\n";

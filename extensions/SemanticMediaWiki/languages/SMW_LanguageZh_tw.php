@@ -1,9 +1,10 @@
 <?php
 /**
- * @author Markus Krötzsch 翻譯:張致信(Translation: Roc Michael Email:roc.no1@gmail.com) 2007-10-20
+ * @file
+ * @ingroup SMWLanguage
  */
 
-/**
+/*
  * Protect against register_globals vulnerabilities.
  * This line must be present before any global variable is referenced.
  */
@@ -12,7 +13,14 @@ if (!defined('MEDIAWIKI')) die();
 global $smwgIP;
 include_once($smwgIP . '/languages/SMW_Language.php');
 
-class SMW_LanguageZh_tw extends SMW_Language {
+/**
+ * Traditional Chinese language labels for important SMW labels (namespaces, datatypes,...).
+ *
+ * @author 張致信 (Roc Michael roc.no1\@gmail.com)
+ * @ingroup SMWLanguage
+ * @ingroup Language
+ */
+class SMWLanguageZh_tw extends SMWLanguage {
 
 protected $m_DatatypeLabels = array(
 	'_wpg' => '頁面',	//'Page', // name of page datatype
@@ -53,28 +61,28 @@ protected $m_DatatypeAliases = array(
 
 protected $m_SpecialProperties = array(
 	//always start upper-case
-	SMW_SP_HAS_TYPE  => '設有型態',	//'Has type',
-	SMW_SP_HAS_URI   => '對應的URI',	//'Equivalent URI',
-	SMW_SP_SUBPROPERTY_OF => '所屬的子性質',	//'Subproperty of',
-    SMW_SP_DISPLAY_UNITS => '顯示單位',      //Display unit
-    SMW_SP_IMPORTED_FROM => '輸入來源',     //Imported from
-    SMW_SP_CONVERSION_FACTOR => '符合於',  //Corresponds to
-    SMW_SP_SERVICE_LINK => '提供服務',      //Provides service
-    SMW_SP_POSSIBLE_VALUE => '允許值'      //Allows value
+	'_TYPE' => '設有型態',	//'Has type',
+	'_URI'  => '對應的URI',	//'Equivalent URI',
+	'_SUBP' => '所屬的子性質',	//'Subproperty of',
+	'_UNIT' => '顯示單位',      //Display unit
+	'_IMPO' => '輸入來源',     //Imported from
+	'_CONV' => '符合於',  //Corresponds to
+	'_SERV' => '提供服務',      //Provides service
+	'_PVAL' => '允許值'      //Allows value
 );
 
 
 protected $m_SpecialPropertyAliases = array(
-	'Display unit' => SMW_SP_DISPLAY_UNITS,
+	'Display unit' => '_UNIT',
 // support English aliases for special properties
-	'Has type'          => SMW_SP_HAS_TYPE,
-	'Equivalent URI'    => SMW_SP_HAS_URI,
-	'Subproperty of'    => SMW_SP_SUBPROPERTY_OF,
-	'Display units'     => SMW_SP_DISPLAY_UNITS,
-	'Imported from'     => SMW_SP_IMPORTED_FROM,
-	'Corresponds to'    => SMW_SP_CONVERSION_FACTOR,
-	'Provides service'  => SMW_SP_SERVICE_LINK,
-	'Allows value'      => SMW_SP_POSSIBLE_VALUE
+	'Has type'          => '_TYPE',
+	'Equivalent URI'    => '_URI',
+	'Subproperty of'    => '_SUBP',
+	'Display units'     => '_UNIT',
+	'Imported from'     => '_IMPO',
+	'Corresponds to'    => '_CONV',
+	'Provides service'  => '_SERV',
+	'Allows value'      => '_PVAL'
 );
 
 protected $m_Namespaces = array(

@@ -19,7 +19,7 @@ abstract class ConfigurationDiff {
 	 * @param $version String: new versions
 	 * @param $wikis Array: array of wiki names
 	 */
-	public function __construct( $diff, $version, $wikis ){
+	public function __construct( $diff, $version, $wikis ) {
 		$this->diff = $diff;
 		$this->version = $version;
 		$this->wikis = $wikis;
@@ -58,9 +58,9 @@ abstract class ConfigurationDiff {
 	 * @param $callback callback
 	 * @return old callback
 	 */
-	public function setViewCallback( $callback ){
+	public function setViewCallback( $callback ) {
 		$temp = $this->callback;
-		if( is_callable( $callback ) )
+		if ( is_callable( $callback ) )
 			$this->callback = $callback;
 		return $temp;
 	}
@@ -71,8 +71,8 @@ abstract class ConfigurationDiff {
 	 * @param $setting String: setting name
 	 * @return bool
 	 */
-	protected function isSettingViewable( $setting ){
-		if( !is_callable( $this->callback ) )
+	protected function isSettingViewable( $setting ) {
+		if ( !is_callable( $this->callback ) )
 			return true;
 
 		return (bool)call_user_func_array( $this->callback, array( $setting ) );
@@ -86,21 +86,21 @@ abstract class ConfigurationDiff {
 	 * @param $new Array
 	 * @return array of wikis names
 	 */
-	function cleanWikis( &$old, &$new ){
+	function cleanWikis( &$old, &$new ) {
 		$wikis = array();
-		if( $this->wikis === true )
+		if ( $this->wikis === true )
 			$this->wikis = array_unique( array_merge( array_keys( $old ), array_keys( $new ) ) );
-		foreach( $this->wikis as $wiki ){
-			if( isset( $old[$wiki] ) && isset( $new[$wiki] ) )
+		foreach ( $this->wikis as $wiki ) {
+			if ( isset( $old[$wiki] ) && isset( $new[$wiki] ) )
 				$wikis[] = $wiki;
 		}
 
-		if( !count( $wikis ) )
+		if ( !count( $wikis ) )
 			return false;
 
 		$old_ = array();
 		$new_ = array();
-		foreach( $wikis as $wiki ){
+		foreach ( $wikis as $wiki ) {
 			$old_[$wiki] = $old[$wiki];
 			$new_[$wiki] = $new[$wiki];
 		}
@@ -112,17 +112,16 @@ abstract class ConfigurationDiff {
 	/**
 	 * Get the HTML of the diff
 	 */
-	function getHTML(){
+	function getHTML() {
 		global $wgOut;
-		if( is_callable( array( $wgOut, 'addStyle' ) ) ) # 1.11 +
-			$wgOut->addStyle( 'common/diff.css' );
+		$wgOut->addStyle( 'common/diff.css' );
 		$old = $this->getOldVersion();
 		$new = $this->getNewVersion();
-		if( !( $wikis = $this->cleanWikis( $old, $new ) ) ){
+		if ( !( $wikis = $this->cleanWikis( $old, $new ) ) ) {
 			return wfMsgExt( 'configure-no-diff', array( 'parse' ) );
 		}
 		$text = '';
-		foreach( $wikis as $wiki ){
+		foreach ( $wikis as $wiki ) {
 			$text .= '<h2>' . htmlspecialchars( $wiki ) . "</h2>\n";
 			$text .= $this->processDiff( $old[$wiki], $new[$wiki] );
 		}
@@ -136,37 +135,38 @@ abstract class ConfigurationDiff {
 	 * @param $new Array
 	 * @return String: XHTML
 	 */
-	function processDiff( $old, $new ){
+	function processDiff( $old, $new ) {
 		$text = '';
 		$settings = $this->getSettings();
-		foreach( $settings as $sectionName => $sectionGroups ){
+		foreach ( $settings as $sectionName => $sectionGroups ) {
 			$sectionDiff = '';
-			foreach( $sectionGroups as $groupName => $groupSettings ){
+			foreach ( $sectionGroups as $groupName => $groupSettings ) {
 				$groupDiff = '';
-				foreach( $groupSettings as $setting => $type ){
+				foreach ( $groupSettings as $setting => $type ) {
 					$oldSetting = isset( $old[$setting] ) ? $old[$setting] : null;
 					$newSetting = isset( $new[$setting] ) ? $new[$setting] : null;
-					if( $oldSetting === $newSetting || !$this->isSettingViewable( $setting ) )
+					if ( $oldSetting === $newSetting || !$this->isSettingViewable( $setting ) ) {
 						continue;
+					}
 					else
 						$groupDiff .= $this->processDiffSetting( $setting, $oldSetting, $newSetting, $type ) . "\n";
 				}
-				if( $groupDiff != '' ){
+				if ( $groupDiff != '' ) {
 					$name = wfMsgExt( 'configure-section-' . $groupName, array( 'parseinline' ) );
-					if( wfEmptyMsg( 'configure-section-' . $groupName, $name ) )
+					if ( wfEmptyMsg( 'configure-section-' . $groupName, $name ) )
 						$name = $groupName;
 					$sectionDiff .= "<tr><td colspan=\"4\"><h4 class=\"config-diff-group\">{$name}</h4></td></tr>\n";
 					$sectionDiff .= $groupDiff;
 				}
 			}
-			if( $sectionDiff != '' ){
+			if ( $sectionDiff != '' ) {
 				$name = wfMsgExt( 'configure-section-' . $sectionName, array( 'parseinline' ) );
 				$text .= "<tr><td colspan=\"4\"><h3 class=\"config-diff-section\">{$name}</h3></td></tr>\n";
 				$text .= $sectionDiff;
 			}
 		}
 
-		if( empty( $text ) )
+		if ( empty( $text ) )
 			return wfMsgExt( 'configure-no-diff', array( 'parse' ) );
 
 		$ret = "<table class='diff'>\n";
@@ -188,12 +188,23 @@ abstract class ConfigurationDiff {
 	 * @param $type String: setting type
 	 * @return String: XHTML
 	 */
-	function processDiffSetting( $name, $old, $new, $type ){
-		$oldSet = $this->getSettingAsArray( $old, $name, $type );
-		$newSet = $this->getSettingAsArray( $new, $name, $type );
+	function processDiffSetting( $name, $old, $new, $type ) {
+		wfLoadExtensionMessages( 'ConfigureSettings' );
+
+		$msg =  'configure-setting-' . $name;
+		$msgVal = wfMsgExt( $msg, array( 'parseinline' ) );
+		$rawVal = Xml::element( 'tt', null, "\$$name" );
+		if ( wfEmptyMsg( $msg, $msgVal ) )
+			$msgVal = $rawVal;
+		else
+			$msgVal = "$msgVal ($rawVal)";
+
+		$oldSet = $this->getSettingAsArray( WebConfiguration::filterVar( $old ), $name, $type );
+		$newSet = $this->getSettingAsArray( WebConfiguration::filterVar( $new ), $name, $type );
 		$diffs = new Diff( $oldSet, $newSet );
 		$formatter = new TableDiffFormatter();
-		return "<tr><td class=\"diff-lineno configure-setting\" colspan=\"4\">\${$name}</td></tr>\n" .
+
+		return "<tr><td class=\"diff-lineno configure-setting\" colspan=\"4\">{$msgVal}</td></tr>\n" .
 			$formatter->format( $diffs );
 	}
 
@@ -205,53 +216,117 @@ abstract class ConfigurationDiff {
 	 * @param $type String: setting type
 	 * @return Array
 	 */
-	function getSettingAsArray( $setting, $name, $type ){
-		if( $setting === null ){
+	function getSettingAsArray( $setting, $name, $type ) {
+		if ( $setting === null ) {
 			$val = array();
-		} else if( $type == 'array' ){
+		} else if ( $type == 'array' ) {
+			if( !is_array( $setting ) )
+				return array();
 			$arrType = $this->getArrayType( $name );
-			if( $arrType == 'simple' || $arrType == 'ns-simple' ){
+			if ( $arrType == 'simple' || $arrType == 'ns-simple' ) {
 				$val = array_values( $setting );
-			} else if( $arrType == 'assoc' ){
+			} else if ( $arrType == 'assoc' ) {
 				$arrVal = array();
-				foreach( $setting as $key => $value ){
+				foreach ( $setting as $key => $value ) {
 					$arrVal[] = "$key: $value";
 				}
 				$val = $arrVal;
-			} else if( $arrType == 'simple-dual' ){
+			} else if ( $arrType == 'simple-dual' ) {
 				$arrVal = array();
-				foreach( $setting as $key => $value ){
+				foreach ( $setting as $key => $value ) {
 					$arrVal[] = implode( ',', $value );
 				}
 				$val = $arrVal;
-			} else if( $arrType == 'ns-bool' || $arrType == 'ns-text' || $arrType == 'ns-array' ){
+			} else if ( $arrType == 'ns-bool' || $arrType == 'ns-text' || $arrType == 'ns-array' ) {
 				$arrVal = array();
-				foreach( $setting as $key => $value ){
-					if( $arrType == 'ns-bool' )
+				foreach ( $setting as $key => $value ) {
+					if ( $arrType == 'ns-bool' )
 						$value = $value ? 'true' : 'false';
-					if( $arrType == 'ns-array' )
+					if ( $arrType == 'ns-array' )
 						$value = is_array( $value ) ? implode( ',', $value ) : '';
 					$arrVal[] = "$key: $value";
 				}
 				$val = $arrVal;
-			} else if( $arrType == 'group-array' ){
+			} else if ( $arrType == 'group-array' ) {
 				$arrVal = array();
-				foreach( $setting as $key => $value ){
+				foreach ( $setting as $key => $value ) {
 					$arrVal[] = "$key: " . implode( ',', $value );
 				}
 				$val = $arrVal;
-			} else if( $arrType == 'group-bool' ){
+			} else if ( $arrType == 'group-bool' ) {
 				$arrVal = array();
-				foreach( $setting as $key1 => $value1 ){
-					foreach( $value1 as $key2 => $value2 ){
-						$arrVal[] = "$key1, $key2: " . ( $value2 ? 'true' : 'false' );
+				ksort($setting);
+				foreach ( $setting as $key1 => $value1 ) {
+					ksort($value1);
+					foreach ( $value1 as $key2 => $value2 ) {
+						if ($value2) // Only show 'true's
+							$arrVal[] = "$key1, $key2: " . 'true';
 					}
 				}
 				$val = $arrVal;
+			} else if ( $arrType == 'rate-limits' ) {
+				$val = array();
+				## Just walk the tree and print out the data.
+				foreach( $setting as $action => $limits ) {
+					foreach( $limits as $group => $limit ) {
+						if (is_array($limit) && count($limit) == 2) { // Only show set limits
+							list( $count, $period ) = $limit;
+							if ($count == 0 || $period == 0)
+								continue;
+
+							$val[] = "$action, $group: " . wfMsg( 'configure-throttle-summary', $count, $period );
+						}
+					}
+				}
+			} else if ( $arrType == 'promotion-conds' ) {
+				## For each group, print out the full conditions.
+				$val = array();
+
+				$opToName = array_flip( array( 'or' => '|', 'and' => '&', 'xor' => '^', 'not' => '!' ) );
+				$validOps = array_keys( $opToName );
+
+				foreach( $setting as $group => $conds ) {
+					if ( !is_array( $conds ) ) {
+						$val[] = "$group: ".wfMsg( "configure-condition-description-$conds" );
+						continue;
+					}
+					if ( count( $conds ) == 0 ) {
+						$val[] = "$group: ".wfMsg( 'configure-autopromote-noconds' );
+						continue;
+					}
+
+					if ( count( $conds ) > 1 && in_array( $conds[0], $validOps ) ) {
+						$boolop = array_shift( $conds );
+						$boolop = $opToName[$boolop];
+
+						$val[] = "$group: " . wfMsg( "configure-boolop-description-$boolop" );
+					} else {
+						$conds = array( $conds );
+					}
+
+					// Analyse each individual one...
+					foreach( $conds as $cond ) {
+						if ($cond == array( APCOND_AGE, -1 ) ) {
+							$val[] = "$group: " . wfMsg( 'configure-autopromote-noconds' );
+							continue;
+						}
+
+						if( !is_array( $cond ) ) {
+							$cond = array( $cond );
+						}
+						$name = array_shift( $cond );
+
+
+						$argSummary = implode( ', ', $cond );
+						$count = count( $cond );
+
+						$val[] = "$group: ".wfMsgExt( "configure-condition-description-$name", array( 'parsemag' ), $argSummary, $count );
+					}
+				}
 			} else {
 				$val = explode( "\n", var_export( $setting, 1 ) );
 			}
-		} else if( $type == 'bool' ){
+		} else if ( $type == 'bool' ) {
 			$val = array( $setting ? 'true' : 'false' );
 		} else {
 			$val = explode( "\n", (string)$setting );
@@ -267,19 +342,19 @@ abstract class ConfigurationDiff {
  */
 class CorePreviewConfigurationDiff extends ConfigurationDiff {
 
-	protected function getOldVersion(){
+	protected function getOldVersion() {
 		return $this->diff;
 	}
 
-	protected function getNewVersion(){
+	protected function getNewVersion() {
 		return $this->version;
 	}
 
-	protected function getSettings(){
+	protected function getSettings() {
 		return ConfigurationSettings::singleton( CONF_SETTINGS_CORE )->getSettings();
 	}
 
-	protected function getArrayType( $setting ){
+	protected function getArrayType( $setting ) {
 		return ConfigurationSettings::singleton( CONF_SETTINGS_CORE )->getArrayType( $setting );
 	}
 }
@@ -291,19 +366,19 @@ class CorePreviewConfigurationDiff extends ConfigurationDiff {
  */
 class ExtPreviewConfigurationDiff extends ConfigurationDiff {
 
-	protected function getOldVersion(){
+	protected function getOldVersion() {
 		return $this->diff;
 	}
 
-	protected function getNewVersion(){
+	protected function getNewVersion() {
 		return $this->version;
 	}
 
-	protected function getSettings(){
+	protected function getSettings() {
 		return ConfigurationSettings::singleton( CONF_SETTINGS_EXT )->getSettings();
 	}
 
-	protected function getArrayType( $setting ){
+	protected function getArrayType( $setting ) {
 		return ConfigurationSettings::singleton( CONF_SETTINGS_EXT )->getArrayType( $setting );
 	}
 }
@@ -315,21 +390,46 @@ class ExtPreviewConfigurationDiff extends ConfigurationDiff {
  */
 class HistoryConfigurationDiff extends ConfigurationDiff {
 
-	protected function getOldVersion(){
+	protected function getOldVersion() {
 		global $wgConf;
-		return $wgConf->getOldSettings( $this->diff );
+
+		$settings = $wgConf->getOldSettings( $this->diff );
+
+		if ($this->diff == 'default') { ## Special case: Replicate settings across all wikis for a fair comparison.
+			$new = $this->getNewVersion();
+
+			$defaultSettings = array();
+
+			## This is kinda annoying. We can't copy ALL settings over, because not all settings are stored.
+			foreach( $new as $wiki => $newSettings ) {
+				if ($wiki == '__metadata') ## Ignore metadata.
+					continue;
+
+				$defaultSettings[$wiki] = array();
+
+				foreach( $newSettings as $key => $value ) {
+					if (isset($settings['default'][$key]))
+						$defaultSettings[$wiki][$key] = $settings['default'][$key];
+				}
+			}
+
+			$settings = $defaultSettings;
+		}
+
+		return $settings;
 	}
 
-	protected function getNewVersion(){
+	protected function getNewVersion() {
 		global $wgConf;
-		return $wgConf->getOldSettings( $this->version );
+		$settings = $wgConf->getOldSettings( $this->version );
+		return $settings;
 	}
 
-	protected function getSettings(){
+	protected function getSettings() {
 		return ConfigurationSettings::singleton( CONF_SETTINGS_BOTH )->getSettings();
 	}
 
-	protected function getArrayType( $setting ){
+	protected function getArrayType( $setting ) {
 		return ConfigurationSettings::singleton( CONF_SETTINGS_BOTH )->getArrayType( $setting );
 	}
 }

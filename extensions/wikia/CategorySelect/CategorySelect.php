@@ -111,7 +111,7 @@ function CategorySelectInitializeHooks($title, $article) {
 			$wgHooks['Skin::getCategoryLinks::end'][] = 'CategorySelectGetCategoryLinksEnd';
 
 			$wgHooks['Skin::getCategoryLinks::begin'][] = 'CategorySelectGetCategoryLinksBegin';
-			$wgHooks['ExtendJSGlobalVars'][] = 'CategorySelectSetupVars';
+			$wgHooks['MakeGlobalVariablesScript'][] = 'CategorySelectSetupVars';
 		}
 	} else if($action == 'edit' || $action == 'submit') {
 		//edit mode
@@ -122,7 +122,7 @@ function CategorySelectInitializeHooks($title, $article) {
 		$wgHooks['EditPage::showDiff::begin'][] = 'CategorySelectDiffArticle';
 		$wgHooks['EditForm::MultiEdit:Form'][] = 'CategorySelectDisplayCategoryBox';
 
-		$wgHooks['ExtendJSGlobalVars'][] = 'CategorySelectSetupVars';
+		$wgHooks['MakeGlobalVariablesScript'][] = 'CategorySelectSetupVars';
 	}
 
 	return true;

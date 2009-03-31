@@ -1,5 +1,5 @@
 <?php
-if (!defined('MEDIAWIKI')) die();
+if ( !defined( 'MEDIAWIKI' ) ) die();
 
 /**
  * This class contains some static helper functions for other classes.
@@ -23,69 +23,14 @@ class TranslateUtils {
 
 		// Cache some amount of titles for speed
 		static $cache = array();
-		#if ( count($cache)>5000 ) $cache = array();
-		if ( !isset($cache[$message]) ) {
-			$cache[$message] = $wgContLang->ucfirst($message);
+		if ( !isset( $cache[$message] ) ) {
+			$cache[$message] = $wgContLang->ucfirst( $message );
 		}
 		return $cache[$message] . '/' . $code;
 	}
 
 	/**
-	 * Fills the page/talk exists bools according to their existence in the
-	 * database.
-	 *
-	 * @param $messages MessageCollection
-	 * @param $namespaces Array: two-item 1-d array with namespace numbers
-	 */
-	public static function fillExistence( MessageCollection $messages,
-		array $namespaces ) {
-		wfMemIn( __METHOD__ ); wfProfileIn( __METHOD__ );
-
-		// Filter the titles so that we can find the respective pages from the db
-		$code = $messages->code;
-		$titles = array();
-		foreach ( $messages->keys() as $key ) {
-			$titles[] = self::title( $key, $code );
-		}
-
-		// Quick return if nothing to search
-		if ( !count($titles) ) return;
-
-		// Fetch from database, we will get existing titles as the result
-		$dbr = wfGetDB( DB_SLAVE );
-		$rows = $dbr->select(
-			'page',
-			array( 'page_namespace', 'page_title' ),
-			array(
-				'page_namespace' => $namespaces,
-				'page_title'     => $titles,
-			),
-			__METHOD__
-		);
-
-		// Now store the pages we found...
-		foreach ( $rows as $row ) {
-			if ( $row->page_namespace == $namespaces[0] ) {
-				$pages[$row->page_title] = true;
-			} elseif ( $row->page_namespace == $namespaces[1]) {
-				$talks[$row->page_title] = true;
-			}
-		}
-		$rows->free();
-
-		// ... and loop again to populate the collection
-		foreach ( $messages->keys() as $key ) {
-			$messages[$key]->pageExists = isset( $pages[self::title( $key, $code )] );
-			$messages[$key]->talkExists = isset( $talks[self::title( $key, $code )] );
-		}
-
-		wfProfileOut( __METHOD__ ); wfMemOut( __METHOD__ );
-	}
-
-	/**
 	 * Fills the actual translation from database, if any.
-	 * TranslateUtils::fillExistence must be called before this to populate page
-	 * existences.
 	 *
 	 * @param $messages MessageCollection
 	 * @param $namespaces Array: two-item 1-d array with namespace numbers
@@ -96,20 +41,17 @@ class TranslateUtils {
 
 		$titles = array();
 		foreach ( $messages->keys() as $key ) {
-			// Only fetch messages for pages that exists
-			if ( $messages[$key]->pageExists ) {
-				$titles[] = self::title( $key, $messages->code );
-			}
+			$titles[] = self::title( $key, $messages->code );
 		}
 
-		if ( !count($titles) ) return;
+		if ( !count( $titles ) ) return;
 
 		// Fetch contents
 		$titles = self::getContents( $titles, $namespaces[0] );
 
 		foreach ( $messages->keys() as $key ) {
 			$title = self::title( $key, $messages->code );
-			if ( isset($titles[$title]) ) {
+			if ( isset( $titles[$title] ) ) {
 				$messages[$key]->database = $titles[$title][0];
 				$messages[$key]->addAuthor( $titles[$title][1] );
 			}
@@ -122,8 +64,8 @@ class TranslateUtils {
 		$namespace = NS_MEDIAWIKI ) {
 
 		$title = self::title( $key, $language );
-		$data = self::getContents( array($title), $namespace );
-		return isset($data[$title][0]) ? $data[$title][0] : null;
+		$data = self::getContents( array( $title ), $namespace );
+		return isset( $data[$title][0] ) ? $data[$title][0] : null;
 	}
 
 	/**
@@ -132,7 +74,7 @@ class TranslateUtils {
 	 * @param $titles Mixed: string or array of titles.
 	 * @param $namespace Mixed: the number of the namespace to look in for.
 	 */
-	private static function getContents( $titles, $namespace ) {
+	public static function getContents( $titles, $namespace ) {
 		wfMemIn( __METHOD__ ); wfProfileIn( __METHOD__ );
 		$dbr = wfGetDB( DB_SLAVE );
 		$rows = $dbr->select( array( 'page', 'revision', 'text' ),
@@ -168,7 +110,7 @@ class TranslateUtils {
 		$recentchanges = $dbr->tableName( 'recentchanges' );
 		$hours = intval( $hours );
 		$cutoff_unixtime = time() - ( $hours * 3600 );
-		#$cutoff_unixtime = $cutoff_unixtime - ($cutoff_unixtime % 86400);
+		# $cutoff_unixtime = $cutoff_unixtime - ($cutoff_unixtime % 86400);
 		$cutoff = $dbr->timestamp( $cutoff_unixtime );
 
 		$namespaces = $dbr->makeList( $wgTranslateMessageNamespaces );
@@ -184,7 +126,7 @@ class TranslateUtils {
 
 		// Fetch results, prepare a batch link existence check query
 		$rows = array();
-		while( $row = $dbr->fetchObject( $res ) ){
+		while ( $row = $dbr->fetchObject( $res ) ) {
 			$rows[] = $row;
 		}
 		$dbr->freeResult( $res );
@@ -198,20 +140,20 @@ class TranslateUtils {
 		$tableheader = Xml::openElement( 'table', array(
 			'class'   => 'mw-sp-translate-table',
 			'border'  => '1',
-			'cellspacing' => '0')
+			'cellspacing' => '0' )
 		);
 
-		$tableheader .= Xml::openElement('tr');
-		$tableheader .= Xml::element('th',
-			array( 'rowspan' => '2'),
-			$title ? $title : wfMsgHtml('allmessagesname')
+		$tableheader .= Xml::openElement( 'tr' );
+		$tableheader .= Xml::element( 'th',
+			array( 'rowspan' => '2' ),
+			$title ? $title : wfMsgHtml( 'allmessagesname' )
 		);
-		$tableheader .= Xml::element('th', null, wfMsgHtml('allmessagesdefault') );
-		$tableheader .= Xml::closeElement('tr');
+		$tableheader .= Xml::element( 'th', null, wfMsgHtml( 'allmessagesdefault' ) );
+		$tableheader .= Xml::closeElement( 'tr' );
 
-		$tableheader .= Xml::openElement('tr');
-		$tableheader .= Xml::element('th', null, wfMsgHtml('allmessagescurrent') );
-		$tableheader .= Xml::closeElement('tr');
+		$tableheader .= Xml::openElement( 'tr' );
+		$tableheader .= Xml::element( 'th', null, wfMsgHtml( 'allmessagescurrent' ) );
+		$tableheader .= Xml::closeElement( 'tr' );
 
 		return $tableheader;
 	}
@@ -219,64 +161,49 @@ class TranslateUtils {
 	public static function makeListing( MessageCollection $messages, $group,
 		$review = false, array $namespaces ) {
 
-		wfMemIn( __METHOD__ ); wfProfileIn( __METHOD__ );
-
 		global $wgUser;
 		$sk = $wgUser->getSkin();
 		wfLoadExtensionMessages( 'Translate' );
 
 		$uimsg = array();
-		foreach ( array( 'talk', 'edit', 'history', 'optional', 'delete' ) as $msg ) {
+		foreach ( array( 'edit', 'optional' ) as $msg ) {
 			$uimsg[$msg] = wfMsgHtml( self::MSG . $msg );
 		}
 
 		$output =  '';
 
-		foreach( $messages as $key => $m ) {
+		foreach ( $messages as $key => $m ) {
 
-			$title = self::title( $key, $messages->code );
 			$tools = array();
 
-			$page['object'] = Title::makeTitle( $namespaces[0], $title );
-			$talk['object'] = Title::makeTitle( $namespaces[1], $title );
+			$title = Title::makeTitle(
+				$namespaces[0],
+				self::title( $key, $messages->code )
+			);
 
 			$original = $m->definition;
 			$message = $m->translation ? $m->translation : $original;
 
 			global $wgLang;
-			$niceTitle = $wgLang->truncate( $key, -30, '…' );
-			if( $m->pageExists ) {
-				$page['link'] = $sk->makeKnownLinkObj( $page['object'], htmlspecialchars( $niceTitle ) );
-			} else {
-				$page['link'] = $sk->makeBrokenLinkObj( $page['object'], htmlspecialchars( $niceTitle ) );
-			}
-			if( $m->talkExists ) {
-				$talk['link'] = $sk->makeKnownLinkObj( $talk['object'], $uimsg['talk'] );
-			} else {
-				$talk['link'] = $sk->makeBrokenLinkObj( $talk['object'], $uimsg['talk'] );
-			}
-			$tools[] = $talk['link'];
+			$niceTitle = htmlspecialchars( $wgLang->truncate( $key, - 30, '…' ) );
 
-			if ( $wgUser->isAllowed( 'translate' ) ) {
-				$tools[] = $sk->makeKnownLinkObj( $page['object'], $uimsg['edit'], "action=edit&loadgroup=$group" );
+			if ( 1 || $wgUser->isAllowed( 'translate' ) ) {
+				$tools['edit'] = $sk->makeKnownLinkObj( $title, $niceTitle, "action=edit&loadgroup=$group" );
 			} else {
-				$tools[] = $uimsg['edit'];
+				$tools['edit'] = '';
 			}
-
-			$tools[] = $sk->makeKnownLinkObj( $page['object'], $uimsg['history'], 'action=history' );
 
 			$anchor = 'msg_' . $key;
 			$anchor = Xml::element( 'a', array( 'name' => $anchor, 'href' => "#$anchor" ), "↓" );
 
 			$extra = '';
-			if ( $m->optional ) $extra = $uimsg['optional'];
+			if ( $m->optional ) $extra = '<br />' . $uimsg['optional'];
 
-			$leftColumn = $anchor . ' ' . $page['link'] . ' ' . $extra . '<br />' .
-				implode( ' | ', $tools );
+			$leftColumn = $anchor . $tools['edit'] . $extra;
 
 			if ( $review ) {
 				$output .= Xml::tags( 'tr', array( 'class' => 'orig' ),
-					Xml::tags( 'td', array( 'rowspan' => '2'), $leftColumn ) .
+					Xml::tags( 'td', array( 'rowspan' => '2' ), $leftColumn ) .
 					Xml::tags( 'td', null, TranslateUtils::convertWhiteSpaceToHTML( $original ) )
 				);
 
@@ -293,7 +220,6 @@ class TranslateUtils {
 
 		}
 
-		wfProfileOut( __METHOD__ ); wfMemOut( __METHOD__ );
 		return $output;
 	}
 
@@ -314,7 +240,7 @@ class TranslateUtils {
 
 	public static function getLanguageName( $code, $native = false, $language = 'en' ) {
 		wfMemIn( __METHOD__ );
-		if ( !$native && is_callable(array( 'LanguageNames', 'getNames' )) ) {
+		if ( !$native && is_callable( array( 'LanguageNames', 'getNames' ) ) ) {
 			$languages = LanguageNames::getNames( $language ,
 				LanguageNames::FALLBACK_NORMAL,
 				LanguageNames::LIST_MW_AND_CLDR
@@ -337,13 +263,13 @@ class TranslateUtils {
 		}
 		$code = implode( '-', $parts );
 		wfMemOut( __METHOD__ );
-		return isset($languages[$code]) ? $languages[$code] . $suffix : false;
+		return isset( $languages[$code] ) ? $languages[$code] . $suffix : false;
 	}
 
 	public static function languageSelector( $language, $selectedId ) {
 		wfMemIn( __METHOD__ );
 		global $wgLang;
-		if ( is_callable(array( 'LanguageNames', 'getNames' )) ) {
+		if ( is_callable( array( 'LanguageNames', 'getNames' ) ) ) {
 			$languages = LanguageNames::getNames( $language,
 				LanguageNames::FALLBACK_NORMAL,
 				LanguageNames::LIST_MW_AND_CLDR
@@ -355,7 +281,7 @@ class TranslateUtils {
 		ksort( $languages );
 
 		$selector = new HTMLSelector( 'language', 'language', $selectedId );
-		foreach( $languages as $code => $name ) {
+		foreach ( $languages as $code => $name ) {
 			$selector->addOption( "$code - $name", $code );
 		}
 		wfMemOut( __METHOD__ );
@@ -363,16 +289,20 @@ class TranslateUtils {
 	}
 
 	public static function messageKeyToGroup( $namespace, $key ) {
-		$key = strtolower( "$namespace:$key" );
+		$key = self::normaliseKey( $namespace, $key );
 		$index = self::messageIndex();
 		return @$index[$key];
+	}
+
+	public static function normaliseKey( $namespace, $key ) {
+		return str_replace( " ", "_", strtolower( "$namespace:$key" ) );
 	}
 
 	public static function messageIndex() {
 		wfMemIn( __METHOD__ );
 		$keyToGroup = array();
-		if ( file_exists(TRANSLATE_INDEXFILE) ) {
-			$keyToGroup = unserialize( file_get_contents(TRANSLATE_INDEXFILE) );
+		if ( file_exists( TRANSLATE_INDEXFILE ) ) {
+			$keyToGroup = unserialize( file_get_contents( TRANSLATE_INDEXFILE ) );
 		} else {
 			wfDebug( __METHOD__ . ": Message index missing." );
 		}
@@ -426,7 +356,16 @@ class TranslateUtils {
 		$css .= "/*<![CDATA[*/\n" . htmlspecialchars( file_get_contents( $file ) ) . "\n/*]]>*/";
 		return true;
 	}
-	
+
+	public static function snippet( &$text, $length = 10 ) {
+		global $wgLegalTitleChars, $wgContLang;
+		$snippet = preg_replace( "/[^\p{L}]/u", ' ', $text );
+		$snippet = preg_replace( "/ {2,}/u", ' ', $snippet );
+		$snippet = $wgContLang->truncate( $snippet, $length );
+		$snippet = str_replace( ' ', '_', trim( $snippet ) );
+		return $snippet;
+	}
+
 }
 
 class HTMLSelector {
@@ -448,7 +387,7 @@ class HTMLSelector {
 		$this->attributes[$name] = $value;
 	}
 
-	public function addOption( $name, $value = false, $selected = false) {
+	public function addOption( $name, $value = false, $selected = false ) {
 		$selected = $selected ? $selected : $this->selected;
 		$value = $value ? $value : $name;
 		$this->options[] = Xml::option( $name, $value, $value === $selected );
@@ -456,18 +395,5 @@ class HTMLSelector {
 
 	public function getHTML() {
 		return Xml::tags( 'select', $this->attributes, implode( "\n", $this->options ) );
-	}
-
-}
-
-class TranslatePreferences {
-	static function TranslateUserToggles(&$extraToggles) {
-		wfLoadExtensionMessages( 'Translate' );
-
-		// 'tog-translate-nonewsletter' is used as opt-out for
-		// users with a confirmed e-mail address
-		$extraToggles[] = 'translate-nonewsletter';
-
-		return true;
 	}
 }

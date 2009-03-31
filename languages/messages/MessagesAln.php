@@ -10,6 +10,11 @@
 
 $fallback = 'sq';
 
+$specialPageAliases = array(
+	'Popularpages'              => array( 'Faqe të famshme' ),
+	'Search'                    => array( 'Kërko' ),
+);
+
 $messages = array(
 # User preference toggles
 'tog-underline'               => 'Nënvizoji lidhjet',
@@ -55,8 +60,6 @@ $messages = array(
 'underline-always'  => 'gjithmonë',
 'underline-never'   => 'kurrë',
 'underline-default' => 'sipas shfletuesit',
-
-'skinpreview' => '(Parapamje)',
 
 # Dates
 'sunday'        => 'E diel',
@@ -146,7 +149,7 @@ $messages = array(
 'mytalk'         => 'Diskutimet e mia',
 'anontalk'       => 'Diskutimet për këtë IP',
 'navigation'     => 'Shfleto',
-'and'            => 'dhe',
+'and'            => '&#32;dhe',
 
 # Metadata in edit box
 'metadata_help' => 'Metadata:',
@@ -207,8 +210,6 @@ $messages = array(
 # All link text and link target definitions of links into project namespace that get used by other message strings, with the exception of user group pages (see grouppage) and the disambiguation template definition (see disambiguations).
 'aboutsite'            => 'Rreth {{SITENAME}}',
 'aboutpage'            => 'Project:Rreth',
-'bugreports'           => 'Kontakt',
-'bugreportspage'       => 'Project:Kontakt',
 'copyright'            => 'Përmbajtja asht në disponim nëpërmjet liqencës $1.',
 'copyrightpagename'    => '{{SITENAME}} Të drejta autori',
 'copyrightpage'        => '{{ns:project}}:Të drejta autori',
@@ -231,8 +232,6 @@ $messages = array(
 
 'badaccess'        => 'Gabim leje',
 'badaccess-group0' => 'Nuk jeni lejue me e bá kët veprim.',
-'badaccess-group1' => 'Ky veprim asht i limituem për përdoruesit e grupit $1',
-'badaccess-group2' => 'Veprimi i kërkuem asht i limituem për përdoruesit e grupit $1.',
 'badaccess-groups' => 'Ky veprim asht i limituem për përdoruesit e grupit $1.',
 
 'versionrequired'     => 'Nevojitet versioni $1 i MediaWiki-it',
@@ -321,7 +320,6 @@ Mirëmbajtësi i cili e ka bllokue dha këtë arsye: $1",
 'cannotdelete'         => 'Nuk mujta me gris këtë faqe ose figurë të dhënë. (Munet qi asht e grisur nga dikush tjeter.)',
 'badtitle'             => 'Titull i gabuem',
 'badtitletext'         => 'Titulli i faqes qi kërkuet nuk ishte i saktë, ishte bosh, ose ishte një lidhje gabim me një titull wiki internacional.',
-'perfdisabled'         => "Ju kërkoj të falme! Ky veprim asht bllokue përkohsisht se e ngadalëson regjistrin aq shumë sa s'munet me përdor kërrkush tjetër.",
 'perfcached'           => 'Informacioni i mëposhtëm asht kopje e ruajtme dhe munet mos me kán e freskët:',
 'perfcachedts'         => 'Informacioni i mëposhtëm asht një kopje e rifreskueme me $1.',
 'wrong_wfQuery_params' => 'Parametra gabim te wfQuery()<br />
@@ -390,8 +388,8 @@ Llogaria juej asht hap. Mos harroni me ndryshu parapëlqimet e {{SITENAME}}-s.',
 'hr_tip'          => 'vijë horizontale (përdoreni rallë)',
 
 # Edit pages
-'summary'            => 'Përmbledhje',
-'subject'            => 'Subjekt/Titull',
+'summary'            => 'Përmbledhje:',
+'subject'            => 'Subjekt/Titull:',
 'minoredit'          => 'Ky asht një redaktim i vogël',
 'watchthis'          => 'Mbikqyre kët faqe',
 'showpreview'        => 'Trego parapamjen',
@@ -406,7 +404,7 @@ Llogaria juej asht hap. Mos harroni me ndryshu parapëlqimet e {{SITENAME}}-s.',
 
 # History pages
 'revisionasof'     => 'Versioni i $1',
-'revision-info'    => 'Versioni me $1 nga $2',
+'revision-info'    => 'Versioni me $1 nga $2', # Additionally available: $3: revision id
 'previousrevision' => '← Verzion ma i vjetër',
 'cur'              => 'tash',
 'last'             => 'fund',
@@ -417,16 +415,18 @@ Llogaria juej asht hap. Mos harroni me ndryshu parapëlqimet e {{SITENAME}}-s.',
 'editundo'                => 'ktheje',
 
 # Search results
-'noexactmatch' => 'Faqja me atë titull nuk asht krijue
+'noexactmatch'   => 'Faqja me atë titull nuk asht krijue
 
 Muneni me [[$1|fillu një artikull]] me kët titull.
 
 Ju lutem kërkoni {{SITENAME}}-n para se me krijue një artikull të ri se munet me kánë nën një titull tjetër.',
-'viewprevnext' => 'Shikoni ($1) ($2) ($3).',
-'powersearch'  => 'Kërko',
+'viewprevnext'   => 'Shikoni ($1) ($2) ($3).',
+'searchhelp-url' => 'Help:Ndihmë',
+'powersearch'    => 'Kërko',
 
 # Preferences page
 'mypreferences' => 'Parapëlqimet',
+'skin-preview'  => 'Parapamje',
 
 # Recent changes
 'recentchanges'   => 'Ndryshimet e fundit',
@@ -449,7 +449,7 @@ Ju lutem kërkoni {{SITENAME}}-n para se me krijue një artikull të ri se munet
 # Upload
 'upload' => 'Ngarkoni skeda',
 
-# Image description page
+# File description page
 'filehist'            => 'Historiku i dosjes',
 'filehist-datetime'   => 'Data/Ora',
 'filehist-user'       => 'Përdoruesi',
@@ -488,29 +488,29 @@ Ju lutem kërkoni {{SITENAME}}-n para se me krijue një artikull të ri se munet
 'categories' => 'Kategori',
 
 # Watchlist
-'mywatchlist'          => 'Lista mbikqyrëse',
-'addedwatch'           => 'U shtu te lista mbikqyrëse',
-'removedwatch'         => 'U hjek nga lista mibkqyrëse',
-'removedwatchtext'     => 'Faqja "<nowiki>$1</nowiki>" asht hjek nga lista mbikqyrëse e juej.',
-'watch'                => 'Mbikqyre',
-'unwatch'              => 'Çmbikqyre',
-'watchlist-hide-own'   => 'Mshehi redaktimet e mija',
-'watchlist-hide-minor' => 'Mshehi redaktimet e vogla',
+'mywatchlist'      => 'Lista mbikqyrëse',
+'addedwatch'       => 'U shtu te lista mbikqyrëse',
+'removedwatch'     => 'U hjek nga lista mibkqyrëse',
+'removedwatchtext' => 'Faqja "<nowiki>$1</nowiki>" asht hjek nga lista mbikqyrëse e juej.',
+'watch'            => 'Mbikqyre',
+'unwatch'          => 'Çmbikqyre',
 
 # Displayed when you click the "watch" button and it is in the process of watching
 'watching'   => 'Tuj mbikqyrë...',
 'unwatching' => 'Tuj çmbikqyrë...',
 
-# Delete/protect/revert
-'deletedarticle'              => 'grisi "$1"',
+# Delete
+'deletedarticle' => 'grisi "$1"',
+
+# Protect
 'protect-legend'              => 'Konfirmoni',
 'protectcomment'              => 'Arsyja:',
 'protectexpiry'               => 'Afáti',
 'protect_expiry_invalid'      => 'Data e skadimit asht e pasaktë.',
 'protect_expiry_old'          => 'Data e skadimit asht në kohën kalueme.',
 'protect-unchain'             => 'Ndryshoje lejen e zhvendosjeve',
-'protect-text'                => 'Këtu muneni me shiku dhe me ndryshu nivelin e mbrojtjes për faqen <strong><nowiki>$1</nowiki></strong>.',
-'protect-locked-access'       => 'Llogaria juej nuk ka privilegjet e nevojitme për me ndryshu nivelin e mbrojtjes. Kufizimet e kësaj faqe janë <strong>$1</strong>:',
+'protect-text'                => "Këtu muneni me shiku dhe me ndryshu nivelin e mbrojtjes për faqen '''<nowiki>$1</nowiki>'''.",
+'protect-locked-access'       => "Llogaria juej nuk ka privilegjet e nevojitme për me ndryshu nivelin e mbrojtjes. Kufizimet e kësaj faqe janë '''$1''':",
 'protect-default'             => '(parazgjedhje)',
 'protect-level-autoconfirmed' => 'Blloko përdoruesit pa llogari',
 'protect-level-sysop'         => 'Lejo veç administruesit',
@@ -531,7 +531,6 @@ Ju lutem kërkoni {{SITENAME}}-n para se me krijue një artikull të ri se munet
 # What links here
 'whatlinkshere'       => "Lidhjet k'tu",
 'whatlinkshere-title' => 'Faqe qi lidhen me $1',
-'linklistsub'         => '(Listë e lidhjeve)',
 'linkshere'           => "Faqet e mëposhtme lidhen k'tu '''[[:$1]]''':",
 'isredirect'          => 'faqe përcjellëse',
 'istemplate'          => 'përfshirë',

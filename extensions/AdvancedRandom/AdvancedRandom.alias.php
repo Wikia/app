@@ -11,21 +11,36 @@ $aliases = array();
  * @author Jon Harald Søby
  */
 $aliases['en'] = array(
-    'AdvancedRandom' => array( 'AdvancedRandom' ),
+	'AdvancedRandom' => array( 'AdvancedRandom' ),
 );
 
 /** Arabic (العربية)
  * @author Meno25
  */
 $aliases['ar'] = array(
-	'AdvancedRandom' => array( 'عشوائي متقدم' ),
+	'AdvancedRandom' => array( 'عشوائي_متقدم' ),
 );
 
 /** Egyptian Spoken Arabic (مصرى)
  * @author Meno25
  */
 $aliases['arz'] = array(
-	'AdvancedRandom' => array( 'عشوائى متقدم' ),
+	'AdvancedRandom' => array( 'عشوائى_متقدم' ),
+);
+
+/** Bosnian (Bosanski) */
+$aliases['bs'] = array(
+	'AdvancedRandom' => array( 'NaprednoSlucajno' ),
+);
+
+/** Spanish (Español) */
+$aliases['es'] = array(
+	'AdvancedRandom' => array( 'AleatorioAvanzado', 'Aleatorio avanzado' ),
+);
+
+/** Persian (فارسی) */
+$aliases['fa'] = array(
+	'AdvancedRandom' => array( 'تصادفی_پیشرفته' ),
 );
 
 /** Finnish (Suomi) */
@@ -43,6 +58,26 @@ $aliases['he'] = array(
 /** Haitian (Kreyòl ayisyen) */
 $aliases['ht'] = array(
 	'AdvancedRandom' => array( 'RandonmAvanse' ),
+);
+
+/** Hungarian (Magyar) */
+$aliases['hu'] = array(
+	'AdvancedRandom' => array( 'Fejletlebb véletlen' ),
+);
+
+/** Interlingua (Interlingua) */
+$aliases['ia'] = array(
+	'AdvancedRandom' => array( 'AleatoriAvantiate' ),
+);
+
+/** Luxembourgish (Lëtzebuergesch) */
+$aliases['lb'] = array(
+	'AdvancedRandom' => array( 'Zoufall' ),
+);
+
+/** Nedersaksisch (Nedersaksisch) */
+$aliases['nds-nl'] = array(
+	'AdvancedRandom' => array( 'Uut-ebreid_willekeurig' ),
 );
 
 /** Dutch (Nederlands) */

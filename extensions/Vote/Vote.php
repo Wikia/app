@@ -15,15 +15,17 @@ exit(1);
  
 $wgExtensionCredits['specialpage'][] = array(
 	'name' => 'Vote',
-	'svn-date' => '$LastChangedDate: 2008-05-14 00:38:28 +0000 (Wed, 14 May 2008) $',
-	'svn-revision' => '$LastChangedRevision: 34773 $',
+	'svn-date' => '$LastChangedDate: 2008-12-18 05:56:43 +0000 (Thu, 18 Dec 2008) $',
+	'svn-revision' => '$LastChangedRevision: 44752 $',
 	'author' => 'Rob Church',
 	'description' => 'Provides simple polling capabilities',
+	'descriptionmsg' => 'vote-desc',
 	'url' => 'http://www.mediawiki.org/wiki/Extension:Vote',
 );
 
 $dir = dirname(__FILE__) . '/';
-$wgExtensionMessagesFiles['SpecialVote'] = $dir . 'Vote.i18n.php';
+$wgExtensionMessagesFiles['Vote'] = $dir . 'Vote.i18n.php';
+$wgExtensionAliasesFiles['Vote'] = $dir . 'Vote.alias.php';
 $wgAutoloadClasses['SpecialVote'] = $dir . 'Vote.page.php';
 $wgSpecialPages['Vote'] = 'SpecialVote';
 $wgExtensionFunctions[] = 'efVote';

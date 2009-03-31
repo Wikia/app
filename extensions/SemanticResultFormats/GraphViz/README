@@ -1,0 +1,16 @@
+Graph is a query printer for Semantic MediaWiki applying the
+GraphViz extension in order to create graphs out of query results.
+
+== Installation ==
+The following two MediaWiki installations should be installed and running.
+Please test them separately from this extension -- especially the GraphViz
+extension is a bit hard to install.
+1) Semantic MediaWiki
+2) GraphViz
+When both of them are up and running, you can install this extension like
+any other semantic result printer (refer to the separate README for that).
+
+== Configuration and Usage ==
+For an up to date documentation please refer to
+http://semantic-mediawiki.org/wiki/Graph
+

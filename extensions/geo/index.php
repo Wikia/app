@@ -1,5 +1,5 @@
 <?php
-include_once ( "geosettings.php" ) ;
+require_once ( "geosettings.php" ) ;
 
 if ( isset ( $wikibasedir ) )
 	{

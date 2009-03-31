@@ -164,7 +164,8 @@ class ExprParser {
 		$operators = array();
 
 		# Unescape inequality operators
-		$expr = strtr( $expr, array( '&lt;' => '<', '&gt;' => '>' ) );
+		$expr = strtr( $expr, array( '&lt;' => '<', '&gt;' => '>',
+			'&minus;' => '-', '−' => '-' ) );
 
 		$p = 0;
 		$end = strlen( $expr );

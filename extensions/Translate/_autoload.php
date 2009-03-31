@@ -1,5 +1,5 @@
 <?php
-if (!defined('MEDIAWIKI')) die();
+if ( !defined( 'MEDIAWIKI' ) ) die();
 /**
  * Autoload definitions.
  *
@@ -9,7 +9,7 @@ if (!defined('MEDIAWIKI')) die();
  * @file
  */
 
-$dir = dirname(__FILE__) . '/';
+$dir = dirname( __FILE__ ) . '/';
 
 $wgAutoloadClasses['TranslateTasks'] = $dir . 'TranslateTasks.php';
 $wgAutoloadClasses['TaskOptions'] = $dir . 'TranslateTasks.php';
@@ -19,6 +19,7 @@ $wgAutoloadClasses['HTMLSelector'] = $dir . 'TranslateUtils.php';
 
 $wgAutoloadClasses['MessageChecks'] = $dir . 'MessageChecks.php';
 $wgAutoloadClasses['MessageGroups'] = $dir . 'MessageGroups.php';
+$wgAutoloadClasses['WikiPageMessageGroup'] = $dir . 'MessageGroups.php';
 $wgAutoloadClasses['AliasMessageGroup'] = $dir . 'MessageGroups.php';
 
 $wgAutoloadClasses['MessageCollection'] = $dir . 'Message.php';
@@ -34,8 +35,8 @@ $wgAutoloadClasses['SpecialTranslate'] = $dir . 'TranslatePage.php';
 $wgAutoloadClasses['SpecialMagic'] = $dir . 'SpecialMagic.php';
 $wgAutoloadClasses['SpecialTranslationChanges'] = $dir . 'SpecialTranslationChanges.php';
 $wgAutoloadClasses['SpecialTranslationStats'] = $dir . 'Stats.php';
-
-$wgAutoloadClasses['TranslatePreferences'] = $dir . 'TranslateUtils.php';
+$wgAutoloadClasses['SpecialTranslations'] = $dir . 'SpecialTranslations.php';
+$wgAutoloadClasses['SpecialLanguageStats'] = $dir . 'SpecialLanguageStats.php';
 
 $wgAutoloadClasses['SimpleFormatReader'] = $dir . 'ffs/Simple.php';
 $wgAutoloadClasses['SimpleFormatWriter'] = $dir . 'ffs/Simple.php';
@@ -47,13 +48,14 @@ $wgAutoloadClasses['GettextFormatReader'] = $dir . 'ffs/Gettext.php';
 $wgAutoloadClasses['GettextFormatWriter'] = $dir . 'ffs/Gettext.php';
 $wgAutoloadClasses['JavaFormatReader'] = $dir . 'ffs/Java.php';
 $wgAutoloadClasses['JavaFormatWriter'] = $dir . 'ffs/Java.php';
+$wgAutoloadClasses['PhpVariablesFormatReader'] = $dir . 'ffs/PhpVariables.php';
+$wgAutoloadClasses['PhpVariablesFormatWriter'] = $dir . 'ffs/PhpVariables.php';
 $wgAutoloadClasses['XliffFormatWriter'] = $dir . 'ffs/Xliff.php';
-
 
 # utils
 $wgAutoloadClasses['ResourceLoader'] = $dir . 'utils/ResourceLoader.php';
 $wgAutoloadClasses['StringMatcher'] = $dir . 'utils/StringMatcher.php';
-
+$wgAutoloadClasses['FCFontFinder'] = $dir . 'utils/Font.php';
 
 $wgAutoloadClasses['StringMangler'] = $dir . 'utils/StringMangler.php';
 $wgAutoloadClasses['SmItem'] = $dir . 'utils/StringMangler.php';
@@ -61,9 +63,17 @@ $wgAutoloadClasses['SmRewriter'] = $dir . 'utils/StringMangler.php';
 $wgAutoloadClasses['SmAffixRewriter'] = $dir . 'utils/StringMangler.php';
 $wgAutoloadClasses['SmRegexRewriter'] = $dir . 'utils/StringMangler.php';
 
+$wgAutoloadClasses['TranslatePreferences'] = $dir . 'utils/UserToggles.php';
+$wgAutoloadClasses['TranslateToolbox'] = $dir . 'utils/ToolBox.php';
 
 # predefined groups
 $wgAutoloadClasses['PremadeMediawikiExtensionGroups'] = $dir . 'groups/MediaWikiExtensions.php';
 $wgAutoloadClasses['FreeColMessageGroup'] = $dir . 'groups/FreeCol.php';
+$wgAutoloadClasses['MantisMessageGroup'] = $dir . 'groups/Mantis.php';
 
-
+# tag
+$wgAutoloadClasses['TranslateTag'] = $dir . 'tag/Tag.php';
+$wgAutoloadClasses['TranslateTagHooks'] = $dir . 'tag/Hooks.php';
+$wgAutoloadClasses['TranslateTagUtils'] = $dir . 'tag/Utils.php';
+$wgAutoloadClasses['FuzzyJob'] = $dir . 'tag/FuzzyJob.php';
+$wgAutoloadClasses['RenderJob'] = $dir . 'tag/RenderJob.php';

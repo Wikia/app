@@ -36,6 +36,9 @@ class FormsPage extends QueryPage {
 
 	function getPageHeader() {
 		global $wgUser;
+		
+		wfLoadExtensionMessages('SemanticForms');
+		
 		$sk = $wgUser->getSkin();
 		$cf = SpecialPage::getPage('CreateForm');
 		$create_form_link = $sk->makeKnownLinkObj($cf->getTitle(), $cf->getDescription());

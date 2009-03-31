@@ -91,7 +91,7 @@ function wfSpecialPostcomment( $par )
 	global $wgFeedClasses, $wgFilterCallback, $wgWhitelistEdit;
 
 
-	$wgOut->setRobotpolicy( "noindex,nofollow" );
+	$wgOut->setRobotPolicy( "noindex,nofollow" );
 	$fname = "wfSpecialPostcomment";
 
 	//echo "topic: " . $wgRequest->getVal("topic_name") . "<br />";

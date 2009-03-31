@@ -107,6 +107,8 @@ class ApiQueryDeletedrevs extends ApiQueryBase {
 			$lb = new LinkBatch($titles);
 			$where = $lb->constructSet('ar', $db);
 			$this->addWhere($where);
+		} else {
+			$this->dieUsage('You have to specify a page title or titles');
 		}
 
 		$this->addOption('LIMIT', $limit + 1);
@@ -228,6 +230,6 @@ class ApiQueryDeletedrevs extends ApiQueryBase {
 	}
 
 	public function getVersion() {
-		return __CLASS__ . ': $Id: ApiQueryDeletedrevs.php 37502 2008-07-10 14:13:11Z catrope $';
+		return __CLASS__ . ': $Id: ApiQueryDeletedrevs.php 40798 2008-09-13 20:41:58Z aaron $';
 	}
 }

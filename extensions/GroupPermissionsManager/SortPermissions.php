@@ -5,13 +5,13 @@
 */
 
 class SortPermissions extends SpecialPage {
-	var $oldrev = '';
+	public $oldrev = '';
 	
 	/**
 	* Constructor function
 	* Registers the special page, restricts it to those with the 'grouppermissions' right
 	*/
-	function SortPermissions() {
+	function __construct() {
 		SpecialPage::SpecialPage( 'SortPermissions', 'grouppermissions' );
 	}
 	
@@ -26,10 +26,16 @@ class SortPermissions extends SpecialPage {
 			$wgOut->permissionRequired( 'grouppermissions' );
 			return;
 		}
+		loadGPMessages();
 		$wgOut->addHTML('<noscript><strong>' . wfMsg('grouppermissions-needjs') . '</strong></noscript>');
-		wfLoadExtensionMessages('GroupPermissions');
 		$this->setHeaders();
 		$wgOut->addWikiText( wfMsg( 'grouppermissions-sp-header' ) );
+		$dir = dirname(__FILE__);
+		if ( !empty( $wgScriptPath ) ) {
+			$pos = strpos($dir, $wgScriptPath);
+			$dir = substr($dir, $pos);
+		}
+		addScriptFile("$dir/scripts/permsort.js");
 		//if we posted, try to write the file
 		if($wgRequest->wasPosted()) {
 			$success = $this->writeFile();
@@ -40,10 +46,6 @@ class SortPermissions extends SpecialPage {
 			}
 		}
 		$this->makeForm();
-		$dir = dirname(__FILE__);
-		$pos = strpos($dir, $wgScriptPath);
-		$inc = substr($dir, $pos);
-		addScriptFile("$inc/scripts/permsort.js");
 	}
 	
 	/**
@@ -109,7 +111,8 @@ class SortPermissions extends SpecialPage {
 	*/
 	function makeRadios($perm, $types) {
 		global $wgGPManagerSort;
-		$ret = "\n<tr id=\"right-$perm\"><td>$perm (<a href=\"javascript:removePerm('$perm');\">".wfMsg('grouppermissions-sp-remove')."</a>)</td>";
+		$permmsg = wfEmptyMsg('right-' . $perm, wfMsg('right-' . $perm)) ? $perm : wfMsg('right-' . $perm);
+		$ret = "\n<tr id=\"right-$perm\"><td><span title=\"$permmsg\">$perm</span> (<a href=\"javascript:removePerm('$perm');\">".wfMsg('grouppermissions-sp-remove')."</a>)</td>";
 		foreach($types as $type) {
 			if(array_key_exists($type, $wgGPManagerSort) && in_array($perm, $wgGPManagerSort[$type])) {
 				$ret .= "\n<td><input type=\"radio\" name=\"right-$perm\" id=\"$perm-$type\" class=\"type-$type\" value=\"$type\" checked=\"checked\" />";
@@ -188,6 +191,7 @@ class SortPermissions extends SpecialPage {
 			$sort[$value] = array();
 		}
 		//now implode it and put it in the file
+		$nr = array();
 		foreach($sort as $key => $rights) {
 			$st = " '" . implode("', '", $rights) . "' ";
 			if($st === " '' ") {
@@ -196,22 +200,43 @@ class SortPermissions extends SpecialPage {
 			foreach($rights as $right) {
 				if(!in_array($right, $permissionslist)) {
 					//define a new permission since we added it via the javascript
-					$sortpermissions .= "\n\$wgGroupPermissions['*']['$right'] = false;";
+					//although we add this to the GroupPermissions.php file, not this one.
+					$nr[] = $right;
 				}
 			}
 			$sortpermissions .= "\n\$wgGPManagerSort['$key'] = array($st);";
 		}
 		$sortpermissions = str_replace( "\r\n", "\n", $sortpermissions );
-		chdir( dirname(__FILE__) . "/config" );
-		$f = fopen( "SortPermissions.php", 'wt' );
-		if(fwrite( $f, $sortpermissions ) ) {
-			fclose( $f );
-			print "\n";
-			return true;
-		} else {
-			fclose( $f );
-			echo("<p class='error'>An error occured while writing the config/SortPermissions.php file. Check user rights and disk space then try again.</p>");
-			return false;
+		chdir( dirname(__FILE__) . '/config' );
+		$f = fopen( 'SortPermissions.php', 'wt' );
+		if(!fwrite( $f, $sortpermissions ) ) {
+			echo('<p class="error">An error occured while writing the config/SortPermissions.php file. Check user rights and disk space then try again.</p>');
+			fclose($f);
+			die(1);
 		}
+		fclose($f);
+		if($nr !== array()) {
+			$np = '';
+			if(file_exists(dirname(__FILE__) . '/config/GroupPermissions.php')) {
+				$np = file_get_contents(dirname(__FILE__) . '/config/GroupPermissions.php');
+				$r = rename(dirname(__FILE__) . '/config/GroupPermissions.php', dirname(__FILE__) . '/config/GroupPermissions.' . $this->oldrev . '.php');
+				if(!$r) {
+					global $wgOut;
+					$wgOut->addWikiText(wfMsg('grouppermissions-nooldrev'));
+				}
+			}
+			//for some reason append mode was fucking things up...
+			$f = fopen('GroupPermissions.php', 'wt');
+			foreach($nr as $right) {
+				$np .= "\n\$wgGroupPermissions['*']['$right'] = false;";
+			}
+			if(!fwrite($f, $np)) {
+				echo('<p class="error">An error occured while writing the config/GroupPermissions.php file. Check user rights and disk space then try again.</p>');
+				fclose($f);
+				die(1);
+			}
+			fclose($f);
+		}
+		return true;
 	}
 }

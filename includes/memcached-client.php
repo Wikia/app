@@ -464,7 +464,7 @@ class memcached
       if (!$this->_active)
          return false;
 
-      $this->stats['get_multi']++;
+      @$this->stats['get_multi']++;
       $sock_keys = array();
 
       foreach ($keys as $key)
@@ -817,8 +817,8 @@ class memcached
          if (is_resource($sock)) {
             $this->_flush_read_buffer($sock);
             return $sock;
-         }
-         $hv += $this->_hashfunc($tries . $realkey);
+		 }
+         $hv = $this->_hashfunc( $hv . $realkey );
       }
 
       return false;

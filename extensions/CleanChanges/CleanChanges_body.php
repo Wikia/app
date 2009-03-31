@@ -437,8 +437,12 @@ class NCL extends EnhancedChangesList {
 
 
 		global $wgStylePath;
-		$image = Xml::element( 'img', array( 'height' => '12',
-			'src' => $wgStylePath . '/common/images/magnify-clip.png' )
+		$image = Xml::element( 'img', array(
+			'src' => $wgStylePath . '/common/images/magnify-clip.png',
+			'alt' => wfMsg( 'cleanchanges-showuserlinks' ),
+			'title' => wfMsg( 'cleanchanges-showuserlinks' ),
+		  'height' => '12'
+			)
 		);
 
 
@@ -550,14 +554,15 @@ class NCL extends EnhancedChangesList {
 			);
 		}
 
-		if( $szdiff < $wgRCChangedSizeThreshold ) {
-			return $this->XMLwrapper( 'mw-plusminus-neg', $cache[$szdiff], 'strong' );
-		} elseif( $szdiff === 0 ) {
-			return $this->XMLwrapper( 'mw-plusminus-null', $cache[$szdiff] );
+		$tag = 'span';
+		if ( abs($szdiff) > abs($wgRCChangedSizeThreshold) ) $tag = 'strong';
+
+		if( $szdiff === 0 ) {
+			return $this->XMLwrapper( 'mw-plusminus-null', $cache[$szdiff], $tag );
 		} elseif( $szdiff > 0 ) {
-			return $this->XMLwrapper( 'mw-plusminus-pos', $cache[$szdiff] );
+			return $this->XMLwrapper( 'mw-plusminus-pos', $cache[$szdiff], $tag );
 		} else {
-			return $this->XMLwrapper( 'mw-plusminus-neg', $cache[$szdiff] );
+			return $this->XMLwrapper( 'mw-plusminus-neg', $cache[$szdiff], $tag );
 		}
 	}
 

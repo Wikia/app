@@ -1,5 +1,7 @@
 <?php
 /**
+ * @ingroup Language
+ * @ingroup SDLanguage
  * @author Yaron Koren (Translation:Ghassem Tofighi Email:[MyFamily]@gmail.com, HomePage:http://ght.ir)
  */
 

@@ -189,7 +189,7 @@ class ContributionScores extends IncludableSpecialPage
 		}
 		$reportTitle .= " " . wfMsg( 'contributionscores-top', $limit );
 		$title = Xml::element( 'h4', array( 'class' => 'contributionscores-title' ), $reportTitle ) . "\n";
-		$wgOut->addHtml( $this->genContributionScoreTable( $days, $limit, $title, $options ) );
+		$wgOut->addHTML( $this->genContributionScoreTable( $days, $limit, $title, $options ) );
 	}
 	
 	function showPage() {
@@ -212,8 +212,8 @@ class ContributionScores extends IncludableSpecialPage
 			}
 			$reportTitle .= " " . wfMsg('contributionscores-top', $scoreReport[1] );
 			$title = Xml::element( 'h2', array( 'class' => 'contributionscores-title' ), $reportTitle ) . "\n";
-			$wgOut->addHtml( $title );
-			$wgOut->addHtml( $this->genContributionScoreTable( $scoreReport[0], $scoreReport[1] ) );
+			$wgOut->addHTML( $title );
+			$wgOut->addHTML( $this->genContributionScoreTable( $scoreReport[0], $scoreReport[1] ) );
 		}
 	}
 }

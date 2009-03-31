@@ -16,6 +16,7 @@ if( !defined( 'MEDIAWIKI' ) ) {
 
 # This file contains the hook registration and installation
 
+// FIXME: use autoloader and other standards here
 // require the message file
 require( 'extensions/GoogleMaps/GoogleMaps.i18n.php' );
 require( 'extensions/GoogleMaps/export/GoogleMapsExporter.php' );

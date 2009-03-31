@@ -18,14 +18,24 @@ $aliases['en'] = array(
  * @author Meno25
  */
 $aliases['ar'] = array(
-	'Renameuser' => array( 'إعادة تسمية مستخدم' ),
+	'Renameuser' => array( 'إعادة_تسمية_مستخدم' ),
 );
 
 /** Egyptian Spoken Arabic (مصرى)
  * @author Meno25
  */
 $aliases['arz'] = array(
-	'Renameuser' => array( 'إعادة تسمية مستخدم' ),
+	'Renameuser' => array( 'إعادة_تسمية_مستخدم' ),
+);
+
+/** Bosnian (Bosanski) */
+$aliases['bs'] = array(
+	'Renameuser' => array( 'PreimenovanjeKorisnika' ),
+);
+
+/** Catalan (Català) */
+$aliases['ca'] = array(
+	'Renameuser' => array( 'Reanomena usuari' ),
 );
 
 /** German (Deutsch)
@@ -33,6 +43,11 @@ $aliases['arz'] = array(
  */
 $aliases['de'] = array(
 	'Renameuser' => array( 'Benutzer umbenennen' ),
+);
+
+/** Divehi (ދިވެހިބަސް) */
+$aliases['dv'] = array(
+	'Renameuser' => array( 'މެމްބަރުގެ ނަން ބަދަލު ކުރައްވާ' ),
 );
 
 /** Finnish (Suomi) */
@@ -50,6 +65,11 @@ $aliases['gl'] = array(
 	'Renameuser' => array( 'Renomear usuario' ),
 );
 
+/** Swiss German (Alemannisch) */
+$aliases['gsw'] = array(
+	'Renameuser' => array( 'Benutzer e andre Name gee' ),
+);
+
 /** Hebrew (עברית)
  * @author Rotem Liss
  */
@@ -62,6 +82,11 @@ $aliases['hr'] = array(
 	'Renameuser' => array( 'Preimenuj_suradnika' ),
 );
 
+/** Upper Sorbian (Hornjoserbsce) */
+$aliases['hsb'] = array(
+	'Renameuser' => array( 'Wužiwarja přemjenować' ),
+);
+
 /** Haitian (Kreyòl ayisyen) */
 $aliases['ht'] = array(
 	'Renameuser' => array( 'RenonmeItilizatè' ),
@@ -72,9 +97,29 @@ $aliases['hu'] = array(
 	'Renameuser' => array( 'Szerkesztő átnevezése' ),
 );
 
+/** Indonesian (Bahasa Indonesia) */
+$aliases['id'] = array(
+	'Renameuser' => array( 'Ganti nama pengguna' ),
+);
+
+/** Japanese (日本語) */
+$aliases['ja'] = array(
+	'Renameuser' => array( '利用者名の変更' ),
+);
+
 /** Khmer (ភាសាខ្មែរ) */
 $aliases['km'] = array(
-	'Renameuser' => array( 'ប្តូរឈ្មោះអ្នកប្រើប្រាស់' ),
+	'Renameuser' => array( 'ប្ដូរឈ្មោះអ្នកប្រើប្រាស់' ),
+);
+
+/** Korean (한국어) */
+$aliases['ko'] = array(
+	'Renameuser' => array( '이름바꾸기', '계정이름바꾸기', '사용자이름바꾸기' ),
+);
+
+/** Ripoarisch (Ripoarisch) */
+$aliases['ksh'] = array(
+	'Renameuser' => array( 'Metmaacher ömnänne', 'Medmaacher ömnänne', 'Metmaacher ömnenne', 'Medmaacher ömnenne', 'Metmaacher ömdäufe', 'Medmaacher ömdäufe' ),
 );
 
 /** Latin (Latina) */
@@ -87,9 +132,19 @@ $aliases['lb'] = array(
 	'Renameuser' => array( 'Benotzer ëmbenennen' ),
 );
 
+/** Macedonian (Македонски) */
+$aliases['mk'] = array(
+	'Renameuser' => array( 'ПреименувајКорисник' ),
+);
+
 /** Malay (Bahasa Melayu) */
 $aliases['ms'] = array(
-	'Renameuser' => array( 'Tukar_nama_pengguna' ),
+	'Renameuser' => array( 'Tukar nama pengguna' ),
+);
+
+/** Nedersaksisch (Nedersaksisch) */
+$aliases['nds-nl'] = array(
+	'Renameuser' => array( 'Gebruker_herneumen' ),
 );
 
 /** Dutch (Nederlands) */
@@ -101,7 +156,17 @@ $aliases['nl'] = array(
  * @author Jon Harald Søby
  */
 $aliases['no'] = array(
-	'Renameuser' => array( 'Gi_en_bruker_nytt_navn' ),
+	'Renameuser' => array( 'Gi en bruker nytt navn' ),
+);
+
+/** Occitan (Occitan) */
+$aliases['oc'] = array(
+	'Renameuser' => array( 'TornarNomenarUtilizaire', 'Tornar nomenar Utilizaire' ),
+);
+
+/** Polish (Polski) */
+$aliases['pl'] = array(
+	'Renameuser' => array( 'Zmiana nazwy użytkownika' ),
 );
 
 /** Pashto (پښتو) */
@@ -119,9 +184,19 @@ $aliases['pt-br'] = array(
 	'Renameuser' => array( 'Renomear utilizador', 'Renomear usuário' ),
 );
 
+/** Albanian (Shqip) */
+$aliases['sq'] = array(
+	'Renameuser' => array( 'RiemërtoPërdorues' ),
+);
+
 /** Swedish (Svenska) */
 $aliases['sv'] = array(
 	'Renameuser' => array( 'Användarnamnbyte' ),
+);
+
+/** Swahili (Kiswahili) */
+$aliases['sw'] = array(
+	'Renameuser' => array( 'BadilishajinalaMtumiaji' ),
 );
 
 /** Thai (ไทย) */

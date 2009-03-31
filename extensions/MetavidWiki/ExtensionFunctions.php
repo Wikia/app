@@ -6,7 +6,7 @@
 if ( !defined( 'MEDIAWIKI' ) ) {
     echo "This file is part of MediaWiki, it is not a valid entry point.\n";
     exit( 1 );
-}
+} 
 
 if ( !defined( 'MW_SPECIALPAGE_VERSION' ) ) {
     /**

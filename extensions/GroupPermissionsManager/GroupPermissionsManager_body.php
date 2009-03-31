@@ -14,7 +14,7 @@ class GroupPermissions extends SpecialPage {
 	/**
 	* Constructor
 	*/
-	function GroupPermissions() {
+	function __construct() {
 		SpecialPage::SpecialPage( 'GroupPermissions', 'grouppermissions' );
 	}
 
@@ -29,7 +29,7 @@ class GroupPermissions extends SpecialPage {
 			$wgOut->permissionRequired( 'grouppermissions' );
 			return;
 		}
-		wfLoadExtensionMessages('GroupPermissions');
+		loadGPMessages();
 		$this->setHeaders();
 		$wgOut->addWikiText( wfMsg( 'grouppermissions-header' ) );
 
@@ -48,7 +48,7 @@ class GroupPermissions extends SpecialPage {
 		//sort the array in alphabetical order for ease of finding things
 		sort($this->permissionslist);
 
-		$wgOut->addHtml( $this->makeSearchForm() );
+		$wgOut->addHTML( $this->makeSearchForm() );
 				
 		//test if we have a valid target to act upon
 		if( $this->target != '') {
@@ -61,15 +61,15 @@ class GroupPermissions extends SpecialPage {
 					//group exists, so we can change it, can't delete it if it's an implicit group
 					if(in_array($this->target, $wgImplicitGroups)){
 						//cannot delete group, show just show the change form
-						$wgOut->addHtml( $this->makeChangeForm() );
+						$wgOut->addHTML( $this->makeChangeForm() );
 					} else {
 						//can delete group, so show that form as well
-						$wgOut->addHtml( $this->makeDeleteForm() );
-						$wgOut->addHtml( $this->makeChangeForm() );
+						$wgOut->addHTML( $this->makeDeleteForm() );
+						$wgOut->addHTML( $this->makeChangeForm() );
 					}
 				} else {
 					//group doesn't exist, let's make it and assign some rights
-					$wgOut->addHtml( $this->makeAddForm() );
+					$wgOut->addHTML( $this->makeAddForm() );
 				}
 			} elseif( $wgRequest->wasPosted() && $wgRequest->getVal('doadd') == '1' ) {
 				//we just added a new group!
@@ -249,7 +249,11 @@ class GroupPermissions extends SpecialPage {
 			$form .= '<fieldset><legend>'.wfMsgHtml("grouppermissions-sort-$type").'</legend>';
 			$form .= "\n<h2>".wfMsgHtml("grouppermissions-sort-$type")."</h2>\n<table>";
 			foreach($list as $right => $value) {
-				$form .= "\n<tr><td>$right</td><td>";
+				$rightmsg = wfMsg('right-' . $right);
+				if(wfEmptyMsg('right-' . $right, $rightmsg))
+					$rightmsg = $right;
+				$msg = wfMsg('grouppermissions-display', $rightmsg, $right);
+				$form .= "\n<tr><td>$msg</td><td>";
 				if($value) {
 					$form .= $this->makeRadio($right, 'true', true) . $this->makeRadio($right, 'false') . $this->makeRadio($right, 'never');
 				} else {

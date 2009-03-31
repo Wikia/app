@@ -1,0 +1,37 @@
+Index: Linker.php
+===================================================================
+--- Linker.php	(revision 25540)
++++ Linker.php	(working copy)
+@@ -989,8 +989,14 @@
+ 		$editurl = '&section='.$section;
+ 		$url = $this->makeKnownLinkObj( $title, wfMsg('editsection'), 'action=edit'.$editurl );
+ 
+-		return "<span class=\"editsection\">[".$url."]</span>";
+-
++### -	return "<span class=\"editsection\">[".$url."]</span>";
++	/** Added editSectionLinkForOther hook that allows section/header link to be modified */
++		$result = null;
++		wfRunHooks( 'EditSectionLinkForOther', array( &$this, $title, $section, $url, &$result ) );
++		return is_null( $result )
++			? "<span class=\"editsection\">[{$url}]</span>"
++			: "<span class=\"editsection\">[{$result}]</span>";
++	/** End of hook */
+ 	}
+ 
+ 	/**
+@@ -1005,7 +1011,14 @@
+ 		$hint = ( $hint=='' ) ? '' : ' title="' . wfMsgHtml( 'editsectionhint', htmlspecialchars( $hint ) ) . '"';
+ 		$url = $this->makeKnownLinkObj( $nt, wfMsg('editsection'), 'action=edit'.$editurl, '', '', '',  $hint );
+ 
+-		return "<span class=\"editsection\">[".$url."]</span>";
++### - 	return "<span class=\"editsection\">[".$url."]</span>";
++	/** Added editSectionLink hook that allows section/header link to be modified */
++		$result = null;
++		wfRunHooks( 'EditSectionLink', array( &$this, $nt, $section, $hint, $url, &$result ) );
++		return is_null( $result )
++			? "<span class=\"editsection\">[{$url}]</span>"
++			: "<span class=\"editsection\">[{$result}]</span>";
++	/** End of hook */
+ 	}
+ 
+ 	/**

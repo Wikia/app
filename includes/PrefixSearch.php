@@ -1,5 +1,12 @@
 <?php
 
+/**
+ * PrefixSearch - Handles searching prefixes of titles and finding any page
+ * names that match. Used largely by the OpenSearch implementation.
+ * 
+ * @ingroup Search
+ */
+
 class PrefixSearch {
 	/**
 	 * Do a prefix search of titles and return a list of matching page names.
@@ -48,7 +55,7 @@ class PrefixSearch {
 		if( count($namespaces) == 1 ){
 			$ns = $namespaces[0];
 			if( $ns == NS_MEDIA ) {
-				$namespaces = array(NS_IMAGE);
+				$namespaces = array(NS_FILE);
 			} elseif( $ns == NS_SPECIAL ) {
 				return self::specialSearch( $search, $limit );
 			}
@@ -96,7 +103,9 @@ class PrefixSearch {
 
 	/**
 	 * Unless overridden by PrefixSearchBackend hook...
-	 * This is case-sensitive except the first letter (per $wgCapitalLinks)
+	 * This is case-sensitive (First character may
+	 * be automatically capitalized by Title::secureAndSpit()
+	 * later on depending on $wgCapitalLinks)
 	 *
 	 * @param array $namespaces Namespaces to search in
 	 * @param string $search term
@@ -104,12 +113,6 @@ class PrefixSearch {
 	 * @return array of title strings
 	 */
 	protected static function defaultSearchBackend( $namespaces, $search, $limit ) {
-		global $wgCapitalLinks, $wgContLang;
-
-		if( $wgCapitalLinks ) {
-			$search = $wgContLang->ucfirst( $search );
-		}
-
 		$ns = array_shift($namespaces); // support only one namespace
 		if( in_array(NS_MAIN,$namespaces))
 			$ns = NS_MAIN; // if searching on many always default to main 

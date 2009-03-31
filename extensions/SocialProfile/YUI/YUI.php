@@ -1,11 +1,19 @@
 <?php
-$wgExtensionFunctions[] = "wfYUI";
+/**
+ * This is a small helper extension that will include yui.js on every pageload
+ * as SocialProfile relies on YUI functions.
+ *
+ * @file
+ * @ingroup Extensions
+ */
+$wgExtensionFunctions[] = 'wfYUI';
 
 $wgExtensionCredits['other'][] = array(
-        'name' => 'Yahoo! User Interface Library',
-        'author' => 'Yahoo! Inc.',
-        'url' => 'http://www.mediawiki.org/wiki/Extension:SocialProfile',
-        'description' => 'A set of utilities and controls, written in JavaScript',
+	'name' => 'Yahoo! User Interface Library',
+	'author' => 'Yahoo! Inc.',
+	'version' => '2.3.1',
+	'url' => 'http://www.mediawiki.org/wiki/Extension:SocialProfile',
+	'description' => 'A set of utilities and controls, written in JavaScript',
 	'descriptionmsg' => 'yui-desc',
 );
 

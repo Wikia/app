@@ -509,7 +509,7 @@ $wgForum = new Forum();
  * @addtogroup Extensions
  */
 function wfForum() {
-	global $IP, $wgMessageCache, $wgAllMessagesEn, $wgNavigationLinks, $wgTitle;
+	global $IP, $wgAllMessagesEn, $wgNavigationLinks, $wgTitle;
 	require_once( $IP.'/includes/SpecialPage.php' );
 
 

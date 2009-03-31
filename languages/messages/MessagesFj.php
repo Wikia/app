@@ -110,7 +110,7 @@ $messages = array(
 'email'              => 'I vola livaliva',
 
 # Edit pages
-'summary'      => 'Kena i Soqoni',
+'summary'      => 'Kena i Soqoni:',
 'watchthis'    => 'Vakaraica toka na tabana oqo',
 'savearticle'  => 'Vakabula na tabana oqo',
 'showpreview'  => 'Vakaraitaka na kenai yaloyalo',
@@ -189,7 +189,7 @@ $messages = array(
 'tooltip-search'         => 'Vaqaqara {{SITENAME}}',
 'tooltip-p-logo'         => 'Tabana levu',
 
-# Special:NewImages
+# Special:NewFiles
 'ilsubmit' => 'Vaqaqara',
 
 # Multipage image navigation

@@ -32,13 +32,15 @@ class MailAddress {
 	 * @param $address Mixed: string with an email address, or a User object
 	 * @param $name String: human-readable name if a string address is given
 	 */
-	function __construct( $address, $name=null ) {
+	function __construct( $address, $name = null, $realName = null ) {
 		if( is_object( $address ) && $address instanceof User ) {
 			$this->address = $address->getEmail();
 			$this->name = $address->getName();
+			$this->realName = $address->getRealName();
 		} else {
 			$this->address = strval( $address );
 			$this->name = strval( $name );
+			$this->reaName = strval( $realName );
 		}
 	}
 
@@ -51,7 +53,9 @@ class MailAddress {
 		# can't handle "Joe Bloggs <joe@bloggs.com>" format email addresses,
 		# so don't bother generating them
 		if( $this->name != '' && !wfIsWindows() ) {
-			$quoted = wfQuotedPrintable( $this->name );
+			global $wgEnotifUseRealName;
+			$name = ( $wgEnotifUseRealName && $this->realName ) ? $this->realName : $this->name;
+			$quoted = wfQuotedPrintable( $name );
 			if( strpos( $quoted, '.' ) !== false || strpos( $quoted, ',' ) !== false ) {
 				$quoted = '"' . $quoted . '"';
 			}
@@ -98,9 +102,10 @@ class UserMailer {
 	 * @param $subject String: email's subject.
 	 * @param $body String: email's text.
 	 * @param $replyto String: optional reply-to email (default: null).
+	 * @param $contentType String: optional custom Content-Type
 	 * @return mixed True on success, a WikiError object on failure.
 	 */
-	static function send( $to, $from, $subject, $body, $replyto=null ) {
+	static function send( $to, $from, $subject, $body, $replyto=null, $contentType=null ) {
 		global $wgSMTP, $wgOutputEncoding, $wgErrorString, $wgEnotifImpersonal;
 		global $wgEnotifMaxRecips;
 
@@ -139,7 +144,8 @@ class UserMailer {
 			$headers['Subject'] = wfQuotedPrintable( $subject );
 			$headers['Date'] = date( 'r' );
 			$headers['MIME-Version'] = '1.0';
-			$headers['Content-type'] = 'text/plain; charset='.$wgOutputEncoding;
+			$headers['Content-type'] = (is_null($contentType) ?
+					'text/plain; charset='.$wgOutputEncoding : $contentType);
 			$headers['Content-transfer-encoding'] = '8bit';
 			$headers['Message-ID'] = "<$msgid@" . $wgSMTP['IDHost'] . '>'; // FIXME
 			$headers['X-Mailer'] = 'MediaWiki mailer';
@@ -170,9 +176,11 @@ class UserMailer {
 			} else {
 				$endl = "\n";
 			}
+			$ctype = (is_null($contentType) ? 
+					'text/plain; charset='.$wgOutputEncoding : $contentType);
 			$headers =
 				"MIME-Version: 1.0$endl" .
-				"Content-type: text/plain; charset={$wgOutputEncoding}$endl" .
+				"Content-type: $ctype$endl" .
 				"Content-Transfer-Encoding: 8bit$endl" .
 				"X-Mailer: MediaWiki mailer$endl".
 				'From: ' . $from->toString();
@@ -255,14 +263,9 @@ class UserMailer {
  *
  */
 class EmailNotification {
-	/**@{{
-	 * @private
-	 */
-	var $to, $subject, $body, $replyto, $from;
-	var $user, $title, $timestamp, $summary, $minorEdit, $oldid, $composed_common, $editor, $action;
-	var $mailTargets = array();
-
-	/**@}}*/
+	private $to, $subject, $body, $replyto, $from;
+	private $user, $title, $timestamp, $summary, $minorEdit, $oldid, $composed_common, $editor, $action;
+	private $mailTargets = array();
 
 	/**
 	 * Send emails corresponding to the user $editor editing the page $title.
@@ -341,7 +344,7 @@ class EmailNotification {
 
 		$userTalkId = false;
 
-		if ( (!$minorEdit || $wgEnotifMinorEdits) ) {
+		if ( !$minorEdit || ($wgEnotifMinorEdits && !$editor->isAllowed('nominornewtalk') ) ) {
 			if ( $wgEnotifUserTalk && $isUserTalkPage ) {
 				$targetUser = User::newFromName( $title->getText() );
 				if ( !$targetUser || $targetUser->isAnon() ) {
@@ -351,9 +354,13 @@ class EmailNotification {
 				} elseif ( !$targetUser->canReceiveEmail() ) {
 					wfDebug( __METHOD__.": user doesn't have confirmed e-mail or has disabled e-mail notification in his options\n" );
 				} elseif( $targetUser->getOption( 'enotifusertalkpages' ) ) {
-					wfDebug( __METHOD__.": sending talk page update notification\n" );
-					$this->compose( $targetUser );
-					$userTalkId = $targetUser->getId();
+					if( $targetUser->isEmailConfirmed() ) {
+						wfDebug( __METHOD__.": sending talk page update notification\n" );
+						$this->compose( $targetUser );
+						$userTalkId = $targetUser->getId();
+					} else {
+						wfDebug( __METHOD__.": talk page owner doesn't have validated email\n" );
+					}
 				} else {
 					wfDebug( __METHOD__.": talk page owner doesn't want notifications\n" );
 				}
@@ -400,7 +407,9 @@ class EmailNotification {
 
 		$this->sendMails();
 
-		if ( $wgShowUpdatedMarker || $wgEnotifWatchlist ) {
+		$latestTimestamp = Revision::getTimestampFromId( $title, $title->getLatestRevID() );
+		// Do not update watchlists if something else already did.
+		if ( $timestamp >= $latestTimestamp && ($wgShowUpdatedMarker || $wgEnotifWatchlist) ) {
 			# Mark the changed watch-listed page with a timestamp, so that the page is
 			# listed with an "updated since your last visit" icon in the watch list. Do
 			# not do this to users for their own edits.
@@ -426,7 +435,7 @@ class EmailNotification {
 	function composeCommonMailtext() {
 		global $wgPasswordSender, $wgNoReplyAddress;
 		global $wgEnotifFromEditor, $wgEnotifRevealEditorAddress;
-		global $wgEnotifImpersonal;
+		global $wgEnotifImpersonal, $wgEnotifUseRealName;
 
 		$this->composed_common = true;
 
@@ -450,9 +459,6 @@ class EmailNotification {
 		$replyto = ''; /* fail safe */
 		$keys    = array();
 
-		# regarding the use of oldid as an indicator for the last visited version, see also
-		# http://bugzilla.wikipeda.org/show_bug.cgi?id=603 "Delete + undelete cycle doesn't preserve old_id"
-		# However, in the case of a new page which is already watched, we have no previous version to compare
 		if( $this->oldid ) {
 			$difflink = $this->title->getFullUrl( 'diff=0&oldid=' . $this->oldid );
 			$keys['$NEWPAGE'] = wfMsgForContent( 'enotif_lastvisited', $difflink );
@@ -489,7 +495,7 @@ class EmailNotification {
 		# the user has not opted-out and the option is enabled at the
 		# global configuration level.
 		$editor = $this->editor;
-		$name    = $editor->getName();
+		$name    = $wgEnotifUseRealName ? $editor->getRealName() : $editor->getName();
 		$adminAddress = new MailAddress( $wgPasswordSender, 'Wikia' );
 		$editorAddress = new MailAddress( $editor );
 		if( $wgEnotifRevealEditorAddress
@@ -571,11 +577,13 @@ class EmailNotification {
 	 * @private
 	 */
 	function sendPersonalised( $watchingUser ) {
+		global $wgLang, $wgEnotifUseRealName;
 		// From the PHP manual:
 		//     Note:  The to parameter cannot be an address in the form of "Something <someone@example.com>".
 		//     The mail command will not parse this properly while talking with the MTA.
 		$to = new MailAddress( $watchingUser );
-		$body = str_replace( '$WATCHINGUSERNAME', $watchingUser->getName() , $this->body );
+		$name = $wgEnotifUseRealName ? $watchingUser->getRealName() : $watchingUser->getName();
+		$body = str_replace( '$WATCHINGUSERNAME', $name , $this->body );
 
 		$timecorrection = $watchingUser->getOption( 'timecorrection' );
 

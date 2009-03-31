@@ -9,6 +9,10 @@
 img.tex { vertical-align: middle; }
 span.texhtml { font-family: serif; }
 
+/* add a bit of margin space between the preview and the toolbar */
+/* this replaces the ugly <p><br /></p> we used to insert into the page source */
+#wikiPreview.ontop { margin-bottom: 1em; }
+
 /* Stop floats from intruding into edit area in previews */
 #toolbar, #wpTextbox1 { clear: both; }
 
@@ -91,8 +95,9 @@ body.ltr .magnify { float:right; }
 .mw-hidden-cats-hidden { display: none; }
 .catlinks-allhidden { display: none; }
 
-/* Convenience links to edit block and delete reasons */
-p.mw-ipb-conveniencelinks, p.mw-filedelete-editreasons, p.mw-delete-editreasons {
+/* Convenience links to edit block, delete and protect reasons */
+p.mw-ipb-conveniencelinks, p.mw-protect-editreasons,
+p.mw-filedelete-editreasons, p.mw-delete-editreasons {
 	font-size: 90%;
 	float: right;
 }
@@ -104,10 +109,16 @@ div.searchresult {
 }
 .mw-search-results li {
 	padding-bottom: 1em;
+	list-style:none;
 }
 .mw-search-result-data {
 	color: green;
 	font-size: 97%;
+}
+
+td#mw-search-menu {
+	padding-left:6em;
+	font-size:85%;
 }
 
 div#mw-search-interwiki {
@@ -134,8 +145,26 @@ span.searchalttitle {
 
 div.searchdidyoumean {
 	font-size: 127%;
-	padding-bottom:1ex;
-	padding-top:1ex; 
+	margin-bottom: 1ex;
+	margin-top: 1ex;
+	/* Note that this color won't affect the link, as desired. */
+	color: #c00;
+}
+
+div.searchdidyoumean em {
+	font-weight: bold;
+}
+
+.searchmatch {
+	font-weight: bold;
+}
+
+div.searchresults {
+	border:1px solid darkblue;
+	padding-top: 10px;
+	padding-bottom: 10px;
+	padding-left: 20px;
+	padding-right: 20px;
 }
 
 /*
@@ -160,6 +189,7 @@ table.mw-userrights-groups * td,table.mw-userrights-groups * th {
 	left: 0px;
 	width: 0px;
 	background-color: white; 
+	background-color: Window;
 	border-style: solid;
 	border-color: #AAAAAA;
 	border-width: 1px;
@@ -223,7 +253,13 @@ td.os-suggest-result-hl {
     border: 1px dashed #aaa;
 }
 
-table.mw-listgrouprights-table  {
+/*
+ * Special:ListGroupRights styling
+ * Special:Statistics styling 
+*/
+
+table.mw-listgrouprights-table,
+table.mw-statistics-table {
 	border: 1px solid #ccc;
 	border-collapse: collapse;
 }
@@ -232,9 +268,14 @@ table.mw-listgrouprights-table tr  {
 	vertical-align: top;
 }
 
-table.mw-listgrouprights-table td, table.mw-listgrouprights-table th {
+table.mw-listgrouprights-table td, table.mw-listgrouprights-table th,
+table.mw-statistics-table td, table.mw-statistics-table th {
 	padding: 0.5em 0.2em 0.5em 0.2em;
 	border: 1px solid #ccc;
+}
+
+td.mw-statistics-numbers {
+	text-align: right;
 }
 
 /* Special:SpecialPages styling */
@@ -252,11 +293,25 @@ h4.mw-specialpagesgroup {
 	font-style: italic;
 }
 
-/*
- * macbre: fix empty list items render bug in FF (do not apply to any version of IE, refs RT 9666)
- *
- * http://www.webdevout.net/css-hacks#in_css-selectors
-html>/body #bodyContent li {
-	min-height: 1.5em;
+/* Special:EmailUser styling */
+table.mw-emailuser-table {
+	width: 98%;
 }
-*/
+td#mw-emailuser-sender, td#mw-emailuser-recipient {
+	font-weight: bold;
+}
+
+/*
+ * Recreating deleted page warning
+ * Reupload file warning
+ * Page protection warning
+ * incl. log entries for these warnings
+ */
+div.mw-warning-with-logexcerpt {
+	padding: 3px;
+	margin-bottom: 3px;
+	border: 2px solid #2F6FAB;
+}
+div.mw-warning-with-logexcerpt ul li {
+	font-size: 90%;
+}

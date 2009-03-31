@@ -215,7 +215,7 @@ class ConfirmAccountsPage extends SpecialPage
 				$reason . '</i></p>' );
 		}
 		
-		$form  = wfOpenElement( 'form', array( 'method' => 'post', 'name' => 'accountconfirm',
+		$form  = Xml::openElement( 'form', array( 'method' => 'post', 'name' => 'accountconfirm',
 			'action' => $titleObj->getLocalUrl() ) );
 		$form .= "<fieldset>";
 		$form .= '<legend>' . wfMsgHtml('confirmaccount-leg-user') . '</legend>';
@@ -263,7 +263,7 @@ class ConfirmAccountsPage extends SpecialPage
 						$pg = '';
 					}
 					
-					$form .= "<td>".wfCheckLabel( $set[0], $formName, $formName, $this->mAreas[$formName] > 0 )." {$pg}</td>\n";
+					$form .= "<td>".Xml::checkLabel( $set[0], $formName, $formName, $this->mAreas[$formName] > 0 )." {$pg}</td>\n";
 				}
 			}
 			$form .= "</tr></table></div>";
@@ -338,7 +338,7 @@ class ConfirmAccountsPage extends SpecialPage
 		$form .= Xml::hidden( 'acrid', $row->acr_id );
 		$form .= Xml::hidden( 'wpShowRejects', $this->showRejects );
 		$form .= Xml::hidden( 'wpEditToken', $wgUser->editToken() )."\n";
-		$form .= wfCloseElement( 'form' );
+		$form .= Xml::closeElement( 'form' );
 		
 		$wgOut->addHTML( $form );
 		
@@ -373,8 +373,7 @@ class ConfirmAccountsPage extends SpecialPage
 	}
 	
 	function doSubmit() {
-		global $wgOut;
-
+		global $wgOut, $wgUser;
 		$titleObj = Title::makeTitle( NS_SPECIAL, "ConfirmAccounts/{$this->specialPageParameter}" );
 		$row = $this->getRequest( true );
 		if( !$row ) {
@@ -382,13 +381,20 @@ class ConfirmAccountsPage extends SpecialPage
 			$wgOut->returnToMain( true, $titleObj );
 			return;
 		}
-		$errors = array();
-
-		if( $this->submitType == 'reject' || $this->submitType == 'spam' ) {
-			global $wgUser;
+		if( $this->submitType === 'reject' || $this->submitType === 'spam' ) {
 			# Make proxy user to email a rejection message :(
 			$u = User::newFromName( $row->acr_name, 'creatable' );
 			$u->setEmail( $row->acr_email );
+			# Request can later be recovered
+			$dbw = wfGetDB( DB_MASTER );
+			$dbw->begin();
+			$dbw->update( 'account_requests', 
+				array( 'acr_rejected' => $dbw->timestamp(),
+					'acr_user' => $wgUser->getID(),
+					'acr_comment' => ($this->submitType == 'spam') ? '' : $this->reason,
+					'acr_deleted' => 1 ), 
+				array( 'acr_id' => $this->acrID, 'acr_deleted' => 0 ),
+				__METHOD__ );
 			# Do not send multiple times, don't send for "spam" requests
 			if( !$row->acr_rejected && $this->submitType != 'spam' ) {
 				if( $this->reason ) {
@@ -404,23 +410,15 @@ class ConfirmAccountsPage extends SpecialPage
 					return false;
 				}
 			}
-			$dbw = wfGetDB( DB_MASTER );
-			# Request can later be recovered
-			$dbw->update( 'account_requests', 
-				array( 'acr_rejected' => $dbw->timestamp(),
-					'acr_user' => $wgUser->getID(),
-					'acr_comment' => ($this->submitType == 'spam') ? '' : $this->reason,
-					'acr_deleted' => 1 ), 
-				array( 'acr_id' => $this->acrID, 'acr_deleted' => 0 ),
-				__METHOD__ );
+			$dbw->commit();
 			# Clear cache for notice of how many account requests there are
 			global $wgMemc;
 			$key = wfMemcKey( 'confirmaccount', 'noticecount' );
 			$wgMemc->delete( $key );
 
 			$this->showSuccess( $this->submitType );
-		} else if( $this->submitType == 'accept' ) {
-			global $wgAuth;
+		} else if( $this->submitType === 'accept' ) {
+			global $wgAuth, $wgConfirmAccountSaveInfo;
 			# Now create user and check if the name is valid
 			$user = User::newFromName( $this->mUsername, 'creatable' );	
 			if( is_null($user) ) {
@@ -435,6 +433,12 @@ class ConfirmAccountsPage extends SpecialPage
 				return;
 			}
 			# Add user to DB
+			$dbw = wfGetDB( DB_MASTER );
+			# DELETE also ran due to possible rollback failure,
+			# such as that caused by objectcache table usage.
+			# Per http://bugs.mysql.com/bug.php?id=30767, not
+			# too huge of a deal anyway...
+			$dbw->begin();
 			$user = User::createNew( $user->getName() );
 			# VERY important to set email now. Otherwise user will have to request
 			# a new password at the login screen...
@@ -443,18 +447,16 @@ class ConfirmAccountsPage extends SpecialPage
 			$user->setNewpassword( $p );
 			$user->setRealName( $row->acr_real_name );
 			$user->saveSettings(); // Save this into the DB
-			# Check if the user already confirmed email address
-			$dbw = wfGetDB( DB_MASTER );
+			# Import email address confirmation
 			$dbw->update( 'user',
 				array( 'user_email_authenticated' => $row->acr_email_authenticated,
 					'user_email_token_expires' => $row->acr_email_token_expires,
 					'user_email_token' => $row->acr_email_token ),
 				array( 'user_id' => $user->getID() ),
-				__METHOD__ );
+				__METHOD__ 
+			);
 			# Move to credentials if configured to do so
-			global $wgConfirmAccountSaveInfo;
 			if( $wgConfirmAccountSaveInfo ) {
-				global $wgUser;
 				# Copy any attached files to new storage group
 				$key = $row->acr_storage_key;
 				if( $key ) {
@@ -462,12 +464,14 @@ class ConfirmAccountsPage extends SpecialPage
 					$storeNew = FileStore::get( 'accountcreds' );
 					if( !$storeOld || !$storeNew ) {
 						$dbw->delete( 'user', array( 'user_id' => $user->getID() ) );
+						$dbw->rollback();
 						wfDebug( __METHOD__.": invalid storage group '{$store}'.\n" );
 						return false;
 					}
 					$transaction = new FSTransaction();
 					if( !FileStore::lock() ) {
 						$dbw->delete( 'user', array( 'user_id' => $user->getID() ) );
+						$dbw->rollback();
 						wfDebug( __METHOD__.": failed to acquire file store lock, aborting\n" );
 						return false;
 					}
@@ -477,7 +481,6 @@ class ConfirmAccountsPage extends SpecialPage
 					}
 				}
 				$acd_id = $dbw->nextSequenceValue( 'account_credentials_acd_id_seq' );
-				$dbw->begin();
 				# Move request data into a separate table
 				$dbw->insert( 'account_credentials',
 					array( 'acd_user_id' => $user->getID(),
@@ -496,25 +499,19 @@ class ConfirmAccountsPage extends SpecialPage
 						'acd_user' => $wgUser->getID(),
 						'acd_comment' => $this->reason,
 						'acd_id' => $acd_id ),
-					__METHOD__ );
+					__METHOD__
+				);
 			}
 			# Add to global user login system (if there is one)
 			if( !$wgAuth->addUser( $user, $p, $row->acr_email, $row->acr_real_name ) ) {
 				$dbw->delete( 'user', array( 'user_id' => $user->getID() ) );
+				$dbw->rollback();
 				# Rollback file and row copies from credentials table on failure
-				if( $wgConfirmAccountSaveInfo ) {
-					$dbw->rollback();
-					if( isset($transaction) )
-						$transaction->rollback();
+				if( isset($transaction) ) {
+					$transaction->rollback();
 				}
 				$this->showForm( wfMsgHtml( 'externaldberror' ) );
 				return false;
-			}
-			# Commit these if we make past the CentralAuth system
-			if( $wgConfirmAccountSaveInfo ) {
-				$dbw->commit();
-				if( isset($transaction) )
-					$transaction->commit();
 			}
 			
 			# Grant any necessary rights
@@ -530,36 +527,45 @@ class ConfirmAccountsPage extends SpecialPage
 				}
 			}
 			
+			# OK, now remove the request from the queue
+			$dbw->delete( 'account_requests', array('acr_id' => $this->acrID), __METHOD__ );
+			
+			# Commit this if we make past the CentralAuth system
+			# and the groups are added. Next step is sending out an
+			# email, which we cannot take back...
+			$dbw->commit();
+			if( isset($transaction) ) {
+				$transaction->commit();
+			}
+			
 			# Send out password
-			$ebody = '';
 			if( $this->reason ) {
+				$msg = "confirmaccount-email-body2-pos{$this->mType}";
 				# If the user is in a group and there is a welcome for that group, use it
-				if( $group && !wfEmptyMsg( "confirmaccount-email-body2-pos{$this->mType}", wfMsg("confirmaccount-email-body2-pos{$this->mType}") ) ) {
-					$ebody = wfMsgExt("confirmaccount-email-body2-pos{$this->mType}", array('parsemag'), $user->getName(), $p, $this->reason );
-				}
+				if( $group && !wfEmptyMsg( $msg, wfMsg($msg) ) ) {
+					$ebody = wfMsgExt($msg, array('parsemag'), $user->getName(), $p, $this->reason );
 				# Use standard if none found...
-				if( !$ebody ) {
+				} else {
 					$ebody = wfMsgExt( 'confirmaccount-email-body2', array('parsemag'), $user->getName(), $p, $this->reason );
 				}
 			} else {
+				$msg = "confirmaccount-email-body-pos{$this->mType}";
 				# If the user is in a group and there is a welcome for that group, use it
-				if( $group && !wfEmptyMsg( "confirmaccount-email-body-pos{$this->mType}", wfMsg("confirmaccount-email-body-pos{$this->mType}") ) ) {
-					$ebody = wfMsgExt("confirmaccount-email-body-pos{$this->mType}", array('parsemag'), $user->getName(), $p, $this->reason );
-				}
+				if( $group && !wfEmptyMsg( $msg, wfMsg($msg) ) ) {
+					$ebody = wfMsgExt($msg, array('parsemag'), $user->getName(), $p, $this->reason );
 				# Use standard if none found...
-				if( !$ebody ) {
+				} else {
 					$ebody = wfMsgExt( 'confirmaccount-email-body', array('parsemag'), $user->getName(), $p, $this->reason );
 				}
 			}
 			$result = $user->sendMail( wfMsg( 'confirmaccount-email-subj' ), $ebody );
 			if( WikiError::isError( $result ) ) {
-				$errors[] = wfMsg( 'mailerror', htmlspecialchars( $result->toString() ) );
+				$error = wfMsg( 'mailerror', htmlspecialchars( $result->toString() ) );
 			}
 			
 			# Safe to hook/log now...
 			wfRunHooks( 'AddNewAccount', array( $user ) );
-			# OK, now remove the request from the queue
-			$dbw->delete( 'account_requests', array('acr_id' => $this->acrID), __METHOD__ );
+			$user->addNewUserLogEntry();
 			# Clear cache for notice of how many account requests there are
 			global $wgMemc;
 			$key = wfMemcKey( 'confirmaccount', 'noticecount' );
@@ -639,8 +645,8 @@ class ConfirmAccountsPage extends SpecialPage
 				$utalk->doEdit( $welcome . ' ~~~~', wfMsg('confirmaccount-wsum'), EDIT_MINOR );
 			}
 			# Finally, done!!!
-			$this->showSuccess( $this->submitType, $user->getName(), $errors );
-		} else if( $this->submitType == 'hold' ) {
+			$this->showSuccess( $this->submitType, $user->getName(), $error );
+		} else if( $this->submitType === 'hold' ) {
 			global $wgUser;
 			# Make proxy user to email a message
 			$u = User::newFromName( $row->acr_name, 'creatable' );
@@ -660,14 +666,15 @@ class ConfirmAccountsPage extends SpecialPage
 			$dbw->begin();
 			$dbw->update( 'account_requests',
 				array( 'acr_held' => $dbw->timestamp(), 
-					'acr_user' => $wgUser->getID(),
+					'acr_user'    => $wgUser->getID(),
 					'acr_comment' => $this->reason ),
 				array( 'acr_id' => $this->acrID, 'acr_held IS NULL', 'acr_deleted' => 0 ), 
-					__METHOD__ );
+					__METHOD__
+			);
 			# Do not send multiple times
 			if( !$row->acr_held && !($row->acr_deleted && $row->acr_deleted !='f') ) {
 				$result = $u->sendMail( wfMsg( 'confirmaccount-email-subj' ),
-						wfMsgExt( 'confirmaccount-email-body5', array('parsemag'), $u->getName(), $this->reason ) );
+					wfMsgExt( 'confirmaccount-email-body5', array('parsemag'), $u->getName(), $this->reason ) );
 				if( WikiError::isError( $result ) ) {
 					$dbw->rollback();
 					$error = wfMsg( 'mailerror', htmlspecialchars( $result->toString() ) );

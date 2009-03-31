@@ -3,13 +3,13 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 	echo "FlaggedRevs extension\n";
 	exit( 1 );
 }
-wfLoadExtensionMessages( 'Stabilization' );
-wfLoadExtensionMessages( 'FlaggedRevs' );
 
 class Stabilization extends UnlistedSpecialPage
 {
     function __construct() {
         UnlistedSpecialPage::UnlistedSpecialPage( 'Stabilization', 'stablesettings' );
+		wfLoadExtensionMessages( 'Stabilization' );
+		wfLoadExtensionMessages( 'FlaggedRevs' );
     }
 
     function execute( $par ) {
@@ -104,73 +104,70 @@ class Stabilization extends UnlistedSpecialPage
 		}
 
 		$special = SpecialPage::getTitleFor( 'Stabilization' );
-		$form .= Xml::openElement( 'form', array( 'name' => 'stabilization', 'action' => $special->getLocalUrl( ), 'method' => 'post' ) );
+		$form .= Xml::openElement( 'form', array( 'name' => 'stabilization', 'action' => $special->getLocalUrl( ), 'method' => 'post' ) ).
+			Xml::fieldset( wfMsg( 'stabilization-def' ), false ) . "\n" .
+			Xml::radioLabel( wfMsg( 'stabilization-def1' ), 'mwStableconfig-override', 1, 'default-stable', 1 == $this->override, $off ) . '<br />' . "\n" .
+			Xml::radioLabel( wfMsg( 'stabilization-def2' ), 'mwStableconfig-override', 0, 'default-current', 0 == $this->override, $off ) . "\n" .
+			Xml::closeElement( 'fieldset' ) .
 
-		$form .= "<fieldset><legend>".wfMsg('stabilization-def')."</legend>";
-		$form .= "<table><tr>";
-		$form .= "<td>".Xml::radio( 'mwStableconfig-override', 1, (1==$this->override), array('id' => 'default-stable')+$off)."</td>";
-		$form .= "<td>".Xml::label( wfMsg('stabilization-def1'), 'default-stable' )."</td>";
-		$form .= "</tr><tr>";
-		$form .= "<td>".Xml::radio( 'mwStableconfig-override', 0, (0==$this->override), array('id' => 'default-current')+$off)."</td>";
-		$form .= "<td>".Xml::label( wfMsg('stabilization-def2'), 'default-current' )."</td>";
-		$form .= "</tr></table></fieldset>";
+			Xml::fieldset( wfMsg( 'stabilization-select' ), false ) .
+			Xml::radioLabel( wfMsg( 'stabilization-select1' ), 'mwStableconfig-select', FLAGGED_VIS_NORMAL, 'stable-select1', FLAGGED_VIS_NORMAL == $this->select, $off ) . '<br />' . "\n" .
+			Xml::radioLabel( wfMsg( 'stabilization-select2' ), 'mwStableconfig-select', FLAGGED_VIS_LATEST, 'stable-select2', FLAGGED_VIS_LATEST == $this->select, $off ) . '<br />' . "\n" .
+			// Xml::radioLabel( wfMsg( 'stabilization-select3' ), 'mwStableconfig-select', FLAGGED_VIS_PRISTINE, 'stable-select3', FLAGGED_VIS_PRISTINE == $this->select, $off ) .
+			Xml::closeElement( 'fieldset' ) .
 
-		$form .= "<fieldset><legend>".wfMsg('stabilization-select')."</legend>";
-		$form .= "<table><tr>";
-		/*
-		$form .= "<td>".Xml::radio( 'mwStableconfig-select', FLAGGED_VIS_PRISTINE, 
-			(FLAGGED_VIS_PRISTINE==$this->select), array('id' => 'stable-select3')+$off )."</td>";
-		$form .= "<td>".Xml::label( wfMsg('stabilization-select3'), 'stable-select3' )."</td>";
-		$form .= "</tr><tr>";
-		*/
-		$form .= "<td>".Xml::radio( 'mwStableconfig-select', FLAGGED_VIS_NORMAL, 
-			(FLAGGED_VIS_NORMAL==$this->select), array('id' => 'stable-select1')+$off )."</td>";
-		$form .= "<td>".Xml::label( wfMsg('stabilization-select1'), 'stable-select1' )."</td>";
-		$form .= "</tr><tr>";
-		$form .= "<td>".Xml::radio( 'mwStableconfig-select', FLAGGED_VIS_LATEST, 
-			(FLAGGED_VIS_LATEST==$this->select), array('id' => 'stable-select2')+$off )."</td>";
-		$form .= "<td>".Xml::label( wfMsg('stabilization-select2'), 'stable-select2' )."</td>";
-		$form .= "</tr></table></fieldset>";
-
-		if( $this->isAllowed ) {
-			$form .= "<fieldset><legend>".wfMsgHtml('stabilization-leg')."</legend>";
-			$form .= '<table>';
-			$form .= '<tr><td>'.Xml::label( wfMsg('stabilization-comment'), 'wpReason' ).'</td>';
-			$form .= '<td>'.Xml::input( 'wpReason', 60, $this->comment, array('id' => 'wpReason') )."</td></tr>";
-		} else {
-			$form .= '<table>';
-		}
-		$form .= '<tr>';
-		$form .= '<td><label for="expires">' . wfMsgExt( 'stabilization-expiry', array( 'parseinline' ) ) . '</label></td>';
-		$form .= '<td>' . Xml::input( 'mwStableconfig-expiry', 60, $this->expiry, array('id' => 'expires')+$off ) . '</td>';
-		$form .= '</tr>';
-		$form .= '</table>';
+			Xml::fieldset( wfMsg( 'stabilization-leg' ), false ) .
+			Xml::openElement( 'table', array( 'class' => 'mw-fr-stabilization-leg' ) ) .
+			'<tr>
+				<td class="mw-label">' .
+					Xml::tags( 'label', array( 'for' => 'expires' ), wfMsgExt( 'stabilization-expiry', array( 'parseinline' ) ) ) .
+				'</td>
+				<td class="mw-input">' .
+					Xml::input( 'mwStableconfig-expiry', 60, $this->expiry, array( 'id' => 'expires'  ) + $off ) .
+				'</td>
+			</tr>';		
 
 		if( $this->isAllowed ) {
 			$watchLabel = wfMsgExt('watchthis', array('parseinline'));
 			$watchAttribs = array('accesskey' => wfMsg( 'accesskey-watch' ), 'id' => 'wpWatchthis');
 			$watchChecked = ( $wgUser->getOption( 'watchdefault' ) || $wgTitle->userIsWatching() );
 
-			$form .= "<p>&nbsp;&nbsp;&nbsp;".Xml::check( 'wpWatchthis', $watchChecked, $watchAttribs );
-			$form .= "&nbsp;<label for='wpWatchthis'".$this->skin->tooltipAndAccesskey('watch').">{$watchLabel}</label></p>";
-
-			$form .= Xml::hidden( 'title', $wgTitle->getPrefixedDBKey() );
-			$form .= Xml::hidden( 'page', $this->page->getPrefixedText() );
-			$form .= Xml::hidden( 'wpEditToken', $wgUser->editToken() );
-
-			$form .= '<p>'.Xml::submitButton( wfMsg( 'stabilization-submit' ) ).'</p>';
-			$form .= "</fieldset>";
+			$form .= '<tr>
+					<td class="mw-label">' .
+						Xml::label( wfMsg( 'stabilization-comment' ), 'wpReason' ) .
+					'</td>
+					<td class="mw-input">' .
+						Xml::input( 'wpReason', 60, $this->comment, array( 'id' => 'wpReason' ) ) .
+					'</td>
+				</tr>
+				<tr>
+					<td></td>
+					<td class="mw-input">' .
+						Xml::check( 'wpWatchthis', $watchChecked, $watchAttribs ) .
+						"<label for='wpWatchthis'" . $this->skin->tooltipAndAccesskey( 'watch' ) . ">{$watchLabel}</label>" .
+					'</td>
+				</tr>
+				<tr>
+					<td></td>
+					<td class="mw-submit">' .
+						Xml::submitButton( wfMsg( 'stabilization-submit' ) ) .
+					'</td>
+				</tr>' .
+				Xml::hidden( 'title', $wgTitle->getPrefixedDBKey() ) .
+				Xml::hidden( 'page', $this->page->getPrefixedText() ) .
+				Xml::hidden( 'wpEditToken', $wgUser->editToken() );
+		} else {
+			$form .= Xml::openElement( 'table', array( 'class' => 'mw-fr-stabilization' ) );
 		}
 
-		$form .= '</form>';
+		$form .= Xml::closeElement( 'table' ) .
+			Xml::closeElement( 'fieldset' ) .
+			Xml::closeElement( 'form' );
 
 		$wgOut->addHTML( $form );
 
-		$wgOut->addHtml( Xml::element( 'h2', NULL, htmlspecialchars( LogPage::logName( 'stable' ) ) ) );
-		$logViewer = new LogViewer(
-			new LogReader( new FauxRequest(
-				array( 'page' => $this->page->getPrefixedText(), 'type' => 'stable' ) ) ) );
-		$logViewer->showList( $wgOut );
+		$wgOut->addHTML( Xml::element( 'h2', NULL, htmlspecialchars( LogPage::logName( 'stable' ) ) ) );
+		LogEventsList::showLogExtract( $wgOut, 'stable', $this->page->getPrefixedText() );
 	}
 
 	function submit() {
@@ -200,7 +197,6 @@ class Stabilization extends UnlistedSpecialPage
 		}
 
 		$dbw = wfGetDB( DB_MASTER );
-		$dbw->begin();
 		# Get current config
 		$row = $dbw->selectRow( 'flaggedpage_config',
 			array( 'fpc_select', 'fpc_override', 'fpc_expiry' ),
@@ -248,7 +244,9 @@ class Stabilization extends UnlistedSpecialPage
 				$encodedExpiry = Block::encodeExpiry($expiry, $dbw );
 				if( $encodedExpiry != 'infinity' ) {
 					$expiry_description = ' (' . wfMsgForContent( 'stabilize-expiring',
-						$wgContLang->timeanddate($expiry, false, false) ) . ')';
+						$wgContLang->timeanddate($expiry, false, false) ,
+						$wgContLang->date($expiry, false, false) ,
+						$wgContLang->time($expiry, false, false) ) . ')';
 					$reason .= "$expiry_description";
 				}
 			}
@@ -270,7 +268,7 @@ class Stabilization extends UnlistedSpecialPage
 			# Insert a null revision
 			$nullRevision = Revision::newNullRevision( $dbw, $id, $comment, true );
 			$nullRevId = $nullRevision->insertOn( $dbw );
-			# Update page record
+			# Update page record and touch page
 			$article = new Article( $this->page );
 			$article->updateRevisionOn( $dbw, $nullRevision, $latest );
 			wfRunHooks( 'NewRevisionFromEditComplete', array($article, $nullRevision, $latest) );
@@ -283,9 +281,18 @@ class Stabilization extends UnlistedSpecialPage
 		} else {
 			$wgUser->removeWatch( $this->page );
 		}
-		$dbw->commit();
 
-		$wgOut->redirect( $this->page->getFullUrl() );
+		$query = '';
+		# Take the user to the diff to make sure an outdated version isn't
+		# being set at the default. This is really an issue with configs
+		# that only let certain pages be reviewed.
+		if( $this->select == FLAGGED_VIS_NORMAL ) {
+			$frev = FlaggedRevision::newFromStable( $this->page, FR_MASTER );
+			if( $frev && $frev->getRevId() != $latest ) {
+				$query = "oldid={$frev->getRevId()}&diff=cur&diffonly=0"; // override diff-only
+			}
+		}
+		$wgOut->redirect( $this->page->getFullUrl( $query ) );
 
 		return true;
 	}

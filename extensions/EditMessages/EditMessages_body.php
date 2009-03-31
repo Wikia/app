@@ -222,9 +222,11 @@ class EditMessagesPage extends SpecialPage {
 		}
 
 		foreach ( $warnings as $warningType => $warnings2 ) {
-			if ( count( $warnings2 ) ) {
+			if ( $warningsCount = count( $warnings2 ) ) {
 				$wgOut->addWikiMsg( 'editmsg-warning-' . $warningType,
-					implode( ', ', $warnings2 ) );
+					implode( ', ', $warnings2 ), $warningsCount );
+				// is this really needed?
+				$warningsCount = 0;
 			}
 		}
 

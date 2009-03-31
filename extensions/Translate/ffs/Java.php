@@ -32,8 +32,8 @@ class JavaFormatReader extends SimpleFormatReader {
 			$handle = fopen( $this->filename, "rt" );
 			$state = 0;
 
-			while ( !feof($handle) ) {
-				$line = fgets($handle);
+			while ( !feof( $handle ) ) {
+				$line = fgets( $handle );
 
 				if ( $state === 0 ) {
 					if ( $line === "\n" ) {
@@ -43,11 +43,11 @@ class JavaFormatReader extends SimpleFormatReader {
 
 					$formatPrefix = '# Author: ';
 
-					$prefixLength = strlen($formatPrefix);
+					$prefixLength = strlen( $formatPrefix );
 					$prefix = substr( $line, 0, $prefixLength );
 					if ( strcasecmp( $prefix, $formatPrefix ) === 0 ) {
 						// fgets includes the trailing newline, trim to get rid of it
-						$authors[] = trim(substr( $line, $prefixLength ));
+						$authors[] = trim( substr( $line, $prefixLength ) );
 					}
 				} elseif ( $state === 1 ) {
 					if ( $line === "\n" || $line[0] !== '#' ) {
@@ -85,7 +85,7 @@ class JavaFormatReader extends SimpleFormatReader {
 		foreach ( $lines as $line ) {
 			if ( $line === '' || !strpos( $line, '=' ) || $line[0] === '#' ) { continue; }
 			list( $key, $value ) = explode( '=', $line, 2 );
-			$messages[$mangler->mangle(trim($key))] = trim($value);
+			$messages[$mangler->mangle( trim( $key ) )] = trim( $value );
 		}
 		return $messages;
 	}
@@ -101,13 +101,13 @@ class JavaFormatWriter extends SimpleFormatWriter {
 	 */
 	public function makeHeader( $handle, $code ) {
 		global $wgSitename;
-		list( $name, $native ) = $this->getLanguageNames($code);
+		list( $name, $native ) = $this->getLanguageNames( $code );
 		$authors = $this->formatAuthors( '# Author: ', $code );
-		$when = wfTimestamp(TS_ISO_8601);
+		$when = wfTimestamp( TS_ISO_8601 );
 
 		fwrite( $handle, <<<HEADER
 # Messages for $name ($native)
-# Exported from $wgSitename at $when
+# Exported from $wgSitename
 $authors
 
 HEADER
@@ -117,8 +117,12 @@ HEADER
 	/**
 	 * Inherited. Exports messages as lines of format key=value.
 	 */
-	protected function exportMessages( $handle, array $messages ) {
-		foreach ( $messages as $key => $value ) {
+	protected function exportMessages( $handle, MessageCollection $collection ) {
+		$mangler = $this->group->getMangler();
+		foreach ( $collection->keys() as $item ) {
+			$key = $mangler->unmangle( $item );
+			$value = str_replace( TRANSLATE_FUZZY, '', $collection[$item]->translation );
+
 			# Make sure we don't slip newlines trough... it would be fatal
 			$value = str_replace( "\n", '\\n', $value );
 			# No pretty alignment here, sorry

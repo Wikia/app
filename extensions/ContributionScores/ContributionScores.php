@@ -1,6 +1,6 @@
 <?php
 /** \file
-* \brief Contains setup code for the Contribution Scores Extension. 
+* \brief Contains setup code for the Contribution Scores Extension.
 */
 
 # Not a valid entry point, skip unless MEDIAWIKI is defined
@@ -30,7 +30,10 @@ $wgAutoloadClasses['ContributionScores'] = CONTRIBUTIONSCORES_PATH . '/Contribut
 $wgSpecialPages['ContributionScores'] = 'ContributionScores';
 $wgSpecialPageGroups['ContributionScores'] = 'wiki';
 
-if( version_compare( $wgVersion, '1.11', '>=' ) ) {
+if( version_compare( $wgVersion, '1.13', '>=' ) ) {
+	$wgExtensionMessagesFiles['ContributionScores'] = CONTRIBUTIONSCORES_PATH . '/ContributionScores.i18n.php';
+	$wgExtensionAliasesFiles['ContributionScores'] = CONTRIBUTIONSCORES_PATH . '/ContributionScores.alias.php';
+} else if( version_compare( $wgVersion, '1.11', '>=' ) ) {
 	$wgExtensionMessagesFiles['ContributionScores'] = CONTRIBUTIONSCORES_PATH . '/ContributionScores.i18n.php';
 } else {
 	$wgExtensionFunctions[] = 'efContributionScores_AddMessages';
@@ -47,7 +50,7 @@ if ( defined( 'MW_SUPPORTS_PARSERFIRSTCALLINIT' ) ) {
 ///Message Cache population for versions that did not support $wgExtensionFunctions
 function efContributionScores_AddMessages() {
 	global $wgMessageCache;
-	
+
 	#Add Messages
 	require( CONTRIBUTIONSCORES_PATH . '/ContributionScores.i18n.php' );
 	foreach( $messages as $key => $value ) {
@@ -58,7 +61,7 @@ function efContributionScores_AddMessages() {
 
 function efContributionScores_Setup() {
 	global $wgParser;
-	
+
 	$wgParser->setFunctionHook( 'cscore', 'efContributionScores_Render' );
 	return true;
 }
@@ -73,16 +76,16 @@ function efContributionScores_Render(&$parser, $usertext, $metric='score') {
 
 	if( version_compare( $wgVersion, '1.11', '>=' ) )
 		wfLoadExtensionMessages( 'ContributionScores' );
-		
+
 	$output = "";
-	
+
 	if ($wgContribScoreDisableCache) {
 		$parser->disableCache();
 	}
-	
+
 	$user = User::newFromName($usertext);
 	$dbr = wfGetDB( DB_SLAVE );
-	
+
 	if ( $user instanceof User && $user->isLoggedIn() ) {
 		if ($metric=='score') {
 			$res = $dbr->select('revision',
@@ -96,7 +99,7 @@ function efContributionScores_Render(&$parser, $usertext, $metric='score') {
 									array('rev_user' => $user->getID()));
 			$row = $dbr->fetchObject($res);
 			$output = $row->rev_count;
-			
+
 		} elseif ($metric=='pages') {
 			$res = $dbr->select('revision',
 									'COUNT(DISTINCT rev_page) AS page_count',
@@ -109,6 +112,6 @@ function efContributionScores_Render(&$parser, $usertext, $metric='score') {
 	} else {
 		$output = wfMsg('contributionscores-invalidusername');
 	}
-	
+
 	return $parser->insertStripItem($output, $parser->mStripState);
 }

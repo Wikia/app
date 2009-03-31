@@ -19,8 +19,8 @@ $namespaceNames = array(
 	NS_USER_TALK      => 'Discuusje_gebruker',
 	# NS_PROJECT set by $wgMetaNamespace
 	NS_PROJECT_TALK   => 'Discuusje_$1',
-	NS_IMAGE          => 'Ofbeeldienge',
-	NS_IMAGE_TALK     => 'Discuusje_ofbeeldienge',
+	NS_FILE           => 'Ofbeeldienge',
+	NS_FILE_TALK      => 'Discuusje_ofbeeldienge',
 	NS_MEDIAWIKI      => 'MediaWiki',
 	NS_MEDIAWIKI_TALK => 'Discuusje_MediaWiki',
 	NS_TEMPLATE       => 'Patrôon',
@@ -69,6 +69,10 @@ $messages = array(
 'newpages'          => 'Nieuwe bloadn',
 'newpages-username' => 'Gebrukersnoame:',
 
+# Special:Log/newusers
+'newuserlogpage'          => 'Logboek nieuwe gebrukers',
+'newuserlog-create-entry' => 'Nieuwe gebruker',
+
 # Watchlist
 'mywatchlist' => 'Myn volglyste',
 'watch'       => 'Volgn',
@@ -95,7 +99,7 @@ $messages = array(
 # Tooltip help for the actions
 'tooltip-n-mainpage' => "Noar 't voorblad goane",
 
-# Special:NewImages
+# Special:NewFiles
 'newimages' => 'Nieuwe ofbeeldiengn',
 
 );

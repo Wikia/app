@@ -31,6 +31,13 @@ class XmlTypeCheck {
 		$this->filterCallback = $filterCallback;
 		$this->run( $file );
 	}
+	
+	/**
+	 * Get the root element. Simple accessor to $rootElement
+	 */
+	public function getRootElement() {
+		return $this->rootElement;
+	}
 
 	private function run( $fname ) {
 		$parser = xml_parser_create_ns( 'UTF-8' );

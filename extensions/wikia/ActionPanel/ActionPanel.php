@@ -9,7 +9,7 @@ $wgExtensionCredits['other'][] = array(
 );
 
 $wgExtensionMessagesFiles['ActionPanel'] = dirname(__FILE__).'/'.'ActionPanel.i18n.php';
-$wgHooks['ExtendJSGlobalVars'][] = 'fnAddActionPanelJSGlobalVariables';
+$wgHooks['MakeGlobalVariablesScript'][] = 'fnAddActionPanelJSGlobalVariables';
 function fnAddActionPanelJSGlobalVariables(&$vars){
 	global $wgTitle, $wgContLang;
 	wfLoadExtensionMessages('ActionPanel');

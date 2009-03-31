@@ -1,0 +1,24 @@
+SubstAll is an extension written for MediaWiki. Only tested on the
+current trunk (1.14alpha), but should function on anything as far
+back as 1.11. To install, do the following:
+
+1. Download copy SubstAll.php and SubstAll.i18n.php to a
+   subfolder of your extensions directory.
+2. Add require_once("extensions/SubstAll/SubstAll.php"); to
+   your LocalSettings.php file.
+
+The syntax is simple. Anything placed within <substall>...</substall>
+tags on page save will be preprocessed to final wiki markup. This
+means all templates, all magic words, et cetera will be full expanded.
+This is similar to the behavior of the ExpandTemplates extension
+written by Tim Starling.
+
+The word "substall" can be customized by editing the "substall-hook"
+message on your MediaWiki (navigate to [[MediaWiki:Substall-hook]]
+and replace it with any single word you'd like).
+
+Also, setting $wgRemoveCommentsOnSubstAll to true (default) will strip
+any HTML comments <!-- like this --> from the output. Set to false if
+you'd like to have them instead.
+
+Software is free under GNU GPL v2 or a later version if you'd wish. Enjoy.

@@ -64,7 +64,7 @@ class Cite {
 	var $mGroupCnt = array();
 
 	/**
-	 * Internal counter for anonymous references, seperate from
+	 * Internal counter for anonymous references, separate from
 	 * $mOutCnt because anonymous references won't increment it,
 	 * but will incremement $mOutCnt
 	 *
@@ -131,10 +131,13 @@ class Cite {
 		list($key,$group) = $this->refArg( $argv );
 		
 		if( $str === '' ) {
-			# <ref ...></ref>.  This construct is always invalid: either
-			# it's a contentful ref, or it's a named duplicate and should
-			# be <ref ... />.
-			return $this->error( 'cite_error_ref_no_input' );
+			# <ref ...></ref>.  This construct is  invalid if
+			# it's a contentful ref, but OK if it's a named duplicate and should
+			# be equivalent <ref ... />, for compatability with #tag.
+			if ( $key == false )
+				return $this->error( 'cite_error_ref_no_input' );
+			else
+				$str = null;
 		}
 				
 		if( $key === false ) {
@@ -155,7 +158,24 @@ class Cite {
 			return $this->error( 'cite_error_ref_numeric_key' );
 		}
 
-		#Split these into groups.
+		if( preg_match(
+			'/<ref\b[^<]*?>/',
+			preg_replace( '#<([^ ]+?).*?>.*?</\\1 *>|<!--.*?-->#', '', $str )
+		) ) {
+			# (bug 6199) This most likely implies that someone left off the
+			# closing </ref> tag, which will cause the entire article to be
+			# eaten up until the next <ref>.  So we bail out early instead.
+			# The fancy regex above first tries chopping out anything that
+			# looks like a comment or SGML tag, which is a crude way to avoid
+			# false alarms for <nowiki>, <pre>, etc.
+			#
+			# Possible improvement: print the warning, followed by the contents
+			# of the <ref> tag.  This way no part of the article will be eaten
+			# even temporarily.
+			return $this->error( 'cite_error_included_ref' );
+		}
+
+		# Split these into groups.
 		if( $group === null ) {
 			$group = $default_group;
 		}
@@ -195,14 +215,14 @@ class Cite {
 		else if ( $cnt >= 1 ) {
 			if ( isset( $argv['name'] ) ) {
 				// Key given.
-				$key = $this->validateName( $argv['name'] );
+				$key = Sanitizer::escapeId( $argv['name'], 'noninitial' );
 				unset( $argv['name']);
 				--$cnt;
 			}
 			if ( isset( $argv['group'] ) ){
 				if (! $wgAllowCiteGroups ) return array(false); //remove when groups are fully tested.
 				// Group given.
-				$group = $argv['group'];//don't apply validateName for group display
+				$group = $argv['group'];
 				unset( $argv['group']);
 				--$cnt;
 			}
@@ -211,37 +231,11 @@ class Cite {
 				return array ($key,$group);
 			else
 				// Invalid key
-				return array(false);
+				return array(false,false);
 		}
 		else
 			// No key
 			return array(null,$group);
-	}
-	
-	/**
-	 * Since the key name is used in an XHTML id attribute, it must
-	 * conform to the validity rules. The restriction to begin with
-	 * a letter is lifted since references have their own prefix.
-	 *
-	 * @fixme merge this code with the various section name transformations
-	 * @fixme double-check for complete validity
-	 * @return string if valid, false if invalid
-	 */
-	function validateName( $name ) {
-		if( preg_match( '/^[A-Za-z0-9:_.-]*$/i', $name ) ) {
-			return $name;
-		} else {
-			// WARNING: CRAPPY CUT AND PASTE MAKES BABY JESUS CRY
-			$text = urlencode( str_replace( ' ', '_', $name ) );
-			$replacearray = array(
-				'%3A' => ':',
-				'%' => '.'
-			);
-			return str_replace(
-				array_keys( $replacearray ),
-				array_values( $replacearray ),
-				$text );
-		}
 	}
 
 	/**
@@ -340,7 +334,9 @@ class Cite {
 			
 		}
 		
-		if ( count( $argv ) )
+		if ( count( $argv ) && $wgAllowCiteGroups )
+			return $this->error( 'cite_error_references_invalid_parameters_group' );
+		elseif ( count( $argv ) )
 			return $this->error( 'cite_error_references_invalid_parameters' );
 		else
 			return $this->referencesFormat($group);
@@ -563,7 +559,7 @@ class Cite {
 	 * This does approximately the same thing as
 	 * Language::listToText() but due to this being used for a
 	 * slightly different purpose (people might not want , as the
-	 * first seperator and not 'and' as the second, and this has to
+	 * first separator and not 'and' as the second, and this has to
 	 * use messages from the content language) I'm rolling my own.
 	 *
 	 * @static
@@ -643,7 +639,7 @@ class Cite {
 	/**
 	 * Generate the labels to pass to the
 	 * 'cite_references_link_many_format' message, the format is an
-	 * arbitary number of tokens seperated by [\t\n ]
+	 * arbitary number of tokens separated by [\t\n ]
 	 */
 	function genBacklinkLabels() {
 		wfProfileIn( __METHOD__ );

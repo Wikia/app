@@ -1,0 +1,12 @@
+Google Charts are query printers for Semantic MediaWiki applying the
+Google Charts API at http://code.google.com/apis/chart
+Currently they include two query printers, for bar and pie charts.
+
+== Installation ==
+They are installed just as the other semantic result formats. Refer to that
+documentation. The keywords are 'googlebar' and 'googlepie'.
+
+== Configuration and Usage ==
+For an up to date documentation please refer to
+http://semantic-mediawiki.org/wiki/Google_bar_chart
+http://semantic-mediawiki.org/wiki/Google_pie_chart

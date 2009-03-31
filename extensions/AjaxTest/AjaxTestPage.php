@@ -38,7 +38,7 @@ class AjaxTestPage extends SpecialPage {
 		);
 		
 		
-		$wgOut->addHtml( $this->makeInputForm() );
+		$wgOut->addHTML( $this->makeInputForm() );
 	}
 	        
 	/**
@@ -47,36 +47,36 @@ class AjaxTestPage extends SpecialPage {
 	function makeInputForm() {
 		$thisTitle = Title::makeTitle( NS_SPECIAL, $this->getName() );
 		$form = '';
-		$form .= wfOpenElement( 'form', array( 'name' => 'ajaxtest', 'method' => 'get', 'action' => $thisTitle->getLocalUrl() ) );
-		$form .= wfElement( 'input', array( 'type' => 'text', 'name' => 'ajaxtest_text', 'id' => 'ajaxtest_text', 'value' => '', 'size' => '64' ) ) . ' ';
-		$form .= wfElement( 'br' );
-		$form .= wfElement( 'label', array( 'for' => 'usestring' ), 'use string value' );
-		$form .= wfElement( 'input', array( 'type' => 'checkbox', 'name' => 'usestring', 'id' => 'usestring') );
-		$form .= wfElement( 'br' );
-		$form .= wfElement( 'label', array( 'for' => 'httpcache' ), 'use http cache' );
-		$form .= wfElement( 'input', array( 'type' => 'checkbox', 'name' => 'httpcache', 'id' => 'httpcache') );
-		$form .= wfElement( 'br' );
-		$form .= wfElement( 'label', array( 'for' => 'lastmod' ), 'use last modified' );
-		$form .= wfElement( 'input', array( 'type' => 'checkbox', 'name' => 'lastmod', 'id' => 'lastmod') );
-		$form .= wfElement( 'br' );
-		$form .= wfElement( 'label', array( 'for' => 'error' ), 'trigger error' );
-		$form .= wfElement( 'input', array( 'type' => 'checkbox', 'name' => 'error', 'id' => 'error') );
-		$form .= wfElement( 'br' );
-		$form .= wfOpenElement( 'select', array( 'name' => 'ajaxtest_target', 'id' => 'ajaxtest_target' ) );
-		$form .= wfElement( 'option', array( 'value' => 'function' ), "function" );
-		$form .= wfElement( 'option', array( 'value' => 'element' ), "element" );
-		$form .= wfElement( 'option', array( 'value' => 'input' ), "input" );
-		$form .= wfCloseElement( 'select' );
-		$form .= wfElement( 'input', array( 'type' => 'button', 'onclick' => 'doAjaxTest();', 'value' => 'TEST' ) );
-		$form .= wfElement( 'input', array( 'type' => 'button', 'onclick' => 'clearAjaxTest();', 'value' => 'CLEAR' ) );
-		#$form .= wfElement( 'input', array( 'type' => 'button', 'onclick' => 'getElementById("ajaxtest_out").value= getElementById("ajaxtest_text").value;', 'value' => 'DUMMY' ) );
-		$form .= wfCloseElement( 'form' );
+		$form .= Xml::openElement( 'form', array( 'name' => 'ajaxtest', 'method' => 'get', 'action' => $thisTitle->getLocalUrl() ) );
+		$form .= Xml::element( 'input', array( 'type' => 'text', 'name' => 'ajaxtest_text', 'id' => 'ajaxtest_text', 'value' => '', 'size' => '64' ) ) . ' ';
+		$form .= Xml::element( 'br' );
+		$form .= Xml::element( 'label', array( 'for' => 'usestring' ), 'use string value' );
+		$form .= Xml::element( 'input', array( 'type' => 'checkbox', 'name' => 'usestring', 'id' => 'usestring') );
+		$form .= Xml::element( 'br' );
+		$form .= Xml::element( 'label', array( 'for' => 'httpcache' ), 'use http cache' );
+		$form .= Xml::element( 'input', array( 'type' => 'checkbox', 'name' => 'httpcache', 'id' => 'httpcache') );
+		$form .= Xml::element( 'br' );
+		$form .= Xml::element( 'label', array( 'for' => 'lastmod' ), 'use last modified' );
+		$form .= Xml::element( 'input', array( 'type' => 'checkbox', 'name' => 'lastmod', 'id' => 'lastmod') );
+		$form .= Xml::element( 'br' );
+		$form .= Xml::element( 'label', array( 'for' => 'error' ), 'trigger error' );
+		$form .= Xml::element( 'input', array( 'type' => 'checkbox', 'name' => 'error', 'id' => 'error') );
+		$form .= Xml::element( 'br' );
+		$form .= Xml::openElement( 'select', array( 'name' => 'ajaxtest_target', 'id' => 'ajaxtest_target' ) );
+		$form .= Xml::element( 'option', array( 'value' => 'function' ), "function" );
+		$form .= Xml::element( 'option', array( 'value' => 'element' ), "element" );
+		$form .= Xml::element( 'option', array( 'value' => 'input' ), "input" );
+		$form .= Xml::closeElement( 'select' );
+		$form .= Xml::element( 'input', array( 'type' => 'button', 'onclick' => 'doAjaxTest();', 'value' => 'TEST' ) );
+		$form .= Xml::element( 'input', array( 'type' => 'button', 'onclick' => 'clearAjaxTest();', 'value' => 'CLEAR' ) );
+		#$form .= Xml::element( 'input', array( 'type' => 'button', 'onclick' => 'getElementById("ajaxtest_out").value= getElementById("ajaxtest_text").value;', 'value' => 'DUMMY' ) );
+		$form .= Xml::closeElement( 'form' );
 		
-		$form .= wfElement( 'hr' );
-		$form .= wfElement( 'input', array( 'type' => 'text', 'name' => 'ajaxtest_out', 'id' => 'ajaxtest_out', 'value' => '', 'size' => '64' ) ) . ' ';
-		$form .= wfElement( 'p', array( 'id' => 'ajaxtest_area' ) );
-		$form .= wfElement( 'hr' );
-		$form .= wfElement( 'p', array( 'id' => 'sajax_debug' ) );
+		$form .= Xml::element( 'hr' );
+		$form .= Xml::element( 'input', array( 'type' => 'text', 'name' => 'ajaxtest_out', 'id' => 'ajaxtest_out', 'value' => '', 'size' => '64' ) ) . ' ';
+		$form .= Xml::element( 'p', array( 'id' => 'ajaxtest_area' ) );
+		$form .= Xml::element( 'hr' );
+		$form .= Xml::element( 'p', array( 'id' => 'sajax_debug' ) );
 		return $form;
 	}
 }

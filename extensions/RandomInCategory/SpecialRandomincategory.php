@@ -14,14 +14,16 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 
 $wgExtensionCredits['specialpage'][] = array(
 	'name' => 'Random in category',
-	'svn-date' => '$LastChangedDate: 2008-05-06 11:59:58 +0000 (Tue, 06 May 2008) $',
-	'svn-revision' => '$LastChangedRevision: 34306 $',
+	'svn-date' => '$LastChangedDate: 2008-09-05 14:09:21 +0000 (Fri, 05 Sep 2008) $',
+	'svn-revision' => '$LastChangedRevision: 40488 $',
 	'author' => 'VasilievVV',
 	'description' => 'Special page to get a random page in category',
 	'descriptionmsg' => 'randomincategory-desc',
 );
 
-$wgExtensionMessagesFiles['RandomInCategory'] = dirname(__FILE__) . '/SpecialRandomincategory.i18n.php';
+$dir = dirname(__FILE__) . '/';
+$wgExtensionMessagesFiles['RandomInCategory'] = $dir . 'SpecialRandomincategory.i18n.php';
+$wgExtensionAliasesFiles['RandomInCategory'] = $dir . 'SpecialRandomincategory.alias.php';
 
 $wgSpecialPages['Randomincategory'] = 'RandomPageInCategory';
-$wgAutoloadClasses['RandomPageInCategory'] = dirname( __FILE__ ) . '/SpecialRandomincategory.body.php';
+$wgAutoloadClasses['RandomPageInCategory'] = $dir . 'SpecialRandomincategory.body.php';

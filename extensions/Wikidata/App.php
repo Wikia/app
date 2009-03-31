@@ -174,8 +174,7 @@ function modifyTabs($skin, $content_actions) {
 }
 
 function initializeWikidata() {
-	global 
-		$wgMessageCache, $wgExtensionPreferences, $wdSiteContext, $wgPropertyToColumnFilters;
+	global $wgExtensionPreferences, $wdSiteContext, $wgPropertyToColumnFilters;
 		
 	$dbr =& wfGetDB(DB_MASTER);
 	$dbr->query("SET NAMES utf8");

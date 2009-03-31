@@ -1,0 +1,3 @@
+#!/bin/bash
+
+ocamldebug -I `ocamlfind query unix` -I `ocamlfind query str` -I `ocamlfind query vec` -I `ocamlfind query mapmin` -I `ocamlfind query hashtbl_bounded` -I `ocamlfind query fileinfo` -I `ocamlfind query intvmap` -I `ocamlfind query extlib` -I `ocamlfind query mysql` -I `ocamlfind query sexplib` -I ../batch/analysis ./eval_online_wiki -db_user <username> -db_pass <password> -db_name <dbname> -log_name ~/temp/color.log

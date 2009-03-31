@@ -44,15 +44,14 @@ function addOnloadHook(hookFunct) {
 }
 
 function hookEvent(hookName, hookFunct) {
-	if (window.addEventListener) {
-		window.addEventListener(hookName, hookFunct, false);
-	} else if (window.attachEvent) {
-		window.attachEvent("on" + hookName, hookFunct);
-	}
+	addHandler(window, hookName, hookFunct);
 }
 
 function importScript(page) {
-	return importScriptURI(wgScript + '?action=raw&ctype=text/javascript&title=' + encodeURIComponent(page.replace(/ /g,'_')));
+	var uri = wgScript + '?title=' +
+		encodeURIComponent(page.replace(/ /g,'_')).replace('%2F','/').replace('%3A',':') +
+		'&action=raw&ctype=text/javascript';
+	return importScriptURI(uri);
 }
 
 var loadedScripts = {}; // included-scripts tracker
@@ -101,22 +100,6 @@ if (typeof(wgBreakFrames) != 'undefined' && wgBreakFrames) { // Wikia fix (Inez)
 	// Un-trap us from framesets
 	if (window.top != window) {
 		window.top.location = window.location;
-	}
-}
-
-// for enhanced RecentChanges
-function toggleVisibility(_levelId, _otherId, _linkId) {
-	var thisLevel = document.getElementById(_levelId);
-	var otherLevel = document.getElementById(_otherId);
-	var linkLevel = document.getElementById(_linkId);
-	if (thisLevel.style.display == 'none') {
-		thisLevel.style.display = 'block';
-		otherLevel.style.display = 'none';
-		linkLevel.style.display = 'inline';
-	} else {
-		thisLevel.style.display = 'none';
-		otherLevel.style.display = 'inline';
-		linkLevel.style.display = 'none';
 	}
 }
 
@@ -309,6 +292,28 @@ function addPortletLink(portlet, href, text, id, tooltip, accesskey, nextnode) {
 	return item;
 }
 
+function getInnerText(el) {
+	if (typeof el == "string") return el;
+	if (typeof el == "undefined") { return el };
+	if (el.textContent) return el.textContent; // not needed but it is faster
+	if (el.innerText) return el.innerText;     // IE doesn't have textContent
+	var str = "";
+
+	var cs = el.childNodes;
+	var l = cs.length;
+	for (var i = 0; i < l; i++) {
+		switch (cs[i].nodeType) {
+			case 1: //ELEMENT_NODE
+				str += ts_getInnerText(cs[i]);
+				break;
+			case 3:	//TEXT_NODE
+				str += cs[i].nodeValue;
+				break;
+		}
+	}
+	return str;
+}
+
 
 /**
  * Set up accesskeys/tooltips from the deprecated ta array.  If doId
@@ -449,8 +454,19 @@ function toggle_element_check(ida,idb) {
 	From http://www.robertnyman.com/2005/11/07/the-ultimate-getelementsbyclassname/
 */
 function getElementsByClassName(oElm, strTagName, oClassNames){
-	var arrElements = (strTagName == "*" && oElm.all)? oElm.all : oElm.getElementsByTagName(strTagName);
 	var arrReturnElements = new Array();
+	if ( typeof( oElm.getElementsByClassName ) == "function" ) {
+		/* Use a native implementation where possible FF3, Saf3.2, Opera 9.5 */
+		var arrNativeReturn = oElm.getElementsByClassName( oClassNames );
+		if ( strTagName == "*" )
+			return arrNativeReturn;
+		for ( var h=0; h < arrNativeReturn.length; h++ ) {
+			if( arrNativeReturn[h].tagName.toLowerCase() == strTagName.toLowerCase() )
+				arrReturnElements[arrReturnElements.length] = arrNativeReturn[h];
+		}
+		return arrReturnElements;
+	}
+	var arrElements = (strTagName == "*" && oElm.all)? oElm.all : oElm.getElementsByTagName(strTagName);
 	var arrRegExpClassNames = new Array();
 	if(typeof oClassNames == "object"){
 		for(var i=0; i<oClassNames.length; i++){
@@ -518,8 +534,9 @@ var ts_image_up = "sort_up.gif";
 var ts_image_down = "sort_down.gif";
 var ts_image_none = "sort_none.gif";
 var ts_europeandate = wgContentLanguage != "en"; // The non-American-inclined can change to "true"
-var ts_alternate_row_colors = true;
-var SORT_COLUMN_INDEX;
+var ts_alternate_row_colors = false;
+var ts_number_transform_table = null;
+var ts_number_regex = null;
 
 function sortables_init() {
 	var idnum = 0;
@@ -549,7 +566,14 @@ function ts_makeSortable(table) {
 	for (var i = 0; i < firstRow.cells.length; i++) {
 		var cell = firstRow.cells[i];
 		if ((" "+cell.className+" ").indexOf(" unsortable ") == -1) {
-			cell.innerHTML += '&nbsp;&nbsp;<a href="#" class="sortheader" onclick="ts_resortTable(this);return false;"><span class="sortarrow"><img src="'+ ts_image_path + ts_image_none + '" alt="&darr;"/></span></a>';
+			cell.innerHTML += '&nbsp;&nbsp;'
+				+ '<a href="#" class="sortheader" '
+				+ 'onclick="ts_resortTable(this);return false;">'
+				+ '<span class="sortarrow">'
+				+ '<img src="'
+				+ ts_image_path
+				+ ts_image_none
+				+ '" alt="&darr;"/></span></a>';
 		}
 	}
 	if (ts_alternate_row_colors) {
@@ -558,25 +582,7 @@ function ts_makeSortable(table) {
 }
 
 function ts_getInnerText(el) {
-	if (typeof el == "string") return el;
-	if (typeof el == "undefined") { return el };
-	if (el.textContent) return el.textContent; // not needed but it is faster
-	if (el.innerText) return el.innerText;     // IE doesn't have textContent
-	var str = "";
-
-	var cs = el.childNodes;
-	var l = cs.length;
-	for (var i = 0; i < l; i++) {
-		switch (cs[i].nodeType) {
-			case 1: //ELEMENT_NODE
-				str += ts_getInnerText(cs[i]);
-				break;
-			case 3:	//TEXT_NODE
-				str += cs[i].nodeValue;
-				break;
-		}
-	}
-	return str;
+	return getInnerText( el );
 }
 
 function ts_resortTable(lnk) {
@@ -592,9 +598,14 @@ function ts_resortTable(lnk) {
 		table = table.parentNode;
 	if (!table) return;
 
-	// Work out a type for the column
 	if (table.rows.length <= 1) return;
 
+	// Generate the number transform table if it's not done already
+	if (ts_number_transform_table == null) {
+		ts_initTransformTable();
+	}
+
+	// Work out a type for the column
 	// Skip the first row if that's where the headings are
 	var rowStart = (table.tHead && table.tHead.rows.length > 0 ? 0 : 1);
 
@@ -607,39 +618,52 @@ function ts_resortTable(lnk) {
 		}
 	}
 
-	sortfn = ts_sort_caseinsensitive;
-	if (itm.match(/^\d\d[\/. -][a-zA-Z]{3}[\/. -]\d\d\d\d$/))
-		sortfn = ts_sort_date;
-	if (itm.match(/^\d\d[\/.-]\d\d[\/.-]\d\d\d\d$/))
-		sortfn = ts_sort_date;
-	if (itm.match(/^\d\d[\/.-]\d\d[\/.-]\d\d$/))
-		sortfn = ts_sort_date;
-	if (itm.match(/^[\u00a3$\u20ac]/)) // pound dollar euro
-		sortfn = ts_sort_currency;
-	if (itm.match(/^[\d.,]+\%?$/))
-		sortfn = ts_sort_numeric;
+	// TODO: bug 8226, localised date formats
+	var sortfn = ts_sort_generic;
+	var preprocessor = ts_toLowerCase;
+	if (/^\d\d[\/. -][a-zA-Z]{3}[\/. -]\d\d\d\d$/.test(itm)) {
+		preprocessor = ts_dateToSortKey;
+	} else if (/^\d\d[\/.-]\d\d[\/.-]\d\d\d\d$/.test(itm)) {
+		preprocessor = ts_dateToSortKey;
+	} else if (/^\d\d[\/.-]\d\d[\/.-]\d\d$/.test(itm)) {
+		preprocessor = ts_dateToSortKey;
+	// pound dollar euro yen currency cents
+	} else if (/(^[\u00a3$\u20ac\u00a4\u00a5]|\u00a2$)/.test(itm)) {
+		preprocessor = ts_currencyToSortKey;
+	} else if (ts_number_regex.test(itm)) {
+		preprocessor = ts_parseFloat;
+	}
 
 	var reverse = (span.getAttribute("sortdir") == 'down');
 
 	var newRows = new Array();
+	var staticRows = new Array();
 	for (var j = rowStart; j < table.rows.length; j++) {
 		var row = table.rows[j];
-		var keyText = ts_getInnerText(row.cells[column]);
-		var oldIndex = (reverse ? -j : j);
+		if((" "+row.className+" ").indexOf(" unsortable ") < 0) {
+			var keyText = ts_getInnerText(row.cells[column]);
+			var oldIndex = (reverse ? -j : j);
+			var preprocessed = preprocessor( keyText );
 
-		newRows[newRows.length] = new Array(row, keyText, oldIndex);
+			newRows[newRows.length] = new Array(row, preprocessed, oldIndex);
+		} else staticRows[staticRows.length] = new Array(row, false, j-rowStart);
 	}
 
 	newRows.sort(sortfn);
 
 	var arrowHTML;
 	if (reverse) {
-			arrowHTML = '<img src="'+ ts_image_path + ts_image_down + '" alt="&darr;"/>';
-			newRows.reverse();
-			span.setAttribute('sortdir','up');
+		arrowHTML = '<img src="'+ ts_image_path + ts_image_down + '" alt="&darr;"/>';
+		newRows.reverse();
+		span.setAttribute('sortdir','up');
 	} else {
-			arrowHTML = '<img src="'+ ts_image_path + ts_image_up + '" alt="&uarr;"/>';
-			span.setAttribute('sortdir','down');
+		arrowHTML = '<img src="'+ ts_image_path + ts_image_up + '" alt="&uarr;"/>';
+		span.setAttribute('sortdir','down');
+	}
+
+	for (var i = 0; i < staticRows.length; i++) {
+		var row = staticRows[i];
+		newRows.splice(row[2], 0, row);
 	}
 
 	// We appendChild rows that already exist to the tbody, so it moves them rather than creating new ones
@@ -661,10 +685,69 @@ function ts_resortTable(lnk) {
 	}
 	span.innerHTML = arrowHTML;
 
-	ts_alternate(table);
+	if (ts_alternate_row_colors) {
+		ts_alternate(table);
+	}
 }
 
-function ts_dateToSortKey(date) {
+function ts_initTransformTable() {
+	if ( typeof wgSeparatorTransformTable == "undefined"
+			|| ( wgSeparatorTransformTable[0] == '' && wgDigitTransformTable[2] == '' ) )
+	{
+		digitClass = "[0-9,.]";
+		ts_number_transform_table = false;
+	} else {
+		ts_number_transform_table = {};
+		// Unpack the transform table
+		// Separators
+		ascii = wgSeparatorTransformTable[0].split("\t");
+		localised = wgSeparatorTransformTable[1].split("\t");
+		for ( var i = 0; i < ascii.length; i++ ) { 
+			ts_number_transform_table[localised[i]] = ascii[i];
+		}
+		// Digits
+		ascii = wgDigitTransformTable[0].split("\t");
+		localised = wgDigitTransformTable[1].split("\t");
+		for ( var i = 0; i < ascii.length; i++ ) { 
+			ts_number_transform_table[localised[i]] = ascii[i];
+		}
+
+		// Construct regex for number identification
+		digits = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', ',', '\\.'];
+		maxDigitLength = 1;
+		for ( var digit in ts_number_transform_table ) {
+			// Escape regex metacharacters
+			digits.push( 
+				digit.replace( /[\\\\$\*\+\?\.\(\)\|\{\}\[\]\-]/,
+					function( s ) { return '\\' + s; } )
+			);
+			if (digit.length > maxDigitLength) {
+				maxDigitLength = digit.length;
+			}
+		}
+		if ( maxDigitLength > 1 ) {
+			digitClass = '[' + digits.join( '', digits ) + ']';
+		} else {
+			digitClass = '(' + digits.join( '|', digits ) + ')';
+		}
+	}
+
+	// We allow a trailing percent sign, which we just strip.  This works fine
+	// if percents and regular numbers aren't being mixed.
+	ts_number_regex = new RegExp(
+		"^(" +
+			"[+-]?[0-9][0-9,]*(\\.[0-9,]*)?(E[+-]?[0-9][0-9,]*)?" + // Fortran-style scientific
+			"|" +
+			"[+-]?" + digitClass + "+%?" + // Generic localised
+		")$", "i"
+	);
+}
+
+function ts_toLowerCase( s ) {
+	return s.toLowerCase();
+}
+
+function ts_dateToSortKey(date) {	
 	// y2k notes: two digit years less than 50 are treated as 20XX, greater than 50 are treated as 19XX
 	if (date.length == 11) {
 		switch (date.substr(3,3).toLowerCase()) {
@@ -705,38 +788,34 @@ function ts_dateToSortKey(date) {
 	return "00000000";
 }
 
-function ts_parseFloat(num) {
-	if (!num) return 0;
-	num = parseFloat(num.replace(/,/g, ""));
-	return (isNaN(num) ? 0 : num);
+function ts_parseFloat( s ) {
+	if ( !s ) {
+		return 0;
+	}
+	if (ts_number_transform_table != false) {
+		var newNum = '', c;
+		
+		for ( var p = 0; p < s.length; p++ ) {
+			c = s.charAt( p );
+			if (c in ts_number_transform_table) {
+				newNum += ts_number_transform_table[c];
+			} else {
+				newNum += c;
+			}
+		}
+		s = newNum;
+	}
+
+	num = parseFloat(s.replace(/,/g, ""));
+	return (isNaN(num) ? s : num);
 }
 
-function ts_sort_date(a,b) {
-	var aa = ts_dateToSortKey(a[1]);
-	var bb = ts_dateToSortKey(b[1]);
-	return (aa < bb ? -1 : aa > bb ? 1 : a[2] - b[2]);
+function ts_currencyToSortKey( s ) {
+	return ts_parseFloat(s.replace(/[^0-9.,]/g,''));
 }
 
-function ts_sort_currency(a,b) {
-	var aa = ts_parseFloat(a[1].replace(/[^0-9.]/g,''));
-	var bb = ts_parseFloat(b[1].replace(/[^0-9.]/g,''));
-	return (aa != bb ? aa - bb : a[2] - b[2]);
-}
-
-function ts_sort_numeric(a,b) {
-	var aa = ts_parseFloat(a[1]);
-	var bb = ts_parseFloat(b[1]);
-	return (aa != bb ? aa - bb : a[2] - b[2]);
-}
-
-function ts_sort_caseinsensitive(a,b) {
-	var aa = a[1].toLowerCase();
-	var bb = b[1].toLowerCase();
-	return (aa < bb ? -1 : aa > bb ? 1 : a[2] - b[2]);
-}
-
-function ts_sort_default(a,b) {
-	return (a[1] < b[1] ? -1 : a[1] > b[1] ? 1 : a[2] - b[2]);
+function ts_sort_generic(a, b) {
+	return a[1] < b[1] ? -1 : a[1] > b[1] ? 1 : a[2] - b[2];
 }
 
 function ts_alternate(table) {
@@ -811,6 +890,7 @@ function jsMsg( message, className ) {
 	}
 
 	messageDiv.setAttribute( 'id', 'mw-js-message' );
+	messageDiv.style.display = 'block';
 	if( className ) {
 		messageDiv.setAttribute( 'class', 'mw-js-message-'+className );
 	}
@@ -900,6 +980,21 @@ function addHandler( element, attach, handler ) {
  */
 function addClickHandler( element, handler ) {
 	addHandler( element, 'click', handler );
+}
+
+/**
+ * Removes an event handler from an element
+ *
+ * @param Element element Element to remove handler from
+ * @param String remove Event to remove
+ * @param callable handler Event handler callback to remove
+ */
+function removeHandler( element, remove, handler ) {
+	if( window.removeEventListener ) {
+		element.removeEventListener( remove, handler, false );
+	} else if( window.detachEvent ) {
+		element.detachEvent( 'on' + remove, handler );
+	}
 }
 //note: all skins should call runOnloadHook() at the end of html output,
 //      so the below should be redundant. It's there just in case.

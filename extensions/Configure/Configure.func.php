@@ -11,41 +11,39 @@ if ( !defined( 'MEDIAWIKI' ) ) die();
  */
 
 /**
- * Ajax function to create checkboxes for a new group in $wgGroupPermissions
+ * Ajax function to create row for a new group in $wgGroupPermissions or
+ * $wgAutopromote
  *
+ * @param $setting String: setting name
  * @param $group String: new group name
- * @return either <err#> if group already exist or html fragment
+ * @return either <err#> on error or html fragment
  */
-function efConfigureAjax( $group ){
-	global $wgUser, $wgGroupPermissions;
-	if( !$wgUser->isAllowed( 'configure-all' ) ){
+function efConfigureAjax( $setting, $group ) {
+	global $wgUser;
+
+	$settings = ConfigurationSettings::singleton( CONF_SETTINGS_BOTH );
+	if ( $settings->getSettingType( $setting ) != 'array' )
+		return '<err#>';
+
+	wfLoadExtensionMessages( 'Configure' );
+	$type = $settings->getArrayType( $setting );
+	switch( $type ) {
+	case 'group-bool':
+		if ( isset( $GLOBALS[$setting] ) && isset( $GLOBALS[$setting][$group] ) )
+			return '<err#>';
+
+		$row = ConfigurationPage::buildGroupSettingRow( $setting, $type, User::getAllRights(), true, $group, array() );
+
+		// Firefox seems to not like that :(
+		return str_replace( '&nbsp;', ' ', $row );
+	case 'promotion-conds':
+		if ( isset( $GLOBALS[$setting] ) && isset( $GLOBALS[$setting][$group] ) )
+			return '<err#>';
+
+		return ConfigurationPage::buildPromotionCondsSettingRow( $setting, true, $group, array() );
+	default:
 		return '<err#>';
 	}
-	if( isset( $wgGroupPermissions[$group] ) ){
-		$html = '<err#>';
-	} else {
-		if( is_callable( array( 'User', 'getAllRights' ) ) ){ // 1.13 +
-			$all = User::getAllRights();
-		} else {
-			$all = array();
-			foreach( $wgGroupPermissions as $rights )
-				$all = array_merge( $all, array_keys( $rights ) );
-			$all = array_unique( $all );
-		}
-		$row = '<div style="-moz-column-count:2"><ul>';
-		foreach( $all as $right ){
-			$id = Sanitizer::escapeId( 'wpwgGroupPermissions-'.$group.'-'.$right );
-			$desc = ( is_callable( array( 'User', 'getRightDescription' ) ) ) ?
-				User::getRightDescription( $right ) :
-				$right;
-			$row .= '<li>'.Xml::checkLabel( $desc, $id, $id ) . "</li>\n";
-		}
-		$row .= '</ul></div>';
-		$groupName = User::getGroupName( $group );
-		// Firefox seems to not like that :(
-		$html = str_replace( '&nbsp;', ' ', $row );
-	}
-	return $html;
 }
 
 /**
@@ -58,9 +56,9 @@ function efConfigureAjax( $group ){
  *
  * @param $wiki String
  */
-function efConfigureSetup( $wiki = 'default' ){
-	global $wgConf, $wgConfigureFilesPath;
-
+function efConfigureSetup( $wiki = 'default' ) {
+	global $wgConf, $wgConfigureFilesPath, $wgConfigureExtDir;
+	wfProfileIn( __FUNCTION__ );
 	# Create the new configuration object...
 	$oldConf = $wgConf;
 	require_once( dirname( __FILE__ ) . '/Configure.obj.php' );
@@ -71,40 +69,49 @@ function efConfigureSetup( $wiki = 'default' ){
 	$wgConf->wikis = $oldConf->wikis;
 	$wgConf->settings = $oldConf->settings;
 	$wgConf->localVHosts = $oldConf->localVHosts;
+	$wgConf->siteParamsCallback = $oldConf->siteParamsCallback;
 
+	$wgConf->snapshotDefaults();
+
+	global $wgConfigureHandler;
+	if ( $wgConfigureHandler == 'db' ) {
+		// Defer to after caches and database are set up.
+		global $wgHooks;
+		$wgHooks['SetupAfterCache'][] = array( 'efConfigureInitialise' );
+	} else {
+		efConfigureInitialise();
+	}
+	# Cleanup $wgConfigureExtDir as needed
+	if( substr( $wgConfigureExtDir, -1 ) != '/' && substr( $wgConfigureExtDir, -1 ) != '\\' ) {
+		$wgConfigureExtDir .= '/';
+	}
+	wfProfileOut( __FUNCTION__ );
+}
+
+function efConfigureInitialise() {
+	global $wgConf;
 	# Load the new configuration, and fill in the settings
 	$wgConf->initialise();
 	$wgConf->extract();
+	return true;
 }
 
 /**
- * Function that loads the messages in $wgMessageCache, it is used for backward
- * compatibility with 1.10 and older versions
+ * Declare the API module only if $wgConfigureAPI is true
  */
-function efConfigureLoadMessages(){
-	if( function_exists( 'wfLoadExtensionMessages' ) ){
-		wfLoadExtensionMessages( 'Configure' );
-	} else {
-		global $wgMessageCache;
-		require( dirname( __FILE__ ) . '/Configure.i18n.php' );
-		foreach( $messages as $lang => $messages ){
-			$wgMessageCache->addMessages( $messages, $lang );
-		}
+function efConfigureSetupAPI() {
+	global $wgConfigureAPI, $wgAPIModules;
+	if ( $wgConfigureAPI === true ) {
+		$wgAPIModules['configure'] = 'ApiConfigure';
 	}
 }
 
 /**
- * Loads special pages aliases, for backward compatibility with < 1.13
+ * Add custom rights defined in $wgRestrictionLevels
  */
-function efConfigureLoadAliases( &$spAliases, $code ){
-	require( dirname( __FILE__ ) . '/Configure.alias.php' );
-	do {
-		if( isset( $aliases[$code] ) ){
-			foreach( $aliases[$code] as $can => $aliasArr ){
-				foreach( $aliasArr as $alias )
-					$spAliases[$can][] = str_replace( ' ', '_', $alias );
-			}
-		}
-	} while( $code = Language::getFallbackFor( $code ) );
+function efConfigureGetAllRights( &$rights ) {
+	global $wgRestrictionLevels;
+	$newrights = array_diff( $wgRestrictionLevels, array( '', 'sysop' ) ); // Pseudo rights
+	$rights = array_unique( array_merge( $rights, $newrights ) );
 	return true;
 }

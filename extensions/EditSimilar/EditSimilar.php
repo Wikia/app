@@ -55,7 +55,7 @@ $wgExtensionCredits['other'][] = array(
 	  * number of articles in result is limited
 
 	IMPORTANT NOTE: This extension REQUIRES the article MediaWiki:EditSimilar-Categories to exist on your
-			wiki in order to run. If this article is nonexistant, the extension will disable itself.
+			wiki in order to run. If this article is nonexistent, the extension will disable itself.
 			Format of the article is as follows:
 			* Chosen Stub Category 1
 			* Chosen Stub Category 2

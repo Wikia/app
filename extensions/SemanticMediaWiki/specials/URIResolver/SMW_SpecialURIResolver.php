@@ -1,4 +1,9 @@
 <?php
+/**
+ * @file
+ * @ingroup SMWSpecialPage
+ * @ingroup SpecialPage
+ */
 
 /**
  * @author Denny Vrandecic
@@ -7,7 +12,8 @@
  * without the need of changing code deep in
  * MediaWiki were no hook has ever seen light.
  *
- * @note AUTOLOAD
+ * @ingroup SMWSpecialPage
+ * @ingroup SpecialPage
  */
 class SMWURIResolver extends SpecialPage {
 
@@ -16,35 +22,28 @@ class SMWURIResolver extends SpecialPage {
 	 */
 	public function __construct() {
 		parent::__construct('URIResolver', '', false);
+		wfLoadExtensionMessages('SemanticMediaWiki');
 	}
 
-	function execute($query = '') {
+	function execute( $query ) {
 		global $wgOut, $smwgIP;
 		wfProfileIn('SpecialURIResolver::execute (SMW)');
 		if ('' == $query) {
 			if (stristr($_SERVER['HTTP_ACCEPT'], 'RDF')) {
-				$wgOut->disable();
-				header('HTTP/1.1 303 See Other');
-				$s = Skin::makeSpecialUrl('ExportRDF', 'stats=1');
-				header('Location: ' . $s);
+				$wgOut->redirect(SpecialPage::getTitleFor('ExportRDF')->getFullURL('stats=1'), 303);
 			} else {
+				$this->setHeaders();
 				$wgOut->addHTML(wfMsg('smw_uri_doc'));
 			}
 		} else {
-			$wgOut->disable();
 			$query = SMWExporter::decodeURI($query);
 			$query = str_replace( "_", "%20", $query );
 			$query = urldecode($query);
 			$title = Title::newFromText($query);
 
-			header('HTTP/1.1 303 See Other');
-			if (stristr($_SERVER['HTTP_ACCEPT'], 'RDF')) {
-				$s = Skin::makeSpecialUrlSubpage('ExportRDF', $title->getPrefixedURL(), 'xmlmime=rdf');
-				header('Location: ' . $s);
-			} else {
-				$t = $title->getFullURL();
-				header('Location: ' . $t);
-			}
+			$wgOut->redirect( stristr($_SERVER['HTTP_ACCEPT'], 'RDF')
+				? SpecialPage::getTitleFor('ExportRDF', $title->getPrefixedText())->getFullURL('xmlmime=rdf')
+				: $title->getFullURL(), 303);
 		}
 		wfProfileOut('SpecialURIResolver::execute (SMW)');
 	}

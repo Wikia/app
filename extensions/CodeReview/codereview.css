@@ -1,0 +1,92 @@
+table.mw-codereview-meta td {
+	vertical-align: top;
+}
+
+.mw-codereview-paths {
+	max-height:600px;
+	overflow:auto;
+}
+
+.TablePager_col_cr_message {
+	max-width: 20em;
+}
+
+.TablePager_col_cr_timestamp {
+	white-space: nowrap;
+}
+
+.mw-codereview-comment {
+	border: solid 1px #aaaab3;
+	padding: 0px;
+	background: #eee;
+	margin-bottom: 8px;
+}
+
+.mw-codereview-comment-meta {
+	padding: 4px 8px;
+}
+
+.mw-codereview-comment-text {
+	background: white;
+	padding: 16px;
+}
+
+.mw-codereview-comment .mw-codereview-post-comment {
+	padding: 16px;
+	padding-left: 48px;
+}
+
+
+.mw-codereview-status-new td {
+	background: #ffffc0 !important;
+}
+.mw-codereview-status-new:hover td {
+	background: #dfdfa0 !important;
+}
+
+.mw-codereview-status-fixme td {
+	background: #ff9999 !important;
+}
+.mw-codereview-status-fixme:hover td {
+	background: #df0000 !important;
+	color: white;
+}
+.mw-codereview-status-fixme:hover td a {
+	color: #ff0 !important;
+}
+
+.mw-codereview-status-resolved td {
+	background: #c0ffc0 !important;
+}
+.mw-codereview-status-resolved:hover td {
+	background: #a0dfa0 !important;
+}
+
+.mw-codereview-status-reverted td {
+	background: #cceeff !important;
+}
+.mw-codereview-status-reverted:hover td {
+	background: #66bbff !important;
+}
+.mw-codereview-status-deferred td {
+	color: #666;
+}
+
+/* Diffs */
+.mw-codereview-diff ins {
+	text-decoration: none;
+	color: green;
+}
+
+.mw-codereview-diff del {
+	text-decoration: none;
+	color: red;
+}
+
+.mw-codereview-diff .meta {
+	color: darkcyan;
+}
+
+.mw-codereview-live td {
+	border-color: #33cc99 !important;
+}

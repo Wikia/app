@@ -21,7 +21,7 @@ class SpecialAdvancedRandom extends SpecialPage {
 	/**
 	 * main()
 	 */
-	public function execute( $params ) {
+	public function execute( $par ) {
 		global $wgOut;
 		wfLoadExtensionMessages( 'AdvancedRandom' );
 
@@ -40,26 +40,48 @@ class SpecialAdvancedRandom extends SpecialPage {
 
 		$rand = wfRandom();
 		$dbr =& wfGetDB( DB_SLAVE );
-		$res = $dbr->selectRow(
-			array( 'page', 'pagelinks' ),
-			array( 'page_namespace', 'page_title', 'page_random' ),
-			array(
-				'page_id = pl_from',
-				'pl_namespace' => $ft->getNamespace(),
-				'page_namespace' => $namespace,
-				'pl_title' => $ft->getDBkey(),
-				"page_random > $rand"
-			),
-			$fname,
-			array(
-				'ORDER BY' => 'page_random',
-				'USE INDEX' => array(
-					'page' => 'page_random',
-				)
-			)
-		);
 
-		$title =& Title::makeTitle( Namespace::getSubject( $namespace ), $res->page_title );
+		if ($ft->getNamespace() == NS_TEMPLATE) {
+			$res = $dbr->selectRow(
+				array( 'page', 'templatelinks' ),
+				array( 'page_namespace', 'page_title', 'page_random' ),
+				array(
+					'page_id = tl_from',
+					'tl_namespace' => NS_TEMPLATE,
+					'page_namespace' => $namespace,
+					'tl_title' => $ft->getDBkey(),
+					"page_random > $rand"
+				),
+				$fname,
+				array(
+					'ORDER BY' => 'page_random',
+					'USE INDEX' => array(
+						'page' => 'page_random',
+					)
+				)
+			);
+		} else {
+			$res = $dbr->selectRow(
+				array( 'page', 'pagelinks' ),
+				array( 'page_namespace', 'page_title', 'page_random' ),
+				array(
+					'page_id = pl_from',
+					'pl_namespace' => $ft->getNamespace(),
+					'page_namespace' => $namespace,
+					'pl_title' => $ft->getDBkey(),
+					"page_random > $rand"
+				),
+				$fname,
+				array(
+					'ORDER BY' => 'page_random',
+					'USE INDEX' => array(
+						'page' => 'page_random',
+					)
+				)
+			);
+		}
+
+		$title =& Title::makeTitle( MWNamespace::getSubject( $namespace ), $res->page_title );
 		if ( is_null( $title ) || $title->getText() == '' )
 			$title = Title::newMainPage();;
 		$this->redirect( $title );

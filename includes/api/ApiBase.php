@@ -38,14 +38,15 @@
  */
 abstract class ApiBase {
 
-	// These constants allow modules to specify exactly how to treat incomming parameters.
+	// These constants allow modules to specify exactly how to treat incoming parameters.
 
-	const PARAM_DFLT = 0;
-	const PARAM_ISMULTI = 1;
-	const PARAM_TYPE = 2;
-	const PARAM_MAX = 3;
-	const PARAM_MAX2 = 4;
-	const PARAM_MIN = 5;
+	const PARAM_DFLT = 0; // Default value of the parameter
+	const PARAM_ISMULTI = 1; // Boolean, do we accept more than one item for this parameter (e.g.: titles)?
+	const PARAM_TYPE = 2; // Can be either a string type (e.g.: 'integer') or an array of allowed values
+	const PARAM_MAX = 3; // Max value allowed for a parameter. Only applies if TYPE='integer'
+	const PARAM_MAX2 = 4; // Max value allowed for a parameter for bots and sysops. Only applies if TYPE='integer'
+	const PARAM_MIN = 5; // Lowest value allowed for a parameter. Only applies if TYPE='integer'
+	const PARAM_ALLOW_DUPLICATES = 6; // Boolean, do we allow the same value to be set more than once when ISMULTI=true
 
 	const LIMIT_BIG1 = 500; // Fast query, std user limit
 	const LIMIT_BIG2 = 5000; // Fast query, bot/sysop limit
@@ -159,6 +160,10 @@ abstract class ApiBase {
 		$data =& $this->getResult()->getData();
 		if(isset($data['warnings'][$this->getModuleName()]))
 		{
+			# Don't add duplicate warnings
+			$warn_regex = preg_quote($warning, '/');
+			if(preg_match("/{$warn_regex}(\\n|$)/", $data['warnings'][$this->getModuleName()]['*']))
+				return;
 			$warning = "{$data['warnings'][$this->getModuleName()]['*']}\n$warning";
 			unset($data['warnings'][$this->getModuleName()]);
 		}
@@ -238,10 +243,10 @@ abstract class ApiBase {
 	 * module's help.
 	 */
 	public function makeHelpMsgParameters() {
-		$params = $this->getAllowedParams();
+		$params = $this->getFinalParams();
 		if ($params !== false) {
 
-			$paramsDescription = $this->getParamDescription();
+			$paramsDescription = $this->getFinalParamDescription();
 			$msg = '';
 			$paramPrefix = "\n" . str_repeat(' ', 19);
 			foreach ($params as $paramName => $paramSettings) {
@@ -260,7 +265,7 @@ abstract class ApiBase {
 						$choices = array();
 						$nothingPrompt = false;
 						foreach ($type as $t)
-							if ($t=='')
+							if ($t === '')
 								$nothingPrompt = 'Can be empty, or ';
 							else
 								$choices[] =  $t;
@@ -319,17 +324,38 @@ abstract class ApiBase {
 	}
 
 	/**
-	 * Returns an array of allowed parameters (keys) => default value for that parameter
+	 * Returns an array of allowed parameters (keys) => default value for that parameter.
+	 * Don't call this function directly: use getFinalParams() to allow hooks
+	 * to modify parameters as needed.
 	 */
 	protected function getAllowedParams() {
 		return false;
 	}
 
 	/**
-	 * Returns the description string for the given parameter.
+	 * Returns an array of parameter descriptions.
+	 * Don't call this functon directly: use getFinalParamDescription() to allow
+	 * hooks to modify descriptions as needed.
 	 */
 	protected function getParamDescription() {
 		return false;
+	}
+	
+	/**
+	 * Get final list of parameters, after hooks have had
+	 * a chance to tweak it as needed.
+	 */
+	public function getFinalParams() {
+		$params = $this->getAllowedParams();
+		wfRunHooks('APIGetAllowedParams', array(&$this, &$params));
+		return $params;
+	}
+	
+	
+	public function getFinalParamDescription() {
+		$desc = $this->getParamDescription();
+		wfRunHooks('APIGetParamDescription', array(&$this, &$desc));
+		return $desc;
 	}
 
 	/**
@@ -343,12 +369,11 @@ abstract class ApiBase {
 	/**
 	* Using getAllowedParams(), makes an array of the values provided by the user,
 	* with key being the name of the variable, and value - validated value from user or default.
-	* This method can be used to generate local variables using extract().
 	* limit=max will not be parsed if $parseMaxLimit is set to false; use this
 	* when the max limit is not definite, e.g. when getting revisions.
 	*/
 	public function extractRequestParams($parseMaxLimit = true) {
-		$params = $this->getAllowedParams();
+		$params = $this->getFinalParams();
 		$results = array ();
 
 		foreach ($params as $paramName => $paramSettings)
@@ -361,9 +386,26 @@ abstract class ApiBase {
 	 * Get a value for the given parameter
 	 */
 	protected function getParameter($paramName, $parseMaxLimit = true) {
-		$params = $this->getAllowedParams();
+		$params = $this->getFinalParams();
 		$paramSettings = $params[$paramName];
 		return $this->getParameterFromSettings($paramName, $paramSettings, $parseMaxLimit);
+	}
+	
+	/**
+	 * Die if none or more than one of a certain set of parameters is set
+	 */
+	public function requireOnlyOneParameter($params) {
+		$required = func_get_args();
+		array_shift($required);
+		
+		$intersection = array_intersect(array_keys(array_filter($params,
+				create_function('$x', 'return !is_null($x);')
+			)), $required);
+		if (count($intersection) > 1) {
+			$this->dieUsage('The parameters '.implode(', ', $intersection).' can not be used together', 'invalidparammix');
+		} elseif (count($intersection) == 0) {
+			$this->dieUsage('One of the parameters '.implode(', ', $required).' is required', 'missingparam');
+		}
 	}
 
 	/**
@@ -400,10 +442,12 @@ abstract class ApiBase {
 			$default = $paramSettings;
 			$multi = false;
 			$type = gettype($paramSettings);
+			$dupes = false;
 		} else {
 			$default = isset ($paramSettings[self :: PARAM_DFLT]) ? $paramSettings[self :: PARAM_DFLT] : null;
 			$multi = isset ($paramSettings[self :: PARAM_ISMULTI]) ? $paramSettings[self :: PARAM_ISMULTI] : false;
 			$type = isset ($paramSettings[self :: PARAM_TYPE]) ? $paramSettings[self :: PARAM_TYPE] : null;
+			$dupes = isset ($paramSettings[self:: PARAM_ALLOW_DUPLICATES]) ? $paramSettings[self :: PARAM_ALLOW_DUPLICATES] : false;
 
 			// When type is not given, and no choices, the type is the same as $default
 			if (!isset ($type)) {
@@ -494,8 +538,8 @@ abstract class ApiBase {
 				}
 			}
 
-			// There should never be any duplicate values in a list
-			if (is_array($value))
+			// Throw out duplicates if requested
+			if (is_array($value) && !$dupes)
 				$value = array_unique($value);
 		}
 
@@ -515,10 +559,10 @@ abstract class ApiBase {
 	protected function parseMultiValue($valueName, $value, $allowMultiple, $allowedValues) {
 		if( trim($value) === "" )
 			return array();
-		$sizeLimit = $this->mMainModule->canApiHighLimits() ? 501 : 51;
-		$valuesList = explode('|', $value,$sizeLimit);
-		if( count($valuesList) == $sizeLimit ) {
-			$junk = array_pop($valuesList); // kill last jumbled param
+		$sizeLimit = $this->mMainModule->canApiHighLimits() ? self::LIMIT_SML2 : self::LIMIT_SML1;
+		$valuesList = explode('|', $value, $sizeLimit + 1);
+		if( self::truncateArray($valuesList, $sizeLimit) ) {
+			$this->setWarning("Too many values supplied for parameter '$valueName': the limit is $sizeLimit");
 		}
 		if (!$allowMultiple && count($valuesList) != 1) {
 			$possibleValues = is_array($allowedValues) ? "of '" . implode("', '", $allowedValues) . "'" : '';
@@ -527,7 +571,7 @@ abstract class ApiBase {
 		if (is_array($allowedValues)) {
 			# Check for unknown values
 			$unknown = array_diff($valuesList, $allowedValues);
-			if(!empty($unknown))
+			if(count($unknown))
 			{
 				if($allowMultiple)
 				{
@@ -569,6 +613,23 @@ abstract class ApiBase {
 			}
 		}
 	}
+	
+	/**
+	 * Truncate an array to a certain length.
+	 * @param $arr array Array to truncate
+	 * @param $limit int Maximum length
+	 * @return bool True if the array was truncated, false otherwise
+	 */
+	public static function truncateArray(&$arr, $limit)
+	{
+		$modified = false;
+		while(count($arr) > $limit)
+		{
+			$junk = array_pop($arr);
+			$modified = true;
+		}
+		return $modified;
+	}
 
 	/**
 	 * Call main module's error handler
@@ -594,8 +655,6 @@ abstract class ApiBase {
 		'protectedpagetext' => array('code' => 'protectedpage', 'info' => "The ``\$1'' right is required to edit this page"),
 		'protect-cantedit' => array('code' => 'cantedit', 'info' => "You can't protect this page because you can't edit it"),
 		'badaccess-group0' => array('code' => 'permissiondenied', 'info' => "Permission denied"), // Generic permission denied message
-		'badaccess-group1' => array('code' => 'permissiondenied', 'info' => "Permission denied"), // Can't use the parameter 'cause it's wikilinked
-		'badaccess-group2' => array('code' => 'permissiondenied', 'info' => "Permission denied"),
 		'badaccess-groups' => array('code' => 'permissiondenied', 'info' => "Permission denied"),
 		'titleprotected' => array('code' => 'protectedtitle', 'info' => "This title has been protected from creation"),
 		'nocreate-loggedin' => array('code' => 'cantcreate', 'info' => "You don't have permission to create new pages"),
@@ -632,13 +691,21 @@ abstract class ApiBase {
 		'ipb_already_blocked' => array('code' => 'alreadyblocked', 'info' => "The user you tried to block was already blocked"),
 		'ipb_blocked_as_range' => array('code' => 'blockedasrange', 'info' => "IP address ``\$1'' was blocked as part of range ``\$2''. You can't unblock the IP invidually, but you can unblock the range as a whole."),
 		'ipb_cant_unblock' => array('code' => 'cantunblock', 'info' => "The block you specified was not found. It may have been unblocked already"),
+		'mailnologin' => array('code' => 'cantsend', 'info' => "You're not logged in or you don't have a confirmed e-mail address, so you can't send e-mail"),
+		'usermaildisabled' => array('code' => 'usermaildisabled', 'info' => "User email has been disabled"),
+		'blockedemailuser' => array('code' => 'blockedfrommail', 'info' => "You have been blocked from sending e-mail"),
+		'notarget' => array('code' => 'notarget', 'info' => "You have not specified a valid target for this action"),
+		'noemail' => array('code' => 'noemail', 'info' => "The user has not specified a valid e-mail address, or has chosen not to receive e-mail from other users"),
+		'rcpatroldisabled' => array('code' => 'patroldisabled', 'info' => "Patrolling is disabled on this wiki"),
+		'markedaspatrollederror-noautopatrol' => array('code' => 'noautopatrol', 'info' => "You don't have permission to patrol your own changes"),
 
 		// API-specific messages
 		'missingparam' => array('code' => 'no$1', 'info' => "The \$1 parameter must be set"),
 		'invalidtitle' => array('code' => 'invalidtitle', 'info' => "Bad title ``\$1''"),
+		'nosuchpageid' => array('code' => 'nosuchpageid', 'info' => "There is no page with ID \$1"),
 		'invaliduser' => array('code' => 'invaliduser', 'info' => "Invalid username ``\$1''"),
-		'invalidexpiry' => array('code' => 'invalidexpiry', 'info' => "Invalid expiry time"),
-		'pastexpiry' => array('code' => 'pastexpiry', 'info' => "Expiry time is in the past"),
+		'invalidexpiry' => array('code' => 'invalidexpiry', 'info' => "Invalid expiry time ``\$1''"),
+		'pastexpiry' => array('code' => 'pastexpiry', 'info' => "Expiry time ``\$1'' is in the past"),
 		'create-titleexists' => array('code' => 'create-titleexists', 'info' => "Existing titles can't be protected with 'create'"),
 		'missingtitle-createonly' => array('code' => 'missingtitle-createonly', 'info' => "Missing titles can only be protected with 'create'"),
 		'cantblock' => array('code' => 'cantblock', 'info' => "You don't have permission to block users"),
@@ -651,6 +718,12 @@ abstract class ApiBase {
 		'permdenied-undelete' => array('code' => 'permissiondenied', 'info' => "You don't have permission to restore deleted revisions"),
 		'createonly-exists' => array('code' => 'articleexists', 'info' => "The article you tried to create has been created already"),
 		'nocreate-missing' => array('code' => 'missingtitle', 'info' => "The article you tried to edit doesn't exist"),
+		'nosuchrcid' => array('code' => 'nosuchrcid', 'info' => "There is no change with rcid ``\$1''"),
+		'cantpurge' => array('code' => 'cantpurge', 'info' => "Only users with the 'purge' right can purge pages via the API"),
+		'protect-invalidaction' => array('code' => 'protect-invalidaction', 'info' => "Invalid protection type ``\$1''"),
+		'protect-invalidlevel' => array('code' => 'protect-invalidlevel', 'info' => "Invalid protection level ``\$1''"),
+		'toofewexpiries' => array('code' => 'toofewexpiries', 'info' => "\$1 expiry timestamps were provided where \$2 were needed"),
+		
 
 		// ApiEditPage messages
 		'noimageredirect-anon' => array('code' => 'noimageredirect-anon', 'info' => "Anonymous users can't create image redirects"),
@@ -665,18 +738,33 @@ abstract class ApiBase {
 		'editconflict' => array('code' => 'editconflict', 'info' => "Edit conflict detected"),
 		'hashcheckfailed' => array('code' => 'badmd5', 'info' => "The supplied MD5 hash was incorrect"),
 		'missingtext' => array('code' => 'notext', 'info' => "One of the text, appendtext and prependtext parameters must be set"),
+		'emptynewsection' => array('code' => 'emptynewsection', 'info' => 'Creating empty new sections is not possible.'),
 	);
 
 	/**
 	 * Output the error message related to a certain array
-	 * @param array $error Element of a getUserPermissionsErrors()
+	 * @param array $error Element of a getUserPermissionsErrors()-style array
 	 */
 	public function dieUsageMsg($error) {
+		$parsed = $this->parseMsg($error);
+		$this->dieUsage($parsed['code'], $parsed['info']);
+	}
+	
+	/**
+	 * Return the error message related to a certain array
+	 * @param array $error Element of a getUserPermissionsErrors()-style array
+	 * @return array('code' => code, 'info' => info)
+	 */
+	public function parseMsg($error) {
 		$key = array_shift($error);
 		if(isset(self::$messageMap[$key]))
-			$this->dieUsage(wfMsgReplaceArgs(self::$messageMap[$key]['info'], $error), wfMsgReplaceArgs(self::$messageMap[$key]['code'], $error));
+			return array(	'code' =>
+				wfMsgReplaceArgs(self::$messageMap[$key]['code'], $error),
+					'info' =>
+				wfMsgReplaceArgs(self::$messageMap[$key]['info'], $error)
+			);
 		// If the key isn't present, throw an "unknown error"
-		$this->dieUsageMsg(array('unknownerror', $key));
+		return $this->parseMsg(array('unknownerror', $key));
 	}
 
 	/**
@@ -814,6 +902,6 @@ abstract class ApiBase {
 	 * Returns a String that identifies the version of this class.
 	 */
 	public static function getBaseVersion() {
-		return __CLASS__ . ': $Id: ApiBase.php 36309 2008-06-15 20:37:28Z catrope $';
+		return __CLASS__ . ': $Id: ApiBase.php 47041 2009-02-09 14:39:41Z catrope $';
 	}
 }

@@ -188,7 +188,7 @@ class SpecialCrosswikiBlock extends SpecialPage {
 		<tr id='wpAnonOnlyRow'>
 			<td>&nbsp;</td>
 			<td>
-				" . wfCheckLabel( wfMsgHtml( 'crosswikiblock-anononly' ),
+				" . Xml::checkLabel( wfMsgHtml( 'crosswikiblock-anononly' ),
 					'wpAnonOnly', 'wpAnonOnly', $wgRequest->getCheck( 'wpAnonOnly' ),
 					array( 'tabindex' => '6' ) ) . "
 			</td>
@@ -196,7 +196,7 @@ class SpecialCrosswikiBlock extends SpecialPage {
 		<tr id='wpCreateAccountRow'>
 			<td>&nbsp;</td>
 			<td>
-				" . wfCheckLabel( wfMsgHtml( 'crosswikiblock-nocreate' ),
+				" . Xml::checkLabel( wfMsgHtml( 'crosswikiblock-nocreate' ),
 					'wpCreateAccount', 'wpCreateAccount', $wgRequest->getCheck( 'wpAnonOnly' ),
 					array( 'tabindex' => '7' ) ) . "
 			</td>
@@ -204,7 +204,7 @@ class SpecialCrosswikiBlock extends SpecialPage {
 		<tr id='wpEnableAutoblockRow'>
 			<td>&nbsp;</td>
 			<td>
-				" . wfCheckLabel( wfMsgHtml( 'crosswikiblock-autoblock' ),
+				" . Xml::checkLabel( wfMsgHtml( 'crosswikiblock-autoblock' ),
 						'wpEnableAutoblock', 'wpEnableAutoblock', $wgRequest->getCheck( 'wpAnonOnly' ),
 							array( 'tabindex' => '8' ) ) . "
 			</td>
@@ -216,7 +216,7 @@ class SpecialCrosswikiBlock extends SpecialPage {
 			<tr id='wpEnableEmailBan'>
 			<td>&nbsp;</td>
 				<td>
-					" . wfCheckLabel( wfMsgHtml( 'crosswikiblock-noemail' ),
+					" . Xml::checkLabel( wfMsgHtml( 'crosswikiblock-noemail' ),
 							'wpEmailBan', 'wpEmailBan', $wgRequest->getCheck( 'wpEmailBan' ),
 								array( 'tabindex' => '10' )) . "
 				</td>

@@ -126,6 +126,9 @@ ikhawundi lakho liyadalwa. musa ukukhohlwa ukuguqula amakhethelo a-{{SITENAME}} 
 'emailconfirmlink'   => 'Qinisekisa ikheli likagesi lakho',
 'loginlanguagelabel' => 'Ulimi: $1',
 
+# Password reset dialog
+'newpassword' => 'Izwi elingenangozi elisha:',
+
 # Edit page toolbar
 'italic_sample' => 'Amazwi ama-italiki',
 'italic_tip'    => 'Amazwi ama-italiki',
@@ -133,7 +136,7 @@ ikhawundi lakho liyadalwa. musa ukukhohlwa ukuguqula amakhethelo a-{{SITENAME}} 
 'hr_tip'        => 'Umugqa uhleliwe  (use sparingly)',
 
 # Edit pages
-'summary'            => 'Isifinyezo',
+'summary'            => 'Isifinyezo:',
 'minoredit'          => 'Lokho ngukuhlela okuncane',
 'watchthis'          => 'Bukela ngalelikhasi',
 'savearticle'        => 'Ukonga ikhasi',
@@ -157,8 +160,9 @@ ikhawundi lakho liyadalwa. musa ukukhohlwa ukuguqula amakhethelo a-{{SITENAME}} 
 'rev-delundel' => 'bukisa/fihla',
 
 # Search results
-'searchresults' => 'Umphumela wokusesha',
-'powersearch'   => 'Sesha',
+'searchresults'  => 'Umphumela wokusesha',
+'searchhelp-url' => 'Help:Isiqikili',
+'powersearch'    => 'Sesha',
 
 # Preferences page
 'preferences'       => 'Amakhethelo',
@@ -168,7 +172,6 @@ ikhawundi lakho liyadalwa. musa ukukhohlwa ukuguqula amakhethelo a-{{SITENAME}} 
 'changepassword'    => 'Guqula izwi elingenangozi',
 'math'              => 'Izibalo',
 'saveprefs'         => 'Saveprefs',
-'newpassword'       => 'Izwi elingenangozi elisha:',
 'searchresultshead' => 'Sesha',
 'timezonelegend'    => 'Isifunda sasikhathi',
 'localtime'         => 'Isikhathi siyalapha',
@@ -190,7 +193,7 @@ ikhawundi lakho liyadalwa. musa ukukhohlwa ukuguqula amakhethelo a-{{SITENAME}} 
 
 'nolicense' => 'Ubekhetha lutho',
 
-# Image description page
+# File description page
 'nolinkstoimage'   => 'Akukho amakhasi akhomba kuleli fayela.',
 'noimage'          => 'Akukho ifayela elinaleli gama, unga $1.',
 'noimage-linktext' => 'Layisha',
@@ -199,7 +202,7 @@ ikhawundi lakho liyadalwa. musa ukukhohlwa ukuguqula amakhethelo a-{{SITENAME}} 
 'randompage' => 'Ikhasi elingaphandle kokucabanga',
 
 # Statistics
-'userstats' => 'Ukwaziswa wamsebenzisi',
+'statistics-header-users' => 'Ukwaziswa wamsebenzisi',
 
 # Miscellaneous special pages
 'shortpages'        => 'Amakhasi amafishane',
@@ -215,6 +218,9 @@ ikhawundi lakho liyadalwa. musa ukukhohlwa ukuguqula amakhethelo a-{{SITENAME}} 
 # Special:AllPages
 'allinnamespace' => 'Onke amakhasi ($1 namespace)',
 'allpagessubmit' => 'Hamba',
+
+# Special:Log/newusers
+'newuserlog-create-entry' => 'Umsebenzi omusha',
 
 # E-mail user
 'emailuser'    => 'Thumela umlayezo lo msebenzisi',
@@ -232,10 +238,12 @@ ikhawundi lakho liyadalwa. musa ukukhohlwa ukuguqula amakhethelo a-{{SITENAME}} 
 
 'enotif_newpagetext' => 'Lelikhasi liyasha.',
 
-# Delete/protect/revert
-'deletepage'     => 'Sula ikhasi',
-'confirm'        => 'Qinisekisa',
-'exblank'        => 'ikhasi elize',
+# Delete
+'deletepage' => 'Sula ikhasi',
+'confirm'    => 'Qinisekisa',
+'exblank'    => 'ikhasi elize',
+
+# Protect
 'protectcomment' => 'Isizathu ngenxa yalondoloza',
 
 # Restrictions (nouns)
@@ -267,6 +275,7 @@ ikhawundi lakho liyadalwa. musa ukukhohlwa ukuguqula amakhethelo a-{{SITENAME}} 
 # Move page
 'move-page-legend'        => 'Thuthisa ikhasi',
 'movearticle'             => 'Thuthisa ikhasi',
+'movenologin'             => 'Awungenile',
 'movepagebtn'             => 'Thuthisa ikhasi',
 'movedto'                 => 'Lithuthiselwe e',
 'movereason'              => 'Isizathu',
@@ -294,7 +303,7 @@ ikhawundi lakho liyadalwa. musa ukukhohlwa ukuguqula amakhethelo a-{{SITENAME}} 
 'markaspatrolledtext' => 'Dweba ukuthi lelikhasi liyagadwa',
 'markedaspatrolled'   => 'Dweba ukuthi lelikhasi liyagadwa',
 
-# Special:NewImages
+# Special:NewFiles
 'newimages' => 'Uhlelo lwamafayela amasha',
 'noimages'  => 'Awuboni lutho.',
 'ilsubmit'  => 'Sesha',

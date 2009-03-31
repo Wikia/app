@@ -74,28 +74,28 @@ class CategoryTreePage extends SpecialPage {
 			$title = CategoryTree::makeTitle( $this->target );
 
 			if ( $title && $title->getArticleID() ) {
-				$wgOut->addHtml( Xml::openElement( 'div', array( 'class' => 'CategoryTreeParents' ) ) );
-				$wgOut->addHtml( wfMsgExt( 'categorytree-parents', 'parseinline' ) );
-				$wgOut->addHtml( ': ' );
+				$wgOut->addHTML( Xml::openElement( 'div', array( 'class' => 'CategoryTreeParents' ) ) );
+				$wgOut->addHTML( wfMsgExt( 'categorytree-parents', 'parseinline' ) );
+				$wgOut->addHTML( ': ' );
 
 				$parents = $this->tree->renderParents( $title );
 
 				if ( $parents == '' ) {
-					$wgOut->addHtml( wfMsgExt( 'categorytree-no-parent-categories', 'parseinline' ) );
+					$wgOut->addHTML( wfMsgExt( 'categorytree-no-parent-categories', 'parseinline' ) );
 				} else {
-					$wgOut->addHtml( $parents );
+					$wgOut->addHTML( $parents );
 				}
 
-				$wgOut->addHtml( Xml::closeElement( 'div' ) );
+				$wgOut->addHTML( Xml::closeElement( 'div' ) );
 
-				$wgOut->addHtml( Xml::openElement( 'div', array( 'class' => 'CategoryTreeResult' ) ) );
-				$wgOut->addHtml( $this->tree->renderNode( $title, 1 ) );
-				$wgOut->addHtml( Xml::closeElement( 'div' ) );
+				$wgOut->addHTML( Xml::openElement( 'div', array( 'class' => 'CategoryTreeResult' ) ) );
+				$wgOut->addHTML( $this->tree->renderNode( $title, 1 ) );
+				$wgOut->addHTML( Xml::closeElement( 'div' ) );
 			}
 			else {
-				$wgOut->addHtml( Xml::openElement( 'div', array( 'class' => 'CategoryTreeNotice' ) ) );
-				$wgOut->addHtml( wfMsgExt( 'categorytree-not-found', 'parseinline' , $this->target ) );
-				$wgOut->addHtml( Xml::closeElement( 'div' ) );
+				$wgOut->addHTML( Xml::openElement( 'div', array( 'class' => 'CategoryTreeNotice' ) ) );
+				$wgOut->addHTML( wfMsgExt( 'categorytree-not-found', 'parseinline' , $this->target ) );
+				$wgOut->addHTML( Xml::closeElement( 'div' ) );
 			}
 		}
 

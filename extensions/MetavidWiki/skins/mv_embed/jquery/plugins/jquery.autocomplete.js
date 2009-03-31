@@ -1,5 +1,5 @@
-(function($){ 
-	
+(function($){
+
 jQuery.autocomplete = function(input, options) {
 	// Create a link to self
 	var me = this;
@@ -10,11 +10,11 @@ jQuery.autocomplete = function(input, options) {
 	// Apply inputClass if necessary
 	if (options.inputClass) $input.addClass(options.inputClass);
 
-	// Create results 
+	// Create results
 	if(!options.resultElem){
 		var results = document.createElement("div");
 		// Create jQuery object for results
-		var $results = $(results);		
+		var $results = $(results);
 		// Add to body element
 		$("body").append(results);
 		$results.hide().addClass(options.resultsClass).css("position", "absolute");
@@ -24,7 +24,7 @@ jQuery.autocomplete = function(input, options) {
 		var $results = $j(options.resultElem);
 		$results.hide();
 	}
-	
+
 
 	input.autocompleter = me;
 
@@ -118,7 +118,7 @@ jQuery.autocomplete = function(input, options) {
 
 	hideResultsNow();
 
-	function onChange() {		
+	function onChange() {
 		// ignore if the following keys are pressed: [del] [shift] [capslock]
 		if( lastKeyPressCode == 46 || (lastKeyPressCode > 8 && lastKeyPressCode < 32) ) return $results.hide();
 		var v = $input.val();
@@ -235,6 +235,10 @@ jQuery.autocomplete = function(input, options) {
 		}else{
 			$results.show();
 		}
+		if(options.resultContainer){
+			$(options.resultContainer).css({top: (pos.y + input.offsetHeight) + "px",
+				left: (pos.x- parseInt(iWidth)) + "px"}).show();
+		}
 	};
 
 	function hideResults() {
@@ -247,6 +251,9 @@ jQuery.autocomplete = function(input, options) {
 		$input.removeClass(options.loadingClass);
 		if ($results.is(":visible")) {
 			$results.hide();
+		}
+		if(options.resultContainer){
+			$(options.resultContainer).hide();
 		}
 		if (options.mustMatch) {
 			var v = $input.val();
@@ -264,7 +271,7 @@ jQuery.autocomplete = function(input, options) {
 			// if the field no longer has focus or if there are no matches, do not display the drop down
 			if( !hasFocus || data.length == 0 ) return hideResultsNow();
 
-			//messes with layout & ie7 does not have this problem 
+			//messes with layout & ie7 does not have this problem
 			/*if ($.browser.msie) {
 				// we put a styled iframe behind the calendar so HTML SELECT elements don't show through
 				$results.append(document.createElement('iframe'));
@@ -293,6 +300,8 @@ jQuery.autocomplete = function(input, options) {
 
 	function dataToDom(data) {
 		var ul = document.createElement("ul");
+		if(options.ul_class)$(ul).addClass(options.ul_class);
+
 		var num = data.length;
 
 		// limited results to a max number
@@ -357,7 +366,7 @@ jQuery.autocomplete = function(input, options) {
 	function loadFromCache(q) {
 		if (!q) return null;
 		if (typeof cache.data[q]!='undefined'){
-		 	return cache.data[q];			
+		 	return cache.data[q];
 		}
 		if (options.matchSubset) {
 			for (var i = q.length - 1; i >= options.minChars; i--) {
@@ -479,7 +488,7 @@ jQuery.fn.autocomplete = function(url, options, data) {
 	// Set default values for required options
 	options.resultElem = options.resultElem || null;
 	options.paramName = options.paramName || 'q';
-	
+
 	options.inputClass = options.inputClass || "ac_input";
 	options.resultsClass = options.resultsClass || "ac_results";
 	options.lineSeparator = options.lineSeparator || "\n";

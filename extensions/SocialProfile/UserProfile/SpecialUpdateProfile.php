@@ -1,71 +1,90 @@
 <?php
-/**#@+
-* A special page to allow users to update their social profile
-*
-* @package MediaWiki
-* @subpackage SpecialPage
-*
-* @author David Pean <david.pean@gmail.com>
-* @copyright Copyright © 2007, Wikia Inc.
-* @license http://www.gnu.org/copyleft/gpl.html GNU General Public License 2.0 or later
-*/
+/**
+ * A special page to allow users to update their social profile
+ *
+ * @file
+ * @ingroup Extensions
+ * @author David Pean <david.pean@gmail.com>
+ * @copyright Copyright © 2007, Wikia Inc.
+ * @license http://www.gnu.org/copyleft/gpl.html GNU General Public License 2.0 or later
+ */
 
 class SpecialUpdateProfile extends UnlistedSpecialPage {
-	function __construct() {
+
+	/**
+	 * Constructor
+	 */
+	public function __construct() {
 		parent::__construct( 'UpdateProfile' );
 	}
 
 	function initProfile(){
-		global $wgUser, $wgDBprefix;
-		$dbr = wfGetDB( DB_MASTER );
-		$s = $dbr->selectRow( 'user_profile', array( 'up_user_id' ), array( 'up_user_id' => $wgUser->getID() ), __METHOD__ );
+		global $wgUser;
+		$dbw = wfGetDB( DB_MASTER );
+		$s = $dbw->selectRow( 'user_profile', array( 'up_user_id' ), array( 'up_user_id' => $wgUser->getID() ), __METHOD__ );
 		if ( $s === false ) {
-			$fname = $wgDBprefix.'user_profile::addToDatabase';
 			$dbw = wfGetDB( DB_MASTER );
 			$dbw->insert( 'user_profile',
 				array(
 					'up_user_id' => $wgUser->getID()
-				), $fname
+				), __METHOD__
 			);
 		}
 	}
 
-	function execute($section){
-		global $wgUser, $wgOut, $wgRequest, $wgSiteView, $IP, $wgUserProfileScripts, $wgStyleVersion, $wgUpdateProfileInRecentChanges, $wgSupressPageTitle;
+	/**
+	 * Show the special page
+	 *
+	 * @param $section Mixed: parameter passed to the page or null
+	 */
+	public function execute( $section ){
+		global $wgUser, $wgOut, $wgRequest, $wgSiteView, $wgUserProfileScripts, $wgUpdateProfileInRecentChanges, $wgSupressPageTitle;
 		$wgSupressPageTitle = true;
 
-		$wgOut->setHTMLTitle( wfMsg('pagetitle', wfMsg('edit-profile-title')));
+		wfLoadExtensionMessages( 'SocialProfileUserProfile' );
 
+		$wgOut->setHTMLTitle( wfMsg( 'pagetitle', wfMsg('edit-profile-title') ) );
+
+		// This feature is only available for logged-in users.
 		if( !$wgUser->isLoggedIn() ) {
 			$wgOut->setPagetitle( wfMsgForContent( 'user-profile-update-notloggedin-title' ) );
-			$wgOut->addHTML(  wfMsgForContent(  'user-profile-update-notloggedin-text',  Title::makeTitle(NS_SPECIAL, "Login" . $which)->escapeFullUrl(), Title::makeTitle(NS_SPECIAL, "UserRegister" . $which)->escapeFullUrl() ) );
+			$wgOut->addHTML(
+				wfMsgForContent( 'user-profile-update-notloggedin-text',
+					SpecialPage::getTitleFor( 'UserLogin' )->escapeFullURL(),
+					SpecialPage::getTitleFor( 'UserLogin', 'signup' )->escapeFullURL()
+				)
+			);
 			return;
 		}
 
+		// No need to allow blocked users to access this page, they could abuse it, y'know.
 		if( $wgUser->isBlocked() ){
 			$wgOut->blockedPage( false );
 			return false;
 		}
 
-		$wgOut->addScript("<link rel='stylesheet' type='text/css' href=\"{$wgUserProfileScripts}/UserProfile.css?{$wgStyleVersion}\"/>\n");
-		$wgOut->addScript("<script type=\"text/javascript\" src=\"{$wgUserProfileScripts}/UpdateProfile.js\"></script>\n");
+		// Add CSS & JS
+		$wgOut->addStyle( '../..' . $wgUserProfileScripts . '/UserProfile.css' );
+		$wgOut->addScriptFile( $wgUserProfileScripts.'/UpdateProfile.js' );
+		// Nasty hack since UserProfile.css is loaded before skin's main.css
+		$wgOut->addHTML( '<style>.profile-tab a:visited { color: #FFFFFF; } .profile-tab-on a:visited { color: #FFFFFF; }</style>' );
 
- 		if($wgRequest->wasPosted()){
-			//$section = $wgRequest->getVal("section");
-			if(!$section)$section="basic";
-			switch($section){
-				case "basic":
+ 		if( $wgRequest->wasPosted() ){
+			//$section = $wgRequest->getVal('section');
+			if( !$section ) $section = 'basic';
+			switch( $section ){
+				case 'basic':
 					$this->saveProfileBasic();
-					$this->saveWikiaSettings_basic();
+					$this->saveSettings_basic();
 					break;
-				case "personal":
+				case 'personal':
 					$this->saveProfilePersonal();
 					break;
-				case "custom":
+				case 'custom':
 					$this->saveProfileCustom();
 					break;
-				case "preferences":
-					$this->saveWikiaSettings_pref();
+				case 'preferences':
+					$this->saveSettings_pref();
 					break;
 			}
 
@@ -76,45 +95,45 @@ class SpecialUpdateProfile extends UnlistedSpecialPage {
 				$log->updateRecentChanges = false;
 			}
 			$log->addEntry( wfMsgForContent( 'user-profile-update-profile' ), $wgUser->getUserPage(), wfMsgForContent( 'user-profile-update-log-section' ) . " '{$section}'" );
-			$wgOut->addHTML("<span class='profile-on'>" . wfMsgForContent( 'user-profile-update-saved' ) . "</span><br /><br />");
+			$wgOut->addHTML( '<span class="profile-on">' . wfMsgForContent( 'user-profile-update-saved' ) . '</span><br /><br />' );
 
-			//create user page if not exists
+			// create user page if not exists
 			$title = Title::makeTitle( NS_USER, $wgUser->getName() );
 			$article = new Article( $title );
 			if( !$article->exists() ){
-				$article->doEdit( "", "create user page", EDIT_SUPPRESS_RC );
+				$article->doEdit( '', 'create user page', EDIT_SUPPRESS_RC );
 			}
 		}
 
-			//$section = $wgRequest->getVal("section");
-			if(!$section)$section="basic";
-			switch($section){
-				case "basic":
-					$wgOut->addHTML($this->displayBasicForm());
-				break;
-				case "personal":
-					$wgOut->addHTML($this->displayPersonalForm());
-				break;
-				case "custom":
-					$wgOut->addHTML($this->displayCustomForm());
-				break;
-				case "preferences":
-					$wgOut->addHTML($this->displayPreferencesForm());
-				break;
+			//$section = $wgRequest->getVal('section');
+			if( !$section ) $section = 'basic';
+			switch( $section ){
+				case 'basic':
+					$wgOut->addHTML( $this->displayBasicForm() );
+					break;
+				case 'personal':
+					$wgOut->addHTML( $this->displayPersonalForm() );
+					break;
+				case 'custom':
+					$wgOut->addHTML( $this->displayCustomForm() );
+					break;
+				case 'preferences':
+					$wgOut->addHTML( $this->displayPreferencesForm() );
+					break;
 			}
 	}
 
-	function saveWikiaSettings_basic(){
+	function saveSettings_basic(){
 		global $wgUser, $wgOut, $wgRequest, $wgSiteView, $wgEmailAuthentication;
 
-		$wgUser->setRealName( $wgRequest->getVal("real_name") );
-		$wgUser->setEmail( $wgRequest->getVal("email") );
+		$wgUser->setRealName( $wgRequest->getVal('real_name') );
+		$wgUser->setEmail( $wgRequest->getVal('email') );
 
-		if($wgUser->getEmail()!=$wgRequest->getVal("email")){
+		if( $wgUser->getEmail() != $wgRequest->getVal('email') ){
 			$wgUser->mEmailAuthenticated = null; # but flag as "dirty" = unauthenticated
 		}
 
-		if ($wgEmailAuthentication) {
+		if( $wgEmailAuthentication ) {
 			# Mail a temporary password to the dirty address.
 			# User can come back through the confirmation URL to re-enable email.
 			$result = $wgUser->sendConfirmationMail();
@@ -127,32 +146,33 @@ class SpecialUpdateProfile extends UnlistedSpecialPage {
 		$wgUser->saveSettings();
 	}
 
-	function saveWikiaSettings_pref(){
+	function saveSettings_pref(){
 		global $wgUser, $wgOut, $wgRequest, $wgSiteView, $wgSitename;
 
-		$notify_friend = $wgRequest->getVal("notify_friend");
-		$notify_gift = $wgRequest->getVal("notify_gift");
-		$notify_challenge = $wgRequest->getVal("notify_challenge");
-		$notify_honorifics = $wgRequest->getVal("notify_honorifics");
-		$notify_message = $wgRequest->getVal("notify_message");
-		if($notify_friend=="")$notify_friend = 0;
-		if($notify_gift == "")$notify_gift = 0;
-		if($notify_challenge == "")$notify_challenge = 0;
-		if($notify_honorifics == "")$notify_honorifics = 0;
-		if($notify_message == "")$notify_message = 0;
+		$notify_friend = $wgRequest->getVal( 'notify_friend' );
+		$notify_gift = $wgRequest->getVal( 'notify_gift' );
+		$notify_challenge = $wgRequest->getVal( 'notify_challenge' );
+		$notify_honorifics = $wgRequest->getVal( 'notify_honorifics' );
+		$notify_message = $wgRequest->getVal( 'notify_message' );
+		if( $notify_friend == '' ) $notify_friend = 0;
+		if( $notify_gift == '' ) $notify_gift = 0;
+		if( $notify_challenge == '' ) $notify_challenge = 0;
+		if( $notify_honorifics == '' ) $notify_honorifics = 0;
+		if( $notify_message == '' ) $notify_message = 0;
 		$wgUser->setOption( 'notifygift', $notify_gift );
 		$wgUser->setOption( 'notifyfriendrequest', $notify_friend );
 		$wgUser->setOption( 'notifychallenge', $notify_challenge );
 		$wgUser->setOption( 'notifyhonorifics', $notify_honorifics );
 		$wgUser->setOption( 'notifymessage', $notify_message );
 		$wgUser->saveSettings();
-		// This code is mostly relative to ArmchairGM, however can be fixed to be used for others.. (maybe try and get code from ArmchairGM)
-		if($wgSitename=="ArmchairGM"){
-			$dbr = wfGetDB( DB_MASTER );
-			if($wgRequest->getVal("weeklyemail")==1){
-				$s = $dbr->selectRow( '`user_mailing_list`', array( 'um_user_id' ), array( 'um_user_id' => $wgUser->getID()  ), __METHOD__ );
+		// This code is mostly related to ArmchairGM, however can be fixed to be used for others.
+		if( $wgSitename == 'ArmchairGM' ){
+			$dbw = wfGetDB( DB_MASTER );
+			// If the user wants a weekly email, we'll put some info about that to the user_mailing_list table
+			if( $wgRequest->getVal('weeklyemail') == 1 ){
+				$s = $dbw->selectRow( 'user_mailing_list', array( 'um_user_id' ), array( 'um_user_id' => $wgUser->getID() ), __METHOD__ );
 				if ( $s === false ){
-					$dbr->insert( '`user_mailing_list`',
+					$dbw->insert( 'user_mailing_list',
 					array(
 						'um_user_id' => $wgUser->getID(),
 						'um_user_name' => $wgUser->getName(),
@@ -160,15 +180,15 @@ class SpecialUpdateProfile extends UnlistedSpecialPage {
 					);
 				}
 			} else {
-				$sql = "DELETE from user_mailing_list where um_user_id = {$wgUser->getID()}";
-				$res = $dbr->query($sql);
+				// Otherwise, just delete the entry.
+				$dbw->delete( 'user_mailing_list', array( 'um_user_id' => $wgUser->getID() ), __METHOD__ );
 			}
 		}
 	}
 
-	function formatBirthdayDB($birthday){
+	function formatBirthdayDB( $birthday ){
 		$dob = explode('/', $birthday);
-		if(count($dob) == 2){
+		if( count($dob) == 2 ){
 			$year = 2007;
 			$month = $dob[0];
 			$day = $dob[1];
@@ -177,9 +197,9 @@ class SpecialUpdateProfile extends UnlistedSpecialPage {
 		return ($birthday_date);
 	}
 
-	function formatBirthday($birthday){
+	function formatBirthday( $birthday ){
 		$dob = explode('-', $birthday);
-		if(count($dob) == 3){
+		if( count($dob) == 3 ){
 			$year = 0000;
 			$month = $dob[1];
 			$day = $dob[2];
@@ -189,35 +209,35 @@ class SpecialUpdateProfile extends UnlistedSpecialPage {
 	}
 
 	function saveProfileBasic(){
-		global $wgUser, $wgMemc, $wgRequest, $wgSitename, $wgDBprefix;
+		global $wgUser, $wgMemc, $wgRequest, $wgSitename;
 
 		$this->initProfile();
 		$dbw = wfGetDB( DB_MASTER );
 			$dbw->update('user_profile',
 			array( /* SET */
-				'up_location_city' => $wgRequest->getVal("location_city"),
-				'up_location_state' => $wgRequest->getVal("location_state"),
-				'up_location_country' => $wgRequest->getVal("location_country"),
+				'up_location_city' => $wgRequest->getVal( 'location_city' ),
+				'up_location_state' => $wgRequest->getVal( 'location_state' ),
+				'up_location_country' => $wgRequest->getVal( 'location_country' ),
 
-				'up_hometown_city' => $wgRequest->getVal("hometown_city"),
-				'up_hometown_state' => $wgRequest->getVal("hometown_state"),
-				'up_hometown_country' => $wgRequest->getVal("hometown_country"),
+				'up_hometown_city' => $wgRequest->getVal( 'hometown_city' ),
+				'up_hometown_state' => $wgRequest->getVal( 'hometown_state' ),
+				'up_hometown_country' => $wgRequest->getVal( 'hometown_country' ),
 
-				'up_birthday' => $this->formatBirthdayDB($wgRequest->getVal("birthday")),
-				'up_about' => $wgRequest->getVal("about"),
-				'up_occupation' => $wgRequest->getVal("occupation"),
-				'up_schools' => $wgRequest->getVal("schools"),
-				'up_places_lived' => $wgRequest->getVal("places"),
-				'up_websites' => $wgRequest->getVal("websites"),
-				'up_relationship' => $wgRequest->getVal("relationship")
+				'up_birthday' => $this->formatBirthdayDB( $wgRequest->getVal( 'birthday' ) ),
+				'up_about' => $wgRequest->getVal( 'about' ),
+				'up_occupation' => $wgRequest->getVal( 'occupation' ),
+				'up_schools' => $wgRequest->getVal( 'schools' ),
+				'up_places_lived' => $wgRequest->getVal('places' ),
+				'up_websites' => $wgRequest->getVal( 'websites' ),
+				'up_relationship' => $wgRequest->getVal( 'relationship' )
 			), array( /* WHERE */
 				'up_user_id' => $wgUser->getID()
-			), ""
+			), __METHOD__
 			);
 		// Relevant to Wikia Blackbird.
-		if($wgSitename == "Wikia Blackbird"){
-			$enroll = $wgRequest->getVal("enroll");
-			if($enroll=="")$enroll = 0;
+		if( $wgSitename == "Wikia Blackbird" ){
+			$enroll = $wgRequest->getVal( 'enroll' );
+			if( $enroll == '' ) $enroll = 0;
 			$wgUser->setOption( 'blackbirdenroll', $enroll );
 			$wgUser->saveSettings();
 		}
@@ -225,20 +245,19 @@ class SpecialUpdateProfile extends UnlistedSpecialPage {
 	}
 
 	function saveProfileCustom(){
-		global $wgUser, $wgMemc, $wgRequest, $wgDBprefix;
+		global $wgUser, $wgMemc, $wgRequest;
 
 		$this->initProfile();
 		$dbw = wfGetDB( DB_MASTER );
 			$dbw->update( 'user_profile',
 			array( /* SET */
-				'up_custom_1' => $wgRequest->getVal("custom1"),
-				'up_custom_2' => $wgRequest->getVal("custom2"),
-				'up_custom_3' => $wgRequest->getVal("custom3"),
-				'up_custom_4' => $wgRequest->getVal("custom4")
-
+				'up_custom_1' => $wgRequest->getVal( 'custom1' ),
+				'up_custom_2' => $wgRequest->getVal( 'custom2' ),
+				'up_custom_3' => $wgRequest->getVal( 'custom3' ),
+				'up_custom_4' => $wgRequest->getVal( 'custom4' )
 			), array( /* WHERE */
 				'up_user_id' => $wgUser->getID()
-			), ""
+			), __METHOD__
 			);
 		$wgMemc->delete( wfMemcKey( 'user', 'profile', 'info', $wgUser->getID() ) );
 	}
@@ -250,19 +269,18 @@ class SpecialUpdateProfile extends UnlistedSpecialPage {
 		$dbw = wfGetDB( DB_MASTER );
 			$dbw->update( 'user_profile',
 			array( /* SET */
-
-				'up_companies' => $wgRequest->getVal("companies"),
-				'up_movies' => $wgRequest->getVal("movies"),
-				'up_music' => $wgRequest->getVal("music"),
-				'up_tv' => $wgRequest->getVal("tv"),
-				'up_books' => $wgRequest->getVal("books"),
-				'up_magazines' => $wgRequest->getVal("magazines"),
-				'up_video_games' => $wgRequest->getVal("videogames"),
-				'up_snacks' => $wgRequest->getVal("snacks"),
-				'up_drinks' => $wgRequest->getVal("drinks")
+				'up_companies' => $wgRequest->getVal( 'companies' ),
+				'up_movies' => $wgRequest->getVal( 'movies' ),
+				'up_music' => $wgRequest->getVal( 'music' ),
+				'up_tv' => $wgRequest->getVal( 'tv' ),
+				'up_books' => $wgRequest->getVal( 'books' ),
+				'up_magazines' => $wgRequest->getVal( 'magazines' ),
+				'up_video_games' => $wgRequest->getVal( 'videogames' ),
+				'up_snacks' => $wgRequest->getVal( 'snacks' ),
+				'up_drinks' => $wgRequest->getVal( 'drinks' )
 			), array( /* WHERE */
 				'up_user_id' => $wgUser->getID()
-			), ""
+			), __METHOD__
 			);
 		$wgMemc->delete( wfMemcKey( 'user', 'profile', 'info', $wgUser->getID() ) );
 	}
@@ -272,14 +290,15 @@ class SpecialUpdateProfile extends UnlistedSpecialPage {
 
 		$dbr = wfGetDB( DB_MASTER );
 		$s = $dbr->selectRow( 'user_profile',
-			array(
-				'up_location_city', 'up_location_state', 'up_location_country',
-				'up_hometown_city', 'up_hometown_state', 'up_hometown_country',
-				'up_birthday','up_occupation','up_about','up_schools','up_places_lived',
-				'up_websites'
-			),
-
-		array( 'up_user_id' => $wgUser->getID() ), "" );
+				array(
+					'up_location_city', 'up_location_state', 'up_location_country',
+					'up_hometown_city', 'up_hometown_state', 'up_hometown_country',
+					'up_birthday', 'up_occupation', 'up_about', 'up_schools', 'up_places_lived',
+					'up_websites'
+				),
+				array( 'up_user_id' => $wgUser->getID() ),
+				__METHOD__
+			);
 
 		if ( $s !== false ) {
 			$location_city = $s->up_location_city;
@@ -296,14 +315,20 @@ class SpecialUpdateProfile extends UnlistedSpecialPage {
 			$websites = $s->up_websites;
 		}
 
-		if(!$location_country)$location_country = wfMsgForContent( 'user-profile-default-country' );
-		if(!$hometown_country)$hometown_country = wfMsgForContent( 'user-profile-default-country' );
-		// where is table 'user' ???
+		wfLoadExtensionMessages( 'SocialProfileUserProfile' );
+
+		if( !$location_country ) {
+			$location_country = wfMsgForContent( 'user-profile-default-country' );
+		}
+		if( !$hometown_country ) {
+			$hometown_country = wfMsgForContent( 'user-profile-default-country' );
+		}
+
 		$s = $dbr->selectRow( 'user',
-			array(
-				'user_real_name', 'user_email', 'user_email_authenticated'
-			),
-		array( 'user_id' => $wgUser->getID() ), "" );
+				array( 'user_real_name', 'user_email', 'user_email_authenticated' ),
+				array( 'user_id' => $wgUser->getID() ),
+				__METHOD__ 
+			);
 
 		if ( $s !== false ) {
 			$real_name = $s->user_real_name;
@@ -312,7 +337,8 @@ class SpecialUpdateProfile extends UnlistedSpecialPage {
 			$email_authenticated = $s->user_email_authenticated;
 		}
 
-		$countries = array("Afghanistan","Albania","Algeria","American Samoa","Andorra","Angola","Anguilla","Antarctica","Antigua and Barbuda","Argentina","Armenia","Aruba","Australia","Austria","Azerbaijan","Bahamas","Bahrain","Bangladesh","Barbados","Belarus","Belgium","Belize","Benin","Bermuda","Bhutan","Bolivia","Bosnia and Herzegovina","Botswana","Bouvet Island","Brazil","British Indian Ocean Territory","Brunei Darussalam","Bulgaria","Burkina Faso","Burundi","Cambodia","Cameroon","Canada","Cape Verde","Cayman Islands","Central African Republic","Chad","Chile","China","Christmas Island","Cocos Islands","Colombia","Comoros","Congo","Congo, Democratic Republic of the","Cook Islands","Costa Rica","Cote d'Ivoire","Croatia","Cuba","Cyprus","Czech Republic","Denmark","Djibouti","Dominica","Dominican Republic","Ecuador","Egypt","El Salvador","Equatorial Guinea","Eritrea","Estonia","Ethiopia","Falkland Islands","Faroe Islands","Fiji","Finland","France","French Guiana","French Polynesia","Gabon","Gambia","Georgia","Germany","Ghana","Gibraltar","Greece","Greenland","Grenada","Guadeloupe","Guam","Guatemala","Guinea","Guinea-Bissau","Guyana","Haiti","Heard Island and McDonald Islands","Honduras","Hong Kong","Hungary","Iceland","India","Indonesia","Iran","Iraq","Ireland","Israel","Italy","Jamaica","Japan","Jordan","Kazakhstan","Kenya","Kiribati","Kuwait","Kyrgyzstan","Laos","Latvia","Lebanon","Lesotho","Liberia","Libya","Liechtenstein","Lithuania","Luxembourg","Macao","Macedonia","Madagascar","Malawi","Malaysia","Maldives","Mali","Malta","Marshall Islands","Martinique","Mauritania","Mauritius","Mayotte","Mexico","Micronesia","Moldova","Monaco","Mongolia","Montserrat","Morocco","Mozambique","Myanmar","Namibia","Nauru","Nepal","Netherlands","Netherlands Antilles","New Caledonia","New Zealand","Nicaragua","Niger","Nigeria","Norfolk Island","North Korea","Norway","Oman","Pakistan","Palau","Palestinian Territory","Panama","Papua New Guinea","Paraguay","Peru","Philippines","Pitcairn","Poland","Portugal","Puerto Rico","Qatar","Romania","Russian Federation","Rwanda","Saint Helena","Saint Kitts and Nevis","Saint Lucia","Saint Pierre and Miquelon","Saint Vincent and the Grenadines","Samoa","San Marino","Sao Tome and Principe","Saudi Arabia","Senegal","Serbia and Montenegro","Seychelles","Sierra Leone","Singapore","Slovakia","Slovenia","Solomon Islands","Somalia","South Africa","South Georgia","South Korea","Spain","Sri Lanka","Sudan","Suriname","Svalbard and Jan Mayen","Swaziland","Sweden","Switzerland","Syrian Arab Republic","Taiwan","Tajikistan","Tanzania","Thailand","Timor-Leste","Togo","Tokelau","Tonga","Trinidad and Tobago","Tunisia","Turkey","Turkmenistan","Tuvalu","Uganda","Ukraine","United Arab Emirates","United Kingdom","United States","United States Minor Outlying Islands","Uruguay","Uzbekistan","Vanuatu","Vatican City","Venezuela","Vietnam","Virgin Islands, British","Virgin Islands, U.S.","Wallis and Futuna","Western Sahara","Yemen","Zambia","Zimbabwe");
+		$countries = explode( "\n*", wfMsgForContent( 'userprofile-country-list' ) );
+		array_shift( $countries );
 
 		$wgOut->setPageTitle( wfMsg('edit-profile-title') );
 		$form = UserProfile::getEditProfileNav( wfMsg( 'user-profile-section-personal' ) );
@@ -325,16 +351,16 @@ class SpecialUpdateProfile extends UnlistedSpecialPage {
 			<div class="cleared"></div>
 			<p class="profile-update-unit-left">' . wfMsgForContent( 'user-profile-personal-email' ) . '</p>
 			<p class="profile-update-unit"><input type="text" size="25" name="email" id="email" value="'. $email . '"/>';
-			if(!$wgUser->mEmailAuthenticated){
-				$confirm = Title::makeTitle( NS_SPECIAL, 'Confirmemail' );
+			if( !$wgUser->mEmailAuthenticated ){
+				$confirm = SpecialPage::getTitleFor( 'Confirmemail' );
 				$form .= " <a href=\"{$confirm->getFullURL()}\">" . wfMsgForContent( 'user-profile-personal-confirmemail' ) . "</a>";
 			}
 			$form .= '</p>
 			<div class="cleared"></div>';
-			if(!$wgUser->mEmailAuthenticated){
-				$form  .= '<p class="profile-update-unit-left"></p><p class="profile-update-unit-small">'.wfMsgForContent('user-profile-personal-email-needs-auth').'</p>';
+			if( !$wgUser->mEmailAuthenticated ){
+				$form .= '<p class="profile-update-unit-left"></p><p class="profile-update-unit-small">'.wfMsgForContent('user-profile-personal-email-needs-auth').'</p>';
 			}
-			$form .='<div class="cleared"></div>
+			$form .= '<div class="cleared"></div>
 		</div>
 		<div class="cleared"></div>';
 
@@ -352,12 +378,12 @@ class SpecialUpdateProfile extends UnlistedSpecialPage {
 				</script>";
 		 	$form .= "<select name=\"location_country\" id=\"location_country\" onChange=\"displaySection('location_state',this.value,'')\"><option></option>";
 
-		for ($i = 0; $i<count($countries); $i++) {
-			$form .= "<option value=\"{$countries[$i]}\" " . (($countries[$i] == $location_country)?'selected="selected"':'') . ">";
-			$form .= $countries[$i] . "</option>\n";
+		foreach( $countries as $country ) {
+			$form .= "<option value=\"{$country}\"" . ( ( $country == $location_country ) ? ' selected="selected"' : '' ) . ">";
+			$form .= $country . "</option>\n";
 		}
 
-		$form .=  "</select>";
+		$form .= '</select>';
 			$form .= '</p>
 			<div class="cleared"></div>
 		</div>
@@ -377,12 +403,12 @@ class SpecialUpdateProfile extends UnlistedSpecialPage {
 			</script>";
 		$form .= "<select name=\"hometown_country\" id=\"hometown_country\" onChange=\"displaySection('hometown_state',this.value,'')\"><option></option>";
 
-		for($i = 0; $i <count($countries); $i++) {
-			$form .= "<option value=\"{$countries[$i]}\" " . (($countries[$i] == $hometown_country)?'selected="selected"':'') . ">";
-			$form .= $countries[$i] . "</option>";
+		foreach( $countries as $country ) {
+			$form .= "<option value=\"{$country}\"" . ( ( $country == $hometown_country ) ? ' selected="selected"' : '' ) . ">";
+			$form .= $country . "</option>";
 		}
 
-		$form .=  "</select>";
+		$form .= '</select>';
 		$form .= '</p>
 			<div class="cleared"></div>
 		</div>
@@ -457,13 +483,14 @@ class SpecialUpdateProfile extends UnlistedSpecialPage {
 
 		$dbr = wfGetDB( DB_MASTER );
 		$s = $dbr->selectRow( 'user_profile',
-			array(
-				'up_about', 'up_places_lived', 'up_websites','up_relationship',
-				'up_occupation', 'up_companies', 'up_schools','up_movies','up_tv', 'up_music',
-				'up_books','up_video_games','up_magazines','up_snacks','up_drinks'
-			),
-
-		array( 'up_user_id' => $wgUser->getID() ), "" );
+				array(
+					'up_about', 'up_places_lived', 'up_websites', 'up_relationship',
+					'up_occupation', 'up_companies', 'up_schools', 'up_movies', 'up_tv', 'up_music',
+					'up_books', 'up_video_games', 'up_magazines', 'up_snacks', 'up_drinks'
+				),
+				array( 'up_user_id' => $wgUser->getID() ),
+				__METHOD__
+			);
 
 		if ( $s !== false ) {
 			$places = $s->up_places_lived;
@@ -481,7 +508,9 @@ class SpecialUpdateProfile extends UnlistedSpecialPage {
 			$drinks = $s->up_drinks;
 		}
 
-		$wgOut->setPageTitle( wfMsg('user-profile-section-interests'));
+		wfLoadExtensionMessages( 'SocialProfileUserProfile' );
+
+		$wgOut->setPageTitle( wfMsg('user-profile-section-interests') );
 		$form = UserProfile::getEditProfileNav( wfMsg( 'user-profile-section-interests' ) );
 		$form .= "<form action=\"\" method=\"post\" enctype=\"multipart/form-data\" name=\"profile\">
 			<div class=\"profile-info clearfix\">";
@@ -542,7 +571,9 @@ class SpecialUpdateProfile extends UnlistedSpecialPage {
 	function displayPreferencesForm(){
 		global $wgRequest, $wgSiteView, $wgUser, $wgOut;
 
-		$wgOut->setPageTitle( wfMsg('user-profile-section-preferences'));
+		wfLoadExtensionMessages( 'SocialProfileUserProfile' );
+
+		$wgOut->setPageTitle( wfMsg('user-profile-section-preferences') );
 		$form = UserProfile::getEditProfileNav( wfMsg( 'user-profile-section-preferences' ) );
 		$form .= '<form action="" method="post" enctype="multipart/form-data" name=profile>';
 		$form .= '<div class="profile-info clearfix">
@@ -566,9 +597,9 @@ class SpecialUpdateProfile extends UnlistedSpecialPage {
 			<div class="cleared"></div>';
 		$form .= '<input type="button" class="site-button" value="' . wfMsgForContent('user-profile-update-button') . '" size="20" onclick="document.profile.submit()" />
 			</form>';
-		$form .= "</div>";
+		$form .= '</div>';
 
-			return $form;
+		return $form;
 	}
 
 	function displayCustomForm(){
@@ -576,11 +607,12 @@ class SpecialUpdateProfile extends UnlistedSpecialPage {
 
 		$dbr = wfGetDB( DB_MASTER );
 		$s = $dbr->selectRow( 'user_profile',
-			array(
-				'up_custom_1', 'up_custom_2','up_custom_3', 'up_custom_4','up_custom_5'
-			),
-
-		array( 'up_user_id' => $wgUser->getID() ), "" );
+				array(
+					'up_custom_1', 'up_custom_2','up_custom_3', 'up_custom_4','up_custom_5'
+				),
+				array( 'up_user_id' => $wgUser->getID() ),
+				__METHOD__
+			);
 
 		if ( $s !== false ) {
 			$custom1 = $s->up_custom_1;
@@ -588,6 +620,9 @@ class SpecialUpdateProfile extends UnlistedSpecialPage {
 			$custom3 = $s->up_custom_3;
 			$custom4 = $s->up_custom_4;
 		}
+
+		wfLoadExtensionMessages( 'SocialProfileUserProfile' );
+
 		$wgOut->setHTMLTitle( wfMsg('pagetitle', wfMsg('user-profile-tidbits-title')));
 		$form =  '<h1>'.wfMsg('user-profile-tidbits-title').'</h1>';
 		$form .= UserProfile::getEditProfileNav( wfMsg( 'user-profile-section-custom' ) );
@@ -618,8 +653,7 @@ class SpecialUpdateProfile extends UnlistedSpecialPage {
 				</div>
 			<input type=\"button\" class=\"site-button\" value='" . wfMsgForContent('user-profile-update-button') . "' size=\"20\" onclick=\"document.profile.submit()\" />
 			</div>
-			</form>
-			";
+			</form>";
 
 		return $form;
 	}

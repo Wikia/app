@@ -90,7 +90,7 @@ function wfSpecialTransaction() {
 				);
 			
 			$wgOut->addHTML(DefaultEditor::getExpansionCss());
-			$wgOut->addHTML("<script language='javascript'><!--\nexpandEditors();\n--></script>");
+			$wgOut->addHTML("<script language='javascript'>/* <![CDATA[ */\nexpandEditors();\n/* ]]> */</script>");
 		}
 	}
 	

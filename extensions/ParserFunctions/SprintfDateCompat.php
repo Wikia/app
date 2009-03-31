@@ -87,6 +87,16 @@ class SprintfDateCompat {
 					if ( !$unix ) $unix = wfTimestamp( TS_UNIX, $ts );
 					$num = date( 'L', $unix );
 					break;
+				# 'o' is supported since PHP 5.1.0
+				# return literal if not supported
+				# TODO: emulation for pre 5.1.0 versions
+				case 'o':
+					if ( !$unix ) $unix = wfTimestamp( TS_UNIX, $ts );
+					if ( version_compare(PHP_VERSION, '5.1.0') === 1 )
+						$num = date( 'o', $unix );
+					else
+						$s .= 'o';
+					break;
 				case 'Y':
 					$num = substr( $ts, 0, 4 );
 					break;

@@ -1,26 +1,7 @@
 <?php
-if ( !defined( 'MEDIAWIKI' ) ):
-?>
-<html>
-<head><title>PovWatch Version 1.0</title></head>
-<body>
-<h1>PovWatch Version 1.0</h1>
-<p>
-This is a MediaWiki extension for pushing articles on to the watchlists of other users.
-To install it, add the following to the bottom of your <tt>LocalSettings.php</tt>,
-before the "?&gt;":</p>
-<pre>
-require_once( "$IP/extensions/PovWatch/PovWatch.php" );
-</pre>
-</body>
-</html>
-<?php
-	exit(1);
-endif;
+if (!defined('MEDIAWIKI')) die();
 
-	wfLoadExtensionMessages( 'povwatch' );
-
-class PovWatchPage extends SpecialPage {
+class SpecialPovWatch extends SpecialPage {
 	public $mPosted, $mTitleText, $mSubscribe, $mUnsubscribe, $mPush;
 	public $mComment, $mToken, $mOut;
 
@@ -34,6 +15,8 @@ class PovWatchPage extends SpecialPage {
 
 	function execute( $subpage ) {
 		global $wgRequest, $wgUser, $wgOut;
+
+		wfLoadExtensionMessages( 'PovWatch' );
 
 		$this->setHeaders();
 
@@ -294,7 +277,7 @@ EOT
 	#-------------------------------------------------------------------------
 
 	function message( $message, $arg1 = '', $arg2 = '' ) {
-		return wfMsg( 'povwatch_' . $message, $arg1, $arg2 );
+		return wfMsgNoTrans( 'povwatch_' . $message, $arg1, $arg2 );
 	}
 
 	function isSubscribed( User $user ) {

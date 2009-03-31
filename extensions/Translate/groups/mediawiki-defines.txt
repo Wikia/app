@@ -1,6 +1,11 @@
+ABC
+descmsg = abcdesc
+optional = abcsep, abcabc, abcpdf, abcps, abcmidi, abcvorbis
+
 Absentee Landlord
 
 Abuse Filter
+optional = abusefilter-history-action, abusefilter-edit-builder-op-bool-xor
 
 Advanced Random
 file = AdvancedRandom/SpecialAdvancedRandom.i18n.php
@@ -11,9 +16,16 @@ descmsg = ajax-qp-desc
 Ajax Show Editors
 descmsg = ajax-se-desc
 
+Amazon Plus
+optional = amazonplus-status, amazonplus-status-sep, amazonplus-currency
+optional = amazonplus-cp-usd, amazonplus-cp-cad, amazonplus-cp-gbp, amazonplus-cp-eur
+optional = amazonplus-cp-jpy
+ignored = amazonplus-english
+
 Anti Bot
 
 Anti Spoof
+ignored = antispoof-conflict-item
 
 APC
 file = APC/ViewAPC.i18n.php
@@ -30,6 +42,7 @@ Babel
 ignored = babel-box-cellspacing, babel-category-prefix, babel-category-suffix
 ignored = babel-portal-prefix, babel-portal-suffix, babel-template-prefix
 ignored = babel-template-suffix, babel-footer
+optional = babel-directionality
 optional = babel-0-female, babel-1-female, babel-2-female, babel-3-female
 optional = babel-4-female, babel-5-female, babel-N-female, babel-0-n-female
 optional = babel-1-n-female, babel-2-n-female, babel-3-n-female
@@ -37,6 +50,7 @@ optional = babel-4-n-female, babel-5-n-female, babel-N-n-female, babel-0-male
 optional = babel-1-male, babel-2-male, babel-3-male, babel-4-male, babel-5-male
 optional = babel-N-male, babel-0-n-male, babel-1-n-male, babel-2-n-male
 optional = babel-3-n-male, babel-4-n-male, babel-5-n-male, babel-N-n-male
+optional = babel-autocreate-user
 
 Back and Forth
 file = BackAndForth/BackAndForth.i18n.php
@@ -81,17 +95,21 @@ Category Feed
 file = catfeed/catfeed.i18n.php
 id = ext-catfeed
 
+Category Watch
+
 Central Auth
+optional = centralauth-editset-grouplink
 
 Central Notice
 
 Change Author
 optional = changeauthor-rev
-ignored = changeauthor-short,changeauthor-logpagetext
+ignored = changeauthor-logpagetext, changeauthor-short
 
-CharInsert
+Char Insert
 
 Check User
+ignored = checkuser-toollinks
 
 Chemistry
 file = Chemistry/ChemFunctions.i18n.php
@@ -118,11 +136,20 @@ file = Cite/SpecialCite.i18n.php
 descmsg = cite_article_desc
 ignored = cite_text
 
+Cldr
+file = cldr/LanguageNames.i18n.php
+
 Clean Changes
+
+Close Wikis
+optional = closewikis-closed
+
+Code Review
+descmsg = code-desc
 
 Collection
 descmsg = coll-desc
-ignored = coll-collection
+ignored = coll-template_blacklist_title
 
 Comment Pages
 ignored = commenttab-editintro, commenttab-preload
@@ -135,6 +162,11 @@ optional = configure-section-djvu, configure-section-imagemagick
 optional = configure-section-interwiki, configure-section-memcached
 optional = configure-section-squid, configure-section-svg, configure-section-tex
 optional = configure-section-tidy
+
+Configure Settings
+file = Configure/Configure.settings.i18n.php
+descmsg = configure-setting-desc
+optional = configure-setting-desc
 
 Confirm Account
 descmsg = confirmedit-desc
@@ -149,7 +181,12 @@ file = ConfirmEdit/FancyCaptcha.i18n.php
 
 Contact Page
 
+Contribution Reporting
+optional = contribstats-percentage
+
 Contribution Scores
+
+Contribution Tracking
 
 Contributions Edit Count
 file = Contributionseditcount/Contributionseditcount.i18n.php
@@ -172,17 +209,20 @@ file = Crosswiki/Block/CrosswikiBlock.i18n.php
 
 Crowd Authentication
 
+CSS
+
 Data Transfer
 file = DataTransfer/languages/DT_Messages.php
 descmsg = dt-desc
 
 Delete Batch
 
-Deleted Contributions
-id = ext-deletedcontribs
-descmsg = deletedcontributions-desc
+Delete Queue
+optional = deletequeue-prod-reasons, deletequeue-speedy-reasons
 
 Did You Mean
+
+Discussion Threading
 
 Dismissable SiteNotice
 descmsg = sitenotice-desc
@@ -192,6 +232,9 @@ Double Wiki
 
 DPL Forum
 file = DPLforum/DPLforum.i18n.php
+
+Drafts
+ignored = accesskey-drafts-save
 
 Duplicator
 
@@ -210,8 +253,7 @@ Edit User
 
 Email Address Image
 
-Email Page
-descmsg = ea-desc
+Emergency DeSysop
 
 Error Handler
 
@@ -231,10 +273,11 @@ Flagged Revisions - Flagged Revs
 id = ext-flaggedrevs-flaggedrevs
 file = FlaggedRevs/language/FlaggedRevs.i18n.php
 optional = revreview-toggle, revreview-ak-review, accesskey-ca-current, accesskey-ca-stable
+descmsg = flaggedrevs-desc
 
-Flagged Revisions - Flagged Revs Aliases
-id = ext-flaggedrevs-flaggedrevsaliases
-file = FlaggedRevs/language/FlaggedRevsAliases.i18n.php
+Flagged Revisions - Liked Pages
+id = ext-flaggedrevs-likedpages
+file = FlaggedRevs/language/LikedPages.i18n.php
 
 Flagged Revisions - Old Reviewed Pages
 id = ext-flaggedrevs-oldreviewedpages
@@ -272,6 +315,15 @@ Flagged Revisions - Unreviewed Pages
 id = ext-flaggedrevs-unreviewedpages
 file = FlaggedRevs/language/UnreviewedPages.i18n.php
 
+Flagged Revisions - Unstable Pages
+id = ext-flaggedrevs-unstablepages
+file = FlaggedRevs/language/UnstablePages.i18n.php
+
+Flagged Revisions - Validation Statistics
+id = ext-flaggedrevs-validationstatistics
+file = FlaggedRevs/language/ValidationStatistics.i18n.php
+optional = validationstatistics-nbr
+
 Find Spam
 
 Fixed Image
@@ -290,7 +342,13 @@ ignored = globalblocking-expiry-options
 
 Global Usage
 
+Global User rights
+descmsg = gur-desc
+
 Gnuplot
+
+Google AdSense
+ignored = googleadsense
 
 Google Analytics
 file = googleAnalytics/googleAnalytics.i18n.php
@@ -302,11 +360,8 @@ var = wgGoogleMapsMessages
 Go To Category
 
 Group Permissions Manager
-optional = grouppermissions-log-entry
-ignored = grouppermissions-ca-article, grouppermissions-ca-discussion, grouppermissions-ca-edit
-ignored = grouppermissions-ca-watch, grouppermissions-ca-protect, grouppermissions-ca-delete
-ignored = grouppermissions-ca-history, grouppermissions-ca-move, grouppermissions-ca-newsection
-ignored = content_actions
+descmsg = grouppermissions-desc
+optional = grouppermissions-display
 
 HTMLets
 
@@ -318,7 +373,7 @@ Icon
 
 Image Map
 descmsg = imagemap_desc
-ignored = imagemap_desc_types
+optional = imagemap_desc_types
 
 Image Tagging
 
@@ -327,8 +382,9 @@ Import Free Images
 Import Users
 file = ImportUsers/SpecialImportUsers.i18n.php
 
+IM Status
+
 Input Box
-file = inputbox/InputBox.i18n.php
 
 Inspect Cache
 
@@ -346,25 +402,32 @@ Interwiki List
 Invitations
 ignored = invitations-uninvitedlist-item
 
+JS Kit
+
 Labeled Section Transclusion
 file = LabeledSectionTransclusion/lst.i18n.php
 descmsg = lst-desc
-
-Cldr
-file = cldr/LanguageNames.i18n.php
 
 Language Selector
 
 Latex Doc
 
-Link Search
+Link OpenID
+optional = linkopenid-prefstext-xrdsurl
 
 Liquid Threads
 file = LiquidThreads/Lqt.i18n.php
 descmsg = lqt-desc
+optional = lqt_rc_ellipsis
 ignored = lqt_header_warning_before_big
 
+Log Entry
+descmsg = logentry-parserhook-desc
+
 Lookup User
+
+Lua
+descmsg = lua_desc
 
 Maintenance
 ignored = maintenance-initEditCount, maintenance-runJobs, maintenance-showJobs
@@ -372,21 +435,27 @@ ignored = maintenance-stats
 
 Math Stat
 file = MathStatFunctions/MathStatFunctions.i18n.php
+descmsg = msfunc_desc
 
 Media Functions
+
+Meta Keywords
+optional = metakeywords, metadescription
 
 Metavid Wiki
 file = MetavidWiki/languages/MV_Messages.php
 optional = ao_file_64Kb_MPEG4, ao_file_256Kb_MPEG4, ao_file_MPEG1, ao_file_MPEG2
-optional = ao_file_flash_flv
+optional = ao_file_flash_flv, ao_file_512Kb_MPEG4, ao_file_Ogg_Video
 
 Mibbit
 
 MicroID
 
 Mini Donation
+descmsg = donationform-desc
 
 Minimum Name Length
+descmsg = minnamelength-desc
 
 Mini Preview
 
@@ -395,6 +464,7 @@ ignored = multiboilerplate, multiboilerplate-label
 
 Multi Upload
 file = MultiUpload/SpecialMultipleUpload.i18n.php
+descmsg = multipleupload-desc
 
 MediaWiki Search
 id = ext-mwsearch
@@ -414,17 +484,19 @@ optional = newsextension-checkok1, newsextension-gotcached, newsextension-purge
 optional = newsextension-loggin, newsextension-outputting, newsextension-stale
 optional = newsextension-nofoundonpage, newsextension-renderedfeed
 optional = newsextension-cachingfeed, newsextension-freshfeed
+descmsg = newsextension-desc
 
-Newuser Log
-file = Newuserlog/Newuserlog.i18n.php
-ignored = newuserlogentry
+News Channel
 
 New User Message
+ignored = newusermessage-template, newusermessage-editor
 
 New User Notification
 file = NewUserNotif/NewUserNotif.i18n.php
+descmsg = newusernotif-desc
 
-No Move Userpages
+Nss MySQL Auth
+descmsg = nss-desc
 
 Nuke
 file = Nuke/SpecialNuke.i18n.php
@@ -432,30 +504,40 @@ file = Nuke/SpecialNuke.i18n.php
 OAI-PMH repository
 id = ext-oai
 file = OAI/OAIRepo.i18n.php
+optional = oairepository
 
 Ogg Handler
 optional = ogg-player-cortado, ogg-player-vlc-mozilla, ogg-player-vlc-activex
 optional = ogg-player-quicktime-mozilla, ogg-player-quicktime-activex
+optional = ogg-player-totem, ogg-player-kmplayer, ogg-player-kaffeine
+optional = ogg-player-mplayerplug-in
+descmsg = ogg-desc
 
 Online Status
 ignored = onlinestatus-levels
 
 OpenID
 
+Open Search Xml
+
+Other Sites
+
 Oversight
 file = Oversight/HideRevision.i18n.php
+descmsg = hiderevision-desc
 
 Page By
 
 Password Reset
 
-Parser Diff Test
-
 Parser Functions
+descmsg = pfunc_desc
 
 Patroller
+descmsg = patrol-desc
 
 Pdf Handler
+descmsg = pdf-desc
 
 Piwik
 optional = piwik
@@ -469,17 +551,22 @@ Poem
 
 Post Comment
 file = Postcomment/SpecialPostcomment.i18n.php
+descmsg = postcomment_desc
 
 POV Watch
 file = PovWatch/PovWatch.i18n.php
+descmsg = povwatch_desc
 
 Preloader
 
 Profile Monitor
+descmsg = profiling-desc
 
 Proofread Page
+descmsg = proofreadpage_desc
 
 Protect Section
+descmsg = protectsection_desc
 
 PSI NoTocNum
 
@@ -488,6 +575,7 @@ Purge
 Purge Cache
 
 Quiz
+descmsg = quiz_desc
 
 Random Image
 
@@ -498,6 +586,11 @@ Random Root Page
 file = Randomrootpage/Randomrootpage.i18n.php
 
 Random Users With Avatars
+descmsg = random-users-avatars-desc
+
+Record Admin
+
+Refresh Special
 
 Regex Block
 file = regexBlock/regexBlock.i18n.php
@@ -506,27 +599,35 @@ RegexFunctions
 
 Rename User
 file = Renameuser/SpecialRenameuser.i18n.php
+ignored = renameuser-summary
 
 Replace Text
 
 Review
 
 Right Functions
+optional = rightfunctions-rest1, rightfunctions-rest2, rightfunctions-rest3, rightfunctions-sep
+
+Search Box
 
 See also
 
 Scan Set
 
+Secure Passwords
+
 Select Category
 
-Semantic Calendar
-file = SemanticCalendar/languages/SC_Messages.php
+Semantic Result Formats
+file = SemanticResultFormats/SRF_Messages.php
 
 Semantic Drilldown
 file = SemanticDrilldown/languages/SD_Messages.php
 
 Semantic Forms
 file = SemanticForms/languages/SF_Messages.php
+
+Semantic Gallery
 
 Semantic Google Maps
 
@@ -535,16 +636,22 @@ file = SemanticMediaWiki/languages/SMW_Messages.php
 ignored = smw_ask_doculink, smw_service_online_maps, smw_uri_blacklist
 optional = smw_rss_link, smw_decseparator, smw_kiloseparator
 optional = smw_rss_description, smw_browse_more, specialpages-group-smw_group
+optional = smw_csv_link, smw_icalendar_link, smw_vcard_link
+
+Shared User Rights
+descmsg = gblrights-desc
 
 Show Processlist
 
 Sign Document
+descmsg = signature-desc
 
 Sign Document Special Create
 file = SignDocument/SpecialCreateSignDocument.i18n.php
 
 Sign Document Special
 file = SignDocument/SpecialSignDocument.i18n.php
+descmsg = signature-desc
 
 Simple Anti Spam
 
@@ -554,24 +661,31 @@ Skin Per Page
 
 Slippy Map
 ignored = slippymap_license, slippymap_osmlink
+descmsg = slippymap_desc
 
 Smooth Gallery
 ignored = smoothgallery-pagetext
 
-Social Profile User Board
+Social Profile - User Board
+id = ext-socialprofile-userboard
 file = SocialProfile/UserBoard/UserBoard.i18n.php
 
-Social Profile User Profile
+Social Profile - User Profile
+id = ext-socialprofile-userprofile
 file = SocialProfile/UserProfile/UserProfile.i18n.php
 optional = avatarlogentry, profilelogentry
+ignored = userprofile-country-list
 
-Social Profile User Relationship
+Social Profile - User Relationship
+id = ext-socialprofile-userrelationship
 file = SocialProfile/UserRelationship/UserRelationship.i18n.php
 
-Social Profile User Stats
+Social Profile - User Stats
+id = ext-socialprofile-userstats
 file = SocialProfile/UserStats/UserStats.i18n.php
 
 Spam Blacklist
+descmsg = spam-blacklist-desc
 
 Spam Diff Tool
 
@@ -579,16 +693,27 @@ Spam Regex
 
 Special File List
 file = SpecialFileList/SpecialFilelist.i18n.php
+descmsg = filelist-desc
 
 Special Form
 ignored = formtemplatepattern
+descmsg = form-desc
+
+Stalker Log
+
+Subst All
+optional = substall-hook
 
 Sub Page List 3
+descmsg = spl3-desc
 
 Stale Pages
 
+String Functions
+
 Syntax Highlight GeSHi
 file = SyntaxHighlight_GeSHi/SyntaxHighlight_GeSHi.i18n.php
+descmsg = syntaxhighlight-desc
 
 Tab0
 
@@ -596,13 +721,21 @@ Talk Here
 ignored = talkhere-title, talkhere-headtext, talkhere-afterinput
 ignored = talkhere-afterform
 
-Template Link
+Tasks
+ignored = tasks_search_limit
+optional = tasks_help_page_link, tasks_help_separator, tasks_creation_tasks
+descmsg = tasks_desc
 
-TidyTab
-file = TidyTab/Tidy.i18n.php
+Template Link
+descmsg = templatelink_desc
 
 Throttle
 file = Throttle/UserThrottle.i18n.php
+descmsg = acct_creation_global_soft_throttle_hit-desc
+
+TidyTab
+file = TidyTab/Tidy.i18n.php
+descmsg = tidy-desc
 
 Timeline
 file = timeline/Timeline.i18n.php
@@ -616,21 +749,88 @@ file = Todo/SpecialTodo.i18n.php
 
 Todo Tasks
 file = TodoTasks/SpecialTaskList.i18n.php
+descmsg = tasklist-parser-desc
 
 Tooltip
 
 Tor Block
 
 Translate
-optional = translate-page-paging-links
+optional = translate-page-paging-links, translate-languagestats-groups
 
-Universal Edit Button
+Trusted XFF
+
+Unicode Converter
+
+Uniwiki - Authors
+id = ext-uniwiki-authors
+file = uniwiki/Authors/Authors.i18n.php
+descmsg = authors-desc
+
+Uniwiki - Auto Create Category Pages
+id = ext-uniwiki-autocreatecategorypages
+file = uniwiki/AutoCreateCategoryPages/AutoCreateCategoryPages.i18n.php
+descmsg = autocreatecategorypages-desc
+
+Uniwiki - Cat Box At Top
+id = ext-uniwiki-catboxattop
+file = uniwiki/CatBoxAtTop/CatBoxAtTop.i18n.php
+descmsg = catboxattop-desc
+
+Uniwiki - Create Page
+id = ext-uniwiki-createpage
+file = uniwiki/CreatePage/CreatePage.i18n.php
+descmsg = createpage-desc
+
+Uniwiki - Css Hooks
+id = ext-uniwiki-csshooks
+file = uniwiki/CssHooks/CssHooks.i18n.php
+descmsg = csshooks-desc
+
+Uniwiki - Custom Toolbar
+id = ext-uniwiki-customtoolbar
+file = uniwiki/CustomToolbar/CustomToolbar.i18n.php
+var = wgCustomToolbarMessages
+descmsg = ct-desc
+optional = ct_external_sample
+
+Uniwiki - Format Changes
+id = ext-uniwiki-formatchanges
+file = uniwiki/FormatChanges/FormatChanges.i18n.php
+descmsg = formatchanges-desc
+
+Uniwiki - Format Search
+id = ext-uniwiki-formatsearch
+file = uniwiki/FormatSearch/FormatSearch.i18n.php
+descmsg = formatsearch-desc
+
+Uniwiki - Generic Edit Page
+id = ext-uniwiki-genericeditpage
+file = uniwiki/GenericEditPage/GenericEditPage.i18n.php
+descmsg = gep-desc
+
+Uniwiki - Javascript
+id = ext-uniwiki-javascript
+file = uniwiki/Javascript/Javascript.i18n.php
+descmsg = javascript-desc
+
+Uniwiki - Layouts
+id = ext-uniwiki-layouts
+file = uniwiki/Layouts/Layouts.i18n.php
+descmsg = layouts-desc
+optional = layouts-layoutcategorypage
+
+Uniwiki - Moo Tools 12 core
+id = ext-uniwiki-mootools12core
+file = uniwiki/MooTools12core/MooTools12core.i18n.php
+descmsg = mootools12core-desc
 
 Usage Statistics
 file = UsageStatistics/SpecialUserStats.i18n.php
 
 User Contact Links
 file = UserContactLinks/UserSignature.i18n.php
+descmsg = usercontactlink-desc
 
 User Images
 
@@ -641,6 +841,8 @@ Username Blacklist
 User Rights Notification
 id = ext-userrightsnotif
 file = UserRightsNotif/UserRightsNotif.i18n.php
+
+User Welcome
 
 Vote
 
@@ -653,8 +855,7 @@ Web Store
 What Is My IP
 
 White List
-var = allMessages
-file = WhiteList/SpecialWhitelistEdit.i18n.php
+file = WhiteList/WhiteListEdit.i18n.php
 
 Who Is Watching
 file = WhoIsWatching/SpecialWhoIsWatching.i18n.php
@@ -668,7 +869,9 @@ Wikihiero
 file = wikihiero/wikihiero.i18n.php
 
 Wikimedia Messages
-ignored = sidebar
+ignored = sidebar, robots.txt
+optional = grouppage-steward, grouppage-sysadmin, grouppage-Global_bot
+optional = grouppage-Global_rollback, grouppage-Ombudsmen, grouppage-coder
 
 Wiki Text Logged In Out
 

@@ -13,11 +13,12 @@ CREATE TABLE /*$wgDBprefix*/flaggedpages (
   PRIMARY KEY (fp_page_id),
   INDEX fp_reviewed_page (fp_reviewed,fp_page_id),
   INDEX fp_quality_page (fp_quality,fp_page_id)
-) TYPE=InnoDB;
+) /*$wgDBTableOptions*/;
 
 -- Migrate old page_ext hacks over
 INSERT INTO /*$wgDBprefix*/flaggedpages (fp_page_id,fp_reviewed,fp_stable,fp_quality)
 SELECT page_id,page_ext_reviewed,page_ext_stable,page_ext_quality FROM /*$wgDBprefix*/page
 WHERE page_ext_stable IS NOT NULL;
 
--- Leave the old fields and indexes for now
+-- Leave the old fields for now
+ALTER TABLE /*$wgDBprefix*/page DROP INDEX ext_namespace_reviewed;

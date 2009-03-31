@@ -11,6 +11,13 @@ $messages['en'] = array(
 	'fixedimage-desc' => 'Adds <tt><nowiki><fundraising></nowiki></tt> tag as an image',
 );
 
+/** Message documentation (Message documentation)
+ * @author Purodha
+ */
+$messages['qqq'] = array(
+	'fixedimage-desc' => 'Short description of the FixedImage extension, shown on [[Special:Version]].',
+);
+
 /** Afrikaans (Afrikaans)
  * @author Naudefj
  */
@@ -32,6 +39,20 @@ $messages['ar'] = array(
 	'fixedimage-desc' => 'يضيف وسم <tt><nowiki><fundraising></nowiki></tt> كصورة',
 );
 
+/** Egyptian Spoken Arabic (مصرى)
+ * @author Ramsis II
+ */
+$messages['arz'] = array(
+	'fixedimage-desc' => 'بيضيف تاج <tt><nowiki><fundraising></nowiki></tt> على هيئة صورة',
+);
+
+/** Asturian (Asturianu)
+ * @author Esbardu
+ */
+$messages['ast'] = array(
+	'fixedimage-desc' => 'Añade la etiqueta <tt><nowiki><fundraising></nowiki></tt> como una imaxe',
+);
+
 /** Southern Balochi (بلوچی مکرانی)
  * @author Mostafadaneshvar
  */
@@ -44,6 +65,20 @@ $messages['bcc'] = array(
  */
 $messages['bg'] = array(
 	'fixedimage-desc' => 'Добавяне на етикета <tt><nowiki><fundraising></nowiki></tt> като картинка',
+);
+
+/** Bengali (বাংলা)
+ * @author Bellayet
+ */
+$messages['bn'] = array(
+	'fixedimage-desc' => '<tt><nowiki><fundraising></nowiki></tt> ট্যাগ চিত্র হিসেবে যোগ করো',
+);
+
+/** Catalan (Català)
+ * @author Paucabot
+ */
+$messages['ca'] = array(
+	'fixedimage-desc' => "Afegeix l'etiqueta <tt><nowiki><fundraising></nowiki></tt> com una imatge",
 );
 
 /** Czech (Česky)
@@ -74,11 +109,32 @@ $messages['eo'] = array(
 	'fixedimage-desc' => 'Aldonas etikedon <tt><nowiki><fundraising></nowiki></tt> kiel bildon',
 );
 
+/** Spanish (Español)
+ * @author Remember the dot
+ */
+$messages['es'] = array(
+	'fixedimage-desc' => 'Añade elemento <tt><nowiki><fundraising></nowiki></tt> como una imagen',
+);
+
+/** Basque (Euskara)
+ * @author Theklan
+ */
+$messages['eu'] = array(
+	'fixedimage-desc' => '<tt><nowiki><fundraising></nowiki></tt> etiketa irudi gisa txertatzen du',
+);
+
 /** Persian (فارسی)
  * @author Huji
  */
 $messages['fa'] = array(
 	'fixedimage-desc' => 'برچسب <tt><nowiki><fundraising></nowiki></tt> را به عنوان تصویر اضافه می‌کند',
+);
+
+/** Finnish (Suomi)
+ * @author Str4nd
+ */
+$messages['fi'] = array(
+	'fixedimage-desc' => 'Lisää <tt><nowiki><fundraising></nowiki></tt>-tagin kuvana.',
 );
 
 /** French (Français)
@@ -148,7 +204,35 @@ $messages['id'] = array(
  * @author Darth Kule
  */
 $messages['it'] = array(
-	'fixedimage-desc' => "Aggiunge il marcatore <tt><nowiki><fundraising></nowiki></tt> come un'immagine",
+	'fixedimage-desc' => "Aggiunge il tag <tt><nowiki><fundraising></nowiki></tt> come un'immagine",
+);
+
+/** Japanese (日本語)
+ * @author Aotake
+ */
+$messages['ja'] = array(
+	'fixedimage-desc' => '<tt><nowiki><fundraising></nowiki></tt> タグを画像として挿入する',
+);
+
+/** Javanese (Basa Jawa)
+ * @author Pras
+ */
+$messages['jv'] = array(
+	'fixedimage-desc' => 'Nambahaké tag <tt><nowiki><fundraising></nowiki></tt> minangka gambar',
+);
+
+/** Khmer (ភាសាខ្មែរ)
+ * @author Lovekhmer
+ */
+$messages['km'] = array(
+	'fixedimage-desc' => 'ដាក់ប្លាក <tt><nowiki><fundraising></nowiki></tt> ជារូបភាព',
+);
+
+/** Ripoarisch (Ripoarisch)
+ * @author Purodha
+ */
+$messages['ksh'] = array(
+	'fixedimage-desc' => 'Deit dä <tt><nowiki><fundraising></nowiki></tt>-Befääl em Wiki dobei, för e Belltsche.',
 );
 
 /** Luxembourgish (Lëtzebuergesch)
@@ -156,6 +240,13 @@ $messages['it'] = array(
  */
 $messages['lb'] = array(
 	'fixedimage-desc' => 'Setzt den Tag <tt><nowiki><fundraising></nowiki></tt> als Bild derbäi',
+);
+
+/** Limburgish (Limburgs)
+ * @author Matthias
+ */
+$messages['li'] = array(
+	'fixedimage-desc' => 'Veug tag <tt><nowiki><fundraising></nowiki></tt> es aafbeilding',
 );
 
 /** Marathi (मराठी)
@@ -172,11 +263,25 @@ $messages['ms'] = array(
 	'fixedimage-desc' => 'Menambah tag <tt><nowiki><fundraising></nowiki></tt> sebagai imej',
 );
 
+/** Low German (Plattdüütsch)
+ * @author Slomox
+ */
+$messages['nds'] = array(
+	'fixedimage-desc' => 'Föögt dat <tt><nowiki><fundraising></nowiki></tt>-Tag as Bild to',
+);
+
 /** Dutch (Nederlands)
  * @author Siebrand
  */
 $messages['nl'] = array(
 	'fixedimage-desc' => 'Voegt de tag <tt><nowiki><fundraising></nowiki></tt> toe als afbeelding',
+);
+
+/** Norwegian Nynorsk (‪Norsk (nynorsk)‬)
+ * @author Harald Khan
+ */
+$messages['nn'] = array(
+	'fixedimage-desc' => 'Legg til merkelappen <tt><nowiki><fundraising></nowiki></tt> som eit bilete.',
 );
 
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
@@ -190,7 +295,7 @@ $messages['no'] = array(
  * @author Cedric31
  */
 $messages['oc'] = array(
-	'fixedimage-desc' => 'Apondís la balisa <tt><nowiki><fundraising></nowiki></tt> coma un imatge',
+	'fixedimage-desc' => 'Apond la balisa <tt><nowiki><fundraising></nowiki></tt> coma un imatge',
 );
 
 /** Polish (Polski)
@@ -198,6 +303,13 @@ $messages['oc'] = array(
  */
 $messages['pl'] = array(
 	'fixedimage-desc' => 'Dodaje znacznik zbiórki funduszy <tt><nowiki><fundraising></nowiki></tt> jako obrazek',
+);
+
+/** Pashto (پښتو)
+ * @author Ahmed-Najib-Biabani-Ibrahimkhel
+ */
+$messages['ps'] = array(
+	'fixedimage-desc' => 'د <tt><nowiki><پانګونه></nowiki></tt> پټۍ د يوه انځور په توګه ورګډوي',
 );
 
 /** Portuguese (Português)
@@ -212,6 +324,13 @@ $messages['pt'] = array(
  */
 $messages['ro'] = array(
 	'fixedimage-desc' => 'Adaugă eticheta <tt><nowiki><fundraising></nowiki></tt> ca imagine',
+);
+
+/** Tarandíne (Tarandíne)
+ * @author Joetaras
+ */
+$messages['roa-tara'] = array(
+	'fixedimage-desc' => "Aggiunge 'u tag <tt><nowiki><fundraising></nowiki></tt> cumme a 'n'immaggine",
 );
 
 /** Russian (Русский)
@@ -236,8 +355,8 @@ $messages['sr-ec'] = array(
 );
 
 /** Swedish (Svenska)
- * @author M.M.S.
  * @author Lejonel
+ * @author M.M.S.
  */
 $messages['sv'] = array(
 	'fixedimage-desc' => 'Lägger till taggen <tt><nowiki><fundraising></nowiki></tt> för att visa en bild',

@@ -1,5 +1,5 @@
 <?php
-if (!defined('MEDIAWIKI')) die();
+if( !defined('MEDIAWIKI') ) die();
 /**
  * Add a new log to Special:Log that displays account creations in reverse
  * chronological order using the AddNewAccount hook
@@ -13,29 +13,34 @@ if (!defined('MEDIAWIKI')) die();
 
 $wgExtensionCredits['other'][] = array(
 	'name'           => 'Newuserlog',
-	'svn-date' => '$LastChangedDate: 2008-06-25 20:13:58 +0000 (Wed, 25 Jun 2008) $',
-	'svn-revision' => '$LastChangedRevision: 36653 $',
+	'svn-date' => '$LastChangedDate: 2008-09-15 04:56:07 +0000 (Mon, 15 Sep 2008) $',
+	'svn-revision' => '$LastChangedRevision: 40841 $',
 	'description'    => 'Adds a [[Special:Log/newusers|log of account creations]] to [[Special:Log]]',
 	'descriptionmsg' => 'newuserlog-desc',
 	'url'            => 'http://www.mediawiki.org/wiki/Extension:Newuserlog',
 	'author'         => 'Ævar Arnfjörð Bjarmason'
 );
 
-$wgExtensionMessagesFiles['Newuserlog'] = dirname(__FILE__) . '/Newuserlog.i18n.php';
-
-# Add a new log type
-$wgLogTypes[]                      = 'newusers';
-$wgLogNames['newusers']            = 'newuserlogpage';
-$wgLogHeaders['newusers']          = 'newuserlogpagetext';
-$wgLogActions['newusers/newusers'] = 'newuserlogentry'; // For compatibility with older log entries
-$wgLogActions['newusers/create']   = 'newuserlog-create-entry';
-$wgLogActions['newusers/create2']  = 'newuserlog-create2-entry';
-$wgLogActions['newusers/autocreate'] = 'newuserlog-autocreate-entry';
-# Run this hook on new account creation
-$wgHooks['AddNewAccount'][] = 'wfNewuserlogHook';
-$wgHooks['AuthPluginAutoCreate'][] = 'wfNewuserlogAutoCreate';
-# Run this hook on Special:Log
-$wgHooks['LogLine'][] = 'wfNewuserlogLogLine';
+if( isset($wgNewUserLog) ) {
+	trigger_error( "You must remove the newuserlog extension, as it is now in the core software!",
+	   E_USER_WARNING );
+} else {
+	# Run this hook on new account creation
+	$wgHooks['AddNewAccount'][] = 'wfNewuserlogHook';
+	$wgHooks['AuthPluginAutoCreate'][] = 'wfNewuserlogAutoCreate';
+	# Run this hook on Special:Log
+	$wgHooks['LogLine'][] = 'wfNewuserlogLogLine';
+	# Set message file
+	$wgExtensionMessagesFiles['Newuserlog'] = dirname(__FILE__) . '/Newuserlog.i18n.php';
+	# Add a new log type
+	$wgLogTypes[]                      = 'newusers';
+	$wgLogNames['newusers']            = 'newuserlogpage';
+	$wgLogHeaders['newusers']          = 'newuserlogpagetext';
+	$wgLogActions['newusers/newusers'] = 'newuserlogentry'; // For compatibility with older log entries
+	$wgLogActions['newusers/create']   = 'newuserlog-create-entry';
+	$wgLogActions['newusers/create2']  = 'newuserlog-create2-entry';
+	$wgLogActions['newusers/autocreate'] = 'newuserlog-autocreate-entry';
+}
 
 function wfNewuserlogHook( $user = null, $byEmail = false ) {
 	global $wgUser, $wgContLang;
@@ -80,7 +85,9 @@ function wfNewuserlogAutoCreate( $user ) {
  * @param string $time timestamp of the log entry
  * @return bool true
  */
-function wfNewuserlogLogLine( $log_type = '', $log_action = '', $title = null, $paramArray = array(), &$comment = '', &$revert = '', $time = '' ) {
+function wfNewuserlogLogLine( $log_type = '', $log_action = '', $title = null, $paramArray = array(), 
+	&$comment = '', &$revert = '', $time = '' ) 
+{
 	if ( $log_action == 'create2' ) {
 		global $wgUser;
 		$skin = $wgUser->getSkin();

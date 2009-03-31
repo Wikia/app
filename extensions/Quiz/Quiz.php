@@ -246,9 +246,9 @@ class Quiz {
 	    # Determine the content of the settings table.
 	    $settings = array_fill(0, 4, "");
 		if(!$this->mDisplaySimple) {
-		 	$settings[0] .=	"<td>".wfMsgHtml('quiz_addedPoints').":</td>" .
+		 	$settings[0] .=	"<td>".wfMsgHtml( 'quiz_addedPoints', $this->mAddedPoints ).":</td>" .
 							"<td><input class=\"numerical\" type=\"text\" name=\"addedPoints\" value=\"$this->mAddedPoints\"/>&nbsp;&nbsp;</td>";
-			$settings[1] .=	"<td>".wfMsgHtml('quiz_cutoffPoints').":</td>" .
+			$settings[1] .=	"<td>".wfMsgHtml('quiz_cutoffPoints', $this->mCutoffPoints ).":</td>" .
 							"<td><input class=\"numerical\" type=\"text\" name=\"cutoffPoints\" value=\"$this->mCutoffPoints\"/></td>";
 			$bChecked = ($this->mIgnoringCoef)? "checked=\"checked\"" : "";
 			$settings[2] .=	"<td>".wfMsgHtml('quiz_ignoreCoef').":</td>" .

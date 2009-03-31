@@ -26,7 +26,7 @@ $wgExtensionCredits['other'][] = array(
 	'name' => 'Polyglot', 
 	'author' => 'Daniel Kinzler', 
 	'url' => 'http://mediawiki.org/wiki/Extension:Polyglot',
-	'description' => 'support for content in multiple languages in a single mediawiki.',
+	'description' => 'Support for content in multiple languages in a single MediaWiki',
 );
 
 /**
@@ -91,7 +91,7 @@ function wfPolyglotArticleFromTitle( &$title, &$article ) {
 
 	if ( $ns < 0 
 		|| in_array($ns,  $wfPolyglotExcemptNamespaces) 
-		|| ($wfPolyglotExcemptTalkPages && Namespace::isTalk($ns)) ) {
+		|| ($wfPolyglotExcemptTalkPages && MWNamespace::isTalk($ns)) ) {
 		return true;
 	}
 
@@ -194,7 +194,7 @@ function wfPolyglotParserAfterTidy( &$parser, &$text ) {
 	//      at least if wgPolyglotFollowRedirects is true
 
 	if ( $ns >= 0 && !in_array($ns,  $wfPolyglotExcemptNamespaces)
-		&& (!$wfPolyglotExcemptTalkPages || !Namespace::isTalk($ns)) ) {
+		&& (!$wfPolyglotExcemptTalkPages || !MWNamespace::isTalk($ns)) ) {
 		$ll = wfPolyglotGetLanguages($parser->mTitle);
 		if ($ll) $links = array_merge($links, $ll);
 

@@ -7,13 +7,13 @@ CREATE TABLE /*$wgDBprefix*/updates (
   up_page int(10) unsigned NOT NULL,
   up_action enum('modify','create','delete') NOT NULL default 'modify',
   up_timestamp char(14) NOT NULL default '',
-  
+
   -- For clean paging
   up_sequence int(10) unsigned NOT NULL auto_increment,
-  
+
   -- Exactly one entry per page
   PRIMARY KEY up_page(up_page),
-  
+
   -- We routinely pull things based on timestamp.
   KEY up_timestamp(up_timestamp),
   KEY up_sequence(up_sequence,up_timestamp)

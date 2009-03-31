@@ -24,7 +24,8 @@ class SpecialListGroupRights extends SpecialPage {
 	 * Show the special page
 	 */
 	public function execute( $par ) {
-		global $wgOut, $wgGroupPermissions, $wgImplicitGroups, $wgMessageCache;
+		global $wgOut, $wgImplicitGroups, $wgMessageCache;
+		global $wgGroupPermissions, $wgAddGroups, $wgRemoveGroups;
 		$wgMessageCache->loadAllMessages();
 
 		$this->setHeaders();
@@ -69,13 +70,16 @@ class SpecialListGroupRights extends SpecialPage {
 				$grouplink = '';
 			}
 
+			$addgroups = isset( $wgAddGroups[$group] ) ? $wgAddGroups[$group] : array();
+			$removegroups = isset( $wgRemoveGroups[$group] ) ? $wgRemoveGroups[$group] : array();
+
 			$wgOut->addHTML(
 				'<tr>
 					<td>' .
 						$grouppage . $grouplink .
 					'</td>
 					<td>' .
-						self::formatPermissions( $permissions ) .
+						self::formatPermissions( $permissions, $addgroups, $removegroups ) .
 					'</td>
 				</tr>'
 			);
@@ -91,18 +95,29 @@ class SpecialListGroupRights extends SpecialPage {
 	 * @param $permissions Array of permission => bool (from $wgGroupPermissions items)
 	 * @return string List of all granted permissions, separated by comma separator
 	 */
-	 private static function formatPermissions( $permissions ) {
+	 private static function formatPermissions( $permissions, $add, $remove ) {
+	 	global $wgLang;
 		$r = array();
 		foreach( $permissions as $permission => $granted ) {
 			if ( $granted ) {
-				$description = wfMsgHTML( 'listgrouprights-right-display',
-					User::getRightDescription($permission),
+				$description = wfMsgExt( 'listgrouprights-right-display', array( 'parseinline' ),
+					User::getRightDescription( $permission ),
 					$permission
 				);
 				$r[] = $description;
 			}
 		}
 		sort( $r );
+		if( $add === true ){
+			$r[] = wfMsgExt( 'listgrouprights-addgroup-all', array( 'escape' ) );
+		} else if( is_array( $add ) && count( $add ) ) {
+			$r[] = wfMsgExt( 'listgrouprights-addgroup', array( 'parseinline' ), $wgLang->listToText( array_map( array( 'User', 'makeGroupLinkWiki' ), $add ) ), count( $add ) );
+		}
+		if( $remove === true ){
+			$r[] = wfMsgExt( 'listgrouprights-removegroup-all', array( 'escape' ) );
+		} else if( is_array( $remove ) && count( $remove ) ) {
+			$r[] = wfMsgExt( 'listgrouprights-removegroup', array( 'parseinline' ), $wgLang->listToText( array_map( array( 'User', 'makeGroupLinkWiki' ), $remove ) ), count( $remove ) );
+		}
 		if( empty( $r ) ) {
 			return '';
 		} else {

@@ -37,8 +37,8 @@ $wgMiniPreviewMaxTotal = 15; # Maximum number of categories and galleries shown
  */
 $wgExtensionCredits['parserhook'][] = array(
 	'name' => 'MiniPreview',
-	'svn-date' => '$LastChangedDate: 2008-05-06 11:59:58 +0000 (Tue, 06 May 2008) $',
-	'svn-revision' => '$LastChangedRevision: 34306 $',
+	'svn-date' => '$LastChangedDate: 2008-12-25 13:59:01 +0000 (Thu, 25 Dec 2008) $',
+	'svn-revision' => '$LastChangedRevision: 45025 $',
 	'author' => 'Magnus Manske',
 	'url' => 'http://www.mediawiki.org/wiki/Extension:MiniPreview',
 	'description' => 'MiniPreview displays, next to an image, small previews of other images in the same categories or displayed on the same pages',
@@ -119,7 +119,7 @@ function efMiniPreviewShow ( &$imagePage, &$output )  {
 
 	# Output
 	$mainwidth = ( $wgMiniPreviewThumbnailSize + 2 ) * 3 ;
-	$html = wfOpenElement( 'div', array (
+	$html = Xml::openElement( 'div', array (
 		'id' => 'MiniPreview',
 		'class' => 'MiniPreview_main',
 		'style' => "float:right;clear:right",
@@ -133,22 +133,22 @@ function efMiniPreviewShow ( &$imagePage, &$output )  {
 			if ( $last_type != $p->from_category ) $html .= "<div class='MiniPreviewSeparator'>&nbsp;</div>" ; # Visually separate categories from galleries
 			$last_type = $p->from_category;
 			$nsid = $p->from_category ? 14 : $wgMiniPreviewGalleryNamespace ;
-			$ns = Namespace::getCanonicalName ( $nsid ) . ':' ;
+			$ns = MWNamespace::getCanonicalName ( $nsid ) . ':' ;
 			$t = Title::newFromDBkey( $ns . $p->source_title );
 			$mode = ( $p->from_category ? "category" : "gallery" ) ;
 
-			$html .= wfOpenElement( 'div', array( 'class' => 'MiniPreview_'.$mode , 'width' => '100%' ) );
-			$html .= wfElement( 'a' , array ( 'href' => $t->getLocalURL() ) , $t->getText() );
-			$html .= wfOpenElement( 'table' , array( 'border' => '0' , 'cellpadding' => '0' , 'cellspacing' => '0' )); # CSS is just not up to this yet...
-			$html .= wfOpenElement( 'tr' );
+			$html .= Xml::openElement( 'div', array( 'class' => 'MiniPreview_'.$mode , 'width' => '100%' ) );
+			$html .= Xml::element( 'a' , array ( 'href' => $t->getLocalURL() ) , $t->getText() );
+			$html .= Xml::openElement( 'table' , array( 'border' => '0' , 'cellpadding' => '0' , 'cellspacing' => '0' )); # CSS is just not up to this yet...
+			$html .= Xml::openElement( 'tr' );
 			$html .= wfMiniPreviewGetThumbnail ( $p->entry[0] , $image_data ) ;
 			$html .= wfMiniPreviewGetThumbnail ( $p->entry[1] , $image_data ) ;
 
-			$html .= wfOpenElement( 'td' );
-			$html .= wfOpenElement( 'div', array(
+			$html .= Xml::openElement( 'td' );
+			$html .= Xml::openElement( 'div', array(
 				'style' => "width:{$wgMiniPreviewThumbnailSize}px;height:{$wgMiniPreviewThumbnailSize}px;",
 				'class' => 'MiniPreview_count' ));
-			$html .= wfMsg ( 'minipreview-files_in_'.$mode , array("<b>".$p->image_count."</b>") );
+			$html .= wfMsgExt( 'minipreview-files_in_'.$mode , array( 'parsemag' ), $p->image_count );
 			$html .= wfCloseElement ( "div" ) ;
 			$html .= wfCloseElement ( "td" ) ;
 			$html .= wfCloseElement ( "tr" ) ;
@@ -168,8 +168,8 @@ function wfMiniPreviewGetThumbnail ( $entry , &$image_data ) {
 	$divclass = ( $entry->id == 0 ) ? 'MiniPreview_no_thumb' : 'MiniPreview_thumb' ;
 
 	$ret = '';
-	$ret .= wfOpenElement( 'td' );
-	$ret .= wfOpenElement( 'div', array(
+	$ret .= Xml::openElement( 'td' );
+	$ret .= Xml::openElement( 'div', array(
 		'style' => "width:{$wgMiniPreviewThumbnailSize}px;height:{$wgMiniPreviewThumbnailSize}px;overflow:hidden",
 		'class' => $divclass )
 	);

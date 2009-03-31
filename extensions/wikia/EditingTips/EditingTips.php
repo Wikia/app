@@ -72,7 +72,7 @@ function getEditingTips() {
 
 $wgHooks['UserToggles'][] = 'wfEditingTipsToggle';
 $wgHooks['getEditingPreferencesTab'][] = 'wfEditingTipsToggle';
-$wgHooks['ExtendJSGlobalVars'][] = 'wfEditingTipsSetupVars';
+$wgHooks['MakeGlobalVariablesScript'][] = 'wfEditingTipsSetupVars';
 
 function wfEditingTipsToggle($toggles, $default_array = false) {
 	wfLoadExtensionMessages('EditingTips');
@@ -120,7 +120,7 @@ function AddEditingToggles($o) {
 			$marg = 'clear: both;' ;
 			$o->ImageSeparator = ' - ' ;
 		}
-		$wgOut->addHtml('<div id="editingTipsToggleDiv" style="float: left; margin-top:20px; '. $marg . '">');
+		$wgOut->addHtml('<div id="editingTipsToggleDiv" style="margin-top:20px; '. $marg . '">');
 
 		if(count(getEditingTips()) > 0) {
 			$wgOut->addHtml($sep . '<a href="" id="toggleEditingTips">'. (isEditingTipsEnabled() ? wfMsg ('editingtips_hide') : wfMsg ('editingtips_show') ).'</a> - ');

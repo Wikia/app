@@ -17,8 +17,8 @@ $dir = dirname(__FILE__);
 $wgExtensionCredits['other'][] = array(
 	'name'           => 'GlobalBlocking',
 	'author'         => 'Andrew Garrett',
-	'svn-date' => '$LastChangedDate: 2008-07-09 18:40:42 +0000 (Wed, 09 Jul 2008) $',
-	'svn-revision' => '$LastChangedRevision: 37426 $',
+	'svn-date' => '$LastChangedDate: 2008-11-04 01:56:29 +0000 (Tue, 04 Nov 2008) $',
+	'svn-revision' => '$LastChangedRevision: 43183 $',
 	'description'    => 'Allows IP addresses to be blocked across multiple wikis',
 	'descriptionmsg' => 'globalblocking-desc',
 	'url'            => 'http://www.mediawiki.org/wiki/Extension:GlobalBlocking',
@@ -27,11 +27,23 @@ $wgExtensionCredits['other'][] = array(
 $wgExtensionMessagesFiles['GlobalBlocking'] =  "$dir/GlobalBlocking.i18n.php";
 $wgExtensionAliasesFiles['GlobalBlocking'] = "$dir/GlobalBlocking.alias.php";
 $wgHooks['getUserPermissionsErrorsExpensive'][] = 'GlobalBlocking::getUserPermissionsErrors';
+$wgHooks['UserIsBlockedGlobally'][] = 'GlobalBlocking::isBlockedGlobally';
 
 $wgAutoloadClasses['SpecialGlobalBlock'] = "$dir/SpecialGlobalBlock.php";
 $wgSpecialPages['GlobalBlock'] = 'SpecialGlobalBlock';
 $wgAutoloadClasses['SpecialGlobalBlockList'] = "$dir/SpecialGlobalBlockList.php";
 $wgSpecialPages['GlobalBlockList'] = 'SpecialGlobalBlockList';
+$wgAutoloadClasses['SpecialGlobalBlockStatus'] = "$dir/SpecialGlobalBlockStatus.php";
+$wgSpecialPages['GlobalBlockStatus'] = 'SpecialGlobalBlockStatus';
+$wgAutoloadClasses['SpecialRemoveGlobalBlock'] = "$dir/SpecialRemoveGlobalBlock.php";
+$wgSpecialPages['RemoveGlobalBlock'] = 'SpecialRemoveGlobalBlock';
+$wgAutoloadClasses['ApiQueryGlobalBlocks'] = "$dir/ApiQueryGlobalBlocks.php";
+$wgAPIListModules['globalblocks'] = 'ApiQueryGlobalBlocks';
+
+$wgSpecialPageGroups['GlobalBlock'] = 'users';
+$wgSpecialPageGroups['GlobalBlockList'] = 'users';
+$wgSpecialPageGroups['GlobalBlockStatus'] = 'users';
+$wgSpecialPageGroups['RemoveGlobalBlock'] = 'users';
 
 ## Add global block log
 $wgLogTypes[] = 'gblblock';
@@ -40,7 +52,7 @@ $wgLogHeaders['gblblock'] = 'globalblocking-logpagetext';
 $wgLogActions['gblblock/gblock'] = 'globalblocking-block-logentry';
 $wgLogActions['gblblock/gunblock'] = 'globalblocking-unblock-logentry';
 $wgLogActions['gblblock/whitelist'] = 'globalblocking-whitelist-logentry';
-$wgLogActions['gblblock/dewhitelist'] = 'globalblocking-dewhitelist-logentry';
+$wgLogActions['gblblock/dwhitelist'] = 'globalblocking-dewhitelist-logentry'; // Stupid logging table doesn't like >16 chars
 
 ## Permissions
 $wgGroupPermissions['steward']['globalblock'] = true;
@@ -68,26 +80,43 @@ $wgGlobalBlockingDatabase = 'globalblocking';
 $wgApplyGlobalBlocks = true;
 
 class GlobalBlocking {
-	static function getUserPermissionsErrors( &$title, &$user, &$action, &$result ) {
+	static function getUserPermissionsErrors( &$title, &$user, $action, &$result ) {
 		global $wgApplyGlobalBlocks;
 		if ($action == 'read' || !$wgApplyGlobalBlocks) {
 			return true;
 		}
-		
-		global $wgUser;
-		$dbr = GlobalBlocking::getGlobalBlockingSlave();
 		$ip = wfGetIp();
+		$blockError = self::getUserBlockErrors( $user, $ip );
+		if( !empty($blockError) ) {
+			$result[] = $blockError;
+			return false;
+		}
+		return true;
+	}
+	
+	static function isBlockedGlobally( &$user, $ip, &$blocked ) {
+		$blockError = self::getUserBlockErrors( $user, $ip );
+		if( $blockError ) {
+			$blocked = true;
+			return false;
+		}
+		return true;
+	}
+		
+	static function getUserBlockErrors( $user, $ip ) {
+		$dbr = GlobalBlocking::getGlobalBlockingSlave();
 		
 		$hex_ip = IP::toHex( $ip );
-		
 		$ip_pattern = substr( $hex_ip, 0, 4 ) . '%'; // Don't bother checking blocks out of this /16.
 	
-		$conds = array( 'gb_range_end>='.$dbr->addQuotes($hex_ip), // This block in the given range.
-				'gb_range_start<='.$dbr->addQuotes($hex_ip),
-				'gb_range_start like ' . $dbr->addQuotes( $ip_pattern ),
-				'gb_expiry>'.$dbr->addQuotes($dbr->timestamp(wfTimestampNow())) );
+		$conds = array( 
+			'gb_range_end>='.$dbr->addQuotes($hex_ip), // This block in the given range.
+			'gb_range_start<='.$dbr->addQuotes($hex_ip),
+			'gb_range_start like ' . $dbr->addQuotes( $ip_pattern ),
+			'gb_expiry>'.$dbr->addQuotes($dbr->timestamp(wfTimestampNow())) 
+		);
 	
-		if (!$wgUser->isAnon())
+		if ( !$user->isAnon() )
 			$conds['gb_anon_only'] = 0;
 	
 		// Get the block
@@ -96,7 +125,12 @@ class GlobalBlocking {
 			// Check for local whitelisting
 			if (GlobalBlocking::getWhitelistInfo( $block->gb_id ) ) {
 				// Block has been whitelisted.
-				return true;
+				return array();
+			}
+			
+			if ( $user->isAllowed( 'ipblock-exempt' ) ) {
+				// User is exempt from IP blocks.
+				return array();
 			}
 
 			$expiry = Block::formatExpiry( $block->gb_expiry );
@@ -106,11 +140,9 @@ class GlobalBlocking {
 			$display_wiki = self::getWikiName( $block->gb_by_wiki );
 			$user_display = self::maybeLinkUserpage( $block->gb_by_wiki, $block->gb_by );
 			
-			$result[] = array('globalblocking-blocked', $user_display, $display_wiki, $block->gb_reason, $expirystr);
-			return false;
+			return array('globalblocking-blocked', $user_display, $display_wiki, $block->gb_reason, $expiry);
 		}
-	
-		return true;
+		return array();
 	}
 	
 	static function getGlobalBlockingMaster() {
@@ -154,16 +186,15 @@ class GlobalBlocking {
 		$dbw->commit();
 	}
 	
-	static function getWhitelistInfo( $block_id = null, $block_ip = null ) {
+	static function getWhitelistInfo( $id = null, $address = null ) {
 		$conds = array();
-		if ($block_id != null) {
-			$conds = array( 'gbw_id' => $block_id );
-		} elseif ($block_ip != null) {
-			$block_id = GlobalBlocking::getGlobalBlockId( $block_ip );
-			$conds = array( 'gbw_id' => $block_id );
+		if ($id != null) {
+			$conds = array( 'gbw_id' => $id );
+		} elseif ($address != null) {
+			$conds = array( 'gbw_address' => $address );
 		} else {
 			//WTF?
-			return false;
+			throw new MWException( "Neither Block IP nor Block ID given for retrieving whitelist status" );
 		}
 		
 		$dbr = wfGetDB( DB_SLAVE );
@@ -178,12 +209,18 @@ class GlobalBlocking {
 		}
 	}
 	
+	static function getWhitelistInfoByIP( $block_ip ) {
+		return self::getWhitelistInfo( null, $block_ip );
+	}
+	
 	static function getWikiName( $wiki_id ) {
 		if (class_exists('WikiMap')) {
 			// We can give more info than just the wiki id!
 			$wiki = WikiMap::getWiki( $wiki_id );
-			
-			return $wiki->getDisplayName();
+				
+			if ($wiki) {
+				return $wiki->getDisplayName();
+			}
 		}
 		
 		return $wiki_id;
@@ -193,7 +230,9 @@ class GlobalBlocking {
 		if (class_exists( 'WikiMap')) {
 			$wiki = WikiMap::getWiki( $wiki_id );
 			
-			return "[".$wiki->getUrl( "User:$user" )." $user]";
+			if ($wiki) {
+				return "[".$wiki->getUrl( "User:$user" )." $user]";
+			}
 		}
 		return $user;
 	}

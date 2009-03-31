@@ -257,7 +257,9 @@ class ImageMap {
 
 		if ( $realmap ) {
 			# Construct the map
-			$mapName = "ImageMap_" . ++self::$id;
+			# Add random number to avoid breaking cached HTML fragments that are 
+			# later joined together on the one page (bug 16471)
+			$mapName = "ImageMap_" . ++self::$id . '_' . mt_rand( 0, 0x7fffffff );
 			$mapHTML = "<map name=\"$mapName\">\n$mapHTML</map>\n";
 
 			# Alter the image tag
@@ -281,7 +283,8 @@ class ImageMap {
 		# Add the map HTML to the div
 		# We used to add it before the div, but that made tidy unhappy
 		if ( $mapHTML != '' ) {
-			$mapDoc = DOMDocument::loadXML( $mapHTML );
+			$mapDoc = new DOMDocument();
+			$mapDoc->loadXML( $mapHTML );
 			$mapNode = $domDoc->importNode( $mapDoc->documentElement, true );
 			$div->appendChild( $mapNode );
 		}

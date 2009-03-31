@@ -49,7 +49,7 @@ class ApiBlock extends ApiBase {
 	 * of success. If it fails, the result will specify the nature of the error.
 	 */
 	public function execute() {
-		global $wgUser;
+		global $wgUser, $wgBlockAllowsUTEdit;
 		$this->getMain()->requestWriteMode();
 		$params = $this->extractRequestParams();
 
@@ -72,8 +72,6 @@ class ApiBlock extends ApiBase {
 			$this->dieUsageMsg(array('canthide'));
 		if($params['noemail'] && !$wgUser->isAllowed('blockemail'))
 			$this->dieUsageMsg(array('cantblock-email'));
-		if(wfReadOnly())
-			$this->dieUsageMsg(array('readonlytext'));
 
 		$form = new IPBlockForm('');
 		$form->BlockAddress = $params['user'];
@@ -83,13 +81,15 @@ class ApiBlock extends ApiBase {
 		$form->BlockOther = '';
 		$form->BlockAnonOnly = $params['anononly'];
 		$form->BlockCreateAccount = $params['nocreate'];
-		$form->BlockEnableAutoBlock = $params['autoblock'];
+		$form->BlockEnableAutoblock = $params['autoblock'];
 		$form->BlockEmail = $params['noemail'];
 		$form->BlockHideName = $params['hidename'];
+		$form->BlockAllowUsertalk = $params['allowusertalk'] && $wgBlockAllowsUTEdit;
+		$form->BlockReblock = $params['reblock'];
 
 		$userID = $expiry = null;
 		$retval = $form->doBlock($userID, $expiry);
-		if(!empty($retval))
+		if(count($retval))
 			// We don't care about multiple errors, just report one of them
 			$this->dieUsageMsg($retval);
 
@@ -107,6 +107,8 @@ class ApiBlock extends ApiBase {
 			$res['noemail'] = '';
 		if($params['hidename'])
 			$res['hidename'] = '';
+		if($params['allowusertalk'])
+			$res['allowusertalk'] = '';
 
 		$this->getResult()->addValue(null, $this->getModuleName(), $res);
 	}
@@ -125,13 +127,15 @@ class ApiBlock extends ApiBase {
 			'autoblock' => false,
 			'noemail' => false,
 			'hidename' => false,
+			'allowusertalk' => false,
+			'reblock' => false,
 		);
 	}
 
 	public function getParamDescription() {
 		return array (
 			'user' => 'Username, IP address or IP range you want to block',
-			'token' => 'A block token previously obtained through the gettoken parameter',
+			'token' => 'A block token previously obtained through the gettoken parameter or prop=info',
 			'gettoken' => 'If set, a block token will be returned, and no other action will be taken',
 			'expiry' => 'Relative expiry time, e.g. \'5 months\' or \'2 weeks\'. If set to \'infinite\', \'indefinite\' or \'never\', the block will never expire.',
 			'reason' => 'Reason for block (optional)',
@@ -139,7 +143,9 @@ class ApiBlock extends ApiBase {
 			'nocreate' => 'Prevent account creation',
 			'autoblock' => 'Automatically block the last used IP address, and any subsequent IP addresses they try to login from',
 			'noemail' => 'Prevent user from sending e-mail through the wiki. (Requires the "blockemail" right.)',
-			'hidename' => 'Hide the username from the block log. (Requires the "hideuser" right.)'
+			'hidename' => 'Hide the username from the block log. (Requires the "hideuser" right.)',
+			'allowusertalk' => 'Allow the user to edit their own talk page (depends on $wgBlockAllowsUTEdit)',
+			'reblock' => 'If the user is already blocked, overwrite the existing block',
 		);
 	}
 
@@ -157,6 +163,6 @@ class ApiBlock extends ApiBase {
 	}
 
 	public function getVersion() {
-		return __CLASS__ . ': $Id: ApiBlock.php 35388 2008-05-27 10:18:28Z catrope $';
+		return __CLASS__ . ': $Id: ApiBlock.php 43677 2008-11-18 15:21:04Z catrope $';
 	}
 }

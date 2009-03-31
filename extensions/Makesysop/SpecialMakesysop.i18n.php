@@ -638,7 +638,7 @@ $messages['he'] = array(
 	'already_bureaucrat'       => 'משתמש זה הוא כבר ביורוקרט',
 	'group-steward'            => 'דיילים',
 	'group-steward-member'     => 'דייל',
-	'grouppage-steward'        => '{{ns:project}}:דיילים',
+	'grouppage-steward'        => '{{ns:project}}:דייל',
 	'right-makesysop'          => 'הפיכת משתמשים למפעילי מערכת או לביורוקרטים',
 );
 

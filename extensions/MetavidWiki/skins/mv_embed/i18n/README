@@ -1,0 +1,51 @@
+This _short_ document outlines the plan for internationalization support for stand alone
+javascript libraries being integrated into mediaWiki.
+
+A key piece is of this system is the script_loader.   
+
+For static usage every script file should have an associative text js language file:
+mv_embed.en.js 
+mv_embed.es.js 
+mv_embed.fn.js 
+
+libSequencer_mv_sequencer.en.js
+libSequencer_mv_sequencer.es.js
+
+These static files will be updated via mediaWikis translation system.
+ 
+
+These static files will be combined with the server side load script so that the language segment 
+is requested at the same time the script is included. It won't result in a separate request because 
+script_loader.php will combine the files. 
+
+script_loader.php arguments: 
+@uid 	_string the unique id to ensure fresh copy of the scripts
+@sl  	_string the list of scripts with relative paths
+@debug  _boolean if debug is "ON" don't send out minimised code 
+the javascript should read this param on Document.URL and not group requests for ease of debuging. 
+
+
+script_loader.php will take a set of scripts as arguments ie: 
+http://server.com/script_loader.php?uid=SVN_Version_Number&sl=/mv_embed/mv_embed.js,mv_embed.en.js,/jQuery/jquery.js
+
+It will minimise the scripts (strip comments and a custom stip of debug statements ie js_log('msg') 
+can use:  http://code.google.com/p/jsmin-php/  for minimisation. 
+
+Features: 
+script_loader will concatenate all the minimised code from the requested set of scripts.
+
+script_loader will send appropriate http cache headers. 
+	Can expire _never_ since we send unique SVN version id to force updates. 
+	This will integrate with the squid proxy setup so the minimisation just
+	happens on fresh requests
+	 
+script_loader will read the client accept header and send out gziped or not. 
+
+MediaWiki specific Features: 
+
+We will want pass the il8n off to mediaWikis existing internationalization infastructure.  
+MediaWiki should parse the il8n js file and check mediaWikis message space for any language variables.
+Yes this does result in all js_variables being stored twice. 
+
+But will have the advantage of being a stand alone solution for media remixing and should enable
+wider participation in development. 

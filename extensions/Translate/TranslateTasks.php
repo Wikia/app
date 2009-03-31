@@ -84,14 +84,14 @@ abstract class TranslateTask {
 	}
 
 	protected function doPaging() {
-		$total = count($this->collection);
+		$total = count( $this->collection );
 
 		$this->collection->slice(
 			$this->options->getOffset(),
 			$this->options->getLimit()
 		);
 
-		$left = count($this->collection);
+		$left = count( $this->collection );
 
 		$callback = $this->options->getPagingCB();
 		call_user_func( $callback, $this->options->getOffset(), $left, $total );
@@ -182,6 +182,25 @@ class ViewOptionalTask extends ViewMessagesTask {
 
 }
 
+class ViewUntranslatedOptionalTask extends ViewOptionalTask {
+	protected $id = 'untranslatedoptional';
+
+	protected function setProcess() {
+		$this->process = array(
+			array( $this, 'preinit' ),
+			array( $this, 'filterNonOptional' ),
+			array( $this, 'postinit' ),
+			array( $this, 'filterTranslated' ),
+			array( $this, 'doPaging' ),
+		);
+	}
+
+	protected function filterTranslated() {
+		$this->collection->filter( 'translated' );
+	}
+
+}
+
 class ViewProblematicTask extends ReviewMessagesTask {
 	protected $id = 'problematic';
 
@@ -202,8 +221,8 @@ class ViewProblematicTask extends ReviewMessagesTask {
 
 		foreach ( $this->collection->keys() as $key ) {
 			$item = $this->collection[$key];
-			if ( in_array($key, $problematic) ) {
-			 if ( $checker->doFastChecks($item, $type, $code) ) continue;
+			if ( in_array( $key, $problematic ) ) {
+			 if ( $checker->doFastChecks( $item, $type, $code ) ) continue;
 			}
 
 			unset( $this->collection[$key] );
@@ -294,6 +313,7 @@ class ExportToFileMessagesTask extends ExportMessagesTask {
 
 	public function output() {
 		$writer = $this->group->getWriter();
+		$this->collection->filter( 'translation', null );
 		return $writer->webExport( $this->collection );
 	}
 }
@@ -341,7 +361,7 @@ class ExportAsPoMessagesTask extends ExportMessagesTask {
 		$headers['X-Language-Code'] = $this->options->getLanguage();
 		$headers['X-Message-Group'] = $this->group->getId();
 
-		$headerlines = array('');
+		$headerlines = array( '' );
 		foreach ( $headers as $key => $value ) {
 			$headerlines[] = "$key: $value\n";
 		}
@@ -349,7 +369,7 @@ class ExportAsPoMessagesTask extends ExportMessagesTask {
 		$out .= "# Translation of $label to $languageName\n";
 		$out .= self::formatmsg( '', $headerlines  );
 
-		foreach ( $this->collection as $key => $m) {
+		foreach ( $this->collection as $key => $m ) {
 			$flags = array();
 
 			$translation = $m->translation;
@@ -358,9 +378,6 @@ class ExportAsPoMessagesTask extends ExportMessagesTask {
 
 			# CASE3: optional messages; accept only if different
 			if ( $m->optional ) $flags[] = 'optional';
-
-			# CASE4: don't export non-translations unless translated in wiki
-			if( !$m->pageExists && $translation === $m->definition ) $translation = '';
 
 			# Remove fuzzy markings before export
 			if ( strpos( $translation, TRANSLATE_FUZZY ) !== false ) {

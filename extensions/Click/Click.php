@@ -93,7 +93,7 @@ function efClickParserFunction_Render( &$parser, $target = '', $image = '', $wid
 			$r = Xml::openElement( 'a', array( 'href' => $target, 'title' => $target ) );
 			$parser->mOutput->addExternalLink( $target );
 		} elseif( is_object( $targettitle ) ) {
-				// Valid internal link after all (but to non-existant page), open hyperlink and register internal link.
+				// Valid internal link after all (but to non-existent page), open hyperlink and register internal link.
 				$r = Xml::openElement( 'a', array( 'class' => 'new', 'href' => $targettitle->getLocalUrl( 'action=edit&redlink=1' ), 'title' => wfMsg( 'red-link-title', $title ) ) );
 				$parser->mOutput->addLink( $targettitle );
 		}

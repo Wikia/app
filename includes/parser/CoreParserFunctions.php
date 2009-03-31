@@ -33,7 +33,9 @@ class CoreParserFunctions {
 		$parser->setFunctionHook( 'numberofarticles', array( __CLASS__, 'numberofarticles' ), SFH_NO_HASH );
 		$parser->setFunctionHook( 'numberoffiles',    array( __CLASS__, 'numberoffiles'    ), SFH_NO_HASH );
 		$parser->setFunctionHook( 'numberofadmins',   array( __CLASS__, 'numberofadmins'   ), SFH_NO_HASH );
+		$parser->setFunctionHook( 'numberingroup',    array( __CLASS__, 'numberingroup'    ), SFH_NO_HASH );
 		$parser->setFunctionHook( 'numberofedits',    array( __CLASS__, 'numberofedits'    ), SFH_NO_HASH );
+		$parser->setFunctionHook( 'numberofviews',    array( __CLASS__, 'numberofviews'    ), SFH_NO_HASH );
 		$parser->setFunctionHook( 'language',         array( __CLASS__, 'language'         ), SFH_NO_HASH );
 		$parser->setFunctionHook( 'padleft',          array( __CLASS__, 'padleft'          ), SFH_NO_HASH );
 		$parser->setFunctionHook( 'padright',         array( __CLASS__, 'padright'         ), SFH_NO_HASH );
@@ -56,7 +58,10 @@ class CoreParserFunctions {
 	static function intFunction( $parser, $part1 = '' /*, ... */ ) {
 		if ( strval( $part1 ) !== '' ) {
 			$args = array_slice( func_get_args(), 2 );
-			return wfMsgReal( $part1, $args, true );
+			$message = wfMsgGetKey( $part1, true, false, false );
+			$message = wfMsgReplaceArgs( $message, $args );
+			$message = $parser->replaceVariables( $message ); // like $wgMessageCache->transform()
+			return $message;
 		} else {
 			return array( 'found' => false );
 		}
@@ -64,20 +69,13 @@ class CoreParserFunctions {
 
 	static function ns( $parser, $part1 = '' ) {
 		global $wgContLang;
-		$found = false;
 		if ( intval( $part1 ) || $part1 == "0" ) {
-			$text = $wgContLang->getNsText( intval( $part1 ) );
-			$found = true;
+			$index = intval( $part1 );
 		} else {
-			$param = str_replace( ' ', '_', strtolower( $part1 ) );
-			$index = MWNamespace::getCanonicalIndex( strtolower( $param ) );
-			if ( !is_null( $index ) ) {
-				$text = $wgContLang->getNsText( $index );
-				$found = true;
-			}
+			$index = $wgContLang->getNsIndex( str_replace( ' ', '_', $part1 ) );
 		}
-		if ( $found ) {
-			return $text;
+		if ( $index !== false ) {
+			return $wgContLang->getFormattedNsText( $index );
 		} else {
 			return array( 'found' => false );
 		}
@@ -128,8 +126,12 @@ class CoreParserFunctions {
 		# attempt, url-decode and try for a second.
 		if( is_null( $title ) )
 			$title = Title::newFromUrl( urldecode( $s ) );
-		if ( !is_null( $title ) ) {
-			if ( !is_null( $arg ) ) {
+		if( !is_null( $title ) ) {
+			# Convert NS_MEDIA -> NS_FILE
+			if( $title->getNamespace() == NS_MEDIA ) {
+				$title = Title::makeTitle( NS_FILE, $title->getDBKey() );
+			}
+			if( !is_null( $arg ) ) {
 				$text = $title->$func( $arg );
 			} else {
 				$text = $title->$func();
@@ -167,10 +169,16 @@ class CoreParserFunctions {
 	 * @return string
 	 */
 	static function displaytitle( $parser, $text = '' ) {
+		global $wgRestrictDisplayTitle;
 		$text = trim( Sanitizer::decodeCharReferences( $text ) );
-		$title = Title::newFromText( $text );
-		if( $title instanceof Title && $title->getFragment() == '' && $title->equals( $parser->mTitle ) )
+
+		if ( !$wgRestrictDisplayTitle ) {
 			$parser->mOutput->setDisplayTitle( $text );
+		} else {
+			$title = Title::newFromText( $text );
+			if( $title instanceof Title && $title->getFragment() == '' && $title->equals( $parser->mTitle ) )
+				$parser->mOutput->setDisplayTitle( $text );
+		}
 		return '';
 	}
 
@@ -207,14 +215,20 @@ class CoreParserFunctions {
 		return self::formatRaw( SiteStats::images(), $raw );
 	}
 	static function numberofadmins( $parser, $raw = null ) {
-		return self::formatRaw( SiteStats::admins(), $raw );
+		return self::formatRaw( SiteStats::numberingroup('sysop'), $raw );
 	}
 	static function numberofedits( $parser, $raw = null ) {
 		return self::formatRaw( SiteStats::edits(), $raw );
 	}
+	static function numberofviews( $parser, $raw = null ) {
+		return self::formatRaw( SiteStats::views(), $raw );
+	}
 	static function pagesinnamespace( $parser, $namespace = 0, $raw = null ) {
 		return self::formatRaw( SiteStats::pagesInNs( intval( $namespace ) ), $raw );
 	}
+	static function numberingroup( $parser, $name = '', $raw = null) {
+		return self::formatRaw( SiteStats::numberingroup( strtolower( $name ) ), $raw );
+	} 
 
 	/**
 	 * Return the number of pages in the given category, or 0 if it's nonexis-
@@ -269,12 +283,12 @@ class CoreParserFunctions {
 		if( isset( $cache[$page] ) ) {
 			$length = $cache[$page];
 		} elseif( $parser->incrementExpensiveFunctionCount() ) {
-			$length = $cache[$page] = $title->getLength();
+			$rev = Revision::newFromTitle($title);
+			$id = $rev ? $rev->getPage() : 0;
+			$length = $cache[$page] = $rev ? $rev->getSize() : 0;
 	
 			// Register dependency in templatelinks
-			$id = $title->getArticleId();
-			$revid = Revision::newFromTitle($title);
-			$parser->mOutput->addTemplate($title, $id, $revid);
+			$parser->mOutput->addTemplate( $title, $id, $rev ? $rev->getId() : 0 );
 		}	
 		return self::formatRaw( $length, $raw );
 	}
@@ -320,9 +334,18 @@ class CoreParserFunctions {
 
 	public static function defaultsort( $parser, $text ) {
 		$text = trim( $text );
-		if( strlen( $text ) > 0 )
-			$parser->setDefaultSort( $text );
-		return '';
+		if( strlen( $text ) == 0 )
+			return '';
+		$old = $parser->getCustomDefaultSort();
+		$parser->setDefaultSort( $text );
+		if( $old === false || $old == $text )
+			return '';
+		else
+			return( '<span class="error">' .
+				wfMsg( 'duplicate-defaultsort',
+						 htmlspecialchars( $old ),
+						 htmlspecialchars( $text ) ) .
+				'</span>' );
 	}
 
 	public static function filepath( $parser, $name='', $option='' ) {
@@ -330,7 +353,7 @@ class CoreParserFunctions {
 		if( $file ) {
 			$url = $file->getFullUrl();
 			if( $option == 'nowiki' ) {
-				return "<nowiki>$url</nowiki>";
+				return array( $url, 'nowiki' => true );
 			}
 			return $url;
 		} else {
@@ -365,7 +388,7 @@ class CoreParserFunctions {
 		foreach ( $args as $arg ) {
 			$bits = $arg->splitArg();
 			if ( strval( $bits['index'] ) === '' ) {
-				$name = $frame->expand( $bits['name'], PPFrame::STRIP_COMMENTS );
+				$name = trim( $frame->expand( $bits['name'], PPFrame::STRIP_COMMENTS ) );
 				$value = trim( $frame->expand( $bits['value'] ) );
 				if ( preg_match( '/^(?:["\'](.+)["\']|""|\'\')$/s', $value, $m ) ) {
 					$value = isset( $m[1] ) ? $m[1] : '';

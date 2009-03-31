@@ -82,8 +82,9 @@ input#wpSave, input#wpDiff {
 	float: right;
 	margin: 0 0 1em 3em;
 }
-/* Convenience links to edit block and delete reasons */
-p.mw-ipb-conveniencelinks, p.mw-filedelete-editreasons, p.mw-delete-editreasons {
+/* Convenience links to edit block, delete and protect reasons */
+p.mw-ipb-conveniencelinks, p.mw-protect-editreasons,
+p.mw-filedelete-editreasons, p.mw-delete-editreasons {
 	float: left;
 }
 
@@ -99,7 +100,7 @@ table.filehistory th {
 	margin: 0 -15em 0 0;
 	float: left;
 }
-	
+
 #mw_content {
 	margin: 0 14em 0 0;
 	border-left: none;
@@ -140,6 +141,12 @@ table.filehistory th {
  */
 html > body div#mw_contentholder ul {
 	display: table;
+}
+html > body div#mw_contentholder ul li {
+	margin-right:10px;
+}
+html > body div.pBody ul li {
+	margin-right:4px;
 }
 html > body div#mw_contentholder ul#filetoc {
 	display: block;

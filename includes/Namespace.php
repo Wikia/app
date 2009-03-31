@@ -16,8 +16,8 @@ $wgCanonicalNamespaceNames = array(
 	NS_USER_TALK        => 'User_talk',
 	NS_PROJECT          => 'Project',
 	NS_PROJECT_TALK     => 'Project_talk',
-	NS_IMAGE            => 'Image',
-	NS_IMAGE_TALK       => 'Image_talk',
+	NS_FILE             => 'File',
+	NS_FILE_TALK        => 'File_talk',
 	NS_MEDIAWIKI        => 'MediaWiki',
 	NS_MEDIAWIKI_TALK   => 'MediaWiki_talk',
 	NS_TEMPLATE         => 'Template',
@@ -53,7 +53,7 @@ class MWNamespace {
 	 */
 	public static function isMovable( $index ) {
 		global $wgAllowImageMoving;
-		$result = !( $index < NS_MAIN || ($index == NS_IMAGE && !$wgAllowImageMoving)  || $index == NS_CATEGORY );
+		$result = !( $index < NS_MAIN || ($index == NS_FILE && !$wgAllowImageMoving)  || $index == NS_CATEGORY );
 		wfRunHooks( 'MWNamespace:isMovable', array( &$result, $index ) );
 		return $result;
 	}
@@ -107,11 +107,15 @@ class MWNamespace {
 	 * Returns the canonical (English Wikipedia) name for a given index
 	 *
 	 * @param $index Int: namespace index
-	 * @return string
+	 * @return string or false if no canonical definition.
 	 */
 	public static function getCanonicalName( $index ) {
 		global $wgCanonicalNamespaceNames;
-		return $wgCanonicalNamespaceNames[$index];
+		if( isset( $wgCanonicalNamespaceNames[$index] ) ) {
+			return $wgCanonicalNamespaceNames[$index];
+		} else {
+			return false;
+		}
 	}
 
 	/**

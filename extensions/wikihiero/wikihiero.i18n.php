@@ -8,7 +8,15 @@
 $messages = array();
 
 $messages['en'] = array(
-	'wikihiero-desc' => 'Adds <tt>&lt;hiero&gt;</tt> tag to display hieroglyph',
+	'wikihiero-desc' => 'Adds <tt>&lt;hiero&gt;</tt> tag to display hieroglyphs',
+);
+
+/** Message documentation (Message documentation)
+ * @author Raimond Spekking
+ * @author Raymond
+ */
+$messages['qqq'] = array(
+	'wikihiero-desc' => 'Extension description displayed on [[Special:Version]]',
 );
 
 /** Afrikaans (Afrikaans)
@@ -32,6 +40,13 @@ $messages['ar'] = array(
 	'wikihiero-desc' => 'يضيف الوسم <tt>&lt;hiero&gt;</tt> لعرض الهيروغليفية',
 );
 
+/** Egyptian Spoken Arabic (مصرى)
+ * @author Ramsis II
+ */
+$messages['arz'] = array(
+	'wikihiero-desc' => 'بيضيف تاج ال <tt>&lt;hiero&gt;</tt> علشان يعرض الهيروغليفي',
+);
+
 /** Asturian (Asturianu)
  * @author Esbardu
  */
@@ -46,6 +61,14 @@ $messages['bcc'] = array(
 	'wikihiero-desc' => 'هور کنت <tt>&lt;hiero&gt;</tt> برچسپء په پیشدارگ هیروگلیف',
 );
 
+/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
+ * @author EugeneZelenko
+ * @author Jim-by
+ */
+$messages['be-tarask'] = array(
+	'wikihiero-desc' => 'Дадае тэг <tt>&lt;hiero&gt;</tt> для адлюстраваньня гіерогліфаў',
+);
+
 /** Bulgarian (Български)
  * @author DCLXVI
  */
@@ -58,6 +81,20 @@ $messages['bg'] = array(
  */
 $messages['br'] = array(
 	'wikihiero-desc' => 'Ouzhpennañ a ra ar valizenn <tt>&lt;hiero&gt;</tt> evit embann ar hieroglifoù.',
+);
+
+/** Bosnian (Bosanski)
+ * @author CERminator
+ */
+$messages['bs'] = array(
+	'wikihiero-desc' => 'Dodaje <tt>&lt;hiero&gt;</tt> tag za prikazivanje hieroglifa',
+);
+
+/** Catalan (Català)
+ * @author Paucabot
+ */
+$messages['ca'] = array(
+	'wikihiero-desc' => "Afegeix l'etiqueta <tt>&lt;hiero&gt;</tt> per a visualitzar jeroglífics",
 );
 
 /** Czech (Česky)
@@ -93,6 +130,20 @@ $messages['dsb'] = array(
  */
 $messages['eo'] = array(
 	'wikihiero-desc' => 'Aldonas etikedon <tt>&lt;hiero&gt;</tt> por montri hieroglifon',
+);
+
+/** Spanish (Español)
+ * @author Remember the dot
+ */
+$messages['es'] = array(
+	'wikihiero-desc' => 'Añade elemento <tt>&lt;hiero&gt;</tt> para mostrar un jeroglífico',
+);
+
+/** Basque (Euskara)
+ * @author Theklan
+ */
+$messages['eu'] = array(
+	'wikihiero-desc' => 'Jeroglifikoak jarri ahal izateko <tt>&lt;hiero&gt;</tt> etiketa gehitzen du',
 );
 
 /** Persian (فارسی)
@@ -187,10 +238,11 @@ $messages['it'] = array(
 );
 
 /** Japanese (日本語)
+ * @author Aotake
  * @author JtFuruhata
  */
 $messages['ja'] = array(
-	'wikihiero-desc' => '象形文字を表示する <tt>&lt;hiero&gt;</tt> タグを追加',
+	'wikihiero-desc' => '象形文字を表示する <tt>&lt;hiero&gt;</tt> タグを追加する',
 );
 
 /** Jutish (Jysk)
@@ -205,6 +257,13 @@ $messages['jut'] = array(
  */
 $messages['jv'] = array(
 	'wikihiero-desc' => 'Nambahaké tag <tt>&lt;hiero&gt;</tt> kanggo nuduhaké hieroglif',
+);
+
+/** Khmer (ភាសាខ្មែរ)
+ * @author Lovekhmer
+ */
+$messages['km'] = array(
+	'wikihiero-desc' => 'ដាក់បន្ថែមប្លាក <tt>&lt;hiero&gt;</tt> ដើម្បីបង្ហាញអក្សររូបភាព',
 );
 
 /** Korean (한국어)
@@ -270,6 +329,13 @@ $messages['nl'] = array(
 	'wikihiero-desc' => 'Voegt de tag <tt>&lt;hiero&gt;</tt> toe voor de weergave van hiërogliefen',
 );
 
+/** Norwegian Nynorsk (‪Norsk (nynorsk)‬)
+ * @author Frokor
+ */
+$messages['nn'] = array(
+	'wikihiero-desc' => 'Legg til taggen <tt>&lt;hiero&gt;</tt> for å vise hieroglyfar',
+);
+
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
  * @author Jon Harald Søby
  */
@@ -281,7 +347,7 @@ $messages['no'] = array(
  * @author Cedric31
  */
 $messages['oc'] = array(
-	'wikihiero-desc' => 'Apondís la balisa <tt>&lt;hiero&gt;</tt> per afichar los ieroglifes',
+	'wikihiero-desc' => 'Apond la balisa <tt>&lt;hiero&gt;</tt> per afichar los ieroglifes',
 );
 
 /** Polish (Polski)
@@ -298,6 +364,20 @@ $messages['pt'] = array(
 	'wikihiero-desc' => 'Adiciona a marca <tt>&lt;hiero&gt;</tt> para apresentar hieróglifos',
 );
 
+/** Romanian (Română)
+ * @author KlaudiuMihaila
+ */
+$messages['ro'] = array(
+	'wikihiero-desc' => 'Adaugă tagul <tt>&lt;hiero&gt;</tt> pentru a afişa hieroglife',
+);
+
+/** Tarandíne (Tarandíne)
+ * @author Joetaras
+ */
+$messages['roa-tara'] = array(
+	'wikihiero-desc' => "Ause 'u tag <tt>&lt;hiero&gt;</tt> pe visualizzà 'a hieroglife",
+);
+
 /** Russian (Русский)
  * @author Александр Сигачёв
  */
@@ -310,6 +390,13 @@ $messages['ru'] = array(
  */
 $messages['sah'] = array(
 	'wikihiero-desc' => 'Иероглифтары көрдөрөргө анаан <tt>&lt;hiero&gt;</tt> тиэги эбэр',
+);
+
+/** Sicilian (Sicilianu)
+ * @author Santu
+ */
+$messages['scn'] = array(
+	'wikihiero-desc' => 'Juncìricci lu tag <tt>&lt;hiero&gt;</tt> pi la visualizzazzioni di li giruglìfici',
 );
 
 /** Slovak (Slovenčina)
@@ -340,6 +427,13 @@ $messages['sv'] = array(
 	'wikihiero-desc' => 'Lägger till taggen <tt>&lt;hiero&gt;</tt> för att visa hieroglyfer',
 );
 
+/** Silesian (Ślůnski)
+ * @author Lajsikonik
+ */
+$messages['szl'] = array(
+	'wikihiero-desc' => 'Dodowo znaczńik <tt>&lt;hiero&gt;</tt> kery dozwalo wyśwjetlać hjeroglify',
+);
+
 /** Telugu (తెలుగు)
  * @author Veeven
  */
@@ -347,11 +441,18 @@ $messages['te'] = array(
 	'wikihiero-desc' => 'హీయెరోగ్లిఫ్&zwnj;ని చూపించడానికై <tt>&lt;hiero&gt;</tt> అనే టాగుని చేరుస్తుంది',
 );
 
-/** Tajik (Cyrillic) (Тоҷикӣ/tojikī (Cyrillic))
+/** Tajik (Cyrillic) (Тоҷикӣ (Cyrillic))
  * @author Ibrahim
  */
 $messages['tg-cyrl'] = array(
 	'wikihiero-desc' => 'Бачасби <tt>&lt;hiero&gt;</tt>-ро барои намоиши ҳироглиф илова мекунад',
+);
+
+/** Tagalog (Tagalog)
+ * @author AnakngAraw
+ */
+$messages['tl'] = array(
+	'wikihiero-desc' => 'Nagdaragdag ng tatak na <tt>&lt;hiro&gt;</tt> upang mapalitaw ang mga hiroglipikong panitik (hiroglip)',
 );
 
 /** Ukrainian (Українська)

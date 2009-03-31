@@ -31,17 +31,17 @@ class XliffFormatWriter extends SimpleFormatWriter {
 	 */
 	protected function header( XMLWriter $w, $handle, $code ) {
 		$header = '';
-		$w->startDocument('1.0','UTF-8');
+		$w->startDocument( '1.0', 'UTF-8' );
 
 		// http://docs.oasis-open.org/xliff/v1.2/os/xliff-core.html#Specs_XMLDecl
-		$w->startElement ('xliff'); // level 0
+		$w->startElement ( 'xliff' ); // level 0
 		$w->writeAttribute( 'version', '1.2' );
-		$w->writeAttribute( 'xmlns', 'urn:oasis:names:tc:xliff:document:1.2');
-		$w->writeAttribute( 'xmlns:xsi', 'http://www.w3.org/2001/XMLSchema-instance');
-		$w->writeAttribute( 'xsi:schemaLocation', 'urn:oasis:names:tc:xliff:document:1.2 xliff-core-1.2.xsd');
+		$w->writeAttribute( 'xmlns', 'urn:oasis:names:tc:xliff:document:1.2' );
+		$w->writeAttribute( 'xmlns:xsi', 'http://www.w3.org/2001/XMLSchema-instance' );
+		$w->writeAttribute( 'xsi:schemaLocation', 'urn:oasis:names:tc:xliff:document:1.2 xliff-core-1.2.xsd' );
 
 		// http://docs.oasis-open.org/xliff/v1.2/os/xliff-core.html#file
-		$w->startElement('file'); // level 1
+		$w->startElement( 'file' ); // level 1
 		$w->writeAttribute( 'source-language', 'en' );
 		$w->writeAttribute( 'target-language', $code );
 		// TODO: use better type depending on the group
@@ -49,7 +49,7 @@ class XliffFormatWriter extends SimpleFormatWriter {
 		// doesn't make any sense
 		$w->writeAttribute( 'original', $this->group->getId() );
 		
-		fwrite( $handle, $w->outputMemory(true) );
+		fwrite( $handle, $w->outputMemory( true ) );
 	}
 
 	/**
@@ -57,10 +57,10 @@ class XliffFormatWriter extends SimpleFormatWriter {
 	 * TODO: Add more information like provided in the web interface.
 	 */
 	protected function messages( XMLWriter $w, $handle, MessageCollection $collection ) {
-		$w->startElement('body');
+		$w->startElement( 'body' );
 
 		foreach ( $collection->keys() as $key ) {
-			$w->startElement('trans-unit');
+			$w->startElement( 'trans-unit' );
 			$w->writeAttribute( 'id', $key );
 			$w->writeElement( 'source', $collection[$key]->definition );
 			$translation = $collection[$key]->translation;
@@ -68,7 +68,7 @@ class XliffFormatWriter extends SimpleFormatWriter {
 				$w->writeElement( 'target',  $translation );
 			}
 			$w->endElement();
-			fwrite( $handle, $w->outputMemory(true) );
+			fwrite( $handle, $w->outputMemory( true ) );
 		}
 		$w->endElement(); // </body>
 	}
@@ -79,6 +79,6 @@ class XliffFormatWriter extends SimpleFormatWriter {
 	protected function footer( XMLWriter $w, $handle, $code ) {
 		$w->endElement(); // </file>
 		$w->endElement(); // </xliff>
-		fwrite( $handle, $w->outputMemory(true) );
+		fwrite( $handle, $w->outputMemory( true ) );
 	}
 }

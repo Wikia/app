@@ -1,5 +1,5 @@
 (function($) {
-	
+
 	// options.activeClass
 	$.ui.plugin.add("droppable", "activate", "activeClass", function(e,ui) {
 		$(this).addClass(ui.options.activeClass);

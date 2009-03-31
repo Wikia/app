@@ -33,7 +33,22 @@ function customMessageGroups( $id ) {
 </code>
 
 == Changes in version 10 ==
-
+* 2008-12-07   bug in export to file in web interface caused empty translations to be exported
+* 2008-11-30:1 added Special:LanguageStats for real-time translation statistics
+* 2008-11-24:2 fallback messages in the edit screen now have an edit link
+* 2008-11-24:1 added Special:Translations to show all translations of a message
+* 2008-09-09:1 add message checks for Mantis
+* 2008-09-07   add support for Mantis
+* 2008-09-05   add languageeditstats.php to provide a top list of edits per language
+* 2008-09-05   add import for groups containing "." like core-1.13
+* 2008-08-08:1 experimental sync-group to import external changes and keep them in sync
+* 2008-08-04:1 add "Other translations" link to Special:Prefexindex in sidebar toolbox
+* 2008-07-29:2 support for variables and purging and fallbacks in page translation
+* 2008-07-29:1 bug fixes and enhanced magic word support for AdvancedTranslate
+* 2008-07-26:2 proper parents for branched messages
+* 2008-07-26:1
+ - improved speed and memory usage
+ - experimental <translate> tag for wikipage translation
 * 2008-07-17:1
 - simple form to generate graphs
 - scale and count parameters for graphs
@@ -145,6 +160,6 @@ function customMessageGroups( $id ) {
 == Changes in version 4 ==
 * New "task-based" interface
 * Paging of messages
-* Seperation of translation and interface language
+* Separation of translation and interface language
 * New mediawiki extensions available for translation
 * Support for extensions which use splitted i18n files

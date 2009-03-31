@@ -126,7 +126,7 @@ class PlayerImagePage extends ImagePage {
 		} else {
 			# Just need to set the right headers
 			$wgOut->setArticleFlag( false );
-			$wgOut->setRobotpolicy( 'noindex,nofollow' );
+			$wgOut->setRobotPolicy( 'noindex,nofollow' );
 			$this->viewUpdates();
 		}
 
@@ -147,8 +147,8 @@ class PlayerImagePage extends ImagePage {
 
 		if ( $exif ) {
 			global $wgStylePath, $wgStyleVersion;
-			$expand = htmlspecialchars( wfEscapeJsString( wfMsg( 'metadata-expand' ) ) );
-			$collapse = htmlspecialchars( wfEscapeJsString( wfMsg( 'metadata-collapse' ) ) );
+			$expand = htmlspecialchars( Xml::escapeJsString( wfMsg( 'metadata-expand' ) ) );
+			$collapse = htmlspecialchars( Xml::escapeJsString( wfMsg( 'metadata-collapse' ) ) );
 			$wgOut->addHTML( Xml::element( 'h2', array( 'id' => 'metadata' ), wfMsg( 'metadata' ) ). "\n" );
 			$wgOut->addWikiText( $this->makeMetadataTable( $exif ) );
 			$wgOut->addHTML(

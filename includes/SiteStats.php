@@ -7,6 +7,7 @@ class SiteStats {
 	static $row, $loaded = false;
 	static $admins, $jobs;
 	static $pageCount = array();
+	static $groupMemberCounts = array();
 
 	static function recache() {
 		self::load( true );
@@ -92,18 +93,44 @@ class SiteStats {
 		self::load();
 		return self::$row->ss_users;
 	}
+	
+	static function activeUsers() {
+		self::load();
+		return self::$row->ss_active_users;
+	}
 
 	static function images() {
 		self::load();
 		return self::$row->ss_images;
 	}
 
+	/**
+	 * @deprecated Use self::numberingroup('sysop') instead
+	 */
 	static function admins() {
-		if ( !isset( self::$admins ) ) {
-			$dbr = wfGetDB( DB_SLAVE );
-			self::$admins = $dbr->selectField( 'user_groups', 'COUNT(*)', array( 'ug_group' => 'sysop' ), __METHOD__ );
+		wfDeprecated(__METHOD__);
+		return self::numberingroup('sysop');
+	}
+	
+	/**
+	 * Find the number of users in a given user group.
+	 * @param string $group Name of group
+	 * @return int
+	 */
+	static function numberingroup($group) {
+		if ( !isset( self::$groupMemberCounts[$group] ) ) {
+			global $wgMemc;
+			$key = wfMemcKey( 'SiteStats', 'groupcounts', $group );
+			$hit = $wgMemc->get( $key );
+			if ( !$hit ) {
+				$dbr = wfGetDB( DB_SLAVE );
+				$hit = $dbr->selectField( 'user_groups', 'COUNT(*)', 
+													array( 'ug_group' => $group ), __METHOD__ );
+				$wgMemc->set( $key, $hit, 3600 );
+			}
+			self::$groupMemberCounts[$group] = $hit;
 		}
-		return self::$admins;
+		return self::$groupMemberCounts[$group];		
 	}
 
 	static function jobs() {
@@ -185,54 +212,35 @@ class SiteStatsUpdate {
 		$fname = 'SiteStatsUpdate::doUpdate';
 		$dbw = wfGetDB( DB_MASTER );
 
-		# First retrieve the row just to find out which schema we're in
-		$row = $dbw->selectRow( 'site_stats', '*', false, $fname );
-
 		$updates = '';
 
 		$this->appendUpdate( $updates, 'ss_total_views', $this->mViews );
 		$this->appendUpdate( $updates, 'ss_total_edits', $this->mEdits );
 		$this->appendUpdate( $updates, 'ss_good_articles', $this->mGood );
+		$this->appendUpdate( $updates, 'ss_total_pages', $this->mPages );
+		$this->appendUpdate( $updates, 'ss_users', $this->mUsers );
 
-		if ( isset( $row->ss_total_pages ) ) {
-			# Update schema if required
-			if ( $row->ss_total_pages == -1 && !$this->mViews ) {
-				$dbr = wfGetDB( DB_SLAVE, array( 'SpecialStatistics', 'vslow') );
-				list( $page, $user ) = $dbr->tableNamesN( 'page', 'user' );
-
-				$sql = "SELECT COUNT(page_namespace) AS total FROM $page";
-				$res = $dbr->query( $sql, $fname );
-				$pageRow = $dbr->fetchObject( $res );
-				$pages = $pageRow->total + $this->mPages;
-
-				$sql = "SELECT COUNT(user_id) AS total FROM $user";
-				$res = $dbr->query( $sql, $fname );
-				$userRow = $dbr->fetchObject( $res );
-				$users = $userRow->total + $this->mUsers;
-
-				if ( $updates ) {
-					$updates .= ',';
-				}
-				$updates .= "ss_total_pages=$pages, ss_users=$users";
-			} else {
-				$this->appendUpdate( $updates, 'ss_total_pages', $this->mPages );
-				$this->appendUpdate( $updates, 'ss_users', $this->mUsers );
-			}
-		}
 		if ( $updates ) {
 			$site_stats = $dbw->tableName( 'site_stats' );
 			$sql = $dbw->limitResultForUpdate("UPDATE $site_stats SET $updates", 1);
+
+			# Need a separate transaction because this a global lock
 			$dbw->begin();
 			$dbw->query( $sql, $fname );
 			$dbw->commit();
 		}
-
-		/*
-		global $wgDBname, $wgTitle;
-		if ( $this->mGood && $wgDBname == 'enwiki' ) {
-			$good = $dbw->selectField( 'site_stats', 'ss_good_articles', '', $fname );
-			error_log( $good . ' ' . $wgTitle->getPrefixedDBkey() . "\n", 3, '/home/wikipedia/logs/million.log' );
-		}
-		*/
+	}
+	
+	public static function cacheUpdate( $dbw ) {
+		$dbr = wfGetDB( DB_SLAVE, array( 'SpecialStatistics', 'vslow') );
+		# Get non-bot users than did some recent action other than making accounts.
+		# If account creation is included, the number gets inflated ~20+ fold on enwiki.
+		$activeUsers = $dbr->selectField( 'recentchanges', 'COUNT( DISTINCT rc_user_text )',
+			array( 'rc_user != 0', 'rc_bot' => 0, "rc_log_type != 'newusers' OR rc_log_type IS NULL" ),
+			__METHOD__ );
+		$dbw->update( 'site_stats', 
+			array( 'ss_active_users' => intval($activeUsers) ),
+			array( 'ss_row_id' => 1 ), __METHOD__, array( 'LIMIT' => 1 )
+		);
 	}
 }

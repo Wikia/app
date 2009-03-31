@@ -10,8 +10,8 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 $wgExtensionCredits['other'][] = array(
 	'name'           => 'SpamBlacklist',
 	'author'         => 'Tim Starling',
-	'svn-date' => '$LastChangedDate: 2008-06-19 03:14:34 +0000 (Thu, 19 Jun 2008) $',
-	'svn-revision' => '$LastChangedRevision: 36439 $',
+	'svn-date'       => '$LastChangedDate: 2008-11-02 22:40:02 +0000 (Sun, 02 Nov 2008) $',
+	'svn-revision'   => '$LastChangedRevision: 43098 $',
 	'url'            => 'http://www.mediawiki.org/wiki/Extension:SpamBlacklist',
 	'description'    => 'Regex-based anti-spam tool',
 	'descriptionmsg' => 'spam-blacklist-desc',
@@ -23,7 +23,6 @@ $wgExtensionMessagesFiles['SpamBlackList'] = $dir . 'SpamBlacklist.i18n.php';
 global $wgFilterCallback, $wgPreSpamFilterCallback;
 global $wgSpamBlacklistFiles;
 global $wgSpamBlacklistSettings;
-
 
 $wgSpamBlacklistFiles = false;
 $wgSpamBlacklistSettings = array();
@@ -39,9 +38,9 @@ if ( defined( 'MW_SUPPORTS_EDITFILTERMERGED' ) ) {
 	$wgFilterCallback = 'wfSpamBlacklistFilter';
 }
 
-
 $wgHooks['EditFilter'][] = 'wfSpamBlacklistValidate';
 $wgHooks['ArticleSaveComplete'][] = 'wfSpamBlacklistArticleSave';
+$wgHooks['APIEditBeforeSave'][] = 'wfSpamBlacklistFilterAPIEditBeforeSave';
 
 /**
  * Internationalization messages
@@ -74,18 +73,42 @@ function wfSpamBlacklistObject() {
  */
 function wfSpamBlacklistFilter( &$title, $text, $section, &$hookErr, $editSummary ) {
 	$spamObj = wfSpamBlacklistObject();
-	return $spamObj->filter( $title, $text, $section, $editSummary );
+	$ret = $spamObj->filter( $title, $text, $section, $editSummary );
+	if ( $ret !== false ) EditPage::spamPage( $ret );
+	return ( $ret !== false );
 }
 
 /**
  * Hook function for EditFilterMerged, replaces wfSpamBlacklistFilter
  */
-function wfSpamBlacklistFilterMerged( $editPage, $text, &$hookErr, $editSummary ) {
+function wfSpamBlacklistFilterMerged( &$editPage, $text, &$hookErr, $editSummary ) {
+	global $wgTitle;
+	if( is_null( $wgTitle ) ) {
+		# API mode
+		# wfSpamBlacklistFilterAPIEditBeforeSave already checked the blacklist
+		return true;
+	}
+
 	$spamObj = wfSpamBlacklistObject();
 	$title = $editPage->mArticle->getTitle();
-	$ret = $spamObj->filter( $title, $text, '', $editPage, $editSummary );
+	$ret = $spamObj->filter( $title, $text, '', $editSummary, $editPage );
+	if ( $ret !== false ) $editPage->spamPage( $ret );
 	// Return convention for hooks is the inverse of $wgFilterCallback
-	return !$ret;
+	return ( $ret === false );
+}
+
+/**
+ * Hook function for APIEditBeforeSave
+ */
+function wfSpamBlacklistFilterAPIEditBeforeSave( &$editPage, $text, &$resultArr ) {
+	$spamObj = wfSpamBlacklistObject();
+	$title = $editPage->mArticle->getTitle();
+	$ret = $spamObj->filter( $title, $text, '', '', $editPage );
+	if ( $ret!==false ) {
+		$resultArr['spamblacklist'] = $ret;
+	}
+	// Return convention for hooks is the inverse of $wgFilterCallback
+	return ( $ret === false );
 }
 
 /**

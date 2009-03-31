@@ -114,6 +114,7 @@ class FreeColMessageGroup extends MessageGroup {
 		'model.nation.french.newColonyName.7', 'model.nation.french.newColonyName.8', 'model.nation.french.newColonyName.9',
 		'model.nation.french.region.land.1', 'model.nation.french.region.land.2', 'model.nation.french.region.land.3',
 		'model.nation.french.region.land.4', 'model.nation.french.region.land.5', 'model.nation.french.region.land.6',
+		'model.nation.french.region.land.7',
 		'model.nation.french.region.mountain.1', 'model.nation.french.region.mountain.10', 'model.nation.french.region.mountain.2',
 		'model.nation.french.region.mountain.3', 'model.nation.french.region.mountain.4', 'model.nation.french.region.mountain.5',
 		'model.nation.french.region.mountain.6', 'model.nation.french.region.mountain.7', 'model.nation.french.region.mountain.8',
@@ -149,17 +150,55 @@ class FreeColMessageGroup extends MessageGroup {
 		'model.nation.spanish.region.land.1', 'model.nation.spanish.region.land.2', 'model.nation.spanish.region.land.3',
 		'model.nation.spanish.region.land.4', 'model.nation.spanish.region.land.5', 'model.nation.spanish.region.river.1',
 		'model.nation.spanish.region.river.2', 'model.nation.swedish.europe', 'model.nation.swedish.ruler',
-		'model.nation.swedishREF.ruler', 'model.nationType.naval.name', 'model.unit.occupation.activeNoMovesLeft',
+		'model.nation.swedishREF.ruler', 'model.unit.occupation.activeNoMovesLeft',
 		'shipName.3.0', 'model.nation.spanish.region.mountain.1', 'model.nation.spanish.region.mountain.2',
 		'model.nation.spanish.region.mountain.3', 'model.nation.spanish.region.mountain.4', 'model.nation.spanish.region.mountain.5',
 		'model.nation.spanish.region.river.3', 'model.nation.spanish.region.river.4', 'model.nation.spanish.region.river.5',
+		'model.region.default', 'model.nation.danish.newColonyName.0', 'model.nation.danish.newColonyName.1',
+		'model.nation.danish.newColonyName.2',
+		'model.nation.danish.newColonyName.10', 'model.nation.danish.newColonyName.11', 'model.nation.danish.newColonyName.12',
+		'model.nation.danish.newColonyName.3', 'model.nation.danish.newColonyName.4', 'model.nation.danish.newColonyName.5',
+		'model.nation.danish.newColonyName.6', 'model.nation.danish.newColonyName.7', 'model.nation.danish.newColonyName.8',
+		'model.nation.danish.newColonyName.9', 'model.nation.danish.region.land.1', 'model.nation.danish.region.land.2',
+		'model.nation.danish.region.land.3', 'model.nation.danish.region.land.4', 'model.nation.danish.region.land.5',
+		'model.nation.danish.region.land.6', 'model.nation.danish.region.mountain.1', 'model.nation.danish.region.mountain.2',
+		'model.nation.danish.region.mountain.3', 'model.nation.danish.region.mountain.4', 'model.nation.danish.region.mountain.5',
+		'model.nation.danish.region.mountain.6', 'model.nation.danish.region.river.1', 'model.nation.danish.region.river.2',
+		'model.nation.danish.region.river.3', 'model.nation.russian.newColonyName.0', 'model.nation.russian.newColonyName.1',
+		'model.nation.russian.newColonyName.10',
+		'model.nation.russian.newColonyName.11', 'model.nation.russian.newColonyName.12', 'model.nation.russian.newColonyName.13',
+		'model.nation.russian.newColonyName.14', 'model.nation.russian.newColonyName.15', 'model.nation.russian.newColonyName.16',
+		'model.nation.russian.newColonyName.17', 'model.nation.russian.newColonyName.18', 'model.nation.russian.newColonyName.19',
+		'model.nation.russian.newColonyName.2', 'model.nation.russian.newColonyName.20', 'model.nation.russian.newColonyName.21',
+		'model.nation.russian.newColonyName.22', 'model.nation.russian.newColonyName.23', 'model.nation.russian.newColonyName.3',
+		'model.nation.russian.newColonyName.4', 'model.nation.russian.newColonyName.5', 'model.nation.russian.newColonyName.6',
+		'model.nation.russian.newColonyName.7', 'model.nation.russian.newColonyName.8', 'model.nation.russian.newColonyName.9',
+		'model.nation.russian.region.land.1', 'model.nation.russian.region.land.2', 'model.nation.russian.region.land.3',
+		'model.nation.russian.region.land.4', 'model.nation.russian.region.land.5', 'model.nation.russian.region.mountain.1',
+		'model.nation.russian.region.mountain.2', 'model.nation.russian.region.mountain.3', 'model.nation.russian.region.mountain.4',
+		'model.nation.russian.region.mountain.5', 'model.nation.russian.region.river.1', 'model.nation.russian.region.river.2',
+		'model.nation.russian.region.river.3', 'model.nation.russian.region.river.4', 'model.nation.swedish.newColonyName.0',
+		'model.nation.swedish.newColonyName.1', 'model.nation.swedish.newColonyName.10', 'model.nation.swedish.newColonyName.11',
+		'model.nation.swedish.newColonyName.12', 'model.nation.swedish.newColonyName.13', 'model.nation.swedish.newColonyName.14',
+		'model.nation.swedish.newColonyName.15', 'model.nation.swedish.newColonyName.16', 'model.nation.swedish.newColonyName.17',
+		'model.nation.swedish.newColonyName.18', 'model.nation.swedish.newColonyName.19', 'model.nation.swedish.newColonyName.2',
+		'model.nation.swedish.newColonyName.20', 'model.nation.swedish.newColonyName.21', 'model.nation.swedish.newColonyName.3',
+		'model.nation.swedish.newColonyName.4', 'model.nation.swedish.newColonyName.5', 'model.nation.swedish.newColonyName.6',
+		'model.nation.swedish.newColonyName.7', 'model.nation.swedish.newColonyName.8', 'model.nation.swedish.newColonyName.9',
+		'model.nation.swedish.region.land.1', 'model.nation.swedish.region.land.2', 'model.nation.swedish.region.land.3',
+		'model.nation.swedish.region.river.1', 'model.nation.swedish.region.river.2', 'model.nation.swedish.region.river.3',
+		'model.nation.swedish.region.river.4',
+	);
+
+	protected $ignored = array(
+		'headerFont',
 	);
 
 	public function getMessageFile( $code ) {
 		if ( $code == 'en' ) {
 			return 'FreeColMessages.properties';
 		} else {
-			if ( isset($this->codeMap[$code]) ) {
+			if ( isset( $this->codeMap[$code] ) ) {
 				$code = $this->codeMap[$code];
 			}
 			return "FreeColMessages_$code.properties";

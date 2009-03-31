@@ -78,7 +78,7 @@ class SpecialNuke extends SpecialPage {
 			'method' => 'post' ),
 			null ) .
 			"\n<div>" .
-			wfMsgHtml( 'deletecomment' ) . ': ' .
+			wfMsgHtml( 'deletecomment' ) . ' ' .
 			Xml::element( 'input', array(
 				'name' => 'wpReason',
 				'value' => $reason,
@@ -115,19 +115,18 @@ class SpecialNuke extends SpecialPage {
 
 	function getNewPages( $username ) {
 		$dbr = wfGetDB( DB_SLAVE );
-		$result = $dbr->select( array( 'recentchanges', 'revision' ),
-			array( 'rc_namespace', 'rc_title', 'rc_timestamp', 'COUNT(rev_id) AS edits' ),
+		$result = $dbr->select( 'recentchanges',
+			array( 'rc_namespace', 'rc_title', 'rc_timestamp', 'COUNT(*) AS edits' ),
 			array(
 				'rc_user_text' => $username,
 				'(rc_new = 1) OR (rc_log_type = "upload" AND rc_log_action = "upload")' 
-				),
+			),
 			__METHOD__,
 			array(
 				'ORDER BY' => 'rc_timestamp DESC',
-				'GROUP BY' => $dbr->implicitGroupby() ? 'rev_page' : 'rc_namespace, rc_title, rc_timestamp'
-			),
-			array( 'revision' => array( 'LEFT JOIN', 'rc_cur_id=rev_page' ) )
-			);
+				'GROUP BY' => 'rc_namespace, rc_title'
+			)
+		);
 		$pages = array();
 		while( $row = $dbr->fetchObject( $result ) ) {
 			$pages[] = array( Title::makeTitle( $row->rc_namespace, $row->rc_title ), $row->edits );

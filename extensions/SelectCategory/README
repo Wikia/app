@@ -62,7 +62,7 @@ $wgSelectCategoryRoot
   this root will be displayed when editing a page in a certain namespace.
   Useful on big wiki sites to keep the database load down.
   If not set (default) the extension searches for all root categories and
-  displays them including all children.
+  displays them including all children. 
  - Example
   $wgSelectCategoryRoot = array(
        NS_MEDIA                => false,
@@ -86,9 +86,9 @@ $wgSelectCategoryRoot
 
 $wgSelectCategoryEnableSubpages
  - Defines if the extension should be active when editing subpages.
-  Default is true, as subpages are disabled in MediaWiki by default.
- - Example
-  $wgSelectCategoryEnableSubpages = false;
+   Default is true, as subpages are disabled in MediaWiki by default.
+ - Example:
+   $wgSelectCategoryEnableSubpages = false;
 
 APPEARANCE
 --------------------------------------------------------------------------
@@ -100,11 +100,11 @@ and attach your own settings to [[MediaWiki:Monobook.css]] or your users
 BUGS, CONTACT
 --------------------------------------------------------------------------
 
-Write us on http://www.mediawiki.org/wiki/Extension_talk:SelectCategory and
-we'll see what we can do for you.
+For bug reports or feature requests file a bug on bugzilla.wikimedia.org
+under the product "MediaWiki extensions" and its component "SelectCategory".
 
 Alternatively you can reach us on 
-- Leon Weber:       <leon.weber@leonweber.de>
+- Leon Weber:       <leon@leonweber.de>
 - Manuel Schneider: <manuel.schneider@wikimedia.ch>
 
 The download and description page of this extension can be found at:

@@ -928,7 +928,7 @@ function removeTranslatedTextAttributeValue($valueId) {
 
 function optionAttributeValueExists($objectId, $optionId) {
 	$dc=wdGetDataSetContext();
-	$dbr =& wfGetDb(DB_SLAVE);
+	$dbr =& wfGetDB(DB_SLAVE);
 	$queryResult = $dbr->query("SELECT value_id FROM {$dc}_option_attribute_values" .
 								' WHERE object_id = ' . $objectId .
 								' AND option_id = ' . $optionId .
@@ -945,7 +945,7 @@ function createOptionAttributeValue($objectId, $optionId) {
 	$dc=wdGetDataSetContext();
 	$valueId = newObjectId("{$dc}_option_attribute_values");
 
-	$dbr =& wfGetDb(DB_MASTER);
+	$dbr =& wfGetDB(DB_MASTER);
 	$sql = "INSERT INTO {$dc}_option_attribute_values(value_id,object_id,option_id,add_transaction_id)" .
 			' VALUES(' . $valueId .
 			',' . $objectId .

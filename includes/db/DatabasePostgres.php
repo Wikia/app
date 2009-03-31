@@ -78,12 +78,6 @@ class DatabasePostgres extends Database {
 		$failFunction = false, $flags = 0 )
 	{
 
-		global $wgOut;
-		# Can't get a reference if it hasn't been set yet
-		if ( !isset( $wgOut ) ) {
-			$wgOut = NULL;
-		}
-		$this->mOut =& $wgOut;
 		$this->mFailFunction = $failFunction;
 		$this->mFlags = $flags;
 		$this->open( $server, $user, $password, $dbName);
@@ -138,10 +132,9 @@ class DatabasePostgres extends Database {
 
 		global $wgDBport;
 
-		if (!strlen($user)) { ## e.g. the class is being loaded
-			return;
+		if (!strlen($user)) { ## e.g. the class is being loaded  
+			return;  
 		}
-
 		$this->close();
 		$this->mServer = $server;
 		$this->mPort = $port = $wgDBport;
@@ -149,22 +142,31 @@ class DatabasePostgres extends Database {
 		$this->mPassword = $password;
 		$this->mDBname = $dbName;
 
-		$hstring="";
+		$connectVars = array(
+			'dbname' => $dbName,
+			'user' => $user,
+			'password' => $password );
 		if ($server!=false && $server!="") {
-			$hstring="host=$server ";
+			$connectVars['host'] = $server;
 		}
 		if ($port!=false && $port!="") {
-			$hstring .= "port=$port ";
+			$connectVars['port'] = $port;
 		}
+		$connectString = $this->makeConnectionString( $connectVars );
 
-		error_reporting( E_ALL );
-		@$this->mConn = pg_connect("$hstring dbname=$dbName user=$user password=$password");
+		$this->installErrorHandler();
+		$this->mConn = pg_connect( $connectString );
+		$phpError = $this->restoreErrorHandler();
 
 		if ( $this->mConn == false ) {
 			wfDebug( "DB connection error\n" );
 			wfDebug( "Server: $server, Database: $dbName, User: $user, Password: " . substr( $password, 0, 3 ) . "...\n" );
 			wfDebug( $this->lastError()."\n" );
-			return false;
+			if ( !$this->mFailFunction ) {
+				throw new DBConnectionError( $this, $phpError );
+			} else {
+				return false;
+			}
 		}
 
 		$this->mOpened = true;
@@ -189,6 +191,14 @@ class DatabasePostgres extends Database {
 		return $this->mConn;
 	}
 
+	function makeConnectionString( $vars ) {
+		$s = '';
+		foreach ( $vars as $name => $value ) {
+			$s .= "$name='" . str_replace( "'", "\\'", $value ) . "' ";
+		}
+		return $s;
+	}
+
 
 	function initial_setup($password, $dbName) {
 		// If this is the initial connection, setup the schema stuff and possibly create the user
@@ -197,9 +207,8 @@ class DatabasePostgres extends Database {
 		print "<li>Checking the version of Postgres...";
 		$version = $this->getServerVersion();
 		$PGMINVER = '8.1';
-		if ($this->numeric_version < $PGMINVER) {
-			print "<b>FAILED</b>. Required version is $PGMINVER. You have " . 
-				htmlspecialchars( $this->numeric_version ) . " (" . htmlspecialchars( $version ) . ")</li>\n";
+		if ($version < $PGMINVER) {
+			print "<b>FAILED</b>. Required version is $PGMINVER. You have " . htmlspecialchars( $version ) . "</li>\n";
 			dieout("</ul>");
 		}
 		print "version " . htmlspecialchars( $this->numeric_version ) . " is OK.</li>\n";
@@ -730,10 +739,10 @@ class DatabasePostgres extends Database {
 	 * $args may be a single associative array, or an array of these with numeric keys,
 	 * for multi-row insert (Postgres version 8.2 and above only).
 	 *
-	 * @param array $table   String: Name of the table to insert to.
-	 * @param array $args    Array: Items to insert into the table.
-	 * @param array $fname   String: Name of the function, for profiling
-	 * @param mixed $options String or Array. Valid options: IGNORE
+	 * @param $table   String: Name of the table to insert to.
+	 * @param $args    Array: Items to insert into the table.
+	 * @param $fname   String: Name of the function, for profiling
+	 * @param $options String or Array. Valid options: IGNORE
 	 *
 	 * @return bool Success of insert operation. IGNORE always returns true.
 	 */
@@ -746,8 +755,7 @@ class DatabasePostgres extends Database {
 
 		$table = $this->tableName( $table );
 		if (! isset( $wgDBversion ) ) {
-			$this->getServerVersion();
-			$wgDBversion = $this->numeric_version;
+			$wgDBversion = $this->getServerVersion();
 		}
 
 		if ( !is_array( $options ) )
@@ -1009,10 +1017,10 @@ class DatabasePostgres extends Database {
 	 * Returns an SQL expression for a simple conditional.
 	 * Uses CASE on Postgres
 	 *
-	 * @param string $cond SQL expression which will result in a boolean value
-	 * @param string $trueVal SQL expression to return if true
-	 * @param string $falseVal SQL expression to return if false
-	 * @return string SQL fragment
+	 * @param $cond String: SQL expression which will result in a boolean value
+	 * @param $trueVal String: SQL expression to return if true
+	 * @param $falseVal String: SQL expression to return if false
+	 * @return String: SQL fragment
 	 */
 	function conditional( $cond, $trueVal, $falseVal ) {
 		return " (CASE WHEN $cond THEN $trueVal ELSE $falseVal END) ";
@@ -1055,7 +1063,7 @@ class DatabasePostgres extends Database {
 	/**
 	 * @return string wikitext of a link to the server software's web site
 	 */
-		function getSoftwareLink() {
+	function getSoftwareLink() {
 		return "[http://www.postgresql.org/ PostgreSQL]";
 	}
 
@@ -1063,15 +1071,16 @@ class DatabasePostgres extends Database {
 	 * @return string Version information from the database
 	 */
 	function getServerVersion() {
-		$version = pg_fetch_result($this->doQuery("SELECT version()"),0,0);
-		$thisver = array();
-		if (!preg_match('/PostgreSQL (\d+\.\d+)(\S+)/', $version, $thisver)) {
-			die("Could not determine the numeric version from $version!");
+		$versionInfo = pg_version( $this->mConn );
+		if ( isset( $versionInfo['server'] ) ) {
+			$this->numeric_version = $versionInfo['server'];
+		} else {
+			// There's no way to identify the precise version before 7.4, but 
+			// it doesn't matter anyway since we're just going to give an error.
+			$this->numeric_version = '7.3 or earlier';
 		}
-		$this->numeric_version = $thisver[1];
-		return $version;
+		return $this->numeric_version;
 	}
-
 
 	/**
 	 * Query whether a given relation exists (in the given schema, or the
@@ -1319,7 +1328,7 @@ END;
 	 *
 	 * @private
 	 *
-	 * @param string $com SQL string, read from a stream (usually tables.sql)
+	 * @param $ins String: SQL string, read from a stream (usually tables.sql)
 	 *
 	 * @return string SQL string
 	 */
@@ -1344,7 +1353,7 @@ END;
 	 *
 	 * @private
 	 *
-	 * @param array $options an associative array of options to be turned into
+	 * @param $options Array: an associative array of options to be turned into
 	 *              an SQL query, valid keys are listed in the function.
 	 * @return array
 	 */
@@ -1416,6 +1425,10 @@ END;
 	}
 	public function unlock( $lockName, $method ) {
 		return true;
+	}
+	
+	public function getSearchEngine() {
+		return "SearchPostgres";
 	}
 
 } // end DatabasePostgres class

@@ -322,8 +322,8 @@ class SpecialOpenID extends SpecialPage {
 			if (Auth_OpenID::isFailure($form_html)) {
 				displayError("Could not redirect to server: " . $form_html->message);
 			} else {
-				$wgOut->addHtml("<p>" . wfMsg("openidautosubmit") . "</p>");
-				$wgOut->addHtml($form_html);
+				$wgOut->addHTML("<p>" . wfMsg("openidautosubmit") . "</p>");
+				$wgOut->addHTML($form_html);
 				$wgOut->addInlineScript("function submitOpenIDForm() {\n document.getElementById(\"".$form_id."\").submit()\n }\nhookEvent(\"load\", submitOpenIDForm);\n");
 			}
 		}

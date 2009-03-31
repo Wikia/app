@@ -41,9 +41,10 @@ class BitmapHandler extends ImageHandler {
 	}
 
 	function doTransform( $image, $dstPath, $dstUrl, $params, $flags = 0 ) {
-		global $wgUseImageMagick, $wgImageMagickConvertCommand;
+		global $wgUseImageMagick, $wgImageMagickConvertCommand, $wgImageMagickTempDir;
 		global $wgCustomConvertCommand;
 		global $wgSharpenParameter, $wgSharpenReductionThreshold;
+		global $wgMaxAnimatedGifArea;
 
 		if ( !$this->normaliseParams( $image, $params ) ) {
 			return new TransformParameterError( $params );
@@ -59,7 +60,7 @@ class BitmapHandler extends ImageHandler {
 		$retval = 0;
 		wfDebug( __METHOD__.": creating {$physicalWidth}x{$physicalHeight} thumbnail at $dstPath\n" );
 
-		if ( $physicalWidth == $srcWidth && $physicalHeight == $srcHeight ) {
+		if ( !$image->mustRender() && $physicalWidth == $srcWidth && $physicalHeight == $srcHeight ) {
 			# normaliseParams (or the user) wants us to return the unscaled image
 			wfDebug( __METHOD__.": returning unscaled image\n" );
 			return new ThumbnailImage( $image, $image->getURL(), $clientWidth, $clientHeight, $srcPath );
@@ -77,6 +78,7 @@ class BitmapHandler extends ImageHandler {
 		} else {
 			$scaler = 'client';
 		}
+		wfDebug( __METHOD__.": scaler $scaler\n" );
 
 		if ( $scaler == 'client' ) {
 			# Client-side image scaling, use the source URL
@@ -85,18 +87,22 @@ class BitmapHandler extends ImageHandler {
 		}
 
 		if ( $flags & self::TRANSFORM_LATER ) {
+			wfDebug( __METHOD__.": Transforming later per flags.\n" );
 			return new ThumbnailImage( $image, $dstUrl, $clientWidth, $clientHeight, $dstPath );
 		}
 
 		if ( !wfMkdirParents( dirname( $dstPath ) ) ) {
-			wfDebug( "Unable to create thumbnail destination directory, falling back to client scaling\n" );
+			wfDebug( __METHOD__.": Unable to create thumbnail destination directory, falling back to client scaling\n" );
 			return new ThumbnailImage( $image, $image->getURL(), $clientWidth, $clientHeight, $srcPath );
 		}
 
 		if ( $scaler == 'im' ) {
 			# use ImageMagick
 
+			$quality = '';
 			$sharpen = '';
+			$frame = '';
+			$animation = '';
 			if ( $mimeType == 'image/jpeg' ) {
 				$quality = "-quality 80"; // 80%
 				# Sharpening, see bug 6193
@@ -105,8 +111,21 @@ class BitmapHandler extends ImageHandler {
 				}
 			} elseif ( $mimeType == 'image/png' ) {
 				$quality = "-quality 95"; // zlib 9, adaptive filtering
+			} elseif( $mimeType == 'image/gif' ) {
+				if( $srcWidth * $srcHeight > $wgMaxAnimatedGifArea ) {
+					// Extract initial frame only; we're so big it'll
+					// be a total drag. :P
+					$frame = '[0]';
+				} else {
+					// Coalesce is needed to scale animated GIFs properly (bug 1017).
+					$animation = ' -coalesce ';
+				}
+			}
+
+			if ( strval( $wgImageMagickTempDir ) !== '' ) {
+				$tempEnv = 'MAGICK_TMPDIR=' . wfEscapeShellArg( $wgImageMagickTempDir ) . ' ';
 			} else {
-				$quality = ''; // default
+				$tempEnv = '';
 			}
 
 			# Specify white background color, will be used for transparent images
@@ -116,11 +135,12 @@ class BitmapHandler extends ImageHandler {
 			# It seems that ImageMagick has a bug wherein it produces thumbnails of
 			# the wrong size in the second case.
 
-			$cmd  =  wfEscapeShellArg($wgImageMagickConvertCommand) .
+			$cmd  = 
+				$tempEnv .
+				wfEscapeShellArg($wgImageMagickConvertCommand) .
 				" {$quality} -background white -size {$physicalWidth} ".
-				wfEscapeShellArg($srcPath) .
-				// Coalesce is needed to scale animated GIFs properly (bug 1017).
-				' -coalesce ' .
+				wfEscapeShellArg($srcPath . $frame) .
+				$animation .
 				// For the -resize option a "!" is needed to force exact size,
 				// or ImageMagick may decide your ratio is wrong and slice off
 				// a pixel.

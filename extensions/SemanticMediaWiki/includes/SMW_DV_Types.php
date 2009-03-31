@@ -1,4 +1,8 @@
 <?php
+/**
+ * @file
+ * @ingroup SMWDataValues
+ */
 
 /**
  * This datavalue implements special processing suitable for defining
@@ -10,7 +14,7 @@
  *   SMWDataValueFactory.
  *
  * @author Markus Krötzsch
- * @note AUTOLOADED
+ * @ingroup SMWDataValues
  */
 class SMWTypesValue extends SMWDataValue {
 
@@ -128,7 +132,8 @@ class SMWTypesValue extends SMWDataValue {
 				}
 				$id = SMWDataValueFactory::findTypeID($type);
 				if ($id{0} == '_') { // builtin
-					smwfRequireHeadItem(SMW_HEADER_TOOLTIP);
+					wfLoadExtensionMessages('SemanticMediaWiki');
+					SMWOutputs::requireHeadItem(SMW_HEADER_TOOLTIP);
 					$result .= '<span class="smwttinline"><span class="smwbuiltin">[[' . $typenamespace . ':' . $type . '|' . $type . ']]</span><span class="smwttcontent">' . wfMsgForContent('smw_isknowntype') . '</span></span>';
 				} else {
 					$result .= '[[' . $typenamespace . ':' . $type . '|' . $type . ']]';
@@ -153,7 +158,8 @@ class SMWTypesValue extends SMWDataValue {
 				$title = Title::newFromText($type, SMW_NS_TYPE);
 				$id = SMWDataValueFactory::findTypeID($type);
 				if ($id{0} == '_') { // builtin
-					smwfRequireHeadItem(SMW_HEADER_TOOLTIP);
+					wfLoadExtensionMessages('SemanticMediaWiki');
+					SMWOutputs::requireHeadItem(SMW_HEADER_TOOLTIP);
 					$result .= '<span class="smwttinline"><span class="smwbuiltin">' . 
 					$linker->makeLinkObj( $title, $type) . '</span><span class="smwttcontent">' .
 					wfMsgForContent('smw_isknowntype') . '</span></span>';
@@ -265,13 +271,13 @@ class SMWTypesValue extends SMWDataValue {
 
 	/**
 	 * Retrieve type values.
-	 * FIXME: wildly inefficient since new id management
+	 * @bug This implementation is inefficient.
 	 */
 	public function getTypeValues() {
 		$result = array();
 		$i = 0;
 		foreach ($this->getTypeLabels() as $tl) {
-			$result[$i] = SMWDataValueFactory::newSpecialValue(SMW_SP_HAS_TYPE, $tl);
+			$result[$i] = SMWDataValueFactory::newPropertyObjectValue(SMWPropertyValue::makeProperty('_TYPE'), $tl);
 			$i++;
 		}
 		return $result;

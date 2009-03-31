@@ -54,6 +54,7 @@ class ApiQueryCategories extends ApiQueryGeneratorBase {
 
 		$params = $this->extractRequestParams();
 		$prop = $params['prop'];
+		$show = array_flip((array)$params['show']);
 
 		$this->addFields(array (
 			'cl_from',
@@ -86,11 +87,31 @@ class ApiQueryCategories extends ApiQueryGeneratorBase {
 				$this->dieUsage("Invalid continue param. You should pass the " .
 					"original value returned by the previous query", "_badcontinue");
 			$clfrom = intval($cont[0]);
-			$clto = $this->getDb()->strencode($this->titleToKey($cont[1]));
+			$clto = $this->getDB()->strencode($this->titleToKey($cont[1]));
 			$this->addWhere("cl_from > $clfrom OR ".
 					"(cl_from = $clfrom AND ".
 					"cl_to >= '$clto')");
 		}
+		if(isset($show['hidden']) && isset($show['!hidden']))
+			$this->dieUsage("Incorrect parameter - mutually exclusive values may not be supplied", 'show');
+		if(isset($show['hidden']) || isset($show['!hidden']))
+		{
+			$this->addOption('STRAIGHT_JOIN');
+			$this->addTables(array('page', 'page_props'));
+			$this->addJoinConds(array(
+				'page' => array('LEFT JOIN', array(
+					'page_namespace' => NS_CATEGORY,
+					'page_title = cl_to')),
+				'page_props' => array('LEFT JOIN', array(
+					'pp_page=page_id',
+					'pp_propname' => 'hiddencat'))
+			));
+			if(isset($show['hidden']))
+				$this->addWhere(array('pp_propname IS NOT NULL'));
+			else
+				$this->addWhere(array('pp_propname IS NULL'));
+		}
+
 		# Don't order by cl_from if it's constant in the WHERE clause
 		if(count($this->getPageSet()->getGoodTitles()) == 1)
 			$this->addOption('ORDER BY', 'cl_to');
@@ -128,7 +149,7 @@ class ApiQueryCategories extends ApiQueryGeneratorBase {
 				if ($fld_sortkey)
 					$vals['sortkey'] = $row->cl_sortkey;
 				if ($fld_timestamp)
-					$vals['timestamp'] = $row->cl_timestamp;
+					$vals['timestamp'] = wfTimestamp(TS_ISO_8601, $row->cl_timestamp);
 
 				$data[] = $vals;
 			}
@@ -166,6 +187,13 @@ class ApiQueryCategories extends ApiQueryGeneratorBase {
 					'timestamp',
 				)
 			),
+			'show' => array(
+				ApiBase :: PARAM_ISMULTI => true,
+				ApiBase :: PARAM_TYPE => array(
+					'hidden',
+					'!hidden',
+				)
+			),
 			'limit' => array(
 				ApiBase :: PARAM_DFLT => 10,
 				ApiBase :: PARAM_TYPE => 'limit',
@@ -181,6 +209,7 @@ class ApiQueryCategories extends ApiQueryGeneratorBase {
 		return array (
 			'prop' => 'Which additional properties to get for each category.',
 			'limit' => 'How many categories to return',
+			'show' => 'Which kind of categories to show',
 			'continue' => 'When more results are available, use this to continue',
 		);
 	}
@@ -199,6 +228,6 @@ class ApiQueryCategories extends ApiQueryGeneratorBase {
 	}
 
 	public function getVersion() {
-		return __CLASS__ . ': $Id: ApiQueryCategories.php 37909 2008-07-22 13:26:15Z catrope $';
+		return __CLASS__ . ': $Id: ApiQueryCategories.php 44585 2008-12-14 17:39:50Z catrope $';
 	}
 }

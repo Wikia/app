@@ -58,6 +58,7 @@ $messages['an'] = array(
 	'imagemap_invalid_coord' => "Error: coordinada no conforme en a ringlera $1, ha d'estar un numero",
 	'imagemap_invalid_desc' => "Error: A descripzión (desc) espezificata no ye conforme, ha d'estar una de: <tt>$1</tt>",
 	'imagemap_description' => 'Informazión sobre ista imachen',
+	'imagemap_poly_odd' => "Error: s'ha trobato un polinomio con un numero impar de coordinadas en a linia $1",
 );
 
 /** Arabic (العربية)
@@ -144,6 +145,27 @@ $messages['bcl'] = array(
 	'imagemap_description' => 'Manónongod sa retratong ini',
 );
 
+/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
+ * @author EugeneZelenko
+ * @author Jim-by
+ * @author Red Winged Duck
+ */
+$messages['be-tarask'] = array(
+	'imagemap_desc' => 'Дазваляе стварэньне на старонцы кліента мапаў выявы з выкарыстаньнем тэгу <tt><nowiki><imagemap></nowiki></tt>',
+	'imagemap_no_image' => 'Памылка: у першым радку мусіць быць пазначаная выява',
+	'imagemap_invalid_image' => 'Памылка: няслушная выява альбо яна не існуе',
+	'imagemap_bad_image' => 'Памылка: выява на гэтай старонцы ўваходзіць у чорны сьпіс',
+	'imagemap_no_link' => 'Памылка: ня знойдзеная слушная спасылка ў канцы радку $1',
+	'imagemap_invalid_title' => 'Памылка: няслушная назва ў спасылцы ў радку $1',
+	'imagemap_missing_coord' => 'Памылка: недастаткова каардынатаў для фігуры ў радку $1',
+	'imagemap_unrecognised_shape' => 'Памылка: нераспазнаная фігура ў радку $1, кожны радок павінен пачынацца з: default, rect, circle ці poly',
+	'imagemap_no_areas' => 'Памылка: павінна быць пазначана хоць бы адна вобласьць',
+	'imagemap_invalid_coord' => 'Памылка: няправільная каардыната ў радку $1, павінна быць лічба',
+	'imagemap_invalid_desc' => 'Памылка: няслушнае значэньне desc, павінна быць адно з: <tt>$1</tt>',
+	'imagemap_description' => 'Апісаньне выявы',
+	'imagemap_poly_odd' => 'Памылка: у радку $1 знойдзены шматкутнік з няцотнай колькасьцю каардынатаў',
+);
+
 /** Bulgarian (Български)
  * @author Spiritia
  */
@@ -184,6 +206,25 @@ $messages['br'] = array(
 	'imagemap_invalid_title' => 'Error: titl direizh el liamm el linenn $1',
 	'imagemap_missing_coord' => 'Error: diouer a zaveennoù zo evit stumm al linenn $1',
 	'imagemap_description' => 'Diwar-benn ar skeudenn-mañ',
+);
+
+/** Bosnian (Bosanski)
+ * @author CERminator
+ */
+$messages['bs'] = array(
+	'imagemap_desc' => 'Omogućuje mape slika na klijentskom računaru koje se mogu kliknuti koristeći oznaku <tt><nowiki><imagemap></nowiki></tt>',
+	'imagemap_no_image' => 'Greška: morate odrediti sliku u prvom redu',
+	'imagemap_invalid_image' => 'Greška: slika je nevaljana ili ne postoji',
+	'imagemap_bad_image' => 'Greška: slika je nepoželjna na ovoj stranici',
+	'imagemap_no_link' => 'Greška: nije pronađen valjan link na kraju reda $1',
+	'imagemap_invalid_title' => 'Greška: nevaljan naslov u linku u redu $1',
+	'imagemap_missing_coord' => 'Greška: nema dovoljno koordinata za iscrtavanje u redu $1',
+	'imagemap_unrecognised_shape' => 'Greška: neprepoznat oblik u redu $1, svaki red mora počinjati sa jednim od: default, rect, circle ili poly',
+	'imagemap_no_areas' => 'Greška: mora se navesti bar jedno područje specifikacije',
+	'imagemap_invalid_coord' => 'Greška: nevaljane koordinate u redu $1, treba biti broj',
+	'imagemap_invalid_desc' => 'Greška: nevaljana specifikacija opisa, mora biti jedan od: <tt>$1</tt>',
+	'imagemap_description' => 'O ovoj slici',
+	'imagemap_poly_odd' => 'Greška: pronađen poly sa neparnim brojem koordinata u redu $1',
 );
 
 /** Catalan (Català)
@@ -272,6 +313,25 @@ $messages['de'] = array(
 	'imagemap_poly_odd' => 'Fehler: Polygon mit ungerader Anzahl an Koordinaten in Zeile $1',
 );
 
+/** Lower Sorbian (Dolnoserbski)
+ * @author Michawiki
+ */
+$messages['dsb'] = array(
+	'imagemap_desc' => 'Zmóžnja klikajobne wobraze wót boka klienta z pomocu toflicki <tt><nowiki><imagemap></nowiki></tt>',
+	'imagemap_no_image' => 'Zmólka: musyš wobraz w prědnej zmužce pódaś',
+	'imagemap_invalid_image' => 'Zmólka: wobraz jo njepłaśiwy abo njeeksistěrujo',
+	'imagemap_bad_image' => 'Zmólka: wobraz stoj na cornej lisćinje',
+	'imagemap_no_link' => 'Zmólka: žeden płaśiwy wótkaz na kóńcu smužki $1 namakany',
+	'imagemap_invalid_title' => 'Zmólka: njepłaśiwy titel we wótkazu w smužce $1',
+	'imagemap_missing_coord' => 'Zmólka: nic dosć koordinatow za formu w smužce $1',
+	'imagemap_unrecognised_shape' => 'Zmólka: njespóznata forma w smužce $1, kužda smužka musy se z jadnym z toś tych parametrow zachopiś: default, rect, circle abo poly',
+	'imagemap_no_areas' => 'Umólka: nanejmjenjej jaden parameter "area" musy se definěrowaś',
+	'imagemap_invalid_coord' => 'Zmólka: njepłaśiwa koordinata w smužce $1, musy to licba byś',
+	'imagemap_invalid_desc' => 'Zmólka: njepłaśiwy parameter "desc", móžno su: <tt>$1</tt>',
+	'imagemap_description' => 'Wó toś tom wobrazu',
+	'imagemap_poly_odd' => 'Zmólka: polygon z njerowneju licbu koordinatow w smužce $1',
+);
+
 /** Greek (Ελληνικά)
  * @author Consta
  */
@@ -306,6 +366,7 @@ $messages['es'] = array(
 	'imagemap_no_image' => 'Error: hay que especificar un imagen en la línea primera',
 	'imagemap_invalid_image' => 'Error: la imagen no es válida o no existe',
 	'imagemap_no_link' => 'Error: no se encontró ningún enlace válido al final de la línea $1',
+	'imagemap_invalid_title' => 'Error: título no válido en un enlace de la linea $1',
 	'imagemap_no_areas' => 'Error: se debe dar al menos una especificación de área',
 	'imagemap_invalid_coord' => 'Error: hay una coordenada no válida en la línea $1, debe ser un número',
 	'imagemap_description' => 'Acerca de esta imagen',
@@ -346,6 +407,7 @@ $messages['fa'] = array(
  * @author Agony
  * @author Nike
  * @author Str4nd
+ * @author Tarmo
  */
 $messages['fi'] = array(
 	'imagemap_desc' => 'Mahdollistaa napsautettavien kuvakarttojen tekemisen <tt><nowiki><imagemap></nowiki></tt>-elementillä.',
@@ -360,6 +422,7 @@ $messages['fi'] = array(
 	'imagemap_invalid_coord' => 'Error: kelpaamaton koordinaatti rivillä $1. Koordinaatin täytyy olla numero.',
 	'imagemap_invalid_desc' => 'Virhe: virheellinen kohdemäärittely, kohdemäärittelyn tulee olla yksi seuraavista: <tt>$1</tt>',
 	'imagemap_description' => 'Kuvan tiedot',
+	'imagemap_poly_odd' => 'Virhe: löytyi polygoni, jossa pariton määrä koordinaatteja rivillä $1',
 );
 
 /** French (Français)
@@ -495,6 +558,7 @@ $messages['hsb'] = array(
 	'imagemap_desc' => 'Zmóžnja klikajomne wobrazowe mapy na klientowej stronje z pomocu taflički <tt><nowiki><imagemap></nowiki></tt>',
 	'imagemap_no_image' => '&lt;imagemap&gt; zmylk: Dyrbiš w prěnjej lince wobraz podać',
 	'imagemap_invalid_image' => '&lt;imagemap&gt; zmylk: Wobraz je njepłaćiwy abo njeeksistuje',
+	'imagemap_bad_image' => 'Zmylk: wobraz na tutej stronje je na čornej lisćinje',
 	'imagemap_no_link' => '&lt;imagemap&gt; zmylk: Na kóncu linki $1 njebu płaćiwy wotkaz namakany',
 	'imagemap_invalid_title' => '&lt;imagemap&gt; zmylk: njepłaćiwy titul we wotkazu w lince $1',
 	'imagemap_missing_coord' => '&lt;imagemap&gt; zmylk: Přemało koordinatow w lince $1 za podobu',
@@ -503,6 +567,7 @@ $messages['hsb'] = array(
 	'imagemap_invalid_coord' => '&lt;imagemap&gt; zmylk: njepłaćiwa koordinata w lince $1: su jenož ličby dowolene',
 	'imagemap_invalid_desc' => '&lt;imagemap&gt; zmylk: Njepłaćiwy parameter "desc", móžne su: <tt>$1</tt>',
 	'imagemap_description' => 'Wo tutym wobrazu',
+	'imagemap_poly_odd' => 'Zmylk: polygon z njerunej ličbu koordinatow na lince $1',
 );
 
 /** Hungarian (Magyar)
@@ -513,6 +578,7 @@ $messages['hu'] = array(
 	'imagemap_desc' => 'Lehetővé teszi kliensoldali imagemap-ek létrehozását a <tt><nowiki><imagemap></nowiki></tt> tag segítségével',
 	'imagemap_no_image' => 'Error: kell egy előírt kép az első sorban',
 	'imagemap_invalid_image' => 'Error: érvénytelen vagy nem létező kép',
+	'imagemap_bad_image' => 'Hiba: a kép feketelistán van ezen az oldalon',
 	'imagemap_no_link' => 'Error: nincs érvényes link a(z) $1. sor végén',
 	'imagemap_invalid_title' => 'Error: érvénytelen cím a linkben a $1 vonalban',
 	'imagemap_missing_coord' => 'Error: nincs elég koordináta az alakításhoz a $1 sorban',
@@ -521,6 +587,7 @@ $messages['hu'] = array(
 	'imagemap_invalid_coord' => 'Error: érvénytelen koordináta a $1 vonalban, számnak kell lennie',
 	'imagemap_invalid_desc' => 'Error: hibás desc leírás, ezek egyike kell: <tt>$1</tt>',
 	'imagemap_description' => 'Kép leírása',
+	'imagemap_poly_odd' => 'Hiba: az $1. sorban páratlan számú koordináta található',
 );
 
 /** Interlingua (Interlingua)
@@ -597,6 +664,7 @@ $messages['it'] = array(
 
 /** Japanese (日本語)
  * @author Aotake
+ * @author Fryed-peach
  * @author JtFuruhata
  * @author Kahusi
  * @author Mizusumashi
@@ -604,7 +672,7 @@ $messages['it'] = array(
 $messages['ja'] = array(
 	'imagemap_desc' => '<tt><nowiki><imagemap></nowiki></tt>タグによるクライアントサイドのクリッカブルマップ機能を有効にする',
 	'imagemap_no_image' => 'エラー: 最初の行で画像を指定して下さい。',
-	'imagemap_invalid_image' => 'エラー: 画像が無効、又は存在しません。',
+	'imagemap_invalid_image' => 'エラー: 画像が無効であるか、存在しません。',
 	'imagemap_bad_image' => 'エラー: このページでは画像が排除されています',
 	'imagemap_no_link' => 'エラー: 有効なリンクが$1行目の最後に存在しません。',
 	'imagemap_invalid_title' => 'エラー: $1行目のリンクのタイトルが無効です。',
@@ -688,9 +756,10 @@ $messages['kk-latn'] = array(
 /** Khmer (ភាសាខ្មែរ)
  * @author Chhorran
  * @author Lovekhmer
+ * @author Thearith
  */
 $messages['km'] = array(
-	'imagemap_invalid_title' => 'កំហុស:ចំនងជើងមិនត្រឹមត្រូវក្នុងតំនភ្ជាប់នៅបន្ទាត់ទី$1',
+	'imagemap_invalid_title' => 'កំហុស:ចំណងជើងមិនត្រឹមត្រូវក្នុងតំណភ្ជាប់នៅបន្ទាត់ទី$1',
 	'imagemap_description' => 'អំពីរូបភាពនេះ',
 );
 
@@ -700,6 +769,8 @@ $messages['km'] = array(
 $messages['ko'] = array(
 	'imagemap_no_image' => '오류: 첫 줄에 그림이 제시되어야 합니다.',
 	'imagemap_invalid_image' => '오류: 그림이 잘못되었거나 존재하지 않습니다.',
+	'imagemap_bad_image' => '오류: 이 그림은 이 문서에서 사용이 금지되어 있습니다.',
+	'imagemap_description' => '이 그림에 대한 정보',
 );
 
 /** Ripoarisch (Ripoarisch)
@@ -719,7 +790,8 @@ $messages['ksh'] = array(
 	'imagemap_invalid_desc' => 'Do es ene Fääler met <tt><nowiki><imagemap></nowiki></tt> opjefalle: Dä Parammeeter „<tt><nowiki>desc</nowiki></tt>“ eß verkeeht aanjejovve. Bruche kanns De nor ein fun dänne hee: <tt>$1</tt>',
 	'imagemap_description' => 'Övver dat Beld hee',
 	'imagemap_desc_types' => 'bovve räähß, unge räähß, unge lengkß, bovve lengkß, nix',
-	'imagemap_poly_odd' => 'Do es ene Fääler met <imagemap> opjefalle: De Parammeeter för „poly“ möße Zahle-Päärche sin, ävver hee es ei Zahl zovill udder zowinnisch.',
+	'imagemap_poly_odd' => 'Do es ene Fääler met <imagemap> opjefalle: De Parammeeter för „poly“ möße Zahle-Päärche sin, ävver hee es ei Zahl zovill udder zowinnisch
+en dä Reih: $1.',
 );
 
 /** Latin (Latina)
@@ -853,6 +925,7 @@ $messages['ms'] = array(
 $messages['nds'] = array(
 	'imagemap_no_image' => 'Error: in de eerste Reeg mutt en Bild angeven wesen',
 	'imagemap_invalid_image' => 'Error: Bild geiht nich oder dat gifft dat gornich',
+	'imagemap_bad_image' => 'Fehler: Dat Bild steiht op de swarte List för disse Sied',
 	'imagemap_no_link' => 'Error: an dat Enn vun Reeg $1 weer keen Lenk',
 	'imagemap_invalid_title' => 'Error: in Reeg $1 is de Titel in’n Lenk nich bi de Reeg',
 	'imagemap_missing_coord' => 'Error: Form in Reeg $1 hett nich noog Koordinaten',
@@ -1072,6 +1145,47 @@ $messages['sah'] = array(
 	'imagemap_description' => 'Ойуу туһунан',
 );
 
+/** Sicilian (Sicilianu)
+ * @author Santu
+ */
+$messages['scn'] = array(
+	'imagemap_desc' => "Pirmetti di rializzari ''image map'' cliccàbbili latu client cô tag <tt><nowiki><imagemap></nowiki></tt>",
+	'imagemap_no_image' => "Sbàgghiu: s'hà spicificari na mmàggini ntâ prima riga",
+	'imagemap_invalid_image' => "Sbàgghiu: la mmàggini nun è vàlida o non c'è",
+	'imagemap_bad_image' => "Sbàgghiu: la mmàggini s'attrova ntâ blacklist pi sta pàggina",
+	'imagemap_no_link' => '
+Sbàgghiu: non vinni attruvatu nuddu lijami vàlidu a la fini dâ riga $1',
+	'imagemap_invalid_title' => 'Sbàgghiu: tìtulu dû lijami non vàlidu ntâ riga $1',
+	'imagemap_missing_coord' => 'Sbàgghiu: non ci sunnu abbastanza cuurdinati pi la furma spicificata nti la tiga $1',
+	'imagemap_unrecognised_shape' => 'Sbàgghiu: Furma (shape) non canusciuta nti la riga $1, ogniduna di li righi hà accuminciari cu unu di li furmi ccà di sècutu:  default, rect, circle o poly',
+	'imagemap_no_areas' => "Sbàgghiu: hà èssiri spicificata ô cchiù picca n'ària.",
+	'imagemap_invalid_coord' => 'Sbàgghiu: cuurdinata non vàlida ntâ riga $1, idda hà èssiri nu nùmmiru',
+	'imagemap_invalid_desc' => 'Sbàgghiu: valuri non vàlidu pô paràmitru desc, hà èssiri unu di chisti: <tt>$1</tt>',
+	'imagemap_description' => "Nfumazzioni supr'a â mmàggini",
+	'imagemap_desc_types' => 'top-right (susu-a manu dritta), bottom-right (jusu-a manu dritta) , bottom-left (jusu-a manu manca), top-left (susu-a manu manca), none (nenti)',
+	'imagemap_poly_odd' => "Sbàgghiu: attruvatu pulìgunu c'un nùmmiru sparu di cuurdinati nti la riga $1",
+);
+
+/** Sinhala (සිංහල)
+ * @author නන්දිමිතුරු
+ */
+$messages['si'] = array(
+	'imagemap_desc' => '<tt><nowiki><imagemap></nowiki></tt> ටැගය භාවිතයෙන් සේවාලාභි-අන්තයෙහි ක්ලික්කලහැකි රූප සිතියම් වලට ඉඩ සලසයි',
+	'imagemap_no_image' => 'දෝෂය: ඔබ විසින්, පළමු පේලියෙහි රූපයක් හුවාදැක්වියයුතුය',
+	'imagemap_invalid_image' => 'දෝෂය: රූපය අනීතිකයි නැතිනම් නොපවතියි',
+	'imagemap_bad_image' => 'දෝෂය: රූපය මෙම පටුවෙහි අපලේඛණය කොට ඇත',
+	'imagemap_no_link' => 'දෝෂය: $1 පේළිය කෙළවර කිසිදු නීතික සබැඳියක් හමුනොවිණි',
+	'imagemap_invalid_title' => 'දෝෂය: $1 පේළියෙහි සබැඳියෙහි ශීර්ෂය අනීතිකයි',
+	'imagemap_missing_coord' => 'දෝෂය: $1 පේළියෙහි හැඩය සඳහා අවශ්‍ය තරමට ඛණ්ඩාංක සපයා නොමැත',
+	'imagemap_unrecognised_shape' => 'දෝෂය: $1 පේළියෙහි හැඩය හඳුනාගතනොහැකි විය, සෑම පේළියක්ම මෙයින් එකකික් ඇරඹිය යුතුය: default, rect, circle හෝ poly',
+	'imagemap_no_areas' => 'දෝෂය: අවම වශයෙන් සරි පිරිවිතර එකක් හෝ සැපයිය යුතුය',
+	'imagemap_invalid_coord' => 'දෝෂය: $1 පේළියෙහි අනීතික ඛණ්ඩාංකයකි, එය සංඛ්‍යාවක් විය යුතුය',
+	'imagemap_invalid_desc' => 'දෝෂය: desc පිරිවිතරය අනීතිකයි, මෙයින් එකක් විය යුතුය: <tt>$1</tt>',
+	'imagemap_description' => 'මෙම රූපය පිළිබඳ',
+	'imagemap_desc_types' => 'ඉහළ-දකුණ, පහළ-දකුණ, පහළ-වම, ඉහළ-වම, කිසිවක් නැත',
+	'imagemap_poly_odd' => 'දෝෂය: $1 පේළියෙහි ඛණ්ඩාංක ඔත්තේ ගණනක් සමග poly හමුවිය',
+);
+
 /** Slovak (Slovenčina)
  * @author Helix84
  */
@@ -1193,6 +1307,26 @@ $messages['tg-cyrl'] = array(
 	'imagemap_invalid_coord' => 'Error: баробарии ғайримиҷоз дар сатри $1, бояд адад бошад',
 	'imagemap_invalid_desc' => 'Error: тавзеҳоти ғайримиҷоз, бояд яке аз ин маворид бошад: <tt>$1</tt>',
 	'imagemap_description' => 'Дар бораи ин акс',
+);
+
+/** Tagalog (Tagalog)
+ * @author AnakngAraw
+ */
+$messages['tl'] = array(
+	'imagemap_desc' => 'Nagpapahintulot ng napipindot na mga larawang mapa sa panig ng mga kliyente na ginagamitan ng tatak na <tt><nowiki><imagemap></nowiki></tt>',
+	'imagemap_no_image' => 'Kamalian: dapat tumukoy ng isang larawan sa unang guhit/hanay',
+	'imagemap_invalid_image' => 'Kamalian: hindi tanggap o hindi umiiral ang isang larawan',
+	'imagemap_bad_image' => 'Kamalian: ipinagbabawal (nasa "itim na talaan") sa pahinang ito ang larawan',
+	'imagemap_no_link' => 'Kamalian: walang natagpuang tanggap na kawing sa hulihan ng guhit/hanay na $1',
+	'imagemap_invalid_title' => 'Kamalian: may hindi tanggap na pamagat sa kawing sa guhit/hanay na $1',
+	'imagemap_missing_coord' => 'Kamalian: walang sapat na tugmaang pampook para sa hugis sa guhit/hanay na $1',
+	'imagemap_unrecognised_shape' => "Kamalian: hindi nakikilalang hugis sa guhit/hanay na \$1, bawat guhit ay dapat na nagsisimula sa kahit na isang: nakatakda, parihaba, bilog o \"poli\" (''poly'')",
+	'imagemap_no_areas' => 'Kamalian: dapat na magbigay ng kahit na isang pagtutukoy na pampook',
+	'imagemap_invalid_coord' => 'Kamalian: hindi tanggap na tugmaang pampook sa guhit/hanay na $1, dapat na isang bilang',
+	'imagemap_invalid_desc' => 'Kamalian: hindi tanggap na pagtukoy sa paglalarawan, dapat na isa sa: <tt>$1</tt>',
+	'imagemap_description' => 'Tungkol sa larawang ito',
+	'imagemap_desc_types' => 'pang-itaas na kanan, pang-ibabang kanan, pang-ibabang kaliwa, pang-itaas na kaliwa, wala',
+	'imagemap_poly_odd' => "Kamalian: nakatagpo ng isang \"poli\" (''poly'') na mayroong bilang na may butal na pang-pagtutugmang pampook na nasa guhit/hanay na \$1",
 );
 
 /** Turkish (Türkçe)

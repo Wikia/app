@@ -30,15 +30,16 @@ require_once('XmlFunctions.php');
 class SpecialForm extends SpecialPage {
 	function SpecialForm() {
 		SpecialPage::SpecialPage("Form");
-		self::loadMessages();
 	}
 
 	function execute( $par ) {
 		global $wgRequest, $wgOut;
 
+		wfLoadExtensionMessages( 'Form' );
+
 		# Must have a name, like Special:Form/Nameofform
 		# XXX: instead of an error, show a list of available forms
-		
+
 		if (!$par) {
 			$wgOut->showErrorPage('formnoname', 'formnonametext');
 			return;
@@ -62,21 +63,8 @@ class SpecialForm extends SpecialPage {
 		}
 	}
 
-	# Load form-related messages, per special-page guidelines
-	
-	function loadMessages() {
-		static $messagesLoaded = false;
-		global $wgMessageCache;
-
-		if ( $messagesLoaded ) return true;
-		wfLoadExtensionMessages('SpecialForm');
-		$messagesLoaded = true;
-
-		return true;
-	}
-
 	# Load and parse a form article from the DB
-	
+
 	function loadForm($name) {
 		$nt = Title::makeTitleSafe(NS_MEDIAWIKI, wfMsgForContent('formpattern', $name));
 
@@ -93,12 +81,12 @@ class SpecialForm extends SpecialPage {
 		$text = $article->getContent(true);
 
 		# Form constructor does the parsing
-		
+
 		return new Form($name, $text);
 	}
 
 	function showForm($form, $errmsg = NULL) {
-		global $wgOut, $wgRequest, $wgParser, $wgTitle;
+		global $wgOut, $wgRequest, $wgParser, $wgTitle, $wgUser, $wgSpecialFormRecaptcha;
 
 		$self = SpecialPage::getTitleFor(wfMsgForContent('form') . '/' . $form->name);
 
@@ -106,41 +94,64 @@ class SpecialForm extends SpecialPage {
 
 		if (!is_null($form->instructions)) {
 
-			$wgOut->addHtml(wfOpenElement('div', array('class' => 'instructions')) .
+			$wgOut->addHTML(Xml::openElement('div', array('class' => 'instructions')) .
 							$wgOut->parse($form->instructions) .
-							wfCloseElement('div') .
-							wfElement('br'));
+							Xml::closeElement('div') .
+							Xml::element('br'));
 		}
 
 		if (!is_null($errmsg)) {
-			$wgOut->addHtml(wfOpenElement('div', array('class' => 'error')) .
+			$wgOut->addHTML(Xml::openElement('div', array('class' => 'error')) .
 							$wgOut->parse($errmsg) .
-							wfCloseElement('div') .
-							wfElement('br'));
+							Xml::closeElement('div') .
+							Xml::element('br'));
 		}
-		
-		$wgOut->addHtml(wfOpenElement('form',
+
+		$wgOut->addHTML(Xml::openElement('form',
 									  array('method' => 'POST',
 											'action' => $self->getLocalURL())));
 
 		foreach ($form->fields as $field) {
-			$wgOut->addHtml($field->render($wgRequest->getText($field->name)) . wfElement('br') . "\n");
+			$wgOut->addHTML($field->render($wgRequest->getText($field->name)) . Xml::element('br') . "\n");
 		}
 
-		$wgOut->addHtml(wfElement('input', array('type' => 'submit',
+		if ($wgUser->getId() == 0 && $wgSpecialFormRecaptcha) { # Anonymous user, use recaptcha
+			require_once('recaptchalib.php');
+			global $recaptcha_public_key; # same as used by Recaptcha plugin
+			$wgOut->addHTML(recaptcha_get_html($recaptcha_public_key));
+		}
+
+		$wgOut->addHTML(Xml::element('input', array('type' => 'submit',
 												 'value' => wfMsg('formsave'))));
 
-		$wgOut->addHtml(wfCloseElement('form'));
+		$wgOut->addHTML(Xml::closeElement('form'));
 	}
 
 	function createArticle($form) {
 
-		global $wgOut, $wgRequest, $wgLang;
-		
+		global $wgOut, $wgRequest, $wgLang, $wgUser, $wgSpecialFormRecaptcha;
+
+		# Check recaptcha
+
+		if ($wgUser->getId() == 0 && $wgSpecialFormRecaptcha) {
+
+			require_once('recaptchalib.php');
+			global $recaptcha_private_key; # same as used by Recaptcha plugin
+			$resp = recaptcha_check_answer($recaptcha_private_key,
+										   $_SERVER["REMOTE_ADDR"],
+										   $wgRequest->getText("recaptcha_challenge_field"),
+										   $wgRequest->getText("recaptcha_response_field"));
+
+			if (!$resp->is_valid) {
+				$this->showForm($form, wfMsg('formbadrecaptcha'));
+				return;
+			}
+		}
+
 		# Check for required fields
 
 		$missedFields = array();
-		
+
 		foreach ($form->fields as $name => $field) {
 			$value = $wgRequest->getText($name);
 			if ($field->isOptionTrue('required') && (is_null($value) || strlen($value) == 0)) {
@@ -149,7 +160,7 @@ class SpecialForm extends SpecialPage {
 		}
 
 		# On error, show the form again with some error text.
-		
+
 		if ($missedFields) {
 			if (count($missedFields) > 1) {
 				$msg = wfMsg('formrequiredfieldpluralerror', $wgLang->listToText($missedFields));
@@ -163,19 +174,19 @@ class SpecialForm extends SpecialPage {
 		# First, we make sure we have all the titles
 
 		$nt = array();
-		
+
 		for ($i = 0; $i < count($form->template); $i++) {
-			
+
 			$namePattern = $form->namePattern[$i];
 			$template = $form->template[$i];
 
 			if (!$namePattern || !$template) {
-				$wgOut->showErrorPage('formindexmismatch', 'formindexmismatchtext', array($i));
+				$wgOut->showErrorPage('formindexmismatch-title', 'formindexmismatch', array($i));
 				return;
 			}
 
 			wfDebug("SpecialForm: for index '$i', namePattern = '$namePattern' and template = '$template'.\n");
-			
+
 			$title = $this->makeTitle($form, $namePattern);
 
 			$nt[$i] = Title::newFromText($title);
@@ -184,7 +195,7 @@ class SpecialForm extends SpecialPage {
 				$wgOut->showErrorPage('formbadpagename', 'formbadpagenametext', array($title));
 				return;
 			}
-		
+
 			if ($nt[$i]->getArticleID() != 0) {
 				$wgOut->showErrorPage('formarticleexists', 'formarticleexists', array($title));
 				return;
@@ -196,7 +207,7 @@ class SpecialForm extends SpecialPage {
 		for ($i = 0; $i < count($form->template); $i++) {
 
 			$template = $form->template[$i];
-			
+
 			$text = "{{subst:$template";
 
 			foreach ($form->fields as $name => $field) {
@@ -210,27 +221,27 @@ class SpecialForm extends SpecialPage {
 				# Just break here; output already sent
 				return;
 			}
-				
+
 			$title = $nt[$i]->GetPrefixedText();
-			
+
 			wfDebug("SpecialForm: saving article with index '$i' and title '$title'\n");
 
 			$article = new Article($nt[$i]);
 
-			  
-			if (!$article->doEdit($text, wfMsg('formsavesummary', $form->name), EDIT_NEW)) {
+			$status = $article->doEdit($text, wfMsg('formsavesummary', $form->name), EDIT_NEW);
+			if ( $status === false || ( is_object( $status ) && !$status->isOK() ) ) {
 				$wgOut->showErrorPage('formsaveerror', 'formsaveerrortext', array($title));
 				return; # Don't continue
 			}
 		}
 
 		# Redirect to the first article
-		
+
 		if ($nt && $nt[0]) {
 			$wgOut->redirect($nt[0]->getFullURL());
 		}
 	}
-	
+
 	function makeTitle($form, $pattern) {
 		global $wgRequest;
 
@@ -244,7 +255,7 @@ class SpecialForm extends SpecialPage {
 	}
 
 	# Had to crib some checks from EditPage.php, since they're not done in Article.php
-	
+
 	function checkSave($nt, $text) {
 		global $wgSpamRegex, $wgFilterCallback, $wgUser, $wgMaxArticleSize, $wgOut;
 
@@ -252,9 +263,9 @@ class SpecialForm extends SpecialPage {
 		$errortext = "";
 
 		$editPage = new FakeEditPage($nt);
-		
+
 		# FIXME: more specific errors, copied from EditPage.php
-		
+
 		if ($wgSpamRegex && preg_match($wgSpamRegex, $text, $matches)) {
 			$wgOut->showErrorPage('formsaveerror', 'formsaveerrortext');
 			return false;
@@ -283,7 +294,7 @@ class SpecialForm extends SpecialPage {
 			$wgOut->showErrorPage('formsaveerror', 'formsaveerrortext');
 			return false;
 		}
-		
+
 		return true;
 	}
 }
@@ -293,7 +304,7 @@ class SpecialForm extends SpecialPage {
 class FakeEditPage {
 
 	var $mTitle;
-	
+
 	function FakeEditPage(&$nt) {
 		$this->mTitle = $nt;
 	}
@@ -419,27 +430,27 @@ class FormField {
 				(strcasecmp($value, 'true') == 0) ||
 				(strcasecmp($value, '1') == 0));
 	}
-	
+
 	function render($def = NULL) {
 		global $wgOut;
 
 		switch ($this->type) {
 		 case 'textarea':
-			return wfOpenElement('h2') .
-			  wfElement('label', array('for' => $this->name), $this->label) .
-		      wfCloseElement('h2') .
+			return Xml::openElement('h2') .
+			  Xml::element('label', array('for' => $this->name), $this->label) .
+		      Xml::closeElement('h2') .
 			  (($this->description) ?
-			   (wfOpenElement('div') . $wgOut->parse($this->description) . wfCloseElement('div')) : '') .
-			  wfOpenElement('textarea', array('name' => $this->name,
+			   (Xml::openElement('div') . $wgOut->parse($this->description) . Xml::closeElement('div')) : '') .
+			  Xml::openElement('textarea', array('name' => $this->name,
 											  'id' => $this->name,
 											  'rows' => $this->getOption('rows', 6),
 											  'cols' => $this->getOption('cols', 80))) .
 			  ((is_null($def)) ? '' : $def) .
-			  wfCloseElement('textarea');
+			  Xml::closeElement('textarea');
 			break;
 		 case 'text':
-			return wfElement('label', array('for' => $this->name), $this->label) . ": " .
-			  wfElement('input', array('type' => 'text',
+			return Xml::element('label', array('for' => $this->name), $this->label) . ": " .
+			  Xml::element('input', array('type' => 'text',
 									   'name' => $this->name,
 									   'id' => $this->name,
 									   'value' => ((is_null($def)) ? '' : $def),
@@ -452,8 +463,8 @@ class FormField {
 			if ($def == 'checked') {
 				$attrs['checked'] = 'checked';
 			}
-			return wfElement('label', array('for' => $this->name), $this->label) . ": " .
-			  wfElement('input', $attrs);
+			return Xml::element('label', array('for' => $this->name), $this->label) . ": " .
+			  Xml::element('input', $attrs);
 			break;
 		 case 'radio':
 			$items = array();
@@ -465,25 +476,25 @@ class FormField {
 				if ($item == $def) {
 					$attrs['checked'] = 'checked';
 				}
-				$items[] = wfOpenElement('input', $attrs) .
-				  wfElement('label', null, $item) .
-				  wfCloseElement('input');
+				$items[] = Xml::openElement('input', $attrs) .
+				  Xml::element('label', null, $item) .
+				  Xml::closeElement('input');
 			}
-			return wfElement('span', null, $this->label) . wfElement('br') . implode("", $items);
+			return Xml::element('span', null, $this->label) . Xml::element('br') . implode("", $items);
 			break;
 		 case 'select':
 			$items = array();
 			$rawitems = explode(';', $this->getOption('items'));
 			foreach ($rawitems as $item) {
-				$items[] = wfElement('option',
+				$items[] = Xml::element('option',
 									 ($item == $def) ? array('selected' => 'selected') : null,
 									 $item);
 			}
 
-			return wfElement('label', array('for' => $this->name), $this->label) . ": " .
-			  wfOpenElement('select', array('name' => $this->name, 'id' => $this->name)) .
+			return Xml::element('label', array('for' => $this->name), $this->label) . ": " .
+			  Xml::openElement('select', array('name' => $this->name, 'id' => $this->name)) .
 			  implode("", $items) .
-		      wfCloseElement('select');
+		      Xml::closeElement('select');
 
 			break;
 		 default:

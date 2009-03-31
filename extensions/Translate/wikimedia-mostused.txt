@@ -173,7 +173,6 @@ recentchangeslinked-summary
 recentchangeslinked-title
 editing
 template-protected
-noexactmatch
 noarticletext
 filehist-help
 filehist-filesize
@@ -197,7 +196,6 @@ viewprevnext
 viewsource
 allpagessubmit
 namespacesall
-linklistsub
 whatlinkshere-title
 metadata
 thumbnail_error
@@ -215,7 +213,6 @@ istemplate
 tooltip-ca-viewsource
 edit-externally-help
 edit-externally
-categoryarticlecount
 category_header
 linkshere
 whatlinkshere-next
@@ -249,7 +246,6 @@ currentevents
 nolinkshere
 previousdiff
 subcategories
-subcategorycount
 tooltip-minoredit
 tooltip-watch
 about
@@ -264,6 +260,7 @@ template-semiprotected
 histlast
 histfirst
 histlegend
+history-fieldset-title
 tooltip-ca-unwatch
 nstab-project
 recentchanges-feed-description
@@ -287,6 +284,8 @@ newmessageslink
 month
 monthsall
 year
+pager-newer-n
+pager-older-n
 uctop
 newarticle
 delete
@@ -304,6 +303,9 @@ revertmove
 blocklogentry
 allpagesfrom
 sp-contributions-blocklog
+sp-contributions-search
+sp-contributions-newbies
+sp-contributions-username
 nstab-template
 tooltip-ca-nstab-template
 uploadlogpage
@@ -335,17 +337,13 @@ watchlist-details
 wlshowlast
 watchlistall2
 nologin
-watchlist-hide-minor
 revision-info
 category-media-header
-category-media-count
 viewsourcetext
 badtitletext
 statistics
 nlinks
 rcshowhidepatr
-watchlist-hide-own
-watchlist-hide-bots
 editthispage
 importlogpage
 preferences
@@ -377,8 +375,6 @@ speciallogtitlelabel
 specialloguserlabel
 qbfind
 history-feed-item-nocomment
-bugreports
-bugreportspage
 page_last
 page_first
 ipblocklist
@@ -444,8 +440,6 @@ noemail
 passwordsent
 eauthentsent
 history_short
-confirmdelete
-deletesub
 historywarning
 confirmdeletetext
 actioncomplete
@@ -454,7 +448,6 @@ deletecomment
 deleteotherreason
 deletereasonotherlist
 deletepage
-movepage
 movepagetext
 movepagetalktext
 movearticle
@@ -467,14 +460,11 @@ articleexists
 talkexists
 movedto
 movetalk
-talkpagemoved
-talkpagenotmoved
 movereason
 addedwatch
 addedwatchtext
 removedwatch
 removedwatchtext
-confirmprotect
 protectcomment
 protectexpiry
 protect_expiry_invalid

@@ -60,6 +60,9 @@ window.onload = function() {
 	FCK.Track('/templateEditor/open');
 
 	FCK.BlockEvent(GetE('templatePreview'), 'click');
+
+	// overwrite default mwsuggest.js AJAX call (fixes RT #12639)
+	window.os_delayedFetch = FCK.TemplateEditor.FetchSuggestions;
 }
 
 FCK.TemplateEditor = {
@@ -89,6 +92,47 @@ FCK.TemplateEditor.EnableTemplateSuggestion = function(enable) {
 	}
 }
 
+// fic RT #12639
+FCK.TemplateEditor.FetchSuggestions = function() {
+
+	if(os_timer == null)
+		return;
+	var r = os_timer.r;
+	var query = os_timer.query;
+	os_timer = null;
+	var path = wgMWSuggestTemplate.replace("{namespaces}",os_getNamespaces(r))
+		  .replace("{dbname}",wgDBname)
+		  .replace("{searchTerms}",os_encodeQuery(query));
+
+	// remove domain name (fixes RT #12639)
+	path = path.replace(/http:\/\/(.*)\//, '/');
+
+	FCK.log('MW suggest fetch from ' + path);
+
+	// try to get from cache, if not fetch using ajax
+	var cached = os_cache[path];
+	if(cached != null) {
+		os_updateIfRelevant(r, query, cached, path);
+	} else {
+		var callback = {
+			success: function(o) {
+				if (typeof window.os_updateIfRelevant == 'function') {
+					window.os_updateIfRelevant(r, query, o.responseText, path);
+				}
+			},
+			failure: function(o) {
+			}
+		};
+
+		FCK.YAHOO.util.Connect.asyncRequest(
+			"POST",
+			path,
+			callback,
+			''
+		);
+	}
+}
+
 FCK.TemplateEditor.InsertTemplateFromSearch = function() {
 
 	var templateName = FCK.TemplateEditor.GetE('templateQuery').value;
@@ -96,21 +140,33 @@ FCK.TemplateEditor.InsertTemplateFromSearch = function() {
 	// send AJAX query to get template parameters and show progress bar
 	FCK.TemplateEditor.Dialog.Throbber.Show();
 
+	FCK.log('getting ' + templateName + ' params');
+
 	// clear search field
 	FCK.TemplateEditor.GetE('templateQuery').value = '';
 
-	FCK.TemplateEditor.win.sajax_request_type = 'POST';
-	FCK.TemplateEditor.win.sajax_do_call('WysiwygGetTemplateParamsAjax', [templateName], function(res) {
-		var params = eval('(' + res.responseText + ')');
+	var callback = {
+		success: function(o) {
+			var params = eval('(' + o.responseText + ')');
 
-		// go to step #2
-		FCK.log('suggested template: ' + templateName);
-		FCK.log(params);
+			// go to step #2
+			FCK.log('suggested template: ' + templateName);
+			FCK.log(params);
 
-		FCK.Track('/templateEditor/suggest');
+			FCK.Track('/templateEditor/suggest');
 
-		FCK.TemplateEditor.SelectTemplate(templateName, params);
-	});
+			FCK.TemplateEditor.SelectTemplate(templateName, params);
+		},
+		failure: function(o) {
+		}
+	};
+
+	FCK.YAHOO.util.Connect.asyncRequest(
+		"POST",
+		FCK.TemplateEditor.Dialog.parent.wgScriptPath + '/index.php?action=ajax',
+		callback,
+		'rs=WysiwygGetTemplateParamsAjax&rsargs[]=' + encodeURIComponent(templateName)
+	);
 
 	return false;
 }

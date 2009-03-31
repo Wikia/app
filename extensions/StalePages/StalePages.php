@@ -15,27 +15,11 @@ $wgExtensionCredits['specialpage'][] = array(
 	'author'         => 'Tim Laqua',
 	'description'    => 'Generates a list of pages that have not been edited recently',
 	'descriptionmsg' => 'stalepages-desc',
-	'version'        => '0.7'
+	'version'        => '0.8'
 );
 
-if( version_compare( $wgVersion, '1.11', '>=' ) ) {    
-	$wgExtensionMessagesFiles['Stalepages'] = $dirname(__FILE__) . '/StalePages.i18n.php';
-} else {
-	$wgExtensionFunctions[] = 'efStalepages';
-}
-
-$wgAutoloadClasses['Stalepages'] = dirname(__FILE__) . '/StalePages_body.php';
-
+$dir = dirname(__FILE__) . '/';
+$wgExtensionMessagesFiles['Stalepages'] = $dir . 'StalePages.i18n.php';
+$wgExtensionAliasesFiles['Stalepages'] = $dir . 'Stalepages.alias.php';
+$wgAutoloadClasses['Stalepages'] = $dir . 'StalePages_body.php';
 $wgSpecialPages['Stalepages'] = 'Stalepages';
-
-
-///Message Cache population for versions that did not support $wgExtensionFunctions
-function efStalePages() {
-	global $wgMessageCache;   
-	
-	#Add Messages   
-	require( dirname( __FILE__ ) . '/StalePages.i18n.php' );   
-	foreach( $messages as $key => $value ) {   
-		  $wgMessageCache->addMessages( $messages[$key], $key );   
-	}   
-} 

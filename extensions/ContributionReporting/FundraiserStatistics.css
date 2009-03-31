@@ -1,0 +1,58 @@
+.fundraiserstats-view-box {
+	width: 100%;
+	border: solid 1px silver;
+}
+.fundraiserstats-today {
+	position: absolute;
+	width: 6px;
+	height: 6px;
+	background-color: black;
+	margin-top: 3px;
+	margin-left: -1px;
+}
+.fundraiserstats-bar-2007 {
+	background-color: #AAAAFF;
+	border: outset 1px #AAAAFF;
+	width: 3px;
+	margin-left: 3px;
+}
+.fundraiserstats-bar-2008 {
+	background-color: #AAFFAA;
+	border: outset 1px #AAFFAA;
+	width: 3px;
+}
+.fundraiserstats-bar-space {
+	width: 3px;
+}
+.fundraiserstats-chart {
+	padding: 10px;
+	border-left: solid 1px silver;
+	border-right: solid 1px silver;
+}
+.fundraiserstats-chart-tabs {
+	border-bottom: solid 1px silver;
+	height: 24px;
+}
+.fundraiserstats-chart-tab-normal {
+	padding-left: 6px;
+	padding-right: 6px;
+	border: solid 1px silver;
+	float: left;
+	line-height: 23px;
+	height: 23px;
+	margin-right: 6px;
+	cursor: pointer;
+	font-weight: bold;
+}
+.fundraiserstats-chart-tab-current {
+	padding-left: 6px;
+	padding-right: 6px;
+	border: solid 1px silver;
+	border-bottom-color: white;
+	float: left;
+	line-height: 23px;
+	height: 23px;
+	margin-right: 6px;
+	cursor: pointer;
+	font-weight: bold;
+}

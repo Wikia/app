@@ -12,7 +12,7 @@ class SpecialNewpages extends SpecialPage {
 	// Some internal settings
 	protected $showNavigation = false;
 
-	public function __construct(){
+	public function __construct() {
 		parent::__construct( 'Newpages' );
 		$this->includable( true );	
 	}
@@ -26,7 +26,8 @@ class SpecialNewpages extends SpecialPage {
 		$opts->add( 'hideliu', false );
 		$opts->add( 'hidepatrolled', false );
 		$opts->add( 'hidebots', false );
-		$opts->add( 'limit', 50 );
+		$opts->add( 'hideredirs', true );
+		$opts->add( 'limit', (int)$wgUser->getOption( 'rclimit' ) );
 		$opts->add( 'offset', '' );
 		$opts->add( 'namespace', '0' );
 		$opts->add( 'username', '' );
@@ -58,6 +59,8 @@ class SpecialNewpages extends SpecialPage {
 				$this->opts->setValue( 'hidepatrolled', true );
 			if ( 'hidebots' == $bit )
 				$this->opts->setValue( 'hidebots', true );
+			if ( 'showredirs' == $bit )
+				$this->opts->setValue( 'hideredirs', false );
 			if ( is_numeric( $bit ) )
 				$this->opts->setValue( 'limit', intval( $bit ) );
 
@@ -67,6 +70,8 @@ class SpecialNewpages extends SpecialPage {
 			// PG offsets not just digits!
 			if ( preg_match( '/^offset=([^=]+)$/', $bit, $m ) )
 				$this->opts->setValue( 'offset',  intval($m[1]) );
+			if ( preg_match( '/^username=(.*)$/', $bit, $m ) )
+				$this->opts->setValue( 'username', $m[1] );
 			if ( preg_match( '/^namespace=(.*)$/', $bit, $m ) ) {
 				$ns = $wgLang->getNsIndex( $m[1] );
 				if( $ns !== false ) {
@@ -83,7 +88,7 @@ class SpecialNewpages extends SpecialPage {
 	 * @return string
 	 */
 	public function execute( $par ) {
-		global $wgLang, $wgGroupPermissions, $wgUser, $wgOut;
+		global $wgLang, $wgUser, $wgOut;
 
 		$this->setHeaders();
 		$this->outputHeader();
@@ -125,7 +130,8 @@ class SpecialNewpages extends SpecialPage {
 		$filters = array(
 			'hideliu' => 'rcshowhideliu',
 			'hidepatrolled' => 'rcshowhidepatr',
-			'hidebots' => 'rcshowhidebots'
+			'hidebots' => 'rcshowhidebots',
+			'hideredirs' => 'whatlinkshere-hideredirs'
 		);
 
 		// Disable some if needed
@@ -142,8 +148,8 @@ class SpecialNewpages extends SpecialPage {
 		$self = $this->getTitle();
 		foreach ( $filters as $key => $msg ) {
 			$onoff = 1 - $this->opts->getValue($key);
-			$link = $this->skin->makeKnownLinkObj( $self, $showhide[$onoff],
-				wfArrayToCGI( array( $key => $onoff ), $changed )
+			$link = $this->skin->link( $self, $showhide[$onoff], array(),
+				 array( $key => $onoff ) + $changed
 			);
 			$links[$key] = wfMsgHtml( $msg, $link );
 		}
@@ -231,7 +237,7 @@ class SpecialNewpages extends SpecialPage {
 		global $wgLang, $wgContLang, $wgUser;
 		$dm = $wgContLang->getDirMark();
 
-		$title = Title::makeTitleSafe( $result->page_namespace, $result->page_title );
+		$title = Title::makeTitleSafe( $result->rc_namespace, $result->rc_title );
 		$time = $wgLang->timeAndDate( $result->rc_timestamp, true );
 		$plink = $this->skin->makeKnownLinkObj( $title, '', $this->patrollable( $result ) ? 'rcid=' . $result->rc_id : '' );
 		$hist = $this->skin->makeKnownLinkObj( $title, wfMsgHtml( 'hist' ), 'action=history' );
@@ -261,7 +267,7 @@ class SpecialNewpages extends SpecialPage {
 	 * @param string $type
 	 */
 	protected function feed( $type ) {
-		global $wgFeed, $wgFeedClasses;
+		global $wgFeed, $wgFeedClasses, $wgFeedLimit;
 
 		if ( !$wgFeed ) {
 			global $wgOut;
@@ -277,16 +283,12 @@ class SpecialNewpages extends SpecialPage {
 
 		$feed = new $wgFeedClasses[$type](
 			$this->feedTitle(),
-			wfMsg( 'tagline' ),
+			wfMsgExt( 'tagline', 'parsemag' ),
 			$this->getTitle()->getFullUrl() );
 
 		$pager = new NewPagesPager( $this, $this->opts );
 		$limit = $this->opts->getValue( 'limit' );
-		global $wgFeedLimit;
-		if( $limit > $wgFeedLimit ) {
-			$limit = $wgFeedLimit;
-		}
-		$pager->mLimit = $limit;
+		$pager->mLimit = min( $limit, $wgFeedLimit );
 
 		$feed->outHeader();
 		if( $pager->getNumRows() > 0 ) {
@@ -305,7 +307,7 @@ class SpecialNewpages extends SpecialPage {
 	}
 
 	protected function feedItem( $row ) {
-		$title = Title::MakeTitle( intval( $row->page_namespace ), $row->page_title );
+		$title = Title::MakeTitle( intval( $row->rc_namespace ), $row->rc_title );
 		if( $title ) {
 			$date = $row->rc_timestamp;
 			$comments = $title->getTalkPage()->getFullURL();
@@ -322,13 +324,6 @@ class SpecialNewpages extends SpecialPage {
 		}
 	}
 
-	/**
-	 * Quickie hack... strip out wikilinks to more legible form from the comment.
-	 */
-	protected function stripComment( $text ) {
-		return preg_replace( '/\[\[([^]]*\|)?([^]]+)\]\]/', '\2', $text );
-	}
-
 	protected function feedItemAuthor( $row ) {
 		return isset( $row->rc_user_text ) ? $row->rc_user_text : '';
 	}
@@ -336,20 +331,10 @@ class SpecialNewpages extends SpecialPage {
 	protected function feedItemDesc( $row ) {
 		$revision = Revision::newFromId( $row->rev_id );
 		if( $revision ) {
-			global $wgRequest;
-
-			if( $wgRequest->getVal( 'type' ) == 'html' ) {
-				global $wgParser, $parserOptions, $wgTitle;
-				$_summary = $wgParser->parse( $revision->getUserText(), $wgTitle, new ParserOptions(), false )->mText ;
-				$_comment = $wgParser->parse( $revision->getComment(), $wgTitle, new ParserOptions(), false )->mText ;
-				$_text = $wgParser->parse( $revision->getText(), $wgTitle, new ParserOptions(), false )->mText ;
-			} else {
-				$_summary = htmlspecialchars( $revision->getUserText() );
-				$_comment = htmlspecialchars( $revision->getComment() );
-				$_text = nl2br( htmlspecialchars( $revision->getText() ) );
-			}
-
-			return "<p>$_summary: $_comment</p>\n<hr />\n<div>$_text</div>";
+			return '<p>' . htmlspecialchars( $revision->getUserText() ) . ': ' .
+				htmlspecialchars( FeedItem::stripComment( $revision->getComment() ) ) . 
+				"</p>\n<hr />\n<div>" .
+				nl2br( htmlspecialchars( $revision->getText() ) ) . "</div>";
 		}
 		return '';
 	}
@@ -362,15 +347,13 @@ class NewPagesPager extends ReverseChronologicalPager {
 	// Stored opts
 	protected $opts, $mForm;
 
-	private $hideliu, $hidepatrolled, $hidebots, $namespace, $user, $spTitle;
-
 	function __construct( $form, FormOptions $opts ) {
 		parent::__construct();
 		$this->mForm = $form;
 		$this->opts = $opts;
 	}
 
-	function getTitle(){
+	function getTitle() {
 		static $title = null;
 		if ( $title === null )
 			$title = $this->mForm->getTitle();
@@ -389,13 +372,13 @@ class NewPagesPager extends ReverseChronologicalPager {
 		$user = Title::makeTitleSafe( NS_USER, $username );
 
 		if( $namespace !== false ) {
-			$conds['page_namespace'] = $namespace;
+			$conds['rc_namespace'] = $namespace;
 			$rcIndexes = array( 'new_name_timestamp' );
 		} else {
 			$rcIndexes = array( 'rc_timestamp' );
 		}
 		$conds[] = 'page_id = rc_cur_id';
-		$conds['page_is_redirect'] = 0;
+
 		# $wgEnableNewpagesUserFilter - temp WMF hack
 		if( $wgEnableNewpagesUserFilter && $user ) {
 			$conds['rc_user_text'] = $user->getText();
@@ -412,9 +395,13 @@ class NewPagesPager extends ReverseChronologicalPager {
 			$conds['rc_bot'] = 0;
 		}
 
+		if ( $this->opts->getValue( 'hideredirs' ) ) {
+			$conds['page_is_redirect'] = 0;
+		}
+
 		return array(
 			'tables' => array( 'recentchanges', 'page' ),
-			'fields' => 'page_namespace,page_title, rc_cur_id, rc_user,rc_user_text,rc_comment,
+			'fields' => 'rc_namespace,rc_title, rc_cur_id, rc_user,rc_user_text,rc_comment,
 				rc_timestamp,rc_patrolled,rc_id,page_len as length, page_latest as rev_id',
 			'conds' => $conds,
 			'options' => array( 'USE INDEX' => array('recentchanges' => $rcIndexes) )
@@ -435,7 +422,7 @@ class NewPagesPager extends ReverseChronologicalPager {
 		while( $row = $this->mResult->fetchObject() ) {
 			$linkBatch->add( NS_USER, $row->rc_user_text );
 			$linkBatch->add( NS_USER_TALK, $row->rc_user_text );
-			$linkBatch->add( $row->page_namespace, $row->page_title );
+			$linkBatch->add( $row->rc_namespace, $row->rc_title );
 		}
 		$linkBatch->execute();
 		return "<ul>";

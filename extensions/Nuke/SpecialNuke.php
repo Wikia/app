@@ -10,8 +10,8 @@ $wgExtensionAliasesFiles['Nuke'] = $dir . 'SpecialNuke.alias.php';
 
 $wgExtensionCredits['specialpage'][] = array(
 	'name'           => 'Nuke',
-	'svn-date'       => '$LastChangedDate: 2008-07-10 07:28:42 +0000 (Thu, 10 Jul 2008) $',
-	'svn-revision'   => '$LastChangedRevision: 37469 $',
+	'svn-date'       => '$LastChangedDate: 2008-09-01 17:25:05 +0000 (Mon, 01 Sep 2008) $',
+	'svn-revision'   => '$LastChangedRevision: 40309 $',
 	'description'    => 'Gives sysops the ability to mass delete pages',
 	'descriptionmsg' => 'nuke-desc',
 	'author'         => 'Brion Vibber',
@@ -23,3 +23,4 @@ $wgAvailableRights[] = 'nuke';
 
 $wgAutoloadClasses['SpecialNuke'] = $dir . 'SpecialNuke_body.php';
 $wgSpecialPages['Nuke'] = 'SpecialNuke';
+$wgSpecialPageGroups['Nuke'] = 'pagetools';

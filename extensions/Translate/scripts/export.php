@@ -10,7 +10,7 @@
  */
 
 $optionsWithArgs = array( 'lang', 'target', 'group' );
-require( dirname(__FILE__) . '/cli.inc' );
+require( dirname( __FILE__ ) . '/cli.inc' );
 
 function showUsage() {
 	STDERR( <<<EOT
@@ -20,36 +20,35 @@ Usage: php export.php [options...]
 
 Options:
   --target      Target directory for exported files
-  --lang        Comma separated list of language codes
+  --lang        Comma separated list of language codes or *
   --group       Group id
 EOT
 );
 	exit( 1 );
 }
 
-if ( isset($options['help']) || $args === 1 ) {
+if ( isset( $options['help'] ) || $args === 1 ) {
 	showUsage();
 }
 
-if ( !isset($options['target']) ) {
+if ( !isset( $options['target'] ) ) {
 	STDERR( "You need to specify target directory" );
-	exit(1);
+	exit( 1 );
 }
-if ( !isset($options['lang']) ) {
+if ( !isset( $options['lang'] ) ) {
 	STDERR( "You need to specify languages to export" );
-	exit(1);
+	exit( 1 );
 }
-if ( !isset($options['group']) ) {
+if ( !isset( $options['group'] ) ) {
 	STDERR( "You need to specify group" );
-	exit(1);
+	exit( 1 );
 }
 if ( !is_writable( $options['target'] ) ) {
 	STDERR( "Target directory is not writable" );
-	exit(1);
+	exit( 1 );
 }
 
-$langs = array_map( 'trim', explode( ',', $options['lang'] ) );
-
+$langs = Cli::parseLanguageCodes( $options['lang'] );
 
 $group = MessageGroups::getGroup( $options['group'] );
 

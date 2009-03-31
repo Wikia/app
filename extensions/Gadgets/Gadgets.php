@@ -19,8 +19,8 @@ if( !defined( 'MEDIAWIKI' ) ) {
 
 $wgExtensionCredits['other'][] = array(
 	'name' => 'Gadgets',
-	'svn-date' => '$LastChangedDate: 2008-07-09 14:57:19 +0000 (Wed, 09 Jul 2008) $',
-	'svn-revision' => '$LastChangedRevision: 37390 $',
+	'svn-date' => '$LastChangedDate: 2008-11-06 22:20:29 +0000 (Thu, 06 Nov 2008) $',
+	'svn-revision' => '$LastChangedRevision: 43269 $',
 	'author' => 'Daniel Kinzler',
 	'url' => 'http://mediawiki.org/wiki/Extension:Gadgets',
 	'description' => 'lets users select custom javascript gadgets',
@@ -32,6 +32,7 @@ $wgHooks['RenderPreferencesForm'][] = 'wfGadgetsRenderPreferencesForm';
 $wgHooks['ResetPreferences'][] = 'wfGadgetsResetPreferences';
 $wgHooks['BeforePageDisplay'][] = 'wfGadgetsBeforePageDisplay';
 $wgHooks['ArticleSaveComplete'][] = 'wfGadgetsArticleSaveComplete';
+$wgHooks['LoadAllMessages'][] = 'wfGadgetsInjectMessages';
 
 $dir = dirname(__FILE__) . '/';
 $wgExtensionMessagesFiles['Gadgets'] = $dir . 'Gadgets.i18n.php';
@@ -122,7 +123,7 @@ function wfLoadGadgetsStructured( $forceNewText = NULL ) {
 	return $gadgets;
 }
 
-function wfGadgetsInitPreferencesForm( &$prefs, &$request ) {
+function wfGadgetsInitPreferencesForm( $prefs, $request ) {
 	$gadgets = wfLoadGadgets();
 	if ( !$gadgets ) return true;
 
@@ -134,7 +135,7 @@ function wfGadgetsInitPreferencesForm( &$prefs, &$request ) {
 	return true;
 }
 
-function wfGadgetsResetPreferences( &$prefs, &$user ) {
+function wfGadgetsResetPreferences( $prefs, $user ) {
 	$gadgets = wfLoadGadgets();
 	if ( !$gadgets ) return true;
 
@@ -146,13 +147,13 @@ function wfGadgetsResetPreferences( &$prefs, &$user ) {
 	return true;
 }
 
-function wfGadgetsRenderPreferencesForm( &$prefs, &$out ) {
+function wfGadgetsRenderPreferencesForm( $prefs, $out ) {
 	$gadgets = wfLoadGadgetsStructured();
 	if ( !$gadgets ) return true;
 
 	wfLoadExtensionMessages( 'Gadgets' );
 
-	$out->addHtml( "\n<fieldset>\n<legend>" . wfMsgHtml( 'gadgets-prefs' ) . "</legend>\n" );
+	$out->addHTML( "\n<fieldset>\n<legend>" . wfMsgHtml( 'gadgets-prefs' ) . "</legend>\n" );
 
 	$out->addWikiMsg( 'gadgets-prefstext' );
 
@@ -161,7 +162,7 @@ function wfGadgetsRenderPreferencesForm( &$prefs, &$out ) {
 	foreach ( $gadgets as $section => $entries ) {
 		if ( $section !== false && $section !== '' ) {
 			$ttext = wfMsgExt( "gadget-section-$section", $msgOpt );
-			$out->addHtml( "\n<h2 id=\"".htmlspecialchars("gadget-section-$section")."\">" . $ttext . "</h2>\n" );
+			$out->addHTML( "\n<h2 id=\"".htmlspecialchars("gadget-section-$section")."\">" . $ttext . "</h2>\n" );
 		}
 
 		foreach ( $entries as $gname => $code ) {
@@ -172,13 +173,13 @@ function wfGadgetsRenderPreferencesForm( &$prefs, &$out ) {
 
 			# NOTE: No label for checkmarks as this causes the checks to toggle
 			# when clicking a link in the describing text.
-			$out->addHtml( "<div class='toggle'><input type='checkbox' value='1' " .
+			$out->addHTML( "<div class='toggle'><input type='checkbox' value='1' " .
 				"id=\"$tname\" name=\"wpOp$tname\"$checked$disabled />" .
-				" <span class='toggletext'>$ttext</span></div>\n" );
+				" <span class='toggletext'><label for='$tname'>$ttext</label></span></div>\n" );
 		}
 	}
 
-	$out->addHtml( "</fieldset>\n\n" );
+	$out->addHTML( "</fieldset>\n\n" );
 
 	return true;
 }
@@ -231,3 +232,36 @@ function wfApplyGadgetCode( $code, &$out, &$done ) {
 		}
 	}
 }
+
+/**
+* inject descriptions into system messages, so they show on Special:Allmessages
+*/
+function wfGadgetsInjectMessages() {
+	global $wgLang, $wgMessageCache;
+
+	$gadgets = wfLoadGadgetsStructured();
+	if ( !$gadgets ) return true;
+
+	$args = array();
+	$messages = array();
+
+	foreach ( $gadgets as $section => $entries ) {
+		if ( $section !== false && $section !== '' ) {
+			$tname = "gadget-section-$section";
+			$ttext = wfMsgReal( $tname, $args, true, false, false );
+			if ( wfEmptyMsg( $tname, $ttext ) ) $ttext = $section;
+			$messages[$tname] = $ttext;
+		}
+
+		foreach ( $entries as $gname => $code ) {
+			$tname = "gadget-$gname";
+			$ttext = wfMsgReal( $tname, $args, true, false, false );
+			if ( wfEmptyMsg( $tname, $ttext ) ) $ttext = $gname;
+			$messages[$tname] = $ttext;
+		}
+	}
+	
+	$wgMessageCache->addMessages( $messages );
+	return true;
+}
+

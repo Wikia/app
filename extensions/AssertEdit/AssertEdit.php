@@ -19,8 +19,8 @@ if ( ! defined( 'MEDIAWIKI' ) )
 
 $wgExtensionCredits['other'][] = array(
 	'name' => 'AssertEdit',
-	'svn-date' => '$LastChangedDate: 2008-05-31 14:32:47 +0000 (Sat, 31 May 2008) $',
-	'svn-revision' => '$LastChangedRevision: 35651 $',
+	'svn-date' => '$LastChangedDate: 2008-07-23 19:33:28 +0000 (Wed, 23 Jul 2008) $',
+	'svn-revision' => '$LastChangedRevision: 37971 $',
 	'author' => 'Steve Sanbeg',
 	'description' => 'Adds edit assertions for use by bots',
 	'descriptionmsg' => 'assert_edit_desc',
@@ -59,7 +59,7 @@ function efAssertEditHook( &$editpage ) {
 		//slightly modified from showErrorPage(), to return back here.
 		$wgOut->setPageTitle( wfMsg( 'assert_edit_title' ) );
 		$wgOut->setHTMLTitle( wfMsg( 'errorpagetitle' ) );
-		$wgOut->setRobotpolicy( 'noindex,nofollow' );
+		$wgOut->setRobotPolicy( 'noindex,nofollow' );
 		$wgOut->setArticleRelated( false );
 		$wgOut->enableClientCache( false );
 		$wgOut->mRedirect = '';

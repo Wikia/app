@@ -19,8 +19,8 @@ $namespaceNames = array(
 	NS_USER_TALK        => 'Puruhára_myangekõi',
 	# NS_PROJECT set by $wgMetaNamespace
 	NS_PROJECT_TALK     => '$1_myangekõi',
-	NS_IMAGE            => 'Ta\'ãnga',
-	NS_IMAGE_TALK       => 'Ta\'ãnga_myangekõi',
+	NS_FILE             => 'Ta\'ãnga',
+	NS_FILE_TALK        => 'Ta\'ãnga_myangekõi',
 	NS_MEDIAWIKI        => 'MediaWiki',
 	NS_MEDIAWIKI_TALK   => 'MediaWiki_myangekõi',
 	NS_TEMPLATE         => 'Tembiecharã',
@@ -163,15 +163,22 @@ $messages = array(
 'showtoc'                 => 'hechauka',
 'hidetoc'                 => 'toñemi',
 'restorelink'             => '$1 ediciones borradas',
+'red-link-title'          => '$1 (ndaipóri ko togue)',
 
 # Short words for each namespace, by default used in the namespace tab in monobook
 'nstab-main'      => 'Kuatiahai',
 'nstab-user'      => 'Puruhára',
+'nstab-media'     => 'Media rogue',
 'nstab-special'   => "Mba'echĩchĩ",
-'nstab-image'     => "Ta'ãnga",
+'nstab-project'   => "Mba'e apopyrã rogue",
+'nstab-image'     => 'Ñongatupy',
 'nstab-mediawiki' => 'Marandu',
 'nstab-template'  => 'Tembiecharã',
+'nstab-help'      => 'Pytyvõ',
 'nstab-category'  => 'Ñemohenda',
+
+# Main script and global functions
+'nosuchaction' => 'Upe tembiapo ndaipóri',
 
 # General errors
 'ns-specialprotected' => 'Las páginas en el espacio de nombres Especial no se pueden editar.',
@@ -213,15 +220,15 @@ $messages = array(
 'hr_tip'        => 'Haipuku oñenóva (eipurúke tekotevẽ javénte)',
 
 # Edit pages
-'summary'               => 'Jehaimombyky',
-'subject'               => "Mba'ekuaarã/teraete",
+'summary'               => 'Jehaimombyky:',
+'subject'               => "Mba'ekuaarã/teraete:",
 'minoredit'             => "Kóva ha'e peteĩ jehai mbyky",
 'watchthis'             => 'Toñeñangareko ko tembiapóre',
 'savearticle'           => 'Hai',
 'showpreview'           => 'Tojechauka jehai ñemboguapy mboyve',
 'showdiff'              => 'Tojechauka ñemoambue',
 'missingsummary'        => "'''Atención:''' No has escrito un resumen de edición. Si haces clic nuevamente en «Hai» tu edición se grabará sin él.",
-'subject-preview'       => "Previsualización del mba'ekuaarã/teraete",
+'subject-preview'       => "Previsualización del mba'ekuaarã/teraete:",
 'newarticletext'        => "Rehapykuehókuri peteĩ joaju peteĩ kuatiarogue ndaipórivape.
 Nde remoheñoisérõ ko kuatiarogue, eñepyrũkatu ehai.
 Reikotevẽvérõ marandu, emoñe'ẽ kuatiarogue ñepytyvõ rehegua. Oiméramo reikereínte térã rejavyhaguére, upéicharõ terehojey [[{{MediaWiki:Helppage}}|kuatiarogue mboyveguápe]].",
@@ -230,8 +237,8 @@ Reikotevẽvérõ marandu, emoñe'ẽ kuatiarogue ñepytyvõ rehegua. Oiméramo 
 'editingsection'        => 'Ojehaihína $1 (vore)',
 'editingcomment'        => 'Ojehaihína $1 (comentario)',
 'yourtext'              => "Mba'ehaipyre",
-'longpagewarning'       => "<strong>Ejesarekóke: ko kuatiarogue, tuichakuépe, oguereko $1 kb; heta kundahára ikatu iñapañuãi jehaijeýpe kuatiarogue ohaságui 32 kb.
-Aipórõ, eñeha'ãna emboja'o ne rembiapo, vore michĩvévape.</strong>",
+'longpagewarning'       => "'''Ejesarekóke: ko kuatiarogue, tuichakuépe, oguereko $1 kb; heta kundahára ikatu iñapañuãi jehaijeýpe kuatiarogue ohaságui 32 kb.
+Aipórõ, eñeha'ãna emboja'o ne rembiapo, vore michĩvévape.'''",
 
 # History pages
 'cur'         => "ko'ag̃agua",
@@ -304,11 +311,11 @@ Reomĩsérõ ta'ãnga peteĩ kuatiaroguépe, eipuru peteĩ joaju:
 '''<nowiki>[[</nowiki>Media<nowiki>:Archivo.ogg]]</nowiki>''' ojoaju hag̃ua hekopete pe jehai'atýre.",
 'filename'   => "Téra jehai'aty",
 
-# Special:ImageList
-'imagelist'      => "Ta'ãnga rysýi",
-'imagelist_user' => 'Puruhára',
+# Special:ListFiles
+'listfiles'      => "Ta'ãnga rysýi",
+'listfiles_user' => 'Puruhára',
 
-# Image description page
+# File description page
 'filehist-revert'   => 'embojevy',
 'filehist-current'  => "ko'ag̃agua",
 'filehist-datetime' => 'Ára/Aravo',
@@ -396,7 +403,15 @@ Reomĩsérõ ta'ãnga peteĩ kuatiaroguépe, eipuru peteĩ joaju:
 
 # Special:AllPages
 'allpages'          => 'Opaite kuatiarogue',
+'alphaindexline'    => '$1 $2 peve',
+'nextpage'          => 'Kuatia rogue upeigua($1)',
+'prevpage'          => 'Kuatia rogue mboyvegua ($1)',
+'allpagesfrom'      => 'Ehechauka kuatia rogue oñepyrũva:   -pe',
+'allpagesto'        => 'Ehechauka kuatia rogue opáva:  -pe',
+'allarticles'       => 'Opa kuatia rogue',
+'allinnamespace'    => "Opa kuatia rogue (pa'ũ $1)",
 'allnotinnamespace' => 'Opaite kuatiarogue (fuera del espacio $1)',
+'allpagesprev'      => 'Mboyvegua',
 'allpagesnext'      => 'Upeigua',
 'allpagessubmit'    => 'Hechauka',
 
@@ -416,13 +431,18 @@ Reomĩsérõ ta'ãnga peteĩ kuatiaroguépe, eipuru peteĩ joaju:
 'mywatchlist' => 'Tapykueho rysýi',
 'watch'       => 'Ñangareko',
 
-# Delete/protect/revert
+# Delete
 'deletedarticle' => 'oñembogue "[[$1]]"',
 'dellogpage'     => 'Ñemboguepyre ñonagatupy',
 'deletionlog'    => 'ñemboguepyre ñonagatupy',
+
+# Rollback
 'rollback_short' => 'Embojevy',
 'rollbacklink'   => 'Embojevy',
-'protect-text'   => 'Puedes ver y modificar el nivel de protección de la página <strong>$1</strong>.',
+
+# Protect
+'prot_1movedto2' => '[[$1]] oñembohasa [[$2]]-pe',
+'protect-text'   => "Puedes ver y modificar el nivel de protección de la página '''$1'''.",
 
 # Undelete
 'undeletedrevisions'       => '$1 ediciones restauradas',
@@ -446,7 +466,6 @@ Reomĩsérõ ta'ãnga peteĩ kuatiaroguépe, eipuru peteĩ joaju:
 'whatlinkshere'       => "Oñembojoajukuaáva ko'ápe",
 'whatlinkshere-title' => 'Kuatiarogue ojoajúva "$1" rehe',
 'whatlinkshere-page'  => 'Kuatiarogue:',
-'linklistsub'         => '(Joajukuéra rysýi)',
 'linkshere'           => "Ko'ã kuatiarogue ojoaju '''[[:$1]]''' rehe:",
 'whatlinkshere-prev'  => 'mboyvegua $1',
 'whatlinkshere-next'  => 'upeigua $1',
@@ -488,6 +507,7 @@ Reomĩsérõ ta'ãnga peteĩ kuatiaroguépe, eipuru peteĩ joaju:
 'tooltip-pt-mycontris'   => "Tysỹi che mba'emoĩmbyre",
 'tooltip-ca-move'        => 'Guerova kuatiarogue',
 'tooltip-p-logo'         => 'Ape',
+'tooltip-n-mainpage'     => 'Eho ijapépe',
 
 # Spam protection
 'spamprotectiontitle' => 'Filtro de protección contra spam',
@@ -500,7 +520,7 @@ Reomĩsérõ ta'ãnga peteĩ kuatiaroguépe, eipuru peteĩ joaju:
 # Media information
 'file-info' => "(tamaño de jehai'aty: $1; tipo MIME: $2)",
 
-# Special:NewImages
+# Special:NewFiles
 'newimages' => "Ta'ãnga pyahu renda",
 'ilsubmit'  => 'Jeheka',
 

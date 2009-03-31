@@ -2,7 +2,6 @@
 
 function TaskListLoadMessages() {
     static $messagesLoaded = false;
-    global $wgMessageCache;
     if ($messagesLoaded) return;
         $messagesLoaded = true;
 	wfLoadExtensionMessages('TaskList');    
@@ -373,15 +372,15 @@ class TaskListByProject extends SpecialPage
 
         $titleObj = SpecialPage::getTitleFor( "TaskListByProject" );
         $kiaction = $titleObj->getLocalUrl();
-        $wgOut->addHtml("<FORM ACTION=\"{$kiaction}\" METHOD=GET><LABEL FOR=project>" .
+        $wgOut->addHTML("<FORM ACTION=\"{$kiaction}\" METHOD=GET><LABEL FOR=project>" .
                         wfMsgTL('tasklistchooseproj') . "</LABEL>");
-        $wgOut->addHtml("<select name=project>");
+        $wgOut->addHTML("<select name=project>");
 
         $validprojects = preg_split('/\s*\*\s*/', getValidProjects(), -1, PREG_SPLIT_NO_EMPTY);
         foreach ($validprojects as $vp) 
-            $wgOut->addHtml("<option value=\"$vp\">$vp</option>");
+            $wgOut->addHTML("<option value=\"$vp\">$vp</option>");
 
-        $wgOut->addHtml("</select><INPUT TYPE=submit VALUE='" . wfMsgTL('tasklistprojdisp') . "'></FORM>");
+        $wgOut->addHTML("</select><INPUT TYPE=submit VALUE='" . wfMsgTL('tasklistprojdisp') . "'></FORM>");
     }
 }
 

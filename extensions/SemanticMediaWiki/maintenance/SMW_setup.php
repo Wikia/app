@@ -6,8 +6,9 @@
  * Special:SMWAdmin. However, the latter may timeout if the setup involves
  * migrating a lot of existing data.
  *
- * Note: this file must be placed in MediaWiki's "maintenance" directory!
- *       or the MW_INSTALL_PATH environment variable must be set.
+ * Note: if SMW is not installed in its standard path under ./extensions
+ *       then the MW_INSTALL_PATH environment variable must be set.
+ *       See README in the maintenance directory.
  *
  * Usage:
  * php SMW_refreshData.php [options...]
@@ -25,13 +26,20 @@
  *            SMW. Deleted data can be recreated using this script (setup) and 
  *            SMW_refreshData.php but this may take some time.
  * @author Markus Krötzsch
+ * @file
+ * @ingroup SMWMaintenance
  */
 
 /**
+ * @defgroup SMWMaintenance SMWMaintenance
+ * This group contains all parts of SMW that are maintenance scripts.
+ * @ingroup SMW
+ */
+
+/*
  * no guarantees, but look in the usual place for commandLine.inc, so this
  * so it will work most of the time
  */
-
 $optionsWithArgs = array( 'b', 'user', 'password');
 
 require_once ( getenv('MW_INSTALL_PATH') !== false

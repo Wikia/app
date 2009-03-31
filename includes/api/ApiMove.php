@@ -44,9 +44,7 @@ class ApiMove extends ApiBase {
 		if(is_null($params['reason']))
 			$params['reason'] = '';
 
-		$titleObj = NULL;
-		if(!isset($params['from']))
-			$this->dieUsageMsg(array('missingparam', 'from'));
+		$this->requireOnlyOneParameter($params, 'from', 'fromid');
 		if(!isset($params['to']))
 			$this->dieUsageMsg(array('missingparam', 'to'));
 		if(!isset($params['token']))
@@ -54,9 +52,18 @@ class ApiMove extends ApiBase {
 		if(!$wgUser->matchEditToken($params['token']))
 			$this->dieUsageMsg(array('sessionfailure'));
 
-		$fromTitle = Title::newFromText($params['from']);
-		if(!$fromTitle)
-			$this->dieUsageMsg(array('invalidtitle', $params['from']));
+		if(isset($params['from']))
+		{
+			$fromTitle = Title::newFromText($params['from']);
+			if(!$fromTitle)
+				$this->dieUsageMsg(array('invalidtitle', $params['from']));
+		}
+		else if(isset($params['fromid']))
+		{
+			$fromTitle = Title::newFromID($params['fromid']);
+			if(!$fromTitle)
+				$this->dieUsageMsg(array('nosuchpageid', $params['fromid']));
+		}
 		if(!$fromTitle->exists())
 			$this->dieUsageMsg(array('notanarticle'));
 		$fromTalk = $fromTitle->getTalkPage();
@@ -66,27 +73,10 @@ class ApiMove extends ApiBase {
 			$this->dieUsageMsg(array('invalidtitle', $params['to']));
 		$toTalk = $toTitle->getTalkPage();
 
-		// Run getUserPermissionsErrors() here so we get message arguments too,
-		// rather than just a message key. The latter is troublesome for messages
-		// that use arguments.
-		// FIXME: moveTo() should really return an array, requires some
-		//	  refactoring of other code, though (mainly SpecialMovepage.php)
-		$errors = array_merge($fromTitle->getUserPermissionsErrors('move', $wgUser),
-					$fromTitle->getUserPermissionsErrors('edit', $wgUser),
-					$toTitle->getUserPermissionsErrors('move', $wgUser),
-					$toTitle->getUserPermissionsErrors('edit', $wgUser));
-		if(!empty($errors))
-			// We don't care about multiple errors, just report one of them
-			$this->dieUsageMsg(current($errors));
-
 		$hookErr = null;
-
 		$retval = $fromTitle->moveTo($toTitle, true, $params['reason'], !$params['noredirect']);
 		if($retval !== true)
-		{
-			# FIXME: Title::moveTo() sometimes returns a string
 			$this->dieUsageMsg(reset($retval));
-		}
 
 		$r = array('from' => $fromTitle->getPrefixedText(), 'to' => $toTitle->getPrefixedText(), 'reason' => $params['reason']);
 		if(!$params['noredirect'] || !$wgUser->isAllowed('suppressredirect'))
@@ -105,8 +95,9 @@ class ApiMove extends ApiBase {
 			// We're not gonna dieUsage() on failure, since we already changed something
 			else
 			{
-				$r['talkmove-error-code'] = ApiBase::$messageMap[$retval]['code'];
-				$r['talkmove-error-info'] = ApiBase::$messageMap[$retval]['info'];
+				$parsed = $this->parseMsg(reset($retval));
+				$r['talkmove-error-code'] = $parsed['code'];
+				$r['talkmove-error-info'] = $parsed['info'];
 			}
 		}
 
@@ -129,6 +120,9 @@ class ApiMove extends ApiBase {
 	public function getAllowedParams() {
 		return array (
 			'from' => null,
+			'fromid' => array(
+				ApiBase::PARAM_TYPE => 'integer'
+			),
 			'to' => null,
 			'token' => null,
 			'reason' => null,
@@ -141,7 +135,8 @@ class ApiMove extends ApiBase {
 
 	public function getParamDescription() {
 		return array (
-			'from' => 'Title of the page you want to move.',
+			'from' => 'Title of the page you want to move. Cannot be used together with fromid.',
+			'fromid' => 'Page ID of the page you want to move. Cannot be used together with from.',
 			'to' => 'Title you want to rename the page to.',
 			'token' => 'A move token previously retrieved through prop=info',
 			'reason' => 'Reason for the move (optional).',
@@ -154,7 +149,7 @@ class ApiMove extends ApiBase {
 
 	public function getDescription() {
 		return array(
-			'Moves a page.'
+			'Move a page.'
 		);
 	}
 
@@ -165,6 +160,6 @@ class ApiMove extends ApiBase {
 	}
 
 	public function getVersion() {
-		return __CLASS__ . ': $Id: ApiMove.php 35619 2008-05-30 19:59:47Z btongminh $';
+		return __CLASS__ . ': $Id: ApiMove.php 47041 2009-02-09 14:39:41Z catrope $';
 	}
 }

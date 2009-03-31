@@ -9,7 +9,7 @@ class RemoveUnusedGroups extends SpecialPage {
 	* Constructor function
 	* Registers the special page, restricts it to those with the 'userrights' right
 	*/
-	function RemoveUnusedGroups() {
+	function __construct() {
 		SpecialPage::SpecialPage( 'RemoveUnusedGroups', 'userrights' );
 	}
 	
@@ -18,21 +18,22 @@ class RemoveUnusedGroups extends SpecialPage {
 	* @param $par unused
 	*/
 	function execute($par) {
-		global $wgUser, $wgRequest, $wgOut, $wgGPManagerRUGrequireConfirm;
+		global $wgUser, $wgRequest, $wgOut, $wgGPManagerRUGconfirm;
 		
 		if( !$wgUser->isAllowed( 'userrights' ) ) {
 			$wgOut->permissionRequired( 'userrights' );
 			return;
 		}
 		
-		wfLoadExtensionMessages('GroupPermissions');
+		loadGPMessages();
 		$this->setHeaders();
 		$wgOut->addWikiText( wfMsg( 'grouppermissions-rug-header' ) );
-		if($wgRequest->wasPosted()) {
+		if($wgRequest->wasPosted() || !$wgGPManagerRUGconfirm) {
 			$success = $this->removeUsers();
 			if($success) {
 				$wgOut->addWikiText(wfMsg('grouppermissions-rug-success'));
 			}
+			return;
 		}
 		$thisTitle = Title::makeTitle( NS_SPECIAL, $this->getName() );
 		$form = "<form method=\"post\" action=\"".$thisTitle->getLocalUrl()."\">\n<input type=\"submit\" name=\"wpConfirm\" value=\"".wfMsg('grouppermissions-rug-confirm')."\" />\n</form>";

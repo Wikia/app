@@ -1,6 +1,7 @@
 <?php
-
-wfBoardVoteInitMessages();
+if (!defined('MEDIAWIKI')) {
+	die( "Not a valid entry point\n" );
+}
 
 class GoToBoardVotePage extends SpecialPage {
 	function __construct() {
@@ -12,12 +13,14 @@ class GoToBoardVotePage extends SpecialPage {
 		global $wgBoardVoteEditCount, $wgBoardVoteRecentEditCount, $wgBoardVoteCountDate;
 		global $wgBoardVoteRecentFirstCountDate, $wgBoardVoteRecentCountDate;
 
+		wfLoadExtensionMessages( 'BoardVote' );
+
 		$this->setHeaders();
 
 		$centralSessionId = '';
 		if ( class_exists( 'CentralAuthUser' ) ) {
 			global $wgCentralAuthCookiePrefix;
-			if ( isset( $wgCentralAuthCookiePrefix ) 
+			if ( isset( $wgCentralAuthCookiePrefix )
 				&& isset( $_COOKIE[$wgCentralAuthCookiePrefix . 'Session'] ) )
 			{
 				$centralSessionId = $_COOKIE[$wgCentralAuthCookiePrefix . 'Session'];
@@ -42,12 +45,11 @@ class GoToBoardVotePage extends SpecialPage {
 			$wgOut->addWikiText( wfMsg( "boardvote_redirecting", $url ) );
 			$wgOut->addMeta( 'http:Refresh', '20;url=' . htmlspecialchars( $url ) );
 		} else {
-			$wgOut->addWikiText( wfMsg( "boardvote_notloggedin", $wgBoardVoteEditCount,
+			$wgOut->addWikiText( wfMsgExt( 'boardvote_notloggedin', array( 'parsemag' ), $wgBoardVoteEditCount,
 				$wgLang->timeanddate( $wgBoardVoteCountDate ), $wgBoardVoteRecentEditCount,
 				$wgLang->timeanddate( $wgBoardVoteRecentFirstCountDate ),
 				$wgLang->timeanddate( $wgBoardVoteRecentCountDate )
 			) );
 		}
-
 	}
 }

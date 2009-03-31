@@ -9,11 +9,11 @@ if(!defined('MEDIAWIKI'))
    die();
 
 $wgAvailableRights[] = 'deletebatch';
-$wgGroupPermissions['staff']['deletebatch'] = true;
+$wgGroupPermissions['bureaucrat']['deletebatch'] = true;
 
 $wgExtensionCredits['specialpage'][] = array(
    'name'           => 'Delete Batch',
-   'version'        => '1.0',
+   'version'        => '1.1',
    'author'         => 'Bartek Łapiński',
    'url'            => 'http://www.mediawiki.org/wiki/Extension:DeleteBatch',
    'description'    => 'Deletes a batch of pages',
@@ -25,3 +25,4 @@ $wgExtensionMessagesFiles['DeleteBatch'] = $dir . 'DeleteBatch.i18n.php';
 $wgExtensionAliasesFiles['DeleteBatch'] = $dir . 'DeleteBatch.alias.php';
 $wgAutoloadClasses['DeleteBatch'] = $dir. 'DeleteBatch.body.php';
 $wgSpecialPages['DeleteBatch'] = 'DeleteBatch';
+$wgSpecialPageGroups['DeleteBatch'] = 'pagetools';

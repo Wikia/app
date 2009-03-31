@@ -52,8 +52,8 @@ define('NS_USER', 2);
 define('NS_USER_TALK', 3);
 define('NS_PROJECT', 4);
 define('NS_PROJECT_TALK', 5);
-define('NS_IMAGE', 6);
-define('NS_IMAGE_TALK', 7);
+define('NS_FILE', 6);
+define('NS_FILE_TALK', 7);
 define('NS_MEDIAWIKI', 8);
 define('NS_MEDIAWIKI_TALK', 9);
 define('NS_TEMPLATE', 10);
@@ -62,6 +62,16 @@ define('NS_HELP', 12);
 define('NS_HELP_TALK', 13);
 define('NS_CATEGORY', 14);
 define('NS_CATEGORY_TALK', 15);
+/**
+ * NS_IMAGE and NS_IMAGE_TALK are the pre-v1.14 names for NS_FILE and
+ * NS_FILE_TALK respectively, and are kept for compatibility.
+ *
+ * When writing code that should be compatible with older MediaWiki
+ * versions, either stick to the old names or define the new constants
+ * yourself, if they're not defined already.
+ */
+define('NS_IMAGE', NS_FILE);
+define('NS_IMAGE_TALK', NS_FILE_TALK);
 /**#@-*/
 
 /**
@@ -202,6 +212,9 @@ define( 'OT_MSG' , 3 );  // b/c alias for OT_PREPROCESS
 define( 'SFH_NO_HASH', 1 );
 define( 'SFH_OBJECT_ARGS', 2 );
 
+# Flags for Parser::setLinkHook
+define( 'SLH_PATTERN', 1 );
+
 # Flags for Parser::replaceLinkHolders
 define( 'RLH_FOR_UPDATE', 1 );
 
@@ -211,3 +224,6 @@ define( 'APCOND_EDITCOUNT', 1 );
 define( 'APCOND_AGE', 2 );
 define( 'APCOND_EMAILCONFIRMED', 3 );
 define( 'APCOND_INGROUPS', 4 );
+define( 'APCOND_ISIP', 5 );
+define( 'APCOND_IPINRANGE', 6 );
+define( 'APCOND_AGE_FROM_EDIT', 7 );

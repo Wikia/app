@@ -16,7 +16,7 @@ $wgExtensionCredits['parserhook'][] = array(
 	'name'           => 'RegexFunctions',
 	'author'         => 'Ryan Schmidt',
 	'url'            => 'http://www.mediawiki.org/wiki/Extension:RegexFunctions',
-	'version'        => '1.2',
+	'version'        => '1.3',
 	'description'    => 'Regular Expression parser functions',
 	'descriptionmsg' => 'regexfunctions-desc',
 );
@@ -123,7 +123,7 @@ class ExtRegexFunctions {
 	//santizes a regex pattern
 	function sanitize($pattern, $m = false, $e = false) {
 		if(preg_match('/^\/(.*)([^\\\\])\/(.*?)$/', $pattern, $matches)) {
-			$pat = preg_replace('/([^\\\\])?\(\?(.*)(\:.*)?\)/Ue', '\'$1(?\' . $this->cleanupInternal(\'$2\') . \'$3)\'', $matches[1] . $matches[2]);
+			$pat = preg_replace('/([^\\\\])?\(\?(.*\:)?(.*)\)/Ue', '\'$1(?\' . $this->cleanupInternal(\'$2\') . \'$3)\'', $matches[1] . $matches[2]);
 			$ret = '/' . $pat . '/';
 			if($m) {
 				$mod = '';
@@ -136,7 +136,7 @@ class ExtRegexFunctions {
 				$ret .= $mod;
 			}
 		} else {
-			$pat = preg_replace('/([^\\\\])?\(\?(.*)(\:.*)?\)/Ue', '\'$1(?\' . $this->cleanupInternal(\'$2\') . \'$3)\'', $pattern);
+			$pat = preg_replace('/([^\\\\])?\(\?(.*\:)?(.*)\)/Ue', '\'$1(?\' . $this->cleanupInternal(\'$2\') . \'$3)\'', $pattern);
 			$pat = preg_replace('!([^\\\\])/!', '$1\\/', $pat);
 			$ret = '/' . $pat . '/';
 		}

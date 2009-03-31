@@ -103,8 +103,12 @@ class MagicWord {
 		'contentlanguage',
 		'pagesinnamespace',
 		'numberofadmins',
+		'numberofviews',
 		'defaultsort',
 		'pagesincategory',
+		'index',
+		'noindex',
+		'numberingroup',
 	);
 
 	/* Array of caching hints for ParserCache */
@@ -143,6 +147,8 @@ class MagicWord {
 		'localtimestamp' => 3600,
 		'pagesinnamespace' => 3600,
 		'numberofadmins' => 3600,
+		'numberofviews' => 3600,
+		'numberingroup' => 3600,
 		);
 
 	static public $mDoubleUnderscoreIDs = array(
@@ -153,6 +159,8 @@ class MagicWord {
 		'noeditsection',
 		'newsectionlink',
 		'hiddencat',
+		'index',
+		'noindex',
 		'staticredirect',
 	);
 

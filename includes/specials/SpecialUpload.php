@@ -23,7 +23,7 @@ class UploadForm {
 	const BEFORE_PROCESSING = 1;
 	const LARGE_FILE_SERVER = 2;
 	const EMPTY_FILE = 3;
-	const MIN_LENGHT_PARTNAME = 4;
+	const MIN_LENGTH_PARTNAME = 4;
 	const ILLEGAL_FILENAME = 5;
 	const PROTECTED_PAGE = 6;
 	const OVERWRITE_EXISTING_FILE = 7;
@@ -308,7 +308,7 @@ class UploadForm {
 				$this->mainUploadForm( wfMsgHtml( 'emptyfile' ) );
 				break;
 
-			case self::MIN_LENGHT_PARTNAME:
+			case self::MIN_LENGTH_PARTNAME:
 				$this->mainUploadForm( wfMsgHtml( 'minlength1' ) );
 				break;
 
@@ -336,10 +336,7 @@ class UploadForm {
 					wfMsgExt( 'filetype-banned-type',
 						array( 'parseinline' ),
 						htmlspecialchars( $finalExt ),
-						implode(
-							wfMsgExt( 'comma-separator', array( 'escapenoentities' ) ),
-							$wgFileExtensions
-						),
+						$wgLang->commaList( $wgFileExtensions ),
 						$wgLang->formatNum( count($wgFileExtensions) )
 					)
 				);
@@ -410,7 +407,15 @@ class UploadForm {
 			$basename = $this->mSrcName;
 		}
 		$filtered = wfStripIllegalFilenameChars( $basename );
-
+		
+		/* Normalize to title form before we do any further processing */
+		$nt = Title::makeTitleSafe( NS_FILE, $filtered );
+		if( is_null( $nt ) ) {
+			$resultDetails = array( 'filtered' => $filtered );
+			return self::ILLEGAL_FILENAME;
+		}
+		$filtered = $nt->getDBkey();
+		
 		/**
 		 * We'll want to blacklist against *any* 'extension', and use
 		 * only the final one for the whitelist.
@@ -431,14 +436,9 @@ class UploadForm {
 		}
 
 		if( strlen( $partname ) < 1 ) {
-			return self::MIN_LENGHT_PARTNAME;
+			return self::MIN_LENGTH_PARTNAME;
 		}
 
-		$nt = Title::makeTitleSafe( NS_IMAGE, $filtered );
-		if( is_null( $nt ) ) {
-			$resultDetails = array( 'filtered' => $filtered );
-			return self::ILLEGAL_FILENAME;
-		}
 		$this->mLocalFile = wfLocalFile( $nt );
 		$this->mDestName = $this->mLocalFile->getName();
 
@@ -528,10 +528,7 @@ class UploadForm {
 					wfMsgExt( 'filetype-unwanted-type',
 						array( 'parseinline' ),
 						htmlspecialchars( $finalExt ),
-						implode(
-							wfMsgExt( 'comma-separator', array( 'escapenoentities' ) ),
-							$wgFileExtensions
-						),
+						$wgLang->commaList( $wgFileExtensions ),
 						$wgLang->formatNum( count($wgFileExtensions) )
 					) . '</li>';
 				}
@@ -552,7 +549,7 @@ class UploadForm {
 				$warning .= self::getExistsWarning( $this->mLocalFile );
 			}
 			
-			$warning .= $this->getDupeWarning( $this->mTempPath );
+			$warning .= $this->getDupeWarning( $this->mTempPath, $finalExt );
 			
 			if( $warning != '' ) {
 				/**
@@ -618,7 +615,7 @@ class UploadForm {
 			// extensions (eg 'jpg' rather than 'JPEG').
 			//
 			// Check for another file using the normalized form...
-			$nt_lc = Title::makeTitle( NS_IMAGE, $partname . '.' . $file->getExtension() );
+			$nt_lc = Title::makeTitle( NS_FILE, $partname . '.' . $file->getExtension() );
 			$file_lc = wfLocalFile( $nt_lc );
 		} else {
 			$file_lc = false;
@@ -745,7 +742,7 @@ class UploadForm {
 	public static function ajaxGetLicensePreview( $license ) {
 		global $wgParser, $wgUser;
 		$text = '{{' . $license . '}}';
-		$title = Title::makeTitle( NS_IMAGE, 'Sample.jpg' );
+		$title = Title::makeTitle( NS_FILE, 'Sample.jpg' );
 		$options = ParserOptions::newFromUser( $wgUser );
 
 		// Expand subst: first, then live templates...
@@ -759,9 +756,10 @@ class UploadForm {
 	 * Check for duplicate files and throw up a warning before the upload
 	 * completes.
 	 */
-	function getDupeWarning( $tempfile ) {
+	function getDupeWarning( $tempfile, $extension ) {
 		$hash = File::sha1Base36( $tempfile );
 		$dupes = RepoGroup::singleton()->findBySha1( $hash );
+		$archivedImage = new ArchivedFile( null, 0, $hash.".$extension" );
 		if( $dupes ) {
 			global $wgOut;
 			$msg = "<gallery>";
@@ -775,6 +773,10 @@ class UploadForm {
 				wfMsgExt( "file-exists-duplicate", array( "parse" ), count( $dupes ) ) .
 				$wgOut->parse( $msg ) .
 				"</li>\n";
+		} elseif ( $archivedImage->getID() > 0 ) {
+			global $wgOut;
+			$name = Title::makeTitle( NS_FILE, $archivedImage->getName() )->getPrefixedText();
+			return Xml::tags( 'li', null, wfMsgExt( 'file-deleted-duplicate', array( 'parseinline' ), array( $name ) ) );
 		} else {
 			return '';
 		}
@@ -969,7 +971,7 @@ wgUploadAutoFill = {$autofill};
 		}
 
 		if( $this->mDesiredDestName ) {
-			$title = Title::makeTitleSafe( NS_IMAGE, $this->mDesiredDestName );
+			$title = Title::makeTitleSafe( NS_FILE, $this->mDesiredDestName );
 			// Show a subtitle link to deleted revisions (to sysops et al only)
 			if( $title instanceof Title && ( $count = $title->isDeleted() ) > 0 && $wgUser->isAllowed( 'deletedhistory' ) ) {
 				$link = wfMsgExt(
@@ -980,7 +982,7 @@ wgUploadAutoFill = {$autofill};
 						wfMsgExt( 'restorelink', array( 'parsemag', 'escape' ), $count )
 					)
 				);
-				$wgOut->addHtml( "<div id=\"contentSub2\">{$link}</div>" );
+				$wgOut->addHTML( "<div id=\"contentSub2\">{$link}</div>" );
 			}
 
 			// Show the relevant lines from deletion log (for still deleted files only)
@@ -1016,21 +1018,20 @@ wgUploadAutoFill = {$autofill};
 
 		$allowedExtensions = '';
 		if( $wgCheckFileExtensions ) {
-			$delim = wfMsgExt( 'comma-separator', array( 'escapenoentities' ) );
 			if( $wgStrictFileExtensions ) {
 				# Everything not permitted is banned
 				$extensionsList =
 					'<div id="mw-upload-permitted">' .
-					wfMsgWikiHtml( 'upload-permitted', implode( $wgFileExtensions, $delim ) ) .
+					wfMsgWikiHtml( 'upload-permitted', $wgLang->commaList( $wgFileExtensions ) ) .
 					"</div>\n";
 			} else {
 				# We have to list both preferred and prohibited
 				$extensionsList =
 					'<div id="mw-upload-preferred">' .
-					wfMsgWikiHtml( 'upload-preferred', implode( $wgFileExtensions, $delim ) ) .
+					wfMsgWikiHtml( 'upload-preferred', $wgLang->commaList( $wgFileExtensions ) ) .
 					"</div>\n" .
 					'<div id="mw-upload-prohibited">' .
-					wfMsgWikiHtml( 'upload-prohibited', implode( $wgFileBlacklist, $delim ) ) .
+					wfMsgWikiHtml( 'upload-prohibited', $wgLang->commaList( $wgFileBlacklist ) ) .
 					"</div>\n";
 			}
 		} else {
@@ -1180,7 +1181,7 @@ wgUploadAutoFill = {$autofill};
 				<tr>"
 			);
 			if( $useAjaxLicensePreview ) {
-				$wgOut->addHtml( "
+				$wgOut->addHTML( "
 						<td></td>
 						<td id=\"mw-license-preview\"></td>
 					</tr>
@@ -1216,7 +1217,7 @@ wgUploadAutoFill = {$autofill};
 			);
 		}
 
-		$wgOut->addHtml( "
+		$wgOut->addHTML( "
 				<td></td>
 				<td>
 					<input tabindex='7' type='checkbox' name='wpWatchthis' id='wpWatchthis' $watchChecked value='true' />
@@ -1290,7 +1291,7 @@ wgUploadAutoFill = {$autofill};
 	 *
 	 * @return array
 	 */
-	function splitExtensions( $filename ) {
+	public function splitExtensions( $filename ) {
 		$bits = explode( '.', $filename );
 		$basename = array_shift( $bits );
 		return array( $basename, $bits );
@@ -1316,7 +1317,7 @@ wgUploadAutoFill = {$autofill};
 	 * @param array $list
 	 * @return bool
 	 */
-	function checkFileExtensionList( $ext, $list ) {
+	public function checkFileExtensionList( $ext, $list ) {
 		foreach( $ext as $e ) {
 			if( in_array( strtolower( $e ), $list ) ) {
 				return true;
@@ -1765,7 +1766,7 @@ wgUploadAutoFill = {$autofill};
 	function showError( $description ) {
 		global $wgOut;
 		$wgOut->setPageTitle( wfMsg( "internalerror" ) );
-		$wgOut->setRobotpolicy( "noindex,nofollow" );
+		$wgOut->setRobotPolicy( "noindex,nofollow" );
 		$wgOut->setArticleRelated( false );
 		$wgOut->enableClientCache( false );
 		$wgOut->addWikiText( $description );
@@ -1808,14 +1809,14 @@ wgUploadAutoFill = {$autofill};
 		$loglist = new LogEventsList( $wgUser->getSkin(), $out );
 		$pager = new LogPager( $loglist, 'delete', false, $filename );
 		if( $pager->getNumRows() > 0 ) {
-			$out->addHtml( '<div id="mw-upload-deleted-warn">' );
+			$out->addHTML( '<div class="mw-warning-with-logexcerpt">' );
 			$out->addWikiMsg( 'upload-wasdeleted' );
 			$out->addHTML(
 				$loglist->beginLogEventsList() .
 				$pager->getBody() .
 				$loglist->endLogEventsList()
 			);
-			$out->addHtml( '</div>' );
+			$out->addHTML( '</div>' );
 		}
 	}
 }

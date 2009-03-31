@@ -46,8 +46,6 @@ $messages = array(
 
 'underline-always' => 'အမြဲ',
 
-'skinpreview' => '(နမူနာ)',
-
 # Dates
 'sunday'        => 'တ​နင်္ဂ​နွေ​',
 'monday'        => 'တ​နင်္လာ​',
@@ -166,6 +164,11 @@ $messages = array(
 'loginsuccesstitle'       => 'မှတ်​ပုံ​တင်​ဖြင့်​ဝင်​ခြင်းအောင်မြင်သည်။',
 'loginlanguagelabel'      => 'ဘာသာ: $1',
 
+# Password reset dialog
+'oldpassword' => 'ဝှက်​စ​ကား​လုံးအဟောင်း:',
+'newpassword' => 'ဝှက်​စ​ကား​လုံးအသစ်:',
+'retypenew'   => 'ဝှက်​စ​ကား​လုံးပအသစ်ကိုထပ်ရိုက်ပါ:',
+
 # Edit page toolbar
 'italic_sample' => 'စာသားဆောင်း',
 'italic_tip'    => 'စာသားဆောင်း',
@@ -174,7 +177,7 @@ $messages = array(
 'hr_tip'        => 'မျဉ်းလဲ',
 
 # Edit pages
-'summary'            => 'အ​ကျဉ်း​ချုပ်​',
+'summary'            => 'အ​ကျဉ်း​ချုပ်​:',
 'minoredit'          => 'သာ​မန်​ပြင်​ဆင်​မှု​ဖြစ်​ပါ​သည်​',
 'watchthis'          => 'ဤ​စာ​မျက်​နှာ​အား​စောင့်​ကြည့်​ပါ​',
 'savearticle'        => 'သိမ်း​ပါ​',
@@ -182,7 +185,7 @@ $messages = array(
 'showpreview'        => 'န​မူ​နာ​ပြ​ပါ​',
 'showlivepreview'    => 'နမူနာအရှင်',
 'showdiff'           => 'ပြင်​ဆင်​ထား​သည်​များ​ကို​ပြ​ပါ​',
-'summary-preview'    => 'အ​ကျဉ်း​ချုပ်​န​မူ​နာ',
+'summary-preview'    => 'အ​ကျဉ်း​ချုပ်​န​မူ​နာ:',
 'whitelistedittitle' => 'ပြင်​ဆင်​ခြင်း​သည်​မှတ်​ပုံ​တင်​ရန်​လို​သည်​',
 'loginreqtitle'      => 'မှတ်​ပုံ​တင်​ဖြင့်​ဝင်​ဖို့လိုပါတယ်',
 'loginreqlink'       => 'မှတ်​ပုံ​တင်​ဖြင့်​ဝင်​ပါ​',
@@ -204,11 +207,9 @@ $messages = array(
 'mypreferences'     => 'ကျွန်​တော့​ရွေး​ချယ်​စ​ရာ​များ​',
 'prefsnologin'      => 'မှတ်​ပုံ​တင်​ဖြင့်​မ​ဝင်​ရ​သေး​ပါ​',
 'changepassword'    => 'ဝှက်​စ​ကား​လုံးကိုပြောင်းပါ',
+'skin-preview'      => 'နမူနာ',
 'math'              => 'သင်္ချာ',
 'datetime'          => 'နေ့စွဲနှင့် အချိန်',
-'oldpassword'       => 'ဝှက်​စ​ကား​လုံးအဟောင်း:',
-'newpassword'       => 'ဝှက်​စ​ကား​လုံးအသစ်:',
-'retypenew'         => 'ဝှက်​စ​ကား​လုံးပအသစ်ကိုထပ်ရိုက်ပါ:',
 'searchresultshead' => 'ရှာ​ဖွေ​ရန်​',
 
 # Groups
@@ -235,12 +236,12 @@ $messages = array(
 'fileuploadsummary' => 'အ​ကျဉ်း​ချုပ်:',
 'watchthisupload'   => 'ဤ​စာ​မျက်​နှာ​အား​စောင့်​ကြည့်​ပါ​',
 
-# Special:ImageList
+# Special:ListFiles
 'imgfile'        => 'ဖိုင်',
-'imagelist'      => 'ဖိုင်စာရင်း',
-'imagelist_date' => 'နေ့စွဲ',
+'listfiles'      => 'ဖိုင်စာရင်း',
+'listfiles_date' => 'နေ့စွဲ',
 
-# Image description page
+# File description page
 'filehist'           => 'ဖိုင်မှတ်တမ်း',
 'filehist-deleteall' => 'အားလုံးဖျက်',
 'filehist-deleteone' => 'ဖျက်',
@@ -261,7 +262,6 @@ $messages = array(
 
 # Statistics
 'statistics' => 'စာရင်းအင်း',
-'sitestats'  => '{{SITENAME}} စာရင်းအင်းများ',
 
 'brokenredirects-edit'   => '(ပြင်​ဆင်​ရန်)',
 'brokenredirects-delete' => '(ဖျက်​ပါ)',
@@ -278,9 +278,6 @@ $messages = array(
 
 # Book sources
 'booksources-go' => 'သွား​ပါ​',
-
-# Special:Log
-'log-search-submit' => 'သွား​ပါ​',
 
 # Special:AllPages
 'allpages'       => 'စာမျက်နှာအားလုံး',
@@ -300,12 +297,16 @@ $messages = array(
 'watch'         => 'စောင့်​ကြည့်​ပါ​',
 'watchthispage' => 'ဤ​စာ​မျက်​နှာ​အား​စောင့်​ကြည့်​ပါ​',
 
-# Delete/protect/revert
-'deletepage'       => 'စာမျက်နှာကိုဖျက်ပါ',
-'confirm'          => 'အတည်ပြု',
-'delete-confirm'   => '"$1"ကို ဖျက်ပါ',
-'delete-legend'    => 'ဖျက်',
-'restriction-type' => 'အခွင့်:',
+# Delete
+'deletepage'     => 'စာမျက်နှာကိုဖျက်ပါ',
+'confirm'        => 'အတည်ပြု',
+'delete-confirm' => '"$1"ကို ဖျက်ပါ',
+'delete-legend'  => 'ဖျက်',
+
+# Protect
+'prot_1movedto2'         => '[[$1]]  မှ​ [[$2]] သို့​',
+'protect-expiry-options' => '၂ နာရီ:2 hours,၁ နေ့:1 day,၃ နေ့:3 days,၁ ပတ်:1 week,၂ ပတ်:2 weeks,၁ လ:1 month,၃ လ:3 months,၆ လ:6 months,၁ နှစ်:1 year,အနန္တ:infinite', # display1:time1,display2:time2,...
+'restriction-type'       => 'အခွင့်:',
 
 # Restrictions (nouns)
 'restriction-edit'   => 'ပြင်​ဆင်​ရန်​',
@@ -337,6 +338,7 @@ $messages = array(
 # Move page
 'move-page-legend' => 'စာ​မျက်​နှာ​အား​ရွေ့​ပြောင်း​ပါ​',
 'movearticle'      => 'စာ​မျက်​နှာ​အား​ရွေ့​ပြောင်း​ပါ​',
+'movenologin'      => 'မှတ်​ပုံ​တင်​ဖြင့်​မ​ဝင်​ရ​သေး​ပါ​',
 'movepagebtn'      => 'စာ​မျက်​နှာ​အား​ရွေ့​ပြောင်း​ပါ​',
 'pagemovedsub'     => 'ပြောင်းရွှေ့ခြင်းအောင်မြင်သည်',
 'movedto'          => 'ရွေ့​ပြောင်း​ရန်​နေ​ရာ​',
@@ -361,7 +363,7 @@ $messages = array(
 'tooltip-t-upload'       => 'ဖိုင်တင်ပါ',
 'tooltip-save'           => 'ပြင်ဆင်ရန်သိမ်းပါ',
 
-# Special:NewImages
+# Special:NewFiles
 'ilsubmit' => 'ရှာ​ဖွေ​ရန်​',
 
 # EXIF tags

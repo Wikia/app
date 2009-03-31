@@ -1,32 +1,35 @@
 <?php
 /**
  * Print links to RSS feeds for query results.
+ * @file
+ * @ingroup SMWQuery
  */
 
 /**
  * Printer for creating a link to RSS feeds.
+ *
  * @author Denny Vrandecic
  * @author Markus Krötzsch
- * @note AUTOLOADED
+ * @ingroup SMWQuery
  */
-
 class SMWRSSResultPrinter extends SMWResultPrinter {
 	protected $m_title = '';
 	protected $m_description = '';
 
 	protected function readParameters($params,$outputmode) {
 		SMWResultPrinter::readParameters($params,$outputmode);
-		if (array_key_exists('rsstitle', $this->m_params)) {
+		if (array_key_exists('title', $this->m_params)) {
+			$this->m_title = trim($this->m_params['title']);
+		// for backward compatibiliy
+		} elseif (array_key_exists('rsstitle', $this->m_params)) {
 			$this->m_title = trim($this->m_params['rsstitle']);
 		}
-		if (array_key_exists('rssdescription', $this->m_params)) {
+		if (array_key_exists('description', $this->m_params)) {
+			$this->m_description = trim($this->m_params['description']);
+		// for backward compatibiliy
+		} elseif (array_key_exists('rssdescription', $this->m_params)) {
 			$this->m_description = trim($this->m_params['rssdescription']);
 		}
-	}
-
-	public function getResult($results, $params, $outputmode) { // skip checks, results with 0 entries are normal
-		$this->readParameters($params,$outputmode);
-		return $this->getResultText($results,$outputmode) . $this->getErrorString($results);
 	}
 
 	public function getMimeType($res) {
@@ -36,7 +39,7 @@ class SMWRSSResultPrinter extends SMWResultPrinter {
 	protected function getResultText($res, $outputmode) {
 		global $smwgIQRunningNumber, $wgSitename, $wgServer, $smwgRSSEnabled, $wgRequest;
 		$result = '';
-
+		wfLoadExtensionMessages('SemanticMediaWiki');
 		if ($outputmode == SMW_OUTPUT_FILE) { // make RSS feed
 			if (!$smwgRSSEnabled) return '';
 			if ($this->m_title == '') {
@@ -64,7 +67,7 @@ class SMWRSSResultPrinter extends SMWResultPrinter {
 						}
 					} elseif ( (strtolower($req->getLabel()) == "date") && ($req->getTypeID() == "_dat") ) {
 						foreach ($field->getContent() as $entry) {
-							$dates[] = $entry->getXSDvalue();
+							$dates[] = $entry->getXMLSchemaDate();
 						}
 					}
 				}
@@ -99,18 +102,18 @@ class SMWRSSResultPrinter extends SMWResultPrinter {
 			}
 			$result .= "</rdf:RDF>";
 		} else { // just make link to feed
-			if ($this->mSearchlabel) {
-				$label = $this->mSearchlabel;
+			if ($this->getSearchLabel($outputmode)) {
+				$label = $this->getSearchLabel($outputmode);
 			} else {
 				$label = wfMsgForContent('smw_rss_link');
 			}
 			$link = $res->getQueryLink($label);
 			$link->setParameter('rss','format');
 			if ($this->m_title !== '') {
-				$link->setParameter($this->m_title,'rsstitle');
+				$link->setParameter($this->m_title,'title');
 			}
 			if ($this->m_description !== '') {
-				$link->setParameter($this->m_description,'rssdescription');
+				$link->setParameter($this->m_description,'description');
 			}
 			if (array_key_exists('limit', $this->m_params)) {
 				$link->setParameter($this->m_params['limit'],'limit');
@@ -118,16 +121,15 @@ class SMWRSSResultPrinter extends SMWResultPrinter {
 				$link->setParameter(10,'limit');
 			}
 
-			foreach ($res->getPrintRequests() as $printout) {
-				if ((strtolower($printout->getLabel()) == "date") && ($printout->getTypeID() == "_dat")) {
-					$link->setParameter($printout->getTitle()->getText(),'sort');
-					$link->setParameter('DESC','order');
+			foreach ($res->getPrintRequests() as $printout) { // overwrite given "sort" parameter with printout of label "date"
+				if (($printout->getMode() == SMWPrintRequest::PRINT_PROP) && (strtolower($printout->getLabel()) == "date") && ($printout->getTypeID() == "_dat")) {
+					$link->setParameter($printout->getData()->getWikiValue(),'sort');
 				}
 			}
 
 			$result .= $link->getText($outputmode,$this->mLinker);
-
-			smwfRequireHeadItem('rss' . $smwgIQRunningNumber, '<link rel="alternate" type="application/rss+xml" title="' . $this->m_title . '" href="' . $link->getURL() . '" />');
+			$this->isHTML = ($outputmode == SMW_OUTPUT_HTML); // yes, our code can be viewed as HTML if requested, no more parsing needed
+			SMWOutputs::requireHeadItem('rss' . $smwgIQRunningNumber, '<link rel="alternate" type="application/rss+xml" title="' . $this->m_title . '" href="' . $link->getURL() . '" />');
 		}
 
 		return $result;
@@ -139,7 +141,8 @@ class SMWRSSResultPrinter extends SMWResultPrinter {
 /**
  * Represents a single entry, or item, in an RSS feed. Useful since those items are iterated more
  * than once when serialising RSS.
- * @TODO: this code still needs cleanup, it's a mess
+ * @todo This code still needs cleanup, it's a mess.
+ * @ingroup SMWQuery
  */
 class SMWRSSItem {
 
@@ -196,11 +199,9 @@ class SMWRSSItem {
 	 * Creates the RSS output for the single item.
 	 */
 	public function text() {
-		global $wgTitle, $wgServer, $wgParser, $smwgStoreActive, $smwgRSSWithPages;
-		static $parser = null;
+		global $wgServer, $wgParser, $smwgShowFactbox, $smwgRSSWithPages;
 		static $parser_options = null;
-		$smwgStoreActive = false; // make sure no Factbox is shown (RSS lacks the required styles)
-		// do not bother to restore this later, not needed in this context
+		$smwgShowFactbox = SMW_FACTBOX_HIDDEN; // just hide factbox; no need to restore this setting, I hope that nothing comes after FILE outputs
 
 		$text  = "\t<item rdf:about=\"$this->uri\">\n";
 		$text .= "\t\t<title>$this->label</title>\n";
@@ -210,12 +211,9 @@ class SMWRSSItem {
 		foreach ($this->creator as $creator)
 			$text .= "\t\t<dc:creator>" . smwfXMLContentEncode($creator) . "</dc:creator>\n";
 		if ($smwgRSSWithPages) {
-			if ($parser == null) {
-				$parser_options = new ParserOptions();
-				$parser_options->setEditSection(false);  // embedded sections should not have edit links
-				$parser = clone $wgParser;
-			}
-			$parserOutput = $parser->parse('{{' . $this->articlename . '}}', $this->title, $parser_options);
+			$parser_options = new ParserOptions();
+			$parser_options->setEditSection(false);  // embedded sections should not have edit links
+			$parserOutput = $wgParser->parse('{{' . $this->articlename . '}}', $this->title, $parser_options);
 			$content = $parserOutput->getText();
 			// Make absolute URLs out of the local ones:
 			///TODO is there maybe a way in the parser options to make the URLs absolute?

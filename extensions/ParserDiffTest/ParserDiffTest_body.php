@@ -126,7 +126,7 @@ class ParserDiffTest extends SpecialPage
 		$form .= Xml::openElement( 'textarea', array( 'name' => 'pdt_input', 'id' => 'pdt_input', 'rows' => 10, 'cols' => 10 ) );
 		$form .= htmlspecialchars( $text );
 		$form .= Xml::closeElement( 'textarea' );
-		$form .= '<p>' . Xml::submitButton( wfMsg( 'pdtest_ok' ) ) . '&nbsp;&nbsp;' . 
+		$form .= '<p>' . Xml::submitButton( wfMsg( 'pdtest_ok' ), array( 'accesskey' => 's' ) ) . '&nbsp;&nbsp;' . 
 		   Xml::submitButton( wfMsg( 'pdtest_get_text' ), array( 'name' => 'pdt_get_text' ) ) . '</p>';
 		$form .= "</fieldset>\n";
 		$form .= Xml::closeElement( 'form' );

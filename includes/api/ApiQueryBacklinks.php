@@ -60,7 +60,6 @@ class ApiQueryBacklinks extends ApiQueryGeneratorBase {
 	);
 
 	public function __construct($query, $moduleName) {
-		$code = $prefix = $linktbl = null;
 		extract($this->backlinksSettings[$moduleName]);
 
 		parent :: __construct($query, $moduleName, $code);
@@ -100,7 +99,7 @@ class ApiQueryBacklinks extends ApiQueryGeneratorBase {
 		 * AND pl_title='Foo' AND pl_namespace=0
 		 * LIMIT 11 ORDER BY pl_from
 		 */
-		$db = $this->getDb();
+		$db = $this->getDB();
 		$this->addTables(array('page', $this->bl_table));
 		$this->addWhere("{$this->bl_from}=page_id");
 		if(is_null($resultPageSet))
@@ -108,12 +107,12 @@ class ApiQueryBacklinks extends ApiQueryGeneratorBase {
 		else
 			$this->addFields($resultPageSet->getPageTableFields());
 		$this->addFields('page_is_redirect');
-		$this->addWhereFld($this->bl_title, $this->rootTitle->getDbKey());
+		$this->addWhereFld($this->bl_title, $this->rootTitle->getDBKey());
 		if($this->hasNS)
 			$this->addWhereFld($this->bl_ns, $this->rootTitle->getNamespace());
 		$this->addWhereFld('page_namespace', $this->params['namespace']);
 		if(!is_null($this->contID))
-			$this->addWhere("page_id>={$this->contID}");
+			$this->addWhere("{$this->bl_from}>={$this->contID}");
 		if($this->params['filterredir'] == 'redirects')
 			$this->addWhereFld('page_is_redirect', 1);
 		if($this->params['filterredir'] == 'nonredirects')
@@ -124,11 +123,11 @@ class ApiQueryBacklinks extends ApiQueryGeneratorBase {
 
 	private function prepareSecondQuery($resultPageSet = null) {
 		/* SELECT page_id, page_title, page_namespace, page_is_redirect, pl_title, pl_namespace
-		 * FROM pagelinks, page WHERE pl_from=page_id
-		 * AND (pl_title='Foo' AND pl_namespace=0) OR (pl_title='Bar' AND pl_namespace=1)
-		 * LIMIT 11 ORDER BY pl_namespace, pl_title, pl_from
+		   FROM pagelinks, page WHERE pl_from=page_id
+		   AND (pl_title='Foo' AND pl_namespace=0) OR (pl_title='Bar' AND pl_namespace=1)
+		   ORDER BY pl_namespace, pl_title, pl_from LIMIT 11
 		 */
-		$db = $this->getDb();
+		$db = $this->getDB();
 		$this->addTables(array('page', $this->bl_table));
 		$this->addWhere("{$this->bl_from}=page_id");
 		if(is_null($resultPageSet))
@@ -138,16 +137,31 @@ class ApiQueryBacklinks extends ApiQueryGeneratorBase {
 		$this->addFields($this->bl_title);
 		if($this->hasNS)
 			$this->addFields($this->bl_ns);
-		$titleWhere = '';
+		$titleWhere = array();
 		foreach($this->redirTitles as $t)
-			$titleWhere .= ($titleWhere != '' ? " OR " : '') .
-					"({$this->bl_title} = ".$db->addQuotes($t->getDBKey()).
+			$titleWhere[] = "({$this->bl_title} = ".$db->addQuotes($t->getDBKey()).
 					($this->hasNS ? " AND {$this->bl_ns} = '{$t->getNamespace()}'" : "") .
 					")";
-		$this->addWhere($titleWhere);
+		$this->addWhere($db->makeList($titleWhere, LIST_OR));
 		$this->addWhereFld('page_namespace', $this->params['namespace']);
 		if(!is_null($this->redirID))
-			$this->addWhere("page_id>={$this->redirID}");
+		{
+			$first = $this->redirTitles[0];
+			$title = $db->strencode($first->getDBKey());
+			$ns = $first->getNamespace();
+			$from = $this->redirID;
+			if($this->hasNS)
+				$this->addWhere("{$this->bl_ns} > $ns OR ".
+						"({$this->bl_ns} = $ns AND ".
+						"({$this->bl_title} > '$title' OR ".
+						"({$this->bl_title} = '$title' AND ".
+						"{$this->bl_from} >= $from)))");
+			else
+				$this->addWhere("{$this->bl_title} > '$title' OR ".
+						"({$this->bl_title} = '$title' AND ".
+						"{$this->bl_from} >= $from)");
+				
+		}
 		if($this->params['filterredir'] == 'redirects')
 			$this->addWhereFld('page_is_redirect', 1);
 		if($this->params['filterredir'] == 'nonredirects')
@@ -170,7 +184,7 @@ class ApiQueryBacklinks extends ApiQueryGeneratorBase {
 		$this->prepareFirstQuery($resultPageSet);
 
 		$db = $this->getDB();
-		$res = $this->select(__METHOD__);
+		$res = $this->select(__METHOD__.'::firstQuery');
 
 		$count = 0;
 		$this->data = array ();
@@ -195,11 +209,11 @@ class ApiQueryBacklinks extends ApiQueryGeneratorBase {
 		}
 		$db->freeResult($res);
 
-		if($this->redirect && !empty($this->redirTitles))
+		if($this->redirect && count($this->redirTitles))
 		{
 			$this->resetQueryParams();
 			$this->prepareSecondQuery($resultPageSet);
-			$res = $this->select(__METHOD__);
+			$res = $this->select(__METHOD__.'::secondQuery');
 			$count = 0;
 			while($row = $db->fetchObject($res))
 			{
@@ -210,7 +224,7 @@ class ApiQueryBacklinks extends ApiQueryGeneratorBase {
 					if($this->hasNS)
 						$contTitle = Title::makeTitle($row->{$this->bl_ns}, $row->{$this->bl_title});
 					else
-						$contTitle = Title::makeTitle(NS_IMAGE, $row->{$this->bl_title});
+						$contTitle = Title::makeTitle(NS_FILE, $row->{$this->bl_title});
 					$this->continueStr = $this->getContinueRedirStr($contTitle->getArticleID(), $row->page_id);
 					break;
 				}
@@ -229,7 +243,7 @@ class ApiQueryBacklinks extends ApiQueryGeneratorBase {
 			$resultData = array();
 			foreach($this->data as $ns => $a)
 				foreach($a as $title => $arr)
-					$resultData[$arr['pageid']] = $arr;
+					$resultData[] = $arr;
 			$result = $this->getResult();
 			$result->setIndexedTagName($resultData, $this->bl_code);
 			$result->addValue('query', $this->getModuleName(), $resultData);
@@ -254,7 +268,7 @@ class ApiQueryBacklinks extends ApiQueryGeneratorBase {
 		ApiQueryBase::addTitleInfo($a, Title::makeTitle($row->page_namespace, $row->page_title));
 		if($row->page_is_redirect)
 			$a['redirect'] = '';
-		$ns = $this->hasNS ? $row->{$this->bl_ns} : NS_IMAGE;
+		$ns = $this->hasNS ? $row->{$this->bl_ns} : NS_FILE;
 		$this->data[$ns][$row->{$this->bl_title}]['redirlinks'][] = $a;
 		$this->getResult()->setIndexedTagName($this->data[$ns][$row->{$this->bl_title}]['redirlinks'], $this->bl_code);
 	}
@@ -276,7 +290,7 @@ class ApiQueryBacklinks extends ApiQueryGeneratorBase {
 		}
 
 		// only image titles are allowed for the root in imageinfo mode
-		if (!$this->hasNS && $this->rootTitle->getNamespace() !== NS_IMAGE)
+		if (!$this->hasNS && $this->rootTitle->getNamespace() !== NS_FILE)
 			$this->dieUsage("The title for {$this->getModuleName()} query must be an image", 'bad_image_title');
 	}
 
@@ -399,6 +413,6 @@ class ApiQueryBacklinks extends ApiQueryGeneratorBase {
 	}
 
 	public function getVersion() {
-		return __CLASS__ . ': $Id: ApiQueryBacklinks.php 37504 2008-07-10 14:28:09Z catrope $';
+		return __CLASS__ . ': $Id: ApiQueryBacklinks.php 46135 2009-01-24 13:03:40Z catrope $';
 	}
 }

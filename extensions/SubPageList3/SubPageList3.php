@@ -232,7 +232,7 @@ class SubpageList3 {
 
 	/**
 	 * returns all errors as a string
-	 * @return string all errors seperated by a newline
+	 * @return string all errors separated by a newline
 	 * @private
 	 */
 	function geterrors() {

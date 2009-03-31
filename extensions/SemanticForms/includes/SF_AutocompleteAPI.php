@@ -31,6 +31,7 @@ class SFAutocompleteAPI extends ApiBase {
 		$relation = str_replace(' ', '_', $params['relation']);
 		$attribute = str_replace(' ', '_', $params['attribute']);
 		$category = str_replace(' ', '_', $params['category']);
+		$concept = str_replace(' ', '_', $params['concept']);
 		$limit = $params['limit'];
 
 		if (strlen($substr) == 0)
@@ -38,18 +39,20 @@ class SFAutocompleteAPI extends ApiBase {
 			$this->dieUsage("The substring must be specified", 'param_substr');
 		}
 		if ($property != '') {
-			$data = sffGetAllPagesForProperty_1_2($property, $substr);
+			$data = SFUtils::getAllValuesForProperty_1_2($property, $substr);
 		} elseif ($relation != '') {
-			$data = sffGetAllPagesForProperty_orig(true, $relation, $substr);
+			$data = SFUtils::getAllValuesForProperty_orig(true, $relation, $substr);
 		} elseif ($attribute != '') {
-			$data = sffGetAllPagesForProperty_orig(false, $attribute, $substr);
+			$data = SFUtils::getAllValuesForProperty_orig(false, $attribute, $substr);
 		} elseif ($category != '') {
-			$data = sffGetAllPagesForCategory($category, 3, $substr);
+			$data = SFUtils::getAllPagesForCategory($category, 3, $substr);
+		} elseif ($concept != '') {
+			$data = SFUtils::getAllPagesForConcept($concept, $substr);
 		} elseif ($namespace != '') {
 			// special handling for main (blank) namespace
 			if ($namespace == 'main')
 				$namespace = '';
-			$data = sffGetAllPagesForNamespace($namespace, $substr);
+			$data = SFUtils::getAllPagesForNamespace($namespace, $substr);
 		} else {
 			$date = array();
 		}
@@ -78,6 +81,7 @@ class SFAutocompleteAPI extends ApiBase {
 			'relation' => null,
 			'attribute' => null,
 			'category' => null,
+			'concept' => null,
 		);
 	}
 
@@ -88,6 +92,7 @@ class SFAutocompleteAPI extends ApiBase {
 			'relation' => 'Relation for which to search values',
 			'attribute' => 'Attribute for which to search values',
 			'category' => 'Category for which to search values',
+			'concept' => 'Concept for which to search values',
 			'namespace' => 'Namespace for which to search values',
 			'limit' => 'Limit how many entries to return',
 		);

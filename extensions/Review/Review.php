@@ -889,10 +889,10 @@ function wfReviewExtensionFunction () {
 		
 			$this->setHeaders();
 			if ( $error ) {
-				$wgOut->addHtml( wfMsgForContent ( 'review_error' ) );
+				$wgOut->addHTML( wfMsgForContent ( 'review_error' ) );
 			} else {
 				$wgOut->setPageTitle ( $page_title ) ;
-				$wgOut->addHtml( $out );
+				$wgOut->addHTML( $out );
 			}
 		}
 	} # end of class SpecialReview

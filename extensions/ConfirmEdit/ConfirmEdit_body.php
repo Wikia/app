@@ -102,11 +102,11 @@ class SimpleCaptcha {
 		$index = $this->storeCaptcha( $captcha );
 
 		return "<p><label for=\"wpCaptchaWord\">{$captcha['question']}</label> = " .
-			wfElement( 'input', array(
+			Xml::element( 'input', array(
 				'name' => 'wpCaptchaWord',
 				'id'   => 'wpCaptchaWord' ) ) .
 			"</p>\n" .
-			wfElement( 'input', array(
+			Xml::element( 'input', array(
 				'type'  => 'hidden',
 				'name'  => 'wpCaptchaId',
 				'id'    => 'wpCaptchaId',
@@ -144,8 +144,12 @@ class SimpleCaptcha {
 	 * @return bool true to keep running callbacks
 	 */
 	function injectUserCreate( &$template ) {
-		global $wgCaptchaTriggers, $wgOut;
+		global $wgCaptchaTriggers, $wgOut, $wgUser;
 		if( $wgCaptchaTriggers['createaccount'] ) {
+			if( $wgUser->isAllowed( 'skipcaptcha' ) ) {
+				wfDebug( "ConfirmEdit: user group allows skipping captcha on account creation\n" );
+				return true;
+			}
 			$template->set( 'captcha',
 				"<div class='captcha'>" .
 				$wgOut->parse( $this->getMessage( 'createaccount' ) ) .
@@ -313,8 +317,8 @@ class SimpleCaptcha {
 			} else {
 				// Get link changes in the slowest way known to man
 				$oldtext = $this->loadText( $editPage, $section );
-				$oldLinks = $this->findLinks( $oldtext );
-				$newLinks = $this->findLinks( $newtext );
+				$oldLinks = $this->findLinks( $editPage, $oldtext );
+				$newLinks = $this->findLinks( $editPage, $newtext );
 			}
 
 			$unknownLinks = array_filter( $newLinks, array( &$this, 'filterLink' ) );
@@ -516,8 +520,12 @@ class SimpleCaptcha {
 	 * @return bool true to continue, false to abort user creation
 	 */
 	function confirmUserCreate( $u, &$message ) {
-		global $wgCaptchaTriggers;
+		global $wgCaptchaTriggers, $wgUser;
 		if( $wgCaptchaTriggers['createaccount'] ) {
+			if( $wgUser->isAllowed( 'skipcaptcha' ) ) {
+				wfDebug( "ConfirmEdit: user group allows skipping captcha on account creation\n" );
+				return true;
+			}
 			$this->trigger = "new account '" . $u->getName() . "'";
 			if( !$this->passCaptcha() ) {
 				$message = wfMsg( 'captcha-createaccount-fail' );
@@ -642,12 +650,12 @@ class SimpleCaptcha {
 	 * @param string $text
 	 * @return array of strings
 	 */
-	function findLinks( $text ) {
-		global $wgParser, $wgTitle, $wgUser;
+	function findLinks( &$editpage, $text ) {
+		global $wgParser, $wgUser;
 
 		$options = new ParserOptions();
-		$text = $wgParser->preSaveTransform( $text, $wgTitle, $wgUser, $options );
-		$out = $wgParser->parse( $text, $wgTitle, $options );
+		$text = $wgParser->preSaveTransform( $text, $editpage->mTitle, $wgUser, $options );
+		$out = $wgParser->parse( $text, $editpage->mTitle, $options );
 
 		return array_keys( $out->getExternalLinks() );
 	}

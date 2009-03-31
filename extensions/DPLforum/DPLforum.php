@@ -30,9 +30,9 @@
 
 */
 
-if(!defined('MEDIAWIKI')) {
-	echo("This file is an extension to the MediaWiki software and is not a valid access point");
-	die(1);
+if ( !defined( 'MEDIAWIKI' ) ) {
+	echo( "This file is an extension to the MediaWiki software and is not a valid access point" );
+	die( 1 );
 }
 
 $wgExtensionFunctions[] = 'wfDPLforum';
@@ -43,29 +43,29 @@ $wgExtensionCredits['parserhook'][] = array(
 	'description'    => 'DPL-based forum extension',
 	'descriptionmsg' => 'dplforum-desc',
 	'author'         => 'Ross McClure',
-	'version'        => '3.2'
+	'version'        => '3.3'
 );
 
-$dir = dirname(__FILE__) . '/';
+$dir = dirname( __FILE__ ) . '/';
 $wgExtensionMessagesFiles['DPLforum'] = $dir . 'DPLforum.i18n.php';
 $wgAutoloadClasses['DPLForum'] = $dir . 'DPLforum_body.php';
 
 function wfDPLforum() {
 	global $wgParser;
 
-	wfLoadExtensionMessages('DPLforum');
-	$wgParser->setHook('forum', 'parseForum');
-	$wgParser->setFunctionHook('forumlink', array(new DPLForum(),'link'));
+	wfLoadExtensionMessages( 'DPLforum' );
+	$wgParser->setHook( 'forum', 'parseForum' );
+	$wgParser->setFunctionHook( 'forumlink', array( new DPLForum(), 'link' ) );
 }
 
-function wfDPLmagic(&$magicWords, $langCode="en") {
-	switch($langCode) {
-		default: $magicWords['forumlink'] = array (0,'forumlink');
+function wfDPLmagic( &$magicWords, $langCode = "en" ) {
+	switch( $langCode ) {
+		default: $magicWords['forumlink'] = array ( 0, 'forumlink' );
 	}
 	return true;
 }
 
-function parseForum($input, $argv, &$parser) {
+function parseForum( $input, $argv, &$parser ) {
 	$f = new DPLForum();
-	return $f->parse($input, $parser);
+	return $f->parse( $input, $parser );
 }

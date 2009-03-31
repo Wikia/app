@@ -52,7 +52,7 @@ function registerWikiwygExtension() {
     global $wgOut, $wgSkin, $jsdir, $cssdir, $wgScriptPath;
     global $wgWikiwygPath, $wgUser, $wgTitle;
     global $wgServer, $wgWikiwygJsPath, $wgWikiwygCssPath, $wgWikiwygImagePath;
-    global $wgRequest, $wgWysiwygEnabled, $wgMessageCache;
+    global $wgRequest, $wgWysiwygEnabled;
     global $wgLang, $wgContLang, $wgEnableAjaxLogin;
 
 	wfLoadExtensionMessages('Wikiwyg');
@@ -256,7 +256,7 @@ class EZParser extends UnlistedSpecialPage {
 
 /*		if (!in_array( 'ezparser', $wgUser->getRights() ) ) {
 			$wgOut->setArticleRelated( false );
-			$wgOut->setRobotpolicy( 'noindex,follow' );
+			$wgOut->setRobotPolicy( 'noindex,follow' );
 			$wgOut->errorpage( 'nosuchspecialpage', 'nospecialpagetext' );
 			return;
 		}

@@ -1,6 +1,8 @@
 <?php
 /**
  * Create vCard exports
+ * @file
+ * @ingroup SMWQuery
  */
 
 /**
@@ -8,24 +10,19 @@
  * @author Markus Krötzsch
  * @author Denny Vrandecic
  * @author Frank Dengler
- * @note AUTOLOADED
+ * @ingroup SMWQuery
  */
 class SMWvCardResultPrinter extends SMWResultPrinter {
 	protected $m_title = '';
 	protected $m_description = '';
-
-	public function getResult($results, $params, $outputmode) { // skip checks, results with 0 entries are normal
-		$this->readParameters($params,$outputmode);
-		return $this->getResultText($results,$outputmode) . $this->getErrorString($results);
-	}
 
 	public function getMimeType($res) {
 		return 'text/x-vcard';
 	}
 
 	public function getFileName($res) {
-		if ($this->mSearchlabel != '') {
-			return str_replace(' ', '_',$this->mSearchlabel) . '.vcf';
+		if ($this->getSearchLabel(SMW_OUTPUT_WIKI) != '') {
+			return str_replace(' ', '_',$this->getSearchLabel(SMW_OUTPUT_WIKI)) . '.vcf';
 		} else {
 			return 'vCard.vcf';
 		}
@@ -105,7 +102,7 @@ class SMWvCardResultPrinter extends SMWResultPrinter {
 					if ( (strtolower($req->getLabel()) == "birthday") && ($req->getTypeID() == "_dat") ) {
 						$value = current($field->getContent()); // save only the first
 						if ($value !== false) {
-							$birthday =  $value->getXSDValue();
+							$birthday =  $value->getXMLSchemaDate();
 						}
 					}
 					if ( (strtolower($req->getLabel()) == "homepage") && ($req->getTypeID() == "_uri") ) {
@@ -156,15 +153,16 @@ class SMWvCardResultPrinter extends SMWResultPrinter {
 				$result .= $item->text();
 			}
 		} else { // just make link to vcard
-			if ($this->mSearchlabel) {
-				$label = $this->mSearchlabel;
+			if ($this->getSearchLabel($outputmode)) {
+				$label = $this->getSearchLabel($outputmode);
 			} else {
+				wfLoadExtensionMessages('SemanticMediaWiki');
 				$label = wfMsgForContent('smw_vcard_link');
 			}
 			$link = $res->getQueryLink($label);
 			$link->setParameter('vcard','format');
-			if ($this->mSearchlabel != '') {
-				$link->setParameter($this->mSearchlabel,'searchlabel');
+			if ($this->getSearchLabel(SMW_OUTPUT_WIKI) != '') {
+				$link->setParameter($this->getSearchLabel(SMW_OUTPUT_WIKI),'searchlabel');
 			}
 			if (array_key_exists('limit', $this->m_params)) {
 				$link->setParameter($this->m_params['limit'],'limit');
@@ -172,6 +170,7 @@ class SMWvCardResultPrinter extends SMWResultPrinter {
 				$link->setParameter(20,'limit');
 			}
 			$result .= $link->getText($outputmode,$this->mLinker);
+			$this->isHTML = ($outputmode == SMW_OUTPUT_HTML); // yes, our code can be viewed as HTML if requested, no more parsing needed
 		}
 		return $result;
 	}
@@ -180,6 +179,7 @@ class SMWvCardResultPrinter extends SMWResultPrinter {
 
 /**
  * Represents a single entry in an vCard
+ * @ingroup SMWQuery
  */
 class SMWvCardEntry {
 	private $uri;
@@ -298,6 +298,7 @@ class SMWvCardEntry {
 
 /**
  * Represents a single address entry in an vCard entry.
+ * @ingroup SMWQuery
  */
 class SMWvCardAddress{
 	private $type;
@@ -335,6 +336,7 @@ class SMWvCardAddress{
 
 /**
  * Represents a single telephone entry in an vCard entry.
+ * @ingroup SMWQuery
  */
 class SMWvCardTel{
 	private $type;
@@ -360,6 +362,7 @@ class SMWvCardTel{
 
 /**
  * Represents a single email entry in an vCard entry.
+ * @ingroup SMWQuery
  */
 class SMWvCardEmail{
 	private $type;

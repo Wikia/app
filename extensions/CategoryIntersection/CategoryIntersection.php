@@ -27,8 +27,8 @@ EOT;
 
 $wgExtensionCredits['other'][] = array(
 	'name'           => 'Category Intersection',
-	'svn-date' => '$LastChangedDate: 2008-06-14 09:32:06 +0000 (Sat, 14 Jun 2008) $',
-	'svn-revision' => '$LastChangedRevision: 36279 $',
+	'svn-date' => '$LastChangedDate: 2008-08-10 19:29:02 +0000 (Sun, 10 Aug 2008) $',
+	'svn-revision' => '$LastChangedRevision: 39079 $',
 	'author'         => 'Magnus Manske',
 	'url'            => 'http://www.mediawiki.org/wiki/Extension:CategoryIntersection',
 	'descriptionmsg' => 'categoryintersection-desc',
@@ -41,20 +41,8 @@ $wgHooks['ArticleDelete'][] = 'CategoryIntersectionArticleDelete';
 
 $wgAutoloadClasses['CategoryIntersection'] = $dir . 'CategoryIntersection_body.php'; # Tell MediaWiki to load the extension body.
 $wgExtensionMessagesFiles['CategoryIntersection'] = $dir . 'CategoryIntersection.i18n.php';
+$wgExtensionAliasesFiles['CategoryIntersection'] = $dir . 'CategoryIntersection.alias.php';
 $wgSpecialPages['CategoryIntersection'] = 'CategoryIntersection'; # Let MediaWiki know about your new special page.
-$wgHooks['LanguageGetSpecialPageAliases'][] = 'categoryIntersectionLocalizedPageName'; # Add any aliases for the special page.
-
-function categoryIntersectionLocalizedPageName(&$specialPageArray, $code) {
-	# The localized title of the special page is among the messages of the extension:
-	wfLoadExtensionMessages( 'CategoryIntersection' );
-	$text = wfMsg('categoryintersection');
-
-	# Convert from title in text form to DBKey and put it into the alias array:
-	$title = Title::newFromText($text);
-	$specialPageArray['Categoryintersection'][] = $title->getDBKey();
-
-	return true;
-}
 
 function CategoryIntersectionGetHashValues ($categories) {
 	sort ($categories);

@@ -15,14 +15,16 @@ $wgExtensionCredits['other'][] = array(
 	'name'           => 'Custom Tabs',
 	'author'         => 'Ryan Schmidt',
 	'url'            => 'http://www.mediawiki.org/wiki/Extension:GroupPermissionsManager',
-	'version'        => '1.0',
+	'version'        => '1.1',
 	'description'    => 'Allows for the content actions (tabs) to be customized',
 	'descriptionmsg' => 'grouppermissions-desc3',
 );
 
 $wgHooks['SkinTemplateContentActions'][] = 'efGPManagerCustomTabs';
+$wgHooks['SkinTemplateTabs'][] = 'efGPManagerGetSkin';
+$wgHooks['SkinTemplateBuildContentActionUrlsAfterSpecialPage'][] = 'efGPManagerGetSkin';
 
-$wgGPManagerShowEditTab = false; //whether to always show the edit tab even though the user may not be able to read the resulting page.
+$egSkinObj = '';
 
 function efGPManagerCustomTabs(&$ca) {
 	//loop protection
@@ -30,7 +32,7 @@ function efGPManagerCustomTabs(&$ca) {
 		return true;
 	}
 	global $wgUser, $wgGPManagerShowEditTab;
-	wfLoadExtensionMessages('GroupPermissions');
+	loadGPMessages();
 	$dt = array();
 	$dto = array();
 	foreach($ca as $tab => $stuff) {
@@ -142,6 +144,18 @@ function efGPManagerCustomTabs(&$ca) {
 	}
 	//just in case this gets loaded late and wipes out any other extensions that mess with the content actions, run them again
 	define('IN_GPM', true); //this prevents this from being run more than once per pageload (which is a good thing, considering we're recursively calling the hook again)
+	global $egSkinObj;
+	if($egSkinObj instanceOf SkinTemplate && $egSkinObj->iscontent) {
+		wfRunHooks('SkinTemplateTabs', array(&$egSkinObj, &$ca));
+	} elseif($egSkinObj instanceOf SkinTemplate) {
+		wfRunHooks('SkinTemplateBuildContentActionUrlsAfterSpecialPage', array(&$egSkinObj, &$ca));
+	}
 	$res = wfRunHooks('SkinTemplateContentActions', array(&$ca));
 	return $res; //if one of the extensions returned false, then we return false
+}
+
+function efGPManagerGetSkin(&$skin, $ca) {
+	global $egSkinObj;
+	$egSkinObj = $skin;
+	return true;
 }

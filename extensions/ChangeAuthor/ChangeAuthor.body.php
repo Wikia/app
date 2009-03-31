@@ -210,7 +210,7 @@ class ChangeAuthor extends SpecialPage
 		// $errMsg: Error message
 		// Returns: HTML.
 		global $wgScript;
-		$dbr = wfGetDb(DB_SLAVE);
+		$dbr = wfGetDB(DB_SLAVE);
 		$res = $dbr->select(
 					'revision',
 					Revision::selectFields(),
@@ -232,9 +232,10 @@ class ChangeAuthor extends SpecialPage
 		$retval .= Xml::openElement('fieldset');
 		$retval .= Xml::element('p', array(), wfMsg('changeauthor-explanation-multi'));
 		$retval .= Xml::inputLabel(wfMsg('changeauthor-comment'), 'comment', 'comment', 50);
-		$retval .= Xml::submitButton(wfMsg('changeauthor-changeauthors-multi'));
+		$retval .= Xml::submitButton(wfMsgExt('changeauthor-changeauthors-multi',
+					array('parsemag', 'escape'), count($revs)));
 		if($errMsg != '')
-		{	
+		{
 			$retval .= Xml::openElement('p') . Xml::openElement('b');
 			$retval .= Xml::element('font', array('color' => 'red'), $errMsg);
 			$retval .= Xml::closeElement('b') . Xml::closeElement('p');
@@ -313,7 +314,7 @@ class ChangeAuthor extends SpecialPage
 	{
 		// Changes revision authors in the database
 		// $authors: array, key=revid value=array(User from, User to)
-		$dbw = wfGetDb(DB_MASTER);
+		$dbw = wfGetDB(DB_MASTER);
 		$dbw->begin();
 		$editcounts = array(); // Array to keep track of EC mutations; key=userid, value=mutation
 		$log = new LogPage('changeauth');

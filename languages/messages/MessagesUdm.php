@@ -19,8 +19,8 @@ $namespaceNames = array(
 	NS_USER_TALK        => 'Викиавтор_сярысь_вераськон',
 	# NS_PROJECT set by $wgMetaNamespace
 	NS_PROJECT_TALK     => '$1_сярысь_вераськон',
-	NS_IMAGE            => 'Суред',
-	NS_IMAGE_TALK       => 'Суред_сярысь_вераськон',
+	NS_FILE             => 'Суред',
+	NS_FILE_TALK        => 'Суред_сярысь_вераськон',
 	NS_MEDIAWIKI        => 'MediaWiki',
 	NS_MEDIAWIKI_TALK   => 'MediaWiki_сярысь_вераськон',
 	NS_TEMPLATE         => 'Шаблон',
@@ -72,6 +72,9 @@ $messages = array(
 'logout'        => 'Кошкыны',
 'userlogout'    => 'Кошкыны',
 'createaccount' => 'выль вики-авторлэн регистрациез',
+
+# Search results
+'searchhelp-url' => 'Help:Валэктон',
 
 # Preferences page
 'preferences' => 'настройкаос',

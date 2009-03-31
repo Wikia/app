@@ -66,7 +66,7 @@ class ApiQueryImages extends ApiQueryGeneratorBase {
 				$this->dieUsage("Invalid continue param. You should pass the " .
 					"original value returned by the previous query", "_badcontinue");
 			$ilfrom = intval($cont[0]);
-			$ilto = $this->getDb()->strencode($this->titleToKey($cont[1]));
+			$ilto = $this->getDB()->strencode($this->titleToKey($cont[1]));
 			$this->addWhere("il_from > $ilfrom OR ".
 					"(il_from = $ilfrom AND ".
 					"il_to >= '$ilto')");
@@ -103,7 +103,7 @@ class ApiQueryImages extends ApiQueryGeneratorBase {
 				}
 
 				$vals = array();
-				ApiQueryBase :: addTitleInfo($vals, Title :: makeTitle(NS_IMAGE, $row->il_to));
+				ApiQueryBase :: addTitleInfo($vals, Title :: makeTitle(NS_FILE, $row->il_to));
 				$data[] = $vals;
 			}
 
@@ -123,7 +123,7 @@ class ApiQueryImages extends ApiQueryGeneratorBase {
 							'|' . $this->keyToTitle($row->il_to));
 					break;
 				}
-				$titles[] = Title :: makeTitle(NS_IMAGE, $row->il_to);
+				$titles[] = Title :: makeTitle(NS_FILE, $row->il_to);
 			}
 			$resultPageSet->populateFromTitles($titles);
 		}
@@ -165,6 +165,6 @@ class ApiQueryImages extends ApiQueryGeneratorBase {
 	}
 
 	public function getVersion() {
-		return __CLASS__ . ': $Id: ApiQueryImages.php 37535 2008-07-10 21:20:43Z catrope $';
+		return __CLASS__ . ': $Id: ApiQueryImages.php 44121 2008-12-01 17:14:30Z vyznev $';
 	}
 }

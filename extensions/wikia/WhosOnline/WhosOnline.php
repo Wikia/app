@@ -33,10 +33,10 @@ $wgExtensionCredits['other'][] = array(
 );
 
 // API module
-global $wgAutoloadClasses, $wgApiQueryListModules;
+global $wgAutoloadClasses, $wgAPIListModules;
 
 $wgAutoloadClasses['WikiaApiQueryWhosOnline']  = 'extensions/wikia/WhosOnline/WhosOnlineApi.php';
-$wgApiQueryListModules['whosonline'] = 'WikiaApiQueryWhosOnline';
+$wgAPIListModules['whosonline'] = 'WikiaApiQueryWhosOnline';
 
 // special page
 $wgExtensionFunctions[] = 'wfWhosOnline';

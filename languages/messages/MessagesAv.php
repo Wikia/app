@@ -4,6 +4,7 @@
  * @ingroup Language
  * @file
  *
+ * @author MF-Warburg
  * @author MONARCH79
  * @author Phoebe
  */
@@ -21,7 +22,7 @@ $messages = array(
 'saturday'  => 'Шаммат',
 
 'mytalk' => 'Дур бахlс',
-'and'    => 'ва',
+'and'    => '&#32;ва',
 
 'errorpagetitle' => 'Гъалатl',
 'help'           => 'Кумек',
@@ -95,6 +96,9 @@ $messages = array(
 
 # Special:AllPages
 'allarticles' => 'Киналго макъалаби',
+
+# Special:Log/newusers
+'newuserlog-create-entry' => 'ЦIияв гIахьалчи',
 
 # Watchlist
 'watchlist' => 'Дур халгьабиялъул сияхl',

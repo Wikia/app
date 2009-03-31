@@ -10,70 +10,179 @@ $messages = array();
  * @author Ryan Schmidt
  */
 $messages['en'] = array(
-	'rightfunctions-desc'          => 'Permission-based parser functions',
-	'rightfunctions-restboth' => '$1 (from local page), $2 (from cascading sources)',
-	'rightfunctions-restcasc' => '$1 (from cascading sources)',
+	'rightfunctions-desc'  => 'Permission-based parser functions',
+	'rightfunctions-rest1' => '$1 $2', # do not translate this message
+	'rightfunctions-rest2' => '$1 $2$5 $3 $4', # do not translate this message
+	'rightfunctions-rest3' => '$1 $2$7 $3 $4$7 $5 $6', # do not translate this message
+	'rightfunctions-sep'   => ',', # the separator used in the above two messages, $5 and $7 respectively
+	'rightfunctions-casc'  => '(from cascading sources)',
+	'rightfunctions-local' => '(from local page)',
+	'rightfunctions-ns'    => '(from namespace protection)',
+	
+);
+
+/** Message documentation (Message documentation)
+ * @author Purodha
+ */
+$messages['qqq'] = array(
+	'rightfunctions-desc' => 'Short description of this extension, shown in [[Special:Version]]. Do not translate or change links.',
 );
 
 /** Arabic (العربية)
  * @author Meno25
  */
 $messages['ar'] = array(
-	'rightfunctions-desc'     => 'دوال بارسر تعتمد على السماحات',
-	'rightfunctions-restboth' => '$1 (من الصفحة المحلية)، $2 (من المصادر المضمنة)',
-	'rightfunctions-restcasc' => '$1 (من المصادر المضمنة)',
+	'rightfunctions-desc' => 'دوال محلل تعتمد على السماحات',
+	'rightfunctions-casc' => '(من مصادر مضمنة)',
+	'rightfunctions-local' => '(من صفحة محلية)',
+	'rightfunctions-ns' => '(من حماية نطاق)',
 );
 
-/** Bulgarian (Български)
- * @author DCLXVI
+/** Egyptian Spoken Arabic (مصرى)
+ * @author Meno25
  */
-$messages['bg'] = array(
-	'rightfunctions-restboth' => '$1 (от локална страница), $2 (от каскадни източници)',
-	'rightfunctions-restcasc' => '$1 (от каскадни източници)',
+$messages['arz'] = array(
+	'rightfunctions-desc' => 'دوال محلل تعتمد على السماحات',
+	'rightfunctions-casc' => '(من مصادر مضمنة)',
+	'rightfunctions-local' => '(من صفحة محلية)',
+	'rightfunctions-ns' => '(من حماية نطاق)',
+);
+
+/** Bosnian (Bosanski)
+ * @author CERminator
+ */
+$messages['bs'] = array(
+	'rightfunctions-desc' => 'Funkcije parsera bazirane za dopuštenjima',
+	'rightfunctions-casc' => '(iz povezanih izvora)',
+	'rightfunctions-local' => '(sa lokalne stranice)',
+	'rightfunctions-ns' => '(od zaštite imenskog prostora)',
+);
+
+/** German (Deutsch)
+ * @author Melancholie
+ */
+$messages['de'] = array(
+	'rightfunctions-desc' => 'Erlaubnisbasierte Parser-Funktionen',
+	'rightfunctions-casc' => '(von kaskadierenden Quellen)',
+	'rightfunctions-local' => '(von lokalen Seiten)',
+	'rightfunctions-ns' => '(von Namensraumsperrungen)',
+);
+
+/** Lower Sorbian (Dolnoserbski)
+ * @author Michawiki
+ */
+$messages['dsb'] = array(
+	'rightfunctions-desc' => 'Parserowe funkcije na zakłaźe pšawow',
+	'rightfunctions-casc' => '(z kaskaděrujucych žrědłow)',
+	'rightfunctions-local' => '(z lokalnego boka)',
+	'rightfunctions-ns' => '(ze šćita mjenjowego ruma)',
 );
 
 /** Esperanto (Esperanto)
  * @author Yekrats
  */
 $messages['eo'] = array(
-	'rightfunctions-desc'     => 'Rajtecaj funkcioj de sintaksaj analiziloj',
-	'rightfunctions-restboth' => '$1 (de loka paĝo), $2 (de rilataj fontoj)',
-	'rightfunctions-restcasc' => '$1 (de rilataj fontoj)',
+	'rightfunctions-desc' => 'Rajtecaj funkcioj de sintaksaj analiziloj',
+	'rightfunctions-casc' => '(de kaskadaj fontoj)',
+	'rightfunctions-local' => '(de loka paĝo)',
+	'rightfunctions-ns' => '(de nomspaca protektado)',
 );
 
 /** French (Français)
  * @author Grondin
+ * @author McDutchie
  */
 $messages['fr'] = array(
-	'rightfunctions-desc'     => 'Permissions de base des fonctions parseurs',
-	'rightfunctions-restboth' => '$1 (à partir de la page locale), $2 (à partir des sources en cascade)',
-	'rightfunctions-restcasc' => '$1 (à partir des sources en cascade)',
+	'rightfunctions-desc' => 'Fonctions pour le parseur basées sur des permissions',
+	'rightfunctions-casc' => '(depuis les sources en cascade)',
+	'rightfunctions-local' => '(depuis une page locale)',
+	'rightfunctions-ns' => '(depuis la protection des espaces de nom)',
 );
 
 /** Galician (Galego)
  * @author Toliño
  */
 $messages['gl'] = array(
-	'rightfunctions-desc'     => 'Permisos baseados nas funcións analíticas',
-	'rightfunctions-restboth' => '$1 (a partir da páxina local), $2 (a partir das fontes en serie)',
-	'rightfunctions-restcasc' => '$1 (a partir das fontes en serie)',
+	'rightfunctions-desc' => 'Permisos baseados nas funcións analíticas',
+	'rightfunctions-rest1' => '$1 $2',
+	'rightfunctions-rest2' => '$1 $2$5 $3 $4',
+	'rightfunctions-rest3' => '$1 $2$7 $3 $4$7 $5 $6',
+	'rightfunctions-sep' => ',',
+	'rightfunctions-casc' => '(desde fontes en cascada)',
+	'rightfunctions-local' => '(desde a páxina local)',
+	'rightfunctions-ns' => '(desde a protección do espazo de nomes)',
+);
+
+/** Hebrew (עברית)
+ * @author Rotemliss
+ * @author YaronSh
+ */
+$messages['he'] = array(
+	'rightfunctions-desc' => 'הוראות תנאי מבוססות הרשאות',
+	'rightfunctions-rest1' => '$1 $2',
+	'rightfunctions-rest2' => '$1 $2$5 $3 $4',
+	'rightfunctions-rest3' => '$1 $2$7 $3 $4$7 $5 $6',
+	'rightfunctions-sep' => ',',
+	'rightfunctions-casc' => '(ממקורות מדורגים)',
+	'rightfunctions-local' => '(מדף מקומי)',
+	'rightfunctions-ns' => '(מהגנת מרחב השם)',
 );
 
 /** Hindi (हिन्दी)
  * @author Kaustubh
  */
 $messages['hi'] = array(
-	'rightfunctions-desc'     => 'अनुमति-आधारित पार्सर कार्य',
-	'rightfunctions-restcasc' => '$1 (अन्य स्रोतोंसे)',
+	'rightfunctions-desc' => 'अनुमति-आधारित पार्सर कार्य',
 );
 
 /** Upper Sorbian (Hornjoserbsce)
  * @author Michawiki
  */
 $messages['hsb'] = array(
-	'rightfunctions-desc'     => 'Parserowe funkcije na zakładźe prawow',
-	'rightfunctions-restboth' => '$1 (z lokalneje strony), $2 (z překrywacych žórłow)',
-	'rightfunctions-restcasc' => '$1 (z překrywacych žórłow)',
+	'rightfunctions-desc' => 'Parserowe funkcije na zakładźe prawow',
+	'rightfunctions-casc' => '(z kaskadowacych žórłow)',
+	'rightfunctions-local' => '(z lokalneje strony)',
+	'rightfunctions-ns' => '(ze škita mjenoweho ruma)',
+);
+
+/** Interlingua (Interlingua)
+ * @author McDutchie
+ */
+$messages['ia'] = array(
+	'rightfunctions-desc' => 'Functiones pro le analysator syntactic a base de permissiones',
+	'rightfunctions-rest1' => '$1 $2',
+	'rightfunctions-rest2' => '$1 $2$5 $3 $4',
+	'rightfunctions-rest3' => '$1 $2$7 $3 $4$7 $5 $6',
+	'rightfunctions-sep' => ',',
+	'rightfunctions-casc' => '(ab fontes in cascada)',
+	'rightfunctions-local' => '(ab un pagina local)',
+	'rightfunctions-ns' => '(ab le protection de spatios de nomines)',
+);
+
+/** Italian (Italiano)
+ * @author Pietrodn
+ */
+$messages['it'] = array(
+	'rightfunctions-desc' => 'Funzioni del parser basate sui permessi',
+);
+
+/** Khmer (ភាសាខ្មែរ)
+ * @author Lovekhmer
+ * @author Thearith
+ */
+$messages['km'] = array(
+	'rightfunctions-local' => '(ពី​ទំពរ​មូលដ្ឋាន)',
+	'rightfunctions-ns' => '(ពីការការពារលំហឈ្មោះ)',
+);
+
+/** Ripoarisch (Ripoarisch)
+ * @author Purodha
+ */
+$messages['ksh'] = array(
+	'rightfunctions-desc' => 'Parser-Fungxjuhne op Rääschte.',
+	'rightfunctions-casc' => '(fun Kaßkade-Quelle)',
+	'rightfunctions-local' => '(fun en Sigg hee em Wiki)',
+	'rightfunctions-ns' => '(fum Appachemang Schotz)',
 );
 
 /** Luxembourgish (Lëtzebuergesch)
@@ -81,88 +190,103 @@ $messages['hsb'] = array(
  */
 $messages['lb'] = array(
 	'rightfunctions-desc' => 'Parser Funktiounen déi vun de Benotzerrechter ofhänken',
+	'rightfunctions-casc' => '(vun de Quellen a Kaskaden)',
+	'rightfunctions-local' => '(vun der lokaler Säit)',
+	'rightfunctions-ns' => '(vun der Spär vum Nummraum)',
 );
 
 /** Marathi (मराठी)
  * @author Kaustubh
  */
 $messages['mr'] = array(
-	'rightfunctions-desc'     => 'परवानगी आधारित पार्सर कार्ये',
-	'rightfunctions-restboth' => '$1 (स्थानिक स्रोतांकडून), $2 (इतर स्रोतांकडून)',
-	'rightfunctions-restcasc' => '$1 (इतर स्रोतांकडून)',
+	'rightfunctions-desc' => 'परवानगी आधारित पार्सर कार्ये',
 );
 
 /** Dutch (Nederlands)
- * @author Siebrand
  * @author SPQRobin
+ * @author Siebrand
  */
 $messages['nl'] = array(
-	'rightfunctions-desc'     => 'Rechtengebaseerde parserfuncties',
-	'rightfunctions-restboth' => '$1 (van plaatselijke pagina), $2 (van bovengelegen bronnen)',
-	'rightfunctions-restcasc' => '$1 (van bovengelegen bronnen)',
+	'rightfunctions-desc' => 'Rechtengebaseerde parserfuncties',
+	'rightfunctions-casc' => '(van cascadebronnen)',
+	'rightfunctions-local' => '(van lokale pagina)',
+	'rightfunctions-ns' => '(van naamruimtebeveiliging)',
+);
+
+/** Norwegian Nynorsk (‪Norsk (nynorsk)‬)
+ * @author Harald Khan
+ */
+$messages['nn'] = array(
+	'rightfunctions-desc' => 'Rettbaserte parserfunksjonar',
+	'rightfunctions-casc' => '(frå etterfølgjande kjelder)',
+	'rightfunctions-local' => '(frå lokal sida)',
+	'rightfunctions-ns' => '(frå namneromvern)',
 );
 
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
  * @author Jon Harald Søby
  */
 $messages['no'] = array(
-	'rightfunctions-desc'     => 'Rettighetsbaserte parserfunksjoner',
-	'rightfunctions-restboth' => '$1 (fra lokal side), $2 (fra arvende kilder)',
-	'rightfunctions-restcasc' => '$1 (fra arvende kilder)',
+	'rightfunctions-desc' => 'Rettighetsbaserte parserfunksjoner',
 );
 
 /** Occitan (Occitan)
  * @author Cedric31
  */
 $messages['oc'] = array(
-	'rightfunctions-desc'     => 'Permissions de basa de las foncions parsaires',
-	'rightfunctions-restboth' => '$1 (a partir de la pagina locala), $2 (a partir de las fonts en cascada)',
-	'rightfunctions-restcasc' => '$1 (a partir de las fonts en cascada)',
+	'rightfunctions-desc' => 'Permissions de basa de las foncions parsaires',
+	'rightfunctions-casc' => '(dempuèi las fonts en cascada)',
+	'rightfunctions-local' => '(dempuèi una pagina locala)',
+	'rightfunctions-ns' => '(dempuèi la proteccion dels espacis de nom)',
 );
 
 /** Polish (Polski)
  * @author Sp5uhe
  */
 $messages['pl'] = array(
-	'rightfunctions-desc'     => 'Funkcje parsera pracujące na uprawnieniach',
-	'rightfunctions-restboth' => '$1 (z lokalnej strony), $2 (ze źródeł kaskadowych)',
-	'rightfunctions-restcasc' => '$1 (ze źródeł kaskadowych)',
+	'rightfunctions-desc' => 'Funkcje parsera pracujące na uprawnieniach',
 );
 
 /** Russian (Русский)
  * @author Александр Сигачёв
  */
 $messages['ru'] = array(
-	'rightfunctions-desc'     => 'Функции парсера на основе разрешений',
-	'rightfunctions-restboth' => '$1 (с локальной страницы), $2 (из каскадных источников)',
-	'rightfunctions-restcasc' => '$1 (из каскадных источников)',
+	'rightfunctions-desc' => 'Функции парсера на основе разрешений',
 );
 
 /** Slovak (Slovenčina)
  * @author Helix84
  */
 $messages['sk'] = array(
-	'rightfunctions-desc'     => 'Funkcie syntaktického analyzátora podľa oprávnení',
-	'rightfunctions-restboth' => '$1 (z lokálnej stránky), $2 (kaskádovito zo zdroja)',
-	'rightfunctions-restcasc' => '$1 (kaskádovito zo zdroja)',
+	'rightfunctions-desc' => 'Funkcie syntaktického analyzátora podľa oprávnení',
+	'rightfunctions-casc' => '(z kaskádových zdrojov)',
+	'rightfunctions-local' => '(z lokálnej stránky)',
+	'rightfunctions-ns' => '(zo zamknutia menného priestoru)',
 );
 
 /** Swedish (Svenska)
- * @author M.M.S.
  * @author Lejonel
+ * @author M.M.S.
+ * @author Najami
  */
 $messages['sv'] = array(
-	'rightfunctions-desc'     => 'Parserfunktioner som är baserade på användarrättigheter',
-	'rightfunctions-restboth' => '$1 (från lokal sida), $2 (från kaskaderade källor)',
-	'rightfunctions-restcasc' => '$1 (från kaskaderade källor)',
+	'rightfunctions-desc' => 'Parserfunktioner som är baserade på användarrättigheter',
+	'rightfunctions-casc' => '(från kaskaderande källor)',
+	'rightfunctions-local' => '(från lokal sida)',
+	'rightfunctions-ns' => '(från namnrymdsskrivskydd)',
+);
+
+/** Telugu (తెలుగు)
+ * @author Veeven
+ */
+$messages['te'] = array(
+	'rightfunctions-local' => '(స్థానిక పేజీ నుండి)',
 );
 
 /** Vietnamese (Tiếng Việt)
  * @author Vinhtantran
  */
 $messages['vi'] = array(
-	'rightfunctions-desc'     => 'Hàm cú pháp dựa trên sự cấp phép',
-	'rightfunctions-restboth' => '$1 (từ trang cục bộ), $2 (từ các nguồn theo tầng)',
-	'rightfunctions-restcasc' => '$1 (từ các nguồn theo tầng)',
+	'rightfunctions-desc' => 'Hàm cú pháp dựa trên sự cấp phép',
 );
 

@@ -48,8 +48,6 @@ $messages = array(
 'underline-always' => 'Marwalba',
 'underline-never'  => 'Marnaba',
 
-'skinpreview' => '(Horfiirin)',
-
 # Dates
 'sunday'        => 'Axad',
 'monday'        => 'Isniin',
@@ -118,7 +116,7 @@ $messages = array(
 'mypage'         => 'Boggeyga',
 'mytalk'         => 'Wadahadalkeyga',
 'anontalk'       => 'Wadahadalka IP:gan',
-'and'            => 'iyo',
+'and'            => '&#32;iyo',
 
 'errorpagetitle'    => 'Qalad',
 'returnto'          => 'Ku noqo $1.',
@@ -226,9 +224,9 @@ $messages = array(
 
 # Login and logout pages
 'logouttitle'                => 'Isticmaalaha ka bax',
-'logouttext'                 => '<strong>Hada waa aad ka baxday.</strong>
+'logouttext'                 => "'''Hada waa aad ka baxday.'''
 
-Waad sii isticmaali kartaa {{SITENAME}}han adoonlagu aqoon, ama gudaha ayaad gali kartaa markale adiga oo isticmaalaya gudagalkaagii hore ama mid kaduwan. OGEYSIIS waxaa lagayabaa beyjajka qaarkood in ay yiraahdaa wali gudaha ayaad kujirtaa, ilaa aad internet barowsarkaaaga aad nadiifiso.',
+Waad sii isticmaali kartaa {{SITENAME}}han adoonlagu aqoon, ama gudaha ayaad gali kartaa markale adiga oo isticmaalaya gudagalkaagii hore ama mid kaduwan. OGEYSIIS waxaa lagayabaa beyjajka qaarkood in ay yiraahdaa wali gudaha ayaad kujirtaa, ilaa aad internet barowsarkaaaga aad nadiifiso.",
 'welcomecreation'            => "== Soo dhawoow, $1! ==
 
 Gudagalahaaga waa la sameeyey. Ha' hilmaamin in aad wax ka bedesho {{SITENAME}} dooqaaga.",
@@ -238,7 +236,6 @@ Gudagalahaaga waa la sameeyey. Ha' hilmaamin in aad wax ka bedesho {{SITENAME}} 
 'yourpasswordagain'          => 'Markale ereysirkaaga',
 'remembermypassword'         => 'Kumbuyuutarkaan ku xasuusnaaw gudagalkeyga',
 'yourdomainname'             => 'Magacaga shabakada',
-'loginproblem'               => '<b>Dhibaato baa kajirtay gudagalkaaga.</b><br />Iskuday marlabaad!',
 'login'                      => 'Gudaha gal',
 'userlogin'                  => 'Gudaha gal / akoon sameyso',
 'logout'                     => 'Ka bax',
@@ -282,6 +279,11 @@ Wax e-boosto ah oo ku saabsan arrimaha soo socdo looma soo diridoono.',
 'accountcreatedtext'         => "Akoonka isticmaalaha $1 waa la'sameeyay.",
 'loginlanguagelabel'         => 'Luqada: $1',
 
+# Password reset dialog
+'oldpassword' => 'Ereysirkii hore:',
+'newpassword' => 'Ereysir cusub:',
+'retypenew'   => 'Qor mar labaad ereysirka cusub:',
+
 # Edit pages
 'minoredit'                 => 'Kan waa wax ka bedel yar',
 'watchthis'                 => 'Boggaan waardiyey',
@@ -299,17 +301,17 @@ Wax e-boosto ah oo ku saabsan arrimaha soo socdo looma soo diridoono.',
 'accmailtitle'              => "Ereysirka waa la'diray.",
 'accmailtext'               => 'Ereysirka "$1" waxaa loo diray $2.',
 'anontalkpagetext'          => "----''Meeshaan waa bogga wadahadalka isticmaalayaasha aanan la aqoonsanin oo aanan weli sameysanin akoon ama aanan weli isticmaali. Si loo kala sooco isticmaalayaasha, waa in aan isticmaalnaa lambar cinwaaneedka IP:ga. Cinwaanka IP:ga waxaa suurto gal ah in ay wada isticmaalaan dad badan. Hadii aad tahay isticmaale aanan la'aqoonsanin oo aad dareemaysid in laguu gafay, fadlan ka sameyso akoon meeshaan  [[Special:UserLogin|sameyso akoon ama gudaha gal]] si aad uga dhowrsatid in laguugu qaldo isticmaalayaasha kale oo aann la'aqoonsanin.''",
-'previewnote'               => '<strong>Waxa aad aragtid waa horfiirin; wixii aad bedeshay lama keydinin!</strong>',
-'session_fail_preview'      => "<strong>Waan ka xunahay! Wixii aad bedeshay ma'suurto galin in la'keydiyo cilad dhacday awgeed.
-Fadlan markale isku day. Hadii aysan weli shaqaynin, ka bax ee markale soo gudagal.</strong>",
-'session_fail_preview_html' => "<strong>Waan ka xunahay! Wixii aad bedeshay ma'suurto galin in la'keydiyo cilad dhacday awgeed.</strong>
+'previewnote'               => "'''Waxa aad aragtid waa horfiirin; wixii aad bedeshay lama keydinin!'''",
+'session_fail_preview'      => "'''Waan ka xunahay! Wixii aad bedeshay ma'suurto galin in la'keydiyo cilad dhacday awgeed.
+Fadlan markale isku day. Hadii aysan weli shaqaynin, ka bax ee markale soo gudagal.'''",
+'session_fail_preview_html' => "'''Waan ka xunahay! Wixii aad bedeshay ma'suurto galin in la'keydiyo cilad dhacday awgeed.'''
 
 ''Sababtoo ah {{SITENAME}}han wuxuu leeyahay HTML ceyriin ah, horfiirintiisa waxaa loo qariyey si looga hortago weerar ka yimaada JavaScriptga.''
 
-<strong>Hadii wax ka bedlkaan uu yahay mid xaq ah, fadlan markale isku day. Hadii aysan weli shaqaynin, is kuday inaad  ka baxdo ee markale soo gudagal.</strong>",
+'''Hadii wax ka bedlkaan uu yahay mid xaq ah, fadlan markale isku day. Hadii aysan weli shaqaynin, is kuday inaad  ka baxdo ee markale soo gudagal.'''",
 'yourtext'                  => 'Qoraalkaaga',
-'editingold'                => '<strong>DIGNIIN: Waxaad wax ka bedeli rabtaa boggan caddadkiisa duqoobay.
-Hadii aad keydisid, waxaa dhumidoona caddadyadii kan ka dambeeyey.</strong>',
+'editingold'                => "'''DIGNIIN: Waxaad wax ka bedeli rabtaa boggan caddadkiisa duqoobay.
+Hadii aad keydisid, waxaa dhumidoona caddadyadii kan ka dambeeyey.'''",
 'yourdiff'                  => 'Kaladuwanaanshaha',
 'semiprotectedpagewarning'  => "'''Ogeysiis:''' Beyjkan waa laxiray, kuwa magaca gudagal ka leh kaliya ayaa wax ka badalikara.",
 'nocreate-loggedin'         => 'Laguuma ogola inaad beyjaj cusub ku sameysid {{SITENAME}}han.',
@@ -344,6 +346,7 @@ Iskuday in aad [[Special:Search|karaadiso wikigan]] beyjaj laxiira oo cusub.',
 'prevn'                 => 'Ka horeeya $1',
 'nextn'                 => 'Ku xiga $1',
 'viewprevnext'          => 'Fiiri ($1) ($2) ($3).',
+'searchhelp-url'        => 'Help:Caawinaad',
 'powersearch'           => 'Raadi',
 
 # Preferences page
@@ -352,6 +355,7 @@ Iskuday in aad [[Special:Search|karaadiso wikigan]] beyjaj laxiira oo cusub.',
 'prefsnologin'         => 'Gudaha kuma jirtid',
 'prefsnologintext'     => 'Waa in aad [[Special:UserLogin|Gudaha ku jirtaa]] si aad dooqyadaada u dalbatid.',
 'prefsreset'           => 'Dooqyada waxaa laga keenay keydka.',
+'skin-preview'         => 'Horfiirin',
 'math'                 => 'Xisaab',
 'datedefault'          => "Ma'jiro dooq",
 'datetime'             => 'Taariikhda iyo saacada',
@@ -359,9 +363,6 @@ Iskuday in aad [[Special:Search|karaadiso wikigan]] beyjaj laxiira oo cusub.',
 'prefs-watchlist'      => 'liiska-waardiyaha',
 'prefs-watchlist-days' => 'Tirada maalamaha ay ku jirayaan liiska-waardiyaha:',
 'saveprefs'            => 'Kaydi',
-'oldpassword'          => 'Ereysirkii hore:',
-'newpassword'          => 'Ereysir cusub:',
-'retypenew'            => 'Qor mar labaad ereysirka cusub:',
 'textboxsize'          => 'Wax ka bedelka',
 'searchresultshead'    => 'Raadi',
 'recentchangesdays'    => 'Tirada maalmaha lagu tusaayo isbedelada dhow:',
@@ -394,7 +395,7 @@ Iskuday in aad [[Special:Search|karaadiso wikigan]] beyjaj laxiira oo cusub.',
 'savefile'        => 'Faylka kaydi',
 'watchthisupload' => 'Boggaan waardiyey',
 
-# Image description page
+# File description page
 'nolinkstoimage'   => "Ma'ay jiraan beyjaj ku xiran faylkaan.",
 'shareduploadwiki' => 'Fadlan meeshaa $1 ka fiiri warbixin dheeraad ah.',
 
@@ -426,9 +427,6 @@ Iskuday in aad [[Special:Search|karaadiso wikigan]] beyjaj laxiira oo cusub.',
 
 # Book sources
 'booksources-go' => 'Soco',
-
-# Special:Log
-'log-search-submit' => 'Soco',
 
 # Special:AllPages
 'allpages'          => 'Dhamaan boggaga',
@@ -493,14 +491,17 @@ Hadii aad rabootid in aad boggan ka saartid wardiyeynta, dhagsii \"Ha' wardiyeyn
 'watchlistcontains' => 'Liiskaaga waardiyeynta waxaa ku jiro $1 {{PLURAL:$1|bog|boggag}}.',
 'wlshowlast'        => 'Fiiri $1 saacadood ama $2 maalmood $3 ee ugu dambeeyay',
 
-# Delete/protect/revert
-'confirm'                => 'Xaqiiji',
-'excontent'              => "qoraalka wuxuu ahaa: '$1'",
-'exblank'                => 'Bogga waxba kuma jirin',
-'historywarning'         => '<strong>Digniin:</strong> Bogga aad tirtirirabtid wuxuu leeyahay taariikkh hore:',
-'actioncomplete'         => "Amarka waa la'dhamaystiray",
+# Delete
+'confirm'        => 'Xaqiiji',
+'excontent'      => "qoraalka wuxuu ahaa: '$1'",
+'exblank'        => 'Bogga waxba kuma jirin',
+'historywarning' => '<strong>Digniin:</strong> Bogga aad tirtirirabtid wuxuu leeyahay taariikkh hore:',
+'actioncomplete' => "Amarka waa la'dhamaystiray",
+
+# Protect
 'protectedarticle'       => 'la\'difaacay "[[$1]]"',
 'protect-title'          => 'la\'difaacaa "$1"',
+'prot_1movedto2'         => '[[$1]] waxaa loo wareejiyey [[$2]]',
 'protect-legend'         => 'Xaqiiji difaacida',
 'protectcomment'         => 'Sababta loo difaacaayo',
 'protect_expiry_invalid' => "Wakhtiga dhicitaanka sax ma'aha.",
@@ -542,6 +543,7 @@ Hadii aad rabootid in aad boggan ka saartid wardiyeynta, dhagsii \"Ha' wardiyeyn
 'block-log-flags-nocreate' => 'sameynta gudagalah lamaogola',
 
 # Move page
+'movenologin'     => 'Gudaha kuma jirtid',
 'movedto'         => 'loo wareejiyey',
 'movetalk'        => "Wareejiyey bogga wadahadalka la'xiriira",
 '1movedto2'       => '[[$1]] waxaa loo wareejiyey [[$2]]',
@@ -553,7 +555,7 @@ Hadii aad rabootid in aad boggan ka saartid wardiyeynta, dhagsii \"Ha' wardiyeyn
 'allmessagesdefault'        => "Qoraalka la'isku ogyahay",
 'allmessagescurrent'        => 'Qoraalka hada qoran',
 'allmessagestext'           => 'Liiskan waxaa ku qoran dhamaan fariimaha lagahelikaro xarun magaceedka MediaWiki.
-Please visit [http://www.mediawiki.org/wiki/Localisation MediaWiki Localisation] and [http://translatewiki.net Betawiki] if you wish to contribute to the generic MediaWiki localisation.',
+Please visit [http://www.mediawiki.org/wiki/Localisation MediaWiki Localisation] and [http://translatewiki.net translatewiki.net] if you wish to contribute to the generic MediaWiki localisation.',
 'allmessagesnotsupportedDB' => "'''{{ns:special}}:Allmessages''' la'ma isticmaalikaro, '''\$wgUseDatabaseMessages''' oo dansan daraadeed.",
 'allmessagesfilter'         => 'Kalasoocaha fariimaha:',
 'allmessagesmodified'       => 'Itus kuwa wax laga bedelay',
@@ -591,7 +593,7 @@ Please visit [http://www.mediawiki.org/wiki/Localisation MediaWiki Localisation]
 # Info page
 'numwatchers' => 'Tirada waardiyeyaasha: $1',
 
-# Special:NewImages
+# Special:NewFiles
 'imagelisttext' => "Hoos waxaa yaala liiska '''$1''' {{PLURAL:$1|file|faylalka}} oo u kala soocan $2.",
 'bydate'        => 'hab taariikheed',
 
@@ -602,11 +604,6 @@ Please visit [http://www.mediawiki.org/wiki/Localisation MediaWiki Localisation]
 
 # E-mail address confirmation
 'confirmemail_noemail' => 'Kuma haysatid cinwaan E-boosto sax [[Special:Preferences|isticmaala dooqiisa]].',
-
-# AJAX search
-'searchcontaining' => "Raadi maqaal uu ku jiro ''$1''.",
-'searchnamed'      => "Raadi maqaalada magacoodu uu yahay ''$1''.",
-'articletitles'    => "Maqaalada ka bilaawdo ''$1''",
 
 # Multipage image navigation
 'imgmultigo' => 'Soco!',

@@ -19,6 +19,18 @@ $messages['en'] = array(
 	'multiboilerplate-submit' => 'Load',
 );
 
+/** Message documentation (Message documentation)
+ * @author MinuteElectron
+ * @author Purodha
+ */
+$messages['qqq'] = array(
+	'multiboilerplate-desc' => 'Description of the MultiBoilerplate extension, shown on [[Special:Version]]. Do not translate or change links.',
+	'multiboilerplate-legend' => 'Title of the form used for selecting a boilerplate.',
+	'multiboilerplate-submit' => 'The text displayed on the button that loads the boilerplate into the edit box.
+
+{{Identical|Load}}',
+);
+
 /** Afrikaans (Afrikaans)
  * @author Arnobarnard
  */
@@ -27,11 +39,20 @@ $messages['af'] = array(
 );
 
 /** Arabic (العربية)
- * @author Meno25
  * @author Alnokta
+ * @author Meno25
  */
 $messages['ar'] = array(
-	'multiboilerplate-desc'   => 'يسمح لقالب أن يختار من صندوق منسدل موجود فوق استمارة التعديل أثناء تعديل الصفحات',
+	'multiboilerplate-desc' => 'يسمح لقالب أن يختار من صندوق منسدل موجود فوق استمارة التعديل أثناء تعديل الصفحات',
+	'multiboilerplate-legend' => 'اختر طبق البويلر',
+	'multiboilerplate-submit' => 'تحميل',
+);
+
+/** Egyptian Spoken Arabic (مصرى)
+ * @author Meno25
+ */
+$messages['arz'] = array(
+	'multiboilerplate-desc' => 'يسمح لقالب أن يختار من صندوق منسدل موجود فوق استمارة التعديل أثناء تعديل الصفحات',
 	'multiboilerplate-legend' => 'اختر طبق البويلر',
 	'multiboilerplate-submit' => 'تحميل',
 );
@@ -43,10 +64,37 @@ $messages['bg'] = array(
 	'multiboilerplate-submit' => 'Зареждане',
 );
 
+/** German (Deutsch)
+ * @author Imre
+ * @author Revolus
+ */
+$messages['de'] = array(
+	'multiboilerplate-desc' => 'Ermöglicht während der Seitenbearbeitung, eine Textvorlage aus der Auswahlbox über dem Bearbeitungsformular auszuwählen',
+	'multiboilerplate-legend' => 'Textvorlage auswählen',
+	'multiboilerplate-submit' => 'Laden',
+);
+
+/** Lower Sorbian (Dolnoserbski)
+ * @author Michawiki
+ */
+$messages['dsb'] = array(
+	'multiboilerplate-desc' => 'Zmóžnja wubraśe tekstowego elementa z wuběrańskego kašćika nad wobźěłowańskim pólom, mjaztym až boki se wobźěłuju',
+	'multiboilerplate-legend' => 'Tekstowy element wubraś',
+	'multiboilerplate-submit' => 'Zacytaś',
+);
+
+/** Greek (Ελληνικά)
+ * @author Consta
+ */
+$messages['el'] = array(
+	'multiboilerplate-submit' => 'Φορτώστε',
+);
+
 /** Esperanto (Esperanto)
  * @author Yekrats
  */
 $messages['eo'] = array(
+	'multiboilerplate-legend' => 'Selekti norman tekston',
 	'multiboilerplate-submit' => 'Alŝuti',
 );
 
@@ -54,7 +102,7 @@ $messages['eo'] = array(
  * @author Grondin
  */
 $messages['fr'] = array(
-	'multiboilerplate-desc'   => "Permet de sélectionner une page ou un modèle à incorporer à partir d'une boîte en haut du formulaire d'édition d'une page.",
+	'multiboilerplate-desc' => "Permet de sélectionner une page ou un modèle à incorporer à partir d'une boîte en haut du formulaire d'édition d'une page.",
 	'multiboilerplate-legend' => 'Sélectionner la page à incorporer',
 	'multiboilerplate-submit' => 'Charger',
 );
@@ -70,9 +118,16 @@ $messages['fy'] = array(
  * @author Toliño
  */
 $messages['gl'] = array(
-	'multiboilerplate-desc'   => 'Permite que unha páxina a engadir sexa seleccionada dunha caixa despregable localizada enriba do formulario de edición ao editar páxinas',
+	'multiboilerplate-desc' => 'Permite que unha páxina a engadir sexa seleccionada dunha caixa despregable localizada enriba do formulario de edición ao editar páxinas',
 	'multiboilerplate-legend' => 'Seleccionar a páxina a engadir',
 	'multiboilerplate-submit' => 'Cargar',
+);
+
+/** Ancient Greek (Ἀρχαία ἑλληνικὴ)
+ * @author Crazymadlover
+ */
+$messages['grc'] = array(
+	'multiboilerplate-submit' => 'φορτίζειν',
 );
 
 /** Hawaiian (Hawai`i)
@@ -94,9 +149,25 @@ $messages['hi'] = array(
  * @author Michawiki
  */
 $messages['hsb'] = array(
-	'multiboilerplate-desc'   => 'Zmóžnja tekstowy element z padaceho kašćika wubrać, kotrež je wyše wobdźěłanskeho pola na wobdźełanskich stronach',
+	'multiboilerplate-desc' => 'Zmóžnja tekstowy element z padaceho kašćika wubrać, kotrež je wyše wobdźěłanskeho pola na wobdźełanskich stronach',
 	'multiboilerplate-legend' => 'Tekstowy element wubrać',
 	'multiboilerplate-submit' => 'Začitać',
+);
+
+/** Interlingua (Interlingua)
+ * @author McDutchie
+ */
+$messages['ia'] = array(
+	'multiboilerplate-desc' => 'Permitte seliger un modello de texto ab un quadro disrolante situate super le formulario pro modificar paginas',
+	'multiboilerplate-legend' => 'Seliger modello',
+	'multiboilerplate-submit' => 'Cargar',
+);
+
+/** Japanese (日本語)
+ * @author Hosiryuhosi
+ */
+$messages['ja'] = array(
+	'multiboilerplate-submit' => 'ロード',
 );
 
 /** Javanese (Basa Jawa)
@@ -113,10 +184,20 @@ $messages['km'] = array(
 	'multiboilerplate-submit' => 'ផ្ទុក',
 );
 
+/** Ripoarisch (Ripoarisch)
+ * @author Purodha
+ */
+$messages['ksh'] = array(
+	'multiboilerplate-desc' => 'Jit däm Schriver en Ußwahl aan extra parat jemaate Vörlare övver däm Finster för et Sigge-Beärrbeide.',
+	'multiboilerplate-legend' => 'Sök en Vörlaach uß',
+	'multiboilerplate-submit' => 'Donn et Enndraare!',
+);
+
 /** Luxembourgish (Lëtzebuergesch)
  * @author Robby
  */
 $messages['lb'] = array(
+	'multiboilerplate-desc' => "Erlaabt et eng Säit oder eng Schabloun aus enger Këscht uewen am Formulaire fir d'Ännere vun enger Säit erauszesichen",
 	'multiboilerplate-legend' => 'Säit eraussichen déi soll agebaut ginn',
 	'multiboilerplate-submit' => 'Lueden',
 );
@@ -132,7 +213,7 @@ $messages['ml'] = array(
  * @author Kaustubh
  */
 $messages['mr'] = array(
-	'multiboilerplate-desc'   => 'पाने संपादित करत असताना, संपादन पेटीच्या वर बॉइलरप्लेटस निवडण्यासाठी लागणारी ओढ-यादी (drop-down) दाखविण्याची परवानगी देते',
+	'multiboilerplate-desc' => 'पाने संपादित करत असताना, संपादन पेटीच्या वर बॉइलरप्लेटस निवडण्यासाठी लागणारी ओढ-यादी (drop-down) दाखविण्याची परवानगी देते',
 	'multiboilerplate-legend' => 'बॉईलरप्लेट निवडा',
 	'multiboilerplate-submit' => 'लोड',
 );
@@ -142,16 +223,23 @@ $messages['mr'] = array(
  * @author Siebrand
  */
 $messages['nl'] = array(
-	'multiboilerplate-desc'   => 'Biedt de mogelijkheid een standaard tekstblok te selecteren uit een selectievenster bovenaan een bewerkingspagina',
+	'multiboilerplate-desc' => 'Biedt de mogelijkheid een standaard tekstblok te selecteren uit een selectievenster bovenaan een bewerkingspagina',
 	'multiboilerplate-legend' => 'Sjabloon selecteren',
 	'multiboilerplate-submit' => 'Laden',
+);
+
+/** Norwegian Nynorsk (‪Norsk (nynorsk)‬)
+ * @author Harald Khan
+ */
+$messages['nn'] = array(
+	'multiboilerplate-submit' => 'Last',
 );
 
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
  * @author Jon Harald Søby
  */
 $messages['no'] = array(
-	'multiboilerplate-desc'   => 'Viser en boks på toppen av redigeringssiden for å velge og laste en standardtekst',
+	'multiboilerplate-desc' => 'Viser en boks på toppen av redigeringssiden for å velge og laste en standardtekst',
 	'multiboilerplate-legend' => 'Velg standardtekst',
 	'multiboilerplate-submit' => 'Last',
 );
@@ -160,7 +248,7 @@ $messages['no'] = array(
  * @author Cedric31
  */
 $messages['oc'] = array(
-	'multiboilerplate-desc'   => "Permet de seleccionar una pagina o un modèl d'incorporar a partir d'una bóstia en naut del formulari d'edicion d'una pagina.",
+	'multiboilerplate-desc' => "Permet de seleccionar una pagina o un modèl d'incorporar a partir d'una bóstia en naut del formulari d'edicion d'una pagina.",
 	'multiboilerplate-legend' => "Seleccionar la pagina d'incorporar",
 	'multiboilerplate-submit' => 'Cargar',
 );
@@ -181,8 +269,11 @@ $messages['ps'] = array(
 
 /** Portuguese (Português)
  * @author Malafaya
+ * @author Waldir
  */
 $messages['pt'] = array(
+	'multiboilerplate-desc' => 'Permite que um texto-modelo seja seleccionado de uma lista drop-down localizada em cima do formulário de edição, quando se edita páginas',
+	'multiboilerplate-legend' => 'Seleccione o texto-modelo',
 	'multiboilerplate-submit' => 'Carregar',
 );
 
@@ -190,7 +281,7 @@ $messages['pt'] = array(
  * @author Александр Сигачёв
  */
 $messages['ru'] = array(
-	'multiboilerplate-desc'   => 'Позволяет пользователям выбирать типовые тексты из выпадающего списка над полем редактирования',
+	'multiboilerplate-desc' => 'Позволяет пользователям выбирать типовые тексты из выпадающего списка над полем редактирования',
 	'multiboilerplate-legend' => 'Выбор образца',
 	'multiboilerplate-submit' => 'Загрузить',
 );
@@ -199,7 +290,7 @@ $messages['ru'] = array(
  * @author Helix84
  */
 $messages['sk'] = array(
-	'multiboilerplate-desc'   => 'Umožňuje výber šablóny, ktoré sa zobrazuje na vrchu editovacej stránky',
+	'multiboilerplate-desc' => 'Umožňuje výber šablóny, ktoré sa zobrazuje na vrchu editovacej stránky',
 	'multiboilerplate-legend' => 'Vyberte nápis',
 	'multiboilerplate-submit' => 'Načítať',
 );
@@ -208,17 +299,31 @@ $messages['sk'] = array(
  * @author M.M.S.
  */
 $messages['sv'] = array(
-	'multiboilerplate-desc'   => 'Visar en box på toppen av redigeringssidan för att välja och ladda en standardtext',
+	'multiboilerplate-desc' => 'Visar en box på toppen av redigeringssidan för att välja och ladda en standardtext',
 	'multiboilerplate-legend' => 'Välj standardtext',
 	'multiboilerplate-submit' => 'Ladda',
+);
+
+/** Thai (ไทย)
+ * @author Octahedron80
+ */
+$messages['th'] = array(
+	'multiboilerplate-submit' => 'โหลด',
 );
 
 /** Vietnamese (Tiếng Việt)
  * @author Vinhtantran
  */
 $messages['vi'] = array(
-	'multiboilerplate-desc'   => 'Cho phép một bảng thông báo được chọn từ hộp thả xuống đặt phía trên khung soạn thảo khi sửa đổi trang',
+	'multiboilerplate-desc' => 'Cho phép một bảng thông báo được chọn từ hộp thả xuống đặt phía trên khung soạn thảo khi sửa đổi trang',
 	'multiboilerplate-legend' => 'Chọn bảng thông báo',
 	'multiboilerplate-submit' => 'Tải',
+);
+
+/** Volapük (Volapük)
+ * @author Smeira
+ */
+$messages['vo'] = array(
+	'multiboilerplate-submit' => 'Lodön',
 );
 

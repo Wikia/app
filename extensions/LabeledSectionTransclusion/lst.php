@@ -27,8 +27,8 @@ $wgExtensionCredits['parserhook'][] = array(
 	'name'           => 'LabeledSectionTransclusion',
 	'author'         => 'Steve Sanbeg',
 	'url'            => 'http://www.mediawiki.org/wiki/Extension:Labeled_Section_Transclusion',
-	'svn-date' => '$LastChangedDate: 2008-05-06 11:59:58 +0000 (Tue, 06 May 2008) $',
-	'svn-revision' => '$LastChangedRevision: 34306 $',
+	'svn-date' => '$LastChangedDate: 2008-11-30 03:15:22 +0000 (Sun, 30 Nov 2008) $',
+	'svn-revision' => '$LastChangedRevision: 44056 $',
 	'description'    => 'Adds #lst and #lstx functions and &lt;section&gt; tag, enables marked sections of text to be transcluded',
 	'descriptionmsg' => 'lst-desc',
 );

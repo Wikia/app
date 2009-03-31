@@ -11,60 +11,69 @@ $aliases = array();
  * @author Jon Harald Søby
  */
 $aliases['en'] = array(
-    'EmailPages' => array( 'EmailPages' ),
+	'EmailPage' => array( 'EmailPage' ),
 );
 
-/** Arabic (العربية) */
+/** Arabic (العربية)
+ * @author Meno25
+ */
 $aliases['ar'] = array(
-	'EmailPages' => array( 'مراسلة الصفحات' ),
+	'EmailPage' => array( 'مراسلة_الصفحة' ),
 );
 
-/** Egyptian Spoken Arabic (مصرى) */
+/** Egyptian Spoken Arabic (مصرى)
+ * @author Meno25
+ */
 $aliases['arz'] = array(
-	'EmailPages' => array( 'مراسلة المقالة' ),
+	'EmailPage' => array( 'مراسلة_الصفحة' ),
 );
 
 /** French (Français) */
 $aliases['fr'] = array(
-	'EmailPages' => array( 'EnvoyerPage', 'Envoyer Page' ),
+	'EmailPage' => array( 'EnvoyerPage', 'Envoyer Page' ),
 );
 
 /** Galician (Galego) */
 $aliases['gl'] = array(
-	'EmailPages' => array( 'Enviar páxinas por correo electrónico' ),
+	'EmailPage' => array( 'Enviar páxinas por correo electrónico' ),
 );
 
 /** Hebrew (עברית)
  * @author Rotem Liss
  */
 $aliases['he'] = array(
-	'EmailPages' => array( 'שליחת_דף_בדואר' ),
+	'EmailPage' => array( 'שליחת_דף_בדואר' ),
 );
 
 /** Haitian (Kreyòl ayisyen) */
 $aliases['ht'] = array(
-	'EmailPages' => array( 'EmèlAtik' ),
+	'EmailPage' => array( 'EmèlAtik' ),
 );
 
 /** Hungarian (Magyar) */
 $aliases['hu'] = array(
-	'EmailPages' => array( 'Szócikk elküldése e-mailben' ),
+	'EmailPage' => array( 'Szócikk elküldése e-mailben' ),
+);
+
+/** Luxembourgish (Lëtzebuergesch) */
+$aliases['lb'] = array(
+	'EmailPage' => array( 'E-Mail-Säiten' ),
 );
 
 /** Dutch (Nederlands) */
 $aliases['nl'] = array(
-	'EmailPages' => array( 'PaginaE-mailen', 'PaginaEmailen' ),
+	'EmailPage' => array( 'PaginaE-mailen', 'PaginaEmailen' ),
 );
 
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
  * @author Jon Harald Søby
  */
 $aliases['no'] = array(
-	'EmailPages' => array( 'Send_side_som_e-post' ),
+	'EmailPage' => array( 'Send side som e-post' ),
 );
 
 /** Pashto (پښتو) */
 $aliases['ps'] = array(
-	'EmailPages' => array( 'د برېښليک مخونه' ),
+	'EmailPage' => array( 'د برېښليک مخونه' ),
 );
 

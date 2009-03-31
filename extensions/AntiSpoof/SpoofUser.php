@@ -39,31 +39,30 @@ class SpoofUser {
 	/**
 	 * Does the username pass Unicode legality and script-mixing checks?
 	 *
-	 * @return mixed false if no conflict, or string with conflicting username
+	 * @return array empty if no conflict, or array containing conflicting usernames
 	 */
-	public function getConflict() {
-		if( $this->isLegal() ) {
-			$dbr = wfGetDB( DB_SLAVE );
+	public function getConflicts() {
+		$dbr = wfGetDB( DB_SLAVE );
 
-			// Join against the user table to ensure that we skip stray
-			// entries left after an account is renamed or otherwise munged.
-			$row = $dbr->selectRow(
-				array( 'spoofuser', 'user' ),
-				array( 'user_name' ),
-				array(
-					'su_normalized' => $this->mNormalized,
-					'su_name=user_name',
-				),
-				__METHOD__ );
+		// Join against the user table to ensure that we skip stray
+		// entries left after an account is renamed or otherwise munged.
+		$spoofedUsers = $dbr->select(
+			array( 'spoofuser', 'user' ),
+			array( 'user_name' ),
+			array(
+				'su_normalized' => $this->mNormalized,
+				'su_name=user_name',
+			),
+			__METHOD__,
+			array(
+				'LIMIT' => 5
+			) );
 
-			if( $row ) {
-				return $row->user_name;
-			} else {
-				return false;
-			}
-		} else {
-			return false;
+		$spoofs = array();
+		while( $row = $dbr->fetchObject( $spoofedUsers ) ) {
+			array_push( $spoofs, $row->user_name );
 		}
+		return $spoofs;
 	}
 
 	/**

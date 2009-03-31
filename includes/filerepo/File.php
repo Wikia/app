@@ -264,7 +264,14 @@ abstract class File {
 	 * Overridden by LocalFile, UnregisteredLocalFile
 	 * STUB
 	 */
-	function getMetadata() { return false; }
+	public function getMetadata() { return false; }
+
+	/**
+	 * Return the bit depth of the file
+	 * Overridden by LocalFile
+	 * STUB
+	 */
+	public function getBitDepth() { return 0; }
 
 	/**
 	 * Return the size of the image file, in bytes
@@ -499,8 +506,7 @@ abstract class File {
 	 *
 	 * @param integer $width	maximum width of the generated thumbnail
 	 * @param integer $height	maximum height of the image (optional)
-	 * @param boolean $render	True to render the thumbnail if it doesn't exist,
-	 *                       	false to just return the URL
+	 * @param boolean $render	Deprecated
 	 *
 	 * @return ThumbnailImage or null on failure
 	 *
@@ -511,8 +517,7 @@ abstract class File {
 		if ( $height != -1 ) {
 			$params['height'] = $height;
 		}
-		$flags = $render ? self::RENDER_NOW : 0;
-		return $this->transform( $params, $flags );
+		return $this->transform( $params, 0 );
 	}
 
 	/**
@@ -575,7 +580,7 @@ abstract class File {
 			// Purge. Useful in the event of Core -> Squid connection failure or squid
 			// purge collisions from elsewhere during failure. Don't keep triggering for
 			// "thumbs" which have the main image URL though (bug 13776)
-			if ( $wgUseSquid && ($thumb->isError() || $thumb->getUrl() != $this->getURL()) ) {
+			if ( $wgUseSquid && ( !$thumb || $thumb->isError() || $thumb->getUrl() != $this->getURL()) ) {
 				SquidUpdate::purge( array( $thumbUrl ) );
 			}
 		} while (false);
@@ -678,8 +683,9 @@ abstract class File {
 	 * @param $limit integer Limit of rows to return
 	 * @param $start timestamp Only revisions older than $start will be returned
 	 * @param $end timestamp Only revisions newer than $end will be returned
+	 * @param $inc bool Include the endpoints of the time range
 	 */
-	function getHistory($limit = null, $start = null, $end = null) {
+	function getHistory($limit = null, $start = null, $end = null, $inc=true) {
 		return array();
 	}
 
@@ -1212,7 +1218,7 @@ abstract class File {
 		if ( $handler ) {
 			return $handler->getLongDesc( $this );
 		} else {
-			return MediaHandler::getLongDesc( $this );
+			return MediaHandler::getGeneralLongDesc( $this );
 		}
 	}
 
@@ -1221,7 +1227,7 @@ abstract class File {
 		if ( $handler ) {
 			return $handler->getShortDesc( $this );
 		} else {
-			return MediaHandler::getShortDesc( $this );
+			return MediaHandler::getGeneralShortDesc( $this );
 		}
 	}
 
@@ -1241,7 +1247,7 @@ abstract class File {
 	function getRedirectedTitle() {
 		if ( $this->redirected ) {
 			if ( !$this->redirectTitle )
-				$this->redirectTitle = Title::makeTitle( NS_IMAGE, $this->redirected );
+				$this->redirectTitle = Title::makeTitle( NS_FILE, $this->redirected );
 			return $this->redirectTitle;
 		}
 	}

@@ -564,7 +564,7 @@ function wfSpecialValidate( $page = '' ) {
 		if( $wgUseValidation ) {
 			require_once ( 'SpecialValidate.php' ) ;
 			$wgOut->setPagetitle( wfMsg( 'validate' ) . ': ' . $this->mTitle->getPrefixedText() );
-			$wgOut->setRobotpolicy( 'noindex,follow' );
+			$wgOut->setRobotPolicy( 'noindex,follow' );
 			if( $this->mTitle->getNamespace() != 0 ) {
 				$wgOut->addHTML( wfMsg( 'val_validate_article_namespace_only' ) );
 				return;

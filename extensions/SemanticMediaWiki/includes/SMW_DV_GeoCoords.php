@@ -1,4 +1,8 @@
 <?php
+/**
+ * @file
+ * @ingroup SMWDataValues
+ */
 
 /// Unicode symbols for coordinate minutes and seconds;
 /// may not display in every font ...
@@ -9,7 +13,7 @@ define('SMW_GEO_SEC','″');
  * Implementation of datavalues that are geographic coordinates.
  *
  * @author Markus Krötzsch
- * @note AUTOLOADED
+ * @ingroup SMWDataValues
  */
 class SMWGeoCoordsValue extends SMWDataValue {
 
@@ -26,6 +30,7 @@ class SMWGeoCoordsValue extends SMWDataValue {
 	// Note: signs are used as e.g. on Google maps, i.e. S and W are negative numbers.
 
 	protected function parseUserValue($value) {
+		wfLoadExtensionMessages('SemanticMediaWiki');
 		$this->m_lat = false;
 		$this->m_long = false;
 		$this->m_latparts = false;
@@ -160,7 +165,8 @@ class SMWGeoCoordsValue extends SMWDataValue {
 
 	public function getShortWikiText($linked = NULL) {
 		if ($this->isValid() && ($linked !== NULL) && ($linked !== false)) {
-			smwfRequireHeadItem(SMW_HEADER_TOOLTIP);
+			wfLoadExtensionMessages('SemanticMediaWiki');
+			SMWOutputs::requireHeadItem(SMW_HEADER_TOOLTIP);
 			return '<span class="smwttinline">' . $this->m_caption . '<span class="smwttcontent">' .
 			        wfMsgForContent('smw_label_latitude') . ' ' . $this->formatAngleValues(true) . '<br />' .
 			        wfMsgForContent('smw_label_longitude') . ' ' . $this->formatAngleValues(false) .
@@ -207,6 +213,7 @@ class SMWGeoCoordsValue extends SMWDataValue {
 	 * Get and cache localised direction labels. Just for convenience.
 	 */
 	protected function initDirectionLabels() {
+		wfLoadExtensionMessages('SemanticMediaWiki');
 		$this->m_N = wfMsgForContent('smw_abb_north');
 		$this->m_E = wfMsgForContent('smw_abb_east');
 		$this->m_W = wfMsgForContent('smw_abb_west');
@@ -219,6 +226,7 @@ class SMWGeoCoordsValue extends SMWDataValue {
 	 * each possibly false if unset.
 	 */
 	protected function setAngleValues($direction, &$angles) {
+		wfLoadExtensionMessages('SemanticMediaWiki');
 		$numvalue = SMWDataValueFactory::newTypeIDValue('_num');
 		$res = 0;
 		$factor = 1;

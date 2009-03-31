@@ -1,3 +1,15 @@
+<?php
+ini_set( 'zlib.output_compression', 'off' );
+
+$wgDBadminuser = $wgDBadminpassword = $wgDBserver = $wgDBname = $wgDBprefix = false;
+$wgEnableProfileInfo = $wgProfileToDatabase = false;
+
+define( 'MW_NO_SETUP', 1 );
+require_once( './includes/WebStart.php' );
+@include_once( './AdminSettings.php' );
+require_once( './includes/GlobalFunctions.php' );
+
+?>
 <!--
      Show profiling data.
 
@@ -55,13 +67,6 @@
 </head>
 <body>
 <?php
-
-$wgDBadminuser = $wgDBadminpassword = $wgDBserver = $wgDBname = $wgEnableProfileInfo = $wgDBprefix = false;
-
-define( 'MW_NO_SETUP', 1 );
-require_once( './includes/WebStart.php' );
-@include_once("./AdminSettings.php");
-require_once( './includes/GlobalFunctions.php' );
 
 if (!$wgEnableProfileInfo) {
 	echo "disabled\n";

@@ -1,9 +1,10 @@
 <?php
 /**
- * @author helix84
+ * @file
+ * @ingroup SMWLanguage
  */
 
-/**
+/*
  * Protect against register_globals vulnerabilities.
  * This line must be present before any global variable is referenced.
  */
@@ -12,7 +13,14 @@ if (!defined('MEDIAWIKI')) die();
 global $smwgIP;
 include_once($smwgIP . '/languages/SMW_Language.php');
 
-class SMW_LanguageSk extends SMW_Language {
+/**
+ * Slovak language labels for important SMW labels (namespaces, datatypes,...).
+ *
+ * @author helix84
+ * @ingroup SMWLanguage
+ * @ingroup Language
+ */
+class SMWLanguageSk extends SMWLanguage {
 
 protected $m_DatatypeLabels = array(
 	'_wpg' => 'Page', // name of page datatype  //TODO translate
@@ -48,27 +56,27 @@ protected $m_DatatypeAliases = array(
 
 protected $m_SpecialProperties = array(
 	//always start upper-case
-	SMW_SP_HAS_TYPE  => 'Má typ',
-	SMW_SP_HAS_URI   => 'Ekvivalent URI',
-	SMW_SP_SUBPROPERTY_OF => 'Subproperty of', // TODO: translate
-	SMW_SP_DISPLAY_UNITS => 'Zobrazovacia jednotka', // TODO: should be plural now ("units"), singluar stays alias
-	SMW_SP_IMPORTED_FROM => 'Importovaný z',
-	SMW_SP_CONVERSION_FACTOR => 'Zodpovedá',
-	SMW_SP_SERVICE_LINK => 'Poskytuje službu',
-	SMW_SP_POSSIBLE_VALUE => 'Allowed value'	//TODO translate
+	'_TYPE' => 'Má typ',
+	'_URI'  => 'Ekvivalent URI',
+	'_SUBP' => 'Subproperty of', // TODO: translate
+	'_UNIT' => 'Zobrazovacia jednotka', // TODO: should be plural now ("units"), singluar stays alias
+	'_IMPO' => 'Importovaný z',
+	'_CONV' => 'Zodpovedá',
+	'_SERV' => 'Poskytuje službu',
+	'_PVAL' => 'Allowed value'	//TODO translate
 );
 
 protected $m_SpecialPropertyAliases = array(
-	'Zobrazovacia jednotka' => SMW_SP_DISPLAY_UNITS,
+	'Zobrazovacia jednotka' => '_UNIT',
 	// support English aliases for special properties
-	'Has type'          => SMW_SP_HAS_TYPE,
-	'Equivalent URI'    => SMW_SP_HAS_URI,
-	'Subproperty of'    => SMW_SP_SUBPROPERTY_OF,
-	'Display units'     => SMW_SP_DISPLAY_UNITS,
-	'Imported from'     => SMW_SP_IMPORTED_FROM,
-	'Corresponds to'    => SMW_SP_CONVERSION_FACTOR,
-	'Provides service'  => SMW_SP_SERVICE_LINK,
-	'Allows value'      => SMW_SP_POSSIBLE_VALUE
+	'Has type'          => '_TYPE',
+	'Equivalent URI'    => '_URI',
+	'Subproperty of'    => '_SUBP',
+	'Display units'     => '_UNIT',
+	'Imported from'     => '_IMPO',
+	'Corresponds to'    => '_CONV',
+	'Provides service'  => '_SERV',
+	'Allows value'      => '_PVAL'
 );
 
 

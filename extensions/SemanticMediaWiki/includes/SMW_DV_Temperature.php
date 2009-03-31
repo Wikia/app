@@ -1,11 +1,15 @@
 <?php
+/**
+ * @file
+ * @ingroup SMWDataValues
+ */
 
 /**
  * This datavalue implements unit support for measuring temperatures. This is
  * mostly an example implementation of how to realise custom unit types easily.
  *
  * @author Markus Krötzsch
- * @note AUTOLOADED
+ * @ingroup SMWDataValues
  */
 class SMWTemperatureValue extends SMWNumberValue {
 
@@ -45,6 +49,7 @@ class SMWTemperatureValue extends SMWNumberValue {
 			break;
 			default: //unsupported unit
 				// create error here, assuming that our temperature units should not be augmented by unknown units
+				wfLoadExtensionMessages('SemanticMediaWiki');
 				$this->addError(wfMsgForContent('smw_unsupportedunit',$this->m_unit));
 				$this->m_unit = $this->m_unitin;
 			break;

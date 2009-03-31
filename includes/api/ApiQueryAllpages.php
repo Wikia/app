@@ -62,11 +62,21 @@ class ApiQueryAllpages extends ApiQueryGeneratorBase {
 			$this->addWhereIf('page_is_redirect = 0', $params['filterredir'] === 'nonredirects');
 		$this->addWhereFld('page_namespace', $params['namespace']);
 		$dir = ($params['dir'] == 'descending' ? 'older' : 'newer');
-		$from = (is_null($params['from']) ? null : $this->titleToKey($params['from']));
+		$from = (is_null($params['from']) ? null : $this->titlePartToKey($params['from']));
 		$this->addWhereRange('page_title', $dir, $from, null);
 		if (isset ($params['prefix']))
-			$this->addWhere("page_title LIKE '" . $db->escapeLike($this->titleToKey($params['prefix'])) . "%'");
+			$this->addWhere("page_title LIKE '" . $db->escapeLike($this->titlePartToKey($params['prefix'])) . "%'");
 
+		if (is_null($resultPageSet)) {
+			$selectFields = array (
+				'page_namespace',
+				'page_title',
+				'page_id'
+			);
+		} else {
+			$selectFields = $resultPageSet->getPageTableFields();
+		}
+		$this->addFields($selectFields);
 		$forceNameTitleIndex = true;
 		if (isset ($params['minsize'])) {
 			$this->addWhere('page_len>=' . intval($params['minsize']));
@@ -79,15 +89,20 @@ class ApiQueryAllpages extends ApiQueryGeneratorBase {
 		}
 
 		// Page protection filtering
-		if (isset ($params['prtype'])) {
+		if (!empty ($params['prtype'])) {
 			$this->addTables('page_restrictions');
 			$this->addWhere('page_id=pr_page');
 			$this->addWhere('pr_expiry>' . $db->addQuotes($db->timestamp()));
 			$this->addWhereFld('pr_type', $params['prtype']);
 
-			$prlevel = $params['prlevel'];
-			if (!is_null($prlevel) && $prlevel != '' && $prlevel != '*')
+			// Remove the empty string and '*' from the prlevel array
+			$prlevel = array_diff($params['prlevel'], array('', '*'));
+			if (!empty($prlevel))
 				$this->addWhereFld('pr_level', $prlevel);
+			if ($params['prfiltercascade'] == 'cascading')
+				$this->addWhereFld('pr_cascade', 1);
+			if ($params['prfiltercascade'] == 'noncascading')
+				$this->addWhereFld('pr_cascade', 0);
 
 			$this->addOption('DISTINCT');
 
@@ -105,20 +120,16 @@ class ApiQueryAllpages extends ApiQueryGeneratorBase {
 		} else if($params['filterlanglinks'] == 'withlanglinks') {
 			$this->addTables('langlinks');
 			$this->addWhere('page_id=ll_from');
+			$this->addOption('STRAIGHT_JOIN');
+			// We have to GROUP BY all selected fields to stop
+			// PostgreSQL from whining
+			$this->addOption('GROUP BY', implode(', ', $selectFields));
 			$forceNameTitleIndex = false;
 		}
 		if ($forceNameTitleIndex)
 			$this->addOption('USE INDEX', 'name_title');
 
-		if (is_null($resultPageSet)) {
-			$this->addFields(array (
-				'page_id',
-				'page_namespace',
-				'page_title'
-			));
-		} else {
-			$this->addFields($resultPageSet->getPageTableFields());
-		}
+		
 
 		$limit = $params['limit'];
 		$this->addOption('LIMIT', $limit+1);
@@ -185,6 +196,14 @@ class ApiQueryAllpages extends ApiQueryGeneratorBase {
 				ApiBase :: PARAM_TYPE => $wgRestrictionLevels,
 				ApiBase :: PARAM_ISMULTI => true
 			),
+			'prfiltercascade' => array (
+				ApiBase :: PARAM_DFLT => 'all',
+				ApiBase :: PARAM_TYPE => array (
+					'cascading',
+					'noncascading',
+					'all'
+				),
+			),
 			'limit' => array (
 				ApiBase :: PARAM_DFLT => 10,
 				ApiBase :: PARAM_TYPE => 'limit',
@@ -221,6 +240,7 @@ class ApiQueryAllpages extends ApiQueryGeneratorBase {
 			'maxsize' => 'Limit to pages with at most this many bytes',
 			'prtype' => 'Limit to protected pages only',
 			'prlevel' => 'The protection level (must be used with apprtype= parameter)',
+			'prfiltercascade' => 'Filter protections based on cascadingness (ignored when apprtype isn\'t set)',
 			'filterlanglinks' => 'Filter based on whether a page has langlinks',
 			'limit' => 'How many total pages to return.'
 		);
@@ -244,6 +264,6 @@ class ApiQueryAllpages extends ApiQueryGeneratorBase {
 	}
 
 	public function getVersion() {
-		return __CLASS__ . ': $Id: ApiQueryAllpages.php 37775 2008-07-17 09:26:01Z brion $';
+		return __CLASS__ . ': $Id: ApiQueryAllpages.php 44863 2008-12-20 23:54:04Z catrope $';
 	}
 }

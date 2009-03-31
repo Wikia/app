@@ -4,8 +4,8 @@
  * @ingroup Language
  * @file
  *
+ * @author Dumitrachi T. Fundu
  * @author Hakka
- * @author Hakka (with the help of a native speaker Dumitrachi T. Fundu)
  */
 
 $messages = array(
@@ -106,7 +106,7 @@ Isape a vostrã ira adratã. Nu agãrshits s-le alãxits alidzerle-a vostre ti {
 'username'           => 'Numa di ufilizitor:',
 
 # Edit pages
-'summary'            => 'Rezime',
+'summary'            => 'Rezime:',
 'minoredit'          => 'Aistã easte alãxire njicã',
 'watchthis'          => 'Mutrits-u frãndzã aistã',
 'savearticle'        => 'Avigljats-u frãndzã',
@@ -151,9 +151,6 @@ Isape a vostrã ira adratã. Nu agãrshits s-le alãxits alidzerle-a vostre ti {
 # Book sources
 'booksources-go' => 'Du-vã',
 
-# Special:Log
-'log-search-submit' => 'Du-vã',
-
 # Special:AllPages
 'allpagessubmit' => 'Du-vã',
 
@@ -164,6 +161,9 @@ Isape a vostrã ira adratã. Nu agãrshits s-le alãxits alidzerle-a vostre ti {
 'watch'         => 'Videts',
 'watchthispage' => 'Mutrits-u frãndzã aistã',
 'unwatch'       => 'Azãptãsits videare',
+
+# Protect
+'prot_1movedto2' => '[[$1]] s-trãdzi tu [[$2]]',
 
 # Restrictions (nouns)
 'restriction-edit' => 'Alãxiri',
@@ -202,7 +202,7 @@ Isape a vostrã ira adratã. Nu agãrshits s-le alãxits alidzerle-a vostre ti {
 'tooltip-pt-logout'      => 'Disligats-vã',
 'tooltip-p-logo'         => 'Prota frãndzã',
 
-# Special:NewImages
+# Special:NewFiles
 'ilsubmit' => 'Caftã',
 
 # Multipage image navigation

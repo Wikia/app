@@ -11,7 +11,7 @@ if (!defined('MEDIAWIKI')) die();
 
 $wgExtensionCredits['specialpage'][] = array(
 	'name' => 'Patroller',
-	'version' => '1.0rc2',
+	'version' => '1.0rc3',
 	'author' => 'Rob Church',
 	'description' => 'Enhanced patrolling interface with workload sharing',
 	'descriptionmsg' => 'patrol-desc',
@@ -20,6 +20,7 @@ $wgExtensionCredits['specialpage'][] = array(
 
 $dir = dirname(__FILE__) . '/';
 $wgExtensionMessagesFiles['Patroller'] = $dir . 'Patroller.i18n.php';
+$wgExtensionAliasesFiles['Patroller'] = $dir . 'Patroller.alias.php';
 $wgAutoloadClasses['Patroller'] = $dir . 'Patroller.class.php';
 $wgSpecialPages['Patrol'] = 'Patroller';
 

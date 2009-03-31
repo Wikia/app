@@ -16,7 +16,6 @@ $extensions = array(
 		'name' => 'AbsenteeLandlord',
 		'settings' => array(
 			'wgAbsenteeLandlordMaxDays' => 'int',
-			'wgAbsenteeLandlordTouchFile' => 'text',
 		),
 		'url' => 'http://www.mediawiki.org/wiki/Extension:AbsenteeLandlord',
 	),
@@ -24,6 +23,17 @@ $extensions = array(
 		'name' => 'AbuseFilter',
 		'settings' => array(
 			'wgAbuseFilterAvailableActions' => 'array',
+			'wgAbuseFilterConditionLimit' => 'int',
+			'wgAbuseFilterEmergencyDisableThreshold' => 'text', // FIXME: float
+			'wgAbuseFilterEmergencyDisableCount' => 'int',
+			'wgAbuseFilterEmergencyDisableAge' => 'int',
+			'wgAbuseFilterParserClass' => 'text',
+			'wgAbuseFilterNativeParser' => 'text',
+			'wgAbuseFilterNativeSyntaxCheck' => 'text',
+			'wgAbuseFilterNativeExpressionEvaluator' => 'text',
+		),
+		'array' => array(
+			'wgAbuseFilterAvailableActions' => 'simple',
 		),
 		'schema' => true,
 		'url' => 'http://www.mediawiki.org/wiki/Extension:AbuseFilter',
@@ -70,12 +80,19 @@ $extensions = array(
 	array(
 		'name' => 'APC',
 		'file' => 'ViewAPC.php',
+		'url' => 'http://www.mediawiki.org/wiki/Extension:APC',
 	),
 	array(
 		'name' => 'Asksql',
 		'settings' => array(
 			'wgAllowSysopQueries' => 'bool',
 			'wgSqlLogFile' => 'text',
+			'wgDBsqlpassword' => 'text',
+			'wgDBsqluser' => 'text',
+		),
+		'view-restricted' => array(
+			'wgDBsqlpassword',
+			'wgDBsqluser',
 		),
 		'url' => 'http://www.mediawiki.org/wiki/Extension:Asksql',
 	),
@@ -88,7 +105,8 @@ $extensions = array(
 		'url' => 'http://www.mediawiki.org/wiki/Extension:AuthorProtect',
 	),
 	array(
-		'name' => 'Autincrement',
+		'name' => 'Autoincrement',
+		'url' => 'http://www.mediawiki.org/wiki/Extension:Autoincrement',
 	),
 
 	// B
@@ -111,6 +129,9 @@ $extensions = array(
 	),
 	array(
 		'name' => 'BadImage',
+		'settings' => array(
+			'wgBadImageCache' => 'bool',
+		),
 		'schema' => true,
 		'url' => 'http://www.mediawiki.org/wiki/Extension:Bad_Image_List',
 	),
@@ -210,10 +231,14 @@ $extensions = array(
 			'wgCategoryTreeUnifiedView' => 'bool',
 			'wgCategoryTreeMaxDepth' => 'array',
 			'wgCategoryTreeExtPath' => 'text',
+			# 'wgCategoryTreeVersion' => 'int',
+			# 'wgCategoryTreeUseCategoryTable' => 'bool',
+			'wgCategoryTreeOmitNamespace' => array( 0 => 'Never', 10 => 'Always', 20 => 'Category', 30 => 'Auto' ),
 			'wgCategoryTreeDefaultMode' => array( 0 => 'Categories', 10 => 'Pages', 20 => 'All' ),
 			'wgCategoryTreeCategoryPageMode' => array( 0 => 'Categories', 10 => 'Pages', 20 => 'All' ),
 			'wgCategoryTreeDefaultOptions' => 'array',
 			'wgCategoryTreeCategoryPageOptions' => 'array',
+			'wgCategoryTreeSpecialPageOptions' => 'array',
 			'wgCategoryTreeSidebarOptions' => 'array',
 			'wgCategoryTreePageCategoryOptions' => 'array',
 		),
@@ -221,6 +246,7 @@ $extensions = array(
 			'wgCategoryTreeMaxDepth' => 'assoc',
 			'wgCategoryTreeDefaultOptions' => 'assoc',
 			'wgCategoryTreeCategoryPageOptions' => 'assoc',
+			'wgCategoryTreeSpecialPageOptions' => 'assoc',
 			'wgCategoryTreeSidebarOptions' => 'assoc',
 			'wgCategoryTreePageCategoryOptions' => 'assoc',
 		),
@@ -243,6 +269,8 @@ $extensions = array(
 			'wgCentralAuthAutoLoginWikis' => 'array',
 			'wgCentralAuthLoginIcon' => 'text',
 			'wgCentralAuthCreateOnView' => 'bool',
+			'wgCentralAuthUDPAddress' => 'text',
+			'wgCentralAuthNew2UDPPrefix' => 'text',
 		),
 		'array' => array(
 			'wgCentralAuthAutoLoginWikis' => 'simple',
@@ -253,23 +281,29 @@ $extensions = array(
 	array(
 		'name' => 'CentralNotice',
 		'settings' => array(
-			'wgNoticeLoader' => 'text',
+			'wgNoticeCentralPath' => 'text',
+			'wgNoticeLocalPath' => 'text',
 			'wgNoticeLang' => 'text',
 			'wgNoticeProject' => 'text',
+			'wgNoticeProjects' => 'array',
+			'wgNoticeCentralDirectory' => 'text',
+			'wgNoticeLocalDirectory' => 'text',
 			'wgNoticeInfrastructure' => 'bool',
 			'wgCentralNoticeLoader' => 'bool',
-			'wgNoticeText' => 'text',
 			'wgNoticeTestMode' => 'bool',
 			'wgNoticeEnabledSites' => 'array',
 			'wgNoticeTimeout' => 'int',
 			'wgNoticeServerTimeout' => 'int',
-			'wgNoticeScroll' => 'bool',
 			'wgNoticeCounterSource' => 'text',
-			'wgNoticeRenderDirectory' => 'text',
-			'wgNoticeRenderPath' => 'text',
 		),
 		'array' => array(
-			'wgNoticeEnabledSites' => 'simple',
+			'wgNoticeProjects' => 'simple',
+		),
+		'empty' => array(
+			'wgNoticeCentralPath' => false,
+			'wgNoticeLocalPath' => false,
+			'wgNoticeCentralDirectory' => false,
+			'wgNoticeLocalDirectory' => false,
 		),
 		'url' => 'http://www.mediawiki.org/wiki/Extension:CentralNotice',
 	),
@@ -287,7 +321,9 @@ $extensions = array(
 		'settings' => array(
 			'wgCheckUserLog' => 'text',
 			'wgCUDMaxAge' => 'int',
+			'wgCheckUserMaxBlocks' => 'int',
 		),
+		'schema' => true,
 		'url' => 'http://www.mediawiki.org/wiki/Extension:CheckUser',
 	),
 	array(
@@ -314,7 +350,7 @@ $extensions = array(
 	array(
 		'name' => 'SpecialCite',
 		'dir' => 'Cite',
-		'url' => 'http://www.mediawiki.org/wiki/Extension:Cite/Cite.php'
+		'url' => 'http://www.mediawiki.org/wiki/Extension:Cite/Special:Cite.php'
 	),
 	array(
 		'name' => 'CleanChanges',
@@ -329,14 +365,42 @@ $extensions = array(
 		'url' => 'http://www.mediawiki.org/wiki/Extension:Click',
 	),
 	array(
+		'name' => 'CodeReview',
+		'settings' => array(
+			'wgCodeReviewENotif' => 'bool',
+			'wgSubversionProxy' => 'text',
+			'wgSubversionProxyTimeout' => 'int',
+			'wgSubversionUser' => 'text',
+			'wgSubversionPassword' => 'text',
+			'wgWikiSVN' => 'text',
+		),
+		'schema' => true,
+		'url' => 'http://www.mediawiki.org/wiki/Extension:CodeReview',
+	),
+	array(
 		'name' => 'Collection',
 		'settings' => array(
 			'wgCollectionMWServeURL' => 'text',
 			'wgCollectionMWServeCredentials' => 'text',
+			'wgCollectionMWServeCert' => 'text',
+			'wgCollectionArticleNamespaces' => 'array',
 			'wgCommunityCollectionNamespace' => 'int',
-			'wgSharedBaseURL' => 'text',
-			'wgLicenseArticle' => 'text',
+			'wgCollectionMaxArticles' => 'int',
+			'wgLicenseName' => 'text',
+			'wgLicenseURL' => 'text',
 			'wgPDFTemplateBlacklist' => 'text',
+			'wgCollectionTemplateExclusionCategory' => 'text',
+			'wgCollectionFormats' => 'array',
+			'wgCollectionPortletForLoggedInUsersOnly' => 'bool',
+		),
+		'array' => array(
+			'wgCollectionArticleNamespaces' => 'ns-simple',
+			'wgCollectionFormats' => 'assoc',
+		),
+		'empty' => array(
+			'wgCollectionMWServeCert' => null,
+			'wgLicenseName' => null,
+			'wgLicenseURL' => null,
 		),
 		'url' => 'http://www.mediawiki.org/wiki/Extension:Collection',
 	),
@@ -377,6 +441,7 @@ $extensions = array(
 			'wgConfirmAccountSaveInfo' => 'bool',
 			'wgConfirmAccountContact' => 'text',
 			'wgConfirmAccountCaptchas' => 'bool',
+			'wgConfirmAccountNotice' => 'bool',
 			'wgAllowAccountRequestFiles' => 'bool',
 			'wgAccountRequestExts' => 'array',
 		),
@@ -392,12 +457,22 @@ $extensions = array(
 		'name' => 'ConfirmEdit',
 		'settings' => array(
 			'wgCaptchaClass' => 'text',
+			'wgCaptchaWhitelistIP' => 'array',
 			'wgCaptchaTriggers' => 'array',
 			'wgCaptchaTriggersOnNamespace' => 'array',
+			'wgCaptchaStorageClass' => 'text',
+			'wgCaptchaSessionExpiration' => 'int',
+			'wgCaptchaBadLoginExpiration' => 'int',
+			'ceAllowConfirmedEmail' => 'bool',
+			'wgCaptchaBadLoginAttempts' => 'int',
+			'wgCaptchaWhitelist' => 'text',
+			'wgCaptchaRegexes' => 'array',
 		),
 		'array' => array(
+			'wgCaptchaWhitelistIP' => 'simple',
 			'wgCaptchaTriggers' => 'assoc',
 			'wgCaptchaTriggersOnNamespace' => 'array',
+			'wgCaptchaRegexes' => 'simple',
 		),
 		'url' => 'http://www.mediawiki.org/wiki/Extension:ConfirmEdit',
 	),
@@ -442,6 +517,10 @@ $extensions = array(
 	),
 	array(
 		'name' => 'Contributors',
+		'settings' => array(
+			'wgContributorsLimit' => 'int',
+			'wgContributorsThreshold' => 'int',
+		),
 		'url' => 'http://www.mediawiki.org/wiki/Extension:Contributors',
 		'schema' => true,
 	),
@@ -454,7 +533,7 @@ $extensions = array(
 		'settings' => array(
 			'wgCountEditsMostActive' => 'bool',
 		),
-		'url' => 'http://www.mediawiki.wiki/wiki/Extesion:CountEdits',
+		'url' => 'http://www.mediawiki.wiki/wiki/Extension:CountEdits',
 	),
 	array(
 		'name' => 'CreateBox',
@@ -476,11 +555,43 @@ $extensions = array(
 		),
 		'url' => 'http://www.mediawiki.org/wiki/Extension:CSS',
 	),
-	
+
 	// D
+	array(
+		'name' => 'DeleteBatch',
+		'url' => 'http://www.mediawiki.org/wiki/Extension:DeleteBatch',
+	),
 	array(
 		'name' => 'DeletedContributions',
 		'url' => 'http://www.mediawiki.org/wiki/Extension:DeletedContributions',
+	),
+	array(
+		'name' => 'DeleteQueue',
+		'settings' => array(
+			'wgDeleteQueueExpiry' => 'array',
+		),
+		'array' => array(
+			'wgDeleteQueueExpiry' => 'assoc',
+		),
+		'schema' => true,
+		'url' => 'http://www.mediawiki.org/wiki/Extension:DeleteQueue',
+	),
+	array(
+		'name' => 'DidYouMean',
+		'settings' => array(
+			'wgDymUseSeeTemplate' => 'bool',
+		),
+		'schema' => true,
+		'url' => 'http://www.mediawiki.org/wiki/Extension:DidYouMean',
+	),
+	array(
+		'name' => 'DisableSpecialPages',
+		'settings' => array(
+			'wgDisabledSpecialPages' => 'array',
+		),
+		'array' => array(
+			'wgDisabledSpecialPages' => 'simple',
+		),
 	),
 	array(
 		'name' => 'DismissableSiteNotice',
@@ -488,6 +599,14 @@ $extensions = array(
 			'wgMajorSiteNoticeID' => 'int',
 		),
 		'url' => 'http://www.mediawiki.org/wiki/Extension:DismissableSiteNotice',
+	),
+	array(
+		'name' => 'Duplicator',
+		'settings' => array(
+			'wgDuplicatorRevisionLimit' => 'int',
+		),
+		'schema' => true,
+		'url' => 'http://www.mediawiki.org/wiki/Extension:Duplicator',
 	),
 
 	// E
@@ -508,7 +627,7 @@ $extensions = array(
 	),
 	array(
 		'name' => 'EditSubpages',
-		'url' => "http://www.mediawiki.org/wiki/Extension:EditSubpages",
+		'url' => 'http://www.mediawiki.org/wiki/Extension:EditSubpages',
 	),
 	array(
 		'name' => 'EditUser',
@@ -536,7 +655,7 @@ $extensions = array(
 	),
 	array(
 		'name' => 'FindSpam',
-		'url'=>'http://www.mediawiki.org/wiki/Extension:Find_Spam',
+#		'url'=>'http://www.mediawiki.org/wiki/Extension:Find_Spam',
 	),
 	array(
 		'name' => 'FlaggedRevs',
@@ -548,12 +667,13 @@ $extensions = array(
 			'wgFlaggedRevsPatrolNamespaces' => 'array',
 			'wgFlaggedRevsWhitelist' => 'array',
 			'wgFlaggedRevsOverride' => 'bool',
+			'wgFlaggedRevsReviewForDefault' => 'bool',
 			'wgFlaggedRevsPrecedence' => 'bool',
 			'wgFlaggedRevsExceptions' => 'array',
 			'wgFlaggedRevsComments' => 'bool',
 			'wgReviewChangesAfterEdit' => 'bool',
 			'wgFlaggedRevsAutoReview' => 'bool',
-			'wgUseStableTemplates' => 'bool',
+			'wgFlaggedRevsAutoReviewNew' => 'bool',
 			'wgUseCurrentTemplates' => 'bool',
 			'wgUseStableImages' => 'bool',
 			'wgUseCurrentImages' => 'bool',
@@ -562,17 +682,19 @@ $extensions = array(
 			'wgFlaggedRevPristine' => 'int',
 			'wgFlagRestrictions' => 'array',
 			'wgReviewCodes' => 'array',
+			'wgFlaggedRevsStylePath' => 'text',
 			'wgFlaggedRevsAutopromote' => 'array',
-			'wgFlaggedRevsExternalStore' => 'array',
 			'wgFlaggedRevsLogInRC' => 'bool',
 			'wgFlaggedRevsOversightAge' => 'int',
-			'wgFlaggedRevsLongPending' => 'array',
 			'wgFlaggedRevsBacklog' => 'int',
 			'wgFlaggedRevsVisible' => 'array',
 			'wgFlaggedRevsTalkVisible' => 'bool',
+			'wgFeedbackNamespaces' => 'array',
 			'wgFlaggedRevsFeedbackTags' => 'array',
 			'wgFlaggedRevsFeedbackAge' => 'int',
+			'wgFlaggedRevsStatsAge' => 'int',
 			'wgPHPlotDir' => 'text',
+			'wgSvgGraphDir' => 'text',
 		),
 		'array' => array(
 			'wgFlaggedRevsNamespaces' => 'ns-simple',
@@ -583,13 +705,16 @@ $extensions = array(
 			'wgFlagRestrictions' => 'array',
 			'wgReviewCodes' => 'simple',
 			'wgFlaggedRevsAutopromote' => 'assoc',
-			'wgFlaggedRevsExternalStore' => 'simple',
-			'wgFlaggedRevsLongPending' => 'simple',
 			'wgFlaggedRevsVisible' => 'simple',
+			'wgFeedbackNamespaces' => 'ns-simple',
 			'wgFlaggedRevsFeedbackTags' => 'assoc',
 		),
 		'schema' => true,
 		'url' => 'http://www.mediawiki.org/wiki/Extension:FlaggedRevs',
+	),
+	array(
+		'name' => 'ForcePreview',
+		'url' => 'http://www.mediawiki.org/wiki/Extension:ForcePreview',
 	),
 	array(
 		'name' => 'FormPreloadPostCache',
@@ -618,6 +743,26 @@ $extensions = array(
 		),
 		'url' => 'http://www.mediawiki.org/wiki/Extension:Gnuplot',
 	),
+	array(
+		'name' => 'GoogleAdSense',
+		'settings' => array(
+			'wgGoogleAdSenseWidth' => 'int',
+			'wgGoogleAdSenseHeight' => 'int',
+			'wgGoogleAdSenseSrc' => 'text',
+			'wgGoogleAdSenseClient' => 'text',
+			'wgGoogleAdSenseSlot' => 'text',
+			'wgGoogleAdSenseID' => 'text',
+		),
+		'url' => 'http://www.mediawiki.org/wiki/Extension:Google_AdSense_2',
+	),
+	array(
+		'name' => 'GoToCategory',
+		'url' => 'http://www.mediawiki.org/wiki/Extension:GoToCategory',
+	),
+	array(
+		'name' => 'GroupPortal',
+		'url' => 'http://www.mediawiki.org/wiki/Extension:GroupPortal',
+	),
 
 	// I
 	array(
@@ -625,7 +770,7 @@ $extensions = array(
 		'url' => 'http://www.mediawiki.org/wiki/Extension:ImageMap',
 	),
 	array(
-		'name' => 'inputbox',
+		'name' => 'Inputbox',
 		'url' => 'http://www.mediawiki.org/wiki/Extension:Inputbox',
 	),
 	array(
@@ -647,7 +792,7 @@ $extensions = array(
 		'url' => 'http://mediawiki.org/wiki/Extension:SpecialInterwiki',
 	),
 	array(
-		'name' => 'InerwikiList',
+		'name' => 'InterwikiList',
 		'url' => 'http://mediawiki.org/wiki/Extension:InterwikiList',
 	),
 
@@ -685,11 +830,12 @@ $extensions = array(
 		'file' => 'SpecialNuke.php',
 		'url' => 'http://www.mediawiki.org/wiki/Extension:Nuke',
 	),
-	
+
 	// O
 	array(
 		'name' => 'OggHandler',
 		'settings' => array(
+			'wgPlayerStatsCollection' => 'bool',
 			'wgFFmpegLocation' => 'text',
 			'wgCortadoJarFile' => 'text',
 		),
@@ -700,6 +846,14 @@ $extensions = array(
 		'settings' => array(
 			'wgAllowAnyUserOnlineStatusFunction' => 'bool',
 		),
+		'url' => 'http://www.mediawiki.org/wiki/Extension:OnlineStatus',
+	),
+	array(
+		'name' => 'OpenSearchXml',
+		'settings' => array(
+			'wgOpenSearchAdvertiseXml' => 'bool',
+		),
+		'url' => 'http://www.mediawiki.org/wiki/Extension:OpenSearchXml',
 	),
 	array(
 		'name' => 'Oversight',
@@ -732,7 +886,7 @@ $extensions = array(
 		'name' => 'Renameuser',
 		'file' => 'SpecialRenameuser.php',
 		'url' => 'http://www.mediawiki.org/wiki/Extension:Renameuser',
-	),	
+	),
 
 	// S
 	array(
@@ -744,16 +898,30 @@ $extensions = array(
 		'array' => array(
 			'wgSkinPerNamespace' => 'ns-text',
 		),
+		'url' => 'http://www.mediawiki.org/wiki/Extension:SkinPerNamespace',
 	),
 	array(
 		'name' => 'SkinPerPage',
 		'url' => 'http://www.mediawiki.org/wiki/Extension:SkinPerPage',
 	),
 	array(
+		'name' => 'SocialProfile',
+		'settings' => array(
+			'wgUserBoard' => 'bool',
+			'wgFriendingEnabled' => 'bool',
+		),
+		'schema' => true,
+		'url' => 'http://www.mediawiki.org/wiki/Extension:SocialProfile',
+	),
+	array(
+		'name' => 'SpamRegex',
+		'url' => 'http://www.mediawiki.org/wiki/Extension:SpamRegex',
+	),
+	array(
 		'name' => 'SyntaxHighlight_GeSHi',
 		'url' => 'http://www.mediawiki.org/wiki/Extension:SyntaxHighlight_GeSHi',
 	),
-	
+
 	// T
 	array(
 		'name' => 'Timeline',
@@ -762,6 +930,14 @@ $extensions = array(
 	),
 	array(
 		'name' => 'TitleBlacklist',
+		'settings' => array(
+			'wgTitleBlacklistCaching' => 'array',
+			'wgTitleBlacklistSources' => 'array',
+		),
+		'array' => array(
+			'wgTitleBlacklistCaching' => 'assoc',
+			'wgTitleBlacklistSources' => 'array',
+		),
 		'url' => 'http://www.mediawiki.org/wiki/Extension:Title_Blacklist',
 	),
 	array(
@@ -802,9 +978,11 @@ $extensions = array(
 			'wgTranslateGroupStructure' => 'array',
 			'wgTranslateAddMWExtensionGroups' => 'bool',
 			'wgTranslateEC' => 'array',
+			'wgTranslateCC' => 'array',
 			'wgTranslateTasks' => 'array',
 			'wgTranslatePHPlot' => 'text',
 			'wgTranslatePHPlotFont' => 'text',
+			'wgTranslateTagTranslationLocation' => 'array',
 		),
 		'array' => array(
 			'wgTranslateLanguageFallbacks' => 'assoc',
@@ -814,12 +992,24 @@ $extensions = array(
 			'wgTranslateAC' => 'assoc',
 			'wgTranslateGroupStructure' => 'array',
 			'wgTranslateEC' => 'simple',
+			'wgTranslateCC' => 'assoc',
 			'wgTranslateTasks' => 'assoc',
+			'wgTranslateTagTranslationLocation' => 'simple',
 		),
 		'url' => 'http://www.mediawiki.org/wiki/Extension:Translate',
 	),
 
 	// U
+	array(
+		'name' => 'UserMerge',
+		'settings' => array(
+			'wgUserMergeProtectedGroups' => 'array',
+		),
+		'array' => array(
+			'wgUserMergeProtectedGroups' => 'simple',
+		),
+		'url' => 'http://www.mediawiki.org/wiki/Extension:User_Merge_and_Delete',
+	),
 	array(
 		'name' => 'UsernameBlacklist',
 		'url' => 'http://www.mediawiki.org/wiki/Extension:Username_Blacklist',

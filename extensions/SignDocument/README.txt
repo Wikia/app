@@ -21,24 +21,24 @@ fit for actual use.
 	[4] File manifest
 
 [1] Installation
-	[1.1] SignDocument has the following installation prerequisites: 
+	[1.1] SignDocument has the following installation prerequisites:
 		[1.1.1] MediaWiki 1.10+ and its requirements (such as PHP5 and MySQL)
 		[1.1.2] It should run on all operating systems that MW supports;
 		however, it has only been tested on SuSE Linux 10.1 and Red Hat Fedora
 		Core 4.
 		[1.1.3] ExtensionFunctions.php must be installed in your extensions
 		directory. This can be downloaded from subversion.
-	
+
 	[1.2] Verify that you have all the needed files (see |4| below) in the
 	directoy "<wikiroot>/extensions/SignDocument". If you need the extension
 	to be stored elsewhere, then amend these instructions accordingly.
-	
+
 	[1.3] First, you must set up the database to support the extension. To do
 	this, execute "mysql -u root -p |yourwikidb| < signdocument.sql", or
 	otherwise execute the signdocument.sql script (using phpMyAdmin or similar
 	applications).
 
-	[1.4] Then, add to your LocalSettings.php: 
+	[1.4] Then, add to your LocalSettings.php:
 	'require_once( "$IP/extensions/SignDocument/SignDocument.php" )'.
 
 	[1.5] You can then add a user on your wiki to the group "sigadmin" via
@@ -76,7 +76,7 @@ fit for actual use.
 [3] Using Special:SignDocument
 	[3.1] The heart of the extension is Special:SignDocument, which provides
 	both the interface allowing users to sign documents and the moderation
-	interface, accessible to users in the group "sigadmin". 
+	interface, accessible to users in the group "sigadmin".
 
 	[3.2] Accessing the special page directly will give you a list of pages
 	that you can sign or for which you can view signatures; however, in most
@@ -122,6 +122,3 @@ fit for actual use.
 		-> Localization for Special:CreateSignDocument.
 	[4.9] SignDocumentHelpers.php
 		-> Helper classes for the extension.
-	
-	
-	

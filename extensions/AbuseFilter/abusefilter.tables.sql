@@ -12,6 +12,7 @@ CREATE TABLE /*$wgDBprefix*/abuse_filter (
 	af_hidden tinyint(1) not null default 0,
 	af_hit_count bigint not null default 0,
 	af_throttled tinyint(1) NOT NULL default 0,
+	af_deleted tinyint(1) NOT NULL DEFAULT 0,
 	
 	PRIMARY KEY (af_id),
 	KEY (af_user)
@@ -45,4 +46,24 @@ CREATE TABLE /*$wgDBprefix*/abuse_filter_log (
 	KEY (afl_timestamp),
 	KEY (afl_namespace, afl_title),
 	KEY (afl_ip)
+) /*$wgDBTableOptions*/;
+
+CREATE TABLE /*$wgDBprefix*/abuse_filter_history (
+	afh_id BIGINT unsigned NOT NULL AUTO_INCREMENT,
+	afh_filter BIGINT unsigned NOT NULL,
+	afh_user BIGINT unsigned NOT NULL,
+	afh_user_text varchar(255) binary NOT NULL,
+	afh_timestamp binary(14) NOT NULL,
+	afh_pattern BLOB NOT NULL,
+	afh_comments BLOB NOT NULL,
+	afh_flags TINYBLOB NOT NULL,
+	afh_public_comments TINYBLOB,
+	afh_actions BLOB,
+	afh_deleted tinyint(1) NOT NULL DEFAULT 0,
+	
+	PRIMARY KEY (afh_id),
+	KEY (afh_filter),
+	KEY (afh_user),
+	KEY (afh_user_text),
+	KEY (afh_timestamp)
 ) /*$wgDBTableOptions*/;

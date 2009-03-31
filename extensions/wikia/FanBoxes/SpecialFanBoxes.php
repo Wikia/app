@@ -44,6 +44,14 @@ class FanBoxes extends SpecialPage {
 				$wgOut->redirect( $login->getFullURL("returnto=Special:UserBoxes")  );
 				return false;
 		}
+
+		// don't allow blocked users (RT #12589)
+		if ($wgUser->isBlocked()) {
+			$wgOut-> blockedPage();
+			return true;
+		}
+
+		$output = '';
 			
 		$title = str_replace("#","",$wgRequest->getVal("wpTitle"));
 		$fanboxid = $wgRequest->getVal("id");
@@ -436,7 +444,7 @@ class FanBoxes extends SpecialPage {
 	
 	
 	function colorPickerAndCategoryCloud(){
-				$output.="				
+				$output="				
 				<div class=\"add-colors\">
 					<h1>". wfMsgForContent( 'fan_add_colors' ) ."</h1>
 					<div id=\"add-colors-left\">	
@@ -518,9 +526,9 @@ class FanBoxes extends SpecialPage {
 		$tagcloud .= "</div>";
 		$output .= "<div class=\"create-category-title\"> <h1> $categories_label </h1></div>";
 		$output .= "<div class=\"categorytext\">$categories_help_text</div>";
-		$output .= $tagcloud;		
-		$output .= "<textarea class=\"createbox\" tabindex=\"$tab_counter\" accesskey=\",\" name=\"pageCtg\" id=\"pageCtg\" rows=\"2\" cols=\"80\">{$categories}</textarea><br><br>";
-		$output .= "</div>";	
+		$output .= $tagcloud;
+		$output .= "<textarea class=\"createbox\" tabindex=\"$tabcounter\" accesskey=\",\" name=\"pageCtg\" id=\"pageCtg\" rows=\"2\" cols=\"80\">{$categories}</textarea><br><br>";
+		$output .= "</div>";
 			
 		return $output;
 	}

@@ -12,14 +12,14 @@ if (!defined('MEDIAWIKI')) {
 
 $wgExtensionCredits['specialpage'][] = array(
 	'name'           => 'SiteMatrix',
-	'svn-date' => '$LastChangedDate: 2008-07-21 20:14:27 +0000 (Mon, 21 Jul 2008) $',
-	'svn-revision' => '$LastChangedRevision: 37888 $',
+	'svn-date' => '$LastChangedDate: 2008-12-18 08:28:22 +0000 (Thu, 18 Dec 2008) $',
+	'svn-revision' => '$LastChangedRevision: 44757 $',
 	'url'            => 'http://www.mediawiki.org/wiki/Extension:SiteMatrix',
 	'description'    => 'Displays a list of Wikimedia wikis',
 	'descriptionmsg' => 'sitematrix-desc',
 );
 
-$wgSiteMatrixFile = '/home/wikipedia/common/langlist';
+$wgSiteMatrixFile = '/apache/common/langlist';
 $wgSiteMatrixSites = array(
 	'wiki' => array(
 		'name' => 'Wikipedia',
@@ -65,6 +65,8 @@ $wgExtensionAliasesFiles['SiteMatrix'] = $dir . 'SiteMatrix.alias.php';
 
 $wgAutoloadClasses['SiteMatrixPage'] = $dir . 'SiteMatrix_body.php';
 $wgSpecialPages['SiteMatrix'] = 'SiteMatrixPage';
+$wgSpecialPageGroups['SiteMatrix'] = 'wiki';
 
 $wgAutoloadClasses['ApiQuerySiteMatrix'] = $dir . 'SiteMatrix_body.php';
 $wgAPIModules['sitematrix'] = 'ApiQuerySiteMatrix';
+

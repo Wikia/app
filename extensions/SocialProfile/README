@@ -16,8 +16,11 @@ SocialProfile is licensed under GNU General Public License 2.0 or later.
 See http://www.gnu.org/copyleft/gpl.html for more details.
 
 ==Bugs==
-Bugs and issues can be reported on the extension's infopage:
+Bugs and issues can be reported on the extension's talk page:
 http://www.mediawiki.org/w/index.php?title=Extension_talk:SocialProfile&action=edit&section=new
+or on the MediaWiki Bugzilla:
+https://bugzilla.wikimedia.org/enter_bug.cgi?product=MediaWiki%20extensions
+
 It is recommended that you spend a while reading the documentation and
 searching the archived discussions before posting a question - it is
 possible that someone has experienced the same issue with this software

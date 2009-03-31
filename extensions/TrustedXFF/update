@@ -1,0 +1,5 @@
+#!/bin/bash
+
+cd `dirname $0`
+php generate.php
+bzip2 -kf trusted-xff.cdb

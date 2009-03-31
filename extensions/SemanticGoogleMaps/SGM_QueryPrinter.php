@@ -3,7 +3,9 @@ if (!defined('MEDIAWIKI')) die();
 /**
  * Print query results in a Google Map. Based on Google Maps API code
  * written by Robert Buzink and query results printing code written by
- * Markus Krötzsch.
+ * Markus KrÃ¶tzsch.
+ *
+ * @author Yaron Koren
  */
 
 class SGMResultPrinter extends SMWResultPrinter {
@@ -17,23 +19,21 @@ class SGMResultPrinter extends SMWResultPrinter {
 	protected function getResultText($res, $outputmode) {
 		global $smwgIQRunningNumber, $wgUser;
 		$skin = $wgUser->getSkin();
-
-		// print header
-		$result = $this->mIntro;
+		$result = "";
 
 		$locations = array();
+		$legend_labels = array();
 		// print all result rows
 		while ( $row = $res->getNext() ) {
-			$lat = $lon = $title = $text = "";
-			foreach ($row as $field) {
+			$lat = $lon = $title = $text = $icon = "";
+			foreach ($row as $i => $field) {
 				$pr = $field->getPrintRequest();
-				$first = true;
 				while ( ($object = $field->getNextObject()) !== false ) {
 					if ($object->getTypeID() == '_geo') { // use shorter "LongText" for wikipage
 						// don't add geographical coordinates to the display
 					} elseif ($object->getTypeID() == '_wpg') { // use shorter "LongText" for wikipage
 						$text .= $pr->getHTMLText($skin) . " " . $object->getLongText($outputmode, $skin) . "<br />";
-						if ($first) {
+						if ($i == 0) {
 							$title = $object->getShortWikiText(false);
 						}
 					} else {
@@ -43,19 +43,39 @@ class SGMResultPrinter extends SMWResultPrinter {
 						list($lat,$lon) = explode(',', $object->getXSDValue());
 
 					}
-					$first = false;
 				}
-				if ($lat != '' && $lon != '') {
-					$locations[] = array($lat, $lon, $title, $text);
+			}
+			if ($lat != '' && $lon != '') {
+				// look for display_options field, which can
+				// be set by Semantic Compound Queries
+				if (property_exists($row[0], 'display_options')) {
+					if (array_key_exists('icon', $row[0]->display_options)) {
+						$icon = $row[0]->display_options['icon'];
+						// this is somewhat of a hack - if a
+						// legend label has been set, we're
+						// getting it for every point,
+						// instead of just once per icon
+						if (array_key_exists('legend label', $row[0]->display_options)) {
+							$legend_label = $row[0]->display_options['legend label'];
+							if (! array_key_exists($icon, $legend_labels)) {
+								$legend_labels[$icon] = $legend_label;
+							}
+						}
+					}
+				// icon can be set even for regular, non-compound
+				// queries -if it is, though, we have to translate
+				// the name into a URL here
+				} elseif (array_key_exists('icon', $this->m_params)) {
+					$icon_title = Title::newFromText($this->m_params['icon']);
+					$icon_image_page = new ImagePage($icon_title);
+					$icon = $icon_image_page->getDisplayedFile()->getURL();
 				}
+
+				$locations[] = array($lat, $lon, $title, $text, $icon);
 			}
 		}
 
-
 		$coordinates = '1,1';
-		$zoom = '2';
-		$type = 'G_HYBRID_MAP';
-		$controls = 'GSmallMapControl';
 		$class = 'pmap';
 		if (array_key_exists('width', $this->m_params)) {
 			$width = $this->m_params['width'];
@@ -67,6 +87,26 @@ class SGMResultPrinter extends SMWResultPrinter {
 		} else {
 			$height = 400;
 		}
+		if (array_key_exists('center', $this->m_params)) {
+			$center = $this->m_params['center'];
+		} else {
+			$center = null;
+		}
+		if (array_key_exists('zoom', $this->m_params)) {
+			$zoom = $this->m_params['zoom'];
+		} else {
+			$zoom = 0;
+		}
+		if (array_key_exists('map type', $this->m_params)) {
+			$type = $this->m_params['map type'];
+		} else {
+			$type = 'G_NORMAL_MAP';
+		}
+		if (array_key_exists('map control', $this->m_params)) {
+			$control_class = $this->m_params['map control'];
+		} else {
+			$control_class = 'GLargeMapControl';
+		}
                 global $wgJsMimeType, $wgGoogleMapsKey, $wgGoogleMapsOnThisPage;
 
                 if (!$wgGoogleMapsOnThisPage) {$wgGoogleMapsOnThisPage = 0;}
@@ -75,8 +115,14 @@ class SGMResultPrinter extends SMWResultPrinter {
                 $map_text = <<<END
 <script src="http://maps.google.com/maps?file=api&v=2&key=$wgGoogleMapsKey" type="$wgJsMimeType"></script>
 <script type="text/javascript">
-function createMarker(point, title, label) {
-	var marker = new GMarker(point, {title:title});
+function createMarker(point, title, label, icon) {
+	if (icon!='') {
+		var iconObj = new GIcon(G_DEFAULT_ICON);
+		iconObj.image = icon;
+		var marker = new GMarker(point, {title:title, icon:iconObj});
+	} else {
+		var marker = new GMarker(point, {title:title});
+	}
 	GEvent.addListener(marker, 'click',
 		function() {
 			marker.openInfoWindowHtml(label, {maxWidth:350});
@@ -101,16 +147,17 @@ window.unload = GUnload;
 function makeMap{$wgGoogleMapsOnThisPage}() {
 	if (GBrowserIsCompatible()) {
 		var map = new GMap2(document.getElementById("map$wgGoogleMapsOnThisPage"), {size: new GSize('$width', '$height')});
-		map.addControl(new {$controls}());
+		map.setMapType($type);
+		map.addControl(new {$control_class}());
 		map.addControl(new GMapTypeControl());
 END;
-		if (count($locations) > 0) {
+		if (count($locations) > 0 && $center == null) {
 			// get the extremes among these points to calculate
 			// the correct zoom level for the map
 			$min_lat = 90;
 			$max_lat = -90;
-			$min_lon = 90;
-			$max_lon = -90;
+			$min_lon = 180;
+			$max_lon = -180;
 			foreach ($locations as $i => $location) {
 				list($lat, $lon) = $location;
 				if ($lat < $min_lat) {$min_lat = $lat; }
@@ -130,32 +177,33 @@ END;
 			$min_lat_plus = $min_lat - (0.05 * $lat_width);
 			$max_lon_plus = $max_lon + (0.05 * $lon_width);
 			$min_lon_plus = $min_lon - (0.05 * $lon_width);
-		} else {
-			$center_lat = 0;
-			$center_lon = 0;
-			// a set of coordinates that will guarantee that
-			// the correct zoom level will appear (i.e., the
-			// whole world) - I don't know why these specific
-			// numbers are what is required
-			$max_lat_plus = 80;
-			$min_lat_plus = -80;
-			$max_lon_plus = 140;
-			$min_lon_plus = -140;
-		}
-                $map_text .=<<<END
+			$map_text .=<<<END
 	var center = new GLatLng($center_lat, $center_lon);
 	var sw_point = new GLatLng($min_lat_plus, $min_lon_plus);
 	var ne_point = new GLatLng($max_lat_plus, $max_lon_plus);
 	var bounds = new GLatLngBounds(sw_point, ne_point);
 	var zoom = map.getBoundsZoomLevel(bounds);
 	map.setCenter(center, zoom);
+
 END;
+		} else {
+			if ($center == null) {
+				$center_lat = 0;
+				$center_lon = 0;
+			} else {
+				// GLatLng class expects only numbers, no
+				// letters or degree symbols
+				list($center_lat, $center_lon) = SGMUtils::getLatLon($center);
+			}
+			$map_text .= "	map.setCenter(new GLatLng($center_lat, $center_lon), $zoom);\n";
+		}
 		// add a marker to the map for each location
 		foreach ($locations as $i => $location) {
-			list($lat, $lon, $title, $label) = $location;
+			list($lat, $lon, $title, $label, $icon) = $location;
+			$title = str_replace("'", "\'", $title);
 			$label = str_replace("'", "\'", $label);
 			$map_text .=<<<END
-	map.addOverlay(createMarker(new GLatLng($lat, $lon), "$title", '$label'));
+	map.addOverlay(createMarker(new GLatLng($lat, $lon), '$title', '$label', '$icon'));
 END;
 		}
 
@@ -168,14 +216,32 @@ END;
 		// to avoid wiki parsing adding random '<p>' tags, we have
 		// to replace all newlines with spaces
 		$map_text = preg_replace('/\s+/m', ' ', $map_text);
+
+		// add the legend, if any labels have been defined
+		if (count($legend_labels) > 0) {
+			$map_text .= "\n<div style=\"margin: 10px; padding: 5px;\">\n";
+			foreach ($legend_labels as $icon => $legend_label) {
+/*
+				$icon_title = Title::newFromText($icon);
+				$icon_image = new ImagePage($icon_title);
+				$icon_url = $icon_image->getDisplayedFile()->getURL();
+*/
+				$map_text .= "<img src=\"$icon\" />&nbsp;$legend_label&nbsp;&nbsp;&nbsp; ";
+			}
+			$map_text .= "</div>\n";
+		}
 		$result .= $map_text;
 
 		// print further results footer
-		if ( $this->mInline && $res->hasFurtherResults() && $this->mSearchlabel !== '') {
+		// getSearchLabel() method was added in SMW 1.3
+		if (method_exists($this, 'getSearchLabel')) {
+			$search_label = $this->getSearchLabel(SMW_OUTPUT_HTML);
+		} else {
+			$search_label = $this->mSearchlabel;
+		}
+		if ( $this->mInline && $res->hasFurtherResults() && $search_label !== '') {
 			$link = $res->getQueryLink();
-			if ($this->mSearchlabel) {
-				$link->setCaption($this->mSearchlabel);
-			}
+			$link->setCaption($search_label);
 			$result .= "\t<tr class=\"smwfooter\"><td class=\"sortbottom\" colspan=\"" . $res->getColumnCount() . '"> ' . $link->getText($outputmode,$this->mLinker) . "</td></tr>\n";
 		}
 		return array($result, 'noparse' => 'true', 'isHTML' => 'true');

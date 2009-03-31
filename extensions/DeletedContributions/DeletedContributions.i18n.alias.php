@@ -18,14 +18,19 @@ $aliases['en'] = array(
  * @author Meno25
  */
 $aliases['ar'] = array(
-	'DeletedContributions' => array( 'مساهمات محذوفة' ),
+	'DeletedContributions' => array( 'مساهمات_محذوفة' ),
 );
 
 /** Egyptian Spoken Arabic (مصرى)
  * @author Meno25
  */
 $aliases['arz'] = array(
-	'DeletedContributions' => array( 'مساهمات محذوفة' ),
+	'DeletedContributions' => array( 'مساهمات_محذوفة' ),
+);
+
+/** Danish (Dansk) */
+$aliases['da'] = array(
+	'DeletedContributions' => array( 'Slettede bidrag' ),
 );
 
 /** German (Deutsch)
@@ -33,6 +38,11 @@ $aliases['arz'] = array(
  */
 $aliases['de'] = array(
 	'DeletedContributions' => array( 'Gelöschte Beiträge' ),
+);
+
+/** Greek (Ελληνικά) */
+$aliases['el'] = array(
+	'DeletedContributions' => array( 'ΔιαγραμμένεςΣυνεισφορές' ),
 );
 
 /** Finnish (Suomi) */
@@ -72,6 +82,16 @@ $aliases['hu'] = array(
 	'DeletedContributions' => array( 'Törölt szerkesztések' ),
 );
 
+/** Indonesian (Bahasa Indonesia) */
+$aliases['id'] = array(
+	'DeletedContributions' => array( 'Kontribusi yang dihapus' ),
+);
+
+/** Korean (한국어) */
+$aliases['ko'] = array(
+	'DeletedContributions' => array( '삭제된기여' ),
+);
+
 /** Latin (Latina) */
 $aliases['la'] = array(
 	'DeletedContributions' => array( 'Conlationes deletae', 'Conlationes usoris deletae' ),
@@ -85,6 +105,11 @@ $aliases['lb'] = array(
 /** Malay (Bahasa Melayu) */
 $aliases['ms'] = array(
 	'DeletedContributions' => array( 'Sumbangan_dihapuskan' ),
+);
+
+/** Nedersaksisch (Nedersaksisch) */
+$aliases['nds-nl'] = array(
+	'DeletedContributions' => array( 'Vort-ehaolen gebrukersbiedragen' ),
 );
 
 /** Dutch (Nederlands) */

@@ -8,24 +8,24 @@ if (!defined('MEDIAWIKI')) {
  *
  * @addtogroup Extensions
  */
- 
-class SpecialAutoLogin extends UnlistedSpecialPage
-{
+class SpecialAutoLogin extends UnlistedSpecialPage {
+
 	function __construct() {
 		parent::__construct('AutoLogin');
 	}
-	
+
 	function execute( $par ) {
 		global $wgRequest, $wgOut, $wgUser, $wgMemc, $IP;
-		
-		$tempToken = $wgRequest->getVal('token');
+
+		$tempToken = $wgRequest->getVal( 'token' );
 		$logout = $wgRequest->getBool( 'logout' );
 
 		# Don't cache error messages
 		$wgOut->enableClientCache( false );
 
-		if (strlen($tempToken) == 0) {
+		if( strlen( $tempToken ) == 0 ) {
 			wfLoadExtensionMessages( 'SpecialCentralAuth' );
+			$this->setHeaders();
 			$wgOut->addWikiMsg( 'centralauth-autologin-desc' );
 			return;
 		}
@@ -34,9 +34,11 @@ class SpecialAutoLogin extends UnlistedSpecialPage
 		$data = $wgMemc->get( $key );
 		$wgMemc->delete( $key );
 
-		if ( !$data ) {
+		if( !$data ) {
 			$msg = 'Token is invalid or has expired';
 			wfDebug( __METHOD__.": $msg\n" );
+			wfLoadExtensionMessages( 'SpecialCentralAuth' );
+			$this->setHeaders();
 			$wgOut->addWikiText( $msg );
 			return;
 		}
@@ -44,22 +46,24 @@ class SpecialAutoLogin extends UnlistedSpecialPage
 		$userName = $data['userName'];
 		$token = $data['token'];
 		$remember = $data['remember'];
-		
-		#die( print_r( $data, true ));
-		
-		if ($data['wiki'] != wfWikiID()) {
+
+		if( $data['wiki'] != wfWikiID() ) {
 			$msg = 'Bad token (wrong wiki)';
 			wfDebug( __METHOD__.": $msg\n" );
+			wfLoadExtensionMessages( 'SpecialCentralAuth' );
+			$this->setHeaders();
 			$wgOut->addWikiText( $msg );
 			return;
 		}
-		
+
 		$centralUser = new CentralAuthUser( $userName );
 		$loginResult = $centralUser->authenticateWithToken( $token );
-	
-		if ($loginResult != 'ok') {
+
+		if( $loginResult != 'ok' ) {
 			$msg = "Bad token: $loginResult";
 			wfDebug( __METHOD__.": $msg\n" );
+			wfLoadExtensionMessages( 'SpecialCentralAuth' );
+			$this->setHeaders();
 			$wgOut->addWikiText( $msg );
 			return;
 		}
@@ -68,7 +72,7 @@ class SpecialAutoLogin extends UnlistedSpecialPage
 		if ( $logout ) {
 			$centralUser->deleteGlobalCookies();
 		} else {
-			$centralUser->setGlobalCookies($remember);
+			$centralUser->setGlobalCookies( $remember );
 		}
 
 		$wgOut->disable();
@@ -78,7 +82,7 @@ class SpecialAutoLogin extends UnlistedSpecialPage
 		header( 'Content-Type: image/png' );
 
 		global $wgCentralAuthLoginIcon;
-		if ( $wgCentralAuthLoginIcon ) {
+		if( $wgCentralAuthLoginIcon ) {
 			readfile( $wgCentralAuthLoginIcon );
 		} else {
 			readfile( dirname(__FILE__).'/1x1.png' );

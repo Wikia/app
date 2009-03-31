@@ -2,8 +2,9 @@
 if ( ! defined( 'MEDIAWIKI' ) )
 	die();
 /**
- * Get a random page from the set of pages whos talk or subjectpage links to a
- * given page, can be used like Special:AdvancedRandom/Template:Featured/Talk
+ * Get a random page from the set of pages which links to a given page or
+ * includes a given template.
+ * Can be used like Special:AdvancedRandom/Template:Featured/Talk
  * to get a random featured article or like
  * Special:AdvancedRandom/Template:Delete to get a random speedy deletion
  * candidate.
@@ -26,7 +27,8 @@ $wgExtensionCredits['specialpage'][] = array(
 			 '[[Special:AdvancedRandom/Template:GFDL/Image]] to ' .
 			 'get a random GFDL file',
 	'descriptionmsg' => 'advancedrandom-desc',
-	'author' => 'Ævar Arnfjörð Bjarmason'
+	'author' => 'Ævar Arnfjörð Bjarmason',
+	'version' => '0.2',
 );
 
 $dir = dirname(__FILE__) . '/';

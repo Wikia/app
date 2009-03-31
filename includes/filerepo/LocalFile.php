@@ -68,7 +68,7 @@ class LocalFile extends File
 	 * Do not call this except from inside a repo class.
 	 */
 	static function newFromRow( $row, $repo ) {
-		$title = Title::makeTitle( NS_IMAGE, $row->img_name );
+		$title = Title::makeTitle( NS_FILE, $row->img_name );
 		$file = new self( $title, $repo );
 		$file->loadFromRow( $row );
 		return $file;
@@ -453,6 +453,11 @@ class LocalFile extends File
 		return $this->metadata;
 	}
 
+	function getBitDepth() {
+		$this->load();
+		return $this->bits;
+	}
+
 	/**
 	 * Return the size of the image file, in bytes
 	 * @public
@@ -619,30 +624,37 @@ class LocalFile extends File
 	/** purgeDescription inherited */
 	/** purgeEverything inherited */
 
-	function getHistory($limit = null, $start = null, $end = null) {
+	function getHistory($limit = null, $start = null, $end = null, $inc = true) {
 		$dbr = $this->repo->getSlaveDB();
 		$tables = array('oldimage');
-		$join_conds = array();
 		$fields = OldLocalFile::selectFields();
-		$conds = $opts = array();
+		$conds = $opts = $join_conds = array();
+		$eq = $inc ? "=" : "";
 		$conds[] = "oi_name = " . $dbr->addQuotes( $this->title->getDBKey() );
-		if( $start !== null ) {
-			$conds[] = "oi_timestamp <= " . $dbr->addQuotes( $dbr->timestamp( $start ) );
+		if( $start ) {
+			$conds[] = "oi_timestamp <$eq " . $dbr->addQuotes( $dbr->timestamp( $start ) );
 		}
-		if( $end !== null ) {
-			$conds[] = "oi_timestamp >= " . $dbr->addQuotes( $dbr->timestamp( $end ) );
+		if( $end ) {
+			$conds[] = "oi_timestamp >$eq " . $dbr->addQuotes( $dbr->timestamp( $end ) );
 		}
 		if( $limit ) {
 			$opts['LIMIT'] = $limit;
 		}
-		$opts['ORDER BY'] = 'oi_timestamp DESC';
+		// Search backwards for time > x queries
+		$order = (!$start && $end !== null) ? "ASC" : "DESC";
+		$opts['ORDER BY'] = "oi_timestamp $order";
+		$opts['USE INDEX'] = array('oldimage' => 'oi_name_timestamp');
 		
-		wfRunHooks( 'LocalFile::getHistory', array( &$this, &$tables, &$fields, &$conds, &$opts, &$join_conds ) );
+		wfRunHooks( 'LocalFile::getHistory', array( &$this, &$tables, &$fields, 
+			&$conds, &$opts, &$join_conds ) );
 		
 		$res = $dbr->select( $tables, $fields, $conds, __METHOD__, $opts, $join_conds );
 		$r = array();
 		while( $row = $dbr->fetchObject($res) ) {
 			$r[] = OldLocalFile::newFromRow($row, $this->repo);
+		}
+		if( $order == "ASC" ) {
+			$r = array_reverse( $r ); // make sure it ends up descending
 		}
 		return $r;
 	}
@@ -732,11 +744,11 @@ class LocalFile extends File
 	 * @return FileRepoStatus object. On success, the value member contains the
 	 *     archive name, or an empty string if it was a new file.
 	 */
-	function upload( $srcPath, $comment, $pageText, $flags = 0, $props = false, $timestamp = false ) {
+	function upload( $srcPath, $comment, $pageText, $flags = 0, $props = false, $timestamp = false, $user = null ) {
 		$this->lock();
 		$status = $this->publish( $srcPath, $flags );
 		if ( $status->ok ) {
-			if ( !$this->recordUpload2( $status->value, $comment, $pageText, $props, $timestamp ) ) {
+			if ( !$this->recordUpload2( $status->value, $comment, $pageText, $props, $timestamp, $user ) ) {
 				$status->fatal( 'filenotfound', $srcPath );
 			}
 		}
@@ -766,18 +778,22 @@ class LocalFile extends File
 	/**
 	 * Record a file upload in the upload log and the image table
 	 */
-	function recordUpload2( $oldver, $comment, $pageText, $props = false, $timestamp = false )
+	function recordUpload2( $oldver, $comment, $pageText, $props = false, $timestamp = false, $user = null )
 	{
-		global $wgUser;
+		if( is_null( $user ) ) {
+			global $wgUser;
+			$user = $wgUser; 
+		}
 
 		$dbw = $this->repo->getMasterDB();
+		$dbw->begin();
 
 		if ( !$props ) {
 			$props = $this->repo->getFileProps( $this->getVirtualUrl() );
 		}
 		$props['description'] = $comment;
-		$props['user'] = $wgUser->getId();
-		$props['user_text'] = $wgUser->getName();
+		$props['user'] = $user->getId();
+		$props['user_text'] = $user->getName();
 		$props['timestamp'] = wfTimestamp( TS_MW );
 		$this->setProps( $props );
 
@@ -812,8 +828,8 @@ class LocalFile extends File
 				'img_minor_mime' => $this->minor_mime,
 				'img_timestamp' => $timestamp,
 				'img_description' => $comment,
-				'img_user' => $wgUser->getId(),
-				'img_user_text' => $wgUser->getName(),
+				'img_user' => $user->getId(),
+				'img_user_text' => $user->getName(),
 				'img_metadata' => $this->metadata,
 				'img_sha1' => $this->sha1
 			),
@@ -858,8 +874,8 @@ class LocalFile extends File
 					'img_minor_mime' => $this->minor_mime,
 					'img_timestamp' => $timestamp,
 					'img_description' => $comment,
-					'img_user' => $wgUser->getId(),
-					'img_user_text' => $wgUser->getName(),
+					'img_user' => $user->getId(),
+					'img_user_text' => $user->getName(),
 					'img_metadata' => $this->metadata,
 					'img_sha1' => $this->sha1
 				), array( /* WHERE */
@@ -874,21 +890,24 @@ class LocalFile extends File
 		}
 
 		$descTitle = $this->getTitle();
-		$article = new Article( $descTitle );
+		$article = new ImagePage( $descTitle );
+		$article->setFile( $this );
 		#--- wikia code
 		wfRunHooks( 'Image::RecordUpload:article', array( &$article, $descTitle ) ) ;
 
 		# Add the log entry
 		$log = new LogPage( 'upload' );
 		$action = $reupload ? 'overwrite' : 'upload';
-		$log->addEntry( $action, $descTitle, $comment );
+		$log->addEntry( $action, $descTitle, $comment, array(), $user );
 
 		if( $descTitle->exists() ) {
 			# Create a null revision
-			$nullRevision = Revision::newNullRevision( $dbw, $descTitle->getArticleId(), $log->getRcComment(), false );
+			$latest = $descTitle->getLatestRevID();
+			$nullRevision = Revision::newNullRevision( $dbw, $descTitle->getArticleId(),
+				$log->getRcComment(), false );
 			$nullRevision->insertOn( $dbw );
 			
-			wfRunHooks( 'NewRevisionFromEditComplete', array($article, $nullRevision, false) );
+			wfRunHooks( 'NewRevisionFromEditComplete', array($article, $nullRevision, $latest, $user) );
 			$article->updateRevisionOn( $dbw, $nullRevision );
 
 			# Invalidate the cache for the description page
@@ -1111,8 +1130,8 @@ class LocalFile extends File
 		if ( !$revision ) return false;
 		$text = $revision->getText();
 		if ( !$text ) return false;
-		$html = $wgParser->parse( $text, new ParserOptions );
-		return $html;
+		$pout = $wgParser->parse( $text, $this->title, new ParserOptions() );
+		return $pout->getText();
 	}
 
 	function getDescription() {
@@ -1130,7 +1149,7 @@ class LocalFile extends File
 		// Initialise now if necessary
 		if ( $this->sha1 == '' && $this->fileExists ) {
 			$this->sha1 = File::sha1Base36( $this->getPath() );
-			if ( strval( $this->sha1 ) != '' ) {
+			if ( !wfReadOnly() && strval( $this->sha1 ) != '' ) {
 				$dbw = $this->repo->getMasterDB();
 				$dbw->update( 'image',
 					array( 'img_sha1' => $this->sha1 ),
@@ -1357,7 +1376,7 @@ class LocalFileDeleteBatch {
 			$dbw->delete( 'oldimage',
 				array(
 					'oi_name' => $this->file->getName(),
-					'oi_archive_name IN (' . $dbw->makeList( array_keys( $oldRels ) ) . ')'
+					'oi_archive_name' => array_keys( $oldRels )
 				), __METHOD__ );
 		}
 		if ( $deleteCurrent ) {
@@ -1511,7 +1530,8 @@ class LocalFileRestoreBatch {
 		$result = $dbw->select( 'filearchive', '*',
 			$conditions,
 			__METHOD__,
-			array( 'ORDER BY' => 'fa_timestamp DESC' ) );
+			array( 'ORDER BY' => 'fa_timestamp DESC' )
+		);
 
 		$idsPresent = array();
 		$storeBatch = array();
@@ -1556,15 +1576,11 @@ class LocalFileRestoreBatch {
 					'minor_mime' => $row->fa_minor_mime,
 					'major_mime' => $row->fa_major_mime,
 					'media_type' => $row->fa_media_type,
-					'metadata' => $row->fa_metadata );
+					'metadata'   => $row->fa_metadata
+				);
 			}
 
 			if ( $first && !$exists ) {
-				// The live (current) version cannot be hidden!
-				if( !$this->unsuppress && $row->fa_deleted ) {
-					$this->file->unlock();
-					return $status;
-				}
 				// This revision will be published as the new current version
 				$destRel = $this->file->getRel();
 				$insertCurrent = array(
@@ -1581,7 +1597,13 @@ class LocalFileRestoreBatch {
 					'img_user'        => $row->fa_user,
 					'img_user_text'   => $row->fa_user_text,
 					'img_timestamp'   => $row->fa_timestamp,
-					'img_sha1'        => $sha1);
+					'img_sha1'        => $sha1
+				);
+				// The live (current) version cannot be hidden!
+				if( !$this->unsuppress && $row->fa_deleted ) {
+					$storeBatch[] = array( $deletedUrl, 'public', $destRel );
+					$this->cleanupBatch[] = $row->fa_storage_key;
+				}
 			} else {
 				$archiveName = $row->fa_archive_name;
 				if( $archiveName == '' ) {
@@ -1618,6 +1640,7 @@ class LocalFileRestoreBatch {
 			$deleteIds[] = $row->fa_id;
 			if( !$this->unsuppress && $row->fa_deleted & File::DELETED_FILE ) {
 				// private files can stay where they are
+				$status->successCount++;
 			} else {
 				$storeBatch[] = array( $deletedUrl, 'public', $destRel );
 				$this->cleanupBatch[] = $row->fa_storage_key;
@@ -1707,7 +1730,7 @@ class LocalFileMoveBatch {
 		$this->file = $file;
 		$this->target = $target;
 		$this->oldHash = $this->file->repo->getHashPath( $this->file->getName() );
-		$this->newHash = $this->file->repo->getHashPath( $this->target->getDbKey() );
+		$this->newHash = $this->file->repo->getHashPath( $this->target->getDBKey() );
 		$this->oldName = $this->file->getName();
 		$this->newName = $this->file->repo->getNameFromTitle( $this->target );
 		$this->oldRel = $this->oldHash . $this->oldName;
@@ -1753,7 +1776,7 @@ class LocalFileMoveBatch {
 				continue;
 			}
 			$this->olds[] = array(
-				"{$archiveBase}/{$this->oldHash}{$oldname}",
+				"{$archiveBase}/{$this->oldHash}{$oldName}",
 				"{$archiveBase}/{$this->newHash}{$timestamp}!{$this->newName}"
 			);
 		}

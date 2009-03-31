@@ -9,11 +9,25 @@ $messages['en'] = array(
 Create in-page version, especially useful for Wikinews.',
 );
 
+/** Message documentation (Message documentation)
+ * @author Purodha
+ */
+$messages['qqq'] = array(
+	'catfeed-desc' => 'Short description of this extension, shown on [[Special:Version]]. Do not translate or change links.',
+);
+
 /** Arabic (العربية)
  * @author Meno25
  */
 $messages['ar'] = array(
-	'catfeed-desc' => 'يستخدم أجزاء من تلقيمات أحدث التغييرات. ينشيء نسخة في الصفحة، مفيد خصوصا لويكي الأخبار.',
+	'catfeed-desc' => 'يستخدم أجزاء من تلقيمات أحدث التغييرات. ينشئ نسخة في الصفحة، مفيد خصوصا لويكي الأخبار.',
+);
+
+/** Egyptian Spoken Arabic (مصرى)
+ * @author Meno25
+ */
+$messages['arz'] = array(
+	'catfeed-desc' => 'يستخدم أجزاء من تلقيمات أحدث التغييرات. ينشئ نسخة فى الصفحة، مفيد خصوصا لويكى الأخبار.',
 );
 
 /** Bengali (বাংলা)
@@ -37,6 +51,14 @@ $messages['cs'] = array(
 	'catfeed-desc' => 'Používá kousky z kanálů posledních změn. Vytvoří verzi v rámci stránky. Obzvlášť užitečné pro Wikinews.',
 );
 
+/** German (Deutsch)
+ * @author Melancholie
+ */
+$messages['de'] = array(
+	'catfeed-desc' => 'Nutzt Teile der Letzte-Änderungen-Newsfeeds.
+Erzeugung einer eingebetteten Version; besonders für Wikinews nützlich.',
+);
+
 /** Lower Sorbian (Dolnoserbski)
  * @author Michawiki
  */
@@ -45,9 +67,28 @@ $messages['dsb'] = array(
 Napóraj wersiju w boku, wósebnje   wužytnu za Wikinowosće.',
 );
 
-/** French (Français) */
+/** Spanish (Español)
+ * @author Sanbec
+ */
+$messages['es'] = array(
+	'catfeed-desc' => 'Usa partes de sindicaciones de modificaciones recientes.
+Crea versiones para su uso en páginas, especialmente útil para Wikinews.',
+);
+
+/** Basque (Euskara)
+ * @author Theklan
+ */
+$messages['eu'] = array(
+	'catfeed-desc' => 'Azken aldaketen jariotik zatiak erabiltzen ditu.
+Wikinewserako bereziki erabilgarria den in-page bertsioa sortzen du.',
+);
+
+/** French (Français)
+ * @author McDutchie
+ */
 $messages['fr'] = array(
-	'catfeed-desc' => 'Utilise des bits pour alimenter les modifications récentes. Crée une version de page, très pratique pour Wikinews.',
+	'catfeed-desc' => 'Utilise des pièces des syndications de modifications récentes.
+Crée une version à insérer dans les pages, très pratique pour Wikinews.',
 );
 
 /** Galician (Galego)
@@ -56,6 +97,13 @@ $messages['fr'] = array(
 $messages['gl'] = array(
 	'catfeed-desc' => 'Usa anacos de accións dos cambios recentes.
 Crear versións dentro dunha páxina, útil especialmente nas Galinovas.',
+);
+
+/** Hebrew (עברית)
+ * @author Rotemliss
+ */
+$messages['he'] = array(
+	'catfeed-desc' => 'שימוש בחלקים מהזנות השינויים האחרונים כדי ליצור גרסה בתוך הדף. פעולה זו שימושית במיוחד בוויקיחדשות.',
 );
 
 /** Hindi (हिन्दी)
@@ -73,11 +121,27 @@ $messages['hsb'] = array(
 	'catfeed-desc' => 'Wužiwa bity z kanalow aktualnych změnow. Wutwor wersiju w stronje, kotraž je wosebje wužitna za WikiNews.',
 );
 
+/** Interlingua (Interlingua)
+ * @author McDutchie
+ */
+$messages['ia'] = array(
+	'catfeed-desc' => 'Usa partes de syndicationes de modificationes recente.
+Crea versiones pro uso in paginas, specialmente utile pro Wikinews.',
+);
+
 /** Japanese (日本語)
+ * @author Aotake
  * @author JtFuruhata
  */
 $messages['ja'] = array(
-	'catfeed-desc' => '最近の更新をフィードします。ページ内バージョンで作成されているため、特にウィキニュースでは便利です。',
+	'catfeed-desc' => '最近の更新フィードから一部の情報を抽出し、ページ内バージョンを作成する。ウィキニュースで特に有用',
+);
+
+/** Ripoarisch (Ripoarisch)
+ * @author Purodha
+ */
+$messages['ksh'] = array(
+	'catfeed-desc' => 'Bruch Stöcker fum <i lang="en">ecentchanges feeds</i>, määt et en de Sigge, dat es besöngisch joot ze Bruche em Neueschkeitewiki.',
 );
 
 /** Luxembourgish (Lëtzebuergesch)
@@ -104,6 +168,14 @@ Maakt een versie binnen een pagina.
 In het bijzonder handig voor Wikinews',
 );
 
+/** Norwegian Nynorsk (‪Norsk (nynorsk)‬)
+ * @author Harald Khan
+ */
+$messages['nn'] = array(
+	'catfeed-desc' => 'Nyttar informasjon frå siste endringar.
+Ein kan laga versjonar til bruk på innhaldssider, noko som er spesielt nyttig for Wikinyhende.',
+);
+
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
  * @author Jon Harald Søby
  */
@@ -118,6 +190,14 @@ $messages['oc'] = array(
 	'catfeed-desc' => 'Utiliza de bits per alimentar los darrièrs cambiaments. Crèa una version de pagina, fòrça practica per Wikinews.',
 );
 
+/** Plautdietsch (Plautdietsch)
+ * @author Wikipeeta
+ */
+$messages['pdt'] = array(
+	'catfeed-desc' => 'Brukt Deele vonne Latzte-Endarung-Newsfeeds.
+Moakt eene ennjebungne Versioon; besondasch praktisch fe Wikinews.',
+);
+
 /** Polish (Polski)
  * @author Sp5uhe
  */
@@ -130,6 +210,14 @@ $messages['pl'] = array(
  */
 $messages['pt'] = array(
 	'catfeed-desc' => 'Usa pedaços de "feeds" de alterações recentes. Cria uma versão dentro de uma página, especialmente útil para Wikinotícias.',
+);
+
+/** Tarandíne (Tarandíne)
+ * @author Joetaras
+ */
+$messages['roa-tara'] = array(
+	'catfeed-desc' => "Ause le stuezze da le feed de le cangiaminde recende.
+Ccreje 'na versione jndr'à pàgene, specialmende utile pe le Uicchinews.",
 );
 
 /** Russian (Русский)

@@ -448,7 +448,7 @@ if (defined('MEDIAWIKI')) {
 		$model->add(new Statement($artres, $DCMES['date'],
 								  MwRdfTimestamp($article->getTimestamp())));
 
-		if (Namespace::isTalk($nt->getNamespace())) {
+		if ( MWNamespace::isTalk( $nt->getNamespace() ) ) {
 			$model->add(new Statement($artres, $DCMES['subject'],
 									  MwRdfTitleResource($nt->getSubjectPage())));
 		} else {

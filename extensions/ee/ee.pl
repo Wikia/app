@@ -150,15 +150,25 @@ foreach $section(@sections) {
 		if(index($fileurl,$search)>=0) {
 			$username=$cfg->val($section,"Username");
 			$password=$cfg->val($section,"Password");
+			$auth_server=$cfg->val("${section}:HTTPAuth","Server");
+			$auth_realm=$cfg->val("${section}:HTTPAuth","Realm");
+			$auth_username=$cfg->val("${section}:HTTPAuth","Username");
+			$auth_password=$cfg->val("${section}:HTTPAuth","Password");
 		}
 	}
-
 }
 
 # Log into server
 # Note that we also log in for diffs, as the raw text might only be available
 # to logged in users (depending on the wiki security settings), and we may want
 # to offer GUI-based rollback functionality later
+if( $auth_username ne "" ) {
+	$browser->credentials(
+	    $auth_server,
+	    $auth_realm,
+	    $auth_username => $auth_password
+	  );
+}
 $response=$browser->post($login_url,@ns_headers,
 Content=>[wpName=>$username,wpPassword=>$password,wpRemember=>"1",wpLoginAttempt=>"Log in"]);
 

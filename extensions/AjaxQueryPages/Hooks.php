@@ -14,7 +14,8 @@ function wfAjaxQueryPagesAddJS( $out ) {
 	}
 	global $wgQueryPages;
 	if( !$spObj = SpecialPage::getPageByAlias( $wgTitle->getDBkey() )
-		or !(isset($wgQueryPages) ) ) {
+//		or !(isset($wgQueryPages) )
+	) {
 		return true;
 	}
 

@@ -69,6 +69,7 @@ function update_flaggedrevs( $start = null ) {
 				$changed++;
 			}
 			# Update the row...
+			$db->begin();
 			$db->update( 'flaggedrevs',
 				array( 'fr_quality' => $quality,
 					'fr_img_name' => $file,
@@ -76,11 +77,12 @@ function update_flaggedrevs( $start = null ) {
 					'fr_img_timestamp' => $time ),
 				array( 'fr_rev_id' => $row->fr_rev_id, 'fr_page_id' => $row->rev_page ),
 				__FUNCTION__ );
+			$db->commit();
 			$count++;
 		}
 		$db->freeResult( $res );
-		$blockStart += $BATCH_SIZE - 1;
-		$blockEnd += $BATCH_SIZE - 1;
+		$blockStart += $BATCH_SIZE;
+		$blockEnd += $BATCH_SIZE;
 		wfWaitForSlaves( 5 );
 	}
 	echo "fr_quality and fr_img_* columns update complete ... {$count} rows [{$changed} changed]\n";
@@ -115,6 +117,7 @@ function update_flaggedpages( $start = null ) {
 			# Replaces new fields into flaggedpages
 			$frev = FlaggedRevision::newFromStable( $title, FR_FOR_UPDATE );
 			# Update fp_stable, fp_quality, and fp_reviewed
+			$db->begin();
 			if( $frev ) {
 				$article = new Article( $title );
 				FlaggedRevs::updateArticleOn( $article, $frev->getRevId(), $row->page_latest );
@@ -126,10 +129,11 @@ function update_flaggedpages( $start = null ) {
 				if( $db->affectedRows() > 0 )
 					$deleted++;
 			}
+			$db->commit();
 			$count++;
 		}
-		$blockStart += $BATCH_SIZE - 1;
-		$blockEnd += $BATCH_SIZE - 1;
+		$blockStart += $BATCH_SIZE;
+		$blockEnd += $BATCH_SIZE;
 		wfWaitForSlaves( 5 );
 	}
 	echo "flaggedpage columns update complete ... {$count} rows [{$deleted} deleted]\n";
@@ -165,16 +169,18 @@ function update_flaggedtemplates( $start = null ) {
 			$frev = $revision ? FlaggedRevision::newFromTitle( $revision->getTitle(), $row->ft_rev_id ) : null;
 			# Somethings broke? Delete the row...
 			if( !$frev ) {
+				$db->begin();
 				$db->delete( 'flaggedtemplates', 
 					array( 'ft_rev_id' => $row->ft_rev_id ),
 					__FUNCTION__ );
 				if( $db->affectedRows() > 0 )
 					$deleted++;
+				$db->commit();
 			}
 			$count++;
 		}
-		$blockStart += $BATCH_SIZE - 1;
-		$blockEnd += $BATCH_SIZE - 1;
+		$blockStart += $BATCH_SIZE;
+		$blockEnd += $BATCH_SIZE;
 		wfWaitForSlaves( 5 );
 	}
 	echo "flaggedtemplates columns update complete ... {$count} rows [{$deleted} deleted]\n";
@@ -210,16 +216,18 @@ function update_flaggedimages( $start = null ) {
 			$frev = $revision ? FlaggedRevision::newFromTitle( $revision->getTitle(), $row->fi_rev_id ) : null;
 			# Somethings broke? Delete the row...
 			if( !$frev ) {
+				$db->begin();
 				$db->delete( 'flaggedimages', 
 					array( 'fi_rev_id' => $row->fi_rev_id ),
 					__FUNCTION__ );
 				if( $db->affectedRows() > 0 )
 					$deleted++;
+				$db->commit();
 			}
 			$count++;
 		}
-		$blockStart += $BATCH_SIZE - 1;
-		$blockEnd += $BATCH_SIZE - 1;
+		$blockStart += $BATCH_SIZE;
+		$blockEnd += $BATCH_SIZE;
 		wfWaitForSlaves( 5 );
 	}
 	echo "flaggedtemplates columns update complete ... {$count} rows [{$deleted} deleted]\n";

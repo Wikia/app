@@ -1,18 +1,19 @@
-This is the latest version of the metavid capture software.
-It has been tuned a bit to be more genneraly applicable/scallable
+This will eventually host the tools for capturing brodcasted content
+and inserting it into a wiki/ uploading it to archive.org
 
-The genneral flow and machine layout is as follows:
-note: obvisuly your layout may differ and adjustments may be needed. 
+presently the script metavid project uses are accessible here:
+http://slugforge.cse.ucsc.edu/gf/project/metavid/
+but I don't recommend using them not generally applicable.
 
-dependencies: 
+
+dependencies:
 	metavidWiki
-	ffmpeg2theora 
+	ffmpeg2theora
 	icecast
-	
 	~Video for Linux~ compatible capture hardware
 
 
-Scripts Run level: 
+Scripts Run level:
 
 ==box_config==
 box_name =(optional if left empty will use IP)
@@ -30,16 +31,16 @@ mv2mvWiki_demon.php
 
 
 ===capture===
-capture_demon.php  
+capture_demon.php
 
 ===transcode===
 transcode_demon.php
 
 
-(media server and mediaWiki server could be the same box) 
+(media server and mediaWiki server could be the same box)
 ===media server===
 ~ shoutcast ~
-mediaServer_demon.php 
+mediaServer_demon.php
 
 ===mediaWiki Server===
 mysql
@@ -47,6 +48,5 @@ wiki running under /wiki
 mediaWiki_demon.php
 
 
-
 ===http capture admin===
-(can be run on any server) 
+(can be run on any server)

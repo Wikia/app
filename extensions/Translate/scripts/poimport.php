@@ -9,7 +9,7 @@
  */
 
 $optionsWithArgs = array( 'file', 'user' );
-require( dirname(__FILE__) . '/cli.inc' );
+require( dirname( __FILE__ ) . '/cli.inc' );
 
 function showUsage() {
 	STDERR( <<<EOT
@@ -20,7 +20,7 @@ Usage: php poimport.php [options...]
 Options:
   --file      Po file to import
   --user      User who makes edits to wiki
-  --really    Doesn't do anything unless this is specified.
+  --really    Does not do anything unless this is specified.
 
 EOT
 );
@@ -28,31 +28,31 @@ EOT
 }
 
 if ( isset( $options['help'] ) ) showUsage();
-if (!isset($options['file'])) {
+if ( !isset( $options['file'] ) ) {
 	STDERR( "You need to specify input file" );
-	exit(1);
+	exit( 1 );
 }
 
 /*
  * Parse the po file.
  */
 $p = new PoImporter( $options['file'] );
-list($changes, $group) = $p->parse();
+list( $changes, $group ) = $p->parse();
 
-if (!isset($options['user'])) {
+if ( !isset( $options['user'] ) ) {
 	STDERR( "You need to specify user name for wiki import" );
-	exit(1);
+	exit( 1 );
 }
 
-if (!count($changes)) {
+if ( !count( $changes ) ) {
 	STDOUT( "No changes to import" );
-	exit(0);
+	exit( 0 );
 }
 
 /*
  * Import changes to wiki.
  */
-$w = new WikiWriter( $changes, $group, $options['user'], !isset($options['really']) );
+$w = new WikiWriter( $changes, $group, $options['user'], !isset( $options['really'] ) );
 $w->execute();
 
 /**
@@ -102,7 +102,7 @@ class PoImporter {
 			return false;
 		}
 
-		if ( preg_match( '/X-Message-Group:\s+([a-zA-Z0-9-_]+)/', $data, $matches ) ) {
+		if ( preg_match( '/X-Message-Group:\s+([a-zA-Z0-9-._]+)/', $data, $matches ) ) {
 			$groupId = $matches[1];
 			STDOUT( "Detected message group as $groupId" );
 		} else {
@@ -125,7 +125,7 @@ class PoImporter {
 				// Remove quoting
 				$key = preg_replace( $quotePattern, '', $matches[1] );
 				// Ignore unknown keys
-				if ( !isset($contents[$key]) ) continue;
+				if ( !isset( $contents[$key] ) ) continue;
 			} else {
 				continue;
 			}
@@ -203,7 +203,7 @@ class WikiWriter {
 			return;
 		}
 
-		$count = count($this->changes);
+		$count = count( $this->changes );
 		STDOUT( "Going to update $count pages." );
 
 		$ns = $this->group->namespaces[0];
@@ -221,25 +221,25 @@ class WikiWriter {
 		global $wgTitle, $wgArticle;
 		$wgTitle = Title::makeTitleSafe( $namespace, $title );
 
-		STDOUT( "Updating {$wgTitle->getPrefixedText()}... ", true );
+		STDOUT( "Updating {$wgTitle->getPrefixedText()}... ", $title );
 		if ( !$wgTitle instanceof Title ) {
-			STDOUT( "INVALID TITLE!", false );
+			STDOUT( "INVALID TITLE!", $title );
 			return;
 		}
 
 		if ( $this->dryrun ) {
-			STDOUT( "DRY RUN!", false );
+			STDOUT( "DRY RUN!", $title );
 			return;
 		}
 
 		$wgArticle = new Article( $wgTitle );
 
-		$success = $wgArticle->doEdit( $text, 'Updating translation from gettext import' );
+		$status = $wgArticle->doEdit( $text, 'Updating translation from gettext import' );
 
-		if ( $success ) {
-			STDOUT( "OK!", false );
+		if ( $status === true || ( is_object( $status ) && $status->isOK() ) ) {
+			STDOUT( "OK!", $title );
 		} else {
-			STDOUT( "Failed!", false );
+			STDOUT( "Failed!", $title );
 		}
 	}
 }

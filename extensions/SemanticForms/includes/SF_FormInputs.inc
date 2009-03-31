@@ -5,6 +5,7 @@
  * @author Yaron Koren
  * @author Jeffrey Stuckman
  * @author Matt Williamson
+ * @author Patrick Nagel
  */
 
 class SFFormInputs {
@@ -17,20 +18,23 @@ class SFFormInputs {
       $smw_version = SMW_VERSION;
       if (version_compare(SMW_VERSION, '1.2', '>=' ) ||
           substr($smw_version, 0, 3) == '1.2') { // temporary hack
-        $names_array = sffGetAllPagesForProperty_1_2($field_name);
+        $names_array = SFUtils::getAllValuesForProperty_1_2($field_name);
       } else {
         $is_relation = ($autocomplete_field_type == 'relation');
-        $names_array = sffGetAllPagesForProperty_orig($is_relation, $field_name);
+        $names_array = SFUtils::getAllValuesForProperty_orig($is_relation, $field_name);
       }
     } elseif ($autocomplete_field_type == 'category') {
-      $names_array = sffGetAllPagesForCategory($field_name, 10);
+      $names_array = SFUtils::getAllPagesForCategory($field_name, 10);
+    } elseif ($autocomplete_field_type == 'concept') {
+      $names_array = SFUtils::getAllPagesForConcept($field_name);
     } else { // i.e., $autocomplete_field_type == 'namespace'
       // switch back to blank for main namespace
       if ($field_name == "main")
         $field_name = "";
-      $names_array = sffGetAllPagesForNamespace($field_name);
+      $names_array = SFUtils::getAllPagesForNamespace($field_name);
     }
-    return $names_array;
+    // escape quotes, to avoid Javascript errors
+    return array_map('addslashes', $names_array);
   }
 
   function uploadLinkHTML($input_id, $delimiter = null) {
@@ -56,6 +60,7 @@ class SFFormInputs {
           array_key_exists('autocomplete', $other_args) ||
           array_key_exists('autocomplete on property', $other_args) ||
           array_key_exists('autocomplete on category', $other_args) ||
+          array_key_exists('autocomplete on concept', $other_args) ||
           array_key_exists('autocomplete on', $other_args) ||
           array_key_exists('autocomplete on namespace', $other_args) ||
           array_key_exists('remote autocompletion', $other_args)) {
@@ -147,9 +152,9 @@ END;
 	<select id="$input_id" tabindex="$sfgTabIndex" name="$input_name" class="$className" $disabled_text>
 
 END;
-    // add a blank value at the beginning if it's a non-mandatory field
-    if (! $is_mandatory)
-      $text .= "  <option value=\"\"></option>\n";
+    // add a blank value at the beginning, regardless of whether this is
+    // a mandatory field
+    $text .= "  <option value=\"\"></option>\n";
     if (($possible_values = $other_args['possible_values']) == null)
       $possible_values = array(); 
     foreach ($possible_values as $possible_value) {
@@ -188,6 +193,10 @@ END;
     $info_id = "info_$sfgFieldNum";
     $hidden_input_name = $input_name . "[is_list]";
     $input_name .= "[]"; // needed so that this input will send an array
+    if (array_key_exists('size', $other_args))
+      $size_text = "size=". $other_args['size'];
+    else
+      $size_text = "";
     $disabled_text = ($is_disabled) ? "disabled" : "";
     // get list delimiter - default is comma
     if (array_key_exists('delimiter', $other_args)) {
@@ -198,7 +207,7 @@ END;
     $cur_values = SFFormInputs::getValuesArray($cur_value, $delimiter);
 
     $text =<<<END
-	<select id="$input_id" tabindex="$sfgTabIndex" name="$input_name" class="$className" multiple $disabled_text>
+	<select id="$input_id" tabindex="$sfgTabIndex" name="$input_name" class="$className" multiple $size_text $disabled_text>
 
 END;
     if (($possible_values = $other_args['possible_values']) == null)
@@ -265,10 +274,13 @@ END;
   }
 
   function textInputWithAutocompleteHTML($cur_value, $input_name, $is_mandatory, $is_disabled, $other_args) {
-    // if 'no autocomplete' was specified, call the regular text entry instead
+    // if 'no autocomplete' was specified, print a regular text entry instead
     if (array_key_exists('no autocomplete', $other_args) &&
         $other_args['no autocomplete'] == true)
       return SFFormInputs::textEntryHTML($cur_value, $input_name, $is_mandatory, $is_disabled, $other_args);
+    // if a set of values was specified, print a dropdown instead
+    if (array_key_exists('possible_values', $other_args) && $other_args['possible_values'] != null)
+      return SFFormInputs::dropdownHTML($cur_value, $input_name, $is_mandatory, $is_disabled, $other_args);
 
     global $sfgTabIndex, $sfgFieldNum;
 
@@ -285,6 +297,9 @@ END;
     } elseif (array_key_exists('autocomplete on category', $other_args)) {
       $autocomplete_field_type = 'category';
       $semantic_field_name = $other_args['autocomplete on category'];
+    } elseif (array_key_exists('autocomplete on concept', $other_args)) {
+      $autocomplete_field_type = 'concept';
+      $semantic_field_name = $other_args['autocomplete on concept'];
     } elseif (array_key_exists('autocomplete on namespace', $other_args)) {
       $autocomplete_field_type = 'namespace';
       $semantic_field_name = $other_args['autocomplete on namespace'];
@@ -310,8 +325,17 @@ END;
     if (array_key_exists('input_type', $other_args) && $other_args['input_type'] == "textarea") {
       $rows = $other_args['rows'];
       $cols = $other_args['cols'];
+      if (array_key_exists('maxlength', $other_args)) {
+        $maxlength = $other_args['maxlength'];
+        // is this an unnecessary performance load? Get the substring of the
+        // text on every key press or release, regardless of the current length
+        // of the text
+        $js_call = " onKeyDown=\"this.value = this.value.substring(0, $maxlength);\" onKeyUp=\"this.value = this.value.substring(0, $maxlength);\"";
+      } else {
+        $js_call = "";
+      }
       $text =<<<END
-	<textarea tabindex="$sfgTabIndex" id="$input_id" name="$input_name" rows="$rows" cols="$cols" class="$className" $disabled_text></textarea>
+	<textarea tabindex="$sfgTabIndex" id="$input_id" name="$input_name" rows="$rows" cols="$cols" class="$className" $disabled_text $js_call></textarea>
 
 END;
     } else {
@@ -358,12 +382,14 @@ END;
       }
     }
     $javascript_text = "autocompletemappings[$sfgFieldNum] = '$options_str_key';\n";
-    if (array_key_exists('remote_autocompletion', $other_args) &&
-        $other_args['remote_autocompletion'] == true) {
+    if (array_key_exists('remote autocompletion', $other_args) &&
+        $other_args['remote autocompletion'] == true) {
       $javascript_text .= "autocompletedatatypes['$options_str_key'] = '$autocomplete_field_type';\n";
-    } else {
+    } elseif ($semantic_field_name != '') {
       $autocomplete_values = SFFormInputs::createAutocompleteValuesArray(str_replace(' ', '_', $semantic_field_name), $autocomplete_field_type);
       $autocomplete_string = "[['" . implode("'], ['", $autocomplete_values) . "']]";
+      // replace any newlines in the string, just to avoid breaking the Javascript
+      $autocomplete_string = str_replace("\n", ' ', $autocomplete_string);
       $javascript_text .= "autocompletestrings['$options_str_key'] = $autocomplete_string;\n";
     }
     if ($cur_value) {
@@ -386,6 +412,9 @@ END;
       if ((array_key_exists('is_relation', $other_args) && $other_args['is_relation'] == true) ||
           array_key_exists('autocomplete', $other_args) ||
           array_key_exists('autocomplete on', $other_args) ||
+          array_key_exists('autocomplete on property', $other_args) ||
+          array_key_exists('autocomplete on category', $other_args) ||
+          array_key_exists('autocomplete on concept', $other_args) ||
           array_key_exists('autocomplete on namespace', $other_args) ||
           array_key_exists('remote autocompletion', $other_args)) {
         $other_args['input_type'] = "textarea";
@@ -398,15 +427,25 @@ END;
     $className = ($is_mandatory) ? "mandatoryField" : "createboxInput";
     if (array_key_exists('class', $other_args))
       $className .= " " . $other_args['class'];
-    $input_id = "input_$sfgFieldNum";
     $info_id = "info_$sfgFieldNum";
+    // use a special ID for the free text field, for FCK's needs
+    $input_id = $input_name == "free_text" ? "free_text" : "input_$sfgFieldNum";
     $disabled_text = ($is_disabled) ? "disabled" : "";
 
     $rows = $other_args['rows'];
     $cols = $other_args['cols'];
+    if (array_key_exists('maxlength', $other_args)) {
+      $maxlength = $other_args['maxlength'];
+      // is this an unnecessary performance load? Get the substring of the
+      // text on every key press or release, regardless of the current length
+      // of the text
+      $js_call = " onKeyDown=\"this.value = this.value.substring(0, $maxlength);\" onKeyUp=\"this.value = this.value.substring(0, $maxlength);\"";
+    } else {
+      $js_call = "";
+    }
 
     $text =<<<END
-	<textarea tabindex="$sfgTabIndex" id="$input_id" name="$input_name" rows="$rows" cols="$cols" class="$className" $disabled_text>$cur_value</textarea>
+	<textarea tabindex="$sfgTabIndex" id="$input_id" name="$input_name" rows="$rows" cols="$cols" class="$className" $disabled_text $js_call>$cur_value</textarea>
 	<span id="$info_id" class="errorMessage"></span>
 
 END;
@@ -418,7 +457,7 @@ END;
 
     $disabled_text = ($is_disabled) ? "disabled" : "";
     $text = '	<select tabindex="' . $sfgTabIndex . '" id="input_' . $sfgFieldNum . '_month" name="' . $input_name . "[month]\" $disabled_text>\n";
-    $month_names = sffGetMonthNames();
+    $month_names = SFFormUtils::getMonthNames();
     foreach ($month_names as $i => $name) {
       // pad out month to always be two digits
       $month_value = ($wgAmericanDates == true) ? $name : str_pad($i + 1, 2, "0", STR_PAD_LEFT);
@@ -431,7 +470,7 @@ END;
   }
 
   function dateEntryHTML($date, $input_name, $is_mandatory, $is_disabled, $other_args) {
-    global $sfgTabIndex, $sfgFieldNum, $sfgJSValidationCalls;
+    global $sfgTabIndex, $sfgFieldNum, $sfgJSValidationCalls, $wgAmericanDates;
 
     $input_id = "input_$sfgFieldNum";
     $info_id = "info_$sfgFieldNum";
@@ -461,16 +500,22 @@ END;
       $month = $cur_date['month'];
       $day = null; // no need for day
     }
+    $text = "";
     $disabled_text = ($is_disabled) ? "disabled" : "";
-    $text = SFFormInputs::monthDropdownHTML($month, $input_name, $is_disabled);
-    $text .= '  <input tabindex="' . $sfgTabIndex . '" id="' . $input_id . '_day" name="' . $input_name . '[day]" type="text" value="' . $day . '" size="2" ' . $disabled_text . '/>' . "\n";
+    if ($wgAmericanDates) {
+      $text .= SFFormInputs::monthDropdownHTML($month, $input_name, $is_disabled);
+      $text .= '  <input tabindex="' . $sfgTabIndex . '" id="' . $input_id . '_day" name="' . $input_name . '[day]" type="text" value="' . $day . '" size="2" ' . $disabled_text . '/>' . "\n";
+    } else {
+      $text .= '  <input tabindex="' . $sfgTabIndex . '" id="' . $input_id . '_day" name="' . $input_name . '[day]" type="text" value="' . $day . '" size="2" ' . $disabled_text . '/>' . "\n";
+      $text .= SFFormInputs::monthDropdownHTML($month, $input_name, $is_disabled);
+    }
     $text .= '  <input tabindex="' . $sfgTabIndex . '" id="' . $input_id . '_year" name="' . $input_name . '[year]" type="text" value="' . $year . '" size="4" ' . $disabled_text . '/>' . "\n";
     $text .= "	<span id=\"$info_id\" class=\"errorMessage\"></span>";
     return array($text, null);
   }
 
   function dateTimeEntryHTML($datetime, $input_name, $is_mandatory, $is_disabled, $other_args) {
-    global $sfgTabIndex;
+    global $sfgTabIndex, $sfg24HourTime;
 
     $include_timezone = $other_args['include_timezone'];
  
@@ -478,17 +523,25 @@ END;
       // can show up here either as an array or a string, depending on
       // whether it came from user input or a wiki page
       if (is_array($datetime)) {
-        if (isset($datetime['hour'])) $hour = $cur_value['hour'];
-        if (isset($datetime['minute'])) $minute = $cur_value['minute'];
-        if (isset($datetime['second'])) $second = $cur_value['second'];
-        if (isset($datetime['ampm24h'])) $ampm24h = $cur_value['ampm24h'];
-        if (isset($datetime['timezone'])) $timezone = $cur_value['timezone'];
+        if (isset($datetime['hour'])) $hour = $datetime['hour'];
+        if (isset($datetime['minute'])) $minute = $datetime['minute'];
+        if (isset($datetime['second'])) $second = $datetime['second'];
+        if (! $sfg24HourTime) {
+          if (isset($datetime['ampm24h'])) $ampm24h = $datetime['ampm24h'];
+        }
+        if (isset($datetime['timezone'])) $timezone = $datetime['timezone'];
       } else {
         $actual_date = strtotime($datetime);
-        $hour = date("g", $actual_date);
+        if ($sfg24HourTime) {
+          $hour = date("G", $actual_date);
+        } else {
+          $hour = date("g", $actual_date);
+        }
         $minute = date("i", $actual_date);
         $second = date("s", $actual_date);
-        $ampm24h = date("A", $actual_date);
+        if (! $sfg24HourTime) {
+          $ampm24h = date("A", $actual_date);
+        }
         $timezone = date("T", $actual_date);
       }
     } else {
@@ -496,6 +549,7 @@ END;
       $hour = null;
       $minute = null;
       $second = "00"; // default at least this value
+      $ampm24h = "";
       $timezone = "";
     }
 
@@ -507,15 +561,17 @@ END;
     $sfgTabIndex++;
     $text .= ':<input tabindex="' . $sfgTabIndex . '" name="' . $input_name . '[second]" type="text" value="' . $second . '" size="2"/ ' . $disabled_text . '>' . "\n";
 
-    $sfgTabIndex++;
-    $text .= '   <select tabindex="' . $sfgTabIndex . '" name="' . $input_name . "[ampm24h]\" $disabled_text>\n";
-    $ampm24h_options = array('', 'AM', 'PM');
-    foreach ($ampm24h_options as $value) {
-      $text .= "        <option value=\"$value\"";
-      if ($value == $ampm24h) {$text .= " selected=\"selected\""; }
-      $text .= ">$value</option>\n";
+    if (! $sfg24HourTime) {
+      $sfgTabIndex++;
+      $text .= '   <select tabindex="' . $sfgTabIndex . '" name="' . $input_name . "[ampm24h]\" $disabled_text>\n";
+      $ampm24h_options = array('', 'AM', 'PM');
+      foreach ($ampm24h_options as $value) {
+        $text .= "        <option value=\"$value\"";
+        if ($value == $ampm24h) {$text .= " selected=\"selected\""; }
+        $text .= ">$value</option>\n";
+      }
+      $text .= "  </select>\n";
     }
-    $text .= "  </select>\n";
 
     if ($include_timezone) {
       $sfgTabIndex++;
@@ -574,6 +630,8 @@ END;
     } else {
       // default to false - no need to check if it matches a 'false' word
       $vlc = strtolower(trim($cur_value));
+      // manually load SMW's message values, if they weren't loaded before
+      wfLoadExtensionMessages('SemanticMediaWiki');
       if (in_array($vlc, explode(',', wfMsgForContent('smw_true_words')), TRUE)) {
         $checked_str = ' checked="checked"';
       } else {
@@ -590,5 +648,3 @@ END;
   }
 
 }
-
-?>

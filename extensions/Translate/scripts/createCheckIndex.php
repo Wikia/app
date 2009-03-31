@@ -9,8 +9,8 @@
  * @file
  */
 
-$optionsWithArgs = array('groups' );
-require( dirname(__FILE__) . '/cli.inc' );
+$optionsWithArgs = array( 'groups' );
+require( dirname( __FILE__ ) . '/cli.inc' );
 
 $codes = Language::getLanguageNames( false );
 
@@ -19,18 +19,18 @@ if ( $wgTranslateDocumentationLanguageCode )
 	unset( $codes[$wgTranslateDocumentationLanguageCode] );
 
 // Skip source
-unset($codes['en']);
+unset( $codes['en'] );
 
 $codes = array_keys( $codes );
 sort( $codes );
 
-if ( isset($options['groups'] ) ) {
+if ( isset( $options['groups'] ) ) {
 	$reqGroups = array_map( 'trim', explode( ',', $options['groups'] ) );
 } else {
 	$reqGroups = false;
 }
 
-$verbose = isset($options['verbose']);
+$verbose = isset( $options['verbose'] );
 
 $groups = MessageGroups::singleton()->getGroups();
 $checker = MessageChecks::getInstance();
@@ -39,21 +39,21 @@ foreach ( $groups as $g ) {
 	$id = $g->getId();
 
 	// Skip groups that are not requested
-	if ( $reqGroups && !in_array($id, $reqGroups) ) {
-		unset($g);
+	if ( $reqGroups && !in_array( $id, $reqGroups ) ) {
+		unset( $g );
 		continue;
 	}
 
 	$problematic = array();
 	$type = $g->getType();
-	if ( !$checker->hasChecks($type) ) {
-		unset($g);
+	if ( !$checker->hasChecks( $type ) ) {
+		unset( $g );
 		continue;
 	}
 
 	// Initialise messages, using unique definitions if appropriate
-	$collection_skel = $g->initCollection( 'en', $g->isMeta() );
-	if ( !count($collection_skel) ) continue;
+	$collection_skel = $g->initCollection( 'en', true );
+	if ( !count( $collection_skel ) ) continue;
 
 	STDOUT( "Working with $id: ", $id );
 
@@ -83,7 +83,7 @@ foreach ( $groups as $g ) {
 
 	// Store the results
 	$file = TRANSLATE_CHECKFILE . "-$id";
-	wfMkdirParents( dirname($file) );
+	wfMkdirParents( dirname( $file ) );
 	file_put_contents( $file, serialize( $problematic ) );
 }
 

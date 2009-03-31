@@ -13,6 +13,42 @@
 
 $fallback = 'it';
 
+$namespaceNames = array(
+	NS_MEDIA            => 'Media',
+	NS_SPECIAL          => 'Speciàle',
+	NS_TALK             => 'Chiàcchiera',
+	NS_USER             => 'Utente',
+	NS_USER_TALK        => 'Utente_chiàcchiera',
+	NS_PROJECT_TALK     => '$1_chiàcchiera',
+	NS_FILE             => 'Fiùra',
+	NS_FILE_TALK        => 'Fiùra_chiàcchiera',
+	NS_MEDIAWIKI        => 'MediaWiki',
+	NS_MEDIAWIKI_TALK   => 'MediaWiki_chiàcchiera',
+	NS_TEMPLATE         => 'Modello',
+	NS_TEMPLATE_TALK    => 'Modello_chiàcchiera',
+	NS_HELP             => 'Ajùto',
+	NS_HELP_TALK        => 'Ajùto_chiàcchiera',
+	NS_CATEGORY         => 'Categurìa',
+	NS_CATEGORY_TALK    => 'Categurìa_chiàcchiera',
+);
+
+$namespaceAliases = array(
+	'Speciale' => NS_SPECIAL,
+	'Discussione' => NS_TALK,
+	'Utente' => NS_USER,
+	'Discussioni_utente' => NS_USER_TALK,
+	'Discussioni_$1' => NS_PROJECT_TALK,
+	'Immagine' => NS_FILE,
+	'Discussioni_immagine' => NS_FILE_TALK,
+	'MediaWiki' => NS_MEDIAWIKI,
+	'Discussioni_MediaWiki' => NS_MEDIAWIKI_TALK,
+	'Discussioni_template' => NS_TEMPLATE_TALK,
+	'Aiuto' => NS_HELP,
+	'Discussioni_aiuto' => NS_HELP_TALK,
+	'Categoria' => NS_CATEGORY,
+	'Discussioni_categoria' => NS_CATEGORY_TALK,
+);
+
 $messages = array(
 # User preference toggles
 'tog-underline'               => "Sottolinia 'e jonte:",
@@ -179,14 +215,13 @@ $messages = array(
 'badtitle'        => "'O nnomme nun è jùsto",
 
 # Login and logout pages
-'logouttext'                 => "<strong>Site asciùte.</strong><br />
+'logouttext'                 => "'''Site asciùte.'''<br />
 Putite cuntinuà a ausà {{SITENAME}} comme n'utente senza nomme, o si nò putite trasì n'ata vota, cu 'o stesso nomme o cu n'ato nomme.",
 'welcomecreation'            => "== Bemmenuto, $1! ==
 
 'O cunto è stato criato currettamente.  Nun scurdà 'e perzonalizzà 'e ppreferenze 'e {{SITENAME}}.",
 'remembermypassword'         => 'Allicuordate d"a password',
 'yourdomainname'             => "Spiecà 'o dumminio",
-'loginproblem'               => "<b>È capetato nu sbaglio a ll'acciesso.</b><br />Pruvate n'ata vota.",
 'login'                      => 'Tràse',
 'userlogin'                  => "Tràse o cria n'acciesso nuovo",
 'logout'                     => 'Jèsce',
@@ -224,7 +259,7 @@ Putite cuntinuà a ausà {{SITENAME}} comme n'utente senza nomme, o si nò putit
 'loginreqpagetext'  => "Pe' veré ate ppaggene abbesognate $1.",
 'accmailtitle'      => "'O password è stato mannato.",
 'accmailtext'       => '\'A password pe ll\'utente "$1" fuje mannata ô nnerizzo $2.',
-'previewnote'       => "<strong>Chesta è sola n'anteprimma; 'e cagnamiénte â paggena NUN songo ancora sarvate!</strong>",
+'previewnote'       => "'''Chesta è sola n'anteprimma; 'e cagnamiénte â paggena NUN songo ancora sarvate!'''",
 'editing'           => "Cagnamiento 'e $1",
 'templatesused'     => "Template ausate 'a chesta paggena:",
 
@@ -244,6 +279,7 @@ Putite cuntinuà a ausà {{SITENAME}} comme n'utente senza nomme, o si nò putit
 'noexactmatch'     => "''''A paggena \"\$1\" nun asiste.''' Se pô [[:\$1|criala mmo]].",
 'notitlematches'   => "Voce addemannata nun truvata dint' 'e titule 'e articulo",
 'notextmatches'    => "Voce addemannata nun truvata dint' 'e teste 'e articulo",
+'searchhelp-url'   => 'Help:Ajùto',
 'powersearch'      => 'Truova',
 
 # Preferences page
@@ -279,10 +315,10 @@ Putite cuntinuà a ausà {{SITENAME}} comme n'utente senza nomme, o si nò putit
 'fileexists-thumb' => "<center>'''Immagine esistente'''</center>",
 'uploadedimage'    => 'ha carecato "[[$1]]"',
 
-# Special:ImageList
-'imagelist_name' => 'Nomme',
+# Special:ListFiles
+'listfiles_name' => 'Nomme',
 
-# Image description page
+# File description page
 'filehist-user'    => 'Utente',
 'imagelinks'       => 'Jonte ê ffiure',
 'noimage-linktext' => 'carrecarlo mmo',
@@ -316,6 +352,9 @@ Putite cuntinuà a ausà {{SITENAME}} comme n'utente senza nomme, o si nò putit
 'categories'         => 'Categurìe',
 'categoriespagetext' => "Lista cumpleta d\"e categurie presente ncopp' 'o sito.",
 
+# Special:LinkSearch
+'linksearch-ok' => 'Truova',
+
 # Watchlist
 'addedwatch'   => 'Aggiunto ai Osservate Speciale tue',
 'watch'        => 'Secuta',
@@ -324,7 +363,7 @@ Putite cuntinuà a ausà {{SITENAME}} comme n'utente senza nomme, o si nò putit
 'enotif_newpagetext' => 'Chesta è na paggena nòva.',
 'changed'            => 'cagnata',
 
-# Delete/protect/revert
+# Delete
 'deletepage'      => 'Scancella paggena',
 'excontent'       => "'o cuntenuto era: '$1'",
 'excontentauthor' => "'o cuntenuto era: '$1' (e ll'unneco cuntribbutore era '[[Special:Contributions/$2|$2]]')",
@@ -336,8 +375,14 @@ Putite cuntinuà a ausà {{SITENAME}} comme n'utente senza nomme, o si nò putit
 'dellogpage'      => 'Scancellazione',
 'deletionlog'     => 'Log d"e scancellazione',
 'deletecomment'   => 'Mutivo d"a scancellazione',
-'rollback'        => "Ausa na revizione 'e primma",
-'revertpage'      => "Cangiaje 'e cagnamiénte 'e [[Special:Contributions/$2|$2]] ([[User talk:$2|discussione]]), cu â verzione 'e pprimma 'e  [[User:$1|$1]]", # Additional available: $3: revid of the revision reverted to, $4: timestamp of the revision reverted to, $5: revid of the revision reverted from, $6: timestamp of the revision reverted from
+
+# Rollback
+'rollback'   => "Ausa na revizione 'e primma",
+'revertpage' => "Cangiaje 'e cagnamiénte 'e [[Special:Contributions/$2|$2]] ([[User talk:$2|discussione]]), cu â verzione 'e pprimma 'e  [[User:$1|$1]]", # Additionally available: $3: revid of the revision reverted to, $4: timestamp of the revision reverted to, $5: revid of the revision reverted from, $6: timestamp of the revision reverted from
+
+# Protect
+'prot_1movedto2'         => 'ha spustato [[$1]] a [[$2]]',
+'protect-expiry-options' => '2 ore:2 hours,1 juorno:1 day,3 juorne:3 days,1 semmana:1 week,2 semmane:2 weeks,1 mise:1 month,3 mese:3 months,6 mese:6 months,1 anno:1 year,infinito:infinite', # display1:time1,display2:time2,...
 
 # Undelete
 'viewdeletedpage' => "Vìre 'e ppàggine scancellate",
@@ -407,7 +452,7 @@ Putite cuntinuà a ausà {{SITENAME}} comme n'utente senza nomme, o si nò putit
 'numedits'    => "Nummero 'e cagnamiente (articulo): $1",
 'numwatchers' => "Nummero 'e asservature: $1",
 
-# Special:NewImages
+# Special:NewFiles
 'noimages' => "Nun nc'è nind' 'a veré.",
 'ilsubmit' => 'Truova',
 
@@ -439,9 +484,6 @@ Putite cuntinuà a ausà {{SITENAME}} comme n'utente senza nomme, o si nò putit
 
 # Delete conflict
 'deletedwhileediting' => 'Attenziòne: quaccherùno have scancellàto chesta pàggena prìmma ca tu accuminciàste â scrìvere!',
-
-# AJAX search
-'hideresults' => "Annasconne 'e risultate",
 
 # Auto-summaries
 'autoredircomment' => 'Redirect â paggena [[$1]]',

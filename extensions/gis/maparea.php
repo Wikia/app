@@ -46,7 +46,7 @@ class maparea {
 
 		if ($action != 'raw') {
 			/* No reason for robots to follow map links */
-			$wgOut->setRobotpolicy( 'noindex,nofollow' );
+			$wgOut->setRobotPolicy( 'noindex,nofollow' );
 
 			$wgOut->setPagetitle( "Maparea" );
 
@@ -131,7 +131,7 @@ class maparea {
 		}
 		return $out;
 	}
-	
+
 	function map_pos( $lat, $lon )
 	{
 		#
@@ -158,4 +158,3 @@ class maparea {
 		return $out;
 	}
 }
-

@@ -1,0 +1,9 @@
+
+Page: 5977 Title: "Computer cluster"
+TextInc 1164215441 PageId: 5977 rev0: 89371512 uid0: 8 rev1: 89416034 uid1: 0 text: 316 left: 316 n01: 1 t01: 20722
+TextInc 1164223409 PageId: 5977 rev0: 89416034 uid0: 0 rev1: 89428960 uid1: 0 text: 2 left: 2 n01: 1 t01: 7968
+TextInc 1164223409 PageId: 5977 rev0: 89371512 uid0: 8 rev1: 89428960 uid1: 0 text: 316 left: 316 n01: 2 t01: 28690
+TextLife 1164194719 PageId: 5977 rev0: 89371512 uid0: 8 NJudges: 2 NewText: 316 Life: 632
+EditInc 1164223409 PageId: 5977 rev0: 89371512 uid0: 8 rev1: 89416034 uid1: 0 rev2: 89428960 uid2: 0 d01:    2.00 d02:    2.00 d12:    0.00 n01: 1 n12: 1 t01: 20722 t12: 7968
+EditLife 1164215441 PageId: 5977 rev0: 89416034 uid0: 0 NJudges: 1 Delta:    2.00 AvgSpecQ: 1.00000
+TextLife 1164215441 PageId: 5977 rev0: 89416034 uid0: 0 NJudges: 1 NewText: 2 Life: 2

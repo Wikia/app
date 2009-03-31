@@ -1,9 +1,10 @@
 <?php
 /**
- * @author Davide Eynard, David Laniado
+ * @file
+ * @ingroup SMWLanguage
  */
 
-/**
+/*
  * Protect against register_globals vulnerabilities.
  * This line must be present before any global variable is referenced.
  */
@@ -12,7 +13,15 @@ if (!defined('MEDIAWIKI')) die();
 global $smwgIP;
 include_once($smwgIP . '/languages/SMW_Language.php');
 
-class SMW_LanguageIt extends SMW_Language {
+/**
+ * Italian language labels for important SMW labels (namespaces, datatypes,...).
+ *
+ * @author Davide Eynard
+ * @author David Laniado
+ * @ingroup SMWLanguage
+ * @ingroup Language
+ */
+class SMWLanguageIt extends SMWLanguage {
 
 protected $m_DatatypeLabels = array(
 	'_wpg' => 'Pagina',  // name of page datatypee
@@ -40,18 +49,18 @@ protected $m_DatatypeAliases = array(
 
 protected $m_SpecialProperties = array(
 	//always start upper-case
-	SMW_SP_HAS_TYPE  => 'Ha tipo', //'Has type',
-	SMW_SP_HAS_URI   => 'URI equivalente', //'Equivalent URI',
-	SMW_SP_SUBPROPERTY_OF => 'Sottopropriet&agrave; di', // 'Subproperty of',
-	SMW_SP_DISPLAY_UNITS => 'Display units', //TODO
-	SMW_SP_IMPORTED_FROM => 'Importato da', // 'Imported from',
-	SMW_SP_CONVERSION_FACTOR => 'Corrisponde a ', // 'Corresponds to',
-	SMW_SP_SERVICE_LINK => 'Fornisce servizio', // 'Provides service',
-	SMW_SP_POSSIBLE_VALUE => 'Ammette valore', //'Allows value'
+	'_TYPE'  => 'Ha tipo', //'Has type',
+	'_URI'   => 'URI equivalente', //'Equivalent URI',
+	'_SUBP' => 'Sottopropriet&agrave; di', // 'Subproperty of',
+	'_UNIT' => 'Display units', //TODO
+	'_IMPO' => 'Importato da', // 'Imported from',
+	'_CONV' => 'Corrisponde a ', // 'Corresponds to',
+	'_SERV' => 'Fornisce servizio', // 'Provides service',
+	'_PVAL' => 'Ammette valore', //'Allows value'
 );
 
 protected $m_SpecialPropertyAliases = array(
-	'Display unit' => SMW_SP_DISPLAY_UNITS
+	'Display unit' => '_UNIT'
 );
 
 protected $m_Namespaces = array( // TODO: translate (English aliases can be kept, see other language files

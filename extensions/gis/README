@@ -1,12 +1,12 @@
-The GIS extension is based on the experience learned from WikiProject 
+The GIS extension is based on the experience learned from WikiProject
 Geographical coordinates. The extensions can be enabled individually, but
-the concept is certainly more powerful when they are all enabled. 
+the concept is certainly more powerful when they are all enabled.
 
 For more information, please see:
 http://www.mediawiki.org/wiki/Extension:Gis
 http://en.wikipedia.org/wiki/Wikipedia:WikiProject_Geographical_coordinates
 
-Magnus Manske has been extremely helpful in the work on integration with 
+Magnus Manske has been extremely helpful in the work on integration with
 Wikimaps, and that work will continue. I would also like to give a big thank
 you to all participants in WikiProject Geographical coordinates who have
 helped immensely with suggestions practical work.

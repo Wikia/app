@@ -1,12 +1,12 @@
 <?php
 /**
  * Abstract class to encapsulate properties of OrderedListPages.
- * Inherited by SMWTypePage and SMWPropertyPage.
- *
  * Some code adapted from CategoryPage.php
  *
  * @author Nikolas Iwan
  * @author Markus Krötzsch
+ * @file
+ * @ingroup SMW
  */
 
 /**
@@ -16,7 +16,7 @@
  * parameters.
  *
  * Some code adapted from CategoryPage.php
- * @note AUTOLOADED
+ * @ingroup SMW
  */
 abstract class SMWOrderedListPage extends Article {
 
@@ -24,7 +24,6 @@ abstract class SMWOrderedListPage extends Article {
 	protected $from; // start string: print $limit results from here
 	protected $until; // end string: print $limit results strictly before this article
 	protected $articles; // array of articles for which information is printed (primary ordering method)
-	protected $articles_start_char; // array of first characters of printed articles, used for making subheaders
 	protected $skin; // cache for the current skin, obtained from $wgUser
 
 	/**
@@ -54,6 +53,7 @@ abstract class SMWOrderedListPage extends Article {
 		$this->until = $wgRequest->getVal( 'until' );
 		if ($this->initParameters()) {
 			$wgOut->addHTML( $this->getHTML() );
+			SMWOutputs::commitToOutputPage($wgOut); // Flush required CSS to output
 		}
 		wfProfileOut( __METHOD__ . ' (SMW)');
 	}
@@ -61,7 +61,7 @@ abstract class SMWOrderedListPage extends Article {
 	/**
 	 * Initialise some parameters that might be changed by subclasses
 	 * (e.g. $limit). Method can be overwritten in this case.
-	 * If the method returns false, nothing will be printed besides 
+	 * If the method returns false, nothing will be printed besides
 	 * the original article.
 	 */
 	protected function initParameters() {
@@ -85,7 +85,6 @@ abstract class SMWOrderedListPage extends Article {
 	 */
 	protected function clearPageState() {
 		$this->articles = array();
-		$this->articles_start_char = array();
 	}
 
 	/**
@@ -105,13 +104,13 @@ abstract class SMWOrderedListPage extends Article {
 	 */
 	protected function getNavigationLinks($query = array()) {
 		global $wgUser, $wgLang;
-		$sk =& $this->getSkin();
+		$sk = $this->getSkin();
 		$limitText = $wgLang->formatNum( $this->limit );
 		
 		$ac = count($this->articles);
 		if ($this->until != '') {
 			if ($ac > $this->limit) { // (we assume that limit is at least 1)
-				$first = $this->articles[1]->getDBkey();
+				$first = $this->articles[1]->getSortkey();
 			} else {
 				$first = '';
 			}
@@ -119,7 +118,7 @@ abstract class SMWOrderedListPage extends Article {
 		} elseif ( ($ac > $this->limit) || ($this->from != '') ) {
 			$first = $this->from;
 			if ( $ac > $this->limit) {
-				$last = $this->articles[$ac-1]->getDBkey();
+				$last = $this->articles[$ac-1]->getSortkey();
 			} else {
 				$last = '';
 			}
@@ -151,6 +150,87 @@ abstract class SMWOrderedListPage extends Article {
 		}
 		return $this->skin;
 	}
+
+	/**
+	 * Like Article's getTitle(), but returning a suitable SMWWikiPageValue
+	 */
+	protected function getDataValue() {
+		return SMWWikiPageValue::makePageFromTitle($this->getTitle());
+	}
+
+	/**
+	 * Format a list of SMWWikipageValues chunked by letter in a three-column
+	 * list, ordered vertically.
+	 */
+	protected function columnList($start, $end, $elements) {
+		global $wgContLang;
+		// divide list into three equal chunks
+		$chunk = (int) ( ($end-$start+1) / 3);
+
+		// get and display header
+		$r = '<table width="100%"><tr valign="top">';
+
+		$prev_start_char = 'none';
+
+		// loop through the chunks
+		for($startChunk = $start, $endChunk = $chunk, $chunkIndex = 0;
+			$chunkIndex < 3;
+			$chunkIndex++, $startChunk = $endChunk, $endChunk += $chunk + 1) {
+			$r .= "<td>\n";
+			$atColumnTop = true;
+
+			// output all articles
+			for ($index = $startChunk ;
+				$index < $endChunk && $index < $end;
+				$index++ ) {
+				// check for change of starting letter or begining of chunk
+				$start_char = $wgContLang->convert( $wgContLang->firstChar( $elements[$index]->getSortkey() ) );
+				if ( ($index == $startChunk) ||
+					 ($start_char != $prev_start_char) ) {
+					if( $atColumnTop ) {
+						$atColumnTop = false;
+					} else {
+						$r .= "</ul>\n";
+					}
+					$cont_msg = "";
+					if ( $start_char == $prev_start_char ) {
+						$cont_msg = wfMsgHtml('listingcontinuesabbrev');
+					}
+					$r .= "<h3>" . htmlspecialchars( $start_char ) . " $cont_msg</h3>\n<ul>";
+					$prev_start_char = $start_char;
+				}
+				$r .= "<li>" . $elements[$index]->getLongHTMLText($this->getSkin()) . "</li>\n";
+			}
+			if( !$atColumnTop ) {
+				$r .= "</ul>\n";
+			}
+			$r .= "</td>\n";
+		}
+		$r .= '</tr></table>';
+		return $r;
+	}
+
+	/**
+	 * Format a list of articles chunked by letter in a bullet list.
+	 */
+	protected function shortList($start, $end, $elements) {
+		global $wgContLang;
+		$start_char = $wgContLang->convert( $wgContLang->firstChar( $elements[$start]->getSortkey() ) );
+		$prev_start_char = $start_char;
+		$r = '<h3>' . htmlspecialchars( $start_char ) . "</h3>\n";
+		$r .= '<ul><li>'. $elements[$start]->getLongHTMLText($this->getSkin()) . '</li>';
+		for ($index = $start+1; $index < $end; $index++ ) {
+			$start_char = $wgContLang->convert( $wgContLang->firstChar( $elements[$index]->getSortkey() ) );
+			if ($start_char != $prev_start_char) {
+				$r .= "</ul><h3>" . htmlspecialchars( $start_char ) . "</h3>\n<ul>";
+				$prev_start_char = $start_char;
+			}
+			$r .= '<li>' . $elements[$index]->getLongHTMLText($this->getSkin()) . '</li>';
+		}
+		$r .= '</ul>';
+		return $r;
+	}
+
 }
 
 

@@ -363,7 +363,7 @@ sec 1
 !!end
 
 !!test
-LST: transclude nonexistant section
+LST: transclude nonexistent section
 !!input
 {{#lst:sections|9999}}
 !!result

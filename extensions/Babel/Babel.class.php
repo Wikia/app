@@ -108,7 +108,7 @@ class Babel {
 
 			} elseif( $this->_validTitle( $name ) ) {
 
-				// Non-existant page and invalid parameter syntax, red link.
+				// Non-existent page and invalid parameter syntax, red link.
 				$contents .= "\n[[Template:{$this->_addFixes( $name,'template' )}]]";
 
 			} else {
@@ -332,7 +332,7 @@ HEREDOC;
 	 */
 	private function _parseParameter( $parameter ) {
 
-		// Break up the parameter on - (which seperates it's two parts).
+		// Break up the parameter on - (which separates it's two parts).
 		$chunks = explode( '-', $parameter );
 
 		// Initialise the return array.
@@ -612,6 +612,8 @@ HEREDOC;
 			// Add category wikitext to box tower.
 			$r .= "[[Category:{$this->_addFixes( $code,'category' )}|$level{$wgUser->getName()}]]";
 
+			BabelAutoCreate::create( $this->_addFixes( "$code",'category' ), $this->_nameCode( $code ) );
+
 		}
 
 		// Add to level categories, only adding it to the level 0
@@ -620,6 +622,8 @@ HEREDOC;
 
 			// Add category wikitext to box tower.
 			$r .= "[[Category:{$this->_addFixes( "$code-$level",'category' )}|{$wgUser->getName()}]]";
+
+			BabelAutoCreate::create( $this->_addFixes( "$code-$level",'category' ), $level, $this->_nameCode( $code ) );
 
 		}
 
@@ -661,6 +665,22 @@ HEREDOC;
 			}
 
 		}
+
+		/* Try the native MediaWiki names (or CLDR).
+		 */
+		if( class_exists( 'LanguageNames' ) ) {
+			$names = LanguageNames::getNames( $code );
+		} else {
+			$names = Language::getLanguageNames();
+		}
+
+		if( array_key_exists( strtolower( $code ), $names ) ) {
+			return true;
+		}
+
+		/* Not found, return false.
+		 */
+		return false;
 
 	}
 
@@ -718,6 +738,18 @@ HEREDOC;
 
 		if( array_key_exists( $code, $this->_codes[ 'ISO_639_3' ] ) && array_key_exists( "name_$lang", $this->_codes[ 'ISO_639_3' ][ $code ] ) ) {
 			return $this->_codes[ 'ISO_639_3' ][ $code ][ "name_$lang" ];
+		}
+
+		/* Try the native MediaWiki names (or CLDR).
+		 */
+		if( class_exists( 'LanguageNames' ) ) {
+			$names = LanguageNames::getNames( $code );
+		} else {
+			$names = Language::getLanguageNames();
+		}
+
+		if( array_key_exists( strtolower( $code ), $names ) ) {
+			return $names[ strtolower( $code ) ];
 		}
 
 		// Nothing found, return input.

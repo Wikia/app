@@ -21,6 +21,7 @@ $wgQueryPages = array(
 	array( 'DeadendPagesPage',              'Deadendpages'                  ),
 	array( 'DisambiguationsPage',           'Disambiguations'               ),
 	array( 'DoubleRedirectsPage',           'DoubleRedirects'               ),
+	array( 'LinkSearchPage',                'LinkSearch'                    ),
 	array( 'ListredirectsPage',             'Listredirects'					),
 	array( 'LonelyPagesPage',               'Lonelypages'                   ),
 	array( 'LongPagesPage',                 'Longpages'                     ),
@@ -39,7 +40,9 @@ $wgQueryPages = array(
 	array( 'UnusedCategoriesPage',          'Unusedcategories'              ),
 	array( 'UnusedimagesPage',              'Unusedimages'                  ),
 	array( 'WantedCategoriesPage',          'Wantedcategories'              ),
+	array( 'WantedFilesPage',               'Wantedfiles'                   ),
 	array( 'WantedPagesPage',               'Wantedpages'                   ),
+	array( 'WantedTemplatesPage',          'Wantedtemplates'              ),
 	array( 'UnwatchedPagesPage',            'Unwatchedpages'                ),
 	array( 'UnusedtemplatesPage',           'Unusedtemplates' 				),
 	array( 'WithoutInterwikiPage',			'Withoutinterwiki'				),
@@ -334,22 +337,22 @@ class QueryPage {
 
 		$this->preprocessResults( $dbr, $res );
 
-		$wgOut->addHtml( XML::openElement( 'div', array('class' => 'mw-spcontent') ) );
+		$wgOut->addHTML( XML::openElement( 'div', array('class' => 'mw-spcontent') ) );
 
 		# Top header and navigation
 		if( $shownavigation ) {
-			$wgOut->addHtml( $this->getPageHeader() );
+			$wgOut->addHTML( $this->getPageHeader() );
 			if( $num > 0 ) {
-				$wgOut->addHtml( '<p>' . wfShowingResults( $offset, $num ) . '</p>' );
+				$wgOut->addHTML( '<p>' . wfShowingResults( $offset, $num ) . '</p>' );
 				# Disable the "next" link when we reach the end
 				$paging = wfViewPrevNext( $offset, $limit, $wgContLang->specialPage( $sname ),
 					wfArrayToCGI( $this->linkParameters() ), ( $num < $limit ) );
-				$wgOut->addHtml( '<p>' . $paging . '</p>' );
+				$wgOut->addHTML( '<p>' . $paging . '</p>' );
 			} else {
 				# No results to show, so don't bother with "showing X of Y" etc.
 				# -- just let the user know and give up now
-				$wgOut->addHtml( '<p>' . wfMsgHtml( 'specialpage-empty' ) . '</p>' );
-				$wgOut->addHtml( XML::closeElement( 'div' ) );
+				$wgOut->addHTML( '<p>' . wfMsgHtml( 'specialpage-empty' ) . '</p>' );
+				$wgOut->addHTML( XML::closeElement( 'div' ) );
 				return;
 			}
 		}
@@ -366,10 +369,10 @@ class QueryPage {
 
 		# Repeat the paging links at the bottom
 		if( $shownavigation ) {
-			$wgOut->addHtml( '<p>' . $paging . '</p>' );
+			$wgOut->addHTML( '<p>' . $paging . '</p>' );
 		}
 
-		$wgOut->addHtml( XML::closeElement( 'div' ) );
+		$wgOut->addHTML( XML::closeElement( 'div' ) );
 
 		return $num;
 	}
@@ -428,7 +431,7 @@ class QueryPage {
 				? $wgContLang->listToText( $html )
 				: implode( '', $html );
 
-			$out->addHtml( $html );
+			$out->addHTML( $html );
 		}
 	}
 
@@ -531,7 +534,7 @@ class QueryPage {
 	}
 
 	function feedDesc() {
-		return wfMsg( 'tagline' );
+		return wfMsgExt( 'tagline', 'parsemag' );
 	}
 
 	function feedUrl() {

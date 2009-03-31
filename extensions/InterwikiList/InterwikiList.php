@@ -13,11 +13,11 @@
  */
  
 $wgExtensionCredits['specialpage'][] = array(
-        'name'				=> 'Interwiki List',
-		'version'			=> '0.2',
-        'url'				=> 'http://mediawiki.org/wiki/Extension:InterwikiList',
+        'name'			=> 'Interwiki List',
+	'version'		=> '0.3',
+        'url'			=> 'http://mediawiki.org/wiki/Extension:InterwikiList',
         'description'		=> 'Adds a [[Special:Interwikilist|special page]] to view available interwiki links',
-        'author'			=> '[mailto:innocentkiller@gmail.com Chad Horohoe]',
+        'author'		=> '[mailto:innocentkiller@gmail.com Chad Horohoe]',
         'descriptionmsg'	=> 'interwikilist-desc',
 );
 

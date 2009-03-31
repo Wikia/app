@@ -1,0 +1,19 @@
+The script create_db.php now handles both table creation and removal.
+
+To create tables:
+./create_db.php "path_to_mediawiki" "mysql_root_user_name"
+
+To remove tables:
+./create_db.php "path_to_mediawiki" "mysql_root_user_name" remove
+
+For example, if mediawiki is at /usr/share/mediawiki and the root user is root, 
+One would use
+
+./create_db.php /usr/share/mediawiki root
+
+to create the tables, and 
+
+./create_db.php /usr/share/mediawiki root remove
+
+to remove the files.
+

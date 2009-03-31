@@ -241,7 +241,7 @@ class TalkHereArticle {
 			'accesskey' => wfMsg('accesskey-save'),
 			'title'     => wfMsg( 'tooltip-save' ).' ['.wfMsg( 'accesskey-save' ).']',
 		);
-		$wgOut->addHTML( wfElement('input', $temp, '') );
+		$wgOut->addHTML( Xml::element('input', $temp, '') );
 
 		$temp = array(
 			'id'        => 'wpPreview',
@@ -252,7 +252,7 @@ class TalkHereArticle {
 			'accesskey' => wfMsg('accesskey-preview'),
 			'title'     => wfMsg( 'tooltip-preview' ).' ['.wfMsg( 'accesskey-preview' ).']',
 		);
-		$wgOut->addHTML(  wfElement('input', $temp, '') );
+		$wgOut->addHTML(  Xml::element('input', $temp, '') );
 
 		$edithelpurl = Skin::makeInternalOrExternalUrl( wfMsgForContent( 'edithelppage' ));
 		$edithelp = '<a target="helpwindow" href="'.$edithelpurl.'">'.

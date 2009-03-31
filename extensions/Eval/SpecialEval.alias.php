@@ -28,6 +28,16 @@ $aliases['arz'] = array(
 	'Eval' => array( 'تقييم' ),
 );
 
+/** Bosnian (Bosanski) */
+$aliases['bs'] = array(
+	'Eval' => array( 'Ocjenjivanje' ),
+);
+
+/** German (Deutsch) */
+$aliases['de'] = array(
+	'Eval' => array( 'Auswerten' ),
+);
+
 /** French (Français) */
 $aliases['fr'] = array(
 	'Eval' => array( 'Évaluer', 'Evaluer' ),
@@ -36,6 +46,11 @@ $aliases['fr'] = array(
 /** Galician (Galego) */
 $aliases['gl'] = array(
 	'Eval' => array( 'Avaliación' ),
+);
+
+/** Swiss German (Alemannisch) */
+$aliases['gsw'] = array(
+	'Eval' => array( 'Uuswerte' ),
 );
 
 /** Hebrew (עברית)
@@ -55,13 +70,28 @@ $aliases['lb'] = array(
 	'Eval' => array( 'Bewertung' ),
 );
 
+/** Maltese (Malti) */
+$aliases['mt'] = array(
+	'Eval' => array( 'Eval' ),
+);
+
+/** Nedersaksisch (Nedersaksisch) */
+$aliases['nds-nl'] = array(
+	'Eval' => array( 'Evalueren' ),
+);
+
 /** Dutch (Nederlands) */
 $aliases['nl'] = array(
-	'Eval' => array( 'Eval' ),
+	'Eval' => array( 'Evalueren' ),
 );
 
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬) */
 $aliases['no'] = array(
 	'Eval' => array( 'Eval' ),
+);
+
+/** Occitan (Occitan) */
+$aliases['oc'] = array(
+	'Eval' => array( 'Evaluar' ),
 );
 

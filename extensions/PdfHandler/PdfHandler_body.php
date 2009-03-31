@@ -198,10 +198,6 @@ class PdfHandler extends ImageHandler {
 		return intval( $data['Pages'] );
 	}
 
-	/**
-	 * @fixme pdfinfo currently only gives us a per-file page size.
-	 * Some files may have different dimensions per page.
-	 */
 	function getPageDimensions( $image, $page ) {
 		$data = $this->getMetaArray( $image );
 		return PdfImage::getPageSize( $data, $page );

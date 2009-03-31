@@ -65,7 +65,7 @@ Class ExtCategoryTests {
 		}
 		$cattitle = Title::makeTitleSafe(NS_CATEGORY, $category);
 		$catkey = $cattitle->getDBkey();
-		$db = wfGetDb(DB_SLAVE);
+		$db = wfGetDB(DB_SLAVE);
 		$res = $db->select(array('page', 'categorylinks'), 'cl_from', array(
 					'page_id=cl_from',
 					'page_namespace' => $ns,
@@ -89,7 +89,7 @@ Class ExtCategoryTests {
 			$page = $title->getDBkey();
 			$ns = $title->getNamespace();
 		}
-		$db = wfGetDb(DB_SLAVE);
+		$db = wfGetDB(DB_SLAVE);
 		$res = $db->select(array('page', 'categorylinks'), 'cl_from', array(
 					'page_id=cl_from',
 					'page_namespace' => $ns,

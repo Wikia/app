@@ -68,7 +68,7 @@ $messages = array(
 'mypage'         => 'ܕܦܝ',
 'mytalk'         => 'ܕܘܪܫܝ',
 'navigation'     => 'ܐܠܦܪܘܬܐ',
-'and'            => 'ܘ',
+'and'            => '&#32;ܘ',
 
 'errorpagetitle'    => 'ܛܥܝܘܬܐ',
 'help'              => 'ܥܘܕܪܢܐ',
@@ -103,7 +103,7 @@ $messages = array(
 # All link text and link target definitions of links into project namespace that get used by other message strings, with the exception of user group pages (see grouppage) and the disambiguation template definition (see disambiguations).
 'currentevents'        => 'ܓܕ̈ܫܐ ܗܫ̈ܝܐ',
 'currentevents-url'    => 'Project:ܓܕ̈ܫܐ ܗܫܝܐ',
-'mainpage'             => 'ܕܦܐ ܪܫܝܐ',
+'mainpage'             => 'ܕܦܐ ܪܝܫܝܐ',
 'mainpage-description' => 'ܕܦܐ ܪܫܝܐ',
 'portal'               => 'ܬܪܥܐ ܕܟܢܫܐ',
 'portal-url'           => 'Project:ܬܪܥܐ ܕܟܢܫܐ',
@@ -158,14 +158,14 @@ $messages = array(
 'upload'   => 'ܛܥܢܐ ܦ̮ܥܝܠ',
 'filename' => 'ܫܡܐ ܕܫܘܦܝܢܐ',
 
-# Special:ImageList
-'imagelist_name' => 'ܫܡܐ',
+# Special:ListFiles
+'listfiles_name' => 'ܫܡܐ',
 
 # Random page
 'randompage' => 'ܡܓܠܬܐ ܚܘܝܚܐ',
 
 # Miscellaneous special pages
-'move' => 'ܡܓ̰ܘܓ̰',
+'move' => 'ܫܢܝ',
 
 # Book sources
 'booksources'    => 'ܙܠ',
@@ -202,7 +202,7 @@ $messages = array(
 # Namespace 8 related
 'allmessagesname' => 'ܫܡܐ',
 
-# Special:NewImages
+# Special:NewFiles
 'ilsubmit' => 'ܛܥܘܝܐ',
 
 # 'all' in various places, this might be different for inflected languages

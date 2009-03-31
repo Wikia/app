@@ -55,8 +55,8 @@ class AbstractFilter {
 		$title = $wgSitename . ': ' . $this->title->getPrefixedText();
 		
 		$xml = "<doc>\n";
-		$xml .= wfElement( 'title', null, $this->_variant( $title ) ) . "\n";
-		$xml .= wfElement( 'url', null, $this->title->getFullUrl() ) . "\n";
+		$xml .= Xml::element( 'title', null, $this->_variant( $title ) ) . "\n";
+		$xml .= Xml::element( 'url', null, $this->title->getFullUrl() ) . "\n";
 		
 		// add abstract and links when we have revision data...
 		$this->revision = null;
@@ -67,7 +67,7 @@ class AbstractFilter {
 	function writeClosePage( $string ) {
 		$xml = '';
 		if( $this->revision ) {
-			$xml .= wfElement( 'abstract', null,
+			$xml .= Xml::element( 'abstract', null,
 				$this->_variant(
 					$this->_abstract( $this->revision ) ) ) . "\n";
 			$xml .= "<links>\n";
@@ -260,10 +260,10 @@ class AbstractFilter {
 	 */
 	function _formatLink( $url, $anchor, $type ) {
 		$maxUrlLength = 1024; // as defined in Yahoo's .xsd
-		return wfOpenElement( 'sublink', array( 'linktype' => $type ) ) .
-			wfElement( 'anchor', null, $this->_variant( $anchor ) ) .
-			wfElement( 'link', null, substr( $url, 0, $maxUrlLength ) ) .
-			wfCloseElement( 'sublink' ) . "\n";
+		return Xml::openElement( 'sublink', array( 'linktype' => $type ) ) .
+			Xml::element( 'anchor', null, $this->_variant( $anchor ) ) .
+			Xml::element( 'link', null, substr( $url, 0, $maxUrlLength ) ) .
+			Xml::closeElement( 'sublink' ) . "\n";
 	}
 	
 }

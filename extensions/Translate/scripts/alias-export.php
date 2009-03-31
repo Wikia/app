@@ -1,6 +1,6 @@
 <?php
 /**
- * Script to export translations of one message group to file(s).
+ * Script to export special page aliases of extensions.
  *
  * @author Niklas Laxstrom
  *
@@ -9,8 +9,8 @@
  * @file
  */
 
-$optionsWithArgs = array( 'lang', 'target', 'group' );
-require( dirname(__FILE__) . '/cli.inc' );
+$optionsWithArgs = array( 'lang', 'target' );
+require( dirname( __FILE__ ) . '/cli.inc' );
 
 function showUsage() {
 	STDERR( <<<EOT
@@ -20,41 +20,40 @@ Usage: php aliasexport.php [options...]
 
 Options:
   --target      Target directory for exported files
-  --lang        Comma separated list of language codes
-  --group       Group id
+  --lang        Comma separated list of language codes or *
 EOT
 );
 	exit( 1 );
 }
 
-if ( isset($options['help']) || $args === 1 ) {
+if ( isset( $options['help'] ) || $args === 1 ) {
 	showUsage();
 }
 
-if ( !isset($options['target']) ) {
+if ( !isset( $options['target'] ) ) {
 	STDERR( "You need to specify target directory" );
-	exit(1);
+	exit( 1 );
 }
-if ( !isset($options['lang']) ) {
+if ( !isset( $options['lang'] ) ) {
 	STDERR( "You need to specify languages to export" );
-	exit(1);
+	exit( 1 );
 }
 
 if ( !is_writable( $options['target'] ) ) {
 	STDERR( "Target directory is not writable" );
-	exit(1);
+	exit( 1 );
 }
 
-$langs = array_map( 'trim', explode( ',', $options['lang'] ) );
+$langs = Cli::parseLanguageCodes( $options['lang'] );
 
 
-if ( !file_exists(TRANSLATE_ALIASFILE) || !is_readable(TRANSLATE_ALIASFILE) ) {
+if ( !file_exists( TRANSLATE_ALIASFILE ) || !is_readable( TRANSLATE_ALIASFILE ) ) {
 	STDERR( "Alias file not defined" );
-	exit(1);
+	exit( 1 );
 }
 
 $defines = file_get_contents( TRANSLATE_ALIASFILE );
-$sections = preg_split( "/\n\n/", $defines, -1, PREG_SPLIT_NO_EMPTY );
+$sections = preg_split( "/\n\n/", $defines, - 1, PREG_SPLIT_NO_EMPTY );
 
 foreach ( $sections as $section ) {
 	$lines = array_map( 'trim', preg_split( "/\n/", $section ) );

@@ -829,6 +829,7 @@ class PPFrame_DOM implements PPFrame {
 
 	/**
 	 * Recursion depth of this frame, top = 0
+	 * Note that this is NOT the same as expansion depth in expand()
 	 */
 	var $depth;
 
@@ -886,20 +887,21 @@ class PPFrame_DOM implements PPFrame {
 
 	function expand( $root, $flags = 0 ) {
 		global $wgWysiwygParserEnabled;
-		static $depth = 0;
+		static $expansionDepth = 0;
 		if ( is_string( $root ) ) {
 			return $root;
 		}
+		wfProfileIn( __METHOD__ );
 
 		if ( ++$this->parser->mPPNodeCount > $this->parser->mOptions->mMaxPPNodeCount )
 		{
 			return '<span class="error">Node-count limit exceeded</span>';
 		}
 
-		if ( $depth > $this->parser->mOptions->mMaxPPExpandDepth ) {
+		if ( $expansionDepth > $this->parser->mOptions->mMaxPPExpandDepth ) {
 			return '<span class="error">Expansion depth limit exceeded</span>';
 		}
-		++$depth;
+		++$expansionDepth;
 
 		if ( $root instanceof PPNode_DOM ) {
 			$root = $root->node;
@@ -1070,6 +1072,7 @@ class PPFrame_DOM implements PPFrame {
 					$newIterator = $contextNode->childNodes;
 				}
 			} else {
+				wfProfileOut( __METHOD__ );
 				throw new MWException( __METHOD__.': Invalid parameter type' );
 			}
 
@@ -1092,7 +1095,8 @@ class PPFrame_DOM implements PPFrame {
 				}
 			}
 		}
-		--$depth;
+		--$expansionDepth;
+		wfProfileOut( __METHOD__ );
 		return $outStack[0];
 	}
 
@@ -1283,6 +1287,32 @@ class PPTemplateFrame_DOM extends PPFrame_DOM {
 		return !count( $this->numberedArgs ) && !count( $this->namedArgs );
 	}
 
+	function getArguments() {
+		$arguments = array();
+		foreach ( array_merge(
+				array_keys($this->numberedArgs),
+				array_keys($this->namedArgs)) as $key ) {
+			$arguments[$key] = $this->getArgument($key);
+		}
+		return $arguments;
+	}
+
+	function getNumberedArguments() {
+		$arguments = array();
+		foreach ( array_keys($this->numberedArgs) as $key ) {
+			$arguments[$key] = $this->getArgument($key);
+		}
+		return $arguments;
+	}
+
+	function getNamedArguments() {
+		$arguments = array();
+		foreach ( array_keys($this->namedArgs) as $key ) {
+			$arguments[$key] = $this->getArgument($key);
+		}
+		return $arguments;
+	}
+
 	function getNumberedArgument( $index ) {
 		if ( !isset( $this->numberedArgs[$index] ) ) {
 			return false;
@@ -1356,6 +1386,9 @@ class PPCustomFrame_DOM extends PPFrame_DOM {
 	}
 
 	function getArgument( $index ) {
+		if ( !isset( $this->args[$index] ) ) {
+			return false;
+		}
 		return $this->args[$index];
 	}
 }

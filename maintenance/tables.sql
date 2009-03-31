@@ -446,7 +446,7 @@ CREATE TABLE /*$wgDBprefix*/imagelinks (
   
   -- Filename of target image.
   -- This is also the page_title of the file's description page;
-  -- all such pages are in namespace 6 (NS_IMAGE).
+  -- all such pages are in namespace 6 (NS_FILE).
   il_to varchar(255) binary NOT NULL default '',
   
   UNIQUE KEY il_from (il_from,il_to),
@@ -596,6 +596,9 @@ CREATE TABLE /*$wgDBprefix*/site_stats (
 
   -- Number of users, theoretically equal to SELECT COUNT(*) FROM user;
   ss_users bigint default '-1',
+  
+  -- Number of users that still edit
+  ss_active_users bigint default '-1',
 
   -- Deprecated, no longer updated as of 1.5
   ss_admins int default '-1',
@@ -675,6 +678,9 @@ CREATE TABLE /*$wgDBprefix*/ipblocks (
   -- Block prevents user from accessing Special:Emailuser
   ipb_block_email bool NOT NULL default 0,
   
+  -- Block allows user to edit their own talk page
+  ipb_allow_usertalk bool NOT NULL default 0,
+  
   PRIMARY KEY ipb_id (ipb_id),
 
   -- Unique index to support "user already blocked" messages
@@ -695,7 +701,7 @@ CREATE TABLE /*$wgDBprefix*/ipblocks (
 CREATE TABLE /*$wgDBprefix*/image (
   -- Filename.
   -- This is also the title of the associated description page,
-  -- which will be in namespace 6 (NS_IMAGE).
+  -- which will be in namespace 6 (NS_FILE).
   img_name varchar(255) binary NOT NULL default '',
   
   -- File size in bytes.
@@ -904,7 +910,7 @@ CREATE TABLE /*$wgDBprefix*/recentchanges (
   rc_old_len int,
   rc_new_len int,
 
-  -- Visibility of deleted revisions, bitfield
+  -- Visibility of recent changes items, bitfield
   rc_deleted tinyint unsigned NOT NULL default '0',
 
   -- Value corresonding to log_id, specific log entries
@@ -1044,7 +1050,7 @@ CREATE TABLE /*$wgDBprefix*/objectcache (
   keyname varbinary(255) NOT NULL default '',
   value mediumblob,
   exptime datetime,
-  UNIQUE KEY (keyname),
+  PRIMARY KEY (keyname),
   KEY (exptime)
 
 ) /*$wgDBTableOptions*/;

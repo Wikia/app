@@ -38,7 +38,7 @@ function autoreview_current( $user, $db ) {
 				$text = $rev->getText();
 				# Assume basic flagging level
 				$flags = array();
-				foreach( FlaggedRevs::$dimensions as $tag => $minQL ) {
+				foreach( FlaggedRevs::getDimensions() as $tag => $minQL ) {
 					$flags[$tag] = 1;
 				}
 				$article = new Article( $title );

@@ -65,77 +65,77 @@ class DPL2_i18n
              * $1: wrong parameter given by user
              * $3: list of possible titles of namespaces (except pseudo-namespaces: Media, Special)
              */
-            'dpl2_log_' . self::FATAL_WRONGNS => "Error: Wrong '$0' parameter: '$1'! Help:  <code>$0= <i>empty string</i> (Main)$3</code>.",
+            'dpl2_log_' . self::FATAL_WRONGNS => "ERROR: Wrong '$0' parameter: '$1'! Help:  <code>$0= <i>empty string</i> (Main)$3</code>.",
             /**
              * $0: 'linksto' (left as $0 just in case the parameter is renamed in the future)
              * $1: wrong parameter given by user
              */
-            'dpl2_log_' . self::FATAL_WRONGLINKSTO => "Error: Wrong '$0' parameter: '$1'! Help:  <code>$0= <i>full pagename</i></code>.",
+            'dpl2_log_' . self::FATAL_WRONGLINKSTO => "ERROR: Wrong '$0' parameter: '$1'! Help:  <code>$0= <i>full pagename</i></code>.",
             /**
              * $0: max number of categories that can be included
              */
-            'dpl2_log_' . self::FATAL_TOOMANYCATS => 'Error: Too many categories! Maximum: $0. Help: increase <code>ExtDynamicPageList2::$maxCategoryCount</code> to specify more categories or set <code>ExtDynamicPageList2::$allowUnlimitedCategories=true</code> for no limitation. (Set the variable in <code>LocalSettings.php</code>, after including <code>DynamicPageList2.php</code>.)',
+            'dpl2_log_' . self::FATAL_TOOMANYCATS => 'ERROR: Too many categories! Maximum: $0. Help: increase <code>ExtDynamicPageList2::$maxCategoryCount</code> to specify more categories or set <code>ExtDynamicPageList2::$allowUnlimitedCategories=true</code> for no limitation. (Set the variable in <code>LocalSettings.php</code>, after including <code>DynamicPageList2.php</code>.)',
             /**
              * $0: min number of categories that have to be included
              */
-            'dpl2_log_' . self::FATAL_TOOFEWCATS => 'Error: Too few categories! Minimum: $0. Help: decrease <code>ExtDynamicPageList2::$minCategoryCount</code> to specify fewer categories. (Set the variable preferably in <code>LocalSettings.php</code>, after including <code>DynamicPageList2.php</code>.)',
-            'dpl2_log_' . self::FATAL_NOSELECTION => "Error: No selection criteria found! You must use at least one of the following parameters: category, namespace, titlematch, linksto, uses, createdby, modifiedby, lastmodifiedby or their 'not' variants",
-            'dpl2_log_' . self::FATAL_CATDATEBUTNOINCLUDEDCATS => "Error: You need to include at least one category if you want to use 'addfirstcategorydate=true' or 'ordermethod=categoryadd'!",
-            'dpl2_log_' . self::FATAL_CATDATEBUTMORETHAN1CAT => "Error: If you include more than one category, you cannot use 'addfirstcategorydate=true' or 'ordermethod=categoryadd'!",
-            'dpl2_log_' . self::FATAL_MORETHAN1TYPEOFDATE => 'Error: You cannot add more than one type of date at a time!',
+            'dpl2_log_' . self::FATAL_TOOFEWCATS => 'ERROR: Too few categories! Minimum: $0. Help: decrease <code>ExtDynamicPageList2::$minCategoryCount</code> to specify fewer categories. (Set the variable preferably in <code>LocalSettings.php</code>, after including <code>DynamicPageList2.php</code>.)',
+            'dpl2_log_' . self::FATAL_NOSELECTION => "ERROR: No selection criteria found! You must use at least one of the following parameters: category, namespace, titlematch, linksto, uses, createdby, modifiedby, lastmodifiedby or their 'not' variants",
+            'dpl2_log_' . self::FATAL_CATDATEBUTNOINCLUDEDCATS => "ERROR: You need to include at least one category if you want to use 'addfirstcategorydate=true' or 'ordermethod=categoryadd'!",
+            'dpl2_log_' . self::FATAL_CATDATEBUTMORETHAN1CAT => "ERROR: If you include more than one category, you cannot use 'addfirstcategorydate=true' or 'ordermethod=categoryadd'!",
+            'dpl2_log_' . self::FATAL_MORETHAN1TYPEOFDATE => 'ERROR: You cannot add more than one type of date at a time!',
             /**
              * $0: param=val that is possible only with $1 as last 'ordermethod' parameter
              * $1: last 'ordermethod' parameter required for $0
              */
-            'dpl2_log_' . self::FATAL_WRONGORDERMETHOD => "Error: You can use '$0' with 'ordermethod=[...,]$1' only!",
+            'dpl2_log_' . self::FATAL_WRONGORDERMETHOD => "ERROR: You can use '$0' with 'ordermethod=[...,]$1' only!",
             /**
              * $0: the number of arguments in includepage
              */
-            'dpl2_log_' . self::FATAL_DOMINANTSECTIONRANGE => "Error: the index for the dominant section must be between 1 and the number of arguments of includepage ($0 in this case)",
+            'dpl2_log_' . self::FATAL_DOMINANTSECTIONRANGE => "ERROR: the index for the dominant section must be between 1 and the number of arguments of includepage ($0 in this case)",
             /**
              * $0: prefix_dpl_clview where 'prefix' is the prefix of your mediawiki table names
              * $1: SQL query to create the prefix_dpl_clview on your mediawiki DB
              */
-            'dpl2_log_' . self::FATAL_NOCLVIEW => "Error: Cannot perform logical operations on the Uncategorized pages (e.g. with the 'category' parameter) because the $0 view does not exist on the database! Help: have the DB admin execute this query: <code>$1</code>.",
-            'dpl2_log_' . self::FATAL_OPENREFERENCES => 'Error: specifying "openreferences" is incompatible with some other option you specified. See the manual for details.',
+            'dpl2_log_' . self::FATAL_NOCLVIEW => "ERROR: Cannot perform logical operations on the Uncategorized pages (e.g. with the 'category' parameter) because the $0 view does not exist on the database! Help: have the DB admin execute this query: <code>$1</code>.",
+            'dpl2_log_' . self::FATAL_OPENREFERENCES => 'ERROR: specifying "openreferences" is incompatible with some other option you specified. See the manual for details.',
 
             // WARN
             /**
              * $0: unknown parameter given by user
              * $1: list of DPL2 available parameters separated by ', '
              */
-            'dpl2_log_' . self::WARN_UNKNOWNPARAM => "Warning: Unknown parameter '$0' is ignored. Help: available parameters: <code>$1</code>.",
+            'dpl2_log_' . self::WARN_UNKNOWNPARAM => "WARNING: Unknown parameter '$0' is ignored. Help: available parameters: <code>$1</code>.",
             /**
              * $3: list of valid param values separated by ' | '
              */
-            'dpl2_log_' . self::WARN_WRONGPARAM => "Warning: Wrong '$0' parameter: '$1'! Using default: '$2'. Help: <code>$0= $3</code>.",
+            'dpl2_log_' . self::WARN_WRONGPARAM => "WARNING: Wrong '$0' parameter: '$1'! Using default: '$2'. Help: <code>$0= $3</code>.",
             /**
              * $0: param name
              * $1: wrong param value given by user
              * $2: default param value used instead by program
              */
-            'dpl2_log_' . self::WARN_WRONGPARAM_INT => "Warning: Wrong '$0' parameter: '$1'! Using default: '$2' (no limit). Help: <code>$0= <i>empty string</i> (no limit) | n</code>, with <code>n</code> a positive integer.",
-            'dpl2_log_' . self::WARN_NORESULTS => 'Warning: No results!',
-            'dpl2_log_' . self::WARN_CATOUTPUTBUTWRONGPARAMS => "Warning: Add* parameters ('adduser', 'addeditdate', etc.)' and 'includepage' have no effect with 'mode=category'. Only the page namespace/title can be viewed in this mode.",
+            'dpl2_log_' . self::WARN_WRONGPARAM_INT => "WARNING: Wrong '$0' parameter: '$1'! Using default: '$2' (no limit). Help: <code>$0= <i>empty string</i> (no limit) | n</code>, with <code>n</code> a positive integer.",
+            'dpl2_log_' . self::WARN_NORESULTS => 'WARNING: No results!',
+            'dpl2_log_' . self::WARN_CATOUTPUTBUTWRONGPARAMS => "WARNING: Add* parameters ('adduser', 'addeditdate', etc.)' and 'includepage' have no effect with 'mode=category'. Only the page namespace/title can be viewed in this mode.",
             /**
              * $0: 'headingmode' value given by user
              * $1: value used instead by program (which means no heading)
              */
-            'dpl2_log_' . self::WARN_HEADINGBUTSIMPLEORDERMETHOD => "Warning: 'headingmode=$0' has no effect with 'ordermethod' on a single component. Using: '$1'. Help: you can use not-$1 'headingmode' values with 'ordermethod' on multiple components. The first component is used for headings. E.g. 'ordermethod=category,<i>comp</i>' (<i>comp</i> is another component) for category headings.",
+            'dpl2_log_' . self::WARN_HEADINGBUTSIMPLEORDERMETHOD => "WARNING: 'headingmode=$0' has no effect with 'ordermethod' on a single component. Using: '$1'. Help: you can use not-$1 'headingmode' values with 'ordermethod' on multiple components. The first component is used for headings. E.g. 'ordermethod=category,<i>comp</i>' (<i>comp</i> is another component) for category headings.",
             /**
              * $0: 'log' value
              */
-            'dpl2_log_' . self::WARN_DEBUGPARAMNOTFIRST => "Warning: 'debug=$0' is not in first position in the DPL element. The new debug settings are not applied before all previous parameters have been parsed and checked.",
+            'dpl2_log_' . self::WARN_DEBUGPARAMNOTFIRST => "WARNING: 'debug=$0' is not in first position in the DPL element. The new debug settings are not applied before all previous parameters have been parsed and checked.",
             /**
              * $0: title of page that creates an infinite transclusion loop
              */
-            'dpl2_log_' . self::WARN_TRANSCLUSIONLOOP => "Warning: An infinite transclusion loop is created by page '$0'.",
+            'dpl2_log_' . self::WARN_TRANSCLUSIONLOOP => "WARNING: An infinite transclusion loop is created by page '$0'.",
 
             // DEBUG
             /**
              * $0: SQL query executed to generate the dynamic page list
              */
-            'dpl2_log_' . self::DEBUG_QUERY => 'Query: <code>$0</code>',
+            'dpl2_log_' . self::DEBUG_QUERY => 'QUERY: <code>$0</code>',
 
             /*
                Output formatting
@@ -233,7 +233,7 @@ class DPL2_i18n
             /**
              * $1: number of articles
              */
-            'dpl2_articlecount' => '{{PLURAL:$1|???? $1 ????|???? ?? ???}} ??? ????? ??.'
+            'dpl2_articlecount' => '{{plural:$1|???? $1 ????|???? ?? ???}} ??? ????? ??.'
         );
         self::$messages['it'] = array(
             /*

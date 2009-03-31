@@ -78,6 +78,11 @@
  *			changed call time by reference in extract Heading
  * @version 1.6.9
  *			added include trimming
+ * @version 1.7.1
+ *			allow % within included template parameters
+ * @version 1.7.3
+ *			%SECTION% can now be used within multiseseparators (see includeHeading)
+
  */
 
 class DPL2Include
@@ -380,10 +385,10 @@ class DPL2Include
         }
         
         if (isset($m[0][0])) {
-            $sectionHeading=preg_replace("/^=+\s*/","",$m[0][0]);
-            $sectionHeading=preg_replace("/\s*=+\s*$/","",$sectionHeading);
+            $sectionHeading[$n]=preg_replace("/^=+\s*/","",$m[0][0]);
+            $sectionHeading[$n]=preg_replace("/\s*=+\s*$/","",$sectionHeading[$n]);
         }
-        else $sectionHeading = '';
+        else $sectionHeading[$n] = '';
         if ($nr==1) {
             // output n-th section and done
             $output[0] = self::parse($parser,$title,$piece, "#lsth:${page}|${sec}", $nhead, $recursionCheck, $maxLength, $link, $trim);
@@ -411,7 +416,7 @@ class DPL2Include
     // and do NOT match the condition "$mustNotMatch" (if specified)
     // we use a callback function to format retrieved parameters, accessible via $dpl->formatTemplateArg()
     public static function includeTemplate($parser, $dpl, $dplNr, $article, $template1='', $template2='', $defaultTemplate,
-    									   $mustMatch, $mustNotMatch, $matchParsed)
+    									   $mustMatch, $mustNotMatch, $matchParsed, $iTitleMaxLen)
     {
         $page = $article->mTitle->getPrefixedText();
         $date = $article->myDate;
@@ -526,13 +531,21 @@ class DPL2Include
                                     $output[$n] .= "|"; // \n";
                                 }
                                 $found=false;
-                                // named parameter
-                                $exParmQuote = str_replace('/','\/',$exParm);
-                                foreach ($parms as $parm) {
-                                    if (!preg_match("/^\s*$exParmQuote\s*=/",$parm)) continue;
-                                    $found=true;
-                                    $output[$n] .= $dpl->formatTemplateArg(preg_replace("/^$exParmQuote\s*=\s*/","",$parm),$dplNr,$exParmKey,$firstCall,$maxlen);
-                                    break;
+                                // % in parameter name
+                                if (strpos($exParm,'%')!==FALSE) {
+	                                // %% is a short form for inclusion of %PAGE% and %TITLE%
+	                                $found=true;
+    	                            $output[$n] .= $dpl->formatTemplateArg($dpl->articleLink($exParm,$article,$iTitleMaxLen),$dplNr,$exParmKey,$firstCall,$maxlen);
+                                }
+                                if (!$found) {
+	                                // named parameter
+	                                $exParmQuote = str_replace('/','\/',$exParm);
+	                                foreach ($parms as $parm) {
+	                                    if (!preg_match("/^\s*$exParmQuote\s*=/",$parm)) continue;
+	                                    $found=true;
+	                                    $output[$n] .= $dpl->formatTemplateArg(preg_replace("/^$exParmQuote\s*=\s*/","",$parm),$dplNr,$exParmKey,$firstCall,$maxlen);
+	                                    break;
+	                                }
                                 }
                                 if (!$found && is_numeric($exParm) && intval($exParm) == $exParm) {
                                     // numeric parameter

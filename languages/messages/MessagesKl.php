@@ -101,7 +101,7 @@ $messages = array(
 'acct_creation_throttle_hit' => 'Utoqqatterpunga, $1 kontonik pilersereersimavutit. Pilersitseqqissinnaanngilatit.',
 
 # Edit pages
-'summary'      => 'Qanoq issusersiuineq',
+'summary'      => 'Qanoq issusersiuineq:',
 'accmailtitle' => 'Password-i nassiunneqarsimavoq.',
 'accmailtext'  => 'Password-i "$1" $2-mut nassiunneqarsimavoq.',
 'newarticle'   => '(Nuutaq)',
@@ -122,7 +122,7 @@ $messages = array(
 # Upload
 'upload' => 'Læg en fil op',
 
-# Image description page
+# File description page
 'filehist-user' => 'Pineqartoq',
 
 # MIME search
@@ -150,8 +150,11 @@ $messages = array(
 Qupperneq nakkutilliinermi allattorsimaffik kingusinnerusukkut piissagukku, taava quppernerup sinaatungaani \"Nakkutilliinermi allattorsimaffik peeruk\" tooruk.",
 'watch'          => 'Piggassineq',
 
-# Delete/protect/revert
+# Delete
 'actioncomplete' => 'Naammassineqareersimavoq',
+
+# Protect
+'prot_1movedto2' => '[[$1]]-i nuunneqarsimavoq [[$2]]-mut',
 
 # Contributions
 'uctop' => '(kaarfa)',

@@ -48,13 +48,10 @@ class BackupReader {
 
 	function handleRevision( $rev ) {
 		$title = $rev->getTitle();
-		if (!$title) {
+		if( !$title ) {
 			$this->progress( "Got bogus revision with null title!" );
 			return;
 		}
-		#$timestamp = $rev->getTimestamp();
-		#$display = $title->getPrefixedText();
-		#echo "$display $timestamp\n";
 
 		$this->revCount++;
 		$this->report();
@@ -79,6 +76,15 @@ class BackupReader {
 		}
 	}
 
+	function handleLogItem( $rev ) {
+		$this->revCount++;
+		$this->report();
+
+		if( !$this->dryRun ) {
+			call_user_func( $this->logItemCallback, $rev );
+		}
+	}
+
 	function report( $final = false ) {
 		if( $final xor ( $this->pageCount % $this->reportingInterval == 0 ) ) {
 			$this->showReport();
@@ -95,7 +101,11 @@ class BackupReader {
 				$rate = '-';
 				$revrate = '-';
 			}
-			$this->progress( "$this->pageCount ($rate pages/sec $revrate revs/sec)" );
+			# Logs dumps don't have page tallies
+			if( $this->pageCount )
+				$this->progress( "$this->pageCount ($rate pages/sec $revrate revs/sec)" );
+			else
+				$this->progress( "$this->revCount ($revrate revs/sec)" );
 		}
 		wfWaitForSlaves(5);
 	}
@@ -129,6 +139,8 @@ class BackupReader {
 			array( &$this, 'handleRevision' ) );
 		$this->uploadCallback = $importer->setUploadCallback(
 			array( &$this, 'handleUpload' ) );
+		$this->logItemCallback = $importer->setLogItemCallback(
+			array( &$this, 'handleLogItem' ) );
 
 		return $importer->doImport();
 	}

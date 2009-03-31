@@ -80,8 +80,8 @@ class GenerateSitemap {
 		NS_USER_TALK		=> '1.0',
 		NS_PROJECT		=> '1.0',
 		NS_PROJECT_TALK		=> '1.0',
-		NS_IMAGE		=> '1.0',
-		NS_IMAGE_TALK		=> '1.0',
+		NS_FILE			=> '1.0',
+		NS_FILE_TALK		=> '1.0',
 		NS_MEDIAWIKI		=> '0.5',
 		NS_MEDIAWIKI_TALK	=> '0.5',
 		NS_TEMPLATE		=> '0.5',
@@ -428,7 +428,7 @@ class GenerateSitemap {
 	 *
 	 * @static
 	 *
-	 * @param string $url An RFC 2396 compilant URL
+	 * @param string $url An RFC 2396 compliant URL
 	 * @param string $date A ISO 8601 date
 	 * @param string $priority A priority indicator, 0.0 - 1.0 inclusive with a 0.1 stepsize
 	 *

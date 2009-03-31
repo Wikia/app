@@ -19,7 +19,9 @@ function sf_autocomplete(input_name, container_name, values, api_url, data_type,
         var mySchema = ["sfautocomplete", "title"];
         this.oACDS = new YAHOO.widget.DS_XHR(myServer, mySchema);
         this.oACDS.scriptQueryParam = "substr";
-        if (data_type == 'relation')
+        if (data_type == 'property')
+            this.oACDS.scriptQueryAppend = "action=sfautocomplete&format=json&property=" + data_source;
+        else if (data_type == 'relation')
             this.oACDS.scriptQueryAppend = "action=sfautocomplete&format=json&relation=" + data_source;
         else if (data_type == 'attribute')
             this.oACDS.scriptQueryAppend = "action=sfautocomplete&format=json&attribute=" + data_source;

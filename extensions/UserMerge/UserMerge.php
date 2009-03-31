@@ -9,31 +9,28 @@ if (!defined('MEDIAWIKI')) {
         exit(1);
 }
 
-$wgExtensionFunctions[] = 'efUserMerge';
 $wgExtensionCredits['specialpage'][] = array(
     'name'           => 'User Merge and Delete',
     'url'            => 'http://www.mediawiki.org/wiki/Extension:User_Merge_and_Delete',
     'author'         => 'Tim Laqua',
     'description'    => "Merges references from one user to another user in the Wiki database - will also delete old users following merge.  Requires 'usermerge' privileges.",
     'descriptionmsg' => 'usermerge-desc',
-    'version'        => '1.5'
+    'version'        => '1.6'
 );
 
 $dir = dirname(__FILE__) . '/';
 $wgAutoloadClasses['UserMerge'] = $dir . 'UserMerge_body.php';
 
 $wgExtensionMessagesFiles['UserMerge'] = $dir . 'UserMerge.i18n.php';
+$wgExtensionAliasesFiles['UserMerge'] = $dir . 'UserMerge.alias.php';
 $wgSpecialPages['UserMerge'] = 'UserMerge';
 $wgSpecialPageGroups['UserMerge'] = 'users';
 
 $wgUserMergeProtectedGroups = array( "sysop" );
 
-function efUserMerge() {
-	# Add a new log type
-	global $wgLogTypes, $wgLogNames, $wgLogHeaders, $wgLogActions;
-	$wgLogTypes[]                 		= 'usermerge';
-	$wgLogNames['usermerge']            = 'usermerge-logpage';
-	$wgLogHeaders['usermerge']          = 'usermerge-logpagetext';
-	$wgLogActions['usermerge/mergeuser'] 	= 'usermerge-success-log';
-	$wgLogActions['usermerge/deleteuser']	= 'usermerge-userdeleted-log';
-}
+# Add a new log type
+$wgLogTypes[]                 		= 'usermerge';
+$wgLogNames['usermerge']            = 'usermerge-logpage';
+$wgLogHeaders['usermerge']          = 'usermerge-logpagetext';
+$wgLogActions['usermerge/mergeuser'] 	= 'usermerge-success-log';
+$wgLogActions['usermerge/deleteuser']	= 'usermerge-userdeleted-log';

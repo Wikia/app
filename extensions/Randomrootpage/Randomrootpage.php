@@ -6,13 +6,13 @@ if (!defined('MEDIAWIKI')) die();
  * @addtogroup Extensions
  *
  * @author Hojjat (aka Huji) <huji.huji@gmail.com>
- * @copyright Copyright © 2008, Hojjat (aka Huji)
+ * @copyright Copyright Â© 2008, Hojjat (aka Huji)
  * @license http://www.gnu.org/copyleft/gpl.html GNU General Public License 2.0 or later
  */
 
 $wgExtensionCredits['specialpage'][] = array(
 	'name'           => 'Random root page',
-	'version'        => '1.0',
+	'version'        => '1.1',
 	'author'         => 'Hojjat (aka Huji)',
 	'url'            => 'http://www.mediawiki.org/wiki/Extension:Randomrootpage',
 	'descriptionmsg' => 'randomrootpage-desc',
@@ -24,3 +24,5 @@ $wgSpecialPageGroups['Randomrootpage'] = 'pages';
 $dir = dirname(__FILE__) . '/';
 $wgExtensionMessagesFiles['Randomrootpage'] = $dir . 'Randomrootpage.i18n.php';
 $wgAutoloadClasses['SpecialRandomrootpage'] = $dir . 'Randomrootpage_body.php';
+
+$wgSpecialPageGroups['Randomrootpage'] = 'redirects';
