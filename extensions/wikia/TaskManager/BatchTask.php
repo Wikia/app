@@ -38,12 +38,12 @@ define( "TASK_FINISHED_UNDO", 5 );     #--- task finished but undone later
 abstract class BatchTask {
 
 	public static $mStatuses = array(
-		TASK_WAITING           => "Waiting for start",
+		TASK_WAITING           => "Waiting",
 		TASK_STARTED           => "Running",
 		TASK_QUEUED            => "Queued",
-		TASK_FINISHED_SUCCESS  => "Finished, status OK",
-		TASK_FINISHED_ERROR    => "Finished, status ERROR",
-		TASK_FINISHED_UNDO     => "Finished, status UNDO",
+		TASK_FINISHED_SUCCESS  => "Success",
+		TASK_FINISHED_ERROR    => "Error",
+		TASK_FINISHED_UNDO     => "Undo",
 	);
 
 	const DEFAULT_TTL = 7200; // two hours
