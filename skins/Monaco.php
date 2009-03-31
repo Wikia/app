@@ -1324,6 +1324,8 @@ class MonacoTemplate extends QuickTemplate {
 		<style type="text/css"><?= $cssstyle['content'] ?></style>
 <?php
 	}
+
+	echo "\t\t";
 	$this->html('csslinks');
 
 	if($wgRequest->getVal('action') != '' || $wgTitle->getNamespace() == NS_SPECIAL) {
