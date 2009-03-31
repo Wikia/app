@@ -146,6 +146,9 @@ class WhatLinksHerePage {
 		$options['LIMIT'] = $queryLimit;
 		$fields = array( 'page_id', 'page_namespace', 'page_title', 'page_is_redirect' );
 
+		// hook by Wikia, Bartek Lapinski 30.03.2009, for videos and stuff
+		wfRunHooks( 'SpecialWhatlinkshere::beforeImageQuery', array( &$hideimages, &$plConds, &$tlConds, &$ilConds ) );
+
 		if( $fetchlinks ) {
 			$options['ORDER BY'] = 'pl_from';
 			$plRes = $dbr->select( array( 'pagelinks', 'page' ), $fields,
