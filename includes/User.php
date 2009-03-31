@@ -2186,29 +2186,14 @@ class User {
 	 * @todo FIXME : need to check the old failback system [AV]
 	 */
 	function &getSkin() {
-		global $wgRequest, $wgAllowUserSkin, $wgDefaultSkin;
+		global $wgRequest;
 		if ( ! isset( $this->mSkin ) ) {
 			wfProfileIn( __METHOD__ );
-			# if we're not allowing users to override below, then use the default
-			$userSkin = $wgDefaultSkin;
-
-			if( wfRunHooks( 'AlternateGetSkin', array ( &$this ) ) ) {
+			if(wfRunHooks('AlternateGetSkin', array (&$this))) {
 				# get the user skin
 				$userSkin = $this->getOption( 'skin' );
 				$userSkin = $wgRequest->getVal('useskin', $userSkin);
 			}
-
-			if( $wgAllowUserSkin ) {
-				# get the user skin
-				$userSkin = $this->getOption( 'skin' );
-				$userSkin = $wgRequest->getVal('useskin', $userSkin);
-			}
-
-			// Wikia: skin may be be already initialized inside AlternateGetSkin hook handler
-			if ( ! isset( $this->mSkin ) ) {
-				$this->mSkin =& Skin::newFromKey( $userSkin );
-			}
-
 			wfProfileOut( __METHOD__ );
 		}
 		return $this->mSkin;
