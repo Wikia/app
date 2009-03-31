@@ -98,6 +98,15 @@ class Skin extends Linker {
 			return $key;
 		}
 
+		// Wikia: normalize using $wgSkinTheme array
+		global $wgSkinTheme;
+		if ( strpos($key, '-') !== false ) {
+			list($skin, $theme) = explode('-', $key);
+			if ( isset($wgSkinTheme[$skin]) && in_array($theme, $wgSkinTheme[$skin]) ) {
+				return $key;
+			}
+		}
+
 		// Older versions of the software used a numeric setting
 		// in the user preferences.
 		$fallback = array(
