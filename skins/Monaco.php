@@ -1324,6 +1324,7 @@ class MonacoTemplate extends QuickTemplate {
 		<style type="text/css"><?= $cssstyle['content'] ?></style>
 <?php
 	}
+	$this->html('csslinks');
 
 	if($wgRequest->getVal('action') != '' || $wgTitle->getNamespace() == NS_SPECIAL) {
 		echo $wgUser->isLoggedIn() ? GetReferences("monaco_loggedin_js") : GetReferences("monaco_non_loggedin_js");
