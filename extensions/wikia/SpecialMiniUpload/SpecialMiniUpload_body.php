@@ -8,7 +8,7 @@ class MiniUpload extends SpecialPage {
 		static $messagesLoaded = false;
 		global $wgMessageCache;
 		if($messagesLoaded) {
-			return;
+			return true;
 		}
 		$messagesLoaded = true;
 
@@ -16,7 +16,7 @@ class MiniUpload extends SpecialPage {
 		foreach($allMessages as $lang => $langMessages) {
 			$wgMessageCache->addMessages($langMessages, $lang);
 		}
-        return true;
+	        return true;
 	}
 
 	function MiniUpload() {
