@@ -47,7 +47,10 @@ class PreferencesForm {
 		$this->mStubs = $request->getVal( 'wpStubs' );
 		$this->mRows = $request->getVal( 'wpRows' );
 		$this->mCols = $request->getVal( 'wpCols' );
-		$this->mSkin = Skin::normalizeKey( $request->getVal( 'wpSkin' ) );
+
+		/* Wikia change begin = @author: Macbre */
+		$this->mSkin = $request->getVal( 'wpSkin' );
+		/* Wikia change end */
 
 		/* Wikia change begin - @author: Inez */
 		/* Skin chooser related */
