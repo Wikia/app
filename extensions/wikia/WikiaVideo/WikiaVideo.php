@@ -5,10 +5,12 @@ if(!defined('MEDIAWIKI')) {
 
 //Avoid unstubbing $wgParser on setHook() too early on modern (1.12+) MW versions, as per r35980 
 if ( defined( 'MW_SUPPORTS_PARSERFIRSTCALLINIT' ) ) {
-	$wgHooks['ParserFirstCallInit'][] = 'WikiaVideo_init';
+	$wgHooks['ParserFirstCallInit'][] = 'WikiaVideo_initParserHook';
 } else {
-	$wgExtensionFunctions[] = 'WikiaVideo_init';
+	$wgExtensionFunctions[] = 'WikiaVideo_initParserHook';
 }
+
+$wgExtensionFunctions[] = 'WikiaVideo_init';
 
 $wgHooks['ParserBeforeStrip'][] = 'WikiaVideoParserBeforeStrip';
 $wgHooks['SpecialNewImages::beforeQuery'][] = 'WikiaVideoNewImagesBeforeQuery';
@@ -45,9 +47,13 @@ function WikiaVideoPreRenderVideoGallery( $matches ) {
 }
 
 function WikiaVideo_init() {
-	global $wgExtraNamespaces, $wgAutoloadClasses, $wgParser;
+	global $wgExtraNamespaces, $wgAutoloadClasses;
 	$wgExtraNamespaces[NS_VIDEO] = 'Video';
 	$wgAutoloadClasses['VideoPage'] = dirname(__FILE__). '/VideoPage.php';
+}
+
+function WikiaVideo_initParserHook() {
+	global $wgParser;
 	$wgParser->setHook('videogallery', 'WikiaVideo_renderVideoGallery');
 	return true;
 }
