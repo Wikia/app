@@ -49,7 +49,7 @@ if ($use_default_style) {
 			$flashvars .= $key .'='. urlencode($_POST[$key]) .'&';
 			break;
 		}
-		if ($_POST[$key]) {
+		if (isset($_POST[$key])) {
 			$flashvars .= $key .'='. urlencode($_POST[$key]) .'&';
 		}
 	}
