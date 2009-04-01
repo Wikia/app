@@ -126,7 +126,6 @@
 								//user_2 = escape(user_2);
 								var params = (user_2) ? '&conv=' + user_2 : '';
 								var url = '/index.php?title=Special:UserBoard&user='+user_1 + params;
-								alert(url);
 								window.location = url;
 							}
 						};
