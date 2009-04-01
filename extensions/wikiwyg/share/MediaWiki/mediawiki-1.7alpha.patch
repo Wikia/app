@@ -1,0 +1,52 @@
+Index: skins/common/wikibits.js
+===================================================================
+--- skins/common/wikibits.js	(revision 15869)
++++ skins/common/wikibits.js	(working copy)
+@@ -62,8 +62,10 @@
+ 	}
+ }
+ // Un-trap us from framesets
++if (false) {
+ if (window.top != window)
+ 	window.top.location = window.location;
++}
+ 
+ // for enhanced RecentChanges
+ function toggleVisibility(_levelId, _otherId, _linkId) {
+Index: includes/Parser.php
+===================================================================
+--- includes/Parser.php	(revision 15869)
++++ includes/Parser.php	(working copy)
+@@ -523,7 +523,7 @@
+ 					}
+ 					// Shouldn't happen otherwise. :)
+ 				case 'nowiki':
+-					$output = wfEscapeHTMLTagsOnly( $content );
++					$output = "<span class=\"wikiwyg-nowiki\">".wfEscapeHTMLTagsOnly( $content )."</span>";
+ 					break;
+ 				case 'math':
+ 					$output = MathRenderer::renderMath( $content );
+@@ -2823,7 +2823,7 @@
+ 							$articleContent = $this->fetchTemplate( $title );
+ 							if ( $articleContent !== false ) {
+ 								$found = true;
+-								$text = $articleContent;
++								$text = "<span class=\"wikiwyg-template\">".$articleContent."</span>";
+ 								$replaceHeadings = true;
+ 							}
+ 						}
+Index: languages/Language.php
+===================================================================
+--- languages/Language.php	(revision 15869)
++++ languages/Language.php	(working copy)
+@@ -920,6 +920,10 @@
+ 			}
+ 		}
+ 
++#bugfix JASON
++if(!is_array($rawEntry)){
++$rawEntry = array(true);
++}
+ 		$mw->mCaseSensitive = $rawEntry[0];
+ 		$mw->mSynonyms = array_slice( $rawEntry, 1 );
+ 	}

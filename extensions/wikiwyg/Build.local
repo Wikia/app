@@ -1,0 +1,114 @@
+#!/usr/bin/perl
+use strict;
+no strict 'refs';
+
+my $action = shift || '';
+
+my @javascript_files = qw(
+    lib/Wikiwyg.js
+    lib/Wikiwyg/Toolbar.js
+    lib/Wikiwyg/Wysiwyg.js
+    lib/Wikiwyg/Wikitext.js
+    lib/Wikiwyg/Preview.js
+); 
+
+my $function = "handle_$action";
+
+usage(), exit
+  unless defined &$function;
+
+&$function();
+
+sub handle_all {
+    handle_copyright();
+    handle_doc();
+    handle_readme();
+    handle_manifest();
+    handle_dist();
+}
+
+sub handle_clean {
+    my $distname = dist_name()
+      or die;
+    system_call("rm -fr foo bar xxx $distname $distname.tar.gz");
+}
+
+sub handle_doc {
+    system_call("pod2html doc/pod/Wikiwyg.pod > doc/html/Wikiwyg.html");
+    system_call("pod2html doc/pod/CodingStyleGuide.pod > doc/html/CodingStyleGuide.html");
+    system_call("rm pod2htm*");
+    system_call("pod2text doc/pod/Wikiwyg.pod > doc/text/Wikiwyg.txt");
+    system_call("pod2text doc/pod/CodingStyleGuide.pod > doc/text/CodingStyleGuide.txt");
+}
+
+sub handle_readme {
+    my $text = `cat lib/Wikiwyg.js`;
+    $text =~ s[.*?/\*(.*?)\*/.*][$1]s;
+    $text .= "\n";
+    open README, "> README" or die;
+    print README $text;
+}
+
+sub handle_copyright {
+    my $copyright = `cat COPYRIGHT`;
+    for my $file (@javascript_files) {
+        my $text = `cat $file`;
+        $text =~ s/(?<=\nCOPYRIGHT:\n\n).*?\n(?= ===)/$copyright/ms
+            or die;
+        open FILE, "> $file" or die $!;
+        print FILE $text;
+        close FILE;
+    }
+}
+
+sub handle_manifest {
+    system_call("find . -type f | egrep -v '(\.svn|Build|_richtext|\.tar\.gz)' | perl -pe 's/..//' | sort > MANIFEST");
+}
+
+sub handle_version {
+    print version(), "\n";
+}
+
+sub handle_dist {
+    my $distname = dist_name()
+      or die;
+    system_call("cat MANIFEST | cpio -dump $distname");
+    system_call("tar cvzf $distname.tar.gz $distname");
+    system_call("rm -r $distname");
+}
+
+sub dist_name {
+    'Wikiwyg-' . version();
+}
+
+sub version {
+    my $source = `cat lib/Wikiwyg.js`;
+    $source =~ /VERSION\s*\=\s*\'([\d\.]+)\'/
+      or die "Can't find Wikiwyg version";
+    return $1;
+}
+
+sub usage {
+    print <<END;
+usage: perl Build.pl <action>
+
+actions:
+* all - doc, meta, manifest, dist
+* ci - check code into svn
+* clean - remove artifact files
+* dist - create dist tarball
+* doc - create docs from pods
+* manifest - generate a MANFEST file
+* meta - create META.yml
+* readme - generate the README file
+* version - print Wikiwyg version
+
+END
+}
+
+sub system_call {
+    my $command = shift;
+    print "$command\n";
+    system($command) == 0 
+      or die "...command failed\n";
+}

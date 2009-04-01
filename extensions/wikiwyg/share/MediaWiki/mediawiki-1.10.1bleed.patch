@@ -1,0 +1,279 @@
+Index: skins/common/wikibits.js
+===================================================================
+--- skins/common/wikibits.js	(wersja 24284)
++++ skins/common/wikibits.js	(kopia robocza)
+@@ -229,6 +229,17 @@
+ 	return false;
+ }
+ 
++function getLabelFor (obj_id) {
++        var labels = document.getElementsByTagName ('label') ;
++        if (labels && (labels.length > 0)) {
++                        for (var i=0 ; i < labels.length; i++) {
++                        if (labels[i].htmlFor == obj_id)
++                                return labels[i] ;
++                }
++        }
++        return false ;
++}
++
+ // Timezone stuff
+ // tz in format [+-]HHMM
+ function checkTimezone(tz, msg) {
+@@ -371,6 +382,11 @@
+ 	var textbox = document.getElementById('wpTextbox1');
+ 	if (!textbox) { return false; }
+ 
++        /* Bartek - FF bug fix */
++        if (textbox.style.display == 'none') {
++                return false ;
++        }
++
+ 	// Don't generate buttons for browsers which don't fully
+ 	// support it.
+ 	if (!document.selection && textbox.selectionStart === null) {
+Index: skins/MonoBook.php
+===================================================================
+--- skins/MonoBook.php	(wersja 24284)
++++ skins/MonoBook.php	(kopia robocza)
+@@ -70,6 +70,15 @@
+ 		<meta http-equiv="imagetoolbar" content="no" /><![endif]-->
+ 		
+ 		<?php print Skin::makeGlobalVariablesScript( $this->data ); ?>
++
++	        <!-- YUI -->
++               <script type="text/javascript" src="<?php echo $GLOBALS['wgYuiPath'] ?>/utilities/utilities.js"></script>
++              <script type="text/javascript" src="<?php echo $GLOBALS['wgYuiPath'] ?>/container/container-min.js"></script>
++              <script type="text/javascript" src="<?php echo $GLOBALS['wgYuiPath'] ?>/autocomplete/autocomplete-min.js"></script>
++              <script type="text/javascript" src="<?php echo $GLOBALS['wgYuiPath'] ?>/logger/logger-min.js"></script>
++              <script type="text/javascript" src="<?php echo $GLOBALS['wgYuiPath'] ?>/3rdpart/yui-cookie.js"></script>
++              <script type="text/javascript" src="<?php echo $GLOBALS['wgYuiPath'] ?>/3rdpart/tools-min.js"></script>
++              <script type="text/javascript" src="<?php $this->text('stylepath') ?>/common/tracker.js?<?= $GLOBALS['wgStyleVersion'] ?>"></script>
+                 
+ 		<script type="<?php $this->text('jsmimetype') ?>" src="<?php $this->text('stylepath' ) ?>/common/wikibits.js?<?php echo $GLOBALS['wgStyleVersion'] ?>"><!-- wikibits js --></script>
+ <?php	if($this->data['jsvarurl'  ]) { ?>
+@@ -90,6 +99,10 @@
+ 		if($this->data['trackbackhtml']) print $this->data['trackbackhtml']; ?>
+ 		<!-- Head Scripts -->
+ <?php $this->html('headscripts') ?>
++
++        <link rel="stylesheet" type="text/css" href="http://images.wikia.com/common/yui/container/assets/container.css" />
++        <link rel="stylesheet" type="text/css" href="http://images.wikia.com/common/yui/logger/assets/logger.css" />
++
+ 	</head>
+ <body <?php if($this->data['body_ondblclick']) { ?>ondblclick="<?php $this->text('body_ondblclick') ?>"<?php } ?>
+ <?php if($this->data['body_onload'    ]) { ?>onload="<?php     $this->text('body_onload')     ?>"<?php } ?>
+@@ -108,6 +121,31 @@
+ 			<?php if($this->data['showjumplinks']) { ?><div id="jump-to-nav"><?php $this->msg('jumpto') ?> <a href="#column-one"><?php $this->msg('jumptonavigation') ?></a>, <a href="#searchInput"><?php $this->msg('jumptosearch') ?></a></div><?php } ?>
+ 			<!-- start content -->
+ 			<?php $this->html('bodytext') ?>
++                                        <?php
++                                                global $wgRightsText, $wgInPageEnabled, $wgOut ;
++                                                //make people happy and load only when wikiwyg is enabled - Bartek
++                                                if ( isset($wgInPageEnabled)) {
++                                                        //if (wfGetDependingOnSkin () == 1) {
++                                                                echo "<div id=\"editpage-copywarn\" style=\"display: none\">\n" ;
++                                                                $copywarn =
++                                                                wfMsg( $wgRightsText ? 'copyrightwarning' : 'copyrightwarning2',
++                                                                                '[[' . wfMsgForContent( 'copyrightpage' ) . ']]',
++                                                                                $wgRightsText );
++
++                                                                        global $wgTitle;
++                                                                        global $wgParser;
++
++                                                                        $popts = $wgOut->parserOptions();
++                                                                        $popts->setTidy(false);
++
++                                                                        $parserOutput = $wgParser->parse( $copywarn, $wgTitle, $popts,
++                                                                                        $true, true, $wgOut->mRevisionId );
++                                                                        echo $parserOutput->getText () ;
++                                                                echo "\n</div>" ;
++                                                        //}
++                                                }
++                                        ?>
++
+ 			<?php if($this->data['catlinks']) { ?><div id="catlinks"><?php       $this->html('catlinks') ?></div><?php } ?>
+ 			<!-- end content -->
+ 			<div class="visualClear"></div>
+Index: includes/Parser.php
+===================================================================
+--- includes/Parser.php	(wersja 24284)
++++ includes/Parser.php	(kopia robocza)
+@@ -532,7 +532,7 @@
+ 	 * @private
+ 	 */
+ 	function strip( $text, $state, $stripcomments = false , $dontstrip = array () ) {
+-		global $wgContLang;
++		global $wgContLang, $wgWikiwygEnabled;
+ 		wfProfileIn( __METHOD__ );
+ 		$render = ($this->mOutputType == OT_HTML);
+ 
+@@ -584,7 +584,11 @@
+ 					}
+ 					// Shouldn't happen otherwise. :)
+ 				case 'nowiki':
+-					$output = Xml::escapeTagsOnly( $content );
++                                        if ($wgWikiwygEnabled == true) {
++                                                $output = "<span class=\"wikiwyg-nowiki\">".Xml::escapeTagsOnly( $content )."</span>";
++                                        } else {
++                                                $output = Xml::escapeTagsOnly( $content );
++                                        }
+ 					break;
+ 				case 'math':
+ 					$output = $wgContLang->armourMath( MathRenderer::renderMath( $content ) );
+@@ -2894,7 +2898,7 @@
+ 	 * @private
+ 	 */
+ 	function braceSubstitution( $piece ) {
+-		global $wgContLang, $wgLang, $wgAllowDisplayTitle, $wgNonincludableNamespaces;
++		global $wgContLang, $wgLang, $wgAllowDisplayTitle, $wgNonincludableNamespaces, $wgWikiwygEnabled;
+ 		$fname = __METHOD__ /*. '-L' . count( $this->mArgStack )*/;
+ 		wfProfileIn( $fname );
+ 		wfProfileIn( __METHOD__.'-setup' );
+Index: includes/EditPage.php
+===================================================================
+--- includes/EditPage.php	(wersja 24284)
++++ includes/EditPage.php	(kopia robocza)
+@@ -1175,6 +1175,8 @@
+ <input type='hidden' value=\"{$this->starttime}\" name=\"wpStarttime\" />\n
+ <input type='hidden' value=\"{$this->edittime}\" name=\"wpEdittime\" />\n
+ <input type='hidden' value=\"{$this->scrolltop}\" name=\"wpScrolltop\" id=\"wpScrolltop\" />\n" );
++		
++		wfRunHooks ('EditForm:BeforeDisplayingTextbox', array (&$this, &$hidden) ) ;
+ 
+ 		$wgOut->addHTML( <<<END
+ $recreate
+@@ -1188,6 +1190,8 @@
+ </textarea>
+ 		" );
+ 
++		wfRunHooks ( 'EditForm::AfterEdit:Form', array (&$this) ) ;
++
+ 		$wgOut->addWikiText( $copywarn );
+ 		$wgOut->addHTML( $this->editFormTextAfterWarn );
+ 		$wgOut->addHTML( "
+Index: includes/SpecialPreferences.php
+===================================================================
+--- includes/SpecialPreferences.php	(wersja 24284)
++++ includes/SpecialPreferences.php	(kopia robocza)
+@@ -32,7 +32,7 @@
+ 	 * Load some values
+ 	 */
+ 	function PreferencesForm( &$request ) {
+-		global $wgContLang, $wgUser, $wgAllowRealName;
++		global $wgContLang, $wgUser, $wgAllowRealName, $wgInPageEnabled, $wgWysiwygEnabled ;
+ 
+ 		$this->mQuickbar = $request->getVal( 'wpQuickbar' );
+ 		$this->mOldpass = $request->getVal( 'wpOldpass' );
+@@ -66,6 +66,10 @@
+ 		$this->mWatchlistDays = $request->getVal( 'wpWatchlistDays' );
+ 		$this->mWatchlistEdits = $request->getVal( 'wpWatchlistEdits' );
+ 
++		if (isset ($wgInPageEnabled) && $wgInPageEnabled && $wgWysiwygEnabled && isset($wgWysiwygEnabled)) {
++			$this->mVisualEditor = $request->getVal ('wpVisualEditor') ;
++		}
++
+ 		$this->mSaveprefs = $request->getCheck( 'wpSaveprefs' ) &&
+ 			$this->mPosted &&
+ 			$wgUser->matchEditToken( $request->getVal( 'wpEditToken' ) );
+@@ -206,7 +210,7 @@
+ 		global $wgUser, $wgOut, $wgParser;
+ 		global $wgEnableUserEmail, $wgEnableEmail;
+ 		global $wgEmailAuthentication;
+-		global $wgAuth;
++		global $wgAuth, $wgWysiwygEnabled;
+ 
+ 
+ 		if ( '' != $this->mNewpass && $wgAuth->allowPasswordChange() ) {
+@@ -273,6 +277,11 @@
+ 		$wgUser->setOption( 'underline', $this->validateInt($this->mUnderline, 0, 2) );
+ 		$wgUser->setOption( 'watchlistdays', $this->validateFloat( $this->mWatchlistDays, 0, 7 ) );
+ 
++                /* wikiwyg mode */
++                if (isset($wgWysiwygEnabled) && $wgWysiwygEnabled) {
++                        $wgUser->setOption( 'visualeditormode', $this->mVisualEditor );
++                }
++
+ 		# Set search namespace options
+ 		foreach( $this->mSearchNs as $i => $value ) {
+ 			$wgUser->setOption( "searchNs{$i}", $value );
+@@ -437,6 +446,26 @@
+ 		return $out;
+ 	}
+ 
++        function getEditingTab () {
++                /* moved here to better customize later */
++                $default_array = array (
++                               'editsection',
++                               'editsectiononrightclick',
++                               'editondblclick',
++                               'editwidth',
++                               'showtoolbar',
++                               'previewonfirst',
++                               'previewontop',
++                               'minordefault',
++                               'externaleditor',
++                               'externaldiff',
++                               $wgLivePreview ? 'uselivepreview' : false,
++                               'forceeditsummary',
++                ) ;
++                wfRunHooks ('getEditingPreferencesTab', array (&$this, &$default_array) ) ;
++                return $default_array ;
++        }
++
+ 	function addRow($td1, $td2) {
+ 		return "<tr><td align='right'>$td1</td><td align='left'>$td2</td></tr>";
+ 	}
+@@ -452,6 +481,7 @@
+ 		global $wgRCShowWatchingUsers, $wgEnotifRevealEditorAddress;
+ 		global $wgEnableEmail, $wgEnableUserEmail, $wgEmailAuthentication;
+ 		global $wgContLanguageCode, $wgDefaultSkin, $wgSkipSkins, $wgAuth;
++		global $wgWysiwygEnabled ;
+ 
+ 		$wgOut->setPageTitle( wfMsg( 'preferences' ) );
+ 		$wgOut->setArticleRelated( false );
+@@ -846,22 +876,20 @@
+ 				' ' .
+ 				wfInputLabel( wfMsg( 'columns' ), 'wpCols', 'wpCols', 3, $this->mCols ) .
+ 			"</div>" .
+-			$this->getToggles( array(
+-				'editsection',
+-				'editsectiononrightclick',
+-				'editondblclick',
+-				'editwidth',
+-				'showtoolbar',
+-				'previewonfirst',
+-				'previewontop',
+-				'minordefault',
+-				'externaleditor',
+-				'externaldiff',
+-				$wgLivePreview ? 'uselivepreview' : false,
+-				'forceeditsummary',
+-			) ) . '</fieldset>'
+-		);
++			$this->getToggles( $this->getEditingTab ()) . '</fieldset>' 
++		) ;
+ 
++                /* wikiwyg stuff */
++                global $wgInPageEnabled ;
++                /* I guess no sense showing it without wysiwyg mode, eh? */
++                if (isset ($wgInPageEnabled) && $wgInPageEnabled && isset ($wgWysiwygEnabled) && $wgWysiwygEnabled) {
++                        $ws_checked = '' ;
++                        $wk_checked = '' ;
++                        ( $this->mVisualEditor == 'wysiwyg') ? $ws_checked = "checked=\"checked\"" : $wk_checked = "checked=\"checked\"" ;
++                        $wgOut->addHTML ("<div style=\"font-color: gray; margin-left: 10px;\"><input type='radio' name='wpVisualEditor' id=\"wpVisualEditorWysiwyg\" value=\"wysiwyg\" $ws_checked disabled=\"disabled\" /> <label for=\"wpVisualEditorWysiwyg\">".wfMsg ('wysiwygdef')."</label></div>") ;
++                        $wgOut->addHTML ("<div style=\"font-color: gray; margin-left: 10px;\"><input type='radio' name='wpVisualEditor' id=\"wpVisualEditorWikitext\" value=\"wikitext\" $wk_checked disabled=\"disabled\" /> <label for=\"wpVisualEditorWikitext\">".wfMsg ('wikitextdef')."</label></div>") ;  
++		}
++
+ 		# Recent changes
+ 		$wgOut->addHtml( '<fieldset><legend>' . wfMsgHtml( 'prefs-rc' ) . '</legend>' );
+ 		
+@@ -953,6 +981,8 @@
+ 		}
+ 		$wgOut->addHTML( '</fieldset>' );
+ 
++		wfRunHooks ('handleWikiPrefs') ;
++		
+ 		$token = $wgUser->editToken();
+ 		$skin = $wgUser->getSkin();
+ 		$wgOut->addHTML( "
