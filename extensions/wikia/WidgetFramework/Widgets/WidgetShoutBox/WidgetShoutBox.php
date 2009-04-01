@@ -149,7 +149,7 @@ function WidgetShoutBox($id, $params) {
 
 			//add remove link for privlidged users
 			$removeLink = '';
-			if ($wgUser->isAllowed('shoutboxremove')) {
+			if (!isset($params['_widgetTag']) && $wgUser->isAllowed('shoutboxremove')) {
 				$removeLink = '<a href="#" onclick="WidgetShoutBoxRemoveMsg(' . $id . ', this); return false;">x</a> ';
 			}
 			// time
