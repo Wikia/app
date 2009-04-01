@@ -256,6 +256,7 @@ YE.onDOMReady(function () {
 		}
 		
 		YE.addListener('AWClogin', 'click', __showLoginPanel);
+		YE.addListener('login', 'click', __showLoginPanel);
 	}
 });
 /*]]>*/

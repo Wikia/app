@@ -526,14 +526,6 @@ class HomeTemplate extends QuickTemplate {
 		<div class="box blue">
 			<?= HomeDataProvider::getContentForBox('promoted-feature') ?>
 		</div>
-		<div class="box green">
-			<img src="<?php $this->text('stylepath') ?>/home/images/wikia_search.gif?<?= $wgStyleVersion ?>" alt="Wikia Search" style="float: right; margin-left: 10px;" />
-			<b>Wikia</b> is working to fix web searching in a collaborative and open way. Try searching the web with Wikia and help us improve our results.<br />
-			<form action="javascript: wikia_search();" style="margin-top: 3px;">
-				<input type="text" id="wikia_search_field" />
-				<input type="submit" value="go" />
-			</form>
-		</div>
 	</div>
 </div>
 

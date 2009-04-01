@@ -209,7 +209,10 @@ function renderRss( $input ) {
 
 	if ( $DisableCache ) {
 		global $wgParser;
-		$wgParser->disableCache();
+		#$wgParser->disableCache();
+		global $wgParserCacheExpireTime;
+		$wgParserCacheExpireTime = 600;
+		wfDebug( "soft disable Cache (rss)\n" );
 	}
 	return $output;
 }

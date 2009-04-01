@@ -14,8 +14,17 @@ $wgExtensionFunctions[] = 'WikiaVideo_init';
 
 $wgHooks['ParserBeforeStrip'][] = 'WikiaVideoParserBeforeStrip';
 $wgHooks['SpecialNewImages::beforeQuery'][] = 'WikiaVideoNewImagesBeforeQuery';
+$wgHooks['SpecialWhatlinkshere::beforeImageQuery'][] = 'WikiaVideoWhatlinkshereBeforeQuery';
 $wgWikiaVideoGalleryId = 0;
 $wgWikiaVETLoaded = false;
+
+function WikiaVideoWhatlinkshereBeforeQuery( $hideimages, $pageconds, $targetconds, $imageconds ) {	
+	if( NS_VIDEO == $pageconds['pl_namespace'] ) {
+		$hideimages = false;		
+		$imageconds['il_to'] = ':' . $imageconds['il_to'];
+	}
+	return true;
+}
 
 function WikiaVideoNewImagesBeforeQuery( $where ) {
         $where[] = 'img_media_type != \'VIDEO\'';

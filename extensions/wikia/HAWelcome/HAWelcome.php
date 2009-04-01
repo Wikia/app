@@ -47,17 +47,6 @@ $wgExtensionMessagesFiles[ "HAWelcome" ] = dirname(__FILE__) . '/HAWelcome.i18n.
  */
 $wgWikiaBatchTasks[ "welcome" ] = "HAWelcomeTask";
 
-/**
- *  permissions / rt#12215
- */
-$wgAvailableRights[] = "welcometool";
-$wgGroupPermissions['*'          ]['welcometool'] = true;
-$wgGroupPermissions['user'       ]['welcometool'] = true;
-$wgGroupPermissions['bot'        ]['welcometool'] = false;
-$wgGroupPermissions['staff'      ]['welcometool'] = false;
-$wgGroupPermissions['helper'     ]['welcometool'] = false;
-$wgGroupPermissions['sysop'      ]['welcometool'] = false;
-$wgGroupPermissions['bureaucrat' ]['welcometool'] = false;
 
 class HAWelcomeJob extends Job {
 
@@ -226,7 +215,7 @@ class HAWelcomeJob extends Job {
 	 * @return User class instance
 	 */
 	public function getLastSysop() {
-		global $wgCityId, $wgMemc;
+		global $wgCityId, $wgMemc, $wgLanguageCode;
 
 		wfProfileIn( __METHOD__ );
 
@@ -242,7 +231,7 @@ class HAWelcomeJob extends Job {
 					/**
 					 * first: check memcache, maybe we have already stored id of sysop
 					 */
-					$sysopId = $wgMemc->get( wfMemcKey( "lastsysopid" ) );
+					$sysopId = $wgMemc->get( wfMemcKey( "last-sysop-id" ) );
 					if( $sysopId ) {
 						Wikia::log( __METHOD__, "sysop", "Have sysop id from memcached: {$sysopId}" );
 						$this->mSysop = User::newFromId( $sysopId );
@@ -291,11 +280,12 @@ class HAWelcomeJob extends Job {
 							array( "rev_user", "rev_user_text"),
 							$dbr->makeList( $admins, LIST_OR ),
 							__METHOD__,
-							array( "order by" => "rev_timestamp desc")
+							array( "ORDER BY" => "rev_id DESC")
 						);
+						Wikia::log( __METHOD__, "query", $dbr->lastQuery() );
 						if( $row->rev_user ) {
 							$this->mSysop = User::newFromId( $row->rev_user );
-							$wgMemc->set( wfMemcKey( "lastsysopid" ), $row->rev_user, 86400 );
+							$wgMemc->set( wfMemcKey( "last-sysop-id" ), $row->rev_user, 86400 );
 						}
 					}
 				}
@@ -309,11 +299,11 @@ class HAWelcomeJob extends Job {
 			 * fallback, if still user is uknown we use Wikia user
 			 */
 			if( $this->mSysop instanceof User && $this->mSysop->getId() ) {
-				Wikia::log( __METHOD__, "sysop", "Found sysop: " . $this->mSysop->getName( ) );
+				Wikia::log( __METHOD__, "sysop", "Found sysop: " . $this->mSysop->getName() );
 			}
 			else {
-				Wikia::log( __METHOD__, "sysop", "Fallback to " . self::WELCOMEUSER );
-				$this->mSysop = User::newFromName( self::WELCOMEUSER );
+				$this->mSysop = Wikia::staffForLang( $wgLanguageCode );
+				Wikia::log( __METHOD__, "sysop", "Fallback to hardcoded user: " . $this->mSysop->getName() );
 			}
 		}
 		wfProfileOut( __METHOD__ );
@@ -357,7 +347,27 @@ class HAWelcomeJob extends Job {
 				$revision->setTitle( $Title );
 			}
 
-			if( $Title && !$wgCommandLineMode && $wgUser->isAllowed( 'welcometool' ) && !empty( $wgSharedDB ) ) {
+			/**
+			 * get groups for user rt#12215
+			 */
+			$groups = $wgUser->getEffectiveGroups();
+			$invalid = array(
+				"bot" => true,
+				"staff" => true,
+				"helper" => true,
+				"sysop" => true,
+				"bureaucrat" => true
+			);
+			$canWelcome = true;
+			foreach( $groups as $group ) {
+				if( isset( $invalid[ $group ] ) && $invalid[ $group ] ) {
+					$canWelcome = false;
+					Wikia::log( __METHOD__, $wgUser->getId(), "Skip welcome, user is at least in group: " . $group );
+					break;
+				}
+			}
+
+			if( $Title && !$wgCommandLineMode && $canWelcome && !empty( $wgSharedDB ) ) {
 
 				Wikia::log( __METHOD__, "title", $Title->getFullURL() );
 
@@ -403,9 +413,6 @@ class HAWelcomeJob extends Job {
 				else {
 					Wikia::log( __METHOD__, "disabled" );
 				}
-			}
-			else {
-				Wikia::log( __METHOD__, "rights", "user isAllowed = " . $wgUser->isAllowed( 'welcometool' ) );
 			}
 		}
 		$wgErrorLog = $oldValue;
