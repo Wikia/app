@@ -194,6 +194,7 @@ function CategorySelectAjaxParseCategories($wikitext) {
 	if (trim($data['wikitext']) == '') {	//all categories handled
 		$result['categories'] = $data['categories'];
 	} else {	//unhandled syntax
+		wfLoadExtensionMessages('CategorySelect');
 		$result['error'] = wfMsg('categoryselect-unhandled-syntax');
 	}
 	return Wikia::json_encode($result);
@@ -215,7 +216,9 @@ function CategorySelectAjaxSaveCategories($articleId, $categories) {
 			$result['error'] = "Article [id=$articleId] does not exist.";
 		} else {
 			if($title->userCan('edit') && !$wgUser->isBlocked()) {
-				global $wgUser, $wgOut;
+				global $wgOut;
+				wfLoadExtensionMessages('CategorySelect');
+
 				$article = new Article($title);
 				$article_text = $article->fetchContent();
 				$article_text .= $categories;
@@ -436,6 +439,7 @@ function CategorySelectGenerateHTMLforEdit($formId = '') {
  */
 function CategorySelectGenerateHTMLforView() {
 	global $wgExtensionsPath, $wgStyleVersion;
+	wfLoadExtensionMessages('CategorySelect');
 
 	$result = '
 	<div id="csMainContainer" class="csViewMode">
