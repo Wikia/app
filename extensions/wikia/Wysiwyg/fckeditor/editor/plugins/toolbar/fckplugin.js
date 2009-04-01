@@ -182,9 +182,10 @@ FCK.WikiaUsingNewToolbar = true;
 WikiaToolbar.prototype.WikiaSwitchToolbar = function(switchToWikitext) {
 
 	var MWtoolbar = window.parent.document.getElementById('toolbar');
+	var iframe = window.parent.document.getElementById('wpTextbox1___Frame');
 
 	if (switchToWikitext) {
-		MWtoolbar.style.top = '16px';
+		MWtoolbar.style.top = (iframe.offsetTop + 14) + 'px';
 		MWtoolbar.style.left = '12px';
 		MWtoolbar.style.visibility = 'visible';
 
