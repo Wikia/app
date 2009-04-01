@@ -39,7 +39,7 @@ class AutoCreateWikiPage extends SpecialPage {
 	const TESTDB = "testdb";
 	const STARTER_GAME = 2; /** gaming **/
 	const STARTER_ENTE = 3; /** enter. **/
-#	const STARTER_SPRT = 15; /** sport **/
+	const STARTER_SPRT = 15; /** sport **/
 	const LOG = "autocreatewiki";
 	const IMGROOT = "/images/";
     const CREATEWIKI_LOGO = "/images/central/images/2/22/Wiki_Logo_Template.png";
@@ -57,7 +57,7 @@ class AutoCreateWikiPage extends SpecialPage {
 	 * constructor
 	 */
 	public function  __construct() {
-		parent::__construct( "AutoCreateWiki" /*class*/ );
+		parent::__construct( "CreateWiki" /*class*/ );
 
 		/**
 		 * initialize some data
@@ -70,7 +70,7 @@ class AutoCreateWikiPage extends SpecialPage {
 		$this->mStarters = array(
 			self::STARTER_GAME => 3578,
 			self::STARTER_ENTE => 3711,
-#			self::STARTER_SPRT => 12698
+			self::STARTER_SPRT => 12698
 		);
 
 		/**
@@ -103,9 +103,8 @@ class AutoCreateWikiPage extends SpecialPage {
 
 		wfLoadExtensionMessages( "AutoCreateWiki" );
 
-		error_log ("wfTimestamp = " . wfTimestamp() . "\n");
 		$this->setHeaders();
-		$this->mTitle = Title::makeTitle( NS_SPECIAL, "AutoCreateWiki" );
+		$this->mTitle = Title::makeTitle( NS_SPECIAL, "CreateWiki" );
 		$this->mAction = $wgRequest->getVal( "action", false );
 		$this->mSubpage = $subpage;
 		$this->mPosted = $wgRequest->wasPosted();
@@ -132,13 +131,16 @@ class AutoCreateWikiPage extends SpecialPage {
 			$this->setValuesToSession();
 			exit;
 		}
-		elseif ( $subpage === "Testing" ) {
-			if ( $this->setVarsFromSession() > 0 ) {
-				$this->test();
-			}
-		}
 		elseif ( $subpage === "Processing" ) {
 			$this->log (" session: " . print_r($_SESSION, true). "\n");
+			#--- restriction
+			if ( $wgUser->isAnon() ) {
+				$this->displayRestrictionError();
+				return;
+			} elseif ( $wgUser->isBlocked() ) {
+				$wgOut->blockedPage();
+				return;
+			}
 			if ( isset( $_SESSION['mAllowToCreate'] ) && ( $_SESSION['mAllowToCreate'] >= wfTimestamp() ) ) {
 				$this->mNbrUserCreated = $this->countCreatedWikisByUser();
 				if ( $this->mNbrUserCreated >= self::DAILY_USER_LIMIT ) {
@@ -155,6 +157,14 @@ class AutoCreateWikiPage extends SpecialPage {
 			}
 		}
 		elseif ( $subpage === "Wiki_create" ) {
+			#--- restriction
+			if ( $wgUser->isAnon() ) {
+				$this->displayRestrictionError();
+				return;
+			} elseif ( $wgUser->isBlocked() ) {
+				$wgOut->blockedPage();
+				return;
+			}
 			if ( isset( $_SESSION['mAllowToCreate'] ) && ( $_SESSION['mAllowToCreate'] >= wfTimestamp() ) ) {
 				#--- Limit of user creation
 				$this->mNbrUserCreated = $this->countCreatedWikisByUser();
@@ -207,6 +217,11 @@ class AutoCreateWikiPage extends SpecialPage {
 					}
 				}
 
+				#-- restriction
+				if ( $wgUser->isBlocked() ) {
+					$wgOut->blockedPage();
+					return;
+				}
 				#-- user logged in or just create
 				if ( empty( $this->mErrors ) && ( $wgUser->getID() > 0 ) ) {
 					#--- save values to session and redirect
@@ -222,22 +237,6 @@ class AutoCreateWikiPage extends SpecialPage {
 			}
 			$this->createWikiForm();
 		}
-	}
-
-	private function test() {
-		global $wgOut;
-		for ($i = 1; $i < 9; $i++) {
-			$this->setInfoLog('OK', wfMsg('autocreatewiki-step' . $i));
-			sleep(1);
-		}
-
-		$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
-		$oTmpl->set_vars( array(
-			"domain" => "testtestest.wikia.com",
-		));
-		#---
-		$sFinishText = $oTmpl->execute("finish");
-		$this->setInfoLog('END', $sFinishText);
 	}
 
 	/**
@@ -329,7 +328,8 @@ class AutoCreateWikiPage extends SpecialPage {
 			return;
 		}
 		$this->mWikiData[ "city_id" ] = $this->mWikiId;
-		$this->mWikiData[ "founder" ] = $wgUser->getId();
+		$this->mWikiData[ "founder" ] = $this->mFounder->getId();
+		$this->mWikiData[ "founder-name" ] = $this->mFounder->getName();
 		$this->log( "Creating row in city_list table, city_id = {$this->mWikiId}" );
 
 		$bIns = $dbw->insert(

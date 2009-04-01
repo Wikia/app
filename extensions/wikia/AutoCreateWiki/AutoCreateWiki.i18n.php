@@ -80,6 +80,7 @@ $messages['en'] = array(
 	"autocreatewiki-step11" => "Sending email to user ... ",
 	"autocreatewiki-redirect" => "Redirecting to new Wiki: $1 ... ",
 	"autocreatewiki-congratulation" => "Congratulation!",
+	"autocreatewiki-regex-error-comment" => "used in Wiki $1 (whole text: $2)",
 // processing errors
 	"autocreatewiki-step2-error" => "Database exists!",
 	"autocreatewiki-step3-error" => "Cannot set default information in database!",
@@ -92,7 +93,7 @@ Hello, $2,
 
 The Wikia you requested is now available at <$1> We hope to see you editing there soon!
 
-We've added some Information and Tips on your User Talk Page (<$5> to help you get started.
+We've added some Information and Tips on your User Talk Page (<$5>) to help you get started.
 
 If you have any problems, you can ask for community help on the wiki at <http://www.wikia.com/wiki/Forum:Help_desk>, or via email to community@wikia.com. You can also visit our live #wikia IRC chat channel <http://irc.wikia.com>.
 

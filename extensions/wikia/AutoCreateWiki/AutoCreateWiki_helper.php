@@ -160,7 +160,7 @@ class AutoCreateWiki {
 			$sResponse = wfMsg('autocreatewiki-empty-wikiname');
 		} elseif (preg_match('/[^a-z0-9-\s]/i', $sValue)) {
 			$sResponse = wfMsg('autocreatewiki-invalid-wikiname');
-		} elseif (self::checkBadWords($sValue, true) === false) {
+		} elseif (self::checkBadWords($sValue, "name", true) === false) {
 			$sResponse = wfMsg('autocreatewiki-violate-policy');
 		}
 		wfProfileOut(__METHOD__);
@@ -184,7 +184,7 @@ class AutoCreateWiki {
 		} elseif ( in_array( $sName, array_keys( Language::getLanguageNames() )) ) {
 			#-- invalid name
 			$sResponse = wfMsg('autocreatewiki-violate-policy');
-		} elseif (self::checkBadWords($sName) === false) {
+		} elseif (self::checkBadWords($sName, "domain") === false) {
 			#-- invalid name (bad words)
 			$sResponse = wfMsg('autocreatewiki-violate-policy');
 		} else {
@@ -366,9 +366,9 @@ class AutoCreateWiki {
 	}
 	
 	/**
-	 * check "bad" words
+	 * check "bad" words (include in MediaWiki message)
 	 */
-	public static function checkBadWords($sText, $split = false) {
+	public static function checkBadWordsInMsg($sText, $where, $split = false) {
 		wfProfileIn(__METHOD__);
 		$allowed = true;
 		$sBadWords = wfMsg(self::BAD_WORDS_MSG);
@@ -397,6 +397,30 @@ class AutoCreateWiki {
 					}
 				}
 			}
+		}
+		#---
+		wfProfileOut(__METHOD__);
+		return $allowed;
+	}	
+	
+	/**
+	 * check "bad" words by TextRegex extension
+	 */
+	public static function checkBadWords($sText, $where, $split = false) {
+		wfProfileIn(__METHOD__);
+		$allowed = true;
+		error_log ("checkBadWords($sText, $where, $split) \n");
+		error_log ("class_exists (\"TextRegexCore\") : " . intval(class_exists ("TextRegexCore")) . "\n");
+		$oRegexCore = new TextRegexCore( "creation", 0 );
+		if ($oRegexCore instanceof TextRegexCore) {
+			$newText = preg_replace("/[^a-z0-9]/i", "", $sText);
+			#-- 
+			if ($split == true) {
+				$aWordsInText = preg_split("/[\s,]+/", $newText);
+			} else {
+				$aWordsInText = array($newText);
+			}
+			$allowed = $oRegexCore->isAllowedText($aWordsInText, wfMsg('autocreatewiki-regex-error-comment', $where, $sText));
 		}
 		#---
 		wfProfileOut(__METHOD__);

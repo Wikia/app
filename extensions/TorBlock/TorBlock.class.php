@@ -33,6 +33,17 @@ class TorBlock {
 			wfDebug( "-User detected as editing from Tor node. Adding Tor block to permissions errors\n" );
 			wfLoadExtensionMessages( 'TorBlock' );
 
+			// sanitize $result parameter
+			$oldResult = $result; $result = array();
+			if ($oldResult != array() && is_array($oldResult) && !is_array($oldResult[0]))
+				$result[] = $oldResult; # A single array representing an error
+			else if (is_array($oldResult) && is_array($oldResult[0]))
+				$result = array_merge( $result, $oldResult ); # A nested array representing multiple result
+			else if ($oldResult != '' && $oldResult != null && $oldResult !== true && $oldResult !== false)
+				$result[] = array($oldResult); # A string representing a message-id
+			else if ($oldResult === false )
+				$result[] = array('badaccess-group0'); # a generic "We don't want them to do that"
+
 			$result[] = array('torblock-blocked', $ip);
 
 			return false;

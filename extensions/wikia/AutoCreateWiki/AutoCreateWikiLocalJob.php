@@ -56,21 +56,30 @@ class AutoCreateWikiLocalJob extends Job {
 	 */
     public function run() {
 
-		global $wgUser;
+		global $wgUser, $wgErrorLog;
 
 		wfProfileIn( __METHOD__ );
 
 		wfLoadExtensionMessages( "AutoCreateWiki" );
+
+		$wgErrorLog = true;
 
 		/**
 		 * setup founder user
 		 */
 		if( $this->mParams[ "founder"] ) {
 			$this->mFounder = User::newFromId( $this->mParams[ "founder"] );
+			$this->mFounder->load();
 		}
-		$this->setWelcomeTalkPage();
+		if( ! $this->mFounder ) {
+			Wikia::log( __METHOD__, "user", "Cannot load user with user_id = {$this->mParams[ "founder"]}" );
+		}
 		$this->moveMainPage();
+		$this->setWelcomeTalkPage();
+		$this->protectKeyPages();
 		$this->populateCheckUserTables();
+		$wgErrorLog = false;
+
 
 		wfProfileOut( __METHOD__ );
 
@@ -133,9 +142,10 @@ class AutoCreateWikiLocalJob extends Job {
 	private function setWelcomeTalkPage() {
 		global $wgUser;
 
-		Wikia::log( __METHOD__, "talk", "Setting welcome talk page on new wiki..." );
+		Wikia::log( __METHOD__, "talk", "Setting welcome talk page on new wiki" );
 
 		$talkPage = $this->mFounder->getTalkPage();
+		Wikia::log( __METHOD__, "talk", $talkPage->getFullUrl() );
 		if( $talkPage ) {
 			$wikiaName = isset( $this->mParams[ "title" ] )
 				? $this->mParams[ "title" ]
@@ -160,7 +170,7 @@ class AutoCreateWikiLocalJob extends Job {
 			);
 
 			$talkBody = false;
-			if(! empty( $wikiaLang ) ) {
+			if (! empty( $wikiaLang ) ) {
 				/**
 				 * custom lang translation
 				 */
@@ -259,7 +269,7 @@ class AutoCreateWikiLocalJob extends Job {
 	 * @author Lucas 'TOR' Garczewski <tor@wikia-inc.com>
 	 */
 	private function protectKeyPages() {
-		global $wgUser, $wgWikiaKeyPages;
+		global $wgUser, $wgWikiaKeyPages, $wgMessageCache;
 
 		$wgUser = User::newFromName( "CreateWiki script" );
 		if ( $wgUser->isAnon() ) {

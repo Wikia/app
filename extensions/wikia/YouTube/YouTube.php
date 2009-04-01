@@ -36,7 +36,13 @@ if (!defined('MEDIAWIKI'))
 	exit(1);
 }
 
-$wgExtensionFunctions[] = 'wfYouTube';
+//Avoid unstubbing $wgParser on setHook() too early on modern (1.12+) MW versions, as per r35980
+if ( defined( 'MW_SUPPORTS_PARSERFIRSTCALLINIT' ) ) {
+	$wgHooks['ParserFirstCallInit'][] = 'wfYouTube';
+} else {
+	$wgExtensionFunctions[] = 'wfYouTube';
+}
+
 $wgExtensionCredits['parserhook'][] = array
 (
 	'name'        => 'YouTube',
@@ -60,6 +66,8 @@ function wfYouTube()
 	$wgParser->setHook('nicovideo', 'embedNicovideo');
 	$wgParser->setHook('ggtube', 'embedGoGreenTube');
 	$wgParser->setHook('cgamer', 'embedCrispyGamer');
+
+	return true;
 }
 
 function embedYouTube_url2ytid($url)
