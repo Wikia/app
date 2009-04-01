@@ -364,8 +364,8 @@ function wfSIWEEditInterwiki(){
 #	foreach ( $lang_names as $lang_name){
 #	  $languages .= ", '$lang_name'";
 #	}
-	if ($from) $from = "iw_prefix like '". $db->escapeLike($from). "%'";
-	$result = $db->query("SELECT * FROM `$wikiaDB`.`interwiki` WHERE $from;");
+	if ($from) $from = "WHERE iw_prefix like '". $db->escapeLike($from). "%'";
+	$result = $db->query("SELECT * FROM `$wikiaDB`.`interwiki` $from;");
 
 	$ret .= "<p><select multiple='multiple' onchange='updateForm( this.value );'>\n";
 	while( $dbObject = $db->fetchObject($result)){
