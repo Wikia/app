@@ -91,7 +91,7 @@ class VideoPage extends Article {
 		$code = $this->getEmbedCode($width);
 
 		if(empty($thumb)) {
-			return "<div class=\"t{$align}\">{$code}</div>";
+			return "<div class=\"t{$align}\" style=\"width:{$width}px\">{$code}</div>";
 		}
 
 		$url = $this->mTitle->getLocalURL('');
@@ -122,7 +122,7 @@ EOD;
 		if ($caption != '') $wgWysiwygMetaData[$refid]['caption'] = $caption;
 
 		if(empty($thumb)) {
-			return "<div class=\"t{$align}\" refid=\"{$refid}\" style=\"position:relative\">{$code}</div>";
+			return "<div class=\"t{$align}\" refid=\"{$refid}\" style=\"position:relative;width:{$width}px\">{$code}</div>";
 		}
 
 		$wgWysiwygMetaData[$refid]['thumb'] = 1;
