@@ -218,11 +218,6 @@ $HeadURL = split('/', '$HeadURL$');
 $wgReleaseNumber = ($HeadURL[4] === "trunk" ) ? "trunk" : $HeadURL[5];
 
 /**
- * Enable FAST extension for this branch only
- */
-$wgEnableFASTExt = true;
-
-/**
  * Definition of new log type (settings), related to ticket #2657,
  * will be me moved to different configuration file
  */
