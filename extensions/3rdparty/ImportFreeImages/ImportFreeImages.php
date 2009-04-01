@@ -358,10 +358,10 @@ function wfSpecialImportFreeImages( $par )
 			$wgOut->addHTML( "</a><br/>" );
 			//$wgOut->addHTML( "<img  src=http://static.flickr.com/" . $photo['server'] . "/" . $photo['id'] . "_" . $photo['secret'] . "." . "jpg>" );
 			$url="http://farm{$photo['farm']}.static.flickr.com/{$photo['server']}/{$photo['id']}_{$photo['secret']}.jpg";
-			$wgOut->addHTML( "<img src=\"http://farm{$photo['farm']}.static.flickr.com/{$photo['server']}/{$photo['id']}_{$photo['secret']}_{$wgIFI_ThumbType}.jpg\" alt=\"" . urlencode($photo['title']) . "\"/>" );
+			$wgOut->addHTML( "<img src=\"http://farm{$photo['farm']}.static.flickr.com/{$photo['server']}/{$photo['id']}_{$photo['secret']}_{$wgIFI_ThumbType}.jpg\" alt=\"" . htmlspecialchars($photo['title']) . "\"/>" );
 							
 			$wgOut->addHTML( "<br/>(<a href='#' onclick=\"s2('$url', '{$photo['id']}','{$photo['owner']}', '" .
-				urlencode($owner['username']  ) . "', '" . urlencode($photo['title']) . "'); return false;\">" .
+				addslashes($owner['username']  ) . "', '" . addslashes($photo['title']) . "'); return false;\">" .
 				wfMsg('importfreeimages_importthis') . "</a>)\n</td>" );
 			if ($i % $wgIFI_ResultsPerRow == ($wgIFI_ResultsPerRow - 1) ) $wgOut->addHTML("</tr>");
 			$i++;
