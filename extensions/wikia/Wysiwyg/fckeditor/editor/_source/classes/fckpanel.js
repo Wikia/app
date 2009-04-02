@@ -32,7 +32,14 @@ var FCKPanel = function( parentWindow )
 
 	var oDocument ;
 
-	if ( FCKBrowserInfo.IsIE )
+	// Wikia: RT #12624
+	if ( FCKBrowserInfo.IsIE8 )
+	{
+		this._Popup = GLOBAL_POPUP_BUCKET_FCK_IE8.pop();
+		oDocument = this.Document = this._Popup.document ;
+		FCK.IECleanup.AddItem( this, FCKPanel_Cleanup ) ;
+	}
+	else if ( FCKBrowserInfo.IsIE )
 	{
 		// Create the Popup that will hold the panel.
 		// The popup has to be created before playing with domain hacks, see #1666.
