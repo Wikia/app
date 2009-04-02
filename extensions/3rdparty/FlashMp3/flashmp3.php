@@ -42,12 +42,12 @@ function wfFlashMP3() {
  
 // The callback function for converting the input text to HTML output
 function renderFlashMP3($input, $args) {
-        global $wgScriptPath;
+        global $wgExtensionsPath, $wgStyleVersion;
         $type = '1pixelout';
         $id = 1;
         $params = explode("|", htmlspecialchars($input));
         $files = explode(",", array_shift($params));
-        $player_path = $wgScriptPath.'/extensions/audio_player/';
+        $player_path = $wgExtensionsPath.'/3rdparty/FlashMp3/audio-player/';
  
         if (isset($args['type'])) {
            $type = $args['type'];
@@ -91,8 +91,11 @@ function renderFlashMP3($input, $args) {
                                 {
                                         $albumArt = '&amp;albumArt=http://static.last.fm/depth/catalogue/noimage/cover_med.gif';  // TODO: you can set a default cover here
                                 }
+				else {
+					$albumArt = '';
+				}
  
-                                $output .= '<object width="340" height="123">'
+                                $output = '<object width="340" height="123">'
                                         . '<param name="movie" value="http://static.last.fm/webclient/41/defaultEmbedPlayer.swf" />'
                                         . '<param name="FlashVars" value="viral=true&amp;lfmMode=playlist&amp;resourceID='.$resourceID.'&amp;resourceType='.$resourceType.$albumArt.$restTitle.$param_string.'" />'
                                         . '<param name="wmode" value="transparent" />'
@@ -130,7 +133,7 @@ function renderFlashMP3($input, $args) {
                                 $param_string = implode('&amp;', $params);
                                 if (!empty($param_string)) $param_string .= '&amp;';
  
-                                $output = '<script language="JavaScript" src="'.$player_path.'audio-player.js"></script>'
+                                $output = '<script language="JavaScript" src="'.$player_path.'audio-player.js?'.$wgStyleVersion.'"></script>'
                                         . '<object type="application/x-shockwave-flash" data="'.$player_path.'player.swf" id="audioplayer'.$id.'" height="24" width="290">'
                                         . '<param name="movie" value="'.$player_path.'player.swf">'
                                         . '<param name="FlashVars" value="playerID='.$id.'&amp;'.$param_string.'soundFile='.$file_string.'">'
