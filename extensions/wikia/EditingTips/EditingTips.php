@@ -31,7 +31,7 @@ function getEditingTips() {
 		return $wgEditingTipsContent;
 	} else {
 		$tips = array();
-		$text = wfMsg('EditingTips')."\n__NOTOC__\n__NOEDITSECTION__";
+		$text = "{{MediaWiki:EditingTips}}\n__NOTOC__\n__NOEDITSECTION__";
 		$html = '<html>'.$wgOut->parse($text).'</html>';
 		$doc = new DOMDocument("1.0", "ISO-8859-1");
 		$doc->loadHTML($html);
