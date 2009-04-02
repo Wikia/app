@@ -104,7 +104,7 @@ function Wysiwyg_UserGetOption($options, $name, $value) {
 	return true;
 }
 
-function Wysywig_Ajax($type, $input = false, $wysiwygData = false, $articleId = -1) {
+function Wysywig_Ajax($type, $input = false, $wysiwygData = false, $pageName = false) {
 
 	if($type == 'html2wiki') {
 		return new AjaxResponse(Wysiwyg_HtmlToWikiText($input, $wysiwygData, true));
@@ -118,7 +118,7 @@ function Wysywig_Ajax($type, $input = false, $wysiwygData = false, $articleId = 
 		} else {
 			$separator = Parser::getRandomString();
 			header('X-sep: ' . $separator);
-			return new AjaxResponse(join(Wysiwyg_WikiTextToHtml($input, $articleId, true), "--{$separator}--"));
+			return new AjaxResponse(join(Wysiwyg_WikiTextToHtml($input, $pageName, true), "--{$separator}--"));
 		}
 
 	}
@@ -250,7 +250,7 @@ function Wysiwyg_Initial2($form) {
 	global $wgWysiwygData, $wgWysiwygFallbackToSourceMode;
 
 	if (empty($wgWysiwygFallbackToSourceMode)) {
-		list($form->textbox1, $wgWysiwygData) = Wysiwyg_WikiTextToHtml($form->textbox1, -1, true);
+		list($form->textbox1, $wgWysiwygData) = Wysiwyg_WikiTextToHtml($form->textbox1, false, true);
 	}
 	else {
 		$wgWysiwygData = '';
@@ -359,14 +359,14 @@ function Wysiwyg_CheckEdgeCases($text) {
 	return $out;
 }
 
-function Wysiwyg_WikiTextToHtml($wikitext, $articleId = -1, $encode = false) {
+function Wysiwyg_WikiTextToHtml($wikitext, $pageName = false, $encode = false) {
 	global $IP, $wgWysiwygMetaData, $wgWysiwygParserEnabled, $wgWysiwygParserTildeEnabled, $wgTitle, $wgUser, $wgWysiwygMarkers;
 
 	require_once("$IP/extensions/wikia/Wysiwyg/WysiwygParser.php");
 
 	wfDebug("Wysiwyg_WikiTextToHtml wikitext: {$wikitext}\n");
 
-	$title = ($articleId == -1) ? $wgTitle : Title::newFromID($articleId);
+	$title = ($pageName === false) ? $wgTitle : Title::newFromText($pageName);
 
 	// detect empty lines at the beginning of wikitext
 	$emptyLinesAtStart = strspn($wikitext, "\n");
