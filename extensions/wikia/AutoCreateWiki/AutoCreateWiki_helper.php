@@ -409,8 +409,6 @@ class AutoCreateWiki {
 	public static function checkBadWords($sText, $where, $split = false) {
 		wfProfileIn(__METHOD__);
 		$allowed = true;
-		error_log ("checkBadWords($sText, $where, $split) \n");
-		error_log ("class_exists (\"TextRegexCore\") : " . intval(class_exists ("TextRegexCore")) . "\n");
 		$oRegexCore = new TextRegexCore( "creation", 0 );
 		if ($oRegexCore instanceof TextRegexCore) {
 			$newText = preg_replace("/[^a-z0-9]/i", "", $sText);

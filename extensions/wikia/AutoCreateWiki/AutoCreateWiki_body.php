@@ -285,7 +285,7 @@ class AutoCreateWikiPage extends SpecialPage {
 			$this->log( "Database {$this->mWikiData[ "dbname"]} exists!" );
 			$error = 1;
 		} else {
-			$dbw->query( sprintf( "CREATE DATABASE %s", $this->mWikiData[ "dbname"]) );
+			$dbw->query( sprintf( "CREATE DATABASE `%s`", $this->mWikiData[ "dbname"]) );
 			$this->log( "Creating database {$this->mWikiData[ "dbname"]}" );
 		}
 
@@ -497,9 +497,10 @@ class AutoCreateWikiPage extends SpecialPage {
 				}
 
 				$startupImages = sprintf( "%s/starter/%s/images/", self::IMGROOT, $prefix );
+
 				if (file_exists( $startupImages ) && is_dir( $startupImages ) ) {
-					wfShellExec("/bin/cp -af $startupImages {$this->mWikiData[ "images" ]}/");
-					$this->log("/bin/cp -af $startupImages {$this->mWikiData[ "images" ]}/");
+					wfShellExec("/bin/cp -af {$startupImages} /images/{$this->mWikiData[ "dir_part" ]}/");
+					$this->log("/bin/cp -af {$startupImages} /images/{$this->mWikiData[ "dir_part" ]}/");
 				}
 				$cmd = sprintf(
 					"SERVER_ID=%d %s %s/maintenance/updateArticleCount.php --update --conf %s",
@@ -600,19 +601,6 @@ class AutoCreateWikiPage extends SpecialPage {
 		$localJob = new AutoCreateWikiLocalJob(	Title::newFromText( NS_MAIN, "Main" ), $this->mWikiData );
 		$localJob->WFinsert( $this->mWikiId, $this->mWikiData[ "dbname" ] );
 
-		/**
-		 * inform task manager
-		 */
-		$Task = new LocalMaintenanceTask();
-		$Task->createTask(
-			array(
-				"city_id" => $this->mWikiId,
-				"command" => "maintenance/runJobs.php",
-				"arguments" => "--type ACWLocal"
-			),
-			TASK_QUEUED
-		);
-
 		$dbw->selectDB( $wgDBname );
 
 		$this->setCentralPages();
@@ -627,6 +615,20 @@ class AutoCreateWikiPage extends SpecialPage {
 		 * show congratulation message
 		 */
 		$this->setInfoLog( 'OK', wfMsg('autocreatewiki-congratulation')  );
+
+		/**
+		 * inform task manager
+		 */
+		$Task = new LocalMaintenanceTask();
+		$Task->createTask(
+			array(
+				"city_id" => $this->mWikiId,
+				"command" => "maintenance/runJobs.php",
+				"arguments" => "--type ACWLocal"
+			),
+			TASK_QUEUED
+		);
+		$this->log( "Add local maintenance task" );
 
 		/**
 		 * show total time

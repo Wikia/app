@@ -229,29 +229,14 @@ class WikiMover {
 		wfProfileIn( __METHOD__ );
 
 		#--- seems like we can start moving articles
-		echo "Moving articles from {$this->mSourceName} ({$this->mSourceID}) to $this->mTargetName ({$this->mTargetID})\n";
+		$this->log( "Moving articles from {$this->mSourceName} ({$this->mSourceID}) to $this->mTargetName ({$this->mTargetID})" );
 
 		$dbr = wfGetDB( DB_MASTER );
 
-		#---
-		# count pages, namespaces skip mediawiki namespaces, so far just for
-		# stats and information
-
-		$oRes = $dbr->select(
-			array( $this->sourceTable( "page" )),
-			array( "count(page_id) as count", "page_namespace" ),
-			null,
-			__METHOD__,
-			array( "GROUP BY" => "page_namespace" )
-		);
-
-		while ( $oRow = $dbr->fetchObject( $oRes ) ) {
-			$this->log("{$wgContLang->getNsText($oRow->page_namespace)} ({$oRow->page_namespace}) => {$oRow->count} articles");
-		}
-
-		$dbr->freeResult( $oRes );
-
-		#--- get all pages
+		/**
+		 * get all pages
+		 */
+		$skipNamespaces = array( "NS_MEDIAWIKI", "NS_MEDIAWIKI_TALK" );
 		$aSourcePages = array();
 		$oRes = $dbr->select(
 			array( $this->sourceTable( "page" )),
@@ -552,8 +537,7 @@ class WikiMover {
 	 *
 	 * @return nothing
 	 */
-	private function moveLastRevision( $aPage, $targetID )
-	{
+	private function moveLastRevision( $aPage, $targetID ) {
 		$dbw = wfGetDB( DB_MASTER );
 
 		$iOldArticleID = $aPage["data"]->page_id;
@@ -622,8 +606,7 @@ class WikiMover {
 	 *
 	 * @return array composed array with proper values
 	 */
-	private function rowToText( $oRevision )
-	{
+	private function rowToText( $oRevision ) {
 		$aTextFields = array();
 		foreach ($this->mTargetTextFields as $field) {
 			switch( $field ) {
@@ -685,8 +668,7 @@ class WikiMover {
 	 *
 	 * @return nothing
 	 */
-	public function redirect()
-	{
+	public function redirect() {
 		global $wgSharedDB;
 
 		if (empty( $this->mSourceID )) {
@@ -738,8 +720,7 @@ class WikiMover {
 	 *
 	 * @return nothing
 	 */
-	public function moveUserGroups()
-	{
+	public function moveUserGroups() {
 		if (empty( $this->mMoveUserGroups )) {
 			$this->log('Skipped moving user groups as instructed');
 			return true;
@@ -809,8 +790,7 @@ class WikiMover {
 	 *
 	 * @return nothing
 	 */
-	public function moveImages()
-	{
+	public function moveImages() {
 		if (empty( $this->mSourceName )) {
 			wfDebug("wikimover: source database name is empty", true);
 			return false;

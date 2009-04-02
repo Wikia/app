@@ -61,20 +61,24 @@ class TextRegex extends SpecialPage {
 				$wgOut->setSubTitle( wfMsg( 'textregex-block-succ' ) );
 				$wgOut->addHTML(wfMsgExt('textregex-block-message', 'parse', htmlspecialchars($this->mBlockedRegex) ));
 				$db_conn = DB_MASTER;
+				$oTextRegexList->unsetKeys();
 				$oTextRegexForm->showForm('');
 			} elseif ( $this->action == 'success_unblock' ) {
 				$wgOut->setSubTitle( wfMsg( 'textregex-unblock-succ' ) );
 				$wgOut->addHTML(wfMsgExt('textregex-unblock-message', 'parse', htmlspecialchars($this->mBlockedRegex)) );
 				$db_conn = DB_MASTER;
+				$oTextRegexList->unsetKeys();
 				$oTextRegexForm->showForm('');
 			} elseif ( $this->action == 'failure_unblock' ) {
 				$id = htmlspecialchars( $wgRequest->getVal( 'id' ) );
 				$db_conn = DB_MASTER;
-				$sRF->showForm( wfMsg( 'textregex-error-unblocking', $id ) );
+				$oTextRegexList->unsetKeys();				
+				$oTextRegexForm->showForm( wfMsg( 'textregex-error-unblocking', $id ) );
 			} else if ( $wgRequest->wasPosted() && ($this->action == 'submit') && $wgUser->matchEditToken( $wgRequest->getVal( 'wpEditToken' ) ) ) {
 				$oTextRegexForm->doSubmit();
 			} else if ( $this->action == 'delete' ) {
 				$oTextRegexList->deleteFromList();
+				$oTextRegexList->unsetKeys();				
 			} else {
 				$oTextRegexForm->showForm( '' );
 			}
@@ -114,13 +118,13 @@ class TextRegexList {
 	}
 
 	public function getMemcKey() {
-		global $wgSharedDB, $wgMemc;
-		return wfMemcKey( $wgSharedDB, 'textRegex', $this->subList);
+		global $wgMemc;
+		return wfMemcKey( 'textRegex', $this->subList);
 	}
 
 	public function getMemcAllKey() {
-		global $wgSharedDB;
-		return wfMemcKey( $wgSharedDB, 'textRegex', $this->subList, 'all' );
+		global $wgMemc;
+		return wfMemcKey( 'textRegex', $this->subList, 'all' );
 	}
 
 	/* useful for cleaning the memcached keys */
@@ -204,7 +208,6 @@ class TextRegexList {
 		
 		if ( $dbw->affectedRows() ) {
 			/* success  */
-			$this->unsetKeys();
 			wfProfileOut( __METHOD__ );
 			$wgOut->redirect( $this->oTitle->getFullURL( 'action=success_unblock&text='.urlencode($oRegexInfo->tr_text).'&'.$this->getListBits() ) );
 		} else {
@@ -428,7 +431,6 @@ class TextRegexForm {
 			return;
 		}
 		
-		$this->oTRList->unsetKeys();
 		/* redirect */
 		wfProfileOut( __METHOD__ );
 		$wgOut->redirect( $this->oTitle->getFullURL( 'action=success_block&text=' .$this->mBlockedRegex.'&'.$this->oTRList->getListBits() ) );

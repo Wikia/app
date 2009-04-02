@@ -13,6 +13,9 @@ class WebResponse {
 	 * @param $replace Bool: replace current similar header
 	 */
 	public function header($string, $replace=true) {
+		if( headers_sent( $filename, $linenum ) ) {
+			error_log( $_SERVER['HTTP_HOST'] . '-' . $_SERVER['REQUEST_URI']." - Headers already sent in $filename on line $linenum. Cant send another header - $string" );
+		}
 		header($string,$replace);
 	}
 
