@@ -25,7 +25,7 @@ if (!defined('MEDIAWIKI')) {
 
 $wgExtensionCredits['specialpage'][] = array(
 	'name' => 'MultiDelete',
-	'author' => '[http://www.wikia.com/wiki/User:Marooned Maciej Błaszkowski (Marooned)]', 'Bartek Łapiński',
+	'author' => '[http://www.wikia.com/wiki/User:Marooned Maciej Błaszkowski (Marooned)], Bartek Łapiński',
 	'description' => 'This extension deletes a batch of pages or a page on multiple wikis.'
 );
 
