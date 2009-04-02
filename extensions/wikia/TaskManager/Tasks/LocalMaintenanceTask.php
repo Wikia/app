@@ -55,6 +55,8 @@ class LocalMaintenanceTask extends BatchTask {
 		$arguments = isset( $this->mParams[ "arguments" ] )
 			? $this->mParams[ "arguments" ] : "";
 
+		wfWaitForSlaves( 2 );
+
 		if( $city_id && $command ) {
 			/**
 			 * execute maintenance script

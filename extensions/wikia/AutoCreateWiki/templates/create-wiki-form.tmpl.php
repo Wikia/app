@@ -210,7 +210,6 @@ var msgError = "<?=addslashes(wfMsg('autocreatewiki-invalid-wikiname'))?>";
 var YC = YAHOO.util.Connect;
 var YD = YAHOO.util.Dom;
 var YE = YAHOO.util.Event;
-<?php error_log (print_r($mPostedErrors, true)); ?>
 <?php if ( !empty($mPostedErrors) && is_array($mPostedErrors) ) : ?>
 <?php 	foreach ( $mPostedErrors as $field => $value ) : ?>
 <?php 		if ( !empty($value) ) : ?>

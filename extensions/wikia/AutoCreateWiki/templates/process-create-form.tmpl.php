@@ -22,6 +22,7 @@ YE.onDOMReady(function () {
 	var titleUrl = '<?=$mTitle->getLocalURL()."/Processing"?>'; 
 	var wgAjaxPath = wgScriptPath + wgScript;
 	var redirServer = '<?=$subdomain?>';
+	var waitMsg = '<?=wfMsg('autocreatewiki-stepdefault')?>';
 	var errorMsg = '<?=wfMsg('autocreatewiki-errordefault')?>';
 	//var usedMsg = new Array();
 
@@ -30,7 +31,7 @@ YE.onDOMReady(function () {
 		var styleColor = (resType == 'OK' || resType == 'END') ? "green" : "red";
 		var styleMsg = (resType == 'OK' || resType == 'END') ? '<?=wfMsg('autocreatewiki-done')?>' : '<?=wfMsg('autocreatewiki-error')?>';
 		var msgType = (resType != 'END') ? '&nbsp;&nbsp;<strong style="color:' + styleColor + '">' + styleMsg + '</strong>' : "";
-		var msg = text + ((resType != '') ? msgType : "");
+		var msg = ((resType == 'OK') ? waitMsg + "<br />" : "") + text + ((resType != '') ? msgType : "");
 		logSteps.innerHTML = msg;
 	}
 
@@ -56,8 +57,8 @@ YE.onDOMReady(function () {
 					};
 					//window.location.href = 'http://'+redirServer+'.<?=$domain?>';
 				} else if ( !(isError > 0) ) {
-					if (loop < 150) {
-						setTimeout(checkProcess, 2000);
+					if (loop < 100) {
+						setTimeout(checkProcess, 2500);
 					} else {
 						setLog(loop, errorMsg, 'ERROR');
 					}
