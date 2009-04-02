@@ -177,5 +177,11 @@ function initEditor() {
 	}
 }
 
-addOnloadHook(initEditor);
-
+if (typeof YAHOO.util.Event.onDOMReady != 'undefined') {
+	YAHOO.util.Event.onDOMReady(function() {
+		initEditor();
+	});
+}
+else {
+	addOnloadHook(initEditor);
+}
