@@ -37,7 +37,7 @@ $wgExtensionFunctions [] = 'wfEditSimilarSetup' ;
 
 $wgExtensionCredits['other'][] = array(
         'name' => 'EditSimilar',
-        'version' => 1.16 ,
+        'version' => 1.17 ,
         'author' => 'Bartek Łapiński, [http://www.wikia.com/wiki/User:TOR Łukasz \'TOR\' Garczewski]',
         'url' => 'http://help.wikia.com/wiki/Help:EditSimilar',
         'description' => 'Encourages users to edit an article similar (by categories) to the one they just had edited.',
@@ -324,8 +324,8 @@ function wfEditSimilarSetup () {
 	$wgHooks ['ArticleSaveComplete'][] = 'wfEditSimilarCheck' ; 
 	$wgHooks ['OutputPageBeforeHTML'][] = 'wfEditSimilarViewMesg' ; 
 	if ( $wgUser->isLoggedIn ()) {
-		$wgHooks ['getEditingPreferencesCustomHtml'][] = 'wfEditSimilarPrefCustomHtml' ;		
-		$wgHooks ['UserToggles'][] = 'wfEditSimilarToggle' ;
+		$wgHooks['UserToggles'][] = 'wfEditSimilarToggle' ;
+		$wgHooks ['getEditingPreferencesTab'][] = 'wfEditSimilarToggle' ;
 	}
 }
 
@@ -381,26 +381,14 @@ function wfEditSimilarViewMesg (&$out) {
 	return true ;
 }
 
-// a customized version of getToggle from SpecialPreferences
-// this one uses getOption with a default - so we can have it checked if unset
-function wfEditSimilarPrefCustomHtml ($prefsForm) {
-	wfLoadExtensionMessages ('EditSimilar') ;
-	global $wgOut, $wgUser, $wgLang ;
-	$tname = 'edit-similar' ;
-	$prefsForm->mUsedToggles [$tname] =  true ;
-	$ttext = $wgLang->getUserToggle ($tname) ;
-	// the catch lies here
-	$checked = $wgUser->getOption ($tname, 1) == 1 ? ' checked="checked"' : '';
-		
-	$wgOut->addHTML ("<div class='toggle'><input type='checkbox' value='1' id=\"$tname\" name=\"wpOp$tname\"$checked />" .
-                        " <span class='toggletext'><label for=\"$tname\">$ttext</label></span></div>\n") ;	
-	return true ;
-}
-
-function wfEditSimilarToggle ($toggles) {
-	wfLoadExtensionMessages ('EditSimilar') ;
-	$toggles ['edit-similar'] = 'edit-similar' ;
-        return true ;
+function wfEditSimilarToggle($toggles, $default_array = false) {
+        wfLoadExtensionMessages('EditSimilar');
+        if(is_array($default_array)) {
+                $default_array[] = 'edit-similar';
+        } else {
+                $toggles[] = 'edit-similar';
+        }
+        return true;
 }
 
 }
