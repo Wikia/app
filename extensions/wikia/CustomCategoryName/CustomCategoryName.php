@@ -14,10 +14,11 @@ $wgHooks['SkinTemplateOutputPageBeforeExec'][] = 'CustomCategoryNameHook';
 
 function CustomCategoryNameHook($skintpl, $tpl) {
 	global $wgRequest;
-	if ($skintpl->mTitle->mNamespace == NS_CATEGORY && $wgRequest->getVal('action', 'view') == 'view') {
+	$action = $wgRequest->getVal('action', 'view');
+	if ($skintpl->mTitle->mNamespace == NS_CATEGORY && ($action == 'view' || $action == 'purge')) {
 		$customCategoryName = wfMsg('custom-category-name');
 		if (!wfEmptyMsg('custom-category-name', $customCategoryName)) {
-			$tpl->set('title', $skintpl->mTitle->getNsText() . ': ' . $customCategoryName . ' ' . $skintpl->mTitle->getText());
+			$tpl->set('title', $skintpl->mTitle->getNsText() . ':' . $customCategoryName . ' ' . $skintpl->mTitle->getText());
 		}
 	}
 	return true;
