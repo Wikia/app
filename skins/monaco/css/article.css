@@ -388,3 +388,18 @@ span.searchmatch {
 	background-color: #fff;
 	font-family: Arial, sans-serif;
 }
+
+/*** ADSENSE FOR SEARCH ***/
+#afs_narrow {
+	border-left: 1px solid #CCC;
+	float: right;
+	margin-left: 10px;
+	padding-left: 10px;
+	width: 220px;
+}
+#afs_wide .ad_text {
+	padding-right: .5em;
+}
+#afs_wide .ad_text + br {
+	display: none;
+}
