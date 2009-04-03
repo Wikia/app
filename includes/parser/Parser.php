@@ -1592,7 +1592,7 @@ class Parser
 	 * @private
 	 */
 	function replaceInternalLinks2( &$s ) {
-		global $wgContLang, $wgWysiwygParserEnabled, $wgEnableVideoToolExt;
+		global $wgContLang, $wgWysiwygParserEnabled, $wgEnableVideoToolExt, $wgEnableNYCSocialTools, $wgEnableVideoNY;
 
 		wfProfileIn( __METHOD__ );
 
@@ -1848,7 +1848,7 @@ class Parser
 				/* Wikia change begin - @author: Inez, Macbre */
 				/* Support for [[Video:...]] */
 				if($ns == NS_VIDEO) {
-					if(!empty($wgEnableVideoToolExt)) {
+					if(!empty($wgEnableVideoToolExt) && (empty($wgEnableNYCSocialTools) || empty($wgEnableVideoNY))) {
 						wfProfileIn(__METHOD__ . "-video");
 						if (!empty($wgWysiwygParserEnabled)) {
 							Wysiwyg_SetRefId('video', array('text' => &$text, 'link' => $link, 'wasblank' => $wasblank, 'noforce' => $noforce, 'original' => $originalWikitext));
