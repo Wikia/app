@@ -26,8 +26,8 @@ function wfDocstoc() {
 // respond to <docstoc> tag
 function OutputDocstoc($input, $args) {
 	//optional height/width
-	$height = $args['height'] == '' ? '550' : $args['height'];
-	$width  = $args['width'] == '' ? '670' : $args['width'];
+	$height = empty($args['height']) ? '550' : $args['height'];
+	$width  = empty($args['width']) ? '670' : $args['width'];
 
 	//required
 	$docid  = $args['docid'];
@@ -39,7 +39,7 @@ function OutputDocstoc($input, $args) {
 		return 'Invalid docid or memid';
 	}
 
-	$embedtype = $args['embed'] == '' ? 'object' : 'embed';
+	$embedtype = empty($args['embed']) ? 'object' : 'embed';
 
 	$output = '';
 
