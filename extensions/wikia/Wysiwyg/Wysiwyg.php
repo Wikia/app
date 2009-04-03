@@ -389,11 +389,6 @@ function Wysiwyg_WikiTextToHtml($wikitext, $pageName = false, $encode = false) {
 		$html = '<!--NEW_LINE-->' . $html;
 	}
 
-	// replace placeholders with <input> grey boxes
-	if (!empty($wgWysiwygMarkers)) {
-		$html = strtr($html, $wgWysiwygMarkers);
-	}
-
 	// add _wysiwyg_new_line attribute to HTML node following <!--NEW_LINE--> comment
 	$html = preg_replace('/<\!--NEW_LINE--><(\w+)/', '<$1 _wysiwyg_new_line="true"', $html);
 
@@ -457,6 +452,11 @@ function Wysiwyg_WikiTextToHtml($wikitext, $pageName = false, $encode = false) {
 	$html = str_replace("\n", "<!--EOL1-->\n", $html);
 
 	$html = preg_replace_callback("/<li>(\s*)/", create_function('$matches','return "<li space_after=\"".$matches[1]."\">";'), $html);
+
+	// replace placeholders with <input> grey boxes
+	if (!empty($wgWysiwygMarkers)) {
+		$html = strtr($html, $wgWysiwygMarkers);
+	}
 
 	wfDebug("Wysiwyg_WikiTextToHtml html: {$html}\n");
 
