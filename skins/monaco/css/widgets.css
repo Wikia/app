@@ -203,6 +203,11 @@
 	text-decoration: none;
 }
 
+#navigation .Monaco-sidebar_edit {
+	font-size: 80%;
+	text-align: right;
+}
+
 #navigation a:hover, .navigation-hover {
 	background-color: #e0efff;
 }
