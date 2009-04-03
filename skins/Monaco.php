@@ -1762,14 +1762,14 @@ if ($wgOut->isArticle()){
           if (narrowAds != "")
           {
               narrowAds = '<a style="text-decoration:none" ' +
-                          'href="http://services.google.com/feedback/online_hws_feedback">' +
+                          'href="https://www.google.com/adsense/support/bin/request.py?contact=afs_violation">' +
                           '<span class="ad_header" style="text-align:left">Ads by Google</span><br><br></a>' + narrowAds;
           }
 
           if (wideAds != "")
           {
               wideAds = '<a style="text-decoration:none" ' +
-                        'href="http://services.google.com/feedback/online_hws_feedback">' +
+                        'href="https://www.google.com/adsense/support/bin/request.py?contact=afs_violation">' +
                         '<span class="ad_header" style="text-align:left">Ads by Google</span><br><br></a>' + wideAds;
           }
 
