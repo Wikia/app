@@ -551,7 +551,9 @@ FCK.FixWikitextPlaceholder = function(placeholder) {
 
 	// placeholder is last child of p, div, li, dt or dd node - add dirty span
 	if (placeholder.parentNode.nodeName.IEquals(['p', 'div', 'li', 'dt', 'dd']) && 
-		(placeholder == placeholder.parentNode.lastChild || placeholder == placeholder.parentNode.lastChild.previousSibling) ) {
+		(placeholder == placeholder.parentNode.lastChild || 
+			(placeholder.parentNode.lastChild.previousSibling && placeholder == placeholder.parentNode.lastChild.previousSibling.previousSibling)
+		)) {
 		if (FCKBrowserInfo.IsGecko10) {
 			// add &nbsp; for FF2.x
 			var frag = FCK.EditorDocument.createDocumentFragment();
