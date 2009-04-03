@@ -203,7 +203,8 @@
 	text-decoration: none;
 }
 
-#navigation .Monaco-sidebar_edit {
+#navigation .Monaco-sidebar_edit,
+#navigation .Monaco-sidebar_more {
 	font-size: 80%;
 	text-align: right;
 }
