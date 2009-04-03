@@ -207,7 +207,8 @@ class LookupContribsCore {
 						'rev_page as page_id',
 						'rev_timestamp as timestamp',
 						'rc_namespace',
-						'rc_new' 
+						'rc_new',
+						'0 as page_remove' 
 					),
 					array (
 						'rev_user' => intval($iUserId),
