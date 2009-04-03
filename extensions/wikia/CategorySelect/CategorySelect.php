@@ -247,8 +247,10 @@ function CategorySelectAjaxSaveCategories($articleId, $categories) {
  * @author Maciej Błaszkowski <marooned at wikia-inc.com>
  */
 function CategorySelectReplaceContent($editPage, $text) {
-	$data = CategorySelect::SelectCategoryAPIgetData($text);
-	$text = $data['wikitext'];
+	if (!$editPage->isConflict) {
+		$data = CategorySelect::SelectCategoryAPIgetData($text);
+		$text = $data['wikitext'];
+	}
 	return true;
 }
 
