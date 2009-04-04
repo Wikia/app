@@ -49,7 +49,7 @@ class ShortPagesPage extends QueryPage {
 			WHERE $nsclause AND page_is_redirect=0";
 	}
 
-	function preprocessResults( &$db, &$res ) {
+	function preprocessResults( $db, $res ) {
 		# There's no point doing a batch check if we aren't caching results;
 		# the page must exist for it to have been pulled out of the table
 		if( $this->isCached() ) {
