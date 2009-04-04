@@ -34,7 +34,6 @@ class CategoryPage extends Article {
 
 		if ( NS_CATEGORY == $this->mTitle->getNamespace() ) {
 			$this->closeShowCategory();
-			wfRunHooks('AfterCategoryPageView', array(&$this));
 		}
 	}
 	
