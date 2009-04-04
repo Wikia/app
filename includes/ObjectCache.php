@@ -38,7 +38,6 @@ $wgCaches = array();
  */
 function &wfGetCache( $inputType ) {
 	global $wgCaches, $wgMemCachedServers, $wgMemCachedDebug, $wgMemCachedPersistent;
-    global $wgMemCachedPoolServers, $wgMemCachedClass; #--- wikia memcache class
 	$cache = false;
 
 	if ( $inputType == CACHE_ANYTHING ) {
