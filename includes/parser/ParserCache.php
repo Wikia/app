@@ -98,7 +98,7 @@ class ParserCache {
 			// Save the timestamp so that we don't have to load the revision row on view
 			$parserOutput->mTimestamp = $article->getTimestamp();
 
-			$parserOutput->mText .= "\n<!-- Saved in parser cache with key $key and timestamp $now -->";
+			$parserOutput->mText .= "\n<!-- Saved in parser cache with key $key and timestamp $now -->\n";
 			wfDebug( "Saved in parser cache with key $key and timestamp $now\n" );
 
 			if( $parserOutput->containsOldMagic() ){
