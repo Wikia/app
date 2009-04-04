@@ -422,7 +422,7 @@ class Parser
 				"Template argument size: {$this->mIncludeSizes['arg']}/$max bytes\n".
 				$PFreport;
 			wfRunHooks( 'ParserLimitReport', array( $this, &$limitReport ) );
-			$text .= "<!-- \n$limitReport-->\n";
+			$text .= "\n<!-- \n$limitReport-->\n";
 		}
 		$this->mOutput->setText( $text );
 		$this->mRevisionId = $oldRevisionId;
