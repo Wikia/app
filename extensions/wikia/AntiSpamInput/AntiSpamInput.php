@@ -20,36 +20,35 @@ if (!defined('MEDIAWIKI')) {
         exit(1);
 }
 
-global $wgHooks;
-# vanilla EditPage
-$wgHooks['EditPage::showEditForm:initial'][] = 'wfAntiSpamInputBoxInclusion' ;
-$wgHooks['EditPage::attemptSave'][] = 'wfAntiSpamInputCheck' ;
-
-# Special:RequestWiki
-$wgHooks['RequestWiki::showRequestForm:presubmit'][] = 'wfAntiSpamInputBoxInclusion' ;
-$wgHooks['RequestWiki::processErrors'][] = 'wfAntiSpamInputCheck' ;
-
-# Special:CreatePage
-$wgHooks['CreatePageMultiEditor::GenerateForm:presubmit'][] = 'wfAntiSpamInputBoxInclusion' ;
-# wfAntiSpamInputCheck for CreatePage is handled by EditPage::attemptSave hook above
-
 $wgExtensionFunctions[] = 'wfAntiSpamInputInit';
 $wgExtensionCredits['other'][] = array(
     'name' => 'AntiSpamInput' ,
     'author' => "[http://www.wikia.com/wiki/User:TOR Łukasz 'TOR' Garczewski]",
-    'version' => 0.3 ,
+    'version' => 0.4 ,
     'description' => 'Simple spambot blocking mechanism.'
-);
-function wfAntiSpamInputInit () {
-	global $wgMessageCache;
 
+);
+
+function wfAntiSpamInputInit () {
+	global $wgHooks;
+	# vanilla EditPage
+	$wgHooks['EditPage::showEditForm:initial'][] = 'wfAntiSpamInputBoxInclusion' ;
+	$wgHooks['EditPage::attemptSave'][] = 'wfAntiSpamInputCheck' ;
+
+	# Special:RequestWiki
+	$wgHooks['RequestWiki::showRequestForm:presubmit'][] = 'wfAntiSpamInputBoxInclusion' ;
+	$wgHooks['RequestWiki::processErrors'][] = 'wfAntiSpamInputCheck' ;
+
+	# Special:CreatePage
+	$wgHooks['CreatePageMultiEditor::GenerateForm:presubmit'][] = 'wfAntiSpamInputBoxInclusion' ;
+	# wfAntiSpamInputCheck for CreatePage is handled by EditPage::attemptSave hook above
+}
+
+function wfAntiSpamInputBoxInclusion ( $form = false ) {
+	global $wgMessageCache;
 	$wgMessageCache->addMessages( array(
 		'antispam_label' => 'This field is a spam trap. <strong>DO NOT</strong> fill it in!'
 	));
-}
-
-
-function wfAntiSpamInputBoxInclusion ( $form = false ) {
 
 	$input = "\n<div id='antispam_container' style='display: none'>\n".
                  "<label for='antispam'>". wfMsg('antispam_label'). "</label>\n".
