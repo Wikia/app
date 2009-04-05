@@ -630,6 +630,8 @@ function getMenu() {
 	}
 
 	if(!empty($content)) {
+		header("Content-Type: text/javascript");
+		header("Content-Length: " . strlen($content) );
 		header("Cache-Control: s-maxage={$duration}, must-revalidate, max-age=0");
 		header("X-Pass-Cache-Control: max-age={$duration}");
 		echo $content;
