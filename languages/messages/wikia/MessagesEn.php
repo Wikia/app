@@ -208,7 +208,7 @@ ___________________________________________________________________________
 'enotif_summary' => 'The summary of the edit is: ',
 'enotif_no_summary' => 'No edit summary was given',
 'imagereverted' => 'Revert to earlier version was successful. <strong>This change may take up to 2 minutes to be visible.</strong>',
-'pagetitle'		=> '$1 - {{SITENAME}} - a Wikia wiki',
+'pagetitle'		=> '#wikiapagetitle#',
 'passwordremindertitle' => 'Password reminder from Wikia',
 'passwordremindertext' => 'Hi,
 The login password for user "$2" is now "$3".
