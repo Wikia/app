@@ -52,27 +52,23 @@ function WidgetCommunity($id, $params) {
 		}
 	}
 
-	global $wgContentNamespaces;
 	// recently edited
-	$aResult = WidgetFrameworkCallAPI(array(
-		"action" => "query",
-		"list" => "recentchanges",
-		"rclimit" => 2,
-		"rctype" => "edit|new",
-		"rcshow" => "!anon|!bot",
-		"rcnamespace" => "0|1|2|3|6|7" . '|' . implode('|', $wgContentNamespaces),
-		"rcprop" => "title|timestamp|user"));
-
-	if(!empty($aResult['query']['recentchanges'])) {
-		$recentlyEdited = $aResult['query']['recentchanges'];
-	} else {
-		$recentlyEdited = array();
-	}
-
+	$recentlyEdited = array();
 	global $wgHideRCinCommunityWidget;
-	if ($wgHideRCinCommunityWidget) {
-		$recentlyEdited = array();
+	if ( !empty( $wgHideRCinCommunityWidget ) ) {
+		global $wgContentNamespaces;
+		$aResult = WidgetFrameworkCallAPI(array(
+			"action" => "query",
+			"list" => "recentchanges",
+			"rclimit" => 2,
+			"rctype" => "edit|new",
+			"rcshow" => "!anon|!bot",
+			"rcnamespace" => "0|1|2|3|6|7" . '|' . implode('|', $wgContentNamespaces),
+			"rcprop" => "title|timestamp|user"));
+
+		$recentlyEdited = $aResult['query']['recentchanges'];
 	}
+
 
 	// template stuff
 	$tmpl = new EasyTemplate(dirname( __FILE__ ));
