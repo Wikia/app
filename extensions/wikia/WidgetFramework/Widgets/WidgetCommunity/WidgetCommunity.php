@@ -55,7 +55,7 @@ function WidgetCommunity($id, $params) {
 	// recently edited
 	$recentlyEdited = array();
 	global $wgHideRCinCommunityWidget;
-	if ( !empty( $wgHideRCinCommunityWidget ) ) {
+	if ( empty( $wgHideRCinCommunityWidget ) ) {
 		global $wgContentNamespaces;
 		$aResult = WidgetFrameworkCallAPI(array(
 			"action" => "query",
