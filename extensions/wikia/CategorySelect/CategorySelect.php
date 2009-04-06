@@ -85,7 +85,7 @@ function CategorySelectInitializeHooks($title, $article) {
 	}
 
 	// Initialize only for namespace: main, image, user (same as for Wysiwyg)
-	if(!in_array($title->mNamespace, array(NS_MAIN, NS_IMAGE, NS_USER))) {
+	if(!in_array($title->mNamespace, array(NS_MAIN, NS_IMAGE, NS_USER, NS_CATEGORY, NS_VIDEO))) {
 		return true;
 	}
 
