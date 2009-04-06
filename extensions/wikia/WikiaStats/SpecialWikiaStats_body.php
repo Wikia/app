@@ -202,7 +202,7 @@ class WikiaStatsClass extends SpecialPage
         global $wgMemc, $wgLang;
 		global $wgStatsExcludedNonSpecialGroup;
 
-		list ($fromY, $fromM, $toY, $toM) = array();
+		$fromY = $fromM = $toY = $toM = "";
 		$m = array();
 		if (preg_match("/^([0-9]{4})([0-9]{1,2})/", $this->fromDate, $m)) {
 			list (, $fromY, $fromM) = $m; 

@@ -918,6 +918,10 @@ class WikiaGenericStats {
 					$result['namespaces'][$nspace] += intval($row->cnt);
 				} 
 
+				if (empty($result['months'])) {
+					$result['months'] = array();
+				}
+
 				$prevValues = array();
 				if (!empty($result) && is_array($result['months'])) {
 					foreach ($result['months'] as $date => $rowNspace) {
@@ -983,6 +987,13 @@ class WikiaGenericStats {
 			}
 		}
 
+		if ( empty($result) ) {
+			$result = array(
+				'months' => '',
+				'trends' => '',
+				'namespaces' => ''
+			);
+		}
 		wfProfileOut( __METHOD__ );
 		#---
 		return $result;
