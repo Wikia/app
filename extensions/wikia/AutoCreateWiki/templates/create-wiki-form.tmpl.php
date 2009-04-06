@@ -37,8 +37,8 @@ var msgError = "<?=addslashes(wfMsg('autocreatewiki-invalid-wikiname'))?>";
 			<li class="label"><label class="required" id="wiki-category-label"><?=wfMsg('nstab-category')?>:</label></li>
 			<li class="data1"><select name="wiki-category" id="wiki-category"><option value=""><?=wfMsg('autocreatewiki-category-select')?></option>
 <?php if (!empty($aCategories) && is_array($aCategories)) :  ?>
-<?php 
-	foreach ($aCategories as $iCat => $sCatName) : 
+<?php
+	foreach ($aCategories as $iCat => $sCatName) :
 	if ($sCatName == 'Wikia') continue;
 	$selected = "";
 	if ( isset($params['wiki-category']) && ($params['wiki-category'] == $iCat) ) {
@@ -47,8 +47,8 @@ var msgError = "<?=addslashes(wfMsg('autocreatewiki-invalid-wikiname'))?>";
 ?>
 
 				<option value="<?=$iCat?>" <?=$selected?>><?=$sCatName?></option>
-<?php 
-	endforeach 
+<?php
+	endforeach
 ?>
 <?php endif ?>
 				</select>
@@ -62,17 +62,17 @@ var msgError = "<?=addslashes(wfMsg('autocreatewiki-invalid-wikiname'))?>";
 			<li class="label"><label class="required" id="wiki-language-label"><?=wfMsg('yourlanguage')?></label></li>
 			<li class="data1">
 				<select name="wiki-language" id="wiki-language">
-<?php 
-	$isSelected = false; 
-	if (!empty($aTopLanguages) && is_array($aTopLanguages)) : 
+<?php
+	$isSelected = false;
+	if (!empty($aTopLanguages) && is_array($aTopLanguages)) :
 ?>
 				<optgroup label="<?= wfMsg('autocreatewiki-language-top', count($aTopLanguages)) ?>">
-<?php foreach ($aTopLanguages as $sLang) : 
-		$selected = ''; 
+<?php foreach ($aTopLanguages as $sLang) :
+		$selected = '';
 		if ( empty($isSelected) && ( ( isset( $params['wiki-language'] ) && ($sLang == $params['wiki-language']) ) || ( !isset($params['wiki-language']) && ( $sLang == 'en' ) ) ) ) :
 			$isSelected = true;
 			$selected = ' selected="selected"';
-		endif; 
+		endif;
 ?>
 				<option value="<?=$sLang?>" <?=$selected?>><?=$aLanguages[$sLang]?></option>
 <?php endforeach ?>
@@ -80,12 +80,12 @@ var msgError = "<?=addslashes(wfMsg('autocreatewiki-invalid-wikiname'))?>";
 <?php endif ?>
 				<optgroup label="<?= wfMsg('autocreatewiki-language-all') ?>">
 <?php if (!empty($aLanguages) && is_array($aLanguages)) : ?>
-<?php 
+<?php
 	foreach ($aLanguages as $sLang => $sLangName) :
 		if ( empty($isSelected) && ( ( isset($params['wiki-language'] ) && ( $sLang == $params['wiki-language'] ) ) || ( !isset($params['wiki-language']) && ( $sLang == 'en' ) ) ) ) :
 			$isSelected = true;
 			$selected = ' selected="selected"';
-		endif; 
+		endif;
 ?>
 				<option value="<?=$sLang?>" <?=$selected?>><?=$sLangName?></option>
 <?php endforeach ?>
@@ -99,7 +99,7 @@ var msgError = "<?=addslashes(wfMsg('autocreatewiki-invalid-wikiname'))?>";
 	</div>
 <?php if ($wgUser->isAnon()) : ?>
 	<br />
-<!-- Create an account -->	
+<!-- Create an account -->
 	<h1><?=wfMsg('nologinlink')?></h1>
 	<div class="formblock" style="padding:2px;">
 		<ul>
@@ -134,7 +134,7 @@ var msgError = "<?=addslashes(wfMsg('autocreatewiki-invalid-wikiname'))?>";
 			<li class="label"><label class="required" id="wiki-password-label"><?=wfMsg('yourpassword')?></label></li>
 			<li class="data1">
 				<input type="password" name="wiki-password" id="wiki-password" /> <span class="error-status" id="wiki-password-error-status">&nbsp;</span>
-				<div class="error" style="display: none;" id="wiki-password-error"></div>				
+				<div class="error" style="display: none;" id="wiki-password-error"></div>
 			</li>
 		</ul>
 	</div>
@@ -143,7 +143,7 @@ var msgError = "<?=addslashes(wfMsg('autocreatewiki-invalid-wikiname'))?>";
 			<li class="label"><label class="required" id="wiki-retype-password-label"><?=wfMsg('yourpasswordagain')?></label></li>
 			<li class="data1">
 				<input type="password" id="wiki-retype-password" name="wiki-retype-password" /> <span class="error-status" id="wiki-retype-password-error-status">&nbsp;</span>
-				<div class="error" style="display: none;" id="wiki-retype-password-error"></div>				
+				<div class="error" style="display: none;" id="wiki-retype-password-error"></div>
 			</li>
 		</ul>
 	</div>
@@ -199,8 +199,8 @@ var msgError = "<?=addslashes(wfMsg('autocreatewiki-invalid-wikiname'))?>";
 	</div>
 <?php endif ?>
 	<div class="toolbar color1 clearfix">
-		<input type="submit" value="Create Wiki" name="wiki-submit" id="wiki-submit" />
-		<input type="reset" value="Cancel" name="wiki-cancel" id="wiki-cancel" />
+		<input type="submit" value="<?php echo wfMsg( "autocreatewiki") ?>" name="wiki-submit" id="wiki-submit" />
+		<input type="reset" value="<?php echo wfMsg( "cancel" ) ?>" name="wiki-cancel" id="wiki-cancel" />
 	</div>
 </div>
 </form>
@@ -213,7 +213,7 @@ var YE = YAHOO.util.Event;
 <?php if ( !empty($mPostedErrors) && is_array($mPostedErrors) ) : ?>
 <?php 	foreach ( $mPostedErrors as $field => $value ) : ?>
 <?php 		if ( !empty($value) ) : ?>
-if ( YD.get('<?=$field?>') ) { 
+if ( YD.get('<?=$field?>') ) {
 	YD.addClass('<?=$field?>', 'error');
 	if ( YD.get('<?=$field?>-error') ) {
 		YD.setStyle('<?=$field?>-error', 'display', 'block');
@@ -222,11 +222,11 @@ if ( YD.get('<?=$field?>') ) {
 	if ( YD.get('<?=$field?>-label') ) YD.addClass('<?=$field?>-label', 'error');
 <?
 	if ($field == 'wiki-blurry-word') {
-?>		
+?>
 		if ( YD.get('wpCaptchaWord') ) YD.addClass('wpCaptchaWord', 'error');
-<?		
+<?
 	}
-?>	
+?>
 }
 <?php		endif ?>
 <?php 	endforeach ?>
@@ -240,7 +240,7 @@ YE.onDOMReady(function () {
 	if (YD.get('userloginRound')) {
 		__showLoginPanel = function(e) {
 			var ifr = YD.get('awc-process-login');
-			var titleUrl = '<?=$mTitle->getLocalURL()."/Caching"?>'; 
+			var titleUrl = '<?=$mTitle->getLocalURL()."/Caching"?>';
 			var wikiName = YD.get('wiki-name');
 			var wikiDomain = YD.get('wiki-domain');
 			var wikiCategory = YD.get('wiki-category');
@@ -253,7 +253,7 @@ YE.onDOMReady(function () {
 			YAHOO.wikia.AjaxLogin.showLoginPanel(e);
 			return false;
 		}
-		
+
 		YE.addListener('AWClogin', 'click', __showLoginPanel);
 		YE.addListener('login', 'click', __showLoginPanel);
 	}
