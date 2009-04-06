@@ -232,15 +232,16 @@ class WikiaMiniUpload {
 	function insertImage() {
 		global $wgRequest, $wgUser, $wgContLang, $IP;
 		$type = $wgRequest->getVal('type');
-		$name = urldecode( $wgRequest->getVal('name') );
+		$name = $wgRequest->getVal('name');
 		$mwname = $wgRequest->getVal('mwname');
 		$extraId = $wgRequest->getVal('extraId');
 		$newFile =  true;
 
 		if($name !== NULL) {
+			$name = urldecode( $name );	
 			if($name == '') {
 				header('X-screen-type: error');
-				return 'You need to specify file name first!';
+				return WfMsg( 'wmu-warn3' );
 			} else {
 				$name = preg_replace("/[^".Title::legalChars()."]|:/", '-', $name);
 				// did they give no extension at all when they changed the name?
