@@ -30,7 +30,7 @@ class InviteEmail extends UnlistedSpecialPage {
 	
 	function execute(){
 		global $wgUser, $wgOut, $wgRequest;
-		global $wgEmailFrom, $wgSitename;
+		global $wgEmailFrom, $wgSitename, $wgStyleVersion;
 
 		# Check blocks
 		if( $wgUser->isBlocked() ) {
@@ -174,7 +174,8 @@ class InviteEmail extends UnlistedSpecialPage {
 		$this->page =  $wgRequest->getVal('page');
 		
 		$email = $this->getInviteEmailContent($this->email_type);
-		
+		$skip = "";
+				
 		$out = "";
 		/*
 		$out .= "<div class=\"invite-links\">
