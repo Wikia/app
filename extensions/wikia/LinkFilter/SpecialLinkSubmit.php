@@ -22,11 +22,6 @@ class LinkSubmit extends UnlistedSpecialPage {
 			return false;
 		}
 		
-		if( in_array( "no_link_submit", $wgUser->getGroups() ) ) {
-			$wgOut->errorpage( 'error', 'badaccess' );
-			return true;
-		}
-		
 		if ( $wgUser->isAnon() ) {
 			$login = Title::makeTitle(NS_SPECIAL, "Login");
 			$wgOut->errorpage( 'linkfilter-login-title', 'linkfilter-login-text' );

@@ -40,12 +40,11 @@ $wgLinkPageDisplay['games'] = true;
 $wgLinkPageDisplay['new_links'] = false;
 
 $wgGroupPermissions['linkadmin']["read"]  = true;
-$wgGroupPermissions['no_link_submit']["read"]  = true;
 
 $wgAvailableRights[] = 'linkadmin';
 $wgGroupPermissions['staff']['linkadmin'] = true;
 $wgGroupPermissions['sysop']['linkadmin'] = true;
-$wgGroupPermissions['janitor']['linkadmin'] = true;
+$wgGroupPermissions['helper']['linkadmin'] = true;
 
 $wgHooks['TitleMoveComplete'][] = 'fnUpdateLinkFilter';
 function fnUpdateLinkFilter(&$title, &$newtitle, &$user, $oldid, $newid) {
