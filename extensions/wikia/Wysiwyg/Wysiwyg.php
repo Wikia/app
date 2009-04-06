@@ -134,7 +134,7 @@ function Wysiwyg_Initial($form) {
 	}
 
 	// do not initialize for articles in namespaces different then main, image or user
-	if(!in_array($form->mTitle->mNamespace, array(NS_MAIN, NS_IMAGE, NS_USER))) {
+	if(!in_array($form->mTitle->mNamespace, array(NS_MAIN, NS_IMAGE, NS_USER, NS_CATEGORY, NS_VIDEO))) {
 		return true;
 	}
 
