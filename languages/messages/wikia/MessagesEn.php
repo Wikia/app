@@ -271,6 +271,14 @@ Your account has been created. Don't forget to change your {{SITENAME}} [[Specia
 'ajaxLogin1' => 'To complete your log in, you must enter a new password.  This will take you away from this edit page and you may lose your current edit.',
 'ajaxLogin2' => 'Are you sure? You may lose your edits if you leave this page now.',
 
+# Registration page
+'prefs-help-realname' => 'Optional',
+'prefs-help-email' => 'We loathe spam even more than you do. We will NOT sell your email address.',
+'prefs-help-terms' => 'By clicking the button above, you agree to the [[w:Terms of Use| Wikia\'s Terms of Use]]',
+'prefs-help-birthday' => 'Why do I need to provide this?',
+'prefs-help-birthmesg' => 'Why do I need to provide my birthday?',
+'prefs-help-birthinfo' => 'Wikia requires all users to provide their real date of birth as both a safety precaution and as a means of preserving the integrity of the site while complying with federal regulations.',
+
 # MiniUpload
 'mu_login' => 'You must be logged in to upload files.',
 
