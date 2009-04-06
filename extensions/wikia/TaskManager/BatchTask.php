@@ -285,170 +285,172 @@ abstract class BatchTask {
 		$this->log( $line, $timestamp = null );
 	}
 
-    /**
-     * log
-     *
-     * add log line to database with timestamp if task identifier is set
-     *
-     * @author eloy@wikia-inc.com
-     * @access public
-     *
-     * @param string $line  - line with information
-     * @param string $timestamp default null - timestamp to set in MW oformat
-     */
-    public function log( $line, $timestamp = null ) {
-        if( empty( $this->mTaskID ) ) {
+	/**
+	 * log
+	 *
+	 * add log line to database with timestamp if task identifier is set
+	 *
+	 * @author eloy@wikia-inc.com
+	 * @access public
+	 *
+	 * @param string $line  - line with information
+	 * @param string $timestamp default null - timestamp to set in MW oformat
+	 */
+	public function log( $line, $timestamp = null ) {
+		if( empty( $this->mTaskID ) ) {
 			/**
 			 * task id not defined
 			 */
-            return false;
-        }
-        wfProfileIn( __METHOD__ );
-        $sTimestamp = is_null($timestamp) ? wfTimestampNow() : $timestamp;
-        $dbw = wfGetDB( DB_MASTER );
-        $dbw->insert(
-            wfSharedTable( "wikia_tasks_log" ),
-            array(
-              "task_id"         => $this->mTaskID,
-              "log_timestamp"   => $sTimestamp,
-              "log_line"        => $line
-            ),
-            __METHOD__
-        );
-        if ( !empty( $this->mDebug )) {
-            echo "{$sTimestamp}: {$line}\n";
-        }
-        wfProfileOut( __METHOD__ );
-    }
+			return false;
+		}
+		wfProfileIn( __METHOD__ );
+		$sTimestamp = is_null($timestamp) ? wfTimestampNow() : $timestamp;
+		$dbw = wfGetDB( DB_MASTER );
+		$dbw->insert(
+			wfSharedTable( "wikia_tasks_log" ),
+			array(
+			  "task_id"         => $this->mTaskID,
+			  "log_timestamp"   => $sTimestamp,
+			  "log_line"        => $line
+			),
+			__METHOD__
+		);
+		if ( !empty( $this->mDebug )) {
+			echo "{$sTimestamp}: {$line}\n";
+		}
+		wfProfileOut( __METHOD__ );
+	}
 
-    /**
-     * getLog
-     *
-     * get log for task stored in database
-     *
-     * @author eloy@wikia
-     * @access public
-     *
-     * @param boolean $wantarray default false Format of log
-     *
-     * @return string or mixed or null
-     */
-    public function getLog( $wantarray = false )
-    {
-        if (is_null($this->mTaskID)) {
-            return false; #--- task id not defined
-        }
-        wfProfileIn( __METHOD__ );
-        $dbr = wfGetDB( DB_MASTER );
-        $oRes = $dbr->select(
-            wfSharedTable( "wikia_tasks_log" ),
-            array( "*" ),
-            array( "task_id" => $this->mTaskID ),
-            __METHOD__,
-            array( "ORDER BY" => "log_timestamp" )
-        );
-        if (empty( $wantarray )) {
-            $mRetval = "";
-        }
-        else {
-            $mRetval = array();
-        }
-        while ( $oRow = $dbr->fetchObject( $oRes ) ) {
-            if (empty( $wantarray )) {
-                $mRetval = sprintf(
-                    "%s id=%s log=%s\n",
-                    wfTimestamp( TS_EXIF, $oRow->log_timestamp ),
-                    $oRow->task_id,
-                    $oRow->log_line
-                );
-            }
-            else {
-                $mRetval[] = $oRow;
-            }
-        }
-        $dbr->freeResult( $oRes );
-        wfProfileOut( __METHOD__ );
+	/**
+	 * getLog
+	 *
+	 * get log for task stored in database
+	 *
+	 * @author eloy@wikia
+	 * @access public
+	 *
+	 * @param boolean $wantarray default false Format of log
+	 *
+	 * @return string or mixed or null
+	 */
+	public function getLog( $wantarray = false ) {
+		if (is_null($this->mTaskID)) {
+			/**
+			 * task id not defined
+			 */
+			return false;
+		}
+		wfProfileIn( __METHOD__ );
+		$dbr = wfGetDB( DB_MASTER );
+		$oRes = $dbr->select(
+			wfSharedTable( "wikia_tasks_log" ),
+			array( "*" ),
+			array( "task_id" => $this->mTaskID ),
+			__METHOD__,
+			array( "ORDER BY" => "log_timestamp" )
+		);
+		if (empty( $wantarray )) {
+			$mRetval = "";
+		}
+		else {
+			$mRetval = array();
+		}
+		while ( $oRow = $dbr->fetchObject( $oRes ) ) {
+			if (empty( $wantarray )) {
+				$mRetval = sprintf(
+					"%s id=%s log=%s\n",
+					wfTimestamp( TS_EXIF, $oRow->log_timestamp ),
+					$oRow->task_id,
+					$oRow->log_line
+				);
+			}
+			else {
+				$mRetval[] = $oRow;
+			}
+		}
+		$dbr->freeResult( $oRes );
+		wfProfileOut( __METHOD__ );
 
-        return $mRetval;
-    }
+		return $mRetval;
+	}
 
-    /**
-     * createTask
-     *
-     * add task to database, usually run by submitForm
-     *
-     * @access public
-     * @author eloy@wikia
-     *
-     * @param mixed $params: array with task arguments
-     * @param integer $status default TASK_WAITING: initial status of task
-     *
-     * @return integer: id of added task or null
-     */
-    public function createTask( $params, $status = TASK_WAITING ) {
-        global $wgUser;
+	/**
+	 * createTask
+	 *
+	 * add task to database, usually run by submitForm
+	 *
+	 * @access public
+	 * @author eloy@wikia
+	 *
+	 * @param mixed $params: array with task arguments
+	 * @param integer $status default TASK_WAITING: initial status of task
+	 *
+	 * @return integer: id of added task or null
+	 */
+	public function createTask( $params, $status = TASK_WAITING ) {
+		global $wgUser;
 
-        wfProfileIn( __METHOD__ );
-        $dbw = wfGetDB( DB_MASTER );
-        $dbw->insert(
-            wfSharedTable( "wikia_tasks" ),
-            array(
-               "task_user_id" => $wgUser->getID(),
-               "task_type" => $this->getType(),
-               "task_priority" => 1,
-               "task_status" => $status,
-               "task_added" => wfTimestampNow(),
-               "task_started" => "",
-               "task_finished" => "",
-               "task_arguments" => serialize( $params )
-            ),
-            __METHOD__
-        );
-        wfProfileOut( __METHOD__ );
+		wfProfileIn( __METHOD__ );
+		$dbw = wfGetDB( DB_MASTER );
+		$dbw->insert(
+			wfSharedTable( "wikia_tasks" ),
+			array(
+			   "task_user_id" => $wgUser->getID(),
+			   "task_type" => $this->getType(),
+			   "task_priority" => 1,
+			   "task_status" => $status,
+			   "task_added" => wfTimestampNow(),
+			   "task_started" => "",
+			   "task_finished" => "",
+			   "task_arguments" => serialize( $params )
+			),
+			__METHOD__
+		);
+		wfProfileOut( __METHOD__ );
 
-        $this->mTaskID = $dbw->insertId();
-        return $this->mTaskID;
-    }
+		$this->mTaskID = $dbw->insertId();
+		return $this->mTaskID;
+	}
 
 
-    /**
-     * closeTask
-     *
-     * mark task as finished, no matter in which state it is
-     *
-     * @access public
-     * @author eloy@wikia
-     *
-     * @param integer $success default true: set to false if you want to close
-     *      with failure status
-     *
-     * @return void
-     */
-    public function closeTask( $success = true ) {
-        if (is_null($this->mTaskID)) {
-            return false; #--- task id not defined
-        }
-        wfProfileIn( __METHOD__ );
+	/**
+	 * closeTask
+	 *
+	 * mark task as finished, no matter in which state it is
+	 *
+	 * @access public
+	 * @author eloy@wikia
+	 *
+	 * @param integer $success default true: set to false if you want to close
+	 *      with failure status
+	 *
+	 * @return void
+	 */
+	public function closeTask( $success = true ) {
+		if (is_null($this->mTaskID)) {
+			return false; #--- task id not defined
+		}
+		wfProfileIn( __METHOD__ );
 
-        $status = ( $success === true )
-            ? TASK_FINISHED_SUCCESS
-            : TASK_FINISHED_ERROR;
+		$status = ( $success === true )
+			? TASK_FINISHED_SUCCESS
+			: TASK_FINISHED_ERROR;
 
-        $dbw = wfGetDB( DB_MASTER );
-        $dbw->update(
-            wfSharedTable( "wikia_tasks" ),
-            array(
-               "task_status" => $status,
-               "task_finished" => wfTimestampNow(),
-            ),
-            array(
-                "task_id" => $this->mTaskID
-            ),
-            __METHOD__
-        );
+		$dbw = wfGetDB( DB_MASTER );
+		$dbw->update(
+			wfSharedTable( "wikia_tasks" ),
+			array(
+			   "task_status" => $status,
+			   "task_finished" => wfTimestampNow(),
+			),
+			array(
+				"task_id" => $this->mTaskID
+			),
+			__METHOD__
+		);
 
-        wfProfileOut( __METHOD__ );
-    }
+		wfProfileOut( __METHOD__ );
+	}
 
     /**
      * TaskDirectory
