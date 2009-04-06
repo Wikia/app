@@ -681,17 +681,27 @@ class WikiFactory {
 	 * @autor eloy@wikia
 	 * @static
 	 *
-	 * @param $domain string - domain name
+	 * @param string  $domain	domain name
+	 * @param integer $city_id	wiki identifier in city_list table
 	 *
 	 * @return string with normalized domain
 	 */
-	public static function getDomainHash( $domain ) {
-		$domain = strtolower( $domain );
-		if (substr($domain, 0, 4) === "www." ) {
-			#--- cut off www. part
-			$domain = substr($domain, 4, strlen($domain) - 4 );
+	public static function getDomainHash( $domain, $city_id = false ) {
+		if( empty( $domain ) && $city_id ) {
+			/**
+			 * we have city_id and $domain is not defined
+			 */
+			$domain = $city_id;
 		}
-
+		else {
+			$domain = strtolower( $domain );
+			if (substr($domain, 0, 4) === "www." ) {
+				/**
+				 * cut off www. part
+				 */
+				$domain = substr($domain, 4, strlen($domain) - 4 );
+			}
+		}
 		return $domain;
 	}
 
@@ -813,12 +823,13 @@ class WikiFactory {
 	 * @access public
 	 * @static
 	 *
-	 * @param string $domain: wiki domain
+	 * @param string  $domain	wiki domain
+	 * @param integer $city_id	wiki identifier in city_list table
 	 *
 	 * @return boolean status
 	 */
-	static public function getDomainKey( $domain ) {
-		$key = self::getDomainHash( $domain );
+	static public function getDomainKey( $domain, $city_id = false ) {
+		$key = self::getDomainHash( $domain, $city_id );
 		if (strpos($domain, ' ') !== false)  {
 			$backtrace = debug_backtrace();
 			error_log ( "getDomainKey backtrace: " . print_r($backtrace, true) );

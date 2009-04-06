@@ -275,21 +275,34 @@ abstract class BatchTask {
         return self::TaskDirectory( $this->getType(), $this->getID() );
     }
 
+
     /**
      * addLog
+     * @deprecated
+     * @see log
+     */
+	public function addLog( $line, $timestamp = null ) {
+		wfDeprecated(   );
+		$this->log( $line, $timestamp = null );
+	}
+
+    /**
+     * log
      *
      * add log line to database with timestamp if task identifier is set
      *
-     * @author eloy@wikia
+     * @author eloy@wikia-inc.com
      * @access public
      *
      * @param string $line  - line with information
      * @param string $timestamp default null - timestamp to set in MW oformat
      */
-    public function addLog( $line, $timestamp = null )
-    {
-        if (is_null($this->mTaskID)) {
-            return false; #--- task id not defined
+    public function log( $line, $timestamp = null ) {
+        if( empty( $this->mTaskID ) ) {
+			/**
+			 * task id not defined
+			 */
+            return false;
         }
         wfProfileIn( __METHOD__ );
         $sTimestamp = is_null($timestamp) ? wfTimestampNow() : $timestamp;
