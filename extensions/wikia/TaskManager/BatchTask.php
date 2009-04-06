@@ -260,29 +260,28 @@ abstract class BatchTask {
         $this->mTaskID = $id;
     }
 
-    /**
-     * getTaskDirectory
-     *
-     * directory for task combined from id and type, create if no exists
-     *
-     * @access public
-     * @author eloy@wikia
-     *
-     * @return string: path to directory
-     */
-    public function getTaskDirectory()
-    {
-        return self::TaskDirectory( $this->getType(), $this->getID() );
-    }
+	/**
+	 * getTaskDirectory
+	 *
+	 * directory for task combined from id and type, create if no exists
+	 *
+	 * @access public
+	 * @author eloy@wikia
+	 *
+	 * @return string: path to directory
+	 */
+	public function getTaskDirectory() {
+		return self::TaskDirectory( $this->getType(), $this->getID() );
+	}
 
 
-    /**
-     * addLog
-     * @deprecated
-     * @see log
-     */
+	/**
+	 * addLog
+	 * @deprecated
+	 * @see log
+	 */
 	public function addLog( $line, $timestamp = null ) {
-		wfDeprecated(   );
+		wfDeprecated( __METHOD__ );
 		$this->log( $line, $timestamp = null );
 	}
 
