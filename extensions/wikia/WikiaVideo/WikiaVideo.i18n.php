@@ -3,6 +3,7 @@ $messages = array();
 
 $messages['en'] = array(
 	'wikiavideo-reverted' => 'The video $1 was successfully reverted. Go back to $2.',
+	'wikiavideo-unreverted' => 'You do not have permission to revert $1.',
 	'wikiavideo-added' => 'added video $1',
 	'wikiavideo-back' => 'back',
 	'wikiavideo-create' => 'Add Video',
