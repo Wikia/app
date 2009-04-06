@@ -227,8 +227,14 @@ class Our404HandlerPage extends UnlistedSpecialPage {
 		 * check, maybe we have article with that title, if yes 301redirect to
 		 * this article
 		 */
-		$uri = $_SERVER['REQUEST_URI'];
-		$title = $wgContLang->ucfirst( trim( str_replace( '/', ' ', $_SERVER['REQUEST_URI'] ) ) );
+		if( $uri === null ) {
+			$uri = $_SERVER['REQUEST_URI'];
+			if ( !preg_match( '!^https?://!', $uri ) ) {
+				$uri = 'http://unused' . $uri;
+			}
+			$uri = substr( parse_url( $uri, PHP_URL_PATH ), 1 );
+		}
+		$title = $wgContLang->ucfirst( $uri );
 		$namespace = NS_MAIN;
 
 		/**

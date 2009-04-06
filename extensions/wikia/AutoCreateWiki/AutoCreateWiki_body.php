@@ -47,10 +47,7 @@ class AutoCreateWikiPage extends SpecialPage {
     const SESSION_TIME = 60;
     const DAILY_LIMIT = 200;
     const DAILY_USER_LIMIT = 10;
-    const TEMPLATE_LIST_WIKIA = "Template:List_of_Wikia_New";
-    const ARTICLE_NEW_WIKIS = "New_wikis_this_week/Draft";
     const DEFAULT_STAFF = "Angela";
-    const SEND_WELCOME_MAIL = 1;
     const CACHE_LOGIN_KEY = 'awc_beforelog';
 
 	/**
@@ -122,7 +119,7 @@ class AutoCreateWikiPage extends SpecialPage {
 
 		$this->mNbrCreated = $this->countCreatedWikis();
 
-		if ( $this->mNbrCreated >= self::DAILY_LIMIT ) {
+		if ( !in_array('staff', $wgUser->getGroups()) && ($this->mNbrCreated >= self::DAILY_LIMIT) ) {
 			$wgOut->addHTML(wfMsg('autocreatewiki-limit-day'), $this->mNbrCreated);
 			return;
 		}
@@ -143,7 +140,7 @@ class AutoCreateWikiPage extends SpecialPage {
 			}
 			if ( isset( $_SESSION['mAllowToCreate'] ) && ( $_SESSION['mAllowToCreate'] >= wfTimestamp() ) ) {
 				$this->mNbrUserCreated = $this->countCreatedWikisByUser();
-				if ( $this->mNbrUserCreated >= self::DAILY_USER_LIMIT ) {
+				if ( !in_array('staff', $wgUser->getGroups()) && ($this->mNbrUserCreated >= self::DAILY_USER_LIMIT) ) {
 					$wgOut->addHTML(wfMsg('autocreatewiki-limit-creation'), $this->mNbrUserCreated);
 					return;
 				}
@@ -168,7 +165,7 @@ class AutoCreateWikiPage extends SpecialPage {
 			if ( isset( $_SESSION['mAllowToCreate'] ) && ( $_SESSION['mAllowToCreate'] >= wfTimestamp() ) ) {
 				#--- Limit of user creation
 				$this->mNbrUserCreated = $this->countCreatedWikisByUser();
-				if ( $this->mNbrUserCreated >= self::DAILY_USER_LIMIT ) {
+				if ( !in_array('staff', $wgUser->getGroups()) && ($this->mNbrUserCreated >= self::DAILY_USER_LIMIT) ) {
 					$wgOut->addHTML(wfMsg('autocreatewiki-limit-creation'), $this->mNbrUserCreated);
 					return;
 				}
@@ -321,6 +318,8 @@ class AutoCreateWikiPage extends SpecialPage {
 		 * get Wiki ID
 		 */
 		$this->mWikiId = $dbw->insertId();
+		$this->mWikiData[ "city_id" ] = $this->mWikiId;
+
 		if ( empty($this->mWikiId) ) {
 			$this->setInfoLog( 'ERROR', wfMsg('autocreatewiki-step3') );
 			$this->log( "Empty city_id = {$this->mWikiId}" );
@@ -400,27 +399,37 @@ class AutoCreateWikiPage extends SpecialPage {
 			$WFSettingsVars[ "wgEnableWysiwygExt" ] = true;
 		}
 
+		$oRes = $dbw->select(
+			wfSharedTable("city_variables_pool"),
+			array( "cv_id, cv_name" ),
+			array( "cv_name in ('" . implode( "', '", array_keys($WFSettingsVars) ) . "')"),
+			__METHOD__
+		);
+		$WFVariables = array();
+		while ( $oRow = $dbw->fetchObject( $oRes ) ) {
+			$WFVariables[ $oRow->cv_name ] = $oRow->cv_id;
+		}
+		$dbw->freeResult( $oRes );
+
 		foreach( $WFSettingsVars as $variable => $value ) {
 			/**
 			 * first, get id of variable
 			 */
-			$Row = $dbw->selectRow(
-				wfSharedTable("city_variables_pool"),
-				array( "cv_id" ),
-				array( "cv_name" => $variable ),
-				__METHOD__
-			);
+			$cv_id = 0;
+			if ( isset( $WFVariables[$variable] ) ) {
+				$cv_id = $WFVariables[$variable];
+			}
 
 			/**
 			 * then, insert value for wikia
 			 */
-			if( isset( $Row->cv_id ) && $Row->cv_id ) {
+			if( !empty($cv_id) ) {
 				$dbw->insert(
 					wfSharedTable( "city_variables" ),
 					array(
 						"cv_value"       => serialize( $value ),
 						"cv_city_id"     => $this->mWikiId,
-						"cv_variable_id" => $Row->cv_id
+						"cv_variable_id" => $cv_id
 					),
 					__METHOD__
 				);
@@ -562,15 +571,10 @@ class AutoCreateWikiPage extends SpecialPage {
 			$wikiMover->setOverwrite( true );
 			$wikiMover->mMoveUserGroups = false;
 			$wikiMover->load();
+			$wikiMover->setRunJobs( false );
 			$wikiMover->setTargetUploadDirectory( $this->mWikiData[ "images" ] );
 			$wikiMover->move();
 
-			/**
-			 * WikiMove has internal log engine
-			 */
-            foreach( $wikiMover->getLog( true ) as $log ) {
-                $this->log( $log["info"] );
-            }
 			$this->addCustomSettings( $this->mWikiData[ "hub" ], $wgHubCreationVariables, 'hub' );
 		}
 		else {
@@ -603,13 +607,7 @@ class AutoCreateWikiPage extends SpecialPage {
 
 		$dbw->selectDB( $wgDBname );
 
-		$this->setCentralPages();
 		$this->setInfoLog( 'OK', wfMsg('autocreatewiki-step10') );
-
-		if ( self::SEND_WELCOME_MAIL == 1 ) {
-			$this->sendWelcomeMail();
-			$this->setInfoLog( 'OK', wfMsg('autocreatewiki-step11') );
-		}
 
 		/**
 		 * show congratulation message
@@ -624,7 +622,8 @@ class AutoCreateWikiPage extends SpecialPage {
 			array(
 				"city_id" => $this->mWikiId,
 				"command" => "maintenance/runJobs.php",
-				"arguments" => "--type ACWLocal"
+				"type" => "ACWLocal",
+				"data" => $this->mWikiData
 			),
 			TASK_QUEUED
 		);
@@ -1122,233 +1121,6 @@ class AutoCreateWikiPage extends SpecialPage {
 		return 1;
 	}
 
-	/**
-	 * set central pages
-	 */
-	private function setCentralPages() {
-		global $wgDBname, $wgUser;
-
-		/**
-		 * do it only when run on central wikia
-		*/
-		if ( $wgDBname != "wikicities" ) {
-			$this->log( "Not run on central wikia. Cannot set wiki description page" );
-			return false;
-		}
-
-		$oldUser = $wgUser;
-		/**
-		 * set user for all maintenance work on central
-		 */
-		$wgUser = User::newFromName( 'CreateWiki script' );
-		$this->log( "Creating and modifing pages on Central Wikia (as user: " . $wgUser->getName() . ")..." );
-
-		/**
-		 * title of page
-		 */
-		$centralTitleName = $this->mWikiData[ "name"];
-
-		#--- title for this page
-		$centralTitle = Title::newFromText( $centralTitleName, NS_MAIN );
-		$oHubs = WikiFactoryHub::getInstance();
-		$aCategories = $oHubs->getCategories();
-
-		if ( $centralTitle instanceof Title ) {
-			#--- and article for for this title
-			$this->log( sprintf("[debug] Got title object for page: %s", $centralTitle->getFullUrl( ) ) );
-		    $oCentralArticle = new Article( $centralTitle, 0);
-		    #--- set category name
-	    	$sCategory = $this->mWikiData[ "hub" ];
-			if (!empty( $aCategories ) && isset( $aCategories[ $this->mWikiData[ "hub" ] ] ) ) {
-		    	$sCategory = $aCategories[ $this->mWikiData[ "hub" ] ];
-			}
-
-			$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
-			$oTmpl->set_vars( array(
-				"data"          => $this->mWikiData,
-				"wikid"         => $this->mWikiId,
-				"founder"       => $this->mFounder,
-				"timestamp"     => $sTimeStamp = gmdate("j F, Y"),
-				"category"		=> $sCategory
-			));
-
-			if (!$oCentralArticle->exists()) {
-				#--- create article
-				$this->log( sprintf("[debug] Creating new article: %s", $centralTitle->getFullUrl( ) ) );
-
-				$sPage = $oTmpl->execute("central");
-
-				$this->log( "[debug] Page body formatted, launching doEdit() ..." );
-				$oCentralArticle->doEdit( $sPage, "created by autocreate Wiki process", EDIT_FORCE_BOT );
-				$this->log( sprintf("Article %s added.", $centralTitle->getFullUrl()) );
-			} else {
-				#--- update article
-				$this->log( sprintf("[debug] Updating existing article: %s", $centralTitle->getFullUrl()) );
-
-				$sContent = $oCentralArticle->getContent();
-				$sContent = $oTmpl->execute("central");
-
-				$oCentralArticle->doEdit( $sContent, "modified by autocreate Wiki process", EDIT_FORCE_BOT );
-				$this->log( sprintf("Article %s already exists... content added", $centralTitle->getFullUrl()) );
-			}
-		}
-		else {
-			$this->log( "ERROR: Unable to create title object for page on Central Wikia: " . $centralTitleName );
-			return false;
-		}
-
-		/**
-		 * add to Template:List_of_Wikia_New
-		 */
-		$oCentralListTitle = Title::newFromText( self::TEMPLATE_LIST_WIKIA, NS_MAIN );
-		if ( $oCentralListTitle instanceof Title ) {
-			$oCentralListArticle = new Article( $oCentralListTitle, 0);
-			if ( $oCentralListArticle->exists() ) {
-				$sContent =  $oCentralListArticle->getContent();
-				$sContent .= "{{subst:nw|" . $this->mWikiData['subdomain'] . "|";
-				$sContent .= $centralTitleName . "|" . $this->mWikiData['language'] . "}}";
-
-				$oCentralListArticle->doEdit( $sContent, "modified by autocreate Wiki process", EDIT_FORCE_BOT);
-				$this->log( sprintf("Article %s modified.", $oCentralListTitle->getFullUrl()) );
-			}
-			else {
-				$this->log( sprintf("Article %s not exists.", $oCentralListTitle->getFullUrl()) );
-			}
-
-			#--- add to New_wikis_this_week/Draft
-			$oCentralListTitle = Title::newFromText( self::ARTICLE_NEW_WIKIS, NS_MAIN );
-			$oCentralListArticle = new Article( $oCentralListTitle, 0);
-
-			if ( $oCentralListArticle->exists() ) {
-				$sReplace =  "{{nwtw|" . $this->mWikiData['language']  . "|" ;
-				$sReplace .= $aCategories[ $this->mWikiData[ "hub" ] ] . "|" ;
-				$sReplace .= $centralTitleName . "|http://" . $this->mWikiData['subdomain'] . ".wikia.com}}\n|}";
-
-				$sContent = str_replace("|}", $sReplace, $oCentralListArticle->getContent());
-
-				$oCentralListArticle->doEdit( $sContent, "modified by autocreate Wiki process", EDIT_FORCE_BOT);
-				$this->log( sprintf("Article %s modified.", $oCentralListTitle->getFullUrl()) );
-			}
-			else {
-				$this->log( sprintf("Article %s not exists.", $oCentralListTitle->getFullUrl()) );
-			}
-		}
-		else {
-			$this->log( "ERROR: Unable to create title object for page: " . $sCentralListTitle);
-			return false;
-		}
-
-		if ( strcmp( strtolower( $this->mWikiData['redirect'] ), strtolower( $centralTitleName ) ) != 0 ) {
-			#--- add redirect(s) on central
-			$oCentralRedirectTitle = Title::newFromText( $this->mWikiData['redirect'], NS_MAIN );
-			if ( $oCentralRedirectTitle instanceof Title ) {
-				$oCentralRedirectArticle = new Article( $oCentralRedirectTitle, 0);
-				if ( !$oCentralRedirectArticle->exists() ) {
-					$sContent = "#Redirect [[" . $centralTitleName . "]]";
-					$oCentralRedirectArticle->doEdit( $sContent, "modified by autocreate Wiki process", EDIT_FORCE_BOT);
-					$this->log( sprintf("Article %s added (redirect to: " . $centralTitleName . ").", $oCentralRedirectTitle->getFullUrl()) );
-				} else {
-					$this->log( sprintf("Article %s already exists.", $oCentralRedirectTitle->getFullUrl()) );
-				}
-
-				if ( ( $this->mWikiData['language'] == 'en' ) && ( !eregi("^en.", $this->mWikiData['subdomain']) ) ) {
-					// extra redirect page: en.<subdomain>
-					$sCentralRedirectTitle = 'en.' . $this->mWikiData['subdomain'];
-					$oCentralRedirectTitle = Title::newFromText( $sCentralRedirectTitle, NS_MAIN );
-					if ( !$oCentralRedirectArticle->exists() ) {
-						$sContent = "#Redirect [[" . $centralTitleName . "]]";
-						$oCentralRedirectArticle->doEdit( $sContent, "modified by autocreate Wiki process", EDIT_FORCE_BOT);
-						$this->log( sprintf("Article %s added (extra redirect to: " . $centralTitleName . ").", $oCentralRedirectTitle->getFullUrl()) );
-					} else {
-						$this->log( sprintf("Article %s already exists.", $oCentralRedirectTitle->getFullUrl()) );
-					}
-				}
-			} else {
-				$this->log( "ERROR: Unable to create title object for redirect page: " . $this->mWikiData['redirect'] );
-				return false;
-			}
-		}
-
-		/**
-		 * revert back to original User object, just in case
-		 */
-		$wgUser = $oldUser;
-
-		$this->log( "Creating and modifing pages on Central Wikia finished." );
-		return true;
-	}
-
-	/**
-	 * sendWelcomeMail
-	 *
-	 * sensd welcome email to founder (if founder has set email address)
-	 *
-	 * @author eloy@wikia-inc.com
-	 * @author adi@wikia-inc.com
-	 * @author moli@wikia-inc.com
-	 * @access private
-	 *
-	 * @return boolean status
-	 */
-	private function sendWelcomeMail() {
-		global $wgDevelEnvironment, $wgUser, $wgPasswordSender;
-
-		$oReceiver = $this->mFounder;
-		if ( !empty( $wgDevelEnvironment ) ) {
-			$oReceiver = $wgUser;
-		}
-
-		$sServer = "http://{$this->mWikiData["subdomain"]}." . "wikia.com";
-		// set apropriate staff member
-		$oStaffUser = AutoCreateWiki::getStaffUserByLang( $this->mWikiData['language'] );
-		$oStaffUser = ( $oStaffUser instanceof User ) ? $oStaffUser : User::newFromName( self::DEFAULT_STAFF );
-
-		$sFrom = new MailAddress( $wgPasswordSender, "The Wikia Community Team" );
-		$sTo = $oReceiver->getEmail();
-
-		$aBodyParams = array (
-			0 => $sServer,
-			1 => $oReceiver->getName(),
-			2 => $oStaffUser->getRealName(),
-			3 => htmlspecialchars( $oStaffUser->getName() ),
-			4 => sprintf( "%s%s", $sServer, $oReceiver->getTalkPage()->getLocalURL() ),
-		);
-
-		$sBody = $sSubject = null;
-		if ( !empty( $this->mWikiData['language'] ) ) {
-			// custom lang translation
-			$sBody = wfMsgExt("autocreatewiki-welcomebody",
-				array( 'language' => $this->mWikiData['language'] ),
-				$aBodyParams
-			);
-			$sSubject = wfMsgExt("autocreatewiki-welcomesubject",
-				array( 'language' => $this->mWikiData['language'] ),
-				array( $this->mWikiData[ "title" ] )
-			);
-		}
-
-		if ( is_null( $sBody ) ) {
-			// default lang (english)
-			$sBody = wfMsg("autocreatewiki-welcomebody", $aBodyParams);
-		}
-
-		if ( $sSubject == null ) {
-			// default lang (english)
-			$sSubject = wfMsg( "autocreatewiki-welcomesubject", array( $this->mWikiData[ 'title' ] ) );
-		}
-
-		if ( !empty($sTo) ) {
-			$bStatus = $oReceiver->sendMail( $sSubject, $sBody, $sFrom );
-			if ( $bStatus === true ) {
-				$this->log( "Mail to founder {$sTo} sent." );
-			}
-			else {
-				$this->log( "Mail to founder {$sTo} probably not sent. sendMail returned false." );
-			}
-		} else {
-			$this->log( "Founder email is not set. Welcome email is not sent" );
-		}
-	}
 
 	/**
 	 * common log function

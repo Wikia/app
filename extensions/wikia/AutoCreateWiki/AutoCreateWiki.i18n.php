@@ -80,20 +80,21 @@ $messages['en'] = array(
 	"autocreatewiki-step11" => "Sending email to user ... ",
 	"autocreatewiki-redirect" => "Redirecting to new Wiki: $1 ... ",
 	"autocreatewiki-congratulation" => "Congratulation!",
+	"autocreatewiki-welcometalk-log" => "set by bot",
 	"autocreatewiki-regex-error-comment" => "used in Wiki $1 (whole text: $2)",
 // processing errors
 	"autocreatewiki-step2-error" => "Database exists!",
 	"autocreatewiki-step3-error" => "Cannot set default information in database!",
 	"autocreatewiki-step6-error" => "Cannot set default tables in database!",
 	"autocreatewiki-step7-error" => "Cannot copy starter database for language!",
-// welcome messages
-    "autocreatewiki-welcomesubject" => "$1 has been created!",
-    "autocreatewiki-welcomebody" => "
+	"requestwiki-filter-language" => "kh,kp,mu,als,an,ast,de-form,de-weig,dk,en-gb,ia,ie,ksh,mwl,pdc,pfl,simple,tokipona,tp,zh-cn,zh-hans,zh-hant,zh-hk,zh-mo,zh-my,zh-sg,zh-tw",
+    "createwiki_welcomesubject" => "$1 has been created!",
+    "createwiki_welcomebody" => "
 Hello, $2,
 
 The Wikia you requested is now available at <$1> We hope to see you editing there soon!
 
-We've added some Information and Tips on your User Talk Page (<$5>) to help you get started.
+We've added some Information and Tips on your User Talk Page (<$5> to help you get started.
 
 If you have any problems, you can ask for community help on the wiki at <http://www.wikia.com/wiki/Forum:Help_desk>, or via email to community@wikia.com. You can also visit our live #wikia IRC chat channel <http://irc.wikia.com>.
 
@@ -107,7 +108,7 @@ Wikia Community Team
 
 <http://www.wikia.com/wiki/User:$4>
     ",
-    "autocreatewiki-welcometalk" => "
+    "createwiki_welcometalk" => "
 Hi '''$1''' -- we are excited to have '''$4''' as part of the Wikia community!
 
 Starting a new wiki can be overwhelming, but don't worry, the [[Wikia:Community Team|WIkia Community Team]] is here to help!  We have put together a few guides to getting started. They say imitation is the best form of flattery so absolutely check out other wikis on [[Wikia:Wikia| Wikia]] for ideas on layout, ways to organize your content, etc. We are all one big family at Wikia and the most important thing is to have fun!
@@ -123,7 +124,5 @@ Now, go edit!  We look forward to seeing this project thrive!
 Best wishes,
 
 [[User:$2|$3]]
-    ",
-	"autocreatewiki-welcometalk-log" => "Welcoming new sysop",
-	"requestwiki-filter-language" => "kh,kp,mu,als,an,ast,de-form,de-weig,dk,en-gb,ia,ie,ksh,mwl,pdc,pfl,simple,tokipona,tp,zh-cn,zh-hans,zh-hant,zh-hk,zh-mo,zh-my,zh-sg,zh-tw",
+    "
 );
