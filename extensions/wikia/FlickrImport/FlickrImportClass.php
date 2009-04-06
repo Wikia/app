@@ -110,7 +110,7 @@ class FlickrImport{
 
 	
 	public function importPhoto( $id, $search_term, $title = "" ){
-		global $wgOut, $wgTmpDirectory, $wgRequest;
+		global $wgOut, $wgTmpDirectory, $wgRequest, $wgUser;
 		
 		$f = new phpFlickr($this->flickr_api_key);
 		$photo = $f->photos_getInfo($id);
