@@ -104,7 +104,12 @@ function getRequests() {
 
 	function getRelationshipRequestLink(){
 		global $wgUser, $IP, $wgUploadPath;
-		require_once("$IP/extensions/wikia/UserRelationship/UserRelationshipClass.php");
+
+		// macbre: fix fatal "Cannot redeclare class UserRelationship"
+		if (!class_exists('UserRelationship')) {
+			require_once("$IP/extensions/wikia/UserRelationship/UserRelationshipClass.php");
+		}
+
 		$friend_request_count = UserRelationship::getOpenRequestCount($wgUser->getID(),1);
 		$foe_request_count = UserRelationship::getOpenRequestCount($wgUser->getID(),2);
 		$relationship_request_link = Title::makeTitle(NS_SPECIAL, "ViewRelationshipRequests");
