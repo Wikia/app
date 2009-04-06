@@ -2,7 +2,7 @@
 $wgExtensionCredits['other'][] = array(
         'name' => 'New Edit Page',
 	'description' => 'Applies edit page changes',
-        'version' => 0.21,
+        'version' => 0.22,
         'author' => '[http://pl.wikia.com/wiki/User:Macbre Maciej Brencz]'
 );
 
@@ -43,9 +43,9 @@ function wfNewEditPageArticleView($title) {
 function wfNewEditPageAddCSS() {
 	global $wgWysiwygEdit, $wgOut, $wgUser, $wgExtensionsPath, $wgStyleVersion, $wgNewEditPageNewArticle;
 
-	// do not touch monobook
+	// do not touch skins other than Monaco (RT #13061)
 	$skinName = get_class($wgUser->getSkin());
-	if ($skinName == 'SkinMonoBook') {
+	if ($skinName != 'SkinMonaco') {
 		return true;
 	}
 
@@ -76,9 +76,9 @@ function wfNewEditPageAddCSS() {
 function wfNewEditPageAddPreviewBar($editPage) {
 	global $wgOut, $wgUser, $wgHooks;
 
-	// do not touch monobook
+	// do not touch skins other than Monaco (RT #13061)
 	$skinName = get_class($wgUser->getSkin());
-	if ($skinName == 'SkinMonoBook') {
+	if ($skinName != 'SkinMonaco') {
 		return true;
 	}
 
