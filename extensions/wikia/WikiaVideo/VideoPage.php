@@ -675,6 +675,16 @@ EOD;
 	// handle video page revert
 	function revert() {
 		global $wgOut, $wgRequest, $wgUser;
+
+		// is the target protected?
+		$permErrors = $this->mTitle->getUserPermissionsErrors( 'edit', $wgUser );
+		$permErrorsUpload = $this->mTitle->getUserPermissionsErrors( 'upload', $wgUser );
+
+		if( $permErrors || $permErrorsUpload ) {
+			$wgOut->addHTML( wfMsg( 'wikiavideo-unreverted', '<b>' . $this->mTitle->getText() . '</b>' ) );
+			return ;
+		}
+
 		$timestamp = $wgRequest->getVal( 'oldvideo' );
 		$fname = get_class( $this ) . '::' . __FUNCTION__;
 		$dbr = wfGetDB( DB_SLAVE );
