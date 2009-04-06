@@ -116,4 +116,16 @@ class EasyTemplate {
 		}
 		return file_exists($this->mPath ."/". $file);
 	}
+
+	/**
+	 * simple wrapper for wfMsg
+	 */
+	public function msg( $message, $forContent = false ) {
+		if( ! $forContent ) {
+			echo wfMsg( $message );
+		}
+		else {
+			echo wfMsgForContent( $message );
+		}
+	}
 };
