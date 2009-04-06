@@ -183,7 +183,7 @@ class WikiFactoryLoader {
 		if( isset( $wgDBservers ) && is_array( $wgDBservers ) ) {
 			$server = array_rand( $wgDBservers );
 			$host = $wgDBservers[ $server ]["host"];
-			$this->mDBhandler = new Database( $host, $wgDBuser, $wgDBpassword, $this->mDBname );
+			$this->mDBhandler = new Database( $host, $wgDBuser, $wgDBpassword, $this->mDBname, 1 );
 			$this->debug( "connecting to {$host} {$wgDBuser} {$wgDBpassword} {$this->mDBname}" );
 		}
 		/**

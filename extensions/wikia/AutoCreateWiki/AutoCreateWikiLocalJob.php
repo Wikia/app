@@ -18,21 +18,13 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 	exit( 1 );
 }
 
-/**
- * job is self-hosted, without other part of autocreate
- */
-$dir = dirname(__FILE__);
-$wgExtensionMessagesFiles[ "AutoCreateWiki" ] = $dir . "/AutoCreateWiki.i18n.php";
+$wgJobClasses[ "ACWLocal" ] = "AutoCreateWikiLocalJob";
 
 /**
  * maintenance script from CheckUser
  */
 include_once( $GLOBALS['IP'] . "/extensions/CheckUser/install.inc" );
 
-/**
- * include helper file for additional methods
- */
-include_once( $dir . "/AutoCreateWiki_helper.php" );
 
 class AutoCreateWikiLocalJob extends Job {
 
@@ -56,18 +48,17 @@ class AutoCreateWikiLocalJob extends Job {
 	 */
     public function run() {
 
-		global $wgUser, $wgErrorLog;
+		global $wgUser, $wgErrorLog, $wgExtensionMessagesFiles;
 
 		wfProfileIn( __METHOD__ );
 
-		error_log ("AWC: run local job \n");
+		$wgExtensionMessagesFiles[ "AutoCreateWiki" ] = dirname(__FILE__) . "/AutoCreateWiki.i18n.php";
 		wfLoadExtensionMessages( "AutoCreateWiki" );
-		error_log ("AWC: after run local job \n");
+
 		$wgErrorLog = true;
 		/**
 		 * setup founder user
 		 */
-		error_log ("AWC: founder : " . $this->mParams[ "founder"] .  " \n");
 		if( $this->mParams[ "founder"] ) {
 			$this->mFounder = User::newFromId( $this->mParams[ "founder"] );
 			$this->mFounder->load();
@@ -79,14 +70,12 @@ class AutoCreateWikiLocalJob extends Job {
 				$this->mFounder->load();
 			}
 		}
-		error_log ("AWC: moveMainPage \n");
+
 		$this->moveMainPage();
-		error_log ("AWC: protectKeyPages \n");
 		$this->protectKeyPages();
-		error_log ("AWC: populateCheckUserTables \n");
 		$this->populateCheckUserTables();
-		error_log ("AWC: setWelcomeTalkPage \n");
 		$this->setWelcomeTalkPage();
+		$this->sendWelcomeMail();
 
 		wfProfileOut( __METHOD__ );
 
@@ -166,7 +155,7 @@ class AutoCreateWikiLocalJob extends Job {
 			/**
 			 * set apropriate staff member
 			 */
-			$wgUser = AutoCreateWiki::getStaffUserByLang( $wikiaLang );
+			$wgUser = Wikia::staffForLang( $wikiaLang );
 			$wgUser = ( $wgUser instanceof User ) ? $wgUser : User::newFromName( "Angela" );
 
 			$talkParams = array(
@@ -181,14 +170,14 @@ class AutoCreateWikiLocalJob extends Job {
 				/**
 				 * custom lang translation
 				 */
-				$talkBody = wfMsgExt( "autocreatewiki-welcometalk", array( 'language' => $wikiaLang ), $talkParams );
+				$talkBody = wfMsgExt( "createwiki_welcometalk", array( 'language' => $wikiaLang ), $talkParams );
 			}
 
 			if( ! $talkBody ) {
 				/**
 				 * wfMsgExt should always return message, but just in case...
 				 */
-				$talkBody = wfMsg( "autocreatewiki-welcometalk", $talkParams );
+				$talkBody = wfMsg( "createwiki_welcometalk", $talkParams );
 			}
 
 			/**
@@ -330,9 +319,79 @@ class AutoCreateWikiLocalJob extends Job {
 	 * tables are created in first step. there we only fill them
 	 */
 	private function populateCheckUserTables() {
-
 		$dbw = wfGetDB( DB_MASTER );
 		create_cu_changes( $dbw, true );
 		create_cu_log( $dbw );
+	}
+
+	/**
+	 * sendWelcomeMail
+	 *
+	 * sensd welcome email to founder (if founder has set email address)
+	 *
+	 * @author eloy@wikia-inc.com
+	 * @author adi@wikia-inc.com
+	 * @author moli@wikia-inc.com
+	 * @access private
+	 *
+	 * @return boolean status
+	 */
+	private function sendWelcomeMail() {
+		global $wgUser, $wgPasswordSender;
+
+		$oReceiver = $this->mFounder;
+		$sServer = sprintf("http://%s.wikia.com", $this->mParams["subdomain"] );
+
+		/**
+		 * set apropriate staff member
+		 */
+		$oStaffUser = Wikia::staffForLang( $this->mParams[ "language" ] );
+		$oStaffUser = ( $oStaffUser instanceof User ) ? $oStaffUser : User::newFromName( "Angela" );
+
+		$sFrom = new MailAddress( $wgPasswordSender, "The Wikia Community Team" );
+		$sTo = $oReceiver->getEmail();
+
+		$aBodyParams = array (
+			$sServer,
+			$oReceiver->getName(),
+			$oStaffUser->getRealName(),
+			htmlspecialchars( $oStaffUser->getName() ),
+			htmlspecialchars( $oReceiver->getTalkPage()->getFullURL() ),
+		);
+
+		$sBody = $sSubject = null;
+		if ( !empty( $this->mParams['language'] ) ) {
+			// custom lang translation
+			$sBody = wfMsgExt("createwiki_welcomebody",
+				array( 'language' => $this->mParams['language'] ),
+				$aBodyParams
+			);
+			$sSubject = wfMsgExt("createwiki_welcomesubject",
+				array( 'language' => $this->mParams['language'] ),
+				array( $this->mParams[ "title" ] )
+			);
+		}
+
+		/**
+		 * fallback to english
+		 */
+		if( empty( $sBody ) ) {
+			$sBody = wfMsg( "createwiki_welcomebody", $aBodyParams );
+		}
+		if( empty( $sSubject ) ) {
+			$sSubject = wfMsg( "createwiki_welcomesubject", array( $this->mParams[ 'title' ] ) );
+		}
+
+		if ( !empty($sTo) ) {
+			$status = $oReceiver->sendMail( $sSubject, $sBody, $sFrom );
+			if ( $status === true ) {
+				Wikia::log( __METHOD__, "mail", "Mail to founder {$sTo} sent." );
+			}
+			else {
+				Wikia::log( __METHOD__, "mail", "Mail to founder {$sTo} probably not sent. sendMail returned false." );
+			}
+		} else {
+			Wikia::log( __METHOD__, "mail", "Founder email is not set. Welcome email is not sent" );
+		}
 	}
 }

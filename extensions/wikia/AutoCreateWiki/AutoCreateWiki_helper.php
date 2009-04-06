@@ -154,13 +154,14 @@ class AutoCreateWiki {
 	 * check form fields
 	 */
 	public static function checkWikiNameIsCorrect($sValue) {
+		global $wgUser;
 		wfProfileIn(__METHOD__);
 		$sResponse = "";
 		if ($sValue == "") {
 			$sResponse = wfMsg('autocreatewiki-empty-wikiname');
 		} elseif (preg_match('/[^a-z0-9-\s]/i', $sValue)) {
 			$sResponse = wfMsg('autocreatewiki-invalid-wikiname');
-		} elseif (self::checkBadWords($sValue, "name", true) === false) {
+		} elseif ( !in_array('staff', $wgUser->getGroups()) && (self::checkBadWords($sValue, "name", true) === false) ) {
 			$sResponse = wfMsg('autocreatewiki-violate-policy');
 		}
 		wfProfileOut(__METHOD__);
@@ -168,8 +169,9 @@ class AutoCreateWiki {
 	}
 	
 	public static function checkDomainIsCorrect($sName, $sLang) {
-		wfProfileIn(__METHOD__);
+		global $wgUser;
 
+		wfProfileIn(__METHOD__);
 		$sResponse = "";
 		
 		if ( strlen($sName) === 0 ) {
@@ -184,7 +186,7 @@ class AutoCreateWiki {
 		} elseif ( in_array( $sName, array_keys( Language::getLanguageNames() )) ) {
 			#-- invalid name
 			$sResponse = wfMsg('autocreatewiki-violate-policy');
-		} elseif (self::checkBadWords($sName, "domain") === false) {
+		} elseif ( !in_array('staff', $wgUser->getGroups()) && (self::checkBadWords($sName, "domain") === false) ) {
 			#-- invalid name (bad words)
 			$sResponse = wfMsg('autocreatewiki-violate-policy');
 		} else {
