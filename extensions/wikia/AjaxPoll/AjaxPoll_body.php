@@ -38,26 +38,18 @@ class AjaxPollClass {
 	 * @param Object $parser: Wiki Parser object
 	 */
 	static public function renderFromTag( $input, $params, &$parser ) {
-		global $wgTitle, $wgOut;
+		global $wgOut;
 
 		/**
 		 * ID of the poll
 		 */
 		$id = strtoupper( md5( $input ) );
-
-		$oParser = new Parser();
-		$input = $oParser->parse( $input, $wgTitle, $wgOut->parserOptions() );
-		$input = trim( strip_tags( $input->getText() ) );
+		$input = trim( strip_tags( $parser->recursiveTagParse( $input ) ) );
 
 		$class = new AjaxPollClass;
-
-
-		/**
-		 * check if poll exists in database. If not - add it
-		 */
 		$class->mId = $id;
 		$class->mBody = $input;
-		$class->mTitle = $wgTitle;
+		$class->mTitle = $parser->getTitle();
 		$class->mParser = $parser;
 		$class->mAttribs = $params;
 
