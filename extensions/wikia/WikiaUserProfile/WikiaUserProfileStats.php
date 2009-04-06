@@ -136,7 +136,7 @@ class WikiaUserProfileStats
 		#---
 		if (empty($data))
 		{
-			$dbr =& wfGetDBStats();
+			$dbr =& wfGetDBExt(DB_SLAVE);
 			#---
 			$sql_where = array( "user_id" => $this->user_id );
 			#---

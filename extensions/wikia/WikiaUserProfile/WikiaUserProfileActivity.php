@@ -219,7 +219,7 @@ class WikiaUserProfileActivity
 			#---
 			$city_where = ($this->shared_city) ? " and city_id = '".$this->shared_city."' " : "";
 			#---
-			$dbs =& wfGetDBStats();
+			$dbs =& wfGetDBExt(DB_SLAVE);
 			#---
 			$sql = "SELECT city_id, page_id, page_namespace, page_title, user_id, user_name, vote, UNIX_TIMESTAMP(time) as item_date ";
 			$sql .= "FROM `dbstats`.`city_page_vote` ";
