@@ -234,7 +234,7 @@ function CategorySelectAjaxSaveCategories($articleId, $categories) {
 				$result['info'] = 'ok';
 				$result['html'] = $cats;
 			} else {
-				$result['error'] = "User rights error.";
+				$result['error'] = 'User rights error.';
 			}
 		}
 	}
@@ -329,7 +329,9 @@ function CategorySelectImportFormData($editPage, $request) {
 		}
 
 		if ($editPage->preview || $editPage->diff) {
-			CategorySelect::SelectCategoryAPIgetData($categories);
+			$data = CategorySelect::SelectCategoryAPIgetData($editPage->textbox1 . $categories);
+			$editPage->textbox1 = $data['wikitext'];
+			$categories = CategorySelectChangeFormat($data['categories'], 'array', 'wiki');
 		} else {	//saving article
 			$editPage->textbox1 .= $categories;
 		}
@@ -347,7 +349,7 @@ function CategorySelectDiffArticle($editPage, $oldtext, $newtext) {
 	global $wgCategorySelectCategoriesInWikitext;
 	//add categories only for whole article editing
 	if ($editPage->section == '' && isset($wgCategorySelectCategoriesInWikitext)) {
-		$newtext .= "\n" . $wgCategorySelectCategoriesInWikitext;
+		$newtext .= $wgCategorySelectCategoriesInWikitext;
 	}
 	return true;
 }

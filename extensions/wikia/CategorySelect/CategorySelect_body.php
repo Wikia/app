@@ -63,7 +63,7 @@ class CategorySelect {
 		//replace markers back to wikitext
 		$modifiedWikitext = $wgParser->mStripState->unstripBoth($modifiedWikitext);
 
-		$wgCategorySelectMetaData = array('wikitext' => $modifiedWikitext, 'categories' => $categories);
+		$wgCategorySelectMetaData = array('wikitext' => rtrim($modifiedWikitext), 'categories' => $categories);
 		return $wgCategorySelectMetaData;
 	}
 
