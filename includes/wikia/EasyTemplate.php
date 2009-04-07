@@ -70,6 +70,18 @@ class EasyTemplate {
 	}
 
 	/**
+	 * Set a variable
+	 *
+	 * @param string $name	variable name
+	 * @param mixed  $value	variable value
+	 *
+	 * @return void
+	 */
+	public function set( $name, $value ) {
+		$this->mVars[ $name ] = $value;
+	}
+
+	/**
 	 * Open, parse, and return the template file.
 	 *
 	 * @param string string the template file name
@@ -120,12 +132,7 @@ class EasyTemplate {
 	/**
 	 * simple wrapper for wfMsg
 	 */
-	public function msg( $message, $forContent = false ) {
-		if( ! $forContent ) {
-			echo wfMsg( $message );
-		}
-		else {
-			echo wfMsgForContent( $message );
-		}
+	public function msg( $message ) {
+		echo wfMsg( $message );
 	}
 };
