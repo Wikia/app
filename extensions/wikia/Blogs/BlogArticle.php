@@ -60,7 +60,7 @@ class BlogArticle extends Article {
 			 */
 			if( $this->exists() ) {
 				$oldPrefixedText = $this->mTitle->mPrefixedText;
-				list( $author, $prefixedText )  = explode('/', $this->mTitle->mPrefixedText, 2);
+				list( $author, $prefixedText )  = explode('/', $this->mTitle->getPrefixedText(), 2);
 				if( isset( $prefixedText ) && !empty( $prefixedText ) ) {
 					$this->mTitle->mPrefixedText = $prefixedText;
 				}
