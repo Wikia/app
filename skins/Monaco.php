@@ -2033,6 +2033,9 @@ if (array_key_exists("TOP_RIGHT_BOXAD", AdEngine::getInstance()->getPlaceholders
 <?php		wfProfileIn( __METHOD__ . '-monacofooter'); ?>
 		<div id="monaco_footer" class="reset">
 
+<?php
+if ( $wgRequest->getVal('action') != 'edit' ) {
+?>
 		<div id="spotlight_footer">
 		<table>
 		<tr>
@@ -2048,8 +2051,9 @@ if (array_key_exists("TOP_RIGHT_BOXAD", AdEngine::getInstance()->getPlaceholders
 		</tr>
 		</table>
 		</div>
-
 <?php
+}
+
 	// macbre: BEGIN
 	//
 	global $wgCityId;
