@@ -281,7 +281,7 @@ class Our404HandlerPage extends UnlistedSpecialPage {
 		 */
 		$wgOut->setStatusCode( 404 );
 
-		$info = wfMsgForContent( 'message404', $uri, $title );
+		$info = wfMsgForContent( 'message404', $uri, urldecode( $title ) );
 		$wgOut->addHTML( '<h2>'.wfMsg( 'our404handler-oops' ).'</h2>
 						<div>'. $wgOut->parse( $info ) .'</div>' );
 	}
