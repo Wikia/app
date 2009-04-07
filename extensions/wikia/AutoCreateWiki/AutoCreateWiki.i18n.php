@@ -114,7 +114,7 @@ Hi '''$1''' -- we are excited to have '''$4''' as part of the Wikia community!
 Starting a new wiki can be overwhelming, but don't worry, the [[Wikia:Community Team|WIkia Community Team]] is here to help!  We have put together a few guides to getting started. They say imitation is the best form of flattery so absolutely check out other wikis on [[Wikia:Wikia| Wikia]] for ideas on layout, ways to organize your content, etc. We are all one big family at Wikia and the most important thing is to have fun!
 
 * Our guide to [[Help:Starting this wiki|Getting Started]] gives you 5 things you can do right now to set your wiki up for success
-* We also put together some [[Help:Advice on starting a wiki|Advice On Starting a Wiki]] which provides a more a in-depth look at some of the important things you should consider when building a wiki
+* We also put together some [[w:c:help:Advice:Starting_a_wiki|Advice on Starting a Wiki]] which provides a more a in-depth look at some of the important things you should consider when building a wiki
 * If you are new to wikis in general than we recommend checking our [[help:FAQ|new user FAQ]]
 
 If you need help (which trust me we ALL do) you can access our full in-depth help at [[w:c:Help|Help Wikia]], Stop by the [[Wikia:Forum:Help desk|Wikia Help Desk Forum]], or email us through our [[Special:Contact|contact form]].  Also, you can visit our [http://irc.wikia.com live #wikia chat channel] any time. A lot of the veteran \"Wikians\" hang out here so its a good place if come if you want to get some advice or simply make friends.

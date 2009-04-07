@@ -16,10 +16,10 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 }
 
 class AutoCreateWiki {
-	
+
 	const STAFF_LIST = "staffsigs";
     const BAD_WORDS_MSG = 'creation_blacklist';
-	
+
 	/**
 	 * isDomainExists
 	 *
@@ -36,13 +36,25 @@ class AutoCreateWiki {
 		$dbr = wfGetDB( DB_SLAVE );
 		$oRow = $dbr->selectRow(
 			wfSharedTable("city_domains"),
-			array( "count(*) as count" ),
+			array( "city_id" ),
 			array( "city_domain" => $sDomain ),
 			__METHOD__
 		);
-		return $oRow->count;
+		
+		$exists = 0;
+		if (isset($oRow->city_id)) {
+			$city_id = $oRow->city_id;
+			$oRow = $dbr->selectRow(
+				wfSharedTable("city_list"),
+				array( "count(*) as count" ),
+				array( "city_id" => $city_id, "city_public" => 1 ),
+				__METHOD__
+			);
+			$exists = (isset($oRow->count) && $oRow->count > 0);
+		}
+		return $exists;
 	}
-	
+
 	/**
 	 * getDomainsLikeOrExact
 	 *
@@ -64,7 +76,7 @@ class AutoCreateWiki {
 		$unique = array();
 
 		$name = self::deleteCommonPostfix($name);
-		
+
 		$condition = $conditionSimilar = "";
 
 		/**
@@ -95,14 +107,13 @@ class AutoCreateWiki {
 			if ( $skip === false ) {
 				#--- exact (but with language prefixes)
 				list ($city_domains, $city_list) = array(wfSharedTable("city_domains"), wfSharedTable("city_list"));
-				
+
 				$oRes = $dbr->select (
 					array ( $city_domains, $city_list ),
 					array ( "*" ),
 					array (
 						$condition,
-						"{$city_domains}.city_id = {$city_list}.city_id",
-						"{$city_list}.city_public" => 1
+						"{$city_domains}.city_id = {$city_list}.city_id"
 					),
 					__METHOD__,
 					array( "limit" => 20 )
@@ -111,20 +122,23 @@ class AutoCreateWiki {
 				while ( $oRow = $dbr->fetchObject( $oRes ) ) {
 					if ( preg_match( "/^www\./", strtolower( $oRow->city_domain ) ) )
 						continue;
-					$unique[ strtolower( $oRow->city_domain ) ] = 1;
-					$domains["exact"][] = $oRow;
+					if ( $oRow->city_public == 1 ) {
+						$unique[ strtolower( $oRow->city_domain ) ] = 1;
+						$domains["exact"][] = $oRow;
+					} else {
+						$domains["closed"][] = $oRow;
+					}
 				}
 				$dbr->freeResult($oRes);
 
-				#-- 
+				#--
 				# Similar domains
 				$oRes = $dbr->select(
 					array ( $city_domains, $city_list ),
 					array ( "*" ),
 					array (
 						$conditionSimilar,
-						"{$city_domains}.city_id = {$city_list}.city_id",
-						"{$city_list}.city_public" => 1
+						"{$city_domains}.city_id = {$city_list}.city_id"
 					),
 					__METHOD__,
 					array( "limit" => 20 )
@@ -133,10 +147,14 @@ class AutoCreateWiki {
 				while ( $oRow = $dbr->fetchObject( $oRes ) ) {
 					if ( preg_match( "/^www\./", strtolower( $oRow->city_domain ) ) )
 						continue;
-					if ( array_key_exists( strtolower($oRow->city_domain), $unique)
-						&& $unique[ strtolower($oRow->city_domain) ] == 1 )
-						continue;
-					$domains["like"][] = $oRow;
+					if ( $oRow->city_public == 1 ) {
+						if ( array_key_exists( strtolower($oRow->city_domain), $unique)
+							&& $unique[ strtolower($oRow->city_domain) ] == 1 )
+							continue;
+						$domains["like"][] = $oRow;
+					} else {
+						$domains["closed"][] = $oRow;
+					}
 				}
 				$dbr->freeResult($oRes);
 			}
@@ -149,17 +167,18 @@ class AutoCreateWiki {
 		$regexp = array('/(?:^|(?<!\s))(?:' . implode('|', $commonPostfixes) . ')(?:\s|$)/');
 		return preg_replace($regexp, '', $name);
 	}
-	
+
 	/*
 	 * check form fields
 	 */
 	public static function checkWikiNameIsCorrect($sValue) {
-		global $wgUser;
+		global $wgUser, $wgLegalTitleChars;
+
 		wfProfileIn(__METHOD__);
 		$sResponse = "";
 		if ($sValue == "") {
 			$sResponse = wfMsg('autocreatewiki-empty-wikiname');
-		} elseif (preg_match('/[^a-z0-9-\s]/i', $sValue)) {
+		} elseif (preg_match('/[^' . $wgLegalTitleChars . ']/i', $sValue)) {
 			$sResponse = wfMsg('autocreatewiki-invalid-wikiname');
 		} elseif ( !in_array('staff', $wgUser->getGroups()) && (self::checkBadWords($sValue, "name", true) === false) ) {
 			$sResponse = wfMsg('autocreatewiki-violate-policy');
@@ -167,13 +186,13 @@ class AutoCreateWiki {
 		wfProfileOut(__METHOD__);
 		return $sResponse;
 	}
-	
+
 	public static function checkDomainIsCorrect($sName, $sLang) {
 		global $wgUser;
 
 		wfProfileIn(__METHOD__);
 		$sResponse = "";
-		
+
 		if ( strlen($sName) === 0 ) {
 			#-- empty field
 			$sResponse = wfMsg('autocreatewiki-empty-field');
@@ -194,9 +213,9 @@ class AutoCreateWiki {
 			if (!empty($iExists)) {
 				#--- domain exists
 				$sResponse = wfMsg('autocreatewiki-name-taken', $sName);
-			} 
+			}
 		}
-		
+
 		wfProfileOut(__METHOD__);
 		return $sResponse;
 	}
@@ -227,7 +246,7 @@ class AutoCreateWiki {
 		wfProfileOut(__METHOD__);
 		return $sResponse;
 	}
-	
+
 	public static function checkUsernameIsCorrect($sValue) {
 		wfProfileIn(__METHOD__);
 		$sResponse = "";
@@ -247,7 +266,7 @@ class AutoCreateWiki {
 		wfProfileOut(__METHOD__);
 		return $sResponse;
 	}
-		
+
 	public static function checkEmailIsCorrect($sValue) {
 		wfProfileIn(__METHOD__);
 
@@ -255,14 +274,14 @@ class AutoCreateWiki {
 		if ( ( $sValue == "") || ( !User::isValidEmailAddr( $sValue ) ) )  {
 			$sResponse = wfMsg( 'invalidemailaddress' );
 		}
-		
+
 		wfProfileOut(__METHOD__);
 		return $sResponse;
 	}
-	
+
 	public static function checkPasswordIsCorrect($sUsername, $sValue) {
 		global $wgMinimalPasswordLength;
-		
+
 		wfProfileIn(__METHOD__);
 		$sResponse = "";
 		if ($sUsername == "") {
@@ -284,7 +303,7 @@ class AutoCreateWiki {
 		return $sResponse;
 	}
 
-	public static function checkRetypePasswordIsCorrect($sPass, $sValue) {	
+	public static function checkRetypePasswordIsCorrect($sPass, $sValue) {
 		wfProfileIn(__METHOD__);
 		$sResponse = "";
 		if ( $sValue == "" ) {
@@ -294,8 +313,8 @@ class AutoCreateWiki {
 		}
 		wfProfileOut(__METHOD__);
 		return $sResponse;
-	}	
-	
+	}
+
 	public static function checkBirthdayIsCorrect ($sYear, $sMonth, $sDay) {
 		wfProfileIn(__METHOD__);
 		$sResponse = "";
@@ -313,13 +332,13 @@ class AutoCreateWiki {
 				$userBirthDay = strtotime($sYear . '-' . $sMonth . '-' . $sDay);
 				if ($userBirthDay > strtotime('-13 years')) {
 					$sResponse = wfMsg('userlogin-unable-info');
-				} 
+				}
 			}
 		}
 		wfProfileOut(__METHOD__);
 		return $sResponse;
 	}
-	
+
 	/**
 	 * get staff member signature for given lang code
 	 */
@@ -348,9 +367,9 @@ class AutoCreateWiki {
 		wfProfileOut( __METHOD__ );
 		return $oUser;
 	}
-	
+
 	/**
-	 * get or set value from memcache 
+	 * get or set value from memcache
 	 */
 	public static function logMemcKey ($action, $aParams, $aInfo = array()) {
 		global $wgUser, $wgMemc;
@@ -366,7 +385,7 @@ class AutoCreateWiki {
 		wfProfileOut(__METHOD__);
 		return $key;
 	}
-	
+
 	/**
 	 * check "bad" words (include in MediaWiki message)
 	 */
@@ -374,11 +393,11 @@ class AutoCreateWiki {
 		wfProfileIn(__METHOD__);
 		$allowed = true;
 		$sBadWords = wfMsg(self::BAD_WORDS_MSG);
-		
+
 		if ( !empty($sBadWords) && !empty($sText) ) {
-			#-- check only a-z and 0-9 
+			#-- check only a-z and 0-9
 			$newText = preg_replace("/[^a-z0-9]/i", "", $sText);
-			#-- 
+			#--
 			if ($split == true) {
 				$aWordsInText = preg_split("/[\s,]+/", $newText);
 			} else {
@@ -403,8 +422,8 @@ class AutoCreateWiki {
 		#---
 		wfProfileOut(__METHOD__);
 		return $allowed;
-	}	
-	
+	}
+
 	/**
 	 * check "bad" words by TextRegex extension
 	 */
@@ -414,7 +433,7 @@ class AutoCreateWiki {
 		$oRegexCore = new TextRegexCore( "creation", 0 );
 		if ($oRegexCore instanceof TextRegexCore) {
 			$newText = preg_replace("/[^a-z0-9]/i", "", $sText);
-			#-- 
+			#--
 			if ($split == true) {
 				$aWordsInText = preg_split("/[\s,]+/", $newText);
 			} else {
@@ -425,5 +444,5 @@ class AutoCreateWiki {
 		#---
 		wfProfileOut(__METHOD__);
 		return $allowed;
-	}	
+	}
 }
