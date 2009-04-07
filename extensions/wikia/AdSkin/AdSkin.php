@@ -1,5 +1,7 @@
 <?php
 /*
+ * Ads ad as background of main page of the wiki
+ *
  * Author: Christian Williams 
  */
 
