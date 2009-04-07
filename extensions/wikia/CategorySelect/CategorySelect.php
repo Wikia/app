@@ -319,7 +319,7 @@ function CategorySelectImportFormData($editPage, $request) {
 	if ($request->wasPosted()) {
 		$sourceType = $request->getVal('wpCategorySelectSourceType');
 		if ($sourceType == 'wiki') {
-			$categories = $editPage->safeUnicodeInput($request, 'csWikitext');
+			$categories = "\n" . trim($editPage->safeUnicodeInput($request, 'csWikitext'));
 		} else {	//json
 			$categories = $editPage->safeUnicodeInput($request, 'wpCategorySelectWikitext');
 			$categories = CategorySelectChangeFormat($categories, 'json', 'wiki');
