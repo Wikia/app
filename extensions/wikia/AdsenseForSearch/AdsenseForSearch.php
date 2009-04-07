@@ -21,12 +21,12 @@ echo <<<EOS
 
 	   function GetParam(name) 
 	   { 
-			var match = new RegExp(name + "=*([^&]+)*","i").exec(location.search);
-			if (match==null)
+			var match = new RegExp(name + "=([^&;]+)").exec(location.search);
+			if (match===null)
 			{
 				match = new RegExp(name + "=(.+)","i").exec(location.search);
 			}
-		    if (match==null)
+		    if (match===null)
 			{
 		       return null;
 			}
