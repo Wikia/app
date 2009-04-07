@@ -19,6 +19,7 @@ $wgExtensionMessagesFiles['WidgetsSpecialPage'] = dirname(__FILE__) . '/WidgetsS
 $wgExtensionCredits['specialpage'][] = array(
 	'name' => 'Widgets list',
 	'description' => '[[Special:Widgets|Special page]] containing a list of all available widgets',
+	'url' => 'http://help.wikia.com/wiki/Help:Widgets#Full_Widgets_List',
 	'version' => '1.0',
 	'author' => 'Maciej Brencz',
 );
