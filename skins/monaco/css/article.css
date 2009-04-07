@@ -376,7 +376,7 @@ body div.searchresult {
 	font-size: medium;
 	text-decoration: underline;
 }
-.mw-search-result-data {
+.mw-search-results .mw-search-result-data {
 	font-size: 70%;
 }
 span.searchmatch {
