@@ -42,6 +42,7 @@ function axACWRequestCheckName() {
 
 	$isError = false;
 	$sResponse = AutoCreateWiki::checkDomainIsCorrect($sName, $sLang);
+	error_log("$sResponse");
 	if ( empty($sResponse) ) {
 		$aDomains = AutoCreateWiki::getDomainsLikeOrExact($sName, $sLang);
 		if ( !empty($aDomains) && is_array($aDomains) ) {
@@ -64,6 +65,11 @@ function axACWRequestCheckName() {
 				if (!empty($sLike)) {
 					$sResponse .= "<ul id='wiki-result-list-like'>{$sLike}</ul>";
 				}
+			}
+			
+			if ( !isset($aDomains['exact']) && !isset($aDomains['like']) && isset($aDomains['closed']) ) {
+				$sResponse = wfMsg('autocreatewiki-violate-policy');
+				$isError = true;
 			}
 		}
 	} else {

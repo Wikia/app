@@ -18,6 +18,10 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 	exit( 1 );
 }
 
+/**
+ * sometimes class Job is uknown in this point
+ */
+include_once( $GLOBALS[ "IP" ] . "/includes/JobQueue.php" );
 $wgJobClasses[ "ACWLocal" ] = "AutoCreateWikiLocalJob";
 
 /**
