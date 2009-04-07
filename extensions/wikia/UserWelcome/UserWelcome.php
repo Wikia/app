@@ -1,4 +1,11 @@
 <?php
+
+/*
+ * Ads <welcomeuser /> parser hook to show current user social infobox
+ *
+ * @author NY team
+ */
+
 $wgExtensionFunctions[] = "wfWelcomeUser";
 $wgExtensionFunctions[] = 'wfWelcomeUserReadLang';
 
