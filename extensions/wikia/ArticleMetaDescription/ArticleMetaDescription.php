@@ -30,7 +30,7 @@ function wfArticleMetaDescription(&$out, &$text) {
 		
 	$sMessage = null;
 	$sMainPage = wfMsgForContent('Mainpage');
-	if(eregi(':', $sMainPage)) {
+	if(strpos($sMainPage, ':') !== false) {
 	    $sTitle = $wgTitle->getFullText();
 	}
 	else {
