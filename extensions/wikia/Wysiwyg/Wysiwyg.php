@@ -796,7 +796,7 @@ function WysiwygGetTemplateParams($name, $templateCall = null) {
 				for($k = 0; isset($a[$k]); $k++) {
 					$line = $a[$k];
 					if(preg_match($e1, $line, $m)) {
-						$templateCall .= str_replace('|', '%08X', '[[' . $m[1] . '|' . $m[2] . ']]') . $m[3];
+						$templateCall .= str_replace('|', '%08X', '[[' . $m[1] . ($m[2] === '' ? '' : ('|' . $m[2])) . ']]') . $m[3];
 					} elseif(preg_match($e1_img, $line, $m)) {
 						$templateCall .=  str_replace('|', '%08X', '[[' . $m[1] . '|' . $m[2]);
 					} else {
