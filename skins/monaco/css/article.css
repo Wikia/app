@@ -367,9 +367,10 @@ ul.mw-search-results {
 	list-style-image: none;
 	font-family: "Arial", sans-serif;
 }
-div.searchresult {
-	width: 42em;
+body div.searchresult {
 	font-size: small;
+	max-width: 42em;
+	width: auto !important;
 }
 .mw-search-results a {
 	font-size: medium;
@@ -392,6 +393,7 @@ span.searchmatch {
 /*** ADSENSE FOR SEARCH ***/
 #afs_narrow {
 	border-left: 1px solid #CCC;
+	clear: right;
 	float: right;
 	margin-left: 10px;
 	padding-left: 10px;
@@ -400,6 +402,6 @@ span.searchmatch {
 #afs_wide .ad_text {
 	padding-right: .5em;
 }
-#afs_wide .ad_text + br {
-	display: none;
+.google_afs a {
+	background-image: none !important;
 }
