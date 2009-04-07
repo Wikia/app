@@ -16,7 +16,7 @@ function wfSharedMessages() {
 	$wgHooks['MessagesPreLoad'][] = 'wfGetSharedMessage';
 }
 
-function wfGetSharedMessage($messageTitle, $message){
+function wfGetSharedMessage($messageTitle, &$message){
 	$text = '';
 	if(preg_match('/^shared-(.*)/i', $messageTitle, $messageParts)) {
 		global $wgContLang, $wgLang;
