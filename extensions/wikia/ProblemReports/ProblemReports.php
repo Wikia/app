@@ -11,35 +11,12 @@ if (!defined('MEDIAWIKI')) die();
  * @author Maciej Brencz <macbre@wikia-inc.com>
  * @license http://www.gnu.org/copyleft/gpl.html GNU General Public License 2.0 or later
  * 
-  create table problem_reports (
-    pr_id int not null auto_increment primary key,
-    pr_cat varchar(32) not null,
-    pr_summary varchar(512),
-    pr_ns int not null,
-    pr_title varchar(255) not null,
-    pr_city_id int,
-    pr_server varchar(128),
-    pr_anon_reporter int(1),
-    pr_reporter varchar(128),
-    pr_ip int(32) unsigned not null,
-    pr_email varchar(128),
-    pr_browser varhar(256),
-    pr_date datetime not null,
-    pr_status int(8)
- );
-  *
-  
-  settings:
-  
-  $wgProblemReportsEnable (boolean)		// turn on "ProblemReports" extension
-  $wgProblemReportsEnableAnonReports (boolean)	// allow anons to report a problems
-  
  */
 
 $wgExtensionCredits['other'][] = array(
 	'name' => 'ProblemReports',
 	'url' => 'http://help.wikia.com/wiki/Help:ProblemReports',
-	'version' => '2.42',
+	'version' => '2.43',
 	'description' => 'Allows users to report problems with wiki-articles and helpers/sysops/janitors/staff to view & resolve them',
 	'author' => '[http://pl.wikia.com/wiki/User:Macbre Maciej Brencz]'
 );
