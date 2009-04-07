@@ -122,7 +122,7 @@ echo <<<EOS
           document.getElementById("afs_narrow").innerHTML = narrowAds;
       }
 EOS;
-	if ( isset($wgAFSKeywords) ) {
+	if ( !empty($wgAFSKeywords) ) {
 		$afs_keywords = '';
 		//$afs_string = str_replace(' ', '', trim( $wgAFSKeywords ) );
 		$afs_array = explode(',', $wgAFSKeywords);
