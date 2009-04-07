@@ -25,23 +25,24 @@ $strRendPath = "$IP/extensions/wikia/wikitex";
 
 // Set class names; which may be customized based on local language, fashion
 // or whim.  Henry V was a maker of these when he was courting Gallrix Kate.
-$arrRend = array ('math'	=> 'strMath',
-		  'batik'	=> 'strBatik',
-		  'chem'	=> 'strXym',
-		  'chess'	=> 'strChess',
-		  'feyn'	=> 'strFeyn',
-		  'go'		=> 'strGo',
-		  'greek'	=> 'strGreek',
-		  'graph'	=> 'strGraph',
-		  'ling'	=> 'strLing',
-		  'music'	=> 'strMusic',
-		  'plot'	=> 'strPlot',
-		  'ppch'	=> 'strPPCH',
-		  'schem'	=> 'strSchem',
-		  'teng'	=> 'strTeng',
-		  'tipa'	=> 'strTipa');
-#SVG disabled for now
-#		  'svg'		=> 'strSVG',
+$arrRend = array (
+	'math'	=> 'strMath',
+#	'batik'	=> 'strBatik',
+#	'chem'	=> 'strXym',
+#	'chess'	=> 'strChess',
+#	'feyn'	=> 'strFeyn',
+#	'go'		=> 'strGo',
+#	'greek'	=> 'strGreek',
+#	'graph'	=> 'strGraph',
+#	'ling'	=> 'strLing',
+#	'music'	=> 'strMusic',
+#	'plot'	=> 'strPlot',
+#	'ppch'	=> 'strPPCH',
+#	'schem'	=> 'strSchem',
+#	 'svg'		=> 'strSVG', #SVG disabled for now
+#	'teng'	=> 'strTeng',
+#	'tipa'	=> 'strTipa'
+);
 
 // liberal Latin in errorous dicta
 $arrErr['rend']	= 'directive non gratum.';
