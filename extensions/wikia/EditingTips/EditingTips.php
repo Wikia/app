@@ -5,7 +5,7 @@
 
 $wgExtensionCredits['other'][] = array(
     'name' => 'EditingTips',
-    'author' => 'Christian Williams, Inez Korczyński, Bartek Łapiński',
+    'author' => array('Christian Williams', 'Inez Korczyński', 'Bartek Łapiński'),
 );
 
 $wgExtensionMessagesFiles['EditingTips'] = dirname(__FILE__).'/'.'EditingTips.i18n.php';
