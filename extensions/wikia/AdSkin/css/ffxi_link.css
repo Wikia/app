@@ -1,0 +1,31 @@
+#request_wiki {
+	display: none;
+}
+#ffxi_link {
+	color: #FFF !important;
+	font-size: 9pt;
+	font-weight: bold;
+	left: 221px;
+	position: absolute;
+	text-align: left;
+	top: 4px;
+	width: 420px;
+}
+#wikia_page {
+	top: -157px;
+}
+#userData {
+	top: 20px;
+}
+body.mainpage #ffxi_link {
+	display: none;
+}
+body.mainpage #request_wiki {
+	display: block;
+}
+body.mainpage #wikia_page {
+	top: -176px;
+}
+body.mainpage #userData {
+	top: 10px;
+}

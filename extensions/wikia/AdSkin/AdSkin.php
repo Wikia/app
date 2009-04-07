@@ -98,6 +98,10 @@ function RenderAdLink() {
 			echo '<link rel="stylesheet" type="text/css" href="'. $wgExtensionsPath .'/wikia/AdSkin/css/warhammer_link.css?'. $wgAdSkinVersion .'" />';
 			echo '<a href="http://www.warhammeronline.com/trial?WHK33J-U7C8Q-HWPEJ-9QAIJ-4Y8JK" id="warhammer_link">Download the Free 10-Day Trial</a>';
 			break;
+		case "ffxi_link":
+			echo '<link rel="stylesheet" type="text/css" href="'. $wgExtensionsPath .'/wikia/AdSkin/css/ffxi_link.css?'. $wgAdSkinVersion .'" />';
+			echo '<a href="http://ad.doubleclick.net/clk;213790954;29393853;v?http://www.finalfantasyxi.com" id="ffxi_link">The story of Vana\'diel continues! New chapters in the FINAL FANTASY&reg; XI saga begin, starting with "The Crystalline Prophecy."<br />Experience the story of a lifetime!</a>';
+			break;
 		}
 	}
 	return true;
