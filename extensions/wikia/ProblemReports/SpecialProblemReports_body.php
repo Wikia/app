@@ -94,8 +94,14 @@ class SpecialProblemReports extends SpecialPage
 	function handleMailer() {
 		global $wgRequest, $wgUser, $wgOut, $wgServerName;
 	    
-		// check user permission to send emails (and maybe his email is empty)
-		if ( !WikiaApiQueryProblemReports::userCanDoActions() || $wgUser->getEmail() == '' ) {
+		// check user permission to send emails (RT #13150)
+		if ( !(WikiaApiQueryProblemReports::userCanDoActions() && WikiaApiQueryProblemReports::userCanDoCrossWikiActions()) ) {
+			$wgOut->showPermissionsErrorPage( array('permissionserrors') );
+			return;
+		}
+
+		// maybe your email is empty
+		if ( $wgUser->getEmail() == '' ) {
 			$wgOut->showPermissionsErrorPage( array('mailnologintext') );
 			return;
 		}
