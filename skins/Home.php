@@ -517,7 +517,7 @@ class HomeTemplate extends QuickTemplate {
 		</div>
 	</div>
 	<div id="homepage_right">
-		<div style="position: absolute; top: 15px; left: 50%;"><a href="http://requests.wikia.com" class="big_button orange" style="margin-left: -50%;"><big>Create a Wiki</big><small></small></a></div>
+		<div style="position: absolute; top: 15px; left: 50%;"><a href="http://www.wikia.com/wiki/Special:CreateWiki" class="big_button orange" style="margin-left: -50%;"><big>Create a Wiki</big><small></small></a></div>
 		<div class="box yellow" style="background-image: url(<?php $this->text('stylepath') ?>/home/images/new_to_wikis_accent.gif); background-position: 240px 100%; background-repeat: no-repeat; padding-right: 70px;">
 			<h1>New to Wikis?</h1>
 			"Wiki" comes from the Hawaiian word for fast. Wikia's wikis are websites where editing is simple and quick.<br />
