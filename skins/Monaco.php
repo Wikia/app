@@ -1432,7 +1432,7 @@ if(isset($categorylist['nodes']) && count($categorylist['nodes']) > 0 ) {
 			wfRunHooks('MonacoAdLink');
 
 			if ($wgUser->isLoggedIn()) {
-				echo '<a rel="nofollow" href="http://requests.wikia.com" id="request_wiki" class="loggedin">'. wfMsg('createwikipagetitle') .'</a>';
+				echo '<a rel="nofollow" href="http://www.wikia.com/wiki/Special:CreateWiki" id="request_wiki" class="loggedin">'. wfMsg('createwikipagetitle') .'</a>';
 			}
 ?>
 			</div>
@@ -1464,7 +1464,7 @@ if( $custom_user_data ) {
 	} else {
 ?>
 				<li>
-					<a rel="nofollow" href="http://requests.wikia.com" id="request_wiki"><?=wfMsg('createwikipagetitle')?></a>
+					<a rel="nofollow" href="http://www.wikia.com/wiki/Special:CreateWiki" id="request_wiki"><?=wfMsg('createwikipagetitle')?></a>
 				</li>
 				<li id="userLogin">
 					<a rel="nofollow" class="bigButton" id="login" href="<?= htmlspecialchars($this->data['userlinks']['login']['href']) ?>">
