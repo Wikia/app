@@ -21,7 +21,7 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 $wgExtensionCredits['specialpage'][] = array(
 	'name' => 'AutoCreateWiki',
 	'version' => '1.0',
-	'author' => 'Krzysztof Krzyźaniak',
+	'author' => 'Krzysztof Krzyżaniak, Piotr Molski',
 	'description' => 'Create wiki in WikiFactory by user requests'
 );
 
