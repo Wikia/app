@@ -955,13 +955,6 @@ class Linker {
 			}
 
 			if ( $thumb ) {
-				if($thumb->width < $file->width) { // if thumb width is lower then original image width
-					if(@filesize($thumb->path) > @filesize($file->path)) { // if thumb file size is bigger then original file size
-						error_log("Inez - saved: ".(filesize($thumb->path)-filesize($file->path)));
-						$thumb->path = $file->path;
-						$thumb->url = $file->url;
-					}
-				}
 				$outerWidth = $thumb->getWidth() + 2;
 			} else {
 				$outerWidth = $hp['width'] + 2;

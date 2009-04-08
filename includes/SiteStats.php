@@ -36,6 +36,7 @@ class SiteStats {
 		wfDebug( __METHOD__ . ": reading site_stats from slave\n" );
 		$row = self::doLoad( wfGetDB( DB_SLAVE ) );
 
+		/*
 		if( !self::isSane( $row ) ) {
 			// Might have just been initialized during this request? Underflow?
 			wfDebug( __METHOD__ . ": site_stats damaged or missing on slave\n" );
@@ -63,6 +64,7 @@ class SiteStats {
 		if( !self::isSane( $row ) ) {
 			wfDebug( __METHOD__ . ": site_stats persistently nonsensical o_O\n" );
 		}
+		*/
 		return $row;
 	}
 

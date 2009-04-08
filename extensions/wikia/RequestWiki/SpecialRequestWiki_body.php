@@ -44,6 +44,13 @@ class RequestWikiPage extends SpecialPage {
 
 		global $wgUser, $wgOut, $wgRequest;
 
+		/**
+		 * redirect to central wikia new autocreate page
+		 * @see extensions/wikia/AutoCreateWiki/
+		 */
+		$wgOut->redirect( "http://www.wikia.com/wiki/Special:CreateWiki");
+		return true;
+
 		if( $wgUser->isBlocked() ) {
 			$wgOut->blockedPage();
 			return;

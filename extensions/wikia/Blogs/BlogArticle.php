@@ -184,6 +184,7 @@ class BlogArticle extends Article {
 		 * use cache or skip cache when action=purge
 		 */
 		$user    = $this->mTitle->getBaseText();
+		$userMem = $this->mTitle->getPrefixedDBkey();
 		$listing = false;
 		$purge   = $wgRequest->getVal( "action" ) == 'purge';
 		$page    = $wgRequest->getVal( "page", 0 );
@@ -192,7 +193,7 @@ class BlogArticle extends Article {
 		$wgOut->setSyndicated( true );
 
 		if( !$purge ) {
-			$listing  = $wgMemc->get( wfMemcKey( "blog", "listing", $user, $page ) );
+			$listing  = $wgMemc->get( wfMemcKey( "blog", "listing", $userMem, $page ) );
 		}
 
 		if( !$listing ) {
@@ -207,7 +208,7 @@ class BlogArticle extends Article {
 				"offset" => $offset
 			);
 			$listing = BlogTemplateClass::parseTag( "<author>$user</author>", $params, $wgParser );
-			$wgMemc->set( wfMemcKey( "blog", "listing", $user, $offset ), $page, 3600 );
+			$wgMemc->set( wfMemcKey( "blog", "listing", $userMem, $offset ), $page, 3600 );
 		}
 
 		$wgOut->addHTML( $listing );
@@ -222,7 +223,7 @@ class BlogArticle extends Article {
 	public function clearBlogListing() {
 		global $wgRequest, $wgMemc;
 
-		$user = $this->mTitle->getBaseText();
+		$user = $this->mTitle->getPrefixedDBkey();
 		foreach( range(0, 5) as $page ) {
 			$wgMemc->delete( wfMemcKey( "blog", "listing", $user, $page ) );
 		}
@@ -237,6 +238,7 @@ class BlogArticle extends Article {
 		global $wgSitename;
 
 		$user    = $this->mTitle->getBaseText();
+		$userMemc = $this->mTitle->getPrefixedDBkey();
 		$listing = false;
 		$purge   = $wgRequest->getVal( 'action' ) == 'purge';
 		$offset  = 0;
@@ -244,7 +246,7 @@ class BlogArticle extends Article {
 		wfProfileIn( __METHOD__ );
 
 		if( !$purge ) {
-			$listing  = $wgMemc->get( wfMemcKey( "blog", "feed", $user, $offset ) );
+			$listing  = $wgMemc->get( wfMemcKey( "blog", "feed", $userMemc, $offset ) );
 		}
 
 		if ( !$listing ) {
@@ -259,7 +261,7 @@ class BlogArticle extends Article {
 			);
 
 			$listing = BlogTemplateClass::parseTag( "<author>$user</author>", $params, $wgParser );
-			$wgMemc->set( wfMemcKey( "blog", "feed", $user, $offset ), $listing, 3600 );
+			$wgMemc->set( wfMemcKey( "blog", "feed", $userMemc, $offset ), $listing, 3600 );
 		}
 
 		$feed = new $wgFeedClasses[ $format ]( wfMsg("blog-userblog", $user), wfMsg("blog-fromsitename", $wgSitename), $wgTitle->getFullUrl() );
