@@ -306,7 +306,30 @@ class WikiaMiniUpload {
 					} else {
 						header('X-screen-type: conflict');
 						$tmpl = new EasyTemplate(dirname(__FILE__).'/templates/');
-						$tmpl->set_vars(array('name' => $name, 'mwname' => $mwname, 'extraId' => $extraId));
+
+						$data = array('wpUpload' => 1, 'wpSourceType' => 'web', 'wpUploadFileURL' => '');
+						$form = new UploadForm(new FauxRequest($data, true));
+						// extensions check
+						list( $partname, $ext ) = $form->splitExtensions( $name );
+
+						if( count( $ext ) ) {
+							$finalExt = $ext[count( $ext ) - 1];
+						} else {
+							$finalExt = '';
+						}
+
+						// for more than one "extension"
+						if( count( $ext ) > 1 ) {
+							for( $i = 0; $i < count( $ext ) - 1; $i++ )
+								$partname .= '.' . $ext[$i];
+						}
+	
+						$tmpl->set_vars(array(
+							'partname' => $partname,
+							'extension' => strtolower( $finalExt ),
+							'mwname' => $mwname,
+							'extraId' => $extraId
+						));
 						return $tmpl->execute('conflict');
 					}
 				} else {

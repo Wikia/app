@@ -10,7 +10,7 @@ if(!defined('MEDIAWIKI')) {
 $wgExtensionCredits['other'][] = array(
         'name' => 'WikiaMiniUpload (Add Images)',
         'author' => 'Inez Korczyński, Bartek Łapiński',
-	'version' => '1.01',
+	'version' => '1.02'
 );
 
 $dir = dirname(__FILE__).'/';
@@ -46,6 +46,7 @@ function WMUSetupVars($vars) {
 	$vars['wmu_close'] = wfMsg('wmu-close');
 	$vars['wmu_warn1'] = wfMsg('wmu-warn1');
 	$vars['wmu_warn2'] = wfMsg('wmu-warn2');
+	$vars['wmu_warn3'] = wfMsg('wmu-warn3');
 	$vars['wmu_bad_extension'] = wfMsg('wmu-bad-extension');
 	$vars['filetype_missing'] = wfMsg('filetype-missing');
 	$vars['file_extensions'] = $wgFileExtensions;

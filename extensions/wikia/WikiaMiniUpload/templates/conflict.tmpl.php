@@ -1,7 +1,7 @@
 <input id="ImageUploadExtraId" type="hidden" value="<?= urlencode($extraId) ?>" />
 <?php
 $file_mwname = new FakeLocalFile(Title::newFromText($mwname, 6), RepoGroup::singleton()->getLocalRepo());
-$file_name = new LocalFile(Title::newFromText($name, 6), RepoGroup::singleton()->getLocalRepo());
+$file_name = new LocalFile(Title::newFromText($partname . '.' . $extension, 6), RepoGroup::singleton()->getLocalRepo());
 echo wfMsg('wmu-conflict-inf', $file_name->getName());
 ?>
 <table cellspacing="0" id="ImageUploadConflictTable">
@@ -9,7 +9,9 @@ echo wfMsg('wmu-conflict-inf', $file_name->getName());
 		<td style="border-right: 1px solid #CCC;">
 			<h2><?= wfMsg('wmu-rename') ?></h2>
 			<div style="margin: 5px 0;">
-				<input type="text" id="ImageUploadRenameName" value="<?= $file_name->getName() ?>" />
+				<input type="text" id="ImageUploadRenameName" value="<?= $partname ?>" />
+				<label for="ImageUploadRenameName">.<?= $extension ?></label>
+	                        <input id="ImageUploadRenameExtension" type="hidden" value="<?= $extension ?>" />
 				<input type="button" value="<?= wfMsg('wmu-insert') ?>" onclick="WMU_insertImage(event, 'rename');" />
 			</div>
 		</td>
