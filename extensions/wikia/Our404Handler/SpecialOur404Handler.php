@@ -19,7 +19,7 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 $wgExtensionCredits['specialpage'][] = array(
 	'name' => 'Our404Handler',
 	'version' => '1.0',
-	'author' => 'Krzysztof Krzyźaniak',
+	'author' => 'Krzysztof Krzyżaniak',
 	'description' => 'Our 404 handler for making thumbs and other magic',
 );
 
