@@ -109,7 +109,7 @@ function renderRss( $input ) {
 	#Check for errors.
 	if ( empty($rss) ) {
 		wfLoadExtensionMessages( 'rss' );
-		return wfMsg( 'rss-error', $url, 'failed to fetch');
+		return wfMsg('rss-empty', $url);
 	}
 
 	if ( $rss->ERROR ) {
