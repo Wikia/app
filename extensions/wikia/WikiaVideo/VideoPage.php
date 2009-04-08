@@ -40,6 +40,15 @@ class VideoPage extends Article {
 		parent::view();
 	}
 
+	function delete() {
+		parent::delete();	
+		$title = $this->mTitle;
+		if ( $title ) {
+			$update = new VideoHTMLCacheUpdate( $title, 'imagelinks' );
+			$update->doUpdate();
+		}
+	}
+
 	// 
 	function view() {
 		global $wgOut, $wgUser, $wgRequest;
@@ -601,7 +610,7 @@ EOD;
                 );
 
 		$cat = $wgContLang->getFormattedNsText( NS_CATEGORY );
-		$saved_text = '[[' . $cat . ':' . wfMsgForContent( 'wikiavideo-category' ) . ']]';		
+		$saved_text = '[[' . $cat . ':' . wfMsgForContent( 'wikiavideo-category' ) . ']]';
 
                 if( $dbw->affectedRows() == 0 ) {
 			// we are updating
@@ -1009,3 +1018,25 @@ class VideoHistoryList {
                 return "</table>\n";
         }
 }
+
+class VideoHTMLCacheUpdate extends HTMLCacheUpdate {
+
+	function getToCondition() {
+		$prefix = $this->getPrefix();
+		switch ( $this->mTable ) {
+			case 'pagelinks':
+			case 'templatelinks':
+			case 'redirect':
+				return array(
+						"{$prefix}_namespace" => $this->mTitle->getNamespace(),
+						"{$prefix}_title" => $this->mTitle->getDBkey()
+					    );
+			case 'imagelinks':
+				return array( 'il_to' => ':' . $this->mTitle->getDBkey() );
+			case 'categorylinks':
+				return array( 'cl_to' => $this->mTitle->getDBkey() );
+		}
+		throw new MWException( 'Invalid table type in ' . __CLASS__ );
+	}
+}
+
