@@ -21,5 +21,5 @@ $messages['en'] = array(
  */
 $messages['pl'] = array(
 	'rss-error' => '<div>Nie udało się odczytać kanału $1: $2</div>',
-	'rss-empty' => '<div>Nie udało się odczytać kanału $1.',
+	'rss-empty' => '<div>Nie udało się odczytać kanału $1!</div>',
 );
