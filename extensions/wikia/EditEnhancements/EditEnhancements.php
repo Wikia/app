@@ -1,6 +1,7 @@
 <?
 $wgExtensionCredits['other'][] = array(
         'name' => 'EditEnhancements',
+	'description' => 'Puts edit summary and save button above the fold',
         'version' => '1.0',
         'author' => array('[http://pl.wikia.com/wiki/User:Macbre Maciej Brencz]', 'Christian Williams')
 );
