@@ -39,7 +39,7 @@ function MagicLinksInit() {
 function MagicLinksReplaceLinks(&$out, &$text) {
 	$aSearch = array(
 		'/(?<=^|[[(<>\s])(t:r(\d+))/mi',	//new svn
-		'/(?<=^|[[(<>\s])(r(\d+))/mi',	//old svn
+		'/(?<=^|[[(<>\s])(r(\d+))(?=[])<>\s]|$)/mi',	//old svn
 		'/(?<=^|[[(<>\s])(rt#(\d+))/mi',	//new tickets (RT)
 		'/(?<=^|[[(<>\s])(trac#(\d+))/mi',	//old tickets (trac)
 	);
