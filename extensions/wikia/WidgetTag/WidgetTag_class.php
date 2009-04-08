@@ -9,7 +9,7 @@ class WidgetTagRenderer extends WidgetFramework {
                         self::$instance = new WidgetTagRenderer();
                 }
                 return self::$instance;
-	}	
+	}
 
 
         public function renderTag( $input, $args, $parser ) {
@@ -65,4 +65,3 @@ class WidgetTagRenderer extends WidgetFramework {
 		return $output;
 	}
 }
-
