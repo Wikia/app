@@ -532,9 +532,17 @@ function WMU_insertImage(e, type) {
 	if(type == 'overwrite') {
 		params.push('name='+ encodeURIComponent( $('ImageUploadExistingName').value ) );
 	} else if(type == 'rename') {
-		params.push('name='+ encodeURIComponent( $('ImageUploadRenameName').value ) );
+			if( '' == $( 'ImageUploadRenameName' ).value ) {
+				alert( wmu_warn3 );
+				return;
+			}
+		params.push('name='+ encodeURIComponent( $('ImageUploadRenameName').value ) + '.' + $( 'ImageUploadRenameExtension' ).value );
 	} else {
 		if($('ImageUploadName')) {
+			if( '' == $( 'ImageUploadName' ).value ) {
+				alert( wmu_warn3 );
+				return;
+			}
 			params.push('name='+ encodeURIComponent( $('ImageUploadName').value ) + '.' + $('ImageUploadExtension').value);
 		}
 	}
