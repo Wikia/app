@@ -452,7 +452,7 @@ class BlogComment {
 		$update = SquidUpdate::newSimplePurge( $Title );
 		$update->doUpdate();
 
-		$key = $Title->getBaseText();
+		$key = $Title->getPrefixedDBkey();
 		$wgMemc->delete( wfMemcKey( "blog", "listing", $key, 0 ) );
 		$wgMemc->delete( wfMemcKey( "blog", "comm", $Title->getArticleID() ) );
 
