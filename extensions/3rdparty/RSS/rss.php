@@ -107,6 +107,11 @@ function renderRss( $input ) {
 	$rss = @fetch_rss( $url );
 
 	#Check for errors.
+	if ( empty($rss) ) {
+		wfLoadExtensionMessages( 'rss' );
+		return wfMsg( 'rss-error', $url, 'failed to fetch');
+	}
+
 	if ( $rss->ERROR ) {
 		wfLoadExtensionMessages( 'rss' );
 		return wfMsg( 'rss-error', $url, $rss->ERROR);
