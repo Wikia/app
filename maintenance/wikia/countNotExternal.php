@@ -12,16 +12,16 @@ function countNotExternal() {
 	$databases = array();
 	$res = $dbr->select(
 		wfSharedTable( "city_list" ),
-		array( "city_dbname" ),
+		array( "city_dbname", "city_id" ),
 		array( "city_public" => 1 ),
 		__FUNCTION__
 	);
 	while( $row = $dbr->fetchObject( $res ) ) {
-		$databases[] = $row->city_dbname;
+		$databases[ $row->city_id ] = $row->city_dbname;
 	}
 	$dbr->freeResult( $res );
 
-	foreach( $databases as $database )  {
+	foreach( $databases as $city_id => $database )  {
 
 		$sql = "
 			SELECT count(*) as count
@@ -35,7 +35,7 @@ function countNotExternal() {
 		$row = $dbr->fetchObject( $res );
 
 		if( !empty( $row->count ) ) {
-			printf( "Not External rows in %20s = %8d\n", $database, $row->count );
+			printf( "Not External rows in %5d %30s = %8d\n", $city_id, $database, $row->count );
 		}
 
 		$dbr->freeResult( $res );
