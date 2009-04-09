@@ -751,6 +751,8 @@ Text should be placed on this page if you wish to explain usage, style and polic
 
 * pt-br
 ** Zuirdj
-"
+",
 
+# Special: Preferences
+'seeeditcount' => 'See edit count',
 ));
