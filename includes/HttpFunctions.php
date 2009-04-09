@@ -33,7 +33,7 @@ class Http {
 	 * @param $method string HTTP method. Usually GET/POST
 	 * @param $url string Full URL to act on
 	 * @param $timeout int Seconds to timeout. 'default' falls to $wgHTTPTimeout
-	 * @param $curlOptions array Optional array of extra params to pass 
+	 * @param $curlOptions array Optional array of extra params to pass
 	 * to curl_setopt()
 	 */
 	public static function request( $method, $url, $timeout = 'default', $curlOptions = array() ) {
@@ -71,7 +71,7 @@ class Http {
 			if ( is_object( $wgTitle ) ) {
 				curl_setopt( $c, CURLOPT_REFERER, $wgTitle->getFullURL() );
 			}
-			
+
 			if ( is_array( $curlOptions ) ) {
 				foreach( $curlOptions as $option => $value ) {
 					curl_setopt( $c, $option, $value );
@@ -133,12 +133,6 @@ class Http {
 		$matches = array();
 		if ( preg_match( '!^http://([\w.-]+)[/:].*$!', $url, $matches ) ) {
 			$host = $matches[1];
-			/**
-			 * quick hack for RT#13221
-			 */
-			if( preg_match( '/(wowwiki.com|wikia.com|uncyclopedia.org|falloutvault.com|memory-alpha.org)/', $host ) ) {
-				return true;
-			}
 
 			// Split up dotwise
 			$domainParts = explode( '.', $host );
@@ -158,7 +152,7 @@ class Http {
 		}
 		return false;
 	}
-	
+
 	/**
 	 * Return a standard user-agent we can use for external requests.
 	 */
