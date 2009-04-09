@@ -21,13 +21,21 @@ if(!defined('MEDIAWIKI')) {
 $wgExtensionCredits['other'][] = array(
     'name' => 'LinkSuggest',
     'author' => 'Inez Korczyński, Bartek Łapiński, Ciencia al Poder',
-    'version' => '1.50',
+    'version' => '1.51',
 );
 
 $wgExtensionMessagesFiles['LinkSuggest'] = dirname(__FILE__).'/'.'LinkSuggest.i18n.php';
 
 $wgHooks['UserToggles'][] = 'wfLinkSuggestToggle' ;
 $wgHooks['getEditingPreferencesTab'][] = 'wfLinkSuggestToggle' ;
+$wgHooks['MakeGlobalVariablesScript'][] = 'wfLinkSuggestSetupVars';
+
+
+function wfLinkSuggestSetupVars( $vars ) {	
+	global $wgContLang;
+	$vars['ls_template_ns'] = $wgContLang->getFormattedNsText( NS_TEMPLATE );
+        return true;
+}
 
 function wfLinkSuggestToggle($toggles, $default_array = false) {
 	wfLoadExtensionMessages('LinkSuggest');

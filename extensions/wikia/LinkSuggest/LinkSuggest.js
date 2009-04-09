@@ -258,10 +258,10 @@ YAHOO.lang.extend(YAHOO.example.AutoCompleteTextArea, YAHOO.widget.AutoComplete,
 					for (var i=0, aList=elContainer.getElementsByTagName('li'); i<aList.length; i++){
 						if (aList[i]._sResultKey){
 							if (this._bIsTemplate){
-								aList[i].innerHTML = aList[i].innerHTML.replace('Template:','');
-								aList[i]._sResultKey = aList[i]._sResultKey.replace('Template:','');
+								aList[i].innerHTML = aList[i].innerHTML.replace(ls_template_ns+':','');
+								aList[i]._sResultKey = aList[i]._sResultKey.replace(ls_template_ns+':','');
 								for (var j=0; j<aList[i]._oResultData.length; j++){
-									aList[i]._oResultData[j] = aList[i]._oResultData[j].replace('Template:','');
+									aList[i]._oResultData[j] = aList[i]._oResultData[j].replace(ls_template_ns+':','');
 								}
 							}
 						}
