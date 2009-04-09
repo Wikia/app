@@ -156,13 +156,13 @@ class LocalMaintenanceTask extends BatchTask {
 	 *
 	 */
 	private function setCentralPages() {
-		global $wgDBname, $wgUser;
+		global $wgCityId, $wgUser;
 
 		/**
 		 * do it only when run on central wikia
 		*/
-		if ( $wgDBname != "wikicities" ) {
-			$this->addLog( "Not run on central wikia. Cannot set wiki description page" );
+		if ( $wgCityId != 177 ) {
+			$this->log( "Not run on central wikia. Cannot set wiki description page" );
 			return false;
 		}
 
@@ -175,9 +175,10 @@ class LocalMaintenanceTask extends BatchTask {
 		$this->addLog( "Creating and modifing pages on Central Wikia (as user: " . $wgUser->getName() . ")..." );
 
 		/**
-		 * title of page
+		 * title of page, skip last "Wiki" part
 		 */
-		$centralTitleName = $this->mWikiData[ "name"];
+		$centralTitleName = preg_replace( "/(\s+wiki)$/i", "", $this->mWikiData[ "title" ] );
+
 
 		#--- title for this page
 		$centralTitle = Title::newFromText( $centralTitleName, NS_MAIN );
@@ -276,9 +277,9 @@ class LocalMaintenanceTask extends BatchTask {
 			return false;
 		}
 
-		if( strcmp( strtolower( $this->mWikiData['redirect'] ), strtolower( $centralTitleName ) ) != 0 ) {
+		if( strcmp( strtolower( $this->mWikiData['name'] ), strtolower( $centralTitleName ) ) != 0 ) {
 			#--- add redirect(s) on central
-			$oCentralRedirectTitle = Title::newFromText( $this->mWikiData['redirect'], NS_MAIN );
+			$oCentralRedirectTitle = Title::newFromText( $this->mWikiData['name'], NS_MAIN );
 			if ( $oCentralRedirectTitle instanceof Title ) {
 				$oCentralRedirectArticle = new Article( $oCentralRedirectTitle, 0);
 				if ( !$oCentralRedirectArticle->exists() ) {
@@ -305,7 +306,8 @@ class LocalMaintenanceTask extends BatchTask {
 						$this->addLog( sprintf("Article %s already exists.", $oCentralRedirectTitle->getFullUrl()) );
 					}
 				}
-			} else {
+			}
+			else {
 				$this->addLog( "ERROR: Unable to create title object for redirect page: " . $this->mWikiData['redirect'] );
 				return false;
 			}
