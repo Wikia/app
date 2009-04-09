@@ -519,3 +519,16 @@ CREATE TABLE IF NOT EXISTS `shared_newtalks` (
   `sn_date` timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
   KEY `sn_user_id_sn_user_ip_sn_wiki_idx` (`sn_user_id`,`sn_user_ip`,`sn_wiki`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+DROP TABLE IF EXISTS `city_cats`;
+CREATE TABLE `city_cats` (
+  `cat_id` int(9) NOT NULL auto_increment,
+  `cat_name` varchar(255) default NULL,
+  `cat_url` text,
+  PRIMARY KEY  (`cat_id`),
+  KEY `cat_name_idx` (`cat_name`)
+) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=latin1;
+
+LOCK TABLES `city_cats` WRITE;
+INSERT INTO `city_cats` VALUES (1,'Humor','http://www.wikia.com/wiki/Humor'),(2,'Gaming','http://gaming.wikia.com/'),(3,'Entertainment','http://entertainment.wikia.com/'),(4,'Wikia','http://www.wikia.com/wiki/Category:Hubs'),(5,'Toys','http://www.wikia.com/wiki/Toys'),(7,'Travel','http://www.wikia.com/wiki/Travel'),(8,'Education','http://www.wikia.com/wiki/Education'),(9,'Lifestyle','http://www.wikia.com/wiki/Lifestyle'),(10,'Finance','http://www.wikia.com/wiki/Finance'),(11,'Politics','http://www.wikia.com/wiki/Politics'),(12,'Technology','http://www.wikia.com/wiki/Technology'),(13,'Science','http://www.wikia.com/wiki/Science'),(14,'Philosophy','http://www.wikia.com/wiki/Philosophy'),(15,'Sports','http://www.wikia.com/wiki/Sports'),(16,'Music','http://www.wikia.com/wiki/Music'),(17,'Creative','http://www.wikia.com/wiki/Creative'),(18,'Auto','http://www.wikia.com/wiki/Auto'),(19,'Green','http://www.wikia.com/wiki/Green');
+UNLOCK TABLES;
