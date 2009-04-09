@@ -9,7 +9,9 @@
 $messages = array();
 
 $messages['en'] = array(
-	"autocreatewiki" => "Create new Wiki",
+	"autocreatewiki" => "Create a new Wiki",
+	"createwikipagetitle" => "Create a new Wiki",
+	"createwiki"=> "Create a new Wiki",
 	"autocreatewiki-chooseone" => "Choose one",
 	"autocreatewiki-required" => "$1 = required",
 	"autocreatewiki-web-address" => "Web Address:",
