@@ -282,8 +282,9 @@ class AutoCreateWikiLocalJob extends Job {
 		/**
 		 * define restriction level and duration
 		 */
-		$restrictions['edit'] = 'sysop';
-		$restrictions['move'] = 'sysop';
+		$restrictions[ "edit"   ] = 'sysop';
+		$restrictions[ "move"   ] = 'sysop';
+		$restrictions[ "create" ] = 'sysop';
 		$titleRestrictions = 'sysop';
 		$expiry = Block::infinity();
 
