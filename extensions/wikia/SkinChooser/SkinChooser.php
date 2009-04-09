@@ -1,5 +1,7 @@
 <?php
 /*
+ * Allow user to choose prefered skin / theme in user preferences
+ *
  * Author: Inez Korczynski
  */
 
