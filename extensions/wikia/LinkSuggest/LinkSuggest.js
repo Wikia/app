@@ -249,7 +249,7 @@ YAHOO.lang.extend(YAHOO.example.AutoCompleteTextArea, YAHOO.widget.AutoComplete,
 		}
 
 		if(sQueryStartAt >= 0 && sQueryReal.length > 2) {
-			YAHOO.example.AutoCompleteTextArea.superclass._sendQuery.call(this, sQueryReal);
+			YAHOO.example.AutoCompleteTextArea.superclass._sendQuery.call(this, encodeURI( sQueryReal ).replace(/%[0-9A-F]{2}/g,'_') );
 		}
 	},
 
