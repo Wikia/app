@@ -106,7 +106,7 @@ function WikiaSkinPreferences($pref) {
 
 	$validSkinNames2 = $validSkinNames;
 
-	$previewtext = wfMsg('skinpreview');
+	$previewtext = wfMsg('skin-preview');
 	//ticket #2428 - Marooned
 	if(isset($wgSkinPreviewPage) && is_string($wgSkinPreviewPage)) {
 		$previewLinkTemplate = Title::newFromText($wgSkinPreviewPage)->getLocalURL('useskin=');
