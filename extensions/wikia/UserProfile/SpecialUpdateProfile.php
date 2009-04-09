@@ -40,6 +40,13 @@ function wfSpecialUpdateProfile()
 			#---
 			global $wgCountriesList, $wgStateList;
 			#---
+
+			# Show a message if the database is in read-only mode
+			if ( wfReadOnly() ) {
+				$wgOut->readOnlyPage();
+				return;
+			}
+
 			$fname = "UpdateProfile:execute";
 			$wgOut->setPagetitle( wfMsg('updateyourprofile') );
 
