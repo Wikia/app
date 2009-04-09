@@ -133,6 +133,13 @@ class Http {
 		$matches = array();
 		if ( preg_match( '!^http://([\w.-]+)[/:].*$!', $url, $matches ) ) {
 			$host = $matches[1];
+			/**
+			 * quick hack for RT#13221
+			 */
+			if( preg_match( '/(wowwiki.com|wikia.com|uncyclopedia.org|falloutvault.com|memory-alpha.org)/', $host ) ) {
+				return true;
+			}
+
 			// Split up dotwise
 			$domainParts = explode( '.', $host );
 			// Check if this domain or any superdomain is listed in $wgConf as a local virtual host
