@@ -268,7 +268,7 @@ function wkLUshowDetails(limit, offset, ord, desc)
 		//---
 		div_details.innerHTML="<img src=\"<?=$wgExtensionsPath?>/wikia/Listusers/images/ajax-loader-s.gif\" />";
 		//---
-		var baseurl = wgScript + "?action=ajax&rs=ListUsers::axShowUsers" + params;
+		var baseurl = wgScript + "?action=ajax&rs=Listusers::axShowUsers" + params;
 		YAHOO.util.Connect.asyncRequest( "GET", baseurl, LocalUsersShowDetailsCallback);
 	}
 }

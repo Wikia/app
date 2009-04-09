@@ -16,14 +16,14 @@ $wgExtensionCredits['specialpage'][] = array(
     "author" => "Piotr Molski"
 );
 
-$wgExtensionMessagesFiles["ListUsers"] = dirname(__FILE__) . '/SpecialListusers.i18n.php';
+$wgExtensionMessagesFiles["Listusers"] = dirname(__FILE__) . '/SpecialListusers.i18n.php';
 
 $wgAvailableRights[] = 'listusers';
 $wgGroupPermissions['staff']['listusers'] = true;
 $wgGroupPermissions['sysop']['listusers'] = true;
 
-extAddSpecialPage( dirname(__FILE__) . '/SpecialListusers_body.php', 'ListUsers', 'ListUsers' );
-$wgSpecialPageGroups['ListUsers'] = 'users';
+extAddSpecialPage( dirname(__FILE__) . '/SpecialListusers_body.php', 'Listusers', 'Listusers' );
+$wgSpecialPageGroups['Listusers'] = 'users';
 
 global $wgAjaxExportList;
-$wgAjaxExportList[] = "ListUsers::axShowUsers";
+$wgAjaxExportList[] = "Listusers::axShowUsers";

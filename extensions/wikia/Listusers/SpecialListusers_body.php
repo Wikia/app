@@ -10,15 +10,15 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 	echo "This is MediaWiki extension and cannot be used standalone.\n"; exit( 1 ) ; 
 }
 
-class ListUsers extends SpecialPage {
+class Listusers extends SpecialPage {
 	private $mTitle;
 	private $mGroup;
 	/**
 	 * constructor
 	 */
 	function  __construct() {
-		parent::__construct( "ListUsers"  /*class*/, 'listusers' /*restriction*/);
-		wfLoadExtensionMessages("ListUsers");
+		parent::__construct( "Listusers"  /*class*/, 'listusers' /*restriction*/);
+		wfLoadExtensionMessages("Listusers");
 	}
 	
 	public function execute( $subpage ) {
@@ -40,7 +40,7 @@ class ListUsers extends SpecialPage {
 		/**
 		 * initial output
 		 */
-		$this->mTitle = Title::makeTitle( NS_SPECIAL, 'ListUsers' );
+		$this->mTitle = Title::makeTitle( NS_SPECIAL, 'Listusers' );
 		$wgOut->setPageTitle( wfMsg('listuserstitle') );
 		$wgOut->setRobotpolicy( 'noindex,nofollow' );
 		$wgOut->setArticleRelated( false );
@@ -182,7 +182,7 @@ class ListUsers extends SpecialPage {
 		$orderby = (isset($orderOption[$order])) ? $orderOption[$order] : $orderOption["username"];
 		
 		$aUsers = array('cnt' => 0, 'data' => array());
-		$memkey = wfForeignMemcKey( $wgSharedDB, null, "ListUsers", "articles", str_replace(" ", "_", $groups.$text.$contrib.$offset) );
+		$memkey = wfForeignMemcKey( $wgSharedDB, null, "Listusers", "articles", str_replace(" ", "_", $groups.$text.$contrib.$offset) );
 		$cached = ""; #$wgMemc->get($memkey);
 		if (!is_array ($cached)) { 
 			$dbs = wfGetDBExt(DB_SLAVE);
@@ -316,7 +316,7 @@ class ListUsers extends SpecialPage {
 		$result = array('nbr_records' => 0, 'limit' => $limit, 'page' => $page, 'order' => $order, 'desc' => $desc);
 
 		if ( (!empty($wgUser)) && (!$wgUser->isBlocked()) ) {
-			wfLoadExtensionMessages("ListUsers");
+			wfLoadExtensionMessages("Listusers");
 			
 			$aUsers = self::__getUsersFromDB($groups, $userSearch, $contrib, $limit, $page, $order, $desc);
 			
