@@ -192,7 +192,7 @@ class WikiFactoryLoader {
 		/**
 		 * and finally fallback to $wgDBserver
 		 */
-		if( ! $this->mDBhandler ) {
+		if( !$this->mDBhandler || !$this->mDBhandler->isOpen() ) {
 			$this->mDBhandler = new Database( $wgDBserver, $wgDBuser, $wgDBpassword, $this->mDBname );
 			$this->debug( "fallback to wgDBserver {$wgDBserver}" );
 		}
