@@ -64,6 +64,8 @@ YAHOO.namespace('YAHOO.example').FontSizeMonitor = (function(){
 
 
 /**
+ * TieDivLibrary is used to position ads on the page
+ *
  * @author Inez Korczynski, Christian Williams, Maciej Brencz
  */
 TieDivLibrary = new function() {
