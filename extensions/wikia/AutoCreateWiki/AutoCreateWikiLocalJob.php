@@ -74,6 +74,7 @@ class AutoCreateWikiLocalJob extends Job {
 				$this->mFounder->load();
 			}
 		}
+		$wgUser = User::newFromName( "CreateWiki script" );
 
 		$this->moveMainPage();
 		$this->protectKeyPages();
@@ -205,7 +206,7 @@ class AutoCreateWikiLocalJob extends Job {
 	 * move main page to SEO-friendly name
 	 */
 	private function moveMainPage() {
-		global $wgSitename;
+		global $wgSitename, $wgUser;
 
 		$source = wfMsgForContent('Mainpage');
 		$target = $wgSitename;
