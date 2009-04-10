@@ -116,12 +116,6 @@ YAHOO.Wikia.Tracker = {
 				YAHOO.log(fake, "info", "tracker");
 			}
 
-			if(wgServer.indexOf('-gamespot') > 0) {
-				fake = '/1_' + skinname + '/gamespot-' + wgDB + '/' + username + '/' + fakeurl;
-				urchinTracker(fake);
-				YAHOO.log(fake, "info", "tracker");
-			}
-
 			if(wgServer.indexOf('-abc') > 0) {
 				fake = '/1_' + skinname + '/abc-' + wgDB + '/' + username + '/' + fakeurl;
 				urchinTracker(fake);
