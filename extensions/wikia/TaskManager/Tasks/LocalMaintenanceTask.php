@@ -172,7 +172,7 @@ class LocalMaintenanceTask extends BatchTask {
 		 * set user for all maintenance work on central
 		 */
 		$wgUser = User::newFromName( 'CreateWiki script' );
-		$this->addLog( "Creating and modifing pages on Central Wikia (as user: " . $wgUser->getName() . ")..." );
+		$this->log( "Creating and modifing pages on Central Wikia (as user: " . $wgUser->getName() . ")..." );
 
 		/**
 		 * title of page, skip last "Wiki" part
@@ -189,7 +189,7 @@ class LocalMaintenanceTask extends BatchTask {
 			/**
 			 *  and article for for this title
 			 */
-			$this->addLog( sprintf("Have title object for page: %s", $centralTitle->getFullUrl( ) ) );
+			$this->log( sprintf("Have title object for page: %s", $centralTitle->getFullUrl( ) ) );
 		    $oCentralArticle = new Article( $centralTitle, 0);
 
 		    /**
@@ -213,24 +213,24 @@ class LocalMaintenanceTask extends BatchTask {
 				/**
 				 * create article
 				 */
-				$this->addLog( sprintf("Creating new article: %s", $centralTitle->getFullUrl( ) ) );
+				$this->log( sprintf("Creating new article: %s", $centralTitle->getFullUrl( ) ) );
 				$sPage = $oTmpl->execute("central");
 				$oCentralArticle->doEdit( $sPage, "created by autocreate Wiki process", EDIT_FORCE_BOT );
-				$this->addLog( sprintf("Article %s added.", $centralTitle->getFullUrl()) );
+				$this->log( sprintf("Article %s added.", $centralTitle->getFullUrl()) );
 			}
 			else {
 				/**
 				 * update article
 				 */
-				$this->addLog( sprintf("Updating existing article: %s", $centralTitle->getFullUrl()) );
+				$this->log( sprintf("Updating existing article: %s", $centralTitle->getFullUrl()) );
 				$sContent = $oCentralArticle->getContent();
 				$sContent = $oTmpl->execute("central");
 				$oCentralArticle->doEdit( $sContent, "modified by autocreate Wiki process", EDIT_FORCE_BOT );
-				$this->addLog( sprintf("Article %s already exists... content added", $centralTitle->getFullUrl()) );
+				$this->log( sprintf("Article %s already exists... content added", $centralTitle->getFullUrl()) );
 			}
 		}
 		else {
-			$this->addLog( "ERROR: Unable to create title object for page on Central Wikia: " . $centralTitleName );
+			$this->log( "ERROR: Unable to create title object for page on Central Wikia: " . $centralTitleName );
 			return false;
 		}
 
@@ -246,10 +246,10 @@ class LocalMaintenanceTask extends BatchTask {
 				$sContent .= $centralTitleName . "|" . $this->mWikiData['language'] . "}}";
 
 				$oCentralListArticle->doEdit( $sContent, "modified by autocreate Wiki process", EDIT_FORCE_BOT);
-				$this->addLog( sprintf("Article %s modified.", $oCentralListTitle->getFullUrl()) );
+				$this->log( sprintf("Article %s modified.", $oCentralListTitle->getFullUrl()) );
 			}
 			else {
-				$this->addLog( sprintf("Article %s not exists.", $oCentralListTitle->getFullUrl()) );
+				$this->log( sprintf("Article %s not exists.", $oCentralListTitle->getFullUrl()) );
 			}
 
 			/**
@@ -266,14 +266,14 @@ class LocalMaintenanceTask extends BatchTask {
 				$sContent = str_replace("|}", $sReplace, $oCentralListArticle->getContent());
 
 				$oCentralListArticle->doEdit( $sContent, "modified by autocreate Wiki process", EDIT_FORCE_BOT);
-				$this->addLog( sprintf("Article %s modified.", $oCentralListTitle->getFullUrl()) );
+				$this->log( sprintf("Article %s modified.", $oCentralListTitle->getFullUrl()) );
 			}
 			else {
-				$this->addLog( sprintf("Article %s not exists.", $oCentralListTitle->getFullUrl()) );
+				$this->log( sprintf("Article %s not exists.", $oCentralListTitle->getFullUrl()) );
 			}
 		}
 		else {
-			$this->addLog( "ERROR: Unable to create title object for page: " . $sCentralListTitle);
+			$this->log( "ERROR: Unable to create title object for page: " . $sCentralListTitle);
 			return false;
 		}
 
@@ -285,10 +285,10 @@ class LocalMaintenanceTask extends BatchTask {
 				if ( !$oCentralRedirectArticle->exists() ) {
 					$sContent = "#Redirect [[" . $centralTitleName . "]]";
 					$oCentralRedirectArticle->doEdit( $sContent, "modified by autocreate Wiki process", EDIT_FORCE_BOT);
-					$this->addLog( sprintf("Article %s added (redirect to: " . $centralTitleName . ").", $oCentralRedirectTitle->getFullUrl()) );
+					$this->log( sprintf("Article %s added (redirect to: " . $centralTitleName . ").", $oCentralRedirectTitle->getFullUrl()) );
 				}
 				else {
-					$this->addLog( sprintf("Article %s already exists.", $oCentralRedirectTitle->getFullUrl()) );
+					$this->log( sprintf("Article %s already exists.", $oCentralRedirectTitle->getFullUrl()) );
 				}
 
 				if( ( $this->mWikiData['language'] == 'en' ) && ( !eregi("^en.", $this->mWikiData['subdomain']) ) ) {
@@ -300,15 +300,15 @@ class LocalMaintenanceTask extends BatchTask {
 					$enRedirectArticle = new Article( $enRedirectTitle, 0);
 					if ( ! $enRedirectArticle->exists() ) {
 						$$enRedirectArticle->doEdit( "#Redirect [[" . $centralTitleName . "]]", "modified by autocreate Wiki process", EDIT_FORCE_BOT);
-						$this->addLog( sprintf("Article %s added (extra redirect to: " . $centralTitleName . ").", $enRedirectTitle->getFullUrl()) );
+						$this->log( sprintf("Article %s added (extra redirect to: " . $centralTitleName . ").", $enRedirectTitle->getFullUrl()) );
 					}
 					else {
-						$this->addLog( sprintf("Article %s already exists.", $enRedirectTitle->getFullUrl()) );
+						$this->log( sprintf("Article %s already exists.", $enRedirectTitle->getFullUrl()) );
 					}
 				}
 			}
 			else {
-				$this->addLog( "ERROR: Unable to create title object for redirect page: " . $this->mWikiData['redirect'] );
+				$this->log( "ERROR: Unable to create title object for redirect page: " . $this->mWikiData['redirect'] );
 				return false;
 			}
 		}
@@ -318,7 +318,7 @@ class LocalMaintenanceTask extends BatchTask {
 		 */
 		$wgUser = $oldUser;
 
-		$this->addLog( "Creating and modifing pages on Central Wikia finished." );
+		$this->log( "Creating and modifing pages on Central Wikia finished." );
 		return true;
 	}
 }
