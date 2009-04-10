@@ -57,7 +57,6 @@ YAHOO.Wikia.Customize.click = function( e, theme ) {
     <div id="skinThumbs">
 <?php
     foreach($themes as $theme):
-        if ($theme == "gamespot") continue;
         if ($theme == $current) $checked = 'checked="checked"'; else $checked = "";
 ?>
     <div class="skinframe">

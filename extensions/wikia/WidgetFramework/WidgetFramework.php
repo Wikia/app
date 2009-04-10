@@ -90,7 +90,6 @@ class WidgetFramework {
 						array('type' => 'WidgetSidebar', 'id' => 202),
 						array('type' => 'WidgetWikiaToolbox', 'id' => 203),
 						array('type' => 'WidgetWikiaPartners', 'id' => 204),
-						array('type' => 'WidgetGamespot', 'id' => 205),
 						array('type' => 'WidgetAdvertiser', 'id' => 206),
 					),
 				);
