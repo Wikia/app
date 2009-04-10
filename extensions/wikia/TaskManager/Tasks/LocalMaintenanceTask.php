@@ -295,15 +295,15 @@ class LocalMaintenanceTask extends BatchTask {
 					/**
 					 * extra redirect page: en.<subdomain>
 					 */
-					$sCentralRedirectTitle = 'en.' . $this->mWikiData['subdomain'];
-					$oCentralRedirectTitle = Title::newFromText( $sCentralRedirectTitle, NS_MAIN );
-					if ( !$oCentralRedirectArticle->exists() ) {
-						$sContent = "#Redirect [[" . $centralTitleName . "]]";
-						$oCentralRedirectArticle->doEdit( $sContent, "modified by autocreate Wiki process", EDIT_FORCE_BOT);
-						$this->addLog( sprintf("Article %s added (extra redirect to: " . $centralTitleName . ").", $oCentralRedirectTitle->getFullUrl()) );
+					$enTitle = 'en.' . $this->mWikiData['subdomain'];
+					$enRedirectTitle = Title::newFromText( $enTitle, NS_MAIN );
+					$enRedirectArticle = new Article( $enRedirectTitle, 0);
+					if ( ! $enRedirectArticle->exists() ) {
+						$$enRedirectArticle->doEdit( "#Redirect [[" . $centralTitleName . "]]", "modified by autocreate Wiki process", EDIT_FORCE_BOT);
+						$this->addLog( sprintf("Article %s added (extra redirect to: " . $centralTitleName . ").", $enRedirectTitle->getFullUrl()) );
 					}
 					else {
-						$this->addLog( sprintf("Article %s already exists.", $oCentralRedirectTitle->getFullUrl()) );
+						$this->addLog( sprintf("Article %s already exists.", $enRedirectTitle->getFullUrl()) );
 					}
 				}
 			}
