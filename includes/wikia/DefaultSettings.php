@@ -155,7 +155,6 @@ include_once( "$IP/extensions/wikia/MostPopularCategories/SpecialMostPopularCate
 include_once( "$IP/extensions/wikia/MostPopularArticles/SpecialMostPopularArticles.php" );
 include_once( "$IP/extensions/wikia/MostVisitedPages/SpecialMostVisitedPages.php" );
 include_once( "$IP/extensions/wikia/WidgetSpecialPage/WidgetsSpecialPage.php" );
-include_once( "$IP/extensions/ParserDiffTest/ParserDiffTest.php" );
 
 
 /**
