@@ -183,6 +183,7 @@ class WikiFactoryLoader {
 		if( $this->mDBhandler instanceof Database ) {
 			return $this->mDBhandler;
 		}
+		$host = "";
 		if( isset( $wgDBservers ) && is_array( $wgDBservers ) ) {
 			$server = array_rand( $wgDBservers );
 			$host = $wgDBservers[ $server ]["host"];
