@@ -392,8 +392,12 @@ class BlogComment {
 			return Wikia::json_encode( array( "error" => 1 ) );
 		}
 
-		list( $status, $article ) = self::doPost( $wgRequest, $wgUser, $Title );
-		$res = self::doAfterPost($status, $article);
+		$response = self::doPost( $wgRequest, $wgUser, $Title );
+		$res = array();
+		if ( $response !== false ) {
+			$status = $response[0]; $article = $response[1];
+			$res = self::doAfterPost($status, $article);
+		}
 
 		return Wikia::json_encode( $res );
 	}
@@ -413,12 +417,18 @@ class BlogComment {
 	static public function doPost( &$Request, &$User, &$Title ) {
 
 		global $wgMemc, $wgTitle;
+		wfProfileIn( __METHOD__ );
 
 		$text = $Request->getText("wpBlogComment", false);
 		if( !$text || !strlen( $text ) ) {
+			wfProfileOut( __METHOD__ );
 			return false;
 		}
-		wfProfileIn( __METHOD__ );
+
+		if ( wfReadOnly() ) {
+			wfProfileOut( __METHOD__ );
+			return false;
+		}
 
 		/**
 		 * title for comment is combination of article title and some "random"
@@ -685,8 +695,12 @@ class BlogCommentList {
 			if ( $sSubmit && $sComment && $iArticleId ) {
 				$oTitle = Title::newFromID( $iArticleId );
 				if ( $oTitle instanceof Title ) {
-					list( $status, $article ) = BlogComment::doPost( $wgRequest, $wgUser, $oTitle );
-					$res = BlogComment::doAfterPost($status, $article);
+					$response = BlogComment::doPost( $wgRequest, $wgUser, $oTitle );
+					$res = array();
+					if ( $response !== false ) {
+						$status = $response[0]; $article = $response[1];
+						$res = BlogComment::doAfterPost($status, $article);
+					}
 					$wgOut->redirect( $oTitle->getLocalURL() );
 				}
 			}
@@ -704,6 +718,7 @@ class BlogCommentList {
 
 		$comments  = $this->getCommentPages();
 		$canDelete = $wgUser->isAllowed( "delete" );
+		$isReadOnly = wfReadOnly();
 
 		$template = new EasyTemplate( dirname( __FILE__ ) . '/templates/' );
 
@@ -721,6 +736,7 @@ class BlogCommentList {
 			"output"	=> $wgOut,
 			"comments"  => $comments,
 			"canDelete" => $canDelete,
+			"isReadOnly" => $isReadOnly,
 		) );
 
 		$text = $template->execute( "comment-list" );
