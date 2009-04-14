@@ -107,7 +107,7 @@ class UserProfile {
 
 		//get work information
 		
-		if( $wgUserProfileDisplay['work'] == true ){
+		if( isset($wgUserProfileDisplay['work']) && $wgUserProfileDisplay['work'] == true ){
 			//try cache first
 			if( $profile["user_id"] ){
 				$key = wfMemcKey( 'user', 'profile',self::$profile_version, 'work', $this->user_id );

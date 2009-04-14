@@ -16,10 +16,10 @@ function RenderVote( $input, $args, &$parser ){
 	//$wgOut->addScript("<script type=\"text/javascript\" src=\"extensions/wikia/Vote/Vote.js?{$wgStyleVersion}\"></script>\n");
 
 	$wgOut->addHTML("<script>
-				var _VOTE_LINK = \"" . wfMsgForContent( 'vote_link' ) . "\"
-				var _UNVOTE_LINK = \"" . wfMsgForContent( 'vote_unvote_link' ) . "\"
-			</script>
-			");
+	var _VOTE_LINK = \"" . wfMsgForContent( 'vote_link' ) . "\"
+	var _UNVOTE_LINK = \"" . wfMsgForContent( 'vote_unvote_link' ) . "\"
+	</script>
+	");
 		
 	getValue($type,$input,"type");
 	
@@ -33,9 +33,7 @@ function RenderVote( $input, $args, &$parser ){
 	default:
 		$Vote = new Vote($wgTitle->mArticleID);
 	}
-	
 	$output = $Vote->display();
-	
 	wfProfileOut(__METHOD__);
 	
 	return $output; 

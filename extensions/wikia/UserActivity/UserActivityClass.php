@@ -491,7 +491,11 @@ class UserActivity {
 		if($this->show_messages_sent)$this->simplifyPageActivity( "user_message" );
 		//if($this->show_system_messages)$this->simplifyPageActivity( "system_messages", false );
 		
-		if($this->activityLines)usort($this->activityLines, array("UserActivity", "sortItems"));
+		if ( !isset($this->activityLines) ) {
+			$this->activityLines = array();
+		}
+		if ( isset($this->activityLines) && is_array($this->activityLines) )
+			usort($this->activityLines, array("UserActivity", "sortItems"));
 		return $this->activityLines;
 	}
 	

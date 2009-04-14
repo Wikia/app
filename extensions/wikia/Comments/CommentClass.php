@@ -385,7 +385,7 @@ class Comment{
 				 "Comment_Username"=>$row->Comment_Username,"comment_ip"=>$row->comment_ip,"comment_text"=>$row->comment_text , "comment_date"=>$row->comment_date,
 				 "Comment_user_id"=>$row->Comment_user_id,"Comment_user_points"=>number_format($row->stats_total_points),
 				 "CommentID"=>$row->CommentID,"Comment_Score"=>$row->Comment_Score,
-				 "CommentVotePlus"=>$row->CommentVotePlus, "CommentVoteMinus"=>$row->CommentVoteMinus, "AlreadyVoted" => $row->AlreadyVoted,
+				 "CommentVotePlus"=>$row->CommentVotePlus, "CommentVoteMinus"=>$row->CommentVoteMinus, "AlreadyVoted" => "",
 				 "Comment_Parent_ID"=>$row->Comment_Parent_ID, "thread" => $thread, "timestamp" => $row->timestamp
 				 
 				 );
@@ -516,7 +516,10 @@ class Comment{
 		foreach ($comments as $comment) {
 			
 			$CommentScore=$comment["Comment_Score"];
-			$this->Scorecard [ $comment["Comment_Username"] ] += $CommentScore;
+			if (!isset($this->Scorecard[ $comment["Comment_Username"] ])) {
+				$this->Scorecard[ $comment["Comment_Username"] ] = 0;
+			}
+			$this->Scorecard[ $comment["Comment_Username"] ] += $CommentScore;
 			
 			$CommentPosterLevel="";
 			

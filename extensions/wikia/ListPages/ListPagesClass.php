@@ -309,7 +309,7 @@ class ListPages{
 		
 		//SELECT FIELDS
 		$fields = array(
-				"page_id","page_namespace","page_title", "page_counter","UNIX_TIMESTAMP(page_touched)", 
+				"page_id","page_namespace","page_title", "page_counter","UNIX_TIMESTAMP(page_touched) as page_touched", 
 				"IFNULL(comment_count,0) as comment_count",
 				"IFNULL(vote_count,0) as vote_count",
 				"IFNULL(vote_avg,0) as vote_avg"
@@ -449,11 +449,14 @@ class ListPages{
 		$dbr =& wfGetDB( DB_SLAVE );
 		while ($row = $dbr->fetchObject( $res ) ) {
 			$list_pages[] = array(
-			 "page_id"=>$row->page_id,"page_title"=>$row->page_title , "page_touched" => $row->page_touched,
-			 "page_namespace"=>$row->page_namespace,"vote_count"=>$row->vote_count,
-			 "comment_count"=>$row->comment_count,"vote_avg"=>$row->vote_avg
-			 );
-	
+				"page_id" => $row->page_id,
+				"page_title" => $row->page_title, 
+				"page_touched" => $row->page_touched,
+				"page_namespace" => $row->page_namespace,
+				"vote_count" => $row->vote_count,
+				"comment_count" => $row->comment_count,
+				"vote_avg" => $row->vote_avg
+			);
 		}
 		if($this->PageNo==1){
 			$key = wfMemcKey( 'listpages', 'list', str_replace(" ","","category:{$this->CategoriesStr}:level:{$this->Level}:showpublished:{$this->ShowPublished}:sort:{$this->Order}:count:{$this->ShowCount}:order:{$this->SortBy}:ratingmin:{$this->ratingMin}") );
@@ -648,6 +651,3 @@ class ListPages{
 
 }
 
-
-
-?>

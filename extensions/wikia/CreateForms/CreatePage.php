@@ -14,6 +14,8 @@ function renderCreateForm($input, $args, &$parser){
 	
 	$wgOut->addScript("<script>var wgBlogDates=" . (($wgBlogDates)?1:0) . "</script>");
 	
+	$form = null;
+	$fromview = "";
 	$parser->disableCache();
 	
 	if(!$wgUser->isAllowed('edit') && $wgUser->isAnon() ){

@@ -23,6 +23,10 @@ class AjaxUploadForm extends UploadForm{
 	 	$value = null;
 	 	$value = $this->internalProcessUpload( $details );
 		
+		if ( !isset($this->mDestFile) ) { 
+			$this->mDestFile = "";	
+		}
+		
 	 	switch($value) {
 			case self::SUCCESS:
 				$this->showSuccess();
@@ -91,6 +95,10 @@ class AjaxUploadForm extends UploadForm{
 		{
 			wfDebug( "Hook 'UploadForm:initial' broke output of the upload form" );
 			return false;
+		}
+
+		if ( !isset($this->mDestFile) ) { 
+			$this->mDestFile = "";	
 		}
 
 		$isOverwrite = $wgRequest->getVal('wpOverwriteFile');

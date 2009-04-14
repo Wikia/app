@@ -17,6 +17,7 @@ function wfSpecialCommentIgnoreList(){
 			global $wgUser, $wgOut, $wgRequest, $IP, $wgCommentsDirectory, $wgMessageCache;
 			
 			$wgOut->setPagetitle( wfMsg("comment_ignore_title") );
+			$out = "";
 			
 			require_once ("$wgCommentsDirectory/CommentClass.php");
 			require_once ("$IP/extensions/wikia/UserStats/UserStatsClass.php");
@@ -33,7 +34,7 @@ function wfSpecialCommentIgnoreList(){
 			/* Redirect Non-logged in users to Login Page
 			/* It will automatically return them to the CommentBlockList page
 			/*/
-			if($wgUser->getID() == 0 && $user_name==""){
+			if ($wgUser->getID() == 0 && $user_name==""){
 				$block_list =  Title::makeTitle( NS_SPECIAL  , "CommentIgnoreList"  );
 				$wgOut->redirect( $block_list->getFullURL() . "&returnto=Special:CommentIgnoreList" );
 				return false;
@@ -71,6 +72,7 @@ function wfSpecialCommentIgnoreList(){
 			
 			$res = $dbr->query($sql);
 			
+			$out = "";
 			if( $dbr->numRows($res)>0){
 				$out = "<ul>";
 				while ($row = $dbr->fetchObject( $res ) ) {

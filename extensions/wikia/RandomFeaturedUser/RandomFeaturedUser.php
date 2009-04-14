@@ -23,8 +23,8 @@ function GetRandomUser( $input, $args, &$parser ){
 	
 	$parser->disableCache();
 	 
-	$period = $args["period"];
-	if( $period != "weekly" && $period != "monthly"){
+	$period = (isset($args["period"])) ? $args["period"] : "";
+	if ( $period != "weekly" && $period != "monthly") {
 		return "";
 	}
 	
@@ -80,7 +80,7 @@ function GetRandomUser( $input, $args, &$parser ){
 		return "";
 	}
 	
-	$output .= "<div class=\"random-featured-user\">";
+	$output = "<div class=\"random-featured-user\">";
 	
 	if( $wgRandomFeaturedUser["points"] == true ){
 		$stats = new UserStats($random_user["user_id"], $random_user["user_name"]);
@@ -102,10 +102,12 @@ function GetRandomUser( $input, $args, &$parser ){
 		$p = new Parser();
 		$profile = new UserProfile( $random_user["user_name"] );
 		$profile_data = $profile->getProfile();
-		$about = $profile_data["about"];
+		$about = (isset($profile_data["about"])) ? $profile_data["about"] : "";
 		//remove templates
 		$about =  preg_replace('@{{.*?}}@si', '', $about);
-		if($profile_data["about"])$output .= "<div class=\"random-featured-user-about-title\">" .wfMsg("random_user_about_me") . "</div>" . $p->parse( $about, $wgTitle, $wgOut->parserOptions(), false)->getText();
+		if ( !empty($about) ) {
+			$output .= "<div class=\"random-featured-user-about-title\">" .wfMsg("random_user_about_me") . "</div>" . $p->parse( $about, $wgTitle, $wgOut->parserOptions(), false)->getText();
+		}
 	}
 	
 	$output .= "</div><div class=\"cleared\"></div>";

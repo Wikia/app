@@ -9,7 +9,7 @@ class SiteScout{
 	var $timestamp = 0;
 	var $items = array();
 	
-	function SiteScout(){
+	function SiteScout($uid = 0) {
 		$this->user_id = $uid;
 		return "";
 	} 
@@ -60,6 +60,7 @@ class SiteScout{
 	
 	function getControls(){	
 		global $wgSitename, $wgUploadPath;
+		$output = "";
 		$edits = $this->getEditCount();
 		$votes = $this->getVoteCount();
 		$comments = $this->getCommentCount();
@@ -312,6 +313,7 @@ class SiteScout{
 	
 	function getEditsSQL(){
 		$dbr =& wfGetDB( DB_SLAVE );
+		$TimeSQL = "";
 		if($this->timestamp >0){
 			//$TimeSQL = ' WHERE UNIX_TIMESTAMP( rc_timestamp)  > ' . ($this->timestamp );
 		}
@@ -321,6 +323,7 @@ class SiteScout{
 	
 	function getVotesSQL(){
 		$dbr =& wfGetDB( DB_SLAVE );
+		$TimeSQL = "";
 		if($this->timestamp >0){
 			//$TimeSQL = ' AND UNIX_TIMESTAMP( vote_date) > ' . $this->timestamp;
 		}
@@ -330,6 +333,7 @@ class SiteScout{
 	
 	function getCommentsSQL(){
 		$dbr =& wfGetDB( DB_SLAVE );
+		$TimeSQL = "";
 		if($this->timestamp >0){
 			//$TimeSQL = ' AND UNIX_TIMESTAMP( comment_date) > ' . $this->timestamp;
 		}
@@ -339,6 +343,7 @@ class SiteScout{
 	
 	function getNetworkUpdatesSQL(){
 		$dbr =& wfGetDB( DB_SLAVE );
+		$TimeSQL = "";
 		if($this->timestamp >0){
 			//$TimeSQL = ' WHERE UNIX_TIMESTAMP( us_date) > ' . $this->timestamp;
 		}

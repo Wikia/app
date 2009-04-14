@@ -11,8 +11,7 @@ function GetSiteActivity( $input, $args, &$parser ){
 
 	$parser->disableCache();
 	 
-	$limit = $args["limit"];
-	if(!$limit)$limit = 10;
+	$limit = ( isset($args["limit"]) && is_numeric($args["limit"]) ) ? $args["limit"] : 10;
 	
 	require_once ( "$IP/extensions/wikia/UserHome/UserActivity.i18n.php" );
 	foreach( efWikiaUserActivity() as $lang => $messages ){

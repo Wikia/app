@@ -9,7 +9,7 @@ class UpdateProfile extends SpecialPage {
 	function initProfile(){
 		global $wgUser;
 		$dbr =& wfGetDB( DB_MASTER );
-		$s = $dbr->selectRow( 'user_profile', array( 'up_user_id' ), array( 'up_user_id' => $wgUser->getID() ), $fname );
+		$s = $dbr->selectRow( 'user_profile', array( 'up_user_id' ), array( 'up_user_id' => $wgUser->getID() ), __METHOD__ );
 		if ( $s === false ) {		
 			$fname = 'user_profile::addToDatabase';
 			$dbw =& wfGetDB( DB_MASTER );
@@ -24,7 +24,7 @@ class UpdateProfile extends SpecialPage {
 
 
 	function execute($section){
-		global $wgUser, $wgOut, $wgRequest, $IP, $wgUserProfileScripts, $wgUpdateProfileInRecentChanges, $wgSupressPageTitle ;
+		global $wgUser, $wgOut, $wgRequest, $IP, $wgUserProfileScripts, $wgUpdateProfileInRecentChanges, $wgSupressPageTitle, $wgStyleVersion ;
 		$wgSupressPageTitle = true;
 		$wgOut->setHTMLTitle(   wfMsg('edit-profile-title'));
 		$wgOut->setPageTitle(  wfMsg('edit-profile-title'));
@@ -98,7 +98,7 @@ class UpdateProfile extends SpecialPage {
 	}
 
 	function saveWikiaSettings_basic(){
-		global $wgUser, $wgOut, $wgRequest, $wgSiteView;
+		global $wgUser, $wgOut, $wgRequest, $wgSiteView, $wgEmailAuthentication;
 		
 		$wgUser->setRealName( $wgRequest->getVal("real_name") );
 	
@@ -283,6 +283,7 @@ class UpdateProfile extends SpecialPage {
 	
 		array( 'up_user_id' => $wgUser->getID() ), "" );
 
+		$location_city = $location_state = $hometown_city = $hometown_state = $hometown_country = $birthday = $about = $places = $websites = $schools = $occupation = "";
 		if ( $s !== false ) {
 			$location_city = $s->up_location_city;
 			$location_state = $s->up_location_state;
@@ -298,8 +299,12 @@ class UpdateProfile extends SpecialPage {
 			$websites = $s->up_websites;
 		
 		}
-		if(!$location_country)$location_country = wfMsgForContent( 'user-profile-default-country' );
-		if(!$hometown_country)$hometown_country = wfMsgForContent( 'user-profile-default-country' );
+		if(!isset($location_country)) {
+			$location_country = wfMsgForContent( 'user-profile-default-country' );
+		}
+		if(!isset($hometown_country)) {
+			$hometown_country = wfMsgForContent( 'user-profile-default-country' );
+		}
 		
 		$s = $dbr->selectRow( 'user', 
 			array( 
@@ -348,8 +353,6 @@ class UpdateProfile extends SpecialPage {
 			<div class="cleared"></div>
 		</div>
 		<div class="cleared"></div>';
-		
-		
 		
 		$form .= '<div class="profile-update">
 			<p class="profile-update-title">' . wfMsgForContent( 'user-profile-personal-location' ) . '</p>
@@ -570,7 +573,7 @@ class UpdateProfile extends SpecialPage {
 	
 	
 	function displayPreferencesForm(){
-		global $wgRequest, $wgSiteView, $wgUser, $wgOut;
+		global $wgRequest, $wgSiteView, $wgUser, $wgOut, $wgSitename;
 		
 		$wgOut->setHTMLTitle( wfMsg('pagetitle', wfMsg('user-profile-section-preferences')));
 		$form =  '<h1>'.wfMsg('user-profile-section-preferences').'</h1>';
