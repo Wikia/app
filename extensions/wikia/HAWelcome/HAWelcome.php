@@ -274,13 +274,12 @@ class HAWelcomeJob extends Job {
 						 * remove bots from admins
 						 */
 						$admins = array( "rev_user" => array_unique( array_diff( $admins, $bots ) ) );
-						$sixtydays = wfTimestamp( TS_MW, time() - 5184000 ); // 60 days ago (24*60*60*60)
 						$row = $dbr->selectRow(
 							array( "revision" ),
 							array( "rev_user", "rev_user_text"),
 							array(
 								$dbr->makeList( $admins, LIST_OR ),
-								"rev_timestamp > {$sixtydays}"
+								"rev_timestamp > " . $dbr->addQuotes(  $dbr->timestamp( 5184000 ) ) // 60 days ago (24*60*60*60)
 							),
 							__METHOD__,
 							array( "ORDER BY" => "rev_timestamp DESC")
