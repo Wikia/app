@@ -29,7 +29,7 @@ $wgMysqlUpdates = array(
 	// do_linkscc_update obsolete
 	array( 'add_table', 'hitcounter',                        'patch-hitcounter.sql' ),
 	array( 'add_field', 'recentchanges', 'rc_type',          'patch-rc_type.sql' ),
-	
+
 	// 1.3
 	array( 'add_field', 'user',          'user_real_name',   'patch-user-realname.sql' ),
 	array( 'add_table', 'querycache',                        'patch-querycache.sql' ),
@@ -38,7 +38,7 @@ $wgMysqlUpdates = array(
 	// do_linkscc_1_3_update obsolete
 	array( 'do_old_links_update' ),
 	array( 'add_field', 'recentchanges', 'rc_ip',            'patch-rc_ip.sql' ),
-	
+
 	// 1.4
 	array( 'do_image_name_unique_update' ),
 	array( 'add_field', 'recentchanges', 'rc_id',            'patch-rc_id.sql' ),
@@ -52,7 +52,7 @@ $wgMysqlUpdates = array(
 	array( 'do_watchlist_update' ),
 	array( 'do_user_update' ),
 	// do_copy_newtalk_to_watchlist obsolete
-	
+
 	// 1.5
 	array( 'do_schema_restructuring' ),
 	array( 'add_field', 'logging',       'log_params',       'patch-log_params.sql' ),
@@ -77,7 +77,7 @@ $wgMysqlUpdates = array(
 	array( 'add_table', 'transcache',                        'patch-transcache.sql' ),
 	array( 'add_field', 'interwiki',     'iw_trans',         'patch-interwiki-trans.sql' ),
 	array( 'add_table', 'trackbacks',                        'patch-trackbacks.sql' ),
-	
+
 	// 1.6
 	array( 'do_watchlist_null' ),
 	// do_image_index_update obsolete
@@ -94,7 +94,7 @@ $wgMysqlUpdates = array(
 	array( 'add_table', 'filearchive',                         'patch-filearchive.sql' ),
 	array( 'add_field', 'ipblocks',        'ipb_anon_only',    'patch-ipb_anon_only.sql' ),
 	array( 'do_rc_indices_update' ),
-	
+
 	// 1.9
 	array( 'add_field', 'user',          'user_newpass_time', 'patch-user_newpass_time.sql' ),
 	array( 'add_table', 'redirect',                           'patch-redirect.sql' ),
@@ -103,7 +103,7 @@ $wgMysqlUpdates = array(
 	array( 'do_backlinking_indices_update' ),
 	array( 'add_field', 'recentchanges', 'rc_old_len',        'patch-rc_len.sql' ),
 	array( 'add_field', 'user',          'user_editcount',    'patch-user_editcount.sql' ),
-	
+
 	// 1.10
 	array( 'do_restrictions_update' ),
 	array( 'add_field', 'logging',       'log_id',           'patch-log_id.sql' ),
@@ -116,7 +116,7 @@ $wgMysqlUpdates = array(
 	array( 'add_field', 'ipblocks',      'ipb_deleted',      'patch-ipb_deleted.sql' ),
 	array( 'add_field', 'filearchive',   'fa_deleted',       'patch-fa_deleted.sql' ),
 	array( 'add_field', 'archive',       'ar_len',           'patch-ar_len.sql' ),
-	
+
 	// 1.11
 	array( 'add_field', 'ipblocks',      'ipb_block_email',  'patch-ipb_emailban.sql' ),
 	array( 'do_categorylinks_indices_update' ),
@@ -129,7 +129,7 @@ $wgMysqlUpdates = array(
 
 	// 1.12
 	array( 'add_table', 'protected_titles',                  'patch-protected_titles.sql' ),
-	
+
 	// 1.13
 	array( 'add_field', 'ipblocks',      'ipb_by_text',      'patch-ipb_by_text.sql' ),
 	array( 'add_table', 'page_props',                        'patch-page_props.sql' ),
@@ -143,12 +143,17 @@ $wgMysqlUpdates = array(
 	array( 'maybe_do_profiling_memory_update' ),
 	array( 'do_filearchive_indices_update' ),
 	array( 'update_password_format' ),
-	
+
 	// 1.14
 	array( 'add_field', 'site_stats',     'ss_active_users',  'patch-ss_active_users.sql' ),
 	array( 'do_active_users_init' ),
 	array( 'add_field', 'ipblocks',     'ipb_allow_usertalk',  'patch-ipb_allow_usertalk.sql' )
 );
+
+/**
+ * Wikia-specific updaters
+ */
+require_once( "$IP/maintenance/wikia/updaters.inc" );
 
 
 # For extensions only, should be populated via hooks
@@ -387,7 +392,7 @@ function do_watchlist_update() {
 		wfOut( "Adding missing watchlist talk page rows... " );
 		flush();
 
-		$wgDatabase->insertSelect( 'watchlist', 'watchlist', 
+		$wgDatabase->insertSelect( 'watchlist', 'watchlist',
 			array(
 				'wl_user' => 'wl_user',
 				'wl_namespace' => 'wl_namespace | 1',
@@ -940,7 +945,7 @@ function do_rc_indices_update() {
 		'rc_ns_usertext' => 'patch-recentchanges-utindex.sql',
 		'rc_user_text' => 'patch-rc_user_text-index.sql',
 	);
-	
+
 	foreach( $indexes as $index => $patch ) {
 		$info = $wgDatabase->indexInfo( 'recentchanges', $index, __METHOD__ );
 		if( !$info ) {
@@ -974,7 +979,7 @@ function do_backlinking_indices_update() {
 	if (!index_has_field('pagelinks', 'pl_namespace', 'pl_from') ||
 		!index_has_field('templatelinks', 'tl_namespace', 'tl_from') ||
 		!index_has_field('imagelinks', 'il_to', 'il_from'))
-	{	
+	{
 		dbsource( archive( 'patch-backlinkindexes.sql' ) );
 		wfOut( "...backlinking indices updated\n" );
 	}
@@ -983,7 +988,7 @@ function do_backlinking_indices_update() {
 function do_categorylinks_indices_update() {
 	wfOut( "Checking for categorylinks indices...\n" );
 	if (!index_has_field('categorylinks', 'cl_sortkey', 'cl_from'))
-	{	
+	{
 		dbsource( archive( 'patch-categorylinksindex.sql' ) );
 		wfOut( "...categorylinks indices updated\n" );
 	}
@@ -994,7 +999,7 @@ function do_filearchive_indices_update() {
 	wfOut( "Checking filearchive indices...\n" );
 	$info = $wgDatabase->indexInfo( 'filearchive', 'fa_user_timestamp', __METHOD__ );
 	if ( !$info )
-	{	
+	{
 		dbsource( archive( 'patch-filearhive-user-index.sql' ) );
 		wfOut( "...filearchive indices updated\n" );
 	}
@@ -1036,11 +1041,11 @@ function do_active_users_init() {
 	global $wgDatabase;
 	$activeUsers = $wgDatabase->selectField( 'site_stats', 'ss_active_users', false, __METHOD__ );
 	if( $activeUsers == -1 ) {
-		$activeUsers = $wgDatabase->selectField( 'recentchanges', 
+		$activeUsers = $wgDatabase->selectField( 'recentchanges',
 			'COUNT( DISTINCT rc_user_text )',
-			array( 'rc_user != 0', 'rc_bot' => 0, "rc_log_type != 'newusers'" ), __METHOD__ 
+			array( 'rc_user != 0', 'rc_bot' => 0, "rc_log_type != 'newusers'" ), __METHOD__
 		);
-		$wgDatabase->update( 'site_stats', 
+		$wgDatabase->update( 'site_stats',
 			array( 'ss_active_users' => intval($activeUsers) ),
 			array( 'ss_row_id' => 1 ), __METHOD__, array( 'LIMIT' => 1 )
 		);
@@ -1068,7 +1073,7 @@ function do_all_updates( $shared = false, $purge = true ) {
 		do_postgres_updates();
 		return;
 	}
-	
+
 	# Run core updates in sequence...
 	global $wgMysqlUpdates;
 	foreach( $wgMysqlUpdates as $params ) {
@@ -1076,7 +1081,7 @@ function do_all_updates( $shared = false, $purge = true ) {
 		call_user_func_array( $func, $params );
 		flush();
 	}
-	
+
 	/// @fixme clean up this mess too!
 	global $wgExtNewTables, $wgExtNewFields, $wgExtNewIndexes;
 	# Add missing extension tables
@@ -1098,12 +1103,12 @@ function do_all_updates( $shared = false, $purge = true ) {
 	}
 
 
-	wfOut( "Deleting old default messages (this may take a long time!)..." ); 
+	wfOut( "Deleting old default messages (this may take a long time!)..." );
 	deleteDefaultMessages();
 	wfOut( "Done\n" );
-	
+
 	do_stats_init();
-	
+
 	if( $purge ) {
 		purge_cache();
 	}
@@ -1180,7 +1185,7 @@ function do_restrictions_update() {
 			$wgDatabase->update( 'page', array ( 'page_restrictions' => ''), array( 'page_id' => $id ), __METHOD__ );
 
 			}
-			
+
 			foreach( $restrictions as $type => $level ) {
 				$wgDatabase->insert( 'page_restrictions', array ( 'pr_page' => $id,
 											'pr_type' => $type,
@@ -1217,7 +1222,7 @@ function do_populate_parent_id() {
 		return;
 	}
 	require_once( 'populateParentId.inc' );
-	
+
 	global $wgDatabase;
 	populate_rev_parent_id( $wgDatabase );
 	 */
@@ -1254,7 +1259,7 @@ pg_describe_table($table)
 global	$wgDatabase, $wgDBmwschema;
 	$q = <<<END
 SELECT attname, attnum FROM pg_namespace, pg_class, pg_attribute
-	WHERE pg_class.relnamespace = pg_namespace.oid 
+	WHERE pg_class.relnamespace = pg_namespace.oid
 	  AND attrelid=pg_class.oid AND attnum > 0
 	  AND relname=%s AND nspname=%s
 END;
@@ -1266,7 +1271,7 @@ END;
 
 	$cols = array();
 	while ($r = $wgDatabase->fetchRow($res)) {
-		$cols[] = array(	
+		$cols[] = array(
 				"name" => $r[0],
 				"ord" => $r[1],
 			);
