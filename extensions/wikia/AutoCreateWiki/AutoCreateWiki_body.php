@@ -117,6 +117,11 @@ class AutoCreateWikiPage extends SpecialPage {
 			$this->mDefSubdomain = "wikia.com";
 		}
 
+		if ( wfReadOnly() ) {
+			$wgOut->readOnlyPage();
+			return;
+		}
+
 		$this->mNbrCreated = $this->countCreatedWikis();
 
 		if ( !in_array('staff', $wgUser->getGroups()) && ($this->mNbrCreated >= self::DAILY_LIMIT) ) {
