@@ -35,11 +35,16 @@ CREATE TABLE `blockedby_stats` (
 function wfRegexBlockCheck ($current_user) {
 	wfProfileIn( __METHOD__ );
 
- if(in_array('staff', $current_user->getGroups())) {
- 	// Staff users should not be blocked in any case
+	$userGroups = $current_user->getGroups();
+	if (empty($userGroups)) {
+		$userGroups = array();
+	}
+	
+	if( in_array('staff', $userGroups) ) {
+		// Staff users should not be blocked in any case
 		wfProfileOut( __METHOD__ );
 		return true;
- }
+	}
  
 	$ip_to_check = wfGetIP();
 
@@ -587,7 +592,11 @@ function wfRegexBlockSetUserData(&$user, $user_ip, $blocker, $valid) {
             $user->mBlock->mAddress = ($valid['ip'] == 1) ? wfGetIP() : $user->getName();
         }
 
-        $result = wfRegexBlockUpdateStats ( $user, $user_ip, $blocker, $valid['match'], $valid['blckid'] );
+		if ( wfReadOnly() ) {
+			$result = true;
+		} else {
+			$result = wfRegexBlockUpdateStats ( $user, $user_ip, $blocker, $valid['match'], $valid['blckid'] );
+		}
     }
 
 	wfProfileOut( __METHOD__ );
