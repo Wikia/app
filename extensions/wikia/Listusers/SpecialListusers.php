@@ -7,7 +7,7 @@
  * @licence GNU General Public Licence 2.0 or later
  */
 if ( !defined( 'MEDIAWIKI' ) ) {
-    echo "This is MediaWiki extension named TagsReport.\n";
+    echo "This is MediaWiki extension named Listusers.\n";
     exit( 1 ) ;
 }
 $wgExtensionCredits['specialpage'][] = array(
@@ -19,8 +19,8 @@ $wgExtensionCredits['specialpage'][] = array(
 $wgExtensionMessagesFiles["Listusers"] = dirname(__FILE__) . '/SpecialListusers.i18n.php';
 
 $wgAvailableRights[] = 'listusers';
-$wgGroupPermissions['staff']['listusers'] = true;
-$wgGroupPermissions['sysop']['listusers'] = true;
+#$wgGroupPermissions['staff']['listusers'] = true;
+#$wgGroupPermissions['sysop']['listusers'] = true;
 
 extAddSpecialPage( dirname(__FILE__) . '/SpecialListusers_body.php', 'Listusers', 'Listusers' );
 $wgSpecialPageGroups['Listusers'] = 'users';

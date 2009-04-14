@@ -17,25 +17,21 @@ class Listusers extends SpecialPage {
 	 * constructor
 	 */
 	function  __construct() {
-		parent::__construct( "Listusers"  /*class*/, 'listusers' /*restriction*/);
+		parent::__construct( "Listusers"  /*class*/ );
 		wfLoadExtensionMessages("Listusers");
 	}
 	
 	public function execute( $subpage ) {
 		global $wgUser, $wgOut, $wgRequest;
 
-		if( $wgUser->isBlocked() ) {
+		/*if( $wgUser->isBlocked() ) {
 			$wgOut->blockedPage();
 			return;
-		}
-		if( wfReadOnly() ) {
+		}*/
+		if ( wfReadOnly() ) {
 			$wgOut->readOnlyPage();
 			return;
 		}
-		/*if( !$wgUser->isAllowed( 'listusers' ) ) {
-			$this->displayRestrictionError();
-			return;
-		}*/
 		
 		/**
 		 * initial output
@@ -182,8 +178,9 @@ class Listusers extends SpecialPage {
 		$orderby = (isset($orderOption[$order])) ? $orderOption[$order] : $orderOption["username"];
 		
 		$aUsers = array('cnt' => 0, 'data' => array());
-		$memkey = wfForeignMemcKey( $wgSharedDB, null, "Listusers", "articles", str_replace(" ", "_", $groups.$text.$contrib.$offset) );
-		$cached = ""; #$wgMemc->get($memkey);
+		$subMemkey = md5($groups.$text.$contrib.$offset.$limit.$orderby);
+		$memkey = wfForeignMemcKey( $wgSharedDB, null, "Listusers", $subMemkey );
+		$cached = $wgMemc->get($memkey);
 		if (!is_array ($cached)) { 
 			$dbs = wfGetDBExt(DB_SLAVE);
 			if (!is_null($dbs)) {
@@ -245,10 +242,10 @@ class Listusers extends SpecialPage {
 						1 => $sk->makeLinkObj(Title::newFromText('Contributions', NS_SPECIAL), $wgLang->ucfirst(wfMsg('contribslink')), "target={$oUser->getName()}"),
 						2 => $sk->makeLinkObj(Title::newFromText('Editcount', NS_SPECIAL), $wgLang->ucfirst(wfMsg('listusersedits')), "username={$oUser->getName()}")
 					);
-					if ( $wgUser->isAllowed( 'block' ) ) {
+					if ( $wgUser->isAllowed( 'block' ) && (!$wgUser->isBlocked()) ) {
 						$aLinks[] = $sk->makeLinkObj(Title::newFromText("BlockIP/{$oUser->getName()}", NS_SPECIAL), $wgLang->ucfirst(wfMsg('blocklink')));
 					}
-					if ( $wgUser->isAllowed( 'userrights' ) ) {
+					if ( $wgUser->isAllowed( 'userrights' ) && (!$wgUser->isBlocked()) ) {
 						$aLinks[] = $sk->makeLinkObj(Title::newFromText('UserRights', NS_SPECIAL), $wgLang->ucfirst(wfMsg('listgrouprights-rights')), "user={$oUser->getName()}");
 					};
 
@@ -315,7 +312,7 @@ class Listusers extends SpecialPage {
 
 		$result = array('nbr_records' => 0, 'limit' => $limit, 'page' => $page, 'order' => $order, 'desc' => $desc);
 
-		if ( (!empty($wgUser)) && (!$wgUser->isBlocked()) ) {
+		if ( !empty($wgUser) /*&& !$wgUser->isBlocked() */) {
 			wfLoadExtensionMessages("Listusers");
 			
 			$aUsers = self::__getUsersFromDB($groups, $userSearch, $contrib, $limit, $page, $order, $desc);
