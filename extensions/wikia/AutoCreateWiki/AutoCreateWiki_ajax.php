@@ -42,7 +42,6 @@ function axACWRequestCheckName() {
 
 	$isError = false;
 	$sResponse = AutoCreateWiki::checkDomainIsCorrect($sName, $sLang);
-	error_log("$sResponse");
 	if ( empty($sResponse) ) {
 		$aDomains = AutoCreateWiki::getDomainsLikeOrExact($sName, $sLang);
 		if ( !empty($aDomains) && is_array($aDomains) ) {
