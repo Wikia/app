@@ -22,8 +22,10 @@ CREATE TABLE IF NOT EXISTS `page_vote` (
   `ip` varchar(32) NOT NULL,
   `time` datetime NOT NULL,
   KEY `user_id` (`user_id`,`article_id`),
-  KEY `article_id` (`article_id`)
+  KEY `article_id` (`article_id`),
+  KEY `unique_vote` (`unique_id`, `article_id`)
 ) ENGINE=InnoDB;
+
 
 create table if not exists rank_groups (
     grp_id int not null auto_increment primary key,
@@ -148,7 +150,7 @@ CREATE TABLE IF NOT EXISTS `page_visited` (
   KEY `page_visited_cnt_inx` (`count`)
 ) ENGINE=InnoDB;
 
-CREATE TABLE IF NOT EXISTS `poll_info` ( 
+CREATE TABLE IF NOT EXISTS `poll_info` (
 		`poll_id` VARCHAR(32),
 		`poll_txt` TEXT,
 		`poll_date` DATETIME,
@@ -157,11 +159,11 @@ CREATE TABLE IF NOT EXISTS `poll_info` (
 		PRIMARY KEY  (`poll_id`)
 ) Engine=InnoDB;
 
-CREATE TABLE IF NOT EXISTS `poll_vote` ( 
-		`poll_id` VARCHAR(32), 
-		`poll_user` VARCHAR(255), 
-		`poll_ip` VARCHAR(255), 
-		`poll_answer` INTEGER(3), 
-		`poll_date` DATETIME, 	
-			PRIMARY KEY  (`poll_id`,`poll_user`) 
+CREATE TABLE IF NOT EXISTS `poll_vote` (
+		`poll_id` VARCHAR(32),
+		`poll_user` VARCHAR(255),
+		`poll_ip` VARCHAR(255),
+		`poll_answer` INTEGER(3),
+		`poll_date` DATETIME,
+			PRIMARY KEY  (`poll_id`,`poll_user`)
 ) Engine=InnoDB;
