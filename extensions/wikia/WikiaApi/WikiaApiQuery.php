@@ -402,6 +402,9 @@ class WikiaApiQuery extends ApiQueryBase {
 
 	#---
 	protected function insert($method) {
+		if (wfReadOnly())
+			$this->dieUsageMsg(array('readonlytext'));
+
 		// getDB has its own profileDBIn/Out calls
 		$db = $this->getDB();
 		$db->begin($method);
@@ -412,6 +415,9 @@ class WikiaApiQuery extends ApiQueryBase {
 
 	#---
 	protected function update($method) {
+		if (wfReadOnly())
+			$this->dieUsageMsg(array('readonlytext'));
+
 		// getDB has its own profileDBIn/Out calls
 		$db = $this->getDB();
 		$db->begin($method);
@@ -422,6 +428,9 @@ class WikiaApiQuery extends ApiQueryBase {
 
 	#---
 	protected function replace($method) {
+		if (wfReadOnly())
+			$this->dieUsageMsg(array('readonlytext'));
+
 		// getDB has its own profileDBIn/Out calls
 		$db = $this->getDB();
 		$db->begin($method);
@@ -432,6 +441,9 @@ class WikiaApiQuery extends ApiQueryBase {
 
 	#---
 	protected function delete($method, $close = 1) {
+		if (wfReadOnly())
+			$this->dieUsageMsg(array('readonlytext'));
+
 		$db = $this->getDB();
 		$db->begin($method);
 		$res = $db->delete( $this->mTable, $this->mWhere, $method );
