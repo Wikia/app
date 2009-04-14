@@ -279,7 +279,7 @@ class HAWelcomeJob extends Job {
 							array( "rev_user", "rev_user_text"),
 							array(
 								$dbr->makeList( $admins, LIST_OR ),
-								"rev_timestamp > " . $dbr->addQuotes(  $dbr->timestamp( 5184000 ) ) // 60 days ago (24*60*60*60)
+								"rev_timestamp > " . $dbr->addQuotes(  $dbr->timestamp( time() - 5184000 ) ) // 60 days ago (24*60*60*60)
 							),
 							__METHOD__,
 							array( "ORDER BY" => "rev_timestamp DESC")
