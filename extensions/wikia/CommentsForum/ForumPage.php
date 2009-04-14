@@ -112,21 +112,21 @@ class ForumPage extends Article{
 	function getForumContent(){
 		global $wgOut, $wgAnonName, $wgTitle, $wgUploadPath;
 		
-	
-		if( $this->authors[0]["user_id"] ){
+		$avatar_img = "";
+		if( isset($this->authors) && is_array($this->authors) && !empty($this->authors[0]["user_id"]) ){
 			$avatar = new wAvatar( $this->authors[0]["user_id"] ,"ml");
 			$avatar_img = "<img src=\"{$wgUploadPath}/avatars/" . $avatar->getAvatarImage() . "\" alt=\"\" border=\"0\"/>";
 		}
 		$output = "<p>";
 		$output .= "<div class=\"fc-item\">";
-		$output .= 	"<div class=\"fc-avatar\">{$avatar_img}</div>";
+		$output .= 	"<div class=\"fc-avatar\">" . ((isset($avatar_img)) ? $avatar_img : "") . "</div>";
 		$output .= 		"<div class=\"fc-container\">";
 		$output .= 			"<div class=\"fc-user\">";
 		
-		if( $this->authors[0]["user_id"] ){
+		if( isset($this->authors) && is_array($this->authors) && !empty($this->authors[0]["user_id"]) ){
 			$user_title = Title::makeTitle(NS_USER, $this->authors[0]["user_name"] );
 			$CommentPoster = "<a href=\"".$user_title->escapeFullURL()."\" rel=\"nofollow\">{$this->authors[0]["user_name"]}</a>";
-		}else{
+		} else {
 			$CommentPoster = $wgAnonName;
 		}
 		
@@ -195,6 +195,7 @@ class ForumPage extends Article{
 		global $wgUploadPath, $wgMemc;
 		
 		$comments = array();
+		$output	= "";
 		
 		//try cache first
 		$key = wfMemcKey( 'comments-forum', 'plus', '24hours' );
@@ -260,15 +261,11 @@ class ForumPage extends Article{
 		}
 		
 		if (count($comments)>0) {
-			
 			$output = "<div class=\"forum-container bottom-fix\">
 				<h2>".wfMsg("forum_comments_of_day")."</h2>"
 				.$output.
 			"</div>";
-			
 		}
-		
-		
 		
 		return $output;
 	}

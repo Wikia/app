@@ -13,12 +13,9 @@ function GetRandomImage( $input, $args, &$parser ){
 	
 	$parser->disableCache();
 	 
-	$categories = trim($args["categories"]);
-	$limit = $args["limit"];
-	$width = $args["width"];
-	
-	if( !is_numeric($width) ) $width = 200;
-	if( !is_numeric($limit) ) $limit = 10;
+	$categories = ( isset($args["categories"]) ) ? trim($args["categories"]) : "";
+	$width = ( isset($args["width"]) && is_numeric($args["width"]) ) ? $args["width"] : 200;
+	$limit = ( isset($args["limit"]) && is_numeric($args["limit"]) ) ? $args["limit"] : 10;
 	
 	$key = wfMemcKey( 'image', 'random', $limit, str_replace(" ","",$categories)  );
 	$data = $wgMemc->get( $key );
@@ -30,6 +27,7 @@ function GetRandomImage( $input, $args, &$parser ){
 		$ctg = str_replace("\,","#comma#",$ctg);
 		$aCat = explode(",", $ctg);
 			
+		$category_match = array();
 		foreach($aCat as $sCat){
 			if($sCat!=""){
 				$category_match[] = Title::newFromText(  trim( str_replace("#comma#",",",$sCat) )   )->getDBKey();	
@@ -39,7 +37,9 @@ function GetRandomImage( $input, $args, &$parser ){
 		if( count( $category_match ) == 0 ) return "";
 		
 		$params['ORDER BY'] = 'page_id';
-		if($limit)$params['LIMIT'] = $limit;
+		if ( !empty($limit) ) {
+			$params['LIMIT'] = $limit;
+		}
 		
 		$dbr =& wfGetDB( DB_MASTER );
 		$res = $dbr->select( '`page` INNER JOIN `categorylinks` on cl_from=page_id', 'page_title', 

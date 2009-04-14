@@ -78,9 +78,13 @@ function wfCommentList($page_id,$order){
 
 	$Comment = new Comment($page_id);
 	$Comment->setOrderBy($order);
-	if($_POST["shwform"] == 1)$output .= $Comment->displayOrderForm();
+	if ( isset($_POST["shwform"]) && ($_POST["shwform"] == 1)) {
+		$output .= $Comment->displayOrderForm();
+	}
 	$output .= $Comment->display();
-	if($_POST["shwform"] == 1)$output .= $Comment->diplayForm();
+	if ( isset($_POST["shwform"]) && ($_POST["shwform"] == 1) ) {
+		$output .= $Comment->diplayForm();
+	}
 	return $output;
 }
 

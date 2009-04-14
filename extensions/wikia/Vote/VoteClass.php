@@ -7,98 +7,91 @@ class Vote{
 
     
     function Vote($pageid){
-	global $wgUser;
-	
-        $this->PageID = $pageid;
-	$this->Username = $wgUser->getName();
-        $this->Userid =  $wgUser->getID();
+    	global $wgUser;
+    	$this->PageID = $pageid;
+    	$this->Username = $wgUser->getName();
+    	$this->Userid =  $wgUser->getID();
     }
     
-    function setUser($user_name,$user_id){
-        
-    }
+    function setUser($user_name,$user_id) { }
     
-    function count(){
-	global $wgMemc;
-	$key = wfMemcKey( 'vote', 'count', $this->PageID );
-	$data = $wgMemc->get( $key );
+    function count() { 
+    	global $wgMemc; 
+    	$key = wfMemcKey( 'vote', 'count', $this->PageID ); 
+    	$data = $wgMemc->get( $key );
 	
-	//try cache
-	if($data){
-		wfDebug( "loading vote count for page {$this->PageID} from cache\n" );
-		$vote_count = $data;
-	}else{
-		$dbr =& wfGetDB( DB_MASTER );
-		$vote_count = 0;
-		$sql = "SELECT count(*) as VoteCount FROM Vote WHERE vote_page_id = " . $this->PageID;
-		$res = $dbr->query($sql);
-		$row = $dbr->fetchObject( $res );
-		if($row){
-		   $vote_count= $row->VoteCount;
+		//try cache
+		if ($data){
+			wfDebug( "loading vote count for page {$this->PageID} from cache\n" );
+			$vote_count = $data;
+		} else {
+			$dbr =& wfGetDB( DB_MASTER );
+			$vote_count = 0;
+			$sql = "SELECT count(*) as VoteCount FROM Vote WHERE vote_page_id = " . $this->PageID;
+			$res = $dbr->query($sql);
+			$row = $dbr->fetchObject( $res );
+			if($row){
+			   $vote_count= $row->VoteCount;
+			}
+			$wgMemc->set( $key, $vote_count );
 		}
-		$wgMemc->set( $key, $vote_count );
-	}
         return $vote_count;
     }
     
-    function getAverageVote(){
-	global $wgMemc;
-	$key = wfMemcKey( 'vote', 'avg', $this->PageID );
-	$data = $wgMemc->get( $key );
-	
-	$VoteAvg = 0;
-	if($data){
-		wfDebug( "loading vote avg for page {$this->PageID} from cache\n" );
-		$VoteAvg = $data;
-	}else{
-		$dbr =& wfGetDB( DB_MASTER );
-		
-		$sql = "SELECT AVG(vote_value) as VoteAvg FROM Vote WHERE vote_page_id = " . $this->PageID;
-		$res = $dbr->query($sql);
-		$row = $dbr->fetchObject( $res );
-		if($row){
-		    $VoteAvg = $row->VoteAvg;
-		}
-		$wgMemc->set( $key, $VoteAvg );
-	}
-        return number_format($VoteAvg,2);
+    function getAverageVote() {
+    	global $wgMemc;
+    	$key = wfMemcKey( 'vote', 'avg', $this->PageID );
+    	$data = $wgMemc->get( $key );
+    	$VoteAvg = 0;
+    	if($data) {
+    		wfDebug( "loading vote avg for page {$this->PageID} from cache\n" );
+    		$VoteAvg = $data; 
+    	} else {
+    		$dbr =& wfGetDB( DB_MASTER );
+    		$sql = "SELECT AVG(vote_value) as VoteAvg FROM Vote WHERE vote_page_id = " . $this->PageID;
+    		$res = $dbr->query($sql);
+    		$row = $dbr->fetchObject( $res );
+    		if($row){
+    			$VoteAvg = $row->VoteAvg;
+    		}
+    		$wgMemc->set( $key, $VoteAvg );
+    	}
+    	return number_format($VoteAvg,2);
     }
     
     function clearCache(){
-	global $wgUser, $wgMemc;
+    	global $wgUser, $wgMemc;
+		//kill internal cache
+		$wgMemc->delete( wfMemcKey(  'vote', 'count', $this->PageID ) );
+		$wgMemc->delete( wfMemcKey(  'vote', 'avg', $this->PageID ) );
 	
-	//kill internal cache
-	$wgMemc->delete( wfMemcKey(  'vote', 'count', $this->PageID ) );
-	$wgMemc->delete( wfMemcKey(  'vote', 'avg', $this->PageID ) );
-	
-	//purge squid
-	$page_title = Title::newFromID( $this->PageID);
-	if( is_object( $page_title ) ){
-		$page_title->invalidateCache();
-		$page_title->purgeSquid();
-	
-		//kill parser cache
-		$article = new Article( $page_title );
-		$parserCache =& ParserCache::singleton();
-		$parser_key = $parserCache->getKey( $article, $wgUser);
-		$wgMemc->delete( $parser_key );
+		//purge squid
+		$page_title = Title::newFromID( $this->PageID);
+		if( is_object( $page_title ) ){
+			$page_title->invalidateCache();
+			$page_title->purgeSquid();
+
+			//kill parser cache
+			$article = new Article( $page_title );
+			$parserCache =& ParserCache::singleton();
+			$parser_key = $parserCache->getKey( $article, $wgUser);
+			$wgMemc->delete( $parser_key );
+		}
 	}
-    }
     
     function delete(){
-	global $wgMemc, $IP;
-	
-        $dbr =& wfGetDB( DB_MASTER );
-        $sql = "DELETE FROM `Vote` WHERE vote_page_id = ". $this->PageID . " AND username = '". $this->Username . "'";
-        $res = $dbr->query($sql);
+    	global $wgMemc, $IP;
+		$dbr =& wfGetDB( DB_MASTER );
+		$sql = "DELETE FROM `Vote` WHERE vote_page_id = ". $this->PageID . " AND username = '". $this->Username . "'";
+		$res = $dbr->query($sql);
        
-	$this->clearCache();
+		$this->clearCache();
 			
-	$stats = new UserStatsTrack($this->Userid, $this->Username);
-	$stats->decStatField("vote");
+		$stats = new UserStatsTrack($this->Userid, $this->Username);
+		$stats->decStatField("vote");
 	
-	$this->updateStats();
-    }
+		$this->updateStats();
+	}
     
 	function updateStats(){
 		//update stats
@@ -150,49 +143,54 @@ class Vote{
 		}
 	}
     
-      function UserAlreadyVoted(){
-	global $wgUser;
-
-        $dbr =& wfGetDB( DB_MASTER );
-	$s = $dbr->selectRow( '`Vote`', 
+	function UserAlreadyVoted(){
+		global $wgUser;
+		$dbr =& wfGetDB( DB_MASTER );
+		$s = $dbr->selectRow( '`Vote`', 
 			array( 'vote_value' ), 
-			array( 'vote_page_id'=>$this->PageID, "username" => $this->Username ), $fname );
-        if($s === false)
-            return false;
-        else
-            return $s->vote_value;
+			array( 
+				'vote_page_id'=>$this->PageID, 
+				"username" => $this->Username 
+			), 
+			__METHOD__ 
+		);
+		if($s === false)
+			return false;
+		else
+			return $s->vote_value;
      }
      
-     function display(){
-	global $wgUser, $wgReadOnly, $wgAnonRedirect;
+     function display() {
+     	global $wgUser, $wgReadOnly, $wgAnonRedirect;
+     	
+     	$this->votekey = md5($this->PageID . 'pants' . $this->Username );
+     	$voted = $this->UserAlreadyVoted();
+     	
+     	$make_vote_box_clickable="";
+     	if($voted==false) {
+     		$make_vote_box_clickable = "vote-clickable";
+		}
 
-        $this->votekey = md5($this->PageID . 'pants' . $this->Username );
-	$voted = $this->UserAlreadyVoted();
-	
-	$make_vote_box_clickable="";
-	if($voted==false)$make_vote_box_clickable = "vote-clickable";
-
-         $output = "<div class=\"vote-box {$make_vote_box_clickable}\" id=\"votebox\" onclick=\"clickVote(1,{$this->PageID},'{$this->votekey}')\">";
-	 		$output .= "<span id=\"PollVotes\" class=\"vote-number\">{$this->count()}</span>";
+		$output = "<div class=\"vote-box {$make_vote_box_clickable}\" id=\"votebox\" onclick=\"clickVote(1,{$this->PageID},'{$this->votekey}')\">";
+		$output .= "<span id=\"PollVotes\" class=\"vote-number\">{$this->count()}</span>";
 		$output .= "</div>";
 		$output .= "<div id=\"Answer\" class=\"vote-action\">";
-			
-			if (!$wgUser->isAllowed('vote')) {
-				$login =  Title::makeTitle(NS_SPECIAL,"Login");
-				$output .= "<a class=\"votebutton\" href=\"{$login->escapeFullURL()}\" rel=\"nofollow\">".wfMsg('vote_link')."</a>";
-			} else {
-				if (!$wgReadOnly) {
-					if ($voted == false) {
-					    $output .= "<a href=\"javascript:clickVote(1,{$this->PageID},'{$this->votekey}')\">".wfMsg('vote_link')."</a>";
-					} else {
-					    $output .= "<a href=\"javascript:unVote('{$this->PageID}', '{$this->votekey}')\">".wfMsg('vote_unvote_link')."</a>";
-					}
+		
+		if (!$wgUser->isAllowed('vote')) {
+			$login =  Title::makeTitle(NS_SPECIAL,"Login");
+			$output .= "<a class=\"votebutton\" href=\"{$login->escapeFullURL()}\" rel=\"nofollow\">".wfMsg('vote_link')."</a>";
+		} else {
+			if (!$wgReadOnly) {
+				if ($voted == false) {
+					$output .= "<a href=\"javascript:clickVote(1,{$this->PageID},'{$this->votekey}')\">".wfMsg('vote_link')."</a>";
+				} else {
+					$output .= "<a href=\"javascript:unVote('{$this->PageID}', '{$this->votekey}')\">".wfMsg('vote_unvote_link')."</a>";
 				}
 			}
-        $output .= "</div>";
-        
+		}
+		$output .= "</div>";
 		return $output;
-     }
+	}
 }
 
 Class VoteStars extends Vote {

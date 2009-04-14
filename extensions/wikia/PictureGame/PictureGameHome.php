@@ -286,11 +286,11 @@ function wfSpecialPictureGameHome(){
 
 			
 			$output = "
-
 			<script type=\"text/javascript\">
-
+			<!--
 			var __picturegame_editgameediting__ = \"" . wfMsgForContent('picturegame_editgameediting') . "\";
 			var __request_url__ = \"" . $wgRequest->getRequestURL() . "\";
+			-->
 			</script>";
 			
 			$wgOut->addScript("<script type=\"text/javascript\" src=\"{$this->INCLUDEPATH}editpanel.js?{$wgStyleVersion}\"></script>\n");
@@ -306,108 +306,62 @@ function wfSpecialPictureGameHome(){
 			$stats_data = $stats->getUserStats();
 
 			$output .= "
-
 			<style type=\"text/css\">@import \"{$this->INCLUDEPATH}editpanel.css?{$wgStyleVersion}\";</style>
 
 			<div id=\"edit-container\" class=\"edit-container\">
-				<div id=\"edit-textboxes\" class=\"edit-textboxes\">
-
+			<form id=\"picGameVote\" name=\"picGameVote\" method=\"post\" action=\"" . Title::makeTitle(NS_SPECIAL, "PictureGameHome")->escapeFullURL("picGameAction=completeEdit") . "\">
+				<div id=\"edit-textboxes\" class=\"edit-textboxes\">	
 					<div class=\"credit-box-edit\" id=\"creditBox\">
-						<h1>";
-						//Submitted By
-			$output .= wfMsgForContent('picturegame_submittedby');
-			$output .= "		</h1>
+						<h1>". wfMsgForContent('picturegame_submittedby') . "</h1>
 						<div class=\"submitted-by-image\">
 							<a href=\"" . Title::makeTitle(NS_USER,$row->username) . "\"><img src=\"{$wgUploadPath}/avatars/{$avatarID}\" style=\"border:1px solid #d7dee8; width:50px; height:50px;\" alt=\"\" border=\"0\"/></a>
 						</div>
 						<div class=\"submitted-by-user\">
 							<a href=\"index.php?title=User:{$row->username}\">{$user_name}</a>
 							<ul>
-								<li>
-									<img src=\"{$wgUploadPath}/common/voteIcon.gif\" border=\"0\" alt=\"\"> {$stats_data["votes"]}
-								</li>
-								<li>
-									<img src=\"{$wgUploadPath}/common/pencilIcon.gif\" border=\"0\" alt=\"\"> {$stats_data["edits"]}
-								</li>
-								<li>
-									<img src=\"{$wgUploadPath}/common/commentsIcon.gif\" border=\"0\" alt=\"\"> {$stats_data["comments"]}
-								</li>
+								<li><img src=\"{$wgUploadPath}/common/voteIcon.gif\" border=\"0\" alt=\"\"> {$stats_data["votes"]}</li>
+								<li><img src=\"{$wgUploadPath}/common/pencilIcon.gif\" border=\"0\" alt=\"\"> {$stats_data["edits"]}</li>
+								<li><img src=\"{$wgUploadPath}/common/commentsIcon.gif\" border=\"0\" alt=\"\"> {$stats_data["comments"]}</li>
 							</ul>
 						</div>
 						<div class=\"cleared\"></div>
 					</div>
-
-
-
-					<form id=\"picGameVote\" name=\"picGameVote\" method=\"post\" action=\"" . Title::makeTitle(NS_SPECIAL, "PictureGameHome")->escapeFullURL("picGameAction=completeEdit") . "\">
-						<h1>";
-                                                //Title
-                                                $output .= wfMsgForContent('picturegame_editgamegametitle');
-                                                $output .= "</h1>
-						<p><input name=\"newTitle\" id=\"newTitle\" type=\"text\" value=\"{$title_text}\" size=\"40\"/></p>
-						<input id=\"key\" name=\"key\" type=\"hidden\" value=\"" . md5($imgID . $this->SALT) . "\" />
-						<input id=\"id\" name=\"id\" type=\"hidden\" value=\"{$imgID}\" />
-
+					<h1>" . wfMsgForContent('picturegame_editgamegametitle') . "</h1>
+					<p><input name=\"newTitle\" id=\"newTitle\" type=\"text\" value=\"{$title_text}\" size=\"40\"/></p>
+					<input id=\"key\" name=\"key\" type=\"hidden\" value=\"" . md5($imgID . $this->SALT) . "\" />
+					<input id=\"id\" name=\"id\" type=\"hidden\" value=\"{$imgID}\" />
 				</div>
 				<div class=\"edit-images-container\">
 					<div id=\"edit-images\" class=\"edit-images\">
 						<div id=\"edit-image-one\" class=\"edit-image-one\">
-                                                        <h1>";
-                                                        //First Image
-                                                        $output .= wfMsgForContent('picturegame_createeditfirstimage');
-                                                        $output .= "</h1>
+							<h1>" . wfMsgForContent('picturegame_createeditfirstimage') . "</h1>
 							<p><input name=\"imgOneCaption\" id=\"imgOneCaption\" type=\"text\" value=\"{$img1_caption_text}\" /></p>
 							<p id=\"image-one-tag\">{$imgOne}</p>
-							<p><a href=\"javascript:loadUploadFrame('{$imgOneName}', 1)\">";
-                                                        //Upload New Image
-                                                        $output .= wfMsgForContent('picturegame_editgameuploadtext');
-                                                        $output .= "</a></p>
+							<p><a href=\"javascript:loadUploadFrame('{$imgOneName}', 1)\">" . wfMsgForContent('picturegame_editgameuploadtext') . "</a></p>
 						</div>
-
 						<div id=\"edit-image-two\" class=\"edit-image-one\">
-                                                        <h1>";
-                                                        //Second Image
-                                                        $output .= wfMsgForContent('picturegame_createeditsecondimage');
-                                                        $output .= "</h1>
+							<h1>" . wfMsgForContent('picturegame_createeditsecondimage') . "</h1>
 							<p><input name=\"imgTwoCaption\" id=\"imgTwoCaption\" type=\"text\" value=\"{$img2_caption_text}\" /></p>
 							<p id=\"image-two-tag\">{$imgTwo}</p>
-							<p><a href=\"javascript:loadUploadFrame('{$imgTwoName}', 2)\">";
-                                                        //Upload New Image
-                                                        $output .= wfMsgForContent('picturegame_editgameuploadtext');
-                                                        $output .= "</a></p>
+							<p><a href=\"javascript:loadUploadFrame('{$imgTwoName}', 2)\">" . wfMsgForContent('picturegame_editgameuploadtext') . "</a></p>
 						</div>
-
 						<div id=\"loadingImg\" class=\"loadingImg\" style=\"display:none\">
 							<img src=\"{$wgUploadPath}/common/ajax-loader-white.gif\" />
 						</div>
-
 						<div class=\"cleared\"></div>
-
 					</div>
-
 					<div class=\"edit-image-frame\" id=\"edit-image-frame\" style=\"display:hidden\">
 						<div class=\"edit-image-text\" id=\"edit-image-text\"> </div>
 						<iframe frameBorder=\"0\" scrollbar=\"no\" class=\"upload-frame\" id=\"upload-frame\" src=\"\"></iframe>
 					</div>
-
 					<div class=\"cleared\"></div>
 				</div>
-
-				<div class=\"copyright-warning\">"
-					. wfMsg("copyrightwarning") .
-				"</div>
-
+				<div class=\"copyright-warning\">". wfMsg("copyrightwarning") . "</div>
 				<div id=\"complete-buttons\" class=\"complete-buttons\">
-					<input type=\"button\" onclick=\"document.picGameVote.submit()\" value=\"" .
-					//Submit
-					wfMsgForContent('picturegame_buttonsubmit')
-					."\"/>
-					<input type=\"button\"  onclick=\"window.location='" . Title::makeTitle(NS_SPECIAL,"PictureGameHome")->escapeFullURL("picGameAction=renderPermalink&id={$imgID}") . "'\" value=\"".
-					//Cancel
-					wfMsgForContent('picturegame_buttoncancel')
-					."\"/>
+					<input type=\"button\" onclick=\"document.picGameVote.submit()\" value=\"" . wfMsgForContent('picturegame_buttonsubmit') ."\"/>
+					<input type=\"button\"  onclick=\"window.location='" . Title::makeTitle(NS_SPECIAL,"PictureGameHome")->escapeFullURL("picGameAction=renderPermalink&id={$imgID}") . "'\" value=\"". wfMsgForContent('picturegame_buttoncancel') . "\"/>
 				</div>
-				</form>
+			</form>
 			</div>
 			";
 			//"
@@ -417,7 +371,7 @@ function wfSpecialPictureGameHome(){
 
 		/* Displays the admin panel */
 		function adminPanel(){
-			global $wgRequest, $wgUser, $wgOut, $wgRequest, $wgSiteView, $IP, $wgUploadPath;
+			global $wgRequest, $wgUser, $wgOut, $wgRequest, $wgSiteView, $IP, $wgUploadPath, $wgStyleVersion;
 
 			$now = time();
 			$key = md5($now . $this->SALT);
@@ -929,6 +883,8 @@ function wfSpecialPictureGameHome(){
 		function getImageDivs($isPermalink = false, $imgID = -1, $lastID = -1){
 
 			global $wgRequest, $wgUser, $wgOut, $wgRequest, $wgSiteView, $IP, $IMGCONTENT, $wgSiteName, $wgUseEditButtonFloat, $wgUploadPath;
+			
+			$totalVotes = 0;
 
 			$dbr =& wfGetDB( DB_SLAVE );
 
@@ -1011,6 +967,7 @@ function wfSpecialPictureGameHome(){
 			};
 			
 			$x=1;
+			$img1_caption_text = "";
 			$img1caption_array=str_split($row->img1_caption);
 			foreach ($img1caption_array as $img1_character) {
 				
@@ -1025,6 +982,7 @@ function wfSpecialPictureGameHome(){
 			
 			
 			$x=1;
+			$img2_caption_text = "";
 			$img1caption_array=str_split($row->img2_caption);
 			foreach ($img1caption_array as $img2_character) {
 				
@@ -1123,7 +1081,7 @@ function wfSpecialPictureGameHome(){
 						";
 			}
 			
-
+			$output = "";
 			// set the page title
 			// $wgOut->setPagetitle($title_text);
 
@@ -1183,113 +1141,82 @@ function wfSpecialPictureGameHome(){
 			<script>var next_id = \"{$next_id}\";</script>
 			{$editLink}
 			<div class=\"editDiv\" id=\"editDiv\" style=\"display: none\"> </div>
-
-
-					<div class=\"serverMessages\" id=\"serverMessages\"></div>
-
-					<div class=\"imgContent\" id=\"imgContent\">
-						<div class=\"imgTitle\" id=\"imgTitle\">" . $title . "</div>
-						<div class=\"imgContainer\" id=\"imgContainer\" style=\"width:45%;\">
-							<div class=\"imgCaption\" id=\"imgOneCaption\">" . $img1_caption . "</div>
-							<div class=\"imageOne\" id=\"imageOne\" style=\"padding:5px;\" onClick=\"castVote(0)\" onmouseover=\"doHover('imageOne')\" onmouseout=\"endHover('imageOne')\" >
-								" . $imgOne . "	</div>
-						</div>
-
-						<div class=\"imgContainer\" id=\"imgContainer\" style=\"width:45%;\">
-							<div class=\"imgCaption\" id=\"imgTwoCaption\">" . $img2_caption . "</div>
-							<div class=\"imageTwo\" id=\"imageTwo\" style=\"padding:5px;\" onClick=\"castVote(1)\" onmouseover=\"doHover('imageTwo')\" onmouseout=\"endHover('imageTwo')\">
-							" . $imgTwo . "	</div>
-						</div>
-						<div class=\"cleared\"></div>
-
-						<div class=\"pic-game-navigation\">
-							<ul>
-								<li id=\"backButton\" style=\"display:" . ($lastID > 0 ? "block" : "none") . "\"><a href=\"javascript:window.parent.document.location='" .  Title::makeTitle(NS_SPECIAL, "PictureGameHome")->escapeFullURL("picGameAction=renderPermalink") . "&id=' + \$('lastid').value\">";
-                                                                //Go Back
-                                                $output .=       wfMsgForContent('picturegame_backbutton');
-                                                $output .=       "</a></li>
-								<li id=\"skipButton\" style=\"display:" . ($next_id > 0 ? "block" : "none") . "\"><a href=\"" . Title::makeTitle(NS_SPECIAL, "PictureGameHome")->escapeFullURL("picGameAction=startGame") . "\">";
-                                                                //Skip
-                                                $output .=       wfMsgForContent('picturegame_skipbutton');
-                                                $output .=      "</a></li>
-							</ul>
-						</div>
-
-						<form id=\"picGameVote\" name=\"picGameVote\" method=\"post\" action=\"" . Title::makeTitle(NS_SPECIAL, "PictureGameHome")->escapeFullURL("picGameAction=castVote") . "\">
-							<input id=\"key\" name=\"key\" type=\"hidden\" value=\"" . md5($imgID . $this->SALT) . "\" />
-							<input id=\"id\" name=\"id\" type=\"hidden\" value=\"" . $imgID . "\" />
-							<input id=\"lastid\" name=\"lastid\" type=\"hidden\" value=\"" . $lastID . "\" />
-							<input id=\"nextid\" name=\"nextid\" type=\"hidden\" value=\"" . $next_id . "\" />
-							
-							<input id=\"img\" name=\"img\" type=\"hidden\" value=\"\" />
-						</form>
+			<div class=\"serverMessages\" id=\"serverMessages\"></div>
+				
+			<div class=\"imgContent\" id=\"imgContent\">
+				<div class=\"imgTitle\" id=\"imgTitle\">" . $title . "</div>
+				<div class=\"imgContainer\" id=\"imgContainer\" style=\"width:45%;\">
+					<div class=\"imgCaption\" id=\"imgOneCaption\">" . $img1_caption . "</div>
+					<div class=\"imageOne\" id=\"imageOne\" style=\"padding:5px;\" onClick=\"castVote(0)\" onmouseover=\"doHover('imageOne')\" onmouseout=\"endHover('imageOne')\" >" . $imgOne . "	</div>
 				</div>
-				<div class=\"other-info\">
-					{$createLink}
-					<div class=\"credit-box\" id=\"creditBox\">
-						<h1>";
-						//Submitted By
-			$output .= wfMsgForContent('picturegame_submittedby');
-			$output .= "		</h1>
-						<div class=\"submitted-by-image\">
-							<a href=\"{$user_title->getFullURL()}\"><img src={$wgUploadPath}/avatars/{$avatarID} style=\"border:1px solid #d7dee8; width:50px; height:50px;\"/></a>
-						</div>
-						<div class=\"submitted-by-user\">
-							<a href=\"{$user_title->getFullURL()}\">{$user_name}</a>
-							<ul>
-								<li>
-									<img src=\"{$wgUploadPath}/common/voteIcon.gif\" border=\"0\"> {$stats_data["votes"]}
-								</li>
-								<li>
-									<img src=\"{$wgUploadPath}/common/pencilIcon.gif\" border=\"0\"> {$stats_data["edits"]}
-								</li>
-								<li>
-									<img src=\"{$wgUploadPath}/common/commentsIcon.gif\" border=\"0\"> {$stats_data["comments"]}
-								</li>
-							</ul>
-						</div>
-						<div class=\"cleared\"></div>
-					</div>
-
-					<div class=\"voteStats\" id=\"voteStats\" style=\"display:none\">
-						<div id=\"vote-stats-text\"><h1>";
-                                        //Previous Game
-                                        $output .= wfMsgForContent('picturegame_previousgame');
-                                        $output .= " ({$totalVotes})</h1></div>
-						<div class=\"vote-bar\">
-							<span class=\"vote-thumbnail\" id=\"one-vote-thumbnail\">{$vote_one_tag}</span>
-							<span class=\"vote-percent\" id=\"one-vote-percent\">{$imgOnePercent}%</span>
-							<span class=\"vote-blue\"><img src=\"{$wgUploadPath}/common/vote-bar-blue.gif\" id=\"one-vote-width\" border=\"0\" style=\"width:{$barOneWidth}px;height:11px;\"/></span>
-						</div>
-						<div class=\"vote-bar\">
-							<span class=\"vote-thumbnail\" id=\"two-vote-thumbnail\">{$vote_two_tag}</span>
-							<span class=\"vote-percent\" id=\"two-vote-percent\">{$imgTwoPercent}%</span>
-							<span class=\"vote-red\"><img src=\"{$wgUploadPath}/common/vote-bar-red.gif\" id=\"two-vote-width\" border=\"0\" style=\"width:{$barTwoWidth}px;height:11px;\"/></span>
-						</div>
-					</div>
-
-					<div class=\"utilityButtons\" id=\"utilityButtons\">
-						<a href=\"javascript:flagImg('" . str_replace("'", "\'", wfMsgForContent('picturegame_flagimgconfirm')) . "')\">";
-						//Report Images
-			$output .= wfMsgForContent('picturegame_reportimages');
-			$output .=		" </a> -
-						<a href=\"javascript:window.parent.document.location='" . Title::makeTitle(NS_SPECIAL, "PictureGameHome")->escapeFullURL("picGameAction=renderPermalink") . "&id=' + \$('id').value\"> ";
-						//Permalink
-			$output .= wfMsgForContent('picturegame_permalink');
-			$output .=		"</a>
-					" . $editlinks . "
-					</div>
-
+				<div class=\"imgContainer\" id=\"imgContainer\" style=\"width:45%;\">
+					<div class=\"imgCaption\" id=\"imgTwoCaption\">" . $img2_caption . "</div>
+					<div class=\"imageTwo\" id=\"imageTwo\" style=\"padding:5px;\" onClick=\"castVote(1)\" onmouseover=\"doHover('imageTwo')\" onmouseout=\"endHover('imageTwo')\">" . $imgTwo . "	</div>
 				</div>
-
 				<div class=\"cleared\"></div>
-				
-				<script language=\"javascript\">
-					{$permalinkJS}
-				</script>
-				
+				<div class=\"pic-game-navigation\">
+					<ul>
+						<li id=\"backButton\" style=\"display:" . ($lastID > 0 ? "block" : "none") . "\"><a href=\"javascript:window.parent.document.location='" .  Title::makeTitle(NS_SPECIAL, "PictureGameHome")->escapeFullURL("picGameAction=renderPermalink") . "&id=' + \$('lastid').value\">";
+						//Go Back
+						$output .=       wfMsgForContent('picturegame_backbutton');
+						$output .=       "</a></li>
+						<li id=\"skipButton\" style=\"display:" . ($next_id > 0 ? "block" : "none") . "\"><a href=\"" . Title::makeTitle(NS_SPECIAL, "PictureGameHome")->escapeFullURL("picGameAction=startGame") . "\">";
+						//Skip
+						$output .=       wfMsgForContent('picturegame_skipbutton');
+						$output .=      "</a></li>
+					</ul>
+				</div>
+				<form id=\"picGameVote\" name=\"picGameVote\" method=\"post\" action=\"" . Title::makeTitle(NS_SPECIAL, "PictureGameHome")->escapeFullURL("picGameAction=castVote") . "\">
+					<input id=\"key\" name=\"key\" type=\"hidden\" value=\"" . md5($imgID . $this->SALT) . "\" />
+					<input id=\"id\" name=\"id\" type=\"hidden\" value=\"" . $imgID . "\" />
+					<input id=\"lastid\" name=\"lastid\" type=\"hidden\" value=\"" . $lastID . "\" />
+					<input id=\"nextid\" name=\"nextid\" type=\"hidden\" value=\"" . $next_id . "\" />
+					<input id=\"img\" name=\"img\" type=\"hidden\" value=\"\" />
+				</form>
 			</div>
-			
+			<div class=\"other-info\">
+				{$createLink}
+				<div class=\"credit-box\" id=\"creditBox\">
+					<h1>" . wfMsgForContent('picturegame_submittedby') . "</h1>
+					<div class=\"submitted-by-image\">
+						<a href=\"{$user_title->getFullURL()}\"><img src={$wgUploadPath}/avatars/{$avatarID} style=\"border:1px solid #d7dee8; width:50px; height:50px;\"/></a>
+					</div>
+					<div class=\"submitted-by-user\">
+						<a href=\"{$user_title->getFullURL()}\">{$user_name}</a>
+						<ul>
+							<li><img src=\"{$wgUploadPath}/common/voteIcon.gif\" border=\"0\"> {$stats_data["votes"]}</li>
+							<li><img src=\"{$wgUploadPath}/common/pencilIcon.gif\" border=\"0\"> {$stats_data["edits"]}</li>
+							<li><img src=\"{$wgUploadPath}/common/commentsIcon.gif\" border=\"0\"> {$stats_data["comments"]}</li>
+						</ul>
+					</div>
+					<div class=\"cleared\"></div>
+				</div>
+				<div class=\"voteStats\" id=\"voteStats\" style=\"display:none\">
+					<div id=\"vote-stats-text\"><h1>";
+					//Previous Game
+					$output .= wfMsgForContent('picturegame_previousgame');
+					$output .= " ({$totalVotes})</h1></div>
+					<div class=\"vote-bar\">
+						<span class=\"vote-thumbnail\" id=\"one-vote-thumbnail\">{$vote_one_tag}</span>
+						<span class=\"vote-percent\" id=\"one-vote-percent\">{$imgOnePercent}%</span>
+						<span class=\"vote-blue\"><img src=\"{$wgUploadPath}/common/vote-bar-blue.gif\" id=\"one-vote-width\" border=\"0\" style=\"width:{$barOneWidth}px;height:11px;\"/></span>
+					</div>
+					<div class=\"vote-bar\">
+						<span class=\"vote-thumbnail\" id=\"two-vote-thumbnail\">{$vote_two_tag}</span>
+						<span class=\"vote-percent\" id=\"two-vote-percent\">{$imgTwoPercent}%</span>
+						<span class=\"vote-red\"><img src=\"{$wgUploadPath}/common/vote-bar-red.gif\" id=\"two-vote-width\" border=\"0\" style=\"width:{$barTwoWidth}px;height:11px;\"/></span>
+					</div>
+				</div>
+				<div class=\"utilityButtons\" id=\"utilityButtons\">
+					<a href=\"javascript:flagImg('" . str_replace("'", "\'", wfMsgForContent('picturegame_flagimgconfirm')) . "')\">" . wfMsgForContent('picturegame_reportimages') . "</a> - 
+					<a href=\"javascript:window.parent.document.location='" . Title::makeTitle(NS_SPECIAL, "PictureGameHome")->escapeFullURL("picGameAction=renderPermalink") . "&id=' + \$('id').value\"> " . wfMsgForContent('picturegame_permalink') . "</a> " . $editlinks . " 
+				</div>
+			</div>
+			<div class=\"cleared\">
+			<script language=\"javascript\">
+				{$permalinkJS}
+			</script>
+			</div>
 			<div id=\"preload\" style=\"display:none\">
 				{$preload}
 				<object classid=\"clsid:D27CDB6E-AE6D-11cf-96B8-444553540000\" codebase=\"http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=9,0,28,0\" width=\"75\" height=\"75\" title=\"hourglass\"> 
@@ -1367,7 +1294,7 @@ function wfSpecialPictureGameHome(){
 		
 		// renders the inital page of the game
 		function renderPictureGame(){
-			global $wgRequest, $wgUser, $wgOut, $wgRequest, $wgSiteView, $IP,$wgStyleVersion;
+			global $wgRequest, $wgUser, $wgOut, $wgRequest, $wgSiteView, $IP, $wgStyleVersion;
 
 			$permalinkID =  addslashes( $wgRequest->getVal("id") );
 			$lastid = addslashes( $wgRequest->getVal("lastid") );

@@ -124,11 +124,15 @@ class SystemGifts {
 	
 	public function doesGiftExistForThreshold($category,$threshold){
 		$dbr = wfGetDB( DB_SLAVE );
-		$s = $dbr->selectRow( '`system_gift`', array( 'gift_id' ), array( 'gift_category' => $this->categories[$category] , 'gift_threshold' => $threshold  ), __METHOD__ );
-		if ( $s === false ) {
+		if (isset($this->categories[$category])) {
+			$s = $dbr->selectRow( '`system_gift`', array( 'gift_id' ), array( 'gift_category' => $this->categories[$category], 'gift_threshold' => $threshold  ), __METHOD__ );
+			if ( $s === false ) {
+				return false;
+			}else{
+				return $s->gift_id;
+			}
+		} else {
 			return false;
-		}else{
-			return $s->gift_id;
 		}
 	}
 	

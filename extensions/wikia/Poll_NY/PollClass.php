@@ -207,14 +207,15 @@ class Poll {
 	public function getPollList( $count = 3, $order = "poll_id" ){
 		global $wgMemc;
 		
+		$polls = array();
 		//try cache
 		$key = wfMemcKey( 'polls', 'order', $order, 'count', $count);
 		$data = $wgMemc->get( $key );
 		//$wgMemc->delete( $key );
-		if( $data ){                   
+		if( !empty($data) && is_array($data) ){                   
 			wfDebug( "Got polls list ($count) ordered by {$order} from cache\n" );
 			$polls = $data;
-		}else{
+		} else {
 			wfDebug( "Got polls list ($count) ordered by {$order} from db\n" );
 			$dbr =& wfGetDB( DB_SLAVE );
 			$params['LIMIT'] = $count;
@@ -233,7 +234,9 @@ class Poll {
 					"choices" => self::get_poll_choices( $row->poll_id, $row->poll_vote_count )
 				);				
 			}
-			$wgMemc->set( $key, $polls, 60 * 10 );
+			if ( !empty($polls) ) {
+				$wgMemc->set( $key, $polls, 60 * 10 );
+			}
 		}
 
 		return $polls;		

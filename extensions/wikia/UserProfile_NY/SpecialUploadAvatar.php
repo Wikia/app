@@ -13,7 +13,7 @@ class UploadAvatar extends SpecialPage {
   }
 
   function execute(){
-	  global $wgRequest, $wgOut, $IP, $wgUser, $wgUserProfileScripts, $wgSupressPageTitle;
+	  global $wgRequest, $wgOut, $IP, $wgUser, $wgUserProfileScripts, $wgSupressPageTitle, $wgStyleVersion;
 	
 	  $wgSupressPageTitle = true;
 	  
@@ -76,7 +76,7 @@ class UploadAvatar extends SpecialPage {
   	function getAvatar($size){
 		global $wgUser, $wgDBname,$wgUploadDirectory, $wgUploadPath;
 		$files = glob($wgUploadDirectory . "/avatars/" . $wgDBname . "_" . $wgUser->getID() .  "_" . $size . "*");
-		if($files[0]){
+		if ( isset($files) && isset($files[0]) ){
 			return "<img src=\"{$wgUploadPath}/avatars/" .  basename($files[0]) . "\" alt=\"\" border=\"0\">" ;
 		}
 	}
@@ -244,7 +244,10 @@ function createThumbnail($imageSrc, $ext,$imgDest,$thumbWidth){
 
 	if($origWidth < $thumbWidth)$thumbWidth = $origWidth;
 	$thumbHeight = ($thumbWidth * $origHeight / $origWidth);
-	if($thumbHeight < $thumbWidth)$border = " -bordercolor white  -border  0x" . (($thumbWidth - $thumbHeight) / 2);
+	$border = "";
+	if ($thumbHeight < $thumbWidth) {
+		$border = " -bordercolor white  -border  0x" . (($thumbWidth - $thumbHeight) / 2);
+	}
 	if($TypeCode == 2)exec("convert -size " . $thumbWidth . "x" . $thumbWidth . " -resize " . $thumbWidth . " -crop " . $thumbWidth . "x" . $thumbWidth . "+0+0   -quality 100 " . $border . " " . $imageSrc . " " . $this->avatarUploadDirectory . "/" . $imgDest . ".jpg");
 	if($TypeCode == 1)exec("convert -size " . $thumbWidth . "x" . $thumbWidth . " -resize " . $thumbWidth . " -crop " . $thumbWidth . "x" . $thumbWidth . "+0+0 " . $imageSrc . " " . $border . " " . $this->avatarUploadDirectory . "/" . $imgDest . ".gif");
 	if($TypeCode == 3)exec("convert -size " . $thumbWidth . "x" . $thumbWidth . " -resize " . $thumbWidth . " -crop " . $thumbWidth . "x" . $thumbWidth . "+0+0 " . $imageSrc . " " . $this->avatarUploadDirectory . "/" . $imgDest . ".png");
@@ -592,7 +595,7 @@ function createThumbnail($imageSrc, $ext,$imgDest,$thumbWidth){
 	
 		global $wgSitename;
 		
-		$output .= "<h1>".wfMsg( 'user-profile-picture-title' )."</h1>";
+		$output = "<h1>".wfMsg( 'user-profile-picture-title' )."</h1>";
 		
 		$output .= UserProfile::getEditProfileNav( wfMsg( 'user-profile-section-picture' ) );
 		

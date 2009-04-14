@@ -432,6 +432,7 @@ class UserStatsTrack{
 		
 		if( $this->user_id == 0 )return "";
 
+		$stats_data = array();
 		if( is_array( $wgUserLevels ) ){
 			//Load points before update
 			$stats = new UserStats($this->user_id, $this->user_name);
@@ -577,7 +578,7 @@ class UserStats{
 			$stats["weekly_wins"] = number_format($row->stats_weekly_winner_count);
 			$stats["monthly_wins"] = number_format($row->stats_monthly_winner_count);
 			$stats["poll_votes"] = number_format($row->stats_poll_votes);
-			$stats["currency"] = number_format($row->stats_currency);
+			$stats["currency"] = 0; # number_format($row->stats_currency); => wtf?
 			$stats["picture_game_votes"] = number_format($row->stats_picturegame_votes);
 			$stats["quiz_created"] = number_format($row->stats_quiz_questions_created);
 			$stats["quiz_answered"] = number_format($row->stats_quiz_questions_answered);

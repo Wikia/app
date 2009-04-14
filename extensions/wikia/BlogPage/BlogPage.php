@@ -162,8 +162,9 @@ class BlogPage extends Article{
 		//get date of when article was created
 		$create_date = date("F d, Y", $this->getCreateDate($wgTitle->getArticleID()));
 		
-		$output .= "<div class=\"blog-byline\">" . wfMsg("blog_by") . " ";
+		$output = "<div class=\"blog-byline\">" . wfMsg("blog_by") . " ";
 		
+		$authors = "";
 		foreach($this->authors as $author) {
 			$count++;
 			$user_title = Title::makeTitle( NS_USER , $author["user_name"]);
@@ -174,6 +175,7 @@ class BlogPage extends Article{
 		
 		$output .= "</div>";
 		
+		$edit_text = "";
 		if( $create_date != $edit_date ){
 			$edit_text = ", " . wfMsg("blog_last_edited") . " {$edit_date}";
 		}
@@ -204,10 +206,12 @@ class BlogPage extends Article{
 			return "";
 		}
 
-		$author_user_name =  $this->authors[ $author_index ]["user_name"];
-		$author_user_id = $this->authors[ $author_index ]["user_id"];
+		$author_user_name =  (isset($this->authors[ $author_index ]) && isset($this->authors[ $author_index ]["user_name"])) 
+							? $this->authors[ $author_index ]["user_name"] : "";
+		$author_user_id = (isset($this->authors[ $author_index ]) && isset($this->authors[ $author_index ]["user_id"]))  
+							? $this->authors[ $author_index ]["user_id"] : "";
 		
-		if( !$author_user_id ){
+		if( empty($author_user_id) ){
 			return "";
 		}
 		
@@ -355,6 +359,7 @@ class BlogPage extends Article{
 			$dbr =& wfGetDB( DB_SLAVE );
 
 			//get authors
+			$authors = "";
 			foreach($this->authors as $author) {
 				$authors .= " and rev_user_text<>" . $dbr->addQuotes($author["user_name"]);
 			}
@@ -422,6 +427,7 @@ class BlogPage extends Article{
 			$dbr =& wfGetDB( DB_SLAVE );
 
 			//get authors
+			$authors = "";
 			foreach($this->authors as $author) {
 				$authors .= " and username<>" . $dbr->addQuotes($author["user_name"]);
 			}

@@ -65,7 +65,7 @@ function wfGetRandomGameUnit( $input = "", $argsv = array() ){
 			//$wgMemc->delete( $key );
 			$data = $wgMemc->get( $key );
 			if( $data ){
-				wfDebug( "Got quiz list ($count) ordered by {$order} from cache\n" );
+				wfDebug( "Got quiz list ($count) from cache\n" );
 				$quiz = $data;
 			}else{
 				wfDebug( "Got quiz list ($count) ordered by q_id from db\n" );
@@ -95,6 +95,7 @@ function wfGetRandomGameUnit( $input = "", $argsv = array() ){
 		case "picgame":
 			//try cache
 			$pics = array();
+			$key = wfMemcKey( 'picgame', 'order', 'q_id' , 'count', $count );
 			$data = $wgMemc->get( $key );
 			if( $data ){
 				wfDebug( "Got picture game list ($count) ordered by id from cache\n" );
@@ -204,6 +205,9 @@ function wfDisplayPictureGame( $picturegame ){
 	$imgTwo = "<img width=\"".($img_two->getWidth() >= $img_width ? $img_width : $img_two->getWidth())."\" alt=\"\" src=\"".$thumb_two_url."?".time()."\"/>";
 
 	$pic_game_link = Title::makeTitle(NS_SPECIAL, "PictureGameHome");
+
+	# check PictureGame/PictureGameHome.php to see what value of $key should be
+	$key = "";
 
 	$output = "<div class=\"game-unit-container\">
 			<h2>" . wfMsg("game_unit_picturegame_title") . "</h2>
