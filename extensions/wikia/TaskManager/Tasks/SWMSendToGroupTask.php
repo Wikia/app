@@ -572,11 +572,9 @@ class SWMSendToGroupTask extends BatchTask {
 
 		$dbr = wfGetDBExt(DB_SLAVE);
 
-		//if the group is 'staff' - display (==send) the message on a local wiki [John's request, 2008-03-06] - Marooned
-		$wikiID = $params['groupName'] == 'staff' ? null : 'lu_wikia_id';
 		$dbResult = $dbr->select(
 			array('city_local_users'),
-			array('lu_user_id', $wikiID),
+			array('lu_user_id', 'lu_wikia_id'),
 			array('lu_wikia_id IN (' . implode(',', array_keys($wikisDB)) . ')', "lu_allgroups LIKE '%" . $dbr->escapeLike($params['groupName']) . ";%'"),
 			__METHOD__,
 			array('GROUP BY' => 'lu_user_id')
@@ -584,8 +582,11 @@ class SWMSendToGroupTask extends BatchTask {
 
 		//step 3 of 3: add records about new message to right users
 		$sqlValues = array();
+
 		while ($row = $dbr->FetchObject($dbResult)) {
-			$sqlValues[] = "({$row->lu_wikia_id}, {$row->lu_user_id}, {$params['messageId']}, " . MSG_STATUS_UNSEEN . ')';
+			//if the group is 'staff' - display (==send) the message on a local wiki [John's request, 2008-03-06] - Marooned
+			$wikiID = $params['groupName'] == 'staff' ? 'NULL' : $row->lu_wikia_id;
+			$sqlValues[] = "($wikiID, {$row->lu_user_id}, {$params['messageId']}, " . MSG_STATUS_UNSEEN . ')';
 		}
 		$dbr->FreeResult($dbResult);
 
