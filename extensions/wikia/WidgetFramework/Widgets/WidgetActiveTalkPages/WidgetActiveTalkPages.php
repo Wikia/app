@@ -16,7 +16,7 @@ $wgWidgets['WidgetActiveTalkPages'] = array(
 	),
 	'desc' => array(
 		'en' => 'A list of recently edited talk pages', 
-		'pl' => 'Lista ostatni edytowanych strony dyskusji',
+		'pl' => 'Lista ostatnio edytowanych strony dyskusji',
 		'hu' => 'A legutóbb megváltozott vitalapok listája.'
     ),
 	'params' => array(
