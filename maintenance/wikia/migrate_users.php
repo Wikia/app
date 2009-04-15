@@ -31,6 +31,9 @@ require_once( "../commandLine.inc" );
 //
 // And re-attribution could continue as if there was no collision.
 
+// "import" is like different/prompt with automagic "yes" to all questions
+// used by mass import script
+
 global $wgDBname;
 
 if(!function_exists('readline')){
@@ -45,7 +48,7 @@ if(!function_exists('readline_add_history')){
     return;
   }
  }
-$collisionActions = array("same","different","prompt");
+$collisionActions = array("same","different","prompt","import");
 if(!isset($options["collision-action"]) || $options["collision-action"] == ""){
   print "no collision action specified, assuming \"same\" (look in the source for what this means)\n";
   $options["collision-action"] = "same";
@@ -121,6 +124,31 @@ while($row = $dbr->fetchObject( $res )){
     }
     else if($options["collision-action"] == "different"){
       continue;
+    }
+    else if($options["collision-action"] == "import"){
+
+		$new_shared_username = $row2->user_name;
+		$new_local_username = "{$prefix}{$row->user_name}{$postfix}";
+
+		#local DB user name is changed
+		alterTable($dbr->tableName( 'user' ),"user_name","\"$row->user_name\"","\"$new_local_username\"");
+		moveUserPages("\"$row->user_name\"","\"$new_local_username\"");
+
+		$res3 = $dbr->insert("`$shared_db`.`$shared_table`",
+					  array('user_name' => $new_local_username,
+						'user_real_name' => $row->user_real_name,
+						'user_password' => $row->user_password,
+						'user_newpassword' => $row->user_newpassword,
+						'user_email' => $row->user_email,
+						'user_options' => $row->user_options,
+						'user_touched' => $row->user_touched,
+						'user_token' => $row->user_token,
+						'user_email_authenticated' => $row->user_email_authenticated,
+						'user_email_token' => $row->user_email_token,
+						'user_email_token_expires' => $row->user_email_token_expires,
+						'user_registration' => $row->user_registration));
+		$newid = $dbr->insertID();
+
     }
     else{
       #prompt for new user names
@@ -201,13 +229,13 @@ while($row = $dbr->fetchObject( $res )){
   alterTable($dbr->tableName( 'user_newtalk' ),"user_id",$row->user_id,$newid);
   alterTable($dbr->tableName( 'watchlist' ),"wl_user",$row->user_id,$newid);
 
-  if ($new_local_username != $row->user_name) {
-	alterTable($dbr->tableName( 'revision' ),"rev_user_text",$row->user_name,$new_local_username);
-	alterTable($dbr->tableName( 'image' ),"img_user_text",$row->user_name,$new_local_username);
-	alterTable($dbr->tableName( 'recentchanges' ),"rc_user_text",$row->user_name,$new_local_username);
-	alterTable($dbr->tableName( 'archive' ),"ar_user_text",$row->user_name,$new_local_username);
-	alterTable($dbr->tableName( 'filearchive' ),"fa_user_text",$row->user_name,$new_local_username);
-	alterTable($dbr->tableName( 'oldimage' ),"oi_user_text",$row->user_name,$new_local_username);
+  if (!empty($new_local_username) && $new_local_username != $row->user_name) {
+	alterTable($dbr->tableName( 'revision' ),"rev_user_text","\"$row->user_name\"","\"$new_local_username\"");
+	alterTable($dbr->tableName( 'image' ),"img_user_text","\"$row->user_name\"","\"$new_local_username\"");
+	alterTable($dbr->tableName( 'recentchanges' ),"rc_user_text","\"$row->user_name\"","\"$new_local_username\"");
+	alterTable($dbr->tableName( 'archive' ),"ar_user_text","\"$row->user_name\"","\"$new_local_username\"");
+	alterTable($dbr->tableName( 'filearchive' ),"fa_user_text","\"$row->user_name\"","\"$new_local_username\"");
+	alterTable($dbr->tableName( 'oldimage' ),"oi_user_text","\"$row->user_name\"","\"$new_local_username\"");
   }
 
  }
@@ -239,3 +267,26 @@ function alterTable( $table, $column, $from_val, $to_val, $where_column = false 
 		$dbr->query("UPDATE low_priority $table SET $column=$to_val where $where_column=$from_val");
 	}
 }
+
+function moveUserPages($from_text, $to_text)
+{
+	global $dbr, $options;
+	// c&p from move_user.php
+
+# Move user pages if there is no exisitng page at the new location
+$query = 'UPDATE LOW_PRIORITY IGNORE page set page_title='. $to_text.
+	' where (page_namespace = 2 or page_namespace = 3) and page_title = '. $from_text. ';';
+
+if ( isset($options['verbose']) ) print($query. "\n");
+if (!isset($options['dryrun'])) $dbr->query($query);
+
+$query = 'UPDATE LOW_PRIORITY IGNORE page set page_title=concat('. $to_text. ',' .
+	'substring(page_title, '. (strlen($options['from']) + 1) .')) ' .
+	'WHERE (page_namespace = 2 OR page_namespace = 3) and page_title like "'.
+	$dbr->escapeLike($options['from']). '/%";';
+
+if ( isset($options['verbose']) ) print($query. "\n");
+if (!isset($options['dryrun'])) $dbr->query($query);
+
+}
+
