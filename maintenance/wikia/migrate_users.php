@@ -7,7 +7,7 @@
 /** */
 
 $options= array('verbose');
-$optionsWithArgs = array('collision-action','skipto','prefix','postfix');
+$optionsWithArgs = array('collision-action','skipto','prefix','postfix','single');
 require_once( "../commandLine.inc" );
 
 
@@ -82,6 +82,11 @@ if(!empty($options['prefix'])){
 $postfix = "";
 if(!empty($options['postfix'])){
 	$postfix = $options['postfix'];
+}
+
+$single = null;
+if (!empty($options['single'])) {
+	$single = true;
 }
 
 #be careful not to blast the shared DB
@@ -238,6 +243,10 @@ while($row = $dbr->fetchObject( $res )){
 	alterTable($dbr->tableName( 'oldimage' ),"oi_user_text","\"$row->user_name\"","\"$new_local_username\"");
   }
 
+	if (!empty($single)) {
+		echo "Done.\n";
+		exit;
+	}
  }
 
 #We only announce collisions if we aren't handling them, or if we're in verbose mode
@@ -289,4 +298,3 @@ if ( isset($options['verbose']) ) print($query. "\n");
 if (!isset($options['dryrun'])) $dbr->query($query);
 
 }
-
