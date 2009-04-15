@@ -413,35 +413,30 @@ class SiteWideMessages extends SpecialPage {
 							switch ($mSendModeUsers) {
 								case 'ALL':
 								case 'ACTIVE':
-									$wikiDB = WikiFactory::IDtoDB($mWikiId);
+									$dbr = wfGetDBExt(DB_SLAVE);
 
-									$DB = wfGetDB(DB_SLAVE);
-									$DB->selectDB($wikiDB);
-									if (!$DB->tableExists('local_users')) {
-										break;
-									}
-									$dbResult = $DB->Query (
-										  'SELECT user_id'
-										. ' FROM local_users'
-										. ';'
-										, __METHOD__
+									$dbResult = $dbr->select(
+										array('city_local_users'),
+										array('lu_user_id'),
+										array('lu_wikia_id' => $mWikiId),
+										__METHOD__
 									);
 
 									$activeUsers = array();
-									while ($oMsg = $DB->FetchObject($dbResult)) {
-										$activeUsers[] = $oMsg->user_id;
+									while ($oMsg = $dbr->FetchObject($dbResult)) {
+										$activeUsers[] = $oMsg->lu_user_id;
 									}
 									if ($dbResult !== false) {
-										$DB->FreeResult($dbResult);
+										$dbr->FreeResult($dbResult);
 									}
 
-									$DB = wfGetDB(DB_MASTER);
+									$dbw = wfGetDB(DB_MASTER);
 									$sqlValues = array();
 									foreach($activeUsers as $activeUser) {
 										$sqlValues[] = "($mWikiId, $activeUser, {$result['msgId']}, " . MSG_STATUS_UNSEEN . ')';
 									}
 									if (count($sqlValues)) {
-										$dbResult = (boolean)$DB->Query (
+										$dbResult = (boolean)$dbw->Query (
 											  'INSERT INTO ' . MSG_STATUS_DB
 											. ' (msg_wiki_id, msg_recipient_id, msg_id, msg_status)'
 											. ' VALUES ' . implode(',', $sqlValues)
