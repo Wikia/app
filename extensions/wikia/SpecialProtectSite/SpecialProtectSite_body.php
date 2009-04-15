@@ -248,7 +248,7 @@ class ProtectsiteForm extends HTMLForm
             ''
           )) .
           "\n<br />" .
-          (isset($request['comment']) ? $this->textbox('comment', $request['comment']) : '') .
+          $this->textbox('comment', $request['comment']) .
           "\n<br />" .
           wfElement('input', array(
             'type'  => 'submit',

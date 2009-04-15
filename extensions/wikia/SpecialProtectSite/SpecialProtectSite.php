@@ -8,6 +8,7 @@
  * 'protectsite' - Group permission to use the special page.
  * $wgProtectsiteLimit - Maximum time allowed for protection of the site.
  * $wgProtectsiteDefaultTimeout - Default protection time.
+ * $wgProtectsiteExempt - Array of non-sysop usergroups to be not effected by rights changes
  */
 
 if (!defined('MEDIAWIKI')) {
@@ -32,18 +33,19 @@ $wgExtensionFunctions[] = 'wfSetupProtectsite';
 /* Extension Credits.  Splarka wants me to be so UN:VAIN!  Haet haet hat! */
 $wgExtensionCredits['specialpage'][] = array(
   'name'        => 'Protect Site',
-  'version'     => '0.1',
+  'version'     => '0.2',
   'description' => 'allows a site administrator to temporarily block various site modifications',
   'author'      => '[mailto:e.wolfie@gmail.com Eric Johnston] ' .
                    '<nowiki>[</nowiki>' .
                    '[http://uncyclopedia.org/wiki/User:Dawg Uncyclopedia:Dawg]' .
-                   '<nowiki>]</nowiki>',
+                   '<nowiki>]</nowiki>'.
+                   '<br>C. \'Uberfuzzy\' Stafford',
 );
 
 $wgExtensionMessagesFiles['SpecialProtectSite'] = $dir . '/SpecialProtectSite.i18n.php';
 
 /* Set the default timeout if not set in the configuration. */
-if( !isset( $wgProtectsiteDefaultTimeout ) ) {
+if( empty( $wgProtectsiteDefaultTimeout ) ) {
 	$wgProtectsiteDefaultTimeout = '1 hour';
 }
 
@@ -58,7 +60,7 @@ if( !isset( $wgProtectsiteDefaultTimeout ) ) {
  */
 function wfSetupProtectsite() {
 	/* Globals */
-	global $wgUser, $wgGroupPermissions, $wgVersion, $wgMemc;
+	global $wgUser, $wgGroupPermissions, $wgVersion, $wgMemc, $wgProtectsiteExempt;
 
 	/* Initialize Object */
 	$persist_data = new MediaWikiBagOStuff();
@@ -72,24 +74,6 @@ function wfSetupProtectsite() {
 		}
 	}
 
-	/* Chop a single named value out of an array and return the new array.
-	 * This is required for 1.7 compatibility.
-	 * Remove from source once 1.8+ is required for use of this extension.
-	 */
-	function chop_array($arr,$value) {
-		if (in_array($value, $arr)) {
-			foreach ($arr as $val) {
-				if ($val != $value) {
-					$ret[] = $val;
-				}
-			}
-			return $ret;
-		}
-		else {
-			return $arr;
-		}
-	}
-
 	/* Logic to disable the selected user rights */
 	if (is_array($prot)) {
 		/* MW doesn't timout correctly, this handles it */
@@ -98,68 +82,37 @@ function wfSetupProtectsite() {
 		}
 
 		/* Protection-related code */
-		if (version_compare($wgVersion,'1.8','>=')) {
-			/* Code for MediaWiki 1.8 */
-			$wgGroupPermissions['*']['createaccount'] = !($prot['createaccount'] >= 1);
-			$wgGroupPermissions['user']['createaccount'] = !($prot['createaccount'] == 2);
+		/* Code for MediaWiki 1.8+ */
+		$wgGroupPermissions['*']['createaccount'] = !($prot['createaccount'] >= 1);
+		$wgGroupPermissions['user']['createaccount'] = !($prot['createaccount'] == 2);
 
-			$wgGroupPermissions['*']['createpage'] = !($prot['createpage'] >= 1);
-			$wgGroupPermissions['*']['createtalk'] = !($prot['createpage'] >= 1);
-			$wgGroupPermissions['user']['createpage'] = !($prot['createpage'] == 2);
-			$wgGroupPermissions['user']['createtalk'] = !($prot['createpage'] == 2);
+		$wgGroupPermissions['*']['createpage'] = !($prot['createpage'] >= 1);
+		$wgGroupPermissions['*']['createtalk'] = !($prot['createpage'] >= 1);
+		$wgGroupPermissions['user']['createpage'] = !($prot['createpage'] == 2);
+		$wgGroupPermissions['user']['createtalk'] = !($prot['createpage'] == 2);
 
-			$wgGroupPermissions['*']['edit'] = !($prot['edit'] >= 1);
-			$wgGroupPermissions['user']['edit'] = !($prot['edit'] == 2);
-			$wgGroupPermissions['sysop']['edit'] = true;
-			$wgGroupPermissions['helper']['edit'] = true;
-			$wgGroupPermissions['staff']['edit'] = true;
+		$wgGroupPermissions['*']['edit'] = !($prot['edit'] >= 1);
+		$wgGroupPermissions['user']['edit'] = !($prot['edit'] == 2);
+		$wgGroupPermissions['sysop']['edit'] = true;
 
-			$wgGroupPermissions['user']['move'] = !($prot['move'] == 1);
-			$wgGroupPermissions['user']['upload'] = !($prot['upload'] == 1);
-			$wgGroupPermissions['user']['reupload'] = !($prot['upload'] == 1);
-			$wgGroupPermissions['user']['reupload-shared'] = !($prot['upload'] == 1);
-		}
-		else {
-			/* Code for MediaWiki 1.7 (and possibly below) */
-			if (!in_array('sysop',$wgUser->mGroups) && !in_array('bureaucrat',$wgUser->mGroups)) {
-				if ($wgUser->mId == 0) {
-					if ($prot['createaccount'] >= 1) {
-						$wgUser->mRights = chop_array($wgUser->mRights,'createaccount');
-					}
-
-					if ($prot['createpage'] >= 1) {
-						$wgUser->mRights = chop_array($wgUser->mRights,'createpage');
-						$wgUser->mRights = chop_array($wgUser->mRights,'createtalk');
-					}
-
-					if ($prot['edit'] >= 1) {
-						$wgUser->mRights = chop_array($wgUser->mRights,'edit');
-					}
-				}
-				else {
-					if ($prot['createaccount'] == 2) {
-						$wgUser->mRights = chop_array($wgUser->mRights,'createaccount');
-					}
-
-					if ($prot['createpage'] == 2) {
-						$wgUser->mRights = chop_array($wgUser->mRights,'createpage');
-						$wgUser->mRights = chop_array($wgUser->mRights,'createtalk');
-					}
-
-					if ($prot['edit'] == 2) {
-						$wgUser->mRights = chop_array($wgUser->mRights,'edit');
-					}
-
-					if ($prot['move'] == 1) {
-						$wgUser->mRights = chop_array($wgUser->mRights,'move');
-					}
-
-					if ($prot['upload'] == 1) {
-						$wgUser->mRights = chop_array($wgUser->mRights,'upload');
-						$wgUser->mRights = chop_array($wgUser->mRights,'reupload');
-						$wgUser->mRights = chop_array($wgUser->mRights,'reupload-shared');
-					}
-				}
+		$wgGroupPermissions['user']['move'] = !($prot['move'] == 1);
+		$wgGroupPermissions['user']['upload'] = !($prot['upload'] == 1);
+		$wgGroupPermissions['user']['reupload'] = !($prot['upload'] == 1);
+		$wgGroupPermissions['user']['reupload-shared'] = !($prot['upload'] == 1);
+		
+		// are there any groups that should not get affected by Protectsite's lockdown?
+		if( !empty($wgProtectsiteExempt) && is_array($wgProtectsiteExempt) ) {
+			//there are, so loop over them, and force these rights to be true
+			//will resolve any problems from inheriting rights from 'user' or 'sysop'
+			foreach($wgProtectsiteExempt as $ExemptGroup)
+			{
+				$wgGroupPermissions[$ExemptGroup]['edit'] = 1;
+				$wgGroupPermissions[$ExemptGroup]['createpage'] = 1;
+				$wgGroupPermissions[$ExemptGroup]['createtalk'] = 1;
+				$wgGroupPermissions[$ExemptGroup]['move'] = 1;
+				$wgGroupPermissions[$ExemptGroup]['upload'] = 1;
+				$wgGroupPermissions[$ExemptGroup]['reupload'] = 1;
+				$wgGroupPermissions[$ExemptGroup]['reupload-shared'] = 1;
 			}
 		}
 	}
