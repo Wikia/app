@@ -522,38 +522,33 @@ class SWMSendToGroupTask extends BatchTask {
 	 */
 	private function sendMessageHelperToActive(&$DB, &$wikisDB, &$params) {
 		$result = true;
-		$usersSent = array();
 
-		//step 2 of 3: look into each wiki for active users
-		$this->addLog('Step 2 of 3: look into each wiki for active users [number of wikis = ' . count($wikisDB) . ']');
-		foreach($wikisDB as $wikiID => $wikiDB) {
-			$DB->selectDB($wikiDB);
-			if (!$DB->tableExists('local_users')) {
-				continue;
-			}
-			$dbResult = $DB->Query (
-				  'SELECT user_id'
-				. ' FROM local_users'
-				. ';'
-				, __METHOD__
-			);
+		//step 2 of 3: get list of active users (on specified wikis)
+		$this->addLog('Step 2 of 3: get list of active users (on specified wikis) [number of wikis = ' . count($wikisDB) . ']');
 
-			//step 3 of 3: add records about new message to right users
-			$sqlValues = array();
-			while ($row = $DB->FetchObject($dbResult)) {
-				if (empty($usersSent[$row->user_id])) {
-					$sqlValues[] = "($wikiID, {$row->user_id}, {$params['messageId']}, " . MSG_STATUS_UNSEEN . ')';
-					$usersSent[$row->user_id] = true;
-				}
-			}
-			$DB->FreeResult($dbResult);
-			if (count($sqlValues)) {
-				//remove line below if log is too long
-				$this->addLog("Step 3 of 3: add records about new message to right users [wiki_id = $wikiID, wiki_db = $wikiDB, number of users = " . count($sqlValues) .	"]");
-				$result &= $this->sendMessageHelperToUsers($sqlValues);
-			}
-			unset($sqlValues);
+		$dbr = wfGetDBExt(DB_SLAVE);
+
+		$dbResult = $dbr->select(
+			array('city_local_users'),
+			array('lu_user_id', 'lu_wikia_id'),
+			array('lu_wikia_id IN (' . implode(',', array_keys($wikisDB)) . ')'),
+			__METHOD__,
+			array('GROUP BY' => 'lu_user_id')
+		);
+
+		//step 3 of 3: add records about new message to right users
+		$sqlValues = array();
+		while ($row = $dbr->FetchObject($dbResult)) {
+			$sqlValues[] = "({$row->lu_wikia_id}, {$row->lu_user_id}, {$params['messageId']}, " . MSG_STATUS_UNSEEN . ')';
 		}
+		$dbr->FreeResult($dbResult);
+
+		if (count($sqlValues)) {
+			$this->addLog("Step 3 of 3: add records about new message to right users [number of users = " . count($sqlValues) .	"]");
+			$result = $this->sendMessageHelperToUsers($sqlValues);
+		}
+		unset($sqlValues);
+
 		return $result;
 	}
 
@@ -571,43 +566,35 @@ class SWMSendToGroupTask extends BatchTask {
 	 */
 	private function sendMessageHelperToGroup(&$DB, &$wikisDB, &$params) {
 		$result = true;
-		$usersSent = array();
 
-		//step 2 of 3: look into each wiki for users that belong to a specified group
-		$this->addLog('Step 2 of 3: look into each wiki for users that belong to a specified group [number of wikis = ' . count($wikisDB) . ']');
-		foreach($wikisDB as $wikiID => $wikiDB) {
-			$DB->selectDB($wikiDB);
-			$dbResult = $DB->Query (
-				  'SELECT ug_user'
-				. ' FROM user_groups'
-				. ' WHERE ug_group = ' . $DB->AddQuotes($params['groupName'])
-				. ';'
-				, __METHOD__
-			);
+		//step 2 of 3: get list of users that belong to a specified group (on specified wikis)
+		$this->addLog('Step 2 of 3: get list of users that belong to a specified group (on specified wikis) [number of wikis = ' . count($wikisDB) . ']');
 
-			//for log purpose
-			$wikiIDorg = $wikiID;
-			//if the group is 'staff' - display (==send) the message on a local wiki [John's request, 2008-03-06] - Marooned
-			if ($params['groupName'] == 'staff') {
-				$wikiID = null;
-			}
+		$dbr = wfGetDBExt(DB_SLAVE);
 
-			//step 3 of 3: add records about new message to right users
-			$sqlValues = array();
-			while ($row = $DB->FetchObject($dbResult)) {
-				if (empty($usersSent[$row->ug_user])) {
-					$sqlValues[] = "($wikiID, {$row->ug_user}, {$params['messageId']}, " . MSG_STATUS_UNSEEN . ')';
-					$usersSent[$row->ug_user] = true;
-				}
-			}
-			$DB->FreeResult($dbResult);
-			if (count($sqlValues)) {
-				//remove line below if log is too long
-				$this->addLog("Step 3 of 3: add records about new message to right users [wiki_id = $wikiIDorg, wiki_db = $wikiDB, number of users = " . count($sqlValues) .	"]");
-				$result &= $this->sendMessageHelperToUsers($sqlValues);
-			}
-			unset($sqlValues);
+		//if the group is 'staff' - display (==send) the message on a local wiki [John's request, 2008-03-06] - Marooned
+		$wikiID = $params['groupName'] == 'staff' ? null : 'lu_wikia_id';
+		$dbResult = $dbr->select(
+			array('city_local_users'),
+			array('lu_user_id', $wikiID),
+			array('lu_wikia_id IN (' . implode(',', array_keys($wikisDB)) . ')', "lu_allgroups LIKE '%" . $dbr->escapeLike($params['groupName']) . ";%'"),
+			__METHOD__,
+			array('GROUP BY' => 'lu_user_id')
+		);
+
+		//step 3 of 3: add records about new message to right users
+		$sqlValues = array();
+		while ($row = $dbr->FetchObject($dbResult)) {
+			$sqlValues[] = "({$row->lu_wikia_id}, {$row->lu_user_id}, {$params['messageId']}, " . MSG_STATUS_UNSEEN . ')';
 		}
+		$dbr->FreeResult($dbResult);
+
+		if (count($sqlValues)) {
+			$this->addLog("Step 3 of 3: add records about new message to right users [number of users = " . count($sqlValues) .	"]");
+			$result = $this->sendMessageHelperToUsers($sqlValues);
+		}
+		unset($sqlValues);
+
 		return $result;
 	}
 }
