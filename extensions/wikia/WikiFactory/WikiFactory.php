@@ -33,8 +33,10 @@ class WikiFactory {
 	const LOG_CATEGORY = 3;
 	const LOG_STATUS   = 4;
 
-	const DOMAINCACHE = "/tmp/wikifactory/domains.ser";
-	const CACHEDIR = "/tmp/wikifactory/wikis";
+	const db	       = "wikicities";
+	const DOMAINCACHE  = "/tmp/wikifactory/domains.ser";
+	const CACHEDIR     = "/tmp/wikifactory/wikis";
+
 	static public $types = array(
 		"integer",
 		"long",
@@ -71,6 +73,20 @@ class WikiFactory {
 			self::$mIsUsed = (bool )$flag;
 		}
 		return self::$mIsUsed;
+	}
+
+	/**
+	 * wrapper for connecting to proper table
+	 *
+	 * @access public
+	 * @static
+	 *
+	 * @param string	$table	table name
+	 *
+	 * @return string	table name with database
+	 */
+	static public function table( $table ) {
+		return sprintf("`%s`.`%s`", self::db , $table );
 	}
 
 	/**
@@ -114,7 +130,7 @@ class WikiFactory {
 
 		$dbr = wfGetDB( DB_SLAVE );
 		$oRes = $dbr->select(
-			array( wfSharedTable("city_domains") ),
+			array( self::table( "city_domains" ) ),
 			array( "*" ),
 			$condition,
 			__METHOD__
@@ -170,7 +186,7 @@ class WikiFactory {
 
 		#--- check if $wiki exists
 		$oRow = $dbw->selectRow(
-			wfSharedTable( "city_list" ),
+			self::table( "city_list" ),
 			array( "city_id "),
 			array( "city_id" => $wiki ),
 			__METHOD__
@@ -182,7 +198,7 @@ class WikiFactory {
 		}
 		#--- check if $domain exists
 		$oRow = $dbw->selectRow(
-			wfSharedTable( "city_domains" ),
+			self::table( "city_domains" ),
 			array( "city_domain "),
 			array( "city_domain" => strtolower( $domain ) ),
 			__METHOD__
@@ -196,7 +212,7 @@ class WikiFactory {
 
 		#--- ewentually insert
 		$dbw->insert(
-			wfSharedTable("city_domains"),
+			self::table("city_domains"),
 			array(
 				"city_domain" => strtolower( $domain ),
 				"city_id" => $wiki
@@ -232,7 +248,7 @@ class WikiFactory {
 		$dbw = wfGetDB( DB_MASTER );
 		$dbw->begin();
 
-		if ( ! $dbw->delete(wfSharedTable("city_domains"), array( "city_id" => $wiki, "city_domain" => $domain ), __METHOD__) ) {
+		if ( ! $dbw->delete(self::table("city_domains"), array( "city_id" => $wiki, "city_domain" => $domain ), __METHOD__) ) {
 			$dbw->rollback();
 			wfProfileOut( __METHOD__ );
 			return false;
@@ -277,7 +293,7 @@ class WikiFactory {
 			#--- failure, getting from database
 			$dbr = wfGetDB( DB_SLAVE );
 			$oRow = $dbr->selectRow(
-				array( wfSharedTable("city_domains") ),
+				array( self::table("city_domains") ),
 				array( "city_id" ),
 				array( "city_domain" => $domain ),
 				__METHOD__
@@ -334,7 +350,7 @@ class WikiFactory {
 			 * delete old value
 			 */
 			$dbw->delete(
-				wfSharedTable("city_variables"),
+				self::table("city_variables"),
 				array (
 					"cv_variable_id" => $cv_variable_id,
 					"cv_city_id" => $city_id
@@ -346,7 +362,7 @@ class WikiFactory {
 			 * insert new one
 			 */
 			$dbw->insert(
-				wfSharedTable("city_variables"),
+				self::table("city_variables"),
 				array(
 					"cv_variable_id"    => $cv_variable_id,
 					"cv_city_id"        => $city_id,
@@ -408,7 +424,7 @@ class WikiFactory {
 					}
 					$city_url = $server . $script_path;
 					$dbw->update(
-						wfSharedTable("city_list"),
+						self::table("city_list"),
 						array("city_url" => $city_url ),
 						array("city_id" => $city_id),
 						__METHOD__ );
@@ -417,7 +433,7 @@ class WikiFactory {
 				case "wgLanguageCode":
 					#--- city_lang
 					$dbw->update(
-						wfSharedTable("city_list"),
+						self::table("city_list"),
 						array("city_lang" => $value ),
 						array("city_id" => $city_id ),
 						__METHOD__ );
@@ -426,7 +442,7 @@ class WikiFactory {
 				case "wgSitename":
 					#--- city_title
 					$dbw->update(
-						wfSharedTable("city_list"),
+						self::table("city_list"),
 						array("city_title" => $value ),
 						array("city_id" => $city_id ),
 						__METHOD__ );
@@ -435,7 +451,7 @@ class WikiFactory {
 				case "wgDBname":
 					#--- city_dbname
 					$dbw->update(
-						wfSharedTable("city_list"),
+						self::table("city_list"),
 						array("city_dbname" => $value ),
 						array("city_id" => $city_id ),
 						__METHOD__ );
@@ -446,7 +462,7 @@ class WikiFactory {
 					if (strpos($value, ' ') !== false) {
 						$value = str_replace(' ', '_', $value);
 						$dbw->update(
-							wfSharedTable('city_variables'),
+							self::table('city_variables'),
 							array('cv_value' => serialize($value)),
 							array(
 								'cv_city_id' => $city_id,
@@ -580,7 +596,7 @@ class WikiFactory {
 		}
 
 		$oRow = $dbr->selectRow(
-			array( wfSharedTable("city_list") ),
+			array( self::table("city_list") ),
 			array( "city_id", "city_dbname" ),
 			array( "city_dbname" => $city_dbname ),
 			__METHOD__
@@ -617,7 +633,7 @@ class WikiFactory {
 			$dbr = wfGetDB( DB_SLAVE );
 		}
 		$oRow = $dbr->selectRow(
-			array( wfSharedTable("city_list") ),
+			array( self::table("city_list") ),
 			array( "city_id", "city_dbname" ),
 			array( "city_id" => $city_id ),
 			__METHOD__
@@ -650,7 +666,7 @@ class WikiFactory {
 		 */
 		$dbr = wfGetDB( DB_SLAVE );
 		$oRow = $dbr->selectRow(
-			array( wfSharedTable("city_list") ),
+			array( self::table("city_list") ),
 			array( "*" ),
 			array( "city_id" => $id ),
 			__METHOD__
@@ -664,7 +680,7 @@ class WikiFactory {
 		 */
 		$dbr = wfGetDB( DB_MASTER );
 		$oRow = $dbr->selectRow(
-			array( wfSharedTable("city_list") ),
+			array( self::table("city_list") ),
 			array( "*" ),
 			array( "city_id" => $id ),
 			__METHOD__
@@ -866,7 +882,7 @@ class WikiFactory {
 		}
 		$dbw = wfGetDB( DB_MASTER );
 		$dbw->update(
-			wfSharedTable( "city_list" ),
+			self::table( "city_list" ),
 			array(
 				"city_factory_timestamp" => wfTimestampNow()
 			),
@@ -910,15 +926,15 @@ class WikiFactory {
 
 		$oRes = $dbr->select(
 			array(
-				wfSharedTable("city_variables_pool"),
-				wfSharedTable("city_variables_groups")
+				self::table("city_variables_pool"),
+				self::table("city_variables_groups")
 			), /*from*/
 			array(
 				"cv_group_id",
 				"cv_group_name"
 			), /*what*/
 			array(
-				"cv_group_id in (select cv_variable_group from ". wfSharedTable("city_variables_pool").")"
+				"cv_group_id in (select cv_variable_group from ". self::table("city_variables_pool").")"
 			), /*where*/
 			__METHOD__
 		);
@@ -959,8 +975,8 @@ class WikiFactory {
 
 		$aVariables = array();
 		$aTables = array(
-			wfSharedTable("city_variables_pool"),
-			wfSharedTable("city_variables_groups")
+			self::table("city_variables_pool"),
+			self::table("city_variables_groups")
 		);
 
 		$where = array( "cv_group_id = cv_variable_group" );
@@ -982,7 +998,7 @@ class WikiFactory {
 
 		if ( $defined === true && $wiki != 0 ) {
 			#--- add city_variables table
-			$aTables[] = wfSharedTable("city_variables");
+			$aTables[] = self::table("city_variables");
 			#--- add join
 			$where[] = "cv_variable_id = cv_id";
 			$where[ "cv_city_id" ] = $wiki;
@@ -1098,7 +1114,7 @@ class WikiFactory {
 
 		$dbw = wfGetDB( DB_MASTER );
 		$dbw->update(
-			wfSharedTable( "city_list" ),
+			self::table( "city_list" ),
 			array( "city_public" => $city_public ),
 			array( "city_id" => $city_id ),
 			__METHOD__
@@ -1164,7 +1180,7 @@ class WikiFactory {
 		}
 
 		$oRow = $dbr->selectRow(
-			wfSharedTable( "city_variables_pool" ),
+			self::table( "city_variables_pool" ),
 			array(
 				"cv_id",
 				"cv_name",
@@ -1187,7 +1203,7 @@ class WikiFactory {
 
 		if( !empty( $city_id ) ) {
 			$oRow2 = $dbr->selectRow(
-				wfSharedTable("city_variables"),
+				self::table("city_variables"),
 				array(
 					"cv_city_id",
 					"cv_variable_id",
@@ -1318,7 +1334,7 @@ class WikiFactory {
 
 		$dbw = wfGetDB( DB_MASTER );
 		return $dbw->insert(
-			wfSharedTable( "city_list_log" ),
+			self::table( "city_list_log" ),
 			array(
 				"cl_city_id" => $city_id,
 				"cl_user_id" => $wgUser->getId(),
@@ -1362,7 +1378,7 @@ class WikiFactory {
 		$dbr = wfGetDB( DB_SLAVE );
 
 		$oRow = $dbr->selectRow(
-			array( wfSharedTable("city_variables") ),
+			array( self::table("city_variables") ),
 			array( "cv_city_id" ),
 			array( "cv_value" => @serialize($cv_value) ),
 			__METHOD__
