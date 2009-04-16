@@ -21,6 +21,7 @@ $wgHooks['getEditingPreferencesTab'][] = 'Wysiwyg_UserPreferences';
 $wgHooks['MagicWordwgVariableIDs'][] = 'Wysiwyg_RegisterMagicWordID';
 $wgHooks['LanguageGetMagic'][] = 'Wysiwyg_GetMagicWord';
 $wgHooks['InternalParseBeforeLinks'][] = 'Wysiwyg_RemoveMagicWord';
+$wgHooks['LinkEnd'][] = 'Wysiwyg_LinkEnd';
 
 function Wysiwyg_SetDomain(&$skin, &$tpl) {
 
@@ -1027,4 +1028,24 @@ function WysiwygToolbarRemoveTooltip() {
 	$dbw->commit();
 
 	return new AjaxResponse('ok');
+}
+
+/**
+ * Modify links HTML using hook called inside Linker::link()
+ *
+ * @author Maciej Brencz <macbre at wikia-inc.com>
+ */
+function Wysiwyg_LinkEnd( $linker, $target, $options, $text, $attribs, $ret) {
+
+	// don't do anything when not in wysiwyg mode
+	global $wgWysiwygParserEnabled;
+	if (empty($wgWysiwygParserEnabled)) {
+		return true;
+	}
+
+	// interwiki links
+	if ($target->isExternal()) {
+		$attribs['refid'] = Wysiwyg_GetRefId($text, true);
+	}
+	return true;
 }
