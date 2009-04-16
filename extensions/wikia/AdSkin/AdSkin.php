@@ -1,7 +1,5 @@
 <?php
 /*
- * Ads ad as background of main page of the wiki
- *
  * Author: Christian Williams 
  */
 
@@ -103,6 +101,38 @@ function RenderAdLink() {
 		case "ffxi_link":
 			echo '<link rel="stylesheet" type="text/css" href="'. $wgExtensionsPath .'/wikia/AdSkin/css/ffxi_link.css?'. $wgAdSkinVersion .'" />';
 			echo '<a href="http://ad.doubleclick.net/clk;213790954;29393853;v?http://www.finalfantasyxi.com" id="ffxi_link">The story of Vana\'diel continues! New chapters in the FINAL FANTASY&reg; XI saga begin, starting with "The Crystalline Prophecy."<br />Experience the story of a lifetime!</a>';
+			break;
+		case "mlb_link":
+			echo '<style type="text/css">
+				#request_wiki {
+					display: none;
+				}
+				#mlb_link {
+					color: #FFF !important;
+					font-size: 8pt;
+					font-weight: bold;
+					left: 221px;
+					position: absolute;
+					text-align: left;
+					top: 3px;
+					width: 320px;
+				}
+			</style>';
+
+			echo "<div id=\"mlb_link\"><script type='text/javascript'><!--//<![CDATA[
+ var m3_u = (location.protocol=='https:'?'https://wikia-ads.wikia.com/www/delivery/ajs.php':'http://wikia-ads.wikia.com/www/delivery/ajs.php');
+ var m3_r = Math.floor(Math.random()*99999999999);
+ if (!document.MAX_used) document.MAX_used = ',';
+ document.write (\"<scr\"+\"ipt type='text/javascript' src='\"+m3_u);
+ document.write (\"?zoneid=667\");
+ document.write ('&amp;cb=' + m3_r);
+ if (document.MAX_used != ',') document.write (\"&amp;exclude=\" + document.MAX_used);
+ document.write (\"&amp;loc=\" + escape(window.location));
+ if (document.referrer) document.write (\"&amp;referer=\" + escape(document.referrer));
+ if (document.context) document.write (\"&context=\" + escape(document.context));
+ if (document.mmm_fo) document.write (\"&amp;mmm_fo=1\");
+ document.write (\"'><\/scr\"+\"ipt>\");
+//]]>--></script></div>";
 			break;
 		}
 	}
