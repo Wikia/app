@@ -298,7 +298,7 @@ class LocalMaintenanceTask extends BatchTask {
 					$enRedirectTitle = Title::newFromText( $enTitle, NS_MAIN );
 					$enRedirectArticle = new Article( $enRedirectTitle, 0);
 					if ( ! $enRedirectArticle->exists() ) {
-						$$enRedirectArticle->doEdit( "#Redirect [[" . $centralTitleName . "]]", "modified by autocreate Wiki process", EDIT_FORCE_BOT);
+						$enRedirectArticle->doEdit( "#Redirect [[" . $centralTitleName . "]]", "modified by autocreate Wiki process", EDIT_FORCE_BOT);
 						$this->log( sprintf("Article %s added (extra redirect to: " . $centralTitleName . ").", $enRedirectTitle->getFullUrl()) );
 					}
 					else {
