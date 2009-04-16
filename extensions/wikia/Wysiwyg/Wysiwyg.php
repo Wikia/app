@@ -280,7 +280,8 @@ function Wysiwyg_AlternateEdit($form) {
 }
 
 function Wysiwyg_NotifySaveComplete(&$article, &$user, &$text, &$summary, &$minoredit, &$watchthis, &$sectionanchor, &$flags, $revision) {
-	if(is_object($revision)) {
+	global $wgDevelEnvironment;
+	if(is_object($revision) && empty($wgDevelEnvironment)) {
 		global $wgSitename;
 
 		$url = $article->getTitle()->getFullURL();
