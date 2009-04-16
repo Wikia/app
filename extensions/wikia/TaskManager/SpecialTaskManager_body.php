@@ -576,10 +576,13 @@ class TaskManagerPager extends TablePager {
 			}
 		}
 
-		if (!is_null($sType)) {
-			$aSorting["task_type"] = $sType;
-		} else {
-			unset($aSorting["task_type"]);
+		if (!is_null($sType) || $wgRequest->wasPosted()) {
+			if ( count($sType) != 0 ) {
+				$aSorting["task_type"] = $sType;
+			}
+			else {
+				unset($aSorting["task_type"]);
+			}
 		}
 
 		$this->mQueryConds = $aSorting;
