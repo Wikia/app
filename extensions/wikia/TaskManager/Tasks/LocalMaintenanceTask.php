@@ -179,7 +179,6 @@ class LocalMaintenanceTask extends BatchTask {
 		 */
 		$centralTitleName = preg_replace( "/(\s+wiki)$/i", "", $this->mWikiData[ "title" ] );
 
-
 		#--- title for this page
 		$centralTitle = Title::newFromText( $centralTitleName, NS_MAIN );
 		$oHubs = WikiFactoryHub::getInstance();
@@ -224,7 +223,7 @@ class LocalMaintenanceTask extends BatchTask {
 				 */
 				$this->log( sprintf("Updating existing article: %s", $centralTitle->getFullUrl()) );
 				$sContent = $oCentralArticle->getContent();
-				$sContent = $oTmpl->execute("central");
+				$sContent .= $oTmpl->execute("central");
 				$oCentralArticle->doEdit( $sContent, "modified by autocreate Wiki process", EDIT_FORCE_BOT );
 				$this->log( sprintf("Article %s already exists... content added", $centralTitle->getFullUrl()) );
 			}
