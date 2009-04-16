@@ -30,13 +30,6 @@ $wgAdsInContentExtensionConfig = array(
 	'insideAdUnitConfig' => array(
  		'google'     => array(
 			0 => array(
-				'width' => 468,
-				'height' => 60,
-				'align' => 'left',
-				'float' => false,
-//				'googleAdChannel' => '9100000015'), // 011
-				'googleAdChannel' => 'INCONTENT_LEADERBOARD'),
-			1 => array(
 				'width' => 200,
 				'height' => 200,
 				'align' => 'left',
@@ -44,22 +37,9 @@ $wgAdsInContentExtensionConfig = array(
 //				'googleAdChannel' => '9100000016') // 012
 				'googleAdChannel' => 'INCONTENT_BOXAD')
  																	),
-/* 		'yieldbuild' => array(
-			0 => array(
-				'width' => 468,
-				'height' => 200,
-				'align' => 'left',
-				'yieldbuildLocation' => 'left_first_section'),
-			1 => array(
-				'width' => 468,
-				'height' => 200,
-				'align' => 'left',
-				'yieldbuildLocation' => 'right_first_section')
- 	                ) */
 	),
 	'limit' => array(
 		'google' => 4,
-//		'yieldbuild' => 0
 	)
 );
 
@@ -97,7 +77,6 @@ function wfAdsInContentHook(&$out, &$text) {
 </script>
 <script type="text/javascript">
   GA_googleAddSlot("ca-pub-4086838842346968", "INCONTENT_BOXAD");
-  GA_googleAddSlot("ca-pub-4086838842346968", "INCONTENT_LEADERBOARD");
   GA_googleAddAdSensePageAttr("google_ad_channel", "4974569436");
 </script>
 <script type="text/javascript">
