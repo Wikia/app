@@ -73,7 +73,7 @@ function wfSpecialTopFansRecent(){
 			$top_title = Title::makeTitle( NS_SPECIAL  , "TopUsers"  );
 			$recent_title = Title::makeTitle( NS_SPECIAL  , "TopUsersRecent"  );
 			
-			$out .= "<div class=\"top-fan-nav\">
+			$out = "<div class=\"top-fan-nav\">
 				<h1>" . wfMsg("top_fans_by_points_nav_header") . "</h1>
 				<p><a href=\"{$top_title->escapeFullURL()}\">" . wfMsg("top_fans_total_points_link") . "</a></p>";
 			
@@ -88,14 +88,13 @@ function wfSpecialTopFansRecent(){
 				
 			//Build Nav of Stats by Category based on Mediawiki:topfans_by_category
 			
-			if (count($lines)>0) {
-				$out .= "<h1 style=\"margin-top:15px !important;\">" . wfMsg("top_fans_by_category_nav_header") . "</h1>";
-			}
-			
 			$by_category_title = Title::makeTitle( NS_SPECIAL, "TopFansByStatistic");
 			$nav = array();
 			
 			$lines = explode( "\n", wfMsgForContent( 'topfans_by_category' ) );
+			if (count($lines)>0) {
+				$out .= "<h1 style=\"margin-top:15px !important;\">" . wfMsg("top_fans_by_category_nav_header") . "</h1>";
+			}
 			foreach ($lines as $line) {
 				
 				if (strpos($line, '*') !== 0){

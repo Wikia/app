@@ -52,7 +52,8 @@ function wfVideoImport() {
 					var _LOADING_MSG = \"" . wfMsgForContent( 'videoimport_loading' ) . "\"
 					</script>
 					");
-			
+
+			$from_text = ""; $from_title = null; $from_url = "";
 			if( $from ){
 				$from_title = Title::newFromDBkey( $from );
 				$from_url = $from_title->getFullURL();
@@ -64,7 +65,7 @@ function wfVideoImport() {
 			
 			$y = new YoutubeImport( );
 			
-		 
+		 	$output = $video_gallery_values = "";
 			//User has select videos to import
 			if( $wgRequest->wasPosted() ){
 				if ( $wgRequest->getVal("ids") ){
@@ -96,6 +97,7 @@ function wfVideoImport() {
 			
 			//Display Form for searching/selecting images
 			$upload_title = Title::makeTitle(NS_SPECIAL,"AddVideo");
+			$categories_qs = "";
 			if($categories){
 				$categories_qs = "&wpCategories=" . urlencode($categories);
 			}

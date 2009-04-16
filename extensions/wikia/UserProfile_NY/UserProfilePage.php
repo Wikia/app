@@ -102,6 +102,7 @@ class UserProfilePage extends Article{
 	function getUserStatsRow($label,$value) {
 		global $wgUser, $wgTitle, $wgOut;
 		
+		$output = "";
 		if ($value!=0) {
 			$output = "<div>
 					<b>{$label}</b>
@@ -125,7 +126,7 @@ class UserProfilePage extends Article{
 		$stats_data = $stats->getUserStats();
 		
 		$total_value = $stats_data["edits"] . $stats_data["votes"] . $stats_data["comments"] . $stats_data["recruits"] . $stats_data["poll_votes"] . $stats_data["picture_game_votes"] . $stats_data["quiz_points"];
-		
+		$output = "";
 		if ($total_value!=0) {
 			$output .= "<div class=\"user-section-heading\">
 				<div class=\"user-section-title\">
@@ -170,6 +171,7 @@ class UserProfilePage extends Article{
 		//try cache first
 		$key = wfMemcKey( 'user', 'profile', 'articles', $this->user_id );
 		$data = $wgMemc->get( $key );
+		$articles = array();
 		if( $data != ""){
 			wfDebug("Got UserProfile articles for user {$user_name} from cache\n");
 			$articles = $data;
@@ -198,7 +200,7 @@ class UserProfilePage extends Article{
 		}
 		
 		//load opinion count via user stats;
-		$stats = new UserStats($this->user_id, $this->$user_name);
+		$stats = new UserStats($this->user_id, $this->user_name);
 		$stats_data = $stats->getUserStats();
 		$article_count = $stats_data["opinions_created"];
 		
@@ -440,10 +442,10 @@ class UserProfilePage extends Article{
 		$data = $wgMemc->get( $key );
 	
 		if( $data ){                   
-			wfDebug( "Got profile polls for user {$user_name} from cache\n" );
+			wfDebug( "Got profile polls for user {$this->user_id} from cache\n" );
 			$polls = $data;
 		}else{
-			wfDebug( "Got profile polls for user {$user_name} from db\n" );	
+			wfDebug( "Got profile polls for user {$this->user_id} from db\n" );	
 			$dbr =& wfGetDB( DB_SLAVE );
 			$params['LIMIT'] = "3";
 			$params['ORDER BY'] = "poll_id desc";
@@ -473,10 +475,10 @@ class UserProfilePage extends Article{
 		$key = wfMemcKey( 'user', 'profile', 'quiz' , $this->user_id);
 		$data = $wgMemc->get( $key );
 		if( $data ){
-			wfDebug( "Got profile quizzes for user {$user_name} from cache\n" );
+			wfDebug( "Got profile quizzes for user {$this->user_id} from cache\n" );
 			$quiz = $data;
 		}else{
-			wfDebug( "Got profile quizzes for user {$user_name} from db\n" );	
+			wfDebug( "Got profile quizzes for user {$this->user_id} from db\n" );	
 			$dbr =& wfGetDB( DB_SLAVE );
 			$params['LIMIT'] = "3";
 			$params['ORDER BY'] = "q_id desc";
@@ -506,10 +508,10 @@ class UserProfilePage extends Article{
 		$key = wfMemcKey( 'user', 'profile', 'picgame' , $this->user_id);
 		$data = $wgMemc->get( $key );
 		if( $data ){
-			wfDebug( "Got profile picgames for user {$user_name} from cache\n" );
+			wfDebug( "Got profile picgames for user {$this->user_id} from cache\n" );
 			$pics = $data;
 		}else{
-			wfDebug( "Got profile picgames for user {$user_name} from db\n" );	
+			wfDebug( "Got profile picgames for user {$this->user_id} from db\n" );	
 			$dbr =& wfGetDB( DB_SLAVE );
 			$params['LIMIT'] = "3";
 			$params['ORDER BY'] = "id desc";
@@ -670,6 +672,7 @@ class UserProfilePage extends Article{
 	function getProfileSection($label,$value,$required=true){
 		global $wgUser, $wgTitle, $wgOut;
 		
+		$output = "";
 		if($value || $required) {
 			if(!$value) {
 				if ( $wgUser->getName() == $wgTitle->getText()  ) {
@@ -710,22 +713,47 @@ class UserProfilePage extends Article{
 		}
 		$profile_data = $this->profile_data;
 		
-		$location = $profile_data["location_city"] . ", " . $profile_data["location_state"];
-		if($profile_data["location_country"]!="United States"){
+		$location = (isset($profile_data["location_city"])) ? $profile_data["location_city"] . ", " . ((isset($profile_data["location_state"])) ? $profile_data["location_state"] : "") : "";
+		if ( isset($profile_data["location_country"]) && ($profile_data["location_country"]!="United States") ) {
 			$location = "";
 			$location .= $profile_data["location_country"];
 		}	
 		
 		if($location==", ")$location="";
 		
-		$hometown = $profile_data["hometown_city"] . ", " . $profile_data["hometown_state"];
-		if($profile_data["hometown_country"]!="United States"){
+		$hometown = (isset($profile_data["hometown_city"])) ? $profile_data["hometown_city"] . ", " . ((isset($profile_data["hometown_state"])) ? $profile_data["hometown_state"] : "") : "";
+		if ( isset($profile_data["hometown_country"]) && ($profile_data["hometown_country"]!="United States") ) {
 			$hometown = "";
 			$hometown .= $profile_data["hometown_country"];
 		}
-		if($hometown==", ")$hometown="";
+		if ($hometown==", ") {
+			$hometown="";
+		}
 		
-		$joined_data = $profile_data["real_name"] . $location.$hometown . $profile_data["birthday"] . $profile_data["occupation"] . $profile_data["websites"] . $profile_data["places_lived"] . $profile_data["schools"] . $profile_data["about"];
+		$joined_data = "";
+		if (isset($profile_data["real_name"])) {
+			$joined_data .= $profile_data["real_name"];
+		}
+		$joined_data .= $location.$hometown;
+		if (isset($profile_data["birthday"])) {
+			$joined_data .= $profile_data["birthday"];
+		} 
+		if (isset($profile_data["occupation"])) {
+			$joined_data .= $profile_data["occupation"];
+		}
+		if (isset($profile_data["websites"])) {
+			$joined_data .= $profile_data["websites"];
+		}
+		if (isset($profile_data["places_lived"])) {
+			$joined_data .= $profile_data["places_lived"];
+		} 
+		if (isset($profile_data["schools"])) {
+			$joined_data .= $profile_data["schools"];
+		}
+		if (isset($profile_data["about"])) {
+			$joined_data .= $profile_data["about"];
+		}
+
 		$edit_info_link = Title::MakeTitle(NS_SPECIAL,"UpdateProfile");
 	
 		if ($joined_data) {
@@ -745,12 +773,12 @@ class UserProfilePage extends Article{
 				$this->getProfileSection(wfMsg("user-personal-info-real-name"),$profile_data["real_name"], false).
 				$this->getProfileSection(wfMsg("user-personal-info-location"),$location, false).
 				$this->getProfileSection(wfMsg("user-personal-info-hometown"),$hometown, false).
-				$this->getProfileSection(wfMsg("user-personal-info-birthday"),$profile_data["birthday"], false).
-				$this->getProfileSection(wfMsg("user-personal-info-occupation"),$profile_data["occupation"], false).
-				$this->getProfileSection(wfMsg("user-personal-info-websites"),$profile_data["websites"], false).
-				$this->getProfileSection(wfMsg("user-personal-info-places-lived"),$profile_data["places_lived"],false).
-				$this->getProfileSection(wfMsg("user-personal-info-schools"),$profile_data["schools"],false).
-				$this->getProfileSection(wfMsg("user-personal-info-about-me"),$profile_data["about"],false).	
+				$this->getProfileSection(wfMsg("user-personal-info-birthday"),(isset($profile_data["birthday"])) ? $profile_data["birthday"] : "", false).
+				$this->getProfileSection(wfMsg("user-personal-info-occupation"), (isset($profile_data["occupation"])) ? $profile_data["occupation"] : "", false).
+				$this->getProfileSection(wfMsg("user-personal-info-websites"), (isset($profile_data["websites"])) ? $profile_data["websites"] : "", false).
+				$this->getProfileSection(wfMsg("user-personal-info-places-lived"), (isset($profile_data["places_lived"])) ? $profile_data["places_lived"] : "",false).
+				$this->getProfileSection(wfMsg("user-personal-info-schools"), (isset($profile_data["schools"])) ? $profile_data["schools"] : "",false).
+				$this->getProfileSection(wfMsg("user-personal-info-about-me"), (isset($profile_data["about"])) ? $profile_data["about"] : "",false).	
 			"</div>";
 		} else if ($wgUser->getName()==$user_name) {
 			$output .= "<div class=\"user-section-heading\">
@@ -790,7 +818,19 @@ class UserProfilePage extends Article{
 		}
 		$profile_data = $this->profile_data;
 		
-		$joined_data = $profile_data["custom_1"] . $profile_data["custom_2"] . $profile_data["custom_3"] . $profile_data["custom_4"]; 
+		$joined_data = "";
+		if (isset($profile_data["custom_1"])) {
+			$joined_data .= $profile_data["custom_1"];
+		}
+		if (isset($profile_data["custom_2"])) {
+			$joined_data .= $profile_data["custom_2"];
+		}
+		if (isset($profile_data["custom_3"])) {
+			$joined_data .= $profile_data["custom_3"];
+		}
+		if (isset($profile_data["custom_4"])) {
+			$joined_data .= $profile_data["custom_4"];
+		}
 		$edit_info_link = Title::MakeTitle(NS_SPECIAL,"UpdateProfile");
 		
 		if ($joined_data) {
@@ -850,8 +890,32 @@ class UserProfilePage extends Article{
 		}
 		$profile_data = $this->profile_data;
 		
-		$joined_data = $profile_data["movies"] . $profile_data["tv"] . $profile_data["music"] . $profile_data["books"] . $profile_data["video_games"] . $profile_data["magazines"] . $profile_data["drinks"] . $profile_data["snacks"];
-		
+		$joined_data = "";
+		if (isset($profile_data["movies"])) {
+			$joined_data .= $profile_data["movies"];
+		}
+		if (isset($profile_data["tv"])) {
+			$joined_data .= $profile_data["tv"];
+		}
+		if (isset($profile_data["music"])) {
+			$joined_data .= $profile_data["music"];
+		}
+		if (isset($profile_data["books"])) {
+			$joined_data .= $profile_data["books"];
+		}
+		if (isset($profile_data["video_games"])) {
+			$joined_data .= $profile_data["video_games"];
+		}
+		if (isset($profile_data["magazines"])) {
+			$joined_data .= $profile_data["magazines"];
+		}
+		if (isset($profile_data["drinks"])) {
+			$joined_data .= $profile_data["drinks"];
+		}
+		if (isset($profile_data["snacks"])) {
+			$joined_data .= $profile_data["snacks"];
+		}
+
 		$edit_info_link = Title::MakeTitle(NS_SPECIAL,"UpdateProfile");
 		
 		if ($joined_data) {
@@ -1299,63 +1363,63 @@ class UserProfilePage extends Article{
 				$output .= "<div id=\"recent-all\">$by_type</div>";
 				
 				$by_type = "";
-				if($items_html_type["edit"]){
+				if( isset($items_html_type["edit"]) && is_array($items_html_type["edit"]) ){
 					foreach($items_html_type["edit"] as $item){
 						$by_type .= $item;	
 					}
 				}
 				
 				$by_type = "";
-				if($items_html_type["comment"]){
+				if( isset($items_html_type["comment"]) && is_array($items_html_type["comment"]) ){
 					foreach($items_html_type["comment"] as $item){
 						$by_type .= $item;	
 					}
 				}
 								
 				$by_type = "";
-				if($items_html_type["gift-sent"]){
+				if( isset($items_html_type["gift-sent"]) && is_array($items_html_type["gift-sent"]) ){
 					foreach($items_html_type["gift-sent"] as $item){
 						$by_type .= $item;	
 					}
 				}
 				
 				$by_type = "";
-				if($items_html_type["gift-rec"]){
+				if( isset($items_html_type["gift-rec"]) && is_array($items_html_type["gift-rec"]) ){
 					foreach($items_html_type["gift-rec"] as $item){
 						$by_type .= $item;	
 					}
 				}
 				
 				$by_type = "";
-				if($items_html_type["system_gift"]){
+				if( isset($items_html_type["system_gift"]) && is_array($items_html_type["system_gift"]) ){
 					foreach($items_html_type["system_gift"] as $item){
 						$by_type .= $item;	
 					}
 				}
 				
 				$by_type = "";
-				if($items_html_type["friend"]){
+				if ( isset($items_html_type["friend"]) && is_array($items_html_type["friend"]) ){
 					foreach($items_html_type["friend"] as $item){
 						$by_type .= $item;	
 					}
 				}
 				
 				$by_type = "";
-				if($items_html_type["foe"]){
+				if ( isset($items_html_type["foe"]) && is_array($items_html_type["foe"]) ){
 					foreach($items_html_type["foe"] as $item){
 						$by_type .= $item;	
 					}
 				}
 				
 				$by_type = "";
-				if($items_html_type["system_message"]){
+				if ( isset($items_html_type["system_message"]) && is_array($items_html_type["system_message"]) ){
 					foreach($items_html_type["system_message"] as $item){
 						$by_type .= $item;	
 					}
 				}
 				
 				$by_type = "";
-				if($items_html_type["network_update"]){
+				if ( isset($items_html_type["network_update"]) && is_array($items_html_type["network_update"]) ) {
 					foreach($items_html_type["network_update"] as $item){
 						$by_type .= $item;	
 					}
@@ -1434,7 +1498,7 @@ class UserProfilePage extends Article{
 					$user =  Title::makeTitle( NS_USER  , $gift["user_name_from"]  );
 					$gift_image = "<img src=\"{$wgUploadPath}/awards/" . Gifts::getGiftImage($gift["gift_id"],"ml") . "\" border=\"0\" alt=\"\" />";
 					$gift_link = $user =  Title::makeTitle( NS_SPECIAL  , "ViewGift"  );
-					$output .= "<a href=\"".$gift_link->escapeFullURL('gift_id='.$gift[id])."\" ".(($gift["status"] == 1)?"class=\"user-page-new\"":"")." rel=\"nofollow\">{$gift_image}</a>";
+					$output .= "<a href=\"".$gift_link->escapeFullURL('gift_id='.$gift['id'])."\" ".(($gift["status"] == 1)?"class=\"user-page-new\"":"")." rel=\"nofollow\">{$gift_image}</a>";
 					if($x==count($gifts) || $x!=1 && $x%$per_row ==0)$output .= "<div class=\"cleared\"></div>";
 					$x++;	
 
@@ -1603,6 +1667,7 @@ class UserProfilePage extends Article{
 	function getFanBoxes($user_name){
 		global $wgOut, $IP, $wgUser, $wgTitle, $wgMemc, $wgUserProfileDisplay, $wgMessageCache, $wgFanBoxScripts, $wgFanBoxDirectory, $wgEnableUserBoxes;
 		
+		$output = "";
 		if (!$wgEnableUserBoxes || $wgUserProfileDisplay['userboxes'] == false) {
 			return "";
 		}
@@ -1685,7 +1750,8 @@ class UserProfilePage extends Article{
 						$fantag_leftside  = $tagParser->parse($fantag_leftside, $wgTitle, $wgOut->parserOptions(), false );
 						$fantag_leftside  = $fantag_leftside->getText();
 					}
-					
+
+					$leftfontsize = "9px";					
 					if ($fanbox["fantag_left_textsize"] == "mediumfont") {
 						$leftfontsize= "11px";
 					}
@@ -1694,6 +1760,7 @@ class UserProfilePage extends Article{
 						$leftfontsize= "15px";
 					}
 					
+					$rightfontsize = "8px";					
 					if ($fanbox["fantag_right_textsize"] == "smallfont") {
 						$rightfontsize= "10px";
 					}

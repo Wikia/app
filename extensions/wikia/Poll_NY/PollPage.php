@@ -31,7 +31,7 @@ class PollPage extends Article{
 		//Get Total Polls Count so we can tell the user how many they have voted for out of total
 		$dbr =& wfGetDB( DB_MASTER );
 		$total_polls = 0;
-		$s = $dbr->selectRow( '`poll_question`', array( 'count(*) as count' ), '', $fname );
+		$s = $dbr->selectRow( '`poll_question`', array( 'count(*) as count' ), '', __METHOD__ );
 		if ( $s !== false )$total_polls = number_format($s->count);	
 		
 		$stats = new UserStats($wgUser->getID(), $wgUser->getName() );
@@ -55,7 +55,7 @@ class PollPage extends Article{
 			$user_name_short = ($poll_info["user_name"] == substr($poll_info["user_name"], 0, 27) ) ?
 								 $poll_info["user_name"] : ( substr($poll_info["user_name"], 0, 27) . "...");
 			
-			$output .= "<div class=\"poll-right\" >";
+			$output = "<div class=\"poll-right\" >";
 			if ($wgUser->isLoggedIn()) {
 				$output .= "<div class=\"create-link\">
 				<a href=\"" . Title::makeTitle(NS_SPECIAL, "CreatePoll")->escapeFullURL() . "\">

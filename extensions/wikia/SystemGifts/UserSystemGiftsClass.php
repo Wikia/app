@@ -232,7 +232,7 @@ class UserSystemGifts {
 		while ($row = $dbr->fetchObject( $res ) ) {
 			 $requests[] = array(
 				 "id"=>$row->sg_id,"gift_id"=>$row->sg_gift_id,"timestamp"=>($row->sg_date ) , "status"=>$row->sg_status,
-				 "user_id"=>$row->sg_user,"user_name"=>$row->sg_user_name,
+				 "user_id"=>$row->sg_user_id,"user_name"=>$row->sg_user_name,
 				 "gift_name"=>$row->gift_name, "gift_description"=>$row->gift_description, 
 				 "gift_given_count" => $row->gift_given_count, "unix_timestamp"=>$row->unix_time
 				 );

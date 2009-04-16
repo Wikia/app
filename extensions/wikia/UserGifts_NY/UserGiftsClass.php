@@ -237,9 +237,15 @@ class UserGifts {
 		$requests = array();
 		while ($row = $dbr->fetchObject( $res ) ) {
 			 $requests[] = array(
-				 "id"=>$row->ug_id,"gift_id"=>$row->ug_gift_id,"timestamp"=>($row->ug_date ) , "status"=>$row->ug_status,
-				 "user_id_from"=>$row->ug_user_id_from,"user_name_from"=>$row->ug_user_name_from,
-				 "gift_name"=>$row->gift_name, "gift_description"=>$row->gift_description, "gift_given_count" => $row->gift_given_count,
+				 "id"=>$row->ug_id,
+				 "gift_id"=>$row->ug_gift_id,
+				 "timestamp"=>($row->ug_date ), 
+				 "status"=>$row->ug_status,
+				 "user_id_from"=>$row->ug_user_id_from,
+				 "user_name_from"=>$row->ug_user_name_from,
+				 "gift_name"=>$row->gift_name, 
+				 "gift_description"=>$row->gift_description, 
+				 "gift_given_count" => $row->gift_given_count,
 				 "unix_timestamp" => $row->unix_time
 				 );
 		}

@@ -32,10 +32,9 @@ class UserProfile {
 	 * @private
 	 */
 	/* private */ function __construct($username) {
-		$title1 = Title::newFromDBkey($username  );
+		$title1 = Title::newFromDBkey($username);
 		$this->user_name = $title1->getText();
 		$this->user_id = User::idFromName($this->user_name);
-		
 	}
 	
 	 
@@ -55,6 +54,7 @@ class UserProfile {
 		$key = wfMemcKey( 'user', 'profile', self::$profile_version,  'info', $this->user_id );
 		//$wgMemc->delete( $key );
 		$data = $wgMemc->get( $key );
+		$profile = array();
 		if ( $data ) {
 			wfDebug( "Got user profile info for {$this->user_name} from cache\n" );
 			$profile = $data;
@@ -68,9 +68,9 @@ class UserProfile {
 				$params
 				);
 		
+			$profile["user_id"]= $this->user_id;
 			if($row){
-				$profile["user_id"]= $this->user_id;
-				$profile["gender"]= $row->up_gender;
+				$profile["gender"]= (isset($row->up_gender)) ? $row->up_gender : 0;
 				$profile["location_city"]= $row->up_location_city;	
 				$profile["location_state"]= $row->up_location_state;	
 				$profile["location_country"]= $row->up_location_country;

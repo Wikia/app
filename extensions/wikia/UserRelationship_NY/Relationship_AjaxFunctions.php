@@ -20,7 +20,8 @@ function wfRelationshipRequestResponse($response, $request_id){
 		$key = wfMemcKey( 'user_relationship', 'awaitingrequests', $user_id_from );
 		$wgMemc->delete( $key );
 		
-		$rel->updateRelationshipRequestStatus($request_id,$_POST["response"]);
+		$response = (isset($_POST["response"])) ? $_POST["response"] : "";
+		$rel->updateRelationshipRequestStatus($request_id,$response);
 	
 		$avatar = new wAvatar($user_id_from,"l");
 		$avatar_img = $avatar->getAvatarURL();

@@ -5,8 +5,7 @@ $wgSpecialPageGroups['UserActivity'] = 'users';
 
 function wfSpecialUserHome(){
 	global $wgUser,$IP;
-	include_once("includes/SpecialPage.php");
-
+//	include_once("includes/SpecialPage.php");
 
 	class UserHome extends SpecialPage {
 	

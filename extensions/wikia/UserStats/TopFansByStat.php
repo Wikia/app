@@ -79,10 +79,10 @@ function wfSpecialTopFansByStat(){
 	
 			//top nav bar
 			
-			$top_title = Title::makeTitle( NS_SPECIAL  , "TopFans"  );
-			$recent_title = Title::makeTitle( NS_SPECIAL  , "TopFansRecent"  );
+			$top_title = Title::makeTitle( NS_SPECIAL  , "TopUsers"  );
+			$recent_title = Title::makeTitle( NS_SPECIAL  ,  "TopUsersRecent"  );
 			
-			$out .= "<div class=\"top-fan-nav\">
+			$out = "<div class=\"top-fan-nav\">
 				<h1>" . wfMsg("top_fans_by_points_nav_header") . "</h1>
 				<p><a href=\"{$top_title->escapeFullURL()}\">" . wfMsg("top_fans_total_points_link") . "</a></p>";
 				

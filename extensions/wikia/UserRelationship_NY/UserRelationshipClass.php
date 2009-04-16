@@ -48,8 +48,8 @@ class UserRelationship {
 		
 		$dbr =& wfGetDB( DB_MASTER );
 		
-		$s = $dbr->selectRow( '`user_relationship_request`', array( 'ur_user_id_to' ), array( 'ur_user_id_to' => $user_id_to, 'ur_user_id_from' =>  $this->user_id), $fname );
-		if ( $s->ur_user_id_to > 0 ) {
+		$s = $dbr->selectRow( '`user_relationship_request`', array( 'ur_user_id_to' ), array( 'ur_user_id_to' => $user_id_to, 'ur_user_id_from' =>  $this->user_id), __METHOD__ );
+		if ( isset($s) && isset($s->ur_user_id_to) && ($s->ur_user_id_to > 0) ) {
 			return "";	
 		}
 		
@@ -234,7 +234,7 @@ class UserRelationship {
 		$dbr =& wfGetDB( DB_MASTER );
 		$s = $dbr->selectRow( '`user_relationship_request`', 
 				array( 'ur_user_id_from','ur_user_name_from','ur_type','ur_trust_type'),
-				array( 'ur_id' => $relationship_request_id ), $fname 
+				array( 'ur_id' => $relationship_request_id ), __METHOD__ 
 		);
 		if ( $s == true ) {
 			$ur_user_id_from = $s->ur_user_id_from;
@@ -371,7 +371,7 @@ class UserRelationship {
 	
 	public function verifyRelationshipRequest($relationship_request_id){
 		$dbr =& wfGetDB( DB_MASTER );
-		$s = $dbr->selectRow( '`user_relationship_request`', array( 'ur_user_id_to' ), array( 'ur_id' => $relationship_request_id ), $fname );
+		$s = $dbr->selectRow( '`user_relationship_request`', array( 'ur_user_id_to' ), array( 'ur_id' => $relationship_request_id ), __METHOD__ );
 		if ( $s !== false ) {
 			if($this->user_id == $s->ur_user_id_to){
 				return true;
@@ -392,7 +392,7 @@ class UserRelationship {
 	
 	static function userHasRequestByID($user1,$user2){
 		$dbr =& wfGetDB( DB_MASTER );
-		$s = $dbr->selectRow( '`user_relationship_request`', array( 'ur_type' ), array( 'ur_user_id_to' => $user1, 'ur_user_id_from' => $user2, 'ur_status' => 0 ), $fname );
+		$s = $dbr->selectRow( '`user_relationship_request`', array( 'ur_type' ), array( 'ur_user_id_to' => $user1, 'ur_user_id_from' => $user2, 'ur_status' => 0 ), __METHOD__ );
 		if ( $s === false ) {
 			return false;
 		}else{
@@ -510,12 +510,14 @@ class UserRelationship {
 		
 		$dbr =& wfGetDB( DB_MASTER );
 		
+		$limit_sql = "";
 		if($limit>0){
 			$limitvalue = 0;
 			if($page)$limitvalue = $page * $limit - ($limit); 
 			$limit_sql = " LIMIT {$limitvalue},{$limit} ";
 		}
 		
+		$type_sql = $trust_type_sql = "";
 		if($type){
 			$type_sql = " AND r_type = {$type} ";
 		}
@@ -559,7 +561,7 @@ class UserRelationship {
 		if($trust_type > 0){
 			$where["r_trust_type"] = $trust_type;
 		}
-		$s = $dbr->selectRow( '`user_relationship`', array( 'count(*) as the_count' ), $where, $fname );
+		$s = $dbr->selectRow( '`user_relationship`', array( 'count(*) as the_count' ), $where, __METHOD__ );
 	
 		return $s->the_count;
 

@@ -23,14 +23,19 @@
 		
 		function execute(){
 			
-			global $wgUser, $wgOut, $wgRequest, $wgMessageCache, $IP, $wgUploadPath, $wgUserRelationshipScripts, $wgDisableFoeing;
+			global $wgUser, $wgOut, $wgRequest, $wgMessageCache, $IP, $wgUploadPath, $wgUserRelationshipScripts, $wgDisableFoeing, $wgStyleVersion;
 	
 			$wgOut->addScript("<link rel='stylesheet' type='text/css' href=\"{$wgUserRelationshipScripts}/UserRelationship.css?{$wgStyleVersion}\"/>\n");
 			
-			$usertitle = Title::newFromDBkey($wgRequest->getVal('user'));
-			$user =  Title::makeTitle( NS_USER  , $usertitle->getText()  );
+			$userText = $wgRequest->getVal('user');
+			if (empty($userText)) {
+				$wgOut->addHTML("No user selected.  Please request friends/foes through the correct link.");
+				return false;	
+			}
+			$usertitle = Title::newFromDBkey($userText);
+			$user =  Title::makeTitle( NS_USER, $usertitle->getText() );
 			  
-			if(!$usertitle){
+			if (!$usertitle) {
 				$wgOut->addHTML("No user selected.  Please request friends/foes through the correct link.");
 				return false;	
 			}

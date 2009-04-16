@@ -108,6 +108,10 @@ class PollAjaxUploadForm extends UploadForm{
 		global $wgUseCopyrightUpload;
 		global $wgRequest, $wgAllowCopyUploads, $wgStyleVersion;
 
+		if (!isset($this->mDestFile)) { 
+			$this->mDestFile = "";
+		}
+		
 		if( !wfRunHooks( 'UploadForm:initial', array( &$this ) ) )
 		{
 			wfDebug( "Hook 'UploadForm:initial' broke output of the upload form" );

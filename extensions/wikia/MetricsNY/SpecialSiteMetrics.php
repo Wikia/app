@@ -40,7 +40,7 @@ class SiteMetrics extends SpecialPage {
 		}
 		
 		//Write Google Charts API script to generate graph
-		$output .= "<script>
+		$output = "<script>
 		
 		var simpleEncoding = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
 		var maxValue='{$max}';
@@ -145,7 +145,7 @@ class SiteMetrics extends SpecialPage {
 		    return;
 		}        
 			
-			
+		$output = "";	
 		//$current_user_name = $wgUser->getName();
 		//$user = User::newFromName($current_user_name);
 		$user_groups = $wgUser->getGroups();

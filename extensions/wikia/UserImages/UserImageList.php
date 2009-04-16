@@ -16,7 +16,7 @@ class UserImageList extends SpecialPage {
 
 	
 	function execute(){
-		global $wgRequest, $IP, $wgOut, $wgUser, $wgMessageCache;
+		global $wgRequest, $IP, $wgOut, $wgUser, $wgMessageCache, $wgStyleVersion;
 		
 		$wgOut->addScript("<link rel='stylesheet' type='text/css' href=\"/extensions/wikia/UserImages/UserImages.css?{$wgStyleVersion}\"/>\n");
 		$wgOut->addScript("<script type=\"text/javascript\" src=\"/extensions/wikia/UserImages/UserImages.js?{$wgStyleVersion}\"></script>\n");

@@ -7,8 +7,10 @@ class GiveGift extends SpecialPage {
 	
 	function execute(){
 		
-		global $wgUser, $wgOut, $wgRequest, $IP, $wgMemc, $wgMessageCache, $wgUploadPath, $wgUserGiftsScripts;
+		global $wgUser, $wgOut, $wgRequest, $IP, $wgMemc, $wgMessageCache, $wgUploadPath, $wgUserGiftsScripts, $wgStyleVersion;
 	
+		$output = "";
+		
 		$wgOut->addScript("<script type=\"text/javascript\" src=\"{$wgUserGiftsScripts}/UserGifts.js\"></script>\n");
 		$wgOut->addScript("<link rel='stylesheet' type='text/css' href=\"{$wgUserGiftsScripts}/UserGifts.css?{$wgStyleVersion}\"/>\n");
 		
@@ -20,10 +22,8 @@ class GiveGift extends SpecialPage {
 		
 		$usertitle = Title::newFromDBkey($wgRequest->getVal('user'));
 		if (!$usertitle) {
-			
 			$wgOut->addHTML($wgOut->addHTML($this->displayFormNoUser()));
 			return false;	
-		
 		}
 		
 		$user_title =  Title::makeTitle( NS_USER  , $wgRequest->getVal('user')  );
@@ -149,7 +149,9 @@ class GiveGift extends SpecialPage {
 		}
 		
 		$gift = Gifts::getGift($gift_id);
-		
+		if ( empty($gift) ) {
+			return false;			
+		}
 		if( $gift["access"] == 1 && $wgUser->getID() != $gift["creator_user_id"] ){
 			return $this->displayFormAll();
 		}
@@ -162,11 +164,11 @@ class GiveGift extends SpecialPage {
 		
 		$gift_image = "<img id=\"gift_image_{$gift["gift_id"]}\" src=\"{$wgUploadPath}/awards/" . Gifts::getGiftImage($gift["gift_id"],"l") . "\" border=\"0\" alt=\"\"/>";
 			
-		$output .= "<form action=\"\" method=\"post\" enctype=\"multipart/form-data\" name=\"gift\">
+		$output = "<form action=\"\" method=\"post\" enctype=\"multipart/form-data\" name=\"gift\">
 			<div class=\"g-message\">
 				".wfMsg("g-give-to-user-message", $this->user_name_to, $give_gift_link->escapeFullURL('user='.$this->user_name_to))."
 			</div>
-			<div id=\"give_gift_{$gift["id"]}\" class=\"g-container\">
+			<div id=\"give_gift_{$gift["gift_id"]}\" class=\"g-container\">
 				{$gift_image}
 				<div class=\"g-title\">{$gift["gift_name"]}</div>";
 				if ($gift["gift_description"])$output .= "<div class=\"g-describe\">{$gift["gift_description"]}</div>";
@@ -190,7 +192,7 @@ class GiveGift extends SpecialPage {
 		
 		global $wgUser, $wgOut, $wgRequest, $wgFriendingEnabled, $IP;
 		
-		$output .= $wgOut->setPagetitle( wfMsg("g-give-no-user-title") );
+		$output = $wgOut->setPagetitle( wfMsg("g-give-no-user-title") );
 		
 		$output =  "";
 		$output .= "<form action=\"\" method=\"GET\" enctype=\"multipart/form-data\" name=\"gift\">
@@ -245,7 +247,7 @@ class GiveGift extends SpecialPage {
 		
 		$total = Gifts::getGiftCount();
 		$gifts = Gifts::getGiftList($per_page,$page, "gift_name");
-		
+		$output = "";
 		if ($gifts) {
 			
 			$wgOut->setPagetitle( wfMsg("g-give-all-title", $this->user_name_to));

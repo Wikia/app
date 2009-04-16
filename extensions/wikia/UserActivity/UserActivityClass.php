@@ -160,6 +160,7 @@ class UserActivity {
 	
 	private function setGiftsSent(){
 		$dbr =& wfGetDB( DB_SLAVE );
+		$rel_sql = $user_sql = "";
 		if($this->rel_type)$rel_sql = "WHERE ug_user_id_to in (select r_user_id_relation from user_relationship where r_user_id={$this->user_id} and r_type={$this->rel_type})";
 		if($this->show_current_user)$user_sql = "WHERE ug_user_id_from = {$this->user_id}";
 	

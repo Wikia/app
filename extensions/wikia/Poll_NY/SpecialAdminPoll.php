@@ -92,7 +92,7 @@ class AdminPoll extends SpecialPage {
 				"flagged" => wfMsg("poll_admin_flagged")
 		);
 				
-		$output .= "
+		$output = "
 		<div class=\"view-poll-top-links\">
 			<a href=\"javascript:history.go(-1);\">" . wfMsg( 'poll_take_button' ) . "</a>
 		</div>
@@ -135,6 +135,7 @@ class AdminPoll extends SpecialPage {
 				$status_int = 2;
 				break;
 		}
+		$where = array();
 		if( $status_int > -1 ){
 			$where["poll_status"] = $status_int;
 		}
@@ -225,6 +226,7 @@ class AdminPoll extends SpecialPage {
 		<div class=\"cleared\"></div>";
 		
 		$numofpages = $total / $per_page; 
+		$user_link = ""; # ????
 		
 		if($numofpages>1){
 			$output .= "<div class=\"view-poll-page-nav\">";

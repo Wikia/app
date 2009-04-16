@@ -239,7 +239,7 @@ class VideoHistoryList {
 
 		$s = "<li>({$rlink}) <a href=\"{$url}\"{$style}>{$datetime}</a> . . ({$type}) . . {$userlink}";
 
-		$s .= $this->skin->commentBlock( $description, $wgTitle );
+		$s .= $this->skin->commentBlock( /*$description - wtf ?*/"", $wgTitle );
 		$s .= "</li>\n";
 		return $s;
 	}

@@ -42,6 +42,8 @@ class ImageRating extends SpecialPage {
 			$wgOut->blockedPage();
 			return;
 		}
+		
+		$category_join = $category_where = "";
 	 
 		# Add messages
 		global $wgMessageCache, $wgImageRatingMessages;
@@ -133,8 +135,7 @@ class ImageRating extends SpecialPage {
 			
 			);
 		
-		$output .= "<div class=\"image-rating-menu\">
-			<h2>" . wfMsgForContent( 'menutitle' ) . "</h2>";
+		$output = "<div class=\"image-rating-menu\"><h2>" . wfMsgForContent( 'menutitle' ) . "</h2>";
 			
 		foreach($menu as $title=>$qs){
 			if ($type!=$qs){

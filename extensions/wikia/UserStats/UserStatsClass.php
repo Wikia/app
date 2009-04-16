@@ -125,10 +125,8 @@ class UserStatsTrack{
 		
 			$this->clearCache();
 			
-
-	
 			//update weekly/monthly points
-			if($this->point_values[$field]){
+			if( isset($this->point_values[$field]) && !empty($this->point_values[$field]) ){
 				if($wgUserStatsTrackWeekly)$this->updateWeeklyPoints($this->point_values[$field]);
 				if($wgUserStatsTrackMonthly)$this->updateMonthlyPoints($this->point_values[$field]);
 			}

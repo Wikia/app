@@ -47,7 +47,10 @@
 			$user_id = User::idFromName($user_name);
 			$user =  Title::makeTitle( NS_USER  , $user_name  );
 			$user_safe = str_replace("&","%26",$user_name);
-			
+
+			$user_id_2 = 0;
+			$user_2 = null;
+			$user_safe_2 = "";
 			if($user_name_2){
 				$user_id_2 = User::idFromName($user_name_2);
 				$user_2 =  Title::makeTitle( NS_USER  , $user_name  );
@@ -156,7 +159,8 @@
 				$start = ($page-1) * $per_page + 1;
 			}
 			$end = $start + ( count($messages) ) - 1;
-			
+
+			$board_to_board = "";			
 			if($wgUser->getName()!=$user_name){
 				$board_to_board = "<a href=\"" . UserBoard::getUserBoardToBoardURL($wgUser->getName(),$user_name)."\">" .wfMsg( "userboard_boardtoboard" ) . "</a>";
 			}
@@ -203,7 +207,8 @@
 			/*BUILD NEXT/PREV NAV
 			**/
 			$can_post = false;
-			
+
+			$user_name_from = $user_name_to = "";			
 			if(!$user_id_2){
 				if($wgUser->getName() != $user_name){
 					$can_post = true;

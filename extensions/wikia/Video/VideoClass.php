@@ -1,7 +1,9 @@
 <?php
 
 //GLOBAL VIDEO NAMESPACE REFERENCE
-define( 'NS_VIDEO', 400 );
+if ( !defined('NS_VIDEO') ) {
+	define( 'NS_VIDEO', 400 );
+}
 
 class Video{
 	
@@ -68,12 +70,13 @@ class Video{
 			'IGNORE'
 		);
 
+		$category_wiki_text = "";
 		if( $dbr->affectedRows() == 0 ) {
 			$desc = "updated video [[" . Title::makeTitle(NS_VIDEO,$this->getName())->getPrefixedText() . "]]";
 			
 			//clear cache
 			global $wgMemc;
-			$key = wfMemcKey( 'video', 'page', "$this->getName()" );
+			$key = wfMemcKey( 'video', 'page', str_replace(" ", "_", $this->getName()) );
 			$wgMemc->delete( $key );
 			
 			# Collision, this is an update of a video
@@ -496,10 +499,11 @@ class YouTubeVideo extends FlashVideo{
 		$url = $this->video->getURL();
 		$standard_youtube_inurl = strpos( strtoupper( $url ), "WATCH?V=");
 		
+		$id = "";
 		if( $standard_youtube_inurl !== false){
 			$id = substr( $url , $standard_youtube_inurl+8, strlen($url) );
 		}
-		if(!$id){
+		if( empty($id) ){
 			$id_test = str_replace("http://www.youtube.com/v/","",$url);
 			if( $id_test != $url ){
 				$id = $id_test;	

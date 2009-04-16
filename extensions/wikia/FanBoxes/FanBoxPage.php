@@ -79,20 +79,19 @@ class FanBoxPage extends Article{
 	
 	}
 	
-	function fanBoxHolders (){
+	function fanBoxHolders() {
 		global $IP, $wgUser, $wgTitle, $wgOut,$wgUploadPath, $wgMemc;
 		
 		$fanboxholders = $this->getFanBoxHolders();
-
+		$output = "";
 		foreach($fanboxholders as $fanboxholder){
-				$userftusername = $fanboxholder["userft_user_name"];
-				$userftuserid = $fanboxholder["userft_user_id"];				
-				$user_title = Title::makeTitle( NS_USER, $fanboxholder["userft_user_name"] );
-				$avatar = new wAvatar($fanboxholder["userft_user_id"],"ml");
+			$userftusername = $fanboxholder["userft_user_name"];
+			$userftuserid = $fanboxholder["userft_user_id"];				
+			$user_title = Title::makeTitle( NS_USER, $fanboxholder["userft_user_name"] );
+			$avatar = new wAvatar($fanboxholder["userft_user_id"],"ml");
 
-				$output .= "<a href=\"".$user_title->escapeFullURL()."\"><img src=\"{$wgUploadPath}/avatars/{$avatar->getAvatarImage()}\" alt=\"\" border=\"0\" /></a>";
-
-			};
+			$output .= "<a href=\"".$user_title->escapeFullURL()."\"><img src=\"{$wgUploadPath}/avatars/{$avatar->getAvatarImage()}\" alt=\"\" border=\"0\" /></a>";
+		};
 		
 		return $output;		
 	}

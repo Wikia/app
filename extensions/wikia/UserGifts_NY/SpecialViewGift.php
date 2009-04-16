@@ -26,7 +26,7 @@ class ViewGift extends SpecialPage {
 			return false;	
 		}
 		
-		if(!$user_name)$user_name = $wgUser->getName();
+		$user_name = $wgUser->getName();
 		$gift = UserGifts::getUserGift($gift_id);
 		$user_safe = urlencode($gift["user_name_to"]);
 		$id=User::idFromName($user_name);

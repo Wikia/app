@@ -95,6 +95,7 @@ function wfUserProfileFromTitle( &$title, &$article ){
 		$wgShowAds = false;
 	}
 	
+	$show_user_page = false;
 	if ( strpos( $title->getText(), "/" ) === false && ( NS_USER == $title->getNamespace() || NS_USER_PROFILE == $title->getNamespace() ) ) {
 		if( !$wgRequest->getVal("action") ){
 			$wgSupressPageTitle = true;
@@ -109,7 +110,7 @@ function wfUserProfileFromTitle( &$title, &$article ){
 			$profile_data = $profile->getProfile();
 			
 			//If they want regular page, ignore this hook
-			if( $profile_data["user_id"] && $profile_data["user_page_type"] == 0 ){
+			if( isset($profile_data) && $profile_data["user_id"] && $profile_data["user_page_type"] == 0 ){
 				$show_user_page = true;
 			}
 		}

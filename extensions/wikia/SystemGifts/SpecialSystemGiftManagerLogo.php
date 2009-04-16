@@ -233,6 +233,7 @@ class SystemGiftManagerLogo extends SpecialPage {
 function createThumbnail($imageSrc, $ext,$imgDest,$thumbWidth){
 	list($origWidth ,$origHeight,$TypeCode)=getimagesize($imageSrc);
 
+	$border = $thumbWidth = 0;
 	if($origWidth < $thumbWidth)$thumbWidth = $origWidth;
 	$thumbHeight = ($thumbWidth * $origHeight / $origWidth);
 	if($thumbHeight < $thumbWidth)$border = " -bordercolor white  -border  0x" . (($thumbWidth - $thumbHeight) / 2);
