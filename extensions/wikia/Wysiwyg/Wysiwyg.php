@@ -479,8 +479,14 @@ function Wysiwyg_HtmlToWikiText($html, $wysiwygData, $decode = false) {
 
 	require_once(dirname(__FILE__).'/ReverseParser.php');
 
+	// run ReverseParser
 	$reverseParser = new ReverseParser();
-	return $reverseParser->parse($html, $decode ? Wikia::json_decode($wysiwygData, true) : $wysiwygData);
+	$out = $reverseParser->parse($html, $decode ? Wikia::json_decode($wysiwygData, true) : $wysiwygData);
+
+	// replace 0xA0 (in UTF8-compatible way) with 0x20 - reduce number of "empty" diffs
+	$out = str_replace("\xC2\xA0", ' ', $out);
+
+	return $out;
 }
 
 function Wysiwyg_WrapTemplate($originalCall, $output, $lineStart) {
