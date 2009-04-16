@@ -64,12 +64,12 @@ class WikiFactory {
 	 * @static
 	 * @author Krzysztof Krzyżaniak <eloy@wikia.com>
 	 *
-	 * @param boolean	$flag	if value not null set flag to $flag
+	 * @param boolean	$flag	if value set flag to $flag
 	 *
 	 * @return boolean	current value of self::$mIsUsed
 	 */
-	static public function isUsed( $flag = null ) {
-		if( !is_null( $flag ) ) {
+	static public function isUsed( $flag = false ) {
+		if( $flag ) {
 			self::$mIsUsed = (bool )$flag;
 		}
 		return self::$mIsUsed;
@@ -480,7 +480,7 @@ class WikiFactory {
 			$dbw->commit();
 		}
 		catch ( DBQueryError $e ) {
-			wfDebug( __METHOD__.": database error, cannot write variable\n" );
+			Wikia::log( __METHOD__, "", "Database error, cannot write variable." );
 			$dbw->rollback();
 			$bStatus = false;
 			throw $e;
@@ -751,7 +751,7 @@ class WikiFactory {
 
 		if( !$data ) {
 			#--- If unserializing somehow didn't work, we delete the file
-			error_log("couldn't unserialize data from {$file}!");
+			Wikia::log( __METHOD__, "", "Could not unserialize data from {$file}!" );;
 			@unlink($file);
 			return false;
 		}
@@ -762,10 +762,11 @@ class WikiFactory {
 		$now = time();
 		$host = isset( $_SERVER['SERVER_NAME'] ) ? $_SERVER['SERVER_NAME'] : "unknown";
 		if( ( $now > $data[0] ) || ( !is_null($timestamp) && $timestamp != $data[1] ) ) {
-			#--- Unlinking when the file was expired
+			/**
+			 * Unlinking when the file was expired
+			 */
 			$cond1 = ( $now > $data[0] ) ? "y" : "n";
 			$cond2 = ( $timestamp != $data[1] ) ? "y" : "n";
-			error_log("{$host} expire {$file} now={$now} > ttl={$data[0]} ({$cond1}) or given {$timestamp} != stored {$data[1]} ({$cond2})" );
 			@unlink($file);
 			return false;
 		}
@@ -805,7 +806,7 @@ class WikiFactory {
 		 */
 		$data = serialize( array(time() + $ttl, $timestamp, $data) );
 		if ( file_put_contents( $file, $data, LOCK_EX ) === false ) {
-			wfDebug( "wikifactory: Could not write to file {$file}", true );
+			Wikia::log( __METHOD__, "", "Could not write to file {$file}" );
 			return false;
 		}
 		return true;
@@ -873,7 +874,7 @@ class WikiFactory {
 	static public function clearCache( $city_id ) {
 
 		if( ! self::isUsed() ) {
-			wfDebug( __METHOD__ . ": WikiFactory is not used.");
+			Wikia::log( __METHOD__, "", "WikiFactory is not used." );
 			return null;
 		}
 
@@ -919,7 +920,7 @@ class WikiFactory {
 	static public function getGroups() {
 
 		if( ! self::isUsed() ) {
-			wfDebug( __METHOD__ . ": WikiFactory is not used.");
+			Wikia::log( __METHOD__, "", "WikiFactory is not used." );
 			return array();
 		}
 
@@ -972,8 +973,8 @@ class WikiFactory {
 		$defined = false, $editable = false, $string = false )
 	{
 		if( ! self::isUsed() ) {
-			wfDebug( __METHOD__ . ": WikiFactory is not used.");
-			return null;
+			Wikia::log( __METHOD__, "", "WikiFactory is not used." );
+			return false;
 		}
 
 		$aVariables = array();
@@ -1107,8 +1108,8 @@ class WikiFactory {
 	static public function setPublicStatus( $city_public, $city_id ) {
 
 		if( ! self::isUsed() ) {
-			wfDebug( __METHOD__ . ": WikiFactory is not used.");
-			return null;
+			Wikia::log( __METHOD__, "", "WikiFactory is not used." );
+			return false;
 		}
 
 		wfProfileIn( __METHOD__ );
@@ -1152,8 +1153,8 @@ class WikiFactory {
 	static private function loadVariableFromDB( $cv_id, $cv_name, $city_id, $master = false ) {
 
 		if( ! self::isUsed() ) {
-			wfDebug( __METHOD__ . ": WikiFactory is not used.");
-			return null;
+			Wikia::log( __METHOD__, "", "WikiFactory is not used." );
+			return false;
 		}
 
 		/**
@@ -1329,7 +1330,7 @@ class WikiFactory {
 		global $wgUser, $wgCityId;
 
 		if( ! self::isUsed() ) {
-			wfDebug( __METHOD__ . ": WikiFactory is not used.");
+			Wikia::log( __METHOD__, "", "WikiFactory is not used." );
 			return false;
 		}
 
@@ -1365,7 +1366,7 @@ class WikiFactory {
 	static public function VarValueToID( $cv_value ) {
 
 		if( ! self::isUsed() ) {
-			wfDebug( __METHOD__ . ": WikiFactory is not used.");
+			Wikia::log( __METHOD__, "", "WikiFactory is not used." );
 			return null;
 		}
 
