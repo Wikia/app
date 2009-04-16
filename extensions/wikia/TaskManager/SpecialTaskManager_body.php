@@ -10,8 +10,8 @@
  */
 
 if ( !defined( 'MEDIAWIKI' ) ) {
-    echo "This is MediaWiki extension and cannot be used standalone.\n";
-    exit( 1 ) ;
+	echo "This is MediaWiki extension and cannot be used standalone.\n";
+	exit( 1 ) ;
 }
 
 
@@ -255,153 +255,153 @@ class TaskManagerPage extends SpecialPage {
 		}
 	}
 
-    #--- loadTaskData -------------------------------------------------------
-    private function loadTaskData( $id )
-    {
-        $dbr = wfGetDB( DB_MASTER );
+	#--- loadTaskData -------------------------------------------------------
+	private function loadTaskData( $id )
+	{
+		$dbr = wfGetDB( DB_MASTER );
 
-        $oRow = $dbr->selectRow(
-            array( wfSharedTable( "wikia_tasks")) /*from*/,
-            array( "*" ) /*what*/,
-            array( "task_id" => $id ) /*where*/,
-            __METHOD__
-        );
+		$oRow = $dbr->selectRow(
+			array( wfSharedTable( "wikia_tasks")) /*from*/,
+			array( "*" ) /*what*/,
+			array( "task_id" => $id ) /*where*/,
+			__METHOD__
+		);
 
-        return $oRow;
-    }
+		return $oRow;
+	}
 
-    #--- removeTask ---------------------------------------------------------
-    private function removeTask( $id )
-    {
-        $dbw = wfGetDB( DB_MASTER );
-        $dbw->selectDB( "wikicities" );
+	#--- removeTask ---------------------------------------------------------
+	private function removeTask( $id )
+	{
+		$dbw = wfGetDB( DB_MASTER );
+		$dbw->selectDB( "wikicities" );
 
-        $iStatus = $dbw->delete(
-            "wikia_tasks" /*from*/,
-            array( "task_id" => $id ) /*where*/,
-            __METHOD__
-        );
-        $dbw->commit();
+		$iStatus = $dbw->delete(
+			"wikia_tasks" /*from*/,
+			array( "task_id" => $id ) /*where*/,
+			__METHOD__
+		);
+		$dbw->commit();
 
-        return $iStatus;
-    }
+		return $iStatus;
+	}
 
-    #--- loadTaskData -------------------------------------------------------
-    private function changeTaskStatus( $id, $to )
-    {
-        $dbw = wfGetDB( DB_MASTER );
-        $dbw->selectDB( "wikicities" );
+	#--- loadTaskData -------------------------------------------------------
+	private function changeTaskStatus( $id, $to )
+	{
+		$dbw = wfGetDB( DB_MASTER );
+		$dbw->selectDB( "wikicities" );
 
-        $iStatus = $dbw->update(
-            "wikia_tasks" /*from*/,
-            array( "task_status" => $to ) /*what*/,
-            array( "task_id" => $id ) /*where*/,
-            __METHOD__
-        );
-        $dbw->commit();
+		$iStatus = $dbw->update(
+			"wikia_tasks" /*from*/,
+			array( "task_status" => $to ) /*what*/,
+			array( "task_id" => $id ) /*where*/,
+			__METHOD__
+		);
+		$dbw->commit();
 
-        return $iStatus;
-    }
+		return $iStatus;
+	}
 
-    #--- loadTaskForm-- -----------------------------------------------------
-    private function loadTaskForm()
-    {
-        global $wgOut, $wgWikiaBatchTasks;
+	#--- loadTaskForm-- -----------------------------------------------------
+	private function loadTaskForm()
+	{
+		global $wgOut, $wgWikiaBatchTasks;
 
-        #--- first check which task types should be visible
-        $aTypes = array();
-        if( is_array( $wgWikiaBatchTasks )) {
-            foreach( $wgWikiaBatchTasks as $type => $class ) {
-                $oObject = new $class;
-                if( $oObject->isVisible() === true ) {
-                    $aTypes[$type] = $class;
-                }
-            }
-        }
-        $oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
-        $oTmpl->set_vars( array(
-            "types" => $aTypes,
-            "title" => $this->mTitle
-        ));
-        $wgOut->addHTML( $oTmpl->execute( "taskform" ) );
-    }
+		#--- first check which task types should be visible
+		$aTypes = array();
+		if( is_array( $wgWikiaBatchTasks )) {
+			foreach( $wgWikiaBatchTasks as $type => $class ) {
+				$oObject = new $class;
+				if( $oObject->isVisible() === true ) {
+					$aTypes[$type] = $class;
+				}
+			}
+		}
+		$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
+		$oTmpl->set_vars( array(
+			"types" => $aTypes,
+			"title" => $this->mTitle
+		));
+		$wgOut->addHTML( $oTmpl->execute( "taskform" ) );
+	}
 
-    #--- loadPager ----------------------------------------------------------
-    private function loadPager()
-    {
-        global $wgOut;
+	#--- loadPager ----------------------------------------------------------
+	private function loadPager()
+	{
+		global $wgOut;
 
-        #--- init pager
-        $oPager = new TaskManagerPager;
+		#--- init pager
+		$oPager = new TaskManagerPager;
 
-        $oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
-        $oTmpl->set_vars( array(
-            "limit"     => $oPager->getForm(),
-            "body"      => $oPager->getBody(),
-            "nav"       => $oPager->getNavigationBar()
-        ));
-        $wgOut->addHTML( $oTmpl->execute("pager") );
-    }
+		$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
+		$oTmpl->set_vars( array(
+			"limit"     => $oPager->getForm(),
+			"body"      => $oPager->getBody(),
+			"nav"       => $oPager->getNavigationBar()
+		));
+		$wgOut->addHTML( $oTmpl->execute("pager") );
+	}
 }
 
 class TaskManagerPager extends TablePager {
-    var $mFieldNames = null;
-    var $mMessages = array();
-    var $mQueryConds = array();
-    var $mTitle;
+	var $mFieldNames = null;
+	var $mMessages = array();
+	var $mQueryConds = array();
+	var $mTitle;
 
-    #--- constructor
-    function __construct()
-    {
-        $this->mTitle = Title::makeTitle( NS_SPECIAL, "TaskManager" );
-        $this->mDefaultDirection = true;
-        parent::__construct();
-    }
+	#--- constructor
+	function __construct()
+	{
+		$this->mTitle = Title::makeTitle( NS_SPECIAL, "TaskManager" );
+		$this->mDefaultDirection = true;
+		parent::__construct();
+	}
 
-    #--- getFieldNames ------------------------------------------------------
-    function getFieldNames()
-    {
-        if ( !$this->mFieldNames ) {
-            $this->mFieldNames = array();
-            $this->mFieldNames["task_id"] = "#";
-            $this->mFieldNames["task_type"] = "Type";
-            $this->mFieldNames["task_status"] = "Status";
-            $this->mFieldNames["task_added"] = "Added";
-            $this->mFieldNames["task_user_id"] = "User";
-            $this->mFieldNames["task_started"] = "Started";
-            $this->mFieldNames["task_finished"] = "Finished";
-            $this->mFieldNames["task_actions"] = "Actions";
-        }
+	#--- getFieldNames ------------------------------------------------------
+	function getFieldNames()
+	{
+		if ( !$this->mFieldNames ) {
+			$this->mFieldNames = array();
+			$this->mFieldNames["task_id"] = "#";
+			$this->mFieldNames["task_type"] = "Type";
+			$this->mFieldNames["task_status"] = "Status";
+			$this->mFieldNames["task_added"] = "Added";
+			$this->mFieldNames["task_user_id"] = "User";
+			$this->mFieldNames["task_started"] = "Started";
+			$this->mFieldNames["task_finished"] = "Finished";
+			$this->mFieldNames["task_actions"] = "Actions";
+		}
 
-        return $this->mFieldNames;
-    }
+		return $this->mFieldNames;
+	}
 
-    #--- isFieldSortable-----------------------------------------------------
-    function isFieldSortable( $field ) {
-        static $sortable = array( "task_type", "task_id", "task_user_id", "task_status", "task_added" );
-        return in_array( $field, $sortable );
-    }
+	#--- isFieldSortable-----------------------------------------------------
+	function isFieldSortable( $field ) {
+		static $sortable = array( "task_type", "task_id", "task_user_id", "task_status", "task_added" );
+		return in_array( $field, $sortable );
+	}
 
-    #--- formatValue --------------------------------------------------------
-    function formatValue( $field, $value ) {
-        global $wgStylePath;
+	#--- formatValue --------------------------------------------------------
+	function formatValue( $field, $value ) {
+		global $wgStylePath;
 
-        switch ($field) {
-            case "task_status":
-                $iTaskID = $this->mCurrentRow->task_id;
-                $sRetval = BatchTask::getStatusName( $value );
+		switch ($field) {
+			case "task_status":
+				$iTaskID = $this->mCurrentRow->task_id;
+				$sRetval = BatchTask::getStatusName( $value );
 
-                if( in_array ( $value, array(
-                    TASK_FINISHED_SUCCESS,
-                    TASK_FINISHED_ERROR,
-                    TASK_FINISHED_SUCCESS,
+				if( in_array ( $value, array(
+					TASK_FINISHED_SUCCESS,
+					TASK_FINISHED_ERROR,
+					TASK_FINISHED_SUCCESS,
 					TASK_FINISHED_UNDO ) ) )
 				{
-                    $sRetval .= sprintf(
-                        "<br /><a href=\"%s\">log</a>",
-                        $this->mTitle->getLocalUrl( "action=log&id={$iTaskID}")
-                    );
-                }
+					$sRetval .= sprintf(
+						"<br /><a href=\"%s\">log</a>",
+						$this->mTitle->getLocalUrl( "action=log&id={$iTaskID}")
+					);
+				}
 
 		// also, stuff to make a link for restore task as per #2478
 		$iTaskType = $this->mCurrentRow->task_type ;
@@ -414,66 +414,66 @@ class TaskManagerPager extends TablePager {
 					) ;
 		}
 		return $sRetval;
-                break;
+				break;
 
-            case "task_actions":
-                $iTaskID = $this->mCurrentRow->task_id;
-                $iTaskStatus = $this->mCurrentRow->task_status;
-                $sRetval = "";
+			case "task_actions":
+				$iTaskID = $this->mCurrentRow->task_id;
+				$iTaskStatus = $this->mCurrentRow->task_status;
+				$sRetval = "";
 
-                switch ( $iTaskStatus ) {
-                    case TASK_WAITING:
-                        $sRetval .= sprintf(
-                            "<a href=\"%s\">
-                                <img src=\"/skins/common/images/media-playback-start.png\" title=\"Start\" />
-                            </a>",
-                            $this->mTitle->getLocalUrl( "action=start&id={$iTaskID}" ));
-                        break;
+				switch ( $iTaskStatus ) {
+					case TASK_WAITING:
+						$sRetval .= sprintf(
+							"<a href=\"%s\">
+								<img src=\"/skins/common/images/media-playback-start.png\" title=\"Start\" />
+							</a>",
+							$this->mTitle->getLocalUrl( "action=start&id={$iTaskID}" ));
+						break;
 
-                    case TASK_STARTED:
-                        $sRetval .= sprintf(
-                        "<a href=\"%s\">
-                            <img src=\"/skins/common/images/media-playback-stop.png\" title=\"Stop\" />
-                        </a>",
-                        $this->mTitle->getLocalUrl( "action=finish&id={$iTaskID}"));
-                        break;
+					case TASK_STARTED:
+						$sRetval .= sprintf(
+						"<a href=\"%s\">
+							<img src=\"/skins/common/images/media-playback-stop.png\" title=\"Stop\" />
+						</a>",
+						$this->mTitle->getLocalUrl( "action=finish&id={$iTaskID}"));
+						break;
 
-                    case TASK_QUEUED:
-                        $sRetval .= sprintf(
-                        "<a href=\"%s\">
-                            <img src=\"/skins/common/images/media-playback-pause.png\" title=\"Stop\" />
-                        </a>",
-                        $this->mTitle->getLocalUrl( "action=stop&id={$iTaskID}"));
-                        break;
+					case TASK_QUEUED:
+						$sRetval .= sprintf(
+						"<a href=\"%s\">
+							<img src=\"/skins/common/images/media-playback-pause.png\" title=\"Stop\" />
+						</a>",
+						$this->mTitle->getLocalUrl( "action=stop&id={$iTaskID}"));
+						break;
 
-                    case TASK_FINISHED_SUCCESS:
-                        break;
+					case TASK_FINISHED_SUCCESS:
+						break;
 
-                    case TASK_FINISHED_ERROR:
-                        break;
+					case TASK_FINISHED_ERROR:
+						break;
 
-                    case TASK_FINISHED_UNDO:
-                        break;
-                }
-                $sRetval .= sprintf(
-                    "<a href=\"%s\">
-                        <img src=\"/skins/common/images/process-stop.png\" title=\"Remove\" />
-                    </a>",
-                    $this->mTitle->getLocalUrl( "action=remove&id={$iTaskID}")
-                );
-                return $sRetval;
-                break;
+					case TASK_FINISHED_UNDO:
+						break;
+				}
+				$sRetval .= sprintf(
+					"<a href=\"%s\">
+						<img src=\"/skins/common/images/process-stop.png\" title=\"Remove\" />
+					</a>",
+					$this->mTitle->getLocalUrl( "action=remove&id={$iTaskID}")
+				);
+				return $sRetval;
+				break;
 
-            case "task_added":
-            case "task_started":
-            case "task_finished":
-                if (empty($value)) {
-                    return "<em>not yet</em>";
-                }
-                else {
-                    return wfTimestamp( TS_EXIF, $value );
-                }
-                break;
+			case "task_added":
+			case "task_started":
+			case "task_finished":
+				if (empty($value)) {
+					return "<em>not yet</em>";
+				}
+				else {
+					return wfTimestamp( TS_EXIF, $value );
+				}
+				break;
 
 			case "task_type":
 				$Task = BatchTask::newFromID( $this->mCurrentRow->task_id );
@@ -487,116 +487,111 @@ class TaskManagerPager extends TablePager {
 			break;
 
 
-            case "task_user_id":
+			case "task_user_id":
 				if( $value ) {
-	                $oUser = User::newFromId( $value );
+					$oUser = User::newFromId( $value );
 					$label = sprintf("<a href=\"%s\">%s</a>", $oUser->getUserPage()->getLocalUrl(), $oUser->getName());
 				}
 				else {
 					$label = "<b>Anonymous</b>";
 				}
-                return $label;
-                break;
+				return $label;
+				break;
 
-            default:
-                return $value;
-        }
-    }
+			default:
+				return $value;
+		}
+	}
 
-    /**
-     * formatRow
-     *
-     * more fancy FormatRow method
-     *
-     * @param object $row: database row class
-     */
-    function formatRow( $row ) {
-        $s = "<tr>\n";
-        $fieldNames = $this->getFieldNames();
-        $this->mCurrentRow = $row;  # In case formatValue needs to know
-        foreach( $fieldNames as $field => $name ) {
-            $value = isset( $row->$field ) ? $row->$field : null;
-            $formatted = strval( $this->formatValue( $field, $value ) );
-            if( $formatted == '' ) {
-                $formatted = '&nbsp;';
-            }
-            $class = 'tablepager-col-' . htmlspecialchars( $row->task_status );
-            $style = in_array($field, array("task_type", "task_status"))
-                ? "text-align: left"
-                : "";
-            $s .= "<td class=\"{$class}\" style=\"{$style}\">{$formatted}</td>\n";
-        }
-        $s .= "</tr>\n";
-        return $s;
-    }
+	/**
+	 * formatRow
+	 *
+	 * more fancy FormatRow method
+	 *
+	 * @param object $row: database row class
+	 */
+	function formatRow( $row ) {
+		$s = "<tr>\n";
+		$fieldNames = $this->getFieldNames();
+		$this->mCurrentRow = $row;  # In case formatValue needs to know
+		foreach( $fieldNames as $field => $name ) {
+			$value = isset( $row->$field ) ? $row->$field : null;
+			$formatted = strval( $this->formatValue( $field, $value ) );
+			if( $formatted == '' ) {
+				$formatted = '&nbsp;';
+			}
+			$class = 'tablepager-col-' . htmlspecialchars( $row->task_status );
+			$style = in_array($field, array("task_type", "task_status"))
+				? "text-align: left"
+				: "";
+			$s .= "<td class=\"{$class}\" style=\"{$style}\">{$formatted}</td>\n";
+		}
+		$s .= "</tr>\n";
+		return $s;
+	}
 
-    /**
-     * getDefaultSort
-     *
-     * @access public
-     *
-     * @return string: name of table using in sorting
-     */
-    public function getDefaultSort()
-    {
-        return "task_added";
-    }
+	/**
+	 * getDefaultSort
+	 *
+	 * @access public
+	 *
+	 * @return string: name of table using in sorting
+	 */
+	public function getDefaultSort() {
+		return "task_added";
+	}
 
-    #--- getQueryInfo -------------------------------------------------------
-    function getQueryInfo() {
+	#--- getQueryInfo -------------------------------------------------------
+	function getQueryInfo() {
 
-        /**
-         * get filters from session
-         */
-        return array(
-            "tables" => wfSharedTable("wikia_tasks"),
-            "fields" => array("*"),
-            "conds" => $this->mQueryConds
-        );
-    }
+		/**
+		 * get filters from session
+		 */
+		return array(
+			"tables" => wfSharedTable("wikia_tasks"),
+			"fields" => array("*"),
+			"conds" => $this->mQueryConds
+		);
+	}
 
-    #--- getForm() -------------------------------------------------------
-    function getForm()
-    {
-        global $wgWikiaBatchTasks, $wgRequest;
+	#--- getForm() -------------------------------------------------------
+	function getForm() {
+		global $wgWikiaBatchTasks, $wgRequest;
 
-        $aSorting = array();
-        $iStatus = $wgRequest->getVal( "wpStatus" );
-        $sType = $wgRequest->getVal( "wpType" );
+		$aSorting = array();
+		$iStatus = $wgRequest->getVal( "wpStatus" );
+		$sType = $wgRequest->getArray( "wpType" );
 
-        #--- get data from session
-        if (!empty($_SESSION["taskmanager.filters"])) {
-            $aSorting = $_SESSION["taskmanager.filters"];
-        }
+		#--- get data from session
+		if (!empty($_SESSION["taskmanager.filters"])) {
+			$aSorting = $_SESSION["taskmanager.filters"];
+		}
 
-        if (!is_null($iStatus)) {
-            if ( $iStatus != -1 ) {
-                $aSorting["task_status"] = $iStatus;
-            }
-            else {
-                unset($aSorting["task_status"]);
-            }
-        }
+		if (!is_null($iStatus)) {
+			if ( $iStatus != -1 ) {
+				$aSorting["task_status"] = $iStatus;
+			}
+			else {
+				unset($aSorting["task_status"]);
+			}
+		}
 
-        if (!is_null($sType)) {
-            if ( $sType != -1 ) {
-                $aSorting["task_type"] = $sType;
-            }
-            else {
-                unset($aSorting["task_type"]);
-            }
-        }
+		if (!is_null($sType)) {
+			$aSorting["task_type"] = $sType;
+		} else {
+			unset($aSorting["task_type"]);
+		}
 
-        $this->mQueryConds = $aSorting;
-        $_SESSION["taskmanager.filters"] = $aSorting;
+		$this->mQueryConds = $aSorting;
+		$_SESSION["taskmanager.filters"] = $aSorting;
 
-        $oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
-        $oTmpl->set_vars( array(
-            "title" => $this->mTitle,
-            "types" => $wgWikiaBatchTasks,
-            "current" => $this->mQueryConds,
-            "statuses" => BatchTask::getStatuses(),
-        ));
-        return $oTmpl->execute( "form" );
-    }
+		$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
+		$oTmpl->set_vars( array(
+			"title" => $this->mTitle,
+			"types" => $wgWikiaBatchTasks,
+			"current" => $this->mQueryConds,
+			"statuses" => BatchTask::getStatuses(),
+		));
+		return $oTmpl->execute( "form" );
+	}
 }
