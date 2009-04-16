@@ -60,6 +60,7 @@ class SystemGiftManager extends SpecialPage {
 	}
 	
 	function displayGiftList(){
+		$per_page = $page = 0;
 		$output = "<div>";
 		$gifts = SystemGifts::getGiftList($per_page,$page);
 		if($gifts){
@@ -77,9 +78,11 @@ class SystemGiftManager extends SpecialPage {
 	function displayForm($gift_id){
 		global $wgUploadPath;
 		
-		$form .= "<div><b><a href=\"/index.php?title=Special:SystemGiftManager\">View Gift List</a></b></div><p>";
+		$form = "<div><b><a href=\"/index.php?title=Special:SystemGiftManager\">View Gift List</a></b></div><p>";
 		
-		if($gift_id)$gift = SystemGifts::getGift($gift_id);
+		if ($gift_id) {
+			$gift = SystemGifts::getGift($gift_id);
+		}
 
 		
 		$form .=  '<form action="" method="POST" enctype="multipart/form-data" name="gift">';
@@ -88,11 +91,11 @@ class SystemGiftManager extends SpecialPage {
 		
 		$form .=  '<tr>
 		<td width="200" class="view-form">gift name</td>
-		<td width="695"><input type="text" size="45" class="createbox" name="gift_name" value="'. $gift["gift_name"] . '"/></td>
+		<td width="695"><input type="text" size="45" class="createbox" name="gift_name" value="'. ((isset($gift)) ? $gift["gift_name"] : "") . '"/></td>
 		</tr>
 		<tr>
 		<td width="200" class="view-form" valign="top">gift description</td>
-		<td width="695"><textarea class="createbox" name="gift_description" rows="2" cols="30">'. $gift["gift_description"] . '</textarea></td>
+		<td width="695"><textarea class="createbox" name="gift_description" rows="2" cols="30">'. ((isset($gift)) ? $gift["gift_description"] : "" ). '</textarea></td>
 		</tr>
 		<tr>
 		<td width="200" class="view-form">gift type</td>
@@ -100,12 +103,12 @@ class SystemGiftManager extends SpecialPage {
 			<select name="gift_category">';
 			$g = new SystemGifts();
 			foreach($g->categories as $category => $id){
-				$form .= '<option ' . (($gift["gift_category"]==$id)?"selected":"") . " value=\"{$id}\">{$category}</option>";
+				$form .= '<option ' . (( isset($gift) && $gift["gift_category"]==$id) ? "selected" : "" ) . " value=\"{$id}\">{$category}</option>";
 			}
 			$form .= '</select>
 		<tr>
 		<td width="200" class="view-form">threshold</td>
-		<td width="695"><input type="text" size="25" class="createbox" name="gift_threshold" value="'. $gift["gift_threshold"] . '"/></td>
+		<td width="695"><input type="text" size="25" class="createbox" name="gift_threshold" value="'. ((isset($gift)) ? $gift["gift_threshold"] : "") . '"/></td>
 		</tr>
 		<tr>';
 	
@@ -122,8 +125,8 @@ class SystemGiftManager extends SpecialPage {
 		
 		$form .=  '<tr>
 		<td colspan="2">
-		<input type=hidden name="id" value="' . $gift["gift_id"] . '">
-		<input type="button" class="createbox" value="' . (($gift["gift_id"])?"edit":"create gift") . '" size="20" onclick="document.gift.submit()" />
+		<input type=hidden name="id" value="' . ((isset($gift)) ? $gift["gift_id"] : "") . '">
+		<input type="button" class="createbox" value="' . (( isset($gift) && $gift["gift_id"] ) ? "edit" : "create gift" ) . '" size="20" onclick="document.gift.submit()" />
 		<input type="button" class="createbox" value="cancel" size="20" onclick="history.go(-1)" />
 		</td>
 		</tr>

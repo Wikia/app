@@ -66,35 +66,20 @@ class BoardBlast extends SpecialPage {
 		$stats = new UserStats($wgUser->getID(), $wgUser->getName() );
 		$stats_data = $stats->getUserStats();
 				
-		$output .= "<div class=\"board-blast-message-form\">
-
-				<h2>" . wfMsgForContent( 'boardblaststep1' ) . "</h2>
-			
-				<form method=\"post\" name=\"blast\" action=\"\">
-					
-					<input type=\"hidden\" name=\"ids\" id=\"ids\">
-					
-					<div class=\"blast-message-text\">
-						" . wfMsgForContent( 'boardblastprivatenote' ) . "
-					</div>
-					
-					<textarea name=\"message\" id=\"message\" cols=\"63\" rows=\"4\"/></textarea>
-				
-				</form>
-			
+		$output = "<div class=\"board-blast-message-form\">
+		<h2>" . wfMsgForContent( 'boardblaststep1' ) . "</h2>
+		<form method=\"post\" name=\"blast\" action=\"\">
+			<input type=\"hidden\" name=\"ids\" id=\"ids\">
+			<div class=\"blast-message-text\">" . wfMsgForContent( 'boardblastprivatenote' ) . "</div>
+			<textarea name=\"message\" id=\"message\" cols=\"63\" rows=\"4\"/></textarea>
+		</form>
 		</div>
-		
-		
 		<div class=\"blast-nav\">
-		
-				<h2>" . wfMsgForContent( 'boardblaststep2' ) . "</h2>
-				
-				<div class=\"blast-nav-links\">
-					<a href=\"javascript:void(0);\" onclick=\"javascript:select_all()\">" . wfMsgForContent( 'boardlinkselectall' ) . "</a> -
-					<a href=\"javascript:void(0);\" onclick=\"javascript:unselect_all()\">" . wfMsgForContent( 'boardlinkunselectall' ) . "</a> ";
-					
-				$output .= "</div>
-		
+			<h2>" . wfMsgForContent( 'boardblaststep2' ) . "</h2>
+			<div class=\"blast-nav-links\">
+				<a href=\"javascript:void(0);\" onclick=\"javascript:select_all()\">" . wfMsgForContent( 'boardlinkselectall' ) . "</a> -
+				<a href=\"javascript:void(0);\" onclick=\"javascript:unselect_all()\">" . wfMsgForContent( 'boardlinkunselectall' ) . "</a> 
+			</div>
 		</div>";
 				
 		$rel = new UserRelationship( $wgUser->getName() );
@@ -114,10 +99,11 @@ class BoardBlast extends SpecialPage {
 			}
 			 
 			$output .= "</div>
-			
 			<div class=\"cleared\"></div>";
-		}else{
-			$output .= "<div>" . wfMsgForContent( 'boardnofriends' ) . "</div>";
+		} else {
+			$output .= "<div>" . wfMsgForContent( 'boardnofriends' ) . "</div>
+			</div>
+			<div class=\"cleared\"></div>";
 		}
 	 
 		$output .= "<div class=\"blast-message-box-button\">

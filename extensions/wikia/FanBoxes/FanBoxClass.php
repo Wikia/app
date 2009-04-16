@@ -311,7 +311,7 @@ class FanBox{
 			$this->left_textsize = $row->fantag_left_textsize;
 			$this->right_textsize = $row->fantag_right_textsize;
 			$this->pg_id = $row->fantag_pg_id;
-			$this->user_id = $row->fangtag_user_id;
+			$this->user_id = $row->fantag_user_id;
 			$this->user_name = $row->fantag_user_name;
 		} 
 	 
@@ -367,7 +367,8 @@ class FanBox{
 		else {
 			$fantag_perma ="<a class=\"perma\" style=\"font-size:8px; color:".$this->getFanBoxRightTextColor()." \" href=\"".$fantag_title->escapeFullURL()."\" title=\"{$this->name}\">perma</a>";
 		}
-		
+
+		$leftfontsize = "12px";		
 		if ($this->getFanBoxLeftTextSize() == "mediumfont"){
 			$leftfontsize= "14px";
 		}
@@ -375,6 +376,7 @@ class FanBox{
 			$leftfontsize= "20px";
 		}
 		
+		$rightfontsize= "10px";
 		if ($this->getFanBoxRightTextSize() == "smallfont"){
 			$rightfontsize= "12px";
 		}
@@ -387,7 +389,7 @@ class FanBox{
 		$right_text  = $right_text->getText();
 
 		$output = "";
-		$output.="<input type=\"hidden\" name=\"individualFantagId\" value=\"$this->getFanBoxId()\">
+		$output.="<input type=\"hidden\" name=\"individualFantagId\" value=\"{$this->getFanBoxId()}\">
 			<div class=\"individual-fanbox\" id=\"individualFanbox".$individual_fantag_id."\">
 				<div class=\"permalink-container\">
 					$fantag_perma
@@ -429,7 +431,7 @@ class FanBox{
 		$individual_fantag_id = $this->getFanBoxId();
 		
 
-		$output .= "
+		$output = "
 			<div class=\"fanbox-pop-up-box\" id=\"fanboxPopUpBox".$individual_fantag_id."\">
 			<table cellpadding=\"0\" cellspacing=\"0\" width=\"258px\"><tr><td align=\"center\">". wfMsgForContent( 'fanbox_remove_fanbox' ) ."<tr><td align=\"center\">
 			<input type=\"button\" value=\"Remove\" size=\"20\" onclick=\"closeFanboxAdd('fanboxPopUpBox{$individual_fantag_id}','individualFanbox{$individual_fantag_id}'); showMessage(2, '$fanboxtitle', $individual_fantag_id) \" />
@@ -446,7 +448,7 @@ class FanBox{
 		$fanboxtitle = $fanboxtitle->getText();
 		$individual_fantag_id = $this->getFanBoxId();
 		
-		$output .= "
+		$output = "
 			<div class=\"fanbox-pop-up-box\" id=\"fanboxPopUpBox".$individual_fantag_id."\">
 			<table cellpadding=\"0\" cellspacing=\"0\" width=\"258px\"><tr><td align=\"center\">". wfMsgForContent( 'fanbox_add_fanbox' ) ."<tr><td align=\"center\">
 			<input type=\"button\" value=\"Add\" size=\"20\" onclick=\"closeFanboxAdd('fanboxPopUpBox{$individual_fantag_id}','individualFanbox{$individual_fantag_id}'); showMessage(1, '$fanboxtitle', $individual_fantag_id) \"/>
@@ -454,7 +456,7 @@ class FanBox{
 			</td></table>
 			</div>";
 
-	return $output;
+		return $output;
 	}
 
 	public function outputIfUserNotLoggedIn() {

@@ -112,6 +112,7 @@ function wfSpecialTopUsers(){
 				$CommentIcon = $avatar->getAvatarImage();
 				
 				//Break list into sections based on User Level if its defined for this site
+				$last_level = "";
 				if( is_array( $wgUserLevels ) ){
 					$user_level = new UserLevel( number_format( $user["points"] ) );
 					if( $user_level->getLevelName()!=$last_level ){

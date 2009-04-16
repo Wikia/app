@@ -33,6 +33,7 @@ class ViewPoll extends SpecialPage {
 		if($type=="most")$order="ORDER BY poll_vote_count";
 		
 		//display only a user's most or newest
+		$user_link = $user_page_title = $user_sql = "";
 		$user = $wgRequest->getVal('user');
 		if ($user) {
 			$user_sql = "WHERE poll_user_name='" . addslashes($user)."'";
@@ -57,7 +58,7 @@ class ViewPoll extends SpecialPage {
 		$random_poll_link = Title::makeTitle(NS_SPECIAL, "RandomPoll");
 		
 		
-		$output .= "
+		$output = "
 		<div class=\"view-poll-top-links\">
 			<a href=\"".$random_poll_link->escapeFullURL()."\">" . wfMsgForContent( 'poll_take_button' ) . "</a>
 		</div>
@@ -73,7 +74,7 @@ class ViewPoll extends SpecialPage {
 		
 		$output .= "</div>";
 		
-		$wgOut->setPageTitle( wfMsgForContent( 'poll_view_title' ,$user_page_titl) );
+		$wgOut->setPageTitle( wfMsgForContent( 'poll_view_title' ,$user_page_title) );
 		
 		$dbr =& wfGetDB( DB_SLAVE );
 		

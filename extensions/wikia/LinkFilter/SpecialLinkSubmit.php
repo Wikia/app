@@ -7,7 +7,7 @@ class LinkSubmit extends UnlistedSpecialPage {
 
 	function execute(){
 		
-		global $IP, $wgUser, $wgOut, $wgRequest, $wgSitename, $wgMessageCache, $wgLinkFilterScripts; 
+		global $IP, $wgUser, $wgOut, $wgRequest, $wgSitename, $wgMessageCache, $wgLinkFilterScripts, $wgStyleVersion; 
 		
 		$wgOut->addScript("<link rel='stylesheet' type='text/css' href=\"{$wgLinkFilterScripts}/LinkFilter.css?{$wgStyleVersion}\"/>\n");
 		
@@ -66,12 +66,15 @@ class LinkSubmit extends UnlistedSpecialPage {
 		}
 		
 		if( !$title ){
-			$title = $_POST["lf_title"];
+			if (isset($_POST["lf_title"])) {
+				$title = $_POST["lf_title"];
+			}
 		}
 		
 		$_SESSION["alreadysubmitted"] = false;
 		$output = "";
-		
+
+		$lf_desc = isset($_POST["lf_desc"]) ? $_POST["lf_desc"] : "" ;		
 		$output .= "<script>
 			function submit_link(){
 				if(\$('lf_title').value == '' ){
@@ -120,7 +123,7 @@ class LinkSubmit extends UnlistedSpecialPage {
 					<label >".wfMsg('linkfilter-description')."</label>
 				</div>
 				<div class=\"link-characters-left\">" . wfMsg("linkfilter-description-max") . " - <span id=\"desc-remaining\">300</span> " . wfMsg("linkfilter-description-left") . "</div>
-				<textarea tabindex=\"3\" class=\"lr-input\" onKeyUp=\"limit_text(document.link.lf_desc,300)\" onKeyDown=\"limit_text(document.link.lf_desc,300)\" rows=4 name=\"lf_desc\" id=\"lf_desc\" value=\"{$_POST["lf_desc"]}\"/></textarea>
+				<textarea tabindex=\"3\" class=\"lr-input\" onKeyUp=\"limit_text(document.link.lf_desc,300)\" onKeyDown=\"limit_text(document.link.lf_desc,300)\" rows=4 name=\"lf_desc\" id=\"lf_desc\" value=\"{$lf_desc}\"/></textarea>
 				 
 				<div class=\"link-submit-title\">
 					<label>".wfMsg('linkfilter-type')."</label>

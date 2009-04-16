@@ -56,7 +56,7 @@ class UserSlideShow extends SpecialPage {
 		categorylinks on replace(cl_sortkey,' ','_')=concat('Image:',img_name)
 		WHERE img_user_text = '" . addslashes($user_name) . "' 
 		AND cl_to = 'Profile_Pictures'
-		ORDER BY img_timestamp DESC {$limit_sql}";
+		ORDER BY img_timestamp DESC ";
 	
 	    $res_total = $dbr->query($sql_total);
 		$row = $dbr->fetchObject($res_total);

@@ -151,7 +151,7 @@ class UserBoard {
 		$key = wfMemcKey( 'user', 'newboardmessage', $user_id );
 		//$dbr =& wfGetDB( DB_MASTER );
 		$new_count = 0;
-		//$s = $dbr->selectRow( '`user_board`', array( 'count(*) as count' ), array( 'ug_user_id_to' => $user_id, 'ug_status' => 1 ), $fname );
+		//$s = $dbr->selectRow( '`user_board`', array( 'count(*) as count' ), array( 'ug_user_id_to' => $user_id, 'ug_status' => 1 ), __METHOD__ );
 		//if ( $s !== false )$new_gift_count = $s->count;	
 		
 		$wgMemc->set($key,$new_count);
@@ -173,7 +173,7 @@ class UserBoard {
 	
 	public function doesUserOwnMessage($user_id, $ub_id){
 		$dbr =& wfGetDB( DB_MASTER );
-		$s = $dbr->selectRow( '`user_board`', array( 'ub_user_id' ), array( 'ub_id' => $ub_id ), $fname );
+		$s = $dbr->selectRow( '`user_board`', array( 'ub_user_id' ), array( 'ub_id' => $ub_id ), __METHOD__ );
 		if ( $s !== false ) {
 			if($user_id == $s->ub_user_id){
 				return true;
@@ -184,7 +184,7 @@ class UserBoard {
 	
 	public function didUserSendMessage($user_id, $ub_id){
 		$dbr =& wfGetDB( DB_MASTER );
-		$s = $dbr->selectRow( '`user_board`', array( 'ub_user_id_from' ), array( 'ub_id' => $ub_id ), $fname );
+		$s = $dbr->selectRow( '`user_board`', array( 'ub_user_id_from' ), array( 'ub_id' => $ub_id ), __METHOD__ );
 		if ( $s !== false ) {
 			if($user_id == $s->ub_user_id_from){
 				return true;
@@ -196,7 +196,7 @@ class UserBoard {
 	public function deleteMessage($ub_id){
 		if($ub_id){
 			$dbr =& wfGetDB( DB_MASTER );
-			$s = $dbr->selectRow( '`user_board`', array( 'ub_user_id','ub_user_name','ub_type' ), array( 'ub_id' => $ub_id ), $fname );
+			$s = $dbr->selectRow( '`user_board`', array( 'ub_user_id','ub_user_name','ub_type' ), array( 'ub_id' => $ub_id ), __METHOD__ );
 			if ( $s !== false ) {
 				
 				$sql = "DELETE FROM user_board WHERE ub_id={$ub_id}";
@@ -341,7 +341,7 @@ class UserBoard {
 	public function displayMessages($user_id,$user_id_2=0,$count=10,$page=0){
 		global $wgUser,$max_link_text_length, $wgTitle;
 		$messages = $this->getUserBoardMessages($user_id,$user_id_2,$count,$page);
-		
+		$output = "";
 		if ($messages) {
 			
 			foreach ($messages as $message) {

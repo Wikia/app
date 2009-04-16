@@ -24,6 +24,7 @@ class UserFanBoxes {
 	public function getUserFanboxes($type,$limit=0,$page=0){
 		$dbr =& wfGetDB( DB_MASTER );
 		
+		$limit_sql = "";
 		if($limit>0){
 			$limitvalue = 0;
 			if($page)$limitvalue = $page * $limit - ($limit); 
@@ -59,7 +60,7 @@ class UserFanBoxes {
 		$dbr =& wfGetDB( DB_SLAVE );
 		$s = $dbr->selectRow( '`user_fantag`', 
 			array( 'count(*) as count' ), 
-			array( 'userft_user_name'=>$user_name ), $fname );
+			array( 'userft_user_name'=>$user_name ), __METHOD__ );
 		
 		return $s->count;		
 	}
@@ -70,7 +71,7 @@ class UserFanBoxes {
 		$dbr =& wfGetDB( DB_SLAVE );
 		$s = $dbr->selectRow( '`user_fantag`', 
 			array( 'count(*) as count' ), 
-			array( 'userft_user_id'=>$wgUser->getID(), "userft_fantag_id" => $userft_fantag_id), $fname );
+			array( 'userft_user_id'=>$wgUser->getID(), "userft_fantag_id" => $userft_fantag_id), __METHOD__ );
 		return $s->count;		
 	}
 }

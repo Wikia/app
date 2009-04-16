@@ -57,6 +57,7 @@ class FanBoxes extends SpecialPage {
 		$fanboxid = $wgRequest->getVal("id");
 		
 		//set up the edit fanbox part
+		$categories = "";
 		
 		if ($fanboxid){ 
 			
@@ -69,8 +70,6 @@ class FanBoxes extends SpecialPage {
 				array( 'cl_from' => $fanboxid), __METHOD__, 
 				$params
 			);
-			
-			$categories = "";
 			
 			while ($row = $dbr->fetchObject( $res ) ) {
 				if( $row->cl_to != "Userboxes" && strpos($row->cl_to, "Userboxes_by_User_" ) === false  ){
@@ -172,7 +171,7 @@ class FanBoxes extends SpecialPage {
 						</div>
 					</div>";
 		
-			$output.= $this->colorPickerAndCategoryCloud();
+			$output.= $this->colorPickerAndCategoryCloud($categories);
 
 
 			$output.="
@@ -334,7 +333,7 @@ class FanBoxes extends SpecialPage {
 						</div>
 					</div>";
 			
-			$output.= $this->colorPickerAndCategoryCloud();
+			$output.= $this->colorPickerAndCategoryCloud($categories);
 			
 			
 			
@@ -443,7 +442,7 @@ class FanBoxes extends SpecialPage {
 	}
 	
 	
-	function colorPickerAndCategoryCloud(){
+	function colorPickerAndCategoryCloud($categories){
 				$output="				
 				<div class=\"add-colors\">
 					<h1>". wfMsgForContent( 'fan_add_colors' ) ."</h1>

@@ -97,8 +97,6 @@ And don\'t forget to add $2 as your Wikia friend, at $3
 
 The Wikia Team ',
 ),
-
-
 	);
 }
 

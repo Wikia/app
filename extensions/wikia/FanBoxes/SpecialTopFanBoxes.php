@@ -31,16 +31,10 @@ function wfSpecialTopFanBoxes(){
 			$topfanboxid = $wgRequest->getVal("id");
 			$topfanboxcategory = $wgRequest->getVal("cat");
 						
-			
-		
-
-			if($topfanboxid == fantag_date){
+			if ($topfanboxid == 'fantag_date') {
 				$wgOut->setPageTitle("Most Recent Userboxes");
 				$topfanboxes = $this->getTopFanboxes('fantag_date');
-
-			}
-			
-			else {
+			} else {
 				$wgOut->setPageTitle("Top Userboxes");
 				$topfanboxes = $this->getTopFanboxes('fantag_count');
 			}

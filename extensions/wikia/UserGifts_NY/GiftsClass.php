@@ -65,6 +65,7 @@ class Gifts {
 			FROM gift WHERE gift_id = {$id} LIMIT 0,1";
 		$res = $dbr->query($sql);
 		$row = $dbr->fetchObject( $res );
+		$gift = array();
 		if($row){
 			$gift["gift_id"]= $row->gift_id;	
 			$gift["gift_name"]= $row->gift_name;	
@@ -99,17 +100,20 @@ class Gifts {
 			$limit_sql = " LIMIT {$limitvalue},{$limit} ";
 		}
 		
-		$sql = "SELECT gift_id,gift_name,gift_description,gift_given_count
+		$sql = "SELECT gift_id,gift_name,gift_description,gift_given_count, gift_createdate
 			FROM gift
 			where gift_access=0 OR gift_creator_user_id = {$wgUser->getID()}
 			ORDER BY {$order}
 			{$limit_sql}";
 		
 		$res = $dbr->query($sql);
+		$gifts = array();
 		while ($row = $dbr->fetchObject( $res ) ) {
 			 $gifts[] = array(
-				 "id"=>$row->gift_id,"timestamp"=>($row->gift_timestamp ) ,
-				 "gift_name"=>$row->gift_name,"gift_description"=>$row->gift_description,
+				 "id" => $row->gift_id,
+				 "timestamp" => $row->gift_createdate,
+				 "gift_name" => $row->gift_name,
+				 "gift_description"=>$row->gift_description,
 				 "gift_given_count"=>$row->gift_given_count
 				 );
 		}
@@ -149,7 +153,7 @@ class Gifts {
 	static function getCustomCreatedGiftCount($user_id){
 		$dbr =& wfGetDB( DB_SLAVE );
 		$gift_count = 0;
-		$s = $dbr->selectRow( '`gift`', array("count(*) as count"), array( 'gift_creator_user_id' => $user_id ), $fname );
+		$s = $dbr->selectRow( '`gift`', array("count(*) as count"), array( 'gift_creator_user_id' => $user_id ), __METHOD__ );
 		if ( $s !== false )$gift_count = $s->count;	
 		return $gift_count;
 	}
@@ -157,7 +161,7 @@ class Gifts {
 	static function getGiftCount(){
 		$dbr =& wfGetDB( DB_SLAVE );
 		$gift_count = 0;
-		$s = $dbr->selectRow( '`gift`', array( 'count(*) as count' ), $fname );
+		$s = $dbr->selectRow( '`gift`', array( 'count(*) as count' ), null, __METHOD__ );
 		if ( $s !== false )$gift_count = $s->count;	
 		return $gift_count;
 	}

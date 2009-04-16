@@ -67,7 +67,7 @@ class SystemGifts {
 							'sg_user_name' => $row2->stats_user_name,
 							'sg_status' => 0,
 							'sg_date' => date("Y-m-d H:i:s", time() - (60 * 60 * 24 * 3) ),
-							), $fname
+							), __METHOD__
 						);
 						
 						$sg_key = wfMemcKey( 'user', 'profile', 'system_gifts', "{$row2->stats_user_id}" );
@@ -93,7 +93,6 @@ class SystemGifts {
 	}
 	
 	public function addGift($gift_name,$gift_description, $gift_category,$gift_threshold){
-		$user_id_to = User::idFromName($user_to);
 		$dbr =& wfGetDB( DB_MASTER );
 		$fname = 'system_gift::addToDatabase';
 		$dbr->insert( '`system_gift`',
@@ -103,7 +102,7 @@ class SystemGifts {
 			'gift_category' => $gift_category,
 			'gift_threshold' => $gift_threshold,
 			'gift_createdate' => date("Y-m-d H:i:s"),
-			), $fname
+			), __METHOD__
 		);	
 		return $dbr->insertId();
 	}
@@ -169,25 +168,30 @@ class SystemGifts {
 	static function getGiftList($limit=0,$page=0){
 		$dbr =& wfGetDB( DB_SLAVE );
 		
+		$limit_sql = "";
 		if($limit>0){
 			$limitvalue = 0;
 			if($page)$limitvalue = $page * $limit - ($limit); 
 			$limit_sql = " LIMIT {$limitvalue},{$limit} ";
 		}
 		
-		$sql = "SELECT gift_id,gift_name,gift_description,gift_category, gift_threshold, gift_given_count
+		$sql = "SELECT gift_id,gift_name,gift_description,gift_category, gift_threshold, gift_given_count, gift_createdate
 			FROM system_gift
 			ORDER BY gift_createdate DESC
 			{$limit_sql}";
 		
 		$res = $dbr->query($sql);
+		$gifts = array();
 		while ($row = $dbr->fetchObject( $res ) ) {
 			 $gifts[] = array(
-				 "id"=>$row->gift_id,"timestamp"=>($row->gift_timestamp ) ,
-				 "gift_name"=>$row->gift_name,"gift_description"=>$row->gift_description,
-				  "gift_category"=>$row->gift_category,"gift_threshold"=>$row->gift_threshold,
+				 "id"=>$row->gift_id,
+				 "timestamp"=> $row->gift_createdate,	
+				 "gift_name"=>$row->gift_name,
+				 "gift_description"=>$row->gift_description,
+				 "gift_category"=>$row->gift_category,
+				 "gift_threshold"=>$row->gift_threshold,
 				 "gift_given_count"=>$row->gift_given_count
-				 );
+			);
 		}
 		return $gifts;
 	}
@@ -195,7 +199,7 @@ class SystemGifts {
 	static function getGiftCount(){
 		$dbr =& wfGetDB( DB_SLAVE );
 		$gift_count = 0;
-		$s = $dbr->selectRow( '`system_gift`', array( 'count(*) as count' ), $fname );
+		$s = $dbr->selectRow( '`system_gift`', array( 'count(*) as count' ), __METHOD__ );
 		if ( $s !== false )$gift_count = $s->count;	
 		return $gift_count;
 	}

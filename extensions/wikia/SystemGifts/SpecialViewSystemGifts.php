@@ -7,7 +7,7 @@ class ViewSystemGifts extends SpecialPage {
 	
 	function execute(){
 		
-		global $wgUser, $wgOut, $wgRequest, $IP, $wgMemc, $wgUploadPath, $wgMessageCache, $wgSystemGiftsScripts;
+		global $wgUser, $wgOut, $wgRequest, $IP, $wgMemc, $wgUploadPath, $wgMessageCache, $wgSystemGiftsScripts, $wgStyleVersion;
 		
 		$wgOut->addScript("<link rel='stylesheet' type='text/css' href=\"{$wgSystemGiftsScripts}/SystemGift.css?{$wgStyleVersion}\"/>\n");
 

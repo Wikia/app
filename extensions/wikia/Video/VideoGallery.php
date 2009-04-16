@@ -14,7 +14,7 @@ function wfVideoGallery() {
 function wfRenderVideoGallery($input, $argv, &$parser){
 	global $wgTitle;
 	$vg = new VideoGallery();
-	$vg->setContextTitle( $wgTitle->mTitle );
+	$vg->setContextTitle( $wgTitle->getText() );
 	$vg->setShowFilename( true );
 	$vg->setParsing();
 
@@ -51,7 +51,7 @@ function wfRenderVideoGallery($input, $argv, &$parser){
 		} else {
 			$label = '';
 		}
-
+		$html = "";
 		/*
 		$pout = $this->parse( $label,
 			$this->mTitle,
@@ -110,6 +110,15 @@ class VideoGallery
 	 */
 	function setCaption( $caption ) {
 		$this->mCaption = htmlspecialchars( $caption );
+	}
+
+	/**
+	 * Get the caption (as plain text)
+	 *
+	 * @param 
+	 */
+	function getCaption() {
+		return (isset($this->mCaption)) ? $this->mCaption : "";
 	}
 
 	/**
@@ -233,7 +242,7 @@ class VideoGallery
 		$sk = $this->getSkin();
 	 
 		$s = '<table class="gallery" cellspacing="0" cellpadding="0">';
-		if( $this->mCaption )
+		if( $this->getCaption() )
 			$s .= "\n\t<caption>{$this->mCaption}</caption>";
 
 		$i = 0;
