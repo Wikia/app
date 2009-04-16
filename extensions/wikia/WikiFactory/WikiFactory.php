@@ -33,7 +33,7 @@ class WikiFactory {
 	const LOG_CATEGORY = 3;
 	const LOG_STATUS   = 4;
 
-	const db	       = "wikicities";
+	const db           = "wikicities"; // @see $wgWikiFactoryDB
 	const DOMAINCACHE  = "/tmp/wikifactory/domains.ser";
 	const CACHEDIR     = "/tmp/wikifactory/wikis";
 
@@ -86,7 +86,10 @@ class WikiFactory {
 	 * @return string	table name with database
 	 */
 	static public function table( $table ) {
-		return sprintf("`%s`.`%s`", self::db , $table );
+		global $wgWikiFactoryDB;
+
+		$database = !empty( $wgWikiFactoryDB )  ? $wgWikiFactoryDB : self::db;
+		return sprintf("`%s`.`%s`", $database, $table );
 	}
 
 	/**
