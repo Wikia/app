@@ -231,7 +231,7 @@ class ReverseParser {
 						}
 
 						// <br /> inside paragraphs (without ' <!--NEW_LINE_1-->' following it)
-						if($node->nextSibling && $node->nextSibling->nextSibling && 
+						if($node->nextSibling && $node->nextSibling->nextSibling &&
 							$node->nextSibling->nodeType != XML_COMMENT_NODE &&
 							$node->nextSibling->nextSibling->nodeType != XML_COMMENT_NODE) {
 							$out = '<br />';
@@ -241,7 +241,7 @@ class ReverseParser {
 						else if ($newNode) {
 							$out = "\n";
 						}
-						
+
 						break;
 
 					case 'p':
@@ -259,7 +259,7 @@ class ReverseParser {
 						// ;foo
 						// :bar
 						$prefix = "\n\n";
-	
+
 						// handle <dt> elements being rendered as p.definitionTerm
 						if ($this->hasCSSClass($node, 'definitionTerm')) {
 							$textContent = ';' . rtrim($textContent);
@@ -281,7 +281,7 @@ class ReverseParser {
 						}
 
 						// <p><br /> </p>
-						if ( ($textContent == ' ') && ($node->firstChild->nodeType == XML_ELEMENT_NODE) && 
+						if ( ($textContent == ' ') && ($node->firstChild->nodeType == XML_ELEMENT_NODE) &&
 							($node->firstChild->nodeName == 'br') ) {
 							$textContent = '';
 						}
@@ -308,7 +308,7 @@ class ReverseParser {
 							if ( !empty($node->parentNode) && $node->parentNode->nodeName == 'li' ) {
 								// indented paragraph inside list item
 								// *: foo
-								
+
 								// remove one :
 								$textContent = substr($textContent, 1);
 
@@ -370,6 +370,7 @@ class ReverseParser {
 					case 'h5':
 					case 'h6':
 						$head = str_repeat("=", $node->nodeName{1});
+
 						if(!empty($nodeData)) {
 							$nextNode = $this->getNextElementNode($node);
 
@@ -380,6 +381,7 @@ class ReverseParser {
 							if ( $nextNode && ($nextNode->nodeName == 'p') && $this->getIndentationLevel($nextNode) === false ) {
 								$linesAfter++;
 							}
+							$textContent = $node->getAttribute('space_after') . $textContent;
 						} else {
 							$linesBefore = $node->previousSibling ? 2 : 0;
 							$linesAfter = 1;
@@ -635,7 +637,7 @@ class ReverseParser {
 				wfDebug("Wysiwyg ReverseParserNew - has new line before\n");
 				$out = "\n{$out}";
 			}
-			
+
 			// do the same with nodes containing _wysiwyg_line_start and washtml attributes (added in Parser.php)
 			if($this->nodeHasLineStart($node)) {
 				wfDebug("Wysiwyg ReverseParserNew - starts new line\n");
@@ -660,7 +662,7 @@ class ReverseParser {
 					}
 				}
 			}
-			
+
 		} else if($node->nodeType == XML_COMMENT_NODE) {
 
 			// if the next sibling node of the current one comment node is text or node (so any sibling)
@@ -668,7 +670,7 @@ class ReverseParser {
 			// e.g. "<!--NEW_LINE_1-->abc" => "\nabc"
 
 			// ignore <!--NEW_LINE_1--> comment inside list item
-			if($node->data == "NEW_LINE_1" && $node->nextSibling && $node->parentNode->nodeName != 'li') { 
+			if($node->data == "NEW_LINE_1" && $node->nextSibling && $node->parentNode->nodeName != 'li') {
 				$out = "\n";
 			}
 
@@ -903,7 +905,7 @@ class ReverseParser {
 		switch($data['type']) {
 			case 'image';
 				return $this->handleMedia($node, $content);
-			
+
 			case 'internal link':
 			case 'internal link: file':
 			case 'internal link: special page':
@@ -1226,7 +1228,7 @@ class ReverseParser {
 	private function getIndentationLevel($node) {
 		while (!empty($node->parentNode)) {
 			$cssStyle = $node->getAttribute('style');
-			
+
 			if(!empty($cssStyle)) {
 				$margin = (substr($cssStyle, 0, 11) == 'margin-left') ? intval(substr($cssStyle, 12)) : 0;
 				return intval($margin/40);
