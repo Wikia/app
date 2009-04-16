@@ -84,10 +84,6 @@ class ReverseParser {
 			// save meta-data
 			$this->data = is_array($data) ? $data : array();
 
-			// replace &nbsp; with single space
-			// otherwise it will be replaced with 0x0A by DOMDocument parser
-			$html = str_replace('&nbsp;', ' ' , $html);
-
 			// HTML cleanup
 			// trying to fix RT #9466
 			// </b><a ...><b>     => <a ...>
