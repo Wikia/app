@@ -696,7 +696,6 @@ class BlogTemplateClass {
 		/* parse summary */
 		if ( (!empty($oRev)) && (!empty(self::$aOptions['summary'])) ) {
 			$sBlogText = $oRev->revText();
-			error_log ("sBlogText = " . $sBlogText . "\n\n\n\n");
 			/* parse or not parse - this is a good question */
 			$localParser = new Parser();
 			if ( !in_array(self::$aOptions['type'], array('array', 'noparse')) ) {
