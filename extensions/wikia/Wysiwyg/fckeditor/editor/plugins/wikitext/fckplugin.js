@@ -73,6 +73,14 @@ FCK.onWysiwygLoad = function() {
 			return;
 		}
 
+		// unblock save / preview / show changes button
+		var buttons = ['wpSave', 'wpPreview', 'wpDiff'];
+		for (b=0; b<buttons.length; b++) {
+			window.parent.document.getElementById(buttons[b]).disabled = false;
+		}
+
+		FCK.log('Save / preview / show changes buttons have been unblocked');
+
 		// set wysiwyg load time [s]
 		FCK.LoadTime = ((new Date()).getTime() - window.parent.wgNow.getTime()) / 1000;
 
