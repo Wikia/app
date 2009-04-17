@@ -484,6 +484,8 @@ function Wysiwyg_HtmlToWikiText($html, $wysiwygData, $decode = false) {
 
 	$reverseParser = new ReverseParser();
 	$out = $reverseParser->parse($html, $decode ? Wikia::json_decode($wysiwygData, true) : $wysiwygData);
+
+	// fix non-breakable space issue ("empty" diffs)
 	$out = str_replace("\xC2\xA0", ' ', $out);
 	return $out;
 }
