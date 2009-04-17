@@ -34,7 +34,7 @@ class WhereIsExtension extends SpecialPage {
 	}
 
 	function execute() {
-		global $wgOut, $wgUser, $wgRequest;
+		global $wgOut, $wgUser, $wgRequest, $wgTitle;
 		$gVar = $wgRequest->getText('var');
 		$gVal = $wgRequest->getVal('val', 'true');
 		wfLoadExtensionMessages('WhereIsExtension');
@@ -48,6 +48,9 @@ class WhereIsExtension extends SpecialPage {
 
 		$formData['vars'] = $this->getListOfVars();
 		$formData['selectedVal'] = $gVal;
+		$formData['selectedGroup'] = 27;	//default group: extensions
+		$formData['groups'] = WikiFactory::getGroups();
+		$formData['actionURL'] = $wgTitle->getFullURL();
 		if (!empty($gVar)) {
 			$formData['selectedVar'] = $gVar;
 			$formData['wikis'] = $this->getListOfWikisWithVar($gVar, $gVal);

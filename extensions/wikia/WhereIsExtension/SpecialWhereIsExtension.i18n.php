@@ -28,7 +28,11 @@ $messages = array(
 		'whereisextension'			=> 'Where is extension',	//the name displayed on Special:SpecialPages
 		'whereisextension-submit'	=> 'Search',
 		'whereisextension-list'		=> 'List of wikis with enabled selected extension',
-		'whereisextension-isset'	=> 'is set to'
+		'whereisextension-isset'	=> 'is set to',
+		'whereisextension-filter'	=> 'Filter',
+		'whereisextension-all-groups'	=> 'All groups',
+		'whereisextension-name-contains'	=> 'variable name contains',
+		'whereisextension-isset'	=> 'is set to',
 	)
 );
 ?>
