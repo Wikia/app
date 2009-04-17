@@ -773,7 +773,7 @@ class OutputPage {
 		$response->header( 'Vary: Accept-Encoding, Cookie' );
 
 		# Add an X-Vary-Options header for Squid with Wikimedia patches
-		$response->header( $this->getXVO() );
+		//$response->header( $this->getXVO() );
 
 		if( !$this->uncacheableBecauseRequestVars() && $this->mEnableClientCache ) {
 			if( $wgUseSquid && session_id() == '' &&
