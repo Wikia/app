@@ -573,6 +573,10 @@ CONTROL;
 		$otext = str_replace( "\r\n", "\n", $otext );
 		$ntext = str_replace( "\r\n", "\n", $ntext );
 
+		// wikia: fix non-breakable space issue ("empty" diffs)
+		$otext = str_replace( "\xC2\xA0", ' ', $otext);
+		$ntext = str_replace( "\xC2\xA0", ' ', $ntext);
+
 		if ( $wgExternalDiffEngine == 'wikidiff' ) {
 			# For historical reasons, external diff engine expects
 			# input text to be HTML-escaped already
