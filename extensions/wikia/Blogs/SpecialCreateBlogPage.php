@@ -81,7 +81,7 @@ class CreateBlogPage extends SpecialBlogPage {
 			$aPageProps['commenting'] = 1;
 		}
 
-		$editPage = new EditPage( $this->mPostArticle );
+		$editPage = new EditBlogPage( $this->mPostArticle );
 		$editPage->initialiseForm();
 		$editPage->textbox1 = $sPostBody;
 		$editPage->summary  = wfMsg('create-blog-updated');
@@ -261,5 +261,17 @@ class CreateBlogPage extends SpecialBlogPage {
 				EDIT_NEW | EDIT_MINOR | EDIT_FORCE_BOT  # flags
 			);
 		}
+	}
+}
+
+class EditBlogPage extends EditPage {
+	#---
+	function __construct ($article) {
+		parent::__construct($article);
+	}
+	
+	protected function wasDeletedSinceLastEdit() {
+		# allow to recreate (always)
+		return false;
 	}
 }
