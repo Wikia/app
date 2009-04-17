@@ -3,8 +3,8 @@ $wgExtensionCredits['other'][] = array(
 	'name' => 'Wikia Rich Text Editor (Wysiwyg)',
 	'description' => 'FCKeditor integration for MediaWiki',
 	'url' => 'http://www.wikia.com/wiki/c:help:Help:New_editor',
-	'version' => 0.12,
-	'author' => array('Inez Korczyński', '[http://pl.wikia.com/wiki/User:Macbre Maciej Brencz]', 'Maciej Błaszkowski (Marooned)', 'Łukasz \'TOR\' Garczewski')
+	'version' => 0.13,
+	'author' => array('Inez Korczyński', 'Maciej Brencz', 'Maciej Błaszkowski (Marooned)', 'Łukasz \'TOR\' Garczewski')
 );
 
 $dir = dirname(__FILE__).'/';
@@ -245,6 +245,7 @@ function Wysiwyg_Initial($form) {
 	$wgHooks['EditPage::showEditForm:initial2'][] = 'Wysiwyg_Initial2';
 	$wgHooks['EditForm:BeforeDisplayingTextbox'][] = 'Wysiwyg_BeforeDisplayingTextbox';
 	$wgHooks['SkinTemplateOutputPageBeforeExec'][] = 'Wysiwyg_SetDomain';
+	$wgHooks['EditPageBeforeEditButtons'][] = 'Wysiwyg_BlockSaveButton';
 	return true;
 }
 
@@ -1051,5 +1052,21 @@ function Wysiwyg_LinkEnd( $linker, $target, $options, $text, $attribs, $ret) {
 	if ($target->isExternal()) {
 		$attribs['refid'] = Wysiwyg_GetRefId($text, true);
 	}
+	return true;
+}
+
+/**
+ * Block save / preview / show changes buttons until wysiwyg is fully loaded
+ *
+ * @author Maciej Brencz <macbre at wikia-inc.com>
+ */
+function Wysiwyg_BlockSaveButton($editPage, &$checkboxes) {
+
+	// add disabled='disabled' attribute
+	$buttons = array('save', 'preview', 'diff');
+	foreach($buttons as $button) {
+		$checkboxes[$button] = substr($checkboxes[$button], 0, -3) . ' disabled="disabled" />';
+	}
+
 	return true;
 }
