@@ -4498,7 +4498,9 @@ class Parser
 
 			if ( strpos( $matches[0], '%' ) !== false )
 				$matches[1] = urldecode( $matches[1] );
-			$tp = Title::newFromText( $matches[1]/*, NS_FILE*/ );
+
+			# Allow <gallery> to accept image names without an Image: prefix
+			$tp = Title::newFromText( $matches[1], NS_FILE );
 			$nt =& $tp;
 			if( is_null( $nt ) ) {
 				# Bogus title. Ignore these so we don't bomb out later.
