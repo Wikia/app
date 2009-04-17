@@ -29,7 +29,7 @@ class WikiaApiQuery extends ApiQueryBase {
     #--- action's params
 	const INSERT 	= "insert";
 	const UPDATE 	= "update";
-	const DELETE	= "delete";
+	const DELETE	= "wdelete";
 	const QUERY 	= "query";
 
     #--- default params
