@@ -858,15 +858,7 @@ function wfReportTime() {
 	} else {
 		$elapsedcpu = 0;
 	}
-	header( sprintf( "X-CPU-Time: %01.3f", $elapsedcpu ) );
-	header( sprintf( "X-Real-Time: %01.3f", $elapsed ) );
 	if( $wgShowHostnames) header( sprintf( "X-Served-By-Backend: %s", wfHostname() ) );
-	global $wgUser, $wgTitle;
-	if( is_object( $wgUser) ) header( sprintf( "X-User-Id: %d", $wgUser->getId() ) );
-	if( is_object( $wgTitle ) ) {
-		header( sprintf( "X-Article-Id: %d", $wgTitle->getArticleId() ) );
-		header( sprintf( "X-Namespace-Number: %d", $wgTitle->getNamespace() ) );
-	}
 	return $wgShowHostnames
 		? sprintf( "<!-- Served by %s in %01.3f secs. cpu: %01.3f -->", wfHostname(), $elapsed, $elapsedcpu )
 		: sprintf( "<!-- Served in %01.3f secs. cpu: %01.3f -->", $elapsed, $elapsedcpu );
