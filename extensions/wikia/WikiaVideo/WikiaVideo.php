@@ -56,8 +56,18 @@ function WikiaVideoPreRenderVideoGallery( $matches ) {
 }
 
 function WikiaVideo_init() {
-	global $wgExtraNamespaces, $wgAutoloadClasses;
-	$wgExtraNamespaces[NS_VIDEO] = 'Video';
+	global $wgExtraNamespaces, $wgNamespaceAliases, $wgAutoloadClasses;
+
+	switch ( $wgLanguageCode ) {
+		case 'pl':
+			$wgExtraNamespaces[NS_VIDEO] = 'Video';
+			$wgExtraNamespaces[NS_VIDEO + 1] = 'Dyskusja_Video';
+			$wgNamespaceAliases['Video_talk'] = 401;
+			break;
+		default:
+			$wgExtraNamespaces[NS_VIDEO] = 'Video';
+			$wgExtraNamespaces[NS_VIDEO + 1] = 'Video_talk';
+	}
 	$wgAutoloadClasses['VideoPage'] = dirname(__FILE__). '/VideoPage.php';
 }
 
