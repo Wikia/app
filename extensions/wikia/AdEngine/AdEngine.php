@@ -185,6 +185,10 @@ class AdEngine {
 		return true;
 	}
 
+	/* Simple accessor for slots array */
+	public function getSlots() {
+		return $this->slots;
+	}
 
 	/* Category name/id is needed multiple times for multiple providers. Be gentle on our dbs by adding a thin caching layer. */
 	public function getCachedCategory(){
