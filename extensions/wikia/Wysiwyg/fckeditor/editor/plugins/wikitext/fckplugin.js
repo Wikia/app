@@ -67,12 +67,6 @@ FCK.LoadTime = false;
 FCK.onWysiwygLoad = function() {
 	// run just once
 	if (FCK.LoadTime == false) {
-		// check existance of wgNow global JS variable
-		if (typeof window.parent.wgNow == 'undefined') {
-			FCK.log('Wysiwyg loaded (no wgNow defined!)');
-			return;
-		}
-
 		// unblock save / preview / show changes button
 		var buttons = ['wpSave', 'wpPreview', 'wpDiff'];
 		for (b=0; b<buttons.length; b++) {
@@ -81,11 +75,22 @@ FCK.onWysiwygLoad = function() {
 
 		FCK.log('Save / preview / show changes buttons have been unblocked');
 
-		// set wysiwyg load time [s]
-		FCK.LoadTime = ((new Date()).getTime() - window.parent.wgNow.getTime()) / 1000;
-
 		// add FCK version info
 		FCK.log('FCKeditor v' + window.parent.FCKeditorAPI.Version + ' (build ' + window.parent.FCKeditorAPI.VersionBuild + ')');
+
+		//
+		// set wysiwyg load time
+		//
+
+		// check existance of wgNow global JS variable
+		// should be always defined in Monaco skin
+		if (typeof window.parent.wgNow == 'undefined') {
+			FCK.log('Wysiwyg loaded (wgNow not defined!)');
+			FCK.LoadTime = true;
+			return;
+		}
+
+		FCK.LoadTime = ((new Date()).getTime() - window.parent.wgNow.getTime()) / 1000;
 
 		// report load time
 		FCK.log('Wysiwyg loaded in ' + FCK.LoadTime + ' s');
