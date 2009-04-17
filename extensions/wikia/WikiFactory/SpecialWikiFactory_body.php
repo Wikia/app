@@ -607,12 +607,16 @@ class ChangeLogPager extends TablePager {
 			),
 			"fields" => array( "*" ),
 			"conds" => array(
-				WikiFactory::table("city_list").".city_id = " . WikiFactory::table("city_list_log").".cl_city_id"
+				WikiFactory::table("city_list", "city_id" )
+					. " = "
+					. WikiFactory::table( "city_list_log", "cl_city_id" )
 			)
 		);
 
 		if( $this->mWikiId ) {
-			$query[ "conds" ][] = WikiFactory::table("city_list").".city_id = " . $this->mWikiId;
+			$query[ "conds" ][] = WikiFactory::table("city_list", "city_id" )
+				. " = "
+				. $this->mWikiId;
 		}
 		return $query;
 	}
