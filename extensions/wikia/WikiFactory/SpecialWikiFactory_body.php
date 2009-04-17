@@ -349,7 +349,7 @@ class CityListPager extends TablePager {
                 'city_lang' => wfMsg( "wf_city_lang" ),
 				'cc_name' => wfMsg( "wf_cc_name" ),
                 'city_public' => wfMsg( "wf_city_public" ),
-				'actions' => wfMsg( "wf-label-actions" ),
+				'actions' => wfMsg( "wikifactory-label-actions" ),
             );
         }
         return $this->mFieldNames;
@@ -364,7 +364,17 @@ class CityListPager extends TablePager {
         return 'city_id';
     }
 
-    function formatValue( $field, $value ) {
+	/**
+	 * prepare HTML for listing
+	 *
+	 * @access public
+	 *
+	 * @param string $field
+	 * @param mixed $value
+	 *
+	 * @return string
+	 */
+    public function formatValue( $field, $value ) {
         global $wgLang;
 
 		$Tmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );

@@ -23,5 +23,6 @@ $messages["en"] = array(
 	"wikifactory-label-domains" => "Domains",
 	"wikifactory-label-return" => "Return to list",
 	"wikifactory-label-clog" => "Changelog",
+	"wikifactory-label-actions" => "Actions",
 	"right-wikifactory" => "Change internal settings for wikis",
 );
