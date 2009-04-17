@@ -602,17 +602,17 @@ class ChangeLogPager extends TablePager {
 	function getQueryInfo() {
 		$query = array(
 			"tables" => array(
-				wfSharedTable("city_list_log"),
-				wfSharedTable("city_list"),
+				WikiFactory::table("city_list_log"),
+				WikiFactory::table("city_list"),
 			),
 			"fields" => array( "*" ),
 			"conds" => array(
-				wfSharedTable("city_list").".city_id = " . wfSharedTable("city_list_log").".cl_city_id"
+				WikiFactory::table("city_list").".city_id = " . WikiFactory::table("city_list_log").".cl_city_id"
 			)
 		);
 
 		if( $this->mWikiId ) {
-			$query[ "conds" ][] = wfSharedTable("city_list").".city_id = " . $this->mWikiId;
+			$query[ "conds" ][] = WikiFactory::table("city_list").".city_id = " . $this->mWikiId;
 		}
 		return $query;
 	}
