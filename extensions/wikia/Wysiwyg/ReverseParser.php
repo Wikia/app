@@ -971,7 +971,6 @@ class ReverseParser {
 				// put it back together
 				$data['href'] = $protocol . ':' . $path;
 
-				// fill FCK data
 				if (preg_match('%^(?:' . $this->urlProtocols . ')%im', $data['href'])) {
 					// external links
 					if ($data['type'] == 'external link: raw' && !$textBefore && !$textAfter) {
