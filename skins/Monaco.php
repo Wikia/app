@@ -1693,6 +1693,7 @@ if ($wgOut->isArticle()){
 						$this->html('catlinks');
 					?>
 					<!-- end content -->
+					<?php if($this->data['dataAfterContent']) { $this->html ('dataAfterContent'); } ?>
 					<div class="visualClear"></div>
 				</div>
 
