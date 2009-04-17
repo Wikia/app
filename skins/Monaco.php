@@ -1675,16 +1675,18 @@ if ($wgOut->isArticle()){
 					$this->html('bodytext');
 
 		                        // Display additional ads before categories and footer on long pages
-					if ( $wgUser->isAnon() &&
+					global $wgEnabledAdsPrefooter, $wgDBname;
+					if ( !empty( $wgEnableAdsPrefooter ) &&
+					$wgUser->isAnon() &&
 					$wgOut->isArticle() &&
 					ArticleAdLogic::isContentPage() &&
 					ArticleAdLogic::isLongArticle($this->data['bodytext'])) {
 						echo  '<table style="margin-top: 1em; width: 100%"><tr>' .
 						'<td style="width: 50%; text-align: center"><div style="width: 300px; margin: 0 auto">' .
-						AdEngine::getInstance()->getPlaceHolderDiv('PREFOOTER_LEFT_BOXAD', false) .
+						AdEngine::getInstance()->getPlaceHolderDiv("PREFOOTER_BOXAD_$wgDBname", false) .
 						"</div></td>\n" .
 						'<td style="width: 50%; text-align: center"><div style="width: 300px; margin: 0 auto">' .
-						AdEngine::getInstance()->getPlaceHolderDiv('PREFOOTER_RIGHT_BOXAD', false) .
+						AdEngine::getInstance()->getPlaceHolderDiv("PREFOOTER_BOXAD_$wgDBname", false) .
 						"</div></td></tr>\n</table>";
 					}
 

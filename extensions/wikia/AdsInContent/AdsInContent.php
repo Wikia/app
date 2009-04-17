@@ -60,7 +60,7 @@ function wfAdsInContentSetup() {
  * AdsInContent Extenssion hook handler
  */
 function wfAdsInContentHook(&$out, &$text) {
-	global $wgAdsInContentExtensionConfig, $wgTitle, $wgUser, $wgHooks, $wgOut;
+	global $wgAdsInContentExtensionConfig, $wgTitle, $wgUser, $wgHooks, $wgOut, $wgDBname;
 
 	$loggedIn = $wgUser->isLoggedIn();
 	$ns = $wgTitle->getNamespace();
@@ -76,7 +76,7 @@ function wfAdsInContentHook(&$out, &$text) {
   GS_googleEnableAllServices();
 </script>
 <script type="text/javascript">
-  GA_googleAddSlot("ca-pub-4086838842346968", "INCONTENT_BOXAD");
+  GA_googleAddSlot("ca-pub-4086838842346968", "INCONTENT_BOXAD_' . $wgDBname . '");
   GA_googleAddAdSensePageAttr("google_ad_channel", "4974569436");
 </script>
 <script type="text/javascript">
