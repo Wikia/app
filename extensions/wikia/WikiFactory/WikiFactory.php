@@ -82,14 +82,20 @@ class WikiFactory {
 	 * @static
 	 *
 	 * @param string	$table	table name
+	 * @param string	$column	column name default false
 	 *
 	 * @return string	table name with database
 	 */
-	static public function table( $table ) {
+	static public function table( $table, $column = false ) {
 		global $wgWikiFactoryDB;
 
 		$database = !empty( $wgWikiFactoryDB )  ? $wgWikiFactoryDB : self::db;
-		return sprintf("`%s`.`%s`", $database, $table );
+		if( $column ) {
+			return sprintf("`%s`.`%s`.`%s`", $database, $table, $column );
+		}
+		else {
+			return sprintf("`%s`.`%s`", $database, $table );
+		}
 	}
 
 	/**
