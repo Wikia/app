@@ -319,33 +319,27 @@ class WikiFactoryPage extends SpecialPage {
 	}
 }
 
-
+/**
+ * @name CityListPager
+ */
 class CityListPager extends TablePager {
-    var $mFieldNames = null;
-    var $mMessages = array();
-    var $mQueryConds = array();
+	private
+		$mFieldNames = null,
+		$mMessages   = array(),
+		$mQueryConds = array();
 
-    #--- constructor
-    function __construct() {
-        global $wgRequest, $wgMiserMode;
-        if ( $wgRequest->getText( 'sort', 'img_date' ) == 'img_date' ) {
-            $this->mDefaultDirection = true;
-        } else {
-            $this->mDefaultDirection = false;
-        }
-        $search = $wgRequest->getText( 'ilsearch' );
-        if ( $search != '' && !$wgMiserMode ) {
-            $nt = Title::newFromUrl( $search );
-            if( $nt ) {
-                $dbr = wfGetDB( DB_SLAVE );
-                $m = $dbr->strencode( strtolower( $nt->getDBkey() ) );
-                $m = str_replace( "%", "\\%", $m );
-                $m = str_replace( "_", "\\_", $m );
-                $this->mQueryConds = "";
-             }
-        }
-        parent::__construct();
-    }
+	/**
+	 * constructor
+	 *
+	 * @access public
+	 */
+	public function __construct() {
+		global $wgRequest, $wgMiserMode;
+
+		$this->mDefaultDirection = true;
+		$search = $wgRequest->getText( 'ilsearch' );
+		parent::__construct();
+	}
 
     function getFieldNames() {
         if ( !$this->mFieldNames ) {
@@ -353,10 +347,9 @@ class CityListPager extends TablePager {
                 'city_id' => wfMsg( "wf_city_id" ),
                 'city_url' => wfMsg( "wf_city_url" ),
                 'city_lang' => wfMsg( "wf_city_lang" ),
-					 'cc_name' => wfMsg( "wf_cc_name" ),
+				'cc_name' => wfMsg( "wf_cc_name" ),
                 'city_public' => wfMsg( "wf_city_public" ),
-                'city_title' => wfMsg( "wf_city_title" ),
-                'city_created' => wfMsg( "wf_city_created" ),
+				'actions' => wfMsg( "wf-label-actions" ),
             );
         }
         return $this->mFieldNames;
@@ -373,55 +366,68 @@ class CityListPager extends TablePager {
 
     function formatValue( $field, $value ) {
         global $wgLang;
+
+		$Tmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
+
+		$return = false;
         switch ( $field ) {
             case "city_url":
                 $title = Title::makeTitle( NS_SPECIAL, 'WikiFactory' );
-                preg_match("/http:\/\/([^\/]+)/", $value, $match );
-                $link = sprintf("%s/%s", $title->getFullUrl(), $this->mCurrentRow->city_id);
-                return sprintf("<a href=\"%s\">%s</a>", $link, $value);
+                $link = sprintf( "%s/%s", $title->getFullUrl(), $this->mCurrentRow->city_id );
+				$Tmpl->set( "link", $link );
+				$Tmpl->set( "value", $value );
+				$Tmpl->set( "city_title", $this->mCurrentRow->city_title );
+				$Tmpl->set( "city_created", $this->mCurrentRow->city_created );
+				$return = $Tmpl->execute("listing-city-url");
                 break;
             case "city_public":
-                switch($value) {
+                switch( $value ) {
                     case 0:
-                        return "<span style=\"color:#fe0000;font-weight:bold;font-size:small;\">disabled</span>";
+                        $return = "<span style=\"color:#fe0000;font-weight:bold;font-size:small;\">disabled</span>";
                         break;
                     case 1:
-                        return "<span style=\"color:darkgreen;font-weight:bold;font-size:small;\">enabled</span>";
+                        $return = "<span style=\"color:darkgreen;font-weight:bold;font-size:small;\">enabled</span>";
                         break;
                     case 2:
-                        return "<span style=\"color: #0000fe;font-weight:bold;font-size:small\">redirected</span>";
+                        $return = "<span style=\"color: #0000fe;font-weight:bold;font-size:small\">redirected</span>";
                         break;
                 }
                 break;
-            default: return $value;
+            default:
+				$return = $value;
         }
+		return $return;
     }
 
-    /**
-     * getQueryInfo
-     *
-     * get data needed for creating query
-     */
-    function getQueryInfo()
-    {
-        $fields = $this->getFieldNames();
-        unset( $fields['links'] );
-        $fields = array_keys( $fields );
+	/**
+	 * getQueryInfo	get data needed for creating query
+	 *
+	 * @access public
+	 *
+	 * @return Array	builded query
+	 */
+	public function getQueryInfo() {
+		$fields = $this->getFieldNames();
+		unset( $fields['actions'] );
 
-			$query = array(
-				"tables" => array(
-					wfSharedTable("city_list"),
-					wfSharedTable("city_cats_view"),
-				),
-				"fields" => $fields,
-				"conds" => array(
-					wfSharedTable("city_list").".city_id = ".
-					wfSharedTable("city_cats_view").".cc_city_id",
-				)
-			);
+		$fields = array_keys( $fields );
+		$fields[] = "city_created";
+		$fields[] = "city_title";
 
-			return $query;
-    }
+		$query = array(
+			"tables" => array(
+				WikiFactory::table("city_list"),
+				WikiFactory::table("city_cats_view"),
+			),
+			"fields" => $fields,
+			"conds" => array(
+				WikiFactory::table("city_list").".city_id = ".
+				WikiFactory::table("city_cats_view").".cc_city_id",
+			)
+		);
+
+		return $query;
+	}
 
     function getForm() {
         global $wgRequest, $wgMiserMode;

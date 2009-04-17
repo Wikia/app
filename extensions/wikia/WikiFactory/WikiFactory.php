@@ -22,7 +22,7 @@ if( ! function_exists( "wfUnserializeHandler" ) ) {
 	 */
 	function wfUnserializeHandler( $errno, $errstr ) {
 		global $_variable_key, $_variable_value;
-		error_log( $_SERVER['SERVER_NAME'] . " ($_variable_key=$_variable_value): $errno, $errstr" );
+		Wikia::log( __FUNCTION__, $_SERVER['SERVER_NAME'], "({$_variable_key}={$_variable_value}): {$errno}, {$errstr}" );
 	}
 }
 
