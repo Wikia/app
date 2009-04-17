@@ -279,6 +279,12 @@ class ArticleAdLogic {
 	public static function isBoxAdArticle($html){
 		static $lastMd5, $lastResult;
 
+		// Give up early if the BoxAd slot is disabled
+		$slots = AdEngine::getInstance()->getSlots();
+		if ( !array_key_exists( 'TOP_RIGHT_BOXAD', $slots ) || $slots['TOP_RIGHT_BOXAD']['enabled'] == 'No' ) {
+			return false;
+		}
+
 		$currentMd5 = md5($html);
 		if ($currentMd5 == $lastMd5 ){
 			// function was called again with the same html as last time.
