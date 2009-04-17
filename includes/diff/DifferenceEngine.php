@@ -530,7 +530,7 @@ CONTROL;
 				$difftext = $wgMemc->get( $key );
 				if ( $difftext ) {
 					wfIncrStats( 'diff_cache_hit' );
-					$difftext = $this->localiseLineNumbers( $difftext );
+					$difftext = $this->localiseLineNumbers( $this->addNoDiffMsg($difftext) );
 					$difftext .= "\n<!-- diff cache key $key -->\n";
 					wfProfileOut( __METHOD__ );
 					return $difftext;
@@ -557,7 +557,7 @@ CONTROL;
 		}
 		// Replace line numbers with the text in the user's language
 		if ( $difftext !== false ) {
-			$difftext = $this->localiseLineNumbers( $difftext );
+			$difftext = $this->localiseLineNumbers( $this->addNoDiffMsg($difftext) );
 		}
 		wfProfileOut( __METHOD__ );
 		return $difftext;
@@ -672,6 +672,21 @@ CONTROL;
 		return wfMsgExt( 'lineno', array( 'parseinline' ), $wgLang->formatNum( $matches[1] ) );
 	}
 
+	/**
+	 * Show "No diff" message when diff is empty
+	 *
+	 * Fixes trac#3907
+	 *
+	 * @author Maciej Brencz <macbre@wikia-inc.com>
+	 */
+	function addNoDiffMsg($text) {
+		if (strpos($text, '<!--LINE ') === false) {
+			return '<tr><td colspan=\'4\' align=\'center\' class=\'diff-nodiff\'>'.wfMsg('nodiff').'</td></tr>';
+		}
+		else {
+			return $text;
+		}
+	}
 
 	/**
 	 * If there are revisions between the ones being compared, return a note saying so.
