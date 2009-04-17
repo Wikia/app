@@ -24,7 +24,7 @@ function rateArticle(e) {
 }
 function unrateArticle(e) {
 	YAHOO.util.Event.preventDefault(e);
-	YAHOO.util.Connect.asyncRequest('GET', wgScriptPath+'/api.php?action=delete&list=wkvoteart&format=json&wkpage='+wgArticleId, rateArticle_callback);
+	YAHOO.util.Connect.asyncRequest('GET', wgScriptPath+'/api.php?action=wdelete&list=wkvoteart&format=json&wkpage='+wgArticleId, rateArticle_callback);
 	YAHOO.util.Dom.addClass('star-rating', 'star-rating-progress');
 	YAHOO.util.Dom.setStyle('unrateLink', 'display', 'none');
 }

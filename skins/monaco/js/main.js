@@ -167,7 +167,7 @@ Event.onDOMReady(function() {
 	}
 	Event.addListener('unrateLink', 'click', function(e) {
 		Event.preventDefault(e);
-		YAHOO.util.Connect.asyncRequest('GET', wgScriptPath+'/api.php?action=delete&list=wkvoteart&format=json&wkpage='+wgArticleId, callback);
+		YAHOO.util.Connect.asyncRequest('GET', wgScriptPath+'/api.php?action=wdelete&list=wkvoteart&format=json&wkpage='+wgArticleId, callback);
 		YAHOO.util.Dom.addClass('star-rating', 'star-rating-progress');
 		Dom.setStyle('unrateLink', 'display', 'none');
 		YAHOO.Wikia.Tracker.trackByStr(e, 'ArticleFooter/vote/unrate');
