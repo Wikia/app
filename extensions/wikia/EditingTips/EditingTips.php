@@ -104,7 +104,6 @@ function isWidescreenEnabled() {
 	return $isWidescreen;
 }
 
-$wgHooks['SkinGetPageClasses'][] = 'wfEditingTipsAddBodyClass';
 function wfEditingTipsAddBodyClass($classes) {
 	if ( isWidescreenEnabled() ) {
 		$classes .= ' editingWide editingTips';
@@ -118,6 +117,7 @@ function AddEditingToggles($o) {
 	if(get_class($wgUser->getSkin()) == 'SkinMonaco') {
 		wfLoadExtensionMessages('EditingTips');
 		$wgHooks['EditPage::showEditForm:fields'][] = 'AddEditingTips';
+		$wgHooks['SkinGetPageClasses'][] = 'wfEditingTipsAddBodyClass';
 		if (isset ($o->ImageSeparator)) {
 			$sep = $o->ImageSeparator ;
 			$marg = 'margin-left:5px;' ;
