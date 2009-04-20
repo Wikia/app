@@ -532,7 +532,7 @@ class HAWelcomeJob extends Job {
 		 * bots can't welcome
 		 */
 		if( !in_array( "bot", $groups ) ) {
-			if( $sysop !== "@sysop" ) {
+			if( $sysop === "@sysop" ) {
 				$result = in_array( "sysop", $groups ) ? true : false;
 			}
 			else {
