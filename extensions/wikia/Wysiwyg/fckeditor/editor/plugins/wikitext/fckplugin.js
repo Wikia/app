@@ -486,6 +486,10 @@ FCK.SetupElementsWithRefId = function() {
 		}
 
 		var data = FCK.wysiwygData[refid];
+		if (!data) {
+			continue;
+		}
+
 		var type = node.getAttribute('_fck_type') || data.type;
 		var name = node.nodeName.toLowerCase();
 
