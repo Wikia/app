@@ -21,15 +21,16 @@ $wgExtensionCredits['specialpage'][] = array(
     "author" => "[http://www.wikia.com/wiki/User:Eloy.wikia Krzysztof Krzyżaniak (eloy)]"
 );
 
+$dir = dirname( __FILE__ );
 /**
  * messages file
  */
-$wgExtensionMessagesFiles["WikiFactory"] = dirname(__FILE__) . '/SpecialWikiFactory.i18n.php';
+$wgExtensionMessagesFiles["WikiFactory"] =  $dir . '/SpecialWikiFactory.i18n.php';
 
 /**
  * helper file
  */
-require_once( dirname(__FILE__) . '/SpecialWikiFactory_ajax.php' );
+require_once( $dir . '/SpecialWikiFactory_ajax.php' );
 
 
 /**
@@ -41,3 +42,7 @@ $wgGroupPermissions['wikifactory']['wikifactory'] = true;
 
 extAddSpecialPage( dirname(__FILE__) . '/SpecialWikiFactory_body.php', 'WikiFactory', 'WikiFactoryPage' );
 $wgSpecialPageGroups['WikiFactory'] = 'wikia';
+
+$wgAutoloadClasses[ "CloseWikiPage" ] = $dir. "/Close/SpecialCloseWiki_body.php";
+$wgSpecialPages[ "CloseWiki" ] = "CloseWikiPage";
+$wgSpecialPageGroups[ "CloseWiki" ] = 'wikia';
