@@ -15,8 +15,21 @@ class WysiwygParser extends Parser {
 			'</pre>';
 	}
 
-	function doMagicLinks( $text ) {
-		return $text;
+	# macbre: fixes RT #14031
+	# catch ONLY raw external links
+	function magicLinkCallback( $m ) {
+		if ( isset( $m[1] ) && strval( $m[1] ) !== '' ) {
+			# Skip anchor
+			return $m[0];
+		} elseif ( isset( $m[2] ) && strval( $m[2] ) !== '' ) {
+			# Skip HTML element
+			return $m[0];
+		} elseif ( isset( $m[3] ) && strval( $m[3] ) !== '' ) {
+			# Free external link
+			return $this->makeFreeExternalLink( $m[0] );
+		} else {
+			return $m[0];
+		}
 	}
 
 	var $mEmptyLineCounter = 0;
