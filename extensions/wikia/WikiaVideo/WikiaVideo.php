@@ -56,7 +56,7 @@ function WikiaVideoPreRenderVideoGallery( $matches ) {
 }
 
 function WikiaVideo_init() {
-	global $wgExtraNamespaces, $wgNamespaceAliases, $wgAutoloadClasses;
+	global $wgExtraNamespaces, $wgNamespaceAliases, $wgAutoloadClasses, $wgLanguageCode;
 
 	switch ( $wgLanguageCode ) {
 		case 'pl':
