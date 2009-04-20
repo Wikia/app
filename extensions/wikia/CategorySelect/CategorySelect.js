@@ -45,8 +45,6 @@ function extractSortkey(text) {
 
 function deleteCategory(e) {
 	var catId = e.parentNode.parentNode.getAttribute('catId');
-	YAHOO.log('deleting catId = ' + catId);
-	YAHOO.log(e.parentNode.parentNode);
 	e.parentNode.parentNode.parentNode.removeChild(e.parentNode.parentNode);
 	delete categories[catId];
 }
@@ -62,8 +60,6 @@ function modifyCategoryDialog(data, handler) {
 		draggable: true,
 		close: true
 	});
-
-	YAHOO.log(data);
 
 	var buttons = [ { text: data.save, handler: function() {
 		// close dialog
@@ -95,8 +91,6 @@ function modifyCategoryDialog(data, handler) {
 
 function modifyCategory(e) {
 	var catId = e.parentNode.parentNode.getAttribute('catId');
-	YAHOO.log('catId = ' + catId);
-	YAHOO.log(categories[catId]);
 	defaultSortkey = categories[catId].sortkey != '' ? categories[catId].sortkey : (csDefaultSort != '' ? csDefaultSort : wgTitle);
 
 	modifyCategoryDialog({
@@ -110,8 +104,6 @@ function modifyCategory(e) {
 		'save': csInfoboxSave
 	},
 	function(data) {
-		YAHOO.log(data);
-
 		extractedParams = extractSortkey(data['category']);
 		data['category'] = extractedParams['name'];
 
@@ -200,7 +192,6 @@ function addCategory(category, params, index) {
 	if (index == undefined) {
 		index = categories.length;
 	}
-	YAHOO.log('addCategory: index = ' + index + ', namespace = ' + (params['namespace'] ? params['namespace'] : csDefaultNamespace) + ', category = ' + category);
 
 	//replace full wikitext that user may provide (eg. [[category:abc]]) to just a name (abc)
 	category = category.replace(fixCategoryRegexp, '$1');
@@ -280,6 +271,8 @@ function toggleCodeView() {
 	if ($('csWikitextContainer').style.display != 'block') {	//switch to code view
 		$('csWikitext').value = generateWikitextForCategories();
 		$('csItemsContainer').style.display = 'none';
+		$('csHintContainer').style.display = 'none';
+		$('csCategoryInput').style.display = 'none';
 		$('csSwitchView').innerHTML = csVisualView;
 		$('csWikitextContainer').style.display = 'block';
 		$('wpCategorySelectWikitext').value = '';	//remove JSON - this will inform PHP to use wikitext instead
@@ -347,7 +340,6 @@ function inputKeyPress(e) {
 		//TODO: stop AJAX call for AutoComplete
 		YAHOO.util.Event.preventDefault(e);
 		category = $('csCategoryInput').value;
-		YAHOO.log('enter pressed, value = ' + category);
 		if (category != '' && oAutoComp._oCurItem == null) {
 			addCategory(category);
 		}
@@ -357,12 +349,13 @@ function inputKeyPress(e) {
 }
 
 function submitAutoComplete(comp, resultListItem) {
-	YAHOO.log('selected category:' + resultListItem[2]);
 	addCategory(resultListItem[2][0]);
 }
 
 function collapseAutoComplete() {
-	$('csHintContainer').style.display = 'block';
+	if ($('csCategoryInput').style.display != 'none' && $('csWikitextContainer').style.display != 'block') {
+		$('csHintContainer').style.display = 'block';
+	}
 }
 
 function expandAutoComplete(sQuery , aResults) {
@@ -374,7 +367,6 @@ function regularEditorSubmit(e) {
 }
 
 function initAutoComplete() {
-	YAHOO.log('initAutoComplete');
 	// Init datasource
 	var oDataSource = new YAHOO.widget.DS_XHR(wgServer + wgScriptPath + '/', ["\n"]);
 	oDataSource.responseType = YAHOO.widget.DS_XHR.TYPE_FLAT;
@@ -392,16 +384,12 @@ function initAutoComplete() {
 }
 
 function initHandlers() {
-	YAHOO.log('initHandlers: begin');
 	//handle [enter] for non existing categories
 	YAHOO.util.Event.addListener('csCategoryInput', 'keypress', inputKeyPress);
-	YAHOO.log('initHandlers: keypress done');
 	YAHOO.util.Event.addListener('csCategoryInput', 'blur', inputBlur);
-	YAHOO.log('initHandlers: blur done');
 	if (typeof formId != 'undefined') {
 		YAHOO.util.Event.addListener(formId, 'submit', regularEditorSubmit);
 	}
-	YAHOO.log('initHandlers: end');
 }
 
 function initTooltip() {
@@ -476,7 +464,6 @@ function csCancel() {
 }
 
 Event.onDOMReady(function() {
-	YAHOO.log('onDOMReady');
 	if (csType == 'edit') {
 		initHandlers();
 		initAutoComplete();
