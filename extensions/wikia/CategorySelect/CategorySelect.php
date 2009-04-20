@@ -167,7 +167,7 @@ function CategorySelectAjaxGetCategories() {
 	$res = $dbr->select(
 		'category',
 		'cat_title',
-		'cat_title LIKE "%' . $dbr->escapeLike(str_replace(' ', '_', $cat)) . '%"',
+		array('cat_title LIKE "%' . $dbr->escapeLike(str_replace(' ', '_', $cat)) . '%"', 'cat_pages > 0'),
 		__METHOD__,
 		array('LIMIT' => '10')
 	);
