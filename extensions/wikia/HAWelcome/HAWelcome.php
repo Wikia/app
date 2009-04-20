@@ -370,9 +370,9 @@ class HAWelcomeJob extends Job {
 			}
 
 			/**
-			 * put potential welcomer to memcached
+			 * put possible welcomer into memcached, RT#14067
 			 */
-			if( self::isWelcomer( $wgUser ) && $wgUser->getId() ) {
+			if( $wgUser->getId() && self::isWelcomer( $wgUser ) ) {
 				$wgMemc->set( wfMemcKey( "last-sysop-id" ), $wgUser->getId(), 86400 );
 				Wikia::log( __METHOD__, $wgUser->getId(), "Store possible welcomer in memcached" );
 			}
