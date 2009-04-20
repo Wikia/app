@@ -487,6 +487,15 @@ function Wysiwyg_HtmlToWikiText($html, $wysiwygData, $decode = false) {
 
 	// fix non-breakable space issue ("empty" diffs)
 	$out = str_replace("\xC2\xA0", ' ', $out);
+
+	// Special handling for #REDIRECT (per #13637)
+	if(strtoupper(substr($out,0, 26)) == '<NOWIKI>#</NOWIKI>REDIRECT') {
+		$outA = split("\n", trim($out));
+		if(count($outA) == 1) {
+			return str_replace(array('<nowiki>','</nowiki>'), array('',''), $out);
+		}
+	}
+
 	return $out;
 }
 
