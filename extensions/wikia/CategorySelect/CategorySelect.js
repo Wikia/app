@@ -350,6 +350,7 @@ function inputKeyPress(e) {
 
 function submitAutoComplete(comp, resultListItem) {
 	addCategory(resultListItem[2][0]);
+	positionSuggestBox();
 }
 
 function collapseAutoComplete() {
