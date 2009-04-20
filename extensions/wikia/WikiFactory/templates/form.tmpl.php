@@ -321,6 +321,9 @@ YAHOO.util.Event.addListener("wf-clear-cache", "click", $Factory.Variable.clear)
                 Wiki founder identifier is <strong><?php echo $wiki->city_founding_user ?></strong>
                 and his/her email is <strong><?php echo empty( $wiki->city_founding_email) ? "empty" : $wiki->city_founding_email ?></strong>
             </li>
+				<li>
+					Wiki was created on <strong><?php echo $wiki->city_created ?></strong>
+				</li>
             <li>
                 This wiki is <strong><?php echo $statuses[ $wiki->city_public ] ?></strong>.
 				            <? if(($statuses[$wiki->city_public] == 'disabled') && is_object($wikiRequest)): ?>
