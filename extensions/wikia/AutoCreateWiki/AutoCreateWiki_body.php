@@ -45,7 +45,7 @@ class AutoCreateWikiPage extends SpecialPage {
     const CREATEWIKI_LOGO = "/images/central/images/2/22/Wiki_Logo_Template.png";
     const CREATEWIKI_ICON = "/images/central/images/6/64/Favicon.ico";
     const SESSION_TIME = 60;
-    const DAILY_LIMIT = 200;
+    const DAILY_LIMIT = 300;
     const DAILY_USER_LIMIT = 10;
     const DEFAULT_STAFF = "Angela";
     const CACHE_LOGIN_KEY = 'awc_beforelog';
