@@ -72,8 +72,6 @@ function getEditingTips() {
 
 $wgHooks['UserToggles'][] = 'wfEditingTipsToggle';
 $wgHooks['getEditingPreferencesTab'][] = 'wfEditingTipsToggle';
-$wgHooks['MakeGlobalVariablesScript'][] = 'wfEditingTipsSetupVars';
-
 function wfEditingTipsToggle($toggles, $default_array = false) {
 	wfLoadExtensionMessages('EditingTips');
 	if(is_array($default_array)) {
@@ -96,12 +94,20 @@ function isEditingTipsEnabled() {
 	}
 }
 
-function wfEditingTipsSetupVars($vars) {
+function isWidescreenEnabled() {
 	global $wgUser, $wgCookiePrefix;
 	if($wgUser->isLoggedIn()) {
-		$vars['et_widescreen'] = $wgUser->getOption('widescreeneditingtips');
+		$isWidescreen = $wgUser->getOption('widescreeneditingtips') ? true : false;
 	} else {
-		$vars['et_widescreen'] = isset($_COOKIE[$wgCookiePrefix.'etw']) ? 1 : 0;
+		$isWidescreen = isset($_COOKIE[$wgCookiePrefix.'etw']);
+	}
+	return $isWidescreen;
+}
+
+$wgHooks['SkinGetPageClasses'][] = 'wfEditingTipsAddBodyClass';
+function wfEditingTipsAddBodyClass($classes) {
+	if ( isWidescreenEnabled() ) {
+		$classes .= ' editingWide editingTips';
 	}
 	return true;
 }
@@ -125,7 +131,7 @@ function AddEditingToggles($o) {
 		if(count(getEditingTips()) > 0) {
 			$wgOut->addHtml($sep . '<a href="" id="toggleEditingTips">'. (isEditingTipsEnabled() ? wfMsg ('editingtips_hide') : wfMsg ('editingtips_show') ).'</a> - ');
 		}
-		$wgOut->addHtml('<a href="" id="toggleWideScreen">' . wfMsg ('editingtips_enter_widescreen') .'</a></div>');
+		$wgOut->addHtml('<a href="" id="toggleWideScreen">' . (isWidescreenEnabled() ? wfMsg('editingtips_exit_widescreen') : wfMsg ('editingtips_enter_widescreen')) .'</a></div>');
 		$wgOut->addHtml('
 			<noscript>
 				<style type="text/css">

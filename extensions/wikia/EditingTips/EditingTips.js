@@ -89,14 +89,6 @@ YAHOO.util.Event.addListener("toggleWideScreen", "click", function(e) {
 YAHOO.util.Event.onDOMReady(function() {
 	var editingTipsHeaders = $('editingTips').getElementsByTagName("dt");
 
-	if (1 == et_widescreen) {
-		YAHOO.util.Dom.addClass(document.body, "editingWide");
-		YAHOO.util.Dom.addClass(document.body, "editingTips");
-		if($("toggleWideScreen")) {
-			$("toggleWideScreen").innerHTML = editingTipsExitMsg ;
-		}
-	}
-
 	YAHOO.util.Event.addListener(editingTipsHeaders, 'click', function(e) {
 		var el = YAHOO.util.Event.getTarget(e);
 
