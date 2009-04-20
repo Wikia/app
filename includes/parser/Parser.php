@@ -1546,6 +1546,8 @@ class Parser
 		     || (!empty($wgAllowExternalWhitelistImages) && wfRunHooks('outputMakeExternalImage', array(&$url)))) {
 			if ( preg_match( self::EXT_IMAGE_REGEX, $url ) ) {
 				# Image found
+				/* Wikia change begin - @author: Marooned */
+				/* Wysiwyg: mark element and add metadata to wysiwyg array */
 				global $wgWysiwygParserEnabled;
 				if (!empty($wgWysiwygParserEnabled)) {
 				} else {
