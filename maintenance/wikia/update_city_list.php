@@ -26,7 +26,7 @@ if (isset($options['help'])) {
 $db = wfGetDB(DB_MASTER);
 $db->selectDB($wgSharedDB);
 
-$sql = 'SELECT cv_id FROM `city_variables_pool` WHERE cv_name="wgSiteName"';
+$sql = 'SELECT cv_id FROM `city_variables_pool` WHERE cv_name="wgSitename"';
 $res = $db->query($sql);
 $cv_id = $db->fetchObject($res);
 $cv_id = $cv_id->cv_id;
@@ -49,4 +49,3 @@ if (isset($options['verbose'])) print($sql. "\n");
 if (!isset($options['dryrun'])) $db->query($sql);
 
 echo "Found $countAll rows, $countNoEmpty with the wgSiteName set to a different value than city_title.\n";
-?>
