@@ -700,7 +700,14 @@ END;
 			$type = "ns-subject";
 		}
 		$name = Sanitizer::escapeClass( 'page-'.$title->getPrefixedText() );
-		return "$numeric $type $name";
+		
+		$classes = "$numeric $type $name";
+
+		// macbre@wikia: allow extensions to change body tag attributes
+		// refs RT #14017
+		wfRunHooks( 'SkinGetPageClasses', array( &$classes ) );
+
+		return $classes;
 	}
 
 	/**
