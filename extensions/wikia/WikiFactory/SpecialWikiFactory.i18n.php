@@ -9,6 +9,7 @@ $messages = array();
 $messages["en"] = array(
     'wikifactorypagetitle' => 'Wiki Factory Configurator',
     'wikifactory' => 'Wiki Factory Configurator',
+	"closewiki" => 
     "wf_city_url" => "Address",
     "wf_city_id" => "id",
     "wf_city_title" => "Title",

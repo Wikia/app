@@ -17,12 +17,14 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 	exit( 1 );
 }
 
-class AutoCreateWikiPage extends SpecialPage {
+class CloseWikiPage extends SpecialPage {
+
+	private
+		$mTitle;
 
 	/**
 	 * constructor
 	 */
-
 	public function  __construct() {
 		parent::__construct( "CloseWiki", "wikifactory", true );
 	}
@@ -36,6 +38,34 @@ class AutoCreateWikiPage extends SpecialPage {
 	 *
 	 */
 	public function execute( $subpage ) {
-		return true;
+
+		global $wgUser, $wgOut, $wgRequest;
+
+		wfProfileIn( __METHOD__ );
+		wfLoadExtensionMessages("WikiFactory");
+		$this->setHeaders();
+
+		$fail = false;
+		if( $wgUser->isBlocked() ) {
+			$wgOut->blockedPage();
+			$fail = true;
+		}
+
+		if( wfReadOnly() ) {
+			$wgOut->readOnlyPage();
+			$fail = true;
+		}
+
+		if( !$wgUser->isAllowed( 'wikifactory' ) ) {
+			$this->displayRestrictionError();
+			$fail = true;
+		}
+
+		if( !$fail ) {
+			$this->mTitle = Title::makeTitle( NS_SPECIAL, 'WikiFactory' );
+		}
+
+		wfProfileOut( __METHOD__ );
+		return !$fail;
 	}
 }
