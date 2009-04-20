@@ -46,7 +46,7 @@
 		if( typeof( AjaxPollSubmitsArray ) == "undefined" ) {
 			var AjaxPollSubmitsArray = [];
 		}
-		AjaxPollSubmitsArray.push({"submit":"axPollSubmit<?php echo $id ?>", "id":"axPoll<?php echo $id ?>", "pollId":"<?php echo $id ?>", "url":"<?php echo $title->getFullURL( "action=ajax&rs=axAjaxPollSubmit" ) ?>"});
+		AjaxPollSubmitsArray.push({"submit":"axPollSubmit<?php echo $id ?>", "id":"axPoll<?php echo $id ?>", "pollId":"<?php echo $id ?>", "url":"<?php echo ( is_object($title) ? $title->getFullURL( "action=ajax&rs=axAjaxPollSubmit" ) : "" ); ?>"});
 		</script>
 		<?php else: echo wfMsg("ajaxpoll-closed"); endif ?>
 	</form>
