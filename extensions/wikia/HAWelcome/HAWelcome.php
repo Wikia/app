@@ -369,6 +369,14 @@ class HAWelcomeJob extends Job {
 				}
 			}
 
+			/**
+			 * put potential welcomer to memcached
+			 */
+			if( self::isWelcomer( $wgUser ) && $wgUser->getId() ) {
+				$wgMemc->set( wfMemcKey( "last-sysop-id" ), $wgUser->getId(), 86400 );
+				Wikia::log( __METHOD__, $wgUser->getId(), "Store possible welcomer in memcached" );
+			}
+
 			if( $Title && !$wgCommandLineMode && $canWelcome && !empty( $wgSharedDB ) ) {
 
 				Wikia::log( __METHOD__, "title", $Title->getFullURL() );
@@ -520,7 +528,7 @@ class HAWelcomeJob extends Job {
 	 *
 	 * @return boolean	status of operation
 	 */
-	static public function canWelcome( $User ) {
+	static public function isWelcomer( &$User ) {
 
 		wfProfileIn( __METHOD__ );
 
