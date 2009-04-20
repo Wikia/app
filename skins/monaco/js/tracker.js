@@ -195,28 +195,29 @@ var initTracker = function() {
 	});
 
 	// Spotlights
-	footerSpotlights = Dom.get('spotlight_footer').getElementsByTagName('div');
-	sidebarSpotlight = Dom.get('102_content');
-
-	// Advertiser Widget
-	if (sidebarSpotlight) {
-		sidebarSpotlight = sidebarSpotlight.getElementsByTagName('div');
-	}
-
-	if (footerSpotlights && footerSpotlights.length > 0) {
-		for (s=0; s < footerSpotlights.length; s++) {
-			var id = parseInt(footerSpotlights[s].id.substr( footerSpotlights[s].id.length - 1 ));
-			Event.addListener('realAd' + id, 'click', function(e, id) {
-				Tracker.trackByStr(e, 'spotlights/footer' + (id+1));
-			}, s);
+	var footerSpotlights = Dom.get('spotlight_footer');
+	if(footerSpotlights) {
+		footerSpotlights = footerSpotlights.getElementsByTagName('div');
+		if (footerSpotlights && footerSpotlights.length > 0) {
+			for (s=0; s < footerSpotlights.length; s++) {
+				var id = parseInt(footerSpotlights[s].id.substr( footerSpotlights[s].id.length - 1 ));
+				Event.addListener('realAd' + id, 'click', function(e, id) {
+					Tracker.trackByStr(e, 'spotlights/footer' + (id+1));
+				}, s);
+			}
 		}
 	}
 
-	if (sidebarSpotlight && sidebarSpotlight.length > 0) {
-		var id = sidebarSpotlight[0].id.substr( sidebarSpotlight[0].id.length - 1 );
-		Event.addListener('realAd' + id, 'click', function(e) {
-			Tracker.trackByStr(e, 'spotlights/sidebar1');
-		});
+	// Advertiser Widget
+	var sidebarSpotlight = Dom.get('102_content');
+	if(sidebarSpotlight) {
+		sidebarSpotlight = sidebarSpotlight.getElementsByTagName('div');
+		if(sidebarSpotlight && sidebarSpotlight.length > 0) {
+			var id = sidebarSpotlight[0].id.substr( sidebarSpotlight[0].id.length - 1 );
+			Event.addListener('realAd' + id, 'click', function(e) {
+				Tracker.trackByStr(e, 'spotlights/sidebar1');
+			});
+		}
 	}
 
 };
