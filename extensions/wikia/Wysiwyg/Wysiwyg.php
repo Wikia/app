@@ -356,6 +356,11 @@ function Wysiwyg_CheckEdgeCases($text) {
 		}
 	}
 
+	// macbre: is current article an redirect (RT #13637)
+	if (strtoupper(substr($text, 0, 9)) == '#REDIRECT') {
+		$edgeCasesFound[] = wfMsg('wysiwyg-edgecase-redirect');
+	}
+
 	// if edge case was found add main information about edge cases, like "Edge cases found:"
 	if (count($edgeCasesFound) > 0) {
 		$out = wfMsg('wysiwyg-edgecase-info').' '.implode(', ', $edgeCasesFound);
