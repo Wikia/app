@@ -509,6 +509,44 @@ class HAWelcomeJob extends Job {
 
 		return $return;
 	}
+
+	/**
+	 * check if user can welcome other users
+	 *
+	 * @static
+	 * @access public
+	 *
+	 * @param User	$User	instance of User class
+	 *
+	 * @return boolean	status of operation
+	 */
+	static public function canWelcome( $User ) {
+
+		wfProfileIn( __METHOD__ );
+
+		$sysop  = trim( wfMsg( "welcome-user" ) );
+		$groups = $User->getEffectiveGroups();
+		$result = false;
+
+		/**
+		 * bots can't welcome
+		 */
+		if( !in_array( "bot", $groups ) ) {
+			if( $sysop !== "@sysop" ) {
+				$result = in_array( "sysop", $groups ) ? true : false;
+			}
+			else {
+				$result =
+					in_array( "sysop", $groups ) ||
+					in_array( "staff", $groups ) ||
+					in_array( "helper", $groups )
+						? true : false;
+			}
+		}
+		wfProfileOut( __METHOD__ );
+
+		return $result;
+	}
 }
 
 
