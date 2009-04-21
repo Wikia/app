@@ -1086,3 +1086,18 @@ function Wysiwyg_BlockSaveButton($editPage, &$checkboxes) {
 
 	return true;
 }
+
+/**
+ * Parse given wikitext to HTML
+ *
+ * Workaround for disabled MW API on staff and contractor
+ *
+ * @author Maciej Brencz <macbre at wikia-inc.com>
+ */
+$wgAjaxExportList[] = 'WysiwygParseWikitext';
+function WysiwygParseWikitext($wikitext) {
+	global $wgParser, $wgTitle;
+
+	$options = new ParserOptions();
+	return $wgParser->parse($wikitext, $wgTitle, $options)->getText();
+}
