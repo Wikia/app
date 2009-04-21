@@ -163,7 +163,7 @@ class TaskManagerExecutor {
 	private function getTask() {
 		$aStarted = array();
 		$aRunning = array();
-		$dbr = wfGetDB( DB_MASTER );
+		$dbr = wfGetDB( DB_SLAVE );
 
 		$dbr->begin();
 		try {
@@ -199,7 +199,6 @@ class TaskManagerExecutor {
 				__METHOD__,
 				array( "ORDER BY" => "task_priority, task_added")
 			);
-			$dbr->commit();
 		}
 		catch( DBConnectionError $e ) {
 			$this->log( "Connection error: " . $e->getMessage() );

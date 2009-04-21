@@ -403,6 +403,9 @@ class CityListPager extends TablePager {
                         break;
                 }
                 break;
+			case "actions":
+				$return = Xml::check( $this->mCurrentRow->city_id, false, array() );
+				break;
             default:
 				$return = $value;
         }
@@ -454,6 +457,32 @@ class CityListPager extends TablePager {
             "</form>\n";
         return $s;
     }
+
+	/**
+	 * top of table
+
+	 * @access public
+	 *
+	 * @return string HTML code
+	 */
+	public function getStartBody() {
+		$html = parent::getStartBody();
+
+		return $html;
+	}
+
+	/**
+	 * bottom of table
+	 *
+	 * @access public
+	 *
+	 * @return string HTML code
+	 */
+	public function getEndBody() {
+		$html = parent::getEndBody();
+
+		return $html;
+	}
 }
 
 /**
