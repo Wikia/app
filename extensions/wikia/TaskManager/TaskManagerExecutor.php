@@ -48,35 +48,40 @@ class TaskManagerExecutor {
      */
     public function execute() {
 
-		$this->log( "Task Manager started" );
-		foreach( range(1, self::LIMIT ) as $taskNumber ) {
-			$taskClass = $this->getTask();
-			if( $taskClass instanceof BatchTask ) {
-				/**
-				 * lock task
-				 */
-				$taskId = $this->mTaskData->task_id;
-				$this->lockTask( $taskId );
-				$taskClass->setId( $taskId );
-
-				/**
-				 * execute task
-				 */
-				$taskClass->addlog(sprintf( "task started: %s", wfTimestamp( TS_DB, time() ) ) );
-				$status = $taskClass->execute( $this->mTaskData );
-				$taskClass->addlog(sprintf( "task finished: %s", wfTimestamp( TS_DB, time() ) ) );
-
-				/**
-				 * unlock task
-				 */
-				$this->unlockTask( $taskId, $status );
-				$this->log( sprintf( "batch(%d) finished task id=%d; type=%s", $taskNumber, $taskId, $taskClass->getType() ) );
-			}
-			else {
-				$this->log( sprintf( "batch(%d) queue is empty", $taskNumber ) );
-			}
+		if( wfReadOnly() ) {
+			$this->log( "Database is in read-only mode" );
 		}
-		$this->log( "Task Manager finished" );
+		else {
+			$this->log( "Task Manager started" );
+			foreach( range(1, self::LIMIT ) as $taskNumber ) {
+				$taskClass = $this->getTask();
+				if( $taskClass instanceof BatchTask ) {
+					/**
+					 * lock task
+					 */
+					$taskId = $this->mTaskData->task_id;
+					$this->lockTask( $taskId );
+					$taskClass->setId( $taskId );
+
+					/**
+					 * execute task
+					 */
+					$taskClass->addlog(sprintf( "task started: %s", wfTimestamp( TS_DB, time() ) ) );
+					$status = $taskClass->execute( $this->mTaskData );
+					$taskClass->addlog(sprintf( "task finished: %s", wfTimestamp( TS_DB, time() ) ) );
+
+					/**
+					 * unlock task
+					 */
+					$this->unlockTask( $taskId, $status );
+					$this->log( sprintf( "batch(%d) finished task id=%d; type=%s", $taskNumber, $taskId, $taskClass->getType() ) );
+				}
+				else {
+					$this->log( sprintf( "batch(%d) queue is empty", $taskNumber ) );
+				}
+			}
+			$this->log( "Task Manager finished" );
+		}
     }
 
 	/**
