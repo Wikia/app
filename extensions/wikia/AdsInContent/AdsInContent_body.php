@@ -117,9 +117,9 @@ class AdsInContent {
 
 			$adBody = '<div class="contentAdInside noprint" ';
 			if (!empty($aSelectedAdUnit['float'])) {
-				$adBody .= 'style="margin-bottom: 2em; margin-top: 2em margin-' .
+				$adBody .= 'style="margin-bottom: 1em; margin-' .
 					( $aSelectedAdUnit['align'] == 'left' ? 'right' : 'left' ) .
-					': 3em; float: ' . $aSelectedAdUnit['align'] . '"'; 
+					': 1em; float: ' . $aSelectedAdUnit['align'] . '"'; 
 			}
 			$adBody .= '>' . self::getAdUnit( $aSelectedAdUnit ) . '</div>';
 		}
@@ -175,7 +175,7 @@ class AdsInContent {
 					}
 
 					$this->mContent = preg_replace('/<!--AdBox:'.$iSectionNo.'-->/siU', $sAdBody, $this->mContent);
-					if(($this->lastUsedAdUnit != null) && ($this->lastUsedAdUnit['align'] == 'right')) {
+					if(($this->lastUsedAdUnit != null) && ($this->lastUsedAdUnit['float'] == true)) {
 						$this->mContent = preg_replace('/<!--BeginSect:('.($iSectionNo+1).'|e)-->/siU', '<br clear="both" />', $this->mContent);
 					}
 					$this->mAdsCounter++;

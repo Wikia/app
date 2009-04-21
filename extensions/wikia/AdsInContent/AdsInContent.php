@@ -74,6 +74,7 @@ function wfAdsInContentHook(&$out, &$text) {
 	// show only for anon user in the main namespace (if article exists)
 	if( ($ns == NS_MAIN) && !$loggedIn && $wgTitle->exists() && !AdsInContent::isMainPage()) {
 		$wgHooks['SkinAfterBottomScripts'][] = 'AdsInContent::applyTopSectionJSFix';
+		$wgOut->addStyle( '../extensions/wikia/AdsInContent/adsincontent.css', 'screen' );
 		$wgOut->addHtml(
 '<script type="text/javascript" src="http://partner.googleadservices.com/gampad/google_service.js">
 </script>
