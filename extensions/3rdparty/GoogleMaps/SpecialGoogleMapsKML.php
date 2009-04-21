@@ -8,6 +8,9 @@ require_once("includes/SpecialPage.php");
 // Easy links to KML files
 
 class GoogleMapsKML extends SpecialPage {
+        function GoogleMapsKML() {
+            parent::SpecialPage('Google Maps KML', '', false /* listed */);
+        }
 	function execute( $params ) {
 		global $wgRequest, $wgOut, $wgTitle, $wgUser;
 		global $wgContLang, $wgProxyKey, $wgParser;

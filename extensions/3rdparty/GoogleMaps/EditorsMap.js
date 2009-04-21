@@ -1531,7 +1531,7 @@ PARSE_STATE_POINTS: 1,
                  this.addXmlSource(RegExp.$1);
              } else if (line.match(/^\/(.*?)\\/)) {
                  this.active_marker.addTab(RegExp.$1);
-             } else if (line.match(/^(?:\((.*?)\) *)?([^, ]+), *([^ ,]+)(?:, *(.+))?/)) {
+             } else if (line.match(/^(?:\((.*?)\))? *([^, ]+), *([^ ,]+)(?:, *(.+))?/)) {
                  state = this.PARSE_STATE_POINTS;
                  var icon = RegExp.$1;
                  var lat = parseFloat(RegExp.$2);
