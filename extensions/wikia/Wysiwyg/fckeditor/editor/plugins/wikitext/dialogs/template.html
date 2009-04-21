@@ -320,37 +320,18 @@ FCK.TemplateEditor.CreatePreview = function() {
 
 	FCK.Track('/templateEditor/preview');
 
-	var callback = {
-		success: function(o) {
-			result = eval('(' + o.responseText + ')');
-			html = result.parse.text['*'];
+	FCK.ParseWikitext(wikitext, function(html, FCK, data) {
+		// set HTML and re-enable preview button
+		data.preview.innerHTML = html;
+		data.preview.className = '';
+		data.button.disabled = false;
 
-			// remove newPP comment and whitespaces
-			html = o.argument.FCK.YAHOO.lang.trim(html.split('<! \nNewPP limit report')[0]);
-
-			// unblock preview button
-			o.argument.preview.innerHTML = html;
-			o.argument.preview.className = '';
-			o.argument.button.disabled = false;
-
-			// reset margin/padding/align
-			o.argument.FCK.TemplatePreviewReset(o.argument.preview);
-		},
-
-		failure: function(o) {
-			o.argument.preview.className = '';
-			o.argument.button.disabled = false;
-		},
-
-		argument: {'preview': FCK.TemplateEditor.GetE('templatePreview'), 'button': FCK.TemplateEditor.GetE('templateDoPreview'), 'FCK': FCK}
-	};
-
-	FCK.YAHOO.util.Connect.asyncRequest(
-		"POST",
-		FCK.TemplateEditor.Dialog.parent.wgScriptPath + '/api.php',
-		callback,
-		"action=parse&format=json&prop=text&title=" + encodeURIComponent(FCK.TemplateEditor.Dialog.parent.wgPageName) + "&text=" +  encodeURIComponent(wikitext)
-	);
+		// reset margin/padding/align of template
+		FCK.TemplatePreviewReset(data.preview);
+	}, {
+		'preview': FCK.TemplateEditor.GetE('templatePreview'),
+		'button': FCK.TemplateEditor.GetE('templateDoPreview')
+	});
 }
 
 
