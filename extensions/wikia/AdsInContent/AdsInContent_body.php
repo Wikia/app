@@ -175,7 +175,7 @@ class AdsInContent {
 					}
 
 					$this->mContent = preg_replace('/<!--AdBox:'.$iSectionNo.'-->/siU', $sAdBody, $this->mContent);
-					if(($this->lastUsedAdUnit != null) && ($this->lastUsedAdUnit['float'] == true)) {
+					if(($this->lastUsedAdUnit != null) && ($this->lastUsedAdUnit['align'] == 'right')) {
 						$this->mContent = preg_replace('/<!--BeginSect:('.($iSectionNo+1).'|e)-->/siU', '<br clear="both" />', $this->mContent);
 					}
 					$this->mAdsCounter++;
