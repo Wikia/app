@@ -600,6 +600,38 @@ FCK.FixWikitextPlaceholder = function(placeholder) {
 	}
 }
 
+// parses given wikitext and fires callback with HTML, FCK and refid
+FCK.ParseWikitext = function(wikitext, callback, refid) {
+	// parse given wikitext
+	var callback = {
+		success: function(o) {
+			FCK = o.argument.FCK;
+
+			// parse response
+			result = eval('(' + o.responseText + ')');
+			html = result.parse.text['*'];
+
+			// remove newPP comment and whitespaces
+			html = FCK.YAHOO.lang.trim(html.split('<!-- \nNewPP limit report')[0]);
+
+			// fire callback
+			refid =  o.argument.refid;
+			callback = o.argument.callback;
+
+			callback(html, FCK, refid);
+		},
+		failure: function(o) {},
+		argument: {'FCK': FCK, 'refid': refid, 'callback': callback}
+	}
+
+	FCK.YAHOO.util.Connect.asyncRequest(
+		'POST',
+		window.parent.wgScriptPath + '/api.php',
+		callback,
+		"action=parse&format=json&prop=text&title=" + encodeURIComponent(window.parent.wgPageName) + "&text=" +  encodeURIComponent(wikitext)
+	);
+}
+
 // check whether given page exists (API query returns pageid != 0)
 // if not -> add "new" class to simulate MW parser behaviour
 FCK.CheckInternalLink = function(title, link) {
