@@ -337,30 +337,6 @@ function initializeDragAndDrop() {
 			moveElement(srcEl.getAttribute('catid'), prevSibId);
 		},
 
-		onDragDrop: function(e, id) {
-			// If there is one drop interaction, the 'a' was dropped either on the list,
-			// or it was dropped on the current location of the source element.
-			if (DDM.interactionInfo.drop.length === 1) {
-
-				// The position of the cursor at the time of the drop (YAHOO.util.Point)
-				var pt = DDM.interactionInfo.point;
-
-				// The region occupied by the source element at the time of the drop
-				var region = DDM.interactionInfo.sourceRegion;
-
-				// Check to see if we are over the source element's location.  We will
-				// append to the bottom of the list once we are sure it was a drop in
-				// the negative space (the area of the list without any list items)
-				if (!region.intersect(pt)) {
-					var destEl = Dom.get(id);
-					var destDD = DDM.getDDById(id);
-					destEl.appendChild(this.getEl());
-					destDD.isEmpty = false;
-					DDM.refreshCache();
-				}
-			}
-		},
-
 		onDrag: function(e) {
 			// Keep track of the direction of the drag for use during onDragOver
 			var x = Event.getPageX(e);
