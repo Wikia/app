@@ -133,7 +133,7 @@ class TaskManagerArchive {
 				"task_started"   => $task->task_started,
 				"task_finished"  => $task->task_finished,
 				"task_arguments" => $task->task_arguments,
-				"task_log"       => serialize( $task->task_log ),
+				"task_log"       => gzdeflate( serialize( $task->task_log ) ),
 				"task_added"     => $task->task_added
 			);
 			$dbw->insert(
