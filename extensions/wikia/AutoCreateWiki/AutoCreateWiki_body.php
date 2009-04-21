@@ -153,7 +153,7 @@ class AutoCreateWikiPage extends SpecialPage {
 				if ( !in_array('staff', $wgUser->getGroups()) && ($this->mNbrUserCreated >= self::DAILY_USER_LIMIT) ) {
 					$wgOut->addHTML(
 						wfMsgExt( "autocreatewiki-limit-creation",
-							array( "language" => $this->mUserLanguage ), array(	$this->mNbrUserCreated )
+							array( "language" => $this->mUserLanguage ), array( $this->mNbrUserCreated )
 					));
 					return;
 				}
