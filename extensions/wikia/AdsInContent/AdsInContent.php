@@ -35,7 +35,13 @@ $wgAdsInContentExtensionConfig = array(
 				'align' => 'left',
 				'float' => true,
 //				'googleAdChannel' => '9100000016') // 012
-				'googleAdChannel' => 'TOR5_INCONTENT')
+				'googleAdChannel' => 'TOR5_INCONTENT'),
+			1 => array(
+				'width' => 200,
+				'height' => 200,
+				'align' => 'left',
+				'float' => true,
+				'googleAdChannel' => 'TOR5_INCONENT2'),
  																	),
 	),
 	'limit' => array(
@@ -77,6 +83,7 @@ function wfAdsInContentHook(&$out, &$text) {
 </script>
 <script type="text/javascript">
   GA_googleAddSlot("ca-pub-4086838842346968", "TOR5_INCONTENT");
+  GA_googleAddSlot("ca-pub-4086838842346968", "TOR5_INCONTENT2");
   GA_googleAddAdSensePageAttr("google_ad_channel", "4974569436");
 </script>
 <script type="text/javascript">
