@@ -601,7 +601,7 @@ FCK.FixWikitextPlaceholder = function(placeholder) {
 }
 
 // parses given wikitext and fires callback with HTML, FCK and refid
-FCK.ParseWikitext = function(wikitext, callback, refid) {
+FCK.ParseWikitext = function(wikitext, callback, data) {
 	// parse given wikitext
 	var callback = {
 		success: function(o) {
@@ -609,13 +609,13 @@ FCK.ParseWikitext = function(wikitext, callback, refid) {
 
 			// fire callback
 			FCK = o.argument.FCK;
-			refid =  o.argument.refid;
+			data =  o.argument.data;
 			callback = o.argument.callback;
 
-			callback(html, FCK, refid);
+			callback(html, FCK, data);
 		},
 		failure: function(o) {},
-		argument: {'FCK': FCK, 'refid': refid, 'callback': callback}
+		argument: {'FCK': FCK, 'data': data, 'callback': callback}
 	}
 
 	FCK.YAHOO.util.Connect.asyncRequest(
