@@ -75,7 +75,10 @@ class TaskManagerArchive {
 				"task_log",
 				"task_added"
 			),
-			array( "task_added < " . $dbr->addQuotes(  $dbr->timestamp( time() - 24 * 60 * 60 * self::CUTOFFDAYS ) ) ),
+			array(
+				"task_added < " . $dbr->addQuotes(  $dbr->timestamp( time() - 24 * 60 * 60 * self::CUTOFFDAYS ) ),
+				"task_status > " . TASK_STARTED
+			),
 			__METHOD__,
 			array( "ORDER BY" => "task_added", "LIMIT" => self::LIMIT )
 		);
