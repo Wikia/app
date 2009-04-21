@@ -148,15 +148,13 @@ class GoogleMaps {
 
 		// get the current map settings
 		$o = self::getMapSettings( $this->mTitle, $this->mMapDefaults );
-		
-		$extensionVersion = GOOGLE_MAPS_EXTENSION_VERSION;
 
 		$output = '';
 
 		// output the necessary styles, script includes, and global variables
 		$output .= '
 <style type="text/css">
-	@import "' . $this->mUrlPath . '/css/color_select.css?v=' . $extensionVersion . '";
+	@import "' . $this->mUrlPath . '/css/color_select.css";
 	textarea.balloon_textarea {
 		width: 220px;
 		height: 52px;
@@ -164,11 +162,11 @@ class GoogleMaps {
 </style>
 <!--[if IE]>
 <style type="text/css">
-	@import "' . $this->mUrlPath . '/css/color_select_ie.css?v=' . $extensionVersion . '";
+	@import "' . $this->mUrlPath . '/css/color_select_ie.css";
 </style><![endif]-->
 <!--[if lt IE 7]>
 <style type="text/css">
-	@import "' . $this->mUrlPath . '/css/color_select_ie6.css?v=' . $extensionVersion . '";
+	@import "' . $this->mUrlPath . '/css/color_select_ie6.css";
 </style><![endif]-->
 <script type="' . $this->mJsMimeType . '">
 //<![CDATA[
@@ -283,9 +281,7 @@ JAVASCRIPT;
 			}
 			return false;
 		};
-		if (document.getElementById('toolbar')) {
-			document.getElementById('toolbar').appendChild(image);
-		}
+		document.getElementById('toolbar').appendChild(image);
 	}
 	window.unload = function() { GUnload() };
 
@@ -402,7 +398,7 @@ JAVASCRIPT;
             $o = array_merge($o, array('number_of_maps' => $this->mGoogleMapsOnThisPage,
                 'incompatible_message' => $this->translateMessage( 'gm-incompatible-browser' ),
                 'incompatible_message_link' => $this->translateMessage( 'gm-incompatible-browser-link' )));
-            $img_exporter = new GoogleMapsImgExporter($this->mApiKey);
+            $img_exporter = new GoogleMapsImgExporter($this->mApiKey, $this->mLanguageCode);
             $img_exporter->addHeader($o);
             self::renderContent($pContent, $pParser, $pLocalParser, $img_exporter, $o);
             $img_exporter->addTrailer();
@@ -478,7 +474,7 @@ JAVASCRIPT;
                     $tabs[] = array( 'title' => $matches[1], 'gm-caption' => $parsed);
                     $state = GOOGLE_MAPS_PARSE_ADD_MARKER;
                 }
-                else if ($syntax != "0" && preg_match( '/^\/([^\\\\]+)\\\\$/', $line, $matches ) ) {
+                else if ($syntax != "0" && preg_match( '/^\/([^\\\\]+)\\\\ *$/', $line, $matches ) ) {
                     if (count($tabs)) {
                         $parsed = self::parseWikiText($pParser, $pLocalParser, $caption, $pParser->mTitle, $pParser->mOptions);
                         $tabs[count($tabs)-1]['gm-caption'] = $parsed;
@@ -490,7 +486,7 @@ JAVASCRIPT;
                     $exporter->addXmlSource($line);
                 }
                 // the line is a regular point
-                else if( preg_match( "/^(?:\(([.a-zA-Z0-9_-]*?)\) *)?([0-9.-]+), *([0-9.-]+)(?:, ?(.+))?/", $line, $matches ) ) {
+                else if( preg_match( "/^(?:\(([.a-zA-Z0-9_-]*?)\))? *([0-9.-]+), *([0-9.-]+)(?:, ?(.+))?/", $line, $matches ) ) {
                     // first create the previous marker, now that we have all the tab/caption info
                     if( $state == GOOGLE_MAPS_PARSE_ADD_MARKER ) {
                         self::addMarker($exporter, $pParser, $pLocalParser, $lat, $lon, 
@@ -514,7 +510,7 @@ JAVASCRIPT;
                     }
 
                     // need to create this icon, since we haven't already
-                    if( $icon && !$icons[$icon] ) {
+                    if( $icon && !isset($icons[$icon]) ) {
                         $exporter->addIcon($icon, $o);
                         $icons[$icon] = true;
                     }
@@ -685,7 +681,7 @@ JAVASCRIPT;
 
 		// our defaults, in	case $wgGoogleMapsDefaults isn't specified.
 		$o = array(
-			'api'         => 2.95,
+			'api'         => '2.140',
 			'color'       => '#758bc5',
 			'controls'    => 'medium',
 			'doubleclick' => 'recenter',
@@ -825,11 +821,16 @@ JAVASCRIPT;
 		var mapIcons = {};
 
 		function addLoadEvent(func) {
-			if (!window.onloadFuncts) {
-				window.onloadFuncts = [];
+			var oldonload = window.onload;
+			if (typeof oldonload == 'function') {
+				window.onload	= function() {
+					oldonload();
+					func();
+				};
+				} else {
+					window.onload = func;
+				}
 			}
-			window.onloadFuncts[window.onloadFuncts.length] = func;
-		}
 JAVASCRIPT;
 
 		// replace multiple spaces with a single space and strip newlines and tabs (make sure no tabs
@@ -849,7 +850,7 @@ JAVASCRIPT;
 	function getMessageJS ( ) {
 		$translation = "var _ = { ";
 		foreach( array_keys( $this->mMessages["en"] ) as $key ) {
-			$translation .= "'$key':'" . Xml::encodeJsVar( $this->translateMessage( $key ) ) . "', ";
+			$translation .= "'$key':'" . addslashes( $this->translateMessage( $key ) ) . "', ";
 		}
 		$translation = preg_replace( "/, $/", '', $translation );
 		$translation .= " };";

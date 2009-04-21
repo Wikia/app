@@ -5,9 +5,9 @@
 # Copyright Evan Miller (emmiller@gmail.com)
 # Modifications copyright Joshua Hodge
 
-# Version 0.9.3, 8 Apr 2008
+# Version 0.9.4, 27 Jan 2009
 
-define('GOOGLE_MAPS_EXTENSION_VERSION', '0.9.3');
+define('GOOGLE_MAPS_EXTENSION_VERSION', '0.9.4');
 
 // if we're not in the mediawiki framework just die
 if( !defined( 'MEDIAWIKI' ) ) {
@@ -16,20 +16,15 @@ if( !defined( 'MEDIAWIKI' ) ) {
 
 # This file contains the hook registration and installation
 
+// FIXME: use autoloader and other standards here
 // require the message file
-$dir = dirname( __FILE__ ) ;
-require( $dir . '/GoogleMaps.i18n.php' );
-require( $dir . '/export/GoogleMapsExporter.php' );
-require( $dir . '/export/GoogleMapsJsExporter.php' );
-require( $dir . '/export/GoogleMapsKmlExporter.php' );
-require( $dir . '/export/GoogleMapsImgExporter.php' );
-require( $dir . '/SpecialGoogleMapsKML.php' );
-require( $dir . '/GoogleMaps.body.php' );
-
-// could you PLEASE think about someone using a DIFFERENT extensions structure?
-if (empty ($wgGoogleMapsExtDir)) {
-    $wgGoogleMapsExtDir = "extensions/GoogleMaps" ;
-}
+require( 'extensions/GoogleMaps/GoogleMaps.i18n.php' );
+require( 'extensions/GoogleMaps/export/GoogleMapsExporter.php' );
+require( 'extensions/GoogleMaps/export/GoogleMapsJsExporter.php' );
+require( 'extensions/GoogleMaps/export/GoogleMapsKmlExporter.php' );
+require( 'extensions/GoogleMaps/export/GoogleMapsImgExporter.php' );
+require( 'extensions/GoogleMaps/SpecialGoogleMapsKML.php' );
+require( 'extensions/GoogleMaps/GoogleMaps.body.php' );
 
 /**
  * This function is for rendering a <googlemap> tag on MW 1.5.
@@ -70,7 +65,7 @@ function wfGoogleMaps_Install() {
 		$wgGoogleMapsDefaults, $wgGoogleMapsMessages, $wgGoogleMapsCustomMessages, $wgGoogleMapsUrlPath,
 		$wgXhtmlNamespaces, $wgGoogleMapsTemplateVariables, $wgJsMimeType, $wgLanguageCode, $wgContLang,
 		$wgParser, $wgProxyKey, $wgVersion, $wgGoogleMaps, $wgHooks, $wgScriptPath, $wgSpecialPages,
-		$wgTitle, $wgGoogleMapsExtDir ;
+		$wgTitle;
 	// set up some default values for the various extension configuration parameters
 	// to keep from getting PHP notices if running in strict mode
 	if( !isset( $wgGoogleMapsKey ) ) {
@@ -92,7 +87,7 @@ function wfGoogleMaps_Install() {
 		$wgGoogleMapsCustomMessages = null;
 	}
 	if( !isset( $wgGoogleMapsUrlPath ) ) {
-		$wgGoogleMapsUrlPath = "{$wgScriptPath}/" . $wgGoogleMapsExtDir ;
+		$wgGoogleMapsUrlPath = "{$wgScriptPath}/extensions/GoogleMaps";
 	}
 	if( !isset( $wgXhtmlNamespaces ) ) {
 		$wgXhtmlNamespaces = null;
@@ -181,7 +176,7 @@ function wfGoogleMaps_Install() {
 	}
 
 	// Set up the special page
-	$wgSpecialPages['GoogleMapsKML'] = array('GoogleMapsKML', 'GoogleMapsKML', 'googlemapskml', true);
+	$wgSpecialPages['GoogleMapsKML'] = array('GoogleMapsKML', 'GoogleMapsKML');
 }
 
 // add the install extension function
@@ -189,9 +184,10 @@ $wgExtensionFunctions[] = 'wfGoogleMaps_Install'; # array( $wgGoogleMapExtension
 
 // extension credits
 $wgExtensionCredits['other'][] = array(
-	'name'        => 'Google Maps Extension',
-	'author'      => 'Evan Miller',
-	'version'     => GOOGLE_MAPS_EXTENSION_VERSION,
-	'url'         => 'http://www.mediawiki.org/wiki/Extension:Google_Maps',
-	'description' => 'Easily create maps with wiki-fied markers'
+	'name'           => 'Google Maps Extension',
+	'author'         => '[http://www.evanmiller.org/ Evan Miller]',
+	'version'        => GOOGLE_MAPS_EXTENSION_VERSION,
+	'url'            => 'http://www.mediawiki.org/wiki/Extension:Google_Maps',
+	'description'    => 'Easily create maps with wiki-fied markers',
+	'descriptionmsg' => 'gm-descs',
 );
