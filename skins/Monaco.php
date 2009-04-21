@@ -1687,7 +1687,7 @@ if ($wgOut->isArticle()){
 #						AdEngine::getInstance()->getPlaceHolderDiv("PREFOOTER_LEFT_BOXAD_$wgDBname", false) .
 						"</div></td>\n" .
 						'<td style="width: 50%; text-align: center"><div style="width: 300px; margin: 0 auto">' .
-						AdEngine::getInstance()->getPlaceHolderDiv("TOR5_FOOTER", false) . # testing, see above
+						AdEngine::getInstance()->getPlaceHolderDiv("TOR5_FOOTER2", false) . # testing, see above
 #						AdEngine::getInstance()->getPlaceHolderDiv("PREFOOTER_RIGHT_BOXAD_$wgDBname", false) .
 						"</div></td></tr>\n</table>";
 					}
