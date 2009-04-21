@@ -851,7 +851,7 @@ JAVASCRIPT;
 	function getMessageJS ( ) {
 		$translation = "var _ = { ";
 		foreach( array_keys( $this->mMessages["en"] ) as $key ) {
-			$translation .= "'$key':'" . Xml::encodeJsVar( $this->translateMessage( $key ) ) . "', ";
+			$translation .= "'{$key}': " . Xml::encodeJsVar( $this->translateMessage( $key ) ) . ', ';
 		}
 		$translation = preg_replace( "/, $/", '', $translation );
 		$translation .= " };";
