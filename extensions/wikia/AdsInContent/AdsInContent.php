@@ -41,7 +41,7 @@ $wgAdsInContentExtensionConfig = array(
 				'height' => 200,
 				'align' => 'left',
 				'float' => true,
-				'googleAdChannel' => 'TOR5_INCONENT2'),
+				'googleAdChannel' => 'TOR5_INCONTENT2'),
  																	),
 	),
 	'limit' => array(
