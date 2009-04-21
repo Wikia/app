@@ -16,14 +16,15 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 
 $sSpecialPage = "TaskManager";
 $wgExtensionCredits['specialpage'][] = array(
-    "name" => $sSpecialPage,
-    "description" => "Display and manage background tasks",
-    "url" => "http://www.wikia.com/",
-    "author" => "Krzysztof Krzyżaniak (eloy)"
+	"name" => $sSpecialPage,
+	"description" => "Display and manage background tasks",
+	"url" => "http://www.wikia.com/",
+	"author" => "Krzysztof Krzyżaniak (eloy)"
 );
 
-#--- base class for BatchTask
-#--- add all task which should be visible here
+/**
+ * add all task which should be visible here
+ */
 require_once( dirname(__FILE__) . "/BatchTask.php" );
 extAddBatchTask( dirname(__FILE__)."/Tasks/CloseWikiTask.php", "closewiki", "CloseWikiTask" );
 extAddBatchTask( dirname(__FILE__)."/Tasks/MultiDeleteTask.php", "multidelete", "MultiDeleteTask" );
@@ -39,7 +40,9 @@ extAddBatchTask( dirname(__FILE__)."/Tasks/SWMSendToGroupTask.php", "SWMSendToGr
 extAddBatchTask( dirname(__FILE__)."/Tasks/LocalMaintenanceTask.php", "local-maintenance", "LocalMaintenanceTask" );
 
 
-#--- permissions
+/**
+ * permissions
+ */
 $wgAvailableRights[] = 'wikifactory';
 $wgGroupPermissions['staff']['wikifactory'] = true;
 
