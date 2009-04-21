@@ -1675,7 +1675,7 @@ if ($wgOut->isArticle()){
 					$this->html('bodytext');
 
 		                        // Display additional ads before categories and footer on long pages
-					global $wgEnabledAdsPrefooter, $wgDBname;
+					global $wgEnableAdsPrefooter, $wgDBname;
 					if ( !empty( $wgEnableAdsPrefooter ) &&
 					$wgUser->isAnon() &&
 					$wgOut->isArticle() &&
