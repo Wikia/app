@@ -59,6 +59,11 @@ function WikiaVideo_init() {
 	global $wgExtraNamespaces, $wgNamespaceAliases, $wgAutoloadClasses, $wgLanguageCode;
 
 	switch ( $wgLanguageCode ) {
+		case 'de':
+			$wgExtraNamespaces[NS_VIDEO] = 'Video';
+			$wgExtraNamespaces[NS_VIDEO + 1] = 'Video_Diskussion';
+			$wgNamespaceAliases['Video_talk'] = NS_VIDEO + 1;
+			break;
 		case 'pl':
 			$wgExtraNamespaces[NS_VIDEO] = 'Video';
 			$wgExtraNamespaces[NS_VIDEO + 1] = 'Dyskusja_Video';
