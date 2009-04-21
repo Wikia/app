@@ -328,7 +328,8 @@ class HAWelcomeJob extends Job {
 	 * @return true means process other hooks
 	 */
 	public static function revisionInsertComplete( &$revision, &$url, &$flags ) {
-		global $wgUser, $wgCityId, $wgCommandLineMode, $wgSharedDB, $wgErrorLog;
+		global $wgUser, $wgCityId, $wgCommandLineMode, $wgSharedDB,
+			$wgErrorLog, $wgMemc;
 
 		wfProfileIn( __METHOD__ );
 
