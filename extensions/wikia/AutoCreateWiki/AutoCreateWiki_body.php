@@ -32,7 +32,9 @@ class AutoCreateWikiPage extends SpecialPage {
 		$mCurrTime,
 		$mPosted,
 		$mPostedErrors,
-		$mErrors;
+		$mErrors,
+		$mUserLanguage;
+
 	/**
 	 * test database, CAUTION! content will be destroyed during tests
 	 */
@@ -45,7 +47,7 @@ class AutoCreateWikiPage extends SpecialPage {
     const CREATEWIKI_LOGO = "/images/central/images/2/22/Wiki_Logo_Template.png";
     const CREATEWIKI_ICON = "/images/central/images/6/64/Favicon.ico";
     const SESSION_TIME = 60;
-    const DAILY_LIMIT = 300;
+    const DAILY_LIMIT = 500;
     const DAILY_USER_LIMIT = 10;
     const DEFAULT_STAFF = "Angela";
     const CACHE_LOGIN_KEY = 'awc_beforelog';
@@ -94,9 +96,8 @@ class AutoCreateWikiPage extends SpecialPage {
 	 * @param $subpage Mixed: subpage of SpecialPage
 	 */
 	public function execute( $subpage ) {
-		global $wgRequest, $wgAuth, $wgUser;
-		global $wgOut;
-		global $wgDevelEnvironment;
+		global $wgRequest, $wgAuth, $wgUser, $wgOut, $wgDevelEnvironment,
+			$wgContLanguageCode;
 
 		wfLoadExtensionMessages( "AutoCreateWiki" );
 
@@ -122,10 +123,14 @@ class AutoCreateWikiPage extends SpecialPage {
 			return;
 		}
 
+		$this->mUserLanguage = $wgUser->getOption( 'language', $wgContLanguageCode );
 		$this->mNbrCreated = $this->countCreatedWikis();
 
 		if ( !in_array('staff', $wgUser->getGroups()) && ($this->mNbrCreated >= self::DAILY_LIMIT) ) {
-			$wgOut->addHTML(wfMsgExt('autocreatewiki-limit-day', $this->mNbrCreated));
+			$wgOut->addHTML(
+				wfMsgExt( "autocreatewiki-limit-day",
+					array( "language" => $this->mUserLanguage ), array( $this->mNbrCreated )
+			));
 			return;
 		}
 
@@ -146,7 +151,10 @@ class AutoCreateWikiPage extends SpecialPage {
 			if ( isset( $_SESSION['mAllowToCreate'] ) && ( $_SESSION['mAllowToCreate'] >= wfTimestamp() ) ) {
 				$this->mNbrUserCreated = $this->countCreatedWikisByUser();
 				if ( !in_array('staff', $wgUser->getGroups()) && ($this->mNbrUserCreated >= self::DAILY_USER_LIMIT) ) {
-					$wgOut->addHTML( wfMsgExt('autocreatewiki-limit-creation', $this->mNbrUserCreated) );
+					$wgOut->addHTML(
+						wfMsgExt( "autocreatewiki-limit-creation",
+							array( "language" => $this->mUserLanguage ), array(	$this->mNbrUserCreated )
+					));
 					return;
 				}
 				if ( $this->setVarsFromSession() > 0 ) {
@@ -168,10 +176,15 @@ class AutoCreateWikiPage extends SpecialPage {
 				return;
 			}
 			if ( isset( $_SESSION['mAllowToCreate'] ) && ( $_SESSION['mAllowToCreate'] >= wfTimestamp() ) ) {
-				#--- Limit of user creation
+				/**
+				 * Limit of user creation
+				 */
 				$this->mNbrUserCreated = $this->countCreatedWikisByUser();
 				if ( !in_array('staff', $wgUser->getGroups()) && ($this->mNbrUserCreated >= self::DAILY_USER_LIMIT) ) {
-					$wgOut->addHTML( wfMsgExt('autocreatewiki-limit-creation', $this->mNbrUserCreated) );
+					$wgOut->addHTML(
+						wfMsgExt( "autocreatewiki-limit-creation",
+							array( "language" => $this->mUserLanguage ), array(	$this->mNbrUserCreated )
+					));
 					return;
 				}
 				if ( $this->setVarsFromSession() > 0 ) {

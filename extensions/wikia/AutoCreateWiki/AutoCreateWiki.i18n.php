@@ -39,7 +39,7 @@ $messages['en'] = array(
 	"autocreatewiki-info-blurry-word" => "To help protect against automated account creation, please type the blurry word that you see into this field.",
 	"autocreatewiki-info-terms-agree" => "By creating a wiki and a user account, you agree to the <a href=\"http://www.wikia.com/wiki/Terms_of_use\">Wikia's Terms of Use</a>",
 // errors
-	"autocreatewiki-limit-day" => "You have exceeded the the maximum number of wiki creation today ($1).",
+	"autocreatewiki-limit-day" => "Wikia has exceeded the maximum number of wiki creations today ($1).",
 	"autocreatewiki-limit-creation" => "You have exceeded the the maximum number of wiki creation in 24 hours ($1).",
 	"autocreatewiki-empty-field" => "Please complete this field.",
 	"autocreatewiki-bad-name" => "The name cannot contain special characters (like $ or @) and must be a single lower-case word without spaces.",
