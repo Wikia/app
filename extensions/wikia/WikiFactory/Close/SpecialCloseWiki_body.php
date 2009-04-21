@@ -65,7 +65,31 @@ class CloseWikiPage extends SpecialPage {
 			$this->mTitle = Title::makeTitle( NS_SPECIAL, 'WikiFactory' );
 		}
 
+		if( $wgRequest->wasPosted() ) {
+			/**
+			 * check if something was posted
+			 */
+			$this->doPosted();
+		}
+		elseif( !empty( $subpage ) ){
+			/**
+			 * if not posted then we check if $subpage is set to something
+			 * reasonable
+			 */
+		}
+		else {
+			/**
+			 * show empty form
+			 */
+		}
 		wfProfileOut( __METHOD__ );
 		return !$fail;
+	}
+
+	/**
+	 * multiple wikis can be posted
+	 */
+	private function doPosted() {
+
 	}
 }
