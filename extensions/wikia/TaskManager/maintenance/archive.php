@@ -91,7 +91,7 @@ class TaskManagerArchive {
 		Wikia::log( __METHOD__, "", sprintf("Got %d rows for archiving", count( $this->mData ) ) );
 
 		foreach( $this->mData as $num => $task ) {
-			Wikia::log( __METHOD__, "", sprintf( "Getting logs for task %d", $task->task_id ) );
+			Wikia::log( __METHOD__, "", sprintf( "Getting logs for task id=%d type=%s", $task->task_id, $task->task_type ) );
 			$res = $dbr->select(
 				array( WikiFactory::table( "wikia_tasks_log" ) ),
 				array( "*" ),
@@ -141,7 +141,7 @@ class TaskManagerArchive {
 				$values,
 				__method__
 			);
-			Wikia::log( __METHOD__, "", sprintf("Task %d moved.", $task->task_id ) );
+			Wikia::log( __METHOD__, "", sprintf("Task id=%d type=%s moved.", $task->task_id, $task->task_type ) );
 			$this->mData[ $num ]->moved = true;
 		}
 		$dbw->commit();
@@ -168,7 +168,7 @@ class TaskManagerArchive {
 					array( "task_id" => $task->task_id ),
 					__method__
 				);
-				Wikia::log( __METHOD__, "", sprintf("Task %d removed.", $task->task_id ) );
+				Wikia::log( __METHOD__, "", sprintf("Task id=%d type=%s removed.", $task->task_id, $task->task_type ) );
 			}
 		}
 
