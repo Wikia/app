@@ -197,7 +197,7 @@ class TaskManagerExecutor {
 				array( "*" ),
 				$aCondition,
 				__METHOD__,
-				array( "ORDER BY" => "task_priority, task_added")
+				array( "ORDER BY" => "task_id")
 			);
 		}
 		catch( DBConnectionError $e ) {
