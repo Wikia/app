@@ -605,16 +605,10 @@ FCK.ParseWikitext = function(wikitext, callback, refid) {
 	// parse given wikitext
 	var callback = {
 		success: function(o) {
-			FCK = o.argument.FCK;
-
-			// parse response
-			result = eval('(' + o.responseText + ')');
-			html = result.parse.text['*'];
-
-			// remove newPP comment and whitespaces
-			html = FCK.YAHOO.lang.trim(html.split('<!-- \nNewPP limit report')[0]);
+			html = o.responseText;
 
 			// fire callback
+			FCK = o.argument.FCK;
 			refid =  o.argument.refid;
 			callback = o.argument.callback;
 
@@ -626,9 +620,9 @@ FCK.ParseWikitext = function(wikitext, callback, refid) {
 
 	FCK.YAHOO.util.Connect.asyncRequest(
 		'POST',
-		window.parent.wgScriptPath + '/api.php',
+		((window.parent.wgScript == null) ? (window.parent.wgScriptPath + "/index.php") : window.parent.wgScript),
 		callback,
-		"action=parse&format=json&prop=text&title=" + encodeURIComponent(window.parent.wgPageName) + "&text=" +  encodeURIComponent(wikitext)
+		"action=ajax&title=" + encodeURIComponent(window.parent.wgPageName) + "&rs=WysiwygParseWikitext&rsargs[]=" +  encodeURIComponent(wikitext)
 	);
 }
 
