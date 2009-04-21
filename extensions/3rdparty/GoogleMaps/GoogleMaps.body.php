@@ -149,12 +149,14 @@ class GoogleMaps {
 		// get the current map settings
 		$o = self::getMapSettings( $this->mTitle, $this->mMapDefaults );
 
+		$extensionVersion = GOOGLE_MAPS_EXTENSION_VERSION;
+
 		$output = '';
 
 		// output the necessary styles, script includes, and global variables
 		$output .= '
 <style type="text/css">
-	@import "' . $this->mUrlPath . '/css/color_select.css";
+	@import "' . $this->mUrlPath . '/css/color_select.css?v=' . $extensionVersion  . '";
 	textarea.balloon_textarea {
 		width: 220px;
 		height: 52px;
@@ -162,11 +164,11 @@ class GoogleMaps {
 </style>
 <!--[if IE]>
 <style type="text/css">
-	@import "' . $this->mUrlPath . '/css/color_select_ie.css";
+	@import "' . $this->mUrlPath . '/css/color_select_ie.css?v=' . $extensionVersion  . '";
 </style><![endif]-->
 <!--[if lt IE 7]>
 <style type="text/css">
-	@import "' . $this->mUrlPath . '/css/color_select_ie6.css";
+	@import "' . $this->mUrlPath . '/css/color_select_ie6.css?v=' . $extensionVersion  . '";
 </style><![endif]-->
 <script type="' . $this->mJsMimeType . '">
 //<![CDATA[
@@ -200,7 +202,6 @@ JAVASCRIPT;
 
 	// output the 'rtl' setting
 	$isRTLString = $this->mLanguage->isRTL() ? 'true' : 'false';
-        $extensionVersion = GOOGLE_MAPS_EXTENSION_VERSION;
 	$output .= " 'rtl':{$isRTLString} };";
 
 	// output the base utility JS (addLoadEvent function, etc.)
@@ -850,7 +851,7 @@ JAVASCRIPT;
 	function getMessageJS ( ) {
 		$translation = "var _ = { ";
 		foreach( array_keys( $this->mMessages["en"] ) as $key ) {
-			$translation .= "'$key':'" . addslashes( $this->translateMessage( $key ) ) . "', ";
+			$translation .= "'$key':'" . Xml::encodeJsVar( $this->translateMessage( $key ) ) . "', ";
 		}
 		$translation = preg_replace( "/, $/", '', $translation );
 		$translation .= " };";

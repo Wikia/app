@@ -18,13 +18,15 @@ if( !defined( 'MEDIAWIKI' ) ) {
 
 // FIXME: use autoloader and other standards here
 // require the message file
-require( 'extensions/GoogleMaps/GoogleMaps.i18n.php' );
-require( 'extensions/GoogleMaps/export/GoogleMapsExporter.php' );
-require( 'extensions/GoogleMaps/export/GoogleMapsJsExporter.php' );
-require( 'extensions/GoogleMaps/export/GoogleMapsKmlExporter.php' );
-require( 'extensions/GoogleMaps/export/GoogleMapsImgExporter.php' );
-require( 'extensions/GoogleMaps/SpecialGoogleMapsKML.php' );
-require( 'extensions/GoogleMaps/GoogleMaps.body.php' );
+
+// wikia: $wgGoogleMapsExtDir defined in conf/CommonExtensions.php
+require( $wgGoogleMapsExtDir . '/GoogleMaps.i18n.php' );
+require( $wgGoogleMapsExtDir . '/export/GoogleMapsExporter.php' );
+require( $wgGoogleMapsExtDir . '/export/GoogleMapsJsExporter.php' );
+require( $wgGoogleMapsExtDir . '/export/GoogleMapsKmlExporter.php' );
+require( $wgGoogleMapsExtDir . '/export/GoogleMapsImgExporter.php' );
+require( $wgGoogleMapsExtDir . '/SpecialGoogleMapsKML.php' );
+require( $wgGoogleMapsExtDir . '/GoogleMaps.body.php' );
 
 /**
  * This function is for rendering a <googlemap> tag on MW 1.5.
