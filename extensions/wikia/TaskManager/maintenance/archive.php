@@ -45,6 +45,8 @@ class TaskManagerArchive {
 	 */
 	public function execute() {
 
+		$this->mData = array();
+		
 		$this->getRows();
 		$this->moveRows();
 		$this->removeRows();
