@@ -54,7 +54,7 @@ class AdProviderGoogle implements iAdProvider {
                         google_color_text   = AdEngine.getAdColor("text");
                         google_color_url    = AdEngine.getAdColor("url");' . "\n";
 		}
-	
+
 		$channel = $this->getChannel();
 	       	$out.= 'google_ad_channel      = "' . addslashes($channel) . '";' . "\n";
 		/* Channel is how we do bucket tests.
@@ -65,12 +65,12 @@ class AdProviderGoogle implements iAdProvider {
 		if ($channel == '9000000009'){
 			// page_url + hints. Rumor has it these two are mutually exclusive, but we are trying it anyway.
                         $out .= 'google_page_url     = "' . addslashes($this->getPageUrl()) . '";' . "\n";
-                        $out .= $this->getGoogleHints() . "\n"; 
+                        $out .= $this->getGoogleHints() . "\n";
 		} else if ($channel == '9000000010') {
 			// Control
 		} else if ($channel == '9000000011') {
 			// Hints alone
-                        $out .= $this->getGoogleHints() . "\n"; 
+                        $out .= $this->getGoogleHints() . "\n";
 		}
 		$out .= '/*]]>*/</script>
 			<script type="text/javascript" src="http://pagead2.googlesyndication.com/pagead/show_ads.js"></script>';
@@ -79,15 +79,17 @@ class AdProviderGoogle implements iAdProvider {
 
 
 	/* Note: This function won't really do any good right now, because we don't have ads
-	 * on the search results pages 
+	 * on the search results pages
 	 */
 	public function getGoogleHints(){
-		if(!empty($_GET['search'])){
-			return 'google_hints        = "' . addslashes($_GET['search']) . '";';
-                } else {
+		if(!empty($_GET['search'])) {
+			return 'google_keywords        = "' . addslashes($_GET['search']) . '";';
+//			return 'google_hints        = "' . addslashes($_GET['search']) . '";';
+		} else {
 			// Pull in the same keywords we use for the page.
-			return 'google_hints        = AdEngine.getKeywords();';
-                }
+			return 'google_keywords        = AdEngine.getKeywords();';
+//			return 'google_hints        = AdEngine.getKeywords();';
+		}
 	}
 
 
@@ -98,7 +100,7 @@ class AdProviderGoogle implements iAdProvider {
 		} else {
 			return 'http://' . $_SERVER['HTTP_HOST'] . $_SERVER['SCRIPT_NAME'];
 		}
-	} 
+	}
 
 	public function getChannel(){
 		// Channel is a way to do bucket testing.
@@ -106,7 +108,7 @@ class AdProviderGoogle implements iAdProvider {
 		if (!empty($channel)){
 			return $channel;
 		}
-		
+
 		switch (mt_rand(1,3)){
 			case 1: $channel = 9000000009; break;
 			case 2: $channel = 9000000010; break;
@@ -116,7 +118,7 @@ class AdProviderGoogle implements iAdProvider {
 	}
 
 
-	
+
 	// https://www.google.com/adsense/support/bin/answer.py?hl=en&answer=9727
 	public function getSupportedLanguages(){
 		return array('ar', 'bg', 'zh', 'hr', 'cs', 'da', 'nl', 'en', 'fi', 'fr', 'de', 'el', 'he',
