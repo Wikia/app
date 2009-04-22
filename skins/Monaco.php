@@ -1681,7 +1681,7 @@ if ($wgOut->isArticle()){
 					$wgOut->isArticle() &&
 					ArticleAdLogic::isContentPage() &&
 					ArticleAdLogic::isLongArticle($this->data['bodytext'])) {
-						echo  '<table style="margin-top: 1em; width: 100%"><tr>' .
+						echo  '<table style="margin-top: 1em; width: 100%; clear: both"><tr>' .
 						'<td style="width: 50%; text-align: center"><div style="width: 300px; margin: 0 auto">' .
 						AdEngine::getInstance()->getPlaceHolderDiv("PREFOOTER_LEFT_BOXAD_$wgDBname", false) .
 						"</div></td>\n" .
