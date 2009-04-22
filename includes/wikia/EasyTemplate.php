@@ -82,6 +82,15 @@ class EasyTemplate {
 	}
 
 	/**
+	 * @deprecated
+	 * @see render
+	 */
+	public function execute( $file ) {
+		wfDeprecated( __FUNCTION__ );
+		return $this->render( $file );
+	}
+
+	/**
 	 * Open, parse, and return the template file.
 	 *
 	 * @param string string the template file name
@@ -93,9 +102,9 @@ class EasyTemplate {
 	 *
 	 * @return string
 	 */
-	public function execute( $file ) {
-
+	public function render( $file ) {
 		wfProfileIn( __METHOD__ );
+
 		if( !strstr($file, ".tmpl.php") ) {
 			$file .= ".tmpl.php";
 		}
@@ -114,7 +123,7 @@ class EasyTemplate {
 	 *
 	 * Check if template's file exists
 	 *
-	 * @author Piotr Molski <moli@wikia.com>
+	 * @author Piotr Molski <moli@wikia-inc.com>
 	 *
 	 * @access public
 	 *
