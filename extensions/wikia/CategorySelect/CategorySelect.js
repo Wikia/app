@@ -234,7 +234,9 @@ function addCategory(category, params, index) {
 	elementSpanOuter.appendChild(elementSpan);
 
 	$('csItemsContainer').insertBefore(elementA, $('csCategoryInput'));
-
+	if ($('csCategoryInput').style.display != 'none') {
+		$('csHintContainer').style.display = 'block';
+	}
 	$('csCategoryInput').value = '';
 
 	//Drag&Drop
@@ -451,7 +453,6 @@ function inputKeyPress(e) {
 		if (category != '' && oAutoComp._oCurItem == null) {
 			addCategory(category);
 		}
-		inputBlur();
 	}
 	positionSuggestBox();
 }
@@ -483,15 +484,15 @@ function getCategories(sQuery) {
 	var resultsSecond = [];
 	sQuery = unescape(sQuery);
 	sQuery = sQuery.toLowerCase().replace(/_/g, ' ');
-	console.log(sQuery);
-	for(var i = 0, len = categoryArray.length; i < len; i++) {
+
+	for (var i = 0, len = categoryArray.length; i < len; i++) {
 		var index = categoryArray[i].toLowerCase().indexOf(sQuery);
-		if(index == 0) {
+		if (index == 0) {
 			resultsFirst.push([categoryArray[i]]);
-		} else if(index > 0) {
+		} else if (index > 0) {
 			resultsSecond.push([categoryArray[i]]);
 		}
-		if((resultsFirst.length + resultsSecond.length) == 10) {
+		if ((resultsFirst.length + resultsSecond.length) == 10) {
 			break;
 		}
 	}
