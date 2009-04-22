@@ -66,13 +66,13 @@ function wfAdsInContentSetup() {
  * AdsInContent Extenssion hook handler
  */
 function wfAdsInContentHook(&$out, &$text) {
-	global $wgAdsInContentExtensionConfig, $wgTitle, $wgUser, $wgHooks, $wgOut, $wgDBname;
+	global $wgAdsInContentExtensionConfig, $wgTitle, $wgUser, $wgHooks, $wgOut, $wgDBname, $wgContentNamespaces;
 
 	$loggedIn = $wgUser->isLoggedIn();
 	$ns = $wgTitle->getNamespace();
 
 	// show only for anon user in the main namespace (if article exists)
-	if( ($ns == NS_MAIN) && !$loggedIn && $wgTitle->exists() && !AdsInContent::isMainPage()) {
+	if( in_array( $ns, $wgContentNamespaces ) && !$loggedIn && $wgTitle->exists() && !AdsInContent::isMainPage()) {
 		$wgHooks['SkinAfterBottomScripts'][] = 'AdsInContent::applyTopSectionJSFix';
 		$wgOut->addStyle( '../extensions/wikia/AdsInContent/adsincontent.css', 'screen' );
 		$wgOut->addHtml(
