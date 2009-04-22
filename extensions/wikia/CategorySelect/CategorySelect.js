@@ -475,17 +475,36 @@ function regularEditorSubmit(e) {
 	$('wpCategorySelectWikitext').value = YAHOO.Tools.JSONEncode(categories);
 }
 
+function getCategories(sQuery) {
+	if(typeof categoryArray != 'object') {
+		return;
+	}
+	var resultsFirst = [];
+	var resultsSecond = [];
+	sQuery = sQuery.toLowerCase().replace(/_/g, ' ');
+	for(var i = 0; i < categoryArray.length; i++) {
+		var index = categoryArray[i].toLowerCase().indexOf(sQuery);
+		if(index == 0) {
+			resultsFirst.push([categoryArray[i]]);
+		} else if(index > 0) {
+			resultsSecond.push([categoryArray[i]]);
+		}
+		if((resultsFirst.length + resultsSecond.length) == 10) {
+			break;
+		}
+	}
+	return resultsFirst.concat(resultsSecond);
+}
+
 function initAutoComplete() {
 	// Init datasource
-	var oDataSource = new YAHOO.widget.DS_XHR(wgServer + wgScriptPath + '/', ["\n"]);
-	oDataSource.responseType = YAHOO.widget.DS_XHR.TYPE_FLAT;
-	oDataSource.scriptQueryAppend = 'action=ajax&rs=CategorySelectAjaxGetCategories';
-	oDataSource.queryMatchCase = true;
+	var oDataSource = new YAHOO.widget.DS_JSFunction(getCategories);
+	//oDataSource.queryMatchCase = true;
 
 	// Init AutoComplete object and assign datasource object to it
 	oAutoComp = new YAHOO.widget.AutoComplete('csCategoryInput', 'csSuggestContainer', oDataSource);
 	oAutoComp.autoHighlight = false;
-	oAutoComp.queryDelay = 0.5;
+	oAutoComp.queryDelay = 0;
 	oAutoComp.highlightClassName = 'CSsuggestHover';
 	oAutoComp.queryMatchContains = true;
 	oAutoComp.itemSelectEvent.subscribe(submitAutoComplete);
