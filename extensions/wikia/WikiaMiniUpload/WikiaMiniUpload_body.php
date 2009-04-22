@@ -225,6 +225,11 @@ class WikiaMiniUpload {
 			$props['extension'] = strtolower( $finalExt );
 		}
 
+		// a guard
+		if( !is_object( $props['file'] ) ) {
+			return $this->loadMain( $this->translateError( UploadForm::EMPTY_FILE ) );
+		}		
+
 		$tmpl->set_vars(array('props' => $props));
 		return $tmpl->execute('details');
 	}
