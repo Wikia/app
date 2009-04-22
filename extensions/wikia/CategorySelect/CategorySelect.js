@@ -575,7 +575,7 @@ function csCancel() {
 	$('csAddCategorySwitch').style.display = 'block';
 }
 
-Event.onDOMReady(function() {
+wgAfterContentAndJS.push(function() {
 	if (csType == 'edit') {
 		initHandlers();
 		initAutoComplete();
