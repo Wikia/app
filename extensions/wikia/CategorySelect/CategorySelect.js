@@ -481,7 +481,8 @@ function getCategories(sQuery) {
 	}
 	var resultsFirst = [];
 	var resultsSecond = [];
-	sQuery = sQuery.toLowerCase().replace(/_/g, ' ');
+	sQuery = sQuery.toLowerCase().replace(/_/g, ' ').replace(/%20/g, ' ');
+	console.log(sQuery);
 	for(var i = 0; i < categoryArray.length; i++) {
 		var index = categoryArray[i].toLowerCase().indexOf(sQuery);
 		if(index == 0) {
