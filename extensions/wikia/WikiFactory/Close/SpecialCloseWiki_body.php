@@ -156,11 +156,12 @@ class CloseWikiPage extends SpecialPage {
 		global $wgRequest, $wgOut;
 
 		$this->mTmpl->reset();
-		$this->mTmpl->set( "wikis",   $this->mWikis );
-		$this->mTmpl->set( "title",   $this->mTitle );
-		$this->mTmpl->set( "action",  $this->mAction );
-		$this->mTmpl->set( "errors",  $this->mErrors );
-		$this->mTmpl->set( "actions", array( "Closing", "Closing and Redirecting", "Closing and Deleting") );
+		$this->mTmpl->set( "wikis",     $this->mWikis );
+		$this->mTmpl->set( "title",     $this->mTitle );
+		$this->mTmpl->set( "action",    $this->mAction );
+		$this->mTmpl->set( "errors",    $this->mErrors );
+		$this->mTmpl->set( "actions",   array( "Closing", "Closing and Redirecting", "Closing and Deleting") );
+		$this->mTmpl->set( "redirects", $this->mRedirects );
 
 		$wgOut->addHTML( $this->mTmpl->render( "confirm" ) );
 	}
@@ -175,18 +176,19 @@ class CloseWikiPage extends SpecialPage {
 		 */
 		if( $this->mAction == self::CLOSE_REDIRECT ) {
 			$valid = true;
+			print_pre( $this->mRedirects );
 			foreach( $this->mWikis as $wiki ) {
-				if( empty( $this->mRedirects[ $wiki->city_id ] ) ) {
+				Wikia::log( __METHOD__, $wiki->city_id, $this->mRedirects[ $wiki->city_id ] );
+				if( !isset( $this->mRedirects[ $wiki->city_id ] ) ) {
 					$valid = false;
 					$this->mErrors[ $wiki->city_id ] = "";
-					break;
 				}
 				else {
 					$city_id = WikiFactory::DomainToID( trim( $this->mRedirects[ $wiki->city_id ] ) );
 					if( !$city_id ) {
+						Wikia::log( __METHOD__, $wiki->city_id, "not exists" );
 						$valid = false;
 						$this->mErrors[ $wiki->city_id ] = $this->mRedirects[ $wiki->city_id ];
-						break;
 					}
 				}
 			}
@@ -200,7 +202,30 @@ class CloseWikiPage extends SpecialPage {
 				/**
 				 * do other action
 				 */
+				switch( $this->mAction ) {
+					case self::CLOSE:
+						$this->doClose();
+						break;
+					case self::CLOSE_REDIRECT:
+						$this->doCloseAndRedirect();
+						break;
+					case self::CLOSE_DELETE:
+						$this->doCloseAndDelete();
+						break;
+				}
 			}
 		}
+	}
+
+	private function doClose() {
+
+	}
+
+	private function doCloseAndRedirect() {
+
+	}
+
+	private function doCloseAndDelete() {
+
 	}
 }

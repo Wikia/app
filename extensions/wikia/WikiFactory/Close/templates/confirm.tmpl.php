@@ -1,3 +1,6 @@
+<?php
+	print_pre( $errors );
+?>
 Check wikis and confirm operation
 <div>
 	<form action="<?php echo $title->getFullUrl( "step=2") ?>" method="post">
@@ -23,7 +26,7 @@ Check wikis and confirm operation
 		<td>
 			<ul>
 				<li style="list-style:none;">
-					<strong><?php echo $wiki->city_title ?></strong></em>
+					<strong><?php echo $wiki->city_title ?> <?php echo $wiki->city_id ?></strong></em>
 				</li>
 				<li style="list-style:none;">
 					<a href="<?php echo $wiki->city_url ?>"><em><?php echo $wiki->city_url ?></em></a>
@@ -41,9 +44,16 @@ Check wikis and confirm operation
 			<?php echo $wiki->city_created ?>
 		</td>
 <?php if( $action == CloseWikiPage::CLOSE_REDIRECT ): ?>
-		<td>
-			<input type="text" name="redirects[ <?php echo $wiki->city_id ?> ]" value="" maxlenght="64" size="32" />
-			<label>domain name</label>
+		<td style="padding: 5px;">
+			<div class="center <?php echo isset( $errors[ $wiki->city_id ] ) ? "error" : "" ?>">
+				<input
+					type="text"
+					name="redirects[<?php echo $wiki->city_id ?>]"
+					value="<?php echo isset( $redirects[ $wiki->city_id ] ) ? $redirects[ $wiki->city_id ] : "" ?>"
+					maxlenght="64" size="32" />
+				<br />
+				<label><em>domain name <?php echo isset( $errors[ $wiki->city_id ] ) ? "is not valid" : "" ?></em></label>
+			</div>
 		</td>
 <?php endif ?>
 	</tr>

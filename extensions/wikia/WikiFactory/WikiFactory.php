@@ -289,17 +289,21 @@ class WikiFactory {
 		}
 
 		wfProfileIn( __METHOD__ );
-		$city_id = null;
+		$city_id = false;
 
 		$oMemc = wfGetCache( CACHE_MEMCACHED );
 		$domains = $oMemc->get( self::getDomainKey( $domain ) );
 
 		if( isset( $domains[ "id" ] ) ) {
-			#--- success, we have it from memcached!
+			/**
+			 * success, we have it from memcached!
+			 */
 			$city_id = $domains[ "id" ];
 		}
 		else {
-			#--- failure, getting from database
+			/**
+			 * failure, getting from database
+			 */
 			$dbr = wfGetDB( DB_SLAVE );
 			$oRow = $dbr->selectRow(
 				array( self::table("city_domains") ),
