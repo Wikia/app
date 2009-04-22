@@ -35,6 +35,7 @@ $wgAjaxExportList[] = 'CategorySelectAjaxParseCategories';
 $wgAjaxExportList[] = 'CategorySelectAjaxSaveCategories';
 $wgAjaxExportList[] = 'CategorySelectRemoveTooltip';
 $wgAjaxExportList[] = 'CategorySelectGenerateHTMLforView';
+$wgAjaxExportList[] = 'CategorySelectGetCategories';
 
 /**
  * Initialize hooks - step 1/2
@@ -181,6 +182,32 @@ function CategorySelectAjaxGetCategories() {
 	$ar->setCacheDuration(60 * 20);
 
 	return $ar;
+}
+
+/**
+ * @author Inez Korczyński
+ */
+function CategorySelectGetCategories($inline = false) {
+	$dbr = wfGetDB(DB_SLAVE);
+	$res = $dbr->select(
+		'category',
+		'cat_title',
+		array('cat_pages > 0'),
+		__METHOD__
+	);
+	$categories = array();
+	while($row = $dbr->fetchObject($res)) {
+		$categories[] = str_replace('_', ' ', $row->cat_title);
+	}
+	$out = 'var categoryArray = ["'.join('","', $categories).'"];';
+
+	if($inline === true) {
+		return $out;
+	} else {
+		$ar = new AjaxResponse($out);
+		$ar->setCacheDuration(60 * 60);
+		return $ar;
+	}
 }
 
 /**
@@ -397,7 +424,7 @@ function CategorySelectGetCategoryLinksEnd(&$categoryLinks) {
 	$action = $wgRequest->getVal('action', 'view');
 	//for redirected page this hook is ran twice - check for button existence and don't add second one (fixes rt#12223)
 	if (($action == 'view' || $action == 'purge') && strpos($categoryLinks, '<div id="csAddCategorySwitch"') === false) {
-		$categoryLinks .= ' <div id="csAddCategorySwitch" class="noprint" style="position:relative;float:left;border: 1px solid #BBB;-moz-border-radius:3px;-webkit-border-radius:3px;padding:0 4px 0 12px;background:#ddd url(\'' . $wgExtensionsPath . '/wikia/CategorySelect/sprite.png\') left center no-repeat;line-height: 16px;"><a href="#" onclick="YAHOO.util.Get.script(wgExtensionsPath+\'/wikia/CategorySelect/CategorySelect.js?\'+wgStyleVersion,{onSuccess:function(){showCSpanel();}});$(\'catlinks\').className+=\' csLoading\';return false;" onfocus="this.blur();" style="color:#000;font-size:0.85em;text-decoration:none;background:#ddd;display:block;padding:0 3px">' . wfMsg('categoryselect-addcategory-button') . '</a></div>';
+		$categoryLinks .= ' <div id="csAddCategorySwitch" class="noprint" style="position:relative;float:left;border: 1px solid #BBB;-moz-border-radius:3px;-webkit-border-radius:3px;padding:0 4px 0 12px;background:#ddd url(\'' . $wgExtensionsPath . '/wikia/CategorySelect/sprite.png\') left center no-repeat;line-height: 16px;"><a href="#" onclick="YAHOO.util.Get.script(wgServer + wgScriptPath + \'?action=ajax&rs=CategorySelectGetCategories\'); YAHOO.util.Get.script(wgExtensionsPath+\'/wikia/CategorySelect/CategorySelect.js?\'+wgStyleVersion,{onSuccess:function(){showCSpanel();}});$(\'catlinks\').className+=\' csLoading\';return false;" onfocus="this.blur();" style="color:#000;font-size:0.85em;text-decoration:none;background:#ddd;display:block;padding:0 3px">' . wfMsg('categoryselect-addcategory-button') . '</a></div>';
 	}
 	return true;
 }
@@ -410,7 +437,7 @@ function CategorySelectGetCategoryLinksEnd(&$categoryLinks) {
 function CategorySelectGenerateHTMLforEdit($formId = '') {
 	global $wgOut, $wgExtensionsPath, $wgStyleVersion, $wgCategorySelectMetaData;
 
-	$wgOut->addScript("<script type=\"text/javascript\">var formId = '$formId';</script>");
+	$wgOut->addScript("<script type=\"text/javascript\">var formId = '$formId';".CategorySelectGetCategories(true)."</script>");
 	$wgOut->addScript("<script type=\"text/javascript\" src=\"$wgExtensionsPath/wikia/CategorySelect/CategorySelect.js?$wgStyleVersion\"></script>");
 	$wgOut->addScript("<link rel=\"stylesheet\" type=\"text/css\" href=\"$wgExtensionsPath/wikia/CategorySelect/CategorySelect.css?$wgStyleVersion\" />");
 
