@@ -89,6 +89,6 @@ function tabviewRender($input, $params, &$parser ) {
 	}
 
 	$outJS .= "tabView_{$id}.appendTo('tabview_" . $id . "');";
-	$outJS = '<script type="text/javascript">if(!window.onloadFuncts) { var onloadFuncts = []; } onloadFuncts[onloadFuncts.length] = function() {' . $outJS . '};</script>';
+	$outJS = '<script type="text/javascript">wgBeforeLoad.push(function() {' . $outJS . '});</script>';
 	return $out.$outJS;
 }

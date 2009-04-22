@@ -702,13 +702,13 @@ function ts_initTransformTable() {
 		// Separators
 		ascii = wgSeparatorTransformTable[0].split("\t");
 		localised = wgSeparatorTransformTable[1].split("\t");
-		for ( var i = 0; i < ascii.length; i++ ) { 
+		for ( var i = 0; i < ascii.length; i++ ) {
 			ts_number_transform_table[localised[i]] = ascii[i];
 		}
 		// Digits
 		ascii = wgDigitTransformTable[0].split("\t");
 		localised = wgDigitTransformTable[1].split("\t");
-		for ( var i = 0; i < ascii.length; i++ ) { 
+		for ( var i = 0; i < ascii.length; i++ ) {
 			ts_number_transform_table[localised[i]] = ascii[i];
 		}
 
@@ -717,7 +717,7 @@ function ts_initTransformTable() {
 		maxDigitLength = 1;
 		for ( var digit in ts_number_transform_table ) {
 			// Escape regex metacharacters
-			digits.push( 
+			digits.push(
 				digit.replace( /[\\\\$\*\+\?\.\(\)\|\{\}\[\]\-]/,
 					function( s ) { return '\\' + s; } )
 			);
@@ -747,7 +747,7 @@ function ts_toLowerCase( s ) {
 	return s.toLowerCase();
 }
 
-function ts_dateToSortKey(date) {	
+function ts_dateToSortKey(date) {
 	// y2k notes: two digit years less than 50 are treated as 20XX, greater than 50 are treated as 19XX
 	if (date.length == 11) {
 		switch (date.substr(3,3).toLowerCase()) {
@@ -794,7 +794,7 @@ function ts_parseFloat( s ) {
 	}
 	if (ts_number_transform_table != false) {
 		var newNum = '', c;
-		
+
 		for ( var p = 0; p < s.length; p++ ) {
 			c = s.charAt( p );
 			if (c in ts_number_transform_table) {
@@ -1015,3 +1015,9 @@ function getLabelFor (obj_id) {
 		}
 	return false;
 }
+
+if(skin != 'monaco') {
+	addOnloadHook(function() { for(var i=0;i<wgBeforeLoad.length;i++){wgBeforeLoad[i]();} });
+}
+
+
