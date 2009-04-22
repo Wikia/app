@@ -51,5 +51,6 @@ function wfMakeGlobalVariablesScript($vars) {
 	if($wgUser->isAllowed('editinterface')) {
 		$vars['wgMenuEdit'] = wfMsg('monaco-edit-this-menu');
 	}
+	$vars['wgBeforeLoad'] = array();
 	return true;
 }
