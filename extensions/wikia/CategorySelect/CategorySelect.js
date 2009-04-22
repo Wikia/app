@@ -546,6 +546,10 @@ function showCSpanel() {
 	var pars = 'rs=CategorySelectGenerateHTMLforView';
 	var callback = {
 		success: function(originalRequest) {
+			//prevent multiple instances when user click very fast
+			if ($('csMainContainer') != null) {
+				return;
+			}
 			var el = document.createElement('div');
 			el.innerHTML = originalRequest.responseText;
 			$('catlinks').appendChild(el);
