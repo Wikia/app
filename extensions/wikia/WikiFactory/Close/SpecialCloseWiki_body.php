@@ -26,9 +26,12 @@ class CloseWikiPage extends SpecialPage {
 
 	private
 		$mTitle,
-		$mWikis  = array(),
+		$mWikis     = array(),
 		$mTmpl,
-		$mAction;
+		$mStep      = 1,
+		$mAction,
+		$mErrors    = array(),
+		$mRedirects = array();
 
 
 
@@ -73,7 +76,7 @@ class CloseWikiPage extends SpecialPage {
 		}
 
 		if( !$fail ) {
-			$this->mTitle = Title::makeTitle( NS_SPECIAL, 'WikiFactory' );
+			$this->mTitle = Title::makeTitle( NS_SPECIAL, 'CloseWiki' );
 		}
 
 		/**
@@ -86,7 +89,12 @@ class CloseWikiPage extends SpecialPage {
 			 * check if something was posted
 			 */
 			$this->parseRequest();
-			$this->doConfirm();
+			if( $this->mStep != 1 ) {
+				$this->doProcess();
+			}
+			else {
+				$this->doConfirm();
+			}
 		}
 		elseif( !empty( $subpage ) ){
 			/**
@@ -109,6 +117,8 @@ class CloseWikiPage extends SpecialPage {
 	private function parseRequest( ) {
 		global $wgRequest, $wgOut;
 
+		$this->mStep = $wgRequest->getVal( "step", 1 );
+
 		/**
 		 * get numeric values for checkboxes
 		 */
@@ -122,28 +132,75 @@ class CloseWikiPage extends SpecialPage {
 			}
 		}
 
-		/**
-		 * check which action was requested
-		 */
-		foreach( array_keys( $wgRequest->getValues() ) as $value ) {
-			if( preg_match( "/^submit(\d+)$/", $value, $matches ) ) {
-				$this->mAction = $matches[1];
-				break;
+		if( $this->mStep == 1 ) {
+			/**
+			 * check which action was requested
+			 */
+			foreach( array_keys( $wgRequest->getValues() ) as $value ) {
+				if( preg_match( "/^submit(\d+)$/", $value, $matches ) ) {
+					$this->mAction = $matches[1];
+					break;
+				}
 			}
 		}
-
+		else {
+			$this->mAction = $wgRequest->getVal( "action", 0 );
+		}
+		$this->mRedirects = $wgRequest->getArray( "redirects", array() );
 	}
 
 	/**
-	 * multiple wikis can be posted
+	 * @access private
 	 */
-	private function doConfirm( ) {
+	private function doConfirm() {
 		global $wgRequest, $wgOut;
 
 		$this->mTmpl->reset();
-		$this->mTmpl->set( "wikis", $this->mWikis );
-		$this->mTmpl->set( "action", $this->mAction );
+		$this->mTmpl->set( "wikis",   $this->mWikis );
+		$this->mTmpl->set( "title",   $this->mTitle );
+		$this->mTmpl->set( "action",  $this->mAction );
+		$this->mTmpl->set( "errors",  $this->mErrors );
+		$this->mTmpl->set( "actions", array( "Closing", "Closing and Redirecting", "Closing and Deleting") );
 
 		$wgOut->addHTML( $this->mTmpl->render( "confirm" ) );
+	}
+
+	/**
+	 * @access private
+	 */
+	private function doProcess() {
+
+		/**
+		 * if we redirecting check if target wikia exists and is active wiki
+		 */
+		if( $this->mAction == self::CLOSE_REDIRECT ) {
+			$valid = true;
+			foreach( $this->mWikis as $wiki ) {
+				if( empty( $this->mRedirects[ $wiki->city_id ] ) ) {
+					$valid = false;
+					$this->mErrors[ $wiki->city_id ] = "";
+					break;
+				}
+				else {
+					$city_id = WikiFactory::DomainToID( trim( $this->mRedirects[ $wiki->city_id ] ) );
+					if( !$city_id ) {
+						$valid = false;
+						$this->mErrors[ $wiki->city_id ] = $this->mRedirects[ $wiki->city_id ];
+						break;
+					}
+				}
+			}
+			if( !$valid ) {
+				/**
+				 * back to form
+				 */
+				$this->doConfirm();
+			}
+			else {
+				/**
+				 * do other action
+				 */
+			}
+		}
 	}
 }
