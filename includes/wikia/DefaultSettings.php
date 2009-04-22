@@ -105,7 +105,7 @@ $wgAPIListModules["wkreferer"] = "WikiaApiQueryReferers";
 /**
  * registered API methods
  */
-$wgApiQueryMetaModules["siteinfo"] = "WikiaApiQuerySiteInfo";
+$wgAPIMetaModules["siteinfo"] = "WikiaApiQuerySiteInfo";
 
 /**
  * registered Ajax methods
