@@ -19,8 +19,19 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 
 class CloseWikiPage extends SpecialPage {
 
+	const
+		CLOSE          = 0,
+		CLOSE_REDIRECT = 1,
+		CLOSE_DELETE   = 2;
+
 	private
-		$mTitle;
+		$mTitle,
+		$mWikis  = array(),
+		$mTmpl,
+		$mAction;
+
+
+
 
 	/**
 	 * constructor
@@ -65,11 +76,17 @@ class CloseWikiPage extends SpecialPage {
 			$this->mTitle = Title::makeTitle( NS_SPECIAL, 'WikiFactory' );
 		}
 
+		/**
+		 * initialize template class
+		 */
+		$this->mTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
+
 		if( $wgRequest->wasPosted() ) {
 			/**
 			 * check if something was posted
 			 */
-			$this->doPosted();
+			$this->parseRequest();
+			$this->doConfirm();
 		}
 		elseif( !empty( $subpage ) ){
 			/**
@@ -89,7 +106,44 @@ class CloseWikiPage extends SpecialPage {
 	/**
 	 * multiple wikis can be posted
 	 */
-	private function doPosted() {
+	private function parseRequest( ) {
+		global $wgRequest, $wgOut;
 
+		/**
+		 * get numeric values for checkboxes
+		 */
+		$wikis = $wgRequest->getArray( "wikis", array() );
+		if( is_array( $wikis ) ) {
+			foreach( $wikis as $city_id ) {
+				$wiki = WikiFactory::getWikiByID( $city_id );
+				if( $wiki ) {
+					$this->mWikis[] = $wiki;
+				}
+			}
+		}
+
+		/**
+		 * check which action was requested
+		 */
+		foreach( array_keys( $wgRequest->getValues() ) as $value ) {
+			if( preg_match( "/^submit(\d+)$/", $value, $matches ) ) {
+				$this->mAction = $matches[1];
+				break;
+			}
+		}
+
+	}
+
+	/**
+	 * multiple wikis can be posted
+	 */
+	private function doConfirm( ) {
+		global $wgRequest, $wgOut;
+
+		$this->mTmpl->reset();
+		$this->mTmpl->set( "wikis", $this->mWikis );
+		$this->mTmpl->set( "action", $this->mAction );
+
+		$wgOut->addHTML( $this->mTmpl->render( "confirm" ) );
 	}
 }
