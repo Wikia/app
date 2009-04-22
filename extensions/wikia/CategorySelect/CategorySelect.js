@@ -453,6 +453,13 @@ function inputKeyPress(e) {
 		if (category != '' && oAutoComp._oCurItem == null) {
 			addCategory(category);
 		}
+		//hide input and show button when [enter] pressed with empty input
+		if (category == '') {
+			inputBlur();
+		}
+	}
+	if(e.keyCode == 27) {
+		inputBlur();
 	}
 	positionSuggestBox();
 }
