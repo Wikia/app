@@ -34,11 +34,25 @@ function WidgetAnswers($id, $params) {
 		}
 		$languageLoaded = true;
 	}
+
+	global $wgUser;
 	
 	// HTML for the Ask a Question 
-	$h = '<form method="get" action="" onsubmit="return false" name="ask_form" id="ask_form">
+	$askform = '<form method="get" action="" onsubmit="return false" name="ask_form" id="ask_form">
 			<input type="text" id="answers_ask_field" value="' . htmlspecialchars(wfMsg("ask_a_question")) . '" class="alt" />
 		</form>';
+	
+	$h = ''; //html output
+
+	if ( $wgUser->isLoggedIn() ) {
+		if ( in_array( 'sysop', $wgUser->getGroups() ) ) {
+			$h .= '<div class="widget_answers_note">'. wfMsg( "answers_widget_admin_note" ). '</div>';
+		} else {
+			$h .= '<div class="widget_answers_note">'. wfMsg( "answers_widget_user_note" ). '</div>';
+		}
+	} else {
+		$h .= $askform;
+	}
 	
 	$h .= '<div style="padding: 7px;">';
 	$h .= '<b>' . wfMsg("recent_asked_questions") . '</b>';
@@ -86,7 +100,7 @@ jQuery("#recent_unanswered_questions").ready(function() {
 				if (text.length > 100){
 					text = text.substring(0,100) + "...";
 				}
-				html += "<li><a href=\"" + page.url + "\">" + text + "</a></li>";
+				html += "<li><a href=\"" + page.url + "\" target=\"_blank\">" + text + "</a></li>";
 			}
 			jQuery("#recent_unanswered_questions").prepend( html );
 		}
@@ -96,6 +110,12 @@ jQuery("#recent_unanswered_questions").ready(function() {
 	</script>
 	<noscript><A href="http://answers.wikia.com">Get your questions answered on answers.wikia.com</a></noscript>';
 	$h .= '</div>';
+
+	if ( $wgUser->isLoggedIn() ) {
+		$h .= $askform;
+	} else {
+		$h .= '<div class="widget_answers_note">'. wfMsg( "answers_widget_anon_note" ). '</div>';
+	}
 
     wfProfileOut( __METHOD__ );
     

@@ -9,6 +9,11 @@
 	background: #CCC;
 	padding: 5px 3px;
 }
+.widget_answers_note {
+	background: #CCC;
+	font-size: 9pt;
+	padding: 3px !important;
+}
 #answers_ask_field {
 	background: #FFF url(http://images.wikia.com/extensions/wikia/WidgetFramework/Widgets/WidgetAnswers/field_bg.png) repeat-x;
 	border: 1px solid #093;
