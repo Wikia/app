@@ -480,6 +480,7 @@ function initAutoComplete() {
 	var oDataSource = new YAHOO.widget.DS_XHR(wgServer + wgScriptPath + '/', ["\n"]);
 	oDataSource.responseType = YAHOO.widget.DS_XHR.TYPE_FLAT;
 	oDataSource.scriptQueryAppend = 'action=ajax&rs=CategorySelectAjaxGetCategories';
+	oDataSource.queryMatchCase = true;
 
 	// Init AutoComplete object and assign datasource object to it
 	oAutoComp = new YAHOO.widget.AutoComplete('csCategoryInput', 'csSuggestContainer', oDataSource);
