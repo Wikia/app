@@ -1863,7 +1863,7 @@ if(!$custom_article_footer && $displayArticleFooter) {
 		}
 		$this->html('headscripts');
 	}
-	echo '<script type="text/javascript">for(var i=0;i<wgBeforeLoad.length;i++){wgBeforeLoad[i]();}</script>' . "\n";
+	echo '<script type="text/javascript">for(var i=0;i<wgAfterContentAndJS.length;i++){wgAfterContentAndJS[i]();}</script>' . "\n";
 
 if (array_key_exists("TOP_RIGHT_BOXAD", AdEngine::getInstance()->getPlaceholders())){
 	// Reset elements with a "clear:none" to "clear:right" when the box ad is displayed
