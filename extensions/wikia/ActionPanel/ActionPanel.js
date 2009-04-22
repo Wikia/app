@@ -59,7 +59,7 @@ function applyActionsOnQuestions(){
 				
 				jQuery( hover_menu ).addClass("questionhovermenu").css({
 						display: "none",
-						top: jQuery(this).offset().top + 5,
+						top: jQuery(this).offset().top - 4,
 						left: menu_left 
 					}).click(function(e) {
 						e.stopPropagation();
@@ -134,7 +134,7 @@ function applyActionsOnQuestions(){
 				
 				//Quick Answer Form and Callback
 				var add_answer = document.createElement('textarea');
-				jQuery( add_answer ).css("width",235);
+				jQuery( add_answer ).css("width",245);
 				jQuery( quick_answer ).append(add_answer);
 				
 				//get page content first
