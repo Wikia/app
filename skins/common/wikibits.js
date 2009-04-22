@@ -1017,7 +1017,7 @@ function getLabelFor (obj_id) {
 }
 
 if(skin != 'monaco') {
-	addOnloadHook(function() { for(var i=0;i<wgBeforeLoad.length;i++){wgBeforeLoad[i]();} });
+	addOnloadHook(function() { for(var i=0;i<wgAfterContentAndJS.length;i++){wgAfterContentAndJS[i]();} });
 }
 
 
