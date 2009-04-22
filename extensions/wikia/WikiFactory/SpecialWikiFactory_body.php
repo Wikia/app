@@ -404,7 +404,7 @@ class CityListPager extends TablePager {
                 }
                 break;
 			case "actions":
-				$return = Xml::check( $this->mCurrentRow->city_id, false, array() );
+				$return = Xml::check( "wikis[ ]", false, array( "value" => $this->mCurrentRow->city_id ) );
 				break;
             default:
 				$return = $value;
@@ -466,7 +466,13 @@ class CityListPager extends TablePager {
 	 * @return string HTML code
 	 */
 	public function getStartBody() {
-		$html = parent::getStartBody();
+
+		$html = "";
+
+		$Tmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
+		$Tmpl->set( "closeTitle", Title::makeTitle( NS_SPECIAL, "CloseWiki" ) );
+		$html .= $Tmpl->render( "listing-actions" );
+		$html .= parent::getStartBody();
 
 		return $html;
 	}
@@ -479,7 +485,11 @@ class CityListPager extends TablePager {
 	 * @return string HTML code
 	 */
 	public function getEndBody() {
-		$html = parent::getEndBody();
+
+		$html = "";
+
+		$html .= Xml::closeElement( "form" );
+		$html .= parent::getEndBody();
 
 		return $html;
 	}

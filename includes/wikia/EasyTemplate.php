@@ -42,6 +42,7 @@ class EasyTemplate {
 
 	/**
 	 * public constructor
+	 * @example new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
 	 */
 	public function __construct( $path ) {
 		$this->mPath = rtrim( $path, "/" );
@@ -136,6 +137,13 @@ class EasyTemplate {
 			$file .= ".tmpl.php";
 		}
 		return file_exists($this->mPath ."/". $file);
+	}
+
+	/**
+	 * reset variables array
+	 */
+	public function reset() {
+		$this->mVars = array();
 	}
 
 	/**
