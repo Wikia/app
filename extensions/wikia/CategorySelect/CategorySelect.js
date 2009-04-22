@@ -484,7 +484,7 @@ function getCategories(sQuery) {
 	sQuery = unescape(sQuery);
 	sQuery = sQuery.toLowerCase().replace(/_/g, ' ');
 	console.log(sQuery);
-	for(var i = 0; i < categoryArray.length; i++) {
+	for(var i = 0, len = categoryArray.length; i < len; i++) {
 		var index = categoryArray[i].toLowerCase().indexOf(sQuery);
 		if(index == 0) {
 			resultsFirst.push([categoryArray[i]]);
