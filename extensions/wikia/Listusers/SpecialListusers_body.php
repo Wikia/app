@@ -231,6 +231,7 @@ class Listusers extends SpecialPage {
 
 				while ( $oRow = $dbs->fetchObject( $res ) ) {
 					$oUser = User::newFromName($oRow->lu_user_name);
+					if ( !($oUser instanceof User) ) continue;
 					$__groups = explode(";", $oRow->lu_allgroups);
 					$sGroups = "<i>".wfMsg('listusers-nonegroup')."</i>";
 					if ( !empty($__groups) && is_array($__groups) ) {
