@@ -574,7 +574,7 @@ class CreateWikiTask extends BatchTask {
 					$this->addLog( sprintf("Article %s already exists.", $oCentralRedirectTitle->getFullUrl()) );
 				}
 
-				if( ($this->mTaskData['language'] == 'en') && (!preg_match('/^en\./i' $this->mTaskData['subdomain'])) ) {
+				if( ($this->mTaskData['language'] == 'en') && (!preg_match('/^en\./i', $this->mTaskData['subdomain'])) ) {
 					// extra redirect page: en.<subdomain>
 					$sCentralRedirectTitle = 'en.' . $this->mTaskData['subdomain'];
 					$oCentralRedirectTitle = Title::newFromText( $sCentralRedirectTitle, NS_MAIN );
