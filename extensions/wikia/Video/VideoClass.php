@@ -324,14 +324,8 @@ class Video{
 	}
 	
 	public static function isURL($code){
-		$text = ereg("^(http|https|ftp)://(www\.)?.*$", $code );
-		if($text){
-			return true;
-		}else{
-			return false;
-		}
+		return preg_match('%^(?:http|https|ftp)://(?:www\.)?.*$%i', $code) ? true : false;
 	}
-	
 	
 	public static function getURLfromEmbedCode($code){
 		preg_match("/embed .*src=(\"([^<\"].*?)\"|\'([^<\"].*?)\'|[^<\"].*?)(.*flashvars=(\"([^<\"].*?)\"|\'([^<\"].*?)\'|[^<\"].*?\s))?/i",$code,$matches );

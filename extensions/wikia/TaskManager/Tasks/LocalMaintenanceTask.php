@@ -290,7 +290,7 @@ class LocalMaintenanceTask extends BatchTask {
 					$this->log( sprintf("Article %s already exists.", $oCentralRedirectTitle->getFullUrl()) );
 				}
 
-				if( ( $this->mWikiData['language'] == 'en' ) && ( !eregi("^en.", $this->mWikiData['subdomain']) ) ) {
+				if( ( $this->mWikiData['language'] == 'en' ) && ( !preg_match('/^en\./i', $this->mWikiData['subdomain']) ) ) {
 					/**
 					 * extra redirect page: en.<subdomain>
 					 */
