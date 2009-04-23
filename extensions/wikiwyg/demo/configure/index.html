@@ -1,0 +1,215 @@
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="../../css/wikiwyg.css" />
+<script type="text/javascript" src="../../lib/Wikiwyg.js"></script>
+<script type="text/javascript" src="../../lib/Wikiwyg/Toolbar.js"></script>
+<script type="text/javascript" src="../../lib/Wikiwyg/Wysiwyg.js"></script>
+<script type="text/javascript" src="../../lib/Wikiwyg/Wikitext.js"></script>
+<script type="text/javascript" src="../../lib/Wikiwyg/Preview.js"></script>
+<script>
+window.onload = function() {
+    var div1 = document.getElementById('example1');
+    var config1 = {
+        doubleClickToEdit: false,
+        wysiwyg: {
+            iframeId: 'example1-iframe'
+        },
+        toolbar: {
+            imagesLocation: '../../images/',
+            controlLayout: [
+                'save', 'cancel', 'mode_selector', '/',
+                'bold', 'italic', '|', 'indent', 'outdent'
+            ]
+        }, 
+        modeClasses: [
+            'Wikiwyg.Wysiwyg',
+            'Wikiwyg.Preview'
+        ]
+    };
+    wikiwyg1 = new Wikiwyg();
+    wikiwyg1.createWikiwygArea(div1, config1);
+    if (wikiwyg1.enabled)
+        Wikiwyg.changeLinksMatching(
+            'href', /edit1/, function() { wikiwyg1.editMode(); return false }
+        );
+
+    var div2 = document.getElementById('example2');
+    var config2 = {
+        doubleClickToEdit: true,
+        toolbar: {
+            imagesLocation: '../../images/',
+            controlLayout: [
+                'cancel', '|',
+                'bold', 'italic', 'strike', '|',
+                'ordered', 'unordered', '|',
+                'foo', 'bar'
+            ],
+            controlLabels: {
+                foo: 'Foo Fighting',
+                bar: 'Bar Hopping'
+            }
+        },
+        modeClasses: [
+            'Wikiwyg.Wikitext.Custom'
+        ]
+    };
+    wikiwyg2 = new Wikiwyg();
+    wikiwyg2.createWikiwygArea(div2, config2);
+    if (wikiwyg2.enabled)
+        Wikiwyg.changeLinksMatching(
+            'href', /edit2/, function() { wikiwyg2.editMode(); return false }
+        );
+}
+
+proto = new Subclass('Wikiwyg.Wikitext.Custom', 'Wikiwyg.Wikitext');
+
+proto.config = Wikiwyg.Wikitext.prototype.config;
+proto.config.markupRules.strike = ['bound_phrase', '---', '---'];
+proto.config.markupRules.foo = ['bound_phrase', '```', '```'];
+proto.config.markupRules.bar = ['bound_phrase', 'XXX', 'YYY'];
+
+proto.do_foo = Wikiwyg.Wikitext.make_do('foo');
+proto.do_bar = Wikiwyg.Wikitext.make_do('bar');
+</script>
+</head>
+<body>
+<p>
+This page shows how you can configure the toolbar and other options to
+customize your Wikiwyg.
+</p>
+<h2>Custom Toolbar - Wysiwyg/Preview Modes</h2>
+Use this configuration:
+<blockquote>
+<pre>
+&lt;script&gt;
+window.onload = function() {
+    var div = document.getElementById('example1');
+    var config = {
+        doubleClickToEdit: false,
+        wysiwyg: {
+            iframeId: 'example1-iframe'
+        },
+        toolbar: {
+            imagesLocation: '../../images/',
+            controlLayout: [
+                'cancel', 'mode_selector', '/',
+                'bold', 'italic', '|', 'indent', 'outdent'
+            ],
+        }, 
+        modeClasses: [
+            'Wikiwyg.Wysiwyg',
+            'Wikiwyg.Preview'
+        ]
+    };
+    wikiwyg1 = new Wikiwyg();
+    wikiwyg1.createWikiwygArea(div, config);
+    if (wikiwyg1.enabled)
+        Wikiwyg.changeLinksMatching(
+            'href', /edit/, function() { wikiwyg1.editMode(); return false }
+        );
+}
+&lt;/script&gt;
+</pre>
+</blockquote>
+<p>
+To get this:
+</p>
+<blockquote>
+<h3><a href="edit1" onclick="alert('Not supported'); return false">Edit</a></h3>
+<div id="example1">
+<p>
+Click the 'Edit' link above to edit this area.
+</p><p>
+Note that the toolbar is different than the default one:
+</p>
+<ul>
+    <li>Only the buttons specified show up now</li>
+    <li>A '|' adds a separator image</li>
+    <li>A '/' forces a line break in toolbar</li>
+    <li>There is no 'Wikitext' mode</li>
+    <li>Doubleclick to edit is disabled</li>
+</ul>
+</div>
+<iframe id="example1-iframe"></iframe>
+</blockquote>
+<h2>Custom Toolbar and Custom Wikitext Markup</h2>
+Use this configuration:
+<blockquote>
+<pre>
+&lt;script&gt;
+window.onload = function() {
+    var div2 = document.getElementById('example2');
+    var config2 = {
+        doubleClickToEdit: true,
+        toolbar: {
+            imagesLocation: '../../images/',
+            controlLayout: [
+                'cancel', '|',
+                'bold', 'italic', 'strike', '|',
+                'ordered', 'unordered', '|',
+                'foo', 'bar'
+            ],
+            controlLabels: {
+                foo: 'Foo Fighting',
+                bar: 'Bar Hopping'
+            }
+        },
+        modeClasses: [
+            'Wikiwyg.Wikitext.Custom'
+        ]
+    };
+    wikiwyg2 = new Wikiwyg();
+    wikiwyg2.createWikiwygArea(div2, config2);
+    if (wikiwyg2.enabled)
+        Wikiwyg.changeLinksMatching(
+            'href', /edit2/, function() { wikiwyg2.editMode(); return false }
+        );
+}
+
+proto = new Subclass('Wikiwyg.Wikitext.Custom', 'Wikiwyg.Wikitext');
+
+proto.config = Wikiwyg.Wikitext.prototype.config;
+proto.config.markupRules.strike = ['bound_phrase', '---', '---'];
+proto.config.markupRules.foo = ['bound_phrase', '```', '```'];
+proto.config.markupRules.bar = ['bound_phrase', 'XXX', 'YYY'];
+
+proto.do_foo = Wikiwyg.Wikitext.make_do('foo');
+proto.do_bar = Wikiwyg.Wikitext.make_do('bar');
+&lt;/script&gt;
+</pre>
+</blockquote>
+<p>
+To get this:
+</p>
+<blockquote>
+<h3><a href="edit2" onclick="alert('Not supported'); return false">Edit</a></h3>
+<div id="example2">
+<p>
+This section uses Javascript to translate this HTML into Wikitext when you
+click edit. Very fast.
+</p>
+<p>
+So first of all note that we have added a Foo and Bar button to the
+toolbar. There are no images for them, but you can just make your own
+20x20 foo.gif and bar.gif.
+</p>
+<p>
+This demo uses a subclass of Wikiwyg.Wikitext called
+Wikiwyg.Wikitext.Custom.
+</p>
+<p>
+Other things to note:
+<ul>
+<li>Doubleclick to edit is on.</li>
+<li>Strikethrough markup was changed from -this- to ---that---.</li>
+</ul>
+</p>
+<p>
+Note that instead of doing a client side translation, you could override
+'Wikiwyg.Wikitext.prototype.fromHtml to simply insert wikitext that you
+embedded in the page yourself.
+</p>
+</div>
+</blockquote>
+</body>
+</html>

@@ -1,0 +1,156 @@
+SYNOPSIS
+    This document describes the coding style used in Wikiwyg.
+
+    This is the first major Javascript project for the current developers of
+    Wikiwyg. It seems worthwhile to write down the coding style decisions.
+    Perhaps someday there will emerge more definitive standards for how to
+    do good javascript.
+
+CLASSES
+    Yes, in truth, Javascript does not use class based OO. Still it can be
+    useful to think in those terms. Especially for a group of Perl expats.
+    ;)
+
+    All classes in Wikiwyg are defined as "Subclass" objects. The class
+    "My.Class" which is a subclass of "Your.Class" is defined like this:
+
+        var proto = new Subclass('My.Class', 'Your.Class');
+
+    The "Subclass" constructor is a simple class generator that generates a
+    constructor for your class, puts it in the symbol table, and gives the
+    prototype a few helpful properties:
+
+    classname
+        The class name of an object. Useful for introspection.
+
+    baseclass
+        The base class name of an object.
+
+    superfunc('method_name')
+        This method allows you to call a particular method, higher in the
+        inheritance hierarchy.
+
+            proto.foo = function(xyz) {
+                this.superfunc('foo').call(this, xyz);
+            }
+
+    The "Subclass" constructor returns the prototype of the new class, which
+    is handy to use to add more properties to the prototype.
+
+METHODS
+    Wikiwyg has a few different kinds of methods.
+
+    Public instance methods
+        Most of the methods are instance methods (as opposed to class
+        methods). All this means is that they are functions assigned to the
+        prototype of the class object.
+
+            proto.doSomething = function() { ... };
+
+        That the method is *Public* just means that it is intended to be
+        supported asis in the future. Put another way, public methods form
+        the API of a class.
+
+    Private instance methods
+        Private instance methods differ from publics ones, in that they are
+        not guaranteed to be around in later releases of the code.
+
+            proto.do_something_else = function() { ... };
+
+    Public class methods
+        Some methods are just helper functions and don't have anything to do
+        with an object instance.
+
+            klass.helperFunction(foo) { ... };
+
+        For the most part, all class methods are public in Wikiwyg. Also
+        most of them are defined in the 'Wikiwyg' class.
+
+IDENTIFIERS
+    Wikiwyg uses several styles of identifiers:
+
+    "Titlecased"
+        A single word with the first letter capitalized. These identifiers
+        are only used for the parts of class names.
+
+            proto = new Subclass('Foo.Bar.Baz');
+
+        If multiple words must be specified, use CamelCase.
+
+    "mountainCasedWords"
+        Multiple words with the first one lower case and the rest title
+        case. Used for public method names. There are some public methods
+        which use lowercase_words, but they are a special case.
+
+    "lower_case_words_with_underscores"
+        These indentifiers are used for private method names and for
+        variable names.
+
+        They are also used for a special kind of public method. Methods that
+        begin with 'do_' or 'format_' are public.
+
+    "lowercase"
+        Single lowercase words are used for more generic or less important
+        variable names. They are also used for a few very common public
+        properties like "config".
+
+    "i" Single letter identifiers are only used for things like "i" for a
+        loop iterator.
+
+  SEMICOLONS
+    For the most part, Javascript dows not require semicolons to terminate
+    statements. Nonetheless, Wikiwyg terminates almost all statements with
+    semicolons because they make the code more legible. They convey to the
+    maintainer where the statement is intended to end.
+
+    There ar a couple exceptions to the rule though.
+
+        proto.two = function() {
+            return 2;
+        }
+
+    There is no semicolon after the function definition. Even though
+    technically this is the end of an assignment statement, the '}' is
+    sufficient to convey that meaning.
+
+    On the other hand:
+
+        proto.two = function() { return 2 };
+
+    In the above case, when the function assignment is all on one line, the
+    inner statement should not have a semicolon, but the entire statement
+    should.
+
+  BRACES
+    Javascript allows single statement blocks to be free of braces. Although
+    sometimes this makes code less verbose looking, it has proven a bad idea
+    to do this everywhere that it is allowed. It makes the code more fragile
+    to changing because you have to always be aware when you need the
+    braces. Unfortunately, Javascript will not warn you when you are about
+    to shoot yourself in the foot.
+
+    Wikiwyg uses the following guidelines for braces.
+
+    *   All functions should have braces around the body.
+
+    *   "if" statements can omit braces only if the condition is on one line
+        and the body is a total of one line. If one of the "else" clauses is
+        multiline in any way, the entire if structure should use braces.
+
+            if (foo) {
+                xxx = 1;
+            }
+            else {
+                yyy = 1;
+                zzz = 2;
+            }
+
+        The less you fight the braces, the happier you become. :}
+
+    *   With "for" and "while" statements, use braces if either the
+        condition or body uses more than one line.
+
+OTHER
+    * Sensibly break up lines longer than 80 chars.
+    * Don't Do Tabs!
+

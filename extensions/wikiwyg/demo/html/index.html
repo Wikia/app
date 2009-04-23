@@ -1,0 +1,111 @@
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="../../css/wikiwyg.css" />
+<script type="text/javascript" src="../../lib/Wikiwyg.js"></script>
+<script type="text/javascript" src="../../lib/Wikiwyg/Toolbar.js"></script>
+<script type="text/javascript" src="../../lib/Wikiwyg/Wysiwyg.js"></script>
+<script type="text/javascript" src="../../lib/Wikiwyg/Wikitext.js"></script>
+<script type="text/javascript" src="../../lib/Wikiwyg/Preview.js"></script>
+<script type="text/javascript" src="../../lib/Wikiwyg/HTML.js"></script>
+<script type="text/javascript" src="../../lib/Wikiwyg/Standalone.js"></script>
+<script>
+// Find all the divs in the page (after it has loaded) and Wikiwygify them.
+var wikiwyg_divs = [];
+onload = function() {
+    config = {
+        imagesLocation: '../../images/',
+        doubleClickToEdit: true,
+        modeClasses: [
+            'Wikiwyg.Wysiwyg',
+            'Wikiwyg.Wikitext',
+            'Wikiwyg.HTML',
+            'Wikiwyg.Preview'
+        ]
+    };
+    var elements = document.getElementsByTagName('div');
+    var divs = [];
+    for (var i = 0; i < elements.length; i++)
+        divs.push(elements[i]);
+    for (var i in divs) {
+        var wikiwyg = new Wikiwyg.Standalone();
+        wikiwyg.createWikiwygArea(divs[i], config);
+        wikiwyg_divs.push(wikiwyg);
+    }
+    return true;
+}
+
+</script>
+</head>
+<body>
+<h3>Wikiwyg Demo Page</h3>
+<p>
+Doubleclick on any of the 3 sections below to edit them. You'll need a
+Mozilla based browser like Firefox. You may edit more than one section
+at a time. Changes are saved into the browser and are lost when you
+reload the page.
+
+</p>
+<hr />
+<blockquote>
+<div>
+<p>
+Wikiwyg is a Javascript library that can be easily
+integrated into any wiki or blog software. It offers the user multiple
+ways to edit/view a piece of content:
+</p>
+<ul>
+<li>Wysiwyg mode - Simple, HTML, Design Mode editing.
+<li>Wikitext mode - Standard, Wiki, Text Area editing.
+<ul>
+<li>Possible to support more than one wiki syntax flavor.
+</ul>
+<li>Preview mode - Display mode without saving changes.
+</ul>
+</div>
+<hr />
+<div>
+<p>
+<h3>Lorem ipsum</h3>
+</p>
+<p>
+Lorem ipsum dolor sit amet ipso facto.Lorem ipsum dolor sit amet ipso
+facto.Lorem ipsum dolor sit amet ipso facto. Lorem ipsum dolor sit amet
+ipso facto.Lorem ipsum dolor sit amet ipso facto.
+</p>
+<p>
+facto.Lorem ipsum dolor sit amet ipso facto.Lorem ipsum dolor sit
+amet ipso facto.Lorem ipsum dolor sit amet ipso facto. Lorem ipsum
+dolor sit amet ipso facto.Lorem ipsum dolor sit amet ipso facto.
+</p>
+</div> <hr />
+<div>
+<h3>COPYRIGHT:</h3>
+<pre>
+    Copyright (c) 2005 Socialtext Corporation 
+    655 High Street
+    Palo Alto, CA 94301 U.S.A.
+    All rights reserved.
+</pre>
+<p>
+Wikiwyg is free software. 
+</p>
+<p>
+This library is <em>free software</em>; you can redistribute it and/or modify it
+under the terms of the GNU Lesser General Public License as published by
+the Free Software Foundation; either version 2.1 of the License, or (at
+your option) any later version.
+</p>
+<p>
+This library is distributed in the hope that it will be useful, but
+<strong>WITHOUT ANY WARRANTY</strong>; without even the implied
+warranty of <strong>MERCHANTABILITY</strong> or <strong>FITNESS FOR A
+PARTICULAR PURPOSE</strong>. See the GNU Lesser General Public License
+for more details.
+</p>
+<pre>
+    http://www.gnu.org/copyleft/lesser.txt
+</pre>
+</div>
+</blockquote>
+</body>
+</html>
