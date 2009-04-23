@@ -54,12 +54,7 @@ class Link{
 	}
 	
 	public static function isURL($code){
-		$text = ereg("^(http|https|ftp)://(www\.)?.*$", $code );
-		if($text){
-			return true;
-		}else{
-			return false;
-		}
+		return preg_match('%^(?:http|https|ftp)://(?:www\.)?.*$%i', $code) ? true : false;
 	}
 	
 	public function addLink($title, $desc, $url, $type){		

@@ -716,7 +716,7 @@ function createThumbnail($imageSrc, $ext,$imgDest,$thumbWidth){
 		wfDebug("SpecialUpload::detectScript: checking for embedded scripts and HTML stuff\n");
 		
 		#check for HTML doctype
-		if (eregi("<!DOCTYPE *X?HTML",$chunk)) return true;
+		if (preg_match('/<!DOCTYPE *X?HTML/i', $chunk)) return true;
 		
 		/**
 		* Internet Explorer for Windows performs some really stupid file type

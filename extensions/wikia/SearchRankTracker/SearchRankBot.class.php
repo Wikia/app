@@ -164,7 +164,7 @@ class SearchRankBot {
 					// filter out trailing slashes
 					$sLinkFiltered = ( substr( $sLink[1], -1, 1 ) == '/' ? substr( $sLink[1], 0, -1 ) : $sLink[1] );
 
-					if(eregi($sUrl, $sLinkFiltered)) {
+					if(strpos($sLinkFiltered, $sUrl) !== false) {
 						$iRank = $iCount;
 						$this->printDebug("=> (google) Phrase: \"$sPhrase\", URL: $sUrl - found at position: $iCount");
 						break;

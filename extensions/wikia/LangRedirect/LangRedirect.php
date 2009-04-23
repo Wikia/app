@@ -22,7 +22,7 @@ function getRedirectURL() {
 	$prefered = array();
 
 	foreach ($accept_langs as $lang) {
-		ereg('([a-z]{1,2})(-([a-z0-9]+))?(;q=([0-9\.]+))?', $lang, $found);
+		preg_match('/([a-z]{1,2})(-([a-z0-9]+))?(;q=([0-9.]+))?/', $lang, $found);
 		$code = $found[1];
 		$morecode = $found[3];
 		$fullcode = $morecode ? $code . '-'. $morecode : $code;
