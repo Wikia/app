@@ -25,7 +25,6 @@ if( !defined( 'MEDIAWIKI' ) )
 // macbre: use Wikia specific class between SkinTemplate and SkinMonoBook
 require_once("skins/wikia/WikiaMonoBook.php");
 
-//class SkinMonoBook extends SkinTemplate {
 class SkinMonoBook extends WikiaSkinMonoBook {
 	/** Using monobook. */
 	function initPage( OutputPage $out ) {
