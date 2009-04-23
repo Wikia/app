@@ -35,6 +35,15 @@ class WikiaSkinMonoBook extends SkinTemplate {
 		$wgHooks['SkinTemplateSetupPageCss'][] = array(&$this, 'addWikiaCss');
 	}
 
+	function setupSkinUserCss( OutputPage $out ) {
+		parent::setupSkinUserCss( $out );
+
+		// add YUI css
+		$out->addStyle('common/yui_2.5.2/container/assets/container.css');
+		$out->addStyle('common/yui_2.5.2/logger/assets/logger.css');
+		$out->addStyle('common/yui_2.5.2/tabview/assets/tabview.css');
+	}
+
 	function addWikiaVars(&$obj, &$tpl) {
 		global $wgCityId, $wgStyleVersion, $wgStylePath, $wgOut, $wgHooks;
 
@@ -70,14 +79,8 @@ class WikiaSkinMonoBook extends SkinTemplate {
 			AnalyticsEngine::track('QuantServe', AnalyticsEngine::EVENT_PAGEVIEW)
 		);
 
-		$tpl->set('wikia_headscripts', "\n\n\t\t".'<!-- Wikia -->'."\n\t\t".
-			GetReferences('monobook_js').
-			"\n\t\t".
-			"<!-- YUI CSS -->\n\t\t".
-			'<link rel="stylesheet" type="text/css" href="'.$wgStylePath.'/common/yui_2.5.2/container/assets/container.css?'.$wgStyleVersion.'"/>'.
-			'<link rel="stylesheet" type="text/css" href="'.$wgStylePath.'/common/yui_2.5.2/logger/assets/logger.css?'.$wgStyleVersion.'"/>'.
-			'<link rel="stylesheet" type="text/css" href="'.$wgStylePath.'/common/yui_2.5.2/tabview/assets/tabview.css?'.$wgStyleVersion.'"/>'.
-			"\n\t\t".'<!-- /Wikia -->'."\n\n");
+		// load allinone / separate JS files
+		$tpl->set('wikia_headscripts', GetReferences('monobook_js') . "<!-- wikia -->\n");
 
 		// wikia toolbox
 		$tpl->set('wikia_toolbox', $this->buildWikiaToolbox());
