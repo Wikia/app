@@ -1096,8 +1096,23 @@ function Wysiwyg_BlockSaveButton($editPage, &$checkboxes) {
  */
 $wgAjaxExportList[] = 'WysiwygParseWikitext';
 function WysiwygParseWikitext($wikitext) {
-	global $wgParser, $wgTitle;
+	global $IP, $wgRequest, $wgTitle, $wgWysiwygParserEnabled;
+	
+	// enable wysiwyg parser when requested
+	if ($wgRequest->getVal('wysiwyg')) {
+		require_once("$IP/extensions/wikia/Wysiwyg/WysiwygParser.php");
+		$wgWysiwygParserEnabled = true;
+		$parser = new WysiwygParser();
+	}
+	else {
+		$parser = new Parser();
+	}
 
 	$options = new ParserOptions();
-	return $wgParser->parse($wikitext, $wgTitle, $options)->getText();
+
+	$html = $parser->parse($wikitext, $wgTitle, $options)->getText();
+
+	$wgWysiwygParserEnabled = false;
+
+	return $html;
 }

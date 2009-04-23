@@ -601,7 +601,7 @@ FCK.FixWikitextPlaceholder = function(placeholder) {
 }
 
 // parses given wikitext and fires callback with HTML, FCK and refid
-FCK.ParseWikitext = function(wikitext, callback, data) {
+FCK.ParseWikitext = function(wikitext, callback, data, useWysiwygParser) {
 	// parse given wikitext
 	var callback = {
 		success: function(o) {
@@ -618,11 +618,24 @@ FCK.ParseWikitext = function(wikitext, callback, data) {
 		argument: {'FCK': FCK, 'data': data, 'callback': callback}
 	}
 
+	// build params array
+	var params = [];
+
+	params.push('action=ajax');
+	params.push('title=' + encodeURIComponent(window.parent.wgPageName));
+	params.push('rs=WysiwygParseWikitext');
+	params.push('rsargs[]=' + encodeURIComponent(wikitext));
+
+	if (useWysiwygParser) {
+		params.push('wysiwyg=1');
+	}
+
+	// send request
 	FCK.YAHOO.util.Connect.asyncRequest(
 		'POST',
 		((window.parent.wgScript == null) ? (window.parent.wgScriptPath + "/index.php") : window.parent.wgScript),
 		callback,
-		"action=ajax&title=" + encodeURIComponent(window.parent.wgPageName) + "&rs=WysiwygParseWikitext&rsargs[]=" +  encodeURIComponent(wikitext)
+		params.join('&')
 	);
 }
 
