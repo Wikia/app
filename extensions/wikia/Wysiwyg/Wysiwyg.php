@@ -75,12 +75,6 @@ function Wysiwyg_Toggle($toggles) {
 // modify values returned by User::getOption() when wysiwyg is enabled
 function Wysiwyg_UserGetOption($options, $name, $value) {
 
-	// don't continue when on Special:Preferences
-	global $wgTitle;
-	if ( !empty($wgTitle) && SpecialPage::resolveAlias( $wgTitle->getDBkey() ) == 'Preferences') {
-		return true;
-	}
-
 	// don't continue if user turns off wysiwyg (disablewysiwyg = true)
 	if (!empty($options['disablewysiwyg'])) {
 		return true;
@@ -100,6 +94,11 @@ function Wysiwyg_UserGetOption($options, $name, $value) {
 	);
 
 	if ( array_key_exists($name, $values) ) {
+		// don't continue when on Special:Preferences
+		global $wgTitle;
+		if ( !empty($wgTitle) && SpecialPage::resolveAlias( $wgTitle->getDBkey() ) == 'Preferences') {
+			return true;
+		}
 		$value = $values[$name];
 	}
 
@@ -1106,7 +1105,7 @@ function Wysiwyg_BlockSaveButton($editPage, &$checkboxes) {
 $wgAjaxExportList[] = 'WysiwygParseWikitext';
 function WysiwygParseWikitext($wikitext) {
 	global $IP, $wgRequest, $wgTitle, $wgWysiwygParserEnabled;
-	
+
 	// enable wysiwyg parser when requested
 	if ($wgRequest->getVal('wysiwyg')) {
 		require_once("$IP/extensions/wikia/Wysiwyg/WysiwygParser.php");
