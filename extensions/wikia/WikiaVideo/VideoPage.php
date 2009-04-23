@@ -128,11 +128,12 @@ EOD;
 		$wgWysiwygMetaData[$refid]['href'] = !empty($title) ? $title->getPrefixedText() : '';
 		$wgWysiwygMetaData[$refid]['align'] = $align;
 		if (!empty($width)) $wgWysiwygMetaData[$refid]['width'] = intval($width);
-		if ($caption != '') $wgWysiwygMetaData[$refid]['caption'] = $caption;
-
+		
 		if(empty($thumb)) {
 			return "<div class=\"t{$align}\" refid=\"{$refid}\" style=\"position:relative;width:{$width}px\">{$code}</div>";
 		}
+
+		if ($caption != '') $wgWysiwygMetaData[$refid]['caption'] = $caption;
 
 		$wgWysiwygMetaData[$refid]['thumb'] = 1;
 
