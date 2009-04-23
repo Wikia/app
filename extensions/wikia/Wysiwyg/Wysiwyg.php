@@ -75,8 +75,11 @@ function Wysiwyg_Toggle($toggles) {
 // modify values returned by User::getOption() when wysiwyg is enabled
 function Wysiwyg_UserGetOption($options, $name, $value) {
 
+	wfProfileIn(__METHOD__);
+
 	// don't continue if user turns off wysiwyg (disablewysiwyg = true)
 	if (!empty($options['disablewysiwyg'])) {
+		wfProfileOut(__METHOD__);
 		return true;
 	}
 
@@ -94,14 +97,16 @@ function Wysiwyg_UserGetOption($options, $name, $value) {
 	);
 
 	if ( array_key_exists($name, $values) ) {
-		// don't continue when on Special:Preferences
+		// don't continue when on Special:Preferences (actually only check namespace ID, it's faster)
 		global $wgTitle;
-		if ( !empty($wgTitle) && SpecialPage::resolveAlias( $wgTitle->getDBkey() ) == 'Preferences') {
+		if ( !empty($wgTitle) && ($wgTitle->getNamespace() == NS_SPECIAL) ) {
+			wfProfileOut(__METHOD__);
 			return true;
 		}
 		$value = $values[$name];
 	}
 
+	wfProfileOut(__METHOD__);
 	return true;
 }
 
