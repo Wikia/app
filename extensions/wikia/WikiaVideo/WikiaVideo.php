@@ -218,6 +218,7 @@ function WikiaVideo_makeVideo($title, $options, $sk, $wikitext = '') {
 		// defaults
 		$width = 400;
 		$thumb = false;
+		$frame = false;
 		$caption = '';
 
 		foreach($params as $param) {
@@ -227,6 +228,9 @@ function WikiaVideo_makeVideo($title, $options, $sk, $wikitext = '') {
 				$width = str_replace('px', '', $param);
 			} else if('thumb' == $param) {
 				$thumb = true;
+			} else if ('frame' == $param) {
+				$thumb = true;
+				$frame = true;
 			} else if(('left' == $param) || ('right' == $param)) {
 				$align = $param;
 			} else {
@@ -247,10 +251,10 @@ function WikiaVideo_makeVideo($title, $options, $sk, $wikitext = '') {
 
 		// generate different HTML for MW editor and FCK editor
 		if (!empty($wgWysiwygParserEnabled)) {
-			$out = $video->generateWysiwygWindow($refId, $title, $align, $width, $caption, $thumb);
+			$out = $video->generateWysiwygWindow($refId, $title, $align, $width, $caption, $thumb, $frame);
 		}
 		else {
-			$out = $video->generateWindow($align, $width, $caption, $thumb);
+			$out = $video->generateWindow($align, $width, $caption, $thumb, $frame);
 		}
 	}
 	wfProfileOut('WikiaVideo_makeVideo');
