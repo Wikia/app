@@ -68,7 +68,7 @@ class UncyclopediaTemplate extends QuickTemplate {
 		<meta http-equiv="Content-Type" content="<?php $this->text('mimetype') ?>; charset=<?php $this->text('charset') ?>" />
 		<?php $this->html('headlinks') ?>
 		<title><?php $this->text('pagetitle') ?></title>
-
+		
 		<!-- YUI -->
 		<script type="text/javascript" src="http://images.wikia.com/common/yui/utilities/utilities.js"></script>
 		<script type="text/javascript" src="http://images.wikia.com/common/yui/container/container-min.js"></script>
@@ -95,6 +95,7 @@ class UncyclopediaTemplate extends QuickTemplate {
 		<script type="<?php $this->text('jsmimetype') ?>" src="<?php $this->text('stylepath' ) ?>/common/wikibits.js?<?php echo $GLOBALS['wgStyleVersion'] ?>"><!-- wikibits js --></script>
 
 		<script type="<?php $this->text('jsmimetype') ?>" src="<?php $this->text('stylepath' ) ?>/uncyclopedia/main.js?<?php echo $GLOBALS['wgStyleVersion'] ?>"><!-- wikia YUI dialog js --></script>
+		<?php $this->html('csslinks') ?>
 <?php	if($this->data['jsvarurl'  ]) { ?>
 		<script type="<?php $this->text('jsmimetype') ?>" src="<?php $this->text('jsvarurl'  ) ?>"><!-- site js --></script>
 <?php	} ?>
