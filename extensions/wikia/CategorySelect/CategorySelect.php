@@ -75,11 +75,6 @@ function CategorySelectInitializeHooks($title, $article) {
 		return true;
 	}
 
-	// Don't initialize for blocked users
-	if($wgUser->isBlocked()) {
-		return true;
-	}
-
 	// Initialize only for Monaco skin
 	if(get_class($wgUser->getSkin()) != 'SkinMonaco') {
 		return true;
@@ -109,13 +104,10 @@ function CategorySelectInitializeHooks($title, $article) {
 		if ($action == 'purge' && $wgUser->isAnon() && !$wgRequest->wasPosted()) {
 			return true;
 		}
-		if($wgTitle->userCan('edit')) {
-			//view mode
-			$wgHooks['Skin::getCategoryLinks::end'][] = 'CategorySelectGetCategoryLinksEnd';
-
-			$wgHooks['Skin::getCategoryLinks::begin'][] = 'CategorySelectGetCategoryLinksBegin';
-			$wgHooks['MakeGlobalVariablesScript'][] = 'CategorySelectSetupVars';
-		}
+		//view mode
+		$wgHooks['Skin::getCategoryLinks::end'][] = 'CategorySelectGetCategoryLinksEnd';
+		$wgHooks['Skin::getCategoryLinks::begin'][] = 'CategorySelectGetCategoryLinksBegin';
+		$wgHooks['MakeGlobalVariablesScript'][] = 'CategorySelectSetupVars';
 	} else if($action == 'edit' || $action == 'submit') {
 		//edit mode
 		$wgHooks['EditPage::importFormData::finished'][] = 'CategorySelectImportFormData';
