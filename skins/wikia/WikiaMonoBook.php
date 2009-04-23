@@ -194,9 +194,14 @@ class WikiaSkinMonoBook extends SkinTemplate {
 	// HTML to be added between footer and end of page
 	function bottomScripts() {
 		global $wgDBserver;
-		$bottomScriptText = "\n\t".'<!-- WikiaBottomScripts  -->'."\n";
+		$bottomScriptText = '';
+
 		wfRunHooks( 'SkinAfterBottomScripts', array( $this, &$bottomScriptText ) );
-		$bottomScriptText .= "\n\n\t".'<!-- /WikiaBottomScripts  -->'."\n\n" . '<!-- DB: '.$wgDBserver.' -->'."\n\n";
-		return $bottomScriptText;
+
+		return "
+		<!-- WikiaBottomScripts -->
+		{$bottomScriptText}
+		<!-- /WikiaBottomScripts -->
+		<!-- DB: {$wgDBserver} -->";
 	}
 } // end of class
