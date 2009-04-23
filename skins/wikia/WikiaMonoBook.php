@@ -18,10 +18,10 @@ require_once dirname(__FILE__) . "/../../extensions/wikia/AnalyticsEngine/Analyt
 
 class WikiaSkinMonoBook extends SkinTemplate {
 
-	var $ads;
+	protected $ads;
 
 	function initPage(&$out) {
-		global $wgOut, $wgHooks, $wgShowAds, $wgUseAdServer, $wgRequest;
+		global $wgHooks, $wgShowAds, $wgUseAdServer, $wgRequest;
 
 		parent::initPage( $out );
 
@@ -36,10 +36,9 @@ class WikiaSkinMonoBook extends SkinTemplate {
 	}
 
 	function addWikiaVars(&$obj, &$tpl) {
-		global $wgKennisnet;
+		global $wgCityId, $wgStyleVersion, $wgStylePath, $wgOut, $wgHooks;
 
-		$isKennisnet = isset($wgKennisnet) && ($wgKennisnet == true);
-
+		// setup ads
 		AdEngine::getInstance()->setLoadType('inline');
 		if($this->ads === false) {
 			$tpl->set('pageclass', $tpl->textret('pageclass').' without-adsense');
@@ -55,26 +54,21 @@ class WikiaSkinMonoBook extends SkinTemplate {
 			$tpl->set('ads_topleft', AdServer::getInstance()->getAd('tl'));
 			$tpl->set('ads_topright', AdServer::getInstance()->getAd('tr'));
 			$tpl->set('ads_bot', AdServer::getInstance()->getAd('b'));
-		    $tpl->set('ads_columngoogle',  '<!-- USING ad server! -->'."\n".'<div id="column-google" class="noprint">'."\n".
-
-			AdEngine::getInstance()->getSetupHtml() .
-			'<div id="wikia_header" style="display:none"></div>' . // Hack because ads have code that references this. Awful.
-    			'<div id="column-google-topright">'.AdEngine::getInstance()->getAd('RIGHT_SPOTLIGHT_1').'</div>'."\n".
-			'<div id="column-google-right">'.AdEngine::getInstance()->getAd('RIGHT_SKYSCRAPER_1').'</div>'."\n".
-			'<div id="column-google-botright">'.AdEngine::getInstance()->getAd('RIGHT_SPOTLIGHT_2').'</div>'."\n</div>\n"
+			$tpl->set('ads_columngoogle',  '<!-- USING ad server! -->'."\n".'<div id="column-google" class="noprint">'."\n".
+				AdEngine::getInstance()->getSetupHtml() .
+				'<div id="wikia_header" style="display:none"></div>' . // Hack because ads have code that references this. Awful.
+				'<div id="column-google-topright">'.AdEngine::getInstance()->getAd('RIGHT_SPOTLIGHT_1').'</div>'."\n".
+				'<div id="column-google-right">'.AdEngine::getInstance()->getAd('RIGHT_SKYSCRAPER_1').'</div>'."\n".
+				'<div id="column-google-botright">'.AdEngine::getInstance()->getAd('RIGHT_SPOTLIGHT_2').'</div>'."\n</div>\n"
 			);
-
 		}
 
-		global $wgCityId;
 		$tpl->set('ads_bottomjs',
 			AnalyticsEngine::track('GA_Urchin', AnalyticsEngine::EVENT_PAGEVIEW) .
 			AnalyticsEngine::track('GA_Urchin', 'hub', AdEngine::getCachedCategory()) .
 			AnalyticsEngine::track('GA_Urchin', 'onewiki', array($wgCityId)) .
 			AnalyticsEngine::track('QuantServe', AnalyticsEngine::EVENT_PAGEVIEW)
 		);
-
-		global $wgStyleVersion, $wgStylePath;
 
 		$tpl->set('wikia_headscripts', "\n\n\t\t".'<!-- Wikia -->'."\n\t\t".
 			GetReferences('monobook_js').
@@ -85,107 +79,62 @@ class WikiaSkinMonoBook extends SkinTemplate {
 			'<link rel="stylesheet" type="text/css" href="'.$wgStylePath.'/common/yui_2.5.2/tabview/assets/tabview.css?'.$wgStyleVersion.'"/>'.
 			"\n\t\t".'<!-- /Wikia -->'."\n\n");
 
-		global $wgCurse, $wgStylePath, $wgOut, $wgHooks;
-		if(!empty($wgCurse) && $wgCurse == true) {
-		$tpl->set('cursed', true);
-		$tpl->set('cursed_path', 'http://www.curse.com/js/wikia');	// serve JS from curse.com
-		//$this->set('cursed_path', $wgCurseExternal ? 'http://www.curse.com/js/wikia' : $wgStylePath.'/monobook/curse'); // serve JS from wikia.com
-
-		$wgOut->addScript('<!-- curse --><script type="text/javascript" src="'.$tpl->textret('cursed_path').'/head.js"></script><!-- /curse -->'."\n");
-
-		$tpl->set('curse_header', '<!-- curse header --><script type="text/javascript" src="'.$tpl->textret('cursed_path').'/header.js"></script><!-- /curse header -->');
-		$tpl->set('curse_footer', '<!-- curse footer --><script type="text/javascript" src="'.$tpl->textret('cursed_path').'/footer.js"></script><!-- /curse footer -->');
-
-		} else {
-		    $tpl->set('cursed', false);
-		}
-
-		// ABC.com cobranding
-		global $wgPartnerWikiData;
-		if( isset($wgPartnerWikiData['project']) &&  $wgPartnerWikiData['project'] == 'ABC' ) {
-			$tpl->set( 'abc_css', '<link rel="stylesheet" type="text/css" href="'.$wgStylePath.'/monobook/abc/main.css"/>' );
-			$tpl->set( 'abc_header', '<iframe width="100%" height="172" src="http://abc.go.com/static/gnav/header_fall2007_external.html?url=/primetime/lost/wiki"></iframe><div id="wikia-content"><div>' );
-			$tpl->set( 'abc_footer', '</div><iframe width="100%" height="97" src="http://abc.go.com/static/gnav/footer_fall2007_external.html"></iframe>' );
-		}
-
 		// wikia toolbox
-		$tpl->set('wikia_toolbox', !$isKennisnet ? $this->buildWikiaToolbox() : '');
+		$tpl->set('wikia_toolbox', $this->buildWikiaToolbox());
 
 		// setup footer links
 		$tpl->set('copyright',  '');
 		$tpl->set('privacy',    '');
 
-		if(!$isKennisnet)
-		{
-		    $tpl->set('about',      '<a href="http://www.wikia.com/wiki/About_Wikia" title="About Wikia">About Wikia</a>');
-		    $tpl->set('disclaimer', '<a href="http://www.wikia.com/wiki/Terms_of_use" title="Terms of use">Terms of use</a>');
-		    $tpl->set('advertise',  '<a href="http://www.federatedmedia.net/authors/wikia" title="advertise on wikia">Advertise</a>');
-		    $tpl->set('hosting',    '<i>Wikia</i>&reg; is a registered service mark of Wikia, Inc. All rights reserved.');
-
-		    $tpl->set('credits',    ' ');
-		}
-		else
-		{
-		    $tpl->set('about',      '');
-		    $tpl->set('disclaimer', '');
-		    $tpl->set('advertise',  '');
-		    $tpl->set('hosting',    '');
-		    $tpl->set('diggs',      '');
-		    $tpl->set('delicious',  '');
-		}
+		$tpl->set('about',      '<a href="http://www.wikia.com/wiki/About_Wikia" title="About Wikia">About Wikia</a>');
+		$tpl->set('disclaimer', '<a href="http://www.wikia.com/wiki/Terms_of_use" title="Terms of use">Terms of use</a>');
+		$tpl->set('advertise',  '<a href="http://www.federatedmedia.net/authors/wikia" title="advertise on wikia">Advertise</a>');
+		$tpl->set('hosting',    '<i>Wikia</i>&reg; is a registered service mark of Wikia, Inc. All rights reserved.');
+		$tpl->set('credits',    ' ');
 
 		return true; // hooks must return true
 	}
 
-	function addWikiaCss(&$out)
-	{
-	    global $wgStylePath, $wgStyleVersion;
-
-	    $out = '@import "'.$wgStylePath.'/wikia/css/Monobook.css?'.$wgStyleVersion.'";' . $out;
-
-	    //print_r($out);
-
-	    return true; // hooks must return true
+	function addWikiaCss(&$out) {
+		global $wgStylePath, $wgStyleVersion;
+		$out = '@import "'.$wgStylePath.'/wikia/css/Monobook.css?'.$wgStyleVersion.'";' . $out;
+		return true;
 	}
 
-	function buildWikiaToolbox()
-	{
-	    wfProfileIn(__METHOD__);
+	function buildWikiaToolbox() {
+		wfProfileIn(__METHOD__);
+		global $wgOut;
 
-	    global $wgKennisnet, $wgOut;
+		$wikicitiesNavUrls = $this->buildWikicitiesNavUrls();
+		$toolboxTitle = htmlspecialchars(wfMsg('wikicities-nav'));
+		$wikiaMessages = self::getWikiaMessages();
 
-	    $wikicitiesNavUrls = $this->buildWikicitiesNavUrls();
+		if (!empty($wikicitiesNavUrls)) {
+			foreach($wikicitiesNavUrls as $navlink) {
+				$items[] = '<li id="'.htmlspecialchars($navlink['id']).'"><a href="'.htmlspecialchars($navlink['href']).'">'.htmlspecialchars($navlink['text']).'</a></li>';
+			}
 
-	    $toolbox = '';
-
-	    if (empty($wgKennisnet))
-	    {
-    		$toolbox = "\n\t".'<div class="portlet" id="p-wikicities-nav">'."\n\t\t".'<h5>'.wfMsg('wikicities-nav').'</h5>'."\n\t\t".'<div class="pBody">';
-
-		if (count($wikicitiesNavUrls))
-		{
-		    $toolbox .= "\n\t\t\t<ul>";
-
-		    foreach($wikicitiesNavUrls as $navlink)
-		    {
-                	$toolbox .= "\n\t\t\t\t".'<li id="'.htmlspecialchars($navlink['id']).'"><a href="'.htmlspecialchars($navlink['href']).'">'.htmlspecialchars($navlink['text']).'</a></li>';
-		    }
-
-		    $toolbox .= "\n\t\t\t</ul>\n\n\t\t\t<hr />";
-
+			$toolbox = "
+			<ul>
+				" . implode("\n\t\t\t\t", $items) . "
+			</ul>
+			<hr />";
+		}
+		else {
+			$toolbox = '';
 		}
 
-    		$toolbox .= "\n\n\t\t\t<ul>".
-	            "\n\t\t\t\t".'<li><a href="http://www.wikia.com/wiki/Wikia_news_box">Wikia messages:</a><br />'.self::getWikiaMessages().'</li>'.
-		    "\n\t\t\t</ul>\n\t\t</div>\n\t</div>\n";
-	    }
+		$html = "	<div class=\"portlet\" id=\"p-wikicities-nav\">
+		<h5>{$toolboxTitle}</h5>
+		<div class=\"pBody\">{$toolbox}
+			<ul>
+				<li><a href=\"http://www.wikia.com/wiki/Wikia_news_box\">Wikia messages:</a><br />{$wikiaMessages}</li>
+			</ul>
+		</div>
+	</div>";
 
-	    //print_pre(htmlspecialchars($toolbox));
-
-	    wfProfileOut(__METHOD__);
-
-	    return $toolbox;
-
+		wfProfileOut(__METHOD__);
+		return $html;
 	}
 
 	function getWikiaMessages() {
@@ -239,19 +188,15 @@ class WikiaSkinMonoBook extends SkinTemplate {
 	    }
         wfProfileOut( __METHOD__ );
         return $result;
-    }
+	}
 
 
 	// HTML to be added between footer and end of page
-	function bottomScripts()
-	{
-	    global $wgServer, $wgDBserver;
-
-	    $bottomScriptText = "\n\t".'<!-- WikiaBottomScripts  -->'."\n";
-        wfRunHooks( 'SkinAfterBottomScripts', array( $this, &$bottomScriptText ) );
-	    $bottomScriptText .= "\n\n\t".'<!-- /WikiaBottomScripts  -->'."\n\n" . '<!-- DB: '.$wgDBserver.' -->'."\n\n";
-
-        return $bottomScriptText;
+	function bottomScripts() {
+		global $wgDBserver;
+		$bottomScriptText = "\n\t".'<!-- WikiaBottomScripts  -->'."\n";
+		wfRunHooks( 'SkinAfterBottomScripts', array( $this, &$bottomScriptText ) );
+		$bottomScriptText .= "\n\n\t".'<!-- /WikiaBottomScripts  -->'."\n\n" . '<!-- DB: '.$wgDBserver.' -->'."\n\n";
+		return $bottomScriptText;
 	}
 } // end of class
-?>
