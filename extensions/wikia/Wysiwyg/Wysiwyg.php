@@ -130,23 +130,29 @@ function Wysywig_Ajax($type, $input = false, $wysiwygData = false, $pageName = f
 function Wysiwyg_Initial($form) {
 	global $wgUser, $wgOut, $wgRequest, $IP, $wgExtensionsPath, $wgStyleVersion, $wgHooks, $wgWysiwygEdgeCasesFound, $wgWysiwygFallbackToSourceMode, $wgJsMimeType, $wgWysiwygEdit, $wgWysiwygUseNewToolbar;
 
+	wfProfileIn(__METHOD__);
+
 	// check user preferences option
 	if($wgUser->getOption('disablewysiwyg') == true) {
+		wfProfileOut(__METHOD__);
 		return true;
 	}
 
 	// do not initialize for articles in namespaces different then main, image or user
 	if(!in_array($form->mTitle->mNamespace, array(NS_MAIN, NS_IMAGE, NS_USER, NS_CATEGORY, NS_VIDEO))) {
+		wfProfileOut(__METHOD__);
 		return true;
 	}
 
 	// RT #10170: do not initialize for user JS/CSS subpages
 	if ($form->mTitle->isCssJsSubpage()) {
+		wfProfileOut(__METHOD__);
 		return true;
 	}
 
 	// macbre: enable only on monaco skin
 	if(get_class($wgUser->getSkin()) != 'SkinMonaco') {
+		wfProfileOut(__METHOD__);
 		return true;
 	}
 
@@ -154,6 +160,7 @@ function Wysiwyg_Initial($form) {
 
 	// do not initialize for not compatible browsers
 	if(!FCKeditor_IsCompatibleBrowser()) {
+		wfProfileOut(__METHOD__);
 		return true;
 	}
 
@@ -246,6 +253,8 @@ function Wysiwyg_Initial($form) {
 	$wgHooks['EditForm:BeforeDisplayingTextbox'][] = 'Wysiwyg_BeforeDisplayingTextbox';
 	$wgHooks['SkinTemplateOutputPageBeforeExec'][] = 'Wysiwyg_SetDomain';
 	$wgHooks['EditPageBeforeEditButtons'][] = 'Wysiwyg_BlockSaveButton';
+
+	wfProfileOut(__METHOD__);
 	return true;
 }
 
