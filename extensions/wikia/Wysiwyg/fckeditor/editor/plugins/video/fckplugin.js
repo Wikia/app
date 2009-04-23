@@ -181,63 +181,49 @@ FCK.VideoUpdate = function(refid, wikitext, extraData) {
 
 	FCK.log(FCK.wysiwygData[refid]);
 
-	// parse given wikitext
-	var callback = {
-		success: function(o) {
-			FCK = o.argument.FCK;
-			refid =  o.argument.refid;
+	FCK.ParseWikitext(wikitext, function(html, FCK, data) {
+		refid = data.refid;
 
-			var oldVideo = FCK.GetElementByRefId(refid);
-			FCK.log(oldVideo);
+		var oldVideo = FCK.GetElementByRefId(refid);
+		FCK.log(oldVideo);
 
-			result = eval('(' + o.responseText + ')');
-			html = result.parse.text['*'];
+		// insert html into editing area (before old video)...
+		var wrapper = FCKTools.GetElementDocument(oldVideo).createElement('DIV');
 
-			// remove newPP comment and whitespaces
-			html = FCK.YAHOO.lang.trim(html.split('<!-- \nNewPP limit report')[0]);
+		// fix IE's "unknown runtine error" by always adding wrapper before block elements (FF will try to validate, IE will throw an error)
+		// @see http://piecesofrakesh.blogspot.com/2007/02/ies-unknown-runtime-error-when-using.html
+		if (oldVideo.nodeName.IEquals('a') && FCKBrowserInfo.IsIE) {
+			oldVideo.parentNode.parentNode.insertBefore(wrapper, oldVideo.parentNode);
+		}
+		else {
+			oldVideo.parentNode.insertBefore(wrapper, oldVideo);
+		}
 
-			// insert html into editing area (before old video)...
-			var wrapper = FCKTools.GetElementDocument(oldVideo).createElement('DIV');
+		// set HTML
+		wrapper.innerHTML = html;
 
-			// fix IE's "unknown runtine error" by always adding wrapper before block elements (FF will try to validate, IE will throw an error)
-			// @see http://piecesofrakesh.blogspot.com/2007/02/ies-unknown-runtime-error-when-using.html
-			if (oldVideo.nodeName.IEquals('a') && FCKBrowserInfo.IsIE) {
-				oldVideo.parentNode.parentNode.insertBefore(wrapper, oldVideo.parentNode);
-			}
-			else {
-				oldVideo.parentNode.insertBefore(wrapper, oldVideo);
-			}
+		// ...and "protect" it
+		wrapper.firstChild.setAttribute('refid', refid);
+		FCK.ProtectVideo(wrapper.firstChild);
 
-			// set HTML
-			wrapper.innerHTML = html;
+		// remember current values of _wysiwyg_new_line and _wysiwyg_line_start attributes
+		if (oldVideo.getAttribute('_wysiwyg_new_line')) {
+			wrapper.firstChild.setAttribute('_wysiwyg_new_line', true);
+		}
 
-			// ...and "protect" it
-			wrapper.firstChild.setAttribute('refid', refid);
-			FCK.ProtectVideo(wrapper.firstChild);
+		if (oldVideo.getAttribute('_wysiwyg_line_start')) {
+			wrapper.firstChild.setAttribute('_wysiwyg_line_start', true);
+		}
+		else {
+			wrapper.firstChild.removeAttribute('_wysiwyg_line_start');
+		}
 
-			// remember current values of _wysiwyg_new_line and _wysiwyg_line_start attributes
-			if (oldVideo.getAttribute('_wysiwyg_new_line')) {
-				wrapper.firstChild.setAttribute('_wysiwyg_new_line', true);
-			}
-
-			if (oldVideo.getAttribute('_wysiwyg_line_start')) {
-				wrapper.firstChild.setAttribute('_wysiwyg_line_start', true);
-			}
-
-			// remove wrapper and old video
-			FCKDomTools.RemoveNode(oldVideo, false); // including child nodes
-			FCKDomTools.RemoveNode(wrapper, true); // excluding child nodes
-		},
-		failure: function(o) {},
-		argument: {'FCK': FCK, 'refid': refid}
-	}
-
-	FCK.YAHOO.util.Connect.asyncRequest(
-		'POST',
-		window.parent.wgScriptPath + '/api.php',
-		callback,
-		"action=parse&format=json&wysiwyg=true&prop=text&title=" + encodeURIComponent(window.parent.wgPageName) + "&text=" +  encodeURIComponent(wikitext)
-	);
+		// remove wrapper and old video
+		FCKDomTools.RemoveNode(oldVideo, false); // including child nodes
+		FCKDomTools.RemoveNode(wrapper, true); // excluding child nodes
+	}, {
+		'refid': refid
+	}, true /* use wysiwyg parser */);
 }
 
 FCK.VideoAdd = function(wikitext, extraData) {
@@ -258,48 +244,31 @@ FCK.VideoAdd = function(wikitext, extraData) {
 	// merge with extraData
 	FCK.wysiwygData[refid] = FCK.YAHOO.lang.merge(FCK.wysiwygData[refid], extraData);
 
-	// parse given wikitext
-	var callback = {
-		success: function(o) {
-			FCK = o.argument.FCK;
-			refid =  o.argument.refid;
+	FCK.ParseWikitext(wikitext, function(html, FCK, data) {
+		refid =  data.refid;
 
-			result = eval('(' + o.responseText + ')');
-			html = result.parse.text['*'];
+		// insert html into editing area...
+		var wrapper = FCK.EditorDocument.createElement('DIV');
+		FCK.InsertElement(wrapper);
+		wrapper.innerHTML = html;
 
-			// remove newPP comment and whitespaces
-			html = FCK.YAHOO.lang.trim(html.split('<!-- \nNewPP limit report')[0]);
+		// is "simple" video wrapped by <p></p> ?
+		if (html.substr(0,3) == '<p>') {
+			// remove wrapping <p></p>
+			wrapper.innerHTML = html.substr(3, html.length-7);
+		}
 
-			// insert html into editing area...
-			var wrapper = FCK.EditorDocument.createElement('DIV');
-			FCK.InsertElement(wrapper);
-			wrapper.innerHTML = html;
+		// ...and "protect" it
+		wrapper.firstChild.setAttribute('refid', refid);
+		FCK.ProtectVideo(wrapper.firstChild);
 
-			// is "simple" video wrapped by <p></p> ?
-			if (html.substr(0,3) == '<p>') {
-				// remove wrapping <p></p>
-				wrapper.innerHTML = html.substr(3, html.length-7);
-			}
+		// remove wrapper
+		FCKDomTools.RemoveNode(wrapper, true);
 
-			// ...and "protect" it
-			wrapper.firstChild.setAttribute('refid', refid);
-			FCK.ProtectVideo(wrapper.firstChild);
-
-			// remove wrapper
-			FCKDomTools.RemoveNode(wrapper, true);
-
-			FCK.log(FCK.wysiwygData[refid]);
-		},
-		failure: function(o) {},
-		argument: {'FCK': FCK, 'refid': refid}
-	}
-
-	FCK.YAHOO.util.Connect.asyncRequest(
-		'POST',
-		window.parent.wgScriptPath + '/api.php',
-		callback,
-		"action=parse&format=json&wysiwyg=true&prop=text&title=" + encodeURIComponent(window.parent.wgPageName) + "&text=" +  encodeURIComponent(wikitext)
-	);
+		FCK.log(FCK.wysiwygData[refid]);
+	}, {
+		'refid': refid
+	}, true /* use wysiwyg parser */);
 }
 
 
