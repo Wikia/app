@@ -335,7 +335,7 @@ class SpamRegexBatch {
 
 		$title =  Title::newFromText( $article );
 		$dbr = wfGetDB( DB_SLAVE );
-		$row = $db->selectRow(
+		$row = $dbr->selectRow(
 			array(
 				"`$db`.page",
 				"`$db`.revision",
