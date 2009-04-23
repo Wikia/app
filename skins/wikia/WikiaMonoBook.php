@@ -44,8 +44,9 @@ class WikiaSkinMonoBook extends SkinTemplate {
 		$out->addStyle('common/yui_2.5.2/tabview/assets/tabview.css');
 	}
 
-	function addWikiaVars(&$obj, &$tpl) {
+	public function addWikiaVars(&$obj, &$tpl) {
 		global $wgCityId, $wgStyleVersion, $wgStylePath, $wgOut, $wgHooks;
+		wfProfileIn(__METHOD__);
 
 		// setup ads
 		AdEngine::getInstance()->setLoadType('inline');
@@ -95,18 +96,19 @@ class WikiaSkinMonoBook extends SkinTemplate {
 		$tpl->set('hosting',    '<i>Wikia</i>&reg; is a registered service mark of Wikia, Inc. All rights reserved.');
 		$tpl->set('credits',    ' ');
 
-		return true; // hooks must return true
+		wfProfileOut(__METHOD__);
+		return true;
 	}
 
-	function addWikiaCss(&$out) {
+	public function addWikiaCss(&$out) {
 		global $wgStylePath, $wgStyleVersion;
 		$out = '@import "'.$wgStylePath.'/wikia/css/Monobook.css?'.$wgStyleVersion.'";' . $out;
 		return true;
 	}
 
-	function buildWikiaToolbox() {
-		wfProfileIn(__METHOD__);
+	protected function buildWikiaToolbox() {
 		global $wgOut;
+		wfProfileIn(__METHOD__);
 
 		$wikicitiesNavUrls = $this->buildWikicitiesNavUrls();
 		$toolboxTitle = htmlspecialchars(wfMsg('wikicities-nav'));
@@ -140,9 +142,8 @@ class WikiaSkinMonoBook extends SkinTemplate {
 		return $html;
 	}
 
-	function getWikiaMessages() {
-		global $wgMemc, $wgOut;
-		global $wgLang, $wgContLang;
+	protected function getWikiaMessages() {
+		global $wgMemc, $wgOut, $wgLang, $wgContLang;
 		wfProfileIn( __METHOD__ );
 
 		$cacheWikiaMessages = $wgLang->getCode() == $wgContLang->getCode();
@@ -161,41 +162,39 @@ class WikiaSkinMonoBook extends SkinTemplate {
 		return $ret;
 	}
 
-	function buildWikicitiesNavUrls () {
-
-    	    wfProfileIn( __METHOD__ );
-
-	    global $wgWikicitiesNavLinks, $wgMemc;
+	protected function buildWikicitiesNavUrls () {
+		global $wgWikicitiesNavLinks, $wgMemc;
+		wfProfileIn( __METHOD__ );
 
 		$result = $wgMemc->get( wfMemcKey( 'wikiaNavUrls' ) );
 		if ( empty ( $result ) ) {
-	        $result = array();
-	        if(isset($wgWikicitiesNavLinks) && is_array($wgWikicitiesNavLinks)) {
-	            foreach ( $wgWikicitiesNavLinks as $link ) {
-	                $text = wfMsg( $link['text'] );
-	                wfProfileIn( __METHOD__.'::'.$link['text'] );
-	                if ($text != '-') {
-	                    $dest = wfMsgForContent( $link['href'] );
-			    wfProfileIn( __METHOD__.'::'.$link['text'].'::2' );
-	                    $result[] = array(
-	                            'text' => $text,
-	                            'href' => $this->makeInternalOrExternalUrl( $dest ),
-	                            'id' => 'n-'.$link['text']
-	                            );
-			    wfProfileOut( __METHOD__.'::'.$link['text'].'::2' );
-	                }
-			wfProfileOut( __METHOD__.'::'.$link['text'] );
-	            }
-	        }
-	        $wgMemc->set( wfMemcKey( 'wikiaNavUrls' ), $result, 60*60 );
-	    }
-        wfProfileOut( __METHOD__ );
-        return $result;
+			$result = array();
+			if(isset($wgWikicitiesNavLinks) && is_array($wgWikicitiesNavLinks)) {
+				foreach ( $wgWikicitiesNavLinks as $link ) {
+					$text = wfMsg( $link['text'] );
+					wfProfileIn( __METHOD__.'::'.$link['text'] );
+					if ($text != '-') {
+						$dest = wfMsgForContent( $link['href'] );
+						wfProfileIn( __METHOD__.'::'.$link['text'].'::2' );
+						$result[] = array(
+						'text' => $text,
+						'href' => $this->makeInternalOrExternalUrl( $dest ),
+						'id' => 'n-'.$link['text']
+						);
+						wfProfileOut( __METHOD__.'::'.$link['text'].'::2' );
+					}
+					wfProfileOut( __METHOD__.'::'.$link['text'] );
+				}
+			}
+			$wgMemc->set( wfMemcKey( 'wikiaNavUrls' ), $result, 60*60 );
+		}
+
+		wfProfileOut( __METHOD__ );
+		return $result;
 	}
 
-
 	// HTML to be added between footer and end of page
-	function bottomScripts() {
+	public function bottomScripts() {
 		global $wgDBserver;
 		$bottomScriptText = '';
 
