@@ -183,7 +183,7 @@ class SpamRegexBatch {
 					wfDebug( "Match! \n" );
 					$wgMemc->delete($this->memcache_regexes);
 					wfDebug( "Clear cache - " . $this->memcache_regexes . "\n" );
-					$wgMemc->delete("$wgDBname:spam_".$this->list."_regexes");
+					$wgMemc->delete("$wgDBname:spam_".$this->list."_regexes:v2");
 					wfDebug( "Clear cache with spam list: $wgDBname:spam_".$this->list."_regexes" );
 					$key = "spam_".$this->list."_file:$fileName";
 					$warningKey = "$wgDBname:spamfilewarning:$fileName";
@@ -239,7 +239,7 @@ class SpamRegexBatch {
 		
 		// This used to be cached per-site, but that could be bad on a shared
 		// server where not all wikis have the same configuration.
-		$key = "$wgDBname:spam_".$this->list."_regexes";
+		$key = "$wgDBname:spam_".$this->list."_regexes:v2";
 
 		$cachedRegexes = $wgMemc->get( $key );
 		if( is_array( $cachedRegexes ) ) {
@@ -332,29 +332,29 @@ class SpamRegexBatch {
 	 */
 	function getArticleText( $db, $article ) {
 		wfDebugLog( 'SpamRegexBatch', "Fetching local spam ".$this->list." from '$article' on '$db'...\n" );
-		global $wgDBname;
-		wfProfileIn( __METHOD__ );
-		$dbr = wfGetDB( DB_READ );
-		$dbr->selectDB( $db );
-		$text = false;
-		if ( $dbr->tableExists( 'page' ) ) {
-			// 1.5 schema
-			$dbw =& wfGetDB( DB_READ );
-			$dbw->selectDB( $db );
-			$revision = Revision::newFromTitle( Title::newFromText( $article ) );
-			if ( $revision ) {
-				$text = $revision->getText();
-			}
-			$dbw->selectDB( $wgDBname );
-		} else {
-			// 1.4 schema
-			$title = Title::newFromText( $article );
-			$text = $dbr->selectField( 'cur', 'cur_text', array( 'cur_namespace' => $title->getNamespace(),
-				'cur_title' => $title->getDBkey() ), 'SpamRegexBatch::getArticleText' );
-		}
-		$dbr->selectDB( $wgDBname );
+
+		$title =  Title::newFromText( $article );
+		$dbr = wfGetDB( DB_SLAVE );
+		$row = $db->selectRow(
+			array(
+				"`$db`.page",
+				"`$db`.revision",
+				"`$db`.text"
+			),
+			array('*'),
+			array(
+				'page_namespace' => $title->getNamespace(),
+				'page_title' => $title->getDBkey(),
+				'page_latest = rev_id',
+				'old_id = rev_text_id'
+			)
+		);
 		wfProfileOut( __METHOD__ );
-		return strval( $text );
+		if($row) {
+			return Revision::getRevisionText($row);
+		} else {
+			return null;
+		}
 	}
 
 	function getHTTP( $url ) {
