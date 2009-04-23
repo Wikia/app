@@ -44,13 +44,13 @@ class AutoCreateWikiPage extends SpecialPage {
 	const STARTER_SPRT = 15; /** sport **/
 	const LOG = "autocreatewiki";
 	const IMGROOT = "/images/";
-    const CREATEWIKI_LOGO = "/images/central/images/2/22/Wiki_Logo_Template.png";
-    const CREATEWIKI_ICON = "/images/central/images/6/64/Favicon.ico";
-    const SESSION_TIME = 60;
-    const DAILY_LIMIT = 200;
-    const DAILY_USER_LIMIT = 10;
-    const DEFAULT_STAFF = "Angela";
-    const CACHE_LOGIN_KEY = 'awc_beforelog';
+	const CREATEWIKI_LOGO = "/images/central/images/2/22/Wiki_Logo_Template.png";
+	const CREATEWIKI_ICON = "/images/central/images/6/64/Favicon.ico";
+	const SESSION_TIME = 60;
+	const DAILY_LIMIT = 1000;
+	const DAILY_USER_LIMIT = 2;
+	const DEFAULT_STAFF = "Angela";
+	const CACHE_LOGIN_KEY = 'awc_beforelog';
 
 	/**
 	 * constructor
