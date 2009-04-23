@@ -270,13 +270,17 @@ $wgHooks['AlternateGetSkin'][] = 'WikiaGetSkin';
 function WikiaGetSkin ($user) {
 	global $wgCookiePrefix, $wgCookieExpiration, $wgCookiePath, $wgCookieDomain, $wgCookieSecure, $wgDefaultSkin, $wgDefaultTheme, $wgVisitorSkin, $wgVisitorTheme, $wgOldDefaultSkin, $wgSkinTheme, $wgOut, $wgForceSkin, $wgRequest, $wgHomePageName, $wgHomePageSkin, $wgTitle, $wgAdminSkin, $wgSkipSkins;
 
+	wfProfileIn(__METHOD__);
+
 	if(!($wgTitle instanceof Title) || in_array( $user->getOption('skin'), $wgSkipSkins )) {
 		$user->mSkin = &Skin::newFromKey(isset($wgDefaultSkin) ? $wgDefaultSkin : 'monobook');
+		wfProfileOut(__METHOD__);
 		return false;
 	}
 
 	if( $wgTitle->getText() == $wgHomePageName && $wgTitle->getNamespace() == NS_MAIN ) {
 		$user->mSkin = &Skin::newFromKey($wgHomePageSkin);
+		wfProfileOut(__METHOD__);
 		return false;
 	}
 
@@ -286,6 +290,7 @@ function WikiaGetSkin ($user) {
 		$userTheme = ( array_key_exists(1, $elems) ) ? $elems[1] : null;
 		$user->mSkin = &Skin::newFromKey($wgRequest->getVal('useskin', $userSkin));
 		$user->mSkin->themename = $wgRequest->getVal('usetheme', $userTheme);
+		wfProfileOut(__METHOD__);
 		return false;
 	}
 
@@ -307,6 +312,8 @@ function WikiaGetSkin ($user) {
 	}
 
 	# Get skin logic
+	wfProfileIn(__METHOD__.'::GetSkinLogic');
+
 	if(!$user->isLoggedIn()) { # If user is not logged in
 		if(count($_COOKIE) > 0 && isset($_COOKIE[$wgCookiePrefix.'skinpref'])) { # If user has cookie with variable 'skinpref'
 			$skinpref = split('-', $_COOKIE[$wgCookiePrefix.'skinpref']);
@@ -347,6 +354,7 @@ function WikiaGetSkin ($user) {
 			}
 		}
 	}
+	wfProfileOut(__METHOD__.'::GetSkinLogic');
 
 	$userSkin = $wgRequest->getVal('useskin', $userSkin);
 	$userTheme = $wgRequest->getVal('usetheme', $userTheme);
@@ -359,6 +367,7 @@ function WikiaGetSkin ($user) {
 
 	# Normalize theme name and set it as a variable for skin object.
 	if(isset($wgSkinTheme[$normalizedSkinName])){
+		wfProfileIn(__METHOD__.'::NormalizeThemeName');
 		if(!in_array($userTheme, $wgSkinTheme[$normalizedSkinName])){
 			if(in_array($wgDefaultTheme, $wgSkinTheme[$normalizedSkinName])){
 				$userTheme = $wgDefaultTheme;
@@ -370,6 +379,9 @@ function WikiaGetSkin ($user) {
 		$user->mSkin->themename = $userTheme;
 
 		wfDebug("SkinChooser: using theme '{$userTheme}'\n");
+		wfProfileOut(__METHOD__.'::NormalizeThemeName');
 	}
+
+	wfProfileOut(__METHOD__);
 	return false;
 }
