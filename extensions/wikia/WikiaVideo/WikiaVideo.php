@@ -246,10 +246,7 @@ function WikiaVideo_makeVideo($title, $options, $sk, $wikitext = '') {
 		$video->load();
 
 		// generate different HTML for MW editor and FCK editor
-		$isWysiwyg = !empty($wgWysiwygParserEnabled);
-		$isWysiwyg |= ($wgRequest->getVal('action') == 'parse') && ($wgRequest->getVal('wysiwyg') == 'true'); // macbre: will be removed when AJAX request (WysiwygParseWikitext) will be used to parse wikitext
-
-		if ($isWysiwyg) {
+		if (!empty($wgWysiwygParserEnabled)) {
 			$out = $video->generateWysiwygWindow($refId, $title, $align, $width, $caption, $thumb);
 		}
 		else {
