@@ -1461,37 +1461,18 @@ FCK.InsertTemplate = function(refid, name, params) {
 	// add placeholder event handlers
 	FCK.TemplatePreviewAdd(placeholder);
 
-	// generate new preview
-	var callback = {
-		success: function(o) {
-			result = eval('(' + o.responseText + ')');
-			html = result.parse.text['*'];
+	// generate template preview
+	FCK.ParseWikitext(wikitext, function(html, FCK, data) {
+		refid = data.refid;
 
-			FCK = o.argument.FCK;
-			refid = o.argument.refid;
+		// update metaData entry and preview
+		FCK.wysiwygData[refid].preview = html;
+		FCK.TemplatePreviewAdd(FCK.GetElementByRefId(refid));
 
-			// remove newPP comment and whitespaces
-			html = o.argument.FCK.YAHOO.lang.trim(html.split('<! \nNewPP limit report')[0]);
-
-			// update metaData entry and preview
-			FCK.wysiwygData[refid].preview = html;
-			FCK.TemplatePreviewAdd(FCK.GetElementByRefId(refid));
-
-			FCK.log('template #'+refid+' preview updated');
-		},
-
-		failure: function(o) {},
-
-		argument: {'FCK': FCK, 'refid': refid}
-	};
-
-	FCK.YAHOO.util.Connect.asyncRequest(
-		"POST",
-		window.parent.wgScriptPath + '/api.php',
-		callback,
-		"action=parse&format=json&prop=text&title=" + encodeURIComponent(window.parent.wgPageName) + "&text=" +  encodeURIComponent(wikitext)
-	);
-
+		FCK.log('template #'+refid+' preview updated');
+	}, {
+		'refid': refid
+	});
 }
 
 
