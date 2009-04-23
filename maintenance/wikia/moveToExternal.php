@@ -60,7 +60,7 @@ function moveToExternal( $cluster, $limit ) {
 			$obj = unserialize( $text );
 			$className = strtolower( get_class( $obj ) );
 			if ( $className == 'historyblobstub' ) {
-				resolveStub( $id, $row->old_text, $row->old_flags );
+				continue;
 			} elseif ( $className == 'historyblobcurstub' ) {
 				$text = gzdeflate( $obj->getText() );
 				$flags = 'utf-8,gzip,external';
@@ -107,8 +107,4 @@ function moveToExternal( $cluster, $limit ) {
 		usleep( 5000 );
 	}
 	$dbr->freeResult( $res );
-}
-
-function resolveStub( $id, $old_text, $old_flags) {
-	$stub = unserialize( $old_text );
 }
