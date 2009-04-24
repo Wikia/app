@@ -328,7 +328,7 @@ function WidgetSlideshowOnUpdate(id)
 		
 		a = document.createElement('a');
 		a.href  = list.images[i].url;
-		a.title = list.images[i].alt;
+		a.title = decodeURIComponent(list.images[i].alt);
 		div.appendChild(a);
 		
 		YAHOO.util.Dom.get(id + '-images').appendChild(div);
