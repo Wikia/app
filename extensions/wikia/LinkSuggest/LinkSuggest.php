@@ -71,7 +71,9 @@ function getLinkSuggestImage() {
 
 	if($img) {
 		$out = $img->createThumb(180);
-	} else {
+	}
+
+	if(trim($out) == '') {
 		$out = 'N/A';
 	}
 
