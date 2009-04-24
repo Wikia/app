@@ -517,7 +517,8 @@ function VET_preQuery(e) {
 		} else {
 			VET_track('query/search/' + query); // tracking
 			VET_indicator(1, true);
-			return true;
+			VET_sendQueryEmbed( query );
+			return false;
 		}
 	}
 }
@@ -795,62 +796,25 @@ function VET_track(str) {
 	YAHOO.Wikia.Tracker.track('VET/' + str);
 }
 
-var VET_preQueryCallback = {
-	onComplete: function(response) {
-		VET_displayDetails(response);
-	}
-}
+function VET_sendQueryEmbed(query) {
+	var callback = {
+		success: function(o) {
+			var screenType = o.getResponseHeader['X-screen-type'];
+			if(typeof screenType == "undefined") {
+				screenType = o.getResponseHeader['X-Screen-Type'];
+			}
 
-/**
-*
-*  AJAX IFRAME METHOD (AIM)
-*  http://www.webtoolkit.info/
-*
-**/
-AIM = {
-	frame : function(c) {
-		var n = 'f' + Math.floor(Math.random() * 99999);
-		var d = document.createElement('DIV');
-		d.innerHTML = '<iframe style="display:none" src="about:blank" id="'+n+'" name="'+n+'" onload="AIM.loaded(\''+n+'\')"></iframe>';
-		document.body.appendChild(d);
-		var i = document.getElementById(n);
-		if (c && typeof(c.onComplete) == 'function') {
-			i.onComplete = c.onComplete;
-		}
-		return n;
-	},
-	form : function(f, name) {
-		f.setAttribute('target', name);
-	},
-	submit : function(f, c) {
+			if( 'error' == YAHOO.lang.trim(screenType) ) {
+				alert( o.responseText );		
+			} else {
+				VET_displayDetails(o.responseText);		
+			}
 
-		// macbre: allow cross-domain
-		if(document.domain != 'localhost' && typeof FCK != 'undefined') {
-			f.action += ((f.action.indexOf('?') > 0) ? '&' : '?') + 'domain=' + escape(document.domain);
-		}
-
-		AIM.form(f, AIM.frame(c));
-		if (c && typeof(c.onStart) == 'function') {
-			return c.onStart();
-		} else {
-			return true;
-		}
-	},
-	loaded : function(id) {
-		var i = document.getElementById(id);
-		if (i.contentDocument) {
-			var d = i.contentDocument;
-		} else if (i.contentWindow) {
-			var d = i.contentWindow.document;
-		} else {
-			var d = window.frames[id].document;
-		}
-		if (d.location.href == "about:blank") {
-			return;
-		}
-
-		if (typeof(i.onComplete) == 'function') {
-			i.onComplete(d.body.innerHTML);
+			VET_indicator(1, false);
 		}
 	}
+	VET_indicator(1, true);
+	YAHOO.util.Connect.abort(VET_asyncTransaction)
+	VET_asyncTransaction = YAHOO.util.Connect.asyncRequest('GET', wgScriptPath + '/index.php?action=ajax&rs=VET&method=insertVideo&' + 'url=' + $('VideoEmbedUrl').value, callback);
 }
+

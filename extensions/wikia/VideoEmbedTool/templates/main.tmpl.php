@@ -31,7 +31,7 @@
 						<?php
 				}
 				?>
-					<form onsubmit="return AIM.submit(this, VET_preQueryCallback)" action="<?= $wgScriptPath ?>/index.php?action=ajax&rs=VET&method=insertVideo" id="VideoEmbedForm" method="POST" enctype="multipart/form-data">
+					<form action="<?= $wgScriptPath ?>/index.php?action=ajax&rs=VET&method=insertVideo" id="VideoEmbedForm" method="POST">
 					<input id="VideoEmbedUrl" name="wpVideoEmbedUrl" type="text" size="32" />
 					<input id="VideoEmbedUrlSubmit" type="submit" value="<?= wfMsg('vet-upload-btn') ?>" onclick="return VET_preQuery(event);" />
 					</form>
