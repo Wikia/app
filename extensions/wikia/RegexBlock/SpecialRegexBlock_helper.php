@@ -40,7 +40,7 @@ class RegexBlockData
 
         $this->mNbrResults = 0;
         /* we use memcached here */
-        $key = wfForeignMemcKey( $wgSharedDB, "", REGEXBLOCK_SPECIAL_KEY, REGEXBLOCK_SPECIAL_NUM_RECORD );
+        $key = wfForeignMemcKey( (isset($wgSharedDB)) ? $wgSharedDB : "wikicities", "", REGEXBLOCK_SPECIAL_KEY, REGEXBLOCK_SPECIAL_NUM_RECORD );
         $cached = $wgMemc->get ($key);
 
         if ( empty( $cached ) ) {
@@ -81,7 +81,7 @@ class RegexBlockData
             $blockers_array = wfRegexBlockGetBlockers();
         } else {
             global $wgMemc, $wgSharedDB;
-            $key = wfForeignMemcKey( $wgSharedDB, "", REGEXBLOCK_BLOCKERS_KEY );
+            $key = wfForeignMemcKey( (isset($wgSharedDB)) ? $wgSharedDB : "wikicities", "", REGEXBLOCK_BLOCKERS_KEY );
             $cached = $wgMemc->get ($key);
 
             if (!is_array($cached)) {
