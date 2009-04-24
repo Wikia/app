@@ -342,7 +342,7 @@ class WikiFactoryPage extends SpecialPage {
 			$stats[] = $row;
 		}
 
-		$Tmpl = new EasyTemplate( dirname( __FILE__ ) );
+		$Tmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
 		$Tmpl->set( "stats", $stats );
 
 		return $Tmpl->render( "shortstats" );
