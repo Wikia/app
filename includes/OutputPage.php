@@ -849,18 +849,6 @@ class OutputPage {
 			}
 
 			wfRunHooks( 'AjaxAddScript', array( &$this ) );
-
-			if( $wgEnableMWSuggest ) {
-				if(get_class($wgUser->getSkin()) != 'SkinMonaco') {
-					$this->addScript( "<script type=\"{$wgJsMimeType}\" src=\"{$wgStylePath}/common/ajaxsearch.js?$wgStyleVersion\"></script>\n" );
-				}
-			}
-
-			if( $wgAjaxWatch && $wgUser->isLoggedIn() ) {
-				if(get_class($wgUser->getSkin()) != 'SkinMonaco') {
-					$this->addScript( "<script type=\"{$wgJsMimeType}\" src=\"{$wgStylePath}/common/ajaxwatch.js?$wgStyleVersion\"></script>\n" );
-				}
-			}
 		}
 
 		if ( '' != $this->mRedirect ) {
