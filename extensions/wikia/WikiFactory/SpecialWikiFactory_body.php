@@ -79,6 +79,9 @@ class WikiFactoryPage extends SpecialPage {
 			));
 			$wgOut->addHTML( $oTmpl->execute("changelog") );
 		}
+		elseif ( $subpage === "short.stats" ) {
+			$wgOut->addHTML( $this->shortStats() );
+		}
 		else {
 			$subpage = ( $subpage == "/" ) ? null : $subpage;
 			$oWiki = $this->getWikiData( $subpage );
@@ -316,6 +319,33 @@ class WikiFactoryPage extends SpecialPage {
 			);
 			return wfElement( "a", $attribs, wfMsg( "wikifactory-label-{$tab}" ) );
 		}
+	}
+
+	private function shortStats() {
+
+		$dbr = wfGetDB( DB_SLAVE );
+		$res = $dbr->select(
+			WikiFactory::table( "city_list" ),
+			array(
+				"date(city_created) as date",
+				"count(*) as count"
+			),
+			false,
+			__METHOD__,
+			array(
+				  "GROUP BY" => "date(city_created)",
+				  "ORDER BY" => "date(city_created) desc"
+			)
+		);
+		$stats = array();
+		while( $row = $dbr->fetchObject( $res ) ) {
+			$stats[] = $row;
+		}
+
+		$Tmpl = new EasyTemplate( dirname( __FILE__ ) );
+		$Tmpl->set( "stats", $stats );
+
+		return $Tmpl->render( "shortstats" );
 	}
 }
 
