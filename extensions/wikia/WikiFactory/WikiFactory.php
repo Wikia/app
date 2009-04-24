@@ -10,7 +10,7 @@
 $wgExtensionCredits['other'][] = array(
 	"name" => "WikiFactoryLoader",
 	"description" => "MediaWiki configuration loader",
-	"version" => preg_replace( '/^.* (\d\d\d\d-\d\d-\d\d).*$/', '\1', '$Id: WikiFactory.php 13985 2008-06-16 15:20:38Z eloy $' ),
+	"version" => "20090424092331",
 	"author" => "[http://www.wikia.com/wiki/User:Eloy.wikia Krzysztof Krzyżaniak (eloy)]"
 );
 
@@ -716,21 +716,22 @@ class WikiFactory {
 	 * @return string with normalized domain
 	 */
 	public static function getDomainHash( $domain, $city_id = false ) {
-		if( empty( $domain ) && $city_id ) {
+
+		$domain = strtolower( $domain );
+		if (substr($domain, 0, 4) === "www." ) {
 			/**
-			 * we have city_id and $domain is not defined
+			 * cut off www. part
 			 */
-			$domain = $city_id;
+			$domain = substr($domain, 4, strlen($domain) - 4 );
 		}
-		else {
-			$domain = strtolower( $domain );
-			if (substr($domain, 0, 4) === "www." ) {
-				/**
-				 * cut off www. part
-				 */
-				$domain = substr($domain, 4, strlen($domain) - 4 );
-			}
+		if( $city_id ) {
+			/**
+			 * if city_id is defined it means that we have www/dofus/memory-alpha
+			 * case
+			 */
+			$domain = sprintf( "%d.$domain", $city_id );
 		}
+
 		return $domain;
 	}
 
