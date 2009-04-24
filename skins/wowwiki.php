@@ -39,6 +39,8 @@ class SkinWowwiki extends SkinMonoBook {
 
 	function setupSkinUserCss( OutputPage $out ) {
 		// Append to the default screen common & print styles...
+		WikiaSkinMonobook::setupSkinUserCss( $out );
+
 		$out->addStyle( 'wowwiki/main.css', 'screen' );
 
 		$out->addStyle( 'wowwiki/IE50Fixes.css', 'screen', 'lt IE 5.5000' );
