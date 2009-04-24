@@ -142,20 +142,12 @@ class MonoBookTemplate extends QuickTemplate {
 		<script type="<?php $this->text('jsmimetype') ?>"><?php $this->html('userjsprev') ?></script>
 <?php	}
 		if($this->data['trackbackhtml']) print $this->data['trackbackhtml']; ?>
-<?php $this->html('abc_css') ?>
 	</head>
 <body<?php if($this->data['body_ondblclick']) { ?> ondblclick="<?php $this->text('body_ondblclick') ?>"<?php } ?>
 <?php if($this->data['body_onload']) { ?> onload="<?php $this->text('body_onload') ?>"<?php } ?>
  class="mediawiki <?php $this->text('dir') ?> <?php $this->text('pageclass') ?> <?php $this->text('skinnameclass') ?> wikiaSkinMonobook">
-	<div id="globalWrapper"><?php
-
-	// wikia: cobranding
-
-	$this->html('curse_header');
-	$this->html('abc_header');
-
-?>
-		<div id="column-content">
+	<div id="globalWrapper">
+	<div id="column-content">
 	<div id="content" class="content-ads"<?php $this->wideSkyscraper();?><?php $this->noSkyscraper();?>>
 		<a name="top" id="top"></a>
 		<?php if($this->data['sitenotice']) { ?><div id="siteNotice"><?php $this->html('sitenotice') ?></div><?php } ?>
@@ -262,7 +254,24 @@ if ( !$this->isSkyscraper() ) {
 ?>
 			<div class="visualClear"></div>
 			<div id="footer">
+<?php $this->footer(); ?>
+		</div>
+<?php $this->html('ads_bottomjs'); ?>
+<?php $this->html('bottomscripts'); /* JS call to runBodyOnloadHook */ ?>
+<?php $this->html('reporttime') ?>
+<?php if ( $this->data['debug'] ): ?>
+<!-- Debug output:
+<?php $this->text( 'debug' ); ?>
+
+-->
+<?php endif; ?>
+</body></html>
 <?php
+	wfRestoreWarnings();
+	} // end of execute() method
+
+	/*************************************************************************************************/
+	function footer() {
 		if($this->data['poweredbyico']) { ?>
 				<div id="f-poweredbyico"><?php $this->html('poweredbyico') ?></div>
 <?php 	}
@@ -294,29 +303,7 @@ if ( !$this->isSkyscraper() ) {
 ?>
 			</ul>
 <?php	}
-?>
-		</div>
-<?php
-
-	// wikia: cobranding
-
-	$this->html('curse_footer');
-	$this->html('abc_footer');
-
-?>
-<?php $this->html('ads_bottomjs'); ?>
-<?php $this->html('bottomscripts'); /* JS call to runBodyOnloadHook */ ?>
-<?php $this->html('reporttime') ?>
-<?php if ( $this->data['debug'] ): ?>
-<!-- Debug output:
-<?php $this->text( 'debug' ); ?>
-
--->
-<?php endif; ?>
-</body></html>
-<?php
-	wfRestoreWarnings();
-	} // end of execute() method
+	}
 
 	/*************************************************************************************************/
 	function searchBox() {
