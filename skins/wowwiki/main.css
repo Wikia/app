@@ -941,7 +941,14 @@ li#ca-talk {
 li#ca-watch, li#ca-unwatch, li#ca-varlang-0, li#ca-print {
     margin-left: 1.6em;
 }
-
+#p-cactions .pBody {
+	font-size: 1em;
+	background-color: transparent;
+	color: inherit;
+	border-collapse: inherit;
+	border: 0;
+	padding: 0;
+}
 /*
 ** the remaining portlets
 */
@@ -968,7 +975,7 @@ li#ca-watch, li#ca-unwatch, li#ca-varlang-0, li#ca-print {
     margin: .6em 0 1em 0;
     padding: .4em 0 1.2em 0;
     text-align: center;
-    font-size: 90%;
+    font-size: 115%;
 }
 #footer li {
     display: inline;
