@@ -1044,8 +1044,6 @@ input.searchButton {
 }
 #f-poweredbyico, #f-copyrightico {
 	margin: 0 8px;
-	position: relative;
-	top: -2px; /* Bump it up just a tad */
 }
 #f-poweredbyico {
 	float: right;
