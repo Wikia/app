@@ -334,7 +334,7 @@ class WikiFactoryPage extends SpecialPage {
 			false,
 			__METHOD__,
 			array(
-				  "GROUP BY" => "date(city_created)",
+				  "GROUP BY" => "date(city_created), city_public",
 				  "ORDER BY" => "date(city_created) desc"
 			)
 		);
