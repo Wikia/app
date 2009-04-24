@@ -219,8 +219,11 @@ function wfGetRegexBlockedData($user, $blockers, $master = 0) {
 		return false;
 	}
 
+	$cached = "";
 	$memkey = wfForeignMemcKey( (isset($wgSharedDB)) ? $wgSharedDB : "wikicities", "", REGEXBLOCK_BLOCKERS_KEY, "All-In-One" );
-	$cached = $oMemc->get ($memkey);
+	if ( empty($master) ) {
+		$cached = $oMemc->get ($memkey);
+	}
 
 	if ( empty($cached) ) {
 		/* fetch data from db, concatenate into one string, then fill cache */
@@ -621,10 +624,11 @@ function wfRegexBlockUnsetKeys ($username) {
 	/* blockers */
 	$key = wfForeignMemcKey( (isset($wgSharedDB)) ? $wgSharedDB : "wikicities", "", REGEXBLOCK_BLOCKERS_KEY );
 	$oMemc->delete( $key );
-	$blockers_array = wfRegexBlockGetBlockers($readMaster);
 	/* blocker's matches */
 	$key = wfForeignMemcKey( (isset($wgSharedDB)) ? $wgSharedDB : "wikicities", "", REGEXBLOCK_BLOCKERS_KEY, "All-In-One" );
 	$oMemc->delete( $key );
+	#--- 
+	$blockers_array = wfRegexBlockGetBlockers($readMaster);
 	wfGetRegexBlockedData ($wgUser, $blockers_array, $readMaster);
 
 	wfProfileOut( __METHOD__ );
