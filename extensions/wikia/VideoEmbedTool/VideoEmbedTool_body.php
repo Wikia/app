@@ -155,7 +155,7 @@ class VideoEmbedTool {
 
 		$ns = $wgTitle->getNamespace();
 
-		$url = $wgRequest->getVal( 'wpVideoEmbedUrl' );
+		$url = $wgRequest->getVal( 'url' );
 		$tempname = 'Temp_video_'.$wgUser->getID().'_'.rand(0, 1000);
 		$title = Title::makeTitle( NS_VIDEO, $tempname );
 		$video = new VideoPage( $title );
@@ -163,12 +163,12 @@ class VideoEmbedTool {
 		// todo some safeguard here to take care of bad urls
 		if( !$video->parseUrl( $url ) ) {
 			header('X-screen-type: error');
-			return $this->loadMain( wfMsg( 'vet-bad-url' ) );
+			return wfMsg( 'vet-bad-url' );
 		}
 
 		if( !$video->checkIfVideoExists() ) {
 			header('X-screen-type: error');
-			return $this->loadMain( wfMsg( 'vet-non-existing' ) );
+			return wfMsg( 'vet-non-existing' );
 		}
 
 		$props['provider'] = $video->getProvider();
