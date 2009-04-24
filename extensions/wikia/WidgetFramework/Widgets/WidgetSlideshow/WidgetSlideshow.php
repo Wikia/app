@@ -168,7 +168,7 @@ function WidgetSlideshowGetImagesFromSpecialPage()
 			if (!empty($thumb)) {
 			    $images[] = array (
 				'thumb' => $thumb,
-				'alt'   => $description,
+				'alt'   => rawurlencode($description),
 				'url'   => is_object($url) ? $url->getLocalURL() : ''
 			    );
 			}
@@ -214,7 +214,7 @@ function WidgetSlideshowGetImagesFromNewest() {
 			if (!empty($thumb)) {
 			    $images[] = array (
 				'thumb' => $thumb,
-				'alt'   => $row->img_description,
+				'alt'   => rawurlencode($row->img_description),
 				'url'   => is_object($url) ? $url->getLocalURL() : ''
 			    );
 			}
@@ -259,7 +259,7 @@ function WidgetSlideshowGetImagesFromRandom() {
 			if (!empty($thumb)) {
 			    $images[] = array (
 				'thumb' => $thumb,
-				'alt'   => $row->img_description,
+				'alt'   => rawurlencode($row->img_description),
 				'url'   => is_object($url) ? $url->getLocalURL() : ''
 			    );
 			}
