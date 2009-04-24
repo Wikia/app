@@ -841,16 +841,6 @@ class OutputPage {
 
 		wfProfileIn( __METHOD__ );
 
-		if ( $wgUseAjax ) {
-			global $wgStylePath, $wgStyleVersion;
-
-			if(get_class($wgUser->getSkin()) != 'SkinMonaco') {
-				$this->addScript( "<script type=\"{$wgJsMimeType}\" src=\"{$wgStylePath}/common/ajax.js?$wgStyleVersion\"></script>\n" );
-			}
-
-			wfRunHooks( 'AjaxAddScript', array( &$this ) );
-		}
-
 		if ( '' != $this->mRedirect ) {
 			# Standards require redirect URLs to be absolute
 			$this->mRedirect = wfExpandUrl( $this->mRedirect );
@@ -933,14 +923,16 @@ class OutputPage {
 		$sk = $wgUser->getSkin();
 
 		if ( $wgUseAjax ) {
-			$this->addScriptFile( 'ajax.js' );
+			// macbre@wikia: ajax.js and ajawatch.js files are part of allinone.js for Monaco skin - don't add them twice
+			if ( get_class($sk) != 'SkinMonaco' ) {
+				$this->addScriptFile( 'ajax.js' );
 
-			wfRunHooks( 'AjaxAddScript', array( &$this ) );
+				wfRunHooks( 'AjaxAddScript', array( &$this ) );
 
-			if( $wgAjaxWatch && $wgUser->isLoggedIn() ) {
-				$this->addScriptFile( 'ajaxwatch.js' );
+				if( $wgAjaxWatch && $wgUser->isLoggedIn() ) {
+					$this->addScriptFile( 'ajaxwatch.js' );
+				}
 			}
-			
 			if ( $wgEnableMWSuggest && !$wgUser->getOption( 'disablesuggest', false ) ){
 				$this->addScriptFile( 'mwsuggest.js' );
 			}
