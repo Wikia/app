@@ -446,6 +446,7 @@ function LS_realDisplayPreview(file, url) {
 		YAHOO.util.Dom.get('LS_imagePreview').innerHTML = '<img src="'+url+'"/>';
 	} else {
 		LS_previewImages[file] = 'none';
+		LS_hidePreview();
 	}
 }
 
