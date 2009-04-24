@@ -432,12 +432,12 @@ function LS_displayPreview() {
     var callback = {
 		success: function(o) {
 			LS_previewImages[LS_imageToPreview] = true;
-			YAHOO.util.Dom.get('LS_imagePreview').style.left = (parseInt(YAHOO.util.Dom.get('wpTextbox1_container').style.left) - 180) + 'px';
-			YAHOO.util.Dom.get('LS_imagePreview').style.top = YAHOO.util.Dom.get('wpTextbox1_container').style.top;
-
-
-			YAHOO.util.Dom.get('LS_imagePreview').style.visibility = '';
-			YAHOO.util.Dom.get('LS_imagePreview').innerHTML = '<img src="'+o.responseText+'"/>';
+			if(o.responseText.trim() != '') {
+				YAHOO.util.Dom.get('LS_imagePreview').style.left = (parseInt(YAHOO.util.Dom.get('wpTextbox1_container').style.left) - 180) + 'px';
+				YAHOO.util.Dom.get('LS_imagePreview').style.top = YAHOO.util.Dom.get('wpTextbox1_container').style.top;
+				YAHOO.util.Dom.get('LS_imagePreview').style.visibility = '';
+				YAHOO.util.Dom.get('LS_imagePreview').innerHTML = '<img src="'+o.responseText+'"/>';
+			}
 		},
 		argument: LS_imageToPreview
     }

@@ -52,7 +52,7 @@ $wgHooks['EditForm::MultiEdit:Form'][] = 'AddLinkSuggest';
 function AddLinkSuggest($a, $b, $c, $d) {
 	global $wgOut, $wgExtensionsPath, $wgStyleVersion, $wgUser;
 	if($wgUser->getOption('disablelinksuggest') != true) {
-		$wgOut->addHTML('<div id="LS_imagePreview" style="visibility: hidden; position: absolute; z-index: 999;"></div>');
+		$wgOut->addHTML('<div id="LS_imagePreview" style="visibility: hidden; position: absolute; z-index: 999; background-color: white;"></div>');
 		$wgOut->addHTML('<div id="wpTextbox1_container" class="yui-ac-container"></div>');
 		$wgOut->addScript('<script type="text/javascript" src="'.$wgExtensionsPath.'/wikia/LinkSuggest/LinkSuggest.js?'.$wgStyleVersion.'"></script>');
 	}
@@ -67,7 +67,11 @@ function getLinkSuggestImage() {
 	global $wgRequest;
 	$imageName = $wgRequest->getText('imageName');
 	$img = wfFindFile($imageName);
-	$thumb = $img->createThumb(180);
+	if($img) {
+		$thumb = $img->createThumb(180);
+	} else {
+		$thumb = '';
+	}
 
 	$ar = new AjaxResponse($thumb);
 	$ar->setCacheDuration(60 * 60);
