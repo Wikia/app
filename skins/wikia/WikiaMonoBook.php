@@ -203,7 +203,6 @@ class WikiaSkinMonoBook extends SkinTemplate {
 		return "
 		<!-- WikiaBottomScripts -->
 		{$bottomScriptText}
-		<!-- /WikiaBottomScripts -->
-		<!-- DB: {$wgDBserver} -->";
+		<!-- /WikiaBottomScripts -->";
 	}
 } // end of class
