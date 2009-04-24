@@ -718,7 +718,7 @@ class WikiFactory {
 	public static function getDomainHash( $domain, $city_id = false ) {
 
 		$domain = strtolower( $domain );
-		if (substr($domain, 0, 4) === "www." ) {
+		if( substr($domain, 0, 4) === "www." ) {
 			/**
 			 * cut off www. part
 			 */
@@ -727,7 +727,7 @@ class WikiFactory {
 		if( $city_id ) {
 			/**
 			 * if city_id is defined it means that we have www/dofus/memory-alpha
-			 * case
+			 * case.
 			 */
 			$domain = sprintf( "%d.$domain", $city_id );
 		}
