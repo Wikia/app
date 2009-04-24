@@ -52,7 +52,7 @@ $wgHooks['EditForm::MultiEdit:Form'][] = 'AddLinkSuggest';
 function AddLinkSuggest($a, $b, $c, $d) {
 	global $wgOut, $wgExtensionsPath, $wgStyleVersion, $wgUser;
 	if($wgUser->getOption('disablelinksuggest') != true) {
-		$wgOut->addHTML('<div id="LS_imagePreview" style="visibility: hidden; position: absolute; z-index: 999; background-color: white;"></div>');
+		$wgOut->addHTML('<div id="LS_imagePreview" style="visibility: hidden; position: absolute; z-index: 999; width: 180px; text-align: right;"></div>');
 		$wgOut->addHTML('<div id="wpTextbox1_container" class="yui-ac-container"></div>');
 		$wgOut->addScript('<script type="text/javascript" src="'.$wgExtensionsPath.'/wikia/LinkSuggest/LinkSuggest.js?'.$wgStyleVersion.'"></script>');
 	}
