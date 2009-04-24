@@ -31,10 +31,11 @@ $wgHooks['getEditingPreferencesTab'][] = 'wfLinkSuggestToggle' ;
 $wgHooks['MakeGlobalVariablesScript'][] = 'wfLinkSuggestSetupVars';
 
 
-function wfLinkSuggestSetupVars( $vars ) {	
+function wfLinkSuggestSetupVars( $vars ) {
 	global $wgContLang;
 	$vars['ls_template_ns'] = $wgContLang->getFormattedNsText( NS_TEMPLATE );
-        return true;
+	$vars['ls_file_ns'] = $wgContLang->getFormattedNsText( NS_FILE );
+	return true;
 }
 
 function wfLinkSuggestToggle($toggles, $default_array = false) {
@@ -51,6 +52,7 @@ $wgHooks['EditForm::MultiEdit:Form'][] = 'AddLinkSuggest';
 function AddLinkSuggest($a, $b, $c, $d) {
 	global $wgOut, $wgExtensionsPath, $wgStyleVersion, $wgUser;
 	if($wgUser->getOption('disablelinksuggest') != true) {
+		$wgOut->addHTML('<div id="LS_imagePreview" style="visibility: hidden; position: absolute; z-index: 999;"></div>');
 		$wgOut->addHTML('<div id="wpTextbox1_container" class="yui-ac-container"></div>');
 		$wgOut->addScript('<script type="text/javascript" src="'.$wgExtensionsPath.'/wikia/LinkSuggest/LinkSuggest.js?'.$wgStyleVersion.'"></script>');
 	}
@@ -59,6 +61,18 @@ function AddLinkSuggest($a, $b, $c, $d) {
 
 global $wgAjaxExportList;
 $wgAjaxExportList[] = 'getLinkSuggest';
+$wgAjaxExportList[] = 'getLinkSuggestImage';
+
+function getLinkSuggestImage() {
+	global $wgRequest;
+	$imageName = $wgRequest->getText('imageName');
+	$img = wfFindFile($imageName);
+	$thumb = $img->createThumb(180);
+
+	$ar = new AjaxResponse($thumb);
+	$ar->setCacheDuration(60 * 60);
+	return $ar;
+}
 
 function getLinkSuggest() {
 	global $wgRequest, $wgContLang;
