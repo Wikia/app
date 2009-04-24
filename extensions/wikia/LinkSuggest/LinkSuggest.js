@@ -411,7 +411,7 @@ function LS_PrepareTextarea (textarea, oDS) {
 			});
 
 	oAutoComp.containerCollapseEvent.subscribe(function(o) {
-			LS_hidePreview();
+			LS_itemUnHighlight();
 			if ( this._suggestionSuccessful == false ) {
 				this.track('close');
 			}
@@ -424,50 +424,56 @@ function LS_PrepareTextarea (textarea, oDS) {
 }
 
 var LS_previewTimer;
-var LS_imageToPreview;
 var LS_previewImages = {};
-
-function LS_displayPreview() {
-    var callback = {
-		success: function(o) {
-			LS_realDisplayPreview(LS_imageToPreview, o.responseText);
-		},
-		argument: LS_imageToPreview
-    }
-	YAHOO.util.Connect.asyncRequest('GET', wgServer+wgScriptPath+'?action=ajax&rs=getLinkSuggestImage&imageName='+encodeURIComponent(LS_imageToPreview), callback);
-}
-
-function LS_realDisplayPreview(file, url) {
-	if(url != '' && url != 'none') {
-		LS_previewImages[file] = url;
-		YAHOO.util.Dom.get('LS_imagePreview').style.left = (parseInt(YAHOO.util.Dom.get('wpTextbox1_container').style.left) - 181) + 'px';
-		YAHOO.util.Dom.get('LS_imagePreview').style.top = YAHOO.util.Dom.get('wpTextbox1_container').style.top;
-		YAHOO.util.Dom.get('LS_imagePreview').style.visibility = '';
-		YAHOO.util.Dom.get('LS_imagePreview').innerHTML = '<img src="'+url+'"/>';
-	} else {
-		LS_previewImages[file] = 'none';
-		LS_hidePreview();
-	}
-}
-
-function LS_hidePreview() {
-	YAHOO.util.Dom.get('LS_imagePreview').style.visibility = 'hidden';
-	clearTimeout(LS_previewTimer);
-}
+var LS_imageToPreview;
 
 function LS_itemHighlight(oSelf , elItem) {
-	if(elItem[1].innerHTML.indexOf(ls_file_ns) == 0) {
-		LS_imageToPreview = elItem[1].innerHTML.substring(ls_file_ns.length + 1);
+	clearTimeout(LS_previewTimer);
+	if(elItem[1].innerHTML.indexOf(ls_file_ns+':') == 0) { // check if namespace of highlighted item is NS_FILE
+		LS_imageToPreview = elItem[1].innerHTML.substring(ls_file_ns.length + 1); // get filename from highlighted item
+
 		if(LS_previewImages[LS_imageToPreview]) {
-			LS_realDisplayPreview(LS_imageToPreview, LS_previewImages[LS_imageToPreview]);
+			LS_preview(LS_imageToPreview);
 		} else {
-			LS_previewTimer = setTimeout(LS_displayPreview, 750);
+			LS_previewTimer = setTimeout(LS_preview, 750);
 		}
 	}
 }
 
-function LS_itemUnHighlight(oSelf , elItem) {
-	LS_hidePreview();
+function LS_itemUnHighlight() {
+	YAHOO.util.Dom.get('LS_imagePreview').style.visibility = 'hidden';
+	clearTimeout(LS_previewTimer);
+}
+
+function LS_preview(image) {
+	if(image) LS_imageToPreview = image;
+	if(LS_previewImages[LS_imageToPreview]) {
+		LS_realPreview(LS_previewImages[LS_imageToPreview]);
+	} else {
+	    var callback = {
+			success: function(o) {
+				LS_previewImages[LS_imageToPreview] = o.responseText;
+				LS_realPreview(LS_previewImages[LS_imageToPreview]);
+			},
+			argument: LS_imageToPreview
+	    }
+		YAHOO.util.Connect.asyncRequest('GET', wgServer+wgScriptPath+'?action=ajax&rs=getLinkSuggestImage&imageName='+encodeURIComponent(LS_imageToPreview), callback);
+
+	}
+}
+
+function LS_realPreview(s) {
+	if((YAHOO.util.Dom.getX('wpTextbox1_container') + 180 + parseInt(YAHOO.util.Dom.get('wpTextbox1_container').style.width)) < YAHOO.util.Dom.getViewportWidth()) {
+		YAHOO.util.Dom.get('LS_imagePreview').style.textAlign = 'left';
+		YAHOO.util.Dom.get('LS_imagePreview').style.left = (parseInt(YAHOO.util.Dom.get('wpTextbox1_container').style.left) + parseInt(YAHOO.util.Dom.get('wpTextbox1_container').style.width) + 1) + 'px';
+	} else {
+		YAHOO.util.Dom.get('LS_imagePreview').style.textAlign = 'right';
+		YAHOO.util.Dom.get('LS_imagePreview').style.left = (parseInt(YAHOO.util.Dom.get('wpTextbox1_container').style.left) - 181) + 'px';
+	}
+	YAHOO.util.Dom.get('LS_imagePreview').style.top = YAHOO.util.Dom.get('wpTextbox1_container').style.top;
+	YAHOO.util.Dom.get('LS_imagePreview').style.visibility = '';
+	if(s != 'N/A') s = '<img src="'+s+'"/>';
+	YAHOO.util.Dom.get('LS_imagePreview').innerHTML = s;
 }
 
 addOnloadHook(function() {
