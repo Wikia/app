@@ -328,6 +328,7 @@ class WikiFactoryPage extends SpecialPage {
 			WikiFactory::table( "city_list" ),
 			array(
 				"date(city_created) as date",
+				"city_public",
 				"count(*) as count"
 			),
 			false,
@@ -339,8 +340,23 @@ class WikiFactoryPage extends SpecialPage {
 		);
 		$stats = array();
 		while( $row = $dbr->fetchObject( $res ) ) {
-			$stats[] = $row;
+			if( !isset( $stats[ $row->date ] ) ){
+				$stats[ $row->date ] = (object) null;
+			}
+			$stats[ $row->date ]->total += $row->count;
+			switch( $row->city_public ) {
+				case 1:
+					$stats[ $row->date ]->active += $row->count;
+					break;
+				case 0:
+					$stats[ $row->date ]->disabled += $row->count;
+					break;
+				case 2:
+					$stats[ $row->date ]->redirected += $row->count;
+					break;
+			}
 		}
+		$dbr->freeResult( $res );
 
 		$Tmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
 		$Tmpl->set( "stats", $stats );
