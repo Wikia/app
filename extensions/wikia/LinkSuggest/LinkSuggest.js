@@ -428,23 +428,23 @@ var LS_imageToPreview;
 var LS_previewImages = {};
 
 function LS_displayPreview() {
-
     var callback = {
 		success: function(o) {
-			LS_previewImages[LS_imageToPreview] = true;
-			if(o.responseText != '') {
-				YAHOO.util.Dom.get('LS_imagePreview').style.left = (parseInt(YAHOO.util.Dom.get('wpTextbox1_container').style.left) - 181) + 'px';
-				YAHOO.util.Dom.get('LS_imagePreview').style.top = YAHOO.util.Dom.get('wpTextbox1_container').style.top;
-				YAHOO.util.Dom.get('LS_imagePreview').style.visibility = '';
-				YAHOO.util.Dom.get('LS_imagePreview').innerHTML = '<img src="'+o.responseText+'"/>';
-			}
+			LS_realDisplayPreview(LS_imageToPreview, o.responseText);
 		},
 		argument: LS_imageToPreview
     }
-
 	YAHOO.util.Connect.asyncRequest('GET', wgServer+wgScriptPath+'?action=ajax&rs=getLinkSuggestImage&imageName='+encodeURIComponent(LS_imageToPreview), callback);
+}
 
-
+function LS_realDisplayPreview(file, url) {
+	LS_previewImages[file] = url;
+	if(url != '') {
+		YAHOO.util.Dom.get('LS_imagePreview').style.left = (parseInt(YAHOO.util.Dom.get('wpTextbox1_container').style.left) - 181) + 'px';
+		YAHOO.util.Dom.get('LS_imagePreview').style.top = YAHOO.util.Dom.get('wpTextbox1_container').style.top;
+		YAHOO.util.Dom.get('LS_imagePreview').style.visibility = '';
+		YAHOO.util.Dom.get('LS_imagePreview').innerHTML = '<img src="'+url+'"/>';
+	}
 }
 
 function LS_hidePreview() {
@@ -456,7 +456,7 @@ function LS_itemHighlight(oSelf , elItem) {
 	if(elItem[1].innerHTML.indexOf(ls_file_ns) == 0) {
 		LS_imageToPreview = elItem[1].innerHTML.substring(ls_file_ns.length + 1);
 		if(LS_previewImages[LS_imageToPreview]) {
-			LS_displayPreview();
+			LS_realDisplayPreview(LS_imageToPreview, LS_previewImages[LS_imageToPreview]);
 		} else {
 			LS_previewTimer = setTimeout(LS_displayPreview, 750);
 		}
