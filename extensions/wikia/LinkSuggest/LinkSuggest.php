@@ -67,13 +67,13 @@ function getLinkSuggestImage() {
 	global $wgRequest;
 	$imageName = $wgRequest->getText('imageName');
 
-	$img = wfFindFile($imageName);
-
-	if($img) {
-		$out = $img->createThumb(180);
-	}
-
-	if(trim($out) == '') {
+	$out = 'N/A';
+	try {
+		$img = wfFindFile($imageName);
+		if($img) {
+			$out = $img->createThumb(180);
+		}
+	} catch (Exception $e) {
 		$out = 'N/A';
 	}
 
