@@ -13,16 +13,12 @@
 if( !defined( 'MEDIAWIKI' ) )
 	die( -1 );
 
-
-
-
 /**
- * Inherit main code from SkinTemplate, set the CSS and template filter.
+ * Inherit main code from MonoBookTemplate, set the CSS and custom template elements.
  * @todo document
  * @ingroup Skins
  */
 
-// macbre: use monobook skin as base
 require_once("skins/MonoBook.php");
 
 class SkinWowwiki extends SkinMonoBook {
