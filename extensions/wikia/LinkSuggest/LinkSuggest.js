@@ -438,12 +438,14 @@ function LS_displayPreview() {
 }
 
 function LS_realDisplayPreview(file, url) {
-	LS_previewImages[file] = url || 'none';
-	if(url != '' && != 'none') {
+	if(url != '' && url != 'none') {
+		LS_previewImages[file] = url;
 		YAHOO.util.Dom.get('LS_imagePreview').style.left = (parseInt(YAHOO.util.Dom.get('wpTextbox1_container').style.left) - 181) + 'px';
 		YAHOO.util.Dom.get('LS_imagePreview').style.top = YAHOO.util.Dom.get('wpTextbox1_container').style.top;
 		YAHOO.util.Dom.get('LS_imagePreview').style.visibility = '';
 		YAHOO.util.Dom.get('LS_imagePreview').innerHTML = '<img src="'+url+'"/>';
+	} else {
+		LS_previewImages[file] = 'none';
 	}
 }
 
