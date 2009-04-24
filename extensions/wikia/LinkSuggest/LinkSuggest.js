@@ -411,12 +411,60 @@ function LS_PrepareTextarea (textarea, oDS) {
 			});
 
 	oAutoComp.containerCollapseEvent.subscribe(function(o) {
+			LS_hidePreview();
 			if ( this._suggestionSuccessful == false ) {
 				this.track('close');
 			}
 			YAHOO.util.Event.removeListener(this._elTextbox, "keydown");
 			YAHOO.util.Event.removeListener(this._elTextbox, "keypress");
 			});
+
+	oAutoComp.itemArrowToEvent.subscribe(LS_itemHighlight);
+	oAutoComp.itemArrowFromEvent.subscribe(LS_itemUnHighlight);
+}
+
+var LS_previewTimer;
+var LS_imageToPreview;
+var LS_previewImages = {};
+
+function LS_displayPreview() {
+
+    var callback = {
+		success: function(o) {
+			LS_previewImages[LS_imageToPreview] = true;
+			YAHOO.util.Dom.get('LS_imagePreview').style.left = (parseInt(YAHOO.util.Dom.get('wpTextbox1_container').style.left) - 180) + 'px';
+			YAHOO.util.Dom.get('LS_imagePreview').style.top = YAHOO.util.Dom.get('wpTextbox1_container').style.top;
+
+
+			YAHOO.util.Dom.get('LS_imagePreview').style.visibility = '';
+			YAHOO.util.Dom.get('LS_imagePreview').innerHTML = '<img src="'+o.responseText+'"/>';
+		},
+		argument: LS_imageToPreview
+    }
+
+	YAHOO.util.Connect.asyncRequest('GET', wgServer+wgScriptPath+'?action=ajax&rs=getLinkSuggestImage&imageName='+encodeURIComponent(LS_imageToPreview), callback);
+
+
+}
+
+function LS_hidePreview() {
+	YAHOO.util.Dom.get('LS_imagePreview').style.visibility = 'hidden';
+	clearTimeout(LS_previewTimer);
+}
+
+function LS_itemHighlight(oSelf , elItem) {
+	if(elItem[1].innerHTML.indexOf(ls_file_ns) == 0) {
+		LS_imageToPreview = elItem[1].innerHTML.substring(ls_file_ns.length + 1);
+		if(LS_previewImages[LS_imageToPreview]) {
+			LS_displayPreview();
+		} else {
+			LS_previewTimer = setTimeout(LS_displayPreview, 750);
+		}
+	}
+}
+
+function LS_itemUnHighlight(oSelf , elItem) {
+	LS_hidePreview();
 }
 
 addOnloadHook(function() {
