@@ -179,7 +179,7 @@ class Listusers extends SpecialPage {
 		
 		$aUsers = array('cnt' => 0, 'data' => array());
 		$subMemkey = md5($groups.$text.$contrib.$offset.$limit.$orderby);
-		$memkey = wfForeignMemcKey( $wgSharedDB, null, "Listusers", $subMemkey );
+		$memkey = wfForeignMemcKey( $wgCityId, null, "Listusers", $subMemkey );
 		$cached = $wgMemc->get($memkey);
 		if (!is_array ($cached)) { 
 			$dbs = wfGetDBExt(DB_SLAVE);
