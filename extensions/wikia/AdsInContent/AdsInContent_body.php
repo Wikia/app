@@ -117,7 +117,7 @@ class AdsInContent {
 
 			$adBody = '<div class="contentAdInside noprint" ';
 			if (!empty($aSelectedAdUnit['float'])) {
-				$adBody .= 'style="margin-bottom: 1em; margin-' .
+				$adBody .= 'style="margin-bottom: 1em; margin-top: 1em; margin-' .
 					( $aSelectedAdUnit['align'] == 'left' ? 'right' : 'left' ) .
 					': 1em; float: ' . $aSelectedAdUnit['align'] . '"'; 
 			}
