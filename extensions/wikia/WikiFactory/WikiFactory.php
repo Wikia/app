@@ -110,13 +110,14 @@ class WikiFactory {
 	 *
 	 * @param integer	$city_id	default null	wiki identified in city_list
 	 * @param boolean	$extended	default false	result is whole row not scalar
+	 * @param boolean	$extended	default false	result is whole row not scalar
 	 *
 	 * @return mixed: array of domains
 	 *
 	 * if city_id is null it will return such array:
 	 *
 	 */
-	static public function getDomains( $city_id = null, $extended = false ) {
+	static public function getDomains( $city_id = null, $extended = false, $master = false ) {
 
 		if( ! self::isUsed() ) {
 			Wikia::log( __METHOD__, "", "WikiFactory is not used." );
@@ -137,7 +138,7 @@ class WikiFactory {
 			return $domains;
 		}
 
-		$dbr = wfGetDB( DB_SLAVE );
+		$dbr = ( $master ) ? wfGetDB( DB_MASTER ) : wfGetDB( DB_SLAVE );
 		$oRes = $dbr->select(
 			array( self::table( "city_domains" ) ),
 			array( "*" ),
@@ -358,6 +359,7 @@ class WikiFactory {
 			 * use master connection for changing variables
 			 */
 			$variable = self::loadVariableFromDB( $cv_variable_id, false, $city_id, true );
+			$oldValue = isset( $variable->cv_value ) ? $variable->cv_value :  false;
 
 			/**
 			 * delete old value
@@ -440,7 +442,12 @@ class WikiFactory {
 						self::table("city_list"),
 						array("city_url" => $city_url ),
 						array("city_id" => $city_id),
-						__METHOD__ );
+						__METHOD__
+					);
+
+					/**
+					 * clear cache with old domain (stored in $oldValue)
+					 */
 				break;
 
 				case "wgLanguageCode":
@@ -883,10 +890,11 @@ class WikiFactory {
 	 * @return boolean status
 	 */
 	static public function clearCache( $city_id ) {
+		global $wgMemc;
 
 		if( ! self::isUsed() ) {
 			Wikia::log( __METHOD__, "", "WikiFactory is not used." );
-			return null;
+			return false;
 		}
 
 		/**
@@ -895,26 +903,26 @@ class WikiFactory {
 		if( ! is_numeric( $city_id ) ) {
 			return false;
 		}
+		wfProfileIn( __METHOD__ );
 		$dbw = wfGetDB( DB_MASTER );
 		$dbw->update(
 			self::table( "city_list" ),
-			array(
-				"city_factory_timestamp" => wfTimestampNow()
-			),
-			array(
-				"city_id" => $city_id
-			),
+			array( "city_factory_timestamp" => wfTimestampNow()	),
+			array( "city_id" => $city_id ),
 			__METHOD__
 		);
 
-		$oMemc = wfGetCache( CACHE_MEMCACHED );
-		$domains = self::getDomains( $city_id );
+		$domains = self::getDomains( $city_id, false, true );
 		if( is_array( $domains ) ) {
 			foreach( $domains as $domain ) {
-				$oMemc->delete( self::getDomainKey( $domain ) );
+				$wgMemc->delete( self::getDomainKey( $domain ) );
+				Wikia::log( __METHOD__, "", "Remove {$domain} from wikifactory cache" );
 			}
 		}
-		return $oMemc->delete( self::getVarsKey( $city_id ) );
+		$wgMemc->delete( self::getVarsKey( $city_id ) );
+
+		wfProfileOut( __METHOD__ );
+		return true;
 	}
 
 	/**
