@@ -194,7 +194,7 @@ class UsercreateTemplate extends QuickTemplate {
 			<td class="mw-input" id="wpEmailTD">
 				<label for='wpEmail'><?php $this->msg('youremail') ?></label><br/>
 				<input type='text' class='loginText' name="wpEmail" id="wpEmail" value="<?php $this->text('email') ?>" size='20' />
-				<div>
+				<div class="mw-input-help">
 					<?php $this->msgWiki('prefs-help-email'); ?>
 				</div>
 			</td>
@@ -232,7 +232,7 @@ class UsercreateTemplate extends QuickTemplate {
 			<td class="mw-input">
 				<label for='wpRealName'><?php $this->msg('yourrealname') ?></label><br/>
 				<input type='text' class='loginText' name="wpRealName" id="wpRealName" value="<?php $this->text('realname') ?>" size='20' />
-				<div>
+				<div class="mw-input-help">
 					<?php $this->msgWiki('prefs-help-realname'); ?>
 				</div>
 			</td>

@@ -9,6 +9,13 @@
 	padding-top: 3px;
 }
 
+.mw-input-help {
+	font-size: 95%;
+	font-style: italic;
+	margin-left: 2em;
+	margin-top: -0.25em;
+}
+
 #wpBirthDateTD select {
 	width: 80px;
 	margin: 0 3px 0 0;
