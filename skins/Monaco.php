@@ -345,9 +345,6 @@ class SkinMonaco extends SkinTemplate {
 		$this->stylename = 'monaco';
 		$this->template  = 'MonacoTemplate';
 
-		// extra CSS file for RTL (MW1.13)
-		$this->cssfiles[] = 'rtl';
-
 		// Get category information (id, name, url)
 		$cats = wfGetBreadCrumb();
 		$idx = count($cats)-2;
