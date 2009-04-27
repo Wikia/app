@@ -78,7 +78,7 @@ function wfRegexBlockGetBlockers($master = 0) {
 	wfProfileIn( __METHOD__ );
 
     $key = wfForeignMemcKey( (isset($wgSharedDB)) ? $wgSharedDB : "wikicities" , "", REGEXBLOCK_BLOCKERS_KEY );
-    $cached = $oMemc->get($key);
+    $cached = ($master == 1) ? false : $oMemc->get($key);
     $blockers_array = array();
 
     if (!is_array($cached)) {
