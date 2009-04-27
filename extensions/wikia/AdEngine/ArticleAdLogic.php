@@ -374,7 +374,8 @@ class ArticleAdLogic {
 			'watch',
 			'unwatch',
 			'protect',
-			'unprotect');
+			'unprotect',
+			'rollback');
 
 		return in_array($wgRequest->getVal( 'action' ), $noAdActions);
 	}
