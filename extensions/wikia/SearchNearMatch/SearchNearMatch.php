@@ -2,9 +2,6 @@
 /**
  * search hook extending near matches to mixture of capital/not letters
  * at the beginning of words
- * + shared help
- * + link suggest emulation TODO
- * + full capital/not mix
  *
  * @author Przemek Piotrowski <ppiotr@wikia-inc.com>
  * @see RT#4307 RT#11497
@@ -21,15 +18,6 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 $wgHooks['SearchGetNearMatch'][] = 'SearchNearMatch::allCapitalOneLower';
 $wgHooks['SearchGetNearMatch'][] = 'SearchNearMatch::fullCapitalAndLowerMix';
 $wgHooks['SearchGetNearMatch'][] = 'SearchNearMatch::allCapitalOneLowerFromDB';
-
-if ($wgWikiaEnableSharedHelpExt) {
-#	$wgHooks['SearchGetNearMatch'][] = 'SearchNearMatch::checkHelpWikia';
-}
-
-if ($wgEnableLinkSuggestExt) {
-#	$wgHooks['SearchGetNearMatch'][] = 'SearchNearMatch::emulateLinkSuggest';
-}
-
 
 class SearchNearMatch {
 	/**
@@ -175,44 +163,6 @@ class SearchNearMatch {
 				self::fullCapitalAndLowerMixMagic($temp, $heap);
 			}
 		}
-	}
-
-	/**
-	 * @see getLinkSuggest in LinkSuggest.php 
-	 */
-	public static function emulateLinkSuggest($term, &$title) {
-		$guesses = array();
-
-/*
-		TODO
-		decouple getLinkSuggest into engine and ajax wrapper
-		use engine here
-*/
-		return self::checkGuesses($guesses, $title);
-	}
-
-	/**
-	 * page Help:Foo may not/semi/exists via shared help.wikia
-	 *
-	 * FIXME do it only for help namespace?
-	 */
-	public static function checkHelpWikia($term, &$title) {
-		$guesses = array();
-
-		$data = Http::get('http://help.wikia.com/api.php?action=opensearch&search=' . $term . '&namespace=12');
-		if (preg_match('/^\["' . $term . '",\["(.*)"\]\]$/', $data, $matches)) {
-			$guesses = split('","', $matches[1]);
-		}
-
-		//return self::checkGuesses($guesses, $title);
-		// not this time, it does not exist here for sure
-		// however, it surely exists via shared help
-		if (!empty($guesses[0])) {
-			$title = Title::newFromText($guesses[0]);
-			return false;
-		}
-
-		return true;
 	}
 }
 
