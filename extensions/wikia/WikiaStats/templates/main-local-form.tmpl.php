@@ -321,7 +321,14 @@ YAHOO.util.Event.onDOMReady(function () {
 	{
 		success: function( oResponse ) 
 		{
-			var resData = YAHOO.Tools.JSONParse(oResponse.responseText);
+			var resData = "";
+			if (YAHOO.Tools) {
+				resData = YAHOO.Tools.JSONParse(oResponse.responseText);
+			} else if ((YAHOO.lang) && (YAHOO.lang.JSON)) {
+				resData = YAHOO.lang.JSON.parse(oResponse.responseText);
+			} else {
+				resData = eval('(' + oResponse.responseText + ')');
+			}
 			YD.get("ws-edits-article-table").innerHTML = resData['text'];
 			YD.get("ws-progress-edits-bar").innerHTML = "&nbsp;";
 		},
@@ -336,7 +343,14 @@ YAHOO.util.Event.onDOMReady(function () {
 	{
 		success: function( oResponse ) 
 		{
-			var resData = YAHOO.Tools.JSONParse(oResponse.responseText);
+			var resData = "";
+			if (YAHOO.Tools) {
+				resData = YAHOO.Tools.JSONParse(oResponse.responseText);
+			} else if ((YAHOO.lang) && (YAHOO.lang.JSON)) {
+				resData = YAHOO.lang.JSON.parse(oResponse.responseText);
+			} else {
+				resData = eval('(' + oResponse.responseText + ')');
+			}
 			YD.get("ws-wikians-active-absent-table").innerHTML = resData['text'];
 			YD.get("ws-progress-wikians-bar").innerHTML = "&nbsp;";
 			document.getElementById( "wk-select-month-wikians-div" ).style.display = "block";
@@ -352,7 +366,14 @@ YAHOO.util.Event.onDOMReady(function () {
 	{
 		success: function( oResponse ) 
 		{
-			var resData = YAHOO.Tools.JSONParse(oResponse.responseText);
+			var resData = "";
+			if (YAHOO.Tools) {
+				resData = YAHOO.Tools.JSONParse(oResponse.responseText);
+			} else if ((YAHOO.lang) && (YAHOO.lang.JSON)) {
+				resData = YAHOO.lang.JSON.parse(oResponse.responseText);
+			} else {
+				resData = eval('(' + oResponse.responseText + ')');
+			}
 			YD.get("ws-anon-wikians-table").innerHTML = resData['text'];
 			YD.get("ws-progress-anon-bar").innerHTML = "&nbsp;";
 		},
@@ -367,7 +388,14 @@ YAHOO.util.Event.onDOMReady(function () {
 	{
 		success: function( oResponse ) 
 		{
-			var resData = YAHOO.Tools.JSONParse(oResponse.responseText);
+			var resData = "";
+			if (YAHOO.Tools) {
+				resData = YAHOO.Tools.JSONParse(oResponse.responseText);
+			} else if ((YAHOO.lang) && (YAHOO.lang.JSON)) {
+				resData = YAHOO.lang.JSON.parse(oResponse.responseText);
+			} else {
+				resData = eval('(' + oResponse.responseText + ')');
+			}
 			YD.get("ws-pageviews-table").innerHTML = resData['text'];
 			YD.get("ws-progress-pageviews-bar").innerHTML = "&nbsp;";
 		},
@@ -382,7 +410,14 @@ YAHOO.util.Event.onDOMReady(function () {
 	{
 		success: function( oResponse ) 
 		{
-			var resData = YAHOO.Tools.JSONParse(oResponse.responseText);
+			var resData = "";
+			if (YAHOO.Tools) {
+				resData = YAHOO.Tools.JSONParse(oResponse.responseText);
+			} else if ((YAHOO.lang) && (YAHOO.lang.JSON)) {
+				resData = YAHOO.lang.JSON.parse(oResponse.responseText);
+			} else {
+				resData = eval('(' + oResponse.responseText + ')');
+			}
 			YD.get("ws-articles-size-table").innerHTML = resData['text'];
 			YD.get("ws-progress-article-bar").innerHTML = "&nbsp;";
 		},
@@ -397,7 +432,14 @@ YAHOO.util.Event.onDOMReady(function () {
 	{
 		success: function( oResponse ) 
 		{
-			var resData = YAHOO.Tools.JSONParse(oResponse.responseText);
+			var resData = "";
+			if (YAHOO.Tools) {
+				resData = YAHOO.Tools.JSONParse(oResponse.responseText);
+			} else if ((YAHOO.lang) && (YAHOO.lang.JSON)) {
+				resData = YAHOO.lang.JSON.parse(oResponse.responseText);
+			} else {
+				resData = eval('(' + oResponse.responseText + ')');
+			}
 			YD.get("ws-namespace-count-table").innerHTML = resData['text'];
 			YD.get("ws-progress-namespace-bar").innerHTML = "&nbsp;";
 		},
@@ -412,7 +454,14 @@ YAHOO.util.Event.onDOMReady(function () {
 	{
 		success: function( oResponse ) 
 		{
-			var resData = YAHOO.Tools.JSONParse(oResponse.responseText);
+			var resData = "";
+			if (YAHOO.Tools) {
+				resData = YAHOO.Tools.JSONParse(oResponse.responseText);
+			} else if ((YAHOO.lang) && (YAHOO.lang.JSON)) {
+				resData = YAHOO.lang.JSON.parse(oResponse.responseText);
+			} else {
+				resData = eval('(' + oResponse.responseText + ')');
+			}
 			YD.get("ws-page-edits-count-table").innerHTML = resData['text'];
 			YD.get("ws-progress-page-edits-bar").innerHTML = "&nbsp;";
 		},
@@ -427,7 +476,14 @@ YAHOO.util.Event.onDOMReady(function () {
 	{
 		success: function( oResponse ) 
 		{
-			var resData = YAHOO.Tools.JSONParse(oResponse.responseText);
+			var resData = "";
+			if (YAHOO.Tools) {
+				resData = YAHOO.Tools.JSONParse(oResponse.responseText);
+			} else if ((YAHOO.lang) && (YAHOO.lang.JSON)) {
+				resData = YAHOO.lang.JSON.parse(oResponse.responseText);
+			} else {
+				resData = eval('(' + oResponse.responseText + ')');
+			}
 			YD.get("ws-othernpaces-edits-count-table").innerHTML = resData['text'];
 			YD.get("ws-progress-othernpaces-edits-bar").innerHTML = "&nbsp;";
 		},
@@ -545,7 +601,14 @@ YAHOO.util.Event.onDOMReady(function () {
 	{
 		success: function( oResponse ) 
 		{
-			var resData = YAHOO.Tools.JSONParse(oResponse.responseText);
+			var resData = "";
+			if (YAHOO.Tools) {
+				resData = YAHOO.Tools.JSONParse(oResponse.responseText);
+			} else if ((YAHOO.lang) && (YAHOO.lang.JSON)) {
+				resData = YAHOO.lang.JSON.parse(oResponse.responseText);
+			} else {
+				resData = eval('(' + oResponse.responseText + ')');
+			}
 			var page_id = document.getElementById( "wk-page-edits-stats-page-id" ).value;
 			YD.get("wk-page-count-details-stats").innerHTML = resData['text'];
 			YD.get("ws-progress-page-edits-bar").innerHTML = "&nbsp;";
@@ -575,7 +638,14 @@ YAHOO.util.Event.onDOMReady(function () {
 	{
 		success: function( oResponse ) 
 		{
-			var resData = YAHOO.Tools.JSONParse(oResponse.responseText);
+			var resData = "";
+			if (YAHOO.Tools) {
+				resData = YAHOO.Tools.JSONParse(oResponse.responseText);
+			} else if ((YAHOO.lang) && (YAHOO.lang.JSON)) {
+				resData = YAHOO.lang.JSON.parse(oResponse.responseText);
+			} else {
+				resData = eval('(' + oResponse.responseText + ')');
+			}
 			var page_id = document.getElementById( "wk-page-edits-stats-page-id" ).value;
 			YD.get("wk-othernpaces-count-details-stats").innerHTML = resData['text'];
 			YD.get("ws-progress-othernpaces-edits-bar").innerHTML = "&nbsp;";
