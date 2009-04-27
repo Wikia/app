@@ -178,12 +178,13 @@ class WikiFactory {
 	 * @access public
 	 * @static
 	 *
-	 * @param integer $wiki: wiki identifier in city_list
+	 * @param integer  $city_id: wiki identifier in city_list
 	 * @param string $domain: domain name
 	 *
 	 * @return boolean: true - added, false otherwise
 	 */
-	static public function addDomain( $wiki, $domain ) {
+	static public function addDomain( $city_id, $domain ) {
+		global $wgMemc;
 
 		if( ! self::isUsed() ) {
 			Wikia::log( __METHOD__, "", "WikiFactory is not used." );
@@ -200,19 +201,27 @@ class WikiFactory {
 		$dbw = wfGetDB( DB_MASTER );
 		$dbw->begin();
 
-		#--- check if $wiki exists
+		/**
+		 * check if $wiki exists
+		 */
 		$oRow = $dbw->selectRow(
 			self::table( "city_list" ),
 			array( "city_id "),
-			array( "city_id" => $wiki ),
+			array( "city_id" => $city_id ),
 			__METHOD__
 		);
-		if( $oRow->city_id != $wiki ) {
+		if( $oRow->city_id != $city_id ) {
+			/**
+			 * ... yes it exists
+			 */
 			wfProfileOut( __METHOD__ );
 			$dbw->rollback();
 			return false;
 		}
-		#--- check if $domain exists
+
+		/**
+		 * check if $domain exists
+		 */
 		$oRow = $dbw->selectRow(
 			self::table( "city_domains" ),
 			array( "city_domain "),
@@ -220,25 +229,35 @@ class WikiFactory {
 			__METHOD__
 		);
 		if( strtolower( $oRow->city_domain ) == strtolower( $domain ) ) {
-			#--- exists
+			/**
+			 * ... yes it exists
+			 */
 			wfProfileOut( __METHOD__ );
 			$dbw->rollback();
 			return false;
 		}
 
-		#--- ewentually insert
+		/**
+		 * ewentually insert
+		 */
 		$dbw->insert(
 			self::table("city_domains"),
 			array(
 				"city_domain" => strtolower( $domain ),
-				"city_id" => $wiki
+				"city_id" => $city_id
 			),
 			__METHOD__
 		);
-		self::log( self::LOG_DOMAIN, "{$domain} added.", $wiki );
+		self::log( self::LOG_DOMAIN, "{$domain} added.",  $city_id );
 		$dbw->commit();
-		wfProfileOut( __METHOD__ );
 
+		/**
+		 * clear cache
+		 */
+		$wgMemc->delete( sprintf( "wikifactory:domains:%d:%d", $city_id, true ) );
+		$wgMemc->delete( sprintf( "wikifactory:domains:%d:%d", $city_id, false ) );
+
+		wfProfileOut( __METHOD__ );
 		return true;
 	}
 
