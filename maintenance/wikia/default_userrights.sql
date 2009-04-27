@@ -37,7 +37,8 @@ insert into user_groups(ug_user, ug_group) values
 (/*Uberfuzzy*/161697, 'staff'),
 (/*VickyBC*/1066766, 'staff'),
 (/*WikiaBot*/269919,'staff'),
-(/*Zuirdj*/47,'staff')
+(/*Zuirdj*/47,'staff'),
+(/*WikiaStaff*/1342530,'staff')
 ;
 
 delete from user_groups where ug_group="helper";
