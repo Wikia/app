@@ -84,6 +84,8 @@ class WantedPagesPage extends QueryPage {
 				$pageLink = $skin->makeBrokenLinkObj( $title );
 			}
 			return wfSpecialList( $pageLink, $this->makeWlhLink( $title, $skin, $result ) );
+		} elseif (empty($result->title) {
+			return null; // this is a band aid solution but I give up )-: see RT#14387
 		} else {
 			$tsafe = htmlspecialchars( $result->title );
 			return "Invalid title in result set; {$tsafe}";
