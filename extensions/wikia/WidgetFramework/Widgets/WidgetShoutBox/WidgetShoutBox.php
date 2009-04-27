@@ -431,6 +431,9 @@ function WidgetShoutBoxRemoveMessage($msgId) {
 		// remove a message from shared table
 		$dbw->delete(wfSharedTable('shout_box_messages'), array('id' => $msgId), __FUNCTION__ );
 
+		// fix RT #14396
+		$dbw->commit();
+
 		// add msg also to memcache entry - avoid using unecessary updates queries
 		$key = wfMemcKey('widget::shoutbox::messages:1');
 		$msgs = $wgMemc->get($key);
