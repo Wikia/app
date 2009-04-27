@@ -534,6 +534,7 @@ class CityListPager extends TablePager {
 	 * @return string HTML code
 	 */
 	public function getEndBody() {
+		global $wgDevelEnvironment;
 
 		$html = "";
 
