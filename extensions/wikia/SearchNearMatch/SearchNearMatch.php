@@ -18,9 +18,9 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 /**
  * order is important, put heavy queries at the end
  */
-$wgHooks['SearchGetNearMatch'][] = 'SearchNearMatch::allCapitalOneLowerFromDB';
 $wgHooks['SearchGetNearMatch'][] = 'SearchNearMatch::allCapitalOneLower';
 $wgHooks['SearchGetNearMatch'][] = 'SearchNearMatch::fullCapitalAndLowerMix';
+$wgHooks['SearchGetNearMatch'][] = 'SearchNearMatch::allCapitalOneLowerFromDB';
 
 if ($wgWikiaEnableSharedHelpExt) {
 #	$wgHooks['SearchGetNearMatch'][] = 'SearchNearMatch::checkHelpWikia';
@@ -59,7 +59,12 @@ class SearchNearMatch {
 		$guesses = array();
 		
 		$words = ucwords(strtolower($term));
-		$words = explode(' ', $words);
+		$words = preg_split('/\s/', $words, -1, PREG_SPLIT_NO_EMPTY);
+		if (7 < sizeof($words)) {
+			// PHP Fatal error:  Allowed memory size exhausted...
+			return true;
+		}
+
 		// first word is always upercase, no need to mutate
 		$first_word = array_shift($words);
 
@@ -78,7 +83,8 @@ class SearchNearMatch {
 			$guesses[] = $first_word . ' ' . $mutation;
 		}
 
-		return self::checkGuesses($guesses, $title);
+		$result = self::checkGuesses($guesses, $title);
+		return $result;
 	}
 
 
@@ -136,7 +142,13 @@ class SearchNearMatch {
 		$guesses = array();
 
 		$words = ucwords(strtolower($term));
-		$words = explode(' ', $words);
+		$words = preg_split('/\s/', $words, -1, PREG_SPLIT_NO_EMPTY);
+		if (7 < sizeof($words)) {
+			// PHP Fatal error:  Allowed memory size exhausted...
+			return true;
+		}
+
+		// first word is always upercase, no need to mutate
 		$first_word = array_shift($words);
 
 		$heap = array();
@@ -149,7 +161,8 @@ class SearchNearMatch {
 			$guesses[] = $first_word . ' ' . $mutation;
 		}
 
-		return self::checkGuesses($guesses, $title);
+		$result = self::checkGuesses($guesses, $title);
+		return $result;
 	}
 
 	private static function fullCapitalAndLowerMixMagic($words, &$heap) {
