@@ -512,12 +512,15 @@ class CityListPager extends TablePager {
 	 * @return string HTML code
 	 */
 	public function getStartBody() {
+		global $wgDevelEnvironment;
 
 		$html = "";
 
-		$Tmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
-		$Tmpl->set( "closeTitle", Title::makeTitle( NS_SPECIAL, "CloseWiki" ) );
-		$html .= $Tmpl->render( "listing-actions" );
+		if( $wgDevelEnvironment ) {
+			$Tmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
+			$Tmpl->set( "closeTitle", Title::makeTitle( NS_SPECIAL, "CloseWiki" ) );
+			$html .= $Tmpl->render( "listing-actions" );
+		}
 		$html .= parent::getStartBody();
 
 		return $html;
@@ -534,7 +537,9 @@ class CityListPager extends TablePager {
 
 		$html = "";
 
-		$html .= Xml::closeElement( "form" );
+		if( $wgDevelEnvironment ) {
+			$html .= Xml::closeElement( "form" );
+		}
 		$html .= parent::getEndBody();
 
 		return $html;
