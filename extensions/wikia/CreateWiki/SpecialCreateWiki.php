@@ -54,4 +54,5 @@ if ( !function_exists( 'extAddSpecialPage' ) ) {
 }
 extAddSpecialPage( dirname(__FILE__) . '/SpecialCreateWiki_body.php', 'CreateWiki', 'CreateWikiForm' );
 
-?>
+#--- special page group
+$wgSpecialPageGroups['CreateWiki'] = 'wikia';
