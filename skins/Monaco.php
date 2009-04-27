@@ -365,6 +365,17 @@ class SkinMonaco extends SkinTemplate {
 	}
 
 	/**
+	 * Add specific styles for this skin
+	 *
+	 * Don't add common/shared.css as it's kept in allinone.css
+	 *
+	 * @param $out OutputPage
+	 */
+	function setupSkinUserCss( OutputPage $out ){
+		$out->addStyle( 'common/commonPrint.css', 'print' );	
+	}
+
+	/**
 	 * @author Inez Korczynski <inez@wikia.com>
 	 */
 	public function addVariables(&$obj, &$tpl) {
