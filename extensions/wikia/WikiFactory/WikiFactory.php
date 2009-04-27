@@ -130,12 +130,18 @@ class WikiFactory {
 
 		$domains = array();
 		$condition = is_null( $city_id ) ? null : array( "city_id" => $city_id );
-		$key = sprintf( "wikifactory:domains:%d:%d", $city_id, $extended );
-		$domains = $wgMemc->get( $key );
 
-		if( is_array( $domains ) ) {
-			wfProfileOut( __METHOD__ );
-			return $domains;
+		/**
+		 * skip cache if we want master
+		 */
+		if( ! $master ) {
+			$key = sprintf( "wikifactory:domains:%d:%d", $city_id, $extended );
+			$domains = $wgMemc->get( $key );
+
+			if( is_array( $domains ) ) {
+				wfProfileOut( __METHOD__ );
+				return $domains;
+			}
 		}
 
 		$dbr = ( $master ) ? wfGetDB( DB_MASTER ) : wfGetDB( DB_SLAVE );
