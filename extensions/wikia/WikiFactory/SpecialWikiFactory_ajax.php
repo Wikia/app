@@ -160,12 +160,7 @@ function axWFactoryDomainCRUD($type="add") {
             break;
     }
     #--- get actuall domain list
-    $oRes = $dbw->select(wfSharedTable("city_domains"), "city_domain",
-        array("city_id" => $iCityId), __METHOD__, array("ORDER BY" => "city_domain") );
-    while ( $oRow = $dbw->fetchObject( $oRes )) {
-        $aDomains[] = $oRow->city_domain;
-    }
-    $dbw->freeResult( $oRes );
+	 $oDomains = WikiFactory::getDomains( $iCityId, false, true );
 
     #--- send response, return domain array
     $aResponse["domains"] = $aDomains;
