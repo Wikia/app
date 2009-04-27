@@ -210,7 +210,7 @@ function wfProblemReportsAjaxAPI() {
 	// update / remove report
 	$FauxRequest = new FauxRequest(array
 	(
-		'action'	=> ($params['status'] != 10) ? 'update' : 'delete',
+		'action'	=> ($params['status'] != 10) ? 'update' : 'wdelete',
 		'list'		=> 'problemreports',
 
 		'wkstatus'	=> $params['status'],
