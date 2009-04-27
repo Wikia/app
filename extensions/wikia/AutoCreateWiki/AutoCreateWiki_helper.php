@@ -116,7 +116,7 @@ class AutoCreateWiki {
 						"{$city_domains}.city_id = {$city_list}.city_id"
 					),
 					__METHOD__,
-					array( "limit" => 20 )
+					array( "LIMIT" => 20 )
 				);
 
 				while ( $oRow = $dbr->fetchObject( $oRes ) ) {
@@ -141,7 +141,7 @@ class AutoCreateWiki {
 						"{$city_domains}.city_id = {$city_list}.city_id"
 					),
 					__METHOD__,
-					array( "limit" => 20 )
+					array( "LIMIT" => 20 )
 				);
 
 				while ( $oRow = $dbr->fetchObject( $oRes ) ) {
