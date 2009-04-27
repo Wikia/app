@@ -2374,12 +2374,19 @@ class Title {
 		global $wgUseSiteJs, $wgUseSiteCss, $wgAllowUserJs;
 		global $wgSquidMaxage, $wgJsMimeType;
 		if( $wgUseSiteCss && $this->getNamespace() == NS_MEDIAWIKI ) {
+			$query = array(
+				'usemsgcache' => 'yes',
+				'ctype' => 'text/css',
+				'smaxage' => $wgSquidMaxage,
+				'action' => 'raw',
+				'maxage' => $wgSquidMaxage,
+			);
 			if( $this->getText() == 'Common.css' ) {
-				$urls[] = $this->getInternalURL( "usemsgcache=yes&action=raw&ctype=text/css&smaxage=$wgSquidMaxage" );
+				$urls[] = $this->getInternalURL( $query ); 
 			} else {
 				foreach( Skin::getSkinNames() as $skinkey => $skinname ) {
 					if( $this->getText() == ucfirst($skinkey).'.css' ) {
-						$urls[] = $this->getInternalURL( "usemsgcache=yes&action=raw&ctype=text/css&smaxage=$wgSquidMaxage" );
+						$urls[] = $this->getInternalURL( $query );
 						break;
 					} elseif ( $wgUseSiteJs && $this->getText() == 'Common.js' ) {
 						$urls[] = Skin::makeUrl('-', "action=raw&gen=js&useskin=" .urlencode( $skinkey ) );
