@@ -261,22 +261,24 @@ function WidgetShoutBoxAddMessage($msg) {
 			$key = wfMemcKey('widget::shoutbox::messages:1');
 			$msgs = $wgMemc->get($key);
 
-			if (is_array($msgs)) {
-				$msgs[$insertId] = array(
-					'id' => $insertId,
-					'time' => time(),
-					'user' => $wgUser->getName(),
-					'message' => stripslashes($message),
-					'*' => ''
-				);
-
-				// sort and limit array size (keep key association)
-				krsort($msgs, SORT_NUMERIC);
-				$msgs = array_slice($msgs, 0, 50, true);
-
-				// save to cache
-				$wgMemc->set($key, $msgs, 3600); // cache for an hour
+			if (!is_array($msgs)) {
+				$smsgs = array();
 			}
+
+			$msgs[$insertId] = array(
+				'id' => $insertId,
+				'time' => time(),
+				'user' => $wgUser->getName(),
+				'message' => stripslashes($message),
+				'*' => ''
+			);
+
+			// sort and limit array size (keep key association)
+			krsort($msgs, SORT_NUMERIC);
+			$msgs = array_slice($msgs, 0, 50, true);
+
+			// save to cache
+			$wgMemc->set($key, $msgs, 3600); // cache for an hour
 		}
 	}
 
