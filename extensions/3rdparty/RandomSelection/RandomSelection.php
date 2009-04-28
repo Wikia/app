@@ -95,7 +95,7 @@ function renderChosen( $input, $argv, &$parser ) {
 		$result = '';
 		$length = count($input);
 		for ($i = 0; $i < $length; $i++) {
-			$result .= "<span style=\"display:none\" id=\"option_{$wgRandomSelectTagCount}_$i\">" . $parser->recursiveTagParse($input[$i]) . '</span>';
+			$result .= "<div style=\"display:none\" id=\"option_{$wgRandomSelectTagCount}_$i\">" . $parser->recursiveTagParse($input[$i]) . '</div>';
 		}
 		return $result . sprintf($addedJS, $length);
 	}
