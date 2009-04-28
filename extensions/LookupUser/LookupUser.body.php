@@ -85,7 +85,7 @@ EOT
 	 * Retrieves and shows the gathered info to the user
 	 * @param $target Mixed: user whose info we're looking up
 	 */
-	function showInfo( $target ) {
+	function showInfo( $target, $emailUser = "" ) {
 		global $wgOut, $wgLang, $wgScript;
 		
 		/**
