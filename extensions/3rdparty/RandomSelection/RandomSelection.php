@@ -9,7 +9,6 @@
  Optional parameter: <option weight="3"> == 3x weight given
 
  Author: Ross McClure [http://www.mediawiki.org/wiki/User:Algorithm]
- Author: Maciej Błaszkowski (Marooned) <marooned at wikia-inc.com>
 */
 
 //Avoid unstubbing $wgParser on setHook() too early on modern (1.12+) MW versions, as per r35980
@@ -33,37 +32,12 @@ function wfRandomSelection() {
 	return true;
 }
 
-function getRandomOption($r, $out, $len, &$choosedOptions) {
-	# Choose an option at random
-	$input = '';
-	//no more options
-	if (count($choosedOptions) >= $len) return $input;
-	do {
-		$t = mt_rand(1,$r);
-		for($i = 0; $i < $len; $i++) {
-			$t -= $out[1][$i];
-			if($t <= 0) {
-				if (empty($choosedOptions[$i])) {
-					$input = $out[2][$i];
-					$choosedOptions[$i] = 1;
-				}
-				break;
-			}
-		}
-	} while ($input == '');
-	return $input;
-}
-
 function renderChosen( $input, $argv, &$parser ) {
-	global $wgParserCacheExpireTime, $wgRandomSelectExtraItems, $wgRandomSelectTagCount;
-
-	isset($wgRandomSelectTagCount) ? $wgRandomSelectTagCount++ : $wgRandomSelectTagCount = 0;
-
-	$choosedOptions = array();
-	$addedJS = "<script type=\"text/javascript\">document.getElementById('option_{$wgRandomSelectTagCount}_'+Math.floor(Math.random() * %d)).style.display='inline';</script><noscript><style type=\"text/css\">#option_{$wgRandomSelectTagCount}_0 {display:inline ! important}</style></noscript>";
-
-//	$wgParserCacheExpireTime = 60;
-//	wfDebug( "soft disable Cache (choose)\n" );
+	# Prevent caching
+	#$parser->disableCache();
+	global $wgParserCacheExpireTime;
+	$wgParserCacheExpireTime = 60;
+	wfDebug( "soft disable Cache (choose)\n" );
 
 	# Parse the options and calculate total weight
 	$len = preg_match_all("/<option(?:(?:\\s[^>]*?)?\\sweight=[\"']?([^\\s>]+))?"
@@ -75,29 +49,20 @@ function renderChosen( $input, $argv, &$parser ) {
 		$r += $out[1][$i];
 	}
 
-	if($r <= 0) return '';
-	$input = array(getRandomOption($r, $out, $len, $choosedOptions));
-
-	if ($input[0] != '') {
-		//add extra options for JS to pick one at client side
-		for ($i = 0; $i < $wgRandomSelectExtraItems; $i++) {
-			$tmp = getRandomOption($r, $out, $len, $choosedOptions);
-			if ($tmp != '') {
-				$input[] = $tmp;
-			} else {
-				break;
-			}
+	# Choose an option at random
+	if($r <= 0) return "";
+	$r = mt_rand(1,$r);
+	for($i = 0; $i < $len; $i++) {
+		$r -= $out[1][$i];
+		if($r <= 0) {
+			$input = $out[2][$i];
+			break;
 		}
 	}
 
 	# If running new parser, take the easy way out
 	if( defined( 'Parser::VERSION' ) && version_compare( Parser::VERSION, '1.6.1', '>' ) ) {
-		$result = '';
-		$length = count($input);
-		for ($i = 0; $i < $length; $i++) {
-			$result .= "<div style=\"display:none\" id=\"option_{$wgRandomSelectTagCount}_$i\">" . $parser->recursiveTagParse($input[$i]) . '</div>';
-		}
-		return $result . sprintf($addedJS, $length);
+		return $parser->recursiveTagParse($input);
 	}
 
 	# Otherwise, create new parser to handle rendering
@@ -112,11 +77,7 @@ function renderChosen( $input, $argv, &$parser ) {
 	$localParser->mFunctionSynonyms = $parser->mFunctionSynonyms;
 
 	# Render the chosen option
-
-	$result = '';
-	$length = count($input);
-	for ($i = 0; $i < $length; $i++) {
-		$result .= "<span style=\"display:none\" id=\"option_{$wgRandomSelectTagCount}_$i\">" . $localParser->parse($input[$i], $parser->mTitle, $parser->mOptions, false, false)->getText() . '</span>';
-	}
-	return $result . sprintf($addedJS, $length);
+	$output = $localParser->parse($input, $parser->mTitle,
+					$parser->mOptions, false, false);
+	return $output->getText();
 }
