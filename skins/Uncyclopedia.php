@@ -68,19 +68,9 @@ class SkinUncyclopedia extends SkinMonoBook {
 	}
 
 	public function addWikiaVars(&$obj, &$tpl) {
-		wfProfileIn(__METHOD__);
-
 		parent::addWikiaVars($obj, $tpl);
-/*
-		$tpl->set('copyright', '<a href="http://www.gnu.org/copyleft/fdl.html" class="external " title="http://www.gnu.org/copyleft/fdl.html" rel="nofollow">GFDL</a>');
-		$tpl->set('privacy', '<a href="http://www.wikia.com/wiki/Wikia:Privacy_Policy" title="w:Wikia:Privacy Policy">Terms of use</a>');
-		$tpl->set('about', '<a href="/WoWWiki:About" title="WoWWiki:About">About WoWWiki</a>');
-		$tpl->set('disclaimer', '<a href="/WoWWiki:General_disclaimer" title="WoWWiki:General disclaimer">Disclaimers</a>');
-*/
-		wfProfileOut(__METHOD__);
 		return true;
 	}
-
 }
 
 /**
