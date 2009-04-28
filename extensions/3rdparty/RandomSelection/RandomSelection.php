@@ -60,7 +60,7 @@ function renderChosen( $input, $argv, &$parser ) {
 	isset($wgRandomSelectTagCount) ? $wgRandomSelectTagCount++ : $wgRandomSelectTagCount = 0;
 
 	$choosedOptions = array();
-	$addedJS = "<script type=\"text/javascript\">var random = Math.floor(Math.random() * %d);$('option_{$wgRandomSelectTagCount}_'+random).style.display='inline';</script><noscript><style type=\"text/css\">#option_{$wgRandomSelectTagCount}_0 {display:inline ! important}</style></noscript>";
+	$addedJS = "<script type=\"text/javascript\">document.getElementById('option_{$wgRandomSelectTagCount}_'+Math.floor(Math.random() * %d)).style.display='inline';</script><noscript><style type=\"text/css\">#option_{$wgRandomSelectTagCount}_0 {display:inline ! important}</style></noscript>";
 
 //	$wgParserCacheExpireTime = 60;
 //	wfDebug( "soft disable Cache (choose)\n" );
