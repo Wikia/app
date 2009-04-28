@@ -150,7 +150,7 @@ class Skin extends Linker {
 				// Preload base classes to work around APC/PHP5 bug
 				include_once( "{$wgStyleDirectory}/MonoBook.deps.php" );
 				require_once( "{$wgStyleDirectory}/GWMonoBook.php" );
-				$className = "SkinMonoBook";
+				$className = 'SkinGuildWars';
 			}
 			else {
 				// Preload base classes to work around APC/PHP5 bug
