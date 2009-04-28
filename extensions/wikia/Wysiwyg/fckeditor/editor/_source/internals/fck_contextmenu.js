@@ -272,28 +272,6 @@ function FCK_ContextMenu_GetListener( listenerName )
 				}
 			}} ;
 
-		case 'BulletedList' :
-			return {
-			AddItems : function( menu, tag, tagName )
-			{
-				if ( FCKSelection.HasAncestorNode('UL') )
-				{
-					menu.AddSeparator() ;
-					menu.AddItem( 'BulletedList', FCKLang.BulletedListProp, 27 ) ;
-				}
-			}} ;
-
-		case 'NumberedList' :
-			return {
-			AddItems : function( menu, tag, tagName )
-			{
-				if ( FCKSelection.HasAncestorNode('OL') )
-				{
-					menu.AddSeparator() ;
-					menu.AddItem( 'NumberedList', FCKLang.NumberedListProp, 26 ) ;
-				}
-			}} ;
-
 		case 'DivContainer':
 			return {
 			AddItems : function( menu, tag, tagName )
