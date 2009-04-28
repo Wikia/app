@@ -163,7 +163,7 @@ class TaskManagerExecutor {
 	private function getTask() {
 		$aStarted = array();
 		$aRunning = array();
-		$dbr = wfGetDB( DB_SLAVE );
+		$dbr = wfGetDB( DB_MASTER );
 
 		$dbr->begin();
 		try {
