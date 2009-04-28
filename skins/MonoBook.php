@@ -143,6 +143,7 @@ class MonoBookTemplate extends QuickTemplate {
 <body<?php if($this->data['body_ondblclick']) { ?> ondblclick="<?php $this->text('body_ondblclick') ?>"<?php } ?>
 <?php if($this->data['body_onload']) { ?> onload="<?php $this->text('body_onload') ?>"<?php } ?>
  class="mediawiki <?php $this->text('dir') ?> <?php $this->text('pageclass') ?> <?php $this->text('skinnameclass') ?> wikiaSkinMonobook">
+<?php $this->navbar(); ?>
 	<div id="globalWrapper">
 	<div id="column-content">
 	<div id="content" class="content-ads"<?php $this->wideSkyscraper();?><?php $this->noSkyscraper();?>>
@@ -430,6 +431,9 @@ if ( !$this->isSkyscraper() ) {
 	</div>
 <?php
 	}
+
+	/*************************************************************************************************/
+	function navbar() {}
 
 } // end of class
 
