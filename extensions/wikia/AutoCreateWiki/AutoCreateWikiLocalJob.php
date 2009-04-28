@@ -91,7 +91,8 @@ class AutoCreateWikiLocalJob extends Job {
 	 * inherited "insert" function add job to current database, for this job
 	 * we need to add job to newly created wiki
 	 *
-	 * @param Integer $city_id	wiki identifier in city_list table
+	 * @param integer $city_id	wiki identifier in city_list table
+	 * @param string  $database target database name
 	 */
 	public function WFinsert( $city_id, $database = false ) {
 
