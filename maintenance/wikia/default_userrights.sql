@@ -13,7 +13,6 @@ insert into user_groups(ug_user, ug_group) values
 (/*Dmurphy*/138300,'staff'),
 (/*Eloy.wikia*/51098,'staff'),
 (/*Emil*/27301,'staff'),
-(/*Galezewski*/189276,'staff'),
 (/*Gil*/20251,'staff'),
 (/*Gorillamania*/414904,'staff'),
 (/*Inez*/51654,'staff'),
