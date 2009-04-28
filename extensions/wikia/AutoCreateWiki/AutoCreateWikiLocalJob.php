@@ -146,8 +146,8 @@ class AutoCreateWikiLocalJob extends Job {
 		Wikia::log( __METHOD__, "talk", "Setting welcome talk page on new wiki" );
 
 		$talkPage = $this->mFounder->getTalkPage();
-		Wikia::log( __METHOD__, "talk", $talkPage->getFullUrl() );
 		if( $talkPage ) {
+			Wikia::log( __METHOD__, "talk", $talkPage->getFullUrl() );
 			$wikiaName = isset( $this->mParams[ "title" ] )
 				? $this->mParams[ "title" ]
 				: WikiFactory::getVarValueByName( "wgSitename", $this->mParams[ "city_id"], true );
@@ -303,7 +303,8 @@ class AutoCreateWikiLocalJob extends Job {
 			$article = new Article( $title );
 
 			if ( $article->exists() ) {
-				$ok = $article->updateRestrictions( $restrictions, $reason, 0, $expiry );
+				$cascade = 0;
+				$ok = $article->updateRestrictions( $restrictions, $reason, $cascade, $expiry );
 			}
 			else {
 				$ok = $title->updateTitleProtection( $titleRestrictions, $reason, $expiry );
