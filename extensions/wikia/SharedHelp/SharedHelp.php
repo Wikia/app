@@ -202,6 +202,8 @@ function SharedHelpHook(&$out, &$text) {
 			curl_close( $c );
 		}
 
+		if (empty($content)) return true; 
+
 		//process article if not redirected before
 		if (empty($wasRedirected)) {
 			# get rid of editsection links
