@@ -77,10 +77,10 @@ class AutoCreateWikiLocalJob extends Job {
 		$wgUser = User::newFromName( "CreateWiki script" );
 
 		$this->moveMainPage();
-		$this->protectKeyPages();
-		$this->populateCheckUserTables();
 		$this->setWelcomeTalkPage();
 		$this->sendWelcomeMail();
+		$this->populateCheckUserTables();
+		$this->protectKeyPages();
 
 		wfProfileOut( __METHOD__ );
 
@@ -260,7 +260,6 @@ class AutoCreateWikiLocalJob extends Job {
 					Wikia::log( __METHOD__, "move", "source {$source} and target {$target} are the same" );
 				}
 			}
-
 		}
 	}
 
