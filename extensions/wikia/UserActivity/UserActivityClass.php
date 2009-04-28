@@ -516,7 +516,12 @@ class UserActivity {
 				$page_title = Title::newFromText( $page_name );
 			}
 
-			if (!($page_title instanceof Title)) continue;
+			if (!($page_title instanceof Title)) {
+				global $wgTitle;
+				$url = $wgTitle->getFullUrl();
+				Wikia::log(__METHOD__, 'page_title', "\$page_title is null, \$type=$type, \$page_name=$page_name, URL=$url");
+				continue;
+			}
 
 			$count_users = count( $page_data["users"] );
 			$user_index = 0;
