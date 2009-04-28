@@ -6,6 +6,7 @@ $messages = array_merge( $messages , array(
 'monaco_skins' => 'Monaco',
 'monaco-sapphire' => 'Sapphire',
 'monaco-jade' => 'Jade',
+'monaco-ruby' => 'Ruby',
 'monaco-slate' => 'Slate',
 'monaco-smoke' => 'Smoke',
 'monaco-beach' => 'Beach',
