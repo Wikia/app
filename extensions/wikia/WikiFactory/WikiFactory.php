@@ -134,8 +134,8 @@ class WikiFactory {
 		/**
 		 * skip cache if we want master
 		 */
+		$key = sprintf( "wikifactory:domains:%d:%d", $city_id, $extended );
 		if( ! $master ) {
-			$key = sprintf( "wikifactory:domains:%d:%d", $city_id, $extended );
 			$domains = $wgMemc->get( $key );
 
 			if( is_array( $domains ) ) {
@@ -269,11 +269,11 @@ class WikiFactory {
 	 * @author tor@wikia-inc.com
 	 *
 	 * @param integer $wiki: wiki identifier in city_list
-	 * @param string $domain: domain name
+	 * @param string $domain: domain name (on null)
 	 *
 	 * @return boolean: true - removed, false otherwise
 	 */
-	static public function removeDomain ( $wiki, $domain ) {
+	static public function removeDomain ( $wiki, $domain = null ) {
 		if( ! self::isUsed() ) {
 			Wikia::log( __METHOD__, "", "WikiFactory is not used." );
 			return false;
@@ -282,8 +282,13 @@ class WikiFactory {
 		wfProfileIn( __METHOD__ );
 		$dbw = wfGetDB( DB_MASTER );
 		$dbw->begin();
+		
+		$cond = array( "city_id" => $wiki );
+		if ( !is_null($domain) ) {
+			$cond["city_domain"] = $domain;
+		}
 
-		if ( ! $dbw->delete(self::table("city_domains"), array( "city_id" => $wiki, "city_domain" => $domain ), __METHOD__) ) {
+		if ( ! $dbw->delete( self::table("city_domains"), $cond, __METHOD__ ) ) {
 			$dbw->rollback();
 			wfProfileOut( __METHOD__ );
 			return false;
@@ -1434,6 +1439,45 @@ class WikiFactory {
 
 		wfProfileOut( __METHOD__ );
 		return isset( $oRow->city_id ) ? $oRow->city_id : null;
+	}
+	
+	
+	/**
+	 * redirectDomains
+	 *
+	 * move domains from one to other Wiki
+	 *
+	 * @author moli@wikia
+	 * @access public
+	 * @static
+	 *
+	 * @param integer	$city_id	source Wiki ID
+	 * @param integer	$new_city_id	target Wiki ID
+	 *
+	 *
+	 * @return integer: city ID or null if not found
+	 */
+	static public function redirectDomains($city_id, $new_city_id) { 
+		wfProfileIn( __METHOD__ );
+		$res = true;
+		
+		$dbw = wfGetDB( DB_MASTER );
+		$dbw->begin();
+
+		$db = $dbw->update(
+			self::table("city_domains"),
+			array("city_id" => $new_city_id ),
+			array("city_id" => $city_id),
+			__METHOD__ );
+
+		if ($db) {	
+			$dbw->commit();
+		} else {
+			$dbw->rollback();
+			$res = false;
+		}
+		wfProfileOut( __METHOD__ );
+		return $res;
 	}
 
 };

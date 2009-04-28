@@ -1,24 +1,15 @@
-<?php
-	print_pre( $errors );
-?>
-Check wikis and confirm operation
+<!-- s:<?= __FILE__ ?> -->
+<?=wfMsg('closewiki-check-and-confirm')?>
 <div>
 	<form action="<?php echo $title->getFullUrl( "step=2") ?>" method="post">
 	<table class="filehistory" style="width: 100%">
 	<tr>
-		<th>
-			Name
-		</th>
-		<th>
-			Lang
-		</th>
-		<th>
-			Created
-		</th>
+		<th><?=wfMsg('allmessagesname')?></th>
+		<th><?=wfMsg('wf_city_lang')?></th>
+		<th><?=wfMsg('wf_city_created')?></th>
+		<th><?=wfMsg('wf_city_founding_user')?></th>
 <?php if( $action == CloseWikiPage::CLOSE_REDIRECT ): ?>
-		<th>
-			Redirect to
-		</th>
+		<th><?=wfMsg('closewiki-redirect-to')?></th>
 <?php endif ?>
 	</tr>
 <?php foreach( $wikis as $wiki ): ?>
@@ -43,6 +34,16 @@ Check wikis and confirm operation
 		<td>
 			<?php echo $wiki->city_created ?>
 		</td>
+		<td>
+			<ul>
+				<li style="list-style:none;">
+					<?php echo ( isset($wiki->city_founding_user) ) ? User::newFromId($wiki->city_founding_user)->getName() : wfMsg('closewiki-unknown') ?>
+				</li>	
+				<li style="list-style:none;">
+					<?php echo $wiki->city_founding_email ?>
+				</li>
+			</ul>
+		</td>
 <?php if( $action == CloseWikiPage::CLOSE_REDIRECT ): ?>
 		<td style="padding: 5px;">
 			<div class="center <?php echo isset( $errors[ $wiki->city_id ] ) ? "error" : "" ?>">
@@ -52,14 +53,16 @@ Check wikis and confirm operation
 					value="<?php echo isset( $redirects[ $wiki->city_id ] ) ? $redirects[ $wiki->city_id ] : "" ?>"
 					maxlenght="64" size="32" />
 				<br />
-				<label><em>domain name <?php echo isset( $errors[ $wiki->city_id ] ) ? "is not valid" : "" ?></em></label>
+				<label><em><?= wfMsg('closewiki-message', isset( $errors[ $wiki->city_id ] ) ? "is not valid" : "") ?></em></label>
 			</div>
 		</td>
 <?php endif ?>
 	</tr>
 <?php endforeach ?>
 	</table>
+	<br />
 	<input type="hidden" name="action" value="<?php echo $action ?>" />
-	<input type="submit" name="submit" value="Confirm <?php echo $actions[ $action ] ?> of <?php echo count( $wikis ) ?> wikis." />
+	<input type="submit" name="submit" value="<?=wfMsg('closewiki-confirm-button', $actions[ $action ], wfMsg('closewiki-nbr-wiki', count( $wikis )) )?>" />
 	</form>
 </div>
+<!-- e:<?= __FILE__ ?> -->
