@@ -456,7 +456,7 @@ class Linker {
 		/* Wikia change end */
 
 		/* Wikia change begin - @author: unknown, Inez */
-		if($nt->isExternal()) {
+		if( $nt && $nt->isExternal()) {
 			$iwclass = strtolower($nt->getInterwiki());
 			if(in_array($iwclass, array('w', 'wikia', 'wikicities'))) {
 				$iwclass = 'w';
