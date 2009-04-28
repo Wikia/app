@@ -538,6 +538,9 @@ class Linker {
 	function makeBrokenLinkObj( $title, $text = '', $query = '', $trail = '', $prefix = '' ) {
 		wfProfileIn( __METHOD__ );
 
+global $wgWikiaEnableSharedHelpExt;
+if ($wgWikiaEnableSharedHelpExt && (NS_HELP == $title->getNamespace()) && SharedHelpArticleExists($title)) return $this->makeKnownLinkObj($title, $text, $query, $trail, $prefix);
+
 		list( $inside, $trail ) = Linker::splitTrail( $trail );
 		if( $text === '' ) {
 			$text = $this->linkText( $title );
