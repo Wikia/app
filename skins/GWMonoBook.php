@@ -61,6 +61,32 @@ class SkinGuildWars extends SkinMonoBook {
  */
 class GuildWarsTemplate extends MonoBookTemplate {
 
+	function execute() {
+
+		$this->data['ads_bottomjs'] = <<<ADS
+<script type="text/javascript" src="http://edge.quantserve.com/quant.js"></script>
+<script type="text/javascript">_qacct="p-8bG6eLqkH6Avk";quantserve();</script>
+<noscript>
+<a href="http://www.quantcast.com/p-8bG6eLqkH6Avk" target="_blank"><img src="http://pixel.quantserve.com/pixel/p-8bG6eLqkH6Avk.gif" style="display: none;" border="0" height="1" width="1" alt="Quantcast"/></a>
+</noscript>
+<script type='text/javascript'><!--//<![CDATA[
+var m3_u = (location.protocol=='https:'?'https://wikia-ads.wikia.com/www/delivery/ajs.php':'http://wikia-ads.wikia.com/www/delivery/ajs.php');
+var m3_r = Math.floor(Math.random()*99999999999);
+if (!document.MAX_used) document.MAX_used = ',';
+document.write ("<scr"+"ipt type='text/javascript' src='"+m3_u);
+document.write ("?zoneid=15");
+document.write ('&amp;cb=' + m3_r);
+if (document.MAX_used != ',') document.write ("&amp;exclude=" + document.MAX_used);
+document.write ("&amp;loc=" + escape(window.location));
+if (document.referrer) document.write ("&amp;referer=" + escape(document.referrer));
+if (document.context) document.write ("&context=" + escape(document.context));
+if (document.mmm_fo) document.write ("&amp;mmm_fo=1");
+document.write ("'><\/scr"+"ipt>");
+//]]>--></script><noscript><a href='http://wikia-ads.wikia.com/www/delivery/ck.php?n=a1137749&amp;cb=INSERT_RANDOM_NUMBER_HERE' target='_blank'><img src='http://wikia-ads.wikia.com/www/delivery/avw.php?zoneid=15&amp;n=a1137749' border='0' alt='' /></a></noscript>
+ADS;
+		parent::execute();
+	}
+
 	// HTML to be added between footer and end of page
 	function navbar() {
 ?>
