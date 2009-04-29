@@ -378,6 +378,57 @@ function axWFactoryFilterVariables( )
     ));
 }
 
+/**
+ * axAWCMetrics
+ *
+ * Ajax call, return filtered list of all wikis with some metrics data
+ *
+ * @access public
+ * @author moli@wikia
+ *
+ * @return string: json string 
+ */
+function axAWCMetrics() {
+	global $wgUser, $wgRequest;	
+	wfLoadExtensionMessages( "AutoCreateWiki" );
+
+	error_log ( print_r($wgRequest, true) );
+
+	if ( wfReadOnly() ) {
+		return;
+	}
+
+	if ( !in_array('staff', $wgUser->getGroups()) ) {
+		return "";
+	} 
+
+	if( $wgUser->isBlocked() ) {
+		return "";
+	}
+	
+	$limit = $wgRequest->getVal('awc-limit', CreateWikiMetrics::LIMIT);
+	$page = $wgRequest->getVal('awc-offset', 0);
+	$order = $wgRequest->getVal('awc-order', CreateWikiMetrics::ORDER);
+	$desc = $wgRequest->getVal('awc-desc', CreateWikiMetrics::DESC);
+	$aResponse = array('nbr_records' => 0, 'limit' => $limit, 'page' => $page, 'order' => $order, 'desc' => $desc);
+	
+	$OAWCMetrics = new CreateWikiMetrics();
+	$OAWCMetrics->getRequestParams();
+	list ($res, $count) = $OAWCMetrics->getMainStatsRecords();
+	
+	if ( !empty($res) ) {
+		$aResponse['data'] = $res;
+		$aResponse['nbr_records'] = $count;
+	}
+	
+	if (!function_exists('json_encode'))  {
+		$oJson = new Services_JSON();
+		return $oJson->encode($aResponse);
+	} else {
+		return json_encode($aResponse);
+	}
+}
+
 global $wgAjaxExportList;
 $wgAjaxExportList[] = "axWFactoryGetVariable";
 $wgAjaxExportList[] = "axWFactoryFilterVariables";
@@ -385,3 +436,4 @@ $wgAjaxExportList[] = "axWFactoryDomainCRUD";
 $wgAjaxExportList[] = "axWFactoryDomainQuery";
 $wgAjaxExportList[] = "axWFactoryClearCache";
 $wgAjaxExportList[] = "axWFactorySaveVariable";
+$wgAjaxExportList[] = "axAWCMetrics";
