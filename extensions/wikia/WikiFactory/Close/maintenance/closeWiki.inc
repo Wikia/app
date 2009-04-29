@@ -1,13 +1,9 @@
 <?php
-
 /**
  * @package MediaWiki
  * @addtopackage maintenance
  */
 
-/**
- * @todo how to check if dump is already done?
- */
 include( $IP . "/maintenance/backup.inc" );
 
 class CloseWikiMaintenace {
@@ -15,7 +11,8 @@ class CloseWikiMaintenace {
 	private
 		$mDumpDirectory,
 		$mImgDirectory,
-		$mAction;
+		$mAction,
+		$mCityID;
 
 	public function __construct() {
 		global $wgDevelEnvironment;
@@ -39,6 +36,7 @@ class CloseWikiMaintenace {
 	public function execute() {
 
 		global $wgCityId;
+		$this->mCityID = $wgCityId;
 
 		if( !wfReadOnly() ) {
 			/**
@@ -49,10 +47,19 @@ class CloseWikiMaintenace {
 				$this->mAction = $Wiki->city_public;
 			}
 			switch( $this->mAction ) {
+				case WikiFactory::STATUS_CLOSED:
+					$this->dumpXMl();
+					$this->compressImages();
+					break;
 
+				case WikiFactory::STATUS_DELETE:
+					$this->dumpXMl();
+					$this->compressImages();
+					$this->removeImageDirectory();
+					$this->cleanWikiFactory();
+					// $this->dropDB();
+					break;
 			}
-			#$this->dumpXMl();
-			$this->compressImages();
 		}
 		return true;
 	}
@@ -84,6 +91,13 @@ class CloseWikiMaintenace {
 		$dumper->dump( WikiExporter::FULL, WikiExporter::TEXT );
 	}
 
+	/**
+	 * zip all images from image table
+	 *
+	 * @access public
+	 *
+	 * @return integer status of zip operation
+	 */
 	public function compressImages() {
 		global $wgUploadDirectory, $wgDBname;
 
@@ -98,6 +112,7 @@ class CloseWikiMaintenace {
 			}
 			else {
 				Wikia::log( __METHOD__, "dir", "Path {$directory} exists and it is file" );
+				wfDie( "Path {$directory} exists and it is file" );
 			}
 		}
 		Wikia::log( __METHOD__, "", "Zipping images from {$wgUploadDirectory} to {$zipfile}" );
@@ -106,7 +121,7 @@ class CloseWikiMaintenace {
 
 		if ($zip->open( $zipfile, ZIPARCHIVE::CREATE ) !== true ) {
 			Wikia::log( __METHOD__, "zip", "Cannot open {$zipfile}" );
-			exit(1);
+			wfDie( "Cannot open {$zipfile}" );
 		}
 
 		foreach( $this->getFilesList() as $file ) {
@@ -115,16 +130,39 @@ class CloseWikiMaintenace {
 				$zip->addFile( $file, ltrim( $file, "/" ) );
 			}
 		}
-		Wikia::log( __METHOD__, "zip", "Added {$zip->numFiles} files, {$zip->status}" );
+		$status = $zip->status;
+		Wikia::log( __METHOD__, "zip", "Added {$zip->numFiles} files, {$tatus}" );
 		$zip->close();
+
+		return $status;
 	}
 
+	/**
+	 * drop database. Danger! Use with caution
+	 *
+	 * @access public
+	 */
 	public function dropDB() {
 
+		global $wgSharedDB, $wgDBname;
+		wfProfileIn( __METHOD__ );
+
+		$dbw = wfGetDB();
+		$dbw->selectDB( $wgSharedDB );
+		$dbw->begin();
+		$dbw->query( "DROP DATABASE `$wgDBname`");
+		$dbw->commit();
+		wfProfileOut( __METHOD__ );
 	}
 
+	/**
+	 * remove image folder from public view. Make sure that you have them zipped
+	 *
+	 * @access public
+	 */
 	public function removeImageDirectory() {
-
+		wfProfileIn( __METHOD__ );
+		wfProfileOut( __METHOD__ );
 	}
 
 	/**
@@ -153,5 +191,64 @@ class CloseWikiMaintenace {
 		wfProfileOut( __METHOD__ );
 
 		return $images;
+	}
+
+	/**
+	 * clean wikifactory tables:
+	 *
+	 *  remove rows from city_variables
+	 *  remove rows from city_categories
+	 *  remove row from city_list
+	 *
+	 *  old values will be stored in archive database
+	 *
+	 *  eventually all tables which use city_id should have foreign key to
+	 *  city_list( city_id )
+	 */
+	public function cleanWikiFactory() {
+
+		// so far return();
+		return;
+
+		wfProfileIn( __METHOD__ );
+
+		$dbw = wfGetDB( DB_MASTER );
+
+		$dba = wfGetDBExt( DB_MASTER );
+		$dba->selectDb( "archive" );
+
+		/**
+		 * move city_variables to archive
+		 */
+		$sth = $dbw->select(
+			array( WikiFactory::table( "city_variables" ) ),
+			array( "cv_city_id", "cv_variable_id", "cv_value" ),
+			array( "cv_city_id" => $this->mCityID ),
+			__METHOD__
+		);
+		$timestamp = wfTimestampNow();
+		while( $row = $dbw->fetchObject( $sth ) ) {
+			$dba->insert(
+				"city_variables",
+				array(
+					"cv_city_id"     => $row->cv_city_id,
+					"cv_variable_id" => $row->cv_variable_id,
+					"cv_value"       => $row->cv_value,
+					"cv_timestamp"   => $timestamp
+				),
+				__METHOD__
+			);
+		}
+		$dbw->freeResult( $sth );
+
+		$dbw->begin();
+		$dbw->delete(
+			WikiFactory::table( "city_variables" ),
+			array( "cv_city_id" => $this->mCityID ),
+			__METHOD__
+		);
+
+		$dbw->commit();
+		wfProfileOut( __METHOD__ );
 	}
 }
