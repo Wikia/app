@@ -159,6 +159,7 @@ class AdEngine {
 				WHERE skin='".$db->strencode($skin_name)."'";
 
 		$res = $db->query($sql);
+		$this->slots = array();
 
 		while($row = $db->fetchObject($res)){
 			$this->slots[$row->slot] = array(
@@ -268,7 +269,7 @@ class AdEngine {
 		// Special case for this type of ad. Not in Athena
 		} else if ($slotname == 'RIGHT_SKYSCRAPER_1'){
 			return $this->getProviderFromId($this->slots[$slotname]['provider_id']);
-			
+
 		// All of the errors and toggles are handled, now switch based on language
 		} else {
 
