@@ -116,7 +116,8 @@ CREATE TABLE IF NOT EXISTS `city_cat_mapping` (
   `city_id` int(11) default NULL,
   `cat_id` int(11) default NULL,
   KEY `city_id_idx` (`city_id`),
-  KEY `cat_id_idx` (`cat_id`)
+  KEY `cat_id_idx` (`cat_id`),
+  CONSTRAINT `city_cat_mapping_ibfk_1` FOREIGN KEY (`city_id`) REFERENCES `city_list` (`city_id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB ;
 
 CREATE TABLE IF NOT EXISTS `user_profile` (
