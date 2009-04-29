@@ -294,9 +294,11 @@ class BlogTemplateClass {
 			$oUser = User::newFromName($username);
 			if ( $oUser instanceof User ) {
 				$sk = $oUser->getSkin();
+				$oUserPage = $oUser->getUserPage();
+				$oUserTalkPage = $oUser->getTalkPage();
 				$aResult = array(
-					"userpage" => $sk->makeLinkObj($oUser->getUserPage(), $oUser->getName()),
-					"talkpage" => $sk->makeLinkObj($oUser->getTalkPage(), wfMsg('blog-avatar-talk')),
+					"userpage" => ($oUserPage instanceof Title) ? $sk->makeLinkObj($oUserPage, $oUser->getName()) : "",
+					"talkpage" => ($oUserTalkPage instanceof Title) ? $sk->makeLinkObj($oUserTalkPage, wfMsg('blog-avatar-talk')) : "",
 					"contribs" => $sk->makeLinkObj(Title::newFromText('Contributions', NS_SPECIAL), wfMsg('blog-avatar-contrib'), "target={$oUser->getName()}"),
 				);
 			}
