@@ -8,6 +8,7 @@ $messages['en'] = array(
 	'createblogpage' => 'Create Blog',
 	'createbloglistingpage' => 'Create Blog Listing',
 	"create-blog-spam" => "Looks like spam",
+	"create-blog-cant-edit" => "Could not perform edit",
 	"create-blog-post-category" => 'Blog posts',
 	"create-blog-post-category-body" => "This is an automatically generated list of blog posts",
 	"create-blog-post-category-log" => "Created category article for blog posts",

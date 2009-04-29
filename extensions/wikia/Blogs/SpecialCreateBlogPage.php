@@ -99,7 +99,12 @@ class CreateBlogPage extends SpecialBlogPage {
 
 			default:
 				Wikia::log( __METHOD__, "editpage", $status );
-				$sMsg = wfMsg('create-blog-spam');
+				if( $status == EditPage::AS_READ_ONLY_PAGE_LOGGED ) {
+					$sMsg = wfMsg('create-blog-cant-edit');
+				}
+				else {
+					$sMsg = wfMsg('create-blog-spam');
+				}
 				$this->mFormErrors[] = $sMsg . "($status)";
 				$this->renderForm();
 				break;
@@ -269,7 +274,7 @@ class EditBlogPage extends EditPage {
 	function __construct ($article) {
 		parent::__construct($article);
 	}
-	
+
 	protected function wasDeletedSinceLastEdit() {
 		# allow to recreate (always)
 		return false;
