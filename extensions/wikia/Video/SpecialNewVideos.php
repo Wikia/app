@@ -139,7 +139,11 @@ function wfSpecialNewVideos( $par, $specialPage ) {
 
 		$nt = Title::newFromText( $name, NS_IMAGE );
 		$vid = new Video( $nt );
-		$ul = $sk->makeLinkObj( Title::makeTitle( NS_USER, $ut ), $ut );
+		$oUser = Title::makeTitle( NS_USER, $ut );
+		$ul = "";
+		if ( !is_null($oUser) && $oUser instanceof Title ) {
+			$ul = $sk->makeLinkObj( $oUser, $ut );
+		}
 
 		$gallery->add( $vid, "$ul<br />\n<i>".$wgLang->timeanddate( $s->video_timestamp, true )."</i><br />\n" );
 
