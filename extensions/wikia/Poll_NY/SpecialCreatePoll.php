@@ -79,6 +79,12 @@ function wfSpecialCreatePoll(){
 				
 				//Add Poll  
 				$poll_title = Title::makeTitleSafe( NS_POLL, $wgRequest->getVal("poll_question") );
+				if ( is_null($poll_title) && !$poll_title instanceof Title ) {
+					$wgSupressPageTitle = false;
+					$wgOut->setPageTitle( wfMsg('poll_create_threshold_title') );
+					$wgOut->addHTML( wfMsg("poll_create_threshold_reason", $threshold_reason) );
+					return "";
+				}
 				
 				//Put Choices in Wiki Text (so we can track changes)
 				$choices = "";
