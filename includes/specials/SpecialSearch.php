@@ -1087,9 +1087,11 @@ class SpecialSearchOld {
 	 *
 	 */
 	function setupPage( $term ) {
-		global $wgOut;
+		global $wgOut, $wgSupressPageTitle, $wgSupressSiteNotice;
 		if( !empty( $term ) ){
-			$wgOut->setPageTitle( wfMsg( 'searchresults') );
+			$wgOut->setPageTitle( wfMsg( 'searchresults') );	//left for skins other than Monaco
+			$wgSupressPageTitle = true;
+			$wgSupressSiteNotice = true;
 			$wgOut->setHTMLTitle( wfMsg( 'pagetitle', wfMsg( 'searchresults-title', $term) ) );
 		}			
 		$subtitlemsg = ( Title::newFromText( $term ) ? 'searchsubtitle' : 'searchsubtitleinvalid' );
