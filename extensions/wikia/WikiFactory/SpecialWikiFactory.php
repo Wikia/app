@@ -32,6 +32,10 @@ $wgExtensionMessagesFiles["WikiFactory"] =  $dir . '/SpecialWikiFactory.i18n.php
  */
 require_once( $dir . '/SpecialWikiFactory_ajax.php' );
 
+/**
+ * metrics
+ */
+require_once( $dir . '/Metrics/SpecialAWCMetrics.php' );
 
 /**
  * permissions
