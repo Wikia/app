@@ -238,11 +238,18 @@ class Listusers extends SpecialPage {
 						$sGroups = implode(", ", $__groups);
 					}
 
+
 					$aLinks = array (
-						0 => $sk->makeLinkObj(Title::newFromText($oUser->getName(), NS_USER_TALK), $wgLang->ucfirst(wfMsg('talkpagelinktext'))),
+						0 => "",
 						1 => $sk->makeLinkObj(Title::newFromText('Contributions', NS_SPECIAL), $wgLang->ucfirst(wfMsg('contribslink')), "target={$oUser->getName()}"),
 						2 => $sk->makeLinkObj(Title::newFromText('Editcount', NS_SPECIAL), $wgLang->ucfirst(wfMsg('listusersedits')), "username={$oUser->getName()}")
 					);
+					
+					$oUserTalkTitle = Title::newFromText($oUser->getName(), NS_USER_TALK);
+					if ( !is_null($oUserTalkTitle) && $oUserTalkTitle instanceof Title ) {
+						$aLinks[0] = $sk->makeLinkObj($oUserTalkTitle, $wgLang->ucfirst(wfMsg('talkpagelinktext')));
+					}
+					
 					if ( $wgUser->isAllowed( 'block' ) && (!$wgUser->isBlocked()) ) {
 						$aLinks[] = $sk->makeLinkObj(Title::newFromText("BlockIP/{$oUser->getName()}", NS_SPECIAL), $wgLang->ucfirst(wfMsg('blocklink')));
 					}
