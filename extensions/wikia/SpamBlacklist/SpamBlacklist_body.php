@@ -21,7 +21,7 @@ if ( defined( 'MEDIAWIKI' ) ) {
 			if (empty($settings['warningTime']))
 				$settings['warningTime'] = 600;
 			if (empty($settings['expiryTime']))
-				$settings['expiryTime'] = 900;
+				$settings['expiryTime'] = 43200;
 			if (empty($settings['warningChance']))
 				$settings['warningChance'] = 100;
 
