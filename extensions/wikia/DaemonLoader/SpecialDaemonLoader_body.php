@@ -457,11 +457,14 @@ class DaemonLoader extends SpecialPage {
         		if (!empty($fileName)) {
         			$aFileInfo = pathinfo($fileName);
         			$loop++;
-        			$aUrls[] = $sk->makeLinkObj(
-        				Title::newFromText(self::$oName . "/report", NS_SPECIAL), 
-        				Xml::element("img", array( "src" => "$wgExtensionsPath/wikia/".self::$oName."/images/xls.gif", "border" => "0", "title" => $aFileInfo['basename'])), 
-        				"id=$jobId&file=$loop"
-        			);
+        			$oTitle = Title::newFromText(self::$oName . "/report", NS_SPECIAL);
+        			if ($oTitle instanceof Title) {
+						$aUrls[] = $sk->makeLinkObj(
+							$oTitle, 
+							Xml::element("img", array( "src" => "$wgExtensionsPath/wikia/".self::$oName."/images/xls.gif", "border" => "0", "title" => $aFileInfo['basename'])), 
+							"id=$jobId&file=$loop"
+						);
+					}
 				}
 			}
 			$res = implode(" &#183; ", $aUrls);
