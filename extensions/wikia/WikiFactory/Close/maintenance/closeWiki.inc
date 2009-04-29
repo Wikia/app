@@ -15,13 +15,7 @@ class CloseWikiMaintenace {
 	private
 		$mDumpDirectory,
 		$mImgDirectory,
-		$mImgSubDirs = array(
-			'0', '1', '2', '3',
-			'4', '5', '6', '7',
-			'8', '9', 'a', 'b',
-			'c', 'd', 'e', 'f',
-			'archive'
-		);
+		$mAction;
 
 	public function __construct() {
 		global $wgDevelEnvironment;
@@ -34,11 +28,29 @@ class CloseWikiMaintenace {
 			$this->mDumpDirectory = "/tmp/dumps";
 			$this->mZipDirectory = "/tmp/dumps";
 		}
+
 	}
 
+	/**
+	 * main entry point
+	 *
+	 * @access public
+	 */
 	public function execute() {
 
+		global $wgCityId;
+
 		if( !wfReadOnly() ) {
+			/**
+			 * check what we have to do with this wikia
+			 */
+			if( $wgCityId ) {
+				$Wiki = WikiFactory::getWikiByID( $wgCityId );
+				$this->mAction = $Wiki->city_public;
+			}
+			switch( $this->mAction ) {
+
+			}
 			#$this->dumpXMl();
 			$this->compressImages();
 		}

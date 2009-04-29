@@ -28,14 +28,19 @@ if( ! function_exists( "wfUnserializeHandler" ) ) {
 
 class WikiFactory {
 
-	const LOG_VARIABLE = 1;
-	const LOG_DOMAIN   = 2;
-	const LOG_CATEGORY = 3;
-	const LOG_STATUS   = 4;
+	const LOG_VARIABLE  = 1;
+	const LOG_DOMAIN    = 2;
+	const LOG_CATEGORY  = 3;
+	const LOG_STATUS    = 4;
 
-	const db           = "wikicities"; // @see $wgWikiFactoryDB
-	const DOMAINCACHE  = "/tmp/wikifactory/domains.ser";
-	const CACHEDIR     = "/tmp/wikifactory/wikis";
+	const STATUS_OPEN   = 1;
+	const STATUS_REDIR  = 2;
+	const STATUS_CLOSED = 0;
+	const STATUS_DELETE = -1;
+
+	const db            = "wikicities"; // @see $wgWikiFactoryDB
+	const DOMAINCACHE   = "/tmp/wikifactory/domains.ser";
+	const CACHEDIR      = "/tmp/wikifactory/wikis";
 
 	static public $types = array(
 		"integer",
@@ -282,7 +287,7 @@ class WikiFactory {
 		wfProfileIn( __METHOD__ );
 		$dbw = wfGetDB( DB_MASTER );
 		$dbw->begin();
-		
+
 		$cond = array( "city_id" => $wiki );
 		if ( !is_null($domain) ) {
 			$cond["city_domain"] = $domain;
@@ -1440,8 +1445,8 @@ class WikiFactory {
 		wfProfileOut( __METHOD__ );
 		return isset( $oRow->city_id ) ? $oRow->city_id : null;
 	}
-	
-	
+
+
 	/**
 	 * redirectDomains
 	 *
@@ -1457,10 +1462,10 @@ class WikiFactory {
 	 *
 	 * @return integer: city ID or null if not found
 	 */
-	static public function redirectDomains($city_id, $new_city_id) { 
+	static public function redirectDomains($city_id, $new_city_id) {
 		wfProfileIn( __METHOD__ );
 		$res = true;
-		
+
 		$dbw = wfGetDB( DB_MASTER );
 		$dbw->begin();
 
@@ -1470,7 +1475,7 @@ class WikiFactory {
 			array("city_id" => $city_id),
 			__METHOD__ );
 
-		if ($db) {	
+		if ($db) {
 			$dbw->commit();
 		} else {
 			$dbw->rollback();
