@@ -1194,7 +1194,8 @@ textarea {
 
 
 /* Fixes for ChangesList */
-.changes-list-entry a {
+.changes-list-entry a.mw-arr-d,
+.changes-list-entry a.mw-arr-r {
         display: block;
         width: 12px;
         height: 12px;

@@ -633,8 +633,8 @@ class EnhancedChangesList extends ChangesList {
 		$expandTitle = htmlspecialchars( wfMsg('rc-enhanced-expand') );
 		$closeTitle = htmlspecialchars( wfMsg('rc-enhanced-hide') );
 
-		$tl  = "<span id='mw-rc-openarrow-$jsid' class='mw-changeslist-expanded' style='visibility:hidden'><a href='#' $toggleLink title='$expandTitle'>" . $this->sideArrow() . "</a></span>";
-		$tl .= "<span id='mw-rc-closearrow-$jsid' class='mw-changeslist-hidden' style='display:none'><a href='#' $toggleLink title='$closeTitle'>" . $this->downArrow() . "</a></span>";
+		$tl  = "<span id='mw-rc-openarrow-$jsid' class='mw-changeslist-expanded changes-list-entry' style='visibility:hidden'><a href='#' $toggleLink title='$expandTitle' class='mw-arr-r'>" . $this->sideArrow() . "</a></span>";
+		$tl .= "<span id='mw-rc-closearrow-$jsid' class='mw-changeslist-hidden changes-list-entry' style='display:none'><a href='#' $toggleLink title='$closeTitle' class='mw-arr-d'>" . $this->downArrow() . "</a></span>";
 		$r .= '<td valign="top" style="white-space: nowrap"><tt>'.$tl.'&nbsp;';
 
 		# Main line
