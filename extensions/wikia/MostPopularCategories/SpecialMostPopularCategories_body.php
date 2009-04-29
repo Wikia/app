@@ -62,11 +62,14 @@ class MostpopularcategoriesPage extends QueryPage {
 		if (empty($this->show)) {
 			$this->data[$result->title] = $result->value;
 			return false;
-	        } else {
-        	        $title = Title::makeTitle( NS_CATEGORY, $result->title );
-	                $titleText = $skin->makeLinkObj( $title, htmlspecialchars( $title->getText() ) );
-
-			return wfSpecialList( $titleText, $result->value );
+		} else {
+			$title = Title::makeTitle( NS_CATEGORY, $result->title );
+			if ($title instanceof Title) {
+				$titleText = $skin->makeLinkObj( $title, htmlspecialchars( $title->getText() ) );
+				return wfSpecialList( $titleText, $result->value );
+			} else {
+				return false;
+			}
 		}
 	}
 

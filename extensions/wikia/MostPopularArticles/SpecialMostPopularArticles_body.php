@@ -73,9 +73,12 @@ class MostpopulararticlesPage extends QueryPage {
 			return false;
 		} else {
 			$title = Title::makeTitle( $result->namespace, $result->title );
-			$titleText = $skin->makeLinkObj( $title, htmlspecialchars( $title->getPrefixedtext() ) ); 
-
-			return wfSpecialList( $titleText, $result->value );
+			if ($title instanceof Title) {
+				$titleText = $skin->makeLinkObj( $title, htmlspecialchars( $title->getPrefixedtext() ) ); 
+				return wfSpecialList( $titleText, $result->value );
+			} else {
+				return false;
+			}
 		}
 	}
 
