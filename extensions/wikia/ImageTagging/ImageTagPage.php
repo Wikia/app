@@ -336,22 +336,18 @@ function wfGetImageTags($img, $imgName) {
             $html .= ', ';
 
         $wgOut->addHTML("<!-- tag rect: " . $o->tag_rect . ", tag title: " . $o->article_tag . ", unique_id: " . $o->unique_id . "-->"); 
-
         $span = '<span id="' . $o->article_tag . '-tag" onmouseout="hideTagBox()" onmouseover="tagBoxPercent(' . $o->tag_rect . ', false)">';
-
-	#echo "article tag: " . $o->article_tag . "\n";
-	$articleTitle = Title::newFromText($o->article_tag);
+		#echo "article tag: " . $o->article_tag . "\n";
+		$articleTitle = Title::newFromText($o->article_tag);
 
         #$articleLink = '<a href="' . $articleTitle->escapeFullURL() . '" onmouseout="hideTagBox()">' . $o->article_tag . '</a>';
-        $articleLink = $sk->makeLinkObj($articleTitle);
-
-	$specialImagesTitle = Title::newFromText("Special:TaggedImages");
-
-        $imagesLink = '<a onmouseover="tagBoxPercent(' . $o->tag_rect . ', false)" onmouseout="hideTagBox()" href="' . $specialImagesTitle->escapeFullURL("q=".$o->article_tag) . '">' . wfMsgHtml('images') . '</a>';
-
-        $removeLink = '<a href="#" onclick="removeTag(' . $o->unique_id . ', this, \'' . addslashes( $o->article_tag ) . '\'); return false;">' . wfMsgHtml('removetag') . '</a>';
-
-        $html .= $span . $articleLink . ' (' . $imagesLink . ' | ' . $removeLink . ')</span>';
+		if ( $articleTitle instanceof Title ) {
+        	$articleLink = $sk->makeLinkObj($articleTitle);
+			$specialImagesTitle = Title::newFromText("Special:TaggedImages");
+			$imagesLink = '<a onmouseover="tagBoxPercent(' . $o->tag_rect . ', false)" onmouseout="hideTagBox()" href="' . $specialImagesTitle->escapeFullURL("q=".$o->article_tag) . '">' . wfMsgHtml('images') . '</a>';
+			$removeLink = '<a href="#" onclick="removeTag(' . $o->unique_id . ', this, \'' . addslashes( $o->article_tag ) . '\'); return false;">' . wfMsgHtml('removetag') . '</a>';
+			$html .= $span . $articleLink . ' (' . $imagesLink . ' | ' . $removeLink . ')</span>';
+		}
     }
     $db->freeResult($res);
 
