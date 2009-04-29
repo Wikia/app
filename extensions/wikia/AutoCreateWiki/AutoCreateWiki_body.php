@@ -413,10 +413,6 @@ class AutoCreateWikiPage extends SpecialPage {
 		);
 		$this->mWikiData[ "founder" ] = $wgUser->getId();
 
-		if( $WFSettingsVars[ "wgLanguageCode" ] === "en" ) {
-			$WFSettingsVars[ "wgEnableWysiwygExt" ] = true;
-		}
-
 		$oRes = $dbw->select(
 			wfSharedTable("city_variables_pool"),
 			array( "cv_id, cv_name" ),
