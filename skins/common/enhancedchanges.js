@@ -28,13 +28,13 @@ function toggleVisibility(idNumber) {
 	var openarrow = document.getElementById("mw-rc-openarrow-"+idNumber);
 	var closearrow = document.getElementById("mw-rc-closearrow-"+idNumber);
 	var subentries = document.getElementById("mw-rc-subentries-"+idNumber);
-	if (openarrow.className == 'mw-changeslist-expanded') {
-		openarrow.className = 'mw-changeslist-hidden';
-		closearrow.className = 'mw-changeslist-expanded';
-		subentries.className = 'mw-changeslist-expanded';
+	if (openarrow.className == 'mw-changeslist-expanded changes-list-entry') {
+		openarrow.className = 'mw-changeslist-hidden changes-list-entry';
+		closearrow.className = 'mw-changeslist-expanded changes-list-entry';
+		subentries.className = 'mw-changeslist-expanded changes-list-entry';
 	} else {
-		openarrow.className = 'mw-changeslist-expanded';
-		closearrow.className = 'mw-changeslist-hidden';
-		subentries.className = 'mw-changeslist-hidden';
+		openarrow.className = 'mw-changeslist-expanded changes-list-entry';
+		closearrow.className = 'mw-changeslist-hidden changes-list-entry';
+		subentries.className = 'mw-changeslist-hidden changes-list-entry';
 	}
 }
