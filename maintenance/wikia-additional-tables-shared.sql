@@ -493,13 +493,14 @@ CREATE TABLE IF NOT EXISTS `online` (
 ) TYPE=InnoDB;
 
 CREATE TABLE IF NOT EXISTS `city_list_log` (
-  `cl_city_id` int(10) unsigned NOT NULL,
+  `cl_city_id` int(9) NOT NULL,
   `cl_timestamp` timestamp NOT NULL default CURRENT_TIMESTAMP,
   `cl_user_id` int(5) unsigned default NULL,
   `cl_type` int(5) NOT NULL,
   `cl_text` mediumtext NOT NULL,
   KEY `cl_city_id_idx` (`cl_city_id`),
-  KEY `cl_type_idx` (`cl_type`)
+  KEY `cl_type_idx` (`cl_type`),
+  CONSTRAINT `city_list_log_ibfk_1` FOREIGN KEY (`cl_city_id`) REFERENCES `city_list` (`city_id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- user wikicities aint got enough rights to do views! ops need to be asked to run this query
