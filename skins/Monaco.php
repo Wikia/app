@@ -1639,7 +1639,9 @@ if ($wgOut->isArticle()){
 				}
 				?>
 				<a name="top" id="top"></a>
-				<?php if($this->data['sitenotice']) { ?><div id="siteNotice"><?php $this->html('sitenotice') ?></div><?php } ?>
+				<?php
+				global $wgSupressSiteNotice;
+				if( empty( $wgSupressSiteNotice ) && $this->data['sitenotice']) { ?><div id="siteNotice"><?php $this->html('sitenotice') ?></div><?php } ?>
 				<?php
 				global $wgSupressPageTitle;
 				if( empty( $wgSupressPageTitle ) ){ ?><h1 class="firstHeading"><?php $this->data['displaytitle']!=""?$this->html('title'):$this->text('title') ?></h1><?php } ?>
