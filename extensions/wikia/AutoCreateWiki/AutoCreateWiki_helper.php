@@ -41,6 +41,15 @@ class AutoCreateWiki {
 			__METHOD__
 		);
 		
+		if ( !isset($oRow->city_id) ) {
+			$oRow = $dbr->selectRow(
+				wfSharedTable("city_domains"),
+				array( "city_id" ),
+				array( "city_domain" => sprintf( "%s.%s", "www", $sDomain ) ),
+				__METHOD__
+			);
+		}
+		
 		$exists = 0;
 		if (isset($oRow->city_id)) {
 			$city_id = $oRow->city_id;
@@ -104,6 +113,11 @@ class AutoCreateWiki {
 				$conditionSimilar = "city_domain like '%{$name}%'";
 			}
 
+			$conditionLanguage = "";
+			if ( !is_null($language) ) {
+				$conditionLanguage = "city_lang = '{$language}'";
+			}
+
 			if ( $skip === false ) {
 				#--- exact (but with language prefixes)
 				list ($city_domains, $city_list) = array(wfSharedTable("city_domains"), wfSharedTable("city_list"));
@@ -113,7 +127,8 @@ class AutoCreateWiki {
 					array ( "*" ),
 					array (
 						$condition,
-						"{$city_domains}.city_id = {$city_list}.city_id"
+						"{$city_domains}.city_id = {$city_list}.city_id",
+						$conditionLanguage
 					),
 					__METHOD__,
 					array( "LIMIT" => 20 )
@@ -138,7 +153,8 @@ class AutoCreateWiki {
 					array ( "*" ),
 					array (
 						$conditionSimilar,
-						"{$city_domains}.city_id = {$city_list}.city_id"
+						"{$city_domains}.city_id = {$city_list}.city_id",
+						$conditionLanguage
 					),
 					__METHOD__,
 					array( "LIMIT" => 20 )
@@ -212,7 +228,7 @@ class AutoCreateWiki {
 			$iExists = AutoCreateWiki::domainExists($sName, $sLang);
 			if (!empty($iExists)) {
 				#--- domain exists
-				$sResponse = wfMsg('autocreatewiki-name-taken', $sName);
+				$sResponse = wfMsg('autocreatewiki-name-taken', ( !is_null($sLang) && ($sLang != 'en') ) ? sprintf("%s.%s", $sLang, $sName) : $sName );
 			}
 		}
 
