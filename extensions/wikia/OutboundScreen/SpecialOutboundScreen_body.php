@@ -7,8 +7,7 @@ class Outbound extends UnlistedSpecialPage {
 	public function __construct() {
 		parent::__construct( 'Outbound'/*class*/ );
 		wfLoadExtensionMessages( 'Outbound' ); // Load internationalization messages
-        }
-
+	}
 
 	function execute ( $par ) {
 		?>
