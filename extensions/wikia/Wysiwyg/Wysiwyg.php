@@ -194,11 +194,7 @@ function Wysiwyg_Initial($form) {
 	);
 
 	// CSS
- 	$wgOut->addLink(array(
-		'rel' => 'stylesheet',
-		'href' => "$wgExtensionsPath/wikia/Wysiwyg/wysiwyg.css?$wgStyleVersion",
-		'type' => 'text/css'
-	));
+	$wgOut->addExtensionStyle("$wgExtensionsPath/wikia/Wysiwyg/wysiwyg.css?$wgStyleVersion");
 
 	// add support for new toolbar
 	if (!empty($wgWysiwygUseNewToolbar)) {
