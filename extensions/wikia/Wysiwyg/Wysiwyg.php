@@ -781,13 +781,11 @@ function Wysiwyg_GetRefId(&$text, $returnIDonly = false) {
 
 $wgAjaxExportList[] = 'WysiwygImage';
 function WysiwygImage() {
-	global $wgRequest, $wgExtensionsPath, $wgStylePath, $wgStyleVersion;
+	global $wgRequest, $wgExtensionsPath, $wgStylePath, $wgStyleVersion, $wgTitle;
 
-	// get page name, so even new pages will work
-	$title = Title::newFromText($wgRequest->getVal('pagename'));
 	$options = new ParserOptions();
 	$parser = new Parser();
-	$out = $parser->parse($wgRequest->getText('wikitext'), $title, $options)->getText();
+	$out = $parser->parse($wgRequest->getText('wikitext'), $wgTitle, $options)->getText();
 
 	$html = <<<EOD
 <html>
