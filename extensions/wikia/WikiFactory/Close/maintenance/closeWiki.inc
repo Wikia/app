@@ -32,13 +32,18 @@ class CloseWikiMaintenace {
 	 * main entry point
 	 *
 	 * @access public
+	 *
+	 * @param boolean $setupif true just create directory tree and HTML index
 	 */
-	public function execute() {
+	public function execute( $setup ) {
+		global $wgCityId, $wgDBname, $wgServer;
 
-		global $wgCityId;
 		$this->mCityID = $wgCityId;
 
-		if( !wfReadOnly() ) {
+		if( $setup ) {
+			$this->setupDirectories();
+		}
+		elseif( !wfReadOnly() ) {
 			/**
 			 * check what we have to do with this wikia
 			 */
@@ -48,8 +53,10 @@ class CloseWikiMaintenace {
 			}
 			switch( $this->mAction ) {
 				case WikiFactory::STATUS_CLOSED:
+				case WikiFactory::STATUS_OPEN:
 					$this->dumpXMl();
 					$this->compressImages();
+					$this->createIndex( $wgDBname, $wgServer );
 					break;
 
 				case WikiFactory::STATUS_DELETE:
@@ -70,16 +77,7 @@ class CloseWikiMaintenace {
 		/**
 		 * @name dumpfile
 		 */
-		$dumpfile = sprintf("/%s/%s/full.gz", ltrim( $this->mDumpDirectory, "/" ), $wgDBname );
-		$directory = dirname( $dumpfile );
-		if( !is_dir( $directory ) ) {
-			if( ! is_file( $directory ) ) {
-				wfMkdirParents( $directory );
-			}
-			else {
-				Wikia::log( __METHOD__, "dir", "Path {$directory} exists and it is file" );
-			}
-		}
+		$dumpfile = sprintf("%s/full.xml.gz", $this->getDirectory( $wgDBname ) );
 		$args = array(
 			"--full",
 			"--quiet",
@@ -104,23 +102,16 @@ class CloseWikiMaintenace {
 		/**
 		 * @name dumpfile
 		 */
-		$zipfile = sprintf("/%s/%s/images.zip", ltrim( $this->mZipDirectory, "/" ), $wgDBname );
-		$directory = dirname( $zipfile );
-		if( !is_dir( $directory ) ) {
-			if( ! is_file( $directory ) ) {
-				wfMkdirParents( $directory );
-			}
-			else {
-				Wikia::log( __METHOD__, "dir", "Path {$directory} exists and it is file" );
-				wfDie( "Path {$directory} exists and it is file" );
-			}
+		$zipfile = sprintf("%s/images.zip", $this->getDirectory( $wgDBname ) );
+		if( is_file( $zipfile ) ) {
+			unlink( $zipfile );
 		}
-		Wikia::log( __METHOD__, "", "Zipping images from {$wgUploadDirectory} to {$zipfile}" );
+		Wikia::log( __CLASS__, "", "Zipping images from {$wgUploadDirectory} to {$zipfile}" );
 
 		$zip = new ZipArchive();
 
 		if ($zip->open( $zipfile, ZIPARCHIVE::CREATE ) !== true ) {
-			Wikia::log( __METHOD__, "zip", "Cannot open {$zipfile}" );
+			Wikia::log( __CLASS__, "zip", "Cannot open {$zipfile}" );
 			wfDie( "Cannot open {$zipfile}" );
 		}
 
@@ -131,7 +122,7 @@ class CloseWikiMaintenace {
 			}
 		}
 		$status = $zip->status;
-		Wikia::log( __METHOD__, "zip", "Added {$zip->numFiles} files, {$tatus}" );
+		Wikia::log( __CLASS__, "zip", "Added {$zip->numFiles} files, {$status}" );
 		$zip->close();
 
 		return $status;
@@ -187,6 +178,10 @@ class CloseWikiMaintenace {
 			$images[] = wfLocalFile( $row->img_name )->getPath();
 		}
 		$dbr->freeResult( $sth );
+
+		/**
+		 * get archived images too
+		 */
 
 		wfProfileOut( __METHOD__ );
 
@@ -248,7 +243,77 @@ class CloseWikiMaintenace {
 			__METHOD__
 		);
 
+		$dbw->delete(
+			WikiFactory::table( "city_list_log" ),
+			array( "cv_city_id" => $this->mCityID ),
+			__METHOD__
+		);
+
 		$dbw->commit();
 		wfProfileOut( __METHOD__ );
+	}
+
+	/**
+	 * go trough *ALL* city_list and crete directories for dump
+	 *
+	 * @access private
+	 *
+	 * @param string $database city_dbname  in city_list
+	 * @param string $url city_url in city_list
+	 */
+	private function createIndex( $database, $url ) {
+
+		$directory = $this->getDirectory( $database );
+		$haveXml = is_file( "{$directory}/full.xml.gz" ) ? true : false;
+		$haveZip = is_file( "{$directory}/images.zip" ) ? true : false;
+
+		$Tmpl = new EasyTemplate( dirname( __FILE__) . "/../templates/" );
+		$Tmpl->set( "directory", $directory );
+		$Tmpl->set( "haveXml", $haveXml );
+		$Tmpl->set( "haveZip", $haveZip );
+		$Tmpl->set( "database", $database );
+		$Tmpl->set( "url", $url );
+		if( file_put_contents( "{$directory}/index.html", $Tmpl->render( "index-html" ) ) ) {
+			Wikia::log( __CLASS__, "index", "create {$directory}/index.html" );
+		}
+	}
+
+	/**
+	 * go trough *ALL* city_list and crete directories for dump
+	 */
+	public function setupDirectories() {
+
+		$dbr = wfGetDB( DB_SLAVE );
+		$sth = $dbr->select(
+			WikiFactory::table( "city_list" ),
+			array( "city_id", "city_dbname", "city_url" ),
+			false,
+			__METHOD__
+		);
+		while( $row = $dbr->fetchObject( $sth ) ) {
+			$this->createIndex( $row->city_dbname, $row->city_url );
+		}
+	}
+
+	/**
+	 * dump directory is created as
+	 *
+	 * <root>/<first letter>/<two first letters>/<database>
+	 */
+	private function getDirectory( $database ) {
+		$database = strtolower( $database );
+		$directory = sprintf(
+			"%s/%s/%s/%s",
+			$this->mDumpDirectory,
+			substr( $database, 0, 1),
+			substr( $database, 0, 2),
+			$database
+		);
+		if( !is_dir( $directory ) ) {
+			Wikia::log( __CLASS__ , "dir", "create {$directory}" );
+			wfMkdirParents( $directory );
+		}
+
+		return $directory;
 	}
 }
