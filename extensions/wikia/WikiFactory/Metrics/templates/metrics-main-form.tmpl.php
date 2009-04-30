@@ -74,6 +74,14 @@ div#sidebar { display: none !important; }
 				<input type="button" value="<?=wfMsg('go')?>" id="awc-metrics-submit" />
 			</td></tr>
 		</table>
+		<table width="100%" style="text-align:left;">
+			<tr>
+				<td valign="middle" class="awc-metrics-row">
+					<input name="awc-metrics-closed" id="awc-metrics-closed" type="checkbox" /> <?=wfMsg('awc-metrics-closed')?>
+					<input name="awc-metrics-redirected" id="awc-metrics-redirected" type="checkbox" /> <?=wfMsg('awc-metrics-redirected')?>
+				</td>
+			</tr>
+		</table>
 	</fieldset>
 	</div>
 <!-- end of options -->
@@ -200,6 +208,9 @@ function wkAWCMetricsDetails(limit, offset, ord, desc)
 	var user 		= YD.get( "awc-metrics-user" );
 	var email 		= YD.get( "awc-metrics-email" );
 
+	var closed 		= YD.get( "awc-metrics-closed" );
+	var redirected 	= YD.get( "awc-metrics-redirected" );
+
 	var foundText 	= "<?=wfMsg('awc-metrics-wikis-found', "CNT")?>";
 
 	AWCMetricsDetailsCallback = {
@@ -270,7 +281,11 @@ function wkAWCMetricsDetails(limit, offset, ord, desc)
 				//oneRow += "<th rowspan=\"2\"><a id=\"TablePager_founderEmail\" style=\"cursor:pointer;" + ((order == 'founderEmail') ? "color:#006400;" : "") + "\">" + _th + " Founder email</a></th>";
 
 				// columns (stats)
-				oneRow += "<th colspan=\"11\" style=\"text-align:center\"><?=wfMsg('awc-metrics-statistics')?></th>";
+				oneRow += "<th colspan=\"10\" style=\"text-align:center\"><?=wfMsg('awc-metrics-statistics')?></th>";
+
+				// column (pageviews)
+				_th = (order == 'pageviews') ? ((desc == -1) ? "&darr;" : "&uarr;") : "";
+				oneRow += "<th rowspan=\"2\"><a id=\"TablePager_pageviews\" style=\"cursor:pointer;" + ((order == 'pageviews') ? "color:#006400;" : "") + "\">" + _th + " <?=wfMsg('awc-metrics-pageviews')?></a></th>";
 				
 				// column (options)
 				oneRow += "<th rowspan=\"2\" style=\"text-align:center\"><?=wfMsg('awc-metrics-close')?></th></tr>";
@@ -322,10 +337,6 @@ function wkAWCMetricsDetails(limit, offset, ord, desc)
 				_th = (order == 'users_edits') ? ((desc == -1) ? "&darr;" : "&uarr;") : "";
 				oneRow += "<th><a id=\"TablePager_users_edits\" style=\"cursor:pointer;" + ((order == 'users_edits') ? "color:#006400;" : "") + "\">" + _th + " <?=wfMsg('awc-metrics-all-users-edit-main-ns')?></a></th>";
 
-				// column (pageviews)
-				_th = (order == 'pageviews') ? ((desc == -1) ? "&darr;" : "&uarr;") : "";
-				oneRow += "<th><a id=\"TablePager_pageviews\" style=\"cursor:pointer;" + ((order == 'pageviews') ? "color:#006400;" : "") + "\">" + _th + " <?=wfMsg('awc-metrics-pageviews')?></a></th>";
-
 				oneRow += "</tr>";
 				
 				_tmp += oneRow;
@@ -337,24 +348,34 @@ function wkAWCMetricsDetails(limit, offset, ord, desc)
  				if (resData['data']) {
 					for (i in resData['data']) {
 						loop++;
+						var cssClass = " style=\"color:#000000;\" ";
+						var is_closed = 0;
+						if (resData['data'][i]['public'] == 0) {
+							// closed
+							cssClass = " style=\"color:#EF0036;\" ";
+							is_closed = 1;
+						} else if (resData['data'][i]['public'] == 2) {
+							// redirected
+							cssClass = " style=\"color:#26CF5D;\" ";
+						}
 						oneRow = "<tr style=\"font-size:90%;\"><td>" + loop  + ".</td>";
-						oneRow += "<td><a href=\"" + resData['data'][i]['url'] + "\" target=\"new\">" +resData['data'][i]['title']+ "</a></td>";
-						oneRow += "<td>" + resData['data'][i]['db']+ "</td>";
-						oneRow += "<td>" +resData['data'][i]['lang']+ "</td>";
-						oneRow += "<td>" +resData['data'][i]['created']+ "</td>";
-						oneRow += "<td><div>" +resData['data'][i]['founderUrl']+ "</div><div>" +resData['data'][i]['founderEmail']+ "</div></td>";
-						oneRow += "<td>" +resData['data'][i]['wikians']+ "</td>";
-						oneRow += "<td>" +resData['data'][i]['articles']+ "</td>";
-						oneRow += "<td>" +resData['data'][i]['articles_per_day']+ "</td>";
-						oneRow += "<td>" +resData['data'][i]['mean_nbr_revision']+ "</td>";
-						oneRow += "<td>" +resData['data'][i]['mean_size']+ "</td>";
-						oneRow += "<td>" +resData['data'][i]['edits']+ "</td>";
-						oneRow += "<td>" +resData['data'][i]['db_size']+ "</td>";
-						oneRow += "<td>" +resData['data'][i]['images']+ "</td>";
-						oneRow += "<td>" +resData['data'][i]['users_reg']+ "</td>";
-						oneRow += "<td>" +resData['data'][i]['users_edits']+ "</td>";
-						oneRow += "<td>" +resData['data'][i]['pageviews']+ "</td>";
-						oneRow += "<td><input type=\"checkbox\" value=\"" +resData['data'][i]['id']+ "\" name=\"wikis[]\"/></td>";
+						oneRow += "<td " + cssClass + "><a href=\"" + resData['data'][i]['url'] + "\" target=\"new\">" +resData['data'][i]['title']+ "</a></td>";
+						oneRow += "<td " + cssClass + ">" + resData['data'][i]['db']+ "</td>";
+						oneRow += "<td " + cssClass + ">" +resData['data'][i]['lang']+ "</td>";
+						oneRow += "<td " + cssClass + ">" +resData['data'][i]['created']+ "</td>";
+						oneRow += "<td " + cssClass + "><div>" +resData['data'][i]['founderUrl']+ "</div><div>" +resData['data'][i]['founderEmail']+ "</div></td>";
+						oneRow += "<td " + cssClass + ">" +resData['data'][i]['wikians']+ "</td>";
+						oneRow += "<td " + cssClass + ">" +resData['data'][i]['articles']+ "</td>";
+						oneRow += "<td " + cssClass + ">" +resData['data'][i]['articles_per_day']+ "</td>";
+						oneRow += "<td " + cssClass + ">" +resData['data'][i]['mean_nbr_revision']+ "</td>";
+						oneRow += "<td " + cssClass + ">" +resData['data'][i]['mean_size_txt']+ "</td>";
+						oneRow += "<td " + cssClass + ">" +resData['data'][i]['edits']+ "</td>";
+						oneRow += "<td " + cssClass + ">" +resData['data'][i]['db_size_txt']+ "</td>";
+						oneRow += "<td " + cssClass + ">" +resData['data'][i]['images']+ "</td>";
+						oneRow += "<td " + cssClass + ">" +resData['data'][i]['users_reg']+ "</td>";
+						oneRow += "<td " + cssClass + ">" +resData['data'][i]['users_edits']+ "</td>";
+						oneRow += "<td " + cssClass + ">" +resData['data'][i]['pageviews_txt']+ "</td>";
+						oneRow += "<td " + cssClass + "><input type=\"checkbox\" " + ((is_closed == 1) ? " disabled=\"disabled\" " : "") + " value=\"" +resData['data'][i]['id']+ "\" name=\"wikis[]\"/></td>";
 						oneRow += "</tr>";
 						_tmp += oneRow;
 					}
@@ -392,6 +413,8 @@ function wkAWCMetricsDetails(limit, offset, ord, desc)
 	params += "&awc-offset=" + offset;
 	params += "&awc-order=" + ord;
 	params += "&awc-desc=" + desc;
+	params += "&awc-closed=" + closed.checked;
+	params += "&awc-redir=" + redirected.checked;
 
 	//---
 	div_details.innerHTML="<img src=\"<?=$wgExtensionsPath?>/wikia/WikiFactory/Metrics/images/ajax-loader-s.gif\" />";
