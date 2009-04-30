@@ -298,7 +298,7 @@ function menuItemAction(e) {
 function check_item_in_array(item, source_id) {
 	clearTimeout(m_timer);
 	var sub_menu_item = 'sub-menu' + item;
-	if (last_displayed == '' || ((sub_menu_item.indexOf(last_displayed) != -1) && (sub_menu_item != last_displayed))) {
+	if (last_displayed == '' || ((sub_menu_item.indexOf(last_displayed + '_') != -1) && (sub_menu_item != last_displayed + '_'))) {
 		do_menuItemAction(item, source_id);
 	} else {
 		var exit = false;
@@ -306,7 +306,7 @@ function check_item_in_array(item, source_id) {
 		var the_last_displayed;
 		while( !exit && displayed_menus.length > 0 ) {
 			the_last_displayed = displayed_menus.pop();
-			if ((sub_menu_item.indexOf(the_last_displayed.item) == -1)) {
+			if ((sub_menu_item.indexOf(the_last_displayed.item + '_') == -1)) {
 				doClear(the_last_displayed.item, '');
 				YAHOO.util.Dom.removeClass(the_last_displayed.source, "navigation-hover");
 			}
