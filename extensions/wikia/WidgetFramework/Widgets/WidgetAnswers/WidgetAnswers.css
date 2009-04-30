@@ -11,8 +11,12 @@
 }
 .widget_answers_note {
 	background: #CCC;
+	color: #000;
 	font-size: 9pt;
 	padding: 3px !important;
+}
+.widget_answers_note a {
+	color: #002BB8 !important;
 }
 #answers_ask_field {
 	background: #FFF url(http://images.wikia.com/extensions/wikia/WidgetFramework/Widgets/WidgetAnswers/field_bg.png) repeat-x;
