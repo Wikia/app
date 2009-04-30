@@ -730,7 +730,7 @@ FCK.ProtectImage = function(image) {
 	var coveringDiv = FCK.EditingArea.Document.createElement('div');
 
 	// fix FF2.x issue with iframes with "generated content": use "ajax" html provider
-	iframe.src = window.parent.wgServer + window.parent.wgScript + '?action=ajax&rs=WysiwygImage&articleid=' + encodeURIComponent(window.parent.wgArticleId) + '&wikitext=' + encodeURIComponent(FCK.wysiwygData[refid].original);
+	iframe.src = window.parent.wgServer + window.parent.wgScript + '?action=ajax&rs=WysiwygImage&pagename=' + encodeURIComponent(window.parent.wgPageName) + '&wikitext=' + encodeURIComponent(FCK.wysiwygData[refid].original);
 
 	iframe.name = 'image' + refid;
 

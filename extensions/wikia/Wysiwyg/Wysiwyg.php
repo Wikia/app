@@ -783,7 +783,8 @@ $wgAjaxExportList[] = 'WysiwygImage';
 function WysiwygImage() {
 	global $wgRequest, $wgExtensionsPath, $wgStylePath, $wgStyleVersion;
 
-	$title = Title::newFromID($wgRequest->getInt('articleid'));
+	// get page name, so even new pages will work
+	$title = Title::newFromText($wgRequest->getVal('pagename'));
 	$options = new ParserOptions();
 	$parser = new Parser();
 	$out = $parser->parse($wgRequest->getText('wikitext'), $title, $options)->getText();
