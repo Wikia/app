@@ -170,16 +170,16 @@ class CreateWikiMetrics {
 
 			#--- stats 				
 			$table = "`dbstats`.`city_stats_full`";
-			$db_fields[] = "sum(cw_users_all_reg_main_ns) as users_edits";
-			$db_fields[] = "sum(cw_users_all_reg) as users_reg";
-			$db_fields[] = "sum(cw_images_uploaded) as images";
-			$db_fields[] = "sum(cw_db_size) as db_size";
-			$db_fields[] = "sum(cw_db_edits) as edits";
-			$db_fields[] = "avg(cw_article_mean_size) as mean_size";
-			$db_fields[] = "avg(cw_article_mean_nbr_revision) as mean_nbr_revision";
-			$db_fields[] = "avg(cw_article_new_per_day) as articles_per_day";
-			$db_fields[] = "sum(cw_article_count_link) as articles";
-			$db_fields[] = "sum(cw_wikians_total) as wikians";
+			$db_fields[] = "round(avg(cw_users_all_reg_main_ns), 1) as users_edits";
+			$db_fields[] = "max(cw_users_all_reg) as users_reg";
+			$db_fields[] = "max(cw_images_uploaded) as images";
+			$db_fields[] = "max(cw_db_size) as db_size";
+			$db_fields[] = "round(avg(cw_db_edits), 1) as edits";
+			$db_fields[] = "round(avg(cw_article_mean_size),1) as mean_size";
+			$db_fields[] = "round(avg(cw_article_mean_nbr_revision),1) as mean_nbr_revision";
+			$db_fields[] = "round(avg(cw_article_new_per_day),1) as articles_per_day";
+			$db_fields[] = "max(cw_article_count_link) as articles";
+			$db_fields[] = "max(cw_wikians_total) as wikians";
 
 			$oRes = $dbs->select( 
 				$table, 
@@ -189,18 +189,33 @@ class CreateWikiMetrics {
 				array( 'GROUP BY' => 'cw_city_id' )
 			);
 			while ( $oRow = $dbs->fetchObject( $oRes ) ) {
+				$db_size = array_reduce (
+					array (" B", " KB", " MB", " GB"), create_function (
+						'$a,$b', 'return is_numeric($a)?($a>=1024?$a/1024:number_format($a,1).$b):$a;'
+					), $oRow->db_size
+				);
+				
+				$art_size = array_reduce (
+					array (" B", " KB", " MB", " GB"), create_function (
+						'$a,$b', 'return is_numeric($a)?($a>=1024?$a/1024:number_format($a,1).$b):$a;'
+					), $oRow->mean_size
+				);
+				
 				$_tmp = array(
 					'wikians' 			=> $oRow->wikians,
 					'articles' 			=> $oRow->articles,
 					'articles_per_day'	=> sprintf("%0.1f", $oRow->articles_per_day),
 					'mean_nbr_revision'	=> sprintf("%0.1f", $oRow->mean_nbr_revision),
-					'mean_size'			=> sprintf("%0.1f", $oRow->mean_size),
+					'mean_size_txt'		=> $art_size,
+					'mean_size'			=> $oRow->mean_size,
 					'edits'				=> $oRow->edits,
+					'db_size_txt'		=> $db_size,
 					'db_size'			=> $oRow->db_size,
 					'images'			=> $oRow->images,
 					'users_reg'			=> $oRow->users_reg,
 					'users_edits'		=> $oRow->users_edits,
 					'pageviews'			=> 0,
+					'pageviews_txt'		=> "",
 				);
 				$AWCCities[ $oRow->cw_city_id ] = array_merge( $AWCCities[ $oRow->cw_city_id ], $_tmp );
 			}
@@ -216,7 +231,13 @@ class CreateWikiMetrics {
 				array( 'GROUP BY' => 'pv_city_id' )
 			);
 			while ( $oRow = $dbs->fetchObject( $oRes ) ) {
+				$page_views = array_reduce (
+					array (" ", " K", " M", " G"), create_function (
+						'$a,$b', 'return is_numeric($a)?($a>=1000?$a/1000:number_format($a,1).$b):$a;'
+					), $oRow->cnt
+				);
 				$AWCCities[ $oRow->pv_city_id ][ "pageviews" ] = $oRow->cnt;
+				$AWCCities[ $oRow->pv_city_id ][ "pageviews_txt" ] = $page_views;
 			}
 			$dbs->freeResult( $oRes );
 			
@@ -256,7 +277,6 @@ class CreateWikiMetrics {
 		/* check params */
 		$where = $options = array();
 		#----
-		// disable (?) $where[] = 'city_created >= ' . $dbr->addQuotes(self::START_DATE);
 		if ( !empty($this->axCreated) && in_array( $this->axCreated, array_keys($this->mPeriods) ) ) {
 			$sCreated = ($this->axCreated > 100) ? intval($this->axCreated - 100) . ' MONTH' : intval($this->axCreated) . ' WEEK';
 			$where[] = 'city_created >= DATE_SUB(NOW(), INTERVAL ' . $sCreated . ')';
@@ -280,12 +300,24 @@ class CreateWikiMetrics {
 		if ( !empty($this->axTitle) ) {
 			$where[] = 'city_title >= ' . $dbr->addQuotes($this->axTitle);
 		}
-		if ( !empty($this->axFounder) && is_numeric( $this->axFounder ) ) {
-			$where[] = 'city_founding_user = ' . intval($this->axFounder);
+		if ( !empty($this->axFounder) ) {
+			$oFounder = User::newFromName( $this->axFounder );
+			if ( $oFounder instanceof User ) {
+				$where[] = 'city_founding_user = ' . $oFounder->getId();
+			}
 		}
 		if ( !empty($this->axFounderEmail) ) {
 			$where[] = 'city_founding_email LIKE "%' . $dbr->escapeLike( str_replace(' ', '_', $this->axFounderEmail) ) . '%"';
 		}
+		$city_public = array( 0 => 1 );
+		if ( !empty($this->axClosed) ) {
+			$city_public[] = 0;
+		}
+		if ( !empty($this->axRedirected) ) {
+			$city_public[] = 2;
+		}
+		$where[] = 'city_public in (' . implode(",", $city_public) . ')';
+
 		#----
 		#- check order - if order is for city_list - we can use limit and order by in SQL query
 		#----
@@ -312,7 +344,7 @@ class CreateWikiMetrics {
 		#----
 		$oRes = $dbr->select( 
 			"`wikicities`.`city_list`", 
-			array( "city_id, city_dbname, city_url, city_created, city_founding_user, city_title, city_founding_email, city_lang" ),
+			array( "city_id, city_dbname, city_url, city_created, city_founding_user, city_title, city_founding_email, city_lang, city_public" ),
 			$where,
 			__METHOD__,
 			$options
@@ -346,18 +378,22 @@ class CreateWikiMetrics {
 				'founderUrl'		=> $sFounderLink,
 				'founderName'		=> $sFounderName,
 				'founderEmail'		=> $oRow->city_founding_email,
+				'public'			=> $oRow->city_public,
 				#-- stats 
 				'wikians' 			=> 0,
 				'articles' 			=> 0,
 				'articles_per_day'	=> 0,
 				'mean_nbr_revision'	=> 0,
 				'mean_size'			=> 0,
+				'mean_size_txt'		=> "",
 				'edits'				=> 0,
 				'db_size'			=> 0,
+				'db_size_txt'		=> "",
 				'images'			=> 0,
 				'users_reg'			=> 0,
 				'users_edits'		=> 0,
 				'pageviews'			=> 0,
+				'pageviews_txt'		=> 0,
 			);
 		}
 		$dbr->freeResult( $oRes );
