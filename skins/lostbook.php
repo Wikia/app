@@ -46,13 +46,6 @@ class SkinLostbook extends SkinMonoBook {
 		$out->addStyle( 'lostbook/IE70Fixes.css', 'screen', 'IE 7' );
 
 		$out->addStyle( 'lostbook/rtl.css', 'screen', '', 'rtl' );
-
-		// load YUI (moved from r5702)
-/*
-		$out->addScriptFile('http://yui.yahooapis.com/2.6.0/build/yahoo-dom-event/yahoo-dom-event.js');
-		$out->addScriptFile('http://yui.yahooapis.com/2.6.0/build/connection/connection-min.js');
-		$out->addScriptFile('http://yui.yahooapis.com/2.6.0/build/json/json-min.js');
-*/
 	}
 
 	// don't return "wikia" toolbox
