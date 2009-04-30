@@ -44,54 +44,6 @@ class SkinQuartz extends SkinTemplate {
 			}
 		}
 
-		global $wgABtesting, $wgCookiePrefix, $wgRequest, $wgCookieExpiration, $wgCookiePath, $wgCookieDomain, $wgCookieSecure;
-
-		# if A/B testing is enabled
-		if(!empty($wgABtesting) && $wgABtesting == true) {
-
-			# if A/B group is not yet assigned to user
-			if(!isset($_COOKIE[$wgCookiePrefix.'g']) || empty($_COOKIE[$wgCookiePrefix.'g'])) {
-
-				# if user did't login before
-				if(!isset($_COOKIE[$wgCookiePrefix.'UserID']) || empty($_COOKIE[$wgCookiePrefix.'UserID'])) {
-
-					$rand = rand(1,10);
-					if($rand == 8) {
-						$group = 1;
-					} else if($rand == 9) {
-						$group = 2;
-					} else {
-						$group = -1; # default
-					}
-
-				} else {
-
-					$group = -1; # default
-
-				}
-
-				$exp = time() + $wgCookieExpiration;
-				setcookie( $wgCookiePrefix.'g', $group, $exp, $wgCookiePath, $wgCookieDomain, $wgCookieSecure);
-
-			} else {
-
-				$group = (int) $_COOKIE[$wgCookiePrefix.'g'];
-
-			}
-
-			if(($_group = $wgRequest->getVal('abgroup')) != '') {
-				$group = $_group;
-				if($wgRequest->getBool('save')) {
-					$exp = time() + $wgCookieExpiration;
-					setcookie( $wgCookiePrefix.'g', $group, $exp, $wgCookiePath, $wgCookieDomain, $wgCookieSecure);
-				}
-			}
-
-			if($group == -1 || $group == 1 || $group == 2) {
-				$tpl->abmode = $group;
-			}
-		}
-
 		$tpl->themename = $this->themename;
 		return $tpl;
 	}
@@ -435,75 +387,75 @@ class QuartzTemplate extends QuickTemplate {
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-	<meta http-equiv="Content-Type" content="<?php $this->text('mimetype') ?>; charset=<?php $this->text('charset') ?>" />
-	<?php $this->html('headlinks') ?>
-	<title><?php $this->text('pagetitle') ?></title>
+	<head>
+		<meta http-equiv="Content-Type" content="<?php $this->text('mimetype') ?>; charset=<?php $this->text('charset') ?>" />
+		<?php $this->html('headlinks') ?>
+		<title><?php $this->text('pagetitle') ?></title>
 
-	<style type="text/css" media="screen,projection">/*<![CDATA[*/
-	    @import "<?php $this->text('stylepath') ?>/common/shared.css?<?php echo $GLOBALS['wgStyleVersion'] ?>";
-	    @import "<?php $this->text('stylepath') ?>/monobook/main.css?<?= $GLOBALS['wgStyleVersion'] ?>";
-	/*]]>*/</style>
-	<link rel="stylesheet" type="text/css" <?php if(empty($this->data['printable']) ) { ?>media="print"<?php } ?> href="<?php $this->text('stylepath') ?>/common/commonPrint.css?<?= $GLOBALS['wgStyleVersion'] ?>" />
-        <!--[if lt IE 5.5000]><style type="text/css">@import "<?php $this->text('stylepath') ?>/monobook/IE50Fixes.css?<?= $GLOBALS['wgStyleVersion'] ?>";</style><![endif]-->
-        <!--[if IE 5.5000]><style type="text/css">@import "<?php $this->text('stylepath') ?>/monobook/IE55Fixes.css?<?= $GLOBALS['wgStyleVersion'] ?>";</style><![endif]-->
-        <!--[if IE 6]><style type="text/css">@import "<?php $this->text('stylepath') ?>/monobook/IE60Fixes.css?<?= $GLOBALS['wgStyleVersion'] ?>";</style><![endif]-->
-        <!--[if IE 7]><style type="text/css">@import "<?php $this->text('stylepath') ?>/monobook/IE70Fixes.css?<?= $GLOBALS['wgStyleVersion'] ?>";</style><![endif]-->
-        <!--[if lt IE 7]><script type="text/javascript" src="<?php $this->text('stylepath') ?>/common/IEFixes.js?<?= $GLOBALS['wgStyleVersion'] ?>"></script>
-	<meta http-equiv="imagetoolbar" content="no" /><![endif]-->
+		<style type="text/css" media="screen,projection">/*<![CDATA[*/
+		    @import "<?php $this->text('stylepath') ?>/monobook/main.css?<?= $GLOBALS['wgStyleVersion'] ?>";
+		/*]]>*/</style>
+		<link rel="stylesheet" type="text/css" <?php if(empty($this->data['printable']) ) { ?>media="print"<?php } ?> href="<?php $this->text('stylepath') ?>/common/commonPrint.css?<?= $GLOBALS['wgStyleVersion'] ?>" />
+		<!--[if lt IE 5.5000]><style type="text/css">@import "<?php $this->text('stylepath') ?>/monobook/IE50Fixes.css?<?= $GLOBALS['wgStyleVersion'] ?>";</style><![endif]-->
+		<!--[if IE 5.5000]><style type="text/css">@import "<?php $this->text('stylepath') ?>/monobook/IE55Fixes.css?<?= $GLOBALS['wgStyleVersion'] ?>";</style><![endif]-->
+		<!--[if IE 6]><style type="text/css">@import "<?php $this->text('stylepath') ?>/monobook/IE60Fixes.css?<?= $GLOBALS['wgStyleVersion'] ?>";</style><![endif]-->
+		<!--[if IE 7]><style type="text/css">@import "<?php $this->text('stylepath') ?>/monobook/IE70Fixes.css?<?= $GLOBALS['wgStyleVersion'] ?>";</style><![endif]-->
+		<!--[if lt IE 7]><script type="text/javascript" src="<?php $this->text('stylepath') ?>/common/IEFixes.js?<?= $GLOBALS['wgStyleVersion'] ?>"></script>
+		<meta http-equiv="imagetoolbar" content="no" /><![endif]-->
 
-	<?=Skin::makeGlobalVariablesScript( $this->data );?>
+		<?=Skin::makeGlobalVariablesScript( $this->data );?>
 
-	<?= GetReferences('quartz_js') ?>
+		<?= GetReferences('quartz_js') ?>
 
-	<!-- YUI CSS -->
-	<link rel="stylesheet" type="text/css" href="<?php $this->text('stylepath') ?>/common/yui_2.5.2/container/assets/container.css?<?= $GLOBALS['wgStyleVersion'] ?>"/>
-	<link rel="stylesheet" type="text/css" href="<?php $this->text('stylepath') ?>/common/yui_2.5.2/logger/assets/logger.css?<?= $GLOBALS['wgStyleVersion'] ?>"/>
-	<link rel="stylesheet" type="text/css" href="<?php $this->text('stylepath') ?>/common/yui_2.5.2/tabview/assets/tabview.css?<?= $GLOBALS['wgStyleVersion'] ?>"/>
+		<!-- YUI CSS -->
+		<link rel="stylesheet" type="text/css" href="<?php $this->text('stylepath') ?>/common/yui_2.5.2/container/assets/container.css?<?= $GLOBALS['wgStyleVersion'] ?>"/>
+		<link rel="stylesheet" type="text/css" href="<?php $this->text('stylepath') ?>/common/yui_2.5.2/logger/assets/logger.css?<?= $GLOBALS['wgStyleVersion'] ?>"/>
+		<link rel="stylesheet" type="text/css" href="<?php $this->text('stylepath') ?>/common/yui_2.5.2/tabview/assets/tabview.css?<?= $GLOBALS['wgStyleVersion'] ?>"/>
 
-	<link rel="stylesheet" href="<?php $this->text('stylepath') ?>/quartz/css/main.css?<?= $GLOBALS['wgStyleVersion'] ?>" type="text/css" />
+		<link rel="stylesheet" href="<?php $this->text('stylepath') ?>/quartz/css/main.css?<?= $GLOBALS['wgStyleVersion'] ?>" type="text/css" />
 <?php
 if($this->themename != 'custom') {
 	$themeCssLink = $this->textret('stylepath') . '/quartz/' . $this->themename . '/css/main.css?' . $GLOBALS['wgStyleVersion'];
-} else {
-	global $wgSquidMaxage;
-	$themeCssLink = Skin::makeNSUrl( 'Quartz.css', "usemsgcache=yes&action=raw&ctype=text/css&smaxage=$wgSquidMaxage", NS_MEDIAWIKI);
+}
+else {
+	$themeCssLink = '';
 }
 ?>
-	<link rel="stylesheet" href="<?= $themeCssLink ?>" type="text/css" />
+		<link rel="stylesheet" href="<?= $themeCssLink ?>" type="text/css" />
 
-	<!--[if lt IE 7]><link rel="stylesheet" href="<?php $this->text('stylepath') ?>/quartz/css/main_ie.css?<?= $GLOBALS['wgStyleVersion'] ?>" /><![endif]-->
-	<!--[if IE 7]><link rel="stylesheet" href="<?php $this->text('stylepath') ?>/quartz/css/main_ie7.css?<?= $GLOBALS['wgStyleVersion'] ?>" /><![endif]-->
-	<link rel="stylesheet" type="text/css" <?php if(empty($this->data['printable']) ) { ?>media="print"<?php } ?> href="<?php $this->text('stylepath') ?>/quartz/css/print.css?<?= $GLOBALS['wgStyleVersion'] ?>" />
+		<!--[if lt IE 7]><link rel="stylesheet" href="<?php $this->text('stylepath') ?>/quartz/css/main_ie.css?<?= $GLOBALS['wgStyleVersion'] ?>" /><![endif]-->
+		<!--[if IE 7]><link rel="stylesheet" href="<?php $this->text('stylepath') ?>/quartz/css/main_ie7.css?<?= $GLOBALS['wgStyleVersion'] ?>" /><![endif]-->
+		<link rel="stylesheet" type="text/css" <?php if(empty($this->data['printable']) ) { ?>media="print"<?php } ?> href="<?php $this->text('stylepath') ?>/quartz/css/print.css?<?= $GLOBALS['wgStyleVersion'] ?>" />
 
-	<!-- widgets -->
-	<link rel="stylesheet" href="<?php $this->text('stylepath') ?>/common/widgets/css/widgets_base.css?<?= $GLOBALS['wgStyleVersion'] ?>" />
-	<?= GetReferences('quartz_css') ?>
-	<!--[if lt IE 7]><link rel="stylesheet" href="<?php $this->text('stylepath') ?>/common/widgets/css/widgets_ie.css?<?= $GLOBALS['wgStyleVersion'] ?>" /><![endif]-->
-	<!--[if IE 7]><link rel="stylesheet" href="<?php $this->text('stylepath') ?>/common/widgets/css/widgets_ie7.css?<?= $GLOBALS['wgStyleVersion'] ?>" /><![endif]-->
+		<!-- widgets -->
+		<link rel="stylesheet" href="<?php $this->text('stylepath') ?>/common/widgets/css/widgets_base.css?<?= $GLOBALS['wgStyleVersion'] ?>" />
+		<?= GetReferences('quartz_css') ?>
+		<!--[if lt IE 7]><link rel="stylesheet" href="<?php $this->text('stylepath') ?>/common/widgets/css/widgets_ie.css?<?= $GLOBALS['wgStyleVersion'] ?>" /><![endif]-->
+		<!--[if IE 7]><link rel="stylesheet" href="<?php $this->text('stylepath') ?>/common/widgets/css/widgets_ie7.css?<?= $GLOBALS['wgStyleVersion'] ?>" /><![endif]-->
+		<?php $this->html('csslinks') ?>
 
-	<!-- MediaWiki -->
+		<!-- MediaWiki -->
 <?php	if($this->data['jsvarurl'  ]) { ?>
-	<script type="<?php $this->text('jsmimetype') ?>" src="<?php $this->text('jsvarurl'  ) ?>"><!-- site js --></script>
+		<script type="<?php $this->text('jsmimetype') ?>" src="<?php $this->text('jsvarurl'  ) ?>"><!-- site js --></script>
 <?php	} ?>
 <?php	if($this->data['pagecss'   ]) { ?>
-	<style type="text/css"><?php $this->html('pagecss') ?></style>
+		<style type="text/css"><?php $this->html('pagecss') ?></style>
 <?php	}
         if($this->data['usercss'   ]) { ?>
-	<style type="text/css"><?php $this->html('usercss') ?></style>
+		<style type="text/css"><?php $this->html('usercss') ?></style>
 <?php	}
         if($this->data['userjs'    ]) { ?>
-	<script type="<?php $this->text('jsmimetype') ?>" src="<?php $this->text('userjs' ) ?>"></script>
+		<script type="<?php $this->text('jsmimetype') ?>" src="<?php $this->text('userjs' ) ?>"></script>
 <?php	}
         if($this->data['userjsprev']) { ?>
-	<script type="<?php $this->text('jsmimetype') ?>"><?php $this->html('userjsprev') ?></script>
+		<script type="<?php $this->text('jsmimetype') ?>"><?php $this->html('userjsprev') ?></script>
 <?php	}
         if($this->data['trackbackhtml']) echo $this->data['trackbackhtml']; ?>
-        <?php $this->html('headscripts');
+	        <?php $this->html('headscripts');
 ?>
-</head>
+	</head>
 
-<body <?php if($this->data['body_onload']) { ?>onload="<?php $this->text('body_onload') ?>"<?php } ?> class="mediawiki <?php $this->text('dir') ?> <?php $this->text('pageclass') ?><?php if (!$wgUser->isLoggedIn()) { ?> loggedout<?php } ?> wikiaSkinQuartz">
+<body<?php if($this->data['body_onload']) { ?> onload="<?php $this->text('body_onload') ?>"<?php } ?> class="mediawiki <?php $this->text('dir') ?> <?php $this->text('pageclass') ?><?php if (!$wgUser->isLoggedIn()) { ?> loggedout<?php } ?> wikiaSkinQuartz">
 <?php wfRunHooks('GetHTMLAfterBody', array ($this)); ?>
 	<div id="header" class="clearfix abmode<?= $this->abmode ?> abmode<?= $this->abmode ?>-<?= !$this->data['loggedin'] ? 'anon' : 'loggedin' ?>">
 	<?= $this->getLeftTopBar() ?>
