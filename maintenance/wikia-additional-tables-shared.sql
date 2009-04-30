@@ -529,7 +529,30 @@ CREATE TABLE `city_cats` (
   `cat_url` text,
   PRIMARY KEY  (`cat_id`),
   KEY `cat_name_idx` (`cat_name`)
-) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+
+CREATE TABLE IF NOT EXISTS `city_variables_pool` (
+  `cv_id` smallint(5) unsigned NOT NULL auto_increment,
+  `cv_name` varchar(255) NOT NULL,
+  `cv_description` text NOT NULL,
+  `cv_variable_type` enum('integer','long','string','float','array','boolean','text','struct','hash') NOT NULL default 'integer',
+  `cv_variable_group` tinyint(3) unsigned NOT NULL default '1',
+  `cv_access_level` tinyint(3) unsigned NOT NULL default '1' COMMENT '1 - read only\n2 - admin writable\n3 - user writable\n',
+  PRIMARY KEY  (`cv_id`),
+  UNIQUE KEY `idx_name_unique` (`cv_name`),
+  KEY `name_unique` (`cv_name`)
+) ENGINE=InnoDB;
+
+CREATE TABLE IF NOT EXISTS `city_variables` (
+  `cv_city_id` int(9) NOT NULL,
+  `cv_variable_id` smallint(5) unsigned NOT NULL default '0',
+  `cv_value` mediumblob NOT NULL,
+  PRIMARY KEY  (`cv_variable_id`,`cv_city_id`),
+  KEY `cv_city_id` (`cv_city_id`),
+  CONSTRAINT `city_variables_ibfk_2` FOREIGN KEY (`cv_city_id`) REFERENCES `city_list` (`city_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `city_variables_ibfk_1` FOREIGN KEY (`cv_variable_id`) REFERENCES `city_variables_pool` (`cv_id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=latin1
 
 LOCK TABLES `city_cats` WRITE;
 INSERT INTO `city_cats` VALUES (1,'Humor','http://www.wikia.com/wiki/Humor'),(2,'Gaming','http://gaming.wikia.com/'),(3,'Entertainment','http://entertainment.wikia.com/'),(4,'Wikia','http://www.wikia.com/wiki/Category:Hubs'),(5,'Toys','http://www.wikia.com/wiki/Toys'),(7,'Travel','http://www.wikia.com/wiki/Travel'),(8,'Education','http://www.wikia.com/wiki/Education'),(9,'Lifestyle','http://www.wikia.com/wiki/Lifestyle'),(10,'Finance','http://www.wikia.com/wiki/Finance'),(11,'Politics','http://www.wikia.com/wiki/Politics'),(12,'Technology','http://www.wikia.com/wiki/Technology'),(13,'Science','http://www.wikia.com/wiki/Science'),(14,'Philosophy','http://www.wikia.com/wiki/Philosophy'),(15,'Sports','http://www.wikia.com/wiki/Sports'),(16,'Music','http://www.wikia.com/wiki/Music'),(17,'Creative','http://www.wikia.com/wiki/Creative'),(18,'Auto','http://www.wikia.com/wiki/Auto'),(19,'Green','http://www.wikia.com/wiki/Green');
