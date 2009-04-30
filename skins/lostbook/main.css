@@ -56,8 +56,9 @@ div.topicon {
 
 #t-digglink {
     position:relative;
-    margin: .5em 0 0 0;
+    margin: .5em 0 0 -1.5em;
     text-align: center;
+    list-style: none;
 }
 
 /* @media screen, projection { */

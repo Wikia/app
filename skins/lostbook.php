@@ -72,22 +72,15 @@ class SkinLostbook extends SkinMonoBook {
 	}
 
 	function addDiggButton($tpl) {
-?>
-
-				<div id="t-digglink">
-<?php
 		if($tpl->data['notspecialpage']) { 
 			global $wgTitle;
 			$url = htmlspecialchars($wgTitle->getFullURL());
 ?>
-					<a href="http://digg.com/submit?phase=2&amp;topic=television&amp;url=<?= $url ?>"><img src="http://digg.com/img/badges/91x17-digg-button-alt.png" width="91" height="17" alt="Digg!" /></a>
+
+					<li id="t-digglink"><a href="http://digg.com/submit?phase=2&amp;topic=television&amp;url=<?= $url ?>"><img src="http://digg.com/img/badges/91x17-digg-button-alt.png" width="91" height="17" alt="Digg!" /></a></li>
 <?php
 		}
-?>
-				</div>
-<?php
 		return true;
-	
 	}
 }
 
