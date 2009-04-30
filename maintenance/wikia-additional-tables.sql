@@ -27,22 +27,6 @@ CREATE TABLE IF NOT EXISTS `page_vote` (
 ) ENGINE=InnoDB;
 
 
-create table if not exists rank_groups (
-    grp_id int not null auto_increment primary key,
-    grp_url varchar(255) not null,
-    grp_keywords varchar(255) not null,
-    grp_tm timestamp default now(),
-    grp_active int not null default 1
-) ENGINE=InnoDB;
-
-create table if not exists rank_results (
-    res_id int not null auto_increment primary key,
-    res_id_grp int not null,
-    res_engine int not null,
-    res_position int not null,
-    res_tm timestamp default now()
-) ENGINE=InnoDB;
-
 create table if not exists send_stats (
     send_id int not null auto_increment primary key,
     send_page_id int not null,
