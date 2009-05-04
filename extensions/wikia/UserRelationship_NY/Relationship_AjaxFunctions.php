@@ -8,7 +8,6 @@ function wfRelationshipRequestResponse($response, $request_id){
 	global $wgUser, $wgOut, $IP, $wgMessageCache, $wgUserRelationshipDirectory; 
 	$out = "";
 
-	
 	$rel = new UserRelationship($wgUser->getName() );
 	if($rel->verifyRelationshipRequest($request_id) == true ){
 		$request = $rel->getRequest($request_id);
@@ -20,7 +19,7 @@ function wfRelationshipRequestResponse($response, $request_id){
 		$key = wfMemcKey( 'user_relationship', 'awaitingrequests', $user_id_from );
 		$wgMemc->delete( $key );
 		
-		$response = (isset($_POST["response"])) ? $_POST["response"] : "";
+		$response = (isset($_POST["response"])) ? $_POST["response"] : $response;
 		$rel->updateRelationshipRequestStatus($request_id,$response);
 	
 		$avatar = new wAvatar($user_id_from,"l");
