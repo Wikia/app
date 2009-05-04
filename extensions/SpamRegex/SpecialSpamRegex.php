@@ -311,7 +311,7 @@ class spamRegexForm {
 		<tr>
 			<td align=\"right\">{$phraseblock}</td>
 			<td align=\"left\">
-				<input tabindex=\"1\" name=\"wpBlockedPhrase\" value=\"{$scBlockedPhrase}\" />
+				<input tabindex=\"1\" name=\"wpBlockedPhrase\" id=\"wpBlockedPhrase\" value=\"{$scBlockedPhrase}\" />
 			</td>
 		</tr>
 		<tr>
