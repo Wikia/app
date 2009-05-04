@@ -41,6 +41,9 @@ class CreateWikiMetrics {
     private $axOffset;
     private $axOrder;
     private $axDesc;
+    private $axClosed;
+    private $axRedir;
+    private $axDaily;
 	
 	/**
 	 * constructor
@@ -136,6 +139,7 @@ class CreateWikiMetrics {
 		$this->mTopLanguages = explode(',', wfMsg('awc-metrics-language-top-list'));
 		$this->mLanguages = self::getFixedLanguageNames();
 		asort($this->mLanguages);
+		return count($this->mLanguages);
 	}
 	
 	/* make values of request params */
@@ -147,23 +151,27 @@ class CreateWikiMetrics {
 			foreach ($aValues as $key => $value) {
 				$k = trim($key);
 				if ( strpos($key, "awc-") !== false ) {
-					$key = str_replace("awc-", "", $key);
-					$key = str_replace("-", "_", "ax".ucfirst($key));
-					$this->$key = strip_tags($value);
+					$mKey = str_replace("awc-", "", $key);
+					$mKey = str_replace("-", "_", "ax".ucfirst($mKey));
+					$this->$mKey = strip_tags($value);
 				}
 			}
 		}
 		wfProfileOut( __METHOD__ );
 	}
 	
-	/* get main table of stats */
+	/*
+	 * build stats records
+	 *
+	 * @author moli@wikia-inc.com
+	 * @return array
+	 *
+	 */
 	public function getMainStatsRecords() {
 		$res = array();
 		wfProfileIn( __METHOD__ );
 		#---
 		list ($AWCCities, $AWCCitiesCount) = $this->getWikis();
-		//error_log ( "AWCCitiesCount = " . print_r($AWCCitiesCount, true) );
-		//error_log ( "this = " . print_r($this, true) );
 		if ( !empty( $AWCCities ) ) {
 			$dbs = wfGetDBExt(DB_SLAVE);
 			$wikiList = implode( ",", array_keys( $AWCCities ) );
@@ -266,17 +274,19 @@ class CreateWikiMetrics {
 		wfProfileOut( __METHOD__ );
 		return array($res, $AWCCitiesCount);
 	}
-	
-	/* get list of wikis for request params */
-	private function getWikis() {
-		wfProfileIn( __METHOD__ );
-		$res = array();
 
-		/* db */
-		$dbr = wfGetDB( DB_SLAVE );
-		/* check params */
-		$where = $options = array();
-		#----
+	/*
+	 * build proper options for SQL queries
+	 *
+	 * @author moli@wikia-inc.com
+	 * @return array
+	 *
+	 */
+	private function buildQueryOptions(&$dbr) {
+		wfProfileIn( __METHOD__ );
+
+		$where = array();
+
 		if ( !empty($this->axCreated) && in_array( $this->axCreated, array_keys($this->mPeriods) ) ) {
 			$sCreated = ($this->axCreated > 100) ? intval($this->axCreated - 100) . ' MONTH' : intval($this->axCreated) . ' WEEK';
 			$where[] = 'city_created >= DATE_SUB(NOW(), INTERVAL ' . $sCreated . ')';
@@ -289,7 +299,7 @@ class CreateWikiMetrics {
 			$where[] = 'DATE_FORMAT(city_created, \'%Y/%m/%d\') <= ' . $dbr->addQuotes($this->axTo);
 		}
 		if ( !empty($this->axLanguage) ) {
-			$this->getLangs();
+			$countLangs = $this->getLangs();
 			if ( !empty( $this->mLanguages ) && in_array( $this->axLanguage, array_keys($this->mLanguages) ) ) {
 				$where[] = 'city_lang = ' . $dbr->addQuotes($this->axLanguage);
 			}
@@ -313,7 +323,7 @@ class CreateWikiMetrics {
 		if ( !empty($this->axClosed) ) {
 			$city_public[] = 0;
 		}
-		if ( !empty($this->axRedirected) ) {
+		if ( !empty($this->axRedir) ) {
 			$city_public[] = 2;
 		}
 		$where[] = 'city_public in (' . implode(",", $city_public) . ')';
@@ -334,6 +344,27 @@ class CreateWikiMetrics {
 		if ( !empty($this->axDesc) && in_array( $this->axDesc, array_keys($this->mOrder) ) ) {
 			$this->mOrderDesc = $this->mOrder[$this->axDesc];
 		}
+
+		wfProfileOut( __METHOD__ );
+		return $where;
+	}
+	
+	/*
+	 * get list of Wikis for some params
+	 *
+	 * @author moli@wikia-inc.com
+	 * @return array
+	 *
+	 */
+	private function getWikis() {
+		wfProfileIn( __METHOD__ );
+		$res = array();
+
+		/* db */
+		$dbr = wfGetDB( DB_SLAVE );
+		/* check params */
+		$where = $this->buildQueryOptions($dbr);
+		#----
 		$options[] = 'SQL_CALC_FOUND_ROWS';
 		if ( $this->mSort != $this->axOrder ) {
 			$options['LIMIT'] = $this->mLimit;
@@ -400,6 +431,74 @@ class CreateWikiMetrics {
 
 		wfProfileOut( __METHOD__ );
 		return array($AWCMetrics, $AWCCitiesCount);
+	}
+
+	/*
+	 * get # wikis per hubs per month
+	 *
+	 * @author moli@wikia-inc.com
+	 * @return array
+	 *
+	 */
+	public function getCategoriesRecords() {
+		global $wgUser, $wgLang;
+		/* db */
+		$dbr = wfGetDB( DB_SLAVE, 'dpl' );
+		/* check params */
+		$where = $this->buildQueryOptions($dbr);
+		#----
+		if ( empty($where) ) {
+			$where = array();
+		}
+		
+		#----
+		$where[] = "ccm.city_id = cl.city_id";
+		$what = "IFNULL(date_format(cl.city_created, '%Y-%m'), '0000-00')";
+		if ( !empty($this->axDaily) ) {
+			$what = "IFNULL(date_format(cl.city_created, '%Y-%m-%d'), '0000-00-00')";
+		}
+			
+		$oRes = $dbr->select( 
+			"`wikicities`.`city_cat_mapping` as ccm, `wikicities`.`city_list` as cl", 
+			array( "ccm.cat_id, $what as row_date, count(*) as cnt" ),
+			$where,
+			__METHOD__,
+			array(
+				'GROUP BY' => 'cat_id, row_date', 
+				'ORDER BY' => 'row_date desc',
+			)
+		);
+
+		$hubs = WikiFactoryHub::getInstance();
+		$aCategories = $hubs->getCategories();
+
+		$AWCMetrics = array(); $AWCCitiesCount = 0;
+		while ( $oRow = $dbr->fetchObject( $oRes ) ) {
+			if ( empty($this->axDaily) ) {
+				$sDate = ($oRow->row_date == '0000-00') ? '1970-01' : $oRow->row_date;
+				$dateArr = explode('-', $sDate);
+				$stamp = mktime(23,59,59,$dateArr[1],1,$dateArr[0]);
+				$out = $wgLang->sprintfDate("M Y", wfTimestamp(TS_MW, $stamp));
+			} else {
+				$sDate = ($oRow->row_date == '0000-00-00') ? '1970-01-01' : $oRow->row_date;
+				$dateArr = explode('-', $sDate);
+				$stamp = mktime(23,59,59,$dateArr[1],$dateArr[2],$dateArr[0]);
+				$out = $wgLang->date( wfTimestamp( TS_MW, $stamp ), true );
+			}
+
+			$AWCMetrics[$out][$oRow->cat_id] = array(
+				'month' 	=> $sDate,
+				'monthTxt' 	=> $out,
+				'catId' 	=> $oRow->cat_id,
+				'catName' 	=> $aCategories[$oRow->cat_id],
+				'count'		=> $oRow->cnt
+			);
+			$AWCCitiesCount += $oRow->cnt;
+		}
+		$dbr->freeResult( $oRes );
+
+		wfProfileOut( __METHOD__ );
+		return array($AWCMetrics, $AWCCitiesCount, $aCategories);
 	}
 
 	/*

@@ -11,7 +11,7 @@
 div#widget_sidebar { display: none !important; }
 div#wikia_page { margin-left: 5px; z-index:100; }
 div#sidebar { display: none !important; }
-.TablePager th { white-space:nowrap;font-size:95%; }
+.TablePager th { font-size:91%; }
 .TablePager td { padding:1px; }
 </style>
 <p class='error'><?=$error?></p>
@@ -71,7 +71,6 @@ div#sidebar { display: none !important; }
 				<span style="vertical-align:middle"><input name="awc-metrics-user" id="awc-metrics-user" size="15" /></span>
 				<span style="vertical-align:middle"><?=wfMsg('awc-metrics-by-email')?></span>
 				<span style="vertical-align:middle"><input name="awc-metrics-email" id="awc-metrics-email" size="30" /></span>
-				<input type="button" value="<?=wfMsg('go')?>" id="awc-metrics-submit" />
 			</td></tr>
 		</table>
 		<table width="100%" style="text-align:left;">
@@ -79,6 +78,11 @@ div#sidebar { display: none !important; }
 				<td valign="middle" class="awc-metrics-row">
 					<input name="awc-metrics-closed" id="awc-metrics-closed" type="checkbox" /> <?=wfMsg('awc-metrics-closed')?>
 					<input name="awc-metrics-redirected" id="awc-metrics-redirected" type="checkbox" /> <?=wfMsg('awc-metrics-redirected')?>
+				</td>
+				<td valign="middle" class="awc-metrics-row" align="right">
+					<input type="button" value="<?=wfMsg('search')?>" id="awc-metrics-submit" />
+					<input type="button" value="<?=wfMsg('awc-metrics-hubs')?>" id="awc-metrics-hubs" />
+					<input type="button" value="<?=wfMsg('awc-metrics-news-day')?>" id="awc-metrics-news-day" />
 				</td>
 			</tr>
 		</table>
@@ -216,14 +220,7 @@ function wkAWCMetricsDetails(limit, offset, ord, desc)
 	AWCMetricsDetailsCallback = {
 		success: function( oResponse )
 		{
-			var resData = "";
-			if (YAHOO.Tools) {
-				resData = YAHOO.Tools.JSONParse(oResponse.responseText);
-			} else if ((YAHOO.lang) && (YAHOO.lang.JSON)) {
-				resData = YAHOO.lang.JSON.parse(oResponse.responseText);
-			} else {
-				resData = eval('(' + oResponse.responseText + ')');
-			}
+			var resData = __parseResponse(oResponse.responseText);
 			div_details.innerHTML = "";
 			var records = YD.get( "awc-metrics-list" );
 			if ( (!resData) || (resData['nbr_records'] == 0) ) {
@@ -413,14 +410,27 @@ function wkAWCMetricsDetails(limit, offset, ord, desc)
 	params += "&awc-offset=" + offset;
 	params += "&awc-order=" + ord;
 	params += "&awc-desc=" + desc;
-	params += "&awc-closed=" + closed.checked;
-	params += "&awc-redir=" + redirected.checked;
+	params += "&awc-closed=" + ((closed.checked) ? 1 : 0);
+	params += "&awc-redir=" + ((redirected.checked) ? 1 : 0);
 
 	//---
 	div_details.innerHTML="<img src=\"<?=$wgExtensionsPath?>/wikia/WikiFactory/Metrics/images/ajax-loader-s.gif\" />";
 	//---
 	var baseurl = wgScript + "?action=ajax&rs=axAWCMetrics" + params;
 	YAHOO.util.Connect.asyncRequest( "GET", baseurl, AWCMetricsDetailsCallback);
+}
+
+function __parseResponse(text) {
+	var resData = text;
+	if (YAHOO.Tools) {
+		resData = YAHOO.Tools.JSONParse(text);
+	} else if ((YAHOO.lang) && (YAHOO.lang.JSON)) {
+		resData = YAHOO.lang.JSON.parse(text);
+	} else {
+		resData = eval('(' + text + ')');
+	}
+	
+	return resData;
 }
 
 __ShowStats = function(e, args) {
@@ -433,6 +443,128 @@ __ShowStats = function(e, args) {
 	var select_pages = YD.get( 'wcAWCMetricsSelect' );
 	var cnt = (select_pages) ? select_pages.value : <?=CreateWikiMetrics::LIMIT?>;
 	wkAWCMetricsDetails(cnt, 0, _order, _desc);
+};
+
+__ShowCategories = function(e, args) {
+	var daily = (args[0]) ? args[0] : 0;
+	var div_details = YD.get( "awc-metrics-result" );
+	var records = YD.get( "awc-metrics-list" );
+
+	//----
+	var f 			= YD.get( "awc-metrics-form" );
+	var created 	= YD.get( "awc-metrics-created" );
+	var language	= YD.get( "awc-metrics-language" );
+	var between_f 	= YD.get( "awc-metrics-between-from" );
+	var between_to  = YD.get( "awc-metrics-between-to" );
+	//----
+	var domain 		= YD.get( "awc-metrics-domains" );
+	var title		= YD.get( "awc-metrics-title" );
+	var user 		= YD.get( "awc-metrics-user" );
+	var emailFnder	= YD.get( "awc-metrics-email" );
+
+	var closed 		= YD.get( "awc-metrics-closed" );
+	var redirected 	= YD.get( "awc-metrics-redirected" );
+
+	var foundText 	= "<?=wfMsg('awc-metrics-wikis-found', "CNT")?>";
+
+	AWCMetricsCategoriesCallback = {
+		success: function( oResponse )
+		{
+			var resData = __parseResponse(oResponse.responseText);
+			//---
+			div_details.innerHTML = "";
+			if ( (!resData) || (resData['nbr_records'] == 0) ) {
+				tmp  = "<br />";
+				tmp += "<div class=\"awc-metrics-msg\"><?=wfMsg('awc-metrics-not-found')?></div>";
+				tmp += "<br />";
+				records.innerHTML = tmp;
+			} else { 
+				records.innerHTML = "";
+				cats = resData['cats'];
+				data = resData['data'];
+				//
+				div_details.innerHTML = foundText.replace("CNT", resData['nbr_records']);
+				//
+				var _tmp = "<div style=\"clear:both\">";
+ 				_tmp += "<table width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" valign=\"top\" class=\"TablePager\" style=\"text-align:center\">";
+ 				
+ 				// first column (month)
+				var oneRow = "<th>&nbsp;</th>";
+
+				// columns (categories)
+				if ( cats ) {
+					for (i in cats) {
+						oneRow += "<th>" + cats[i] + "</th>";
+					}
+				}
+				
+				if (daily) {
+					oneRow += "<th><?=wfMsg('awc-metrics-sum-day')?></th>";
+				} else {
+					oneRow += "<th><?=wfMsg('awc-metrics-sum-month')?></th>";
+				}
+				_tmp += "<tr>" + oneRow + "</tr>";
+				// end of header
+
+				// data
+ 				if ( data ) {
+					for (month in data) {
+						oneRow = "<tr>";
+						oneRow += "<th>" + month + "</th>";
+						var rowCnt = 0;
+						if ( cats ) {
+							for (i in cats) {
+								var cnt = 0; 
+								if ( data[month][i] ) {
+									cnt = parseInt(data[month][i]['count']);
+								}
+								oneRow += "<td>" + cnt + "</td>";
+								rowCnt += cnt;
+							}
+						}
+						oneRow += "<th>" + rowCnt + "</th>";
+						oneRow += "</tr>";
+						_tmp += oneRow;
+					}
+				}
+
+				_tmp += "</table><br />";
+				records.innerHTML = _tmp + "</div>";
+
+				if (typeof TieDivLibrary != "undefined" ) {
+					TieDivLibrary.calculate();
+				};
+			}
+		},
+		failure: function( oResponse )
+		{
+			var records = YD.get('awc-metrics-list');
+			div_details.innerHTML = "";
+			if (!resData) {
+				records.innerHTML = "<?=wfMsg('awc-metrics-not-found')?>";
+			}
+			if (typeof TieDivLibrary != "undefined" ) {
+				TieDivLibrary.calculate();
+			}; 
+		}
+	};
+
+	var params = "&awc-created=" + created.value;
+	params += "&awc-from=" + between_f.value;
+	params += "&awc-to=" + between_to.value;
+	params += "&awc-language=" + language.value;
+	params += "&awc-domain=" + domain.value;
+	params += "&awc-title=" + title.value;
+	params += "&awc-founder=" + user.value;
+	params += "&awc-founderEmail=" + emailFnder.value;
+	params += "&awc-closed=" + ((closed.checked) ? 1 : 0);
+	params += "&awc-redir=" + ((redirected.checked) ? 1 : 0);
+	params += "&awc-daily=" + daily;
+	//---
+	div_details.innerHTML="<img src=\"<?=$wgExtensionsPath?>/wikia/WikiFactory/Metrics/images/ajax-loader-s.gif\" />";
+	//---
+	var baseurl = wgScript + "?action=ajax&rs=axAWCMetricsCategory" + params;
+	YAHOO.util.Connect.asyncRequest( "GET", baseurl, AWCMetricsCategoriesCallback);
 };
 
 function _addEvents(f, desc) {
@@ -457,8 +589,10 @@ function _addEvents(f, desc) {
 
 YAHOO.util.Event.onDOMReady(function () {
 	var desc = 1;
-	wkAWCMetricsDetails(<?=CreateWikiMetrics::LIMIT?>, 0, 'created', desc);
-	YE.addListener("awc-metrics-submit", "click", __ShowStats, [desc]);
+	wkAWCMetricsDetails(<?=CreateWikiMetrics::LIMIT?>, 0, 'created', desc );
+	YE.addListener("awc-metrics-submit", "click", __ShowStats, [desc] );
+	YE.addListener("awc-metrics-hubs", "click", __ShowCategories, [0] );
+	YE.addListener("awc-metrics-news-day", "click", __ShowCategories, [1] );
 });
 /*]]>*/
 </script>

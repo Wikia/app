@@ -392,8 +392,6 @@ function axAWCMetrics() {
 	global $wgUser, $wgRequest;	
 	wfLoadExtensionMessages( "AutoCreateWiki" );
 
-	error_log ( print_r($wgRequest, true) );
-
 	if ( wfReadOnly() ) {
 		return;
 	}
@@ -429,6 +427,52 @@ function axAWCMetrics() {
 	}
 }
 
+/**
+ * axAWCMetricsCategory
+ *
+ * Ajax call, return # of Wikis per hubs per month
+ *
+ * @access public
+ * @author moli@wikia
+ *
+ * @return string: json string 
+ */
+function axAWCMetricsCategory() {
+	global $wgUser, $wgRequest;	
+	wfLoadExtensionMessages( "AutoCreateWiki" );
+
+	if ( wfReadOnly() ) {
+		return;
+	}
+
+	if ( !in_array('staff', $wgUser->getGroups()) ) {
+		return "";
+	} 
+
+	if( $wgUser->isBlocked() ) {
+		return "";
+	}
+	
+	$aResponse = array('nbr_records' => 0, 'data' => '', 'cats' => array());
+	
+	$OAWCMetrics = new CreateWikiMetrics();
+	$OAWCMetrics->getRequestParams();
+	list ($res, $count, $categories) = $OAWCMetrics->getCategoriesRecords();
+	
+	if ( !empty($res) ) {
+		$aResponse['data'] = $res;
+		$aResponse['nbr_records'] = $count;
+		$aResponse['cats'] = $categories;
+	}
+	
+	if (!function_exists('json_encode'))  {
+		$oJson = new Services_JSON();
+		return $oJson->encode($aResponse);
+	} else {
+		return json_encode($aResponse);
+	}
+}
+
 global $wgAjaxExportList;
 $wgAjaxExportList[] = "axWFactoryGetVariable";
 $wgAjaxExportList[] = "axWFactoryFilterVariables";
@@ -437,3 +481,4 @@ $wgAjaxExportList[] = "axWFactoryDomainQuery";
 $wgAjaxExportList[] = "axWFactoryClearCache";
 $wgAjaxExportList[] = "axWFactorySaveVariable";
 $wgAjaxExportList[] = "axAWCMetrics";
+$wgAjaxExportList[] = "axAWCMetricsCategory";
