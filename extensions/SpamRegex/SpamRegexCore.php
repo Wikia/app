@@ -23,12 +23,12 @@ class SpamRegexHooks {
 					$wgOut->setPageTitle( wfMsg( 'spamprotectiontitle' ) );
 					$wgOut->setRobotPolicy( 'noindex,nofollow' );
 					$wgOut->setArticleRelated( false );
-
+					$wgOut->addHTML( '<div id="spamprotected_summary">' );
 					$wgOut->addWikiMsg( 'spamprotectiontext' );
 					$wgOut->addWikiMsg( 'spamprotectionmatch', "<nowiki>{$s_matches[0]}</nowiki>" );
 					$wgOut->addWikiMsg( 'spamregex-summary' );
-
 					$wgOut->returnToMain( false, $wgTitle );
+					$wgOut->addHTML( '</div>' );
 					wfProfileOut( __METHOD__ );
 					return false;
 				}
