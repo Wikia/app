@@ -78,4 +78,8 @@ $messages["en"] = array(
 	"awc-metrics-close" => "Close",
 	"awc-metrics-closed" => "show closed Wikis",
 	"awc-metrics-redirected" => "show closed and redirected Wikis",
+	"awc-metrics-hubs" => "New wikis (per month)",
+	"awc-metrics-news-day" => "New wikis (per day)",
+	"awc-metrics-sum-month" => "Count (per month)",
+	"awc-metrics-sum-day" => "Count (per day)",
 );
