@@ -28,8 +28,8 @@ function PvXparser( $input, $argv, &$parser )
 	$art_title = $parser->mTitle->getText();
 	$output = parse_gwbbcode($input, $art_title);
 
-	# Hack to point the download button to the right place witout touching core gwbccode files
-	$output = str_replace('/template.php', "$wgServer/extensions/3rdparty/PvX/template.php", $output);
+	# Hack to point the download button to a dedicated special page
+	$output = str_replace('/template.php', Title::newFromText( 'DownloadTemplate', NS_SPECIAL )->getFullUrl(), $output);
 
 	return $output;
 }
