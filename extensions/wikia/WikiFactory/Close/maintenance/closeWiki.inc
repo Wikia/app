@@ -207,10 +207,51 @@ class CloseWikiMaintenace {
 
 		wfProfileIn( __METHOD__ );
 
+		/**
+		 * initialization
+		 */
+		$timestamp = wfTimestampNow();
 		$dbw = wfGetDB( DB_MASTER );
-
 		$dba = wfGetDBExt( DB_MASTER );
 		$dba->selectDb( "archive" );
+
+		/**
+		 * copy city_list to archive
+		 */
+		$wiki = WikiFactory::getWikiByID( $this->mCityID );
+		$dba->begin();
+		$dba->insert(
+			"city_list",
+			array(
+				"city_id"                => $wiki->city_id,
+				"city_path"              => $wiki->city_path,
+				"city_dbname"            => $wiki->city_dbname,
+				"city_sitename"          => $wiki->city_sitename,
+				"city_url"               => $wiki->city_url,
+				"city_created"           => $wiki->city_created,
+				"city_founding_user"     => $wiki->city_founding_user,
+				"city_adult"             => $wiki->city_adult,
+				"city_public"            => $wiki->city_public,
+				"city_additional"        => $wiki->city_additional,
+				"city_description"       => $wiki->city_description,
+				"city_title"             => $wiki->city_title,
+				"city_founding_email"    => $wiki->city_founding_email,
+				"city_lang"              => $wiki->city_lang,
+				"city_special_config"    => $wiki->city_special_config,
+				"city_umbrella"          => $wiki->city_umbrella,
+				"city_ip"                => $wiki->city_ip,
+				"city_google_analytics"  => $wiki->city_google_analytics,
+				"city_google_search"     => $wiki->city_google_search,
+				"city_google_maps"       => $wiki->city_google_maps,
+				"city_indexed_rev"       => $wiki->city_indexed_rev,
+				"city_deleted_timestamp" => $timestamp,
+				"city_factory_timestamp" => $timestamp,
+				"city_useshared"         => $row->city_useshared,
+			    "ad_cat"                 => $row->ad_cat,
+			),
+			__METHOD__
+		);
+		$dba->commit();
 
 		/**
 		 * move city_variables to archive
@@ -221,7 +262,6 @@ class CloseWikiMaintenace {
 			array( "cv_city_id" => $this->mCityID ),
 			__METHOD__
 		);
-		$timestamp = wfTimestampNow();
 		while( $row = $dbw->fetchObject( $sth ) ) {
 			$dba->insert(
 				"city_variables",
