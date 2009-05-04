@@ -289,6 +289,12 @@ class CloseWikiMaintenace {
 			__METHOD__
 		);
 
+		$dbw->delete(
+			WikiFactory::table( "city_list" ),
+			array( "city_id" => $this->mCityID ),
+			__METHOD__
+		);
+
 		$dbw->commit();
 		wfProfileOut( __METHOD__ );
 	}
