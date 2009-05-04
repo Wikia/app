@@ -56,6 +56,7 @@
 				$user_2 =  Title::makeTitle( NS_USER  , $user_name  );
 				$user_safe_2 = urlencode($user_name_2);
 			}
+			
 			/*/
 			/* Error message for username that does not exist (from URL)
 			/*/			
@@ -232,7 +233,7 @@
 				
 				
 			if($can_post){	
-				if($wgUser->isLoggedIn() ){
+				if ( $wgUser->isLoggedIn() && !$wgUser->isBlocked() ) {
 					$output .= '<div class="user-page-message-form">
 						<input type="hidden" id="user_name_to" name="user_name_to" value="'.$user_name_to.'"/>
 						<input type="hidden" id="user_name_from" name="user_name_from" value="'.$user_name_from.'"/>

@@ -40,6 +40,12 @@
 				return false;	
 			}
 			
+			$oUser = User::newFromName($userText);
+			if ( ($oUser instanceof User) && ($oUser->isBlocked()) ) {
+				$wgOut->addHTML("You do not have permission to add new friend/foe");
+				return false;
+			}
+			
 			$wgOut->addHTML("<script>
 			function enablize(which_div, disable) {
 				 
