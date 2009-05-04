@@ -215,7 +215,7 @@ function Ok() {
 	aLinks[0].removeAttribute('_fcksavedurl');
 
 	if(!refid) {
-		refid = FCK.wysiwygData.length;
+		refid = FCK.GetFreeRefId();
 		aLinks[0].setAttribute('refid', refid);
 	}
 
