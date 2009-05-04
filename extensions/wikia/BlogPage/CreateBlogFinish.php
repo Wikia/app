@@ -3,6 +3,23 @@
 $wgHooks['ArticleInsertComplete'][] = 'wfCreateBlogCheck';
 $wgHooks['OutputPageBeforeHTML'][] = 'wfFinishCreateBlog';
 
+$wgHooks['AlternateEdit'][] = 'wfAllowShowEditBlogPage';
+function wfAllowShowEditBlogPage(&$editpage) {
+	global $wgTitle, $wgOut, $wgUser;
+	if( $wgTitle->getNamespace() == NS_BLOG ) {
+		//error_log ("editpage:" . print_r($editpage, true), 3, "/tmp/moli.log");
+		if( $wgUser->isAnon() ){
+			$wgOut->addHTML("You have to <a href=\"index.php?title=Special:Login\">log in</a> to create articles");
+			return false;
+		}
+ 	
+		if (!$wgUser->isAllowed('edit') || $wgUser->isBlocked() ){
+			$wgOut->addHTML("You do not have permission to create articles");
+			return false;
+		}
+	}
+	return true;
+}
 
 function wfCreateBlogCheck(&$article, &$user, &$text, &$summary, &$minoredit, &$watchthis, &$sectionanchor, &$flags){
 	global $wgOut, $wgTitle, $wgArticle, $wgUser, $wgRequest, $wgSendNewArticleToFriends, $wgEnableFacebook, $wgBlogCategory;
