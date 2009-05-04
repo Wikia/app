@@ -331,7 +331,7 @@ class spamRegexForm {
 		<tr>
 			<td align=\"right\">&#160;</td>
 			<td align=\"left\">
-				<input tabindex=\"4\" name=\"wpSpamRegexBlockedSubmit\" type=\"submit\" value=\"{$blockphrase}\" />
+				<input tabindex=\"4\" name=\"wpSpamRegexBlockedSubmit\" id=\"wpSpamRegexBlockedSubmit\" type=\"submit\" value=\"{$blockphrase}\" />
 			</td>
 		</tr>
 	</table>
