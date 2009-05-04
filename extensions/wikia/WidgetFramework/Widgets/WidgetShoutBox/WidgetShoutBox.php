@@ -51,7 +51,7 @@ $wgWidgets['WidgetShoutBox'] = array(
 
 function WidgetShoutBox($id, $params) {
 
-	global $wgUser, $wgTitle, $wgRequest, $wgSitename;
+	global $wgUser, $wgTitle, $wgRequest, $wgSitename, $wgLang;
 
 	wfProfileIn(__METHOD__);
 
@@ -150,6 +150,8 @@ function WidgetShoutBox($id, $params) {
 				$removeLink = '<a href="#" onclick="WidgetShoutBoxRemoveMsg(' . $id . ', this); return false;">x</a> ';
 			}
 			// time
+			//adjust user's timezone
+			$msg['time'] = $wgLang->sprintfDate('U', $wgLang->userAdjust(wfTimestamp(TS_MW, $msg['time'])));
 			$ret .= '<li' . ($count++ % 2 ? ' class="msgOdd"' : '') . ' msgid="' . $msg['id'] . '"' . '>' .
 				$removeLink.
 				htmlspecialchars( '['.date( $msg['time'] < $midnight ? 'j M' : 'G:i', $msg['time']) . ']' ) . '&nbsp;';
