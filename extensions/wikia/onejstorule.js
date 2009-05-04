@@ -1,8 +1,8 @@
 
 //start prototype / scriptac helper
 
-var $ = YAHOO.util.Dom.get;
-
+//var $ = YAHOO.util.Dom.get;
+var $G = YAHOO.util.Dom.get;
 
 function $El(name) {
 	return new YAHOO.util.Element(name);
@@ -78,7 +78,7 @@ YAHOO.util.Element.prototype.hide = Element_Hide;
 YAHOO.util.Element.prototype.show = Element_Show;
 
 YAHOO.util.Element.remove = function(el) {
-    element = $(el);
+    element = $G(el);
     element.parentNode.removeChild(element);
 }
 
@@ -1007,10 +1007,10 @@ function submenu(id){
 	
 	//clear all tab classes
 	on_tabs = $$("tab-on")
-	for(x = 0 ; x<= on_tabs.length-1 ; x++)$(on_tabs[x]).className="tab-off"
+	for(x = 0 ; x<= on_tabs.length-1 ; x++)$G(on_tabs[x]).className="tab-off"
 	
 	on_tabs = $$("sub-menu")
-	for(x = 0 ; x<= on_tabs.length-1 ; x++)YAHOO.widget.Effects.Hide($(on_tabs[x]))
+	for(x = 0 ; x<= on_tabs.length-1 ; x++)YAHOO.widget.Effects.Hide($G(on_tabs[x]))
 		
 	//hide submenu that might have been previously clicked
 	if (last_clicked)YAHOO.widget.Effects.Hide("submenu-"+last_clicked)
@@ -1047,8 +1047,8 @@ function editMenuToggle() {
 		var callback = {
 			success: function( oResponse ) {
 				YAHOO.util.Dom.setStyle('votebox', 'cursor', "default");
-				$("PollVotes").innerHTML = oResponse.responseText;
-				$("Answer").innerHTML = "<a href=javascript:unVote(" + PageID + ",'" + mk + "')>" + _UNVOTE_LINK + "</a>";
+				$G("PollVotes").innerHTML = oResponse.responseText;
+				$G("Answer").innerHTML = "<a href=javascript:unVote(" + PageID + ",'" + mk + "')>" + _UNVOTE_LINK + "</a>";
 			}
 		};
 
@@ -1063,8 +1063,8 @@ function editMenuToggle() {
 			success: function( oResponse ) {
 			
 				YAHOO.util.Dom.setStyle('votebox', 'cursor', "pointer");
-				$("PollVotes").innerHTML = oResponse.responseText;
-				$('Answer').innerHTML = "<a href=javascript:clickVote(1," + PageID + ",'" + mk + "')>" + _VOTE_LINK + "</a>";
+				$G("PollVotes").innerHTML = oResponse.responseText;
+				$G('Answer').innerHTML = "<a href=javascript:clickVote(1," + PageID + ",'" + mk + "')>" + _VOTE_LINK + "</a>";
 			}
 		};
 
@@ -1089,7 +1089,7 @@ function editMenuToggle() {
 		var pars = 'rs=' + rsfun + '&rsargs[]=' + TheVote + '&rsargs[]=' + PageID+'&rsargs[]=' + mk
 		var callback = {
 			success: function( oResponse ) {
-				$('rating_'+id).innerHTML = oResponse.responseText;
+				$G('rating_'+id).innerHTML = oResponse.responseText;
 			}
 		};
 		var request = YAHOO.util.Connect.asyncRequest('POST', url, callback, pars);
@@ -1100,7 +1100,7 @@ function editMenuToggle() {
 		var pars = 'rs=wfVoteStarsDelete&rsargs[]=' + PageID + '&rsargs[]=' + mk;
 		var callback = {
 			success: function( oResponse ) {
-				$('rating_'+id).innerHTML = oResponse.responseText;
+				$G('rating_'+id).innerHTML = oResponse.responseText;
 			}
 		};
 		var request = YAHOO.util.Connect.asyncRequest('POST', url, callback, pars);
@@ -1121,9 +1121,9 @@ function editMenuToggle() {
 				old_rating = prev_rating;
 			}
 			if(!num && old_rating >= x){
-				$("rating_" + id + "_" + x).src = "/images/star_" + star_on + ".gif";
+				$G("rating_" + id + "_" + x).src = "/images/star_" + star_on + ".gif";
 			}else{
-				$("rating_" + id + "_" + x).src = "/images/star_off.gif";
+				$G("rating_" + id + "_" + x).src = "/images/star_off.gif";
 			}
 		}
 	}
@@ -1132,7 +1132,7 @@ function editMenuToggle() {
 		if(clearRatingTimer && last_id==id)clearTimeout(clearRatingTimer);
 		clearRating(id,num,prev_rating)
 		for (var x=1;x<=num;x++) {
-			$("rating_" + id + "_" + x).src = "/images/star_voted.gif";
+			$G("rating_" + id + "_" + x).src = "/images/star_voted.gif";
 		}
 		last_id = id;
 	}
@@ -1184,20 +1184,20 @@ function editMenuToggle() {
 		var pars = 'rs=wfCommentVote&rsargs[]=' + cid + '&rsargs[]=' + vt + '&rsargs[]=' + mk + '&rsargs[]=' + ((vg)?vg:0) + '&rsargs[]=' + document.commentform.pid.value;
 		var callback = {
 			success: function( oResponse ) {
-				$("Comment" + cid).innerHTML = oResponse.responseText
-				$("CommentBtn" + cid).innerHTML = "<img src=/images/common/voted.gif align=absbottom hspace=2><span class=CommentVoted>" + _COMMENT_VOTED + "</span>";
+				$G("Comment" + cid).innerHTML = oResponse.responseText
+				$G("CommentBtn" + cid).innerHTML = "<img src=/images/common/voted.gif align=absbottom hspace=2><span class=CommentVoted>" + _COMMENT_VOTED + "</span>";
 			} 
 		};
 		var request = YAHOO.util.Connect.asyncRequest('POST', url, callback, pars);
 	}	
 	 
 	function ViewComments(pid,ord,end){
-		$("allcomments").innerHTML = _COMMENT_LOADING + "<br><br>";
+		$G("allcomments").innerHTML = _COMMENT_LOADING + "<br><br>";
 		var url = wgScript + "?title=Special:CommentListGet&pid="+pid+"&ord="+ord;
 		var pars = '';
 		var callback = {
 			success: function(oResponse) {
-					$("allcomments").innerHTML = oResponse.responseText
+					$G("allcomments").innerHTML = oResponse.responseText
 					submitted = 0
 					if(end)window.location.hash = "end";
 			}
@@ -1292,21 +1292,21 @@ function editMenuToggle() {
 	}
 	
 	function Reply(parentid,poster){
-		$("replyto").innerHTML = _COMMENT_REPLY_TO + " " + poster + " (<a href=javascript:Cancel_Reply()>" + _COMMENT_CANCEL_REPLY + "</a>) <br>"
+		$G("replyto").innerHTML = _COMMENT_REPLY_TO + " " + poster + " (<a href=javascript:Cancel_Reply()>" + _COMMENT_CANCEL_REPLY + "</a>) <br>"
 		document.commentform.comment_parent_id.value = parentid
 	}
 	
 	function Cancel_Reply(){
-		$("replyto").innerHTML = ""
+		$G("replyto").innerHTML = ""
 		document.commentform.comment_parent_id.value = ""
 	}
 	
 	function ChangeToStep(Stp,Drt){
-		$("Step" + Stp).style.visibility="visible"
-		$("Step" + Stp).style.display="block";
+		$G("Step" + Stp).style.visibility="visible"
+		$G("Step" + Stp).style.display="block";
 
-		$("Step" + (Stp-Drt)).style.visibility="hidden"
-		$("Step" + (Stp-Drt)).style.display="none";
+		$G("Step" + (Stp-Drt)).style.visibility="hidden"
+		$G("Step" + (Stp-Drt)).style.display="none";
 	}
 
 //end comments
@@ -1320,7 +1320,7 @@ function editMenuToggle() {
 
 		var callback = {
 			success: function( oResponse ) {
-				$("ListPages" + id).innerHTML = oResponse.responseText
+				$G("ListPages" + id).innerHTML = oResponse.responseText
 			}
 			
 		};
@@ -1328,10 +1328,10 @@ function editMenuToggle() {
 	}		
 
 	function getContent(url,pars,layerTo){
-		$(layerTo).innerHTML = "<table height=150 cellpadding=0 cellspacing=0><tr><td valign=top><span style='color:#666666;font-weight:800'>Loading...</span></td></tr></table><br><br>";
+		$G(layerTo).innerHTML = "<table height=150 cellpadding=0 cellspacing=0><tr><td valign=top><span style='color:#666666;font-weight:800'>Loading...</span></td></tr></table><br><br>";
 		var callback = {
 			success: function( oResponse ) {
-				$(layerTo).innerHTML = oResponse.responseText
+				$G(layerTo).innerHTML = oResponse.responseText
 			}
 		};	
 		var request = YAHOO.util.Connect.asyncRequest('POST', url, callback, pars);
@@ -1342,9 +1342,9 @@ function editMenuToggle() {
 function imageSwap(divID, type, on, path) {
 	
 	if (on==1) {
-		$(divID).src = path+'/common/'+type+'-on.gif';
+		$G(divID).src = path+'/common/'+type+'-on.gif';
 	} else {
-		$(divID).src = path+'/common/'+type+'.gif';
+		$G(divID).src = path+'/common/'+type+'.gif';
 	}
 	
 	
@@ -1355,10 +1355,10 @@ var show = 'false';
 function show_more_category(el) {
 	
 	if (show=='false') {
-		$(el).style.display = 'block';
+		$G(el).style.display = 'block';
 		show = 'true';
 	} else {
-		$(el).style.display = 'none';
+		$G(el).style.display = 'none';
 		show = 'false';
 	}
 	
@@ -1399,7 +1399,7 @@ function show_poll_results(id, page_id){
 	
 	var callback = {
 		success: function( oResponse ) {
-			$("poll-display_" + id).innerHTML = oResponse.responseText
+			$G("poll-display_" + id).innerHTML = oResponse.responseText
 		}
 	};
 	var request = YAHOO.util.Connect.asyncRequest('POST', url, callback, pars);	

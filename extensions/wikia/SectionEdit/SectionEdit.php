@@ -29,22 +29,20 @@ function SectionEditJS() {
 
 		$script = '
 if (skin == "monaco") {
-	jQuery.noConflict();
-	jQuery("h2 span.mw-headline").each(function(i) {
+	$("h2 span.mw-headline").each(function(i) {
 		//add elements and styling
-		jQuery(this).parent().prepend("<span class=\"editsection\"><a href=\"'.$editUrl.'\">'.$editMsg.'</a></span>").find(".editsection a").addClass("bigButton").contents().wrap("<big></big>").end().append("<small></small>").parent().css("position", "relative").css("top", "-3px").css("margin-bottom", "-2px");
+		$(this).parent().prepend("<span class=\"editsection\"><a href=\"'.$editUrl.'\">'.$editMsg.'</a></span>").find(".editsection a").addClass("bigButton").contents().wrap("<big></big>").end().append("<small></small>").parent().css("position", "relative").css("top", "-3px").css("margin-bottom", "-2px");
 	});
 }';
 	}
 	else {
 		$script = '
 if (skin == "monaco") {
-	jQuery.noConflict();
-	jQuery("h2 span.editsection").each(function(i) {
+	$("h2 span.editsection").each(function(i) {
 		//remove nodes in the editsection that are not anchors
-		jQuery(this).contents().not("a").remove();
+		$(this).contents().not("a").remove();
 		//add elements and styling
-		jQuery(this).find("a").addClass("bigButton").contents().wrap("<big></big>").end().append("<small></small>").parent().css("position", "relative").css("top", "-3px").css("margin-bottom", "-2px");
+		$(this).find("a").addClass("bigButton").contents().wrap("<big></big>").end().append("<small></small>").parent().css("position", "relative").css("top", "-3px").css("margin-bottom", "-2px");
 	});
 }';
 	}

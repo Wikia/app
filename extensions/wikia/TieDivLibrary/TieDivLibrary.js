@@ -80,25 +80,24 @@ TieDivLibrary = new function() {
 	this.calculate = function() {
 		//YAHOO.log('calculate()', 'info', 'TieDivLibrary');
 		for(i = 0; i < items.length; i++) {
-			jQuery.noConflict();
-			var offset = jQuery("#" + items[i][0]).offset();
-			offset.top -= jQuery("#monaco_shrinkwrap_main").offset().top;
+			var offset = $("#" + items[i][0]).offset();
+			offset.top -= $("#monaco_shrinkwrap_main").offset().top;
 			if (YAHOO.util.Dom.getStyle(items[i][0], "float") == 'right') {
-				jQuery("#" + items[i][0] + "_load").css({
+				$("#" + items[i][0] + "_load").css({
 					display: "block",
 					top: offset.top,
-					right: YAHOO.util.Dom.getViewportWidth() - offset.left - jQuery("#monaco_shrinkwrap_main").offset().left - jQuery("#" + items[i][0]).width()
+					right: YAHOO.util.Dom.getViewportWidth() - offset.left - $("#monaco_shrinkwrap_main").offset().left - $("#" + items[i][0]).width()
 				});
 			} else {
-				jQuery("#" + items[i][0] + "_load").css({
+				$("#" + items[i][0] + "_load").css({
 					display: "block",
 					top: offset.top,
-					left: offset.left - jQuery("#monaco_shrinkwrap_main").offset().left
+					left: offset.left - $("#monaco_shrinkwrap_main").offset().left
 				});
 			}
 			//Ad networks might send 300x600 on the homepage. This checks the actual height of the _load div's contents and adjusts the placeholder.
 			if (items[i][0] == 'HOME_TOP_RIGHT_BOXAD') {
-				jQuery("#" + items[i][0]).css("height", jQuery("#" + items[i][0] + "_load").height());
+				$("#" + items[i][0]).css("height", $("#" + items[i][0] + "_load").height());
 			}
 		}
 	};

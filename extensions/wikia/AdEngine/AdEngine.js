@@ -143,7 +143,7 @@ AdEngine.displaySlotIfAd = function (slotname) {
 
         var noopFound = false;
         for (i = 0 ; i < noopStrings.length; i++){
-                if($(slotname + '_load').innerHTML.indexOf(noopStrings[i]) > -1 ) {
+                if($('#' + slotname + '_load').html().indexOf(noopStrings[i]) > -1 ) {
                 	// Override stated dimensions set by CSS
 			YAHOO.util.Dom.setStyle(slotname + '_load', 'height', '1px');
                 	YAHOO.util.Dom.setStyle(slotname + '_load', 'width', '1px');
