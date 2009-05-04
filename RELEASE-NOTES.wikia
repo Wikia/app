@@ -1,3 +1,3 @@
 
 == Changes since 200905.1 ==
-* 
+* rt#14685: Shoutbox uses server time, not user's local time - fixed in t:r8239
