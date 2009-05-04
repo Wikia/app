@@ -1,5 +1,5 @@
 //macbre: moved here from onejstorule.js
-var $ = YAHOO.util.Dom.get;
+var $G = YAHOO.util.Dom.get;
 
 (function() {
 var Dom = YAHOO.util.Dom;
@@ -289,7 +289,7 @@ function menuItemAction(e) {
 		source_id = source_id.substr(2);
 	}
 	if (source_id && menuitem_array[source_id]) {
-		if ($(last_over)) YAHOO.util.Dom.removeClass(last_over, "navigation-hover");
+		if ($G(last_over)) YAHOO.util.Dom.removeClass(last_over, "navigation-hover");
 		last_over = source_id;
 		YAHOO.util.Dom.addClass(source_id, "navigation-hover");
 		check_item_in_array(menuitem_array[source_id], source_id);
@@ -321,8 +321,8 @@ function check_item_in_array(item, source_id) {
 	}
 }
 function do_menuItemAction(item, source_id) {
-	if ($('sub-menu'+item)) {
-		$('sub-menu'+item).style.display="block";
+	if ($G('sub-menu'+item)) {
+		$G('sub-menu'+item).style.display="block";
 		YAHOO.util.Dom.addClass(source_id, "navigation-hover");
 		displayed_menus.push({"item":'sub-menu'+item,"source":source_id});
 		last_displayed = 'sub-menu'+item;
@@ -354,7 +354,7 @@ function clearBackground(e) {
 	try {source_id = e.target.id;}
 	catch (ex) {source_id = e.srcElement.id}
 	var source_id = (source_id.indexOf("a-") == 0) ? source_id.substr(2) : source_id;
-	if (source_id && $(source_id) && menuitem_array[source_id]) {
+	if (source_id && $G(source_id) && menuitem_array[source_id]) {
 		YAHOO.util.Dom.removeClass(source_id, "navigation-hover");
 		clearMenu(e);
 	}
@@ -364,8 +364,8 @@ function clearMenu(e) {
 	m_timer = setTimeout(function() { doClearAll(); }, 300);
 }
 function doClear(item, type) {
-	if ($(type+item)) {
-		$(type+item).style.display="none";
+	if ($G(type+item)) {
+		$G(type+item).style.display="none";
 	}
 }
 function doClearAll() {
@@ -392,8 +392,8 @@ function menuInit() {
 		return;
 	}
 	menuInitCalled = true;
-	if($('ca-edit')) {
-		editthispage = $('ca-edit').href;
+	if($G('ca-edit')) {
+		editthispage = $G('ca-edit').href;
 	}
 	if(typeof wgMenuEdit != 'undefined') menuArray[2000] = {'href' : YAHOO.util.Dom.hasClass('navigation', 'userMenu') ? wgScript + '?title=User:'+wgUserName+'/Monaco-sidebar&action=edit' : wgScript + '?title=MediaWiki:Monaco-sidebar&action=edit', 'text' : wgMenuEdit, 'className' : 'Monaco-sidebar_edit'};
 	for(var i in menuArray.mainMenu) {
@@ -436,18 +436,18 @@ function menuInit() {
 		var div = document.createElement('div');
 		div.id = 'navigation_'+i;
 		div.innerHTML = out;
-		YAHOO.util.Dom.insertAfter(div, $('a-menu-item_'+i));
+		YAHOO.util.Dom.insertAfter(div, $G('a-menu-item_'+i));
 		submenu_array['sub-menu_'+i] = '_'+i;
-		$('sub-menu_'+i).onmouseout = clearMenu;
-		if($('sub-menu_'+i).captureEvents) $('sub-menu_'+i).captureEvents(Event.MOUSEOUT);
+		$G('sub-menu_'+i).onmouseout = clearMenu;
+		if($G('sub-menu_'+i).captureEvents) $G('sub-menu_'+i).captureEvents(Event.MOUSEOUT);
 		YAHOO.util.Event.on(items, 'mouseover', sub_menuItemAction_wrap)
 		menuitem_array['menu-item_'+i]= '_'+i;
-		$('a-menu-item_'+i).onmouseover = menuItemAction;
-		if($('a-menu-item_'+i).captureEvents) $('a-menu-item_'+i).captureEvents(Event.MOUSEOVER);
-		$('a-menu-item_'+i).onmouseout = clearBackground;
-		if($('a-menu-item_'+i).captureEvents) $('a-menu-item_'+i).captureEvents(Event.MOUSEOUT);
+		$G('a-menu-item_'+i).onmouseover = menuItemAction;
+		if($G('a-menu-item_'+i).captureEvents) $G('a-menu-item_'+i).captureEvents(Event.MOUSEOVER);
+		$G('a-menu-item_'+i).onmouseout = clearBackground;
+		if($G('a-menu-item_'+i).captureEvents) $G('a-menu-item_'+i).captureEvents(Event.MOUSEOUT);
 	}
-	$('navigation_widget').onmouseout = clearMenu;
+	$G('navigation_widget').onmouseout = clearMenu;
 }
 function sub_menuItemAction_wrap(e) {
 	if(!e) var e = window.event;
@@ -488,7 +488,7 @@ function sub_menuItemAction_wrap(e) {
 		var div = document.createElement('div');
 		div.id = 'navigation'+name_part;
 		div.innerHTML = out;
-		YAHOO.util.Dom.insertAfter(div, $('a-sub-menu-item'+name_part));
+		YAHOO.util.Dom.insertAfter(div, $G('a-sub-menu-item'+name_part));
 		submenu_array['sub-menu'+name_part+'_'+menu_id] = name_part+'_'+menu_id;
 		YAHOO.util.Event.on(items, 'mouseover', sub_menuItemAction_wrap);
 		menuArray[menu_id].children = false;
