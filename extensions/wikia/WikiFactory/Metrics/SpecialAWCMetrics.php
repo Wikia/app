@@ -465,7 +465,7 @@ class CreateWikiMetrics {
 			__METHOD__,
 			array(
 				'GROUP BY' => 'cat_id, row_date', 
-				'ORDER BY' => 'row_date desc',
+				'ORDER BY' => 'row_date',
 			)
 		);
 
