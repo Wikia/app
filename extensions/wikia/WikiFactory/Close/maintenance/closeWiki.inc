@@ -52,11 +52,18 @@ class CloseWikiMaintenace {
 				$this->mAction = $Wiki->city_public;
 			}
 			switch( $this->mAction ) {
-				case WikiFactory::STATUS_CLOSED:
+
 				case WikiFactory::STATUS_OPEN:
 					$this->dumpXMl();
 					$this->compressImages();
 					$this->createIndex( $wgDBname, $wgServer );
+					break;
+
+				case WikiFactory::STATUS_CLOSED:
+					$this->dumpXMl();
+					$this->compressImages();
+					$this->createIndex( $wgDBname, $wgServer );
+					$this->removeImageDirectory();
 					break;
 
 				case WikiFactory::STATUS_DELETE:
@@ -143,7 +150,7 @@ class CloseWikiMaintenace {
 		$dbw->begin();
 		$dbw->query( "DROP DATABASE `$wgDBname`");
 		$dbw->commit();
-		
+
 		wfProfileOut( __METHOD__ );
 	}
 
