@@ -38,34 +38,17 @@ class WikiaApiQueryVoteArticle extends WikiaApiQuery {
 		global $wgUser;
 
 		switch ($this->getActionName()) {
-			case parent::INSERT :
-								{
-									$this->addVoteArticle();
-									break;
-								}
-			case parent::UPDATE :
-								{
-									$this->changeVoteArticle();
-									break;
-								}
-			case parent::DELETE :
-								{
-									$this->removeVoteArticle();
-									break;
-								}
-			default:
-								{
-									$this->getVoteArticle();
-									break;
-								}
+			case parent::INSERT : $this->addVoteArticle(); break;
+			case parent::UPDATE : $this->changeVoteArticle(); break;
+			case parent::DELETE : $this->removeVoteArticle(); break;
+			default: $this->getVoteArticle(); break;
 		}
 	}
 
 	/*
 	 * Get votes of articles
 	 */
-	private function getVoteArticle ()
-	{
+	private function getVoteArticle () {
 		global $wgTopVoted, $wgDBname;
 
         $topvoted = $page = $uservote = null;
@@ -90,29 +73,27 @@ class WikiaApiQueryVoteArticle extends WikiaApiQuery {
 				$wgTopVoted = true;
             }
 
+			$select_user_vote = "";
 			if ( !is_null($uservote) ) {
 				if ( empty($user_id) && empty($ip) )  {
 					throw new WikiaApiQueryError(2);
 				}
 
-				$select_user_vote = "(select max(vote) from page_vote p2 where p2.article_id = p1.article_id and ";
+				$select_user_vote = "select article_id as page_id, max(vote) as uservote from page_vote where IMPLODE and ";
 
 				if (! empty($user_id) ) {
 					$this->setCacheKey ($lcache_key, 'U', $user_id);
-					$select_user_vote .= " p2.user_id = '$user_id' ";
+					$select_user_vote .= " user_id = '$user_id' ";
 				} else {
 				    //$this->addWhereFld( "ip", $ip );
-					$select_user_vote .= " p2.unique_id = '$browserId' ";
+					$select_user_vote .= " unique_id = '$browserId' ";
 					$this->setCacheKey ($lcache_key, 'UB', $browserId);
 				}
-				$select_user_vote .= ") as uservote";
+				$select_user_vote .= " group by article_id";
 			}
 
 			$this->addTables( array("`page_vote` p1", "page") );
-			$add_fields = array('page_id', 'page_title', 'AVG(vote) as votesavg');
-			if (!empty($select_user_vote)) {
-				$add_fields[] = $select_user_vote;
-			}
+			$add_fields = array('page_id', 'page_title', 'AVG(vote) as votesavg, max(time) as max_time');
 			$this->addFields( $add_fields );
 
 			$this->addWhere ( "page_id = article_id" );
@@ -189,12 +170,31 @@ class WikiaApiQueryVoteArticle extends WikiaApiQuery {
 						"title"			=> $row->page_title,
 						"votesavg"		=> $row->votesavg,
 					);
-					if (isset($row->uservote)) {
-						$data[$row->page_id]["uservote"] = $row->uservote;
-					}
-					ApiResult :: setContent( $data[$row->page_id], $row->page_title );
+					if ( isset($select_user_vote) && !empty($select_user_vote) ) {
+						$data[$row->page_id]["uservote"] = 0;
+					} 
 				}
 				$db->freeResult($res);
+
+				if ( !empty($data) && is_array($data) ) {
+					if (!empty($select_user_vote)) {
+						$dbr = wfGetDB( DB_SLAVE );
+
+						$pages = implode( ",", array_keys($data) );
+						$select_user_vote = str_replace("IMPLODE", " article_id in (".$pages.") ", $select_user_vote);
+						$oRes = $dbr->query($select_user_vote, __METHOD__);
+
+						while ( $oRow = $dbr->fetchObject( $oRes ) ) {
+							$data[$oRow->page_id]["uservote"] = $oRow->uservote;
+						}
+						$dbr->freeResult( $oRes );
+					}
+
+					foreach ( $data as $page_id => $values ) {
+						ApiResult::setContent( $values, $values['title'] );
+					}
+				}
+
 				$this->saveCacheData($lcache_key, $data, $ctime);
 			} else {
 				// ... cached
