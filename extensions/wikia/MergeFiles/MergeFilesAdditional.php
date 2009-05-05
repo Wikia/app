@@ -106,6 +106,7 @@ $MF['monaco_loggedin_js']['source'] = array(
 
 	'common/jquery/jquery-1.3.2.min.js', 
 	'common/jquery/jquery.json-1.3.min.js',
+	'common/jquery/jquery.wikia.js',
 
 	'common/ajax.js',
 	'common/urchin.js',
@@ -137,6 +138,7 @@ $MF['monaco_non_loggedin_js']['source'] = array(
 
 	'common/jquery/jquery-1.3.2.min.js',
 	'common/jquery/jquery.json-1.3.min.js',
+	'common/jquery/jquery.wikia.js',
 
 	'common/ajax.js',
 	'common/urchin.js',
