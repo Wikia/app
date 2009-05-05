@@ -522,7 +522,7 @@ __ShowCategories = function(e, args) {
 								if ( data[month][i] ) {
 									cnt = parseInt(data[month][i]['count']);
 								}
-								var incArr = "";
+								var incArr = "&nbsp;";
 								if ( typeof(prevMonth[i]) !='undefined' && prevMonth[i] !== null ) {
 									var diff = cnt - parseInt(prevMonth[i]);
 									if (diff > 0) {
@@ -533,7 +533,7 @@ __ShowCategories = function(e, args) {
 								} 
 								prevMonth[i] = cnt;
 								//---
-								oneRow += "<td id=\""+month+"_"+i+"\">" + cnt + " " + incArr + "</td>";
+								oneRow += "<td id=\""+month+"_"+i+"\">" + cnt + "&nbsp;" + incArr + "</td>";
 								rowCnt += cnt;
 								//---
 								if (!maxDate[month]) {
