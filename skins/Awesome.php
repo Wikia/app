@@ -980,19 +980,19 @@ EOS;
 			} else if($this->themename == 'sapphire') {
 				 // ...do nothing
 			} else if($this->themename != '') {
-				$css[] = array('url' => $wgStylePath.'/monaco/'.$this->themename.'/css/main.css?'.$wgStyleVersion);
+				$css[] = array('url' => $wgStylePath.'/awesome/'.$this->themename.'/css/main.css?'.$wgStyleVersion);
 			}
 		}
 
-		$css[] = array('url' => $wgStylePath.'/monaco/css/monaco_ltie7.css?'.$wgStyleVersion, 'cond' => 'if lt IE 7');
-		$css[] = array('url' => $wgStylePath.'/monaco/css/monaco_ie7.css?'.$wgStyleVersion, 'cond' => 'if IE 7');
-		$css[] = array('url' => $wgStylePath.'/monaco/css/monaco_ie8.css?'.$wgStyleVersion, 'cond' => 'if IE 8');
+		$css[] = array('url' => $wgStylePath.'/awesome/css/awesome_ltie7.css?'.$wgStyleVersion, 'cond' => 'if lt IE 7');
+		$css[] = array('url' => $wgStylePath.'/awesome/css/awesome_ie7.css?'.$wgStyleVersion, 'cond' => 'if IE 7');
+		$css[] = array('url' => $wgStylePath.'/awesome/css/awesome_ie8.css?'.$wgStyleVersion, 'cond' => 'if IE 8');
 
-		$css[] = array('url' => $wgStylePath.'/monaco/css/print.css?'.$wgStyleVersion, 'param' => empty($tpl->data['printable']) ? 'media="print" ' : '');
+		$css[] = array('url' => $wgStylePath.'/awesome/css/print.css?'.$wgStyleVersion, 'param' => empty($tpl->data['printable']) ? 'media="print" ' : '');
 
 		// RTL support
 		if ($wgContLang->isRTL()) {
-			$css[] = array('url' => $wgStylePath.'/monaco/rtl.css?'.$wgStyleVersion);
+			$css[] = array('url' => $wgStylePath.'/awesome/rtl.css?'.$wgStyleVersion);
 		}
 
 		// CSS - end
@@ -1312,6 +1312,8 @@ class AwesomeTemplate extends QuickTemplate {
 <?php
 	/* macbre: #3432 */
 	foreach($this->data['references']['allinone_css'] as $css) {
+			// do dirty replace
+			$css['url'] = str_replace('/monaco', '/awesome', $css['url']);
 ?>
 			@import "<?= $css['url'] ?>";
 <?php
@@ -1326,7 +1328,7 @@ class AwesomeTemplate extends QuickTemplate {
 <?php
 	}
 ?>
-		<noscript><link rel="stylesheet" type="text/css" href="<?= $wgStylePath ?>/monaco/css/noscript.css" /></noscript>
+		<noscript><link rel="stylesheet" type="text/css" href="<?= $wgStylePath ?>/awesome/css/noscript.css" /></noscript>
 <?php
 	foreach($this->data['references']['cssstyle'] as $cssstyle) {
 ?>
@@ -1338,9 +1340,11 @@ class AwesomeTemplate extends QuickTemplate {
 	$this->html('csslinks');
 
 	if($wgRequest->getVal('action') != '' || $wgTitle->getNamespace() == NS_SPECIAL) {
-		echo $wgUser->isLoggedIn() ? GetReferences("monaco_loggedin_js") : GetReferences("monaco_non_loggedin_js");
+		echo str_replace('/monaco', '/awesome', $wgUser->isLoggedIn() ? GetReferences("monaco_loggedin_js") : GetReferences("monaco_non_loggedin_js"));
 		foreach($this->data['references']['js'] as $script) {
 			if (!empty($script['url'])) {
+				// do dirty replace
+				$script['url'] = str_replace('/monaco', '/awesome', $script['url']);
 ?>
 		<script type="<?= $script['mime'] ?>" src="<?= htmlspecialchars($script['url']) ?>"></script>
 <?php
@@ -1858,6 +1862,8 @@ if(!$custom_article_footer && $displayArticleFooter) {
 	if(!($wgRequest->getVal('action') != '' || $wgTitle->getNamespace() == NS_SPECIAL)) {
 		echo $wgUser->isLoggedIn() ? GetReferences("monaco_loggedin_js") : GetReferences("monaco_non_loggedin_js");
 		foreach($this->data['references']['js'] as $script) {
+				// do dirty replace
+				$script['url'] = str_replace('/monaco', '/awesome', $script['url']);
 ?>
 		<script type="<?= $script['mime'] ?>" src="<?= htmlspecialchars($script['url']) ?>"></script>
 <?php
