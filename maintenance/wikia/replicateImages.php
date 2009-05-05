@@ -20,7 +20,8 @@ class WikiaReplicateImages {
 	private $mServers = array(
 		"file3" => array(
 			"address" => "10.8.2.133",
-			"transform" => array( "!^/images/(.)!", "/raid/images/by_id/$1/$1" ),
+			/* "transform" => array( "!^/images/(.)!", "/raid/images/by_id/$1/$1" ), */
+			"transform" => 'transform_for_file3',
 			"flag" => 1
 		),
 		"willow" => array(
@@ -69,7 +70,11 @@ class WikiaReplicateImages {
 				$source = $oResultRow->up_path;
 				foreach( $this->mServers as $server ) {
 					if( $server[ "transform" ] ) {
-						$destination = preg_replace( $server["transform"][0], $server["transform"][1] , $source );
+						if (is_array($server['transform'])) {
+							$destination = preg_replace( $server["transform"][0], $server["transform"][1] , $source );
+						} else {
+							$destination = call_user_func(array('WikiaReplicateImages', $server['transform']), $source);
+						}
 					}
 					else {
 						$destination = $source;
@@ -127,6 +132,19 @@ class WikiaReplicateImages {
 		else {
 			print("No new images to be replicated.\n");
 		}
+	}
+
+	public static function transform_for_file3($source) {
+		$destination = $source;
+
+		/*	"transform" => array( "!^/images/(.)!", "/raid/images/by_id/$1/$1" ), */
+		if (preg_match('!^/images/(.)!', $source, $matches)) {
+			$first_char = $matches[1];
+			$replace = '/raid/images/by_id/' . strtolower($first_char) . '/' . $first_char;
+			$destination = preg_replace('!^/images/(.)!', $replace, $source);
+		}
+
+		return $destination;
 	}
 };
 
