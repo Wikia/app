@@ -122,8 +122,8 @@ function wysiwygShowFirstEditMessage(title, message, dismiss) {
 
 function initEditor() {
 	// hide link to WikiaMiniUpload
-	if($('wmuLink')) {
-		$('wmuLink').parentNode.style.display = 'none';
+	if($G('wmuLink')) {
+		$G('wmuLink').parentNode.style.display = 'none';
 	}
 
 	var oFCKeditor = new FCKeditor("wpTextbox1");
