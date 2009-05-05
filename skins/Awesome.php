@@ -1472,7 +1472,7 @@ if( $custom_user_data ) {
 					<a rel="nofollow" href="http://www.wikia.com/wiki/Special:CreateWiki" id="request_wiki"><?=wfMsg('createwikipagetitle')?></a>
 				</li>
 				<li id="userLogin">
-					<a rel="nofollow" class="bigButton" id="login" href="<?= htmlspecialchars($this->data['userlinks']['login']['href']) ?>">
+					<a rel="nofollow" class="bigButton" id="login" rel="login" href="<?= htmlspecialchars($this->data['userlinks']['login']['href']) ?>">
 						<big><?= htmlspecialchars($this->data['userlinks']['login']['text']) ?></big>
 						<small>&nbsp;</small>
 					</a>
@@ -1860,7 +1860,8 @@ if(!$custom_article_footer && $displayArticleFooter) {
 
 <?php
 	if(!($wgRequest->getVal('action') != '' || $wgTitle->getNamespace() == NS_SPECIAL)) {
-		echo $wgUser->isLoggedIn() ? GetReferences("monaco_loggedin_js") : GetReferences("monaco_non_loggedin_js");
+		echo str_replace('/monaco', '/awesome', $wgUser->isLoggedIn() ? GetReferences("monaco_loggedin_js") : GetReferences("monaco_non_loggedin_js"));
+
 		foreach($this->data['references']['js'] as $script) {
 				// do dirty replace
 				$script['url'] = str_replace('/monaco', '/awesome', $script['url']);
@@ -2155,6 +2156,7 @@ wfRunHooks('SpecialFooter');
 wfProfileOut( __METHOD__ . '-body');
 ?>
 
+		<div id="positioned_elements" class="reset"></div>
 	</body>
 </html>
 <?php

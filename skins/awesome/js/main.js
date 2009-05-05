@@ -496,3 +496,176 @@ function sub_menuItemAction_wrap(e) {
 	}
 	return sub_menuItemAction(e);
 }
+
+
+//
+// macbre: add Christian's code for LeanMonaco
+//
+
+//Attach DOM-Ready handlers
+$(function() {
+	//$("#headerButtonHub").click(openHubMenu);
+	//$("[rel='manage_widgets']").click(openCockpit);
+	$("[rel='login']").click(openLogin);
+	$(document).ajaxSend(startAjax).ajaxComplete(stopAjax);
+	//$("#search_field").autocomplete({ajax: "http://muppet.wikia.com/?query=" + $("#search_field").val() + "&action=ajax&rs=getLinkSuggest"})
+	/*
+	$("#search_field").autocomplete({ 
+		list: ["hello", "hello person", "goodbye"],
+		timeout: 300
+	});
+	*/
+});
+
+//Ajax Wait Indicator
+function startAjax() {
+	$("body").addClass("ajax");	
+}
+function stopAjax() {
+	$("body").removeClass("ajax");	
+}
+/*
+//Widget Cockpit
+function openCockpit(event) {
+	event.preventDefault();
+	$.get("cockpit.html", function(html) {
+		$("#positioned_elements").append(html);
+	});
+}
+
+//Hub Menu
+function openHubMenu(event) {
+	event.preventDefault();
+	$.get("hub_menu.html", function(html) {
+		$("#positioned_elements").append(html);
+	});
+}
+*/
+
+// AjaxLogin
+function openLogin(event) {
+	event.preventDefault();
+	$.get(window.wgScript + '?action=ajax&rs=GetAjaxLogin&uselang=' + window.wgUserLanguage, function(html) {
+		$("#positioned_elements").append(html);
+	});	
+}
+
+//Modal
+$.fn.extend({
+  makeModal: function(options) {
+    var settings = { width: 400 };
+		if (options) {
+			$.extend(settings, options);
+		}    
+   	   	
+   	this.addClass('modalInside').wrap('<div class="modalWrapper"></div>');
+
+   	var wrapper = this.closest(".modalWrapper");
+		
+		function getModalTop() {
+			var modalTop = (($(window).height() - wrapper.outerHeight()) / 2) + $(window).scrollTop();
+			if (modalTop < $(window).scrollTop() + 20) {
+				return $(window).scrollTop() + 20;
+			} else {
+				return modalTop;	
+			}
+		}
+   	
+   	wrapper
+   		.prepend('<h1 class="modalTitle color1">' + this.attr('title') + '</h1>')
+   		.width(settings.width)
+   		.css({
+   			marginLeft: -wrapper.outerWidth() / 2,
+				top: getModalTop()
+   		})
+   		.fadeIn("fast");
+
+   	$(window)
+   		.bind("keypress.modal", function(event) {
+   			if (event.keyCode == 27) {
+   				wrapper.closeModal();
+   			}	
+   		})
+   		.bind("resize.modal", function() {
+   			wrapper.css("top", getModalTop());
+   			$("#blackout").height($(document).height());
+   		});
+
+   	$("#positioned_elements").append('<div id="blackout"></div>');
+   	$("#blackout")
+   		.height($(document).height())
+   		.fadeTo("fast", 0.65)
+   		.bind("click", function() {
+   			wrapper.closeModal();
+   		});
+  },
+  closeModal: function() {
+  	$(window).unbind(".modal");
+  	this.animate({
+  		top: this.offset()["top"] + 100,
+  		opacity: 0
+  	}, "fast", function() {
+  		$(this).remove();
+  	});
+  	$("#blackout").fadeOut("fast", function() {
+  		$(this).remove();
+  	})  	
+  } 
+});
+/*
+//Navigation
+monacoNavigationInitCalled = false;
+function monacoNavigationInit() {
+	if (monacoNavigationInitCalled) {
+		return;	
+	}
+	monacoNavigationInitCalled = true;
+	var html = '';
+	
+	function monacoNavigationRender(i, item, append) {
+		html += '<div class="sub-menu widget" style="display: none;">';
+		$.each(item, function(i, item) {
+			//does this item have children?
+			var children = '';
+			if (menuArray[item].children) {
+				children = '<em>›</em>';
+			}
+			//render div for this item
+			html += '<div class="menu-item"><a href="' + menuArray[item].href + '" rel="nofollow">' + menuArray[item].text + children + '</a>';
+				if (children != '') {
+					monacoNavigationRender(menuArray[item], menuArray[item].children);
+				}
+			html += '</div>';
+		});
+		html += '</div>';
+		if (append) {
+			$("#menu-item_" + i).append(html);
+		}
+	};
+	
+	$.each(menuArray.mainMenu, function (i, item) {
+		monacoNavigationRender(i, item, true);	
+	});
+	//no border on last item in sub-menus
+	$(".sub-menu").each(function() {
+		$(this).children("div:last").css("border", 0);
+	});
+	monacoNavigationHoverActions();
+}
+
+var menutimer;
+function monacoNavigationHoverActions() {
+	$("#navigation .menu-item").hover(function() {
+		$(this).addClass("navigation-hover").children(".sub-menu").show();
+		$(this).siblings().removeClass("navigation-hover").find(".sub-menu").hide().end().find(".menu-item").removeClass("navigation-hover");
+	});
+	$("#navigation").mouseleave(function() {
+		$(this).find(".menu-item").removeClass("navigation-hover");
+		menutimer = setTimeout(function() {
+			$("#navigation").find(".sub-menu").hide();
+		}, 500);
+	}).mouseover(function() {
+		clearTimeout(menutimer);
+	});
+}
+*/
