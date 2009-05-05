@@ -24,7 +24,7 @@ $xnum++;
 ?>
 </div>
 <textarea accesskey="," name="wpCategoryTextarea" id="wpCategoryTextarea" rows='3' cols='<?=$cols?>'<?$ew?>><?=$text_category?></textarea>
-<input type="button" name="wpCategoryButton" id="wpCategoryButton" class="button color1" value="Add Category" onclick="cloudInputAdd(); return false ;" />
+<input type="button" name="wpCategoryButton" id="wpCategoryButton" class="button color1" value="<?= wfMsg ('createpage_addcategory') ?>" onclick="cloudInputAdd(); return false ;" />
 <input type="text" name="wpCategoryInput" id="wpCategoryInput" value="" />
 </div>
 <script type="text/javascript">
