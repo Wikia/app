@@ -64,7 +64,7 @@ class CloseWikiMaintenace {
 					$this->compressImages();
 					$this->removeImageDirectory();
 					$this->cleanWikiFactory();
-					// $this->dropDB();
+					$this->dropDB();
 					break;
 			}
 		}
@@ -143,6 +143,7 @@ class CloseWikiMaintenace {
 		$dbw->begin();
 		$dbw->query( "DROP DATABASE `$wgDBname`");
 		$dbw->commit();
+		
 		wfProfileOut( __METHOD__ );
 	}
 
@@ -201,9 +202,6 @@ class CloseWikiMaintenace {
 	 *  city_list( city_id )
 	 */
 	public function cleanWikiFactory() {
-
-		// so far return();
-		return;
 
 		wfProfileIn( __METHOD__ );
 
