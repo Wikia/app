@@ -130,7 +130,7 @@ function renderRss( $input ) {
 	if( $reverse ) $rss->items = array_reverse($rss->items);
 	$description = false;
 	foreach ( $rss->items as $item ) {
-		if ( $item['description'] ) {
+		if ( isset($item['description']) && $item['description'] ) {
 			$description = true;
 			break;
 		}
@@ -190,9 +190,9 @@ function renderRss( $input ) {
 			$title = trim( iconv( $charset, $wgOutputEncoding, $item['title'] ) );
 			$d_title = wfRssFilter($title, $rssFilter) && wfRssFilterout($title, $rssFilterout);
 			$title = wfRssHighlight($title, $rssHighlight);
-			$pubdate = trim( iconv( $charset, $wgOutputEncoding, $item['pubdate'] ) );
+			$pubdate = isset($item['pubdate']) ? trim( iconv( $charset, $wgOutputEncoding, $item['pubdate'] ) ) : '';
 			if ( $pubdate == '' ) {
-				$pubdate = trim( iconv( $charset, $wgOutputEncoding, $item['dc']['date'] ) );
+				$pubdate = isset($item['dc']) && is_array($item['dc']) && isset($item['dc']['date']) ? trim( iconv( $charset, $wgOutputEncoding, $item['dc']['date'] ) ) : '';
 			}
 			$pubdate = date( "F d, Y H:i", strtotime( $pubdate ) );
 
