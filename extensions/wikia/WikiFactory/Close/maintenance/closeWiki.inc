@@ -79,8 +79,8 @@ class CloseWikiMaintenace {
 	}
 
 	public function dumpXMl() {
-		global $wgDBname;
-
+		global $wgDBname, $wgDBuser, $wgDBpassword;
+		Wikia::log( __CLASS__, "$wgDBuser : $wgDBpassword" );
 		/**
 		 * @name dumpfile
 		 */
