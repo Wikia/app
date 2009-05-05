@@ -544,7 +544,14 @@ function openHubMenu(event) {
 
 // AjaxLogin
 function openLogin(event) {
+	// check wgEnableAjaxLogin
+	if ( (typeof wgEnableAjaxLogin == 'undefined') || !wgEnableAjaxLogin) {
+		$().log('AjaxLogin: wgEnableAjaxLogin is false, going to Special:Userlogin...');
+		return;
+	}
+
 	event.preventDefault();
+
 	$.get(window.wgScript + '?action=ajax&rs=GetAjaxLogin&uselang=' + window.wgUserLanguage, function(html) {
 		$("#positioned_elements").append(html);
 	});	
