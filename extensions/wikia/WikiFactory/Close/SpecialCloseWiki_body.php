@@ -35,7 +35,7 @@ class CloseWikiPage extends SpecialPage {
 		$mErrors    = array(),
 		$mRedirects = array(),
 		$mActionList = array( "Closing", "Closing and Redirecting", "Closing and Deleting");
-		
+
 
 	/**
 	 * constructor
@@ -159,7 +159,7 @@ class CloseWikiPage extends SpecialPage {
 	 */
 	private function doConfirm() {
 		global $wgRequest, $wgOut;
-	
+
 		#---
 		$this->mTmpl->reset();
 		$this->mTmpl->set( "wikis",     $this->mWikis );
@@ -195,12 +195,12 @@ class CloseWikiPage extends SpecialPage {
 						$valid = false;
 						$this->mErrors[ $wiki->city_id ] = $this->mRedirects[ $wiki->city_id ];
 					} else {
-						$newWikis[ $wiki->city_id ] = $city_id; 
+						$newWikis[ $wiki->city_id ] = $city_id;
 					}
 				}
 			}
 		}
-		
+
 		if( !$valid ) {
 			/**
 			 * back to form
@@ -225,15 +225,15 @@ class CloseWikiPage extends SpecialPage {
 			}
 		}
 	}
-	
+
 	/**
 	 * @access private
 	 */
-	private function moveOldDomains($wikiaId, $newWikiaId = null, $remove = 0) { 
+	private function moveOldDomains($wikiaId, $newWikiaId = null, $remove = 0) {
 		global $wgSharedDB;
-		
+
 		$aDomainsToMove = WikiFactory::getDomains( $wikiaId );
-		
+
 		if ( !empty($aDomainsToMove) ) {
 			#-- connect to dataware;
 			$dbs = wfGetDBExt(DB_SLAVE);
@@ -263,7 +263,7 @@ class CloseWikiPage extends SpecialPage {
 	 */
 	private function doClose() {
 		global $wgRequest, $wgOut;
-		wfProfileIn( __METHOD__ );	
+		wfProfileIn( __METHOD__ );
 
 		$WFTitle = Title::makeTitle( NS_SPECIAL, 'WikiFactory' );
 		#---
@@ -272,15 +272,13 @@ class CloseWikiPage extends SpecialPage {
 			$output = Xml::openElement( 'ul', null );
 			foreach( $this->mWikis as $wiki ) {
 				Wikia::log( __METHOD__, "Closing: {$wiki->city_description} (url: {$wiki->city_url}) (id: {$wiki->city_id}) (dbname: {$wiki->city_dbname})" );
-				#-- move to archive 
-				$this->moveOldDomains( $wiki->city_id );
 				#-- set public to 0
 				$res = WikiFactory::setPublicStatus(self::CLOSE_ACTION, $wiki->city_id);
 				if ($res === self::CLOSE_ACTION) {
 					$output .= Xml::tags(
-						'li', 
-						array( 'style' => 'list-style:none' ), 
-						wfMsgExt( 'closewiki-wiki-closed', array('parse'), $wiki->city_description, $wiki->city_url ) 
+						'li',
+						array( 'style' => 'list-style:none' ),
+						wfMsgExt( 'closewiki-wiki-closed', array('parse'), $wiki->city_description, $wiki->city_url )
 					);
 				}
 				WikiFactory::clearCache($wiki->city_id);
@@ -288,7 +286,7 @@ class CloseWikiPage extends SpecialPage {
 			$output .= Xml::closeElement( 'ul' );
 		}
 
-		$output .= Xml::element( 'input', 
+		$output .= Xml::element( 'input',
 			array(
 				'name' 		=> 'wiki-return',
 				'type' 		=> 'button',
@@ -296,7 +294,7 @@ class CloseWikiPage extends SpecialPage {
 				'onclick' 	=> "window.location='{$WFTitle->getFullURL()}'",
 			)
 		);
-		
+
 		$wgOut->addHtml( $output );
 		wfProfileOut( __METHOD__ );
 	}
@@ -308,7 +306,7 @@ class CloseWikiPage extends SpecialPage {
 	private function doCloseAndRedirect($newWikis = array()) {
 		global $wgRequest, $wgOut;
 		wfProfileIn( __METHOD__ );
-		
+
 		$WFTitle = Title::makeTitle( NS_SPECIAL, 'WikiFactory' );
 		#---
 		$output = "";
@@ -316,24 +314,24 @@ class CloseWikiPage extends SpecialPage {
 			$output = Xml::openElement( 'ul', null );
 			foreach( $this->mWikis as $wiki ) {
 				Wikia::log( __METHOD__, "Closing: {$wiki->city_description} (url: {$wiki->city_url}) (id: {$wiki->city_id}) (dbname: {$wiki->city_dbname}) and redirecting to: {$this->mRedirects[$wiki->city_id]} (id: {$newWikis[$wiki->city_id]}) " );
-				#-- move to archive 
+				#-- move to archive
 				$this->moveOldDomains( $wiki->city_id, $newWikis[$wiki->city_id] );
 				#-- set new city ID in city_domains
 				$isMoved = WikiFactory::redirectDomains( $wiki->city_id, $newWikis[$wiki->city_id] );
-				if ( !empty($isMoved) ) { 
+				if ( !empty($isMoved) ) {
 					#-- set public to 0
 					$res = WikiFactory::setPublicStatus(self::CLOSE_ACTION, $wiki->city_id);
 					if ($res === self::CLOSE_ACTION) {
 						$output .= Xml::tags(
-							'li', 
-							array( 'style' => 'list-style:none' ), 
-							wfMsgExt( 
-								'closewiki-wiki-closed_redirect', 
-								array('parse'), 
-								$wiki->city_description, 
+							'li',
+							array( 'style' => 'list-style:none' ),
+							wfMsgExt(
+								'closewiki-wiki-closed_redirect',
+								array('parse'),
+								$wiki->city_description,
 								$wiki->city_url,
 								sprintf( "%s%s", "http://", $this->mRedirects[ $wiki->city_id ] )
-							) 
+							)
 						);
 						WikiFactory::clearCache($wiki->city_id);
 						WikiFactory::clearCache($newWikis[$wiki->city_id]);
@@ -343,7 +341,7 @@ class CloseWikiPage extends SpecialPage {
 			$output .= Xml::closeElement( 'ul' );
 		}
 
-		$output .= Xml::element( 'input', 
+		$output .= Xml::element( 'input',
 			array(
 				'name' 		=> 'wiki-return',
 				'type' 		=> 'button',
@@ -351,7 +349,7 @@ class CloseWikiPage extends SpecialPage {
 				'onclick' 	=> "window.location='{$WFTitle->getFullURL()}'",
 			)
 		);
-		
+
 		$wgOut->addHtml( $output );
 		wfProfileOut( __METHOD__ );
 	}
@@ -362,7 +360,7 @@ class CloseWikiPage extends SpecialPage {
 	 */
 	private function doCloseAndDelete() {
 		global $wgRequest, $wgOut;
-		wfProfileIn( __METHOD__ );	
+		wfProfileIn( __METHOD__ );
 
 		$WFTitle = Title::makeTitle( NS_SPECIAL, 'WikiFactory' );
 		#---
@@ -371,7 +369,7 @@ class CloseWikiPage extends SpecialPage {
 			$output = Xml::openElement( 'ul', null );
 			foreach( $this->mWikis as $wiki ) {
 				Wikia::log( __METHOD__, "Closing and removing: {$wiki->city_description} (url: {$wiki->city_url}) (id: {$wiki->city_id}) (dbname: {$wiki->city_dbname})" );
-				#-- move to archive 
+				#-- move to archive
 				$this->moveOldDomains( $wiki->city_id, self::DELETE_ACTION );
 				#-- clear city_domains
 				if ( WikiFactory::removeDomain( $wiki->city_id ) ) {
@@ -379,9 +377,9 @@ class CloseWikiPage extends SpecialPage {
 					$res = WikiFactory::setPublicStatus(self::DELETE_ACTION, $wiki->city_id);
 					if ($res === self::DELETE_ACTION) {
 						$output .= Xml::tags(
-							'li', 
-							array( 'style' => 'list-style:none' ), 
-							wfMsgExt( 'closewiki-wiki-closed_removed', array('parse'), $wiki->city_description, $wiki->city_url ) 
+							'li',
+							array( 'style' => 'list-style:none' ),
+							wfMsgExt( 'closewiki-wiki-closed_removed', array('parse'), $wiki->city_description, $wiki->city_url )
 						);
 					}
 					WikiFactory::clearCache($wiki->city_id);
@@ -390,7 +388,7 @@ class CloseWikiPage extends SpecialPage {
 			$output .= Xml::closeElement( 'ul' );
 		}
 
-		$output .= Xml::element( 'input', 
+		$output .= Xml::element( 'input',
 			array(
 				'name' 		=> 'wiki-return',
 				'type' 		=> 'button',
@@ -398,7 +396,7 @@ class CloseWikiPage extends SpecialPage {
 				'onclick' 	=> "window.location='{$WFTitle->getFullURL()}'",
 			)
 		);
-		
+
 		$wgOut->addHtml( $output );
 		wfProfileOut( __METHOD__ );
 	}
