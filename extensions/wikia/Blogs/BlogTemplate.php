@@ -661,7 +661,7 @@ class BlogTemplateClass {
 								}
 							}
 						}
-						$sResult .= substr($aLine[2], 0, $iMaxLength + $iEntLength);
+						$sResult .= mb_substr($aLine[2], 0, $iMaxLength + $iEntLength);
 						break;
 					} else {
 						$sResult .= $aLine[2];
