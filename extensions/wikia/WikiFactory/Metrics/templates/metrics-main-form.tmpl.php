@@ -507,6 +507,10 @@ __ShowCategories = function(e, args) {
 				// end of header
 
 				// data
+				var maxDate = new Array();
+				var maxHub = new Array();
+				var prevMonth = new Array();
+				var dataRows = "";
  				if ( data ) {
 					for (month in data) {
 						oneRow = "<tr>";
@@ -518,18 +522,49 @@ __ShowCategories = function(e, args) {
 								if ( data[month][i] ) {
 									cnt = parseInt(data[month][i]['count']);
 								}
-								oneRow += "<td>" + cnt + "</td>";
+								var incArr = "";
+								if ( prevMonth[i] ) {
+									var diff = cnt - parseInt(prevMonth[i]);
+									if (diff > 0) {
+										incArr = "<strong style=\"color:#0BBF13;\">&uarr;</strong>"; 
+									} else if (diff < 0) {
+										incArr = "<strong style=\"color:#FF000A;\">&darr;</strong>";
+									}
+								} 
+								prevMonth[i] = cnt;
+								//---
+								oneRow += "<td id=\""+month+"_"+i+"\">" + cnt + " " + incArr + "</td>";
 								rowCnt += cnt;
+								//---
+								if (!maxDate[month]) {
+									maxDate[month] = 0;
+								}
+								if (maxDate[month] < cnt) {
+									maxHub[month] = i; 
+									maxDate[month] = cnt;
+								} 
 							}
 						}
 						oneRow += "<th>" + rowCnt + "</th>";
 						oneRow += "</tr>";
-						_tmp += oneRow;
+						
+						dataRows = oneRow + dataRows;
 					}
 				}
+				_tmp += dataRows;
 
 				_tmp += "</table><br />";
 				records.innerHTML = _tmp + "</div>";
+
+				if (maxHub) {
+					for (month in maxHub) {
+						var box = YD.get(month + "_" + maxHub[month]);
+						if (box) {
+							box.style.backgroundColor = "#EEEEFF";
+							box.style.fontWeight = "bold";
+						}
+					}
+				}
 
 				if (typeof TieDivLibrary != "undefined" ) {
 					TieDivLibrary.calculate();
