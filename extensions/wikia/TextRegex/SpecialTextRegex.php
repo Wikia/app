@@ -282,7 +282,7 @@ class TextRegexList {
 		$html = wfViewPrevNext(
 			$this->offset,
 			$this->limit,
-			$wgContLang->specialpage( 'TextRegex' ),
+			$wgContLang->specialpage( 'TextRegex/'.$this->subList ),
 			'',
 			($this->numResults - $this->offset) <= $this->limit
 		);
@@ -312,7 +312,7 @@ class TextRegexList {
 			$pager = wfViewPrevNext(
 				$this->offset, 
 				$this->limit, 
-				$wgContLang->specialpage( 'TextRegex' ), 
+				$wgContLang->specialpage( 'TextRegex/'.$this->subList ), 
 				$filter, 
 				($numStatResults - $this->offset) <= $this->limit 
 			);
