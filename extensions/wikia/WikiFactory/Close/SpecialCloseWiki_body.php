@@ -242,7 +242,7 @@ class CloseWikiPage extends SpecialPage {
 				$dbs->begin();
 				foreach ($aDomainsToMove as $domain) {
 					$dbs->insert(
-						"`archive`.`old_city_domains`",
+						"`archive`.`city_domains`",
 						array(
 							"city_id" => $wikiaId,
 							"city_domain" => $domain,

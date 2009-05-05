@@ -1,4 +1,4 @@
-CREATE TABLE `archive`.`old_city_domains` (
+CREATE TABLE `archive`.`city_domains` (
   `city_id` int(10) unsigned NOT NULL,
   `city_domain` varchar(255) NOT NULL default 'wikia.com',
   `city_timestamp` varchar(14) NOT NULL default '19700101000000',
