@@ -134,14 +134,16 @@ class Gatherer extends SpecialPage {
 	}
 	
 	private function doUpload( $title, $file, $msg, $comment ) {
+		global $wgTmpDirectory;
+
 		$fileObj = wfLocalFile( $title );
 		$dir = sys_get_temp_dir();
-		$path = tempnam( $dir, 'MTG' );
+		$path = tempnam( $wgTmpDirectory, 'MTG' );
 		$f = fopen( $path, 'w' );
 		fwrite( $f, $file );
 		fclose( $f );
 		$props = File::getPropsFromPath( $path );
-		$fileObj->upload( $path, $comment, $msg, 0, $props );
+		$fileObj->upload( $path, $comment, $msg, File::DELETE_SOURCE, $props );
 	}
 	
 	private function createCardPage( $gatherer ) {
