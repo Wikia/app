@@ -15,11 +15,11 @@ YAHOO.util.Event.addListener(["toggleEditingTips", "editingTips_close"], "click"
 		SaveEditingTipsState(true, isWide);
 
 		YAHOO.util.Dom.removeClass(document.body, "editingWide");
-		if($("toggleWideScreen")) {
-			$("toggleWideScreen").innerHTML = editingTipsEnterMsg ;
+		if($G("toggleWideScreen")) {
+			$G("toggleWideScreen").innerHTML = editingTipsEnterMsg ;
 		}
-		if($("toggleEditingTips")) {
-			$("toggleEditingTips").innerHTML = "Hide Editing Tips";
+		if($G("toggleEditingTips")) {
+			$G("toggleEditingTips").innerHTML = "Hide Editing Tips";
 		}
 
 		YAHOO.Wikia.Tracker.trackByStr(e, 'editingTips/toggle/editingTips/on');
@@ -27,8 +27,8 @@ YAHOO.util.Event.addListener(["toggleEditingTips", "editingTips_close"], "click"
 		SaveEditingTipsState(false, isWide);
 
 		YAHOO.util.Dom.removeClass(document.body, "editingTips");
-		if($("toggleEditingTips")) {
-			$("toggleEditingTips").innerHTML = editingTipsShowMsg ;
+		if($G("toggleEditingTips")) {
+			$G("toggleEditingTips").innerHTML = editingTipsShowMsg ;
 		}
 		YAHOO.Wikia.Tracker.trackByStr(e, 'editingTips/toggle/editingTips/off');
 	} else {
@@ -39,8 +39,8 @@ YAHOO.util.Event.addListener(["toggleEditingTips", "editingTips_close"], "click"
 			AccordionMenu.openDtById("firstTip");
 			showDone = true;
 		}
-		if($("toggleEditingTips")) {
-			$("toggleEditingTips").innerHTML = editingTipsHideMsg ;
+		if($G("toggleEditingTips")) {
+			$G("toggleEditingTips").innerHTML = editingTipsHideMsg ;
 		}
 		YAHOO.Wikia.Tracker.trackByStr(e, 'editingTips/toggle/editingTips/on');
 	}
@@ -63,8 +63,8 @@ YAHOO.util.Event.addListener("toggleWideScreen", "click", function(e) {
 	if(YAHOO.util.Dom.hasClass(document.body, "editingWide")) {
 		YAHOO.util.Dom.removeClass(document.body, "editingWide");
 		YAHOO.util.Dom.removeClass(document.body, "editingTips");
-		if($("toggleWideScreen")) {
-			$("toggleWideScreen").innerHTML = editingTipsEnterMsg ;
+		if($G("toggleWideScreen")) {
+			$G("toggleWideScreen").innerHTML = editingTipsEnterMsg ;
 		}
 		//save state
 		SaveEditingTipsState(iEnabled, false);
@@ -72,11 +72,11 @@ YAHOO.util.Event.addListener("toggleWideScreen", "click", function(e) {
 	} else {
 		YAHOO.util.Dom.addClass(document.body, "editingWide");
 		YAHOO.util.Dom.addClass(document.body, "editingTips");
-		if($("toggleWideScreen")) {
-			$("toggleWideScreen").innerHTML = editingTipsExitMsg ;
+		if($G("toggleWideScreen")) {
+			$G("toggleWideScreen").innerHTML = editingTipsExitMsg ;
 		}
-		if($("toggleEditingTips")) {
-			$("toggleEditingTips").innerHTML = editingTipsShowMsg ;
+		if($G("toggleEditingTips")) {
+			$G("toggleEditingTips").innerHTML = editingTipsShowMsg ;
 		}
 
 		//save state
@@ -87,7 +87,7 @@ YAHOO.util.Event.addListener("toggleWideScreen", "click", function(e) {
 
 // tracking
 YAHOO.util.Event.onDOMReady(function() {
-	var editingTipsHeaders = $('editingTips').getElementsByTagName("dt");
+	var editingTipsHeaders = $G('editingTips').getElementsByTagName("dt");
 
 	YAHOO.util.Event.addListener(editingTipsHeaders, 'click', function(e) {
 		var el = YAHOO.util.Event.getTarget(e);
