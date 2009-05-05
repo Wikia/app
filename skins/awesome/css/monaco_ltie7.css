@@ -1,0 +1,129 @@
+#wikia_logo {
+	background-image: none;
+	filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='http://images.wikia.com/common/skins/monaco/images/wikia_logo.png', sizingMethod='crop');
+}
+#wikia_logo.entertainment span {
+	background-image: none;
+	filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='http://images.wikia.com/common/skins/monaco/images/hub_entertainment.png', sizingMethod='crop');
+}
+.headerMenuButton dt, .headerMenuButton dd {
+	background-image: none;
+	filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='http://images.wikia.com/common/skins/monaco/images/header_button.png', sizingMethod='crop');
+}
+a.bigButton big, a.bigButton small {
+	background-image: none;
+	filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='http://images.wikia.com/common/skins/monaco/images/big_button.png?1', sizingMethod='crop');
+}
+#page_controls div {
+	background: none;
+	filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='http://images.wikia.com/common/skins/monaco/images/sprite.png', sizingMethod='crop');
+}
+#search_button {
+	background: none;
+	filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='http://images.wikia.com/common/skins/monaco/images/search.png', sizingMethod='crop');
+}
+.shadow, #page_bar, #search_box {
+	background-image: none !important;
+}
+.widget dt div.close span, .widget dt div.edit span, .widget dt div.hide span, #widget_cockpit_close {
+	background-image: none;
+	filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='http://images.wikia.com/common/skins/monaco/images/widget_sprite.png', sizingMethod='crop');
+}
+.staffSig {
+	background-image: none !important;
+	filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='http://images.wikia.com/wikia/images/e/e9/WikiaStaff.png', sizingMethod='scale');
+}
+/*
+ * macbre: fixed problem with tables and headings border, but caused problems with infoboxes (RT 3884)
+body.ns-0 #bodyContent table {
+	position: relative;
+}*/
+#wikia_header #headerButtonHub {
+	margin-left: -30%;
+}
+
+/* RTL fixes */
+body.rtl #fe_talk,
+body.rtl #fe_permalink {
+	width: 40%;
+	position: relative;
+	right: -6px;
+}
+
+body.rtl #fe_talk div a,
+body.rtl #fe_permalink div a {
+	position: relative;
+	margin-right: 6px;
+}
+
+body.rtl #articleFooter ul.actions li div {
+        margin: 0 20px 0 0;
+}
+body.ltr #articleFooter ul.actions li div {
+	margin: 0 0 0 20px;
+}
+
+/* spotlights fix */
+#spotlight_footer {
+	height: 1px;
+	margin-bottom: 100px;
+}
+
+/* user menu fix */
+#monaco_shrinkwrap_main,
+#wikia_page {
+	z-index: 10 !important;
+}
+
+/* widget dashboard (#2397) */
+.widget_dashboard .sidebar,
+.widget_dashboard .widget,
+.widget_dashboard .widgetToolbox {
+	position: relative;
+}
+
+/* Special:Widgets */
+#widgetsSpecialPageList dl {
+	position: relative;
+}
+
+.ImageMapWrapper {
+	clear: both;
+}
+
+/* edit page */
+#wpTextbox1 {
+	width: 99% !important;
+}
+
+/* #3433 */
+#wikia_header #headerButtonHub {
+	margin-left: 0 !important;
+	left: -50%;
+}
+
+/* ads */
+#FOOTER_SPOTLIGHT_LEFT, #FOOTER_SPOTLIGHT_MIDDLE, #FOOTER_SPOTLIGHT_RIGHT {
+	visibility: hidden;
+}
+
+#spotlight_footer {
+	height: 1px;
+	margin-bottom: 100px;
+}
+
+/* #3740 */
+#monaco_footer {
+	top: 0px !important;
+	margin-top: -155px;
+}
+
+/* fix YUI overlay mask */
+.mask {
+	position: absolute;
+}
+
+/* Special:Preferences tabs */
+#preftoc {
+	position: relative;
+}

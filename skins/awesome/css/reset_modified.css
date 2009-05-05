@@ -1,0 +1,18 @@
+/*
+Copyright (c) 2007, Yahoo! Inc. All rights reserved.
+Code licensed under the BSD License:
+http://developer.yahoo.net/yui/license.txt
+version: 2.3.1
+*/
+.reset div,.reset dl,.reset dt,.reset dd,.reset ul,.reset ol,.reset li,.reset h1,.reset h2,.reset h3,.reset h4,.reset h5,.reset h6,.reset pre,.reset code,.reset form,.reset fieldset,.reset legend,.reset input,.reset textarea,.reset p,.reset blockquote,.reset th,.reset td{margin:0;padding:0;line-height:normal;}
+.reset table{border-collapse:collapse;border-spacing:0;}
+.reset fieldset,.reset img{border:0;}
+.reset address,.reset caption,.reset cite,.reset code,.reset dfn,.reset em,.reset strong,.reset th,.reset var{font-style:normal;font-weight:normal;}
+.reset li {list-style:none; list-style-image: none;}
+.reset caption,.reset th {text-align:left;}
+.reset h1,.reset h2,.reset h3,.reset h4,.reset h5,.reset h6{font-size:100%;font-weight:normal;border:0;}
+.reset q:before,.reset q:after{content:'';}
+.reset abbr,.reset acronym {border:0;font-variant:normal;}
+.reset sup,.reset sub {line-height:-1px;vertical-align: text-top;}
+.reset sub {vertical-align:text-bottom;}
+.reset input, .reset textarea, .reset select{font-family:inherit;font-size:inherit;font-weight:inherit;}
