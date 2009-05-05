@@ -6,7 +6,7 @@ AjaxLogin = {
 		this.form = form;
 
 		// add submit event handler for login form
-		this.form.submit(AjaxLogin.formSubmitHandler);
+		this.form.submit(AjaxLogin.formSubmitHandler).log('AjaxLogin: init()');
 	},
 	formSubmitHandler: function(ev) {
 		// Prevent the default action for event (submit of form)
@@ -16,10 +16,18 @@ AjaxLogin = {
 		// Let's block login form (disable buttons and input boxes)
 		AjaxLogin.blockLoginForm(true);
 
-		var actionURL = window.wgScriptPath + '/api.php?action=ajaxlogin&format=json';
+		var params = [
+			'action=ajaxlogin',
+			'format=json',
+			'wpLoginattempt=1',
+			'wpName=' + encodeURIComponent(AjaxLogin.form.find('#wpName1').attr('value')),
+			'wpPassword=' + encodeURIComponent(AjaxLogin.form.find('#wpPassword1').attr('value')),
+			'wpRemember=' + (AjaxLogin.form.find('#wpRemember1').attr('checked') ? 1 : 0)
+		];
+
+		$.getJSON(window.wgScriptPath + '/api.php?' + params.join('&'), AjaxLogin.handleSuccess);
 	},
-	handleSuccess: function(o) {
-		var response = YAHOO.Tools.JSONParse(o.responseText);
+	handleSuccess: function(response) {
 		var responseResult = response.ajaxlogin.result;
 		switch(responseResult) {
 			case 'Reset':
@@ -35,17 +43,15 @@ AjaxLogin = {
 				YAHOO.wikia.AjaxLogin.blockLoginForm(true);
 				break;
 			case 'Success':
-				if(wgCanonicalNamespace == 'Special' && wgCanonicalSpecialPageName == 'RequestWiki') {
-					Event.removeListener('pSubmit', 'click', YAHOO.wikia.AjaxLogin.showLoginPanel);
-					Dom.get('pSubmit').click();
-				} else if(Dom.get('wpPreview') && Dom.get('wpLogin')) {
-					if (Dom.get('wikiDiff') && (Dom.get('wikiDiff').childNodes.length > 0)) {
-						Dom.get('wpDiff').click();
+				// we're on edit page
+				if($('#wpPreview').length && $('#wpLogin').length) {
+					if ($('#wikiDiff').children().length) {
+						$('#wpDiff').click();
 					} else {
-						if (Dom.get('wikiPreview') && Dom.get('wikiPreview').childNodes.length == 0) {
-							Dom.get('wpLogin').value = 1;
+						if ($('#wikiPreview').children().length == 0) {
+							$('#wpLogin').attr('value', 1);
 						}
-						Dom.get('wpPreview').click();
+						$('#wpPreview').click();
 					}
 				} else {
 					if(wgCanonicalSpecialPageName == "Userlogout") {
@@ -56,26 +62,23 @@ AjaxLogin = {
 				}
 				break;
 			case 'NotExists':
-				this.blockLoginForm(false);
-				Dom.get('wpName1').value = '';
-				Dom.get('wpPassword1').value = '';
-				Dom.get('wpName1').focus();
+				AjaxLogin.blockLoginForm(false);
+				AjaxLogin.form.find('#wpPassword1').attr('value', '');
+				AjaxLogin.form.find('#wpName1').attr('value', '').focus();
 			case 'WrongPass':
-				this.blockLoginForm(false);
-				Dom.get('wpPassword1').value = '';
-				Dom.get('wpPassword1').focus();
+				AjaxLogin.blockLoginForm(false);
+				AjaxLogin.form.find('#wpPassword1').attr('value', '').focus();
 			default:
-				this.blockLoginForm(false);
-				this.displayReason(response.ajaxlogin.text);
+				AjaxLogin.blockLoginForm(false);
+				AjaxLogin.displayReason(response.ajaxlogin.text);
 				break;
 		}
 	},
 	handleFailure: function() {
-		YAHOO.log("YAHOO.wikia.AjaxLogin.handleFailure was called", "error", "AjaxLogin.js");
+		AjaxLogin.form.log("YAHOO.wikia.AjaxLogin.handleFailure was called");
 	},
 	displayReason: function(reason) {
-		Dom.setStyle('wpError', 'display', '');
-		Dom.get('wpError').innerHTML = reason + '<br/><br/>';
+		AjaxLogin.form.find('#wpError').css('display', '').html(reason + '<br/><br/>');
 	},
 	blockLoginForm: function(block) {
 		this.form.find('input').attr('disabled', (block ? true : false));
