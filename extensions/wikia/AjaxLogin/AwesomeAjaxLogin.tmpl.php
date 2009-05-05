@@ -15,9 +15,9 @@ $link = $titleObj->getLocalUrl('type=signup');
 			<input type="checkbox" name="wpRemember" tabindex="104" value="1" id="wpRemember1" <?php if( $wgUser->getOption( 'rememberpassword' ) ) { ?>checked="checked"<?php } ?> />
 			<label for="wpRemember1"><?= wfMsg('remembermypassword') ?></label><br/>
 		</div>
-		<input style="margin:0;padding:0 .25em;width:auto;overflow:visible;" type="submit" name="wpLoginattempt" id="wpLoginattempt" tabindex="105" value="<?= wfMsg("login") ?>" />
+		<input style="margin:0;padding:0 .25em;width:auto;overflow:visible;" type="submit" name="wpLoginattempt" id="wpLoginattempt" tabindex="105" value="<?= wfMsg("login") ?>" onclick="AjaxLogin.action='login'" />
 <?php if( $wgEnableEmail && $wgAuth->allowPasswordChange() ) { ?>
-		<br /><input style="margin:3px 0;padding:0 .25em;width:auto;overflow:visible;font-size:0.9em" type="submit" name="wpMailmypassword" id="wpMailmypassword" tabindex="106" value="<?= wfMsg('mailmypassword') ?>" />
+		<br /><input style="margin:3px 0;padding:0 .25em;width:auto;overflow:visible;font-size:0.9em" type="submit" name="wpMailmypassword" id="wpMailmypassword" tabindex="106" value="<?= wfMsg('mailmypassword') ?>" onclick="AjaxLogin.action='password'" />
 <?php } ?>
 	<br/><a id="wpAjaxRegister" href="<?= htmlspecialchars($link) ?>"><?= wfMsg('nologinlink') ?></a>
 	</form>

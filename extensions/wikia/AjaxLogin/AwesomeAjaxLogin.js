@@ -7,6 +7,9 @@ AjaxLogin = {
 
 		// add submit event handler for login form
 		this.form.submit(AjaxLogin.formSubmitHandler).log('AjaxLogin: init()');
+
+		// ask before going to register form from edit page
+		this.form.find('#wpAjaxRegister').click(AjaxLogin.ajaxRegisterConfirm);
 	},
 	formSubmitHandler: function(ev) {
 		// Prevent the default action for event (submit of form)
@@ -16,10 +19,12 @@ AjaxLogin = {
 		// Let's block login form (disable buttons and input boxes)
 		AjaxLogin.blockLoginForm(true);
 
+		AjaxLogin.form.log('AjaxLogin: selected action = '+ AjaxLogin.action);
+
 		var params = [
 			'action=ajaxlogin',
 			'format=json',
-			'wpLoginattempt=1',
+			(AjaxLogin.action == 'password' ? 'wpMailmypassword=1' : 'wpLoginattempt=1'),
 			'wpName=' + encodeURIComponent(AjaxLogin.form.find('#wpName1').attr('value')),
 			'wpPassword=' + encodeURIComponent(AjaxLogin.form.find('#wpPassword1').attr('value')),
 			'wpRemember=' + (AjaxLogin.form.find('#wpRemember1').attr('checked') ? 1 : 0)
@@ -75,7 +80,7 @@ AjaxLogin = {
 		}
 	},
 	handleFailure: function() {
-		AjaxLogin.form.log("YAHOO.wikia.AjaxLogin.handleFailure was called");
+		AjaxLogin.form.log('AjaxLogin: handleFailure was called');
 	},
 	displayReason: function(reason) {
 		AjaxLogin.form.find('#wpError').css('display', '').html(reason + '<br/><br/>');
@@ -83,10 +88,13 @@ AjaxLogin = {
 	blockLoginForm: function(block) {
 		this.form.find('input').attr('disabled', (block ? true : false));
 	},
-	ajaxRegisterConfirm: function(e) {
-		if(Dom.get('wpPreview') && Dom.get('wpLogin')) {
+	ajaxRegisterConfirm: function(ev) {
+		AjaxLogin.form.log('AjaxLogin: ajaxRegisterConfirm()');
+
+		// todo: check ajaxLogin2
+		if($('#wpPreview').length && $('#wpLogin').length) {
 			if(typeof(ajaxLogin2)!="undefined" && !confirm(ajaxLogin2)) {
-				YAHOO.util.Event.preventDefault(e);
+				ev.preventDefault();
 			}
 		}
 	}
