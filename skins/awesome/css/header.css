@@ -460,3 +460,58 @@ div.widget_cockpit_controls {
 .WidgetAnswersThumb div {
 	background-image: url(http://images.wikia.com/common/skins/common/widgets/icons/widget_answers.png);
 }
+
+/* LeanMonaco code */
+body.ajax * {
+	cursor: wait !important;	
+}
+div.modalWrapper {
+	background: #FFF;
+	border: 1px solid #AAA;
+	display: none;
+	left: 50%;
+	padding: 2px;
+	position: absolute;
+	z-index: 1001;
+}
+h1.modalTitle {
+	font-weight: bold;
+	padding: 5px;
+}
+.modalInside {
+	padding: 5px !important;
+}
+#blackout {
+	background: #000;
+	left: 0;
+	opacity: 0;
+	position: absolute;
+	top: 0;
+	width: 100%;
+	z-index: 1000;	
+}
+
+
+ul.jq-ui-autocomplete {
+    position: absolute;
+    overflow: hidden;
+    background-color: #fff;
+    border: 1px solid #aaa;
+    margin: 0px;
+    padding: 0;
+    list-style: none;
+    font: normal .75em/.75em Verdana, Arial, sans-serif;
+    color: #333;
+    z-index: 30;
+}
+ul.jq-ui-autocomplete li { 
+  display: block; 
+  padding: .3em .5em .3em .3em; 
+  overflow: hidden;
+  width: 100%;
+}
+
+ul.jq-ui-autocomplete li.active { 
+  background-color: #3875d7; 
+  color: #fff;
+}

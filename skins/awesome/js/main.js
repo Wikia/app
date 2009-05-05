@@ -506,7 +506,7 @@ function sub_menuItemAction_wrap(e) {
 $(function() {
 	//$("#headerButtonHub").click(openHubMenu);
 	//$("[rel='manage_widgets']").click(openCockpit);
-	$("[rel='login']").click(openLogin);
+	$('.ajaxLogin').click(openLogin);
 	$(document).ajaxSend(startAjax).ajaxComplete(stopAjax);
 	//$("#search_field").autocomplete({ajax: "http://muppet.wikia.com/?query=" + $("#search_field").val() + "&action=ajax&rs=getLinkSuggest"})
 	/*
