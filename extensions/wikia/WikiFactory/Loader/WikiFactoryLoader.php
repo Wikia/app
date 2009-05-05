@@ -412,13 +412,28 @@ class WikiFactoryLoader {
 		/**
 		 * if wikia is not defined or is disabled we redirecting to Not_a_valid_Wikia
 		 */
-		if( empty( $this->mWikiID ) || empty( $this->mIsWikiaActive ) ) {
+		if( empty( $this->mWikiID ) ) {
 			global $wgNotAValidWikia;
 			$this->debug( "redirected to {$wgNotAValidWikia}, {$this->mWikiID} {$this->mIsWikiaActive}" );
 			header("Location: $wgNotAValidWikia");
 			wfProfileOut( __METHOD__ );
 			exit(0);
 		}
+
+		/**
+		 * if wikia is disabled and is not Commandline mode we redirect it to
+		 * dump directory.
+		 */
+		 if( empty( $this->mIsWikiaActive ) ) {
+			if( ! $this->mCommandLine ) {
+				global $wgNotAValidWikia;
+				$this->debug( "disabled and not commandline, redirected to {$wgNotAValidWikia}, {$this->mWikiID} {$this->mIsWikiaActive}" );
+				header("Location: $wgNotAValidWikia");
+				wfProfileOut( __METHOD__ );
+				exit(0);
+			}
+		 }
+
 
 		/**
 		 * for yellowikis.wikia check geolocation and for GB -> redirect to owikis
