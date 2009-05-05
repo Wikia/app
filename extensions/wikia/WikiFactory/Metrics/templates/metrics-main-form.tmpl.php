@@ -523,7 +523,7 @@ __ShowCategories = function(e, args) {
 									cnt = parseInt(data[month][i]['count']);
 								}
 								var incArr = "";
-								if ( prevMonth[i] ) {
+								if ( typeof(prevMonth[i]) !='undefined' && prevMonth[i] !== null ) {
 									var diff = cnt - parseInt(prevMonth[i]);
 									if (diff > 0) {
 										incArr = "<strong style=\"color:#0BBF13;\">&uarr;</strong>"; 
