@@ -25,6 +25,6 @@ $link = $titleObj->getLocalUrl('type=signup');
 
 <script type="text/javascript">
 	AjaxLogin.init( $('#AjaxLogin form') );
-	$('#AjaxLogin').makeModal({width: 250});
+	$('#AjaxLogin').makeModal({width: 275});
 	$('#AjaxLogin #wpName1').focus();
 </script>
