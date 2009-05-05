@@ -1,9 +1,9 @@
 <?php
-global $wgAuth, $wgUser, $wgEnableEmail, $wgExtensionsPath, $wgStyleVersion;
+global $wgAuth, $wgUser, $wgEnableEmail, $wgExtensionsPath;
 $titleObj = SpecialPage::getTitleFor( 'Userlogin' );
 $link = $titleObj->getLocalUrl('type=signup');
 ?>
-<script type="text/javascript" src="<?= $wgExtensionsPath ?>/wikia/AjaxLogin/AwesomeAjaxLogin.js?<?= $wgStyleVersion ?>"></script>
+<script type="text/javascript" src="<?= $wgExtensionsPath ?>/wikia/AjaxLogin/AwesomeAjaxLogin.js"></script>
 <div id="AjaxLogin" title="<?= wfMsg('login') ?>">
 	<form action="" method="post" name="userajaxloginform" id="userajaxloginform" style="margin:5px">
 		<div id="wpError" style="width: 250px; line-height: 1.4em"></div>
