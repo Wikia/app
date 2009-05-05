@@ -18,6 +18,7 @@
     </style>
 </head>
 <body>
+	<h1>Archive for <?php echo $database ?>:</h1>
 	<ol>
 <?php if( $haveXml ): ?>
 		<li>
