@@ -34,18 +34,19 @@ class WidgetFramework {
 		global $wgUser;
 
 		switch (get_class($wgUser->getSkin())) {
-		case "SkinMonaco":
-			$this->skinname = 'monaco';
-			break;
-		case "SkinQuartz":
-			$this->skinname = 'quartz';
-			break;
-		default:
-			# This is a generalization, but we don't really care
-			# most of the times -- widgets are only displayed on
-			# Quartz and Monaco.
-			# We do care for things like Special:WidgetDashboard
-			$this->skinname = 'monobook';
+			case "SkinMonaco":
+			case "SkinAwesome":
+				$this->skinname = 'monaco';
+				break;
+			case "SkinQuartz":
+				$this->skinname = 'quartz';
+				break;
+			default:
+				# This is a generalization, but we don't really care
+				# most of the times -- widgets are only displayed on
+				# Quartz and Monaco.
+				# We do care for things like Special:WidgetDashboard
+				$this->skinname = 'monobook';
 		}
 
 		$this->loadConfig();
