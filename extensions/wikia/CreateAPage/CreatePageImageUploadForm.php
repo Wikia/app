@@ -89,7 +89,7 @@ class CreatePageImageUploadForm extends UploadForm {
                         case self::EMPTY_FILE:
                                 return wfMsg ('emptyfile') ;
 
-                        case self::MIN_LENGHT_PARTNAME:
+                        case self::MIN_LENGTH_PARTNAME:
                                 return wfMsg ('minlength1') ;
                             return;
 
@@ -192,7 +192,7 @@ class CreatePageImageUploadForm extends UploadForm {
                 }
 
                 if( strlen( $partname ) < 1 ) {
-                        return self::MIN_LENGHT_PARTNAME;
+                        return self::MIN_LENGTH_PARTNAME;
                 }
 
                 /**
