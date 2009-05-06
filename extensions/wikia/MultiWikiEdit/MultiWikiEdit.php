@@ -513,8 +513,12 @@ class MultiWikiEditForm {
 	function fetchWikis ($lang = '', $cat = 0) {
 		global $wgSharedDB ;
 		$dbr =& wfGetDB (DB_SLAVE);
-		'' != $lang ? $extra = " WHERE city_lang = '$lang'" : $extra = '' ;
-		'' != $cat ? $extra = " WHERE cat_id = '$cat'" : $extra = '' ; # FIXME this is sooo ugly (and does not allow for multi - lang+cat)
+		$extra = '';
+		if (!empty($lang)) {
+			$extra = " WHERE city_lang = '$lang'";
+		} else if (!empty($cat)) {
+			$extra = " WHERE cat_id = '$cat'";
+		}
 		$query = "SELECT city_dbname, city_id, city_url, city_title, city_path FROM `{$wgSharedDB}`.city_list JOIN `{$wgSharedDB}`.city_cat_mapping USING (city_id)" . $extra ;
 		$res = $dbr->query ($query) ;
 		$wiki_array = array () ;
