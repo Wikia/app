@@ -29,5 +29,10 @@ function GetAjaxLoginForm($skin) {
 $wgAjaxExportList[] = 'GetAjaxLogin';
 function GetAjaxLogin() {
 	$tmpl = new EasyTemplate(dirname( __FILE__ ));
-	return new AjaxResponse( $tmpl->execute('AwesomeAjaxLogin') );
+
+	$response = new AjaxResponse();
+	$response->addText( $tmpl->execute('AwesomeAjaxLogin') );
+	$response->setCacheDuration( 3600 * 24 * 365 * 10); // 10 years
+
+	return $response;
 }
