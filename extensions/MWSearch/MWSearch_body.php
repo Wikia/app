@@ -493,7 +493,10 @@ class LuceneSearchSet extends SearchResultSet {
 		wfDebug( "Fetching search data from $searchUrl\n" ); 
 		wfSuppressWarnings();
 		wfProfileIn( $fname.'-contact-'.$host );
+		global $wgHTTPProxy;
+		$httpProxy = $wgHTTPProxy; $wgHTTPProxy = false;
 		$data = Http::get( $searchUrl, $wgLuceneSearchTimeout );
+		$wgHTTPProxy = $httpProxy;
 		wfProfileOut( $fname.'-contact-'.$host );
 		wfRestoreWarnings();
 		if( $data === false ) {
