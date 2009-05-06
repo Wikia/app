@@ -270,6 +270,8 @@ function _fetch_remote_file ($url, $headers = "" ) {
     $client->agent = MAGPIE_USER_AGENT;
     $client->read_timeout = MAGPIE_FETCH_TIME_OUT;
     $client->use_gzip = MAGPIE_USE_GZIP;
+    $client->proxy_host = MAGPIE_PROXY_HOST;
+    $client->proxy_port = MAGPIE_PROXY_PORT;
     if (is_array($headers) ) {
         $client->rawheaders = $headers;
     }
@@ -390,6 +392,13 @@ function init () {
     // use gzip encoding to fetch rss files if supported?
     if ( !defined('MAGPIE_USE_GZIP') ) {
         define('MAGPIE_USE_GZIP', true);
+    }
+
+    if ( !defined('MAGPIE_PROXY_HOST') ) {
+        define('MAGPIE_PROXY_HOST', '');
+    }
+    if ( !defined('MAGPIE_PROXY_PORT') ) {
+        define('MAGPIE_PROXY_PORT', '');
     }
 }
 
