@@ -151,49 +151,6 @@ Event.onContentReady("background_strip", function() {
 	pos('headerMenuHub', 'headerButtonHub', 'left');
 });
 
-/**
- * @author Inez Korczynski
- */
-Event.onDOMReady(function() {
-	var callback = {
-		success: function(o) {
-			o = YAHOO.Tools.JSONParse(o.responseText);
-			Dom.setStyle('current-rating', 'width', Math.round(o.item.wkvoteart[0].avgvote * 17)+'px');
-			Dom.setStyle(['star1','star2','star3','star4','star5'], 'display', o.item.wkvoteart[0].remove ? '' : 'none');
-			Dom.setStyle('unrateLink', 'display', o.item.wkvoteart[0].remove ? 'none' : '');
-			YAHOO.util.Dom.removeClass('star-rating', 'star-rating-progress');
-			YAHOO.util.Connect.asyncRequest('POST', window.location.href, null, "action=purge");
-		}
-	}
-	Event.addListener('unrateLink', 'click', function(e) {
-		Event.preventDefault(e);
-		YAHOO.util.Connect.asyncRequest('GET', wgScriptPath+'/api.php?action=wdelete&list=wkvoteart&format=json&wkpage='+wgArticleId, callback);
-		YAHOO.util.Dom.addClass('star-rating', 'star-rating-progress');
-		Dom.setStyle('unrateLink', 'display', 'none');
-		YAHOO.Wikia.Tracker.trackByStr(e, 'ArticleFooter/vote/unrate');
-	});
-	Event.addListener(['star1','star2','star3','star4','star5'], 'click', function(e) {
-		Event.preventDefault(e);
-		var rating = this.id.substr(4,1);
-		YAHOO.util.Connect.asyncRequest('GET', wgScriptPath+'/api.php?action=insert&list=wkvoteart&format=json&wkvote='+rating+'&wkpage='+wgArticleId, callback);
-		YAHOO.util.Dom.addClass('star-rating', 'star-rating-progress');
-		YAHOO.Wikia.Tracker.trackByStr(e, 'ArticleFooter/vote/' + rating);
-	});
-
-	// fix for IE6(#1843)
-	if (YAHOO.env.ua.ie == 6) {
-		Event.addListener(['star1','star2','star3','star4','star5'], 'mouseover', function(e) {
-			var rating = this.id.substr(4,1);
-			YAHOO.util.Dom.addClass(this, 'hover');
-			YAHOO.util.Dom.setStyle(this, 'width', parseInt(rating*17) + 'px');
-		});
-		Event.addListener(['star1','star2','star3','star4','star5'], 'mouseout', function(e) {
-			YAHOO.util.Dom.removeClass(this, 'hover');
-			YAHOO.util.Dom.setStyle(this, 'width', '17px');
-		});
-	}
-});
-
 Event.onDOMReady(function() {
 	Event.addListener('body', 'mouseover', clearMenu);
 });
@@ -518,6 +475,7 @@ $(function() {
 		timeout: 300
 	});
 	*/
+	setupVoting();
 });
 
 //Ajax Wait Indicator
@@ -555,11 +513,9 @@ function openLogin(event) {
 
 	event.preventDefault();
 
-	$.ajaxSetup({cache: true});
 	$.get(window.wgScript + '?action=ajax&rs=GetAjaxLogin&uselang=' + window.wgUserLanguage, function(html) {
 		$("#positioned_elements").append(html);
 	});
-	$.ajaxSetup({cache: false});
 }
 
 //Modal
@@ -681,3 +637,37 @@ function monacoNavigationHoverActions() {
 	});
 }
 */
+
+function setupVoting() {
+	var callback = function(data) {
+		$('#star-rating').removeClass('star-rating-progress');
+
+		// show current rating
+		$('#current-rating').css('width', Math.round(data.item.wkvoteart[0].avgvote * 17) + 'px');
+		$('#star-rating a').css('display', data.item.wkvoteart[0].remove ? '' : 'none');
+		$('#unrateLink').css('display', data.item.wkvoteart[0].remove ? 'none' : '');
+
+		// purge current page
+		$.post(window.location.href, {action: 'purge'});
+	};
+
+	$('#star-rating a').click(function(ev) {
+		ev.preventDefault();
+
+		var rating = this.id.substr(4,1);
+		$('#star-rating').addClass('star-rating-progress');
+		$.getJSON(wgScriptPath+'/api.php?action=insert&list=wkvoteart&format=json&wkvote='+rating+'&wkpage='+wgArticleId, callback);
+
+		// todo: YAHOO.Wikia.Tracker.trackByStr(e, 'ArticleFooter/vote/' + rating);
+	});
+
+	$('#unrateLink').click(function(ev) {
+		ev.preventDefault();
+
+		$('#star-rating').addClass('star-rating-progress');
+		$('#unrateLink').css('display', 'none');
+		$.getJSON(wgScriptPath+'/api.php?action=wdelete&list=wkvoteart&format=json&wkpage='+wgArticleId, callback);
+
+		// todo: YAHOO.Wikia.Tracker.trackByStr(e, 'ArticleFooter/vote/unrate');
+	});
+}
