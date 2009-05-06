@@ -24,7 +24,11 @@ class Outbound extends UnlistedSpecialPage {
 
 		<p><a href="<?= $par ?>">Click here to continue...</a></p>
 	</div>
-	<div style="width: 728px; height: 90px; border: 1px solid black; margin: 0 auto; vertical-align: middle; font-size: 24pt">Your ad here</div>
+	<div style="vertical-align: middle;">
+		<!-- Begin: AdBrite, Generated: 2009-05-04 17:07:52  -->
+		<script type="text/javascript" src="http://ads.adbrite.com/mb/text_group.php?sid=1157756&br=1"></script>
+		<!-- End: AdBrite -->
+	</div>
 </div>
 </body>
 </html>
