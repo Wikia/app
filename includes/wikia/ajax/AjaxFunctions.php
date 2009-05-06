@@ -9,7 +9,7 @@ function GetHubMenu() {
 
 	$response = new AjaxResponse();
 	$response->addText( $tmpl->execute('hubMenu') );
-	$response->setCacheDuration( 3600 * 24 * 7); // 1 week
+	$response->setCacheDuration( 3600 * 24 * 365 * 10); // 10 years
 
 	return $response;
 }
@@ -48,7 +48,7 @@ function GetUserMenu($userName = '') {
 
 	$response = new AjaxResponse();
 	$response->addText( $html );
-	$response->setCacheDuration( 3600 * 24 * 7); // 1 week
+	$response->setCacheDuration( 3600 * 24 * 365 * 10); // 10 years
 
 	return $response;
 }
