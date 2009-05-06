@@ -28,6 +28,11 @@ class WikiaReplicateImages {
 			"address" => "10.8.2.136",
 			"transform" => false,
 			"flag" => 2
+		),
+		"file4" => array(
+			"address" => "10.6.10.39",
+			"transform" => array( "!^/images/(.)!", "/raid/images/by_id/$1/$1" ),
+			"flag" => 4
 		)
 	);
 
