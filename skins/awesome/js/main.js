@@ -555,13 +555,17 @@ $.fn.extend({
 		}
    	
    	wrapper
-   		.prepend('<h1 class="modalTitle color1">' + this.attr('title') + '</h1>')
+   		.prepend('<h1 class="modalTitle color1"><div style="background-image: url(http://images.wikia.com/common/skins/monaco/images/sprite.png);"></div>' + this.attr('title') + '</h1>')
    		.width(settings.width)
    		.css({
    			marginLeft: -wrapper.outerWidth() / 2,
 				top: getModalTop()
    		})
    		.fadeIn("fast");
+
+	$("h1.modalTitle div").bind("click", function() {
+		wrapper.closeModal();
+	});
 
    	$(window)
    		.bind("keypress.modal", function(event) {
