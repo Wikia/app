@@ -454,6 +454,15 @@ div.modalWrapper {
 h1.modalTitle {
 	font-weight: bold;
 	padding: 5px;
+	position: relative;
+}
+h1.modalTitle div {
+	clip: rect(0px 320px 16px 304px);
+	cursor: pointer;
+	height: 16px;
+	position: absolute;
+	right: -27px;
+	width: 352px;
 }
 .modalInside {
 	padding: 5px !important;
