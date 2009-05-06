@@ -20,8 +20,7 @@ class WikiaReplicateImages {
 	private $mServers = array(
 		"file3" => array(
 			"address" => "10.8.2.133",
-			/* "transform" => array( "!^/images/(.)!", "/raid/images/by_id/$1/$1" ), */
-			"transform" => 'transform_for_file3',
+			"transform" => true,
 			"flag" => 1
 		),
 		"willow" => array(
@@ -31,7 +30,7 @@ class WikiaReplicateImages {
 		),
 		"file4" => array(
 			"address" => "10.6.10.39",
-			"transform" => array( "!^/images/(.)!", "/raid/images/by_id/$1/$1" ),
+			"transform" => true,
 			"flag" => 4
 		)
 	);
@@ -61,29 +60,36 @@ class WikiaReplicateImages {
 		$oResource = $dbr->select(
 			array( "upload_log" ),
 			array( "up_id", "up_path" ),
-			array( "up_flags" => 0 ),
+			array(
+				$dbr->makeList(
+					array( "up_flags" => 0, "up_flags" => -1 ),
+					LIST_OR
+				),
+			),
 			__METHOD__,
 			array(
 				  "ORDER BY" => "up_created ASC",
 				  "LIMIT" => $iImageLimit
 			)
 		);
+
 		if( $oResource ) {
 			while( $oResultRow = $dbr->fetchObject( $oResource ) ) {
-				$success = false;
 				$flags = 0;
 				$source = $oResultRow->up_path;
+
 				foreach( $this->mServers as $server ) {
+
+					/**
+					 * some server have other directories layout
+					 */
 					if( $server[ "transform" ] ) {
-						if (is_array($server['transform'])) {
-							$destination = preg_replace( $server["transform"][0], $server["transform"][1] , $source );
-						} else {
-							$destination = call_user_func(array('WikiaReplicateImages', $server['transform']), $source);
-						}
+						$destination = $this->transformPath( $source, $server );
 					}
 					else {
 						$destination = $source;
 					}
+
 					/**
 					 * check if source file exists. I know, stats are bad
 					 */
@@ -103,19 +109,17 @@ class WikiaReplicateImages {
 							$output = wfShellExec( $cmd, $retval );
 
 							if( $retval > 0 ) {
-								syslog( LOG_ERR, "{$cmd} command failed." );
-								$success = false;
-								break;
+								Wikia::log( __CLASS__, "error", "{$cmd} command failed." );
 							}
 							else {
-								syslog( LOG_INFO, "{$cmd}." );
+								Wikia::log( __CLASS__, "info", "{$cmd}." );
 								$flags = $flags | $server["flag"];
-								$success = true;
 							}
 						}
 					}
 					else {
-						syslog( LOG_WARNING, "{$source} doesn't exists." );
+						Wikia::log( __CLASS__, "info", "{$source} doesn't exists." );
+						$flags = -1;
 					}
 				}
 
@@ -130,31 +134,41 @@ class WikiaReplicateImages {
 						array( "up_id" => $oResultRow->up_id )
 					);
 					$dbw->commit();
-					syslog( LOG_INFO, "{$source} copied to ".$login . '@' . $server["address"] . ':' . $destination );
+					if( $flags > 0 ) {
+						Wikia::log( __CLASS__, "info", "{$source} copied to ".$login . '@' . $server["address"] . ':' . $destination );
+					}
 				}
 			}
 		}
 		else {
-			print("No new images to be replicated.\n");
+			print("No new images to for replication.\n");
 		}
 	}
 
-	public static function transform_for_file3($source) {
+	/**
+	 * use regexp to translate paths
+	 *
+	 * @access public
+	 * @param string $source
+	 *
+	 * @return string translated path
+	 */
+	public function transformPath( $source, $server ) {
 		$destination = $source;
 
-		/*	"transform" => array( "!^/images/(.)!", "/raid/images/by_id/$1/$1" ), */
-		if (preg_match('!^/images/(.)!', $source, $matches)) {
-			$first_char = $matches[1];
-			$replace = '/raid/images/by_id/' . strtolower($first_char) . '/' . $first_char;
-			$destination = preg_replace('!^/images/(.)!', $replace, $source);
+		switch( $server ) {
+			case "file3":
+			case "file4":
+				if( preg_match('!^/images/(.)!', $source, $matches ) ) {
+					$first_char = $matches[1];
+					$replace = '/raid/images/by_id/' . strtolower( $first_char ) . '/' . $first_char;
+					$destination = preg_replace( '!^/images/(.)!', $replace, $source );
+				}
+				break;
 		}
-
 		return $destination;
 	}
-};
+}
 
-
-openlog( "wikia-replicate-images", LOG_PID | LOG_PERROR, LOG_LOCAL0 );
 $replicate = new WikiaReplicateImages( $options );
 $replicate->execute();
-closelog();
