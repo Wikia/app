@@ -859,6 +859,17 @@ function wfReportTime() {
 		$elapsedcpu = 0;
 	}
 	if( $wgShowHostnames) header( sprintf( "X-Served-By-Backend: %s", wfHostname() ) );
+
+	// WIKIA: send a message to the MQ
+	global $wgReportTimeToStomp;
+	if( $wgReportTimeToStomp ) {
+		global $wgStompServer, $wgStompUser, $wgStompPassword;
+		$stomp = new Stomp( $wgStompServer );
+		$stomp->connect( $wgStompUser, $wgStompPassword );
+		$stomp->send( '/queue/service_time', $elapsed );
+		$stomp->disconnect();
+	}
+
 	return $wgShowHostnames
 		? sprintf( "<!-- Served by %s in %01.3f secs. cpu: %01.3f -->", wfHostname(), $elapsed, $elapsedcpu )
 		: sprintf( "<!-- Served in %01.3f secs. cpu: %01.3f -->", $elapsed, $elapsedcpu );
