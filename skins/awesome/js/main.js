@@ -504,7 +504,7 @@ function openHubMenu(event) {
 	event.preventDefault();
 	headerMenuFunction = openHubMenu;
 	//$.get(window.wgScript + '?action=ajax&rs=GetMonacoHeaderMenu&uselang=' + window.wgUserLanguage, {trigger: event.currentTarget.id}, function(html) {
-	$.get(window.wgScript + '?action=ajax&rs=GetHubMenu', {trigger: event.currentTarget.id}, function(html) {
+	$.get(window.wgScript + '?action=ajax&rs=GetHubMenu', function(html) {
 		$("#positioned_elements").append(html);
 	});	
 }
