@@ -29,3 +29,6 @@
 	}
 ?>
 </div>
+<script type="text/javascript">
+	$("#headerMenuHub").makeHeaderMenu("<?=$_GET['trigger']?>");
+</script>

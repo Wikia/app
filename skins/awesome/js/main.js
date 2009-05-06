@@ -100,6 +100,8 @@ Event.onDOMReady(function() {
 /**
  * @author Christian Williams, Inez Korczynski
  */
+
+/*
 Event.onContentReady("background_strip", function() {
 	function pos(menuId, buttonId, side) {
 		Event.addListener(buttonId, 'click', function() {
@@ -147,13 +149,14 @@ Event.onContentReady("background_strip", function() {
 			clearTimeout(headerMenuTimer);
 		});
 	}
-	pos('headerMenuUser', 'headerButtonUser', 'right');
-	pos('headerMenuHub', 'headerButtonHub', 'left');
+	//pos('headerMenuUser', 'headerButtonUser', 'right');
+	//pos('headerMenuHub', 'headerButtonHub', 'left');
 });
 
 Event.onDOMReady(function() {
 	Event.addListener('body', 'mouseover', clearMenu);
 });
+*/
 
 })();
 
@@ -464,7 +467,8 @@ $.ajaxSetup({cache: true});
 
 //Attach DOM-Ready handlers
 $(function() {
-	//$("#headerButtonHub").click(openHubMenu);
+	$("#headerButtonHub").bind("click.headerMenu", openHubMenu);
+	$("#headerButtonUser").bind("click.headerMenu", openUserMenu);
 	//$("[rel='manage_widgets']").click(openCockpit);
 	$('.ajaxLogin').click(openLogin);
 	$(document).ajaxSend(startAjax).ajaxComplete(stopAjax);
@@ -493,15 +497,26 @@ function openCockpit(event) {
 		$("#positioned_elements").append(html);
 	});
 }
+*/
 
 //Hub Menu
 function openHubMenu(event) {
 	event.preventDefault();
-	$.get("hub_menu.html", function(html) {
+	headerMenuFunction = openHubMenu;
+	//$.get(window.wgScript + '?action=ajax&rs=GetMonacoHeaderMenu&uselang=' + window.wgUserLanguage, {trigger: event.currentTarget.id}, function(html) {
+	$.get(window.wgScript + '?action=ajax&rs=GetHubMenu', {trigger: event.currentTarget.id}, function(html) {
 		$("#positioned_elements").append(html);
-	});
+	});	
 }
-*/
+
+//User Menu
+function openUserMenu(event) {
+	event.preventDefault();
+	headerMenuFunction = openUserMenu;
+	$.get(window.wgScript + '?action=ajax&rs=GetMonacoHeaderMenu&uselang=' + window.wgUserLanguage, {trigger: event.currentTarget.id}, function(html) {
+		$("#positioned_elements").append(html);
+	});	
+}
 
 // AjaxLogin
 function openLogin(event) {
@@ -580,6 +595,73 @@ $.fn.extend({
   	})  	
   } 
 });
+
+//Header Menu
+$.fn.extend({
+	makeHeaderMenu: function(trigger, options) {
+		if (!trigger) {
+			//adding error logging here
+			$(this).remove();
+		} else {
+			trigger = $("#"+trigger);
+		}
+
+		var menu = $(this);
+  		var headerMenuTimer;
+		var settings = { 
+    			delay: 500,
+    			edge: 10,
+    			attach_to: "#wikia_header",
+    			attach_at: "bottom",
+    		};
+		if (options) {
+			$.extend(settings, options);
+		}
+				
+		//make the trigger unclickable for now - will bound again when menu is closed
+		trigger.unbind(".headerMenu");
+
+		//calculate left position
+		var center = trigger.offset().left + ( trigger.outerWidth() / 2 );
+		var menuWidth = menu.outerWidth();
+		var targetLeft = center - ( menuWidth / 2 );
+		if (targetLeft < settings.edge) {
+			targetLeft = settings.edge;
+		}
+
+		//calculate top position
+		var targetTop = $(settings.attach_to).offset().top;
+		if (settings.attach_at == "bottom") {
+			targetTop += $(settings.attach_to).outerHeight();
+		}
+		
+		//show menu, set mouseenter/mouseleave handlers
+		menu.css("left", targetLeft).css("top", targetTop).slideDown("fast").mouseleave(function() {
+			headerMenuTimer = setTimeout(function() {
+				menu.closeHeaderMenu(trigger, menu);
+			}, settings.delay);
+		}).mouseenter(function() {
+			clearTimeout(headerMenuTimer);
+		});
+
+		//close menu by clicking anywhere		
+		$(document).bind("click.headerMenu", function() {
+			menu.closeHeaderMenu(trigger, menu);
+		});
+
+		menu.click(function(event) {
+			event.stopPropagation();
+		});
+  	},
+	closeHeaderMenu: function(trigger, menu) {
+		$(document).unbind(".headerMenu");
+		trigger.bind("click.headerMenu", headerMenuFunction);
+		menu.slideUp("fast", function() {
+			//menu.remove();
+		});
+	}
+});
+
 /*
 //Navigation
 monacoNavigationInitCalled = false;
