@@ -356,7 +356,10 @@ function wkAWCMetricsDetails(limit, offset, ord, desc)
 							cssClass = " style=\"color:#26CF5D;\" ";
 						}
 						oneRow = "<tr style=\"font-size:90%;\"><td>" + loop  + ".</td>";
-						oneRow += "<td " + cssClass + "><a href=\"" + resData['data'][i]['url'] + "\" target=\"new\">" +resData['data'][i]['title']+ "</a></td>";
+						oneRow += "<td " + cssClass + ">";
+						oneRow += "<a href=\"" + resData['data'][i]['url'] + "\" target=\"new\">" +resData['data'][i]['title']+ "</a><br />";
+						oneRow += "(<a href=\"http://www.wikia.com/wiki/Special:WikiFactory/" + resData['data'][i]['id'] + "\" target=\"new\">Wiki Factory</a>)";
+						oneRow += "</td>";
 						oneRow += "<td " + cssClass + ">" + resData['data'][i]['db']+ "</td>";
 						oneRow += "<td " + cssClass + ">" +resData['data'][i]['lang']+ "</td>";
 						oneRow += "<td " + cssClass + ">" +resData['data'][i]['created']+ "</td>";
