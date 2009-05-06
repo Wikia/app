@@ -866,7 +866,11 @@ function wfReportTime() {
 		global $wgStompServer, $wgStompUser, $wgStompPassword;
 		$stomp = new Stomp( $wgStompServer );
 		$stomp->connect( $wgStompUser, $wgStompPassword );
-		$stomp->send( 'wikia.apache.service_time', $elapsed, array( 'exchange' => 'amq.topic', 'bytes_message' => 1 ) );
+		$stomp->send( 'wikia.apache.service_time.'.wfHostname(),
+				$elapsed,
+				array( 'exchange' => 'amq.topic', 'bytes_message' => 1 ),
+				false
+			);
 		$stomp->disconnect();
 	}
 
