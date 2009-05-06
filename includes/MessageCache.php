@@ -262,7 +262,7 @@ class MessageCache {
 
 			$this->lock($cacheKey);
 
-			# Limit the concurrency of loadFromDB to a single process 
+			# Limit the concurrency of loadFromDB to a single process
 			# This prevents the site from going down when the cache expires
 			$statusKey = wfMemcKey( 'messages', $code, 'status' );
 			$success = $this->mMemc->add( $statusKey, 'loading', MSG_LOAD_TIMEOUT );
@@ -371,7 +371,7 @@ class MessageCache {
 	 * @param $text Mixed: new contents of the page.
 	 */
 	public function replace( $title, $text ) {
-		global $wgMaxMsgCacheEntrySize;
+		global $wgMaxMsgCacheEntrySize, $wgTitle;
 		wfProfileIn( __METHOD__ );
 
 
@@ -413,6 +413,9 @@ class MessageCache {
 		$parserMemc->delete( wfMemcKey( 'navlinks' ) );
 		$parserMemc->delete( wfMemcKey( 'MonacoData' ) );
 		$parserMemc->delete( wfMemcKey( 'MonacoDataOld' ) );
+
+		// Set the JavaScript variable which is used by AJAX request to make data caching possible - Inez
+		$parserMemc->set(wfMemcKey('wgMWrevId'), $wgTitle->getLatestRevID());
 
 		wfRunHooks( "MessageCacheReplace", array( $title, $text ) );
 
