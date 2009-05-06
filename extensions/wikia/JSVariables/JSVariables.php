@@ -6,7 +6,7 @@
 $wgHooks['MakeGlobalVariablesScript'][] = 'wfMakeGlobalVariablesScript';
 
 function wfMakeGlobalVariablesScript($vars) {
-	global $wgCurse, $wgCityId, $wgEnableAjaxLogin, $wgUser, $wgDBname, $wgPrivateTracker, $wgWikiaAdvertiserCategory, $wgExtensionsPath, $wgTitle, $wgArticle, $wgStyleVersion, $wgSitename;
+	global $wgMemc, $wgCurse, $wgCityId, $wgEnableAjaxLogin, $wgUser, $wgDBname, $wgPrivateTracker, $wgWikiaAdvertiserCategory, $wgExtensionsPath, $wgTitle, $wgArticle, $wgStyleVersion, $wgSitename;
 
 	$cats = wfGetBreadCrumb();
 	$idx = count($cats)-2;
@@ -52,5 +52,9 @@ function wfMakeGlobalVariablesScript($vars) {
 		$vars['wgMenuEdit'] = wfMsg('monaco-edit-this-menu');
 	}
 	$vars['wgAfterContentAndJS'] = array();
+
+	// Set the JavaScript variable which is used by AJAX request to make data caching possible - Inez
+	$vars['wgMWrevId'] = $wgMemc->get(wfMemcKey('wgMWrevId'));
+
 	return true;
 }
