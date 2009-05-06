@@ -38,9 +38,19 @@ $aliases['de'] = array(
 	'MultiUpload' => array( 'Mehrere Dateien hochladen' ),
 );
 
+/** Lower Sorbian (Dolnoserbski) */
+$aliases['dsb'] = array(
+	'MultiUpload' => array( 'Někotare dataje nagraś' ),
+);
+
 /** French (Français) */
 $aliases['fr'] = array(
-	'MultiUpload' => array( 'Téléchargement multiple', 'TéléchargementMultiple' ),
+	'MultiUpload' => array( 'Téléversement multiple', 'TéléversementMultiple' ),
+);
+
+/** Franco-Provençal (Arpetan) */
+$aliases['frp'] = array(
+	'MultiUpload' => array( 'Tèlèchargement multiplo', 'TèlèchargementMultiplo' ),
 );
 
 /** Swiss German (Alemannisch) */
@@ -51,6 +61,16 @@ $aliases['gsw'] = array(
 /** Croatian (Hrvatski) */
 $aliases['hr'] = array(
 	'MultiUpload' => array( 'Višestruko_postavljanje' ),
+);
+
+/** Upper Sorbian (Hornjoserbsce) */
+$aliases['hsb'] = array(
+	'MultiUpload' => array( 'wjacore dataje nahrać' ),
+);
+
+/** Interlingua (Interlingua) */
+$aliases['ia'] = array(
+	'MultiUpload' => array( 'Cargar plures' ),
 );
 
 /** Indonesian (Bahasa Indonesia) */
@@ -90,13 +110,33 @@ $aliases['no'] = array(
 	'MultiUpload' => array( 'Last opp mange filer' ),
 );
 
+/** Occitan (Occitan) */
+$aliases['oc'] = array(
+	'MultiUpload' => array( 'Telecargament multiple', 'TelecargamentMultiple' ),
+);
+
 /** Brazilian Portuguese (Português do Brasil) */
 $aliases['pt-br'] = array(
 	'MultiUpload' => array( 'Carregamentos em massa' ),
 );
 
+/** Sanskrit (संस्कृत) */
+$aliases['sa'] = array(
+	'MultiUpload' => array( 'अनेकभारंन्यस्यति' ),
+);
+
+/** Albanian (Shqip) */
+$aliases['sq'] = array(
+	'MultiUpload' => array( 'MultiNgarkim' ),
+);
+
 /** Swedish (Svenska) */
 $aliases['sv'] = array(
 	'MultiUpload' => array( 'Multiuppladdning' ),
+);
+
+/** Tagalog (Tagalog) */
+$aliases['tl'] = array(
+	'MultiUpload' => array( 'Maramihang pagkarga' ),
 );
 

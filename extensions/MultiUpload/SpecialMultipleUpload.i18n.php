@@ -28,17 +28,19 @@ You can enter an optional '''Destination filename''' and provide a '''Summary'''
 Inappropriate files will be deleted immediately, see the [[{{MediaWiki:Multipleupload-page}}|file deletion policy]].",
 	'multiupload-fileuploaded' => 'File uploaded.',
 	'multiupload-toolbox' => 'Upload multiple files',
-	'multiupload-no-files'		   => "Please select at least one file to upload",
-	'multiupload-blank'		   => "No file selected",
+	'multiupload-no-files' => 'Please select at least one file to upload',
+	'multiupload-blank' => 'No file selected',
 );
 
 /** Message documentation (Message documentation)
  * @author Jon Harald Søby
  * @author Purodha
+ * @author Siebrand
  */
 $messages['qqq'] = array(
 	'multipleupload' => '{{Identical|Upload files}}',
 	'multipleupload-desc' => 'Short description of this extension, shown on [[Special:Version]]. Do not translate or change links.',
+	'multipleupload-text' => 'Plural is supported for $1.',
 );
 
 /** Karelian (Karjala)
@@ -74,6 +76,8 @@ $messages['ar'] = array(
 الصور غير الملائمة سيتم حذفها فورا، انظر [[{{MediaWiki:Multipleupload-page}}|سياسة حذف الصور]].",
 	'multiupload-fileuploaded' => 'تم رفع الملف.',
 	'multiupload-toolbox' => 'رفع ملفات متعددة',
+	'multiupload-no-files' => 'من فضلك اختر ملفا واحدا على الأقل للرفع',
+	'multiupload-blank' => 'لا ملف تم اختياره',
 );
 
 /** Egyptian Spoken Arabic (مصرى)
@@ -98,6 +102,44 @@ $messages['arz'] = array(
 	'multiupload-toolbox' => 'رفع ملفات متعددة',
 );
 
+/** Bavarian (Boarisch)
+ * @author Man77
+ */
+$messages['bar'] = array(
+	'multipleupload' => 'Datein aufelådn',
+	'multipleupload-ignoreallwarnings' => "'''Ålle Wårnungen''' ignorian und de Datein so speichan.",
+	'multipleupload-saveallfiles' => 'Ålle Datein speichan',
+	'multipleupload-addresswarnings' => "Bittschee, bevoa'st de Datei wieda aufelådst, ålle Wårnungen beårbeitn und ausrama.",
+	'multipleupload-page' => '{{ns:project}}:Löschrichtlinien',
+	'multiupload-fileuploaded' => 'Datei is aufeglådn',
+	'multiupload-toolbox' => 'Mehrare Datein aufelådn',
+);
+
+/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
+ * @author EugeneZelenko
+ * @author Jim-by
+ */
+$messages['be-tarask'] = array(
+	'multipleupload' => 'Загрузка файлаў',
+	'multipleupload-desc' => 'Дазваляе ўдзельнікам [[Special:MultipleUpload|загружаць некалькі файлаў за раз]]',
+	'multipleupload-ignoreallwarnings' => "Ігнараваць '''усе папярэджаньні''' і захаваць файлы ў любым выпадку.",
+	'multipleupload-saveallfiles' => 'Захаваць усе файлы',
+	'multipleupload-addresswarnings' => 'Калі ласка, разглядзіце ўсе папярэджаньні перад паўторная загрузкай файлаў.',
+	'multipleupload-page' => '{{ns:project}}:Правілы выдаленьня файлаў',
+	'multipleupload-text' => "З дапамогай гэтай старонкі можна загрузіць некалькі файлаў.
+
+Націсьніце «Агляд» і выберыце ўсе файлы, якія Вы жадаеце загрузіць.
+Адначасова Вы можаце загрузіць ад 1 да $1 {{PLURAL:$1|файла|файлаў|файлаў}}.
+
+Вы можаце запоўніць неабавязковыя палі '''Мэтавае імя файла''' і дадаць кароткае '''Апісаньне''' Вашых файлаў.
+
+Неадпаведныя файлы будуць выдалены неадкладна, глядзіце [[{{MediaWiki:Multipleupload-page}}|правілы выдаленьня фалаў]].",
+	'multiupload-fileuploaded' => 'Файл загружаны.',
+	'multiupload-toolbox' => 'Загрузка некалькіх файлаў',
+	'multiupload-no-files' => 'Калі ласка, выберыце хаця б адзін файл для загрузкі',
+	'multiupload-blank' => 'Файлы ня выбраны',
+);
+
 /** Bulgarian (Български)
  * @author DCLXVI
  * @author Spiritia
@@ -118,6 +160,30 @@ $messages['bg'] = array(
 Неприемливите файлове ще бъдат изтривани незабавоно; вижте [[{{MediaWiki:Multipleupload-page}}|политиката за изтриване на файлове]].",
 	'multiupload-fileuploaded' => 'Файлът беше качен.',
 	'multiupload-toolbox' => 'Качване на няколко файла',
+);
+
+/** Bosnian (Bosanski)
+ * @author CERminator
+ */
+$messages['bs'] = array(
+	'multipleupload' => 'Postavljanje datoteka',
+	'multipleupload-desc' => 'Omogućuje korisnicima [[Special:MultipleUpload|postavljanje nekoliko datoteka odjednom]]',
+	'multipleupload-ignoreallwarnings' => "Zanemari '''sva upozorenja''' i spremi datoteke.",
+	'multipleupload-saveallfiles' => 'Spremi sve datoteke',
+	'multipleupload-addresswarnings' => 'Molimo prije ponovnom postavljanju datoteka obradite i riješite svako upozorenje.',
+	'multipleupload-page' => '{{ns:project}}:Politika brisanja datoteka',
+	'multipleupload-text' => "Ovdje možete postaviti veći broj datoteka odjednom.
+
+Izaberite 'Browse' ('pregledaj') i odaberite sve datoteke koje želite postaviti.
+Možete postaviti od 1 do $1 datoteka odjednom.
+
+Moguće je odrediti '''Naziv odredišne datoteke''' i navesti '''Sažetak''' opisujući Vašu datoteku.
+
+Neodgovarajuće datoteke će biti obrisane odmah, pogledajte [[{{MediaWiki:Multipleupload-page}}|politiku brisanja datoteka]].",
+	'multiupload-fileuploaded' => 'Datoteka postavljena.',
+	'multiupload-toolbox' => 'Postavi više datoteka',
+	'multiupload-no-files' => 'Molimo odaberite bar jednu datoteku za postavljanje',
+	'multiupload-blank' => 'Nijedna datoteka nije odabrana',
 );
 
 /** Chamorro (Chamoru)
@@ -149,9 +215,35 @@ Nevhodné soubory budou okmažitě smazány, vizte [[{{MediaWiki:Multipleupload-
 	'multiupload-toolbox' => 'Nahrát více souborů',
 );
 
+/** Danish (Dansk)
+ * @author BabelFrode
+ * @author Byrial
+ */
+$messages['da'] = array(
+	'multipleupload' => 'Læg filer op',
+	'multipleupload-desc' => 'Tillader brugere at [[Special:MultipleUpload|lægge flere filer op samtidig]]',
+	'multipleupload-ignoreallwarnings' => "Overhør '''alle advarsler''' og gem filerne.",
+	'multipleupload-saveallfiles' => 'Gem alle filer',
+	'multipleupload-addresswarnings' => 'Vis hensyn overfor enhver advarsel før du lægger filerne op igen.',
+	'multipleupload-page' => '{{ns:project}}:Retningslinjer for sletning af filer',
+	'multipleupload-text' => "Læg flere filer op her.
+
+Vælg \"Gennemse...\" og vælg hver fil, du ønsker skal lægges op.
+Du kan lægge mellem 1 og \$1 filer op ad gangen.
+
+Du kan indsætte et valgfrit '''Målnavn''' og en '''Beskrivelse/kilde''', som beskriver din fil.
+
+Upassende filer bliver slettet øjeblikkeligt - se [[{{MediaWiki:Multipleupload-page}}|Retningslinjer for sletning af filer]].",
+	'multiupload-fileuploaded' => 'Filen er lagt op.',
+	'multiupload-toolbox' => 'Læg flere filer op.',
+	'multiupload-no-files' => 'Vælg mindst én fil du vil lægge op.',
+	'multiupload-blank' => 'Ingen filer valgt',
+);
+
 /** German (Deutsch)
  * @author Purodha
  * @author Raimond Spekking
+ * @author Umherirrender
  */
 $messages['de'] = array(
 	'multipleupload' => 'Dateien hochladen',
@@ -162,22 +254,25 @@ $messages['de'] = array(
 	'multipleupload-page' => '{{ns:project}}:Löschrichtlinien',
 	'multipleupload-text' => "Gleichzeitiges Hochladen mehrerer Dateien.
 
-Wähle 'Browse' und wähle jede Datei aus, die du hochladen möchtest. Du kannst gleichzeitig zwischen 1 und $1 Dateien hochladen.
+Wähle „Browse“ und wähle jede Datei aus, die du hochladen möchtest. Du kannst gleichzeitig zwischen 1 und $1 Dateien hochladen.
 
 Du kannst wahlweise auch einen '''Ziel-Dateinamen''' vorgeben und eine '''Beschreibung''' für deine Dateien.
 
 Ungeeignete Dateien werden sofort gelöscht, siehe die [[{{MediaWiki:Multipleupload-page}}|Löschrichtlinien]].",
 	'multiupload-fileuploaded' => 'Datei hochgeladen.',
 	'multiupload-toolbox' => 'Hochladen mehrerer Dateien',
+	'multiupload-no-files' => 'Bitte wähle mindestens eine Datei zum Hochladen aus',
+	'multiupload-blank' => 'Keine Datei ausgewählt',
 );
 
 /** German (formal address) (Deutsch (Sie-Form))
  * @author Raimond Spekking
+ * @author Umherirrender
  */
 $messages['de-formal'] = array(
 	'multipleupload-text' => "Gleichzeitiges Hochladen mehrerer Dateien.
 
-Klicken Sie auf 'Browse' und wählen Sie jede Datei aus, die Sie hochladen möchten. Sie können gleichzeitig zwischen 1 und $1 Dateien hochladen.
+Klicken Sie auf „Browse“ und wählen Sie jede Datei aus, die Sie hochladen möchten. Sie können gleichzeitig zwischen 1 und $1 Dateien hochladen.
 
 Sie können wahlweise auch einen '''Ziel-Dateinamen''' vorgeben und eine '''Beschreibung''' für Ihre Dateien.
 
@@ -204,6 +299,8 @@ Móžoš zapódaś opcionalne '''datajowe mě''' a '''Zespominanje''', kótarež
 Njegóźece se dataje budu se ned lašowaś, glědaj [[{{MediaWiki:Multipleupload-page}}|zasady lašowanja datajow]].",
 	'multiupload-fileuploaded' => 'Dataja nagrata.',
 	'multiupload-toolbox' => 'Někotare dataje nagraś',
+	'multiupload-no-files' => 'Pšsosym wubjeŕ nanejmjenjej jadnu dataju za nagraśe',
+	'multiupload-blank' => 'Žedna dataja wubrana',
 );
 
 /** Greek (Ελληνικά)
@@ -236,9 +333,12 @@ Vi povas eniri nedevigan '''Cela doserionomo''' kaj doni '''Resumo''' priskriban
 Malkonvenaj dosieroj estos tuj forigita. Vidu la [[{{MediaWiki:Multipleupload-page}}|regularo pri forigado de dosieroj]].",
 	'multiupload-fileuploaded' => 'Dosiero alŝutita.',
 	'multiupload-toolbox' => 'Alŝuti multe de dosierojn',
+	'multiupload-no-files' => 'Bonvolu elekti almenaŭ unu dosieron por alŝuti',
+	'multiupload-blank' => 'Neniu dosiero elektita',
 );
 
 /** Spanish (Español)
+ * @author Crazymadlover
  * @author Imre
  * @author Sanbec
  */
@@ -258,6 +358,8 @@ Puedes introducir un '''Nombre de archivo de destino''' opcional y proporcionar 
 Los archivos inapropiados se eliminarán inmediatamente: mira la [[{{MediaWiki:Multipleupload-page}}|política de borrado de archivos]].",
 	'multiupload-fileuploaded' => 'Archivo subido.',
 	'multiupload-toolbox' => 'Subir varios archivos',
+	'multiupload-no-files' => 'Por favor seleccione al menos un archivo a cargar',
+	'multiupload-blank' => 'Ningún archivo seleccionado',
 );
 
 /** Persian (فارسی)
@@ -308,6 +410,8 @@ Sopimattomat tiedostot poistetaan välittömästi; katso [[{{MediaWiki:Multipleu
 /** French (Français)
  * @author Dereckson
  * @author Grondin
+ * @author Guérin Nicolas
+ * @author IAlex
  * @author Urhixidur
  */
 $messages['fr'] = array(
@@ -325,7 +429,9 @@ Vous pouvez optionnellement spécifier la '''destination du fichier''' et rempli
 
 Les images non pertinentes pourront être supprimées immédiatement. Voyez la page des [[{{MediaWiki:Multipleupload-page}}|Règles de suppression d’images]].",
 	'multiupload-fileuploaded' => 'Fichier importé (téléversé).',
-	'multiupload-toolbox' => 'Importer (Téléverser) plusieurs fichiers',
+	'multiupload-toolbox' => 'Importer (téléverser) plusieurs fichiers',
+	'multiupload-no-files' => 'Sélectionnez au moins un fichier à téléverser',
+	'multiupload-blank' => 'Aucun fichier sélectionné',
 );
 
 /** Western Frisian (Frysk)
@@ -356,6 +462,31 @@ Pode introducir un '''Nome de ficheiro de destino''' opcional e fornecer un '''R
 Os ficheiros inapropiados eliminaranse inmediatamente: vexa a [[{{MediaWiki:Multipleupload-page}}|política de eliminación de ficheiros]].",
 	'multiupload-fileuploaded' => 'Ficheiro cargado.',
 	'multiupload-toolbox' => 'Cargar múltiples arquivos',
+	'multiupload-no-files' => 'Por favor, seleccione polo menos un ficheiro para cargalo',
+	'multiupload-blank' => 'Non se seleccionou ningún ficheiro',
+);
+
+/** Swiss German (Alemannisch)
+ * @author Als-Holder
+ */
+$messages['gsw'] = array(
+	'multipleupload' => 'Dateie uffelade',
+	'multipleupload-desc' => 'Erlaubt s [[Special:MultipleUpload|Uffelade vu mehrere Dateie]] in einere Aktion',
+	'multipleupload-ignoreallwarnings' => "Ignorier '''alli Warnige''' un spychere di Dateie.",
+	'multipleupload-saveallfiles' => 'Alli Dateie spychere',
+	'multipleupload-addresswarnings' => 'Bitte jedi Warnig bearbeite un uusruume, voreb Du die Dateie nomoluffeladesch.',
+	'multipleupload-page' => '{{ns:project}}:Leschrichtlinie',
+	'multipleupload-text' => "Mehreri Dateie glyychzytig uffelade.
+
+Wehl 'Browse' un wehl jedi Datei us, wu Du wit uffelade. Du chasch glyychzytig zwische 1 un $1 Dateie uffelade.
+
+Du chasch au ne '''Ziil-Dateiname''' vorgee un e '''Bschryybig''' fir Dyyni Dateie.
+
+Dateie, wu nit geignet sin, wäre sofort glescht, lueg d [[{{MediaWiki:Multipleupload-page}}|Leschrichtlinie]].",
+	'multiupload-fileuploaded' => 'Datei uffeglade.',
+	'multiupload-toolbox' => 'Uffelade vu mehrere Dateie',
+	'multiupload-no-files' => 'Bitte wehl zmindescht ei Datei uus zum uffelade',
+	'multiupload-blank' => 'Kei Datei uusgwehlt',
 );
 
 /** Hawaiian (Hawai`i)
@@ -387,6 +518,8 @@ $messages['he'] = array(
 קבצים לא מתאימים יימחקו מיידית, עיינו ב[[{{MediaWiki:Multipleupload-page}}|מדיניות מחיקת הקבצים]].",
 	'multiupload-fileuploaded' => 'הקובץ הועלה.',
 	'multiupload-toolbox' => 'העלאת מספר קבצים',
+	'multiupload-no-files' => 'אנא בחרו לפחות קובץ אחד להעלאה',
+	'multiupload-blank' => 'לא נבחר אף קובץ',
 );
 
 /** Hindi (हिन्दी)
@@ -450,6 +583,8 @@ Móžeš opcionalne '''mjeno za cilowu dataju''' zapodać a '''Zjeće''' podać,
 Njepřihódne wobrazy budu so hnydom wušmórować, hlej [[{{MediaWiki:Multipleupload-page}}|prawidła za wušmórnjenje wobrazow]].",
 	'multiupload-fileuploaded' => 'Dataja nahrata.',
 	'multiupload-toolbox' => 'Wjacore dataje nahrać',
+	'multiupload-no-files' => 'Prošu wubjer znajmjeńša jednu dataju za nahraće',
+	'multiupload-blank' => 'Žana dataja wubrana',
 );
 
 /** Hungarian (Magyar)
@@ -494,6 +629,8 @@ Tu pote entrar optionalmente un '''Nomine de file de destination''' e fornir un 
 Le files inappropriate essera delite immediatemente; vide le [[{{MediaWiki:Multipleupload-page}}|politica pro le deletion de files]].",
 	'multiupload-fileuploaded' => 'File cargate.',
 	'multiupload-toolbox' => 'Cargar plure files',
+	'multiupload-no-files' => 'Per favor selige al minus un file a cargar',
+	'multiupload-blank' => 'Nulle file seligite',
 );
 
 /** Indonesian (Bahasa Indonesia)
@@ -518,9 +655,18 @@ Berkas-berkas yang tidak layak akan segera dihapuskan, lihat [[{{MediaWiki:Multi
 	'multiupload-toolbox' => 'Memuat banyak berkas sekaligus',
 );
 
+/** Ido (Ido)
+ * @author Malafaya
+ */
+$messages['io'] = array(
+	'multipleupload' => 'Adkargar arkivi',
+	'multipleupload-saveallfiles' => 'Registragar omna arkivi',
+);
+
 /** Italian (Italiano)
  * @author Darth Kule
  * @author Pietrodn
+ * @author Stefano-c
  */
 $messages['it'] = array(
 	'multipleupload' => 'Carica file multimediali',
@@ -539,6 +685,8 @@ Puoi inserire un '''Nome del file di destinazione''' e fornire dei '''Dettagli''
 File inappropriati verranno cancellati immediatamente, leggi le [[{{MediaWiki:Multipleupload-page}}|regole per la cancellazione dei file]].",
 	'multiupload-fileuploaded' => 'File caricato.',
 	'multiupload-toolbox' => 'Carica file multipli',
+	'multiupload-no-files' => 'Per favore seleziona almeno un file da caricare',
+	'multiupload-blank' => 'Nessun file selezionato',
 );
 
 /** Japanese (日本語)
@@ -561,6 +709,8 @@ $messages['ja'] = array(
 不適切なファイルはすぐに削除されます。[[{{MediaWiki:Multipleupload-page}}|ファイル削除の方針]]をご覧ください。",
 	'multiupload-fileuploaded' => 'ファイルをアップロードしました。',
 	'multiupload-toolbox' => '複数のファイルをアップロード',
+	'multiupload-no-files' => '最低でも一つはアップロードするファイルを選んでください',
+	'multiupload-blank' => 'ファイルが選択されていません',
 );
 
 /** Javanese (Basa Jawa)
@@ -624,13 +774,15 @@ $messages['ksh'] = array(
 	'multipleupload-text' => "Etlijje Dateie op eimol Huhlade.
 
 Jangk op 'Browse' un donn all de Dateie uswähle, di De huhlade wells.
-Do kannst fun 1 bes $1 Dateie op eimol huhlade.
+Do kanns {{PLURAL:ävver nur ein Datei|fun 1 bes $1 Dateie|kein Dateie}} op eimol huhlade.
 
 De kanns och ene '''Dateiname för et Afspeichere''' aanjevve, un ene '''Tex drövver''' metschecke.
 
 Schlääschte Dateie wäde fottjeworfe, noh de [[{{MediaWiki:Multipleupload-page}}|Räjelle]] doför.",
 	'multiupload-fileuploaded' => 'Datei huhjelade.',
 	'multiupload-toolbox' => 'Etlijje Dateie Huhlade',
+	'multiupload-no-files' => 'Donn winnishßtens ein Dattei för huh ze laade ußsöhke',
+	'multiupload-blank' => 'Kein Dattei ußjesoht',
 );
 
 /** Kurdish (Latin) (Kurdî / كوردی (Latin))
@@ -650,8 +802,18 @@ $messages['lb'] = array(
 	'multipleupload-saveallfiles' => "All d'Fichiere späicheren",
 	'multipleupload-addresswarnings' => "W. e. g. all Warnungen uweisen ier d'Fichieren nach emol eropgluede ginn.",
 	'multipleupload-page' => "{{ns:project}}:Richtlinne fir d'Läsche vu Säiten a Fichieren",
+	'multipleupload-text' => "Hei kënnt dir méi Fichieren mateneen eroplueden.
+
+Wielt 'Browse' a wielt déi Fichieren eraus déi Dir eropluede wëllt.
+Dir kënnt vun 1 bis $1 Fichiere mateneen eroplueden.
+
+Dir kënnt en optionellen '''Zil-Fichiersnumm''' uginn an e '''Resumé''' aginn deen Äre Fichier beschreiwt.
+
+Net ubruechte Fichieren ginn direkt geläscht, kuckt d'[[{{MediaWiki:Multipleupload-page}}|Läsch-Richtlinnen fir Fichieren]].",
 	'multiupload-fileuploaded' => 'Fichier eropgelueden',
 	'multiupload-toolbox' => 'Méi Fichiere mateneen eroplueden',
+	'multiupload-no-files' => 'Sicht mindestens ee Fichier eraus fir eroplzelueden',
+	'multiupload-blank' => 'Kee Fichier erausgesicht',
 );
 
 /** Eastern Mari (Олык Марий)
@@ -737,6 +899,16 @@ $messages['mt'] = array(
 	'multiupload-toolbox' => "Tella' fajls multipli",
 );
 
+/** Erzya (Эрзянь)
+ * @author Botuzhaleny-sodamo
+ */
+$messages['myv'] = array(
+	'multipleupload' => 'Йовкстамс файлат',
+	'multipleupload-saveallfiles' => 'Ванстомс весе файлатнень',
+	'multiupload-fileuploaded' => 'Файлась йовкстазь.',
+	'multiupload-blank' => 'Кочказь файла арась',
+);
+
 /** Nahuatl (Nāhuatl)
  * @author Fluence
  */
@@ -766,10 +938,14 @@ Afbeeldingen die niet relevant zijn, worden onmiddelijk verwijderd.
 Zie het [[{{MediaWiki:Multipleupload-page}}|verwijderingsbeleid van bestanden]].",
 	'multiupload-fileuploaded' => 'Bestand toegevoegd.',
 	'multiupload-toolbox' => 'Meerdere bestanden uploaden',
+	'multiupload-no-files' => 'Selecteer minimaal één te uploaden bestand',
+	'multiupload-blank' => 'Er is geen bestand geselecteerd',
 );
 
 /** Norwegian Nynorsk (‪Norsk (nynorsk)‬)
  * @author Frokor
+ * @author Gunnernett
+ * @author Harald Khan
  * @author Jon Harald Søby
  */
 $messages['nn'] = array(
@@ -788,6 +964,8 @@ Du kan skrive inn eit valfritt '''målnamn''' og gje eit '''samandrag''' for å 
 Upassande filer vil bli sletta med ein gong, sjå [[{{MediaWiki:Multipleupload-page}}|retningslinjene for filsletting]].",
 	'multiupload-fileuploaded' => 'Fil lasta opp.',
 	'multiupload-toolbox' => 'Last opp fleire filer',
+	'multiupload-no-files' => 'Vel minst éi fil som skal verta lasta opp',
+	'multiupload-blank' => 'Inga fil vald',
 );
 
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
@@ -830,6 +1008,8 @@ Podètz inscriure la '''destinacion del fichièr''' e emplenar lo '''Somari''' p
 Los imatges pas pertinents poiràn èsser escafadas immediatament. Vejatz la pagina [[{{MediaWiki:Multipleupload-page}}|image deletion policy]].",
 	'multiupload-fileuploaded' => 'Fichièr telecargat',
 	'multiupload-toolbox' => 'Telecargar mantun fichièr',
+	'multiupload-no-files' => 'Seleccionatz al mens un fichièr de telecargar',
+	'multiupload-blank' => 'Cap de fichièr pas seleccionat',
 );
 
 /** Polish (Polski)
@@ -854,6 +1034,8 @@ Wprowadzić, jeśli chcesz, '''Nazwę docelową''' oraz wypełnił '''Opis''' dl
 Nieprawidłowe pliki będą natychmiast usuwane, zobacz [[{{MediaWiki:Multipleupload-page}}|Zasady usuwania plików]].",
 	'multiupload-fileuploaded' => 'Plik został przesłany.',
 	'multiupload-toolbox' => 'Prześlij wiele plików',
+	'multiupload-no-files' => 'Wybierz co najmniej jeden plik do przesłania',
+	'multiupload-blank' => 'Nie wybrano pliku',
 );
 
 /** Pashto (پښتو)
@@ -898,6 +1080,32 @@ Pode opcionalmente introduzir um '''Nome de ficheiro destino''' e fornecer um ''
 Ficheiros impróprios serão eliminados imediatamente. Veja a [[{{MediaWiki:Multipleupload-page}}|política de eliminação de ficheiros]].",
 	'multiupload-fileuploaded' => 'Ficheiro carregado.',
 	'multiupload-toolbox' => 'Carregar múltiplos ficheiros',
+	'multiupload-no-files' => 'Por favor, selecione pelo menos um ficheiro a carregar',
+	'multiupload-blank' => 'Nenhum ficheiro selecionado',
+);
+
+/** Brazilian Portuguese (Português do Brasil)
+ * @author Eduardo.mps
+ */
+$messages['pt-br'] = array(
+	'multipleupload' => 'Carregar arquivos',
+	'multipleupload-desc' => 'Permite aos utilizadores [[Special:MultipleUpload|carregar vários arquivos de uma vez]]',
+	'multipleupload-ignoreallwarnings' => "Ignorar '''todos os avisos''' e gravar os arquivos.",
+	'multipleupload-saveallfiles' => 'Gravar todos os arquivos',
+	'multipleupload-addresswarnings' => 'Por favor, trate quaisquer avisos antes de carregar novamente os arquivos.',
+	'multipleupload-page' => '{{ns:project}}:Política de eliminação de arquivos',
+	'multipleupload-text' => "Carregue múltiplos arquivos aqui.
+
+Escolha 'Procurar' e selecione cada arquivo que pretenda carregar.
+Pode carregar entre 1 e $1 arquivos de cada vez.
+
+Pode opcionalmente introduzir um '''Nome de arquivo destino''' e fornecer um '''Sumário''' que descreva o seu arquivo.
+
+Arquivos impróprios serão eliminados imediatamente. Veja a [[{{MediaWiki:Multipleupload-page}}|política de eliminação de arquivos]].",
+	'multiupload-fileuploaded' => 'Arquivo carregado.',
+	'multiupload-toolbox' => 'Carregar múltiplos arquivos',
+	'multiupload-no-files' => 'Por favor selecione ao menos um arquivo para carregar',
+	'multiupload-blank' => 'Nenhum arquivo selecionado',
 );
 
 /** Romanian (Română)
@@ -935,6 +1143,14 @@ $messages['ru'] = array(
 Неподходящие файлы будут удалены немедленно, см. [[{{MediaWiki:Multipleupload-page}}|правила удаления файлов]].',
 	'multiupload-fileuploaded' => 'Файл загружен.',
 	'multiupload-toolbox' => 'Загрузка нескольких файлов',
+);
+
+/** Sardinian (Sardu)
+ * @author Marzedu
+ */
+$messages['sc'] = array(
+	'multipleupload' => 'Càrriga files',
+	'multipleupload-saveallfiles' => 'Sarva totu is files',
 );
 
 /** Sicilian (Sicilianu)
@@ -985,6 +1201,34 @@ Môžete zadať voliteľný '''Cieľový názov súboru''' a poskytnúť '''Zhrn
 Nevhodné súbory budú okamžite zmazané, pozri [[{{MediaWiki:Multipleupload-page}}|pravidlá mazania súborov]].",
 	'multiupload-fileuploaded' => 'Súbor nahraný.',
 	'multiupload-toolbox' => 'Nahrať viacero súborov',
+	'multiupload-no-files' => 'Prosím, vyberte aspoň jeden súbor, ktorý chcete nahrať',
+	'multiupload-blank' => 'Nie je vybraný žiadny súbor',
+);
+
+/** Albanian (Shqip)
+ * @author Puntori
+ */
+$messages['sq'] = array(
+	'multipleupload' => 'Ngarko skeda',
+	'multipleupload-desc' => 'Lejon që përdoruesit të [[Special:MultipleUpload|ngarkojnë më shumë se një skedë përnjëherë]]',
+	'multipleupload-saveallfiles' => 'Ruaj të gjitha skedat',
+	'multiupload-fileuploaded' => 'Skedat e ngarkuara.',
+	'multiupload-toolbox' => 'Ngarko skeda të shumta',
+);
+
+/** Serbian Cyrillic ekavian (ћирилица)
+ * @author Михајло Анђелковић
+ */
+$messages['sr-ec'] = array(
+	'multipleupload' => 'Пошаљи фајлове',
+	'multipleupload-desc' => 'Омогући корисницима да [[Special:MultipleUpload|шаљу више фајлова одједном]]',
+	'multipleupload-ignoreallwarnings' => "Игнорипи '''сва упозорења''' и сними фајлове без обзира на њих.",
+	'multipleupload-saveallfiles' => 'Сними све фајлове',
+	'multipleupload-page' => '{{ns:project}}:Политика брисања фајлова',
+	'multiupload-fileuploaded' => 'Фајл послат.',
+	'multiupload-toolbox' => 'Пошаљи више фајлова',
+	'multiupload-no-files' => 'Молимо Вас да назначите макар један фајл за слање',
+	'multiupload-blank' => 'Ни један фајл није био назначен за слање',
 );
 
 /** Seeltersk (Seeltersk)
@@ -992,6 +1236,7 @@ Nevhodné súbory budú okamžite zmazané, pozri [[{{MediaWiki:Multipleupload-p
  */
 $messages['stq'] = array(
 	'multipleupload' => 'Doatäie hoochleede',
+	'multipleupload-desc' => 'Ferlööwet dät [[Special:MultipleUpload|Hoochleeden fon moorere Doatäie]] in een Aktion',
 	'multipleupload-ignoreallwarnings' => "Ignorier '''aal Woarschauengen''' un spiekerje do Doatäie",
 	'multipleupload-saveallfiles' => 'Aal Doatäie spiekerje',
 	'multipleupload-addresswarnings' => 'Älke Woarschauenge anwiese foar dät fonnäien Hoochleeden fon Doatäie.',
@@ -1010,6 +1255,7 @@ Uunoainde Doatäie wäide fluks läsked, sjuch do [[{{MediaWiki:Multipleupload-p
 /** Swedish (Svenska)
  * @author Lokal Profil
  * @author M.M.S.
+ * @author Najami
  */
 $messages['sv'] = array(
 	'multipleupload' => 'Ladda upp filer',
@@ -1028,6 +1274,8 @@ Du kan skriva in valfritt '''målnamn''' och ange en '''sammanfattning''' för a
 Opassande filer raderas omedelbart, se [[{{MediaWiki:Multipleupload-page}}|riktlinjer för filraderingar]].",
 	'multiupload-fileuploaded' => 'Fil uppladdad.',
 	'multiupload-toolbox' => 'Ladda upp flera filer',
+	'multiupload-no-files' => 'Välj minst en fil som ska laddas upp',
+	'multiupload-blank' => 'Ingen fil vald',
 );
 
 /** Tamil (தமிழ்)
@@ -1068,6 +1316,7 @@ $messages['tg-cyrl'] = array(
 );
 
 /** Thai (ไทย)
+ * @author Octahedron80
  * @author Passawuth
  */
 $messages['th'] = array(
@@ -1075,6 +1324,9 @@ $messages['th'] = array(
 	'multipleupload-ignoreallwarnings' => "ไม่สนใจ '''คำเตือน''' และบันทึกไฟล์",
 	'multipleupload-saveallfiles' => 'บันทึกไฟล์ทั้งหมด',
 	'multiupload-fileuploaded' => 'ไฟล์ถูกอัปโหลดเรียบร้อยแล้ว',
+	'multiupload-toolbox' => 'อัปโหลดหลายไฟล์',
+	'multiupload-no-files' => 'กรุณาเลือกอย่างน้อยหนึ่งไฟล์เพื่ออัปโหลด',
+	'multiupload-blank' => 'ไม่มีไฟล์ถูกเลือก',
 );
 
 /** Tagalog (Tagalog)
@@ -1097,13 +1349,33 @@ Maaari kang maglagay (magpasok) ng isang hindi naman talaga kailangang (maaaring
 Kaagad na buburahin ang hindi naaangkop na mga talaksan, tingnan ang [[{{MediaWiki:Multipleupload-page}}|patakaran sa pagbura ng talaksan]].",
 	'multiupload-fileuploaded' => 'Naikarga na ang talaksan.',
 	'multiupload-toolbox' => 'Magkarga ng maramihang mga talaksan',
+	'multiupload-no-files' => 'Paki pumili ng kahit na isang talaksang ikakarga',
+	'multiupload-blank' => 'Walang talaksang pinili',
 );
 
 /** Turkish (Türkçe)
+ * @author Joseph
  * @author Mach
  */
 $messages['tr'] = array(
+	'multipleupload' => 'Dosyaları yükle',
+	'multipleupload-desc' => 'Kullanıcıların [[Special:MultipleUpload|aynı anda birçok dosya yüklemelerine]] izin verir',
+	'multipleupload-ignoreallwarnings' => "'''Tüm uyarıları''' yoksay ve dosyaları her halükarda yükle.",
+	'multipleupload-saveallfiles' => 'Tüm dosyaları kaydet',
+	'multipleupload-addresswarnings' => 'Lütfen dosyaları tekrar yüklemeden önce uyarıları adresleyin.',
+	'multipleupload-page' => '{{ns:project}}:Dosya silme ilkesi',
+	'multipleupload-text' => "Birden çok dosyayı buraya yükleyin.
+
+'Gözat'ı seçin ve yüklemek istediğiniz her dosyayı seçin.
+Bir seferde 1 ile $1 dosyayı yükleyebilirsiniz.
+
+İsteğe bağlı olarak '''Hedef dosya adı''' girebilir ve dosyanızı anlatan bir '''Özet''' sağlayabilirsiniz.
+
+Uygun olmayan dosyalar hemen silinecektir, [[{{MediaWiki:Multipleupload-page}}|dosya silme ilkesini]] görün.",
 	'multiupload-fileuploaded' => 'Dosya yüklendi.',
+	'multiupload-toolbox' => 'Birden fazla dosya yükle',
+	'multiupload-no-files' => 'Lütfen yüklemek için en az bir dosya seçin',
+	'multiupload-blank' => 'Hiçbir dosya seçilmedi',
 );
 
 /** Ukrainian (Українська)
@@ -1148,6 +1420,16 @@ Te pol inserir un '''Nome del file de destinassion''' e fornir dei '''Detagli'''
 I file inapropriati i vegnarà scancelati de paca, lèzi le [[{{MediaWiki:Multipleupload-page}}|regole par la scancelassion dei file]].",
 	'multiupload-fileuploaded' => 'File cargà.',
 	'multiupload-toolbox' => 'Carga file multipli',
+	'multiupload-no-files' => 'Par piaser, selessiona almanco un file da cargar',
+	'multiupload-blank' => 'Nissun file selessionà',
+);
+
+/** Veps (Vepsan kel')
+ * @author Игорь Бродский
+ */
+$messages['vep'] = array(
+	'multipleupload-saveallfiles' => 'Panda muštho kaik failad',
+	'multiupload-fileuploaded' => 'Fail om jügutoittud',
 );
 
 /** Vietnamese (Tiếng Việt)
@@ -1170,6 +1452,8 @@ Bạn có thể nhập vào một '''Tên tập tin đích''' tùy chọn và cu
 Những tập tin không phù hợp sẽ bị xóa lập tức, mời xem [[{{MediaWiki:Multipleupload-page}}|quy định xóa tập tin]].",
 	'multiupload-fileuploaded' => 'Tập tin đã được tải lên.',
 	'multiupload-toolbox' => 'Tải nhiều tập tin',
+	'multiupload-no-files' => 'Xin chọn tối thiểu một tập tin để tải lên',
+	'multiupload-blank' => 'Chưa chọn tập tin nào',
 );
 
 /** Volapük (Volapük)
