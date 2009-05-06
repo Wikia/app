@@ -42,6 +42,8 @@ class MultipleUpload extends SpecialPage {
 
 		$form = new MultipleUploadForm( $wgRequest );
 		$form->execute();
+
+		$form->cleanupTempFile();
 	}
 }
 
@@ -53,9 +55,11 @@ class MultipleUploadForm extends UploadForm {
 
 	// extra goodies
 	// access private
-	var $mUploadTempNameArray, $mUploadSizeArray, $mOnameArray, $mUploadError, $mDestFileArray;
+	var $mUploadTempNameArray, $mUploadSizeArray, $mOnameArray, $mUploadError, $mDestFileArray, $mFilePropsArray;
 	var $mUploadDescriptionArray;
 	var $mShowUploadForm, $mHasWarning, $mFileIndex;
+	var $mWarnings = 0;
+	var $mSessionKey = null;
 
 	/**
 	 * Constructor : initialise object
@@ -69,6 +73,7 @@ class MultipleUploadForm extends UploadForm {
 
 		// initialize
 		$this->mUploadTempNameArray = $this->mUploadSizeArray = $this->mOnameArray = $this->mUploadError = $this->mDestFileArray = $this->mUploadDescriptionArray = array();
+		$this->mmFilePropsArray = array();
 		$this->mShowUploadForm = true;
 		$this->mFileIndex = 0;
 
@@ -87,11 +92,15 @@ class MultipleUploadForm extends UploadForm {
 
 		if( !empty( $this->mSessionKey )  ) {
 			for( $x = 0; $x < $wgMaxUploadFiles; $x++ ) {
-				//if (!isset($_SESSION["wsUploadData_$x"][$this->mSessionKey])) continue;
+				if( !isset( $_SESSION["wsUploadData_$x"][$this->mSessionKey] ) ) continue;
 				$data = $_SESSION["wsUploadData_$x"][$this->mSessionKey];
-				$this->mUploadTempNameArray[$x]   	= $data['mUploadTempName'];
-				$this->mUploadSizeArray[$x]	 = $data['mUploadSize'];
-				$this->mOnameArray[$x]		  = $data['mOname'];
+				$this->mUploadTempNameArray[$x]   	= $data['mTempPath'];
+				$this->mUploadSizeArray[$x]	 		= $data['mFileSize'];
+				$this->mOnameArray[$x]		  		= $data['mSrcName'];
+				$this->mFileProps[$x]				= $data['mFileProps'];
+				$this->mCurlError        = 0 /*UPLOAD_ERR_OK*/;
+				$this->mStashed          = true;
+				$this->mRemoveTempFile   = false;
 			}
 		} else {
 			/**
@@ -100,9 +109,9 @@ class MultipleUploadForm extends UploadForm {
 			for( $x = 0; $x < $wgMaxUploadFiles; $x++ ) {
 				$this->mUploadTempNameArray[$x] = $request->getFileTempName( "wpUploadFile_$x" );
 				$this->mUploadSizeArray [$x]	= $request->getFileSize( "wpUploadFile_$x" );
-				$this->mOnameArray[$x]		  = $request->getFileName( "wpUploadFile_$x" );
+				$this->mOnameArray[$x]		  	= $request->getFileName( "wpUploadFile_$x" );
 				$this->mUploadErrorArray[$x]	= $request->getUploadError( "wpUploadFile_$x" );
-				$this->mUploadDescriptionArray [$x] = $request->getVal( "wpUploadDescription_$x" );
+				$this->mUploadDescriptionArray[$x] = $request->getVal( "wpUploadDescription_$x" );
 			}
 		}
 
@@ -114,35 +123,48 @@ class MultipleUploadForm extends UploadForm {
 	 * @access private
 	 */
 	function processUpload() {
-		global $wgMaxUploadFiles, $wgOut;
+		global $wgMaxUploadFiles, $wgOut, $wgRequest;
 
 		$images = 0;
-		$wgOut->addHTML("<table>");
+		$wgOut->addHTML( '<table>' );
 		$this->mShowUploadForm = false;
+
+		$titleObj = SpecialPage::getTitleFor( 'MultipleUpload' );
+		$wgOut->addHTML(
+			Xml::openElement( 'form', array( 'method' => 'post', 'action' => $titleObj->getLocalURL( 'action=submit' ),
+			 'enctype' => 'multipart/form-data', 'id' => 'uploadwarning' ) ) . "\n"
+		);
+
+		$this->mLicense           = $wgRequest->getText( 'wpLicense' );
+
 		for( $x = 0; $x < $wgMaxUploadFiles; $x++ ) {
 			$this->mFileIndex = $x;
-			if( !isset( $this->mUploadTempNameArray[$x] ) || $this->mUploadTempNameArray[$x] == null ) continue;
+			if( !isset( $this->mUploadTempNameArray[$x] ) || $this->mUploadTempNameArray[$x] == null ) {
+				continue;
+			}
 
 			$images++;
-			$this->mTempPath = $this->mUploadTempNameArray[$x]; 
-			$this->mFileSize = $this->mUploadSizeArray[$x];
-			$this->mSrcName = $this->mOnameArray[$x]; // for mw > 1.9
-			$this->mRemoveTempFile = true;
-			$this->mIgnoreWarning = true;
+			$this->mTempPath 		= $this->mUploadTempNameArray[$x]; 
+			$this->mFileSize 		= $this->mUploadSizeArray[$x];
+			$this->mSrcName 		= $this->mOnameArray[$x]; // for mw > 1.9
+			$this->mRemoveTempFile 	= true; 
+			$this->mIgnoreWarning 	= $wgRequest->getCheck( 'wpIgnoreWarning' );
 
-			$this->mUploadError = $this->mUploadErrorArray [$x];
-			$this->mDesiredDestName = $this->mDestFileArray [$x];
-			$this->mComment = $this->mUploadDescriptionArray [$x];
-			$wgOut->addHTML("<tr><td>");
+			$this->mUploadError 	= $this->mUploadErrorArray[$x];
+			$this->mDesiredDestName = $this->mDestFileArray[$x];
+			$this->mComment 		= $this->mUploadDescriptionArray[$x];
+			$this->mFileProps		= $this->mFileProps[$x];
+
+			$wgOut->addHTML( '<tr><td>' );
 			parent::processUpload();
-			$wgOut->addHTML("</td></tr>");
+			$wgOut->addHTML( '</td></tr>' );
 		}
 
-		$wgOut->addHTML("</table>");
-		// Wikia, Bartek Lapinski 26.03.09 - display a form again with a warning if we gave no files, instead of a blank screen
-		if( 0 == $images) {
+		$wgOut->addHTML( '</table>' );
+		// Display a form again with a warning if we gave no files, instead of a blank screen
+		if( 0 == $images ) {
 			$this->mShowUploadForm = true;
-			$this->mUploadSaveName = wfMsg( 'multiupload-blank' ) ;
+			$this->mUploadSaveName = wfMsg( 'multiupload-blank' );
 			$this->mainUploadForm( wfMsg( 'multiupload-no-files' ) );
 		} else {
 			$this->mShowUploadForm = false;
@@ -152,6 +174,7 @@ class MultipleUploadForm extends UploadForm {
 				$this->showWarningOptions();
 			}
 		}
+		$wgOut->addHTML( Xml::closeElement( 'form' ) . "\n");
 	}
 
 	/**
@@ -160,15 +183,9 @@ class MultipleUploadForm extends UploadForm {
 	 */
 	function showSuccess() {
 		global $wgUser, $wgOut, $wgContLang;
-
-		$sk = $wgUser->getSkin();
-		$ilink = $sk->makeMediaLink( $this->mUploadSaveName, Image::imageUrl( $this->mUploadSaveName ) );
-		$dname = $wgContLang->getNsText( NS_IMAGE ) . ':'.$this->mUploadSaveName;
-		$dlink = $sk->makeKnownLink( $dname, $dname );
-
-		$wgOut->addWikiText( "[[$dname|left|thumb]]" );
-		$text = wfMsgWikiHtml( 'fileuploaded', $ilink, $dlink );
-		$wgOut->addHTML( $text );
+		$t = $this->mLocalFile->getTitle();
+		$wgOut->addHTML( '<h2>' . wfMsg( 'multiupload-fileuploaded' ) . '</h2>' );
+		$wgOut->addWikiText( "[[:{$t->getFullText()}]]" );
 	}
 
 	/**
@@ -179,55 +196,6 @@ class MultipleUploadForm extends UploadForm {
 		global $wgOut;
 		$wgOut->addHTML( "<b>{$this->mUploadSaveName}</b>\n" );
 		$wgOut->addHTML( "<span class='error'>{$error}</span>\n" );
-	}
-
-	/**
-	 * There's something wrong with this file, not enough to reject it
-	 * totally but we require manual intervention to save it for real.
-	 * Stash it away, then present a form asking to confirm or cancel.
-	 *
-	 * @param string $warning as HTML
-	 * @access private
-	 */
-	function uploadWarning( $warning ) {
-		global $wgOut;
-
-		if( !$this->mHasWarning ) {
-			$titleObj = Title::makeTitle( NS_SPECIAL, 'MultipleUpload' );
-			$action = $titleObj->escapeLocalURL( 'action=submit' );
-			$wgOut->addHTML( "<h2>" . wfMsgHtml( 'uploadwarning' )  . "</h2>\n
-				<form id='uploadwarning' method='post' enctype='multipart/form-data' action='$action'>");
-		}
-		$this->mHasWarning = true;
-		$this->mSessionKey = $this->stashSession();
-		if( !$this->mSessionKey ) {
-			# Couldn't save file; an error has been displayed so let's go.
-			return;
-		}
-
-		$wgOut->addHTML( "<b>{$this->mUploadSaveName}</b>\n" );
-		$wgOut->addHTML( "<ul class='warning'>{$warning}</ul><br />\n" );
-		$wgOut->addHTML(" <input type='hidden' name='wpUploadDescription_{$this->mFileIndex}' value=\"" . htmlspecialchars( $this->mUploadDescription ) . "\" />");
-	}
-
-	function stashSession() {
-		$stash = $this->saveTempUploadedFile( $this->mUploadSaveName, $this->mUploadTempName );
-
-		if( !$stash ) {
-			# Couldn't save the file.
-			return false;
-		}
-
-		if( $this->mSessionKey == null )
-			$key = mt_rand( 0, 0x7fffffff );
-		else
-			$key = $this->mSessionKey;
-		$_SESSION["wsUploadData_" . $this->mFileIndex][$key] = array(
-			'mUploadTempName' => $stash,
-			'mUploadSize'	 => $this->mUploadSize,
-			'mOname'		  => $this->mOname
-		);
-		return $key;
 	}
 
 	function showWarningOptions() {
@@ -320,7 +288,7 @@ class MultipleUploadForm extends UploadForm {
 		$wgOut->addScriptFile( $wgScriptPath.'/extensions/MultiUpload/multiupload.js' );
 		$wgOut->addHTML( "
 	<form id='upload' method='post' enctype='multipart/form-data' action=\"$action\">
-		<table border='0'>
+		<table border='0' width='90%'>
 		<tr>
 			<td align='left'><label for='wpUploadFile'><b>{$sourcefilename}</b></label></td>
 			<td align='left'><label for='wpDestFile'><b>{$destfilename}</b></label></td>
@@ -349,7 +317,7 @@ class MultipleUploadForm extends UploadForm {
 			// This is one nasty hack...but necessary to make upload.js not bitch if the user actually touches the "Licensing" dropdown menu instead of just admiring it from a distance.
 			$wgOut->addInlineScript( 'var wgAjaxLicensePreview = "'.$wgAjaxLicensePreview.'";' );
 			$wgOut->addHTML( "
-			<td align='left' colspan=3>
+			<td align='left' colspan='3'>
 			<label for='wpLicense'>$license</label>
 				<select name='wpLicense' id='wpLicense' tabindex='4' style='font-size: xx-small;'
 					onchange='licenseSelectorCheck()'>
@@ -360,8 +328,8 @@ class MultipleUploadForm extends UploadForm {
 			</tr>
 			<tr>");
 			// So that the license previews will show up on the page
-			$wgOut->addHTML( '<td></td>
-					<td id="mw-license-preview"></td>
+			$wgOut->addHTML( '
+					<td id="mw-license-preview" colspan="3"></td>
 				</tr>
 				<tr>' );
 		}
@@ -403,6 +371,81 @@ class MultipleUploadForm extends UploadForm {
 
 	</table>
 	</form>" );
+	}
+
+	/**
+	 * Override uploadWarning so we can put multiple warnings on the same page
+	 * @param $warning String: warning as HTML
+	 * @access private
+	 */
+	function uploadWarning( $warning ) {
+		global $wgOut, $wgUseCopyrightUpload;
+
+		$this->mHasWarning = true;	
+		$this->mSessionKey = $this->stashSession();
+		if( !$this->mSessionKey ) {
+			# Couldn't save file; an error has been displayed so let's go.
+			return;
+		}
+
+		$wgOut->addHTML( '<h2>' . wfMsgHtml( 'uploadwarning' ) . "</h2>\n" );
+		$wgOut->addHTML( '<ul class="warning">' . $warning . "</ul>\n" );
+
+		$titleObj = SpecialPage::getTitleFor( 'Upload' );
+
+		if ( $wgUseCopyrightUpload ) {
+			$copyright = Xml::hidden( 'wpUploadCopyStatus', $this->mCopyrightStatus ) . "\n" .
+					Xml::hidden( 'wpUploadSource', $this->mCopyrightSource ) . "\n";
+		} else {
+			$copyright = '';
+		}
+
+		$wgOut->addHTML(
+			Xml::hidden( 'wpIgnoreWarning', '1' ) . "\n" .
+			Xml::hidden( 'wpUploadDescription_' . $this->mFileIndex, $this->mComment ) . "\n" .
+			Xml::hidden( 'wpLicense', $this->mLicense ) . "\n" .
+			Xml::hidden( 'wpDestFile_' . $this->mFileIndex, $this->mDesiredDestName ) . "\n" .
+			Xml::hidden( 'wpWatchthis', $this->mWatchthis ) . "\n" .
+			"{$copyright}<br />" .
+			Xml::check( 'wpUpload_' . $this->mSessionKey, array( 'name' => 'wpUpload', 'id' => 'wpUpload', 'checked' => 'checked' ) ) . ' ' .
+			Xml::label( wfMsg( 'ignorewarning' ), 'wpUpload_' . $this->mSessionKey ) . '<br />' .
+			Xml::check( 'wpReUpload_' . $this->mSessionKey ) . 
+			Xml::label( wfMsg( 'reuploaddesc' ), 'wpUpload_' . $this->mSessionKey )
+		);
+	}
+
+	function stashSession() {
+		$stash = $this->saveTempUploadedFile( $this->mDestName, $this->mTempPath );
+
+		if( !$stash ) {
+			# Couldn't save the file.
+			return false;
+		}
+
+		if( $this->mSessionKey == null ) {
+			$this->mSessionKey = mt_rand( 0, 0x7fffffff );
+		}
+		$_SESSION['wsUploadData_' . $this->mFileIndex][$this->mSessionKey] = array(
+			'mTempPath'       => $stash,
+			'mFileSize'       => $this->mFileSize,
+			'mSrcName'        => $this->mSrcName,
+			'mFileProps'      => $this->mFileProps,
+			'version'         => self::SESSION_VERSION,
+		);
+		return $this->mSessionKey;
+	}
+
+	/**
+	 * If we've modified the upload file we need to manually remove it
+	 * on exit to clean up.
+	 * @access private
+	 */ 
+	function cleanupTempFile() {
+		global $wgMaxUploadFiles;
+		for( $x = 0; $x < $wgMaxUploadFiles; $x++ ) {
+			$this->mTempPath = $this->mTempPathArray[$x];
+			parent::cleanupTempFile();
+		}
 	}
 
 }

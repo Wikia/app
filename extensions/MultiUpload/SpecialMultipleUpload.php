@@ -17,9 +17,10 @@ $wgMaxUploadFiles = isset( $wgMaxUploadFiles ) ? intval( $wgMaxUploadFiles ) : 5
 
 // Extension credits that will show up on Special:Version
 $wgExtensionCredits['specialpage'][] = array(
+	'path' => __FILE__,
 	'name' => 'MultipleUpload',
 	'author' => 'Travis Derouin',
-	'version' => '1.0',
+	'version' => '1.01',
 	'description' => 'Allows users to upload several files at once.',
 	'descriptionmsg' => 'multipleupload-desc',
 	'url' => 'http://www.mediawiki.org/wiki/Extension:MultiUpload',
@@ -36,7 +37,6 @@ $wgSpecialPageGroups['MultipleUpload'] = 'media';
 
 // Hooked functions
 $wgHooks['MonoBookTemplateToolboxEnd'][]  = 'wfMultiUploadToolbox';
-$wgHooks['UploadComplete'][]  = 'wfMultiUploadShowSuccess';
 $wgHooks['SkinTemplateBuildNavUrlsNav_urlsAfterPermalink'][] = 'wfSpecialMultiUploadNav';
 
 // Add the link to Special:MultipleUpload to all SkinTemplate-based skins for users with the 'upload' user right
@@ -69,15 +69,3 @@ function wfMultiUploadToolbox( &$monobook ) {
 	return true;
 }
 
-// Show thumbnails of the images on MultipleUpload page after uploading them
-function wfMultiUploadShowSuccess( $uploadForm ) {
-	global $wgOut, $wgTitle;
-	wfLoadExtensionMessages( 'MultiUpload' );
-	if( $wgTitle->getText() == "MultipleUpload" ) {
-		$imgTitle = $uploadForm->mLocalFile->getTitle();
-		$wgOut->addWikiText( "[[{$imgTitle->getFullText()}|left|thumb]]" );
-		$text = wfMsgWikiHtml( 'multiupload-fileuploaded' );
-		$wgOut->addHTML( $text );
-	}
-	return true;
-}
