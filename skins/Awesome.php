@@ -1385,13 +1385,7 @@ class AwesomeTemplate extends QuickTemplate {
 <?php
 wfRunHooks('GetHTMLAfterBody', array ($this));
 ?>
-
-		<div style="font-size: 1px; position: absolute;">
-			<a href="/wiki/Special:Recentchanges" accesskey="r">Recent changes</a>
-			<a href="/wiki/Special:Random" accesskey="x">Random page</a>
-		</div>
-
-		<!-- HEADER -->
+	<!-- HEADER -->
 <?php
 
 // curse like cobranding
@@ -2052,7 +2046,7 @@ if(count($wikiafooterlinks) > 0) {
 		if(is_array($linksArrayL) && count($linksArrayL) > 0) {
 		    foreach($linksArrayL as $key => $val) {
 ?>
-						<li><a rel="nofollow" href="<?= htmlspecialchars($val['href']) ?>"><?= htmlspecialchars($val['text']) ?></a></li>
+								<li><a rel="nofollow" href="<?= htmlspecialchars($val['href']) ?>"><?= htmlspecialchars($val['text']) ?></a></li>
 <?php
 		    }
         }
@@ -2065,11 +2059,12 @@ if(count($wikiafooterlinks) > 0) {
 		if(is_array($linksArrayR) && count($linksArrayR) > 0) {
 		    foreach($linksArrayR as $key => $val) {
 ?>
-						<li><a rel="nofollow" href="<?= htmlspecialchars($val['href']) ?>"><?= htmlspecialchars($val['text']) ?></a></li>
+								<li><a rel="nofollow" href="<?= htmlspecialchars($val['href']) ?>"><?= htmlspecialchars($val['text']) ?></a></li>
 <?php
 		    }
         }
 ?>
+								<li style="font-size: 1px; position: absolute; top: 10px"><a href="<?= Title::newFromText('Special:Recentchanges')->getLocalURL() ?>" accesskey="r">Recent changes</a><a href="<?= Title::newFromText('Special:Random')->getLocalURL() ?>" accesskey="x">Random page</a></li>
 							</ul>
 						</td>
 					</tr>
