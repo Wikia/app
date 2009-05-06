@@ -661,7 +661,7 @@ $.fn.extend({
 		$(document).unbind(".headerMenu");
 		trigger.bind("click.headerMenu", headerMenuFunction);
 		menu.slideUp("fast", function() {
-			//menu.remove();
+			menu.remove();
 		});
 	}
 });
