@@ -257,3 +257,9 @@ define('NS_VIDEO', '400');
 $wgJobClasses[ "ACWLocal" ] = "AutoCreateWikiLocalJob";
 //$wgAutoloadClasses[ "AutoCreateWikiLocalJob" ] = $IP . "/extensions/wikia/AutoCreateWiki/AutoCreateWikiLocalJob.php";
 include_once( "$IP/extensions/wikia/AutoCreateWiki/AutoCreateWikiLocalJob.php" );
+
+$wgReportTimeToStomp = false;
+$wgStompServer = '';
+$wgStompUser = '';
+$wgStompPassword = '';
+$wgAutoloadClasses['Stomp'] = "$IP/lib/Stomp.php";
