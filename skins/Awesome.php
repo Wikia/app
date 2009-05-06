@@ -394,7 +394,7 @@ class SkinAwesome extends SkinTemplate {
 			wfProfileIn(__METHOD__ . ' - DATA ARRAY');
 			$data_array['footerlinks'] = $this->getFooterLinks();
 			$data_array['wikiafooterlinks'] = $this->getWikiaFooterLinks();
-			$data_array['categorylist'] = $this->getCategoryList();
+			$data_array['categorylist'] = DataProvider::getCategoryList();
 			$data_array['toolboxlinks'] = $this->getToolboxLinks();
 			//$data_array['sidebarmenu'] = $this->getSidebarLinks();
 			$data_array['relatedcommunities'] = $this->getRelatedCommunitiesLinks();
@@ -592,38 +592,6 @@ EOS;
 		}
 		wfProfileOut( __METHOD__ );
 		return $nodes;
-	}
-
-	/**
-	 * @author Inez Korczynski <inez@wikia.com>
-	 */
-	 private function getCategoryList() {
-		wfProfileIn(__METHOD__);
-		global $wgCat;
-		$cat['text'] = isset($wgCat['name']) ? $wgCat['name'] : '';
-		$cat['href'] = isset($wgCat['url']) ? $wgCat['url'] : '';
-		$message_key = 'shared-Monaco-category-list';
-		$nodes = array();
-
-		if(!isset($wgCat['id']) || null == ($lines = getMessageAsArray($message_key.'-'.$wgCat['id']))) {
-			wfDebugLog('monaco', $message_key.'-'.$wgCat['id'] . ' - seems to be empty');
-			if(null == ($lines = getMessageAsArray($message_key))) {
-				wfDebugLog('monaco', $message_key . ' - seems to be empty');
-				wfProfileOut( __METHOD__ );
-				return $nodes;
-			}
-		}
-
-		foreach($lines as $line) {
-			$depth = strrpos($line, '*');
-			if($depth === 0) {
-				$cat = parseItem($line);
-			} else if($depth === 1) {
-				$nodes[] = parseItem($line);
-			}
-		}
-		wfProfileOut( __METHOD__ );
-		return array('nodes' => $nodes, 'cat' => $cat);
 	}
 
 	/**
