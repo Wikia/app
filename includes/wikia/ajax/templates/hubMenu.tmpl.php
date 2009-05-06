@@ -30,5 +30,5 @@
 ?>
 </div>
 <script type="text/javascript">
-	$("#headerMenuHub").makeHeaderMenu("<?=$_GET['trigger']?>");
+	$("#headerMenuHub").makeHeaderMenu('headerButtonHub');
 </script>
