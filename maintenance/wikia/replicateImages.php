@@ -91,6 +91,7 @@ class WikiaReplicateImages {
 					 * server
 					 */
 					if( ( $Row->up_flags & $server["flag"] ) == $server["flag"] ) {
+						$flags = $flags | $server["flag"];
 						Wikia::log( __CLASS__, "info", "{$Row->up_flags} vs {$server["flag"]}: already uploaded to {$name}" );
 						continue;
 					}
