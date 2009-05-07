@@ -567,7 +567,7 @@ $.fn.extend({
    		.fadeIn("fast");
 
 	$("h1.modalTitle div").bind("click", function() {
-		wrapper.closeModal(te()).getTime()
+		wrapper.closeModal();
 	});
 
    	$(window)
