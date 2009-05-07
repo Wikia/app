@@ -394,6 +394,12 @@ function showCarousel(e) {
 						allow = true;
 					}
 				}
+			} else if (widgetConfig.languages.length > 0) {
+				for(var j in widgetConfig.languages) {
+					if(wgContentLanguage.indexOf(widgetConfig.languages[j]) >= 0) {
+						allow = true;
+					}
+				}
 			} else {
 				allow = true;
 			}

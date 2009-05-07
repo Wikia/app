@@ -17,13 +17,22 @@ $wgWidgets['WidgetAnswers'] = array(
     ),
     'closeable' => true,
     'editable' => false,
-    'listable' => true
+    'listable' => true,
+    'languages' => array( 'en' ), # only show in carousel on EN wikis
 );
 
 
 function WidgetAnswers($id, $params) {
 
     wfProfileIn(__METHOD__);
+
+	# If wiki is not English, hide the widget (#14994)
+	# FIXME: ideally this should be handled by the languages param set above
+	# directly in WidgetFramework::Draw()
+	global $wgLanguageCode;
+	if ( $wgLanguageCode != 'en' ) {
+		return '';
+	}
 
 	static $languageLoaded;
 	if (empty($languageLoaded)){
