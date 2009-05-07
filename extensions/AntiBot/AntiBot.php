@@ -22,7 +22,8 @@
  * Persistent secret token used for setting form field names and what not
  * Change it periodically if they try to filter by any affected form field
  */
-$wgAntiBotSecret = '';
+if ( empty( $wgAntiBotSecret ) ) # now set in CommonSettings.php
+	$wgAntiBotSecret = '';
 
 /** Configure the payload sequence when each plugin is triggered */
 $wgAntiBotPayloads = array(
