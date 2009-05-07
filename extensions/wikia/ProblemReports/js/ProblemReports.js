@@ -41,47 +41,14 @@ ProblemReportsDialog.prototype = {
 		// scroll to the top of the page
 		window.scrollTo(0,0);
 
+		var browserInfo = this.getBrowserInfo();
+
 		// get problem reports form
 		$.get(wgScript + '?action=ajax&rs=wfProblemReportsAjaxGetDialog&title=' + encodeURIComponent(args.title) + '&uselang='+ wgUserLanguage + '&cb=' + wgMWrevId + '-' + wgStyleVersion, function(html) {
 			$("#positioned_elements").append(html);
 			$('#reportProblemForm').makeModal({width: 580});
+			$('#pr_browser').html(browserInfo);
 		});
-	},
-
-	// show dialog after content arrival (via AJAX)
-	showPanel: function(firstTime) {
-
-		// create, render & show YUI panel
-		this.panel = new YAHOO.widget.Panel(this.form, {fixedcenter: false, modal: true, draggable: false, width: '565px', zIndex: 1500});
-
-		this.panel.render(document.body);
-
-		// center form
-		var left = parseInt(YAHOO.util.Dom.getViewportWidth() / 2 - 580/2);
-		YAHOO.util.Dom.setStyle(this.form, 'left', left + 'px');
-
-		// register event handlers
-		if (firstTime) {
-			// register handler for close button
-			YAHOO.util.Event.addListener("pr_cancel", "click", function(ev,o) {
-				o.panel.hide();
-			}, this);
-		}	
-
-		// register handler for beforeHideEvent
-		this.panel.beforeHideEvent.subscribe(function(name, args, o) {
-			o.track('cancel'); // track cancelled problem reports
-		}, this);
-
-		this.panel.show();
-
-		// fill pr_browser with browser name, flash version and stuff
-		YAHOO.util.Dom.get('pr_browser').innerHTML = this.getUserInfo();
-
-		// tracking
-		this.track('open');
-
-		return false;
 	},
 
 	// submit dialog
@@ -169,13 +136,15 @@ ProblemReportsDialog.prototype = {
 	},
 
 	// get user data (browser, skin, theme, etc)
-	getUserInfo: function() {
+	getBrowserInfo: function() {
 		// user agent
-		info  = 'Browser: ' + YAHOO.Tools.getBrowserEngine().ua;
+		info  = 'Browser: ' + navigator.userAgent;
 
 		// flash
+		/*
 		flashVer = parseInt(YAHOO.Tools.checkFlash()) ? YAHOO.Tools.checkFlash() : 'none';
 		info += ' Flash: ' + flashVer;
+		*/
 
 		// skin and theme
 		info += ' Skin: ' + skin;
