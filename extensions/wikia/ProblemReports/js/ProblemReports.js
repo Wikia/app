@@ -136,9 +136,9 @@ ProblemReportsDialog.prototype = {
 
 	// jQuery/Christian popup dialog wrapper
 	infobox: function(header, body) {
-		html = '<div id="problemReportsInfobox" title="' + header + '">' + body + '</div>';
+		html = '<div id="problemReportsInfobox" title="' + header + '"><div style="padding: 5px">' + body + '</div></div>';
 		$("#positioned_elements").append(html);
-		$("#problemReportsInfobox").makeModal({width: 200});
+		$("#problemReportsInfobox").makeModal({width: 300});
 	},
 
 	// do tracking stuff
@@ -146,15 +146,4 @@ ProblemReportsDialog.prototype = {
 		$().log('ProblemReports: track "' + url + '"');
 		// YAHOO.Wikia.Tracker.trackByStr(null, 'report-problem/' + url);
 	}
-}
-
-if (typeof wikiaProblemReportsDialog == 'undefined') {
-
-	var wikiaProblemReportsDialog = false;
-
-	// initialize report a problem dialog handling JS
-	YAHOO.util.Event.onDOMReady( function () {
-		wikiaProblemReportsDialog = new YAHOO.wikia.ProblemReportsDialog();
-		wikiaProblemReportsDialog.init(["fe_report_link", "ca-report-problem"]);
-	});
 }
