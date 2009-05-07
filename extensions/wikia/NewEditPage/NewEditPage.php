@@ -83,7 +83,7 @@ function wfNewEditPageAddPreviewBar($editPage) {
 	}
 
 	// we're in preview mode
-	// extra check for categories - they formtype always set to 'preview' (rt#15017)
+	// extra check for categories - they have `formtype` always set to 'preview' (rt#15017)
 	if ($editPage->formtype == 'preview' && !($editPage->mTitle->mNamespace == NS_CATEGORY && ($wgRequest->getVal('action') != 'submit' || !$wgRequest->wasPosted()))) {
 		wfLoadExtensionMessages('NewEditPage');
 		$wgOut->addHTML('<div id="new_edit_page_preview_notice">' . wfMsg('new-edit-page-preview-notice') . '</div>');
