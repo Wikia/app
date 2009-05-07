@@ -1,10 +1,13 @@
-<b class="xtop"><b class="xb1"></b><b class="xb2"></b><b class="xb3"></b><b class="xb4"></b></b><div class="r_boxContent">
-
+<?php
+	global $wgExtensionsPath, $wgStyleVersion;
+?>
+<style type="text/css">
+	@import url('<?= $wgExtensionsPath ?>/wikia/ProblemReports/css/ProblemReports.css?<?= $wgStyleVersion ?>');
+</style>
+<div id="reportProblemForm" title="<?= htmlspecialchars(wfMsg('reportproblem')) ?> | <?= htmlspecialchars($pageTitle) ?>">
 <form name="reportProblem" id="reportProblem" method="post" action="" onsubmit="return wikiaProblemReportsDialog.panelSubmit()">
 
 <input type="hidden" name="pr_ns" value="<?= $pageNamespace ?>" />
-
-<div class="boxHeader color1"><?= htmlspecialchars(wfMsg('reportproblem')) ?> | <span style="text-transform: none"><?= $pageTitle ?></span></div>
 
 <div class="reportProblemText"><?= $introductoryText ?></div>
 
@@ -43,4 +46,5 @@
     <input type="button" value="<?= htmlspecialchars(wfMsg('cancel')) ?>" id="pr_cancel" style="margin-left: 30px" />
 </div>
 
-</form><div style="clear: both"></div></div><b class="xbottom"><b class="xb4"></b><b class="xb3"></b><b class="xb2"></b><b class="xb1"></b></b>
+</form><div style="clear: both"></div></div>
+</div>
