@@ -35,7 +35,8 @@ $wgWidgetsOrderedList = array(
 	'WidgetAncientPages',
 	'WidgetShoutBox',
 	'WidgetWikiPage',
-	'WidgetNewPages'
+	'WidgetNewPages',
+	'WidgetAnswers'
 );
 
 global $wgWidgets;
@@ -51,6 +52,7 @@ foreach($wgWidgets as $key => $val) {
 	$widgetsConfig[$key]['title'] = $val['title'];
 	$widgetsConfig[$key]['desc'] = isset($val['desc']) ? $val['desc'] : array('en' => 'N/A');
 	$widgetsConfig[$key]['groups'] = isset($val['groups']) ? $val['groups'] : array();
+	$widgetsConfig[$key]['languages'] = isset($val['languages']) ? $val['languages'] : array();
 }
 
 $widgetsConfigStr = 'var widgetsConfig = '.Wikia::json_encode($widgetsConfig).';';
