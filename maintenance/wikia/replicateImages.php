@@ -122,6 +122,17 @@ class WikiaReplicateImages {
 
 							if( $retval > 0 ) {
 								Wikia::log( __CLASS__, "error", "{$cmd} command failed." );
+								/**
+								 * maybe we don't have target directory?
+								 * try to create remote directory
+								 */
+								$cmd = wfEscapeShellArg(
+									"/usr/bin/ssh",
+									$login . '@' . $server["address"],
+									escapeshellcmd( "mkdir -p " . dirname( $destination ) )
+								);
+								$output = wfShellExec( $cmd, $retval );
+								Wikia::log( __CLASS__, "info", "{$cmd}" );
 							}
 							else {
 								Wikia::log( __CLASS__, "info", "{$cmd}." );
