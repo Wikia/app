@@ -26,13 +26,14 @@ ProblemReportsDialog.prototype = {
 		if ( (len > 512) && (false == this.blocked) ) {			
 			this.blocked = true;
 			// disable the submit button & show the alert to tell the user what went wrong...
-			YAHOO.util.Dom.addClass('pr_summary', 'errorField');
-			YAHOO.util.Dom.get("pr_submit").disabled = true;
+			$('#pr_summary'). addClass('errorField');
+			$('#pr_submit').attr('disabled', true);
 			this.infobox( pr_msg_exchead, pr_msg_exceeded, "OK", function() {this.hide()});
-		} else if ((len <= 512) &&  (this.blocked)) {
-				YAHOO.util.Dom.removeClass('pr_summary', 'errorField');
-				YAHOO.util.Dom.get("pr_submit").disabled = false;
-				this.blocked = false;
+		}
+		else if ((len <= 512) &&  (this.blocked)) {
+			$('#pr_summary').removeClass('errorField');
+			$('#pr_submit').attr('disabled', false);
+			this.blocked = false;
 		}
 	},
 
@@ -53,86 +54,64 @@ ProblemReportsDialog.prototype = {
 
 	// submit dialog
 	panelSubmit: function() {
-
-		// send AJAX request
-		var callback = {
-			success: function(o) { o.argument.panelSubmitCheck(YAHOO.Tools.JSONParse(o.responseText)); },
-			failure: function(o) { console.log(o); },
-			argument: this
-		}
-
-		// format AJAX request params
-		var fields = YAHOO.util.Dom.get('reportProblem').elements;
-		var postData = "action=ajax&rs=wfProblemReportsAjaxReport";
+		// format AJAX request URL
+		var fields = $('#reportProblem').attr('elements');
+		var url = wgScript + "?action=ajax&rs=wfProblemReportsAjaxReport";
 
 		for (f=0; f < fields.length; f++) {
-			postData += (fields[f].name != '') ?  "&" + fields[f].name + "=" + encodeURIComponent(fields[f].value) : '';
+			url += (fields[f].name != '') ?  "&" + fields[f].name + "=" + encodeURIComponent(fields[f].value) : '';
 		}
 
 		// add user browser info
-		postData += '&pr_browser=' + encodeURIComponent(YAHOO.util.Dom.get('pr_browser').innerHTML);
+		url += '&pr_browser=' + encodeURIComponent(YAHOO.util.Dom.get('pr_browser').innerHTML);
 
 		// block form submition
-		YAHOO.util.Dom.get("pr_submit").disabled = true;
-		YAHOO.util.Dom.get("pr_cancel").disabled = true;
-
-		YAHOO.util.Dom.setStyle(this.form, 'cursor', 'progress');
+		$('#pr_submit, #pr_cancel').attr('disabled', true);
 
 		// send AJAX request
-		YAHOO.util.Connect.asyncRequest('POST', ((wgScript == null) ? (wgScriptPath + "/index.php") : wgScript), callback, postData);
+		$.getJSON(url, this.panelSubmitCheck);
 
 		return false;
 	},
 
 	// check data returned by PHP logic after dialog submition
 	panelSubmitCheck: function(data) {
-		
+	
+		$().log('ProblemReports: panelSubmitCheck()').log(data);
+	
 		// reset reports dialog CSS
-		YAHOO.util.Dom.get("pr_submit").disabled = false;
-		YAHOO.util.Dom.get("pr_cancel").disabled = false;
-		YAHOO.util.Dom.setStyle(this.form, 'cursor', 'default');
+		$('#pr_submit, #pr_cancel').attr('disabled', false);
 
-		YAHOO.util.Dom.removeClass('pr_email',   'errorField');
-		YAHOO.util.Dom.removeClass('pr_summary', 'errorField');
-		YAHOO.util.Dom.removeClass('pr_cat',     'errorField');
+		$('#pr_email, #pr_summary, #pr_cat').removeClass('errorField');
 
 		// report is not valid
-		if (data.valid == 0)
-		{
+		if (data.valid == 0) {
 			// highlight invalid form fields
 			if (data.email_empty) {
-				YAHOO.util.Dom.addClass('pr_email', 'errorField');
+				$('#pr_email').addClass('errorField');
 			}
 
 			if (data.summary_empty || data.spam) {
-				YAHOO.util.Dom.addClass('pr_summary', 'errorField');
+				$('#pr_summary').addClass('errorField');
 			}
 
 			if (data.cat_empty) {
-				YAHOO.util.Dom.addClass('pr_cat', 'errorField');
+				$('#pr_cat').addClass('errorField');
 			}
 
-			YAHOO.util.Dom.get("pr_submit").disabled = false;
-			YAHOO.util.Dom.get("pr_cancel").disabled = false;
-			YAHOO.util.Dom.setStyle(this.form, 'cursor', 'default');
+			$('#pr_submit, #pr_cancel').attr('disabled', false);
+		
+			wikiaProblemReportsDialog.track('invalid'); // track "invalid" problem reports
+		}
+		else {
+			// close the pop-up
+			$(".modalWrapper").closeModal();
 
-			this.track('invalid'); // track "invalid" problem reports
-
-			// show message from JSON
-			this.infobox(data.caption, data.msg, "OK", function() {this.hide()});
-
-			return;
+			wikiaProblemReportsDialog.track('reported'); // track succesful problem reports
 		}
 
-		// don't track when we hide the panel
-		this.panel.beforeHideEvent.unsubscribe();
-
-		// report was saved -> hide report dialog and show summary dialog
-		this.panel.hide();
-
-		this.track('reported'); // track succesful problem reports
-
-		this.infobox(data.caption, data.msg, "OK", function() {this.hide()});
+		// show message from JSON
+		wikiaProblemReportsDialog.infobox(data.caption, data.msg, "OK", function() {this.hide()});
 	},
 
 	// get user data (browser, skin, theme, etc)
@@ -182,11 +161,9 @@ ProblemReportsDialog.prototype = {
 
 	// do tracking stuff
 	track: function(url) {
-		if (YAHOO.Wikia && YAHOO.Wikia.Tracker) {
-			YAHOO.Wikia.Tracker.trackByStr(null, 'report-problem/' + url);
-		}
+		$().log('ProblemReports: track "' + url + '"');
+		// YAHOO.Wikia.Tracker.trackByStr(null, 'report-problem/' + url);
 	}
-
 }
 
 if (typeof wikiaProblemReportsDialog == 'undefined') {
