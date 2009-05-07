@@ -9,3 +9,7 @@
 ?>
 	</ul>
 </div>
+
+<script type="text/javascript">
+	$("#headerMenuUser").makeHeaderMenu("headerButtonUser", {attach_to: "#wikia_page", attach_at: "top"});
+</script>
