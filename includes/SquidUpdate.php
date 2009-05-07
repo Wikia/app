@@ -79,6 +79,7 @@ class SquidUpdate {
 
 	static function purge( $urlArr ) {
 		global $wgSquidServers, $wgHTCPMulticastAddress, $wgHTCPPort;
+		global $wgPurgeSquidViaStomp;
 
 		/*if ( (@$wgSquidServers[0]) == 'echo' ) {
 			echo implode("<br />\n", $urlArr) . "<br />\n";
@@ -87,6 +88,10 @@ class SquidUpdate {
 
 		if( empty( $urlArr ) ) {
 			return;
+		}
+
+		if( $wgPurgeSquidViaStomp ) {
+			return SquidUpdate::StompPurge( $urlArr );
 		}
 
 		if ( $wgHTCPMulticastAddress && $wgHTCPPort ) {
@@ -254,6 +259,29 @@ class SquidUpdate {
 		} else {
 			$errstr = socket_strerror( socket_last_error() );
 			wfDebug( "SquidUpdate::HTCPPurge(): Error opening UDP socket: $errstr\n" );
+		}
+		wfProfileOut( $fname );
+	}
+
+	static function StompPurge( $urlArr ) {
+		global $wgStompServer, $wgStompUser, $wgStompPassword;
+		$fname = __METHOD__;
+		wfProfileIn( $fname );
+
+		$stomp = new Stomp( $wgStompServer );
+		$stomp->connect( $wgStompUser, $wgStompPassword );
+		$stomp->sync = false;
+		foreach ( $urlArr as $url ) {
+			if( !is_string( $url ) ) {
+				throw new MWException( 'Bad purge URL' );
+			}
+			$url = SquidUpdate::expand( $url );
+
+			wfDebug( "Purging URL $url via Stomp\n" );
+			$stomp->send( 'wikia.purges',
+				Wikia::json_encode( $url ),
+				array( 'exchange' => 'amq.topic', 'bytes_message' => 1 ),
+			);
 		}
 		wfProfileOut( $fname );
 	}

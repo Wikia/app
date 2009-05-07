@@ -258,7 +258,9 @@ $wgJobClasses[ "ACWLocal" ] = "AutoCreateWikiLocalJob";
 //$wgAutoloadClasses[ "AutoCreateWikiLocalJob" ] = $IP . "/extensions/wikia/AutoCreateWiki/AutoCreateWikiLocalJob.php";
 include_once( "$IP/extensions/wikia/AutoCreateWiki/AutoCreateWikiLocalJob.php" );
 
-$wgReportTimeToStomp = false;
+$wgReportTimeViaStomp = false;
+$wgPurgeSquidViaStomp = false;
+
 $wgStompServer = '';
 $wgStompUser = '';
 $wgStompPassword = '';
