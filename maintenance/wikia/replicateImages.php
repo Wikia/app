@@ -164,7 +164,7 @@ class WikiaReplicateImages {
 						array( "up_id" => $Row->up_id )
 					);
 					$dbw->commit();
-					if( $flags > 0 ) {
+					if( ( $flags & $server["flag"] ) == $server["flag"] ) {
 						Wikia::log( __CLASS__, "info", "{$source} copied to ".$login . '@' . $server["address"] . ':' . $destination );
 					}
 				}
