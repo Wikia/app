@@ -1,19 +1,18 @@
 // ProblemReports - JS for "report a problem" dialog
-//
+var ProblemReportsDialog = function () {};
 
-YAHOO.namespace('wikia');
-YAHOO.wikia.ProblemReportsDialog = function () {}
-
-YAHOO.wikia.ProblemReportsDialog.prototype = {
+ProblemReportsDialog.prototype = {
 
 	panel: false,
 	form: false,
 	blocked: false,
 
 	// add onlick event for 'report a problem' action tabs
+	/*
 	init: function(links) {
 		YAHOO.util.Event.addListener(links, "click", this.onClick, {title: wgPageName, obj: this});
 	},
+	*/
 
 	// onClick event handler for lazy loading approach
 	fire: function() {
@@ -39,39 +38,14 @@ YAHOO.wikia.ProblemReportsDialog.prototype = {
 
 	// callback for click on "report a problem" tab / link 
 	onClick: function(type,args) {
-
+		// scroll to the top of the page
 		window.scrollTo(0,0);
 
-		if (!args.obj.form) {
-			// we don't have problem reports form content - get its content via AJAX
-
-			document.body.style.cursor = 'wait'; // show we're doing something in background
-
-			args.obj.form = document.createElement('div');
-			args.obj.form.id = "reportProblemForm";
-			args.obj.form.className = "roundedDiv";
-			args.obj.form.style.cssText = "left: 150px; top: 100px; margin-top: 0; margin-left: 0";
-
-			document.body.appendChild(args.obj.form);
-
-			// get form content via AJAX
-			var callback = {
-				success: function(o) {
-					document.body.style.cursor = 'default';
-					o.argument.form.innerHTML = o.responseText;
-					o.argument.showPanel(true);
-				},
-				failure: function(o) { document.body.style.cursor = 'default'; alert('error'); },
-				argument: args.obj
-			}
-
-			// format AJAX request params
-			YAHOO.util.Connect.asyncRequest("POST", ((wgScript == null) ? (wgScriptPath + "/index.php") : wgScript), callback, "action=ajax&rs=wfProblemReportsAjaxGetDialog&title=" +   encodeURIComponent(args.title) );
-		}
-		else {
-			// yeah, we have problem reports form content - show it...
-			args.obj.showPanel(false);
-		}
+		// get problem reports form
+		$.get(window.wgScript + '?action=ajax&rs=wfProblemReportsAjaxGetDialog&title=' + encodeURIComponent(args.title), function(html) {
+			$("#positioned_elements").append(html);
+			$('#reportProblemForm').makeModal({width: 580});
+		});
 	},
 
 	// show dialog after content arrival (via AJAX)
