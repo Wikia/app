@@ -42,6 +42,9 @@ function GetUserMenu($userName = '') {
 		$link['tooltip'] = !isMsgEmpty('tooltip-pt-'.$id) ?  htmlspecialchars(wfMsg('tooltip-pt-'.$id)) : '';
 		$link['accesskey'] = !isMsgEmpty('accesskey-pt-'.$id) ?  wfMsg('accesskey-pt-'.$id) : '';
 	}
+	$html .= '<script type="text/javascript">
+		$("#headerMenuUser").makeHeaderMenu("headerButtonUser", {attach_to: "#wikia_page", attach_at: "top"});
+		</script>';
 
 	$tmpl = new EasyTemplate(dirname(__FILE__).'/templates');
 

@@ -1,9 +1,5 @@
 function WidgetCommunityDetailsToggle(node) {
-
-    var Dom = YAHOO.util.Dom;
-    var ul = node.parentNode.getElementsByTagName('ul')[0];
-
-    Dom.setStyle(ul, 'display', ( Dom.getStyle(ul, 'display') == 'none') ? '' : 'none');
+	$(node).siblings("ul").toggle();
 }
 
 // tracking
