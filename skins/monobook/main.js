@@ -1,5 +1,5 @@
 // macbre: moved here from onejstorule.js
-var $ = YAHOO.util.Dom.get;
+var $G = YAHOO.util.Dom.get;
 
 function ShowDialogInfo(header, body, txtOK, handleOK)
 {
