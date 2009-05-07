@@ -39,7 +39,7 @@ class QuestionGameUploadForm extends UploadForm{
 				$this->mainUploadForm( wfMsgHtml( 'emptyfile' ) );
 			    return;
 
-			case self::MIN_LENGHT_PARTNAME:
+			case self::MIN_LENGTH_PARTNAME:
 				$this->mainUploadForm( wfMsgHtml( 'minlength1' ) );
 			    return;
 
