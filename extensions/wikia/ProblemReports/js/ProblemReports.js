@@ -134,29 +134,11 @@ ProblemReportsDialog.prototype = {
 		return info;
 	},
 
-	// YUI popup dialog wrapper
-	infobox: function(header, body, txtOK, handleOK) {
-
-		Dialog = new YAHOO.widget.SimpleDialog("wikiaDialogInfo",
-		{
-			width: "250px",
-			zIndex: 999,
-			effect: {effect: YAHOO.widget.ContainerEffect.FADE, duration: 0.25},
-			fixedcenter: true,
-			modal: true,
-			draggable: true,
-			close: false
-		});
-
-		var buttons = [ { text: txtOK, handler: handleOK, isDefault: true} ];
-
-		Dialog.setHeader(header);
-		Dialog.setBody(body);
-		Dialog.cfg.setProperty('icon', YAHOO.widget.SimpleDialog.ICON_INFO);
-		Dialog.cfg.queueProperty("buttons", buttons);
-
-		Dialog.render(document.body);
-		Dialog.show();
+	// jQuery/Christian popup dialog wrapper
+	infobox: function(header, body) {
+		html = '<div id="problemReportsInfobox" title="' + header + '">' + body + '</div>';
+		$("#positioned_elements").append(html);
+		$("#problemReportsInfobox").makeModal({width: 200});
 	},
 
 	// do tracking stuff
