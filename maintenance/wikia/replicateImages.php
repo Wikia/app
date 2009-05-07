@@ -49,42 +49,54 @@ class WikiaReplicateImages {
 	 *
 	 */
 	public function execute() {
-		$iImageLimit = isset( $this->mOptions['limit'] ) ? $this->mOptions['limit'] : 10;
+		$limit = isset( $this->mOptions['limit'] ) ? $this->mOptions['limit'] : 10000;
 		// rsync must be run from root in order to save file's ownership
 		$login = isset( $this->mOptions['u']) ? $this->mOptions['u'] : 'root';
 		$test = isset( $this->mOptions['test']) ? true : false;
 		$dbr = wfGetDBExt( DB_SLAVE );
 		$dbw = wfGetDBExt( DB_MASTER );
 
+		/**
+		 * count flag for image copied on all servers
+		 */
+		$copied = 0;
+		foreach( $this->mServers as $server ) {
+			$copied = $copied | $server["flag"];
+		}
+		Wikia::log( __CLASS__, "info", "flags for all copied is {$copied}" );
 
 		$oResource = $dbr->select(
 			array( "upload_log" ),
-			array( "up_id", "up_path" ),
-			array(
-				$dbr->makeList(
-					array( "up_flags" => 0, "up_flags" => -1 ),
-					LIST_OR
-				),
-			),
+			array( "up_id", "up_path", "up_flags" ),
+			array( "up_flags = 0 OR (up_flags & {$copied}) = {$copied}" ),
 			__METHOD__,
 			array(
 				  "ORDER BY" => "up_created ASC",
-				  "LIMIT" => $iImageLimit
+				  "LIMIT" => $limit
 			)
 		);
 
 		if( $oResource ) {
-			while( $oResultRow = $dbr->fetchObject( $oResource ) ) {
+			while( $Row = $dbr->fetchObject( $oResource ) ) {
 				$flags = 0;
-				$source = $oResultRow->up_path;
+				$source = $Row->up_path;
 
-				foreach( $this->mServers as $server ) {
+				foreach( $this->mServers as $name => $server ) {
+
+					/**
+					 * check flags. Maybe file is already copied to destination
+					 * server
+					 */
+					if( ( $Row->up_flags & $server["flag"] ) == $server["flag"] ) {
+						Wikia::log( __CLASS__, "info", "already uploaded to {$name}" );
+						continue;
+					}
 
 					/**
 					 * some server have other directories layout
 					 */
 					if( $server[ "transform" ] ) {
-						$destination = $this->transformPath( $source, $server );
+						$destination = $this->transformPath( $source, $name );
 					}
 					else {
 						$destination = $source;
@@ -98,7 +110,7 @@ class WikiaReplicateImages {
 							"/usr/bin/rsync",
 							"-axp",
 							"--chmod=g+w",
-							$oResultRow->up_path,
+							$Row->up_path,
 							escapeshellcmd( $login . '@' . $server["address"] . ':' . $destination )
 						);
 
@@ -123,7 +135,7 @@ class WikiaReplicateImages {
 					}
 				}
 
-				if( $success && !$test ) {
+				if( !$test && $flags ) {
 					$dbw->begin();
 					$dbw->update(
 						"upload_log",
@@ -131,7 +143,7 @@ class WikiaReplicateImages {
 							"up_sent" => wfTimestampNow(),
 							"up_flags" => $flags
 						),
-						array( "up_id" => $oResultRow->up_id )
+						array( "up_id" => $Row->up_id )
 					);
 					$dbw->commit();
 					if( $flags > 0 ) {
@@ -141,7 +153,7 @@ class WikiaReplicateImages {
 			}
 		}
 		else {
-			print("No new images to for replication.\n");
+			Wikia::log(__CLASS__, "info", "No new images to for replication.");
 		}
 	}
 
@@ -155,7 +167,6 @@ class WikiaReplicateImages {
 	 */
 	public function transformPath( $source, $server ) {
 		$destination = $source;
-
 		switch( $server ) {
 			case "file3":
 			case "file4":
