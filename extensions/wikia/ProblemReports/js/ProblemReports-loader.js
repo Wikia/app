@@ -12,9 +12,6 @@ $(function() {
 				wikiaProblemReportsDialog = new ProblemReportsDialog();
 				wikiaProblemReportsDialog.fire();
 			});
-			$.get(wgExtensionsPath + '/wikia/ProblemReports/css/ProblemReports.css?' + wgStyleVersion, function() {
-				$().log('ProblemReports: CSS loaded');
-			});
 		}
 		else {
 			// already loaded, show pop-up
