@@ -147,6 +147,7 @@ class WikiaReplicateImages {
 					else {
 						Wikia::log( __CLASS__, "info", "{$source} doesn't exists." );
 						$flags = -1;
+						break;
 					}
 				}
 
