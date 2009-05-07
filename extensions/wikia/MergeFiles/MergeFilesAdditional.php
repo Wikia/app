@@ -78,6 +78,11 @@ $MF['monobook_js']['source'] = array(
 	'common/yui_2.5.2/tabview/tabview.js',
 	'common/yui_extra/tools-min.js',
 
+	'common/jquery/jquery-1.3.2.min.js',
+	'common/jquery/jquery.json-1.3.min.js',
+	'common/jquery/jquery.cookies.2.0.1.min.js',
+	'common/jquery/jquery.wikia.js',
+
 	'common/urchin.js',
 	'common/wikibits.js',
 	'monobook/main.js',
