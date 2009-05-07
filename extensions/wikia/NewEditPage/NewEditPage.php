@@ -74,7 +74,7 @@ function wfNewEditPageAddCSS() {
 
 // add red preview notice in old editor
 function wfNewEditPageAddPreviewBar($editPage) {
-	global $wgOut, $wgUser, $wgHooks;
+	global $wgOut, $wgUser, $wgHooks, $wgRequest;
 
 	// do not touch skins other than Monaco (RT #13061)
 	$skinName = get_class($wgUser->getSkin());
@@ -83,7 +83,8 @@ function wfNewEditPageAddPreviewBar($editPage) {
 	}
 
 	// we're in preview mode
-	if ($editPage->formtype == 'preview') {
+	// extra check for categories - they formtype always set to 'preview' (rt#15017)
+	if ($editPage->formtype == 'preview' && !($editPage->mTitle->mNamespace == NS_CATEGORY && ($wgRequest->getVal('action') != 'submit' || !$wgRequest->wasPosted()))) {
 		wfLoadExtensionMessages('NewEditPage');
 		$wgOut->addHTML('<div id="new_edit_page_preview_notice">' . wfMsg('new-edit-page-preview-notice') . '</div>');
 
