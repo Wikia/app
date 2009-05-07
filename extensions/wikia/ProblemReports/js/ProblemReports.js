@@ -42,7 +42,7 @@ ProblemReportsDialog.prototype = {
 		window.scrollTo(0,0);
 
 		// get problem reports form
-		$.get(window.wgScript + '?action=ajax&rs=wfProblemReportsAjaxGetDialog&title=' + encodeURIComponent(args.title), function(html) {
+		$.get(wgScript + '?action=ajax&rs=wfProblemReportsAjaxGetDialog&title=' + encodeURIComponent(args.title) + '&uselang='+ wgUserLanguage + '&cb=' + wgMWrevId + '-' + wgStyleVersion, function(html) {
 			$("#positioned_elements").append(html);
 			$('#reportProblemForm').makeModal({width: 580});
 		});
