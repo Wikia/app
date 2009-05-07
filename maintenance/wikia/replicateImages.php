@@ -108,7 +108,7 @@ class WikiaReplicateImages {
 					if( file_exists( $source ) || $test ) {
 						$cmd = wfEscapeShellArg(
 							"/usr/bin/rsync",
-							"-axp",
+							"-axpr",
 							"--chmod=g+w",
 							$Row->up_path,
 							escapeshellcmd( $login . '@' . $server["address"] . ':' . $destination )
