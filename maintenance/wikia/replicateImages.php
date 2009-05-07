@@ -68,7 +68,10 @@ class WikiaReplicateImages {
 		$oResource = $dbr->select(
 			array( "upload_log" ),
 			array( "up_id", "up_path", "up_flags" ),
-			array( "up_flags = 0 OR (up_flags & {$copied}) = {$copied}" ),
+			array(
+				"up_flags = 0 OR (up_flags & {$copied}) <> {$copied}",
+				"up_flags <> -1"
+			),
 			__METHOD__,
 			array(
 				  "ORDER BY" => "up_created ASC",
@@ -88,7 +91,7 @@ class WikiaReplicateImages {
 					 * server
 					 */
 					if( ( $Row->up_flags & $server["flag"] ) == $server["flag"] ) {
-						Wikia::log( __CLASS__, "info", "already uploaded to {$name}" );
+						Wikia::log( __CLASS__, "info", "{$Row->up_flags} vs {$server["flag"]}: already uploaded to {$name}" );
 						continue;
 					}
 
