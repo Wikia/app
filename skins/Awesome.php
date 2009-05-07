@@ -1445,25 +1445,6 @@ if( $custom_user_data ) {
 		</div>
 	</div>
 
-	<div class="monaco_shrinkwrap" style="position: absolute; top: 0; z-index: 20">
-<?php
-	if(isset($this->data['userlinks']['more'])) {
-?>
-			<div id="headerMenuUser" class="headerMenu color1 reset">
-					<ul>
-<?php
-		foreach($this->data['userlinks']['more'] as $itemKey => $itemVal) {
-?>
-						<li <?= ($itemKey == 'widgets') ? 'id="cockpit1" ' : '' ?>class="yuimenuitem"><a rel="nofollow" href="<?= htmlspecialchars($itemVal['href']) ?>" class="yuimenuitemlabel" <?= $skin->tooltipAndAccesskey('pt-'.$itemKey) ?>><?= htmlspecialchars($itemVal['text']) ?></a></li>
-<?php
-		}
-?>
-					</ul>
-			</div>
-<?php
-	}
-?>
-	</div>
 	<div class="monaco_shrinkwrap"><div id="background_accent1"></div></div>
 	<div style="position: relative;"><div id="background_accent2"></div></div>
 

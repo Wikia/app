@@ -503,7 +503,6 @@ function openCockpit(event) {
 function openHubMenu(event) {
 	event.preventDefault();
 	headerMenuFunction = openHubMenu;
-	//$.get(window.wgScript + '?action=ajax&rs=GetMonacoHeaderMenu&uselang=' + window.wgUserLanguage, {trigger: event.currentTarget.id}, function(html) {
 	$.get(window.wgScript + '?action=ajax&rs=GetHubMenu', function(html) {
 		$("#positioned_elements").append(html);
 	});	
@@ -513,7 +512,8 @@ function openHubMenu(event) {
 function openUserMenu(event) {
 	event.preventDefault();
 	headerMenuFunction = openUserMenu;
-	$.get(window.wgScript + '?action=ajax&rs=GetMonacoHeaderMenu&uselang=' + window.wgUserLanguage, {trigger: event.currentTarget.id}, function(html) {
+	//$.get(window.wgScript + '?action=ajax&rs=GetMonacoHeaderMenu&uselang=' + window.wgUserLanguage, {trigger: event.currentTarget.id}, function(html) {
+	$.get(window.wgScript + '?action=ajax&rs=GetUserMenu&rsargs[]='+ wgUserName +'&uselang='+ wgUserLanguage, function(html) {
 		$("#positioned_elements").append(html);
 	});	
 }
