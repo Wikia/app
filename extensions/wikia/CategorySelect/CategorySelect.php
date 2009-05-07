@@ -189,7 +189,7 @@ function CategorySelectGetCategories($inline = false) {
 	);
 	$categories = array();
 	while($row = $dbr->fetchObject($res)) {
-		$categories[] = str_replace('_', ' ', $row->cat_title);
+		$categories[] = str_replace('_', ' ', addslashes($row->cat_title));
 	}
 	$out = 'var categoryArray = ["'.join('","', $categories).'"];';
 
