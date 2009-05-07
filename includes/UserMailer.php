@@ -439,8 +439,9 @@ class EmailNotification {
 
 		$this->composed_common = true;
 
-		$summary = ($this->summary == '') ? wfMsg( 'enotif_no_summary' ) : wfMsg( 'enotif_summary'  ) . '"' . $this->summary . '"';
-		$medit   = ($this->minorEdit) ? wfMsg( 'minoredit' ) : '';
+		// RT #1294 Bartek 07.05.2009, use the language of the wiki
+		$summary = ($this->summary == '') ? wfMsgForContent( 'enotif_no_summary' ) : wfMsgForContent( 'enotif_summary'  ) . '"' . $this->summary . '"';
+		$medit   = ($this->minorEdit) ? wfMsgForContent( 'minoredit' ) : '';
 
 		# You as the WikiAdmin and Sysops can make use of plenty of
 		# named variables when composing your notification emails while
