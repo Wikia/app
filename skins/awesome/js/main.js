@@ -535,35 +535,39 @@ function openLogin(event) {
 //Modal
 $.fn.extend({
   makeModal: function(options) {
-    var settings = { width: 400 };
-		if (options) {
-			$.extend(settings, options);
-		}    
+	var settings = { width: 400 };
+	if (options) {
+		$.extend(settings, options);
+	}    
    	   	
    	this.addClass('modalInside').wrap('<div class="modalWrapper"></div>');
 
    	var wrapper = this.closest(".modalWrapper");
+	
+	// let's have it dynamically generated, so every newly created modal will be on the top 
+	var zIndex = ($('.blackout').length+1) * 1000;
 		
-		function getModalTop() {
-			var modalTop = (($(window).height() - wrapper.outerHeight()) / 2) + $(window).scrollTop();
-			if (modalTop < $(window).scrollTop() + 20) {
-				return $(window).scrollTop() + 20;
-			} else {
-				return modalTop;	
-			}
+	function getModalTop() {
+		var modalTop = (($(window).height() - wrapper.outerHeight()) / 2) + $(window).scrollTop();
+		if (modalTop < $(window).scrollTop() + 20) {
+			return $(window).scrollTop() + 20;
+		} else {
+			return modalTop;	
 		}
+	}
    	
    	wrapper
    		.prepend('<h1 class="modalTitle color1"><div style="background-image: url(http://images.wikia.com/common/skins/monaco/images/sprite.png);"></div>' + this.attr('title') + '</h1>')
    		.width(settings.width)
    		.css({
    			marginLeft: -wrapper.outerWidth() / 2,
-				top: getModalTop()
+			top: getModalTop(),
+			zIndex: zIndex + 1
    		})
    		.fadeIn("fast");
 
 	$("h1.modalTitle div").bind("click", function() {
-		wrapper.closeModal();
+		wrapper.closeModal(te()).getTime()
 	});
 
    	$(window)
@@ -574,12 +578,13 @@ $.fn.extend({
    		})
    		.bind("resize.modal", function() {
    			wrapper.css("top", getModalTop());
-   			$("#blackout").height($(document).height());
+   			$(".blackout:last").height($(document).height());
    		});
 
-   	$("#positioned_elements").append('<div id="blackout"></div>');
-   	$("#blackout")
+   	$("#positioned_elements").append('<div class="blackout"></div>');
+   	$(".blackout:last")
    		.height($(document).height())
+		.css({zIndex: zIndex})
    		.fadeTo("fast", 0.65)
    		.bind("click", function() {
    			wrapper.closeModal();
@@ -593,7 +598,7 @@ $.fn.extend({
   	}, "fast", function() {
   		$(this).remove();
   	});
-  	$("#blackout").fadeOut("fast", function() {
+  	$(".blackout:last").fadeOut("fast", function() {
   		$(this).remove();
   	})  	
   } 
