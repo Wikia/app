@@ -113,6 +113,8 @@ class WikiaReplicateImages {
 						$cmd = wfEscapeShellArg(
 							"/usr/bin/rsync",
 							"-axpr",
+							"--owner",
+							"--group",
 							"--chmod=g+w",
 							$Row->up_path,
 							escapeshellcmd( $login . '@' . $server["address"] . ':' . $destination )
