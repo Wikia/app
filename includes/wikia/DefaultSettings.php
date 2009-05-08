@@ -207,6 +207,12 @@ $wgSkipSkins = array(
 		'uncyclopedia',
 		'wowwiki',
 		'lostbook',
+		'quartz',
+		'cologneblue',
+		'modern',
+		'myskin',
+		'simple',
+		'standard',
 );
 
 /**
