@@ -67,7 +67,7 @@ class WikiaReplicateImages {
 
 		$oResource = $dbr->select(
 			array( "upload_log" ),
-			array( "up_id", "up_path", "up_flags" ),
+			array( "up_id", "up_path", "up_flags", "up_created", "up_imgpath" ),
 			array(
 				"up_flags = 0 OR (up_flags & {$copied}) <> {$copied}",
 				"up_flags <> -1"
@@ -83,7 +83,7 @@ class WikiaReplicateImages {
 			while( $Row = $dbr->fetchObject( $oResource ) ) {
 				$flags = 0;
 				$source = $Row->up_path;
-				Wikia::log( __CLASS__, "start", "=============== copy {$Row->up_path} {$Row->up_created} ===============" );
+				Wikia::log( __CLASS__, "start", "==== copy {$Row->up_imgpath} {$Row->up_created}" );
 				foreach( $this->mServers as $name => $server ) {
 
 					/**
@@ -165,7 +165,7 @@ class WikiaReplicateImages {
 					);
 					$dbw->commit();
 					if( ( $flags & $server["flag"] ) == $server["flag"] ) {
-						Wikia::log( __CLASS__, "info", "{$source} copied to ".$login . '@' . $server["address"] . ':' . $destination );
+						Wikia::log( __CLASS__, "info", "{$destination} uploaded to " . $server["address"] );
 					}
 				}
 			}
