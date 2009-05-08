@@ -333,7 +333,7 @@ class CloseWikiMaintenace {
 		$haveXml = is_file( "{$directory}/full.xml.gz" ) ? true : false;
 		$haveZip = is_file( "{$directory}/images.tar" ) ? true : false;
 
-		$Tmpl = new EasyTemplate( dirname( __FILE__) . "/../templates/" );
+		$Tmpl = new EasyTemplate( dirname( __FILE__) . "/templates/" );
 		$Tmpl->set( "directory", $directory );
 		$Tmpl->set( "haveXml", $haveXml );
 		$Tmpl->set( "haveZip", $haveZip );
