@@ -18,7 +18,7 @@ if ( !defined( 'MEDIAWIKI' ) ) {
  */
 class WikiFactoryPage extends SpecialPage {
 
-	private $mWiki, $mTitle, $mDomain, $mTab;
+	private $mWiki, $mTitle, $mDomain, $mTab, $mVariableName;
 	public $mStatuses = array( "disabled", "enabled", "redirected" );
 
 	/**
@@ -124,9 +124,13 @@ class WikiFactoryPage extends SpecialPage {
 			 */
 			if( strpos( $subpage, "/" ) ) {
 				$parts = explode( "/", $subpage, 3 );
+				error_log ("parts = " . print_r($parts, true));
 				if( is_array( $parts ) && sizeof( $parts ) >= 2 ) {
 					$subpage = $parts[0];
 					$tab = $parts[1];
+					if ( ( $tab === "variables" ) && ( isset($parts[2]) ) ) {
+						$this->mVariableName = trim($parts[2]);
+					}
 				}
 			}
 
@@ -153,6 +157,9 @@ class WikiFactoryPage extends SpecialPage {
 		$this->mTab = $tab;
 		if( !is_null( $cityid ) ) {
 			$this->mTitle = Title::makeTitle( NS_SPECIAL, "WikiFactory/{$cityid}/{$tab}" );
+		}
+		if ( !isset($this->mVariableName) ) {
+			$this->mVariableName = "";
 		}
 		return WikiFactory::getWikiByID( $cityid );
 	}
@@ -235,7 +242,8 @@ class WikiFactoryPage extends SpecialPage {
 			"domains"     => WikiFactory::getDomains( $this->mWiki->city_id ),
 			"statuses" 	  => $this->mStatuses,
 			"variables"   => WikiFactory::getVariables(),
-			"wikiRequest" => $oWikiRequest
+			"wikiRequest" => $oWikiRequest,
+			"variableName"=> $this->mVariableName,
 		);
 		if( $this->mTab === "clog" ) {
 			$pager = new ChangeLogPager( $this->mWiki->city_id );
