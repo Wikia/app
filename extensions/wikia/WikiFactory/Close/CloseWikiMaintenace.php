@@ -94,7 +94,7 @@ class CloseWikiMaintenace {
 		if( !$wgDevelEnvironment ) {
 			$args[] = "--server=10.8.2.220";
 		}
-		Wikia::log( __METHOD__, "", "dumping {$wgDBname} to {$dumpfile}");
+		Wikia::log( __CLASS__, "info", "dumping {$wgDBname} to {$dumpfile}");
 		$dumper = new BackupDumper( $args );
 		$dumper->dump( WikiExporter::FULL, WikiExporter::TEXT );
 	}
@@ -160,7 +160,17 @@ class CloseWikiMaintenace {
 	 * @access public
 	 */
 	public function removeImageDirectory() {
+		global $wgUploadDirectory;
+
 		wfProfileIn( __METHOD__ );
+		if( is_dir( $wgUploadDirectory ) ) {
+			/**
+			 * what should we use here?
+			 */
+			$cmd = "rm -rf {$wgUploadDirectory}";
+			wfShellExec( $cmd, $retval );
+			Wikia::log( __CLASS__, "info", "{$wgUploadDirectory} removed");
+		}
 		wfProfileOut( __METHOD__ );
 	}
 
