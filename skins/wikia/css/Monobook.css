@@ -249,3 +249,42 @@ body.rtl #column-google {
 	filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='http://images.wikia.com/wikia/images/e/e9/WikiaStaff.png', sizingMethod='scale');
 }
 
+/* LeanMonaco code */
+body.ajax * {
+	cursor: wait !important;	
+}
+div.modalWrapper {
+	background: #FFF;
+	border: 1px solid #AAA;
+	display: none;
+	left: 50%;
+	padding: 2px;
+	position: absolute;
+	z-index: 1001;
+}
+h1.modalTitle {
+	font-size: 1.3em;
+	font-weight: bold;
+	padding: 5px;
+	position: relative;
+}
+h1.modalTitle div {
+	clip: rect(0px 320px 16px 304px);
+	cursor: pointer;
+	height: 16px;
+	position: absolute;
+	right: -27px;
+	width: 352px;
+}
+.modalInside {
+	padding: 5px !important;
+}
+.blackout {
+	background: #000;
+	left: 0;
+	opacity: 0;
+	position: absolute;
+	top: 0;
+	width: 100%;
+	z-index: 1000;	
+}
