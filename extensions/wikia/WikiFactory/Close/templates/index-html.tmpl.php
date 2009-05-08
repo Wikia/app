@@ -28,8 +28,8 @@
 <?php endif ?>
 <?php if( $haveZip ): ?>
 		<li>
-			<a href="images.zip">images.zip</a>
-			<em class="meta">(last changed: <?php echo date("F d Y H:i:s.", filectime( "{$directory}/images.zip" ) ) ?>)</em>
+			<a href="images.tar">images.tar</a>
+			<em class="meta">(last changed: <?php echo date("F d Y H:i:s.", filectime( "{$directory}/images.tar" ) ) ?>)</em>
 		</li>
 <?php endif ?>
 	</ol>
