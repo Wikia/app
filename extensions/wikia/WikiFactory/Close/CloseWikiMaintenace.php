@@ -79,7 +79,7 @@ class CloseWikiMaintenace {
 	}
 
 	public function dumpXMl() {
-		global $wgDBname;
+		global $wgDBname, $wgDevelEnvironment;
 
 		/**
 		 * @name dumpfile
@@ -91,6 +91,9 @@ class CloseWikiMaintenace {
 			"--output=gzip:{$dumpfile}",
 			"--xml"
 		);
+		if( !$wgDevelEnvironment ) {
+			$args[] = "--server=10.8.2.220";
+		}
 		Wikia::log( __METHOD__, "", "dumping {$wgDBname} to {$dumpfile}");
 		$dumper = new BackupDumper( $args );
 		$dumper->dump( WikiExporter::FULL, WikiExporter::TEXT );
