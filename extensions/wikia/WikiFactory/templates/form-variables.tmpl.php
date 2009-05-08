@@ -37,4 +37,34 @@
     <hr style="clear: both">
     <div id="wk-variable-form"></div>
 </div>
+<?php if ( isset($variableName) && !empty($variableName) ) : ?>
+<script type="text/javascript">
+/*<![CDATA[*/
+$Factory.Variable.__filter = function ( e ) {
+	this.__checkIsLoaded = function () {
+		if ( $Dom.get( "wk-busy-div" ).style.display == 'block') {
+			setTimeout(this.__checkIsLoaded, 1000);
+		} else {
+			if ( $Dom.get( "wk-variable-select" ).length > 0 ) {
+				$Dom.get( "wk-variable-select" ).selectedIndex = 0;
+				$Factory.Variable.select(e, [ "wk-variable-select", 1]);
+			}
+			if (typeof TieDivLibrary != "undefined" ) {
+				TieDivLibrary.calculate();
+			};
+		}
+	}
+	
+	$Dom.get( "wfOnlyWithString" ).value = "<?=addslashes($variableName)?>";
+	$Factory.Variable.filter(e);
+	setTimeout(this.__checkIsLoaded,1000);
+}
+$Factory.Variable.__checkIsLoaded = function( ) {
+}
+
+
+$Event.on(window, "load", $Factory.Variable.__filter);
+/*]]>*/
+</script>
+<?php endif ?>
 <!-- e:<?= __FILE__ ?> -->

@@ -244,7 +244,7 @@ $Factory.Variable.filter = function ( e ) {
     values += "&editable=" + $Dom.get("wf-only-editable").checked;
     values += "&group=" + $Dom.get("wk-group-select").value;
     values += "&wiki=" + <?php echo $wiki->city_id ?>;
-	values += "&string=" + YAHOO.util.Dom.get( "wfOnlyWithString" ).value;
+	values += "&string=" + $Dom.get( "wfOnlyWithString" ).value;
     $Connect.asyncRequest( 'GET', ajaxpath+"?action=ajax&rs=axWFactoryFilterVariables" + values, $Factory.FilterCallback );
 };
 
