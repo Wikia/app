@@ -538,15 +538,15 @@ $.fn.extend({
 	var settings = { width: 400 };
 	if (options) {
 		$.extend(settings, options);
-	}    
-   	   	
+	}
+
    	this.addClass('modalInside').wrap('<div class="modalWrapper"></div>');
 
    	var wrapper = this.closest(".modalWrapper");
-	
+
 	// let's have it dynamically generated, so every newly created modal will be on the top 
 	var zIndex = ($('.blackout').length+1) * 1000;
-		
+
 	function getModalTop() {
 		var modalTop = (($(window).height() - wrapper.outerHeight()) / 2) + $(window).scrollTop();
 		if (modalTop < $(window).scrollTop() + 20) {
@@ -555,7 +555,7 @@ $.fn.extend({
 			return modalTop;	
 		}
 	}
-   	
+
    	wrapper
    		.prepend('<h1 class="modalTitle color1"><div style="background-image: url(http://images.wikia.com/common/skins/monaco/images/sprite.png);"></div>' + this.attr('title') + '</h1>')
    		.width(settings.width)
