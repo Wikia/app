@@ -868,7 +868,7 @@ function wfReportTime() {
 		$stomp->connect( $wgStompUser, $wgStompPassword );
 		$stomp->sync = false;
 		$stomp->send( 'wikia.apache.service_time.'.wfHostname(),
-			$elapsed,
+			Wikia::json_encode( array( 'real' => $elapsed, 'cpu' => $elapsedcpu ) ),
 			array( 'exchange' => 'amq.topic', 'bytes_message' => 1 )
 		);
 	}
