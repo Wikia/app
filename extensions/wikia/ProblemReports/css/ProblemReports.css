@@ -1,3 +1,16 @@
+/* Style container */
+#reportProblemForm_c {
+	top: 0px;
+	left: 0px;
+	position: absolute
+}
+
+#reportProblemSummary_c {
+	position: absolute;
+	top: 150px;
+	left: 150px;
+}
+
 #reportProblemForm a {
 	color: inherit;
 	text-decoration: underline
@@ -6,8 +19,18 @@
 #reportProblemForm {
 	background-color: #fff;
 	color: #000000;
+	border: solid 1px #aaaaaa;
 	font-size: 9pt;
+	visibility: hidden;
+	position: absolute;
+	margin-top: -250px;
+	left: -200px;
 	padding: 8px 12px 0px 8px;
+}
+
+#reportProblemForm {
+	width: 580px !important;
+	left: -300px;
 }
 
 /* Form fields */
@@ -19,11 +42,6 @@
 #reportProblemForm a {
 	color: inherit;
 	text-decoration: underline
-}
-
-.reportProblemText p {
-	line-height: 1.5em;
-	padding: 5px 0;
 }
 
 #reportProblem input[type="text"],
