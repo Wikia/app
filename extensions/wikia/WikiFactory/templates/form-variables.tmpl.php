@@ -59,9 +59,6 @@ $Factory.Variable.__filter = function ( e ) {
 	$Factory.Variable.filter(e);
 	setTimeout(this.__checkIsLoaded,1000);
 }
-$Factory.Variable.__checkIsLoaded = function( ) {
-}
-
 
 $Event.on(window, "load", $Factory.Variable.__filter);
 /*]]>*/
