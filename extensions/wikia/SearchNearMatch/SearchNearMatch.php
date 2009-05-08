@@ -4,6 +4,7 @@
  * at the beginning of words
  *
  * @author Przemek Piotrowski <ppiotr@wikia-inc.com>
+ * @author Piotr Molski <moli@wikia-inc.com>
  * @see RT#4307 RT#11497
  */
 
@@ -93,13 +94,13 @@ class SearchNearMatch {
 			$dbr = wfGetDB( DB_SLAVE );
 			$res = $dbr->select(
 				array( 'page' ),
-				array( 'page_id', "concat('sort_', page_namespace) as custom_order" ),
+				array( 'page_id' ),
 				array(
 					'lower(page_title)' => $word,
 					'page_is_redirect' => 0
 				),
 				__METHOD__,
-				array( "ORDER BY" => "custom_order", "LIMIT" => 1 )
+				array( "ORDER BY" => "CAST(page_namespace AS CHAR)", "LIMIT" => 1 )
 			);
 			if ( $row = $dbr->fetchObject( $res ) ) { 
 				$searchTitleId = $row->page_id;
