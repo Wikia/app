@@ -2,7 +2,7 @@
 ** Diff rendering
 */
 table.diff, td.diff-otitle, td.diff-ntitle {
-	background-color: white;
+	/* background-color: white; RT#15142 */
 }
 td.diff-otitle,
 td.diff-ntitle {
