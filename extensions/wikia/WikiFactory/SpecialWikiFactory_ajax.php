@@ -160,7 +160,7 @@ function axWFactoryDomainCRUD($type="add") {
             break;
     }
     #--- get actuall domain list
-	 $oDomains = WikiFactory::getDomains( $iCityId, false, true );
+	 $aDomains = WikiFactory::getDomains( $iCityId, false, true );
 
     #--- send response, return domain array
     $aResponse["domains"] = $aDomains;
