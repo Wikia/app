@@ -79,8 +79,8 @@ class CloseWikiMaintenace {
 	}
 
 	public function dumpXMl() {
-		global $wgDBname, $wgDBuser, $wgDBpassword;
-		Wikia::log( __CLASS__, "$wgDBuser : $wgDBpassword" );
+		global $wgDBname;
+		
 		/**
 		 * @name dumpfile
 		 */
@@ -91,7 +91,7 @@ class CloseWikiMaintenace {
 			"--output=gzip:{$dumpfile}",
 			"--xml"
 		);
-		Wikia::log( __METHOD__, "". "dumping {$wgDBname} to {$dumpfile}");
+		Wikia::log( __METHOD__, "", "dumping {$wgDBname} to {$dumpfile}");
 		$dumper = new BackupDumper( $args );
 		$dumper->dump( WikiExporter::FULL, WikiExporter::TEXT );
 	}
