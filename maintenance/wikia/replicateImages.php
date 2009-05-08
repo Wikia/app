@@ -164,9 +164,6 @@ class WikiaReplicateImages {
 						array( "up_id" => $Row->up_id )
 					);
 					$dbw->commit();
-					if( ( $flags & $server["flag"] ) == $server["flag"] ) {
-						Wikia::log( __CLASS__, "info", "{$destination} uploaded to " . $server["address"] );
-					}
 				}
 			}
 		}

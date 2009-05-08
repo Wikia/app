@@ -113,7 +113,7 @@ class CloseWikiMaintenace {
 		 * @name dumpfile
 		 */
 		$zipfile = sprintf("%s/images.zip", $this->getDirectory( $wgDBname ) );
-		Wikia::log( __CLASS__, "", "Zipping images from {$wgUploadDirectory} to {$zipfile}" );
+		Wikia::log( __CLASS__, "info", "Zipping images from {$wgUploadDirectory} to {$zipfile}" );
 
 		$zip = new ZipArchive();
 
