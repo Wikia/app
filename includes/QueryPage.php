@@ -469,11 +469,24 @@ class QueryPage {
 			$feed = new $wgFeedClasses[$class](
 				$this->feedTitle(),
 				$this->feedDesc(),
-				$this->feedUrl() );
+				$this->feedUrl() 
+			);
 			$feed->outHeader();
 
 			$dbr = wfGetDB( DB_SLAVE );
-			$sql = $this->getSQL() . $this->getOrder();
+
+			$fname = get_class($this) . '::doQuery';
+			$sname = $this->getName();
+			if ( !$this->isCached() ) {
+				$sql = $this->getSQL();
+			} else {
+				# Get the cached result
+				$querycache = $dbr->tableName( 'querycache' );
+				$type = $dbr->strencode( $sname );
+				$sql = "SELECT qc_type as type, qc_namespace as namespace,qc_title as title, qc_value as value FROM $querycache WHERE qc_type='$type'";
+			}
+			
+			$sql = $sql . " " . $this->getOrder();
 			$sql = $dbr->limitResult( $sql, $limit, 0 );
 			$res = $dbr->query( $sql, 'QueryPage::doFeed' );
 			while( $obj = $dbr->fetchObject( $res ) ) {
