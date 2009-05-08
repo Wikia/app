@@ -288,7 +288,7 @@
 								<a href=\"{$user->escapeFullURL()}\" title=\"{$message["user_name_from"]}}\">{$message["user_name_from"]} </a> {$message_type_label}
 						</div>
 						<div class=\"user-board-message-time\">
-							posted " . get_time_ago($message["timestamp"])." ago
+							" . wfMsg("time_posted") . " " . get_time_ago($message["timestamp"]) . " " . wfMsg("time_ago") . "
 						</div>	
 						<div class=\"user-board-message-content\">	
 							<div class=\"user-board-message-image\">
