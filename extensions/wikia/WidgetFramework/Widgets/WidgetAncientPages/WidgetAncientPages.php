@@ -35,46 +35,58 @@ function WidgetAncientPages($id, $params) {
 	global $wgTitle, $wgLang, $wgOut;
 
 	// load class if it's not loaded yet...
-	if (!class_exists('AncientPagesPage'))
-	{
+	if (!class_exists('AncientPagesPage')) {
 		require_once($IP.'includes/SpecialAncientpages.php');
 	}
 
-	if ( !is_object($wgTitle) ){
+	if ( !is_object($wgTitle) ) {
 		$wgTitle = Title::newFromText( "Main_Page" );
 	}
 
+	$offset = 0;
 	$limit = intval($params['limit']);
 	$limit = ($limit <=0 || $limit > 50) ? 10 : $limit;
 
 	$pages = array();
 	
 	// query the special page object
-	$app = new AncientPagesPage();
-
-	// grab results (copied from QueryPage::doFeed()
-	$dbr = wfGetDB( DB_SLAVE );
-	$sql = $app->getSQL() . $app->getOrder();
-	$sql = $dbr->limitResult( $sql, $limit, 0 );
-	$res = $dbr->query( $sql, 'QueryPage::doFeed' );
-	while( $obj = $dbr->fetchObject( $res ) ) {
-		$pages[] = $obj;
-	}
-
-	$items = array();
-
-	foreach($pages as $edit)
-	{
-		$date = $wgLang->sprintfDate('j M Y', date('YmdHis', $edit->value));
-		
-		$title = Title::newFromText($edit->title, $edit->namespace);
-
-		$items[] = array('name'  => $title->getText(), 
-		                 'href'  => $title->getLocalURL(),
-				 'title' => wfMsg('lastmodifiedat', date('H:i', $edit->value), $date));
-	}
+	$showSpecial = false;
+	$app = new WidgetAncientPagesPage($showSpecial);
+	$app->setListoutput(TRUE);
+	$app->doQuery($offset, $limit, $showSpecial);
 	
+	$items = array();
+	$aRows = $app->getResult();
+	if ( !empty($aRows) && is_array($aRows) ) {
+		foreach($aRows as $sTitle => $sTimestamp) {
+			$date = $wgLang->sprintfDate('j M Y', date('YmdHis', $sTimestamp));
+			$oTitle = Title::newFromText($sTitle, NS_MAIN);
+			if ( $oTitle instanceof Title ) {
+				$items[] = array(
+					'name'  => $oTitle->getText(), 
+					'href'  => $oTitle->getLocalURL(),
+					'title' => wfMsg('lastmodifiedat', date('H:i', $sTimestamp), $date)
+				);
+			}
+		}
+	}	
 	    
     wfProfileOut( __METHOD__ );
     return WidgetFrameworkWrapLinks($items) . WidgetFrameworkMoreLink( Title::newFromText('Ancientpages', NS_SPECIAL)->getLocalURL() );
+}
+
+class WidgetAncientPagesPage extends AncientPagesPage {
+	var $data = array();
+	var $show = false;
+
+	function __construct($show = false) { $this->show = $show; }
+	function getResult() { return $this->data; }
+	function formatResult( $skin, $result ) {
+		if (empty($this->show)) {
+			$this->data[$result->title] = $result->value;
+			return false;
+		} else {
+			return parent::formatResult( $skin, $result);
+		}
+	}
 }
