@@ -68,25 +68,26 @@ function CategorySelectInit() {
  * @author Maciej Błaszkowski <marooned at wikia-inc.com>
  */
 function CategorySelectInitializeHooks($title, $article) {
-	global $wgHooks, $wgRequest, $wgUser, $wgTitle;
+	global $wgHooks, $wgRequest, $wgUser, $wgContentNamespaces;
 
 	// Check user preferences option
 	if($wgUser->getOption('disablecategoryselect') == true) {
 		return true;
 	}
 
-	// Initialize only for Monaco skin
-	if(get_class($wgUser->getSkin()) != 'SkinMonaco') {
+	// Initialize only for allowed skins
+	$allowedSkins = array( 'SkinMonaco', 'SkinAnswers' );
+	if( !in_array( get_class($wgUser->getSkin()), $allowedSkins ) ) {
 		return true;
 	}
 
-	// Initialize only for namespace: main, image, user (same as for Wysiwyg)
-	if(!in_array($title->mNamespace, array(NS_MAIN, NS_IMAGE, NS_USER, NS_CATEGORY, NS_VIDEO))) {
+	// Initialize only for namespace: content, file, user (same as for Wysiwyg)
+	if(!in_array($title->mNamespace, $wgContentNamespaces) && !in_array($title->mNamespace, array( NS_FILE, NS_USER, NS_CATEGORY, NS_VIDEO ))) {
 		return true;
 	}
 
 	// Don't initialize on CSS and JS user subpages
-	if ( $wgTitle->isCssJsSubpage() ) {
+	if ( $title->isCssJsSubpage() ) {
 		return true;
 	}
 

@@ -204,3 +204,31 @@ html>/**/body .CSitemOuter > .CScontrolRemove {
 * html .csViewMode #csButtonsContainer {
 	margin: 0;
 }
+
+/* copied from monaco/css/widgets.css for Anwers skin */
+.yui-ac-content {
+	background: #FFFFFF none repeat scroll 0 0;
+	border: 1px solid #808080 !important;
+	color: #000000;
+	overflow: hidden;
+	position: absolute;
+	width: 100%;
+	z-index: 9050;
+}
+
+.yui-ac-content ul {
+	float: none !important;
+	list-style-image: none !important;
+	margin: 0 !important;
+	padding: 0 !important;
+	width: 100%;
+}
+
+.yui-ac-content li {
+	cursor: default;
+	float:none !important;
+	font-size: 9pt;
+	margin: 0 !important;
+	padding: 1px 0 0 3px;
+	white-space: nowrap;
+}

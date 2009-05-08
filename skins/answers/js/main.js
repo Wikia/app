@@ -1,3 +1,5 @@
+var $G = YAHOO.util.Dom.get;
+
 jQuery("#answers_ask_field").ready(function() {
 	var answers_field_default = wgAskFormTitle;
 	jQuery("#answers_ask_field").focus(function() {
