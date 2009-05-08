@@ -5,7 +5,7 @@
  */
 
 function wfInitStats( $options=array() ) {
-	$dbr = wfGetDB( DB_SLAVE );
+	$dbr = wfGetDB( DB_SLAVE, 'vslow' );
 
 	wfOut( "Counting total edits..." );
 	$edits = $dbr->selectField( 'revision', 'COUNT(*)', '', __METHOD__ );
