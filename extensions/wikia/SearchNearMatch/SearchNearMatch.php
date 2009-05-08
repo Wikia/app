@@ -93,13 +93,13 @@ class SearchNearMatch {
 			$dbr = wfGetDB( DB_SLAVE );
 			$res = $dbr->select(
 				array( 'page' ),
-				array( 'page_id' ),
+				array( 'page_id', "concat('sort_', page_namespace) as custom_order" ),
 				array(
 					'lower(page_title)' => $word,
 					'page_is_redirect' => 0
 				),
 				__METHOD__,
-				array( "ORDER BY" => "page_latest", "LIMIT" => 1 )
+				array( "ORDER BY" => "custom_order", "LIMIT" => 1 )
 			);
 			if ( $row = $dbr->fetchObject( $res ) ) { 
 				$searchTitleId = $row->page_id;
