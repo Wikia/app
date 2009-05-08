@@ -1,3 +1,6 @@
+//@see http://jamazon.co.uk/web/2008/07/21/jquerygetscript-does-not-cache 
+$.ajaxSetup({cache: true});
+
 jQuery.fn.log = function (msg) {
 	if (typeof console != 'undefined') {
 		console.log(msg);
