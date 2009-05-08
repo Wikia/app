@@ -80,7 +80,7 @@ class CloseWikiMaintenace {
 
 	public function dumpXMl() {
 		global $wgDBname;
-		
+
 		/**
 		 * @name dumpfile
 		 */
@@ -110,14 +110,11 @@ class CloseWikiMaintenace {
 		 * @name dumpfile
 		 */
 		$zipfile = sprintf("%s/images.zip", $this->getDirectory( $wgDBname ) );
-		if( is_file( $zipfile ) ) {
-			unlink( $zipfile );
-		}
 		Wikia::log( __CLASS__, "", "Zipping images from {$wgUploadDirectory} to {$zipfile}" );
 
 		$zip = new ZipArchive();
 
-		if ($zip->open( $zipfile, ZIPARCHIVE::CREATE ) !== true ) {
+		if ($zip->open( $zipfile, ZIPARCHIVE::CREATE | ZIPARCHIVE::OVERWRITE ) !== true ) {
 			Wikia::log( __CLASS__, "zip", "Cannot open {$zipfile}" );
 			wfDie( "Cannot open {$zipfile}" );
 		}
