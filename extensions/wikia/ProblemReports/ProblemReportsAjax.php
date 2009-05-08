@@ -50,9 +50,8 @@ function wfProblemReportsAjaxGetDialog() {
 	}
 
 	// create AJAX response
-	$response = new AjaxResponse();
-	$response->addText($text);
-	$response->setCacheDuration( 3600 * 24 * 365 * 10); // 10 years
+	$response = new AjaxResponse( $text );
+	$response->setContentType('text/plain; charset=utf-8');
 
 	wfProfileOut(__METHOD__);
     
