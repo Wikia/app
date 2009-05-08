@@ -70,10 +70,12 @@ function WidgetCommunity($id, $params) {
 	return $output;
 }
 
-function WidgetCommunityGetRecentlyEditedHTML() {
+function WidgetCommunityGetRecentlyEditedHTML( $useCache=1) {
 	global $wgMemc;
-	$ret = $wgMemc->get( wfMemcKey( 'WidgetCommunity', 'recentlyEditedHTML' ) );
-	if( $ret ) return $ret;
+	if( $useCache ) {
+		$ret = $wgMemc->get( wfMemcKey( 'WidgetCommunity', 'recentlyEditedHTML' ) );
+		if( $ret ) return $ret;
+	}
 
 	$recentlyEdited = array();
 	global $wgHideRCinCommunityWidget;
@@ -100,7 +102,8 @@ function WidgetCommunityGetRecentlyEditedHTML() {
 				) . "\n";
 		$ret .= "\t\t</li>\n";
 	}
-	$wgMemc->set( wfMemcKey( 'WidgetCommunity', 'recentlyEditedHTML' ), $ret );
+	if( $useCache) 
+		$wgMemc->set( wfMemcKey( 'WidgetCommunity', 'recentlyEditedHTML' ), $ret );
 
 	return $ret;
 }
@@ -108,7 +111,9 @@ function WidgetCommunityGetRecentlyEditedHTML() {
 $wgHooks['RecentChange_save'][] = 'WidgetCommunityPurgeRecentlyEditedHTML';
 function WidgetCommunityPurgeRecentlyEditedHTML( $rc ) {
 	global $wgMemc;
-	$wgMemc->delete( wfMemcKey( 'WidgetCommunity', 'recentlyEditedHTML' ) );
+	// put in cache for 60 seconds so it invalidates soon in case the slaves were lagged
+	WidgetCommunityGetRecentlyEditedHTML( false );
+	$wgMemc->set( wfMemcKey( 'WidgetCommunity', 'recentlyEditedHTML' ), $ret, 60 );
 }
 
 function WidgetCommunityFormatTime($time) {
