@@ -24,7 +24,7 @@
 		echo wfMsg('already_a_member') .' <a rel="nofollow" id="community_login" href="'. htmlspecialchars(Skin::makeSpecialUrl( 'Userlogin', 'returnto=' . $wgTitle->getPrefixedURL() )) .'">'. wfMsg('log_in') .'</a>';
 	}
 
-	if( !empty( $recentlyEditedHTML ) ) {
+	if(is_array($recentlyEdited) && count($recentlyEdited) > 0) {
 ?>
 <br /><br />
 
@@ -32,7 +32,16 @@
 	<div class="community_toggle" onclick="WidgetCommunityDetailsToggle(this);"></div>
 	<h3><?= wfMsg('monaco-latest') ?></h3>
 	<ul id="<?= $widgetId ?>-recently-edited">
-		<?= $recentlyEditedHTML ?>
+<?php
+		foreach($recentlyEdited as $key => $val) {
+?>
+		<li><?= wfMsg('monaco-latest-item',
+		'<a rel="nofollow" href="'.Title::newFromText($val['title'])->escapeLocalURL().'">'.$val['title'].'</a><br />',
+		'<a rel="nofollow" href="'.Title::newFromText($val['user'], NS_USER)->escapeLocalURL().'">'.$val['user'].'</a>'. WidgetCommunityFormatTime($val['timestamp']));
+		?></li>
+<?php
+		}
+?>
 		<li class="right">
 			<a rel="nofollow" href="<?= htmlentities(Skin::makeSpecialUrl('Recentchanges')) ?>" id="<?= $widgetId ?>-more"><?= strtolower(wfMsg('moredotdotdot')) ?></a>
 		</li>

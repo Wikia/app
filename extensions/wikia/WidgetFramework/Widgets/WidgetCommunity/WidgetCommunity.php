@@ -52,31 +52,7 @@ function WidgetCommunity($id, $params) {
 		}
 	}
 
-	// template stuff
-	$tmpl = new EasyTemplate(dirname( __FILE__ ));
-	$tmpl->set_vars(array(
-		'widgetId' => $id,
-		'total' => $total,
-		'recentlyEditedHTML' => WidgetCommunityGetRecentlyEditedHTML(),
-		'username' => $wgUser->getName(),
-		'userpageurl' => $wgUser->getUserPage()->getLocalURL(),
-		'talkpageurl' => $wgUser->getTalkPage()->getLocalURL(),
-		'users' => $online,
-		'avatarLink' => $avatar));
-
-	$output = $tmpl->execute('WidgetCommunity');
-
-	wfProfileOut(__METHOD__);
-	return $output;
-}
-
-function WidgetCommunityGetRecentlyEditedHTML( $useCache=1) {
-	global $wgMemc;
-	if( $useCache ) {
-		$ret = $wgMemc->get( wfMemcKey( 'WidgetCommunity', 'recentlyEditedHTML' ) );
-		if( $ret ) return $ret;
-	}
-
+	// recently edited
 	$recentlyEdited = array();
 	global $wgHideRCinCommunityWidget;
 	if ( empty( $wgHideRCinCommunityWidget ) ) {
@@ -93,27 +69,23 @@ function WidgetCommunityGetRecentlyEditedHTML( $useCache=1) {
 		$recentlyEdited = $aResult['query']['recentchanges'];
 	}
 
-	$ret = '';
-	foreach($recentlyEdited as $key => $val) {
-		$ret .= "<li>\n";
-	        $ret .= "\t\t\t" . wfMsg('monaco-latest-item',
-					'<a rel="nofollow" href="'.Title::newFromText($val['title'])->escapeLocalURL().'">'.$val['title'].'</a><br />',
-					'<a rel="nofollow" href="'.Title::newFromText($val['user'], NS_USER)->escapeLocalURL().'">'.$val['user'].'</a>' . WidgetCommunityFormatTime( $val['timestamp'] ) 
-				) . "\n";
-		$ret .= "\t\t</li>\n";
-	}
-	if( $useCache) 
-		$wgMemc->set( wfMemcKey( 'WidgetCommunity', 'recentlyEditedHTML' ), $ret );
 
-	return $ret;
-}
+	// template stuff
+	$tmpl = new EasyTemplate(dirname( __FILE__ ));
+	$tmpl->set_vars(array(
+		'widgetId' => $id,
+		'total' => $total,
+		'recentlyEdited' => $recentlyEdited,
+		'username' => $wgUser->getName(),
+		'userpageurl' => $wgUser->getUserPage()->getLocalURL(),
+		'talkpageurl' => $wgUser->getTalkPage()->getLocalURL(),
+		'users' => $online,
+		'avatarLink' => $avatar));
 
-$wgHooks['RecentChange_save'][] = 'WidgetCommunityPurgeRecentlyEditedHTML';
-function WidgetCommunityPurgeRecentlyEditedHTML( $rc ) {
-	global $wgMemc;
-	// put in cache for 60 seconds so it invalidates soon in case the slaves were lagged
-	WidgetCommunityGetRecentlyEditedHTML( false );
-	$wgMemc->set( wfMemcKey( 'WidgetCommunity', 'recentlyEditedHTML' ), $ret, 60 );
+	$output = $tmpl->execute('WidgetCommunity');
+
+	wfProfileOut(__METHOD__);
+	return $output;
 }
 
 function WidgetCommunityFormatTime($time) {
