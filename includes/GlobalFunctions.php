@@ -871,7 +871,7 @@ function wfReportTime() {
 			Wikia::json_encode( array( 
 				'real' => $elapsed, 
 				'cpu' => $elapsedcpu,
-				'url' => @$_SERVER['REQUEST_URI'],
+				'url' => 'http://'.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'],
 			) ),
 			array( 'exchange' => 'amq.topic', 'bytes_message' => 1 )
 		);
