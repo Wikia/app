@@ -124,7 +124,6 @@ class WikiFactoryPage extends SpecialPage {
 			 */
 			if( strpos( $subpage, "/" ) ) {
 				$parts = explode( "/", $subpage, 3 );
-				error_log ("parts = " . print_r($parts, true));
 				if( is_array( $parts ) && sizeof( $parts ) >= 2 ) {
 					$subpage = $parts[0];
 					$tab = $parts[1];
