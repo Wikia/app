@@ -5,6 +5,7 @@
  */
 
 include( $IP . "/maintenance/backup.inc" );
+include( "Archive/Tar.php" );
 
 class CloseWikiMaintenace {
 
@@ -12,7 +13,8 @@ class CloseWikiMaintenace {
 		$mDumpDirectory,
 		$mImgDirectory,
 		$mAction,
-		$mCityID;
+		$mCityID,
+		$mHistory;
 
 	public function __construct() {
 		global $wgDevelEnvironment;
@@ -25,7 +27,7 @@ class CloseWikiMaintenace {
 			$this->mDumpDirectory = "/tmp/dumps";
 			$this->mZipDirectory = "/tmp/dumps";
 		}
-
+		$this->mHistory = true;
 	}
 
 	/**
@@ -100,11 +102,11 @@ class CloseWikiMaintenace {
 	}
 
 	/**
-	 * zip all images from image table
+	 * pack all images from image table, use PEAR Archive_Tar for archive.
 	 *
 	 * @access public
 	 *
-	 * @return integer status of zip operation
+	 * @return integer status of packing operation
 	 */
 	public function compressImages() {
 		global $wgUploadDirectory, $wgDBname;
@@ -112,27 +114,17 @@ class CloseWikiMaintenace {
 		/**
 		 * @name dumpfile
 		 */
-		$zipfile = sprintf("%s/images.zip", $this->getDirectory( $wgDBname ) );
-		Wikia::log( __CLASS__, "info", "Zipping images from {$wgUploadDirectory} to {$zipfile}" );
+		$zipfile = sprintf("%s/images.tar", $this->getDirectory( $wgDBname ) );
+		Wikia::log( __CLASS__, "info", "Packing images from {$wgUploadDirectory} to {$zipfile}" );
 
-		$zip = new ZipArchive();
+		$tar = new Archive_Tar( $zipfile );
 
-		if ($zip->open( $zipfile, ZIPARCHIVE::CREATE | ZIPARCHIVE::OVERWRITE ) !== true ) {
-			Wikia::log( __CLASS__, "zip", "Cannot open {$zipfile}" );
+		if( ! $tar ) {
+			Wikia::log( __CLASS__, "tar", "Cannot open {$zipfile}" );
 			wfDie( "Cannot open {$zipfile}" );
 		}
 
-		foreach( $this->getFilesList() as $file ) {
-			if( is_file( $file ) ) {
-				Wikia::log( __METHOD__, "zip", "Adding {$file}" );
-				$zip->addFile( $file, ltrim( $file, "/" ) );
-			}
-		}
-		$status = $zip->status;
-		Wikia::log( __CLASS__, "zip", "Added {$zip->numFiles} files, {$status}" );
-		$zip->close();
-
-		return $status;
+		return $tar->create( $this->getFilesList() );;
 	}
 
 	/**
@@ -177,6 +169,8 @@ class CloseWikiMaintenace {
 	/**
 	 * Get images list from database
 	 *
+	 * use tables: images & filearchive (when $this->mHistory is set to true)
+	 *
 	 * @return array
 	 */
 	private function getFilesList() {
@@ -193,13 +187,20 @@ class CloseWikiMaintenace {
 			__METHOD__
 		);
 		while( $row = $dbr->fetchObject( $sth ) ) {
-			$images[] = wfLocalFile( $row->img_name )->getPath();
+			$file = wfLocalFile( $row->img_name );
+			if( is_file( $file->getPath() ) ) {
+				$images[] = $file->getPath();
+			}
+			if( $file && $this->mHistory ) {
+				$oldFiles = $file->getHistory();
+				foreach( $oldFiles as $oldfile ) {
+					if( is_file( $oldfile->getPath() ) ) {
+						$images[] = $oldfile->getPath();;
+					}
+				}
+			}
 		}
 		$dbr->freeResult( $sth );
-
-		/**
-		 * get archived images too
-		 */
 
 		wfProfileOut( __METHOD__ );
 
@@ -330,7 +331,7 @@ class CloseWikiMaintenace {
 
 		$directory = $this->getDirectory( $database );
 		$haveXml = is_file( "{$directory}/full.xml.gz" ) ? true : false;
-		$haveZip = is_file( "{$directory}/images.zip" ) ? true : false;
+		$haveZip = is_file( "{$directory}/images.tar" ) ? true : false;
 
 		$Tmpl = new EasyTemplate( dirname( __FILE__) . "/../templates/" );
 		$Tmpl->set( "directory", $directory );
