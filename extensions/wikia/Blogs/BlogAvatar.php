@@ -52,6 +52,11 @@ $wgSpecialPageGroups['RemoveAvatar'] = 'users';
 class BlogAvatar {
 
 	/**
+	 * default avatar path
+	 */
+	public $mDefaultPath = "http://images.wikia.com/messaging/images/";
+
+	/**
 	 * path to file, relative
 	 */
 	public $mPath = false;
@@ -146,15 +151,14 @@ class BlogAvatar {
 
 		wfProfileIn( __METHOD__ );
 
-		$uploadPath = WikiFactory::getVarValueByName( "wgUploadPath", $this->mMsgCityId );
-
 		$this->mDefaultAvatars = array();
 		$images = getMessageAsArray( "blog-avatar-defaults" );
+
 		foreach( $images as $image ) {
 			$hash = FileRepo::getHashPathForLevel( $image, 2 );
-			$url = $uploadPath . '/' . $hash . $image;
-			$this->mDefaultAvatars[] = $url;
+			$this->mDefaultAvatars[] = $this->mDefaultPath . $hash . $image;
 		}
+
 		wfProfileOut( __METHOD__ );
 
 		return $this->mDefaultAvatars;
@@ -201,15 +205,15 @@ class BlogAvatar {
 				/**
 				 * default avatar, path from messaging.wikia.com
 				 */
-				$uploadPath = rtrim( WikiFactory::getVarValueByName( "wgUploadPath", $this->mMsgCityId ), "/" ) . "/";
 				$hash = FileRepo::getHashPathForLevel( $url, 2 );
-				$url = $uploadPath . $hash . $url;
+				$url = $this->mDefaultPath . $hash . $url;
 			}
 		}
 		else {
 			$defaults = $this->getDefaultAvatars();
 			$url = array_shift( $defaults );
 		}
+		
 		return wfReplaceImageServer( $url );
 	}
 
@@ -624,12 +628,12 @@ class BlogAvatar {
 		wfProfileOut( __METHOD__ );
 		return $result;
 	}
-	
+
 	/**
 	 * userMasthead -- Hook handler
 	 *
-	 * @param 
-	 * 
+	 * @param
+	 *
 	 */
 	static public function userMasthead() {
 		global $wgTitle, $wgUser, $wgOut, $wgExtensionsPath, $wgStyleVersion, $wgRequest;
