@@ -83,7 +83,7 @@ class WikiaReplicateImages {
 			while( $Row = $dbr->fetchObject( $oResource ) ) {
 				$flags = 0;
 				$source = $Row->up_path;
-				Wikia::log( __CLASS__, "start", "==== copy {$Row->up_imgpath} {$Row->up_created}" );
+				Wikia::log( __CLASS__, "start", "==== copy {$Row->up_imgpath} created: {$Row->up_created} flags: {$Row->up_flags}" );
 				foreach( $this->mServers as $name => $server ) {
 
 					/**
