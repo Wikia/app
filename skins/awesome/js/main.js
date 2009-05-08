@@ -462,9 +462,6 @@ function sub_menuItemAction_wrap(e) {
 // macbre: add Christian's code for LeanMonaco
 //
 
-//@see http://jamazon.co.uk/web/2008/07/21/jquerygetscript-does-not-cache 
-$.ajaxSetup({cache: true});
-
 //Attach DOM-Ready handlers
 $(function() {
 	$("#headerButtonHub").bind("click.headerMenu", openHubMenu);
