@@ -1374,11 +1374,6 @@ $central_url = !empty($wgLangToCentralMap[$wgContLang->getCode()]) ? $wgLangToCe
 $categorylist = $this->data['data']['categorylist'];
 if(isset($categorylist['nodes']) && count($categorylist['nodes']) > 0 ) {
 ?>
-				<div style="background: #F00; margin: 0 auto; display: inline; padding-right: 20px; position: relative; display: none;">
-					<div style="height: 10px; width: 10px; background: #FF0; position: absolute; top: 0; right: 0;"></div>
-					GAMING
-				</div>
-
 				<div style="position: absolute; left: 50%;">
 				<dl id="headerButtonHub" class="headerMenuButton">
 					<dt><?= isset($categorylist['cat']['text']) ? $categorylist['cat']['text'] : '' ?></dt><dd>&nbsp;</dd>
