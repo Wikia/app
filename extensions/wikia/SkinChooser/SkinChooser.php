@@ -177,17 +177,21 @@ function WikiaSkinPreferences($pref) {
 		unset($validSkinNames['monobook']);
 	}
 
-	# Display radio buttons for rest of skin
-	if(count($validSkinNames) > 0) {
-		$wgOut->addHTML('<div '.($themeCount++%2!=1 ? 'class="prefSection"' : '').'>');
-		$wgOut->addHTML('<h5>'.wfMsg('old_skins').'</h5>');
-		$wgOut->addHTML('<table style="background: transparent none">');
-
+		$oldSkinNames = array();
 		foreach($validSkinNames as $skinKey => $skinVal) {
 			if ( in_array( $skinKey, $wgSkipSkins ) ) {
 				continue;
 			}
+			$oldSkinNames[$skinKey] = $skinVal;
+		}
 
+	# Display radio buttons for rest of skin
+	if(count($oldSkinNames) > 0) {
+		$wgOut->addHTML('<div '.($themeCount++%2!=1 ? 'class="prefSection"' : '').'>');
+		$wgOut->addHTML('<h5>'.wfMsg('old_skins').'</h5>');
+		$wgOut->addHTML('<table style="background: transparent none">');
+
+		foreach($oldSkinNames as $skinKey => $skinVal) {
 			$previewlink = '<a target="_blank" href="'.htmlspecialchars($previewLinkTemplate.$skinKey).'">'.$previewtext.'</a>';
 			$wgOut->addHTML('<tr><td><input type="radio" value="'.$skinKey.'" id="wpSkin'.$skinKey.'" name="wpSkin"'.($pref->mSkin == $skinKey ? ' checked' : '').'/><label for="wpSkin'.$skinKey.'">'.$skinVal.'</label> '.$previewlink.($skinKey == $defaultSkinKey ? ' (' . wfMsg( 'default' ) . ')' : '').'</td></tr>');
 		}
