@@ -114,7 +114,7 @@
 					if(document.getElementById(\"message\").value && !posted){
 						posted = 1;
 						var url = \"index.php?action=ajax\";
-						var pars = 'rs=wfSendBoardMessage&rsargs[]=' + escape(document.getElementById(\"user_name_to\").value) +'&rsargs[]=' + escape(document.getElementById(\"message\").value) + '&rsargs[]=' + document.getElementById(\"message_type\").value + '&rsargs[]={$per_page}'
+						var pars = 'rs=wfSendBoardMessage&rsargs[]=' + encodeURIComponent(document.getElementById(\"user_name_to\").value) +'&rsargs[]=' + encodeURIComponent(document.getElementById(\"message\").value) + '&rsargs[]=' + document.getElementById(\"message_type\").value + '&rsargs[]={$per_page}'
 						 
 						var callback = {
 							success: function(originalRequest){
