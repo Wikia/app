@@ -4,7 +4,7 @@ function send_message(){
 	if(document.getElementById("message").value && !posted){
 		posted = 1;
 		var url = "index.php?action=ajax";
-		var pars = 'rs=wfSendBoardMessage&rsargs[]=' + document.getElementById("user_name_to").value +'&rsargs[]=' + escape(document.getElementById("message").value) + '&rsargs[]=' + document.getElementById("message_type").value +'&rsargs[]=10'
+		var pars = 'rs=wfSendBoardMessage&rsargs[]=' + encodeURIComponent(document.getElementById("user_name_to").value) +'&rsargs[]=' + encodeURIComponent(document.getElementById("message").value) + '&rsargs[]=' + document.getElementById("message_type").value +'&rsargs[]=10'
 		var callback = {
 			success: function(originalRequest){
 				if( typeof( originalRequest ) == "object" ){
