@@ -139,7 +139,38 @@ class CloseWikiMaintenace {
 		global $wgSharedDB, $wgDBname;
 		wfProfileIn( __METHOD__ );
 
+		/**
+		 * check if database is used in more than one wiki
+		 */
 		$dbw = wfGetDB();
+
+		/**
+		 * check city_list table
+		 */
+		$Row = $dbw->selectRow(
+			WikiFactory::table( "city_list" ),
+			array( "count(*) as count" ),
+			array( "city_dbname" => $wgDBname ),
+			__METHOD__
+		);
+		if( $Row->count > 1 ) {
+			wfDie( "{$wgDBname} is used more than once in city_list table" );
+		}
+
+		/**
+		 * check city_variables table
+		 */
+		$Row = $dbw->selectRow(
+			WikiFactory::table( "city_variables" ),
+			array( "count(*) as count" ),
+			array( "cv_value" => serialize( $wgDBname ) ),
+			__METHOD__
+		);
+		if( $Row->count > 1 ) {
+			wfDie( "{$wgDBname} is used more than once in city_variables table" );
+		}
+
+
 		$dbw->selectDB( $wgSharedDB );
 		$dbw->begin();
 		$dbw->query( "DROP DATABASE `$wgDBname`");
