@@ -64,7 +64,7 @@ class CloseWikiMaintenace {
 				case WikiFactory::STATUS_CLOSED:
 					$this->dumpXMl();
 					if( $this->compressImages() === true ) {
-						$this->removeImageDirectory();
+						// not now: $this->removeImageDirectory();
 					}
 					$this->createIndex( $wgDBname, $wgServer );
 					break;
