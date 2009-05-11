@@ -275,6 +275,16 @@ $Factory.Variable.submit = function () {
     $Connect.asyncRequest( 'POST', ajaxpath+"?action=ajax&rs=axWFactorySaveVariable", $Factory.ReplaceCallback );
 };
 
+// submit form with new variable data
+$Factory.Variable.remove_submit = function () {
+	if (window.confirm('Are You sure?')) {
+		$Factory.Busy(1);
+		var oForm = $Dom.get('wf-variable-form');
+		$Connect.setForm(oForm, false);
+		$Connect.asyncRequest( 'POST', ajaxpath+"?action=ajax&rs=axWFactoryRemoveVariable", $Factory.ReplaceCallback );
+	}
+};
+
 YAHOO.util.Event.addListener("wf-only-defined", "click", $Factory.Variable.filter );
 YAHOO.util.Event.addListener("wf-only-editable", "click", $Factory.Variable.filter );
 YAHOO.util.Event.addListener("wfOnlyWithString", "keypress", $Factory.Variable.filter );

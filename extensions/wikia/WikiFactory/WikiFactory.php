@@ -543,6 +543,51 @@ class WikiFactory {
 		return $bStatus;
 	}
 
+
+	/**
+	 * removeVarById
+	 *
+	 * remove variable's value from DB
+	 *
+	 * @access public
+	 * @author moli@wikia
+	 * @static
+	 *
+	 * @param string $variable_id: variable id in city_variables_pool
+	 * @param integer $wiki: wiki id in city list
+	 *
+	 * @return 
+	 */
+	static public function removeVarById( $variable_id, $wiki ) {
+		$bStatus = false;
+		wfProfileIn( __METHOD__ );
+		$dbw = wfGetDB( DB_MASTER );
+		
+		$dbw->begin();
+		try {
+			if ( isset($variable_id) && isset($wiki) ) {
+				$dbw->delete(
+					self::table("city_variables"),
+					array (
+						"cv_variable_id" => $variable_id,
+						"cv_city_id" => $wiki
+					),
+					__METHOD__
+				);
+				$dbw->commit();
+				$bStatus = true;
+			} 
+		}
+		catch ( DBQueryError $e ) {
+			Wikia::log( __METHOD__, "", "Database error, cannot remove variable." );
+			$dbw->rollback();
+			$bStatus = false;
+			throw $e;
+		}
+		wfProfileOut( __METHOD__ );
+		return $bStatus;
+	}
+
 	/**
 	 * setVarByName
 	 *
@@ -903,11 +948,6 @@ class WikiFactory {
 	 */
 	static public function getDomainKey( $domain, $city_id = false ) {
 		$key = self::getDomainHash( $domain, $city_id );
-		if (strpos($domain, ' ') !== false)  {
-			$backtrace = debug_backtrace();
-			error_log ( "getDomainKey backtrace: " . print_r($backtrace, true) );
-			exit;
-		}
 		return "wikifactory:domains:{$key}";
 	}
 

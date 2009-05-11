@@ -77,6 +77,7 @@ Current value:
 <?php endif ?>
 
 	<input type="button" id="wk-submit" name="submit" value="Parse &amp; Save changes" onclick="YAHOO.Wiki.Factory.Variable.submit();" />
+	<input type="button" id="wk-submit-remove" name="remove-submit" value="Remove value" onclick="YAHOO.Wiki.Factory.Variable.remove_submit();" />
 	&nbsp;<span id="wf-variable-parse">&nbsp;</span>
 </form>
 <?php else: ?>
