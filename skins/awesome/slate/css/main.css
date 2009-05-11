@@ -23,7 +23,7 @@
 	background-color: #505254;
 	color: #fec423;
 }
-#navigation a:hover, .navigation-hover {
+.navigation-hover {
 	background-color: #F5F5F5;
 }
 #search_button {

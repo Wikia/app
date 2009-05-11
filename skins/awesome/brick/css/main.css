@@ -26,7 +26,7 @@
 #navigation_widget, #navigation_widget .widget {
 	background-color: #FFF;
 }
-#navigation a:hover, .navigation-hover {
+.navigation-hover {
 	background-color: #F5F5F5;
 }
 #link_box {
