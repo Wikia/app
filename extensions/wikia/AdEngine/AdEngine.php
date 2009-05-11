@@ -137,6 +137,11 @@ class AdEngine {
                         $skin_name = $wgUser->getSkin()->getSkinName();
                 }
 
+		if ($skin_name == 'awesome'){
+			// Temporary hack while we transition to lean monaco
+			$skin_name = 'monaco';
+		}
+
 		$cacheKey = wfMemcKey(__CLASS__ . 'slots', $skin_name, self::cacheKeyVersion);
 		$this->slots = $wgMemc->get($cacheKey);
 
