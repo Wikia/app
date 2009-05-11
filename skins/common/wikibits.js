@@ -86,7 +86,7 @@ function appendCSS(text) {
 }
 
 // special stylesheet links
-if (typeof stylepath != 'undefined' && typeof skin != 'undefined') {
+if (typeof stylepath != 'undefined' && typeof skin != 'undefined' && skin == 'monobook' /* Wikia fix (Macbre): RT #8996 */) {
 	if (is_opera_preseven) {
 		importStylesheetURI(stylepath+'/'+skin+'/Opera6Fixes.css');
 	} else if (is_opera_seven && !is_opera_95) {
