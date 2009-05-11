@@ -128,6 +128,7 @@ class EditAccount extends SpecialPage {
 		$oldEmail = $this->mUser->getEmail();
 		if( $this->mUser->isValidEmailAddr( $email ) ) {
 			$this->mUser->setEmail( $email );
+			$this->mUser->confirmEmail();
 			$this->mUser->saveSettings();
 
 			// Check if everything went through OK, just in case
