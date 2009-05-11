@@ -285,6 +285,17 @@ $Factory.Variable.remove_submit = function () {
 	}
 };
 
+$Factory.Variable.close_submit = function (opt) {
+    $Factory.Busy(1);
+    var oForm = $Dom.get('wf-close-form');
+	submitField = document.createElement("input");
+	submitField.type = "hidden";
+	submitField.name = "submit" + opt;
+	submitField.value = opt;
+	oForm.appendChild(submitField);
+	oForm.submit();
+};
+
 YAHOO.util.Event.addListener("wf-only-defined", "click", $Factory.Variable.filter );
 YAHOO.util.Event.addListener("wf-only-editable", "click", $Factory.Variable.filter );
 YAHOO.util.Event.addListener("wfOnlyWithString", "keypress", $Factory.Variable.filter );
@@ -343,6 +354,16 @@ YAHOO.util.Event.addListener("wf-clear-cache", "click", $Factory.Variable.clear)
 				            <? endif; ?>
             </li>
             <li><a href="#" id="wf-clear-cache"><?php echo wfMsg("wikifactory_removevariable") ?></a></li>
+<?php if ( isset($isDevel) && ($isDevel === true) ) : ?>
+            <li>
+            	<form method="post" action="<?php echo Title::makeTitle( NS_SPECIAL, "CloseWiki" )->getFullURL(); ?>" id="wf-close-form">
+            	<input type="hidden" name="wikis[]" value="<?=$wiki->city_id?>" />
+            	<a href="#" onclick="YAHOO.Wiki.Factory.Variable.close_submit(0);">Close</a> &#183;
+            	<a href="#" onclick="YAHOO.Wiki.Factory.Variable.close_submit(1);">Close and Redirect</a> &#183;
+				<a href="#" onclick="YAHOO.Wiki.Factory.Variable.close_submit(2);">Close and Delete</a>
+				</form>
+            </li>
+<?php endif ?>            
         </ul>
     </div>
 	<div id="wiki-factory-panel">

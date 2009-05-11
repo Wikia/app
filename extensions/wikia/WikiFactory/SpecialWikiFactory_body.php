@@ -204,6 +204,7 @@ class WikiFactoryPage extends SpecialPage {
 	 */
 	public function doWikiForm() {
 		global $wgOut, $wgRequest;
+		global $wgDevelEnvironment;
 
 		$info = null;
 		/**
@@ -249,6 +250,7 @@ class WikiFactoryPage extends SpecialPage {
 			"wikiRequest" => $oWikiRequest,
 			"variableName"=> $this->mVariableName,
 			"user_name"   => $user_name,
+			"isDevel"     => $wgDevelEnvironment
 		);
 		if( $this->mTab === "clog" ) {
 			$pager = new ChangeLogPager( $this->mWiki->city_id );
