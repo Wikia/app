@@ -64,7 +64,7 @@ class EditAccount extends SpecialPage {
 		$userName = $wgRequest->getVal( 'wpUserName' );
 
 		// check if user name is an existing user
-		if( !empty( $userName ) ) {
+		if( User::isValidUserName( $userName ) ) {
 			$this->mUser = User::newFromName( $userName );
 			if( $this->mUser->idFromName( $userName ) === 0 ) {
 				$this->mStatus = false;
