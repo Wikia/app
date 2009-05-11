@@ -1971,7 +1971,7 @@ if(count($wikiafooterlinks) > 0) {
 		    }
         }
 ?>
-								<li style="font-size: 1px; position: absolute; top: 10px"><a href="<?= Title::newFromText('Special:Recentchanges')->getLocalURL() ?>" accesskey="r">Recent changes</a><a href="<?= Title::newFromText('Special:Random')->getLocalURL() ?>" accesskey="x">Random page</a></li>
+								<li style="font-size: 1px; position: absolute; top: -10000px"><a href="<?= Title::newFromText('Special:Recentchanges')->getLocalURL() ?>" accesskey="r">Recent changes</a><a href="<?= Title::newFromText('Special:Random')->getLocalURL() ?>" accesskey="x">Random page</a></li>
 							</ul>
 						</td>
 					</tr>
