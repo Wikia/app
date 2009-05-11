@@ -21,7 +21,7 @@
 	} else {
 		echo '<a rel="nofollow" id="community_register" href="'. htmlspecialchars(Skin::makeSpecialUrl( 'Userlogin', 'type=signup')) .'" class="bigButton" style="margin-bottom: 5px;"><big>'. wfMsg('create_an_account') .'</big><small>&nbsp;</small></a>';
 		echo '<br style="clear: left;"/>';
-		echo wfMsg('already_a_member') .' <a rel="nofollow" id="community_login" href="'. htmlspecialchars(Skin::makeSpecialUrl( 'Userlogin', 'returnto=' . $wgTitle->getPrefixedURL() )) .'">'. wfMsg('log_in') .'</a>';
+		echo wfMsg('already_a_member') .' <a rel="nofollow" id="community_login" class="ajaxLogin" href="'. htmlspecialchars(Skin::makeSpecialUrl( 'Userlogin', 'returnto=' . $wgTitle->getPrefixedURL() )) .'">'. wfMsg('log_in') .'</a>';
 	}
 
 	if(is_array($recentlyEdited) && count($recentlyEdited) > 0) {
