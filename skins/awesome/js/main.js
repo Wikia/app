@@ -229,7 +229,7 @@ function openLogin(event) {
 
 	event.preventDefault();
 
-	$().getModal(window.wgScript + '?action=ajax&rs=GetAjaxLogin&uselang=' + window.wgUserLanguage);
+	$().getModal(window.wgScript + '?action=ajax&rs=GetAjaxLogin&uselang=' + window.wgUserLanguage + '&cb=' + wgMWrevId + '-' + wgStyleVersion);
 }
 
 //Header Menu
