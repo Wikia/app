@@ -213,6 +213,7 @@ $wgSkipSkins = array(
 		'myskin',
 		'simple',
 		'standard',
+		'awesome',
 );
 
 /**
