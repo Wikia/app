@@ -1260,7 +1260,7 @@ class AwesomeTemplate extends QuickTemplate {
 
 	function execute() {
 		wfProfileIn( __METHOD__ );
-		global $wgArticle, $wgUser, $wgLogo, $wgStylePath, $wgRequest, $wgTitle, $wgSitename, $wgEnableFAST_HOME2, $wgExtensionsPath;
+		global $wgArticle, $wgUser, $wgLogo, $wgStylePath, $wgRequest, $wgTitle, $wgSitename, $wgEnableFAST_HOME2, $wgExtensionsPath, $wgAllInOne;
 		$skin = $wgUser->getSkin();
 
 ?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -1269,24 +1269,38 @@ class AwesomeTemplate extends QuickTemplate {
 		?>xmlns:<?php echo "{$tag}=\"{$ns}\" ";
 	} ?>xml:lang="<?php $this->text('lang') ?>" lang="<?php $this->text('lang') ?>" dir="<?php $this->text('dir') ?>">
 <?php		wfProfileIn( __METHOD__ . '-head'); ?>
-<head>
+	<head>
 		<meta http-equiv="Content-Type" content="<?php $this->text('mimetype') ?>; charset=<?php $this->text('charset') ?>" />
                 <!-- Skin = <?php echo basename(__FILE__) ?> -->
 		<?php $this->html('headlinks') ?>
 
 		<title><?php $this->text('pagetitle') ?></title>
 		<?php print Skin::makeGlobalVariablesScript( $this->data ); ?>
+<?php
+	// now let's load CSS files (using @import) / allinone.css (using <link>)
+	if (empty($wgAllInOne)) {
+?>
 		<style type="text/css">/*<![CDATA[*/
 <?php
-	/* macbre: #3432 */
-	foreach($this->data['references']['allinone_css'] as $css) {
+		// load CSS files using @import (trac #3432)
+		foreach($this->data['references']['allinone_css'] as $css) {
 ?>
 			@import "<?= $css['url'] ?>";
 <?php
-	}
+		}
 ?>
 		/*]]>*/</style>
 <?php
+	}
+	else {
+		// load allinone.css using <link> tag
+		foreach($this->data['references']['allinone_css'] as $css) {
+?>
+		<link rel="stylesheet" type="text/css" href="<?= $css['url'] ?>" />
+<?php
+		}
+	}
+
 	foreach($this->data['references']['css'] as $css) {
 ?>
 		<?= isset($css['cond']) ? '<!--['.$css['cond'].']>' : '' ?><link rel="stylesheet" type="text/css" <?= isset($css['param']) ? $css['param'] : '' ?>href="<?= htmlspecialchars($css['url']) ?>" /><?= isset($css['cond']) ? '<![endif]-->' : '' ?>
@@ -1323,10 +1337,10 @@ class AwesomeTemplate extends QuickTemplate {
 	}
 
 ?>
+
 	</head>
 <?php		wfProfileOut( __METHOD__ . '-head'); ?>
 <?php		wfProfileIn( __METHOD__ . '-body'); ?>
-
 <?php
 	if (ArticleAdLogic::isMainPage()){
 		$isMainpage = ' mainpage';
@@ -1343,7 +1357,6 @@ class AwesomeTemplate extends QuickTemplate {
 		$body_css_action = '';
 	}
 ?>
-
 	<body<?php if($this->data['body_onload'    ]) { ?> onload="<?php     $this->text('body_onload')     ?>"<?php } ?>
  class="mediawiki <?php $this->text('dir') ?> <?php $this->text('pageclass') ?><?php if(!empty($this->data['printable']) ) { ?> printable<?php } ?><?php if (!$wgUser->isLoggedIn()) { ?> loggedout<?php } ?> color2 wikiaSkinMonaco<?=$isMainpage?> <?= $body_css_action ?>" id="body">
 <?php
