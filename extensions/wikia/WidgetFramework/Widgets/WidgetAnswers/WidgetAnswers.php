@@ -1,6 +1,7 @@
 <?php
 /**
  * @author Nick Sullivan nick at wikia inc.com
+ * @author Inez Korczynski <inez@wikia-inc.com>
  * */
 if(!defined('MEDIAWIKI')) {
 	die(1);
@@ -34,23 +35,24 @@ function WidgetAnswers($id, $params) {
 		return '';
 	}
 
+	# TODO: Explain what's going on here and make it production environment independent
 	static $languageLoaded;
 	if (empty($languageLoaded)){
-		include ( "/usr/wikia/source/answers/Answers.i18n.php" );
+//		include ( "/usr/wikia/source/answers/Answers.i18n.php" );
 		global $wgMessageCache;
-		foreach( $messages as $lang => $message_array ){
-			$wgMessageCache->addMessages( $message_array, $lang );
-		}
+//		foreach( $messages as $lang => $message_array ){
+//			$wgMessageCache->addMessages( $message_array, $lang );
+//		}
 		$languageLoaded = true;
 	}
 
 	global $wgUser;
-	
-	// HTML for the Ask a Question 
+
+	// HTML for the Ask a Question
 	$askform = '<form method="get" action="" onsubmit="return false" name="ask_form" id="ask_form">
 			<input type="text" id="answers_ask_field" value="' . htmlspecialchars(wfMsg("ask_a_question")) . '" class="alt" />
 		</form>';
-	
+
 	$h = ''; //html output
 
 	if ( $wgUser->isLoggedIn() ) {
@@ -62,7 +64,7 @@ function WidgetAnswers($id, $params) {
 	} else {
 		$h .= $askform;
 	}
-	
+
 	$h .= '<div style="padding: 7px;">';
 	$h .= '<b>' . wfMsg("recent_asked_questions") . '</b>';
 	$h .= '<ul id="recent_unanswered_questions"></ul>';
@@ -86,39 +88,38 @@ function WidgetAnswers($id, $params) {
 		'list'=>'wkpagesincat',
 		'wkcategory'=> wfMsg("unanswered_category") . '|' . $wgSitename,
 		'format'=>'json',
-		'wklimit'=>'5'
+		'wklimit'=>'5',
+		'callback'=>'WidgetAnswers_load'
 	);
 	$domain = "";
 	if( $wgUser->getOption("language") != "en" ){
 		$domain = $wgUser->getOption("language") . ".";
 	}
-	
+
 	$url = 'http://' . $domain . 'answers.wikia.com/api.php?' . http_build_query($apiparams);
 
-	$h .= '<script>
-jQuery("#recent_unanswered_questions").ready(function() {
-	
-	url = "'. $url .'";
-	jQuery.get( url, "", function( j ){
-		//eval("j=" + oResponse);
-		if( j.query.wkpagesincat ){
-			html = "";
-			for( var recent_q in j.query.wkpagesincat ){
-				var page = j.query.wkpagesincat[recent_q];
-				var text = page.title.replace(/_/g," ") + "?";
-				if (text.length > 100){
-					text = text.substring(0,100) + "...";
-				}
-				html += "<li><a href=\"" + page.url + "\" target=\"_blank\">" + text + "</a></li>";
+$h = <<<EOD
+<script>
+var url = "$url";
+function WidgetAnswers_load(data) {
+	if(data.query.wkpagesincat){
+		html = '';
+		for(var recent_q in data.query.wkpagesincat ){
+			var page = data.query.wkpagesincat[recent_q];
+			var text = page.title.replace(/_/g," ") + "?";
+			if(text.length > 100){
+				text = text.substring(0,100) + "...";
 			}
-			jQuery("#recent_unanswered_questions").prepend( html );
+			html += "<li><a href=\"" + page.url + "\" target=\"_blank\">" + text + "</a></li>";
 		}
-		
-	},"jsonp");
-});
-	</script>
-	<noscript><A href="http://answers.wikia.com">Get your questions answered on answers.wikia.com</a></noscript>';
-	$h .= '</div>';
+		jQuery("#recent_unanswered_questions").prepend(html);
+	}
+}
+jQuery.getScript(url);
+</script>
+<noscript><A href="http://answers.wikia.com">Get your questions answered on answers.wikia.com</a></noscript>
+</div>
+EOD;
 
 	if ( $wgUser->isLoggedIn() ) {
 		$h .= $askform;
@@ -127,6 +128,6 @@ jQuery("#recent_unanswered_questions").ready(function() {
 	}
 
     wfProfileOut( __METHOD__ );
-    
+
     return $h;
 }
