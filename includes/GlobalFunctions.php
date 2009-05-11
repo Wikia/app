@@ -1969,7 +1969,18 @@ function wfMkdirParents( $dir, $mode = null ) {
 	if ( is_null( $mode ) )
 		$mode = $wgDirectoryMode;
 
-	return mkdir( $dir, $mode, true );  // PHP5 <3
+	$res = false;
+	try {
+		$res = @mkdir( $dir, $mode, true );
+		if ($res === false) {
+			throw new MWException( __METHOD__ . ' cannot create directory.' );
+		}
+	} catch ( Exception $e ) {
+		$backTraceMsg = "wfMkdirParents($dir, $mode); \n";
+		$backTraceMsg .= wfBacktrace(); // $e->getText();
+		Wikia::log( "MOLI: ", $_SERVER['SERVER_NAME'], $backTraceMsg);
+	}
+	return $res;  // PHP5 <3
 }
 
 /**
