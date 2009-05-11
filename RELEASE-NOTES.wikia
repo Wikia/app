@@ -4,3 +4,4 @@
 
 == Changes since 200905.1 ==
 * rt#14685: Shoutbox uses server time, not user's local time - fixed in t:r8239
+* rt#14656: Answers skin now fetches YUI in one transaction and has tracking

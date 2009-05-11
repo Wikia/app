@@ -80,7 +80,7 @@ if(mwCustomEditButtons) {
 		"imageId": "mw-editbutton-wmu"};
 }
 
-if(skin == 'monaco') {
+if( skin == 'monaco' || skin == 'answers' ) {
 	addOnloadHook(function () {
 		if(document.forms.editform) {
 			WMU_addHandler();
