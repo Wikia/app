@@ -49,6 +49,7 @@ class CloseWikiMaintenace {
 			/**
 			 * check what we have to do with this wikia
 			 */
+			$this->checkDuplicates();
 			if( $wgCityId ) {
 				$Wiki = WikiFactory::getWikiByID( $wgCityId );
 				$this->mAction = $Wiki->city_public;
@@ -142,35 +143,9 @@ class CloseWikiMaintenace {
 		/**
 		 * check if database is used in more than one wiki
 		 */
+		$this->checkDuplicates();
+
 		$dbw = wfGetDB();
-
-		/**
-		 * check city_list table
-		 */
-		$Row = $dbw->selectRow(
-			WikiFactory::table( "city_list" ),
-			array( "count(*) as count" ),
-			array( "city_dbname" => $wgDBname ),
-			__METHOD__
-		);
-		if( $Row->count > 1 ) {
-			wfDie( "{$wgDBname} is used more than once in city_list table" );
-		}
-
-		/**
-		 * check city_variables table
-		 */
-		$Row = $dbw->selectRow(
-			WikiFactory::table( "city_variables" ),
-			array( "count(*) as count" ),
-			array( "cv_value" => serialize( $wgDBname ) ),
-			__METHOD__
-		);
-		if( $Row->count > 1 ) {
-			wfDie( "{$wgDBname} is used more than once in city_variables table" );
-		}
-
-
 		$dbw->selectDB( $wgSharedDB );
 		$dbw->begin();
 		$dbw->query( "DROP DATABASE `$wgDBname`");
@@ -414,5 +389,48 @@ class CloseWikiMaintenace {
 		}
 
 		return $directory;
+	}
+
+	/**
+	 * check if we have any inconsistence in database (duplicates etc.)
+	 * Die if found any
+	 *
+	 * @access private
+	 *
+	 * @return
+	 */
+	private function checkDuplicates() {
+		global $wgDBname;
+
+		/**
+		 * check if database is used in more than one wiki
+		 */
+		$dbw = wfGetDB();
+
+		/**
+		 * check city_list table
+		 */
+		$Row = $dbw->selectRow(
+			WikiFactory::table( "city_list" ),
+			array( "count(*) as count" ),
+			array( "city_dbname" => $wgDBname ),
+			__METHOD__
+		);
+		if( $Row->count > 1 ) {
+			wfDie( "{$wgDBname} is used more than once in city_list table" );
+		}
+
+		/**
+		 * check city_variables table
+		 */
+		$Row = $dbw->selectRow(
+			WikiFactory::table( "city_variables" ),
+			array( "count(*) as count" ),
+			array( "cv_value" => serialize( $wgDBname ) ),
+			__METHOD__
+		);
+		if( $Row->count > 1 ) {
+			wfDie( "{$wgDBname} is used more than once in city_variables table" );
+		}
 	}
 }
