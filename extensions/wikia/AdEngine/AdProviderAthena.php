@@ -25,16 +25,21 @@ class AdProviderAthena implements iAdProvider {
                 }
                 $called = true;
 
-		global $wgDBname, $wgLang, $wgUser, $wgTitle;
+		global $wgDBname, $wgLang, $wgUser, $wgTitle, $wgAthenaDevHosts;
 
-		if (empty($_GET['athena_dev_hosts'])){
-			$base = "/__varnish_athena/";
-			$version = "1";
-		} else {
+		if (!empty($_GET['athena_dev_hosts']) || !empty($wgAthenaDevHosts)){
 			$base = "http://athena.dev.wikia-inc.com/";
 			$version = mt_rand();
+			$out .= "<script>var athena_dev_hosts = 1;</script>";
+		} else {
+			$base = "/__varnish_athena/";
+			$version = "1";
+			$out = '';
 		}
-		$out =  '<script type="text/javascript" src="'. $base .'athena/Athena.js?' . $version . '"></script>' . "\n";
+		$out .=  '<script type="text/javascript" src="'. $base .'athena/Athena.js?' . $version . '"></script>' . "\n";
+
+		if (!empty($_GET['athena_dev_hosts'])){
+		}
 
 		// Page vars are variables that you want available in javascript for serving ads
 		$pageVars = array();
