@@ -379,6 +379,47 @@ function axWFactoryFilterVariables( )
 }
 
 /**
+ * axWFactoryRemoveVariable
+ *
+ * Ajax call, remove
+ *
+ * @access public
+ * @author eloy@wikia
+ *
+ * @return string: json string with array of variables
+ */
+function axWFactoryRemoveVariable( ) {
+	global $wgUser, $wgRequest;
+
+	$error     = 0;
+	$return    = "";
+
+	if ( ! $wgUser->isAllowed('wikifactory') ) {
+		$error++;
+		$return = Wikia::errormsg( "You are not allowed to change variable value" );
+	}
+	else {
+		$cv_id				= $wgRequest->getVal( 'varId' );
+		$city_id			= $wgRequest->getVal( 'cityid' );
+		
+		if( ! WikiFactory::removeVarById( $cv_id, $city_id ) ) {
+			$error++;
+			$return = Wikia::errormsg( "Variable not removed because of problems with database. Try again." );
+		} else {
+			$return = Wikia::successmsg( " Value of variable was removed ");
+		}
+	}
+
+	return Wikia::json_encode(
+		array(
+			"div-body" => $return,
+			"is-error" => $error,
+			"div-name" => "wf-variable-parse"
+		)
+	);
+}
+
+/**
  * axAWCMetrics
  *
  * Ajax call, return filtered list of all wikis with some metrics data
@@ -482,3 +523,4 @@ $wgAjaxExportList[] = "axWFactoryClearCache";
 $wgAjaxExportList[] = "axWFactorySaveVariable";
 $wgAjaxExportList[] = "axAWCMetrics";
 $wgAjaxExportList[] = "axAWCMetricsCategory";
+$wgAjaxExportList[] = "axWFactoryRemoveVariable";
