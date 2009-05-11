@@ -223,7 +223,7 @@ class CreateWikiMetrics {
 					'users_reg'			=> $oRow->users_reg,
 					'users_edits'		=> $oRow->users_edits,
 					'pageviews'			=> 0,
-					'pageviews_txt'		=> "",
+					'pageviews_txt'		=> "0",
 				);
 				$AWCCities[ $oRow->cw_city_id ] = array_merge( $AWCCities[ $oRow->cw_city_id ], $_tmp );
 			}
