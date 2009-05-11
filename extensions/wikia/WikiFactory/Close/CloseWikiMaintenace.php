@@ -54,6 +54,7 @@ class CloseWikiMaintenace {
 				$this->mWiki = WikiFactory::getWikiByID( $wgCityId );
 				$this->mAction = $this->mWiki->city_public;
 			}
+			Wikia::log( __CLASS__, "info", "maintenance on {$wgCityId}" );
 			$this->checkDuplicates();
 			switch( $this->mAction ) {
 
@@ -146,7 +147,7 @@ class CloseWikiMaintenace {
 		 */
 		$this->checkDuplicates();
 
-		$dbw = wfGetDB();
+		$dbw = wfGetDB( DB_MASTER );
 		$dbw->selectDB( $wgSharedDB );
 		$dbw->begin();
 		$dbw->query( "DROP DATABASE `$wgDBname`");
@@ -406,7 +407,7 @@ class CloseWikiMaintenace {
 		/**
 		 * check if database is used in more than one wiki
 		 */
-		$dbw = wfGetDB();
+		$dbw = wfGetDB( DB_MASTER );
 
 		/**
 		 * check city_list table
