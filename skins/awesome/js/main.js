@@ -282,10 +282,20 @@ function menuInit() {
 		if (typeof item != 'object') { 
 			$.each(magicWords[item], function() {
 				classname = '';
+				text = this.text;
 				if (this.className) {
 					classname = ' class="' + this.className + '"';
+					if (this.className == 'Monaco-sidebar_more') {
+						text = wgMenuMore;
+					} else if (this.className == 'Monaco-sidebar_edit') {
+						if (typeof wgMenuEdit != 'undefined') {
+							text = wgMenuEdit;
+						} else {
+							return true;
+						}
+					}
 				}
-				html += '<div class="menu-item"><a href="' + this.url + '" rel="nofollow"' + classname +'>' + this.text +'</a></div>';
+				html += '<div class="menu-item"><a href="' + this.url + '" rel="nofollow"' + classname +'>' + text +'</a></div>';
 			});
 		} else {
 			$.each(item, function(i, item) {
@@ -312,8 +322,14 @@ function menuInit() {
 	$.each(menuArray.mainMenu, function (i, item) {
 		monacoNavigationRender(i, item, true);	
 	});
-	//no border on last item in sub-menus
 	$(".sub-menu").each(function() {
+		//add "Edit this menu" to all sub-menus
+		$().log($(this).children("div:last").children("a:not(\".Monaco-sidebar_edit\")").length);
+		if (typeof wgMenuEdit != 'undefined' && $(this).children("div:last").children("a:not(\".Monaco-sidebar_edit\")").length) {
+			href = ($("#navigation").hasClass("userMenu")) ? '?title=User:' + wgUserName + '/Monaco-sidebar&action=edit' : '?title=MediaWiki:Monaco-sidebar&action=edit';
+			$(this).append('<div class="menu-item"><a href="' + wgScript + href + '" class="Monaco-sidebar_edit">' + wgMenuEdit + '</a></div>');
+		}
+		//no border on last item in sub-menus
 		$(this).children("div:last").css("border", 0);
 	});
 	monacoNavigationHoverActions();
