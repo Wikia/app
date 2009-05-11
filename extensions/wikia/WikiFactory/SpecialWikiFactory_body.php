@@ -230,6 +230,11 @@ class WikiFactoryPage extends SpecialPage {
 			}
 		}
 
+		$user_name = 'unknown';
+		if (!empty($this->mWiki->city_founding_user)) {
+			$user_name = User::WhoIs($this->mWiki->city_founding_user);
+		}
+
 		$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
 		$vars = array(
 			"tab"         => $this->mTab,
@@ -243,6 +248,7 @@ class WikiFactoryPage extends SpecialPage {
 			"variables"   => WikiFactory::getVariables(),
 			"wikiRequest" => $oWikiRequest,
 			"variableName"=> $this->mVariableName,
+			"user_name"   => $user_name,
 		);
 		if( $this->mTab === "clog" ) {
 			$pager = new ChangeLogPager( $this->mWiki->city_id );
