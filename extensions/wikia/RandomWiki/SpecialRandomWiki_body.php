@@ -70,8 +70,13 @@ class RandomWiki extends SpecialPage {
 
 		// When a param is given, add it to the URL as a wiki page
 		if ( !empty( $par ) ) {
-			$wgArticlePathRemote = WikiFactory::getVarByName( 'wgArticlePath', $targetWiki );
-			$url .= str_replace( '$1', $par, unserialize( $wgArticlePathRemote->cv_value ) );
+			$wgArticlePathRemote = unserialize( WikiFactory::getVarByName( 'wgArticlePath', $targetWiki )->cv_value );
+			// Check for funky $wgArticlePath
+			if ( strpos( $wgArticlePathRemote, '$wgScriptPath' ) !== false  ) {
+				$wgScriptPathRemote = unserialize( WikiFactory::getVarByName( 'wgScriptPath', $targetWiki )->cv_value );
+				$wgArticlePathRemote = str_replace( '$wgArticlePath', $wgScriptPathRemote, $wgArticlePathRemote );
+			}
+			$url .= str_replace( '$1', $par, $wgArticlePathRemote );
 		}
 
 		// Redirect the user to a randomly-chosen wiki
