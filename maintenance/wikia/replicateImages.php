@@ -139,6 +139,20 @@ class WikiaReplicateImages {
 								);
 								$output = wfShellExec( $cmd, $retval );
 								Wikia::log( __CLASS__, "info", "{$cmd}" );
+									$cmd = wfEscapeShellArg(
+									"/usr/bin/rsync",
+									"-axpr",
+									"--owner",
+									"--group",
+									"--chmod=g+w",
+									$Row->up_path,
+									escapeshellcmd( $login . '@' . $server["address"] . ':' . $destination )
+								);
+								$output = wfShellExec( $cmd, $retval );
+								if( $retval == 0 ) {
+									Wikia::log( __CLASS__, "info", "{$cmd}." );
+									$flags = $flags | $server["flag"];
+								}
 							}
 							else {
 								Wikia::log( __CLASS__, "info", "{$cmd}." );
