@@ -128,6 +128,7 @@ a.bigButton small {
 	-moz-opacity: .95;
 	opacity: .95;
 	overflow: hidden;
+	visibility: visible;
 	z-index: 1000;
 }
 .headerMenu a {
@@ -449,6 +450,7 @@ div.modalWrapper {
 	left: 50%;
 	padding: 2px;
 	position: absolute;
+	visibility: visible;
 	z-index: 1001;
 }
 h1.modalTitle {
@@ -473,6 +475,7 @@ h1.modalTitle div {
 	opacity: 0;
 	position: absolute;
 	top: 0;
+	visibility: visible;
 	width: 100%;
 	z-index: 1000;	
 }
@@ -500,4 +503,8 @@ ul.jq-ui-autocomplete li {
 ul.jq-ui-autocomplete li.active { 
   background-color: #3875d7; 
   color: #fff;
+}
+
+#positioned_elements {
+	visibility: hidden;
 }
