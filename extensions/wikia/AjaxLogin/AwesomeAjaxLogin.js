@@ -6,10 +6,10 @@ AjaxLogin = {
 		this.form = form;
 
 		// add submit event handler for login form
-		this.form.submit(AjaxLogin.formSubmitHandler).log('AjaxLogin: init()');
+		this.form.submit(this.formSubmitHandler).log('AjaxLogin: init()');
 
 		// ask before going to register form from edit page
-		this.form.find('#wpAjaxRegister').click(AjaxLogin.ajaxRegisterConfirm);
+		this.form.find('#wpAjaxRegister').click(this.ajaxRegisterConfirm);
 	},
 	formSubmitHandler: function(ev) {
 		// Prevent the default action for event (submit of form)
@@ -35,6 +35,7 @@ AjaxLogin = {
 	handleSuccess: function(response) {
 		var responseResult = response.ajaxlogin.result;
 		switch(responseResult) {
+			// TODO: what is this for?
 			case 'Reset':
 				if(Dom.get('wpPreview') && Dom.get('wpLogin')) {
 					if(typeof(ajaxLogin1)!="undefined" && !confirm(ajaxLogin1)) {
@@ -86,7 +87,7 @@ AjaxLogin = {
 		AjaxLogin.form.find('#wpError').css('display', '').html(reason + '<br/><br/>');
 	},
 	blockLoginForm: function(block) {
-		this.form.find('input').attr('disabled', (block ? true : false));
+		AjaxLogin.form.find('input').attr('disabled', (block ? true : false));
 	},
 	ajaxRegisterConfirm: function(ev) {
 		AjaxLogin.form.log('AjaxLogin: ajaxRegisterConfirm()');
