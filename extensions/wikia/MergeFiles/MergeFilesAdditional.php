@@ -182,3 +182,90 @@ $MF['monaco_css']['source'] = array(
 	'../extensions/wikia/Blogs/css/Blogs.css',
 );
 $MF['monaco_css']['source'] = array_merge($MF['monaco_css']['source'], $widgetsAssets['css']);
+
+/* Lean Monaco */
+$MF['awesome_loggedin_js']['source'] = array(
+	'common/yui_2.5.2/utilities/utilities.js',
+	'common/yui_2.5.2/cookie/cookie-beta.js',
+	'common/yui_2.5.2/container/container.js',
+	'common/yui_2.5.2/autocomplete/autocomplete.js',
+	'common/yui_2.5.2/animation/animation-min.js',
+	'common/yui_2.5.2/logger/logger.js',
+	'common/yui_2.5.2/menu/menu.js',
+	'common/yui_2.5.2/tabview/tabview.js',
+	'common/yui_extra/tools-min.js',
+	'common/yui_extra/carousel-min.js',
+
+	'common/jquery/jquery-1.3.2.min.js', 
+	'common/jquery/jquery.json-1.3.min.js',
+	'common/jquery/jquery.cookies.2.0.1.min.js',
+	'common/jquery/jquery.wikia.js',
+
+	'common/ajax.js',
+	'common/urchin.js',
+	'common/wikibits.js',
+	'awesome/js/tracker.js',
+	'common/tracker.js',
+	'common/ajaxwatch.js',
+	'awesome/js/main.js',
+	'common/widgets/js/widgetsConfig.js',
+	'common/widgets/js/widgetsFramework.js',
+	'../extensions/wikia/ProblemReports/js/ProblemReports-loader.js',
+	'../extensions/wikia/AdEngine/AdEngine.js',
+	//'../extensions/wikia/FAST/FAST.js',
+	'../extensions/wikia/TieDivLibrary/TieDivLibrary.js',
+	'common/contributed.js',
+);
+$MF['awesome_loggedin_js']['source'] = array_merge($MF['awesome_loggedin_js']['source'], $widgetsAssets['js']);
+
+$MF['awesome_non_loggedin_js']['source'] = array(
+	'common/yui_2.5.2/utilities/utilities.js',
+	'common/yui_2.5.2/cookie/cookie-beta.js',
+	'common/yui_2.5.2/container/container.js',
+	'common/yui_2.5.2/autocomplete/autocomplete.js',
+	'common/yui_2.5.2/animation/animation-min.js',
+	'common/yui_2.5.2/logger/logger.js',
+	'common/yui_2.5.2/menu/menu.js',
+	'common/yui_2.5.2/tabview/tabview.js',
+	'common/yui_extra/tools-min.js',
+
+	'common/jquery/jquery-1.3.2.min.js',
+	'common/jquery/jquery.json-1.3.min.js',
+	'common/jquery/jquery.cookies.2.0.1.min.js',
+	'common/jquery/jquery.wikia.js',
+
+	'common/ajax.js',
+	'common/urchin.js',
+	'common/wikibits.js',
+	'awesome/js/tracker.js',
+	'common/tracker.js',
+	'awesome/js/main.js',
+	'common/widgets/js/widgetsConfig.js',
+	'common/widgets/js/widgetsFramework.js',
+	'../extensions/wikia/AjaxLogin/AjaxLogin.js',
+	'../extensions/wikia/ProblemReports/js/ProblemReports-loader.js',
+	'../extensions/wikia/AdEngine/AdEngine.js',
+	//'../extensions/wikia/FAST/FAST.js',
+	'../extensions/wikia/Userengagement/Userengagement.js',
+	'../extensions/wikia/TieDivLibrary/TieDivLibrary.js',
+	'common/contributed.js',
+);
+$MF['awesome_non_loggedin_js']['source'] = array_merge($MF['awesome_non_loggedin_js']['source'], $widgetsAssets['js']);
+
+$MF['awesome_css']['source'] = array(
+	'common/yui_2.5.2/container/assets/container.css',
+	'common/yui_2.5.2/tabview/assets/tabview.css',
+	'common/shared.css',
+	'awesome/css/monobook_modified.css',
+	'awesome/css/reset_modified.css',
+	'awesome/css/root.css',
+	'awesome/css/header.css',
+	'awesome/css/article.css',
+	'awesome/css/widgets.css',
+	'awesome/css/footer.css',
+	'awesome/css/star_rating.css',
+	'awesome/css/ny.css',
+	'../extensions/wikia/EditSimilar/EditSimilar.css',
+	'../extensions/wikia/Blogs/css/Blogs.css',
+);
+$MF['awesome_css']['source'] = array_merge($MF['awesome_css']['source'], $widgetsAssets['css']);
