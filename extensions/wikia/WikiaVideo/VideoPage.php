@@ -451,8 +451,13 @@ EOD;
 		return str_replace("\n", ' ', $s); // TODO: Figure out what for this string replace is
 	}
 
-	public function generateWysiwygWindow($refid, $title, $align, $width, $caption, $thumb) {
+	public function generateWysiwygWindow($refid, $title, $align, $width, $caption, $thumb, $frame) {
 		global $wgStylePath, $wgWysiwygMetaData;
+
+		if ($frame) { // frame has always native width
+			$ratios = split( "x", $this->getTextRatio() );
+			$width = intval( trim( $ratios[0] ) );
+		}
 
 		$code = $this->getThumbnailCode($width);
 
