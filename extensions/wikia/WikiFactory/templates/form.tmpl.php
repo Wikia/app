@@ -318,7 +318,7 @@ YAHOO.util.Event.addListener("wf-clear-cache", "click", $Factory.Variable.clear)
 				</strong>
 			</li>
             <li>
-                Wiki founder identifier is <strong><?php echo $wiki->city_founding_user ?></strong>
+					 Wiki founder name is <strong><?php echo $user_name ?></strong> (id <?php echo $wiki->city_founding_user ?>)
                 and his/her email is <strong><?php echo empty( $wiki->city_founding_email) ? "empty" : $wiki->city_founding_email ?></strong>
             </li>
 				<li>
