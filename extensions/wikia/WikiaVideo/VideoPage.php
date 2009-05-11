@@ -41,15 +41,167 @@ class VideoPage extends Article {
 	}
 
 	function delete() {
+		// content moved to doDelete
 		parent::delete();	
-		$title = $this->mTitle;
-		if ( $title ) {
-			$update = new VideoHTMLCacheUpdate( $title, 'imagelinks' );
-			$update->doUpdate();
+	}
+
+	// wrapper for deletion - two modes, total (deletes article plus all history) or one chosen old history (file) revision
+	public function doDelete( $reason, $suppress = false ) {
+		global $wgOut, $wgUser, $wgRequest, $wgLang;
+
+		$wgRequest->getVal( 'wpOldVideo' ) ? $oldvideo = $wgRequest->getVal( 'wpOldVideo' ) : $oldvideo = false ;
+
+		if( !$oldvideo ) { 
+			// move the history to filearchive
+			$this->doDBInserts();
+			// and clean it up
+			$this->doDBDeletes();	
+			// delete the article itself
+			parent::doDelete( $reason, $suppress );	
+
+			// clean up cache for all articles that linked to this one
+			$title = $this->mTitle;
+			if ( $title ) {
+				$update = new VideoHTMLCacheUpdate( $title, 'imagelinks' );
+				$update->doUpdate();
+			}
+		} else {
+			// delete just this one "file" revision, the article remains intact
+			$this->doDBInserts( $oldvideo );
+			$this->doDBDeletes( $oldvideo );				
+
+			// supply info about what we have done
+			$this->load();
+			$data = array(
+					$this->mProvider,
+					$this->mId,
+					$this->mData[0]
+				     );
+			$data = implode( ",", $data ) ;
+			$url = self::getUrl( $data );
+
+			$wgOut->addHTML( wfMsgExt(
+						"wikiavideo-deleted-old",
+						'parse',
+						$url,
+						$this->mTitle->getText(),
+						$wgLang->date( $oldvideo, true ),
+						$wgLang->time( $oldvideo, true )
+						) );
+
+			$log = new LogPage( 'delete' );
+			$logComment = wfMsgForContent( 'deletedrevision', $oldvideo );
+			if( trim( $reason ) != '' )
+				$logComment .= ": {$reason}";
+			$log->addEntry( 'delete', $this->mTitle, $logComment );
+
+			$this->doPurge();
+			$wgOut->addReturnTo( $this->mTitle );
 		}
 	}
 
-	// 
+	public function confirmDelete( $reason ) {
+		global $wgOut, $wgUser, $wgRequest, $wgLang;
+
+		wfDebug( "VideoPage::confirmDelete\n" );
+
+		$wgRequest->getVal( 'oldvideo' ) ? $oldvideo = $wgRequest->getVal( 'oldvideo' ) : $oldvideo = '';
+
+		$wgOut->setSubtitle( wfMsgHtml( 'delete-backlink', $wgUser->getSkin()->makeKnownLinkObj( $this->mTitle ) ) );
+		$wgOut->setRobotPolicy( 'noindex,nofollow' );
+		if( '' == $oldvideo ) {
+			$wgOut->addWikiMsg( 'confirmdeletetext' );
+		} else {
+			// supply info about what we have done
+			$this->load();
+			$data = array(
+					$this->mProvider,
+					$this->mId,
+					$this->mData[0]
+				     );
+			$data = implode( ",", $data ) ;
+			$url = self::getUrl( $data );
+
+			$wgOut->addHTML( wfMsgExt(
+                                "wikiavideo-intro-old",
+                                'parse',
+                                $url,
+                                $wgLang->date( $oldvideo, true ),
+                                $wgLang->time( $oldvideo, true ),
+				self::getOldUrl( $this->mTitle, $oldvideo ),
+				$this->mTitle->getText()				
+                                ) );			
+		}
+
+		if( $wgUser->isAllowed( 'suppressrevision' ) ) {
+			$suppress = "<tr id=\"wpDeleteSuppressRow\" name=\"wpDeleteSuppressRow\">
+				<td></td>
+				<td class='mw-input'>" .
+				Xml::checkLabel( wfMsg( 'revdelete-suppress' ),
+						'wpSuppress', 'wpSuppress', false, array( 'tabindex' => '4' ) ) .
+				"</td>
+				</tr>";
+		} else {
+			$suppress = '';
+		}
+		$checkWatch = $wgUser->getBoolOption( 'watchdeletion' ) || $this->mTitle->userIsWatching();
+
+		$form = Xml::openElement( 'form', array( 'method' => 'post',
+					'action' => $this->mTitle->getLocalURL( 'action=delete' ), 'id' => 'deleteconfirm' ) ) .
+			Xml::openElement( 'fieldset', array( 'id' => 'mw-delete-table' ) ) .
+			Xml::tags( 'legend', null, wfMsgExt( 'delete-legend', array( 'parsemag', 'escapenoentities' ) ) ) .
+			Xml::openElement( 'table', array( 'id' => 'mw-deleteconfirm-table' ) ) .
+			"<tr id=\"wpDeleteReasonListRow\">
+			<td class='mw-label'>" .
+			Xml::label( wfMsg( 'deletecomment' ), 'wpDeleteReasonList' ) .
+			"</td>
+			<td class='mw-input'>" .
+			Xml::listDropDown( 'wpDeleteReasonList',
+					wfMsgForContent( 'deletereason-dropdown' ),
+					wfMsgForContent( 'deletereasonotherlist' ), '', 'wpReasonDropDown', 1 ) .
+			"</td>
+			</tr>
+			<tr id=\"wpDeleteReasonRow\">
+			<td class='mw-label'>" .
+			Xml::label( wfMsg( 'deleteotherreason' ), 'wpReason' ) .
+			"</td>
+			<td class='mw-input'>" .
+			Xml::input( 'wpReason', 60, $reason, array( 'type' => 'text', 'maxlength' => '255',
+						'tabindex' => '2', 'id' => 'wpReason' ) ) .
+			"</td>
+			</tr>
+			<tr>
+			<td></td>
+			<td class='mw-input'>" .
+			Xml::checkLabel( wfMsg( 'watchthis' ),
+					'wpWatch', 'wpWatch', $checkWatch, array( 'tabindex' => '3' ) ) .
+			"</td>
+			</tr>
+			$suppress
+			<tr>
+			<td></td>
+			<td class='mw-submit'>" .
+			Xml::submitButton( wfMsg( 'deletepage' ),
+					array( 'name' => 'wpConfirmB', 'id' => 'wpConfirmB', 'tabindex' => '5' ) ) .
+			"</td>
+			</tr>" .
+			Xml::closeElement( 'table' ) .
+			Xml::closeElement( 'fieldset' ) .
+			Xml::hidden( 'wpEditToken', $wgUser->editToken() ) .
+			Xml::hidden( 'wpOldVideo', $oldvideo ) .			
+			Xml::closeElement( 'form' );
+
+		if( $wgUser->isAllowed( 'editinterface' ) ) {
+			$skin = $wgUser->getSkin();
+			$link = $skin->makeLink ( 'MediaWiki:Deletereason-dropdown', wfMsgHtml( 'delete-edit-reasonlist' ) );
+			$form .= '<p class="mw-delete-editreasons">' . $link . '</p>';
+		}
+
+		$wgOut->addHTML( $form );
+		LogEventsList::showLogExtract( $wgOut, 'delete', $this->mTitle->getPrefixedText() );
+	}
+
+	// handles main video page viewing - two modes, for existing page and for non-existing (not created, deleted...) 
 	function view() {
 		global $wgOut, $wgUser, $wgRequest;
 
@@ -84,6 +236,181 @@ class VideoPage extends Article {
 		}
 	}
 
+	function doCleanup () {
+		global $wgUser;
+		// when we have a non-existing article (deleted) and upload a new video, perform cleanup for earlier image and oldimage versions
+		// if necessary
+		$fname = get_class( $this ) . '::' . __FUNCTION__;
+
+		$dbr = wfGetDB( DB_SLAVE );
+		// if we had at least one revision in image, that means we have to do this
+		// remember, this was deleted
+		$row = $dbr->selectRow(
+			'image',
+			'img_name',
+			array(
+				'img_name = ' . $dbr->addQuotes( self::getNameFromTitle( $this->mTitle ) ) .' OR img_name = ' . $dbr->addQuotes( $this->mTitle->getPrefixedText() ),
+			),
+			$fname
+		);
+		
+		if(!$row) {
+			return; // no need to run 
+		}			
+
+		// move anything from image and oldimage into filearchive, because it wasn't moved before
+		$this->doDBInserts();
+		$this->doDBDeletes();	
+	}
+
+	// take all given video's records from image and oldimage and put into filearchive or just one single old revision
+	// performs old format correction along the way	
+	function doDBInserts( $oldvideo = false ) {
+		global $wgUser;
+
+		$dbw = wfGetDB( DB_MASTER );
+		$encTimestamp = $dbw->addQuotes( $dbw->timestamp() );
+		$encUserId = $dbw->addQuotes( $wgUser->getId() );
+		$encReason = $dbw->addQuotes( $this->reason );
+		$encGroup = 'deleted';
+
+		// cater for older format, gather first, insert then
+
+		if( !$oldvideo ) {
+
+			$conditions = array( 'img_name = ' . $dbw->addQuotes( self::getNameFromTitle( $this->mTitle ) ) .' OR img_name = ' . $dbw->addQuotes( $this->mTitle->getPrefixedText() ) );
+
+			$result = $dbw->select( 'image', '*',
+					$conditions,
+					__METHOD__,
+					array( 'ORDER BY' => 'img_timestamp DESC' )
+					);
+
+			$insertBatch = array();
+			$archiveName = '';
+			$first = true;
+
+			while( $row = $dbw->fetchObject( $result ) ) {
+				if( $first ) { // this is our new current revision
+					$insertCurrent = array(
+							'fa_storage_group' => $encGroup,
+							'fa_storage_key'   => "",
+							'fa_deleted_user'      => $encUserId,
+							'fa_deleted_timestamp' => $encTimestamp,
+							'fa_deleted_reason'    => $encReason,
+							'fa_deleted'               => 0,
+
+							'fa_name'         => self::getNameFromTitle( $this->mTitle ),
+							'fa_archive_name' => 'NULL',
+							'fa_size'         => $row->img_size,
+							'fa_width'        => $row->img_width,
+							'fa_height'       => $row->img_height,
+							'fa_metadata'     => $row->img_metadata,
+							'fa_bits'         => $row->img_bits,
+							'fa_media_type'   => $row->img_media_type,
+							'fa_major_mime'   => $row->img_major_mime,
+							'fa_minor_mime'   => $row->img_minor_mime,
+							'fa_description'  => $row->img_description,
+							'fa_user'         => $row->img_user,
+							'fa_user_text'    => $row->img_user_text,
+							'fa_timestamp'    => $row->img_timestamp
+								);
+				} else {
+					$insertBatchImg = array(
+							'fa_storage_group' => $encGroup,
+							'fa_storage_key'   => "",
+							'fa_deleted_user'      => $encUserId,
+							'fa_deleted_timestamp' => $encTimestamp,
+							'fa_deleted_reason'    => $encReason,
+							'fa_deleted'               => 0,
+
+							'fa_name'         => self::getNameFromTitle( $this->mTitle ),
+							'fa_archive_name' => $archiveName,
+							'fa_size'         => $row->img_size,
+							'fa_width'        => $row->img_width,
+							'fa_height'       => $row->img_height,
+							'fa_metadata'     => $row->img_metadata,
+							'fa_bits'         => $row->img_bits,
+							'fa_media_type'   => $row->img_media_type,
+							'fa_major_mime'   => $row->img_major_mime,
+							'fa_minor_mime'   => $row->img_minor_mime,
+							'fa_description'  => $row->img_description,
+							'fa_user'         => $row->img_user,
+							'fa_user_text'    => $row->img_user_text,
+							'fa_timestamp'    => $row->img_timestamp
+								);
+				}
+				$deleteIds[] = $row->fa_id;
+				$first = false;
+			}
+
+			if ( $insertCurrent ) {
+				$dbw->insert( 'filearchive', $insertCurrent, __METHOD__ );
+			}
+			if ( $insertBatchImg ) {
+				$dbw->insert( 'filearchive', $insertBatchImg, __METHOD__ );
+			}
+
+			$where = array( 'oi_name = ' . $dbw->addQuotes( self::getNameFromTitle( $this->mTitle ) ) .' OR oi_name = ' . $dbw->addQuotes( $this->mTitle->getPrefixedText()) );
+
+		} else { // single old revision to delete
+			$where = array(
+				'oi_name = ' . $dbw->addQuotes( self::getNameFromTitle( $this->mTitle ) ) .' OR oi_name = ' . $dbw->addQuotes( $this->mTitle->getPrefixedText()),
+				'oi_timestamp' => $oldvideo
+			);
+
+		}
+		$encGroup = $dbw->addQuotes( 'deleted' );
+
+		$dbw->insertSelect( 'filearchive', 'oldimage',
+				array(
+					'fa_storage_group' => $encGroup,
+					'fa_storage_key'   => "''",
+					'fa_deleted_user'      => $encUserId,
+					'fa_deleted_timestamp' => $encTimestamp,
+					'fa_deleted_reason'    => $encReason,
+					'fa_name'         => $dbw->addQuotes( self::getNameFromTitle( $this->mTitle ) ),
+					'fa_archive_name' => 'oi_archive_name',
+					'fa_size'         => 'oi_size',
+					'fa_width'        => 'oi_width',
+					'fa_height'       => 'oi_height',
+					'fa_metadata'     => 'oi_metadata',
+					'fa_bits'         => 'oi_bits',
+					'fa_media_type'   => 'oi_media_type',
+					'fa_major_mime'   => 'oi_major_mime',
+					'fa_minor_mime'   => 'oi_minor_mime',
+					'fa_description'  => 'oi_description',
+					'fa_user'         => 'oi_user',
+					'fa_user_text'    => 'oi_user_text',
+					'fa_timestamp'    => 'oi_timestamp',
+					'fa_deleted'      => 0
+						), $where, __METHOD__ );
+
+
+	}
+
+	// delete all given video's records from image and oldimage or just one single old revision
+	// complementary function for doDBInserts
+	function doDBDeletes( $oldvideo = false ) {
+		$dbw = wfGetDB( DB_MASTER );				
+
+		if (!$oldvideo ) {
+			// clear current rev
+			$dbw->delete( 'image', array( 'img_name = ' . $dbw->addQuotes( self::getNameFromTitle( $this->mTitle ) ) .' OR img_name = ' . $dbw->addQuotes( $this->mTitle->getPrefixedText()) ), __METHOD__ );
+			// clear all old revisions
+			$where =  array( 'oi_name = ' . $dbw->addQuotes( self::getNameFromTitle( $this->mTitle ) ) .' OR oi_name = ' . $dbw->addQuotes( $this->mTitle->getPrefixedText())  );
+		} else { // clear just one given old revision
+			$where =  array(
+				'oi_name = ' . $dbw->addQuotes( self::getNameFromTitle( $this->mTitle ) ) .' OR oi_name = ' . $dbw->addQuotes( $this->mTitle->getPrefixedText()),
+				'oi_timestamp' => $oldvideo
+			);			
+		}
+		
+		// clear old revs
+		$dbw->delete( 'oldimage', $where, __METHOD__ );
+
+	}
+
 	function showTOC($metadata) {
 		global $wgLang;
 		$r = '<ul id="filetoc"><li><a href="#file">'.$wgLang->getNsText(NS_VIDEO).'</a></li><li><a href="#filehistory">'.wfMsgHtml( 'filehist' ).'</a></li>'.($metadata ? '<li><a href="#metadata">'.wfMsgHtml('metadata').'</a></li>' : '').'</ul>';
@@ -99,7 +426,7 @@ class VideoPage extends Article {
 
 		if ($frame) { // frame has always native width
 			$ratios = split( "x", $this->getTextRatio() );
-			$width = intval( trim( $ratios[0] ) );
+			$width = intval( trim( $ratios[0] ) );					
 		}
 
 		$code = $this->getEmbedCode($width);
@@ -124,13 +451,8 @@ EOD;
 		return str_replace("\n", ' ', $s); // TODO: Figure out what for this string replace is
 	}
 
-	public function generateWysiwygWindow($refid, $title, $align, $width, $caption, $thumb, $frame) {
+	public function generateWysiwygWindow($refid, $title, $align, $width, $caption, $thumb) {
 		global $wgStylePath, $wgWysiwygMetaData;
-
-		if ($frame) { // frame has always native width
-			$ratios = split( "x", $this->getTextRatio() );
-			$width = intval( trim( $ratios[0] ) );
-		}
 
 		$code = $this->getThumbnailCode($width);
 
@@ -138,7 +460,7 @@ EOD;
 		$wgWysiwygMetaData[$refid]['href'] = !empty($title) ? $title->getPrefixedText() : '';
 		$wgWysiwygMetaData[$refid]['align'] = $align;
 		if (!empty($width)) $wgWysiwygMetaData[$refid]['width'] = intval($width);
-		
+
 		if(empty($thumb)) {
 			return "<div class=\"t{$align}\" refid=\"{$refid}\" style=\"position:relative;width:{$width}px\">{$code}</div>";
 		}
@@ -603,6 +925,10 @@ EOD;
 				break;
 		}
 
+		if( $this->mTitle->isDeleted() ) {
+			$this->doCleanup(); // if the article was previously deleted, and we're inserting a new one
+		}
+
                 $dbw->insert( 'image',
                         array(
                                 'img_name' => self::getNameFromTitle( $this->mTitle ),
@@ -667,6 +993,46 @@ EOD;
 		$this->doEdit( $saved_text, $desc );
 		$dbw->immediateCommit();
 	}
+
+	// load old video
+	public static function getOldUrl( $title, $oldvideo ) {
+		$fname = 'VideoPage' . '::' . __FUNCTION__;
+		$dbr = wfGetDB( DB_SLAVE );
+		$row = $dbr->selectRow(
+			'oldimage',
+			'oi_metadata',
+			array(
+				'oi_name = ' . $dbr->addQuotes( self::getNameFromTitle( $title ) ) .' OR oi_name = ' . $dbr->addQuotes( $title->getPrefixedText() ),
+				'oi_timestamp' => $oldvideo
+			),
+			$fname
+		);
+		if ($row) {
+			$metadata = split( ",", $row->oi_metadata );
+			if ( is_array( $metadata ) ) {
+				$provider = $metadata[0];
+				$id = $metadata[1];
+				array_splice( $metadata, 0, 2 );
+				if ( count( $metadata ) > 0 ) {
+					foreach( $metadata as $data  ) {
+						$tdata[] = $data;
+					}
+				}
+			}
+		}
+
+		$ldata = array(
+				$provider,
+				$id,
+				$tdata[0]
+			     );
+
+
+		$ldata = implode( ",", $ldata ) ;
+		$url = self::getUrl( $ldata );
+		return $url;
+	}
+
 
 	public function load() {
 		$fname = get_class( $this ) . '::' . __FUNCTION__;
@@ -952,6 +1318,7 @@ class VideoHistoryList {
                         . Xml::openElement( 'table', array( 'class' => 'filehistory' ) ) . "\n"
                         . '<tr>'
 			. '<th>&nbsp;</th>'
+			. ( ( $wgUser->isAllowed( 'delete' ) || $wgUser->isAllowed( 'deleterevision' ) ) ? '<th>&nbsp;</th>' : '' )
                         . '<th>' . wfMsgHtml( 'filehist-datetime' ) . '</th>'
                         . '<th>' . wfMsgHtml( 'filehist-user' ) . '</th>'
                         . "</tr>\n";
@@ -985,7 +1352,19 @@ class VideoHistoryList {
 				$user = $row->img_user;
 				$usertext = $row->img_user_text;
 				$url = VideoPage::getUrl( $row->img_metadata );
-				$line = '<tr>' . '<td>' . wfMsgHtml( 'filehist-current' ) . '</td><td><a href="' . $url . '" class="link-video" target="_blank">' . $wgLang->timeAndDate( $row->img_timestamp, true ) . '</a></td>' . '<td>';
+
+			        $q = array();
+                                $q[] = 'action=delete';
+				if( $wgUser->isAllowed('delete') || $wgUser->isAllowed('deleterevision') ) {
+					$delete = '<td>' . $sk->makeKnownLinkObj( $this->mTitle,
+							wfMsgHtml( 'filehist-deleteall' ),
+							implode( '&', $q ) ) . '</td>';
+				} else {
+					$delete = '';
+				}
+
+
+				$line = '<tr>' . $delete . '<td>' . wfMsgHtml( 'filehist-current' ) . '</td><td><a href="' . $url . '" class="link-video" target="_blank">' . $wgLang->timeAndDate( $row->img_timestamp, true ) . '</a></td>' . '<td>';
 				$line .= $sk->userLink( $user, $usertext ) . " <span style='white-space: nowrap;'>" . $sk->userToolLinks( $user, $usertext ) . "</span>";
 				$line .= '</td></tr>';
 				return $line;
@@ -1017,7 +1396,16 @@ class VideoHistoryList {
                                         wfMsgHtml( 'filehist-revert' ),
                                         implode( '&', $q ) );
 
-				$s .= '<tr>' . '<td>' . $revert . '</td><td><a href="' . $url . '" class="link-video" target="_blank">' . $wgLang->timeAndDate( $row->img_timestamp, true ) . '</a></td>' . '<td>';
+                                $q[0] = 'action=delete';
+				if( $wgUser->isAllowed('delete') || $wgUser->isAllowed('deleterevision') ) {
+					$delete = '<td>' . $sk->makeKnownLinkObj( $this->mTitle,
+							wfMsgHtml( 'filehist-deleteone' ),
+							implode( '&', $q ) ) . '</td>';
+				} else {
+					$delete = '';
+				}
+
+				$s .= '<tr>' . $delete . '<td>' . $revert . '</td><td><a href="' . $url . '" class="link-video" target="_blank">' . $wgLang->timeAndDate( $row->img_timestamp, true ) . '</a></td>' . '<td>';
 				$s .= $sk->userLink( $user, $usertext ) . " <span style='white-space: nowrap;'>" . $sk->userToolLinks( $user, $usertext ) . "</span>";
 				$s .= '</td></tr>';
 			}
@@ -1049,5 +1437,121 @@ class VideoHTMLCacheUpdate extends HTMLCacheUpdate {
 		}
 		throw new MWException( 'Invalid table type in ' . __CLASS__ );
 	}
+}
+
+class VideoPageArchive extends PageArchive {
+
+	function listFiles() {
+		$dbr = wfGetDB( DB_SLAVE );
+		$res = $dbr->select( 'filearchive',
+				array(
+					'fa_id',
+					'fa_name',
+					'fa_archive_name',
+					'fa_storage_key',
+					'fa_storage_group',
+					'fa_size',
+					'fa_width',
+					'fa_height',
+					'fa_bits',
+					'fa_metadata',
+					'fa_media_type',
+					'fa_major_mime',
+					'fa_minor_mime',
+					'fa_description',
+					'fa_user',
+					'fa_user_text',
+					'fa_timestamp',
+					'fa_deleted' ),
+				array( 'fa_name' => VideoPage::getNameFromTitle( $this->title ) ),
+				__METHOD__,
+				array( 'ORDER BY' => 'fa_timestamp DESC' ) );
+		$ret = $dbr->resultObject( $res );
+		return $ret;
+	}
+
+	function undelete( $timestamps, $comment = '', $fileVersions = array(), $unsuppress = false ) {
+		global $wgUser;
+		$dbw = wfGetDB( DB_MASTER );
+
+		$conditions = array( 'fa_name' => VideoPage::getNameFromTitle( $this->title ) );
+
+		$result = $dbw->select( 'filearchive', '*',
+				$conditions,
+				__METHOD__,
+				array( 'ORDER BY' => 'fa_timestamp DESC' )
+				);
+
+		$insertBatch = array();
+		$insertCurrent = false;
+		$deleteIds = array();
+		$archiveName = '';
+		$first = true;
+
+		while( $row = $dbw->fetchObject( $result ) ) {
+			if( $first ) { // this is our new current revision
+				$insertCurrent = array(
+						'img_name'        => $row->fa_name,
+						'img_size'        => $row->fa_size,
+						'img_width'       => $row->fa_width,
+						'img_height'      => $row->fa_height,
+						'img_metadata'    => $row->fa_metadata,
+						'img_bits'        => $row->fa_bits,
+						'img_media_type'  => $row->fa_media_type,
+						'img_major_mime'  => $row->fa_major_mime,
+						'img_minor_mime'  => $row->fa_minor_mime,
+						'img_description' => $row->fa_description,
+						'img_user'        => $row->fa_user,
+						'img_user_text'   => $row->fa_user_text,
+						'img_timestamp'   => $row->fa_timestamp,
+						'img_sha1'        => ''
+						);
+			} else { // older revisions, they could be even elder current ones from ancient deletions
+				$insertBatch[] = array(
+						'oi_name'         => $row->fa_name,
+						'oi_archive_name' => $archiveName,
+						'oi_size'         => $row->fa_size,
+						'oi_width'        => $row->fa_width,
+						'oi_height'       => $row->fa_height,
+						'oi_bits'         => $row->fa_bits,
+						'oi_description'  => $row->fa_description,
+						'oi_user'         => $row->fa_user,
+						'oi_user_text'    => $row->fa_user_text,
+						'oi_timestamp'    => $row->fa_timestamp,
+						'oi_metadata'     => $row->fa_metadata,
+						'oi_media_type'   => $row->fa_media_type,
+						'oi_major_mime'   => $row->fa_major_mime,
+						'oi_minor_mime'   => $row->fa_minor_mime,
+						'oi_deleted'      => $this->unsuppress ? 0 : $row->fa_deleted,
+						'oi_sha1'         => '' );
+			}
+			$deleteIds[] = $row->fa_id;
+			$first = false;
+		}
+
+		unset( $result );		
+
+		if ( $insertCurrent ) {
+			$dbw->insert( 'image', $insertCurrent, __METHOD__ );
+		}
+		if ( $insertBatch ) {
+			$dbw->insert( 'oldimage', $insertBatch, __METHOD__ );
+		}
+		if ( $deleteIds ) {
+			$dbw->delete( 'filearchive',
+					array( 'fa_id IN (' . $dbw->makeList( $deleteIds ) . ')' ),
+						__METHOD__ );
+					}
+
+		// todo check out and return the proper "file" restoration info
+		// the info is put into the log inside the parent function
+
+		// run parent version, because it uses a private function inside
+		// files will not be touched anyway here, because it's not NS_FILE
+		parent::undelete( $timestamps, $comment, $fileVersions, $unsuppress );
+
+		return array('', '', '');
+	}
+
 }
 
