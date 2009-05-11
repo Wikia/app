@@ -1,6 +1,6 @@
 
 == Changes since 200905.2 ==
-* 
+* rt#8996: CSS fixes for Opera/KHTML are now only loaded for Monobook 
 
 == Changes since 200905.1 ==
 * rt#14685: Shoutbox uses server time, not user's local time - fixed in t:r8239
