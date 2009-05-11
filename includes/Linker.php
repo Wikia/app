@@ -1119,7 +1119,7 @@ if ($wgWikiaEnableSharedHelpExt && (NS_HELP == $title->getNamespace()) && Shared
 			$text = htmlspecialchars( $text );
 		}
 		$link = '';
-		$success = wfRunHooks('LinkerMakeExternalLink', array( &$url, &$text, &$link ) );
+		$success = wfRunHooks('LinkerMakeExternalLink', array( &$url, &$text, &$link, &$attribs, &$linktype, $this ) );
 		if(!$success) {
 			wfDebug("Hook LinkerMakeExternalLink changed the output of link with url {$url} and text {$text} to {$link}", true);
 			return $link;
