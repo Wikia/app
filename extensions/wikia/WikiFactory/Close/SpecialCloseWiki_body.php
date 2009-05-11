@@ -140,6 +140,7 @@ class CloseWikiPage extends SpecialPage {
 			/**
 			 * check which action was requested
 			 */
+			error_log ("wgRequest->getValues() = " . print_r($wgRequest->getValues(), true). "\n");
 			foreach( array_keys( $wgRequest->getValues() ) as $value ) {
 				if( preg_match( "/^submit(\d+)$/", $value, $matches ) ) {
 					$this->mAction = $matches[1];
