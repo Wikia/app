@@ -937,7 +937,7 @@ EOS;
 		$js = $css = $cssstyle = $allinoneCSS = array();
 
 		// CSS - begin
-		$cssTemp = GetReferences('monaco_css', true);
+		$cssTemp = GetReferences('awesome_css', true);
 		foreach($cssTemp as $cssFile) {
 			$allinoneCSS[] = array('url' => $wgStylePath.'/'.$cssFile.'?'.$wgMergeStyleVersionCSS);
 		}
@@ -1280,8 +1280,6 @@ class AwesomeTemplate extends QuickTemplate {
 <?php
 	/* macbre: #3432 */
 	foreach($this->data['references']['allinone_css'] as $css) {
-			// do dirty replace
-			$css['url'] = str_replace('/monaco', '/awesome', $css['url']);
 ?>
 			@import "<?= $css['url'] ?>";
 <?php
@@ -1308,11 +1306,9 @@ class AwesomeTemplate extends QuickTemplate {
 	$this->html('csslinks');
 
 	if($wgRequest->getVal('action') != '' || $wgTitle->getNamespace() == NS_SPECIAL) {
-		echo str_replace('/monaco', '/awesome', $wgUser->isLoggedIn() ? GetReferences("monaco_loggedin_js") : GetReferences("monaco_non_loggedin_js"));
+		echo $wgUser->isLoggedIn() ? GetReferences("awesome_loggedin_js") : GetReferences("awesome_non_loggedin_js");
 		foreach($this->data['references']['js'] as $script) {
 			if (!empty($script['url'])) {
-				// do dirty replace
-				$script['url'] = str_replace('/monaco', '/awesome', $script['url']);
 ?>
 		<script type="<?= $script['mime'] ?>" src="<?= htmlspecialchars($script['url']) ?>"></script>
 <?php
@@ -1752,11 +1748,9 @@ if(!$custom_article_footer && $displayArticleFooter) {
 
 <?php
 	if(!($wgRequest->getVal('action') != '' || $wgTitle->getNamespace() == NS_SPECIAL)) {
-		echo str_replace('/monaco', '/awesome', $wgUser->isLoggedIn() ? GetReferences("monaco_loggedin_js") : GetReferences("monaco_non_loggedin_js"));
+		echo $wgUser->isLoggedIn() ? GetReferences("awesome_loggedin_js") : GetReferences("awesome_non_loggedin_js");
 
 		foreach($this->data['references']['js'] as $script) {
-				// do dirty replace
-				$script['url'] = str_replace('/monaco', '/awesome', $script['url']);
 ?>
 		<script type="<?= $script['mime'] ?>" src="<?= htmlspecialchars($script['url']) ?>"></script>
 <?php
