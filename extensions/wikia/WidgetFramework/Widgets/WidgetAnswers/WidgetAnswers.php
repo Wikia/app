@@ -38,11 +38,11 @@ function WidgetAnswers($id, $params) {
 	# TODO: Explain what's going on here and make it production environment independent
 	static $languageLoaded;
 	if (empty($languageLoaded)){
-		include ( "/usr/wikia/source/answers/Answers.i18n.php" );
+//		include ( "/usr/wikia/source/answers/Answers.i18n.php" );
 		global $wgMessageCache;
-		foreach( $messages as $lang => $message_array ){
-			$wgMessageCache->addMessages( $message_array, $lang );
-		}
+//		foreach( $messages as $lang => $message_array ){
+//			$wgMessageCache->addMessages( $message_array, $lang );
+//		}
 		$languageLoaded = true;
 	}
 
@@ -98,7 +98,7 @@ function WidgetAnswers($id, $params) {
 
 	$url = 'http://' . $domain . 'answers.wikia.com/api.php?' . http_build_query($apiparams);
 
-$h = <<<EOD
+$h .= <<<EOD
 <script>
 var url = "$url";
 function WidgetAnswers_load(data) {
