@@ -858,3 +858,10 @@ div.category br {
 	height:600px;
 	margin-right:20px;
 }
+
+/* for VET and AddVideo */
+.mask {
+	background: #000000 none repeat scroll 0 0;
+	opacity: 0.6;
+	position: fixed;
+}

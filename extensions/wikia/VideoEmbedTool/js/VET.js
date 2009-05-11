@@ -148,7 +148,7 @@ if(mwCustomEditButtons) {
 	}
 }
 
-if(skin == 'monaco') {
+if(skin == 'monaco'|| skin == 'answers' ) {
 	addOnloadHook(function () {
 		if(document.forms.editform) {
 			VET_addHandler();

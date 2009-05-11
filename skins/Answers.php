@@ -70,15 +70,13 @@ class AnswersTemplate extends MonacoTemplate {
 		<?php $this->html('headlinks') ?>
 	        <link rel="stylesheet" type="text/css" href="<?=$wgStylePath?>/answers/css/monobook_modified.css?<?=$wgStyleVersion?>" />
 	        <link rel="stylesheet" type="text/css" href="<?=$wgStylePath?>/answers/css/reset_modified.css?<?=$wgStyleVersion?>" />
-		<link type="text/css" rel="stylesheet" href="http://yui.yahooapis.com/2.6.0/build/autocomplete/assets/skins/sam/autocomplete.css">
-
-		<script type="text/javascript" src="http://yui.yahooapis.com/2.6.0/build/yahoo-dom-event/yahoo-dom-event.js"></script> 
-		<script type="text/javascript" src="http://yui.yahooapis.com/2.6.0/build/datasource/datasource-min.js"></script>
-		<script type="text/javascript" src="http://yui.yahooapis.com/2.6.0/build/connection/connection-min.js"></script>
-		<script type="text/javascript" src="http://yui.yahooapis.com/2.6.0/build/autocomplete/autocomplete-min.js"></script>
-		<script type="text/javascript" src="http://yui.yahooapis.com/2.7.0/build/get/get-min.js" ></script> 
-		<script type="text/javascript" src="http://yui.yahooapis.com/2.6.0/build/dragdrop/dragdrop-min.js"></script>
-		<script type="text/javascript" src="<?=$wgStylePath?>/common/yui/3rdpart/tools.js"></script> 
+		<!-- Combo-handled YUI CSS files: --> 
+		<link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/combo?2.7.0/build/autocomplete/assets/skins/sam/autocomplete.css&2.7.0/build/container/assets/skins/sam/container.css"> 
+		<!-- Combo-handled YUI JS files: --> 
+		<script type="text/javascript" src="http://yui.yahooapis.com/combo?2.7.0/build/utilities/utilities.js&2.7.0/build/datasource/datasource-min.js&2.7.0/build/autocomplete/autocomplete-min.js&2.7.0/build/container/container-min.js"></script> 
+		<script type="text/javascript" src="<?=$wgStylePath?>/common/yui/3rdpart/tools.js"></script>
+		<script type="text/javascript" src="<?=$wgStylePath?>/answers/js/tracker.js"></script>
+		<script type="text/javascript" src="<?=$wgStylePath?>/common/tracker.js"></script>
 		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.3/jquery.min.js"></script>
 		<script type="text/javascript" src="<?=$wgStylePath?>/answers/js/main.js?<?=$wgStyleVersion?>"></script>
 		<?php
