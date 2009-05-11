@@ -14,7 +14,8 @@ class CloseWikiMaintenace {
 		$mImgDirectory,
 		$mAction,
 		$mCityID,
-		$mHistory;
+		$mHistory,
+		$mWiki;
 
 	public function __construct() {
 		global $wgDevelEnvironment;
@@ -49,11 +50,11 @@ class CloseWikiMaintenace {
 			/**
 			 * check what we have to do with this wikia
 			 */
-			$this->checkDuplicates();
 			if( $wgCityId ) {
-				$Wiki = WikiFactory::getWikiByID( $wgCityId );
-				$this->mAction = $Wiki->city_public;
+				$this->mWiki = WikiFactory::getWikiByID( $wgCityId );
+				$this->mAction = $this->mWiki->city_public;
 			}
+			$this->checkDuplicates();
 			switch( $this->mAction ) {
 
 				case WikiFactory::STATUS_OPEN:
@@ -431,6 +432,13 @@ class CloseWikiMaintenace {
 		);
 		if( $Row->count > 1 ) {
 			wfDie( "{$wgDBname} is used more than once in city_variables table" );
+		}
+
+		/**
+		 * check if value from city_list match value from city_variables
+		 */
+		if( $this->mWiki->city_dbname !== $wgDBname ) {
+			wfDie( "city_variables {$wgDBname} is different than city_list {$this->mWiki->city_dbname}" );
 		}
 	}
 }
