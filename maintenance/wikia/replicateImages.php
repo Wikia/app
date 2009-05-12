@@ -16,21 +16,22 @@ class WikiaReplicateImages {
 	/**
 	 * flag is next value of 2^n
 	 */
-	private $mOptions;
+	private
+		$mRunAs,
+		$mTest,
+		$mOptions;
+
 	private $mServers = array(
 		"file3" => array(
 			"address" => "10.8.2.133",
-			"transform" => true,
 			"flag" => 1
 		),
 		"willow" => array(
 			"address" => "10.8.2.136",
-			"transform" => false,
 			"flag" => 2
 		),
 		"file4" => array(
 			"address" => "10.6.10.39",
-			"transform" => true,
 			"flag" => 4
 		)
 	);
@@ -50,9 +51,12 @@ class WikiaReplicateImages {
 	 */
 	public function execute() {
 		$limit = isset( $this->mOptions['limit'] ) ? $this->mOptions['limit'] : 10000;
-		// rsync must be run from root in order to save file's ownership
-		$login = isset( $this->mOptions['u']) ? $this->mOptions['u'] : 'root';
-		$test = isset( $this->mOptions['test']) ? true : false;
+
+		/**
+		 * rsync must be run from root in order to save file's ownership
+		 */
+		$this->mRunAs = isset( $this->mOptions['u']) ? $this->mOptions['u'] : 'root';
+		$this->mTest = isset( $this->mOptions['test']) ? true : false;
 		$dbr = wfGetDBExt( DB_SLAVE );
 		$dbw = wfGetDBExt( DB_MASTER );
 
@@ -67,7 +71,7 @@ class WikiaReplicateImages {
 
 		$oResource = $dbr->select(
 			array( "upload_log" ),
-			array( "up_id", "up_path", "up_flags", "up_created", "up_imgpath" ),
+			array( "*" ),
 			array(
 				"up_flags = 0 OR (up_flags & {$copied}) <> {$copied}",
 				"up_flags <> -1"
@@ -82,10 +86,14 @@ class WikiaReplicateImages {
 		if( $oResource ) {
 			while( $Row = $dbr->fetchObject( $oResource ) ) {
 				$flags = 0;
-				$source = $Row->up_path;
-				Wikia::log( __CLASS__, "start", "==== copy {$Row->up_imgpath} created: {$Row->up_created} flags: {$Row->up_flags}" );
-				foreach( $this->mServers as $name => $server ) {
 
+				/**
+				 * just uploaded file
+				 */
+
+				Wikia::log( __CLASS__, "start", "====== copy {$Row->up_city_id}:{$Row->up_imgpath} created: {$Row->up_created} flags: {$Row->up_flags}" );
+
+				foreach( $this->mServers as $name => $server ) {
 					/**
 					 * check flags. Maybe file is already copied to destination
 					 * server
@@ -99,75 +107,29 @@ class WikiaReplicateImages {
 					/**
 					 * some server have other directories layout
 					 */
-					if( $server[ "transform" ] ) {
-						$destination = $this->transformPath( $source, $name );
-					}
-					else {
-						$destination = $source;
-					}
+					$source = $Row->up_path;
+					$target = $this->transformPath( $source, $name );
 
-					/**
-					 * check if source file exists. I know, stats are bad
-					 */
-					if( file_exists( $source ) || $test ) {
-						$cmd = wfEscapeShellArg(
-							"/usr/bin/rsync",
-							"-axpr",
-							"--owner",
-							"--group",
-							"--chmod=g+w",
-							$Row->up_path,
-							escapeshellcmd( $login . '@' . $server["address"] . ':' . $destination )
-						);
-
-						if( $test ) {
-							print( $cmd . "\n" );
-						}
-						else {
-							$output = wfShellExec( $cmd, $retval );
-
-							if( $retval > 0 ) {
-								Wikia::log( __CLASS__, "error", "{$cmd} command failed." );
-								/**
-								 * maybe we don't have target directory?
-								 * try to create remote directory
-								 */
-								$cmd = wfEscapeShellArg(
-									"/usr/bin/ssh",
-									$login . '@' . $server["address"],
-									escapeshellcmd( "mkdir -p " . dirname( $destination ) )
-								);
-								$output = wfShellExec( $cmd, $retval );
-								Wikia::log( __CLASS__, "info", "{$cmd}" );
-									$cmd = wfEscapeShellArg(
-									"/usr/bin/rsync",
-									"-axpr",
-									"--owner",
-									"--group",
-									"--chmod=g+w",
-									$Row->up_path,
-									escapeshellcmd( $login . '@' . $server["address"] . ':' . $destination )
-								);
-								$output = wfShellExec( $cmd, $retval );
-								if( $retval == 0 ) {
-									Wikia::log( __CLASS__, "info", "{$cmd}." );
-									$flags = $flags | $server["flag"];
-								}
-							}
-							else {
-								Wikia::log( __CLASS__, "info", "{$cmd}." );
-								$flags = $flags | $server["flag"];
-							}
+					if( file_exists( $source ) || $this->mTest ) {
+						$flags = $this->sendToRemote( $server["address"], $source, $target, $flags );
+						/**
+						 * if old version of file send as well, but this time
+						 * ignore returned flags
+						 */
+						$source = $Row->up_old_path;
+						if( !empty( $source ) && file_exists( $source ) ) {
+							$target = $this->transformPath( $source, $name );
+							$this->sendToRemote( $server["address"], $source, $target, $flags );
 						}
 					}
 					else {
-						Wikia::log( __CLASS__, "info", "{$source} doesn't exists." );
+						Wikia::log( __CLASS__, "info", $source . " doesn't exists." );
 						$flags = -1;
 						break;
 					}
 				}
 
-				if( !$test && $flags ) {
+				if( !$this->mTest && $flags ) {
 					$dbw->begin();
 					$dbw->update(
 						"upload_log",
@@ -207,6 +169,73 @@ class WikiaReplicateImages {
 				break;
 		}
 		return $destination;
+	}
+
+	/**
+	 * send to remote server using rsync command
+	 *
+	 * @access public
+	 *
+	 * @param string  $server address to remote host
+	 * @param string  $source source path
+	 * @param string  $target destination path
+	 * @param integer $flags current value for flags
+	 *
+	 * @return integer flags after operation
+	 */
+	public function sendToRemote( $server, $source, $target, $flags ) {
+		$cmd = wfEscapeShellArg(
+			"/usr/bin/rsync",
+			"-axpr",
+			"--owner",
+			"--group",
+			"--chmod=g+w",
+			$source,
+			escapeshellcmd( $this->mRunAs . '@' . $server . ':' . $target )
+		);
+
+		if( $this->mTest ) {
+			/**
+			 * just testing
+			 */
+			Wikia::log( __CLASS__, "test", $cmd );
+		}
+		else {
+			$output = wfShellExec( $cmd, $retval );
+
+			if( $retval > 0 ) {
+				Wikia::log( __CLASS__, "error", "{$cmd} command failed." );
+				/**
+				 * maybe we don't have target directory?
+				 * try to create remote directory
+				 */
+				$cmd = wfEscapeShellArg(
+					"/usr/bin/ssh",
+					$this->mRunAs . '@' . $server,
+					escapeshellcmd( "mkdir -p " . dirname( $target ) )
+				);
+				$output = wfShellExec( $cmd, $retval );
+				Wikia::log( __CLASS__, "info", $cmd );
+				$cmd = wfEscapeShellArg(
+					"/usr/bin/rsync",
+					"-axpr",
+					"--owner",
+					"--group",
+					"--chmod=g+w",
+					$source,
+					escapeshellcmd( $this->mRunAs . '@' . $server . ':' . $target )
+				);
+				$output = wfShellExec( $cmd, $retval );
+				if( $retval == 0 ) {
+					Wikia::log( __CLASS__, "info", "{$cmd}." );
+					$flags = $flags | $server["flag"];
+				}
+			}
+			else {
+				Wikia::log( __CLASS__, "info", $cmd );
+				$flags = $flags | $server["flag"];
+			}
+		}
 	}
 }
 
