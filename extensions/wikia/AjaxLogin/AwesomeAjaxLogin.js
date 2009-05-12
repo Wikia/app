@@ -1,7 +1,7 @@
 /*
  * Author: Maciej Brencz (based on code from Inez Korczynski)
  */
-AjaxLogin = {
+var AjaxLogin = {
 	init: function(form) {
 		this.form = form;
 
