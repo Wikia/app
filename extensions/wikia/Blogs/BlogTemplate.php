@@ -238,7 +238,8 @@ class BlogTemplateClass {
 
 	private static $blogTAGS = array(
 		"/\[\[Image\:(.*)\]\]/siU",
-		"/\[\[[^\:\]]+\:[^\]]*\]\]/siU",
+		"/\[\[(.*)\:((.+\.[a-z]{3,4})(\|)(.*))\]\]/siU", #images [[Image:Test.png|(.*)]]
+		"/\[\[(.*)\:((.+\.[a-z]{3,4}))\]\]/siU", #images [[Image:Test.png]]
 		"/\{\{#dpl(.*)\}\}/siU",
 		"/\{\{#dplchapter(.*)\}\}/siU",
 		"/<(dpl|dynamicpagelist(.*))>(.*)<\/(dpl|dynamicpagelist)>/siU",
