@@ -1016,7 +1016,7 @@ function getLabelFor (obj_id) {
 	return false;
 }
 
-if(skin != 'monaco') {
+if(skin != 'monaco' && skin != 'awesome' /* LeanMonaco */) {
 	addOnloadHook(function() { for(var i=0;i<wgAfterContentAndJS.length;i++){wgAfterContentAndJS[i]();} });
 }
 
