@@ -360,7 +360,7 @@ function efSharedHelpRemoveMagicWord(&$parser, &$text, &$strip_state) {
 	return true;
 }
 
-function SharedHelpMagicWordCheck( &$parser, &$text, &$stripState ) {
+function efSharedHelpMagicWordCheck( &$parser, &$text, &$stripState ) {
 	global $wgSkipSharedHelp;
 
 	$mw = MagicWord::get('MAG_NOSHAREDHELP');
