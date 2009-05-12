@@ -31,7 +31,7 @@ function canonicalHref(&$skin, &$template){
                         'href' => $wgTitle->getFullURL()
                 )
         );
-        $template->set('headlinks', $template->data['headlinks'] . "\n" . $link . "\n");
+        $template->set('headlinks', $template->data['headlinks'] . "\t\t" . $link . "\n");
         return true;
 }
 
