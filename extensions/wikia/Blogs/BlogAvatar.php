@@ -18,7 +18,8 @@ define ("AVATAR_USER_OPTION_NAME", 'avatar');
 define ("AVATAR_MAX_SIZE", 512000 );
 define ("AVATAR_UPLOAD_FIELD", 'wkUserAvatar');
 
-
+$wgLogTypes[] = AVATAR_LOG_NAME;
+$wgLogHeaders[AVATAR_LOG_NAME] = "blog-avatar-alt";
 $wgHooks['AdditionalUserProfilePreferences'][] = "BlogAvatar::additionalUserProfilePreferences";
 $wgHooks['SavePreferences'][] = "BlogAvatar::savePreferences";
 $wgHooks['MonacoBeforePageBar'][] = "BlogAvatar::userMasthead";
