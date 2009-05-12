@@ -1581,8 +1581,8 @@ class WikiFactory {
 					"city_indexed_rev"       => $wiki->city_indexed_rev,
 					"city_deleted_timestamp" => $timestamp,
 					"city_factory_timestamp" => $timestamp,
-					"city_useshared"         => $row->city_useshared,
-					"ad_cat"                 => $row->ad_cat,
+					"city_useshared"         => $wiki->city_useshared,
+					"ad_cat"                 => $wiki->ad_cat,
 				),
 				__METHOD__
 			);
@@ -1636,5 +1636,4 @@ class WikiFactory {
 		}
 		wfProfileOut( __METHOD__ );
 	}
-
 };
