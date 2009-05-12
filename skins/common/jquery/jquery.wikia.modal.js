@@ -6,6 +6,53 @@ $.fn.extend({
 		$.extend(settings, options);
 	}
 
+	// try to load CSS for modal dialogs
+	if (!window.wgMakeModalCSSLoaded) {
+		appendCSS('\n\
+/* Make Modal CSS */\n\
+div.modalWrapper {			\n\
+	background: #FFF;		\n\
+	border: 1px solid #AAA;		\n\
+	display: none;			\n\
+	left: 50%;			\n\
+	padding: 2px;			\n\
+	position: absolute;		\n\
+	visibility: visible;		\n\
+	z-index: 1001;			\n\
+}					\n\
+h1.modalTitle {				\n\
+	font-weight: bold;		\n\
+	padding: 5px;			\n\
+	position: relative;		\n\
+}					\n\
+h1.modalTitle div {			\n\
+	clip: rect(0px 320px 16px 304px);\n\
+	cursor: pointer;		\n\
+	height: 16px;			\n\
+	position: absolute;		\n\
+	right: -27px;			\n\
+	width: 352px;			\n\
+}					\n\
+.modalInside {				\n\
+	padding: 5px !important;	\n\
+}					\n\
+.blackout {				\n\
+	background: #000;		\n\
+	left: 0;			\n\
+	opacity: 0;			\n\
+	position: absolute;		\n\
+	top: 0;				\n\
+	visibility: visible;		\n\
+	width: 100%;			\n\
+	z-index: 1000;			\n\
+}					\n\
+#positioned_elements {			\n\
+	visibility: hidden;		\n\
+}					');
+		$().log('makeModal: CSS loaded');
+		window.wgMakeModalCSSLoaded = true;
+	}
+
    	this.addClass('modalInside').wrap('<div class="modalWrapper"></div>');
 
    	var wrapper = this.closest(".modalWrapper");
