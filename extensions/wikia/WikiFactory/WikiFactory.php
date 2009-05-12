@@ -556,13 +556,13 @@ class WikiFactory {
 	 * @param string $variable_id: variable id in city_variables_pool
 	 * @param integer $wiki: wiki id in city list
 	 *
-	 * @return 
+	 * @return
 	 */
 	static public function removeVarById( $variable_id, $wiki ) {
 		$bStatus = false;
 		wfProfileIn( __METHOD__ );
 		$dbw = wfGetDB( DB_MASTER );
-		
+
 		$dbw->begin();
 		try {
 			if ( isset($variable_id) && isset($wiki) ) {
@@ -576,7 +576,7 @@ class WikiFactory {
 				);
 				$dbw->commit();
 				$bStatus = true;
-			} 
+			}
 		}
 		catch ( DBQueryError $e ) {
 			Wikia::log( __METHOD__, "", "Database error, cannot remove variable." );
@@ -1523,6 +1523,118 @@ class WikiFactory {
 		}
 		wfProfileOut( __METHOD__ );
 		return $res;
+	}
+
+	/**
+	 * copyToArchive
+	 *
+	 * copy data from WikiFactory database to Archive database
+	 *
+	 * @author Krzysztof Krzyżaniak (eloy) <eloy@wikia-inc.com>
+	 * @access public
+	 * @static
+	 *
+	 * @param integer	$city_id	source Wiki ID
+	 */
+	static public function copyToArchive( $city_id ) {
+
+		wfProfileIn( __METHOD__ );
+		/**
+		 * do only on inactive wikis
+		 */
+		$wiki = WikiFactory::getWikiByID( $city_id );
+		if( isset( $wiki->city_id ) ) {
+
+			$timestamp = wfTimestampNow();
+			$dbw = wfGetDB( DB_MASTER );
+			$dba = wfGetDBExt( DB_MASTER );
+			$dba->selectDb( "archive" );
+
+			$dba->begin();
+
+			/**
+			 * copy city_list to archive
+			 */
+			$dba->insert(
+				"city_list",
+				array(
+					"city_id"                => $wiki->city_id,
+					"city_path"              => $wiki->city_path,
+					"city_dbname"            => $wiki->city_dbname,
+					"city_sitename"          => $wiki->city_sitename,
+					"city_url"               => $wiki->city_url,
+					"city_created"           => $wiki->city_created,
+					"city_founding_user"     => $wiki->city_founding_user,
+					"city_adult"             => $wiki->city_adult,
+					"city_public"            => $wiki->city_public,
+					"city_additional"        => $wiki->city_additional,
+					"city_description"       => $wiki->city_description,
+					"city_title"             => $wiki->city_title,
+					"city_founding_email"    => $wiki->city_founding_email,
+					"city_lang"              => $wiki->city_lang,
+					"city_special_config"    => $wiki->city_special_config,
+					"city_umbrella"          => $wiki->city_umbrella,
+					"city_ip"                => $wiki->city_ip,
+					"city_google_analytics"  => $wiki->city_google_analytics,
+					"city_google_search"     => $wiki->city_google_search,
+					"city_google_maps"       => $wiki->city_google_maps,
+					"city_indexed_rev"       => $wiki->city_indexed_rev,
+					"city_deleted_timestamp" => $timestamp,
+					"city_factory_timestamp" => $timestamp,
+					"city_useshared"         => $row->city_useshared,
+					"ad_cat"                 => $row->ad_cat,
+				),
+				__METHOD__
+			);
+
+			/**
+			 * copy city_variables to archive
+			 */
+			$sth = $dbw->select(
+				array( WikiFactory::table( "city_variables" ) ),
+				array( "cv_city_id", "cv_variable_id", "cv_value" ),
+				array( "cv_city_id" => $city_id ),
+				__METHOD__
+			);
+			while( $row = $dbw->fetchObject( $sth ) ) {
+				$dba->insert(
+					"city_variables",
+					array(
+						"cv_city_id"     => $row->cv_city_id,
+						"cv_variable_id" => $row->cv_variable_id,
+						"cv_value"       => $row->cv_value,
+						"cv_timestamp"   => $timestamp
+					),
+					__METHOD__
+				);
+			}
+			$dbw->freeResult( $sth );
+
+			/**
+			 * copy domains to archive
+			 */
+			$sth = $dbw->select(
+				array( WikiFactory::table( "city_domains" ) ),
+				array( "*" ),
+				array( "city_id" => $city_id ),
+				__METHOD__
+			);
+			while( $row = $dbw->fetchObject( $sth ) ) {
+				$dba->insert(
+					"city_domains",
+					array(
+						"city_id"         => $row->city_id,
+						"city_domain"     => $row->city_domain,
+						"city_new_id"     => $row->city_id,
+						"city_timestamp"  => $timestamp
+					),
+					__METHOD__
+				);
+			}
+			$dbw->freeResult( $sth );
+			$dba->commit();
+		}
+		wfProfileOut( __METHOD__ );
 	}
 
 };

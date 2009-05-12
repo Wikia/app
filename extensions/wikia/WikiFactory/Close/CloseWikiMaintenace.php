@@ -419,7 +419,7 @@ class CloseWikiMaintenace {
 			__METHOD__
 		);
 		if( $Row->count > 1 ) {
-			wfDie( "{$wgDBname} is used more than once in city_list table" );
+			wfDie( "{$wgDBname} is used more than once in city_list table\n" );
 		}
 
 		/**
@@ -432,14 +432,14 @@ class CloseWikiMaintenace {
 			__METHOD__
 		);
 		if( $Row->count > 1 ) {
-			wfDie( "{$wgDBname} is used more than once in city_variables table" );
+			wfDie( "{$wgDBname} is used more than once in city_variables table\n" );
 		}
 
 		/**
 		 * check if value from city_list match value from city_variables
 		 */
 		if( $this->mWiki->city_dbname !== $wgDBname ) {
-			wfDie( "city_variables {$wgDBname} is different than city_list {$this->mWiki->city_dbname}" );
+			wfDie( "city_variables {$wgDBname} is different than city_list {$this->mWiki->city_dbname}\n" );
 		}
 	}
 }
