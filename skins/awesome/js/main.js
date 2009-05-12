@@ -214,7 +214,7 @@ $.fn.extend({
     			delay: 500,
     			edge: 10,
     			attach_to: "#wikia_header",
-    			attach_at: "bottom",
+    			attach_at: "bottom"
     		};
 		if (options) {
 			$.extend(settings, options);
