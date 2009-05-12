@@ -26,7 +26,7 @@ function WidgetAnswers_init(id) {
 		WidgetAnswers_html = '';
 		jQuery.getScript(WidgetAnswers_url);
 	} else {
-		$('#'+id+'_content').children('div:last').children('ul').prepend(WidgetAnswers_html);
+		$('#'+id+'_content').children('div').children('ul').prepend(WidgetAnswers_html);
 	}
 
 	$('#'+WidgetAnswers_ids[i]+'_content').children('form').children('input').val(widget_answers_placeholder).focus(WidgetAnswers_handler).blur(WidgetAnswers_handler).keypress(WidgetAnswers_handler);
@@ -42,7 +42,7 @@ function WidgetAnswers_load(data) {
 			WidgetAnswers_html += "<li><a href=\"" + page.url + "\" target=\"_blank\">" + text + "</a></li>";
 		}
 		for(var i = 0; i < WidgetAnswers_ids.length; i++) {
-			$('#'+WidgetAnswers_ids[i]+'_content').children('div:last').children('ul').prepend(WidgetAnswers_html);
+			$('#'+WidgetAnswers_ids[i]+'_content').children('div').children('ul').prepend(WidgetAnswers_html);
 		}
 	}
 }
