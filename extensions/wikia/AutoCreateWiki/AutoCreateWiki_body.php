@@ -608,6 +608,11 @@ class AutoCreateWikiPage extends SpecialPage {
 		$this->log( "Set images timestamp to current date" );
 
 		/**
+		 * init site_stats table (add empty row)
+		 */
+		$dbw->insert( "site_stats", array( "ss_row_id" => "1"), __METHOD__ );
+
+		/**
 		 * commit all in new database
 		 */
 		$this->setInfoLog( 'OK', wfMsg('autocreatewiki-step9') );
