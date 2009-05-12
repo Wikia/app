@@ -24,7 +24,7 @@ require_once("skins/MonoBook.php");
 class SkinGuildWars extends SkinMonoBook {
 	/** Using monobook. */
 	function initPage( &$out ) {
-		SkinTemplate::initPage( $out );
+		parent::initPage( $out );
 		$this->skinname  = 'monobook';
 		$this->stylename = 'monobook/gw';
 		$this->template  = 'GuildWarsTemplate';
@@ -50,6 +50,10 @@ class SkinGuildWars extends SkinMonoBook {
 	}
 
 	public function addWikiaCss(&$out) {
+		return true;
+	}
+	public function addWikiaVars(&$obj, &$tpl) {
+		parent::addWikiaVars($obj, $tpl);
 		return true;
 	}
 }
