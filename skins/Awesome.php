@@ -956,7 +956,8 @@ EOS;
 		$css[] = array('url' => $wgStylePath.'/awesome/css/awesome_ie7.css?'.$wgStyleVersion, 'cond' => 'if IE 7');
 		$css[] = array('url' => $wgStylePath.'/awesome/css/awesome_ie8.css?'.$wgStyleVersion, 'cond' => 'if IE 8');
 
-		$css[] = array('url' => $wgStylePath.'/awesome/css/print.css?'.$wgStyleVersion, 'param' => empty($tpl->data['printable']) ? 'media="print" ' : '');
+		// moved to allinone.css and wrapped with @media print {}
+		//$css[] = array('url' => $wgStylePath.'/awesome/css/print.css?'.$wgStyleVersion, 'param' => empty($tpl->data['printable']) ? 'media="print" ' : '');
 
 		// RTL support
 		if ($wgContLang->isRTL()) {
@@ -1278,7 +1279,12 @@ class AwesomeTemplate extends QuickTemplate {
 		<?php print Skin::makeGlobalVariablesScript( $this->data ); ?>
 <?php
 	// now let's load CSS files (using @import) / allinone.css (using <link>)
-	if (empty($wgAllInOne)) {
+	if(empty($wgAllInOne)) {
+		$wgAllInOne = false;
+	}
+	$allInOne = $wgRequest->getBool('allinone', $wgAllInOne);
+
+	if (!$allInOne) {
 ?>
 		<style type="text/css">/*<![CDATA[*/
 <?php
