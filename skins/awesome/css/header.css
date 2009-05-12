@@ -44,8 +44,10 @@
 }
 .headerMenuButton dd {
 	clip: rect(0px 300px 15px 280px);
+	float: right !important;
 	position: absolute;
 	right: 0;
+	top: 0;
 	width: 300px;
 }
 #wikia_header a.bigButton {
@@ -168,8 +170,8 @@ a.bigButton small {
 	z-index: 2;
 }
 #wikia_header #headerButtonHub {
+	left: -50%;
 	margin-top: 3px;
-	margin-left: -50%;
 }
 
 /*** BACKGROUND STRIP ***/
