@@ -24,6 +24,12 @@ $wgHooks['EditPage::showEditForm:initial'][] = 'SharedHelpEditPageHook';
 $wgHooks['BrokenLink'][] = 'SharedHelpBrokenLink';
 $wgHooks['WantedPages::getSQL'][] = 'SharedHelpWantedPagesSql';
 
+# __NOSHAREDHELP__ magic word prevents rendering of shared content
+$wgHooks['MagicWordwgVariableIDs'][] = 'efSharedHelpRegisterMagicWordID';
+$wgHooks['LanguageGetMagic'][] = 'efSharedHelpGetMagicWord';
+$wgHooks['InternalParseBeforeLinks'][] = 'efSharedHelpRemoveMagicWord';
+$wgHooks['ParserBeforeInternalParse'][] = 'efSharedHelpMagicWordCheck';
+
 class SharedHttp extends Http {
 	static function get( $url, $timeout = 'default' ) {
 		return self::request( "GET", $url, $timeout );
@@ -95,6 +101,7 @@ class SharedHttp extends Http {
 
 function SharedHelpHook(&$out, &$text) {
 	global $wgTitle, $wgMemc, $wgSharedDB, $wgDBname, $wgCityId, $wgHelpWikiId, $wgContLang, $wgLanguageCode, $wgArticlePath;
+	global $wgSkipSharedHelp;
 
 	if(empty($wgHelpWikiId) || $wgCityId == $wgHelpWikiId) { # Do not proceed if we don't have a help wiki or are on it
 		return true;
@@ -105,8 +112,7 @@ function SharedHelpHook(&$out, &$text) {
 	}
 
 	# Do not process if explicitly told not to
-	$mw = MagicWord::get('MAG_NOSHAREDHELP');
-	if ( $mw->match( $text ) ) {
+	if (!empty( $wgSkipSharedHelp ) ) {
 		return true;
 	}
 
@@ -337,10 +343,7 @@ function SharedHelpWantedPagesSql( $page, $sql ) {
 	return true;
 }
 
-# __NOSHAREDHELP__ magic word prevents rendering of shared content
-$wgHooks['MagicWordwgVariableIDs'][] = 'efSharedHelpRegisterMagicWordID';
-$wgHooks['LanguageGetMagic'][] = 'efSharedHelpGetMagicWord';
-$wgHooks['InternalParseBeforeLinks'][] = 'efSharedHelpRemoveMagicWord';
+# __NOSHAREDHELP__ hook functions
 
 function efSharedHelpRegisterMagicWordID(&$magicWords) {
 	$magicWords[] = 'MAG_NOSHAREDHELP';
@@ -348,11 +351,22 @@ function efSharedHelpRegisterMagicWordID(&$magicWords) {
 }
 
 function efSharedHelpGetMagicWord(&$magicWords, $langCode) {
-	$magicWords['MAG_NOSHAREDHELP'] = array(0, '__NOSHAREDHELP__');
+	$magicWords['MAG_NOSHAREDHELP'] = array( 0, '__NOSHAREDHELP__' );
 	return true;
 }
 
 function efSharedHelpRemoveMagicWord(&$parser, &$text, &$strip_state) {
 	MagicWord::get('MAG_NOSHAREDHELP')->matchAndRemove($text);
+	return true;
+}
+
+function SharedHelpMagicWordCheck( &$parser, &$text, &$stripState ) {
+	global $wgSkipSharedHelp;
+
+	$mw = MagicWord::get('MAG_NOSHAREDHELP');
+	if ( $mw->match( $text ) ) {
+		$wgSkipSharedHelp = true;
+	}
+
 	return true;
 }
