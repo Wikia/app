@@ -421,8 +421,6 @@ class AdEngine {
 		global $wgCityId;
 		$out .=  $this->providerValuesAsJavascript($wgCityId);
 
-		$out .= '<script type="text/javascript">TieDivLibrary.timer()</script>' . "\n";
-
 		// Get the setup code for ad providers used on this page. This is for Ad Providers that support multi-call.
 		foreach ($this->placeholders as $slotname => $load_priority){
 	                $AdProvider = $this->getAdProvider($slotname);
@@ -449,7 +447,6 @@ class AdEngine {
 			*/
 			$out .= '<script type="text/javascript">' .
 				'AdEngine.displaySlotIfAd("'. $slotname .'");' .
-				'TieDivLibrary.tie("'. $slotname .'");' .
 				'</script>' . "\n";
 		}
 		$out .= "<!-- #### END " . __CLASS__ . '::' . __METHOD__ . " ####-->\n";
