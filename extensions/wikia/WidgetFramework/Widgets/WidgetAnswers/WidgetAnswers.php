@@ -123,8 +123,8 @@ function WidgetAnswers($id, $params) {
 	// but in different place - top or the bottom of the widget
 	$ask_a_question = htmlspecialchars(wfMsg("ask_a_question"));
 	$askform = <<<EOD
-<form method="get" action="" onsubmit="return false" name="ask_form" id="ask_form">
-	<input type="text" id="answers_ask_field" value="$ask_a_question" class="alt" />
+<form method="get" action="" onsubmit="return false" name="ask_form" class="ask_form">
+	<input type="text" value="$ask_a_question" class="answers_ask_field"/>
 </form>
 EOD;
 
@@ -138,7 +138,7 @@ EOD;
 		$output = $askform;
 	}
 
-	$output .= '<div style="padding: 7px;"><b>'.wfMsg('recent_asked_questions').'</b><ul id="recent_unanswered_questions"></ul></div>';
+	$output .= '<div style="padding: 7px;"><b>'.wfMsg('recent_asked_questions').'</b><ul></ul></div>';
 
 	$apiparams = array(
 		'smaxage'=>300,
@@ -156,7 +156,7 @@ EOD;
 		$domain = '';
 	}
 	$url = 'http://'.$domain.'answers.wikia.com/api.php?'.http_build_query($apiparams);
-	$output .= '<script type="text/javascript">var WidgetAnswers_url = "'.$url.'";</script>';
+	$output .= '<script type="text/javascript">var WidgetAnswers_url = "'.$url.'"; if(typeof WidgetAnswers_ids == "undefined") var WidgetAnswers_ids = []; WidgetAnswers_ids.push('.$id.');</script>';
 
 	if($wgUser->isLoggedIn()) {
 		$output .= $askform;
