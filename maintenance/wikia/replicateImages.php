@@ -68,6 +68,7 @@ class WikiaReplicateImages {
 			$copied = $copied | $server["flag"];
 		}
 		Wikia::log( __CLASS__, "info", "flags for all copied is {$copied}" );
+		Wikia::log( __CLASS__, "info", "Taking {$limit} rows" );
 
 		$oResource = $dbr->select(
 			array( "upload_log" ),
