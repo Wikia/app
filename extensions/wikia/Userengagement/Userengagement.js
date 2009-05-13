@@ -1,6 +1,6 @@
 YAHOO.util.Event.onDOMReady(function() {
 	
-	if(!$('#ue_msg').length) {
+	if($('#ue_msg').length == 0) {
 	  return;
 	}
 
