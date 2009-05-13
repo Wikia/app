@@ -287,8 +287,8 @@ function wfLogDBError( $text ) {
 
 /**
  * Log to a file without getting "file size exceeded" signals.
- * 
- * Can also log to TCP or UDP with the syntax udp://host:port/prefix. This will 
+ *
+ * Can also log to TCP or UDP with the syntax udp://host:port/prefix. This will
  * send lines to the specified port, prefixed by the specified prefix and a space.
  */
 function wfErrorLog( $text, $file ) {
@@ -412,13 +412,13 @@ function wfGetLangObj( $langcode = false ){
 	if( $langcode instanceof Language )
 		# Great, we already have the object!
 		return $langcode;
-		
+
 	global $wgContLang;
 	if( $langcode === $wgContLang->getCode() || $langcode === true )
 		# $langcode is the language code of the wikis content language object.
 		# or it is a boolean and value is true
 		return $wgContLang;
-	
+
 	global $wgLang;
 	if( $langcode === $wgLang->getCode() || $langcode === false )
 		# $langcode is the language code of user language object.
@@ -577,7 +577,7 @@ function wfMsgGetKey( $key, $useDB, $langCode = false, $transform = true ) {
 	global $wgContLang, $wgMessageCache;
 
 	wfRunHooks('NormalizeMessageKey', array(&$key, &$useDB, &$langCode, &$transform));
-	
+
 	# If $wgMessageCache isn't initialised yet, try to return something sensible.
 	if( is_object( $wgMessageCache ) ) {
 		$message = $wgMessageCache->get( $key, $useDB, $langCode );
@@ -868,8 +868,8 @@ function wfReportTime() {
 		$stomp->connect( $wgStompUser, $wgStompPassword );
 		$stomp->sync = false;
 		$stomp->send( 'wikia.apache.service_time.'.wfHostname(),
-			Wikia::json_encode( array( 
-				'real' => $elapsed, 
+			Wikia::json_encode( array(
+				'real' => $elapsed,
 				'cpu' => $elapsedcpu,
 				'url' => 'http://'.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'],
 			) ),
@@ -1249,7 +1249,7 @@ function wfPurgeSquidServers ($urlArr) {
  * Windows doesn't recognise single-quotes in the shell, but the escapeshellarg()
  * function puts single quotes in regardless of OS.
  *
- * Also fixes the locale problems on Linux in PHP 5.2.6+ (bug backported to 
+ * Also fixes the locale problems on Linux in PHP 5.2.6+ (bug backported to
  * earlier distro releases of PHP)
  */
 function wfEscapeShellArg( ) {
@@ -1383,14 +1383,14 @@ function wfDiff( $before, $after, $params = '-u' ) {
 
 	fwrite( $oldtextFile, $before ); fclose( $oldtextFile );
 	fwrite( $newtextFile, $after ); fclose( $newtextFile );
-	
+
 	// Get the diff of the two files
 	$cmd = "$wgDiff " . $params . ' ' .wfEscapeShellArg( $oldtextName, $newtextName );
-	
+
 	$h = popen( $cmd, 'r' );
-	
+
 	$diff = '';
-	
+
 	do {
 		$data = fread( $h, 8192 );
 		if ( strlen( $data ) == 0 ) {
@@ -1398,12 +1398,12 @@ function wfDiff( $before, $after, $params = '-u' ) {
 		}
 		$diff .= $data;
 	} while ( true );
-	
+
 	// Clean up
 	pclose( $h );
 	unlink( $oldtextName );
 	unlink( $newtextName );
-	
+
 	// Kill the --- and +++ lines. They're not useful.
 	$diff_lines = explode( "\n", $diff );
 	if (strpos( $diff_lines[0], '---' ) === 0) {
@@ -1412,9 +1412,9 @@ function wfDiff( $before, $after, $params = '-u' ) {
 	if (strpos( $diff_lines[1], '+++' ) === 0) {
 		unset($diff_lines[1]);
 	}
-	
+
 	$diff = implode( "\n", $diff_lines );
-	
+
 	return $diff;
 }
 
@@ -1955,7 +1955,7 @@ function wfTempDir() {
 
 /**
  * Make directory, and make all parent directories if they don't exist
- * 
+ *
  * @param string $dir Full path to directory to create
  * @param int $mode Chmod value to use, default is $wgDirectoryMode
  * @return bool
@@ -1976,9 +1976,11 @@ function wfMkdirParents( $dir, $mode = null ) {
 			throw new MWException( __METHOD__ . ' cannot create directory.' );
 		}
 	} catch ( Exception $e ) {
+		global $wgErrorLog;
 		$backTraceMsg = "wfMkdirParents($dir, $mode); \n";
 		$backTraceMsg .= wfBacktrace(); // $e->getText();
-		Wikia::log( "MOLI: ", $_SERVER['SERVER_NAME'], $backTraceMsg);
+		$wgErrorLog = true;
+		Wikia::log( "MOLI", $_SERVER['SERVER_NAME'], $backTraceMsg );
 	}
 	return $res;  // PHP5 <3
 }
@@ -2331,14 +2333,14 @@ function wfArrayMerge( $array1/* ... */ ) {
 /**
  * Merge arrays in the style of getUserPermissionsErrors, with duplicate removal
  * e.g.
- *	wfMergeErrorArrays( 
- *		array( array( 'x' ) ), 
- *		array( array( 'x', '2' ) ), 
- *		array( array( 'x' ) ), 
+ *	wfMergeErrorArrays(
+ *		array( array( 'x' ) ),
+ *		array( array( 'x', '2' ) ),
+ *		array( array( 'x' ) ),
  *		array( array( 'y') )
  *	);
  * returns:
- * 		array( 
+ * 		array(
  *   		array( 'x', '2' ),
  *   		array( 'x' ),
  *   		array( 'y' )
