@@ -10,7 +10,7 @@ TieDivLibrary = new function() {
 	var loop = 3;
 
 	this.calculate = function() {
-		//$().log('calculate');
+		//$().log('loop: ' + loop);
 		shrinkwrap_offset = $("#monaco_shrinkwrap_main").offset();
 		$.each($(".wikia_ad_placeholder"), function() {
 			this_offset = $(this).offset();
@@ -25,7 +25,8 @@ TieDivLibrary = new function() {
 				height: this.height,
 				top: this_offset.top - shrinkwrap_offset.top,
 				width: this.width,
-			}).show();
+				display: "block"
+			});
 		});
 		loop--;
 		if (loop > 0) {
