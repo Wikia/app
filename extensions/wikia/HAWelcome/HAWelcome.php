@@ -508,7 +508,7 @@ class HAWelcomeJob extends Job {
 		wfProfileIn( __METHOD__ );
 
 		$return = false;
-		$message = wfMsgForContent( "welcome-enabled" );
+		$message =  wfMsgExt( "welcome-enabled", array( 'escape', 'language' => 'en' ) );
 		if( in_array( $what, array( "page-user", "message-anon", "message-user" ) )
 			&& strpos( $message, $what  ) !== false ) {
 			$return	= true;
