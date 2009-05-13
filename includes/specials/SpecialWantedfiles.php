@@ -31,8 +31,7 @@ class WantedFilesPage extends QueryPage {
 		$dbr = wfGetDB( DB_SLAVE );
 		list( $imagelinks, $page ) = $dbr->tableNamesN( 'imagelinks', 'page' );
 		$name = $dbr->addQuotes( $this->getName() );
-		return
-			"
+		$sql = "
 			SELECT
 				$name as type,
 				" . NS_FILE . " as namespace,
@@ -43,6 +42,8 @@ class WantedFilesPage extends QueryPage {
 			WHERE page_title IS NULL
 			GROUP BY il_to
 			";
+		wfRunHooks( 'WantedFiles::getSQL', array( &$sql, $name, $imagelinks, $page ) ); // wikia: Bartek
+		return $sql;
 	}
 
 	function sortDescending() { return true; }
