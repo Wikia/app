@@ -19,7 +19,8 @@ function wfDeleteBoardMessage($ub_id){
 	global $IP, $wgMemc, $wgUser;
 
 	$b = new UserBoard();
-	if( $b->doesUserOwnMessage($wgUser->getID(),$ub_id) ){
+	$isSysop   = ( in_array('sysop', $wgUser->getGroups()) || in_array('staff', $wgUser->getGroups() ) );
+	if( $b->doesUserOwnMessage($wgUser->getID(),$ub_id) || $isSysop ){
 		$b->deleteMessage($ub_id);
 	}
 	return "ok";

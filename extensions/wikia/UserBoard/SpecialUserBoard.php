@@ -271,7 +271,8 @@
 					}else{
 						$board_link = "<a href=\"" . UserBoard::getUserBoardURL($message["user_name_from"])."\">" . wfMsg("userboard_myboard") . "</a>";
 					}
-					if($wgUser->getName()==$message["user_name"]){
+					$isSysop   = ( in_array('sysop', $wgUser->getGroups()) || in_array('staff', $wgUser->getGroups() ) );
+					if($wgUser->getName()==$message["user_name"] || $isSysop){
 						$delete_link = "<span class=\"user-board-red\">
 							<a href=\"javascript:void(0);\" onclick=\"javascript:delete_message({$message["id"]})\">" . wfMsg("userboard_delete") . "</a>
 						</span>";
