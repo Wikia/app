@@ -219,12 +219,8 @@ class AjaxPollClass {
 		// macbre: add CSS to the first ajax poll on the page
 		if (self::$mCount == 0) {
 			global $wgExtensionsPath, $wgStyleVersion;
-
-			$css = <<<CSS
-<style type="text/css">/*<![CDATA[*/
-	@import "{$wgExtensionsPath}/wikia/AjaxPoll/AjaxPoll.css?{$wgStyleVersion}";
-/*]]>*/</style>
-CSS;
+			// I know, it doesn't validate, but <style> + @import neither
+			$css = "<link rel=\"stylesheet\" href=\"{$wgExtensionsPath}/wikia/AjaxPoll/AjaxPoll.css?{$wgStyleVersion}\" type=\"text/css\" />";
 		}
 		else {
 			$css = '';
