@@ -38,6 +38,7 @@ class WikiMover {
 
 	public $mRunJobs = false;                  #--- set true to run jobs
 	public $mRefreshLinks = false;             #--- set true to refresh articles links after move
+	public $mRevisionUser = null;              #--- user to be set for all moved revisions
 
 	/**
 	 * almost empty constructor
@@ -198,7 +199,7 @@ class WikiMover {
 	/**
 	 * setRunJobs
 	 *
-	 * @param Boolean	$param 
+	 * @param Boolean	$param
 	 */
 	public function setRunJobs( $value = true ) {
 		$this->mRunJobs = $value;
@@ -207,7 +208,7 @@ class WikiMover {
 	/**
 	 * setRunJobs
 	 *
-	 * @param Boolean	$param 
+	 * @param Boolean	$param
 	 */
 	public function setRefreshLinks( $value = true ) {
 		$this->mRefreshLinks = $value;
@@ -263,13 +264,13 @@ class WikiMover {
 		$skipNamespaces = array( NS_MEDIAWIKI, NS_MEDIAWIKI_TALK );
 		$aSourcePages = array();
 		$oRes = $dbr->select(
-			array( 
+			array(
 				$this->sourceTable( "page" ),
 				$this->sourceTable( "revision" ),
 				$this->sourceTable( "text" )
 			),
 			array( "*" ),
-			array( 
+			array(
 				"page_id = rev_page",
 				"rev_text_id = old_id"
 			 ),
@@ -297,7 +298,7 @@ class WikiMover {
 		$oRes = $dbr->select(
 			array( $this->targetTable( "page" ) ),
 			array( "*" ),
-			null,	
+			null,
 			__METHOD__
 		);
 
@@ -596,14 +597,23 @@ class WikiMover {
 		);
 		$iNewTextID = $dbw->insertId();
 
+		if(($this->mRevisionUser instanceof User) && $this->mRevisionUser->getId()) {
+			$sRevUser = $this->mRevisionUser->getId();
+			$sRevUserText = $this->mRevisionUser->getName();
+		}
+		else {
+			$sRevUser = $oRevision->rev_user;
+			$sRevUserText = $oRevision->rev_user_text;
+		}
+
 		$dbw->insert(
 			$this->targetTable("revision"),
 			array(
 				"rev_id"            => null,
 				"rev_page"          => $iNewArticleID,
 				"rev_comment"       => $oRevision->rev_comment,
-				"rev_user"          => $oRevision->rev_user,
-				"rev_user_text"     => $oRevision->rev_user_text,
+				"rev_user"          => $sRevUser,
+				"rev_user_text"     => $sRevUserText,
 				"rev_timestamp"     => $sNow, //$oRevision->rev_timestamp
 				"rev_minor_edit"    => $oRevision->rev_minor_edit,
 				"rev_deleted"       => $oRevision->rev_deleted,
@@ -625,6 +635,18 @@ class WikiMover {
 		$dbw->commit();
 	}
 
+	/**
+	 * setRevisionUser
+	 *
+	 * set the user name for all moving revisions
+	 *
+	 * @access public
+	 * @param object $oUser Mediawiki user object
+	 *
+	 */
+	public function setRevisionUser(User $oUser) {
+		$this->mRevisionUser = $oUser;
+	}
 
 	/**
 	 * rowToText
@@ -867,7 +889,7 @@ class WikiMover {
 			);
 		}
 		$dbw->freeResult( $oRes );
-		
+
 		$this->log( "load images from target database" );
 		#--- get image data from target
 		$oRes = $dbw->select(
