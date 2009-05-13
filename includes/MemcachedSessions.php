@@ -82,23 +82,18 @@ function memsess_gc( $maxlifetime ) {
  * get connection to memcached cluster
  */
 function &getMemc() {
-	global $wgSessionMemCachedServers, $wgMemc, $wgSessionMemc, $wgMemCachedClass;
+	global $wgSessionMemCachedServers, $wgMemc, $wgSessionMemc;
+	global $wgMemCachedPersistent, $wgMemCachedDebug;
 
-	if( !isset( $wgMemCachedClass ) ) {
-		$wgMemCachedClass = "MemCachedClientforWiki";
-	}
-
-	if( !empty( $wgSessionMemCachedServers ) && is_array( $wgSessionMemCachedServers ) ) {
-		if( !empty( $wgSessionMemc ) && is_object( $wgSessionMemc ) && $wgSessionMemc instanceof $wgMemCachedClass ) {
+	if( !empty( $wgSessionMemCachedServers ) && is_array( $wgSessionMemCachedServers ) && class_exists( 'MemcachedClientforWiki' ) ) {
+		if( !empty( $wgSessionMemc ) && is_object( $wgSessionMemc ) && $wgSessionMemc instanceof MemCachedClientforWiki ) {
 			return $wgSessionMemc;
 		}
 		else {
-			$wgSessionMemc = new $wgMemCachedClass( array(
-				'debug' => false,
-				'compress_threshold' => 1500,
-				'persistant' => true
-			));
+			$wgSessionMemc = new MemCachedClientforWiki(
+				array( 'persistant' => $wgMemCachedPersistent, 'compress_threshold' => 1500 ) );
 			$wgSessionMemc->set_servers( $wgSessionMemCachedServers );
+			$wgSessionMemc->set_debug( $wgMemCachedDebug );
 
 			return $wgSessionMemc;
 		}
