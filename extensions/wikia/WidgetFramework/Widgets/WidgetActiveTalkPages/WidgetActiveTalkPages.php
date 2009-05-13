@@ -54,15 +54,12 @@ function WidgetActiveTalkPages($id, $params) {
 		$date = $wgLang->sprintfDate('j M Y (H:i)', date('YmdHis', $timestamp));
 
 		$title = Title::newFromText( $edit['title'], $edit['ns'] );
-
-		$edit['title'] = substr($edit['title'], 5); // trim "Talk:" from page title
-
 		if (!isset($list[$edit['title']])) {
     		    $list[$edit['title']] = array
 		    (
 			'href'  => $title->getLocalURL('diff='.$edit['revid']), 
 			'title' => $date.' (rev #'.$edit['revid'].')',
-			'name'  => $edit['title']
+			'name'  => $title->getText(),
 		    );
 		}
 	    }
