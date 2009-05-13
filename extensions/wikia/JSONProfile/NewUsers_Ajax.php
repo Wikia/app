@@ -15,7 +15,6 @@ CREATE TABLE `user_welcome_track` (
 $wgAvailableRights[] = 'massmessage';
 $wgGroupPermissions['staff']['massmessage'] = true;
 $wgGroupPermissions['sysop']['massmessage'] = true;
-$wgGroupPermissions['janitor']['massmessage'] = true;
 $wgGroupPermissions['user']['massmessage'] = false;
 
 $wgAjaxExportList [] = 'wfGetNewUsersJSON';
