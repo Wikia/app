@@ -15,6 +15,8 @@ class AjaxPollClass {
 	public $mTitle, $mCreated;
 	public $mAnswers = array();
 
+	public static $mCount = 0; # macbre: count ajax polls on the page
+
 	/**
 	 * __construct
 	 */
@@ -214,6 +216,22 @@ class AjaxPollClass {
 		list( $question, $answers ) = $this->parseInput();
 		list( $votes, $total ) = $this->getVotes();
 
+		// macbre: add CSS to the first ajax poll on the page
+		if (self::$mCount == 0) {
+			global $wgExtensionsPath, $wgStyleVersion;
+
+			$css = <<<CSS
+<style type="text/css">/*<![CDATA[*/
+	@import "{$wgExtensionsPath}/wikia/AjaxPoll/AjaxPoll.css?{$wgStyleVersion}";
+/*]]>*/</style>
+CSS;
+		}
+		else {
+			$css = '';
+		}
+
+		self::$mCount++;
+
 		$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
 		$oTmpl->set_vars( array(
 			"id"		=> $this->mId,
@@ -224,7 +242,8 @@ class AjaxPollClass {
 			"title"		=> $this->mTitle,
 			"status"	=> $this->mStatus,
 			"attribs"	=> $this->mAttribs,
-			"created"	=> wfTimestamp( TS_RFC2822, $this->mCreated )
+			"created"	=> wfTimestamp( TS_RFC2822, $this->mCreated ),
+			"css"		=> $css,
 		));
 
 		$before = $oTmpl->execute( "poll" );
