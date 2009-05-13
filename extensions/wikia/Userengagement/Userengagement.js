@@ -1,6 +1,6 @@
 YAHOO.util.Event.onDOMReady(function() {
 	
-	if(!$('ue_msg')) {
+	if(!$('#ue_msg').length) {
 	  return;
 	}
 
@@ -15,7 +15,7 @@ YAHOO.util.Event.onDOMReady(function() {
 		success: function(o) {
 			if(o.responseText !== undefined) {
 				var aData = YAHOO.Tools.JSONParse(o.responseText);
-				var div = $('ue_msg');
+				var div = $('#ue_msg');
 				div.innerHTML = '';
 				if(aData["response"]!='') {
 					if(aData["msg_id"]!='') {
