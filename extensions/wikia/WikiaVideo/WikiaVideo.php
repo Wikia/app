@@ -184,7 +184,7 @@ function WikiaVideo_renderVideoGallery($input, $args, $parser) {
 						
 
 						$inside = '<a href="#" class="bigButton" style="margin-left: 105px; margin-top: 110px;" id="WikiaVideoGalleryPlaceholder' . $args['id'] . 'x' .  $i . '" onclick="' . $function . '"><big>' . wfMsg( 'wikiavideo-create' ) . '</big><small>&nbsp;</small></a>';
-					} else { // todo maybe add some icon here not text, as we agreed
+					} else {
 						$inside = wfMsg( 'wikiavideo-not-supported' );				
 					}
 
