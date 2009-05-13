@@ -83,7 +83,18 @@ EOD;
 		$domain = '';
 	}
 	$url = 'http://'.$domain.'answers.wikia.com/api.php?'.http_build_query($apiparams);
-	$output .= '<script type="text/javascript">var WidgetAnswers_url = "'.$url.'"; if(typeof WidgetAnswers_ids == "undefined") var WidgetAnswers_ids = []; WidgetAnswers_ids.push('.$id.');</script>';
+
+	$output .= <<<EOD
+<script type="text/javascript">
+if(typeof WidgetAnswers_html == 'undefined') var WidgetAnswers_html = '';
+var WidgetAnswers_url = '$url';
+if(WidgetAnswers_html == '') {
+	jQuery.getScript(WidgetAnswers_url, function() {
+		if(WidgetAnswers_html != '') jQuery('#{$id}_content').children('div').children('ul').prepend(WidgetAnswers_html);
+	});
+} else jQuery('#{$id}_content').children('div').children('ul').prepend(WidgetAnswers_html);
+</script>
+EOD;
 
 	if($wgUser->isLoggedIn()) {
 		$output .= $askform;
