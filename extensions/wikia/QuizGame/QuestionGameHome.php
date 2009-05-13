@@ -3,7 +3,6 @@
 $wgAvailableRights[] = 'quizadmin';
 $wgGroupPermissions['staff']['quizadmin'] = true;
 $wgGroupPermissions['sysop']['quizadmin'] = true;
-$wgGroupPermissions['janitor']['quizadmin'] = true;
 
 $wgQuizLogs = true;
 //custom content actions for quiz game

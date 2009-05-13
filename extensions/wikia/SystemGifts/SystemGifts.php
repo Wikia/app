@@ -3,7 +3,6 @@
 $wgAvailableRights[] = 'awardsmanage';
 $wgGroupPermissions['staff']['awardsmanage'] = true;
 $wgGroupPermissions['sysop']['awardsmanage'] = true;
-$wgGroupPermissions['janitor']['awardsmanage'] = true;
 
 //Special Pages
 $wgAutoloadClasses['TopAwards'] = "{$wgSystemGiftsDirectory}/TopAwards.php";

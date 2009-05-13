@@ -64,7 +64,6 @@ $wgUploadAvatarInRecentChanges = false;
 $wgAvailableRights[] = 'avatarremove';
 $wgGroupPermissions['staff']['avatarremove'] = true;
 $wgGroupPermissions['sysop']['avatarremove'] = true;
-$wgGroupPermissions['janitor']['avatarremove'] = true;
 
 # Add a new log type	 
 global $wgLogTypes, $wgLogNames, $wgLogHeaders, $wgLogActions;
