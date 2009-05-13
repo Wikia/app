@@ -1,3 +1,15 @@
+function WidgetAnswers_load(data) {
+	if(data.query.wkpagesincat) {
+		for(var recent_q in data.query.wkpagesincat ) {
+			var page = data.query.wkpagesincat[recent_q];
+			var text = page.title.replace(/_/g," ") + "?";
+			if(text.length > 100) {
+				text = text.substring(0,100) + "...";
+			}
+			WidgetAnswers_html += "<li><a href=\"" + page.url + "\" target=\"_blank\">" + text + "</a></li>";
+		}
+	}
+}
 var widget_answers_placeholder = 'Ask a question';
 function WidgetAnswers_handler(e) {
 	if(e.type == 'focus') {
@@ -19,30 +31,6 @@ function WidgetAnswers_handler(e) {
 		}
 	}
 }
-
-var WidgetAnswers_html = false;
 function WidgetAnswers_init(id) {
-	if(WidgetAnswers_html === false) {
-		WidgetAnswers_html = '';
-		jQuery.getScript(WidgetAnswers_url);
-	} else {
-		jQuery('#'+id+'_content').children('div').children('ul').prepend(WidgetAnswers_html);
-	}
-
 	jQuery('#'+id+'_content').css('max-height', '400px').children('form').children('input').val(widget_answers_placeholder).focus(WidgetAnswers_handler).blur(WidgetAnswers_handler).keypress(WidgetAnswers_handler);;
-}
-function WidgetAnswers_load(data) {
-	if(data.query.wkpagesincat) {
-		for(var recent_q in data.query.wkpagesincat ) {
-			var page = data.query.wkpagesincat[recent_q];
-			var text = page.title.replace(/_/g," ") + "?";
-			if(text.length > 100) {
-				text = text.substring(0,100) + "...";
-			}
-			WidgetAnswers_html += "<li><a href=\"" + page.url + "\" target=\"_blank\">" + text + "</a></li>";
-		}
-		for(var i = 0; i < WidgetAnswers_ids.length; i++) {
-			jQuery('#'+WidgetAnswers_ids[i]+'_content').children('div').children('ul').prepend(WidgetAnswers_html);
-		}
-	}
 }
