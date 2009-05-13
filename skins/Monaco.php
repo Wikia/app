@@ -2104,6 +2104,7 @@ if(count($wikiafooterlinks) > 0) {
 			<?= WidgetFramework::getInstance()->Draw(1) ?>
 
 			<?php
+				echo AdEngine::getInstance()->getPlaceHolderDiv('LEFT_SLIMBOX_1', false);
 				echo AdEngine::getInstance()->getPlaceHolderDiv('LEFT_NAVBOX_2', false);
 				if ($wgOut->isArticle() ){
 					if (ArticleAdLogic::isMainPage()) { //main page
