@@ -587,6 +587,7 @@ class AutoCreateWikiPage extends SpecialPage {
 			$wikiMover->load();
 			$wikiMover->setRunJobs( false );
 			$wikiMover->setTargetUploadDirectory( $this->mWikiData[ "images" ] );
+			$wikiMover->setRevisionUser(User::newFromName('Default'));
 			$wikiMover->move();
 
 			$this->addCustomSettings( $this->mWikiData[ "hub" ], $wgHubCreationVariables, 'hub' );
