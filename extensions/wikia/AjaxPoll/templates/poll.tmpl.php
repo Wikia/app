@@ -1,4 +1,5 @@
 <!-- s:poll -->
+<?php echo $css ?>
 <div class="ajax-poll" id="ajax-poll-<?php echo $id ?>" >
  <div class="header">
 		<?php echo $question ?>

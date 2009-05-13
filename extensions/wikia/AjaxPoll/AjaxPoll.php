@@ -45,27 +45,7 @@ function wfAjaxPollTag() {
 
 	// add JS
 	$wgOut->addScript("<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/AjaxPoll/AjaxPoll.js?{$wgStyleVersion}\" ></script>\n");
-
-	// add CSS
-	$wgHooks['SkinTemplateOutputPageBeforeExec'][] = 'wfAjaxPollAddCSS';
 }
-
-/**
- * wfAjaxPollAddCSS
- *
- * Adds extension CSS to <head> section
- *
- * @access public
- * @author macbre
- * @global
- */
-
-function wfAjaxPollAddCSS(&$skin, &$tpl) {
-	global $wgExtensionsPath, $wgStyleVersion;
-	$tpl->data['headlinks'] .= "\t\t<link rel=\"stylesheet\" type=\"text/css\" href=\"{$wgExtensionsPath}/wikia/AjaxPoll/AjaxPoll.css?{$wgStyleVersion}\" />\n";
-	return true;
-}
-
 /**
  * axAjaxPollSubmit
  *
