@@ -5,7 +5,7 @@ $link = $titleObj->getLocalUrl('type=signup');
 ?>
 <div id="AjaxLogin" title="<?= wfMsg('login') ?>">
 	<form action="" method="post" name="userajaxloginform" id="userajaxloginform" style="margin:5px">
-		<div id="wpError" style="width: 250px; line-height: 1.4em"></div>
+		<div id="wpError"></div>
 		<label for="wpName1"><?= wfMsg("yourname") ?></label><br/>
 		<input type="text" class="loginText" name="wpName" id="wpName1" tabindex="101" size="20" /><br/>
 		<label for="wpPassword1"><?= wfMsg("yourpassword") ?></label><br/>
