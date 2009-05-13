@@ -160,18 +160,6 @@ include_once( "$IP/extensions/wikia/WidgetSpecialPage/WidgetsSpecialPage.php" );
 
 
 /**
- * Wikia libmemcached client
- */
-require_once( "$IP/includes/wikia/MemcachePoolClientForWiki.php" );
-
-if( isset( $wgMemCachedClassLocal ) && is_string( $wgMemCachedClassLocal ) ) {
-	$wgMemCachedClass = $wgMemCachedClassLocal;
-}
-else {
-	$wgMemCachedClass = "MemCachedClientforWiki"; #  "MemcachePoolClientForWiki";
-}
-
-/**
  * @name $wgSkipSkins
  *
  * NOTE: a few wikis may have local override for this var,
