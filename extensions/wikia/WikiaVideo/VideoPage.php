@@ -1477,6 +1477,10 @@ class VideoPageArchive extends PageArchive {
 
 	function undelete( $timestamps, $comment = '', $fileVersions = array(), $unsuppress = false ) {
 		global $wgUser;
+		if(  $this->title->exists()) { // we currently restore only whole deleted videos, a restore link from log could take us here...
+			return;
+		}
+
 		$dbw = wfGetDB( DB_MASTER );
 
 		$conditions = array( 'fa_name' => VideoPage::getNameFromTitle( $this->title ) );
