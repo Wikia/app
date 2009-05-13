@@ -140,6 +140,17 @@ class Interwiki {
 	 */
 	protected static function load( $prefix ) {
 		global $wgMemc, $wgInterwikiExpiry;
+		# Moli 
+		try {
+			if (mb_strlen($prefix) > 100) {
+				throw new MWException( __METHOD__ . ' cannot create directory.' );
+			}
+		} catch ( Exception $e ) {
+			$backTraceMsg = "key = $prefix \n";
+			$backTraceMsg .= wfBacktrace(); // $e->getText();
+			Wikia::log( "MOLI: ", $_SERVER['SERVER_NAME'], $backTraceMsg);
+		}
+		# Moli - remove after find a bug
 		$key = wfMemcKey( 'interwiki', $prefix );
 		$mc = $wgMemc->get( $key );
 		$iw = false;
