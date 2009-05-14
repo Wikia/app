@@ -14,3 +14,7 @@
 #wmuLinkDiv {
 	display: none;
 }
+
+.lazyload {
+	display: none;
+}
