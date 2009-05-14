@@ -520,14 +520,23 @@ class WikiMover {
 				);
 				$iNewTextID = $dbw->insertId();
 
+		if(($this->mRevisionUser instanceof User) && $this->mRevisionUser->getId()) {
+			$sRevUser = $this->mRevisionUser->getId();
+			$sRevUserText = $this->mRevisionUser->getName();
+		}
+		else {
+			$sRevUser = $oRevision->rev_user;
+			$sRevUserText = $oRevision->rev_user_text;
+		}
+
 				$dbw->insert(
 					$this->targetTable("revision"),
 					array(
 						"rev_id"            => null,
 						"rev_page"          => $iNewArticleID,
 						"rev_comment"       => $oRevision->rev_comment,
-						"rev_user"          => $oRevision->rev_user,
-						"rev_user_text"     => $oRevision->rev_user_text,
+						"rev_user"          => $sRevUser,
+						"rev_user_text"     => $sRevUserText,
 						"rev_timestamp"     => $oRevision->rev_timestamp,
 						"rev_minor_edit"    => $oRevision->rev_minor_edit,
 						"rev_deleted"       => $oRevision->rev_deleted,
