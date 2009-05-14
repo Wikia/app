@@ -21,7 +21,7 @@ class AncientPagesPage extends QueryPage {
 	function isSyndicated() { return false; }
 
 	function getSQL() {
-		global $wgDBtype;
+		global $wgDBtype, $wgContentNamespaces;
 		$db = wfGetDB( DB_SLAVE );
 		$page = $db->tableName( 'page' );
 		$revision = $db->tableName( 'revision' );
@@ -33,7 +33,8 @@ class AncientPagesPage extends QueryPage {
 			        page_title as title,
 			        $epoch as value
 			FROM $page, $revision
-			WHERE page_namespace=".NS_MAIN." AND page_is_redirect=0
+			WHERE page_namespace IN ( " . implode( ', ', $wgContentNamespaces ) . " )
+			  AND page_is_redirect=0
 			  AND page_latest=rev_id";
 	}
 

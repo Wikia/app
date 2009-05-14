@@ -39,12 +39,14 @@ class DeadendPagesPage extends PageQueryPage {
 	 * @return string an sqlquery
 	 */
 	function getSQL() {
+		global $wgContentNamespaces;
+
 		$dbr = wfGetDB( DB_SLAVE );
 		list( $page, $pagelinks ) = $dbr->tableNamesN( 'page', 'pagelinks' );
 		return "SELECT 'Deadendpages' as type, page_namespace AS namespace, page_title as title, page_title AS value " .
 	"FROM $page LEFT JOIN $pagelinks ON page_id = pl_from " .
 	"WHERE pl_from IS NULL " .
-	"AND page_namespace = 0 " .
+	"AND page_namespace IN ( " . implode( ', ', $wgContentNamespaces )  . " ) " .
 	"AND page_is_redirect = 0";
 	}
 }

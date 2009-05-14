@@ -9,8 +9,6 @@
  * @ingroup SpecialPage
  */
 class UncategorizedPagesPage extends PageQueryPage {
-	var $requestedNamespace = NS_MAIN;
-
 	function getName() {
 		return "Uncategorizedpages";
 	}
@@ -25,6 +23,8 @@ class UncategorizedPagesPage extends PageQueryPage {
 	function isSyndicated() { return false; }
 
 	function getSQL() {
+		global $wgContentNamespaces;
+
 		$dbr = wfGetDB( DB_SLAVE );
 		list( $page, $categorylinks ) = $dbr->tableNamesN( 'page', 'categorylinks' );
 		$name = $dbr->addQuotes( $this->getName() );
@@ -38,7 +38,8 @@ class UncategorizedPagesPage extends PageQueryPage {
 				page_title AS value
 			FROM $page
 			LEFT JOIN $categorylinks ON page_id=cl_from
-			WHERE cl_from IS NULL AND page_namespace={$this->requestedNamespace} AND page_is_redirect=0
+			WHERE cl_from IS NULL AND page_namespace IN ( " . explode( ', ', $wgContentNamespaces ) . " )
+			AND page_is_redirect=0
 			";
 	}
 }

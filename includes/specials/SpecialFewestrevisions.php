@@ -25,6 +25,8 @@ class FewestrevisionsPage extends QueryPage {
 	}
 
 	function getSql() {
+		global $wgContentNamespaces;
+
 		$dbr = wfGetDB( DB_SLAVE );
 		list( $revision, $page ) = $dbr->tableNamesN( 'revision', 'page' );
 
@@ -35,7 +37,7 @@ class FewestrevisionsPage extends QueryPage {
 				COUNT(*) as value
 			FROM $revision
 			JOIN $page ON page_id = rev_page
-			WHERE page_namespace = " . NS_MAIN . "
+			WHERE page_namespace IN ( " . implode( ', ', $wgContentNamespaces ) . " ) 
 			GROUP BY page_namespace, page_title, page_is_redirect
 			HAVING COUNT(*) > 1";
 			// ^^^ This was probably here to weed out redirects.
