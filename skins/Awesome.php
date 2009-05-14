@@ -369,7 +369,7 @@ class SkinAwesome extends SkinTemplate {
 	 * @param $out OutputPage
 	 */
 	function setupSkinUserCss( OutputPage $out ){
-		$out->addStyle( 'common/commonPrint.css', 'print' );	
+		$out->addStyle( 'common/commonPrint.css', 'print' );
 	}
 
 	/**
@@ -1915,10 +1915,41 @@ if(count($wikiafooterlinks) > 0) {
 	$msgSearchLabel = wfMsg('Tooltip-search');
 	$searchLabel = wfEmptyMsg('Tooltip-search', $msgSearchLabel) ? (wfMsg('ilsubmit').' '.$wgSitename.'...') : $msgSearchLabel;
 ?>
+<style>
+
+.autocomplete-w1 {
+	z-index: 1001;
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	margin: 6px 0 0 6px;
+	/* IE6 fix: */ _background: none;
+	_margin: 1px 0 0 0;
+}
+.autocomplete {
+	z-index: 1001;
+	border: 1px solid #999;
+	background: #FFF;
+	cursor: default;
+	text-align: left;
+	overflow: auto;
+	margin: -6px 6px 6px -6px;
+	_margin: 0;
+	_overflow-x: hidden;
+}
+.autocomplete div {
+	z-index: 1001;
+	padding: 1px 0 0 3px;
+	white-space: nowrap;
+}
+.autocomplete .selected {
+	background:#F0F0F0;
+}
+</style>
 			<div class="widget" id="navigation_widget">
 				<div id="search_box" class="color1">
 					<form action="<?php $this->text('searchaction') ?>" id="searchform">
-						<input id="search_field" name="search" type="text" title="<?= htmlspecialchars($searchLabel)?>" value="<?= htmlspecialchars($searchLabel)?>" maxlength="200" onfocus="monacoSearchField(event);" onblur="monacoSearchField(event);" />
+						<input id="search_field" name="search" type="text" value="<?= htmlspecialchars($searchLabel) ?>" maxlength="200" onfocus="sf_focus(event);" alt="<?= htmlspecialchars($searchLabel) ?>"/>
 						<input type="hidden" name="go" value="1" />
 						<input type="submit" id="search_button" value="" title="<?= wfMsgHtml('searchbutton') ?>" />
 					</form>
