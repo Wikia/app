@@ -208,7 +208,7 @@
       }
       return ret;
     },
-    
+
     getSuggestions: function(q) {
       var cr, me, ls;
       cr = this.isLocal ? this.getSuggestionsLocal(q) : this.cachedResponse[q];
@@ -250,7 +250,7 @@
       v = this.getQuery(this.currentValue);
       this.container.hide().empty();
       for (var i = 0; i < len; i++) {
-        div = $((me.selectedIndex === i ? '<div class="selected"' : '<div') + ' title="' + this.suggestions[i] + '">' + f(this.suggestions[i], this.data[i], v) + '</div>');
+        div = $((me.selectedIndex === i ? '<div class="navigation-hover"' : '<div') + ' title="' + this.suggestions[i] + '">' + f(this.suggestions[i], this.data[i], v) + '</div>');
         div.mouseover((function(xi) { return function() { me.activate(xi); }; })(i));
         div.click((function(xi) { return function() { me.select(xi); }; })(i));
         //console.log(div);
@@ -283,7 +283,7 @@
       this.selectedIndex = index;
       if (this.selectedIndex !== -1 && divs.length > this.selectedIndex) {
         activeItem = divs.get(this.selectedIndex);
-        $(activeItem).attr('class', 'selected');
+        $(activeItem).attr('class', 'navigation-hover');
       }
       return activeItem;
     },
