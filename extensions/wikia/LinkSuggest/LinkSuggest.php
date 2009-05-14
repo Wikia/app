@@ -88,6 +88,7 @@ function getLinkSuggest() {
 	// trim passed query and replace spaces by underscores
 	// - this is how MediaWiki store article titles in database
 	$query = str_replace(' ', '_', trim($wgRequest->getText('query')));
+	$query = urldecode( $query );
 
 	// explode passed query by ':' to get namespace and article title
 	$queryParts = explode(':', $query, 2);
@@ -120,21 +121,19 @@ function getLinkSuggest() {
 	// and prepare it for later use...
 	$namespacePrefix = (!empty($namespaceName)) ? $namespaceName . ':' : '';
 
-	$query = addslashes(strtolower($query));
+	$query = addslashes(mb_strtolower($query));
 	$db =& wfGetDB(DB_SLAVE, 'search');
 
-	$sql = "SELECT qc_title FROM querycache WHERE qc_type = 'Mostlinked' AND LOWER(qc_title) LIKE '{$query}%' AND qc_namespace = {$namespace} ORDER BY qc_value DESC LIMIT 10;";
+	$sql = "SELECT qc_title FROM querycache WHERE qc_type = 'Mostlinked' AND LOWER(convert(qc_title using utf8)) LIKE '{$query}%' AND qc_namespace = {$namespace} ORDER BY qc_value DESC LIMIT 10;";
 	$res = $db->query($sql);
 	while($row = $db->fetchObject($res)) {
 		$results[] = str_replace('_', ' ', $namespacePrefix . $row->qc_title);
 	}
-
-	$sql = "SELECT page_title FROM page WHERE lower(page_title) LIKE '{$query}%' AND page_is_redirect=0 AND page_namespace = {$namespace} ORDER BY page_title ASC LIMIT ".(15 - count($results));
+	$sql = "SELECT page_title FROM page WHERE lower(convert(page_title using utf8)) LIKE '{$query}%' AND page_is_redirect=0 AND page_namespace = {$namespace} ORDER BY page_title ASC LIMIT ".(15 - count($results));
 	$res = $db->query($sql);
 	while($row = $db->fetchObject($res)) {
 		$results[] = str_replace('_', ' ', $namespacePrefix . $row->page_title);
 	}
-
 	$results = array_unique($results);
 
 	$ar = new AjaxResponse(implode("\n", $results));
