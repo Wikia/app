@@ -68,7 +68,7 @@ class ApiRollback extends ApiBase {
 
 		if($retval)
 			// We don't care about multiple errors, just report one of them
-			$this->dieUsageMsg(current($retval));
+			$this->dieUsageMsg(reset($retval));
 
 		$info = array(
 			'title' => $titleObj->getPrefixedText(),
@@ -119,6 +119,6 @@ class ApiRollback extends ApiBase {
 	}
 
 	public function getVersion() {
-		return __CLASS__ . ': $Id: ApiRollback.php 45043 2008-12-26 04:13:47Z mrzman $';
+		return __CLASS__ . ': $Id: ApiRollback.php 48123 2009-03-07 13:02:30Z catrope $';
 	}
 }
