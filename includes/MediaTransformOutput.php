@@ -191,9 +191,9 @@ class ThumbnailImage extends MediaTransformOutput {
 		}
 
 		// Wikia: macbre - lazy loading of images
-		global $wgWysiwygParserEnabled, $wgImagesLazyLoading, $wgImagesLazyLoadingFromWikitext, $wgStylePath;
+		global $wgWysiwygParserEnabled, $wgImagesLazyLoading, $wgStylePath;
 
-		if (empty($wgWysiwygParserEnabled) && !empty($wgImagesLazyLoading) && !empty($wgImagesLazyLoadingFromWikitext)) {
+		if ( !empty($options['lazy-load']) &&  empty($wgWysiwygParserEnabled) && !empty($wgImagesLazyLoading) ) {
 			// original image
 			$img = Xml::element( 'img', $attribs );
 			$s = Xml::openElement( 'noscript', array('title' => $this->url) ) . $img . Xml::closeElement( 'noscript' );
