@@ -762,7 +762,7 @@ if ($wgWikiaEnableSharedHelpExt && (NS_HELP == $title->getNamespace()) && Shared
 			return $res;
 		}
 
-		global $wgContLang, $wgUser, $wgThumbLimits, $wgThumbUpright, $wgWysiwygParserEnabled, $wgWysiwygMetaData;
+		global $wgContLang, $wgUser, $wgThumbLimits, $wgThumbUpright, $wgWysiwygParserEnabled, $wgWysiwygMetaData, $wgImagesLazyLoadingFromWikitext;
 		//Wysiwyg: add proper URL to file to metadata array when file exists
 		if (!empty($wgWysiwygParserEnabled) && isset($frameParams['refid']) && $file) {
 			$wgWysiwygMetaData[$frameParams['refid']]['url'] = $file->getFullUrl();
@@ -885,7 +885,10 @@ if ($wgWikiaEnableSharedHelpExt && (NS_HELP == $title->getNamespace()) && Shared
 			}
 			/* Wikia change end */
 
+			// Wikia: lazy loading of images
+			$wgImagesLazyLoadingFromWikitext = true;
 			$s = $thumb->toHtml( $params );
+			$wgImagesLazyLoadingFromWikitext = false;
 		}
 		if ( '' != $fp['align'] ) {
 			$s = "<div$refId class=\"float{$fp['align']}\">{$s}</div>";
@@ -910,7 +913,7 @@ if ($wgWikiaEnableSharedHelpExt && (NS_HELP == $title->getNamespace()) && Shared
 	}
 
 	function makeThumbLink2( Title $title, $file, $frameParams = array(), $handlerParams = array(), $time = false, $query = "" ) {
-		global $wgStylePath, $wgContLang, $wgWysiwygParserEnabled;
+		global $wgStylePath, $wgContLang, $wgWysiwygParserEnabled, $wgImagesLazyLoadingFromWikitext;
 		$exists = $file && $file->exists();
 
 		# Shortcuts
@@ -984,12 +987,15 @@ if ($wgWikiaEnableSharedHelpExt && (NS_HELP == $title->getNamespace()) && Shared
 			$s .= htmlspecialchars( wfMsg( 'thumbnail_error', '' ) );
 			$zoomicon = '';
 		} else {
+			// Wikia: macbre - lazy loading of images
+			$wgImagesLazyLoadingFromWikitext = true;
 			$s .= $thumb->toHtml( array(
 				'alt' => $fp['alt'],
 				'title' => $fp['title'],
 				'img-class' => 'thumbimage',
 				'desc-link' => true,
 				'desc-query' => $query ) );
+			$wgImagesLazyLoadingFromWikitext = false;
 			if ( isset( $fp['framed'] ) ) {
 				$zoomicon="";
 			} else {
