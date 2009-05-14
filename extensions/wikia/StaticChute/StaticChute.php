@@ -1,0 +1,222 @@
+<?php
+define('MEDIAWIKI', 1);
+require_once dirname(__FILE__) . '/../MergeFiles/MergeFilesAdditional.php';
+$STATIC_CHUTE_CONFIG = $MF; // Reuse for now
+
+class StaticChute {
+
+	public $fileType; // js|css|html
+	public $supportedFileTypes = array('js', 'css', 'html');
+	public $minify = true;
+	public $minifyCacheDir;
+	public $bytesIn = 0;
+	public $bytesOut = 0;
+
+	public function __construct($fileType){
+		if (! in_array($fileType, $this->supportedFileTypes)){
+			trigger_error("Unsupported file type: $fileType", E_USER_ERROR);
+			return;
+		}
+
+		$this->fileType = $fileType;
+
+		// Set up the cache dir
+		$this->minifyCacheDir = sys_get_temp_dir() . '/minifyCache';
+		if (!is_dir($this->minifyCacheDir)){
+			mkdir($this->minifyCacheDir, 0777, true);
+		}
+	}
+
+
+	/* message function that will print the message appropriately based on the format */
+	public function comment ($msg){
+		switch ($this->fileType){
+		  case 'js': return "\n/*" . $msg . "*/\n";
+		  case 'css': return "\n/*" . $msg . "*/\n";
+		  case 'html': return "\n<!-- ". htmlspecialchars($msg) . "-->\n";
+		  default: return htmlspecialchars($msg);
+		}
+	}
+
+
+	/* For the supplied arguments, return a list of files to include args is an array (usually $_GET)
+ 	 * that can contain either 'package' or 'files' & 'dir'
+ 	 * 'packages' is a a way to call a predefined list of files for include. For example 'anon'. Multiple
+ 	 * packages can be included, separated by comma
+ 	 * 'files' is a csv separated list of files to include from 'dir' (default /)
+ 	 */
+	public function getFileList($args){
+		global $STATIC_CHUTE_CONFIG;
+		$C = $STATIC_CHUTE_CONFIG;
+		$out = array();
+
+		if (!empty($args['packages'])){
+			$basedir = realpath(getenv('DOCUMENT_ROOT') . '/skins/');
+			foreach(split(',', $args['packages']) as $package){
+				if (empty($C[$package]['source'])){
+					continue;
+				} else {
+					foreach ($C[$package]['source'] as $f){
+						$out[] = realpath($basedir . '/' . $f);
+					}
+				}
+			}
+
+		} else if (!empty($args['files'])){
+			$basedir = realpath(getenv('DOCUMENT_ROOT') . '/');
+			foreach(split(',', $args['files']) as $file){
+				// We don't trust user input. Check to make sure the requested file is 
+				// in the document root
+				$rfile = realpath($basedir . $file);
+				if (!preg_match("#^$basedir#", $rfile)){
+					trigger_error("Requested file $file is not in document root", E_USER_WARNING);
+					continue;
+				} else {
+					$out[] = $rfile;
+				}
+			}
+		}
+
+		return $out;
+	}
+
+
+	/* Walk through a list of files and get the latest modified time in the list
+	* @param $files -array of files to check. Assumed to be relative to basedir
+	* @return unix timestamp of the latest modified file, -1 if no files
+	* @return string containing minfied javascript, unless there is an error, then the un-minified javascript
+	*/
+	private function getLatestMod($files){
+		$maxtime = -1;
+		foreach($files as $file){
+			$time=@filemtime($this->unixbasedir . $file);
+			if ($time > $maxtime){
+				$maxtime = $time;
+			}
+		}
+
+		return $maxtime;
+	}
+
+
+	
+	public function minifyHtml($html){
+		// Taking the easy, safe path. This could be improved if you want to go through the
+		// effort/expense/risk of processing the DOM. For now just strip leading space on each line
+		$min = preg_replace('/^\s+/', '', $html);
+    		return $min; 
+	}
+
+
+	public function minifyCss($css){
+		// Not implemented yet. Know a good CSS minfier that doesn't bork the CSS?
+		$min = preg_replace('/^\s+/', '', $css);
+    		return $min;
+	}
+
+
+	/* Remove comments and superfluous white space from javascript. 
+	* Utilize JSMin from Douglas Crawford
+	* http://www.crockford.com/javascript/jsmin.html
+	* This is the PHP port.
+	* We utilize caching heavily, but if performance becomes an issue, consider the C version.
+	*
+	* @param $js - javascript code to minimize
+	* @return minified js, unless there is an error, return original js
+	*/
+	public function minifyJS($js){
+		
+		require dirname(__FILE__) . '/JSMin.php';
+		try {
+			$min = JSMin::minify($js);
+		} catch (JSMinException $e){
+			$msg = "Error minifying javascript: " . $e->getMessage();
+			trigger_error($msg, E_USER_WARNING);
+			return $js . $this->comment($msg);
+		}
+
+    		return $min;
+	}
+
+
+	/* Take a list of $files, checks / sets http headers, and returns the combined output (if applicable)
+	* @param $files - array of files to process. Full unix path. See getFileList() 
+	* @return can be one of:
+		string output if successful
+		bool false on error
+		bool true for a conditional get that was not modified (304)
+	*/
+	public function process($files){
+		if (!is_array($files) || empty($files)){
+			header('HTTP/1.0 400 Bad Request');
+			trigger_error("$files must be an array of file names", E_USER_WARNING);
+			return false;
+	 	}
+
+		// If the browser sent caching headers, check to see if the files have been modified
+		$latestMod=$this->getLatestMod($files);
+		header("Last-Modified: " . gmdate('r', $latestMod));
+
+
+		$ifModSince=getenv('HTTP_IF_MODIFIED_SINCE'); 
+		if (!empty($ifModSince) && $latestMod <= strtotime($ifModSince)){
+			// Times match, files have not changed since their last request. 
+			header('HTTP/1.1 304 Not Modified');
+			return true;
+		}
+
+		if (!empty($_GET['maxmod'])){
+			// Since we have a timestamp that will change with the url, set an Expires header
+			// far into the future. This will make it so that the browsers won't even check this
+			// url to see if the files have changed, saving an http request.
+			header('Expires: ' . gmdate('r', strtotime('+13 years')));
+		}
+
+		$out = ''; $fileCount = 0;
+		foreach($files as $file){
+			if (!is_readable($file)){
+				// Mimic a 404
+				trigger_error("$file does not exist", E_USER_NOTICE);
+				continue;
+			}
+			$fileCount++;
+
+			$rawData = file_get_contents($file);
+			if ($this->minify){
+				
+				switch ($this->fileType){
+				  case 'css': $data = $this->minifyCss($rawData); break;
+				  case 'js': $data = $this->minifyJSFile($file); break;
+				  case 'html': $data = $this->minifyHtml($rawData); break;
+				  default: $data = $rawData;
+				}
+			}
+
+			$this->bytesIn += strlen($rawData);
+			$this->bytesOut += strlen($data);
+
+      			$out .= $this->comment($file) . $data . $this->comment(" /$file");
+          	}
+
+		if (empty($out)){
+			return false;
+		} else {
+			$shaved = $this->bytesIn - $this->bytesOut;
+			$pct = round(($shaved / $this->bytesIn) * 100,2);
+			return $this->comment("$fileCount files, shaved $shaved off {$this->bytesIn}, $pct%") . $out;
+		}
+	}
+
+
+	/*
+	* Send out Content-Type headers depending on the file type
+	*/  
+	public function setContentType() {
+		switch($this->fileType){
+		  case 'js': header('Content-type: text/javascript'); break;
+		  case 'css': header('Content-type: text/css'); break;
+		  case 'html': break; // Apache does html by default
+		}
+	}
+
+}
