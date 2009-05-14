@@ -8,7 +8,6 @@ class StaticChute {
 	public $fileType; // js|css|html
 	public $supportedFileTypes = array('js', 'css', 'html');
 	public $minify = true;
-	public $minifyCacheDir;
 	public $bytesIn = 0;
 	public $bytesOut = 0;
 
@@ -20,11 +19,6 @@ class StaticChute {
 
 		$this->fileType = $fileType;
 
-		// Set up the cache dir
-		$this->minifyCacheDir = sys_get_temp_dir() . '/minifyCache';
-		if (!is_dir($this->minifyCacheDir)){
-			mkdir($this->minifyCacheDir, 0777, true);
-		}
 	}
 
 
@@ -100,17 +94,58 @@ class StaticChute {
 
 
 	
-	public function minifyHtml($html){
+	public function minifyHtmlData($html){
 		// Taking the easy, safe path. This could be improved if you want to go through the
 		// effort/expense/risk of processing the DOM. For now just strip leading space on each line
 		$min = preg_replace('/^\s+/', '', $html);
     		return $min; 
 	}
 
+	public function minifyHtmlFile($file){
+		$html = file_get_contents($file);
+    		return self::minifyHtmlData($html);
+	}
 
-	public function minifyCss($css){
+
+	public function minifyCssData($css){
 		// Not implemented yet. Know a good CSS minfier that doesn't bork the CSS?
 		$min = preg_replace('/^\s+/', '', $css);
+    		return $min;
+	}
+
+	public function minifyCssFile($file){
+		$css = file_get_contents($file);
+    		return self::minifyCssData($css);
+	}
+
+	/* Remove comments and superfluous white space from javascript. 
+	* Utilize JSMin from Douglas Crawford
+	* http://www.crockford.com/javascript/jsmin.html
+	* This file will need to be compiled by running "make" in this directory
+	*
+	* @param $js - javascript code to minimize
+	* @return minified js, unless there is an error, return original js
+	*/
+	public function minifyJSFile($jsfile){
+		
+		$jsmin = dirname(__FILE__) . '/jsmin';
+		if (!is_executable($jsmin)){
+			$min = $this->comment("jsmin binary missing or not executable, reverting to MUCH slower PHP method") . $this->minifyJSPHP(file_get_contents($jsfile));
+		} else {
+			$min = shell_exec("cat $jsfile | $jsmin");
+		}
+
+    		return $min;
+	}
+
+	public function minifyJSData($js){
+		// Write the data to a temporary file first
+		$tmpfile = tempnam(sys_get_temp_dir(), 'minifyTemp');
+		$file_put_contents($tmpfile, $js);
+
+		$min = self::minifyJSFile($tmpfile);
+		unlink($tmpfile);
+
     		return $min;
 	}
 
@@ -118,15 +153,30 @@ class StaticChute {
 	/* Remove comments and superfluous white space from javascript. 
 	* Utilize JSMin from Douglas Crawford
 	* http://www.crockford.com/javascript/jsmin.html
-	* This is the PHP port.
-	* We utilize caching heavily, but if performance becomes an issue, consider the C version.
+	* This is the PHP port, which is a backup if the C version isn't available
+	* We utilize caching heavily, but if performance becomes an issue, use consider the C version 
 	*
 	* @param $js - javascript code to minimize
 	* @return minified js, unless there is an error, return original js
 	*/
-	public function minifyJS($js){
-		
-		require dirname(__FILE__) . '/JSMin.php';
+	public function minifyJSPHP($js){
+
+		// This is kinda slow. We need to cache. 
+		$cacheDir = sys_get_temp_dir() . '/minifyCache';
+		if (mt_rand(1,10000) == 42){
+			// One out of every 10000 requests, clear out the cache
+			exec("rm -rf $cacheDir");
+		}
+		if (!is_dir($cacheDir)){
+			mkdir($cacheDir, 0777, true); //recursively create the cache dir
+		}
+
+		$cacheFile = $cacheDir . '/' . md5($js) . '.' . $this->fileType;
+		if (file_exists($cacheFile)){
+			return file_get_contents($cacheFile);
+		}
+
+		require_once dirname(__FILE__) . '/JSMin.php';
 		try {
 			$min = JSMin::minify($js);
 		} catch (JSMinException $e){
@@ -134,8 +184,11 @@ class StaticChute {
 			trigger_error($msg, E_USER_WARNING);
 			return $js . $this->comment($msg);
 		}
+		
+		// Cache
+		file_put_contents($cacheFile, $min);
 
-    		return $min;
+		return $min;
 	}
 
 
@@ -154,12 +207,12 @@ class StaticChute {
 	 	}
 
 		// If the browser sent caching headers, check to see if the files have been modified
-		$latestMod=$this->getLatestMod($files);
+		$latestMod = $this->getLatestMod($files);
 		header("Last-Modified: " . gmdate('r', $latestMod));
 
 
 		$ifModSince=getenv('HTTP_IF_MODIFIED_SINCE'); 
-		if (!empty($ifModSince) && $latestMod <= strtotime($ifModSince)){
+		if (!empty($ifModSince) && date_default_timezone_set('UTC') && $latestMod <= strtotime($ifModSince)){
 			// Times match, files have not changed since their last request. 
 			header('HTTP/1.1 304 Not Modified');
 			return true;
@@ -173,6 +226,7 @@ class StaticChute {
 		}
 
 		$out = ''; $fileCount = 0;
+		$stime = microtime(true);
 		foreach($files as $file){
 			if (!is_readable($file)){
 				// Mimic a 404
@@ -185,9 +239,9 @@ class StaticChute {
 			if ($this->minify){
 				
 				switch ($this->fileType){
-				  case 'css': $data = $this->minifyCss($rawData); break;
+				  case 'css': $data = $this->minifyCssData($rawData); break;
 				  case 'js': $data = $this->minifyJSFile($file); break;
-				  case 'html': $data = $this->minifyHtml($rawData); break;
+				  case 'html': $data = $this->minifyHtmlData($rawData); break;
 				  default: $data = $rawData;
 				}
 			}
@@ -195,15 +249,16 @@ class StaticChute {
 			$this->bytesIn += strlen($rawData);
 			$this->bytesOut += strlen($data);
 
-      			$out .= $this->comment($file) . $data . $this->comment(" /$file");
+      			$out .= $this->comment(basename($file)) . $data . $this->comment(" /$file");
           	}
 
 		if (empty($out)){
 			return false;
 		} else {
+			$time = round(microtime(true) - $stime, 1);
 			$shaved = $this->bytesIn - $this->bytesOut;
 			$pct = round(($shaved / $this->bytesIn) * 100,2);
-			return $this->comment("$fileCount files, shaved $shaved off {$this->bytesIn}, $pct%") . $out;
+			return $this->comment("$fileCount files in $time seconds, shaved $shaved off {$this->bytesIn}, $pct%") . $out;
 		}
 	}
 
