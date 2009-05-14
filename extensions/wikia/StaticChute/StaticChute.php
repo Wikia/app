@@ -2,6 +2,26 @@
 define('MEDIAWIKI', 1);
 require_once dirname(__FILE__) . '/../MergeFiles/MergeFilesAdditional.php';
 $STATIC_CHUTE_CONFIG = $MF; // Reuse for now
+$STATIC_CHUTE_CONFIG['awesome_article_anon_js']['source'] = array(
+	'common/jquery/jquery-1.3.2.min.js',
+	'common/jquery/jquery.json-1.3.min.js',
+	'common/jquery/jquery.cookies.2.0.1.min.js',
+	'common/jquery/jquery.wikia.js',
+
+	'common/ajax.js',
+	'common/urchin.js',
+	'common/wikibits.js',
+	'awesome/js/tracker.js',
+	'common/tracker.js',
+	'awesome/js/main.js',
+	'common/widgets/js/widgetsConfig.js',
+	'common/widgets/js/widgetsFramework.js',
+	'../extensions/wikia/ProblemReports/js/ProblemReports-loader.js',
+	'../extensions/wikia/AdEngine/AdEngine.js',
+	'../extensions/wikia/Userengagement/Userengagement.js',
+	'../extensions/wikia/TieDivLibrary/TieDivLibrary.js',
+	'common/contributed.js',
+);
 
 class StaticChute {
 
@@ -92,6 +112,30 @@ class StaticChute {
 		return $maxtime;
 	}
 
+	public function getChuteUrlForPackage($package, $type = null){
+		if ($type == null){
+			$type = $this->fileType;
+		}
+		$files = $this->getFileList(array('packages'=>$package));
+
+		if (empty($files)){
+			trigger_error("Invalid package for " . __METHOD__, E_USER_WARNING);
+			return false;
+		}
+
+		$latestMod = $this->getLatestMod($files);
+
+		global $wgDevelEnvironments;
+		if (empty($wgDevelEnvironments)){
+			$host = 'images.wikia.com';
+		} else {
+			$host = $_SERVER['HTTP_HOST'];
+		}
+
+		$dir = dirname(str_replace(getenv('DOCUMENT_ROOT'), '', __FILE__));
+		return 'http://' . $host . $dir . '/' . '?' .
+			http_build_query(array('type'=> $type, 'package'=> $package, 'maxmod'=> $latestMod));
+	}
 
 	
 	public function minifyHtmlData($html){
