@@ -1971,11 +1971,9 @@ function wfMkdirParents( $dir, $mode = null ) {
 
 	$res = @mkdir( $dir, $mode, true );
 	if ($res === false) {
-		global $wgErrorLog;
 		$backTraceMsg = "wfMkdirParents($dir, $mode); \n";
 		$backTraceMsg .= wfBacktrace(); // $e->getText();
-		$wgErrorLog = true;
-		Wikia::log( "MOLI", $_SERVER['SERVER_NAME'], $backTraceMsg );
+		error_log( "MOLI: ." $_SERVER['SERVER_NAME'] ." $backTraceMsg \n" );
 	}
 	return $res;  // PHP5 <3
 }
