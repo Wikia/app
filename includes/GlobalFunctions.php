@@ -1969,13 +1969,8 @@ function wfMkdirParents( $dir, $mode = null ) {
 	if ( is_null( $mode ) )
 		$mode = $wgDirectoryMode;
 
-	$res = false;
-	try {
-		$res = @mkdir( $dir, $mode, true );
-		if ($res === false) {
-			throw new MWException( __METHOD__ . ' cannot create directory.' );
-		}
-	} catch ( Exception $e ) {
+	$res = @mkdir( $dir, $mode, true );
+	if ($res === false) {
 		global $wgErrorLog;
 		$backTraceMsg = "wfMkdirParents($dir, $mode); \n";
 		$backTraceMsg .= wfBacktrace(); // $e->getText();
