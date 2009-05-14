@@ -51,6 +51,8 @@ class WithoutInterwikiPage extends PageQueryPage {
 	}
 
 	function getSQL() {
+		global $wgContentNamespaces;
+
 		$dbr = wfGetDB( DB_SLAVE );
 		list( $page, $langlinks ) = $dbr->tableNamesN( 'page', 'langlinks' );
 		$prefix = $this->prefix ? "AND page_title LIKE '" . $dbr->escapeLike( $this->prefix ) . "%'" : '';
@@ -63,7 +65,7 @@ class WithoutInterwikiPage extends PageQueryPage {
 		LEFT JOIN $langlinks
 		       ON ll_from = page_id
 		    WHERE ll_title IS NULL
-		      AND page_namespace=" . NS_MAIN . "
+		      AND page_namespace IN ( " . implode( ', ', $wgContentNamespaces ) . " ) 
 		      AND page_is_redirect = 0
 			  {$prefix}";
 	}

@@ -28,6 +28,8 @@ class LonelyPagesPage extends PageQueryPage {
 	function isSyndicated() { return false; }
 
 	function getSQL() {
+		global $wgContentNamespaces;
+
 		$dbr = wfGetDB( DB_SLAVE );
 		list( $page, $pagelinks, $templatelinks ) = $dbr->tableNamesN( 'page', 'pagelinks', 'templatelinks' );
 
@@ -42,7 +44,7 @@ class LonelyPagesPage extends PageQueryPage {
 		LEFT JOIN $templatelinks
 				ON page_namespace=tl_namespace AND page_title=tl_title
 		    WHERE pl_namespace IS NULL
-		      AND page_namespace=".NS_MAIN."
+		      AND page_namespace IN ( " . implode( ', ', $wgContentNamespaces )  . " )
 		      AND page_is_redirect=0
 			  AND tl_namespace IS NULL";
 
