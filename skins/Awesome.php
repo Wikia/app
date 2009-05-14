@@ -525,6 +525,9 @@ EOS;
 		// User actions links
 		$tpl->set('userlinks', $this->getUserLinks($tpl));
 
+		// marged JS files
+		$tpl->set('mergedJS', "\n\t\t<!-- merged JS -->\n\t\t" . ($wgUser->isLoggedIn() ? GetReferences("awesome_loggedin_js") : GetReferences("awesome_non_loggedin_js")) );
+
 		wfProfileOut( __METHOD__ );
 		return true;
 	}
@@ -1326,7 +1329,7 @@ class AwesomeTemplate extends QuickTemplate {
 	$this->html('csslinks');
 
 	if($wgRequest->getVal('action') != '' || $wgTitle->getNamespace() == NS_SPECIAL) {
-		echo $wgUser->isLoggedIn() ? GetReferences("awesome_loggedin_js") : GetReferences("awesome_non_loggedin_js");
+		$this->html('mergedJS'); 
 		foreach($this->data['references']['js'] as $script) {
 			if (!empty($script['url'])) {
 ?>
@@ -1781,8 +1784,7 @@ if(!$custom_article_footer && $displayArticleFooter) {
 
 <?php
 	if(!($wgRequest->getVal('action') != '' || $wgTitle->getNamespace() == NS_SPECIAL)) {
-		echo $wgUser->isLoggedIn() ? GetReferences("awesome_loggedin_js") : GetReferences("awesome_non_loggedin_js");
-
+		$this->html('mergedJS');
 		foreach($this->data['references']['js'] as $script) {
 ?>
 		<script type="<?= $script['mime'] ?>" src="<?= htmlspecialchars($script['url']) ?>"></script>
