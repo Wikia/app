@@ -316,9 +316,20 @@ YAHOO.util.Event.onDOMReady(function () {
 	</tr><tr>
 		<? } ?>
 		<? $found += (in_array($groupName, $mGroup) && isset($groupList[$groupName])) ? $groupList[$groupName] : 0 ?>
+		<? 
+			$groupLink = wfMsgExt("Grouppage-{$groupName}", array('parseinline', 'language' => 'en') );
+			$link = "";
+			if ( !wfEmptyMsg("Grouppage-{$groupName}", $groupLink) ) {
+				$sk = $wgUser->getSkin();
+				$link = $sk->makeLink($groupLink, $wgContLang->ucfirst($userGroupName), "");
+			} else {
+				$groupLink = "";
+				$link = $wgContLang->ucfirst($userGroupName);
+			}
+		?>
 	<td valign="middle" style="padding:0px 3px;">
 		<span style="vertical-align:middle"><input type="checkbox" name="lu_target" id="lu_target" value="<?=$groupName?>" "<?=(in_array($groupName, $mGroup))?"checked":""?>"></span>
-		<span style="padding-bottom:5px;"><strong><?=$wgContLang->ucfirst($userGroupName)?></strong> (<?=wfMsg('listuserscount', (isset($groupList[$groupName]))?$groupList[$groupName]:0 )?>)</span>
+		<span style="padding-bottom:5px;"><strong><?=$link?></strong> (<?=wfMsg('listuserscount', (isset($groupList[$groupName]))?$groupList[$groupName]:0 )?>)</span>
 	</td>
 		<? $i++; ?>
 	<? } ?>

@@ -75,7 +75,7 @@ class Listusers extends SpecialPage {
 	/* draws the form itself  */
 	function showForm ($error = "") {
 		global $wgOut, $wgContLang;
-		global $wgExtensionsPath;
+		global $wgExtensionsPath, $wgUser;
         wfProfileIn( __METHOD__ );
 		$action = $this->mTitle->escapeLocalURL("");
 		$aGroups = $this->getAllGroups();
@@ -100,7 +100,8 @@ class Listusers extends SpecialPage {
             "contributed"		=> $contributed,
             "wgContLang"		=> $wgContLang,
             "wgExtensionsPath" 	=> $wgExtensionsPath, 
-            "selContrib"		=> 5
+            "selContrib"		=> 5,
+            "wgUser"			=> $wgUser
         ));
         $wgOut->addHTML( $oTmpl->execute("main-form") );
         wfProfileOut( __METHOD__ );
