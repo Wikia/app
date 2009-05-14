@@ -124,12 +124,12 @@ function getLinkSuggest() {
 	$query = addslashes(mb_strtolower($query));
 	$db =& wfGetDB(DB_SLAVE, 'search');
 
-	$sql = "SELECT qc_title FROM querycache WHERE qc_type = 'Mostlinked' AND LOWER(convert(qc_title using utf8)) LIKE '{$query}%' AND qc_namespace = {$namespace} ORDER BY qc_value DESC LIMIT 10;";
+	$sql = "SELECT qc_title FROM querycache WHERE qc_type = 'Mostlinked' AND LOWER(qc_title) LIKE LOWER('{$query}%') AND qc_namespace = {$namespace} ORDER BY qc_value DESC LIMIT 10;";
 	$res = $db->query($sql);
 	while($row = $db->fetchObject($res)) {
 		$results[] = str_replace('_', ' ', $namespacePrefix . $row->qc_title);
 	}
-	$sql = "SELECT page_title FROM page WHERE lower(convert(page_title using utf8)) LIKE '{$query}%' AND page_is_redirect=0 AND page_namespace = {$namespace} ORDER BY page_title ASC LIMIT ".(15 - count($results));
+	$sql = "SELECT page_title FROM page WHERE LOWER(page_title) LIKE LOWER('{$query}%') AND page_is_redirect=0 AND page_namespace = {$namespace} ORDER BY page_title ASC LIMIT ".(15 - count($results));
 	$res = $db->query($sql);
 	while($row = $db->fetchObject($res)) {
 		$results[] = str_replace('_', ' ', $namespacePrefix . $row->page_title);
