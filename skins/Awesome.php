@@ -1564,7 +1564,7 @@ if ($wgOut->isArticle()){
 					$topAdCodeDisplayed = true;
 				}
 				?>
-				<a name="top" id="top"></a>
+				<a name="top" id="top" rel="nofollow"></a>
 				<?php
 				global $wgSupressSiteNotice;
 				if( empty( $wgSupressSiteNotice ) && $this->data['sitenotice']) { ?><div id="siteNotice"><?php $this->html('sitenotice') ?></div><?php } ?>
@@ -1583,7 +1583,6 @@ if ($wgOut->isArticle()){
 					<?php if($this->data['undelete']) { ?><div id="contentSub2"><?php     $this->html('undelete') ?></div><?php } ?>
 					<?php if($this->data['newtalk'] ) { ?><div class="usermessage"><?php $this->html('newtalk')  ?></div><?php } ?>
 					<?php if(!empty($skin->newuemsg)) { echo $skin->newuemsg; } ?>
-					<?php if($this->data['showjumplinks']) { ?><div id="jump-to-nav"><?php $this->msg('jumpto') ?> <a href="#column-one"><?php $this->msg('jumptonavigation') ?></a>, <a href="#searchInput"><?php $this->msg('jumptosearch') ?></a></div><?php } ?>
 					<?php
 					// Print out call to top leaderboard or box ad, if it's a main page, or not in the bucket test
 					if (ArticleAdLogic::isMainPage() || !$topAdCodeDisplayed){
@@ -1715,13 +1714,13 @@ if(!$custom_article_footer && $displayArticleFooter) {
 							<div id="star-rating-wrapper">
 								<ul id="star-rating" class="star-rating">
 									<li style="width: <?= $ratingPx ?>px;" id="current-rating" class="current-rating"><span><?= $rating ?>/5</span></li>
-									<li><a class="one-star" id="star1" title="1/5"<?=$hidden_star?>><span>1</span></a></li>
-									<li><a class="two-stars" id="star2" title="2/5"<?=$hidden_star?>><span>2</span></a></li>
-									<li><a class="three-stars" id="star3" title="3/5"<?=$hidden_star?>><span>3</span></a></li>
-									<li><a class="four-stars" id="star4" title="4/5"<?=$hidden_star?>><span>4</span></a></li>
-									<li><a class="five-stars" id="star5" title="5/5"<?=$hidden_star?>><span>5</span></a></li>
+									<li><a class="one-star" id="star1" rel="nofollow" title="1/5"<?=$hidden_star?>><span>1</span></a></li>
+									<li><a class="two-stars" id="star2" rel="nofollow" title="2/5"<?=$hidden_star?>><span>2</span></a></li>
+									<li><a class="three-stars" id="star3" rel="nofollow" title="3/5"<?=$hidden_star?>><span>3</span></a></li>
+									<li><a class="four-stars" id="star4" rel="nofollow" title="4/5"<?=$hidden_star?>><span>4</span></a></li>
+									<li><a class="five-stars" id="star5" rel="nofollow" title="5/5"<?=$hidden_star?>><span>5</span></a></li>
 								</ul>
-								<span style="<?= ($voted ? '' : 'display: none;') ?>" id="unrateLink"><a id="unrate" href="#"><?= wfMsg( 'unrate_it' ) ?></a></span>
+								<span style="<?= ($voted ? '' : 'display: none;') ?>" id="unrateLink"><a id="unrate" rel="nofollow" href="#"><?= wfMsg( 'unrate_it' ) ?></a></span>
 							</div>
 						</td>
 						<td class="col2">
@@ -1732,13 +1731,13 @@ if(!$custom_article_footer && $displayArticleFooter) {
 
 	if ( !empty($wgProblemReportsEnable) ) {
 ?>
-								<li><img src="<?= $wgStylePath ?>/monobook/blank.gif" id="fe_report_img" class="sprite" alt="<?= wfMsg('reportproblem') ?>" /> <div><a style="cursor:pointer" id="fe_report_link"><?= wfMsg('reportproblem'); ?></a></div></li>
+								<li><img src="<?= $wgStylePath ?>/monobook/blank.gif" id="fe_report_img" class="sprite" alt="<?= wfMsg('reportproblem') ?>" /> <div><a style="cursor:pointer" rel="nofollow" id="fe_report_link"><?= wfMsg('reportproblem'); ?></a></div></li>
 <?php
 	}
 
 	if(!empty($wgNotificationEnableSend)) {
 ?>
-								<li><img src="<?= $wgStylePath ?>/monobook/blank.gif" id="fe_email_img" class="sprite" alt="email" /> <div><a href="#" id="shareEmail_a"><?= wfMsg('footer_7') ?></a></div></li>
+								<li><img src="<?= $wgStylePath ?>/monobook/blank.gif" id="fe_email_img" class="sprite" alt="email" /> <div><a href="#" rel="nofollow" id="shareEmail_a"><?= wfMsg('footer_7') ?></a></div></li>
 <?php
 	}
 ?>
@@ -1841,7 +1840,7 @@ if ( $wgRequest->getVal('action') != 'edit' ) {
 		$GPcontent = '<img src="' . $wgStylePath . '/home/images/gp_media.png" width="128" height="22" alt="GamePro Media" />';
 		// on WoW add link to the image
 		if ($wgCityId == 490) {
-			$GPcontent = '<a href="http://www.idgentertainment.com">' . $GPcontent . '</a>';
+			$GPcontent = '<a href="http://www.idgentertainment.com" rel="nofollow">' . $GPcontent . '</a>';
 		}
 	}
 	//
@@ -2030,7 +2029,7 @@ if(count($wikiafooterlinks) > 0) {
 		    }
         }
 ?>
-								<li style="font-size: 1px; position: absolute; top: -10000px"><a href="<?= Title::newFromText('Special:Recentchanges')->getLocalURL() ?>" accesskey="r">Recent changes</a><a href="<?= Title::newFromText('Special:Random')->getLocalURL() ?>" accesskey="x">Random page</a></li>
+								<li style="font-size: 1px; position: absolute; top: -10000px"><a href="<?= Title::newFromText('Special:Recentchanges')->getLocalURL() ?>" accesskey="r" rel="nofollow">Recent changes</a><a href="<?= Title::newFromText('Special:Random')->getLocalURL() ?>" accesskey="x" rel="nofollow">Random page</a></li>
 							</ul>
 						</td>
 					</tr>

@@ -417,7 +417,7 @@ function CategorySelectGetCategoryLinksEnd(&$categoryLinks) {
 	$action = $wgRequest->getVal('action', 'view');
 	//for redirected page this hook is ran twice - check for button existence and don't add second one (fixes rt#12223)
 	if (($action == 'view' || $action == 'purge') && strpos($categoryLinks, '<div id="csAddCategorySwitch"') === false) {
-		$categoryLinks .= ' <div id="csAddCategorySwitch" class="noprint" style="position:relative;float:left;border: 1px solid #BBB;-moz-border-radius:3px;-webkit-border-radius:3px;padding:0 4px 0 12px;background:#ddd url(\'' . $wgExtensionsPath . '/wikia/CategorySelect/sprite.png\') left center no-repeat;line-height: 16px;"><a href="#" onclick="YAHOO.util.Get.script(wgServer + wgScriptPath + \'?action=ajax&rs=CategorySelectGetCategories\'); YAHOO.util.Get.script(wgExtensionsPath+\'/wikia/CategorySelect/CategorySelect.js?\'+wgStyleVersion,{onSuccess:function(){showCSpanel();}});$(\'catlinks\').className+=\' csLoading\';return false;" onfocus="this.blur();" style="color:#000;font-size:0.85em;text-decoration:none;background:#ddd;display:block;padding:0 3px">' . wfMsg('categoryselect-addcategory-button') . '</a></div>';
+		$categoryLinks .= ' <div id="csAddCategorySwitch" class="noprint" style="position:relative;float:left;border: 1px solid #BBB;-moz-border-radius:3px;-webkit-border-radius:3px;padding:0 4px 0 12px;background:#ddd url(\'' . $wgExtensionsPath . '/wikia/CategorySelect/sprite.png\') left center no-repeat;line-height: 16px;"><a href="#" onclick="YAHOO.util.Get.script(wgServer + wgScriptPath + \'?action=ajax&rs=CategorySelectGetCategories\'); YAHOO.util.Get.script(wgExtensionsPath+\'/wikia/CategorySelect/CategorySelect.js?\'+wgStyleVersion,{onSuccess:function(){showCSpanel();}});$(\'catlinks\').className+=\' csLoading\';return false;" onfocus="this.blur();" style="color:#000;font-size:0.85em;text-decoration:none;background:#ddd;display:block;padding:0 3px" rel="nofollow">' . wfMsg('categoryselect-addcategory-button') . '</a></div>';
 	}
 	return true;
 }
@@ -448,7 +448,7 @@ function CategorySelectGenerateHTMLforEdit($formId = '') {
 			<input id="csCategoryInput" type="text" style="display: none; outline: none;" />
 		</div>
 		<div id="csWikitextContainer"><textarea id="csWikitext" name="csWikitext">' . $categories . '</textarea></div>
-		<div id="csSwitchViewContainer"><a id="csSwitchView" href="#" onclick="toggleCodeView(); return false;" onfocus="this.blur()" tabindex="-1">' . wfMsg('categoryselect-code-view') . '</a></div>
+		<div id="csSwitchViewContainer"><a id="csSwitchView" href="#" onclick="toggleCodeView(); return false;" onfocus="this.blur()" tabindex="-1" rel="nofollow">' . wfMsg('categoryselect-code-view') . '</a></div>
 		<div class="clearfix"></div>
 	</div>
 	';
