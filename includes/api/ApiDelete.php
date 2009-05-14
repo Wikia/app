@@ -76,14 +76,14 @@ class ApiDelete extends ApiBase {
 			$retval = self::deleteFile($params['token'], $titleObj, $params['oldimage'], $reason, false);
 			if(count($retval))
 				// We don't care about multiple errors, just report one of them
-				$this->dieUsageMsg(current($retval));
+				$this->dieUsageMsg(reset($retval));
 		} else {
 			$articleObj = new Article($titleObj);
 			$retval = self::delete($articleObj, $params['token'], $reason);
 			
 			if(count($retval))
 				// We don't care about multiple errors, just report one of them
-				$this->dieUsageMsg(current($retval));
+				$this->dieUsageMsg(reset($retval));
 			
 			if($params['watch'] || $wgUser->getOption('watchdeletion'))
 				$articleObj->doWatch();
@@ -213,6 +213,6 @@ class ApiDelete extends ApiBase {
 	}
 
 	public function getVersion() {
-		return __CLASS__ . ': $Id: ApiDelete.php 44541 2008-12-13 21:07:18Z mrzman $';
+		return __CLASS__ . ': $Id: ApiDelete.php 48123 2009-03-07 13:02:30Z catrope $';
 	}
 }

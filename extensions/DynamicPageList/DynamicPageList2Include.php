@@ -8,7 +8,7 @@
  *
  *
  * @author Steve Sanbeg
- * @copyright Copyright © 2006, Steve Sanbeg
+ * @copyright Copyright Â© 2006, Steve Sanbeg
  * @license http://www.gnu.org/copyleft/gpl.html GNU General Public License 2.0 or later
  *
  *
@@ -436,7 +436,7 @@ class DPL2Include
         $extractParm = array();
         
         // check if we want to extract parameters directly from the call
-        // in that case we won´t invoke template2 but will directly return the extracted parameters
+        // in that case we wonÂ´t invoke template2 but will directly return the extracted parameters
         // as a sequence of table columns; 
         if (strlen($template2)>strlen($template1) && ($template2[strlen($template1)]==':')) {
             $extractParm = split(':',substr($template2,strlen($template1)+1));
@@ -572,4 +572,3 @@ class DPL2Include
     }
 
 }
-?>

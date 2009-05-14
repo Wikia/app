@@ -186,7 +186,7 @@ class ApiQueryRevisions extends ApiQueryBase {
 			$this->validateLimit('limit', $limit, 1, $userMax, $botMax);
 
 			// There is only one ID, use it
-			$this->addWhereFld('rev_page', current(array_keys($pageSet->getGoodTitles())));
+			$this->addWhereFld('rev_page', reset(array_keys($pageSet->getGoodTitles())));
 
 			if(!is_null($params['user'])) {
 				$this->addWhereFld('rev_user_text', $params['user']);
@@ -448,6 +448,6 @@ class ApiQueryRevisions extends ApiQueryBase {
 	}
 
 	public function getVersion() {
-		return __CLASS__ . ': $Id: ApiQueryRevisions.php 44719 2008-12-17 16:34:01Z catrope $';
+		return __CLASS__ . ': $Id: ApiQueryRevisions.php 48126 2009-03-07 13:13:45Z catrope $';
 	}
 }

@@ -58,7 +58,7 @@ class ApiPatrol extends ApiBase {
 		$retval = RecentChange::markPatrolled($params['rcid']);
 			
 		if($retval)
-			$this->dieUsageMsg(current($retval));
+			$this->dieUsageMsg(reset($retval));
 		
 		$result = array('rcid' => $rc->getAttribute('rc_id'));
 		ApiQueryBase::addTitleInfo($result, $rc->getTitle());
@@ -94,6 +94,6 @@ class ApiPatrol extends ApiBase {
 	}
 
 	public function getVersion() {
-		return __CLASS__ . ': $Id: ApiPatrol.php 42548 2008-10-25 14:04:43Z tstarling $';
+		return __CLASS__ . ': $Id: ApiPatrol.php 48123 2009-03-07 13:02:30Z catrope $';
 	}
 }

@@ -59,7 +59,7 @@ class ApiProtect extends ApiBase {
 		$errors = $titleObj->getUserPermissionsErrors('protect', $wgUser);
 		if($errors)
 			// We don't care about multiple errors, just report one of them
-			$this->dieUsageMsg(current($errors));
+			$this->dieUsageMsg(reset($errors));
 
 		$expiry = (array)$params['expiry'];
 		if(count($expiry) != count($params['protections']))
@@ -169,6 +169,6 @@ class ApiProtect extends ApiBase {
 	}
 
 	public function getVersion() {
-		return __CLASS__ . ': $Id: ApiProtect.php 44426 2008-12-10 22:39:41Z catrope $';
+		return __CLASS__ . ': $Id: ApiProtect.php 48123 2009-03-07 13:02:30Z catrope $';
 	}
 }

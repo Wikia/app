@@ -25,8 +25,10 @@ release due to the discovery of serious problems with the schema. We expect to
 fix this problem for the release of 1.15.0. 
 
 == Changes since 1.14.0 ==
+* (bug 17737) Fixed russian URLs for Special:BookSources
 * (bug 17713) Using links with only an anchor no longer add an dummy entry in
   the pagelinks table
+* (bug 17897) Fixed string offset error in <pre> tags
 
 == Changes since 1.14.0rc1 ==
 
@@ -89,6 +91,8 @@ fix this problem for the release of 1.15.0.
 * The 'BeforeWatchlist' hook has been removed due to internal changes in
   Special:Watchlist. 'SpecialWatchlistQuery' should now be used by extensions
   to customize the watchlist database query.
+* $wgFixDoubleRedirects was added for enabling/disabling of double redirect
+  fixing.
 
 
 === Migrated extensions ===
@@ -611,6 +615,7 @@ The following extensions are migrated into MediaWiki 1.14:
   incorrectly
 * (bug 15261, 16262) API no longer outputs invalid UTF-8
 * Fix broken list=alllinks paging and make alunique actually work
+* (bug 17703) Error code and error info were switched for some errors
 
 === Languages updated in 1.14 ===
 
