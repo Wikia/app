@@ -236,6 +236,7 @@ class WikiaReplicateImages {
 				$flags = $flags | $server["flag"];
 			}
 		}
+		return $flag;
 	}
 }
 
