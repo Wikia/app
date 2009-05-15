@@ -822,16 +822,14 @@ JAVASCRIPT;
 		var mapIcons = {};
 
 		function addLoadEvent(func) {
-			var oldonload = window.onload;
-			if (typeof oldonload == 'function') {
-				window.onload	= function() {
-					oldonload();
-					func();
-				};
-				} else {
-					window.onload = func;
-				}
+			if (skin == 'monaco') {
+				wgAfterContentAndJS.push(function() {
+					addOnloadHook(func);
+				});
+			} else {
+				wgAfterContentAndJS.push(func);
 			}
+		}
 JAVASCRIPT;
 
 		// replace multiple spaces with a single space and strip newlines and tabs (make sure no tabs
