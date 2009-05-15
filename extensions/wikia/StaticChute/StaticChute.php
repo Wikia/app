@@ -33,7 +33,6 @@ class StaticChute {
 			'common/jquery/jquery-1.3.2.min.js',
 			'common/jquery/jquery.json-1.3.min.js',
 			'common/jquery/jquery.cookies.2.0.1.min.js',
-			'common/jquery/jquery.lazyloader.js',
 			'common/jquery/jquery.wikia.js',
 
 			'common/ajax.js',
@@ -67,7 +66,6 @@ class StaticChute {
 			'common/jquery/jquery-1.3.2.min.js',
 			'common/jquery/jquery.json-1.3.min.js',
 			'common/jquery/jquery.cookies.2.0.1.min.js',
-			'common/jquery/jquery.lazyloader.js',
 			'common/jquery/jquery.wikia.js',
 
 			'common/ajax.js',
@@ -100,7 +98,6 @@ class StaticChute {
 			'common/jquery/jquery-1.3.2.min.js',
 			'common/jquery/jquery.json-1.3.min.js',
 			'common/jquery/jquery.cookies.2.0.1.min.js',
-			'common/jquery/jquery.lazyloader.js',
 			'common/jquery/jquery.wikia.js',
 
 			'common/ajax.js',
