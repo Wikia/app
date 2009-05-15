@@ -15,7 +15,7 @@ CREATE TABLE `page_vote` (
   `article_id` int(8) unsigned NOT NULL,
   `user_id` int(5) unsigned NOT NULL,
   `vote` int(2) NOT NULL,
-  `ip` varchar(32) NOT NULL,1750
+  `ip` varchar(32) NOT NULL,
   `time` datetime NOT NULL,
   `unique_id` varchar(32) default NULL,
   KEY `user_id` (`user_id`,`article_id`),
