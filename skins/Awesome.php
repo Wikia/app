@@ -973,14 +973,20 @@ EOS;
 	 */
 	private function getReferencesLinks(&$tpl) {
 		wfProfileIn( __METHOD__ );
-		global $wgStylePath, $wgStyleVersion, $wgMergeStyleVersionCSS, $wgExtensionsPath, $wgContLang;
-		$js = $css = $cssstyle = $allinoneCSS = array();
+		global $wgStylePath, $wgStyleVersion, $wgExtensionsPath, $wgContLang;
+		$js = $css = $cssstyle = array();
 
 		// CSS - begin
 
 		// merged CSS - use StaticChute
 		$StaticChute = new StaticChute('css');
-		$allinoneCSS[] = array('url' => $StaticChute->getChuteUrlForPackage('awesome_css') );
+		if ($this->allinone) {
+			$url = htmlspecialchars( $StaticChute->getChuteUrlForPackage('awesome_css') );
+			$tpl->set('mergedCSS', "\n\t\t<!-- merged CSS -->\n\t\t<link rel=\"stylesheet\" type=\"text/css\" href=\"{$url}\" />\n");
+		}
+		else {
+			$tpl->set('mergedCSS', $StaticChute->getChuteHtmlForPackage('awesome_css') );
+		}
 
 		if(isset($this->themename)) {
 			if($this->themename == 'custom') {
@@ -1030,7 +1036,7 @@ EOS;
 		// JS - end
 
 		wfProfileOut( __METHOD__ );
-		return array('js' => $js, 'css' => $css, 'cssstyle' => $cssstyle, 'allinone_css' => $allinoneCSS);
+		return array('js' => $js, 'css' => $css, 'cssstyle' => $cssstyle);
 	}
 
 	/**
@@ -1318,34 +1324,7 @@ class AwesomeTemplate extends QuickTemplate {
 		<title><?php $this->text('pagetitle') ?></title>
 		<?php print Skin::makeGlobalVariablesScript( $this->data ); ?>
 <?php
-	// now let's load CSS files (using @import) / allinone.css (using <link>)
-	if(empty($wgAllInOne)) {
-		$wgAllInOne = false;
-	}
-	$allInOne = $wgRequest->getBool('allinone', $wgAllInOne);
-
-	if (!$allInOne) {
-?>
-		<style type="text/css">/*<![CDATA[*/
-<?php
-		// load CSS files using @import (trac #3432)
-		foreach($this->data['references']['allinone_css'] as $css) {
-?>
-			@import "<?= $css['url'] ?>";
-<?php
-		}
-?>
-		/*]]>*/</style>
-<?php
-	}
-	else {
-		// load allinone.css using <link> tag
-		foreach($this->data['references']['allinone_css'] as $css) {
-?>
-		<link rel="stylesheet" type="text/css" href="<?= $css['url'] ?>" />
-<?php
-		}
-	}
+	$this->html('mergedCSS');
 
 	foreach($this->data['references']['css'] as $css) {
 ?>
