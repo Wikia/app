@@ -189,25 +189,7 @@ class ThumbnailImage extends MediaTransformOutput {
 				$linkAttribs = array('refid' => $options['refid']);
 			}
 		}
-
-		// Wikia: macbre - lazy loading of images
-		global $wgWysiwygParserEnabled, $wgImagesLazyLoading, $wgStylePath;
-
-		if ( !empty($options['lazy-load']) &&  empty($wgWysiwygParserEnabled) && !empty($wgImagesLazyLoading) ) {
-			// original image
-			$img = Xml::element( 'img', $attribs );
-			$s = Xml::openElement( 'noscript', array('title' => $this->url) ) . $img . Xml::closeElement( 'noscript' );
-
-			// image for lazy loading
-			$attribs['class'] = 'lazyload';
-			$attribs['src'] = $wgStylePath . '/common/images/gray.png'; 
-			$s .= Xml::element( 'img', $attribs );
-		}
-		else {
-			$s = Xml::element( 'img', $attribs );
-		}
-
-		return $this->linkWrap( $linkAttribs, $s );
+		return $this->linkWrap( $linkAttribs, Xml::element( 'img', $attribs ) );
 	}
 
 }
