@@ -5,6 +5,7 @@ class StaticChute {
 	public $fileType; // js|css|html
 	public $supportedFileTypes = array('js', 'css', 'html');
 	public $minify = true;
+	public $httpCache = true;
 	public $bytesIn = 0;
 	public $bytesOut = 0;
 
@@ -24,6 +25,11 @@ class StaticChute {
 
 	private function generateConfig(){
 		$widgetsAssets = $this->getWidgetsAssets();
+
+		if (isset($_GET['allinone'])){
+			$this->httpCache = false;
+			$this->minify = false;
+		}
 
 		$this->config = array();
 		// As we convert other skins, bring their config here from MergeFiles
@@ -399,13 +405,13 @@ class StaticChute {
 
 
 		$ifModSince=getenv('HTTP_IF_MODIFIED_SINCE'); 
-		if (!empty($ifModSince) && date_default_timezone_set('UTC') && $latestMod <= strtotime($ifModSince)){
+		if ($this->httpCache && !empty($ifModSince) && date_default_timezone_set('UTC') && $latestMod <= strtotime($ifModSince)){
 			// Times match, files have not changed since their last request. 
 			header('HTTP/1.1 304 Not Modified');
 			return true;
 		}
 
-		if (!empty($_GET['maxmod']) && date_default_timezone_set('UTC')){
+		if ($this->httpCache && !empty($_GET['maxmod']) && date_default_timezone_set('UTC')){
 			// Since we have a timestamp that will change with the url, set an Expires header
 			// far into the future. This will make it so that the browsers won't even check this
 			// url to see if the files have changed, saving an http request.
@@ -464,6 +470,3 @@ class StaticChute {
 	}
 
 }
-$StaticChute = new StaticChute('js');
-echo $StaticChute->getChuteHtmlForPackage('awesome_anon_everything_else_js');
-exit;
