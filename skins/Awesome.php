@@ -977,15 +977,10 @@ EOS;
 		$js = $css = $cssstyle = $allinoneCSS = array();
 
 		// CSS - begin
-/*
-		$cssTemp = GetReferences('awesome_css', true);
-		foreach($cssTemp as $cssFile) {
-			$allinoneCSS[] = array('url' => $wgStylePath.'/'.$cssFile.'?'.$wgMergeStyleVersionCSS);
-		}
-*/
+
 		// merged CSS - use StaticChute
 		$StaticChute = new StaticChute('css');
-		$allinoneCSS[] = array('url' => htmlspecialchars( $StaticChute->getChuteUrlForPackage('awesome_css') ));
+		$allinoneCSS[] = array('url' => $StaticChute->getChuteUrlForPackage('awesome_css') );
 
 		if(isset($this->themename)) {
 			if($this->themename == 'custom') {
