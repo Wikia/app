@@ -3,7 +3,6 @@
 class StaticChute {
 
 	public $fileType; // js|css|html
-	public $package;
 	public $supportedFileTypes = array('js', 'css', 'html');
 	public $minify = true;
 	public $compress = true;
@@ -176,9 +175,6 @@ class StaticChute {
 						$out[] = realpath($basedir . '/' . $f);
 					}
 				}
-
-				// temporary hack to serve print CSS
-				$this->package = $package;
 			}
 
 		} else if (!empty($args['files'])){
@@ -231,6 +227,9 @@ class StaticChute {
 		}
 		$this->allinone = $wgRequest->getBool('allinone', $wgAllInOne);
 
+		// detect whether user requested printable version of the page
+		$this->printable = $wgRequest->getBool('printable');
+
 		if ($this->allinone) {
 			// get URL to StaticChute
 			$urls = array($this->getChuteUrlForPackage($package, $type));
@@ -247,6 +246,11 @@ class StaticChute {
 
 		if ($type == 'css') {
 			$media = $this->getPackageMediaType($package);
+
+			if ($media == 'print' && $this->printable) {
+				$media = '';
+			}
+
 			if (!empty($media)) {
 				$media = " media=\"{$media}\"";
 			}
@@ -478,14 +482,6 @@ class StaticChute {
 		if (empty($out)){
 			return false;
 		} else {
-			// properly serve print CSS
-			if ($this->fileType == 'css') {
-				$media = $this->getPackageMediaType($this->package);
-				if (!empty($media)) {
-					$out = "@media {$media} {{$out}\n}";
-				}
-			}
-
 			if ($this->compress){
 				ob_start("ob_gzhandler");
 			}
