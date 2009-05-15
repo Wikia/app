@@ -963,7 +963,7 @@ EOS;
 
 		// merged CSS - use StaticChute
 		$StaticChute = new StaticChute('css');
-		$tpl->set('mergedCSS', "\n\t\t" . $StaticChute->getChuteHtmlForPackage('awesome_css') . "\n" );
+		$tpl->set('mergedCSS', "\n\t\t" . $StaticChute->getChuteHtmlForPackage('awesome_css') . "\n\t\t" . $StaticChute->getChuteHtmlForPackage('awesome_css_print') . "\n" );
 
 		if(isset($this->themename)) {
 			if($this->themename == 'custom') {
