@@ -27,11 +27,6 @@ class StaticChute {
 	private function generateConfig(){
 		$widgetsAssets = $this->getWidgetsAssets();
 
-		if (isset($_GET['allinone'])){
-			$this->httpCache = false;
-			$this->minify = false;
-		}
-
 		$this->config = array();
 		// As we convert other skins, bring their config here from MergeFiles
 		$this->config['awesome_anon_article_js'] = array(
@@ -222,22 +217,44 @@ class StaticChute {
 		if ($type === null){
 			$type = $this->fileType;
 		}
-	
-		$urls = $this->config[$package];
-		$prefix = $wgStylePath . '/';
+
+		// detect whether to use merged JS/CSS files
+		global $wgAllInOne, $wgRequest;
+		if(empty($wgAllInOne)) {
+			$wgAllInOne = false;
+		}
+		$this->allinone = $wgRequest->getBool('allinone', $wgAllInOne);
+
+		if ($this->allinone) {
+			$urls = array($this->getChuteUrlForPackage($package, $type));
+			$prefix = '';
+			$cb = '';
+		}
+		else {
+			global $wgStyleVersion;
+			$urls = $this->config[$package];
+			$prefix = $wgStylePath . '/';
+			$cb = "?{$wgStyleVersion}";
+		}
 
 		$html = '';
 		foreach ($urls as $u){
+			$u = htmlspecialchars($u);
 			if ($type == "css"){
-				$html .= "\n\t\t\t".'@import "' . $prefix . $u . '?' . $wgStyleVersion  . '";';
+				if ($this->allinone) {
+					$html .= "<link rel=\"stylesheet\" type=\"text/css\" href=\"". $prefix . $u ."\" />";
+				}
+				else {
+					$html .= "\n\t\t\t".'@import "' . $prefix . $u . $cb . '";';
+				}
 			} else if ($type == "js"){
-				$html .= '<script type="text/javascript" src="' . $prefix . $u . '?' . $wgStyleVersion . '"></script>';
+				$html .= '<script type="text/javascript" src="' . $prefix . $u . $cb . '"></script>';
 			}
 		}
 
-		// fix IE issue with limited number of CSS <link> tags on page
-		if ($type == 'css') {
-			$html = "\t\t<style type=\"text/css\">{$html}\n\t\t</style>\n";
+		// fix IE issue with limited number of CSS <link> tags on page (when using separated CSS files)
+		if ($type == 'css' && !$this->allinone) {
+			$html = "<style type=\"text/css\">{$html}\n\t\t</style>\n";
 		}
 	
 		return $html;
