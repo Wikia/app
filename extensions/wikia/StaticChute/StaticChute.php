@@ -3,6 +3,7 @@
 class StaticChute {
 
 	public $fileType; // js|css|html
+	public $package;
 	public $supportedFileTypes = array('js', 'css', 'html');
 	public $minify = true;
 	public $compress = true;
@@ -131,12 +132,17 @@ class StaticChute {
 			'awesome/css/footer.css',
 			'awesome/css/star_rating.css',
 			'awesome/css/ny.css',
-			'awesome/css/print.css',
 			'../extensions/wikia/EditSimilar/EditSimilar.css',
 			'../extensions/wikia/Blogs/css/Blogs.css',
 		);
 		$this->config['awesome_css'] = array_merge($this->config['awesome_css'], $widgetsAssets['css']);
-		
+	
+		// printable CSS
+		$this->config['awesome_css_print'] = array(
+			'awesome/css/print.css',
+			'common/commonPrint.css',
+		);
+	
 	}
 
 
@@ -170,6 +176,9 @@ class StaticChute {
 						$out[] = realpath($basedir . '/' . $f);
 					}
 				}
+
+				// temporary hack to serve print CSS
+				$this->package = $package;
 			}
 
 		} else if (!empty($args['files'])){
@@ -223,24 +232,33 @@ class StaticChute {
 		$this->allinone = $wgRequest->getBool('allinone', $wgAllInOne);
 
 		if ($this->allinone) {
+			// get URL to StaticChute
 			$urls = array($this->getChuteUrlForPackage($package, $type));
 			$prefix = '';
 			$cb = '';
 		}
 		else {
+			// include files separately
 			global $wgStyleVersion;
 			$urls = $this->config[$package];
 			$prefix = $wgStylePath . '/';
 			$cb = "?{$wgStyleVersion}";
 		}
 
+		if ($type == 'css') {
+			$media = $this->getPackageMediaType($package);
+			if (!empty($media)) {
+				$media = " media=\"{$media}\"";
+			}
+		}
+
 		$html = '';
 		foreach ($urls as $u){
 			$u = htmlspecialchars($u);
 			if ($type == "css"){
-				$html .= "<link rel=\"stylesheet\" type=\"text/css\" href=\"". $prefix . $u . $cb . "\" />";
+				$html .= "<link rel=\"stylesheet\" type=\"text/css\" href=\"{$prefix}{$u}{$cb}\"{$media} />";
 			} else if ($type == "js"){
-				$html .= '<script type="text/javascript" src="' . $prefix . $u . $cb . '"></script>';
+				$html .= "<script type=\"text/javascript\" src=\"{$prefix}{$u}{$cb}\"></script>";
 			}
 		}
 
@@ -287,8 +305,16 @@ class StaticChute {
 		return array('js' => $js, 'css' => $css);
 	}       
 
+	private function getPackageMediaType($package) {
+		if (substr($package, -6) == '_print') {
+			$media = 'print';
+		}
+		else {
+			$media = '';
+		}
+		return $media;
+	}
 
-	
 	public function minifyHtmlData($html){
 		// Taking the easy, safe path. This could be improved if you want to go through the
 		// effort/expense/risk of processing the DOM. For now just strip leading space on each line
@@ -452,6 +478,14 @@ class StaticChute {
 		if (empty($out)){
 			return false;
 		} else {
+			// properly serve print CSS
+			if ($this->fileType == 'css') {
+				$media = $this->getPackageMediaType($this->package);
+				if (!empty($media)) {
+					$out = "@media {$media} {{$out}\n}";
+				}
+			}
+
 			if ($this->compress){
 				ob_start("ob_gzhandler");
 			}
