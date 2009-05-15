@@ -1,116 +1,4 @@
 <?php
-$STATIC_CHUTE_CONFIG = array();
-
-function getWidgetsAssets() {
-        $js = $css = array();
-        $dir = 'extensions/wikia/WidgetFramework/Widgets/';
-        if(is_dir($dir)) {
-                if($dh = opendir($dir)) {
-                        while(($file = readdir($dh)) !== false) {
-                                if(filetype($dir.$file) == 'dir') {
-                                        if(file_exists($dir.$file.'/'.$file.'.js')) {
-                                                $js[] = '../'.$dir.$file.'/'.$file.'.js';
-                                        }
-                                        if(file_exists($dir.$file.'/'.$file.'.css')) {
-                                                $css[] = '../'.$dir.$file.'/'.$file.'.css';
-                                        }
-                                }
-                        }
-                }
-                closedir($dh);
-        }
-        return array('js' => $js, 'css' => $css);
-}       
-
-$widgetsAssets = getWidgetsAssets();
-
-// As we convert other skins, bring their config here from MergeFiles
-$STATIC_CHUTE_CONFIG['awesome_anon_article_js'] = array(
-	'common/jquery/jquery-1.3.2.min.js',
-	'common/jquery/jquery.json-1.3.min.js',
-	'common/jquery/jquery.cookies.2.0.1.min.js',
-	'common/jquery/jquery.wikia.js',
-
-	'common/ajax.js',
-	'common/urchin.js',
-	'common/wikibits.js',
-	'awesome/js/tracker.js',
-	'common/tracker.js',
-	'awesome/js/main.js',
-	'common/widgets/js/widgetsConfig.js',
-	'common/widgets/js/widgetsFramework.js',
-	'../extensions/wikia/ProblemReports/js/ProblemReports-loader.js',
-	'../extensions/wikia/AdEngine/AdEngine.js',
-	'../extensions/wikia/Userengagement/Userengagement.js',
-	'../extensions/wikia/TieDivLibrary/TieDivLibrary.js',
-	'common/contributed.js',
-);
-$STATIC_CHUTE_CONFIG['awesome_anon_article_js'] = array_merge($STATIC_CHUTE_CONFIG['awesome_anon_article_js'], $widgetsAssets['js']);
-
-$STATIC_CHUTE_CONFIG['awesome_loggedin_js'] = array(
-        'common/yui_2.5.2/utilities/utilities.js',
-        'common/yui_2.5.2/cookie/cookie-beta.js',
-        'common/yui_2.5.2/container/container.js',
-        'common/yui_2.5.2/autocomplete/autocomplete.js',
-        'common/yui_2.5.2/animation/animation-min.js',
-        'common/yui_2.5.2/logger/logger.js',
-        'common/yui_2.5.2/menu/menu.js',
-        'common/yui_2.5.2/tabview/tabview.js',
-        'common/yui_extra/tools-min.js',
-        'common/yui_extra/carousel-min.js',
-
-        'common/jquery/jquery-1.3.2.min.js',
-        'common/jquery/jquery.json-1.3.min.js',
-        'common/jquery/jquery.cookies.2.0.1.min.js',
-        'common/jquery/jquery.wikia.js',
-
-        'common/ajax.js',
-        'common/urchin.js',
-        'common/wikibits.js',
-        'awesome/js/tracker.js',
-        'common/tracker.js',
-        'common/ajaxwatch.js',
-        'awesome/js/main.js',
-        'common/widgets/js/widgetsConfig.js',
-        'common/widgets/js/widgetsFramework.js',
-        '../extensions/wikia/ProblemReports/js/ProblemReports-loader.js',
-        '../extensions/wikia/AdEngine/AdEngine.js',
-        '../extensions/wikia/TieDivLibrary/TieDivLibrary.js',
-        'common/contributed.js',
-);
-$STATIC_CHUTE_CONFIG['awesome_loggedin_js'] = array_merge($STATIC_CHUTE_CONFIG['awesome_loggedin_js'], $widgetsAssets['js']);
-
-$STATIC_CHUTE_CONFIG['awesome_anon_everything_else_js'] = array(
-        'common/yui_2.5.2/utilities/utilities.js',
-        'common/yui_2.5.2/cookie/cookie-beta.js',
-        'common/yui_2.5.2/container/container.js',
-        'common/yui_2.5.2/autocomplete/autocomplete.js',
-        'common/yui_2.5.2/animation/animation-min.js',
-        'common/yui_2.5.2/logger/logger.js',
-        'common/yui_2.5.2/menu/menu.js',
-        'common/yui_2.5.2/tabview/tabview.js',
-        'common/yui_extra/tools-min.js',
-
-        'common/jquery/jquery-1.3.2.min.js',
-        'common/jquery/jquery.json-1.3.min.js',
-        'common/jquery/jquery.cookies.2.0.1.min.js',
-        'common/jquery/jquery.wikia.js',
-
-        'common/ajax.js',
-        'common/urchin.js',
-        'common/wikibits.js',
-        'awesome/js/tracker.js',
-        'common/tracker.js',
-        'awesome/js/main.js',
-        'common/widgets/js/widgetsConfig.js',
-        'common/widgets/js/widgetsFramework.js',
-        '../extensions/wikia/ProblemReports/js/ProblemReports-loader.js',
-        '../extensions/wikia/AdEngine/AdEngine.js',
-        '../extensions/wikia/Userengagement/Userengagement.js',
-        '../extensions/wikia/TieDivLibrary/TieDivLibrary.js',
-        'common/contributed.js',
-);
-$STATIC_CHUTE_CONFIG['awesome_anon_everything_else_js'] = array_merge($STATIC_CHUTE_CONFIG['awesome_anon_everything_else_js'], $widgetsAssets['js']);
 
 class StaticChute {
 
@@ -120,6 +8,8 @@ class StaticChute {
 	public $bytesIn = 0;
 	public $bytesOut = 0;
 
+	public $config = array();
+
 	public function __construct($fileType){
 		if (! in_array($fileType, $this->supportedFileTypes)){
 			trigger_error("Unsupported file type: $fileType", E_USER_ERROR);
@@ -128,6 +18,101 @@ class StaticChute {
 
 		$this->fileType = $fileType;
 
+		$this->generateConfig();
+	}
+
+
+	private function generateConfig(){
+		$widgetsAssets = $this->getWidgetsAssets();
+
+		$this->config = array();
+		// As we convert other skins, bring their config here from MergeFiles
+		$this->config['awesome_anon_article_js'] = array(
+			'common/jquery/jquery-1.3.2.min.js',
+			'common/jquery/jquery.json-1.3.min.js',
+			'common/jquery/jquery.cookies.2.0.1.min.js',
+			'common/jquery/jquery.wikia.js',
+
+			'common/ajax.js',
+			'common/urchin.js',
+			'common/wikibits.js',
+			'awesome/js/tracker.js',
+			'common/tracker.js',
+			'awesome/js/main.js',
+			'common/widgets/js/widgetsConfig.js',
+			'common/widgets/js/widgetsFramework.js',
+			'../extensions/wikia/ProblemReports/js/ProblemReports-loader.js',
+			'../extensions/wikia/AdEngine/AdEngine.js',
+			'../extensions/wikia/Userengagement/Userengagement.js',
+			'../extensions/wikia/TieDivLibrary/TieDivLibrary.js',
+			'common/contributed.js',
+		);
+		$this->config['awesome_anon_article_js'] = array_merge($this->config['awesome_anon_article_js'], $widgetsAssets['js']);
+
+		$this->config['awesome_loggedin_js'] = array(
+			'common/yui_2.5.2/utilities/utilities.js',
+			'common/yui_2.5.2/cookie/cookie-beta.js',
+			'common/yui_2.5.2/container/container.js',
+			'common/yui_2.5.2/autocomplete/autocomplete.js',
+			'common/yui_2.5.2/animation/animation-min.js',
+			'common/yui_2.5.2/logger/logger.js',
+			'common/yui_2.5.2/menu/menu.js',
+			'common/yui_2.5.2/tabview/tabview.js',
+			'common/yui_extra/tools-min.js',
+			'common/yui_extra/carousel-min.js',
+
+			'common/jquery/jquery-1.3.2.min.js',
+			'common/jquery/jquery.json-1.3.min.js',
+			'common/jquery/jquery.cookies.2.0.1.min.js',
+			'common/jquery/jquery.wikia.js',
+
+			'common/ajax.js',
+			'common/urchin.js',
+			'common/wikibits.js',
+			'awesome/js/tracker.js',
+			'common/tracker.js',
+			'common/ajaxwatch.js',
+			'awesome/js/main.js',
+			'common/widgets/js/widgetsConfig.js',
+			'common/widgets/js/widgetsFramework.js',
+			'../extensions/wikia/ProblemReports/js/ProblemReports-loader.js',
+			'../extensions/wikia/AdEngine/AdEngine.js',
+			'../extensions/wikia/TieDivLibrary/TieDivLibrary.js',
+			'common/contributed.js',
+		);
+		$this->config['awesome_loggedin_js'] = array_merge($this->config['awesome_loggedin_js'], $widgetsAssets['js']);
+
+		$this->config['awesome_anon_everything_else_js'] = array(
+			'common/yui_2.5.2/utilities/utilities.js',
+			'common/yui_2.5.2/cookie/cookie-beta.js',
+			'common/yui_2.5.2/container/container.js',
+			'common/yui_2.5.2/autocomplete/autocomplete.js',
+			'common/yui_2.5.2/animation/animation-min.js',
+			'common/yui_2.5.2/logger/logger.js',
+			'common/yui_2.5.2/menu/menu.js',
+			'common/yui_2.5.2/tabview/tabview.js',
+			'common/yui_extra/tools-min.js',
+
+			'common/jquery/jquery-1.3.2.min.js',
+			'common/jquery/jquery.json-1.3.min.js',
+			'common/jquery/jquery.cookies.2.0.1.min.js',
+			'common/jquery/jquery.wikia.js',
+
+			'common/ajax.js',
+			'common/urchin.js',
+			'common/wikibits.js',
+			'awesome/js/tracker.js',
+			'common/tracker.js',
+			'awesome/js/main.js',
+			'common/widgets/js/widgetsConfig.js',
+			'common/widgets/js/widgetsFramework.js',
+			'../extensions/wikia/ProblemReports/js/ProblemReports-loader.js',
+			'../extensions/wikia/AdEngine/AdEngine.js',
+			'../extensions/wikia/Userengagement/Userengagement.js',
+			'../extensions/wikia/TieDivLibrary/TieDivLibrary.js',
+			'common/contributed.js',
+		);
+		$this->config['awesome_anon_everything_else_js'] = array_merge($this->config['awesome_anon_everything_else_js'], $widgetsAssets['js']);
 	}
 
 
@@ -149,17 +134,15 @@ class StaticChute {
  	 * 'files' is a csv separated list of files to include from 'dir' (default /)
  	 */
 	public function getFileList($args){
-		global $STATIC_CHUTE_CONFIG;
-		$C = $STATIC_CHUTE_CONFIG;
 		$out = array();
 
 		if (!empty($args['packages'])){
 			$basedir = realpath(dirname(__FILE__) . '/../../../skins/');
 			foreach(split(',', $args['packages']) as $package){
-				if (empty($C[$package])){
+				if (empty($this->config[$package])){
 					continue;
 				} else {
-					foreach ($C[$package] as $f){
+					foreach ($this->config[$package] as $f){
 						$out[] = realpath($basedir . '/' . $f);
 					}
 				}
@@ -228,6 +211,28 @@ class StaticChute {
 		return $prefix . '?' .
 			http_build_query(array('type'=> $type, 'packages'=> $package, 'maxmod'=> $latestMod));
 	}
+
+	private function getWidgetsAssets() {
+		$js = $css = array();
+		$dir = 'extensions/wikia/WidgetFramework/Widgets/';
+		if(is_dir($dir)) {
+			if($dh = opendir($dir)) {
+				while(($file = readdir($dh)) !== false) {
+					if(filetype($dir.$file) == 'dir') {
+						if(file_exists($dir.$file.'/'.$file.'.js')) {
+							$js[] = '../'.$dir.$file.'/'.$file.'.js';
+						}
+						if(file_exists($dir.$file.'/'.$file.'.css')) {
+							$css[] = '../'.$dir.$file.'/'.$file.'.css';
+						}
+					}
+				}
+			}
+			closedir($dh);
+		}
+		return array('js' => $js, 'css' => $css);
+	}       
+
 
 	
 	public function minifyHtmlData($html){
