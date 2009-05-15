@@ -229,12 +229,17 @@ class StaticChute {
 		$html = '';
 		foreach ($urls as $u){
 			if ($type == "css"){
-				$html .= '<link type="text/css" href="' . $prefix . $u . '?' . $wgStyleVersion  . '"/>' . "\n";
+				$html .= "\n\t\t\t".'@import "' . $prefix . $u . '?' . $wgStyleVersion  . '";';
 			} else if ($type == "js"){
 				$html .= '<script type="text/javascript" src="' . $prefix . $u . '?' . $wgStyleVersion . '"></script>';
 			}
 		}
-			
+
+		// fix IE issue with limited number of CSS <link> tags on page
+		if ($type == 'css') {
+			$html = "\t\t<style type=\"text/css\">{$html}\n\t\t</style>\n";
+		}
+	
 		return $html;
 	}
 
