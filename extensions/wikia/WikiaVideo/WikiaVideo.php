@@ -18,7 +18,7 @@ $wgHooks['SpecialWhatlinkshere::beforeImageQuery'][] = 'WikiaVideoWhatlinkshereB
 $wgHooks['UndeleteForm::showRevision'][] = 'WikiaVideoSpecialUndeleteSwitchArchive';
 $wgHooks['UndeleteForm::showHistory'][] = 'WikiaVideoSpecialUndeleteSwitchArchive';
 $wgHooks['UndeleteForm::undelete'][] = 'WikiaVideoSpecialUndeleteSwitchArchive';
-$wgHooks['SpecialWantedFiles::getSQL'][] = 'WikiaVideoWantedFilesGetSQL';
+$wgHooks['WantedFiles::getSQL'][] = 'WikiaVideoWantedFilesGetSQL';
 
 $wgWikiaVideoGalleryId = 0;
 $wgWikiaVETLoaded = false;
@@ -32,8 +32,8 @@ function WikiaVideoWantedFilesGetSQL( $sql, $querypage, $name, $imagelinks, $pag
                                 il_to as title,
                                 COUNT(*) as value
                         FROM $imagelinks
-                        LEFT JOIN $page ON il_to = page_title
-                        WHERE page_title IS NOT NULL
+			LEFT JOIN $page ON il_to = page_title AND page_namespace = ". NS_FILE ."
+                        WHERE page_title IS NULL
                         GROUP BY il_to
                         ";
         return true;
