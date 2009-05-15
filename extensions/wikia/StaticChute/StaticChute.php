@@ -139,6 +139,7 @@ class StaticChute {
 			'awesome/css/footer.css',
 			'awesome/css/star_rating.css',
 			'awesome/css/ny.css',
+			'awesome/css/print.css',
 			'../extensions/wikia/EditSimilar/EditSimilar.css',
 			'../extensions/wikia/Blogs/css/Blogs.css',
 		);
