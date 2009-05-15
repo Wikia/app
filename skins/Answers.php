@@ -35,7 +35,8 @@ class SkinAnswers extends SkinMonaco {
 		parent::setupSkinUserCss( $out );
 
 		// Append to the default screen common & print styles...
-		$out->addStyle( 'answers/main.css', 'screen' );
+#		$out->addStyle( 'answers/main.css', 'screen' );
+#		...this file does not exist!
 	}
 }
 
