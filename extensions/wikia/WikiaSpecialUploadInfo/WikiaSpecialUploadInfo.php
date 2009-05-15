@@ -28,14 +28,14 @@ function wfSpecialUploadPutInformation( $uploadForm ) {
 	$fullPath = $uploadForm->mLocalFile->getFullPath();
 
 	$aHistory = $uploadForm->mLocalFile->getHistory(1);
-	$oldFileName = "";
+	$oldFileName = false;
 	if ( isset($aHistory) && isset($aHistory[0]) ) {
 		$oOldLocalFile = $aHistory[0];
 		if ( isset($oOldLocalFile) && ($oOldLocalFile instanceof OldLocalFile) ) {
 			$oldFileName = $oOldLocalFile->getArchiveName();
 		}
 	}
-	
+
 	if ( !empty($oldFileName) ) {
 		$oldFileName = sprintf("%s/%s", $uploadForm->mLocalFile->getArchivePath(), $oldFileName);
 	}
@@ -44,14 +44,14 @@ function wfSpecialUploadPutInformation( $uploadForm ) {
 	$dbw->insert(
 		"upload_log",
 		array(
-			"up_id" 		=> $title->getArticleId(),
-			"up_path" 		=> $fullPath,
-			"up_imgpath"	=> $relPath,
-			"up_flags"		=> 0,
-			"up_title" 		=> $mTitle,
-			"up_created"	=> wfTimestampNow(),
-			"up_city_id"	=> $wgCityId,
-			"up_old_path"	=> $oldFileName
+			"up_id"       => $title->getArticleId(),
+			"up_path"     => $fullPath,
+			"up_imgpath"  => $relPath,
+			"up_flags"    => 0,
+			"up_title"    => $mTitle,
+			"up_created"  => wfTimestampNow(),
+			"up_city_id"  => $wgCityId,
+			"up_old_path" => $oldFileName
 		),
 		__METHOD__
 	);
