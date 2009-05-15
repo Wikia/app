@@ -213,24 +213,21 @@ class StaticChute {
 	}
 
 	public function getChuteHtmlForPackage($package, $type = null){
+		global $wgStylePath;
+
 		if ($type === null){
 			$type = $this->fileType;
 		}
 	
-		if (isset($_GET['allinone'])){
-			$urls = $this->config[$package];
-			$prefix = '/skins/';
-		} else {
-			$urls = array($this->getChuteUrlForPackage($package, $type));
-			$prefix = '';
-		}
+		$urls = $this->config[$package];
+		$prefix = $wgStylePath;
 
 		$html = '';
 		foreach ($urls as $u){
 			if ($type == "css"){
 				$html .= '<link type="text/css" href="' . $prefix . $u . '"/>' . "\n";
 			} else if ($type == "js"){
-				$html .= '<script type="text/javascript" src="' . $prefix . $u . '"></script>' . "\n";
+				$html .= '<script type="text/javascript" src="' . $prefix . $u . '"></script>';
 			}
 		}
 			
