@@ -526,7 +526,15 @@ EOS;
 		$tpl->set('userlinks', $this->getUserLinks($tpl));
 
 		// marged JS files
-		$tpl->set('mergedJS', "\n\t\t<!-- merged JS -->\n\t\t" . ($wgUser->isLoggedIn() ? GetReferences("awesome_loggedin_js") : GetReferences("awesome_non_loggedin_js")) );
+		//$tpl->set('mergedJS', "\n\t\t<!-- merged JS -->\n\t\t" . ($wgUser->isLoggedIn() ? GetReferences("awesome_loggedin_js") : GetReferences("awesome_non_loggedin_js")) );
+
+		// get the right package from StaticChute
+		$StaticChute = new StaticChute('js');
+
+		$package = 'awesome_loggedin_js';
+		$url = htmlspecialchars($StaticChute->getChuteUrlForPackage($package));
+
+		$tpl->set('mergedJS', "\n\t\t<!-- merged JS -->\n\t\t<script type=\"text/javascript\" src=\"{$url}\"></script>\n");
 
 		wfProfileOut( __METHOD__ );
 		return true;
