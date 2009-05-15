@@ -91,7 +91,7 @@ class WikiaReplicateImages {
 				 * just uploaded file
 				 */
 
-				Wikia::log( __CLASS__, "start", "====== copy {$Row->up_id}:{$Row->up_city_id}:{$Row->up_imgpath} created: {$Row->up_created} flags: {$Row->up_flags}" );
+				Wikia::log( __CLASS__, "start", "====== copy up_id:{$Row->up_id} city_id:{$Row->up_city_id} path:{$Row->up_imgpath} created:{$Row->up_created} flags:{$Row->up_flags}" );
 
 				foreach( $this->mServers as $name => $server ) {
 					/**
