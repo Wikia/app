@@ -15,7 +15,7 @@ CREATE TABLE `page_vote` (
   `article_id` int(8) unsigned NOT NULL,
   `user_id` int(5) unsigned NOT NULL,
   `vote` int(2) NOT NULL,
-  `ip` varchar(32) NOT NULL,
+  `ip` varchar(32) NOT NULL,1750
   `time` datetime NOT NULL,
   `unique_id` varchar(32) default NULL,
   KEY `user_id` (`user_id`,`article_id`),
@@ -67,149 +67,205 @@ class WikiaApiQueryVoteArticle extends WikiaApiQuery {
 		$ip = wfGetIP();
 		$browserId = $this->getBrowser();
 
-		try {
-		    $wgTopVoted = false;
-			if ( !empty($topvoted) ) {
-				$wgTopVoted = true;
-            }
-
-			$select_user_vote = "";
-			if ( !is_null($uservote) ) {
-				if ( empty($user_id) && empty($ip) )  {
-					throw new WikiaApiQueryError(2);
-				}
-
-				$select_user_vote = "select article_id as page_id, max(vote) as uservote from page_vote where IMPLODE and ";
-
-				if (! empty($user_id) ) {
-					$this->setCacheKey ($lcache_key, 'U', $user_id);
-					$select_user_vote .= " user_id = '$user_id' ";
-				} else {
-				    //$this->addWhereFld( "ip", $ip );
-					$select_user_vote .= " unique_id = '$browserId' ";
-					$this->setCacheKey ($lcache_key, 'UB', $browserId);
-				}
-				$select_user_vote .= " group by article_id";
-			}
-
-			$this->addTables( array("`page_vote` p1", "page") );
-			$add_fields = array('page_id', 'page_title', 'AVG(vote) as votesavg, max(time) as max_time');
-			$this->addFields( $add_fields );
-
-			$this->addWhere ( "page_id = article_id" );
-			if ( !is_null($page) ) {
+		if ( !is_null($page) ) {
+			# get votes for selected article 
+			try {
+				$this->addTables( array("page_vote") );
+				$add_fields = array('article_id as page_id', 'AVG(vote) as votesavg, max(time) as max_time');
+				$this->addFields( $add_fields );
 				if ( !$this->isInt($page) ) {
 					throw new WikiaApiQueryError(1);
 				}
 				$this->setCacheKey ($lcache_key, 'P', $page);
-				$this->addWhereFld( "page_id", $page );
-			}
+				$this->addWhereFld( "article_id", $page );
 
-			#---
-			if ( !empty($ctime) ) {
-				if ( !$this->isInt($ctime) ) {
-					throw new WikiaApiQueryError(1);
+				#---
+				if ( !empty($ctime) ) {
+					if ( !$this->isInt($ctime) ) {
+						throw new WikiaApiQueryError(1);
+					}
 				}
-			}
 
-			if ( $wgTopVoted ) { // show most voted articles
-				if (empty($uservote)) {
-					$this->setCacheKey ($lcache_key, 'O', "votesavg");
+				if ( !is_null($uservote) ) {
+					if ( !empty($user_id) ) {
+						$this->setCacheKey ($lcache_key, 'U', $user_id);
+						$this->addWhereFld( "user_id", $user_id );
+					} else {
+						$this->setCacheKey ($lcache_key, 'UB', $browserId);
+						$this->addWhereFld( "unique_id", $browserId );
+					}
+					$this->addFields ( array("max(vote) as uservote") );
 				}
-				$order = "votesavg DESC";
-			} else { // show last voted articles
-				if (empty($uservote)) {
-					$this->setCacheKey ($lcache_key, 'O', "time");
-				}
-				$order = "max(time) DESC";
-			}
 
-			#--- order by
-			$this->addOption( "ORDER BY", $order );
-			#--- group by
-			$this->addOption( "GROUP BY", "article_id" );
-
-			#--- limit
-			if ( !empty($limit)  ) {
-				if ( !$this->isInt($limit) ) {
-					throw new WikiaApiQueryError(1);
-				}
-				if (empty($uservote)) {
-					$this->setCacheKey ($lcache_key, 'L', $limit);
-				}
-				$this->addOption( "LIMIT", $limit );
-			}
-
-			#--- offset
-			if ( !empty($offset)  ) {
-				if ( !$this->isInt($offset) ) {
-					throw new WikiaApiQueryError(1);
-				}
-				if (empty($uservote)) {
-					$this->setCacheKey ($lcache_key, 'OF', $offset);
-				}
-				$this->addOption( "OFFSET", $offset );
-			}
-
-			$data = array();
-			// check data from cache ...
-			$cached = $this->getDataFromCache($lcache_key);
-			if (empty($cached)) {
-                #--- database instance - DB_SLAVE
-                $db =& $this->getDB();
-                $db->selectDB( (!defined(WIKIA_API_QUERY_DBNAME)) ? WIKIA_API_QUERY_DBNAME : $wgDBname );
-
-                if ( is_null($db) ) {
-                    throw new WikiaApiQueryError(0);
-                }
-                
-				$res = $this->select(__METHOD__);
-				while ($row = $db->fetchObject($res)) {
-					$data[$row->page_id] = array(
-						"id"			=> $row->page_id,
-						"title"			=> $row->page_title,
-						"votesavg"		=> $row->votesavg,
-					);
-					if ( isset($select_user_vote) && !empty($select_user_vote) ) {
-						$data[$row->page_id]["uservote"] = 0;
-					} 
-				}
-				$db->freeResult($res);
-
-				if ( !empty($data) && is_array($data) ) {
-					if (!empty($select_user_vote)) {
-						$dbr = wfGetDB( DB_SLAVE );
-
-						$pages = implode( ",", array_keys($data) );
-						$select_user_vote = str_replace("IMPLODE", " article_id in (".$pages.") ", $select_user_vote);
-						$oRes = $dbr->query($select_user_vote, __METHOD__);
-
-						while ( $oRow = $dbr->fetchObject( $oRes ) ) {
-							$data[$oRow->page_id]["uservote"] = $oRow->uservote;
+				$data = array();
+				// check data from cache ...
+				$cached = $this->getDataFromCache($lcache_key);
+				if (empty($cached)) {
+					#--- database instance - DB_SLAVE
+					$db =& $this->getDB();
+					$db->selectDB( (!defined(WIKIA_API_QUERY_DBNAME)) ? WIKIA_API_QUERY_DBNAME : $wgDBname );
+					if ( is_null($db) ) throw new WikiaApiQueryError(0);
+					$res = $this->select(__METHOD__);
+					while ($row = $db->fetchObject($res)) {
+						$oTitle = Title::newFromId($row->page_id);
+						if ($oTitle instanceof Title) {
+							$data[$row->page_id] = array(
+								"id"			=> $row->page_id,
+								"title"			=> $oTitle->getText(),
+								"votesavg"		=> $row->votesavg,
+							);
+							if (isset($row->uservote)) {
+								$data[$row->page_id]["uservote"] = $row->uservote;
+							}
+							ApiResult::setContent( $data[$row->page_id], $oTitle->getText() );
 						}
-						$dbr->freeResult( $oRes );
 					}
+					$db->freeResult($res);
+					$this->saveCacheData($lcache_key, $data, $ctime);
+				} else {
+					// ... cached
+					$data = $cached;
+				}
+			} catch (WikiaApiQueryError $e) {
+				// getText();
+			} catch (DBQueryError $e) {
+				$e = new WikiaApiQueryError(0, 'Query error: '.$e->getText());
+			} catch (DBConnectionError $e) {
+				$e = new WikiaApiQueryError(0, 'DB connection error: '.$e->getText());
+			} catch (DBError $e) {
+				$e = new WikiaApiQueryError(0, 'Error in database: '.$e->getLogMessage());
+			}
+		} else {
+			# get list of votes
+			try {
+				$wgTopVoted = ( !empty($topvoted) ) ? true : false;
 
-					foreach ( $data as $page_id => $values ) {
-						ApiResult::setContent( $values, $values['title'] );
+				$this->addTables( array("`page_vote` p1", "page") );
+				$add_fields = array('page_id', 'page_title', 'AVG(vote) as votesavg, max(time) as max_time');
+				$this->addFields( $add_fields );
+				$this->addWhere ( "page_id = article_id" );
+
+				#---
+				if ( !empty($ctime) ) {
+					if ( !$this->isInt($ctime) ) {
+						throw new WikiaApiQueryError(1);
 					}
 				}
 
-				$this->saveCacheData($lcache_key, $data, $ctime);
-			} else {
-				// ... cached
-				$data = $cached;
-			}
-		} catch (WikiaApiQueryError $e) {
-			// getText();
-		} catch (DBQueryError $e) {
-			$e = new WikiaApiQueryError(0, 'Query error: '.$e->getText());
-		} catch (DBConnectionError $e) {
-			$e = new WikiaApiQueryError(0, 'DB connection error: '.$e->getText());
-		} catch (DBError $e) {
-			$e = new WikiaApiQueryError(0, 'Error in database: '.$e->getLogMessage());
-		}
+				$select_user_vote = "";
+				if ( !is_null($uservote) ) {
+					# isset user_id or ip ?					
+					if ( empty($user_id) && empty($ip) )  {
+						throw new WikiaApiQueryError(2);
+					}
 
+					$select_user_vote = "select article_id as page_id, max(vote) as uservote from page_vote where IMPLODE and ";
+					if ( !empty($user_id) ) {
+						$this->setCacheKey ($lcache_key, 'U', $user_id);
+						$select_user_vote .= " user_id = '$user_id' ";
+					} else {
+						$select_user_vote .= " unique_id = '$browserId' ";
+						$this->setCacheKey ($lcache_key, 'UB', $browserId);
+					}
+					$select_user_vote .= " group by article_id";
+				}
+
+				if ( $wgTopVoted ) { 
+					// show most voted articles
+					if (empty($uservote)) $this->setCacheKey ($lcache_key, 'O', "votesavg");
+					$order = "votesavg DESC";
+				} else { 
+					// show last voted articles
+					if (empty($uservote)) $this->setCacheKey ($lcache_key, 'O', "time");
+					$order = "max(time) DESC";
+				}
+
+				#--- order by
+				$this->addOption( "ORDER BY", $order );
+				#--- group by
+				$this->addOption( "GROUP BY", "article_id" );
+
+				#--- limit
+				if ( !empty($limit)  ) {
+					if ( !$this->isInt($limit) ) {
+						throw new WikiaApiQueryError(1);
+					}
+					if (empty($uservote)) {
+						$this->setCacheKey ($lcache_key, 'L', $limit);
+					}
+					$this->addOption( "LIMIT", $limit );
+				}
+
+				#--- offset
+				if ( !empty($offset)  ) {
+					if ( !$this->isInt($offset) ) {
+						throw new WikiaApiQueryError(1);
+					}
+					if (empty($uservote)) {
+						$this->setCacheKey ($lcache_key, 'OF', $offset);
+					}
+					$this->addOption( "OFFSET", $offset );
+				}
+
+				$data = array();
+				// check data from cache ...
+				$cached = $this->getDataFromCache($lcache_key);
+				if (empty($cached)) {
+					#--- database instance - DB_SLAVE
+					$db =& $this->getDB();
+					$db->selectDB( (!defined(WIKIA_API_QUERY_DBNAME)) ? WIKIA_API_QUERY_DBNAME : $wgDBname );
+
+					if ( is_null($db) ) {
+						throw new WikiaApiQueryError(0);
+					}
+					
+					$res = $this->select(__METHOD__);
+					while ($row = $db->fetchObject($res)) {
+						$data[$row->page_id] = array(
+							"id"			=> $row->page_id,
+							"title"			=> $row->page_title,
+							"votesavg"		=> $row->votesavg,
+						);
+						if ( isset($select_user_vote) && !empty($select_user_vote) ) {
+							$data[$row->page_id]["uservote"] = 0;
+						} 
+					}
+					$db->freeResult($res);
+
+					if ( !empty($data) && is_array($data) ) {
+						if (!empty($select_user_vote)) {
+							$dbr = wfGetDB( DB_SLAVE );
+
+							$pages = implode( ",", array_keys($data) );
+							$select_user_vote = str_replace("IMPLODE", " article_id in (".$pages.") ", $select_user_vote);
+							$oRes = $dbr->query($select_user_vote, __METHOD__);
+
+							while ( $oRow = $dbr->fetchObject( $oRes ) ) {
+								$data[$oRow->page_id]["uservote"] = $oRow->uservote;
+							}
+							$dbr->freeResult( $oRes );
+						}
+
+						foreach ( $data as $page_id => $values ) {
+							ApiResult::setContent( $data[$page_id], $values['title'] );
+						}
+					}
+
+					$this->saveCacheData($lcache_key, $data, $ctime);
+				} else {
+					// ... cached
+					$data = $cached;
+				}
+			} catch (WikiaApiQueryError $e) {
+				// getText();
+			} catch (DBQueryError $e) {
+				$e = new WikiaApiQueryError(0, 'Query error: '.$e->getText());
+			} catch (DBConnectionError $e) {
+				$e = new WikiaApiQueryError(0, 'DB connection error: '.$e->getText());
+			} catch (DBError $e) {
+				$e = new WikiaApiQueryError(0, 'Error in database: '.$e->getLogMessage());
+			}
+		}
 		// is exception
 		if ( isset($e) ) {
 			$data = $e->getText();
