@@ -963,7 +963,9 @@ EOS;
 
 		// merged CSS - use StaticChute
 		$StaticChute = new StaticChute('css');
-		$tpl->set('mergedCSS', "\n\t\t" . $StaticChute->getChuteHtmlForPackage('awesome_css') . "\n\t\t" . $StaticChute->getChuteHtmlForPackage('awesome_css_print') . "\n" );
+		$tpl->set('mergedCSS',
+			"\n\t\t" . $StaticChute->getChuteHtmlForPackage('awesome_css') . 
+			"\n\t\t" . $StaticChute->getChuteHtmlForPackage('awesome_css_print') . "\n" );
 
 		if(isset($this->themename)) {
 			if($this->themename == 'custom') {
@@ -978,9 +980,6 @@ EOS;
 		$css[] = array('url' => $wgStylePath.'/awesome/css/awesome_ltie7.css?'.$wgStyleVersion, 'cond' => 'if lt IE 7');
 		$css[] = array('url' => $wgStylePath.'/awesome/css/awesome_ie7.css?'.$wgStyleVersion, 'cond' => 'if IE 7');
 		$css[] = array('url' => $wgStylePath.'/awesome/css/awesome_ie8.css?'.$wgStyleVersion, 'cond' => 'if IE 8');
-
-		// moved to allinone.css and wrapped with @media print {}
-		//$css[] = array('url' => $wgStylePath.'/awesome/css/print.css?'.$wgStyleVersion, 'param' => empty($tpl->data['printable']) ? 'media="print" ' : '');
 
 		// RTL support
 		if ($wgContLang->isRTL()) {
