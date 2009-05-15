@@ -370,7 +370,6 @@ class SkinAwesome extends SkinTemplate {
 	 * @param $out OutputPage
 	 */
 	function setupSkinUserCss( OutputPage $out ){
-		$out->addStyle( 'common/commonPrint.css', 'print' );
 	}
 
 	/**
