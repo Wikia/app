@@ -42,7 +42,7 @@ class WantedFilesPage extends QueryPage {
 			WHERE page_title IS NULL
 			GROUP BY il_to
 			";
-		wfRunHooks( 'WantedFiles::getSQL', array( &$sql, $name, $imagelinks, $page ) ); // wikia: Bartek
+		wfRunHooks( 'WantedFiles::getSQL', array( &$sql, &$this, $name, $imagelinks, $page ) ); // wikia: Bartek
 		return $sql;
 	}
 
