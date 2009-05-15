@@ -358,6 +358,14 @@ class SkinAwesome extends SkinTemplate {
 
 		// Function addVariables will be called to populate all needed data to render skin
 		$wgHooks['SkinTemplateOutputPageBeforeExec'][] = array(&$this, 'addVariables');
+
+		// detect whether to use merged JS/CSS files
+		global $wgAllInOne, $wgRequest;
+		if(empty($wgAllInOne)) {
+			$wgAllInOne = false;
+		}
+		$this->allinone = $wgRequest->getBool('allinone', $wgAllInOne);
+
 		wfProfileOut(__METHOD__);
 	}
 
@@ -548,9 +556,14 @@ EOS;
 			}
 		}
 
-		$url = htmlspecialchars($StaticChute->getChuteUrlForPackage($package));
-
-		$tpl->set('mergedJS', "\n\t\t<!-- merged JS -->\n\t\t<script type=\"text/javascript\" src=\"{$url}\"></script>\n");
+		if ($this->allinone) {
+			$url = htmlspecialchars($StaticChute->getChuteUrlForPackage($package));
+			$tpl->set('mergedJS', "\n\t\t<!-- merged JS -->\n\t\t<script type=\"text/javascript\" src=\"{$url}\"></script>\n");
+		}
+		else {
+			$files = $StaticChute->getChuteHtmlForPackage($package);
+			$tpl->set('mergedJS', "\n\t\t<!-- JS files -->\n\t\t" . $files . "\n\t\t<!-- JS files -->\n");
+		}
 
 		wfProfileOut( __METHOD__ );
 		return true;
