@@ -134,7 +134,7 @@ var recent_questions_page = 0;
 var recent_questions_limit = 10;
 function renderQuestions() {
 	
-	url = wgServer + "/api.php?smaxage=60&action=query&list=wkpagesincat&wkcategory=" + wgUnAnsweredCategory  + "&format=json&wklimit=" + recent_questions_limit + "&wkoffset=" + (recent_questions_limit * recent_questions_page);
+	url = wgServer + "/api.php?smaxage=60&action=query&list=wkpagesincat&wkcategory=" + wgUnAnsweredCategory  + "&format=json&wklimit=" + recent_questions_limit + "&wkoffset=" + (recent_questions_limit * recent_questions_page) + "&wkorder=id";
 	jQuery.getJSON( url, "", function( j ){
 		if( j.query.wkpagesincat ){
 			html = "";
