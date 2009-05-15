@@ -3,15 +3,16 @@
 /**
  * @author Piotr Molski <moli@wikia.com>
  * @author Krzysztof Krzyżaniak <eloy@wikia-inc.com>
+ * @copyright © 2007-2009, Wikia Inc.
+ * @licence GNU General Public Licence 2.0 or later
  *
- * Hook which add additional info to dataware
+ * Hook which add additional info about uploaded picture to dataware database
  */
 if ( ! defined( 'MEDIAWIKI' ) ) {
     die();
 }
 
 $wgHooks['UploadComplete'][]  = 'wfSpecialUploadPutInformation';
-
 
 function wfSpecialUploadPutInformation( $uploadForm ) {
 	global $wgRequest, $wgCityId;
@@ -23,6 +24,9 @@ function wfSpecialUploadPutInformation( $uploadForm ) {
 	if( !($uploadForm->mLocalFile instanceof LocalFile) ) {
 		return true;
 	}
+
+	wfProfileIn( __METHOD__ );
+
 	$mTitle = $title->getText();
 	$relPath = $uploadForm->mLocalFile->getRel();
 	$fullPath = $uploadForm->mLocalFile->getFullPath();
@@ -55,6 +59,8 @@ function wfSpecialUploadPutInformation( $uploadForm ) {
 		),
 		__METHOD__
 	);
+
+	wfProfileOut( __METHOD__ );
 
 	return true;
 }
