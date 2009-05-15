@@ -111,7 +111,7 @@ class WikiaReplicateImages {
 					$target = $this->transformPath( $source, $name );
 
 					if( file_exists( $source ) || $this->mTest ) {
-						$flags = $this->sendToRemote( $server["address"], $source, $target, $flags );
+						$flags = $this->sendToRemote( $server, $source, $target, $flags );
 						/**
 						 * if old version of file send as well, but this time
 						 * ignore returned flags
@@ -119,7 +119,7 @@ class WikiaReplicateImages {
 						$oldsource = $Row->up_old_path;
 						if( !empty( $oldsource ) && file_exists( $oldsource ) ) {
 							$oldtarget = $this->transformPath( $oldsource, $name );
-							$this->sendToRemote( $server["address"], $oldsource, $oldtarget, $flags );
+							$this->sendToRemote( $server, $oldsource, $oldtarget, $flags );
 						}
 					}
 					else {
@@ -177,7 +177,7 @@ class WikiaReplicateImages {
 	 *
 	 * @access public
 	 *
-	 * @param string  $server address to remote host
+	 * @param array   $server remote server definition
 	 * @param string  $source source path
 	 * @param string  $target destination path
 	 * @param integer $flags current value for flags
@@ -192,7 +192,7 @@ class WikiaReplicateImages {
 			"--group",
 			"--chmod=g+w",
 			$source,
-			escapeshellcmd( $this->mRunAs . '@' . $server . ':' . $target )
+			escapeshellcmd( $this->mRunAs . '@' . $server["address"] . ':' . $target )
 		);
 
 		if( $this->mTest ) {
@@ -212,7 +212,7 @@ class WikiaReplicateImages {
 				 */
 				$cmd = wfEscapeShellArg(
 					"/usr/bin/ssh",
-					$this->mRunAs . '@' . $server,
+					$this->mRunAs . '@' . $server["address"],
 					escapeshellcmd( "mkdir -p " . dirname( $target ) )
 				);
 				$output = wfShellExec( $cmd, $retval );
@@ -224,7 +224,7 @@ class WikiaReplicateImages {
 					"--group",
 					"--chmod=g+w",
 					$source,
-					escapeshellcmd( $this->mRunAs . '@' . $server . ':' . $target )
+					escapeshellcmd( $this->mRunAs . '@' . $server["address"] . ':' . $target )
 				);
 				$output = wfShellExec( $cmd, $retval );
 				if( $retval == 0 ) {
