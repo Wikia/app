@@ -81,7 +81,6 @@ $MF['monobook_js']['source'] = array(
 	'common/jquery/jquery-1.3.2.min.js',
 	'common/jquery/jquery.json-1.3.min.js',
 	'common/jquery/jquery.cookies.2.0.1.min.js',
-	'common/jquery/jquery.lazyloader.js',
 	'common/jquery/jquery.wikia.js',
 
 	'common/urchin.js',
@@ -113,7 +112,6 @@ $MF['monaco_loggedin_js']['source'] = array(
 	'common/jquery/jquery-1.3.2.min.js',
 	'common/jquery/jquery.json-1.3.min.js',
 	'common/jquery/jquery.cookies.2.0.1.min.js',
-	'common/jquery/jquery.lazyloader.js',
 	'common/jquery/jquery.wikia.js',
 
 	'common/ajax.js',
@@ -147,7 +145,6 @@ $MF['monaco_non_loggedin_js']['source'] = array(
 	'common/jquery/jquery-1.3.2.min.js',
 	'common/jquery/jquery.json-1.3.min.js',
 	'common/jquery/jquery.cookies.2.0.1.min.js',
-	'common/jquery/jquery.lazyloader.js',
 	'common/jquery/jquery.wikia.js',
 
 	'common/ajax.js',
@@ -202,7 +199,6 @@ $MF['awesome_loggedin_js']['source'] = array(
 	'common/jquery/jquery-1.3.2.min.js',
 	'common/jquery/jquery.json-1.3.min.js',
 	'common/jquery/jquery.cookies.2.0.1.min.js',
-	'common/jquery/jquery.lazyloader.js',
 	'common/jquery/jquery.wikia.js',
 
 	'awesome/js/SearchAutoComplete.js',
@@ -238,7 +234,6 @@ $MF['awesome_non_loggedin_js']['source'] = array(
 	'common/jquery/jquery-1.3.2.min.js',
 	'common/jquery/jquery.json-1.3.min.js',
 	'common/jquery/jquery.cookies.2.0.1.min.js',
-	'common/jquery/jquery.lazyloader.js',
 	'common/jquery/jquery.wikia.js',
 
 	'awesome/js/SearchAutoComplete.js',
