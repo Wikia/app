@@ -213,7 +213,7 @@ class StaticChute {
 	}
 
 	public function getChuteHtmlForPackage($package, $type = null){
-		global $wgStylePath;
+		global $wgStylePath, $wgStyleVersion;
 
 		if ($type === null){
 			$type = $this->fileType;
@@ -225,9 +225,9 @@ class StaticChute {
 		$html = '';
 		foreach ($urls as $u){
 			if ($type == "css"){
-				$html .= '<link type="text/css" href="' . $prefix . $u . '"/>' . "\n";
+				$html .= '<link type="text/css" href="' . $prefix . $u . '?' . $wgStyleVersion  . '"/>' . "\n";
 			} else if ($type == "js"){
-				$html .= '<script type="text/javascript" src="' . $prefix . $u . '"></script>';
+				$html .= '<script type="text/javascript" src="' . $prefix . $u . '?' . $wgStyleVersion . '"></script>';
 			}
 		}
 			
@@ -247,18 +247,9 @@ class StaticChute {
 
 		$latestMod = $this->getLatestMod($files);
 
-		global $wgDevelEnvironments;
-		if (!empty($wgDevelEnvironments)){
-			if ($type == 'css'){
-				$prefix = 'http://images.wikia.com/extensions/wikia/StaticChute/';
-			} else {
-				$prefix = 'http://images.wikia.com/extensions/wikia/StaticChute/';
-			}
-		} else {
-			$prefix = 'http://' . $_SERVER['HTTP_HOST'] . '/extensions/wikia/StaticChute/';
-		}
+		global $wgExtensionsPath;
 
-		return $prefix . '?' .
+		return $wgExtensionsPath . '/wikia/StaticChute/?' .
 			http_build_query(array('type'=> $type, 'packages'=> $package, 'maxmod'=> $latestMod));
 	}
 
