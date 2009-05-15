@@ -159,7 +159,7 @@ class StaticChute {
 
 		if (!empty($args['packages'])){
 			$basedir = realpath(dirname(__FILE__) . '/../../../skins/');
-			foreach(split(',', $args['packages']) as $package){
+			foreach(explode(',', $args['packages']) as $package){
 				if (empty($this->config[$package])){
 					continue;
 				} else {
@@ -171,7 +171,7 @@ class StaticChute {
 
 		} else if (!empty($args['files'])){
 			$basedir = realpath(dirname(__FILE__) . '/../../../');
-			foreach(split(',', $args['files']) as $file){
+			foreach(explode(',', $args['files']) as $file){
 				// We don't trust user input. Check to make sure the requested file is 
 				// in the document root
 				$rfile = realpath($basedir . $file);
@@ -203,6 +203,31 @@ class StaticChute {
 		}
 
 		return $maxtime;
+	}
+
+	public function getChuteHtmlForPackage($package, $type = null){
+		if ($type === null){
+			$type = $this->fileType;
+		}
+	
+		if (isset($_GET['allinone'])){
+			$urls = $this->config[$package];
+			$prefix = '/skins/';
+		} else {
+			$urls = array($this->getChuteUrlForPackage($package, $type));
+			$prefix = '';
+		}
+
+		$html = '';
+		foreach ($urls as $u){
+			if ($type == "css"){
+				$html .= '<link type="text/css" href="' . $prefix . $u . '"/>' . "\n";
+			} else if ($type == "js"){
+				$html .= '<script type="text/javascript" src="' . $prefix . $u . '"></script>' . "\n";
+			}
+		}
+			
+		return $html;
 	}
 
 	public function getChuteUrlForPackage($package, $type = null){
@@ -271,13 +296,13 @@ class StaticChute {
 
 	public function minifyCssData($css){
 		// Not implemented yet. Know a good CSS minfier that doesn't bork the CSS?
-		$min = preg_replace('/^\s+/', '', $css);
+		$min = preg_replace('//', '', $css);
     		return $min;
 	}
 
 	public function minifyCssFile($file){
 		$css = file_get_contents($file);
-    		return self::minifyCssData($css);
+    		return $this->minifyCssData($css);
 	}
 
 	/* Remove comments and superfluous white space from javascript. 
@@ -439,3 +464,6 @@ class StaticChute {
 	}
 
 }
+$StaticChute = new StaticChute('js');
+echo $StaticChute->getChuteHtmlForPackage('awesome_anon_everything_else_js');
+exit;
