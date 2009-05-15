@@ -238,22 +238,12 @@ class StaticChute {
 		foreach ($urls as $u){
 			$u = htmlspecialchars($u);
 			if ($type == "css"){
-				if ($this->allinone) {
-					$html .= "<link rel=\"stylesheet\" type=\"text/css\" href=\"". $prefix . $u ."\" />";
-				}
-				else {
-					$html .= "\n\t\t\t".'@import "' . $prefix . $u . $cb . '";';
-				}
+				$html .= "<link rel=\"stylesheet\" type=\"text/css\" href=\"". $prefix . $u . $cb . "\" />";
 			} else if ($type == "js"){
 				$html .= '<script type="text/javascript" src="' . $prefix . $u . $cb . '"></script>';
 			}
 		}
 
-		// fix IE issue with limited number of CSS <link> tags on page (when using separated CSS files)
-		if ($type == 'css' && !$this->allinone) {
-			$html = "<style type=\"text/css\">{$html}\n\t\t</style>\n";
-		}
-	
 		return $html;
 	}
 
