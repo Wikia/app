@@ -5,6 +5,7 @@ class StaticChute {
 	public $fileType; // js|css|html
 	public $supportedFileTypes = array('js', 'css', 'html');
 	public $minify = true;
+	public $compress = true;
 	public $httpCache = true;
 	public $bytesIn = 0;
 	public $bytesOut = 0;
@@ -450,6 +451,9 @@ class StaticChute {
 		if (empty($out)){
 			return false;
 		} else {
+			if ($this->compress){
+				ob_start("ob_gzhandler");
+			}
 			$time = round(microtime(true) - $stime, 1);
 			$shaved = $this->bytesIn - $this->bytesOut;
 			$pct = round(($shaved / $this->bytesIn) * 100,2);
