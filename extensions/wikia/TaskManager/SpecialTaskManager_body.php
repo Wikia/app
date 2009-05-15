@@ -353,7 +353,7 @@ class TaskManagerPage extends SpecialPage {
 	 * generate and display pager with tasks list
 	 *
 	 * @access private
-     */
+	 */
 	private function loadPager() {
 		global $wgOut;
 
@@ -378,17 +378,21 @@ class TaskManagerPager extends TablePager {
 	var $mQueryConds = array();
 	var $mTitle;
 
-	#--- constructor
-	function __construct()
-	{
+	/**
+	 * constructor
+	 */
+	function __construct() {
 		$this->mTitle = Title::makeTitle( NS_SPECIAL, "TaskManager" );
 		$this->mDefaultDirection = true;
 		parent::__construct();
 	}
 
-	#--- getFieldNames ------------------------------------------------------
-	function getFieldNames()
-	{
+	/**
+	 * getFieldNames
+	 *
+	 * @access public
+	 */
+	function getFieldNames() {
 		if ( !$this->mFieldNames ) {
 			$this->mFieldNames = array();
 			$this->mFieldNames["task_id"] = "#";
@@ -404,13 +408,26 @@ class TaskManagerPager extends TablePager {
 		return $this->mFieldNames;
 	}
 
-	#--- isFieldSortable-----------------------------------------------------
+	/**
+	 * isFieldSortable
+	 *
+	 * @param string $field  field name
+	 *
+	 * @return boolean  if $field is sortable or not
+	 */
 	function isFieldSortable( $field ) {
 		static $sortable = array( "task_type", "task_id", "task_user_id", "task_status", "task_added" );
 		return in_array( $field, $sortable );
 	}
 
-	#--- formatValue --------------------------------------------------------
+	/**
+	 * formatValue
+	 *
+	 * @param string $field  field name
+	 * @param mixed  $value  value of field
+	 *
+	 * @return string  HTML code for row
+	 */
 	function formatValue( $field, $value ) {
 		global $wgStylePath, $wgRequest;
 
