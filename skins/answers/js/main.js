@@ -32,6 +32,9 @@ jQuery("#answers_ask_field").ready(function() {
 	// Don't highlight the first result
 	myAutoComp.autoHighlight = false; 
 
+	myAutoComp.generateRequest = function(sQuery) {
+		return "?lang=" + wgContentLanguage + "&db=" + wgDB + "&query=" + sQuery;
+	}
 });
 
 jQuery("#header_menu_user").ready(function() {
