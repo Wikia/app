@@ -113,6 +113,27 @@ class StaticChute {
 			'common/contributed.js',
 		);
 		$this->config['awesome_anon_everything_else_js'] = array_merge($this->config['awesome_anon_everything_else_js'], $widgetsAssets['js']);
+
+
+		// CSS
+		$this->config['awesome_css'] = array(
+			'common/yui_2.5.2/container/assets/container.css',
+			'common/yui_2.5.2/tabview/assets/tabview.css',
+        		'common/shared.css',
+			'awesome/css/monobook_modified.css',
+			'awesome/css/reset_modified.css',
+			'awesome/css/root.css',
+			'awesome/css/header.css',
+			'awesome/css/article.css',
+			'awesome/css/widgets.css',
+			'awesome/css/footer.css',
+			'awesome/css/star_rating.css',
+			'awesome/css/ny.css',
+			'../extensions/wikia/EditSimilar/EditSimilar.css',
+			'../extensions/wikia/Blogs/css/Blogs.css',
+		);
+		$this->config['awesome_css'] = array_merge($this->config['awesome_css'], $widgetsAssets['css']);
+		
 	}
 
 
@@ -365,6 +386,8 @@ class StaticChute {
 			// url to see if the files have changed, saving an http request.
 			header('Expires: ' . gmdate('r', strtotime('+13 years')));
 		}
+
+		$this->setContentType();
 
 		$out = ''; $fileCount = 0;
 		$stime = microtime(true);
