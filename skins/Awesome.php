@@ -359,13 +359,6 @@ class SkinAwesome extends SkinTemplate {
 		// Function addVariables will be called to populate all needed data to render skin
 		$wgHooks['SkinTemplateOutputPageBeforeExec'][] = array(&$this, 'addVariables');
 
-		// detect whether to use merged JS/CSS files
-		global $wgAllInOne, $wgRequest;
-		if(empty($wgAllInOne)) {
-			$wgAllInOne = false;
-		}
-		$this->allinone = $wgRequest->getBool('allinone', $wgAllInOne);
-
 		wfProfileOut(__METHOD__);
 	}
 
@@ -534,8 +527,6 @@ EOS;
 		$tpl->set('userlinks', $this->getUserLinks($tpl));
 
 		// marged JS files
-		//$tpl->set('mergedJS', "\n\t\t<!-- merged JS -->\n\t\t" . ($wgUser->isLoggedIn() ? GetReferences("awesome_loggedin_js") : GetReferences("awesome_non_loggedin_js")) );
-
 		// get the right package from StaticChute
 		$StaticChute = new StaticChute('js');
 
@@ -556,14 +547,7 @@ EOS;
 			}
 		}
 
-		if ($this->allinone) {
-			$url = htmlspecialchars($StaticChute->getChuteUrlForPackage($package));
-			$tpl->set('mergedJS', "\n\t\t<!-- merged JS -->\n\t\t<script type=\"text/javascript\" src=\"{$url}\"></script>\n");
-		}
-		else {
-			$files = $StaticChute->getChuteHtmlForPackage($package);
-			$tpl->set('mergedJS', "\n\t\t<!-- JS files -->\n\t\t" . $files . "\n\t\t<!-- JS files -->\n");
-		}
+		$tpl->set('mergedJS', "\n\t\t" . $StaticChute->getChuteHtmlForPackage($package) . "\n");
 
 		wfProfileOut( __METHOD__ );
 		return true;
@@ -980,13 +964,7 @@ EOS;
 
 		// merged CSS - use StaticChute
 		$StaticChute = new StaticChute('css');
-		if ($this->allinone) {
-			$url = htmlspecialchars( $StaticChute->getChuteUrlForPackage('awesome_css') );
-			$tpl->set('mergedCSS', "\n\t\t<!-- merged CSS -->\n\t\t<link rel=\"stylesheet\" type=\"text/css\" href=\"{$url}\" />\n");
-		}
-		else {
-			$tpl->set('mergedCSS', $StaticChute->getChuteHtmlForPackage('awesome_css') );
-		}
+		$tpl->set('mergedCSS', "\n\t\t" . $StaticChute->getChuteHtmlForPackage('awesome_css') . "\n" );
 
 		if(isset($this->themename)) {
 			if($this->themename == 'custom') {
