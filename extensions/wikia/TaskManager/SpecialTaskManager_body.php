@@ -2,9 +2,8 @@
 
 /**
  * @package MediaWiki
- * @subpackage SpecialPage
- * @author Krzysztof Krzyżaniak <eloy@wikia.com> for Wikia.com
- * @copyright (C) 2007, Wikia Inc.
+ * @author Krzysztof Krzyżaniak <eloy@wikia-inc.com> for Wikia.com
+ * @copyright © 2007-2009, Wikia Inc.
  * @licence GNU General Public Licence 2.0 or later
  * @version: $Id$
  */
@@ -247,9 +246,18 @@ class TaskManagerPage extends SpecialPage {
 		}
 	}
 
-	#--- loadTaskData -------------------------------------------------------
-	private function loadTaskData( $id )
-	{
+	/**
+	 * load task data from database
+	 *
+	 * @access private
+	 *
+	 * @param integer $id task id in database
+	 *
+	 * @return mixed	row from database or null if no data
+	 */
+	private function loadTaskData( $id ) {
+
+		wfProfileIn( __METHOD__ );
 		$dbr = wfGetDB( DB_MASTER );
 
 		$oRow = $dbr->selectRow(
@@ -258,49 +266,72 @@ class TaskManagerPage extends SpecialPage {
 			array( "task_id" => $id ) /*where*/,
 			__METHOD__
 		);
+		wfProfileOut( __METHOD__ );
 
 		return $oRow;
 	}
 
-	#--- removeTask ---------------------------------------------------------
-	private function removeTask( $id )
-	{
+	/**
+	 * remove task from database
+	 *
+	 * @access private
+	 *
+	 * @param integer $id task id in database
+	 *
+	 * @return boolean status of operation
+	 */
+	private function removeTask( $id ) {
+		wfProfileIn( __METHOD__ );
 		$dbw = wfGetDB( DB_MASTER );
-		$dbw->selectDB( "wikicities" );
 
-		$iStatus = $dbw->delete(
-			"wikia_tasks" /*from*/,
+		$status = $dbw->delete(
+			wfSharedTable("wikia_tasks") /*from*/,
 			array( "task_id" => $id ) /*where*/,
 			__METHOD__
 		);
 		$dbw->commit();
 
-		return $iStatus;
+		wfProfileOut( __METHOD__ );
+
+		return $status;
 	}
 
-	#--- loadTaskData -------------------------------------------------------
-	private function changeTaskStatus( $id, $to )
-	{
+	/**
+	 * change in database status of task
+	 *
+	 * @access private
+	 *
+	 * @param integer $id  task id in database
+	 * @param integer $status new status for task
+	 *
+	 * @return boolean  status of operation
+	 */
+	private function changeTaskStatus( $id, $status ) {
+		wfProfileIn( __METHOD__ );
 		$dbw = wfGetDB( DB_MASTER );
-		$dbw->selectDB( "wikicities" );
-
-		$iStatus = $dbw->update(
-			"wikia_tasks" /*from*/,
-			array( "task_status" => $to ) /*what*/,
+		$sth = $dbw->update(
+			wfSharedTable( "wikia_tasks" )/*from*/,
+			array( "task_status" => $status ) /*what*/,
 			array( "task_id" => $id ) /*where*/,
 			__METHOD__
 		);
-		$dbw->commit();
-
-		return $iStatus;
+		wfProfileOut( __METHOD__ );
+		return $sth;
 	}
 
-	#--- loadTaskForm-- -----------------------------------------------------
-	private function loadTaskForm()
-	{
+	/**
+	 * generate and display HTML form for task
+	 *
+	 * @access private
+	 *
+	 * @return nothing
+     */
+	private function loadTaskForm() {
 		global $wgOut, $wgWikiaBatchTasks;
 
-		#--- first check which task types should be visible
+		/**
+		 * first check which task types should be visible
+		 */
 		$aTypes = array();
 		if( is_array( $wgWikiaBatchTasks )) {
 			foreach( $wgWikiaBatchTasks as $type => $class ) {
@@ -318,12 +349,17 @@ class TaskManagerPage extends SpecialPage {
 		$wgOut->addHTML( $oTmpl->execute( "taskform" ) );
 	}
 
-	#--- loadPager ----------------------------------------------------------
-	private function loadPager()
-	{
+	/**
+	 * generate and display pager with tasks list
+	 *
+	 * @access private
+     */
+	private function loadPager() {
 		global $wgOut;
 
-		#--- init pager
+		/**
+		 * init pager
+		 */
 		$oPager = new TaskManagerPager;
 
 		$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
