@@ -1013,7 +1013,14 @@ EOS;
 			}
 		}
 		if($tpl->data['userjs']) {
-			$js[] = array('url' => $tpl->data['userjs'], 'mime' => 'text/javascript');
+			// macbre: check for empty User:foo/skin.js
+			$userJStitle = Title::newFromText($this->userpage.'/awesome.js');
+			if ($userJStitle->exists()) {
+				$rev = Revision::newFromTitle($userJStitle, 0);
+				if (!empty($rev) && $rev->getText() != '') {
+					$js[] = array('url' => $tpl->data['userjs'], 'mime' => 'text/javascript');
+				}
+			}
 		}
 		if($tpl->data['userjsprev']) {
 			$js[] = array('content' => $tpl->data['userjsprev'], 'mime' => 'text/javascript');
