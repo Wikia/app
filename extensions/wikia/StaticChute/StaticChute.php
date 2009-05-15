@@ -154,7 +154,7 @@ class StaticChute {
 		$out = array();
 
 		if (!empty($args['packages'])){
-			$basedir = realpath(getenv('DOCUMENT_ROOT') . '/skins/');
+			$basedir = realpath(dirname(__FILE__) . '/../../../skins/');
 			foreach(split(',', $args['packages']) as $package){
 				if (empty($C[$package])){
 					continue;
@@ -166,7 +166,7 @@ class StaticChute {
 			}
 
 		} else if (!empty($args['files'])){
-			$basedir = realpath(getenv('DOCUMENT_ROOT') . '/');
+			$basedir = realpath(dirname(__FILE__) . '/../../../');
 			foreach(split(',', $args['files']) as $file){
 				// We don't trust user input. Check to make sure the requested file is 
 				// in the document root
@@ -202,7 +202,7 @@ class StaticChute {
 	}
 
 	public function getChuteUrlForPackage($package, $type = null){
-		if ($type == null){
+		if ($type === null){
 			$type = $this->fileType;
 		}
 		$files = $this->getFileList(array('packages'=>$package));
