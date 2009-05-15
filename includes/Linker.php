@@ -885,8 +885,6 @@ if ($wgWikiaEnableSharedHelpExt && (NS_HELP == $title->getNamespace()) && Shared
 			}
 			/* Wikia change end */
 
-			// Wikia: macbre - lazy loading of images
-			$params['lazy-load'] = true;
 			$s = $thumb->toHtml( $params );
 		}
 		if ( '' != $fp['align'] ) {
@@ -991,10 +989,7 @@ if ($wgWikiaEnableSharedHelpExt && (NS_HELP == $title->getNamespace()) && Shared
 				'title' => $fp['title'],
 				'img-class' => 'thumbimage',
 				'desc-link' => true,
-				'desc-query' => $query,
-				// Wikia: macbre - lazy loading of images
- 				'lazy-load' => true
-			) );
+				'desc-query' => $query ) );
 			if ( isset( $fp['framed'] ) ) {
 				$zoomicon="";
 			} else {
