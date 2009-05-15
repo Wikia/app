@@ -531,7 +531,23 @@ EOS;
 		// get the right package from StaticChute
 		$StaticChute = new StaticChute('js');
 
-		$package = 'awesome_loggedin_js';
+		if ($wgUser->isLoggedIn()) {
+			$package = 'awesome_loggedin_js';
+		}
+		else {
+			$action = $wgRequest->getVal('action', 'view');
+
+			// TODO: check this list of actions
+			if ( ($wgTitle->getNamespace() == NS_SPECIAL) || in_array($action, array('edit', 'preview', 'submit')) ) {
+				// edit mode & Special pages
+				$package = 'awesome_anon_everything_else_js';
+			}
+			else {
+				// view mode
+				$package = 'awesome_anon_article_js';
+			}
+		}
+
 		$url = htmlspecialchars($StaticChute->getChuteUrlForPackage($package));
 
 		$tpl->set('mergedJS', "\n\t\t<!-- merged JS -->\n\t\t<script type=\"text/javascript\" src=\"{$url}\"></script>\n");
