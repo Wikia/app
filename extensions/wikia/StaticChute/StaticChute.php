@@ -215,15 +215,18 @@ class StaticChute {
 		$latestMod = $this->getLatestMod($files);
 
 		global $wgDevelEnvironments;
-		if (empty($wgDevelEnvironments)){
-			$host = 'images.wikia.com';
+		if (!empty($wgDevelEnvironments)){
+			if ($type == 'css'){
+				$prefix = 'http://images.wikia.com/extensions/wikia/StaticChute/';
+			} else {
+				$prefix = 'http://images.wikia.com/extensions/wikia/StaticChute/';
+			}
 		} else {
-			$host = $_SERVER['HTTP_HOST'];
+			$prefix = 'http://' . $_SERVER['HTTP_HOST'] . '/extensions/wikia/StaticChute/';
 		}
 
-		$dir = dirname(str_replace(getenv('DOCUMENT_ROOT'), '', __FILE__));
-		return 'http://' . $host . $dir . '/' . '?' .
-			http_build_query(array('type'=> $type, 'package'=> $package, 'maxmod'=> $latestMod));
+		return $prefix . '?' .
+			http_build_query(array('type'=> $type, 'packages'=> $package, 'maxmod'=> $latestMod));
 	}
 
 	
@@ -351,7 +354,7 @@ class StaticChute {
 			return true;
 		}
 
-		if (!empty($_GET['maxmod'])){
+		if (!empty($_GET['maxmod']) && date_default_timezone_set('UTC')){
 			// Since we have a timestamp that will change with the url, set an Expires header
 			// far into the future. This will make it so that the browsers won't even check this
 			// url to see if the files have changed, saving an http request.
