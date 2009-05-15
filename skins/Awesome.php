@@ -999,7 +999,16 @@ EOS;
 
 		// JS - begin
 		if($tpl->data['jsvarurl']) {
-			if(!isMsgEmpty('Common.js') ||  !isMsgEmpty('Monaco.js')) {
+			// macbre: check for empty merged JS file
+			$s = '';
+			$s .= !isMsgEmpty('Common.js') ? wfMsgForContent('Common.js') : '';
+			$s .= !isMsgEmpty('Awesome.js') ? wfMsgForContent('Awesome.js') : '';
+
+			// eliminate multi-line comments in '/* ... */' form, at start of string
+			// taken from includes/api/ApiFormatJson_json.php
+			$s = trim(preg_replace('#^\s*/\*(.+)\*/#Us', '', $s));
+
+			if ($s != '') {
 				$js[] = array('url' => $tpl->data['jsvarurl'], 'mime' => 'text/javascript');
 			}
 		}
