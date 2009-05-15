@@ -220,7 +220,7 @@ class StaticChute {
 		}
 	
 		$urls = $this->config[$package];
-		$prefix = $wgStylePath;
+		$prefix = $wgStylePath . '/';
 
 		$html = '';
 		foreach ($urls as $u){
