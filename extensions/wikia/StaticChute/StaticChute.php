@@ -302,9 +302,8 @@ class StaticChute {
 
 
 	public function minifyCssData($css){
-		// Not implemented yet. Know a good CSS minfier that doesn't bork the CSS?
-		$min = preg_replace('//', '', $css);
-    		return $min;
+		require_once dirname(__FILE__) . '/Minify_CSS_Compressor.php';
+    		return Minify_CSS_Compressor::process($css);
 	}
 
 	public function minifyCssFile($file){
@@ -433,19 +432,20 @@ class StaticChute {
 
 			$rawData = file_get_contents($file);
 			if ($this->minify){
-				
 				switch ($this->fileType){
 				  case 'css': $data = $this->minifyCssData($rawData); break;
 				  case 'js': $data = $this->minifyJSFile($file); break;
 				  case 'html': $data = $this->minifyHtmlData($rawData); break;
 				  default: $data = $rawData;
 				}
+			} else {
+				$data = $rawData;
 			}
 
 			$this->bytesIn += strlen($rawData);
 			$this->bytesOut += strlen($data);
 
-      			$out .= $this->comment(basename($file)) . $data . $this->comment(" /$file");
+      			$out .= $this->comment(basename($file)) . $data; 
           	}
 
 		if (empty($out)){
