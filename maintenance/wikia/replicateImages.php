@@ -84,7 +84,7 @@ class WikiaReplicateImages {
 		);
 
 		if( $sth ) {
-			while( $Row = $dbr->fetchObject( $sth ) ) {
+			while( $Row = $dbw->fetchObject( $sth ) ) {
 				$flags = 0;
 
 				/**
@@ -146,6 +146,7 @@ class WikiaReplicateImages {
 		else {
 			Wikia::log(__CLASS__, "info", "No new images to for replication.");
 		}
+		Wikia::log(__CLASS__, "info", "eot");
 	}
 
 	/**
