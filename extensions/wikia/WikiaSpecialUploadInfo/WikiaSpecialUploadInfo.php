@@ -48,14 +48,15 @@ function wfSpecialUploadPutInformation( $uploadForm ) {
 	$dbw->insert(
 		"upload_log",
 		array(
-			"up_id"       => $title->getArticleId(),
-			"up_path"     => $fullPath,
-			"up_imgpath"  => $relPath,
-			"up_flags"    => 0,
-			"up_title"    => $mTitle,
-			"up_created"  => wfTimestampNow(),
-			"up_city_id"  => $wgCityId,
-			"up_old_path" => $oldFileName
+			/** up_id is autoincrement **/
+			"up_page_id"    => $title->getArticleId(),
+			"up_path"       => $fullPath,
+			"up_imgpath"    => $relPath,
+			"up_flags"      => 0,
+			"up_title"      => $mTitle,
+			"up_created"    => wfTimestampNow(),
+			"up_city_id"    => $wgCityId,
+			"up_old_path"   => $oldFileName
 		),
 		__METHOD__
 	);
