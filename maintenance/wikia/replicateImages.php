@@ -57,7 +57,6 @@ class WikiaReplicateImages {
 		 */
 		$this->mRunAs = isset( $this->mOptions['u']) ? $this->mOptions['u'] : 'root';
 		$this->mTest = isset( $this->mOptions['test']) ? true : false;
-		$dbr = wfGetDBExt( DB_SLAVE );
 		$dbw = wfGetDBExt( DB_MASTER );
 
 		/**
@@ -70,7 +69,7 @@ class WikiaReplicateImages {
 		Wikia::log( __CLASS__, "info", "flags for all copied is {$copied}" );
 		Wikia::log( __CLASS__, "info", "Taking {$limit} rows" );
 
-		$oResource = $dbr->select(
+		$sth = $dbw->select(
 			array( "upload_log" ),
 			array( "*" ),
 			array(
@@ -79,20 +78,20 @@ class WikiaReplicateImages {
 			),
 			__METHOD__,
 			array(
-				  "ORDER BY" => "up_created ASC",
+				  "ORDER BY" => "up_id ASC",
 				  "LIMIT" => $limit
 			)
 		);
 
-		if( $oResource ) {
-			while( $Row = $dbr->fetchObject( $oResource ) ) {
+		if( $sth ) {
+			while( $Row = $dbr->fetchObject( $sth ) ) {
 				$flags = 0;
 
 				/**
 				 * just uploaded file
 				 */
 
-				Wikia::log( __CLASS__, "start", "====== copy {$Row->up_city_id}:{$Row->up_imgpath} created: {$Row->up_created} flags: {$Row->up_flags}" );
+				Wikia::log( __CLASS__, "start", "====== copy {$Row->up_id}:{$Row->up_city_id}:{$Row->up_imgpath} created: {$Row->up_created} flags: {$Row->up_flags}" );
 
 				foreach( $this->mServers as $name => $server ) {
 					/**
@@ -117,10 +116,10 @@ class WikiaReplicateImages {
 						 * if old version of file send as well, but this time
 						 * ignore returned flags
 						 */
-						$source = $Row->up_old_path;
-						if( !empty( $source ) && file_exists( $source ) ) {
-							$target = $this->transformPath( $source, $name );
-							$this->sendToRemote( $server["address"], $source, $target, $flags );
+						$oldsource = $Row->up_old_path;
+						if( !empty( $oldsource ) && file_exists( $oldsource ) ) {
+							$oldtarget = $this->transformPath( $oldsource, $name );
+							$this->sendToRemote( $server["address"], $oldsource, $oldtarget, $flags );
 						}
 					}
 					else {
