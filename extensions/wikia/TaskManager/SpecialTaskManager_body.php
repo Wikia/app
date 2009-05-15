@@ -130,10 +130,8 @@ class TaskManagerPage extends SpecialPage {
 					else {
 						$wgOut->addHTML(Wikia::errorbox("Task doesn't exists"));
 					}
-					$wgOut->addHTML(Wikia::link(
-						$this->mTitle->getLocalUrl(),
-						wfMsg("taskmanager_tasklist")
-					));
+					$this->loadTaskForm();
+					$this->loadPager();
 					break;
 
 				/**
@@ -149,10 +147,8 @@ class TaskManagerPage extends SpecialPage {
 					else {
 						$wgOut->addHTML( Wikia::errorbox("Task doesn't exists") );
 					}
-					$wgOut->addHTML(Wikia::link(
-						$this->mTitle->getLocalUrl(),
-						wfMsg("taskmanager_tasklist")
-					));
+					$this->loadTaskForm();
+					$this->loadPager();
 					break;
 
 				/**
@@ -168,10 +164,8 @@ class TaskManagerPage extends SpecialPage {
 					else {
 						$wgOut->addHTML( Wikia::errorbox("Task doesn't exists") );
 					}
-					$wgOut->addHTML(Wikia::link(
-						$this->mTitle->getLocalUrl(),
-						wfMsg("taskmanager_tasklist")
-					));
+					$this->loadTaskForm();
+					$this->loadPager();
 					break;
 
 				/**
@@ -187,10 +181,8 @@ class TaskManagerPage extends SpecialPage {
 					else {
 						$wgOut->addHTML( Wikia::errorbox("Task doesn't exists") );
 					}
-					$wgOut->addHTML(Wikia::link(
-						$this->mTitle->getLocalUrl(),
-						wfMsg("taskmanager_tasklist")
-					));
+					$this->loadTaskForm();
+					$this->loadPager();
 					break;
 
 				/**
@@ -384,7 +376,7 @@ class TaskManagerPager extends TablePager {
 
 	#--- formatValue --------------------------------------------------------
 	function formatValue( $field, $value ) {
-		global $wgStylePath;
+		global $wgStylePath, $wgRequest;
 
 		switch ($field) {
 			case "task_status":
@@ -395,31 +387,35 @@ class TaskManagerPager extends TablePager {
 					TASK_FINISHED_SUCCESS,
 					TASK_FINISHED_ERROR,
 					TASK_FINISHED_SUCCESS,
-					TASK_FINISHED_UNDO ) ) )
-				{
+					TASK_FINISHED_UNDO ) )
+				){
 					$sRetval .= sprintf(
 						"<br /><a href=\"%s\">log</a>",
 						$this->mTitle->getLocalUrl( "action=log&id={$iTaskID}")
 					);
 				}
 
-		// also, stuff to make a link for restore task as per #2478
-		$iTaskType = $this->mCurrentRow->task_type ;
-		if ((TASK_FINISHED_SUCCESS == $value) && ('multidelete' == $iTaskType)) {
-			$sRetval .= sprintf (
-					//restore or revert?
-					"<br /><a href=\"%s\">undo</a>",
-					//todo this is just a placeholder now
-					$this->mTitle->getLocalUrl( "action=undo&id={$iTaskID}")
+				// also, stuff to make a link for restore task as per #2478
+				$iTaskType = $this->mCurrentRow->task_type ;
+				if ((TASK_FINISHED_SUCCESS == $value) && ('multidelete' == $iTaskType)) {
+					$sRetval .= sprintf (
+						//restore or revert?
+						"<br /><a href=\"%s\">undo</a>",
+						//todo this is just a placeholder now
+						$this->mTitle->getLocalUrl( "action=undo&id={$iTaskID}")
 					) ;
-		}
-		return $sRetval;
+				}
+				return $sRetval;
 				break;
 
 			case "task_actions":
 				$iTaskID = $this->mCurrentRow->task_id;
 				$iTaskStatus = $this->mCurrentRow->task_status;
 				$sRetval = "";
+				$offset = $wgRequest->getVal( "offset", "" );
+				if( $offset !== "" ) {
+					$offset = "&offset={$offset}";
+				}
 
 				switch ( $iTaskStatus ) {
 					case TASK_WAITING:
@@ -427,7 +423,7 @@ class TaskManagerPager extends TablePager {
 							"<a href=\"%s\">
 								<img src=\"/skins/common/images/media-playback-start.png\" title=\"Start\" />
 							</a>",
-							$this->mTitle->getLocalUrl( "action=start&id={$iTaskID}" ));
+							$this->mTitle->getLocalUrl( "action=start&id={$iTaskID}{$offset}" ));
 						break;
 
 					case TASK_STARTED:
@@ -435,7 +431,7 @@ class TaskManagerPager extends TablePager {
 						"<a href=\"%s\">
 							<img src=\"/skins/common/images/media-playback-stop.png\" title=\"Stop\" />
 						</a>",
-						$this->mTitle->getLocalUrl( "action=finish&id={$iTaskID}"));
+						$this->mTitle->getLocalUrl( "action=finish&id={$iTaskID}{$offset}" ));
 						break;
 
 					case TASK_QUEUED:
@@ -443,7 +439,7 @@ class TaskManagerPager extends TablePager {
 						"<a href=\"%s\">
 							<img src=\"/skins/common/images/media-playback-pause.png\" title=\"Stop\" />
 						</a>",
-						$this->mTitle->getLocalUrl( "action=stop&id={$iTaskID}"));
+						$this->mTitle->getLocalUrl( "action=stop&id={$iTaskID}{$offset}"));
 						break;
 
 					case TASK_FINISHED_SUCCESS:
@@ -459,7 +455,7 @@ class TaskManagerPager extends TablePager {
 					"<a href=\"%s\">
 						<img src=\"/skins/common/images/process-stop.png\" title=\"Remove\" />
 					</a>",
-					$this->mTitle->getLocalUrl( "action=remove&id={$iTaskID}")
+					$this->mTitle->getLocalUrl( "action=remove&id={$iTaskID}{$offset}")
 				);
 				return $sRetval;
 				break;
@@ -538,7 +534,7 @@ class TaskManagerPager extends TablePager {
 	 * @return string: name of table using in sorting
 	 */
 	public function getDefaultSort() {
-		return "task_added";
+		return "task_id";
 	}
 
 	#--- getQueryInfo -------------------------------------------------------
