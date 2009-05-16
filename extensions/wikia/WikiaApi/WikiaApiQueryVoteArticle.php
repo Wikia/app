@@ -71,7 +71,7 @@ class WikiaApiQueryVoteArticle extends WikiaApiQuery {
 			# get votes for selected article
 			try {
 				$this->addTables( array("page_vote") );
-				$add_fields = array('article_id as page_id', 'AVG(vote) as votesavg, max(time) as max_time');
+				$add_fields = array('AVG(vote) as votesavg, max(time) as max_time');
 				$this->addFields( $add_fields );
 				if ( !$this->isInt($page) ) {
 					throw new WikiaApiQueryError(1);
@@ -96,7 +96,6 @@ class WikiaApiQueryVoteArticle extends WikiaApiQuery {
 					}
 					$this->addFields ( array("max(vote) as uservote") );
 				}
-				$this->addOption( "GROUP BY", "article_id" );
 
 				$data = array();
 				// check data from cache ...
