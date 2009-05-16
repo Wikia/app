@@ -106,18 +106,18 @@ class WikiaApiQueryVoteArticle extends WikiaApiQuery {
 					$db->selectDB( (!defined(WIKIA_API_QUERY_DBNAME)) ? WIKIA_API_QUERY_DBNAME : $wgDBname );
 					if ( is_null($db) ) throw new WikiaApiQueryError(0);
 					$res = $this->select(__METHOD__);
-					while ($row = $db->fetchObject($res)) {
-						$oTitle = Title::newFromId($row->page_id);
+					if ($row = $db->fetchObject($res)) {
+						$oTitle = Title::newFromId($page);
 						if ($oTitle instanceof Title) {
-							$data[$row->page_id] = array(
-								"id"			=> $row->page_id,
+							$data[$page] = array(
+								"id"			=> $page,
 								"title"			=> $oTitle->getText(),
 								"votesavg"		=> $row->votesavg,
 							);
 							if (isset($row->uservote)) {
-								$data[$row->page_id]["uservote"] = $row->uservote;
+								$data[$page]["uservote"] = $row->uservote;
 							}
-							ApiResult::setContent( $data[$row->page_id], $oTitle->getText() );
+							ApiResult::setContent( $data[$page], $oTitle->getText() );
 						}
 					}
 					$db->freeResult($res);
