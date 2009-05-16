@@ -216,7 +216,7 @@ class WikiaReplicateImages {
 					escapeshellcmd( "mkdir -p " . dirname( $target ) )
 				);
 				$output = wfShellExec( $cmd, $retval );
-				Wikia::log( __CLASS__, "info", $cmd );
+				Wikia::log( __CLASS__, "info", "s:{$server["address"]} f:{$server["flag"]} mkdir " . dirname( $target ) );
 				$cmd = wfEscapeShellArg(
 					"/usr/bin/rsync",
 					"-axpr",
@@ -228,12 +228,12 @@ class WikiaReplicateImages {
 				);
 				$output = wfShellExec( $cmd, $retval );
 				if( $retval == 0 ) {
-					Wikia::log( __CLASS__, "info", "{$cmd}." );
+					Wikia::log( __CLASS__, "info", "s:{$server["address"]} f:{$server["flag"]} {$source} -> {$target}" );
 					$flags = $flags | $server["flag"];
 				}
 			}
 			else {
-				Wikia::log( __CLASS__, "info", $cmd );
+				Wikia::log( __CLASS__, "info", "s:{$server["address"]} f:{$server["flag"]} {$source} -> {$target}" );
 				$flags = $flags | $server["flag"];
 			}
 		}
