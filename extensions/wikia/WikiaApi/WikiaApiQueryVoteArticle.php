@@ -68,7 +68,7 @@ class WikiaApiQueryVoteArticle extends WikiaApiQuery {
 		$browserId = $this->getBrowser();
 
 		if ( !is_null($page) ) {
-			# get votes for selected article 
+			# get votes for selected article
 			try {
 				$this->addTables( array("page_vote") );
 				$add_fields = array('article_id as page_id', 'AVG(vote) as votesavg, max(time) as max_time');
@@ -96,6 +96,7 @@ class WikiaApiQueryVoteArticle extends WikiaApiQuery {
 					}
 					$this->addFields ( array("max(vote) as uservote") );
 				}
+				$this->addOption( "GROUP BY", "article_id" );
 
 				$data = array();
 				// check data from cache ...
@@ -154,7 +155,7 @@ class WikiaApiQueryVoteArticle extends WikiaApiQuery {
 
 				$select_user_vote = "";
 				if ( !is_null($uservote) ) {
-					# isset user_id or ip ?					
+					# isset user_id or ip ?
 					if ( empty($user_id) && empty($ip) )  {
 						throw new WikiaApiQueryError(2);
 					}
@@ -170,11 +171,11 @@ class WikiaApiQueryVoteArticle extends WikiaApiQuery {
 					$select_user_vote .= " group by article_id";
 				}
 
-				if ( $wgTopVoted ) { 
+				if ( $wgTopVoted ) {
 					// show most voted articles
 					if (empty($uservote)) $this->setCacheKey ($lcache_key, 'O', "votesavg");
 					$order = "votesavg DESC";
-				} else { 
+				} else {
 					// show last voted articles
 					if (empty($uservote)) $this->setCacheKey ($lcache_key, 'O', "time");
 					$order = "max(time) DESC";
@@ -218,7 +219,7 @@ class WikiaApiQueryVoteArticle extends WikiaApiQuery {
 					if ( is_null($db) ) {
 						throw new WikiaApiQueryError(0);
 					}
-					
+
 					$res = $this->select(__METHOD__);
 					while ($row = $db->fetchObject($res)) {
 						$data[$row->page_id] = array(
@@ -228,7 +229,7 @@ class WikiaApiQueryVoteArticle extends WikiaApiQuery {
 						);
 						if ( isset($select_user_vote) && !empty($select_user_vote) ) {
 							$data[$row->page_id]["uservote"] = 0;
-						} 
+						}
 					}
 					$db->freeResult($res);
 
@@ -312,7 +313,7 @@ class WikiaApiQueryVoteArticle extends WikiaApiQuery {
 			if ( empty($user_id) && empty($browserId) ) {
 				throw new WikiaApiQueryError(2);
 			}
-			
+
 			#--- macbre: fixes #2456
 			if ( $vote < 0 || $vote > 5 ) {
 				throw new WikiaApiQueryError(3);
@@ -403,7 +404,7 @@ class WikiaApiQueryVoteArticle extends WikiaApiQuery {
 			if ( empty($user_id) && empty($browserId) ) {
 				throw new WikiaApiQueryError(2);
 			}
-			
+
 			#--- macbre: fixes #2456
 			if ( $vote < 0 || $vote > 5 ) {
 				throw new WikiaApiQueryError(3);
