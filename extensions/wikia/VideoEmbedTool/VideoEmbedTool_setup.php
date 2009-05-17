@@ -72,7 +72,6 @@ function VETWikiaVideoBlueLink() {
 	$wgOut->addHTML( $s );
 
         if ( in_array( get_class($wgUser->getSkin()), $wgVETAllowedSkins ) ) {
-die('1');
                 wfLoadExtensionMessages('VideoEmbedTool');
                 $wgHooks['MakeGlobalVariablesScript'][] = 'VETSetupVars';
                 $wgOut->addScript('<script type="text/javascript" src="'.$wgStylePath.'/common/yui_2.5.2/slider/slider-min.js?'.$wgStyleVersion.'"></script>');
