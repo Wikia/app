@@ -31,3 +31,30 @@ Please leave a message on [[$2|my talk page]] if I can help with anything! $3",
 Please leave a message on [[$2|my talk page]] if I can help with anything! $3",
 	"welcome-message-log" => "welcoming new contributor",
 );
+$messages['fi'] = array(
+	"welcome-user" => "@latest",
+	"welcome-enabled" => "page-user message-anon message-user",
+	"welcome-user-page" => "==Tietoa minusta==
+
+''Tämä on sinun käyttäjäsivusi. Käy muokkaamaan tätä sivua ja kerro yhteisölle itsestäsi!''
+
+==Minun muokkaukseni==
+
+* [[Toiminnot:Muokkaukset/{{PAGENAME}}|Käyttäjän muokkaukset]]
+
+==Minun suosikkisivuni==
+
+* Lisää linkki suosikkisivuillesi tässä wikissä tähän!
+* Suosikkisivu #2
+* Suosikkisivu #3
+",
+	"welcome-message-user" => "Hei ja tervetuloa {{SITENAME}}iin! Kiitos, että muokkasit [[:$1]]-sivua.
+
+Jos vain jotenkin voin auttaa, niin laita rohkeasti viesti [[$2|keskustelusivulleni]]! $3",
+	"welcome-message-anon" => "Hei ja tervetuloa {{SITENAME}}iin! Kiitos, että muokkasit [[:$1]]-sivua.
+
+'''[[Toiminnot:Kirjaudu_sisään|Ole hyvä ja luo tunnus tai kirjaudu sisään]]'''. Se on helppo tapa pitää kirjaa omista muokkauksistasi ja helpottaa sinua kommunikoimaan yhteisössä.
+
+Jos vain jotenkin voin auttaa, niin laita rohkeasti viesti [[$2|keskustelusivulleni]]! $3",
+	"welcome-message-log" => "tervetuloa uusi muokkaaja",
+);
