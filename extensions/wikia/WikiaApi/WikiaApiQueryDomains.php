@@ -43,6 +43,11 @@ class WikiaApiQueryDomains extends ApiQueryBase {
 
 		if ($activeonly) $this->addWhereFld('city_public', 1);
 		if ($wikia) $this->addWhereFld('city_id', $wikia);
+		
+		if ( !empty($from) && !empty($to) ) {
+			if ($from && is_int($from)) $this->addWhere('city_id >= '.intval($from));
+			if ($to && is_int($to)) $this->addWhere('city_id <= '.intval($to));
+		}
 
 		$this->addOption( "ORDER BY ", "city_id" );
 
@@ -84,6 +89,14 @@ class WikiaApiQueryDomains extends ApiQueryBase {
 				ApiBase :: PARAM_TYPE => "integer",
 				ApiBase :: PARAM_MAX => 1,
 				ApiBase :: PARAM_MIN => 0,
+			),
+			"from" => array(
+				ApiBase :: PARAM_TYPE => "integer",
+				ApiBase :: PARAM_MIN => 1,
+			),
+			"to" => array(
+				ApiBase :: PARAM_TYPE => "integer",
+				ApiBase :: PARAM_MIN => 1,
 			)
 		);
 	}
@@ -91,7 +104,9 @@ class WikiaApiQueryDomains extends ApiQueryBase {
 	public function getParamDescription() {
 		return array (
 			"wikia" => "Identifier in Wiki Factory",
-			"active" => "Get only active domains [optional]"
+			"active" => "Get only active domains [optional]",
+			"from" => "Begin of range - identifier in Wiki Factory",
+			"to" => "end of range - identifier in Wiki Factory"
 		);
 	}
 
@@ -100,6 +115,7 @@ class WikiaApiQueryDomains extends ApiQueryBase {
 			"api.php?action=query&list=wkdomains",
 			"api.php?action=query&list=wkdomains&wkactive=1",
 			"api.php?action=query&list=wkdomains&wkwikia=177",
+			"api.php?action=query&list=wkdomains&wkfrom=100&wkto=150",
 		);
 	}
 };
