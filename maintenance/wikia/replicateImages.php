@@ -190,13 +190,12 @@ class WikiaReplicateImages {
 		$cmd = wfEscapeShellArg(
 			"/usr/bin/rsync",
 			"-axpr",
+			"--quiet",
 			"--owner",
 			"--group",
 			"--chmod=g+w",
 			$source,
-			escapeshellcmd( $this->mRunAs . '@' . $server["address"] . ':' . $target ),
-			">/dev/null",
-			"2>/dev/null"
+			escapeshellcmd( $this->mRunAs . '@' . $server["address"] . ':' . $target )
 		);
 
 		if( $this->mTest ) {
@@ -224,13 +223,12 @@ class WikiaReplicateImages {
 				$cmd = wfEscapeShellArg(
 					"/usr/bin/rsync",
 					"-axpr",
+					"--quiet",
 					"--owner",
 					"--group",
 					"--chmod=g+w",
 					$source,
-					escapeshellcmd( $this->mRunAs . '@' . $server["address"] . ':' . $target ),
-					">/dev/null",
-					"2>/dev/null"
+					escapeshellcmd( $this->mRunAs . '@' . $server["address"] . ':' . $target )
 				);
 				$output = wfShellExec( $cmd, $retval );
 				if( $retval == 0 ) {
