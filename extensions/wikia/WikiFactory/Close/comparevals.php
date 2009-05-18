@@ -15,7 +15,7 @@ require_once( "commandLine.inc" );
 $dbr = wfGetDB( DB_SLAVE );
 $sth = $dbr->select(
 	WikiFactory::table("city_list"),
-	array( "city_dbname", "city_id" ),
+	array( "city_dbname", "city_id", "city_public" ),
 	false,
 	__FILE__,
 	array( "ORDER BY" => "city_id" )
@@ -34,10 +34,10 @@ while( $row = $dbr->fetchObject( $sth ) ) {
 
 	if( !empty( $variable->cv_value ) ) {
 		if( unserialize( $variable->cv_value ) !== $row->city_dbname ) {
-			print "wgDBname different than city_dbname in city_id={$row->city_id}\n";
+			print "wgDBname different than city_dbname in city_id={$row->city_id} city_public={$row->city_public}\n";
 		}
 	}
 	else {
-		print "wgDBname is not defined in city_id={$row->city_id}\n";
+		print "wgDBname is not defined in city_id={$row->city_id} city_public={$row->city_public}\n";
 	}
 }
