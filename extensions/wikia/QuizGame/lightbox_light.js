@@ -256,8 +256,8 @@ function setLightboxText(message){
 	
 	// center lightbox and make sure that the top and left values are not negative
 	// and the image placed outside the viewport
-	var lightboxTop = arrayPageScroll[1] + ((arrayPageSize[3] - 35 - $D.getDimensions($('lightboxText') ).height) / 2);
-	var lightboxLeft = ((arrayPageSize[0] - 20 - $D.getDimensions($('lightboxText') ).width) / 2);	
+	var lightboxTop = arrayPageScroll[1] + ((arrayPageSize[3] - 35 - $D.getDimensions($G('lightboxText') ).height) / 2);
+	var lightboxLeft = ((arrayPageSize[0] - 20 - $D.getDimensions($G('lightboxText') ).width) / 2);	
 	
 	objLightbox.style.top = (lightboxTop < 0) ? "0px" : lightboxTop + "px";
 	objLightbox.style.left = (lightboxLeft < 0) ? "0px" : lightboxLeft + "px";

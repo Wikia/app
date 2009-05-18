@@ -7,7 +7,7 @@
 	
 					var callback = {
 						success:function(t){	
-							$('ajax-messages').innerHTML = t.responseText;	
+							$G('ajax-messages').innerHTML = t.responseText;	
 						},
 						failure:function(t) { 
 							alert('Error was: ' + t.responseText);
@@ -23,7 +23,7 @@
 					var pars = 'rs=wfQuestionGameAdmin&rsargs[]=unflagItem&rsargs[]=' + key + '&rsargs[]=' + id;
 	
 					var callback = {
-						success:function(t){	$('ajax-messages').innerHTML = t.responseText;},
+						success:function(t){	$G('ajax-messages').innerHTML = t.responseText;},
 						failure:function(t) { alert('Error was: ' + t.responseText); }
 					};
 					
@@ -37,7 +37,7 @@
 					var pars = 'rs=wfQuestionGameAdmin&rsargs[]=unprotectItem&rsargs[]=' + key + '&rsargs[]=' + id;
 					
 					var callback = {
-						success:function(t){	$('ajax-messages').innerHTML = t.responseText;},
+						success:function(t){	$G('ajax-messages').innerHTML = t.responseText;},
 						failure:function(t) { alert('Error was: ' + t.responseText); }
 					};
 					
@@ -49,7 +49,7 @@
 					var pars = 'rs=wfQuestionGameAdmin&rsargs[]=protectItem&rsargs[]=' + key + '&rsargs[]=' + id;
 					
 					var callback = {
-						success:function(t){	$('ajax-messages').innerHTML = t.responseText;},
+						success:function(t){	$G('ajax-messages').innerHTML = t.responseText;},
 						failure:function(t) { alert('Error was: ' + t.responseText); }
 					};
 					

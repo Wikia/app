@@ -1039,7 +1039,7 @@ function wfSpecialQuizGameHome(){
 								}
 								
 								//{$editLinks}
-								$output .= "<a href=\"javascript:document.location='" . Title::makeTitle(NS_SPECIAL, "QuizGameHome")->escapeFullURL("questionGameAction=renderPermalink") . "&permalinkID=' + \$( 'quizGameId' ).value\">" . wfMsgForContent( 'quiz_permalink' ) . "</a>
+								$output .= "<a href=\"javascript:document.location='" . Title::makeTitle(NS_SPECIAL, "QuizGameHome")->escapeFullURL("questionGameAction=renderPermalink") . "&permalinkID=' + \$G( 'quizGameId' ).value\">" . wfMsgForContent( 'quiz_permalink' ) . "</a>
 								
 								<div id=\"flag-comment\" style=\"display:none;margin-top:5px;\">Reason: <input type=\"text\" size=\"20\" id=\"flag-reason\"> <input type=\"button\" onclick=\"doflagQuestion()\" value=\"Submit\"></div>
 							</div>

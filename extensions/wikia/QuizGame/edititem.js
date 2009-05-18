@@ -1,35 +1,35 @@
 					
 					function toggleCheck(thisBox){
 						for(x=1;x<=(__choices_count__);x++){
-							$('quizgame-isright-'+x).checked = false;
+							$G('quizgame-isright-'+x).checked = false;
 						}
 						thisBox.checked = true;
 					}
 					
 					function uploadError(message){
-						$('ajax-messages').innerHTML = message;
-						$('quizgame-picture').innerHTML = '';
+						$G('ajax-messages').innerHTML = message;
+						$G('quizgame-picture').innerHTML = '';
 						
-						$('imageUpload-frame').src = 'index.php?title=Special:QuestionGameUpload&wpThumbWidth=80&wpCategory=Quizgames&wpOverwriteFile=true&wpDestFile=' + $('quizGamePicture').value;
+						$G('imageUpload-frame').src = 'index.php?title=Special:QuestionGameUpload&wpThumbWidth=80&wpCategory=Quizgames&wpOverwriteFile=true&wpDestFile=' + $G('quizGamePicture').value;
 						YAHOO.widget.Effects.Show('quizgame-upload');
 					}
 					
 					function completeImageUpload(){
 						YAHOO.widget.Effects.Hide('quizgame-upload');
-						$('quizgame-picture').innerHTML = '<img src="http://images.wikia.com/common/wikiany/images/ajax-loader-white.gif?1"\>';
+						$G('quizgame-picture').innerHTML = '<img src="http://images.wikia.com/common/wikiany/images/ajax-loader-white.gif?1"\>';
 					}
 					
 					function uploadComplete(imgSrc, imgName, imgDesc){
-						$('quizgame-picture').innerHTML = imgSrc;
+						$G('quizgame-picture').innerHTML = imgSrc;
 						
-						//$('quizgame-picture').down().src = $('quizgame-picture').down().src + '?' + Math.floor( Math.random()*100 );
-						$('quizgame-picture').firstChild.src = $('quizgame-picture').firstChild.src + '?' + Math.floor( Math.random()*100 );
+						//$G('quizgame-picture').down().src = $G('quizgame-picture').down().src + '?' + Math.floor( Math.random()*100 );
+						$G('quizgame-picture').firstChild.src = $G('quizgame-picture').firstChild.src + '?' + Math.floor( Math.random()*100 );
 						
 						document.quizGameEditForm.quizGamePicture.value = imgName;
 						
-						$('imageUpload-frame').src = 'index.php?title=Special:QuestionGameUpload&wpThumbWidth=80&wpCategory=Quizgames&wpOverwriteFile=true&wpDestFile=' + imgName;
+						$G('imageUpload-frame').src = 'index.php?title=Special:QuestionGameUpload&wpThumbWidth=80&wpCategory=Quizgames&wpOverwriteFile=true&wpDestFile=' + imgName;
 						
-						$('quizgame-editpicture-link').innerHTML = '<a href=\"javascript:showUpload()\">Edit Picture</a>';
+						$G('quizgame-editpicture-link').innerHTML = '<a href=\"javascript:showUpload()\">Edit Picture</a>';
 						YAHOO.widget.Effects.Show('quizgame-editpicture-link');
 					}
 					
