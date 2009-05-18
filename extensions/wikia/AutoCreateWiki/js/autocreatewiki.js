@@ -23,6 +23,10 @@ function allowAction(e) {
 	);
 }
 
+function urlencode(str) {
+	return escape(str).replace('+', '%2B').replace('%20', '+').replace('*', '%2A').replace('/', '%2F').replace('@', '%40');
+}
+
 function setProgressImg(field) {
 	field.innerHTML = '<img src="' + stylepath + '/common/progress-wheel.gif" width="16" height="16" alt="Wait..." border="0" />';
 }
@@ -195,16 +199,17 @@ YAHOO.ACWikiRequest.checkAccount = function(e, fid) {
 		} else if (fid == "retype-password") {
 			params = "&pass=" + escape(YD.get("wiki-password").value);
 		} else if ( fid == "password" ) {
-			params = "&username=" + escape(YD.get("wiki-username").value);
+			params = "&username=" + urlencode(escape(YD.get("wiki-username").value));
 			YD.get("wiki-retype-password").value = "";
 			delete divErrors["'wiki-retype-password-error'"];
 			YAHOO.util.Dom.setStyle("wiki-retype-password-error", 'display', 'none');
 			YD.get("wiki-retype-password-error-status").innerHTML = "";
 		}
-		var req = wgAjaxPath + "?action=ajax&rs=axACWRequestCheckAccount&name=" + escape(fid) + "&lang=" + escape(lang) + "&value=" + escape(name.value);
+		var req = wgAjaxPath + "?action=ajax&rs=axACWRequestCheckAccount&name=" + escape(fid) + "&lang=" + escape(lang) + "&value=" + urlencode(escape(name.value));
 		YC.asyncRequest( "GET", req + params, YAHOO.ACWikiRequest.NameCallback);
 	}
 }
+
 
 YAHOO.ACWikiRequest.wikiAccountKeyUp = function(e) {
 	var id = this.id;
