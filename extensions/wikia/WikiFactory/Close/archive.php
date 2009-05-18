@@ -10,6 +10,7 @@ require_once( "commandLine.inc" );
 
 $city_id = isset( $options[ "city_id" ] ) ? $options[ "city_id" ] : false;
 if( $city_id ) {
+	Wikia::log( __FILE__, "info", "Copy {$city_id} to archive" );
 	WikiFactory::copyToArchive( $city_id );
 }
 else {
