@@ -24,11 +24,6 @@ $wgHooks['EditPage::showEditForm:initial'][] = 'SharedHelpEditPageHook';
 $wgHooks['BrokenLink'][] = 'SharedHelpBrokenLink';
 $wgHooks['WantedPages::getSQL'][] = 'SharedHelpWantedPagesSql';
 
-# __NOSHAREDHELP__ magic word prevents rendering of shared content
-$wgHooks['MagicWordwgVariableIDs'][] = 'efSharedHelpRegisterMagicWordID';
-$wgHooks['LanguageGetMagic'][] = 'efSharedHelpGetMagicWord';
-$wgHooks['InternalParseBeforeLinks'][] = 'efSharedHelpRemoveMagicWord';
-
 class SharedHttp extends Http {
 	static function get( $url, $timeout = 'default' ) {
 		return self::request( "GET", $url, $timeout );
@@ -109,8 +104,9 @@ function SharedHelpHook(&$out, &$text) {
 		return true;
 	}
 
-	# Do not process if explicitly told not to by __NOSHAREDHELP__ magic word
-	if ( strpos( $text, '<!--NOSHAREDHELP-->' ) ) {
+	# Do not process if explicitly told not to
+	$mw = MagicWord::get('MAG_NOSHAREDHELP');
+	if ( $mw->match( $text ) ) {
 		return true;
 	}
 
@@ -286,9 +282,6 @@ function SharedHelpBrokenLink( $linker, $nt, $query, $u, $style, $prefix, $text,
 /**
  * does $title article exist @help.wikia?
  *
- * uses info cached by SharedHelpHook
- * in border cases may be inacurate up to cachetime (600 sec right now)
- *
  * @see SharedHelpHook
  */
 function SharedHelpArticleExists($title) {
@@ -296,12 +289,43 @@ function SharedHelpArticleExists($title) {
 
 	$exists = false;
 
-	$sharedArticleKey = $wgSharedDB . ':sharedArticles:' . $wgHelpWikiId . ':' .
+	$sharedLinkKey = $wgSharedDB . ':sharedLinks:' . $wgHelpWikiId . ':' .
 		MWNamespace::getCanonicalName( $title->getNamespace() ) .  ':' . $title->getDBkey();
-	$sharedArticle = $wgMemc->get($sharedArticleKey);
+	$sharedLink = $wgMemc->get($sharedLinkKey);
 
-	if ( !empty($sharedArticle['timestamp']) ) {
+	if ( $sharedLink ) {
 		$exists =  true;
+	} else {
+		$sharedArticleKey = $wgSharedDB . ':sharedArticles:' . $wgHelpWikiId . ':' .
+			MWNamespace::getCanonicalName( $title->getNamespace() ) .  ':' . $title->getDBkey();
+		$sharedArticle = $wgMemc->get($sharedArticleKey);
+
+		if ( !empty($sharedArticle['timestamp']) ) {
+			$exists =  true;
+		} else {
+			wfProfileIn( __METHOD__ );
+
+			$dbr = wfGetDB( DB_SLAVE );
+			$res = $dbr->select(
+				array( WikiFactory::IDtoDB($wgHelpWikiId) . '.page' ),
+				array( 'page_id' ),
+				array(
+					'page_namespace' => NS_HELP,
+					'page_title' => $title->getDBkey(),
+				),
+				__METHOD__
+			);
+
+			if ( $row = $dbr->fetchObject( $res ) ) {
+				if ( !empty($row->page_id) ) {
+					$exists =  true;
+				}
+			}
+
+			wfProfileOut( __METHOD__ );
+		}
+
+		if ($exists) $wgMemc->set($sharedLinkKey, true);
 	}
 
 	return $exists;
@@ -342,7 +366,10 @@ function SharedHelpWantedPagesSql( $page, $sql ) {
 	return true;
 }
 
-# __NOSHAREDHELP__ hook functions
+# __NOSHAREDHELP__ magic word prevents rendering of shared content
+$wgHooks['MagicWordwgVariableIDs'][] = 'efSharedHelpRegisterMagicWordID';
+$wgHooks['LanguageGetMagic'][] = 'efSharedHelpGetMagicWord';
+$wgHooks['InternalParseBeforeLinks'][] = 'efSharedHelpRemoveMagicWord';
 
 function efSharedHelpRegisterMagicWordID(&$magicWords) {
 	$magicWords[] = 'MAG_NOSHAREDHELP';
@@ -350,11 +377,11 @@ function efSharedHelpRegisterMagicWordID(&$magicWords) {
 }
 
 function efSharedHelpGetMagicWord(&$magicWords, $langCode) {
-	$magicWords['MAG_NOSHAREDHELP'] = array( 0, '__NOSHAREDHELP__' );
+	$magicWords['MAG_NOSHAREDHELP'] = array(0, '__NOSHAREDHELP__');
 	return true;
 }
 
 function efSharedHelpRemoveMagicWord(&$parser, &$text, &$strip_state) {
-	MagicWord::get('MAG_NOSHAREDHELP')->replace('<!--NOSHAREDHELP-->', $text);
+	MagicWord::get('MAG_NOSHAREDHELP')->matchAndRemove($text);
 	return true;
 }
