@@ -117,7 +117,7 @@ class Comment{
 	}
 	
 	function count(){
-		$dbr =& wfGetDB( DB_MASTER );
+		$dbr =& wfGetDB( DB_SLAVE );
 		$s = $dbr->selectRow( '`Comments`', array( 'count(distinct(comment_username)) as CommentCount' ), array( 'comment_page_id' => $this->PageID ), __METHOD__ );
 		if ( $s !== false ) {
 			$this->CommentTotal = $s->CommentCount;
@@ -126,7 +126,7 @@ class Comment{
 	}
 	
 	function countTotal(){
-		$dbr =& wfGetDB( DB_MASTER );
+		$dbr =& wfGetDB( DB_SLAVE );
 		$count = 0;
 		$s = $dbr->selectRow( '`Comments`', array( 'count(*) as CommentCount' ), array( 'comment_page_id' => $this->PageID ), __METHOD__ );
 		if ( $s !== false ) {
@@ -191,7 +191,7 @@ class Comment{
 	}
 	
 	function getCommentScore(){
-		$dbr =& wfGetDB( DB_MASTER );
+		$dbr =& wfGetDB( DB_SLAVE );
 		$s = $dbr->selectRow( '`Comments_Vote`', array( 'sum(Comment_Vote_Score) as CommentScore' ), array( 'Comment_Vote_ID' => $this->CommentID ), __METHOD__ );
 		if ( $s !== false ) {
 			$this->CommentScore = $s->CommentScore;
@@ -200,7 +200,7 @@ class Comment{
 	}
 	
 	function getCommentVoteCount($vote){
-		$dbr =& wfGetDB( DB_MASTER );
+		$dbr =& wfGetDB( DB_SLAVE );
 		$s = $dbr->selectRow( '`Comments_Vote`', array( 'COUNT(*) as CommentVoteCount' ), array( 'Comment_Vote_ID' => $this->CommentID, 'Comment_Vote_Score' => $vote), __METHOD__ );
 		if ( $s !== false ) {
 			$VoteCount = $s->CommentVoteCount;
@@ -360,7 +360,7 @@ class Comment{
 	
 	public function getCommentList(){
 		global $wgUser;
-		$dbr =& wfGetDB( DB_MASTER );
+		$dbr =& wfGetDB( DB_SLAVE );
 		
 		$sql = "SELECT Comment_Username,comment_ip, comment_text,comment_date,UNIX_TIMESTAMP(comment_date) as timestamp,Comment_user_id,
 				CommentID,IFNULL(Comment_Plus_Count - Comment_Minus_Count,0) as Comment_Score,
@@ -471,8 +471,6 @@ class Comment{
 		if($wgUser->getName()=="Pean")$wgDebugComments=true;
 		
 		$sk =& $wgUser->getSkin();
-		
-		$dbr =& wfGetDB(DB_MASTER);
 		
 		$output = "";
 		
@@ -732,7 +730,7 @@ class Comment{
 	
 	static function getBlockList($user_id){
 		$block_list = array();
-		$dbr =& wfGetDB( DB_MASTER );
+		$dbr =& wfGetDB( DB_SLAVE );
 		$sql = "SELECT cb_user_name_blocked
 			FROM Comments_block 
 			WHERE cb_user_id = {$user_id}";
@@ -744,7 +742,7 @@ class Comment{
 	}
 
 	static function isUserCommentBlocked($user_id,$user_id_blocked){
-		$dbr =& wfGetDB( DB_MASTER );
+		$dbr =& wfGetDB( DB_SLAVE );
 		$s = $dbr->selectRow( '`Comments_block`', array( 'cb_id' ), array( 'cb_user_id' => $user_id, 'cb_user_id_blocked' => $user_id_blocked ), $fname );
 		if ( $s !== false ) {
 			return true;

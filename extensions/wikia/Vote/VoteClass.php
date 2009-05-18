@@ -25,7 +25,7 @@ class Vote{
 			wfDebug( "loading vote count for page {$this->PageID} from cache\n" );
 			$vote_count = $data;
 		} else {
-			$dbr =& wfGetDB( DB_MASTER );
+			$dbr =& wfGetDB( DB_SLAVE );
 			$vote_count = 0;
 			$sql = "SELECT count(*) as VoteCount FROM Vote WHERE vote_page_id = " . $this->PageID;
 			$res = $dbr->query($sql);
@@ -47,7 +47,7 @@ class Vote{
     		wfDebug( "loading vote avg for page {$this->PageID} from cache\n" );
     		$VoteAvg = $data; 
     	} else {
-    		$dbr =& wfGetDB( DB_MASTER );
+    		$dbr =& wfGetDB( DB_SLAVE );
     		$sql = "SELECT AVG(vote_value) as VoteAvg FROM Vote WHERE vote_page_id = " . $this->PageID;
     		$res = $dbr->query($sql);
     		$row = $dbr->fetchObject( $res );
@@ -95,7 +95,7 @@ class Vote{
     
 	function updateStats(){
 		//update stats
-		$dbr =& wfGetDB( DB_MASTER );
+		$dbr =& wfGetDB( DB_SLAVE );
 		$sql = "SELECT * from wikia_page_stats where ps_page_id =  " . $this->PageID;
 		$res = $dbr->query($sql);
 		$row = $dbr->fetchObject( $res );
@@ -145,7 +145,7 @@ class Vote{
     
 	function UserAlreadyVoted(){
 		global $wgUser;
-		$dbr =& wfGetDB( DB_MASTER );
+		$dbr =& wfGetDB( DB_SLAVE );
 		$s = $dbr->selectRow( '`Vote`', 
 			array( 'vote_value' ), 
 			array( 

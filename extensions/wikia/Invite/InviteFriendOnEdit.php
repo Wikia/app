@@ -23,7 +23,7 @@ function wfCreateOpinionCheck(&$article, &$user, &$text, &$summary, &$minoredit,
 	
 	if($wgSendNewArticleToFriends){
 		//If the user has created a new opinion, we want to turn on a session flag
-		$dbr =& wfGetDB( DB_MASTER );
+		$dbr =& wfGetDB( DB_SLAVE );
 		$sql = "SELECT cl_to FROM " . $dbr->tableName( 'categorylinks' ) . "  WHERE cl_from=" . $wgTitle->mArticleID;
 		$res = $dbr->query($sql);
 		while ($row = $dbr->fetchObject( $res ) ) {

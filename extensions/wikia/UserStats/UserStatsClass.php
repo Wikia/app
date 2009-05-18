@@ -615,7 +615,7 @@ class UserStats{
 		global $wgMemc;
 
 		wfDebug( "Got user stats  for {$this->user_name} from db\n" );
-		$dbr =& wfGetDB( DB_MASTER );
+		$dbr =& wfGetDB( DB_SLAVE );
 		$sql = "SELECT *
 			FROM user_stats
 			WHERE stats_user_id = {$this->user_id} LIMIT 0,1";
@@ -659,7 +659,7 @@ class UserStats{
 	}
 
 	static function getTopFansList( $limit=10 ){
-		$dbr =& wfGetDB( DB_MASTER );
+		$dbr =& wfGetDB( DB_SLAVE );
 
 		if($limit>0){
 			$limitvalue = 0;
