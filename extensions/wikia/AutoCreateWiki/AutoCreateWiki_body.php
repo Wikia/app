@@ -676,10 +676,10 @@ class AutoCreateWikiPage extends SpecialPage {
         $this->mWikiData[ "language" ]  = $this->awcLanguage;
         $this->mWikiData[ "subdomain" ] = $this->mWikiData[ "name"];
         $this->mWikiData[ "redirect" ]  = $this->mWikiData[ "name"];
-		$this->mWikiData[ "dir_part" ]  = $this->mWikiData[ "name"];
+		$this->mWikiData[ "dir_part" ]  = $this->prepareDirValue();
 		$this->mWikiData[ "dbname" ]    = substr( str_replace( "-", "", $this->mWikiData[ "name"] ), 0, 64);
 		$this->mWikiData[ "path" ]      = "/usr/wikia/docroot/wiki.factory";
-        $this->mWikiData[ "images" ]    = self::IMGROOT . $this->mWikiData[ "name"] . "/images";
+        $this->mWikiData[ "images" ]    = self::IMGROOT . $this->mWikiData[ "dir_part"] . "/images";
         $this->mWikiData[ "testWiki" ]  = false;
 
         if ( isset( $this->mWikiData[ "language" ] ) && $this->mWikiData[ "language" ] !== "en" ) {
@@ -691,6 +691,39 @@ class AutoCreateWikiPage extends SpecialPage {
 		}
 
 		wfProfileOut( __METHOD__ );
+	}
+
+	/**
+	 * check folder exists
+	 *
+	 * @access private
+	 *
+	 * @param 
+	 */
+	private function prepareDirValue() {
+		wfProfileIn( __METHOD__ );
+		#---
+		$this->log( "Checking {$this->mWikiData[ "name"]} folder" );
+
+		$isExist = false; $suffix = ""; 
+		$dir_part = $this->mWikiData[ "name"] . $suffix;
+		while ( $isExist == false ) {
+			$dirName = $this->mWikiData[ "name"] . $suffix;
+			if ( isset( $this->mWikiData[ "language" ] ) && $this->mWikiData[ "language" ] !== "en" ) {
+				$dirName .= "/" . strtolower( $this->mWikiData[ "language" ] );
+			}
+			$dirName = self::IMGROOT . $dirName . "/images";
+			#---				
+			if ( file_exists( $dirName ) ) {
+				$suffix = rand(1, 9999);
+			} else {
+				$dir_part = $this->mWikiData[ "name"] . $suffix;
+				$isExist = true;
+			}
+		}
+		
+		wfProfileOut( __METHOD__ );
+		return $dir_part;
 	}
 
 	/**
