@@ -9,11 +9,11 @@
 	function deleteQuestion(){
 		
 		var url = "index.php?action=ajax";
-		var postBody = 'rs=wfQuestionGameAdmin&rsargs[]=deleteItem&rsargs[]=' + $( 'quizGameKey' ).value + '&rsargs[]=' + $( 'quizGameId' ).value;
+		var postBody = 'rs=wfQuestionGameAdmin&rsargs[]=deleteItem&rsargs[]=' + $G( 'quizGameKey' ).value + '&rsargs[]=' + $G( 'quizGameId' ).value;
 		var callback = 
 		{
 			success:function(t){	
-					$('ajax-messages').innerHTML = t.responseText + "<br />" + __quiz_js_reloading__;
+					$G('ajax-messages').innerHTML = t.responseText + "<br />" + __quiz_js_reloading__;
 					document.location = '/index.php?title=Special:QuizGameHome&questionGameAction=launchGame';
 			},
 			failure:function(t) { 
@@ -24,7 +24,7 @@
 
 	function showEditMenu(){
 		document.location = wgServer + "/index.php?title=Special:QuizGameHome&questionGameAction=editItem&quizGameId=" + 
-				     $( 'quizGameId' ).value + "&quizGameKey=" + $( 'quizGameKey' ).value;
+				     $G( 'quizGameId' ).value + "&quizGameKey=" + $G( 'quizGameKey' ).value;
 	}
 
 	function flagQuestion(){
@@ -34,10 +34,10 @@
 	function doflagQuestion(){
 
 		var url = "index.php?action=ajax";
-		var postBody = 'rs=wfQuestionGameAdmin&rsargs[]=flagItem&rsargs[]=' + $( 'quizGameKey' ).value + '&rsargs[]=' + $( 'quizGameId' ).value + '&rsargs[]=' + $( 'flag-reason' ).value;
+		var postBody = 'rs=wfQuestionGameAdmin&rsargs[]=flagItem&rsargs[]=' + $G( 'quizGameKey' ).value + '&rsargs[]=' + $G( 'quizGameId' ).value + '&rsargs[]=' + $G( 'flag-reason' ).value;
 		var callback = 
 		{
-				success: function(t){	$('ajax-messages').innerHTML = t.responseText;$El('flag-comment').hide();},
+				success: function(t){	$G('ajax-messages').innerHTML = t.responseText;$El('flag-comment').hide();},
 				failure: function(t) { alert('Error was: ' + t.responseText); }
 		}
 		var transaction = YAHOO.util.Connect.asyncRequest('POST', url, callback, postBody);
@@ -46,10 +46,10 @@
 	
 	function protectImage(){	
 		var url = "index.php?action=ajax";
-		var postBody = 'rs=wfQuestionGameAdmin&rsargs[]=protectItem&rsargs[]=' + $( 'quizGameKey' ).value + '&rsargs[]=' + $( 'quizGameId' ).value;
+		var postBody = 'rs=wfQuestionGameAdmin&rsargs[]=protectItem&rsargs[]=' + $G( 'quizGameKey' ).value + '&rsargs[]=' + $G( 'quizGameId' ).value;
 		var callback = 
 		{
-				success: function(t){	$('ajax-messages').innerHTML = t.responseText;},
+				success: function(t){	$G('ajax-messages').innerHTML = t.responseText;},
 				failure: function(t) { alert('Error was: ' + t.responseText); }
 		}
 		var transaction = YAHOO.util.Connect.asyncRequest('POST', url, callback, postBody);
@@ -86,10 +86,10 @@
 		
 		 
 		
-		$("time-countdown").innerHTML = timer;
+		$G("time-countdown").innerHTML = timer;
 		timer--;
 		if(timer==-1){
-			$("quiz-notime").innerHTML =  __quiz_js_timesup__ ;
+			$G("quiz-notime").innerHTML =  __quiz_js_timesup__ ;
 			if(count_second)clearTimeout(count_second)
 		}else{
 			count_second = setTimeout("count_down(0)",1000);
@@ -99,14 +99,14 @@
 	function set_level(){
 		for(x=0;x<=levels_array.length-1;x++){
 			if( (timer==0 && x==levels_array.length-1) || (timer<=levels_array[x] && timer > levels_array[x +1 ]) ){
-				//$("quiz-level-" + (x) ).className = "quiz-level-on"
+				//$G("quiz-level-" + (x) ).className = "quiz-level-on"
 				
 				points=points_array[x]
-				$("quiz-points" ).innerHTML = points + ' ' + __quiz_js_points__ ;
+				$G("quiz-points" ).innerHTML = points + ' ' + __quiz_js_points__ ;
 				next_level = ((levels_array[x+1])?levels_array[x+1]:0);
 			 
 			}else{
-				//$("quiz-level-" + (x) ).className = "quiz-level-off"
+				//$G("quiz-level-" + (x) ).className = "quiz-level-off"
 			}
 		}
 	}
@@ -126,13 +126,13 @@
 	}
 	
 	function go_to_next_quiz( ){
-		window.location = wgServer + '/index.php?title=Special:QuizGameHome&questionGameAction=launchGame&lastid='+$( 'quizGameId' ).value
+		window.location = wgServer + '/index.php?title=Special:QuizGameHome&questionGameAction=launchGame&lastid='+$G( 'quizGameId' ).value
 	}
 	
 	function pause_quiz(){
-		if($("lightbox-loader"))$("lightbox-loader").innerHTML = '';
+		if($G("lightbox-loader"))$G("lightbox-loader").innerHTML = '';
 		if(continue_timer)clearTimeout(continue_timer)
-			$("quiz-controls").innerHTML = "<a  href='javascript:go_to_next_quiz();' class='stop-button'>" + __quiz_pause_continue__ + "</a> - <a href='/index.php?title=Special:QuizLeaderBoard' class='stop-button'>" + __quiz_pause_view_leaderboard__ + "</a> - <a href='/index.php?title=Special:QuizGameHome&questionGameAction=createForm' class='stop-button'>" + __quiz_pause_create_question__ + "</a><br><br><a href='" + wgServer + "' class='stop-button'>" + __quiz_main_page_button__ + "</a>";
+			$G("quiz-controls").innerHTML = "<a  href='javascript:go_to_next_quiz();' class='stop-button'>" + __quiz_pause_continue__ + "</a> - <a href='/index.php?title=Special:QuizLeaderBoard' class='stop-button'>" + __quiz_pause_view_leaderboard__ + "</a> - <a href='/index.php?title=Special:QuizGameHome&questionGameAction=createForm' class='stop-button'>" + __quiz_pause_create_question__ + "</a><br><br><a href='" + wgServer + "' class='stop-button'>" + __quiz_main_page_button__ + "</a>";
 	}
 	
 	function get_loader(){
@@ -162,10 +162,10 @@
 		set_lightbox_text('');
 		
 		var url = "index.php?action=ajax";
-		var postBody = 'rs=wfQuestionGameVote&rsargs[]=-1&rsargs[]=' + $( 'quizGameKey' ).value + '&rsargs[]=' + $( 'quizGameId' ).value  + '&rsargs[]=0';
+		var postBody = 'rs=wfQuestionGameVote&rsargs[]=-1&rsargs[]=' + $G( 'quizGameKey' ).value + '&rsargs[]=' + $G( 'quizGameId' ).value  + '&rsargs[]=0';
 		var callback = 
 		{
-				success: function(t){ go_to_next_quiz($( 'quizGameId' ).value) }
+				success: function(t){ go_to_next_quiz($G( 'quizGameId' ).value) }
 		}
 		var transaction = YAHOO.util.Connect.asyncRequest('POST', url, callback, postBody);
 
@@ -182,7 +182,7 @@
 		voted = 1;
 		//alert("if itss right, you get " + points + " points\");
 		
-		$('ajax-messages').innerHTML = '';
+		$G('ajax-messages').innerHTML = '';
 		
 		objLink = new Object();
 	
@@ -194,17 +194,17 @@
 		
 		quiz_controls = "<div id='quiz-controls'><a href='javascript:void(0)' onclick='pause_quiz()' class='stop-button'>" + __quiz_lightbox_pause_quiz__ + "</a></div>";
 		
-		view_results_button =  "<a href='javascript:go_to_quiz(" + $( 'quizGameId' ).value + ");' class='stop-button'>" + __quiz_lightbox_breakdown__ + "</a>";
+		view_results_button =  "<a href='javascript:go_to_quiz(" + $G( 'quizGameId' ).value + ");' class='stop-button'>" + __quiz_lightbox_breakdown__ + "</a>";
 		
 		var url = "index.php?action=ajax";
-		var postBody = 'rs=wfQuestionGameVote&rsargs[]=' + id + '&rsargs[]=' + $( 'quizGameKey' ).value + '&rsargs[]=' + $( 'quizGameId' ).value  + '&rsargs[]=' + points;
+		var postBody = 'rs=wfQuestionGameVote&rsargs[]=' + id + '&rsargs[]=' + $G( 'quizGameKey' ).value + '&rsargs[]=' + $G( 'quizGameId' ).value  + '&rsargs[]=' + points;
 		var callback = 
 		{
 				success: function(t){
 					var payload = eval('(' + t.responseText + ')');
 					
 					continue_timer = setTimeout("go_to_next_quiz()",3000);
-					//window.location = 'index.php?title=Special:QuizGameHome&questionGameAction=launchGame&lastid=' + $( 'quizGameId' ).value;
+					//window.location = 'index.php?title=Special:QuizGameHome&questionGameAction=launchGame&lastid=' + $G( 'quizGameId' ).value;
 					
 					percent_right = payload.percentRight + __quiz_lightbox_breakdown_percent__;
 					
