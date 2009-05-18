@@ -41,17 +41,6 @@ class AdEngine {
 
 	protected static $instance = false;
 
-	public $bucketName = null;
-	public $bucketNum = -1;
-
-	private $bucketTests = array(
-		1 => 'GAM_leaderboard', // Using Google Ad Manager for leaderboard testing
-		2 => 'GAM_boxad', // Using Google Ad Manager for the box ad
-                3 => 'lp', // Leaderboard placed left-center-right in current spot
-                4 => 'lp', // Leaderboard placed left-center-right in current spot
-                5 => 'bp', // Boxad placement
-	);
-
 	// Exclude these $wgDBname's from bucket testing
 	private $handsOffWikis = array(
 		'masseffect',
@@ -93,7 +82,6 @@ class AdEngine {
 		foreach($this->providers as $p) {
 			$wgAutoloadClasses['AdProvider' . $p]=dirname(__FILE__) . '/AdProvider'.$p.'.php';
 		}
-		$this->bucketNum = mt_rand(0,100);
 	}
 
 	public static function getInstance($slots = null) {
@@ -372,37 +360,6 @@ class AdEngine {
 		return "<div id=\"$slotname\"$style></div>";
 	}
 
-	public function getBucketTestingCode(){
-		// Bucket testing leaderboard ad placement
-		$out = "<script type='text/javascript'>\n" .
-			"AdEngine.bucketTests = " . json_encode($this->bucketTests) . "\n" .
-			'AdEngine.bucketName = "' . addslashes($this->getBucketName()) . '"' . ";\n" .
-			"AdEngine.doBucketTest();\n" .
-			"AdEngine.bucketDebug();\n" .
-			"</script>";
-
-		return $out;
-	}
-
-	public function getBucketName(){
-		global $wgDBname;
-	        if (!is_null($this->bucketName)){
-                	return $this->bucketName;
-		} else if (!empty($_GET['forceBucket'])){
-			// preg_replace to prevent XSS
-			$this->bucketName = preg_replace('/[^a-z0-9A-Z\-\_]/', '', $_GET['forceBucket']);
-			return $this->bucketName;
-		} else if (in_array($wgDBname, $this->handsOffWikis)){
-			$this->bucketName = '';
-		} else {
-			if (isset($this->bucketTests[$this->bucketNum])){
-				$this->bucketName = $this->bucketTests[$this->bucketNum];
-			} else {
-				$this->bucketName = '';
-			}
-		}
-	}
-
 	public function getDelayedLoadingCode(){
 		global $wgExtensionsPath;
 
@@ -417,7 +374,6 @@ class AdEngine {
 
 		$out = "<!-- #### BEGIN " . __CLASS__ . '::' . __METHOD__ . " ####-->\n";
 
-		$out .=  $this->getBucketTestingCode();
 		global $wgCityId;
 		$out .=  $this->providerValuesAsJavascript($wgCityId);
 

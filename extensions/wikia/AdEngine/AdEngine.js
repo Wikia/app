@@ -16,6 +16,7 @@ function AdEngine (){
  */
 AdEngine.resetCssClear = function (side) {
 	var Dom = YAHOO.util.Dom;
+	
 	Dom.getElementsBy(function(el) {
 	if((el.nodeName == 'DIV' || el.nodeName == 'TABLE') &&
 		    Dom.getStyle(el, 'float') == side) {
@@ -26,7 +27,6 @@ AdEngine.resetCssClear = function (side) {
 	}, null, this.bodyWrapper , function(el) {
 			Dom.setStyle(el, 'clear', side);
 	});
-
 };
 
 /**
@@ -35,7 +35,8 @@ AdEngine.resetCssClear = function (side) {
  * if the site has a black background, call a black ad from Google
  * Code pulled originally from FAST.js, with some modifications.
  *
- * @author Inez Korczynski, repackaged into AdEngine by Nick Sullivan
+ * @author Inez Korczynski, repackaged into AdEngine by Nick Sullivan,
+ * rewritten to use jQuery by Nick
  */
 AdEngine.getAdColor = function (type) {
 
@@ -68,7 +69,7 @@ AdEngine.getAdColor = function (type) {
 			link = editSections[0].getElementsByTagName('a')[0];
 		}
 
-		if(link == null) {
+		if(link === null) {
 			var links = $('bodyContent').getElementsByTagName('a');
 			for(i = 0; i < links.length; i++) {
 				if(!YAHOO.util.Dom.hasClass(links[i], 'new')) {
@@ -76,7 +77,7 @@ AdEngine.getAdColor = function (type) {
 					break;
 				}
 			}
-			if(link == null) {
+			if(link === null) {
 				link = links[0];
 			}
 		}
@@ -131,9 +132,7 @@ AdEngine.getHEX = function (color) {
 
 
 /* Backward compatible function call, this method is already referenced in Ad Server code */
-function AdGetColor(type) {
-	return AdEngine.getAdColor(type);
-}
+AdGetColor = AdEngine.getAdColor;
 
 /* Display the div for an ad, as long as it is not a no-op ad, such as a clear gif */
 AdEngine.displaySlotIfAd = function (slotname) {
@@ -155,150 +154,6 @@ AdEngine.displaySlotIfAd = function (slotname) {
         if (! noopFound ) {
                 YAHOO.util.Dom.setStyle(slotname, 'display', 'block');
         }
-};
-
-/* The bucket name is for the type of test we are doing. This function is used because 
- * the bucket name can be set manually in php, or passed through the url
- */
-AdEngine.getBucketName = function(){
-	// Allow for it to be passed in the url, for testing
-	var forceParam = document.location.search.match(/forceBucket=[A-Za-z0-9_\-]+/);
-	if (forceParam != null ){
-		AdEngine.bucketName = forceParam.toString().substr(12);
-	}
-
-	return AdEngine.bucketName;
-};
-
-/* The bucketid is the value for the current bucket that is being tested, 
- * it can also be passed through the url. 
- * Note that AdEngine.bucketid and it will be passed to DART as 'wkabkt', and some day to other AdProviders
- */
-AdEngine.bucketid = ''; // Set it to empty string so we don't pass 'undefined' to ad providers
-AdEngine.getBucketid = function(){
-	var forceParam = document.location.search.match(/forceBucketid=[^&;]*/);
-	if (forceParam != null ){
-		AdEngine.bucketid = forceParam.toString().substr(14);
-	} else if (YAHOO.util.Cookie.get('wkabkt') != null ){
-		AdEngine.bucketid = YAHOO.util.Cookie.get('wkabkt');
-	} else if (AdEngine.bucketid != '' ){
-		return AdEngine.bucketid;
-	} else {
-		var bucketids = new Array('');
-
-		// Set up the various tests
-		if ($('TOP_LEADERBOARD') != null && AdEngine.bucketName == 'lp'){
-			bucketids = new Array('lp_center', 'lp_left', 'lp_right', 'lp_control');
-
-		} else if ($('TOP_LEADERBOARD') != null && AdEngine.bucketName == 'lp_at'){
-			bucketids = new Array('lp_at_center', 'lp_at_left', 'lp_at_right', 'lp_at_control');
-
-		} else if ($('TOP_RIGHT_BOXAD') != null && AdEngine.bucketName == 'bp'){
-			bucketids = new Array('bp_overline', 'bp_down', 'bp_control');
-
-		} 
-
-		if (bucketids.length > 1){
-			AdEngine.bucketid = bucketids[Math.floor(Math.random()*bucketids.length)];
-		}
-
-	}
-
-	return AdEngine.bucketid;
-
-};
-
-AdEngine.bucketDebug = function (){
-	if (document.location.search.match(/bucketDebug/)){
-                var msg = 'AdEngine.bucketName = "' + AdEngine.bucketName + '"\n' +
-                  'AdEngine.bucketid = "' + AdEngine.bucketid + '"\n' + 
-                  'wkabkt cookie = "' + YAHOO.util.Cookie.get('wkabkt') + '"\n';
-
-                alert('Data from AdEngine.bucketDebug:\n' + msg);
-	}
-};
-
-
-/* For testing click through rates on various placements of ads. 
- * Checks to see which bucket this user should be in,
- * and then adjusts the style for the containing div. The name of the bucket
- * is returned so that it can be passed to the ad call for reporting.
- * @return a unique id to identify the test (for passing in the ad call), or '' if no test done.
- */
-AdEngine.doBucketTest = function () {
-	AdEngine.getBucketName();
-	AdEngine.getBucketid(); 
-
-	// Do the switching of the css via javascript
-	if ($('TOP_LEADERBOARD') != null){
-
-	  switch (AdEngine.bucketid){
-		case '': return; // No buckets for this page
-
-		// Shift around the leaderboards in their current slot
-		case 'lp_left':
-			YAHOO.util.Dom.setStyle("TOP_LEADERBOARD", "margin-left", "0");
-			YAHOO.util.Dom.setStyle("TOP_LEADERBOARD", "margin-right", "auto");
-			break;
-		case 'lp_center':
-			YAHOO.util.Dom.setStyle("TOP_LEADERBOARD", "margin-left", "auto");
-			YAHOO.util.Dom.setStyle("TOP_LEADERBOARD", "margin-right", "auto");
-			break;
-		case 'lp_right':
-			YAHOO.util.Dom.setStyle("TOP_LEADERBOARD", "margin-left", "auto");
-			YAHOO.util.Dom.setStyle("TOP_LEADERBOARD", "margin-right", "0");
-			break;
-
-		// Shift around the leaderboards in a new slot, above the title
-		case 'lp_at_left':
-			YAHOO.util.Dom.setStyle("TOP_LEADERBOARD", "margin-left", "0");
-			YAHOO.util.Dom.setStyle("TOP_LEADERBOARD", "margin-right", "auto");
-			break;
-		case 'lp_at_center':
-			YAHOO.util.Dom.setStyle("TOP_LEADERBOARD", "margin-left", "auto");
-			YAHOO.util.Dom.setStyle("TOP_LEADERBOARD", "margin-right", "auto");
-			break;
-		case 'lp_at_right':
-			YAHOO.util.Dom.setStyle("TOP_LEADERBOARD", "margin-left", "auto");
-			YAHOO.util.Dom.setStyle("TOP_LEADERBOARD", "margin-right", "0");
-			break;
-	  }
-	
-	} else if ($('TOP_RIGHT_BOXAD') != null){
-
-       	  // Shift the box ad up and down
-	  switch (AdEngine.bucketid){
-		case 'bp_overline':
-			YAHOO.util.Dom.setStyle("TOP_RIGHT_BOXAD", "margin-top", "-45px");
-			break;
-		case 'bp_down':
-			YAHOO.util.Dom.setStyle("TOP_RIGHT_BOXAD", "margin-top", "45px");
-			break;
-          }
-
-	}	
-
-	// Remember the bucketid for the current session
-	YAHOO.util.Cookie.set("wkabkt", AdEngine.bucketid);
-	
-	return AdEngine.bucketid;
-
-};
-
-// This is how we handle the reporting for bucket testing, by using google channels
-AdEngine.getGoogleChannel = function (){
-	AdEngine.getBucketid();
-	switch (AdEngine.bucketid){
-	  case 'lp_left': return "7793152260";
-	  case 'lp_center': return "1436236834";
-  	  case 'lp_right': return "6226936120";
-	  case 'lp_at_left': return "8909168217";
-	  case 'lp_at_center': return "3786044824";
-	  case 'lp_at_right': return "1531954547";
-	  case 'bp_overline': return "0569622692";
-	  case 'bp_down': return "1570830585";
-	  default: return "";
-	}
 };
 
 
