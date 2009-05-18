@@ -278,8 +278,12 @@ class SquidUpdate {
 			$url = SquidUpdate::expand( $url );
 
 			wfDebug( "Purging URL $url via Stomp\n" );
-			$stomp->send( 'wikia.purges',
-				Wikia::json_encode( array( 'url' => $url ) ),
+			$key = 'wikia.purges';
+			$stomp->send( $key,
+				Wikia::json_encode( array(
+					'key' => $key,
+					'url' => $url,
+				) ),
 				array( 'exchange' => 'amq.topic', 'bytes_message' => 1 )
 			);
 		}
