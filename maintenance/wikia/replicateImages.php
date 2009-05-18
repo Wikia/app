@@ -192,7 +192,9 @@ class WikiaReplicateImages {
 			"--group",
 			"--chmod=g+w",
 			$source,
-			escapeshellcmd( $this->mRunAs . '@' . $server["address"] . ':' . $target )
+			escapeshellcmd( $this->mRunAs . '@' . $server["address"] . ':' . $target ),
+			">/dev/null",
+			"2>/dev/null"
 		);
 
 		if( $this->mTest ) {
@@ -224,7 +226,9 @@ class WikiaReplicateImages {
 					"--group",
 					"--chmod=g+w",
 					$source,
-					escapeshellcmd( $this->mRunAs . '@' . $server["address"] . ':' . $target )
+					escapeshellcmd( $this->mRunAs . '@' . $server["address"] . ':' . $target ),
+					">/dev/null",
+					"2>/dev/null"
 				);
 				$output = wfShellExec( $cmd, $retval );
 				if( $retval == 0 ) {
