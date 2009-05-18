@@ -12,7 +12,7 @@ function wfSpecialUserlogin( $par = '' ) {
 	if( session_id() == '' ) {
 		wfSetupSession();
 	}
-	$wgHooks['ExtendJSGlobalVars'][] = 'wfSpecialUserloginSetupVars';
+	$wgHooks['MakeGlobalVariablesScript'][] = 'wfSpecialUserloginSetupVars';
 	$form = new LoginForm( $wgRequest, $par );
 	$form->execute();
 }
