@@ -84,6 +84,7 @@ class WikiaReplicateImages {
 		);
 
 		if( $sth ) {
+			$cnt = 1;
 			while( $Row = $dbw->fetchObject( $sth ) ) {
 				$flags = 0;
 
@@ -91,7 +92,7 @@ class WikiaReplicateImages {
 				 * just uploaded file
 				 */
 
-				Wikia::log( __CLASS__, "start", "****** copy up_id:{$Row->up_id} city_id:{$Row->up_city_id} path:{$Row->up_imgpath} created:{$Row->up_created} flags:{$Row->up_flags}" );
+				Wikia::log( __CLASS__, "start", "===> {$cnt} up_id:{$Row->up_id} city_id:{$Row->up_city_id} path:{$Row->up_imgpath} created:{$Row->up_created} flags:{$Row->up_flags}" );
 
 				foreach( $this->mServers as $name => $server ) {
 					/**
@@ -141,6 +142,7 @@ class WikiaReplicateImages {
 					);
 					$dbw->commit();
 				}
+				$cnt++;
 			}
 		}
 		else {
