@@ -221,6 +221,7 @@ function SharedHelpHook(&$out, &$text) {
 			$skipNamespaces = array();
 			$skipNamespaces[] = $wgContLang->getNsText(NS_CATEGORY);
 			$skipNamespaces[] = $wgContLang->getNsText(NS_IMAGE);
+			$skinNamespaces[] = $wgContLang->getNsText(NS_FILE);
 			$skipNamespaces[] = "Advice";
 			if ($wgLanguageCode != 'en') {
 				$skipNamespaces[] = Namespace::getCanonicalName(NS_CATEGORY);
