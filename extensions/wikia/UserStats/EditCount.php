@@ -20,7 +20,7 @@ function removeDeletedEdits(&$article, &$user, &$reason){
 	//only keep tally for allowable namespaces
 	if( !is_array($wgNamespacesForEditPoints) || in_array( $wgTitle->getNamespace(), $wgNamespacesForEditPoints ) ){
 	
-		$dbr = wfGetDB( DB_MASTER );
+		$dbr = wfGetDB( DB_SLAVE );
 		$sql = "select rev_user_text, rev_user,  count(*) as the_count from revision where rev_page = {$article->getID()} and rev_user <> 0  group by rev_user_text";
 		$res = $dbr->query($sql);
 		while ($row = $dbr->fetchObject( $res ) ) {
@@ -40,7 +40,7 @@ function restoreDeletedEdits(&$title, $new){
 	//only keep tally for allowable namespaces
 	if( !is_array($wgNamespacesForEditPoints) || in_array( $title->getNamespace(), $wgNamespacesForEditPoints ) ){
 	
-		$dbr = wfGetDB( DB_MASTER );
+		$dbr = wfGetDB( DB_SLAVE );
 		$sql = "select rev_user_text, rev_user,  count(*) as the_count from revision where rev_page = {$title->getArticleID()} and rev_user <> 0  group by rev_user_text";
 		$res = $dbr->query($sql);
 		while ($row = $dbr->fetchObject( $res ) ) {

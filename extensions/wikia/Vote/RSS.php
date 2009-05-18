@@ -18,7 +18,7 @@ class RSS{
 	}
 	
 	function update_rss_category($Category){
-		$dbr =& wfGetDB( DB_MASTER );
+		$dbr =& wfGetDB( DB_SLAVE );
 		if($this->published == 0){
 			$DateSQL = " (select DATE_FORMAT(DATE_SUB(`rev_timestamp` , INTERVAL 4 HOUR ),'%Y-%m-%d %H:%i:%s') from {$dbr->tableName( 'revision' )} where rev_page=page_id order by rev_timestamp asc limit 1) as published_date, ";
 		}else{
@@ -54,7 +54,7 @@ class RSS{
 	}
 	
 	function update_rss_page_categories(){
-		$dbr =& wfGetDB( DB_MASTER );
+		$dbr =& wfGetDB( DB_SLAVE );
 	
 			$sql = "SELECT page_namespace,page_title,published_date,page_id FROM page ";
 			$sql .=" INNER JOIN published_page  ";
@@ -94,7 +94,7 @@ class RSS{
 		
 		global $wgArticlePath, $wgServer;
 			
-		$dbr =& wfGetDB( DB_MASTER );
+		$dbr =& wfGetDB( DB_SLAVE );
 		$result = $dbr->query($sql);
 		
 		$sk =& $wgUser->getSkin();
@@ -181,7 +181,7 @@ class RSS{
 			}
 			
 			$TechnoratiTags = "<a href=\"http://technorati.com/tag/{$wgTechnoratiMainTag}\" rel=\"tag\">{$wgTechnoratiMainTag}</a>";
-			$dbr =& wfGetDB( DB_MASTER );
+			$dbr =& wfGetDB( DB_SLAVE );
 			$sql2 = "SELECT cl_to FROM " . $dbr->tableName( 'categorylinks' ) . "  WHERE cl_from=" . $row->page_id;
 			
 			$res2 = $dbr->query($sql2);

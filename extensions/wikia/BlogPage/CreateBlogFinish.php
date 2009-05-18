@@ -61,7 +61,7 @@ function wfVoteForPageOnCreate(){
 function wfFacebookUpdateProfile(){
 	global $wgUser, $IP, $wgTitle;
 	//check if the current user has the app installed
-	$dbr =& wfGetDB( DB_MASTER );
+	$dbr =& wfGetDB( DB_SLAVE );
 	$s = $dbr->selectRow( '`fb_link_view_opinions`', array( 'fb_user_id','fb_user_session_key' ), array( 'fb_user_id_wikia' => $wgUser->getID() ), $fname );
 	if ( $s !== false ) {
 		require_once "$IP/extensions/wikia/Facebook/appinclude.php";

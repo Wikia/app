@@ -149,11 +149,7 @@ class UserBoard {
 		
 		global $wgMemc;
 		$key = wfMemcKey( 'user', 'newboardmessage', $user_id );
-		//$dbr =& wfGetDB( DB_MASTER );
 		$new_count = 0;
-		//$s = $dbr->selectRow( '`user_board`', array( 'count(*) as count' ), array( 'ug_user_id_to' => $user_id, 'ug_status' => 1 ), __METHOD__ );
-		//if ( $s !== false )$new_gift_count = $s->count;	
-		
 		$wgMemc->set($key,$new_count);
 		
 		return $new_count;
@@ -172,7 +168,7 @@ class UserBoard {
 	}
 	
 	public function doesUserOwnMessage($user_id, $ub_id){
-		$dbr =& wfGetDB( DB_MASTER );
+		$dbr =& wfGetDB( DB_SLAVE );
 		$s = $dbr->selectRow( '`user_board`', array( 'ub_user_id' ), array( 'ub_id' => $ub_id ), __METHOD__ );
 		if ( $s !== false ) {
 			if($user_id == $s->ub_user_id){
@@ -183,7 +179,7 @@ class UserBoard {
 	}
 	
 	public function didUserSendMessage($user_id, $ub_id){
-		$dbr =& wfGetDB( DB_MASTER );
+		$dbr =& wfGetDB( DB_SLAVE );
 		$s = $dbr->selectRow( '`user_board`', array( 'ub_user_id_from' ), array( 'ub_id' => $ub_id ), __METHOD__ );
 		if ( $s !== false ) {
 			if($user_id == $s->ub_user_id_from){
@@ -214,7 +210,7 @@ class UserBoard {
 	
 	public function getUserBoardMessages($user_id,$user_id_2=0,$limit=0,$page=0){
 		global $wgUser, $wgOut, $wgTitle, $wgParser;
-		$dbr =& wfGetDB( DB_MASTER );
+		$dbr =& wfGetDB( DB_SLAVE );
 		
 		if($limit>0){
 			$limitvalue = 0;
@@ -265,7 +261,7 @@ class UserBoard {
 
 	public function getAnonUserBoardMessages($user_name,$user_id_2=0,$limit=0,$page=0){
 		global $wgUser, $wgOut, $wgTitle, $wgParser;
-		$dbr =& wfGetDB( DB_MASTER );
+		$dbr =& wfGetDB( DB_SLAVE );
 		
 		if($limit>0){
 			$limitvalue = 0;
@@ -316,7 +312,7 @@ class UserBoard {
 	
 	public function getUserBoardToBoardCount($user_id,$user_id_2){
 		global $wgOut, $wgUser, $wgTitle;
-		$dbr =& wfGetDB( DB_MASTER );
+		$dbr =& wfGetDB( DB_SLAVE );
 		
 		$user_sql = " ( (ub_user_id={$user_id} and ub_user_id_from={$user_id_2}) OR 
 					(ub_user_id={$user_id_2} and ub_user_id_from={$user_id}) )
@@ -325,10 +321,7 @@ class UserBoard {
 		if(! ($user_id == $wgUser->getID() || $user_id_2 == $wgUser->getID()) ){
 				$user_sql .= " and ub_type = 0 ";
 		}
-		$sql = "SELECT count(*) as the_count
-			FROM user_board   
-			WHERE {$user_sql}
-			";
+		$sql = "SELECT count(*) as the_count FROM user_board WHERE {$user_sql}";
 
 		$res = $dbr->query($sql);
 		$row = $dbr->fetchObject( $res );

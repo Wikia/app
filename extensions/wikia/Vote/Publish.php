@@ -12,7 +12,7 @@ class Publish{
 	
 	function getDaysOld(){
 		$iDaysOld = 1;
-		$dbr =& wfGetDB( DB_MASTER );
+		$dbr =& wfGetDB( DB_SLAVE );
 		$sql = "select DATEDIFF(FROM_UNIXTIME(UNIX_TIMESTAMP()),FROM_UNIXTIME(UNIX_TIMESTAMP(rev_timestamp))) as DaysOld from {$dbr->tableName( 'revision' )} where rev_page=" . $this->PageID . " order by rev_timestamp asc limit 1 ";
 		$res = $dbr->query($sql);
 		$row = $dbr->fetchObject( $res );
@@ -49,7 +49,7 @@ class Publish{
 	}
 	
 	function incOpinionsPublished(){
-		$dbr =& wfGetDB( DB_MASTER );
+		$dbr =& wfGetDB( DB_SLAVE );
 		$sql = "SELECT cl_to FROM " . $dbr->tableName( 'categorylinks' ) . "  WHERE cl_from=" . $this->PageID;
 		$res = $dbr->query($sql);
 		while ($row = $dbr->fetchObject( $res ) ) {
@@ -76,7 +76,7 @@ class Publish{
 	}
 	
 	function already_published(){
-		$dbr =& wfGetDB( DB_MASTER );
+		$dbr =& wfGetDB( DB_SLAVE );
 		$sql = "SELECT * FROM `published_page` WHERE published_page_id =   " . $this->PageID . "  AND published_type = ". $this->PublishedType ;
 		$res = $dbr->query($sql);
 		$row = $dbr->fetchObject( $res );
@@ -87,7 +87,7 @@ class Publish{
 	}
 	
 	function check_score(){
-		$dbr =& wfGetDB( DB_MASTER );
+		$dbr =& wfGetDB( DB_SLAVE );
 		$sql = "SELECT published_level_id,published_score FROM published_level ";
 		$res = $dbr->query($sql);
 		while ($row = $dbr->fetchObject( $res ) ) {
