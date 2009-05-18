@@ -39,7 +39,6 @@ class StaticChute {
 			'common/urchin.js',
 			'common/wikibits.js',
 			'awesome/js/tracker.js',
-			'common/tracker.js',
 			'awesome/js/main.js',
 			'common/widgets/js/widgetsConfig.js',
 			'common/widgets/js/widgetsFramework.js',
@@ -72,7 +71,6 @@ class StaticChute {
 			'common/urchin.js',
 			'common/wikibits.js',
 			'awesome/js/tracker.js',
-			'common/tracker.js',
 			'common/ajaxwatch.js',
 			'awesome/js/main.js',
 			'common/widgets/js/widgetsConfig.js',
@@ -104,7 +102,6 @@ class StaticChute {
 			'common/urchin.js',
 			'common/wikibits.js',
 			'awesome/js/tracker.js',
-			'common/tracker.js',
 			'awesome/js/main.js',
 			'common/widgets/js/widgetsConfig.js',
 			'common/widgets/js/widgetsFramework.js',
@@ -135,13 +132,13 @@ class StaticChute {
 			'../extensions/wikia/Blogs/css/Blogs.css',
 		);
 		$this->config['awesome_css'] = array_merge($this->config['awesome_css'], $widgetsAssets['css']);
-	
+
 		// printable CSS
 		$this->config['awesome_css_print'] = array(
 			'awesome/css/print.css',
 			'common/commonPrint.css',
 		);
-	
+
 	}
 
 
@@ -180,7 +177,7 @@ class StaticChute {
 		} else if (!empty($args['files'])){
 			$basedir = realpath(dirname(__FILE__) . '/../../../');
 			foreach(explode(',', $args['files']) as $file){
-				// We don't trust user input. Check to make sure the requested file is 
+				// We don't trust user input. Check to make sure the requested file is
 				// in the document root
 				$rfile = realpath($basedir . $file);
 				if (!preg_match("#^$basedir#", $rfile)){
@@ -307,7 +304,7 @@ class StaticChute {
 			closedir($dh);
 		}
 		return array('js' => $js, 'css' => $css);
-	}       
+	}
 
 	private function getPackageMediaType($package) {
 		if (substr($package, -6) == '_print') {
@@ -323,7 +320,7 @@ class StaticChute {
 		// Taking the easy, safe path. This could be improved if you want to go through the
 		// effort/expense/risk of processing the DOM. For now just strip leading space on each line
 		$min = preg_replace('/^\s+/', '', $html);
-    		return $min; 
+    		return $min;
 	}
 
 	public function minifyHtmlFile($file){
@@ -342,7 +339,7 @@ class StaticChute {
     		return $this->minifyCssData($css);
 	}
 
-	/* Remove comments and superfluous white space from javascript. 
+	/* Remove comments and superfluous white space from javascript.
 	* Utilize JSMin from Douglas Crawford
 	* http://www.crockford.com/javascript/jsmin.html
 	* This file will need to be compiled by running "make" in this directory
@@ -351,7 +348,7 @@ class StaticChute {
 	* @return minified js, unless there is an error, return original js
 	*/
 	public function minifyJSFile($jsfile){
-		
+
 		$jsmin = dirname(__FILE__) . '/jsmin';
 		if (!is_executable($jsmin)){
 			$min = $this->comment("jsmin binary missing or not executable, reverting to MUCH slower PHP method") . $this->minifyJSPHP(file_get_contents($jsfile));
@@ -374,18 +371,18 @@ class StaticChute {
 	}
 
 
-	/* Remove comments and superfluous white space from javascript. 
+	/* Remove comments and superfluous white space from javascript.
 	* Utilize JSMin from Douglas Crawford
 	* http://www.crockford.com/javascript/jsmin.html
 	* This is the PHP port, which is a backup if the C version isn't available
-	* We utilize caching heavily, but if performance becomes an issue, use consider the C version 
+	* We utilize caching heavily, but if performance becomes an issue, use consider the C version
 	*
 	* @param $js - javascript code to minimize
 	* @return minified js, unless there is an error, return original js
 	*/
 	public function minifyJSPHP($js){
 
-		// This is kinda slow. We need to cache. 
+		// This is kinda slow. We need to cache.
 		$cacheDir = sys_get_temp_dir() . '/minifyCache';
 		if (mt_rand(1,10000) == 42){
 			// One out of every 10000 requests, clear out the cache
@@ -408,7 +405,7 @@ class StaticChute {
 			trigger_error($msg, E_USER_WARNING);
 			return $js . $this->comment($msg);
 		}
-		
+
 		// Cache
 		file_put_contents($cacheFile, $min);
 
@@ -417,7 +414,7 @@ class StaticChute {
 
 
 	/* Take a list of $files, checks / sets http headers, and returns the combined output (if applicable)
-	* @param $files - array of files to process. Full unix path. See getFileList() 
+	* @param $files - array of files to process. Full unix path. See getFileList()
 	* @return can be one of:
 		string output if successful
 		bool false on error
@@ -435,9 +432,9 @@ class StaticChute {
 		header("Last-Modified: " . gmdate('r', $latestMod));
 
 
-		$ifModSince=getenv('HTTP_IF_MODIFIED_SINCE'); 
+		$ifModSince=getenv('HTTP_IF_MODIFIED_SINCE');
 		if ($this->httpCache && !empty($ifModSince) && date_default_timezone_set('UTC') && $latestMod <= strtotime($ifModSince)){
-			// Times match, files have not changed since their last request. 
+			// Times match, files have not changed since their last request.
 			header('HTTP/1.1 304 Not Modified');
 			return true;
 		}
@@ -476,7 +473,7 @@ class StaticChute {
 			$this->bytesIn += strlen($rawData);
 			$this->bytesOut += strlen($data);
 
-      			$out .= $this->comment(basename($file)) . $data; 
+      			$out .= $this->comment(basename($file)) . $data;
           	}
 
 		if (empty($out)){
@@ -495,7 +492,7 @@ class StaticChute {
 
 	/*
 	* Send out Content-Type headers depending on the file type
-	*/  
+	*/
 	public function setContentType() {
 		switch($this->fileType){
 		  case 'js': header('Content-type: text/javascript'); break;

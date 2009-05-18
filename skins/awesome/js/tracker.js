@@ -1,97 +1,148 @@
 /*
-Copyright (c) 2007, Wikia Inc.
+Copyright (c) 2009, Wikia Inc.
 Author: Inez Korczynski (inez (at) wikia.com)
-Version: 1.1
 */
 
 var initTracker = function() {
 
-	var Tracker = YAHOO.Wikia.Tracker;
-	var Dom = YAHOO.util.Dom;
-	var Event = YAHOO.util.Event;
-	var lang = YAHOO.lang;
-
+	// - Inez
 	if(wgID == 2428) {
-		Event.addListener(['realAd0','realAd1'], 'click', function(e) {
-			var el = Event.getTarget(e);
-			if(el.innerHTML == 'Close ad') {
+		$('#realAd0, #realAd1').click(function(e) {
+			if(e.target.innerHTML == 'Close ad') {
 				if(wgIsMainpage) {
-					Tracker.trackByStr(e, 'CloseAd/MainPage');
+					$.tracker.byStr('CloseAd/MainPage');
 				} else {
-					Tracker.trackByStr(e, 'CloseAd/ArticlePage');
+					$.tracker.byStr('CloseAd/ArticlePage');
 				}
 			}
 		});
 	}
 
 	// Request Wiki
-	Event.addListener('request_wiki', 'click', function(e) {
-		Tracker.trackByStr(e, 'RequestWiki/initiate_click');
+	$('#request_wiki').click(function() {
+		$.tracker.byStr('RequestWiki/initiate_click');
 	});
 
 	// Links on edit page
-	Event.addListener(['wpMinoredit','wpWatchthis','wpSave','wpPreview','wpDiff','wpCancel','wpEdithelp'], 'click', function(e) {
-		var str  = 'editpage/' + this.id.substring(2).toLowerCase();
-		Tracker.trackByStr(e, str);
+	$('#wpMinoredit, #wpWatchthis, #wpSave, #wpPreview, #wpDiff, #wpCancel, #wpEdithelp').click(function(e) {
+		$.tracker.byStr('editpage/' + e.target.id.substring(2).toLowerCase());
 	});
 
 	// Edit links for sections
+	// TODO: WTF is this variable?
 	var WysyWigDone = false;
-	var editSections = Dom.getElementsByClassName('editsection', 'span', Dom.get('bodyContent'));
-	if (editSections.length > 0) {
-		Event.addListener(editSections, 'click', function(e) {
-			var el = Event.getTarget(e);
-			if(el.nodeName == 'A') {
-				Tracker.trackByStr(e, 'articleAction/editSection');
-			}
+	$('#bodyContent').find('span.editsection').click(function(e) {
+		if(e.target.nodeName == 'A') { $.tracker.byStr('articleAction/editSection'); }
+	});
+
+	if(wgUserName == null) {
+		$('#login, #register, #community_login, #community_register').click($.tracker.byId);
+
+		$('#wpLoginattempt, #wpMailmypassword, #wpCreateaccount, #wpAjaxRegister').click(function(e) {
+			$.tracker.byStr('loginActions/' + this.id.substring(2).toLowerCase());
 		});
-	}
-
-	if( lang.isNull( wgUserName ) ) {
-		// Login - top left corner
-		Event.addListener('login', 'click', this.trackById);
-		// Create an account - top left corner
-		Event.addListener('register', 'click', this.trackById);
-
-		// Login - community widget
-		Event.addListener('community_login', 'click', this.trackById);
-		// Create an account - community widget
-		Event.addListener('community_register', 'click', this.trackById);
-
-
-		// Login/register process
-		Event.addListener(['wpLoginattempt','wpMailmypassword','wpCreateaccount','wpAjaxRegister'], 'click', function(e) {
-			Tracker.trackByStr(e, 'loginActions/' + this.id.substring(2).toLowerCase());
-		});
-
 	} else {
-		Event.addListener(['userData','headerMenuUser'], 'click', function(e) {
-			var el = Event.getTarget(e);
-			if(el.nodeName == 'A') {
-				parentId = el.parentNode.id;
-				Tracker.trackByStr(e, 'userMenu/' + (parentId == 'header_username' ? 'userPage/' : '') + el.innerHTML);
+		$('#userData, #headerMenuUser').click(function(e) {
+			if(e.target.nodeName == 'A') {
+				var parentId = e.target.parentNode.id;
+				$.tracker.byStr('userMenu/' + (parentId == 'header_username' ? 'userPage/' : '') + e.target.innerHTML);
 			}
 		});
-		Event.addListener('headerButtonUser', 'click', this.trackByStr, 'userMenu/more');
+		$('#headerButtonUser').click(function() { $.tracker.byStr('userMenu/more'); });
 	}
 
 	// CategoryList
-	Event.addListener('headerMenuHub', 'click', function(e) {
-		var el = Event.getTarget(e);
-		if(el.nodeName == 'A') {
-			if ( el.id == 'goToHub' )  {
-				Tracker.trackByStr(e, 'categoryList/moredotdotdot');
-			}
-			else if (el.id != '') {
-				Tracker.trackByStr(e, 'categoryList/'+ el.id.split('-')[1]  + '/' + el.innerHTML);
+	$('#headerMenuHub').click(function() { $.tracker.byStr('categoryList/more'); });
+	$('#headerMenuHub').click(function(e) {
+		if(e.target.nodeName == 'A') {
+			if(e.target.id == 'goToHub')  {
+				$.tracker.byStr('categoryList/moredotdotdot');
+			} else if(e.target.id != '') {
+				$.tracker.byStr('categoryList/'+ e.target.id.split('-')[1]  + '/' + e.target.innerHTML);
 			}
 		}
 	});
-	Event.addListener('headerButtonHub', 'click', this.trackByStr, 'categoryList/more');
 
-	// Wikia & Wiki top left logo
-	Event.addListener(['wikia_logo','wiki_logo'], 'click', this.trackById);
+	// Wikia & Wiki logo
+	$('#wikia_logo, #wiki_logo').click($.tracker.byId);
 
+	// Navigation - toolbox
+	$('#link_box').click(function(e) {
+		if(e.target.nodeName == 'A') {
+			$.tracker.byStr('toolbox/' + e.target.innerHTML);
+		}
+	});
+
+	// User Engagement
+	$('#ue_msg').click(function(e) {
+		if(e.target.nodeName == 'A') {
+			$.tracker.byStr('userengagement/msg_click_' + e.target.id);
+		}
+	});
+
+	// Article content actions
+	$('#page_controls, #page_tabs').click(function(e) {
+		if(e.target.nodeName == 'A') {
+			$.tracker.byStr('articleAction/' + e.target.id.substring(3).replace(/nstab-/, 'view/'));
+		}
+	});
+
+	// Article footer
+	$('#articleFooterActions, #articleFooterActions2').click(function(e) {
+		var el = e.target;
+		if(el.nodeName == 'IMG') { el = el.parentNode; }
+		if(el.nodeName == 'A') { $.tracker.byStr('ArticleFooter/' + el.id.split('_')[1]); }
+	});
+
+	// Share it icons
+	$('#share').click(function(e) {
+		if(e.target.nodeName == 'A') {
+			$.tracker.byStr('ArticleFooter/share/' + e.target.id.substring(5,e.target.id.length-2));
+		}
+	});
+
+
+	// Footer links
+	$('#wikia_footer').click(function(e) {
+		if(e.target.nodeName == 'A') {
+			$.tracker.byStr(((e.target.parentNode.id == 'wikia_corporate_footer') ? 'wikiaFooter/' : 'footer/') + e.target.innerHTML);
+		}
+	});
+
+	// Widgets
+	$('dl.widget').click(function(e) {
+		if(e.target.nodeName == 'A') {
+			$.tracker.byStr('widget/' + this.className.split(' ')[1] + '/' + e.target.innerHTML);
+		}
+	});
+
+	// Search
+	$('#searchform').submit(function() {
+		$.tracker.byStr('search/submit/enter/' +  escape($('#search_field').val().replace(/ /g, '_')));
+	});
+
+	// Search button
+	$('#search_button').click(function(e) {
+		$.tracker.byStr('search/submit/click/' +  escape($('#search_field').val().replace(/ /g, '_')));
+	});
+
+	// Spotlights
+	$('#spotlight_footer').find('div').each(function(i) {
+		var id = parseInt(this.id.substr(this.id.length-1));
+		$('#realAd'+id).click(function() {
+			$.tracker.byStr('spotlights/footer' + (i+1));
+		});
+	});
+
+	// Advertiser Widget
+	$('#102_content').find('div').each(function(i) {
+		var id = this.id.substr(this.id.length-1);
+		$('#realAd'+id).click(function() {
+			$.tracker.byStr('spotlights/sidebar1');
+		});
+	});
+
+	/*
 	// Navigation - sidebar
 	Event.addListener('navigation', 'click', function(e) {
 		var el = Event.getTarget(e);
@@ -124,100 +175,91 @@ var initTracker = function() {
 			Tracker.trackByStr(e, 'sidebar' + str);
 		}
 	});
-
-	// Navigation - toolbox
-	Event.addListener('link_box', 'click', function(e) {
-		var el = Event.getTarget(e);
-		if(el.nodeName == 'A') {
-			Tracker.trackByStr(e, 'toolbox/' + el.innerHTML);
-		}
-	});
-
-
-	// User Engagement
-	Event.addListener('ue_msg', 'click', function(e) {
-		var el = Event.getTarget(e);
-		if(el.nodeName == 'A') {
-			Tracker.trackByStr(e, 'userengagement/msg_click_' + el.id);
-		}
-	});
-
-	// Article content actions
-	Event.addListener(['page_controls','page_tabs'], 'click', function(e) {
-		var el = Event.getTarget(e);
-		if(el.nodeName == 'A') {
-			Tracker.trackByStr(e, 'articleAction/' + el.id.substring(3).replace(/nstab-/, 'view/'));
-		}
-	});
-
-	// Article footer
-	Event.addListener(['articleFooterActions', 'articleFooterActions2'], 'click', function(e) {
-		var el = Event.getTarget(e);
-		if(el.nodeName == 'IMG') {
-			el = el.parentNode;
-		}
-		if(el.nodeName == 'A') {
-			Tracker.trackByStr(e, 'ArticleFooter/' + el.id.split('_')[1]);
-		}
-	});
-
-	Event.addListener('share', 'click', function(e) {
-		var el = Event.getTarget(e);
-		if(el.nodeName == 'A') {
-			Tracker.trackByStr(e, 'ArticleFooter/share/' + el.id.substring(5,el.id.length-2));
-		}
-	});
-
-	// Footer links
-	Event.addListener('wikia_footer', 'click', function(e) {
-		var el = Event.getTarget(e);
-		if(el.nodeName == 'A') {
-			Tracker.trackByStr(e, ((el.parentNode.id == 'wikia_corporate_footer') ? 'wikiaFooter/' : 'footer/') + el.innerHTML);
-		}
-	});
-
-	// Widgets
-	Event.addListener(Dom.getElementsByClassName('widget', 'dl'), 'click', function(e) {
-		var el = Event.getTarget(e);
-		if(el.nodeName == 'A') {
-			var classA = this.className.split(' ');
-			Tracker.trackByStr(e, 'widget/' + classA[1] + '/' + el.innerHTML);
-		}
-	});
-
-	// Search
-	Event.addListener('searchform', 'submit', function(e) {
-		Tracker.trackByStr(e, 'search/submit/enter/' +  escape(Dom.get('search_field').value.replace(/ /g, '_')));
-	});
-
-	Event.addListener('search_button', 'click', function(e) {
-		Tracker.trackByStr(e, 'search/submit/click/' +  escape(Dom.get('search_field').value.replace(/ /g, '_')));
-	});
-
-	// Spotlights
-	var footerSpotlights = Dom.get('spotlight_footer');
-	if(footerSpotlights) {
-		footerSpotlights = footerSpotlights.getElementsByTagName('div');
-		if (footerSpotlights && footerSpotlights.length > 0) {
-			for (s=0; s < footerSpotlights.length; s++) {
-				var id = parseInt(footerSpotlights[s].id.substr( footerSpotlights[s].id.length - 1 ));
-				Event.addListener('realAd' + id, 'click', function(e, id) {
-					Tracker.trackByStr(e, 'spotlights/footer' + (id+1));
-				}, s);
-			}
-		}
-	}
-
-	// Advertiser Widget
-	var sidebarSpotlight = Dom.get('102_content');
-	if(sidebarSpotlight) {
-		sidebarSpotlight = sidebarSpotlight.getElementsByTagName('div');
-		if(sidebarSpotlight && sidebarSpotlight.length > 0) {
-			var id = sidebarSpotlight[0].id.substr( sidebarSpotlight[0].id.length - 1 );
-			Event.addListener('realAd' + id, 'click', function(e) {
-				Tracker.trackByStr(e, 'spotlights/sidebar1');
-			});
-		}
-	}
-
+	*/
 };
+
+/*
+@#@
+*/
+
+jQuery.tracker = function() {
+
+	// Page view
+	if(wgIsArticle) {
+		$.tracker.byStr('view');
+	}
+
+	// Edit page
+	if(wgArticleId != 0 && wgAction == 'edit') {
+		$.tracker.byStr('editpage/view');
+	}
+
+	// TODO: Verify if it works
+	// EditSimilar extension - result & preferences links - Bartek, Inez
+	$('#editsimilar_links').click(function(e) {
+		if(e.target.nodeName == 'A' && e.target.id != 'editsimilar_preferences') {
+			$.tracker.byStr('userengagement/editSimilar_click');
+		} else if(e.target.id == 'editsimilar_preferences') {
+			$.tracker.byStr('userengagement/editSimilar/editSimilarPrefs');
+		}
+	});
+
+	// CreateAPage extension - Bartek, Inez
+	if($('#createpageform').length) {
+		$('#wpSave').click(function(e) { $.tracker.byStr('createPage/save'); });
+		$('#wpPreview').click(function(e) { $.tracker.byStr('createPage/preview'); });
+		$('#wpAdvancedEdit').click(function(e) { $.tracker.byStr('createPage/advancedEdit'); });
+	}
+
+	// TODO: Verify if it works
+	// Special:Userlogin (Macbre)
+	if(wgCanonicalSpecialPageName && wgCanonicalSpecialPageName == 'Userlogin') {
+		$('#userloginlink').children('a:first').click(function(e) { $.tracker.byStr('loginActions/goToSignup'); });
+	}
+
+
+	// Special:Search - Macbre, Inez
+	if(wgCanonicalSpecialPageName && wgCanonicalSpecialPageName == 'Search') {
+		var listNames = ['title', 'text'];
+		// parse URL to get offset value
+		var re = (/\&offset\=(\d+)/).exec(document.location);
+		var offset = re ? (parseInt(re[1]) + 1) : 1;
+
+		$('#bodyContent').children('.mw-search-results').each(function(i) {
+			$(this).find('a').each(function(j) {
+				$(this).click(function() {
+					$.tracker.byStr('search/searchResults/' + listNames[i] + 'Match/' + (offset + j));
+				});
+			});
+			if(i == 0) {
+				$.tracker.byStr('search/searchResults/view');
+			}
+		});
+	}
+
+	initTracker();
+};
+
+jQuery.tracker.byStr = function(message) {
+	$.tracker.track(message);
+};
+
+jQuery.tracker.byId = function(e) {
+	$.tracker.track(this.id);
+};
+
+jQuery.tracker.track = function(fakeurl) {
+	fakeurlArray = fakeurl.split('/');
+	if(typeof urchinTracker != 'undefined') {
+		_uacct = "UA-2871474-1";
+		var username = wgUserName == null ? 'anon' : 'user';
+		var fake = '/1_monaco/' + username + '/' + fakeurl;
+		urchinTracker(fake);
+		if(wgPrivateTracker) {
+			fake = '/1_monaco/' + wgDB + '/' + username + '/' + fakeurl;
+			urchinTracker(fake);
+		}
+	}
+}
+
+$(document).ready($.tracker);
