@@ -818,18 +818,21 @@ class BlogCommentList {
 	static public function articleDeleteComplete( &$Article, &$User, $reason, $id ) {
 		wfProfileIn( __METHOD__ );
 
-		$listing = BlogCommentList::newFromTitle( $Article->getTitle() );
-		$aComments = $listing->getCommentPages();
-		if ( !empty($aComments) ) {
-			foreach ($aComments as $page_id => $oComment) {
-				$oCommentTitle = $oComment->getTitle();
-				if ( $oCommentTitle instanceof Title ) {
-					$oArticle = new Article($oCommentTitle);
-					$oArticle->doDeleteArticle($reason);
+		if ( NS_BLOG_ARTICLE == $Article->getTitle()->getNamespace() ) {
+			$listing = BlogCommentList::newFromTitle( $Article->getTitle() );
+				
+			$aComments = $listing->getCommentPages();
+			if ( !empty($aComments) ) {
+				foreach ($aComments as $page_id => $oComment) {
+					$oCommentTitle = $oComment->getTitle();
+					if ( $oCommentTitle instanceof Title ) {
+						$oArticle = new Article($oCommentTitle);
+						$oArticle->doDeleteArticle($reason);
+					}
 				}
 			}
+			$listing->purge();
 		}
-		$listing->purge();
 
 		wfProfileOut( __METHOD__ );
 		return true;
