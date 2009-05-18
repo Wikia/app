@@ -179,7 +179,7 @@ function WikiaSkinPreferences($pref) {
 
 		$oldSkinNames = array();
 		foreach($validSkinNames as $skinKey => $skinVal) {
-			if ( in_array( $skinKey, $wgSkipSkins ) ) {
+			if ( in_array( $skinKey, $wgSkipSkins ) && !($skinKey == $pref->mSkin) ) {
 				continue;
 			}
 			$oldSkinNames[$skinKey] = $skinVal;
