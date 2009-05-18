@@ -36,6 +36,20 @@ while( $row = $dbr->fetchObject( $sth ) ) {
 		if( unserialize( $variable->cv_value ) !== $row->city_dbname ) {
 			print "wgDBname different than city_dbname in city_id={$row->city_id} city_public={$row->city_public}\n";
 		}
+		else {
+			/**
+			 * check if such database exists
+			 */
+			$exists = $dbr->selectRow(
+				array( "INFORMATION_SCHEMA.SCHEMATA" ),
+ 				array( "count(SCHEMA_NAME) as count" ),
+				array( "SCHEMA_NAME" => $row->city_dbname ),
+				__FILE__
+			);
+			if( !$exists->count ) {
+				print "city_dbname={$row->city_dbname} defined but not exists for city_id={$row->city_id} city_public={$row->city_public}\n";
+			}
+		}
 	}
 	else {
 		print "wgDBname is not defined in city_id={$row->city_id} city_public={$row->city_public}\n";
