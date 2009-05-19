@@ -25,6 +25,6 @@ $link = $titleObj->getLocalUrl('type=signup');
 	$.getScript('<?= $wgExtensionsPath ?>/wikia/AjaxLogin/AwesomeAjaxLogin.js?<?= $wgStyleVersion ?>', function() {
 		AjaxLogin.init( $('#AjaxLogin form') );
 		$('#AjaxLogin').makeModal({width: 275});
-		$('#AjaxLogin #wpName1').focus();
+		$('#AjaxLogin').find('#wpName1').focus();
 	});
 </script>
