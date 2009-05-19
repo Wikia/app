@@ -68,7 +68,7 @@ $stha = $dba->select(
 	__FILE__
 );
 while( $row = $dba->fetchObject( $stha ) ) {
-	$dirs[ $row->cv_value ] = $row->cv_city_id;
+	$dirs[ unserialize( $row->cv_value ) ] = $row->cv_city_id;
 }
 
 foreach( $dirs as $dir => $city_id ) {
@@ -81,7 +81,7 @@ foreach( $dirs as $dir => $city_id ) {
 			array( "cv_city_id" ),
 			array(
 				"cv_variable_id" => 17,
-				"cv_value" => $dir
+				"cv_value" => serialize( $dir )
 			),
 			__FILE__
 		);
