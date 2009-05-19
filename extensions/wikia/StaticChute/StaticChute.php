@@ -287,16 +287,16 @@ class StaticChute {
 
 	private function getWidgetsAssets() {
 		$js = $css = array();
-		$dir = 'extensions/wikia/WidgetFramework/Widgets/';
+		$dir = dirname(__FILE__) . '/../WidgetFramework/Widgets/';
 		if(is_dir($dir)) {
 			if($dh = opendir($dir)) {
 				while(($file = readdir($dh)) !== false) {
 					if(filetype($dir.$file) == 'dir') {
 						if(file_exists($dir.$file.'/'.$file.'.js')) {
-							$js[] = '../'.$dir.$file.'/'.$file.'.js';
+							$js[] = '../extensions/wikia/WidgetFramework/Widgets/'.$file.'/'.$file.'.js';
 						}
 						if(file_exists($dir.$file.'/'.$file.'.css')) {
-							$css[] = '../'.$dir.$file.'/'.$file.'.css';
+							$css[] = '../extensions/wikia/WidgetFramework/Widgets/'.$file.'/'.$file.'.css';
 						}
 					}
 				}
