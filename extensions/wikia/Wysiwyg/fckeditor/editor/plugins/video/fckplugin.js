@@ -338,6 +338,7 @@ FCK.VideoGalleryAdd = function(wikitext) {
 
 	// create new placeholder and add it to the article
 	placeholder = FCK.EditorDocument.createElement('INPUT');
+	placeholder.className = 'wysiwygDisabled wysiwygVideogallery';
 	placeholder.type = 'button';
 	placeholder.value = '<videogallery>';
 	placeholder.setAttribute('refid', refid);
