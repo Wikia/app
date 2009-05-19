@@ -65,6 +65,7 @@ class CloseWikiMaintenace {
 					break;
 
 				case WikiFactory::STATUS_CLOSED:
+				case WikiFactory::STATUS_REDIR:
 					$this->dumpXMl();
 					if( $this->compressImages() === true ) {
 						// not now: $this->removeImageDirectory();
