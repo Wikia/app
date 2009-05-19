@@ -725,7 +725,11 @@ function VET_insertFinalVideo(e, type) {
 							if(VET_refid != -1) {
 								FCK.VideoGalleryUpdate( VET_refid, wikitag );
 							} else {
-								FCK.VideoAdd(wikitag, options);
+								if($G('VideoEmbedLayoutGallery').checked) {				
+									FCK.VideoGalleryAdd(wikitag);
+								} else {
+									FCK.VideoAdd(wikitag, options);
+								}
 							}
 						}
 					} else {
