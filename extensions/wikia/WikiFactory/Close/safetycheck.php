@@ -85,8 +85,8 @@ foreach( $dirs as $dir => $city_id ) {
 			),
 			__FILE__
 		);
-		if( !empty( $row->city_id ) ) {
-			$wiki = WikiFactory::getWikiByID( $row->city_id );
+		if( !empty( $row->cv_city_id ) ) {
+			$wiki = WikiFactory::getWikiByID( $row->cv_city_id );
 			print "Directory {$dir} is taken by {$wiki->city_id}:{$wiki->city_url} which status is {$wiki->city_public}\n";
 		}
 		else {
