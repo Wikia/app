@@ -428,7 +428,10 @@ class CloseWikiMaintenace {
 		$Row = $dbw->selectRow(
 			WikiFactory::table( "city_variables" ),
 			array( "count(*) as count" ),
-			array( "cv_value" => serialize( $wgDBname ) ),
+			array(
+				"cv_value" => serialize( $wgDBname ),
+				array( "cv_variable_id = (SELECT cv_id FROM city_variables_pool WHERE cv_name='wgDBname')" ),
+			),
 			__METHOD__
 		);
 		if( $Row->count > 1 ) {
