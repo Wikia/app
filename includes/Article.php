@@ -945,6 +945,9 @@ class Article {
 			wfMsgForContent( 'pagetitle-view-mainpage' ) !== '' ) {
 				$wgOut->setHTMLTitle( wfMsgForContent( 'pagetitle-view-mainpage' ) );
 			}
+
+			# quick hack for rt#15730; if you ever feel temptation to add 'elseif' ***CREATE A PROPER HOOK***
+			if (NS_CATEGORY == $ns) $wgOut->setHTMLTitle(preg_replace("/^{$this->mTitle->getNsText()}:/", '', $this->mTitle->getPrefixedText()));
 		}
 
 		# check if we're displaying a [[User talk:x.x.x.x]] anonymous talk page
