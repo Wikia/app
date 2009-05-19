@@ -8,11 +8,46 @@
 ini_set( "include_path", dirname(__FILE__)."/../../../../maintenance/" );
 require_once( "commandLine.inc" );
 
+$dbr = wfGetDB( DB_SLAVE );
+
+/**
+ * find duplicates of city_dbname in city_list
+ */
+$sth = $dbr->select(
+	WikiFactory::table("city_list"),
+	array( "city_dbname", "count(city_dbname) as count" ),
+	false,
+	__FILE__,
+	array( "GROUP BY" => "city_dbname" )
+);
+while( $row = $dbr->fetchObject( $sth ) ) {
+	if( $row->count != 1 ) {
+		print "{$row->city_dbname} is used more than once in city_list";
+	}
+}
+
+$dbr->freeResult( $sth );
+/**
+ * find duplicates in city_variables
+ */
+$sth = $dbr->select(
+	WikiFactory::table("city_variables"),
+	array( "cv_value", "count(cv_value) as count" ),
+	array( "cv_variable_id = (SELECT cv_id FROM city_variables_pool WHERE cv_name='wgDBname')" ),
+	__FILE__,
+	array( "GROUP BY" => "cv_value" )
+);
+while( $row = $dbr->fetchObject( $sth ) ) {
+	if( $row->count != 1 ) {
+		print "{$row->cv_value} is used more than once in city_variables";
+	}
+}
+
+$dbr->freeResult( $sth );
+
 /**
  * compare values stored in city_list and city_variables
  */
-
-$dbr = wfGetDB( DB_SLAVE );
 $sth = $dbr->select(
 	WikiFactory::table("city_list"),
 	array( "city_dbname", "city_id", "city_public" ),
