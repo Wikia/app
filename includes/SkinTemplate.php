@@ -187,6 +187,10 @@ class SkinTemplate extends Skin {
 		$tpl->set( 'title', $out->getPageTitle() );
 		wfProfileIn( "parsePageTitle" );
 		$tpl->set( 'pagetitle', $out->getHTMLTitle() );
+
+		# quick hack for rt#15730; if you ever feel temptation to add 'elseif' ***CREATE A PROPER HOOK***
+		if (NS_CATEGORY == $this->mTitle->getNamespace()) $tpl->set( 'pagetitle', preg_replace("/^{$this->mTitle->getNsText()}:/", '', $out->getHTMLTitle()));
+						 
 		wfProfileOut( "parsePageTitle" );
 		$tpl->set( 'displaytitle', $out->mPageLinkTitle );
 		$tpl->set( 'pageclass', $this->getPageClasses( $this->mTitle ) );
