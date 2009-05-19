@@ -24,7 +24,8 @@ class CloseWikiPage extends SpecialPage {
 		CLOSE_REDIRECT = 1,
 		CLOSE_DELETE   = 2,
 		CLOSE_ACTION   = 0,
-		DELETE_ACTION  = -1;
+		DELETE_ACTION  = -1,
+		REDIR_ACTION   = 2;
 
 	private
 		$mTitle,
@@ -321,8 +322,8 @@ class CloseWikiPage extends SpecialPage {
 				$isMoved = WikiFactory::redirectDomains( $wiki->city_id, $newWikis[$wiki->city_id] );
 				if ( !empty($isMoved) ) {
 					#-- set public to 0
-					$res = WikiFactory::setPublicStatus(self::CLOSE_ACTION, $wiki->city_id);
-					if ($res === self::CLOSE_ACTION) {
+					$res = WikiFactory::setPublicStatus(self::REDIR_ACTION, $wiki->city_id);
+					if ($res === self::REDIR_ACTION) {
 						$output .= Xml::tags(
 							'li',
 							array( 'style' => 'list-style:none' ),
