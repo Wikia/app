@@ -159,12 +159,6 @@ class AdProviderGAM implements iAdProvider {
 			$out .= 'GA_googleAddAdSensePageAttr("google_color_url", AdEngine.getAdColor("url"));' . "\n";
 		}
 
-                if (in_array(AdEngine::getInstance()->getBucketName(), array('lp', 'lp_at', 'bp'))){
-			$out .= 'GA_googleAddAdSensePageAttr("google_ad_channel", AdEngine.getGoogleChannel());' . "\n";
-                        // Stop here, because these are doing bucket tests in javascript
-			return $out;
-		}       
-
 		$out .= 'GA_googleAddAdSensePageAttr("google_ad_channel", "' . $channel . '");' . "\n";
 		// Pass the page url. This proved to help eCPM in bucket tests.
 		$out .= 'GA_googleAddAdSensePageAttr("google_page_url", "' . addslashes(AdProviderGoogle::getPageUrl()) . '");' . "\n";
