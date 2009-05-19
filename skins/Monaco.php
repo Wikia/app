@@ -1630,14 +1630,6 @@ if ($wgOut->isArticle()){
 ?>
 <?php		wfProfileIn( __METHOD__ . '-article'); ?>
 			<div id="article" <?php if($this->data['body_ondblclick']) { ?>ondblclick="<?php $this->text('body_ondblclick') ?>"<?php } ?>>
-				<?php
-				// Testing putting the leader board above the title
-				if (! ArticleAdLogic::isMainPage() && AdEngine::getInstance()->getBucketName() == 'lp_at'){
-					// Bucket test to put the ad ad the top
-					echo $topAdCode;
-					$topAdCodeDisplayed = true;
-				}
-				?>
 				<a name="top" id="top"></a>
 				<?php
 				global $wgSupressSiteNotice;
