@@ -98,11 +98,11 @@ AdEngine.getAdColor = function (type) {
 AdEngine.normalizeColor = function(input){
 	if (input.match(/^#[A-F0-9a-f]{3,6}/)){
 		// It's already hex
-		return input.toUpperCase();
+		return input.toUpperCase().replace(/^#/, "");
 	} else if (input.match(/^rgb/)){
 		var s = input.replace(/[^0-9,]/g, '');
 		var rgb = s.split(",");
-		return '#' + AdEngine.dec2hex(rgb[0]) + 
+		return AdEngine.dec2hex(rgb[0]) + 
 		       AdEngine.dec2hex(rgb[1]) + 
 		       AdEngine.dec2hex(rgb[2]); 
 	} else {
