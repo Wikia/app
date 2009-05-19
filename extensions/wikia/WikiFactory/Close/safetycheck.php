@@ -13,6 +13,7 @@ $dbr = wfGetDB( DB_SLAVE );
 /**
  * find duplicates of city_dbname in city_list
  */
+print "Checking for duplicates in city_list\n";
 $sth = $dbr->select(
 	WikiFactory::table("city_list"),
 	array( "city_dbname", "count(city_dbname) as count" ),
@@ -27,13 +28,19 @@ while( $row = $dbr->fetchObject( $sth ) ) {
 }
 
 $dbr->freeResult( $sth );
+
 /**
  * find duplicates in city_variables
  */
+print "Checking for duplicates in city_variables\n";
 $sth = $dbr->select(
 	WikiFactory::table("city_variables"),
 	array( "cv_value", "count(cv_value) as count" ),
-	array( "cv_variable_id = (SELECT cv_id FROM city_variables_pool WHERE cv_name='wgDBname')" ),
+	array(
+		"cv_variable_id = (SELECT cv_id FROM " .
+		WikiFactory::table("city_variables_pool") .
+		" WHERE cv_name='wgDBname')"
+	),
 	__FILE__,
 	array( "GROUP BY" => "cv_value" )
 );
@@ -46,8 +53,53 @@ while( $row = $dbr->fetchObject( $sth ) ) {
 $dbr->freeResult( $sth );
 
 /**
+ * check if archived images directories are not removed
+ *
+ * first, take data from archive wgUploadDirectory => cv_variable_id = 17
+ */
+print "Checking for orphaned image directories\n";
+$dirs = array();
+$dba = wfGetDBExt( DB_SLAVE );
+$dba->selectDB( "archive" );
+$stha = $dba->select(
+	array( "city_variables" ),
+	array( "*" ),
+	array( "cv_variable_id" => 17 ),
+	__FILE__
+);
+while( $row = $dba->fetchObject( $stha ) ) {
+	$dirs[ $row->cv_value ] = $row->cv_city_id;
+}
+
+foreach( $dirs as $dir => $city_id ) {
+	if( file_exists( $dir ) && is_dir( $dir ) ) {
+		/**
+		 * check if is connected to any wiki alive or not
+		 */
+		$row = $dbr->selectRow(
+			WikiFactory::table( "city_variables" ),
+			array( "cv_city_id" ),
+			array(
+				"cv_variable_id" => 17,
+				"cv_value" => $dir
+			),
+			__FILE__
+		);
+		if( !empty( $row->city_id ) ) {
+			$wiki = WikiFactory::getWikiByID( $row->city_id );
+			print "Directory {$dir} is taken by {$wiki->city_id}:{$wiki->city_url} which status is {$wiki->city_public}\n";
+		}
+		else {
+			print "Directory {$dir} exists but is not connected to any wiki\n";
+		}
+	}
+}
+
+
+/**
  * compare values stored in city_list and city_variables
  */
+print "Compare values stored in city_list and city_variables\n";
 $sth = $dbr->select(
 	WikiFactory::table("city_list"),
 	array( "city_dbname", "city_id", "city_public" ),
@@ -91,7 +143,7 @@ while( $row = $dbr->fetchObject( $sth ) ) {
 	}
 }
 
-/** 
+/**
  * find dbs not defined in city_variables
  **/
 $sth = $dbr->select(
@@ -102,7 +154,7 @@ $sth = $dbr->select(
 	),
 	__FILE__,
 	array( "ORDER BY" => "cv_value" )
-);	
+);
 $DB_NAMES = array();
 while( $row = $dbr->fetchObject( $sth ) ) {
 	$db_name = unserialize($row->cv_value);
