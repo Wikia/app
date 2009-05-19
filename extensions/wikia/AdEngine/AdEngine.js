@@ -41,7 +41,7 @@ AdEngine.resetCssClear = function (side) {
 AdEngine.getAdColor = function (type) {
 
 	if(typeof adColorsContent == 'undefined') {
-		adColorsContent = new Array();
+		adColorsContent = [];
 	}
 
 	if(typeof themename == 'string') {
@@ -57,44 +57,35 @@ AdEngine.getAdColor = function (type) {
 	}
 
 	if(type == 'text') {
-		adColorsContent[type] = AdEngine.getHEX(YAHOO.util.Dom.getStyle('article', 'color'));
+		adColorsContent[type] = AdEngine.normalizeColor($('#article').css('color'));
 		return adColorsContent[type];
 	}
 
 	if(type == 'link' || type == 'url') {
-		var link;
 
-		var editSections = YAHOO.util.Dom.getElementsByClassName('editsection', 'span', 'article');
-		if(editSections.length > 0) {
-			link = editSections[0].getElementsByTagName('a')[0];
+		var a;
+		if ($("#article a:first").length > 0){
+			a=$("#article a:first");
+			adColorsContent[type] = AdEngine.normalizeColor(a.css('color'));
+		} else if ($("a:first").length > 0){
+			a=$("a:first");
+			adColorsContent[type] = AdEngine.normalizeColor(a.css('color'));
+		} else {
+			adColorsContent[type] = "black";
 		}
 
-		if(link === null) {
-			var links = $('bodyContent').getElementsByTagName('a');
-			for(i = 0; i < links.length; i++) {
-				if(!YAHOO.util.Dom.hasClass(links[i], 'new')) {
-					link = links[i];
-					break;
-				}
-			}
-			if(link === null) {
-				link = links[0];
-			}
-		}
-
-		adColorsContent[type] = AdEngine.getHEX(YAHOO.util.Dom.getStyle(link, 'color'));
 		return adColorsContent[type];
 	}
 
 	if(type == 'bg') {
-	        var color = AdEngine.getHEX(YAHOO.util.Dom.getStyle('article', 'background-color'));
+	        var color = AdEngine.normalizeColor($('#article').css('background-color'));
 
 		if(color == 'transparent' || color == AdGetColor('text')) {
-		        color = AdEngine.getHEX(YAHOO.util.Dom.getStyle('wikia_page', 'background-color'));
+		        color = AdEngine.normalizeColor($('#wikia_page').css('background-color'));
         	}
 
-	        if(color == 'transparent' || color == '000000') {
-       		 	color = AdEngine.getHEX(YAHOO.util.Dom.getStyle(document.body, 'background-color'));
+	        if(color == 'transparent' || color == '#000000') {
+       		 	color = AdEngine.normalizeColor($("#bodyContent").css('background-color'));
        		}
 
 		adColorsContent[type] = color;
@@ -103,33 +94,31 @@ AdEngine.getAdColor = function (type) {
 
 };
 
-AdEngine.dec2hex = function (n) {
-	var HCHARS = "0123456789ABCDEF";
-	n = parseInt(n, 10);
-	n = (YAHOO.lang.isNumber(n)) ? n : 0;
-	n = (n > 255 || n < 0) ? 0 : n;
-	return HCHARS.charAt((n - n % 16) / 16) + HCHARS.charAt(n % 16);
+/* We can get color data in a lot of different formats. Normalize here for css. false on error */
+AdEngine.normalizeColor = function(input){
+	if (input.match(/^#[A-F0-9a-f]{3,6}/)){
+		// It's already hex
+		return input.toUpperCase();
+	} else if (input.match(/^rgb/)){
+		var s = input.replace(/[^0-9,]/g, '');
+		var rgb = s.split(",");
+		return '#' + AdEngine.dec2hex(rgb[0]) + 
+		       AdEngine.dec2hex(rgb[1]) + 
+		       AdEngine.dec2hex(rgb[2]); 
+	} else {
+		// Input is a string, like "transparent" or "white"
+		return input;
+	}
 };
 
-AdEngine.rgb2hex = function (r, g, b) {
-	if (YAHOO.lang.isArray(r)) {
-		return AdEngine.rgb2hex(r[0], r[1], r[2]);
+AdEngine.dec2hex = function(d){
+	var h = parseInt(d, 10).toString(16); 
+	if (h.toString() == "0"){
+		return "00";
+	} else {
+		return h.toUpperCase();
 	}
-	return AdEngine.dec2hex(r) + AdEngine.dec2hex(g) + AdEngine.dec2hex(b);
 };
-
-AdEngine.getHEX = function (color) {
-	if(color == 'transparent') {
-		return color;
-	}
-
-	if(color.match(/^\#/)) {
-		return color.substring(1);
-	}
-
-	return AdEngine.rgb2hex(color.substring(4).substr(0, color.length-5).split(', '));
-};
-
 
 /* Backward compatible function call, this method is already referenced in Ad Server code */
 AdGetColor = AdEngine.getAdColor;
@@ -144,15 +133,15 @@ AdEngine.displaySlotIfAd = function (slotname) {
         for (i = 0 ; i < noopStrings.length; i++){
                 if($('#' + slotname + '_load').html().indexOf(noopStrings[i]) > -1 ) {
                 	// Override stated dimensions set by CSS
-			YAHOO.util.Dom.setStyle(slotname + '_load', 'height', '1px');
-                	YAHOO.util.Dom.setStyle(slotname + '_load', 'width', '1px');
+                	$("#" + slotname + "_load").css("height", "1px");
+                	$("#" + slotname + "_load").css("width", "1px");
                         noopFound = true;
                         break;
                 }
         }
         // All clear
         if (! noopFound ) {
-                YAHOO.util.Dom.setStyle(slotname, 'display', 'block');
+		$("#" + slotname).show();
         }
 };
 
