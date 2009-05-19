@@ -322,6 +322,7 @@ function VET_getFirstFree( gallery, box ) {
 function VET_show(e, gallery, box) {
 	VET_refid = null;
 	VET_wysiwygStart = 1;
+	VET_gallery = -1;
 
 	if(typeof gallery != "undefined") {
 
