@@ -46,7 +46,6 @@
 			<a rel="nofollow" href="<?= htmlentities(Skin::makeSpecialUrl('Recentchanges')) ?>" id="<?= $widgetId ?>-more"><?= strtolower(wfMsg('moredotdotdot')) ?></a>
 		</li>
 	</ul>
-	<br />
 	</div>
 <?php
 	}
