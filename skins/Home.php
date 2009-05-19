@@ -815,12 +815,16 @@ class HomeDataProvider {
 					if ($title = Title::newFromText($image['org'])) {
 						$image['src'] = Image::newFromTitle($title)->getUrl();
 					}
-					global $wgOut;
-					$text = $wgOut->parse(ltrim($msg[2], '* '));
-					self::$data[$msgKey] = "
-						<h1>$header</h1>
-						<img id=\"promoted_feature_img\" src=\"{$image['src']}\" alt=\"{$image['text']}\" style=\"float: right; margin-left: 10px;\" />
-						$text";
+					$text = ltrim($msg[2], '* ');
+					self::$data[$msgKey] = '';
+					if ( $header ) {
+						self::$data[$msgKey] = '<h1>' . htmlspecialchars( $header ) . '</h1>';
+					}
+					if ( $image ) {
+						self::$data[$msgKey] .= "<img id=\"promoted_feature_img\" src=\"{$image['src']}\" alt=\"{$image['text']}\" style=\"float: right; margin-left: 10px;\" />";
+					}
+
+					self::$data[$msgKey] .= $text;
 				}
 				//end: promoted feature
 				$wgMemc->set($key, self::$data, 300);
