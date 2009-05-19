@@ -1392,6 +1392,18 @@ class AwesomeTemplate extends QuickTemplate {
 <?php
 	}
 
+	// add hidden login-box, so firefox can fill it using stored login/password
+	// then copy it to AjaxLogin box
+	// TODO: move to AjaxLogin extension and use GetHTMLAfterBody hook
+	if ($wgUser->isAnon()) {
+?>
+	<form action="" method="post" name="userajaxloginform" id="userajaxloginform" style="display: none">
+		<input type="text" name="wpName" id="wpName1" />
+		<input type="password" name="wpPassword" id="wpPassword1" />
+	</form>
+<?
+	}
+
 wfRunHooks('GetHTMLAfterBody', array ($this));
 ?>
 	<!-- HEADER -->

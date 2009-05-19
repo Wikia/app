@@ -5,6 +5,10 @@ var AjaxLogin = {
 	init: function(form) {
 		this.form = form;
 
+		// copy login/password from hidden form
+		this.form.find('#wpName1').attr('value', $('#wpName1').attr('value') );
+		this.form.find('#wpPassword1').attr('value', $('#wpPassword1').attr('value') );
+
 		// add submit event handler for login form
 		this.form.submit(this.formSubmitHandler).log('AjaxLogin: init()');
 
