@@ -149,12 +149,12 @@ var initTracker = function() {
 		while (self.attr("id") != 'navigation') {
 			if (self.hasClass('menu-item')) {
 				tree.push($.trim(self.children("a").contents()[0].nodeValue));
-			} 
+			}
 			self = self.parent();
 		}
 		tree.reverse();
 		str = 'sidebar/' + tree.join("/");
-		Tracker.trackByStr(e, str);
+		$.tracker.byStr(str);
 	});
 
 };
