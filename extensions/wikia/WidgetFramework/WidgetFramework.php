@@ -75,8 +75,6 @@ class WidgetFramework {
 
 				// Turn this widget on for anons if the wiki factory variable is on
 				global $wgEnableAnswersMonacoWidget;
-				// Disabled because Pean made it slow and unusable. 
-				$wgEnableAnswersMonacoWidget = false;
 				if ($wgEnableAnswersMonacoWidget){
 					$last = array_pop($this->config[1]);
 					$this->config[1][] = array('type' => 'WidgetAnswers', 'id' => 142);
