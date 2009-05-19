@@ -142,40 +142,21 @@ var initTracker = function() {
 		});
 	});
 
-	/*
 	// Navigation - sidebar
-	Event.addListener('navigation', 'click', function(e) {
-		var el = Event.getTarget(e);
-		if(el.nodeName == 'A') {
-			var str = '';
-			id = el.id;
-			idA = id.split('-');
-
-			if(idA[1] == 'menu') {
-				menuId    = id.split('_')[1];
-				str = '/' + menuId + '_' + el.innerHTML;
-				if(str.indexOf('<') > 0) str = str.substring(0, str.indexOf('<'));
-			} else {
-				submenuA = idA[idA.length - 1].split('_');
-				key = '';
-				for(var i = 1; i < submenuA.length; i++) {
-					if(i == 1) {
-						key += '_' + submenuA[i];
-						temp = '/' + submenuA[i] + '_' + Dom.get('a-menu-item_' + submenuA[i]).innerHTML;
-						if(temp.indexOf('<') > 0) temp = temp.substring(0, temp.indexOf('<'));
-						str += temp;
-					} else {
-						key += '_' + submenuA[i];
-						temp = '/' + submenuA[i] + '_' + Dom.get('a-sub-menu-item' + key).innerHTML;
-						if(temp.indexOf('<') > 0) temp = temp.substring(0, temp.indexOf('<'));
-						str += temp;
-					}
-				}
-			}
-			Tracker.trackByStr(e, 'sidebar' + str);
+	$("#navigation a").live("click", function() {
+		var tree = [];
+		self = $(this);
+		while (self.attr("id") != 'navigation') {
+			if (self.hasClass('menu-item')) {
+				tree.push($.trim(self.children("a").contents()[0].nodeValue));
+			} 
+			self = self.parent();
 		}
+		tree.reverse();
+		str = 'sidebar/' + tree.join("/");
+		Tracker.trackByStr(e, str);
 	});
-	*/
+
 };
 
 /*
