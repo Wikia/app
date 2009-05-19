@@ -57,11 +57,11 @@ function printWikiaIrcGatewayLoginForm( $input, $argv ) {
 
 	foreach ( $array as $line ) {
 		if ( strpos( ltrim( $line, '* ' ), 'group: ' ) === 0 ) {
-			$output .= '<optgroup label="' . substr( ltrim( $line, '* ' ), 7 ) . '">';
+			$output .= '<optgroup label="' . htmlspecialchars( substr( ltrim( $line, '* ' ), 7 ) ) . '">';
 		} elseif ( strpos( ltrim( $line, '* ' ), 'group-end' ) === 0 ) {
 			$output .= "</optgroup>\n";
 		} else {
-			$output .= '<option>' . ltrim( $line, '* ') . "</option>\n";
+			$output .= '<option>' . htmlspecialchars( ltrim( $line, '* ') ) . "</option>\n";
 		}
 	}
 
