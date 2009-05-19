@@ -489,9 +489,8 @@ function getCategories(sQuery) {
 	}
 	var resultsFirst = [];
 	var resultsSecond = [];
-	sQuery = unescape(sQuery);
+	sQuery = decodeURIComponent(sQuery);
 	sQuery = sQuery.toLowerCase().replace(/_/g, ' ');
-
 	for (var i = 0, len = categoryArray.length; i < len; i++) {
 		var index = categoryArray[i].toLowerCase().indexOf(sQuery);
 		if (index == 0) {
@@ -499,11 +498,11 @@ function getCategories(sQuery) {
 		} else if (index > 0) {
 			resultsSecond.push([categoryArray[i]]);
 		}
-		if ((resultsFirst.length + resultsSecond.length) == 10) {
+		if (resultsFirst.length == 10) {
 			break;
 		}
 	}
-	return resultsFirst.concat(resultsSecond);
+	return resultsFirst.concat(resultsSecond).slice(0,10);
 }
 
 function initAutoComplete() {
