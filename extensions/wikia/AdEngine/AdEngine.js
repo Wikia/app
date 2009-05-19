@@ -15,17 +15,10 @@ function AdEngine (){
  * @author Inez Korczynski, lightly modified by Nick Sullivan
  */
 AdEngine.resetCssClear = function (side) {
-	var Dom = YAHOO.util.Dom;
-	
-	Dom.getElementsBy(function(el) {
-	if((el.nodeName == 'DIV' || el.nodeName == 'TABLE') &&
-		    Dom.getStyle(el, 'float') == side) {
-			return true;
+	$("#" + bodyWrapper + " div, #" + bodyWrapper +" table").each(function() {
+		if ($(this).css("float") == side) {
+			$(this).css("clear", side);
 		}
-		return false;
-
-	}, null, this.bodyWrapper , function(el) {
-			Dom.setStyle(el, 'clear', side);
 	});
 };
 
