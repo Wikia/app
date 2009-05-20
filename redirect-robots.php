@@ -141,9 +141,7 @@ if($bot == 'goog'){
 	$r .= "Disallow: /trap/\n";
 	$r .= "Disallow: /dbdumps/\n";
 	$r .= "Disallow: /wikistats/\n";
-	$r .= "Disallow: /*printable=yes*\n";
 	$r .= "Disallow: /*feed=rss*\n";
-	$r .= "Disallow: /*action=edit*\n";
 	$r .= "Disallow: /*action=history*\n";
 	$r .= "Disallow: /*action=delete*\n";
 	$r .= "Disallow: /*action=watch*\n";
@@ -166,9 +164,7 @@ if($bot == 'goog'){
 	$r .= "Disallow: /trap/\n";
 	$r .= "Disallow: /dbdumps/\n";
 	$r .= "Disallow: /wikistats/\n";
-	$r .= "Disallow: /*printable=yes*\n";
 	$r .= "Disallow: /*feed=rss*\n";
-	$r .= "Disallow: /*action=edit*\n";
 	$r .= "Disallow: /*action=history*\n";
 	$r .= "Disallow: /*action=delete*\n";
 	$r .= "Disallow: /*action=watch*\n";
