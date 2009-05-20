@@ -431,7 +431,9 @@ class CloseWikiMaintenace {
 			array( "count(*) as count" ),
 			array(
 				"cv_value" => serialize( $wgDBname ),
-				array( "cv_variable_id = (SELECT cv_id FROM city_variables_pool WHERE cv_name='wgDBname')" ),
+				"cv_variable_id = (SELECT cv_id FROM " .
+				WikiFactory::table( "city_variables_pool" ) .
+				" WHERE cv_name='wgDBname')",
 			),
 			__METHOD__
 		);
