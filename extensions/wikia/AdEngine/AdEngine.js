@@ -5,8 +5,9 @@ var AdsCB = Math.floor(Math.random()*99999999); // generate random number to use
 */
 
 function AdEngine (){
-	this.bodyWrapper = 'bodyContent';
 }
+
+AdEngine.bodyWrapper = 'bodyContent';
 
 /**
  * For pages that have divs floated right, clear right so they appear under a box ad
@@ -15,7 +16,7 @@ function AdEngine (){
  * @author Inez Korczynski, lightly modified by Nick Sullivan
  */
 AdEngine.resetCssClear = function (side) {
-	$("#" + bodyWrapper + " div, #" + bodyWrapper +" table").each(function() {
+	$("#" + AdEngine.bodyWrapper + " div, #" + AdEngine.bodyWrapper +" table").each(function() {
 		if ($(this).css("float") == side) {
 			$(this).css("clear", side);
 		}
