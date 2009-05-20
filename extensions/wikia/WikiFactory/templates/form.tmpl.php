@@ -354,7 +354,6 @@ YAHOO.util.Event.addListener("wf-clear-cache", "click", $Factory.Variable.clear)
 				            <? endif; ?>
             </li>
             <li><a href="#" id="wf-clear-cache"><?php echo wfMsg("wikifactory_removevariable") ?></a></li>
-<?php if ( isset($isDevel) && ($isDevel === true) ) : ?>
             <li>
             	<form method="post" action="<?php echo Title::makeTitle( NS_SPECIAL, "CloseWiki" )->getFullURL(); ?>" id="wf-close-form">
             	<input type="hidden" name="wikis[]" value="<?=$wiki->city_id?>" />
@@ -363,7 +362,6 @@ YAHOO.util.Event.addListener("wf-clear-cache", "click", $Factory.Variable.clear)
 				<a href="#" onclick="YAHOO.Wiki.Factory.Variable.close_submit(2);">Close and Delete</a>
 				</form>
             </li>
-<?php endif ?>            
         </ul>
     </div>
 	<div id="wiki-factory-panel">
