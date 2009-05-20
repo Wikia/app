@@ -1535,18 +1535,12 @@ FCK.YE = FCK.YAHOO.util.Event;
 
 // log functionality
 FCK.log = function(msg) {
-	if (FCK.YAHOO) {
-		FCK.YAHOO.log(msg, 'info', 'Wysiwyg');
-	}
+	window.parent.$().log(msg);
 }
 
 // macbre: setup tracker object
-FCK.Tracker = (typeof window.parent.YAHOO != 'undefined' && typeof window.parent.YAHOO.Wikia != 'undefined') ? window.parent.YAHOO.Wikia.Tracker : false;
-
 FCK.Track = function(fakeUrl) {
-	if (FCK.Tracker) {
-		FCK.Tracker.trackByStr(null, 'wysiwyg'+fakeUrl);
-	}
+	window.parent.WET.byStr(null, 'wysiwyg'+fakeUrl);
 }
 
 // track the fact of using FCK + send the name of edited page
