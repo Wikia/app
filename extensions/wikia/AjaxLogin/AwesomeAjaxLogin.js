@@ -5,9 +5,15 @@ var AjaxLogin = {
 	init: function(form) {
 		this.form = form;
 
-		// copy login/password from hidden form
-		$('#wpNameAjaxLogin').attr('value', $('#wpName1').attr('value') );
-		$('#wpPasswordAjaxLogin').attr('value', $('#wpPassword1').attr('value') );
+		// move login/password/remember fields from hidden form to AjaxLogin
+		var labels = this.form.find('label');
+		$('#wpName1').insertAfter(labels[0]);
+		$('#wpPassword1').insertAfter(labels[1]);
+		$('#wpRemember1').insertBefore(labels[2]);
+
+		// remove hidden form
+		$('#userajaxloginform').remove();
+		this.form.attr('id', 'userajaxloginform');
 
 		// add submit event handler for login form
 		this.form.submit(this.formSubmitHandler).log('AjaxLogin: init()');
@@ -20,19 +26,19 @@ var AjaxLogin = {
 		if(ev) {
 			ev.preventDefault();
 		}
-		// Let's block login form (disable buttons and input boxes)
-		AjaxLogin.blockLoginForm(true);
-
 		AjaxLogin.form.log('AjaxLogin: selected action = '+ AjaxLogin.action);
 
 		var params = [
 			'action=ajaxlogin',
 			'format=json',
 			(AjaxLogin.action == 'password' ? 'wpMailmypassword=1' : 'wpLoginattempt=1'),
-			'wpName=' + encodeURIComponent($('#wpNameAjaxLogin').attr('value')),
-			'wpPassword=' + encodeURIComponent($('#wpPasswordAjaxLogin').attr('value')),
-			'wpRemember=' + ($('#wpRememberAjaxLogin').attr('checked') ? 1 : 0)
+
+			// serialize form fields
+			AjaxLogin.form.serialize()
 		];
+
+		// Let's block login form (disable buttons and input boxes)
+		AjaxLogin.blockLoginForm(true);
 
 		$.getJSON(window.wgScriptPath + '/api.php?' + params.join('&'), AjaxLogin.handleSuccess);
 	},
@@ -73,11 +79,11 @@ var AjaxLogin = {
 				break;
 			case 'NotExists':
 				AjaxLogin.blockLoginForm(false);
-				$('#wpPasswordAjaxLogin').attr('value', '');
-				$('#wpNameAjaxLogin').attr('value', '').focus();
+				$('#wpPassword1n').attr('value', '');
+				$('#wpName1').attr('value', '').focus();
 			case 'WrongPass':
 				AjaxLogin.blockLoginForm(false);
-				$('#wpPasswordAjaxLogin').attr('value', '').focus();
+				$('#wpPassword1').attr('value', '').focus();
 			default:
 				AjaxLogin.blockLoginForm(false);
 				AjaxLogin.displayReason(response.ajaxlogin.text);
@@ -102,4 +108,4 @@ var AjaxLogin = {
 			}
 		}
 	}
-}
+};

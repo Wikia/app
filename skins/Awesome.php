@@ -1397,10 +1397,11 @@ class AwesomeTemplate extends QuickTemplate {
 	// TODO: move to AjaxLogin extension and use GetHTMLAfterBody hook
 	if ($wgUser->isAnon()) {
 ?>
-	<form action="" method="post" name="userajaxloginform" id="userajaxloginform" style="display: none">
-		<input type="text" name="wpName" id="wpName1" />
-		<input type="password" name="wpPassword" id="wpPassword1" />
-	</form>
+		<form action="" method="post" name="userajaxloginform" id="userajaxloginform" style="display: none">
+			<input type="text" name="wpName" id="wpName1" tabindex="101" size="20" />
+			<input type="password" name="wpPassword" id="wpPassword1" tabindex="102" size="20" />
+			<input type="checkbox" name="wpRemember" id="wpRemember1" tabindex="104" value="1" <?php if( $wgUser->getOption( 'rememberpassword' ) ) { ?>checked="checked"<?php } ?> />
+		</form>
 <?
 	}
 
