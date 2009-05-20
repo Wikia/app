@@ -1,9 +1,15 @@
 //@see http://jamazon.co.uk/web/2008/07/21/jquerygetscript-does-not-cache 
 $.ajaxSetup({cache: true});
 
-jQuery.fn.log = function (msg) {
+jQuery.fn.log = function (msg, group) {
 	if (typeof console != 'undefined') {
-		console.log(msg);
+		if (group) {
+			// nice formatting of objects with group prefix
+			console.log((typeof msg != 'object' ? '%s: %s' : '%s: %o'), group, msg);
+		}
+		else {
+			console.log(msg);
+		}
 	}
 	else if (typeof opera != 'undefined') {
 		opera.postError(msg);
