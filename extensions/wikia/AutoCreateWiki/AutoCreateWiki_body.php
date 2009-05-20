@@ -677,7 +677,7 @@ class AutoCreateWikiPage extends SpecialPage {
         $this->mWikiData[ "subdomain" ] = $this->mWikiData[ "name"];
         $this->mWikiData[ "redirect" ]  = $this->mWikiData[ "name"];
 		$this->mWikiData[ "dir_part" ]  = $this->prepareDirValue();
-		$this->mWikiData[ "dbname" ]    = substr( str_replace( "-", "", $this->mWikiData[ "name"] ), 0, 64);
+		$this->mWikiData[ "dbname" ]    = substr( str_replace( "-", "", $this->mWikiData[ "name"] ), 0, 50 ); #(64 - lang - rand(1, 99)
 		$this->mWikiData[ "path" ]      = "/usr/wikia/docroot/wiki.factory";
         $this->mWikiData[ "images" ]    = self::IMGROOT . $this->mWikiData[ "dir_part"] . "/images";
         $this->mWikiData[ "testWiki" ]  = false;
@@ -689,6 +689,8 @@ class AutoCreateWikiPage extends SpecialPage {
 			$this->mWikiData[ "dir_part" ] .= "/" . strtolower( $this->mWikiData[ "language" ] );
 			$this->mWikiData[ "images" ]    = self::IMGROOT . $this->mWikiData[ "dir_part"] . "/images";
 		}
+		
+		$this->mWikiData[ "dbname" ] = WikiFactory::prepareDBName($this->mWikiData[ "dbname" ]);
 
 		wfProfileOut( __METHOD__ );
 	}
