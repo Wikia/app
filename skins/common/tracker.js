@@ -72,6 +72,11 @@ var WET = function() {
 		}
 	}
 
+	// Links on edit page
+	$('#wpMinoredit, #wpWatchthis, #wpSave, #wpPreview, #wpDiff, #wpCancel, #wpEdithelp').click(function(e) {
+		WET.byStr('editpage/' + this.id.substring(2).toLowerCase());
+	});
+
 	// Initialize tracking for specific skin
 	if(typeof initTracker != 'undefined') {
 		initTracker();
