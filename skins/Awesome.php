@@ -1936,13 +1936,43 @@ if(count($wikiafooterlinks) > 0) {
 						<input type="hidden" name="go" value="1" />
 						<input type="submit" id="search_button" value="" title="<?= wfMsgHtml('searchbutton') ?>" />
 					</form>
-					<div id="searchSuggestContainer" class="yui-ac-container"></div>
 <style>
-.autocomplete-w1 { z-index:10001 !important;background:url(img/shadow.png) no-repeat bottom right; position:absolute; top:0px; left:0px; margin:8px 0 0 6px; /* IE6 fix: */ _background:none; _margin:0; }
-.autocomplete { z-index:10001;border:1px solid #999; background:#FFF; cursor:default; text-align:left; max-height:350px; overflow:auto; margin:-6px 6px 6px -6px; /* IE6 specific: */ _height:350px;  _margin:0; _overflow-x:hidden; }
-.autocomplete .selected { z-index:10001;background:#F0F0F0; }
-.autocomplete div { z-index:10001;padding:2px 5px; white-space:nowrap; }
-.autocomplete strong { z-index:10001;font-weight:normal; color:#3399FF; }
+/* TODO: set z-index: 20000 for #AutocompleteContainter_xxxxxxxxxx */
+.autocomplete-w1 {
+	left: 0px;
+	margin: 8px 0 0 6px;
+	position: absolute;
+	top: 0px;
+	/* IE6 fix: */
+	_background:none;
+	_margin:0;
+}
+.autocomplete {
+	background: #FFF;
+	border: 1px solid #999;
+	cursor: default;
+	font-size: 0.9em;
+	margin: -6px 6px 6px -6px;
+	max-height: 350px;
+	overflow: auto;
+	text-align: left;
+	width: 174px !important;
+	/* IE6 specific: */
+	_height: 350px; 
+	_margin: 0;
+	_overflow-x: hidden;
+}
+.autocomplete .selected {
+	background: #F0F0F0;
+}
+.autocomplete div {
+	padding: 2px 5px;
+	white-space: nowrap;
+}
+.autocomplete strong {
+	color:#3399FF;
+	font-weight: normal;
+}
 </style>
 				</div>
 <?php
