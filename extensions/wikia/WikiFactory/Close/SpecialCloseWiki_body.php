@@ -109,6 +109,8 @@ class CloseWikiPage extends SpecialPage {
 				/**
 				 * show empty form
 				 */
+				$oWFTitle = Title::makeTitle( NS_SPECIAL, 'WikiFactory' );
+				$wgOut->redirect( $oWFTitle->getLocalURL() );
 			}
 		}
 		wfProfileOut( __METHOD__ );
