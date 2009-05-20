@@ -237,7 +237,7 @@ FCK.VideoAdd = function(wikitext, extraData) {
 	var params = wikitext.substring(2, wikitext.length-2).split('|');
 	FCK.wysiwygData[refid] = {
 		'type': 'video',
-		'original': wikitext,
+		'description': wikitext,
 		'href': params[0]
 	};
 
@@ -333,7 +333,7 @@ FCK.VideoGalleryAdd = function(wikitext) {
 	FCK.wysiwygData[refid] = {
 		'type': 'hook',
 		'name': 'videogallery',
-		'original': wikitext
+		'description': wikitext
 	};
 
 	// create new placeholder and add it to the article
