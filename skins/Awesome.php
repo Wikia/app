@@ -1936,6 +1936,13 @@ if(count($wikiafooterlinks) > 0) {
 						<input type="submit" id="search_button" value="" title="<?= wfMsgHtml('searchbutton') ?>" />
 					</form>
 					<div id="searchSuggestContainer" class="yui-ac-container"></div>
+<style>
+.autocomplete-w1 { z-index:10001 !important;background:url(img/shadow.png) no-repeat bottom right; position:absolute; top:0px; left:0px; margin:8px 0 0 6px; /* IE6 fix: */ _background:none; _margin:0; }
+.autocomplete { z-index:10001;border:1px solid #999; background:#FFF; cursor:default; text-align:left; max-height:350px; overflow:auto; margin:-6px 6px 6px -6px; /* IE6 specific: */ _height:350px;  _margin:0; _overflow-x:hidden; }
+.autocomplete .selected { z-index:10001;background:#F0F0F0; }
+.autocomplete div { z-index:10001;padding:2px 5px; white-space:nowrap; }
+.autocomplete strong { z-index:10001;font-weight:normal; color:#3399FF; }
+</style>
 				</div>
 <?php
 	$monacoSidebar = new MonacoSidebar();
