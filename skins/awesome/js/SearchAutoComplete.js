@@ -13,8 +13,12 @@ function sf_focus(e) {
 			}
 		});
 
-//		$.getScript(stylepath+'/common/jquery/jquery.ui.autocomplete.js', function() {
-//		});
+		$.getScript(stylepath+'/common/jquery/jquery.autocomplete.js', function() {
+		    var a = $('#search_field').autocomplete({
+		      width: 300,
+		      lookup: 'January,February,March,April,May,June,July,August,September,October,November,December'.split(',')
+		    });
+		});
 	}
 
 	// On focus - if the search field value is same as default then clean it and add field_active class
