@@ -77,17 +77,31 @@ h1.modalTitle div {			\n\
 			top: getModalTop(),
 			zIndex: zIndex + 1
    		})
-   		.fadeIn("fast");
+   		.fadeIn("fast")
+		.log('makeModal: #' + this.attr('id'));
+
+	// add event handlers
+	var persistent = (typeof options.persistent == 'boolean') ? options.persistent : false;
 
 	$("h1.modalTitle div").bind("click", function() {
-		wrapper.closeModal();
+		if (persistent) {
+			wrapper.hideModal();
+		}
+		else {
+			wrapper.closeModal();
+		}
 	});
 
    	$(window)
    		.bind("keypress.modal", function(event) {
    			if (event.keyCode == 27) {
-   				wrapper.closeModal();
-   			}	
+				if (persistent) {
+					wrapper.hideModal();
+				}
+				else {
+					wrapper.closeModal();
+				}
+   			}
    		})
    		.bind("resize.modal", function() {
    			wrapper.css("top", getModalTop());
@@ -100,7 +114,12 @@ h1.modalTitle div {			\n\
 		.css({zIndex: zIndex})
    		.fadeTo("fast", 0.65)
    		.bind("click", function() {
-   			wrapper.closeModal();
+			if (persistent) {
+				wrapper.hideModal();
+			}
+			else {
+				wrapper.closeModal();
+			}
    		});
   },
   closeModal: function() {
@@ -113,6 +132,36 @@ h1.modalTitle div {			\n\
   	});
   	$(".blackout:last").fadeOut("fast", function() {
   		$(this).remove();
-  	})
-  } 
+  	});
+  },
+  // just hide the modal - don't remove DOM node
+  hideModal: function() {
+	this.animate({
+  		top: this.offset()["top"] + 100,
+  		opacity: 0
+  	}, "fast");
+  	$(".blackout:last").fadeOut("fast").addClass('blackoutHidden');
+  },
+  // show previously hidden modal
+  showModal: function() {
+
+	var wrapper = this.closest(".modalWrapper");
+
+	// let's have it dynamically generated, so every newly created modal will be on the top 
+	var zIndex = ($('.blackout').length+1) * 1000;
+
+	wrapper
+		.css('zIndex', zIndex+1)
+		.animate({
+	  		top: wrapper.offset()["top"] - 100,
+  			opacity: 1
+	  	}, "fast")
+		.log('showModal: #' + this.attr('id'));
+
+   	$(".blackout.blackoutHidden:last")
+   		.height($(document).height())
+		.css({zIndex: zIndex})
+		.removeClass('blackoutHidden')
+   		.fadeIn("fast");
+  }
 });
