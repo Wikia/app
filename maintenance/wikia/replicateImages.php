@@ -70,6 +70,8 @@ class WikiaReplicateImages {
 		Wikia::log( __CLASS__, "info", "flags for all copied is {$copied}" );
 		Wikia::log( __CLASS__, "info", "Taking {$limit} rows" );
 
+		$order = "up_id " . $reverse ? "DESC" : "ASC";
+
 		$sth = $dbw->select(
 			array( "upload_log" ),
 			array( "*" ),
@@ -79,7 +81,7 @@ class WikiaReplicateImages {
 			),
 			__METHOD__,
 			array(
-				  "ORDER BY" => "up_id " . $reverse ? "DESC" : "ASC",
+				  "ORDER BY" => $order,
 				  "LIMIT" => $limit
 			)
 		);
