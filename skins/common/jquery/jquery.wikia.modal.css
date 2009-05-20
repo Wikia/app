@@ -14,12 +14,12 @@ h1.modalTitle {
 	position: relative;
 }
 h1.modalTitle div {
-	clip: rect(0px 320px 16px 304px);
+	background-position: 48px 0;
 	cursor: pointer;
 	height: 16px;
 	position: absolute;
-	right: -27px;
-	width: 352px;
+	right: 5px;
+	width: 16px;
 }
 .modalInside {
 	padding: 5px !important;
