@@ -5,6 +5,9 @@ jQuery.fn.log = function (msg) {
 	if (typeof console != 'undefined') {
 		console.log(msg);
 	}
+	else if (typeof opera != 'undefined') {
+		opera.postError(msg);
+	}
 	return this;
 };
 
