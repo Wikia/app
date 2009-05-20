@@ -50,14 +50,19 @@ class WikiaReplicateImages {
 	 *
 	 */
 	public function execute() {
-		$limit = isset( $this->mOptions['limit'] ) ? $this->mOptions['limit'] : 10000;
+
+		global $wgErrorLog;
 
 		/**
 		 * rsync must be run from root in order to save file's ownership
 		 */
 		$this->mRunAs = isset( $this->mOptions['u']) ? $this->mOptions['u'] : 'root';
-		$this->mTest = isset( $this->mOptions['test']) ? true : false;
-		$reverse = isset( $this->mOptions['reverse']) ? true : false;
+		$this->mTest  = isset( $this->mOptions['test']) ? true : false;
+
+		$limit      = isset( $this->mOptions['limit'] ) ? $this->mOptions['limit'] : 10000;
+		$reverse    = isset( $this->mOptions['reverse']) ? true : false;
+		$wgErrorLog = isset( $this->mOptions['log']) ? true : false;
+
 		$dbw = wfGetDBExt( DB_MASTER );
 
 		/**
