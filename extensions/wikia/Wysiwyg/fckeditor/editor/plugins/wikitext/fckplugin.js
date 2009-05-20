@@ -1535,7 +1535,7 @@ FCK.YE = FCK.YAHOO.util.Event;
 
 // log functionality
 FCK.log = function(msg) {
-	window.parent.$().log(msg);
+	window.parent.$().log(msg, 'Wysiwyg');
 }
 
 // macbre: setup tracker object
