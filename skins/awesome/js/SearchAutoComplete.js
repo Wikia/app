@@ -18,6 +18,7 @@ function sf_focus(e) {
 		      width: 300,
 		      lookup: 'January,February,March,April,May,June,July,August,September,October,November,December'.split(',')
 		    });
+		    $('body').children('div').slice(-1).css('zIndex', 20000);
 		});
 	}
 
