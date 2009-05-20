@@ -964,7 +964,7 @@ EOS;
 		// merged CSS - use StaticChute
 		$StaticChute = new StaticChute('css');
 		$tpl->set('mergedCSS',
-			"\n\t\t" . $StaticChute->getChuteHtmlForPackage('awesome_css') . 
+			"\n\t\t" . $StaticChute->getChuteHtmlForPackage('awesome_css') .
 			"\n\t\t" . $StaticChute->getChuteHtmlForPackage('awesome_css_print') . "\n" );
 
 		if(isset($this->themename)) {
@@ -1337,7 +1337,7 @@ class AwesomeTemplate extends QuickTemplate {
 	$this->html('csslinks');
 
 	if($wgRequest->getVal('action') != '' || $wgTitle->getNamespace() == NS_SPECIAL) {
-		$this->html('mergedJS'); 
+		$this->html('mergedJS');
 		foreach($this->data['references']['js'] as $script) {
 			if (!empty($script['url'])) {
 ?>
@@ -1928,37 +1928,6 @@ if(count($wikiafooterlinks) > 0) {
 	$msgSearchLabel = wfMsg('Tooltip-search');
 	$searchLabel = wfEmptyMsg('Tooltip-search', $msgSearchLabel) ? (wfMsg('ilsubmit').' '.$wgSitename.'...') : $msgSearchLabel;
 ?>
-<style>
-
-.autocomplete-w1 {
-	z-index: 1001;
-	position: absolute;
-	top: 0px;
-	left: 0px;
-	margin: 6px 0 0 6px;
-	/* IE6 fix: */ _background: none;
-	_margin: 1px 0 0 0;
-}
-.autocomplete {
-	z-index: 1001;
-	border: 1px solid #999;
-	background: #FFF;
-	cursor: default;
-	text-align: left;
-	overflow: auto;
-	margin: -6px 6px 6px -6px;
-	_margin: 0;
-	_overflow-x: hidden;
-}
-.autocomplete div {
-	z-index: 1001;
-	padding: 1px 0 0 3px;
-	white-space: nowrap;
-}
-.autocomplete .selected {
-	background:#F0F0F0;
-}
-</style>
 			<div class="widget" id="navigation_widget">
 				<div id="search_box" class="color1">
 					<form action="<?php $this->text('searchaction') ?>" id="searchform">
