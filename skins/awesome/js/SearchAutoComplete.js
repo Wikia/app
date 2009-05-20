@@ -14,10 +14,12 @@ function sf_focus(e) {
 		});
 
 		$.getScript(stylepath+'/common/jquery/jquery.autocomplete.js', function() {
-		    var a = $('#search_field').autocomplete({
-		      width: 300,
-		      lookup: 'January,February,March,April,May,June,July,August,September,October,November,December'.split(',')
-		    });
+			$('#search_field').autocomplete({
+				lookup: 'January,February,March,April,May,June,July,August,September,October,November,December'.split(','),
+				fnFormatResult: function(v) { return v; },
+				selectedClass: 'navigation-hover',
+				deferRequestBy: 1000
+			});
 		    $('body').children('div').slice(-1).css('zIndex', 20000);
 		});
 	}
