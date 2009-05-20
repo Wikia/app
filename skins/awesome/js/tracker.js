@@ -23,11 +23,6 @@ var initTracker = function() {
 		$.tracker.byStr('RequestWiki/initiate_click');
 	});
 
-	// Links on edit page
-	$('#wpMinoredit, #wpWatchthis, #wpSave, #wpPreview, #wpDiff, #wpCancel, #wpEdithelp').click(function(e) {
-		$.tracker.byStr('editpage/' + e.target.id.substring(2).toLowerCase());
-	});
-
 	// Edit links for sections
 	// TODO: WTF is this variable?
 	var WysyWigDone = false;
