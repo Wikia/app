@@ -63,16 +63,22 @@ FCKToolbarItems.RegisterItem( 'AddImage', oTildesItem );
 //
 // FCK load time logging
 //
+//
+//
+
+FCK.ToggleEditButtons = function( mode ) {
+	var buttons = ['wpSave', 'wpPreview', 'wpDiff'];
+	for (b=0; b<buttons.length; b++) {
+		window.parent.document.getElementById(buttons[b]).disabled = mode;
+	}
+}
+
 FCK.LoadTime = false;
 FCK.onWysiwygLoad = function() {
 	// run just once
 	if (FCK.LoadTime == false) {
 		// unblock save / preview / show changes button
-		var buttons = ['wpSave', 'wpPreview', 'wpDiff'];
-		for (b=0; b<buttons.length; b++) {
-			window.parent.document.getElementById(buttons[b]).disabled = false;
-		}
-
+		FCK.ToggleEditButtons( false );
 		FCK.log('Save / preview / show changes buttons have been unblocked');
 
 		// add FCK version info
@@ -150,6 +156,8 @@ FCK.SwitchEditMode = function() {
 
 	FCK.InProgress = true;
 
+	FCK.ToggleEditButtons(true);
+
 	var args = arguments;
 
 	if(FCK.EditMode == FCK_EDITMODE_WYSIWYG) {
@@ -185,6 +193,7 @@ FCK.SwitchEditMode = function() {
 			}
 			FCK.EditingArea.TargetElement.className = '';
 			setTimeout(function() {FCK.InProgress = false;}, 100);
+			FCK.ToggleEditButtons(false);
 			FCK.EditingArea.Focus(); // macbre: moved here from fck.js
 		});
 	}
@@ -301,6 +310,7 @@ FCK.Events.AttachEvent( 'OnAfterSetHTML', function() {
 			FCK.WysiwygSwitchToolbars(true);
 			if (FCK.Track) FCK.Track('/switchMode/html2wiki');
 			window.parent.document.getElementById('wysiwygTemporarySaveType').value = "1";
+			FCK.ToggleEditButtons(false);
 		});
 	}
 
