@@ -9,7 +9,7 @@ TieDivLibrary = new function() {
 
 	var loop = 3;
 
-	this.calculate = function() {
+	this.calculate = function(event) {
 		//$().log('loop: ' + loop);
 		shrinkwrap_offset = $("#monaco_shrinkwrap_main").offset();
 		$.each($(".wikia_ad_placeholder"), function() {
@@ -17,16 +17,18 @@ TieDivLibrary = new function() {
 			load = $("#" + this.id + "_load");
 			if ($.inArray(this.id, TieDivLibrary.rightAds) >= 0) {
 				load.css("right", $(window).width() - $(this).width() - this_offset.left - shrinkwrap_offset.left);
-				$(this).height(load.height());
 			} else {
-				load.css("left", this_offset.left);
+				load.css("left", this_offset.left - shrinkwrap_offset.left);
 			}
 			load.css({
-				height: this.height,
 				top: this_offset.top - shrinkwrap_offset.top,
-				width: this.width,
 				display: "block"
 			});
+			//when page has loaded, adjust placeholders for 300x600 ads, and do extra loops to be safe
+			if (typeof event != 'undefined' && event.type == 'load') {
+				$(this).height(load.height());
+				loop = 10;
+			}
 		});
 		loop--;
 		if (loop > 0) {
@@ -35,12 +37,6 @@ TieDivLibrary = new function() {
 			loop = 3;
 		}
 	}
-	$(window).bind("load resize", function() {
-		TieDivLibrary.calculate();
-	});
-	$(document).bind("click keydown", function() {
-		TieDivLibrary.calculate();
-	}).ajaxComplete(function() {
-		TieDivLibrary.calculate();
-	});
+	$(window).bind("load resize", this.calculate);
+	$(document).bind("click keydown", this.calculate).ajaxComplete(this.calculate);
 }
