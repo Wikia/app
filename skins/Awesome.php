@@ -1958,9 +1958,9 @@ if(count($wikiafooterlinks) > 0) {
 	text-align: left;
 	width: 174px !important;
 	/* IE6 specific: */
-	_height: 350px; 
 	_margin: 0;
 	_overflow-x: hidden;
+	_width: 168px !important;
 }
 .autocomplete .selected {
 	background: #F0F0F0;
