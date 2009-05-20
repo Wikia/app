@@ -523,7 +523,7 @@ class HomeTemplate extends QuickTemplate {
 			"Wiki" comes from the Hawaiian word for fast. Wikia's wikis are websites where editing is simple and quick.<br />
 			<a href="http://help.wikia.com/wiki/Help:Video_demos">Take a video tour</a> to learn more.
 		</div>
-		<div class="box blue">
+		<div class="box blue" style="padding: 0">
 			<?= HomeDataProvider::getContentForBox('promoted-feature') ?>
 		</div>
 	</div>
