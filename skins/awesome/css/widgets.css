@@ -315,12 +315,11 @@
 	font-size: 0.9em;
 	margin: -6px 6px 6px -6px;
 	max-height: 350px;
-	overflow: auto;
+	overflow: hidden;
 	text-align: left;
 	width: 174px !important;
 	/* IE6 specific: */
 	_margin: 0;
-	_overflow-x: hidden;
 	_width: 168px !important;
 }
 .autocomplete .selected {
