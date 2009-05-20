@@ -798,7 +798,7 @@ function VET_close(e) {
 }
 
 function VET_track(str) {
-	YAHOO.Wikia.Tracker.track('VET/' + str);
+	WET.byStr('VET/' + str);
 }
 
 function VET_sendQueryEmbed(query) {
