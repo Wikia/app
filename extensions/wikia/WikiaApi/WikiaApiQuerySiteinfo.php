@@ -12,7 +12,7 @@ if (!defined('MEDIAWIKI')) {
  */
 class WikiaApiQuerySiteinfo extends ApiQuerySiteinfo {
 	
-	private $variablesList = array('wgDefaultSkin','wgDefaultTheme','wgAdminSkin','wgArticlePath','wgScriptPath','wgScript','wgServer','wgLanguageCode','wgCityId');
+	private $variablesList = array('wgDefaultSkin','wgDefaultTheme','wgAdminSkin','wgArticlePath','wgScriptPath','wgScript','wgServer','wgLanguageCode','wgCityId','wgContentNamespaces');
 	
 	public function __construct($query, $moduleName) {
 		parent :: __construct($query, $moduleName, 'si');
@@ -59,7 +59,16 @@ class WikiaApiQuerySiteinfo extends ApiQuerySiteinfo {
 		$data = array ();
 		foreach ($this->variablesList as $id => $variableName) {
 			$data[$id] = array( 'id' => $variableName );
-			ApiResult :: setContent( $data[$id], (array_key_exists($variableName, $GLOBALS) && !is_null($GLOBALS[$variableName])) ? $GLOBALS[$variableName] : "" );
+			$value = (array_key_exists($variableName, $GLOBALS) && !is_null($GLOBALS[$variableName])) ? $GLOBALS[$variableName] : "";
+			if ( is_array($value) ) {
+				$loop = 0; foreach ($value as $key => $v) { 
+					$data[$id]["value".$loop] = array( 'id' => $key);
+					ApiResult :: setContent( $data[$id]["value".$loop], $v );
+					$loop++;
+				}
+			} else {
+				ApiResult :: setContent( $data[$id], $value );
+			}
 		}
 		
 		$result = $this->getResult();
