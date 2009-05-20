@@ -1,5 +1,5 @@
 // macbre: moved here from onejstorule.js
-var $ = YAHOO.util.Dom.get;
+var $G = YAHOO.util.Dom.get;
 
 YAHOO.util.Event.onDOMReady(function() {
 	initAutoComplete();
