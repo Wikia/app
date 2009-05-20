@@ -1636,4 +1636,54 @@ class WikiFactory {
 		}
 		wfProfileOut( __METHOD__ );
 	}
+	
+	
+	/**
+	 * prepareDBName
+	 *
+	 * check dbname in city_list and databases
+	 *
+	 * @author moli@wikia
+	 * @access public
+	 * @static
+	 *
+	 * @param integer	$dbname		name of DB to check
+	 *
+	 * @return string: fixed name of DB
+	 */
+	static public function prepareDBName($dbname) {
+		wfProfileIn( __METHOD__ );
+		$dbr = wfGetDB( DB_SLAVE );
+		#-- check city_list
+		$exists = 1; $suffix = "";
+		while ( $exists == 1 ) {
+			$dbname = sprintf("%s%s", $dbname, $suffix);
+			Wikia::log( __METHOD__, "", "Checking if database {$dbname} already exists in city_list" );
+			$Row = $dbr->selectRow(
+				WikiFactory::table("city_list"),
+				array( "count(*) as count" ),
+				array( "city_dbname" => $dbname ),
+				__METHOD__
+			);
+			$exists = 0;
+			if( $Row->count > 0 ) {
+				Wikia::log( __METHOD__, "", "Database {$dbname} exists in city_list!" );
+				$exists = 1;
+			} else {
+				Wikia::log( __METHOD__, "", "Checking if database {$dbname} already exists in database" );
+				$oRes = $dbr->query( sprintf( "show databases like '%s'", $dbname) );
+				if ( $dbr->numRows( $oRes ) > 0 ) {
+					Wikia::log( __METHOD__, "", "Database {$dbname} exists in database!" );
+					$exists = 1;
+				} 
+			}
+			# add suffix			
+			if ($exists == 1) {
+				$suffix = rand(1,999);
+			} 
+		}
+		wfProfileOut( __METHOD__ );
+		return $dbname;
+	}
+	
 };
