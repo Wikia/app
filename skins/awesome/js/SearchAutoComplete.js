@@ -13,6 +13,7 @@ function sf_focus(e) {
 			}
 		});
 
+		// Download AutoComplete dependency and initialize it
 		$.getScript(stylepath+'/common/jquery/jquery.autocomplete.js', function() {
 			$('#search_field').autocomplete({
 				serviceUrl: wgServer+wgScript+'?action=ajax&rs=getLinkSuggest&format=json',
