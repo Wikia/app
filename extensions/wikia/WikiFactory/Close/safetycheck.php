@@ -11,6 +11,46 @@ require_once( "commandLine.inc" );
 $dbr = wfGetDB( DB_SLAVE );
 
 /**
+ * find dbs not defined in city_variables
+ **/
+print "Checking for databases defined in RDBS but not in city_list\n";
+$sth = $dbr->select(
+	WikiFactory::table( "city_variables" ),
+	array( "cv_value" ),
+	array(
+		"cv_variable_id = (SELECT cv_id FROM " .
+		WikiFactory::table("city_variables_pool") .
+		" WHERE cv_name='wgDBname')"
+	),
+	__FILE__,
+	array( "ORDER BY" => "cv_value" )
+);
+
+$DB_NAMES = array();
+while( $row = $dbr->fetchObject( $sth ) ) {
+	$db_name = unserialize($row->cv_value);
+	if ( !empty($db_name) ) {
+		$DB_NAMES[$db_name] = 1;
+	}
+};
+$dbr->freeResult( $sth );
+
+$sth = $dbr->select(
+	array( "INFORMATION_SCHEMA.SCHEMATA" ),
+	array( "distinct(SCHEMA_NAME) as dbname " ),
+	false,
+	__FILE__,
+	array( "ORDER BY" => "1" )
+);
+
+while( $row = $dbr->fetchObject( $sth ) ) {
+	if ( !isset($DB_NAMES[$row->dbname]) ) {
+		print "{$row->dbname} exists, but is not used in city_variables\n";
+	}
+}
+$dbr->freeResult( $sth );
+
+/**
  * find duplicates of city_dbname in city_list
  */
 print "Checking for duplicates in city_list\n";
@@ -142,39 +182,3 @@ while( $row = $dbr->fetchObject( $sth ) ) {
 		print "wgDBname is not defined in city_id={$row->city_id} city_public={$row->city_public}\n";
 	}
 }
-
-/**
- * find dbs not defined in city_variables
- **/
-$sth = $dbr->select(
-	WikiFactory::table( "city_variables" ),
-	array( "cv_value" ),
-	array(
-		"cv_variable_id = (SELECT cv_id FROM city_variables_pool WHERE cv_name='wgDBname')"
-	),
-	__FILE__,
-	array( "ORDER BY" => "cv_value" )
-);
-$DB_NAMES = array();
-while( $row = $dbr->fetchObject( $sth ) ) {
-	$db_name = unserialize($row->cv_value);
-	if ( !empty($db_name) ) {
-		$DB_NAMES[$db_name] = 1;
-	}
-};
-$dbr->freeResult( $sth );
-
-$sth = $dbr->select(
-	array( "INFORMATION_SCHEMA.SCHEMATA" ),
-	array( "distinct(SCHEMA_NAME) as dbname " ),
-	false,
-	__FILE__,
-	array( "ORDER BY" => "1" )
-);
-
-while( $row = $dbr->fetchObject( $sth ) ) {
-	if ( !isset($DB_NAMES[$row->dbname]) ) {
-		print "{$row->dbname} exists, but is not defined in city_variables\n";
-	}
-}
-$dbr->freeResult( $sth );
