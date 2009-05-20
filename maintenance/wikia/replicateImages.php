@@ -57,6 +57,7 @@ class WikiaReplicateImages {
 		 */
 		$this->mRunAs = isset( $this->mOptions['u']) ? $this->mOptions['u'] : 'root';
 		$this->mTest = isset( $this->mOptions['test']) ? true : false;
+		$reverse = isset( $this->mOptions['reverse']) ? true : false;
 		$dbw = wfGetDBExt( DB_MASTER );
 
 		/**
@@ -78,7 +79,7 @@ class WikiaReplicateImages {
 			),
 			__METHOD__,
 			array(
-				  "ORDER BY" => "up_id DESC",
+				  "ORDER BY" => "up_id " . $reverse ? "DESC" : "ASC",
 				  "LIMIT" => $limit
 			)
 		);
