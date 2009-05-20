@@ -73,7 +73,9 @@ var WET = function() {
 	}
 
 	// Initialize tracking for specific skin
-	initTracker();
+	if(typeof initTracker != 'undefined') {
+		initTracker();
+	}
 
 };
 
