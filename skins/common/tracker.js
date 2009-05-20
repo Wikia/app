@@ -100,6 +100,7 @@ WET.track = function(fakeurl) {
 	if(WET.skinname != '' && typeof urchinTracker != 'undefined') {
 		_uacct = 'UA-2871474-1';
 		var fake = '/1_' + WET.skinname + '/' + WET.username + '/' + fakeurl;
+		$().log(fake, 'tracker');
 		urchinTracker(fake);
 		if(wgPrivateTracker) {
 			fake = '/1_' + WET.skinname + '/' + wgDB + '/' + WET.username + '/' + fakeurl
