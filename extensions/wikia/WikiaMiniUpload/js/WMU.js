@@ -729,7 +729,7 @@ function WMU_close(e) {
 }
 
 function WMU_track(str) {
-	YAHOO.Wikia.Tracker.track('WMU/' + str);
+	WET.byStr('WMU/' + str);
 }
 
 var WMU_uploadCallback = {
