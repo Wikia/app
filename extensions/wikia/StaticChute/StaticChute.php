@@ -275,10 +275,21 @@ class StaticChute {
 		foreach ($urls as $u){
 			$u = htmlspecialchars($u);
 			if ($type == "css"){
-				$html .= "<link rel=\"stylesheet\" type=\"text/css\" href=\"{$prefix}{$u}{$cb}\"{$media} />";
+				if ($this->allinone) {
+					$html .= "<link rel=\"stylesheet\" type=\"text/css\" href=\"{$prefix}{$u}{$cb}\"{$media} />";
+				}
+				else {
+					// IE has some strange limit of ~30 links per page
+					// output <style> + @import when not using merged CSS files
+					$html .= "\n\t\t\t@import url({$prefix}{$u}{$cb});";
+				}
 			} else if ($type == "js"){
 				$html .= "<script type=\"text/javascript\" src=\"{$prefix}{$u}{$cb}\"></script>";
 			}
+		}
+
+		if ($type == 'css' && !$this->allinone) {
+			$html = "<style type=\"text/css\"{$media}>{$html}\n\t\t</style>";
 		}
 
 		return $html;
