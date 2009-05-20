@@ -8,6 +8,9 @@ form.highlightform {
 	min-width: 700px;
 	position: relative;
 }
+form.highlightform * {
+	position: relative;
+}
 div.formhighlight {
 	background: #dbe7ff;	
 	position: absolute;
