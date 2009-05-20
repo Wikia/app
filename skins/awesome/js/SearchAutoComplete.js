@@ -15,8 +15,9 @@ function sf_focus(e) {
 
 		$.getScript(stylepath+'/common/jquery/jquery.autocomplete.js', function() {
 			$('#search_field').autocomplete({
-				lookup: 'January,February,March,April,May,June,July,August,September,October,November,December'.split(','),
+				serviceUrl: wgServer+wgScript+'?action=ajax&rs=getLinkSuggest&format=json',
 				fnFormatResult: function(v) { return v; },
+				onSelect: function(v, d) { location.href = wgArticlePath.replace(/\$1/, encodeURI(v.replace(/ /g, '_'))); },
 				selectedClass: 'navigation-hover',
 				deferRequestBy: 1000
 			});

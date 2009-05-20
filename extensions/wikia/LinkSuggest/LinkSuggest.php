@@ -136,7 +136,13 @@ function getLinkSuggest() {
 	}
 	$results = array_unique($results);
 
-	$ar = new AjaxResponse(implode("\n", $results));
+	if($wgRequest->getText('format') == 'json') {
+		$out = Wikia::json_encode(array('query' => $wgRequest->getText('query'), 'suggestions' => array_values($results)));
+	} else {
+		$out = implode("\n", $results);
+	}
+
+	$ar = new AjaxResponse($out);
 	$ar->setCacheDuration(60 * 60); // cache results for one hour
 
 	return $ar;
