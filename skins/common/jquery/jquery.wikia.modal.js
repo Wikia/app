@@ -96,11 +96,11 @@ $.fn.extend({
   },
   // just hide the modal - don't remove DOM node
   hideModal: function() {
+	$(".blackout:last").fadeOut("fast").addClass('blackoutHidden');
 	this.animate({
   		top: this.offset()["top"] + 100,
   		opacity: 0
   	}, "fast");
-  	$(".blackout:last").fadeOut("fast").addClass('blackoutHidden');
   },
   // show previously hidden modal
   showModal: function() {
@@ -110,18 +110,21 @@ $.fn.extend({
 	// let's have it dynamically generated, so every newly created modal will be on the top 
 	var zIndex = ($('.blackout').length+1) * 1000;
 
-	wrapper
-		.css('zIndex', zIndex+1)
-		.animate({
-	  		top: wrapper.offset()["top"] - 100,
-  			opacity: 1
-	  	}, "fast")
-		.log('showModal: #' + this.attr('id'));
-
    	$(".blackout.blackoutHidden:last")
    		.height($(document).height())
-		.css({zIndex: zIndex})
-		.removeClass('blackoutHidden')
-   		.fadeIn("fast");
+		.css({
+			display: 'block',
+			opacity: 0.65,
+			zIndex: zIndex
+		})
+		.removeClass('blackoutHidden');
+
+	wrapper
+		.css({
+			top: wrapper.offset()["top"] - 100,
+			zIndex:  zIndex+1,
+			opacity: 1
+		})
+		.log('showModal: #' + this.attr('id'));
   }
 });
