@@ -1,5 +1,5 @@
 <?php
-global $wgAuth, $wgUser, $wgEnableEmail, $wgExtensionsPath, $wgStyleVersion;
+global $wgAuth, $wgUser, $wgEnableEmail;
 $titleObj = SpecialPage::getTitleFor( 'Userlogin' );
 $link = $titleObj->getLocalUrl('type=signup');
 ?>
@@ -18,7 +18,3 @@ $link = $titleObj->getLocalUrl('type=signup');
 	<br/><a id="wpAjaxRegister" href="<?= htmlspecialchars($link) ?>"><?= wfMsg('nologinlink') ?></a>
 	</form>
 </div>
-<script type="text/javascript" src="<?= $wgExtensionsPath ?>/wikia/AjaxLogin/AwesomeAjaxLogin.js?<?= $wgStyleVersion ?>"></script>
-<script type="text/javascript">
-	AjaxLogin.init($("#AjaxLoginBox form"));
-</script> 
