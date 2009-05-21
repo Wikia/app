@@ -41,7 +41,6 @@ function AddNewTalkSectionInit() {
 	$wgHooks['CustomArticleFooter'][] = 'AddNewTalkSectionAddFooter';
 	$wgHooks['SkinTemplateSetupPageCss'][] = 'AddNewTalkSectionAddCSS';
 	$wgHooks['EditPage::importFormData::finished'][] = 'AddNewTalkSectionImportFormData';
-	$wgHooks['EditPage::showEditForm:fields'][] = 'AddNewTalkSectionAddFormFields';
 //	$wgHooks['UserToggles'][] = 'AddNewTalkSectionToggleUserPreference';
 //	$wgHooks['getEditingPreferencesTab'][] = 'AddNewTalkSectionToggleUserPreference';
 }
@@ -72,7 +71,7 @@ function AddNewTalkSectionAddFooter(&$skin, &$tpl, &$custom_article_footer) {
 			$link = wfMsg('Add_comment');
 		}
 		$skin = $wgUser->getSkin();
-		$link = $skin->makeKnownLinkObj( $wgTitle, $link, 'action=edit&section=new&src=footer' );
+		$link = $skin->makeKnownLinkObj( $wgTitle, $link, 'action=edit&section=new' );
 		$custom_article_footer .= '<div id="AddNewTalkSectionFooter"><div id="AddNewTalkSectionImage"></div><span id="AddNewTalkSectionLink">' . $link . '</span></div>';
 	}
 	return true;
@@ -86,8 +85,7 @@ function AddNewTalkSectionAddFooter(&$skin, &$tpl, &$custom_article_footer) {
 function AddNewTalkSectionImportFormData($editPage, $request) {
 	global $wgAddNewTalkSectionOnTop;
 	if (!empty($wgAddNewTalkSectionOnTop) && $request->wasPosted() && $editPage->mTitle->exists()) {
-		$sourceType = $request->getVal('wpAddNewTalkSectionSourceType');
-		if ($sourceType == 'footer' && !($editPage->preview || $editPage->diff)) {
+		if (!($editPage->preview || $editPage->diff)) {
 			global $wgParser;
 			//grab section 0 (from the begining to the first heading)
 			$section0 = $wgParser->getSection($editPage->mArticle->getContent(), '0');
@@ -103,20 +101,6 @@ function AddNewTalkSectionImportFormData($editPage, $request) {
 			$editPage->section = '';
 			$editPage->textbox1 = $text;
 		}
-	}
-	return true;
-}
-
-/**
- * Add hidden field with source info
- *
- * @author Maciej Błaszkowski <marooned at wikia-inc.com>
- */
-function AddNewTalkSectionAddFormFields($editPage, $wgOut) {
-	global $wgRequest;
-	//add hidden field to distinguish between regular 'start a new section' and our new one
-	if ($wgRequest->getVal('wpAddNewTalkSectionSourceType', $wgRequest->getVal('src')) == 'footer') {
-		$wgOut->addHTML('<input type="hidden" value="footer" name="wpAddNewTalkSectionSourceType" />');
 	}
 	return true;
 }

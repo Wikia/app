@@ -8,9 +8,11 @@
 
 #AddNewTalkSectionImage {
 	background-image: url(http://images.wikia.com/common/skins/monaco/images/sprite.png);
-	clip: rect(0px, 16px, 16px, 0px);
+	clip: rect(0px, 288px, 16px, 272px);
+	left: -272px;
+	margin-left: 8px;
 	float: left;
-	width: 16px;
+	width: 336px;
 	height: 16px;
 	position: absolute;
 }
