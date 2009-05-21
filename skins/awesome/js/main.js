@@ -369,6 +369,8 @@ function monacoNavigationHoverActions() {
 }
 
 function setupVoting() {
+
+	// callback for vote and unrate
 	var callback = function(data) {
 		$('#star-rating').removeClass('star-rating-progress');
 
@@ -381,14 +383,15 @@ function setupVoting() {
 		$.post(window.location.href, {action: 'purge'});
 	};
 
-	$('#star-rating a').click(function(ev) {
+	$('#star-rating').find('a').click(function(ev) {
 		ev.preventDefault();
 
 		var rating = this.id.substr(4,1);
 		$('#star-rating').addClass('star-rating-progress');
+
 		$.getJSON(wgScriptPath+'/api.php?action=insert&list=wkvoteart&format=json&wkvote='+rating+'&wkpage='+wgArticleId, callback);
 
-		// todo: YAHOO.Wikia.Tracker.trackByStr(e, 'ArticleFooter/vote/' + rating);
+		WET.byStr('ArticleFooter/vote/' + rating);
 	});
 
 	$('#unrateLink').click(function(ev) {
@@ -396,8 +399,9 @@ function setupVoting() {
 
 		$('#star-rating').addClass('star-rating-progress');
 		$('#unrateLink').css('display', 'none');
+
 		$.getJSON(wgScriptPath+'/api.php?action=wdelete&list=wkvoteart&format=json&wkpage='+wgArticleId, callback);
 
-		// todo: YAHOO.Wikia.Tracker.trackByStr(e, 'ArticleFooter/vote/unrate');
+		WET.byStr('ArticleFooter/vote/unrate');
 	});
 }
