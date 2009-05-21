@@ -80,6 +80,7 @@ class CloseWikiMaintenace {
 						$this->removeImageDirectory();
 					}
 					$this->cleanWikiFactory();
+					$this->createIndex( $wgDBname, $wgServer );
 					$this->dropDB();
 					break;
 			}
