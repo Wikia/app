@@ -53,7 +53,7 @@ function wfSpecialRemoveRelationship(){
 				$out .= $wgOut->setPagetitle( wfMsg('woopserrormsg') );
 				$out .= '<div class="friend-request-message">'.wfMsg('cant_remove_yourself').'</div>';
 				$out .= '<div class="friend-request-buttons">';
-				$out .= '<input type="button" value="'.wfMsg('home').'" size="20" onclick=\'window.location=' . Title::newNewMainPage->getLocalURL() . '"\' /> ';
+				$out .= '<input type="button" value="'.wfMsg('home').'" size="20" onclick=\'window.location="' . Title::newNewMainPage()->getLocalURL() . '"\' /> ';
 				if ( $wgUser->isLoggedIn() ) 
 				{
 					$out .= '<input type="button" value="'.wfMsg('yourprofile').'" size="20" onclick=\'window.location="' . Title::makeTitle(NS_USER_PROFILE, $wgUser->getName())->getLocalURL() . '"\' /> ';
