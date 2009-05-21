@@ -42,6 +42,11 @@ $MF['quartz_js']['source'] = array(
 	'common/yui_extra/tools-min.js',
 	'common/yui_extra/carousel-min.js',
 
+	'common/jquery/jquery-1.3.2.js',
+	'common/jquery/jquery.json-1.3.min.js',
+	'common/jquery/jquery.cookies.2.0.1.min.js',
+	'common/jquery/jquery.wikia.js',
+
 	'common/urchin.js',
 	'quartz/js/main.js',
 	'quartz/js/usermenu.js',
