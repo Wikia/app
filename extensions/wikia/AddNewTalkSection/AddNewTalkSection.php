@@ -84,8 +84,8 @@ function AddNewTalkSectionAddFooter(&$skin, &$tpl, &$custom_article_footer) {
  * @author Maciej Błaszkowski <marooned at wikia-inc.com>
  */
 function AddNewTalkSectionImportFormData($editPage, $request) {
-	global $addNewTalkSectionOnTop;
-	if (!empty($addNewTalkSectionOnTop) && $request->wasPosted() && $editPage->mTitle->exists()) {
+	global $wgAddNewTalkSectionOnTop;
+	if (!empty($wgAddNewTalkSectionOnTop) && $request->wasPosted() && $editPage->mTitle->exists()) {
 		$sourceType = $request->getVal('wpAddNewTalkSectionSourceType');
 		if ($sourceType == 'footer' && !($editPage->preview || $editPage->diff)) {
 			global $wgParser;
