@@ -26,6 +26,11 @@ jQuery.fn.getModal = function(url, id, options) {
 		$.get(url, function(html) {
 			$("#positioned_elements").append(html);
 
+			// fire callbackBefore if provided
+			if (typeof options == 'object' && typeof options.callbackBefore == 'function') {
+				options.callbackBefore();
+			}
+
 			// makeModal() if requested
 			if (typeof id == 'string') {
 				$(id).makeModal(options);
