@@ -156,7 +156,7 @@ class CloseWikiMaintenace {
 		 * check if database is used in more than one wiki
 		 */
 		$this->checkDuplicates();
-
+		Wikia::log( __CLASS__, "info", "dropping {$wgDBname} database" );
 		$dbw = wfGetDB( DB_MASTER );
 		$dbw->selectDB( $wgSharedDB );
 		$dbw->begin();
