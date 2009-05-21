@@ -74,6 +74,7 @@ class CloseWikiMaintenace {
 					break;
 
 				case WikiFactory::STATUS_DELETE:
+					Wikia::log( __CLASS__, "info", "close and delete on {$wgCityId}" );
 					$this->dumpXMl();
 					if( $this->compressImages() === true ) {
 						$this->removeImageDirectory();
