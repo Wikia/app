@@ -3,7 +3,7 @@ global $wgAuth, $wgUser, $wgEnableEmail;
 $titleObj = SpecialPage::getTitleFor( 'Userlogin' );
 $link = $titleObj->getLocalUrl('type=signup');
 ?>
-<div id="AjaxLogin" title="<?= wfMsg('login') ?>">
+<div id="AjaxLoginBox" title="<?= wfMsg('login') ?>">
 	<form action="" method="post" style="margin:5px; font-size: 0.95em" name="userajaxloginform">
 		<div id="wpError"></div>
 		<label for="wpName1" style="display: block"><?= wfMsg("yourname") ?></label>
