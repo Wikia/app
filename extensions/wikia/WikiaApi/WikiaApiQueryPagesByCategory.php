@@ -296,7 +296,11 @@ class WikiaApiQueryPagesyByCategory extends WikiaApiQuery {
 			$cached = $this->getDataFromCache($lcache_key);
 			if (!is_array($cached)) {
 				foreach ($encodedCats as $id => $category) {
-					#--
+					#---
+					$pages = $this->getCategoryPages($db, $category);
+					#--- no pages
+					if ( empty($pages) ) continue;
+					
 					$this->resetQueryParams();
 					# build main query on page table
 					$this->addTables( array( "page" ) );
@@ -307,7 +311,7 @@ class WikiaApiQueryPagesyByCategory extends WikiaApiQuery {
 						'page_touched',
 						'page_random'
 					));
-					$this->addWhere ( "page_id in (select distinct(cl_from) from `categorylinks` where cl_to = '".addslashes($category)."')" );
+					$this->addWhere ( "page_id in ('" . implode("','", $pages) . "')" );
 					$this->addWhere ( "page_is_redirect = 0" );
 					#-- limit;
 					$this->addOption( "LIMIT", $limit );
@@ -355,6 +359,24 @@ class WikiaApiQueryPagesyByCategory extends WikiaApiQuery {
 
 		$this->getResult()->addValue('query', $this->getModuleName(), $data);
 	}
+
+	private function getCategoryPages($db, $category) {
+		#---
+		$this->resetQueryParams();
+		# build main query on page table
+		$this->addTables( array( 'categorylinks' ) );
+		$this->addFields( array( 'cl_from as page_id' ) );
+		$this->addWhere ( array('cl_to' => $category) );
+		#---
+		$res = $this->select(__METHOD__);
+		#---
+		while ($row = $db->fetchObject($res)) {
+			$pages[] = $row->page_id;
+		}
+		$db->freeResult($res);
+		return $pages;
+	}
+
 
 	protected function getQueryDescription() { return 'Get Wikia pages by category'; }
 	protected function getParamQueryDescription() { return 	array ( 'category' => 'category to get pages for' ); }
