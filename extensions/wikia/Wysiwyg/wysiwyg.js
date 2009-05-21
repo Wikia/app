@@ -86,7 +86,7 @@ function wysiwygShowFirstEditMessage(title, message, dismiss) {
 	}
 
 	// tracking
-	YAHOO.Wikia.Tracker.trackByStr(null, 'wysiwyg/firstTimeEditMessage');
+	WET.byStr('wysiwyg/firstTimeEditMessage');
 
 	// create and show YUI message
 	wysiwygShowInfobox(title, message, dismiss, function() {
@@ -166,13 +166,13 @@ function initEditor() {
 			var buttonId = elem.id.substring(2).toLowerCase();
 			var editorSourceMode = FCK.EditMode;
 
-			YAHOO.Wikia.Tracker.trackByStr(e, 'wysiwyg/' + buttonId + '/' + (editorSourceMode ? 'wikitextmode' : 'visualmode'));
+			WET.byStr('wysiwyg/' + buttonId + '/' + (editorSourceMode ? 'wikitextmode' : 'visualmode'));
 		});
 		if (fallbackToSourceMode) {
-			YAHOO.Wikia.Tracker.trackByStr(null, 'wysiwyg/edgecase');
+			WET.byStr('wysiwyg/edgecase');
 		}
 		if (temporarySaveType != '') {
-			YAHOO.Wikia.Tracker.trackByStr(null, 'wysiwyg/temporarySave/restore');
+			WET.byStr('wysiwyg/temporarySave/restore');
 		}
 	}
 }
