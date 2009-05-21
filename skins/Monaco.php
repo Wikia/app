@@ -369,7 +369,7 @@ class SkinMonaco extends SkinTemplate {
 	 * @param $out OutputPage
 	 */
 	function setupSkinUserCss( OutputPage $out ){
-		$out->addStyle( 'common/commonPrint.css', 'print' );	
+		$out->addStyle( 'common/commonPrint.css', 'print' );
 	}
 
 	/**
@@ -1717,15 +1717,11 @@ if ($wgOut->isArticle()){
 <?php		wfProfileIn( __METHOD__ . '-articlefooter'); ?>
 <?php
 global $wgTitle, $wgOut;
-$displayArticleFooter = $wgTitle->exists() && $wgTitle->isContentPage() && !$wgTitle->isTalkPage() && $wgOut->isArticle();
-
-$custom_article_footer = "";
-if( $displayArticleFooter ){
-	wfRunHooks( 'CustomArticleFooter', array( &$this, &$tpl, &$custom_article_footer ) );
-	if( $custom_article_footer )echo $custom_article_footer;
-}
-
-if(!$custom_article_footer && $displayArticleFooter) {
+$custom_article_footer = '';
+wfRunHooks( 'CustomArticleFooter', array( &$this, &$tpl, &$custom_article_footer ));
+if ($custom_article_footer !== '') {
+	echo $custom_article_footer;
+} elseif ($wgTitle->exists() && $wgTitle->isContentPage() && !$wgTitle->isTalkPage() && $wgOut->isArticle()) {
 	global $wgArticle, $wgLang, $wgSitename;
 ?>
 			<div id="articleFooter" class="reset">
