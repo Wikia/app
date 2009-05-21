@@ -632,7 +632,7 @@ function wfSpecialQuizGameHome(){
 			
 			$output = wfMsgForContent( 'quiz_login_text' ) . "<p>";
 			$output .= "<div>
-				<input type=\"button\" class=\"site-button\" value=\"" . wfMsgForContent( 'quiz_main_page_button' ) . "\" onclick=\"window.location='" . Title::makeTitle(NS_MAIN, "Main Page")->escapeFullURL() . "'\"/> 
+				<input type=\"button\" class=\"site-button\" value=\"" . wfMsgForContent( 'quiz_main_page_button' ) . "\" onclick=\"window.location='" . Title::newMainPage()->escapeFullURL() . "'\"/> 
 				<input type=\"button\" class=\"site-button\" value=\"" . wfMsgForContent( 'quiz_login_button' ) . "\" onclick=\"window.location='" . Title::makeTitle(NS_SPECIAL, "Login")->escapeFullURL() . "'\"/>
 			</div>";
 			$wgOut->addHTML($output);

@@ -63,7 +63,9 @@ function wfSpecialGiveGift(){
 				$out .= $wgOut->setPagetitle( wfMsg('woopserrormsg') );
 				$out .= "<div class=\"give-gift-message\">".wfMsg('cannot_give_gift_yourself')."</div>";
 				$out .= "<div class=\"give-gift-buttons\">";
-				$out .= "<input type=\"button\" value=\"".wfMsg('home')."\" onclick=\"window.location='/index.php?title=Main_Page'\"/> ";
+				$out .= "<input type=\"button\" value=\"".wfMsg('home')."\" onclick=\"window.location='" .
+					Title::newMainPage()->getLocalURL() .
+					"'\"/> ";
 				$out .= "<input type=\"button\" value=\"".wfMsg('yourprofile')."\" onclick=\"window.location='" . Title::makeTitle(NS_USER_PROFILE, $wgUser->getName())->getLocalURL() . "'\"/> ";
 				$out .= "<input type=\"button\" value=\"".wfMsg('your_user_page')."\" onclick=\"window.location='" . Title::makeTitle(NS_USER, $wgUser->getName())->getLocalURL() . "'\"/> ";
 				$out .= "</div>";
@@ -79,7 +81,9 @@ function wfSpecialGiveGift(){
 				$out .= $wgOut->setPagetitle( wfMsg('woopserrormsg') );
 				$out .= "<div class=\"give-gift-message\">".wfMsg('user_haveto_logged')."</div>";
 				$out .= "<div class=\"give-gift-buttons\">";
-				$out .= "<input type=\"button\" value=\"".wfMsg('home')."\" onclick=\"window.location='/index.php?title=Main_Page'\"/> ";
+				$out .= "<input type=\"button\" value=\"".wfMsg('home')."\" onclick=\"window.location='" . 
+					Title::newMainPage()->getLocalURL() .
+					"'\"/> ";
 				$out .= "<input type=\"button\" value=\"".wfMsg('login')."\" onclick=\"".$login_href."\"/> ";
 				$out .= "</div>";
 				$wgOut->addHTML($out);

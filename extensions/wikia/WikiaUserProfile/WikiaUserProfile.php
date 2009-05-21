@@ -271,7 +271,7 @@ class WikiaProfileUserTitle extends Article{
 			$wgOut->setPagetitle( wfMsg('woops_wrong_turn') );
 			$out .= "<!-s:1--><div class=\"relationship-request-message\">".wfMsg('user_not_exist')."</div><!-e:1-->";
 			$out .= "<!-s:2--><div class=\"relationship-request-buttons\">";
-			$out .= "<input type=\"button\" class=\"relationship-request-button\" value=\"".wfMsg('home')."\" onclick=\"window.location='/index.php?title=Main_Page'\"/>";
+			$out .= "<input type=\"button\" class=\"relationship-request-button\" value=\"".wfMsg('home')."\" onclick=\"window.location='" . Title::newMainPage()->getLocalURL() . "'\"/>";
 			if ( $wgUser->isLoggedIn() )
 			{
 				$out .= " <input type=\"button\" class=\"relationship-request-button\" value=\"".wfMsg('your_user_page')."\" onclick=\"window.location='/index.php?title=User:{$wgUser->getName()}'\"/>";
@@ -452,7 +452,9 @@ class SkinUserProfile extends Article {
 			$wgOut->setPagetitle( wfMsg('woops_wrong_turn') );
 			$out .= "<!-s:5--><div class=\"relationship-request-message\">".wfMsg('user_not_exist')."</div><!-e:5-->";
 			$out .= "<!-s:6--><div class=\"relationship-request-buttons\">";
-			$out .= "<input type=\"button\" class=\"relationship-request-button\" value=\"".wfMsg('home')."\" onclick=\"window.location='/index.php?title=Main_Page'\"/>";
+			$out .= "<input type=\"button\" class=\"relationship-request-button\" value=\"".wfMsg('home')."\" onclick=\"window.location='" . 
+				Title::newMainPage()->getLocalURL() . 
+				"'\"/>";
 			if ( $wgUser->isLoggedIn() )
 			{
 				$out .= " <input type=\"button\" class=\"relationship-request-button\" value=\"".wfMsg('your_user_page')."\" onclick=\"window.location='/index.php?title=User:{$wgUser->getName()}'\"/>";

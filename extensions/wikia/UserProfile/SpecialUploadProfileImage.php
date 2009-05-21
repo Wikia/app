@@ -95,10 +95,10 @@ class SkinSports extends Skin {
 	
 	$s .= '<div id="top">';
           $s .= '<div id="logo">';
-            $s .= '<a href="index.php?title=Main_Page"><img src="images/sports/logo.png" alt="logo" border="0"/></a>';
+            $s .= '<a href="' . Title::newMainPage()->getLocalURL() . '"><img src="images/sports/logo.png" alt="logo" border="0"/></a>';
           $s .= '</div>';
           $s .= '<div id="toplinks">';
-            $s .= '<a href="index.php?title=Main_Page">home</a> - <a href="index.php?title=Special:Recentchanges">recent changes</a> - <a href="index.php?title=Special:SiteScout">site scout</a> - ';
+            $s .= '<a href="' . Title::newMainPage()->getLocalURL() . '">home</a> - <a href="index.php?title=Special:Recentchanges">recent changes</a> - <a href="index.php?title=Special:SiteScout">site scout</a> - ';
 	    $s .= '<a href="index.php?title=Help">help</a>';
           $s .= '</div>';
           $s .= '<div id="search">';
@@ -308,7 +308,7 @@ class SkinSports extends Skin {
      $s .= '<div id="bottom'. $type .'"></div>';
      $s .= '<div id="footer'. $type .'">';
        $s .= '<p>';
-         $s .= '<a href="index.php?title=Main_Page">home</a>';
+         $s .= '<a href="' . Title::newMainPage()->getLocaURL() . '">home</a>';
          $s .= '<a href="index.php?title=About">about</a>';
          $s .= '<a href="index.php?title=Special:Specialpages">special pages</a>';
 	 $s .= '<a href="index.php?title=Help">help</a>';

@@ -91,7 +91,9 @@ function wfSpecialViewRelationships(){
 				$wgOut->setPagetitle( wfMsg('woops_wrong_turn') );
 				$out .= "<div class=\"relationship-request-message\">".wfMsg('user_not_exist')."</div>";
 				$out .= "<div class=\"relationship-request-buttons\">";
-				$out .= "<input type=\"button\" value=\"".wfMsg('home')."\" onclick=\"window.location='/index.php?title=Main_Page'\"/>";
+				$out .= "<input type=\"button\" value=\"".wfMsg('home')."\" onclick=\"window.location='" .
+					Title::newMainPage()->getLocalURL() . 
+					"'\"/>";
 				if ( $wgUser->isLoggedIn() )
 				{
 					$out .= " <input type=\"button\" value=\"".wfMsg('your_user_page')."\" onclick=\"window.location='/index.php?title=User:{$wgUser->getName()}'\"/>";

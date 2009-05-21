@@ -232,7 +232,7 @@ EOF;
 					$wgOut->setPagetitle( wfMsg('msg_sent') );
 					$wgOut->addHTML("<p class=\"user-message\">".wfMsg('emailswentout')." " . $confirm. "</p>");
 					$wgOut->addHTML("<div class=\"relationship-request-buttons\">
-					  <input type=\"button\" value=\"".wfMsg('home')."\" onclick=\"window.location='/index.php?title=Main_Page'\"/>
+					  <input type=\"button\" value=\"".wfMsg('home')."\" onclick=\"window.location='" . Title::newMainPage()->getLocalURL() . "'\"/>
 					  <input type=\"button\" value=\"".wfMsg('yourprofile')."\" onclick=\"window.location='" . Title::makeTitle(NS_USER_PROFILE, $wgUser->getName())->getLocalURL() . "'\"/>
 					  <input type=\"button\" value=\"".wfMsg('youruserpage')."\" onclick=\"window.location='" . Title::makeTitle(NS_USER, $wgUser->getName())->getLocalURL() . "'\"/>
 					  </div>");

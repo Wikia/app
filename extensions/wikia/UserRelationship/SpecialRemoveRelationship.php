@@ -53,7 +53,7 @@ function wfSpecialRemoveRelationship(){
 				$out .= $wgOut->setPagetitle( wfMsg('woopserrormsg') );
 				$out .= '<div class="friend-request-message">'.wfMsg('cant_remove_yourself').'</div>';
 				$out .= '<div class="friend-request-buttons">';
-				$out .= '<input type="button" value="'.wfMsg('home').'" size="20" onclick=\'window.location="index.php?title=Main_Page"\' /> ';
+				$out .= '<input type="button" value="'.wfMsg('home').'" size="20" onclick=\'window.location=' . Title::newNewMainPage->getLocalURL() . '"\' /> ';
 				if ( $wgUser->isLoggedIn() ) 
 				{
 					$out .= '<input type="button" value="'.wfMsg('yourprofile').'" size="20" onclick=\'window.location="' . Title::makeTitle(NS_USER_PROFILE, $wgUser->getName())->getLocalURL() . '"\' /> ';
@@ -69,7 +69,9 @@ function wfSpecialRemoveRelationship(){
 				$out .= $wgOut->setPagetitle( wfMsg('woopserrormsg') );
 				$out .= '<div class="friend-request-message">'.wfMsg('invalid_relationship', $this->user_name_to).'</div>';
 				$out .= '<div class="friend-request-buttons">';
-				$out .= '<input type="button" value="'.wfMsg('home').'" size="20" onclick=\'window.location="index.php?title=Main_Page"\' /> ';
+				$out .= '<input type="button" value="'.wfMsg('home').'" size="20" onclick=\'window.location="' .
+					Title::newMainPage()->getLocalURL() . 
+					'"\' /> ';
 				if ( $wgUser->isLoggedIn() ) 
 				{
 					$out .= '<input type="button" value="'.wfMsg('yourprofile').'" size="20" onclick=\'window.location="' . Title::makeTitle(NS_USER_PROFILE, $wgUser->getName())->getLocalURL() . '"\' /> ';
@@ -85,7 +87,9 @@ function wfSpecialRemoveRelationship(){
 				$out .= $wgOut->setPagetitle( wfMsg('woopserrormsg') );
 				$out .= '<div class="friend-request-message">'.wfMsg('user_pending_request', $label, $this->user_name_to).'</div>';
 				$out .= '<div class="friend-request-buttons">';
-				$out .= '<input type="button" value="'.wfMsg('home').'" size="20" onclick=\'window.location="index.php?title=Main_Page"\' /> ';
+				$out .= '<input type="button" value="'.wfMsg('home').'" size="20" onclick=\'window.location="' . 
+					Title::newMainPage()->getLocalURL() .
+					'"\' /> ';
 				if ( $wgUser->isLoggedIn() )
 				{
 					$out .= '<input type="button" value="'.wfMsg('yourprofile').'" size="20" onclick=\'window.location="' . Title::makeTitle(NS_USER_PROFILE, $wgUser->getName())->getLocalURL() . '"\' /> ';
@@ -100,7 +104,9 @@ function wfSpecialRemoveRelationship(){
 				$out .= $wgOut->setPagetitle( wfMsg('woopserrormsg') );
 				$out .= '<div class="friend-request-message">'.wfMsg('user_haveto_logged_to_remove', $label).'</div>';
 				$out .= '<div class="friend-request-buttons">';
-				$out .= '<input type="button" value="'.wfMsg('home').'" size="20" onclick=\'window.location="index.php?title=Main_Page"\' /> ';
+				$out .= '<input type="button" value="'.wfMsg('home').'" size="20" onclick=\'window.location="' .
+					Title::newMainPage()->getLocalURL() .
+					'"\' /> ';
 				if ( $wgUser->isLoggedIn() ) 
 				{
 					$out .= '<input type="button" value="'.wfMsg('yourprofile').'" size="20" onclick=\'window.location="' . Title::makeTitle(NS_USER_PROFILE, $wgUser->getName())->getLocalURL() . '"\' /> ';
@@ -128,7 +134,9 @@ function wfSpecialRemoveRelationship(){
 					<span class="friend-request-message">'.wfMsg('you_remove_relationship', $this->user_name_to, $label).'</span>
 					<div class="cleared"></div>
 					<div class=\"friend-request-buttons\">				
-						<input type="button" value="'.wfMsg('home').'" size="20" onclick="window.location=\'index.php?title=Main_Page\'"/> 
+						<input type="button" value="'.wfMsg('home').'" size="20" onclick="window.location=\'' .
+						Title::newMainPage()->getLocalURL() .
+						'\'"/> 
 						<input type="button" value="'.wfMsg('yourprofile').'" size="20" onclick=\'window.location="' . Title::makeTitle(NS_USER_PROFILE, $wgUser->getName())->getLocalURL() . '"\' /> 
 						<input type="button" value="'.wfMsg('your_user_page').'" size="20" onclick=\'window.location="' . Title::makeTitle(NS_USER, $wgUser->getName())->getLocalURL() . '"\' />
 					</div>

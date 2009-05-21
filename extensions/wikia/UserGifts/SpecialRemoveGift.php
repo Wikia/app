@@ -80,7 +80,7 @@ function wfSpecialRemoveGift()
 				</div>
 				<div class=\"cleared\" style=\"margin:0px 0px 15px 0px;\"></div>
 				<div class=\"give-gift-buttons\">							
-				<input type=\"button\" value=\"".wfMsg('home')."\" size=\"20\" onclick=\"window.location='index.php?title=Main_Page'\" />
+				<input type=\"button\" value=\"".wfMsg('home')."\" size=\"20\" onclick=\"window.location='" . Title::newMainPage()->getLocalURL() . "'\" />
 				<input type=\"button\" value=\"".wfMsg('viewyourgiftlist')."\" size=\"20\" onclick=\"window.location='index.php?title=Special:ViewGifts&user={$wgUser->getName()}'\" />
 				<input type=\"button\" value=\"".wfMsg('your_user_page')."\" size=\"20\" onclick=\"window.location='index.php?title=User:{$wgUser->getName()}'\" />
 				</div>";				

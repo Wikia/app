@@ -40,7 +40,7 @@ function WidgetAncientPages($id, $params) {
 	}
 
 	if ( !is_object($wgTitle) ) {
-		$wgTitle = Title::newFromText( "Main_Page" );
+		$wgTitle = Title::newMainPage();
 	}
 
 	$offset = 0;
