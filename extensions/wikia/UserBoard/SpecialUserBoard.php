@@ -308,7 +308,7 @@
 					</div>";
 				}
 			}else{
-				$invite_title = Title::makeTitle(NS_SPECIAL,"InviteEmail");
+				$invite_title = Title::makeTitle(NS_SPECIAL,"InviteSpecialPage");
 				$output .= "<p>" . wfMsg("userboard_nomessages", $invite_title->escapeFullURL() ) . "</p>";
 			
 			}
