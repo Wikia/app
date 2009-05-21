@@ -90,7 +90,7 @@
 						{$avatar_img}
 						" . wfMsgExt("ur-add-sent-message", array('parse'), array($label, $this->user_name_to)) . "
 						<div class=\"relationship-buttons\" >
-							<input type=\"button\" class=\"site-button\" value=\"".wfMsg('ur-main-page')."\" size=\"20\" onclick=\"window.location='index.php?title=Main_Page'\"/> 
+							<input type=\"button\" class=\"site-button\" value=\"".wfMsg('ur-main-page')."\" size=\"20\" onclick=\"window.location='" . Title::newMainPage()->getLocalURL() ."'\"/> 
 							<input type=\"button\" class=\"site-button\" value=\"".wfMsg('ur-your-profile')."\" size=\"20\" onclick=\"window.location='".$wgUser->getUserPage()->escapeFullURL() . "'\"/>
 						</div>
 						<div class=\"cleared\"></div>

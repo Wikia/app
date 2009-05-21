@@ -49,7 +49,7 @@
 					".wfMsg("ur-remove-error-message-remove-yourself")."
 				</div>
 				<div>
-					<input type=\"button\" class=\"site-button\" value=\"".wfMsg("ur-main-page")."\" size=\"20\" onclick='window.location=\"index.php?title=Main_Page\"' /> ";
+					<input type=\"button\" class=\"site-button\" value=\"".wfMsg("ur-main-page")."\" size=\"20\" onclick='window.location=\"" . Title::newMainPage()->getLocalURL() . "\"' /> ";
 			        if($wgUser->isLoggedIn())$out.="<input type=\"button\" class=\"site-button\" value=\"".wfMsg("ur-your-profile")."\" size=\"20\" onclick=\"window.location='".$wgUser->getUserPage()->escapeFullURL() . "'\"/>";
 				$out .= "</div>";
 				
@@ -62,7 +62,7 @@
 					".wfMsg("ur-remove-error-message-no-relationship", $this->user_name_to)."
 				</div>
 				<div>
-					<input type=\"button\" class=\"site-button\" value=\"".wfMsg("ur-main-page")."\" size=\"20\" onclick='window.location=\"index.php?title=Main_Page\"' /> ";
+					<input type=\"button\" class=\"site-button\" value=\"".wfMsg("ur-main-page")."\" size=\"20\" onclick='window.location=\"" . Title::newMainPage()->getLocalURL() . "\"' /> ";
 				 	if($wgUser->isLoggedIn())$out.="<input type=\"button\" class=\"site-button\" value=\"".wfMsg("ur-your-profile")."\" size=\"20\" onclick=\"window.location='".$wgUser->getUserPage()->escapeFullURL() . "'\"/>";
 				$out .= "</div>";
 				
@@ -74,7 +74,7 @@
 					".wfMsg("ur-remove-error-message-pending-request", $label, $this->user_name_to)."
 				</div>
 				<div>
-					<input type=\"button\" class=\"site-button\" value=\"".wfMsg("ur-main-page")."\" size=\"20\" onclick='window.location=\"index.php?title=Main_Page\"' /> ";
+					<input type=\"button\" class=\"site-button\" value=\"".wfMsg("ur-main-page")."\" size=\"20\" onclick='window.location=\"" . Title::newMainPage()->getLocalURL() . "\"' /> ";
 				 	if($wgUser->isLoggedIn())$out.="<input type=\"button\" class=\"site-button\" value=\"".wfMsg("ur-your-profile")."\" size=\"20\" onclick=\"window.location='".$wgUser->getUserPage()->escapeFullURL() . "'\"/>";
 				$out .= "</div>";
 				
@@ -86,7 +86,7 @@
 					".wfMsg("ur-remove-error-not-loggedin", $label)."
 				</div>
 				<div>
-					<input type=\"button\" class=\"site-button\" value=".wfMsg("ur-main-page")." size=\"20\" onclick='window.location=\"index.php?title=Main_Page\"' /> ";
+					<input type=\"button\" class=\"site-button\" value=".wfMsg("ur-main-page")." size=\"20\" onclick='window.location=\"" . Title::newMainPage()->getLocalURL() . "\"' /> ";
 				 	if($wgUser->isLoggedIn())$out.="<input type=\"button\" class=\"site-button\" value=".wfMsg("ur-your-profile")." size=\"20\" onclick=\"window.location='".$wgUser->getUserPage()->escapeFullURL() . "'\"/>";
 				$out .= "</div>";
 				
@@ -109,7 +109,7 @@
 		               	{$avatar_img}
 						".wfMsg("ur-remove-relationship-message-confirm", $this->user_name_to, $label)."
 						<div class=\"relationship-buttons\">
-							<input type=\"button\" class=\"site-button\" value=\"".wfMsg('ur-main-page')."\" size=\"20\" onclick=\"window.location='index.php?title=Main_Page'\"/> 
+							<input type=\"button\" class=\"site-button\" value=\"".wfMsg('ur-main-page')."\" size=\"20\" onclick=\"window.location='" . Title::newMainPage()->getLocalURL() . "'\"/> 
 							<input type=\"button\" class=\"site-button\" value=\"".wfMsg('ur-your-profile')."\" size=\"20\" onclick=\"window.location='".$wgUser->getUserPage()->escapeFullURL() . "'\"/>
 						</div>
 					   <div class=\"cleared\"></div>

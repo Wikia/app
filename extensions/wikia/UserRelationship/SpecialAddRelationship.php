@@ -59,7 +59,7 @@ function wfSpecialAddRelationship(){
 				$out .= $wgOut->setPagetitle( wfMsg('woopserrormsg') );
 				$out .= '<div class="give-gift-message">'.wfMsg('cannot_request_yourself').'</div>';
 				$out .= '<div class="friend-request-buttons">';
-				$out .= '<input type="button" value="'.wfMsg('home').'" size="20" onclick=\'window.location="/index.php?title=Main_Page"\' /> ';
+				$out .= '<input type="button" value="'.wfMsg('home').'" size="20" onclick=\'window.location="' . Title::newMainPage()->getLocalURL() .'"\' /> ';
 				$out .= '<input type="button" value="'.wfMsg('return_to_user').'" size="20" onclick=\'window.location="/index.php?title=User:'.$wgUser->getName().'"\' /> ';
 				$out .= '</div>';
 
@@ -70,7 +70,7 @@ function wfSpecialAddRelationship(){
 				$out .= $wgOut->setPagetitle( wfMsg('woopserrormsg') );
 				$out .= '<div class="give-gift-message">'.wfMsg('user_dont_exist').'</div>';
 				$out .= '<div class="friend-request-buttons">';
-				$out .= '<input type="button" value="'.wfMsg('home').'" size="20" onclick=\'window.location="/index.php?title=Main_Page"\' /> ';
+				$out .= '<input type="button" value="'.wfMsg('home').'" size="20" onclick=\'window.location="' . Title::newMainPage()->getLocalURL() . '"\' /> ';
 				$out .= '<input type="button" value="'.wfMsg('return_to_user').'" size="20" onclick=\'window.location="/index.php?title=User:'.$wgUser->getName().'"\' /> ';
 				$out .= '</div>';
 
@@ -95,7 +95,7 @@ function wfSpecialAddRelationship(){
 					$out .= '<div class="cleared"></div>';
 					$out .= '</div>';
 					$out .= '<div class="friend-request-buttons">';
-					$out .= '<input type="button" value="'.wfMsg('home').'" size="20" onclick=\'window.location="/index.php?title=Main_Page"\' /> ';
+					$out .= '<input type="button" value="'.wfMsg('home').'" size="20" onclick=\'window.location="' . Title::newMainPage()->getLocalURL() . '"\' /> ';
 					$out .= '<input type="button" value="'.wfMsg('return_to_user').'" size="20" onclick=\'window.location="/index.php?title=User:'.$wgUser->getName().'"\' /> ';
 					$out .= '</div>';
 					$wgOut->addHTML($out);
@@ -119,7 +119,9 @@ function wfSpecialAddRelationship(){
 					$out .= '<div class="cleared"></div>';
 					$out .= '</div>';
 					$out .= '<div class="friend-request-buttons">';
-					$out .= '<input type="button" value="'.wfMsg('home').'" size="20" onclick=\'window.location="/index.php?title=Main_Page"\' /> ';
+					$out .= '<input type="button" value="'.wfMsg('home').'" size="20" onclick=\'window.location="' . 
+						Title::newMainPage()->getLocalURL() .
+						'"\' /> ';
 					$out .= '<input type="button" value="'.wfMsg('return_to_user').'" size="20" onclick=\'window.location="' . Title::makeTitle(NS_USER, $wgUser->getName())->getLocalURL() . '"\' /> ';
 					$out .= '<input type="button" value="'.wfMsg('user_profile_page', $wgUser->getName()).'" size="30" onclick=\'window.location="' . Title::makeTitle(NS_USER_PROFILE, $wgUser->getName())->getLocalURL() . '"\' /> ';
 					$out .= '</div>';
@@ -145,7 +147,9 @@ function wfSpecialAddRelationship(){
 					$out .= $this->returnPage();
 					$out .= '<div class="give-gift-message">'.wfMsg('user_haveto_logged_to_add', $label).'</div>';
 					$out .= '<div class="friend-request-buttons">';
-					$out .= '<input type="button" value="'.wfMsg('home').'" size="20" onclick=\'window.location="/index.php?title=Main_Page"\' /> ';
+					$out .= '<input type="button" value="'.wfMsg('home').'" size="20" onclick=\'window.location="' .
+						Title::newMainPage()->getLocalURL() .
+						'"\' /> ';
 					$out .= '<input type="button" value="'.wfMsg('login').'" size="20" onclick=\''.$login_href.'\' /> '; // FIXME should be UserProfile (renders as UserProfile&action=edit now...) or better SpecialAddRelationship&user=foo&reltype=bar (no way to add params to returnto...)
 					$out .= '</div>';
 					$wgOut->addHTML($out);

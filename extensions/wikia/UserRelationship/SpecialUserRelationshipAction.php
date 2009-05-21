@@ -45,14 +45,14 @@ function wfUserRelationshipAction(){
 			{
 				echo "<div class=\"relationship-request-confirm\">".wfMsg('user_add_relationship', $user_name_from, $rel_type)."</div>";
 				echo "<div class=\"relationship-request-buttons\">
-				  <input type=\"button\" value=\"".wfMsg('home')."\" onclick=\"window.location='/index.php?title=Main_Page'\"/>
+				  <input type=\"button\" value=\"".wfMsg('home')."\" onclick=\"window.location='" . Title::newMainPage()->getLocaURL() . "'\"/>
 				  <input type=\"button\" value=\"".wfMsg('yourprofile')."\" onclick=\"window.location='" . Title::makeTitle(NS_USER_PROFILE, $wgUser->getName())->getLocalURL() . "'\"/>
 				  <input type=\"button\" value=\"".wfMsg('your_user_page')."\" onclick=\"window.location='" . Title::makeTitle(NS_USER, $wgUser->getName())->getLocalURL() . "'\"/>
 				  </div>";
 			} else {
 				echo "<div class=\"relationship-request-confirm\">".wfMsg('user_reject_relationship', $user_name_from, $rel_type)."</div>";
 				echo "<div class=\"relationship-request-buttons\">
-				  <input type=\"button\" value=\"".wfMsg('home')."\" onclick=\"window.location='/index.php?title=Main_Page'\"/>
+				  <input type=\"button\" value=\"".wfMsg('home')."\" onclick=\"window.location='" . Title::newMainPage()->getLocaURL() . "'\"/>
 				  <input type=\"button\" value=\"".wfMsg('yourprofile')."\" onclick=\"window.location='" . Title::makeTitle(NS_USER_PROFILE, $wgUser->getName())->getLocalURL() . "'\"/>
 				  <input type=\"button\" value=\"".wfMsg('your_user_page')."\" onclick=\"window.location='" . Title::makeTitle(NS_USER, $wgUser->getName())->getLocalURL() . "'\"/>
 				  </div>";

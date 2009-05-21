@@ -73,7 +73,7 @@
 					".wfMsg("ur-error-message-no-user")."
 				</div>
 				<div class=\"relationship-request-buttons\">
-					<input type=\"button\" class=\"site-button\" value=\"".wfMsg('ur-main-page')."\" onclick=\"window.location='index.php?title=Main_Page'\"/>";
+					<input type=\"button\" class=\"site-button\" value=\"".wfMsg('ur-main-page')."\" onclick=\"window.location='" . Title::newMainPage()->getLocalURL() . "'\"/>";
 					if($wgUser->isLoggedIn())$out .= " <input type=\"button\" class=\"site-button\" value=\"".wfMsg('ur-your-profile')."\" onclick=\"window.location='".$wgUser->getUserPage()->escapeFullURL() . "'\"/>";
 			  	$out .= "</div>";
 				$wgOut->addHTML($out);

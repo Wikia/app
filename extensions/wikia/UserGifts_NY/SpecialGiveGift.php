@@ -113,7 +113,7 @@ class GiveGift extends SpecialPage {
 					$output .= "</div>
 				<div class=\"cleared\"></div>
 				<div class=\"g-buttons\">
-					<input type=\"button\" class=\"site-button\" value=\"".wfMsg('g-main-page')."\" size=\"20\" onclick=\"window.location='index.php?title=Main_Page'\"/> 
+					<input type=\"button\" class=\"site-button\" value=\"".wfMsg('g-main-page')."\" size=\"20\" onclick=\"window.location='" . Title::newMainPage()->getLocalURL() . "'\"/> 
 					<input type=\"button\" class=\"site-button\" value=\"".wfMsg('g-your-profile')."\" size=\"20\" onclick=\"window.location='".$wgUser->getUserPage()->escapeFullURL() . "'\"/>
 				</div>";
 				

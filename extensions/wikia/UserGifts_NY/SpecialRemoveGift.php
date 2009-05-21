@@ -56,7 +56,7 @@ class RemoveGift extends SpecialPage {
 				<div class=\"cleared\"></div>
 			</div>
 			<div class=\"g-buttons\">							
-				<input type=\"button\" class=\"site-button\" value=\"".wfMsg('g-main-page')."\" size=\"20\" onclick=\"window.location='index.php?title=Main_Page'\" />
+				<input type=\"button\" class=\"site-button\" value=\"".wfMsg('g-main-page')."\" size=\"20\" onclick=\"window.location='" . Title::newMainPage()->getLocalURL() . "'\" />
 				<input type=\"button\" class=\"site-button\" value=\"".wfMsg('g-your-profile')."\" size=\"20\" onclick=\"window.location='".$user_page_link->escapeFullURL()."'\" />
 			</div>";				
 			

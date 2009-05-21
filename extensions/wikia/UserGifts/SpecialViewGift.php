@@ -126,7 +126,7 @@ function wfSpecialViewGift(){
 			}
 			else
 			{
-				$output .= "<input type=\"button\" value=\"".wfMsg('home')."\" onclick=\"window.location='/index.php?title=Main_Page'\"/> ";
+				$output .= "<input type=\"button\" value=\"".wfMsg('home')."\" onclick=\"window.location='" . Title::newMainPage()->getLocalURL() . "'\"/> ";
 				$output .= "<input type=\"button\" value=\"".wfMsg('view_your_gifts')."\" onclick=\"window.location='/index.php?title=Special:ViewGifts&user={$gift["user_name_to"]}'\"/>";
 			}
 
