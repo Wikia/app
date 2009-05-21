@@ -1,0 +1,22 @@
+#AddNewTalkSectionFooter {
+	border-top: 1px dashed #CCC;
+	font-size: 9pt;
+	margin: 0;
+	overflow: hidden;
+	padding: 10px;
+}
+
+#AddNewTalkSectionImage {
+	background-image: url(http://images.wikia.com/common/skins/monaco/images/sprite.png);
+	clip: rect(0px, 16px, 16px, 0px);
+	float: left;
+	width: 16px;
+	height: 16px;
+	position: absolute;
+}
+
+#AddNewTalkSectionLink a {
+	padding-left: 20px;
+	font-weight: bold;
+	color: black;
+}
