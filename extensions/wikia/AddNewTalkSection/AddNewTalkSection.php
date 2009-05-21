@@ -63,7 +63,7 @@ function AddNewTalkSectionAddCSS(&$out) {
  */
 function AddNewTalkSectionAddFooter(&$skin, &$tpl, &$custom_article_footer) {
 	global $wgTitle;
-	if ($wgTitle->getNamespace() == NS_USER_TALK) {
+	if ($wgTitle->isTalkPage()) {
 		global $wgHooks, $wgOut, $wgUser, $wgExtensionsPath, $wgStyleVersion;
 		wfLoadExtensionMessages('AddNewTalkSection');
 		$link = wfMsg('addnewtalksection-link');
