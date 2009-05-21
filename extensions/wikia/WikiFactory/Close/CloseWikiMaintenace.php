@@ -219,7 +219,7 @@ class CloseWikiMaintenace {
 						$path = $oldfile->getPath();
 						if( is_file( $path ) ) {
 							$images[] = $oldfile->getPath();;
-							Wikia::log( __CLASS, "info", "adding {$path} to archive" );
+							Wikia::log( __CLASS__, "info", "adding {$path} to archive" );
 						}
 					}
 				}
@@ -324,24 +324,13 @@ class CloseWikiMaintenace {
 			$dbw->freeResult( $sth );
 
 			$dbw->begin();
-			$dbw->delete(
-				WikiFactory::table( "city_variables" ),
-				array( "cv_city_id" => $this->mCityID ),
-				__METHOD__
-			);
-
-			$dbw->delete(
-				WikiFactory::table( "city_list_log" ),
-				array( "cv_city_id" => $this->mCityID ),
-				__METHOD__
-			);
-
-			$dbw->delete(
-				WikiFactory::table( "city_list" ),
-				array( "city_id" => $this->mCityID ),
-				__METHOD__
-			);
-
+			if( !empty( $this->mCityID ) ) {
+				$dbw->delete(
+					WikiFactory::table( "city_list" ),
+					array( "city_id" => $this->mCityID ),
+					__METHOD__
+				);
+			}
 			$dbw->commit();
 		}
 		wfProfileOut( __METHOD__ );
