@@ -1540,7 +1540,7 @@ FCK.log = function(msg) {
 
 // macbre: setup tracker object
 FCK.Track = function(fakeUrl) {
-	window.parent.WET.byStr(null, 'wysiwyg'+fakeUrl);
+	window.parent.WET.byStr('wysiwyg'+fakeUrl);
 }
 
 // track the fact of using FCK + send the name of edited page
