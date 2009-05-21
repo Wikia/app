@@ -12,7 +12,7 @@ jQuery.fn.log = function (msg, group) {
 		}
 	}
 	else if (typeof opera != 'undefined') {
-		opera.postError(msg);
+		opera.postError((group ? (group + ': ') : '') + msg);
 	}
 	return this;
 };
