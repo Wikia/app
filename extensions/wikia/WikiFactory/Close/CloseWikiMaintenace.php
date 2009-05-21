@@ -130,8 +130,15 @@ class CloseWikiMaintenace {
 			Wikia::log( __CLASS__, "tar", "Cannot open {$zipfile}" );
 			wfDie( "Cannot open {$zipfile}" );
 		}
-
-		return $tar->create( $this->getFilesList() );;
+		$files = $this->getFilesList();
+		if( is_array( $files ) && count( $files ) ) {
+			Wikia::log( __CLASS__, "info", sprintf( "Packed %d images", count( $files ) ) );
+			return $tar->create( $files );
+		}
+		else {
+			Wikia::log( __CLASS__, "info", "List of images is empty" );
+			return true;
+		}
 	}
 
 	/**
