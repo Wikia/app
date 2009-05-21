@@ -199,14 +199,18 @@ class CloseWikiMaintenace {
 		);
 		while( $row = $dbr->fetchObject( $sth ) ) {
 			$file = wfLocalFile( $row->img_name );
-			if( is_file( $file->getPath() ) ) {
-				$images[] = $file->getPath();
+			$path = $file->getPath();
+			if( is_file( $path ) ) {
+				$images[] = $path;
+				Wikia::log( __CLASS, "info", "adding {$path} to archive" );
 			}
 			if( $file && $this->mHistory ) {
 				$oldFiles = $file->getHistory();
 				foreach( $oldFiles as $oldfile ) {
-					if( is_file( $oldfile->getPath() ) ) {
+					$path = $oldfile->getPath();
+					if( is_file( $path ) ) {
 						$images[] = $oldfile->getPath();;
+						Wikia::log( __CLASS, "info", "adding {$path} to archive" );
 					}
 				}
 			}
