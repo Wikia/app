@@ -201,14 +201,13 @@ function openLogin(event) {
 		$('#AjaxLoginBox').showModal();
 	}
 	else {
-		// make modal persistent, so it won't be removed from DOM
-		$().getModal(window.wgScript + '?action=ajax&rs=GetAjaxLogin&uselang=' + window.wgUserLanguage + '&cb=' + wgMWrevId + '-' + wgStyleVersion, '#AjaxLoginBox', 
-		{
-			width: 300,
-			persistent: true,
-			callback: function() {
+		$().getModal(window.wgScript + '?action=ajax&rs=GetAjaxLogin&uselang=' + window.wgUserLanguage + '&cb=' + wgMWrevId + '-' + wgStyleVersion,  false, {callback: function() {
 				$.getScript(wgExtensionsPath + '/wikia/AjaxLogin/AwesomeAjaxLogin.js?' + wgStyleVersion, function() {
+					// first initialized AjaxLogin form (move login/password fields)
 					AjaxLogin.init( $('#AjaxLoginBox form') );
+
+					// then show as modal
+					$('#AjaxLoginBox').makeModal({width: 300, persistent: true});
 				});
 			}
 		});
