@@ -84,7 +84,7 @@ function AddNewTalkSectionAddFooter(&$skin, &$tpl, &$custom_article_footer) {
  */
 function AddNewTalkSectionImportFormData($editPage, $request) {
 	global $wgAddNewTalkSectionOnTop;
-	if (!empty($wgAddNewTalkSectionOnTop) && $request->wasPosted() && $editPage->mTitle->exists()) {
+	if (!empty($wgAddNewTalkSectionOnTop) && $request->wasPosted() && $editPage->mTitle->exists() && $editPage->section == 'new') {
 		if (!($editPage->preview || $editPage->diff)) {
 			global $wgParser;
 			//grab section 0 (from the begining to the first heading)
