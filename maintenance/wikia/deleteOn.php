@@ -62,6 +62,7 @@ $dbw = wfGetDB( DB_MASTER );
 		exit (1) ;
 	}
 
+	$wgTitle = $page; // this cannot be NULL
 
 	print $page->getPrefixedText();
 	$dbw->begin();
@@ -82,4 +83,3 @@ $dbw = wfGetDB( DB_MASTER );
 		sleep( $interval );
 	}
 	wfWaitForSlaves( 5 );
-?>
