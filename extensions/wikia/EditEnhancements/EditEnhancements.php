@@ -1,9 +1,9 @@
 <?
 $wgExtensionCredits['other'][] = array(
-        'name' => 'EditEnhancements',
+	'name' => 'EditEnhancements',
 	'description' => 'Puts edit summary and save button above the fold',
-        'version' => '1.0',
-        'author' => array('[http://pl.wikia.com/wiki/User:Macbre Maciej Brencz]', 'Christian Williams')
+	'version' => '1.2',
+	'author' => array('[http://pl.wikia.com/wiki/User:Macbre Maciej Brencz]', 'Christian Williams', '[http://www.wikia.com/wiki/User:Marooned Maciej Błaszkowski (Marooned)]')
 );
 
 $wgExtensionFunctions[] = 'wfEditEnhancementsInit';
@@ -18,5 +18,3 @@ function wfEditEnhancementsInit() {
 		$instance = new EditEnhancements($action);
 	}
 }
-
-

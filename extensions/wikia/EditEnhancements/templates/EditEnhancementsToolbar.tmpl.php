@@ -44,6 +44,12 @@
 		margin: 0 0 0 0.5em !important;
 		padding: 0;
 	}
+	#edit_enhancements_toolbar #scroll_down_arrow {
+		font-weight: bold;
+		width: 12px;
+		cursor: pointer;
+		float: right;
+	}
 </style>
 
 <script type="text/javascript">
@@ -60,5 +66,8 @@
 		<li><?=$buttons['preview'] ?></li>
 		<li><?=$checkboxes['minor'] ?></li>
 		<li><?=$checkboxes['watch'] ?></li>
+		<?php if ($action != 'edit' || $undo) { ?>
+		<li id="scroll_down_arrow"><span onclick="window.scrollTo(0,document.getElementById('wpTextbox1').offsetTop)">&darr;</span></li>
+		<?php } ?>
 	</ul>
 </div>
