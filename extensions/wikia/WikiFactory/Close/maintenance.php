@@ -10,5 +10,5 @@ require_once( "commandLine.inc" );
 require_once( "CloseWikiMaintenace.php" );
 
 $setup = isset( $options[ "setup" ] ) ? true : false;
-$maintenance = new CloseWikiMaintenace( );
+$maintenance = new CloseWikiMaintenace( $options );
 $maintenance->execute( $setup );

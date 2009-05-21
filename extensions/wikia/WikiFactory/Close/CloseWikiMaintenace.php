@@ -10,6 +10,7 @@ include( "Archive/Tar.php" );
 class CloseWikiMaintenace {
 
 	private
+		$mOptions,
 		$mDumpDirectory,
 		$mImgDirectory,
 		$mAction,
@@ -17,7 +18,7 @@ class CloseWikiMaintenace {
 		$mHistory,
 		$mWiki;
 
-	public function __construct() {
+	public function __construct( $options ) {
 		global $wgDevelEnvironment;
 
 		if( !$wgDevelEnvironment ) {
@@ -29,6 +30,7 @@ class CloseWikiMaintenace {
 			$this->mZipDirectory = "/tmp/dumps";
 		}
 		$this->mHistory = true;
+		$this->mOptions = $options;
 	}
 
 	/**
@@ -67,9 +69,7 @@ class CloseWikiMaintenace {
 				case WikiFactory::STATUS_CLOSED:
 				case WikiFactory::STATUS_REDIR:
 					$this->dumpXMl();
-					if( $this->compressImages() === true ) {
-						// not now: $this->removeImageDirectory();
-					}
+					$this->compressImages();
 					$this->createIndex( $wgDBname, $wgServer );
 					break;
 
@@ -99,8 +99,8 @@ class CloseWikiMaintenace {
 			"--output=gzip:{$dumpfile}",
 			"--xml"
 		);
-		if( !$wgDevelEnvironment ) {
-			$args[] = "--server=10.8.2.220";
+		if( isset( $this->mOptions[ "server" ] ) ) {
+			$args[] = "--server=" . $this->mOptions[ "server" ] ;
 		}
 		Wikia::log( __CLASS__, "info", "dumping {$wgDBname} to {$dumpfile}");
 		$dumper = new BackupDumper( $args );
