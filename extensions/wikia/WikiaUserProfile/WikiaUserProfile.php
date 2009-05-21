@@ -263,6 +263,7 @@ class WikiaProfileUserTitle extends Article{
 		$user_name = $this->userName;
 		$user_id = User::idFromName($user_name);
 		$user =  Title::makeTitle( NS_USER  , $user_name  );
+		$out = '';
 
 		/*/
 		/* Error message for username that does not exist (from URL)
