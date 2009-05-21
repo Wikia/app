@@ -511,32 +511,27 @@ if(wgUserName != null) {
 }
 })();
 
-(function() {
-var Dom = YAHOO.util.Dom;
-var Event = YAHOO.util.Event;
-
-function runWidgetInits() {
-	if(skin == 'quartz') {
-		widgets = Dom.getElementsByClassName('widget', 'li');
-	} else if(skin == 'monaco') {
-		widgets = Dom.getElementsByClassName('widget', 'dl');
-
-		 // resize carousel (#3179)
-		var carousel = Dom.get('widget_cockpit_list').parentNode;
-		if (!YAHOO.env.ua.ie) {
-			Dom.addClass(carousel, 'carousel-clip-region-auto');
-		}
+// init widgets
+$(function() {
+	if (skin == 'quartz') {
+		widgets = $('#widgets_1').children('li');
 	}
-	for(i = 0; i < widgets.length; i++) {
-		id = widgets[i].id;
-		id = id.substring(0, id.length - 3);
-		type = Dom.get(widgets[i].id).className.split(' ')[1];
+	else {
+		widgets = $('#sidebar_1').children('dl');
+	}
+
+	$().log(widgets, 'Widgets');
+
+	widgets.each(function() {
+		id = $(this).attr('id');
+		id = id.substring(0, id.length-3);
+
+		type = $(this).attr('class').split(' ').pop();
+
 		fname = type + '_init';
-		if(YAHOO.lang.isFunction(window[fname])) {
+		if (typeof window[fname] == 'function') {
+			$().log(fname, 'Widgets');
 			window[fname](id);
 		}
-	}
-}
-
-Event.onDOMReady(runWidgetInits);
-})();
+	});
+});
