@@ -3394,6 +3394,9 @@ jQuery.extend({
 	// Last-Modified header cache for next request
 	lastModified: {},
 
+	// macbre: Wikia change
+	lazyLoaderTimer: {},
+
 	ajax: function( s ) {
 		// Extend the settings, but re-extend 's' so that it can be
 		// checked again later (in the test suite, specifically)
@@ -3483,19 +3486,37 @@ jQuery.extend({
 			if ( !jsonp ) {
 				var done = false;
 
-				// Attach handlers for all browsers
-				script.onload = script.onreadystatechange = function(){
-					if ( !done && (!this.readyState ||
-							this.readyState == "loaded" || this.readyState == "complete") ) {
-						done = true;
-						success();
-						complete();
+				// macbre: Wikia change - start
+                                // safari doesn't support either onload or readystate, create a timer
+                                // only way to do this in safari
+                                // @see http://ajaxian.com/archives/a-technique-for-lazy-script-loading
+                                if (($.browser.safari && !navigator.userAgent.match(/Version\/3/)) || $.browser.opera) { // sniff
+                                        $.lazyLoaderTimer[s.url] = setInterval(function() {
+                                                if (!done && /loaded|complete/.test(document.readyState)) {
+                                                        clearInterval($.lazyLoaderTimer[s.url]);
 
-						// Handle memory leak in IE
-						script.onload = script.onreadystatechange = null;
-						head.removeChild( script );
-					}
-				};
+							done = true;
+							success();
+							complete();
+                                                }
+                                        }, 10);
+                                }
+				else {
+					// Attach handlers for all browsers
+					script.onload = script.onreadystatechange = function(){
+						if ( !done && (!this.readyState ||
+								this.readyState == "loaded" || this.readyState == "complete") ) {
+							done = true;
+							success();
+							complete();
+
+							// Handle memory leak in IE
+							script.onload = script.onreadystatechange = null;
+							head.removeChild( script );
+						}
+					};
+				}
+				// macbre: Wikia change - end
 			}
 
 			head.appendChild(script);
