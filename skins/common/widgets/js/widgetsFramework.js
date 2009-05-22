@@ -13,7 +13,7 @@ var DDM = YAHOO.util.DragDropMgr;
 function init() {
 	if(skin == 'quartz') {
 		widgets = Dom.getElementsByClassName('widget', 'li');
-	} else if(skin == 'monaco') {
+	} else if(skin == 'monaco' || skin == 'awesome') {
 		widgets = Dom.getElementsByClassName('widget', 'dl');
 	}
 	for(i = 0; i < widgets.length; i++) {
@@ -25,7 +25,7 @@ function init() {
 
 	if(skin == 'quartz') {
 		sidebars = Dom.getElementsByClassName('widgets', 'ul');
-	} else if(skin == 'monaco') {
+	} else if(skin == 'monaco' || skin == 'awesome') {
 		sidebars = Dom.getElementsByClassName('sidebar', 'div');
 	}
 	for(i = 0; i < sidebars.length; i++) {
@@ -288,7 +288,7 @@ YAHOO.extend(YAHOO.wikia.ddObject, YAHOO.util.DDProxy, {
 			return;
 		}
 
-		if((skin == 'monaco' && destEl.nodeName.toLowerCase() == 'dl') || (skin == 'quartz' && destEl.nodeName.toLowerCase() == 'li')) {
+		if(( (skin == 'monaco' || skin == 'awesome') && destEl.nodeName.toLowerCase() == 'dl') || (skin == 'quartz' && destEl.nodeName.toLowerCase() == 'li')) {
 			if(this.isThumb == true) {
 				srcEl = Dom.get('ghost');
 				Dom.setStyle('ghost', 'display', 'block');
@@ -428,7 +428,7 @@ function showCarousel(e) {
 				}
 
 				thumb_el.className = 'widget_thumb draggable clearfix ' + i +'Thumb';
-				if(skin == 'monaco') {
+				if(skin == 'monaco' || skin == 'awesome') {
 					thumb_el.innerHTML = '<div class="icon"></div><h1>' + title + '<div class="add"></div></h1><br />' + desc;
 				} else if(skin == 'quartz') {
 					thumb_el.innerHTML = title
@@ -481,7 +481,7 @@ function getNumberForCarousel() {
 		var carouselWidth = parseInt(Dom.getX('next-arrow')-Dom.getX('prev-arrow')-32);
 		Dom.setStyle('widget_cockpit_overlay', 'width', parseInt(carouselWidth/10)*10 + 'px');
 		carouselVisible = Math.floor(carouselWidth / widgetElWidth);
-	} else if (skin == 'monaco') {
+	} else if (skin == 'monaco' || skin == 'awesome') {
 		var carouselSize = parseInt(Dom.getViewportWidth() - 60);
 
 		carouselVisible = Math.floor(carouselSize / (55 + 145 + 5));
