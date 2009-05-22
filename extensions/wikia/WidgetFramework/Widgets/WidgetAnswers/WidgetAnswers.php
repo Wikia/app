@@ -7,7 +7,7 @@ if(!defined('MEDIAWIKI')) {
 	die(1);
 }
 
-global $wgWidgets;
+global $wgWidgets, $wgAvailableAnswersLang;
 $wgWidgets['WidgetAnswers'] = array(
 	'callback' => 'WidgetAnswers',
 	'title' => array(
@@ -19,17 +19,16 @@ $wgWidgets['WidgetAnswers'] = array(
     'closeable' => true,
     'editable' => false,
     'listable' => true,
-    'languages' => array( 'en' ), # only show in carousel on EN wikis
+    'languages' => $wgAvailableAnswersLang,
 );
 
 
 function WidgetAnswers($id, $params) {
     wfProfileIn(__METHOD__);
 
-	// Hide widget if wiki content language is not english
 	# TODO: should be handled directly in WidgetFramework, probably Draw/DrawOne method
-	global $wgLanguageCode;
-	if($wgLanguageCode != 'en')	{
+	global $wgLanguageCode, $wgAvailableAnswersLang;
+	if (!in_array($wgLanguageCode, $wgAvailableAnswersLang))	{
 		return '';
 	}
 
