@@ -149,11 +149,6 @@ wfRunHooks('GetHTMLAfterBody', array (&$this));
 	</div><?/*answers_header*/?>
 
 	<div id="answers_page">
-		<?php
-		if ( 
-			$wgTitle->getNamespace() != NS_CATEGORY || in_array( 'staff', $wgUser->getGroups() )
-		) {
-		?>
 		<div id="page_bar" class="reset color1 clearfix">
 			<ul id="page_controls">
 			<?php
@@ -183,9 +178,6 @@ wfRunHooks('GetHTMLAfterBody', array (&$this));
 			?>
 			</ul>
 		</div><?/*page_bar*/?>
-		<?php
-		}
-		?>
 
 		<div id="answers_article">
 		
