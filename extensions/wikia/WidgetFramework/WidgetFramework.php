@@ -229,16 +229,19 @@ class WidgetFramework {
 			return '';
 		}
 
+		// generate xHTML valid nodes ID (refs RT #9584)
+		$widget['id'] = 'widget_' . $widget['id'];
+
 		if($this->skinname == 'monaco') {
 			$closeButton = ($closeable) ? "<div id=\"{$widget['id']}_close\" class=\"close\"><span></span></div>" : '';
 			$editButton  = ($editable) ? "<div id=\"{$widget['id']}_edit\" class=\"edit\"><span></span></div>" : '';
 			$editForm  = ($editable) ? "<dd style=\"display: none;\" class=\"shadow widget_contents\" id=\"{$widget['id']}_editform\"></dd>" : '';
-			return "<dl class=\"widget {$widget['type']}\" id=\"{$widget['id']}_wg\"><dt class=\"color1 widget_title\" id=\"{$widget['id']}_header\"><div class=\"widgetToolbox\">{$closeButton}{$editButton}</div>{$title}</dt><dd class=\"shadow widget_contents\" id=\"{$widget['id']}_content\">{$body}</dd>{$editForm}</dl>";
+			return "<dl class=\"widget {$widget['type']}\" id=\"{$widget['id']}\"><dt class=\"color1 widget_title\" id=\"{$widget['id']}_header\"><div class=\"widgetToolbox\">{$closeButton}{$editButton}</div>{$title}</dt><dd class=\"shadow widget_contents\" id=\"{$widget['id']}_content\">{$body}</dd>{$editForm}</dl>";
 		} else if($this->skinname == 'quartz') {
 			$closeButton = ($closeable) ? "<span id=\"{$widget['id']}_close\" class=\"closeButton\">x</span>" : '';
 			$editButton  = ($editable) ? "<span id=\"{$widget['id']}_edit\" class=\"editButton\">Edit</span>" : '';
 			$editForm  = ($editable) ? "<div style=\"display: none;\" class=\"widgetContent\" id=\"{$widget['id']}_editform\"></div>" : '';
-			return "<li class=\"widget {$widget['type']}\" id=\"{$widget['id']}_wg\"><div class=\"sidebar clearfix\" id=\"{$widget['id']}\"><h1 id=\"{$widget['id']}_header\">$title</h1><div class=\"widgetContent {$widget['type']}\" id=\"{$widget['id']}_content\">{$body}</div>{$editForm}</div><div class=\"widgetToolbox\">{$editButton}{$closeButton}</div></li>";
+			return "<li class=\"widget {$widget['type']}\" id=\"{$widget['id']}\"><div class=\"sidebar clearfix\" id=\"{$widget['id']}\"><h1 id=\"{$widget['id']}_header\">$title</h1><div class=\"widgetContent {$widget['type']}\" id=\"{$widget['id']}_content\">{$body}</div>{$editForm}</div><div class=\"widgetToolbox\">{$editButton}{$closeButton}</div></li>";
 		} else {
 			// ..should never occur
 		}
@@ -259,7 +262,8 @@ class WidgetFramework {
 		global $wgWidgets;
 		$params = $this->getParams($widget);
 		$params['skinname'] = $this->skinname;
-		$widgetOut = $wgWidgets[$widget['type']]['callback']($widget['id'],$params);
+
+		$widgetOut = $wgWidgets[$widget['type']]['callback']('widget_' . $widget['id'], $params);
 		if($wrap) {
 			return $this->wrap($widget, $widgetOut);
 		} else {
@@ -555,6 +559,11 @@ function WidgetFrameworkAjax() {
 		} else {
 			$response = array('success' => false);
 		}
+	}
+
+	// add widget id
+	if (!empty($response)) {
+		$response['id'] = $wgRequest->getInt('id');
 	}
 
 	return new AjaxResponse(Wikia::json_encode($response));
