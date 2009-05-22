@@ -86,7 +86,7 @@ $wgAutoloadClasses["ApiPartnerWikiConfig"] = "extensions/wikia/FeaturedContent/A
 $wgAutoloadClasses["WikiaApiAjaxLogin"] = "extensions/wikia/WikiaApi/WikiaApiAjaxLogin.php";
 $wgAutoloadClasses["ApiImageThumb"] = $GLOBALS["IP"]."/extensions/wikia/Our404Handler/ApiImageThumb.php";
 $wgAutoloadClasses["WikiaApiQuerySiteInfo"] = "extensions/wikia/WikiaApi/WikiaApiQuerySiteinfo.php";
-
+$wgAutoloadClasses["WikiaApiQueryPageinfo"] = "extensions/wikia/WikiaApi/WikiaApiQueryPageinfo.php";
 
 /**
  * registered API methods
@@ -112,6 +112,11 @@ $wgAPIMetaModules["siteinfo"] = "WikiaApiQuerySiteInfo";
  */
 global $wgAjaxExportList;
 
+/**
+ * registered Ajax methods
+ */
+global $wgAPIPropModules;
+$wgAPIPropModules["pageinfo"] = "WikiaApiQueryPageinfo";
 
 /**
  * registered Format names
@@ -157,7 +162,6 @@ include_once( "$IP/extensions/wikia/MostPopularCategories/SpecialMostPopularCate
 include_once( "$IP/extensions/wikia/MostPopularArticles/SpecialMostPopularArticles.php" );
 include_once( "$IP/extensions/wikia/MostVisitedPages/SpecialMostVisitedPages.php" );
 include_once( "$IP/extensions/wikia/WidgetSpecialPage/WidgetsSpecialPage.php" );
-
 
 /**
  * @name $wgSkipSkins
