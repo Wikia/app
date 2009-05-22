@@ -44,100 +44,99 @@ $wgGroupPermissions['staff']['wteditimagelist'] = true;
 
 function WidgetSlideshow($id, $params) {
 
-    wfProfileIn(__METHOD__);
-    
-    //print_pre($params);
+	global $wgUser;
 
-    $json = '<span id="'.$id.'-json" style="display:none">'.WidgetSlideshowGetImagesAsJSON($params['show'], $params['limit']).'</span>';
+	wfProfileIn(__METHOD__);
 
-    $placeholder = '<div id="'.$id.'-images" class="WidgetSlideshowImages">&nbsp;</div>';
+	// generate HTML
+	$html = '';
 
-    $controls = '<div class="WidgetSlideshowControls" id="'.$id.'-controls">'.
-	'<a class="WidgetSlideshowControlPrev" title="'.wfMsg('allpagesprev').'">prev</a>'.
-	'<a class="WidgetSlideshowControlNext" title="'.wfMsg('allpagesnext').'">next</a>'.
-	'<a class="WidgetSlideshowControlPause">pause</a>'.
-	'</div><div style="display:block">&nbsp;</div>';
-	
-    
-    // show 'edit images list' only for staff and sysops and when showing images from special page list
-    global $wgUser;
-		
-    $editText = '';
-    
-    if ( ($params['show'] == 3) && $wgUser->isAllowed('wteditimagelist') ) {
-	// add edit list link only for sysops/staff users
-        $url = Title::newFromText('WidgetSlideshowImages', NS_MEDIAWIKI);
-			
-        $editText = '<div style="opacity: 0.6; float: left; margin-top: 7px">'.
-	    '<a href="'.$url->getFullURL('action=edit').'">Edit images list</a>'.
-    	    '</div>';
-    }    
-    
-    wfProfileOut(__METHOD__);
-        
-    return $json . $placeholder . $controls . $editText;
-}
+	$list = WidgetSlideshowGetImages($params['show'], $params['limit']);
+	$images = array();
 
-// get JSON encoded list of images
-function WidgetSlideshowGetImagesAsJSON($set, $limit) {
-
-    global $wgMemc;
-    
-    $key = wfMemcKey('widget::slideshow::'.$set);
-    
-    $images = $wgMemc->get( $key );
-    //$images = false;
-
-    $list = array('id' => $set.'-'.$limit);
-    
-    // try to use memcache
-    if ( is_array($images) ) {
-	$list['memcache'] = $key;
-    }
-    else {
-	switch( $set ) {
-	    case 1: // newest
-		$images = WidgetSlideshowGetImagesFromNewest();
-		break;	    
-	    
-	    case 2: // random
-		$images = WidgetSlideshowGetImagesFromRandom();
-		break;	    
-	    
-	    case 3: // list
-		$images = WidgetSlideshowGetImagesFromSpecialPage();
-		break;
+	if (!empty($list['images'])) {
+		foreach($list['images'] as $image) {
+			$images[] = "<li rel=\"{$image['thumb']}\"><a href=\"{$image['url']}\" title=\"{$image['alt']}\"></a></li>";
+		}
 	}
 
-	// set memcache entry	
-	$wgMemc->set($key, $images, 600);
-    }
-    
-    // don't limit images list from special page (refs #2340)
-    if ($set != 3) {
-        $limit = intval($limit);
-	$limit = ($limit < 4 || $limit > 50) ? 15 : $limit;
-    
-	$images = array_slice($images, 0, $limit);
-    }
-    
-    // "no images" message
-    if ( count($images) < 2 ) {
-	$list['msg'] = wfMsg('noimages');
-	$images = false;
-    }
-    else {
-	$list['count'] = count($images);    
-    }
-    
-    $list['images'] = $images;
+	$html .= '<ul id="'.$id.'-images" class="WidgetSlideshowImages">'.implode('', $images).'</ul>';
 
-    return Wikia::json_encode($list);
+	// prev / next / pause-play
+	$html .= '<div class="WidgetSlideshowControls" id="'.$id.'-controls">'.
+		'<a class="WidgetSlideshowControlPrev" title="'.wfMsg('allpagesprev').'">prev</a>'.
+		'<a class="WidgetSlideshowControlNext" title="'.wfMsg('allpagesnext').'">next</a>'.
+		'<a class="WidgetSlideshowControlPause">pause</a>'.
+		'<a class="WidgetSlideshowControlPlay">play</a>'.
+		'</div><div style="display:block">&nbsp;</div>';
+
+	// show 'edit images list' only for staff and sysops and when showing images from special page list
+	if ( ($params['show'] == 3) && $wgUser->isAllowed('wteditimagelist') ) {
+		// add edit list link only for sysops/staff users
+		$url = Title::newFromText('WidgetSlideshowImages', NS_MEDIAWIKI)->getLocalURL('action=edit');
+		$html .= '<div style="opacity: 0.6; float: left; margin-top: 7px"><a href="' . htmlspecialchars($url) . '">Edit images list</a></div>';
+	}
+
+	wfProfileOut(__METHOD__);
+
+	return $html;
 }
 
+// get list of images
+function WidgetSlideshowGetImages($set, $limit) {
+	global $wgMemc;
 
+	$key = wfMemcKey('widget', 'slideshow', $set, '2');
 
+	$images = $wgMemc->get( $key );
+	//$images = false;
 
+	$list = array('id' => $set.'-'.$limit);
+
+	// try to use memcache
+	if ( is_array($images) ) {
+		$list['memcache'] = $key;
+	}
+	else {
+		switch( $set ) {
+			case 1: // newest
+				$images = WidgetSlideshowGetImagesFromNewest();
+				break;	    
+
+			case 2: // random
+				$images = WidgetSlideshowGetImagesFromRandom();
+				break;	    
+
+			case 3: // list
+				$images = WidgetSlideshowGetImagesFromSpecialPage();
+				break;
+		}
+
+		// set memcache entry	
+		$wgMemc->set($key, $images, 600);
+	}
+
+	// don't limit images list from special page (refs #2340)
+	if ($set != 3) {
+		$limit = intval($limit);
+		$limit = ($limit < 4 || $limit > 50) ? 15 : $limit;
+
+		$images = array_slice($images, 0, $limit);
+	}
+
+	// "no images" message
+	if ( count($images) < 2 ) {
+		$list['msg'] = wfMsg('noimages');
+		$images = false;
+	}
+	else {
+		$list['count'] = count($images);    
+	}
+
+	$list['images'] = $images;
+
+	return $list;
+}
 
 // grab list of images from special page MediaWiki:WidgetSlideshowImages (limit here has no effect at all ;)
 function WidgetSlideshowGetImagesFromSpecialPage()
@@ -168,7 +167,7 @@ function WidgetSlideshowGetImagesFromSpecialPage()
 			if (!empty($thumb)) {
 			    $images[] = array (
 				'thumb' => $thumb,
-				'alt'   => rawurlencode($description),
+				'alt'   => $description,
 				'url'   => is_object($url) ? $url->getLocalURL() : ''
 			    );
 			}
@@ -214,7 +213,7 @@ function WidgetSlideshowGetImagesFromNewest() {
 			if (!empty($thumb)) {
 			    $images[] = array (
 				'thumb' => $thumb,
-				'alt'   => rawurlencode($row->img_description),
+				'alt'   => $row->img_description,
 				'url'   => is_object($url) ? $url->getLocalURL() : ''
 			    );
 			}
@@ -259,7 +258,7 @@ function WidgetSlideshowGetImagesFromRandom() {
 			if (!empty($thumb)) {
 			    $images[] = array (
 				'thumb' => $thumb,
-				'alt'   => rawurlencode($row->img_description),
+				'alt'   => $row->img_description,
 				'url'   => is_object($url) ? $url->getLocalURL() : ''
 			    );
 			}

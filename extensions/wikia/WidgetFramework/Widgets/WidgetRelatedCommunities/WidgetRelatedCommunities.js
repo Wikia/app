@@ -1,12 +1,9 @@
-// tracking
-function WidgetRelatedCommunities_init(id) {
+function WidgetRelatedCommunities_init(id, widget) {
 
-	links = YAHOO.util.Dom.get(id+'_content').getElementsByTagName('a');
-
-	for (l=0; l < links.length; l++) {
-		YAHOO.util.Event.addListener(links[l], 'click', function(ev, url) {
-			YAHOO.Wikia.Tracker.trackByStr(ev, 'widget/WidgetRelatedCommunities/' + url);
-			YAHOO.util.Event.stopPropagation(ev);
-		}, ((l+1) + '/' + links[l].innerHTML) );
-	}
+	// add tracking
+	widget.find('a').each( function(n) {
+		$(this).click( function(e) {
+			WET.byStr('widget/WidgetRelatedCommunities/' + (n+1) + '/' + $(this).html() );
+		});
+	});
 }

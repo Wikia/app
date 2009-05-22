@@ -6,10 +6,12 @@
 
 <?php
 	global $wgUser, $wgShowIPinHeader, $wgTitle;
+
 	if($wgUser->isLoggedIn()) {
-        if ( !empty( $GLOBALS["wgWikiaEnableSocialTools"] ) || class_exists("BlogAvatar") ) {
-            echo $avatarLink;
-        }
+		if ( !empty( $GLOBALS["wgWikiaEnableSocialTools"] ) || class_exists("BlogAvatar") ) {
+			echo $avatarLink;
+		}
+
 		echo wfMsg('monaco-welcome-back', '<a rel="nofollow" href="'.htmlspecialchars($userpageurl).'" id="'.$widgetId.'-my-name">'.$username.'</a>');
 		echo '<span style="font-size: 11px" id="'.$widgetId.'-my-menu">';
 		echo '<a rel="nofollow" href="'.htmlspecialchars($userpageurl).'">'.wfMsg('mypage').'</a>';
