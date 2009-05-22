@@ -1200,8 +1200,13 @@ class EditPage {
 				}
 
 				if ( !$this->mArticle->mRevision->isCurrent() ) {
-					$this->mArticle->setOldSubtitle( $this->mArticle->mRevision->getId() );
-					$wgOut->addWikiMsg( 'editingold' );
+					/* Wikia change begin - @author: Marooned */
+					/* Add new hook and condition to allow alternate message to be displayed when editing old revision */
+					if ( wfRunHooks( 'EditPage::showEditForm:oldRevisionNotice', array( &$this ) ) ) {
+						$this->mArticle->setOldSubtitle( $this->mArticle->mRevision->getId() );
+						$wgOut->addWikiMsg( 'editingold' );
+					}
+					/* Wikia change end */
 				}
 			}
 		}

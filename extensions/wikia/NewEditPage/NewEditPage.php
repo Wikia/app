@@ -1,9 +1,9 @@
 <?
 $wgExtensionCredits['other'][] = array(
-        'name' => 'New Edit Page',
+	'name' => 'New Edit Page',
 	'description' => 'Applies edit page changes',
-        'version' => 0.22,
-        'author' => '[http://pl.wikia.com/wiki/User:Macbre Maciej Brencz]'
+	'version' => 0.666,
+	'author' => array('[http://pl.wikia.com/wiki/User:Macbre Maciej Brencz]', '[http://www.wikia.com/wiki/User:Marooned Maciej Błaszkowski (Marooned)]')
 );
 
 $wgExtensionFunctions[] = 'wfNewEditPageInit';
@@ -22,6 +22,8 @@ function wfNewEditPageInit() {
 
 	// add red preview notice
 	$wgHooks['EditPage::showEditForm:initial'][] = 'wfNewEditPageAddPreviewBar';
+	// add brown old revision notice
+	$wgHooks['EditPage::showEditForm:oldRevisionNotice'][] = 'wfNewEditPageAddOldRevisionBar';
 	return true;
 }
 
@@ -86,7 +88,7 @@ function wfNewEditPageAddPreviewBar($editPage) {
 	// extra check for categories - they have `formtype` always set to 'preview' (rt#15017)
 	if ($editPage->formtype == 'preview' && !($editPage->mTitle->mNamespace == NS_CATEGORY && ($wgRequest->getVal('action') != 'submit' || !$wgRequest->wasPosted()))) {
 		wfLoadExtensionMessages('NewEditPage');
-		$wgOut->addHTML('<div id="new_edit_page_preview_notice">' . wfMsg('new-edit-page-preview-notice') . '</div>');
+		$wgOut->addHTML('<div class="new_edit_page_notice" id="new_edit_page_preview_notice">' . wfMsg('new-edit-page-preview-notice') . '</div>');
 
 		// add page title before preview HTML
 		$wgHooks['OutputPageBeforeHTML'][] = 'wfNewEditPageAddPreviewTitle';
@@ -96,6 +98,34 @@ function wfNewEditPageAddPreviewBar($editPage) {
 	}
 
 	return true;
+}
+
+/**
+ * add brown old revision notice in old editor
+ *
+ * @author Maciej Błaszkowski <marooned at wikia-inc.com>
+ */
+function wfNewEditPageAddOldRevisionBar($editPage) {
+	global $wgOut, $wgUser, $wgHooks, $wgRequest;
+
+	// do not touch skins other than Monaco (RT #13061)
+	$skinName = get_class($wgUser->getSkin());
+	if ($skinName != 'SkinMonaco') {
+		return true;
+	}
+
+	if (!$editPage->mArticle->isCurrent()) {
+		wfLoadExtensionMessages('NewEditPage');
+		$wgOut->addHTML('<div class="new_edit_page_notice" id="new_edit_page_old_revision_notice">' . wfMsgExt('editingold', 'parseinline') . '</div>');
+
+		// add page title before preview HTML
+		$wgHooks['OutputPageBeforeHTML'][] = 'wfNewEditPageAddPreviewTitle';
+
+		// hide page title in preview mode
+		$wgOut->addHTML('<style type="text/css">.firstHeading {display: none}</style>');
+	}
+	//false to supress original warning
+	return false;
 }
 
 // add page title before preview HTML
