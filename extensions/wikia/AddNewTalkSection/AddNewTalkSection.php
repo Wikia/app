@@ -62,16 +62,24 @@ function AddNewTalkSectionAddCSS(&$out) {
  * @author Maciej Błaszkowski <marooned at wikia-inc.com>
  */
 function AddNewTalkSectionAddFooter(&$skin, &$tpl, &$custom_article_footer) {
-	global $wgTitle;
-	if ($wgTitle->isTalkPage()) {
-		global $wgHooks, $wgOut, $wgUser, $wgExtensionsPath, $wgStyleVersion;
+	global $wgTitle, $wgRequest, $wgUser;
+
+	$action = $wgRequest->getVal('action', 'view');
+	//do not show link when anon sees 'pres ok to purge the page'
+	if ($action == 'purge' && $wgUser->isAnon() && !$wgRequest->wasPosted()) {
+		return true;
+	}
+
+	if ($wgTitle->isTalkPage() && in_array($action, array('view', 'purge'))) {
+		global $wgUser;
 		wfLoadExtensionMessages('AddNewTalkSection');
+		//TODO: grab message for user's language WITHOUT fallback to English!
 		$link = wfMsg('addnewtalksection-link');
 		if (wfEmptyMsg('addnewtalksection-link', $link)) {
 			$link = wfMsg('Add_comment');
 		}
 		$skin = $wgUser->getSkin();
-		$link = $skin->makeKnownLinkObj( $wgTitle, $link, 'action=edit&section=new' );
+		$link = $skin->makeKnownLinkObj( $wgTitle, $link, 'action=edit&section=new', '', '', 'rel="nofollow"' );
 		$custom_article_footer .= '<div id="AddNewTalkSectionFooter"><div id="AddNewTalkSectionImage"></div><span id="AddNewTalkSectionLink">' . $link . '</span></div>';
 	}
 	return true;

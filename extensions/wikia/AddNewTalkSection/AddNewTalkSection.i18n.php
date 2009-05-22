@@ -24,7 +24,6 @@ if (!defined('MEDIAWIKI')) {
 
 $messages = array(
 	'en' => array(
-		'addnewtalksection-link' => 'Add new section',
-//		'tog-disableaddnewtalksection' => 'Disable Add ...'
+		'addnewtalksection-link' => 'Add new section'
 	)
 );
