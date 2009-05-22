@@ -394,6 +394,7 @@ class WidgetFramework {
 					if($id == $widget['id']) {
 						if($this->load($widget['type'])) {
 							$params = $this->getParams($widget);
+							$widget['id'] = 'widget_' . $widget['id'];
 							$out  = "<form onsubmit='return false;' id=\"{$widget['id']}_editor\">";
 							foreach($wgWidgets[$widget['type']]['params'] as $key => $val) {
 								$out .= '<label for="' . $widget['id'] . '_editor_' . $key  . '">' . wfMsg(!empty($val['msg']) ? $val['msg'] : $key) . ':</label>';
