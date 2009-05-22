@@ -59,7 +59,8 @@ class EditEnhancements {
 			'checkboxes' => $this->checkboxes,
 			'summary'    => $this->summary,
 			'action'     => $this->action,
-			'undo'     => $this->undo
+			'undo'       => $this->undo,
+			'arrowTitle' => wfMsg('edit-enhancements-scroll-down-arrow')
 		));
 
 		$wgOut->addHTML($this->tmpl->execute('EditEnhancementsToolbar'));

@@ -755,4 +755,6 @@ Text should be placed on this page if you wish to explain usage, style and polic
 
 # Special: Preferences
 'seeeditcount' => 'See edit count',
+
+'edit-enhancements-scroll-down-arrow' => 'Skip to edit box'
 ));
