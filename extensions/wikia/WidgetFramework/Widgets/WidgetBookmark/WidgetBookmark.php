@@ -33,6 +33,8 @@ function WidgetBookmark($id) {
 
 	$pages = false;
 
+	$id = intval(substr($id, 7));
+
 	// handle AJAX request
 	if ( $wgRequest->getVal('rs') == 'WidgetFrameworkAjax' ) {
 

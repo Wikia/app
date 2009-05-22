@@ -73,10 +73,12 @@ function WidgetTips($id, $params) {
 		$tipId = array_rand($tips);
 	}
 
+	$id = intval(substr($id, 7));
+
 	// prev/next tip selector
 	$selector = '<div class="WidgetTipsSelector">'.
-	'<a onclick="WidgetTipsChange(\''.$id.'\', '.$tipId.', \'prev\')">&laquo; '.wfMsg('allpagesprev').'</a> '.
-	'<a onclick="WidgetTipsChange(\''.$id.'\', '.$tipId.', \'next\')">'.wfMsg('allpagesnext').' &raquo;</a></div>';
+		'<a onclick="WidgetTipsChange('.$id.', '.$tipId.', \'prev\')">&laquo; '.wfMsg('allpagesprev').'</a> '.
+		'<a onclick="WidgetTipsChange('.$id.', '.$tipId.', \'next\')">'.wfMsg('allpagesnext').' &raquo;</a></div>';
 
 	wfProfileOut(__METHOD__);
 

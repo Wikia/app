@@ -1,58 +1,34 @@
-function WidgetCommunityDetailsToggle(node) {
-	$(node).siblings("ul").toggle();
-}
-
-// tracking
-function WidgetCommunity_init(id) {
+function WidgetCommunity_init(id, widget) {
 
 	// my user page / talk page / widgets
 	if (wgUserName) {
-		myLinks = YAHOO.util.Dom.get(id + '-my-menu').getElementsByTagName('a');
-
-		YAHOO.util.Event.addListener(myLinks[0], 'click', function(e) {
-			YAHOO.Wikia.Tracker.trackByStr(e, 'widget/WidgetCommunity/MyPage');
-			YAHOO.util.Event.stopPropagation(e);
+		$('#widget_' + id + '-my-menu').children('a').each( function(n) {
+			$(this).click( function(e) {
+				url = (['MyPage', 'MyTalk', 'Widgets'])[n];
+				WET.byStr('widget/WidgetCommunity/' + url);
+			});
 		});
 
-		YAHOO.util.Event.addListener(myLinks[1], 'click', function(e) {
-			YAHOO.Wikia.Tracker.trackByStr(e, 'widget/WidgetCommunity/MyTalk');
-			YAHOO.util.Event.stopPropagation(e);
-        	});
-
-		YAHOO.util.Event.addListener(myLinks[2], 'click', function(e) {
-			YAHOO.Wikia.Tracker.trackByStr(e, 'widget/WidgetCommunity/Widgets');
-			YAHOO.util.Event.stopPropagation(e);
-	        });
-
 		// user page link in Welcome back...
-		YAHOO.util.Event.addListener(YAHOO.util.Dom.get(id + '-my-name'), 'click', function(e) {
-                	YAHOO.Wikia.Tracker.trackByStr(e, 'widget/WidgetCommunity/MyPage');
-	                YAHOO.util.Event.stopPropagation(e);
+		$('#widget_' + id + '-my-name').click( function(e) {
+                	WET.byStr('widget/WidgetCommunity/MyPage');
         	});
 	}
 
-	// more...
-	YAHOO.util.Event.addListener(id + '-more', 'click', function(e) {
-		YAHOO.Wikia.Tracker.trackByStr(e, 'widget/WidgetCommunity/more');
-		YAHOO.util.Event.stopPropagation(e);
+	$('#widget_' + id + '-more').click( function(e) {
+                WET.byStr('widget/WidgetCommunity/more');
         });
 
-	// recently edited
-	var editsul = YAHOO.util.Dom.get(id + '-recently-edited');
-	if(editsul) {
-		var edits = editsul.getElementsByTagName('li');
+	// Latest Activity links
+	// ignore "more..." link
+	$('#widget_' + id + '-recently-edited').find('a').slice(0, -1).each(function(n) {
+		$(this).click( function(e) {
+			url = (n%2 == 0 ? 'RAlink/' : 'RAuser/') + parseInt(Math.floor(n/2) + 1);
+			WET.byStr('widget/WidgetCommunity/' + url);
+		});
+	});
+}
 
-		for (e=0; e < edits.length-1; e++) {
-			links = edits[e].getElementsByTagName('a');
-			YAHOO.util.Event.addListener(links[0], 'click', function(ev, id) {
-				YAHOO.Wikia.Tracker.trackByStr(ev, 'widget/WidgetCommunity/RAlink'+id);
-				YAHOO.util.Event.stopPropagation(ev);
-				}, e+1);
-
-			YAHOO.util.Event.addListener(links[1], 'click', function(ev, id) {
-				YAHOO.Wikia.Tracker.trackByStr(ev, 'widget/WidgetCommunity/RAuser'+id);
-				YAHOO.util.Event.stopPropagation(ev);
-				}, e+1);
-		}
-	}
+function WidgetCommunityDetailsToggle(node) {
+	$(node).siblings("ul").toggle();
 }

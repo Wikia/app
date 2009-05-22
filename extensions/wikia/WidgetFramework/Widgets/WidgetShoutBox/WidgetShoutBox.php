@@ -135,6 +135,8 @@ function WidgetShoutBox($id, $params) {
 
 		$parser = new Parser();
 
+		$id = intval(substr($id, 7));
+
 		// display messages
 		foreach ( array_reverse($msgs) as $msg)
 		{
@@ -208,7 +210,7 @@ function WidgetShoutBox($id, $params) {
 	// show form only for non-blocked and logged in users
 	if ( $wgUser->isLoggedIn() && !$wgUser->isBlocked() && !isset($params['_widgetTag']) ) {
 		$ret .= '<form onsubmit="WidgetShoutBoxSend(\''.$id.'\'); return false;" action="">'."\n";
-		$ret .= '<input type="text" name="message" autocomplete="off" id="'.$id.'_message" maxlength="100" />'."\n";
+		$ret .= '<input type="text" name="message" autocomplete="off" id="widget_'.$id.'_message" maxlength="100" />'."\n";
 		$ret .= '<input type="submit" value="'.wfMsg('send').'" />'."\n";
 		$ret .= '</form>';
 	}

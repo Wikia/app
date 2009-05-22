@@ -50,7 +50,7 @@ function WidgetTopContent($id, $params) {
     
 	// don't show select box when being rendered by WidgetTag
 	if ( !isset($params['_widgetTag']) ) {
-		$out_selector = '<select onchange="WidgetTopContentSwitchSection(this);" id="'.$id.'-select">';
+		$out_selector = '<select onchange="WidgetTopContentSwitchSection(this);" id="'.$id.'_select">';
 		$out_sections = '';
 		foreach ( $sections as $key => $val ) {
 			$out_selector .= '<option value="'. $key .'"'.($key == $active ? ' selected="selected"' : '').'>' . $provider->Translate( $key ) . '</option>';

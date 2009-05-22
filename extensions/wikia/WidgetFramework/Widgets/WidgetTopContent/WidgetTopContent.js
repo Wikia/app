@@ -1,54 +1,30 @@
 function WidgetTopContentSwitchSection(selector) {
+	widgetId = selector.id.split('_')[1];
+	selected = selector.options[ selector.selectedIndex ].value;
 
-    widgetId = selector.id.split('-')[0];
-    selected = selector.options[ selector.selectedIndex ].value;
+	WET.byStr('sidebar/TopContent/' + selector.selectedIndex + '_' + selected);
 
-    var callback = {
-		success: function(o) {
-			id = o.argument;
-			res = YAHOO.Tools.JSONParse(o.responseText);
-			if(res.success) {
-				YAHOO.util.Dom.removeClass(id+'_content', 'widget_loading');
-				YAHOO.util.Dom.get(id+'_content').innerHTML = res.body;
-				if(res.title) {
-					YAHOO.util.Dom.get(id+'_header').innerHTML = res.title;
-				}
+	$('#widget_' + widgetId + '_content').html('').addClass('widget_loading');
 
-				 WidgetTopContent_init(id);
-
-			} else {
-				// ..should never occur
+	$.getJSON(wgScript + '?action=ajax&rs=WidgetFrameworkAjax&actionType=configure&id='+widgetId+'&skin='+skin+'&at='+selected, function(res) {
+		if(res.success) {
+			$('#widget_' + res.id +'_content').removeClass('widget_loading').html(res.body);
+			if(res.title) {
+				$('#widget_' + res.id +'_header').html(res.title);
 			}
-		},
-		failure: function(o) {
-			// ..should never occur
-		},
-		argument: widgetId
-    }
-
-	YAHOO.Wikia.Tracker.trackByStr(null, 'sidebar/TopContent/' + selector.selectedIndex + '_' + selected);
-
-    YAHOO.util.Connect.asyncRequest('GET', wgScriptPath + '/index.php?action=ajax&rs=WidgetFrameworkAjax&actionType=configure&id='+widgetId+'&skin='+skin+'&at='+selected, callback);
-    YAHOO.util.Dom.get(widgetId+'_content').innerHTML = '';
-    YAHOO.util.Dom.addClass(widgetId+'_content', 'widget_loading');
+			 WidgetTopContent_init(res.id, $('#widget_' + res.id));
+		}
+	});
 }
 
-// setup tracking
-function WidgetTopContent_init(id) {
-	content = YAHOO.util.Dom.get(id + '_content');
-	links = content.childNodes[0].getElementsByTagName('a');
+function WidgetTopContent_init(id, widget) {
+	selector = $('#widget_' + id + '_select');
+	sectionId = selector.attr('selectedIndex');
+	sectionName = selector.attr('options')[sectionId].value;
 
-	YAHOO.util.Event.addListener(links, 'click', function(e,id) {
-		selector = YAHOO.util.Dom.get(id + '-select');
-		sectionId = selector.selectedIndex;
-		sectionName = selector.options[sectionId].value;
-
-		el = YAHOO.util.Event.getTarget(e);
-
-		if (YAHOO.Wikia && YAHOO.Wikia.Tracker) {
-			YAHOO.Wikia.Tracker.trackByStr(e, 'TopContent/' + (sectionId+1) + '_' + sectionName + '/' + el.innerHTML);
-		}
-
-		YAHOO.util.Event.stopPropagation(e);
-        }, id);
+	widget.find('ul').find('a').each( function() {
+		$(this).click( function(e) {
+			WET.byStr('TopContent/' + (sectionId+1) + '_' + sectionName + '/' + $(this).html());
+		});
+	});
 }
