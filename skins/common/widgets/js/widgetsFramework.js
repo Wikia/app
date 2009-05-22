@@ -48,9 +48,9 @@ function getWidgetPosition(widgetId) {
 }
 
 function close() {
-	id = this.id.substring(0, this.id.length-6);
+	id = this.id.split('_')[1];
 	YAHOO.util.Connect.asyncRequest('GET', wgScriptPath + '/index.php?action=ajax&rs=WidgetFrameworkAjax&actionType=delete&id='+id);
-	Dom.get(id+'_wg').parentNode.removeChild(Dom.get(id+'_wg'));
+	$('#widget_' + id).remove();
 }
 
 function edit() {
@@ -80,15 +80,17 @@ function edit() {
 		argument: id
 	}
 
+	id = this.id.split('_')[1];
+
 	YAHOO.util.Connect.asyncRequest('GET', wgScriptPath + '/index.php?action=ajax&rs=WidgetFrameworkAjax&actionType=editform&id='+id+'&skin='+skin, edit_callback);
 }
 
 function edit_save() {
-	id = this.id.substring(0, this.id.length-5);
+	id = this.id.split('_')[1];
 
 	var edit_save_callback = {
 		success: function(o) {
-			id = o.argument;
+			id = 'widget_' + o.argument;
 			res = YAHOO.Tools.JSONParse(o.responseText);
 			if(res.success) {
 				Dom.setStyle(id+'_content', 'display', '');
@@ -123,10 +125,9 @@ function edit_save() {
 		argument: id
 	}
 
-	YAHOO.util.Connect.setForm(id+'_editor');
+	YAHOO.util.Connect.setForm('widget_'+id+'_editor');
 	YAHOO.util.Connect.asyncRequest('GET', wgScriptPath + '/index.php?action=ajax&rs=WidgetFrameworkAjax&actionType=configure&id='+id+'&skin='+skin, edit_save_callback);
-	Dom.get(id+'_editform').innerHTML = '';
-	Dom.addClass(id+'_editform', 'widget_loading');
+	$('#widget_'+id+'_editform').html().addClass('widget_loading');
 }
 
 function edit_cancel() {
@@ -209,11 +210,11 @@ YAHOO.wikia.ddObject = function(id) {
 	this.goingUp = false;
 
 	if(this.isThumb == false) {
-		this.pureId = id.substring(0, id.length - 3);;
-		this.setHandleElId(this.pureId + '_header');
+		this.pureId = id.substring(7);
+		this.setHandleElId(id + '_header');
 
-		Event.addListener(this.pureId + '_close', 'click', close);
-		Event.addListener(this.pureId + '_edit', 'click', edit);
+		Event.addListener(id + '_close', 'click', close);
+		Event.addListener(id + '_edit', 'click', edit);
 	}
 }
 
