@@ -32,5 +32,5 @@ function WidgetAnswers_handler(e) {
 	}
 }
 function WidgetAnswers_init(id) {
-	jQuery('#'+id+'_content').css('max-height', '400px').children('form').children('input').val(widget_answers_placeholder).focus(WidgetAnswers_handler).blur(WidgetAnswers_handler).keypress(WidgetAnswers_handler);;
+	jQuery('#widget_' + id+'_content').css('max-height', '400px').children('form').children('input').val(widget_answers_placeholder).focus(WidgetAnswers_handler).blur(WidgetAnswers_handler).keypress(WidgetAnswers_handler);
 }
