@@ -56,28 +56,37 @@ div#sidebar { display: none !important; }
 		</table>
 		<table width="100%" style="text-align:left;">
 			<tr><td valign="middle" class="awc-metrics-row">
-				<span style="vertical-align:middle"><?=wfMsg('awc-metrics-created-between', '<input name="awc-metrics-between-from" id="awc-metrics-between-from" size="15" />', '<input name="awc-metrics-between-to" id="awc-metrics-between-to" size="15" />')?></span>
+				<span style="vertical-align:middle">
+					<?= wfMsg('awc-metrics-created-between', 
+						'<input name="awc-metrics-between-from" id="awc-metrics-between-from" size="20" />', 
+						'<input name="awc-metrics-between-to" id="awc-metrics-between-to" size="20" />'
+					) ?>
+				</span>
 			</td></tr>
 		</table>
 		<table width="100%" style="text-align:left;">
 			<tr><td valign="middle" class="awc-metrics-row">
-				<span style="vertical-align:middle"><?=wfMsg('awc-metrics-by-domains')?></span>
-				<span style="vertical-align:middle"><input name="awc-metrics-domains" id="awc-metrics-domains" size="15" /></span>
+				<span style="vertical-align:middle"><?=wfMsg('awc-metrics-by-dbname')?></span>
+				<span style="vertical-align:middle"><input name="awc-metrics-dbname" id="awc-metrics-dbname" size="10" /></span>
 				<span style="vertical-align:middle"><?=wfMsg('awc-metrics-by-title')?></span>
-				<span style="vertical-align:middle"><input name="awc-metrics-title" id="awc-metrics-title" size="15" /></span>
+				<span style="vertical-align:middle"><input name="awc-metrics-title" id="awc-metrics-title" size="10" /></span>
+				<span style="vertical-align:middle"><?=wfMsg('awc-metrics-by-domains')?></span>
+				<span style="vertical-align:middle"><input name="awc-metrics-domains" id="awc-metrics-domains" size="10" /></span>
 			</td></tr>
 			<tr><td valign="middle" class="awc-metrics-row">
 				<span style="vertical-align:middle"><?=wfMsg('awc-metrics-by-user')?></span>
 				<span style="vertical-align:middle"><input name="awc-metrics-user" id="awc-metrics-user" size="15" /></span>
 				<span style="vertical-align:middle"><?=wfMsg('awc-metrics-by-email')?></span>
-				<span style="vertical-align:middle"><input name="awc-metrics-email" id="awc-metrics-email" size="30" /></span>
+				<span style="vertical-align:middle"><input name="awc-metrics-email" id="awc-metrics-email" size="40" /></span>
 			</td></tr>
 		</table>
 		<table width="100%" style="text-align:left;">
 			<tr>
 				<td valign="middle" class="awc-metrics-row">
+					<input name="awc-metrics-active" id="awc-metrics-active" type="checkbox" checked="checked" /> <?=wfMsg('awc-metrics-active')?>
 					<input name="awc-metrics-closed" id="awc-metrics-closed" type="checkbox" /> <?=wfMsg('awc-metrics-closed')?>
 					<input name="awc-metrics-redirected" id="awc-metrics-redirected" type="checkbox" /> <?=wfMsg('awc-metrics-redirected')?>
+					<input name="awc-metrics-removed" id="awc-metrics-removed" type="checkbox" /> <?=wfMsg('awc-metrics-removed')?>
 				</td>
 				<td valign="middle" class="awc-metrics-row" align="right">
 					<input type="button" value="<?=wfMsg('search')?>" id="awc-metrics-submit" />
@@ -207,13 +216,16 @@ function wkAWCMetricsDetails(limit, offset, ord, desc)
 	var between_f 	= YD.get( "awc-metrics-between-from" );
 	var between_to  = YD.get( "awc-metrics-between-to" );
 	//----
+	var dbname 		= YD.get( "awc-metrics-dbname" );
 	var domain 		= YD.get( "awc-metrics-domains" );
 	var title		= YD.get( "awc-metrics-title" );
 	var user 		= YD.get( "awc-metrics-user" );
 	var email 		= YD.get( "awc-metrics-email" );
 
+	var active 		= YD.get( "awc-metrics-active" );
 	var closed 		= YD.get( "awc-metrics-closed" );
 	var redirected 	= YD.get( "awc-metrics-redirected" );
+	var removed 	= YD.get( "awc-metrics-removed" );
 
 	var foundText 	= "<?=wfMsg('awc-metrics-wikis-found', "CNT")?>";
 
@@ -252,36 +264,36 @@ function wkAWCMetricsDetails(limit, offset, ord, desc)
 				var oneRow = "<tr><th rowspan=\"2\">#</th>";
 
 				// column (TITLE)
-				var _th = (order == 'title') ? ((desc == -1) ? "&darr;" : "&uarr;") : "";
+				var _th = (order == 'title') ? ((desc == -1) ? "<strong style=\"font-size:146%\">&darr;</strong>" : "<strong style=\"font-size:146%\">&uarr;</strong>") : "";
 				oneRow += "<th rowspan=\"2\"><a id=\"TablePager_title\" style=\"cursor:pointer;" + ((order == 'title') ? "color:#006400;" : "") + "\">" + _th + " Wikia</a></th>";
 
 				// column (DBNAME)
-				var _th = (order == 'db') ? ((desc == -1) ? "&darr;" : "&uarr;") : "";
+				var _th = (order == 'db') ? ((desc == -1) ? "<strong style=\"font-size:146%\">&darr;</strong>" : "<strong style=\"font-size:146%\">&uarr;</strong>") : "";
 				oneRow += "<th rowspan=\"2\"><a id=\"TablePager_db\" style=\"cursor:pointer;" + ((order == 'db') ? "color:#006400;" : "") + "\">" + _th + " DBName</a></th>";
 				
 				// column (LANG)
-				_th = (order == 'lang') ? ((desc == -1) ? "&darr;" : "&uarr;") : "";
+				_th = (order == 'lang') ? ((desc == -1) ? "<strong style=\"font-size:146%\">&darr;</strong>" : "<strong style=\"font-size:146%\">&uarr;</strong>") : "";
 				oneRow += "<th rowspan=\"2\"><a id=\"TablePager_lang\" style=\"cursor:pointer;" + ((order == 'lang') ? "color:#006400;" : "") + "\">" + _th + " Lang</a></th>";
 
 				// column (CREATED)				
-				_th = (order == 'created') ? ((desc == -1) ? "&darr;" : "&uarr;") : "";
+				_th = (order == 'created') ? ((desc == -1) ? "<strong style=\"font-size:146%\">&darr;</strong>" : "<strong style=\"font-size:146%\">&uarr;</strong>") : "";
 				oneRow += "<th rowspan=\"2\"><a id=\"TablePager_created\" style=\"cursor:pointer;" + ((order == 'created') ? "color:#006400;" : "") + "\">" + _th + " Created</a></th>";
 				
 				// column (FOUNDER)
-				_th = (order == 'founderName') ? ((desc == -1) ? "&darr;" : "&uarr;") : "";
-				var _th2 = (order == 'founderEmail') ? ((desc == -1) ? "&darr;" : "&uarr;") : "";
+				_th = (order == 'founderName') ? ((desc == -1) ? "<strong style=\"font-size:146%\">&darr;</strong>" : "<strong style=\"font-size:146%\">&uarr;</strong>") : "";
+				var _th2 = (order == 'founderEmail') ? ((desc == -1) ? "<strong style=\"font-size:146%\">&darr;</strong>" : "<strong style=\"font-size:146%\">&uarr;</strong>") : "";
 				oneRow += "<th rowspan=\"2\"><a id=\"TablePager_founderName\" style=\"cursor:pointer;" + ((order == 'founderName') ? "color:#006400;" : "") + "\">" + _th + " Founder</a>";
 				oneRow += "<a id=\"TablePager_founderEmail\" style=\"cursor:pointer;" + ((order == 'founderEmail') ? "color:#006400;" : "") + "\">" + _th2 + " Founder email</a></th>";
 
 				// column (FOUNDER EMAIL)
-				//_th = (order == 'founderEmail') ? ((desc == -1) ? "&darr;" : "&uarr;") : "";
+				//_th = (order == 'founderEmail') ? ((desc == -1) ? "<strong style=\"font-size:146%\">&darr;</strong>" : "<strong style=\"font-size:146%\">&uarr;</strong>") : "";
 				//oneRow += "<th rowspan=\"2\"><a id=\"TablePager_founderEmail\" style=\"cursor:pointer;" + ((order == 'founderEmail') ? "color:#006400;" : "") + "\">" + _th + " Founder email</a></th>";
 
 				// columns (stats)
 				oneRow += "<th colspan=\"10\" style=\"text-align:center\"><?=wfMsg('awc-metrics-statistics')?></th>";
 
 				// column (pageviews)
-				_th = (order == 'pageviews') ? ((desc == -1) ? "&darr;" : "&uarr;") : "";
+				_th = (order == 'pageviews') ? ((desc == -1) ? "<strong style=\"font-size:146%\">&darr;</strong>" : "<strong style=\"font-size:146%\">&uarr;</strong>") : "";
 				oneRow += "<th rowspan=\"2\"><a id=\"TablePager_pageviews\" style=\"cursor:pointer;" + ((order == 'pageviews') ? "color:#006400;" : "") + "\">" + _th + " <?=wfMsg('awc-metrics-pageviews')?></a></th>";
 				
 				// column (options)
@@ -295,43 +307,43 @@ function wkAWCMetricsDetails(limit, offset, ord, desc)
 				oneRow = "<tr>";
 
 				// column (WIKIANS)
-				_th = (order == 'wikians') ? ((desc == -1) ? "&darr;" : "&uarr;") : "";
+				_th = (order == 'wikians') ? ((desc == -1) ? "<strong style=\"font-size:146%\">&darr;</strong>" : "<strong style=\"font-size:146%\">&uarr;</strong>") : "";
 				oneRow += "<th><a id=\"TablePager_wikians\" style=\"cursor:pointer;" + ((order == 'wikians') ? "color:#006400;" : "") + "\">" + _th + " <?=wfMsg('awc-metrics-wikians')?></a></th>";
 
 				// column (ARTICLES)
-				_th = (order == 'articles') ? ((desc == -1) ? "&darr;" : "&uarr;") : "";
+				_th = (order == 'articles') ? ((desc == -1) ? "<strong style=\"font-size:146%\">&darr;</strong>" : "<strong style=\"font-size:146%\">&uarr;</strong>") : "";
 				oneRow += "<th><a id=\"TablePager_articles\" style=\"cursor:pointer;" + ((order == 'articles') ? "color:#006400;" : "") + "\">" + _th + " <?=wfMsg('awc-metrics-articles')?></a></th>";
 
 				// column (NEW_ARTICLES_PER_DAY)
-				_th = (order == 'articles_per_day') ? ((desc == -1) ? "&darr;" : "&uarr;") : "";
+				_th = (order == 'articles_per_day') ? ((desc == -1) ? "<strong style=\"font-size:146%\">&darr;</strong>" : "<strong style=\"font-size:146%\">&uarr;</strong>") : "";
 				oneRow += "<th><a id=\"TablePager_articles_per_day\" style=\"cursor:pointer;" + ((order == 'articles_per_day') ? "color:#006400;" : "") + "\">" + _th + " <?=wfMsg('awc-metrics-articles-per-day')?></a></th>";
 
 				// column (REVISIONS)
-				_th = (order == 'mean_nbr_revision') ? ((desc == -1) ? "&darr;" : "&uarr;") : "";
+				_th = (order == 'mean_nbr_revision') ? ((desc == -1) ? "<strong style=\"font-size:146%\">&darr;</strong>" : "<strong style=\"font-size:146%\">&uarr;</strong>") : "";
 				oneRow += "<th><a id=\"TablePager_mean_nbr_revision\" style=\"cursor:pointer;" + ((order == 'mean_nbr_revision') ? "color:#006400;" : "") + "\">" + _th + " <?=wfMsg('awc-metrics-revisions-per-page')?></a></th>";
 
 				// column (MEAN SIZE)
-				_th = (order == 'mean_size') ? ((desc == -1) ? "&darr;" : "&uarr;") : "";
+				_th = (order == 'mean_size') ? ((desc == -1) ? "<strong style=\"font-size:146%\">&darr;</strong>" : "<strong style=\"font-size:146%\">&uarr;</strong>") : "";
 				oneRow += "<th><a id=\"TablePager_mean_size\" style=\"cursor:pointer;" + ((order == 'mean_size') ? "color:#006400;" : "") + "\">" + _th + " <?=wfMsg('awc-metrics-article-avg-size')?></a></th>";
 
 				// column (EDITS)
-				_th = (order == 'edits') ? ((desc == -1) ? "&darr;" : "&uarr;") : "";
+				_th = (order == 'edits') ? ((desc == -1) ? "<strong style=\"font-size:146%\">&darr;</strong>" : "<strong style=\"font-size:146%\">&uarr;</strong>") : "";
 				oneRow += "<th><a id=\"TablePager_edits\" style=\"cursor:pointer;" + ((order == 'edits') ? "color:#006400;" : "") + "\">" + _th + " <?=wfMsg('awc-metrics-edits')?></a></th>";
 
 				// column (DB_SIZE)
-				_th = (order == 'db_size') ? ((desc == -1) ? "&darr;" : "&uarr;") : "";
+				_th = (order == 'db_size') ? ((desc == -1) ? "<strong style=\"font-size:146%\">&darr;</strong>" : "<strong style=\"font-size:146%\">&uarr;</strong>") : "";
 				oneRow += "<th><a id=\"TablePager_db_size\" style=\"cursor:pointer;" + ((order == 'db_size') ? "color:#006400;" : "") + "\">" + _th + " <?=wfMsg('awc-metrics-db-size')?></a></th>";
 
 				// column (images)
-				_th = (order == 'images') ? ((desc == -1) ? "&darr;" : "&uarr;") : "";
+				_th = (order == 'images') ? ((desc == -1) ? "<strong style=\"font-size:146%\">&darr;</strong>" : "<strong style=\"font-size:146%\">&uarr;</strong>") : "";
 				oneRow += "<th><a id=\"TablePager_images\" style=\"cursor:pointer;" + ((order == 'images') ? "color:#006400;" : "") + "\">" + _th + " <?=wfMsg('awc-metrics-images')?></a></th>";
 
 				// column (users_reg)
-				_th = (order == 'users_reg') ? ((desc == -1) ? "&darr;" : "&uarr;") : "";
+				_th = (order == 'users_reg') ? ((desc == -1) ? "<strong style=\"font-size:146%\">&darr;</strong>" : "<strong style=\"font-size:146%\">&uarr;</strong>") : "";
 				oneRow += "<th><a id=\"TablePager_users_reg\" style=\"cursor:pointer;" + ((order == 'users_reg') ? "color:#006400;" : "") + "\">" + _th + " <?=wfMsg('awc-metrics-all-users')?></a></th>";
 
 				// column (users_edits)
-				_th = (order == 'users_edits') ? ((desc == -1) ? "&darr;" : "&uarr;") : "";
+				_th = (order == 'users_edits') ? ((desc == -1) ? "<strong style=\"font-size:146%\">&darr;</strong>" : "<strong style=\"font-size:146%\">&uarr;</strong>") : "";
 				oneRow += "<th><a id=\"TablePager_users_edits\" style=\"cursor:pointer;" + ((order == 'users_edits') ? "color:#006400;" : "") + "\">" + _th + " <?=wfMsg('awc-metrics-all-users-edit-main-ns')?></a></th>";
 
 				oneRow += "</tr>";
@@ -347,13 +359,13 @@ function wkAWCMetricsDetails(limit, offset, ord, desc)
 						loop++;
 						var cssClass = " style=\"color:#000000;\" ";
 						var is_closed = 0;
-						if (resData['data'][i]['public'] == 0) {
-							// closed
+						if ( (resData['data'][i]['public'] == 0) || (resData['data'][i]['public'] == -1) ) {
+							// closed or removed
 							cssClass = " style=\"color:#EF0036;\" ";
 							is_closed = 1;
-						} else if (resData['data'][i]['public'] == 2) {
-							// redirected
-							cssClass = " style=\"color:#26CF5D;\" ";
+						} else if ( (resData['data'][i]['public'] == 2) ) {
+							// redirected 
+							cssClass = " style=\"color:#007F11;\" ";
 						}
 						oneRow = "<tr style=\"font-size:90%;\"><td>" + loop  + ".</td>";
 						oneRow += "<td " + cssClass + ">";
@@ -405,6 +417,7 @@ function wkAWCMetricsDetails(limit, offset, ord, desc)
 	params += "&awc-from=" + between_f.value;
 	params += "&awc-to=" + between_to.value;
 	params += "&awc-language=" + language.value;
+	params += "&awc-dbname=" + dbname.value;
 	params += "&awc-domain=" + domain.value;
 	params += "&awc-title=" + title.value;
 	params += "&awc-founder=" + user.value;
@@ -415,6 +428,8 @@ function wkAWCMetricsDetails(limit, offset, ord, desc)
 	params += "&awc-desc=" + desc;
 	params += "&awc-closed=" + ((closed.checked) ? 1 : 0);
 	params += "&awc-redir=" + ((redirected.checked) ? 1 : 0);
+	params += "&awc-active=" + ((active.checked) ? 1 : 0);
+	params += "&awc-removed=" + ((removed.checked) ? 1 : 0);
 
 	//---
 	div_details.innerHTML="<img src=\"<?=$wgExtensionsPath?>/wikia/WikiFactory/Metrics/images/ajax-loader-s.gif\" />";
@@ -460,13 +475,16 @@ __ShowCategories = function(e, args) {
 	var between_f 	= YD.get( "awc-metrics-between-from" );
 	var between_to  = YD.get( "awc-metrics-between-to" );
 	//----
+	var dbname 		= YD.get( "awc-metrics-dbname" );
 	var domain 		= YD.get( "awc-metrics-domains" );
 	var title		= YD.get( "awc-metrics-title" );
 	var user 		= YD.get( "awc-metrics-user" );
 	var emailFnder	= YD.get( "awc-metrics-email" );
 
+	var active 		= YD.get( "awc-metrics-active" );
 	var closed 		= YD.get( "awc-metrics-closed" );
 	var redirected 	= YD.get( "awc-metrics-redirected" );
+	var removed 	= YD.get( "awc-metrics-removed" );
 
 	var foundText 	= "<?=wfMsg('awc-metrics-wikis-found', "CNT")?>";
 
@@ -591,12 +609,15 @@ __ShowCategories = function(e, args) {
 	params += "&awc-from=" + between_f.value;
 	params += "&awc-to=" + between_to.value;
 	params += "&awc-language=" + language.value;
+	params += "&awc-dbname=" + dbname.value;
 	params += "&awc-domain=" + domain.value;
 	params += "&awc-title=" + title.value;
 	params += "&awc-founder=" + user.value;
 	params += "&awc-founderEmail=" + emailFnder.value;
 	params += "&awc-closed=" + ((closed.checked) ? 1 : 0);
 	params += "&awc-redir=" + ((redirected.checked) ? 1 : 0);
+	params += "&awc-active=" + ((active.checked) ? 1 : 0);
+	params += "&awc-removed=" + ((removed.checked) ? 1 : 0);
 	params += "&awc-daily=" + daily;
 	//---
 	div_details.innerHTML="<img src=\"<?=$wgExtensionsPath?>/wikia/WikiFactory/Metrics/images/ajax-loader-s.gif\" />";

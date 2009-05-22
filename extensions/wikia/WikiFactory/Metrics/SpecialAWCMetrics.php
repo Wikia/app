@@ -33,6 +33,7 @@ class CreateWikiMetrics {
     private $axFrom;
     private $axTo;
     private $axLanguage;
+    private $axDbname;
     private $axDomain;
     private $axTitle;
     private $axFounder;
@@ -41,8 +42,10 @@ class CreateWikiMetrics {
     private $axOffset;
     private $axOrder;
     private $axDesc;
+    private $axActive;
     private $axClosed;
     private $axRedir;
+    private $axRemoved;
     private $axDaily;
 	
 	/**
@@ -282,10 +285,11 @@ class CreateWikiMetrics {
 	 * @return array
 	 *
 	 */
-	private function buildQueryOptions(&$dbr) {
+	private function buildQueryOptions(&$dbr, $prefix = "") {
 		wfProfileIn( __METHOD__ );
 
 		$where = array();
+		$city_id = ( !empty($prefix) ) ? "{$prefix}.city_id" : "city_id";
 
 		if ( !empty($this->axCreated) && in_array( $this->axCreated, array_keys($this->mPeriods) ) ) {
 			$sCreated = ($this->axCreated > 100) ? intval($this->axCreated - 100) . ' MONTH' : intval($this->axCreated) . ' WEEK';
@@ -304,11 +308,19 @@ class CreateWikiMetrics {
 				$where[] = 'city_lang = ' . $dbr->addQuotes($this->axLanguage);
 			}
 		}
-		if ( !empty($this->axDomain) ) {
-			$where[] = 'city_dbname LIKE "%' . $dbr->escapeLike($this->axDomain) . '%"';
+		if ( !empty($this->axDbname) ) {
+			$where[] = 'city_dbname LIKE "%' . $dbr->escapeLike($this->axDbname) . '%"';
 		}
 		if ( !empty($this->axTitle) ) {
 			$where[] = 'city_title >= ' . $dbr->addQuotes($this->axTitle);
+		}
+		if ( !empty($this->axDomain) ) {
+			$wikisIds = $this->getWikisByDomain();
+			if (!empty($wikisIds) ) {
+				$where[] = "{$city_id} in (" . implode(",", $wikisIds) . ")";
+			} else {
+				$where[] = "{$city_id} = 0";
+			}
 		}
 		if ( !empty($this->axFounder) ) {
 			$oFounder = User::newFromName( $this->axFounder );
@@ -319,14 +331,24 @@ class CreateWikiMetrics {
 		if ( !empty($this->axFounderEmail) ) {
 			$where[] = 'city_founding_email LIKE "%' . $dbr->escapeLike( str_replace(' ', '_', $this->axFounderEmail) ) . '%"';
 		}
-		$city_public = array( 0 => 1 );
+		$city_public = array( );
+		if ( !empty($this->axActive) ) {
+			$city_public[] = 1; 
+		}
 		if ( !empty($this->axClosed) ) {
 			$city_public[] = 0;
 		}
 		if ( !empty($this->axRedir) ) {
 			$city_public[] = 2;
 		}
-		$where[] = 'city_public in (' . implode(",", $city_public) . ')';
+		if ( !empty($this->axRemoved) ) {
+			$city_public[] = -1;
+		}
+		if ( !empty($city_public) ) {
+			$where[] = 'city_public in (' . implode(",", $city_public) . ')';
+		} else {
+			$where[] = "{$city_id} = 0";
+		}
 
 		#----
 		#- check order - if order is for city_list - we can use limit and order by in SQL query
@@ -445,7 +467,7 @@ class CreateWikiMetrics {
 		/* db */
 		$dbr = wfGetDB( DB_SLAVE, 'dpl' );
 		/* check params */
-		$where = $this->buildQueryOptions($dbr);
+		$where = $this->buildQueryOptions($dbr, 'cl');
 		#----
 		if ( empty($where) ) {
 			$where = array();
@@ -519,6 +541,37 @@ class CreateWikiMetrics {
 			unset($languages[$key]);
 		}
 		return $languages;
+	}
+	
+	/*
+	 * get a list Wikis where domain contain fragment of string
+	 *
+	 * @author moli@wikia-inc.com
+	 * @return array
+	 */
+	private function getWikisByDomain() {
+		wfProfileIn( __METHOD__ );
+		$aCityIds = array();
+
+		$dbr = wfGetDB( DB_SLAVE );		
+		$domain = $dbr->escapeLike( strtolower( $this->axDomain ) );
+		
+		$oRes = $dbr->select( 
+			"`wikicities`.`city_domains`", 
+			array( 'city_id' ),
+			array( "city_domain like '%{$domain}%'" ),
+			__METHOD__,
+			array( 'ORDER BY' => 'city_id' )
+		);
+		while ( $oRow = $dbr->fetchObject( $oRes ) ) {
+			if ( !isset($aCityIds[$oRow->city_id]) ) {
+				$aCityIds[$oRow->city_id] = $oRow->city_id;
+			}
+		}
+		$dbr->freeResult( $oRes );
+		
+		wfProfileOut( __METHOD__ );
+		return $aCityIds;
 	}
 	
 }
