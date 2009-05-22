@@ -22,3 +22,9 @@
 	font-weight: bold;
 	color: black;
 }
+
+/* fix for IE */
+* html #AddNewTalkSectionImage {
+	background: none;
+	filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='http://images.wikia.com/common/skins/monaco/images/sprite.png', sizingMethod='crop');
+}
