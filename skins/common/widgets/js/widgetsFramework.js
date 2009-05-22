@@ -520,18 +520,17 @@ $(function() {
 		widgets = $('#sidebar_1').children('dl');
 	}
 
-	$().log(widgets, 'Widgets');
+	var start = (new Date()).getTime();
 
 	widgets.each(function() {
-		id = $(this).attr('id');
-		id = id.substring(0, id.length-3);
+		id = parseInt( $(this).attr('id').substring(7) );
 
 		type = $(this).attr('class').split(' ').pop();
 
 		fname = type + '_init';
 		if (typeof window[fname] == 'function') {
-			$().log(fname, 'Widgets');
-			window[fname](id);
+			$().log('calling ' + fname, 'Widgets');
+			window[fname](id, $(this));
 		}
-	});
+	}).log(widgets.length + ' widgets initialized in ' + ((new Date()).getTime() - start) + ' ms' , 'Widgets');
 });
