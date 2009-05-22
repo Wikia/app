@@ -212,7 +212,7 @@ class CloseWikiMaintenace {
 				$path = $file->getPath();
 				if( is_file( $path ) ) {
 					$images[] = $path;
-					Wikia::log( __CLASS, "info", "adding {$path} to archive" );
+					Wikia::log( __CLASS__, "info", "adding {$path} to archive" );
 				}
 				if( $file && $this->mHistory ) {
 					$oldFiles = $file->getHistory();
