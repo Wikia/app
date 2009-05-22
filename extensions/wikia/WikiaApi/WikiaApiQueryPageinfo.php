@@ -9,156 +9,139 @@ if (!defined('MEDIAWIKI')) {
  * A query module to generate pageviews .
  *
  */
-class WikiaApiQueryPageinfo extends ApiQueryGeneratorBase {
+class WikiaApiQueryPageinfo extends ApiQueryInfo {
 
 	public function __construct($query, $moduleName) {
-		parent :: __construct($query, $moduleName, 'pi');
+		parent :: __construct($query, $moduleName);
 	}
 
 	public function execute() {
-		$this->run();
-	}
-
-	public function executeGenerator($resultPageSet) {
-		$this->run($resultPageSet);
-	}
-
-	private function run($resultPageSet = null) {
-
-		if ($this->getPageSet()->getGoodTitleCount() == 0)
-			return;	// nothing to do
-
+		$prop = array();
 		$params = $this->extractRequestParams();
-		$prop = array_flip($params['prop']);
-		#--- columns
-		$this->addFields( array( 'article_id', 'count as page_counter' ) );
-		#--- table
-		$this->addTables('page_visited');
-		#--- where
-		$this->addWhereFld('article_id', array_keys($this->getPageSet()->getGoodTitles()));
-		if (!is_null($params['continue'])) {
-			$cont = explode('|', $params['continue']);
-			if ( count($cont) != 1 )
-				$this->dieUsage("Invalid continue param. You should pass the " .
-					"original value returned by the previous query", "_badcontinue");
-			$pagefrom = intval($cont[0]);
-			$this->addWhere("article_id >= '$pagefrom'");
+		if ( isset($params['prop']) ) {
+			$prop = array_flip($params['prop']);
 		}
-		#--- order 
-		if ( count($this->getPageSet()->getGoodTitles()) > 1 ) {
-			$order = $params['order'];
-			if (!is_null($order)) {
-				switch ($order) {
-					case 'page':
-						$this->addOption('ORDER BY', 'article_id');
-						break;
-					case 'views':
-						$this->addOption('ORDER BY', 'count desc');
-						break;
-					default :
-						ApiBase :: dieDebug(__METHOD__, "Unknown prop=$p");
+
+		$result = $this->getResult();
+
+		foreach ( $prop as $param => $id) {
+			switch ($param) {
+				case "views" 	: $this->getPageViews($result); break;
+				case "revcount" : $this->getRevCount($result); break;
+				case "created"	: $this->getCreateDate($result); break;
+			}
+		}
+		parent :: execute(); 
+	}
+	
+	private function getPageViews(&$result) {
+		$res = &$result->getData();
+		
+		if ( isset($res['query']) && isset($res['query']['pages']) ) {
+			$aTitles = $this->getPageSet()->getGoodTitles();
+			#---
+			$this->resetQueryParams();
+			$this->addFields( array( 'article_id', 'count as page_counter' ) );
+			#--- table
+			$this->addTables('page_visited');
+			#--- where
+			$this->addWhereFld('article_id', array_keys($aTitles));
+			#--- select 
+			$db = $this->getDB();
+			$oRes = $this->select(__METHOD__);
+			$pageviews = array();
+			while ($oRow = $db->fetchObject($oRes)) {
+				$pageviews[$oRow->article_id] = $oRow->page_counter;
+			}
+			$db->freeResult($oRes);
+			
+			foreach ($aTitles as $page_id => $oTitle) {
+				if ( isset($res ['query']['pages'][$page_id]) ) {
+					$res['query']['pages'][$page_id]['views'] = ( isset( $pageviews[$page_id] ) )  ? intval( $pageviews[$page_id] ) : 0;
 				}
 			}
 		}
+	}
 
+	private function getCreateDate(&$result) {
+		$res = &$result->getData();
+		
+		if ( isset($res['query']) && isset($res['query']['pages']) ) {
+			$aTitles = $this->getPageSet()->getGoodTitles();
+			#---
+			$this->resetQueryParams();
+			$this->addFields( array( 'min(rev_timestamp) as created', 'rev_page as page_id' ) );
+			#--- table
+			$this->addTables('revision');
+			#--- where
+			$this->addWhereFld('rev_page', array_keys($aTitles));
+			#--- select 
+			$db = $this->getDB();
+			$oRes = $this->select(__METHOD__);
+			$created = array();
+			while ($oRow = $db->fetchObject($oRes)) {
+				$created[$oRow->page_id] = $oRow->created;
+			}
+			$db->freeResult($oRes);
+			
+			foreach ($aTitles as $page_id => $oTitle) {
+				if ( isset($res ['query']['pages'][$page_id]) ) {
+					$res['query']['pages'][$page_id]['created'] = 
+						( isset( $created[$page_id] ) ) 
+						? wfTimestamp(TS_ISO_8601, $created[$page_id]) 
+						: "";
+				}
+			}
+		}
+	}
+
+	private function getRevCount(&$result) {
+		$res = &$result->getData();
 		$db = $this->getDB();
-		$res = $this->select(__METHOD__);
-
-		$count = 0;
-		if (is_null($resultPageSet)) {
-			$data = array();
-			$lastId = 0;	// database has no ID 0
-			while ($row = $db->fetchObject($res)) {
-				if (++$count > $params['limit']) {
-					// We've reached the one extra which shows that
-					// there are additional pages to be had. Stop here...
-					$this->setContinueEnumParameter('continue', $row->artilce_id . '|' . $row->page_counter );
-					break;
+		if ( isset($res['query']) && isset($res['query']['pages']) ) {
+			foreach ($this->getPageSet()->getGoodTitles() as $page_id => $oTitle) {
+				if ( isset($res['query']['pages'][$page_id]) ) {
+					$revcount = Revision :: countByPageId($db, $page_id);
+					$res['query']['pages'][$page_id]['revcount'] = intval($revcount);
 				}
-				$record = array (
-					'id' => $row->article_id
-				);
-				$oTitle = Title :: newFromId($row->article_id);
-				if ($oTitle instanceof Title) {
-					$record['views'] = $row->page_counter;
-
-					if ( isset($prop['revcount']) ) {
-						$record['revcount'] = Revision::countByPageId($db, $row->article_id);
-					}
-				}
-				$data[$row->article_id] = $record;
-				$this->addPageSubItems($row->article_id, $record);
-
-				
 			}
-		} else {
-			$titles = array();
-			while ($row = $db->fetchObject($res)) {
-				if (++$count > $params['limit']) {
-					// We've reached the one extra which shows that
-					// there are additional pages to be had. Stop here...
-					$this->setContinueEnumParameter('continue', $row->artilce_id . '|' . $row->page_counter );
-					break;
-				}
-
-				$oTitle = Title :: newFromId($row->article_id);
-				$titles[] = $oTitle;
-			}
-			$resultPageSet->populateFromTitles($titles);
 		}
-
-		$db->freeResult($res);
-	}
-
-	public function getAllowedParams() {
-		return array ( 
-			'order' => array(
-				ApiBase :: PARAM_ISMULTI => true,
-				ApiBase :: PARAM_TYPE => array(
-					'page',
-					'views',
-				)
-			),
-			'limit' => array(
-				ApiBase :: PARAM_DFLT => 10,
-				ApiBase :: PARAM_TYPE => 'limit',
-				ApiBase :: PARAM_MIN => 1,
-				ApiBase :: PARAM_MAX => ApiBase :: LIMIT_BIG1,
-				ApiBase :: PARAM_MAX2 => ApiBase :: LIMIT_BIG2
-			),
-			'prop' => array (
-				ApiBase :: PARAM_ISMULTI => true,
-				ApiBase :: PARAM_DFLT => 'views',
-				ApiBase :: PARAM_TYPE => array (
-					'views',
-					'revcount',
-				)
-			),
-			'continue' => null
-		);
-	}
-
-	public function getParamDescription() {
-		return array ( 
-			'order' 	=> 'How to order results (by page id orac # views)',
-			'limit' 	=> 'How many articles return',
-			'prop' 		=> 'What image information to get.',
-			'continue' 	=> 'When more results are available, use this to continue',
-		);
-	}
-
-	public function getDescription() {
-		return 'Pageviews of page';
 	}
 
 	protected function getExamples() {
-		return array (
-			"Get a pageviews of [[Main Page]] ",
-			"  api.php?action=query&prop=pageviews&titles=Main%20Page&piprop=views|revcount"
+		return array_merge(
+			parent::getExamples(), 		
+			array (
+				"Get a pageviews of [[Main Page]] ",
+				"  api.php?action=query&prop=info&titles=Main%20Page&inprop=views|revcount"
+			)
 		);
 	}
-
-	public function getVersion() { 
-		return __CLASS__ . ': $Id: '.__CLASS__.'.php '.filesize(dirname(__FILE__)."/".__CLASS__.".php").' '.strftime("%Y-%m-%d %H:%M:%S", time()).'Z wikia $'; 
+	
+	public function getAllowedParams() {
+		$params = parent :: getAllowedParams();
+		$params['prop'][ApiBase :: PARAM_TYPE] = array_merge(
+			$params['prop'][ApiBase :: PARAM_TYPE],
+			array (
+				'views',
+				'revcount',
+				'created'
+			)
+		);
+		return $params;
 	}
+	
+	public function getParamDescription() {
+		$description = parent :: getParamDescription();
+		$description['prop'] = array_merge(
+			$description['prop'], 
+			array (
+				' "views"        - The number of pageviews of each page',
+				' "revcount"     - The number of all revisions of each page',
+				' "created"		 - Creation date of each page'
+			)
+		);
+		return $description;
+	}
+	
 }

@@ -116,7 +116,7 @@ global $wgAjaxExportList;
  * registered Ajax methods
  */
 global $wgAPIPropModules;
-$wgAPIPropModules["pageinfo"] = "WikiaApiQueryPageinfo";
+$wgAPIPropModules["info"] = "WikiaApiQueryPageinfo";
 
 /**
  * registered Format names
