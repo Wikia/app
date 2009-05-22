@@ -25,7 +25,7 @@ function WidgetAnswers_handler(e) {
 	} else if (e.type == 'keypress') {
 		var keycode = e.which || window.event.keyCode;
 		if(keycode == 13 && e.target.value != '' ) {
-			window.open('http://answers.wikia.com/index.php?title=Special:CreateQuestionPage&questiontitle=' + encodeURIComponent(e.target.value) + '&categories=' + wgSitename, 'wikianswers');
+			window.open('http://' + wgContentLanguage + '.answers.wikia.com/index.php?title=Special:CreateQuestionPage&questiontitle=' + encodeURIComponent(e.target.value) + '&categories=' + wgSitename, 'wikianswers');
 			e.target.value = widget_answers_placeholder;
 			e.target.style.color = '#999';
 		}
