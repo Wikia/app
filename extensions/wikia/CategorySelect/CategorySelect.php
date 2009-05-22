@@ -242,7 +242,7 @@ function CategorySelectAjaxSaveCategories($articleId, $categories) {
 				$article = new Article($title);
 				$article_text = $article->fetchContent();
 				$article_text .= $categories;
-				$edit_summary = wfMsg('categoryselect-edit-summary');
+				$edit_summary = wfMsgForContent('categoryselect-edit-summary');
 				$flags = EDIT_UPDATE;
 				$article->doEdit($article_text, $edit_summary, $flags);
 
