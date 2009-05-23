@@ -2,8 +2,9 @@
 $wgExtensionFunctions[] = "wfRandomUsersWithAvatars";
 
 function wfRandomUsersWithAvatars() {
-    global $wgParser, $wgOut;
+    global $wgParser, $wgOut, $wgExtensionMessagesFiles;
     $wgParser->setHook( "randomuserswithavatars", "GetRandomUsersWithAvatars" );
+	$wgExtensionMessagesFiles['randomuserswithavatars'] = dirname( __FILE__ ) . '/RandomUsersWithAvatars.i18n.php';
 }
 
 function GetRandomUsersWithAvatars( $input, $args, &$parser ){
@@ -29,7 +30,9 @@ function GetRandomUsersWithAvatars( $input, $args, &$parser ){
 
 	$user_array = array();
 	$random_users = array();
-	
+
+	wfLoadExtensionMessages('randomuserswithavatars');
+
 	$output = "<div class=\"random-users-avatars\">
 		<h2>".wfMsg("random-users-avatars-title")."</h2>";
 
