@@ -274,6 +274,12 @@ class WidgetFramework {
 	// PUBLIC METHODS
 
 	public function SetSkin($skinname) {
+
+		// macbre: temp fix
+		if ($skinname == 'awesome') {
+			$skinname = 'monaco';
+		}
+
 		$this->skinname = $skinname;
 	}
 
@@ -507,7 +513,7 @@ function WidgetFrameworkAjax() {
 			if($output === true) {
 				$response = array('success' => true, 'reload' => true);
 			} else {
-				$response = array('success' => true, 'widget' => $output);
+				$response = array('success' => true, 'widget' => $output, 'type' => $wgRequest->getText('type'));
 			}
 		} else {
 			$response = array('success' => false);
