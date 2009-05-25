@@ -20,6 +20,7 @@ class NewWikisSpecialPage extends SpecialPage {
 
 	function execute($par) {
 		global $wgOut;
+		$wgOut->setPageTitle( wfMsg('newwikis') );
 		$up = new NewWikisPage($par);
 
 		# getBody() first to check, if empty
