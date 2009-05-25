@@ -509,6 +509,7 @@ class HAWelcomeJob extends Job {
 
 		$return = false;
 		$message =  wfMsgExt( "welcome-enabled", array( 'escape', 'language' => 'en' ) );
+		Wikia::log( __METHOD__, "enabled", $message );
 		if( in_array( $what, array( "page-user", "message-anon", "message-user" ) )
 			&& strpos( $message, $what  ) !== false ) {
 			$return	= true;
