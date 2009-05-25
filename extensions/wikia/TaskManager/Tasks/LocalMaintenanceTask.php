@@ -223,9 +223,15 @@ class LocalMaintenanceTask extends BatchTask {
 				 */
 				$this->log( sprintf("Updating existing article: %s", $centralTitle->getFullUrl()) );
 				$sContent = $oCentralArticle->getContent();
-				$sContent .= $oTmpl->execute("central");
-				$oCentralArticle->doEdit( $sContent, "modified by autocreate Wiki process", EDIT_FORCE_BOT );
-				$this->log( sprintf("Article %s already exists... content added", $centralTitle->getFullUrl()) );
+				$wikiUrl = "http://". $this->mWikiData["subdomain"] .".wikia.com";
+				$pos = strpos($sContent, $wikiUrl); 
+				if ($pos !== false) {
+					$sContent .= $oTmpl->execute("central");
+					$oCentralArticle->doEdit( $sContent, "modified by autocreate Wiki process", EDIT_FORCE_BOT );
+					$this->log( sprintf("Article %s already exists... content added", $centralTitle->getFullUrl()) );
+				} else {
+					$this->log( sprintf("Article %s already exists and content was added some times ago", $centralTitle->getFullUrl()) );					
+				}
 			}
 		}
 		else {
