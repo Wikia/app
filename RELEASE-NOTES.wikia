@@ -1,8 +1,9 @@
 == Changes since 200905.3 ==
 * new extension: AddNewTalkSection (see http://contractor.wikia-inc.com/wiki/Add_new_talk_section)
+* WelcomeTool: (bug 16055) revert to wfMsgForContent
 
 == Changes since 200905.2 ==
-* rt#8996: CSS fixes for Opera/KHTML are now only loaded for Monobook 
+* rt#8996: CSS fixes for Opera/KHTML are now only loaded for Monobook
 
 == Changes since 200905.1 ==
 * rt#14685: Shoutbox uses server time, not user's local time - fixed in t:r8239
