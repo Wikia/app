@@ -73,11 +73,7 @@ function AddNewTalkSectionAddFooter(&$skin, &$tpl, &$custom_article_footer) {
 	if ($wgTitle->isTalkPage() && in_array($action, array('view', 'purge'))) {
 		global $wgUser;
 		wfLoadExtensionMessages('AddNewTalkSection');
-		//TODO: grab message for user's language WITHOUT fallback to English!
 		$link = wfMsg('addnewtalksection-link');
-		if (wfEmptyMsg('addnewtalksection-link', $link)) {
-			$link = wfMsg('Add_comment');
-		}
 		$skin = $wgUser->getSkin();
 		$link = $skin->makeKnownLinkObj( $wgTitle, $link, 'action=edit&section=new', '', '', 'rel="nofollow"' );
 		$custom_article_footer .= '<div id="AddNewTalkSectionFooter"><div id="AddNewTalkSectionImage"></div><span id="AddNewTalkSectionLink">' . $link . '</span></div>';
