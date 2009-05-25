@@ -9,6 +9,7 @@
 
 #cockpit_wrapper {
 	overflow: auto;
+	height: 85px;
 }
 
 #cockpit_close {
