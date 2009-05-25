@@ -12,4 +12,5 @@
 
 <script type="text/javascript">
 	$("#headerMenuUser").makeHeaderMenu("headerButtonUser", {attach_to: "#wikia_page", attach_at: "top"});
+	$('#cockpit1').click(WidgetFramework.show_cockpit);
 </script>
