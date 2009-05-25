@@ -96,7 +96,7 @@ class NewWikisPage extends AlphabeticPager {
 	function formatRow( $row ) {
 		global $wgLang;
 
-		$name = XML::tags('A', array('url' => $row->city_url, 'target' => 'new'), $row->city_title);
+		$name = XML::tags('A', array('href' => $row->city_url, 'target' => 'new'), $row->city_title);
 		$item = wfSpecialList( $name, $row->city_lang );
 
 		return "<li>{$item}</li>";
