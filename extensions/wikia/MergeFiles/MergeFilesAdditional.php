@@ -46,6 +46,7 @@ $MF['quartz_js']['source'] = array(
 	'common/jquery/jquery.json-1.3.min.js',
 	'common/jquery/jquery.cookies.2.0.1.min.js',
 	'common/jquery/jquery.wikia.js',
+	'common/jquery/jquery-ui-1.7.1.custom.min.js',
 
 	'common/urchin.js',
 	'quartz/js/main.js',
@@ -116,6 +117,7 @@ $MF['monaco_loggedin_js']['source'] = array(
 	'common/jquery/jquery.json-1.3.min.js',
 	'common/jquery/jquery.cookies.2.0.1.min.js',
 	'common/jquery/jquery.wikia.js',
+	'common/jquery/jquery-ui-1.7.1.custom.min.js',
 
 	'common/ajax.js',
 	'common/urchin.js',
@@ -127,7 +129,6 @@ $MF['monaco_loggedin_js']['source'] = array(
 	'common/widgets/js/widgetsFramework.js',
 	'../extensions/wikia/ProblemReports/js/ProblemReports-loader.js',
 	'../extensions/wikia/AdEngine/AdEngine.js',
-	//'../extensions/wikia/FAST/FAST.js',
 	'../extensions/wikia/TieDivLibrary/TieDivLibrary.js',
 	'common/contributed.js',
 );
@@ -148,6 +149,7 @@ $MF['monaco_non_loggedin_js']['source'] = array(
 	'common/jquery/jquery.json-1.3.min.js',
 	'common/jquery/jquery.cookies.2.0.1.min.js',
 	'common/jquery/jquery.wikia.js',
+	'common/jquery/jquery-ui-1.7.1.custom.min.js',
 
 	'common/ajax.js',
 	'common/urchin.js',
@@ -159,7 +161,6 @@ $MF['monaco_non_loggedin_js']['source'] = array(
 	'../extensions/wikia/AjaxLogin/AjaxLogin.js',
 	'../extensions/wikia/ProblemReports/js/ProblemReports-loader.js',
 	'../extensions/wikia/AdEngine/AdEngine.js',
-	//'../extensions/wikia/FAST/FAST.js',
 	'../extensions/wikia/Userengagement/Userengagement.js',
 	'../extensions/wikia/TieDivLibrary/TieDivLibrary.js',
 	'common/contributed.js',

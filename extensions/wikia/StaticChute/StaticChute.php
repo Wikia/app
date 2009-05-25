@@ -80,6 +80,7 @@ class StaticChute {
 			'common/jquery/jquery.json-1.3.min.js',
 			'common/jquery/jquery.cookies.2.0.1.min.js',
 			'common/jquery/jquery.wikia.js',
+			'common/jquery/jquery-ui-1.7.1.custom.min.js',
 
 			'common/ajax.js',
 			'common/urchin.js',
