@@ -30,18 +30,6 @@ class StaticChute {
 		$this->config = array();
 		// As we convert other skins, bring their config here from MergeFiles
 		$this->config['awesome_anon_article_js'] = array(
-			// macbre: right now we're still using YUI for anons on view pages
-			'common/yui_2.5.2/utilities/utilities.js',
-			'common/yui_2.5.2/cookie/cookie-beta.js',
-			'common/yui_2.5.2/container/container.js',
-			'common/yui_2.5.2/autocomplete/autocomplete.js',
-			'common/yui_2.5.2/animation/animation-min.js',
-			'common/yui_2.5.2/logger/logger.js',
-			'common/yui_2.5.2/menu/menu.js',
-			'common/yui_2.5.2/tabview/tabview.js',
-			'common/yui_extra/tools-min.js',
-			'common/yui_extra/carousel-min.js',
-
 			'common/jquery/jquery-1.3.2.js',
 			'common/jquery/jquery.json-1.3.min.js',
 			'common/jquery/jquery.cookies.2.0.1.min.js',
@@ -137,7 +125,7 @@ class StaticChute {
 		$this->config['awesome_css'] = array(
 			'common/yui_2.5.2/container/assets/container.css',
 			'common/yui_2.5.2/tabview/assets/tabview.css',
-        	'common/shared.css',
+        		'common/shared.css',
 			'awesome/css/monobook_modified.css',
 			'awesome/css/reset_modified.css',
 			'awesome/css/root.css',

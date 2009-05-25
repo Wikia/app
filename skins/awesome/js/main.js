@@ -1,48 +1,7 @@
 //macbre: moved here from onejstorule.js
-var $G = YAHOO.util.Dom.get;
-
-(function() {
-var Dom = YAHOO.util.Dom;
-var Event = YAHOO.util.Event;
-var DDM = YAHOO.util.DragDropMgr;
-
-/**
- * @author Inez Korczynski
- */
-var value = null;
-Event.onDOMReady(function() {
-	var submitAutoComplete_callback = {
-		success: function(o) {
-			if(o.responseText !== undefined) {
-				window.location.href=o.responseText;
-			}
-		}
-	}
-
-	var submitAutoComplete = function(comp, resultListItem) {
-		YAHOO.Wikia.Tracker.trackByStr(null, 'search/suggestItem/' + escape(YAHOO.util.Dom.get('search_field').value.replace(/ /g, '_')));
-		sUrl = wgServer + wgScriptPath + '?action=ajax&rs=getSuggestedArticleURL&rsargs=' + encodeURIComponent(Dom.get('search_field').value);
-		var request = YAHOO.util.Connect.asyncRequest('GET', sUrl, submitAutoComplete_callback);
-	}
-
-//	Event.addListener('search_field', 'keypress', function(e) {if(e.keyCode==13) {Dom.get('searchform').submit();}});
-
-	// Init datasource
-	var oDataSource = new YAHOO.widget.DS_XHR(wgServer + wgScriptPath, ["\n"]);
-	oDataSource.responseType = YAHOO.widget.DS_XHR.TYPE_FLAT;
-	oDataSource.scriptQueryAppend = "action=ajax&rs=getLinkSuggest";
-
-	// Init AutoComplete object and assign datasource object to it
-/*	var oAutoComp = new YAHOO.widget.AutoComplete('search_field','searchSuggestContainer', oDataSource);
-	oAutoComp.highlightClassName = oAutoComp.prehighlightClassName = 'navigation-hover';
-	oAutoComp.autoHighlight = false;
-	oAutoComp.typeAhead = true;
-	oAutoComp.queryDelay = 1;
-	oAutoComp.itemSelectEvent.subscribe(submitAutoComplete);
-*/
-});
-
-})();
+var $G = function(id) {
+	return document.getElementById(id);
+};
 
 //Edit Tips
 var editorMode = 'normal';
