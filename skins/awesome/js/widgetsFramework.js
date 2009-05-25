@@ -658,7 +658,7 @@ var WidgetFramework = {
 	},
 
 	carouselLoaded: false,
-	carouselVisible: null,
+	carouselVisible: false,
 	carouselLength: 0,
 
 	show_cockpit: function(e) {
@@ -667,7 +667,7 @@ var WidgetFramework = {
 		$('#headerMenuUser').hide().log('showing cockpit', 'Widgets');
 
 		if(WidgetFramework.carouselLoaded == false) {
-			$('#positioned_elements').html('<div id="cockpit" class="color1"><ul id="widget_cockpit_list"></ul></div>');
+			$('#positioned_elements').html('<div id="cockpit" class="color1"><div id="cockpit_wrapper"><ul id="widget_cockpit_list"></ul></div><div id="cockpit_close" class="color1"></div></div>');
 
 			var carousel = $('#widget_cockpit_list').hide();
 
@@ -733,14 +733,21 @@ var WidgetFramework = {
 			// set correct width of carousel
 			carousel.css("width", (WidgetFramework.carouselLength * 210) + 'px').show();
 
+			// close cockpit
+			$('#cockpit_close').click(WidgetFramework.hide_cockpit);
+
 			// cockpit is fully loaded
 			WidgetFramework.carouselLoaded = true;
 		}
 
 		// show cockpit
-		$('#cockpit').css("bottom", -50).show().animate({
+		$('#cockpit').css("bottom", -85).show().animate({
 			bottom: 0
 		}, "fast");
+
+		$('#positioned_elements').css('visibility', 'visible');
+
+		WidgetFramework.carouselVisible = true;
 
 		// reposition ads
 		if (typeof TieDivLibrary != 'undefined') {
@@ -749,7 +756,11 @@ var WidgetFramework = {
 	},
 
 	hide_cockpit: function(e) {
+		WidgetFramework.carouselVisible = false;
 
+		$('#cockpit').animate({
+			bottom: -85
+		}, "fast", function() {$(this).hide();});
 	}
 }
 
