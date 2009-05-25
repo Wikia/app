@@ -102,7 +102,7 @@ class RemoveAvatar extends SpecialPage {
 		}
 		
 		//clear cache
-		$key = wfMemcKey( 'user', 'profile', 'avatar', $id, $size );
+		$key = wfMemcKey( 'user', 'profile', 'avatar-1', $id, $size );
 		$wgMemc->delete( $key );
 	}
 }
