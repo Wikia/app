@@ -19,3 +19,8 @@ function WidgetSlideshow_init(id, widget) {
 		});
 	});
 }
+
+// called after widget settings are changed
+function WidgetSlideshow_after_edit(id, widget) {
+	WidgetSlideshow_init(id, widget);
+}
