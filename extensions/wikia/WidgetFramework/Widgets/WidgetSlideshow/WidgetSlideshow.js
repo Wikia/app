@@ -3,8 +3,8 @@ function WidgetSlideshow_init(id, widget) {
 	$.getScript(wgExtensionsPath + '/wikia/WidgetFramework/Widgets/WidgetSlideshow/jquery-slideshow-0.4.js?' + wgStyleVersion, function() {
 		// preload images
 		$('#widget_' + id + '-images').find('li').each( function() {
-			$(this).css('backgroundImage', 'url(' + $(this).attr('rel') + ')');
-			$(this).removeAttr('rel');
+			$(this).css('backgroundImage', 'url(' + $(this).attr('title') + ')');
+			$(this).removeAttr('title');
 		});
 
 		// initialize slideshow
