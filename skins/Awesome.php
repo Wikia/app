@@ -1377,21 +1377,6 @@ class AwesomeTemplate extends QuickTemplate {
 	<body<?php if($this->data['body_onload'    ]) { ?> onload="<?php     $this->text('body_onload')     ?>"<?php } ?>
  class="mediawiki <?php $this->text('dir') ?> <?php $this->text('pageclass') ?><?php if(!empty($this->data['printable']) ) { ?> printable<?php } ?><?php if (!$wgUser->isLoggedIn()) { ?> loggedout<?php } ?> color2 wikiaSkinMonaco<?=$isMainpage?> <?= $body_css_action ?>" id="body">
 <?php
-	// add widget cockpit HTML only for logged in users
-	// TODO: load complete cockpit via AJAX
-	if ($wgUser->isLoggedIn()) {
-?>
-			<div id="widget_cockpit" class="color1">
-				<div id="carousel-prev" class="widget_cockpit_controls">&laquo;</div>
-				<div id="carousel-next" class="widget_cockpit_controls"><div id="cockpit1_close"></div>&raquo;</div>
-				<div class="carousel-clip-region">
-					<ul id="widget_cockpit_list" class="carousel-list clearfix"></ul>
-				</div>
-			</div>
-			<div id="ghost"></div>
-<?php
-	}
-
 	// add hidden login-box, so firefox can fill it using stored login/password
 	// then copy it to AjaxLogin box
 	// TODO: move to AjaxLogin extension and use GetHTMLAfterBody hook
