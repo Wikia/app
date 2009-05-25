@@ -36,7 +36,13 @@ $wgExtensionFunctions[] = 'TOCimprovementsInit';
  * @author Maciej Błaszkowski <marooned at wikia-inc.com>
  */
 function TOCimprovementsInit() {
-	global $wgHooks;
+	global $wgHooks, $wgUser;
+
+	// do not touch skins other than Monaco
+	$skinName = get_class($wgUser->getSkin());
+	if ($skinName != 'SkinMonaco') {
+		return true;
+	}
 	$wgHooks['SkinTemplateSetupPageCss'][] = 'TOCimprovementsAddCSS';
 }
 
@@ -48,7 +54,6 @@ function TOCimprovementsInit() {
 function TOCimprovementsAddCSS(&$out) {
 	global $wgExtensionsPath, $wgStyleVersion, $wgUser, $wgCookiePath, $wgCookieDomain, $wgCookieSecure;
 	if ($wgUser->isAnon() && !empty($_COOKIE['hidetoc'])) {
-		echo '<pre>'; print_r ('cookie set'); echo '</pre>';
 		setcookie('hidetoc', '1', 0, $wgCookiePath, $wgCookieDomain, $wgCookieSecure);
 		$out .= "@import url($wgExtensionsPath/wikia/TOCimprovements/TOCimprovements.css?$wgStyleVersion);\n";
 	}
