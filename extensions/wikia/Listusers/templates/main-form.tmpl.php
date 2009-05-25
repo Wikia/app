@@ -317,7 +317,7 @@ YAHOO.util.Event.onDOMReady(function () {
 		<? } ?>
 		<? $found += (in_array($groupName, $mGroup) && isset($groupList[$groupName])) ? $groupList[$groupName] : 0 ?>
 		<? 
-			$groupLink = wfMsgExt("Grouppage-{$groupName}", array('parseinline', 'language' => 'en') );
+			$groupLink = wfMsgExt("Grouppage-{$groupName}", array('parseinline') );
 			$link = "";
 			if ( !wfEmptyMsg("Grouppage-{$groupName}", $groupLink) ) {
 				$sk = $wgUser->getSkin();
