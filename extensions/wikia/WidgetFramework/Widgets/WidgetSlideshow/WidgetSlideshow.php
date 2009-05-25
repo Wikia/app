@@ -56,7 +56,7 @@ function WidgetSlideshow($id, $params) {
 
 	if (!empty($list['images'])) {
 		foreach($list['images'] as $image) {
-			$images[] = "<li rel=\"{$image['thumb']}\"><a href=\"{$image['url']}\" title=\"{$image['alt']}\"></a></li>";
+			$images[] = "<li rel=\"{$image['thumb']}\"><a href=\"{$image['url']}\" title=\"".htmlspecialchars($image['alt'])."\"></a></li>";
 		}
 	}
 
