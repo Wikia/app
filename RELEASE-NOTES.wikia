@@ -1,6 +1,7 @@
 == Changes since 200905.3 ==
 * new extension: AddNewTalkSection (see http://contractor.wikia-inc.com/wiki/Add_new_talk_section)
 * rt#16055 WelcomeTool: revert to wfMsgForContent
+* EditEnhancements & NewEditPage changed (see http://contractor.wikia-inc.com/wiki/Edit_window_improvement_2)
 
 == Changes since 200905.2 ==
 * rt#8996: CSS fixes for Opera/KHTML are now only loaded for Monobook
