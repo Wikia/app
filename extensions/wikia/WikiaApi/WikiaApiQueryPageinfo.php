@@ -69,27 +69,26 @@ class WikiaApiQueryPageinfo extends ApiQueryInfo {
 		if ( isset($res['query']) && isset($res['query']['pages']) ) {
 			$aTitles = $this->getPageSet()->getGoodTitles();
 			#---
-			$this->resetQueryParams();
-			$this->addFields( array( 'min(rev_timestamp) as created', 'rev_page as page_id' ) );
-			#--- table
-			$this->addTables('revision');
-			#--- where
-			$this->addWhereFld('rev_page', array_keys($aTitles));
-			#--- select 
-			$db = $this->getDB();
-			$oRes = $this->select(__METHOD__);
-			$created = array();
-			while ($oRow = $db->fetchObject($oRes)) {
-				$created[$oRow->page_id] = $oRow->created;
-			}
-			$db->freeResult($oRes);
-			
-			foreach ($aTitles as $page_id => $oTitle) {
-				if ( isset($res ['query']['pages'][$page_id]) ) {
-					$res['query']['pages'][$page_id]['created'] = 
-						( isset( $created[$page_id] ) ) 
-						? wfTimestamp(TS_ISO_8601, $created[$page_id]) 
-						: "";
+			if ( !empty($aTitles) && is_array($aTitles) ) {
+				foreach ($aTitles as $page_id => $oTitle) {
+					$this->resetQueryParams();
+					$this->addFields( array( 'min(rev_timestamp) as created' ) );
+					#--- table
+					$this->addTables('revision');
+					#--- where
+					$this->addWhereFld('rev_page', $page_id);
+					#--- select 
+					$db = $this->getDB();
+					$oRes = $this->select(__METHOD__);
+					$created = "";
+					if ($oRow = $db->fetchObject($oRes)) {
+						$created = wfTimestamp(TS_ISO_8601, $oRow->created); 
+					}
+					$db->freeResult($oRes);
+
+					if ( isset($res ['query']['pages'][$page_id]) ) {
+						$res['query']['pages'][$page_id]['created'] = $created; 
+					}
 				}
 			}
 		}
