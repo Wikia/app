@@ -14,8 +14,8 @@ function GetRandomUsersWithAvatars( $input, $args, &$parser ){
 	
 	$parser->disableCache();
 
-	$count = ( isset($args["count"]) && !is_numeric($args["count"]) ) ? $args["count"] : 10;
-	$per_row = ( isset($args["row"]) && !is_numeric($args["row"]) ) ? $args["row"] : 4;
+	$count = ( isset($args["count"]) && is_numeric($args["count"]) ) ? $args["count"] : 10;
+	$per_row = ( isset($args["row"]) && is_numeric($args["row"]) ) ? $args["row"] : 4;
 	
 	//try cache
 	$key = wfMemcKey( 'users', 'random', 'avatars', $count, $per_row );
