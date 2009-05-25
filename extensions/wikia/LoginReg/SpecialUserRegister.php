@@ -14,13 +14,13 @@ function wfSpecialUserRegister(){
 	
 		function execute(){
 			
-			global $IP, $wgUser, $wgOut, $wgRequest, $wgSitename, $wgFriendingEnabled, $wgMessageCache; 
+			global $IP, $wgUser, $wgOut, $wgRequest, $wgSitename, $wgFriendingEnabled, $wgMessageCache, $wgStyleVersion; 
 			
 			$register =  Title::makeTitle( NS_SPECIAL  , "Userlogin"  );
 			$wgOut->redirect( $register->getFullURL( "type=signup" ) );
 	
 			$wgOut->addScript("<link rel='stylesheet' type='text/css' href=\"/extensions/wikia/LoginReg/LoginReg.css?{$wgStyleVersion}\"/>\n");
-			$wgOut->addScript("<script type=\"text/javascript\" src=\"/extensions/wikia/LoginReg/UserRegister.js\"></script>\n");
+			$wgOut->addScript("<script type=\"text/javascript\" src=\"/extensions/wikia/LoginReg/UserRegister.js?{$wgStyleVersion}\"></script>\n");
 			
 			if( session_id() == '' ) {
 				wfSetupSession();
@@ -136,7 +136,7 @@ function wfSpecialUserRegister(){
 	       			<label for=\"wpage\">".wfMsg("r-age-check" )."</label>
 			</p>";
 			if($wgSitename=="ArmchairGM") {
-				$wgOut->addScript("<script type=\"text/javascript\" src=\"/extensions/wikia/DoubleCombo/DoubleCombo.js\"></script>\n");
+				$wgOut->addScript("<script type=\"text/javascript\" src=\"/extensions/wikia/DoubleCombo/DoubleCombo.js?{$wgStyleVersion}\"></script>\n");
 				
 				$output .= "<div class=\"favorite-container\">
 					<p>

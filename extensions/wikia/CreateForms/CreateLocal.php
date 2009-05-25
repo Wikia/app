@@ -39,8 +39,8 @@ class CreateLocal extends CreateForm {
 	}
 	
 	function displayForm(){
-		global $wgOut;
-		$wgOut->addScript("<script type=\"text/javascript\" src=\"/extensions/CreateForms/CreateLocal.js?2\"></script>\n");
+		global $wgOut, $wgStyleVersion;
+		$wgOut->addScript("<script type=\"text/javascript\" src=\"/extensions/CreateForms/CreateLocal.js?{$wgStyleVersion}\"></script>\n");
 		$output = $this->displayFormStart();
 		
 		$output .= $this->displayFormPageTitle();
@@ -75,8 +75,8 @@ class CreateLocalEntity extends CreateForm {
 	}
 	
 	function displayForm(){
-		global $wgOut;
-		$wgOut->addScript("<script type=\"text/javascript\" src=\"/extensions/CreateForms/CreateLocal.js\"></script>\n");
+		global $wgOut, $wgStyleVersion;
+		$wgOut->addScript("<script type=\"text/javascript\" src=\"/extensions/CreateForms/CreateLocal.js?{$wgStyleVersion}\"></script>\n");
 		$output = $this->displayFormStart();
 		
 		$output .= $this->displayFormPageTitle();

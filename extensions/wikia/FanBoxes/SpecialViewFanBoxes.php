@@ -23,8 +23,8 @@ function wfSpecialViewFanBoxes(){
 			}
 
 			$tagParser = new Parser();
-			$wgOut->addScript("<script type=\"text/javascript\" src=\"{$wgFanBoxScripts}/FanBoxes.js\"></script>\n");
-			$wgOut->addScript("<link rel='stylesheet' type='text/css' href=\"{$wgFanBoxScripts}/FanBoxes.css\"/>\n");
+			$wgOut->addScript("<script type=\"text/javascript\" src=\"{$wgFanBoxScripts}/FanBoxes.js?{$wgStyleVersion}\"></script>\n");
+			$wgOut->addScript("<link rel='stylesheet' type='text/css' href=\"{$wgFanBoxScripts}/FanBoxes.css?{$wgStyleVersion}\"/>\n");
 
 			$wgOut->setPageTitle("Userboxes");
 	

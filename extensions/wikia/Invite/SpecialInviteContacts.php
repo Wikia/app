@@ -90,8 +90,8 @@ EOF;
 			{
 				$_SESSION["alreadysubmitted"] = false;
 
-				$wgOut->addHTML("<script type=\"text/javascript\" src=\"/extensions/wikia/Invite/GetContacts.js\"></script>\n");
-				$wgOut->addHTML("<script type=\"text/javascript\" src=\"/extensions/wikia/getmycontacts/js/ahah.js\"></script>\n");
+				$wgOut->addHTML("<script type=\"text/javascript\" src=\"/extensions/wikia/Invite/GetContacts.js?{$wgStyleVersion}\"></script>\n");
+				$wgOut->addHTML("<script type=\"text/javascript\" src=\"/extensions/wikia/getmycontacts/js/ahah.js?{$wgStyleVersion}\"></script>\n");
 
 				$wgOut->setPagetitle( wfMsg('find_friends') );
 
