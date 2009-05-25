@@ -155,8 +155,9 @@
 					        	$output .= "<a href=\"".$add_relationship_link->escapeFullURL('user='.$user_safe.'&rel_type=1')."\">".wfMsg("ur-add-friend")."</a> |
 								<a href=\"".$add_relationship_link->escapeFullURL('user='.$user_safe.'&rel_type=2')."\">".wfMsg("ur-add-foe")."</a> | ";
 					      	} else if ($user_name == $wgUser->getName()) {
-								$output .= "<a href=\"".$remove_relationship_link->escapeFullURL('user='.$user_safe)."\">".wfMsg("ur-remove-relationship", ucfirst($label))."</a>";
+								$output .= "<a href=\"".$remove_relationship_link->escapeFullURL('user='.$user_safe)."\">".wfMsg("ur-remove-relationship", ucfirst($label))."</a> | ";
 							}
+							$output .= "<a href=\"".$give_gift_link->escapeFullURL('user='.$user_safe)."\">".wfMsg("ur-give-gift")."</a>";
 					 
 					  	 $output .= "</div>
 						 <div class=\"cleared\"></div>
