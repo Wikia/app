@@ -137,10 +137,7 @@ class StaticChute {
 		$this->config['awesome_css'] = array(
 			'common/yui_2.5.2/container/assets/container.css',
 			'common/yui_2.5.2/tabview/assets/tabview.css',
-	        	'common/shared.css',
-
-			'common/widgets/css/widgets_base.css',
-
+        	'common/shared.css',
 			'awesome/css/monobook_modified.css',
 			'awesome/css/reset_modified.css',
 			'awesome/css/root.css',
