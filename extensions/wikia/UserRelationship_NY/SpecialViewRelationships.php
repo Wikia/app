@@ -73,7 +73,7 @@
 					".wfMsg("ur-error-message-no-user")."
 				</div>
 				<div class=\"relationship-request-buttons\">
-					<input type=\"button\" class=\"site-button\" value=\"".wfMsg('ur-main-page')."\" onclick=\"window.location='" . Title::newMainPage()->getLocalURL() . "'\"/>";
+					<input type=\"button\" class=\"site-button\" value=\"".wfMsg('ur-main-page')."\" onclick=\"window.location='index.php?title=Main_Page'\"/>";
 					if($wgUser->isLoggedIn())$out .= " <input type=\"button\" class=\"site-button\" value=\"".wfMsg('ur-your-profile')."\" onclick=\"window.location='".$wgUser->getUserPage()->escapeFullURL() . "'\"/>";
 			  	$out .= "</div>";
 				$wgOut->addHTML($out);
@@ -157,7 +157,11 @@
 					      	} else if ($user_name == $wgUser->getName()) {
 								$output .= "<a href=\"".$remove_relationship_link->escapeFullURL('user='.$user_safe)."\">".wfMsg("ur-remove-relationship", ucfirst($label))."</a> | ";
 							}
-							$output .= "<a href=\"".$give_gift_link->escapeFullURL('user='.$user_safe)."\">".wfMsg("ur-give-gift")."</a>";
+							global $wgUserProfileDisplay;
+							if ($wgUserProfileDisplay['gifts'])
+					      	$output .= "<a href=\"".$give_gift_link->escapeFullURL('user='.$user_safe)."\">".wfMsg("ur-give-gift")."</a>";
+								
+							$output = preg_replace('/ \| $/', '', $output); # spaghetti html creation, ugh )-:
 					 
 					  	 $output .= "</div>
 						 <div class=\"cleared\"></div>
