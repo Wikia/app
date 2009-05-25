@@ -145,8 +145,8 @@ function AddEditingToggles($o) {
 
 function AddEditingTips($o) {
 	global $wgOut, $wgStylePath, $wgStyleVersion, $wgExtensionsPath ;
-	$wgOut->addScript('<link rel="stylesheet" type="text/css" href="'.$wgStylePath.'/monaco/css/accordion-menu-v2.css?'.$wgStyleVersion.'" />');
-	$wgOut->addScript('<script type="text/javascript" src="'.$wgStylePath.'/monaco/js/accordion-menu-v2.js?'.$wgStyleVersion.'"></script>');
+	$wgOut->addScript('<link rel="stylesheet" type="text/css" href="'.$wgExtensionsPath.'/wikia/EditingTips/accordion-menu-v2.css?'.$wgStyleVersion.'" />');
+	$wgOut->addScript('<script type="text/javascript" src="'.$wgExtensionsPath.'/wikia/EditingTips/accordion-menu-v2.js?'.$wgStyleVersion.'"></script>');
 	$wgOut->addScript('<script type="text/javascript" src="'.$wgExtensionsPath.'/wikia/EditingTips/EditingTips.js?'.$wgStyleVersion.'"></script>');
 
 	$script = '
