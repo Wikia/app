@@ -126,5 +126,8 @@ Now, go edit!  We look forward to seeing this project thrive!
 Best wishes,
 
 [[User:$2|$3]]
-    "
+    ",
+// new wikis - special page
+	"newwikis" => "New wikis",    
+	"newwikisstart" => "Display Wikis starting at:",
 );
