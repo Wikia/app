@@ -1,0 +1,5 @@
+#toc ul,
+/* for shared help TOC */
+#sharedtoc ul {
+	display: none;
+}

@@ -52,7 +52,7 @@ function AddNewTalkSectionInit() {
  */
 function AddNewTalkSectionAddCSS(&$out) {
 	global $wgExtensionsPath, $wgStyleVersion;
-	$out .= "@import url($wgExtensionsPath/wikia/AddNewTalkSection/AddNewTalkSection.css?$wgStyleVersion);";
+	$out .= "@import url($wgExtensionsPath/wikia/AddNewTalkSection/AddNewTalkSection.css?$wgStyleVersion);\n";
 	return true;
 }
 
