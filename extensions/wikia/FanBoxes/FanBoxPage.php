@@ -12,9 +12,9 @@ class FanBoxPage extends Article{
 
 	
 	function view(){
-		global $wgOut, $wgUser, $wgRequest, $wgTitle, $wgContLang, $wgFanBoxPageDisplay, $wgFanBoxScripts;
+		global $wgOut, $wgUser, $wgRequest, $wgTitle, $wgContLang, $wgFanBoxPageDisplay, $wgFanBoxScripts, $wgStyleVersion;
 
-		$wgOut->addScript("<script type=\"text/javascript\" src=\"{$wgFanBoxScripts}/FanBoxes.js\"></script>\n");
+		$wgOut->addScript("<script type=\"text/javascript\" src=\"{$wgFanBoxScripts}/FanBoxes.js?{$wgStyleVersion}\"></script>\n");
 
 		
 		$output= $wgOut->setHTMLTitle( $wgTitle->getText() );

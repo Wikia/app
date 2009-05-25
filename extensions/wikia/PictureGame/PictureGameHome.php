@@ -883,6 +883,7 @@ function wfSpecialPictureGameHome(){
 		function getImageDivs($isPermalink = false, $imgID = -1, $lastID = -1){
 
 			global $wgRequest, $wgUser, $wgOut, $wgRequest, $wgSiteView, $IP, $IMGCONTENT, $wgSiteName, $wgUseEditButtonFloat, $wgUploadPath;
+			global $wgStyleVersion;
 			
 			$totalVotes = 0;
 
@@ -1136,8 +1137,8 @@ function wfSpecialPictureGameHome(){
 			$wgOut->setHTMLTitle( wfMsg( 'pagetitle', $title ) );
 			
 			$output .= "
-			<script type=\"text/javascript\" src=\"{$this->INCLUDEPATH}lightbox_light.js\"></script>
-			<script type=\"text/javascript\" src=\"{$this->INCLUDEPATH}picturegame.js\"></script>
+			<script type=\"text/javascript\" src=\"{$this->INCLUDEPATH}lightbox_light.js?{$wgStyleVersion}\"></script>
+			<script type=\"text/javascript\" src=\"{$this->INCLUDEPATH}picturegame.js?{$wgStyleVersion}\"></script>
 			<script>var next_id = \"{$next_id}\";</script>
 			{$editLink}
 			<div class=\"editDiv\" id=\"editDiv\" style=\"display: none\"> </div>

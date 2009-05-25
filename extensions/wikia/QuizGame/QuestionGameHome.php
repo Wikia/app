@@ -1126,7 +1126,7 @@ function wfSpecialQuizGameHome(){
 		}
 		
 		function renderWelcomePage(){
-			global $wgRequest, $wgUser, $wgOut, $wgRequest, $wgSiteView, $IP;
+			global $wgRequest, $wgUser, $wgOut, $wgRequest, $wgSiteView, $IP, $wgStyleVersion;
 	
 			if( $wgUser->isBlocked() ){
 				$wgOut->blockedPage( false );
@@ -1176,7 +1176,7 @@ function wfSpecialQuizGameHome(){
 			
 			</script>
 			
-			<script type=\"text/javascript\" src=\"{$this->INCLUDEPATH}renderwelcomepage.js\"></script>";
+			<script type=\"text/javascript\" src=\"{$this->INCLUDEPATH}renderwelcomepage.js?{$wgStyleVersion}\"></script>";
 			
 			$wgOut->setHTMLTitle( wfMsg( 'pagetitle', wfMsgForContent( 'quiz_create_title' ) ) );
 			$wgOut->setPageTitle( wfMsg( 'pagetitle', wfMsgForContent( 'quiz_create_title' ) ) );

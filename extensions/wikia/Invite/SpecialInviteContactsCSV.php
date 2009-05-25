@@ -60,7 +60,7 @@ function wfSpecialInviteContactsCSV(){
 		}
 
 		function execute() {
-			global $wgUser, $wgOut, $wgRequest, $IP;
+			global $wgUser, $wgOut, $wgRequest, $IP, $wgStyleVersion;
 
 			/*/
 			/* Redirect Non-logged in users to Login Page
@@ -77,8 +77,8 @@ function wfSpecialInviteContactsCSV(){
 
 			$this->domain = $wgRequest->getVal("domain");
 
-			$wgOut->addHTML("<script type=\"text/javascript\" src=\"/extensions/wikia/Invite/GetContacts.js\"></script>\n");
-			$wgOut->addHTML("<script type=\"text/javascript\" src=\"/extensions/wikia/getmycontacts/js/ahah.js\"></script>\n");
+			$wgOut->addHTML("<script type=\"text/javascript\" src=\"/extensions/wikia/Invite/GetContacts.js?{$wgStyleVersion}\"></script>\n");
+			$wgOut->addHTML("<script type=\"text/javascript\" src=\"/extensions/wikia/getmycontacts/js/ahah.js?{$wgStyleVersion}\"></script>\n");
 
 			if ( count($_POST) ) {
 				//UPLOADED CSV FILE

@@ -10,8 +10,8 @@ class CreateLawProposal extends CreateForm {
 	}
 	
 	function displayForm(){
-		global $wgOut;
-		$wgOut->addScript("<script type=\"text/javascript\" src=\"/extensions/CreateForms/CreatePolitics.js\"></script>\n");
+		global $wgOut, $wgStyleVersion;
+		$wgOut->addScript("<script type=\"text/javascript\" src=\"/extensions/CreateForms/CreatePolitics.js{$wgStyleVersion}\"></script>\n");
 		$output = $this->displayFormStart();
 		
 		$output .= $this->displayFormPageTitle();

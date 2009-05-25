@@ -81,7 +81,7 @@ function wfSpecialViewQuizzes(){
 			
 			//javascript
 			
-			$output .= "<script type=\"text/javascript\" src=\"" . QuizGameHome::returnIncludePath() . "viewquizzes.js\"></script>";
+			$output .= "<script type=\"text/javascript\" src=\"" . QuizGameHome::returnIncludePath() . "viewquizzes.js?{$wgStyleVersion}\"></script>";
 			
 			$output .= "<div class=\"view-quizzes\">";
 			

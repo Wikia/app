@@ -40,7 +40,7 @@ class UpdateProfile extends SpecialPage {
 		}
 		
 		$wgOut->addScript("<link rel='stylesheet' type='text/css' href=\"{$wgUserProfileScripts}/UserProfile.css?{$wgStyleVersion}\"/>\n");
-		$wgOut->addScript("<script type=\"text/javascript\" src=\"{$wgUserProfileScripts}/UpdateProfile.js\"></script>\n");
+		$wgOut->addScript("<script type=\"text/javascript\" src=\"{$wgUserProfileScripts}/UpdateProfile.js?{$wgStyleVersion}\"></script>\n");
 		
 		if($wgRequest->wasPosted()){
 			//$section = $wgRequest->getVal("section");

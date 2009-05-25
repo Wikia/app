@@ -8,14 +8,15 @@ function wfUserBoxesHook() {
 
 function UserBoxesHook( $input, $args, &$parser ){	
 		global $wgOut, $IP, $wgParser, $wgUser, $wgTitle, $wgMemc, $wgUserProfileDisplay, $wgMessageCache, $wgFanBoxScripts, $wgFanBoxDirectory, $wgUploadPath;
+		global $wgStyleVersion;
 
 		$parser->disableCache();
 
 		$wgFanBoxDirectory = "$IP/extensions/wikia/FanBoxes";
 		
 		require_once("{$wgFanBoxDirectory}/FanBoxesClass.php");
-		$wgOut->addScript("<script type=\"text/javascript\" src=\"{$wgFanBoxScripts}/FanBoxes.js\"></script>\n");
-		$wgOut->addScript("<link rel='stylesheet' type='text/css' href=\"{$wgFanBoxScripts}/FanBoxes.css\"/>\n");
+		$wgOut->addScript("<script type=\"text/javascript\" src=\"{$wgFanBoxScripts}/FanBoxes.js?{$wgStyleVersion}\"></script>\n");
+		$wgOut->addScript("<link rel='stylesheet' type='text/css' href=\"{$wgFanBoxScripts}/FanBoxes.css?{$wgStyleVersion}\"/>\n");
 		
 		require_once ( "{$wgFanBoxDirectory}/FanBox.i18n.php" );
 			foreach( efWikiaFantag() as $lang => $messages ){
