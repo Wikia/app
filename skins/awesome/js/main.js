@@ -4,6 +4,8 @@ var $G = function(id) {
 };
 
 //Edit Tips
+// macbre: doesn't seem to be used anywhere in the code
+/*
 var editorMode = 'normal';
 function editorAnimate(editorModeRequest) {
 	var animationSpeed = .75;
@@ -75,10 +77,7 @@ function editorAnimate(editorModeRequest) {
 		editorMode = 'wide';
 	}
 }
-
-//
-// macbre: add Christian's code for LeanMonaco
-//
+*/
 
 //Attach DOM-Ready handlers
 $(function() {
@@ -325,6 +324,7 @@ function monacoNavigationHoverActions() {
 	});
 }
 
+// footer star voting
 function setupVoting() {
 
 	// callback for vote and unrate
