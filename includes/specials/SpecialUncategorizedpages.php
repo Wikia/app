@@ -9,6 +9,8 @@
  * @ingroup SpecialPage
  */
 class UncategorizedPagesPage extends PageQueryPage {
+	var $requestedNamespace = NS_MAIN;
+
 	function getName() {
 		return "Uncategorizedpages";
 	}
@@ -29,6 +31,12 @@ class UncategorizedPagesPage extends PageQueryPage {
 		list( $page, $categorylinks ) = $dbr->tableNamesN( 'page', 'categorylinks' );
 		$name = $dbr->addQuotes( $this->getName() );
 
+		// If looking for main, override with content namespaces.
+		// Yes, this is ugly. Should get better treatment in MW 1.15
+		if ( $this->requestedNamespace == NS_MAIN ) {
+			$this->requestedNamespace = implode( ', ', $wgContentNamespaces );
+		}
+
 		return
 			"
 			SELECT
@@ -38,7 +46,7 @@ class UncategorizedPagesPage extends PageQueryPage {
 				page_title AS value
 			FROM $page
 			LEFT JOIN $categorylinks ON page_id=cl_from
-			WHERE cl_from IS NULL AND page_namespace IN ( " . explode( ', ', $wgContentNamespaces ) . " )
+			WHERE cl_from IS NULL AND page_namespace IN ( " . $this->requestedNamespace . " )
 			AND page_is_redirect=0
 			";
 	}
