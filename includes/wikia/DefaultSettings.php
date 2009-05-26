@@ -45,8 +45,8 @@ $wgCityId = null;
 require_once ( $IP."/includes/wikia/Defines.php" );
 require_once ( $IP."/includes/wikia/GlobalFunctions.php" );
 
-global $wgDBname, $wgKennisnet;
-if($wgDBname != 'uncyclo' && !$wgKennisnet) {
+global $wgDBname;
+if($wgDBname != 'uncyclo') {
 	include_once( "$IP/extensions/wikia/SkinChooser/SkinChooser.php" );
 }
 
