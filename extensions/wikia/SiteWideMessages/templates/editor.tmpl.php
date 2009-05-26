@@ -155,6 +155,19 @@
 				?>
 				</select>
 			</fieldset>
+			
+			<fieldset>
+				<legend><?= wfMsg('swm-label-language') ?></legend>
+				<select name="mLang" id="mLang">
+				<option>all</option>
+				<?php
+					global $wgWikiaStaffLanguages;
+					foreach ($wgWikiaStaffLanguages as $lang) {
+						echo "<option>$lang</option>\n";
+					}
+				?>
+				</select>
+			</fieldset>
 			<?php } //do not show this info when editing ?>
 
 			<fieldset>

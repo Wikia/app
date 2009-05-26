@@ -53,6 +53,7 @@ $messages = array(
 		'swm-label-content'			=> 'Content',
 		'swm-label-comment'			=> 'Comment',
 		'swm-label-dismissed'		=> 'Dismissed',
+		'swm-label-language'		=> 'Language',
 		'swm-taskmanager-hint'		=> '<i>Note that some options are more time consuming and will be queued in TaskManager.</i>',
 		'swm-button-preview'		=> '[ Preview ]',
 		'swm-button-send'			=> '[ Send ]',
