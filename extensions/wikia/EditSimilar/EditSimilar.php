@@ -295,7 +295,9 @@ class EditSimilar {
 		$wgOut->addScript ("
 			<script type=\"text/javascript\">
 				if (typeof WET != 'undefined') {
-					WET.byStr('userengagement/editSimilar_view');
+					$(function() {
+						WET.byStr('userengagement/editSimilar_view');
+					});
 				}
 			</script>
 		");
