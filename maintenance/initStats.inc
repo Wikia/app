@@ -20,7 +20,12 @@ function wfInitStats( $options=array() ) {
 	wfOut( "{$pages}\nCounting number of users..." );
 
 	$users = $dbr->selectField( 'user', 'COUNT(*)', '', __METHOD__ );
-	wfOut( "{$users}\nCounting number of admins..." );
+	wfOut( "{$users}\nCounting number of active users..." );
+
+	$active_users = $dbr->selectField( 'recentchanges', 'COUNT( DISTINCT rc_user_text )',
+	         array( 'rc_user != 0', 'rc_bot' => 0, "rc_log_type != 'newusers' OR rc_log_type IS NULL" ),
+				         __METHOD__ );
+	wfOut( "{$active_users}\nCounting number of admins..." );
 
 	$admin = $dbr->selectField( 'user_groups', 'COUNT(*)', array( 'ug_group' => 'sysop' ), __METHOD__ );
 	wfOut( "{$admin}\nCounting number of images..." );
@@ -41,6 +46,7 @@ function wfInitStats( $options=array() ) {
 					'ss_good_articles' => $good,
 					'ss_total_pages' => $pages,
 					'ss_users' => $users,
+					'ss_active_users' => $active_users,
 					'ss_admins' => $admin,
 					'ss_images' => $image );
 	$conds = array( 'ss_row_id' => 1 );
