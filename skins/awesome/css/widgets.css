@@ -10,6 +10,10 @@
 #cockpit_wrapper {
 	overflow: auto;
 	height: 85px;
+	position: relative;
+}
+#widget_cockpit_list {
+	position: absolute;
 }
 
 #cockpit_close {
@@ -18,9 +22,10 @@
 	cursor: pointer;
 	height: 16px;
 	position: absolute;
-	right: 0;
-	top: -16px;
+	right: 5px;
+	top: 50px;
 	width: 16px;
+	z-index: 2000;
 }
 
 body.widgetsAddingBlocked .add {
@@ -385,10 +390,6 @@ body.widgetsAddingBlocked .add {
 	left: 0;
 }
 
-* html #widget_cockpit_list {
-	position: absolute;
-}
-
 * html #cockpit_close {
-	top: 0;
+	top: 5px;
 }
