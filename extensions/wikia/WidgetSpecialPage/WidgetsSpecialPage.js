@@ -1,3 +1,11 @@
+if (typeof WidgetFramework != 'undefined') {
+	// use new widget framework
+	$(function() {
+		$('#widgetsSpecialPageList').find('.add').click(WidgetFramework.add).log('Special:Widgets initialized', 'Widgets');
+	});
+}
+else {
+
 YAHOO.util.Event.onDOMReady(function() {
 
     var Dom = YAHOO.util.Dom;
@@ -71,3 +79,5 @@ YAHOO.util.Event.onDOMReady(function() {
         YAHOO.util.Event.addListener(widgets[w], 'click', add);
     }
 });
+
+}
