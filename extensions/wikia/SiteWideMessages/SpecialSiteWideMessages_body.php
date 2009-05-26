@@ -65,6 +65,7 @@ class SiteWideMessages extends SpecialPage {
 		$formData['groupNameS'] = $wgRequest->getText('mGroupNameS');
 		$formData['userName'] = $wgRequest->getText('mUserName');
 		$formData['expireTime'] = $wgRequest->getVal('mExpireTime');
+		$formData['lang'] = $wgRequest->getVal('mLang');
 
 		//fetching hub list
 		$DB = wfGetDB(DB_SLAVE);
@@ -177,7 +178,7 @@ class SiteWideMessages extends SpecialPage {
 				//TODO: if $mRecipientId == 0 => error - no such user
 				$mText = $wgRequest->getText('mContent');
 				$groupName = $formData['groupName'] == '' ? $formData['groupNameS'] : $formData['groupName'];
-				$result = $this->sendMessage($wgUser, $mRecipientId, $mText, $formData['expireTime'], $formData['wikiName'], $formData['userName'], $groupName, $formData['sendModeWikis'], $formData['sendModeUsers'], $formData['hubId']);
+				$result = $this->sendMessage($wgUser, $mRecipientId, $mText, $formData['expireTime'], $formData['wikiName'], $formData['userName'], $groupName, $formData['sendModeWikis'], $formData['sendModeUsers'], $formData['hubId'], $formData['lang']);
 
 				if (is_null($result['msgId'])) {	//we have an error
 					$formData['messageContent'] = $wgRequest->getText('mContent');
@@ -253,7 +254,7 @@ class SiteWideMessages extends SpecialPage {
 	}
 
 	//DB functions
-	private function sendMessage($mSender, $mRecipientId, $mText, $mExpire, $mWikiName, $mRecipientName, $mGroupName, $mSendModeWikis, $mSendModeUsers, $mHubId) {
+	private function sendMessage($mSender, $mRecipientId, $mText, $mExpire, $mWikiName, $mRecipientName, $mGroupName, $mSendModeWikis, $mSendModeUsers, $mHubId, $mLang) {
 		global $wgSharedDB;
 		$result = array('msgId' => null, 'errMsg' => null);
 		$dbInsertResult = false;
@@ -270,6 +271,7 @@ class SiteWideMessages extends SpecialPage {
 				break;
 			case 'WIKI':
 				$mHubId = null;
+				$mLang = 'all';
 		}
 
 		switch($mSendModeUsers) {
@@ -283,6 +285,7 @@ class SiteWideMessages extends SpecialPage {
 				break;
 			case 'USER':
 				$mGroupName = '';
+				$mLang = 'all';
 		}
 
 		$sendToAll = $mSendModeWikis == 'ALL' && $mSendModeUsers == 'ALL';
@@ -324,7 +327,7 @@ class SiteWideMessages extends SpecialPage {
 			$DB = wfGetDB(DB_MASTER);
 			$dbResult = (boolean)$DB->Query (
 				  'INSERT INTO ' . MSG_TEXT_DB
-				. ' (msg_sender_id, msg_text, msg_mode, msg_expire, msg_recipient_name, msg_group_name, msg_wiki_name, msg_hub_id)'
+				. ' (msg_sender_id, msg_text, msg_mode, msg_expire, msg_recipient_name, msg_group_name, msg_wiki_name, msg_hub_id, msg_lang)'
 				. ' VALUES ('
 				. $DB->AddQuotes($mSender->GetID()). ', '
 				. $DB->AddQuotes($mText) . ', '
@@ -333,7 +336,8 @@ class SiteWideMessages extends SpecialPage {
 				. $DB->AddQuotes($mRecipientName) . ', '
 				. $DB->AddQuotes($mGroupName) . ', '
 				. $DB->AddQuotes($mWikiName) . ', '
-				. $DB->AddQuotes($mHubId)
+				. $DB->AddQuotes($mHubId) . ' , '
+				. $DB->AddQuotes($mLang)
 				. ');'
 				, __METHOD__
 			);
@@ -582,6 +586,7 @@ class SiteWideMessages extends SpecialPage {
 			. ' AND msg_mode = ' . MSG_MODE_ALL
 			. ' AND (msg_expire IS NULL OR msg_expire > ' . $DB->AddQuotes(date('Y-m-d H:i:s')) . ')'
 			. " AND msg_date > '{$user->mRegistration}'"	//fix for ticket #2624
+			. self::getLanguageConstraintsForUser( $user )
 			. ';'
 			, __METHOD__
 		);
@@ -660,6 +665,7 @@ class SiteWideMessages extends SpecialPage {
 			. ' AND msg_mode = ' . MSG_MODE_ALL
 			. ' AND (msg_expire IS NULL OR msg_expire > ' . $DB->AddQuotes(date('Y-m-d H:i:s')) . ')'
 			. " AND msg_date > '{$user->mRegistration}'"	//fix for ticket #2624
+			. self::getLanguageConstraintsForUser( $user )
 			. ';'
 			, __METHOD__
 		);
@@ -768,6 +774,32 @@ class SiteWideMessages extends SpecialPage {
 			wfDebug(basename(__FILE__) . ' || ' . __METHOD__ . " || userID=$userID, result=" . ($dbResult ? 'true':'false') . "\n");
 		}
 		return implode("\n", $messages);
+	}
+
+	/*
+	 * @author Lucas Garczewski <tor@wikia-inc.com>
+	 *
+	 * @param $user current User object
+	 *
+	 * @return string for WHERE clause
+	 */
+	static function getLanguageConstraintsForUser( $user ) {
+		global $wgWikiaStaffLanguages;
+
+		$dbr = wfGetDB( DB_SLAVE );
+
+		$langCond = ' AND msg_lang IN ( ';
+
+		//check if user is using one of our supported languages
+		if ( in_array( $user->getOption('language'), $wgWikiaStaffLanguages ) ) {
+			$langCond .= $dbr->addQuotes($user->getOption('language', 'en'));
+		} else {
+			$langCond .= "'en'"; // if not, default to English
+		}
+
+		$langCond .= ", 'all' )"; // also include global messages
+
+		return $langCond;
 	}
 
 	static function dismissMessage($messageID) {
