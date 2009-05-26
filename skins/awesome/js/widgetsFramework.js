@@ -151,6 +151,45 @@ var WidgetFramework = {
 		});
 	},
 
+	// update widget - used by widgets JS
+	update: function(widgetId, params, callback) {
+		$('#widget_' + widgetId + '_content').html('').addClass('widget_loading');
+
+		// form AJAX request
+		var req = {
+			action: 'ajax',
+			rs: 'WidgetFrameworkAjax',
+			actionType: 'configure',
+			id: widgetId,
+			skin: skin
+		};
+
+		req = $.extend(req, params);
+
+		$.getJSON(wgScript, req, function(res) {
+			if(res.success) {
+				$('#widget_' + res.id +'_content').removeClass('widget_loading').html(res.body);
+
+				if(res.title) {
+					// save content of widget toolbox when title is updated (trac #2330)
+					toolBox = $('#widget_' + res.id + '_header')[0].childNodes[0];
+
+					if (toolBox.className == 'widgetToolbox') {
+						$('#widget_' + res.id + '_header')[0].childNodes[1].nodeValue = res.title;
+					}
+					else {
+						$('#widget_' + res.id + '_header').html(res.title);
+					}
+				}
+
+				// fire callback if provided
+				if (typeof callback == 'function') {
+					callback(res.id, $('#widget_' + res.id));
+				}
+			}
+		});
+	},
+
 	close: function(e) {
 		var id = $(this).attr('id').split('_')[1];
 
