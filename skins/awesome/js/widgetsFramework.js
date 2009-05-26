@@ -87,16 +87,23 @@ var WidgetFramework = {
 		$('#widget_' + id + '_editform').hide().html('');
 	},
 
+	addingBlocked: false,
+
 	add: function(e) {
-		//$().log(this, 'Widget add');
+		// fix RT #14269
+		if (WidgetFramework.addingBlocked) {
+			return;
+		}
 
 		if (this.className == 'add') {
-			type = this.parentNode.parentNode.className.split(' ').pop();
-			type = type.substring(0, type.length - 5);
+			type = $(this).attr('rel');
 		}
 		else {
 			return;
 		}
+
+		WidgetFramework.addingBlocked = true;
+		$('body').addClass('widgetsAddingBlocked');
 
 		$().log('new ' + type, 'Widgets');
 
@@ -137,6 +144,9 @@ var WidgetFramework = {
 					$().log('calling ' + fname, 'Widgets');
 					window[fname](newId, widget);
 				}
+
+				WidgetFramework.addingBlocked = false;
+				$('body').removeClass('widgetsAddingBlocked');
 			}
 		});
 	},
@@ -215,7 +225,7 @@ var WidgetFramework = {
 
 					thumb_el.className = 'widget_thumb draggable clearfix ' + i +'Thumb';
 					if(skin == 'monaco' || skin == 'awesome') {
-						thumb_el.innerHTML = '<div class="icon"></div><h1>' + title + '<div class="add"></div></h1><br />' + desc;
+						thumb_el.innerHTML = '<div class="icon"></div><h1>' + title + '<div class="add" rel="' + i + '"></div></h1><br />' + desc;
 					} else if(skin == 'quartz') {
 						thumb_el.innerHTML = title
 						thumb_el.title = desc;
