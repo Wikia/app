@@ -20,7 +20,7 @@ function WidgetShoutBoxRemoveMsg(widgetId, aElem) {
 		return false;
 	}
 
-	WidgetFramework.update(widgetId, {msgId: msgId}, function(id, widget) {
+	WidgetFramework.update(widgetId, {msgid: msgId}, function(id, widget) {
 		$('#widget_' + id + '_message').focus();
 	});
 }
