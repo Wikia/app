@@ -4,16 +4,8 @@ function WidgetTopContentSwitchSection(selector) {
 
 	WET.byStr('sidebar/TopContent/' + selector.selectedIndex + '_' + selected);
 
-	$('#widget_' + widgetId + '_content').html('').addClass('widget_loading');
-
-	$.getJSON(wgScript + '?action=ajax&rs=WidgetFrameworkAjax&actionType=configure&id='+widgetId+'&skin='+skin+'&at='+selected, function(res) {
-		if(res.success) {
-			$('#widget_' + res.id +'_content').removeClass('widget_loading').html(res.body);
-			if(res.title) {
-				$('#widget_' + res.id +'_header').html(res.title);
-			}
-			 WidgetTopContent_init(res.id, $('#widget_' + res.id));
-		}
+	WidgetFramework.update(widgetId, {at: selected}, function(id, widget) {
+		WidgetTopContent_init(id, widget);
 	});
 }
 
