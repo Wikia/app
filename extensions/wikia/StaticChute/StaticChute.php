@@ -135,7 +135,6 @@ class StaticChute {
 			'awesome/css/footer.css',
 			'awesome/css/star_rating.css',
 			'awesome/css/ny.css',
-			'../extensions/wikia/EditSimilar/EditSimilar.css',
 			'../extensions/wikia/Blogs/css/Blogs.css',
 		);
 		$this->config['awesome_css'] = array_merge($this->config['awesome_css'], $widgetsAssets['css']);
