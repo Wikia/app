@@ -11,7 +11,10 @@
 * @license http://www.gnu.org/copyleft/gpl.html GNU General Public License 2.0 or later
 */
 
-if ( defined( 'MEDIAWIKI' ) ) {
+if ( !defined( 'MEDIAWIKI' ) ) {
+	echo "This is a MediaWiki extension.\n";
+	die();
+}
 
 global $wgExtensionFunctions, $wgGroupPermissions;
 
@@ -37,7 +40,7 @@ $wgExtensionFunctions [] = 'wfEditSimilarSetup' ;
 
 $wgExtensionCredits['other'][] = array(
         'name' => 'EditSimilar',
-        'version' => 1.17 ,
+        'version' => 1.18 ,
         'author' => 'Bartek Łapiński, [http://www.wikia.com/wiki/User:TOR Łukasz \'TOR\' Garczewski]',
         'url' => 'http://help.wikia.com/wiki/Help:EditSimilar',
         'description' => 'Encourages users to edit an article similar (by categories) to the one they just had edited.',
@@ -284,11 +287,15 @@ class EditSimilar {
 
 	// message box wrapper
 	static public function showMessage ($text) {
-		global $wgOut, $wgUser, $wgScript ;
+		global $wgOut, $wgUser, $wgScript, $wgHooks;
+
+		// macbre: load extension CSS on demand
+		$wgHooks['SkinTemplateSetupPageCss'][] = 'wfEditSimilarAddCSS';
+
 		$wgOut->addScript ("
 			<script type=\"text/javascript\">
-				if (YAHOO.Wikia && YAHOO.Wikia.Tracker) {
-					YAHOO.Wikia.Tracker.trackByStr(null, 'userengagement/editSimilar_view');
+				if (typeof WET != 'undefined') {
+					WET.byStr('userengagement/editSimilar_view');
 				}
 			</script>
 		");
@@ -338,6 +345,13 @@ function wfEditSimilarCheck ($article) {
 		$_SESSION ['ES_saved'] = 'yes' ;
 	}
 	return true ;
+}
+
+// macbre: add extension CSS on demand
+function wfEditSimilarAddCSS(&$out) {
+	global $wgExtensionsPath, $wgStyleVersion;
+	$out .= "@import url($wgExtensionsPath/wikia/EditSimilar/EditSimilar.css?$wgStyleVersion);\n";
+	return true;
 }
 
 //view message depending on settings and the relevancy of the results
@@ -390,6 +404,3 @@ function wfEditSimilarToggle($toggles, $default_array = false) {
         }
         return true;
 }
-
-}
-?>
