@@ -238,7 +238,7 @@ var WidgetFramework = {
 			carousel.find('.add').click(WidgetFramework.add);
 
 			// set correct width of carousel
-			carousel.css("width", (WidgetFramework.carouselLength * 210) + 'px').show();
+			carousel.css("width", (WidgetFramework.carouselLength * ($.browser.msie ? 220 : 210)) + 'px').show();
 
 			// close cockpit
 			$('#cockpit_close').click(WidgetFramework.hide_cockpit);
@@ -248,9 +248,15 @@ var WidgetFramework = {
 		}
 
 		// show cockpit
-		$('#cockpit').css("bottom", -85).show().animate({
-			bottom: 0
-		}, "fast");
+		if ($.browser.msie) {
+			$('#cockpit').show();
+			window.scrollTo(0, 0);
+		}
+		else {
+			$('#cockpit').css("bottom", -85).show().animate({
+				bottom: 0
+			}, "fast");
+		}
 
 		$('#positioned_elements').css('visibility', 'visible');
 
@@ -265,9 +271,14 @@ var WidgetFramework = {
 	hide_cockpit: function(e) {
 		WidgetFramework.carouselVisible = false;
 
-		$('#cockpit').animate({
-			bottom: -85
-		}, "fast", function() {$(this).hide();});
+		if ($.browser.msie) {
+			$('#cockpit').hide();
+		}
+		else {
+			$('#cockpit').animate({
+				bottom: -85
+			}, "fast", function() {$(this).hide();});
+		}
 	}
 }
 
