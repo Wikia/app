@@ -15,6 +15,7 @@ function WidgetSlideshow_init(id, widget) {
 			prevClass:	'WidgetSlideshowControlPrev',
 			pauseClass:	'WidgetSlideshowControlPause',
 			startClass:	'WidgetSlideshowControlPlay',
+			blockedClass:	'blocked',
 			slideWidth:	'186px'
 		});
 	});

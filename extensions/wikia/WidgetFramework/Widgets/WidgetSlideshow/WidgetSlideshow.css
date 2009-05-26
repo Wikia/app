@@ -65,6 +65,9 @@
 	background-image: url(http://images.wikia.com/common/skins/common/widgets/icons/widget_slideshow_play.png);
 }
 
+.WidgetSlideshowControls .blocked {
+	display: none;
+}
 
 * html .WidgetSlideshowControlPrev {
 	background: none;
