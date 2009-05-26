@@ -22,6 +22,8 @@ require dirname(__FILE__) . '/Monaco.php';
 
 class SkinAnswers extends SkinMonaco {
 
+	var $skinname = 'answers';
+
 	public function initPage(&$out) {
 		parent::initPage( $out );
 		$this->skinname  = 'answers';
