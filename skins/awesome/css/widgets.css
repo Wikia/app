@@ -23,6 +23,11 @@
 	width: 16px;
 }
 
+body.widgetsAddingBlocked .add {
+	cursor: default;
+	opacity: 0.5;
+}
+
 #widget_sidebar {
 	left: 5px;
 	position: absolute;
