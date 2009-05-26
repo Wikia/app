@@ -267,3 +267,9 @@ $wgAutoloadClasses['Stomp'] = "$IP/lib/Stomp.php";
 
 // StaticChute used to generate merged JS/CSS files on-the-fly
 $wgAutoloadClasses['StaticChute'] = "$IP/extensions/wikia/StaticChute/StaticChute.php";
+
+/*
+ * @name wgWikiaStaffLanguages
+ * array of language codes supported by ComTeam
+ */
+$wgWikiaStaffLanguages = array();
