@@ -227,6 +227,7 @@ if (jQuery.browser.msie)
 		pauseClass: 'pauseClass',				//class of "pause" button
 		startClass: 'startClass',				//class of "start" button
 		reverseClass: 'reverseClass',			//class of "reverse" button
+		blockedClass: 'blockedClass',			//wikia: class of blocked "play" / "pause" button
 		topZIndex: 100,							//z-index of top slide
 		stayOn: false,							//stay on a particular slide (e.g. 1,2,3) if false, slideshow automatically animates
 		stopOnSelect: true,						//stop slideshow if user presses controls
@@ -314,17 +315,25 @@ if (jQuery.browser.msie)
 		obj.find('.'+options.nextClass).click(function(){
 			if(!$(this).hasClass('inactive')){
 				obj.stopTime('animateSlides'+pass);
-				moveSlide(1,objId);		
+				moveSlide(1,objId);
 			}
 		 });	
 		obj.find('.'+options.pauseClass).click(function(){
-				obj.stopTime('animateSlides'+pass);											 
+				obj.stopTime('animateSlides'+pass);
+
+				// wikia
+				$(this).addClass(options.blockedClass);
+				obj.find('.'+options.startClass).removeClass(options.blockedClass);
 		 });
 		obj.find('.'+options.startClass).click(function(){
 			obj.everyTime(options.slideDuration, 'animateSlides'+pass, function advanceSlide() {
 				moveSlide(options.direction,objId);
-			});											 
-		 });		
+			});
+
+			// wikia
+			$(this).addClass(options.blockedClass);
+			obj.find('.'+options.pauseClass).removeClass(options.blockedClass);
+		 }).addClass(options.blockedClass);		
 		
 		obj.find('.'+options.reverseClass).click(function(){
 			options.direction = (options.direction * (-1));									 
