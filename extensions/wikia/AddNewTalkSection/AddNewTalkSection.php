@@ -51,8 +51,10 @@ function AddNewTalkSectionInit() {
  * @author Maciej Błaszkowski <marooned at wikia-inc.com>
  */
 function AddNewTalkSectionAddCSS(&$out) {
-	global $wgExtensionsPath, $wgStyleVersion;
-	$out .= "@import url($wgExtensionsPath/wikia/AddNewTalkSection/AddNewTalkSection.css?$wgStyleVersion);\n";
+	global $wgExtensionsPath, $wgStyleVersion, $wgTitle;
+	if ($wgTitle->isTalkPage()) {
+		$out .= "@import url($wgExtensionsPath/wikia/AddNewTalkSection/AddNewTalkSection.css?$wgStyleVersion);\n";
+	}
 	return true;
 }
 
