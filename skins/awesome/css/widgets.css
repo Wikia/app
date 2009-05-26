@@ -377,3 +377,18 @@ body.widgetsAddingBlocked .add {
 .widgetTag dl {
 	position: relative;
 }
+
+/* widget cockpit IE6 fixes */
+* html #cockpit {
+	position: absolute;
+	top: 0;
+	left: 0;
+}
+
+* html #widget_cockpit_list {
+	position: absolute;
+}
+
+* html #cockpit_close {
+	top: 0;
+}
