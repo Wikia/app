@@ -76,7 +76,7 @@ function AddNewTalkSectionAddFooter(&$skin, &$tpl, &$custom_article_footer) {
 		$link = wfMsg('addnewtalksection-link');
 		$skin = $wgUser->getSkin();
 		$link = $skin->makeKnownLinkObj( $wgTitle, $link, 'action=edit&section=new', '', '', 'rel="nofollow"' );
-		$custom_article_footer .= '<div id="AddNewTalkSectionFooter"><div id="AddNewTalkSectionImage"></div><span id="AddNewTalkSectionLink">' . $link . '</span></div>';
+		$custom_article_footer .= '<div id="AddNewTalkSectionFooter" class="clearfix"><div id="AddNewTalkSectionImage"></div><span id="AddNewTalkSectionLink">' . $link . '</span></div>';
 	}
 	return true;
 }
