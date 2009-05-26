@@ -58,6 +58,11 @@ class WidgetsSpecialPage extends SpecialPage
 		
 		// detect skin
 		$skinname = get_class($wgUser->getSkin());
+
+		// temp fix
+		if ($skinname == 'SkinAwesome') {
+			$skinname = 'SkinMonaco';
+		}
 	
 		if ( !in_array( $skinname, array('SkinQuartz', 'SkinMonaco')) ) {  
 			$wgOut->addHTML( '<div id="widgets-info" class="plainlinks">' . wfMsgExt('widgets-specialpage-info', 'parse') . '</div>' );
@@ -94,7 +99,7 @@ class WidgetsSpecialPage extends SpecialPage
 		
 			$wgOut->addHTML('<dl>'."\n\t".
 				'<dt class="' . ($skinname == 'SkinMonaco' ? $thumbClass : '') . '">'.
-				($wgUser->isLoggedIn() ? '<div class="add" id="widgets_special_page-' . $widget . '-add"></div>' : '').
+				($wgUser->isLoggedIn() ? '<div class="add" id="widgets_special_page-' . $widget . '-add" rel="' . $widget . '"></div>' : '').
 				'<div class="widgetsThumb ' . ($skinname == 'SkinQuartz' ? $thumbClass : '')  .'" title="'.htmlspecialchars($name).'"'.
 				'>&nbsp;</div></dt>'."\n\t".
 				'<dd><h4>'.htmlspecialchars($name).
