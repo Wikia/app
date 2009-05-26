@@ -10,7 +10,7 @@
 	background-image: url(http://images.wikia.com/common/skins/monaco/images/sprite.png);
 	clip: rect(0px 288px 16px 272px);
 	left: -272px;
-	margin-left: 8px;
+	margin: 0 8px;
 	float: left;
 	width: 336px;
 	height: 16px;
@@ -18,7 +18,7 @@
 }
 
 #AddNewTalkSectionLink a {
-	padding-left: 20px;
+	margin: 0 20px;
 	font-weight: bold;
 	color: black;
 }
@@ -27,4 +27,14 @@
 * html #AddNewTalkSectionImage {
 	background: none;
 	filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='http://images.wikia.com/common/skins/monaco/images/sprite.png', sizingMethod='crop');
+}
+
+/* fixes for RTL */
+body.rtl #AddNewTalkSectionImage {
+	left: auto;
+	right: -48px;
+}
+
+* html body.rtl #AddNewTalkSectionLink {
+	float: right;
 }
