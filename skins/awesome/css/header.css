@@ -314,7 +314,6 @@ div.widget_cockpit_controls {
 }
 #widget_cockpit_list li div.icon {
 	background-repeat: no-repeat;
-	cursor: move;
 	height: 50px;
 	left: 0;
 	position: absolute;
