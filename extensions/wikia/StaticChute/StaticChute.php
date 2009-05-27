@@ -120,6 +120,19 @@ class StaticChute {
 		);
 		$this->config['awesome_anon_everything_else_js'] = array_merge($this->config['awesome_anon_everything_else_js'], $widgetsAssets['js']);
 
+		// YUI package
+		$this->config['yui'] = array(
+			'common/yui_2.5.2/utilities/utilities.js',
+			'common/yui_2.5.2/cookie/cookie-beta.js',
+			'common/yui_2.5.2/container/container.js',
+			'common/yui_2.5.2/autocomplete/autocomplete.js',
+			'common/yui_2.5.2/animation/animation-min.js',
+			'common/yui_2.5.2/logger/logger.js',
+			'common/yui_2.5.2/menu/menu.js',
+			'common/yui_2.5.2/tabview/tabview.js',
+			'common/yui_extra/tools-min.js',
+			'common/yui_extra/carousel-min.js',
+		);
 
 		// CSS
 		$this->config['awesome_css'] = array(
