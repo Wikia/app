@@ -76,7 +76,7 @@ function CategorySelectInitializeHooks($title, $article) {
 	}
 
 	// Initialize only for allowed skins
-	$allowedSkins = array( 'SkinMonaco', 'SkinAnswers' );
+	$allowedSkins = array( 'SkinMonaco', 'SkinAwesome', 'SkinAnswers' );
 	if( !in_array( get_class($wgUser->getSkin()), $allowedSkins ) ) {
 		return true;
 	}
