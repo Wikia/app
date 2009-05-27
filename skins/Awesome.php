@@ -977,9 +977,9 @@ EOS;
 			}
 		}
 
-		$css[] = array('url' => $wgStylePath.'/awesome/css/awesome_ltie7.css?'.$wgStyleVersion, 'cond' => 'if lt IE 7');
-		$css[] = array('url' => $wgStylePath.'/awesome/css/awesome_ie7.css?'.$wgStyleVersion, 'cond' => 'if IE 7');
-		$css[] = array('url' => $wgStylePath.'/awesome/css/awesome_ie8.css?'.$wgStyleVersion, 'cond' => 'if IE 8');
+		$css[] = array('url' => $wgStylePath.'/awesome/css/monaco_ltie7.css?'.$wgStyleVersion, 'cond' => 'if lt IE 7');
+		$css[] = array('url' => $wgStylePath.'/awesome/css/monaco_ie7.css?'.$wgStyleVersion, 'cond' => 'if IE 7');
+		$css[] = array('url' => $wgStylePath.'/awesome/css/monaco_ie8.css?'.$wgStyleVersion, 'cond' => 'if IE 8');
 
 		// RTL support
 		if ($wgContLang->isRTL()) {
