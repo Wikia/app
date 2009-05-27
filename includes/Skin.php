@@ -815,7 +815,7 @@ END;
 
 			$msg = wfMsgExt( 'pagecategories', array( 'parsemag', 'escapenoentities' ), count( $allCats['normal'] ) );
 			$s .= '<div id="mw-normal-catlinks">' .
-				$this->link( Title::newFromText( wfMsgForContent('pagecategorieslink') ), $msg )
+				$this->link( Title::newFromText( wfMsgForContent('pagecategorieslink') ), $msg, array('rel' => 'nofollow') )
 				. $colon . $t . '</div>';
 		}
 
