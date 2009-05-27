@@ -348,7 +348,16 @@ class CloseWikiMaintenace {
 	 */
 	private function createIndex( $database, $url ) {
 
+		/**
+		 * just create directory
+		 */
+		return $this->getDirectory( $database );
+
+		/**
+		 * rest is not used yet
+		 */
 		$directory = $this->getDirectory( $database );
+
 		$haveXml = is_file( "{$directory}/full.xml.gz" ) ? true : false;
 		$haveZip = is_file( "{$directory}/images.tar" ) ? true : false;
 
