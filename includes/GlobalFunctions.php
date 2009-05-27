@@ -1851,7 +1851,7 @@ function wfGetCachedNotice( $name ) {
 
 	// Use the extra hash appender to let eg SSL variants separately cache.
 	$key = wfMemcKey( $name . $wgRenderHashAppend );
-	#$cachedNotice = $parserMemc->get( $key );
+	$cachedNotice = $parserMemc->get( $key );
 	if( is_array( $cachedNotice ) ) {
 		if( md5( $notice ) == $cachedNotice['hash'] ) {
 			$notice = $cachedNotice['html'];
