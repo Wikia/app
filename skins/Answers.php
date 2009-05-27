@@ -708,8 +708,19 @@ echo AnalyticsEngine::track('GA_Urchin', AnalyticsEngine::EVENT_PAGEVIEW);
 echo AnalyticsEngine::track('GA_Urchin', 'hub', 'answers');
 global $wgCityId;
 echo AnalyticsEngine::track('QuantServe', AnalyticsEngine::EVENT_PAGEVIEW);
+
+global $wgExtensionsPath;
 ?>
 <!-- End Analytics -->
+
+<script type="text/javascript" src="<?= $wgExtensionsPath ?>/wikia/AdEngine/AdEngine.js"></script>
+<script type="text/javascript" src="<?= $wgExtensionsPath ?>/wikia/TieDivLibrary/TieDivLibrary.js"></script>
+
+<?php
+
+echo AdEngine::getInstance()->getDelayedLoadingCode();
+
+?>
 
 </body></html>
 <?php
