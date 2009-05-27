@@ -16,6 +16,8 @@ var WET = function() {
 		WET.skinname = 'monaco';
 	} else if(skin == 'home') {
 		WET.skinname = 'home';
+	} else if(skin == 'answers') {
+		WET.skinname = 'answers';
 	} else {
 		return;
 	}
