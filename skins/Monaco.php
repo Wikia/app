@@ -2125,8 +2125,6 @@ echo AnalyticsEngine::track('GA_Urchin', 'onewiki', array($wgCityId));
 ?>
 <!-- End Analytics -->
 
-<script type="text/javascript" src="<?= $wgExtensionsPath ?>/wikia/AdEngine/AdEngine.js"></script>
-
 <?
 echo AdEngine::getInstance()->getDelayedLoadingCode();
 
