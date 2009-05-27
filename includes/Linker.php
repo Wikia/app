@@ -1639,7 +1639,7 @@ if ($wgWikiaEnableSharedHelpExt && (NS_HELP == $title->getNamespace()) && Shared
 	 * @return string HTML headline
 	 */
 	public function makeHeadline( $level, $attribs, $anchor, $text, $link, $legacyAnchor = false ) {
-		$ret = "<a name=\"$anchor\" id=\"$anchor\"></a>"
+		$ret = "<a rel=\"nofollow\" name=\"$anchor\" id=\"$anchor\"></a>"
 			. "<h$level$attribs"
 			. $link
 			. " <span class=\"mw-headline\">$text</span>"
