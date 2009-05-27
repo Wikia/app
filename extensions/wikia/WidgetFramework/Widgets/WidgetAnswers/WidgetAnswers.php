@@ -22,7 +22,6 @@ $wgWidgets['WidgetAnswers'] = array(
     'languages' => $wgAvailableAnswersLang,
 );
 
-
 function WidgetAnswers($id, $params) {
     wfProfileIn(__METHOD__);
 
@@ -32,16 +31,12 @@ function WidgetAnswers($id, $params) {
 		return '';
 	}
 
-	# TODO: explain what's going on here and make it production environment independent
-	static $languageLoaded;
-	if(empty($languageLoaded)) {
-		include('/usr/wikia/source/answers/Answers.i18n.php');
-		global $wgMessageCache;
-		foreach( $messages as $lang => $message_array ) {
-			$wgMessageCache->addMessages($message_array, $lang);
-		}
-		$languageLoaded = true;
+	global $wgExtensionMessagesFiles;
+	if( empty( $wgExtensionMessagesFiles['Answers'] ) ) {
+		global $IP;
+		$wgExtensionMessagesFiles['Answers'] = "$IP/../answers/Answers.i18n.php";
 	}
+	wfLoadExtensionMessages( 'Answers' );
 
 	global $wgSitename, $wgUser;
 
