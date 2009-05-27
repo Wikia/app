@@ -14,36 +14,46 @@ $wgAutoloadClasses['Outbound'] = dirname( __FILE__ ) . '/SpecialOutboundScreen_b
 $wgSpecialPages['Outbound'] = 'Outbound';
 $wgExtensionMessagesFiles['Outbound'] = dirname(__FILE__) . '/OutboundScreen.i18n.php';
 
+$wgOutboundScreenConfig = array(
+	'redirectDelay' => 10,
+	'anonsOnly' => false
+);
+
 function efOutboundScreen ( $url, $text, $link ) {
+	global $wgUser, $wgOutboundScreenConfig;
 	static $whiteList;
 
-	if(!is_array($whiteList)) {
-		$whiteList = array();
-		$whiteListContent = wfMsgForContent('outbound-screen-whitelist');
-		if(!empty($whiteListContent)) {
-			$lines = explode("\n", $whiteListContent);
-			foreach($lines as $line) {
-				if(strpos($line, '* ') === 0 ) {
-					$whiteList[] = trim($line, '* ');
+	$loggedIn = $wgUser->isLoggedIn();
+
+	if(($wgOutboundScreenConfig['anonsOnly'] == false) || (($wgOutboundScreenConfig['anonsOnly'] == true) && !$loggedIn)) {
+		if(!is_array($whiteList)) {
+			$whiteList = array();
+			$whiteListContent = wfMsgForContent('outbound-screen-whitelist');
+			if(!empty($whiteListContent)) {
+				$lines = explode("\n", $whiteListContent);
+				foreach($lines as $line) {
+					if(strpos($line, '* ') === 0 ) {
+						$whiteList[] = trim($line, '* ');
+					}
 				}
 			}
 		}
-	}
 
-	$isWhitelisted = false;
-	foreach($whiteList as $whiteListedUrl) {
-		$matches = null;
-		preg_match('/'.$whiteListedUrl.'/i', $url, $matches);
-		if(isset($matches[0])) {
-			$isWhitelisted = true;
-			break;
+		$isWhitelisted = false;
+		foreach($whiteList as $whiteListedUrl) {
+			$matches = null;
+			preg_match('/'.$whiteListedUrl.'/i', $url, $matches);
+			if(isset($matches[0])) {
+				$isWhitelisted = true;
+				break;
+			}
 		}
-	}
 
-	if(!$isWhitelisted) {
-		$special = Title::newFromText( 'Special:Outbound/' . $url );
-		if($special instanceof Title) {
-			$url = $special->getFullURL();
+		if(!$isWhitelisted) {
+			$special = Title::newFromText( 'Special:Outbound/' . $url );
+			if($special instanceof Title) {
+				$url = $special->getFullURL();
+			}
 		}
 	}
 
