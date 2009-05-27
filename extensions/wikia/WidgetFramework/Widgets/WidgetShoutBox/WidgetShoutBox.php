@@ -149,12 +149,12 @@ function WidgetShoutBox($id, $params) {
 			//add remove link for privlidged users
 			$removeLink = '';
 			if (!isset($params['_widgetTag']) && $wgUser->isAllowed('shoutboxremove')) {
-				$removeLink = '<a href="#" onclick="WidgetShoutBoxRemoveMsg(' . $id . ', this); return false;">x</a> ';
+				$removeLink = '<a href="#" onclick="WidgetShoutBoxRemoveMsg(' . $id . ', ' . $msg['id'] . '); return false;">x</a> ';
 			}
 			// time
 			//adjust user's timezone
 			$msg['time'] = $wgLang->sprintfDate('U', $wgLang->userAdjust(wfTimestamp(TS_MW, $msg['time'])));
-			$ret .= '<li' . ($count++ % 2 ? ' class="msgOdd"' : '') . ' msgid="' . $msg['id'] . '"' . '>' .
+			$ret .= '<li' . ($count++ % 2 ? ' class="msgOdd"' : '') . '>' .
 				$removeLink.
 				htmlspecialchars( '['.date( $msg['time'] < $midnight ? 'j M' : 'G:i', $msg['time']) . ']' ) . '&nbsp;';
 
