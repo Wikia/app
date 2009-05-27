@@ -47,6 +47,7 @@ $messages['en'] = array(
 	"autocreatewiki-violate-policy" => "This wiki name contains a word that violates our naming policy",
 	"autocreatewiki-name-taken" => "A wiki with this name already exists. You are welcome to join us at <a href=\"http://$1.wikia.com\">http://$1.wikia.com</a>",
 	"autocreatewiki-name-too-short" => "This name is too short, please choose a name with at least 3 characters.",
+	"autocreatewiki-name-too-long" => "This name is too long, please choose a name with maximum 50 characters.",
 	"autocreatewiki-similar-wikis" => "Below are the wikis already created on this topic. We suggest editing one of them.",
 	"autocreatewiki-invalid-username" => "This username is invalid.",
 	"autocreatewiki-busy-username" => "This username is already taken.",

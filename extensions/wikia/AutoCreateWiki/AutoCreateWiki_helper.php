@@ -215,6 +215,9 @@ class AutoCreateWiki {
 		} elseif ( strlen( $sName ) < 3 ) {
 			#-- too short
 			$sResponse = wfMsg('autocreatewiki-name-too-short');
+		} elseif ( strlen( $sName ) > 50 ) {
+			#-- too short
+			$sResponse = wfMsg('autocreatewiki-name-too-long');
 		} elseif (preg_match('/[^a-z0-9-]/i', $sName)) {
 			#-- invalid name
 			$sResponse = wfMsg('autocreatewiki-bad-name');
