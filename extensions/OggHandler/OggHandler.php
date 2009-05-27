@@ -11,22 +11,27 @@ $wgMediaHandlers['application/ogg'] = 'OggHandler';
 if ( !in_array( 'ogg', $wgFileExtensions ) ) {
 	$wgFileExtensions[] = 'ogg';
 }
+if ( !in_array( 'ogv', $wgFileExtensions ) ) {
+	$wgFileExtensions[] = 'ogv';
+}
+if ( !in_array( 'oga', $wgFileExtensions ) ) {
+	$wgFileExtensions[] = 'oga';
+}
 ini_set( 'include_path', 
 	"$oggDir/PEAR/File_Ogg" .
 	PATH_SEPARATOR .
 	ini_get( 'include_path' ) );
 
 // Bump this when updating OggPlayer.js to help update caches
-$wgOggScriptVersion = '8';
+$wgOggScriptVersion = '10';
 
 $wgExtensionMessagesFiles['OggHandler'] = "$oggDir/OggHandler.i18n.php";
 $wgParserOutputHooks['OggHandler'] = array( 'OggHandler', 'outputHook' );
 $wgHooks['LanguageGetMagic'][] = 'OggHandler::registerMagicWords';
 $wgExtensionCredits['media'][] = array(
+	'path'           => __FILE__,
 	'name'           => 'OggHandler',
 	'author'         => 'Tim Starling',
-	'svn-date' => '$LastChangedDate: 2008-10-20 20:52:01 +0000 (Mon, 20 Oct 2008) $',
-	'svn-revision' => '$LastChangedRevision: 42275 $',
 	'url'            => 'http://www.mediawiki.org/wiki/Extension:OggHandler',
 	'description'    => 'Handler for Ogg Theora and Vorbis files, with JavaScript player.',
 	'descriptionmsg' => 'ogg-desc',
@@ -38,7 +43,7 @@ $wgExtensionCredits['media'][] = array(
 $wgPlayerStatsCollection=false;
 
 // Location of the FFmpeg binary
-$wgFFmpegLocation = 'ffmpeg';
+$wgFFmpegLocation = '/usr/bin/ffmpeg';
 
 // Filename or URL path to the Cortado Java player applet.
 //

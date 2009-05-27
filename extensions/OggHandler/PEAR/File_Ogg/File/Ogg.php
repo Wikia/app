@@ -164,7 +164,7 @@ class File_Ogg
      * Total length in seconds of the entire file
      */
     var $_totalLength;
-
+	var $_startOffset = false;
     /**
      * Returns an interface to an Ogg physical stream.
      *
@@ -456,8 +456,13 @@ class File_Ogg
                 if (isset($groupLengths[$group])) {
                     $groupLengths[$group] = max($groupLengths[$group], $stream->getLength());
                 } else {
-                    $groupLengths[$group] = $stream->getLength();
+                    $groupLengths[$group] = $stream->getLength();                              
                 }
+                //just store the startOffset for the first stream:
+                if( $this->_startOffset === false ){
+                	$this->_startOffset = $stream->getStartOffset();
+                }
+                
             }
         }
         $this->_groupLengths = $groupLengths;
@@ -570,7 +575,16 @@ class File_Ogg
         else
             return array();
     }
-
+    /**
+     * getStartOffset
+     *
+     * @return unknown
+     */
+	function getStartOffset(){
+		if( $this->_startOffset === false)
+			return 0;
+		return $this->_startOffset;
+	}
     /**
      * Get the total length of the group of streams
      */

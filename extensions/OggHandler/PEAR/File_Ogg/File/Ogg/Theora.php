@@ -40,7 +40,7 @@ define( 'OGG_THEORA_COMMENTS_PAGE_OFFSET', 1 );
  * @version     CVS: $Id: Theora.php,v 1.9 2005/11/16 20:43:27 djg Exp $
  */
 class File_Ogg_Theora extends File_Ogg_Media
-{
+{	
     /**
      * @access  private
      */
@@ -54,10 +54,12 @@ class File_Ogg_Theora extends File_Ogg_Media
         $startSec =  $this->getSecondsFromGranulePos( $this->_firstGranulePos );
         
         //make sure the offset is worth taking into account oggz_chop related hack
-	    if( $startSec > 1)
+	    if( $startSec > 1){
             $this->_streamLength = $endSec - $startSec;
-        else
+            $this->_startOffset = $startSec;            
+	    }else{
             $this->_streamLength = $endSec;
+	    }
         				
         /*print "last gran: $this->_lastGranulePos  =  $endSec \n
 first gran: $this->_firstGranulePos  = $startSec \n

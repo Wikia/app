@@ -8,7 +8,7 @@ var wgOggPlayer = {
 
 	// List of players in order of preference
 	// Downpreffed VLC because it crashes my browser all the damn time -- TS
-	'players': ['cortado', 'quicktime-mozilla', 'quicktime-activex', 'vlc-mozilla', 'vlc-activex', 'totem', 'kmplayer', 'kaffeine', 'mplayerplug-in', 'oggPlugin', 'videoElement'],
+	'players': ['videoElement', 'cortado', 'quicktime-mozilla', 'quicktime-activex', 'vlc-mozilla', 'vlc-activex', 'totem', 'kmplayer', 'kaffeine', 'mplayerplug-in', 'oggPlugin'],
 
 	// Client support table
 	'clientSupports': { 'thumbnail' : true },
@@ -138,7 +138,14 @@ var wgOggPlayer = {
 	'debug': function( s ) {
 		//alert(s);
 	},
-
+	'supportedMimeType': function(mimetype) {
+		for (var i = navigator.plugins.length; i-- > 0; ) {
+		    var plugin = navigator.plugins[i];
+		    if (typeof plugin[mimetype] != "undefined")
+		      return true;
+		}
+		return false;
+	},
 	// Detect client capabilities
 	'detect': function() {
 		if (this.detectionDone) {
@@ -189,7 +196,26 @@ var wgOggPlayer = {
 		if ( typeof HTMLVideoElement == 'object' // Firefox, Safari
 				|| typeof HTMLVideoElement == 'function' ) // Opera
 		{
-			this.clientSupports['videoElement'] = true;
+			//do another test for safari: 
+			if( wgOggPlayer.safari ){
+				try{
+					var dummyvid = document.createElement("video");
+					if (dummyvid.canPlayType && dummyvid.canPlayType("video/ogg;codecs=\"theora,vorbis\"") == "probably")
+					{
+						this.clientSupports['videoElement'] = true;
+					} else if(this.supportedMimeType('video/ogg')) {
+						/* older versions of safari do not support canPlayType,
+						   but xiph qt registers mimetype via quicktime plugin */
+						this.clientSupports['videoElement'] = true;
+					} else {
+						/* could add some user nagging to install the xiph qt */
+					}
+				}catch(e){
+					//could not use canPlayType
+				}
+			}else{
+				this.clientSupports['videoElement'] = true;
+			}
 		}
 
 		if (!navigator.mimeTypes || navigator.mimeTypes.length == 0) {
@@ -310,6 +336,7 @@ var wgOggPlayer = {
 	},
 
 	'testActiveX' : function ( name ) {
+		if ( this.mozilla ) return false;
 		var hasObj = true;
 		try {
 			// No IE, not a class called "name", it's a variable
@@ -515,15 +542,17 @@ var wgOggPlayer = {
 
 	'embedVideoElement': function ( elt, params ) {
 		var id = elt.id + "_obj";
-		elt.innerHTML =
+		var html =
 			'<div><video' + 
 				' id=' + this.hq( id ) + 
 				' width=' + this.hq( params.width ) + 
 				' height=' + this.hq( params.height ) + 
 				' src=' + this.hq( params.videoUrl ) +
-				' autoplay="1"' +
-				' controls="1"' +
-				' /></div>';
+				' autoplay="true"';
+		if (!this.safari)
+			html += ' controls="true"';
+		html += ' ></video></div>';
+		elt.innerHTML = html;
 	},
 
 	'embedOggPlugin': function ( elt, params, player ) {
@@ -608,32 +637,24 @@ var wgOggPlayer = {
 		    '  <param name="statusHeight"  value="' + statusHeight + '"/>' +
 		    '</applet>';
 
-		// Wrap it in an iframe to avoid hanging the rendering thread in FF 2.0 and similar
+		// Wrap it in an iframe to avoid hanging the event thread in FF 2/3 and similar
 		// Doesn't work in MSIE or Safari/Mac or Opera 9.5
 		if ( this.mozilla ) {
-			var iframeHtml = '<html><body>' + html + '</body></html>';
-			var iframeJs = 'parent.wgOggPlayer.writeApplet(self, "' + iframeHtml.replace( /"/g, '\\"' ) + '");';
-			var iframeUrl = 'javascript:' + encodeURIComponent( iframeJs );
-				'document.write("' + iframeHtml.replace( /"/g, '\\"' ) + '");';
-			html = '<iframe width=' + this.hq( params.width ) + 
-				'     height=' + this.hq( playerHeight ) + 
-				'     scrolling="no" frameborder="0" marginwidth="0" marginheight="0"' +
-				'     src=' + this.hq( iframeUrl ) + '/>';
+			var iframe = document.createElement( 'iframe' );
+			iframe.setAttribute( 'width', params.width );
+			iframe.setAttribute( 'height', playerHeight );
+			iframe.setAttribute( 'scrolling', 'no' );
+			iframe.setAttribute( 'frameborder', 0 );
+			iframe.setAttribute( 'marginWidth', 0 );
+			iframe.setAttribute( 'marginHeight', 0 );
+			elt.appendChild( iframe );
+			var newDoc = iframe.contentDocument;
+			newDoc.open();
+			newDoc.write( '<html><body>' + html + '</body></html>' );
+			newDoc.close(); // spurious error in some versions of FF, no workaround known
+		} else {
+			elt.innerHTML ='<div>' + html + '</div>';
 		}
-		elt.innerHTML = '<div>' + html + '</div>';
-	},
-
-	'writeApplet' : function ( win, html ) {
-		win.document.write( html );
-		if ( win.stop ) win.stop();
-		// Disable autoplay on back button
-		this_ = this;
-		win.setTimeout( 
-			function () { 
-				this_.setParam( win.document.applets[0], 'autoPlay', '' ); 
-			}, 
-			1 
-		);
 	},
 
 	'embedQuicktimePlugin': function ( elt, params, player ) {
