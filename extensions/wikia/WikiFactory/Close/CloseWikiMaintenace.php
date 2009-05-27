@@ -64,6 +64,7 @@ class CloseWikiMaintenace {
 					$this->dumpXMl();
 					$this->compressImages();
 					$this->createIndex( $wgDBname, $wgServer );
+					$this->updateTimestamp();
 					break;
 
 				case WikiFactory::STATUS_CLOSED:
@@ -71,14 +72,14 @@ class CloseWikiMaintenace {
 					$this->dumpXMl();
 					$this->compressImages();
 					$this->createIndex( $wgDBname, $wgServer );
+					$this->updateTimestamp();
 					break;
 
 				case WikiFactory::STATUS_DELETE:
 					Wikia::log( __CLASS__, "info", "close and delete on {$wgCityId}" );
 					$this->dumpXMl();
-					if( $this->compressImages() === true ) {
-						$this->removeImageDirectory();
-					}
+					$this->compressImages();
+					$this->removeImageDirectory();
 					$this->cleanWikiFactory();
 					$this->createIndex( $wgDBname, $wgServer );
 					$this->dropDB();
@@ -454,5 +455,26 @@ class CloseWikiMaintenace {
 		if( $this->mWiki->city_dbname !== $wgDBname ) {
 			wfDie( "city_variables {$wgDBname} is different than city_list {$this->mWiki->city_dbname}\n" );
 		}
+	}
+
+	/**
+	 * updateTimestamp -- update city_deleted_timestamp
+	 *
+	 * @todo change name of column to something meaningfull
+	 *
+	 */
+	public function updateTimestamp() {
+
+		wfProfileIn( __METHOD__ );
+		if( $this->mCityID ) {
+			$dbw = wfGetDB( DB_MASTER );
+			$dbw->update(
+				WikiFactory::table( "city_list" ),
+				array( "city_deleted_timestamp" => wfTimestampNow() ),
+				array( "city_id" => $this->mCityID ),
+				__METHOD__
+			);
+		}
+		wfProfileOut( __METHOD__ );
 	}
 }
