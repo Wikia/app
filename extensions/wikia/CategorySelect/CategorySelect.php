@@ -437,14 +437,12 @@ wgAfterContentAndJS.push(function() {
 	$('#csAddCategorySwitch').children('a').click(function() {
 		function loadCSJS() {
 			$.getScript(wgExtensionsPath+ '/wikia/CategorySelect/CategorySelect.js?' + wgStyleVersion, function(){showCSpanel();});
-			$().log('loading JS', 'CategorySelect');
 		}
 
 		$.getScript(wgServer + wgScriptPath + '?action=ajax&rs=CategorySelectGetCategories');
 
 		if (typeof YAHOO == 'undefined') {
 			$.getScript(wgExtensionsPath + '/wikia/StaticChute/?type=js&packages=yui&cb=' + wgStyleVersion, loadCSJS);
-			$().log('loading YUI', 'CategorySelect');
 		}
 		else {
 			loadCSJS();
