@@ -628,6 +628,7 @@ class SiteWideMessages extends SpecialPage {
 			. ' AND msg_status = ' . MSG_STATUS_UNSEEN
 			. ' AND (msg_expire IS NULL OR msg_expire > ' . $DB->AddQuotes(date('Y-m-d H:i:s')) . ')'
 			. ' AND msg_removed = ' . MSG_REMOVED_NO
+			. self::getLanguageConstraintsForUseR( $user )
 			. ';'
 			, __METHOD__
 		);
@@ -707,7 +708,8 @@ class SiteWideMessages extends SpecialPage {
 			. ' AND msg_status IN (' . MSG_STATUS_UNSEEN . ', ' . MSG_STATUS_SEEN . ')'
 			. ' AND (msg_expire IS NULL OR msg_expire > ' . $DB->AddQuotes(date('Y-m-d H:i:s')) . ')'
 			. ' AND msg_removed = ' . MSG_REMOVED_NO
-			. " AND (msg_wiki_id IS NULL OR msg_wiki_id = $localCityId)"
+			. " AND msg_wiki_id IN ( NULL, $localCityId )"
+			. self::getLanguageConstraintsForUser( $user )
 			. ';'
 			, __METHOD__
 		);
@@ -797,7 +799,7 @@ class SiteWideMessages extends SpecialPage {
 			$langCond .= "'en'"; // if not, default to English
 		}
 
-		$langCond .= ", 'all' )"; // also include global messages
+		$langCond .= ", 'all', NULL )"; // also include global messages
 
 		return $langCond;
 	}
