@@ -12,9 +12,8 @@ function WidgetShoutBoxSend(widgetId) {
 	return true;
 }
 
-function WidgetShoutBoxRemoveMsg(widgetId, aElem) {
+function WidgetShoutBoxRemoveMsg(widgetId, msgId) {
 	var chatTab = $('#widget_' + widgetId + '_chat');
-	var msgId = aElem.parentNode.getAttribute('msgid');
 
 	if (!chatTab || !msgId) {
 		return false;
