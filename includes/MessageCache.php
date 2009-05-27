@@ -415,7 +415,9 @@ class MessageCache {
 		$parserMemc->delete( wfMemcKey( 'MonacoDataOld' ) );
 
 		// Set the JavaScript variable which is used by AJAX request to make data caching possible - Inez
-		$parserMemc->set(wfMemcKey('wgMWrevId'), $wgTitle->getLatestRevID());
+		if(is_object($wgTitle)) {
+			$parserMemc->set(wfMemcKey('wgMWrevId'), $wgTitle->getLatestRevID());
+		}
 
 		wfRunHooks( "MessageCacheReplace", array( $title, $text ) );
 
