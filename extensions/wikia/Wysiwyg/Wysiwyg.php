@@ -155,7 +155,7 @@ function Wysiwyg_Initial($form) {
 	}
 
 	// macbre: enable only on monaco skin
-	if(get_class($wgUser->getSkin()) != 'SkinMonaco') {
+	if( !in_array(get_class($wgUser->getSkin()), array('SkinMonaco', 'SkinAwesome')) ) {
 		wfProfileOut(__METHOD__);
 		return true;
 	}
