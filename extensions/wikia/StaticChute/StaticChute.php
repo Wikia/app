@@ -31,8 +31,8 @@ class StaticChute {
 		// As we convert other skins, bring their config here from MergeFiles
 		$this->config['awesome_anon_article_js'] = array(
 			'common/jquery/jquery-1.3.2.js',
-			'common/jquery/jquery.json-1.3.min.js',
-			'common/jquery/jquery.cookies.2.0.1.min.js',
+			'common/jquery/jquery.json-1.3.js',
+			'common/jquery/jquery.cookies.2.1.0.js',
 			'common/jquery/jquery.wikia.js',
 
 			'common/ajax.js',
@@ -65,10 +65,10 @@ class StaticChute {
 			'common/yui_extra/carousel-min.js',
 
 			'common/jquery/jquery-1.3.2.js',
-			'common/jquery/jquery.json-1.3.min.js',
-			'common/jquery/jquery.cookies.2.0.1.min.js',
+			'common/jquery/jquery.json-1.3.js',
+			'common/jquery/jquery.cookies.2.1.0.js',
 			'common/jquery/jquery.wikia.js',
-			'common/jquery/jquery-ui-1.7.1.custom.min.js',
+			'common/jquery/jquery-ui-1.7.1.custom.js',
 
 			'common/ajax.js',
 			'common/urchin.js',
@@ -99,8 +99,8 @@ class StaticChute {
 			'common/yui_extra/tools-min.js',
 
 			'common/jquery/jquery-1.3.2.js',
-			'common/jquery/jquery.json-1.3.min.js',
-			'common/jquery/jquery.cookies.2.0.1.min.js',
+			'common/jquery/jquery.json-1.3.js',
+			'common/jquery/jquery.cookies.2.1.0.js',
 			'common/jquery/jquery.wikia.js',
 
 			'common/ajax.js',
