@@ -117,7 +117,7 @@ function print_pre($param, $return = 0)
 function wfReplaceImageServer( $url, $timestamp = false ) {
 	global $wgImagesServers;
 
-	if(isset($wgImagesServers) && is_int($wgImagesServers)) {
+	if(substr(strtolower($wgImagesServers), -4) != 'ogg' && isset($wgImagesServers) && is_int($wgImagesServers)) {
 		if(strlen($url) > 7 && substr($url,0,7) == 'http://') {
 			$hash = sha1($url);
 			$inthash = ord ($hash);
