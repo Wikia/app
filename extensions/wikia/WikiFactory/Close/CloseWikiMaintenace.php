@@ -63,7 +63,7 @@ class CloseWikiMaintenace {
 				case WikiFactory::STATUS_OPEN:
 					$this->dumpXMl();
 					$this->compressImages();
-					$this->createIndex( $wgDBname, $wgServer );
+					# $this->createIndex( $wgDBname, $wgServer );
 					$this->updateTimestamp();
 					break;
 
@@ -71,7 +71,7 @@ class CloseWikiMaintenace {
 				case WikiFactory::STATUS_REDIR:
 					$this->dumpXMl();
 					$this->compressImages();
-					$this->createIndex( $wgDBname, $wgServer );
+					# $this->createIndex( $wgDBname, $wgServer );
 					$this->updateTimestamp();
 					break;
 
@@ -81,7 +81,7 @@ class CloseWikiMaintenace {
 					$this->compressImages();
 					$this->removeImageDirectory();
 					$this->cleanWikiFactory();
-					$this->createIndex( $wgDBname, $wgServer );
+					# $this->createIndex( $wgDBname, $wgServer );
 					$this->dropDB();
 					break;
 			}
