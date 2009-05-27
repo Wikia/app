@@ -1367,7 +1367,7 @@ END;
 		if( $wgRightsPage ) {
 			$link = $this->makeKnownLink( $wgRightsPage, $wgRightsText );
 		} elseif( $wgRightsUrl ) {
-			$link = $this->makeExternalLink( $wgRightsUrl, $wgRightsText );
+			$link = $this->makeExternalLink( $wgRightsUrl, $wgRightsText, true, '', array('rel' => 'nofollow') );
 		} elseif( $wgRightsText ) {
 			$link = $wgRightsText;
 		} else {
