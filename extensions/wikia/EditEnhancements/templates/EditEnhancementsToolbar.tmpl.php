@@ -67,7 +67,7 @@
 		<li><?=$checkboxes['minor'] ?></li>
 		<li><?=$checkboxes['watch'] ?></li>
 		<?php if ($action != 'edit' || $undo) { ?>
-		<li id="scroll_down_arrow"><span onclick="window.scrollTo(0,document.getElementById('wpTextbox1').offsetTop)" title="<?= $arrowTitle ?>">&darr;</span></li>
+		<li id="scroll_down_arrow"><span onclick="window.scrollTo(0,document.getElementById('editform').offsetTop)" title="<?= $arrowTitle ?>">&darr;</span></li>
 		<?php } ?>
 	</ul>
 </div>
