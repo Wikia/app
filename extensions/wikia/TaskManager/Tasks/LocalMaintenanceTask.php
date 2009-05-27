@@ -282,9 +282,9 @@ class LocalMaintenanceTask extends BatchTask {
 			return false;
 		}
 
-		if( strcmp( strtolower( $this->mWikiData['name'] ), strtolower( $centralTitleName ) ) != 0 ) {
+		if( strcmp( strtolower( $this->mWikiData['redirect'] ), strtolower( $centralTitleName ) ) != 0 ) {
 			#--- add redirect(s) on central
-			$oCentralRedirectTitle = Title::newFromText( $this->mWikiData['name'], NS_MAIN );
+			$oCentralRedirectTitle = Title::newFromText( $this->mWikiData['redirect'], NS_MAIN );
 			if ( $oCentralRedirectTitle instanceof Title ) {
 				$oCentralRedirectArticle = new Article( $oCentralRedirectTitle, 0);
 				if ( !$oCentralRedirectArticle->exists() ) {
