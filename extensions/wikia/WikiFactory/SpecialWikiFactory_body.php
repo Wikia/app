@@ -467,7 +467,7 @@ class CityListPager extends TablePager {
                         $return = "<span style=\"color: #0000fe;font-weight:bold;font-size:small\">redirected</span>";
                         break;
                     case -1:
-                        $return = "<span style=\"color: #fe0000;font-weight:bold;font-size:small\">scheduled for deleting</span>";
+                        $return = "<span style=\"color: #fe0000;font-size:small\"><em><strong>scheduled for deletion</strong></em></span>";
                         break;
                 }
                 break;
