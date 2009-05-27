@@ -118,6 +118,7 @@ function showTocToggle(toctitleId, tocId, togglelinkId) {
 		var toggleLink = document.createElement('a');
 		toggleLink.id = togglelinkId ? togglelinkId : 'togglelink';
 		toggleLink.className = 'internal';
+		toggleLink.rel = 'nofollow';
 		toggleLink.href = togglelinkId ? "javascript:toggleToc('" + tocId + "','" + togglelinkId + "')" : 'javascript:toggleToc()';
 		toggleLink.appendChild(document.createTextNode(tocHideText));
 
