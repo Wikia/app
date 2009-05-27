@@ -18,7 +18,7 @@
 
 class LocalMaintenanceTask extends BatchTask {
 
-	private $mParams, $mWikiId;
+	private $mParams, $mWikiId, $mUseTemplate;
 
 	/**
 	 * contructor
@@ -31,6 +31,7 @@ class LocalMaintenanceTask extends BatchTask {
 		$this->mVisible = false;
 		$this->mTTL = 1800;
 		$this->mDebug = false;
+		$this->mUseTemplate = false;
 	}
 
 	/**
@@ -242,44 +243,46 @@ class LocalMaintenanceTask extends BatchTask {
 		/**
 		 * add to Template:List_of_Wikia_New
 		 */
-		$oCentralListTitle = Title::newFromText( "Template:List_of_Wikia_New", NS_MAIN );
-		if ( $oCentralListTitle instanceof Title ) {
-			$oCentralListArticle = new Article( $oCentralListTitle, 0);
-			if ( $oCentralListArticle->exists() ) {
-				$sContent =  $oCentralListArticle->getContent();
-				$sContent .= "{{subst:nw|" . $this->mWikiData['subdomain'] . "|";
-				$sContent .= $centralTitleName . "|" . $this->mWikiData['language'] . "}}";
+		if ( $this->mUseTemplate ) {
+			$oCentralListTitle = Title::newFromText( "Template:List_of_Wikia_New", NS_MAIN );
+			if ( $oCentralListTitle instanceof Title ) {
+				$oCentralListArticle = new Article( $oCentralListTitle, 0);
+				if ( $oCentralListArticle->exists() ) {
+					$sContent =  $oCentralListArticle->getContent();
+					$sContent .= "{{subst:nw|" . $this->mWikiData['subdomain'] . "|";
+					$sContent .= $centralTitleName . "|" . $this->mWikiData['language'] . "}}";
 
-				$oCentralListArticle->doEdit( $sContent, "modified by autocreate Wiki process", EDIT_FORCE_BOT);
-				$this->log( sprintf("Article %s modified.", $oCentralListTitle->getFullUrl()) );
+					$oCentralListArticle->doEdit( $sContent, "modified by autocreate Wiki process", EDIT_FORCE_BOT);
+					$this->log( sprintf("Article %s modified.", $oCentralListTitle->getFullUrl()) );
+				}
+				else {
+					$this->log( sprintf("Article %s not exists.", $oCentralListTitle->getFullUrl()) );
+				}
+
+				/**
+				 * add to New_wikis_this_week/Draft
+				 */
+				$oCentralListTitle = Title::newFromText( "New_wikis_this_week/Draft", NS_MAIN );
+				$oCentralListArticle = new Article( $oCentralListTitle, 0);
+
+				if ( $oCentralListArticle->exists() ) {
+					$sReplace =  "{{nwtw|" . $this->mWikiData['language']  . "|" ;
+					$sReplace .= $aCategories[ $this->mWikiData[ "hub" ] ] . "|" ;
+					$sReplace .= $centralTitleName . "|http://" . $this->mWikiData['subdomain'] . ".wikia.com}}\n|}";
+
+					$sContent = str_replace("|}", $sReplace, $oCentralListArticle->getContent());
+
+					$oCentralListArticle->doEdit( $sContent, "modified by autocreate Wiki process", EDIT_FORCE_BOT);
+					$this->log( sprintf("Article %s modified.", $oCentralListTitle->getFullUrl()) );
+				}
+				else {
+					$this->log( sprintf("Article %s not exists.", $oCentralListTitle->getFullUrl()) );
+				}
 			}
 			else {
-				$this->log( sprintf("Article %s not exists.", $oCentralListTitle->getFullUrl()) );
+				$this->log( "ERROR: Unable to create title object for page: " . $sCentralListTitle);
+				return false;
 			}
-
-			/**
-			 * add to New_wikis_this_week/Draft
-			 */
-			$oCentralListTitle = Title::newFromText( "New_wikis_this_week/Draft", NS_MAIN );
-			$oCentralListArticle = new Article( $oCentralListTitle, 0);
-
-			if ( $oCentralListArticle->exists() ) {
-				$sReplace =  "{{nwtw|" . $this->mWikiData['language']  . "|" ;
-				$sReplace .= $aCategories[ $this->mWikiData[ "hub" ] ] . "|" ;
-				$sReplace .= $centralTitleName . "|http://" . $this->mWikiData['subdomain'] . ".wikia.com}}\n|}";
-
-				$sContent = str_replace("|}", $sReplace, $oCentralListArticle->getContent());
-
-				$oCentralListArticle->doEdit( $sContent, "modified by autocreate Wiki process", EDIT_FORCE_BOT);
-				$this->log( sprintf("Article %s modified.", $oCentralListTitle->getFullUrl()) );
-			}
-			else {
-				$this->log( sprintf("Article %s not exists.", $oCentralListTitle->getFullUrl()) );
-			}
-		}
-		else {
-			$this->log( "ERROR: Unable to create title object for page: " . $sCentralListTitle);
-			return false;
 		}
 
 		if( strcmp( strtolower( $this->mWikiData['redirect'] ), strtolower( $centralTitleName ) ) != 0 ) {
