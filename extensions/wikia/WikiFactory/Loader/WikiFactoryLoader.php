@@ -436,11 +436,12 @@ class WikiFactoryLoader {
 			if( ! $this->mCommandLine ) {
 				global $wgNotAValidWikia;
 				if( $this->mCityDB ) {
+					$database = strtolower( $this->mCityDB );
 					$redirect = sprintf(
 						"http://wikistats.wikia.com/dbdumps/%s/%s/%s/",
-						substr( $this->mCityDB, 0, 1),
-						substr( $this->mCityDB, 0, 2),
-						$this->mCityDB
+						substr( $database, 0, 1),
+						substr( $database, 0, 2),
+						$database
 					);
 				}
 				else {
