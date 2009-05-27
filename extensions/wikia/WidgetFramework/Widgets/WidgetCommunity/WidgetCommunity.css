@@ -33,3 +33,6 @@
 	position: relative;
 }
 
+* html .WidgetCommunity .community_toggle {
+	right: -7px;
+}
