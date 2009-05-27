@@ -34,10 +34,10 @@ $messages["en"] = array(
 	"closewiki-confirm-button" => "Confirm '$1' of $2",
 	"closewiki-nbr-wiki" => "$1 Wikis",
 	"closewiki-wiki-closed" => "'''$1''' was closed ($2)",
-	"closewiki-wiki-closed_removed" => "'''$1''' was closed and removed ($2)",
+	"closewiki-wiki-closed_removed" => "'''$1''' is now closed and scheduled for deleting ($2)",
 	"closewiki-wiki-closed_redirect" => "'''$1''' was closed ($2) and now is redirecting to: $3",
 	"closewiki-dump-url" => "Database dump: $1",
-	"closewiki-images-url" => "Image archive: $1",	
+	"closewiki-images-url" => "Image archive: $1",
 	"closewiki-unknown" => "Unknown",
 	"closewiki-return" => "Back to $1",
 // metrics
