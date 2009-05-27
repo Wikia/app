@@ -446,7 +446,7 @@ class WikiFactoryLoader {
 				else {
 					$redirect = $wgNotAValidWikia;
 				}
-				$this->debug( "disabled and not commandline, redirected to {$wgNotAValidWikia}, {$this->mWikiID} {$this->mIsWikiaActive}" );
+				$this->debug( "disabled and not commandline, redirected to {$redirect}, {$this->mWikiID} {$this->mIsWikiaActive}" );
 				header( "Location: $redirect" );
 				wfProfileOut( __METHOD__ );
 				exit(0);
