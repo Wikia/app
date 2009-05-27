@@ -559,6 +559,9 @@ wfRunHooks('GetHTMLAfterBody', array (&$this));
 	?>
 
 	<?php
+
+	echo '<script type="text/javascript">/*<![CDATA[*/for(var i=0;i<wgAfterContentAndJS.length;i++){wgAfterContentAndJS[i]();}/*]]>*/</script>' . "\n";
+
 	$wikiafooterlinks = $this->data['data']['wikiafooterlinks'];
 	if(count($wikiafooterlinks) > 0) {
 		echo '<div id="wikia_footer">';
