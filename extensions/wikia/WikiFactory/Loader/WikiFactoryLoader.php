@@ -38,7 +38,7 @@ function wfUnserializeHandler( $errno, $errstr ) {
 class WikiFactoryLoader {
 
 	public $mServerName, $mWikiID, $mCityHost, $mCityID, $mOldServerName;
-	public $mAlternativeDomainUsed;
+	public $mAlternativeDomainUsed, $mCityDB;
 	public $mDomain, $mVariables, $mIsWikiaActive, $mAlwaysFromDB;
 	public $mNoRedirect, $mTimestamp, $mAdCategory, $mCommandLine;
 	public $mExpireDomainCacheTimeout = 86400; #--- 24 hours
@@ -111,7 +111,8 @@ class WikiFactoryLoader {
 		$this->mWikiID = 0;
 		$this->mSkipFileCache = 1;
 		$this->mNoRedirect = false;
-		$this->mDBhandler = null;
+		$this->mDBhandler  = null;
+		$this->mCityDB     = false;
 
 		if( !empty( $wgDevelEnvironment ) ) {
 			$wgWikiFactoryDomains = is_array( $wgWikiFactoryDomains )
@@ -251,6 +252,7 @@ class WikiFactoryLoader {
 						"city_public",
 						"city_factory_timestamp",
 						"city_url",
+						"city_dbname",
 						"ad_cat"
 					),
 					array( "city_list.city_id" => $this->mCityID ),
@@ -263,6 +265,7 @@ class WikiFactoryLoader {
 					$this->mWikiID =  $oRow->city_id;
 					$this->mIsWikiaActive = $oRow->city_public;
 					$this->mCityHost = $host;
+					$this->mCityDB   = $oRow->city_dbname;
 					$this->mTimestamp = $oRow->city_factory_timestamp;
 					$this->mAdCategory = empty( $oRow->ad_cat  ) ?  $oRow->ad_cat : "NONE";
 					$this->mDomain = array(
@@ -270,7 +273,8 @@ class WikiFactoryLoader {
 						"host" => $host,
 						"active" => $oRow->city_public,
 						"time" =>  $oRow->city_factory_timestamp,
-						"ad" => $oRow->ad_cat
+						"ad" => $oRow->ad_cat,
+						"db" => $this->mCityDB
 					);
 				}
 			}
@@ -290,6 +294,7 @@ class WikiFactoryLoader {
 						"city_factory_timestamp",
 						"city_domain",
 						"city_url",
+						"city_dbname",
 						"ad_cat"
 					),
 					array(
@@ -307,6 +312,7 @@ class WikiFactoryLoader {
 						$this->mWikiID =  $oRow->city_id;
 						$this->mIsWikiaActive = $oRow->city_public;
 						$this->mCityHost = $host;
+						$this->mCityDB   = $oRow->city_dbname;
 						$this->mTimestamp = $oRow->city_factory_timestamp;
 						$this->mAdCategory = empty( $oRow->ad_cat  ) ?  $oRow->ad_cat : "NONE";
 						$this->mDomain = array(
@@ -314,7 +320,8 @@ class WikiFactoryLoader {
 							"host"   => $host,
 							"active" => $oRow->city_public,
 							"time"   => $oRow->city_factory_timestamp,
-							"ad"     => $oRow->ad_cat
+							"ad"     => $oRow->ad_cat,
+							"db"     => $oRow->city_dbname
 						);
 					}
 				}
@@ -341,6 +348,7 @@ class WikiFactoryLoader {
 			$this->mIsWikiaActive = $this->mDomain["active"];
 			$this->mTimestamp = isset( $this->mDomain["time"] ) ? $this->mDomain["time"] : null;
 			$this->mAdCategory = empty( $this->mDomain["ad"] ) ? "NONE" : $this->mDomain["ad"];
+			$this->mCityDB = isset( $this->mDomain[ "db" ] ) ? $this->mDomain[ "db" ] : false;
 		}
 
 		if( strpos($this->mServerName, "-abc.") != 0 || strpos( $this->mServerName, "beta." ) === 0 ) {
@@ -427,8 +435,19 @@ class WikiFactoryLoader {
 		 if( empty( $this->mIsWikiaActive ) ) {
 			if( ! $this->mCommandLine ) {
 				global $wgNotAValidWikia;
+				if( $this->mCityDB ) {
+					$redirect = sprintf(
+						"http://wikistats.wikia.com/dbdumps/%s/%s/%s/",
+						substr( $this->mCityDB, 0, 1),
+						substr( $this->mCityDB, 0, 2),
+						$this->mCityDB
+					);
+				}
+				else {
+					$redirect = $wgNotAValidWikia;
+				}
 				$this->debug( "disabled and not commandline, redirected to {$wgNotAValidWikia}, {$this->mWikiID} {$this->mIsWikiaActive}" );
-				header("Location: $wgNotAValidWikia");
+				header( "Location: $redirect" );
 				wfProfileOut( __METHOD__ );
 				exit(0);
 			}
