@@ -56,6 +56,7 @@ Please <a href="http://www.mediawiki.org/wiki/Extension:OggHandler/Client_downlo
  * @author Aotake
  * @author BrokenArrow
  * @author Jon Harald Søby
+ * @author Meno25
  * @author Mormegil
  * @author Purodha
  * @author Siebrand
@@ -73,6 +74,11 @@ Parameters are:
 * $3 file sampling rate, f.e. 97kbps',
 	'ogg-play' => '{{Identical|Play}}',
 	'ogg-player-videoElement' => 'Message used in JavaScript.',
+	'ogg-player-vlc-mozilla' => '{{optional}}',
+	'ogg-player-quicktime-mozilla' => '{{optional}}',
+	'ogg-player-totem' => '{{optional}}',
+	'ogg-player-kmplayer' => '{{optional}}',
+	'ogg-player-kaffeine' => '{{optional}}',
 	'ogg-more' => '{{Identical|More...}}',
 	'ogg-download' => '{{Identical|Download}}',
 );
@@ -342,6 +348,7 @@ $messages['bcl'] = array(
 /** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
  * @author EugeneZelenko
  * @author Jim-by
+ * @author Red Winged Duck
  */
 $messages['be-tarask'] = array(
 	'ogg-desc' => 'Апрацоўшчык файлаў Ogg Theora і Vorbis з прайгравальнікам JavaScript',
@@ -360,7 +367,7 @@ $messages['be-tarask'] = array(
 	'ogg-play-sound' => 'Прайграць аўдыё',
 	'ogg-no-player' => 'Прабачце, Ваша сыстэма ня мае неабходнага праграмнага забесьпячэньня для прайграваньня файлаў. Калі ласка, <a href="http://www.mediawiki.org/wiki/Extension:OggHandler/Client_download">загрузіце прайгравальнік</a>.',
 	'ogg-no-xiphqt' => 'Адсутнічае кампанэнт  XiphQT для QuickTime.
-QuickTime не можа прайграваць файлы ў фармаце Ogg бяз гэтага кампанэнта.
+QuickTime ня можа прайграваць файлы ў фармаце Ogg бяз гэтага кампанэнта.
 Калі ласка, <a href="http://www.mediawiki.org/wiki/Extension:OggHandler/Client_download">загрузіце XiphQT</a> альбо выберыце іншы прайгравальнік.',
 	'ogg-player-videoElement' => 'Убудаваная падтрымка браўзэра',
 	'ogg-player-oggPlugin' => 'Плагін для браўзэра',
@@ -575,6 +582,7 @@ $messages['da'] = array(
  * @author Leithian
  * @author MichaelFrey
  * @author Raimond Spekking
+ * @author Umherirrender
  */
 $messages['de'] = array(
 	'ogg-desc' => 'Steuerungsprogramm für Ogg Theora- und Vorbis-Dateien, inklusive einer JavaScript-Abspielsoftware',
@@ -595,7 +603,7 @@ $messages['de'] = array(
 	'ogg-no-xiphqt' => 'Dein System scheint nicht über die XiphQT-Komponente für QuickTime zu verfügen. QuickTime kann ohne diese Komponente keine Ogg-Dateien abspielen.Bitte <a href="http://www.mediawiki.org/wiki/Extension:OggHandler/Client_download">lade XiphQT</a> oder wähle eine andere Abspielsoftware.',
 	'ogg-player-videoElement' => 'Vorhandene Browserunterstützung',
 	'ogg-player-oggPlugin' => 'Browser-Plugin',
-	'ogg-player-thumbnail' => 'Zeige Vorschaubild',
+	'ogg-player-thumbnail' => 'nur Vorschaubild',
 	'ogg-player-soundthumb' => 'Kein Player',
 	'ogg-player-selected' => '(ausgewählt)',
 	'ogg-use-player' => 'Abspielsoftware:',
@@ -650,22 +658,39 @@ Pšosym <a href="http://www.mediawiki.org/wiki/Extension:OggHandler/Cient_downlo
 
 /** Greek (Ελληνικά)
  * @author Consta
+ * @author Dead3y3
  * @author ZaDiak
  */
 $messages['el'] = array(
+	'ogg-desc' => 'Χειριστής για αρχεία Ogg Theora και Vorbis, με αναπαραγωγέα JavaScript',
+	'ogg-short-audio' => 'Αρχείο ήχου Ogg $1, $2',
+	'ogg-short-video' => 'Αρχείο βίντεο Ogg $1, $2',
+	'ogg-short-general' => 'Αρχείο μέσων Ogg $1, $2',
+	'ogg-long-audio' => '(Αρχείο ήχου Ogg $1, διάρκεια $2, $3)',
+	'ogg-long-video' => '(Αρχείο βίντεο Ogg $1, διάρκεια $2, $4×$5 pixels, $3)',
+	'ogg-long-multiplexed' => '(Αρχείο πολυπλεκτικού ήχου/βίντεο Ogg, $1, διάρκεια $2, $4×$5 pixels, $3 ολικά)',
+	'ogg-long-general' => '(Αρχείο μέσων Ogg, διάρκεια $2, $3)',
+	'ogg-long-error' => '(Άκυρο αρχείο ogg: $1)',
 	'ogg-play' => 'Αναπαραγωγή',
 	'ogg-pause' => 'Παύση',
 	'ogg-stop' => 'Διακοπή',
 	'ogg-play-video' => 'Αναπαραγωγή βίντεο',
 	'ogg-play-sound' => 'Αναπαραγωγή ήχου',
-	'ogg-player-thumbnail' => 'Ακόμα μόνο εικόνα',
+	'ogg-no-player' => 'Συγγνώμη, το σύστημά σας δεν φαίνεται να έχει κάποιο υποστηριζόμενο λογισμικό αναπαραγωγής.<br />
+Παρακαλώ <a href="http://www.mediawiki.org/wiki/Extension:OggHandler/Client_download">κατεβάστε ένα πρόγραμμα αναπαραγωγής</a>.',
+	'ogg-no-xiphqt' => 'Δεν φαίνεται να έχετε το στοιχείο XiphQT για το πρόγραμμα QuickTime.<br />
+Το πρόγραμμα QuickTime δεν μπορεί να αναπαράγει αρχεία Ogg χωρίς αυτό το στοιχείο.<br />
+Παρακαλώ <a href="http://www.mediawiki.org/wiki/Extension:OggHandler/Client_download">κατεβάστε το XiphQT</a> ή επιλέξτε ένα άλλο πρόγραμμα αναπαραγωγής.',
+	'ogg-player-videoElement' => 'Τοπική υποστήριξη φυλλομετρητή',
+	'ogg-player-oggPlugin' => 'Πρόσθετο φυλλομετρητή',
+	'ogg-player-thumbnail' => 'Ακίνητη εικόνα μόνο',
 	'ogg-player-soundthumb' => 'Κανένας αναπαραγωγέας',
 	'ogg-player-selected' => '(επιλέχθηκε)',
 	'ogg-use-player' => 'Χρησιμοποίησε αναπαραγωγέα:',
 	'ogg-more' => 'Περισσότερα...',
 	'ogg-dismiss' => 'Κλείσιμο',
 	'ogg-download' => 'Κατεβάστε το αρχείο',
-	'ogg-desc-link' => 'Σχετικά με αυτό τα αρχείο',
+	'ogg-desc-link' => 'Σχετικά με αυτό το αρχείο',
 );
 
 /** Esperanto (Esperanto)
@@ -744,7 +769,22 @@ Por favor <a href="http://www.mediawiki.org/wiki/Extension:OggHandler/Client_dow
 	'ogg-desc-link' => 'Sobre este archivo',
 );
 
+/** Estonian (Eesti)
+ * @author Silvar
+ */
+$messages['et'] = array(
+	'ogg-play' => 'Mängi',
+	'ogg-pause' => 'Paus',
+	'ogg-stop' => 'Peata',
+	'ogg-play-video' => 'Mängi videot',
+	'ogg-play-sound' => 'Mängi heli',
+	'ogg-no-player' => 'Kahjuks, ei paista su süsteemis olevat ühtki ühilduvat multimeedia programmi.
+Palun lae omale tarkvara <a href="http://www.mediawiki.org/wiki/Extension:OggHandler/Client_download">siit alla</a>.',
+	'ogg-dismiss' => 'Sulge',
+);
+
 /** Basque (Euskara)
+ * @author An13sa
  * @author Theklan
  */
 $messages['eu'] = array(
@@ -753,6 +793,13 @@ $messages['eu'] = array(
 	'ogg-short-video' => 'Ogg $1 bideo fitxategia, $2',
 	'ogg-short-general' => 'Ogg $1 media fitxategia, $2',
 	'ogg-long-audio' => '(Ogg $1 soinu fitxategia, $2 iraupea, $3)',
+	'ogg-long-error' => '(ogg fitxategi okerra: $1)',
+	'ogg-play' => 'Hasi',
+	'ogg-pause' => 'Eten',
+	'ogg-stop' => 'Gelditu',
+	'ogg-play-video' => 'Bideoa hasi',
+	'ogg-play-sound' => 'Soinua hasi',
+	'ogg-player-selected' => '(aukeratua)',
 	'ogg-more' => 'Gehiago...',
 	'ogg-dismiss' => 'Itxi',
 	'ogg-download' => 'Fitxategia jaitsi',
@@ -837,6 +884,7 @@ $messages['fo'] = array(
  * @author Seb35
  * @author Sherbrooke
  * @author Urhixidur
+ * @author Verdy p
  */
 $messages['fr'] = array(
 	'ogg-desc' => 'Support pour les fichiers Ogg Theora et Vorbis, avec un lecteur Javascript',
@@ -856,7 +904,7 @@ $messages['fr'] = array(
 	'ogg-no-player' => 'Désolé, votre système ne possède apparemment aucun des lecteurs supportés. Veuillez installer <a href="http://www.mediawiki.org/wiki/Extension:OggHandler/Client_download/fr">un des lecteurs supportés</a>.',
 	'ogg-no-xiphqt' => 'Vous n\'avez apparemment pas le composant XiphQT pour Quicktime. Quicktime ne peut pas lire les fichiers Ogg sans ce composant. Veuillez <a href="http://www.mediawiki.org/wiki/Extension:OggHandler/Client_download/fr">télécharger XiphQT</a> ou choisir un autre lecteur.',
 	'ogg-player-videoElement' => 'Support du navigateur natif',
-	'ogg-player-oggPlugin' => 'Plugiciel du navigateur',
+	'ogg-player-oggPlugin' => 'Module complémentaire du navigateur',
 	'ogg-player-thumbnail' => 'Image statique seulement',
 	'ogg-player-soundthumb' => 'Aucun lecteur',
 	'ogg-player-selected' => '(sélectionné)',
@@ -903,6 +951,7 @@ $messages['frp'] = array(
  * @author Klenje
  */
 $messages['fur'] = array(
+	'ogg-desc' => 'Gjestôr pai files Ogg Theora e Vorbis, cuntun riprodutôr JavaScript',
 	'ogg-short-audio' => 'File audio Ogg $1, $2',
 	'ogg-short-video' => 'File video Ogg $1, $2',
 	'ogg-short-general' => 'File multimediâl Ogg $1, $2',
@@ -917,6 +966,8 @@ $messages['fur'] = array(
 	'ogg-play-sound' => 'Riprodûs il file audio',
 	'ogg-no-player' => 'Nus displâs ma il to sisteme nol à riprodutôrs software supuartâts.
 Par plasê <a href="http://www.mediawiki.org/wiki/Extension:OggHandler/Client_download">discjame un riprodutôr</a>.',
+	'ogg-player-videoElement' => 'Supuart sgarfadôr natîf',
+	'ogg-player-oggPlugin' => 'Plugin sgarfadôr',
 	'ogg-player-thumbnail' => 'Dome figure fisse',
 	'ogg-player-soundthumb' => 'Nissun riprodutôr',
 	'ogg-player-selected' => '(selezionât)',
@@ -952,7 +1003,7 @@ $messages['gl'] = array(
 	'ogg-pause' => 'Deter',
 	'ogg-stop' => 'Parar',
 	'ogg-play-video' => 'Reproducir vídeo',
-	'ogg-play-sound' => 'Reproducir son',
+	'ogg-play-sound' => 'Reproducir o son',
 	'ogg-no-player' => 'Parece que o seu sistema non dispón de software de reprodución axeitado. <a href="http://www.mediawiki.org/wiki/Extension:OggHandler/Client_download">Instale un reprodutor</a>.',
 	'ogg-no-xiphqt' => 'Parece que non dispón do compoñente XiphQT para QuickTime. QuickTime non pode reproducir ficheiros Ogg sen este componente. <a href="http://www.mediawiki.org/wiki/Extension:OggHandler/Client_download">Instale XiphQT</a> ou escolla outro reprodutor.',
 	'ogg-player-videoElement' => 'Soporte do navegador nativo',
@@ -979,10 +1030,36 @@ $messages['grc'] = array(
 );
 
 /** Swiss German (Alemannisch)
+ * @author Als-Holder
  * @author Melancholie
  */
 $messages['gsw'] = array(
+	'ogg-desc' => 'Styyrigsprogramm fir Ogg Theora- un Vorbis-Dateie, mit ere JavaScript-Abspiilsoftware',
+	'ogg-short-audio' => 'Ogg-$1-Audiodatei, $2',
+	'ogg-short-video' => 'Ogg-$1-Videodatei, $2',
+	'ogg-short-general' => 'Ogg-$1-Mediadatei, $2',
 	'ogg-long-audio' => '(Ogg-$1-Audiodatei, Längi: $2, $3)',
+	'ogg-long-video' => '(Ogg-$1-Videodatei, Längi: $2, $4×$5 Pixel, $3)',
+	'ogg-long-multiplexed' => '(Ogg-Audio-/Video-Datei, $1, Längi: $2, $4×$5 Pixel, $3)',
+	'ogg-long-general' => '(Ogg-Mediadatei, Längi: $2, $3)',
+	'ogg-long-error' => '(Uugiltigi Ogg-Datei: $1)',
+	'ogg-play' => 'Start',
+	'ogg-pause' => 'Paus',
+	'ogg-stop' => 'Stopp',
+	'ogg-play-video' => 'Video abspiile',
+	'ogg-play-sound' => 'Audio abspiile',
+	'ogg-no-player' => 'Dyy Syschtem het schyyns kei Abspiilsoftware. Bitte installier <a href="http://www.mediawiki.org/wiki/Extension:OggHandler/Client_download">e Abspiilsoftware</a>.',
+	'ogg-no-xiphqt' => 'Dyy Syschtem het schyyns d XiphQT-Komponent fir QuickTime nit. QuickTime cha ohni die Komponent kei Ogg-Dateie abspiile. Bitte <a href="http://www.mediawiki.org/wiki/Extension:OggHandler/Client_download">lad XiphQT</a> oder wehl e anderi Abspiilsoftware.',
+	'ogg-player-videoElement' => 'Vorhandeni Browserunterstitzig',
+	'ogg-player-oggPlugin' => 'Browser-Plugin',
+	'ogg-player-thumbnail' => 'Zeig Vorschaubild',
+	'ogg-player-soundthumb' => 'Kei Player',
+	'ogg-player-selected' => '(usgwehlt)',
+	'ogg-use-player' => 'Abspiilsoftware:',
+	'ogg-more' => 'Meh …',
+	'ogg-dismiss' => 'Zuemache',
+	'ogg-download' => 'Datei spychere',
+	'ogg-desc-link' => 'Iber die Datei',
 );
 
 /** Manx (Gaelg)
@@ -1063,6 +1140,7 @@ QuickTime बिना इस घटक के Ogg files चलने में 
 /** Croatian (Hrvatski)
  * @author Dalibor Bosits
  * @author SpeedyGonsales
+ * @author Suradnik13
  */
 $messages['hr'] = array(
 	'ogg-desc' => 'Poslužitelj za Ogg Theora i Vorbis datoteke, s JavaScript preglednikom',
@@ -1081,7 +1159,7 @@ $messages['hr'] = array(
 	'ogg-play-sound' => 'Sviraj zvuk',
 	'ogg-no-player' => "Oprostite, izgleda da Vaš operacijski sustav nema instalirane medijske preglednike. Molimo <a href=\"http://www.mediawiki.org/wiki/Extension:OggHandler/Client_download\">instalirajte medijski preglednik (''player'')</a>.",
 	'ogg-no-xiphqt' => "Nemate instaliranu XiphQT komponentu za QuickTime (ili je neispravno instalirana). QuickTime ne može pokretati Ogg datoteke bez ove komponente. Molimo <a href=\"http://www.mediawiki.org/wiki/Extension:OggHandler/Client_download\">instalirajte XiphQT</a> ili izaberite drugi preglednik (''player'').",
-	'ogg-player-videoElement' => 'Ugrađena podrška za browser',
+	'ogg-player-videoElement' => 'Ugrađena podrška za preglednik',
 	'ogg-player-oggPlugin' => 'Plugin preglednika',
 	'ogg-player-vlc-activex' => 'VLC (ActiveX kontrola)',
 	'ogg-player-thumbnail' => 'Samo (nepokretne) slike',
@@ -1242,8 +1320,11 @@ Silakan <a href="http://www.mediawiki.org/wiki/Extension:OggHandler/Client_downl
  * @author Malafaya
  */
 $messages['io'] = array(
+	'ogg-long-error' => '(Ne-valida ogg-arkivo: $1)',
+	'ogg-player-selected' => '(selektita)',
 	'ogg-more' => 'Plus…',
 	'ogg-dismiss' => 'Klozar',
+	'ogg-desc-link' => 'Pri ca arkivo',
 );
 
 /** Icelandic (Íslenska)
@@ -1300,6 +1381,7 @@ $messages['it'] = array(
 
 /** Japanese (日本語)
  * @author Aotake
+ * @author Fryed-peach
  * @author JtFuruhata
  * @author Kahusi
  */
@@ -1310,7 +1392,7 @@ $messages['ja'] = array(
 	'ogg-short-general' => 'Ogg $1 メディアファイル、$2',
 	'ogg-long-audio' => '(Ogg $1 音声ファイル、長さ $2、$3)',
 	'ogg-long-video' => '(Ogg $1 動画ファイル、長さ $2、$4×$5px、$3)',
-	'ogg-long-multiplexed' => '(Ogg 多重音声/動画ファイル、$1、長さ$2、$4×$5px, 凡そ$3)',
+	'ogg-long-multiplexed' => '(Ogg 多重音声/動画ファイル、$1、長さ $2、$4×$5 ピクセル、$3)',
 	'ogg-long-general' => '(Ogg メディアファイル、長さ $2、$3)',
 	'ogg-long-error' => '(無効なOggファイル: $1)',
 	'ogg-play' => '再生',
@@ -1398,6 +1480,13 @@ Please <a href="http://www.mediawiki.org/wiki/Extension:OggHandler/Client_downlo
 	'ogg-dismiss' => 'Tutup',
 	'ogg-download' => 'Undhuh berkas',
 	'ogg-desc-link' => 'Prekara berkas iki',
+);
+
+/** Georgian (ქართული)
+ * @author Malafaya
+ */
+$messages['ka'] = array(
+	'ogg-download' => 'ფაილის ჩამოტვირთვა',
 );
 
 /** Kazakh (Arabic script) (‫قازاقشا (تٴوتە)‬) */
@@ -1638,6 +1727,9 @@ $messages['lb'] = array(
 	'ogg-stop' => 'Stopp',
 	'ogg-play-video' => 'Video ofspillen',
 	'ogg-play-sound' => 'Tounfichier ofspillen',
+	'ogg-no-xiphqt' => 'Dir hutt anscheinend d\'Komponent  XiphQT fir QuickTime net installéiert.
+QuickTime kann Ogg-Fichiere net ouni dës Komponent spillen.
+<a href="http://www.mediawiki.org/wiki/Extension:OggHandler/Client_download">Lued XiphQT w.e.g. erof</a> oder wielt eng aner Software.',
 	'ogg-player-videoElement' => 'Ënnerstetzt duerch de Browser',
 	'ogg-player-oggPlugin' => 'Browser-Plugin',
 	'ogg-player-thumbnail' => 'Just als Bild weisen',
@@ -1678,8 +1770,8 @@ $messages['li'] = array(
 	'ogg-play-sound' => 'Geluid aafspele',
 	'ogg-no-player' => 'Sorry, uch systeem haet gein van de ongersteunde mediaspelers. Installeer estebleef <a href="http://www.java.com/nl/download/manual.jsp">Java</a>.',
 	'ogg-no-xiphqt' => "'t Liek d'r op det geer 't component XiphQT veur QuickTime neet haet. QuickTime kin Ogg-bestenj neet aafspele zonger dit component. Download <a href=\"http://www.mediawiki.org/wiki/Extension:OggHandler/Client_download\">XiphQT</a> estebleef of kees 'ne angere speler.",
-	'ogg-player-videoElement' => '<video> element',
-	'ogg-player-oggPlugin' => 'Ogg-plugin',
+	'ogg-player-videoElement' => 'Native browsersupport',
+	'ogg-player-oggPlugin' => 'Browserplugin',
 	'ogg-player-thumbnail' => 'Allein stilstaondj beild',
 	'ogg-player-soundthumb' => 'Geine mediaspeler',
 	'ogg-player-selected' => '(geselectieërdj)',
@@ -1691,6 +1783,7 @@ $messages['li'] = array(
 );
 
 /** Lithuanian (Lietuvių)
+ * @author Homo
  * @author Matasg
  */
 $messages['lt'] = array(
@@ -1710,7 +1803,7 @@ $messages['lt'] = array(
 	'ogg-no-player' => 'Atsiprašome, neatrodo, kad jūsų sistema turi palaikomą grotuvą. Prašome <a href="http://www.mediawiki.org/wiki/Extension:OggHandler/Client_download">jį atsisiųsti</a>.',
 	'ogg-no-xiphqt' => 'Neatrodo, kad jūs turite XiphQT komponentą QuickTime grotuvui. QuickTime negali groti Ogg bylų be šio komponento. Prašome <a href="http://www.mediawiki.org/wiki/Extension:OggHandler/Client_download">atsisiųsti XiphQT</a> arba pasirinkti kitą grotuvą.',
 	'ogg-player-videoElement' => '<video> elementas',
-	'ogg-player-oggPlugin' => 'Ogg priedas',
+	'ogg-player-oggPlugin' => 'Naršyklės priedas',
 	'ogg-player-thumbnail' => 'Tik paveikslėlis',
 	'ogg-player-soundthumb' => 'Nėra grotuvo',
 	'ogg-player-selected' => '(pasirinkta)',
@@ -1919,6 +2012,19 @@ $messages['nds'] = array(
 	'ogg-desc-link' => 'Över disse Datei',
 );
 
+/** Nedersaksisch (Nedersaksisch)
+ * @author Servien
+ */
+$messages['nds-nl'] = array(
+	'ogg-play' => 'Ofspeulen',
+	'ogg-pause' => 'Pauze',
+	'ogg-stop' => 'Stop',
+	'ogg-play-video' => 'Video ofspeulen',
+	'ogg-play-sound' => 'Geluud ofspeulen',
+	'ogg-more' => 'Meer...',
+	'ogg-dismiss' => 'Sluten',
+);
+
 /** Dutch (Nederlands)
  * @author SPQRobin
  * @author Siebrand
@@ -1949,7 +2055,7 @@ Download <a href="http://www.mediawiki.org/wiki/Extension:OggHandler/Client_down
 	'ogg-player-soundthumb' => 'Geen mediaspeler',
 	'ogg-player-selected' => '(geselecteerd)',
 	'ogg-use-player' => 'Gebruik speler:',
-	'ogg-more' => 'Meer...',
+	'ogg-more' => 'Meer…',
 	'ogg-dismiss' => 'Sluiten',
 	'ogg-download' => 'Bestand downloaden',
 	'ogg-desc-link' => 'Over dit bestand',
@@ -1964,10 +2070,10 @@ $messages['nn'] = array(
 	'ogg-short-audio' => 'Ogg $1-lydfil, $2',
 	'ogg-short-video' => 'Ogg $1-videofil, $2',
 	'ogg-short-general' => 'Ogg $1-mediafil, $2',
-	'ogg-long-audio' => '(Ogg $1-lydfil, lengde $2, $3)',
-	'ogg-long-video' => '(Ogg $1-videofil, lengde $2, $4×$5 pikslar, $3)',
-	'ogg-long-multiplexed' => '(Samansett ogg lyd-/videofil, $1, lengde $2, $4×$5 pikslar, $3 til saman)',
-	'ogg-long-general' => '(Ogg mediafil, lengde $2, $3)',
+	'ogg-long-audio' => '(Ogg $1-lydfil, lengd $2, $3)',
+	'ogg-long-video' => '(Ogg $1-videofil, lengd $2, $4×$5 pikslar, $3)',
+	'ogg-long-multiplexed' => '(Samansett ogg lyd-/videofil, $1, lengd $2, $4×$5 pikslar, $3 til saman)',
+	'ogg-long-general' => '(Ogg mediafil, lengd $2, $3)',
 	'ogg-long-error' => '(Ugyldig ogg-fil: $1)',
 	'ogg-play' => 'Spel av',
 	'ogg-pause' => 'Pause',
@@ -2186,6 +2292,38 @@ $messages['pt'] = array(
 	'ogg-desc-link' => 'Sobre este ficheiro',
 );
 
+/** Brazilian Portuguese (Português do Brasil)
+ * @author Eduardo.mps
+ */
+$messages['pt-br'] = array(
+	'ogg-desc' => 'Manipulador para arquivos Ogg Theora e Vorbis, com reprodutor JavaScript',
+	'ogg-short-audio' => 'Arquivo de áudio Ogg $1, $2',
+	'ogg-short-video' => 'Arquivo de vídeo Ogg $1, $2',
+	'ogg-short-general' => 'Arquivo multimídia Ogg $1, $2',
+	'ogg-long-audio' => '(Arquivo de Áudio Ogg $1, $2 de duração, $3)',
+	'ogg-long-video' => '(Vídeo Ogg $1, $2 de duração, $4×$5 pixels, $3)',
+	'ogg-long-multiplexed' => '(Áudio/vídeo Ogg multifacetado, $1, $2 de duração, $4×$5 pixels, $3 no todo)',
+	'ogg-long-general' => '(Multimídia Ogg, $2 de duração, $3)',
+	'ogg-long-error' => '(Ficheiro ogg inválido: $1)',
+	'ogg-play' => 'Reproduzir',
+	'ogg-pause' => 'Pausar',
+	'ogg-stop' => 'Parar',
+	'ogg-play-video' => 'Reproduzir vídeo',
+	'ogg-play-sound' => 'Reproduzir som',
+	'ogg-no-player' => 'Lamentamos, mas seu sistema aparenta não ter um reprodutor suportado. Por gentileza, <a href="http://www.mediawiki.org/wiki/Extension:OggHandler/Client_download">faça o download de um reprodutor</a>.',
+	'ogg-no-xiphqt' => 'Aparentemente você não tem o componente XiphQT para QuickTime. Não será possível reproduzir arquivos Ogg pelo QuickTime sem tal componente. Por gentileza, <a href="http://www.mediawiki.org/wiki/Extension:OggHandler/Client_download">faça o descarregamento do XiphQT</a> ou escolha outro reprodutor.',
+	'ogg-player-videoElement' => 'Suporte interno do navegador',
+	'ogg-player-oggPlugin' => 'Plugin do navegador',
+	'ogg-player-thumbnail' => 'Apenas imagem estática',
+	'ogg-player-soundthumb' => 'Sem reprodutor',
+	'ogg-player-selected' => '(selecionado)',
+	'ogg-use-player' => 'Usar reprodutor:',
+	'ogg-more' => 'Mais...',
+	'ogg-dismiss' => 'Fechar',
+	'ogg-download' => 'Descarregar arquivo',
+	'ogg-desc-link' => 'Sobre este arquivo',
+);
+
 /** Quechua (Runa Simi)
  * @author AlimanRuna
  */
@@ -2295,8 +2433,8 @@ $messages['sah'] = array(
 	'ogg-play-sound' => 'Иһитиннэр',
 	'ogg-no-player' => 'Хомойуох иһин эн систиэмэҕэр иһитиннэрэр/көрдөрөр анал бырагырааммалар суохтар эбит. Бука диэн, <a href="http://www.mediawiki.org/wiki/Extension:OggHandler/Client_download">плееры хачайдан</a>.',
 	'ogg-no-xiphqt' => 'QuickTime маннык тэрээбэтэ: XiphQT суох эбит. Онон QuickTime бу Ogg билэни (файлы) оонньотор кыаҕа суох. Бука диэн, <a href="http://www.mediawiki.org/wiki/Extension:OggHandler/Client_download"> XiphQT хачайдан</a> эбэтэр атын плееры тал.',
-	'ogg-player-videoElement' => '<video> элэмиэнэ',
-	'ogg-player-oggPlugin' => 'Ogg плагин',
+	'ogg-player-videoElement' => 'Браузер бэйэтин өйөөһүнэ',
+	'ogg-player-oggPlugin' => 'Браузер плагина',
 	'ogg-player-thumbnail' => 'Хамсаабат ойууну эрэ',
 	'ogg-player-soundthumb' => 'Плеер суох',
 	'ogg-player-selected' => '(талыллыбыт)',
@@ -2398,6 +2536,7 @@ $messages['sq'] = array(
 /** Serbian Cyrillic ekavian (ћирилица)
  * @author Millosh
  * @author Sasa Stefanovic
+ * @author Михајло Анђелковић
  */
 $messages['sr-ec'] = array(
 	'ogg-desc' => 'Руковаоц ogg Теора и Ворбис фајловима са јаваскрипт плејером',
@@ -2414,8 +2553,8 @@ $messages['sr-ec'] = array(
 	'ogg-stop' => 'Стоп',
 	'ogg-play-video' => 'Пусти видео',
 	'ogg-play-sound' => 'Пусти звук',
-	'ogg-player-videoElement' => '<video> елемент',
-	'ogg-player-oggPlugin' => 'плагин за ogg',
+	'ogg-player-videoElement' => 'Уграђена подршка у браузер',
+	'ogg-player-oggPlugin' => 'Плагин за браузер',
 	'ogg-player-thumbnail' => 'још увек само слика',
 	'ogg-player-soundthumb' => 'нема плејера',
 	'ogg-player-selected' => '(означено)',
@@ -2430,6 +2569,7 @@ $messages['sr-ec'] = array(
  * @author Pyt
  */
 $messages['stq'] = array(
+	'ogg-desc' => 'Stjuurengsprogramm foar Ogg Theora- un Vorbis-Doatäie, inklusive n JavaScript-Ouspielsoftware',
 	'ogg-short-audio' => 'Ogg-$1-Audiodoatäi, $2',
 	'ogg-short-video' => 'Ogg-$1-Videodoatäi, $2',
 	'ogg-short-general' => 'Ogg-$1-Mediadoatäi, $2',
@@ -2446,8 +2586,8 @@ $messages['stq'] = array(
 	'ogg-no-player' => 'Dien System schient uur neen Ouspielsoftware tou ferföigjen. Installier <a href="http://www.mediawiki.org/wiki/Extension:OggHandler/Client_download">ne Ouspielsoftware</a>.',
 	'ogg-no-xiphqt' => 'Dien System schient nit uur ju XiphQT-Komponente foar QuickTime tou ferföigjen. QuickTime kon sunner disse Komponente neen Ogg-Doatäie ouspielje. 
 Dou <a href="http://www.mediawiki.org/wiki/Extension:OggHandler/Client_download">leede XiphQT</a> of wääl ne uur Ouspielsoftware.',
-	'ogg-player-videoElement' => '<video>-Element>',
-	'ogg-player-oggPlugin' => 'Ogg-Plugin',
+	'ogg-player-videoElement' => 'Anweesende Browser-Unnerstutsenge',
+	'ogg-player-oggPlugin' => 'Browser-Plugin',
 	'ogg-player-thumbnail' => 'Wies Foarschaubielde',
 	'ogg-player-soundthumb' => 'Naan Player',
 	'ogg-player-selected' => '(uutwääld)',
@@ -2578,6 +2718,14 @@ $messages['tg-cyrl'] = array(
 	'ogg-dismiss' => 'Бастан',
 	'ogg-download' => 'Боргирии парванда',
 	'ogg-desc-link' => 'Дар бораи ин парванда',
+);
+
+/** Thai (ไทย)
+ * @author Manop
+ */
+$messages['th'] = array(
+	'ogg-play-video' => 'เล่นวิดีโอ',
+	'ogg-play-sound' => 'เล่นเสียง',
 );
 
 /** Tagalog (Tagalog)
@@ -2738,6 +2886,24 @@ $messages['vec'] = array(
 	'ogg-desc-link' => 'Informazion su sto file',
 );
 
+/** Veps (Vepsan kel')
+ * @author Игорь Бродский
+ */
+$messages['vep'] = array(
+	'ogg-play' => 'Väta',
+	'ogg-pause' => 'Pauz',
+	'ogg-stop' => 'Azotada',
+	'ogg-play-video' => 'Ozutada video',
+	'ogg-play-sound' => 'Väta kulundad',
+	'ogg-player-soundthumb' => 'Ei ole plejerad',
+	'ogg-player-selected' => '(valitud)',
+	'ogg-use-player' => 'Kävutada plejer:',
+	'ogg-more' => 'Enamba...',
+	'ogg-dismiss' => 'Peitta',
+	'ogg-download' => 'Jügutoitta fail',
+	'ogg-desc-link' => 'Informacii neciš failas',
+);
+
 /** Vietnamese (Tiếng Việt)
  * @author Minh Nguyen
  */
@@ -2775,11 +2941,16 @@ $messages['vi'] = array(
  * @author Smeira
  */
 $messages['vo'] = array(
-	'ogg-player-videoElement' => 'Dilet: <video>',
+	'ogg-player-videoElement' => 'Stüt bevüresodanaföm gebidon',
 	'ogg-more' => 'Pluikos...',
 	'ogg-dismiss' => 'Färmükön',
 	'ogg-download' => 'Donükön ragivi',
 	'ogg-desc-link' => 'Tefü ragiv at',
+);
+
+/** Walloon (Walon) */
+$messages['wa'] = array(
+	'ogg-dismiss' => 'Clôre',
 );
 
 /** Yue (粵語) */
