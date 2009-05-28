@@ -14,6 +14,13 @@ TieDivLibrary = new function() {
 		shrinkwrap_offset = $("#monaco_shrinkwrap_main").offset();
 		$.each($(".wikia_ad_placeholder"), function() {
 			this_offset = $(this).offset();
+		
+			//if the placeholder is offset by 0, something is probably wrong. don't position ad yet
+			if (this_offset.top == 0) {
+				$().log(this.id + ' would have been a problem!');
+				return;
+			};
+			
 			load = $("#" + this.id + "_load");
 			if ($.inArray(this.id, TieDivLibrary.rightAds) >= 0) {
 				load.css("right", $(window).width() - $(this).width() - this_offset.left - shrinkwrap_offset.left);
