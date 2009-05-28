@@ -1616,10 +1616,11 @@ if ($wgOut->isArticle()){
 		if ($wgEnableFAST_HOME2) {
 			$topAdCode .= AdEngine::getInstance()->getPlaceHolderDiv('HOME_TOP_RIGHT_BOXAD');
 		}
-	} else if ( ArticleAdLogic::isContentPage() &&
-		   !ArticleAdLogic::isStubArticle($this->data['bodytext'])) { //valid article
-
-		if (ArticleAdLogic::isBoxAdArticle($this->data['bodytext'])) {
+	} else if ( ArticleAdLogic::isContentPage()){
+	
+		if ( ArticleAdLogic::isStubArticle($this->data['bodytext'])){
+			$topAdCode = AdEngine::getInstance()->getPlaceHolderDiv('TOP_LEADERBOARD');
+		} else if (ArticleAdLogic::isBoxAdArticle($this->data['bodytext'])) {
 			$topAdCode = AdEngine::getInstance()->getPlaceHolderDiv('TOP_RIGHT_BOXAD');
 		} else {
 			// Long article, but a collision
@@ -1674,6 +1675,7 @@ if ($wgOut->isArticle()){
 					if ( !empty( $wgEnableAdsPrefooter ) &&
 					$wgUser->isAnon() &&
 					$wgOut->isArticle() &&
+					! $wgEnableAdsInContent && // Turn off Lower skys when ads in content is enabled
 					ArticleAdLogic::isContentPage() &&
 					ArticleAdLogic::isLongArticle($this->data['bodytext'])) {
 						echo  '<table style="margin-top: 1em; width: 100%; clear: both"><tr>' .
@@ -1700,11 +1702,12 @@ if ($wgOut->isArticle()){
 			</div>
 			<!-- /ARTICLE -->
 			<?php // Check to see if it is a super long article, if so, show bottom left nav skyscraper
-			global $wgContLang;
+			global $wgContLang, $wgEnableAdsInContent;
 			if ($wgOut->isArticle() &&
 			    !$wgContLang->isRTL() && // Since this is in the left nav, not suitable for right-to-left languages
 		            !ArticleAdLogic::isMainPage() &&
 			     ArticleAdLogic::isContentPage() &&
+			     ! $wgEnableAdsInContent && // Turn off Lower skys when ads in content is enabled
 			     ArticleAdLogic::isSuperLongArticle($this->data['bodytext'])) {
 				echo '<div style="position: absolute; height: 600px; width: 160px; margin-top: -600px; left: -190px;">' .
 					AdEngine::getInstance()->getPlaceHolderDiv('LEFT_SKYSCRAPER_3', true) .
@@ -2098,6 +2101,7 @@ if(count($wikiafooterlinks) > 0) {
 					if (ArticleAdLogic::isMainPage()) { //main page
 						echo '<div style="text-align: center; margin-bottom: 10px;">'. AdEngine::getInstance()->getPlaceHolderDiv('HOME_LEFT_SKYSCRAPER_2', false) .'</div>';
 					} else if ( ArticleAdLogic::isContentPage() &&
+			     			   ! $wgEnableAdsInContent && // Turn off Lower skys when ads in content is enabled
 					     	   !ArticleAdLogic::isShortArticle($this->data['bodytext'])) { //valid article
 						echo '<div style="text-align: center; margin-bottom: 10px;">'. AdEngine::getInstance()->getPlaceHolderDiv('LEFT_SKYSCRAPER_2', false) .'</div>';
 					}
