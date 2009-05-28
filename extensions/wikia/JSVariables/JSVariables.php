@@ -56,5 +56,10 @@ function wfMakeGlobalVariablesScript($vars) {
 	// Set the JavaScript variable which is used by AJAX request to make data caching possible - Inez
 	$vars['wgMWrevId'] = $wgMemc->get(wfMemcKey('wgMWrevId'));
 
+
+	// Ads In Content is handled with javascript, use this to turn it on. 
+	global $wgEnableAdsInContent; 
+	$vars['wgEnableAdsInContent'] = $wgEnableAdsInContent;
+
 	return true;
 }
