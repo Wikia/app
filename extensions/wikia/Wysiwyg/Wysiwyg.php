@@ -465,8 +465,8 @@ function Wysiwyg_WikiTextToHtml($wikitext, $pageName = false, $encode = false) {
 
 	// fix for multiline pre
 	//
-	// macbre: stripslashes added to fix RT #15834
-	$html = preg_replace('#<pre>.*?</pre>#sie', 'str_replace("\\n", "<!--EOLPRE-->\\n", stripslashes("\0"))', $html);
+	// macbre: str_replace added to fix RT #15834
+	$html = preg_replace('#<pre>.*?</pre>#sie', 'str_replace("\\n", "<!--EOLPRE-->\\n", str_replace("\\\'", "\'", "\0"))', $html);
 
 	// fix for IE
 	$html = str_replace("\n", "<!--EOL1-->\n", $html);
