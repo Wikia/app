@@ -5,9 +5,8 @@
 # this is a modified version, specially for MultiWikiEdit extension and task
 # bartek@wikia.com
 
-# Usage: php editOn.php [-u <user>] [-t <title>] [-x <text>] [-s <summary>] [-m <minor>] [-b <bot>] [-a <autoSummary>] [-no-rc <no-rc>] -add <listfile>
+# Usage: php editOn.php [-u <user>] -t <title> -x <text> [-s <summary>] [-m <minor>] [-b <bot>] [-a <autoSummary>] [-no-rc <no-rc>] [-newonly] [-add]
 # where
-#       <listfile> is a file where each line contains the title of a page to be deleted.
 #       <user> is the username
 #       <title> is what we want to edit
 #       <text> is the new text for this article
@@ -16,6 +15,7 @@
 #       <bot> for a bot (hidden) edit
 #       <autoSummary>  for autosummary
 #       <no-rc> do not show in recent changes
+#	<newonly> do not touch existing articles
 #       <add> do not overwrite article, just add to existing text
 #       <namespace> is the number of namespace
 
@@ -31,6 +31,7 @@ $bot = isset( $options['b'] );
 $autoSummary = isset( $options['a'] );
 $noRC = isset( $options['no-rc'] );
 $add = isset( $options['add']);
+$newonly = isset( $options['newonly'] );
 
 $wgUser = User::newFromName( $userName );
 if ( !$wgUser ) {
@@ -50,6 +51,11 @@ if ( !$wgTitle ) {
 print $wgTitle->getPrefixedText () ;
 
 $wgArticle = new Article( $wgTitle );
+
+if ( !empty( $newonly ) && $wgArticle->exists() ) {
+	print "ARTICLE EXISTS, SKIPPING\n";
+	exit( 1 );
+}
 
 # Read the text
 $text = $options ['x'] ;
@@ -71,4 +77,3 @@ if ( $success ) {
 } else {
 	print "FAILED\n";
 }
-?>
