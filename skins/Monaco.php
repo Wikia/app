@@ -1607,7 +1607,7 @@ if(isset($this->data['articlelinks']['right']) && $showright ) {
 			<!-- ARTICLE -->
 <?php
 echo AdEngine::getInstance()->getSetupHtml();
-global $wgOut;
+global $wgOut, $wgEnableAdsInContent;
 $topAdCode = '';
 $topAdCodeDisplayed = false;
 if ($wgOut->isArticle()){
@@ -1618,7 +1618,7 @@ if ($wgOut->isArticle()){
 		}
 	} else if ( ArticleAdLogic::isContentPage()){
 	
-		if ( ArticleAdLogic::isStubArticle($this->data['bodytext'])){
+		if ( ArticleAdLogic::isStubArticle($this->data['bodytext']) || $wgEnableAdsInContent){
 			$topAdCode = AdEngine::getInstance()->getPlaceHolderDiv('TOP_LEADERBOARD');
 		} else if (ArticleAdLogic::isBoxAdArticle($this->data['bodytext'])) {
 			$topAdCode = AdEngine::getInstance()->getPlaceHolderDiv('TOP_RIGHT_BOXAD');

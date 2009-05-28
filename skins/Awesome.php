@@ -1542,7 +1542,7 @@ if(isset($this->data['articlelinks']['right']) && $showright ) {
 			<!-- ARTICLE -->
 <?php
 echo AdEngine::getInstance()->getSetupHtml();
-global $wgOut;
+global $wgOut, $wgEnableAdsInContent;
 $topAdCode = '';
 $topAdCodeDisplayed = false;
 if ($wgOut->isArticle()){
@@ -1551,15 +1551,16 @@ if ($wgOut->isArticle()){
 		if ($wgEnableFAST_HOME2) {
 			$topAdCode .= AdEngine::getInstance()->getPlaceHolderDiv('HOME_TOP_RIGHT_BOXAD');
 		}
-	} else if ( ArticleAdLogic::isContentPage() &&
-		   !ArticleAdLogic::isStubArticle($this->data['bodytext'])) { //valid article
+	} else if ( ArticleAdLogic::isContentPage() ){
+                if ( ArticleAdLogic::isStubArticle($this->data['bodytext']) || $wgEnableAdsInContent){
+                        $topAdCode = AdEngine::getInstance()->getPlaceHolderDiv('TOP_LEADERBOARD');
+                } else if (ArticleAdLogic::isBoxAdArticle($this->data['bodytext'])) {
+                        $topAdCode = AdEngine::getInstance()->getPlaceHolderDiv('TOP_RIGHT_BOXAD');
+                } else {
+                        // Long article, but a collision
+                        $topAdCode = AdEngine::getInstance()->getPlaceHolderDiv('TOP_LEADERBOARD');
+                }
 
-		if (ArticleAdLogic::isBoxAdArticle($this->data['bodytext'])) {
-			$topAdCode = AdEngine::getInstance()->getPlaceHolderDiv('TOP_RIGHT_BOXAD');
-		} else {
-			// Long article, but a collision
-			$topAdCode = AdEngine::getInstance()->getPlaceHolderDiv('TOP_LEADERBOARD');
-		}
 	}
 }
 ?>
