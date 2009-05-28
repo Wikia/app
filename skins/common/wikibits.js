@@ -133,6 +133,17 @@ function showTocToggle(toctitleId, tocId, togglelinkId) {
 		if (cookiePos > -1 && document.cookie.charAt(cookiePos + 8) == 1) {
 			toggleToc(tocId, togglelinkId);
 		}
+		/* Wikia change begin - @author: Marooned */
+		//changes close related to TOCimprovements extension
+		//change link text when anon and no cookie
+		if (typeof TOCimprovementsEnabled != 'undefined' && !wgUserName && cookiePos == -1) {
+			var toc = document.getElementById(tocId ? tocId : 'toc').getElementsByTagName('ul')[0];
+			var toggleLink = document.getElementById(togglelinkId ? togglelinkId : 'togglelink');
+			//browser bug: setting display:none via CSS will not be seen as element.style.display
+			toc.style.display = 'none';
+			changeText(toggleLink, tocShowText);
+		}
+		/* Wikia change end */
 	}
 }
 
