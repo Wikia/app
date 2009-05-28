@@ -44,6 +44,19 @@ function TOCimprovementsInit() {
 		return true;
 	}
 	$wgHooks['SkinTemplateSetupPageCss'][] = 'TOCimprovementsAddCSS';
+	$wgHooks['MakeGlobalVariablesScript'][] = 'TOCimprovementsSetupVars';
+}
+
+/**
+ * Set variables for JS usage
+ *
+ * @author Maciej Błaszkowski <marooned at wikia-inc.com>
+ */
+function TOCimprovementsSetupVars($vars) {
+	//used in wikibits.js to enable anon handling
+	$vars['TOCimprovementsEnabled'] = '1';
+
+	return true;
 }
 
 /**
@@ -53,8 +66,7 @@ function TOCimprovementsInit() {
  */
 function TOCimprovementsAddCSS(&$out) {
 	global $wgExtensionsPath, $wgStyleVersion, $wgUser, $wgCookiePath, $wgCookieDomain, $wgCookieSecure;
-	if ($wgUser->isAnon() && !empty($_COOKIE['hidetoc'])) {
-		setcookie('hidetoc', '1', 0, $wgCookiePath, $wgCookieDomain, $wgCookieSecure);
+	if ($wgUser->isAnon() && (!isset($_COOKIE['hidetoc']) || $_COOKIE['hidetoc'] == '1')) {
 		$out .= "@import url($wgExtensionsPath/wikia/TOCimprovements/TOCimprovements.css?$wgStyleVersion);\n";
 	}
 	return true;
