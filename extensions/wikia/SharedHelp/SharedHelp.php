@@ -24,6 +24,8 @@ $wgHooks['EditPage::showEditForm:initial'][] = 'SharedHelpEditPageHook';
 $wgHooks['BrokenLink'][] = 'SharedHelpBrokenLink';
 $wgHooks['WantedPages::getSQL'][] = 'SharedHelpWantedPagesSql';
 
+define( 'NOSHAREDHELP_MARKER', '<!--NOSHAREDHELP-->' );
+
 class SharedHttp extends Http {
 	static function get( $url, $timeout = 'default' ) {
 		return self::request( "GET", $url, $timeout );
@@ -106,7 +108,7 @@ function SharedHelpHook(&$out, &$text) {
 
 	# Do not process if explicitly told not to
 	$mw = MagicWord::get('MAG_NOSHAREDHELP');
-	if ( $mw->match( $text ) ) {
+	if ( $mw->match( $text ) || strpos( $text, NOSHAREDHELP_MARKER ) !== false ) {
 		return true;
 	}
 
@@ -382,6 +384,10 @@ function efSharedHelpGetMagicWord(&$magicWords, $langCode) {
 }
 
 function efSharedHelpRemoveMagicWord(&$parser, &$text, &$strip_state) {
-	MagicWord::get('MAG_NOSHAREDHELP')->matchAndRemove($text);
+	$found = MagicWord::get('MAG_NOSHAREDHELP')->matchAndRemove($text);
+	if ( $found ) {
+		$text .= NOSHAREDHELP_MARKER;
+	}
+
 	return true;
 }
