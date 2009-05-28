@@ -27,6 +27,7 @@ $messages['en'] = array(
                         'multiwikiedit_botedit_caption' => 'Bot (hidden) edit' ,
                         'multiwikiedit_autosummary_caption' => 'Enable autosummary' ,
                         'multiwikiedit_norecentchanges_caption' => 'Do not show the change in recent changes' ,
+			'multiwikiedit_newonly_caption' => 'Skip existing articles',
                         'multiwikiedit_choose_articles' => 'choose which found articles should be edited' ,
                         'multiwikiedit_processing' => 'editing pages ' ,
                         'multiwikiedit_from_file' => 'from file list' ,

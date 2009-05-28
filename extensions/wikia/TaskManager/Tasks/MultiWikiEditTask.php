@@ -48,12 +48,13 @@ class MultiWikiEditTask extends BatchTask {
 		$this->addLog ("Article summary: ") ;
 		$this->addLog ($summary_text) ;
 
-		$options_switches = array ('-m','-b','-a','--no-rc') ;
+		$options_switches = array ('-m','-b','-a','--no-rc', '-newonly') ;
 		$options_descriptions = array (
 			'minor edit' ,
 			'bot (hidden) edit' ,
 			'enable autosummary' ,
-			'do not show the change in recent changes'
+			'do not show the change in recent changes',
+			'skip existing articles'
 		) ;
 
 		$this->addLog ("Article flags used with this operation: ") ;
@@ -76,7 +77,7 @@ class MultiWikiEditTask extends BatchTask {
 			$article_to_do = $titleobj->getText () ;
 			$namespace = intval($articles [$i]["namespace"]);
 
-			$sCommand = "SERVER_ID=".$articles [$i]["wikiid"]." php $IP/maintenance/wikia/editOn.php -u ".$username." -t " . escapeshellarg ($article_to_do) . " -n " . $namespace . " -x ".$text." ".$summary_text." $semiglobals --conf " .$wgWikiaLocalSettingsPath ;
+			$sCommand = "SERVER_ID=".$articles [$i]["wikiid"]." php $IP/maintenance/wikia/editOn.php -u $username -t " . escapeshellarg ($article_to_do) . " -n " . $namespace . " -x $text ".$summary_text." $semiglobals --conf $wgWikiaLocalSettingsPath";
 
                         $city_url  = WikiFactory::getVarValueByName( "wgServer", $articles [$i]["wikiid"] ) ;
                         if (empty ($city_url)) {
