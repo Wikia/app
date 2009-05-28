@@ -534,6 +534,10 @@ class ReverseParser {
 						}
 						break;
 
+					case 'thead': // RT #16149
+						$out = rtrim($textContent) . "\n|-\n";
+						break;
+
 					case 'th':
 						$attStr = $this->getAttributesStr($node);
 						if ($attStr != '') {
