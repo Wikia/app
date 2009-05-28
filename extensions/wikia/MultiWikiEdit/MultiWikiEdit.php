@@ -52,10 +52,9 @@ function wfMultiWikiEditSpecial( $par ) {
 	}
 }
 
-/* the form for blocking names and addresses */
 class MultiWikiEditForm {
 	var $mMode, $mUser, $mPage, $mReason, $mFile, $mWikiList, $mFileTemp, $mRange ;
-	var $mText, $mMinorEdit, $mBotEdit, $mAutoSummary, $mNoRecentChanges ;
+	var $mText, $mMinorEdit, $mBotEdit, $mAutoSummary, $mNoRecentChanges, $mNewOnly ;
 
 	/* constructor */
 	function multiwikieditForm ( $par ) {
@@ -75,6 +74,7 @@ class MultiWikiEditForm {
 		$this->mBotEdit = $wgRequest->getVal ('wpBotEdit') ;
 		$this->mAutoSummary = $wgRequest->getVal ('wpAutoSummary') ;
 		$this->mNoRecentChanges = $wgRequest->getVal ('wpNoRecentChanges') ;
+		$this->mNewOnly = $wgRequest->getVal ('wpNewOnly') ;
 	}
 
 	/* output */
@@ -102,6 +102,7 @@ class MultiWikiEditForm {
 			 $this->mBotEdit ? $scBotEdit = "checked=\"checked\"" : $scBotEdit = '' ;
 			 $this->mAutoSummary ? $scAutoSummary = "checked=\"checked\"" : $scAutoSummary = '' ;
 			 $this->mNoRecentChanges ? $scNoRecentChanges = "checked=\"checked\"" : $scNoRecentChanges = '' ;
+			 $this->mNewOnly ? $scNewOnly = "checked=\"checked\"" : $scNewOnly = '';
 
 			 $scText = $this->mText ;
 			 $scSummary = $this->mSummary ;
@@ -114,6 +115,7 @@ class MultiWikiEditForm {
 			$scBotEdit = '' ;
 			$scAutoSummary = '' ;
 			$scNoRecentChanges = '' ;
+			$scNewOnly = '';
 			$scText = '' ;
 			$scSummary = '' ;
 			$scRange = '' ;
@@ -238,9 +240,16 @@ class MultiWikiEditForm {
 			</td>
 		</tr>
 		<tr>
+			<td align=\"right\">&nbsp;</td>
+			<td align=\"left\">
+				<input type=\"checkbox\" tabindex=\"10\" name=\"wpNewOnly\" id=\"wpNewOnly\" value=\"1\" $scNewOnly />
+				".wfMsg('multiwikiedit_newonly_caption')."
+			</td>
+		</tr>
+		<tr>
 			<td align=\"right\" style=\"vertical-align:top\">".wfMsg('multiwikiedit_page')." :</td>
 			<td align=\"left\">
-				<textarea tabindex=\"10\" name=\"wpPage\" id=\"wpPage\" cols=\"40\" rows=\"2\">$scPage</textarea>
+				<textarea tabindex=\"11\" name=\"wpPage\" id=\"wpPage\" cols=\"40\" rows=\"2\">$scPage</textarea>
 			</td>
 		</tr>") ;
 
@@ -248,7 +257,7 @@ class MultiWikiEditForm {
 		<tr>
 			<td align=\"right\">&#160;</td>
 			<td align=\"left\">
-				<input tabindex=\"11\" name=\"wpmultiwikieditSubmit\" type=\"submit\" value=\"".wfMsg('multiwikiedit_button')."\" />
+				<input tabindex=\"12\" name=\"wpmultiwikieditSubmit\" type=\"submit\" value=\"".wfMsg('multiwikiedit_button')."\" />
 			</td>
 		</tr>
 	</table>
@@ -498,7 +507,7 @@ class MultiWikiEditForm {
 			}
 		}
 
-		$_SESSION ['MWE_selected_flags'] = array ($this->mMinorEdit, $this->mBotEdit, $this->mAutoSummary, $this->mNoRecentChanges) ;
+		$_SESSION ['MWE_selected_flags'] = array ($this->mMinorEdit, $this->mBotEdit, $this->mAutoSummary, $this->mNoRecentChanges, $this->mNewOnly);
 		$_SESSION ['MWE_selected_articles'] = $result_array ;
 		$_SESSION ['MWE_text'] = $this->mText ;
 		$_SESSION ['MWE_username'] = $username ;
