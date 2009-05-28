@@ -1547,6 +1547,9 @@ FCK.Track = function(fakeUrl) {
 // RT #14996 - escape characters which may cause problems when sending request to Analytics
 FCK.Track('/init/' + window.parent.wgPageName.replace(/&|=|\?|%|\+/g, '_'));
 
+// RT #14996 - will be compared with number of /init/...
+FCK.Track('/editorInit');
+
 // store editor state (current mode and data) when leaving editor
 // IE doesn't seem to support that
 if (!FCKBrowserInfo.IsIE) {
