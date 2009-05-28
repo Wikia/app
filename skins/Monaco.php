@@ -1671,7 +1671,7 @@ if ($wgOut->isArticle()){
 					$this->html('bodytext');
 
 		                        // Display additional ads before categories and footer on long pages
-					global $wgEnableAdsPrefooter, $wgDBname;
+					global $wgEnableAdsPrefooter, $wgDBname, $wgEnableAdsInContent;
 					if ( !empty( $wgEnableAdsPrefooter ) &&
 					$wgUser->isAnon() &&
 					$wgOut->isArticle() &&
@@ -2097,6 +2097,7 @@ if(count($wikiafooterlinks) > 0) {
 			<?php
 				echo AdEngine::getInstance()->getPlaceHolderDiv('LEFT_SLIMBOX_1', false);
 				echo AdEngine::getInstance()->getPlaceHolderDiv('LEFT_NAVBOX_2', false);
+				global $wgEnableAdsInContent;
 				if ($wgOut->isArticle() ){
 					if (ArticleAdLogic::isMainPage()) { //main page
 						echo '<div style="text-align: center; margin-bottom: 10px;">'. AdEngine::getInstance()->getPlaceHolderDiv('HOME_LEFT_SKYSCRAPER_2', false) .'</div>';

@@ -1604,10 +1604,11 @@ if ($wgOut->isArticle()){
 					$this->html('bodytext');
 
 		                        // Display additional ads before categories and footer on long pages
-					global $wgEnableAdsPrefooter, $wgDBname;
+					global $wgEnableAdsPrefooter, $wgDBname, $wgEnableAdsInContent;
 					if ( !empty( $wgEnableAdsPrefooter ) &&
 					$wgUser->isAnon() &&
 					$wgOut->isArticle() &&
+					! $wgEnableAdsInContent &&
 					ArticleAdLogic::isContentPage() &&
 					ArticleAdLogic::isLongArticle($this->data['bodytext'])) {
 						echo  '<table style="margin-top: 1em; width: 100%; clear: both"><tr>' .
@@ -1633,17 +1634,7 @@ if ($wgOut->isArticle()){
 
 			</div>
 			<!-- /ARTICLE -->
-			<?php // Check to see if it is a super long article, if so, show bottom left nav skyscraper
-			global $wgContLang;
-			if ($wgOut->isArticle() &&
-			    !$wgContLang->isRTL() && // Since this is in the left nav, not suitable for right-to-left languages
-		            !ArticleAdLogic::isMainPage() &&
-			     ArticleAdLogic::isContentPage() &&
-			     ArticleAdLogic::isSuperLongArticle($this->data['bodytext'])) {
-				echo '<div style="position: absolute; height: 600px; width: 160px; margin-top: -600px; left: -190px;">' .
-					AdEngine::getInstance()->getPlaceHolderDiv('LEFT_SKYSCRAPER_3', true) .
-				     '</div>' . "\n";
-			}
+			<?php
 
 		wfProfileOut( __METHOD__ . '-article'); ?>
 
@@ -2030,8 +2021,9 @@ if(count($wikiafooterlinks) > 0) {
 			<?= WidgetFramework::getInstance()->Draw(1) ?>
 
 			<?php
+				global $wgEnableAdsInContent;
 				echo AdEngine::getInstance()->getPlaceHolderDiv('LEFT_NAVBOX_2', false);
-				if ($wgOut->isArticle() ){
+				if ($wgOut->isArticle() && !$wgEnableAdsInContent){
 					if (ArticleAdLogic::isMainPage()) { //main page
 						echo '<div style="text-align: center; margin-bottom: 10px;">'. AdEngine::getInstance()->getPlaceHolderDiv('HOME_LEFT_SKYSCRAPER_2', false) .'</div>';
 					} else if ( ArticleAdLogic::isContentPage() &&
