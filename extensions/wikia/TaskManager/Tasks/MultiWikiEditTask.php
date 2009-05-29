@@ -48,7 +48,7 @@ class MultiWikiEditTask extends BatchTask {
 		$this->addLog ("Article summary: ") ;
 		$this->addLog ($summary_text) ;
 
-		$options_switches = array ('-m','-b','-a','--no-rc', '-newonly') ;
+		$options_switches = array ('-m','-b','-a','--no-rc', '--newonly') ;
 		$options_descriptions = array (
 			'minor edit' ,
 			'bot (hidden) edit' ,
