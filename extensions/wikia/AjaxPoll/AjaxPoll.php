@@ -45,6 +45,9 @@ function wfAjaxPollTag() {
 
 	$wgParser->setHook( "poll", array( "AjaxPollClass", "renderFromTag" ) );
 
+	// temporary solution to ensure AjaxPoll.js is always loaded
+	global $wgOut, $wgJsMimeType, $wgExtensionsPath, $wgStyleVersion, $wgHooks;
+	$wgOut->addScript("<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/AjaxPoll/AjaxPoll.js?{$wgStyleVersion}\" ></script>\n"); 
 }
 /**
  * axAjaxPollSubmit

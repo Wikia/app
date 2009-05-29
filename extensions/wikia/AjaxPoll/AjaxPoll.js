@@ -51,7 +51,7 @@ var AjaxPoll = {
 		});
 
 		// loading inicator & block submit button
-		$().log('AjaxPoll: submit #' + form.id);
+		$().log('submit #' + form.id, 'AjaxPoll');
 		$('#pollSubmittingInfo' + pollId).css('visibility', 'visible');
 		$('#axPollSubmit' + pollId).attr('disabled', true);
 
@@ -61,21 +61,29 @@ var AjaxPoll = {
 		return false;
 	},
 
+	initialized: false,
+
 	init: function() {
-		var polls = $('.ajax-poll form');
+		if (this.initialized) {
+			return;
+		}
+
+		var polls = $('.ajax-poll').children('form');
 		if (polls.length == 0) {
 			// no polls found
 			return;
 		}
 
-		$().log('AjaxPoll: init');
+		$().log('init', 'AjaxPoll');
 
 		polls.each( function() {
 			$(this).submit( AjaxPoll.submit );
 		});
+
+		this.initialized = true;
 	}
 };
 
 $(function() {
 	AjaxPoll.init();
-}).log('AjaxPoll: JS loaded');
+}).log('JS loaded', 'AjaxPoll');
