@@ -1,74 +1,81 @@
-/**
- * YUI! javascript code for AjaxPoll
- */
-YAHOO.namespace( "AjaxPoll" );
+var AjaxPoll = {
+	callback: function( answer ) {
+		// hide loading inicator & unblock submit button
+		pollId = answer.id;
+		$('#pollSubmittingInfo' + pollId).css('visibility', 'hidden');
+		$('#axPollSubmit' + pollId).attr('disabled', false);
 
-YAHOO.AjaxPoll.Callback = {
-	success: function( response ) {
-//	var answer = YAHOO.Tools.JSONParse( response.responseText );
-// simple hack to avoid YUI "parseJSON error":
-		var answer = eval('(' + response.responseText + ')');
-		var votes = answer["votes"];
+		// update total and status info
+		$('#wpPollTotal' + pollId).html(answer.total);
+		$('#wpPollStatus' + pollId).html(answer.status);
 
-		YAHOO.util.Dom.setStyle('pollSubmittingInfo' + answer['id'], 'visibility', 'hidden');
+		// update result bars
+		var votes = answer.votes;
+		$('div.wpPollBar' + pollId).each( function() {
+			var barId = parseInt( this.id.split('-').pop() );
 
-		/**
-		 * get all spans with class "wpBar<id>"
-		 */
-		var bars = YAHOO.util.Dom.getElementsByClassName( "wpPollBar" + answer["id"], "div" );
-		for( var b in bars ) {
-			/**
-			 * now take id of span and check new value in votes, if not defined
-			 * means 0px
-			 */
-			var bar_id = bars[ b ].id;
-			if( bar_id.match( /^wpPollBar\w{32}\-(\d+)$/ ) ) {
-				var key = RegExp.$1;
-				if( votes[ key ] ) {
-					YAHOO.util.Dom.setStyle( [ bar_id ], "width", votes[ key ][ "percent" ] + "%" );
-					YAHOO.util.Dom.get( "wpPollVote" + answer["id"] + "-" + key ).innerHTML = votes[ key ][ "value" ];
-					YAHOO.util.Dom.get( "wpPollVote" + answer["id"] + "-" + key ).title = votes[ key ][ "title" ];
-				}
-				else {
-					YAHOO.util.Dom.setStyle( [ bar_id ], "width", "0px" );
-					YAHOO.util.Dom.get( "wpPollVote" + answer["id"] + "-" + key ).innerHTML = 0;
-					YAHOO.util.Dom.get( "wpPollVote" + answer["id"] + "-" + key ).title = 0;
-				}
+			if (typeof votes[barId] != 'undefined') {
+				$(this).css('width', votes[barId].percent + '%');
+				$('#wpPollVote' + pollId + '-' + barId).html(votes[barId].value).attr('title', votes[barId].title.replace(/&nbsp;/g, ' '));
 			}
-		}
+			else {
+				$(this).css('width', '0px');
+				$('#wpPollVote' + pollId + '-' + barId).html('0').attr('title', '0');
+			}
+		});
 
-		/**
-		 * update total div and status
-		 */
-		YAHOO.util.Dom.get( "wpPollTotal" + answer["id"] ).innerHTML = answer["total"];
-		YAHOO.util.Dom.get( "wpPollStatus" + answer["id"] ).innerHTML = answer["status"];
+		// send purge request
+		//$.post(wgScript, {action: 'purge', title: wgPageName});
 	},
-	failure: function( response ) {},
-	timeout: 50000
-};
 
-YAHOO.AjaxPoll.submit = function( e, data ) {
-	YAHOO.util.Dom.setStyle('pollSubmittingInfo'+data["id"], 'visibility', 'visible');
-	YAHOO.util.Event.preventDefault( e );
-	YAHOO.AjaxPoll.form = YAHOO.util.Dom.get( data["form"] );
-	YAHOO.util.Connect.setForm( YAHOO.AjaxPoll.form );
-	var amp = new RegExp("&amp;", "g");
-	data["url"]	= data["url"].replace( amp, "&" );
-	YAHOO.util.Connect.asyncRequest( "POST", data["url"], YAHOO.AjaxPoll.Callback );
-	return false;
-}
+	submit: function( e ) {
+		e.preventDefault();
 
-YAHOO.AjaxPoll.init = function() {
-	if( typeof( AjaxPollSubmitsArray ) != "undefined" ) {
-		for( var key in AjaxPollSubmitsArray ) {
-			YAHOO.util.Event.addListener(
-				AjaxPollSubmitsArray[ key ][ "submit" ],
-				"click",
-				YAHOO.AjaxPoll.submit,
-				{ "id":AjaxPollSubmitsArray[ key ][ "pollId" ], "form":AjaxPollSubmitsArray[ key ][ "id" ], "url":AjaxPollSubmitsArray[ key ][ "url" ] }
-			);
+		var form = this;
+		var pollId = form.id.substring(6);
+
+		// form AJAX request
+		var params = {
+			title:		wgPageName,
+			action:		'ajax',
+			rs:		'axAjaxPollSubmit',
+			wpPollId:	pollId,
+			wpVote:		'Vote!'
+		};
+
+		// get voted option
+		$('input[name=wpPollRadio' + pollId + ']').each(function(){
+			if (this.checked) {
+				params['wpPollRadio' + pollId] = this.value;
+			}
+		});
+
+		// loading inicator & block submit button
+		$().log('AjaxPoll: submit #' + form.id);
+		$('#pollSubmittingInfo' + pollId).css('visibility', 'visible');
+		$('#axPollSubmit' + pollId).attr('disabled', true);
+
+		// send AJAX request
+		$.post(wgScript, params, AjaxPoll.callback, 'json');
+
+		return false;
+	},
+
+	init: function() {
+		var polls = $('.ajax-poll form');
+		if (polls.length == 0) {
+			// no polls found
+			return;
 		}
+
+		$().log('AjaxPoll: init');
+
+		polls.each( function() {
+			$(this).submit( AjaxPoll.submit );
+		});
 	}
 };
 
-YAHOO.util.Event.onDOMReady( YAHOO.AjaxPoll.init );
+$(function() {
+	AjaxPoll.init();
+}).log('AjaxPoll: JS loaded');

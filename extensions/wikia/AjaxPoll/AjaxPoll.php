@@ -16,8 +16,10 @@
  */
 $wgExtensionCredits['parserhook'][] = array(
 	'name' => 'AjaxPoll',
-	'author' => '[http://www.wikia.com/wiki/User:Eloy.wikia Krzysztof Krzyżaniak (eloy)]',
-	'description' => 'Poll extension for MediaWiki driven by Ajax requests'
+	'author' => array('[http://www.wikia.com/wiki/User:Eloy.wikia Krzysztof Krzyżaniak (eloy)]', 'Maciej Brencz'),
+	'version' => '1.1',
+	'description' => 'Poll extension for MediaWiki driven by Ajax requests',
+	'url' => 'http://help.wikia.com/wiki/Help:Polls'
 );
 
 $wgExtensionFunctions[] = "wfAjaxPollTag";
@@ -39,12 +41,10 @@ require_once( dirname(__FILE__) . '/AjaxPoll_body.php' );
  * @global
  */
 function wfAjaxPollTag() {
-	global $wgParser, $wgOut, $wgJsMimeType, $wgExtensionsPath, $wgStyleVersion, $wgHooks;
+	global $wgParser; 
 
 	$wgParser->setHook( "poll", array( "AjaxPollClass", "renderFromTag" ) );
 
-	// add JS
-	$wgOut->addScript("<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/AjaxPoll/AjaxPoll.js?{$wgStyleVersion}\" ></script>\n");
 }
 /**
  * axAjaxPollSubmit

@@ -1,5 +1,4 @@
 <!-- s:poll -->
-<?php echo $css ?>
 <div class="ajax-poll" id="ajax-poll-<?php echo $id ?>" >
  <div class="header">
 		<?php echo $question ?>
@@ -43,12 +42,6 @@
 		<span id="pollSubmittingInfo<?php echo $id ?>" style="padding-left: 10px; visibility: hidden;">
 			<?php echo wfMsg("ajaxpoll-submitting"); ?>
 		</span>
-		<script type="text/javascript">
-		if( typeof( AjaxPollSubmitsArray ) == "undefined" ) {
-			var AjaxPollSubmitsArray = [];
-		}
-		AjaxPollSubmitsArray.push({"submit":"axPollSubmit<?php echo $id ?>", "id":"axPoll<?php echo $id ?>", "pollId":"<?php echo $id ?>", "url":"<?php echo ( is_object($title) ? $title->getFullURL( "action=ajax&rs=axAjaxPollSubmit" ) : "" ); ?>"});
-		</script>
 		<?php else: echo wfMsg("ajaxpoll-closed"); endif ?>
 	</form>
 </div>
