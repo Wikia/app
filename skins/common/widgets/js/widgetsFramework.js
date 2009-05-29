@@ -127,7 +127,7 @@ function edit_save() {
 
 	YAHOO.util.Connect.setForm('widget_'+id+'_editor');
 	YAHOO.util.Connect.asyncRequest('GET', wgScriptPath + '/index.php?action=ajax&rs=WidgetFrameworkAjax&actionType=configure&id='+id+'&skin='+skin, edit_save_callback);
-	$('#widget_'+id+'_editform').html().addClass('widget_loading');
+	$('#widget_'+id+'_editform').html('').addClass('widget_loading');
 }
 
 function edit_cancel() {
