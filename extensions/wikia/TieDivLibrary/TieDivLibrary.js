@@ -17,7 +17,6 @@ TieDivLibrary = new function() {
 		
 			//if the placeholder is offset by 0, something is probably wrong. don't position ad yet
 			if (this_offset.top == 0) {
-				$().log(this.id + ' would have been a problem!');
 				return;
 			};
 			
