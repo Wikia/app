@@ -795,15 +795,6 @@ body .header_menu_button * {
 	font-size: 15pt;
 	line-height: normal;
 }
-#google_ad_1 {
-	padding-right: 10px;
-}
-#google_ad_2 {
-	padding-left: 10px;
-}
-#google_ad_2 .google_label {
-	visibility: hidden;
-}
 .google_label:hover {
 	text-decoration: none;
 }
