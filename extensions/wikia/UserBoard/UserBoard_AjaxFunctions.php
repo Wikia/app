@@ -10,7 +10,7 @@ function wfSendBoardMessage($user_name,$message,$message_type,$count){
 	
 	$m = $b->sendBoardMessage($wgUser->getID(),$wgUser->getName(),$user_id_to, $user_name, urldecode($message),$message_type);
 	
-	return $b->displayMessages($user_id_to,0,$count);
+	return $b->displayMessages($user_id_to,0,$count, 0, true);
 
 }
 

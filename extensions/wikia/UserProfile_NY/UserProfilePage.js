@@ -8,13 +8,13 @@ function send_message(){
 		var callback = {
 			success: function(originalRequest){
 				if( typeof( originalRequest ) == "object" ){
-					response = originalRequest.responseText
+					response = originalRequest.responseText;
 				}else{
-					response = originalRequest
+					response = originalRequest;
 				}
-				document.getElementById("user-page-board").innerHTML = response
+				document.getElementById("user-page-board").innerHTML = response;
 				posted = 0;
-				$("message").value='';
+				document.getElementById("message").value='';
 			}
 		};
 		var request = YAHOO.util.Connect.asyncRequest('POST', url, callback, pars);					
