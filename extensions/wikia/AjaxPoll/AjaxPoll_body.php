@@ -174,10 +174,11 @@ class AjaxPollClass {
 		 */
 		foreach( $votes as $nr => $vote ) {
 			$percent = $vote[ "value" ] / $total * 100;
-			$percent = $wgLang->formatNum(round($percent, 2));
-			$votes[ $nr ][ "percent" ] = $percent;
-			$votes[ $nr ][ "title" ] = $percent . "%&nbsp;" . wfMsg("ajaxpoll-percentVotes");
+			$votes[ $nr ][ "percent" ] = round($percent, 2);
 			$votes[ $nr ][ "pixels" ] = $this->percent2pixels( $percent );
+
+			$percent = $wgLang->formatNum(round($percent, 2));
+			$votes[ $nr ][ "title" ] = $percent . "%&nbsp;" . wfMsg("ajaxpoll-percentVotes");
 			$votes[ $nr ][ "key" ] = $nr;
 		}
 		wfProfileOut( __METHOD__ );
@@ -217,16 +218,22 @@ class AjaxPollClass {
 		list( $votes, $total ) = $this->getVotes();
 
 		// macbre: add CSS to the first ajax poll on the page
+		$before = '';
 		if (self::$mCount == 0) {
 			global $wgExtensionsPath, $wgStyleVersion;
-			// I know, it doesn't validate, but <style> + @import neither
-			$css = "<link rel=\"stylesheet\" href=\"{$wgExtensionsPath}/wikia/AjaxPoll/AjaxPoll.css?{$wgStyleVersion}\" type=\"text/css\" />";
-		}
-		else {
-			$css = '';
-		}
 
-		self::$mCount++;
+			// I know, it doesn't validate, but <style> + @import neither
+			$before .= "<link rel=\"stylesheet\" href=\"{$wgExtensionsPath}/wikia/AjaxPoll/AjaxPoll.css?{$wgStyleVersion}\" type=\"text/css\" />";
+
+			// load JS only when needed
+			$before .= <<<JS
+<script type="text/javascript">/*<![CDATA[*/
+wgAfterContentAndJS.push(function() {
+	importScriptURI('{$wgExtensionsPath}/wikia/AjaxPoll/AjaxPoll.js?{$wgStyleVersion}');
+});
+/*]]>*/</script>
+JS;
+		}
 
 		$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
 		$oTmpl->set_vars( array(
@@ -239,10 +246,9 @@ class AjaxPollClass {
 			"status"	=> $this->mStatus,
 			"attribs"	=> $this->mAttribs,
 			"created"	=> wfTimestamp( TS_RFC2822, $this->mCreated ),
-			"css"		=> $css,
 		));
 
-		$before = $oTmpl->execute( "poll" );
+		$before .= $oTmpl->execute( "poll" );
 		$out = "";
 		/**
 		 * trim lines to avoid parser false behaviour
@@ -255,6 +261,8 @@ class AjaxPollClass {
 		} else {
 			$out = trim( $before );
 		}
+
+		self::$mCount++;
 
 		wfProfileOut( __METHOD__ );
 
@@ -350,6 +358,7 @@ class AjaxPollClass {
 		if( !is_null( $vote ) ) {
 			if( $this->doVote( $vote ) ) {
 				$status = wfMsg( "ajaxpoll-thankyou" );
+
 				// invalidate cache
 				$wgTitle->invalidateCache();
 
@@ -423,8 +432,10 @@ class AjaxPollClass {
 			__METHOD__
 		);
 		$dbw->commit();
-		wfDebug( __METHOD__ . "(): invalidate cache because of voting" );
+
+		wfDebug( __METHOD__ . "(): invalidate cache because of voting\n" );
 		$this->mTitle->invalidateCache();
+
 		wfProfileOut( __METHOD__ );
 
 		return $status;
