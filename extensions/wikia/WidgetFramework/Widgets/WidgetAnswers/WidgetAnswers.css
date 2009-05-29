@@ -1,5 +1,7 @@
 .WidgetAnswers dt.widget_title {
 	background: #252525 url(http://images.wikia.com/extensions/wikia/WidgetFramework/Widgets/WidgetAnswers/wikianswers.png) 0px -1px no-repeat;
+	color: #252525;
+	font-size: 0.01em;
 	height: 15px;
 }
 .WidgetAnswers dd.widget_contents {

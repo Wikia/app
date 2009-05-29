@@ -11,7 +11,7 @@ global $wgWidgets, $wgAvailableAnswersLang;
 $wgWidgets['WidgetAnswers'] = array(
 	'callback' => 'WidgetAnswers',
 	'title' => array(
-		'en' => ''
+		'en' => 'Wikianswers'
 	),
 	'desc' => array(
 		'en' => 'See a list of top un answered questions'
