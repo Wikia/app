@@ -200,12 +200,19 @@ $wgSkipSkins = array(
 		'wowwiki',
 		'lostbook',
 		'quartz',
+		'awesome',
+);
+/**
+ * @name wgSkipOldSkins
+ *
+ * Remove them only from SkinChooser but let use it if in prefs or ?useskin
+ */
+$wgSkipOldSkins = array(
 		'cologneblue',
 		'modern',
 		'myskin',
 		'simple',
 		'standard',
-		'awesome',
 );
 
 /**

@@ -76,7 +76,7 @@ function SkinChooserExtraToggle(&$extraToggle) {
 
 $wgHooks['AlternateSkinPreferences'][] = 'WikiaSkinPreferences';
 function WikiaSkinPreferences($pref) {
-	global $wgOut, $wgSkinTheme, $wgSkipSkins, $wgStylePath, $wgSkipThemes, $wgUser, $wgDefaultSkin, $wgDefaultTheme, $wgSkinPreviewPage, $wgAdminSkin;
+	global $wgOut, $wgSkinTheme, $wgSkipSkins, $wgStylePath, $wgSkipThemes, $wgUser, $wgDefaultSkin, $wgDefaultTheme, $wgSkinPreviewPage, $wgAdminSkin, $wgSkipOldSkins;
 
 	global $wgForceSkin;
 	if(!empty($wgForceSkin)) {
@@ -179,7 +179,7 @@ function WikiaSkinPreferences($pref) {
 
 		$oldSkinNames = array();
 		foreach($validSkinNames as $skinKey => $skinVal) {
-			if ( in_array( $skinKey, $wgSkipSkins ) && !($skinKey == $pref->mSkin) ) {
+			if (( in_array( $skinKey, $wgSkipSkins ) || in_array( $skinKey, $wgSkipOldSkins )) && !($skinKey == $pref->mSkin) ) {
 				continue;
 			}
 			$oldSkinNames[$skinKey] = $skinVal;
