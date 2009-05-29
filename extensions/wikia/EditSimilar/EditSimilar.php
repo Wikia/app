@@ -287,10 +287,10 @@ class EditSimilar {
 
 	// message box wrapper
 	static public function showMessage ($text) {
-		global $wgOut, $wgUser, $wgScript, $wgHooks;
+		global $wgOut, $wgUser, $wgScript, $wgExtensionsPath, $wgStyleVersion;
 
 		// macbre: load extension CSS on demand
-		$wgHooks['SkinTemplateSetupPageCss'][] = 'wfEditSimilarAddCSS';
+		$wgOut->addExtensionStyle("{$wgExtensionsPath}/wikia/EditSimilar/EditSimilar.css?{$wgStyleVersion}");
 
 		$wgOut->addScript ("
 			<script type=\"text/javascript\">
@@ -347,13 +347,6 @@ function wfEditSimilarCheck ($article) {
 		$_SESSION ['ES_saved'] = 'yes' ;
 	}
 	return true ;
-}
-
-// macbre: add extension CSS on demand
-function wfEditSimilarAddCSS(&$out) {
-	global $wgExtensionsPath, $wgStyleVersion;
-	$out .= "@import url($wgExtensionsPath/wikia/EditSimilar/EditSimilar.css?$wgStyleVersion);\n";
-	return true;
 }
 
 //view message depending on settings and the relevancy of the results
