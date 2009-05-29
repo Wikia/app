@@ -1,14 +1,15 @@
 var $G = YAHOO.util.Dom.get;
 
 jQuery("#answers_ask_field").ready(function() {
-	var answers_field_default = wgAskFormTitle;
-	jQuery("#answers_ask_field").focus(function() {
-		if (jQuery(this).attr('value') == answers_field_default) {
+	var answers_ask_field_default = wgAskFormTitle;
+	var answers_category_field_default = wgAskFormCategory;
+	jQuery(".header_field").focus(function() {
+		if (jQuery(this).attr('value') == eval(this.id + '_default')) {
 			jQuery(this).removeClass('alt').attr('value', '');
 		}
 	}).blur(function() {
 		if (jQuery(this).attr('value') == '') {
-			jQuery(this).addClass('alt').attr('value', answers_field_default);
+			jQuery(this).addClass('alt').attr('value', eval(this.id + '_default'));
 		}
 	});
 	
@@ -62,6 +63,10 @@ function alignCenter(e, target) {
 
 function askQuestion(){
 	q = document.getElementById('answers_ask_field').value.replace(/\s/g,"_");
+	c = document.getElementById('answers_category_field').value; 
+	if (c == wgAskFormCategory) {
+		c = '';
+	}
 	if( !q )return;
 	if( q == wgAskFormTitle )return;
 	
@@ -71,7 +76,7 @@ function askQuestion(){
 	q = encodeURIComponent( q );
 	
 	path = wgServer + wgArticlePath.replace("$1","");
-	url = path + "Special:CreateQuestionPage?questiontitle=" + q.charAt(0).toUpperCase() + q.substring(1);
+	url = path + "Special:CreateQuestionPage?questiontitle=" + q.charAt(0).toUpperCase() + q.substring(1) + "&categories=" + c;
 	window.location = url;
 }
 	
