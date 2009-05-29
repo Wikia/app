@@ -208,9 +208,9 @@ class UserBoard {
 		}
 	}
 	
-	public function getUserBoardMessages($user_id,$user_id_2=0,$limit=0,$page=0){
+	public function getUserBoardMessages($user_id,$user_id_2=0,$limit=0,$page=0, $master = false){
 		global $wgUser, $wgOut, $wgTitle, $wgParser;
-		$dbr =& wfGetDB( DB_SLAVE );
+		$dbr = ( $master ) ? wfGetDB( DB_MASTER ) : wfGetDB( DB_SLAVE );
 		
 		if($limit>0){
 			$limitvalue = 0;
@@ -331,9 +331,9 @@ class UserBoard {
 		return $count;
 	}
 	
-	public function displayMessages($user_id,$user_id_2=0,$count=10,$page=0){
+	public function displayMessages($user_id,$user_id_2=0,$count=10,$page=0, $master = false){
 		global $wgUser,$max_link_text_length, $wgTitle;
-		$messages = $this->getUserBoardMessages($user_id,$user_id_2,$count,$page);
+		$messages = $this->getUserBoardMessages($user_id,$user_id_2,$count,$page, $master);
 		$output = "";
 		if ($messages) {
 			
