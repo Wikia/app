@@ -292,15 +292,13 @@ class EditSimilar {
 		// macbre: load extension CSS on demand
 		$wgOut->addExtensionStyle("{$wgExtensionsPath}/wikia/EditSimilar/EditSimilar.css?{$wgStyleVersion}");
 
-		$wgOut->addScript ("
-			<script type=\"text/javascript\">
-				if (typeof WET != 'undefined') {
-					$(function() {
-						WET.byStr('userengagement/editSimilar_view');
-					});
-				}
-			</script>
-		");
+		// tracking
+		$wgOut->addInlineScript("if (typeof WET != 'undefined') {
+	$(function() {
+		WET.byStr('userengagement/editSimilar_view');
+	});
+}");
+
 		if ($wgUser->isLoggedIn () ) {		
 			$link = "<div class=\"editsimilar_dismiss\">[<span class=\"plainlinks\"><a href=\"" . $wgScript .  "?title=Special:Preferences#prefsection-4\" id=\"editsimilar_preferences\">" . wfMsg('editsimilar-link-disable') . "</a></span>]</div><div style=\"display:block\">&nbsp;</div>" ;
 		} else {
