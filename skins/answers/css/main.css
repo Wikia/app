@@ -18,7 +18,7 @@ body {
 	z-index: 10;
 }
 #wikianswers_logo { 
-	left: 30px; 
+	left: 15px; 
 	position: absolute; 
 }
 #answers_ask { 
@@ -31,30 +31,36 @@ body {
 }
 #ask_wrapper {
 	position: absolute;
-	left: 30px;
+	left: 15px;
 	bottom: 18px;
 }
 #answers_ask span { 
 	line-height: 34px; 
 	padding: 0 5px 0 3px; 
 } 
-#answers_ask_field { 
+input.header_field {
 	background: #FFF url(/skins/answers/images/ask_field_bg.png) top left repeat-x; 
 	border: 2px solid #093; 
 	font-size: 18pt; 
 	font-weight: bold; 
 	padding: 2px 5px; 
-	position: static;
-	width: 450px; 
+	position: static !important;
 }
-#answers_ask_field.alt { 
+#answers_ask_field { 
+	width: 350px; 
+}
+#answers_category_field {
+	margin-right: 5px;
+	width: 150px;
+}
+#answers_ask_field.alt, #answers_category_field.alt { 
 	color: #999; 
 	font-weight: normal; 
 }
 #answers_suggest {
 	left: 5px;
 	top: 2.8em;
-	width: 450px;
+	width: 350px;
 }
 #user_data {
 	position: absolute;

@@ -138,7 +138,8 @@ wfRunHooks('GetHTMLAfterBody', array (&$this));
 	
 		<div id="answers_ask">
 			<form method="get" action="" onsubmit="return false" name="ask_form" id="ask_form">
-				<input type="text" id="answers_ask_field" value="<?=htmlentities(wfMsg("ask_a_question"))?>" class="alt" /><span>?</span>
+				<input type="text" id="answers_ask_field" value="<?=htmlentities(wfMsg("ask_a_question"))?>" class="header_field alt" /><span>?</span>
+				<input type="text" id="answers_category_field" value="<?=htmlentities(wfMsg("in_category"))?>" class="header_field alt" />
 				<a href="javascript:void(0);" id="ask_button" class="huge_button huge_button_green"><div></div><?= wfMsg("ask_button") ?></a>
 			</form>
 		</div><?/*answers_ask*/?>
