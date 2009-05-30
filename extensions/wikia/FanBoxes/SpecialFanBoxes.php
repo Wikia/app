@@ -182,24 +182,24 @@ class FanBoxes extends SpecialPage {
 					$output.="<script>
 						
 						function reset_upload(){
-							\$('imageUpload-frame').src=\"/index.php?title=Special:FanBoxAjaxUpload\"
+							\$G('imageUpload-frame').src=\"/index.php?title=Special:FanBoxAjaxUpload\"
 							YAHOO.widget.Effects.Show(\"imageUpload-frame\");
 						}
 						
 						function completeImageUpload(){
-							\$('fanbox_image').innerHTML ='<div style=\"margin:0px 0px 10px 0px;\"><img height=\"30\" width=\"30\" src=\"../../images/common/ajax-loader-white.gif\"></div>'
-							\$('fanBoxLeftSideOutput2').innerHTML ='<div style=\"margin:0px 0px 10px 0px;\"><img height=\"30\" width=\"30\" src=\"../../images/common/ajax-loader-white.gif\"></div>'
+							\$G('fanbox_image').innerHTML ='<div style=\"margin:0px 0px 10px 0px;\"><img height=\"30\" width=\"30\" src=\"../../images/common/ajax-loader-white.gif\"></div>'
+							\$G('fanBoxLeftSideOutput2').innerHTML ='<div style=\"margin:0px 0px 10px 0px;\"><img height=\"30\" width=\"30\" src=\"../../images/common/ajax-loader-white.gif\"></div>'
 						}
 						
 						function uploadComplete(img_tag,img_name){
-							\$(\"fanbox_image\").innerHTML = img_tag
-							\$(\"fanbox_image2\").innerHTML = '<p><a href=\'javascript:reset_upload();\'>Upload New Image</a></p>'
-							\$(\"fanbox_image\").value = img_name
+							\$G(\"fanbox_image\").innerHTML = img_tag
+							\$G(\"fanbox_image2\").innerHTML = '<p><a href=\'javascript:reset_upload();\'>Upload New Image</a></p>'
+							\$G(\"fanbox_image\").value = img_name
 							
-							\$(\"fanBoxLeftSideOutput2\").innerHTML = img_tag
-							\$(\"fantag_image_name\").value = img_name
+							\$G(\"fanBoxLeftSideOutput2\").innerHTML = img_tag
+							\$G(\"fantag_image_name\").value = img_name
 							
-							\$(\"inputLeftSide\").value = \"\"						
+							\$G(\"inputLeftSide\").value = \"\"						
 							YAHOO.widget.Effects.Hide(\"imageUpload-frame\");
 						}
 					</script>
@@ -209,12 +209,12 @@ class FanBoxes extends SpecialPage {
 						
 						function create_fantag(){
 									
-							if(!\$(\"inputRightSide\").value){
+							if(!\$G(\"inputRightSide\").value){
 								alert(\"You must enter text for the right side\");
 								return '';
 							}
 							
-							if(!\$(\"inputLeftSide\").value && !\$(\"fantag_image_name\").value){
+							if(!\$G(\"inputLeftSide\").value && !\$G(\"fantag_image_name\").value){
 								alert(\"You must enter either text or an image for the left side\");
 								return '';
 							}
@@ -346,24 +346,24 @@ class FanBoxes extends SpecialPage {
 			$output.="<script>
 						
 						function reset_upload(){
-							\$('imageUpload-frame').src=\"/index.php?title=Special:FanBoxAjaxUpload\"
+							\$G('imageUpload-frame').src=\"/index.php?title=Special:FanBoxAjaxUpload\"
 							YAHOO.widget.Effects.Show(\"imageUpload-frame\");
 						}
 						
 						function completeImageUpload(){
-							\$('fanbox_image').innerHTML ='<div style=\"margin:0px 0px 10px 0px;\"><img height=\"30\" width=\"30\" src=\"../../images/common/ajax-loader-white.gif\"></div>'
-							\$('fanBoxLeftSideOutput2').innerHTML ='<div style=\"margin:0px 0px 10px 0px;\"><img height=\"30\" width=\"30\" src=\"../../images/common/ajax-loader-white.gif\"></div>'
+							\$G('fanbox_image').innerHTML ='<div style=\"margin:0px 0px 10px 0px;\"><img height=\"30\" width=\"30\" src=\"../../images/common/ajax-loader-white.gif\"></div>'
+							\$G('fanBoxLeftSideOutput2').innerHTML ='<div style=\"margin:0px 0px 10px 0px;\"><img height=\"30\" width=\"30\" src=\"../../images/common/ajax-loader-white.gif\"></div>'
 						}
 						
 						function uploadComplete(img_tag,img_name){
-							\$(\"fanbox_image\").innerHTML = img_tag
-							\$(\"fanbox_image2\").innerHTML = '<p><a href=\'javascript:reset_upload();\'>Upload New Image</a></p>'
-							\$(\"fanbox_image\").value = img_name
+							\$G(\"fanbox_image\").innerHTML = img_tag
+							\$G(\"fanbox_image2\").innerHTML = '<p><a href=\'javascript:reset_upload();\'>Upload New Image</a></p>'
+							\$G(\"fanbox_image\").value = img_name
 							
-							\$(\"fanBoxLeftSideOutput2\").innerHTML = img_tag
-							\$(\"fantag_image_name\").value = img_name
+							\$G(\"fanBoxLeftSideOutput2\").innerHTML = img_tag
+							\$G(\"fantag_image_name\").value = img_name
 							
-							\$(\"inputLeftSide\").value = \"\"						
+							\$G(\"inputLeftSide\").value = \"\"						
 							YAHOO.widget.Effects.Hide(\"imageUpload-frame\");
 						}
 					</script>
@@ -375,29 +375,29 @@ class FanBoxes extends SpecialPage {
 						function create_fantag(){
 
 							
-							if(!\$(\"inputRightSide\").value){
+							if(!\$G(\"inputRightSide\").value){
 								alert(\"You must enter text for the right side\");
 								return '';
 							}
 							
-							if(!\$(\"inputLeftSide\").value && !\$(\"fantag_image_name\").value){
+							if(!\$G(\"inputLeftSide\").value && !\$G(\"fantag_image_name\").value){
 								alert(\"You must enter either text or an image for the left side\");
 								return '';
 							}
 							
-							if(!\$(\"wpTitle\").value){
+							if(!\$G(\"wpTitle\").value){
 								alert(\"You must enter a title\");
 								return '';
 							}
 							
-							if(\$(\"wpTitle\").value.indexOf('#') > -1){
+							if(\$G(\"wpTitle\").value.indexOf('#') > -1){
 								alert(\"# is an invalid character for the title.\")
 								return '';
 							}
-							\$(\"wpTitle\").value = \$(\"wpTitle\").value.replace('&','%26')
+							\$G(\"wpTitle\").value = \$G(\"wpTitle\").value.replace('&','%26')
 								
 							var url = \"index.php?action=ajax\";
-							var pars = \"rs=wfFanBoxesTitleExists&rsargs[]=\"+escape(\$(\"wpTitle\").value)
+							var pars = \"rs=wfFanBoxesTitleExists&rsargs[]=\"+escape(\$G(\"wpTitle\").value)
 							var callback = {
 								success: function( req ) {
 									if(req.responseText.indexOf(\"OK\")>=0){
