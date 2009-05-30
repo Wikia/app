@@ -102,6 +102,7 @@ WET.track = function(fakeurl) {
 	if(WET.skinname != '' && typeof urchinTracker != 'undefined') {
 		_uacct = 'UA-2871474-1';
 		var fake = '/1_' + WET.skinname + '/' + WET.username + '/' + fakeurl;
+		if ('answers' == skin) {} else // WET.skinname and WET.username @answers equal 'undefined' here so why bother with tracking...
 		$().log(fake, 'tracker');
 		urchinTracker(fake);
 		if(wgPrivateTracker) {
