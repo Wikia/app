@@ -251,7 +251,7 @@ class FanBoxes extends SpecialPage {
 
 
 		$output .="<div >
-			".wfMsgExt("userboxes-instructions","parse")."
+			".wfMsgExt("fanbox_instructions","parse")."
 		</div>
 		
 			<form action=\"\" method=\"post\" name=\"form1\">
