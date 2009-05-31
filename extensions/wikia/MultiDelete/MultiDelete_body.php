@@ -313,9 +313,9 @@ class MultiDelete extends SpecialPage {
 			$thisTask->mUsername = $username;
 			$submit_id = $thisTask->submitForm();
 			if ($submit_id !== false) {
-				$wgOut->addHtml("<br/>". wfMsg('multidelete-task-added', $submit_id). "<br/>" );
+				$wgOut->addHtml("<br/>". wfMsgExt('multidelete-task-added', array('parse'), $submit_id). "<br/>" );
 			} else {
-				$wgOut->addHtml("<br/>". wfMsg('multidelete-task-error'). "<br/>" );
+				$wgOut->addHtml("<br/>". wfMsgExt('multidelete-task-error', array('parse')). "<br/>" );
 			}
 		}
 		$wgOut->SetPageTitle(wfMsg('multidelete-title'));
