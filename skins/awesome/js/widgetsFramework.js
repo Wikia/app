@@ -346,7 +346,9 @@ $(function() {
 			}
 
 			$(this).sortable({
+				addClasses: false,
 				connectWith: sidebars,
+				containment: 'document',
 				delay: 100,
 				handle: '.widget_title',
 				helper: function(ev, widget) {
@@ -361,6 +363,7 @@ $(function() {
 					return helper;
 				},
 				revert: true, // smooth animation
+				revertDuration: 50,
 
 				// events
 				stop: function(ev, ui) {
