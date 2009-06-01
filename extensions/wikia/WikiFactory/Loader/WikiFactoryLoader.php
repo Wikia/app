@@ -432,15 +432,14 @@ class WikiFactoryLoader {
 		 * if wikia is disabled and is not Commandline mode we redirect it to
 		 * dump directory.
 		 */
-		 if( empty( $this->mIsWikiaActive ) ) {
+		if( empty( $this->mIsWikiaActive ) ) {
 			if( ! $this->mCommandLine ) {
 				global $wgNotAValidWikia;
 				if( $this->mCityDB ) {
 					$database = strtolower( $this->mCityDB );
 					$redirect = sprintf(
-						"http://wikistats.wikia.com/dbdumps/%s/%s/%s/",
-						substr( $database, 0, 1),
-						substr( $database, 0, 2),
+						"http://%s/wiki/Special:CloseWiki/information/%s",
+						($wgDevelEnvironment) ? "www.awc.wikia-inc.com" : "www.wikia.com",
 						$database
 					);
 				}
@@ -452,8 +451,7 @@ class WikiFactoryLoader {
 				wfProfileOut( __METHOD__ );
 				exit(0);
 			}
-		 }
-
+		}
 
 		/**
 		 * for yellowikis.wikia check geolocation and for GB -> redirect to owikis
