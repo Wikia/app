@@ -323,6 +323,8 @@ var WidgetFramework = {
 
 // init widgets
 $(function() {
+	$().log('init', 'Widgets');
+
 	var start = (new Date()).getTime();
 
 	if (skin == 'quartz') {
@@ -336,17 +338,15 @@ $(function() {
 		// setup sortable UI jQuery plugin
 		// for all widget sidebars
 		var sidebars = $('.sidebar');
+
 		sidebars.each(function() {
 			// check sidebar ID
 			if (!this.id) {
 				return;
 			}
 
-			var sidebar = $(this);
-
-			sidebar.sortable({
+			$(this).sortable({
 				connectWith: sidebars,
-				containment: 'document',
 				delay: 100,
 				handle: '.widget_title',
 				helper: function(ev, widget) {
@@ -390,8 +390,9 @@ $(function() {
 					});
 				}
 			});
-			$().log(sidebar, 'Widgets');
 		});
+		$().log(sidebars.length + ' sidebar(s) done after ' + ((new Date()).getTime() - start) + ' ms' , 'Widgets');
+
 		// setup widgets toolbar (edit / close)
 		widgets.find('.edit').click(WidgetFramework.edit);
 		widgets.find('.close').click(WidgetFramework.close);
@@ -399,17 +400,18 @@ $(function() {
 
 	// run widgets init functions
 	widgets.each(function() {
-		id = parseInt( $(this).attr('id').substring(7) );
-
-		type = $(this).attr('class').split(' ').pop();
-
+		type = this.className.split(' ').pop();
 		fname = type + '_init';
 		if (typeof window[fname] == 'function') {
+			// get widget id
+			var id = parseInt( $(this).attr('id').substring(7) );
 			$().log('calling ' + fname, 'Widgets');
 			window[fname](id, $(this));
 		}
-	}).log(widgets.length + ' widgets initialized in ' + ((new Date()).getTime() - start) + ' ms' , 'Widgets');
+	});
 
 	// widgets cockpit
 	$('#cockpit1, #cockpit2').click(WidgetFramework.show_cockpit);
+
+	$().log(widgets.length + ' widgets initialized in ' + ((new Date()).getTime() - start) + ' ms' , 'Widgets');
 });
