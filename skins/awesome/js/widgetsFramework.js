@@ -347,6 +347,7 @@ $(function() {
 
 			$(this).sortable({
 				addClasses: false,
+				cancel: '',
 				connectWith: sidebars,
 				containment: 'document',
 				delay: 100,
@@ -362,6 +363,9 @@ $(function() {
 
 					return helper;
 				},
+
+				items: 'dl',
+
 				revert: true, // smooth animation
 				revertDuration: 50,
 
