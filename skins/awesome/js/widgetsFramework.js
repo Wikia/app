@@ -364,7 +364,7 @@ $(function() {
 					return helper;
 				},
 
-				items: 'dl',
+				items: '> .widget',
 
 				revert: true, // smooth animation
 				revertDuration: 50,
