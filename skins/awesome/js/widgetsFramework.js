@@ -335,18 +335,18 @@ $(function() {
 	if (wgUserName != null) {
 		// setup sortable UI jQuery plugin
 		// for all widget sidebars
-		$('.sidebar').each(function() {
-			var sidebar = $(this);
-			var sidebarId = parseInt(sidebar.attr('id').substring(8));
-
+		var sidebars = $('.sidebar');
+		sidebars.each(function() {
 			// check sidebar ID
-			if (!sidebarId) {
+			if (!this.id) {
 				return;
 			}
 
+			var sidebar = $(this);
+
 			sidebar.sortable({
-				axis: 'y',
-				containment: sidebar,
+				connectWith: sidebars,
+				containment: 'document',
 				delay: 100,
 				handle: '.widget_title',
 				helper: function(ev, widget) {
@@ -364,27 +364,33 @@ $(function() {
 
 				// events
 				stop: function(ev, ui) {
+					// get new sidebar
+					var newSidebar = ui.item.closest('.sidebar');
+
 					// index - first widget in the sidebar has index = 1
 					var index = 0;
-					sidebar.children('.widget').each( function(i) {
+					newSidebar.children('.widget').each( function(i) {
 						if ($(this).attr('id') == ui.item.attr('id')) {
 							index = i+1;
 						}
 					});
+
+					// get sidebar ID
+					var id = parseInt(newSidebar.attr('id').substring(8));
 
 					// send reindex request to WidgetFramework
 					$.get(wgScript, {
 						action: 'ajax',
 						rs: 'WidgetFrameworkAjax',
 						actionType: 'reorder',
-						sidebar: sidebarId,
+						sidebar: id,
 
 						id: ui.item.attr('id').split('_').pop(),
 						index: index
 					});
 				}
 			});
-			$().log('sidebar #' + sidebarId, 'Widgets');
+			$().log(sidebar, 'Widgets');
 		});
 		// setup widgets toolbar (edit / close)
 		widgets.find('.edit').click(WidgetFramework.edit);
