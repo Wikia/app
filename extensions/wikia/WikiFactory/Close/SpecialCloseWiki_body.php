@@ -73,6 +73,8 @@ class CloseWikiPage extends SpecialPage {
 		}
 
 		if ( !empty($subpage) && (strpos($subpage, 'information') === 0 ) ) {
+			# don't check permission - show all users
+		} else {
 			if( !$wgUser->isAllowed( 'wikifactory' ) ) {
 				$this->displayRestrictionError();
 				$fail = true;
