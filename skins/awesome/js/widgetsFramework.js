@@ -1,16 +1,11 @@
 /**
  * IMPORTANT: If you want to make any changes in this code or in any part of widget
- * framework (also PHP) then you need to discuss it with me
- *
+ * framework (also PHP) then you need to discuss it with author
  * @author Inez Korczynski <inez@wikia.com>
- */
-
-/*
- * YUI to jQuery
  *
+ * YUI to jQuery rewrite
  * @author Maciej Brencz <macbre@wikia-inc.com>
  */
-
 var WidgetFramework = {
 	edit: function(e) {
 		var id = $(this).attr('id').split('_')[1];
@@ -77,7 +72,7 @@ var WidgetFramework = {
 				}
 			}
 		});
-		
+
 	},
 
 	edit_cancel: function(e) {
