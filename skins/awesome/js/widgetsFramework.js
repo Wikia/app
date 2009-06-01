@@ -351,7 +351,7 @@ $(function() {
 				connectWith: sidebars,
 				containment: 'document',
 				delay: 100,
-				handle: '.widget_title',
+				handle: (skin == 'quartz' ? 'h1' : 'dt'),
 				helper: function(ev, widget) {
 					var helper = document.createElement('div');
 
