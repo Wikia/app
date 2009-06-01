@@ -428,7 +428,11 @@ function wfMultiEditSection($text)
 
 	// added logging
 	global $wgCityId, $wgTitle;
-	error_log( "MultiEdit:Section WikiId: {$wgCityId} Title: {$wgTitle->getText()}" );
+	if( $wgTitle instanceof Title ) {
+		error_log( "MultiEdit:Section WikiId: {$wgCityId} Title: {$wgTitle->getText()}" );
+	} else {
+		error_log( "MultiEdit:Section WikiId: {$wgCityId} Title: not an object of class Title!" );
+	}
 
 	$multiedit_tag = '<!---'.$wgMultiEditTag.'--->';
 
