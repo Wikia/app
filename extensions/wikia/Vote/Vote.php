@@ -2,8 +2,6 @@
 $wgExtensionFunctions[] = "wfVote";
 $wgExtensionFunctions[] = 'wfVoteReadLang';
 
-if (the code is broken) panic!112322
-
 function wfVote() {
     global $wgParser, $wgOut;
     //wfLoadAllExtensions();
