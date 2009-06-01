@@ -384,7 +384,7 @@ YAHOO.lang.extend(YAHOO.example.AutoCompleteTextArea, YAHOO.widget.AutoComplete,
 	},
 
 	track: function(str) {
-		YAHOO.Wikia.Tracker.trackByStr(null, 'linkSuggest/' + str + (wgCanonicalSpecialPageName == 'Createpage' ? '/createPage' : '/editpage'));
+		//YAHOO.Wikia.Tracker.trackByStr(null, 'linkSuggest/' + str + (wgCanonicalSpecialPageName == 'Createpage' ? '/createPage' : '/editpage'));
 	}
 
 });
