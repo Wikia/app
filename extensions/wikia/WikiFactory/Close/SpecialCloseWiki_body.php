@@ -72,9 +72,11 @@ class CloseWikiPage extends SpecialPage {
 			$fail = true;
 		}
 
-		if( !$wgUser->isAllowed( 'wikifactory' ) ) {
-			$this->displayRestrictionError();
-			$fail = true;
+		if ( !empty($subpage) && (strpos($subpage, 'information') === 0 ) ) {
+			if( !$wgUser->isAllowed( 'wikifactory' ) ) {
+				$this->displayRestrictionError();
+				$fail = true;
+			}
 		}
 
 		if( !$fail ) {
@@ -104,6 +106,18 @@ class CloseWikiPage extends SpecialPage {
 				 * if not posted then we check if $subpage is set to something
 				 * reasonable
 				 */
+				if (strpos($subpage, 'information') === 0 ) {
+					if( strpos( $subpage, "/" ) ) {
+						$parts = explode( "/", $subpage, 2 );
+						if( is_array( $parts ) && sizeof( $parts ) == 2 ) {
+							$closedWiki = $parts[1];
+							$this->closedWiki = false;
+							if ($this->isClosed($closedWiki) === true) {
+								$this->showClosedMsg();
+							}
+						}
+					}
+				}
 			}
 			else {
 				/**
@@ -402,6 +416,63 @@ class CloseWikiPage extends SpecialPage {
 		);
 
 		$wgOut->addHtml( $output );
+		wfProfileOut( __METHOD__ );
+	}
+	
+	/*
+	 * is closed Wiki
+	 */
+	function isClosed($dbname) {
+		wfProfileIn( __METHOD__ );
+		
+		$res = false;
+		$cityId = WikiFactory::DBtoID($dbname, true);
+		if ( !empty($cityId) ) {
+			$oRow = WikiFactory::getWikiByID($cityId);
+			if ($oRow->city_public == 0) {
+				$this->closedWiki = $oRow;
+				$res = true;
+			}
+		}
+		
+		wfProfileOut( __METHOD__ );
+		return $res;
+	}
+	
+	/*
+	 * show closed message
+	 */ 
+	function showClosedMsg() {
+		global $wgOut, $wgStylePath, $wgStyleVersion, $wgExtensionsPath;
+		
+		wfProfileIn( __METHOD__ );
+		if ( $this->closedWiki === false ) {
+			wfProfileOut( __METHOD__ );
+			return;
+		}
+
+		$wgOut->addScript( "<link rel=\"stylesheet\" type=\"text/css\" href=\"{$wgStylePath}/common/form.css?{$wgStyleVersion}\" />" );
+
+		$dbDumpUrl = sprintf("http://wikistats.wikia.com/dbdumps/%s/%s/%s/",
+			substr( $this->closedWiki->city_dbname, 0, 1),
+			substr( $this->closedWiki->city_dbname, 0, 2),
+			$this->closedWiki->city_dbname
+		);
+
+		$res = (($ftest = @fopen($dbDumpUrl, ‘r’)) === false) ? false : @fclose($ftest);
+		$this->mTmpl->reset();
+		$this->mTmpl->set_vars( array(
+			"wgExtensionsPath" => $wgExtensionsPath,
+			"wgStyleVersion" => $wgStyleVersion,
+			"dbDumpUrl" => $dbDumpUrl,
+			"dbDumpExist" => $res
+		));
+
+		$wgOut->setPageTitle( wfMsg('closed-wiki') );
+		$wgOut->setRobotpolicy( 'noindex,nofollow' );
+		$wgOut->setArticleRelated( false );
+		$wgOut->addHtml($this->mTmpl->execute("close-info"));
+		
 		wfProfileOut( __METHOD__ );
 	}
 }

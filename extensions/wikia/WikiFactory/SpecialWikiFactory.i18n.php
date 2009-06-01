@@ -85,4 +85,10 @@ $messages["en"] = array(
 	"awc-metrics-news-day" => "New wikis (daily)",
 	"awc-metrics-sum-month" => "Count (per month)",
 	"awc-metrics-sum-day" => "Count (per day)",
+// closed Wiki
+	"closed-wiki" => "Closed Wiki",
+	"closed-wiki-dump-exists" => "Please click [$1 here] if you want to retrieve your content",
+	"closed-wiki-dump-noexists" => "This wiki has been closed. Content dump will be available within 24 hours. Please check back.",
+	"closed-wiki-create-wiki" => "Create a new wiki",
+	"closed-wiki-policy" => "View Wikia's Close Policy"
 );
