@@ -16,28 +16,29 @@ $wgWidgets['WidgetLanguages'] = array(
 	),
 	'desc' => array(
 		'en' => 'Languages'
-    ),
-    'closeable' => false,
-    'editable' => false,
-    'listable' => false
+	),
+	'closeable' => false,
+	'editable' => false,
+	'listable' => false
 );
 
 function WidgetLanguages($id, $params) {
-    wfProfileIn( __METHOD__ );
-    global $wgUser,$wgContLang, $wgLanguageCode;
-    $skin = $wgUser->getSkin();
-    $out = '';
+	wfProfileIn( __METHOD__ );
+	global $wgUser;
+	$skin = $wgUser->getSkin();
 
-    // only display the widget if there are interlanguage links
-    if(!empty($skin->language_urls) && is_array($skin->language_urls)) {
-    	$language = $wgContLang->getLanguageName($wgLanguageCode);
-		$out = '<select onchange="WidgetLanguagesHandleRedirect(this);"><option value="0">'.$language.'</option>';
+	$list = array();
+
+	// only display the widget if there are interlanguage links
+	if(!empty($skin->language_urls) && is_array($skin->language_urls)) {
 		foreach($skin->language_urls as $val) {
-				$out .= '<option value="'.htmlspecialchars($val['href']).'">'.$val['text'].'</option>';
+			$list[] = array(
+				'href'  => $val['href'], 
+				'name'  => $val['text'],
+			);
 		}
-		
-	$out .= '</select>';
-    }
-    wfProfileOut(__METHOD__);
-    return $out;
+	}
+
+	wfProfileOut(__METHOD__);
+	return WidgetFrameworkWrapLinks($list);
 }

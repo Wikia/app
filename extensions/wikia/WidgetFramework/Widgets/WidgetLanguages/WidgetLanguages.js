@@ -1,5 +1,7 @@
-function WidgetLanguagesHandleRedirect(elem) {
-	var selected = elem.options[elem.selectedIndex];
-	WET.byStr('widget/WidgetLanguages/' + selected.text);
-	window.location.href = selected.value;
+function WidgetLanguages_init(id, widget) {
+	widget.find('a').each( function() {
+		$(this).click(function() {
+			WET.byStr('widget/WidgetLanguages/' + $(this).text());
+		});
+	});
 }
