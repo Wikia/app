@@ -227,6 +227,12 @@ function CategorySelectAjaxParseCategories($wikitext) {
  */
 function CategorySelectAjaxSaveCategories($articleId, $categories) {
 	global $wgUser;
+
+	if ( wfReadOnly() ) {
+		$result['error'] = 'Database is locked.';
+		return Wikia::json_encode($result);
+	}
+
 	$categories = CategorySelectChangeFormat($categories, 'json', 'wiki');
 	if ($categories == '') {
 		$result['info'] = 'Nothing to add.';
