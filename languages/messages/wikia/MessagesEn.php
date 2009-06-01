@@ -185,6 +185,33 @@ We look forward to seeing you on Wikia!
 The Wikia Community Team
 www.wikia.com
 ",
+'reconfirmemail_subject' => 'Welcome to Wikia!',
+'reconfirmemail_body' => "Hi $2,
+
+Thank you for updating the email address associated with your Wikia account.
+
+Before our system can send you any mail you have opted to receive, you
+must confirm your email address.
+
+Click on the link below or paste it into your browser:
+
+$3
+
+Note: This confirmation link will expire in 7 days.
+
+
+With thousands of communities on Wikia, there are many ways to have fun
+here. Spend some time getting to know Wikia by visiting the home page
+(www.wikia.com), taking a tutorial at
+http://www.wikia.com/wiki/Help:Tutorial_1 , reading interesting and cool
+articles, writing content on your favorite subjects, or meeting other
+members of the community.
+
+We look forward to seeing you on Wikia!
+
+The Wikia Community Team
+www.wikia.com
+",
 'enotif_lastvisited' => 'To see all changes to this page since your last visit, click here: $1',
 'fileexists'		=> 'A file with this name exists already, please check $1 if you are not sure if you want to change it. Once uploaded, this image may take up to 2 minutes to be visible.',
 'enotif_body' => 'Dear $WATCHINGUSERNAME,

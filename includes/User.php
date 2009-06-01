@@ -2903,6 +2903,26 @@ class User {
 				$invalidateURL ) );
 	}
 
+	/* c&p quick hack for re-confirmation */
+	function sendReConfirmationMail() {
+		global $wgLang;
+		$expiration = null; // gets passed-by-ref and defined in next line.
+		$token = $this->confirmationToken( $expiration );
+		$url = $this->confirmationTokenUrl( $token );
+		$invalidateURL = $this->invalidationTokenUrl( $token );
+		$this->saveSettings();
+
+		return $this->sendMail( wfMsg( 'reconfirmemail_subject' ),
+			wfMsg( 'reconfirmemail_body',
+				wfGetIP(),
+				$this->getName(),
+				$url,
+				$wgLang->timeanddate( $expiration, false ),
+				$invalidateURL ) );
+	}
+
+
+
 	/**
 	 * Send an e-mail to this user's account. Does not check for
 	 * confirmed status or validity.
