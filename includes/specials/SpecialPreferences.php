@@ -343,7 +343,7 @@ class PreferencesForm {
 					if ($wgEmailAuthentication) {
 						# Mail a temporary password to the dirty address.
 						# User can come back through the confirmation URL to re-enable email.
-						$result = $wgUser->sendConfirmationMail();
+						$result = $wgUser->sendReConfirmationMail();
 						if( WikiError::isError( $result ) ) {
 							$error = wfMsg( 'mailerror', htmlspecialchars( $result->getMessage() ) );
 						} else {
