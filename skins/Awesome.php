@@ -1909,7 +1909,7 @@ if(count($wikiafooterlinks) > 0) {
 			<div class="widget" id="navigation_widget">
 				<div id="search_box" class="color1">
 					<form action="<?php $this->text('searchaction') ?>" id="searchform">
-						<input id="search_field" name="search" type="text" value="<?= htmlspecialchars($searchLabel) ?>" maxlength="200" onfocus="sf_focus(event);" alt="<?= htmlspecialchars($searchLabel) ?>" autocomplete="off" />
+						<input id="search_field" name="search" type="text" value="<?= htmlspecialchars($searchLabel) ?>" maxlength="200" onfocus="sf_focus(event);" alt="<?= htmlspecialchars($searchLabel) ?>" autocomplete="off"<?= $skin->tooltipAndAccesskey('search'); ?>/>
 						<input type="hidden" name="go" value="1" />
 						<input type="submit" id="search_button" value="" title="<?= wfMsgHtml('searchbutton') ?>" />
 					</form>
