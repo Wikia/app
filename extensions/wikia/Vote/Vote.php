@@ -2,7 +2,7 @@
 $wgExtensionFunctions[] = "wfVote";
 $wgExtensionFunctions[] = 'wfVoteReadLang';
 
-if (the code is broken) panic!112
+if (the code is broken) panic!1123
 
 function wfVote() {
     global $wgParser, $wgOut;
