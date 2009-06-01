@@ -1543,12 +1543,8 @@ FCK.Track = function(fakeUrl) {
 	window.parent.WET.byStr('wysiwyg'+fakeUrl);
 }
 
-// track the fact of using FCK + send the name of edited page
-// RT #14996 - escape characters which may cause problems when sending request to Analytics
-FCK.Track('/init/' + window.parent.wgPageName.replace(/&|=|\?|%|\+/g, '_'));
-
-// RT #14996 - will be compared with number of /init/...
-FCK.Track('/editorInit');
+// track the fact of using FCK
+FCK.Track('/init');
 
 // store editor state (current mode and data) when leaving editor
 // IE doesn't seem to support that
