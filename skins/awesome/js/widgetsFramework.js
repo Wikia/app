@@ -328,7 +328,7 @@ $(function() {
 	var start = (new Date()).getTime();
 
 	if (skin == 'quartz') {
-		widgets = $('#widgets_1').children('li');
+		widgets = $('.widgets').children('li');
 	}
 	else {
 		widgets = $('.sidebar').children('dl');
@@ -399,26 +399,29 @@ $(function() {
 			});
 		});
 		$().log(sidebars.length + ' sidebar(s) done after ' + ((new Date()).getTime() - start) + ' ms' , 'Widgets');
-
-		// setup widgets toolbar (edit / close)
-		widgets.find('.edit').click(WidgetFramework.edit);
-		widgets.find('.close').click(WidgetFramework.close);
 	}
 
 	// run widgets init functions
 	widgets.each(function() {
-		type = this.className.split(' ').pop();
-		fname = type + '_init';
+		// get widget id
+		var id = parseInt(this.id.substring(7));
+
+		// try to run widget init function
+		var fname = this.className.split(' ').pop() + '_init';
 		if (typeof window[fname] == 'function') {
-			// get widget id
-			var id = parseInt( $(this).attr('id').substring(7) );
 			$().log('calling ' + fname, 'Widgets');
 			window[fname](id, $(this));
+		}
+
+		// setup widget toolbar (edit / close)
+		if (wgUserName != null) {
+			$('#widget_' + id + '_edit').click(WidgetFramework.edit);
+			$('#widget_' + id + '_close').click(WidgetFramework.close);
 		}
 	});
 
 	// widgets cockpit
 	$('#cockpit1, #cockpit2').click(WidgetFramework.show_cockpit);
 
-	$().log(widgets.length + ' widgets initialized in ' + ((new Date()).getTime() - start) + ' ms' , 'Widgets');
+	$().log(widgets.length + ' widgets initialised in ' + ((new Date()).getTime() - start) + ' ms' , 'Widgets');
 });
