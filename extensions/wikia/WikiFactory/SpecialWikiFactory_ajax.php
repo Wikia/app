@@ -158,6 +158,14 @@ function axWFactoryDomainCRUD($type="add") {
         case "cancel":
             $sInfo .= "<em>Action cancelled</em>";
             break;
+        case "setmain":
+				$setmain = WikiFactory::setmainDomain( $iCityId, $sDomain );
+				if ( $setmain ) {
+					$sInfo .= "Success: Domain <em>{$sDomain}</em> set as main.";
+				} else {
+					$sInfo .= "Failed: Domain <em>{$sDomain}</em> was not set as main.";
+				}
+            break;
     }
     #--- get actuall domain list
 	 $aDomains = WikiFactory::getDomains( $iCityId, false, true );
