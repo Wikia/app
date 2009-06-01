@@ -138,10 +138,13 @@ $Factory.Domain.Callback = {
                 $Dom.create("a", "change", {id: id + "change", href: "#"}),
                 document.createTextNode("] ["),
                 $Dom.create("a", "remove", {id: id + "remove", href: "#"}),
+                document.createTextNode("] ["),
+                $Dom.create("a", "setmain", {id: id + "setmain", href: "#"}),
                 document.createTextNode("]")
             ]);
             $Event.addListener(id + "change", "click", $Factory.Domain.change, [id, 1, aDomains[i]]);
             $Event.addListener(id + "remove", "click", $Factory.Domain.remove, [id, 1, aDomains[i]]);
+            $Event.addListener(id + "setmain", "click", $Factory.Domain.setmain, [id, 1, aDomains[i]]);
             $Dom.get( "wk-domain-ol" ).appendChild(li);
         }
         var info = $Dom.create("div", "", {});
@@ -218,6 +221,36 @@ $Factory.Domain.remove = function ( e, data ) {
             $Factory.Busy(1);
             var params = "&cityid="+<?php echo $wiki->city_id ?>+"&domain="+data[2];
             $Connect.asyncRequest( "GET", ajaxpath+"?action=ajax&rs=axWFactoryDomainCRUD&rsargs[0]=remove" + params, $Factory.Domain.Callback );
+            break;
+    }
+};
+// data[0] - div we change, data[1] - step, data[2] - domainname
+$Factory.Domain.setmain = function ( e, data ) {
+    $Event.preventDefault(e);
+    switch ( data[1] ) {
+        case 1:
+            var id = $Factory.randid();
+            document.getElementById( data[0] ).innerHTML = "";
+            var prompt = $Dom.create("span", "Set "+data[2]+" as main?", {className: "prompt"},[
+                document.createTextNode(" ["),
+                $Dom.create("a", "Yes", {id: id+"setmain", href: "#"}),
+                document.createTextNode("] ["),
+                $Dom.create("a", "Cancel", {id: id+"cancel", href: "#"}),
+                document.createTextNode("]")
+            ]);
+            document.getElementById( data[0] ).appendChild(prompt);
+            $Event.addListener(id+"cancel", "click", $Factory.Domain.setmain, [data[0], 2, data[2]]);
+            $Event.addListener(id+"setmain", "click", $Factory.Domain.setmain, [data[0], 3, data[2]]);
+            break;
+        case 2:
+            $Factory.Busy(1);
+            var params = "&cityid="+<?php echo $wiki->city_id ?>;
+            $Connect.asyncRequest( "GET", ajaxpath+"?action=ajax&rs=axWFactoryDomainCRUD&rsargs[0]=cancel" + params, $Factory.Domain.Callback );
+            break;
+        case 3:
+            $Factory.Busy(1);
+            var params = "&cityid="+<?php echo $wiki->city_id ?>+"&domain="+data[2];
+            $Connect.asyncRequest( "GET", ajaxpath+"?action=ajax&rs=axWFactoryDomainCRUD&rsargs[0]=setmain" + params, $Factory.Domain.Callback );
             break;
     }
 };

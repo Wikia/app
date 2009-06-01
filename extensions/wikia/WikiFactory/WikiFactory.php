@@ -308,6 +308,29 @@ class WikiFactory {
 	}
 
 	/**
+	 * setmainDomain
+	 *
+	 * sets domain as main (wgServer)
+	 *
+	 * @param integer $wiki: wiki identifier in city_list
+	 * @param string $domain: domain name (on null)
+	 *
+	 * @return boolean: true - set, false otherwise
+	 */
+	static public function setmainDomain ( $wiki, $domain = null ) {
+		if( ! self::isUsed() ) {
+			Wikia::log( __METHOD__, "", "WikiFactory is not used." );
+			return false;
+		}
+
+		if ('http://' != strpos($domain, 0, 7)) {
+			$domain = 'http://' . $domain;
+		}
+
+		return WikiFactory::setVarByName("wgServer", $wiki, $domain);
+	}
+
+	/**
 	 * DomainToID
 	 *
 	 * @access public
