@@ -3,6 +3,7 @@
 
 == Changes since 200905.4 ==
 * EditEnhancements & NewEditPage changed (see http://contractor.wikia-inc.com/wiki/Edit_window_improvement_2)
+* AjaxPoll rewritten to use jQuery and CSS/JS loading on-demand
 
 == Changes since 200905.3 ==
 * new extension: AddNewTalkSection (see http://contractor.wikia-inc.com/wiki/Add_new_talk_section)
