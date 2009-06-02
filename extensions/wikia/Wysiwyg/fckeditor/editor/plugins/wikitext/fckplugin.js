@@ -1645,8 +1645,9 @@ FCK.CheckPasteCompare = function() {
 					// alert();
 					FCK.ShowInfoDialog('You\'ve pasted text from different editor instance. Go away!');
 
-					// replace with old HTML
+					// replace with old HTML and set events on placeholders
 					FCK.EditorDocument.body.innerHTML = oldHTML;
+					FCK.SetupElementsWithRefId();
 
 					// unblock paste
 					FCK._CheckPasteOldHTML = false;
