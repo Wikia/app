@@ -1556,13 +1556,13 @@ FCK.Diff = function(o, n) {
 
 	// obvious diff
 	if (o.length == 0) {
-		return n;
+		return {html: n, index: 0};
 	}
 	
 	// search from start
 	while (o.charAt(idx) == n.charAt(idx)) {
 		if (idx >= o.length) {
-			return '';
+			return null;
 		}
 		idx++;
 	}
@@ -1571,14 +1571,91 @@ FCK.Diff = function(o, n) {
 	idx = n.length - 1;
 
 	// search from end
-	while(o.charAt(idx+lenDiff) == n.charAt(idx)) {
+	while (o.charAt(idx+lenDiff) == n.charAt(idx)) {
 		if (idx <= 0) {
-			return '';
+			return false;
 		}
 		idx--;
 	}
 
-	return n.substring(startIdx, idx + 1);
+	return {html: n.substring(startIdx, idx + 1), index: startIdx};
+}
+
+// RT #14699
+FCK._CheckPasteOldHTML = false;
+FCK.CheckPaste = function() {
+	FCK.log('CheckPaste');
+
+	// block pasting until FCK.CheckPasteCompare is fired
+	if (FCK._CheckPasteOldHTML != false) {
+		FCK.log('CheckPaste in progress');
+		return false;
+	}
+
+	// store HTML before paste
+	FCK._CheckPasteOldHTML = FCK.EditorDocument.body.innerHTML;
+
+	setTimeout(FCK.CheckPasteCompare, 100);
+
+	return true;
+}
+
+FCK.CheckPasteCompare = function() {
+	FCK.log('CheckPasteCompare');
+
+	var newHTML = FCK.EditorDocument.body.innerHTML;
+	var oldHTML = FCK._CheckPasteOldHTML;
+
+	var diff = FCK.Diff(oldHTML, newHTML);
+
+	FCK.log(diff);
+
+	if (diff != null) {
+		// search for refid attributes in pasted HTML
+		var re = /<[^>]+refid="(\d+)"/g;
+		var matches = [];
+
+		while (match = re.exec(diff.html)) {
+			matches.push(match);
+		}
+
+		FCK.log(matches);
+
+		// scan refids found in pasted HTML
+		if (matches != null) {
+			// don't touch the begining of HTML
+			var html = newHTML.substr(0, diff.index);
+
+			// here's HTML we're going to change
+			var newHTML = newHTML.substring(diff.index, newHTML.length);
+
+			// make replacement in diff
+			for(n=0; n<matches.length; n++) {
+				var refid = parseInt(matches[n][1]);
+				FCK.log('Checking refid #' + refid);
+
+				// TODO: check editor instance attribute
+				if (typeof FCK.wysiwygData[refid] != 'undefined') {
+					// generate new refid
+					var newRefId = FCK.GetFreeRefId();
+
+					// copy meta-data into new refid
+					FCK.wysiwygData[newRefId] = window.parent.$().extend(FCK.wysiwygData[refid], {});
+					FCK.log('New refid #' + newRefId);
+
+					// replace old refid with new one
+					var re = new RegExp('<([^>]+)refid="' + refid + '"');
+					newHTML = newHTML.replace(re, '<$1refid="' + newRefId + '"');
+				}
+			}
+
+			// set new HTML
+			FCK.EditorDocument.body.innerHTML = html + newHTML;
+		}
+	}
+
+	// unblock paste
+	FCK._CheckPasteOldHTML = false;
 }
 
 // track the fact of using FCK
