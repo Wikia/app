@@ -31,14 +31,22 @@
 	display: none;
 }
 
-#new_edit_page_preview_notice {
-	background-color: #c00;
-	color: #fff;
+.new_edit_page_notice {
 	margin: 2px 1px -2px 1px;
 	padding: 8px;
 	text-align: center;
-	font-weight: bold;
 	font-size: 1.1em;
+}
+
+#new_edit_page_preview_notice {
+	background-color: #c00;
+	color: #fff;
+	font-weight: bold;
+}
+
+#new_edit_page_old_revision_notice {
+	background-color: #A6710E;
+	color: #fff;
 }
 
 #new_edit_page_preview_title {
