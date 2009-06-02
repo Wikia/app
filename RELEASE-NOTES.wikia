@@ -1,5 +1,5 @@
 == Changes since 200906.1 ==
-* 
+* rt #14522: error sending email from problem report, for sysop
 
 == Changes since 200905.4 ==
 * EditEnhancements & NewEditPage changed (see http://contractor.wikia-inc.com/wiki/Edit_window_improvement_2)
