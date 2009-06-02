@@ -343,6 +343,10 @@ FCK._ExecPaste = function()
 		FCK.PasteAsPlainText() ;
 		return false ;
 	}
+	else {
+		// macbre@wikia: RT #14669
+		return FCK.CheckPaste();
+	}
 
 	/* For now, the AutoDetectPasteFromWord feature is IE only. */
 	return true ;
