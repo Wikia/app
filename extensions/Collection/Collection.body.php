@@ -211,7 +211,7 @@ class Collection extends SpecialPage {
 		global $wgCollectionVersion;
 		global $wgCollectionStyleVersion;
 		global $wgJsMimeType;
-		global $wgScriptPath;
+		global $wgScriptPath, $wgExtensionsPath;
 		global $wgOut;
 
 		if ( !self::hasSession() ) {
@@ -219,11 +219,11 @@ class Collection extends SpecialPage {
 		}
 		
 		$this->setHeaders();
-		$wgOut->addInlineScript( "var wgCollectionVersion = \"$wgCollectionVersion\";" );		
-		$wgOut->addScript( "<script type=\"$wgJsMimeType\" src=\"$wgScriptPath/extensions/Collection/collection/jquery.js?$wgCollectionStyleVersion\"></script>" );
-		$wgOut->addScript( "<script type=\"$wgJsMimeType\" src=\"$wgScriptPath/extensions/Collection/collection/jquery.ui.js?$wgCollectionStyleVersion\"></script>" );
-		$wgOut->addInlineScript( "jQuery.noConflict();" );		
-		$wgOut->addScript( "<script type=\"$wgJsMimeType\" src=\"$wgScriptPath/extensions/Collection/collection/collection.js?$wgCollectionStyleVersion\"></script>" );
+		$wgOut->addInlineScript( "var wgCollectionVersion = \"$wgCollectionVersion\";" );
+		//$wgOut->addScript( "<script type=\"$wgJsMimeType\" src=\"$wgScriptPath/extensions/Collection/collection/jquery.js?$wgCollectionStyleVersion\"></script>" ); # macbre@wikia: RT #16513
+		$wgOut->addScript( "<script type=\"$wgJsMimeType\" src=\"$wgExtensionsPath/Collection/collection/jquery.ui.js?$wgCollectionStyleVersion\"></script>" );
+		//$wgOut->addInlineScript( "jQuery.noConflict();" );  # macbre@wikia: RT #16513
+		$wgOut->addScript( "<script type=\"$wgJsMimeType\" src=\"$wgExtensionsPath/Collection/collection/collection.js?$wgCollectionStyleVersion\"></script>" );
 		
 		$template = new CollectionPageTemplate();
 		$template->set( 'collection', $_SESSION['wsCollection'] );
@@ -776,7 +776,7 @@ class Collection extends SpecialPage {
 		global $wgLang;
 		global $wgOut;
 		global $wgRequest;
-		global $wgScriptPath;
+		global $wgScriptPath, $wgExtensionsPath;
 		global $wgServer;
 
 		$response = self::mwServeCommand( 'render_status', array(
@@ -803,8 +803,8 @@ class Collection extends SpecialPage {
 			$wgOut->addInlineScript( 'var writer = "' . urlencode( $response['writer']) . '";' );
 			$wgOut->addInlineScript( 'var collection_rendering = true;' );
 			$wgOut->addInlineScript( "var wgCollectionVersion = \"$wgCollectionVersion\";" );		
-			$wgOut->addScript( "<script type=\"$wgJsMimeType\" src=\"$wgScriptPath/extensions/Collection/collection/jquery.js?$wgCollectionStyleVersion\"></script>" );
-			$wgOut->addScript( "<script type=\"$wgJsMimeType\" src=\"$wgScriptPath/extensions/Collection/collection/collection.js?$wgCollectionStyleVersion\"></script>" );
+			//$wgOut->addScript( "<script type=\"$wgJsMimeType\" src=\"$wgScriptPath/extensions/Collection/collection/jquery.js?$wgCollectionStyleVersion\"></script>" ); # macbre@wikia: RT #16513
+			$wgOut->addScript( "<script type=\"$wgJsMimeType\" src=\"$wgExtensionsPath/Collection/collection/collection.js?$wgCollectionStyleVersion\"></script>" );
 			$wgOut->setPageTitle( wfMsg( 'coll-rendering_title' ) );
 
 			if ( isset($response['status']['status'] ) && $response['status']['status'] ) {
