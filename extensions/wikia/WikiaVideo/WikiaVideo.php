@@ -32,7 +32,7 @@ function WikiaVideoWantedFilesGetSQL( $sql, $querypage, $name, $imagelinks, $pag
                                 COUNT(*) as value
                         FROM $imagelinks
 			LEFT JOIN $page ON il_to = page_title AND page_namespace = ". NS_FILE ."
-			WHERE page_title IS NULL AND LOCATE(':', il_to) != 1 AND LOCATE('Video:', il_to) != 1 
+			WHERE page_title IS NULL AND LOCATE(':', il_to) != 1 
                         GROUP BY il_to
                         ";
         return true;
