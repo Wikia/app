@@ -1625,7 +1625,7 @@ FCK.CheckPasteCompare = function() {
 		}
 
 		// scan refids found in pasted HTML
-		if (matches != null) {
+		if (matches.length > 0) {
 			// don't touch the begining of HTML
 			var html = newHTML.substr(0, diff.index);
 
