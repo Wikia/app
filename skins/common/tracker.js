@@ -1,115 +1,156 @@
 /*
-Copyright (c) 2009, Wikia Inc.
+Copyright (c) 2007, Wikia Inc.
 Author: Inez Korczynski (inez (at) wikia.com)
-Description: WET == Wikia Event Tracker
+Version: 1.1
 */
 
-var WET = function() {
+YAHOO.namespace('Wikia');
 
-	// Initialize tracking for elements shared between skins
+(function() {
 
-	if(skin == 'monobook') {
-		WET.skinname = 'monobook';
-	} else if(skin == 'quartz') {
-		WET.skinname = 'vs2';
-	} else if(skin == 'monaco' || skin == 'awesome') {
-		WET.skinname = 'monaco';
-	} else if(skin == 'home') {
-		WET.skinname = 'home';
-	} else if(skin == 'answers') {
-		WET.skinname = 'answers';
-	} else {
-		return;
-	}
+var Dom = YAHOO.util.Dom;
+var Event = YAHOO.util.Event;
 
-	WET.username = wgUserName == null ? 'anon' : 'user';
+YAHOO.Wikia.Tracker = {
 
-	// track the article page view
-	if(wgIsArticle) {
-		WET.byStr('view');
-	}
+	initTracker: initTracker,
 
-	// track the article edit page view
-	if(wgArticleId != 0 && wgAction == 'edit') {
-		WET.byStr('editpage/view');
-	}
+	init: function() {
+		this.initTracker();
 
-	// TODO: check if works
-	// track for EditSimilar links
-	$('#editsimilar_links').children('a').click(function(e) {
-		if(this.id == 'editsimilar_preferences') {
-			WET.byStr('userengagement/editSimilar/editSimilarPrefs')
-		} else {
-			WET.byStr('userengagement/editSimilar_click')
-		}
-	});
-
-	// TODO: check if works
-	// track for Create a Page extension
-	$('#createpageform').find('#wpSave, #wpPreview, #wpAdvancedEdit').click(function(e) { WET.byStr('createPage/' + this.id.substring(2).toLowerCase()); });
-
-	if(wgCanonicalSpecialPageName) {
-		// track the create an account link on login page
-		if(wgCanonicalSpecialPageName == 'Userlogin') {
-			$('#userloginlink a:first').click(function(e) { WET.byStr('loginActions/goToSignup'); });
+		// Page view
+		if(wgIsArticle) {
+			this.trackByStr(null, 'view');
 		}
 
-		// track clicks on search results links
-		if(wgCanonicalSpecialPageName == 'Search') {
-			var listNames = ['title', 'text'];
-			// parse URL to get offset value
-			var re = (/\&offset\=(\d+)/).exec(document.location);
-			var offset = re ? (parseInt(re[1]) + 1) : 1;
+		// Edit page
+		if(wgArticleId != 0 && wgAction == 'edit') {
+			this.trackByStr(null, 'editpage/view');
+		}
 
-			$('#bodyContent .mw-search-results').each(function(i) {
-				$(this).find('a').each(function(j) {
-					$(this).click(function() {
-						WET.byStr('search/searchResults/' + listNames[i] + 'Match/' + (offset + j));
-					});
-				});
-				if(i == 0) {
-					WET.byStr('search/searchResults/view');
+		// EditSimilar extension - result links (Bartek)
+		Event.addListener('editsimilar_links', 'click', function(e) {
+			var el = Event.getTarget(e);
+			if((el.nodeName == 'A') && (el.id != 'editsimilar_preferences')) {
+				YAHOO.Wikia.Tracker.trackByStr(e, 'userengagement/editSimilar_click');
+			}
+		});
+
+		// EditSimilar extension - preferences link (Bartek)
+		Event.addListener('editsimilar_preferences', 'click', function(e) {
+			YAHOO.Wikia.Tracker.trackByStr(e, 'userengagement/editSimilar/editSimilarPrefs');
+		});
+
+		// CreateAPage extension (Bartek)
+		var cpform = Dom.get('createpageform');
+		if(cpform) {
+			Event.addListener('wpSave', 'click', YAHOO.Wikia.Tracker.trackByStr, 'createPage/save');
+			Event.addListener('wpPreview', 'click', YAHOO.Wikia.Tracker.trackByStr, 'createPage/preview');
+			Event.addListener('wpAdvancedEdit', 'click', YAHOO.Wikia.Tracker.trackByStr, 'createPage/advancedEdit');
+		}
+
+		// Special:Userlogin (Macbre)
+		if ( wgCanonicalSpecialPageName && wgCanonicalSpecialPageName == 'Userlogin' ) {
+			Event.addListener($('userloginlink').getElementsByTagName('a')[0], 'click', YAHOO.Wikia.Tracker.trackByStr, 'loginActions/goToSignup');
+		}
+
+		// Special:Search (Macbre)
+		if ( wgCanonicalSpecialPageName && wgCanonicalSpecialPageName == 'Search' ) {
+			lists = Dom.get('bodyContent').getElementsByClassName('mw-search-results');
+
+			if (lists && lists.length > 0) {
+
+				listNames = ['title', 'text'];
+
+				// parse URL to get offset value
+				re = (/\&offset\=(\d+)/).exec(document.location);
+				offset = re ? (parseInt(re[1]) + 1) : 1;
+
+				for (m=0; m < lists.length; m++) {
+					anchors = lists[m].getElementsByTagName('a');
+					for (a=0; a < anchors.length; a++) {
+						Event.addListener(anchors[a], 'click', YAHOO.Wikia.Tracker.trackByStr, 'search/searchResults/' + listNames[m] + 'Match/' + (offset + a));
+					}
 				}
-			});
+
+				// #3439
+				this.trackByStr(null, 'search/searchResults/view');
+			}
 		}
-	}
+	},
 
-	// Links on edit page
-	$('#wpMinoredit, #wpWatchthis, #wpSave, #wpPreview, #wpDiff, #wpCancel, #wpEdithelp').click(function(e) {
-		WET.byStr('editpage/' + this.id.substring(2).toLowerCase());
-	});
+	trackByStr: function(e, str) {
+		YAHOO.Wikia.Tracker.track(str, e);
+	},
 
-	// Initialize tracking for specific skin
-	if(typeof initTracker != 'undefined') {
-		initTracker();
-	}
+	trackById: function(e) {
+		YAHOO.Wikia.Tracker.track(this.id, e);
+	},
 
-};
+	//temp alias for WET compatibility
+	byStr: function(e, str) {
+		YAHOO.Wikia.Tracker.track(str, e);
+	},
 
-WET.skinname;
+	track: function(fakeurl, e) {
 
-WET.username;
+		fakeurlArray = fakeurl.split('/');
+		for(i = 0; i < fakeurlArray.length; i++) {
+			if( !YAHOO.lang.isString(fakeurlArray[i]) || fakeurlArray[i].length < 1 ) {
+				return;
+			}
+		}
 
-WET.byStr = function(message) {
-	WET.track(message);
-};
+		if(skin == 'monobook') { skinname = 'monobook';}
+		else if (skin == 'quartz') { skinname = 'vs2'; }
+		else if (skin == 'monaco') { skinname = 'monaco'; }
+		else if (skin == 'home') { skinname = 'home'; }
 
-WET.byId = function(e) {
-	WET.track(this.id);
-};
+		if(window.skinname && YAHOO.lang.isFunction(urchinTracker)) {
+			_uacct = "UA-2871474-1";
 
-WET.track = function(fakeurl) {
-	if(WET.skinname != '' && typeof urchinTracker != 'undefined') {
-		_uacct = 'UA-2871474-1';
-		var fake = '/1_' + WET.skinname + '/' + WET.username + '/' + fakeurl;
-		if ('answers' == skin) {} else // WET.skinname and WET.username @answers equal 'undefined' here so why bother with tracking...
-		$().log(fake, 'tracker');
-		urchinTracker(fake);
-		if(wgPrivateTracker) {
-			fake = '/1_' + WET.skinname + '/' + wgDB + '/' + WET.username + '/' + fakeurl
+			username = wgUserName == null ? 'anon' : 'user';
+
+			fake = '/1_' + skinname + '/' + username + '/' + fakeurl;
 			urchinTracker(fake);
+			YAHOO.log(fake, "info", "tracker");
+
+			if(wgPrivateTracker) {
+				fake = '/1_' + skinname + '/' + wgDB + '/' + username + '/' + fakeurl;
+				urchinTracker(fake);
+				YAHOO.log(fake, "info", "tracker");
+			}
+
+			if(wgServer.indexOf('-abc') > 0) {
+				fake = '/1_' + skinname + '/abc-' + wgDB + '/' + username + '/' + fakeurl;
+				urchinTracker(fake);
+				YAHOO.log(fake, "info", "tracker");
+			}
 		}
 	}
+
+};
+
+//temp alias for WET compatibility
+var WET = YAHOO.Wikia.Tracker;
+
+YAHOO.widget.Logger.enableBrowserConsole();
+Event.onDOMReady(YAHOO.Wikia.Tracker.init, YAHOO.Wikia.Tracker, true);
+})();
+
+function onYouTubePlayerReady(playerid) {
+	var ytplayer = document.getElementById("YT_" + playerid);
+	ytplayer.addEventListener("onStateChange", "onytplayerStateChange");
 }
 
-$(WET);
+function onytplayerStateChange(newState) {
+	var event;
+	if(newState == 0) {
+		event = "ended";
+	} else if(newState == 1) {
+		event = "playing";
+	}
+	if(event) {
+		YAHOO.Wikia.Tracker.trackByStr(null, "youtube/"+event);
+	}
+}
