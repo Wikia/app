@@ -174,7 +174,10 @@ FCK.VideoUpdate = function(refid, wikitext, extraData) {
 	FCKUndo.SaveUndoStep();
 
 	// update metaData
-	FCK.wysiwygData[refid] = {"type": "video", "original": wikitext};
+	FCK.wysiwygData[refid] = {
+		type: "video",
+		original: wikitext
+	};
 
 	// merge with extraData
 	FCK.wysiwygData[refid] = FCK.YAHOO.lang.merge(FCK.wysiwygData[refid], extraData);
@@ -236,9 +239,9 @@ FCK.VideoAdd = function(wikitext, extraData) {
 	// fill metaData up
 	var params = wikitext.substring(2, wikitext.length-2).split('|');
 	FCK.wysiwygData[refid] = {
-		'type': 'video',
-		'description': wikitext,
-		'href': params[0]
+		type: 'video',
+		original: wikitext,
+		href: params[0]
 	};
 
 	// merge with extraData
