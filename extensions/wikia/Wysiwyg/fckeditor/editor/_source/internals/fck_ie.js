@@ -254,6 +254,9 @@ FCK._ExecPaste = function()
 		// Enable the semaphore to avoid a loop.
 		FCK._PasteIsRunning = true ;
 
+		// macbre@wikia: RT #14669
+		FCK.CheckPaste();
+
 		FCK.ExecuteNamedCommand( 'Paste' ) ;
 
 		// Removes the semaphore.
