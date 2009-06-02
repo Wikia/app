@@ -43,7 +43,11 @@ $wgAjaxExportList[] = 'CategorySelectGetCategories';
  * @author Maciej Błaszkowski <marooned at wikia-inc.com>
  */
 function CategorySelectInit() {
-	global $wgRequest;
+	global $wgRequest, $wgDisableAnonymousEditig;
+
+	if (!empty($wgDisableAnonymousEditig)) {
+		return true;
+	}
 
 	//don't use CategorySelect for undo edits
 	$undoafter = $wgRequest->getVal('undoafter');
