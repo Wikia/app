@@ -1583,7 +1583,7 @@ FCK.Diff = function(o, n) {
 		idx--;
 	}
 
-	return {html: n.substring(startIdx, idx + 1), index: startIdx, n: n, o: o};
+	return {html: n.substring(startIdx, idx + 1), index: startIdx};
 }
 
 // RT #14699
@@ -1617,7 +1617,7 @@ FCK.CheckPasteCompare = function() {
 
 	if (diff != null) {
 		// search for refid attributes in pasted HTML
-		var re = /_fck_editor_instance="(\d+)"[^>]+refid="(\d+)"/g;
+		var re = /_fck_editor_instance="(\d+)"[^>]+refid="(\d+)"[^>]*>/g;
 		var matches = [];
 
 		while (match = re.exec(diff.html)) {
@@ -1645,6 +1645,10 @@ FCK.CheckPasteCompare = function() {
 
 					// replace with old HTML
 					FCK.EditorDocument.body.innerHTML = oldHTML;
+
+					// unblock paste
+					FCK._CheckPasteOldHTML = false;
+
 					return;
 				}
 				else if (typeof FCK.wysiwygData[refid] != 'undefined') {
@@ -1656,8 +1660,8 @@ FCK.CheckPasteCompare = function() {
 					FCK.log('New refid #' + newRefId);
 
 					// replace old refid with new one
-					var re = new RegExp('<([^>]+)refid="' + refid + '"');
-					newHTML = newHTML.replace(re, '<$1refid="' + newRefId + '"');
+					var re = new RegExp('refid="' + refid + '"([^>]*>)');
+					newHTML = newHTML.replace(re, 'refid="' + newRefId + '"$1');
 				}
 			}
 
