@@ -146,3 +146,15 @@ function onytplayerStateChange(newState) {
 		YAHOO.Wikia.Tracker.trackByStr(null, "youtube/"+event);
 	}
 }
+
+// Temporary dummies for tracking - Inez
+if(!window.WET) {
+	var WET = {
+		byStr : function(str){
+			YAHOO.Wikia.Tracker.trackByStr(null, str);
+		},
+		byId : function(e){
+			YAHOO.Wikia.Tracker.trackById(e);
+		}
+	}
+}
