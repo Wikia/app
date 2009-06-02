@@ -73,6 +73,8 @@ FCK.ToggleEditButtons = function( mode ) {
 	}
 }
 
+FCK.EditorInstanceId = (new Date()).getTime();
+
 FCK.LoadTime = false;
 FCK.onWysiwygLoad = function() {
 	// run just once
@@ -499,6 +501,9 @@ FCK.SetupElementsWithRefId = function() {
 		if (!data) {
 			continue;
 		}
+
+		// add editor instance
+		node.setAttribute('_fck_editor_instance', FCK.EditorInstanceId);
 
 		var type = node.getAttribute('_fck_type') || data.type;
 		var name = node.nodeName.toLowerCase();
@@ -1578,7 +1583,7 @@ FCK.Diff = function(o, n) {
 		idx--;
 	}
 
-	return {html: n.substring(startIdx, idx + 1), index: startIdx};
+	return {html: n.substring(startIdx, idx + 1), index: startIdx, n: n, o: o};
 }
 
 // RT #14699
@@ -1618,8 +1623,6 @@ FCK.CheckPasteCompare = function() {
 		while (match = re.exec(diff.html)) {
 			matches.push(match);
 		}
-
-		FCK.log(matches);
 
 		// scan refids found in pasted HTML
 		if (matches != null) {
