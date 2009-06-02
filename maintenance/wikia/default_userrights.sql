@@ -45,7 +45,6 @@ insert into user_groups(ug_user, ug_group) values
 (/*BlueDevil*/304359,'helper'),
 (/*Bola*/126681,'helper'),
 (/*Cizagna*/35784,'helper'),
-(/*Eulalia459678*/223485,'helper'),
 (/*JoePlay*/171752,'helper'),
 (/*JParanoid*/10970,'helper'),
 (/*Merrystar*/11001,'helper'),
