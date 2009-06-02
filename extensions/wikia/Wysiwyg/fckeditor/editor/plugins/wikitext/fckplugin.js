@@ -1617,7 +1617,7 @@ FCK.CheckPasteCompare = function() {
 
 	if (diff != null) {
 		// search for refid attributes in pasted HTML
-		var re = /<[^>]+refid="(\d+)"/g;
+		var re = /_fck_editor_instance="(\d+)"[^>]+refid="(\d+)"/g;
 		var matches = [];
 
 		while (match = re.exec(diff.html)) {
@@ -1634,11 +1634,20 @@ FCK.CheckPasteCompare = function() {
 
 			// make replacement in diff
 			for(n=0; n<matches.length; n++) {
-				var refid = parseInt(matches[n][1]);
-				FCK.log('Checking refid #' + refid);
+				var editorInstance = parseInt(matches[n][1]);
+				var refid = parseInt(matches[n][2]);
+				FCK.log('Checking refid #' + refid + ' (editor #' + editorInstance + ')');
 
-				// TODO: check editor instance attribute
-				if (typeof FCK.wysiwygData[refid] != 'undefined') {
+				// check editor instance attribute
+				if (editorInstance != FCK.EditorInstanceId) {
+					FCK.log('Pasted from different editor instance!');
+					// alert();
+
+					// replace with old HTML
+					FCK.EditorDocument.body.innerHTML = oldHTML;
+					return;
+				}
+				else if (typeof FCK.wysiwygData[refid] != 'undefined') {
 					// generate new refid
 					var newRefId = FCK.GetFreeRefId();
 
