@@ -405,3 +405,10 @@ span.searchmatch {
 .google_afs a {
 	background-image: none !important;
 }
+
+/*** TOC improvements ***/
+body.TOCimprovements #toc ul,
+/* for shared help TOC */
+body.TOCimprovements #sharedtoc ul {
+	display: none;
+}
