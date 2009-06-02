@@ -221,63 +221,6 @@ function WikiaVideo_makeVideo($title, $options, $sk, $wikitext = '') {
 
 	wfProfileIn('WikiaVideo_makeVideo');
 
-	// placeholder? treat differently
-	if( 'Placeholder' == $title->getText() ) {
-		// generate a single empty cell with a button
-		global $wgExtensionMessagesFiles, $wgWikiaVideoPlaceholderId;
-		$wgExtensionMessagesFiles['WikiaVideo'] = dirname(__FILE__).'/WikiaVideo.i18n.php';
-		wfLoadExtensionMessages( 'WikiaVideo' );	
-
-		$params = array_map( 'trim', explode( '|', $options) );
-
-		// defaults
-		$width = 300;
-		$thumb = false;
-		$frame = false;
-		$caption = '';
-		$isalign = 0;
-		$iswidth = 0;
-		$iscaption = 0;
-
-		foreach($params as $param) {
-			$width_check = strpos($param, 'px');
-			if($width_check > -1) {
-				$width = str_replace('px', '', $param);
-				$iswidth = $width;
-			} else if('thumb' == $param) {
-				$thumb = true;
-			} else if('frame' == $param) {
-				$thumb = true;
-				// frame is not covered here as per specs
-			} else if(('left' == $param) || ('right' == $param)) {
-				$align = $param;
-			} else {
-				$caption = $param;
-				$iscaption = 1;
-			}
-		}
-
-		// height? we don't know the provider yet... I'll take youtube proportions for the time being
-		$height = ceil( $width * 355 / 425 );
-		$lmarg = ceil( ( $width - 90 ) / 2 );
-		$tmarg = ceil( ( $height - 30 ) / 2 );
-
-		if(empty($align)) {
-			if($thumb) {
-				$align = 'right';
-			} else {
-				$align = 'none';
-			}
-		}
-
-		$function = 'YAHOO.util.Get.script([wgExtensionsPath+\'/wikia/VideoEmbedTool/js/VET.js?\'+wgStyleVersion, stylepath+\'/common/yui_2.5.2/slider/slider-min.js?\'+wgStyleVersion], {onSuccess:function(o) { VET_show( o.data, ' . -2  . ', ' . $wgWikiaVideoPlaceholderId . ','. $isalign .' ,'. $iswidth .', '. $iscaption .' ) }, data:YAHOO.util.Event.getEvent() }); YAHOO.util.Get.css( wgExtensionsPath+\'/wikia/VideoEmbedTool/css/VET.css?\'+wgStyleVersion )';
-		$out .= '<div class="gallerybox"><div class="thumb t' . $align . '" style="padding: 0;  width: ' . $width . 'px; height: ' . $height . 'px;"><div style="margin-left: auto; margin-right: auto; width: ' . $width . 'px; height: ' . $height . 'px;">';
-		$out .= '<a href="#" class="bigButton" style="margin-left: ' . $lmarg . 'px; margin-top: ' . $tmarg . 'px;" id="WikiaVideoPlaceholder' . $wgWikiaVideoPlaceholderId  . '" onclick="' . $function . '"><big>' . wfMsg( 'wikiavideo-create' ) . '</big><small>&nbsp;</small></a></div>'. $caption .'</div></div>';
-		wfProfileOut('WikiaVideo_makeVideo');
-		$wgWikiaVideoPlaceholderId++;
-		return $out;
-	}
-
 	if(!$title->exists()) {
 		//Wysiwyg: generate wikitext placeholder
 		if (!empty($wgWysiwygParserEnabled)) {
