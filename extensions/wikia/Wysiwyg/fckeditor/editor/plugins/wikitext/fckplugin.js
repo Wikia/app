@@ -1583,7 +1583,7 @@ FCK.Diff = function(o, n) {
 		idx--;
 	}
 
-	return {html: n.substring(startIdx, idx + 1), index: startIdx};
+	return {html: n.substring(startIdx, idx + 1), index: startIdx, 'new': n, 'old': o};
 }
 
 // RT #14699
@@ -1641,7 +1641,9 @@ FCK.CheckPasteCompare = function() {
 				// check editor instance attribute
 				if (editorInstance != FCK.EditorInstanceId) {
 					FCK.log('Pasted from different editor instance!');
+					FCK.Track('/paste/outside');
 					// alert();
+					FCK.ShowInfoDialog('You\'ve pasted text from different editor instance. Go away!');
 
 					// replace with old HTML
 					FCK.EditorDocument.body.innerHTML = oldHTML;
@@ -1665,8 +1667,13 @@ FCK.CheckPasteCompare = function() {
 				}
 			}
 
-			// set new HTML
+			FCK.log(newHTML);
+
+			FCK.Track('/paste/inside');
+
+			// set new HTML and events on placeholders
 			FCK.EditorDocument.body.innerHTML = html + newHTML;
+			FCK.SetupElementsWithRefId();
 		}
 	}
 
