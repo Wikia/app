@@ -87,11 +87,6 @@ YAHOO.Wikia.Tracker = {
 		YAHOO.Wikia.Tracker.track(this.id, e);
 	},
 
-	//temp alias for WET compatibility
-	byStr: function(e, str) {
-		YAHOO.Wikia.Tracker.track(str, e);
-	},
-
 	track: function(fakeurl, e) {
 
 		fakeurlArray = fakeurl.split('/');
@@ -130,9 +125,6 @@ YAHOO.Wikia.Tracker = {
 	}
 
 };
-
-//temp alias for WET compatibility
-var WET = YAHOO.Wikia.Tracker;
 
 YAHOO.widget.Logger.enableBrowserConsole();
 Event.onDOMReady(YAHOO.Wikia.Tracker.init, YAHOO.Wikia.Tracker, true);
