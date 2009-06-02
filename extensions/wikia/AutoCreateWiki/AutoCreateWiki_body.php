@@ -670,9 +670,11 @@ class AutoCreateWikiPage extends SpecialPage {
 		global $wgContLang;
 		wfProfileIn( __METHOD__ );
 
+		$fixedTitle = preg_replace("/(\s)+(w|W)iki$/", "", $wgContLang->ucfirst( $this->awcName ));
+
 		$this->mWikiData[ "hub" ]		= $this->awcCategory;
         $this->mWikiData[ "name" ]      = strtolower( trim( $this->awcDomain ) );
-        $this->mWikiData[ "title" ]     = trim( $wgContLang->ucfirst( $this->awcName ) . " Wiki" );
+        $this->mWikiData[ "title" ]     = trim( $fixedTitle . " Wiki" );
         $this->mWikiData[ "language" ]  = $this->awcLanguage;
         $this->mWikiData[ "subdomain" ] = $this->mWikiData[ "name"];
         $this->mWikiData[ "redirect" ]  = $this->mWikiData[ "name"];
@@ -691,7 +693,7 @@ class AutoCreateWikiPage extends SpecialPage {
 		}
 		
 		$this->mWikiData[ "dbname" ] = WikiFactory::prepareDBName($this->mWikiData[ "dbname" ]);
-
+	
 		wfProfileOut( __METHOD__ );
 	}
 
