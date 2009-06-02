@@ -1543,6 +1543,44 @@ FCK.Track = function(fakeUrl) {
 	window.parent.WET.byStr('wysiwyg'+fakeUrl);
 }
 
+// performs quick diff between two strings (original and one with pasted content)
+// and returns pasted content
+// input:  "abc", "a123bc"
+// return: "123"
+FCK.Diff = function(o, n) {
+	var lenOld = o.length;
+	var lenNew = n.length;
+	var lenDiff = lenOld - lenNew;
+
+	var idx = 0;
+
+	// obvious diff
+	if (o.length == 0) {
+		return n;
+	}
+	
+	// search from start
+	while (o.charAt(idx) == n.charAt(idx)) {
+		if (idx >= o.length) {
+			return '';
+		}
+		idx++;
+	}
+
+	startIdx = idx;
+	idx = n.length - 1;
+
+	// search from end
+	while(o.charAt(idx+lenDiff) == n.charAt(idx)) {
+		if (idx <= 0) {
+			return '';
+		}
+		idx--;
+	}
+
+	return n.substring(startIdx, idx + 1);
+}
+
 // track the fact of using FCK
 FCK.Track('/init');
 
