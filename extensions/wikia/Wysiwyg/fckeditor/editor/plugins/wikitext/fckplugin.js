@@ -1675,6 +1675,9 @@ FCK.CheckPasteCompare = function() {
 			FCK.EditorDocument.body.innerHTML = html + newHTML;
 			FCK.SetupElementsWithRefId();
 		}
+		else {
+			FCK.Track('/paste/plainText');
+		}
 	}
 
 	// unblock paste
