@@ -43,8 +43,8 @@ function TOCimprovementsInit() {
 	if ($skinName != 'SkinMonaco') {
 		return true;
 	}
-	$wgHooks['SkinTemplateSetupPageCss'][] = 'TOCimprovementsAddCSS';
 	$wgHooks['MakeGlobalVariablesScript'][] = 'TOCimprovementsSetupVars';
+	$wgHooks['SkinGetPageClasses'][] = 'TOCimprovementsAddBodyClass';
 }
 
 /**
@@ -60,14 +60,14 @@ function TOCimprovementsSetupVars($vars) {
 }
 
 /**
- * add CSS to style new link
+ * add CSS class to <body> to hide TOC
  *
  * @author Maciej Błaszkowski <marooned at wikia-inc.com>
  */
-function TOCimprovementsAddCSS(&$out) {
-	global $wgExtensionsPath, $wgStyleVersion, $wgUser, $wgCookiePath, $wgCookieDomain, $wgCookieSecure;
+function TOCimprovementsAddBodyClass($classes) {
+	global $wgUser;
 	if ($wgUser->isAnon() && (!isset($_COOKIE['hidetoc']) || $_COOKIE['hidetoc'] == '1')) {
-		$out .= "@import url($wgExtensionsPath/wikia/TOCimprovements/TOCimprovements.css?$wgStyleVersion);\n";
+		$classes .= ' TOCimprovements';
 	}
 	return true;
 }
