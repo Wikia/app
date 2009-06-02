@@ -1616,8 +1616,27 @@ FCK.CheckPasteCompare = function() {
 	FCK.log(diff);
 
 	if (diff != null) {
+		// check for _fck_editor_instance attribute
+		var editorInstance = diff.html.match(/_fck_editor_instance="(\d+)"[^>]*>/);
+
+		if (editorInstance != null && (parseInt(editorInstance[1]) != FCK.EditorInstanceId) ) {
+			FCK.log('Pasted from different editor instance!');
+			FCK.Track('/paste/outside');
+			// alert();
+			FCK.ShowInfoDialog('You\'ve pasted text from different editor instance. Go away!');
+
+			// replace with old HTML and set events on placeholders
+			FCK.EditorDocument.body.innerHTML = oldHTML;
+			FCK.SetupElementsWithRefId();
+
+			// unblock paste
+			FCK._CheckPasteOldHTML = false;
+
+			return;
+		}
+
 		// search for refid attributes in pasted HTML
-		var re = /_fck_editor_instance="(\d+)"[^>]+refid="(\d+)"[^>]*>/g;
+		var re = /refid="(\d+)"[^>]*>/g;
 		var matches = [];
 
 		while (match = re.exec(diff.html)) {
@@ -1634,38 +1653,19 @@ FCK.CheckPasteCompare = function() {
 
 			// make replacement in diff
 			for(n=0; n<matches.length; n++) {
-				var editorInstance = parseInt(matches[n][1]);
-				var refid = parseInt(matches[n][2]);
-				FCK.log('Checking refid #' + refid + ' (editor #' + editorInstance + ')');
+				var refid = parseInt(matches[n][1]);
+				FCK.log('Checking refid #' + refid);
 
-				// check editor instance attribute
-				if (editorInstance != FCK.EditorInstanceId) {
-					FCK.log('Pasted from different editor instance!');
-					FCK.Track('/paste/outside');
-					// alert();
-					FCK.ShowInfoDialog('You\'ve pasted text from different editor instance. Go away!');
+				// generate new refid
+				var newRefId = FCK.GetFreeRefId();
 
-					// replace with old HTML and set events on placeholders
-					FCK.EditorDocument.body.innerHTML = oldHTML;
-					FCK.SetupElementsWithRefId();
+				// copy meta-data into new refid
+				FCK.wysiwygData[newRefId] = window.parent.$().extend(FCK.wysiwygData[refid], {});
+				FCK.log('New refid #' + newRefId);
 
-					// unblock paste
-					FCK._CheckPasteOldHTML = false;
-
-					return;
-				}
-				else if (typeof FCK.wysiwygData[refid] != 'undefined') {
-					// generate new refid
-					var newRefId = FCK.GetFreeRefId();
-
-					// copy meta-data into new refid
-					FCK.wysiwygData[newRefId] = window.parent.$().extend(FCK.wysiwygData[refid], {});
-					FCK.log('New refid #' + newRefId);
-
-					// replace old refid with new one
-					var re = new RegExp('refid="' + refid + '"([^>]*>)');
-					newHTML = newHTML.replace(re, 'refid="' + newRefId + '"$1');
-				}
+				// replace old refid with new one
+				var re = new RegExp('refid="' + refid + '"([^>]*>)');
+				newHTML = newHTML.replace(re, 'refid="' + newRefId + '"$1');
 			}
 
 			FCK.log(newHTML);
