@@ -1,6 +1,7 @@
 == Changes since 200906.1 ==
 * rt #14522: error sending email from problem report, for sysop
 * rt #3304: Widgets can now be translated
+* rt #16527: Widgets can now use contentlang instead of userlang if required
 
 == Changes since 200905.4 ==
 * EditEnhancements & NewEditPage changed (see http://contractor.wikia-inc.com/wiki/Edit_window_improvement_2)

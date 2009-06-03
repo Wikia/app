@@ -16,6 +16,7 @@ $wgWidgets['WidgetAnswers'] = array(
     'editable' => false,
     'listable' => true,
     'languages' => $wgAvailableAnswersLang,
+    'contentlang' => true,
 );
 
 function WidgetAnswers($id, $params) {
@@ -38,7 +39,7 @@ function WidgetAnswers($id, $params) {
 
 	// This HTML for the Ask a Question is used for both logged in and logged out users
 	// but in different place - top or the bottom of the widget
-	$ask_a_question = htmlspecialchars(wfMsg("ask_a_question"));
+	$ask_a_question = htmlspecialchars(wfMsgForContent("ask_a_question"));
 	$askform = <<<EOD
 <form method="get" action="" onsubmit="return false" name="ask_form" class="ask_form">
 	<input type="text" value="$ask_a_question" class="answers_ask_field"/>
@@ -47,22 +48,22 @@ EOD;
 
 	if($wgUser->isLoggedIn()) {
 		if(in_array('sysop', $wgUser->getGroups())) {
-			$output = '<div class="widget_answers_note">'.wfMsg('answers_widget_admin_note').'</div>';
+			$output = '<div class="widget_answers_note">'.wfMsgForContent('answers_widget_admin_note').'</div>';
 		} else {
-			$output = '<div class="widget_answers_note">'.wfMsg('answers_widget_user_note').'</div>';
+			$output = '<div class="widget_answers_note">'.wfMsgForContent('answers_widget_user_note').'</div>';
 		}
 	} else {
 		$output = $askform;
 	}
 
-	$output .= '<div style="padding: 7px;"><b>'.wfMsg('recent_asked_questions').'</b><ul></ul></div>';
+	$output .= '<div style="padding: 7px;"><b>'.wfMsgForContent('recent_asked_questions').'</b><ul></ul></div>';
 
 	$apiparams = array(
 		'smaxage'=>300,
 		'maxage'=> 300,
 		'action'=> 'query',
 		'list'=>'wkpagesincat',
-		'wkcategory'=> wfMsg('unanswered_category') . '|' . $wgSitename,
+		'wkcategory'=> wfMsgForContent('unanswered_category') . '|' . $wgSitename,
 		'format'=>'json',
 		'wklimit'=>'5',
 		'callback'=>'WidgetAnswers_load'
@@ -89,7 +90,7 @@ EOD;
 	if($wgUser->isLoggedIn()) {
 		$output .= $askform;
 	} else {
-		$output .= '<div class="widget_answers_note">'.wfMsg('answers_widget_anon_note').'</div>';
+		$output .= '<div class="widget_answers_note">'.wfMsgForContent('answers_widget_anon_note').'</div>';
 	}
 
 	wfProfileOut(__METHOD__);

@@ -185,9 +185,6 @@ class WidgetFramework {
 		global $wgWidgets, $wgUser, $wgLang;
 
 		if(is_array($widgetOut)) {
-			if(isset($widgetOut['title'])) {
-				$title = wfMsg( $widgetOut['title'] );
-			}
 			if(!empty($widgetOut['nowrap'])) {
 				$nowrap = true;
 			}
@@ -209,8 +206,17 @@ class WidgetFramework {
 			return $body;
 		}
 
+		$contentLang = false;
+		if ( !empty( $wgWidgets[$widget['type']]['contentlang'] ) ) {
+			$contentLang = true;
+		}
+
 		if(empty($title)) {
-			$title = wfMsg( $wgWidgets[$widget['type']]['title'] );
+			if ( empty( $contentLang ) ) {
+				$title = wfMsg( $wgWidgets[$widget['type']]['title'] );
+			} else {
+				$title = wfMsgForContent( $wgWidgets[$widget['type']]['title'] );
+			}
 		}
 
 		$closeable = false;
