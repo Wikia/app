@@ -12,12 +12,8 @@ if(!defined('MEDIAWIKI')) {
 global $wgWidgets;
 $wgWidgets['WidgetWikiaToolbox'] = array(
 	'callback' => 'WidgetWikiaToolbox',
-	'title' => array(
-		'en' => 'Toolbox'
-	),
-	'desc' => array(
-		'en' => 'Toolbox'
-    ),
+	'title' => 'widget-title-wikiatoolbox',
+	'desc' => 'widget-desc-wikiatoolbox',
     'closeable' => false,
     'editable' => false,
     'listable' => false

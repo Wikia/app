@@ -9,16 +9,8 @@ if(!defined('MEDIAWIKI')) {
 global $wgWidgets;
 $wgWidgets['WidgetSlideshow'] = array(
 	'callback' => 'WidgetSlideshow',
-	'title' => array(
-		'en' => 'Image slideshow',
-		'pl' => 'Pokaz obrazów',
-		'hu' => 'Képvetítõ'
-	),
-	'desc' => array(
-		'en' => 'Watch a slideshow of images from this wiki',
-		'pl' => 'Pokaz obrazów z tej wiki',
-		'hu' => 'Nézd diavetítésben a wikin használt képeket.'
-	),
+	'title' => 'widget-title-slideshow',
+	'desc' => 'widget-desc-slideshow',
     	'params' => array(
 		'show' => array(
 			'type' => 'select',

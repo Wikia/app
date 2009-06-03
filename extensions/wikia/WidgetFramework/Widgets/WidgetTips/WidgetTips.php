@@ -9,16 +9,8 @@ if(!defined('MEDIAWIKI')) {
 global $wgWidgets;
 $wgWidgets['WidgetTips'] = array(
 	'callback' => 'WidgetTips',
-	'title' => array(
-		'en' => 'Tips',
-		'pl' => 'Czy wiesz, że...',
-		'hu' => 'Tippek'
-	),
-	'desc' => array(
-		'en' => 'Shows random tips',
-		'pl' => 'Pokazuje losowe podpowiedzi',
-		'hu' => 'Véletlenszerûen kiválasztott tippeket mutat.'
-	),
+	'title' => 'widget-title-tips', 
+	'desc' => 'widget-desc-tips',
 	'params' => array(),
 	'closeable' => true,
 	'editable' => false,

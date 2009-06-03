@@ -10,12 +10,8 @@ if(!defined('MEDIAWIKI')) {
 global $wgWidgets;
 $wgWidgets['WidgetSidebar'] = array(
 	'callback' => 'WidgetSidebar',
-	'title' => array(
-		'en' => 'Sidebar'
-	),
-	'desc' => array(
-		'en' => 'Sidebar'
-    ),
+	'title' => 'widget-title-sidebar',
+	'desc' => 'widget-desc-sidebar',
     'closeable' => false,
     'editable' => false,
     'listable' => false

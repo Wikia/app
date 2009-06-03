@@ -10,13 +10,8 @@ if(!defined('MEDIAWIKI')) {
 global $wgWidgets;
 $wgWidgets['WidgetLanguages'] = array(
 	'callback' => 'WidgetLanguages',
-	'title' => array(
-		'en' => 'Languages',
-		'pl' => 'Wersje językowe'
-	),
-	'desc' => array(
-		'en' => 'Languages'
-	),
+	'title' => 'widget-title-languages',
+	'desc' => 'widget-desc-languages',
 	'closeable' => false,
 	'editable' => false,
 	'listable' => false

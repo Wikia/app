@@ -186,7 +186,7 @@ class WidgetFramework {
 
 		if(is_array($widgetOut)) {
 			if(isset($widgetOut['title'])) {
-				$title = $widgetOut['title'];
+				$title = wfMsg( $widgetOut['title'] );
 			}
 			if(!empty($widgetOut['nowrap'])) {
 				$nowrap = true;
@@ -210,7 +210,7 @@ class WidgetFramework {
 		}
 
 		if(empty($title)) {
-			$title = isset($wgWidgets[$widget['type']]['title'][$wgLang->getCode()]) ? $wgWidgets[$widget['type']]['title'][$wgLang->getCode()] : $wgWidgets[$widget['type']]['title']['en'];
+			$title = wfMsg( $wgWidgets[$widget['type']]['title'] );
 		}
 
 		$closeable = false;

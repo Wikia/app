@@ -10,16 +10,8 @@ if(!defined('MEDIAWIKI')) {
 global $wgWidgets;
 $wgWidgets['WidgetRecentChanges'] = array(
 	'callback' => 'WidgetRecentChanges',
-	'title' => array(
-		'en' => 'Recent changes',
-		'pl' => 'Ostatnie zmiany',
-		'hu' => 'Friss változtatások'
-	),
-	'desc' => array(
-		'en' => 'List of recent changes',
-		'pl' => 'Lista ostatnich zmian',
-		'hu' => 'A legutóbbi változások listája.'
-    ),
+	'title' => 'widget-title-recentchanges',
+	'desc' => 'widget-desc-recentchanges',
 	'params' => array(
 		'limit' => array(
 			'type' => 'text',

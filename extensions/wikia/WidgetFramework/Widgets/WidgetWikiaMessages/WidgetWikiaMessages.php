@@ -11,13 +11,8 @@ if(!defined('MEDIAWIKI')) {
 global $wgWidgets;
 $wgWidgets['WidgetWikiaMessages'] = array(
 	'callback' => 'WidgetWikiaMessages',
-	'title' => array(
-		'en' => 'Wikia messages',
-		'pl' => 'Komunikaty Wikii'
-	),
-	'desc' => array(
-		'en' => 'Wikia messages'
-    ),
+	'title' => 'widget-title-wikiamessages',
+	'desc' => 'widget-desc-wikiamessages',
     'closeable' => false,
     'editable' => false,
     'listable' => false

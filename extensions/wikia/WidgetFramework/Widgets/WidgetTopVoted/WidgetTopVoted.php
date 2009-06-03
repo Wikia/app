@@ -9,17 +9,8 @@ if(!defined('MEDIAWIKI')) {
 global $wgWidgets;
 $wgWidgets['WidgetTopVoted'] = array(
 	'callback' => 'WidgetTopVoted',
-	'title' => array(
-		'en' => 'Top voted',
-		'pl' => 'Najwyżej oceniane',
-		'hu' => 'Legjobbra értékelt'
-	),
-	'desc' => array(
-		'en' => 'See the highest rated articles, as voted by this wiki\'s community', 
-		'pl' => 'Lista najwyżej ocenionych artykułów na tej wiki',
-		'hu' => 'Nézd meg, mely szócikkeket értékelt a legjobbra a wiki közössége.'
-
-    ),
+	'title' => 'widget-title-topvoted',
+	'desc' => 'widget-desc-topvoted', 
     'closeable' => true,
     'editable' => false,
 );

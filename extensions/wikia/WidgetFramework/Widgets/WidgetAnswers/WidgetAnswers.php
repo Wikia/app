@@ -10,12 +10,8 @@ if(!defined('MEDIAWIKI')) {
 global $wgWidgets, $wgAvailableAnswersLang;
 $wgWidgets['WidgetAnswers'] = array(
 	'callback' => 'WidgetAnswers',
-	'title' => array(
-		'en' => 'Wikianswers'
-	),
-	'desc' => array(
-		'en' => 'See a list of top un answered questions'
-    ),
+	'title' => 'widget-title-answers',
+	'desc' => 'widget-desc-answers',
     'closeable' => true,
     'editable' => false,
     'listable' => true,

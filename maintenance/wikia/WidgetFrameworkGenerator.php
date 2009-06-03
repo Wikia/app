@@ -48,9 +48,16 @@ foreach($wgWidgetsOrderedList as $key => $val) {
 }
 
 $widgetsConfig = array();
+$widgetsLanguages = getMessageAsArray( 'widget-languages' );
 foreach($wgWidgets as $key => $val) {
-	$widgetsConfig[$key]['title'] = $val['title'];
-	$widgetsConfig[$key]['desc'] = isset($val['desc']) ? $val['desc'] : array('en' => 'N/A');
+	$titles = array();
+	$descriptions = array();
+	foreach($widgetsLanguages as $lang) {
+		$titles[$lang] = wfMsgReal( $val['title'], '', true, $lang, true );
+		$descriptions[$lang] = wfMsgReal( $val['desc'], '', true, $lang, true );
+	}
+	$widgetsConfig[$key]['title'] = $titles;
+	$widgetsConfig[$key]['desc'] = $descriptions;
 	$widgetsConfig[$key]['groups'] = isset($val['groups']) ? $val['groups'] : array();
 	$widgetsConfig[$key]['languages'] = isset($val['languages']) ? $val['languages'] : array();
 }
