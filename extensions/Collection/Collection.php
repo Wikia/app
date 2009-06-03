@@ -43,7 +43,7 @@ require_once( $dir . 'Version.php' );
 $wgCollectionStyleVersion = 2;
 
 /** URL of mw-serve render server */
-$wgCollectionMWServeURL = 'http://tools.pediapress.com/mw-serve/';
+$wgCollectionMWServeURL = 'http://87.118.99.164:8899/';
 
 /** Login credentials to this MediaWiki as 'USERNAME:PASSWORD' string */
 $wgCollectionMWServeCredentials = null;
