@@ -10,49 +10,31 @@ if (!defined('MEDIAWIKI')) {
  * 
  * @addtogroup API
  */
+
 class WikiaApiQuerySiteinfo extends ApiQuerySiteinfo {
 	
 	private $variablesList = array('wgDefaultSkin','wgDefaultTheme','wgAdminSkin','wgArticlePath','wgScriptPath','wgScript','wgServer','wgLanguageCode','wgCityId','wgContentNamespaces');
 	
 	public function __construct($query, $moduleName) {
 		parent :: __construct($query, $moduleName, 'si');
+		$this->showError = true;
 	}
 
 	public function execute() {
-
+		global $wgCityId;
 		$params = $this->extractRequestParams();
-
+		$this->cityId = $wgCityId;
 		foreach ($params['prop'] as $p) {
 			switch ($p) {
-				default :
-					ApiBase :: dieDebug(__METHOD__, "Unknown prop=$p");
-				case 'general' :
-					$this->appendGeneralInfo($p);
-					break;
-				case 'namespaces' :
-					$this->appendNamespaces($p);
-					break;
-				case 'namespacealiases' :
-					$this->appendNamespaceAliases($p);
-					break;
-				case 'interwikimap' :
-					$filteriw = isset($params['filteriw']) ? $params['filteriw'] : false; 
-					$this->appendInterwikiMap($p, $filteriw);
-					break;
-				case 'dbrepllag' :
-					$this->appendDbReplLagInfo($p, $params['showalldb']);
-					break;
-				case 'statistics' :
-					$this->appendStatistics($p);
-					break;
-				case 'variables':	
+				case 'variables':
 					$this->appendVariables($p);
 					break;
-				default : 
-					parent::execute();
+				case 'category':
+					$this->appendCategory($p);
 					break;
 			}
-		}				
+		}
+		parent::execute();
 	}
 
 	protected function appendVariables($property) {
@@ -72,18 +54,31 @@ class WikiaApiQuerySiteinfo extends ApiQuerySiteinfo {
 		}
 		
 		$result = $this->getResult();
-		$result->setIndexedTagName($data, 'variable');
+		$result->setIndexedTagName($data, $property);
 		$result->addValue('query', $property, $data);
+	}
+
+	protected function appendCategory($property) {
+		$oHub = WikiFactoryHub::getInstance();
+		$catId = $oHub->getCategoryId($this->cityId);
+		$catName = $oHub->getCategoryName($this->cityId);
+		$data = array("catid" => $catId, "catname" => $catName);
+		$result = $this->getResult();
+		$result->setIndexedTagName($data, $property);
+		$result->addValue('query', $property, $data);
+		
 	}
 
 	public function getAllowedParams() {
 		$params = parent::getAllowedParams();
-		$params['prop'][ApiBase:: PARAM_TYPE][] = 'variables';
+		array_push($params['prop'][ApiBase::PARAM_TYPE],'category');
+		array_push($params['prop'][ApiBase::PARAM_TYPE],'variables');
 		return $params;
 	}
 
 	public function getParamDescription() {
 		$params = parent::getParamDescription();
+		$params['prop'][] = ' "category"     - Returns name of category of selected Wikia';
 		$params['prop'][] = ' "variables"    - Returns values of main global variables';
 		return $params;
 	}
@@ -95,7 +90,7 @@ class WikiaApiQuerySiteinfo extends ApiQuerySiteinfo {
 	protected function getExamples() {
 		return array_merge(
 				parent::getExamples(), 
-				array('api.php?action=query&meta=siteinfo&siprop=general|namespaces|statistics|variables')
+				array('api.php?action=query&meta=siteinfo&siprop=general|namespaces|statistics|variables|category')
 		);
 	}
 }

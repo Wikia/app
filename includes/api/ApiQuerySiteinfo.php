@@ -41,6 +41,7 @@ class ApiQuerySiteinfo extends ApiQueryBase {
 
 	public function execute() {
 		$params = $this->extractRequestParams();
+
 		foreach( $params['prop'] as $p )
 		{
 			switch ( $p )
@@ -77,7 +78,9 @@ class ApiQuerySiteinfo extends ApiQueryBase {
 					$this->appendExtensions( $p );
 					break;
 				default :
-					ApiBase :: dieDebug( __METHOD__, "Unknown prop=$p" );
+					if ( !isset($this->showError) ) { 
+						ApiBase :: dieDebug( __METHOD__, "Unknown prop=$p" );
+					}
 			}
 		}
 	}
