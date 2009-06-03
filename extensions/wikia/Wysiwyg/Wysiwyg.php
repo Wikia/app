@@ -248,6 +248,7 @@ function Wysiwyg_Initial($form) {
 
 	$wgOut->addScript( "<script type=\"{$wgJsMimeType}\" src=\"$wgExtensionsPath/wikia/Wysiwyg/fckeditor/fckeditor.js?$wgStyleVersion\"></script>" );
 	$wgOut->addScript( "<script type=\"{$wgJsMimeType}\" src=\"$wgExtensionsPath/wikia/Wysiwyg/wysiwyg.js?$wgStyleVersion\"></script>" );
+	$wgOut->addScript( "<script type=\"{$wgJsMimeType}\" src=\"$wgExtensionsPath/wikia/Wysiwyg/diff/diff-google.js?$wgStyleVersion\"></script>" );
 
 	$wgHooks['EditPage::showEditForm:initial2'][] = 'Wysiwyg_Initial2';
 	$wgHooks['EditForm:BeforeDisplayingTextbox'][] = 'Wysiwyg_BeforeDisplayingTextbox';

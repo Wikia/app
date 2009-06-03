@@ -1552,49 +1552,37 @@ FCK.Track = function(fakeUrl) {
 // and returns pasted content
 // example: FCK.Diff('<br/><b>', '<br/><foo><b>') => <foo>
 // example: FCK.Diff('<br/><span><b>', '<br/><foo><b>') => <foo>
+FCK.DiffTool = false;
 FCK.Diff = function(o, n) {
-	var lenOld = o.length;
-	var lenNew = n.length;
-	var lenDiff = lenOld - lenNew;
-
-	var idx = 0;
-
-	// obvious diff
-	if (o.length == 0) {
-		return {html: n, index: 0};
-	}
-	
-	// search from start
-	while (o.charAt(idx) == n.charAt(idx)) {
-		if (idx >= o.length) {
-			return null;
-		}
-		idx++;
+	// initialise diff tools
+	// from http://code.google.com/p/google-diff-match-patch/
+	if (!FCK.DiffTool) {
+		FCK.DiffTool = new window.parent.diff_match_patch;
 	}
 
-	var startIdx = idx;
-	idx = n.length - 1;
+	// get diff
+	var diff = FCK.DiffTool.diff_main(o, n);
 
-	// search from end
-	while (o.charAt(idx+lenDiff) == n.charAt(idx)) {
-		if (idx <= startIdx) {
-			return false;
-		}
-		idx--;
+	// get unchanged parts at the beginning and at the end of diff
+	var prefix = diff.shift();
+	var suffix = diff.pop();
+
+	var idx = {start: prefix[1].length, end: n.length - suffix[1].length};
+
+	// fix HTML by finding closing > and opening < in prefix and suffix
+	if (/<[^>]*$/.test(prefix[1])) {
+		// go to last < in prefix
+		idx.start = prefix[1].lastIndexOf('<');
 	}
 
-	// make proper HTML
-	if (n.charAt(startIdx-1) == '<') {
-		startIdx--;
-	} 
-
-	if (n.charAt(idx+1) == '>') {
-		idx++;
+	if (/^[^<]*>/.test(suffix[1])) {
+		idx.end += suffix[1].indexOf('>') + 1;
 	}
 
-	var diff = n.substring(startIdx, idx + 1);
+	// get changed fragment
+	var pasted = n.substring(idx.start, idx.end);
 
-	return {html: diff, index: startIdx, 'new': n, 'old': o};
+	return {html: pasted, index: idx.start, 'new': n, 'old': o};
 }
 
 // RT #14699
@@ -1679,7 +1667,7 @@ FCK.CheckPasteCompare = function() {
 				newHTML = newHTML.replace(re, 'refid="' + newRefId + '"$1');
 			}
 
-			FCK.log(newHTML);
+			//FCK.log(newHTML);
 
 			FCK.Track('/paste/inside');
 
