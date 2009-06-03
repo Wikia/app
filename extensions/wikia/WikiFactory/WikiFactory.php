@@ -1676,7 +1676,7 @@ class WikiFactory {
 	 */
 	static public function prepareDBName($dbname) {
 		wfProfileIn( __METHOD__ );
-		$dbr = wfGetDB( DB_SLAVE );
+		$dbr = wfGetDB( DB_MASTER );
 		#-- check city_list
 		$exists = 1; $suffix = "";
 		while ( $exists == 1 ) {
