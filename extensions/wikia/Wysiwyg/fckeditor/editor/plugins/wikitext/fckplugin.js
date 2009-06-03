@@ -1572,12 +1572,12 @@ FCK.Diff = function(o, n) {
 		idx++;
 	}
 
-	startIdx = idx;
+	var startIdx = idx;
 	idx = n.length - 1;
 
 	// search from end
 	while (o.charAt(idx+lenDiff) == n.charAt(idx)) {
-		if (idx <= 0) {
+		if (idx <= startIdx) {
 			return false;
 		}
 		idx--;
@@ -1592,7 +1592,9 @@ FCK.Diff = function(o, n) {
 		idx++;
 	}
 
-	return {html: n.substring(startIdx, idx + 1), index: startIdx, 'new': n, 'old': o};
+	var diff = n.substring(startIdx, idx + 1);
+
+	return {html: diff, index: startIdx, 'new': n, 'old': o};
 }
 
 // RT #14699
