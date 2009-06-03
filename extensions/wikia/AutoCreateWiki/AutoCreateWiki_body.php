@@ -29,6 +29,7 @@ class AutoCreateWikiPage extends SpecialPage {
 		$mMYSQLbin,
 		$mPHPbin,
 		$mStarters,
+		$mLanguageStarters,
 		$mCurrTime,
 		$mPosted,
 		$mPostedErrors,
@@ -71,6 +72,11 @@ class AutoCreateWikiPage extends SpecialPage {
 			self::STARTER_ENTE => 3711,
 			self::STARTER_SPRT => 12698
 		);
+
+		/**
+		 * language starters
+		 */
+		$this->mLanguageStarters = array("en", "ja", "de", "fr", "nl");
 
 		/**
 		 * set paths for external tools
@@ -485,7 +491,7 @@ class AutoCreateWikiPage extends SpecialPage {
 		/**
 		 * import language starter
 		 */
-		if( in_array( $this->mWikiData[ "language" ], array("en", "ja", "de", "fr") ) ) {
+		if( in_array( $this->mWikiData[ "language" ], $this->mLanguageStarters ) ) {
 			$prefix = ( $this->mWikiData[ "language" ] === "en") ? "" : $this->mWikiData[ "language" ];
 			$starterDB = $prefix. "starter";
 
