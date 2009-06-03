@@ -1552,28 +1552,33 @@ FCK.Track = function(fakeUrl) {
 // and returns pasted content
 // example: FCK.Diff('<br/><b>', '<br/><foo><b>') => <foo>
 // example: FCK.Diff('<br/><span><b>', '<br/><foo><b>') => <foo>
-FCK.DiffTool = false;
 FCK.Diff = function(o, n) {
-
 	// speed-up
 	if (o == n) {
 		return null;
 	}
 
-	// initialise diff tools
-	// from http://code.google.com/p/google-diff-match-patch/
-	if (!FCK.DiffTool) {
-		FCK.DiffTool = new window.parent.diff_match_patch;
+	var lenDiff = o.length - n.length;
+	var idx = {start: 0, end: n.length - 1};
+
+	// search for prefix and suffix common for old and new string
+	while (o.charAt(idx.start) == n.charAt(idx.start)) {
+		if (idx.start >= o.length) {
+			return null;
+		}
+		idx.start++;
 	}
 
-	// get diff
-	var diff = FCK.DiffTool.diff_main(o, n);
+	while (o.charAt(idx.end+lenDiff) == n.charAt(idx.end)) {
+		if (idx.end <= idx.start) {
+			return false;
+		}
+		idx.end--;
+	}
 
 	// get unchanged parts at the beginning and at the end of diff
-	var prefix = diff.shift()[1];
-	var suffix = diff.pop()[1];
-
-	var idx = {start: prefix.length, end: n.length - suffix.length};
+	var prefix = n.substring(0, idx.start+1);
+	var suffix = n.substring(idx.end, n.length);
 
 	// fix HTML by finding closing > and opening < in suffix and prefix respectively
 	if (/<[^>]*$/.test(prefix)) {
