@@ -1554,6 +1554,12 @@ FCK.Track = function(fakeUrl) {
 // example: FCK.Diff('<br/><span><b>', '<br/><foo><b>') => <foo>
 FCK.DiffTool = false;
 FCK.Diff = function(o, n) {
+
+	// speed-up
+	if (o == n) {
+		return null;
+	}
+
 	// initialise diff tools
 	// from http://code.google.com/p/google-diff-match-patch/
 	if (!FCK.DiffTool) {
@@ -1562,6 +1568,8 @@ FCK.Diff = function(o, n) {
 
 	// get diff
 	var diff = FCK.DiffTool.diff_main(o, n);
+
+	FCK.log(diff);
 
 	// get unchanged parts at the beginning and at the end of diff
 	var prefix = diff.shift();
