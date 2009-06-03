@@ -177,7 +177,7 @@ class Vote{
 		$output .= "<div id=\"Answer\" class=\"vote-action\">";
 		
 		if (!$wgUser->isAllowed('vote')) {
-			$login =  Title::makeTitle(NS_SPECIAL,"Login");
+			$login =  Title::makeTitle(NS_SPECIAL,"Userlogin");
 			$output .= "<a class=\"votebutton\" href=\"{$login->escapeFullURL()}\" rel=\"nofollow\">".wfMsg('vote_link')."</a>";
 		} else {
 			if (!$wgReadOnly) {

@@ -33,7 +33,7 @@ function wfVideoImport() {
 			}
 			
 			if( ! $wgUser->isAllowed('edit') ){
-				$login = Title::makeTitle(NS_SPECIAL, "Login");
+				$login = Title::makeTitle(NS_SPECIAL, "Userlogin");
 				$wgOut->errorpage( 'videoimport-login-title', 'videoimport-login-text' );
 				return true;	
 			}

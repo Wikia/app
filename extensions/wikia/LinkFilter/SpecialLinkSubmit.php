@@ -23,7 +23,7 @@ class LinkSubmit extends UnlistedSpecialPage {
 		}
 		
 		if ( $wgUser->isAnon() ) {
-			$login = Title::makeTitle(NS_SPECIAL, "Login");
+			$login = Title::makeTitle(NS_SPECIAL, "Userlogin");
 			$wgOut->errorpage( 'linkfilter-login-title', 'linkfilter-login-text' );
 			return true;
 		}

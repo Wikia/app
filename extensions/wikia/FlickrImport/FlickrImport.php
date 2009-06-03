@@ -33,7 +33,7 @@ function wfImageImport() {
 			}
 
 			if ( $wgUser->isAnon() ) {
-				$login = Title::makeTitle(NS_SPECIAL, "Login");
+				$login = Title::makeTitle(NS_SPECIAL, "Userlogin");
 				$wgOut->errorpage( 'importfreeimages-login-title', 'importfreeimages-login-text' );
 				return true;
 			}

@@ -44,7 +44,7 @@ class InviteEmail extends UnlistedSpecialPage {
 		if ( $wgUser->isAnon() ) {
 			$skin = $wgUser->getSkin();
 			$wgOut->setPageTitle( "Not logged in" );
-			$llink = $skin->makeKnownLinkObj( SpecialPage::getTitleFor( 'Login' ), wfMsgHtml( 'loginreqlink' ) );
+			$llink = $skin->makeKnownLinkObj( SpecialPage::getTitleFor( 'Userlogin' ), wfMsgHtml( 'loginreqlink' ) );
 			$wgOut->addHtml( wfMsgWikiHtml( 'inviteemailanontext', $llink ) );
 			return;
 		}

@@ -1365,7 +1365,7 @@ function wfSpecialPictureGameHome(){
                                 $output .= wfMsgForContent('picturegame_creategamenotloggedin');
 				$output .= "<p>
 					<input type=\"button\" class=\"site-button\" onclick=\"window.location='" . Title::makeTitle(NS_SPECIAL, "UserRegister")->escapeFullURL() . "'\" value=\"Sign Up\"/>
-					<input type=\"button\" class=\"site-button\" onclick=\"window.location='" . Title::makeTitle(NS_SPECIAL, "Login")->escapeFullURL() . "'\" value=\"Log In\"/>
+					<input type=\"button\" class=\"site-button\" onclick=\"window.location='" . Title::makeTitle(NS_SPECIAL, "Userlogin")->escapeFullURL() . "'\" value=\"Log In\"/>
 				</p>";
 				$wgOut->addHTML($output);
 				return;

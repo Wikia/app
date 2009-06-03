@@ -9,7 +9,7 @@ function wfAllowShowEditBlogPage(&$editpage) {
 	if( $wgTitle->getNamespace() == NS_BLOG ) {
 		//error_log ("editpage:" . print_r($editpage, true), 3, "/tmp/moli.log");
 		if( $wgUser->isAnon() ){
-			$wgOut->addHTML("You have to <a href=\"index.php?title=Special:Login\">log in</a> to create articles");
+			$wgOut->addHTML("You have to <a href=\"index.php?title=Special:Userlogin\">log in</a> to create articles");
 			return false;
 		}
  	

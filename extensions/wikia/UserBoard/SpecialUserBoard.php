@@ -34,7 +34,7 @@
 			/* It will automatically return them to the ViewGifts page
 			/*/
 			if($wgUser->getID() == 0 && $user_name==""){
-				$login =  Title::makeTitle( NS_SPECIAL  , "Login"  );
+				$login =  Title::makeTitle( NS_SPECIAL  , "Userlogin"  );
 				$wgOut->redirect( $login->getFullURL("&returnto=Special:UserBoard") );
 				return false;
 			}

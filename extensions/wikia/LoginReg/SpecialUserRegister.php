@@ -96,7 +96,7 @@ function wfSpecialUserRegister(){
 			}
 			
 			//safe titles
-			$login_link = Title::makeTitle(NS_SPECIAL, "Login");
+			$login_link = Title::makeTitle(NS_SPECIAL, "Userlogin");
 			$user_login_link = Title::makeTitle(NS_SPECIAL, "Userlogin");
 			
 			$output .= "<div class=\"lr-left\">

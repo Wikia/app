@@ -1646,7 +1646,7 @@ class UserProfilePage extends Article{
 					</div>";
 			} else {
 				
-				$login_link = Title::makeTitle(NS_SPECIAL, "Login");
+				$login_link = Title::makeTitle(NS_SPECIAL, "Userlogin");
 				
 				$output .= "<div class=\"user-page-message-form\">
 						".wfMsg("user-board-login-message", $login_link->escapeFullURL())."

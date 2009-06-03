@@ -633,7 +633,7 @@ function wfSpecialQuizGameHome(){
 			$output = wfMsgForContent( 'quiz_login_text' ) . "<p>";
 			$output .= "<div>
 				<input type=\"button\" class=\"site-button\" value=\"" . wfMsgForContent( 'quiz_main_page_button' ) . "\" onclick=\"window.location='" . Title::newMainPage()->escapeFullURL() . "'\"/> 
-				<input type=\"button\" class=\"site-button\" value=\"" . wfMsgForContent( 'quiz_login_button' ) . "\" onclick=\"window.location='" . Title::makeTitle(NS_SPECIAL, "Login")->escapeFullURL() . "'\"/>
+				<input type=\"button\" class=\"site-button\" value=\"" . wfMsgForContent( 'quiz_login_button' ) . "\" onclick=\"window.location='" . Title::makeTitle(NS_SPECIAL, "Userlogin")->escapeFullURL() . "'\"/>
 			</div>";
 			$wgOut->addHTML($output);
 		}
@@ -818,7 +818,7 @@ function wfSpecialQuizGameHome(){
 						
 					</div>";
 			}else{
-				$stats_box = "<div class=\"user-rank\"><h2>" . wfMsgForContent( 'quiz_leaderboard_scoretitle' ) . "</h2><a href=\"" . Title::makeTitle(NS_SPECIAL, "Login")->escapeFullURL() . "\">" . wfMsgForContent( 'quiz_login' ) . "</a> " . wfMsgForContent( 'quiz_or' ) . " <a href=\"" . Title::makeTitle(NS_SPECIAL, "UserRegister")->escapeFullURL() . "\">" . wfMsgForContent( 'quiz_create_account' ) . "</a> " . wfMsgForContent( 'quiz_leaderboard_climb' ) . "</div>";
+				$stats_box = "<div class=\"user-rank\"><h2>" . wfMsgForContent( 'quiz_leaderboard_scoretitle' ) . "</h2><a href=\"" . Title::makeTitle(NS_SPECIAL, "Userlogin")->escapeFullURL() . "\">" . wfMsgForContent( 'quiz_login' ) . "</a> " . wfMsgForContent( 'quiz_or' ) . " <a href=\"" . Title::makeTitle(NS_SPECIAL, "UserRegister")->escapeFullURL() . "\">" . wfMsgForContent( 'quiz_create_account' ) . "</a> " . wfMsgForContent( 'quiz_leaderboard_climb' ) . "</div>";
 			}
 			
 			
