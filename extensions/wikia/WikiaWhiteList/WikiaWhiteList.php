@@ -56,52 +56,54 @@ function wfWhiteListParse($text) {
 	if (preg_match(sprintf(REGEX_PARSE_WHITELIST,'rel','nofollow'), $text)) {
 	    //---
 		preg_match('#href\s*?=\s*?[\'"]?([^\'" ]*)[\'"]?#i', $text, $captures);
-		$lhref = $captures[1];
-		if (preg_match('#^\s*http://#', $lhref)) {
-			$lparsed = @parse_url($lhref);
-			#---
-			if ( empty($lparsed) || (!is_array($lparsed)) ) {
-				wfProfileOut( __METHOD__ );
-				return $text;				
-			}
-			$lschema = (!empty($lparsed['scheme'])) ? $lparsed['scheme'] : "http";
-			//---
-			if ( empty($lparsed['host']) ) {
-				wfProfileOut( __METHOD__ );
-				return $text;
-			} else  {
-				$host = (isset($lparsed['host'])) ? $lparsed['host'] : "";
-				$path = ""; if ( isset($lparsed['path']) ) $path = (substr($lparsed['path'], 0, 1) == '/') ? $lparsed['path'] : ('/'.$lparsed['path']);
-				$lurl = $lschema . "://" . $host . $path;
-			}
-			//---
-            $setup = wfWhiteListParseSetup();
-            $wgWhiteListLinks = array();
-            $whiteList = WikiaWhitelist::Instance($setup);
-            if (is_object($whiteList)) {
-                $wgWhiteListLinks = $whiteList->getRegexes();
-                # check edited page title -> if page with regexes just clear memcache.
-                $whiteList->getSpamList()->clearListMemCache();
-            }
-            
-			//---
-			if (!empty($wgWhiteListLinks) && is_array($wgWhiteListLinks)) {
-				foreach ($wgWhiteListLinks as $id => $regex) {
-					$m = array();
-					if (preg_match($regex, $lurl, $m) === false) {
-						wfProfileOut( __METHOD__ );
-						return $text;
-					} else {
-						if (count($m) > 0) {
-							$text = preg_replace(sprintf(REGEX_PARSE_WHITELIST,"rel","nofollow"), "", $text);
-							$text = preg_replace(sprintf(CLASS_PARSE_WHITELIST,"external","(text|free|autonumber)"), "", $text);
+		if ( is_array($captures) && isset($captures[1]) ) {
+			$lhref = $captures[1];
+			if (preg_match('#^\s*http://#', $lhref)) {
+				$lparsed = @parse_url($lhref);
+				#---
+				if ( empty($lparsed) || (!is_array($lparsed)) ) {
+					wfProfileOut( __METHOD__ );
+					return $text;				
+				}
+				$lschema = (!empty($lparsed['scheme'])) ? $lparsed['scheme'] : "http";
+				//---
+				if ( empty($lparsed['host']) ) {
+					wfProfileOut( __METHOD__ );
+					return $text;
+				} else  {
+					$host = (isset($lparsed['host'])) ? $lparsed['host'] : "";
+					$path = ""; if ( isset($lparsed['path']) ) $path = (substr($lparsed['path'], 0, 1) == '/') ? $lparsed['path'] : ('/'.$lparsed['path']);
+					$lurl = $lschema . "://" . $host . $path;
+				}
+				//---
+				$setup = wfWhiteListParseSetup();
+				$wgWhiteListLinks = array();
+				$whiteList = WikiaWhitelist::Instance($setup);
+				if (is_object($whiteList)) {
+					$wgWhiteListLinks = $whiteList->getRegexes();
+					# check edited page title -> if page with regexes just clear memcache.
+					$whiteList->getSpamList()->clearListMemCache();
+				}
+				
+				//---
+				if (!empty($wgWhiteListLinks) && is_array($wgWhiteListLinks)) {
+					foreach ($wgWhiteListLinks as $id => $regex) {
+						$m = array();
+						if (preg_match($regex, $lurl, $m) === false) {
+							wfProfileOut( __METHOD__ );
+							return $text;
+						} else {
+							if (count($m) > 0) {
+								$text = preg_replace(sprintf(REGEX_PARSE_WHITELIST,"rel","nofollow"), "", $text);
+								$text = preg_replace(sprintf(CLASS_PARSE_WHITELIST,"external","(text|free|autonumber)"), "", $text);
+							}
 						}
 					}
 				}
+			} else {
+				wfProfileOut( __METHOD__ );
+				return $text;
 			}
-		} else {
-			wfProfileOut( __METHOD__ );
-			return $text;
 		}
 	} 
 	
