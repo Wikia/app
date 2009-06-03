@@ -3,7 +3,7 @@ $wgExtensionCredits['other'][] = array(
 	'name' => 'Wikia Rich Text Editor (Wysiwyg)',
 	'description' => 'FCKeditor integration for MediaWiki',
 	'url' => 'http://www.wikia.com/wiki/c:help:Help:New_editor',
-	'version' => 0.13,
+	'version' => 0.14,
 	'author' => array('Inez Korczyński', 'Maciej Brencz', 'Maciej Błaszkowski (Marooned)', 'Łukasz \'TOR\' Garczewski')
 );
 
