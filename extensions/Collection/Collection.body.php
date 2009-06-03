@@ -1269,7 +1269,7 @@ EOS
 		global $wgCollectionVersion;
 		
 		$c = curl_init( $url );
-		curl_setopt($c, CURLOPT_PROXY, $wgHTTPProxy);
+		#curl_setopt($c, CURLOPT_PROXY, $wgHTTPProxy);
 		$userAgent = wfGetAgent();
 		if ( !$userAgent ) $userAgent = "Unknown user agent";
 		curl_setopt( $c, CURLOPT_USERAGENT, $userAgent . " (via MediaWiki/$wgVersion, Collection/$wgCollectionVersion)" );
