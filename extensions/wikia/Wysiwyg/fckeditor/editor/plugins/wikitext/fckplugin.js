@@ -1550,8 +1550,8 @@ FCK.Track = function(fakeUrl) {
 
 // performs quick diff between two strings (original and one with pasted content)
 // and returns pasted content
-// input:  "abc", "a123bc"
-// return: "123"
+// example: FCK.Diff('<br/><b>', '<br/><foo><b>') => <foo>
+// example: FCK.Diff('<br/><span><b>', '<br/><foo><b>') => <foo>
 FCK.Diff = function(o, n) {
 	var lenOld = o.length;
 	var lenNew = n.length;
@@ -1581,6 +1581,15 @@ FCK.Diff = function(o, n) {
 			return false;
 		}
 		idx--;
+	}
+
+	// make proper HTML
+	if (n.charAt(startIdx-1) == '<') {
+		startIdx--;
+	} 
+
+	if (n.charAt(idx+1) == '>') {
+		idx++;
 	}
 
 	return {html: n.substring(startIdx, idx + 1), index: startIdx, 'new': n, 'old': o};
