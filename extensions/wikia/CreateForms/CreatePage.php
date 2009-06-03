@@ -19,7 +19,7 @@ function renderCreateForm($input, $args, &$parser){
 	$parser->disableCache();
 	
 	if(!$wgUser->isAllowed('edit') && $wgUser->isAnon() ){
-		return "You have to <a href=\"index.php?title=Special:Login\">log in</a> to create articles";
+		return "You have to <a href=\"index.php?title=Special:Userlogin\">log in</a> to create articles";
 	}
 	
 	getValue($category,$input,"category");

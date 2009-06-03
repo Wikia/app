@@ -741,7 +741,7 @@ function wfProfileJSON($user_name, $r_user_name="") {
 				$slashed_user_name .= addslashes($user_name);
 			} else {
 				
-				$login_link = Title::makeTitle(NS_SPECIAL, "Login")->escapeFullURL();
+				$login_link = Title::makeTitle(NS_SPECIAL, "Userlogin")->escapeFullURL();
 				
 				$login_text = wfMsg("user-board-login-message", $login_link);
 			}

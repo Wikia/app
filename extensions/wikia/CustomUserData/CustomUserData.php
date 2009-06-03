@@ -6,7 +6,7 @@ function wfCustomUserData( $skin, &$tpl, &$custom_user_data ) {
 	
 	//links 
 	$register = Title::makeTitle(NS_SPECIAL, "UserRegister");
-	$login = Title::makeTitle(NS_SPECIAL, "Login");
+	$login = Title::makeTitle(NS_SPECIAL, "Userlogin");
 	
 	if( $wgUser->isLoggedIn() ){
 		$custom_user_data  .= "<li>

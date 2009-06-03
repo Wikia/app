@@ -38,7 +38,7 @@ function wfSpecialCreateCollabLib(){
 			/*/
 			if($wgUser->getID() == 0 ){
 				$wgOut->setPagetitle( "Woops!" );
-				$login =  Title::makeTitle( NS_SPECIAL  , "Login"  );
+				$login =  Title::makeTitle( NS_SPECIAL  , "Userlogin"  );
 				$wgOut->redirect( $login->getFullURL("returnto=Special:CreateCollabLib")  );
 				return false;
 			}

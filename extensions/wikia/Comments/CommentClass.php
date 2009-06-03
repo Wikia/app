@@ -452,7 +452,7 @@ class Comment{
 		if ( $wgUser->isLoggedIn() ) {
 			$VoteLink .= '<a href=\'javascript:cv(' . $CommentID . ',' . $VoteType . ',"' . $VoteKey . '","' . $this->Voting . '")\'>';
 		}else{
-			$login = Title::makeTitle(NS_SPECIAL,"Login");
+			$login = Title::makeTitle(NS_SPECIAL,"Userlogin");
 			$VoteLink .= "<a href=\"{$login->escapeFullURL()}\" rel=\"nofollow\">";
 		}
 		if ($VoteType==1) {

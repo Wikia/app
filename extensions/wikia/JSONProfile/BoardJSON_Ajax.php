@@ -190,7 +190,7 @@ function doGetBoardMessagesJSON($user_name, $r_user_name="", $check_count=10, $f
 			if($r_user_name !== ""){
 				$slashed_user_name .= addslashes($user_name);
 			}else {
-				$login_link = Title::makeTitle(NS_SPECIAL, "Login")->escapeFullURL();
+				$login_link = Title::makeTitle(NS_SPECIAL, "Userlogin")->escapeFullURL();
 				$login_text = wfMsg("user-board-login-message", $login_link);
 			}
 		}else {
