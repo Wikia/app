@@ -9,16 +9,8 @@ if(!defined('MEDIAWIKI')) {
 global $wgWidgets;
 $wgWidgets['WidgetLastWikis'] = array(
 	'callback' => 'WidgetLastWikis',
-	'title' => array(
-		'en' => 'Last Wikis',
-		'pl' => 'Ostatnio odwiedzone',
-		'hu' => 'Legutóbbi wikik'
-	),
-	'desc' => array(
-		'en' => 'Quickly jump back to wikis that you\'ve visited in the past', 
-		'pl' => 'Lista ostatnio odwiedzonych Wikii',
-		'hu' => 'Gyors visszalépés a korábban látogatott wikikre.'
-    ),
+	'title' => 'widget-title-lastwikis',
+	'desc' => 'widget-desc-lastwikis',
     'closeable' => true,
     'editable' => false,
 );

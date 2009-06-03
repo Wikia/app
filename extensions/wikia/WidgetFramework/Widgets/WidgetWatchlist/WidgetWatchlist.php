@@ -9,16 +9,8 @@ if(!defined('MEDIAWIKI')) {
 global $wgWidgets;
 $wgWidgets['WidgetWatchlist'] = array(
 	'callback' => 'WidgetWatchlist',
-	'title' => array(
-		'en' => 'Watchlist',
-		'pl' => 'Obserwowane',
-		'hu' => 'Figyelõlista'
-	),
-	'desc' => array(
-		'en' => 'Easily keep an eye on your watched pages', 
-		'pl' => 'Lista obserwowanych stron na tej wiki',
-		'hu' => 'Könnyedén szemmel tarthatod a megfigyelt lapokat.'
-	),
+	'title' => 'wdiget-title-watchlist',
+	'desc' => 'widget-desc-watchlist',
 	'closeable' => true,
 	'editable' => false,
 );

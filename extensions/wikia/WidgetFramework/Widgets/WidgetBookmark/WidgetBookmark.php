@@ -9,16 +9,8 @@ if(!defined('MEDIAWIKI')) {
 global $wgWidgets;
 $wgWidgets['WidgetBookmark'] = array(
 	'callback' => 'WidgetBookmark',
-	'title' => array(
-		'en' => 'Bookmarks',
-		'pl' => 'Zakładki',
-		'hu' => 'Könyvjelzõk'
-	),
-	'desc' => array(
-		'en' => 'Add your favorite pages',
-		'pl' => 'Zachowaj swoje ulubione strony',
-		'hu' => 'Add hozzá a kedvenc oldalaidat.'
-	),
+	'title' => 'widget-title-bookmark',
+	'desc' => 'widget-desc-bookmark',
 	'params' => array(),
 	'closeable' => true,
 	'editable' => false,

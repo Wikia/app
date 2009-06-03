@@ -9,16 +9,8 @@ if(!defined('MEDIAWIKI')) {
 global $wgWidgets;
 $wgWidgets['WidgetEditedRecently'] = array(
 	'callback' => 'WidgetEditedRecently',
-	'title' => array(
-		'en' => 'Recently edited by',
-		'pl' => 'Ostatnio zmieniane przez',
-		'hu' => 'Utoljára szerkesztette'
-	),
-	'desc' => array(
-		'en' => 'Displays a list of recent editors for any article you visit',
-		'pl' => 'Lista ostatnich edytorów tej strony',
-		'hu' => 'Egy listát jelenít meg azokról a szerkesztõkrõl, akik utoljára változtattak a meglátogatott szócikken.'
-    ),
+	'title' => 'widget-title-editedrecently',
+	'desc' => 'widget-desc-editedrecently',  
     	'params' => array(
 		'limit' => array(
 			'type' => 'text',

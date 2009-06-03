@@ -9,16 +9,8 @@ if(!defined('MEDIAWIKI')) {
 global $wgWidgets;
 $wgWidgets['WidgetAncientPages'] = array(
 	'callback' => 'WidgetAncientPages',
-	'title' => array(
-		'en' => 'Stale pages',
-		'pl' => 'Najstarsze strony',
-		'hu' => 'Elhagyott oldalak'
-	),
-	'desc' => array(
-		'en' => 'See a list of pages that have not been edited in a long time', 
-		'pl' => 'Lista stron nieedytowanych przez dłuższy czas',
-		'hu' => 'Nézd meg a legrégebben szerkesztett szócikkeket.'
-    ),
+	'title' => 'widget-title-ancientpages',
+	'desc' => 'widget-desc-ancientpages',
 	'params' => array(
 		'limit' => array(
 			'type' => 'text',

@@ -9,16 +9,8 @@ if(!defined('MEDIAWIKI')) {
 global $wgWidgets;
 $wgWidgets['WidgetNeedHelp'] = array(
 	'callback' => 'WidgetNeedHelp',
-	'title' => array(
-		'en' => 'Help needed',
-		'pl' => 'Potrzebna pomoc',
-		'hu' => 'Segítség kérése'
-	),
-	'desc' => array(
-		'en' => 'Displays articles that have been marked as needing help',
-		'pl' => 'Wyświetla artykuły wymagające dopracowania',
-		'hu' => 'Megjeleníti azokat a szócikkeket, amelyekkel kapcsolatban segítséget kértek.'
-	),
+	'title' => 'widget-title-needhelp',
+	'desc' => 'widget-desc-needhelp',
 	'closeable' => true,
 	'editable' => false,
 );

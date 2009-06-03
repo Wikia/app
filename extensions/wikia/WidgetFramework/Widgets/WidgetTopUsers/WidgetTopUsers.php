@@ -10,16 +10,8 @@ if(!defined('MEDIAWIKI')) {
 global $wgWidgets;
 $wgWidgets['WidgetTopUsers'] = array(
 	'callback' => 'WidgetTopUsers',
-	'title' => array(
-		'en' => 'Top users',
-		'pl' => 'Najaktywniejsi użytkownicy',
-		'hu' => 'Vezetõ felhasználók'
-	),
-	'desc' => array(
-		'en' => 'See a list of the most active users of this wiki',
-		'pl' => 'Lista najaktywniejszych użytkownikow na tej wiki',
-		'hu' => 'Nézd meg a wiki legaktívabb szerkesztõinek listáját.'
-    ),
+	'title' => 'widget-title-topusers',
+	'desc' => 'widget-desc-topusers',
     'closeable' => true,
     'editable' => false,
     'listable' => true

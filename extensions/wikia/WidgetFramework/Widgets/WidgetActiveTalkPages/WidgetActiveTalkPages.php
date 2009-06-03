@@ -9,16 +9,8 @@ if(!defined('MEDIAWIKI')) {
 global $wgWidgets;
 $wgWidgets['WidgetActiveTalkPages'] = array(
 	'callback' => 'WidgetActiveTalkPages',
-	'title' => array(
-		'en' => 'Active talk pages',
-		'pl' => 'Aktywne strony dyskusji',
-		'hu' => 'Aktív vitalapok'
-	),
-	'desc' => array(
-		'en' => 'A list of recently edited talk pages', 
-		'pl' => 'Lista ostatnio edytowanych strony dyskusji',
-		'hu' => 'A legutóbb megváltozott vitalapok listája.'
-    ),
+	'title' => 'widget-title-activetalkpages',
+	'desc' => 'widget-desc-activetalkpages',
 	'params' => array(
 		'limit' => array(
 			'type' => 'text',

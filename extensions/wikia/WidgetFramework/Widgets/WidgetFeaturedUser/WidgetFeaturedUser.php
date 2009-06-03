@@ -10,9 +10,7 @@ if(!defined('MEDIAWIKI')) {
 global $wgWidgets;
 $wgWidgets['WidgetFeaturedUser'] = array(
 	'callback' => 'WidgetFeaturedUser',
-	'title' => array(
-		'en' => 'Featured user',
-	),
+	'title' => 'widget-title-featureduser',	
     'closeable' => true,
     'editable' => false,
 );

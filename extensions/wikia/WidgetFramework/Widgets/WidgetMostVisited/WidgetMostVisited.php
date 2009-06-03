@@ -9,16 +9,8 @@ if(!defined('MEDIAWIKI')) {
 global $wgWidgets;
 $wgWidgets['WidgetMostVisited'] = array(
 	'callback' => 'WidgetMostVisited',
-	'title' => array(
-		'en' => 'Most visited',
-		'pl' => 'Najczęściej odwiedzane',
-		'hu' => 'Leglátogatottabb'
-	),
-	'desc' => array(
-		'en' => 'A list of the most visited articles on this wiki', 
-		'pl' => 'Lista najczęściej odwiedzanych artykułów',
-		'hu' => 'Lista a wiki leglátogatottabb szócikkeirõl.'
-    ),
+	'title' => 'widget-title-mostvisited',
+	'desc' => 'widget-desc-mostvisited',
     'closeable' => true,
     'editable' => false,
 );

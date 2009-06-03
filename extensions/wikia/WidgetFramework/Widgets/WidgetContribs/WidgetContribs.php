@@ -9,16 +9,8 @@ if(!defined('MEDIAWIKI')) {
 global $wgWidgets;
 $wgWidgets['WidgetContribs'] = array(
 	'callback' => 'WidgetContribs',
-	'title' => array(
-		'en' => 'Contributions',
-		'pl' => 'Wkład',
-		'hu' => 'Közremûködések'
-	),
-	'desc' => array(
-		'en' => 'Handy way to view your contributions', 
-		'pl' => 'Pomocna lista ostatnich edycji',
-		'hu' => 'Egyszerû módja a közremûködéseid megtekintésének.'
-	),
+	'title' => 'widget-title-contribs',
+	'desc' => 'widget-desc-contribs',
 	'params' => array(
 		'limit' => array(
 			'type'    => 'text',

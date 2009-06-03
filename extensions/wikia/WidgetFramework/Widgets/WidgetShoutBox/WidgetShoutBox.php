@@ -28,16 +28,8 @@ if(!defined('MEDIAWIKI')) {
 global $wgWidgets;
 $wgWidgets['WidgetShoutBox'] = array(
 	'callback' => 'WidgetShoutBox',
-	'title' => array(
-		'en' => 'Shout Box',
-		'pl' => 'Czat',
-		'hu' => 'Társalgó',
-	),
-	'desc' => array(
-		'en' => 'See who\'s online and chat with your friends',
-		'pl' => 'Zobacz kto jest online i rozmawiaj ze swoimi znajomymi',
-		'hu' => 'Nézd meg, mely szerkesztõk vannak online, és chatelj velük.'
-	),
+	'title' => 'widget-title-shoutbox',
+	'desc' => 'widget-desc-shoutbox',
     	'params' => array(
 		'limit' => array(
 		    'type'    => 'text',

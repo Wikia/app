@@ -10,15 +10,11 @@ if(!defined('MEDIAWIKI')) {
 global $wgWidgets;
 $wgWidgets['WidgetAdvertiser'] = array(
 	'callback' => 'WidgetAdvertiser',
-	'title' => array(
-		'en' => 'Wikia Spotlight'
-	),
-	'desc' => array(
-		'en' => 'Showing spotlights / ads'
-    ),
-    'closeable' => false,
-    'editable' => false,
-    'listable' => false // don't show on Special:Widgets
+	'title' => 'widget-title-advertiser',
+	'desc' => 'widget-desc-advertiser',
+	'closeable' => false,
+	'editable' => false,
+	'listable' => false // don't show on Special:Widgets
 );
 
 function WidgetAdvertiser($id, $params) {

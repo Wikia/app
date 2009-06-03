@@ -9,16 +9,8 @@ if(!defined('MEDIAWIKI')) {
 global $wgWidgets;
 $wgWidgets['WidgetProblemReports'] = array(
 	'callback' => 'WidgetProblemReports',
-	'title' => array(
-		'en' => 'Problem reports',
-		'pl' => 'Zgłoszone problemy',
-		'hu' => 'Hiba jelentése'
-	),
-	'desc' => array(
-		'en' => 'Displays a list of reported problems for this wiki',
-		'pl' => 'Lista zgłoszonych problemów',
-		'hu' => 'Megjeleníti a wikin jelzett hibák listáját.'
-	),
+	'title' => 'widget-title-problemreports',
+	'desc' => 'widget-desc-problemreports',
     	'params' => array(
 		'limit' => array(
 			'type' => 'text',

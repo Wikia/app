@@ -10,12 +10,8 @@ if(!defined('MEDIAWIKI')) {
 global $wgWidgets;
 $wgWidgets['WidgetRelatedCommunities'] = array(
 	'callback' => 'WidgetRelatedCommunities',
-	'title' => array(
-		'en' => 'Related Communities',
-	),
-	'desc' => array(
-		'en' => 'Related communities',
-    ),
+	'title' => 'widget-title-relatedcommunities',
+	'desc' => 'widget-desc-relatedcommunities',
     'closeable' => true,
     'listable' => false,
     'editable' => false,

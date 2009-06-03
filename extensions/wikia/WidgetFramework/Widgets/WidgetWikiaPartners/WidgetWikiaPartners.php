@@ -34,14 +34,8 @@ if(!defined('MEDIAWIKI')) {
 global $wgWidgets;
 $wgWidgets['WidgetWikiaPartners'] = array(
 	'callback' => 'WidgetWikiaPartners',
-	'title' => array(
-		'en' => 'Our partners',
-		'pl' => 'Nasi partnerzy'
-	),
-	'desc' => array(
-		'en' => 'Our partners',
-		'pl' => 'Nasi partnerzy'
-    ),
+	'title' => 'widget-title-wikiapartners',
+	'desc' => 'widget-desc-wikiapartners',
     'closeable' => false,
     'editable' => false,
     'listable' => false
