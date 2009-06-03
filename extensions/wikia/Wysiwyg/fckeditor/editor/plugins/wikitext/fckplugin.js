@@ -1569,22 +1569,21 @@ FCK.Diff = function(o, n) {
 	// get diff
 	var diff = FCK.DiffTool.diff_main(o, n);
 
-	FCK.log(diff);
-
 	// get unchanged parts at the beginning and at the end of diff
-	var prefix = diff.shift();
-	var suffix = diff.pop();
+	var prefix = diff.shift()[1];
+	var suffix = diff.pop()[1];
 
-	var idx = {start: prefix[1].length, end: n.length - suffix[1].length};
+	var idx = {start: prefix.length, end: n.length - suffix.length};
 
-	// fix HTML by finding closing > and opening < in prefix and suffix
-	if (/<[^>]*$/.test(prefix[1])) {
+	// fix HTML by finding closing > and opening < in suffix and prefix respectively
+	if (/<[^>]*$/.test(prefix)) {
 		// go to last < in prefix
-		idx.start = prefix[1].lastIndexOf('<');
+		idx.start = prefix.lastIndexOf('<');
 	}
 
-	if (/^[^<]*>/.test(suffix[1])) {
-		idx.end += suffix[1].indexOf('>') + 1;
+	if (/^[^<]*>/.test(suffix)) {
+		// go to first > in suffix
+		idx.end += suffix.indexOf('>') + 1;
 	}
 
 	// get changed fragment
