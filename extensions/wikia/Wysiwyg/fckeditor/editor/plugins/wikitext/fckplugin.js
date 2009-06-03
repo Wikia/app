@@ -1671,7 +1671,7 @@ FCK.CheckPasteCompare = function() {
 				var newRefId = FCK.GetFreeRefId();
 
 				// copy meta-data into new refid
-				FCK.wysiwygData[newRefId] = window.parent.$().extend(FCK.wysiwygData[refid], {});
+				FCK.wysiwygData[newRefId] = window.parent.$().extend(true, {}, FCK.wysiwygData[refid]);
 				FCK.log('New refid #' + newRefId);
 
 				// replace old refid with new one
