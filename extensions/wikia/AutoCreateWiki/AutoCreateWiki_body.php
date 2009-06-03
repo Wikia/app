@@ -695,8 +695,6 @@ class AutoCreateWikiPage extends SpecialPage {
 		}
 		
 		$this->mWikiData[ "dbname" ] = WikiFactory::prepareDBName($this->mWikiData[ "dbname" ]);
-		error_log (print_r($this->mWikiData, true));
-		exit;
 	
 		wfProfileOut( __METHOD__ );
 	}
