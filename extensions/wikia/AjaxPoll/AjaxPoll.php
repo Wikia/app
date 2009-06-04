@@ -42,13 +42,7 @@ require_once( dirname(__FILE__) . '/AjaxPoll_body.php' );
  */
 function wfAjaxPollTag() {
 	global $wgParser; 
-
 	$wgParser->setHook( "poll", array( "AjaxPollClass", "renderFromTag" ) );
-
-	// temporary solution to ensure AjaxPoll.js / AjaxPoll.css is always loaded
-	global $wgOut, $wgJsMimeType, $wgExtensionsPath, $wgStyleVersion, $wgHooks;
-	$wgOut->addScript("<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/AjaxPoll/AjaxPoll.js?{$wgStyleVersion}\" ></script>\n"); 
-	$wgOut->addExtensionStyle("{$wgExtensionsPath}/wikia/AjaxPoll/AjaxPoll.css?{$wgStyleVersion}");
 }
 /**
  * axAjaxPollSubmit
