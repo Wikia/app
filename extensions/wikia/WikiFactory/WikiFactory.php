@@ -629,7 +629,7 @@ class WikiFactory {
 	 */
 	static public function setVarByName( $variable, $wiki, $value ) {
 		$oVariable = self::getVarByName( $variable, $wiki );
-		return WikiFactory::SetVarByID( $oVariable->cv_variable_id, $wiki, $value );
+		return WikiFactory::setVarByID( $oVariable->cv_variable_id, $wiki, $value );
 	}
 
 	/**
@@ -1344,7 +1344,7 @@ class WikiFactory {
 			}
 			else {
 				$oRow->cv_city_id = $city_id;
-				$oRow->cv_variable_id = $cv_id;
+				$oRow->cv_variable_id = $oRow->cv_id;
 				$oRow->cv_value = null;
 			}
 		}
