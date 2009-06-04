@@ -1571,7 +1571,7 @@ FCK.Diff = function(o, n) {
 
 	while (o.charAt(idx.end+lenDiff) == n.charAt(idx.end)) {
 		if (idx.end <= idx.start) {
-			return false;
+			return null;
 		}
 		idx.end--;
 	}
@@ -1599,6 +1599,7 @@ FCK.Diff = function(o, n) {
 
 // RT #14699
 FCK._CheckPasteOldHTML = false;
+FCK._CheckPasteChecks = 0;
 FCK.CheckPaste = function() {
 	FCK.log('CheckPaste');
 
@@ -1611,7 +1612,9 @@ FCK.CheckPaste = function() {
 	// store HTML before paste
 	FCK._CheckPasteOldHTML = FCK.EditorDocument.body.innerHTML;
 
-	setTimeout(FCK.CheckPasteCompare, 100);
+	// check every 10ms
+	FCK._CheckPasteChecks = 0;
+	setTimeout(FCK.CheckPasteCompare, 10);
 
 	return true;
 }
@@ -1619,8 +1622,24 @@ FCK.CheckPaste = function() {
 FCK.CheckPasteCompare = function() {
 	FCK.log('CheckPasteCompare');
 
+	FCK._CheckPasteChecks++;
+
 	var newHTML = FCK.EditorDocument.body.innerHTML;
 	var oldHTML = FCK._CheckPasteOldHTML;
+
+	// nothing has changed, keep trying...
+	if (newHTML == oldHTML) {
+		if (FCK._CheckPasteChecks > 50) {
+			FCK.log('CheckPasteCompare timed out');
+
+			// unblock paste
+			FCK._CheckPasteOldHTML = false;
+		}
+		else {
+			setTimeout(FCK.CheckPasteCompare, 10);
+		}
+		return;
+	}
 
 	var diff = FCK.Diff(oldHTML, newHTML);
 
