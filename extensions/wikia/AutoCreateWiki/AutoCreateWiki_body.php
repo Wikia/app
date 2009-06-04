@@ -656,6 +656,12 @@ class AutoCreateWikiPage extends SpecialPage {
 		$this->log( "Add local maintenance task" );
 
 		/**
+		 * set new db as readonly (while Task Manager don't finish its job)
+		 */
+		$this->log( "Set new Wiki as readonly" );
+		$isset = WikiFactory::setVarByName('wgReadOnly', $this->mWikiId, "This wiki has been locked to edits (AWC process)");
+
+		/**
 		 * show total time
 		 */
 		$this->log( sprintf( "Total: %F", wfTime() - $startTime ) );
