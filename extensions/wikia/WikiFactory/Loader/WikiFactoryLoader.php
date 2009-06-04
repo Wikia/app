@@ -360,6 +360,7 @@ class WikiFactoryLoader {
 		 */
 		if( $this->mIsWikiaActive == 2 ) {
 			$this->debug( "city_id={$this->mWikiID};city_public={$this->mIsWikiaActive}), redirected to {$this->mCityHost}" );
+			header( "X-Redirected-By-WF: 2" );
 			header( "Location: http://{$this->mCityHost}/", true, 301 );
 			wfProfileOut( __METHOD__ );
 			exit(0);
@@ -412,6 +413,7 @@ class WikiFactoryLoader {
 
 			$this->debug( "redirected from {$url[ "url" ]} to {$target}" );
 
+			header( "X-Redirected-By-WF: NotPrimary" );
 			header( "Location: {$target}", true, 301 );
 			wfProfileOut( __METHOD__ );
 			exit(0);
@@ -423,6 +425,7 @@ class WikiFactoryLoader {
 		if( empty( $this->mWikiID ) ) {
 			global $wgNotAValidWikia;
 			$this->debug( "redirected to {$wgNotAValidWikia}, {$this->mWikiID} {$this->mIsWikiaActive}" );
+			header( "X-Redirected-By-WF: NotAValidWikia" );
 			header("Location: $wgNotAValidWikia");
 			wfProfileOut( __METHOD__ );
 			exit(0);
@@ -447,6 +450,7 @@ class WikiFactoryLoader {
 					$redirect = $wgNotAValidWikia;
 				}
 				$this->debug( "disabled and not commandline, redirected to {$redirect}, {$this->mWikiID} {$this->mIsWikiaActive}" );
+				header( "X-Redirected-By-WF: Dump" );
 				header( "Location: $redirect" );
 				wfProfileOut( __METHOD__ );
 				exit(0);
@@ -480,6 +484,7 @@ class WikiFactoryLoader {
 					try {
 						$geoip = Net_GeoIP::getInstance($wgLocationOfGeoIPDatabase);
 						if( 'GB' == $geoip->lookupCountryCode($ips[0]) ) {
+							header( "X-Redirected-By-WF: Geo" );
 							header('Location: http://www.owikis.co.uk', true, 301);
 							wfProfileOut( __METHOD__ );
 							exit( 0 );
