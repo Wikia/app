@@ -391,6 +391,9 @@ FCKStyle.prototype =
 					// Remove overrides defined to the same element name.
 					this._RemoveOverrides( currentNode, styleOverrides[ elementName ] ) ;
 
+					// macbre@wikia: fix RT #16592
+					FCKDomTools.RemoveAttribute( currentNode, 'washtml' );
+
 					// Remove the element if no more attributes are available.
 					this._RemoveNoAttribElement( currentNode ) ;
 				}
