@@ -222,13 +222,11 @@ class AjaxPollClass {
 		if (self::$mCount == 0) {
 			global $wgExtensionsPath, $wgStyleVersion;
 
-			// I know, it doesn't validate, but <style> + @import neither
-			$before .= "<link rel=\"stylesheet\" href=\"{$wgExtensionsPath}/wikia/AjaxPoll/AjaxPoll.css?{$wgStyleVersion}\" type=\"text/css\" />";
-
-			// load JS only when needed
+			// load CSS/JS only when needed
 			$before .= <<<JS
 <script type="text/javascript">/*<![CDATA[*/
 wgAfterContentAndJS.push(function() {
+	importStylesheetURI('{$wgExtensionsPath}/wikia/AjaxPoll/AjaxPoll.css?{$wgStyleVersion}');
 	importScriptURI('{$wgExtensionsPath}/wikia/AjaxPoll/AjaxPoll.js?{$wgStyleVersion}');
 });
 /*]]>*/</script>
