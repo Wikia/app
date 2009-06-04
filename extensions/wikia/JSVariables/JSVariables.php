@@ -6,7 +6,7 @@
 $wgHooks['MakeGlobalVariablesScript'][] = 'wfMakeGlobalVariablesScript';
 
 function wfMakeGlobalVariablesScript($vars) {
-	global $wgMemc, $wgCurse, $wgCityId, $wgEnableAjaxLogin, $wgUser, $wgDBname, $wgPrivateTracker, $wgWikiaAdvertiserCategory, $wgExtensionsPath, $wgTitle, $wgArticle, $wgStyleVersion, $wgSitename, $wgDevelEnvironment;
+	global $wgMemc, $wgCurse, $wgCityId, $wgEnableAjaxLogin, $wgUser, $wgDBname, $wgPrivateTracker, $wgWikiaAdvertiserCategory, $wgExtensionsPath, $wgTitle, $wgArticle, $wgStyleVersion, $wgSitename;
 
 	$cats = wfGetBreadCrumb();
 	$idx = count($cats)-2;
@@ -60,11 +60,6 @@ function wfMakeGlobalVariablesScript($vars) {
 	// Ads In Content is handled with javascript, use this to turn it on. 
 	global $wgEnableAdsInContent; 
 	$vars['wgEnableAdsInContent'] = $wgEnableAdsInContent;
-
-	// development environment
-	if (!empty($wgDevelEnvironment)) {
-		$vars['wgDevelEnvironment'] = true;
-	}
 
 	return true;
 }
