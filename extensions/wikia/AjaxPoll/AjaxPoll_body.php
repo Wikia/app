@@ -201,6 +201,8 @@ class AjaxPollClass {
 
 		wfProfileIn( __METHOD__ );
 
+		wfDebug("AjaxPoll: rendering poll #" . self::$mCount . "\n");
+
 		/**
 		 * check, maybe form is submited?
 		*/
@@ -218,20 +220,23 @@ class AjaxPollClass {
 		list( $votes, $total ) = $this->getVotes();
 
 		// macbre: add CSS to the first ajax poll on the page
-		$before = '';
-		if (self::$mCount == 0) {
+		$before = '<!-- AjaxPoll #'. self::$mCount .' -->';
+		//if (self::$mCount == 0) {
 			global $wgExtensionsPath, $wgStyleVersion;
 
 			// load CSS/JS only when needed
 			$before .= <<<JS
 <script type="text/javascript">/*<![CDATA[*/
 wgAfterContentAndJS.push(function() {
-	importStylesheetURI('{$wgExtensionsPath}/wikia/AjaxPoll/AjaxPoll.css?{$wgStyleVersion}');
-	importScriptURI('{$wgExtensionsPath}/wikia/AjaxPoll/AjaxPoll.js?{$wgStyleVersion}');
+	if (!window.AjaxPollLoaded) {
+		importStylesheetURI('{$wgExtensionsPath}/wikia/AjaxPoll/AjaxPoll.css?{$wgStyleVersion}');
+		importScriptURI('{$wgExtensionsPath}/wikia/AjaxPoll/AjaxPoll.js?{$wgStyleVersion}');
+		window.AjaxPollLoaded = true;
+	}
 });
 /*]]>*/</script>
 JS;
-		}
+		//}
 
 		$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
 		$oTmpl->set_vars( array(
