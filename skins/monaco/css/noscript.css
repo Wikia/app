@@ -14,3 +14,10 @@
 #wmuLinkDiv {
 	display: none;
 }
+
+/*** TOC improvements ***/
+body.TOCimprovements #toc ul,
+/* for shared help TOC */
+body.TOCimprovements #sharedtoc ul {
+	display: block;
+}
