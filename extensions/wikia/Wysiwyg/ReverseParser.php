@@ -884,19 +884,35 @@ class ReverseParser {
 
 		$refid = $node->getAttribute('refid');
 
-		// handle links pasted from external sites -> assign new refid
+		// handle links pasted from external/local site -> assign new refid
 		if (!is_numeric($refid) || !isset($this->data[$refid])) {
 			$href = $node->getAttribute('href');
 
 			if( is_string($href) ) {
-				// generate new refid
-				$refid = !empty($this->data) ? (max( array_keys($this->data) ) + 1) : 0;
+				wfDebug("ReverseParser: pasted link pointing to '{$href}'\n");
 
-				$this->data[$refid] = array(
-					'type' => ($content == $href) ? 'external link: raw' : 'external link',
-					'text' => $content,
-					'href' => $href
-				);
+				// generate new refid
+				$refid = $this->getFreeRefid();
+
+				// detect links from local wiki
+				if ( $articleName = $this->isLocalWikiLink($href) ) {
+					// internal link
+					$this->data[$refid] = array(
+						'type' => 'internal link',
+						'description' => '',
+						'href' => $articleName
+					);
+
+					wfDebug("ReverseParser: detected pasted link pointing to '{$articleName}' article\n");
+				}
+				else {
+					// external link
+					$this->data[$refid] = array(
+						'type' => ($content == $href) ? 'external link: raw' : 'external link',
+						'text' => $content,
+						'href' => $href
+					);
+				}
 			}
 		}
 
@@ -998,6 +1014,35 @@ class ReverseParser {
 	}
 
 	/**
+	 * Detects link from local wiki and returns article name it points to
+	 *
+	 * Local links are formatted as follows:
+	 *  - http://../wiki/Twilight_Saga
+	 *  - http://muppet.wikia.com/wiki/Elmo
+	 *  - ../wiki/Volturi 
+	 *  - ../index.php/Matt_Groening
+	 */
+	private function isLocalWikiLink($href) {
+		global $wgServer, $wgArticlePath;
+
+		$parsed = parse_url($href);
+		$parsed['path'] = ltrim($parsed['path'], '.');
+
+		$articlePath = str_replace('$1', '', $wgArticlePath);
+
+		if ( ( !isset($parsed['host']) || ($parsed['scheme'] . '://' . $parsed['host'] == $wgServer) )
+			&& (substr($parsed['path'], 0, strlen($articlePath)) == $articlePath) ) {
+				// extract article name for internal link
+				$articleName = substr($parsed['path'], strlen($articlePath));
+
+				return str_replace('_', ' ', urldecode($articleName));
+		}
+
+		// link points to external site
+		return false;
+	}
+
+	/**
 	 * Returns wikimarkup for image/video tags
 	 */
 	private function handleMedia($node, $content) {
@@ -1038,6 +1083,13 @@ class ReverseParser {
 				}
 			break;
 		}
+	}
+
+	/**
+	 * Returns first free refid number
+	 */
+	private function getFreeRefid() {
+		return !empty($this->data) ? (max( array_keys($this->data) ) + 1) : 0;
 	}
 
 	/**
