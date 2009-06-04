@@ -533,11 +533,9 @@ FCK.ShowInfoDialog = function(text) {
 		close: false
 	});
 
-	var buttons = [ { text: 'OK', handler: function() {this.hide()}, isDefault: true} ];
-
 	Dialog.setHeader('&nbsp;');
 	Dialog.setBody(text);
-	Dialog.cfg.queueProperty("buttons", buttons);
+	Dialog.cfg.queueProperty("buttons", [ { "text": 'OK', handler: function() {this.hide()}, isDefault: true} ]);
 
 	Dialog.render(window.parent.document.body);
 	Dialog.show();
