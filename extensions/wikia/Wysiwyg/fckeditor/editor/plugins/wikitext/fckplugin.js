@@ -1618,7 +1618,7 @@ FCK.CheckPasteCompare = function() {
 			FCK.log('Pasted from different editor instance!');
 			FCK.Track('/paste/outside');
 			// alert();
-			FCK.ShowInfoDialog('You\'ve pasted text from different editor instance.');
+			FCK.ShowInfoDialog('Copying from one editor to another in WYSIWYG mode is not currently supported. Please use source mode.');
 
 			// replace with old HTML and set events on placeholders
 			FCK.EditorDocument.body.innerHTML = oldHTML;
