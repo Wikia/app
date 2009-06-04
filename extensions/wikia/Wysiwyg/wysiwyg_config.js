@@ -24,11 +24,8 @@ FCKConfig.Plugins.Add('video');
 toolbarItems.splice(20, 0, 'AddVideo');
 
 // new toolbar
-if (typeof window.parent.wysiwygUseNewToolbar != 'undefined') {
-	toolbarItems = window.parent.wysiwygToolbarItems;
-
-	FCKConfig.Plugins.Add('toolbar');
-}
+toolbarItems = window.parent.wysiwygToolbarItems;
+FCKConfig.Plugins.Add('toolbar');
 
 FCKConfig.ToolbarSets["Default"] = [ toolbarItems ];
 	
