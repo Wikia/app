@@ -39,8 +39,9 @@ function TOCimprovementsInit() {
 	global $wgHooks, $wgUser;
 
 	// do not touch skins other than Monaco
+	// init only for anons
 	$skinName = get_class($wgUser->getSkin());
-	if ($skinName != 'SkinMonaco') {
+	if ($skinName != 'SkinMonaco' || !$wgUser->isAnon()) {
 		return true;
 	}
 	$wgHooks['MakeGlobalVariablesScript'][] = 'TOCimprovementsSetupVars';
@@ -66,7 +67,7 @@ function TOCimprovementsSetupVars($vars) {
  */
 function TOCimprovementsAddBodyClass($classes) {
 	global $wgUser;
-	if ($wgUser->isAnon() && (!isset($_COOKIE['hidetoc']) || $_COOKIE['hidetoc'] == '1')) {
+	if (!isset($_COOKIE['hidetoc']) || $_COOKIE['hidetoc'] == '1') {
 		$classes .= ' TOCimprovements';
 	}
 	return true;
