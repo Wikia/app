@@ -382,7 +382,7 @@ class WikiFactoryLoader {
 		/**
 		 * check if not additional domain was used (then we redirect anyway)
 		 */
-		$cond2 = $this->mAlternativeDomainUsed && ( $host != $this->mOldServerName );
+		$cond2 = !empty( $host ) && $this->mAlternativeDomainUsed && ( $host != $this->mOldServerName );
 
 		if( ( $cond1 || $cond2 ) && empty( $wgDevelEnvironment ) && $this->mNoRedirect === false ) {
 			$url = wfGetCurrentUrl();
