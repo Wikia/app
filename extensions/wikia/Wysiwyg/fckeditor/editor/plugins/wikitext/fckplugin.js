@@ -93,7 +93,7 @@ FCK.onWysiwygLoad = function() {
 		// check existance of wgNow global JS variable
 		// should be always defined in Monaco skin
 		if (typeof window.parent.wgNow == 'undefined') {
-			FCK.log('Wysiwyg loaded (wgNow not defined!)');
+			FCK.log('loaded (wgNow not defined!)');
 			FCK.LoadTime = true;
 			return;
 		}
@@ -101,7 +101,7 @@ FCK.onWysiwygLoad = function() {
 		FCK.LoadTime = ((new Date()).getTime() - window.parent.wgNow.getTime()) / 1000;
 
 		// report load time
-		FCK.log('Wysiwyg loaded in ' + FCK.LoadTime + ' s');
+		FCK.log('loaded in ' + FCK.LoadTime + ' s');
 	}
 }
 
