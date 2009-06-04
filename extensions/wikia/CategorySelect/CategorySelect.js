@@ -576,6 +576,9 @@ function showCSpanel() {
 }
 
 function csSave() {
+	if ($G('csCategoryInput').value != '') {
+		addCategory($G('csCategoryInput').value);
+	}
 	var pars = 'rs=CategorySelectAjaxSaveCategories&rsargs[]=' + wgArticleId + '&rsargs[]=' + encodeURIComponent(YAHOO.Tools.JSONEncode(categories));
 	var callback = {
 		success: function(originalRequest) {
