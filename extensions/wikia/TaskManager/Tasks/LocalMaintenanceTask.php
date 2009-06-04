@@ -82,8 +82,12 @@ class LocalMaintenanceTask extends BatchTask {
 				$retval = wfShellExec( $cmd, $status );
 				$this->addLog( $retval );
 
-				$this->addLog( "Disable locked to edits" );
-				WikiFactory::setVarByName('wgReadOnly', $city_id, "");
+				$this->addLog( "Disable lock to edits" );
+				$oVariable = WikiFactory::getVarByName( 'wgReadOnly', $city_id );
+				if ( isset($oVariable->cv_variable_id) ) {
+					WikiFactory::removeVarById($oVariable->cv_variable_id, $city_id);
+					WikiFactory::clearCache($city_id);
+				}
 
 				$this->mWikiData = $this->mParams[ "data" ];
 				$this->mFounder = User::newFromId( $this->mWikiData[ "founder"] );
