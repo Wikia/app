@@ -232,8 +232,9 @@ function CategorySelectAjaxParseCategories($wikitext) {
 function CategorySelectAjaxSaveCategories($articleId, $categories) {
 	global $wgUser;
 
-	if ( wfReadOnly() ) {
-		$result['error'] = 'Database is locked.';
+	if (wfReadOnly()) {
+		wfLoadExtensionMessages('CategorySelect');
+		$result['error'] = wfMsg('categoryselect-error-db-locked');
 		return Wikia::json_encode($result);
 	}
 
@@ -241,13 +242,13 @@ function CategorySelectAjaxSaveCategories($articleId, $categories) {
 	if ($categories == '') {
 		$result['info'] = 'Nothing to add.';
 	} else {
+		wfLoadExtensionMessages('CategorySelect');
 		$title = Title::newFromID($articleId);
 		if (is_null($title)) {
-			$result['error'] = "Article [id=$articleId] does not exist.";
+			$result['error'] = wfMsg('categoryselect-error-not-exist', $articleId);
 		} else {
 			if($title->userCan('edit') && !$wgUser->isBlocked()) {
 				global $wgOut;
-				wfLoadExtensionMessages('CategorySelect');
 
 				$article = new Article($title);
 				$article_text = $article->fetchContent();
@@ -264,7 +265,7 @@ function CategorySelectAjaxSaveCategories($articleId, $categories) {
 				$result['info'] = 'ok';
 				$result['html'] = $cats;
 			} else {
-				$result['error'] = 'User rights error.';
+				$result['error'] = wfMsg('categoryselect-error-user-rights');
 			}
 		}
 	}

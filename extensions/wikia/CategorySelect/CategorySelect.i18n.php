@@ -37,6 +37,9 @@ $messages = array(
 		'categoryselect-empty-name' => 'Provide category name (part before |)',
 		'categoryselect-button-save' => 'Save',
 		'categoryselect-button-cancel' => 'Cancel',
+		'categoryselect-error-not-exist' => 'Article [id=$1] does not exist.',
+		'categoryselect-error-user-rights' => 'User rights error.',
+		'categoryselect-error-db-locked' => 'Database is locked.',
 		'tog-disablecategoryselect' => 'Disable Category Tagging'
 	),
 	'fi' => array(

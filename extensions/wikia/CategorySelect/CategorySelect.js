@@ -592,6 +592,8 @@ function csSave() {
 				} else {
 					$G('catlinks').insertBefore(tmpDiv.firstChild, $G('catlinks').firstChild);
 				}
+			} else if (result['error'] != undefined) {
+				alert(result['error']);
 			}
 			csCancel();
 		},
