@@ -113,41 +113,8 @@ FCK.onWysiwygLoad = function() {
 FCK.originalSwitchEditMode = FCK.SwitchEditMode;
 
 FCK.WysiwygSwitchToolbars = function(switchToWikitext) {
-
-	// using new toolbar?
-	if (typeof FCK.WikiaUsingNewToolbar != 'undefined') {
-		var toolbar = FCK.ToolbarSet.Toolbars[0];
-		toolbar.WikiaSwitchToolbar(switchToWikitext);
-		return;
-	}
-
-	var toolbar = document.getElementById('xToolbar').getElementsByTagName('tr');
-
-	// using new toolbar?
-	if (!toolbar.length || toolbar.length < 2) {
-		// don't do anything for now
-		return;
-	}
-
-	var toolbarItems = toolbar[0].childNodes;
-	var MWtoolbar = window.parent.document.getElementById('toolbar');
-	var iframe = window.parent.document.getElementById('wpTextbox1___Frame');
-
-	// move MW toolbar next to "Source" button
-	if (MWtoolbar && iframe) {
-		MWtoolbar.style.marginLeft = (toolbarItems[1].offsetWidth + 4) + 'px';
-		MWtoolbar.style.top = (iframe.offsetTop + 3) + 'px';
-	}
-
-	// show/hide FCK toolbar items
-	for (t=0; t<toolbarItems.length; t++) {
-		toolbarItems[t].style.display = (switchToWikitext && t > 1) ? 'none' : '';
-	}
-
-	// show/hide MW toolbar
-	if (MWtoolbar) {
-		MWtoolbar.style.visibility = switchToWikitext ? 'visible' : 'hidden';
-	}
+	var toolbar = FCK.ToolbarSet.Toolbars[0];
+	toolbar.WikiaSwitchToolbar(switchToWikitext);
 }
 
 FCK.SwitchEditMode = function() {

@@ -132,7 +132,7 @@ function Wysywig_Ajax($type, $input = false, $wysiwygData = false, $pageName = f
 }
 
 function Wysiwyg_Initial($form) {
-	global $wgUser, $wgOut, $wgRequest, $IP, $wgExtensionsPath, $wgStyleVersion, $wgHooks, $wgWysiwygEdgeCasesFound, $wgWysiwygFallbackToSourceMode, $wgJsMimeType, $wgWysiwygEdit, $wgWysiwygUseNewToolbar;
+	global $wgUser, $wgOut, $wgRequest, $IP, $wgExtensionsPath, $wgStyleVersion, $wgHooks, $wgWysiwygEdgeCasesFound, $wgWysiwygFallbackToSourceMode, $wgJsMimeType, $wgWysiwygEdit;
 
 	wfProfileIn(__METHOD__);
 
@@ -196,58 +196,58 @@ function Wysiwyg_Initial($form) {
 	// CSS
 	$wgOut->addExtensionStyle("$wgExtensionsPath/wikia/Wysiwyg/wysiwyg.css?$wgStyleVersion");
 
+	//
 	// add support for new toolbar
-	if (!empty($wgWysiwygUseNewToolbar)) {
-		// toolbar data
-		// TODO: get it from MW article
-		// TODO: i18n
-		$toolbarData = array(
-			array(
-				'name'  => 'Text Appearance',
-				'items' => array('H2', 'H3', 'Bold', 'Italic', 'Underline', 'StrikeThrough', 'Normal', 'Pre', 'Outdent', 'Indent')
-			),
-			array(
-				'name'  => 'Lists and Links',
-				'items' => array('UnorderedList', 'OrderedList', 'Link', 'Unlink')
-			),
-			array(
-				'name'  => 'Insert',
-				'items' => array('AddImage', 'AddVideo', 'Table', 'Tildes')
-			),
-			array(
-				'name'  => 'Wiki Templates',
-				'items' => array('InsertTemplate')
-			),
-			array(
-				'name'  => 'Controls',
-				'items' => array('Undo', 'Redo', 'Widescreen', 'Source')
-			),
-		);
+	//
 
-		// generate buckets and items data
-		$toolbarBuckets = array();
-		$toolbarItems = array();
+	// toolbar data
+	// TODO: get it from MW article
+	// TODO: i18n
+	$toolbarData = array(
+		array(
+			'name'  => 'Text Appearance',
+			'items' => array('H2', 'H3', 'Bold', 'Italic', 'Underline', 'StrikeThrough', 'Normal', 'Pre', 'Outdent', 'Indent')
+		),
+		array(
+			'name'  => 'Lists and Links',
+			'items' => array('UnorderedList', 'OrderedList', 'Link', 'Unlink')
+		),
+		array(
+			'name'  => 'Insert',
+			'items' => array('AddImage', 'AddVideo', 'Table', 'Tildes')
+		),
+		array(
+			'name'  => 'Wiki Templates',
+			'items' => array('InsertTemplate')
+		),
+		array(
+			'name'  => 'Controls',
+			'items' => array('Undo', 'Redo', 'Widescreen', 'Source')
+		),
+	);
 
-		foreach($toolbarData as $bucket) {
-			$toolbarBuckets[] = $bucket['name'];
+	// generate buckets and items data
+	$toolbarBuckets = array();
+	$toolbarItems = array();
 
-			$toolbarItems[] = '-';
-			$toolbarItems = array_merge($toolbarItems, $bucket['items']);
-		}
+	foreach($toolbarData as $bucket) {
+		$toolbarBuckets[] = $bucket['name'];
 
-		// tooltip
-		$toolbarTooltip = WysiwygToolbarAddTooltip();
-
-		$wgOut->addInlineScript(
-			"var wysiwygUseNewToolbar = true;\n" .
-			"var wysiwygToolbarBuckets = " . Wikia::json_encode($toolbarBuckets) . ";\n" .
-			"var wysiwygToolbarItems = " . Wikia::json_encode($toolbarItems) . ";" .
-			( !empty($toolbarTooltip) ? "\nvar wysiwygToolbarTooltip = " . Xml::encodeJsVar($toolbarTooltip) . ";" : '')
-		);
+		$toolbarItems[] = '-';
+		$toolbarItems = array_merge($toolbarItems, $bucket['items']);
 	}
 
-	$wgOut->addScript( "<script type=\"{$wgJsMimeType}\" src=\"$wgExtensionsPath/wikia/Wysiwyg/fckeditor/fckeditor.js?$wgStyleVersion\"></script>" );
-	$wgOut->addScript( "<script type=\"{$wgJsMimeType}\" src=\"$wgExtensionsPath/wikia/Wysiwyg/wysiwyg.js?$wgStyleVersion\"></script>" );
+	// tooltip
+	$toolbarTooltip = WysiwygToolbarAddTooltip();
+
+	$wgOut->addInlineScript(
+		"var wysiwygToolbarBuckets = " . Wikia::json_encode($toolbarBuckets) . ";\n" .
+		"var wysiwygToolbarItems = " . Wikia::json_encode($toolbarItems) . ";" .
+		( !empty($toolbarTooltip) ? "\nvar wysiwygToolbarTooltip = " . Xml::encodeJsVar($toolbarTooltip) . ";" : '')
+	);
+
+	$wgOut->addScript( "<script type=\"{$wgJsMimeType}\" src=\"$wgExtensionsPath/wikia/Wysiwyg/fckeditor/fckeditor.js?$wgStyleVersion\"></script>\n" );
+	$wgOut->addScript( "<script type=\"{$wgJsMimeType}\" src=\"$wgExtensionsPath/wikia/Wysiwyg/wysiwyg.js?$wgStyleVersion\"></script>\n" );
 
 	$wgHooks['EditPage::showEditForm:initial2'][] = 'Wysiwyg_Initial2';
 	$wgHooks['EditForm:BeforeDisplayingTextbox'][] = 'Wysiwyg_BeforeDisplayingTextbox';
