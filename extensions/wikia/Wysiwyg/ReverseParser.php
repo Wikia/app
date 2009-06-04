@@ -896,6 +896,12 @@ class ReverseParser {
 
 				// detect links from local wiki
 				if ( $articleName = $this->isLocalWikiLink($href) ) {
+
+					// fix for links pointing to category pages
+					if (strpos($articleName, ':') > 0) {
+						$articleName = ":{$articleName}";
+					}
+
 					// internal link
 					$this->data[$refid] = array(
 						'type' => 'internal link',
