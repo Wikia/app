@@ -516,7 +516,7 @@ FCK.SetupElementsWithRefId = function() {
 			case 'image':
 				FCK.ProtectImage(node);
 				break;
-			
+
 			case 'video':
 				FCK.ProtectVideo(node);
 				break;
@@ -582,8 +582,8 @@ FCK.FixWikitextPlaceholder = function(placeholder) {
 	placeholder.setAttribute('_fckContextMenuDisabled', true);
 
 	// placeholder is last child of p, div, li, dt or dd node - add dirty span
-	if (placeholder.parentNode.nodeName.IEquals(['p', 'div', 'li', 'dt', 'dd']) && 
-		(placeholder == placeholder.parentNode.lastChild || 
+	if (placeholder.parentNode.nodeName.IEquals(['p', 'div', 'li', 'dt', 'dd']) &&
+		(placeholder == placeholder.parentNode.lastChild ||
 			(placeholder.parentNode.lastChild.previousSibling && placeholder == placeholder.parentNode.lastChild.previousSibling.previousSibling)
 		)) {
 		if (FCKBrowserInfo.IsGecko10) {
@@ -1187,7 +1187,7 @@ FCK.TemplatePreviewAdd = function(placeholder) {
 	if (previewDiv) {
 		FCKDomTools.RemoveNode(previewDiv);
 	}
-	
+
 	// copy template previews to clouds
 	var preview = placeholder.nextSibling;
 	previewDiv = docObj.createElement('div');
@@ -1401,11 +1401,11 @@ FCK.GenerateTemplateWikitext = function(name, params) {
 			longestParam = key.length;
 		}
 	}
-	
+
 	// parameters name and value
 	for(key in params) {
 		var value = FCK.YAHOO.Tools.trim(params[key]);
-	
+
 		if (value == '') continue; // ignore empty parameters
 
 		var fill = FCK.YAHOO.Tools.stringRepeat(' ', longestParam - key.length);
