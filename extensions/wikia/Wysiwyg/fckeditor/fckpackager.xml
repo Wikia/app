@@ -259,4 +259,10 @@
 		<File path="editor/_source/internals/fckplugins.js" />
 	</PackageFile>
 
+	<!-- Wikia -->
+	<PackageFile path="editor/plugins/plugins.js">
+		<File path="editor/plugins/wikitext/fckplugin.js" />
+		<File path="editor/plugins/video/fckplugin.js" />
+		<File path="editor/plugins/toolbar/fckplugin.js" />
+	</PackageFile>
 </Package>
