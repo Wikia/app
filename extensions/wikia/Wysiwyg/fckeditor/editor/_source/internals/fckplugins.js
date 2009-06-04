@@ -41,6 +41,11 @@ FCKPlugins.Load = function()
 	for ( var s in oItems )
 		oItems[s].Load() ;
 
+	// Load merged and minified plugins JS file
+	if ( (/fcksource=true/i).test(window.parent.location.search) == false ) {
+		LoadScript( FCKConfig.PluginsPath + 'plugins.js' ) ;
+	}
+
 	// This is a self destroyable function (must be called once).
 	FCKPlugins.Load = null ;
 }

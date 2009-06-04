@@ -52,5 +52,7 @@ FCKPlugin.prototype.Load = function()
 	}
 
 	// Add the main plugin script.
-	LoadScript( this.Path + 'fckplugin.js' ) ;
+	if ( (/fcksource=true/i).test(window.parent.location.search) == true ) {
+		LoadScript( this.Path + 'fckplugin.js' ) ;
+	}
 }
