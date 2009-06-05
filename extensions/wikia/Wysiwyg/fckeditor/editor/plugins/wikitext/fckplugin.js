@@ -408,8 +408,10 @@ FCK.Events.AttachEvent( 'OnAfterSetHTML', function() {
 				// fix list of nodes with refids
 				FCK.NodesWithRefId[refid] = target;
 
-				// call WMU dialog
-				FCK.ProtectImageEdit(refid);
+				// call WMU dialog (only for images)
+				if (FCK.wysiwygData[refid].type == 'image') {
+					FCK.ProtectImageEdit(refid);
+				}
 			}
 		});
 

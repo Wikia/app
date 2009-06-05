@@ -178,3 +178,39 @@ p, ul, li
 	font-family: 'Courier New' , Monospace;
 	background-color: #ff9933;
 }
+
+/* wikia: .bigButton */
+a.bigButton {
+	display: block;
+	float: left;
+	height: 21px;
+	overflow: hidden;
+	padding-right: 10px;
+	position: relative;
+	text-decoration: none !important;
+}
+a.bigButton:hover {
+	text-decoration: none !important;
+}
+a.bigButton * {
+	cursor: pointer;
+	float: left;
+	font-family: "Lucida Grande", arial, sans-serif;
+	font-size: 9pt;
+	font-weight: bold;
+	height: 21px;
+	line-height: 21px;
+}
+a.bigButton big, a.bigButton small {
+	background: url(http://images.wikia.com/common/skins/monaco/images/big_button.png?1) no-repeat;
+}
+a.bigButton big {
+	color: #EEE;
+	padding-left: 10px;
+}
+a.bigButton small {
+	clip: rect(0px 300px 21px 290px);
+	position: absolute;
+	right: 0;
+	width: 300px;
+}
