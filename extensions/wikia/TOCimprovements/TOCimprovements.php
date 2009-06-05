@@ -36,16 +36,30 @@ $wgExtensionFunctions[] = 'TOCimprovementsInit';
  * @author Maciej Błaszkowski <marooned at wikia-inc.com>
  */
 function TOCimprovementsInit() {
+	global $wgHooks;
+	$wgHooks['SkinGetPageClasses'][] = 'TOCimprovementsAddBodyClass';
+}
+
+/**
+ * add CSS class to <body> to hide TOC
+ *
+ * @author Maciej Błaszkowski <marooned at wikia-inc.com>
+ */
+function TOCimprovementsAddBodyClass($classes) {
 	global $wgHooks, $wgUser;
 
-	// do not touch skins other than Monaco
+	// do not touch skins other than Monaco (this condition must not be in TOCimprovementsInit() as it expand stub object too fast and ?usetheme does not work)
 	// init only for anons
 	$skinName = get_class($wgUser->getSkin());
 	if ($skinName != 'SkinMonaco' || !$wgUser->isAnon()) {
 		return true;
 	}
 	$wgHooks['MakeGlobalVariablesScript'][] = 'TOCimprovementsSetupVars';
-	$wgHooks['SkinGetPageClasses'][] = 'TOCimprovementsAddBodyClass';
+
+	if (!isset($_COOKIE['hidetoc']) || $_COOKIE['hidetoc'] == '1') {
+		$classes .= ' TOCimprovements';
+	}
+	return true;
 }
 
 /**
@@ -57,18 +71,5 @@ function TOCimprovementsSetupVars($vars) {
 	//used in wikibits.js to enable anon handling
 	$vars['TOCimprovementsEnabled'] = '1';
 
-	return true;
-}
-
-/**
- * add CSS class to <body> to hide TOC
- *
- * @author Maciej Błaszkowski <marooned at wikia-inc.com>
- */
-function TOCimprovementsAddBodyClass($classes) {
-	global $wgUser;
-	if (!isset($_COOKIE['hidetoc']) || $_COOKIE['hidetoc'] == '1') {
-		$classes .= ' TOCimprovements';
-	}
 	return true;
 }
