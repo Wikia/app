@@ -10,7 +10,7 @@ if(!defined('MEDIAWIKI')) {
 global $wgWidgets;
 $wgWidgets['WidgetTopContent'] = array(
 	'callback' => 'WidgetTopContent',
-	'title' => 'wdiget-title-topcontent',
+	'title' => 'widget-title-topcontent',
 	'desc' => 'widget-desc-topcontent',
     'params' => array (
 	'at' => array(
