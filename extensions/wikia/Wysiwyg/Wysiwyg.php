@@ -737,6 +737,15 @@ function Wysiwyg_SetRefId($type, $params, $addMarker = true, $returnId = false) 
 			$data['original'] = $params['original'];
 			$result = $params['original'];
 			break;
+
+		case 'video_add':
+			$data['width'] = $params['width'];
+			$data['height'] = $params['height'];
+			$data['isAlign'] = $params['isAlign'];
+			$data['isThumb'] = $params['isThumb'];
+
+			$data['original'] = $params['original'];
+			break;
 	}
 
 	if($addMarker) {
