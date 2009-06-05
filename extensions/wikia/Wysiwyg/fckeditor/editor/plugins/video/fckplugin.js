@@ -33,7 +33,7 @@ FCK.VideoOverlay = false;
 // protect video placeholder
 FCK.ProtectVideo = function(video) {
 	var refid = parseInt(video.getAttribute('refid'));
-	
+
 	// for browsers supporting contentEditable
 	if (FCK.UseContentEditable) {
 		video.setAttribute('contentEditable', false);
@@ -75,7 +75,7 @@ FCK.ProtectVideo = function(video) {
 // protect "Add video" placeholder
 FCK.ProtectVideoAdd = function(video) {
 	var refid = parseInt(video.getAttribute('refid'));
-	
+
 	// for browsers supporting contentEditable
 	if (FCK.UseContentEditable) {
 		video.setAttribute('contentEditable', false);
@@ -93,8 +93,10 @@ FCK.ProtectVideoAdd = function(video) {
 		);
 
 		// setup events (remove listener first to avoid multiple event firing)
-		FCKTools.RemoveEventListener(video, 'click', FCK.VideoOnClick);
-		FCKTools.AddEventListener(video, 'click', FCK.VideoAddOnClick);
+		var videoAdd = video.getElementsByTagName('a')[0];
+
+		FCKTools.RemoveEventListener(videoAdd, 'click', FCK.VideoOnClick);
+		FCKTools.AddEventListener(videoAdd, 'click', FCK.VideoAddOnClick);
 
 		FCK.BlockEvent(video, 'contextmenu');
 		FCK.BlockEvent(video, 'mousedown');
