@@ -2,11 +2,15 @@
 $messages = array_merge( $messages, array(
 
 // Widgets 
+'widget-title-activetalkpages' => 'Aktív vitalapok',
+'widget-desc-activetalkpages' => 'A legutóbb megváltozott vitalapok listája.',
 'widget-title-ancientpages' => 'Elhagyott oldalak',
 'widget-desc-ancientpages' => 'Nézd meg a legrégebben szerkesztett szócikkeket.',
 'widget-bookmark-title' => 'Könyvjelzõk',
 'widget-desc-bookmark' => 'Add hozzá a kedvenc oldalaidat.',
+'widget-title-contribs' => 'Közremûködések',
 'widget-desc-contribs' => 'Egyszerû módja a közremûködéseid megtekintésének.',
+'widget-title-editedrecently' => 'Utoljára szerkesztette',
 'widget-desc-editedrecently' => 'Egy listát jelenít meg azokról a szerkesztõkrõl, akik utoljára változtattak a meglátogatott szócikken.',
 'widget-title-languages' => 'Wersje językowe',
 'widget-title-lastwikis' => 'Legutóbbi wikik',

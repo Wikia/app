@@ -45,11 +45,15 @@ Zmień [[Special:Preferences#prefsection-1|swoje preferencje]], aby używać wid
 'wt_click_to_close'  => 'Kliknij, aby zamknąć dymek...',
 
 #General widget messages
+'widget-title-activetalkpages' => 'Lista ostatnio edytowanych strony dyskusji',
+'widget-desc-activetalkpages' => 'Aktywne strony dyskusji',
 'widget-title-ancientpages' => 'Najstarsze strony',
 'widget-desc-ancientpages' => 'Lista stron nieedytowanych przez dłuższy czas',
 'widget-bookmark-title' => 'Zakładki',
 'widget-desc-bookmark' => 'Zachowaj swoje ulubione strony',
+'widget-title-contribs' => 'Wkład',
 'widget-desc-contribs' => 'Pomocna lista ostatnich edycji',
+'widget-title-editedrecently' => 'Ostatnio zmieniane przez',
 'widget-desc-editedrecently' => 'Lista ostatnich edytorów tej strony',
 'widget-title-lastwikis' => 'Ostatnio odwiedzone',
 'widget-desc-lastwikis' => 'Lista ostatnio odwiedzonych Wikii',
