@@ -177,7 +177,7 @@ EOT
 			} else {
 				$registration = wfMsg( 'lookupuser-no-registration' );
 			}
-			$wgOut->addWikiText( '*' . wfMsg( 'username' ) . ' [[User:' . $name . '|' . $name . ']] ([[User talk:' . $name . '|' . wfMsg( 'talkpagelinktext' ) . ']] | [[Special:Contributions/' . $name . '|' . wfMsg( 'contribslink' ) . ']])' );
+			$wgOut->addWikiText( '*' . wfMsg( 'username' ) . ' [[User:' . $name . '|' . $name . ']] (<span id="lu-tools">[[User talk:' . $name . '|' . wfMsg( 'talkpagelinktext' ) . ']] | [[Special:Contributions/' . $name . '|' . wfMsg( 'contribslink' ) . ']]</span>)' );
 			$wgOut->addWikiText( '*' . wfMsg( 'lookupuser-id', $user->getId() ) );
 			$wgOut->addWikiText( '*' . wfMsg( 'lookupuser-email', $email, $name ) );
 			$wgOut->addWikiText( '*' . wfMsg( 'lookupuser-realname', $user->getRealName() ) );
