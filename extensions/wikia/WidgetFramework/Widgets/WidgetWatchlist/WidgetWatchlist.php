@@ -9,7 +9,7 @@ if(!defined('MEDIAWIKI')) {
 global $wgWidgets;
 $wgWidgets['WidgetWatchlist'] = array(
 	'callback' => 'WidgetWatchlist',
-	'title' => 'wdiget-title-watchlist',
+	'title' => 'widget-title-watchlist',
 	'desc' => 'widget-desc-watchlist',
 	'closeable' => true,
 	'editable' => false,
