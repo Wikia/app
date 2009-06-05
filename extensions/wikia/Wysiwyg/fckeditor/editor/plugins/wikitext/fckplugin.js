@@ -488,8 +488,8 @@ FCK.SetupElementsWithRefId = function() {
 				FCK.ProtectVideo(node);
 				break;
 
-			case 'video':
-				//FCK.ProtectVideo(node);
+			case 'video_add':
+				FCK.ProtectVideoAdd(node);
 				break;
 
 			// add tooltip to links
