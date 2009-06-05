@@ -1059,6 +1059,7 @@ class ReverseParser {
 		switch($data['type']) {
 			case 'image':
 			case 'video':
+			case 'video_add':
 				$out = $data['original'];
 				return $out;
 
