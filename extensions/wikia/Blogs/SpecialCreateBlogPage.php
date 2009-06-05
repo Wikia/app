@@ -84,7 +84,7 @@ class CreateBlogPage extends SpecialBlogPage {
 		$editPage = new EditBlogPage( $this->mPostArticle );
 		$editPage->initialiseForm();
 		$editPage->textbox1 = $sPostBody;
-		$editPage->summary  = wfMsg('create-blog-updated');
+		$editPage->summary  = wfMsgForContent('create-blog-updated');
 		$status = $editPage->internalAttemptSave( $result );
 		switch( $status ) {
 			case EditPage::AS_SUCCESS_UPDATE:
