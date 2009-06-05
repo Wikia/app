@@ -158,7 +158,7 @@ class GenerateSitemap {
 		$this->timestamp = wfTimestamp( TS_ISO_8601, wfTimestampNow() );
 
 
-		$this->findex = fopen( "{$this->fspath}sitemap-index-" . wfWikiID() . ".xml", 'wb' );
+		$this->findex = fopen( "{$this->fspath}sitemap-index-" . id_by_andrew() . ".xml", 'wb' );
 	}
 
 	/**
@@ -348,7 +348,7 @@ class GenerateSitemap {
 	 */
 	function sitemapFilename( $namespace, $count ) {
 		$ext = $this->compress ? '.gz' : '';
-		return "sitemap-".wfWikiID()."-NS_$namespace-$count.xml$ext";
+		return "sitemap-".id_by_andrew()."-NS_$namespace-$count.xml$ext";
 	}
 
 	/**
@@ -501,4 +501,21 @@ if ( isset( $options['server'] ) ) {
 
 $gs = new GenerateSitemap( @$options['fspath'], @$options['compress'] !== 'no' );
 $gs->main();
+
+/**
+ * c&p from getSitemapUrl() in redirect-robots.php
+ */
+function id_by_andrew() {
+	global $wgServer;
+	$_SERVER_SERVER_NAME = preg_replace('/^http:\/\//', '', $wgServer);
+
+	$hostel = explode('.',$_SERVER_SERVER_NAME);
+	//delete tdlportion
+	unset($hostel[count($hostel)-1]);
+	unset($hostel[count($hostel)-1]);
+
+	$r = implode('',$hostel);
+
+	return $r;
+}
 
