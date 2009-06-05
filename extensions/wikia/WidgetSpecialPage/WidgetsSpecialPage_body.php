@@ -92,18 +92,18 @@ class WidgetsSpecialPage extends SpecialPage
 			    continue;
 			}
 			
-			$name = isset($data['title'][$langCode]) ? $data['title'][$langCode] : $data['title']['en'];
-			$desc = isset($data['desc'][$langCode])  ? $data['desc'][$langCode]  : $data['desc']['en'];
+			$name = wfMsg($data['title']);
+			$desc = wfMsg($data['desc']);
 
 			$thumbClass = $widget . 'Thumb';
 		
 			$wgOut->addHTML('<dl>'."\n\t".
 				'<dt class="' . ($skinname == 'SkinMonaco' ? $thumbClass : '') . '">'.
 				($wgUser->isLoggedIn() ? '<div class="add" id="widgets_special_page-' . $widget . '-add" rel="' . $widget . '"></div>' : '').
-				'<div class="widgetsThumb ' . ($skinname == 'SkinQuartz' ? $thumbClass : '')  .'" title="'.htmlspecialchars($name).'"'.
+				'<div class="widgetsThumb ' . ($skinname == 'SkinQuartz' ? $thumbClass : '')  .'" title="'.$name.'"'.
 				'>&nbsp;</div></dt>'."\n\t".
-				'<dd><h4>'.htmlspecialchars($name).
-				'</h4><p>'.htmlspecialchars($desc).'</p></dd>'."\n".'</dl>'.
+				'<dd><h4>'.$name.
+				'</h4><p>'.$desc.'</p></dd>'."\n".'</dl>'.
 				"\n\n");
 		}
 		
