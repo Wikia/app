@@ -1032,6 +1032,12 @@ class ReverseParser {
 		global $wgServer, $wgArticlePath;
 
 		$parsed = parse_url($href);
+
+		// kill notice
+		if (!isset($parsed['path'])) {
+			return false;
+		}
+
 		$parsed['path'] = ltrim($parsed['path'], '.');
 
 		$articlePath = str_replace('$1', '', $wgArticlePath);
