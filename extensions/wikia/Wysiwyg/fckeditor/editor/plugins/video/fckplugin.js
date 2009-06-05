@@ -72,6 +72,41 @@ FCK.ProtectVideo = function(video) {
 	}
 }
 
+// protect "Add video" placeholder
+FCK.ProtectVideoAdd = function(video) {
+	var refid = parseInt(video.getAttribute('refid'));
+	
+	// for browsers supporting contentEditable
+	if (FCK.UseContentEditable) {
+		video.setAttribute('contentEditable', false);
+
+		// apply contentEditable to all child nodes of video
+		FCK.YD.getElementsBy(
+			function(node) {
+				return true;
+			},
+			false,
+			video,
+			function(node) {
+				node.setAttribute('contentEditable', false);
+			}
+		);
+
+		// setup events (remove listener first to avoid multiple event firing)
+		FCKTools.RemoveEventListener(video, 'click', FCK.VideoOnClick);
+		FCKTools.AddEventListener(video, 'click', FCK.VideoAddOnClick);
+
+		FCK.BlockEvent(video, 'contextmenu');
+		FCK.BlockEvent(video, 'mousedown');
+		FCK.BlockEvent(video, 'mouseup');
+
+		// store node with refId
+		FCK.NodesWithRefId[ refid ] = video;
+		return;
+	}
+}
+
+
 FCK.VideoOnClick = function(e) {
 	var e = FCK.YE.getEvent(e);
 	var target = FCK.YE.getTarget(e);
@@ -95,6 +130,28 @@ FCK.VideoOnClick = function(e) {
 				FCK.VideoEdit(refid);
 				break;
 		}
+	}
+};
+
+FCK.VideoAddOnClick = function(e) {
+	var e = FCK.YE.getEvent(e);
+	var target = FCK.YE.getTarget(e);
+
+	FCK.YE.stopEvent(e);
+
+	// ignore buttons different then left
+	if (e.button == 0) {
+		var video = FCK.GetParentImage(target);
+		var refid = parseInt(video.getAttribute('refid'));
+
+		FCK.log('video add #' + refid  + ' clicked');
+		FCK.log(FCK.wysiwygData[refid]);
+
+		// tracker
+		FCK.Track('/video/add');
+
+		// open VideoEmbedTool
+		window.parent.VET_show( parseInt(refid), -1 );
 	}
 };
 
@@ -229,10 +286,15 @@ FCK.VideoUpdate = function(refid, wikitext, extraData) {
 	}, true /* use wysiwyg parser */);
 }
 
-FCK.VideoAdd = function(wikitext, extraData) {
+FCK.VideoAdd = function(wikitext, extraData, placeholderRefId) {
 	var refid = FCK.GetFreeRefId();
 
 	FCK.log('adding new video #' + refid + ' using >>' + wikitext + '<<');
+
+	// use this param to replace existing "Add video" placeholder with new video
+	if (placeholderRefId != null) {
+		FCK.log('replacing "Add video" placeholder #' + placeholderRefId);
+	}
 
 	FCK.Track('/video/add');
 
@@ -252,7 +314,15 @@ FCK.VideoAdd = function(wikitext, extraData) {
 
 		// insert html into editing area...
 		var wrapper = FCK.EditorDocument.createElement('DIV');
-		FCK.InsertElement(wrapper);
+
+		if (placeholderRefId != null) {
+			var placeholder = FCK.GetElementByRefId(placeholderRefId);
+			placeholder.parentNode.replaceChild(wrapper, placeholder);
+		}
+		else {
+			FCK.InsertElement(wrapper);
+		}
+
 		wrapper.innerHTML = html;
 
 		// is "simple" video wrapped by <p></p> ?
@@ -270,7 +340,8 @@ FCK.VideoAdd = function(wikitext, extraData) {
 
 		FCK.log(FCK.wysiwygData[refid]);
 	}, {
-		'refid': refid
+		'refid': refid,
+		'placeholderRefId': placeholderRefId
 	}, true /* use wysiwyg parser */);
 }
 
