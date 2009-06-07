@@ -98,6 +98,12 @@ function WikiaVideo_init() {
 			$wgExtraNamespaces[NS_VIDEO + 1] = 'Dyskusja_Video';
 			$wgNamespaceAliases['Video_talk'] = NS_VIDEO + 1;
 			break;
+		case 'fa':
+			$wgExtraNamespaces[NS_VIDEO] = 'ویدیو';
+			$wgExtraNamespaces[NS_VIDEO + 1] = 'بحث_ویدیو';
+			$wgNamespaceAliases['Video'] = NS_VIDEO;
+			$wgNamespaceAliases['Video_talk'] = NS_VIDEO + 1;
+			break;
 		default:
 			$wgExtraNamespaces[NS_VIDEO] = 'Video';
 			$wgExtraNamespaces[NS_VIDEO + 1] = 'Video_talk';
