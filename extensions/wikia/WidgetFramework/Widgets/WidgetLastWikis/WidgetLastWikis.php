@@ -53,7 +53,7 @@ function WidgetLastWikis($id, $params) {
 		array_unshift ( $urls, array( 'url' => $server, 'name' => $wgSitename ) );		
 
 		$expire = time()+3600*24*7;
-		WebResponse::setcookie($wgCookiePrefix.'recentlyvisited', serialize( $urls ), $expire);
+		WebResponse::setcookie('recentlyvisited', serialize( $urls ), $expire);
 	}
 
 	wfProfileOut( __METHOD__ );
