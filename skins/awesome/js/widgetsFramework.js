@@ -344,9 +344,11 @@ $(function() {
 				connectWith: sidebars,
 				containment: 'document',
 				delay: 100,
+				forcePlaceholderSize: true,
 				handle: (skin == 'quartz' ? 'h1' : 'dt'),
 				items: '> .widget',
 				opacity: .5,
+				placeholder: 'widget_sort_placeholder',
 				revert: 200, // smooth animation
 
 				// events

@@ -393,3 +393,10 @@ body.widgetsAddingBlocked .add {
 * html #cockpit_close {
 	top: 5px;
 }
+
+.widget_sort_placeholder {
+	background: transparent;
+	border: 1px dashed #AAA;
+	margin-bottom: 10px !important;
+	padding: 2px !important;
+}
