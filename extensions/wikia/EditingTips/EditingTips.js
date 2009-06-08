@@ -19,7 +19,7 @@ YAHOO.util.Event.addListener(["toggleEditingTips", "editingTips_close"], "click"
 			$G("toggleWideScreen").innerHTML = editingTipsEnterMsg ;
 		}
 		if($G("toggleEditingTips")) {
-			$G("toggleEditingTips").innerHTML = "Hide Editing Tips";
+			$G("toggleEditingTips").innerHTML = editingTipsHideMsg;
 		}
 
 		YAHOO.Wikia.Tracker.trackByStr(e, 'editingTips/toggle/editingTips/on');
