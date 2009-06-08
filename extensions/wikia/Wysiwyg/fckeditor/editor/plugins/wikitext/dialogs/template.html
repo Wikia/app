@@ -257,6 +257,10 @@ FCK.TemplateEditor.SelectStep = function(stepId) {
 				else {
 					name = param;
 				}
+
+				// fix for HTML entities
+				value = value.replace(/&/g, '&amp;');
+
 				output += '<label for="'+id+'">'+name +'</label><textarea id="'+id+'">'+value+'</textarea>';
 			}
 
