@@ -400,3 +400,20 @@ jQuery("#random_users_with_avatars").ready(function() {
 		}
 	});
 });
+
+// macbre: refs RT #16770
+jQuery.fn.log = function (msg, group) {
+	if (typeof console != 'undefined') {
+		if (group) {
+			// nice formatting of objects with group prefix
+			console.log((typeof msg != 'object' ? '%s: %s' : '%s: %o'), group, msg);
+		}
+		else {
+			console.log(msg);
+		}
+	}
+	else if (typeof opera != 'undefined') {
+		opera.postError((group ? (group + ': ') : '') + msg);
+	}
+	return this;
+};
