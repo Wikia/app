@@ -341,28 +341,13 @@ $(function() {
 			}
 
 			$(this).sortable({
-				addClasses: false,
-				cancel: '',
 				connectWith: sidebars,
 				containment: 'document',
 				delay: 100,
 				handle: (skin == 'quartz' ? 'h1' : 'dt'),
-				helper: function(ev, widget) {
-					var helper = document.createElement('div');
-
-					$(helper).css({
-						border: 'solid 2px #aaa',
-						height: $(widget).height() + 'px',
-						width:  $(widget).width() + 'px'
-					});
-
-					return helper;
-				},
-
 				items: '> .widget',
-
-				revert: true, // smooth animation
-				revertDuration: 50,
+				opacity: .5,
+				revert: 200, // smooth animation
 
 				// events
 				stop: function(ev, ui) {
