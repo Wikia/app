@@ -980,7 +980,7 @@ class PPFrame_DOM implements PPFrame {
 						} else {
 							//Wysiwyg: mark template call and add metadata to wysiwyg array
 							if($wgWysiwygParserEnabled && ($originalCall = $xpath->query( 'originalCall', $contextNode )->item( 0 ))) {
-								$out .= Wysiwyg_WrapTemplate($originalCall->textContent, $ret['text'], $lineStart);
+								$out .= Wysiwyg_WrapTemplate(htmlspecialchars_decode($originalCall->textContent), $ret['text'], $lineStart);
 							} else {
 								$out .= $ret['text'];
 							}
