@@ -2142,7 +2142,7 @@ $this->html('reporttime');
 wfRunHooks('SpecialFooter');
 wfProfileOut( __METHOD__ . '-body');
 ?>
-
+		<div id="positioned_elements" class="reset"></div>
 	</body>
 </html>
 <?php
