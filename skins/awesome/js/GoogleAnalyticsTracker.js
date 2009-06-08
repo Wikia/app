@@ -13,3 +13,13 @@ $(document).click(function(e){
 //	var target = getTarget(e);
 //	console.log(target.id);
 });
+
+// macbre: temporary fix
+var WET = {
+	byStr: function(str) {
+		$().log(str, 'tracker');
+	},
+	byId: function(str) {
+		$().log(str, 'tracker');
+	}
+};
