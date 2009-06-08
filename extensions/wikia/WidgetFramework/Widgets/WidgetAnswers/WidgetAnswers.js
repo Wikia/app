@@ -10,7 +10,7 @@ function WidgetAnswers_load(data) {
 		}
 	}
 }
-var widget_answers_placeholder = 'Ask a question';
+var widget_answers_placeholder = ask_a_question_msg;
 function WidgetAnswers_handler(e) {
 	if(e.type == 'focus') {
 		if(e.target.value == widget_answers_placeholder) {
