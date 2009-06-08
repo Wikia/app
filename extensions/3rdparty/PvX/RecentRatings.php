@@ -44,7 +44,7 @@ function wfRecentRatings()
             global $wgOut;
             global $wgRequest;
             global $wgScript;
-            global $wgUser;
+            global $wgUser, $wgLang;
 			global $wgParser;
 			global $wgTitle;
             $wgOut->setPageTitle('Recent ratings');
@@ -52,37 +52,29 @@ function wfRecentRatings()
 			{
 				$out = "I'm being included... :(";
 			} else {
+
+				$timeprevious = '';
+
 				foreach (self::GetRatings() as $array) 
 				{
 				
 					if ($array['page_title'])
 					{
+
 						date_default_timezone_set("UTC");
-						if ($wgUser->getOption( 'timecorrection' )) 
-						{
-						    # we need the time zone correction NEGATIVE here, since the $tm=... statement
-						    # below shifts the TZ of the server, not the user
-							$tz = ' -' . $wgUser->getOption( 'timecorrection' );
-							$tz = str_replace ('--', '+', $tz);
-							$tz = str_replace ('-+', '-', $tz);
-						} else {
-							$tz = '';
-						}
+
+						$timecorrection = $wgUser->getOption( 'timecorrection' );
+						$timecurent = $wgLang->date( wfTimestamp( TS_MW, $array['timestamp'] ), true, false, $timecorrection );
 						
-						$tm = strtotime($array['timestamp'] . $tz); 
-						
-						#$array['timestamp'] = gmdate('Y-m-d H:i:s', $tm); # ok on test box
-						$array['timestamp'] = gmdate('Y-m-d H:i:s', $tm-7200);  # ok on main box (FIX THIS)
-						$timecurent = date('F j, Y', strtotime($array['timestamp']));
 						$out = '* ';
-						
+
 						if ( $timeprevious != $timecurent) 
 						{
 							$tc = '===' . $timecurent . '===';    
 							$wgOut->addWikiText($tc);
 						}
-						$timeprevious = date('F j, Y', strtotime($array['timestamp']));
-						$time = date('H:i', strtotime($array['timestamp']));
+						$timeprevious = $timecurent;
+						$time = $wgLang->time( wfTimestamp( TS_MW, $array['timestamp'] ), true, false, $timecorrection);
 							
 						if ($array['user_name'])
 						{
@@ -143,7 +135,7 @@ function wfRecentRatings()
 		{
 			$dbr = &wfGetDB(DB_SLAVE);
 			$res = $dbr->query("
-			SELECT user_name, R.user_id, page_title, comment, rollback, admin_id, reason, rating1, rating2, rating3, timestamp
+ 			SELECT user_name, R.user_id, page_title, comment, rollback, admin_id, reason, rating1, rating2, rating3, timestamp
 			FROM rating AS R
 			LEFT JOIN " . wfSharedTable( 'user' ) . " AS u1 ON R.user_id = u1.user_id 
 			LEFT JOIN page AS p1 ON R.page_id = p1.page_id 
