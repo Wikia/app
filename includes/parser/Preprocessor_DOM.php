@@ -553,7 +553,7 @@ class Preprocessor_DOM implements Preprocessor {
 						if(count($closeAt) == count($openAt)) {
 							$openIdx = $openAt[0];
 							$closeIdx = $closeAt[count($closeAt)-1];
-							$originalCall = substr($text, $openIdx, $closeIdx-$openIdx+2);
+							$originalCall = htmlspecialchars(substr($text, $openIdx, $closeIdx-$openIdx+2));
 							$element .= "<originalCall><![CDATA[$originalCall]]></originalCall>";
 							$openAt = $closeAt = array();
 						}
