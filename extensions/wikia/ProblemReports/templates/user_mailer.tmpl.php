@@ -2,11 +2,32 @@
 <fieldset id="mailer">
     <legend><?= wfMsg('emailpage') ?></legend>
 
-<?php if ( $is_readonly ) { ?>
+<?php
+	global $wgCityId;
+
+	// wiki is in read-only mode
+	if ( $is_readonly ) {
+?>
    <h4><?= wfMsg('readonly') ?></h4>
-<?php } else if (empty($problem['email'])) { ?>
+<?php
+	}
+	// no email provided
+	else if (empty($problem['email'])) {
+?>
     <p><?= wfMsg('noemailtitle') ?></p>
-<?php } else { ?>
+<?php
+	}
+	// force sending emails from wiki problem was reported from (RT #14522)
+	else if ($wgCityId != $problem['city'] ) {
+		// generate URL to problem report
+		$url = $problem['server'] . '/index.php?title=Special:ProblemReports/' . $problem['id'];
+?>
+	<?= wfMsgExt('pr_mailer_go_to_wiki', 'parse', $url) ?>
+<?php
+	}
+	// now we can show mailer form
+	else {
+?>
     
     <form action="<?= Title::newFromText('ProblemReports/mailer', NS_SPECIAL)->escapeLocalURL() ?>" method="post">
     

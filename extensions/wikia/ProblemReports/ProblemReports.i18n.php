@@ -64,6 +64,7 @@ Software bugs can be reported on the forums. Reports made here will be [[Special
 		'pr_mailer_subject' => 'Reported problem on',
 		'pr_mailer_tmp_info' => 'You can edit templated responses [[MediaWiki:ProblemReportsResponses|here]]',
 		'pr_mailer_to_default' => 'Wikia User',
+		'pr_mailer_go_to_wiki' => 'To send email please go to [$1 wiki problem was reported from]',
 
 		'pr_total_number'       => 'Total number of reports',
 		'pr_view_archive'       => 'View archived problems',
