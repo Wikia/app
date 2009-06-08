@@ -533,15 +533,22 @@ EOS;
 			$package = 'awesome_loggedin_js';
 		}
 		else {
-			$action = $wgRequest->getVal('action', 'view');
+			// list of namespaces and actions on which we should load package with YUI
+			$ns = array(NS_SPECIAL);
+			$actions = array('edit', 'preview', 'submit');
 
-			// TODO: check this list of actions
-			if ( ($wgTitle->getNamespace() == NS_SPECIAL) || in_array($action, array('edit', 'preview', 'submit')) ) {
-				// edit mode & Special pages
+			// add blog namespaces
+			global $wgEnableBlogArticles;
+			if (!empty($wgEnableBlogArticles)) {
+				$ns = array_merge($ns, array(NS_BLOG_ARTICLE, NS_BLOG_ARTICLE_TALK, NS_BLOG_LISTING, NS_BLOG_LISTING_TALK));
+			}
+
+			if ( in_array($wgTitle->getNamespace(), $ns) || in_array($wgRequest->getVal('action', 'view'), $actions) ) {
+				// edit mode & special/blog pages (package with YUI)
 				$package = 'awesome_anon_everything_else_js';
 			}
 			else {
-				// view mode
+				// view mode (package without YUI)
 				$package = 'awesome_anon_article_js';
 			}
 		}
