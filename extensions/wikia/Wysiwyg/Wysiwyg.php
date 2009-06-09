@@ -809,8 +809,7 @@ $out
 </html>
 EOD;
 
-	echo $html;
-	exit();
+	return new AjaxResponse($html);
 }
 
 /**
@@ -872,8 +871,7 @@ function WysiwygGetTemplateParams($name, $templateCall = null) {
 $wgAjaxExportList[] = 'WysiwygGetTemplateParamsAjax';
 function WysiwygGetTemplateParamsAjax($name) {
 	$params = WysiwygGetTemplateParams($name);
-	echo  Wikia::json_encode(!empty($params) ? $params : null, true);
-	exit();
+	return new AjaxResponse( Wikia::json_encode(!empty($params) ? $params : null, true) );
 }
 
 /**
@@ -961,6 +959,7 @@ function WysiwygFirstEditMessageShow() {
 /**
  * Store list of cities id where we shouldn't show first time edit popup anymore
  */
+$wgAjaxExportList[] = 'WysiwygFirstEditMessageSave';
 function WysiwygFirstEditMessageSave() {
 	global $wgUser, $wgCityId;
 
@@ -979,7 +978,6 @@ function WysiwygFirstEditMessageSave() {
 
 	return new AjaxResponse('ok');
 }
-$wgAjaxExportList[] = 'WysiwygFirstEditMessageSave';
 
 /**
  * Show first edit message
@@ -1114,5 +1112,5 @@ function WysiwygParseWikitext($wikitext) {
 
 	$wgWysiwygParserEnabled = false;
 
-	return $html;
+	return new AjaxResponse($html);
 }
