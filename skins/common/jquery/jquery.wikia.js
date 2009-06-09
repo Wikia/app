@@ -17,6 +17,10 @@ jQuery.fn.log = function (msg, group) {
 	return this;
 };
 
+jQuery.fn.exists = function() {
+	return this.length > 0;
+}
+
 jQuery.fn.getModal = function(url, id, options) {
 	// get modal plugin
 	$.getScript(stylepath + '/common/jquery/jquery.wikia.modal.js?' + wgStyleVersion, function() {
