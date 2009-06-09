@@ -8,6 +8,10 @@ $wgExtensionCredits['other'][] = array(
     'author' => 'David Pean',
 );
 
+$wgAvailableRights[] = 'actionpanel';
+$wgGroupPermissions['staff']['actionpanel'] = true;
+$wgGroupPermissions['actionpanel']['actionpanel'] = true;
+
 $wgExtensionMessagesFiles['ActionPanel'] = dirname(__FILE__).'/'.'ActionPanel.i18n.php';
 $wgHooks['MakeGlobalVariablesScript'][] = 'fnAddActionPanelJSGlobalVariables';
 function fnAddActionPanelJSGlobalVariables(&$vars){
@@ -31,6 +35,11 @@ function fnAddActionPanelJSGlobalVariables(&$vars){
 
 $wgHooks["GetHTMLAfterBody"][] = "wfAddActionPanel";
 function wfAddActionPanel(&$tpl){
+	global $wgUser;
+	if (!$wgUser->isAllowed('actionpanel')) {
+		return true;
+	}
+
 	global $wgStyleVersion, $wgExtensionsPath;
 	
 	echo ('<link rel="stylesheet" type="text/css" href="'.$wgExtensionsPath.'/wikia/ActionPanel/ActionPanel.css?'.$wgStyleVersion.'"/>');
