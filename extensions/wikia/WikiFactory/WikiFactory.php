@@ -597,6 +597,7 @@ class WikiFactory {
 					),
 					__METHOD__
 				);
+				self::log(self::LOG_VARIABLE, sprintf("Variable %s removed", self::getVarById($variable_id, $wiki)->cv_name), $wiki);
 				$dbw->commit();
 				$bStatus = true;
 			}
