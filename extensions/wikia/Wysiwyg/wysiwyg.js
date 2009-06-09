@@ -71,18 +71,10 @@ function wysiwygShowInfobox(header, body, labelOk, handlerOk) {
 function wysiwygShowFirstEditMessage(title, message, dismiss) {
 
 	// client-site check for anons/logged-in
-	value = YAHOO.tools.getCookie('wysiwyg-cities-edits');
+	value = $.cookies.get('wysiwyg-cities-edits');
 	if (value) {
-		YAHOO.log('Wysiwyg: cities-edits ' + value);
-		cities = value.split('.');
-		city = parseInt( wgCityId );
-
-		// look for city id
-		for (c=0; c<cities.length; c++) {
-			if (parseInt(cities[c]) == city) {
-				return;
-			}
-		}
+		$().log('first edit msg cookie found', 'Wysiwyg');
+		return;
 	}
 
 	// tracking
@@ -103,18 +95,7 @@ function wysiwygShowFirstEditMessage(title, message, dismiss) {
 			}
 			// for anon store in cookie
 			else {
-				value = YAHOO.tools.getCookie('wysiwyg-cities-edits');
-				if (value) {
-					cities = value.split('.');
-				}
-				else {
-					cities = [];
-				}
-				cities.push( parseInt(wgCityId) );
-
-				value = cities.slice(-50).join('.');
-
-				YAHOO.tools.setCookie('wysiwyg-cities-edits', value, new Date(2012,1,1), '/', document.domain);
+				$.cookies.set('wysiwyg-cities-edits', '1', {hoursToLive: 24 * 365 * 5, domain: document.domain, path: '/'});
 			}
 		}
 	});
