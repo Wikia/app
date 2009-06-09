@@ -169,7 +169,7 @@ function applyActionsOnQuestions(){
 								//alert( "you would have saved (" + add_answer + ") to " + questions[1] + " with token " + token + " (disabled for testing)" )
 								//return false;
 					
-								url = wgServer + "/api.php?format=json&token=" + encodeURIComponent(token) + "&action=edit&title=" + this_title + "&text=" + add_answer.value;
+								url = wgServer + "/api.php?format=json&token=" + encodeURIComponent(token) + "&action=edit&title=" + this_title + "&text=" + encodeURIComponent(add_answer.value);
 								jQuery.post( url, "", function( response ){	
 									eval("j=" + response);
 									
