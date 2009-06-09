@@ -10,7 +10,7 @@ function WidgetAnswers_load(data) {
 		}
 	}
 }
-var widget_answers_placeholder = ask_a_question_msg;
+var widget_answers_placeholder = '';
 function WidgetAnswers_handler(e) {
 	if(e.type == 'focus') {
 		if(e.target.value == widget_answers_placeholder) {
@@ -32,5 +32,6 @@ function WidgetAnswers_handler(e) {
 	}
 }
 function WidgetAnswers_init(id) {
+	widget_answers_placeholder = ask_a_question_msg;
 	jQuery('#widget_' + id+'_content').css('max-height', '400px').children('form').children('input').val(widget_answers_placeholder).focus(WidgetAnswers_handler).blur(WidgetAnswers_handler).keypress(WidgetAnswers_handler);
 }

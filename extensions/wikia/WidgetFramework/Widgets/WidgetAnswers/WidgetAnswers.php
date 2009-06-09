@@ -77,7 +77,7 @@ EOD;
 
 	$output .= <<<EOD
 <script type="text/javascript">
-var ask_a_question_msg = "{$ask_a_question_msg}";
+var ask_a_question_msg = "{$ask_a_question}";
 if(typeof WidgetAnswers_html == 'undefined') var WidgetAnswers_html = '';
 var WidgetAnswers_url = '$url';
 if(WidgetAnswers_html == '') {
