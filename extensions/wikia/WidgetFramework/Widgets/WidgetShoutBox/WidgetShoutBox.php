@@ -43,9 +43,14 @@ $wgWidgets['WidgetShoutBox'] = array(
 
 function WidgetShoutBox($id, $params) {
 
-	global $wgUser, $wgTitle, $wgRequest, $wgSitename, $wgLang;
+	global $wgUser, $wgTitle, $wgRequest, $wgSitename, $wgLang, $wgEnableWidgetShoutbox;
 
 	wfProfileIn(__METHOD__);
+
+	// check if widget is enabled for this wiki and quit early if not
+	if ( empty( $wgEnableWidgetShoutbox ) ) {
+		return wfMsg('widget-shoutbox-disabled');
+	}
 
 	// maybe user is trying to add a message to chat
 	if ( $wgRequest->getVal('message') && $wgRequest->getVal('rs') == 'WidgetFrameworkAjax' ) {

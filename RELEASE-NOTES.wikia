@@ -4,6 +4,7 @@
 * rt #16527: Widgets can now use contentlang instead of userlang if required
 * rt #14699: FCK messing up links
 * rt #16049: FCK: unsupported placeholder type comment found in page text
+* rt #16912: WidgetShoutbox can now be disabled per-wiki
 
 == Changes since 200905.4 ==
 * EditEnhancements & NewEditPage changed (see http://contractor.wikia-inc.com/wiki/Edit_window_improvement_2)

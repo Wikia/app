@@ -578,7 +578,7 @@ hu',
 'widget-desc-wikiatoolbox' => 'Toolbox',
 'widget-title-wikipage' => 'Wiki page in widget',
 'widget-desc-wikipage' => 'Display any article inside a widget. Great for making your own widget',
-
+'widget-shoutbox-disabled' => 'The Shoutbox widget is disabled on this wiki.',
 
 #Wikia Widgets tooltips
 'wt_help_startup'  => '|Not familiar with widgets?||Open user menu and click "Manage widgets"...',
