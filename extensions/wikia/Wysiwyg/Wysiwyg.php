@@ -953,13 +953,9 @@ function WysiwygFirstEditMessageShow() {
 		return true;
 	}
 
-	// for logged in users get comma separated list of city ids
-	$cities = explode(',', $wgUser->getOption('wysiwyg-cities-edits', ''));
-
-	wfDebug('wysiwyg-cities-edits: ' . print_r($cities, true) . "\n");
-
-	// check for current city id
-	return !in_array($wgCityId, $cities);
+	// for logged-in get preferences entry
+	$messageDismissed = $wgUser->getOption('wysiwyg-cities-edits', false);
+	return empty($messageDismissed);
 }
 
 /**
@@ -973,23 +969,8 @@ function WysiwygFirstEditMessageSave() {
 		return;
 	}
 
-	// get comma separated list of city ids
-	$cities = explode(',', $wgUser->getOption('wysiwyg-cities-edits', ''));
-
-	// add current city id
-	if (!in_array($wgCityId, $cities)) {
-		$cities[] = $wgCityId;
-
-		// store up to 50 city ids
-		$cities = array_slice($cities, -50);
-	}
-
-	$value = trim(implode(',', $cities), ',');
-
-	wfDebug("wysiwyg-cities-edits: {$value}\n");
-
 	// store new value in user settings
-	$wgUser->setOption('wysiwyg-cities-edits', $value);
+	$wgUser->setOption('wysiwyg-cities-edits', '1');
 	$wgUser->saveSettings();
 
 	// commit
