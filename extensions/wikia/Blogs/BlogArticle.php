@@ -35,11 +35,18 @@ class BlogArticle extends Article {
 	 * @access public
 	 * @static
 	 */
-	public static function setup() {
-		global $wgOut, $wgStyleVersion, $wgExtensionsPath, $wgMergeStyleVersionJS, $wgJsMimeType;
+	public static function setup($title, $article) {
+		// macbre: check namespace (RT #16832)
+		if ( !in_array($title->getNamespace(), array(NS_BLOG_ARTICLE, NS_BLOG_ARTICLE_TALK, NS_BLOG_LISTING, NS_BLOG_LISTING_TALK)) ) {
+			return true;
+		}
+
+		global $wgOut, $wgStyleVersion, $wgExtensionsPath, $wgJsMimeType;
 		// hack - addScript should be changed to addStyle (but not OutputPage::addStyle which is more like addStyleFile) but it wont work outside wgStylePath
-		$wgOut->addScript( "<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/Blogs/js/Blogs.js?{$wgMergeStyleVersionJS}\" ></script>" );
+		$wgOut->addScript("<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/Blogs/js/Blogs.js?{$wgStyleVersion}\" ></script>\n");
 		wfLoadExtensionMessages( "Blogs" );
+
+		return true;
 	}
 
 	/**

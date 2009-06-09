@@ -56,7 +56,7 @@ if ('de' == $wgLanguageCode) {
  * setup function
  */
 $wgAutoloadClasses[ "BlogArticle" ] = dirname(__FILE__) . '/BlogArticle.php';
-$wgExtensionFunctions[] = "BlogArticle::setup";
+$wgHooks['ArticleFromTitle'][] = "BlogArticle::setup";
 
 /**
  * messages file
