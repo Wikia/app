@@ -3,6 +3,7 @@
 		margin: 5px 0;
 		padding: 5px;
 		clear: both;
+		z-index: 1000;
 	}
 	#editform > .edit_enhancements_toolbar_fixed {
 		position: fixed;

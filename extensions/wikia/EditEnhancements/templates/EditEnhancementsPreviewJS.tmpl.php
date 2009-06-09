@@ -37,7 +37,7 @@ EditEnhancementsPreview = {
 		}
 
 		// fix for IE
-		if ($.browser.msie) {
+		if ($.browser.msie && $.browser.version.substr(0,1)<7) {
 			$('#edit_enhancements_toolbar').css( positionFixed ? {
 				'left': 	0,
 				'position': 	'absolute',
