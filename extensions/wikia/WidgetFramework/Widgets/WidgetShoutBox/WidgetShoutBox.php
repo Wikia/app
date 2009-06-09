@@ -48,7 +48,7 @@ function WidgetShoutBox($id, $params) {
 	wfProfileIn(__METHOD__);
 
 	// check if widget is enabled for this wiki and quit early if not
-	if ( empty( $wgEnableWidgetShoutbox ) ) {
+	if ( isset( $wgEnableWidgetShoutbox ) && !$wgEnableWidgetShoutbox ) {
 		return wfMsg('widget-shoutbox-disabled');
 	}
 
