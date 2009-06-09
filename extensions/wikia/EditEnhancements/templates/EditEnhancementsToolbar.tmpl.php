@@ -4,20 +4,13 @@
 		padding: 5px;
 		clear: both;
 	}
-	.edit_enhancements_toolbar_fixed {
+	#editform > .edit_enhancements_toolbar_fixed {
 		position: fixed;
 		bottom: 0px;
 		margin: 0px !important;
 		z-index: 500;
 	}
-
-	* html .edit_enhancements_toolbar_fixed {
-		position: absolute;
-		top: expression( ((e=document.documentElement.scrollTop+document.documentElement.clientHeight)?e:document.body.scrollTop+document.documentElement.clientHeight) - 100  +'px') !important;
-		left: 0 !important;
-	}
-
-	.edit_enhancements_toolbar_static {
+	#editform > .edit_enhancements_toolbar_static {
 		position: static;
 		width: auto;
 	}
@@ -53,9 +46,9 @@
 </style>
 
 <script type="text/javascript">
-	YAHOO.util.Event.onDOMReady(function() {
-		YAHOO.util.Dom.setStyle('wpDiff', 'color', YAHOO.util.Dom.getStyle('wpEdithelp', 'color'));
-		$G('wpCancel').parentNode.insertBefore(document.createTextNode(' | '), $G('wpCancel'));
+	$(function() {
+		$('#wpDiff').css('color', $('#wpEdithelp').css('color') );
+		$('.editHelp').prepend(' | ');
 	});
 </script>
 
