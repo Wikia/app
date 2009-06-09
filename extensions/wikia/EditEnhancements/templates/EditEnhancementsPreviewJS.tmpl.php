@@ -14,6 +14,8 @@ EditEnhancementsPreview = {
 			textAreaOffset = $('#wpTextbox1___Frame').offset().top + $('#wpTextbox1___Frame').outerHeight();
 		}
 
+		var positionFixed = false;
+
 		// choose positioning method
 		if ( scrollBottomOffset < (textAreaOffset + editBarHeight + 8) ) {
 			bodyContentLeft = $("#bodyContent").offset().left;
@@ -24,12 +26,25 @@ EditEnhancementsPreview = {
 
 			// add margin-top to #editpage-copywarn to keep the same scroll height
 			$('#editpage-copywarn').css('marginTop', editBarHeight + 10 + 'px');
+
+			positionFixed = true;
 		}
 		else {
 			$("#edit_enhancements_toolbar").removeClass('edit_enhancements_toolbar_fixed').addClass('edit_enhancements_toolbar_static').css('width', 'auto');
 
 			// remove margin-top from #editpage-copywarn to keep the same scroll height
 			$('#editpage-copywarn').css('marginTop', '0px');
+		}
+
+		// fix for IE
+		if ($.browser.msie) {
+			$('#edit_enhancements_toolbar').css( positionFixed ? {
+				'left': 	0,
+				'position': 	'absolute',
+				'top':		(document.documentElement.scrollTop+document.documentElement.clientHeight) - 70
+			} : {
+				'position': 	'static'
+			});
 		}
 
 		// rescale summary box
@@ -61,8 +76,10 @@ EditEnhancementsPreview = {
 		this.calculate();
 
 		// start interval for smooth scrolling
-		if (!this.interval) {
-			this.interval = setInterval(this.loop, 25);
+		if (!$.browser.msie) {
+			if (!this.interval) {
+				this.interval = setInterval(this.loop, 25);
+			}
 		}
 	},
 
