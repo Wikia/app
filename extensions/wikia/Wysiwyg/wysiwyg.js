@@ -70,6 +70,8 @@ function wysiwygShowInfobox(header, body, labelOk, handlerOk) {
 // show first time edit message
 function wysiwygShowFirstEditMessage(title, message, dismiss) {
 
+	return;
+
 	// client-site check for anons/logged-in
 	value = $.cookies.get('wysiwyg-cities-edits');
 	if (value) {
@@ -151,6 +153,11 @@ function initEditor() {
 		});
 		if (fallbackToSourceMode) {
 			WET.byStr('wysiwyg/edgecase');
+
+			// track comments in wikitext
+			if ($('#wpTextbox1').val().indexOf('<!--') > -1) {
+				WET.byStr('wysiwyg/wikitext_comment/fallback');
+			}
 		}
 		if (temporarySaveType != '') {
 			WET.byStr('wysiwyg/temporarySave/restore');

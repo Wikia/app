@@ -144,6 +144,12 @@ FCK.SwitchEditMode = function() {
 			if(typeof edgecases == "undefined") edgecases = res.getResponseHeader('X-Edgecases');
 			if (edgecases == '1') {
 				messages = res.responseText;
+
+				// track comments in wikitext
+				if (FCK.EditingArea.Textarea.value.indexOf('<!--') > -1) {
+					FCK.Track('/wikitext_comment/popup');
+				}
+
 				//macbre: just show old-school alert()
 				alert(messages);
 			} else {
