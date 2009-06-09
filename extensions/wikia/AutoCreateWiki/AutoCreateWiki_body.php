@@ -274,6 +274,13 @@ class AutoCreateWikiPage extends SpecialPage {
 		wfProfileIn( __METHOD__ );
 
 		/**
+		 * don't allow to create the same Wiki after page refresh
+		 */
+		if ( isset($_SESSION['mAllowToCreate']) ) {
+			unset($_SESSION['mAllowToCreate']);
+		}
+
+		/**
 		 * this will clean test database and fill mWikiData with test data
 		 */
 		$this->prepareValues();
