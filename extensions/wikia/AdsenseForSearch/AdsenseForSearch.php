@@ -12,6 +12,11 @@ global $wgAFSKeywords;
 echo <<<EOS
 	<div id="afs_narrow" class="google_afs"></div>
 	<div id="afs_wide" class="google_afs"></div>
+	<script type="text/javascript">
+	$(function() {
+		$("#afs_wide").clone().insertAfter(".mw-search-results:last");
+	});
+	</script>
 
 	<script language="JavaScript">
     	<!--
@@ -63,21 +68,21 @@ echo <<<EOS
               if (google_ads[i].type=="text/wide")
               {
                   // render a wide ad
-                  wideAds+='<a style="text-decoration:none" onmouseover="javascript:window.status=\'' +
+                  wideAds+='<div style="margin-top: 1em;"><a style="text-decoration:none" onmouseover="javascript:window.status=\'' +
                           google_ads[i].url + '\';return true;" ' +
                           'onmouseout="javascript:window.status=\'\';return true;" ' +
                           'href="' + google_ads[i].url + '">' +
 
-                          '<span class="ad_line1">' + google_ads[i].line1 + '</span></a><br>' +
+                          '<span class="ad_line1">' + google_ads[i].line1 + '</span></a><br />' +
                           
-                          '<span class="ad_text">' + google_ads[i].line2 + '</span>' +
+                          '<span class="ad_text">' + google_ads[i].line2 + '</span><br />' +
                           
                           '<a style="text-decoration:none" onmouseover="javascript:window.status=\'' +
                           google_ads[i].url + '\';return true;" ' +
                           'onmouseout="javascript:window.status=\'\';return true;" ' +
                           'href="' + google_ads[i].url + '">' +
                           
-                          '<span class="ad_url mw-search-result-data">' + google_ads[i].visible_url + '</span><br><br></a>';
+                          '<span class="ad_url mw-search-result-data">' + google_ads[i].visible_url + '</span></a></div>';
               }
 
               else
@@ -88,18 +93,18 @@ echo <<<EOS
                           'onmouseout="javascript:window.status=\'\';return true;" ' +
                           'href="' + google_ads[i].url + '">' +
 
-                          '<span class="ad_line1">' + google_ads[i].line1 + '</span></a><br>' +
+                          '<span class="ad_line1">' + google_ads[i].line1 + '</span></a><br />' +
 
-                          '<span class="ad_text">' + google_ads[i].line2 + '</span><br>' +
+                          '<span class="ad_text">' + google_ads[i].line2 + '</span><br />' +
 
-                          '<span class="ad_text">' + google_ads[i].line3 + '</span><br>' +
+                          '<span class="ad_text">' + google_ads[i].line3 + '</span><br />' +
 
                           '<a style="text-decoration:none" onmouseover="javascript:window.status=\'' +
                           google_ads[i].url + '\';return true;" ' +
                           'onmouseout="javascript:window.status=\'\';return true;" ' +
                           'href="' + google_ads[i].url + '">' +
 
-                          '<span class="ad_url mw-search-result-data">' + google_ads[i].visible_url + '</span><br><br></a>';
+                          '<span class="ad_url mw-search-result-data">' + google_ads[i].visible_url + '</span><br /><br /></a>';
               }
           }
 
@@ -107,14 +112,14 @@ echo <<<EOS
           {
               narrowAds = '<a style="text-decoration:none" ' +
                           'href="https://www.google.com/adsense/support/bin/request.py?contact=afs_violation">' +
-                          '<span class="ad_header" style="text-align:left">Ads by Google</span><br><br></a>' + narrowAds;
+                          '<span class="ad_header" style="text-align:left">Ads by Google</span><br /><br /></a>' + narrowAds;
           }
 
           if (wideAds != "")
           {
               wideAds = '<a style="text-decoration:none" ' +
                         'href="https://www.google.com/adsense/support/bin/request.py?contact=afs_violation">' +
-                        '<span class="ad_header" style="text-align:left">Ads by Google</span><br><br></a>' + wideAds;
+                        '<span class="ad_header" style="text-align:left">Ads by Google</span></a>' + wideAds;
           }
 
           // Write HTML for wide and narrow ads to the proper <div> elements

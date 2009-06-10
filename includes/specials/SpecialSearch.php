@@ -910,13 +910,16 @@ class SpecialSearchOld {
 				return;
 			}
 		}
-
+		
+		/*
+		This headline has no purpose and has been commented out by Christian and Danny.
 		$wgOut->wrapWikiMsg( "==$1==\n", 'notitlematches' );
 		if( $t->quickUserCan( 'create' ) && $t->quickUserCan( 'edit' ) ) {
 			$wgOut->addWikiMsg( 'noexactmatch', wfEscapeWikiText( $term ) );
 		} else {
 			$wgOut->addWikiMsg( 'noexactmatch-nocreate', wfEscapeWikiText( $term ) );
 		}
+		*/
 
 		return $this->showResults( $term );
 	}
@@ -996,50 +999,54 @@ class SpecialSearchOld {
 			return;
 		}
 
-		$wgOut->addHTML( $this->shortDialog( $term ) );		
+		//Only show top search section if logged in, or if anon without AFS. Modified by Christian.
+		global $wgAFSEnabled;
+		if ( $wgUser->isLoggedIn() || !$wgUser->isLoggedIn() && !$wgAFSEnabled ) {
+			$wgOut->addHTML( $this->shortDialog( $term ) );		
 
-		// Sometimes the search engine knows there are too many hits
-		if ($titleMatches instanceof SearchResultTooMany) {
-			$wgOut->addWikiText( '==' . wfMsg( 'toomanymatches' ) . "==\n" );
-			$wgOut->addHTML( $this->powerSearchBox( $term ) );
-			$wgOut->addHTML( $this->powerSearchFocus() );
-			wfProfileOut( __METHOD__ );
-			return;
-		}
-		
-		// show number of results
-		$num = ( $titleMatches ? $titleMatches->numRows() : 0 )
-			+ ( $textMatches ? $textMatches->numRows() : 0);
-		$totalNum = 0;
-		if($titleMatches && !is_null($titleMatches->getTotalHits()))
-			$totalNum += $titleMatches->getTotalHits();
-		if($textMatches && !is_null($textMatches->getTotalHits()))
-			$totalNum += $textMatches->getTotalHits();
-		if ( $num > 0 ) {
-			if ( $totalNum > 0 ){
-				$top = wfMsgExt('showingresultstotal', array( 'parseinline' ), 
-					$this->offset+1, $this->offset+$num, $totalNum, $num );
-			} elseif ( $num >= $this->limit ) {
-				$top = wfShowingResults( $this->offset, $this->limit );
-			} else {
-				$top = wfShowingResultsNum( $this->offset, $this->limit, $num );
+			// Sometimes the search engine knows there are too many hits
+			if ($titleMatches instanceof SearchResultTooMany) {
+				$wgOut->addWikiText( '==' . wfMsg( 'toomanymatches' ) . "==\n" );
+				$wgOut->addHTML( $this->powerSearchBox( $term ) );
+				$wgOut->addHTML( $this->powerSearchFocus() );
+				wfProfileOut( __METHOD__ );
+				return;
 			}
-			$wgOut->addHTML( "<p class='mw-search-numberresults'>{$top}</p>\n" );
-		}
+		
+			// show number of results
+			$num = ( $titleMatches ? $titleMatches->numRows() : 0 )
+				+ ( $textMatches ? $textMatches->numRows() : 0);
+			$totalNum = 0;
+			if($titleMatches && !is_null($titleMatches->getTotalHits()))
+				$totalNum += $titleMatches->getTotalHits();
+			if($textMatches && !is_null($textMatches->getTotalHits()))
+				$totalNum += $textMatches->getTotalHits();
+			if ( $num > 0 ) {
+				if ( $totalNum > 0 ){
+					$top = wfMsgExt('showingresultstotal', array( 'parseinline' ), 
+						$this->offset+1, $this->offset+$num, $totalNum, $num );
+				} elseif ( $num >= $this->limit ) {
+					$top = wfShowingResults( $this->offset, $this->limit );
+				} else {
+					$top = wfShowingResultsNum( $this->offset, $this->limit, $num );
+				}
+				$wgOut->addHTML( "<p class='mw-search-numberresults'>{$top}</p>\n" );
+			}
 
-		// prev/next links
-		if( $num || $this->offset ) {
-			$prevnext = wfViewPrevNext( $this->offset, $this->limit,
-				SpecialPage::getTitleFor( 'Search' ),
-				wfArrayToCGI(
-					$this->powerSearchOptions(),
-					array( 'search' => $term ) ),
-					($num < $this->limit) );
-			$wgOut->addHTML( "<p class='mw-search-pager-top'>{$prevnext}</p>\n" );
-			wfRunHooks( 'SpecialSearchResults', array( $term, &$titleMatches, &$textMatches ) );
-		} else {
-			wfRunHooks( 'SpecialSearchNoResults', array( $term ) );
-		}
+			// prev/next links
+			if( $num || $this->offset ) {
+				$prevnext = wfViewPrevNext( $this->offset, $this->limit,
+					SpecialPage::getTitleFor( 'Search' ),
+					wfArrayToCGI(
+						$this->powerSearchOptions(),
+						array( 'search' => $term ) ),
+						($num < $this->limit) );
+				$wgOut->addHTML( "<p class='mw-search-pager-top'>{$prevnext}</p>\n" );
+				wfRunHooks( 'SpecialSearchResults', array( $term, &$titleMatches, &$textMatches ) );
+			} else {
+				wfRunHooks( 'SpecialSearchNoResults', array( $term ) );
+			}
+		}	
 
 		if( $titleMatches ) {
 			if( $titleMatches->numRows() ) {
