@@ -30,13 +30,13 @@ function perform_search() {
 	for (i=0; i<search_terms.length; i++) {
 		if ( (searchField.value+'').toLowerCase() == search_terms[i][0].toLowerCase()) {
 			document.location = 'http://' + search_terms[i][1] + '.wikia.com';
-			exit;
+			return;
 		}
 	}
 	for (i=0; i<search_terms_extra.length; i++) {
 		if ( (searchField.value+'').toLowerCase() == search_terms_extra[i][0].toLowerCase()) {
 			document.location = 'http://' + search_terms_extra[i][1] + '.wikia.com';
-			exit;
+			return;
 		}
 	}
 	document.location = 'http://www.wikia.com/wiki/Special:Search?search=' + searchField.value;
@@ -82,4 +82,15 @@ var initTracker = function() {
 			Tracker.trackByStr(e, str);
 		}
 	});
+
+	// macbre: track clicks on "Create a Wiki" and "Find a Wiki"
+	Event.addListener('create-a-wiki', 'click', function() {
+		Tracker.trackByStr(null, 'main_page/create_a_wiki');
+	});	
+
+	function trackFindWiki() {
+		Tracker.trackByStr(null, 'main_page/find_a_wiki');
+	}
+	Event.addListener('search_button', 'click', trackFindWiki);
+	Event.addListener('find_form', 'submit', trackFindWiki);
 };
