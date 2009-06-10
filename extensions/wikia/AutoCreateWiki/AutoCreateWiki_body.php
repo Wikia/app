@@ -674,10 +674,11 @@ class AutoCreateWikiPage extends SpecialPage {
 		$this->log( sprintf( "Total: %F", wfTime() - $startTime ) );
 
 		$sSubdomain = ( $this->awcLanguage === 'en' ) ? strtolower( trim( $this->awcDomain ) ) : $this->awcLanguage . "." . strtolower( trim( $this->awcDomain ) );
+		$fDomain = sprintf("%s.%s", $sSubdomain, $this->mDefSubdomain);
 		$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
-		$oTmpl->set_vars( array(
-			"domain" => sprintf("%s.%s", $sSubdomain, $this->mDefSubdomain),
-		));
+		$oTmpl->set_vars( array( "domain" => $fDomain ));
+
+		$this->log( "return " . $fDomain );
 
 		$sFinishText = $oTmpl->execute("finish");
 		$this->setInfoLog('END', $sFinishText);
