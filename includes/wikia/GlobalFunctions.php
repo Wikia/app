@@ -678,3 +678,24 @@ function getMenuHelper($name, $limit = 7) {
 function isMsgEmpty($key) {
 	return wfEmptyMsg($key, trim(wfMsg($key)));
 }
+
+/*
+ * get a list of language names available for wiki request
+ * (possibly filter some)
+ *
+ * @author nef@wikia-inc.com
+ * @return array
+ *
+ * @see Language::getLanguageNames()
+ * @see RT#11870
+ */
+function wfGetFixedLanguageNames() {
+	$languages = Language::getLanguageNames();
+
+	$filter_languages = explode(',', wfMsg('requestwiki-filter-language'));
+	foreach ($filter_languages as $key) {
+		unset($languages[$key]);
+	}
+	return $languages;
+}
+
