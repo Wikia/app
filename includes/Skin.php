@@ -146,7 +146,7 @@ class Skin extends Linker {
 
 		# Grab the skin class and initialise it.
 		if ( !class_exists( $className ) ) {
-			if( $key === "monobook" && in_array( $wgCityId, array( 26, 5409, 165 ) ) ) {
+			if( $key === "monobook" && in_array( $wgCityId, array( 26, 5409 ) ) ) {
 				// Preload base classes to work around APC/PHP5 bug
 				include_once( "{$wgStyleDirectory}/MonoBook.deps.php" );
 				require_once( "{$wgStyleDirectory}/GWMonoBook.php" );
