@@ -99,7 +99,7 @@ function wfJSPager(total,link,page,limit,func,order,desc) {
 	var nbr_result = "<select id=\"wcLUselect\" style=\"" + selectStyle + "\" ";
 	nbr_result += __makeClickFunc("onChange", func, "this.value", 0, order, desc);
 	for (k = 0; k <= 9; k++) {
-		selected = (limit == (5*(parseInt(k)+1))) ? "selected" : "";
+		selected = (limit == (5*(parseInt(k)+1))) ? "selected=\"selected\"" : "";
 		nbr_result += "<option " + selected + " value=\""+(5*(parseInt(k)+1))+"\">" + (5*(parseInt(k)+1)) + "</option>";
 	}
 	nbr_result += "</select>";
@@ -328,7 +328,7 @@ YAHOO.util.Event.onDOMReady(function () {
 			}
 		?>
 	<td valign="middle" style="padding:0px 3px;">
-		<span style="vertical-align:middle"><input type="checkbox" name="lu_target" id="lu_target" value="<?=$groupName?>" "<?=(in_array($groupName, $mGroup))?"checked":""?>"></span>
+		<span style="vertical-align:middle"><input type="checkbox" name="lu_target" id="lu_target" value="<?=$groupName?>" "<?=(in_array($groupName, $mGroup))?"checked=\"checked\"":""?>"></span>
 		<span style="padding-bottom:5px;"><strong><?=$link?></strong> (<?=wfMsg('listuserscount', (isset($groupList[$groupName]))?$groupList[$groupName]:0 )?>)</span>
 	</td>
 		<? $i++; ?>
@@ -342,7 +342,7 @@ YAHOO.util.Event.onDOMReady(function () {
 		<span class="lu_filter lu_first"><?= wfMsg('listusersstartingtext') ?></span>
 		<span class="lu_filter"><input type="text" name="lu_search" id="lu_search" size="5"></span>
 		<span class="lu_filter lu_first"><?= wfMsg('listuserscontributed') ?></span>
-		<span class="lu_filter"><select name="lu_contributed" id="lu_contributed" ><? foreach ($contributed as $val => $text) { ?><option <?= ($val == $selContrib) ? "selected" : "" ?> value="<?=$val?>"><?=$text?><? } ?></select></span>
+		<span class="lu_filter"><select name="lu_contributed" id="lu_contributed" ><? foreach ($contributed as $val => $text) { ?><option <?= ($val == $selContrib) ? "selected=\"selected\"" : "" ?> value="<?=$val?>"><?=$text?><? } ?></select></span>
 		<span class="lu_filter"><input type="button" value="<?=wfMsg('listusersdetails')?>" id="lu-showusers"></span>
 	</div>
 </fieldset>
