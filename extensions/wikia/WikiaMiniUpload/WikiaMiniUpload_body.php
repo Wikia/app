@@ -242,6 +242,11 @@ class WikiaMiniUpload {
 		$extraId = $wgRequest->getVal('extraId');
 		$newFile =  true;
 
+		if( wfReadOnly ) {
+			header('X-screen-type: error');
+			return wfMsg( 'wmu-readonly' );
+		}
+
 		if($name !== NULL) {
 			$name = urldecode( $name );	
 			if($name == '') {
