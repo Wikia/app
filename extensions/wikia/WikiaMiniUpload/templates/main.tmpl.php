@@ -25,6 +25,8 @@ if( !$wgUser->isAllowed( 'upload' ) ) {
 	} else {
 		echo wfMsg( 'wmu-notallowed' ); 
 	}
+} else if( wfReadOnly ) { 
+		echo wfMsg( 'wmu-readonly' );
 } else {
 	if ($error) {
 		?>

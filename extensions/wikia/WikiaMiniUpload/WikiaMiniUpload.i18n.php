@@ -54,4 +54,5 @@ $messages['en'] = array(
 	'wmu-show-license-msg' => 'show license text',
 	'wmu-max-thumb' => 'maximum thumbnail size exceeded, reverting to original size',
 	'wmu-notallowed' => 'You cannot upload images on this wiki',
+	'wmu-readonly' => 'You cannot upload images, the wiki is in read only state',
 );
