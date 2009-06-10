@@ -55,9 +55,9 @@ function Wysiwyg_RemoveMagicWord(&$parser, &$text, &$strip_state) {
 	return true;
 }
 
-// add "Disable Wysiwyg" as the first option in editing tab of user preferences
+// add "Enable Rich Text Editing" as the first option in editing tab of user preferences
 function Wysiwyg_UserPreferences($preferencesForm, $toggles) {
-	array_unshift($toggles, 'disablewysiwyg');
+	array_unshift($toggles, 'enablerichtext');
 
 	// add JS to hide certain switches when wysiwyg is enabled
 	global $wgOut, $wgJsMimeType, $wgExtensionsPath, $wgStyleVersion;
@@ -68,7 +68,7 @@ function Wysiwyg_UserPreferences($preferencesForm, $toggles) {
 
 // add user toggles
 function Wysiwyg_Toggle($toggles) {
-	$toggles[] = 'disablewysiwyg';
+	$toggles[] = 'enablerichtext';
 	return true;
 }
 
@@ -77,8 +77,8 @@ function Wysiwyg_UserGetOption($options, $name, $value) {
 
 	wfProfileIn(__METHOD__);
 
-	// don't continue if user turns off wysiwyg (disablewysiwyg = true)
-	if (!empty($options['disablewysiwyg'])) {
+	// do not continue if user didn't turn on wysiwyg in preferences
+	if (empty($options['enablerichtext'])) {
 		wfProfileOut(__METHOD__);
 		return true;
 	}
@@ -137,7 +137,7 @@ function Wysiwyg_Initial($form) {
 	wfProfileIn(__METHOD__);
 
 	// check user preferences option
-	if($wgUser->getOption('disablewysiwyg') == true) {
+	if($wgUser->getOption('enablerichtext') != true) {
 		wfProfileOut(__METHOD__);
 		return true;
 	}
