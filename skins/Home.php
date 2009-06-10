@@ -805,7 +805,7 @@ class HomeDataProvider {
 					if ( $header ) {
 						self::$data[$msgKey] = '<h1>' . htmlspecialchars( $header ) . '</h1>';
 					}
-					if ( $image ) {
+					if ( $image && !empty($image['src']) ) {
 						self::$data[$msgKey] .= "<img id=\"promoted_feature_img\" src=\"{$image['src']}\" alt=\"{$image['text']}\" style=\"float: right; margin-left: 10px;\" />";
 					}
 
