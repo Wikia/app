@@ -19,7 +19,7 @@ if ( $wgUser->isAnon() ) {
 				$wgUser->addToDatabase();
 }
 
-if (empty($wgWikiaKeyPages)) $wgWikiaKeyPages = array ( 'Image:Wiki.png', 'Image:Wiki_wide.png', 'Image:Favicon.ico' );
+if (empty($wgWikiaKeyPages)) $wgWikiaKeyPages = array ( 'Image:Wiki.png', 'Image:Favicon.ico' );
 
 #--- define restriction level and duration
 $restrictions['edit'] = 'sysop';
